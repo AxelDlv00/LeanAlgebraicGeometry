@@ -2,250 +2,237 @@ id: AJCR.w4-rep
 title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "*** SELF-CORRECTION 2026-07-29, SAME SESSION (review-ajcr, run 0082 s0004,\
-  \ after a fresh-context\nreview of my own work). THE IsPlusHonest FINDING BELOW\
-  \ IS OVERSTATED ON THE STEP THAT CARRIES IT.\nThe route-decision conclusion SURVIVES,\
-  \ for a different and better-evidenced reason. ***\n\nWHAT I GOT WRONG. I argued:\
-  \ relPicToPicEt lands in PicEtAff.unit, unit is mk at the TRIVIAL cover\n`.self\
-  \ A` alone, therefore honesty asserts that no nontrivial etale cover is needed.\
-  \ That step is\nFALSE. PicEtAff.unit_eq_mk (Picard/RelPicCoverInjective.lean:48)\
-  \ proves a unit class is presented on\nEVERY cover E, not only on `.self` -- so\
-  \ \"mk at the trivial cover\" describes one PRESENTATION, not\nthe RANGE, and nothing\
-  \ follows about which classes the range contains.\n\nAND THE ABSOLUTE FORM IS REFUTED\
-  \ BY A LANDED THEOREM IN THIS TREE:\nPicEtAff.unit_surjective_of_section (Picard/EffectivityClose.lean:141)\
-  \ proves the unit SURJECTIVE\nover a field test K admitting a curve point sigma,\
-  \ upgraded to a MulEquiv by\nPicEtAff.unitEquiv_of_section (:186). Over such tests\
-  \ honesty is DISCHARGED OUTRIGHT -- vacuously\ntrue, no etale cover needed anywhere.\
-  \ So \"IsPlusHonest is the sheafification gap asserted of an\narbitrary section\"\
-  \ is wrong as an absolute.\n\nTHE CORRECTED CLAIM, which is narrower and better\
-  \ supported. The gap is at a GENERAL AFFINE BASE\nWITH NO SECTION, and the tree\
-  \ documents exactly why:\n * the field route closes only through etale-cover cofinality\
-  \ in finite separable field extensions\n   (Algebra.EtaleCover.exists_finiteSeparableField_algHom,\
-  \ EtaleCover.lean:287) -- there is NO\n   general-base analogue of that cofinality;\n\
-  \ * EffectivityMoving.lean:41-48 states plainly that for a merely quasi-finite (non-finite)\
-  \ etale\n   cover the moving statement is FALSE, with a counterexample sketch (B\
-  \ = A_u x A_v over a\n   2-dimensional normal local A with nontrivial local class\
-  \ group). So the [Module.Finite A B]\n   hypothesis in the effectivity layer is\
-  \ load-bearing, not convenience.\n\nSO THE OBSTRUCTION IS BASE-SHAPE, NOT ARBITRARINESS\
-  \ OF THE CLASS. Two consequences:\n 1. the split to hand a prover lane is NOT \"\
-  chart value (cheap) vs arbitrary section (blocked)\" but\n    \"field test with\
-  \ a section (FREE) vs general sectionless affine base (OPEN)\". The delta between\n\
-  \    the chart side and the coverage side is NARROWER than I priced it;\n 2. antecedent\
-  \ 2 still owes a route decision -- which site coverage is local for -- because the\n\
-  \    repair still refines covers and descends, and Zariski-local surjectivity still\
-  \ will not absorb\n    that. The conclusion stands; cite the module-finiteness counterexample,\
-  \ NOT the trivial-cover\n    claim, when repeating it.\n\nAlso corrected, same review:\
-  \ I called DivisorFamilyAffThetaTyping.lean UNROOTED. It is ROOTED --\nAlgebraicJacobian.lean:346\
-  \ imports it at HEAD (commit 2b8cef366) and its .olean exists, so it IS\nkernel-checked.\
-  \ Another lane rooted it while I was auditing it and I did not re-run the grep before\n\
-  publishing. I-0941's step (i) is therefore already done; its step (ii) stands.\n\
-  \n--- the original finding follows; read its trivial-cover reasoning as retracted\
-  \ ---\n\n*** RANKING AMENDMENT, second reviewer pass 2026-07-29 (run 0082 session\
-  \ 0004, review-ajcr).\nANTECEDENT 2 IS NOT A GEOMETRY BILL, IT IS A SITE DECISION\
-  \ -- so the #2 slot below is\nMIS-JUSTIFIED even though its position may be right.\
-  \ Issue I-0920. ***\n\nThe costing below is otherwise intact and should be read\
-  \ as it stands. This amendment changes ONE\nthing: the reason antecedent 2 (dat-b\
-  \ B-5/B-6, local surjectivity) is expensive.\n\nBELOW IT SAYS: \"It carries the\
-  \ content, and its packaging is complete ... What it owes is geometry:\nthe per-point\
-  \ datum, plus the chart-parameter/threshold reconciliation.\"\n\nMEASURED, tracing\
-  \ the per-point datum through its own producer chain rather than through the rows'\n\
-  prose. The producer exists (exists_isChartDatumPlusFibre_of_mem_range, rooted, sorry-free),\
-  \ and what\nit needs reduces to ONE hypothesis: IsPlusHonest (Pic0ChartPlusFibreProducer.lean:200).\
-  \ Read as a\nstatement, that says: for every affine open U of the test, the class\
-  \ restricted to U lies in the\nRANGE of relPicToPicEt -- i.e. Zariski-locally the\
-  \ class comes from the UN-sheafified relPic.\n\nThat is the etale-sheafification\
-  \ gap, structurally:\n * picEt is built on PicEtAff (PicEt.lean:9-21), and PicEtAff\
-  \ C A (PicEtAff.lean:218) is a QUOTIENT\n   OVER ALL ETALE COVERS -- elements are\
-  \ PicEtAff.mk E x;\n * PicEtAff.unit (:377), the target of relPicToPicEt (PicEtUnit.lean:126),\
-  \ is mk at the TRIVIAL\n   cover `.self A` alone.\nSo honesty asserts that no nontrivial\
-  \ etale cover is needed on that piece -- precisely what the\none-step plus construction\
-  \ exists to permit to FAIL. The tree's only honesty mechanism agrees:\nPic0ChartHonest.lean's\
-  \ own \"does not give\" says honesty holds over Spec E.Carrier and NOT over\nSpec\
-  \ A, bought by CHANGING THE BASE, with \"Nothing here performs that descent\".\n\
-  \nWHY THE CHART SIDE IS UNAFFECTED, which is what makes this a real distinction\
-  \ rather than a blanket\npessimism: chartValue = abelDiv * sigmaFamily * (thetaFamily^m)^{-1}\
-  \ (DivSchemeAbel.lean:351, read\nfrom the definition), and honesty is discharged\
-  \ for each factor and closed under the group\noperations. Coverage is different\
-  \ because chartsCoverLocally_of_pointwise\n(Pic0ChartCoveragePointwise.lean:128)\
-  \ quantifies over EVERY s : (pic0SigmaSheaf C).1.obj (op T);\narbitrariness is the\
-  \ content of coverage, and narrowing s to chart-value shape makes it circular.\n\
-  \nCONSEQUENCE. Antecedent 2 splits into a cheap half and an out-of-reach half, and\
-  \ the rows conflate\nthem: honesty of coverage's own WITNESS is already covered;\
-  \ honesty of the class coverage must HIT\nis the gap. The repair -- refine to the\
+summary: "*** ARITHMETIC CORRECTION 2026-07-29 (review-ajcr, run 0082 s0006). THE ANTECEDENT COUNT ON\
+  \ THIS\nROW WAS THREE-OF-THREE WHERE THE GOAL NEEDS FOUR-OF-FOUR, AND ONE SENTENCE BELOW IS MISLEADING\n\
+  IN THE DIRECTION THAT MATTERS. Audited ajcr-p4's finding (I-0967/I-0977); it is CORRECT. ***\n\nTHE\
+  \ SENTENCE TO FIX IS MINE. Below, this row says the big-site sheaf condition, the 01JJ gluing\nand \"\
+  BOTH finiteness certificates -- which are DERIVED from chart-level hypotheses, not assumed\"\nare done\
+  \ and kernel-checked. Read against the statements that is wrong in effect: they are derived\nfrom chart-level\
+  \ hypotheses THAT NOTHING IN THE TREE PRODUCED, which is not the same as derived.\nlocallyOfFiniteType_gluedHom\
+  \ (JacobianDataCharts.lean:154) TAKES\nhlft : forall i, LocallyOfFiniteType (chartHom C f i); it was,\
+  \ until 67c8d24d5, the only Picard/\ndeclaration concluding LocallyOfFiniteType at a chart, so the certificate\
+  \ was an assumption on\nevery route. PicRepDatum.lft (PicRepDatum.lean:100) is a structure FIELD --\
+  \ also an assumption --\nand toJacobianData (JacobianDataFromPicRepDatum.lean:87) only carries it across.\
+  \ So a lane that\ndischarged all THREE tracked antecedents would NOT have produced a JacobianData C,\
+  \ which is what\nChallenge.lean's frozen Jacobian := (jacobianData C).J actually needs.\n\nNOW DISCHARGED,\
+  \ AND IT IS A REAL DISCHARGE RATHER THAN A RELOCATION -- the part I checked hardest,\nbecause \"reduces\
+  \ to X\" usually just moves the bill. Pic0AtlasFiniteType.lean (ajcr-p4) proves\nlocallyOfFiniteType_chartHom_mixedParamChart:\
+  \ at the REAL atlas the certificate follows from\nhD : forall i, LocallyOfFiniteType (D i).hom alone.\
+  \ And hD is FREE at the carrier the\ndivisor-representability lane returns: PROBED, imports current,\
+  \ `lake env lean` EXIT=0 --\nLocallyOfFiniteType (divSchemeOver k A B g r1 r2 b1 b2).hom closes by inferInstance\
+  \ ALONE at\nARBITRARY window data, via the global instance locallyOfFiniteType_divSchemeOverHom\n(DivSchemeQProj.lean:199),\
+  \ and DivOver (DivRepGlobalClassify.lean:113-116, :308) is an instance of\nexactly that shape. So a\
+  \ lane producing rep supplies the fourth antecedent at the same moment at\nzero cost.\n\nWHAT REPLACES\
+  \ THE THREE-ITEM LIST, as the antecedent list of the GOAL:\n 1. hf = IsChartUniv. OPEN (chart-restrict,\
+  \ ajcr-p1).\n 2. Zariski-local surjectivity of Sigma.desc. OPEN (dat-b, ajcr-p2).\n 3. rep i, divisor\
+  \ representability. OPEN (divrep.u2, ajcr-p3).\n 4. hlft, chart finiteness. DISCHARGED at the real atlas,\
+  \ free at the rep carrier.\n 5. quasiCompact. OPEN and GENUINELY A-POSTERIORI, and this is the item\
+  \ to watch now that 4 is\n    gone. PER-CHART compactness is free at the same carrier (compactSpace_divScheme);\
+  \ CompactSpace\n    of the GLUED object is not, and for the class-indexed (infinite) atlas the finite\
+  \ route\n    JacobianData.ofCharts is unavailable, so it must come from the Abel image\n    (JacobianData.ofChartsOfAbelImage).\
+  \ Do not let the freeness of the per-chart form be quoted\n    for the glued form -- that conflation\
+  \ is exactly what this correction is about.\n\nTHE VERDICT IS UNCHANGED: none of the three OPEN antecedents\
+  \ closes this week (I-0873). Item 4\nwas never on the list, so removing it does not shorten the critical\
+  \ path; what it does is make\nthe remaining list the true one. One caveat on the discharging file itself:\n\
+  Pic0AtlasFiniteType.lean:65 claims \"everything in it other than hf, the local-surjectivity\ninstance\
+  \ and rep is now discharged\", while hcpt is an explicit hypothesis of the same definition\nand the\
+  \ file's own :184-186 and :262-265 call it open. The :262 reading is the correct one.\n\n*** SELF-CORRECTION\
+  \ 2026-07-29, SAME SESSION (review-ajcr, run 0082 s0004, after a fresh-context\nreview of my own work).\
+  \ THE IsPlusHonest FINDING BELOW IS OVERSTATED ON THE STEP THAT CARRIES IT.\nThe route-decision conclusion\
+  \ SURVIVES, for a different and better-evidenced reason. ***\n\nWHAT I GOT WRONG. I argued: relPicToPicEt\
+  \ lands in PicEtAff.unit, unit is mk at the TRIVIAL cover\n`.self A` alone, therefore honesty asserts\
+  \ that no nontrivial etale cover is needed. That step is\nFALSE. PicEtAff.unit_eq_mk (Picard/RelPicCoverInjective.lean:48)\
+  \ proves a unit class is presented on\nEVERY cover E, not only on `.self` -- so \"mk at the trivial\
+  \ cover\" describes one PRESENTATION, not\nthe RANGE, and nothing follows about which classes the range\
+  \ contains.\n\nAND THE ABSOLUTE FORM IS REFUTED BY A LANDED THEOREM IN THIS TREE:\nPicEtAff.unit_surjective_of_section\
+  \ (Picard/EffectivityClose.lean:141) proves the unit SURJECTIVE\nover a field test K admitting a curve\
+  \ point sigma, upgraded to a MulEquiv by\nPicEtAff.unitEquiv_of_section (:186). Over such tests honesty\
+  \ is DISCHARGED OUTRIGHT -- vacuously\ntrue, no etale cover needed anywhere. So \"IsPlusHonest is the\
+  \ sheafification gap asserted of an\narbitrary section\" is wrong as an absolute.\n\nTHE CORRECTED CLAIM,\
+  \ which is narrower and better supported. The gap is at a GENERAL AFFINE BASE\nWITH NO SECTION, and\
+  \ the tree documents exactly why:\n * the field route closes only through etale-cover cofinality in\
+  \ finite separable field extensions\n   (Algebra.EtaleCover.exists_finiteSeparableField_algHom, EtaleCover.lean:287)\
+  \ -- there is NO\n   general-base analogue of that cofinality;\n * EffectivityMoving.lean:41-48 states\
+  \ plainly that for a merely quasi-finite (non-finite) etale\n   cover the moving statement is FALSE,\
+  \ with a counterexample sketch (B = A_u x A_v over a\n   2-dimensional normal local A with nontrivial\
+  \ local class group). So the [Module.Finite A B]\n   hypothesis in the effectivity layer is load-bearing,\
+  \ not convenience.\n\nSO THE OBSTRUCTION IS BASE-SHAPE, NOT ARBITRARINESS OF THE CLASS. Two consequences:\n\
+  \ 1. the split to hand a prover lane is NOT \"chart value (cheap) vs arbitrary section (blocked)\" but\n\
+  \    \"field test with a section (FREE) vs general sectionless affine base (OPEN)\". The delta between\n\
+  \    the chart side and the coverage side is NARROWER than I priced it;\n 2. antecedent 2 still owes\
+  \ a route decision -- which site coverage is local for -- because the\n    repair still refines covers\
+  \ and descends, and Zariski-local surjectivity still will not absorb\n    that. The conclusion stands;\
+  \ cite the module-finiteness counterexample, NOT the trivial-cover\n    claim, when repeating it.\n\n\
+  Also corrected, same review: I called DivisorFamilyAffThetaTyping.lean UNROOTED. It is ROOTED --\nAlgebraicJacobian.lean:346\
+  \ imports it at HEAD (commit 2b8cef366) and its .olean exists, so it IS\nkernel-checked. Another lane\
+  \ rooted it while I was auditing it and I did not re-run the grep before\npublishing. I-0941's step\
+  \ (i) is therefore already done; its step (ii) stands.\n\n--- the original finding follows; read its\
+  \ trivial-cover reasoning as retracted ---\n\n*** RANKING AMENDMENT, second reviewer pass 2026-07-29\
+  \ (run 0082 session 0004, review-ajcr).\nANTECEDENT 2 IS NOT A GEOMETRY BILL, IT IS A SITE DECISION\
+  \ -- so the #2 slot below is\nMIS-JUSTIFIED even though its position may be right. Issue I-0920. ***\n\
+  \nThe costing below is otherwise intact and should be read as it stands. This amendment changes ONE\n\
+  thing: the reason antecedent 2 (dat-b B-5/B-6, local surjectivity) is expensive.\n\nBELOW IT SAYS: \"\
+  It carries the content, and its packaging is complete ... What it owes is geometry:\nthe per-point datum,\
+  \ plus the chart-parameter/threshold reconciliation.\"\n\nMEASURED, tracing the per-point datum through\
+  \ its own producer chain rather than through the rows'\nprose. The producer exists (exists_isChartDatumPlusFibre_of_mem_range,\
+  \ rooted, sorry-free), and what\nit needs reduces to ONE hypothesis: IsPlusHonest (Pic0ChartPlusFibreProducer.lean:200).\
+  \ Read as a\nstatement, that says: for every affine open U of the test, the class restricted to U lies\
+  \ in the\nRANGE of relPicToPicEt -- i.e. Zariski-locally the class comes from the UN-sheafified relPic.\n\
+  \nThat is the etale-sheafification gap, structurally:\n * picEt is built on PicEtAff (PicEt.lean:9-21),\
+  \ and PicEtAff C A (PicEtAff.lean:218) is a QUOTIENT\n   OVER ALL ETALE COVERS -- elements are PicEtAff.mk\
+  \ E x;\n * PicEtAff.unit (:377), the target of relPicToPicEt (PicEtUnit.lean:126), is mk at the TRIVIAL\n\
+  \   cover `.self A` alone.\nSo honesty asserts that no nontrivial etale cover is needed on that piece\
+  \ -- precisely what the\none-step plus construction exists to permit to FAIL. The tree's only honesty\
+  \ mechanism agrees:\nPic0ChartHonest.lean's own \"does not give\" says honesty holds over Spec E.Carrier\
+  \ and NOT over\nSpec A, bought by CHANGING THE BASE, with \"Nothing here performs that descent\".\n\n\
+  WHY THE CHART SIDE IS UNAFFECTED, which is what makes this a real distinction rather than a blanket\n\
+  pessimism: chartValue = abelDiv * sigmaFamily * (thetaFamily^m)^{-1} (DivSchemeAbel.lean:351, read\n\
+  from the definition), and honesty is discharged for each factor and closed under the group\noperations.\
+  \ Coverage is different because chartsCoverLocally_of_pointwise\n(Pic0ChartCoveragePointwise.lean:128)\
+  \ quantifies over EVERY s : (pic0SigmaSheaf C).1.obj (op T);\narbitrariness is the content of coverage,\
+  \ and narrowing s to chart-value shape makes it circular.\n\nCONSEQUENCE. Antecedent 2 splits into a\
+  \ cheap half and an out-of-reach half, and the rows conflate\nthem: honesty of coverage's own WITNESS\
+  \ is already covered; honesty of the class coverage must HIT\nis the gap. The repair -- refine to the\
   \ etale carrier, then descend -- changes the site from Zariski\nto etale, and pic0RepresentableByOfCharts'\
-  \ antecedent is Zariski-local surjectivity. No leaf settles\nthat. It is a route\
-  \ question for the human/reviewer layer, and it is the third antecedent-level\n\
-  obstruction found on this seam after the unrestricted-certificate fork (antecedent\
-  \ 1) and U2.\n\nNOT A REFUTATION. Proving IsPlusHonest false for an arbitrary class\
-  \ needs a class not\nZariski-locally in relPic's image; this tree has no Brauer\
-  \ or nontrivial-etale-class machinery to\nbuild one, and I did not build it. The\
-  \ claim is the weaker sufficient one: it is not a lemma about\nthe tree's own constructions,\
-  \ and a lane sent at it will not find a proof.\n\nTHE VERDICT BELOW (\"none of the\
-  \ three antecedents closes this week\") is unchanged and, if anything,\nbetter supported:\
-  \ the antecedent that looked closest to being a bounded geometry bill is the one\n\
-  that turns out to need a decision above the leaf layer.\n\n--- the first reviewer\
-  \ pass's costing follows, accurate except as amended above ---\n\n*** THE COSTING,\
-  \ RE-RANKED 2026-07-29 (run 0082, review-ajcr). THE THREE ANTECEDENTS ARE NOT THREE\n\
-  INDEPENDENT PRICES, AND NONE OF THEM CLOSES THIS WEEK. Read this before picking\
-  \ a leaf. ***\n\nWHAT IS GENUINELY SOUND, and it is worth stating first because\
-  \ it is unusual: pic0RepresentableByOfCharts\n(Picard/Pic0SigmaSheaf.lean:161) and\
-  \ mixedParamRepresentableBy (Pic0ChartAtlasParamFree.lean:125) are\nsorry-free,\
-  \ rooted, and honest. Given the three antecedents they WOULD produce a representing\
-  \ scheme.\nThe machine is correct. Nothing feeds it.\n\nTHE THREE ANTECEDENTS DO\
-  \ NOT COMPOSE AS THE ROWS IMPLY. Measured, `lake env lean` EXIT=0 (probes in\nrun\
-  \ 0082 session dir /probes):\n (1) `hf` = IsChartUniv (Pic0ChartPair.lean:173) is\
-  \ stated at a FREE `V : D.left.Opens`. At ι = PEmpty\n     the whole seam call elaborates\
-  \ with `hf := fun i => PEmpty.elim i` -- no charts, no rep, no\n     IsChartUniv.\
-  \ At V = bottom, injectivity is free (no nonempty test has a point of the empty\
-  \ open).\n     So `hf` at an arbitrary V carries NO CONTENT.\n     QUALIFIED by\
-  \ ajcr-p1 (I-0890), correctly: 'free at V = bottom' is true of the INJECTIVITY clause\n\
-  \     and of exists_factor, and FALSE of the fibre DATUM -- its sq field at an empty\
-  \ test needs\n     Subsingleton (pic0Subgroup C ..) over an empty base, which is\
-  \ true, separate, and absent from the\n     tree. So the degenerate value shows\
-  \ a clause is cheap without exhibiting an inhabitant: CHEAP and\n     SATISFIABLE\
-  \ come apart, and several rows on this leaf have been priced by exactly that\n \
-  \    conflation. The ι = PEmpty conclusion below is unaffected -- it never used\
-  \ V = bottom.\n (2) The seam is nonetheless NOT vacuous: at ι = PEmpty the sup sieve\
-  \ is BOTTOM, and the bottom sieve\n     is Zariski-covering only for an EMPTY test.\
-  \ So ALL the content forcing the atlas to be an atlas\n     sits in the LOCAL-SURJECTIVITY\
-  \ instance -- antecedent 2, not antecedent 1.\n (3) THE UNPRICED OBLIGATION, which\
-  \ no row owned before this pass: coverage\n     (chartsCoverLocally_of_pointwise,\
-  \ Pic0ChartCoveragePointwise.lean:128) must produce\n     `x : (W : Scheme) ⟶ X\
-  \ i`, i.e. INTO `(V i : Scheme)`. So coverage must hit the SAME V at which\n   \
-  \  `hf` was certified. chartLocus is an open of the TEST; V is an open of the DIVISOR\
-  \ SCHEME. Zero\n     files in the tree mention both IsChartUniv and ChartsCoverLocally.\
-  \ Now owned by\n     AJCR.w4-rep.datum.chart-restrict (ajcr-p1, I-0869/I-0872).\n\
-  \nWORSE, AND INDEPENDENTLY CONFIRMED WITH ajcr-p1: the only non-circular producer\
-  \ of `hf`,\nisChartUniv_of_isChartLocusFibre (Pic0ChartUnivReduce.lean:170), goes\
-  \ THROUGH the unrestricted\ncertificate -- its body is `isOpenImmersion_presheaf_of_chartFibrePresented`\
-  \ with the restriction\napplied afterwards. So IsChartLocusFibre implies IsOpenImmersion.presheaf\
-  \ of the UNRESTRICTED Abel\nchart, which three headers call false (|D| is not a\
-  \ point). QUALIFICATION I add: that falsity is a\nHEADER CLAIM, unproved -- isEmpty_forall_chartFibrePresented_of_not_injective\n\
-  (Pic0ChartOpenImmersionCriterion.lean:219) takes non-injectivity as a HYPOTHESIS\
-  \ and is never\ninstantiated. So the tree holds a reduction and its conditional\
-  \ refutation and has connected neither.\n\nTHE RANKING, corrected. Not by ease --\
-  \ by what a discharge would actually buy:\n 1. chart-restrict (the V-coupling +\
-  \ a fibre criterion at the RESTRICTED chart). Held by ajcr-p1.\n    Without it antecedents\
-  \ 1 and 2 cannot be composed at all, so it outranks both.\n 2. Antecedent 2, local\
-  \ surjectivity (dat-b B-5/B-6). It carries the content, and its packaging is\n \
-  \   complete: isLocallySurjective_sigmaDesc_of_pointwise takes B-5 to the instance\
-  \ in ONE step, with\n    a converse, so the pointwise form is not a strengthening\
-  \ chosen to be provable. What it owes is\n    geometry: the per-point datum, plus\
-  \ the chart-parameter/threshold reconciliation.\n 3. Antecedent 1, `hf`. Real but\
-  \ currently unreachable except through the unrestricted statement.\n 4. Antecedent\
-  \ 3, `rep i` (divrep/u2). Multi-round: U2 is refuted on the widened route\n    (isEmpty_chartTyping_of_straddling),\
-  \ and the live question is a chart-free eps-value.\n\nRE-PRICED LEAVES, both directions,\
-  \ all verified by reading the Lean rather than the prose:\n * OVER-PRICED (I-0870):\
-  \ dat-b, chart-u and c9b all say the per-affine-piece datum has NO PRODUCER.\n \
-  \  It has one -- exists_isChartDatumPlusFibre_of_mem_range (Pic0ChartPlusFibreProducer.lean:178),\n\
-  \   rooted and sorry-free, with chartLocusOpensOfIsPlusHonest (:334) giving c9b\
-  \ clause (i) as DATA and\n   haff DISCHARGED. Residue is IsPlusHonest at the coverage\
-  \ class, which is narrower.\n * MIS-ROUTED (I-0862): the rejection cluster's forwarding\
-  \ address, twist-atlas, is the GL_2(k) route\n   protection I-0492 FORBIDS (twistedP1Map\
-  \ = pi >> P1.autOfMatrix). Now rejected. The four rejections\n   themselves are\
-  \ each CORRECT, and three of them are ONE fact -- pieces confined to a fixed chart\n\
-  \   pair -- which R2 already removed.\n * dat-glue: unchanged and correctly deferred;\
-  \ it consumes the above.\n\nVERDICT TO THE HUMAN (also sent --to human): none of\
-  \ the three antecedents closes this week. The\nreachable wins this round are the\
-  \ coupling statement and the re-pricings, not a discharge.\n\nBUILD REACHABILITY\
-  \ IS FIXED, and the paragraph near the end of this row saying otherwise is STALE:\n\
-  93/620 unrooted is now 18/756, the entire DD-R tail is rooted, and the 18 remaining\
-  \ are essentially\nthe old triage's own DELETE list plus Pic0ThetaCocycle. See AJCR.w4-rep.build-reach.\
-  \ Exactly 17 code\nsorries project-wide: Challenge.lean 15 (the statement-only north\
-  \ star) and Pic0ThetaCocycle 2\n(unrooted). A naive sorry count reads AJCR as nearly\
-  \ done; it is not, and the sorries are not the\nmeasure -- the undischarged antecedents\
-  \ are.\n\n--- the round-5 body follows, still accurate except where marked stale\
-  \ above ---\n\nTHE CRITICAL PATH TO Challenge.lean:99.  Re-framed round 4 as one\
-  \ ordered chain; REFRAMED AGAIN\nround 5, because the round-4 framing put the gate\
-  \ in the wrong place.  READ\ninformal/w4-rep-critical-path.md SECTION 7 FIRST --\
-  \ it carries the per-link evidence.\n\nTARGET.  AlgebraicGeometry.Jacobian (Challenge.lean:96-99,\
-  \ a bare sorry).  archon-protected.yaml\nFREEZES the signature, so a hypothesis-carrying\
-  \ restatement is forbidden -- in particular a\nrepresentability theorem valid only\
-  \ over infinite fields is NOT a discharge.  The sanctioned\ndischarge is Jacobian\
-  \ C := (jacobianData C).J.\n\nWHAT THE TARGET REDUCES TO TODAY, exactly.  Round\
-  \ 5 landed JacobianData.ofCharts\n(Picard/JacobianDataCharts.lean:182) and JacobianData.ofChartsOfCompactSpace\
-  \ -- the first producers\nof JacobianData, which had ZERO before (all ~25 occurrences\
-  \ in the tree were consumers taking it as\na section variable).  Composing with\
-  \ the frozen discharge, the target is now exactly\n\n    A ZARISKI ATLAS OF pic0SigmaFunctor\
-  \ C: schemes X i and maps\n    f i : yoneda.obj (X i) -> pic0SigmaFunctor C such\
-  \ that\n      (L7) each f i is a relatively representable open immersion   [roadmap\
-  \ dat-c C9b]\n      (L8) Sigma.desc f is Zariski-locally surjective            \
-  \  [roadmap dat-b B-6]\n      (L*) each chart is quasi-compact with locally-of-finite-type\
-  \ structure morphism.\n\nEverything else above the atlas is DONE and kernel-checked:\
-  \ the big-site sheaf condition, mathlib's\n01JJ gluing (pic0RepresentableByOfCharts,\
-  \ Pic0SigmaSheaf.lean:161), the Sigma-descent, and BOTH\nfiniteness certificates\
-  \ -- which are DERIVED from chart-level hypotheses, not assumed\n(locallyOfFiniteType_gluedHom\
-  \ :154 via IsZariskiLocalAtSource.of_openCover;\nquasiCompact_gluedHom :164 via\
-  \ HasAffineProperty.iff_of_isAffine).  A hypothesis scare was checked\nand closed:\
-  \ Pic0SigmaSheaf.lean:79's [GeometricallyReduced C.hom] is redundant, supplied by\n\
-  Curve/GeometricallyReduced.lean:130/:140 from smoothness (record: JacobianDataCharts.lean:210).\n\
-  \nWHERE THE GATE ACTUALLY BITES -- THE ROUND-5 CORRECTION, and it changes what everyone\
-  \ should work\non.  Inbox I-0365.  The old framing (\"the divrep tail is independent\
-  \ of the certificate; the\ncertificate gates U2\") is FALSE, but not in the direction\
-  \ the tree assumed.  DivFamZar is BY\nDEFINITION a quotient of LOCALLY CERTIFIED\
-  \ families (DivisorFamilyZar.lean:224,:235), so\ncertificates are FREE on the consuming\
-  \ side -- DivFamZar.exists_certChartCover\n(DivRepClassifyZarKit.lean:433) is a\
-  \ landed theorem, unfolded by every classifier keystone\n(DivRepClassifyZar.lean:128/:176/:230,\
-  \ DivRepClassifyZarSep.lean:361/:363), and IsDivRepClassify\n(:90) quantifies over\
-  \ certified families as a HYPOTHESIS.  The bite is on the other side: the no-go\n\
-  (DivSchemeCertZarC1.lean:30-31,:131) says DivFamZar is BLIND to connected divisors\
-  \ meeting both\npinned fibres, so divFunctor C pi g is a PROPER SUBFUNCTOR of degree-g\
-  \ relative divisors.\nRepresenting it is not the problem -- the L9-L13 tail does\
-  \ that honestly.  The problem is that a\ntoo-small divisor functor CANNOT COVER\
-  \ Pic^0: the Abel map out of it is not locally surjective,\nbecause the classes\
-  \ whose only witnesses are the invisible divisors are never hit.  THE GATE IS L8.\n\
-  Judge every proposed repair by whether it widens DivFamZar enough for L8, not by\
-  \ whether it makes a\ncertificate easier to prove.  U2 and the affine package are\
-  \ TAIL work, and they are nearly finished.\n\nSETTLED; DO NOT RE-LITIGATE.  (a)\
-  \ No repair that keeps the pieces inside the preimages of a FIXED\nPAIR of points\
-  \ of P^1 can work: refining the cover, shrinking the base, a cleverer submodule\
-  \ L,\nre-spelling the equations, the joint-covering relaxation (leaf joint-cover,\
-  \ rejected), and re-basing\non the Zariski-local certificate are all provably useless.\
-  \  (b) The no-go is ON-STRATUM: a witness\nexists for every genus >= 2 (spec-dd-r\
-  \ ADDENDUM 4; re-derived independently round 5, critical-path\nsection 7.3; an explicit\
-  \ rational example is y^2 = x^5 - x + 1 with pi = [y-1 : y+1] of degree 5).\nThe\
-  \ round-4 instruction on this row to \"settle that before costing p1-aut or R2\"\
-  \ is STRUCK -- it was\nalready settled the same round, by this row's own child field-size.\
-  \  (c) DO NOT formalise the\nwitness: it needs Sym^g C / Hilb^g, which mathlib lacks\
-  \ and this tree has never built (ADDENDUM 4\nsection 4.5).\n\nTHE ONE LIVE DECISION:\
-  \ R1 VERSUS R2, and it must be made with the descent half COSTED.\n * R1 (p1-aut\
-  \ -> fibre-avoid -> cert-relocalize): quantify the certificate over a twist\n  \
-  \ gamma in Aut(P^1_k).  PROVED CORRECT IFF |P^1(k)| >= g + 2 -- every infinite field,\
-  \ and F_q for\n   q >= g + 1.  Since the target is stated over an ARBITRARY field,\
-  \ R1 CANNOT DISCHARGE THE\n   CHALLENGE ALONE; it needs the descent lane dat-g behind\
-  \ it.  Note what descent is required:\n   the sibling's ZariskiDescentRepresentability.lean\
-  \ is ZARISKI descent and does NOT cross a field\n   extension; what is needed is\
-  \ Galois/fppf descent, for which the sibling's GaloisDescent/\n   (semilinear algebras\
-  \ and modules, sorry-free, built) is the substrate.\n * R2 (generalise FinCoverData's\
-  \ piece type to arbitrary affine opens of the relative curve):\n   field-uniform,\
-  \ and justified in one line -- supp D is finite over R, hence contained in a single\n\
-  \   affine open (Stacks 0B8B), so a cover with one straddling piece always exists.\
-  \  Blast radius\n   measured: FinCoverData is named in 28 files.\nThe honest comparison\
-  \ is R1 + a Galois-descent campaign against R2 + a 28-file refactor.  The\np1-aut\
-  \ leaf says \"do not attempt both\".\n\nTRUST, MEASURED THIS ROUND.  622 modules\
-  \ on disk, 529 reachable from AlgebraicJacobian.lean, 93\nUNROOTED and therefore\
-  \ never kernel-checked (lakefile.toml has no globs and defaultTargets is the\nroot,\
-  \ so unrooted really does mean unverified).  CORRECTION to the round-4 census: Picard/DivRepKit.lean\n\
-  is NO LONGER unrooted -- Picard/DivRepGlobalLift.lean imports it and the root imports\
-  \ that -- so L9,\nthe divisor-representability endpoint, is kernel-checked.  Picard/DivRepAffKitZar.lean,\
-  \ which round-4\nnotes cite as already performing the u2 interface weakening, NO\
-  \ LONGER EXISTS (removed in 1e4ac5b52).\nThe count of sorries is not the measure\
-  \ of what is verified.  Row AJCR.w4-rep.build-reach owns this.\n\nNO SHORTCUT NEXT\
-  \ DOOR, WITH ONE EXCEPTION WORTH CHECKING.  The sibling MainProjects/Algebraic-Jacobian-Challenge\n\
-  does NOT have representability: its Picard.FGAPicRepresentability.instHasPicScheme\
-  \ (:313-317) is an\nexplicit <sorry> instance.  But it does hold one large verified\
-  \ asset the Rebuild has never looked\nat -- GrassmannianQuot.lean:5607 declares\
-  \ an UNCONDITIONAL (functor d r).RepresentableBy (scheme d r)\nin a 5631-line sorry-free\
-  \ file, and both projects share the same toolchain and the same mathlib.\nAlso portable:\
-  \ GaloisDescent/, GlueDescent.lean, ZariskiDescentRepresentability.lean (1372 L).\n\
-  \nTOOLING WARNINGS, unchanged.  (a) Do not steer this subtree from `graph frontier`:\
-  \ its top items are\n\\lean{} name-drift artifacts and the Rebuild cannot be graph-synced\
-  \ (I-0318).  (b) MODULE DOCSTRINGS\nIN THIS TREE ANNOUNCE THEOREMS THE FILES DO\
-  \ NOT DECLARE (I-0349), and roadmap rows have asserted the\nABSENCE of declarations\
-  \ that exist.  Verify both directions with `horizon search` before briefing\nanyone\
-  \ -- and check the ledger for files swept in by an `integrate` commit, which is\
-  \ how round 4's\nown chain document came to call a landed file \"MISSING, never\
-  \ attempted\"."
+  \ antecedent is Zariski-local surjectivity. No leaf settles\nthat. It is a route question for the human/reviewer\
+  \ layer, and it is the third antecedent-level\nobstruction found on this seam after the unrestricted-certificate\
+  \ fork (antecedent 1) and U2.\n\nNOT A REFUTATION. Proving IsPlusHonest false for an arbitrary class\
+  \ needs a class not\nZariski-locally in relPic's image; this tree has no Brauer or nontrivial-etale-class\
+  \ machinery to\nbuild one, and I did not build it. The claim is the weaker sufficient one: it is not\
+  \ a lemma about\nthe tree's own constructions, and a lane sent at it will not find a proof.\n\nTHE VERDICT\
+  \ BELOW (\"none of the three antecedents closes this week\") is unchanged and, if anything,\nbetter\
+  \ supported: the antecedent that looked closest to being a bounded geometry bill is the one\nthat turns\
+  \ out to need a decision above the leaf layer.\n\n--- the first reviewer pass's costing follows, accurate\
+  \ except as amended above ---\n\n*** THE COSTING, RE-RANKED 2026-07-29 (run 0082, review-ajcr). THE\
+  \ THREE ANTECEDENTS ARE NOT THREE\nINDEPENDENT PRICES, AND NONE OF THEM CLOSES THIS WEEK. Read this\
+  \ before picking a leaf. ***\n\nWHAT IS GENUINELY SOUND, and it is worth stating first because it is\
+  \ unusual: pic0RepresentableByOfCharts\n(Picard/Pic0SigmaSheaf.lean:161) and mixedParamRepresentableBy\
+  \ (Pic0ChartAtlasParamFree.lean:125) are\nsorry-free, rooted, and honest. Given the three antecedents\
+  \ they WOULD produce a representing scheme.\nThe machine is correct. Nothing feeds it.\n\nTHE THREE\
+  \ ANTECEDENTS DO NOT COMPOSE AS THE ROWS IMPLY. Measured, `lake env lean` EXIT=0 (probes in\nrun 0082\
+  \ session dir /probes):\n (1) `hf` = IsChartUniv (Pic0ChartPair.lean:173) is stated at a FREE `V : D.left.Opens`.\
+  \ At ι = PEmpty\n     the whole seam call elaborates with `hf := fun i => PEmpty.elim i` -- no charts,\
+  \ no rep, no\n     IsChartUniv. At V = bottom, injectivity is free (no nonempty test has a point of\
+  \ the empty open).\n     So `hf` at an arbitrary V carries NO CONTENT.\n     QUALIFIED by ajcr-p1 (I-0890),\
+  \ correctly: 'free at V = bottom' is true of the INJECTIVITY clause\n     and of exists_factor, and\
+  \ FALSE of the fibre DATUM -- its sq field at an empty test needs\n     Subsingleton (pic0Subgroup C\
+  \ ..) over an empty base, which is true, separate, and absent from the\n     tree. So the degenerate\
+  \ value shows a clause is cheap without exhibiting an inhabitant: CHEAP and\n     SATISFIABLE come apart,\
+  \ and several rows on this leaf have been priced by exactly that\n     conflation. The ι = PEmpty conclusion\
+  \ below is unaffected -- it never used V = bottom.\n (2) The seam is nonetheless NOT vacuous: at ι =\
+  \ PEmpty the sup sieve is BOTTOM, and the bottom sieve\n     is Zariski-covering only for an EMPTY test.\
+  \ So ALL the content forcing the atlas to be an atlas\n     sits in the LOCAL-SURJECTIVITY instance\
+  \ -- antecedent 2, not antecedent 1.\n (3) THE UNPRICED OBLIGATION, which no row owned before this pass:\
+  \ coverage\n     (chartsCoverLocally_of_pointwise, Pic0ChartCoveragePointwise.lean:128) must produce\n\
+  \     `x : (W : Scheme) ⟶ X i`, i.e. INTO `(V i : Scheme)`. So coverage must hit the SAME V at which\n\
+  \     `hf` was certified. chartLocus is an open of the TEST; V is an open of the DIVISOR SCHEME. Zero\n\
+  \     files in the tree mention both IsChartUniv and ChartsCoverLocally. Now owned by\n     AJCR.w4-rep.datum.chart-restrict\
+  \ (ajcr-p1, I-0869/I-0872).\n\nWORSE, AND INDEPENDENTLY CONFIRMED WITH ajcr-p1: the only non-circular\
+  \ producer of `hf`,\nisChartUniv_of_isChartLocusFibre (Pic0ChartUnivReduce.lean:170), goes THROUGH the\
+  \ unrestricted\ncertificate -- its body is `isOpenImmersion_presheaf_of_chartFibrePresented` with the\
+  \ restriction\napplied afterwards. So IsChartLocusFibre implies IsOpenImmersion.presheaf of the UNRESTRICTED\
+  \ Abel\nchart, which three headers call false (|D| is not a point). QUALIFICATION I add: that falsity\
+  \ is a\nHEADER CLAIM, unproved -- isEmpty_forall_chartFibrePresented_of_not_injective\n(Pic0ChartOpenImmersionCriterion.lean:219)\
+  \ takes non-injectivity as a HYPOTHESIS and is never\ninstantiated. So the tree holds a reduction and\
+  \ its conditional refutation and has connected neither.\n\nTHE RANKING, corrected. Not by ease -- by\
+  \ what a discharge would actually buy:\n 1. chart-restrict (the V-coupling + a fibre criterion at the\
+  \ RESTRICTED chart). Held by ajcr-p1.\n    Without it antecedents 1 and 2 cannot be composed at all,\
+  \ so it outranks both.\n 2. Antecedent 2, local surjectivity (dat-b B-5/B-6). It carries the content,\
+  \ and its packaging is\n    complete: isLocallySurjective_sigmaDesc_of_pointwise takes B-5 to the instance\
+  \ in ONE step, with\n    a converse, so the pointwise form is not a strengthening chosen to be provable.\
+  \ What it owes is\n    geometry: the per-point datum, plus the chart-parameter/threshold reconciliation.\n\
+  \ 3. Antecedent 1, `hf`. Real but currently unreachable except through the unrestricted statement.\n\
+  \ 4. Antecedent 3, `rep i` (divrep/u2). Multi-round: U2 is refuted on the widened route\n    (isEmpty_chartTyping_of_straddling),\
+  \ and the live question is a chart-free eps-value.\n\nRE-PRICED LEAVES, both directions, all verified\
+  \ by reading the Lean rather than the prose:\n * OVER-PRICED (I-0870): dat-b, chart-u and c9b all say\
+  \ the per-affine-piece datum has NO PRODUCER.\n   It has one -- exists_isChartDatumPlusFibre_of_mem_range\
+  \ (Pic0ChartPlusFibreProducer.lean:178),\n   rooted and sorry-free, with chartLocusOpensOfIsPlusHonest\
+  \ (:334) giving c9b clause (i) as DATA and\n   haff DISCHARGED. Residue is IsPlusHonest at the coverage\
+  \ class, which is narrower.\n * MIS-ROUTED (I-0862): the rejection cluster's forwarding address, twist-atlas,\
+  \ is the GL_2(k) route\n   protection I-0492 FORBIDS (twistedP1Map = pi >> P1.autOfMatrix). Now rejected.\
+  \ The four rejections\n   themselves are each CORRECT, and three of them are ONE fact -- pieces confined\
+  \ to a fixed chart\n   pair -- which R2 already removed.\n * dat-glue: unchanged and correctly deferred;\
+  \ it consumes the above.\n\nVERDICT TO THE HUMAN (also sent --to human): none of the three antecedents\
+  \ closes this week. The\nreachable wins this round are the coupling statement and the re-pricings, not\
+  \ a discharge.\n\nBUILD REACHABILITY IS FIXED, and the paragraph near the end of this row saying otherwise\
+  \ is STALE:\n93/620 unrooted is now 18/756, the entire DD-R tail is rooted, and the 18 remaining are\
+  \ essentially\nthe old triage's own DELETE list plus Pic0ThetaCocycle. See AJCR.w4-rep.build-reach.\
+  \ Exactly 17 code\nsorries project-wide: Challenge.lean 15 (the statement-only north star) and Pic0ThetaCocycle\
+  \ 2\n(unrooted). A naive sorry count reads AJCR as nearly done; it is not, and the sorries are not the\n\
+  measure -- the undischarged antecedents are.\n\n--- the round-5 body follows, still accurate except\
+  \ where marked stale above ---\n\nTHE CRITICAL PATH TO Challenge.lean:99.  Re-framed round 4 as one\
+  \ ordered chain; REFRAMED AGAIN\nround 5, because the round-4 framing put the gate in the wrong place.\
+  \  READ\ninformal/w4-rep-critical-path.md SECTION 7 FIRST -- it carries the per-link evidence.\n\nTARGET.\
+  \  AlgebraicGeometry.Jacobian (Challenge.lean:96-99, a bare sorry).  archon-protected.yaml\nFREEZES\
+  \ the signature, so a hypothesis-carrying restatement is forbidden -- in particular a\nrepresentability\
+  \ theorem valid only over infinite fields is NOT a discharge.  The sanctioned\ndischarge is Jacobian\
+  \ C := (jacobianData C).J.\n\nWHAT THE TARGET REDUCES TO TODAY, exactly.  Round 5 landed JacobianData.ofCharts\n\
+  (Picard/JacobianDataCharts.lean:182) and JacobianData.ofChartsOfCompactSpace -- the first producers\n\
+  of JacobianData, which had ZERO before (all ~25 occurrences in the tree were consumers taking it as\n\
+  a section variable).  Composing with the frozen discharge, the target is now exactly\n\n    A ZARISKI\
+  \ ATLAS OF pic0SigmaFunctor C: schemes X i and maps\n    f i : yoneda.obj (X i) -> pic0SigmaFunctor\
+  \ C such that\n      (L7) each f i is a relatively representable open immersion   [roadmap dat-c C9b]\n\
+  \      (L8) Sigma.desc f is Zariski-locally surjective              [roadmap dat-b B-6]\n      (L*)\
+  \ each chart is quasi-compact with locally-of-finite-type structure morphism.\n\nEverything else above\
+  \ the atlas is DONE and kernel-checked: the big-site sheaf condition, mathlib's\n01JJ gluing (pic0RepresentableByOfCharts,\
+  \ Pic0SigmaSheaf.lean:161), the Sigma-descent, and BOTH\nfiniteness certificates -- which are DERIVED\
+  \ from chart-level hypotheses, not assumed\n(locallyOfFiniteType_gluedHom :154 via IsZariskiLocalAtSource.of_openCover;\n\
+  quasiCompact_gluedHom :164 via HasAffineProperty.iff_of_isAffine).  A hypothesis scare was checked\n\
+  and closed: Pic0SigmaSheaf.lean:79's [GeometricallyReduced C.hom] is redundant, supplied by\nCurve/GeometricallyReduced.lean:130/:140\
+  \ from smoothness (record: JacobianDataCharts.lean:210).\n\nWHERE THE GATE ACTUALLY BITES -- THE ROUND-5\
+  \ CORRECTION, and it changes what everyone should work\non.  Inbox I-0365.  The old framing (\"the divrep\
+  \ tail is independent of the certificate; the\ncertificate gates U2\") is FALSE, but not in the direction\
+  \ the tree assumed.  DivFamZar is BY\nDEFINITION a quotient of LOCALLY CERTIFIED families (DivisorFamilyZar.lean:224,:235),\
+  \ so\ncertificates are FREE on the consuming side -- DivFamZar.exists_certChartCover\n(DivRepClassifyZarKit.lean:433)\
+  \ is a landed theorem, unfolded by every classifier keystone\n(DivRepClassifyZar.lean:128/:176/:230,\
+  \ DivRepClassifyZarSep.lean:361/:363), and IsDivRepClassify\n(:90) quantifies over certified families\
+  \ as a HYPOTHESIS.  The bite is on the other side: the no-go\n(DivSchemeCertZarC1.lean:30-31,:131) says\
+  \ DivFamZar is BLIND to connected divisors meeting both\npinned fibres, so divFunctor C pi g is a PROPER\
+  \ SUBFUNCTOR of degree-g relative divisors.\nRepresenting it is not the problem -- the L9-L13 tail does\
+  \ that honestly.  The problem is that a\ntoo-small divisor functor CANNOT COVER Pic^0: the Abel map\
+  \ out of it is not locally surjective,\nbecause the classes whose only witnesses are the invisible divisors\
+  \ are never hit.  THE GATE IS L8.\nJudge every proposed repair by whether it widens DivFamZar enough\
+  \ for L8, not by whether it makes a\ncertificate easier to prove.  U2 and the affine package are TAIL\
+  \ work, and they are nearly finished.\n\nSETTLED; DO NOT RE-LITIGATE.  (a) No repair that keeps the\
+  \ pieces inside the preimages of a FIXED\nPAIR of points of P^1 can work: refining the cover, shrinking\
+  \ the base, a cleverer submodule L,\nre-spelling the equations, the joint-covering relaxation (leaf\
+  \ joint-cover, rejected), and re-basing\non the Zariski-local certificate are all provably useless.\
+  \  (b) The no-go is ON-STRATUM: a witness\nexists for every genus >= 2 (spec-dd-r ADDENDUM 4; re-derived\
+  \ independently round 5, critical-path\nsection 7.3; an explicit rational example is y^2 = x^5 - x +\
+  \ 1 with pi = [y-1 : y+1] of degree 5).\nThe round-4 instruction on this row to \"settle that before\
+  \ costing p1-aut or R2\" is STRUCK -- it was\nalready settled the same round, by this row's own child\
+  \ field-size.  (c) DO NOT formalise the\nwitness: it needs Sym^g C / Hilb^g, which mathlib lacks and\
+  \ this tree has never built (ADDENDUM 4\nsection 4.5).\n\nTHE ONE LIVE DECISION: R1 VERSUS R2, and it\
+  \ must be made with the descent half COSTED.\n * R1 (p1-aut -> fibre-avoid -> cert-relocalize): quantify\
+  \ the certificate over a twist\n   gamma in Aut(P^1_k).  PROVED CORRECT IFF |P^1(k)| >= g + 2 -- every\
+  \ infinite field, and F_q for\n   q >= g + 1.  Since the target is stated over an ARBITRARY field, R1\
+  \ CANNOT DISCHARGE THE\n   CHALLENGE ALONE; it needs the descent lane dat-g behind it.  Note what descent\
+  \ is required:\n   the sibling's ZariskiDescentRepresentability.lean is ZARISKI descent and does NOT\
+  \ cross a field\n   extension; what is needed is Galois/fppf descent, for which the sibling's GaloisDescent/\n\
+  \   (semilinear algebras and modules, sorry-free, built) is the substrate.\n * R2 (generalise FinCoverData's\
+  \ piece type to arbitrary affine opens of the relative curve):\n   field-uniform, and justified in one\
+  \ line -- supp D is finite over R, hence contained in a single\n   affine open (Stacks 0B8B), so a cover\
+  \ with one straddling piece always exists.  Blast radius\n   measured: FinCoverData is named in 28 files.\n\
+  The honest comparison is R1 + a Galois-descent campaign against R2 + a 28-file refactor.  The\np1-aut\
+  \ leaf says \"do not attempt both\".\n\nTRUST, MEASURED THIS ROUND.  622 modules on disk, 529 reachable\
+  \ from AlgebraicJacobian.lean, 93\nUNROOTED and therefore never kernel-checked (lakefile.toml has no\
+  \ globs and defaultTargets is the\nroot, so unrooted really does mean unverified).  CORRECTION to the\
+  \ round-4 census: Picard/DivRepKit.lean\nis NO LONGER unrooted -- Picard/DivRepGlobalLift.lean imports\
+  \ it and the root imports that -- so L9,\nthe divisor-representability endpoint, is kernel-checked.\
+  \  Picard/DivRepAffKitZar.lean, which round-4\nnotes cite as already performing the u2 interface weakening,\
+  \ NO LONGER EXISTS (removed in 1e4ac5b52).\nThe count of sorries is not the measure of what is verified.\
+  \  Row AJCR.w4-rep.build-reach owns this.\n\nNO SHORTCUT NEXT DOOR, WITH ONE EXCEPTION WORTH CHECKING.\
+  \  The sibling MainProjects/Algebraic-Jacobian-Challenge\ndoes NOT have representability: its Picard.FGAPicRepresentability.instHasPicScheme\
+  \ (:313-317) is an\nexplicit <sorry> instance.  But it does hold one large verified asset the Rebuild\
+  \ has never looked\nat -- GrassmannianQuot.lean:5607 declares an UNCONDITIONAL (functor d r).RepresentableBy\
+  \ (scheme d r)\nin a 5631-line sorry-free file, and both projects share the same toolchain and the same\
+  \ mathlib.\nAlso portable: GaloisDescent/, GlueDescent.lean, ZariskiDescentRepresentability.lean (1372\
+  \ L).\n\nTOOLING WARNINGS, unchanged.  (a) Do not steer this subtree from `graph frontier`: its top\
+  \ items are\n\\lean{} name-drift artifacts and the Rebuild cannot be graph-synced (I-0318).  (b) MODULE\
+  \ DOCSTRINGS\nIN THIS TREE ANNOUNCE THEOREMS THE FILES DO NOT DECLARE (I-0349), and roadmap rows have\
+  \ asserted the\nABSENCE of declarations that exist.  Verify both directions with `horizon search` before\
+  \ briefing\nanyone -- and check the ledger for files swept in by an `integrate` commit, which is how\
+  \ round 4's\nown chain document came to call a landed file \"MISSING, never attempted\"."
 status: active
 kind: proof
 priority: normal
