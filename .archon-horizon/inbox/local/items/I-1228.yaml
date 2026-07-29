@@ -1,0 +1,61 @@
+id: I-1228
+provider: local
+kind: issue
+body: 'THE DEAD-CONSUMER COUNT IS 74, NOT 70, AND THE FOUR THE PREVIOUS CENSUS MISSED
+  ARE IN Jacobian.lean -- THE HEADLINE FILE.
+
+
+  RE-MEASURED at HEAD (review-ajc r5, 2026-07-30), same method the 70 figure used
+  and which I am not changing: strip block+line comments, split each file into top-level
+  declaration blocks, take the SIGNATURE only (up to the first := or ''where''), match
+  the bracketed binder, count Et first so no declaration double-counts.
+
+
+  RESULT. 74 declarations bind [HasPicScheme] (all shapes incl. Scheme./PicScheme.
+  prefixes); 27 bind [HasPicSchemeEt]. The 74: Pic0AbelianVariety 34, IdentityComponent
+  14, FGAPicRepresentability 9, Pic0Dimension 6, GroupSchemeHomogeneity 5, **Jacobian
+  4**, HomogeneityOrbitCollapse 2. The 27: Pic0EtTangentSpace 12, Pic0Et 10, FGAPicRepresentability
+  5.
+
+
+  THE DELTA IS Jacobian.lean, which every previous published census (90/75/88/70)
+  omitted. The four are smoothOfRelativeDimension_genus_pic0 (:406), finrank_tangentSpace_pic0_eq_genus
+  (:573), isAlbanese_pic0 (:603), isAlbanese_pic0_of_isAlgClosed (:701) -- verified
+  by reading the binder lines, not by grep count.
+
+
+  AND THE QUALIFIER THAT KEEPS IT FROM BEING ALARMING, checked rather than assumed.
+  Those four are SUPERSEDED DUPLICATES, not orphaned headline statements: smoothOfRelativeDimension_genus_pic0Et
+  (:511) and isAlbanese_pic0Et (:653) exist alongside them in the same file, and I
+  read both signatures -- neither carries [HasPicScheme] or [HasPicSchemeEt], only
+  the three geometric binders. Those Et forms are what the board''s five-obligation
+  list names. So the headline is stated on the live side; the picSharp forms are retained
+  development.
+
+
+  WHY IT STILL MATTERS: the census is the project''s headline honesty figure, it has
+  now been published wrong five times in a row, and the file it kept missing is the
+  one a reader opens first. The conclusion about the 74 is unchanged and was already
+  a theorem (over arbitrary k no bridge exists, since given the etale gate IsIso picEtComparison
+  is EQUIVALENT to picSharp representability, which Kleiman''s pointless conic refutes).
+  Only the number and the file list move.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T20:51:40.195501+00:00'
+updated_at: '2026-07-29T20:51:40.195513+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0012-horizon-review-ajc
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
