@@ -29,22 +29,57 @@ fibre dimension.  Steps 2 through 6, the entire semilinear transport
                            ≅  ker d_t       ≅  Γ(X_t, M_t)
 ```
 
-are **unconditional**.  So the comparison between the *fibre dimension of the
-base section module* and `fiberH0` needs only `hbc`, and this file states it
-that way:
+consume **neither `hfin` nor `hproj`** — verified by a fresh-context review,
+which reproduced the original from this theorem by adding only
+`Module.rankAtStalk_eq`.  So this file states the comparison with those two
+hypotheses removed:
 
-* `fiberRank_gammaTop_eq_fiberH0` — no `hfin`, no `hproj`.
+* `fiberRank_gammaTop_eq_fiberH0` — no `hfin`, no `hproj`, only `hbc`.
 
-## Why this is the statement B5 wants
+**But dropping `hfin` has a cost, and it must be stated here rather than
+discovered later.**  The original's docstring
+(`Picard/RigidPushforwardRank.lean`:138-145) closes a junk-value hazard:
+`Module.finrank` returns `0` in the infinite-dimensional case, on *both* sides,
+so the identity could hold vacuously as `0 = 0`.  Its argument that this cannot
+happen runs entirely through `hfin` (`ker d` finite ⟹ `κ(t) ⊗ ker d` is
+finite-dimensional ⟹ steps 3-6 carry that to `Γ(X_t, M_t)`).  `hbc` does **not**
+replace it: taking `d = 0 : M₀ →ₗ[A] PUnit` makes `hbc` hold for every `B`
+(trivially surjective) with `ker d = M₀` arbitrary, so an infinite-dimensional
+`ker d` is compatible with `hbc` and both sides then read `0`.
+
+So the theorem below is honest but weaker than the original in a way the
+hypothesis list alone does not show: **it is informative only where `ker d` is
+finite-dimensional over `κ(t)`**, and it does not certify that itself.  A
+consumer wanting a non-vacuous reading must supply finite-dimensionality
+separately — which is *not* the same as supplying `hfin` (`Module.Finite` over
+the base), and is the reason the statement is still worth having.
+
+## What this buys for B5, and the obligation it does NOT remove
 
 `Scheme.HasH0Semicontinuity` (`Picard/SemicontinuityH0.lean`) asks for openness
-of `{t | q.fiberH0 L t ≤ n}`.  Semicontinuity is only informative where the
-fibre dimension *jumps*, and `hproj` forces it to be locally constant
-(`Module.isLocallyConstant_rankAtStalk`) — so the `sectionsRankAtStalk` form
-cannot be an input to it.  The `Ideal.fiberRank` form here has no such effect:
-it is the fibre dimension of an arbitrary module on the base, which is exactly
-what `Scheme.Modules.isOpen_pointRank_le`
-(`Picard/PointRankSemicontinuity.lean`) proves is upper semicontinuous.
+of `{t | q.fiberH0 L t ≤ n}`.  The `sectionsRankAtStalk` form cannot be an input
+to it: semicontinuity is only informative where the fibre dimension *jumps*, and
+`hproj` forces it locally constant (`Module.isLocallyConstant_rankAtStalk`).
+The `Ideal.fiberRank` form here has no such effect, which is the point of the
+restatement.
+
+**It does not, however, already match
+`Scheme.Modules.isOpen_pointRank_le`** (`Picard/PointRankSemicontinuity.lean`),
+and an earlier revision of this docstring claimed it did.  Measured: the two are
+*not the same term* and `rfl` between them fails.  `pointRank` unfolds (through
+`pointRank_eq_chartFiberRank` at `V = ⊤`) to a `fiberRank` taken at a prime of
+`Γ(Spec R, ⊤)` with the `Γ(Spec R, ⊤)`-module structure, whereas the conclusion
+below uses `t.asIdeal` for `t : PrimeSpectrum R` with the `R`-module structure.
+Bridging them needs a `ΓSpecIso` transport of exactly the kind steps 2 and 6
+perform by hand, and the only in-tree lemma relating the two worlds,
+`Scheme.Modules.rankAtStalk_sections_eq_pointRank`
+(`Picard/FlatteningStratificationUniversal.lean`:204), carries
+`[Module.Flat]` + `[Module.Finite]` binders — i.e. precisely what was dropped.
+
+So B5 has **three** open obligations, not one: (a) `hbc` without
+`h¹`-vanishing, (b) finite-dimensionality to defeat the junk-value reading, and
+(c) this carrier bridge between `pointRank` and `Ideal.fiberRank`.  (c) was
+unlisted until a fresh-context review found it.
 
 ## What is still open
 
@@ -62,11 +97,11 @@ every `B`, while over `B = ℤ/2` the base-changed map is zero and
 `ker (d ⊗ B) = ℤ/2 ≠ 0`.  So `kerBaseChange` is not bijective, with flatness
 of both terms intact.
 
-What this file therefore does is **relocate** the B5 obligation, not discharge
-it.  It converts "find a projectivity-free rank bridge" — impossible, and the
-route the gate's own docstring prescribes — into "supply `hbc` without
-`h¹`-vanishing", which is the honest half of cohomology-and-base-change
-(Stacks 02KG).  Strictly smaller and correctly located; still open.
+What this file therefore does is **relocate** part of the B5 obligation, not
+discharge it.  It converts "find a projectivity-free rank bridge" — impossible,
+and the route the gate's own docstring prescribes — into the three named items
+(a), (b), (c) above, of which (a) is the honest half of
+cohomology-and-base-change (Stacks 02KG).  Correctly located; all three open.
 
 One route not yet followed: a `TwoTermFiniteReplacement` supplies
 `h0_bijective` for *every* algebra `B` with **no** surjectivity hypothesis
