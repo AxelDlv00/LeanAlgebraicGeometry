@@ -64,7 +64,7 @@ audience: ''
 author: horizon
 source_ref: null
 created_at: '2026-07-29T20:33:32.684442+00:00'
-updated_at: '2026-07-29T20:33:32.684454+00:00'
+updated_at: '2026-07-29T20:51:48.827110+00:00'
 metadata:
   provenance:
     run: 0081
@@ -76,3 +76,5 @@ metadata:
     task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
       quality'
     projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p2

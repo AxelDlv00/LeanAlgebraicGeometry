@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.GaloisQuotientGlue
+import AlgebraicJacobian.Picard.GaloisQuotientNonVacuity
 
 /-!
 # The Galois quotient for an arbitrary affine total space (campaign `G2`, the affine case closed)
@@ -177,14 +178,22 @@ theorem exists_isGaloisQuotient_of_isAffine {X : Scheme.{u}} [IsAffine X]
 `HasGaloisQuotient ρ` synthesizes for any semilinear action on an affine scheme.
 
 Before this, the gate's only inhabitant in the project was the single-`𝔽₄` witness
-`hasGaloisQuotient_specF4`. The orbit-in-affine binder is supplied for free here by
-`instOrbitsInAffineOpen_of_isAffine`, so it costs the consumer nothing.
+`hasGaloisQuotient_specF4`, which this instance now closes by `inferInstance`.
+
+**The orbit-in-affine binder of the class costs the consumer nothing here, and that needed
+an import to be true rather than merely plausible.** It is discharged by
+`instOrbitsInAffineOpen_of_isAffine` (`Picard/GaloisQuotientNonVacuity.lean`) — `⊤` is an
+affine open containing every orbit. That module is imported *for this reason*: measured on a
+first version of this file which imported only `GaloisQuotientGlue`, the name did not resolve
+(`unknown identifier`) and `inferInstance` for the orbit hypothesis **failed**, so the
+sentence claiming the binder was free was false at the file that made it. With the import, the
+instance below needs no orbit argument and consumers synthesize it from `[IsAffine X]` alone.
 
 This does **not** discharge `G2(c)`: the campaign consumer `J'_r` is glued, hence non-affine,
 and the Hironaka trap is exactly about that case (module docstring). -/
 instance hasGaloisQuotient_of_isAffine {X : Scheme.{u}} [IsAffine X]
     {f : X ⟶ Spec (CommRingCat.of L)} (ρ : SemilinearGalAction K L X f)
-    [FiniteDimensional K L] [IsGalois K L] [ρ.OrbitsInAffineOpen] :
+    [FiniteDimensional K L] [IsGalois K L] :
     HasGaloisQuotient ρ :=
   ⟨exists_isGaloisQuotient_of_isAffine ρ⟩
 

@@ -1334,8 +1334,18 @@ directions:
 
 The honest content is upstream: `HasPicScheme` itself has **zero** instances,
 and over an arbitrary field it cannot get one (see `HasPicSchemeEt` below and
-`Picard/PicEtSubcanonical.lean:427`). So neither this class nor its 61 consumers
-currently speaks about any curve. -/
+`PicScheme.not_exists_representing_picSharp_of_not_isIso` in
+`Picard/PicEtSubcanonical.lean`). So neither this class nor its **57** consumers
+currently speaks about any curve.
+
+(That figure said "61" until 2026-07-30 — the stale survivor of the correction
+that fixed the two figures fourteen lines above it, which is the caveat-pass
+failure this project keeps reproducing: the pass that fixes a number leaves its
+own copies behind. Re-measured at HEAD by the declaration-block method: 57
+signatures, in Pic0AbelianVariety 33, Pic0Dimension 6, IdentityComponent 6,
+GroupSchemeHomogeneity 5, Jacobian 4, HomogeneityOrbitCollapse 2, and one here.
+The line anchor formerly given for the refutation is dropped in favour of the
+declaration name, for the same reason.) -/
 class PicSchemeLocallyOfFiniteType {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]

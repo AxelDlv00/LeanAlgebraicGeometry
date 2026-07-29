@@ -127,32 +127,50 @@ docstring: "**THE PROJECT'S CENTRAL OPEN OBLIGATION — expected to stay open.**
   \   The affine case is proved and the gluing substrate exists; the general\n   existence\
   \ statement is still the instance-free class\n   `AlgebraicJacobian.GaloisDescent.HasGaloisQuotient`.\n\
   \   `AlgebraicJacobian.GaloisDescent.HasStableAffineCover` is **not** a second\n\
-  \   gate — it has had a global instance since G2(a) landed, and two docstrings\n\
-  \   previously double-counted it (`I-1077`). **Both names are fully qualified on\n\
-  \   purpose**: they live in `Picard/FiniteGaloisQuotient.lean`, which this file\n\
-  \   does *not* import, so a bare `#check HasGaloisQuotient` here fails and would\n\
-  \   read as absence. That is the recorded \"cited names need `#check`, not `grep`\"\
-  \n   trap; import that module before probing either class.\n4. **a section over\
-  \ separably closed `k'` — NO PRODUCER IN THIS PROJECT.** Every\n   J-milestone assumes\
-  \ one; the only rational-point producer in the tree requires\n   `[IsAlgClosed]`,\
-  \ which campaign G1 explicitly forbids here (`k^s`, never\n   `k̄`), and `hasRationalPoint_baseChangeField`\
-  \ only *propagates* a section that\n   `I-0491` forbids the headline to carry. Measured\
-  \ with controls in `I-1135`.\n   This one is upstream of the other three.\n\nMethod\
-  \ note for whoever re-checks any absence claim in this area: a bare\n`horizon search\
-  \ picEt` returns ten hits, **all from the sibling project**, because\nthe result\
-  \ set is capped — reading that as absence in AJC would be a false\nnegative. Query\
-  \ a specific name (`picEtComparison`) or scan declaration headers\nin-tree. Two\
-  \ earlier revisions of this paragraph offered lists called \"the\ncomplete list\"\
-  \ and **both were wrong** (`I-1075`, and a fresh-context audit that\nfound six omissions);\
-  \ neither error touched the conclusion, which is why a token\nscan rather than a\
-  \ census is what such a claim should rest on.\n\nItem 2 was **not** portable from\
-  \ the sibling project, which was the trap, and the\noutcome recorded it: `AJCR`\
-  \ proves a cross-base comparison as a `MulEquiv`\n(`picEtCrossBaseEquiv`, `Picard/PicEtCrossBase.lean:316`,\
-  \ 468 lines), but its\n`picEt` is a hand-built affine-opens limit of plus-classes\
-  \ (`PicEt.lean:105`)\nwhile this file's is a categorical sheafification (`PicEtSheaf.lean:238`)\
-  \ —\ndifferent objects, no `lake` edge. Most of that length is a section-ring scalar\n\
-  tower which a *sheafification*-based `picEt` does not need, because for it the\n\
-  whole sheafification layer collapses to one Mathlib lemma\n(`Functor.pushforwardContinuousSheafificationCompatibility`,\
+  \   gate, but the reason stated here until now was false (`review-ajc`,\n   2026-07-29\
+  \ → corrected 2026-07-30 with controls both ways). It said the cover\n   class \"\
+  has had a global instance since G2(a) landed\"; that instance,\n   `hasStableAffineCover_of_orbitsInAffineOpen`,\
+  \ requires\n   `[ρ.OrbitsInAffineOpen]`, and `inferInstance` for `HasStableAffineCover`\
+  \ at an\n   **abstract** semilinear action carrying only `[FiniteDimensional K L]`\n\
+  \   `[IsGalois K L]` **fails** with `synthInstanceFailed` (control: with the orbit\n\
+  \   hypothesis in scope it succeeds). What is true is that the orbit hypothesis\
+  \ is\n   free *at the action this route uses*: `instOrbitsInAffineOpen_pullback`\n\
+  \   discharges it for `pullbackSemilinearGalAction` over an arbitrary\n   `Spec\
+  \ K`-scheme, so the cover class synthesises there outright — while\n   `HasGaloisQuotient`\
+  \ at that same action does **not** (both measured in one\n   probe). That separation\
+  \ is what makes G2 one gate rather than two, and it is a\n   sharper statement than\
+  \ the absolute it replaces. **Both names are fully\n   qualified on purpose**: they\
+  \ live in `Picard/FiniteGaloisQuotient.lean`, which\n   this file does *not* import,\
+  \ so a bare `#check HasGaloisQuotient` here fails\n   and would read as absence.\
+  \ That is the recorded \"cited names need `#check`,\n   not `grep`\" trap; import\
+  \ that module before probing either class.\n4. **a section over separably closed\
+  \ `k'` — LANDED 2026-07-30, this item is\n   CLOSED.** This entry read \"NO PRODUCER\
+  \ IN THIS PROJECT\" and that is no longer\n   the state: `Curve/SeparablyClosedRationalPoint.lean`\n\
+  \   (`hasRationalPoint_of_isSepClosed`, `sorry`-free, axiom-clean) is exactly the\n\
+  \   producer it said was absent. What survives, and is the reason the descent step\n\
+  \   is still open here, is narrower and was found on that closed item: campaign\
+  \ G1\n   consumes the section at a **finite** Galois level, where `IsSepClosed`\
+  \ is\n   false, so the `k^s` producer does not reach the step that needs it. That\n\
+  \   residue is a filtered-colimit-of-schemes argument tracked as\n   `AJC.picrep.sepclosed-finite`.\
+  \ The old absolute is kept visible here because\n   the `[IsAlgClosed]` half of\
+  \ it is still true and still the trap: `k^s`, never\n   `k̄`, and `hasRationalPoint_baseChangeField`\
+  \ only *propagates* a section that\n   `I-0491` forbids the headline to carry.\n\
+  \   This one is upstream of the other three.\n\nMethod note for whoever re-checks\
+  \ any absence claim in this area: a bare\n`horizon search picEt` returns ten hits,\
+  \ **all from the sibling project**, because\nthe result set is capped — reading\
+  \ that as absence in AJC would be a false\nnegative. Query a specific name (`picEtComparison`)\
+  \ or scan declaration headers\nin-tree. Two earlier revisions of this paragraph\
+  \ offered lists called \"the\ncomplete list\" and **both were wrong** (`I-1075`,\
+  \ and a fresh-context audit that\nfound six omissions); neither error touched the\
+  \ conclusion, which is why a token\nscan rather than a census is what such a claim\
+  \ should rest on.\n\nItem 2 was **not** portable from the sibling project, which\
+  \ was the trap, and the\noutcome recorded it: `AJCR` proves a cross-base comparison\
+  \ as a `MulEquiv`\n(`picEtCrossBaseEquiv`, `Picard/PicEtCrossBase.lean:316`, 468\
+  \ lines), but its\n`picEt` is a hand-built affine-opens limit of plus-classes (`PicEt.lean:105`)\n\
+  while this file's is a categorical sheafification (`PicEtSheaf.lean:238`) —\ndifferent\
+  \ objects, no `lake` edge. Most of that length is a section-ring scalar\ntower which\
+  \ a *sheafification*-based `picEt` does not need, because for it the\nwhole sheafification\
+  \ layer collapses to one Mathlib lemma\n(`Functor.pushforwardContinuousSheafificationCompatibility`,\
   \ applicable because\nrestriction along `Over.map` is continuous for the two localised\
   \ étale topologies\nby pure synthesis). Reading the sibling as a design lead rather\
   \ than transcribing\nit was the cheaper move.\n\nThis is the **sole** `sorry` of\
@@ -176,7 +194,7 @@ generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.Scheme.fgaPicardRepresentability
 type: lean
-updated: '2026-07-30T03:33:55'
+updated: '2026-07-30T04:43:00'
 ---
 theorem fgaPicardRepresentability {k : Type u} [Field k]
     (C : Over (Spec (.of k)))

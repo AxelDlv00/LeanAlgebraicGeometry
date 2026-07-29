@@ -66,12 +66,16 @@ instances**).  For the campaign consumer `J'_r` the hypothesis is supplied by th
   hypothesis, and fails without it — so the orbit hypothesis is exactly what it
   costs. The three sentences in this file and in `FiniteGaloisQuotientAffine.lean`
   that called it instance-free predate that discharge.
-* `HasGaloisQuotient` — `Prop`-gate, and this one **is** genuinely instance-free
-  (same measurement: `infer_instance` fails for an abstract `ρ` even with the
-  orbit hypothesis in scope). It is the existence statement, to be discharged by
-  gluing `Spec (A^Γ)` along a stable affine cover (`G2(c)`) — and it is therefore
-  the single remaining gate of the whole `G2` engine, the quotient step the
-  repaired representability route runs on.
+* `HasGaloisQuotient` — `Prop`-gate. It **was** genuinely instance-free; it is not
+  any more, and the residue is now precisely the **non-affine** case.
+  `hasGaloisQuotient_of_isAffine` (`Picard/GaloisQuotientAffineGeneral.lean`) is a
+  global `instance` discharging it for `[IsAffine X]`, via transport of
+  `isGaloisQuotient_spec` along the equivariant `X.isoSpec`. Measured both ways:
+  `inferInstance` closes the goal at the formerly hand-built witness
+  `hasGaloisQuotient_specF4`, and **fails** for an abstract `ρ` carrying the orbit
+  hypothesis without affineness. So the remaining `G2(c)` work is the gluing of
+  `Spec (A_U^Γ)` along a stable affine cover — the step the repaired
+  representability route actually runs on, since its consumer `J'_r` is glued.
 * `affineGaloisQuotientHomEquiv` — **the affine case of the Hom property, proved**:
   for `X' = Spec A` and affine `T = Spec B`,
   `Hom_{Spec K}(T, Spec A^Γ) ≃ Γ-invariant Hom_{Spec L}(T ×_K Spec L, Spec A)`,
@@ -405,13 +409,27 @@ def IsGaloisQuotient (ρ : SemilinearGalAction K L X f) {Y : Scheme.{u}}
       ∃! u : {u : T ⟶ Y // u ≫ g = t},
         pullbackBaseChange K L g t u.1 u.2 ≫ e.hom = h
 
-/-- GATE (campaign `G2`; `Prop`-class, **no instances** — the deep heart).  Existence
-of the finite Galois quotient under the orbit-in-affine hypothesis.  Intended
-discharge (`G2(c)`): a `Γ`-stable affine cover (`HasStableAffineCover`, from
-`OrbitsInAffineOpen` via the EGA II 4.5.4 pattern), `Spec (A_U^Γ)` on each stable
-affine piece by Speiser descent (`SemilinearAlgebras.descentAlgEquiv` — the affine
-Hom property is `affineGaloisQuotientHomEquiv` below), glued via `Scheme.GlueData`.
-The orbit hypothesis is **essential** (Hironaka trap — module docstring). -/
+/-- GATE (campaign `G2`) — existence of the finite Galois quotient under the
+orbit-in-affine hypothesis.
+
+**No longer instance-free, and the qualification matters: it is discharged on the
+AFFINE locus** (`hasGaloisQuotient_of_isAffine`,
+`Picard/GaloisQuotientAffineGeneral.lean`, a global `instance`), so for `[IsAffine X]`
+this class synthesizes outright and subsumes the former single-object witness
+`hasGaloisQuotient_specF4` (measured: `inferInstance` closes that goal). Measured in
+the other direction too — `inferInstance` **fails** for an abstract `ρ` carrying the
+orbit hypothesis but not affineness, so the remaining content is exactly the
+non-affine case.
+
+Intended discharge of what is left (`G2(c)`): a `Γ`-stable affine cover
+(`HasStableAffineCover`, from `OrbitsInAffineOpen` via the EGA II 4.5.4 pattern),
+`Spec (A_U^Γ)` on each stable affine piece by Speiser descent
+(`SemilinearAlgebras.descentAlgEquiv` — the affine Hom property is
+`affineGaloisQuotientHomEquiv` below; the per-chart *quotient* is now the affine
+instance above rather than something to re-derive), glued via `Scheme.GlueData`.
+The orbit hypothesis is **essential** for that step (Hironaka trap — module
+docstring), and the affine discharge does not weaken it: an affine `X` has no room
+for the trap. -/
 class HasGaloisQuotient [FiniteDimensional K L] [IsGalois K L]
     (ρ : SemilinearGalAction K L X f) [ρ.OrbitsInAffineOpen] : Prop where
   exists_quotient :
