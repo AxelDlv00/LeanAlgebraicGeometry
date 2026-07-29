@@ -21,23 +21,28 @@ does not reach the step `G1` consumes. That gap is this file (board row
 For an arbitrary scheme `X` over `Spec k` **locally of finite type**, and any field extension
 `Ks/k` that is **algebraic**:
 
-* `AlgebraicGeometry.Scheme.exists_finite_subalgebra_of_pointOver` — a `Ks`-point of `X` over
-  `k` factors through `Spec` of a `k`-subalgebra of `Ks` that is a **finite** `k`-module.
+* `AlgebraicGeometry.Scheme.exists_moduleFinite_subalgebra_factorization` — a `Ks`-point of `X`
+  over `k` factors through `Spec` of a `k`-subalgebra of `Ks` that is a **finite** `k`-module.
 
 and, specialised to the separable closure and packaged for the campaign's consumer:
 
-* `AlgebraicGeometry.Scheme.exists_intermediateField_finiteDimensional_pointOver` — the
-  subextension in `IntermediateField` form, with `FiniteDimensional k k'` and
-  `Algebra.IsSeparable k k'`, i.e. exactly a **finite separable** level.
+* `AlgebraicGeometry.Scheme.exists_finiteSeparable_level_factorization` — the subextension in
+  `IntermediateField` form, with `FiniteDimensional k k'` and `Algebra.IsSeparable k k'`, i.e.
+  exactly a **finite separable** level.
 
 ## The route, and why it is not the one this row was opened with
 
-The row's own opening note (and the release note `I-1182`) priced this as a
-filtered-colimit-of-schemes argument: present `k^s` as a colimit of its finite subextensions
-and spread the morphism along the colimit, via
-`RingHom.EssFiniteType.exists_eq_comp_ι_app_of_isColimit`. **That pricing was wrong**, and it
-was wrong in the direction this workspace has been wrong in before — it costed the general
-mechanism rather than reading what the object at hand already carries.
+The **roadmap row `AJC.picrep.sepclosed-finite`** priced this as a filtered-colimit-of-schemes
+argument: present `k^s` as a colimit of its finite subextensions and spread the morphism along
+the colimit, via `RingHom.EssFiniteType.exists_eq_comp_ι_app_of_isColimit`. **That pricing was
+wrong** (it is this lane's own, from the round that opened the row), and it was wrong in the
+direction this workspace has been wrong in before — it costed the general mechanism rather than
+reading what the object at hand already carries.
+
+*Attribution corrected:* an earlier revision credited the same pricing to inbox item `I-1182`,
+which does not contain it — `colimit` and `EssFiniteType` do not occur in that item at all
+(`I-1311`). Naming the wrong site makes a real repricing unauditable, so the row is named and
+the inbox item is not.
 
 No colimit is needed. `Spec Ks` is a **one-point** space, so a `Ks`-point lands in any affine
 open `V` containing its image and factors through it (`IsOpenImmersion.lift`). On that chart
@@ -51,14 +56,21 @@ not manufactured by a limit argument.
 
 ## What this does and does not discharge
 
-It gives the finite level and a point of `X` over it. It does **not** on its own hand `G1` a
-`Scheme.HasRationalPoint` for the base-changed curve `C_{k'}`: that needs the point to be
-turned into a *section* of `C_{k'} → Spec k'`, which is the pullback universal property applied
-to the pair (point of `C`, the level's own identity) — recorded below as
-`hasRationalPoint_baseChangeField_of_finiteLevel` and proved. What is **not** provided is
-Galois-ness of the level: `k'` here is a finite separable subextension, and `G1` wants a finite
-**Galois** one. Enlarging to the normal closure is a further step and is named, not assumed, in
-`exists_intermediateField_finiteDimensional_pointOver`'s docstring.
+It gives the finite level and a point of `X` over it. **Two things it does not give, and an
+earlier revision of this paragraph claimed the first of them was proved here — it was not, and
+no declaration in this file so much as mentioned `HasRationalPoint`** (found by a fresh-context
+audit, `I-1308`; the sentence is corrected rather than annotated, because a reader auditing
+whether the route reaches `G1`'s consumer was being told a step was discharged when it was
+absent).
+
+1. It does **not** hand `G1` a `Scheme.HasRationalPoint` for the base-changed curve `C_{k'}`.
+   That needs the point turned into a *section* of `C_{k'} → Spec k'`, i.e. the pullback
+   universal property applied to the pair (the point of `C`, the level's own identity). The
+   audit measured this as derivable in about seven lines from the statements below; derivable
+   is not proved, and it is not proved here.
+2. It does **not** give Galois-ness of the level. `k'` is a finite *separable* subextension, and
+   `G1` wants a finite **Galois** one. The normal-closure step is named as open in
+   `exists_finiteSeparable_level_factorization`'s own docstring.
 -/
 
 universe u
@@ -282,9 +294,21 @@ asserted.
   follows from `[SmoothOfRelativeDimension 1 C.hom]` by synthesis, so
   `exists_finiteSeparable_level_factorization` applies to every curve `Challenge.lean` binds, with
   no added hypothesis (`level_factorization_of_curve` below).
-* The conclusion is not secretly about `k' = k`. If `k` were already separably closed the finite
-  level would be `k` itself and the theorem would say nothing new; `not_isSepClosed_rat` exhibits
-  a field where that is false, so `k^s ⊋ k` genuinely occurs in the domain of the statement.
+* The conclusion is not secretly about `k' = k` *for every* `k`. If `k` were already separably
+  closed then `k^s = k`, every level would be `k`, and the theorem would say nothing new;
+  `not_isSepClosed_rat` exhibits a field that is **not** separably closed, so the hypothesis
+  "`k` is separably closed" does not hold identically on the domain of the statement.
+
+  **What that argument does and does not deliver, corrected after a fresh-context audit
+  (`I-1310`).** An earlier revision of this bullet concluded "so `k^s ⊋ k` genuinely occurs".
+  That step is *not* supplied by `not_isSepClosed_rat`: getting from `¬ IsSepClosed k` to
+  `k^s ≠ k` needs the converse implication `(k^s = k) → IsSepClosed k`, and that direction is
+  **absent** from mathlib in every spelling I probed (`⊥ = ⊤` on `IntermediateField`,
+  `Function.Bijective (algebraMap k (SeparableClosure k))`, `k ≃+* SeparableClosure k`); only the
+  direction that is not needed here is available (`eq_bot_of_isSepClosed_of_isSeparable`). So what
+  is established is the weaker, sufficient statement above — the separably-closed case is not
+  universal — and the strict-inclusion phrasing is withdrawn rather than left standing beside a
+  caveat.
 -/
 
 /-- `ℚ` is not separably closed — the witness that §4's finite level is a real restriction rather
@@ -308,10 +332,17 @@ theorem not_isSepClosed_rat : ¬ IsSepClosed ℚ := by
   nlinarith [sq_nonneg x, hx2]
 
 /-- §4 applied at the project's curve binders, with nothing added: a `k^s`-point of a smooth
-proper curve over an arbitrary field `k` is defined over a finite separable `k'/k`. This is the
-compiler-checked statement that the file is not about an empty class of inputs. -/
+curve over an arbitrary field `k` is defined over a finite separable `k'/k`. This is the
+compiler-checked statement that the file is not about an empty class of inputs.
+
+**One binder fewer than the challenge carries, and that is measured rather than trimmed by
+taste**: an earlier revision also bound `[IsProper C.hom]`, which the proof never consumes — the
+statement recompiles verbatim without it (`I-1307`). Properness is a hypothesis of the *curve*,
+not of this factorization, and leaving it in would have overstated the price of applying this at
+a non-proper test object. `[SmoothOfRelativeDimension 1 C.hom]` is what remains, and it is used
+only to synthesise `LocallyOfFiniteType`. -/
 theorem level_factorization_of_curve {k : Type u} [Field k]
-    (C : Over (Spec (CommRingCat.of k))) [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    (C : Over (Spec (CommRingCat.of k))) [SmoothOfRelativeDimension 1 C.hom]
     (p : Spec (CommRingCat.of (SeparableClosure k)) ⟶ C.left)
     (hp : p ≫ C.hom = Spec.map (CommRingCat.ofHom (algebraMap k (SeparableClosure k)))) :
     ∃ (k' : IntermediateField k (SeparableClosure k)) (_ : FiniteDimensional k k')
