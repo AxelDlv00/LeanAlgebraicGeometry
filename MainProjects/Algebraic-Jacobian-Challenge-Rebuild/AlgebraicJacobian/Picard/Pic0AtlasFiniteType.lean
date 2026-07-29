@@ -17,20 +17,34 @@ the three undischarged antecedents of `pic0RepresentableByOfCharts`
 (`Picard/Pic0SigmaSheaf.lean`): `IsChartUniv`, Zariski-local surjectivity of `Sigma.desc f`,
 and a representation `rep` of the divisor functor.
 
-**That is the antecedent list of the implication, not of the goal.**  The frozen north star of
-`Challenge.lean` is `Jacobian C := (jacobianData C).J` with `jacobianData C : JacobianData C`,
-and `JacobianData` (`Picard/JacobianData.lean`) has **four** fields — `J`, `rep`,
-`locallyOfFiniteType`, `quasiCompact`.  Accordingly *every* producer of the datum from an atlas
-takes a fourth input on top of `hf` and the local-surjectivity instance:
+**That is the antecedent list of the implication, not of the goal.**  `JacobianData`
+(`Picard/JacobianData.lean`) has **four** fields — `J`, `rep`, `locallyOfFiniteType`,
+`quasiCompact` — and its every producer from an atlas takes a fourth input on top of `hf` and the
+local-surjectivity instance:
 
   `hlft : ∀ i, LocallyOfFiniteType (chartHom C f i)`
 
-`JacobianData.ofCharts`, `JacobianData.ofChartsOfCompactSpace`,
-`JacobianData.ofChartsOfAbelImage` and `JacobianData.ofChartsOfAbelLifts` all carry it.  So a
-session that discharged all three tracked antecedents would still not have produced a
-`JacobianData C`, and nothing in the tree produces `hlft` at any atlas: the only declaration in
-`Picard/` whose conclusion is `LocallyOfFiniteType` is `locallyOfFiniteType_gluedHom`, which
-*takes* `hlft` as a hypothesis.
+`JacobianData.ofCharts` and `JacobianData.ofChartsOfCompactSpace` both carry it, as do the two
+Abel-image producers in `Picard/JacobianDataAbelImage.lean` and
+`Picard/JacobianDataAbelSurj.lean` (named there, not cited here: neither module is in this file's
+import closure, and a name outside the closure is not a name).  So a session that discharged all
+three tracked antecedents would still not have produced a `JacobianData C`, and nothing in the
+tree produces `hlft` **at a chart of an atlas** — `locallyOfFiniteType_gluedHom`
+(`JacobianDataCharts.lean`) is the only route to the glued object's certificate and it *takes*
+`hlft` as a hypothesis.  The DAT-glue route does not escape this either: `PicRepDatum.lft` is a
+structure *field* and `PicRepDatum.toJacobianData` only carries it across, so the certificate was
+an assumption there too.
+
+Two things this file does **not** claim, both of which an earlier draft of this header got wrong
+and which are corrected here rather than annotated:
+
+* it does not claim `Challenge.lean` routes through `JacobianData`.  The frozen `Jacobian` is a
+  `sorry` and does not import this layer; `Jacobian C := (jacobianData C).J` is the *planned*
+  discharge route recorded in `JacobianData.lean`/`JacobianDataCharts.lean`, and no `jacobianData`
+  producer exists in either project;
+* it does not claim the certificate is untracked on the board.  The `dat-glue` row has named "the
+  locally-of-finite-type certificate" in its title since 2026-07-16.  What was missing is a proof,
+  not a mention.
 
 ## What is actually owed, and it is much less than the gap suggests
 
@@ -51,14 +65,21 @@ So the fourth antecedent, at the **real** atlas (heterogeneous parameters, restr
 `LocallyOfFiniteType (D i).hom`: a property of the divisor scheme with no Picard content, no
 chart parameter, and no dependence on the open `V i`.
 
-**And that reduction is not a relocation.**  At the carrier the divisor-representability lane's
-producers actually return — `DivOver`, a local notation for `divSchemeOver …` in
+**And that reduction is not a relocation, for a reason stronger than a carrier match.**
+`LocallyOfFiniteType (D i).hom` is a property of the *functor* `divFunctor C π n`, not of the
+representing object chosen for it: any two representing objects are isomorphic over the base
+(`Functor.RepresentableBy.uniqueUpToIso`), and `LocallyOfFiniteType` transports across an
+isomorphism in the slice.  So **no producer of `rep` can pick a `D` that fails `hD`**, at any
+parameter — `locallyOfFiniteType_of_representableBy` below.
+
+That matters because the contingent argument is weaker in exactly the place it would be tested.
+At the carrier today's producers return — `DivOver`, a local notation for `divSchemeOver …` in
 `DivRepGlobalClassify.lean` / `DivRepChartRange.lean` / `DivRepAffPullClause.lean` — the property
-is a *global instance* (`locallyOfFiniteType_divSchemeOverHom`, `DivSchemeQProj.lean`), so it is
-free by `inferInstance` with no hypothesis at all.  Verified at that exact carrier, with the
-producer file's own variable bundle, rather than at `divSchemeOver` in the abstract: an
-object-level match can be true and irrelevant if the consumer binds a different carrier.  Here it
-does not.
+is a *global instance* (`locallyOfFiniteType_divSchemeOverHom`, `DivSchemeQProj.lean`) and so free
+by `inferInstance`.  But `Pic0ChartAtlasParamFree.lean`'s own header records that representations
+at parameters other than `g` are not available, so a carrier-specific argument would cover only
+the charts whose representing object happens to be that one.  The transport covers all of them,
+including parameters whose representing object nobody has built yet.
 
 One incidental measurement, recorded because it is the reason the freeness was not already
 visible: `DivRepGlobalClassify.lean` — the file that *defines* `DivOver` — does not import
@@ -73,21 +94,31 @@ with either file; the instances simply never met the carrier.
   discharged** for the real atlas, from `LocallyOfFiniteType (D i).hom` alone.
 * `AlgebraicGeometry.locallyOfFiniteType_gluedHom_mixedParamChart` — hence the glued object is
   locally of finite type over the base field, which is the `JacobianData` field itself.
+* `AlgebraicGeometry.locallyOfFiniteType_of_representableBy` — **the fourth antecedent is
+  representation-independent**: the certificate depends on the functor, not on the representing
+  object, so no producer of `rep` can pick a `D` that fails it.
 * `AlgebraicGeometry.jacobianDataOfMixedParamCharts` — **the assembly**: the mixed-parameter
   atlas plus `hf`, local surjectivity, per-index `LocallyOfFiniteType (D i).hom` and
   quasi-compactness of the glued object produce `JacobianData C`.  Landed so that the obligations
-  that remain are visible in **one signature** rather than spread over four files: everything in
-  it other than `hf`, the local-surjectivity instance and `rep` is now discharged.
+  that remain are visible in **one signature** rather than spread over four files.  Of its inputs,
+  `hD` is discharged; `hf`, the local-surjectivity instance, `rep` **and `hcpt`** remain open —
+  four, not three, and `hcpt` is an explicit hypothesis of the signature.
 
 ## What this does NOT do, stated plainly
 
 It closes no gate of the seam.  `IsChartUniv` (`hf`), Zariski-local surjectivity and `rep` are
 untouched and remain unproduced, and each is another lane's target.  The `quasiCompact` field is
-*not* discharged here either: for the class-indexed atlas it is genuinely a-posteriori
-(`JacobianDataCharts.lean` records that `CompactSpace` of the glued object is a theorem about the
-Jacobian, supplied by `JacobianData.ofChartsOfAbelImage` from a surjective Abel map).  What is
-removed is a *fourth* undischarged antecedent that no row tracked, so that discharging the three
-tracked ones now genuinely reaches the north star's datum.
+*not* discharged here either, and it is now the exposed one: for the class-indexed atlas it is
+genuinely a-posteriori — `JacobianDataCharts.lean` records that `CompactSpace` of the *glued*
+object is a theorem about the Jacobian rather than a consequence of the atlas, and the producer
+that supplies it from a surjective Abel map lives in `Picard/JacobianDataAbelImage.lean`, outside
+this file's import closure.  Note the distinction, since the two are easy to conflate: *per-chart*
+compactness is free at the divisor scheme (below), while the *glued* form is not implied by it for
+an infinite atlas.
+
+What is removed is a fourth undischarged antecedent — proved nowhere, though the `dat-glue` row
+did name it — so that discharging the three tracked antecedents now genuinely reaches the datum
+the north star's planned route consumes.
 -/
 
 set_option autoImplicit false
@@ -196,9 +227,16 @@ Read it as the corrected antecedent list of the *goal*:
 * `hD` — `LocallyOfFiniteType (D i).hom`.  **Discharged**, and at the carrier the producers of
   `rep` return it is free by `inferInstance` (the `Discharged` section above).  So a lane that
   produces `rep` supplies this input in the same breath;
-* `hcpt` — `CompactSpace` of the glued object.  **Open, and genuinely a-posteriori**: for the
-  class-indexed atlas this is a theorem about the Jacobian (`JacobianDataCharts.lean` says so),
-  and `JacobianData.ofChartsOfAbelImage` supplies it from a surjective Abel map.
+* `hcpt` — `CompactSpace` of the glued object.  **Open**, and it is the input this file leaves
+  exposed.  `JacobianDataCharts.lean` calls it a-posteriori for the class-indexed atlas — a
+  theorem about the Jacobian, supplied there from a surjective Abel map (`JacobianDataAbelImage`,
+  outside this closure).  But that is the board's pricing quoted, **not** a measurement made here,
+  and there is a specific reason to doubt it is an independent obligation: at `ι = PEmpty` every
+  explicit input including `hcpt` is free, so all the content sits in the local-surjectivity
+  instance, which suggests `hcpt` is a *consequence of coverage* rather than a peer of it
+  (observed by `review-ajcr`).  **I did not derive it from coverage**, so it stands as a
+  hypothesis; a lane taking this further should first ask whether it needs anything beyond
+  coverage at all, rather than proving it separately.
 
 So this declaration is an *implication*, not a witness: it produces no `JacobianData` at any curve
 until the four open inputs above are produced.  Its value is that the fourth antecedent is no
@@ -220,6 +258,42 @@ def jacobianDataOfMixedParamCharts {ι : Type u} (nn : ι → ℕ)
     JacobianData C :=
   JacobianData.ofChartsOfCompactSpace C _ hf
     (locallyOfFiniteType_chartHom_mixedParamChart C π nn D rep m Z hdeg V hD) hcpt
+
+/-! ## `hD` is a RIDER on antecedent 3, not an independent obligation -/
+
+omit [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] in
+variable (C π) in
+/-- **The chart-finiteness certificate is representation-independent.**
+
+If `divFunctor C π n` is represented by `D` and also by `D'`, and `D'.hom` is locally of finite
+type, then so is `D.hom`.  Representing objects are isomorphic over the base
+(`Functor.RepresentableBy.uniqueUpToIso`), the isomorphism's underlying morphism commutes with the
+structure morphisms (`Over.w`), and `LocallyOfFiniteType` is preserved by precomposition with an
+isomorphism.
+
+**This is what makes the fourth antecedent a rider on the third rather than a peer of it.**  A
+producer of `rep` does not get to choose a representing object that fails `hD`: the property
+belongs to the functor.  In particular the discharge does not depend on today's representing
+object being `divSchemeOver`, and it covers the parameters `n ≠ g` at which
+`Pic0ChartAtlasParamFree.lean` records that no representation has been built — a carrier-specific
+argument would not.
+
+Stated with `D'` explicit rather than as an instance so that the direction of use is visible: one
+exhibits *some* representing object of finite type, and every other one inherits it.
+
+A measurement rather than a claim, and it is independent evidence for the reading above: the proof
+uses none of the curve's geometry — not smoothness, not properness, not geometric irreducibility
+(hence the `omit`).  A statement about the divisor scheme's finiteness would need the curve; this
+one needs only that the functor is represented twice. -/
+theorem locallyOfFiniteType_of_representableBy {n : ℕ} {D D' : Over (Spec (.of k))}
+    (rep : (divFunctor C π n).RepresentableBy D)
+    (rep' : (divFunctor C π n).RepresentableBy D')
+    (h : LocallyOfFiniteType D'.hom) :
+    LocallyOfFiniteType D.hom := by
+  have e := rep.uniqueUpToIso rep'
+  haveI := h
+  rw [← Over.w e.hom]
+  infer_instance
 
 /-! ## `hD` is not merely reduced to — it is DISCHARGED at the carrier the producer returns
 
