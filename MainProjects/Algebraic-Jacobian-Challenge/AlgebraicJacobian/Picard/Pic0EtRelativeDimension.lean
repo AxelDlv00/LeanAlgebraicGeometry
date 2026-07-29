@@ -191,6 +191,60 @@ theorem leafB_iff_affineCover {ι : Type*}
         ((Pic0SchemeEt C).hom.appLE ⊤ (V i).1 le_top).hom :=
   HasRingHomProperty.iff_of_iSup_eq_top V hV
 
+/-! ### §2b. The split is not "smoothness plus a rank"
+
+`Jacobian.lean:418-421` prices leaf B as owing `Pic0Et.smooth` **plus** the
+tangent-dimension-to-`Ω`-rank translation, i.e. as two inputs to be supplied
+separately. `leafB_of_chartwise` below is the assembled reduction, and the shape it
+comes out with is different: the chart-level relative-dimension condition is the
+*only* input, because it already implies standard smoothness there
+(`RingHom.IsStandardSmoothOfRelativeDimension.isStandardSmooth`).
+
+So a prover who discharges the chart condition owes nothing further, and a prover who
+discharges `Pic0Et.smooth` first has not paid part of leaf B's price — the smoothness
+half is *absorbed*, not *subtracted*. That is a sharper statement than the docstring's
+and it points the remaining work at one place. -/
+
+/-- **Leaf B from the chart-level condition alone.** The reverse direction of
+`leafB_iff_appLE`, stated as the reduction a prover would use.
+
+Note there is **no smoothness hypothesis**, and its absence is the content: at the
+chart level `IsStandardSmoothOfRelativeDimension n` implies `IsStandardSmooth`, so
+supplying the numeral supplies smoothness with it. Leaf B is therefore *one* obligation
+rather than the two its docstring at `Jacobian.lean:418-421` describes — and by §1 it
+also carries obligation 2, so the chart condition alone would close both. -/
+theorem leafB_of_chartwise
+    (hchart : ∀ (U : (Spec (CommRingCat.of k)).affineOpens)
+      (V : ((Pic0SchemeEt C).left : Scheme.{u}).affineOpens)
+      (e : (V : Scheme.Opens _) ≤ (Pic0SchemeEt C).hom ⁻¹ᵁ (U : Scheme.Opens _)),
+      RingHom.Locally (RingHom.IsStandardSmoothOfRelativeDimension (genus C))
+        ((Pic0SchemeEt C).hom.appLE (U : Scheme.Opens _) (V : Scheme.Opens _) e).hom) :
+    SmoothOfRelativeDimension (genus C) (Pic0SchemeEt C).hom :=
+  (leafB_iff_appLE C).mpr hchart
+
+/-- **What bare smoothness does supply, and it is the wrong shape.** `Smooth` carries
+the ring-hom property `RingHom.Smooth` (not `Locally IsStandardSmooth` — that synthesis
+fails, measured), and `RingHom.Smooth.locally_isStandardSmooth` converts it. So
+smoothness of `Pic⁰` yields, on every chart pair, standard smoothness *with no numeral*.
+
+Comparing with `leafB_of_chartwise`: what separates smoothness from leaf B is exactly
+the passage from `Locally IsStandardSmooth` to
+`Locally (IsStandardSmoothOfRelativeDimension (genus C))` on each chart, i.e. pinning
+the number. Given `IsStandardSmooth` and `Nontrivial`,
+`Algebra.IsStandardSmoothOfRelativeDimension.iff_of_isStandardSmooth` makes that
+pinning literally `Module.rank S Ω[S⁄R] = genus C` — on the away-localisations of chart
+algebras that `RingHom.Locally` quantifies over, which is where the residue lives and
+is *not* where `Pic0Et.finrank_cotangentSpace_eq_genus` computes. -/
+theorem locally_isStandardSmooth_appLE_of_smooth
+    (hsm : Smooth (Pic0SchemeEt C).hom)
+    (U : (Spec (CommRingCat.of k)).affineOpens)
+    (V : ((Pic0SchemeEt C).left : Scheme.{u}).affineOpens)
+    (e : (V : Scheme.Opens _) ≤ (Pic0SchemeEt C).hom ⁻¹ᵁ (U : Scheme.Opens _)) :
+    RingHom.Locally RingHom.IsStandardSmooth
+      ((Pic0SchemeEt C).hom.appLE (U : Scheme.Opens _) (V : Scheme.Opens _) e).hom :=
+  RingHom.Smooth.locally_isStandardSmooth
+    ((HasRingHomProperty.iff_appLE (P := @Smooth) (Q := RingHom.Smooth)).mp hsm U V e)
+
 end Scheme.Pic0Et
 
 /-! ## §3. Homogeneity gives the cover for free and the numeral not at all
