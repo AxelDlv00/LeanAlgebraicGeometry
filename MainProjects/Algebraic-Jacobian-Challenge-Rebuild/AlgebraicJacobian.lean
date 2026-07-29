@@ -343,6 +343,7 @@ import AlgebraicJacobian.Picard.DivisorFamily
 import AlgebraicJacobian.Picard.DivisorFamilyAffCover
 import AlgebraicJacobian.Picard.DivisorFamilyAffAdaptation
 import AlgebraicJacobian.Picard.DivisorFamilyAffTheta
+import AlgebraicJacobian.Picard.DivisorFamilyAffThetaTyping
 import AlgebraicJacobian.Picard.DivisorFamilyAffReindex
 import AlgebraicJacobian.Picard.DivisorFamilyAffPerPiece
 import AlgebraicJacobian.Picard.DivisorFamilyAffCollapse
@@ -491,6 +492,7 @@ import AlgebraicJacobian.Tangent.CechPicIsoTransport
 import AlgebraicJacobian.Tangent.EpsArrowIdentification
 import AlgebraicJacobian.Tangent.TwoChartKernelComparison
 import AlgebraicJacobian.Tangent.CollapseCechH1
+import AlgebraicJacobian.Tangent.EpsReductionSquare
 import AlgebraicJacobian.Tangent.Pic0TangentSpace
 import AlgebraicJacobian.AbelianVariety.JacobianSmooth
 import AlgebraicJacobian.AbelianVariety.JacobianAbelianVariety

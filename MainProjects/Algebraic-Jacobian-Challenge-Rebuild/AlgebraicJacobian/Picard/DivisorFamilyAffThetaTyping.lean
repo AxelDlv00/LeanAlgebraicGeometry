@@ -111,14 +111,18 @@ structure ThetaTrivData (D : AffCoverData C R) (a : ℕ) where
   /-- **The germ law**: where a point of the piece also lies in a pinned chart, the germ of
   the reading agrees with the germ of that chart's component of the section up to a unit of
   the stalk.  This is what the kernel bridge runs on, and it refers to the two-chart model of
-  the SHEAF rather than to the location of the piece. -/
+  the SHEAF rather than to the location of the piece.
+
+  Stated in the `relThetaResSide … inf_le_right` spelling rather than as `Bool.rec x.val.1
+  x.val.2 b`, because that is the form `germ_val_mem_stalkIdeal_of_forall_side`
+  (`Picard/DivisorFamilyAffTheta.lean:691`) consumes — the two differ by a self-restriction. -/
   germ_read : ∀ (j : D.index) (b : Bool) (z : relCurve C R) (hzj : z ∈ D.pieces j)
       (hzb : z ∈ relPinnedChart C R π b) (x : relThetaSections C R π a),
     ∃ u : ((relCurve C R).presheaf.stalk z)ˣ,
       ((relCurve C R).presheaf.germ (D.pieces j) z hzj).hom (read j x)
         = (u : (relCurve C R).presheaf.stalk z)
           * ((relCurve C R).presheaf.germ ((⊤ : (relCurve C R).Opens) ⊓ relPinnedChart C R π b)
-              z ⟨trivial, hzb⟩).hom (Bool.rec x.val.1 x.val.2 b)
+              z ⟨trivial, hzb⟩).hom (relThetaResSide a b inf_le_right x)
 
 /-! ## The old index maps in: nothing landed is lost -/
 
@@ -159,26 +163,126 @@ noncomputable def thetaTrivData : ThetaTrivData (π := π) D a where
     have hgerm := congrArg ((relCurve C R).presheaf.germ
       (D.pieces j ⊓ relPinnedChart C R π b) z hzW).hom hmatch
     rw [map_mul] at hgerm
-    -- the left side is the germ of the reading; the right the germ of the `b` component
+    -- move the reading's germ down to the overlap, where `hmatch` lives
     rw [show ((relCurve C R).presheaf.germ (D.pieces j) z hzj).hom
           (relThetaResSide a (τ.side j)
             (AffAdaptation.piece_le_relPinnedChart (π := π) τ j) x)
         = ((relCurve C R).presheaf.germ (D.pieces j ⊓ relPinnedChart C R π b) z hzW).hom
             (relThetaResSide a (τ.side j) (hle.trans inf_le_left) x) from
-      (germ_relThetaResSide_eq a x (τ.side j)
+      (AffAdaptation.germ_relThetaResSide_eq a x (τ.side j)
         (AffAdaptation.piece_le_relPinnedChart (π := π) τ j) inf_le_left hzW).symm,
       hgerm]
-    refine congrArg _ ?_
-    rw [show relThetaResSide a b (hle.trans inf_le_right) x
-        = (relCurve C R).resHom (inf_le_right :
-            D.pieces j ⊓ relPinnedChart C R π b ≤ relPinnedChart C R π b)
-          (relThetaResSide a b le_rfl x) from
-      (resHom_relThetaResSide a b le_rfl inf_le_right x).symm,
-      TopCat.Presheaf.germ_res_apply]
-    cases b with
-    | false => simp only [relThetaResSide_false]; exact (TopCat.Presheaf.germ_res_apply _ _ _ _ _)
-    | true => simp only [relThetaResSide_true]; exact (TopCat.Presheaf.germ_res_apply _ _ _ _ _)
+    -- and the `b`-component's germ up from the overlap to `⊤ ⊓ chart b`
+    exact congrArg _ (AffAdaptation.germ_relThetaResSide_eq a x b
+      (inf_le_right : (⊤ : (relCurve C R).Opens) ⊓ relPinnedChart C R π b
+        ≤ relPinnedChart C R π b)
+      (le_inf le_top (hle.trans inf_le_right)) hzW)
 
 end ChartTyping
+
+/-! ## Inhabitation at exponent `0`, for EVERY widened cover
+
+At `a = 0` the theta cocycle is trivial (`relThetaCocycle_zero`), so a global theta section is
+a pair of sections of the STRUCTURE sheaf on `V₀`, `V₁` agreeing on the overlap — and the two
+pinned charts cover the curve.  One gluing therefore produces a genuine global section, and the
+reading on a piece is that section restricted.  Note where the covering is used: `V₀ ⊔ V₁ = ⊤`
+is a statement about the CURVE, applied before any piece is mentioned.  No piece is required to
+sit inside a chart, which is exactly the difference from `ChartTyping`. -/
+
+section ZeroExponent
+
+variable (C R π)
+
+/-- **The two pinned charts cover the curve**, in the `⊤ ⊓ ·` spelling the theta components
+live over. -/
+lemma le_iSup_top_inf_relPinnedChart :
+    (⊤ : (relCurve C R).Opens) ≤ ⨆ b : Bool, (⊤ : (relCurve C R).Opens) ⊓ relPinnedChart C R π b :=
+  fun z _ => by
+    have hz : z ∈ (relCover C R (fiberTwoCover π)).V₀ ⊔ (relCover C R (fiberTwoCover π)).V₁ := by
+      rw [relCover_sup]; trivial
+    rcases Opens.mem_sup.mp hz with h | h
+    · exact Opens.mem_iSup.mpr ⟨false, ⟨trivial, h⟩⟩
+    · exact Opens.mem_iSup.mpr ⟨true, ⟨trivial, h⟩⟩
+
+/-- **A global theta section at exponent `0` glues to a global section of `𝒪`.**  Its two
+components agree on the chart overlap because the cocycle is `1` there, and the charts cover. -/
+lemma existsUnique_glueThetaZero (x : relThetaSections C R π 0) :
+    ∃! s : Γ(relCurve C R, ⊤), ∀ b : Bool,
+      (relCurve C R).resHom
+          (inf_le_left : (⊤ : (relCurve C R).Opens) ⊓ relPinnedChart C R π b ≤ ⊤) s
+        = relThetaResSide 0 b inf_le_right x := by
+  refine (relCurve C R).sheaf.existsUnique_gluing'
+    (fun b : Bool => (⊤ : (relCurve C R).Opens) ⊓ relPinnedChart C R π b) ⊤
+    (fun b => homOfLE inf_le_left) (le_iSup_top_inf_relPinnedChart C R π)
+    (fun b => relThetaResSide 0 b inf_le_right x) ?_
+  intro i j
+  -- the matching law at exponent `0`, where the side unit is `1`
+  have hle : ((⊤ : (relCurve C R).Opens) ⊓ relPinnedChart C R π i)
+        ⊓ ((⊤ : (relCurve C R).Opens) ⊓ relPinnedChart C R π j)
+      ≤ relPinnedChart C R π i ⊓ relPinnedChart C R π j :=
+    inf_le_inf inf_le_right inf_le_right
+  have hmatch := relThetaResSide_matching 0 i j hle x
+  rw [AffAdaptation.relThetaSideUnit_zero (C := C) (R := R) (π := π) i j hle, Units.val_one,
+    one_mul] at hmatch
+  rw [show relThetaResSide 0 i (hle.trans inf_le_left) x
+      = (relCurve C R).resHom (inf_le_left :
+          ((⊤ : (relCurve C R).Opens) ⊓ relPinnedChart C R π i)
+            ⊓ ((⊤ : (relCurve C R).Opens) ⊓ relPinnedChart C R π j)
+          ≤ (⊤ : (relCurve C R).Opens) ⊓ relPinnedChart C R π i)
+        (relThetaResSide 0 i inf_le_right x) from
+    (resHom_relThetaResSide 0 i inf_le_right inf_le_left x).symm,
+    show relThetaResSide 0 j (hle.trans inf_le_right) x
+      = (relCurve C R).resHom (inf_le_right :
+          ((⊤ : (relCurve C R).Opens) ⊓ relPinnedChart C R π i)
+            ⊓ ((⊤ : (relCurve C R).Opens) ⊓ relPinnedChart C R π j)
+          ≤ (⊤ : (relCurve C R).Opens) ⊓ relPinnedChart C R π j)
+        (relThetaResSide 0 j inf_le_right x) from
+    (resHom_relThetaResSide 0 j inf_le_right inf_le_right x).symm] at hmatch
+  exact hmatch
+
+/-- The glued global section of a theta section at exponent `0`. -/
+noncomputable def glueThetaZero (x : relThetaSections C R π 0) : Γ(relCurve C R, ⊤) :=
+  (existsUnique_glueThetaZero C R π x).choose
+
+lemma resHom_glueThetaZero (x : relThetaSections C R π 0) (b : Bool) :
+    (relCurve C R).resHom
+        (inf_le_left : (⊤ : (relCurve C R).Opens) ⊓ relPinnedChart C R π b ≤ ⊤)
+        (glueThetaZero C R π x)
+      = relThetaResSide 0 b inf_le_right x :=
+  (existsUnique_glueThetaZero C R π x).choose_spec.1 b
+
+/-- Uniqueness, in the form the linearity proofs consume. -/
+lemma glueThetaZero_eq_of_forall {x : relThetaSections C R π 0} {s : Γ(relCurve C R, ⊤)}
+    (h : ∀ b : Bool, (relCurve C R).resHom
+        (inf_le_left : (⊤ : (relCurve C R).Opens) ⊓ relPinnedChart C R π b ≤ ⊤) s
+      = relThetaResSide 0 b inf_le_right x) :
+    s = glueThetaZero C R π x :=
+  (existsUnique_glueThetaZero C R π x).unique h
+    ((existsUnique_glueThetaZero C R π x).choose_spec.1)
+
+/-- **The gluing is `R`-linear**, as a map out of the theta sections at exponent `0`. -/
+noncomputable def glueThetaZeroHom :
+    relThetaSections C R π 0 →ₗ[R] Γ(relCurve C R, ⊤) where
+  toFun := glueThetaZero C R π
+  map_add' x y := by
+    refine (glueThetaZero_eq_of_forall C R π (fun b => ?_)).symm
+    rw [map_add, resHom_glueThetaZero, resHom_glueThetaZero, map_add]
+  map_smul' r x := by
+    refine (glueThetaZero_eq_of_forall C R π (fun b => ?_)).symm
+    -- `resHom` commutes with the `overModule` scalar action; both spellings of that lemma in
+    -- the tree are `private` (`Cohomology/TwistedSheaf.lean:122`, `GluedSheaf.lean:108`), so
+    -- the two-line unfolding is inlined rather than re-exported (inbox `I-0712`).
+    have hsmul : (relCurve C R).resHom
+        (inf_le_left : (⊤ : (relCurve C R).Opens) ⊓ relPinnedChart C R π b ≤ ⊤)
+          (r • glueThetaZero C R π x)
+        = r • (relCurve C R).resHom
+            (inf_le_left : (⊤ : (relCurve C R).Opens) ⊓ relPinnedChart C R π b ≤ ⊤)
+            (glueThetaZero C R π x) := by
+      rw [Scheme.overModule_smul_def, map_mul, Scheme.overModule_smul_def]
+      congr 1
+      exact (relCurve C R).overAlgebraMap_apply_res R (homOfLE inf_le_left).op r
+    rw [RingHom.id_apply, hsmul, resHom_glueThetaZero, map_smul]
+
+end ZeroExponent
 
 end AlgebraicGeometry
