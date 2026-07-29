@@ -115,22 +115,30 @@ docstring: "**THE PROJECT'S CENTRAL OPEN OBLIGATION — expected to stay open.**
   \ rather than `picEt` of the base-changed\ncurve, and there is no functor for the\
   \ descent datum to be a datum *for*.\nMeasured: the statement type-checks in this\
   \ project (the base-changed curve\ninherits both binders, `RiemannRoch/CurveBaseChange.lean:256`),\
-  \ and it is absent\n— the complete list of `picEt`-named declarations here is `picEt`,\n\
-  `picEtCommGrp`, `picEtCommGrpForgetIso`, `picEtComparison`,\n`picEtComparison_isIso_of_hasRationalPoint`,\
-  \ `picEt_ext_of_pullback_agrees`,\n`isSheafFor_picEt_of_mem`, `isSheafFor_picEt_pullback_presieve`\
-  \ and\n`picEt_isSheaf_forget`, and none of them mentions a base change of the *curve*.\n\
-  (The census is as of 2026-07-29 at commit `d4e9f14b96`; an earlier revision of\n\
-  this paragraph listed `picEt_isSheaf_etaleTopologyOver`, which `ajc-p1` deleted\n\
-  the same day on finding it re-proved `picEt_isSheaf_forget` under a different\n\
-  route — `I-1075`. The absence conclusion is unaffected: the deletion removed a\n\
-  duplicate, not a cross-base statement.)\n\nIt is **not** portable from the sibling\
-  \ project, which is the trap here. `AJCR`\nproves exactly this comparison as a `MulEquiv`\
-  \ (`picEtCrossBaseEquiv`,\n`Picard/PicEtCrossBase.lean:316`), but its `picEt` is\
-  \ a hand-built affine-opens\nlimit of plus-classes (`PicEt.lean:105`) while this\
-  \ file's is a categorical\nsheafification (`PicEtSheaf.lean:238`) — different objects,\
-  \ and there is no\n`lake` dependency edge between the projects. That 468-line file\
-  \ is a design lead,\nnot an import.\n\nThis is the **sole** `sorry` of the seam:\
-  \ everything else below — the\nrepresenting scheme `PicSchemeEt`, its representability,\
+  \ and it is absent.\n\nThe absence rests on a **token scan, not on an enumeration\
+  \ being complete** — and\nthat distinction is the point. Every `picEt`-mentioning\
+  \ declaration in this project\nwas scanned for `baseChange`, `algebraMap` and `Over.map`;\
+  \ the only occurrence of\nthe cross-base shape anywhere in `AlgebraicJacobian/`\
+  \ is the prose above. Two\nearlier revisions of this paragraph instead offered a\
+  \ list called \"the complete\nlist\", and **both lists were wrong**: the first named\n\
+  `picEt_isSheaf_etaleTopologyOver`, which `ajc-p1` deleted hours later as a\nduplicate\
+  \ of `picEt_isSheaf_forget` (`I-1075`), and the second omitted six\ndeclarations,\
+  \ including `picSharp_representableBy_picEt_transport` and\n`isIso_picEtComparison_of_isSheaf`\
+  \ in `PicEtSubcanonical.lean` (found by a\nfresh-context audit of this very correction).\
+  \ Neither error touched the\nconclusion, because none of the missed or deleted declarations\
+  \ relates the functor\nof `C` to the functor of a base change of `C` — which is\
+  \ exactly why the scan, and\nnot the census, is what the claim should have rested\
+  \ on from the start.\n\nMethod note for whoever re-checks this: a bare `horizon\
+  \ search picEt` returns ten\nhits, **all from the sibling project**, because the\
+  \ result set is capped — reading\nthat as absence in AJC would be a false negative.\
+  \ Query a specific name\n(`picEtComparison`) or scan declaration headers in-tree.\n\
+  \nIt is **not** portable from the sibling project, which is the trap here. `AJCR`\n\
+  proves exactly this comparison as a `MulEquiv` (`picEtCrossBaseEquiv`,\n`Picard/PicEtCrossBase.lean:316`),\
+  \ but its `picEt` is a hand-built affine-opens\nlimit of plus-classes (`PicEt.lean:105`)\
+  \ while this file's is a categorical\nsheafification (`PicEtSheaf.lean:238`) — different\
+  \ objects, and there is no\n`lake` dependency edge between the projects. That 468-line\
+  \ file is a design lead,\nnot an import.\n\nThis is the **sole** `sorry` of the\
+  \ seam: everything else below — the\nrepresenting scheme `PicSchemeEt`, its representability,\
   \ local finiteness,\nseparatedness and group-scheme structure, the comparison theorem\n\
   `picEtComparison_isIso_of_hasRationalPoint` and the conditional\n`picSchemeOfHasRationalPoint`\
   \ — is derived from it.\n\n**Why the second conjunct is bundled here rather than\
@@ -150,7 +158,7 @@ generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.Scheme.fgaPicardRepresentability
 type: lean
-updated: '2026-07-30T00:50:56'
+updated: '2026-07-30T01:35:03'
 ---
 theorem fgaPicardRepresentability {k : Type u} [Field k]
     (C : Over (Spec (.of k)))

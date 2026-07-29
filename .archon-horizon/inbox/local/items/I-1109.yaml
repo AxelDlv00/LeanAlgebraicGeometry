@@ -1,0 +1,72 @@
+id: I-1109
+provider: local
+kind: issue
+body: 'EVERY NON-VACUITY WITNESS IN THE WIDENED CERTIFICATE TAIL IS AT n=0 WITH EMPTY
+  SUPPORT -- four of them, each honestly labelled, and nothing in the chain is inhabited
+  at n>0
+
+
+  work-reviewer, AJCR read-only vacuity audit. Measured at HEAD on disk; oleans for
+  the probed modules confirmed newer than sources first. No whole-tree lake build.
+
+
+  VERDICTS. AffCoverData (AffCover.lean:145), AffAdaptation (AffAdaptation.lean:75),
+  AffAdaptation.IsCertified c1-c4 (:252), SwallowedBy (AffSwallow.lean:75), IsLocallyCertifiedAff
+  (AffZar.lean:103), DivFamZarAff (:165), ChartTyping (AffCover.lean:204), IsLocallyCertified/DivFamZar
+  (Zar.lean:71/:235) are ALL NON-VACUOUS as statements: every one names the relative
+  curve, the pieces or the local-equation system. No sibling-HasDivFunctor pattern
+  anywhere in scope. AffCoverData has 2 real producers (toAffCoverData, ofSwallowingPiece)
+  against ~27 consumer files -- inhabited, not the DivFamily shape.
+
+
+  THE DEFECT IS THE WITNESS SET, not any statement. Four separate ''not vacuous''
+  theorems in the tail, all at the same degenerate point:
+
+  - exists_affAdaptation_swallowedBy_of_supportLocus_empty (AffStraddle.lean:275)
+
+  - rankAtStalk_colength_eq_zero_of_supportLocus_empty (AffRank.lean:144)
+
+  - exists_isCertified_of_seed_of_supportLocus_empty (AffSeedEndpoint.lean:148, n=0)
+
+  - restrictedChartFibre_bot (Pic0ChartRestrictedFibreSat.lean:167, V=bot)
+
+  Each is correctly captioned -- AffSeedEndpoint.lean:135-146 says explicitly ''read
+  this as not self-contradictory, not as non-trivially inhabited''. Credit where due:
+  nobody is hiding this.
+
+
+  WHAT NOBODY HAS DONE. grep for any rankAtStalk (colength ...) = n producer with
+  n not syntactically 0: the ONLY hits are hypothesis binders (AffSeedEndpoint.lean:88,
+  AffSeedGate.lean:196/215/234, AffSeedSection.lean:100/121/138). Every widened certificate
+  at n>0 is conditional on hrank, and hrank has no producer at any n>0. The chart-typed
+  side does have the bridge (DivisorAdaptation.IsCertified.finrank_glued, DivisorFamilyField.lean:157,
+  via deg_presentationDivisor) and DivisorFamilyAffAbel.lean:215 names the four-lemma
+  port that would give the widened analogue -- so the residue is located and NOT blocked.
+
+
+  CONSEQUENCE FOR PRICING: the widened tail is currently a theory whose only exhibited
+  inhabitant is the zero divisor. Any roadmap row reading ''geometry produces a widened
+  class'' should be read as ''conditional on hrank at that n''. The cheapest thing
+  that changes this is the four-lemma port at AffAbel.lean:215-218.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-29T17:36:17.083675+00:00'
+updated_at: '2026-07-29T17:36:17.083687+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0008-horizon-review-ajcr
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

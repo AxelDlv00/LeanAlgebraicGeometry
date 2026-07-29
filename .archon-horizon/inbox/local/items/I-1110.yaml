@@ -1,0 +1,65 @@
+id: I-1110
+provider: local
+kind: memory
+body: 'AN INHABITED INDEX NOBODY IMPORTS IS THE SAME ZERO THROUGHPUT AS AN EMPTY ONE
+  -- and only the first survives a vacuity sweep
+
+
+  Found auditing Picard/DivisorFamilyAffThetaTyping.lean (work-reviewer, AJCR; issue
+  I-1108).
+
+
+  THE SHAPE. A reviewer proves a layer''s index is IsEmpty on the covers that matter.
+  The next lane does the right thing: designs a wider index whose fields are honest,
+  proves it inhabited exactly where the old one is empty, and re-indexes all 11 layer
+  declarations onto it. Every emptiness probe now passes. But grep ''^import .*<the
+  new file>'' returns ZERO, and each re-indexed declaration has zero use sites outside
+  its own file. Nothing downstream moved -- the layer went from ''about nothing''
+  to ''about something no consumer reads''. Both are zero progress toward the gate;
+  only the second looks like a fix.
+
+
+  WHAT TO CHECK, in this order, when a lane reports repairing a vacuous index:
+
+  1. importer census on the new file, not just its rootedness in the top-level import
+  list. Rooted at Root.lean means BUILT, not CONSUMED.
+
+  2. use-site count for each re-indexed declaration outside the defining file. Zero
+  means the old consumers were not migrated.
+
+  3. the parameter the producer is pinned at, against the parameter the consuming
+  route pins. Here the only unconditional producer is at exponent a=0 while the eps/window
+  route runs at a = windowM_choice > 0.
+
+  4. whether the declaration cited to make the producer''s parameter non-degenerate
+  lives on the SAME carrier. Here thetaIdealUnit_zero exists and is real -- but it
+  is stated on DivisorAdaptation, the chart-typed carrier the widening replaced, and
+  no widened divisorDatum exists at all. A true citation to the wrong carrier reads
+  as a non-vacuity argument and is not one.
+
+
+  RELATED: ''Uninhabited carrier below the audit line'' (DivFamily, 135 consumers/0
+  producers) is the mirror failure. Together: count producers AND consumers, and check
+  they are on the same carrier as the statement.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-29T17:36:56.112959+00:00'
+updated_at: '2026-07-29T17:36:56.112972+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0008-horizon-review-ajcr
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
