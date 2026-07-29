@@ -2,76 +2,97 @@ id: AJC.pic0av.structure
 title: Smoothness, properness, and irreducibility
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "WHICH TOWER THIS ROW IS ABOUT -- added by review-ajc 2026-07-29, because\
-  \ everything below is\nwritten about the side no curve inhabits, and a prover reading\
-  \ it would spend the round under an\nuninhabited class.\n\nBoth line numbers cited\
-  \ below (Pic0AbelianVariety.lean:1135 geometricallyReduced, :1373\nuniversallyClosed)\
-  \ carry [HasPicScheme C]. That class has ZERO instances: its only producer is the\n\
-  conditional picSchemeOfHasRationalPoint, and hasRationalPoint_of_curve was deleted\
-  \ as FALSE\n(protection I-0491). Kernel-measured census: 76 binder sites on [HasPicScheme\
-  \ C] vs 15 on\n[HasPicSchemeEt C], no declaration binding both (I-0938). So discharging\
-  \ the two sorries below\nproves something about no curve until a rational point\
-  \ is supplied.\n\nTHE HEADLINE'S COUNTERPARTS, which are the ones under picardJacobianWitness:\
-  \ Pic0Et.geometricallyReduced\n(Picard/Pic0Et.lean:174) and Pic0Et.universallyClosed\
-  \ (:227), both carrying [HasPicSchemeEt C], which\nIS unconditionally inhabited\
-  \ (instHasPicSchemeEt, a projection of the central sorry). They are two of\nthe\
-  \ five obligations named on AJC.jacobian.assembly.\n\nTHE MATHEMATICS BELOW IS NOT\
-  \ WASTED -- it TRANSFERS, and one half is free. MEASURED by review-ajc in a\nscratch\
-  \ file, lake env lean EXIT=0, zero diagnostics (I-0944): the kbar reduction this\
-  \ row records is\nNOT specific to Pic0Scheme. Its engine smooth_of_grpObj_of_isReduced_algebraicClosureBaseChange\n\
-  (Picard/GroupSchemeSmoothAlgClosed.lean:156) binds an arbitrary group scheme, and\
-  \ Pic0Et proves both of\nits binders unconditionally (locallyOfFiniteType :127,\
-  \ grpObj :104). So\n\n  IsReduced (Pic0SchemeEt C x_k kbar)  =>  Smooth (Pic0SchemeEt\
-  \ C).hom   AND  GeometricallyReduced (...)\n\nboth elaborate in three lines, the\
-  \ second discharging the sorry at Pic0Et.lean:174. The two-for-one\ncollapse recorded\
-  \ below therefore holds on the headline tower too. TRAP: Pic0Et.lean's import cone\n\
-  (FGAPicRepresentability + IdentityComponent) does NOT see the Smooth.geometricallyReduced\
-  \ instance --\nadd import AlgebraicJacobian.Curve.GeometricallyReduced or synthesis\
-  \ fails and you will wrongly\nconclude the bridge is absent. Pic0AbelianVariety.lean:1209-1213\
-  \ records that same lesson for its own\nversion; the trap re-fired one level up.\n\
-  \nSTILL OWED either way: IsReduced (Pic0Et x_k kbar) is the real mathematics (Kleiman\
-  \ s5 cor:sm,\nCartier) and is a hypothesis in both probes. The PROPERNESS half below\
-  \ is NOT measured to transfer --\nuniversallyClosed_of_valuativeCriterion is stated\
-  \ for Pic0Scheme and its QuasiCompact side condition\nwas proved there; whether\
-  \ it carries to Pic0SchemeEt is unmeasured, so do not assume it.\n\nA lane taking\
-  \ this row should say which tower it is proving, and prefer the Et one.\n\n--- ORIGINAL\
-  \ SUMMARY, mathematics unchanged and still correct on its own terms ---\n\nSmoothness,\
-  \ properness, and irreducibility. TWO sorries in Picard/Pic0AbelianVariety.lean:\n\
-  geometricallyReduced (:1135) and universallyClosed (:1373). Both are fully reduced\
-  \ -- the\nstructural assembly is discharged and each is now a single named geometric\
-  \ input. Geometric\nirreducibility and the GrpObj structure are already THEOREMS,\
-  \ not obligations.\n\nSMOOTHNESS: one hypothesis suffices, and it is a statement\
-  \ about a SINGLE scheme. IsReduced of\nPic^0 x_k Spec kbar gives smoothness (smooth_of_isReduced_algebraicClosureBaseChange,\
-  \ resting on\nmathlib's smooth_of_grpObj which already contains BOTH the translation\
-  \ argument and the descent\nalong Spec kbar -> Spec k) AND it discharges geometricallyReduced\
-  \ itself\n(geometricallyReduced_of_isReduced_algebraicClosureBaseChange, via Smooth.geometricallyReduced).\n\
-  So the two apparently independent obligations collapse to one. Do not state a version\
-  \ quantified\nover all field extensions: GeometricallyReduced has NO MorphismProperty.DescendsAlong\
-  \ instance in\nmathlib v4.31 (checked here and independently by AJCR, I-0495), so\
-  \ the general->kbar reduction is\nnot available from mathlib -- but this project\
-  \ owns the converse through\nCurve/GeometricallyReduced.lean, which is what makes\
-  \ the single-scheme form legitimate.\nMathematics owed: Kleiman section 5 cor:sm\
-  \ -- H^2(C,O_C) = 0 on a curve makes the deformation\nfunctor of an invertible sheaf\
-  \ unobstructed. Characteristic-free BECAUSE dim C = 1 (Pic_{X/k} can\nbe non-smooth\
-  \ in char p for surfaces -- Igusa).\n\nPROPERNESS HAS EXACTLY ONE LIVE ROUTE, and\
-  \ two are refuted:\n * LIVE: universallyClosed_of_valuativeCriterion. Needs ValuativeCriterion.Existence\
-  \ of\n   (Pic0Scheme C).hom; the QuasiCompact side condition mathlib's criterion\
-  \ wants is already a\n   theorem here. Through representability a Spec R-point IS\
-  \ a relative Picard class, so the\n   lifting statement is the concrete assertion\
-  \ that an invertible sheaf on C x_k Spec K extends\n   over the valuation ring --\
-  \ the classical content of properness, and the same species as\n   DualNumber.free_of_cyclic_mod_eps.\n\
-  \ * REFUTED, do not retry: the ambient route. Universal closedness of Pic_{C/k}\
-  \ is not merely hard,\n   it is FALSE -- it forces CompactSpace on an infinite disjoint\
-  \ union over deg in Z\n   (Picard/AmbientPicNotProper.lean, 5 declarations, axiom-clean).\
-  \ This does NOT affect the\n   Pic^0 statement: Pic^0 is quasi-compact, Pic is not.\n\
-  \ * REFUTED on vocabulary: the quasi-projectivity route (Kleiman th:qpp&p). Mathlib\
-  \ v4.31 has no\n   quasi-projectivity API at all, which is also why smoothProperQuotient\
-  \ is unprovable as stated\n   (I-0074 Caveat 2 -- and do NOT reintroduce a global\
-  \ instance for it).\n\nMEASURE AT A SYNTHESIS SITE. smooth/proper and all their\
-  \ reductions quantify over\n[HasPicScheme C] and therefore report CLEAN axioms at\
-  \ the declaration while the caller's\nsynthesis supplies sorryAx. Every clean claim\
-  \ in this leg has been probed against controls that\nDO fire sorryAx; keep that\
-  \ discipline or the completeness number is fiction.\n"
+summary: |
+  WHICH TOWER THIS ROW IS ABOUT -- added by review-ajc 2026-07-29, because everything below is
+  written about the side no curve inhabits, and a prover reading it would spend the round under an
+  uninhabited class.
+
+  Both line numbers cited below (Pic0AbelianVariety.lean:1135 geometricallyReduced, :1373
+  universallyClosed) carry [HasPicScheme C]. That class has ZERO instances: its only producer is the
+  conditional picSchemeOfHasRationalPoint, and hasRationalPoint_of_curve was deleted as FALSE
+  (protection I-0491). Kernel-measured census: 76 binder sites on [HasPicScheme C] vs 15 on
+  [HasPicSchemeEt C], no declaration binding both (I-0938). So discharging the two sorries below
+  proves something about no curve until a rational point is supplied.
+
+  THE HEADLINE'S COUNTERPARTS, which are the ones under picardJacobianWitness: Pic0Et.geometricallyReduced
+  (Picard/Pic0Et.lean:174) and Pic0Et.universallyClosed (:227), both carrying [HasPicSchemeEt C], which
+  IS unconditionally inhabited (instHasPicSchemeEt, a projection of the central sorry). They are two of
+  the five obligations named on AJC.jacobian.assembly.
+
+  THE MATHEMATICS BELOW IS NOT WASTED -- it TRANSFERS, and one half is free. MEASURED by review-ajc in a
+  scratch file, lake env lean EXIT=0, zero diagnostics (I-0944): the kbar reduction this row records is
+  NOT specific to Pic0Scheme. Its engine smooth_of_grpObj_of_isReduced_algebraicClosureBaseChange
+  (Picard/GroupSchemeSmoothAlgClosed.lean:156) binds an arbitrary group scheme, and Pic0Et proves both of
+  its binders unconditionally (locallyOfFiniteType :127, grpObj :104). So
+
+    IsReduced (Pic0SchemeEt C x_k kbar)  =>  Smooth (Pic0SchemeEt C).hom   AND  GeometricallyReduced (...)
+
+  both elaborate in three lines, the second discharging the sorry at Pic0Et.lean:174. The two-for-one
+  collapse recorded below therefore holds on the headline tower too. TRAP: Pic0Et.lean's import cone
+  (FGAPicRepresentability + IdentityComponent) does NOT see the Smooth.geometricallyReduced instance --
+  add import AlgebraicJacobian.Curve.GeometricallyReduced or synthesis fails and you will wrongly
+  conclude the bridge is absent. Pic0AbelianVariety.lean:1209-1213 records that same lesson for its own
+  version; the trap re-fired one level up.
+
+  STILL OWED either way: IsReduced (Pic0Et x_k kbar) is the real mathematics (Kleiman s5 cor:sm,
+  Cartier) and is a hypothesis in both probes. ajc-p3 confirms no Cartier and no CharZero-reducedness
+  result exists under Mathlib/AlgebraicGeometry, so this is genuine content and not a missing import.
+
+  THE PROPERNESS CAVEAT IS RETIRED -- it was MY hedge and ajc-p3 measured past it (I-1032, 2026-07-29).
+  This row said "the PROPERNESS half is NOT measured to transfer ... so do not assume it". It does
+  transfer: QuasiCompact is free from isFiniteTypeGeometricallyIrreducible.2.1, so
+  UniversallyClosed.of_valuativeCriterion applies on the etale side, and UniversallyClosed fpqc-descends
+  from kbar. Measured with imports rebuilt first (lake build EXIT=0, 8625 jobs; then lake env lean
+  EXIT=0), which matters here because this row already records the import trap that makes the bridge
+  look absent.
+
+  WITH THE NEGATIVE RESULT THAT BOUNDS IT, and it is the part a lane must not skip: IsProper itself has
+  NO DescendsAlong instance for (Surjective inf Flat inf QuasiCompact) at v4.31. Only the
+  UniversallyClosed conjunct descends. So "properness transfers" means the conjunct this row's sorry
+  actually names, not IsProper as a whole.
+
+  A lane taking this row should say which tower it is proving, and prefer the Et one.
+
+  --- ORIGINAL SUMMARY, mathematics unchanged and still correct on its own terms ---
+
+  Smoothness, properness, and irreducibility. TWO sorries in Picard/Pic0AbelianVariety.lean:
+  geometricallyReduced (:1135) and universallyClosed (:1373). Both are fully reduced -- the
+  structural assembly is discharged and each is now a single named geometric input. Geometric
+  irreducibility and the GrpObj structure are already THEOREMS, not obligations.
+
+  SMOOTHNESS: one hypothesis suffices, and it is a statement about a SINGLE scheme. IsReduced of
+  Pic^0 x_k Spec kbar gives smoothness (smooth_of_isReduced_algebraicClosureBaseChange, resting on
+  mathlib's smooth_of_grpObj which already contains BOTH the translation argument and the descent
+  along Spec kbar -> Spec k) AND it discharges geometricallyReduced itself
+  (geometricallyReduced_of_isReduced_algebraicClosureBaseChange, via Smooth.geometricallyReduced).
+  So the two apparently independent obligations collapse to one. Do not state a version quantified
+  over all field extensions: GeometricallyReduced has NO MorphismProperty.DescendsAlong instance in
+  mathlib v4.31 (checked here and independently by AJCR, I-0495), so the general->kbar reduction is
+  not available from mathlib -- but this project owns the converse through
+  Curve/GeometricallyReduced.lean, which is what makes the single-scheme form legitimate.
+  Mathematics owed: Kleiman section 5 cor:sm -- H^2(C,O_C) = 0 on a curve makes the deformation
+  functor of an invertible sheaf unobstructed. Characteristic-free BECAUSE dim C = 1 (Pic_{X/k} can
+  be non-smooth in char p for surfaces -- Igusa).
+
+  PROPERNESS HAS EXACTLY ONE LIVE ROUTE, and two are refuted:
+   * LIVE: universallyClosed_of_valuativeCriterion. Needs ValuativeCriterion.Existence of
+     (Pic0Scheme C).hom; the QuasiCompact side condition mathlib's criterion wants is already a
+     theorem here. Through representability a Spec R-point IS a relative Picard class, so the
+     lifting statement is the concrete assertion that an invertible sheaf on C x_k Spec K extends
+     over the valuation ring -- the classical content of properness, and the same species as
+     DualNumber.free_of_cyclic_mod_eps.
+   * REFUTED, do not retry: the ambient route. Universal closedness of Pic_{C/k} is not merely hard,
+     it is FALSE -- it forces CompactSpace on an infinite disjoint union over deg in Z
+     (Picard/AmbientPicNotProper.lean, 5 declarations, axiom-clean). This does NOT affect the
+     Pic^0 statement: Pic^0 is quasi-compact, Pic is not.
+   * REFUTED on vocabulary: the quasi-projectivity route (Kleiman th:qpp&p). Mathlib v4.31 has no
+     quasi-projectivity API at all, which is also why smoothProperQuotient is unprovable as stated
+     (I-0074 Caveat 2 -- and do NOT reintroduce a global instance for it).
+
+  MEASURE AT A SYNTHESIS SITE. smooth/proper and all their reductions quantify over
+  [HasPicScheme C] and therefore report CLEAN axioms at the declaration while the caller's
+  synthesis supplies sorryAx. Every clean claim in this leg has been probed against controls that
+  DO fire sorryAx; keep that discipline or the completeness number is fiction.
 status: active
 kind: proof
 priority: high
