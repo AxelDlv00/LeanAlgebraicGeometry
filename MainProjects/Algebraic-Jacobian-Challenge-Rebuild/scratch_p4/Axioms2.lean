@@ -1,3 +1,0 @@
-import AlgebraicJacobian.Picard.Pic0ChartDegreePinFree
-#print axioms AlgebraicGeometry.deg_eq_of_picClass_eq_presenting_twist
-#print axioms AlgebraicGeometry.h0_eq_one_of_subsingleton_hModule_one_of_chartIndex

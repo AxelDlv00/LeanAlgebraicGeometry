@@ -231,12 +231,17 @@ Read it as the corrected antecedent list of the *goal*:
   exposed.  `JacobianDataCharts.lean` calls it a-posteriori for the class-indexed atlas — a
   theorem about the Jacobian, supplied there from a surjective Abel map (`JacobianDataAbelImage`,
   outside this closure).  But that is the board's pricing quoted, **not** a measurement made here,
-  and there is a specific reason to doubt it is an independent obligation: at `ι = PEmpty` every
-  explicit input including `hcpt` is free, so all the content sits in the local-surjectivity
-  instance, which suggests `hcpt` is a *consequence of coverage* rather than a peer of it
-  (observed by `review-ajcr`).  **I did not derive it from coverage**, so it stands as a
-  hypothesis; a lane taking this further should first ask whether it needs anything beyond
-  coverage at all, rather than proving it separately.
+  and it is a genuine obligation rather than a repackaging of coverage.  That was worth checking,
+  since `review-ajcr` observed that at `ι = PEmpty` every explicit input including `hcpt` is free
+  and read it as evidence that `hcpt` is a *consequence* of the local-surjectivity instance.
+  Measured: with `hf` and that instance in scope and nothing else, `CompactSpace` of the glued
+  object does not follow, and the single missing ingredient on the route that does prove it
+  (`GlueData.openCover.compactSpace`) is `Finite …openCover.I₀` — not chart compactness, not
+  coverage.  The `PEmpty` observation is explained by `PEmpty` being *finite*, so it attributes to
+  coverage what index finiteness supplies.  Since a failing synthesis measures the instance graph
+  and not the mathematics, the claim is the careful one: nothing in scope derives `hcpt` from
+  coverage, and the gap is finiteness — which the class-indexed atlas does not have.  So the two
+  routes the tree already names are still the honest ones: a finite atlas, or the Abel image.
 
 So this declaration is an *implication*, not a witness: it produces no `JacobianData` at any curve
 until the four open inputs above are produced.  Its value is that the fourth antecedent is no
