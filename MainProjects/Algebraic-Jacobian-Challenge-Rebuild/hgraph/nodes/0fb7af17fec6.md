@@ -8,9 +8,10 @@ docstring: Difference of evaluations at two points is divisible by the differenc
 file: AlgebraicJacobian/Algebra/DiagonalIdeal.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicJacobian.Diagonal.aeval_sub_dvd
 type: lean
-updated: '2026-07-16T21:33:27'
+updated: '2026-07-29T15:26:09'
 ---
 lemma aeval_sub_dvd (a b : B ⊗[k] B) (p : Polynomial k) :
     a - b ∣ aeval a p - aeval b p := by

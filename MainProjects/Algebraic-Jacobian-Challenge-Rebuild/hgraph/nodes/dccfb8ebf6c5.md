@@ -74,9 +74,10 @@ docstring: '**NO `ChartTyping` EXISTS ON A COVER WITH A STRADDLING PIECE.**  If 
 file: AlgebraicJacobian/Picard/DivisorFamilyAffTheta.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.AffAdaptation.isEmpty_chartTyping_of_straddling
 type: lean
-updated: '2026-07-29T09:42:53'
+updated: '2026-07-29T15:26:35'
 ---
 theorem isEmpty_chartTyping_of_straddling (D : AffCoverData C R) (j : D.index)
     {x y : relCurve C R} (hxj : x ∈ D.pieces j) (hyj : y ∈ D.pieces j)

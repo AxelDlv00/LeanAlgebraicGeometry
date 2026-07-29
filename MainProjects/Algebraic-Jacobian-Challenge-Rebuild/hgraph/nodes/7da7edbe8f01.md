@@ -6,9 +6,10 @@ decl: CategoryTheory.PresheafOfGroups.OneCocycle.one_res
 file: AlgebraicJacobian/Picard/CechH1.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: CategoryTheory.PresheafOfGroups.OneCocycle.one_res
 type: lean
-updated: '2026-07-16T21:33:28'
+updated: '2026-07-29T15:26:26'
 ---
 lemma one_res (f : ∀ i, V i ⟶ U i) : (1 : OneCocycle G U).res f = 1 :=
   rfl

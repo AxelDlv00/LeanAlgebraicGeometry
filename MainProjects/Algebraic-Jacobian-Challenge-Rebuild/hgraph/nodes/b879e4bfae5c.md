@@ -12,9 +12,10 @@ docstring: '**The defining equation of `pullbackHom`** (`map_preimage`): its `yo
 file: AlgebraicJacobian/Picard/Pic0PullbackGrp.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.JacobianData.yonedaGrp_map_pullbackHom
 type: lean
-updated: '2026-07-17T21:17:13'
+updated: '2026-07-29T15:26:32'
 ---
 theorem yonedaGrp_map_pullbackHom (dX : JacobianData X) (dY : JacobianData Y)
     (g : X ⟶ Y) :

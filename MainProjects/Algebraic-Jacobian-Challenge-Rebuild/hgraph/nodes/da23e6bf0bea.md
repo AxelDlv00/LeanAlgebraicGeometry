@@ -10,9 +10,10 @@ docstring: '**Inversion of the coboundary**: if `g''` is cohomologous to `g` thr
 file: AlgebraicJacobian/Cohomology/GluedSheafCongr.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.IsGluingCoboundary.inv
 type: lean
-updated: '2026-07-17T08:41:24'
+updated: '2026-07-29T15:26:35'
 ---
 lemma inv (hc : Scheme.IsGluingCoboundary U g g' c) :
     Scheme.IsGluingCoboundary U g' g (fun j => (c j)⁻¹) := by

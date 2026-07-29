@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.relCurveMap_base_awayGlueLift
 file: AlgebraicJacobian/Picard/DivisorFamilyZariskiGlue.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.relCurveMap_base_awayGlueLift
 type: lean
-updated: '2026-07-17T18:01:32'
+updated: '2026-07-29T15:26:32'
 ---
 lemma relCurveMap_base_awayGlueLift (hg : Ideal.span (Set.range g) = ⊤)
     (y : relCurve C R) :

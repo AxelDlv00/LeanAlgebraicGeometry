@@ -17,9 +17,10 @@ docstring: '**The per-piece descent unit** ((C2) effectivity, brick E2): the uni
 file: AlgebraicJacobian/Picard/EffectivityDescentDatum.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: Module.comparisonDescentUnit
 type: lean
-updated: '2026-07-16T21:33:28'
+updated: '2026-07-29T15:26:33'
 ---
 noncomputable def comparisonDescentUnit (v : (S ⊗[A] (B ⊗[A] B))ˣ) :
     ((S ⊗[A] B) ⊗[S] (S ⊗[A] B))ˣ :=

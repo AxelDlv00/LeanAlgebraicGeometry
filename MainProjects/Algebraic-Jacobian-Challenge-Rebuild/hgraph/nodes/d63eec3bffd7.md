@@ -7,9 +7,10 @@ docstring: A chosen splitting of the quotient map of a projective-quotient submo
 file: AlgebraicJacobian/Picard/DivCarveKit.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Grassmannian.quotSection
 type: lean
-updated: '2026-07-17T16:57:13'
+updated: '2026-07-29T15:26:34'
 ---
 noncomputable def quotSection : (M ⧸ N) →ₗ[R] M :=
   (Module.projective_lifting_property N.mkQ LinearMap.id N.mkQ_surjective).choose

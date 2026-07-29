@@ -17,9 +17,10 @@ docstring: '**Restricted pair values along an anchored family form a gluing cocy
 file: AlgebraicJacobian/Cohomology/GluedSheafExtraction.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.isGluingCocycle_unitsRestrict_evInf
 type: lean
-updated: '2026-07-17T08:41:24'
+updated: '2026-07-29T15:26:29'
 ---
 lemma Scheme.isGluingCocycle_unitsRestrict_evInf {𝒰 : X.PointedCover}
     (γ : X.unitsCocycle 𝒰) {J : Type u} (U : J → X.Opens) (anchor : J → X)

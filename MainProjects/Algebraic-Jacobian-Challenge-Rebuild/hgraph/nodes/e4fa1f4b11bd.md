@@ -7,9 +7,10 @@ docstring: 'The inclusion `descentIncl₁ : B → B ⊗[A] B` becomes the left o
 file: AlgebraicJacobian/Algebra/LocalizationCocycle.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: IsLocalization.AwayCover.piDoubleEquiv_descentIncl₁
 type: lean
-updated: '2026-07-24T17:02:46'
+updated: '2026-07-29T15:26:36'
 ---
 lemma piDoubleEquiv_descentIncl₁ (s : ∀ i, S i) :
     piDoubleEquiv f S T (Module.descentIncl₁ A (∀ i, S i) s)

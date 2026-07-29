@@ -19,9 +19,10 @@ docstring: 'The **`I`-depth** of an `R`-module `M`: the supremum (in `ℕ∞`) o
 file: AlgebraicJacobian/Algebra/ABDepth.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: RingTheory.Module.depth
 type: lean
-updated: '2026-07-17T10:19:49'
+updated: '2026-07-29T15:26:37'
 ---
 noncomputable def depth {R : Type u} [CommRing R] (_I : Ideal R)
     (_M : Type v) [AddCommGroup _M] [Module R _M] : ℕ∞ :=

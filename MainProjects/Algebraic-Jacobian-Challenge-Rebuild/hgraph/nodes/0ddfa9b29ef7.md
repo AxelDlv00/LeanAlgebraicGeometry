@@ -10,9 +10,10 @@ docstring: '**The fibre window is `Φ`-read by the chart reading of the fibre se
 file: AlgebraicJacobian/Picard/DivSchemeRedesignCarvePinFibreKM.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.ThetaGeneratorSeed.map_divFamPhi_divUniversalFibreSeedW
 type: lean
-updated: '2026-07-20T07:31:14'
+updated: '2026-07-29T15:26:09'
 ---
 theorem map_divFamPhi_divUniversalFibreSeedW :
     Submodule.map (divFamPhi C K π (windowM_choice π hπ g)

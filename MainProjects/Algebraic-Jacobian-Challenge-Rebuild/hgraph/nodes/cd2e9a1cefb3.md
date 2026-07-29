@@ -10,9 +10,10 @@ docstring: 'The selector selects a chart containing the point — the `hmem` cla
 file: AlgebraicJacobian/Tangent/TwoChartSelector.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.AffineTwoCover.selector_mem
 type: lean
-updated: '2026-07-29T00:38:42'
+updated: '2026-07-29T15:26:34'
 ---
 theorem selector_mem (x : Y) : x ∈ D.boolFamily (D.selector x) := by
   classical

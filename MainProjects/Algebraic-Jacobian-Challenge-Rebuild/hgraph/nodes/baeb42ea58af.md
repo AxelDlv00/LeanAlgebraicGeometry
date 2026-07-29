@@ -14,9 +14,10 @@ docstring: '**The `IsSMulRegular` bridge.** A flat ring homomorphism carries non
 file: AlgebraicJacobian/Algebra/DiagonalRegular.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: RingHom.Flat.mem_nonZeroDivisors
 type: lean
-updated: '2026-07-16T21:33:27'
+updated: '2026-07-29T15:26:32'
 ---
 lemma mem_nonZeroDivisors {R S : Type*} [CommRing R] [CommRing S] {f : R →+* S}
     (hf : f.Flat) {r : R} (hr : r ∈ R⁰) : f r ∈ S⁰ := by

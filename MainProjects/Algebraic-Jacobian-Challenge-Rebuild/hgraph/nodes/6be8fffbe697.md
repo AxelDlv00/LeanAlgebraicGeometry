@@ -11,9 +11,10 @@ docstring: 'At the generic point, the nonzero compared reading divides every sec
 file: AlgebraicJacobian/Picard/DivSchemeRedesignGenericFibre.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.germ_genericPoint_dvd_of_windowCompare_ne_zero
 type: lean
-updated: '2026-07-20T17:31:55'
+updated: '2026-07-29T15:26:24'
 ---
 theorem germ_genericPoint_dvd_of_windowCompare_ne_zero
     (b : Bool)

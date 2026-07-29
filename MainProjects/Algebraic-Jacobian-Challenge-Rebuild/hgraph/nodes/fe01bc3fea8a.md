@@ -8,9 +8,10 @@ docstring: On `s ⊗ₜ 1` the identification is the first-projection pullback `
 file: AlgebraicJacobian/Curve/ProductCharts.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.productChartSections_tmul_one
 type: lean
-updated: '2026-07-16T21:33:28'
+updated: '2026-07-29T15:26:39'
 ---
 theorem productChartSections_tmul_one {U : X.left.Opens} {V : T.left.Opens}
     (hU : IsAffineOpen U) (hV : IsAffineOpen V) (s : Γ(X.left, U)) :

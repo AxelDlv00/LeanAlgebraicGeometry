@@ -10,9 +10,10 @@ docstring: 'The chart-0 multiplier section is the chart-0 component of the `s`-w
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivAssemble.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.windowShiftTheta₀_eq
 type: lean
-updated: '2026-07-24T17:02:47'
+updated: '2026-07-29T15:26:16'
 ---
 lemma windowShiftTheta₀_eq
     (hH1S : Subsingleton (relTwistPair C k π

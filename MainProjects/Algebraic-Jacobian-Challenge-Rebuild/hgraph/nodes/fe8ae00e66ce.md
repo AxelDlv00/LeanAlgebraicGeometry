@@ -7,9 +7,10 @@ docstring: On `s ⊗ 1` the raw base change is the section comparison `relAffSec
 file: AlgebraicJacobian/Picard/DivisorFamilyAffSections.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.relSectionsBaseChangeAffRingEquiv_tmul_one
 type: lean
-updated: '2026-07-28T17:25:25'
+updated: '2026-07-29T15:26:39'
 ---
 lemma relSectionsBaseChangeAffRingEquiv_tmul_one {V : (relCurve C R).Opens}
     (hV : IsAffineOpen V) (s : Γ(relCurve C R, V)) :

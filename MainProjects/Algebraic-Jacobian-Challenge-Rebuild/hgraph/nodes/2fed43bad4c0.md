@@ -19,9 +19,10 @@ docstring: '**Base change of sections along the base-field transition** (SB-2, b
 file: AlgebraicJacobian/Cohomology/TransitionSectionsBaseChange.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.transitionSectionsBaseChange
 type: lean
-updated: '2026-07-16T21:33:27'
+updated: '2026-07-29T15:26:14'
 ---
 noncomputable def Over.transitionSectionsBaseChange {V : (C ⊗ overSpec k K₁).left.Opens}
     (hV : IsAffineOpen V) :

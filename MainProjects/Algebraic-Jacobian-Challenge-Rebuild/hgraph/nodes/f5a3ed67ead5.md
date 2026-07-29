@@ -16,9 +16,10 @@ docstring: '**Recovery of the divisor from its window, assembled form** (the `ba
 file: AlgebraicJacobian/Picard/DivisorFamilyEpsMono.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.baseDivisor_window_normalization
 type: lean
-updated: '2026-07-17T21:17:12'
+updated: '2026-07-29T15:26:39'
 ---
 theorem baseDivisor_window_normalization (g : ℕ)
     (hO : Sheaf.h0 (Y.moduleKSheaf K) = 1)

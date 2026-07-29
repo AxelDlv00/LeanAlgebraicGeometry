@@ -10,9 +10,10 @@ docstring: 'The identification of the section ring of the chart overlap `D₊(X�
 file: AlgebraicJacobian/Curve/P1Charts.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.P1.overlapSectionsEquiv
 type: lean
-updated: '2026-07-16T21:33:27'
+updated: '2026-07-29T15:26:34'
 ---
 noncomputable def overlapSectionsEquiv :
     Γ(P1 k, Proj.basicOpen 𝒜 (X 0 * X 1)) ≃+* LaurentPolynomial k :=

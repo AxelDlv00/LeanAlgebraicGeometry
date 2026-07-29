@@ -7,9 +7,10 @@ docstring: The divisor-equality setoid on widened locally-certified systems.
 file: AlgebraicJacobian/Picard/DivisorFamilyAffZar.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.divFamZarAffSetoid
 type: lean
-updated: '2026-07-28T13:42:17'
+updated: '2026-07-29T15:26:31'
 ---
 def divFamZarAffSetoid : Setoid {d : (relCurve C R).LocalEquations //
     IsLocallyCertifiedAff n d} where

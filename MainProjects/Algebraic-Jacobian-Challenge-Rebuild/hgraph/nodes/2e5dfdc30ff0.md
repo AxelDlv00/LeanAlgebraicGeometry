@@ -13,9 +13,10 @@ docstring: 'The **minor determinant** `P^I_J = det(X^I_J)`: the determinant of t
 file: AlgebraicJacobian/Picard/GrassmannianChart.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Grassmannian.minorDet
 type: lean
-updated: '2026-07-17T08:41:25'
+updated: '2026-07-29T15:26:14'
 ---
 noncomputable def minorDet (k : Type u) [Field k] (d r : ℕ) (I J : Finset (Fin r))
     (hI : I.card = d) (hJ : J.card = d) : ChartRing k d r I :=

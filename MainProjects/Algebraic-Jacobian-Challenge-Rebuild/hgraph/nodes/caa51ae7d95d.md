@@ -7,9 +7,10 @@ docstring: Scaling by `1` is the identity.
 file: AlgebraicJacobian/Tangent/TruncExpUnits.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: TruncExpCech.scaleRingHom_one
 type: lean
-updated: '2026-07-17T08:41:25'
+updated: '2026-07-29T15:26:34'
 ---
 theorem scaleRingHom_one : scaleRingHom (1 : R) = RingHom.id R[ε] :=
   RingHom.ext fun x => TrivSqZeroExt.ext (by simp) (by simp)

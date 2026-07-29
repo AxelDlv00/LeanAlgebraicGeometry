@@ -16,9 +16,10 @@ docstring: '**Invertibility of the packaged action of a unit**: a chart section 
 file: AlgebraicJacobian/Cohomology/GluedSheafModule.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.isUnit_algebraMap_end_glued
 type: lean
-updated: '2026-07-16T21:33:27'
+updated: '2026-07-29T15:26:11'
 ---
 lemma isUnit_algebraMap_end_glued (hc : Scheme.IsGluingCocycle U g)
     (hq : ∀ {W : X.Opens} (hW : W ≤ V) (r : Γ(X, V)) (s : ↥(gluedSubmodule k U g W)),

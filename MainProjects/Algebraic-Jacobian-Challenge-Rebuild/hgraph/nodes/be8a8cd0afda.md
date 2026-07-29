@@ -7,9 +7,10 @@ docstring: Arbitrary-exponent relative multiplication on the first theta chart.
 file: AlgebraicJacobian/Picard/DivSchemeWindowMulGeneral.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.relThetaWindowEquiv_thetaWindowMul_fst
 type: lean
-updated: '2026-07-21T23:32:10'
+updated: '2026-07-29T15:26:32'
 ---
 theorem relThetaWindowEquiv_thetaWindowMul_fst (p q : Nat)
     (a : ↥(divisorSections k (p • fiberWeilDivisor pi) ⊤))

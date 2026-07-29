@@ -7,9 +7,10 @@ docstring: '**The constant `1` is a global section of `𝒪(D)` for effective `D
 file: AlgebraicJacobian/RiemannRoch/EffectiveUniqueness.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.one_mem_divisorSections_top
 type: lean
-updated: '2026-07-19T15:31:14'
+updated: '2026-07-29T15:26:12'
 ---
 theorem one_mem_divisorSections_top {D : X.CurveDivisor} (hD : 0 ≤ D) :
     (1 : X.functionField) ∈ divisorSections K D ⊤ := by

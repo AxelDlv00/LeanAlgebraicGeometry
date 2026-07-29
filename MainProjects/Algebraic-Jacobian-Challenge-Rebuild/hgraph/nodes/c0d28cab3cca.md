@@ -10,9 +10,10 @@ docstring: '**The finite-sum ultrametric**: a nonzero finite sum has some nonzer
 file: AlgebraicJacobian/RiemannRoch/BaseDivisorSpan.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.exists_coeffAt_divOf_le_sum
 type: lean
-updated: '2026-07-17T16:57:14'
+updated: '2026-07-29T15:26:33'
 ---
 lemma Scheme.exists_coeffAt_divOf_le_sum {ι : Type*} (s : Finset ι)
     (F : ι → X.functionField) (hsum : ∑ i ∈ s, F i ≠ 0) {x : X}

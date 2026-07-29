@@ -7,9 +7,10 @@ docstring: '(c3) transport: the cokernel of the pulled glued inclusion is flat.'
 file: AlgebraicJacobian/Picard/DivisorFamilyAffCert.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.AffAdaptation.flat_coker_incl_pullback
 type: lean
-updated: '2026-07-28T17:25:25'
+updated: '2026-07-29T15:26:34'
 ---
 theorem flat_coker_incl_pullback
     [Module.Flat R (A.chartProd ⧸ A.gluedSubmodule)]

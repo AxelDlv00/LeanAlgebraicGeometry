@@ -7,9 +7,10 @@ docstring: Chart-1 analogue of `twistTriv₀_twistCollapse₀`.
 file: AlgebraicJacobian/Cohomology/RelThetaTransportCore.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.twistTriv₁_twistCollapse₁
 type: lean
-updated: '2026-07-24T17:02:46'
+updated: '2026-07-29T15:26:32'
 ---
 lemma twistTriv₁_twistCollapse₁ (y) :
     twistTriv₁ k (relCover C k (fiberTwoCover π)).V₀ (relCover C k (fiberTwoCover π)).V₁

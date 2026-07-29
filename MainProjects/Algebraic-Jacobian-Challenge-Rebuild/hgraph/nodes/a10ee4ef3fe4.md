@@ -21,9 +21,10 @@ docstring: 'A **two-lattice pair** over the commutative ring `R`: the curve-lite
 file: AlgebraicJacobian/Cohomology/RigidEngineLattice.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: TwoLatticePair
 type: lean
-updated: '2026-07-24T17:02:46'
+updated: '2026-07-29T15:26:30'
 ---
 structure TwoLatticePair where
   /-- The chart-0 coordinate action on the chart-0 lattice. -/

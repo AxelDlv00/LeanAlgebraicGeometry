@@ -9,9 +9,10 @@ docstring: 'Restriction of sections of the relative curve as an `R`-algebra homo
 file: AlgebraicJacobian/Picard/DivisorFamily.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.relResAlgHom
 type: lean
-updated: '2026-07-17T08:41:25'
+updated: '2026-07-29T15:26:38'
 ---
 noncomputable def relResAlgHom {W V : (relCurve C R).Opens} (h : W ≤ V) :
     Γ(relCurve C R, V) →ₐ[R] Γ(relCurve C R, W) :=

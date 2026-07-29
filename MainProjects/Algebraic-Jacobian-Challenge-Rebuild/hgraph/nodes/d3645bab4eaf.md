@@ -9,9 +9,10 @@ docstring: 'The chart-ring base change on `1 ⊗ s` is the side-uniform chart co
 file: AlgebraicJacobian/Picard/DivSchemeRedesignHinjChart.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.ThetaGeneratorSeed.relPinnedTermBaseChangeAlg_one_tmul
 type: lean
-updated: '2026-07-20T06:01:15'
+updated: '2026-07-29T15:26:34'
 ---
 lemma relPinnedTermBaseChangeAlg_one_tmul (b : Bool)
     (s : Γ(relCurve C R, relPinnedChart C R π b)) :

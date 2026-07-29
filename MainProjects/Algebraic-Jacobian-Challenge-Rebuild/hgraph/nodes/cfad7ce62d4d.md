@@ -10,9 +10,10 @@ docstring: '**Left exactness certificate.** The inclusion `𝒪(D − x) ↪ �
 file: AlgebraicJacobian/RiemannRoch/Devissage.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.devissageSES_mono_f
 type: lean
-updated: '2026-07-16T21:33:29'
+updated: '2026-07-29T15:26:34'
 ---
 instance devissageSES_mono_f : Mono (devissageSES K hx D).f :=
   divisorSheafLE_mono K (devissageDivisor_le hx D)

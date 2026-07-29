@@ -17,9 +17,10 @@ docstring: '**Pullback of a divisor composes**: pulling back in two stages along
 file: AlgebraicJacobian/Picard/DivisorFamilyMapAlg.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.LocalEquations.divEq_pullback_pullback
 type: lean
-updated: '2026-07-17T16:57:13'
+updated: '2026-07-29T15:26:30'
 ---
 theorem divEq_pullback_pullback {X Y Z : Scheme.{u}} {f : Y ⟶ X} {g : Z ⟶ Y} {h : Z ⟶ X}
     (hgf : g ≫ f = h) (E : X.LocalEquations) (hreg₁) (hreg₂) (hreg₃) :

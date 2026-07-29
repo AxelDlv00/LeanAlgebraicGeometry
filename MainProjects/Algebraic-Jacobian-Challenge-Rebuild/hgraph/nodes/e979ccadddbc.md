@@ -32,9 +32,10 @@ docstring: '**Per-point residue-field lifts give point surjectivity.**  If every
 file: AlgebraicJacobian/Picard/JacobianDataAbelSurj.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.surjective_of_forall_exists_residueField_lift
 type: lean
-updated: '2026-07-28T19:44:57'
+updated: '2026-07-29T15:26:37'
 ---
 theorem surjective_of_forall_exists_residueField_lift (f : X ⟶ Y)
     (h : ∀ y : Y, ∃ q : Spec (Y.residueField y) ⟶ X,

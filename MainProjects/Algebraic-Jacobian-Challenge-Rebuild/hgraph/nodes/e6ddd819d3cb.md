@@ -13,9 +13,10 @@ docstring: '**The tangent space is the dual of the cotangent space** (Kleiman §
 file: AlgebraicJacobian/Tangent/TangentDualNumbers.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.localDualNumberHomEquivCotangentSpaceDual
 type: lean
-updated: '2026-07-28T13:42:18'
+updated: '2026-07-29T15:26:36'
 ---
 noncomputable def localDualNumberHomEquivCotangentSpaceDual :
     {f : R →ₐ[k] DualNumber k // ∀ x ∈ maximalIdeal R, fst (f x) = 0}

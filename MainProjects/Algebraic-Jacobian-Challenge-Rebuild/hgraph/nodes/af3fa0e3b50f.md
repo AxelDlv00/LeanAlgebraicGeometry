@@ -10,9 +10,10 @@ docstring: 'The mediating test of the cross-member gluing: the open subscheme of
 file: AlgebraicJacobian/Picard/PicEtCoverBridge.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.picEt.overlapTest
 type: lean
-updated: '2026-07-16T21:33:28'
+updated: '2026-07-29T15:26:31'
 ---
 noncomputable def overlapTest (W : T.left.affineOpens) : Over (Spec (.of k)) :=
   Over.mk (W.1.ι ≫ T.hom)

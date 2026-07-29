@@ -10,9 +10,10 @@ docstring: 'The section-ring isomorphism of an open immersion of tests: pullback
 file: AlgebraicJacobian/Picard/PicEtCoverBridge.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.appLEAlgEquiv
 type: lean
-updated: '2026-07-16T21:33:28'
+updated: '2026-07-29T15:26:37'
 ---
 noncomputable def appLEAlgEquiv {T T' : Over (Spec (.of k))} (f : T' ⟶ T)
     [IsOpenImmersion f.left] (V : T.left.Opens) (hV : V ≤ f.left.opensRange) :

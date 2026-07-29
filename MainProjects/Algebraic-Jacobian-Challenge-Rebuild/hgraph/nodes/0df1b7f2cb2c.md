@@ -7,9 +7,10 @@ docstring: Eliminating a multiplication span into any submodule containing the p
 file: AlgebraicJacobian/RiemannRoch/AnnihilatorKernel.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.mulSpan_le
 type: lean
-updated: '2026-07-17T08:41:25'
+updated: '2026-07-29T15:26:09'
 ---
 lemma Scheme.mulSpan_le {U T W : Submodule K X.functionField}
     (h : ∀ a ∈ U, ∀ f ∈ T, a * f ∈ W) : Scheme.mulSpan K U T ≤ W := by

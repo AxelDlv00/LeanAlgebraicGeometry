@@ -16,9 +16,10 @@ docstring: '**The diagonal is a closed immersion** (worksheet D4): `δ ≫ snd =
 file: AlgebraicJacobian/Curve/DiagonalClosed.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.isClosedImmersion_diagonal_left
 type: lean
-updated: '2026-07-16T21:33:27'
+updated: '2026-07-29T15:26:37'
 ---
 instance isClosedImmersion_diagonal_left : IsClosedImmersion (diagonal C).left := by
   haveI : IsClosedImmersion ((diagonal C).left ≫ (snd C C).left) := by

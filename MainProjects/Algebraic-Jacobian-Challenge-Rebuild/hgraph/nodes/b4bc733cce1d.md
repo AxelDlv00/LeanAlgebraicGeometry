@@ -14,9 +14,10 @@ docstring: '**The classes correspond under `CechPic.map`** (worksheet §3.2, the
 file: AlgebraicJacobian/Cohomology/DatumDescent.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.BasicOpenCocycleDatum.descent_cechPicClass
 type: lean
-updated: '2026-07-17T08:41:24'
+updated: '2026-07-29T15:26:31'
 ---
 theorem BasicOpenCocycleDatum.descent_cechPicClass [IsAffineHom π]
     {B₀ : Subalgebra k B} {D₀ : BasicOpenCocycleDatum C (↥B₀) π}

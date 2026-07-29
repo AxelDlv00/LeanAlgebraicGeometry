@@ -630,7 +630,7 @@ the boundary as a NAMED interface so the DAT-B lane slots in:
   Four sessions on this leaf described the missing producer as geometry ("the identification of the
   datum's fibre class with `μ`'s fibre").  What was actually missing:
 
-  `Over.testPoint_eq_overSpecMap` (`Picard/Pic0ChartPlusFibreProducer.lean`) — **on an AFFINE test
+  `testPoint_eq_overSpecMap` (`Picard/Pic0ChartPlusFibreProducer.lean`) — **on an AFFINE test
   the canonical field point `Over.testPoint t` IS the base-change morphism
   `overSpecMap A κ(t)`.**  Both sides are `Spec` of the same ring map, because
   `Over.instAlgebraTestPointFieldAffine` is *defined* as `Spec.preimage` of `fromSpecResidueField`;
@@ -653,6 +653,30 @@ the boundary as a NAMED interface so the DAT-B lane slots in:
   and both the θ-family (via `thetaFamily_overSpec_affineEquiv`) and the Abel value (`abelDivAff`
   is `relPicToPicEt` of `relPicMk F₀.picClass`, by `rfl`) lie in it — measured, both probes close.
   So `chartTwist` preserves honesty, and the residue is about the λ-factor alone.
+
+  **A CORRECTION TO THIS CORRECTION, from a fresh-context review of the commit that wrote it, and
+  r7's failure mode RECURRED HERE.**  The paragraph above said both non-vacuity witnesses were
+  "measured, both probes close".  Two things were wrong.
+
+  1. **`abelDiv_isPlusHonest` was cited by name and did not exist** — one grep hit in the whole
+     workspace, the citing sentence.  That is exactly the `docstring-declaration-lists-unchecked`
+     failure r7 diagnosed and filed a lesson about, reproduced by the session that filed it,
+     inside its own *non-vacuity* argument.  Kernel EXIT=0, the `sorry` census and the axiom probe
+     are all silent about it, as r7 predicted.  **Now proved** (`abelDiv_isPlusHonest`,
+     `Picard/Pic0ChartPlusFibreProducer.lean`): the witness is the `picClass` of the *restricted*
+     family, and the proof is `picEtMap_abelDiv`, `abelDiv_overSpec`, then `rfl` — `abelDivAff`
+     *is* `relPicToPicEt` of `relPicMk F₀.picClass`.
+  2. **The θ- and Σ-witnesses were the wrong ones to lean on.**  They are the *twist factors*,
+     which `chartTwist_isPlusHonest` discharges anyway, so they say nothing about the class being
+     *charted*.  Since `chartValue = abelDiv · Σ · (θᵐ)⁻¹` and honesty is a subgroup condition,
+     honesty of a chart value reduces to honesty of `abelDiv` **alone** — so the one absent
+     witness was carrying the entire "unconditional on the classes the Σ-chart reads" clause,
+     while the two present ones were decoration.
+
+  So the honest scope now: **CHART-U(b) at a general test has no residue beyond `IsPlusHonest λ`,
+  and a chart *value* is honest.**  What remains genuinely unpriced is honesty of an *arbitrary*
+  `pic⁰` class on a test — DAT-B's coverage business, and where `Pic0ChartHonest`'s "honest only
+  over `E.Carrier`" bites.  Price the hypothesis at the consumer, not at the theorem.
 
   **The transferable rule, and it is not "check whether the declaration exists" (that was r7's).**
   r7 found a docstring naming an absent declaration.  This is the next failure along: the prose

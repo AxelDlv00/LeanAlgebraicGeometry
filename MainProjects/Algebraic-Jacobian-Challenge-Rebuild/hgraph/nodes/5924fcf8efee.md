@@ -7,9 +7,10 @@ docstring: '**`τ` is a `Θᵃ`-twisted glued section.**'
 file: AlgebraicJacobian/Picard/DivisorFamilyThetaSections.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.DivisorAdaptation.thetaSectionSnd_mem
 type: lean
-updated: '2026-07-17T16:57:13'
+updated: '2026-07-29T15:26:21'
 ---
 theorem thetaSectionSnd_mem : A.thetaSectionSnd a ∈ A.thetaGluedSubmodule a := by
   rw [mem_thetaGluedSubmodule_iff]

@@ -10,9 +10,10 @@ docstring: '**The shift map `Lₐ → L₀`.** Multiplication by `uniformizer ^ 
 file: AlgebraicJacobian/RiemannRoch/JumpDimension.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.shiftMap
 type: lean
-updated: '2026-07-16T21:33:29'
+updated: '2026-07-29T15:26:32'
 ---
 noncomputable def shiftMap (a : ℤ) :
     ↥(pointLattice K hx a) →ₗ[K] ↥(pointLattice K hx 0) where

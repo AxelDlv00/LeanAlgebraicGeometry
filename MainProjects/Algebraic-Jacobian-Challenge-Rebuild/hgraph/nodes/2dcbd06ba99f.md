@@ -18,9 +18,10 @@ docstring: '**Steps E–F: the comparison cochain glues and descends to the corr
 file: AlgebraicJacobian/Picard/CoherentWitnessCochains.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.exists_comparison_unit
 type: lean
-updated: '2026-07-16T21:33:28'
+updated: '2026-07-29T15:26:14'
 ---
 theorem exists_comparison_unit
     [IsProper C.hom] [GeometricallyIrreducible C.hom] [GeometricallyReduced C.hom]

@@ -19,9 +19,10 @@ docstring: '**The DD-R carve arrow** (`informal/spec-dd-r.md` §3 item 1) over a
 file: AlgebraicJacobian/Picard/DivCarveLocus.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.divCarveArrow
 type: lean
-updated: '2026-07-17T16:57:13'
+updated: '2026-07-29T15:26:32'
 ---
 noncomputable def divCarveArrow (i : (glueData k g r₁).J) (j : (glueData k g r₂).J)
     (a : ↥(divisorSections k A ⊤)) :

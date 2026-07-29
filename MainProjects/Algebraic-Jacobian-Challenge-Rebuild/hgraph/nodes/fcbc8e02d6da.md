@@ -19,9 +19,10 @@ docstring: '**The vehicle comparison commutes with restriction along an arbitrar
 file: AlgebraicJacobian/Picard/DivisorFamilyAffFunctorCompare.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.divFamZarToAffVehicle_map
 type: lean
-updated: '2026-07-29T03:41:56'
+updated: '2026-07-29T15:26:39'
 ---
 theorem divFamZarToAffVehicle_map {T T' : Over (Spec (.of k))} (f : T' ⟶ T)
     (s : divFamZar C π n T) :

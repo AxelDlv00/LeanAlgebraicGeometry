@@ -7,9 +7,10 @@ docstring: '`δ` composed with the inclusion of its kernel is the zero map.'
 file: AlgebraicJacobian/Cohomology/RigidEngine3Rigidity.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicJacobian.RigidEngine.comp_ker_subtype
 type: lean
-updated: '2026-07-16T21:33:27'
+updated: '2026-07-29T15:26:34'
 ---
 theorem comp_ker_subtype : δ ∘ₗ (LinearMap.ker δ).subtype = 0 := by
   ext x

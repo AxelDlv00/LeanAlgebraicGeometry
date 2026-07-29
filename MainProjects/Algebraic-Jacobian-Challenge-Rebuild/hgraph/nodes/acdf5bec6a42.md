@@ -20,9 +20,10 @@ docstring: '**The seed-level per-prime widened gate.**  At every prime of the ba
 file: AlgebraicJacobian/Picard/DivisorFamilyAffSeedGate.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.ThetaGeneratorSeed.isLocallyCertifiedAff_of_forall_prime_certified_adaptation
 type: lean
-updated: '2026-07-29T05:13:20'
+updated: '2026-07-29T15:26:31'
 ---
 theorem isLocallyCertifiedAff_of_forall_prime_certified_adaptation [IsNoetherianRing R] {n : ℕ}
     (hD : D.IsGenerator)

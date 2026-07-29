@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.Over.algebraMap_testPointField
 file: AlgebraicJacobian/Picard/Pic0ChartTestPoint.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.algebraMap_testPointField
 type: lean
-updated: '2026-07-28T13:42:17'
+updated: '2026-07-29T15:26:25'
 ---
 lemma algebraMap_testPointField {T : Over (Spec (.of k))} (t : T.left) :
     algebraMap k (testPointField t)

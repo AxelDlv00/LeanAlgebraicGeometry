@@ -22,9 +22,10 @@ docstring: 'A transport family between the relative Picard theories of a curve b
 file: AlgebraicJacobian/Picard/PicEtAffTransport.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.RelPicTransportFamily
 type: lean
-updated: '2026-07-24T17:02:48'
+updated: '2026-07-29T15:26:39'
 ---
 structure RelPicTransportFamily (kT : Type u) [Field kT] [Algebra kD kT] [Algebra kE kT]
     (D : Over (Spec (.of kD))) (E : Over (Spec (.of kE))) where

@@ -10,9 +10,10 @@ docstring: 'The restriction of the chart `D₊(X₁)` to the overlap, as a facto
 file: AlgebraicJacobian/Curve/P1Points.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.P1.SpecMap_awayToOverlapRight_chartι
 type: lean
-updated: '2026-07-24T17:02:46'
+updated: '2026-07-29T15:26:40'
 ---
 theorem SpecMap_awayToOverlapRight_chartι :
     Spec.map (CommRingCat.ofHom (awayToOverlapRight k)) ≫ chartι k 1 =

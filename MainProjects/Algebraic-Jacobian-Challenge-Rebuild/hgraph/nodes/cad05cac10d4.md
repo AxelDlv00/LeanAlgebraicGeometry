@@ -18,9 +18,10 @@ docstring: '**The seed certificate with no invented submodule and the landed deg
 file: AlgebraicJacobian/Picard/DivSchemeCertZarKerSpan.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.ThetaGeneratorSeed.divisorAdaptation_isCertified_of_noLeak_liftQ_degree
 type: lean
-updated: '2026-07-25T15:32:34'
+updated: '2026-07-29T15:26:34'
 ---
 theorem divisorAdaptation_isCertified_of_noLeak_liftQ_degree {n : ℕ}
     (hnoLeak : ∀ (j : (A).index) (s : Spec (.of R)),

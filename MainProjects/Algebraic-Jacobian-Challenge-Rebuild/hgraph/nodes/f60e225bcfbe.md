@@ -12,9 +12,10 @@ docstring: 'The **matrix presentation** over `S`: the composite of the coordinat
 file: AlgebraicJacobian/Picard/GrassmannianMatrixPoint.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Grassmannian.matrixProj
 type: lean
-updated: '2026-07-17T08:41:25'
+updated: '2026-07-29T15:26:39'
 ---
 noncomputable def matrixProj (X : Matrix (Fin d) (Fin r) S) :
     TensorProduct k S (Fin r → k) →ₗ[S] (Fin d → S) :=

@@ -7,9 +7,10 @@ docstring: The range of the Čech differential is the image lattice.
 file: AlgebraicJacobian/Cohomology/RigidEngineLattice.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: TwoLatticePair.range_diff_eq
 type: lean
-updated: '2026-07-16T21:33:27'
+updated: '2026-07-29T15:26:33'
 ---
 theorem range_diff_eq : LinearMap.range P.diff = P.imageLattice := by
   refine le_antisymm ?_ (sup_le ?_ ?_)

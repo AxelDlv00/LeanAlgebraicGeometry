@@ -10,9 +10,10 @@ docstring: '**The glued carve locus is a compact space**: a closed subscheme of 
 file: AlgebraicJacobian/Picard/DivSchemeQProj.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.compactSpace_carveScheme
 type: lean
-updated: '2026-07-19T14:31:14'
+updated: '2026-07-29T15:26:12'
 ---
 instance compactSpace_carveScheme : CompactSpace (carveScheme k g r₁ r₂ μ) :=
   QuasiCompact.compactSpace_of_compactSpace (carveSchemeι k g r₁ r₂ μ)

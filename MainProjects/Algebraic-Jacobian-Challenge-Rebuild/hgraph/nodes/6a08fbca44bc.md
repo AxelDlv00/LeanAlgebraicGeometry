@@ -13,9 +13,10 @@ docstring: '**The discharged `hbridge` shape**: two certified families with equa
 file: AlgebraicJacobian/Picard/DivSchemeMonoBridge.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.divFam_stalkIdeal_eq_of_eps_eq
 type: lean
-updated: '2026-07-18T21:01:13'
+updated: '2026-07-29T15:26:24'
 ---
 theorem divFam_stalkIdeal_eq_of_eps_eq (g : ℕ)
     (G G' : CertifiedDivisorFamily C R π g)

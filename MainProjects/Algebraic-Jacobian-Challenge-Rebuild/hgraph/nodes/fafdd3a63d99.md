@@ -8,9 +8,10 @@ file: AlgebraicJacobian/RiemannRoch/Degree.lean
 generated: lean
 lean_status: lean_ok
 private: true
+stale: true
 title: AlgebraicGeometry.classDegFun_picClass
 type: lean
-updated: '2026-07-28T17:25:28'
+updated: '2026-07-29T15:26:39'
 ---
 private theorem classDegFun_picClass (D : X.CurveDivisor) :
     classDegFun K (CurveDivisor.picClass K D) = CurveDivisor.deg K D :=

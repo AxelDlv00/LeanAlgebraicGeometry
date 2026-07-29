@@ -8,9 +8,10 @@ docstring: '**The presentation divisor of the graph is a one-point divisor** at 
 file: AlgebraicJacobian/RiemannRoch/GraphDegree.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.presentationDivisor_graphLocalEquations
 type: lean
-updated: '2026-07-16T21:33:29'
+updated: '2026-07-29T15:26:32'
 ---
 theorem presentationDivisor_graphLocalEquations :
     Scheme.presentationDivisor K (Over.graphLocalEquations C t).presentation

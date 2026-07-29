@@ -40,9 +40,10 @@ docstring: "**The σ-normalized comparison datum ((C2) effectivity, brick E1 —
 file: AlgebraicJacobian/Picard/NormalizedComparison.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.NormalizedCechComparison
 type: lean
-updated: '2026-07-24T17:02:47'
+updated: '2026-07-29T15:26:27'
 ---
 structure NormalizedCechComparison (𝒩 : (XB).PointedCover)
     (γ : (XB).unitsCocycle 𝒩) : Type u where

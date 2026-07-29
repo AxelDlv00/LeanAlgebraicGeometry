@@ -12,9 +12,10 @@ docstring: 'The base comparison of the identity tower is the identity: `Spec` of
 file: AlgebraicJacobian/Picard/DivisorFamilyMapAlg.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.overSpecMap_id
 type: lean
-updated: '2026-07-17T16:57:13'
+updated: '2026-07-29T15:26:34'
 ---
 lemma overSpecMap_id : overSpecMap (k := k) R R = 𝟙 (overSpec k R) := by
   ext : 1

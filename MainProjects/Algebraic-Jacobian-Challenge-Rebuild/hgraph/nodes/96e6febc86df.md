@@ -9,9 +9,10 @@ file: AlgebraicJacobian/RiemannRoch/Skyscraper.lean
 generated: lean
 lean_status: lean_ok
 private: true
+stale: true
 title: AlgebraicGeometry.skyModule_subsingleton_of_not_mem
 type: lean
-updated: '2026-07-28T17:25:29'
+updated: '2026-07-29T15:26:29'
 ---
 private lemma skyModule_subsingleton_of_not_mem (x : X) (M : ModuleCat.{u} K) {U : X.Opens}
     (h : x ∉ U) : Subsingleton ((skyModule x M).obj.obj (op U)) := by

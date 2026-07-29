@@ -29,9 +29,10 @@ docstring: '**Flatness of a cokernel from the ideal-division property** (no Noet
 file: AlgebraicJacobian/Picard/SlicingFlat.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: Module.Flat.of_surjective_exact_of_forall_mem_smul_top
 type: lean
-updated: '2026-07-17T21:17:13'
+updated: '2026-07-29T15:26:10'
 ---
 theorem Module.Flat.of_surjective_exact_of_forall_mem_smul_top [Module.Flat R M]
     (φ : M →ₗ[R] M) (π : M →ₗ[R] Q) (hsurj : Function.Surjective π)

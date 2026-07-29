@@ -10,9 +10,10 @@ docstring: 'The distinguished global section of the constant sheaf of `R`-module
 file: AlgebraicJacobian/Cohomology/OverOpen.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: CategoryTheory.Sheaf.constModuleSheafGen
 type: lean
-updated: '2026-07-16T21:33:27'
+updated: '2026-07-29T15:26:39'
 ---
 noncomputable def constModuleSheafGen : (constModuleSheaf J R).obj.obj (op T) :=
   constModuleSheafHomEquiv J hT (constModuleSheaf J R) (𝟙 _)

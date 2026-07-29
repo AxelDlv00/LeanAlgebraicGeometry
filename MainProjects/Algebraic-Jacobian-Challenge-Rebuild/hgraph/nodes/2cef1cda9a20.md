@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.Scheme.CechPic.ind
 file: AlgebraicJacobian/Picard/Pic.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.CechPic.ind
 type: lean
-updated: '2026-07-16T21:33:28'
+updated: '2026-07-29T15:26:13'
 ---
 theorem ind {motive : X.CechPic → Prop}
     (mk : ∀ (𝒰 : X.PointedCover) (a : X.unitsH1 𝒰), motive (mk 𝒰 a)) (x : X.CechPic) :

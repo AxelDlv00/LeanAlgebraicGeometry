@@ -36,9 +36,10 @@ docstring: '**The `hreg` discharge for the graph pullback**: for the diagonal di
 file: AlgebraicJacobian/Curve/GraphDivisor.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.graph_pullback_regular
 type: lean
-updated: '2026-07-16T21:33:27'
+updated: '2026-07-29T15:26:10'
 ---
 theorem graph_pullback_regular (data : DiagonalChartData C) [IsSeparated C.hom] (t : T ⟶ C)
     (y z : (C ⊗ T).left)

@@ -8,9 +8,10 @@ docstring: The plus class of a relative Picard class with a descent condition on
 file: AlgebraicJacobian/Picard/PicEtAff.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.PicEtAff.mk
 type: lean
-updated: '2026-07-16T21:33:28'
+updated: '2026-07-29T15:26:30'
 ---
 def mk (E : Algebra.EtaleCover A) (x : descentClasses C E) : PicEtAff C A :=
   Quotient.mk _ ⟨E, x⟩

@@ -7,9 +7,10 @@ docstring: The degree of `N` is the `k`-ledger embedding degree `M·δ`.
 file: AlgebraicJacobian/RiemannRoch/WindowFieldTransport.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.deg_windowN
 type: lean
-updated: '2026-07-17T21:31:17'
+updated: '2026-07-29T15:26:34'
 ---
 theorem deg_windowN (g : ℕ) :
     CurveDivisor.deg K (windowN C K hπ g)

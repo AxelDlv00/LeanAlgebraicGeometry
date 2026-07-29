@@ -19,9 +19,10 @@ file: AlgebraicJacobian/Picard/DivRepGlobalClassify.lean
 generated: lean
 lean_status: lean_ok
 private: true
+stale: true
 title: AlgebraicGeometry.DivRepAffinePullback.overSpecMap_comp_divRepClassifyZar
 type: lean
-updated: '2026-07-28T17:25:23'
+updated: '2026-07-29T15:26:38'
 ---
 private theorem overSpecMap_comp_divRepClassifyZar
     (D : DivRepAffinePullback hpi g hO hchi r1 r2 b1 b2)

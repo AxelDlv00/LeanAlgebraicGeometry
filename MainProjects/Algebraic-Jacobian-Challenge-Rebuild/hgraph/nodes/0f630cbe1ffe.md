@@ -7,9 +7,10 @@ docstring: The action of a product.
 file: AlgebraicJacobian/Cohomology/GluedSheafQcoh.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.gluedQsmul_mul
 type: lean
-updated: '2026-07-16T21:33:27'
+updated: '2026-07-29T15:26:09'
 ---
 lemma gluedQsmul_mul {V W : X.Opens} (hWV : W ≤ V) (r r' : Γ(X, V))
     (s : ↥(gluedSubmodule k U g W)) :

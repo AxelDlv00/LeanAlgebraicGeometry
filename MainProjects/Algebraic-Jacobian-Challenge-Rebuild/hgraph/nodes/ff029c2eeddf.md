@@ -27,9 +27,10 @@ docstring: '**The source rank of the carve seed at `κ(p)`**: the universal seed
 file: AlgebraicJacobian/Picard/DivSchemeRedesignHsubChart.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.ThetaGeneratorSeed.finrank_baseChange_divUniversalSeedK_add
 type: lean
-updated: '2026-07-20T08:01:14'
+updated: '2026-07-29T15:26:40'
 ---
 theorem finrank_baseChange_divUniversalSeedK_add
     (p : PrimeSpectrum (seedChartRing' C hπ g r₁ r₂ b₁ b₂ i j)) :

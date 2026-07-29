@@ -10,9 +10,10 @@ docstring: 'If an `R`-linear map out of `R ⊗[k] M` takes some element to `1`, 
 file: AlgebraicJacobian/Picard/DivisorFamilyWindowUnitGeneration.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.exists_basis_baseChange_mul_eq_one
 type: lean
-updated: '2026-07-21T12:32:00'
+updated: '2026-07-29T15:26:31'
 ---
 theorem exists_basis_baseChange_mul_eq_one (basis : Module.Basis ι k M)
     (f : R ⊗[k] M →ₗ[R] B) (x : R ⊗[k] M) (hx : f x = 1) :

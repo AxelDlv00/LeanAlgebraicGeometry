@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.gluedPieceEquiv_symm_apply
 file: AlgebraicJacobian/Cohomology/GluedSheafModule.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.gluedPieceEquiv_symm_apply
 type: lean
-updated: '2026-07-17T08:41:24'
+updated: '2026-07-29T15:26:34'
 ---
 lemma gluedPieceEquiv_symm_apply (hc : Scheme.IsGluingCocycle U g)
     (hP : ∀ i : ι, X.basicOpen (h i) ≤ U (σ i)) (i : ι)

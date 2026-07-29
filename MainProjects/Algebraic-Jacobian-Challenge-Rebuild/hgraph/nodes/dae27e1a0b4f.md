@@ -14,9 +14,10 @@ docstring: 'Restricting the pulled seed equation to the base-changed seed piece 
 file: AlgebraicJacobian/Picard/DivSchemeAdaptationFibreRegular.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.ThetaGeneratorSeed.pullbackEqn_res_self_eq_relPinnedPieceSectionsMap
 type: lean
-updated: '2026-07-24T17:32:26'
+updated: '2026-07-29T15:26:35'
 ---
 theorem pullbackEqn_res_self_eq_relPinnedPieceSectionsMap (hD : D.IsGenerator)
     (p : PrimeSpectrum R) (z : relCurve C p.asIdeal.ResidueField) :

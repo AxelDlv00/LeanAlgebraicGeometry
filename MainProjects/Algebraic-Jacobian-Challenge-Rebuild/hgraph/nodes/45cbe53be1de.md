@@ -12,9 +12,10 @@ docstring: 'The coaction retracts onto the kernel of `coactionSub ⊗ B`: any `x
 file: AlgebraicJacobian/Descent/ModuleDescent.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: Module.DescentDatum.coaction_actionMap
 type: lean
-updated: '2026-07-16T21:33:28'
+updated: '2026-07-29T15:26:18'
 ---
 theorem coaction_actionMap {x : B ⊗[A] M}
     (hx : (D.coaction.restrictScalars A).baseChange B x =

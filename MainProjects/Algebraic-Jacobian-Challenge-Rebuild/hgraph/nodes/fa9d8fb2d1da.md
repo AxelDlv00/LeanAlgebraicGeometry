@@ -19,9 +19,10 @@ file: AlgebraicJacobian/RiemannRoch/DegreeIsoTransport.lean
 generated: lean
 lean_status: lean_ok
 private: true
+stale: true
 title: AlgebraicGeometry.ord_functionFieldMap_germ_of_isIso
 type: lean
-updated: '2026-07-28T17:25:28'
+updated: '2026-07-29T15:26:39'
 ---
 private lemma ord_functionFieldMap_germ_of_isIso (f : W ⟶ X) [IsIso f]
     (hgen : f.base (genericPoint W) = genericPoint X)

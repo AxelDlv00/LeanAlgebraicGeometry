@@ -10,9 +10,10 @@ docstring: '**The truncated exponential is a unit**: `1 + b ε` is invertible in
 file: AlgebraicJacobian/Tangent/TruncExpUnits.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: TruncExpCech.truncExpUnit
 type: lean
-updated: '2026-07-17T08:41:25'
+updated: '2026-07-29T15:26:14'
 ---
 def truncExpUnit (b : R) : (R[ε])ˣ :=
   Units.mkOfMulEqOne (1 + inr b) (1 - inr b) <| by

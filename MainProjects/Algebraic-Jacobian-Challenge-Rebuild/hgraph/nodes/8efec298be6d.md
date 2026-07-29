@@ -11,9 +11,10 @@ file: AlgebraicJacobian/Picard/DegreeZero.lean
 generated: lean
 lean_status: lean_ok
 private: true
+stale: true
 title: AlgebraicGeometry.degAffField
 type: lean
-updated: '2026-07-28T17:25:23'
+updated: '2026-07-29T15:26:28'
 ---
 private def degAffField (E : Algebra.EtaleCover K) : Type u :=
   E.exists_finiteSeparableField_algHom.choose

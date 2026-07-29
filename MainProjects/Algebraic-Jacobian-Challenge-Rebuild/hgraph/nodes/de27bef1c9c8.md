@@ -8,9 +8,10 @@ file: AlgebraicJacobian/Cohomology/RelCurveCollapse.lean
 generated: lean
 lean_status: lean_ok
 private: true
+stale: true
 title: AlgebraicGeometry.fiberEqn_of_mem'
 type: lean
-updated: '2026-07-28T17:25:21'
+updated: '2026-07-29T15:26:35'
 ---
 private lemma fiberEqn_of_mem' {z : Y} (h : z ∈ fiberChart₀ π) :
     fiberEqn π a z

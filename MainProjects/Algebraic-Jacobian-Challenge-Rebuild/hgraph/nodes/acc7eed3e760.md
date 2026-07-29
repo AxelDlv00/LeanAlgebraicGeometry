@@ -7,9 +7,10 @@ docstring: The stage submodule transported into relative theta sections.
 file: AlgebraicJacobian/Picard/DivSchemeHighWindowStage.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.divUniversalHighWindowThetaSubmodule
 type: lean
-updated: '2026-07-21T22:01:54'
+updated: '2026-07-29T15:26:31'
 ---
 noncomputable def divUniversalHighWindowThetaSubmodule (n : Nat)
     (x : DivUniversalHighWindowStage (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j n) :

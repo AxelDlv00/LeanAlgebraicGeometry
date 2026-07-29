@@ -11,8 +11,9 @@ docstring: 'The first insertion `X_{B⊗B⊗B} ⟶ X_B` — the whiskered `Spec`
 file: AlgebraicJacobian/Picard/AmitsurProductCover.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.amitsurInsertion₁
 type: lean
-updated: '2026-07-24T17:02:46'
+updated: '2026-07-29T15:26:33'
 ---
 noncomputable def amitsurInsertion₁ : Xcb ⟶ XB := w₁₂ ≫ (u₁)

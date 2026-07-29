@@ -8,9 +8,10 @@ docstring: '**The residue degree** `[κ(x) : K]`: the `K`-dimension of the resid
 file: AlgebraicJacobian/RiemannRoch/ClosedPoint.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.residueDeg
 type: lean
-updated: '2026-07-16T21:33:28'
+updated: '2026-07-29T15:26:33'
 ---
 noncomputable def Scheme.residueDeg (x : X) : ℕ :=
   Module.finrank K (X.residueField x)

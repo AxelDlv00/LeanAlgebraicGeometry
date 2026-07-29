@@ -21,9 +21,10 @@ docstring: '**Chart restriction of the glued system** (`informal/spec-dd-2.md` �
 file: AlgebraicJacobian/Picard/DivisorFamilyZariskiGlueClass.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.divEq_pullback_awayGluedEquations
 type: lean
-updated: '2026-07-17T18:01:32'
+updated: '2026-07-29T15:26:36'
 ---
 theorem divEq_pullback_awayGluedEquations (hg : Ideal.span (Set.range g) = ⊤)
     (hcompat : AwayCompatDivEq S E T) (i : ι) (hreg) :

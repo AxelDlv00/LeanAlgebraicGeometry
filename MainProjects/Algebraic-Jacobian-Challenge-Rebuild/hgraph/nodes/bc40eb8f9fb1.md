@@ -10,9 +10,10 @@ docstring: 'The relative-curve comparison at the base-field transition `k → K`
 file: AlgebraicJacobian/RiemannRoch/WindowFieldTransport.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.relCurveMap_eq_overSpecMap_ofId
 type: lean
-updated: '2026-07-17T21:42:07'
+updated: '2026-07-29T15:26:32'
 ---
 lemma relCurveMap_eq_overSpecMap_ofId :
     relCurveMap C k K = (C ◁ Over.overSpecMap (Algebra.ofId k K)).left := by

@@ -11,9 +11,10 @@ docstring: 'The basis multiplications from `K` land in the chosen successor
 file: AlgebraicJacobian/Picard/DivSchemeHighWindowRelativeKoszul.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.DivUniversalHighWindowMulPreserves
 type: lean
-updated: '2026-07-22T11:33:49'
+updated: '2026-07-29T15:26:39'
 ---
 def DivUniversalHighWindowMulPreserves (n : Nat)
     (K : Submodule RZ

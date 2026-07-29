@@ -7,9 +7,10 @@ docstring: Unfolding lemma for `Over.diagonalChart`.
 file: AlgebraicJacobian/Curve/DiagonalChart.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.diagonalChart_def
 type: lean
-updated: '2026-07-16T21:33:27'
+updated: '2026-07-29T15:26:31'
 ---
 lemma diagonalChart_def (C : Over (Spec (.of k))) {U : C.left.Opens}
     (hU : IsAffineOpen U) (elift : Γ(C.left, U) ⊗[k] Γ(C.left, U)) :

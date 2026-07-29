@@ -6,9 +6,10 @@ decl: CategoryTheory.Over.sigmaExtensionNat_app_fst
 file: AlgebraicJacobian/Picard/Pic0AtlasFromDivRep.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: CategoryTheory.Over.sigmaExtensionNat_app_fst
 type: lean
-updated: '2026-07-27T01:04:30'
+updated: '2026-07-29T15:26:35'
 ---
 lemma sigmaExtensionNat_app_fst (φ : F ⟶ G) (T : Cᵒᵖ) (x : (sigmaExtension S F).obj T) :
     ((sigmaExtensionNat φ).app T x).1 = x.1 :=

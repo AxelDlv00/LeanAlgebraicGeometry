@@ -13,9 +13,10 @@ docstring: 'If the evaluation `k[t] → A`, `t ↦ a` kills no nonzero polynomia
 file: AlgebraicJacobian/Curve/P1Points.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.P1.fromSpecChart_base_genericPoint
 type: lean
-updated: '2026-07-16T21:33:27'
+updated: '2026-07-29T15:26:20'
 ---
 theorem fromSpecChart_base_genericPoint [IsDomain A] (a : A)
     (hinj : ∀ P : Polynomial k, P ≠ 0 → Polynomial.eval₂ ρ.hom a P ≠ 0) :

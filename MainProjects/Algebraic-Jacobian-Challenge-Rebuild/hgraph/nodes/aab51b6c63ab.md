@@ -7,9 +7,10 @@ docstring: The chart inclusions are morphisms over `Spec k`.
 file: AlgebraicJacobian/Curve/P1.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.P1.chartι_structureMap
 type: lean
-updated: '2026-07-24T17:02:46'
+updated: '2026-07-29T15:26:30'
 ---
 theorem chartι_structureMap (i : Fin 2) :
     chartι k i ≫ structureMap k =

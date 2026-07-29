@@ -23,9 +23,10 @@ docstring: "**THE CRITERION** — `IsOpenImmersion.presheaf` from elementwise da
 file: AlgebraicJacobian/Picard/Pic0ChartOpenImmersionCriterion.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.isOpenImmersion_presheaf_of_chartFibrePresented
 type: lean
-updated: '2026-07-29T05:13:20'
+updated: '2026-07-29T15:26:29'
 ---
 theorem isOpenImmersion_presheaf_of_chartFibrePresented {X : Scheme.{u}}
     (f : yoneda.obj X ⟶ (pic0SigmaSheaf C).1)

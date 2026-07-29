@@ -21,9 +21,10 @@ docstring: '**G1 (Wave-5 target 3, geometric irreducibility; route GI-(a))**: th
 file: AlgebraicJacobian/AbelianVariety/AbelSource.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.geometricallyIrreducible_of_abelSource
 type: lean
-updated: '2026-07-17T10:19:49'
+updated: '2026-07-29T15:26:34'
 ---
 theorem geometricallyIrreducible_of_abelSource (a : AbelSourceData d) :
     GeometricallyIrreducible d.J.hom := by

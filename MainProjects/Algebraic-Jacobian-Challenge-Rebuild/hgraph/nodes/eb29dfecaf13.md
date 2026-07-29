@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.DivisorAdaptation.stalkColEval_mk
 file: AlgebraicJacobian/Picard/DivisorFamilyStalkEval.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.DivisorAdaptation.stalkColEval_mk
 type: lean
-updated: '2026-07-18T20:31:11'
+updated: '2026-07-29T15:26:37'
 ---
 lemma stalkColEval_mk (j : A.index) {z : relCurve C K} (hz : z ∈ A.pieces j)
     (t : Γ(relCurve C K, A.pieces j)) :

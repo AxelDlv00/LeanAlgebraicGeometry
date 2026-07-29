@@ -37,9 +37,10 @@ docstring: '**THE CARRIER-FREE ε-PAIR IDENTITY.**  For an *arbitrary* class `F 
 file: AlgebraicJacobian/Picard/DivRepChartClassUnivQuot.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.divFamEps_eq_of_le_of_quotientData
 type: lean
-updated: '2026-07-29T07:37:18'
+updated: '2026-07-29T15:26:31'
 ---
 theorem divFamEps_eq_of_le_of_quotientData (F : DivFam C R π g)
     (x₁ : Grassmannian.grFunctorAff k

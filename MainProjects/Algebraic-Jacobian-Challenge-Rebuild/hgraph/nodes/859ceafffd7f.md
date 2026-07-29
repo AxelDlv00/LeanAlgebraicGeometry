@@ -15,9 +15,10 @@ docstring: '**The graph-lift whisker square** (base-change geometry): whiskering
 file: AlgebraicJacobian/Curve/GraphDivisor.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.whiskerLeft_comp_graphLift
 type: lean
-updated: '2026-07-16T21:33:27'
+updated: '2026-07-29T15:26:27'
 ---
 lemma whiskerLeft_comp_graphLift {T' : Over (Spec (.of k))} (g : T' ⟶ T) (t : T ⟶ C) :
     (C ◁ g) ≫ lift (fst C T) (snd C T ≫ t)

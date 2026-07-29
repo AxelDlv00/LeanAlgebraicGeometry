@@ -7,9 +7,10 @@ docstring: The chart-0 polynomial algebra sends `t` to the pulled-back chart coo
 file: AlgebraicJacobian/Cohomology/RigidEngine4Relative.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.fiberPolyHom₀_X
 type: lean
-updated: '2026-07-24T17:02:46'
+updated: '2026-07-29T15:26:21'
 ---
 theorem fiberPolyHom₀_X : fiberPolyHom₀ π Polynomial.X = fiberCoord π := by
   have h : (P1.chartSectionsEquiv₀ k).symm Polynomial.X

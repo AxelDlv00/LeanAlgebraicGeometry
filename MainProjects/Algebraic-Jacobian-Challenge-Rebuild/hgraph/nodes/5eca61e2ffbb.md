@@ -12,9 +12,10 @@ docstring: '**The degree-zero restriction of the componentwise lift** (the B-4a 
 file: AlgebraicJacobian/Picard/Pic0ThetaAssembly.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.mem_pic0Subgroup_picEtCrossBase_iff
 type: lean
-updated: '2026-07-17T21:42:06'
+updated: '2026-07-29T15:26:22'
 ---
 theorem mem_pic0Subgroup_picEtCrossBase_iff
     (s : picEt C ((Over.map (Spec.map (CommRingCat.ofHom (algebraMap k L)))).obj T)) :

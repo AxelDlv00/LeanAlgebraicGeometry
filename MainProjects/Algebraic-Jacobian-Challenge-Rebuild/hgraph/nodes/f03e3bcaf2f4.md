@@ -8,9 +8,10 @@ docstring: 'A point off the first pinned chart lies in the second: the pinned ch
 file: AlgebraicJacobian/Picard/DivisorFamilyFieldDictionaryCore.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.mem_V₁_of_notMem_V₀
 type: lean
-updated: '2026-07-24T17:02:47'
+updated: '2026-07-29T15:26:38'
 ---
 lemma mem_V₁_of_notMem_V₀ {x : relCurve C K}
     (hx : x ∉ (relCover C K (fiberTwoCover π)).V₀) :

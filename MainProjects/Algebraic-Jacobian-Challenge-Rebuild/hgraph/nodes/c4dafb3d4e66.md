@@ -15,9 +15,10 @@ docstring: '**A map intertwining two localizations is bijective**: if `p : M →
 file: AlgebraicJacobian/Cohomology/GluedBaseChangeAlgebra.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: IsLocalizedModule.bijective_of_comp_eq
 type: lean
-updated: '2026-07-17T08:41:24'
+updated: '2026-07-29T15:26:33'
 ---
 theorem IsLocalizedModule.bijective_of_comp_eq (p : M →ₗ[R] P) (q : M →ₗ[R] Q)
     [IsLocalizedModule S p] [IsLocalizedModule S q] (T : P →ₗ[R] Q)

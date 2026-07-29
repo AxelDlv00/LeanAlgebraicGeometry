@@ -13,9 +13,10 @@ docstring: 'The `j`-th **component** of a global section of the datum''s glued s
 file: AlgebraicJacobian/Picard/SectionsToDivisors.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.BasicOpenCocycleDatum.component
 type: lean
-updated: '2026-07-17T08:41:25'
+updated: '2026-07-29T15:26:21'
 ---
 noncomputable def component (s : ↥(gluedSubmodule B D.pieces D.unit ⊤))
     (j : D.index) : Γ(relCurve C B, D.pieces j) :=

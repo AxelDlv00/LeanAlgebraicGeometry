@@ -8,9 +8,10 @@ docstring: A scheme quasi-compact over `Spec k` (e.g. proper) is a quasi-compact
 file: AlgebraicJacobian/Curve/Basic.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.compactSpace_left_of_quasiCompact
 type: lean
-updated: '2026-07-16T21:33:27'
+updated: '2026-07-29T15:26:11'
 ---
 instance compactSpace_left_of_quasiCompact [QuasiCompact X.hom] : CompactSpace X.left :=
   QuasiCompact.compactSpace_of_compactSpace X.hom

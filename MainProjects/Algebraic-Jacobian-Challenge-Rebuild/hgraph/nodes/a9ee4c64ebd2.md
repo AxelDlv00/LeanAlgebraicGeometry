@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.Scheme.isSheaf_moduleKPresheaf
 file: AlgebraicJacobian/Cohomology/ModuleKSheaf.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.isSheaf_moduleKPresheaf
 type: lean
-updated: '2026-07-16T21:33:27'
+updated: '2026-07-29T15:26:30'
 ---
 lemma Scheme.isSheaf_moduleKPresheaf :
     Presheaf.IsSheaf (Opens.grothendieckTopology (X : TopCat)) (X.moduleKPresheaf k) := by

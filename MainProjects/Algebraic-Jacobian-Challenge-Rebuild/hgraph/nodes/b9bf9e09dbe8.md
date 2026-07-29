@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.windowAddCoherenceDivisorEquiv_apply
 file: AlgebraicJacobian/Picard/DivSchemeHighWindowFibreNormalization.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.windowAddCoherenceDivisorEquiv_apply
 type: lean
-updated: '2026-07-22T11:03:23'
+updated: '2026-07-29T15:26:32'
 ---
 theorem windowAddCoherenceDivisorEquiv_apply (p q : Nat)
     (D : (relCurve C K).CurveDivisor)

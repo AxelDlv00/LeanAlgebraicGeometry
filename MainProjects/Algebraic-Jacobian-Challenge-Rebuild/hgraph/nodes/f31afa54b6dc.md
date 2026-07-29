@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.divFunctorAff_map
 file: AlgebraicJacobian/Picard/DivisorFamilyAffMap.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.divFunctorAff_map
 type: lean
-updated: '2026-07-29T02:23:55'
+updated: '2026-07-29T15:26:38'
 ---
 lemma divFunctorAff_map {T T' : (Over (Spec (.of k)))ᵒᵖ} (g : T ⟶ T')
     (s : divFamZarAff C n T.unop) :

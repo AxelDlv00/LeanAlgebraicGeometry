@@ -14,9 +14,10 @@ docstring: '**Scheme-level diagonal triviality core.** For an over-`k̄` morphis
 file: AlgebraicJacobian/Albanese/Milne33Rows.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.pullback_lift_diff_self
 type: lean
-updated: '2026-07-17T10:31:28'
+updated: '2026-07-29T15:26:25'
 ---
 lemma pullback_lift_diff_self (G : Over (Spec (.of kbar))) [GrpObj G]
     {T : Scheme.{u}} (t : T ⟶ Spec (.of kbar)) (A : T ⟶ G.left)

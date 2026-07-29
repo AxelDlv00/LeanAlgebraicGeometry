@@ -10,9 +10,10 @@ docstring: 'Every δ transition map is affine (`Spec` of a field hom; both sourc
 file: AlgebraicJacobian/Picard/PicRepColimitMountain.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.DatG0.deltaSchemeMap_isAffineHom
 type: lean
-updated: '2026-07-19T21:31:15'
+updated: '2026-07-29T15:26:08'
 ---
 instance deltaSchemeMap_isAffineHom {L₁ L₂ : FinSubext k K} (h : L₁.1 ≤ L₂.1) :
     IsAffineHom (deltaSchemeMap h).left :=

@@ -12,9 +12,10 @@ docstring: '**The big-site carrier of the slice trick**: the Σ-extension of the
 file: AlgebraicJacobian/Picard/Pic0SigmaSheaf.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.pic0SigmaFunctor
 type: lean
-updated: '2026-07-16T21:33:28'
+updated: '2026-07-29T15:26:31'
 ---
 noncomputable abbrev pic0SigmaFunctor : Scheme.{u}ᵒᵖ ⥤ Type u :=
   Over.sigmaExtension (Spec (.of k)) (pic0TypeFunctor C)

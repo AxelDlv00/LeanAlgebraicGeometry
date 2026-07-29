@@ -10,9 +10,10 @@ docstring: '**Finiteness of the stalk colength along the divisor**: `𝒪_z ⧸ 
 file: AlgebraicJacobian/Picard/DivisorFamilyStalkEval.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.DivisorAdaptation.moduleFinite_stalkQuot
 type: lean
-updated: '2026-07-18T20:31:11'
+updated: '2026-07-29T15:26:40'
 ---
 lemma moduleFinite_stalkQuot (j : A.index) {z : relCurve C K} (hz : z ∈ A.pieces j)
     (hzg : z ≠ genericPoint (relCurve C K)) :

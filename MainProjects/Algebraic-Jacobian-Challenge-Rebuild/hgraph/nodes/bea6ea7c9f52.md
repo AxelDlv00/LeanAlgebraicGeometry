@@ -13,9 +13,10 @@ docstring: '**The easy inclusion at the family level**: window germs lie in the 
 file: AlgebraicJacobian/Picard/DivSchemeMonoBridge.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.span_divFamEpsWindowGermSet_le
 type: lean
-updated: '2026-07-18T21:01:13'
+updated: '2026-07-29T15:26:32'
 ---
 lemma span_divFamEpsWindowGermSet_le (g : ℕ) (G : CertifiedDivisorFamily C R π g)
     (z : relCurve C R) :

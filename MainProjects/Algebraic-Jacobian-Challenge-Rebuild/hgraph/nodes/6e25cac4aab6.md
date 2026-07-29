@@ -15,9 +15,10 @@ docstring: '**Unit sections have trivial order.** The germ at `η` of a unit sec
 file: AlgebraicJacobian/Picard/PresentationDivisor.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.ordZ_germGenericUnits
 type: lean
-updated: '2026-07-16T21:33:28'
+updated: '2026-07-29T15:26:24'
 ---
 theorem ordZ_germGenericUnits {U : X.Opens} (hηU : genericPoint X ∈ U) (u : Γ(X, U)ˣ)
     {x : X} (hx : x ≠ genericPoint X) (hxU : x ∈ U) :

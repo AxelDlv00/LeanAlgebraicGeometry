@@ -43,6 +43,22 @@ automatic:
   Σ-family, and the Abel value itself (`abelDiv_isPlusHonest`).  So `chartTwist` preserves
   honesty, and CHART-U(b) becomes **unconditional** on exactly the classes DAT-C's Σ-chart reads.
 
+  **A CORRECTION TO THIS PARAGRAPH, from a fresh-context review of the commit that first wrote
+  it, and it is the same failure this leaf recorded one round earlier.**  When first committed the
+  sentence above cited `abelDiv_isPlusHonest` **and that declaration did not exist** — a
+  workspace-wide grep returned exactly one hit, the sentence itself.  That is precisely the
+  failure mode r7 diagnosed (`docstring-declaration-lists-unchecked`) and filed a lesson about,
+  reproduced by the very session that filed it, inside its own *non-vacuity* argument.
+  A kernel check, a `sorry` census and an axiom probe are all silent about it.
+
+  It also mattered mathematically, which is why it was worth writing rather than deleting: the
+  θ- and Σ-witnesses are the **twist factors**, which `chartTwist_isPlusHonest` discharges anyway,
+  so they say nothing about the class being *charted*.  Since `chartValue = abelDiv · Σ · (θᵐ)⁻¹`,
+  honesty of a chart value reduces to honesty of `abelDiv` alone — so `abelDiv_isPlusHonest` was
+  carrying the whole of the final clause.  It is now proved (below), so the paragraph stands as
+  written; had it not been, the honest statement would have been "no residue beyond
+  `IsPlusHonest lam`", with the Σ-chart clause unproved.
+
 ## Main declarations
 
 * `AlgebraicGeometry.testPoint_eq_overSpecMap` — **the comparison**: on an affine test the
@@ -241,6 +257,30 @@ theorem sigmaFamily_isPlusHonest (Z : (C ⊗ overSpec k k).left.CurveDivisor)
     (T : Over (Spec (.of k))) :
     IsPlusHonest C T (sigmaFamily C Z T) :=
   thetaFamily_isPlusHonest C _ T
+
+variable (C π) in
+/-- **THE ABEL VALUE IS HONEST AT EVERY TEST** — the witness that carries weight, and the one this
+file's header cited by name before it existed (see the header's own retraction).
+
+The θ- and Σ-family witnesses above are the *twist factors*, which `chartTwist_isPlusHonest`
+discharges anyway; they say nothing about the class being charted.  Since
+`chartValue = abelDiv · Σ · (θᵐ)⁻¹` and honesty is a subgroup condition, honesty of a **chart
+value** reduces to honesty of `abelDiv` — so this is the row that makes CHART-U(b) unconditional
+on the classes DAT-C's Σ-chart actually reads.
+
+It is cheap for a structural reason: `abelDiv`'s components are `abelDivPlus`, i.e. `PicEtAff.unit`
+of `relPicMk` of the family's class, and `relPicToPicEt`'s components are `PicEtAff.unit` of
+`relPicMap` — so the witness on the piece `U` is the class of the *restricted* family, and
+`abelDiv_val` plus `picEtMap_abelDiv` line the two up. -/
+theorem abelDiv_isPlusHonest {n : ℕ} (T : Over (Spec (.of k)))
+    (s : divFamZar C π n T) :
+    IsPlusHonest C T (abelDiv C π n T s) := by
+  intro U
+  refine ⟨relPicMk C (overSpec k Γ(T.left, U.1))
+    ((divFamZarAffineEquiv C π n Γ(T.left, U.1)
+      (divFamZar.map C π n (Over.fromSpecAffine T U) s)).picClass), ?_⟩
+  rw [picEtMap_abelDiv, abelDiv_overSpec]
+  rfl
 
 variable (C) in
 /-- **`chartTwist` PRESERVES honesty** — the reason the producer reaches the Σ-chart.

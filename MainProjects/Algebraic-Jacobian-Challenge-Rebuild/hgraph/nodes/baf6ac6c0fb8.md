@@ -14,9 +14,10 @@ docstring: 'The no-leak clause for **every** piece, from containment of the supp
 file: AlgebraicJacobian/Picard/DivSchemeCertZarTube.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.DivisorAdaptation.forall_noLeak_of_forall_supportLocus_subset
 type: lean
-updated: '2026-07-25T15:32:34'
+updated: '2026-07-29T15:26:32'
 ---
 theorem forall_noLeak_of_forall_supportLocus_subset
     (hsub : ∀ j : A.index, d.supportLocus ⊆ (A.pieces j : Set (relCurve C R))) :

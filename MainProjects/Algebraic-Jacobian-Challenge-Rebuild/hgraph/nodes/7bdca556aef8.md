@@ -75,9 +75,10 @@ docstring: '**THE SATISFIABILITY PROBE, and it is the one that matters here.**  
 file: AlgebraicJacobian/Picard/JacobianDataAbelEffective.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.exists_effective_deg_eq_of_classDeg_eq_zero
 type: lean
-updated: '2026-07-29T12:10:32'
+updated: '2026-07-29T15:26:26'
 ---
 theorem exists_effective_deg_eq_of_classDeg_eq_zero (g : ℕ)
     (hχ : Sheaf.chi (X.moduleKSheaf K) = 1 - (g : ℤ))

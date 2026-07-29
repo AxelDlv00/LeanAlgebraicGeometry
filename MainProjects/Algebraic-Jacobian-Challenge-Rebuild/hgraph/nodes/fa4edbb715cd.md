@@ -15,9 +15,10 @@ docstring: 'Morphisms from a reduced scheme to a separated scheme are determined
 file: AlgebraicJacobian/Albanese/CodimOneExtensionUnique.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.RationalMap.hom_ext_of_toRationalMap_eq
 type: lean
-updated: '2026-07-17T10:19:49'
+updated: '2026-07-29T15:26:39'
 ---
 theorem hom_ext_of_toRationalMap_eq {X Y : Scheme.{u}} [IsReduced X]
     [Y.IsSeparated] {g₁ g₂ : X ⟶ Y}

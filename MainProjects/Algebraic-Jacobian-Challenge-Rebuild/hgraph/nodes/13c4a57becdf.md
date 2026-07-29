@@ -7,9 +7,10 @@ docstring: The first fibre window obeys the transported pole bound `N`.
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivAssembleKappa.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.divUniversalFibreKM_le
 type: lean
-updated: '2026-07-19T14:31:14'
+updated: '2026-07-29T15:26:09'
 ---
 theorem divUniversalFibreKM_le :
     divUniversalFibreKM C hπ g r₁ r₂ b₁ i j K

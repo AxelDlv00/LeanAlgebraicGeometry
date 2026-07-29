@@ -19,9 +19,10 @@ docstring: '**`hfib` in the sheaf form the engine consumes** (W6-full × W6-lite
 file: AlgebraicJacobian/RiemannRoch/W6Full.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.subsingleton_hModule_gluedSheaf_one_of_picClass_eq
 type: lean
-updated: '2026-07-17T08:41:25'
+updated: '2026-07-29T15:26:40'
 ---
 theorem subsingleton_hModule_gluedSheaf_one_of_picClass_eq
     (P : X.MeromorphicPresentation) {D : X.CurveDivisor}

@@ -10,9 +10,10 @@ docstring: 'The Abel transformation at an affine test, plus-construction form: t
 file: AlgebraicJacobian/Picard/DivSchemeAbel.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.abelDivPlus
 type: lean
-updated: '2026-07-19T15:31:13'
+updated: '2026-07-29T15:26:25'
 ---
 def abelDivPlus (A : Type u) [CommRing A] [Algebra k A] (F₀ : DivFamZar C A π n) :
     PicEtAff C A :=

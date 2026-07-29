@@ -12,9 +12,10 @@ docstring: '**Diagonal coincidence on the curve product**: composed with the bas
 file: AlgebraicJacobian/Picard/CoherentWitness.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.whiskerLeft_inl_ofId
 type: lean
-updated: '2026-07-16T21:33:28'
+updated: '2026-07-29T15:26:17'
 ---
 lemma whiskerLeft_inl_ofId :
     (C ◁ Over.overSpecMap (tensorInl (A := A) (B := B))).left

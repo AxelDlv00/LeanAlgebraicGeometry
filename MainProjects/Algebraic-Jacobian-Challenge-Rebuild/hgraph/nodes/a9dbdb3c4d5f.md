@@ -18,9 +18,10 @@ docstring: '**The glued-component germ is the trivialized reading**: in the func
 file: AlgebraicJacobian/Picard/DivSchemeUnivFibreHdiv.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.algebraMap_germ_thetaFieldGluedEquiv_eq
 type: lean
-updated: '2026-07-20T03:31:14'
+updated: '2026-07-29T15:26:30'
 ---
 lemma algebraMap_germ_thetaFieldGluedEquiv_eq (s : relThetaSections C K π a)
     (z : relCurve C K) :

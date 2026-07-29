@@ -14,9 +14,10 @@ docstring: '**The prime-fibre kernel computation** (the flat half): for flat `M`
 file: AlgebraicJacobian/Picard/FibrewiseRegular.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: Module.Flat.mem_smul_top_of_tmul_residueField_one_eq_zero
 type: lean
-updated: '2026-07-17T08:41:25'
+updated: '2026-07-29T15:26:17'
 ---
 theorem Module.Flat.mem_smul_top_of_tmul_residueField_one_eq_zero [Module.Flat R M]
     (p : Ideal R) [p.IsPrime] {x : M}

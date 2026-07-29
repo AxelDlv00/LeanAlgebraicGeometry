@@ -23,9 +23,10 @@ docstring: '**`H¹` base-field invariance** (the parked deg-d5b D2 item, headlin
 file: AlgebraicJacobian/Cohomology/H1BaseFieldInvariance.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.h1BaseFieldEquiv
 type: lean
-updated: '2026-07-17T08:41:24'
+updated: '2026-07-29T15:26:35'
 ---
 noncomputable def h1BaseFieldEquiv :
     letI : C.left.Over (Spec (.of k)) := .ofHom C.hom

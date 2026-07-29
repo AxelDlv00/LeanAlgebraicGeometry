@@ -10,9 +10,10 @@ docstring: 'A morphism from the spectrum of a field lands inside any open contai
 file: AlgebraicJacobian/Curve/SepPointsDenseKit.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.top_le_preimage_of_closedPoint_mem
 type: lean
-updated: '2026-07-19T16:01:13'
+updated: '2026-07-29T15:26:19'
 ---
 lemma top_le_preimage_of_closedPoint_mem {K : Type u} [Field K] {X : Scheme.{u}}
     (p : Spec (.of K) ⟶ X) {U : X.Opens}

@@ -7,9 +7,10 @@ docstring: The diagonal equation on an off-diagonal point is `1`.
 file: AlgebraicJacobian/Curve/DiagonalEquations.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.diagonalEqn_of_notMem
 type: lean
-updated: '2026-07-16T21:33:27'
+updated: '2026-07-29T15:26:39'
 ---
 lemma diagonalEqn_of_notMem {z : (C ⊗ C).left} (h : z ∉ Set.range (diagonal C).left.base) :
     diagonalEqn data z = 1 := by

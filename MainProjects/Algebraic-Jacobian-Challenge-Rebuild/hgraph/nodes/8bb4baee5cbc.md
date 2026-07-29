@@ -15,9 +15,10 @@ docstring: '**Cocycle functoriality**: the relative theta cocycle over the base 
 file: AlgebraicJacobian/Cohomology/RelThetaTwist.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.relThetaCocycle_baseChange
 type: lean
-updated: '2026-07-17T10:19:49'
+updated: '2026-07-29T15:26:28'
 ---
 theorem relThetaCocycle_baseChange :
     relCocycleBaseChange C k R (fiberTwoCover π) (relThetaCocycle C k π n)

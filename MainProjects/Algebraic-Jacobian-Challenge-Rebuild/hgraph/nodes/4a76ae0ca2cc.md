@@ -10,9 +10,10 @@ docstring: 'Through the section-level identifications, restriction from the left
 file: AlgebraicJacobian/Curve/P1Charts.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.P1.overlapSectionsEquiv_res_left
 type: lean
-updated: '2026-07-16T21:33:27'
+updated: '2026-07-29T15:26:19'
 ---
 theorem overlapSectionsEquiv_res_left (a : Γ(P1 k, chartOpen k 0)) :
     overlapSectionsEquiv k (((P1 k).presheaf.map (homOfLE (overlap_le_left k)).op).hom a) =

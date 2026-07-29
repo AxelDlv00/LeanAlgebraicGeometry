@@ -15,9 +15,10 @@ docstring: '**The kernel presentation of the graph ideal** (the multiplicity inp
 file: AlgebraicJacobian/RiemannRoch/GraphChart.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.ker_graphSectionEval_eq_span_graphChartEqn
 type: lean
-updated: '2026-07-16T21:33:29'
+updated: '2026-07-29T15:26:39'
 ---
 theorem ker_graphSectionEval_eq_span_graphChartEqn :
     RingHom.ker (graphSectionEval t (graphPoint_mem_graphChart C t))

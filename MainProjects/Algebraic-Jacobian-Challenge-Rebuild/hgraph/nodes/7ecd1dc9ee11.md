@@ -11,9 +11,10 @@ docstring: '**The cofactor family matches through the theta-ideal transition uni
 file: AlgebraicJacobian/Picard/DivSchemeCertificate.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.DivisorAdaptation.vanishingDiv_matching
 type: lean
-updated: '2026-07-17T16:57:13'
+updated: '2026-07-29T15:26:26'
 ---
 lemma vanishingDiv_matching (p q : A.index) :
     (relCurve C R).resHom

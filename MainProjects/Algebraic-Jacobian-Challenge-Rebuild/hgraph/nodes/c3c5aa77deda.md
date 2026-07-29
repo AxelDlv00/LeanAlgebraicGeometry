@@ -18,9 +18,10 @@ docstring: '**The Mumford `ε ↦ aε` scaling of the thickened Čech `Ȟ¹`** o
 file: AlgebraicJacobian/Tangent/TruncExpCechH1.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.TwoCover.mumfordScaling
 type: lean
-updated: '2026-07-17T08:41:25'
+updated: '2026-07-29T15:26:33'
 ---
 noncomputable def mumfordScaling (a : k) :
     ((Γ(X, U₀ ⊓ U₁)[ε])ˣ ⧸ cechCoboundaryUnits

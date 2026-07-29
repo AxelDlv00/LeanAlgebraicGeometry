@@ -13,9 +13,10 @@ docstring: '**`SwallowedBy` for the explicit straddling cover**, given that the 
 file: AlgebraicJacobian/Picard/DivisorFamilyAffStraddle.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.AffCoverData.swallowedBy_ofSwallowingPiece
 type: lean
-updated: '2026-07-28T18:01:38'
+updated: '2026-07-29T15:26:39'
 ---
 theorem swallowedBy_ofSwallowingPiece {d : (relCurve C R).LocalEquations}
     {W : (relCurve C R).Opens} (hW : IsAffineOpen W) {m : ℕ}

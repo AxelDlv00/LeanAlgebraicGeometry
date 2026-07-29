@@ -6,9 +6,10 @@ decl: TwoLatticePair.moduleFinite_aeval_model_t₁
 file: AlgebraicJacobian/Cohomology/RigidEngineLatticeModelHom.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: TwoLatticePair.moduleFinite_aeval_model_t₁
 type: lean
-updated: '2026-07-24T17:02:46'
+updated: '2026-07-29T15:26:30'
 ---
 instance moduleFinite_aeval_model_t₁ :
     Module.Finite R[X] (Module.AEval' (model R ι m).t₁) :=

@@ -16,9 +16,10 @@ docstring: '**Separation of the locally certified vehicle** (`informal/spec-dd-2
 file: AlgebraicJacobian/Picard/DivisorFamilyZarSheaf.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.divFamZar.ext_of_le_cover
 type: lean
-updated: '2026-07-29T11:07:13'
+updated: '2026-07-29T15:26:26'
 ---
 theorem ext_of_le_cover {T : Over (Spec (.of k))} {ι' : Type*}
     (O : ι' → T.left.Opens) (hcov : ∀ p : T.left, ∃ i, p ∈ O i)

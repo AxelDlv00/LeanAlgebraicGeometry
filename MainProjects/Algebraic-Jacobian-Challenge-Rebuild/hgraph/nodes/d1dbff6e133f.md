@@ -21,9 +21,10 @@ docstring: '**The m-chart glued sheaf** of transition units `g i j ∈ Γ(X, U i
 file: AlgebraicJacobian/Cohomology/GluedSheaf.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.gluedSheaf
 type: lean
-updated: '2026-07-16T21:33:27'
+updated: '2026-07-29T15:26:34'
 ---
 noncomputable def gluedSheaf :
     Sheaf (Opens.grothendieckTopology (X : TopCat)) (ModuleCat.{u} k) :=

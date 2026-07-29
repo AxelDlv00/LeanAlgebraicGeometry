@@ -10,9 +10,10 @@ docstring: 'Under `T ⊆ H⁰(𝒪(A))`, the shifted divisor `A + div f` of a no
 file: AlgebraicJacobian/RiemannRoch/BaseDivisor.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.coeffAt_add_divOf_nonneg
 type: lean
-updated: '2026-07-17T08:41:25'
+updated: '2026-07-29T15:26:17'
 ---
 lemma Scheme.coeffAt_add_divOf_nonneg {T : Submodule K X.functionField}
     {A : X.CurveDivisor} (hTA : T ≤ divisorSections K A ⊤) {f : X.functionField}

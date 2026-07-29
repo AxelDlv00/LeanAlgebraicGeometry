@@ -10,9 +10,10 @@ docstring: '**The `H¹` window at the exponent `a`**: `H¹(𝒪(a·F)) = 0` — 
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivFibre.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.window_embedding_windowA
 type: lean
-updated: '2026-07-19T10:31:16'
+updated: '2026-07-29T15:26:35'
 ---
 theorem window_embedding_windowA :
     Subsingleton (Sheaf.HModule

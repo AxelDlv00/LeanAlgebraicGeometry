@@ -32,9 +32,10 @@ docstring: '**The fibre P-fib-N keystone at the transported windows** (worksheet
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivFibre.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.existsUnique_effective_divisor_of_carve_windowN
 type: lean
-updated: '2026-07-19T11:01:19'
+updated: '2026-07-29T15:26:28'
 ---
 theorem existsUnique_effective_divisor_of_carve_windowN (g : ℕ)
     (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)

@@ -20,9 +20,10 @@ docstring: '**A tracked point-uniformizer.** An open neighbourhood of the closed
 file: AlgebraicJacobian/Picard/PointPresentation.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.PointUniformizerData
 type: lean
-updated: '2026-07-24T17:02:48'
+updated: '2026-07-29T15:26:23'
 ---
 structure PointUniformizerData : Type u where
   /-- The neighbourhood of `x` carrying the spread-out uniformizer. -/

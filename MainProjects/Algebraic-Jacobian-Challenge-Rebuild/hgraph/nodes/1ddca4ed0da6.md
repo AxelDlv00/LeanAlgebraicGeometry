@@ -12,9 +12,10 @@ docstring: '**Nonzero prime at a closed point.** On an integral scheme, the prim
 file: AlgebraicJacobian/RiemannRoch/ChartPoints.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.IsAffineOpen.primeIdealOf_ne_bot
 type: lean
-updated: '2026-07-16T21:33:28'
+updated: '2026-07-29T15:26:11'
 ---
 theorem IsAffineOpen.primeIdealOf_ne_bot {x : X} (hx : x ∈ V) (hxg : x ≠ genericPoint X) :
     (hV.primeIdealOf ⟨x, hx⟩).asIdeal ≠ ⊥ := by

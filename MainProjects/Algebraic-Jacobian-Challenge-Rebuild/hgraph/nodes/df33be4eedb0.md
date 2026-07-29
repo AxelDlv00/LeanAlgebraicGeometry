@@ -13,9 +13,10 @@ docstring: '**Affine consistency of the unit**: on an affine test `overSpec k A`
 file: AlgebraicJacobian/Picard/PicEtUnit.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.picEtAffineEquiv_relPicToPicEt
 type: lean
-updated: '2026-07-16T21:33:28'
+updated: '2026-07-29T15:26:35'
 ---
 theorem picEtAffineEquiv_relPicToPicEt (A : Type u) [CommRing A] [Algebra k A]
     (z : relPic C (overSpec k A)) :

@@ -28,9 +28,10 @@ docstring: '**DAT-0a — the P5-uniform `H¹`-vanishing bound.** For a **finite*
 file: AlgebraicJacobian/RiemannRoch/UniformVanishing.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.exists_bound_subsingleton_hModule_one_of_isFinite_toP1
 type: lean
-updated: '2026-07-16T21:33:29'
+updated: '2026-07-29T15:26:34'
 ---
 theorem exists_bound_subsingleton_hModule_one_of_isFinite_toP1
     [Module.Finite K (Sheaf.HModule (Y.moduleKSheaf K) 0)]

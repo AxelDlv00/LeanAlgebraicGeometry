@@ -19,9 +19,10 @@ file: AlgebraicJacobian/Picard/DivRepClassifyZarCompat.lean
 generated: lean
 lean_status: lean_ok
 private: true
+stale: true
 title: AlgebraicGeometry.specMap_awayPiece_eq_of_clause
 type: lean
-updated: '2026-07-28T17:25:23'
+updated: '2026-07-29T15:26:34'
 ---
 private theorem specMap_awayPiece_eq_of_clause
     {S₀ : Type u} [CommRing S₀] [Algebra k S₀]

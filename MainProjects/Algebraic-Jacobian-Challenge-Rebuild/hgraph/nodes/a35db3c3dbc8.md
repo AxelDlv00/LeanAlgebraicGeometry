@@ -10,9 +10,10 @@ docstring: '**The kernel of `ε ↦ 0` consists of nilpotents.** `ker fstRingHom
 file: AlgebraicJacobian/Tangent/EpsZeroSurjective.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: TruncExpCech.ker_fstRingHom_le_nilradical
 type: lean
-updated: '2026-07-29T06:04:35'
+updated: '2026-07-29T15:26:30'
 ---
 theorem ker_fstRingHom_le_nilradical :
     RingHom.ker (fstRingHom (R := A)) ≤ nilradical (DualNumber A) := by

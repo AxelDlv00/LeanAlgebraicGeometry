@@ -7,9 +7,10 @@ file: AlgebraicJacobian/Picard/CoherentWitnessExists.lean
 generated: lean
 lean_status: lean_ok
 private: true
+stale: true
 title: AlgebraicGeometry.stepGCover_le_w₁₃
 type: lean
-updated: '2026-07-28T17:25:23'
+updated: '2026-07-29T15:26:33'
 ---
 private lemma stepGCover_le_w₁₃ (𝒲 : (Sq).PointedCover) (𝒜 : (XB).PointedCover)
     (x : Xcb) :

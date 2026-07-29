@@ -15,9 +15,10 @@ docstring: '**Section-level regularity on basic sub-opens of the piece**: the re
 file: AlgebraicJacobian/Picard/DivSchemeFamily.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.ThetaGeneratorSeed.res_eqn_mem_nonZeroDivisors
 type: lean
-updated: '2026-07-17T16:57:13'
+updated: '2026-07-29T15:26:31'
 ---
 theorem res_eqn_mem_nonZeroDivisors [IsNoetherianRing R] (hD : D.IsGenerator)
     (z : relCurve C R) (f : Γ(relCurve C R, D.piece z)) :

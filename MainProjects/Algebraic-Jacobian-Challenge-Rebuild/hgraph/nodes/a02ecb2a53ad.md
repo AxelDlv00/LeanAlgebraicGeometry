@@ -14,9 +14,10 @@ docstring: '**The local equation of the diagonal on the chart**: the transport o
 file: AlgebraicJacobian/Curve/DiagonalChart.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.diagonalChartEqn
 type: lean
-updated: '2026-07-16T21:33:27'
+updated: '2026-07-29T15:26:30'
 ---
 noncomputable def diagonalChartEqn (C : Over (Spec (.of k))) {U : C.left.Opens}
     (hU : IsAffineOpen U) [Algebra (Polynomial k) Γ(C.left, U)]

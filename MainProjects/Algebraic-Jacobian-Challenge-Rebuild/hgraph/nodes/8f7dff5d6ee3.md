@@ -10,9 +10,10 @@ docstring: 'The degree-zero scalar identity: the `K`-dimension of `H‚Å∞(C_K, ùí
 file: AlgebraicJacobian/Cohomology/H1BaseFieldInvariance.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.finrank_h0_baseField
 type: lean
-updated: '2026-07-17T08:41:24'
+updated: '2026-07-29T15:26:28'
 ---
 theorem finrank_h0_baseField :
     letI : C.left.Over (Spec (.of k)) := .ofHom C.hom

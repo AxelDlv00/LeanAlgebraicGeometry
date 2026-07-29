@@ -7,9 +7,10 @@ docstring: The equalizer as the whole product, when the glued submodule is `⊤`
 file: AlgebraicJacobian/Picard/DivisorFamilyFieldDegree.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.DivisorAdaptation.gluedTopEquiv
 type: lean
-updated: '2026-07-17T10:19:50'
+updated: '2026-07-29T15:26:39'
 ---
 noncomputable def gluedTopEquiv (h : A.gluedSubmodule = ⊤) : A.Glued ≃ₗ[K] A.chartProd :=
   (LinearEquiv.ofEq _ _ h).trans Submodule.topEquiv

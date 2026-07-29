@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.Scheme.twoChartCocycle_unitsEvInf
 file: AlgebraicJacobian/Tangent/TwoChartCechPic.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.twoChartCocycle_unitsEvInf
 type: lean
-updated: '2026-07-28T14:45:07'
+updated: '2026-07-29T15:26:31'
 ---
 theorem twoChartCocycle_unitsEvInf (u : Γ(X, V false ⊓ V true)ˣ) (sel : X → Bool)
     (hmem : ∀ x, x ∈ V (sel x)) (x y : X) :

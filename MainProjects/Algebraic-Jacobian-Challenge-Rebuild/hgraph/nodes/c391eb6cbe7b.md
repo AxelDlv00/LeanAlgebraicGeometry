@@ -10,9 +10,10 @@ docstring: 'The scalar-extension presentation of the chart-reading ideal after q
 file: AlgebraicJacobian/Picard/DivSchemeRedesignChartReadIdeal.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.ThetaGeneratorSeed.chartIdealColengthMap
 type: lean
-updated: '2026-07-20T16:31:23'
+updated: '2026-07-29T15:26:33'
 ---
 noncomputable def chartIdealColengthMap
     (K : Submodule R (relThetaSections C R π a)) (b : Bool)

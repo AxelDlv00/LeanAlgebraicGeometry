@@ -15,9 +15,10 @@ docstring: '**Section-level regularity from the fibre-regularity predicate**: th
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivFacts.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.ThetaGeneratorSeed.res_eqn_mem_nonZeroDivisors_of_fibre_regular
 type: lean
-updated: '2026-07-20T02:01:14'
+updated: '2026-07-29T15:26:36'
 ---
 theorem res_eqn_mem_nonZeroDivisors_of_fibre_regular [IsNoetherianRing R]
     (hfr : ∀ (z : relCurve C R) (p : PrimeSpectrum R) (f : Γ(relCurve C R, D.piece z)),

@@ -6,9 +6,10 @@ decl: CategoryTheory.Over.sigmaExtension_obj
 file: AlgebraicJacobian/Picard/OverSigmaExtension.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: CategoryTheory.Over.sigmaExtension_obj
 type: lean
-updated: '2026-07-16T21:33:28'
+updated: '2026-07-29T15:26:13'
 ---
 lemma sigmaExtension_obj (T : Cᵒᵖ) :
     (sigmaExtension S F).obj T = Σ a : T.unop ⟶ S, F.obj (op (Over.mk a)) :=

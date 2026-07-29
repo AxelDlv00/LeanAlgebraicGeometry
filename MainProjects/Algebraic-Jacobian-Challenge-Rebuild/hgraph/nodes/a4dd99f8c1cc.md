@@ -11,9 +11,10 @@ docstring: '**`hOK` at every field extension**: `h⁰(𝒪) = 1` on the fibre cu
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivAssembleKappa.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.h0_relCurve_baseField
 type: lean
-updated: '2026-07-19T14:31:14'
+updated: '2026-07-29T15:26:30'
 ---
 theorem h0_relCurve_baseField : Sheaf.h0 ((relCurve C K).moduleKSheaf K) = 1 := by
   haveI : IsProper (baseChangeBundle C K).hom := instIsProperSndLeft C K

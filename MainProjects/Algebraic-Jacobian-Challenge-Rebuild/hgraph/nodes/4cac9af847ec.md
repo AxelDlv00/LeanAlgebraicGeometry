@@ -9,9 +9,10 @@ docstring: 'The restricted chart-0 pieces cover the overlap of the pinned charts
 file: AlgebraicJacobian/Cohomology/GluedSheafDatum.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.BasicOpenCoverData.coverInf
 type: lean
-updated: '2026-07-24T17:02:46'
+updated: '2026-07-29T15:26:19'
 ---
 lemma coverInf : (relCover C B (fiberTwoCover π)).V₀ ⊓ (relCover C B (fiberTwoCover π)).V₁
     ≤ ⨆ j : D.J₀, (relCurve C B).basicOpen (D.hInf j) := by

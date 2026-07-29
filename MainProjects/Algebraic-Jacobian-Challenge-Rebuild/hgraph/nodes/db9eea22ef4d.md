@@ -14,9 +14,10 @@ file: AlgebraicJacobian/Cohomology/Finiteness.lean
 generated: lean
 lean_status: lean_ok
 private: true
+stale: true
 title: AlgebraicGeometry.overlapLaurentHom
 type: lean
-updated: '2026-07-28T17:25:21'
+updated: '2026-07-29T15:26:35'
 ---
 private noncomputable def overlapLaurentHom :
     LaurentPolynomial k →+* Γ(Y, π ⁻¹ᵁ P1.chartOpen k 0 ⊓ π ⁻¹ᵁ P1.chartOpen k 1) :=

@@ -10,9 +10,10 @@ docstring: 'The product of the two chart collapses, as a `k`-linear map of the d
 file: AlgebraicJacobian/Cohomology/RelThetaTransportCore.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.twistCollapseDom
 type: lean
-updated: '2026-07-17T16:57:12'
+updated: '2026-07-29T15:26:30'
 ---
 noncomputable def twistCollapseDom :
     (↥(twistSubmodule k (fiberChart₀ π) (fiberChart₁ π) (thetaUnit π ^ n)

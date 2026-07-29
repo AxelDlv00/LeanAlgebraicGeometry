@@ -24,9 +24,10 @@ docstring: '**The generator of a cyclic quotient can be lifted** — so the "fix
 file: AlgebraicJacobian/Tangent/CyclicQuotientGenerator.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: Submodule.exists_sub_smul_mem_of_quotient_cyclic
 type: lean
-updated: '2026-07-28T22:23:06'
+updated: '2026-07-29T15:26:08'
 ---
 theorem exists_sub_smul_mem_of_quotient_cyclic (N : Submodule R M)
     (h : ∃ y : M ⧸ N, ∀ z : M ⧸ N, ∃ r : R, z = r • y) :

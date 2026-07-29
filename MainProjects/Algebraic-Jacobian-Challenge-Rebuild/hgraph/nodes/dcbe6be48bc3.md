@@ -10,9 +10,10 @@ docstring: '**The matrix-presented Grassmannian point**: the kernel of a surject
 file: AlgebraicJacobian/Picard/GrassmannianMatrixPoint.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Grassmannian.matrixPoint
 type: lean
-updated: '2026-07-17T08:41:25'
+updated: '2026-07-29T15:26:35'
 ---
 noncomputable def matrixPoint (X : Matrix (Fin d) (Fin r) S)
     (hX : Function.Surjective (matrixProj k d r S X)) :

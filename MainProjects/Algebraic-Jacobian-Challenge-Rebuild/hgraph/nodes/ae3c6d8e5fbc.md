@@ -13,9 +13,10 @@ docstring: 'Restriction of a pulled-back equation to a sub-open `W ≤ (E.cover.
 file: AlgebraicJacobian/Picard/LocalEquationsPullback.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.LocalEquations.pullbackEqn_res
 type: lean
-updated: '2026-07-16T21:33:28'
+updated: '2026-07-29T15:26:31'
 ---
 lemma pullbackEqn_res (f : Y ⟶ X) (E : X.LocalEquations) (y : Y) {W : Y.Opens}
     (h : W ≤ (E.cover.pullback f).opens y) :

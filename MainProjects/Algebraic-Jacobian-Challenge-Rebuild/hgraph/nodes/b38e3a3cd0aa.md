@@ -10,9 +10,10 @@ docstring: 'The action commutes with the `k`-module structure (the `smul_qsmul` 
 file: AlgebraicJacobian/Cohomology/GluedSheafQcoh.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.gluedQsmul_smul
 type: lean
-updated: '2026-07-16T21:33:27'
+updated: '2026-07-29T15:26:31'
 ---
 lemma gluedQsmul_smul {V W : X.Opens} (hWV : W ≤ V) (r : Γ(X, V)) (c : k)
     (s : ↥(gluedSubmodule k U g W)) :

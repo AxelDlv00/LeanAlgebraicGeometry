@@ -7,9 +7,10 @@ docstring: Cocycle coherence for a tower `k → L → M`.
 file: AlgebraicJacobian/Challenge.lean
 generated: lean
 lean_status: sorry
+stale: true
 title: AlgebraicGeometry.Jacobian.baseChangeIso_comp
 type: lean
-updated: '2026-07-16T21:33:27'
+updated: '2026-07-29T15:26:35'
 ---
 theorem baseChangeIso_comp (k L M : Type u) [Field k] [Field L] [Field M]
     [Algebra k L] [Algebra L M] [Algebra k M] [IsScalarTower k L M]

@@ -15,9 +15,10 @@ docstring: '**The two-cover H¹ computation, general coefficients.** For a sheaf
 file: AlgebraicJacobian/Cohomology/TwoCover.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.twoCoverH1LinearEquiv
 type: lean
-updated: '2026-07-16T21:33:27'
+updated: '2026-07-29T15:26:08'
 ---
 noncomputable def Scheme.twoCoverH1LinearEquiv
     (F : Sheaf (Opens.grothendieckTopology (X : TopCat)) (ModuleCat.{u} k))

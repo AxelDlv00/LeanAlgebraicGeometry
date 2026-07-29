@@ -19,9 +19,10 @@ docstring: "**Milne Lemma 3.3, Substep 2 topological half (`[2-topo-a]`), abstra
 file: AlgebraicJacobian/Albanese/Milne33Substeps.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.exists_snd_mem_of_fst_eq_of_mem
 type: lean
-updated: '2026-07-17T08:41:24'
+updated: '2026-07-29T15:26:30'
 ---
 theorem exists_snd_mem_of_fst_eq_of_mem
     {kbar : Type u} [Field kbar]

@@ -15,9 +15,10 @@ docstring: '**The relative-curve comparison of a localization is an open immersi
 file: AlgebraicJacobian/Picard/DivisorFamilyZariskiSep.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.isOpenImmersion_relCurveMap_away
 type: lean
-updated: '2026-07-29T11:07:13'
+updated: '2026-07-29T15:26:35'
 ---
 theorem isOpenImmersion_relCurveMap_away (f : R) [IsLocalization.Away f S] :
     IsOpenImmersion (relCurveMap C R S) := by

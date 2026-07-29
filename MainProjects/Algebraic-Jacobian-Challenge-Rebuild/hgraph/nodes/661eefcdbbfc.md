@@ -13,9 +13,10 @@ docstring: 'The étale-plus transport commutes with restriction along an explici
 file: AlgebraicJacobian/Picard/PicEtAffTransport.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.RelPicTransportFamily.mapAlg_picEtAffHom
 type: lean
-updated: '2026-07-17T16:57:14'
+updated: '2026-07-29T15:26:23'
 ---
 theorem mapAlg_picEtAffHom (φ : A →ₐ[kT] A') (a : PicEtAff E A) :
     T.picEtAffHom A' (PicEtAff.mapAlg E (φ.restrictScalars kE) a)

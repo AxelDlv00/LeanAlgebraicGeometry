@@ -9,9 +9,10 @@ docstring: '`δ_{I,J}` on the right factor is the pre-localisation transition ho
 file: AlgebraicJacobian/Picard/GrassmannianDiagonal.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Grassmannian.diagonalRingMap_right
 type: lean
-updated: '2026-07-17T08:41:25'
+updated: '2026-07-29T15:26:20'
 ---
 theorem diagonalRingMap_right (k : Type u) [Field k] (d r : ℕ) (I J : Finset (Fin r))
     (hI : I.card = d) (hJ : J.card = d) (b : ChartRing k d r J) :

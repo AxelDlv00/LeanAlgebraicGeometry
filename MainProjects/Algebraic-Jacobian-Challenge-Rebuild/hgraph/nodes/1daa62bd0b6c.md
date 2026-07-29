@@ -13,9 +13,10 @@ docstring: '**The θ-family commutes with powers** — so `θ^m` may be read eit
 file: AlgebraicJacobian/Picard/Pic0ChartTwistCollapse.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.thetaFamily_pow
 type: lean
-updated: '2026-07-28T15:00:45'
+updated: '2026-07-29T15:26:11'
 ---
 theorem thetaFamily_pow (L : (C ⊗ overSpec k k).left.CechPic)
     (T : Over (Spec (.of k))) (m : ℕ) :

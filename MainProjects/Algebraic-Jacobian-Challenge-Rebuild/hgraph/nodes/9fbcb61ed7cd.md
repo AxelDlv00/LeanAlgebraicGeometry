@@ -15,9 +15,10 @@ docstring: '**The comparison map is a map over the base ring**: composing the st
 file: AlgebraicJacobian/Picard/DivRepAwaySpanGlue.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.DivFamZar.awayMulOfDvd_toAlgHom
 type: lean
-updated: '2026-07-28T13:42:17'
+updated: '2026-07-29T15:26:30'
 ---
 theorem awayMulOfDvd_toAlgHom (f a b : S) (h : a * b = f) (x : S) :
     awayMulOfDvd (k := k) f a b h (IsScalarTower.toAlgHom k S (Localization.Away a) x)

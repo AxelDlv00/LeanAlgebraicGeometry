@@ -10,9 +10,10 @@ docstring: '**`picEtAffineEquiv`-compatibility**: at an affine test the componen
 file: AlgebraicJacobian/Picard/PicEtCurveMap.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.picEtAffineEquiv_picEtPullback
 type: lean
-updated: '2026-07-17T18:01:32'
+updated: '2026-07-29T15:26:09'
 ---
 theorem picEtAffineEquiv_picEtPullback (g : D ⟶ E) (s : picEt E (overSpec k A)) :
     picEtAffineEquiv D A (picEtPullback g (overSpec k A) s)

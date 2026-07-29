@@ -13,9 +13,10 @@ docstring: '**Restriction absorbs `mixedValue`.** Both sides are units on the *s
 file: AlgebraicJacobian/Tangent/TwoChartNormalize.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.unitsRestrict_mixedValue
 type: lean
-updated: '2026-07-28T17:25:29'
+updated: '2026-07-29T15:26:39'
 ---
 theorem unitsRestrict_mixedValue {s t : Bool} (hs : s = false) (ht : t = true)
     (w : Γ(X, V s ⊓ V t)ˣ) {W : X.Opens} (hst : W ≤ V s ⊓ V t) (hft : W ≤ V false ⊓ V true) :
