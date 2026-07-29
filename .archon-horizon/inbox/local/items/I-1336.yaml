@@ -1,0 +1,67 @@
+id: I-1336
+provider: local
+kind: issue
+body: 'framecover-aff: TWO DOCSTRING MEASUREMENTS ARE WRONG -- the carrier-read count
+  is 8 sites not 3, and divisorWindow DOES mention the pinned chart pair.
+
+
+  MEASURED on Picard/DivisorFamilyAffFrameCover.lean at HEAD (361ae7e829/8b49606a54/f76a7d6925),
+  reading DivSchemeFrameCover.lean and DivisorFamilyWindow.lean directly. Oleans rebuilt
+  (EXIT=0, 8885 jobs).
+
+
+  (1) THE COUNT. Docstring ~line 26: ''reads its carrier DivFam C S pi g at exactly
+  THREE points, all inside exists_frame_chart_at_prime: Module.Finite, Module.Projective,
+  rankAtStalk = g''. exists_frame_chart_at_prime (DivSchemeFrameCover.lean:330-451)
+  has EIGHT carrier-read sites: 4x DivFam.finite/projective_window_quotient (347-357
+  -- there are TWO windows, so each is read twice), 2x F.window in the exists_away_free_pair
+  call (361,365), 2x DivFam.window_mapAlg in the closing rfl blocks (426,443). rankAtStalk
+  is not read there at all; it enters via divFamWindowGr''s own definition.
+
+
+  THE MATERIAL OMISSION is the two window_mapAlg sites. That is FUNCTORIALITY of the
+  carrier (window of mapAlg = windowBaseChange), not a window-quotient fact -- and
+  it is exactly what the file''s own new theorem windowBaseChange_windowBaseChange
+  had to replace. So the count both understates the reads and misclassifies the two
+  that motivated the file''s one genuinely new step.
+
+
+  (2) ''NO CHART TYPING''. Docstring ~line 35 and divisorWindowGrOfQuot''s: divisorWindow
+  ''mentions NO adaptation, NO cover and NO chart typing''. First clause true; the
+  other two FALSE. divisorWindow (DivisorFamilyWindow.lean:103) is Submodule.comap
+  _ (d.vanishingSubmodule R (relCover C R (fiberTwoCover pi)).V0 (relCover C R (fiberTwoCover
+  pi)).V1 ...). fiberTwoCover pi (Cohomology/RigidEngine4Relative.lean:75) IS the
+  pinned affine two-chart cover V0 = pi^-1 D+(X0), V1 = pi^-1 D+(X1), and vanishingSubmodule
+  (DivisorStalkIdeal.lean:215) quantifies germs over top-inf-V0 and top-inf-V1 separately.
+  So the window submodule is defined BY the pinned chart pair -- the same pair the
+  straddling no-go''s hx0/hy1 are about. The file''s central sentence ''the window
+  layer is not chart-typed at all'' is false as written.
+
+
+  WHAT SURVIVES: divisorWindow is independent of the ADAPTATION (which cover refines
+  d) while still defined relative to the fixed pinned chart pair. That suffices for
+  the declarations to typecheck carrier-free -- the code is fine, the measurement
+  prose is not.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T23:09:09.805069+00:00'
+updated_at: '2026-07-29T23:09:57.181472+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0010-horizon-ajcr-p1
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-p1
+  - ajcr-p3

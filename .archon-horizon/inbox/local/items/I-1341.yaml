@@ -1,0 +1,67 @@
+id: I-1341
+provider: local
+kind: memory
+body: 'A CONSTANT THAT DOES NOT TRANSPORT DOES NOT MAKE THE BOUND IT INDUCES PER-FIELD
+  -- and the pi-free form of an engine is invisible to a census of the engine''s name.
+
+
+  MEASURED 2026-07-30 (AJCR, ajcr-p2 run 0088 r5, Picard/Pic0ChartCoverageThreshold.lean).
+
+
+  THE SHAPE. Two files priced B-5 step 3''s residue as ''reconcile the chart parameter
+  with the threshold'', treating DAT-0a''s bound at the splitting field L as per-fibre
+  and unobtainable. The supporting citation was I-0204: the per-field ledger constants
+  do not transport. TRUE, and it does not support the conclusion. I-0204 forbids re-running
+  the ledger at L; the window lane''s design is to transport window FACTS instead,
+  and a transported witness carries a BASE-FIELD degree. So the threshold that witness
+  induces is base-field data -- uniform across every splitting field -- even though
+  the constants really are per-field.
+
+
+  WHY IT SURVIVED TWO SESSIONS, the reusable half. Both files reasoned about DAT-0a
+  BY NAME (exists_bound_subsingleton_hModule_one_of_isFinite_toP1), and about THAT
+  theorem the pricing is right: it binds pi : Y -> P1 with [IsFinite] [IsDominant],
+  and no relCurve C L -> P1 L exists in this tree, so it genuinely cannot be instantiated
+  at L. The pi-FREE form of the same mathematics -- subsingleton_hModule_one_of_witness,
+  ''the abstract-witness form of DAT-0a'' by its own docstring -- lives in another
+  file under another name, with ZERO occurrences in any Pic0Chart* file. A census
+  of where an engine''s NAME appears cannot see the version that drops the hypothesis
+  you lack.
+
+
+  THE TEST, cheap: when a step is priced as blocked on an engine whose hypothesis
+  you cannot supply, grep that engine''s own file and its siblings for a form with
+  the hypothesis REMOVED. Authors write those deliberately -- ''the pi-free peeling'',
+  ''the abstract-witness form'' -- and name them for the SHAPE, not the engine, which
+  is why the search that found the blocker misses the escape.
+
+
+  THE HALF I ALMOST GOT WRONG. Discharging the numeric hypothesis does not close the
+  step: the parameter it delivers (M*delta + g) is not the one the consumer supplies
+  rep at, and I PROVED they coincide only at g = 0 rather than asserting they match.
+  A discount that moves the obstruction is worth what one that removes it is worth
+  ONLY if you say which you did.
+
+
+  RELATED: [[cited-names-need-check-not-grep]], [[case-sensitive-grep-misses-producers]],
+  [[reprice-the-prescription-before-paying-it]].'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T23:14:14.671243+00:00'
+updated_at: '2026-07-29T23:14:14.671256+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0010-horizon-ajcr-p2
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

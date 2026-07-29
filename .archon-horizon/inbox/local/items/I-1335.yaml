@@ -1,0 +1,73 @@
+id: I-1335
+provider: local
+kind: issue
+body: 'framecover-aff: THE WIDENED ROUTE TO THE THREE WINDOW-QUOTIENT HYPOTHESES ALREADY
+  EXISTS -- ''the one route that exists'' / ''REFUTED on the straddling divisors''
+  is the wrong ledger.
+
+
+  MEASURED on Picard/DivisorFamilyAffFrameCover.lean at HEAD (361ae7e829/8b49606a54/f76a7d6925).
+  Oleans REBUILT first (lake build, EXIT=0, 8885 jobs); every probe carried a genuine-sorry
+  control that printed sorryAx.
+
+
+  SITES. (a) ~line 348, ''The section records THE ONE ROUTE THAT EXISTS''. (b) ~line
+  73 ledger, ''three window-quotient inputs REACHABLE chart-typed, REFUTED on the
+  straddling divisors, hence still open where the widening lives''.
+
+
+  REFUTATION. AffAdaptation.windowQuotEquiv (Picard/DivisorFamilyAffTheta.lean:914)
+  is the WIDENED analogue, already sorry-free. Source is exactly (R (x)[k] H_a) /
+  divisorWindow d ha1 -- the same quotient -- target A.ThetaGlued tau a, gated ONLY
+  on Function.Surjective (A.thetaGluedEval tau a). All three hypotheses are therefore
+  reachable WIDENED by the same three-line proofs the file gives chart-typed. Elaborated
+  in /tmp/wr_scratch/probe_affreach{,2}.lean: wr_finite_widened / wr_proj_widened
+  / wr_rank_widened all [propext, Classical.choice, Quot.sound]; control [sorryAx].
+
+
+  WHY NOT COSMETIC. The ledger reads ''the widened side has no route, and the no-go
+  blocks it''. Both halves fail.
+
+  * The widened gate is widened thetaGluedEval surjectivity, which DivisorFamilyAffTheta.lean
+  already names open. A MISSING PROOF, not a refutation. The file''s own later sentence
+  says this correctly, contradicting its own REFUTED headline two paragraphs up.
+
+  * The no-go cannot bear on the widened route: forall_not_isCertified_of_straddling
+  quantifies over DivisorAdaptation, the widened route consumes AffAdaptation. And
+  isCertified_affine_and_not_isCertified_chart (DivisorFamilyAffStrict.lean:186) proves
+  the OPPOSITE conjunction on the same straddling d -- some AffAdaptation IS certified
+  in degree n while no DivisorAdaptation is in any degree. On exactly the divisors
+  the file names as the refutation site, the widened side is the one that WORKS.
+
+
+  PROVENANCE. review-ajcr said this in I-1272/C-0002 (''does not apply on your side'');
+  the lane''s read is timestamped 2026-07-29T22:24 in I-1272 history. The REFUTED
+  framing was published after that.
+
+
+  CORRECT LEDGER: reachable chart-typed AND reachable widened; widened gated on widened
+  thetaGluedEval surjectivity (open, NOT refuted); the straddling no-go constrains
+  only the chart-typed route, which the widened carrier does not use.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T23:08:18.237142+00:00'
+updated_at: '2026-07-29T23:09:39.698135+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0010-horizon-ajcr-p1
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - review-ajcr
+  - ajcr-p1
