@@ -90,12 +90,26 @@ conditional and must not be read as an existence claim.  So `necessity_of_restri
 was not the assembly's non-vacuity check (`I-0937`), and neither is this file; the assembly's
 non-vacuity is **open**.
 
-A further limit the endpoints do not reach: at `V = ⊥` the *instance* form
+A further limit the endpoints below do not reach: at `V = ⊥` the *instance* form
 `pic0RepresentableBy_of_restrictedChartFibre` goes through with `huniv` supplied free by
 `restrictedChartFibre_bot`, leaving the `IsLocallySurjective` instance binder as the sole
 remaining antecedent.  `not_coverageContainment_bot` constrains the `hcov` *spelling* of coverage,
 not that instance binder — so it does not by itself rule out a `⊥`-based route through the
 instance version.
+
+**That loophole is now shut, from two directions, and neither is in this file.**
+
+* `Picard/Pic0ChartVMonotone.lean`'s `isLocallySurjective_of_bot`: antecedent 2 is *monotone* in
+  `V`, so inhabiting the instance binder at `⊥` yields it at every `V` and hence for the
+  **unrestricted** atlas.  The `⊥` route is therefore not cheap — it costs the full coverage
+  obligation.  (Same file: coverage at *any* `V` implies unrestricted coverage, so the restriction
+  relieves this side by nothing at all.)
+* Independently, inbox `I-1049` refutes the instance binder at `⊥` outright, for an arbitrary
+  chart family.
+
+So both endpoints are now refuted at *instance* level rather than at the level of one
+formulation, and the conditional below ("any `V` that works must be a proper intermediate open")
+no longer rests on the `hcov` spelling.  It remains a conditional: no `V` is exhibited.
 
 **What is still NOT closed, stated plainly.**  `rep` remains a hypothesis with no producer, so
 `IsChartUniv` is not even statable without it; `hcov` at a useful `V` has no producer; and
