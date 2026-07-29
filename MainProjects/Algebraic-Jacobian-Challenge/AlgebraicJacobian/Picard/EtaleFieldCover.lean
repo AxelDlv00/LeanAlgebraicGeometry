@@ -66,9 +66,14 @@ not there.
   — its base change along an arbitrary `k`-scheme is again étale and surjective.
 * `Scheme.sieve_specMap_mem_etaleTopology` — the generated sieve is a covering
   sieve of `Scheme.etaleTopology`.
-* `Scheme.isSheafFor_picEt_specMap_presieve` — the payoff: `picEt C` satisfies
-  the sheaf axiom for this presieve, for every smooth proper curve `C`. This is
-  the descent test `G3` needs, and it holds with **no** hypothesis on `C(k)`.
+* `Scheme.picEt_isSheaf_etaleTopologyOver` — `picEt C` is an étale sheaf on
+  `(Sch/k)` in the type-valued form, for every smooth proper curve `C`, with
+  **no** hypothesis on `C(k)`.
+* `Scheme.isSheafFor_picEt_pullback_presieve` — the payoff: `picEt C` satisfies
+  the sheaf axiom for the field-extension cover at every test object. This is the
+  descent test `G3` needs.
+* `Scheme.picEt_ext_of_pullback_agrees` — its uniqueness half on its own:
+  restriction along the cover is injective on `picEt`-classes.
 
 ## References
 
@@ -290,6 +295,33 @@ theorem isSheafFor_picEt_pullback_presieve (C : Over (Spec (CommRingCat.of k)))
           (pullback.fst T.hom
             (Spec.map (CommRingCat.ofHom (algebraMap k k'))))))) : Presieve T) :=
   picEt_isSheaf_etaleTopologyOver C _ (sieve_pullback_mem_etaleTopologyOver k' T)
+
+/-- **The separatedness half, in the form `G3` uses it: restriction along the
+cover is injective on `picEt`-classes.**
+
+Two classes in `Pic_{(C/k)ét}(T)` that agree after restriction along the
+base-changed field-extension cover are *equal*. This is the direction the
+Hilbert-90 step of campaign `G3` consumes — it is what makes an invariant class
+determined by its `k'`-shadow, so that a descent datum is unique once it exists.
+
+It is strictly weaker than `isSheafFor_picEt_pullback_presieve` (separatedness is
+the uniqueness half of the sheaf axiom) and is recorded separately because it is
+the half that is used on its own. The corresponding statement for `picSharp` is
+*not* known to fail — `th:cmp` part 1 gives `picSharp ↪ Pic_{(C/k)zar}` on these
+binders — so it is the *amalgamation* half above, not this one, that the repair
+depends on. -/
+theorem picEt_ext_of_pullback_agrees (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    (T : Over (Spec (CommRingCat.of k)))
+    {t₁ t₂ : (PicScheme.picEt C).obj (Opposite.op T)}
+    (h : ∀ ⦃W : Over (Spec (CommRingCat.of k))⦄ ⦃g : W ⟶ T⦄,
+      (((Sieve.overEquiv T).symm
+        (Sieve.generate (Presieve.singleton
+          (pullback.fst T.hom
+            (Spec.map (CommRingCat.ofHom (algebraMap k k'))))))) : Presieve T) g →
+      (PicScheme.picEt C).map g.op t₁ = (PicScheme.picEt C).map g.op t₂) :
+    t₁ = t₂ :=
+  (isSheafFor_picEt_pullback_presieve k' C T).isSeparatedFor.ext h
 
 end Descent
 
