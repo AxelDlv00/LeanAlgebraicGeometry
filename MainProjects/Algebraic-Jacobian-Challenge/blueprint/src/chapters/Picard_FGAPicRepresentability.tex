@@ -278,8 +278,11 @@ fibers; we record the general statement and then specialise.
   subschemes. The scheme \(\Pic_{C/k}\) is called the \emph{Picard scheme}
   of \(C/k\).
 
-  \emph{Formalisation status.} The \(\leanok\) mark was removed from this
-  statement on 2026-07-29: the pinned declaration
+  \emph{Formalisation status} (2026-07-29, \texttt{review-ajc}). The
+  \texttt{\textbackslash leanok} mark was removed from this statement: unlike
+  \cref{def:inst_pic_sharp_representable}, whose mark truthfully certifies that
+  an extraction elaborates, this theorem asserts \emph{representability}, and the
+  pinned declaration
   \texttt{PicScheme.representable} does not prove this theorem. It is the
   \texttt{choose\_spec} projection of the hypothesis class
   \texttt{HasPicScheme}, which the declaration itself assumes as an instance
@@ -288,7 +291,7 @@ fibers; we record the general statement and then specialise.
   \(k\)-rational point (\cref{def:has_rational_point}), and the leaf asserting
   every such curve has one was \emph{false} and has been deleted. The
   mathematical content of this theorem is open, and is carried in Lean by the
-  named obligation \lstinline{fgaPicardRepresentability}, stated for the
+  named obligation \texttt{fgaPicardRepresentability}, stated for the
   \'etale sheafification without a rational-point hypothesis
   (\cref{thm:fga_pic_representability_etale}). Note also that the statement
   above --- with its rational-point hypothesis and its
