@@ -116,6 +116,9 @@ import AlgebraicJacobian.Picard.FiberRankSemicontinuity
 import AlgebraicJacobian.Picard.TwoTermKernelSemicontinuity
 import AlgebraicJacobian.Picard.FiberH0Comparison
 import AlgebraicJacobian.Picard.FiberH0CechKernel
+-- Milne §I.1 Cor 1.2 and 1.4 over an ARBITRARY base field: the two geometric inputs the
+-- (already field-agnostic) Albanese engine consumes, with the `IsAlgClosed` binder removed.
+import AlgebraicJacobian.Albanese.AVRigidityArbitraryField
 import AlgebraicJacobian.Picard.DivDegree
 import AlgebraicJacobian.Picard.FinitePresentationFunctor
 import AlgebraicJacobian.Picard.FiniteGaloisQuotient
@@ -171,6 +174,12 @@ import AlgebraicJacobian.Picard.Pic0EtTangentSpace
 -- reductions of `Pic0Et.geometricallyReduced` / `Pic0Et.universallyClosed`, the two
 -- `Pic0Et` obligations of `picardJacobianWitness`. Rooted here for the same reason.
 import AlgebraicJacobian.Picard.Pic0EtStructure
+-- Cluster D' pushforward-flatness inputs (run 0085 r0, ajc-p3). Rooted late, in r1:
+-- the module was verified only by `lake env lean` on the file itself, and my r0 note
+-- cited a root `lake build` job count that never compiled it (measured by ajc-p2,
+-- I-1058 / I-1060). Rooting it makes the axiom probe's cone honest for these five
+-- declarations, per the same I-0600 / I-0659 reason as `Pic0Dimension` above.
+import AlgebraicJacobian.Picard.DivPushforwardFlat
 -- Headline leaf B in the etale formulation (run 0084 r2, ajc-p2): leaf B implies the
 -- reducedness obligation, so the headline's five are not independent; plus what leaf
 -- B's own residue is (an affine-chart Omega-rank count, not a tangent space).
