@@ -109,6 +109,7 @@ import AlgebraicJacobian.Picard.FinitePresentationFunctor
 import AlgebraicJacobian.Picard.FiniteGaloisQuotient
 import AlgebraicJacobian.Picard.FiniteGaloisQuotientAffine
 import AlgebraicJacobian.Picard.StableAffineCover
+import AlgebraicJacobian.Picard.GaloisQuotientNonVacuity
 import AlgebraicJacobian.Picard.GaloisQuotientGlue
 import AlgebraicJacobian.Picard.LineBundlePullback
 import AlgebraicJacobian.Picard.TensorObjSubstrate
@@ -252,6 +253,39 @@ import AlgebraicJacobian.RiemannRoch.Adelic.ChartFinitenessRefuted
 import AlgebraicJacobian.RiemannRoch.Adelic.UniformChartVanishing
 import AlgebraicJacobian.RiemannRoch.CurveBaseChange
 import AlgebraicJacobian.RiemannRoch.CohomologyKit
+-- The RiemannRoch/Ledger cone and the homogeneity collapse, rooted 2026-07-29 on the
+-- standing request of inbox I-0600 (filed by ajc-rr, whose own write scope excludes this
+-- roll-up).  Until these lines landed, 21 committed modules were outside the root import
+-- closure, so `lake build AlgebraicJacobian` never elaborated them and no `#print axioms`
+-- line in `scripts/axiom-frontier.lean` -- which imports only `AlgebraicJacobian` -- could
+-- even be written for their declarations.  That is trap (5) of TO_USER.md, and it applied
+-- to the project's strongest Riemann-Roch statements: `chi_divisorSheaf_genus`
+-- (Ledger.GenusBridge) and `FiberBound.exists_bound_h0_eq_genus_curve` carry the three
+-- curve binders and nothing else.
+--
+-- FOUR LEAVES, NOT TWENTY-ONE.  These are exactly the modules of the unrooted set that no
+-- other unrooted module imports; their transitive closure covers all 21, verified by
+-- import walk rather than assumed.  Adding the dominated modules explicitly would be
+-- redundant, and the redundancy would rot as the cone's internal edges change.  The
+-- converse risk -- that retiring one of these four silently unroots a subtree -- is the
+-- reason each is named with its cone below rather than folded into one line.
+--
+-- `Ledger.P1Vanishing` drags the vanishing/section-drop/qcoh layer (VanishingFieldDescent,
+-- NonVacuity, DegreeVanishing, SectionDrop, AffineVanishingQcoh, DivisorSheafQcoh,
+-- QcohSections, SectionsFieldBaseChange, GenusFieldInvariance) and is itself the first
+-- *witnessed* `UniformVanishing`: `h¹(𝒪_{ℙ¹}) = 0` over every field, no gate.
+import AlgebraicJacobian.RiemannRoch.Ledger.P1Vanishing
+-- `Ledger.PrincipalTransport` drags PrincipalCompare and carries
+-- `degree_principal_eq_zero_of_isAlgClosed`, the `k = k̄` case of `WeilDivisor.principal_degree_zero`.
+import AlgebraicJacobian.RiemannRoch.Ledger.PrincipalTransport
+-- `Ledger.FiberBound` drags the fibrewise large-twist layer (FiberChart, FiberDivisor,
+-- FiberLattice, FiberVanishing, ExtensionUniformity) and `LedgerPortability` the
+-- universe-gap record plus `GenusBridge`'s χ-ledger headline.
+import AlgebraicJacobian.RiemannRoch.Ledger.FiberBound
+import AlgebraicJacobian.RiemannRoch.LedgerPortability
+-- Not Riemann-Roch: the orbit condition of the A.3 dimension leg is strong enough to force
+-- `dim = 0`, so it is a refutation of its own predecessor's reading rather than a step.
+import AlgebraicJacobian.Picard.HomogeneityOrbitCollapse
 import AlgebraicJacobian.Picard.InvertibleSectionLocalization
 import AlgebraicJacobian.Picard.GaloisDescent.SemilinearModules
 import AlgebraicJacobian.Picard.GaloisDescent.SemilinearAlgebras
