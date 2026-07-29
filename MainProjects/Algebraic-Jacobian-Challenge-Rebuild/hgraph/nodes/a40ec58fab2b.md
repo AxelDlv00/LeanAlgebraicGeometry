@@ -6,9 +6,10 @@ decl: is
 file: AlgebraicJacobian/Tangent/TwoChartRepresentable.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: is
 type: lean
-updated: '2026-07-29T08:27:50'
+updated: '2026-07-29T11:07:21'
 ---
 class is trivial on each *thickened* chart", for which `Picard/EffectivityMoving.lean` is the
 correct tool (see the retraction in §6.9 — that file bridges *into* chart triviality, so it

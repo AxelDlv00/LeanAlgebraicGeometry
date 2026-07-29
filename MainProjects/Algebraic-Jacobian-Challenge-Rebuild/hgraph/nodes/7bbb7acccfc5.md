@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.isClosed_sdiff_basicOpen_of_closure_subset
 type: lean
-updated: '2026-07-24T17:02:47'
+updated: '2026-07-29T11:07:12'
 ---
 theorem isClosed_sdiff_basicOpen_of_closure_subset {X : Scheme.{u}} {V : X.Opens}
     (g : Γ(X, V))
@@ -28,8 +28,3 @@ theorem isClosed_sdiff_basicOpen_of_closure_subset {X : Scheme.{u}} {V : X.Opens
   intro x hx
   refine ⟨hcl hx, ?_⟩
   exact closure_minimal (fun _ h => h.2) (X.basicOpen g).isOpen.isClosed_compl hx
-
-/-- **The closed-trace from a fibrewise no-leak**: if, over every base point `s`, the part
-of the closure of the trace `V \ D(g)` lying over `s` stays inside `V`, then the trace is
-closed.  The fibrewise hypothesis is the topological shadow of the finite fibre support of
-the divisor cut by `g` (produced Zariski-locally on the base by the properness of the

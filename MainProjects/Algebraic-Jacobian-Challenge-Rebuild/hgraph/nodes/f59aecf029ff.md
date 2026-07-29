@@ -6,9 +6,10 @@ decl: killed
 file: AlgebraicJacobian/Picard/SectionsDescent.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: killed
 type: lean
-updated: '2026-07-24T17:02:48'
+updated: '2026-07-29T11:07:22'
 ---
 class killed by `cg^*` is corrected until its two pullbacks agree and then descended
 through this file.

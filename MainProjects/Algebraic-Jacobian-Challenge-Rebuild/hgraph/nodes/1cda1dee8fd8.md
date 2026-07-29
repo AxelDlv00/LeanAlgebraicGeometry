@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.JacobianData.homEquiv_uniqueUpToIso_hom
 type: lean
-updated: '2026-07-17T08:41:25'
+updated: '2026-07-29T11:07:14'
 ---
 theorem homEquiv_uniqueUpToIso_hom (d d' : JacobianData C) {T : Over (Spec (.of k))}
     (f : T ⟶ d.J) :
@@ -45,3 +45,15 @@ noncomputable example (d : JacobianData C) : GrpObj (Over.mk d.J.hom) := d.grpOb
 
 /-- Smoke test 2: `smooth_of_grpObj` applies to `d.J.hom` with no transport lemma;
 the group instance must be *keyed* at `Over.mk d.J.hom` (the ascribed `letI` below —
+instance search does not unfold `Over.mk` on its own, but the ascription is pure
+defeq). -/
+example (d : JacobianData C) [GeometricallyReduced d.J.hom] : Smooth d.J.hom :=
+  letI := d.locallyOfFiniteType
+  letI : GrpObj (Over.mk d.J.hom) := d.grpObj
+  smooth_of_grpObj d.J.hom
+
+/-- Smoke test 3: the unit section of `d.J` is a closed immersion (mathlib's
+group-scheme instance fires on `d.J` directly, with the datum's group structure in
+scope). -/
+example (d : JacobianData C) [GrpObj d.J] : IsClosedImmersion η[d.J].left :=
+  inferInstance

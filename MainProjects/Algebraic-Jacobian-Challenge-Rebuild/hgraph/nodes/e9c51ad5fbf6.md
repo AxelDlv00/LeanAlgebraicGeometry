@@ -6,9 +6,10 @@ decl: identity
 file: AlgebraicJacobian/Picard/Pic0ChartLocusFibreField.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: identity
 type: lean
-updated: '2026-07-24T17:02:47'
+updated: '2026-07-29T11:07:22'
 ---
 class identity `map (relCurveMap … κ(q)) D_A.cechPicClass = map (relCurveMap … κ(q))
 D_B.cechPicClass` (I-0252 gap 1, the Σ/θ naturality) — and the `chartLocus` definition

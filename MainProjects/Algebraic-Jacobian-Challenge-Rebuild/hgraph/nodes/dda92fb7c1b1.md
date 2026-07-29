@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.isOpenImmersion_relCurveMap_away
 type: lean
-updated: '2026-07-24T17:02:47'
+updated: '2026-07-29T11:07:13'
 ---
 theorem isOpenImmersion_relCurveMap_away (f : R) [IsLocalization.Away f S] :
     IsOpenImmersion (relCurveMap C R S) := by
@@ -33,6 +33,3 @@ section Family
 variable {ι : Type u} (g : ι → R) (S : ι → Type u) [∀ i, CommRing (S i)]
   [∀ i, Algebra k (S i)] [∀ i, Algebra R (S i)] [∀ i, IsScalarTower k R (S i)]
   [∀ i, IsLocalization.Away (g i) (S i)]
-
-/-- **The point lift for a span-⊤ family of localizations**: every point of the
-relative curve `C_R` lifts to the relative curve of some localization `S i`. The

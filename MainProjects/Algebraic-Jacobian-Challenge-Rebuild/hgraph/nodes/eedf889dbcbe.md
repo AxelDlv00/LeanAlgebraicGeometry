@@ -6,9 +6,10 @@ decl: maps,
 file: AlgebraicJacobian/Albanese/Milne33.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: maps,
 type: lean
-updated: '2026-07-28T13:42:16'
+updated: '2026-07-29T11:07:22'
 ---
   structure maps, the disjunction `Milne33Indeterminacy f` holds: the
   indeterminacy locus `Z(f)` is empty, or every `x ∈ Z(f)` lies in the closure

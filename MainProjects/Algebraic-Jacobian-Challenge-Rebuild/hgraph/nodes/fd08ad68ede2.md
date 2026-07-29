@@ -30,7 +30,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.IsChartDatumPlusFibre
 type: lean
-updated: '2026-07-28T19:44:57'
+updated: '2026-07-29T11:07:14'
 ---
 def IsChartDatumPlusFibre {A : Type u} [CommRing A] [Algebra k A]
     (μ : picEt C (overSpec k A)) (D : BasicOpenCocycleDatum C A π) : Prop :=
@@ -47,11 +47,3 @@ def IsChartDatumPlusFibre {A : Type u} [CommRing A] [Algebra k A]
 /-! ## The forward half -/
 
 variable (C π) in
-/-- **The forward half of `IsChartDatumPresentation`, pointwise.**
-
-If the datum presents `μ` at `κ(t)` as plus classes (`IsChartDatumPlusFibre`, which mentions no
-witness), then the datum's fibre predicate at `κ(t)` implies the split predicate for `μ`'s fibre.
-
-The proof is the **trivial splitting**: take `L := κ(t)`, the identity extension.  The witness
-divisor the datum predicate hands over already lies in the right class and already has vanishing
-`H¹`, so nothing has to be transported.  `isSplitWitness_of_presenting_witness_self` is the

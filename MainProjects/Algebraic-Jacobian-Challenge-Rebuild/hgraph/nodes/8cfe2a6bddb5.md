@@ -6,9 +6,10 @@ decl: search
 file: AlgebraicJacobian/Picard/WitnessAway.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: search
 type: lean
-updated: '2026-07-24T17:02:48'
+updated: '2026-07-29T11:07:21'
 ---
 instance search finds it; since `(overSpec k R).left = Spec (.of R)` holds by `rfl` the
 re-keyed forms apply on the nose).  The bridge between the scheme-side base rings

@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.ThetaGeneratorSeed.below
 file: AlgebraicJacobian/Picard/DivisorFamilyAffSeedGate.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.ThetaGeneratorSeed.below
 type: lean
-updated: '2026-07-29T05:13:20'
+updated: '2026-07-29T11:07:21'
 ---
 lemma below as *"the gate is not about nothing"*, never as *"the gate is non-trivially
 inhabited"*.

@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divFamZar.ext_of_le_cover
 type: lean
-updated: '2026-07-24T17:02:47'
+updated: '2026-07-29T11:07:13'
 ---
 theorem ext_of_le_cover {T : Over (Spec (.of k))} {ι' : Type*}
     (O : ι' → T.left.Opens) (hcov : ∀ p : T.left, ∃ i, p ∈ O i)
@@ -40,5 +40,3 @@ theorem ext_of_le_cover {T : Over (Spec (.of k))} {ι' : Type*}
 /-! ## Local data on an open cover -/
 
 variable {T : Over (Spec (.of k))} {ι : Type u} (O : ι → T.left.Opens)
-
-/-- **Compatible local data** on an open cover `O` of `T.left`: a locally certified

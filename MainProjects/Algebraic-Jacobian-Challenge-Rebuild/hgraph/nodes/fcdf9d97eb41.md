@@ -6,9 +6,10 @@ decl: '`M_V`'
 file: AlgebraicJacobian/Picard/EffectivityPieceClass.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: '`M_V`'
 type: lean
-updated: '2026-07-24T17:02:47'
+updated: '2026-07-29T11:07:22'
 ---
 class `M_V` are in `AlgebraicJacobian.Picard.EffectivityPieceDescent`.
 

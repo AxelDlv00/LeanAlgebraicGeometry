@@ -6,9 +6,10 @@ decl: '`divRepClassifyZar_isDivRepClassify`'
 file: AlgebraicJacobian/Picard/DivRepClassifyZar.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: '`divRepClassifyZar_isDivRepClassify`'
 type: lean
-updated: '2026-07-24T17:02:47'
+updated: '2026-07-29T11:07:22'
 ---
   lemma `divRepClassifyZar_isDivRepClassify` and the well-definedness lemma
   `divRepClassifyZar_eq_of_isDivRepClassify` (any Over-hom whose scheme morphism

@@ -6,9 +6,10 @@ decl: half
 file: AlgebraicJacobian/Picard/Pic0ChartCoverageAbel.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: half
 type: lean
-updated: '2026-07-29T06:51:20'
+updated: '2026-07-29T11:07:20'
 ---
 class half alone has not supplied the datum — the Σ-component is what pins the chart point to
 lie *over* the test, and it is free only because `W.ι ≫ a` is what `D.hom` must equal.

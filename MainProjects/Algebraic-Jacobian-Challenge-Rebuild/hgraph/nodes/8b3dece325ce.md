@@ -23,7 +23,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ThetaGeneratorSeed.hcolFin_of_forall_fibre
 type: lean
-updated: '2026-07-20T02:31:15'
+updated: '2026-07-29T11:07:12'
 ---
 theorem hcolFin_of_forall_fibre
     (hfib : ∀ (z : relCurve C R) (s : Spec (CommRingCat.of R)),
@@ -72,8 +72,3 @@ set_option synthInstance.maxHeartbeats 800000 in
 set_option maxSynthPendingDepth 8 in
 set_option maxRecDepth 8000 in
 include hO hχ in
-/-- **`hcolFin` at `seedUniv`, reduced to the topological fibre no-leak** (I-0283 residual):
-the ambient colength `Γ(D(h z)) ⧸ (eqn z)` at `seedUniv` is a finite `R_Z`-module as soon
-as, on every piece, the closure of the trace `piece z \ D(eqn z)` of the seed-equation
-vanishing locus stays inside the piece.  This is exactly the `hcolFin` hypothesis of
-`isGenerator_of_fibrewise_ker_span_of_field_vanishing` at `seedUniv`, with all the

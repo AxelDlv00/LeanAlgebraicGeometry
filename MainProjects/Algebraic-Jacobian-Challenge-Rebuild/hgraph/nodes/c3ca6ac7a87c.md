@@ -6,9 +6,10 @@ decl: morphism;
 file: AlgebraicJacobian/Picard/GrassmannianSeparated.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: morphism;
 type: lean
-updated: '2026-07-24T17:02:47'
+updated: '2026-07-29T11:07:21'
 ---
   structure morphism; `isSeparated_grScheme`: the glued scheme is separated.
 * `AlgebraicGeometry.Grassmannian.chartRingAlgHomEquiv`: `(R^I →ₐ[k] S) ≃` free-entry
