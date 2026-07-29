@@ -35,7 +35,7 @@ summary: "ADVANCED, NO ANTECEDENT CLOSED (ajcr-p2, run 0088 r5). Picard/Pic0Char
   \ against TWO controls firing sorryAx (a fresh in-probe sorry and AlgebraicGeometry.Jacobian).\
   \ hchi measured LOAD-BEARING: my own script with it omitted fails at linarith. Filed\
   \ I-1329. Fresh-context audit dispatched."
-status: active
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -58,5 +58,6 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-b
-  owner: ajcr-p2
-  updated_at: '2026-07-29T23:10:10.135088+00:00'
+  updated_at: '2026-07-29T23:15:46.421073+00:00'
+  pinned_commits:
+  - 65d8e29aea
