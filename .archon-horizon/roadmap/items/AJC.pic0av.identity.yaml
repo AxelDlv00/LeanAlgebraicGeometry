@@ -2,47 +2,58 @@ id: AJC.pic0av.identity
 title: Identity component and degree-zero points
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "Identity component and degree-zero points. Two sorries in Picard/IdentityComponent.lean:\nfinrank_eq_genus\
-  \ (:1896) and kPoints_iff_kerDegree (:1939). The degree map itself is BUILT\nand sorry-free (PicScheme.degree\
-  \ :1702, pinned via ClassDegreePinned with a non-vacuity\ntest), the Pic^0 inclusion is BUILT, and the\
-  \ easy direction of the kernel characterisation\nis landed (degree_eq_zero_of_class_eq_zero :1733);\
-  \ the open half is the converse.\n\nTHE DIMENSION HALF IS NOW REDUCED TO TWO NAMED INPUTS, NEITHER DIMENSION-THEORETIC\n\
-  (run 0067 r7, Picard/GroupSchemeHomogeneity.lean, 11 declarations, 0 sorries, axiom-clean\nwith three\
-  \ firing controls):\n\nPic^0 is a GROUP scheme, so translations are automorphisms of the underlying\
-  \ scheme and the\nembedding dimension is constant along a translate orbit. This kills the \"uniform\
-  \ cotangent\nbound\" that three earlier rows (r5, r6) named as the <= half's open content -- it was\
-  \ never\na separate piece of mathematics here. Since the value at the identity is an EQUALITY, one\n\
-  point serves both directions:\n\n  topologicalKrullDim_eq_genus_of_homogeneous -- AXIOM-CLEAN, gives\
-  \ dim Pic^0 = g from\n  (i) the cotangent value at the identity, (ii) regularity of that one stalk,\
-  \ (iii) the\n  orbit condition.\n\n  topologicalKrullDim_eq_genus_of_homogeneous_of_regular -- discharges\
-  \ (i) from front (a)\n  verbatim, since genus C is DEFINED as the H^1 finrank (Genus.lean:41). Reports\
-  \ sorryAx,\n  inherited from front (a) alone, with the clean sibling above it as the control.\n\n***\
-  \ RETRACTED (run 0067 r8, commit 27f526ea7): EVERYTHING ABOVE FROM \"THE DIMENSION HALF IS NOW\nREDUCED\"\
-  \ IS WRONG. THE ORBIT CONDITION IS NOT A GAP -- IT IS CONTRADICTORY FOR g >= 1, so both\ntopologicalKrullDim_eq_genus_of_homogeneous\
-  \ theorems are VACUOUS exactly where the A.3 leg\nexists, and the uniform cotangent bound the r7 row\
-  \ declared dead is REINSTATED as owed. ***\n\nPicard/HomogeneityOrbitCollapse.lean proves topologicalKrullDim_eq_zero_of_homogeneous:\
-  \ the\norbit condition ALONE forces topologicalKrullDim Pic^0 = 0, hence genus_eq_zero_of_homogeneous\n\
-  gives genus C = 0. No hypothesis on k. Three steps: a translation is an ISO of schemes hence a\nhomeomorphism;\
-  \ the identity point is CLOSED (a section of a morphism to Spec k is a closed\nimmersion with singleton\
-  \ range); a homeomorphism carries closed points to closed points. So\n\"every point is a translate of\
-  \ the identity\" makes every point closed = T1, and a nonempty\nSOBER T1 space has topologicalKrullDim\
-  \ 0.\n\nFOURTH WRONG FRAMING of this leg; the r7 text above superseded the third. The tell was already\n\
-  in this project: identityComponent_irreducibleSpace_of_isAlgClosed (IdentityComponent.lean:866)\ntranslates\
-  \ through CLOSED points then needs JACOBSON DENSITY to sweep up the non-closed ones --\nthe step a rational\
-  \ orbit cannot supply. REUSABLE RULE: an orbit of rational points cannot\ncover a scheme; use a COVER\
-  \ (AJCR's smoothOfRelativeDimension_of_translation_cover quantifies\nover a ZeroHypercover), not an\
-  \ orbit of points.\n\nWHAT IS ACTUALLY OWED: front (a); regularity at the identity (free over a perfect\
-  \ field via\nisRegularLocalRing_stalk_of_smooth_of_perfectField, a hypothesis so the statement stays\
-  \ over an\narbitrary field per I-0491); and the UNIFORM COTANGENT BOUND, needing a transport that reaches\n\
-  NON-CLOSED points -- an extension-valued translation or a density argument. SURVIVES r7\nuntouched:\
+summary: "Identity component and degree-zero points. Two sorries in Picard/IdentityComponent.lean:\n\
+  finrank_eq_genus (:1896) and kPoints_iff_kerDegree (:1939). The degree map itself\
+  \ is BUILT\nand sorry-free (PicScheme.degree :1702, pinned via ClassDegreePinned\
+  \ with a non-vacuity\ntest), the Pic^0 inclusion is BUILT, and the easy direction\
+  \ of the kernel characterisation\nis landed (degree_eq_zero_of_class_eq_zero :1733);\
+  \ the open half is the converse.\n\nTHE DIMENSION HALF IS NOW REDUCED TO TWO NAMED\
+  \ INPUTS, NEITHER DIMENSION-THEORETIC\n(run 0067 r7, Picard/GroupSchemeHomogeneity.lean,\
+  \ 11 declarations, 0 sorries, axiom-clean\nwith three firing controls):\n\nPic^0\
+  \ is a GROUP scheme, so translations are automorphisms of the underlying scheme\
+  \ and the\nembedding dimension is constant along a translate orbit. This kills the\
+  \ \"uniform cotangent\nbound\" that three earlier rows (r5, r6) named as the <=\
+  \ half's open content -- it was never\na separate piece of mathematics here. Since\
+  \ the value at the identity is an EQUALITY, one\npoint serves both directions:\n\
+  \n  topologicalKrullDim_eq_genus_of_homogeneous -- AXIOM-CLEAN, gives dim Pic^0\
+  \ = g from\n  (i) the cotangent value at the identity, (ii) regularity of that one\
+  \ stalk, (iii) the\n  orbit condition.\n\n  topologicalKrullDim_eq_genus_of_homogeneous_of_regular\
+  \ -- discharges (i) from front (a)\n  verbatim, since genus C is DEFINED as the\
+  \ H^1 finrank (Genus.lean:41). Reports sorryAx,\n  inherited from front (a) alone,\
+  \ with the clean sibling above it as the control.\n\n*** RETRACTED (run 0067 r8,\
+  \ commit 27f526ea7): EVERYTHING ABOVE FROM \"THE DIMENSION HALF IS NOW\nREDUCED\"\
+  \ IS WRONG. THE ORBIT CONDITION IS NOT A GAP -- IT IS CONTRADICTORY FOR g >= 1,\
+  \ so both\ntopologicalKrullDim_eq_genus_of_homogeneous theorems are VACUOUS exactly\
+  \ where the A.3 leg\nexists, and the uniform cotangent bound the r7 row declared\
+  \ dead is REINSTATED as owed. ***\n\nPicard/HomogeneityOrbitCollapse.lean proves\
+  \ topologicalKrullDim_eq_zero_of_homogeneous: the\norbit condition ALONE forces\
+  \ topologicalKrullDim Pic^0 = 0, hence genus_eq_zero_of_homogeneous\ngives genus\
+  \ C = 0. No hypothesis on k. Three steps: a translation is an ISO of schemes hence\
+  \ a\nhomeomorphism; the identity point is CLOSED (a section of a morphism to Spec\
+  \ k is a closed\nimmersion with singleton range); a homeomorphism carries closed\
+  \ points to closed points. So\n\"every point is a translate of the identity\" makes\
+  \ every point closed = T1, and a nonempty\nSOBER T1 space has topologicalKrullDim\
+  \ 0.\n\nFOURTH WRONG FRAMING of this leg; the r7 text above superseded the third.\
+  \ The tell was already\nin this project: identityComponent_irreducibleSpace_of_isAlgClosed\
+  \ (IdentityComponent.lean:866)\ntranslates through CLOSED points then needs JACOBSON\
+  \ DENSITY to sweep up the non-closed ones --\nthe step a rational orbit cannot supply.\
+  \ REUSABLE RULE: an orbit of rational points cannot\ncover a scheme; use a COVER\
+  \ (AJCR's smoothOfRelativeDimension_of_translation_cover quantifies\nover a ZeroHypercover),\
+  \ not an orbit of points.\n\nWHAT IS ACTUALLY OWED: front (a); regularity at the\
+  \ identity (free over a perfect field via\nisRegularLocalRing_stalk_of_smooth_of_perfectField,\
+  \ a hypothesis so the statement stays over an\narbitrary field per I-0491); and\
+  \ the UNIFORM COTANGENT BOUND, needing a transport that reaches\nNON-CLOSED points\
+  \ -- an extension-valued translation or a density argument. SURVIVES r7\nuntouched:\
   \ the cotangent-invariance theorems (finrank_cotangentSpace_eq_of_ringEquiv,\nfinrank_cotangentSpace_stalk_eq_of_isIso),\
-  \ which concern a single isomorphism.\n\nNOTE finrank_eq_genus HAS ZERO CONSUMERS and sits UPSTREAM\
-  \ of the dimension machinery in the\nimport graph (IdentityComponent imports only FGAPicRepresentability/GeometricallyConnectedSection/\n\
-  DivDegree/Genus). Closing it in place would need an import inversion; the live statement of\nthe same\
-  \ mathematics is the Pic0Dimension/GroupSchemeHomogeneity pair. Do not price it as the\nblocker.\n\n\
-  SEARCH DATUM worth reusing: mathlib v4.31 has NO functoriality for IsLocalRing.CotangentSpace\n-- no\
-  \ map along a ring homomorphism of any kind. Transport a cotangent dimension via\nSubmodule.spanFinrank\
-  \ (Ideal.spanRank_map_le both ways + antisymmetry, no Noetherian needed)\nthen Nakayama. AJC's own spanFinrank_maximalIdeal_le_of_surjective\
+  \ which concern a single isomorphism.\n\nNOTE finrank_eq_genus HAS ZERO CONSUMERS\
+  \ and sits UPSTREAM of the dimension machinery in the\nimport graph (IdentityComponent\
+  \ imports only FGAPicRepresentability/GeometricallyConnectedSection/\nDivDegree/Genus).\
+  \ Closing it in place would need an import inversion; the live statement of\nthe\
+  \ same mathematics is the Pic0Dimension/GroupSchemeHomogeneity pair. Do not price\
+  \ it as the\nblocker.\n\nSEARCH DATUM worth reusing: mathlib v4.31 has NO functoriality\
+  \ for IsLocalRing.CotangentSpace\n-- no map along a ring homomorphism of any kind.\
+  \ Transport a cotangent dimension via\nSubmodule.spanFinrank (Ideal.spanRank_map_le\
+  \ both ways + antisymmetry, no Noetherian needed)\nthen Nakayama. AJC's own spanFinrank_maximalIdeal_le_of_surjective\
   \ is `private`.\n"
 status: active
 kind: proof
