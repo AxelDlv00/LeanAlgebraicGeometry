@@ -1,0 +1,71 @@
+id: I-1346
+provider: local
+kind: issue
+body: 'THE REJECTION CLUSTER IS FIVE ROWS, NOT FOUR, AND TWO OF THE FIVE STILL FORWARD
+  TO A CLOSED ROUTE. Fresh-context; roadmap yaml read at HEAD via git show, Lean at
+  HEAD, no build.
+
+
+  1. COUNT. Rejected under ...ddr.certificate: cert-relocalize, joint-cover, leak-image,
+  tube-fibre, twist-atlas = FIVE. The parent says "Four rejections and one block"
+  and enumerates the first four, while the SAME paragraph rejects twist-atlas. twist-atlas
+  is NOT in the "one obstruction found three ways" group: those three are about where
+  PIECES live; twist-atlas is cert-relocalizes forwarding address, about the CLASSIFIER.
+
+
+  2. STALE FORWARDING #1. cert-relocalize.yaml at HEAD line 14: "Those obligations
+  are tracked by twist-atlas." twist-atlas is rejected as I-0492-forbidden -- a rejected
+  leaf points at a rejected leaf, and that pointer is its only prescription. True
+  forwarding is R2: IsLocallyCertifiedAff / DivFamZarAff / divFunctorAff take (C,R,n)
+  and NO pi (DivisorFamilyAffZar.lean:103,:165; DivisorFamilyAffMap.lean:290), so
+  the twist quantifier disappears instead of needing an outer atlas. Live work is
+  the classifier over that carrier (framecover-aff / fieldmono-aff, both owned).
+
+
+  3. STALE FORWARDING #2, wrong at HEAD. away-kerspan ends "the flattening route.
+  ddr.flattening-fallback was rejected 2026-07-23 with an EMPTY note." That row is
+  PENDING/low, its own summary opening "REJECTION REOPENED (2026-07-25)". Its cheapest
+  experiment is unrun: Picard/EntryIdeal.lean is on disk (29514 bytes), imported by
+  ZERO files, absent from AlgebraicJacobian.lean.
+
+
+  4. WHAT HOLDS. Cited declarations all exist at HEAD: not_exists_unique_support_piece
+  (DivSchemeCertZarSep:257), isClosed_supportLocus_inter_chart_of_forall_noLeak (ChartTrace:129),
+  exists_affCoverData_swallowedBy (AffStraddle:95), isCertified_of_swallowedBy_of_c1
+  (AffGlue:318). joint-covers typing fact unchanged: FinCoverData h0/h1 into Gamma(V0)/Gamma(V1)
+  (DivisorFamily.lean:166/:168), pieces = Sum.elim at :186. twistedP1Map is still
+  pi >> P1.autOfMatrix (TwistedFiberTwoCover:29 / P1Aut:227).
+
+
+  5. ONE BODY STILL PRESCRIBES THE FORBIDDEN ROUTE. finite-field-avoid.descent went
+  high -> low but its SUMMARY was not edited: "transport P1 automorphisms and fixed-twist
+  divisor charts ... semilinear Galois descent data ... depends on the twist-atlas
+  architecture." Pending, hence claimable; the priority change is invisible to a lane
+  reading the text.
+
+
+  NEXT (board only): parent count four -> five; cert-relocalize forwarding -> R2 pointer;
+  correct away-kerspans flattening sentence; restate descents summary.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-29T23:23:25.478096+00:00'
+updated_at: '2026-07-29T23:23:25.478108+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0016-horizon-review-ajcr
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer

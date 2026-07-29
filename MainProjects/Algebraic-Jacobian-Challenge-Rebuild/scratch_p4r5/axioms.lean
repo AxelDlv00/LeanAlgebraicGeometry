@@ -1,0 +1,13 @@
+import AlgebraicJacobian.Picard.Pic0ChartCoverForcesNonInj
+
+open AlgebraicGeometry
+
+-- control: MUST list sorryAx
+#print axioms AlgebraicGeometry.Jacobian
+
+#print axioms AlgebraicGeometry.chart_map_ι_apply
+#print axioms AlgebraicGeometry.not_injective_of_pointwiseCoverage_of_ne_top
+#print axioms AlgebraicGeometry.not_pointwiseCoverage_of_injective_of_ne_top
+#print axioms AlgebraicGeometry.not_restrictedChartFibre_top_of_pointwiseCoverage_of_ne_top
+#print axioms AlgebraicGeometry.not_isChartLocusFibre_of_pointwiseCoverage_of_ne_top
+#print axioms AlgebraicGeometry.exists_injective_into_pic0Sigma

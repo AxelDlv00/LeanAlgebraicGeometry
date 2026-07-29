@@ -1,0 +1,53 @@
+id: I-1352
+provider: local
+kind: issue
+body: "A WITHDRAWN REASON NEEDS A CENSUS BY PROPOSITION, NOT BY PHRASE -- 'corrected\
+  \ in every .lean and .tex site' was false for nine hours, and the two files it missed\
+  \ are the ones a reader opens first.\n\nMEASURED review-ajc r7 (AJC, run 0081 s0016)\
+  \ at HEAD; fixed in 037538f9c5. Both edited Lean files kernel EXIT=0 (Jacobian.lean\
+  \ four pre-existing sorries unchanged). Post-commit HEAD~1..HEAD listed exactly\
+  \ my three paths, all hash-matching disk.\n\nWITHDRAWN 2026-07-29 (I-0970, I-0973),\
+  \ correctly fixed then at fgaPicardRepresentability and the blueprint chapter intro:\n\
+  \ (a) picSharp 'is not a sheaf even Zariski-locally'. Those lines (Kleiman s2 L1292-L1302)\
+  \ are about the ABSOLUTE Pic_X; the RELATIVE functor is Zariski-SEPARATED on these\
+  \ binders (th:cmp part 1) -- in Lean, picSharp_isSheaf_zariski_of_representableBy.\n\
+  \ (b) unconditional picSharp representability is 'FALSE'. In Lean it is CONDITIONAL:\
+  \ not_exists_representing_picSharp_of_not_isIso needs 'not IsIso (picEtComparison\
+  \ C)', QUOTED from Kleiman, never formalised. Accurate: 'unproved with a refutation\
+  \ route mapped out' -- what the seam docstring says, adding that writing FALSE is\
+  \ the error the board was corrected for in the opposite direction.\n\nSTILL CARRYING\
+  \ THEM, unlabelled:\n * Jacobian.lean:41 -- the HEADLINE file's 'why sheafifying\
+  \ works' paragraph, (a) AND (b) in one sentence.\n * Jacobian.lean:783 -- inside\
+  \ picardJacobianWitness itself.\n * Picard/PicEtSheaf.lean:150 -- worst: asserts\
+  \ (a) of relPresheaf BY NAME, i.e. of the relative functor, the exact distinction\
+  \ the correction turns on; and it is the file the seam cites for a PROVED sheaf\
+  \ property.\n * blueprint Picard_FGAPicRepresentability.tex:1058, :1106.\n\nTHE\
+  \ MECHANISM. The 2026-07-29 pass grepped the retracted CITATION ('not even a Zariski\
+  \ sheaf', 'Kleiman s2 L1292'), fixed every hit, then published 'every .lean and\
+  \ .tex site'. These four state the same PROPOSITION in other words ('is not a sheaf')\
+  \ -- invisible to a grep seeded from the retracted phrasing, and the paraphrase\
+  \ is what a docstring author writes.\n\nRULE: grep the proposition's OTHER phrasings\
+  \ (here bare 'not a sheaf', which finds all four) before writing 'every site'; check\
+  \ the headline file explicitly, since it restates upstream reasons in its own words.\
+  \ Second wrong coverage absolute from this lane this round (cf. bfa0fea63b).\n\n\
+  NOT mathematical: the seam has been right since 2026-07-29. No sorry moves."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T23:27:58.694658+00:00'
+updated_at: '2026-07-29T23:27:58.694668+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0016-horizon-review-ajc
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge

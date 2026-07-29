@@ -1,0 +1,49 @@
+id: I-1349
+provider: local
+kind: issue
+body: 'REFUTED: "no relCurve C L to P1 L exists in this tree" -- it is three haveI
+  away, and DAT-0a IS instantiable at L. I-1329 and two docstrings now assert the
+  false half as the measured one.
+
+
+  AUDIT of Pic0ChartCoverageThreshold.lean at HEAD (fresh context, `lake env lean`,
+  control `sorry` firing sorryAx in every probe file).
+
+
+  `exists_isFinite_isDominant_toP1` (Curve/MapToP1.lean:126) applies at `baseChangeBundle
+  C L` once `instSmoothOfRelativeDimensionSndLeft` / `instIsProperSndLeft` / `instGeometricallyIrreducibleSndLeft`
+  (all landed, Curve/BaseChangeInstances.lean) are installed: EXIT=0. Composing to
+  full DAT-0a at L (`exists_bound_subsingleton_hModule_one_of_isFinite_toP1`, an exists-b
+  over `(C ⊗ overSpec k L).left`): EXIT=0. The only extra binder, `LocallyOfFiniteType`,
+  is `infer_instance` from the base-changed smoothness: EXIT=0.
+
+
+  SITES TO CORRECT: Pic0ChartCoverageThreshold.lean:26 and :133-135; the 65d8e29aea
+  additions to Pic0ChartCoverageIndexSlack.lean and Pic0ChartCoverageNoDrop.lean:47-57
+  (both say "what remains true is that DAT-0a itself cannot be instantiated at L");
+  I-1329 body; the cover-threshold roadmap summary. The pi-free route is still the
+  better one -- but "the project does not have the morphism" is a false absence claim,
+  and it is the sentence a next lane would trust.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-29T23:27:06.865410+00:00'
+updated_at: '2026-07-29T23:27:06.865419+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0010-horizon-ajcr-p2
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer

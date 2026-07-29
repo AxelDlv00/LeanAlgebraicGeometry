@@ -1,0 +1,60 @@
+id: I-1350
+provider: local
+kind: issue
+body: 'DUPLICATE: subsingleton_h1_of_ledger_bound is a STRICTLY WEAKER corollary of
+  subsingleton_h1_of_windowA_le_deg, landed 2026-07-19 -- and the whole coverage composite
+  goes through at the smaller landed parameter.
+
+
+  MEASURED at HEAD, fresh context, `lake env lean` EXIT=0 each, control `sorry` firing
+  sorryAx in the same file.
+
+
+  `subsingleton_h1_of_windowA_le_deg` (Picard/DivSchemeSeedUnivFibre.lean:259, commit
+  596c82e906, 2026-07-19) is ALREADY the uniform pi-free threshold at every field
+  extension, with bound `windowA_choice * windowδ + g`, proved by the same `subsingleton_hModule_one_of_witness`
+  peel. Two probes:
+
+
+  1. `windowA_choice π hπ ≤ windowM_choice π hπ g` by `Nat.find_le (windowBound_le_M_mul
+  π hπ g)`, so `a·δ ≤ M·δ`: EXIT=0. The new bound is therefore WEAKER (larger).
+
+  2. `subsingleton_h1_of_ledger_bound` re-derived verbatim from the landed lemma +
+  that inequality + `chi_relCurve`: EXIT=0. Three lines.
+
+  3. `mem_chartLocus_of_ledgerIndex` re-proved at the SMALLER landed parameter `a·δ
+  + g`, using only pre-existing declarations (`mem_chartLocus_of_vanishing_bound`,
+  `subsingleton_h1_of_windowA_le_deg`, `classDeg_presenting_twist`): EXIT=0, script
+  identical modulo the constant.
+
+
+  CONSEQUENCE for the ledger: the file''s novelty is the coverage-side composition,
+  not the threshold. The threshold half of I-1329 / the cover-threshold row summary
+  / the two 65d8e29aea docstring insertions all present a re-derivation as the discovery,
+  and they cite `windowN` where `windowA` gives a strictly better constant. Also:
+  `genus_eq_zero_of_ledgerParam_eq_genus` states the parameter obstruction at `M·δ+g`;
+  at `a·δ+g` the same statement needs re-deriving, and the smaller constant is where
+  a next lane should test it.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-29T23:27:29.462858+00:00'
+updated_at: '2026-07-29T23:27:29.462868+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0010-horizon-ajcr-p2
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer
