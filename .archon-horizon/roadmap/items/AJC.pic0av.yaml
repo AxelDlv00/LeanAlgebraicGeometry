@@ -2,30 +2,28 @@ id: AJC.pic0av
 title: Pic^0 is an abelian variety (A.3)
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "Pic^0 is an abelian variety of dimension g (A.3). FIVE open sorries across\
-  \ the leg, on four\nfronts. Front (d), AJC.rr.principal, is CLOSED -- RiemannRoch/WeilDivisor.lean\
-  \ is sorry-free.\n\n (a) TANGENT / H1 (AJC.pic0av.tangent). ONE sorry: Pic0AbelianVariety.lean:853,\n\
-  \     semilinearComparison_cotangentSpaceDual_h1Cok. The load-bearing one -- everything\
-  \ else\n     in this leg that leaks sorryAx leaks it from here and nowhere else,\
-  \ measured. Its own\n     residue is clause (iii) alone (clauses (i) and (ii) are\
-  \ theorems). Do NOT retry the\n     AJCR two-chart CechPic port: refuted at the\
-  \ CARRIER, not on cost (I-0689) -- AJCR's only\n     sheaf-side bridge cechPicEquivPic\
-  \ carries [IsAffine] irremovably and this clause lives on\n     a proper curve.\n\
-  \n (b) SMOOTHNESS / PROPERNESS (AJC.pic0av.structure). Two sorries, both fully reduced:\n\
-  \     geometricallyReduced (:1135) and universallyClosed (:1373). Properness has\
-  \ exactly ONE\n     live route, universallyClosed_of_valuativeCriterion -- the ambient\
-  \ route is REFUTED\n     (universal closedness of Pic_{C/k} would force CompactSpace\
-  \ on an infinite disjoint union\n     over deg in Z; Picard/AmbientPicNotProper.lean),\
-  \ and the quasi-projectivity route needs\n     vocabulary mathlib v4.31 does not\
-  \ have (I-0074 Caveat 2).\n\n (c) DEGREE / DIMENSION (AJC.pic0av.identity). Two\
-  \ sorries. The degree map is BUILT and\n     sorry-free; the dimension half is now\
-  \ reduced to front (a) + regularity at ONE stalk +\n     an orbit condition, with\
-  \ the \"uniform cotangent bound\" of the r5/r6 framing REFUTED as a\n     separate\
-  \ obligation (run 0067 r7, Picard/GroupSchemeHomogeneity.lean). See that node.\n\
-  \nMEASURE AT A SYNTHESIS SITE, not at the declaration: smooth/proper and their reductions\n\
-  quantify over [HasPicScheme C] and report clean axioms as stated. Every clean claim\
-  \ in this\nleg has been probed against controls that DO fire sorryAx; keep that\
-  \ discipline.\n"
+summary: "Pic^0 is an abelian variety of dimension g (A.3). FIVE open sorries across the leg, on four\n\
+  fronts. Front (d), AJC.rr.principal, is CLOSED -- RiemannRoch/WeilDivisor.lean is sorry-free.\n\n (a)\
+  \ TANGENT / H1 (AJC.pic0av.tangent). ONE sorry: Pic0AbelianVariety.lean:853,\n     semilinearComparison_cotangentSpaceDual_h1Cok.\
+  \ The load-bearing one -- everything else\n     in this leg that leaks sorryAx leaks it from here and\
+  \ nowhere else, measured. Its own\n     residue is clause (iii) alone (clauses (i) and (ii) are theorems).\
+  \ Do NOT retry the\n     AJCR two-chart CechPic port: refuted at the CARRIER, not on cost (I-0689) --\
+  \ AJCR's only\n     sheaf-side bridge cechPicEquivPic carries [IsAffine] irremovably and this clause\
+  \ lives on\n     a proper curve.\n\n (b) SMOOTHNESS / PROPERNESS (AJC.pic0av.structure). Two sorries,\
+  \ both fully reduced:\n     geometricallyReduced (:1135) and universallyClosed (:1373). Properness has\
+  \ exactly ONE\n     live route, universallyClosed_of_valuativeCriterion -- the ambient route is REFUTED\n\
+  \     (universal closedness of Pic_{C/k} would force CompactSpace on an infinite disjoint union\n  \
+  \   over deg in Z; Picard/AmbientPicNotProper.lean), and the quasi-projectivity route needs\n     vocabulary\
+  \ mathlib v4.31 does not have (I-0074 Caveat 2).\n\n (c) DEGREE / DIMENSION (AJC.pic0av.identity). Two\
+  \ sorries. The degree map is BUILT and\n     sorry-free. THE DIMENSION HALF'S r7 REDUCTION IS REFUTED\
+  \ (run 0067 r8, 27f526ea7): its\n     \"orbit condition\" is not a gap but CONTRADICTORY for g >= 1\
+  \ -- a k-rational orbit forces\n     T1 hence topologicalKrullDim 0 (Picard/HomogeneityOrbitCollapse.lean),\
+  \ so both\n     topologicalKrullDim_eq_genus_of_homogeneous theorems are VACUOUS where this leg exists.\n\
+  \     The \"uniform cotangent bound\" that r7 declared dead is REINSTATED as the owed statement,\n \
+  \    and it needs a transport reaching NON-CLOSED points. Fourth wrong framing of this leg.\n\nMEASURE\
+  \ AT A SYNTHESIS SITE, not at the declaration: smooth/proper and their reductions\nquantify over [HasPicScheme\
+  \ C] and report clean axioms as stated. Every clean claim in this\nleg has been probed against controls\
+  \ that DO fire sorryAx; keep that discipline.\n"
 status: active
 kind: proof
 priority: normal
