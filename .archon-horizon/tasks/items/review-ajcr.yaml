@@ -1,0 +1,115 @@
+id: review-ajcr
+project: Algebraic-Jacobian-Challenge-Rebuild
+objective: 'You are the REVIEWER lane for Algebraic-Jacobian-Challenge-Rebuild. Four
+  prover lanes (`ajcr-p1`..`ajcr-p4`) work this project in parallel this round, each
+  picking its own target. Your job is the thing none of them will do: judge whether
+  the project''s ROUTE to Pic^0 representability is sound, whether its roadmap and
+  files are organised so four lanes can work without tripping, and whether its Lean
+  will still hold in a month. Read protection item `I-0838` first — it is the claim
+  protocol, and you are its enforcer.
+
+
+  You are READ-MOSTLY on Lean source. You may edit: the roadmap, the inbox, hgraph
+  nodes, docstrings that state something false, and blueprint/worksheet prose. You
+  may NOT take proof work off the provers — if you find a proof worth doing, propose
+  it to the lane whose rank fits (`inbox add --kind hint --to task:ajcr-pN`).
+
+
+  THE GOOD NEWS AND THE PROBLEM, both established by the 2026-07-29 audit. AJCR is
+  the architecturally sound project: `pic0RepresentableByOfCharts` (`Picard/Pic0SigmaSheaf.lean:161`)
+  and `mixedParamRepresentableBy` (`Picard/Pic0ChartAtlasParamFree.lean:125`) are
+  genuinely sorry-free, kernel-confirmed on `[propext, Classical.choice, Quot.sound]`,
+  honest non-circular implications that WOULD produce a real representing scheme.
+  The problem is that all three antecedents are undischarged — `IsChartUniv`, Zariski-local
+  surjectivity of `Sigma.desc f`, and `rep i` — and not one sorry-free witness exists
+  for any of them. A correct machine with nothing to feed it.
+
+
+  So your central question is a costing question, not a correctness question: **of
+  the three missing inputs, which is actually closest, and is the roadmap''s ranking
+  of them right?** The `AJCR.w4-rep` subtree has 74 leaves with 51 done and a five-to-seven-deep
+  tail under `datum.dat-d.ddr.certificate` where several siblings are `rejected` (`cert-relocalize`,
+  `joint-cover`, `leak-image`, `tube-fibre`) and one is `blocked` (`away-kerspan`).
+  Four rejections and a block clustered under one parent is a signal: either the parent''s
+  formulation is wrong and each rejection is a symptom, or the rejections are correct
+  and the parent should be restated. Determine which. That is worth more than any
+  single leaf, and no prover will see it because each is inside one leaf.
+
+
+  Then, specifically, audit the PRESCRIPTIONS. This project''s leaves carry costings
+  written by earlier sessions — "this gap needs bricks X and Y", "needs a new structure
+  field", "CERT-Σ-gated". Those costings set the price for every later round and nothing
+  re-checks them. There is a documented case in this workspace of a handoff demanding
+  a new structure field where the localization lemma it asked for was already in the
+  file. So: for each of `dat-b`, `dat-c.c9-chartlocus`, `dat-d.ddr.divrep.u2`, and
+  `dat-glue`, read the actual Lean hypothesis rather than the prose about it, and
+  check whether the stated prerequisite is real. Report any leaf whose price is wrong
+  in either direction — over-priced leaves are where a prover lane can win this round.
+
+
+  Also check for the failure modes the audit found across the workspace:
+
+  - VACUITY. Read the STATEMENT of every gate class and structure field on the chart/certificate
+  seam and ask what would falsify it. The cautionary case is AJC''s `HasDivFunctor`,
+  whose field asserted only that a presheaf category is nonempty — the curve did not
+  occur in the statement — while the blueprint advertised it as the existence of the
+  divisor functor. AJCR''s audit came back cleaner than AJC''s, but "cleaner" is not
+  "clean", and the deep `certificate` tail is where a quietly-vacuous side condition
+  would survive longest.
+
+  - HYPOTHESIS DRIFT. 12 of the 101 audited claims proved something adjacent to what
+  their name and docstring said. On this seam that means a lemma about `IsChartUniv`
+  at *some* open where the consumer needs it at the chart locus, or a certificate
+  clause quantified over the wrong family. Check that each chart-side lemma''s conclusion
+  is the one `pic0RepresentableByOfCharts` actually consumes — price the consumer''s
+  carrier, not the object in isolation.
+
+  - BUILD REACHABILITY. 93 of 620 modules are unrooted (`AJCR.w4-rep.build-reach`),
+  so an axiom probe does not see them. Establish whether that is still true and whether
+  it invalidates any "sorry-free" claim on this seam. A file nobody imports is a file
+  nobody has measured.
+
+  - The 17 sorries here sit in `Challenge.lean` (15) and `Pic0ThetaCocycle.lean` (2).
+  `Challenge.lean` is the statement-only headline file, so its sorries are the north
+  star, not debt. Make sure the board reflects that distinction — a naive sorry count
+  reads AJCR as nearly done, and that is how the last round got misread.
+
+
+  WHAT TO PRODUCE. Not a report for me — changes the four provers will hit. A roadmap
+  whose ranking under `w4-rep` reflects real cost, with the rejection cluster either
+  restated or explained. An inbox `issue` per defect naming declaration and file.
+  A direct hint to each prover whose target your costing changes. Findings on the
+  hgraph node of the declaration they concern. If you conclude the three antecedents
+  are all multi-round and none closes this week, say so to `--to human` with the reasoning
+  — I would rather know than have four lanes each report partial progress on a leaf.
+
+
+  Use `ground` and `work-reviewer` subagents freely for independent lenses. Commit
+  your board and prose changes as you go.'
+title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and the costings'
+explanation: ''
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+priority: high
+status: queued
+write_set:
+  files: []
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+roadmap_refs:
+- AJCR.jacobian
+- AJCR.w4-rep
+- AJCR.w4-rep.datum
+inbox_refs:
+- I-0838
+artifact_refs: []
+created_at: '2026-07-29T10:10:19.878060+00:00'
+updated_at: '2026-07-29T10:11:41.901743+00:00'
+metadata:
+  author: human

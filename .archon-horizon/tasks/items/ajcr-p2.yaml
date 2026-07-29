@@ -1,0 +1,165 @@
+id: ajcr-p2
+project: Algebraic-Jacobian-Challenge-Rebuild
+objective: 'You are prover lane `ajcr-p2` on Algebraic-Jacobian-Challenge-Rebuild.
+  This round the objective is deliberately FREE: nobody has told you which declaration
+  to prove. Your objective is to identify the SECOND most important open item standing
+  between this project and Picard/Pic^0 representability, claim it publicly, and discharge
+  it.
+
+
+  READ FIRST: protection item `I-0838`. It is the claim protocol for this round''s
+  ten parallel lanes and it is not optional — steps 2 through 5 (check ownership,
+  claim with `roadmap set --owner ajcr-p2`, announce, release on exit) are what stop
+  four lanes proving the same lemma. Also read `I-0491` and `I-0492`, the two binding
+  human decisions, before touching the seam.
+
+
+  YOUR RANK. You take the SECOND most important item. Rank is a tie-break so four
+  lanes do not converge on one target, not a fence: if your item turns out to be blocked
+  on another lane''s, say so in the inbox and swap. On a contested item you yield
+  to p1, then take the next.
+
+
+  YOUR PEERS this round are ajcr-p1, ajcr-p2, ajcr-p3, ajcr-p4 plus the reviewer `review-ajcr`.
+  The reviewer is auditing route and organisation and will be correcting the board
+  in its first hour — read its inbox items before you fix your target, and re-read
+  them if you are about to start something large. It may direct-message you a proposal;
+  weigh it against what you hold, and take it if it is genuinely worth more. You may
+  propose work to the other lanes the same way (`inbox add --kind hint --to task:<lane>`),
+  naming declaration, file, and why it beats what they hold.
+
+
+  HOW TO CHOOSE, since this is the part I am delegating to you. "Most important" means:
+  measured against the project''s representability headline, what does discharging
+  this buy? A leaf that unblocks three others beats a leaf that is merely nearest.
+  A leaf whose stated prerequisite turns out to already exist in the file beats both
+  — earlier sessions'' costings in this workspace have been wrong in that direction
+  more than once, so read the actual Lean hypothesis, not the prose about it. Use
+  `horizon graph -p Algebraic-Jacobian-Challenge-Rebuild frontier` for the ranked
+  view, `horizon roadmap list --focus AJCR.w4-rep` for the board, and `horizon search`
+  (which spans both projects AND mathlib) before you prove anything — the premise
+  you need is often already next door under a name you would not have grepped.
+
+
+  THE BAR, and it is higher than usual this round. An audit on 2026-07-29 sampled
+  101 representability claims across both projects and refuted 99: 67 were sorry-reachable,
+  17 VACUOUS, 12 proved something adjacent to what they claimed, 3 did not exist.
+  So:
+
+  - Sorry-free is necessary, not sufficient. Before you report a gate closed, exhibit
+  a witness for EVERY antecedent, or state plainly which antecedent remains undischarged.
+  "The implication is proved" and "the conclusion holds for some curve" are different
+  claims and I want to know which you have.
+
+  - Never introduce a class, structure field, or side condition whose statement does
+  not mention the object it is about. The cautionary case is `HasDivFunctor`: its
+  field asserted only that a presheaf category is nonempty, the curve did not occur,
+  and the blueprint advertised it as the existence of the divisor functor with `\leanok`.
+  It survived because nobody read the statement.
+
+  - Never discharge an obligation by projecting the hypothesis you assumed. `choose_spec.1`
+  of your own binder is `P → P`.
+
+  - A green build is not evidence of non-vacuity, and `lean_multi_attempt` reports
+  every snippet as closing the goal when the file''s imports are stale. Check imports
+  before believing a probe.
+
+  - Do not restate an obligation more weakly to make a count go down. If you cannot
+  close it, leave it open and say why.
+
+
+  ONE SHARED LEDGER, ten writers. Another lane''s integrate sweep can commit your
+  half-written file before you have measured it once — write risky proofs as explicit
+  `sorry` first, measure, then fill. Stage explicit files, never `add -A`. Commit
+  at every coherent point; an interrupted lane loses only what was uncommitted. Follow
+  the `lean-check` LSP loop for edits and keep `lake build` for the session boundary
+  — nine other lanes want the build lock too.
+
+
+  WHERE THIS PROJECT ACTUALLY STANDS, so you do not rediscover it. AJCR is the architecturally
+  sound one. `pic0RepresentableByOfCharts` (`Picard/Pic0SigmaSheaf.lean:161`) and
+  `mixedParamRepresentableBy` (`Picard/Pic0ChartAtlasParamFree.lean:125`) are genuinely
+  sorry-free and kernel-confirmed on `[propext, Classical.choice, Quot.sound]` — honest,
+  non-circular implications that WOULD produce a real representing scheme. The problem
+  is that all three antecedents are undischarged, with no sorry-free witness for any:
+  `IsChartUniv`, Zariski-local surjectivity of `Sigma.desc f`, and `rep i`. A correct
+  machine with nothing to feed it.
+
+
+  That makes your choice unusually concrete: pick whichever of the three missing inputs
+  you judge closest, or the leaf that most directly produces one. Do not treat the
+  sorry count as the map — the 17 body sorries are 15 in `Challenge.lean` (the statement-only
+  headline file, so those ARE the north star, not debt) and 2 in `Pic0ThetaCocycle.lean`.
+  The real work is antecedents that no sorry marks.
+
+
+  The board under `AJCR.w4-rep` (51/74 done) has a deep tail worth reading with suspicion:
+  under `datum.dat-d.ddr.certificate`, four siblings are `rejected` (`cert-relocalize`,
+  `joint-cover`, `leak-image`, `tube-fibre`) and one is `blocked` (`away-kerspan`).
+  Four rejections clustered under one parent usually means the parent''s formulation
+  is wrong, not that four different approaches each independently failed. The reviewer
+  is determining which; read its finding before you spend a session inside that tail.
+  Other open items to weigh: `datum.dat-b` (coverage + injectivity — every pic^0 point
+  is hit), `datum.dat-c.c9-chartlocus` and its `chart-u` child (the co-signed chartLocus
+  and its openness — the sole gate of dat-b B-6 AND the whole dat-glue), `datum.dat-d.ddr.divrep.u2`
+  (the DDR9-U epsilon-identity at the universal point), `datum.dat-glue` (the 01JJ
+  RepresentableBy assembly), `datum.dat-j`, `datum.dat-g`, `w4-rep.build-reach` (93
+  of 620 modules unrooted, so the axiom probe does not see them — a file nobody imports
+  is a file nobody has measured, which may matter to whichever "sorry-free" claim
+  you are relying on).
+
+
+  Costings in this project have been wrong before, in the expensive direction: a handoff
+  demanded a new structure field where the localization lemma it asked for was already
+  in the file. So for whatever leaf you pick, read its actual Lean hypothesis before
+  accepting its stated price. An over-priced leaf is where you win this round.
+
+
+  The sibling project Algebraic-Jacobian-Challenge is readable and `horizon search`
+  spans both. It has more Quot/Serre machinery than this project does; if your leaf
+  needs cohomological input, look there before building it. Price the consumer''s
+  carrier when you do — a cross-project match at object level can be true and irrelevant
+  if the cover or instance your statement binds differs.
+
+
+  WHAT I WANT AT THE END. Your report should answer three things without me having
+  to ask: which item you claimed and why it was the second-most important, what its
+  state is now (closed sorry-free with all antecedents witnessed / closed as an implication
+  with named antecedents still open / advanced with the remaining obligation stated
+  / blocked, with the blocker), and what you learned that changes another lane''s
+  plan. If you found a costing wrong, a vacuity, or a route problem, that goes in
+  the inbox as an `issue` at the site that made the claim — not only in your report,
+  which nobody downstream reads.
+
+
+  If your first-choice item collapses on inspection — the prerequisite already exists,
+  or the statement turns out vacuous, or another lane got there first — that is a
+  finding, not a wasted session. Record it, release the claim, and take the next item.
+  Do not sit on a claimed item you are not working.'
+title: 'AJCR prover p2: claim and close the 2nd-most important representability item'
+explanation: ''
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+priority: high
+status: queued
+write_set:
+  files: []
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+roadmap_refs:
+- AJCR.jacobian
+- AJCR.w4-rep
+- AJCR.w4-rep.datum
+inbox_refs:
+- I-0838
+artifact_refs: []
+created_at: '2026-07-29T10:10:50.298474+00:00'
+updated_at: '2026-07-29T10:11:43.181859+00:00'
+metadata:
+  author: human

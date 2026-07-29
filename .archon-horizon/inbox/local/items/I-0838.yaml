@@ -1,0 +1,65 @@
+id: I-0838
+provider: local
+kind: protection
+body: "[persistent] [persistent] REPRESENTABILITY PUSH, 2026-07-29 — the claim/lane\
+  \ protocol that makes 10 free-objective lanes not collide.\n\nWHY THIS EXISTS. This\
+  \ round replaces prescriptive per-leaf tasks with FIVE lanes per project: one REVIEWER\
+  \ and four PROVERS ranked p1..p4. The provers each pick their own target. That only\
+  \ works if claiming is explicit and public. This item is the claiming mechanism.\
+  \ Read it before your first edit.\n\nTHE FIVE LANES PER PROJECT\n- `review-ajc`\
+  \ / `review-ajcr` — reviewer. Read-mostly. Finds defects of ROUTE and ORGANISATION,\
+  \ not of individual proofs; may propose refactors and file tasks-as-proposals for\
+  \ the provers. Does not race provers for proof work.\n- `ajc-p1` / `ajcr-p1` — takes\
+  \ the MOST important open representability item.\n- `-p2`, `-p3`, `-p4` — 2nd, 3rd,\
+  \ 4th most important, where \"important\" is measured against the project's representability\
+  \ headline, not by ease.\n\nCLAIMING — do this BEFORE you start proving, not after.\n\
+  \ 1. `horizon roadmap list --focus <your project's w4-rep / picrep subtree>` and\
+  \ read the reviewer's open notes.\n 2. Pick your item. Check no other lane owns\
+  \ it: an item with `--owner` set to another lane IS CLAIMED. Do not take it, even\
+  \ if you think you would be faster.\n 3. Claim it: `horizon roadmap set <id> --owner\
+  \ <your-task-id> --status active`. If your target is not yet a roadmap item, `roadmap\
+  \ add` it under the right parent first, then claim it.\n 4. Announce: one `horizon\
+  \ inbox add --kind info --to horizon --body \"CLAIM <lane>: <roadmap id> — <one\
+  \ line on what discharging it buys>\"`.\n 5. Release on exit: if you did NOT finish,\
+  \ `roadmap set <id> --owner ''` and leave a one-line inbox note saying where you\
+  \ stopped and what the next lane should NOT re-derive. An item left owned by a dead\
+  \ lane is worse than an unclaimed one.\n\nRANK IS A TIE-BREAK, NOT A FENCE. If p1's\
+  \ item turns out to be blocked on p3's, say so in the inbox and swap — rank exists\
+  \ so four lanes do not all converge on the same top item, not to stop you working\
+  \ on the right thing. p1 has first refusal on any contested item.\n\nYOU MAY PROPOSE\
+  \ WORK TO THE OTHER LANES. Direct-message with `horizon inbox add --kind hint --to\
+  \ task:<lane-id> --body \"…\"`. A good proposal names the declaration, the file,\
+  \ and why it is worth more than what that lane currently holds. You may NOT reassign\
+  \ another lane's claimed item, and you may NOT create new horizon runs or tasks\
+  \ for teams outside your own (`horizon permissions` is false on both counts — propose\
+  \ to the human instead).\n\nSTANDING BINDING DECISIONS you must not relitigate:\
+  \ `I-0491` (AJC: no rational-point binder on the headline; `hasRationalPoint_of_curve`\
+  \ is FALSE and must be deleted, never proved) and `I-0492` (AJCR: `DivFamZar` widens\
+  \ to arbitrary affine opens; do NOT build the GL_2/Aut(P1) route). Read both.\n\n\
+  WHAT COUNTS AS PROGRESS, given the 2026-07-29 audit. That audit found 99 of 101\
+  \ sampled representability claims refuted: 67 sorry-reachable, 17 VACUOUS, 12 hypothesis-shifted.\
+  \ So the bar is explicit:\n- A discharged obligation must be sorry-free AND its\
+  \ hypotheses must be inhabitable. Before you claim a gate closed, exhibit a witness\
+  \ for every antecedent, or say plainly which antecedent is still undischarged.\n\
+  - Do NOT add a class, structure field, or hypothesis whose statement does not mention\
+  \ the object it is supposedly about. `HasDivFunctor` is the cautionary case: its\
+  \ field asserted only that a presheaf category is nonempty, `C` did not occur, and\
+  \ it was advertised as the existence of the relative divisor functor. That is a\
+  \ vacuity, and it survived because nobody read the statement.\n- Do NOT discharge\
+  \ an obligation by projecting the hypothesis you assumed (`choose_spec.1` of your\
+  \ own binder). That is `P → P`.\n- A green `lake build` is not evidence a statement\
+  \ is non-vacuous. Check imports are current before believing a `lean_multi_attempt`\
+  \ success.\n\nCOMMIT DISCIPLINE. This is ONE shared ledger branch with 10 writers.\
+  \ Another lane's integrate sweep can commit your half-written file before you have\
+  \ measured it once. Write risky proofs as explicit `sorry` first, measure, then\
+  \ fill. Stage explicit files, never `add -A`."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-29T10:06:00.874723+00:00'
+updated_at: '2026-07-29T10:06:00.874736+00:00'
+metadata: {}

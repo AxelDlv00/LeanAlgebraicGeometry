@@ -1,0 +1,115 @@
+id: review-ajc
+project: Algebraic-Jacobian-Challenge
+objective: 'You are the REVIEWER lane for Algebraic-Jacobian-Challenge. Four prover
+  lanes (`ajc-p1`..`ajc-p4`) work this project in parallel this round, each picking
+  its own target. Your job is the thing none of them will do: judge whether the project''s
+  ROUTE to Picard representability is sound, whether its files and roadmap are organised
+  so four lanes can work without tripping, and whether its Lean is of a quality that
+  will still hold in a month. Read protection item `I-0838` first — it is the claim
+  protocol, and you are its enforcer.
+
+
+  You are READ-MOSTLY on Lean source. You may edit: the roadmap, the inbox, hgraph
+  nodes, docstrings that state something false, and blueprint prose. You may NOT take
+  proof work off the provers — if you find a proof worth doing, propose it to the
+  lane whose rank fits (`inbox add --kind hint --to task:ajc-pN`).
+
+
+  START WITH THE BOARD, because it is known-wrong. An audit on 2026-07-29 found `AJC.picrep`
+  marked `done` while its advertised deliverable `instHasPicScheme` exists in no `.lean`
+  file — it was deleted on 2026-07-28 under decision `I-0491`, not discharged. The
+  roadmap''s cited anchor `FGAPicRepresentability.lean:259` points mid-docstring.
+  `AJC.jacobian.assembly` returned NONEXISTENT on two independent lenses. Three parent/child
+  status warnings are live (`AJC.picrep` done with `AJC.picrep.tensor` open; `AJC.rr`
+  done with `AJC.rr.extuniform` open; `AJC.jacobian.assembly` all-children-done but
+  itself open). Verify each of these yourself rather than trusting my summary, then
+  fix the board so the four provers plan against reality: correct statuses, re-point
+  stale anchors, and write a summary on `AJC.picrep` that names the actual open obligation.
+  Do this in your FIRST hour — the provers are reading the board to choose their targets,
+  and every minute it lies costs four lanes.
+
+
+  THE ROUTE QUESTION, which is the real one. The whole AJC Jacobian tower rests on
+  ONE bare `sorry`: `fgaPicardRepresentability` at `AlgebraicJacobian/Picard/FGAPicRepresentability.lean:347`.
+  Its own docstring says discharging it means formalising Kleiman §4 — the Abel-map
+  slice `Div^d → Pic^d` as a smooth proper equivalence relation whose quotient is
+  a scheme, plus `Div` representability via the Quot scheme — and that neither input
+  is available. Meanwhile `AJC.picrep.quot` and `AJC.picrep.serre` are both marked
+  `rejected`. So: the file says the route needs Quot and Serre finiteness, and the
+  board says both are rejected. Resolve that. Either there is a different route (and
+  the docstring is stale and should say so), or the route is the rejected one (and
+  rejecting it while keeping the sorry is incoherent). This is the single most valuable
+  thing you can determine this round, and no prover lane will determine it, because
+  each of them is inside one leaf.
+
+
+  Then audit for the failure modes the 2026-07-29 pass found, in the parts of the
+  project the provers are NOT looking at:
+
+  - VACUITY. `HasDivFunctor` asserted only that a presheaf category `(Over (Spec k))ᵒᵖ
+  ⥤ Type (u+1)` is nonempty — `C` did not occur in the statement — and the blueprint
+  advertised it as "the existence of the relative divisor functor" with `\leanok`.
+  Find the others. Read the STATEMENT of every class, structure field, and gate on
+  the representability seam and ask what would falsify it. A hypothesis that nothing
+  can falsify is a hole with a docstring.
+
+  - SELF-PROJECTION. `smoothProperQuotient` proves `P.IsRepresentable → P.IsRepresentable`,
+  with all four Kleiman hypotheses unused, zero instances, and zero call sites. `instPicSharpRepresentable`
+  and `instPicSchemeLocallyOfFiniteType` are `choose_spec.1` / `.2.1` of the hypothesis
+  they assume. These are not defects to fix by proving something — they are defects
+  to LABEL, so no consumer is written against them and no blueprint node claims them.
+
+  - DEAD CONSUMERS. Roughly 45 declarations take `[HasPicScheme C]`. If that class
+  has no instance, all 45 are about no curve. Count them, check whether `HasPicSchemeEt`
+  (which does have an unconditional producer, `instHasPicSchemeEt`, itself a projection
+  of the line-347 sorry) has actually replaced it, and report how much of the project
+  is downstream of an uninhabited class. That number is the honest state of AJC, and
+  someone should write it down.
+
+  - ORGANISATION. `Picard/QuotScheme.lean` is over 6000 lines. `AlgebraicJacobian`
+  has 24 body-position sorries and 172 modules, 66 still on a bare `import Mathlib`.
+  Say which of these actually costs the provers time this round and which is cosmetic;
+  do not file a refactor that buys nothing.
+
+
+  WHAT TO PRODUCE. Not a report for me to read — changes the four provers will hit.
+  A corrected board. An inbox `issue` per genuine defect, naming declaration and file.
+  A direct hint to each prover lane whose target your findings change. Where you find
+  a vacuous or self-projecting declaration, put the finding on its hgraph node and
+  in its docstring, so the next reader cannot miss it. If your route analysis concludes
+  AJC''s representability is not reachable this round by any of the four lanes, say
+  that plainly to `--to human` with the reasoning — that is a valuable finding, not
+  a failure, and I would rather know it than have four lanes spend a day proving lemmas
+  into a dead route.
+
+
+  Use `ground` and `work-reviewer` subagents freely for independent lenses; they are
+  yours, and this task is exactly what they are for. Commit your board and prose changes
+  as you go.'
+title: 'REVIEWER (AJC): audit the representability route, board and Lean quality'
+explanation: ''
+projects:
+- Algebraic-Jacobian-Challenge
+priority: high
+status: queued
+write_set:
+  files: []
+  projects:
+  - Algebraic-Jacobian-Challenge
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+roadmap_refs:
+- AJC.jacobian
+- AJC.picrep
+- AJC.picrep.tensor
+inbox_refs:
+- I-0838
+artifact_refs: []
+created_at: '2026-07-29T10:10:19.257917+00:00'
+updated_at: '2026-07-29T10:11:38.728372+00:00'
+metadata:
+  author: human
