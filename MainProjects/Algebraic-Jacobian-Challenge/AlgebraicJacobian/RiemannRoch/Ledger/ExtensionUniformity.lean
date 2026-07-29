@@ -151,8 +151,9 @@ extraction — so the route "bound AJC's own `n₀` uniformly" is not available.
 
 What *is* available, and is the genus-0 closure (producer in `Ledger/VanishingFieldDescent.lean`,
 witness in `Ledger/P1Vanishing.lean` — see item 2 below on why both are needed to say "closed"):
-that file bypasses `n₀` entirely.  Instead of transporting the *stabilization index*, it transports the *vanishing
-statement*, using faithful flatness of `κ/k` on `GenusFieldInvariance`'s `Ȟ¹` comparison.  The
+that file bypasses `n₀` entirely.  Instead of transporting the *stabilization index*, it
+transports the *vanishing statement*, using faithful flatness of `κ/k` on
+`GenusFieldInvariance`'s `Ȟ¹` comparison.  The
 witness divisor is then `0` at every `κ`, whose degree is `0` with no choice involved.  That
 works exactly when `H¹(𝒪_C)` already vanishes, i.e. `genus C = 0`.
 

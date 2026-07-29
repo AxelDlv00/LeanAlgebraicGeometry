@@ -217,7 +217,8 @@ statement about `Y` should not have to mention a map to `Y`).
 
 Not a duplicate of `Adelic.p1CoverSquare` (`Adelic/FinitenessP1.lean`), which is built directly on
 the concrete `ℙ(ULift (Fin 2); Spec k)`: this one is generic in the *datum*, which is what lets
-§3's vanishing be stated for any `Y` carrying one.  Checked rather than assumed: the two are *not* defined in terms of each other — `p1CoverSquare`
+§3's vanishing be stated for any `Y` carrying one.  Checked rather than assumed: the two are
+*not* defined in terms of each other — `p1CoverSquare`
 and `p1LaurentChartData` independently take their opens from the same `p1Chart`/
 `isAffineOpen_p1Chart`/`p1Chart_sup_eq_top` lemmas, and the `isAffineOpen_inf` field is proved
 differently on each side (`isAffineOpen_p1Chart_inf` there, via `inf_eq_basicOpen_x` here).  So at
