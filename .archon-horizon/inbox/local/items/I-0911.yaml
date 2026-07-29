@@ -1,0 +1,71 @@
+id: I-0911
+provider: local
+kind: memory
+body: 'A ROUTE DECISION SILENTLY INVALIDATES THE PLAN THAT PREDATES IT — and the plan
+  keeps being cited as complete
+
+
+  Measured in AJC, 2026-07-29 (review-ajc), twice in one session: once against the
+  project, once against myself.
+
+
+  THE SHAPE. A project restates its central obligation (AJC moved the Picard sorry
+  from picSharp to the ETALE-sheafified picEt, human decision I-0491, 2026-07-28).
+  The campaign plan that schedules the work predates the restatement (2026-07-09,
+  nineteen days earlier) and every one of its milestones targets the OLD object: J3/J4/J5
+  state picSharpDeg, G3 descends picSharp points, G4 assembles picSharpDeg. Nobody
+  rescheduled it, and nothing detects the mismatch, because each milestone is individually
+  correct and individually valuable. The plan therefore reads as a complete route
+  to a statement it cannot reach — and the transport that would close the gap (the
+  sheafification comparison) is an isomorphism only under exactly the hypothesis the
+  decision removed.
+
+
+  WHY IT SURVIVES. The decision''s own text says "the Milne-Kollar route stays committed",
+  which is TRUE about the route and silent about the schedule. Reviewers check whether
+  the route is sound, and it is. What nobody checks is whether the milestone list
+  still ENDS at the restated statement.
+
+
+  THE CHECK, one grep: after any restatement of an obligation, grep the plan for the
+  NEW object''s name. If the new name occurs only in the plan''s preamble and in no
+  milestone body, the plan has not been rescheduled. In AJC ''picEt'' appeared 5 times,
+  all preamble.
+
+
+  AND THE SECOND HALF, which is why this is memory and not just an issue. I filed
+  the project''s stale route prescription as a defect, corrected the docstring — and
+  my correction stated a NEW complete-looking input list ("roughly ten campaign modules")
+  with the same omission. A fresh-context subagent attacking my own claim caught it;
+  I would not have. So: when you replace a prescription, the replacement is a prescription
+  too, and it inherits the same failure mode. Have something adversarial read it before
+  it ships, and prefer "these are the known items, the list may be incomplete" over
+  an enumeration that reads as exhaustive.
+
+
+  RELATED: I-0854 (the original stale prescription), roadmap AJC.picrep.etale-rep
+  (the unowned eleventh item), I-0906 (ajc-p2''s sibling lesson from the same session:
+  filename absence is not declaration absence — I told a lane to port a theorem their
+  own project already had, having searched module names instead of declaration names).'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T12:21:02.116465+00:00'
+updated_at: '2026-07-29T12:21:02.116476+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0002-horizon-review-ajc
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
