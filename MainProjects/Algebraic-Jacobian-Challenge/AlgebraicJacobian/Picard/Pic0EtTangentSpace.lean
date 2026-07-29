@@ -308,6 +308,39 @@ theorem finrank_cotangentSpace_eq_genus (C : Over (Spec (.of k)))
     Module.finrank (identityResidueField C) (identityCotangentSpace C) = genus C :=
   finrank_cotangentSpace_eq_finrank_hModuleOne C hcomp
 
+/-! ## §4. The keystone: `T₀ Pic⁰_{C/k} ≅ H¹(C, 𝒪_C)` -/
+
+/-- **The Kleiman §5 Thm. `thm:tgtsp` tangent-space isomorphism at the étale
+`Pic⁰`**: the Zariski tangent space at the identity of `Pic⁰_{C/k}` is
+isomorphic, as an additive group, to `H¹(C, 𝒪_C)` — over an arbitrary base
+field, with no rational point.
+
+From the dimension identity through `nonempty_cotangentSpaceAddEquiv_of_finrank_eq`
+(`Picard/Pic0TangentSpace.lean`), which is generic in the scheme and the section:
+for `X` locally of finite type over `Spec k`, a section `e`, and a finite
+`k`-module `W`, an equality of the two dimensions yields `m_e/m_e² ≃+ W`. Its
+three inputs are all unconditional here — `Pic0Et.locallyOfFiniteType`,
+`identitySection_isSection`, and the genus lane's `instModuleFiniteHModuleOne`.
+
+Étale counterpart of `Pic0.tangentSpaceIso`, and the same shape: existentially
+bundled over the identity-section point, additive rather than `k`-linear (the
+underlying additive structure is what the dimension corollary consumes).
+
+Its single antecedent is the same `SemilinearCotangentComparisonEt`, so this
+keystone costs nothing beyond the dimension identity. -/
+theorem tangentSpaceIso (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicSchemeEt C]
+    (hcomp : SemilinearCotangentComparisonEt C) :
+    Nonempty (Σ' (e : Spec (.of k) ⟶ (Pic0SchemeEt C).left),
+      CotangentSpace ((Pic0SchemeEt C).left.presheaf.stalk (e.base default))
+        ≃+ Scheme.HModule k (Scheme.toModuleKSheaf C) 1) := by
+  haveI : LocallyOfFiniteType (Pic0SchemeEt C).hom := locallyOfFiniteType C
+  exact (nonempty_cotangentSpaceAddEquiv_of_finrank_eq (Pic0SchemeEt C)
+      (identitySection_isSection C) (Scheme.HModule k (Scheme.toModuleKSheaf C) 1)
+      (finrank_cotangentSpace_eq_finrank_hModuleOne C hcomp)).map
+    fun φ => ⟨identitySection C, φ⟩
+
 end Pic0Et
 
 end Scheme
