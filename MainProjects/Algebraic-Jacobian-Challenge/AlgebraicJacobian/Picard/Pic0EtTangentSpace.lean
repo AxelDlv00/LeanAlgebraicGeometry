@@ -346,11 +346,24 @@ Immediate from the identity above, since `genus C` is *by definition*
 transport, exactly as on the pointed side.
 
 This is the number `smoothOfRelativeDimension_genus_pic0Et` (`Jacobian.lean`)
-needs. It is **not** that leaf: the leaf additionally needs `Pic0Et.smooth` and
-the passage from a tangent-space dimension to Mathlib's presentation-based
-`SmoothOfRelativeDimension` (characterised by `Module.rank S Ω[S⁄R]`), neither of
-which is touched here. What this removes from the leaf's cost is the transport
-along a section that its docstring claimed to require. -/
+needs. It is **not** that leaf, and the *shape* of what remains is not what an
+earlier revision of this paragraph (mine, run 0084 r1) said. That text priced the
+leaf as needing "`Pic0Et.smooth` and the passage from a tangent-space dimension to
+Mathlib's presentation-based `SmoothOfRelativeDimension`" — two inputs. Corrected
+r2 in `Picard/Pic0EtRelativeDimension.lean`, imports rebuilt first:
+
+* the leaf is **one** obligation. `SmoothOfRelativeDimension n` is a
+  `HasRingHomProperty` over `Locally (IsStandardSmoothOfRelativeDimension n)`, and at
+  chart level the graded condition implies the ungraded one, so pinning the numeral
+  supplies smoothness with it (`Pic0Et.leafB_of_chartwise`, stated with no smoothness
+  hypothesis). `Pic0Et.smooth` is *absorbed*, not subtracted;
+* the number lives in a different **place**, not merely on a different invariant.
+  What the leaf asks is `Module.rank S Ω[S⁄R] = genus C` on the away-localisations of
+  affine chart algebras of `Pic⁰`; what this theorem gives is a `finrank` at the
+  *identity*. Nothing here computes a chart.
+
+What this theorem does remove from the leaf's cost is the transport along a section
+that its docstring used to claim to require. -/
 theorem finrank_cotangentSpace_eq_genus (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
     [GeometricallyIrreducible C.hom] [GeometricallyIntegral C.hom] [HasPicSchemeEt C]

@@ -64,6 +64,18 @@ them as the open statements is a stale reading. What *is* proved unconditionally
 measures axiom-clean: `Pic0Et.grpObj`, `Pic0Et.geometricallyIrreducible`,
 `Pic0Et.locallyOfFiniteType`, `Pic0Et.isSeparated`.
 
+**The five are NOT independent, and the list must not be read as five distances to be
+added** — measured 2026-07-29 r2 (`ajc-p2`, `Picard/Pic0EtRelativeDimension.lean`;
+independently reproduced by `ajc-p3`). Obligation 4 **implies** obligation 2: leaf B gives
+bare smoothness by `SmoothOfRelativeDimension.smooth` and then geometric reducedness by
+this project's `Smooth.geometricallyReduced`, packaged as
+`Scheme.Pic0Et.geometricallyReduced_of_leafB`. So closing leaf B would close two of the
+five at once, and obligation 2 is a *sub-problem* of obligation 4 rather than a peer of
+it. What does **not** follow is that obligation 2 became cheaper: it is the weaker
+statement, so proving it directly (the `k̄` reduction on `AJC.pic0av.structure`) remains
+the right attack, and the implication is useless in that direction. The other three are
+mutually independent as far as anything measured shows.
+
 **All five are true statements awaiting proofs**, and that is the substance of the 2026-07-28
 change rather than the count. The former leaf `hasRationalPoint_of_curve` asserted a
 `k`-rational point from the challenge hypotheses alone; it was *false*, so the witness rested
@@ -415,10 +427,33 @@ the tangent space at the identity is `H¹(C, 𝒪_C)`, of dimension `genus C` by
 of `genus`, and for a smooth group scheme the relative dimension is the dimension of that
 tangent space.
 
-What it owes over and above the `picSharp` leaf `smoothOfRelativeDimension_genus_pic0` is
-the same two steps recorded there — `Pic0Et.smooth` itself, plus the translation between
-a tangent-space dimension and Mathlib's presentation-based `SmoothOfRelativeDimension`
-(which is characterised by `Module.rank S Ω[S⁄R]`, a different invariant).
+What it owes is **one** step, not two — corrected 2026-07-29 r2 (`ajc-p2`,
+`Picard/Pic0EtRelativeDimension.lean`), because the previous sentence here priced the leaf
+as `Pic0Et.smooth` *plus* the translation between a tangent-space dimension and Mathlib's
+presentation-based `SmoothOfRelativeDimension`, and the smoothness half is **absorbed**
+rather than additive. Measured, with imports rebuilt first:
+
+* `SmoothOfRelativeDimension n` is `HasRingHomProperty _ (Locally
+  (IsStandardSmoothOfRelativeDimension n))`, so by `HasRingHomProperty.iff_appLE` this
+  leaf *is* a condition on affine chart pairs (`Pic0Et.leafB_iff_appLE`), and on one
+  affine cover of `Pic⁰` since the base is affine (`Pic0Et.leafB_iff_affineCover`);
+* at chart level the graded condition implies the ungraded one
+  (`RingHom.IsStandardSmoothOfRelativeDimension.isStandardSmooth`), so supplying the
+  numeral supplies smoothness with it. `Pic0Et.leafB_of_chartwise` is therefore stated
+  with **no** smoothness hypothesis, and discharging `Pic0Et.smooth` first pays no part
+  of this leaf's price;
+* conversely `Smooth` carries `RingHom.Smooth`, *not* `Locally IsStandardSmooth` (that
+  synthesis fails — measured), so smoothness gives standard smoothness per chart with no
+  numeral (`Pic0Et.locally_isStandardSmooth_appLE_of_smooth`). The whole distance from
+  `Pic0Et.smooth` to this leaf is pinning the number.
+
+That number is `Module.rank S Ω[S⁄R] = genus C` on the away-localisations of chart
+algebras (`Algebra.IsStandardSmoothOfRelativeDimension.iff_of_isStandardSmooth`) — a
+different invariant *and a different locus* from the identity cotangent space that
+`Pic0Et.finrank_cotangentSpace_eq_genus` computes. Note also that this leaf **contains**
+obligation 2: it gives `Pic0Et.geometricallyReduced` outright
+(`Pic0Et.geometricallyReduced_of_leafB`), so the five obligations of the file header are
+not independent and their distances must not be added.
 
 **And nothing more — corrected 2026-07-29 (`ajc-p2`), because the previous text priced
 this leaf on a transport that is not needed.** That text said the dimension chain
