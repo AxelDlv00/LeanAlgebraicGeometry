@@ -16,74 +16,79 @@ import AlgebraicJacobian.Picard.DivSchemeCertZarPointwise
 > `forall_not_isCertified_of_straddling` … So this theorem is a sound *reduction* whose
 > hypothesis may be false; do not read it as "U2 is one certificate away".
 
-The warning is correct about `HasCertifiedAdaptation`.  **It does not transfer to the object
-U2 actually needs**, and this file measures the gap.
+The warning is correct, and **it does reach the Zariski-local pin as well** — but only in a
+NARROWED form, and the narrowing is what this file records.
 
-## The measurement
+## What the no-go does and does not need
 
-What U2 owes, after `Picard/DivRepChartRange.lean` turned the clause into an equation, is a
-term of `DivFamZar C R_Z π g` — i.e. `DivFamZar.mk` of the seed's system together with
-`IsLocallyCertified` (`Picard/DivisorFamilyZar.lean:71`).  Read that definition rather than
-its summary: its certificates live over `Localization.Away (g i)`, for a span-`⊤` family in
-the base, with the system **pulled back**.  The no-go concludes `∀ A n, ¬ A.IsCertified n`
-for adaptations over the base itself.
+*A first draft of this file claimed the no-go could not reach the pin, on the grounds that no
+lemma carries `¬ IsLocallyCertified` and that the only landed implication runs
+`isLocallyCertified_of_isCertified`, i.e. refuted-side → pin.  Both halves of that are true and
+the conclusion drawn from them was wrong; the correction is kept in place of the claim because
+the reasoning is the reusable part.*
 
-So the two statements quantify over adaptations on **different rings**, and the direction
-the tree actually carries between them is
+No bridge lemma is needed, because `forall_not_isCertified_of_straddling`
+(`Picard/DivisorFamilyAffStrict.lean:127`) takes its base ring as a **section variable** and
+its system as an implicit.  It therefore instantiates directly at
+`R := Localization.Away r` with the **pulled** system, which is exactly the binder
+`IsLocallyCertified` (`Picard/DivisorFamilyZar.lean:71`) uses.  A no-go stated over section
+variables is a *schema*, not a statement about one ring, and "the pin quantifies over a
+different ring" buys nothing against it.
 
-> `isLocallyCertified_of_isCertified` :
-> `(D.divisorAdaptation hD).IsCertified n → IsLocallyCertified …`
-
-i.e. **the refuted side implies the pin**.  Refuting the antecedent of an implication says
-nothing about its conclusion, so the no-go leaves `IsLocallyCertified` untouched.  That is
-not a subtlety about this seam; it is modus ponens run backwards, and it has been priced
-into the leaf since the warning was written.
+What the away form *does* buy is a strictly smaller refuting input.  To kill the pin one now
+needs the two straddling witnesses **inside a single fibre** — the existential picks `r` with
+`r ∉ p`, so witnesses lying over `p` survive whichever `r` is offered, but witnesses at
+unrelated primes can be shrunk away.  Global straddling refutes
+`HasCertifiedAdaptation`; only one-fibre straddling refutes the pin.  Two sibling headers state
+this in prose already (`Picard/DivSchemeCertZarC1.lean:32`,
+`Picard/DivSchemeCertZarVerdict.lean:25`: no Zariski shrink separates the witnesses).
 
 ## What this file lands
 
 The per-prime route already in the tree
 (`ThetaGeneratorSeed.isLocallyCertified_of_forall_prime_exists_certified_adaptation`,
 `Picard/DivSchemeCertZarPointwise.lean:162`) produces the pin from away-localized
-certificates.  Instantiated at the high-window universal seed it gives U2's class half from
-a hypothesis that is **not** an instance of the refuted `∀` — and, composed with the
-ε-identity of `Picard/DivRepChartClassUnivQuot.lean`, U2's *whole* per-chart obligation.
+certificates.  This file instantiates it at the high-window universal seed, so that U2's
+class half is stated at the binder a producer can actually target, and names the refuting
+input that binder still admits.
 
 ## Main declarations
 
+* `AlgebraicGeometry.PointwiseAchiever.ForallPrimeAwayCertified` — the away form of the
+  class obligation, stated so that the ring each adaptation lives over is visible.
 * `AlgebraicGeometry.PointwiseAchiever.divFamZarUnivOfForallPrimeAway` — the `DivFamZar`
-  class at the universal point from per-prime away certificates.
-* `AlgebraicGeometry.PointwiseAchiever.ForallPrimeAwayCertified` — the replacement
-  hypothesis, stated so that the ring each adaptation lives over is visible in the binder.
+  class at the universal point from it, with no certificate over `R_Z` in the input.
 * `AlgebraicGeometry.ThetaGeneratorSeed.isLocallyCertified_of_isCertified_not_conversely`
-  — the direction record: the refuted side implies the pin, which is why the refutation
-  does not propagate.
-* `AlgebraicGeometry.DivisorAdaptation.noLeak_input_degenerate_of_disjoint_pieces` — the
-  guard: the tube's consumer clause is inhabited only at an empty support once two pieces
-  are disjoint, so shrinking the base does not by itself deliver the away hypothesis.
+  — the direction record: the refuted side implies the pin.  Kept, with its name's `_not_
+  conversely` read as a statement about the *implication*, not as a claim that the no-go
+  fails to reach the pin — it does reach it, by instantiation at the away ring.
 
 ## What this does NOT do, stated exactly
 
 It produces **no certificate**, at no prime, so **no gate clears** and `rep` remains
-undischarged.  What changes is which statement a producer must target, and it is strictly
-weaker than the one the leaf records: a certificate over some `Localization.Away r` per base
-prime, rather than one over the whole chart ring.
+undischarged.  It does not make the class half easier; it makes the *refuting* input harder,
+which is a smaller and less exciting claim than the one this file's first draft made.
 
-**The hypothesis is not thereby known satisfiable, and this file does not claim it is.**
-*Nothing here composes the support tube with a certificate*, so the away hypothesis has no
-witness at any prime.  The class half is **open, not refuted** — those are different claims
-and only the second is established here.
+**The away hypothesis has no witness at any prime**, here or anywhere in the tree, and it is
+refutable exactly when the universal seed's support straddles within one fibre.
 
-**And one obvious route to the away hypothesis is measured shut, below.**  The tube's
-consumer chain named at `DivSchemeCertZarTube.lean:172-175` ends in
-`forall_noLeak_of_forall_supportLocus_subset`, whose input is the support inside **every**
-piece — not inside one.  `noLeak_input_degenerate_of_disjoint_pieces` shows that hypothesis
-forces the support **empty** as soon as two pieces of the adaptation are disjoint.  Since a
-chart-typed index is `Fin m₀ ⊕ Fin m₁` over the two pinned charts, that is the generic
-situation and not a corner.  So the tube does *not* hand the away hypothesis to the
-kernel-spanning assembler by itself, and a producer must either supply an adaptation whose
-pieces all contain the support (i.e. shrink the cover, not just the base) or reach
-`IsCertified` some other way.  Recorded because "the tube isolates the support, so shrink
-the base and certify there" is the sentence this seam invites, and it is not enough.
+**THE PROBE THIS SEAM STILL OWES, and it is not this file's contribution.**  Nothing measures
+whether `univSeed`'s `supportLocus` meets both `V₀` and `V₁` — grep finds four files mentioning
+`univSeed` and none comparing its support to the pinned charts.  Until that is measured the
+leaf is unpriced *in both directions*: two rounds have now argued about whether a refutation
+reaches its target instead of checking whether the refutation's antecedent holds.  A lane
+picking this row up should measure the antecedent first.
+
+**Do NOT read the pinned-chart geometry as an obstruction.**  The certificate assemblers
+(`DivisorAdaptation.isCertified_of_noLeak_kernel_spanning`, `Picard/DivSchemeCertUniv.lean:104`)
+consume a *swallow-or-miss* clause, and a **disjoint** piece is its harmless branch:
+`forall_noLeak_of_forall_subset_or_disjoint` accepts it, and
+`forall_subset_or_disjoint_of_isPreconnected` (`Picard/DivSchemeCertZarConn.lean:128`) already
+produces the disjunction for a connected support.  The `∀ j, supp ⊆ pieces j` shape of
+`forall_noLeak_of_forall_supportLocus_subset` (`Picard/DivSchemeCertZarTube.lean:142`) is a
+convenience wrapper, and it is the wrapper — not the interface — that is degenerate on a cover
+with two disjoint pieces.  This paragraph replaces a guard theorem that audited the wrapper and
+inferred a limit on the assembler; the inference was wrong and the theorem is withdrawn.
 -/
 
 set_option autoImplicit false
@@ -135,44 +140,13 @@ end Direction
 
 end ThetaGeneratorSeed
 
-/-! ## The guard on the obvious route to the away hypothesis -/
+/-! ## The refuting input, narrowed to one fibre
 
-namespace DivisorAdaptation
-
-section NoLeakGuard
-
-variable {k : Type u} [Field k] {C : Over (Spec (CommRingCat.of k))}
-variable {R : Type u} [CommRing R] [Algebra k R]
-variable {π : C.left ⟶ P1 k} [IsAffineHom π]
-variable {d : (relCurve C R).LocalEquations}
-
-/-- **The tube's consumer clause is degenerate once two pieces are disjoint.**
-
-`DivSchemeCertZarTube.lean:172-175` routes the tube into the certificate assemblers through
-`forall_noLeak_of_forall_supportLocus_subset`, whose hypothesis is
-`∀ j, d.supportLocus ⊆ A.pieces j` — the support inside **every** piece.  The tube delivers
-containment in **one** piece, and the gap is not a formality: if any two pieces are disjoint,
-the `∀`-form forces the support to be empty.
-
-A chart-typed adaptation is indexed by `Fin m₀ ⊕ Fin m₁`, basic opens of the two *pinned*
-charts, so disjoint pairs are the generic case rather than a corner.  Hence "the tube isolates
-the support, so shrink the base and certify there" does not close the away hypothesis of
-`PointwiseAchiever.ForallPrimeAwayCertified`: a producer must shrink the *cover* so that every
-piece contains the support, or reach `IsCertified` by another route.
-
-This is a statement about the assembler's interface, not about a failed proof attempt. -/
-theorem noLeak_input_degenerate_of_disjoint_pieces (A : DivisorAdaptation C R π d)
-    (hsub : ∀ j : A.index, d.supportLocus ⊆ (A.pieces j : Set (relCurve C R)))
-    {j₁ j₂ : A.index}
-    (hdisj : Disjoint (A.pieces j₁ : Set (relCurve C R))
-      (A.pieces j₂ : Set (relCurve C R))) :
-    d.supportLocus = (∅ : Set (relCurve C R)) :=
-  Set.eq_empty_of_subset_empty fun _ hx =>
-    (Set.disjoint_left.mp hdisj (hsub j₁ hx)) (hsub j₂ hx)
-
-end NoLeakGuard
-
-end DivisorAdaptation
+The no-go instantiates at the away ring (see the module docstring), so the away form is
+refutable — but its two straddling witnesses must now lie over a **single** base prime, since
+the existential chooses `r` outside that prime and witnesses over it survive the shrink.  That
+narrowing is the whole difference between refuting `HasCertifiedAdaptation` and refuting the
+pin, and it is what a producer's geometry has to rule out. -/
 
 namespace PointwiseAchiever
 
