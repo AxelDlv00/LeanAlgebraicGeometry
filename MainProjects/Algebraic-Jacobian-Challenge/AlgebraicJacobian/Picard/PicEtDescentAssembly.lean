@@ -165,6 +165,22 @@ step is the factorisation: an arrow of the sieve factors through `pullback.fst`,
 and lifting that factorisation to the slice over `Spec k` is where
 `pullback.condition` is consumed.
 
+**That the factorisation is not avoidable is measured, not assumed** — it is the
+obvious refutation of this lemma ("the sheaf axiom gives injectivity directly, so
+the hand proof is redundant"), so it was probed rather than argued. Two routes,
+both `EXIT=1`:
+
+* deriving it from `existsUnique_amalgamation_picEt_fieldCover` below requires
+  exhibiting a `Presieve.FamilyOfElements` on the *whole* sieve for which both
+  classes are amalgamations, and constructing that family needs a value at every
+  sieve arrow — i.e. the same factorisation, relocated;
+* discharging the sieve-indexed goal from the single-morphism hypothesis with no
+  factorisation work fails: `exact h`, `simpa using h`, `congrArg _ h` and `aesop`
+  all leave the goal open (`aesop` reports exhaustive search).
+
+So the content is the reduction, and only the reduction. Whoever re-checks this
+should re-run those two probes rather than trust the paragraph.
+
 **No hypothesis on `C(k)`** (`I-0491`), and none on `T`. The finite-separability
 binders are inherited from the covering-sieve membership witness of
 `Picard/EtaleFieldCover.lean`, which is where they are genuinely used; they are
