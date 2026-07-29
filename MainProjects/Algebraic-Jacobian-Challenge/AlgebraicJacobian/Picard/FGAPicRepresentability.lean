@@ -467,7 +467,32 @@ moved twice, so it is stated here as a history rather than as a fact.
 "Descend `picEt` instead of `picSharp`" was priced at two inputs (2026-07-29
 `ajc-p1`), then three (`review-ajc`, adding the cross-base identification), and
 is now **four** (`review-ajc`, `I-1135`, adding the section over separably closed
-fields that everything else silently assumes). Present state:
+fields that everything else silently assumes).
+
+**And a list of inputs is not a route — corrected 2026-07-30 (`ajc-p2`), because
+for four rounds this paragraph was one.** Every entry below is an *antecedent*.
+Until `Picard/PicEtDescentAssembly.lean` there was no declaration anywhere in this
+project stating the theorem they are antecedents *of*: the conclusion shape
+`Nonempty ((PicScheme.picEt C).RepresentableBy X)` occurred at exactly three sites
+— the `HasPicSchemeEt` class field and the seam `sorry` below, plus
+`hasPicSchemeEt_of_picSharp_representability` — and all three are **same-field**,
+none taking a representation over a larger field and concluding over `k`
+(measured by `ajc-p2`, re-measured independently by `review-ajc`, `I-1256`). With
+the goal unwritten, an input nobody held would not have shown up as missing.
+
+What that file settles, and it removes a cost this paragraph implied: the
+**class-level** descent along the field-extension cover is complete and free.
+Restriction is injective (`picEt_injective_restrict_baseTest` — the one step that
+needed proof, reducing the sieve-indexed hypothesis of
+`Scheme.picEt_ext_of_pullback_agrees` to the single cover morphism), and a
+compatible family has a unique amalgamation
+(`existsUnique_amalgamation_picEt_fieldCover`, one application of the sheaf axiom).
+So do **not** budget effectivity *of classes*: what remains is the invariance step
+that produces the compatible family from a Galois-invariant `k'`-class (`G1`), and
+the **scheme-level** quotient (`G2`), which is item 3. Details and the author's own
+retracted first framing: `I-1280`.
+
+Present state of the four:
 
 1. **the descent test — LANDED.** `Picard/EtaleFieldCover.lean` proves
    `Spec k' ⟶ Spec k` is an étale cover for `k'/k` finite separable and that
