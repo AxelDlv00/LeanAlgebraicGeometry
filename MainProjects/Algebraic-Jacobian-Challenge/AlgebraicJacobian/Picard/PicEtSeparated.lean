@@ -5,6 +5,7 @@ Authors: Axel Delaval
 -/
 import AlgebraicJacobian.Picard.FGAPicRepresentability
 import AlgebraicJacobian.Picard.EtaleFieldCover
+import AlgebraicJacobian.Picard.PicEtSubcanonical
 
 /-!
 # Field 3 of the seam's clause (1): separatedness comes from the group structure
@@ -79,7 +80,7 @@ evidence is that they elaborate here.
 It does not close the seam `sorry` and does not witness field 1 for any curve.
 `k'`-side representability of `picEt` is still the campaign's undischarged
 output, and §3's reduction takes it as a hypothesis. Nothing here is
-`sorry`-reachable: all five declarations report
+`sorry`-reachable: all seven declarations report
 `[propext, Classical.choice, Quot.sound]` against
 `Scheme.fgaPicardRepresentability` as a control that reports `sorryAx`, per
 `I-1251` — on this seam the axiom list discriminates and provability does not,
@@ -220,6 +221,39 @@ theorem seamClauseOne_of_representableBy_locallyOfFiniteType {k : Type u} [Field
         LocallyOfFiniteType X.hom ∧ IsSeparated X.hom := by
   obtain ⟨X, ⟨rep⟩, hlft⟩ := h
   exact ⟨X, ⟨rep⟩, hlft, isSeparated_of_representableBy_picEt C rep⟩
+
+/-- **The campaign's own endpoint drops to two fields as well.**
+
+`Scheme.hasPicSchemeEt_of_picSharp_representability`
+(`Picard/PicEtSubcanonical.lean`) is the theorem that turns the Milne–Kollár
+campaign's `picSharp`-shaped output into clause (1), and its hypothesis is a
+*three*-field `picSharp` existential. The separatedness field is free there too,
+and for the same reason: the transport
+`Scheme.picSharp_representableBy_picEt_transport` does not move the representing
+scheme, so the `picEt` representation lands on the **same** `X`, and §3 applies to
+it.
+
+This is the form to hand the campaign: it must deliver a `picSharp`-representing
+scheme that is locally of finite type, and **nothing about separatedness**.
+
+**Still not a discount on the seam.** The hypothesis is exactly what the campaign
+has not delivered, and over an arbitrary `k` it is not merely unproved — there is
+a refutation route mapped out for it
+(`Scheme.PicScheme.not_exists_representing_picSharp_of_not_isIso`, conditional on
+a comparison failure this project quotes rather than proves). What changes is only
+how many fields the deliverable has. -/
+theorem picEtClauseOne_of_picSharp_representableBy_locallyOfFiniteType
+    {k : Type u} [Field k] (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    (h : ∃ X : Over (Spec (.of k)),
+      Nonempty ((Scheme.PicScheme.picSharp C).RepresentableBy X) ∧
+        LocallyOfFiniteType X.hom) :
+    ∃ X : Over (Spec (.of k)),
+      Nonempty ((Scheme.PicScheme.picEt C).RepresentableBy X) ∧
+        LocallyOfFiniteType X.hom ∧ IsSeparated X.hom := by
+  obtain ⟨X, ⟨rep⟩, hlft⟩ := h
+  have repEt := Scheme.picSharp_representableBy_picEt_transport C rep
+  exact ⟨X, ⟨repEt⟩, hlft, isSeparated_of_representableBy_picEt C repEt⟩
 
 /-! ## §4. Field 2, for contrast: it DOES descend, at the route's own cover -/
 
