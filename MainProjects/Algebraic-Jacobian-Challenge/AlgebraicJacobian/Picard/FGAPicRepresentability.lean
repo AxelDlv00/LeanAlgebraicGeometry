@@ -395,7 +395,8 @@ alternative D3), and it needs neither:
   **`sorry`-free is not gate-free here**: the affine case is proved
   (`isGaloisQuotientSpec`, `Picard/FiniteGaloisQuotientAffine.lean`) and the
   gluing substrate exists, but the general existence statement is still the
-  instance-free class `HasGaloisQuotient` (`FiniteGaloisQuotient.lean`), whose
+  instance-free class `AlgebraicJacobian.GaloisDescent.HasGaloisQuotient`
+  (`FiniteGaloisQuotient.lean`, not imported here), whose
   only producer is a single-field non-vacuity witness
   (`Picard/GaloisQuotientNonVacuity.lean`). So G2 is *substantially* built, not
   discharged.
@@ -461,50 +462,67 @@ file's binders (smooth, proper, geometrically integral) is quoted from the
 reference rather than proved. Tracked as `AJC.picrep.etale-rep`; the board node
 `AJC.picrep` carries the landed/absent split.
 
-**The repair has a third input, and until 2026-07-29 no site named it**
-(`review-ajc`, `AJC.picrep.etale-rep.crossbase`). "Descend `picEt` instead of
-`picSharp`" needs three things, not two. Two exist: `Picard/EtaleFieldCover.lean`
-proves `Spec k' ⟶ Spec k` is an étale cover and that `picEt` satisfies its sheaf
-axiom at every test (the descent *test*), and `G1`/`G2` supply the Galois action
-and the quotient. The third is the **cross-base identification**: for a `k'`-test
-`T`,
+**How many inputs the repair has, and which are now in hand** — the count has
+moved twice, so it is stated here as a history rather than as a fact.
+"Descend `picEt` instead of `picSharp`" was priced at two inputs (2026-07-29
+`ajc-p1`), then three (`review-ajc`, adding the cross-base identification), and
+is now **four** (`review-ajc`, `I-1135`, adding the section over separably closed
+fields that everything else silently assumes). Present state:
 
-  `picEt C` at `(Over.map (Spec.map (algebraMap k k'))).obj T`
-    ≅ `picEt (Scheme.baseChangeField C k')` at `T`.
+1. **the descent test — LANDED.** `Picard/EtaleFieldCover.lean` proves
+   `Spec k' ⟶ Spec k` is an étale cover for `k'/k` finite separable and that
+   `picEt` satisfies the sheaf axiom at that cover.
+2. **the cross-base identification — CLOSED** (`Picard/PicEtCrossBase.lean`,
+   `PicScheme.picEt_crossBaseIso`, `sorry`-free and axiom-clean). Without it the
+   scheme `J5` produces over `k'` would represent `picEt` *of the curve over `k`,
+   restricted to `k'`-tests* rather than `picEt` of the base-changed curve, and
+   there would be no functor for the descent datum to be a datum *for* — a
+   mismatch no green build would reveal. **Note the hypotheses it does NOT
+   carry**: earlier revisions of this paragraph, and the board row, both stated
+   the obligation for `k'/k` *finite separable*; the theorem needs neither
+   hypothesis and holds for an arbitrary field extension, because the argument is
+   about pullback projections rather than about étale covers. Finite-separability
+   is item 1's constraint and was double-counted here. Do not budget a
+   separability argument for a cross-base step.
+3. **the Galois action and quotient — G1/G2, substantially built, one gate.**
+   The affine case is proved and the gluing substrate exists; the general
+   existence statement is still the instance-free class
+   `AlgebraicJacobian.GaloisDescent.HasGaloisQuotient`.
+   `AlgebraicJacobian.GaloisDescent.HasStableAffineCover` is **not** a second
+   gate — it has had a global instance since G2(a) landed, and two docstrings
+   previously double-counted it (`I-1077`). **Both names are fully qualified on
+   purpose**: they live in `Picard/FiniteGaloisQuotient.lean`, which this file
+   does *not* import, so a bare `#check HasGaloisQuotient` here fails and would
+   read as absence. That is the recorded "cited names need `#check`, not `grep`"
+   trap; import that module before probing either class.
+4. **a section over separably closed `k'` — NO PRODUCER IN THIS PROJECT.** Every
+   J-milestone assumes one; the only rational-point producer in the tree requires
+   `[IsAlgClosed]`, which campaign G1 explicitly forbids here (`k^s`, never
+   `k̄`), and `hasRationalPoint_baseChangeField` only *propagates* a section that
+   `I-0491` forbids the headline to carry. Measured with controls in `I-1135`.
+   This one is upstream of the other three.
 
-Without it the scheme `J5` produces over `k'` represents `picEt` *of the curve
-over `k`, restricted to `k'`-tests* rather than `picEt` of the base-changed
-curve, and there is no functor for the descent datum to be a datum *for*.
-Measured: the statement type-checks in this project (the base-changed curve
-inherits both binders, `RiemannRoch/CurveBaseChange.lean:256`), and it is absent.
+Method note for whoever re-checks any absence claim in this area: a bare
+`horizon search picEt` returns ten hits, **all from the sibling project**, because
+the result set is capped — reading that as absence in AJC would be a false
+negative. Query a specific name (`picEtComparison`) or scan declaration headers
+in-tree. Two earlier revisions of this paragraph offered lists called "the
+complete list" and **both were wrong** (`I-1075`, and a fresh-context audit that
+found six omissions); neither error touched the conclusion, which is why a token
+scan rather than a census is what such a claim should rest on.
 
-The absence rests on a **token scan, not on an enumeration being complete** — and
-that distinction is the point. Every `picEt`-mentioning declaration in this project
-was scanned for `baseChange`, `algebraMap` and `Over.map`; the only occurrence of
-the cross-base shape anywhere in `AlgebraicJacobian/` is the prose above. Two
-earlier revisions of this paragraph instead offered a list called "the complete
-list", and **both lists were wrong**: the first named
-`picEt_isSheaf_etaleTopologyOver`, which `ajc-p1` deleted hours later as a
-duplicate of `picEt_isSheaf_forget` (`I-1075`), and the second omitted six
-declarations, including `picSharp_representableBy_picEt_transport` and
-`isIso_picEtComparison_of_isSheaf` in `PicEtSubcanonical.lean` (found by a
-fresh-context audit of this very correction). Neither error touched the
-conclusion, because none of the missed or deleted declarations relates the functor
-of `C` to the functor of a base change of `C` — which is exactly why the scan, and
-not the census, is what the claim should have rested on from the start.
-
-Method note for whoever re-checks this: a bare `horizon search picEt` returns ten
-hits, **all from the sibling project**, because the result set is capped — reading
-that as absence in AJC would be a false negative. Query a specific name
-(`picEtComparison`) or scan declaration headers in-tree.
-
-It is **not** portable from the sibling project, which is the trap here. `AJCR`
-proves exactly this comparison as a `MulEquiv` (`picEtCrossBaseEquiv`,
-`Picard/PicEtCrossBase.lean:316`), but its `picEt` is a hand-built affine-opens
-limit of plus-classes (`PicEt.lean:105`) while this file's is a categorical
-sheafification (`PicEtSheaf.lean:238`) — different objects, and there is no
-`lake` dependency edge between the projects. That 468-line file is a design lead,
-not an import.
+Item 2 was **not** portable from the sibling project, which was the trap, and the
+outcome recorded it: `AJCR` proves a cross-base comparison as a `MulEquiv`
+(`picEtCrossBaseEquiv`, `Picard/PicEtCrossBase.lean:316`, 468 lines), but its
+`picEt` is a hand-built affine-opens limit of plus-classes (`PicEt.lean:105`)
+while this file's is a categorical sheafification (`PicEtSheaf.lean:238`) —
+different objects, no `lake` edge. Most of that length is a section-ring scalar
+tower which a *sheafification*-based `picEt` does not need, because for it the
+whole sheafification layer collapses to one Mathlib lemma
+(`Functor.pushforwardContinuousSheafificationCompatibility`, applicable because
+restriction along `Over.map` is continuous for the two localised étale topologies
+by pure synthesis). Reading the sibling as a design lead rather than transcribing
+it was the cheaper move.
 
 This is the **sole** `sorry` of the seam: everything else below — the
 representing scheme `PicSchemeEt`, its representability, local finiteness,
