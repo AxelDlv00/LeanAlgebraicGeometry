@@ -99,6 +99,10 @@ each file's own scope and false of the project.
   Riemann–Roch statement rather than plumbing: at a field, class equality already delivers
   GAP-2's `hD`/`hD'`/`hcl`, leaving exactly its `h⁰ = 1` binder, which the rank anchor ties to
   the chart's own degree.
+* `AlgebraicGeometry.degAt_chartTwist_eq_chartParam` — the chart parameter **is** the fibre
+  degree of the twisted class, unconditionally.  So which branch of the fork holds is arithmetic
+  in `n` alone: `n = g` gives `h⁰ = 1` on `chartLocus` (positive branch), `n > g` gives
+  `h⁰ = n − g + 1 ≥ 2` (negative branch).
 -/
 
 set_option autoImplicit false
@@ -252,6 +256,43 @@ theorem effective_and_picClass_eq_of_picClass_eq_field {K : Type u} [Field K] [A
         = Scheme.CurveDivisor.picClass K (divFamDivisor G) :=
   ⟨zero_le_divFamDivisor F, zero_le_divFamDivisor G, by
     rw [picClass_divFamDivisor, picClass_divFamDivisor, hcl]⟩
+
+/-! ## Which degree the fork is asked at, as an identity rather than a convention -/
+
+variable (C π n) in
+/-- **THE CHART PARAMETER *IS* THE FIBRE DEGREE OF THE TWISTED CLASS** — unconditionally, for
+every chart, with no hypothesis beyond `λ ∈ pic⁰`.
+
+`degAt_chartTwist` gives `deg(chartTwist λ) = m·d₁ − deg Z`, and the chart's own legality
+hypothesis `hdeg` says `deg Z = m·d₁ − n`.  Substituting cancels `m` and `d₁` entirely and
+leaves `n`.
+
+This is worth stating because it removes the last place the twist data could be hiding a
+constraint, and because it fixes where the fork is asked.  `chartLocus`
+(`Picard/Pic0ChartLocus.lean:244`) is by definition the locus where the twisted fibre class has
+an **effective witness with vanishing `H¹`**; by the rank anchor
+`h0_eq_deg_add_chi_of_subsingleton_hModule_one` such a witness has
+`h⁰ = deg + χ = n + (1 − g)`.  So on `chartLocus`:
+
+* at `n = g` the witness has `h⁰ = 1` and is therefore the *unique* effective representative of
+  its class — the fork's **positive** branch, and the reason `Pic0ChartLocus.lean:194-201`
+  records `+g` as "the unique degree at which the witness is unique";
+* at `n > g` it has `h⁰ = n − g + 1 ≥ 2`, so the linear system is positive-dimensional and a
+  witness for the **negative** branch is what one expects to find.
+
+Neither branch is proved here — `chartLocus` membership is a hypothesis about the class, not a
+theorem about the chart, and the `h⁰ = 1` reading is fibrewise while the obligation is at a
+general test (the caveat `Picard/Pic0ChartAbelNonInjective.lean` states and I do not weaken).
+What is settled is that the question is **arithmetic in `n` alone**: no chart parameter, no
+twist exponent and no `Z` enters it. -/
+theorem degAt_chartTwist_eq_chartParam (m : ℕ)
+    (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - (n : ℤ))
+    {T : Over (Spec (.of k))} {lam : picEt C T} (hlam : lam ∈ pic0Subgroup C T)
+    {K : Type u} [Field K] [Algebra k K] (t : overSpec k K ⟶ T) :
+    degAt (chartTwist C m Z T lam) t = (n : ℤ) := by
+  rw [degAt_chartTwist m Z hlam t, hdeg]; ring
 
 /-! ## The negative branch at the sharp target -/
 
