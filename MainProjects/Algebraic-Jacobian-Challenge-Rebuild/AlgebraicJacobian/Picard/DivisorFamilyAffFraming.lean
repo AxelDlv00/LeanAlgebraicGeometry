@@ -38,10 +38,26 @@ elaboration is the content.
 
 ## What this does NOT claim
 
-It does not prove `exists_certChartCover` over the widened carrier — that theorem's proof runs
-the certificate cover and the per-piece frame covers, which is real work and belongs to whoever
-restates it.  What is established is that no *type* obstruction stands in the way: the clause is
-expressible, so the remaining question is a proof, not a redesign.
+It does not prove `exists_certChartCover` over the widened carrier.  What is established here is
+that no *type* obstruction stands in the way: the clause is expressible, so the remaining
+question is a proof, not a redesign.
+
+**A previous version of this paragraph priced that remaining proof as "runs the certificate
+cover and the per-piece frame covers, which is real work".  That over-priced it, and the reason
+generalises** (measured 2026-07-30, `Picard/DivisorFamilyAffFrameCover.lean`, inbox `I-1327`):
+`divFamEps_exists_frameCover` reads its *carrier* at exactly three points, all inside
+`exists_frame_chart_at_prime` — `Module.Finite`, `Module.Projective` and `rankAtStalk = g` of the
+window quotient `(R ⊗[k] H_a) ⧸ F.window`.  Everything below them takes a Grassmannian *point*
+and a base ring and cannot see what produced the submodule, and `divisorWindow` names no
+adaptation, cover or chart typing.  So the cover that proof runs belongs to `d`, which **both**
+carriers share.  A proof that "runs a cover" is chart-dependent only if the cover is indexed by
+the chart typing.
+
+The step that *was* real, and which the old pricing did not name, is the tower transport:
+`map_divFamWindowGr` obtains its composite from `DivFam.mapAlg_comp`, i.e. from the carrier's own
+functoriality, so carrier-free it has to be proved on the submodule
+(`windowBaseChange_windowBaseChange`, new).  None of this discharges an antecedent — see that
+file's `Reachability` section for the no-go that still blocks the widened side.
 
 ## Main declarations
 
