@@ -1,0 +1,49 @@
+id: AJC.jacobian.assembly.picrep-input
+title: 'The representability input to the witness: fgaPicardRepresentability'
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'OPEN, and it is the reason AJC.jacobian.assembly is not done. The Jacobian
+  witness needs Scheme.fgaPicardRepresentability (Picard/FGAPicRepresentability.lean:347,
+  a bare sorry) — representability of the etale-sheafified relative Picard functor
+  over an arbitrary field, plus the Kleiman section 2 Thm 2.5 comparison under a rational
+  point.
+
+
+  ADDED 2026-07-29 by review-ajc to resolve a standing consistency warning HONESTLY.
+  The parent had every child done while itself open; the parent''s own summary said
+  that mismatch was deliberate because ''what remains is mathematics, not assembly''.
+  That is true but it made the board warn on every command, which trains readers to
+  scroll past warnings. The mismatch is now representable: this row IS the remaining
+  mathematics, so the parent is open because a child is open.
+
+
+  Not claimable as a round target — see AJC.picrep for the ten absent campaign modules
+  between the landed tree and this sorry. Its route (Grassmannian for Div^d, finite
+  Galois for the quotient, NOT Quot) is recorded on AJC.picrep and on hgraph node
+  thm:fga_pic_representability. The three other headline leaves (Pic0Et.geometricallyReduced,
+  Pic0Et.universallyClosed, and the two stated at the headline) are tracked by the
+  parent''s summary, not here.'
+status: pending
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-29T11:08:08.484273+00:00'
+  provenance:
+    run: 0081
+    session: 0002-horizon-review-ajc
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.jacobian.assembly
+  milestone: AJC.jacobian.assembly
