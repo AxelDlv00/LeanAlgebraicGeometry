@@ -220,6 +220,110 @@ theorem isLocallySurjective_unrestricted {ι : Type u} {X : ι → Scheme.{u}}
     (J := Scheme.zariskiTopology)
     (Limits.Sigma.map fun i => yoneda.map (X i).topIso.hom) (Sigma.desc f)
 
+/-! ## The nested-open assembly, and why it buys nothing
+
+The two monotonicities make a *two-open* form of the seam stateable: certify `hf` at the larger
+open, coverage at the smaller.  That form is a genuine generalisation of
+`pic0RepresentableBy_of_restrictedChartFibre` — and it is *equivalent* to it, which is the
+point of stating both. -/
+
+variable (C π) in
+/-- **The nested-open assembly**: the seam fires from two opens `Vc ≤ Vf`, with the restricted
+fibre datum at `Vf` and coverage's containment at `Vc`.
+
+`pic0RepresentableBy_of_restrictedChartFibre_of_coverage` is the `Vc = Vf` case.  The proof is
+the collapse: antitonicity moves `huniv` down from `Vf` to `Vc`, and then the shared-`V`
+assembly applies at `Vc`.  So the generalisation is *proved by* reducing it to the special
+case, which is already the whole content of `nested_iff_shared` below.
+
+The representing object is stated as a `Σ` for the same reason the shared-`V` version is: the
+named object mentions the instance the definition constructs. -/
+def pic0RepresentableBy_of_nested {ι : Type u} (nn : ι → ℕ)
+    (D : ι → Over (Spec (.of k)))
+    (rep : ∀ i, (divFunctor C π (nn i)).RepresentableBy (D i))
+    (m : ι → ℕ) (Z : ι → (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : ∀ i, Scheme.CurveDivisor.deg k (Z i)
+      = (m i : ℤ) * classDeg k (thetaCechClass C) - (nn i : ℤ))
+    (Vc Vf : ∀ i, (D i).left.Opens) (hle : ∀ i, Vc i ≤ Vf i)
+    (huniv : ∀ i, RestrictedChartFibre C π (nn i) (rep i) (m i) (Z i) (hdeg i) (Vf i))
+    (hcov : ∀ (T : Scheme.{u}) (s : (pic0SigmaSheaf C).1.obj (op T)) (t : ↥T),
+      ∃ (W : T.Opens) (_ : t ∈ W) (i : ι) (x : (W : Scheme.{u}) ⟶ (D i).left),
+        (abelSigmaChart C π (nn i) (rep i) (m i) (Z i) (hdeg i)).app
+            (op (W : Scheme.{u})) x
+          = (pic0SigmaSheaf C).1.map (W.ι).op s ∧
+        Set.range (x.base) ⊆ Set.range ((Vc i).ι.base)) :
+    Σ J : Over (Spec (.of k)), (pic0TypeFunctor C).RepresentableBy J :=
+  letI : Presheaf.IsLocallySurjective Scheme.zariskiTopology
+      (Sigma.desc (mixedParamChart C π nn D rep m Z hdeg Vc)) :=
+    isLocallySurjective_restrictChart_of_pointwise C
+      (fun i => abelSigmaChart C π (nn i) (rep i) (m i) (Z i) (hdeg i)) Vc hcov
+  ⟨_, mixedParamRepresentableBy C π nn D rep m Z hdeg Vc
+    fun i => isChartUniv_antitone (rep i) (m i) (Z i) (hdeg i) (hle i)
+      (isChartUniv_of_restrictedChartFibre (rep i) (m i) (Z i) (hdeg i) (Vf i) (huniv i))⟩
+
+/-! ## The collapse: the nesting freedom is not freedom
+
+`pic0RepresentableBy_of_nested` lets an `hf` lane and a coverage lane name *different* opens.
+The next theorem says that appearance of freedom is exactly nothing: a nested pair of opens
+solves the seam iff a single open does.
+
+Stated at the level of the two hypotheses the seam actually consumes — `IsChartUniv` and the
+`IsLocallySurjective` instance — so that the collapse is not an artefact of the `hcov` spelling.
+That distinction is the one `Pic0ChartRestrictedFibreSat.lean:93-98` had to flag as unmeasured at
+the `⊥` endpoint, and it is why the instance-level `isLocallySurjective_sigmaDesc_mono` above is
+the load-bearing half of this file. -/
+
+/-- **THE COLLAPSE.**  For a fixed chart family, "there is a nested pair `Vc ≤ Vf` certifying
+antecedent 1 at `Vf` and antecedent 2 at `Vc`" is **equivalent** to "there is a single open
+family certifying both".
+
+Forward: antitonicity moves antecedent 1 down to `Vc`, so `Vc` is a shared solution.  (It is
+equally a shared solution at `Vf`, by monotonicity of antecedent 2 — the pair is squeezed from
+both ends, not opened up.)  Backward: take `Vc = Vf`.
+
+**Why this is worth a theorem rather than a remark.**  Two hypotheses in one parameter with
+*opposite* monotonicities look separable — neither pins the other's value, so "each lane picks
+its own open" reads as a real weakening.  It is not, and the endpoint refutations of
+`Pic0ChartRestrictedFibreSat.lean` cannot detect the error: `⊥` and `⊤` are precisely the two
+extremes of the two monotonicities, so refutations there are consistent with the parameter being
+separable in the interior.  The inference that fails is `¬(forced equal) → independently
+choosable`; opposite monotonicities squeeze a pair rather than decoupling it, because the split
+asks each hypothesis at its own *hard* end.
+
+**Consequence for the board.**  The question `Pic0ChartRestrictedFibreSat.lean` leaves open —
+is the pair `(huniv V, hcov V)` inhabited at any `V`? — is **not** dissolved by nesting, and
+stays the single question gating the antecedent-1 side.  This theorem removes a candidate escape
+from it; it does not answer it, and no inhabitant is exhibited here at any `V`. -/
+theorem nested_iff_shared {ι : Type u} {X : ι → Scheme.{u}}
+    (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1) :
+    (∃ (Vc Vf : ∀ i, (X i).Opens) (_ : ∀ i, Vc i ≤ Vf i),
+        (∀ i, IsOpenImmersion.presheaf (restrictChart (f i) (Vf i))) ∧
+        Presheaf.IsLocallySurjective Scheme.zariskiTopology
+          (Sigma.desc fun i => restrictChart (f i) (Vc i)))
+      ↔ (∃ V : ∀ i, (X i).Opens,
+        (∀ i, IsOpenImmersion.presheaf (restrictChart (f i) (V i))) ∧
+        Presheaf.IsLocallySurjective Scheme.zariskiTopology
+          (Sigma.desc fun i => restrictChart (f i) (V i))) := by
+  refine ⟨fun ⟨Vc, Vf, hle, hf, hcov⟩ => ⟨Vc, fun i =>
+    isOpenImmersion_presheaf_restrictChart_antitone (f i) (hle i) (hf i), hcov⟩,
+    fun ⟨V, hf, hcov⟩ => ⟨V, V, fun _ => le_refl _, hf, hcov⟩⟩
+
+/-- The same collapse read at the *larger* open, which is the half that shows the squeeze is
+two-sided: a nested solution is also a shared solution at `Vf`.
+
+So neither end of the nesting is the "real" one — both collapse — and a lane cannot argue that
+the nested form is weaker by pointing at either. -/
+theorem shared_top_of_nested {ι : Type u} {X : ι → Scheme.{u}}
+    (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1)
+    (Vc Vf : ∀ i, (X i).Opens) (hle : ∀ i, Vc i ≤ Vf i)
+    (hf : ∀ i, IsOpenImmersion.presheaf (restrictChart (f i) (Vf i)))
+    (hcov : Presheaf.IsLocallySurjective Scheme.zariskiTopology
+      (Sigma.desc fun i => restrictChart (f i) (Vc i))) :
+    (∀ i, IsOpenImmersion.presheaf (restrictChart (f i) (Vf i))) ∧
+      Presheaf.IsLocallySurjective Scheme.zariskiTopology
+        (Sigma.desc fun i => restrictChart (f i) (Vf i)) :=
+  ⟨hf, isLocallySurjective_sigmaDesc_mono (C := C) f Vc Vf hle hcov⟩
+
 end
 
 end AlgebraicGeometry
