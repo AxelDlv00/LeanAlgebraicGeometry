@@ -66,6 +66,33 @@ are not supplied here:
 Neither is discharged below.  What is discharged is that `hbc` is not part of
 either.
 
+## The junk-value caveat, which this file DOES inherit
+
+An earlier revision of this docstring said the theorem holds "with no hypotheses
+beyond the geometric ones" and listed what it does not need, without noting the
+cost.  A fresh-context review flagged the omission, and it is a real one.
+
+`Module.finrank` returns `0` in the infinite-dimensional case.  Here the
+coefficient ring is `Γ(Spec ((Spec R).residueField t), ⊤)`, which carries no
+`Field` — not even `Nontrivial` — instance in scope, and neither
+`FiniteDimensional` of the fibre sections nor `Module.Finite` of the Čech kernel
+is synthesisable.  So when the fibre sections are infinite-dimensional, **both
+sides read `0` and the identity is vacuously true**.  That is exactly the hazard
+`Picard/FiberH0Comparison.lean`:40-55 records for its own theorem, and dropping
+`hfin` re-opens it here for the same reason.
+
+This is *not* the same situation as
+`Picard/TwoTermKernelSemicontinuity.lean`, which legitimately closes the hazard:
+there the complex's shape (`K` finite, target `Aⁿ`) makes both fibres
+finite-dimensional by synthesis.  The two files were audited to different
+standards, and this paragraph is the correction.
+
+So the honest reading: the identity is **true unconditionally and informative
+where the fibre `h⁰` is finite** — which is the case of interest, since a curve's
+`h⁰` is finite — but the statement does not certify that finiteness itself.  A
+consumer wanting a non-vacuous reading must supply it, and doing so is *not* the
+same as supplying `hbc`; that remains the point of the restatement.
+
 ## References
 
 Stacks 02KG (cohomology and base change at `i = 0`), 00NX; Mumford, *Abelian
@@ -83,7 +110,10 @@ namespace AlgebraicGeometry
 variable {R : CommRingCat.{u}} {X : Scheme.{u}}
 
 /-- **The fibre `h⁰` is the dimension of the base-changed Čech kernel**, with no
-hypotheses beyond the geometric ones.
+base-change, finiteness or projectivity hypothesis — but see the module
+docstring's junk-value caveat: with `hfin` dropped, the identity is vacuously
+`0 = 0` where the fibre sections are infinite-dimensional, and it does not
+certify that finiteness itself.
 
 For quasi-compact quasi-separated `p : X ⟶ Spec R`, quasi-coherent `M` with a
 two-chart affine cover `𝒰`, and `t : Spec R` with affine fibre inclusion:

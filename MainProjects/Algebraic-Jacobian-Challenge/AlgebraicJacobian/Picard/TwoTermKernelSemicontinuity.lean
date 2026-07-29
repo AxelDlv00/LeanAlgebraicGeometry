@@ -10,10 +10,10 @@ import AlgebraicJacobian.Picard.FiberRankSemicontinuity
 
 **Campaign milestone B5, the Mumford minors argument, done through cokernels.**
 
-For a two-term complex `k : K → Aⁿ` with `K` finitely presented and
-projective — the shape `TwoTermFiniteReplacement` produces
-(`Picard/TwoTermFiniteFree.lean`:507, fields `K0`, `n`, `projective_K0`) —
-the locus
+For a two-term complex `k : K → Aⁿ` with `K` merely **finitely presented** —
+weaker than the shape `TwoTermFiniteReplacement` produces
+(`Picard/TwoTermFiniteFree.lean`:507, whose `K0` is also projective) — the
+locus
 
 ```
 {t : Spec A | dim_κ(t) ker (k ⊗ κ(t)) ≤ e}
@@ -31,26 +31,36 @@ proves load-bearing by counterexample, and finite projectivity forces the rank
 **locally constant** — strictly stronger than the semicontinuity wanted.  The
 prescription inverts the difficulty.
 
-The route below never touches that bridge.  It puts the projectivity where
-projectivity is *true and harmless* — on `K`, the replacement's degree-0 term,
-which is projective by construction — and gets the jumping from the **cokernel**,
-which is only finitely presented and whose fibre rank genuinely jumps:
+The route below never touches that bridge.  It needs **no flatness anywhere**.
+Rank-nullity on each fibre reads
 
 ```
 dim ker (k ⊗ κ)  +  n  =  dim (κ ⊗ K)  +  dim coker (k ⊗ κ)        (rank-nullity)
                           ─────────────    ────────────────────
-                          locally CONSTANT   upper semicontinuous
-                          (K proj. + flat)   (Ideal.isOpen_fiberRank_le)
+                          both upper semicontinuous, by
+                          Ideal.isOpen_fiberRank_le (no flatness)
 ```
 
-Near a point `t₀` the first summand is a constant `r`, so on that neighbourhood
+so near a point `t₀`, bounding *each* summand by its own value at `t₀` bounds
+the sum, hence bounds `dim ker`:
 
 ```
-{dim ker ≤ e}  =  {fiberRank K = r}  ∩  {fiberRank (coker k) ≤ e + n − r},
+{dim ker ≤ e}  ⊇  {fiberRank K ≤ a}  ∩  {fiberRank (coker k) ≤ b},
+                  where a, b are those ranks at t₀,
 ```
 
-an intersection of two opens.  The jumping of `dim ker` is exactly the jumping
-of `dim coker`, transported by an identity that costs nothing.
+an intersection of two opens containing `t₀`.  That is all the argument needs.
+
+**Projectivity of `K` is NOT required, and an earlier revision of this docstring
+said it was.**  The first draft proved local *constancy* of `fiberRank K` (via
+`Module.isLocallyConstant_rankAtStalk`, which does need `K` flat) and cut the
+sublevel locus as `{fiberRank K = r} ∩ {fiberRank coker ≤ e + n − r}`.  That
+works, but it over-buys: upper semicontinuity of both summands suffices, since
+only an upper bound on the sum is ever wanted.  A fresh-context review found the
+theorem provable with the `[Module.Projective A K]` binder deleted, and the
+binder is now gone.  The practical consequence is downstream: a complex fed to
+this engine owes finite presentation of `K` and nothing else — in particular the
+projectivity half of `TwoTermFiniteReplacement`'s shape is not owed.
 
 ## The junk-value hazard is closed structurally, not assumed
 
@@ -206,41 +216,32 @@ flat) and an upper-semicontinuous part (`fiberRank (coker k)`, by
 sublevel locus is the intersection of `{fiberRank K = r}` with
 `{fiberRank (coker k) ≤ e + n − r}`. -/
 theorem isOpen_finrank_ker_baseChange_le (n : ℕ) (k : K →ₗ[A] (Fin n → A))
-    [Module.FinitePresentation A K] [Module.Projective A K] (e : ℕ) :
+    [Module.FinitePresentation A K] (e : ℕ) :
     IsOpen {t : PrimeSpectrum A | Module.finrank t.asIdeal.ResidueField
       (LinearMap.ker (k.baseChange t.asIdeal.ResidueField)) ≤ e} := by
-  haveI : Module.Flat A K := Module.Flat.of_projective
-  have hlc : IsLocallyConstant (fun t : PrimeSpectrum A => t.asIdeal.fiberRank K) := by
-    have h : (fun t : PrimeSpectrum A => t.asIdeal.fiberRank K)
-        = Module.rankAtStalk (R := A) K := by
-      funext t
-      exact (Module.rankAtStalk_eq (M := K) t).symm
-    rw [h]
-    exact Module.isLocallyConstant_rankAtStalk
   rw [isOpen_iff_forall_mem_open]
   intro t₀ ht₀
-  set r := t₀.asIdeal.fiberRank K with hr
   simp only [Set.mem_setOf_eq] at ht₀
-  have hre : r ≤ e + n := by
-    have h := finrank_ker_baseChange_add_eq n k t₀
-    omega
-  refine ⟨_, ?_, (hlc.isOpen_fiber r).inter
-    (Ideal.isOpen_fiberRank_le (M := (Fin n → A) ⧸ LinearMap.range k) (e + n - r)),
-    ⟨rfl, ?_⟩⟩
+  -- The neighbourhood: both fibre ranks bounded by *their own values at `t₀`*.
+  -- Openness of each is `Ideal.isOpen_fiberRank_le`; no flatness enters.
+  refine ⟨_, ?_,
+    (Ideal.isOpen_fiberRank_le (M := K) (t₀.asIdeal.fiberRank K)).inter
+    (Ideal.isOpen_fiberRank_le (M := (Fin n → A) ⧸ LinearMap.range k)
+      (t₀.asIdeal.fiberRank ((Fin n → A) ⧸ LinearMap.range k))),
+    ⟨?_, ?_⟩⟩
   · rintro t ⟨hV, hW⟩
     have h := finrank_ker_baseChange_add_eq n k t
+    have h₀ := finrank_ker_baseChange_add_eq n k t₀
     simp only [Set.mem_setOf_eq] at hV hW ⊢
-    rw [hV] at h
     omega
-  · have h := finrank_ker_baseChange_add_eq n k t₀
-    simp only [Set.mem_setOf_eq]
-    omega
+  · exact Set.mem_setOf_eq ▸ le_refl _
+  · exact Set.mem_setOf_eq ▸ le_refl _
 
 /-- **Closed form**: the superlevel locus of the fibrewise kernel dimension is
 closed.  The complement of `isOpen_finrank_ker_baseChange_le`; this is the
 direction milestone B6 consumes. -/
 theorem isClosed_le_finrank_ker_baseChange (n : ℕ) (k : K →ₗ[A] (Fin n → A))
-    [Module.FinitePresentation A K] [Module.Projective A K] (e : ℕ) :
+    [Module.FinitePresentation A K] (e : ℕ) :
     IsClosed {t : PrimeSpectrum A | e + 1 ≤ Module.finrank t.asIdeal.ResidueField
       (LinearMap.ker (k.baseChange t.asIdeal.ResidueField))} := by
   have hcompl : {t : PrimeSpectrum A | e + 1 ≤ Module.finrank t.asIdeal.ResidueField
