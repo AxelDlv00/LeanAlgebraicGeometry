@@ -1,0 +1,27 @@
+Committed and verified. The remaining dirty paths under `.archon-horizon/` are other lanes' session hook-state and notify caches, plus inbox items nine other live lanes are writing — not mine to commit.
+
+## Progress
+
+- `Picard/DivPushforwardFlat.lean` (new, 0 sorries): 5 theorems, all axiom-clean `[propext, Classical.choice, Quot.sound]`. `lake build` EXIT=0 (8692 jobs), `lake env lean` EXIT=0; the axiom probe carried a deliberately sorried control that correctly reported `sorryAx`, so the clean lines are not silence.
+  - `CoherentSheafFlat.of_pushforward_of_isAffineHom` — the genuinely absent converse of `RigidPushforwardTransfer.lean:480`.
+  - `DivFamily.coherentSheafFlat_id_pushforward`, `.isQuasicoherent_pushforward`, `.isFinitePresentation_pushforward` — the module-side inputs of the flattening stratification's universal property, for a divisor family.
+  - `DivFamily.coherentSheafFlat_id_pullbackId_pushforward` — the `φ = 𝟙` form, bridged through `pullbackId`.
+- Board: `AJC.picrep.divlocallyclosed` claimed, then released unowned/pending, pinned to `fa7e4deb6`.
+
+**Which item and why third.** D3′. The campaign DAG has D4′ ← {D1′, D2′, D3′}; D1′ was landed and D3′'s only dependency B3 was landed, so it was the one D4′ input no other lane's work gated. The reviewer's two offers were either taken (p2 claimed P5 minutes before I priced it) or off the critical path (B4 feeds assembly, not D4′).
+
+**State: advanced, not closed.** D3′ proper — the `∃!` statement about the Grassmannian locus — is untouched, and two antecedents remain undischarged, both stated in the file rather than a footnote: the new `LocallyQuasiFinite` binder has no producer (kernel-checked *not* derivable from `DivFamily`'s other fields, so it is content, not a restatement), and what I proved is the `φ = 𝟙` **instance** of `:876`'s antecedent, not the antecedent as a family over all test morphisms.
+
+## Issues
+
+- **`DivFamily` has 135 consumers and zero producers** (I-0957). All of Cluster D′ is true-over-an-uninhabited-carrier. This is invisible to the vacuity sweeps running this round: `DivFamily` is a plain structure whose fields correctly mention the curve, so it passes the `HasDivFunctor` test and the `choose_spec` test while still making its cluster about no divisor. Re-verified by declaration index after I-1005 warned that case-sensitive greps miss producers.
+- **My own docstring overclaimed and a reviewer refuted it by proving the thing.** I priced the finite-presentation input as "mathematics finished, only plumbing remains" and named the missing tactic; the plumbing was one application of a lemma the project already wraps. I landed the theorem and replaced the wrong sentences rather than appending caveats. Three further defects from the same review are fixed: `:876` has two binders not three, `coherentSheafFlat_id_pushforward` did *not* fit `:876`'s slot as claimed (hence the new bridge), and a cited name didn't resolve.
+- Two board-write quirks worth knowing: `roadmap add` rejects `--name`/`--summary`-only forms (needs `--id`/`--title`), and my first `roadmap set` silently dropped `--pin-commit` — it took only on a second, isolated call.
+
+## Why I stopped
+
+Partly advanced. D3′ is not closed; I released the claim rather than sit on it, after the fresh-context review, its four repairs, and the boundary pass. Ledger source is clean and all my work is committed.
+
+## Next
+
+**Do not build the `DivFamily` witness yet.** p1 landed `not_representableBy_picSharp_of_not_isIso_picEtComparison`: if the comparison fails, no scheme represents `picSharp`, so Cluster D′'s tail may target a false statement, and a producer would convert vacuous-but-true statements into wrong ones. Re-aim D′ at `picEt`-shaped consumers first — my file is carrier-neutral (it never mentions `picSharp` or `picEt`), so it survives the re-aim either way.

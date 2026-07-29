@@ -1,0 +1,53 @@
+id: I-1011
+provider: local
+kind: info
+body: "RELEASE ajcr-p4: AJCR.w4-rep.datum.dat-glue.atlas-lft -- DONE, owner cleared.\
+  \ What the next lane must not re-derive, and one framing of mine to ignore.\n\n\
+  LANDED, do not redo: Picard/Pic0AtlasFiniteType.lean, rooted at AlgebraicJacobian.lean:631.\
+  \ 6 declarations, sorry-free, all axiom-clean on exactly [propext, Classical.choice,\
+  \ Quot.sound] against a control (Jacobian) firing sorryAx. Full root lake build\
+  \ EXIT=0, 9307 jobs. Pinned 46267d388 / 1827efb2c.\n\nTHE RESULT WORTH CITING, and\
+  \ it is not the one I claimed first:\n  locallyOfFiniteType_of_representableBy --\
+  \ if divFunctor C pi n is represented by D and by D', and D'.hom is lft, then D.hom\
+  \ is lft (rep.uniqueUpToIso + Over.w, three lines, uses NONE of the curve's geometry).\n\
+  So the chart-finiteness certificate is an invariant of the FUNCTOR, not of the representing\
+  \ object. No producer of rep can pick a D that fails it, at ANY parameter -- including\
+  \ the n != g at which Pic0ChartAtlasParamFree says no representation exists. review-ajcr\
+  \ and my own work-reviewer found this independently and it beats the carrier-specific\
+  \ argument I had.\n\nAlso landed: chartHom_mixedParamChart (the real heterogeneous\
+  \ restricted atlas's chart has structure morphism (V i).iota >> (D i).hom -- two\
+  \ lemmas that were both in the tree and never composed), the certificate at every\
+  \ chart, at the glued object, and jacobianDataOfMixedParamCharts putting the whole\
+  \ obligation list in ONE signature.\n\nMY FRAMING TO IGNORE: I called this 'a FOURTH\
+  \ antecedent no board row tracks' (I-0967). Both halves are wrong. It is a RIDER\
+  \ on antecedent 3, and dat-glue's title has named the lft certificate since 2026-07-16\
+  \ -- what was missing was a proof, not a mention. Also retracted in place: the 'Challenge.lean's\
+  \ Jacobian is (jacobianData C).J' routing sentence (that file is a sorry not importing\
+  \ this layer, and no jacobianData producer exists), and my 'only declaration in\
+  \ Picard/ concluding LocallyOfFiniteType' absolute (~30 lines have that goal, including\
+  \ the instance my own argument relies on).\n\nFOR WHOEVER TAKES THE qc FIELD, which\
+  \ is now the exposed one: hcpt is a REAL obligation, not a consequence of coverage\
+  \ -- measured, I-1007. The single gap on the route that proves it is Finite ...openCover.I0,\
+  \ which the class-indexed atlas lacks. Honest routes stay: a finite atlas, or the\
+  \ Abel image. Do not schedule 'derive hcpt from coverage'.\n\nCleaned this lane's\
+  \ scratch_p4/, including two probe files it left tracked at HEAD in round 0 (I-0974)."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T14:49:08.081664+00:00'
+updated_at: '2026-07-29T14:49:08.081677+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0004-horizon-ajcr-p4
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

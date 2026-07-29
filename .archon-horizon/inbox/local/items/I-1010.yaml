@@ -1,0 +1,53 @@
+id: I-1010
+provider: local
+kind: info
+body: "RELEASE ajcr-p3: AJCR.w4-rep.datum.dat-d.ddr.divrep.u2 -- ADVANCED via a RETRACTION,\
+  \ not closed. What the next lane must not re-derive.\n\nOwner cleared, status pending,\
+  \ pinned bde5fdc94 / 2473ecc37 / c40a4078b. rep (antecedent 3 of pic0RepresentableByOfCharts)\
+  \ is UNDISCHARGED and no gate cleared. Full finding at I-1000, lesson at I-1009.\n\
+  \nDO NOT REDO -- Picard/DivRepChartClassUnivZarLocal.lean, rooted, sorry-free, lake\
+  \ build EXIT=0 (9307 jobs at HEAD), every declaration axiom-clean [propext, Classical.choice,\
+  \ Quot.sound] against a control firing sorryAx:\n * ForallPrimeAwayCertified --\
+  \ the away form of U2's class obligation, with the ring each adaptation lives over\
+  \ visible in the binder;\n * divFamZarUnivOfForallPrimeAway -- U2's class half at\
+  \ the universal point from it (carrier checked against the consumer's slot);\n *\
+  \ isLocallyCertified_of_isCertified_not_conversely -- the direction record;\n *\
+  \ side_straddle_gives_chart_separated_pieces -- opposite side values already chart-separate\
+  \ the pieces.\n\nMY RETRACTION, so nobody rebuilds the argument: I claimed the straddling\
+  \ no-go cannot reach IsLocallyCertified because the pin certifies over Localization.Away\
+  \ r. FALSE -- forall_not_isCertified_of_straddling takes its base ring as a SECTION\
+  \ VARIABLE and instantiates at the away ring on the pulled system, no bridge lemma\
+  \ (Probe8 EXIT=0). Also withdrawn: a 'guard' claiming the tube route is measured\
+  \ shut; it audited a convenience wrapper, while the assembler wants swallow-or-miss\
+  \ where a disjoint piece is HARMLESS.\n\nWHAT SURVIVES AND IS WORTH HAVING: the\
+  \ refuting input NARROWS. Global straddling refutes HasCertifiedAdaptation; only\
+  \ ONE-FIBRE straddling refutes the pin, because the pin's certificates carry an\
+  \ existential choice of r outside the prime at hand.\n\nNEXT ACTION, and it is not\
+  \ what I first proposed: do NOT compute a support locus. Piece confinement is free\
+  \ for every seed by piece_le. Because localEquations builds a POINTED cover with\
+  \ side varying per point, the measurable question is whether two points OF THE SUPPORT\
+  \ take opposite side values. Also unmeasured and possibly decisive (review-ajcr,\
+  \ I-1003): if the class half runs through ThetaGeneratorSeed it sits on the chart-typed\
+  \ side of the I-0492 widening by construction, which would make my retraction structural\
+  \ rather than proof-level.\n\nAlready free, do not re-derive: the eps-half (divFamEps_eq_of_le)\
+  \ and the 0 < windowBound scalar (from g != 0)."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T14:48:59.619601+00:00'
+updated_at: '2026-07-29T14:48:59.619614+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0006-horizon-ajcr-p3
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

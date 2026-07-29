@@ -18160,7 +18160,7 @@
     "macros": {},
     "states": {
       "blocked": 249,
-      "closed": 7433,
+      "closed": 7434,
       "formalized_open": 301,
       "informal": 175,
       "ready": 186
@@ -54835,7 +54835,7 @@
     },
     {
       "chapter": "The identity component \\(\\Pic^0_{C/k}\\) as an abelian variety",
-      "comment_count": 0,
+      "comment_count": 1,
       "dep_count": 11,
       "descendant_count": 35,
       "group": "c1376",

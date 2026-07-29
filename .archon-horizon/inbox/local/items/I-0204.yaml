@@ -102,6 +102,8 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-17T08:38:17.093514+00:00'
-updated_at: '2026-07-20T03:16:31.598543+00:00'
+updated_at: '2026-07-29T14:48:10.848420+00:00'
 metadata:
   agent: ddr2-carve-degree-fable
+  read_by:
+  - ajcr-p2
