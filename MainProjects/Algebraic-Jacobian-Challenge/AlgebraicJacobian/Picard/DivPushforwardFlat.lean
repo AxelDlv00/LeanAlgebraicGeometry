@@ -158,7 +158,38 @@ theorem Scheme.DivFamily.coherentSheafFlat_id_pushforward
     [LocallyQuasiFinite
       (Scheme.Modules.schematicSupportι x.F ≫ pullback.snd π T.hom)] :
     Scheme.CoherentSheafFlat (𝟙 (T.left : Scheme.{u}))
-      ((Scheme.Modules.pushforward (pullback.snd π T.hom)).obj x.F) :=
-  sorry
+      ((Scheme.Modules.pushforward (pullback.snd π T.hom)).obj x.F) := by
+  letI := x.isFinitePresentation
+  haveI : x.F.IsQuasicoherent := inferInstance
+  set q := pullback.snd π T.hom with hq
+  set i := Scheme.Modules.schematicSupportι x.F with hi
+  -- `i ≫ q` is proper by the divisor family's own support datum, hence finite,
+  -- hence affine.
+  haveI : IsProper (i ≫ q) := x.properSupport
+  haveI : IsFinite (i ≫ q) := IsFinite.of_isProper_of_locallyQuasiFinite _
+  haveI : IsAffineHom (i ≫ q) := inferInstance
+  haveI : IsAffineHom i :=
+    inferInstanceAs (IsAffineHom (Scheme.Modules.annihilator x.F).subschemeι)
+  -- present `O_D` as `i_*` of its restriction to the support
+  set N := (Scheme.Modules.pullback i).obj x.F with hN
+  have hdesc : x.F ≅ (Scheme.Modules.pushforward i).obj N :=
+    Scheme.Modules.schematicSupportDescentIso x.F
+  haveI : N.IsQuasicoherent := pullback_isQuasicoherent_hom i x.F inferInstance
+  -- flatness of `i_* N` over `T`, transported from the family's flatness
+  have h1 : Scheme.CoherentSheafFlat q ((Scheme.Modules.pushforward i).obj N) :=
+    coherentSheafFlat_of_iso q hdesc x.flat
+  -- descend it to `N` along the affine `i`
+  have h2 : Scheme.CoherentSheafFlat (i ≫ q) N :=
+    Scheme.CoherentSheafFlat.of_pushforward_of_isAffineHom i q N h1
+  -- push forward along the affine `i ≫ q`, over the identity of the base
+  have h3 : Scheme.CoherentSheafFlat (𝟙 (T.left : Scheme.{u}))
+      ((Scheme.Modules.pushforward (i ≫ q)).obj N) :=
+    Scheme.CoherentSheafFlat.pushforward_of_isAffineHom (i ≫ q)
+      (𝟙 (T.left : Scheme.{u})) N (by rwa [Category.comp_id])
+  -- and identify `(i ≫ q)_* N ≅ q_* (i_* N) ≅ q_* O_D`
+  intro U hU V hV eV
+  exact coherentSheafFlat_of_iso (𝟙 (T.left : Scheme.{u}))
+    ((Scheme.Modules.pushforwardComp i q).app N ≪≫
+      (Scheme.Modules.pushforward q).mapIso hdesc.symm) h3 hU hV eV
 
 end AlgebraicGeometry
