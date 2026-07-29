@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import Mathlib
 import AlgebraicJacobian.Curve.FiniteLevelRationalPoint
+import AlgebraicJacobian.Picard.RigidPushforwardP1Witness
 
 /-!
 # A rational point at a finite *Galois* level, with no hypothesis on `C(k)`
@@ -151,8 +152,11 @@ Every antecedent of §2 is witnessed here rather than assumed:
 `hasRationalPoint_baseChangeField_separableClosure_of_geometricallyIrreducible` produces the
 `k^s`-section from `[SmoothOfRelativeDimension 1 C.hom]` and `[GeometricallyIrreducible C.hom]`
 alone, and §1 turns it into the over-`Spec k` equation. `GeometricallyIrreducible` is the binder
-`AlgebraicJacobian/Challenge.lean` and the headline `picardJacobianWitness` actually carry, so a
-consumer needs no bridging instance.
+the headline `picardJacobianWitness` (`AlgebraicJacobian/Jacobian.lean:840`) actually carries, so
+a consumer needs no bridging instance — and this file needs one binder *fewer* than the headline,
+which also carries `[IsProper C.hom]`. (The sibling file's docstring attributes this binder to
+`AlgebraicJacobian/Challenge.lean`; **there is no such file in this project**, so that pointer is
+dead and is not repeated here.)
 
 There is **no** `[HasRationalPoint C]`, and there must not be (`I-0491`): the point exists only
 after the separable base extension. -/
@@ -184,3 +188,46 @@ theorem exists_finiteGalois_level_hasRationalPoint_of_geometricallyIntegral {k :
     (hasRationalPoint_baseChangeField_of_pullbackSection C σ hσ)
 
 end AlgebraicGeometry.Scheme
+
+/-! ## §4. Non-vacuity, compiler-checked rather than asserted
+
+Two ways §3 could have been true-about-nothing, both refuted here by a declaration rather than by
+a docstring sentence.
+
+* The binder set could have been empty. It is not: it is satisfied **at the headline's own
+  hypotheses with nothing added** — indeed with one binder *fewer*, since the headline also carries
+  `[IsProper C.hom]` and §3 does not use it (`galoisLevel_at_headline_binders`).
+* The binder set could have been inhabited only by variables. It is not: `ℙ¹` over `ℚ` is a
+  concrete object of the domain and the conclusion holds for it
+  (`galoisLevel_p1Over_rat`). `ℚ` is chosen because it is *not* separably closed, so this is not
+  the degenerate case `k^s = k` where every level is `k` — though note that inference is about
+  this one field, not about the domain as a whole: getting from `¬ IsSepClosed k` to `k^s ≠ k` in
+  general needs a converse this project does not have (`I-1310`), and no such general claim is
+  made here.
+-/
+
+namespace AlgebraicJacobian.NonVacuity
+
+open AlgebraicGeometry.Adelic
+
+/-- **Non-vacuity 1: the headline's binders suffice, with one to spare.** The conclusion of §3
+holds for every curve satisfying the hypotheses of `picardJacobianWitness`
+(`AlgebraicJacobian/Jacobian.lean:840`), with no hypothesis added — and `[IsProper C.hom]`, which
+the headline carries, is present here only to make the match visible; the proof does not use it. -/
+theorem galoisLevel_at_headline_binders {k : Type u} [Field k]
+    (C : Over (Spec (CommRingCat.of k))) [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIrreducible C.hom] :
+    ∃ (k'' : IntermediateField k (SeparableClosure k)) (_ : FiniteDimensional k k'')
+      (_ : IsGalois k k''),
+      Scheme.HasRationalPoint (Scheme.baseChangeField C k'') :=
+  Scheme.exists_finiteGalois_level_hasRationalPoint_of_geometricallyIrreducible C
+
+/-- **Non-vacuity 2: a concrete inhabitant.** `ℙ¹` over `ℚ` satisfies the binders and the
+conclusion holds for it, so §3 is not a statement about an empty class of curves. -/
+theorem galoisLevel_p1Over_rat :
+    ∃ (k'' : IntermediateField ℚ (SeparableClosure ℚ)) (_ : FiniteDimensional ℚ k'')
+      (_ : IsGalois ℚ k''),
+      Scheme.HasRationalPoint (Scheme.baseChangeField (p1Over ℚ) k'') :=
+  Scheme.exists_finiteGalois_level_hasRationalPoint_of_geometricallyIntegral (p1Over ℚ)
+
+end AlgebraicJacobian.NonVacuity
