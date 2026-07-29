@@ -44,13 +44,13 @@ body: 'CLAIM ajcr-p2 (run 0088 r3): AJCR.w4-rep.datum.dat-c.c9-chartlocus.locus-
   (I-1194). Row was created by me under c9-chartlocus, previously unowned.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T20:11:11.114423+00:00'
-updated_at: '2026-07-29T20:17:45.305700+00:00'
+updated_at: '2026-07-29T21:31:04.135415+00:00'
 metadata:
   provenance:
     run: 0088
@@ -63,4 +63,4 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   read_by:
-  - ajcr-p3
+  - ajcr-p2
