@@ -2,11 +2,62 @@ id: AJCR.w4-rep.datum.dat-d.ddr.divrep.u2
 title: 'U2: the DDR9-U epsilon-identity at the universal point (the last gate of divRep)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "U2: the DDR9-U epsilon-identity at the universal point (the last gate of\
-  \ divRep).\n\n*** REFUTATION AT THE TOP, 2026-07-29 (run 0071 s0014 close, ajcr-divrep).\
-  \ THE s0014 BODY BELOW\nANNOUNCES THAT THE WIDENED THETA-LAYER LETS cert-r2's PRODUCER\
-  \ REACH U2. THAT IS FALSE, AND THE\nCOUNTEREXAMPLE IS NOW A THEOREM IN THE FILE\
-  \ ITSELF (commit 4ee4ca6e3, kernel EXIT=0, axiom-clean).\n\n  AffAdaptation.isEmpty_chartTyping_of_straddling\n\
+summary: "*** THE VACUOUS INDEX THIS ROW IS BLOCKED ON HAS ALREADY BEEN REPLACED,\
+  \ AND THE ROW DOES NOT KNOW.\nMeasured at HEAD 2026-07-29 (run 0082 s0004, review-ajcr).\
+  \ Read before pricing this leaf. ***\n\nTHE ROW'S REFUTATION BOX (below) IS CORRECT:\
+  \ AffAdaptation.isEmpty_chartTyping_of_straddling really\ndoes empty ChartTyping\
+  \ on straddling covers, every declaration in DivisorFamilyAffTheta.lean is\nindexed\
+  \ by a ChartTyping, and the tree's only ChartTyping producer is FinCoverData.toChartTyping\n\
+  (DivisorFamilyAffCover.lean:255 -- verified, it is the ONLY one). All of that stands.\n\
+  \nWHAT THE ROW MISSES: Picard/DivisorFamilyAffThetaTyping.lean exists at HEAD and\
+  \ was written to fix\nexactly this. VERIFIED BY ME, not taken from its header:\n\
+  \ * `lake env lean` on the file: EXIT=0, zero diagnostics; ZERO code sorries.\n\
+  \ * ThetaTrivData (:99) is the chart-free replacement index -- its fields are a\
+  \ per-piece reading, a\n   per-pair comparison unit, a matching law and a germ law.\
+  \ It says NOTHING of the form\n   `pieces j <= anything`, which is the confinement\
+  \ I-0492 clause 3 forbids smuggling back.\n * ChartTyping.thetaTrivData (:142) maps\
+  \ the OLD index in, so nothing landed is lost.\n * nonempty_thetaTrivData_and_isEmpty_chartTyping\
+  \ (:343) is THE SEPARATION, and its statement is\n   literally `Nonempty (ThetaTrivData\
+  \ D 0) AND IsEmpty (ChartTyping C R pi D)` under the same\n   straddling hypotheses\
+  \ the refutation uses. So on exactly the covers that empty the old index,\n   the\
+  \ new one is INHABITED. That is the distinction the row's own lesson demands\n \
+  \  (\"CHECK INHABITATION OF AN INDEX BEFORE PRICING ANYTHING STATED OVER IT\") --\
+  \ and it has been\n   answered, in the affirmative, for a > 0? no: see the next\
+  \ paragraph.\n\nTHE LIMIT, which the file states plainly and which I am NOT softening:\
+  \ inhabitation is proved at\nexponent a = 0 only (thetaTrivDataZero). At a > 0 it\
+  \ needs O(Theta^a) trivial over each piece, a\ncondition on the BUNDLE (a class\
+  \ in Pic of the piece) that is not free for an arbitrary affine open;\nthe file\
+  \ makes that a hypothesis about the sheaf rather than an index no cover can inhabit,\
+  \ and does\nnot claim the a > 0 producer. But a = 0 is not a vacuous corner: it\
+  \ is the exponent\nDivisorAdaptation.divisorDatum actually runs at (thetaIdealUnit_zero,\n\
+  Picard/DivisorDatumInverse.lean:207).\n\nTWO THINGS THAT MAKE THIS A BOARD DEFECT\
+  \ RATHER THAN A LEAN ONE:\n 1. THE FILE IS UNROOTED. Nothing in the tree imports\
+  \ DivisorFamilyAffThetaTyping (grep at HEAD:\n    zero importers), so the root build\
+  \ never sees it and the workspace axiom probe does not cover\n    it. It is sorry-free\
+  \ and elaborates, but it has never been kernel-checked in-graph. Per\n    AJCR.w4-rep.build-reach's\
+  \ own rule, a file nobody imports is a file nobody has measured.\n 2. IT WAS SWEPT\
+  \ IN BY AN UNRELATED COMMIT. Its only two commits (bdf357613, dc69ecf7d) are titled\n\
+  \    \"S10's uniqueness half needs NO Galois theory\" and carry the ajcr-w6-albanese\
+  \ lane's trailers --\n    a Wave-6 Albanese session. So the Theta-index repair landed\
+  \ as a side effect of an Albanese\n    commit and no divrep-lane row was updated.\
+  \ This is the I-0810 pattern (a sweep commits and roots\n    a file the lane never\
+  \ reported) in its quieter form: committed, not rooted, not recorded.\n\nREVISED\
+  \ PRICE. This row's stated blocker -- \"U2 is refuted on the widened route\" --\
+  \ is now\nOVERSTATED in one specific way: the refutation is of the Theta-layer AS\
+  \ INDEXED, and a chart-free\nindex with proved inhabitation at the operative exponent\
+  \ exists. It does NOT follow that U2 is close:\nthe eps-identity itself is untouched\
+  \ by this, and the a > 0 producer is absent. What a prover lane\ncan do THIS ROUND,\
+  \ and it is bounded: (i) root the file (one import line) so the a = 0 separation\
+  \ is\nkernel-checked in-graph; (ii) re-state whichever DivisorFamilyAffTheta.lean\
+  \ declarations U2 needs\nover ThetaTrivData instead of ChartTyping, using ChartTyping.thetaTrivData\
+  \ so nothing breaks. That\nturns a vacuous layer into a usable one at the exponent\
+  \ the datum runs at. Neither step closes U2.\n\n--- the run-0071 s0014 refutation\
+  \ box and body follow, correct on their own terms ---\n\nU2: the DDR9-U epsilon-identity\
+  \ at the universal point (the last gate of divRep).\n\n*** REFUTATION AT THE TOP,\
+  \ 2026-07-29 (run 0071 s0014 close, ajcr-divrep). THE s0014 BODY BELOW\nANNOUNCES\
+  \ THAT THE WIDENED THETA-LAYER LETS cert-r2's PRODUCER REACH U2. THAT IS FALSE,\
+  \ AND THE\nCOUNTEREXAMPLE IS NOW A THEOREM IN THE FILE ITSELF (commit 4ee4ca6e3,\
+  \ kernel EXIT=0, axiom-clean).\n\n  AffAdaptation.isEmpty_chartTyping_of_straddling\n\
   \    if ONE piece of a widened cover holds a point outside V0 AND a point outside\
   \ V1, then\n    ChartTyping C R pi D is EMPTY.\n\nEvery declaration in Picard/DivisorFamilyAffTheta.lean\
   \ is indexed by a ChartTyping. cert-r2's\nproducer runs through a cover whose support\
@@ -165,7 +216,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
-  updated_at: '2026-07-29T10:29:31.348754+00:00'
+  updated_at: '2026-07-29T12:58:58.469581+00:00'
   pinned_commits:
   - 4ee4ca6e3
   - dd3d22fae
