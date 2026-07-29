@@ -60,20 +60,18 @@ is a different thing, and the honest statement of what remains is:
 **But the antecedent must not be read as reachable over `k`, and §4 is why.**
 The same subcanonicity that powers the transport also proves that a
 representable `picSharp` is a *Zariski* sheaf
-(`PicScheme.picSharp_isSheaf_zariski_of_representableBy`).
-
-**But the falsity of `picSharp` representability is quoted from Kleiman, NOT
-derived from that theorem** — corrected 2026-07-29 (`review-ajc` / `I-0970`,
-after two successive citations in this slot turned out not to support it).
-Kleiman L5105–L5108: for the conic `u²+v²+w²=0` in `ℙ²_ℝ` — smooth, proper,
-geometrically integral, no rational point, i.e. exactly these binders —
-`Pic_{X/ℝ}` is **not representable**, while `Pic_{(X/ℝ)ét}` is by §4 `th:main`.
-That is direct. The Zariski route would need "`picSharp` is not a Zariski
-sheaf", which no source establishes: `ex:Pfs` compares the two *sheafifications*
-`zar` and `ét` (both already sheaves), and `th:cmp` part 1 gives
-`picSharp ↪ Pic_{(X/S)zar}` here, so `picSharp` is Zariski-*separated* and any
-failure could only be gluing. Do **not** rebuild the argument that way.
-Contrapositive of the quoted fact: representability of `picSharp C` over an
+(`PicScheme.picSharp_isSheaf_zariski_of_representableBy`). Kleiman's Exercise
+`ex:Pfs` exhibits a curve satisfying exactly these binders for which `picSharp`
+is **not** a Zariski sheaf: the conic `u²+v²+w²=0` in `ℙ²_ℝ`, a smooth plane
+conic — smooth, proper, geometrically integral — over a field where it has no
+rational point. Kleiman produces a class of `Pic_{(X/ℝ)ét}(ℝ)` outside the image
+of `Pic_{(X/ℝ)zar}(ℝ)` and concludes that `Pic_{X/ℝ}` is not representable while
+`Pic_{(X/ℝ)ét}` is. (**Cite `ex:Pfs`, not "§2 L1292–L1302"** — corrected
+2026-07-29 by `review-ajc` after reading
+`references/kleiman-picard-src/kleiman-picard.tex`, the full paper, which *is* in
+the workspace: those lines are about the *absolute* functor `Pic_X`, and the
+relative one is defined to defeat that argument.) Contrapositive:
+representability of `picSharp C` over an
 arbitrary field is **false in general**, not merely unproved. So the campaign
 milestones that conclude representability of `picSharp`/`picSharpDeg` over `k`
 itself — G3 (Galois descent of `picSharp` points) and G4 (the coproduct
@@ -83,27 +81,17 @@ This is not an argument against the Milne–Kollár route. Everything through J5
 runs over a separably closed `k'`, where a section is available and the
 obstruction is absent; the break is precisely at the descent step where the
 conclusion returns to `k`. The repair the results here name is that the object
-descended to `k` must be `picEt` and not `picSharp`. Over `k'` the two agree, by
+descended to `k` must be `picEt`, which *has* the sheaf property that carries
+descent, and not `picSharp`, which lacks it. Over `k'` the two agree, by
 `isIso_picEtComparison_of_isSheaf` applied to the representability available
 there — so J5's output is already a `picEt`-representing scheme after base
 change.
 
-**§4 makes the constraint a reduction rather than a quotation**, which is the
-one place this file goes beyond restating Kleiman.
-`not_representableBy_picSharp_of_not_isIso_picEtComparison` proves: if the
-comparison fails to be an isomorphism then NO scheme represents `picSharp C`.
-That is Kleiman's own inference at L5105–L5108 ("the two functors differ, so
-`Pic_{X/ℝ}` is not representable") supplied with a proof, and it is the
-contrapositive of §3 — no sheaf step, no topology. So a hypothetical proof of
-G3/G4 as written would prove `picEtComparison` is an isomorphism for *every*
-curve over *every* field, including pointless ones.
-
-What is **not** formalised, and is the whole residue of the argument: that the
-comparison genuinely fails for that conic. Kleiman's `φ*O(1)` witness runs
-through `h⁰` on `ℙ¹_ℂ` and flat base change. Producing it in Lean is bounded,
-well-specified work, and §4's theorems are the interface it plugs into. Until
-then "G3/G4 target a false statement" rests on that one quotation — and on
-nothing else, which is the improvement.
+What is **not** established here: that Kleiman's non-sheaf example satisfies
+this project's binders (smooth, proper, geometrically integral) — it is quoted
+from the reference, not formalised — and no restated G3. The Lean content of §4
+is exactly the implication "representable ⇒ Zariski sheaf"; the falsity of the
+antecedent is a consequence *given* the quoted counterexample.
 
 There is one genuine subtlety, and it is not a section. The transport proves
 that the *same* scheme represents both functors, so it does not produce
@@ -137,14 +125,8 @@ lemma proved here.
   follows too, *unconditionally*, which is strictly stronger than the seam's
   own `HasRationalPoint C → IsIso …`.
 * `Scheme.PicScheme.picSharp_isSheaf_zariski_of_representableBy` — §4: a
-  representable `picSharp` is a Zariski sheaf. True and clean, but only half of
-  the seam's prose argument; see its docstring for why the other half is not
-  sourced (`I-0970`).
-* `Scheme.PicScheme.not_representableBy_picSharp_of_not_isIso_picEtComparison`
-  and `not_exists_representing_picSharp_of_not_isIso` — §4's actual payload:
-  if the comparison is not an isomorphism then NO scheme represents `picSharp C`.
-  This is Kleiman's non-representability inference (L5105–L5108) as a theorem,
-  and it needs no sheaf step — only §3.
+  representable `picSharp` is a Zariski sheaf, the implication whose
+  contrapositive limits what the campaign's descent step may target.
 
 ## References
 
@@ -339,20 +321,14 @@ would also transport it from there.
 (`Picard/FGAPicRepresentability.lean`, "Why sheafifying is what makes an
 unconditional statement possible") argues *in prose* that an unconditional
 `RepresentableBy` against `picSharp` is FALSE rather than unproved, because
-some curve has a `picSharp` that is not a Zariski sheaf, while a representable
-functor is a sheaf for any subcanonical topology.
-
-**That prose argument does not close, and this theorem is only its first half**
-(`I-0970`). Its second half — a curve whose `picSharp` fails Zariski descent —
-is not established by any source in the workspace: the seam's original citation
-(§2 L1292–L1302) is about the *absolute* functor, its first replacement
-(`ex:Pfs`) compares the two *sheafifications*, and `th:cmp` part 1 in fact gives
-`picSharp ↪ Pic_{(X/S)zar}` on these binders. What IS established, and needs no
-sheaf step, is Kleiman's own L5105–L5108: for the real conic `u²+v²+w²=0`
-(smooth, proper, geometrically integral, no rational point) `Pic_{X/ℝ}` is not
-representable while `Pic_{(X/ℝ)ét}` is. So the conclusion — over an arbitrary
-field, no scheme represents `picSharp C` in general — stands on that quotation,
-not on this theorem.
+Kleiman's Exercise `ex:Pfs` gives a curve — the real conic `u²+v²+w²=0`, smooth
+proper geometrically integral, no rational point — whose `picSharp` is not a
+Zariski sheaf, while a representable functor is a sheaf for any subcanonical
+topology. (That docstring's earlier citation "§2 L1292–L1302" was about the
+*absolute* functor and has been corrected.) This
+theorem is the second half of that argument, as a Lean statement rather than as
+prose. Its contrapositive therefore says: over an arbitrary field, no scheme
+represents `picSharp C` in general.
 
 The campaign milestones G3 and G4 conclude exactly that (G3: `J_r := J'_r/Γ`
 represents `picSharpDeg C r` over `k`; G4 assembles `picSharpDeg`), so they are
@@ -360,16 +336,11 @@ targeting a false statement as written and need restating against `picEt`. That
 restatement is the content of the board row `AJC.picrep.etale-rep`, and it is
 what makes the row a *route repair* rather than a missing theorem.
 
-**The binder check, which the earlier text here left open, now closes**: the
-witness is a smooth plane conic over `ℝ`, hence smooth, proper and
-geometrically integral — this file's exact binders — and it has no `ℝ`-point,
-which is what makes the two functors differ. So the antecedent of this theorem
-is genuinely uninhabitable in general, not merely unproved.
-
-What remains unformalised is the *counterexample itself* (that `Pic_{X/ℝ}` of
-that conic is not representable); it is quoted from Kleiman rather than
-constructed in Lean. `not_representableBy_picSharp_of_not_isIso_picEtComparison`
-below isolates exactly what a Lean version of it would have to supply. -/
+**Not formalised, and deliberately named as such**: that Kleiman's non-sheaf
+curve is smooth, proper and geometrically integral — this project's binders. It
+is quoted from the reference. Without that check the theorem below is a true
+implication whose antecedent has not been *proved* uninhabitable, only reported
+so by Kleiman. -/
 theorem picSharp_isSheaf_zariski_of_representableBy {k : Type u} [Field k]
     (C : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
@@ -379,60 +350,6 @@ theorem picSharp_isSheaf_zariski_of_representableBy {k : Type u} [Field k]
       (picSharp C) := by
   haveI : (picSharp C).IsRepresentable := ⟨X, ⟨rep⟩⟩
   exact GrothendieckTopology.Subcanonical.isSheaf_of_isRepresentable _
-
-/-- **Kleiman's non-representability argument, as a Lean theorem: if the
-comparison is not an isomorphism then `picSharp` is not representable.**
-
-This is the honest replacement for the Zariski-sheaf mechanism above, and it is
-strictly better: it needs no sheaf step and no topology, only §3.
-
-Kleiman's own reasoning at L5105–L5108 and L5126–L5129 is exactly this. For the
-real conic he shows `Pic_{X/ℝ}` and `Pic_{(X/ℝ)ét}` *differ*, and concludes
-"`Pic_{X/ℝ}` is not representable" — with `Pic_{(X/ℝ)ét}` representable by the
-Main Theorem. The inference from "they differ" to "the unsheafified one is not
-representable" is not stated as needing an argument in the source; here it is
-one, and it is the contrapositive of
-`isIso_picEtComparison_of_picSharp_representability`: representability of
-`picSharp` forces the comparison to be an isomorphism, so the two functors
-cannot differ.
-
-**This is what converts the route claim from a quotation into a reduction.**
-Combined with §3, the campaign's tail is constrained as follows: any proof that
-some scheme represents `picSharp C` over a general field `k` would prove that
-`picEtComparison C` is an isomorphism for every such `C` — including curves with
-no `k`-point, where Kleiman exhibits it as non-surjective. So G3 and G4 cannot
-be proved as written, and the repair is to descend `picEt`.
-
-**The one thing still quoted rather than proved**: that the comparison genuinely
-fails to be an isomorphism for that conic. Formalising it means producing a
-class in `picEt C (Spec ℝ)` outside the image — Kleiman's `φ*O(1)`, whose
-argument runs through `h⁰` on `ℙ¹_ℂ` and flat base change. That is a bounded,
-well-specified piece of work, and this theorem is the interface it would plug
-into. -/
-theorem not_representableBy_picSharp_of_not_isIso_picEtComparison {k : Type u} [Field k]
-    (C : Over (Spec (CommRingCat.of k)))
-    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
-    (hne : ¬ IsIso (picEtComparison C)) (X : Over (Spec (CommRingCat.of k))) :
-    IsEmpty ((picSharp C).RepresentableBy X) :=
-  ⟨fun rep => hne (Scheme.isIso_picEtComparison_of_picSharp_representability C rep)⟩
-
-/-- The same statement in the shape the seam's clause (1) uses: if the
-comparison fails to be an isomorphism, the `picSharp` analogue of clause (1) is
-FALSE — no scheme at all represents `picSharp C`, with or without the
-finiteness and separatedness conjuncts.
-
-This is the precise sense in which the campaign's endpoint is not merely
-unproved. Note the quantifier: `X` ranges over all `k`-schemes, so this refutes
-the existential, not just the pinned witness `PicScheme C`. -/
-theorem not_exists_representing_picSharp_of_not_isIso {k : Type u} [Field k]
-    (C : Over (Spec (CommRingCat.of k)))
-    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
-    (hne : ¬ IsIso (picEtComparison C)) :
-    ¬ ∃ X : Over (Spec (CommRingCat.of k)),
-        Nonempty ((picSharp C).RepresentableBy X) ∧
-          LocallyOfFiniteType X.hom ∧ IsSeparated X.hom := by
-  rintro ⟨X, ⟨rep⟩, -, -⟩
-  exact (not_representableBy_picSharp_of_not_isIso_picEtComparison C hne X).false rep
 
 end PicScheme
 

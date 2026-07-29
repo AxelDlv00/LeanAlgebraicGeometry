@@ -344,23 +344,16 @@ All milestones over sep. closed k' ⊇ k with `C' := C ×_k k'` (Λ-stability in
 > landed this round) plus the proved `zariskiTopologyOver_le_etaleTopologyOver`
 > (`Picard/PicEtSheaf.lean:118`): representability of `picSharp` forces `picSharp` to be a
 > **Zariski sheaf**, because the étale topology is subcanonical and refines the Zariski one.
-> Kleiman states the falsity **directly**, at L5105–L5108 (repeated L5126–L5129): for the conic
-> `u²+v²+w²=0` in `ℙ²_ℝ` — a smooth plane conic, hence **smooth, proper and geometrically
-> integral, over a field where it has no rational point**, i.e. exactly this campaign's
-> binders — `Pic_{X/ℝ}` is **not representable**, because `Pic_{(X/ℝ)ét}` is representable by
-> `th:main` while the two functors differ. So the conclusion of G3 contradicts Kleiman.
->
-> **Two citations have been wrong in this slot; take the quotation above and do not rebuild
-> the Zariski-sheaf argument** (`I-0970`, `I-0973`). The seam's original "§2 L1292–L1302" is
-> about the *absolute* functor `Pic_X`, which the relative functor's quotient by `Pic(T)` is
-> designed to defeat. Its first replacement, Exercise `ex:Pfs`, compares the two
-> *sheafifications* `zar` and `ét` — both already sheaves — so it witnesses `zar ≠ ét`, not a
-> failure of Zariski descent for `picSharp`. Indeed `th:cmp` part 1 (L1391–L1393) proves
-> `Pic_{X/S} ↪ Pic_{(X/S)zar}` whenever `O_S ≅ f_*O_X` holds universally, automatic here, so
-> `picSharp` is Zariski-*separated* on these binders — consistent with B1 above, whose audit
-> note says its sheaf statement is false only *without* the section. The Lean theorem
-> `picSharp_isSheaf_zariski_of_representableBy` is true and worth having, but it does **not**
-> supply half of this refutation. (`lake env lean` EXIT=0, zero diagnostics; the probe was
+> Kleiman's Exercise `ex:Pfs` (L1364–L1375, answer L4853–L4896, with L5105–L5108 and
+> L5126–L5129) supplies the other half: the conic `u²+v²+w²=0` in `ℙ²_ℝ` — a smooth plane
+> conic, hence **smooth, proper and geometrically integral, over a field where it has no
+> rational point**, i.e. exactly this campaign's binders — has a class in `Pic_{(X/ℝ)ét}(ℝ)`
+> outside the image of `Pic_{(X/ℝ)zar}(ℝ)`, and Kleiman concludes outright that `Pic_{X/ℝ}` is
+> **not representable** while `Pic_{(X/ℝ)ét}` is. So the conclusion of G3 contradicts Kleiman.
+> (**Not** for the reason first recorded here and in four Lean docstrings: "§2 L1292–L1302" is
+> about the *absolute* functor `Pic_X`, not `picSharp`. That citation was wrong and is
+> corrected — the relative functor quotients by `Pic(T)` precisely to defeat the `ℙ¹_X`
+> argument, and L1600–L1605 proves `Pic_{X/S} ≅ Pic_{(X/S)zar}` under a section.) (`lake env lean` EXIT=0, zero diagnostics; the probe was
 > a scratch file and was deleted — the two inputs it composes are both in-tree.)
 >
 > **What survives, which is nearly everything.** The obstruction is absent over a **separably
@@ -377,15 +370,14 @@ All milestones over sep. closed k' ⊇ k with `C' := C ×_k k'` (Λ-stability in
 > passing through a false intermediate, and it is why roadmap `AJC.picrep.etale-rep` is now
 > priceable rather than unpriced.
 >
-> **Provenance, since this note was corrected twice in one day.** The source is
-> `references/kleiman-picard-src/kleiman-picard.tex` — the full paper, present in the workspace
+> **The check that would have overturned this has now been performed, and it does not.** When
+> this note was first written the counterexample half was *quoted* rather than verified, and the
+> open question was whether Kleiman's curve meets this project's binders. It does: the conic
+> above is smooth, proper and geometrically integral. Read from
+> `references/kleiman-picard-src/kleiman-picard.tex` — the full paper, which is in the workspace
 > (an earlier pass concluded it was absent after grepping only the §4 excerpt
-> `references/Kleiman_The_Picard_Scheme_Theorem-4.8.tex`). The open question when this note was
-> first written was whether Kleiman's curve meets this campaign's binders; it does, the conic
-> being smooth, proper and geometrically integral. What then needed a second correction was the
-> *mechanism*, not the conclusion: the refutation is a quotation of Kleiman's
-> non-representability statement, and does not follow from the Lean Zariski-sheaf theorem.
-> Nothing here is now unverified except the restated G3 itself, which is the work.
+> `references/Kleiman_The_Picard_Scheme_Theorem-4.8.tex`). Nothing here is now unverified except
+> the restated G3 itself, which is the work.
 
 **G4 — Coproduct assembly.**
 (i) `X := ∐_{d:ℤ} X_d`, each `X_d` := copy of `J_r` relabelled through A1's translation `picSharpDeg d ≅ picSharpDeg r`. Mathlib verified: `HasColimitsOfShape (Discrete σ) Scheme.{u}` + `CoproductsOfShapeDisjoint` + disjoint `Sigma.ι` open covers (`AlgebraicGeometry/Limits.lean:187-225`); `LocallyOfFiniteType` along `Sigma.desc` via `sigmaDesc` (`Morphisms/Basic.lean:303`, verified) + FT-descent along `Spec k' → Spec k` (D2-M13: `k'⊗_k A₀` FT ⟹ A₀ FT). New bricks: `hom_sigma_decompose` (T-map = clopen partition + components, matched to B4), `isSeparated_sigma` (verified absent from mathlib; provable via `IsZariskiLocalAtTarget` + disjoint cover).

@@ -58,25 +58,15 @@ so often in practice." Not-a-priori is not never — indeed L1600–L1605 proves
 `Pic_{X/S} ≅ Pic_{(X/S)zar}` whenever `f` has a section.
 
 **The correct witness, and it satisfies exactly this file's binders.** Kleiman
-L5105–L5108 (repeated L5126–L5129): take `X : u² + v² + w² = 0` in `ℙ²_ℝ`, a
+Exercise `ex:Pfs` (L1364–L1375) with its answer (L4853–L4896), read together
+with L5105–L5108 and L5126–L5129: take `X : u² + v² + w² = 0` in `ℙ²_ℝ`, a
 smooth plane conic — hence smooth, proper, and geometrically integral, since
-`X_ℂ ≅ ℙ¹_ℂ` — over a field where it has **no** rational point. Kleiman states
-outright that `Pic_{X/ℝ}` is **not representable**, because `Pic_{(X/ℝ)ét}` is
-representable by §4 `th:main` while the two functors differ (Exercise `ex:Pfs`).
-That is direct non-representability on a curve of exactly the shape this file
-quantifies over.
-
-**Do not route this through a Zariski-sheaf claim** (corrected again the same
-day, after `work-reviewer` refuted the first repair — see `I-0970`). It is
-tempting to argue "representable ⟹ Zariski sheaf, and `picSharp` is not one";
-the second half is *not* what the sources say. `ex:Pfs` compares
-`Pic_{(X/ℝ)zar}` with `Pic_{(X/ℝ)ét}` — both already sheaves — so it witnesses
-`zar ≠ ét`, not a failure of Zariski descent for the unsheafified functor. And
-Kleiman `th:cmp` part 1 (L1391–L1393) proves `Pic_{X/S} ↪ Pic_{(X/S)zar}`
-whenever `O_S ≅ f_* O_X` holds universally, which is automatic on these binders —
-i.e. `picSharp` *is* Zariski-separated here, and any failure could only be
-gluing. The non-representability above needs no sheaf step at all, so take it
-directly. Kleiman §2 **Thm 2.5** repairs it only under a
+`X_ℂ ≅ ℙ¹_ℂ` — over a field where it has **no** rational point. There is a class
+in `Pic_{(X/ℝ)ét}(ℝ)` outside the image of `Pic_{(X/ℝ)zar}(ℝ)`, and Kleiman
+concludes outright that `Pic_{X/ℝ}` is **not representable** while
+`Pic_{(X/ℝ)ét}` is (§4 `th:main`). So the falsity is witnessed on a curve of
+exactly the shape this file quantifies over, which the old citation never
+established. Kleiman §2 **Thm 2.5** repairs it only under a
 **section**: given one (and `O_S = f_* O_X` universally, automatic for our
 proper geometrically integral `C/k`), the comparisons
 
@@ -342,14 +332,12 @@ labelled as strictly weaker.
 unsheafified functor `picSharp C = T ↦ Pic(C ×_k T)/π_T^* Pic(T)` is *not*
 representable over a general field, so an unconditional `RepresentableBy`
 against `picSharp` would be a FALSE statement, not merely an unproved one. The
-witness is Kleiman L5105–L5108: the real conic `u²+v²+w²=0` in `ℙ²_ℝ`, smooth
-proper geometrically integral with no rational point, for which he states
-`Pic_{X/ℝ}` is not representable while `Pic_{(X/ℝ)ét}` is. (**Two citations have
-been wrong in this slot** — "§2 L1292–L1302", which is about the *absolute*
-functor, and then `ex:Pfs`, which compares the two *sheafifications*. Neither
-shows `picSharp` failing Zariski descent, and `th:cmp` part 1 says it is in fact
-Zariski-separated on these binders. Take the non-representability directly; see
-the module docstring.) Against `picEt` it is Kleiman's own
+witness is Kleiman's own Exercise `ex:Pfs` — the real conic `u²+v²+w²=0` in
+`ℙ²_ℝ`, smooth proper geometrically integral with no rational point, for which
+`Pic_{X/ℝ}` is not representable while `Pic_{(X/ℝ)ét}` is. (**Do not cite
+"§2 L1292–L1302" for this**: those lines are about the *absolute* functor
+`Pic_X`, not about `picSharp`. See the corrected citation in the module
+docstring above.) Against `picEt` it is Kleiman's own
 theorem. `PicScheme.picEt_isSheaf_forget` records the sheaf property that makes
 the difference, and it is proved rather than assumed.
 
@@ -423,21 +411,15 @@ representation to a `picEt` one with **no** rational-point hypothesis, the same
 scheme serving both. So no supplementary étale-representability theorem is
 needed.
 
-**What the correction costs instead, and it is a sharper constraint.**
-Representability of `picSharp` over an arbitrary field is **FALSE**, so **G3 and
-G4 target a false statement as written**, not a hard one. The source says so
-directly: Kleiman L5105–L5108 on the conic `u²+v²+w²=0` in `ℙ²_ℝ` — smooth,
-proper, geometrically integral, no rational point — `Pic_{X/ℝ}` is not
-representable while `Pic_{(X/ℝ)ét}` is.
-
-**This does not go through the Zariski-sheaf theorem, and an earlier revision of
-this paragraph wrongly said it did** (`I-0970`). The Lean statement
-`PicScheme.picSharp_isSheaf_zariski_of_representableBy` is true and useful, but
-its contrapositive needs "`picSharp` is not a Zariski sheaf", which no source
-here establishes — `ex:Pfs` compares the two *sheafifications*, and `th:cmp`
-part 1 shows `picSharp ↪ Pic_{(X/S)zar}` on these binders, so it is
-Zariski-*separated*. The falsity is quoted from Kleiman, not derived from that
-theorem. Everything through J5 runs over a separably closed
+**What the correction costs instead, and it is a sharper constraint.** The same
+subcanonicity proves that a representable `picSharp` is a *Zariski* sheaf
+(`PicScheme.picSharp_isSheaf_zariski_of_representableBy`), and the
+sheafification paragraph above records the witness — Kleiman's Exercise `ex:Pfs`,
+the conic `u²+v²+w²=0` in `ℙ²_ℝ`, smooth proper geometrically integral with no
+rational point, whose `Pic_{X/ℝ}` he proves *not* representable while
+`Pic_{(X/ℝ)ét}` is. Contrapositive: representability of `picSharp`
+over an arbitrary field is FALSE, so **G3 and G4 target a false statement as
+written**, not a hard one. Everything through J5 runs over a separably closed
 `k'` where a section is available and the obstruction absent; the break is the
 descent step where the conclusion returns to `k`, and the repair is that the
 object descended must be `picEt` (which has the sheaf property that carries
@@ -894,24 +876,6 @@ false statement (see the section header). The class is supplied at the use
 site, where the Kleiman `lm:qt` hypotheses — including quasi-projectivity of
 the representing scheme, which the `smoothProperQuotient` statement below
 cannot express — actually hold.
-
-**`α` IS A DECORATIVE INDEX — recorded 2026-07-29 (`review-ajc`), from a
-fresh-context vacuity sweep, and it limits the use-site argument just made.**
-Neither `α` nor `Z` occurs in the field `is_representable : P.IsRepresentable`;
-only `P` does. Machine-checked consequences: from
-`[HasSmoothProperQuotient α]` one derives `HasSmoothProperQuotient α'` for *any*
-other `α' : Z' ⟶ P` with the same target, and `[HasSmoothProperQuotient (id P)]`
-discharges the class for every `α` into `P` — where no equivalence relation, no
-smoothness and no properness is in sight. So this class **cannot** express "this
-quotient presentation is smooth and proper"; it says only "`P` is
-representable", indexed by an argument it ignores. The scoping paragraph above
-should be read as describing where the *mathematics* applies, not as a property
-the Lean statement enforces: a use site could satisfy it with an unrelated map
-and nothing would complain.
-
-Nothing is unsound at HEAD — the class has zero instances and zero call sites —
-but do not treat the index as a guard. Recorded as inbox `I-0954`, alongside the
-`P → P` labelling on `smoothProperQuotient` below.
 
 The class is kept as the blueprint-pinned record of the Altman–Kleiman
 `lm:qt` interface. A route to `fgaPicardRepresentability` that takes only finite

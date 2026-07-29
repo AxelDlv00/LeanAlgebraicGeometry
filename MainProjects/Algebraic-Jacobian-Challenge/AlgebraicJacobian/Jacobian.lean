@@ -414,13 +414,39 @@ tangent space.
 What it owes over and above the `picSharp` leaf `smoothOfRelativeDimension_genus_pic0` is
 the same two steps recorded there — `Pic0Et.smooth` itself, plus the translation between
 a tangent-space dimension and Mathlib's presentation-based `SmoothOfRelativeDimension`
-(which is characterised by `Module.rank S Ω[S⁄R]`, a different invariant) — with one
-addition: the landed dimension chain
-`Scheme.Pic0.finrank_cotangentSpace_eq_finrank_hModuleOne` is stated for `Pic0Scheme`,
+(which is characterised by `Module.rank S Ω[S⁄R]`, a different invariant).
+
+**And nothing more — corrected 2026-07-29 (`ajc-p2`), because the previous text priced
+this leaf on a transport that is not needed.** That text said the dimension chain
+`Scheme.Pic0.finrank_cotangentSpace_eq_finrank_hModuleOne` "is stated for `Pic0Scheme`,
 so transporting it to `Pic0SchemeEt` needs the comparison of the two Picard schemes,
-which is available only under a section. That transport is the honest remaining cost of
-the étale formulation at this leaf, and it is why this is a separate statement rather
-than a corollary. -/
+which is available only under a section", and called that "the honest remaining cost".
+Two defects, both measured:
+
+* the chain does not need transporting, because it **restates** at `Pic0SchemeEt` with no
+  comparison anywhere. Every engine of its dual-number leg is quantified over an arbitrary
+  functor and an arbitrary `RepresentableBy`
+  (`Pic0.pointedDualNumberPointsEquivAddKernel`,
+  `pointedDualNumberPointsEquivOfOpenImmersion`,
+  `overDualNumberSectionEquivCotangentSpaceDual`,
+  `nonempty_cotangentSpaceAddEquiv_of_finrank_eq`); `picSharp` entered only at the
+  *application* sites. Applying them at `(PicSharp.etaleSheaf C).obj` with
+  `representableEt` gives the whole chain unconditionally, in
+  `Picard/Pic0EtTangentSpace.lean` — including the representability leg against `picEt`
+  (`Pic0Et.pointedDualNumberPoints_equiv_relPicEtKernel`, axiom-clean) and the keystone
+  `Pic0Et.tangentSpaceIso`. Since a section is exactly what protection `I-0491` forbids
+  the headline to carry, the old pricing put this leaf behind a specification change it
+  does not in fact need;
+* "the **landed** dimension chain" was wrong on its own terms:
+  `Pic0.finrank_cotangentSpace_eq_finrank_hModuleOne` reports `sorryAx`, through
+  `Pic0.semilinearComparison_cotangentSpaceDual_h1Cok`. This file already says so 50
+  lines below, at `finrank_tangentSpace_pic0_eq_genus`.
+
+What the étale dimension count actually costs is **one** statement, and it is the same one
+the pointed development owes: `Pic0Et.SemilinearCotangentComparisonEt`, the étale
+restatement of that `sorry`. `Pic0Et.finrank_cotangentSpace_eq_genus` is proved from it,
+so leaf B's dimension number is not the open part — the two `SmoothOfRelativeDimension`
+translation steps above are, and they are shared with the pointed leaf. -/
 theorem smoothOfRelativeDimension_genus_pic0Et (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIntegral C.hom] :
     SmoothOfRelativeDimension (genus C) (Scheme.Pic0SchemeEt C).hom :=
@@ -429,12 +455,17 @@ theorem smoothOfRelativeDimension_genus_pic0Et (C : Over (Spec (.of k)))
 /-- **Leaf B's dimension count, at the headline and against the landed development.**
 
 The number `genus C` in leaf B is not an arbitrary index: it is the dimension of the
-Zariski tangent space of `Pic⁰_{C/k}` at the identity, and *that* identity is landed
-mathematics (`Scheme.Pic0.finrank_cotangentSpace_eq_finrank_hModuleOne`, the Kleiman §5
-Thm 5.11 chain through the truncated-exponential splitting and the Mayer–Vietoris
-comparison). Since `genus C` is by definition `dim_k H¹(C, 𝒪_C)`, the two sides match
-with no transport, exactly as leaf C's `isAlbanese_pic0_of_isAlgClosed` matches
+Zariski tangent space of `Pic⁰_{C/k}` at the identity
+(`Scheme.Pic0.finrank_cotangentSpace_eq_finrank_hModuleOne`, the Kleiman §5 Thm 5.11
+chain through the truncated-exponential splitting and the Mayer–Vietoris comparison).
+Since `genus C` is by definition `dim_k H¹(C, 𝒪_C)`, the two sides match with no
+transport, exactly as leaf C's `isAlbanese_pic0_of_isAlgClosed` matches
 `Albanese.Pic0.albanese_universal_property`.
+
+That chain is **not landed** — an earlier version of this docstring called it "landed
+mathematics", contradicting what this very declaration records below, that its axioms
+carry `sorryAx`. Both legs of it are proved; the residue is one statement,
+`Pic0.semilinearComparison_cotangentSpaceDual_h1Cok`. Corrected 2026-07-29 (`ajc-p2`).
 
 Stating it here fixes what leaf B still owes, which is easy to misjudge from the leaf
 alone. It is *not* the dimension count. It is the two steps that turn a tangent-space
