@@ -15,6 +15,16 @@ so the *instance* form of the assembly reduces to the `IsLocallySurjective` bind
 board rows and file headers now assert "`⊥` is dead" for the atlas seam on the strength of an
 inbox report of that refutation.  **This file is that refutation, as a theorem.**
 
+## The obstruction is not about `pic⁰` at all
+
+An audit of this file's first version found that its proof mentions nothing of its target: the
+argument is that `⊥` has no points, and it goes through for an arbitrary presheaf of types on
+`Scheme`.  That is `not_isLocallySurjective_restrictChart_bot_of_presheaf`, and everything else
+here is an application of it.  Worth stating in that generality rather than only in the `pic⁰`
+one, because it settles a question a lane might otherwise ask: no repair to `pic0SigmaSheaf` — a
+different sheafification, a different Σ-extension, a finer site — can rescue the `⊥` endpoint,
+since the refutation never looks at the presheaf.
+
 ## What was actually missing, and it was one mathlib lemma
 
 The step that looked unavailable is the passage from a section of the coproduct presheaf
@@ -27,6 +37,11 @@ That lemma had **zero citations** in this project before this file.
 
 * `isEmpty_of_hom_bot` — a scheme admitting a morphism to `(⊥ : X.Opens)` is empty.  Split
   out because it is the only geometric input, and it is not about charts.
+* `not_isLocallySurjective_restrictChart_bot_of_presheaf` — **the refutation's true generality**,
+  found by auditing the proof rather than the statement: it holds for an arbitrary presheaf of
+  types on `Scheme`, with no `pic⁰`, no curve, no field and no sheaf condition.  The `pic⁰` version
+  below is one application (`restrictChart` is the composite by definition).  This is what
+  forecloses "some `pic⁰`-specific repair evades the `⊥` endpoint".
 * `not_isLocallySurjective_restrictChart_bot` — **the refutation.**  For an *arbitrary* chart
   family `f`, given any test `T` carrying a point, the `⊥`-restricted atlas is not
   Zariski-locally surjective.  No divisor data, no chart data, no `rep`.
@@ -35,9 +50,20 @@ That lemma had **zero citations** in this project before this file.
 * `not_chartsCoverLocally_bot` — the same refutation in the spelling a coverage producer
   actually attempts, since nobody proves the instance directly.
 * `false_of_isLocallySurjective_bot` — **the finding.**  `isLocallySurjective_of_bot`
-  (`Pic0ChartVMonotone.lean:272`) is *vacuous*: its hypothesis is precisely what is refuted here.
+  (`Pic0ChartVMonotone.lean:284`) is *vacuous*: its hypothesis is precisely what is refuted here.
   Its conclusion — that a `⊥`-based route would give unrestricted coverage — is correct, but it
   does not shut a cheap route; there was never a route to shut.
+* `isLocallySurjective_restrictChart_top` — the **control**, and the reason to believe the two
+  bullets above are about `⊥` rather than about the seam.  See the paragraph on controls below.
+
+**A binder note, since this file quantifies over more than the theorem it calls vacuous.**  The
+declarations here carry four instances on `C` where `Pic0ChartVMonotone.lean` carries three (no
+`GeometricallyReduced`, which `pic0SigmaSheaf` needs for the sheaf property).  So on its face this
+file speaks about a narrower class of curves.  Measured, not assumed: both
+`not_isLocallySurjective_restrictChart_bot` and the vacuity of `isLocallySurjective_of_bot` state
+*and prove* inside the three-instance binder set, so the extra hypothesis is inherited from the
+carrier and is not doing work in either statement.  (`Smooth.geometricallyReduced` supplies it
+anyway.)
 
 ## Why the primed form exists, and it is the point of the file
 
@@ -49,16 +75,22 @@ are inhabited by objects already in the tree, and the unconditional form follows
 `not_isLocallySurjective_restrictChart_bot'`, whose statement quantifies over nothing but the
 chart family.
 
-Read against `isLocallySurjective_of_bot` (`Pic0ChartVMonotone.lean:272`), the relationship is
+Read against `isLocallySurjective_of_bot` (`Pic0ChartVMonotone.lean:284`), the relationship is
 sharper than "closed from both sides": that theorem's hypothesis *is* what is refuted here, so
 it is vacuous, and the `⊥` loophole was never open in the first place.  Recorded as
 `false_of_isLocallySurjective_bot` below rather than only in prose, because "uninhabitable" and
 "expensive" price a lane's round differently.
 
-**One thing the emptiness of `⊥` is genuinely doing here, checked and not assumed.**  Re-running
-the identical proof script with `⊤` in place of `⊥` fails at the last step (measured: the
-`isEmpty_of_hom_bot` application is a type mismatch, there being no morphism to an empty scheme).
-So this is a refutation *of the `⊥` endpoint*, not an accidental refutation of the seam.
+**Why this is a statement about `⊥` and not an accidental refutation of the seam at every `V`.**
+An earlier draft of this paragraph offered as evidence that *the same proof script fails with `⊤`
+in place of `⊥`*.  That is true and it measures nothing: `isEmpty_of_hom_bot` cannot apply at `⊤`
+by its own statement, and would fail identically at every `V`, including any at which the
+refutation happens to hold.  A control that could not have come out otherwise is not a control.
+
+The real one is `isLocallySurjective_restrictChart_top` below: at `⊤` the restricted atlas
+*inherits* coverage from the unrestricted one, because the inclusion is then an isomorphism.  So a
+`⊤` analogue of the refutation would refute DAT-B for every chart family — the endpoint is
+protected by the project's own target, not by a tactic breaking.
 
 ## What is NOT closed here, stated plainly
 
@@ -94,6 +126,34 @@ theorem isEmpty_of_hom_bot {X : Scheme.{u}} {Y : Scheme.{u}} (g : Y ⟶ (⊥ : X
     IsEmpty Y :=
   g.base.hom.1.isEmpty
 
+/-- **The refutation, generic in the presheaf** — no `pic⁰`, no curve, no field, no sheaf
+condition.
+
+An audit of the `pic⁰`-shaped version below found that its proof uses nothing whatsoever about
+its target, so the honest home of the argument is here: *any* presheaf of types on `Scheme`
+fails Zariski-local surjectivity along a `⊥`-restricted family, provided some test carries a
+point and a section.
+
+Stated separately because it forecloses a route rather than just tidying: a lane hoping that
+some `pic⁰`-specific repair — a different sheafification, a different Σ-extension, a finer
+site-theoretic massage of `pic0SigmaSheaf` — evades the `⊥` endpoint is hoping against a
+statement in which `pic⁰` does not occur.  The obstruction is that `⊥` has no points, and that
+survives every change to the presheaf. -/
+theorem not_isLocallySurjective_restrictChart_bot_of_presheaf
+    {F : Scheme.{u}ᵒᵖ ⥤ Type u} {ι : Type u} {X : ι → Scheme.{u}}
+    (f : ∀ i, yoneda.obj (X i) ⟶ F)
+    (T : Scheme.{u}) (s : F.obj (op T)) (t : T) :
+    ¬ Presheaf.IsLocallySurjective Scheme.zariskiTopology
+      (Sigma.desc fun i => yoneda.map ((⊥ : (X i).Opens).ι) ≫ f i) := by
+  intro hls
+  obtain ⟨𝒰, hle⟩ := Scheme.mem_grothendieckTopology_iff.mp (hls.imageSieve_mem s)
+  obtain ⟨j, y, -⟩ := 𝒰.exists_eq t
+  obtain ⟨u, -⟩ := hle (𝒰.X j) (𝒰.f j) (Presieve.ofArrows.mk j)
+  obtain ⟨i, x, -⟩ := CategoryTheory.FunctorToTypes.jointly_surjective'
+    (Discrete.functor fun i => yoneda.obj ((⊥ : (X i).Opens) : Scheme.{u}))
+    (op (𝒰.X j)) u
+  exact (isEmpty_of_hom_bot (X := X i.as) x).elim y
+
 /-- **The `⊥`-restricted atlas is NOT Zariski-locally surjective** — the instance-level
 refutation, for an arbitrary chart family.
 
@@ -110,15 +170,8 @@ theorem not_isLocallySurjective_restrictChart_bot {ι : Type u} {X : ι → Sche
     (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1)
     (T : Scheme.{u}) (s : (pic0SigmaSheaf C).1.obj (op T)) (t : T) :
     ¬ Presheaf.IsLocallySurjective Scheme.zariskiTopology
-      (Sigma.desc fun i => restrictChart (f i) (⊥ : (X i).Opens)) := by
-  intro hls
-  obtain ⟨𝒰, hle⟩ := Scheme.mem_grothendieckTopology_iff.mp (hls.imageSieve_mem s)
-  obtain ⟨j, y, -⟩ := 𝒰.exists_eq t
-  obtain ⟨u, -⟩ := hle (𝒰.X j) (𝒰.f j) (Presieve.ofArrows.mk j)
-  obtain ⟨i, x, -⟩ := CategoryTheory.FunctorToTypes.jointly_surjective'
-    (Discrete.functor fun i => yoneda.obj ((⊥ : (X i).Opens) : Scheme.{u}))
-    (op (𝒰.X j)) u
-  exact (isEmpty_of_hom_bot (X := X i.as) x).elim y
+      (Sigma.desc fun i => restrictChart (f i) (⊥ : (X i).Opens)) :=
+  not_isLocallySurjective_restrictChart_bot_of_presheaf f T s t
 
 /-! ## Discharging the refutation's own antecedents
 
@@ -178,7 +231,7 @@ refutation is stated there too, otherwise a lane would have to notice the conver
 actually attempts.
 
 `not_isLocallySurjective_restrictChart_bot'` composed with `isLocallySurjective_sigmaDesc`.
-Compare `not_coverageContainment_bot` (`Pic0ChartRestrictedFibreSat.lean:248`), which refutes
+Compare `not_coverageContainment_bot` (`Pic0ChartRestrictedFibreSat.lean:257`), which refutes
 the `hcov` conjunct of the *coupled assembly* — a different and weaker statement, since it
 leaves the instance binder untouched.  This one closes the binder. -/
 theorem not_chartsCoverLocally_bot {ι : Type u} {X : ι → Scheme.{u}}
@@ -188,7 +241,7 @@ theorem not_chartsCoverLocally_bot {ι : Type u} {X : ι → Scheme.{u}}
 
 /-- **`isLocallySurjective_of_bot` is VACUOUS, and this is the file's finding for that lane.**
 
-`Pic0ChartVMonotone.lean:272` proves that inhabiting the coverage instance at `⊥` yields
+`Pic0ChartVMonotone.lean:284` proves that inhabiting the coverage instance at `⊥` yields
 unrestricted coverage, and reads that as "the `⊥` route is not cheap".  The reading is right;
 the mechanism is stronger than advertised.  Its hypothesis is *exactly* the proposition refuted
 above, so the theorem is true with an uninhabitable antecedent — it does not shut a cheap route,
@@ -203,6 +256,26 @@ theorem false_of_isLocallySurjective_bot {ι : Type u} {X : ι → Scheme.{u}}
       (Sigma.desc fun i => restrictChart (f i) (⊥ : (X i).Opens))) :
     False :=
   not_isLocallySurjective_restrictChart_bot' f h
+
+/-- **The control for the refutation: at `⊤` the restricted atlas INHERITS coverage.**
+
+The converse of `isLocallySurjective_unrestricted` (`Pic0ChartVMonotone.lean:254`) at `V = ⊤`,
+and the reason the refutation above is a fact about `⊥` rather than about the seam.  `⊤`'s
+inclusion is an isomorphism, so `sigmaDesc_restrictChart_top` exhibits the `⊤`-restricted atlas as
+an iso followed by the unrestricted one, and local surjectivity transfers by instance search.
+
+**Read as the control it is.**  A `⊤` analogue of `not_isLocallySurjective_restrictChart_bot'`
+would, through this, refute DAT-B coverage for every chart family — i.e. refute the project's own
+target.  So the `⊥` endpoint is protected by something that *could* have come out differently, and
+did not.  Note the iso is used here and nowhere in `Pic0ChartVMonotone.lean`, whose header records
+that its own `⊤` results never need it; this is the statement that does. -/
+theorem isLocallySurjective_restrictChart_top {ι : Type u} {X : ι → Scheme.{u}}
+    (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1)
+    (h : Presheaf.IsLocallySurjective Scheme.zariskiTopology (Sigma.desc f)) :
+    Presheaf.IsLocallySurjective Scheme.zariskiTopology
+      (Sigma.desc fun i => restrictChart (f i) (⊤ : (X i).Opens)) := by
+  rw [sigmaDesc_restrictChart_top (C := C) f]
+  infer_instance
 
 end
 
