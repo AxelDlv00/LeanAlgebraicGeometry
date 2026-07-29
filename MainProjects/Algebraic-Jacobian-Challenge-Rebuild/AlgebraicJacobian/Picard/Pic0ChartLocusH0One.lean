@@ -68,7 +68,30 @@ theorem exists_splitting_h0_eq_one_of_mem_chartLocus
         (_ : Algebra.IsSeparable (Over.testPointField t) L)
         (W : ((C ⊗ overSpec k L).left).CurveDivisor),
       Sheaf.h0 ((C ⊗ overSpec k L).left.divisorSheaf L W) = 1 := by
-  sorry
+  obtain ⟨L, hLf, hLa, hLKa, hLtow, hLfin, hLsep, M, hM, W, hWcl, hWh1⟩ := ht
+  refine ⟨L, hLf, hLa, hLKa, hLtow, hLfin, hLsep, W, ?_⟩
+  haveI : IsIntegral (relCurve C L) := instIsIntegralBaseChange C L
+  haveI : SmoothOfRelativeDimension 1 (relCurve C L ↘ Spec (CommRingCat.of L)) :=
+    instSmoothOfRelativeDimensionBaseChange C L
+  haveI : QuasiCompact (relCurve C L ↘ Spec (CommRingCat.of L)) :=
+    instQuasiCompactBaseChange C L
+  haveI : Module.Finite L (Sheaf.HModule ((relCurve C L).moduleKSheaf L) 0) :=
+    instModuleFiniteHModuleZeroBaseChange C L
+  haveI : Module.Finite L (Sheaf.HModule ((relCurve C L).moduleKSheaf L) 1) :=
+    instModuleFiniteHModuleOneBaseChange C L
+  -- the witness has degree exactly `n`: its class is the presenting class of the twisted
+  -- fibre class, whose `classDeg` the ledger computes as `m·d₁ − deg Z = n`.
+  have hWdeg : Scheme.CurveDivisor.deg L W = (n : ℤ) := by
+    rw [← classDeg_picClass (K := L) W, hWcl,
+      classDeg_presenting_eq_degAff C L _ M hM]
+    change degAt (chartTwist C m Z T lam) (Over.testPoint t) = (n : ℤ)
+    rw [chartTwist, degAt_mul, degAt_inv, degAt_mul, degAt_thetaFamily_pow,
+      degAt_sigmaFamily, hlam, hdeg]
+    ring
+  -- `χ(𝒪)` transports to the base-changed curve
+  have hχL : Sheaf.chi (((C ⊗ overSpec k L).left).moduleKSheaf L) = 1 - (n : ℤ) :=
+    chi_relCurve_baseField C L n hχ
+  exact h0_eq_one_of_subsingleton_of_deg n hχL W hWdeg hWh1
 
 end
 
