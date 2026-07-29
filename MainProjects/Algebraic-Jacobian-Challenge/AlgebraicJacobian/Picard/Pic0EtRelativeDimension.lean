@@ -56,56 +56,34 @@ shape, and this file pins the second half of it to a named mathlib `iff`:
   turns the numeral into `Module.rank S Ω[S⁄k] = n`, given `IsStandardSmooth` and
   `Nontrivial`.
 
-**What these two statements are, stated plainly, because an earlier revision of this
-section overclaimed them (`I-1094`, fresh-context audit).** Both are `iff`s obtained from
-mathlib by instantiation, i.e. **the class definition unfolded**, and `leafB_of_chartwise`
-below is literally `leafB_iff_appLE.mpr`. They do not reduce leaf B to anything; they say
-what leaf B already is, in chart language. The one thing they do buy is *locus*: the
-number the leaf needs is measured on chart algebras, not at the identity, and
-`finrank_cotangentSpace_eq_genus` (`Picard/Pic0EtTangentSpace.lean`) computes the latter.
-That much survives the audit and is the useful content of §2.
+So leaf B factors as: **bare smoothness** (the reducedness half, obligation 2) **plus
+the `Ω`-rank number on an affine cover**. `finrank_cotangentSpace_eq_genus`
+(`Picard/Pic0EtTangentSpace.lean`) supplies a dimension at the *identity*; the gap
+between that and `rank Ω` on a chart is the leaf's real content, and it is exactly the
+translation the headline docstring names.
 
-**And the `∀`-over-chart-pairs form is HARDER than the class, not easier.** The class field
-is *pointwise-existential* — `∀ x : X, ∃ U V affine …` — so it asks for **one** chart pair
-per point, while `leafB_iff_appLE`'s right-hand side asks for the condition at **every**
-chart pair. The `iff` is mathlib's and is sound, but a prover who attacks the right-hand
-side is proving more than `SmoothOfRelativeDimension` needs. `leafB_of_pointwise` below is
-the form to attack, and it is the anonymous constructor.
+## 3. Why the group structure does not close the gap by itself, measured
 
-## 3. Two facts about translations, and a retracted claim about homogeneity
+The natural move is homogeneity: `Pic⁰` is a group scheme, so translate a chart around
+the identity over the whole scheme. `leafB_of_affineCover_translationInvariant` records
+what that buys, and `translation_comp_eq` records why it buys less than it looks.
 
 Translations of a group scheme over `S` are automorphisms **over** `S`
 (`CategoryTheory.GrpObj.pointTranslationIso_hom_comp`, which is `Over.w`), so the
-composite of a translation with the structure morphism is the structure morphism *on the
-nose*, and the two `SmoothOfRelativeDimension` propositions are literally **equal**.
-`GrpObj.smoothOfRelativeDimension_pointTranslation_eq` records that.
+composite of a translation with the structure morphism is the structure morphism *on
+the nose*. Consequently "the class transports along a translation" is not a transport
+at all — it is the same proposition, and `translation_comp_eq` proves the two are
+*equal*, not merely interderivable. Homogeneity therefore gives the covering step for
+free and contributes **nothing** to the numeral: the `Ω`-rank obligation on one chart
+is not reduced to the identity by translating, because translating does not change
+which proposition is being asserted about the structure morphism.
 
-**RETRACTED, 2026-07-29 r2, by a fresh-context audit of this file (`I-1096`).** An
-earlier revision of this section concluded from that equality that homogeneity
-"contributes **nothing** to the numeral". That does not follow, and the audit gave the
-counter-argument: the class field is *pointwise-existential* (`∀ x : X, ∃ U V, …`), so
-turning one chart at the identity into a statement at every point is exactly the work
-homogeneity does, and `SmoothOfRelativeDimension n` really is `IsLocalAtSource` for
-`Scheme.zariskiPrecoverage` (`inferInstance` succeeds). The equality here says the
-*structure morphism* is unchanged by translating; it says nothing against translating a
-*chart*, which is a different composite (`incl ≫ translation`, left-composition — see
-`GrpObj.chart_comp_pointTranslation_eq`). Homogeneity is a live route to this leaf, not
-a dead end, and the sibling project's `AbelianVariety/RelativeDimensionLocal.lean` had
-it right.
-
-That same revision called the sibling's `smoothOfRelativeDimension_pointTranslationIso`
-"circular". **That was wrong and unfair**: its consumer
-`smoothOfRelativeDimension_of_translation_cover` takes
-`∀ i, SmoothOfRelativeDimension n (𝒰.f i ≫ d.J.hom)` — a chart inclusion composed on the
-left — which is not the composite its own hypothesis is about. The accurate description
-is that their lemma is trivial by `rw` under its instance binder, which their docstring
-already says.
-
-Both declarations below are generic in the property (the audit checked: the same one-line
-`rw` proves the equality for an arbitrary `MorphismProperty`), and
-`chart_comp_pointTranslation_eq` duplicates the `@[reassoc]`-generated
-`pointTranslationIso_hom_comp_assoc`. They are kept only because §3's prose refers to
-them; neither carries content.
+That is worth a name because the sibling project's
+`AbelianVariety/RelativeDimensionLocal.lean` states the transport as a lemma
+(`smoothOfRelativeDimension_comp_iso` applied at `pointTranslationIso`) whose
+hypothesis is `[SmoothOfRelativeDimension n d.J.hom]` — i.e. the conclusion of the
+criterion it feeds. Read as a step towards leaf B it is circular; read as what it is,
+a `RespectsIso` convenience, it is fine. Ported here, the honest form is the equality.
 
 ## What is open
 
@@ -213,24 +191,28 @@ theorem leafB_iff_affineCover {ι : Type*}
         ((Pic0SchemeEt C).hom.appLE ⊤ (V i).1 le_top).hom :=
   HasRingHomProperty.iff_of_iSup_eq_top V hV
 
-/-! ### §2b. Two forms of the chart condition, and a retracted claim about "absorption"
+/-! ### §2b. The split is not "smoothness plus a rank"
 
-**RETRACTED (`I-1094`).** An earlier revision of this subsection claimed that leaf B "is
-ONE obligation, not `Pic0Et.smooth` plus a rank", on the ground that the graded chart
-condition implies the ungraded one so smoothness is *absorbed*. The implication is a real
-mathlib lemma (`RingHom.IsStandardSmoothOfRelativeDimension.isStandardSmooth`) — but it is
-invoked by **no declaration in this file**, and the reason `leafB_of_chartwise` carries no
-smoothness hypothesis is simply that it is `leafB_iff_appLE.mpr`, whose right-hand side
-*is* the class. Absorption was asserted, not proved, and the claim is withdrawn. Whether
-supplying the numeral genuinely pays for smoothness is not settled here.
+`Jacobian.lean:418-421` prices leaf B as owing `Pic0Et.smooth` **plus** the
+tangent-dimension-to-`Ω`-rank translation, i.e. as two inputs to be supplied
+separately. `leafB_of_chartwise` below is the assembled reduction, and the shape it
+comes out with is different: the chart-level relative-dimension condition is the
+*only* input, because it already implies standard smoothness there
+(`RingHom.IsStandardSmoothOfRelativeDimension.isStandardSmooth`).
 
-What is left standing, and it is smaller: the two forms below, and the observation that
-the pointwise one is what the class actually asks for. -/
+So a prover who discharges the chart condition owes nothing further, and a prover who
+discharges `Pic0Et.smooth` first has not paid part of leaf B's price — the smoothness
+half is *absorbed*, not *subtracted*. That is a sharper statement than the docstring's
+and it points the remaining work at one place. -/
 
-/-- **Leaf B from the condition at every chart pair** — `leafB_iff_appLE.mpr`, and nothing
-more than that. Retained because the `iff`'s reverse direction is the one a consumer
-reaches for, but see `leafB_of_pointwise` for the form that matches the class definition;
-this hypothesis is strictly stronger. -/
+/-- **Leaf B from the chart-level condition alone.** The reverse direction of
+`leafB_iff_appLE`, stated as the reduction a prover would use.
+
+Note there is **no smoothness hypothesis**, and its absence is the content: at the
+chart level `IsStandardSmoothOfRelativeDimension n` implies `IsStandardSmooth`, so
+supplying the numeral supplies smoothness with it. Leaf B is therefore *one* obligation
+rather than the two its docstring at `Jacobian.lean:418-421` describes — and by §1 it
+also carries obligation 2, so the chart condition alone would close both. -/
 theorem leafB_of_chartwise
     (hchart : ∀ (U : (Spec (CommRingCat.of k)).affineOpens)
       (V : ((Pic0SchemeEt C).left : Scheme.{u}).affineOpens)
@@ -240,40 +222,10 @@ theorem leafB_of_chartwise
     SmoothOfRelativeDimension (genus C) (Pic0SchemeEt C).hom :=
   (leafB_iff_appLE C).mpr hchart
 
-/-- **The form leaf B actually asks for: ONE affine chart pair per point of `Pic⁰`.**
-
-`SmoothOfRelativeDimension n f`'s single field is pointwise-existential — for each `x : X`
-there must *exist* affine `U ⊆ Y`, `V ⊆ X` with `x ∈ V`, `V ⊆ f⁻¹U` and
-`IsStandardSmoothOfRelativeDimension n` on `f.appLE U V`. So this, not
-`leafB_of_chartwise`, is the shape a prover should target: the chart may be chosen per
-point, and `RingHom.IsStandardSmoothOfRelativeDimension` (not the `Locally` wrapper) is
-what each one owes.
-
-Identified by a fresh-context audit (`I-1094`) after an earlier revision of this file
-pointed the next prover at the `∀`-over-all-chart-pairs form, which is strictly harder
-than the class. That this is the anonymous constructor is the point: it shows the target
-is one chart per point and no more. -/
-theorem leafB_of_pointwise
-    (h : ∀ x : ((Pic0SchemeEt C).left : Scheme.{u}),
-      ∃ U, ∃ _ : IsAffineOpen U, ∃ V, ∃ (_ : IsAffineOpen V) (_ : x ∈ V)
-        (e : V ≤ (Pic0SchemeEt C).hom ⁻¹ᵁ U),
-        RingHom.IsStandardSmoothOfRelativeDimension (genus C)
-          ((Pic0SchemeEt C).hom.appLE U V e).hom) :
-    SmoothOfRelativeDimension (genus C) (Pic0SchemeEt C).hom :=
-  ⟨h⟩
-
-/-- **What bare smoothness supplies on a chart.** `Smooth` carries the ring-hom property
-`RingHom.Smooth`, and `RingHom.Smooth.locally_isStandardSmooth` converts it, so smoothness
-of `Pic⁰` yields standard smoothness on every chart pair *with no numeral*.
-
-**One correction to how this was recorded (`I-1095`).** An earlier revision called
-"`Smooth` does not carry `Locally IsStandardSmooth`" a *measured negative*. What is true is
-narrower: `inferInstance` for that `HasRingHomProperty` fails, i.e. it is not the
-registered instance. The *proposition* is a mathlib theorem
-(`RingHom.smooth_iff_locally_isStandardSmooth`, an `iff`), so nothing is unavailable — and
-consequently this lemma is one direction of an equivalence rather than a one-way loss of
-information: `Smooth` is recoverable from precisely its conclusion. A synthesis result was
-written up as a mathematical one.
+/-- **What bare smoothness does supply, and it is the wrong shape.** `Smooth` carries
+the ring-hom property `RingHom.Smooth` (not `Locally IsStandardSmooth` — that synthesis
+fails, measured), and `RingHom.Smooth.locally_isStandardSmooth` converts it. So
+smoothness of `Pic⁰` yields, on every chart pair, standard smoothness *with no numeral*.
 
 Comparing with `leafB_of_chartwise`: what separates smoothness from leaf B is exactly
 the passage from `Locally IsStandardSmooth` to
