@@ -152,6 +152,7 @@ import AlgebraicJacobian.Picard.GeometricallyConnectedSection
 import AlgebraicJacobian.Picard.FGAPicRepresentability
 import AlgebraicJacobian.Picard.PicEtSubcanonical
 import AlgebraicJacobian.Picard.EtaleFieldCover
+import AlgebraicJacobian.Picard.PicEtCrossBase
 import AlgebraicJacobian.Picard.RigidifiedPic
 import AlgebraicJacobian.Picard.IdentityComponent
 import AlgebraicJacobian.Picard.TangentSpaceDualNumbers
