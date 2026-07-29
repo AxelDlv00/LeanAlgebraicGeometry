@@ -5,11 +5,11 @@ content_type: lemma
 created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:relspec_pullback_iso_desc_isiso
-lean_status: lean_ok
+lean_status: linked
 order: 614
 title: Base-change descent is invertible
 type: tex
-updated: '2026-07-29T13:44:21'
+updated: '2026-07-29T18:18:39'
 ---
 The colimit descent map
   \(\underline{\Spec}_T(\mathcal{A}_g) \to

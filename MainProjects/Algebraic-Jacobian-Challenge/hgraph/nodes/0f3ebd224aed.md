@@ -6,9 +6,10 @@ decl: chk_t1Space_of_orbit_of_isClosed
 file: scratch-core-check.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: chk_t1Space_of_orbit_of_isClosed
 type: lean
-updated: '2026-07-29T13:43:19'
+updated: '2026-07-29T18:18:40'
 ---
 theorem chk_t1Space_of_orbit_of_isClosed {X : Type*} [TopologicalSpace X] (z₀ : X)
     (hz₀ : IsClosed ({z₀} : Set X)) (horb : ∀ z : X, ∃ e : X ≃ₜ X, e z₀ = z) :
