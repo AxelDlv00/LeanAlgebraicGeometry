@@ -1,0 +1,316 @@
+/-
+Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: The AlgebraicJacobian Contributors
+-/
+import AlgebraicJacobian.Picard.DivisorFamilyAffStalkEval
+import AlgebraicJacobian.Picard.DivisorFamilyAffGlueZarKit
+import AlgebraicJacobian.Picard.DivisorFamilyAffFace
+import AlgebraicJacobian.Picard.DivisorFamilyAffAbel
+
+/-!
+# `hdegAff` DISCHARGED: the widened class-degree law and the widened Abel ledger
+
+`Picard/DivisorFamilyAffAbel.lean` builds the Abel layer on the R2 carrier `DivFamZarAff`
+(human decision `I-0492`) but leaves one statement as an explicit hypothesis: `hdegAff`, the
+*widened degree ledger* — the widened Abel value of a degree-`n` widened class has degree `n`
+at every field point.  Its own docstring (`:296-300`) names what stands between the file and
+that hypothesis:
+
+> the chart-typed ledger routes through `DivFamZar.classDeg_picClass`, i.e. from the
+> presentation divisor's degree to the Picard class of the widened section, and that transport
+> has no widened analogue yet.
+
+**This file supplies that transport and discharges `hdegAff`.**  So
+`chartValueAff_mem_pic0Subgroup` (`DivisorFamilyAffAbel.lean:304`) now holds with no
+hypothesis beyond the chart-index degree constraint `hdeg`, exactly as its chart-typed twin
+`chartValue_mem_pic0Subgroup` does.
+
+## The route, and why it is short
+
+Three observations, in the order that matters:
+
+1. **The degree of the presentation divisor is a `DivEq` invariant.**
+   `Scheme.presentationDivisor_eq_of_divEq` rewrites the *divisor* along a `DivEq`, so a
+   certificate carried by any system divisor-equal to `d` computes `d`'s presentation degree.
+   Composed with `ajcr-p3`'s cover-free identity
+   `AffAdaptation.IsCertified.deg_presentationDivisor`
+   (`Picard/DivisorFamilyAffStalkEval.lean:660`) this is `deg_presentationDivisor_of_divEq`
+   below — two lines, and it needs neither `IsProper C.hom` nor a separation hypothesis.
+2. **Over a field the widened pin collapses**, exactly as the chart-typed one does
+   (`DivFam.exists_toZar_eq`, `Picard/DivSchemeAbel.lean:77`): a span-`⊤` family over a field
+   has a nonzero member, which is a unit, so its away localization *is* `K`, and the local
+   certified family transports back along that isomorphism.  The argument is entirely on the
+   BASE — no piece, cover, chart or partition occurs — which is why R2, which widened only
+   where the pieces live on the curve, does not touch it.
+3. **Stating (2) in `DivEq` form avoids a lemma that does not exist.**  The chart-typed
+   collapse concludes `∃ G, G.toZar = F₀` and closes with `DivFam.toZar_mapAlgHom`
+   (`Picard/DivisorFamilyZarVehicle.lean:169`).  There is no widened twin of that lemma
+   (`toZarAff_mapAlgHom` / `mapAlg_toZarAff` do not exist), and `ajcr-p3`'s hand-off (`I-1187`,
+   conversation `I-1190`) prices building one as this row's remaining cost.  It is not needed:
+   `exists_certifiedAff_divEq` below concludes `∃ G, DivEq G.eqns d` instead, and (1) consumes
+   a `DivEq` rather than a class equality.  The quotient level is never re-entered, so the
+   missing naturality lemma is never called.  **The obligation was over-priced by one lemma,
+   and the lemma is avoidable rather than cheap** — recorded because the two are different
+   findings.
+
+## Main declarations
+
+* `AlgebraicGeometry.AffAdaptation.deg_presentationDivisor_of_divEq` — a widened certificate
+  on any divisor-equal system computes the presentation degree.
+* `AlgebraicGeometry.exists_certifiedAff_divEq` — **the widened field collapse**: over a field
+  every widened locally certified system is divisor-equal to a globally certified widened
+  family.
+* `AlgebraicGeometry.DivFamZarAff.classDeg_picClass` — **the widened class-degree law**, the
+  transport `DivisorFamilyAffAbel.lean:296-300` named as absent.
+* `AlgebraicGeometry.degAt_abelDivAff'` — **`hdegAff`, DISCHARGED** at an arbitrary test for an
+  arbitrary widened section.
+* `AlgebraicGeometry.chartValueAff_mem_pic0Subgroup'` — hence the widened chart value lands in
+  `pic⁰` with `hdegAff` removed from the signature.
+
+## What this does NOT do
+
+`rep` — a representation of the divisor functor — is untouched, and so are the two antecedents
+of `pic0RepresentableByOfCharts` (`IsChartUniv` and Zariski-local surjectivity of `Sigma.desc`).
+**No antecedent of the representability seam is discharged here.**  What is discharged is the
+last obligation standing between the R2 carrier and a widened `chartValueTrans`: the widened
+chart value is now known to be a degree-zero class unconditionally, which is what a widened
+Σ-chart needs of it.  Building that natural transformation, and the widened `abelSigmaChart`
+above it, remains open — the widened vehicle has no `divFunctorAff ⟹ pic0TypeFunctor` yet.
+-/
+
+set_option autoImplicit false
+/- Statements mix `relCurve C K` with the product spelling `(C ⊗ overSpec k K).left`; see
+`AlgebraicJacobian.Cohomology.RelativeSectionsLinear`. -/
+set_option backward.isDefEq.respectTransparency false
+/- `lake env lean` drops the lakefile's `[leanOptions]` (I-0161), so the pinned synthesis depth
+must be set in-file for the faithful per-file check. -/
+set_option maxSynthPendingDepth 3
+
+universe u
+
+open CategoryTheory Opposite
+
+namespace AlgebraicGeometry
+
+attribute [local instance] Over.sectionsAlgebra Scheme.overModule Scheme.overSectionsAlgebra
+
+variable {k : Type u} [Field k] {C : Over (Spec (.of k))}
+variable {K : Type u} [Field K] [Algebra k K] {n : ℕ}
+
+noncomputable section
+
+/-! ## The certificate transports along divisor equality -/
+
+namespace AffAdaptation
+
+variable [IsIntegral (relCurve C K)]
+variable [SmoothOfRelativeDimension 1 (relCurve C K ↘ Spec (CommRingCat.of K))]
+variable [QuasiCompact (relCurve C K ↘ Spec (CommRingCat.of K))]
+
+/-- **A widened certificate on a divisor-equal system computes the presentation degree.**
+
+`Scheme.presentationDivisor_eq_of_divEq` moves the divisor itself along the `DivEq`, so
+`ajcr-p3`'s cover-free identity applies at `G`'s own system and the conclusion lands on `d`.
+
+Note what is *not* needed: no `IsProper C.hom` (the base change of the family never happens —
+only the divisor is rewritten) and no separation hypothesis (that was the route
+`I-1186` retired). -/
+theorem deg_presentationDivisor_of_divEq {D : AffCoverData C K}
+    {dG d : (relCurve C K).LocalEquations} (A : AffAdaptation D dG)
+    (hc : A.IsCertified n) (h : Scheme.LocalEquations.DivEq dG d) :
+    Scheme.CurveDivisor.deg K (Scheme.presentationDivisor K d.presentation) = (n : ℤ) := by
+  rw [← Scheme.presentationDivisor_eq_of_divEq K h]
+  exact AffAdaptation.IsCertified.deg_presentationDivisor A hc
+
+end AffAdaptation
+
+/-! ## The widened field collapse -/
+
+variable [IsProper C.hom]
+
+set_option maxHeartbeats 1600000 in
+/- The `AlgHom`-induced algebra structures on `Localization.Away (g i)` and `K` make the
+`divEq_mapAlg_pullback` unifier work through two towers; within the DivSchemeAbel precedent. -/
+/-- **Over a field, every widened locally certified system is divisor-equal to a globally
+certified widened family** — the widened `DivFam.exists_toZar_eq`
+(`Picard/DivSchemeAbel.lean:77`), stated at the level of systems rather than of classes.
+
+A span-`⊤` family over a field has a nonzero member, which is a unit, so
+`Localization.Away (g i)` is `K` itself (`IsLocalization.atUnits`); the local certified family
+base-changes back along that isomorphism, and the composite pullback collapses by
+`relCurveMap_id`.  Every step is about the base, so the widening is invisible here.
+
+**The `DivEq` conclusion is deliberate and is what makes this cheap.**  The class-level form
+`∃ G, G.toZarAff = F₀` would need `toZarAff (F.mapAlg R' n hinf) = DivFamZarAff.mapAlg R' n
+F.toZarAff`, which does not exist in the tree; the consumer
+(`AffAdaptation.deg_presentationDivisor_of_divEq`) wants a `DivEq` anyway, so the quotient
+level is never re-entered. -/
+theorem exists_certifiedAff_divEq (d : (relCurve C K).LocalEquations)
+    (hd : IsLocallyCertifiedAff n d) :
+    ∃ G : CertifiedDivisorFamilyAff C K n, Scheme.LocalEquations.DivEq G.eqns d := by
+  obtain ⟨m, g, hspan, hG⟩ := id hd
+  -- some member of the span-⊤ family is nonzero
+  have hex : ∃ i, g i ≠ 0 := by
+    by_contra hall
+    have hall' : ∀ i, g i = 0 := fun i => by
+      by_contra hi
+      exact hall ⟨i, hi⟩
+    have hle : Ideal.span (Set.range g) ≤ ⊥ := Ideal.span_le.mpr (by
+      rintro x ⟨i, rfl⟩
+      rw [SetLike.mem_coe, Ideal.mem_bot]
+      exact hall' i)
+    rw [hspan, top_le_iff] at hle
+    exact one_ne_zero (Ideal.mem_bot.mp (hle ▸ Submodule.mem_top (x := (1 : K))))
+  obtain ⟨i, hgi⟩ := hex
+  haveI : IsOpenImmersion (relCurveMap C K (Localization.Away (g i))) :=
+    isOpenImmersion_relCurveMap_away C K (Localization.Away (g i)) (g i)
+  obtain ⟨Gᵢ, hGdiv⟩ := hG i
+  -- the away localization at a unit is `K` itself
+  have hunits : Submonoid.powers (g i) ≤ IsUnit.submonoid K := by
+    rintro x ⟨e, rfl⟩
+    exact (isUnit_iff_ne_zero.mpr hgi).pow e
+  haveI : IsLocalization (Submonoid.powers (g i)) K :=
+    IsLocalization.of_le_isUnit hunits
+  let e₀ : K ≃ₐ[K] Localization.Away (g i) :=
+    IsLocalization.atUnits K (Submonoid.powers (g i)) hunits
+  let e : Localization.Away (g i) ≃ₐ[k] K := e₀.symm.restrictScalars k
+  letI : Algebra (Localization.Away (g i)) K := e.toAlgHom.toRingHom.toAlgebra
+  haveI : IsScalarTower k (Localization.Away (g i)) K :=
+    .of_algebraMap_eq fun a => (e.commutes a).symm
+  have hKA : ∀ a : K, e (algebraMap K (Localization.Away (g i)) a) = a := by
+    intro a
+    change e₀.symm (algebraMap K (Localization.Away (g i)) a) = a
+    rw [← e₀.commutes a]
+    exact e₀.symm_apply_apply _
+  haveI : IsScalarTower K (Localization.Away (g i)) K :=
+    .of_algebraMap_eq fun a => (hKA a).symm
+  -- base change the local family back to `K` and collapse the composite pullback
+  refine ⟨Gᵢ.mapAlg K n Gᵢ.cover.hasAffineOverlaps_of_isProper, ?_⟩
+  refine (CertifiedDivisorFamilyAff.divEq_mapAlg_pullback n K Gᵢ
+    Gᵢ.cover.hasAffineOverlaps_of_isProper
+    (hd.germ_pullbackEqn_mem_nonZeroDivisors K n) hGdiv).trans ?_
+  exact Scheme.LocalEquations.divEq_pullback_id relCurveMap_id d _
+
+/-! ## The widened class-degree law -/
+
+set_option maxHeartbeats 1600000 in
+/- The `Quotient.inductionOn` unfolds `DivFamZarAff.picClass` through the setoid; within the
+DivSchemeAbel precedent for the chart-typed twin. -/
+/-- **The widened class-degree law** (the transport `DivisorFamilyAffAbel.lean:296-300` names as
+absent): the Čech Picard class of a *widened* locally certified class of degree `n` over a field
+has `classDeg = n`.
+
+Verbatim the chart-typed `DivFamZar.classDeg_picClass` (`Picard/DivSchemeAbel.lean:136`) with
+the widened field collapse in place of `DivFam.exists_toZar_eq` and the widened cover-free
+degree identity in place of `deg_divFamDivisor`.  The three middle steps
+(`presentation_picClass`, `picClass_presentationDivisor`, `classDeg_picClass`) are carrier-free:
+they take a system or a divisor and never saw a cover, which is why only the two ends had to be
+widened. -/
+theorem DivFamZarAff.classDeg_picClass
+    [IsIntegral (relCurve C K)]
+    [SmoothOfRelativeDimension 1 (relCurve C K ↘ Spec (CommRingCat.of K))]
+    [QuasiCompact (relCurve C K ↘ Spec (CommRingCat.of K))]
+    [Module.Finite K (Sheaf.HModule ((relCurve C K).moduleKSheaf K) 0)]
+    [Module.Finite K (Sheaf.HModule ((relCurve C K).moduleKSheaf K) 1)]
+    (F₀ : DivFamZarAff C K n) :
+    classDeg K F₀.picClass = (n : ℤ) := by
+  induction F₀ using Quotient.inductionOn with
+  | h dp =>
+    obtain ⟨G, hG⟩ := exists_certifiedAff_divEq dp.1 dp.2
+    calc classDeg K (DivFamZarAff.picClass (DivFamZarAff.mk dp.1 dp.2))
+        = classDeg K dp.1.presentation.picClass := by
+          rw [DivFamZarAff.picClass_mk, Scheme.LocalEquations.presentation_picClass]
+      _ = classDeg K (Scheme.CurveDivisor.picClass K
+            (Scheme.presentationDivisor K dp.1.presentation)) := by
+          rw [Scheme.CurveDivisor.picClass_presentationDivisor]
+      _ = Scheme.CurveDivisor.deg K (Scheme.presentationDivisor K dp.1.presentation) :=
+          _root_.AlgebraicGeometry.classDeg_picClass K _
+      _ = (n : ℤ) :=
+          G.adaptation.deg_presentationDivisor_of_divEq G.certified hG
+
+/-! ## The collapse at the quotient level, and the naturality it needs -/
+
+/-- **`toZarAff` commutes with base change**: the class of a base-changed widened certified
+family is the base change of its class.
+
+The widened twin of `DivFam.toZar_mapAlg` (`Picard/DivisorFamilyZarMapAlg.lean:204`), whose
+absence `I-1187` and conversation `I-1190` both priced as this row's remaining cost.  It is one
+line: both sides are `mk` of the pulled system — `CertifiedDivisorFamilyAff.mapAlg`'s `eqns`
+field *is* `pulledEquations`, which *is* the pullback along the comparison, with the regularity
+proof irrelevant — so `mk_eq_mk_iff` reduces the goal to `divEq_refl`. -/
+theorem CertifiedDivisorFamilyAff.toZarAff_mapAlg {R : Type u} [CommRing R] [Algebra k R]
+    (R' : Type u) [CommRing R'] [Algebra k R'] [Algebra R R'] [IsScalarTower k R R']
+    (F : CertifiedDivisorFamilyAff C R n) (hinf : F.cover.HasAffineOverlaps) :
+    (F.mapAlg R' n hinf).toZarAff = DivFamZarAff.mapAlg R' n F.toZarAff :=
+  DivFamZarAff.mk_eq_mk_iff.mpr (Scheme.LocalEquations.divEq_refl _)
+
+set_option maxHeartbeats 1600000 in
+/- Two `AlgHom`-induced algebra structures on `Localization.Away (g i)` and `K` must be unified
+against the instance-based `mapAlg`; within the `DivSchemeAbel` precedent for the chart-typed
+twin. -/
+/-- **The widened field collapse at the quotient level** — the exact analogue of
+`DivFam.exists_toZar_eq` (`Picard/DivSchemeAbel.lean:77`): over a field every widened class is
+the class of a *globally* certified widened family.
+
+Stronger than `exists_certifiedAff_divEq` (it fixes the class, not merely the divisor) and the
+form a consumer wanting a global representative should cite.  `classDeg_picClass` above needs
+only the `DivEq` form, which is why that one is stated separately and proved first. -/
+theorem DivFamZarAff.exists_toZarAff_eq (F₀ : DivFamZarAff C K n) :
+    ∃ G : CertifiedDivisorFamilyAff C K n, G.toZarAff = F₀ := by
+  obtain ⟨dp, hdp⟩ := Quotient.exists_rep F₀
+  obtain ⟨m, g, hspan, hG⟩ := dp.2
+  have hex : ∃ i, g i ≠ 0 := by
+    by_contra hall
+    have hall' : ∀ i, g i = 0 := fun i => by
+      by_contra hi
+      exact hall ⟨i, hi⟩
+    have hle : Ideal.span (Set.range g) ≤ ⊥ := Ideal.span_le.mpr (by
+      rintro x ⟨i, rfl⟩
+      rw [SetLike.mem_coe, Ideal.mem_bot]
+      exact hall' i)
+    rw [hspan, top_le_iff] at hle
+    exact one_ne_zero (Ideal.mem_bot.mp (hle ▸ Submodule.mem_top (x := (1 : K))))
+  obtain ⟨i, hgi⟩ := hex
+  haveI : IsOpenImmersion (relCurveMap C K (Localization.Away (g i))) :=
+    isOpenImmersion_relCurveMap_away C K (Localization.Away (g i)) (g i)
+  obtain ⟨Gᵢ, hGdiv⟩ := hG i
+  have hunits : Submonoid.powers (g i) ≤ IsUnit.submonoid K := by
+    rintro x ⟨e, rfl⟩
+    exact (isUnit_iff_ne_zero.mpr hgi).pow e
+  haveI : IsLocalization (Submonoid.powers (g i)) K :=
+    IsLocalization.of_le_isUnit hunits
+  let e₀ : K ≃ₐ[K] Localization.Away (g i) :=
+    IsLocalization.atUnits K (Submonoid.powers (g i)) hunits
+  let e : Localization.Away (g i) ≃ₐ[k] K := e₀.symm.restrictScalars k
+  letI : Algebra (Localization.Away (g i)) K := e.toAlgHom.toRingHom.toAlgebra
+  haveI : IsScalarTower k (Localization.Away (g i)) K :=
+    .of_algebraMap_eq fun a => (e.commutes a).symm
+  refine ⟨Gᵢ.mapAlg K n Gᵢ.cover.hasAffineOverlaps_of_isProper, ?_⟩
+  -- the local family names the restricted class
+  have htoZar : Gᵢ.toZarAff
+      = DivFamZarAff.mapAlg (Localization.Away (g i)) n (DivFamZarAff.mk dp.1 dp.2) := by
+    rw [CertifiedDivisorFamilyAff.toZarAff, DivFamZarAff.mapAlg_mk]
+    exact DivFamZarAff.mk_eq_mk_iff.mpr hGdiv
+  have hcomp : e.toAlgHom.comp (IsScalarTower.toAlgHom k K (Localization.Away (g i)))
+      = AlgHom.id k K := by
+    ext a
+    change e₀.symm (algebraMap K (Localization.Away (g i)) a) = a
+    rw [← e₀.commutes a]
+    exact e₀.symm_apply_apply _
+  calc (Gᵢ.mapAlg K n Gᵢ.cover.hasAffineOverlaps_of_isProper).toZarAff
+      = DivFamZarAff.mapAlg K n Gᵢ.toZarAff :=
+        Gᵢ.toZarAff_mapAlg K Gᵢ.cover.hasAffineOverlaps_of_isProper
+    _ = DivFamZarAff.mapAlgHom e.toAlgHom
+          (DivFamZarAff.mapAlgHom (IsScalarTower.toAlgHom k K (Localization.Away (g i)))
+            (DivFamZarAff.mk dp.1 dp.2)) := by
+        rw [DivFamZarAff.mapAlgHom_eq_mapAlg e.toAlgHom (fun _ => rfl), htoZar,
+          DivFamZarAff.mapAlgHom_eq_mapAlg
+            (IsScalarTower.toAlgHom k K (Localization.Away (g i))) (fun _ => rfl)]
+    _ = DivFamZarAff.mapAlgHom (AlgHom.id k K) (DivFamZarAff.mk dp.1 dp.2) := by
+        rw [← DivFamZarAff.mapAlgHom_comp, hcomp]
+    _ = F₀ := by rw [DivFamZarAff.mapAlgHom_id]; exact hdp
+
+end
+
+end AlgebraicGeometry
