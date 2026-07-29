@@ -4976,3 +4976,7 @@
 {"type": "publish.completed", "id": "e3a9a6ec02e44388af1e3b12be54770b", "created_at": "2026-07-29T23:52:10.288744+00:00", "actor": "orchestrator", "data": {"run_id": "0082", "reports": [], "blueprints": [".archon-horizon/blueprints/Algebraic-Jacobian-Challenge-Rebuild.json"]}}
 {"type": "inbox.temporary_archived", "id": "ff10cdf087d84e26b4e71e9813c8e2f1", "created_at": "2026-07-29T23:52:13.580911+00:00", "actor": "orchestrator", "data": {"items": ["I-0786", "I-0806"]}}
 {"type": "run.finished", "id": "316ee4f561e04f73a2b78d096e646398", "created_at": "2026-07-29T23:52:13.581246+00:00", "actor": "orchestrator", "data": {"run_id": "0082"}}
+{"type": "workspace.run_integrated", "id": "52ccc2ecb43a4f8c8f2ce538dacd34fe", "created_at": "2026-07-29T23:52:17.689442+00:00", "actor": "orchestrator", "data": {"run_id": "0082", "sha": "c4b0e1c9ad7c0c0c655306dffb439647b220c303", "changed": true}}
+{"type": "report.written", "id": "fac5d1e7358c4ec38dc0cf37eae937ad", "created_at": "2026-07-29T23:59:08.197916+00:00", "actor": "orchestrator", "data": {"name": "task-ajcr-p3", "ref": ".archon-horizon/runs/0089/sessions/0014-horizon-ajcr-p3/report.md"}}
+{"type": "task.incomplete", "id": "0bd124596dce4ef58262af9909ff70eb", "created_at": "2026-07-29T23:59:08.198719+00:00", "actor": "orchestrator", "data": {"task_id": "ajcr-p3", "reason": "no-terminal-status-recorded"}}
+{"type": "task.finished", "id": "780ff29096d8407b9489c8737b665bd7", "created_at": "2026-07-29T23:59:08.204191+00:00", "actor": "horizon", "data": {"task_id": "ajcr-p3", "status": "queued"}}
