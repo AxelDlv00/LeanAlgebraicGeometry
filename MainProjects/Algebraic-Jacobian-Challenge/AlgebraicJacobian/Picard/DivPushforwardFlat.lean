@@ -13,7 +13,7 @@ import AlgebraicJacobian.Picard.FlatteningStratificationUniversal
 Campaign milestone **D3'** (`informal/pic-representability-campaign.md:305`) asks
 for the locus over which a Grassmannian `T`-point arises from a degree-`d`
 `DivFamily` to be locally closed *universally*, by extending
-`Scheme.Modules.flatLocusStratification_universal`
+`AlgebraicGeometry.flatLocusStratification_universal`
 (`Picard/FlatteningStratificationUniversal.lean`) "to the family `C × G → G`".
 
 This file supplies the object that extension has to be about, and records why the
@@ -189,8 +189,12 @@ theorem Scheme.CoherentSheafFlat.of_pushforward_of_isAffineHom
 
 For a divisor family `x` whose divisor is quasi-finite over `T`, the pushforward
 `q_* O_D` along `q = pullback.snd π T.hom` is flat over `T` in the
-`CoherentSheafFlat (𝟙 T.left)` sense — the `n = 0` shape that
-`Scheme.Modules.flatLocusStratification_universal` consumes.
+`CoherentSheafFlat (𝟙 T.left)` sense.
+
+This is the `n = 0` shape, but **not literally what
+`AlgebraicGeometry.flatLocusStratification_universal` asks for**: its antecedent
+carries a pullback along the test morphism, which at `φ = 𝟙` is not reduced away.
+The bridged form is `coherentSheafFlat_id_pullbackId_pushforward` below.
 
 Route: `x.properSupport` is `IsProper (i ≫ q)` by definition, so with
 quasi-finiteness `i ≫ q` is finite, hence affine; `schematicSupportDescentIso`
@@ -237,14 +241,16 @@ theorem Scheme.DivFamily.coherentSheafFlat_id_pushforward
     ((Scheme.Modules.pushforwardComp i q).app N ≪≫
       (Scheme.Modules.pushforward q).mapIso hdesc.symm) h3 hU hV eV
 
-/-- **`q_* O_D` is quasi-coherent** when the ambient family is proper — the second
-of the three binders `Scheme.Modules.flatLocusStratification_universal` wants on
-the module it stratifies.
+/-- **`q_* O_D` is quasi-coherent** when the ambient family is proper.
 
 Free: properness of `π` gives `QuasiCompact` and `QuasiSeparated` of the projection
 `q = pullback.snd π T.hom` by base change, and pushforward along a qcqs morphism
-preserves quasi-coherence. Recorded separately from the flatness statement because
-the two are consumed together and neither implies the other. -/
+preserves quasi-coherence.
+
+Not a binder of `AlgebraicGeometry.flatLocusStratification_universal`, which asks
+only for `[IsNoetherian S]` and `[F.IsFinitePresentation]` — quasi-coherence is a
+mathlib instance from the latter. Kept because it is wanted in its own right and is
+the cheap half of the pair. -/
 theorem Scheme.DivFamily.isQuasicoherent_pushforward
     {S X : Scheme.{u}} {π : X ⟶ S} [IsProper π] {T : Over S}
     (x : Scheme.DivFamily π T) :
@@ -252,7 +258,35 @@ theorem Scheme.DivFamily.isQuasicoherent_pushforward
   letI := x.isFinitePresentation
   exact Scheme.Modules.pushforward_isQuasicoherent _ x.F
 
+/-- **The `φ = 𝟙` instance of `flatLocusStratification_universal`'s antecedent.**
+
+`:876` asks, for a test morphism `φ : T' ⟶ S`, for
+`CoherentSheafFlat (𝟙 T') ((Modules.pullback φ).obj F)`. At `φ = 𝟙` that is *not*
+literally `coherentSheafFlat_id_pushforward`: the identity pullback is not reduced
+away, so the carrier is `Γ((pullback (𝟙 T.left)).obj (q_* O_D), V)` where the
+theorem above supplies `Γ(q_* O_D, V)`. This states the bridged form, so that
+consumers do not have to rediscover which of the two shapes they hold.
+
+Note what this does and does not give: the `φ = 𝟙` **instance** of the antecedent,
+not the antecedent as a family over all `φ`. -/
+theorem Scheme.DivFamily.coherentSheafFlat_id_pullbackId_pushforward
+    {S X : Scheme.{u}} {π : X ⟶ S} {T : Over S} (x : Scheme.DivFamily π T)
+    [LocallyQuasiFinite
+      (Scheme.Modules.schematicSupportι x.F ≫ pullback.snd π T.hom)] :
+    Scheme.CoherentSheafFlat (𝟙 (T.left : Scheme.{u}))
+      ((Scheme.Modules.pullback (𝟙 (T.left : Scheme.{u}))).obj
+        ((Scheme.Modules.pushforward (pullback.snd π T.hom)).obj x.F)) := by
+  intro U hU V hV eV
+  exact coherentSheafFlat_of_iso (𝟙 (T.left : Scheme.{u}))
+    (((Scheme.Modules.pullbackId (T.left : Scheme.{u})).app
+      ((Scheme.Modules.pushforward (pullback.snd π T.hom)).obj x.F)).symm)
+    x.coherentSheafFlat_id_pushforward hU hV eV
+
 set_option maxHeartbeats 1600000 in
+-- Heartbeat headroom: the finiteness tower provisions three module structures under
+-- binders and transports across the descent iso, whose `Γ`-identifications are `rfl`
+-- but only after unfolding pushforward-of-pushforward — the same budget
+-- `flat_section_of_affine_cover` needs for the analogous per-chart provisioning.
 /-- **`q_* O_D` is finitely presented** — the input
 `flatLocusStratification_universal` actually asks for.
 
