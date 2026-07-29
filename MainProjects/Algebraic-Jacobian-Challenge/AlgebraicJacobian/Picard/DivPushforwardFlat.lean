@@ -77,12 +77,32 @@ once and in a form the machine can use.
 `flatLocusStratification_universal` wants `IsNoetherian` on the base and both
 `IsQuasicoherent` and `IsFinitePresentation` on the module. Quasi-coherence of
 `q_* O_D` is free for a proper family and is recorded here as
-`DivFamily.isQuasicoherent_pushforward`. **Finite presentation is not** and is the
-next real obligation: `isFinitePresentation_of_finite_sections`
-(`Picard/RigidPushforwardTransfer.lean`) reduces it to `Module.Finite` of
-`Γ(q_* O_D, V)` on affine `V`, which is where the finiteness of the support map
-should be spent — it is available here (`IsFinite (i ≫ q)`), so the residue is a
-section-level transport across the descent isomorphism rather than new geometry.
+`DivFamily.isQuasicoherent_pushforward`.
+
+**Finite presentation is the one input still open, and its residue is measured
+rather than guessed.** `isFinitePresentation_of_finite_sections`
+(`Picard/RigidPushforwardTransfer.lean`) reduces it to `Module.Finite Γ(T,V)
+Γ(q_* O_D, V)` on affine `V`. That tower is *complete* — every link was checked to
+elaborate in scratch:
+
+* `Module.Finite Γ(T,V) Γ(D,W)` for `W := (i ≫ q) ⁻¹ᵁ V`, from
+  `IsFinite.finite_app` — this is where the finiteness of the support map is spent,
+  and it is exactly what quasi-finiteness bought;
+* `Module.Finite Γ(D,W) Γ(N,W)` from `finite_sections_preimage_of_isAffineHom`
+  together with `isFinitePresentation_pullback_schematicSupportι`;
+* the two compose by `Module.Finite.trans` once the `Γ(T,V)`-structure on `Γ(N,W)`
+  is provisioned as `Module.compHom` of `(i ≫ q).app V` and the scalar tower is
+  `IsScalarTower.of_algebraMap_smul (fun _ _ => rfl)`.
+
+What is *not* done is the last transport, from `Γ(N,W)` back to
+`Γ(q_* O_D, V)` across `schematicSupportDescentIso`. The section-level
+isomorphism itself is available (`(pushforward q).map hdesc.hom |>.app V`, whose
+inverse laws follow from `Scheme.Modules.Hom.comp_app` — also checked), so the
+obstacle is only that these sections are `Ab`-valued and carrying `Module.Finite`
+across them needs the semilinearity plumbing spelled out, not a further geometric
+input. Recording the shape so the next session does not re-derive the tower: the
+missing step is bookkeeping of a known kind, and the *mathematics* of this input
+is finished.
 
 Beyond that, D3' still needs the `∃!` statement about the Grassmannian locus
 itself. Nothing in this file closes D3'.
