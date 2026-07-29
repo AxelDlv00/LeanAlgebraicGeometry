@@ -489,11 +489,23 @@ theorem fgaPicardRepresentability {k : Type u} [Field k]
   sorry
 
 /-- **The étale representability gate**, as a `Prop`-class so that consumers can
-quantify over it as a hypothesis and stay kernel-clean.
+quantify over it as a hypothesis.
 
 Unlike the legacy `HasPicScheme`, this class carries **no** hypothesis on
 `C(k)`: its unique producer `instHasPicSchemeEt` is unconditional. It is the
-carrier of the project's central open obligation. -/
+carrier of the project's central open obligation.
+
+**It is not a gate, and quantifying over it does not keep a consumer
+kernel-clean** — the previous sentence here promised that and it is
+undeliverable (`review-ajc`, 2026-07-29). Because `instHasPicSchemeEt` is
+unconditional, instance search discharges this class for every object in its own
+domain, so a consumer that binds it is `sorryAx`-reachable the moment it is
+applied; there is no `C` in the domain for which the binder is a real
+restriction. Contrast `HasPicScheme`, which has no instance at all and for which
+the binder genuinely is a hypothesis. What this class does buy is the shape:
+statements quantified over it read as implications and are stated for an
+arbitrary base field, per `I-0491`. See `PicSchemeEt` below for the
+measurement. -/
 class HasPicSchemeEt {k : Type u} [Field k] (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
     [GeometricallyIntegral C.hom] : Prop where
@@ -517,7 +529,39 @@ representing the étale-sheafified relative Picard functor.
 This is the honest `Pic_{C/k}` of the project — available for every smooth
 proper geometrically integral curve, with no hypothesis on `C(k)`. The legacy
 `PicScheme` (representing the unsheafified `picSharp`) exists only under a
-rational point and is retained for the consumers written against it. -/
+rational point and is retained for the consumers written against it.
+
+**WHAT "AVAILABLE" DOES AND DOES NOT MEAN — read this before reporting anything
+on this side of the seam as landed** (`review-ajc`, 2026-07-29, kernel-measured;
+the same distinction is stated correctly at `Picard/Pic0EtTangentSpace.lean:59`
+and in `scripts/axiom-frontier.lean`, but this is the file a reader arrives at
+first, and it did not say it).
+
+`PicSchemeEt` and everything extracted from it (`representableEt`,
+`instPicSchemeEtLocallyOfFiniteType`, `instPicSchemeEtIsSeparated`,
+`picEtCommGrp`, `groupSchemeStructureEt`) has axiom list
+`[propext, Classical.choice, Quot.sound]` — no `sorryAx`. That is a fact about
+each declaration *as an implication*, and it holds only because each **binds**
+`[HasPicSchemeEt C]`; Lean never unfolds a bound instance.
+
+At a **use site** the picture is different, and this is the honest state:
+`[HasPicSchemeEt C]` is not a gate. Its instance `instHasPicSchemeEt` is
+unconditional, so instance search discharges the class for **every** object in
+its own domain — including an abstract `C` carrying only
+`[SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+[GeometricallyIntegral C.hom]`, with the gate *not* assumed. Measured:
+`etGateAbstract` and `representableEt C` at such a `C` both report
+`[propext, sorryAx, Classical.choice, Quot.sound]`. The control is what makes
+this meaningful rather than a tautology about sorries: in the same probe,
+`(inferInstance : HasPicScheme C)` **fails** with `synthInstanceFailed`. So the
+legacy class is genuinely instance-free — a hypothesis a consumer must supply —
+while `HasPicSchemeEt` is a hypothesis that supplies itself from the bare `sorry`
+at `fgaPicardRepresentability`.
+
+So the étale migration bought exactly one thing, and it is the thing the owner
+decision `I-0491` asked for: these statements are about an **arbitrary field**
+with no rational-point binder. It did not buy a discharged obligation, and no
+count of `sorry`-free declarations on this side is evidence that it did. -/
 noncomputable def PicSchemeEt {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
@@ -539,7 +583,18 @@ noncomputable def representableEt {k : Type u} [Field k]
   Classical.choice (HasPicSchemeEt.has_pic_scheme_et (C := C)).choose_spec.1
 
 /-- `Pic_{C/k}` is locally of finite type over `k` (Kleiman §4 Thm `th:main`(1)),
-extracted from the étale existence package. Unconditional. -/
+extracted from the étale existence package.
+
+**"Unconditional" here means unconditional on `C(k)`, NOT available today.**
+Measured (`review-ajc`, 2026-07-29): this declaration's own axiom list is
+`[propext, Classical.choice, Quot.sound]` only because it *binds*
+`[HasPicSchemeEt C]`, and a bound instance is never unfolded. But that class is
+not a gate — `instHasPicSchemeEt` discharges it by instance search for **every**
+object in its own domain, so at any use site (even an abstract `C` carrying only
+the three geometric binders) it synthesises and the result fires `sorryAx`.
+Control in the same probe: `[HasPicScheme C] := inferInstance` fails with
+`synthInstanceFailed`, so the legacy class really is instance-free while this one
+is not. See `PicSchemeEt` above for the full statement of the distinction. -/
 instance instPicSchemeEtLocallyOfFiniteType {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
@@ -548,7 +603,11 @@ instance instPicSchemeEtLocallyOfFiniteType {k : Type u} [Field k]
   (HasPicSchemeEt.has_pic_scheme_et (C := C)).choose_spec.2.1
 
 /-- `Pic_{C/k}` is separated over `k` (Kleiman §4 Thm `th:main`), extracted from
-the étale existence package. Unconditional. -/
+the étale existence package.
+
+"Unconditional" in the same restricted sense as
+`instPicSchemeEtLocallyOfFiniteType` above: unconditional on `C(k)`, and
+`sorryAx`-reachable at every use site. -/
 instance instPicSchemeEtIsSeparated {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
@@ -603,22 +662,33 @@ comparison `PicScheme.picEtComparison C` is an isomorphism of functors, which
 is Kleiman §2 Thm 2.5 (`th:comp`) — TRUE under a section, and FALSE in general
 without one.
 
-This statement is therefore **NOT** part of the étale seam's obligation, and it
-is deliberately not given a `sorry`-bodied carrier of its own: the seam has
-exactly one open obligation (`fgaPicardRepresentability`), and adding a second
-would misreport the frontier. What is recorded here instead is the *shape* of
-the bridge, as a hypothesis class that a consumer must supply explicitly at the
-use site — the same discipline `HasSmoothProperQuotient` follows for Kleiman's
-quotient lemma, and for the same reason: the statement is true under a section
-and false without one, so it belongs at the use site rather than in a global
-instance.
+This statement is therefore **NOT** given a `sorry`-bodied carrier of its own:
+the seam has exactly one open obligation (`fgaPicardRepresentability`), of which
+this theorem is clause (2), and adding a second carrier would misreport the
+frontier.
 
-The consequence for the headline, stated plainly because it is the shape of the
-remaining work: over an arbitrary field the project reaches representability of
-the *étale* functor (`representableEt`), and a consumer wanting the `picSharp`
-shape must either supply this class or be restated against `picEt`. That
+**Corrected 2026-07-29 (`review-ajc`): there is no class here, and the two
+sentences that said there was are gone.** This passage described the bridge as
+"a hypothesis class that a consumer must supply explicitly at the use site",
+following "the same discipline `HasSmoothProperQuotient` follows", and then told
+a consumer to "either supply this class or be restated against `picEt`". No such
+class exists — `PicEtComparisonIso` never landed, as `:100` of this same file
+already admits three paragraphs above. The bridge is the **theorem** below,
+derived from clause (2) of the seam applied to the section, so a consumer does
+not supply it: a consumer supplies `[HasRationalPoint C]` and gets it. The
+`HasSmoothProperQuotient` analogy was wrong in the same stroke — that *is* a
+real class with a use-site-only discipline, which is why citing it made the
+absent class sound routine.
+
+The consequence for the headline, which is the part that survives unchanged:
+over an arbitrary field the project reaches representability of the *étale*
+functor (`representableEt`), and a consumer wanting the `picSharp` shape must
+either carry `[HasRationalPoint C]` — strictly weaker than the challenge, and
+forbidden as a headline by `I-0491` — or be restated against `picEt`. That
 restatement is downstream work in `Picard/Pic0AbelianVariety.lean` (a lane this
-file does not own), not a defect here. -/
+file does not own), not a defect here, and it is the bulk of what the étale
+decision still implies: 70 declarations bind the `picSharp`-shaped
+`HasPicScheme` against 27 on the étale side. -/
 theorem picEtComparison_isIso_of_hasRationalPoint {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
