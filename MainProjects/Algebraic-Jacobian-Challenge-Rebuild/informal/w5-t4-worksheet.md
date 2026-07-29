@@ -2327,8 +2327,73 @@ instance work at all.**
 > works in a sibling file is not thereby a spelling.** `dualNumberCechH1Equiv` gets away with `_ _`
 > because its own elaboration happens to solve them first.
 
-**T3's RESIDUE AFTER §7.7: (T3-6) alone — the composite.** Five landed arrows
-((T3-1)…(T3-5)); `H¹(C,𝒪) ≃+ ker(CechPic(C_ε) → CechPic(C))` is their composition and is written
-nowhere. Unmeasured, **including whether it comes out additive**: every arrow in the chain is a
-`MulEquiv` or a bare `Equiv`, `Additive`-wrapping happens only on the (T3-1) leg, and T5 needs the
-**semilinear** form on top of that. Per §7.6's own rule, print the types before pricing it.
+**T3's RESIDUE AFTER §7.7: (T3-6) alone — the composite.** Measured in §7.8 below.
+
+### 7.8 (T3-6) MEASURED, NOT GUESSED — the composite reduces to ONE section equation, and §6.24's predicted ingredients are what it needs
+
+*Run 0073 r7, closing measurement. Following §7.6's rule rather than restating it: I wrote the square
+the composite needs, reduced it as far as the landed lemmas go, and read the leftover goal. No new
+module — this section is the price, and it is honest because it is the actual goal text.*
+
+**THE SQUARE.** With `U` a two-chart cover of `C.left`, the composite needs: the **engine's**
+reduction `TwoCover.unitsReduction C.left U₀ U₁`, conjugated by the two carrier translations
+(`dualNumberCechH1Equiv` upstairs, `collapseCechH1Equiv` downstairs), to **be** the geometric
+pullback `pullbackOverlapQuot (relCurveMap C k[ε] k)`.
+
+**WHAT REDUCED FOR FREE (all measured this session, in this order):**
+
+1. The **opens transport** — `relCurveMap ⁻¹ᵁ fst ⁻¹ᵁ U₀ ⊓ relCurveMap ⁻¹ᵁ fst ⁻¹ᵁ U₁ = fst ⁻¹ᵁ (U₀ ⊓ U₁)`
+   — is `rw [relCurveMap_preimage, relCurveMap_preimage]` then **`rfl`**. §7.2 flagged this as
+   load-bearing-and-not-`rfl`; that was right, and its price is three tokens.
+2. `unitsReduction` on a generator **is** `unitsFst`: one `show` (the `abbrev` is reducible, as its
+   own docstring promises).
+3. The two quotient projections and the `Units` coercion peel by `collapseCechH1Equiv_mk`,
+   `congrArg QuotientGroup.mk`, `Units.ext`.
+
+**WHAT IS LEFT, quoted from the goal — this is (T3-6)'s entire content:**
+
+```
+(relCurve C k).resHom ⋯ ((relCurveMap C k[ε] k).appLE … (dualNumberSections C … u))
+  = collapseUnits C (U₀ ⊓ U₁) hci hqi (unitsFst u)
+```
+
+i.e. **"restrict the `ε ↦ 0` image of the thickened section, and you get the collapse of `fst u`."**
+That is `(b-coeff)` (`Over.relSectionsMap_dualNumberSections` / its unit form
+`relSectionsMapUnits_dualNumberSectionsUnits`) composed with the identification of
+`sectionsCollapse` against `Over.sectionsBaseChange` — precisely the two ingredients **§6.24 predicted
+the missing link would need.** §7.4 found the (T3-2) *arrow* needed neither; they are needed **here**,
+one step further along, which retro-justifies §6.24's decomposition at the level it was actually
+about.
+
+**SO (T3-6) IS ONE SECTION-LEVEL EQUATION.** Its one plausible-looking input — the bridge between the
+two `k`-base-change spellings, `sectionsCollapse` (`lid.symm ≫ relSectionsBaseChange`, this
+directory's neighbour) versus `Over.sectionsBaseChange` (what `(b-coeff)` is stated over) — **is not a
+brick.** Probed and green:
+
+```lean
+example … : sectionsCollapse C V hV hV' s = Over.sectionsBaseChange C k hV hV' (s ⊗ₜ (1 : k)) := by
+  rw [Over.sectionsBaseChange_tmul_one, sectionsCollapse_apply]; rfl
+```
+
+Two rewrites and a `rfl`. **This paragraph's first draft named that bridge as "the last brick of T3,
+no lemma relates them (searched)" — and it was wrong by one probe**, which is §7.4's lesson for the
+third time in one session: I searched, found nothing under either name, and wrote "absent" instead of
+spending ninety seconds on `rfl`. The names really are unrelated; the *objects* are two rewrites
+apart.
+
+**HONEST PRICE OF (T3-6), then: [S], no missing input identified.** Every ingredient is landed and
+each of the two non-trivial steps is probed green in isolation; what I did not do is assemble them
+into the single `Units.ext`-level equation, which is where the remaining work is — coercion
+bookkeeping between `Units.map`/`appLE`/`ConcreteCategory.hom` spellings, the family this directory
+has hit repeatedly (`I-0685`). **A successor should expect spelling, not mathematics** — and should
+treat that expectation as this section's prediction rather than its measurement.
+
+**AND THE ADDITIVITY QUESTION IS STILL OPEN**, independently: every arrow in the chain is a
+`MulEquiv`, `Additive`-wrapping happens only on the (T3-1) leg, and T5 needs the **semilinear** form
+(`AddEquiv` + intertwining across `κ(e) ≃+* k`) on top of whatever the composite gives. Two distinct
+obligations, neither implied by the other.
+
+> **What this section is, methodologically:** §7.5 and §7.6 both named a residue and then discovered
+> its price differed from the guess. This time the price is not a guess — it is the leftover goal
+> text after every landed lemma has fired. That is the cheapest honest estimate available, it took
+> under half an hour, and **it is what "print the types" escalates to once the types line up.**
