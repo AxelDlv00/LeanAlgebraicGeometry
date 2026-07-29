@@ -1,3 +1,4 @@
 {"at": "2026-07-27T04:12:13.282984+00:00", "actor": "horizon", "field": "created", "from": "", "to": "pending", "note": "opened"}
 {"at": "2026-07-27T12:06:07.170037+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary, pinned_commits updated"}
 {"at": "2026-07-29T03:01:46.960278+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "milestone updated"}
+{"at": "2026-07-29T23:46:15.684203+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated", "provenance": {"run": "0082", "session": "0016-horizon-review-ajcr", "role": "horizon", "round": "7", "rounds": "8", "task": "review-ajcr", "task_title": "REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and the costings", "projects": "Algebraic-Jacobian-Challenge-Rebuild"}}
