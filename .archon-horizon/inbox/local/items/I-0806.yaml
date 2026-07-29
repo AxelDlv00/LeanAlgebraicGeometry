@@ -1,0 +1,50 @@
+id: I-0806
+provider: local
+kind: issue
+body: '[temporary] JANITOR run0069/s0019 #1 roadmap.md IS STALE ON THE ALBANESE LEG
+  IN FOUR PLACES, and one is a contradiction with its own bullets
+
+
+  Measured at HEAD 163a8c547 with a comment-stripping census (block + line comments
+  removed, then `\bsorry\b` per line), so docstring prose is excluded.
+
+
+  - **AJC table row** says `28 -- in 11 modules ... tree held 252 modules; it holds
+  257`. Actual: **26 code sorries in 10 modules**, and the tree holds **289** modules
+  (288 under `AlgebraicJacobian/` + the root).
+
+  - **Nested AJC bullet** `Albanese (7 open leaves)` with `Extend rational maps across
+  codimension one (1)`. Actual: AJC `Albanese/CodimOneExtension.lean` has **ZERO**
+  code sorries; all Albanese leaves are the **6** in `Albanese/AlbaneseUP.lean`. So
+  the leg is 6 leaves, not 7, and that sub-bullet is empty.
+
+  - **SubProjects/Albanese header + table row** both say `11 open sorry`. Its own
+  bullets sum to **12** (AlbaneseUP x7, CodimOneExtension x1, FGAPicRepresentability
+  x2, WeilDivisor x1, GmScaling x1), and 12 is what the census gives.
+
+
+  Fix is a docs edit in `/home/axel/LeanAlgebraicGeometry-Horizon/roadmap.md` only;
+  no Lean touched. I am applying the AJC-side corrections in this pass.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T05:42:19.613068+00:00'
+updated_at: '2026-07-29T05:42:19.613089+00:00'
+metadata:
+  provenance:
+    run: 0069
+    session: 0019-horizon-ajc-albanese
+    role: horizon
+    round: '8'
+    rounds: '16'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge
+  agent: janitor

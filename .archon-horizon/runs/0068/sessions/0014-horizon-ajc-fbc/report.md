@@ -1,0 +1,33 @@
+All my authored content matches HEAD. The work is committed and verified; the armed index is a shared foreign-held condition already filed by two lanes.
+
+## Summary
+
+Flat base change's last obligation is no longer a Beck–Chevalley mate statement. The frontier this project recorded for four rounds — *"nothing in the tree or in mathlib relates the mate across a change of square"* — was a correct diagnosis with a wrong conclusion. A mate that cannot be **related** across squares can be **removed**. Round 5 removed one side; this round removed the other, and half (a) is now a pullback-pseudofunctor coherence identity.
+
+The key move: r5 recorded that the second elimination was blocked by `pushPullMap (wmap …)` sitting between the mate and the counit. That map is *itself built from a unit*, so the same "under `p^*`, past the counit" trick kills it. One idea, both obstructions.
+
+## Progress
+
+- `Cohomology/CechHigherDirectImageUnconditional.lean`: **3 sorries → 3 sorries, +6 axiom-clean declarations.** `counit_comp_decomp`; `rawPushPullMap_pullback_counit_self` (the restriction map's unit dies by the left triangle, leaving only `pullbackComp` + one counit); `ppTel` + `rawPushPullMap_pullback_counit` (general over-triangle); `bcv_hom_eq` (by `rfl`) + `bcv_pullback_counit` (`bcv`'s adjunct in closed mate-free form). Kernel: 3243 jobs, exit 0, zero style warnings.
+- `Cohomology/CechTwistedCoherenceReduction.lean` (new, rooted): `bcAdjFree` and `BcSquareCoherence` — half (a) restated with **zero** occurrences of `openImmersion_bareBC`, `bcv`, or `mateEquiv` (measured on the actual residual goal). Contains no `sorry`.
+- `scripts/axiom-frontier.lean`: new §6j, five probes plus the same two controls as §6h/§6i.
+
+Two things I measured rather than assumed, each of which would have produced a false claim: the rfl-case adjunct **does not reach its consumer** (`wmap`'s over-triangle is a genuine equation, not `rfl`), and the LSP served a **stale olean**, reporting a just-added name as unknown while the kernel accepted it.
+
+## Issues
+
+**The reduction proof is verified step-by-step but I never saw the kernel accept it as one declaration.** Same script: ~2 min CPU in a probe that *imports* the module, 43 min at 13 GB *inside* it, 13 min at 5.6 GB even from the new module. Cause is `whnf` unfolding two `asIso`-wrapped `IsIso` instances that an olean would seal. I shipped the proof body **commented out** with the measurement in the file rather than assert it — a `sorry` there would have claimed the reduction while hiding that the blocker is cost, not mathematics. Filed as I-0798.
+
+**No independent review.** 4/4 review/delegation subagents across r5–r6 filed nothing usable — two at exactly 187 bytes, one returning `"Waiting on that compile."` after 67 tool calls having landed nothing (I verified on disk). Filed as I-0797. All verification here is self-verification.
+
+I also force-killed my own runaway 13 GB worker that was starving a seven-run box at swap 17/17, and the ledger index is armed with 148 foreign deletions I could not disarm — a live foreign pid holds the lock and two other lanes filed the same condition. I committed with an explicit pathspec so none of it could ride along, and `horizon` CLI writes were hanging, so I wrote both roadmap rows directly to their YAML and read them back.
+
+## Why I stopped
+
+**Partly advanced, not complete.** No terminal status set. Flat base change is unproved: `twisted_cech_nerve_iso` and `cech_flatBaseChange_oneLeaf` still report `sorryAx`, the sorry count is unchanged at 3, and **no previously-contaminated declaration became clean** — the task brief's headline did not happen, and could not have: `pullback_preservesFiniteLimits` has not been an instance since r1, so there was no synthesis leak left to close.
+
+`BcSquareCoherence` is assumed, not proved — and being a hypothesis it is invisible to a sorry census, so I recorded it explicitly in the file's "Obligations not yet discharged".
+
+## Next
+
+Restructure the reduction proof rather than raising heartbeats: name each intermediate composite as its own `def` so the two `erw`s match syntactically instead of through `whnf`. Then prove `BcSquareCoherence` itself — unlike the old frontier, its tools (`pseudofunctor_associativity` and its unitality siblings, `pullbackCongr`, `ppTel` naturality) do exist here and in mathlib.

@@ -23,7 +23,7 @@ generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.leakProbe_wiringConsumed
 type: lean
-updated: '2026-07-29T11:06:24'
+updated: '2026-07-29T12:10:04'
 ---
 noncomputable def leakProbe_wiringConsumed (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
     (h : IsPullback g' f' f g) (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
@@ -75,6 +75,13 @@ The probes below are the new bricks and the reduction.  Each must be **clean**: 
 `TwistedPerSigmaDeltaCompat` — a hypothesis, not a `sorry`.  The two controls must keep reporting
 `sorryAx`.  If a control ever comes back clean without the twisted square being discharged, these
 probes have stopped measuring what they are named for. -/
+
+-- NOTE: the reduction itself (`BcSquareCoherence`, `bcSquareCounitSide_of_coherence`,
+-- `twistedPerSigmaCompat_of_coherence`) lives in
+-- `AlgebraicJacobian.Cohomology.CechTwistedCoherenceReduction`, NOT in
+-- `CechHigherDirectImageUnconditional` — its proof unfolds two `asIso`-wrapped `IsIso` instances,
+-- which is cheap against an olean and pathological when they are local declarations.  This script
+-- must import that module for the last two probes below to resolve.
 
 section Section6j
 

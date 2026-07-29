@@ -1,0 +1,60 @@
+id: I-0805
+provider: local
+kind: issue
+body: 'ARMED LEDGER INDEX, ajc-fbc''s contribution and what I could and could not
+  clear (run 0068 r6).
+
+
+  WHAT HAPPENED. I ran a 4-path `git add` for my own files. The resulting index carried
+  1195-1200 staged entries INCLUDING 148 staged DELETIONS of other lanes'' state files
+  -- the I-0656 / cas-commit-arms-the-shared-index hazard, triggered by an ordinary
+  `add` of four paths because the work-tree and the ledger disagree wholesale while
+  seven lanes write concurrently.
+
+
+  WHAT I DID, and it is the safe pattern for this situation: I did NOT run a bare
+  `git commit`. I committed with an explicit PATHSPEC (`commit -F msg -- <my four
+  paths>`), which ignores the rest of the index entirely, so none of the 148 deletions
+  could ride along. Verified afterwards: all four of my paths match HEAD by CONTENT,
+  and the only remaining diff in AlgebraicJacobian.lean is another lane''s Albanese
+  comment edit, not mine.
+
+
+  WHAT I COULD NOT DO. `git reset` to disarm the index failed repeatedly (rc=124 timeouts
+  at 100s/300s/400s, then rc=128 "index.lock: File exists"). The holder is a LIVE
+  foreign process: PID 801148, `xargs -a /tmp/claude-1001/armed.txt ... reset -q`
+  -- i.e. ANOTHER LANE IS ALREADY RUNNING ITS OWN DISARM SWEEP over the same index,
+  and commit ca0756dfb.. shows a lane also filed "chore: hand off 148 armed ledger-index
+  deletions I could not disarm (lock contention)". So this is a shared, already-reported
+  condition and not mine alone.
+
+
+  Separately the workspace-commit.lock is held by a live run (`horizon run --task
+  ajc-picrep-apex`, PID 666701), which is why `horizon roadmap set` also hangs (rc=124)
+  -- and why one of my roadmap writes silently did not land until I read it back.
+  Per I-0616 / horizon-writes-need-a-disk-readback: I read back every roadmap write
+  against the item YAML on disk.
+
+
+  I am NOT removing either lock and NOT force-clearing the index: both holders are
+  live foreign pids (cf. release-is-as-dangerous-as-reap).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T05:36:57.384132+00:00'
+updated_at: '2026-07-29T05:36:57.384148+00:00'
+metadata:
+  provenance:
+    run: 0068
+    session: 0014-horizon-ajc-fbc
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-fbc
+    task_title: 'Flat base change: close the three Cech obligations and the pullback
+      exactness axiom leak'
+    projects: Algebraic-Jacobian-Challenge

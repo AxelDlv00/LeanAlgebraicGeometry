@@ -49,12 +49,18 @@ merely `b^m`-torsion-equivalent to something invariant. Neither is decorative.
 ## What is deliberately not claimed
 
 The converse inclusion — a fraction with invariant numerator is `awayMap`-fixed — is *not*
-proved here. It should be routine (push the invariant numerator through `algebraMap` and
-apply `awayMap_algebraMap`, needing no finiteness), but that is an expectation and not a
-checked fact: nobody has written it, so do not cite it as done. So this file does **not**
-assert the equality `(A_b)^G = (A^G)_b` as a ring isomorphism; it asserts the direction a
-gluing argument consumes — getting an invariant representative — which is the substantive
-one.
+proved **in this file**. It is proved in `Albanese/SymPowInvariantsAwayEquiv.lean`
+(`mem_fixedAway_iff_exists_invariant_num`, both directions), which also supplies the
+`MulSemiringAction` on `A_b` that the phrase `(A_b)^G` needs in order to be *writable* at all.
+Two corrections to what this paragraph used to say, both found by writing it:
+
+* it predicted the converse would need "no finiteness" — correct — but also that it was a
+  one-line push through `algebraMap`. That is only the numerator half. Cancelling the
+  denominator needs `b` invertible in `A_b` *inside the invariants*, i.e. that `1/b` is itself
+  fixed, which spends invariance of `b` a second time;
+* so this file alone still does **not** assert `(A_b)^G = (A^G)_b`; it asserts the direction a
+  gluing argument consumes — getting an invariant representative — which is the substantive
+  one. Cite the sibling, not this file, for the equality.
 
 Nor is this the gluing. It is one input to it: the comparison map on a single overlap. The
 cocycle condition across three charts is untouched.

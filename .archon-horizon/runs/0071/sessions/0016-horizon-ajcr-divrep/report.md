@@ -1,0 +1,37 @@
+The checkpoint is satisfied by explanation rather than a commit: all nine ledger-tracked paths I authored byte-match HEAD (`8cb2a9c14`), and every file-mutating call after my last commit targeted my agent memory under `/home/axel/.claude/` or scratch under `/tmp/claude-1001/`, both outside the ledger work tree — so they produce no durable ledger change.
+
+Final report:
+
+## Summary
+
+I landed the **Riemann–Roch half of DAT-J** and found that two of this campaign's cost claims — including one in my own task brief — were stale. A fresh-context audit then refuted three of my own headline claims; I verified each independently and corrected them at every site that made them. The refutation of my "satisfiability probe" is the session's most valuable output, not the 388 lines.
+
+## Progress
+
+- `Picard/JacobianDataAbelEffective.lean`: **new**, sorry-free, rooted, kernel EXIT=0, axiom-clean against a control firing `sorryAx`. `exists_effective_deg_eq_of_classDeg_eq` (a degree-`g` class has an effective representative *of degree `g`*), the degree-zero face, the fibre face, and the not-silently-stronger probe.
+- `Picard/JacobianDataAbelEffectivePoint.lean`: **new**, same checks. `exists_effective_deg_eq_of_pic0_at_point` — effectivity at a point of *any* `Pic⁰`-representing object, via five landed lemmas, none touching `divRep`.
+- `JacobianDataAbelSquare.lean`, `JacobianDataAbelImage.lean`: retracted two wrong cost claims at the sites that made them.
+- `informal/w4-rep-critical-path.md`: §7.14; **§1's and §7.1's L11 rows corrected in place**, not merely amended.
+- Roadmap `dat-j` and `divrep`: both now lead with the refutations (verified through the YAML parser).
+- **Root build: 9288 jobs, EXIT=0**, zero errors, zero `uses sorry`; 129 warnings, all pre-existing, none from my modules. Seven commits, all verified ancestors of `main`.
+
+Two findings that rename other rows: **deliverable (2) of my own brief was already landed** before this session (`DivRepGlobalClassify.lean:204/:252/:269`), so nothing below the divisor-representability endpoint remains; and DAT-J's two halves were **never gated alike** — only the Abel square needs the representation.
+
+## Issues
+
+**My "satisfiability probe" was false.** I claimed the degree map hits `g` "unconditionally on the curve". `CurveDivisor.deg` is residue-degree weighted, so its image is `index · ℤ`: at index 3 and `g = 1` over ℚ my theorem is a *vacuous truth*. I walked into the trap I had recorded for other people's rows. The binding limit was also not the one I disclosed (the reference-divisor binder is uniform over all extensions, with no producer), the cone is **not** `Challenge`-free — which `w4-datj` §0.5 makes binding — and one docstring of mine advertised a declaration I never wrote.
+
+Both subagents stalled without reporting (the recorded I-0677 pattern); I re-ran their checks myself. Under load average 50–87 with 197 Lean processes from 13 concurrent runs, the final elaboration re-check of two **docstring-only** edits did not complete — I verified the code byte-identical to the kernel-green version rather than claim a check I did not run. The roadmap and inbox CLIs hung with nothing landing, so I wrote the roadmap corrections to the same on-disk YAML, with backups and a read-back proving all other fields and the previous bodies survived.
+
+**148 armed ledger-index deletions remain**, none in my project, all 148 verified present on disk. I could not disarm them across 14+ attempts because concurrent lanes keep re-taking the index lock, and I did not reap a lock whose holder I could not prove dead. Handed off as a committed path list.
+
+## Why I stopped
+
+**Partly advanced, with my own headline narrowed.** The theorems are kernel-green, rooted, axiom-clean and genuinely divRep-free (the audit cone-checked 323 files). What does not survive is "discharged": the effectivity half rests on an arithmetic hypothesis about the curve's index that nothing in the tree produces. **No gate cleared** — U2 untouched, deliverables 1, 3 and 4 not advanced, and §7.6 stands for the fourth consecutive session: **L8 remains the campaign's real gate.**
+
+## Next
+
+1. The newly visible obligation is an **index condition** — a degree-`g` divisor over the relevant field. Cheap to state, genuinely open, no producer.
+2. A **`Challenge`-free route for the DAT-J producer cone** needs a decision: §0.5's own claim that `FLVClass` is Challenge-free is false at HEAD, so the standing "never `riemann_inequality_curve`" rule no longer avoids the cycle.
+3. β1 remains the only divRep-free target in deliverables 3/4; I probed its shape and it is a genuine open analytic residual, not an artefact.
+4. Before calling a check a *probe*: ask whether the hypothesis is consumer-chosen or determined, and for a determined one **name the landed lemma that inhabits it**.
