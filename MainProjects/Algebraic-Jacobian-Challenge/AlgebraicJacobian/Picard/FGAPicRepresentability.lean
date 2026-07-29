@@ -368,17 +368,42 @@ The project reaches this statement rather than proving it, and it is the single
 named `sorry` that the whole Jacobian headline rests on. Do not replace it with
 a weaker conditional statement to make a count go down.
 
-**Which route discharges it — corrected 2026-07-29 (`review-ajc`), because the
-previous text named the inputs of a route this project does not take.** That
-text said the inputs are `Div` representability "which needs the Quot scheme"
-(Kleiman §3 Thm `th:repDiv`) together with the Altman–Kleiman quotient lemma
-`smoothProperQuotient`. Both belong to the **Grothendieck/Kleiman quotient
-route**, which is `rejected` on the board (`AJC.picrep.quot`,
-`AJC.picrep.serre`) — so a reader who trusted this docstring concluded, wrongly,
-that the seam's own inputs had been abandoned.
+**Which route THIS PROJECT takes — and the 2026-07-29 version of this paragraph
+overstated, corrected 2026-07-30 (`review-ajc`, by reading Kleiman rather than
+the board).** That version said the previous text "named the inputs of a route
+this project does not take", listing `Div` representability (Kleiman §3 Thm
+`th:repDiv`) and the Altman–Kleiman quotient lemma `smoothProperQuotient`, and
+concluded the prescription was *simply wrong* because both belong to the
+Grothendieck/Kleiman quotient route, `rejected` on the board
+(`AJC.picrep.quot`, `AJC.picrep.serre`).
+
+**Right about which route AJC CHOSE; wrong as a statement about what discharging
+this `sorry` NEEDS.** Read from the source
+(`references/kleiman-picard-src/kleiman-picard.tex`): `th:main` L2155–L2166 is
+clause (1) **verbatim** — "Assume `f : X → S` is projective Zariski locally over
+`S`, and is flat with integral geometric fibers. (1) Then `Pic_{X/S}` exists, is
+separated and locally of finite type over `S`, and represents `Pic_{(X/S)ét}`" —
+with no rational-point hypothesis. So clause (1) is a **theorem in the
+literature**; only its formalisation is open. And Kleiman's proof of it reduces
+(1) to (2) and then runs exactly the two named inputs: the Abel map
+`Div_{X/S} → P` with `Div_{X/S}` an open subscheme of the **Hilbert** scheme by
+`th:repDiv`, descended by `lm:qt`. The original text was naming the inputs of the
+only published proof of this file's own statement.
+
+Two things follow, and both matter for planning. `th:repDiv` is **Hilb, not
+Quot** (its statement: "`Div_{X/S}` is representable by an open subscheme of the
+Hilbert scheme `Hilb_{X/S}`"), so rejecting `AJC.picrep.quot` never rejected it.
+And the campaign below is **one** route to clause (1); Kleiman's is a second,
+whose `lm:qt` interface this project already pins as `smoothProperQuotient`
+(§4 below — currently `P → P`, zero instances) while building its `Div` side
+through the Grassmannian instead of Hilb. Nobody has priced Hilb-vs-Grassmannian,
+because the board filed this docstring as stale rather than as an alternative.
+That is a comparison worth making before more work commits to D′; it is *not* a
+recommendation to switch, since Hilb's availability in Mathlib is unmeasured.
+Full detail: `I-1360`.
 
 The committed route is **Milne–Kollár** (`informal/pic-representability-campaign.md`,
-alternative D3), and it needs neither:
+alternative D3), and it needs neither of Kleiman's two:
 
 * `Div^d` representability comes through the **Grassmannian**, not Quot:
   degree slices of `Scheme.DivFunctor` (`Picard/DivDegree.lean`, landed), an
