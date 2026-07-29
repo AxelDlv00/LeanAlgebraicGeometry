@@ -632,6 +632,12 @@ import AlgebraicJacobian.Picard.DivisorFamilyAffAbel
 -- repriced residue rather than assuming it.
 import AlgebraicJacobian.Picard.DivisorFamilyAffFieldDegree
 import AlgebraicJacobian.Picard.DivisorFamilyAffStalkEval
+-- hdegAff DISCHARGED (run 0087 r3, ajcr-p1): the widened class-degree law, hence the widened
+-- Abel ledger at an arbitrary test, hence chartValueAff_mem_pic0Subgroup with no hypothesis
+-- beyond the chart-index constraint. The last obligation between the R2 carrier (I-0492) and a
+-- widened chartValueTrans; the transformation itself is still absent. Rooted so the axiom probe
+-- covers it (AJCR.w4-rep.build-reach).
+import AlgebraicJacobian.Picard.DivisorFamilyAffClassDegree
 import AlgebraicJacobian.Picard.DivRepGlobalAffLift
 import AlgebraicJacobian.Picard.DivRepAffPullIndep
 import AlgebraicJacobian.Picard.DivRepAwayPush
