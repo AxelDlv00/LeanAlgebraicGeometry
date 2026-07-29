@@ -616,6 +616,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyAffAwayRep
 import AlgebraicJacobian.Picard.DivisorFamilyAffStrict
 import AlgebraicJacobian.Picard.DivisorFamilyAffPartitionAudit
 import AlgebraicJacobian.Picard.DivisorFamilyAffFraming
+import AlgebraicJacobian.Picard.DivisorFamilyAffFrameCover
 import AlgebraicJacobian.Picard.DivisorFamilyAffFace
 import AlgebraicJacobian.Picard.DivisorFamilyAffVehicle
 import AlgebraicJacobian.Picard.DivisorFamilyAffGlueZarKit
