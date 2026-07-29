@@ -97,8 +97,7 @@ theorem awayMap_comp_awayMap (b : A) (hb : ∀ g : G, g • b = b) (g h : G) :
     (awayMap b hb g).comp (awayMap b hb h) = awayMap b hb (g * h) := by
   refine IsLocalization.ringHom_ext (Submonoid.powers b) ?_
   ext a
-  simp only [RingHom.comp_apply, RingHom.coe_comp, Function.comp_apply,
-    awayMap_algebraMap b hb]
+  simp only [RingHom.comp_apply, awayMap_algebraMap b hb]
   rw [mul_smul]
 
 /-- **`awayMap` at `1` is the identity.** -/
@@ -113,7 +112,13 @@ theorem awayMap_one (b : A) (hb : ∀ g : G, g • b = b) :
 
 Geometrically: `G` acts on the basic open of `Spec A` cut out by the invariant function `b`.
 This is what lets `(A_b)^G` be written — `FixedPoints.subring` needs an action, not a family of
-endomorphisms — so it is a prerequisite for the comparison of §3 rather than bookkeeping. -/
+endomorphisms — so it is a prerequisite for the comparison of §3 rather than bookkeeping.
+
+Marked `@[implicit_reducible]` because it is a `def` of class type: the linter requires it, and
+the project's convention for a class-valued `def` that cannot be an `instance` is the same
+(compare `Pic0.jacobianScheme_grpObj` in `Albanese/AlbaneseUP.lean`, deliberately not an
+instance for a different reason — there, to stop `sorryAx` propagating by synthesis). -/
+@[implicit_reducible]
 noncomputable def awayMapMulSemiringAction (b : A) (hb : ∀ g : G, g • b = b) :
     MulSemiringAction G (Localization.Away b) where
   smul g x := awayMap b hb g x
