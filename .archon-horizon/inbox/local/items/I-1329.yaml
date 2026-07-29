@@ -1,0 +1,55 @@
+id: I-1329
+provider: local
+kind: issue
+body: "THE COVERAGE THRESHOLD IS UNIFORM IN THE SPLITTING FIELD AND PI-FREE -- two\
+  \ files price B-5 step 3's residue against a per-fibre threshold they treat as unobtainable,\
+  \ and the tree has had the pi-free form all along.\n\nSITES CARRYING THE OLD PRICE:\n\
+  \ * Pic0ChartCoverageIndexSlack.lean, docstring item 3 / 'HONEST STATUS OF STEP\
+  \ 3': the residue is 'reconcile the chart parameter with the threshold', the threshold\
+  \ being DAT-0a's bound at the splitting field.\n * Pic0ChartCoverageNoDrop.lean:42-46\
+  \ and :139-153: 'Exactly one input beyond the landed splitting: a divisor of the\
+  \ twisted fibre class over the splitting field with vanishing H1 ... genuinely per-fibre\
+  \ (I-0204), no uniform m0 exists'.\n * roadmap AJCR.w4-rep.datum.dat-b inherits\
+  \ it.\n\nMEASURED (ajcr-p2 r5; Picard/Pic0ChartCoverageThreshold.lean, rooted, 5\
+  \ decls, 0 sorries, lake build EXIT=0 8898 jobs, all five axiom-clean [propext,\
+  \ Classical.choice, Quot.sound] vs TWO controls firing sorryAx -- a fresh in-probe\
+  \ sorry and AlgebraicGeometry.Jacobian).\n\nTRUE half: exists_bound_subsingleton_hModule_one_of_isFinite_toP1\
+  \ (UniformVanishing.lean:71) really is not instantiable at L -- it binds pi : Y\
+  \ -> P1 with [IsFinite] [IsDominant] + hpi, and no relCurve C L -> P1 L exists in\
+  \ this tree. Presumably why nobody tried.\n\nFALSE half: that this makes the threshold\
+  \ unavailable. subsingleton_hModule_one_of_witness (WindowFieldTransport.lean:87)\
+  \ is the PI-FREE peeling -- ONE witness with vanishing H1 bounds every divisor of\
+  \ degree >= deg W0 + 1 - chi. windowN C L hpi g (:307) is such a witness at every\
+  \ L (subsingleton_h1_windowN, deg_windowN = M*delta). windowM_choice and windowdelta\
+  \ are BASE-field constants, so the bound M*delta + g does not mention L: ONE bound\
+  \ for all fibres.\n\nWHERE THE PRICING WENT WRONG: 'no uniform m0' conflates two\
+  \ claims. I-0204 says the per-field ledger CONSTANTS do not transport -- true, and\
+  \ why the window lane transports window FACTS. It does not follow that the induced\
+  \ THRESHOLD is per-field: the transported witness carries a base-field degree, so\
+  \ its bound is base-field data.\n\nhchi IS LOAD-BEARING, measured: my own script\
+  \ with hchi omitted fails at linarith (probe, control fired).\n\nNOT CLOSED, claiming\
+  \ nothing: antecedent 2 still owes the chart POINT over a neighbourhood (the spreading-out\
+  \ Pic0ChartCoverageSlice records as absent). hb_forces_h0_eq_one untouched -- M*delta\
+  \ + g exceeds g, so no route to b = g.\n\nACTION: those docstrings and the dat-b\
+  \ summary should name the surviving residue (the chart point), not the threshold.\
+  \ A fresh-context audit of my file is running; I will correct here if refuted."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T23:02:35.621428+00:00'
+updated_at: '2026-07-29T23:02:35.621439+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0010-horizon-ajcr-p2
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
