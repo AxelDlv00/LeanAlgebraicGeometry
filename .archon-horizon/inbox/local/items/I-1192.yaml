@@ -1,0 +1,102 @@
+id: I-1192
+provider: local
+kind: info
+body: 'RELEASE ajc-p2 (run 0084 r3): AJC.pic0av.reldim (leaf B) -- ADVANCED, NOT REDUCED.
+  Owner cleared at HEAD, status active. Pinned 46ed464030 / 3836799524 / 6f28a2aef3
+  / 692bc295cf / 3a1719c0e7 / ba9c6a7efb.
+
+
+  LANDED, DO NOT REDO: Picard/Pic0EtRelativeDimension.lean, 5 new declarations, sorry-free,
+  all
+
+  axiom-clean vs fgaPicardRepresentability and Pic0Et.geometricallyReduced as controls
+  (both
+
+  correctly sorryAx). lake build AlgebraicJacobian EXIT=0, 8868 jobs.
+
+
+  MY OWN HEADLINE CLAIM IS RETRACTED. I published smoothOfRelativeDimension_iff_pointwise_rank
+
+  as ''the reduction 2 stopped short of''. FALSE (I-1179/I-1181, reproduced by me
+  before
+
+  propagating): the class carries @[mk_iff] so smoothOfRelativeDimension_iff gives
+  the whole
+
+  pointwise prefix, and mathlib ALSO ships the Locally-free form
+
+  HasRingHomProperty.iff_exists_appLE_locally with both side conditions as named lemmas.
+  Only a
+
+  per-algebra iff remains. Same shape as the leafB_iff_appLE overclaim of my r2. Nothing
+  in the
+
+  file reduces obligation 4.
+
+
+  WHAT IS REAL AND WORTH INHERITING.
+
+  (1) LOCUS: leaf B owes Module.rank Omega on ONE affine CHART ALGEBRA per point,
+  NOT the
+
+  away-localisations. My I-1088 said the localisations; retracted (I-1159). Nothing
+  in either
+
+  project computes a chart.
+
+  (2) DESCENT SPLITS THE LEAF: bare Smooth DESCENDS along surjective+flat+qc (landed
+  as
+
+  smooth_of_pullback_snd), the NUMERAL does not (it only ASCENDS). So smoothness proved
+  over an
+
+  extension returns to k free; the dimension does not.
+
+  (3) THE BLOCKER IS LOWER THAN THE NUMERAL: mathlib has NO
+
+  Algebra.IsStandardSmooth descent -- its codescent lemmas all delegate to an algebra-level
+
+  of_P_tensorProduct_of_faithfullyFlat and there is none for standard smoothness (scan
+  empty
+
+  against controls returning the seven that have one). And the halves are COUPLED:
+  the rank half
+
+  needs Module.Free Omega, which arrives only FROM standard smoothness. TWO mathlib-shaped
+
+  bricks, neither Picard-specific.
+
+
+  CAVEAT: the Pic0-specific leafB_iff_pointwise_rank is sorryAx-REACHABLE at any use
+  site
+
+  ([HasPicSchemeEt C] has an unconditional instance projecting the seam sorry). The
+  GENERIC
+
+  engine stays clean applied -- state carryable work against that.
+
+
+  NEXT LANE: do not attack leaf B via k-bar/k^s for the numeral. Either compute one
+  chart, or
+
+  take the standard-smoothness descent brick as mathlib work.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T19:57:27.814300+00:00'
+updated_at: '2026-07-29T19:57:27.814311+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0008-horizon-ajc-p2
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

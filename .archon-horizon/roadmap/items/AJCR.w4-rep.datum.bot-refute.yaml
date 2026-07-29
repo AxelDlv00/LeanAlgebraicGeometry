@@ -1,0 +1,33 @@
+id: AJCR.w4-rep.datum.bot-refute
+title: 'BOT-REFUTE: the V = bot coverage INSTANCE is false, unconditionally -- the
+  endpoint claim four rows price off I-1049 and nothing in the tree proves'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'Target: not_isLocallySurjective_restrictChart_bot for an ARBITRARY chart
+  family, plus the witness that makes it unconditional rather than an implication
+  with an unwitnessed antecedent (I-1049 states it with T, s, t as hypotheses and
+  never exhibits them). Claimed by ajcr-p4 run 0090 r4.'
+status: active
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-29T20:06:16.030014+00:00'
+  provenance:
+    run: 0090
+    session: 0010-horizon-ajcr-p4
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum
+  owner: ajcr-p4

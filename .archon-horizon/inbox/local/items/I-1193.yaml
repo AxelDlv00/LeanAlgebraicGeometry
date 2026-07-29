@@ -1,0 +1,51 @@
+id: I-1193
+provider: local
+kind: memory
+body: "A DESCENT ASYMMETRY IS USUALLY ONE LEVEL LOWER THAN THE PROPERTY YOU ARE LOOKING\
+  \ AT -- and splitting a graded property into P AND numeral does not reduce descent\
+  \ to the numeral.\n\nMEASURED 2026-07-30 (AJC, ajc-p2 run 0084 r3, Pic0EtRelativeDimension.lean\
+  \ 2d), against\ncontrols in both directions.\n\nTHE OBSERVATION that starts it:\
+  \ SmoothOfRelativeDimension n has no\nDescendsAlong (@Surjective ⊓ @Flat ⊓ @QuasiCompact),\
+  \ while bare @Smooth does. The obvious\nreading -- 'the NUMERAL is what fails to\
+  \ descend' -- is WRONG, and pricing a k-bar-first route\non it wastes the round.\n\
+  \nWHY. Mathlib's codescent lemmas all delegate to an ALGEBRA-level\nof_P_tensorProduct_of_faithfullyFlat\
+  \ (Etale/Descent.lean:95-112 for Smooth/Etale/\nFormallyUnramified; Finiteness/Descent.lean\
+  \ for the finiteness ones). There is NO such lemma\nfor Algebra.IsStandardSmooth.\
+  \ So the UNGRADED property already fails to descend; the numeral\nnever got a chance\
+  \ to be the obstruction.\n\nAND THE HALVES ARE COUPLED, which kills the obvious\
+  \ workaround. IsStandardSmoothOfRelativeDimension\nis equivalent to IsStandardSmooth\
+  \ AND Module.rank Omega = n\n(iff_of_isStandardSmooth). That looks like it splits\
+  \ descent into an easy half and a hard\nhalf. It does not: the rank half needs Module.Free\
+  \ S Omega[S/R], and in mathlib that arrives\nonly FROM standard smoothness (IsStandardSmooth.free_kaehlerDifferential).\
+  \ Descending the rank\nPRESUPPOSES descending the property it is graded by.\n\n\
+  HOW TO CHECK, cheaply, before pricing any descent step:\n1. Find the ungraded/weaker\
+  \ cousin of your property and ask whether IT descends. If not, stop\n   -- your\
+  \ obligation is the cousin's, and it is probably mathlib work.\n2. Follow the delegation\
+  \ chain: for HasRingHomProperty, DescendsAlong reduces via\n   descendsAlong_flat\
+  \ to RingHom.CodescendsAlong, which reduces to an algebra-level\n   of_P_tensorProduct_of_faithfullyFlat.\
+  \ Grep for that suffix -- the list of properties which\n   HAVE one is short and\
+  \ is the real answer.\n3. Do NOT conclude absence from a failing inferInstance alone;\
+  \ scan the source for the\n   property co-occurring with descend/codescend/faithfullyFlat,\
+  \ and keep controls that DO\n   return hits so an empty result means something.\n\
+  4. If you must state the descent, do NOT state it as an implication taking DescendsAlong\
+  \ as a\n   hypothesis. The antecedent IS the missing fact; that is P -> P."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T19:58:17.370072+00:00'
+updated_at: '2026-07-29T19:58:17.370082+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0008-horizon-ajc-p2
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

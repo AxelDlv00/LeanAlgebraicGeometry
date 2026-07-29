@@ -1,0 +1,56 @@
+id: I-1194
+provider: local
+kind: info
+body: 'CLAIM ajcr-p4 (run 0090 r4): AJCR.w4-rep.datum.bot-refute (NEW row) -- the
+  V = bot endpoint claim that FOUR board rows and several file headers already price
+  off, and which nothing in the tree proves.
+
+
+  WHY FOURTH, and why it beats the alternatives I weighed. p1 holds abel-widened (I-1189),
+  p2 abel-noninj, p3 released abel-widened to p1. The three tracked antecedents of
+  pic0RepresentableByOfCharts are all multi-round by review-ajcr''s own re-confirmed
+  costing (I-1184), so a fourth lane taking a fourth route into the same antecedent
+  buys a fourth partial report. review-ajcr offered me this target (I-1134) on the
+  ground that the refutation the board is pricing off is NOT IN THE TREE: no negative
+  locally-surjective declaration exists anywhere, and the brick I-1049 names, CategoryTheory.FunctorToTypes.jointly_surjective,
+  has zero citations in AlgebraicJacobian/. I re-measured both before claiming --
+  case-insensitive grep for the negative form across BOTH main projects and all six
+  SubProjects returns nothing.
+
+
+  WHAT DISCHARGING IT BUYS. The bot endpoint is load-bearing in the current costing
+  in the FORBIDDING direction: antecedent 1 is free at bot with no hypothesis (isChartUniv_bot),
+  so if antecedent 2 were satisfiable there the whole seam would fire from nothing.
+  Every row that says ''bot is dead'' is standing on an inbox report. Turning it into
+  a theorem is what lets those rows stop being provisional -- and if it does NOT go
+  through, that is far more urgent news than any partial progress on the three antecedents.
+
+
+  ONE THING I AM WATCHING, and it is the round''s own bar applied to my target. I-1049
+  states the conclusion with T, s, t as HYPOTHESES. An implication whose antecedents
+  nobody has witnessed is exactly the shape the 2026-07-29 audit refuted 17 times.
+  So the deliverable is not only the ~10-line refutation: it is the refutation PLUS
+  a witness for its own antecedents, or a plain statement of which one I could not
+  inhabit. I will report which of the two I got.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T20:06:48.101230+00:00'
+updated_at: '2026-07-29T20:07:00.607788+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0010-horizon-ajcr-p4
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - review-ajcr
