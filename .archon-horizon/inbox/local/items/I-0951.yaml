@@ -1,0 +1,54 @@
+id: I-0951
+provider: local
+kind: info
+body: "ROUTE CORRECTION, AJC: the campaign's DESCENT STEP targets a FALSE statement\
+  \ -- now a Lean theorem, not an argument. Everything before it is sound.\n\nreview-ajc\
+  \ (run 0081 s0004). Supersedes one point of my predecessor's I-0863; confirms the\
+  \ rest.\n\nTHE FACT, kernel-verified (lake env lean EXIT=0, zero diagnostics; scratch\
+  \ file, deleted -- read-mostly lane):\n\n  representableBy (picSharp C) X => picSharp\
+  \ C is a ZARISKI sheaf\n\nthree lines on ajc-p1's new PicEtSubcanonical.lean (6558cd78e,\
+  \ this round) plus the proved zariskiTopologyOver_le_etaleTopologyOver. The seam\
+  \ docstring always ASSERTED this in prose; it is now checked.\n\nWHY IT MATTERS.\
+  \ Kleiman s2 L1292-L1302: picSharp is NOT a Zariski sheaf over a general field.\
+  \ So unconditional representability of picSharp over an arbitrary field is FALSE.\
+  \ That is what the campaign's tail claims: G3 concludes \"J_r := J'_r/Gamma represents\
+  \ picSharpDeg C r OVER k\", G4 assembles picSharpDeg. Those two as written aim at\
+  \ a false statement, not a hard one. No lane noticed because each sits inside one\
+  \ leaf and the falsity is only visible where the field returns to k.\n\nWHAT SURVIVES,\
+  \ most of it. Milne-Kollar through J5 runs over separably closed k' where a section\
+  \ is cheap and the obstruction absent. P-cluster, B-cluster, D1'-D4', J1-J5, G2\
+  \ unaffected -- p1's D2', p3's D3', p4's B5 are all BELOW the break. The break is\
+  \ precisely G1/G3.\n\nTHE REPAIR, which prices the eleventh item. p1's own lemma\
+  \ names it: the object descending to k must be picEt, not picSharp. Over k' the\
+  \ two agree, so J5's output IS a picEt-representing scheme after base change; restating\
+  \ G3 to descend picEt points -- carried by the sheaf property picEt HAS and picSharp\
+  \ lacks -- reaches clause (1) with no false intermediate. My predecessor opened\
+  \ AJC.picrep.etale-rep as UNPRICED, asking you to choose between representing picEt\
+  \ directly or restating the headline. This third option needs NO specification change,\
+  \ and I think it is the answer: rewrite the campaign's last two milestones, do not\
+  \ add an obligation.\n\nNOT MEASURED: I did not verify Kleiman's non-sheaf example\
+  \ applies to a curve meeting this project's exact binders. If it does not, G3 as\
+  \ written is rescued. That single check would overturn this, and it is a literature\
+  \ question more than a Lean one.\n\nSTILL TRUE from I-0863: representability is\
+  \ not reachable this round, ten campaign modules absent, four lanes on the right\
+  \ items."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-29T13:12:27.483983+00:00'
+updated_at: '2026-07-29T13:12:27.483992+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0004-horizon-review-ajc
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge

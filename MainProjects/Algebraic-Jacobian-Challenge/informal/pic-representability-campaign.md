@@ -337,6 +337,36 @@ All milestones over sep. closed k' ⊇ k with `C' := C ×_k k'` (Λ-stability in
 (i) `picSharp C (T) ≅ (picSharp C_{k'} (T_{k'}))^Γ` naturally, via **rigidified pairs** (B1's automorphism-free `RigidifiedPic` ⟹ descent datum canonical; 2-affine cocycle modules descend by Speiser G2(b)). Conclude `J_r := J'_r/Γ` (G2) represents `picSharpDeg C r` over k.
 (ii) `Picard/PicSharpGaloisDescent.lean`. (iii) B0, B1, G1, G2. (iv) **L**. (v) 🔍 AUDIT (Hilbert-90 trap): invariant **classes** vs equivariant **objects** — every statement must route through rigidified pairs; the naïve `Pic(C_{T'})^Γ` pin is FALSE-adjacent.
 
+> **G3/G4's STATED CONCLUSION IS FALSE AS WRITTEN — corrected 2026-07-29 (`review-ajc`), kernel-verified.**
+> The clause "`J_r := J'_r/Γ` (G2) represents `picSharpDeg C r` **over k**" above, and G4's
+> assembly of `picSharpDeg`, are not merely hard: over an arbitrary `k` they are **false**.
+> Proof, three Lean lines on `Picard/PicEtSubcanonical.lean` (`relPresheaf_isSheaf_of_representableBy`,
+> landed this round) plus the proved `zariskiTopologyOver_le_etaleTopologyOver`
+> (`Picard/PicEtSheaf.lean:118`): representability of `picSharp` forces `picSharp` to be a
+> **Zariski sheaf**, because the étale topology is subcanonical and refines the Zariski one.
+> Kleiman §2 L1292–L1302 says `picSharp` is *not* a Zariski sheaf over a general field. So the
+> conclusion of G3 contradicts Kleiman. (`lake env lean` EXIT=0, zero diagnostics; the probe was
+> a scratch file and was deleted — the two inputs it composes are both in-tree.)
+>
+> **What survives, which is nearly everything.** The obstruction is absent over a **separably
+> closed** field, where a section is cheap — and that is where P1–P5, B0–B6, D1′–D4′, J1–J5 and
+> G2 all run. Nothing before the descent step is affected. The break is exactly the step where
+> the field returns to `k`: **G1/G3**, and G4 downstream of it.
+>
+> **The repair, and it needs no specification change.** The object that descends to `k` must be
+> `picEt`, not `picSharp`. Over `k'` the two agree (a section gives Kleiman §2 Thm 2.5, or
+> `isIso_picEtComparison_of_isSheaf` gives it from representability over `k'`), so J5's output
+> *is* a `picEt`-representing scheme after base change. G3 should be restated to descend `picEt`
+> points, with the descent carried by the sheaf property `picEt` **has** and `picSharp` lacks.
+> That route reaches clause (1) of `fgaPicardRepresentability` — the actual obligation — without
+> passing through a false intermediate, and it is why roadmap `AJC.picrep.etale-rep` is now
+> priceable rather than unpriced.
+>
+> **The one check that would overturn this** (not performed, and it is a literature question):
+> whether Kleiman's non-sheaf example applies to a curve satisfying *this project's* binders —
+> smooth, proper, geometrically integral, over an arbitrary field. If it does not, G3 as
+> written is rescued. Everything else above is measured.
+
 **G4 — Coproduct assembly.**
 (i) `X := ∐_{d:ℤ} X_d`, each `X_d` := copy of `J_r` relabelled through A1's translation `picSharpDeg d ≅ picSharpDeg r`. Mathlib verified: `HasColimitsOfShape (Discrete σ) Scheme.{u}` + `CoproductsOfShapeDisjoint` + disjoint `Sigma.ι` open covers (`AlgebraicGeometry/Limits.lean:187-225`); `LocallyOfFiniteType` along `Sigma.desc` via `sigmaDesc` (`Morphisms/Basic.lean:303`, verified) + FT-descent along `Spec k' → Spec k` (D2-M13: `k'⊗_k A₀` FT ⟹ A₀ FT). New bricks: `hom_sigma_decompose` (T-map = clopen partition + components, matched to B4), `isSeparated_sigma` (verified absent from mathlib; provable via `IsZariskiLocalAtTarget` + disjoint cover).
 (ii) `Picard/PicTotalAssembly.lean`. (iii) A1, B4, G2, G3. (iv) **M**. (v) `Small.{u} ℤ` trivial; audit the clopen-decomposition equivalence once, standalone.
