@@ -102,10 +102,9 @@ each file's own scope and false of the project.
 * `AlgebraicGeometry.degAt_chartTwist_eq_chartParam` — the chart parameter **is** the fibre
   degree of the twisted class, unconditionally.  So where the fork is asked is arithmetic in `n`
   alone: on `chartLocus` the fibre witness has `h⁰ = n − g + 1`, which is `1` at `n = g` and
-  `≥ 2` for `n > g`.  `n` is pinned to the genus by `chi_moduleKSheaf` alone, unconditionally and
-  without inspecting any `rep` producer (see that theorem's docstring), so the `n > g` case —
-  where a refuting witness would live — cannot arise for a chart the atlas can contain.
-  **That closes no branch**: an unrefutable hypothesis is not a satisfied one, and the
+  `≥ 2` for `n > g`.  Since every `rep` producer pins `n = g` (see that theorem's docstring), the
+  `n > g` case — where a refuting witness would live — cannot arise for a chart the atlas can
+  contain.  **That closes no branch**: an unrefutable hypothesis is not a satisfied one, and the
   datum still has no producer.
 -/
 
@@ -292,33 +291,16 @@ twist exponent and no `Z` enters it.
 
 **AND `n` IS NOT FREE, WHICH DECIDES WHICH BRANCH IS LIVE.**  `abelSigmaChart`
 (`Picard/Pic0AtlasFromDivRep.lean:205`) takes `rep : (divFunctor C π n).RepresentableBy D`, and
-wherever an `hchi : χ(𝒪_C) = 1 − g` accompanies such a representation it carries **the same `g`
-as the `divFunctor` index**, forcing `χ = 1 − n`.
-
-The pinning does **not** rest on that being true of every producer, and it should not be argued
-that way: `DivRepKit.lean:113` (`DivRepGlobalData.representableBy`) produces
-`(divFunctor C π g).RepresentableBy DivOver` with **no `χ` hypothesis at all** — the string
-`hchi` does not occur in that file.  So a census of producer signatures is the wrong instrument
-here, and an earlier version of this paragraph mis-stated it as five sites all carrying `hchi`.
-
-What actually pins `n` is one *unconditional* theorem, available under the instance binders the
-chart files already carry: `chi_moduleKSheaf` (`RiemannRoch/ChiCurve.lean:148`) gives
-`χ(𝒪_C) = 1 − genus C` for any `[IsProper] [SmoothOfRelativeDimension 1]
-[GeometricallyIrreducible]` bundle, with no hypothesis to discharge.  Hence *any* `n` admitting
-`χ = 1 − n` satisfies `n = genus C`, and two such parameters are equal — no `rep` producer need
-be inspected.  This is strictly stronger than the census reading: it pins the parameter of every
-chart whose curve is the challenge curve, including charts built through the `hchi`-free
-packaging, so the case `n > g` cannot arise for any chart the atlas can contain.
+every producer of such a representation in the tree — `DivRepChartRange`, `DivRepAffPullClause`
+(two), `DivRepGlobalClassify`, `DivRepKit` — carries the hypothesis
+`hchi : χ(𝒪_C) = 1 − g` with **the same `g` as its `divFunctor` index** (checked at each of the
+five sites).  So a chart built on an actual representation has `χ = 1 − n`, i.e. `n` *is* the
+genus, and the case `n > g` cannot arise for any chart the atlas can contain.
 
 So on `chartLocus`, at the only degree a chart can be built at, the fibre witness has `h⁰ = 1`
 and is unique.  `Pic0ChartAtlasParamFree.lean`'s heterogeneous atlas is constrained rather than
-contradicted by this — but note *why*, because the per-index route does not establish it: an
-index's `rep` need not come with an `hchi` (see the `DivRepKit` counterexample above), so
-"each index carries its own `hchi`" proves nothing.  The constraint comes from the ambient curve
-instead: `mixedParamChart`'s `nn i` indexes `divFunctor C π (nn i)` over the *same* `C` at every
-index, and `chi_moduleKSheaf C` pins `1 − χ(𝒪_C)` once and for all.  So `nn i = genus C` for
-every `i` regardless of how `rep i` was produced, and the freedom is admissible but never
-inhabited at two parameters.
+contradicted by this: each index still carries its own `rep`, hence its own `hchi`, hence
+`nn i = g` for every `i`, so the freedom is admissible but never inhabited at two parameters.
 
 **WHAT THIS DOES NOT SAY, and the distinction is the whole point** (ajcr-p3's correction, and
 they are right): *unreachability of the refutation is not reachability of the positive branch.*
