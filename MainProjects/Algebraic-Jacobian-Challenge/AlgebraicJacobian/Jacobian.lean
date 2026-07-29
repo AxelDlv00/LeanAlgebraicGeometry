@@ -125,8 +125,9 @@ The file contains:
   it, so neither repeats a field, and it is the compiled form of branch (1) of the open
   decision — a headline carrying `C(k) ≠ ∅` needs no new mathematics beyond this. Branch
   (2) is not reachable from it; see its docstring.
-- the three leaves above, and `picardJacobianWitness`, the Albanese witness
-  `J = Pic⁰_{C/k}` assembled from them with no `sorry` of its own.
+- the four leaves above — two in the `picSharp` shape, two in the étale shape — and
+  `picardJacobianWitness`, the Albanese witness `J = Pic⁰_{C/k}` assembled from the
+  étale pair with no `sorry` of its own.
 - `nonempty_jacobianWitness`: existence of an Albanese witness for every curve,
   delegating to `picardJacobianWitness`.
 - `Jacobian` and its four protected instances, each obtained by projection from the
@@ -255,18 +256,28 @@ structure JacobianWitness (C : Over (Spec (.of k)))
   isAlbaneseFor : ∀ (P : 𝟙_ _ ⟶ C), @IsAlbanese k _ C P J grpObj proper smooth geomIrred
 
 
-/-! ## The three open leaves of the witness
+/-! ## The open leaves of the two witnesses
 
-`picardJacobianWitness` below is assembled from the landed `Pic⁰_{C/k}` development
-(`Picard/Pic0AbelianVariety.lean`) together with the three statements of this section.
-These three plus the two unproved upstream theorems named in the file header are the
-entire mathematical distance between the current tree and the headline; everything else
-in the assembly is projection.
+Two witnesses are stated below and they consume *different* leaves, which is the whole
+content of the 2026-07-28 owner decision and the thing easiest to blur:
 
-Each is stated at the exact strength the assembly consumes, so that a proof of the
-three closes `picardJacobianWitness` with no further work — up to the two `sorry`-bodied
-upstream theorems `Pic0.smooth` and `Pic0.proper` recorded in the file header, which the
-assembly invokes and which no leaf here covers. -/
+* the **headline** `picardJacobianWitness` is assembled from the étale development
+  (`Picard/Pic0Et.lean`) together with the two étale leaves
+  `smoothOfRelativeDimension_genus_pic0Et` and `isAlbanese_pic0Et`. Its upstream
+  obligations are `Scheme.fgaPicardRepresentability` and the two residues
+  `Pic0Et.geometricallyReduced` / `Pic0Et.universallyClosed` — five in all, as the
+  file header enumerates;
+* the **conditional** `picardJacobianWitnessOfHasRationalPoint` is assembled from the
+  `picSharp` development (`Picard/Pic0AbelianVariety.lean`) together with the two
+  `picSharp` leaves `smoothOfRelativeDimension_genus_pic0` and `isAlbanese_pic0`, and
+  its upstream obligations are `Pic0.smooth` and `Pic0.proper` behind the gate
+  `Scheme.HasPicScheme`.
+
+Each leaf is stated at the exact strength its own assembly consumes, so that proving a
+witness's leaves plus its upstream obligations closes that witness with no further work;
+everything else in either assembly is projection. The two `picSharp` leaves do **not**
+contribute to the headline, and the two étale leaves do not contribute to the
+conditional milestone. -/
 
 /-! ### Leaf A, split: what follows from the challenge hypotheses and what does not
 
@@ -333,29 +344,35 @@ which is Kleiman's own formulation and needs no hypothesis on `C(k)`. The ration
 survives only where it is a theorem (`hasRationalPoint_of_curve_of_isAlgClosed`, over
 `k̄`) or an explicit hypothesis (`picardJacobianWitnessOfHasRationalPoint`). -/
 
-/-- **Leaf A over an algebraically closed field: a theorem, not a decision.**
+/-- **Leaf A over an algebraically closed field: a theorem, not a formulation choice.**
 
-The rational point is the one leaf of the witness whose statement is *false* over a general
-base field, and therefore the one leaf that cannot be closed by proving it. Over an
+The rational point is the one former leaf of the witness whose statement is *false* over a
+general base field, and therefore the one that could never be closed by proving it. Over an
 algebraically closed field it is not merely provable but proved, by the landed
 `Albanese.hasRationalPoint_of_isAlgClosed`: the curve is irreducible over the one-point base
 and locally of finite type, hence a Jacobson space, so it has a closed point, and over
 `k = k̄` a closed point *is* a `k`-rational section.
 
-This delimits the open decision precisely. What is undecided is not whether a smooth proper
-geometrically irreducible curve has a rational point over *some* field — it does over `k̄` —
-but which of the two honest formulations the project claims over an arbitrary `k`: represent
-`Pic^♯_{C/k}` and carry `C(k) ≠ ∅` as a hypothesis, or represent the étale sheafification
-`Pic_{(C/k)ét}` and carry no such hypothesis. Both remain recorded, neither is assumed.
+What this theorem is for, now that the formulation question is settled. The choice between
+representing `Pic^♯_{C/k}` under `C(k) ≠ ∅` and representing the étale sheafification
+`Pic_{(C/k)ét}` under nothing was decided by the owner on 2026-07-28 in favour of the
+second (protection I-0491), so the headline carries no rational point and this theorem is
+not a step towards it. It is the input that makes
+`picardJacobianWitnessOfIsAlgClosed` an honest `k̄` theorem rather than a vacuity: the
+`picSharp` development is retained for its tangent-space chain, that development needs a
+section, and over `k̄` the section is *proved* here instead of assumed.
 
 Unlike leaves B and C, whose `_of_isAlgClosed` companions record a *distance* and report
 `sorryAx`, this one is a genuine discharge: its axioms are `[propext, Classical.choice,
 Quot.sound]`. What it does **not** do is reduce the count. Over `k̄` the witness still rests
-on five obligations — `Scheme.instHasPicScheme`, `Pic0.smooth`, `Pic0.proper`, and leaves B
-and C — because discharging this leaf makes the representability gate *fire* rather than
-removing it (`Scheme.Pic0Scheme` carries `[Scheme.HasPicScheme C]`, and that `sorry`-bodied
-instance is its sole producer). What the discharge changes is the *kind* of every remaining
-obligation: all five are then true statements awaiting proofs.
+on five obligations — the representability gate, `Pic0.smooth`, `Pic0.proper`, and leaves B
+and C — because discharging this leaf makes the gate *fire* rather than removing it:
+`Scheme.Pic0Scheme` carries `[Scheme.HasPicScheme C]`, whose sole producer is the named
+theorem `Scheme.picSchemeOfHasRationalPoint`, itself resting on
+`Scheme.fgaPicardRepresentability`. (There is no `instHasPicScheme`: the gate has no
+instance at all since 2026-07-28, so it is invoked by name and never synthesised.) What
+the discharge changes is the *kind* of every remaining obligation: all five are then true
+statements awaiting proofs.
 `scripts/axiom-frontier.lean` §0b measures this rather than asserting it. -/
 theorem hasRationalPoint_of_curve_of_isAlgClosed [IsAlgClosed k] (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] :
@@ -583,12 +600,16 @@ theorem isAlbanese_pic0_of_isAlgClosed [IsAlgClosed k] (C : Over (Spec (.of k)))
 
 /-- **The assembly itself, with the rational point taken as a hypothesis.**
 
-This is the mathematical content of the FGA route at the headline, separated from the
-question of *where the rational point comes from* — which is the whole of the open decision
-I-0372 and none of the assembly. Given `[Scheme.HasRationalPoint C]`, the identity component
-`Pic⁰_{C/k}` carries a Jacobian witness, and the remaining obligations are the five
-recorded in the file header: the representability gate `Scheme.instHasPicScheme` (which
-this binder makes fire), the upstream `Pic0.smooth` and `Pic0.proper`, and leaves B and C.
+This is the mathematical content of the `picSharp` route, separated from the question of
+*where the rational point comes from*. Given `[Scheme.HasRationalPoint C]`, the identity
+component `Pic⁰_{C/k}` carries a Jacobian witness, and the obligations of *this* witness
+are five: the representability gate `Scheme.HasPicScheme` — which this binder makes fire,
+through the named theorem `Scheme.picSchemeOfHasRationalPoint` and so through
+`Scheme.fgaPicardRepresentability` — the upstream `Pic0.smooth` and `Pic0.proper`, and the
+two `picSharp` leaves `smoothOfRelativeDimension_genus_pic0` and `isAlbanese_pic0`. These
+are **not** the five obligations of the headline listed in the file header, which are the
+étale ones; the two lists share only their common ancestor
+`Scheme.fgaPicardRepresentability`.
 
 **This is a CONDITIONAL milestone and NOT the headline** (owner decision of 2026-07-28,
 protection I-0491 clause 4). It is true, it records exactly what a rational point buys, and
@@ -727,10 +748,11 @@ noncomputable def jacobianWitness (C : Over (Spec (.of k)))
 /-- The Jacobian of a smooth, proper curve over a field `k`.
 
 The Jacobian is the underlying scheme of an Albanese witness for `C` (see
-`JacobianWitness` and `nonempty_jacobianWitness`), so it is `Pic⁰_{C/k}` for the
-witness `picardJacobianWitness`, whose remaining content is the three leaves of
-§"The three open leaves of the witness" together with the two unproved upstream
-theorems named in the file header. The genus-`0`
+`JacobianWitness` and `nonempty_jacobianWitness`), so it is `Pic⁰_{C/k}` in its étale
+form for the witness `picardJacobianWitness`, whose remaining content is the five
+obligations enumerated in the file header: the two étale leaves of §"The open leaves of
+the two witnesses" together with `Scheme.fgaPicardRepresentability` and the two residues
+`Pic0Et.geometricallyReduced` / `Pic0Et.universallyClosed`. The genus-`0`
 specialisation is implicit in the witness — a smooth proper geometrically
 irreducible group scheme over `k` of relative dimension `0` is `Spec k` — so
 no separate genus-`0` construction is needed. -/
