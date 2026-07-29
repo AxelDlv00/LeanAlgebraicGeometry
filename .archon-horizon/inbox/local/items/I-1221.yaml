@@ -1,0 +1,62 @@
+id: I-1221
+provider: local
+kind: issue
+body: 'Pic0.Bundle IS VACUOUS IN ITS PARAMETER C, AND THE LIMIT ON THE DAMAGE IS THAT
+  NOTHING BINDS IT YET -- labelled at the definition, not repaired.
+
+
+  SITE: AlgebraicJacobian/Albanese/AlbaneseUP.lean, `structure Bundle` (grep the name;
+  line anchors on this seam rot within hours). Found by a vacuity scan over every
+  class and structure under Picard/ plus one hop above it.
+
+
+  THE MEASUREMENT. C is a PARAMETER of Bundle and occurs in NO field. The five fields
+  (scheme, grpObj, proper, smooth, geomIrred) constrain `scheme` to be some proper
+  smooth geometrically irreducible group object over kbar -- an abelian variety --
+  and nothing ties it to the curve C. Kernel-measured, lake env lean EXIT=0 on fresh
+  oleans: for curves C and D with NO relation, the anonymous-constructor term built
+  entirely from `bundle D`''s five projections typechecks at type `Bundle C`. This
+  is exactly the HasDivFunctor shape I-0838 names as the cautionary case, one hop
+  above the Picard seam.
+
+
+  THE QUALIFIER, and it is why this is a label and not a defect to fix now. `Bundle`
+  is never BOUND as a hypothesis anywhere in the project: the only term of the type
+  is the canonical `bundle C`, whose producer pins scheme := Scheme.Pic0Scheme C,
+  and `jacobianScheme C = Scheme.Pic0Scheme C` holds by rfl (measured with the producer''s
+  three gates in scope). So every current consumer really is about C, by definitional
+  unfolding rather than by anything the type records. No existing theorem is weakened.
+
+
+  WHY IT STILL MATTERS. The docstring said ''Interface for Pic0_{C/kbar}'', which
+  invites the next author to write a declaration taking `(b : Bundle C)`. That declaration
+  would be a theorem about an arbitrary abelian variety while reading as one about
+  the Jacobian of C, and since abelJacobi and the Albanese universal property are
+  stated against `jacobianScheme C`, no type error would catch it. Repair if ever
+  needed: add a field pinning the moduli property (a RepresentableBy for the degree-zero
+  part of picEt C, or an iso to Pic0Scheme C).
+
+
+  LANDED: the finding is written into the structure''s own docstring at 3c2dde1c02,
+  with the qualifier, so a reader cannot reach the definition without it. lake build
+  EXIT=0 (8696 jobs).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T20:41:21.437109+00:00'
+updated_at: '2026-07-29T20:41:21.437120+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0012-horizon-review-ajc
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge

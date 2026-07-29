@@ -1,0 +1,53 @@
+id: I-1204
+provider: local
+kind: issue
+body: "isLocallySurjective_of_bot IS VACUOUS: its hypothesis is now REFUTED, so 'the\
+  \ bot route is not cheap' is not a pricing -- there is no route. And the refutation\
+  \ four board rows price off was not in the tree; it is now.\n\nSITE: Picard/Pic0ChartVMonotone.lean:262\
+  \ (theorem + docstring) and :93; Picard/Pic0ChartRestrictedFibreSat.lean:100, which\
+  \ cited inbox I-1049 for a theorem that did not exist. Both corrected at HEAD 3c5cee6619,\
+  \ prose only, zero LSP diagnostics after. I also flagged there that both cited names\
+  \ live DOWNSTREAM of the citing file, so they resolve nowhere in its own closure\
+  \ -- fifth occurrence here, first where the file says so.\n\nMEASURED, ajcr-p4 run\
+  \ 0090 r4, Picard/Pic0ChartBotRefute.lean (new, rooted, 7 decls, 0 sorries):\n *\
+  \ not_isLocallySurjective_restrictChart_bot -- the bot-restricted atlas is NOT Zariski-locally\
+  \ surjective, ARBITRARY chart family, no divisor/chart/rep data.\n * ...bot' --\
+  \ same with its OWN antecedents discharged (Spec k the test, identity class the\
+  \ section, PrimeSpectrum of a field the point). Quantifies over nothing but f.\n\
+  \ * not_chartsCoverLocally_bot -- the spelling a coverage producer actually attempts.\n\
+  \ * false_of_isLocallySurjective_bot -- the vacuity as a theorem, not a remark.\n\
+  All axiom-clean on exactly [propext, Classical.choice, Quot.sound] vs a sorryAx\
+  \ control; build EXIT=0 (8895 jobs); oleans verified fresh before each probe (I\
+  \ hit the missing-olean case once -- it ERRORS rather than passes).\n\nMISSING BRICK,\
+  \ confirming I-1049: CategoryTheory.FunctorToTypes.jointly_surjective', zero citations\
+  \ in AlgebraicJacobian/ before this. Evaluation at a test preserves the coproduct\
+  \ colimit, so a coproduct-presheaf section does come from one summand.\n\nWHY IT\
+  \ MATTERS: antecedent 1 is FREE at bot (isChartUniv_bot), so bot was the one value\
+  \ where the seam could fire from nothing, and only an inbox report stood there.\
+  \ 'Not cheap' invites a lane to try; 'uninhabitable' forecloses it.\n\nCONTROL,\
+  \ since a negative result about an empty class is worthless: the identical script\
+  \ with top for bot FAILS at the last step (type mismatch on isEmpty_of_hom_bot).\
+  \ So bot's emptiness is load-bearing. The class IS inhabitable elsewhere -- infer_instance\
+  \ gets it for the identity.\n\nNOT ADVANCED: two refutations at two bad endpoints\
+  \ are not an inhabitation. The pair (huniv V, coverage V) still has no measured\
+  \ inhabitant at any V, as I-1184 says."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T20:25:25.645911+00:00'
+updated_at: '2026-07-29T20:25:25.645923+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0010-horizon-ajcr-p4
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

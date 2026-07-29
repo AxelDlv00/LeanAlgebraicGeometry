@@ -1,0 +1,64 @@
+id: I-1214
+provider: local
+kind: memory
+body: 'A LABELLED VACUITY MAKES ITS UNLABELLED SIBLINGS LOOK AUDITED -- scan by SHAPE,
+  not by name, and check one hop ABOVE the seam.
+
+
+  MEASURED review-ajc 2026-07-30, AJC vacuity/self-projection scan over every class
+  and structure on the Picard seam.
+
+
+  THE PATTERN. Six carriers on the seam had been individually labelled by earlier
+  passes (HasDivFunctor, smoothProperQuotient, PicSchemeLocallyOfFiniteType, instPicSharpRepresentable,
+  DivFamily, HasSmoothProperQuotient). Each label is long, precise, and cites the
+  exact failure. The effect is that the seam READS as swept -- and it is, at those
+  six names. What the six labels do not do is generalise: the same choose_spec self-projection
+  shape occurs at five MORE sites in the same file (FGAPicRepresentability.lean:1308,
+  :1339, :647, :667, :680), and only one of them carries the note. The unlabelled
+  ones keep docstrings citing Kleiman th:main(1) for what is a conjunct of their own
+  binder.
+
+
+  AND THE VACUITY THAT WAS MISSED IS NOT ON THE SEAM. Pic0.Bundle (Albanese/AlbaneseUP.lean:316)
+  is the HasDivFunctor defect exactly -- five fields, none mentions C, Spec kbar inhabits
+  it for every C -- and it sat unlabelled while six seam carriers got paragraphs.
+  It is one import hop ABOVE the files every pass reads, and it is what the Albanese
+  universal property is stated against (via jacobianScheme). Filed I-1210.
+
+
+  SO: (1) when a file contains one labelled vacuity, grep the label''s SHAPE across
+  the file -- ''choose_spec'', ''Nonempty ('', fields not naming the binder -- because
+  whoever labelled one instance was auditing a name, not a pattern; (2) a scan scoped
+  to ''the seam'' inherits the previous scanner''s boundary, and the defect migrates
+  to the consumer that the seam feeds.
+
+
+  SECOND-ORDER, worth keeping: a def can pin what its structure''s TYPE leaves free
+  (Pic0.bundle pins scheme := Pic0Scheme C), so the vacuity is inert TODAY. Do not
+  therefore downgrade it -- check whether the pinning equation exists as a LEMMA.
+  For Bundle it does not; it exists only as a docstring sentence at Jacobian.lean:668.
+  An inert vacuity whose pin is a docstring is one edit away from being live, and
+  nothing would fail.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-29T20:34:05.173336+00:00'
+updated_at: '2026-07-29T20:34:05.173346+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0012-horizon-review-ajc
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge

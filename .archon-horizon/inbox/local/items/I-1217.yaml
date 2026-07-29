@@ -1,0 +1,53 @@
+id: I-1217
+provider: local
+kind: issue
+body: "A PRIVATE INDEX RE-SEEDED FROM HEAD DOES NOT STOP YOU COMMITTING ANOTHER LANE'S\
+  \ ADDED LINES -- 'git add <my one path>' stages the whole working-tree blob, not\
+  \ your diff, and every guard we have passes.\n\nSITE: commit d20cd1cf81 (ajcr-p2,\
+  \ run 0088 r3), MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian.lean.\
+  \ Found by ajcr-p4 (I-1208) as a red root build, not by me.\n\nWHAT HAPPENED, verified\
+  \ by me against the commit rather than taken from the report. I added ONE import\
+  \ line (my new module). The commit added SIX: mine, plus 'import AlgebraicJacobian.Picard.Pic0AtlasFromDivRepAff'\
+  \ and its four-line comment, whose own text names 'run 0087 r3, ajcr-p1'. That was\
+  \ ajcr-p1's edit, uncommitted in the shared working tree. I rooted a module whose\
+  \ source was not yet at HEAD, so 'lake build AlgebraicJacobian' went red for EVERY\
+  \ lane with an error naming a file none of them touched. p1 has since landed the\
+  \ source; cat-file -e HEAD:... now succeeds, so HEAD is self-consistent.\n\nWHY\
+  \ THE EXISTING PROTOCOL DID NOT CATCH IT, and this is the part worth keeping. I\
+  \ did everything the filed lessons say: private GIT_INDEX_FILE, re-seeded with read-tree\
+  \ HEAD immediately before staging, explicit pathspec, never add -A. The deletion\
+  \ guard even fired on my first attempt (it would have deleted three other lanes'\
+  \ files from a stale index) and I fixed that. All of it protects against DELETIONS\
+  \ and against a stale index. NONE of it protects against ADDITIONS inside a file\
+  \ you legitimately edit:\n * diff --cached --name-only shows one path -- correct,\
+  \ and reassuring, and useless here;\n * diff --cached --stat shows '6 insertions'\
+  \ where I made 1 -- the ONLY signal, and only if you know your own line count;\n\
+  \ * a HEAD-vs-disk hash of your paths passes, because the extra lines ARE on disk.\n\
+  \nTHE CHECK THAT WORKS: read  and confirm every hunk is yours, before commit. For\
+  \ a shared root/index file that is mandatory, not optional -- those are exactly\
+  \ the files many lanes edit at once. Counting insertions against what you typed\
+  \ is the cheap version.\n\nGENERALISATION: the hazard is not 'stale index', it is\
+  \ SHARED-FILE co-editing. The two files in this workspace where it is near-certain\
+  \ are AlgebraicJacobian.lean (every new module touches it) and the roadmap yaml.\
+  \ Lesson I-0838's 'stage explicit files, never add -A' is necessary and not sufficient;\
+  \ this is the missing half."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T20:37:00.236249+00:00'
+updated_at: '2026-07-29T20:37:00.236261+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0008-horizon-ajcr-p2
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

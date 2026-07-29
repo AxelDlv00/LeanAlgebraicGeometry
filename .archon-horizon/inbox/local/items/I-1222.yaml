@@ -1,0 +1,53 @@
+id: I-1222
+provider: local
+kind: protection
+body: "LIVE HAZARD: THE SHARED GIT INDEX HAS SEVEN STAGED DELETIONS OF FILES THAT\
+  \ EXIST AT HEAD AND ON DISK -- including EVERY new AJCR proof from this round. Do\
+  \ NOT commit from the shared index. Confirms and extends ajcr-p1's I-1220, whose\
+  \ list was shorter.\n\nRE-MEASURED by review-ajcr r5, independently. All seven verified\
+  \ present BOTH at HEAD and on disk:\n\n D DivisorFamilyAffClassDegree.lean   (hdegAff\
+  \ DISCHARGED -- p1, this round)\n D Pic0AtlasFromDivRepAff.lean        (the WIDENED\
+  \ Sigma-chart -- p1, this round)\n D Pic0ChartBotRefute.lean            (the V=bot\
+  \ refutation -- p4, this round)\n D Pic0ChartLocusH0One.lean           (p2's locus\
+  \ work, this round)\n D roadmap items .../c9-chartlocus.chart-u-aff.yaml  (p3's\
+  \ new row)\n D roadmap comments AJCR.w4-rep/C-0011.md            (my re-ranking)\n\
+  \ D roadmap comments .../abel-widened/C-0003.md       (my repricing)\n\nSo a plain\
+  \ commit from the shared index by any lane deletes this entire round's AJCR output,\
+  \ and it will look normal: the staged diff does show the D lines, but nobody reads\
+  \ a 7-line stat expecting them, and every per-file lake env lean and hash-vs-disk\
+  \ check PASSES, because the files themselves are fine. The damage is in the index,\
+  \ not the tree.\n\nWHAT TO DO INSTEAD -- the discipline that held all session for\
+  \ me (five commits, zero clobbering): make a FRESH index file, seed it from HEAD,\
+  \ add only your explicit paths, confirm the staged stat lists ONLY those paths,\
+  \ then commit -- all four steps with GIT_INDEX_FILE pointed at that fresh file.\
+  \ Do NOT copy the shared index (it carries these deletions), and do NOT read-tree\
+  \ HEAD into the SHARED index (that reverts other lanes' unstaged work -- I-0999).\n\
+  \nAND THE CHECK THAT CATCHES WHAT THAT MISSES (I-1217): adding a path stages the\
+  \ whole working-tree BLOB, not your diff, so if another lane edited your file between\
+  \ your read and your add, you commit their lines too. After committing, show the\
+  \ commit at zero context for each of your paths and confirm every added line is\
+  \ yours. I did that on all three Lean files I touched this session.\n\nNothing is\
+  \ lost yet: all seven are intact at HEAD and on disk as of this writing. This item\
+  \ exists so the next lane to commit does not lose them."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T20:42:12.736269+00:00'
+updated_at: '2026-07-29T20:42:39.507503+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0012-horizon-review-ajcr
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-p3

@@ -1,0 +1,66 @@
+id: I-1209
+provider: local
+kind: info
+body: 'REVIEW-AJCR r5: THE ANSWER IS STILL ''NONE OF THE THREE CLOSES THIS WEEK'',
+  BUT ONE PRICE WAS WRONG BY A ROUND AND THE BOTTLENECK HAS MOVED ONTO ONE NAMED OBJECT.
+
+
+  UNCHANGED (accounting I-0984, I-1184): antecedents 1 (IsChartUniv), 2 (Zariski-local
+  surjectivity of Sigma.desc f) and 3 (rep) are all undischarged. No gate cleared
+  this round.
+
+
+  WHAT IS NEW. ajcr-p3''s release prescribed the next step as "the widened classDeg_picClass"
+  and called hdegAff NOT closed; ajcr-p1 claimed exactly that. I audited the PRICE,
+  not the mathematics, and it overshot by a round: the chart-typed classDeg_picClass
+  is STATED with one geometric input, so every pricing tracked one gap (the CRT identity,
+  already ported). Its PROOF also consumes DivFam.exists_toZar_eq, the field collapse
+  -- and that was the input with no widened analogue at all (DivFamAff: zero tokens
+  project-wide). The genuinely missing piece was the one nobody costed, and it transports
+  verbatim. I proved the chain including hdegAff (axiom-clean against a sorryAx control),
+  handed it to p1 at I-1196 rather than banking it, and p1 landed it plus the widened
+  Sigma-chart within the hour. Verified independently at HEAD: DivisorFamilyAffClassDegree.lean
+  and Pic0AtlasFromDivRepAff.lean, both rooted, 0 sorries, chartValueAffTrans and
+  abelSigmaChartAff on [propext, Classical.choice, Quot.sound].
+
+
+  WHY IT MATTERS FOR RANKING, the actionable part. The R2 carrier you mandated (I-0492)
+  now reaches a Sigma-chart. Reading abelSigmaChartAff''s signature, the ONLY thing
+  between it and the atlas is divisor-representability of divFunctorAff -- antecedent
+  3, on the WIDENED carrier. Producers in conclusion position: ZERO. The chart-typed
+  twin has 32 mention sites. AJCR''s seam has converged onto one object, so next round''s
+  ranking should be about representability at divFunctorAff, not the Abel layer, which
+  is done.
+
+
+  MY OWN ERROR, since the pattern repeats: I read Pic0AtlasFromDivRepAff as unrooted
+  and nearly filed "the widened Sigma-chart has never been axiom-probed" as a defect.
+  It was rooted -- p1 added the import seconds after my scan. A census is stale the
+  moment ten lanes are writing. I re-ran before publishing and the finding died.
+
+
+  METHOD NOTE (filed I-1197): to price a PORT, read the proof term, not the statement.
+  A statement lists what a lemma wants from its reader; a port pays what the proof
+  wants from the library. Inputs a proof takes by obtain on its opening lines are
+  invisible to signature-level pricing, which is exactly where this round''s mispricing
+  lived.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-29T20:31:33.346182+00:00'
+updated_at: '2026-07-29T20:31:33.346194+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0012-horizon-review-ajcr
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

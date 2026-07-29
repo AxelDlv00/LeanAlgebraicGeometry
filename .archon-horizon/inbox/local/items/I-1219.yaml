@@ -1,0 +1,68 @@
+id: I-1219
+provider: local
+kind: issue
+body: 'GAP-2''s h0 = 1 BINDER IS NOT OWED ON THE CHART LOCUS -- it follows from the
+  locus''s own definition, and so do the two effectivity binders. Seven files price
+  it as owed.
+
+
+  MEASURED by ajcr-p2 (run 0088 r3). Picard/Pic0ChartLocusH0One.lean, NEW, rooted
+  at AlgebraicJacobian.lean:578, 5 declarations, sorry-free, lake build EXIT=0 (8897
+  jobs, module 19s, zero own diagnostics), all five axiom-clean [propext, Classical.choice,
+  Quot.sound] vs a control that fires sorryAx; oleans rebuilt before every probe.
+
+
+  SITES: Pic0ChartPair.lean:152-158; Pic0ChartUnivReduce.lean:160-161; Pic0ChartLocus.lean:146-150
+  (''the effectivity must be RE-SUPPLIED at that point. A lane that reads IsSplitWitness
+  as already giving it will have a gap where it least expects one''); Pic0ChartAbelForkReduce.lean:319
+  (mine).
+
+
+  WHY WRONG ON THE LOCUS. chartLocus is DEFINED through IsSplitWitness (Pic0ChartLocus.lean:151-161),
+  whose clause asserts a CurveDivisor W in the presenting class with Subsingleton
+  (H1 (divisorSheaf L W)) -- exactly what the rank anchor h0_eq_deg_add_chi_of_subsingleton_hModule_one
+  (RiemannRoch/FLVClass.lean:412) consumes. What membership does NOT carry is W''s
+  DEGREE; the chart index supplies that via classDeg_presenting_eq_degAff plus the
+  twist ledger, as exactly n. So h0 = deg + chi = n + (1-n) = 1; then exists_effective_of_h0_pos
+  (SectionBound.lean:175) gives effectivity and h0_divisorSheaf_eq_of_picClass_eq
+  carries the value across. Every link landed; nothing related them. Pic0ChartLocus.lean:146-150
+  is right about IsSplitWitness ALONE and wrong about the locus -- the missing ingredient
+  was degree, not effectivity.
+
+
+  NOT THE THRESHOLD ROUTE: hb_forces_h0_eq_one (Pic0ChartCoverageIndexSlack.lean:180)
+  needs ''every divisor of degree >= n has H1 = 0'', which its own file proves FALSE
+  at n = g. Mine needs vanishing at ONE divisor. One divisor of degree n is not all
+  of them; only the first is true.
+
+
+  CLOSES NO ANTECEDENT. All fibrewise, over L/kappa(t) at one point. Fibre-witness
+  uniqueness is not general-test injectivity (Pic0ChartAbelNonInjective''s caveat,
+  restated by ajcr-p3 against my own last round); RelPicSeparatesDivFamZar stays undischarged.
+  One NAMED INPUT of the field-level keystone is removed, not the relativisation.
+  n = genus is neither proved nor assumed -- hchi stays explicit per I-1176.
+
+
+  NEXT ACTION for c9b / chart-u: budget exists_factor as the relativisation ALONE.
+  Feed eq_of_picClass_eq_of_deg_of_subsingleton (deg + vanishing, no h0) or existsUnique_effective_of_mem_chartLocus
+  (locus point, nothing else) instead of the raw keystone.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T20:38:15.072883+00:00'
+updated_at: '2026-07-29T20:38:15.072900+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0008-horizon-ajcr-p2
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

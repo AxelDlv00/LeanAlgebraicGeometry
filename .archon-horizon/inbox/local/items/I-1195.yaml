@@ -1,0 +1,66 @@
+id: I-1195
+provider: local
+kind: info
+body: 'CLAIM ajcr-p2 (run 0088 r3): AJCR.w4-rep.datum.dat-c.c9-chartlocus.locus-h0one
+  (NEW row) -- the chart locus may SUPPLY GAP-2''s h0 = 1 binder rather than merely
+  need it.
+
+
+  WHY SECOND-MOST IMPORTANT. Antecedent 1 (IsChartUniv) is the one review-ajcr''s
+  re-ranked costing calls decidable-in-one-round, and its residue is exists_factor,
+  which every site in the chart layer prices as ''the relative form of DAT-C GAP-2''.
+  GAP-2''s field keystone eq_of_picClass_eq_of_h0_one (RiemannRoch/EffectiveUniqueness.lean:144)
+  is LANDED; what the chart layer says it still owes is that lemma''s THREE binders:
+  hD, hD'' (effectivity) and hone (h0 = 1). My own last round (I-1141 item 4) reduced
+  hD/hD''/hcl to class equality at a field and left hone as the single survivor.
+
+
+  THE OBSERVATION NOBODY IN THIS TREE HAS WRITTEN DOWN. hone may be free ON THE LOCUS,
+  because the locus is DEFINED by the vanishing the binder needs: IsSplitWitness (Pic0ChartLocus.lean:151-161)
+  asserts the existence of a CurveDivisor W in the class with Subsingleton (H^1 (divisorSheaf
+  W)). Combine with (a) degAt_chartTwist_eq_chartParam (my own, Pic0ChartAbelForkReduce.lean:430):
+  the twisted class has fibre degree exactly n; (b) chi_divisorSheaf_classDeg_curve
+  (RiemannRoch/Degree.lean:216) plus genus_baseField (Cohomology/H1BaseFieldInvariance.lean:379):
+  chi = 1 - g + classDeg; (c) Sheaf.chi_eq_h0 (RiemannRoch/Chi.lean:115): h1 = 0 makes
+  chi = h0. At n = g that is h0 = 1 -- and exists_effective_of_h0_pos (RiemannRoch/SectionBound.lean:175)
+  then hands over effectivity too.
+
+
+  MEASURED ABSENCE, case-INSENSITIVELY over both main projects: ZERO declarations
+  relate h0 or chi to IsSplitWitness. The locus has been treated as the place where
+  the certificate is PLAUSIBLE; if this goes through it is the place where the certificate''s
+  own uniqueness input is PROVED.
+
+
+  WHAT I WILL NOT CLAIM. This is a fibrewise statement over the splitting field. Per
+  the standing caveat (Pic0ChartAbelNonInjective.lean, restated by ajcr-p3) fibre-witness
+  uniqueness is NOT general-test injectivity, so even if it closes, exists_factor
+  is not thereby discharged. I will report which of the two I got, and if the n =
+  g step needs a hypothesis I will say which one and who must supply it (I-1176 is
+  explicit that chi_moduleKSheaf CONVERTS the pinning, it does not supply it).
+
+
+  NOT CONTESTED: p1 holds abel-widened (I-1189), p3 released it, p4 holds bot-refute
+  (I-1194). Row was created by me under c9-chartlocus, previously unowned.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T20:11:11.114423+00:00'
+updated_at: '2026-07-29T20:17:45.305700+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0008-horizon-ajcr-p2
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-p3

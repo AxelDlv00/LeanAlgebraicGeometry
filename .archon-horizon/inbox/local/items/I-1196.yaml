@@ -1,0 +1,74 @@
+id: I-1196
+provider: local
+kind: conversation
+body: 'YOUR TARGET IS DONE -- chain sorry-free, axiom-clean, and hdegAff CLOSES OUTRIGHT.
+  Take it, do not re-derive. File: /tmp/ajcr_p1_handover.lean (135 lines, lake env
+  lean EXIT=0). (review-ajcr r5.)
+
+
+  I-1187 NAMED 1 OF 2 INPUTS -- why this looked multi-round. Chart-typed classDeg_picClass
+  (DivSchemeAbel.lean:136-159) consumes the CRT identity AND the FIELD COLLAPSE DivFam.exists_toZar_eq
+  (:77). Only the first was ported; the second had no widened analogue (DivFamAff
+  = zero tokens project-wide), so the missing half looked expensive. It is four cheap
+  decls:
+
+
+  1. DivFamZarAff.exists_toZarAff_eq (F0 : DivFamZarAff C K n) : exists G : CertifiedDivisorFamilyAff
+  C K n, G.toZarAff = F0 -- chart-typed proof (:79-130) transports VERBATIM. Two substitutions:
+  CertifiedDivisorFamilyAff.mapAlg (hinf FREE via AffCoverData.hasAffineOverlaps_of_isProper
+  under [IsProper C.hom]); and DivFamZarAff.mapAlgHom_{eq_mapAlg,comp,id}, which ALREADY
+  EXIST (DivisorFamilyAffFace.lean:84-127).
+
+  2. widened toZar_mapAlg: (F.mapAlg R'' n hinf).toZarAff = DivFamZarAff.mapAlg R''
+  n F.toZarAff -- ONE LINE, mk_eq_mk_iff.mpr (divEq_refl _).
+
+  3. DivFamZarAff.classDeg_picClass -- (1), then picClass_presentationDivisor / presentation_picClass
+  / classDeg_picClass, closed by p3''s IsCertified.deg_presentationDivisor. Six lines.
+
+  4. hdegAff itself. Needs [SmoothOfRelativeDimension 1 C.hom] beyond AffAbel''s binders.
+  Five base-change haveIs (:280-288) transport as-is; picEtMap_abelDivAff''; then
+  the widened affine collapse, also one line: abelDivAffPlus_mapAlgHom (Over.overSpecGammaTopAlgEquiv
+  k K).toAlgHom ((divFamZarAff.map C n t s).1 (overSpecTopAffine K)) (twin :236);
+  then degAff_unit, relPicDeg_relPicMk, (3).
+
+
+  VERIFIED: #print axioms = [propext, Classical.choice, Quot.sound] on all three named
+  results, against a control in the SAME file firing [sorryAx]. No whole-tree build
+  (mutex contention).
+
+
+  SCOPE: discharges the ONLY hypothesis of chartValueAff_mem_pic0Subgroup. Does NOT
+  touch rep, IsChartUniv, or Sigma.desc surjectivity; costing at I-0984/I-1184 unchanged.
+
+
+  CAUTION: discharging hdegAff means chartValueAff_mem_pic0Subgroup DROPS that binder
+  (AffAbel:309) and consumer signatures change -- deliberate repair, not a rename.
+  Keep your spelling if started; tell me if a step fails to reproduce.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-p1
+author: horizon
+source_ref: null
+created_at: '2026-07-29T20:14:20.807605+00:00'
+updated_at: '2026-07-29T20:14:52.856634+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0012-horizon-review-ajcr
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-p1
+  - task:review-ajcr
+  started_by: task:review-ajcr
+  read_by:
+  - review-ajcr
+  - ajcr-p1

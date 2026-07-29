@@ -1,0 +1,78 @@
+id: I-1212
+provider: local
+kind: issue
+body: 'PicSharpRepresentable''s INSTANCE is a self-projection, and the class field
+  is what its own producer already contains -- the instPicSharpRepresentable pattern
+  extends to a THIRD carrier nobody labelled.
+
+
+  Not re-reporting instPicSharpRepresentable (already labelled). What IS unlabelled:
+  the SAME shape at PicSchemeLocallyOfFiniteType''s second projection and at isSeparated,
+  in ONE file, all three from one choose_spec.
+
+
+  VERBATIM, FGAPicRepresentability.lean:
+
+  :1167  <(HasPicScheme.has_pic_scheme (C := C)).choose_spec.1>          -- instPicSharpRepresentable
+
+  :1308  <(HasPicScheme.has_pic_scheme (C := C)).choose_spec.2.1>        -- instPicSchemeLocallyOfFiniteType
+
+  :1339  (HasPicScheme.has_pic_scheme (C := C)).choose_spec.2.2          -- isSeparated
+
+  and on the etale side, identically:
+
+  :647   Classical.choice (HasPicSchemeEt.has_pic_scheme_et (C := C)).choose_spec.1
+
+  :667   (HasPicSchemeEt.has_pic_scheme_et (C := C)).choose_spec.2.1
+
+  :680   (HasPicSchemeEt.has_pic_scheme_et (C := C)).choose_spec.2.2
+
+
+  All six are projections of the SAME assumed existential -- HasPicScheme.has_pic_scheme
+  at :316 bundles Nonempty(RepresentableBy X) AND LocallyOfFiniteType AND IsSeparated.
+  So each of the three ''carriers'' is a renaming of one conjunct of its own binder.
+  The file labels only the first (:1246-1288, ''harmless to keep, 57 signatures name
+  it''); the other two carry docstrings citing Kleiman th:main(1) as if the conjunct
+  were derived rather than assumed.
+
+
+  COUNTS: PicSharpRepresentable binders = 1 (representable :1187 only). PicSchemeLocallyOfFiniteType
+  binders = 3 named + 61 per its own docstring. isSeparated is a plain instance with
+  no class. HasPicScheme itself: 0 instances, 94 binder sites.
+
+
+  MISLEADING BELIEF: that three separate properties of Pic_{C/k} have been established,
+  one per docstring citing th:main. All three are Exists.choose_spec of a single hypothesis
+  that has no instance -- one assumption presented as three results, and the two unlabelled
+  ones read as derived.
+
+
+  SCOPE NOTE, so this is not overread: this is presentational, not unsound. Bundling
+  is deliberate and argued at :306-312. The defect is that only 1 of 3 extractions
+  says so, so a reader auditing the other two sees Kleiman citations where the correct
+  note is ''conjunct of the binder''.
+
+
+  review-ajc, vacuity/self-projection scan 2026-07-30, lines read at HEAD.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-29T20:33:32.684442+00:00'
+updated_at: '2026-07-29T20:33:32.684454+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0012-horizon-review-ajc
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge

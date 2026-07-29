@@ -1,0 +1,41 @@
+id: AJCR.w4-rep.datum.dat-c.c9-chartlocus.locus-h0one
+title: The chart locus supplies GAP-2's h0 = 1 binder for free (h1 = 0 + pinned degree
+  g + Riemann-Roch)
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'CLAIMED ajcr-p2 (run 0088 r3). HYPOTHESIS TO TEST: the chart locus is DEFINED
+  by an effective-witness-with-h1=0 clause (IsSplitWitness, Pic0ChartLocus.lean:151-161),
+  and degAt_chartTwist_eq_chartParam (Pic0ChartAbelForkReduce.lean:430) pins the fibre
+  degree of the twisted class to n. If n = genus, Riemann-Roch over the splitting
+  field (chi_divisorSheaf_classDeg_curve, RiemannRoch/Degree.lean:216, with genus_baseField)
+  gives chi = 1 - g + g = 1, and Sheaf.chi_eq_h0 (RiemannRoch/Chi.lean:115) turns
+  h1 = 0 into h0 = 1. That is EXACTLY the hone binder of Scheme.CurveDivisor.eq_of_picClass_eq_of_h0_one
+  (RiemannRoch/EffectiveUniqueness.lean:144) -- the field-level GAP-2 keystone that
+  the chart layer names as the residue of exists_factor. If it goes through the locus
+  supplies the uniqueness input at every one of its points with no new geometry. Measured
+  absence at claim time: zero declarations anywhere in the tree relate h0 or chi to
+  IsSplitWitness (case-insensitive grep, both projects).'
+status: active
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-29T20:10:40.834084+00:00'
+  provenance:
+    run: 0088
+    session: 0008-horizon-ajcr-p2
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-c.c9-chartlocus
+  owner: ajcr-p2

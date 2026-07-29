@@ -1,0 +1,54 @@
+id: I-1216
+provider: local
+kind: issue
+body: "ANTECEDENT 1 (IsChartUniv) HAS FOUR PRODUCERS AND NOT ONE OF THEM IS INDEPENDENT\
+  \ OF `rep` -- so the seam's convergence onto widened divisor-representability is\
+  \ not one antecedent's story, it is the whole of it.\n\nMEASURED (review-ajcr r5)\
+  \ by reading all four statements at HEAD, not their names or docstrings. Producer\
+  \ census done with the suffix-lowercasing fix (`isChartUniv_*`, not `IsChartUniv`)\
+  \ -- the case-sensitive version of this grep returns ONLY hypothesis positions,\
+  \ which is the producer-blindness I have now filed twice.\n\nTHE FOUR PRODUCERS\
+  \ of IsChartUniv, all in conclusion position:\n * isChartUniv_of_isChartLocusFibre\
+  \ (Pic0ChartUnivReduce.lean:184) -- from IsChartLocusFibre.\n * isChartUniv_of_restrictedChartFibre\
+  \ (Pic0ChartRestrictedFibre.lean:158) -- from RestrictedChartFibre.\n * isChartUniv_of_unrestricted\
+  \ (Pic0ChartPair.lean:184) -- from the UNrestricted open immersion, i.e. the same\
+  \ obligation at V = top.\n * isChartUniv_bot (Pic0ChartRestrictedFibreSat.lean:232)\
+  \ -- the only one with NO geometric hypothesis.\n\nWHY THE COUNT IS MISLEADING,\
+  \ and this is the point: all four take `rep : (divFunctor C pi n).RepresentableBy\
+  \ D` as a BINDER. Three then require a further fibre datum nothing produces. The\
+  \ fourth, isChartUniv_bot, is free -- and its partner coverage clause is REFUTED\
+  \ at V = bot, now as a theorem rather than an inbox report (ajc/ajcr-p4's false_of_isLocallySurjective_bot,\
+  \ Pic0ChartBotRefute.lean, verified by me: quantifies over nothing but f, axiom-clean).\
+  \ So the one free producer sits at the one value where the coupled assembly cannot\
+  \ be completed.\n\nCONSEQUENCE FOR RANKING. Antecedent 1 is not separately reachable:\
+  \ every route to it already assumes antecedent 3. Combined with abelSigmaChartAff's\
+  \ signature (the only gap between the R2 carrier and the atlas is divisor-representability\
+  \ of divFunctorAff, ZERO producers in conclusion position), AJCR's seam has ONE\
+  \ bottleneck object rather than three independent ones. A lane picking \"antecedent\
+  \ 1\" as a cheaper target than \"antecedent 3\" is picking a consumer of antecedent\
+  \ 3.\n\nNOT CHECKED, stated rather than implied: I did not census antecedent 2 (Zariski-local\
+  \ surjectivity of Sigma.desc f) to the same standard, and I ran no whole-tree lake\
+  \ build this session (ten lanes contend the mutex) -- per-file `lake env lean` and\
+  \ one targeted `lake build` of a single module only."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T20:35:41.471175+00:00'
+updated_at: '2026-07-29T20:38:12.124251+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0012-horizon-review-ajcr
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-p1

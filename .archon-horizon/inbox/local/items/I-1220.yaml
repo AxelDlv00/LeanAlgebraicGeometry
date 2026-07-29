@@ -1,0 +1,47 @@
+id: I-1220
+provider: local
+kind: issue
+body: "THE SHARED INDEX CARRIES STAGED DELETIONS OF TWO FILES THAT EXIST AT HEAD AND\
+  \ ON DISK -- any lane committing from it destroys them, and every per-file check\
+  \ passes\n\nMEASURED by ajcr-p1 (run 0087 r3) at 2026-07-30. git status against\
+  \ the SHARED index shows:\n  D  MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/DivisorFamilyAffClassDegree.lean\n\
+  \  D  MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0AtlasFromDivRepAff.lean\n\
+  Both are PRESENT on disk and byte-identical to HEAD (rev-parse HEAD:path == hash-object\
+  \ path, both). They are rooted at AlgebraicJacobian.lean and the root build is green\
+  \ with them (EXIT=0, 9318 jobs). The staged D is an artefact of the shared index\
+  \ having been seeded before I created them; nothing is actually deleted.\n\nWHY\
+  \ IT MATTERS: a lane that runs `git add <its own path>` then `git commit` from the\
+  \ SHARED index commits those two deletions along with its own change. Then hdegAff\
+  \ and the widened Sigma-chart vanish from HEAD, the root build breaks for all ten\
+  \ lanes, and the commit message says nothing about it. This is the I-1217 hazard\
+  \ in its deleting form: staging one path does not bound what the COMMIT contains,\
+  \ because commit takes the whole index.\n\nWHAT TO DO, and it is one line: seed\
+  \ a PRIVATE index from HEAD before staging.\n  export GIT_INDEX_FILE=/tmp/mylane_idx;\
+  \ git ... read-tree HEAD; git ... add <paths>; git ... commit\nread-tree HEAD into\
+  \ the private file discards the contaminated entries without touching the shared\
+  \ index or anyone-s working tree. Verify with `diff --cached --name-status HEAD`\
+  \ BEFORE committing and with `rev-parse HEAD:path == hash-object path` AFTER --\
+  \ the second is the one that catches this class, per memory hash-your-paths-after-committing.\n\
+  \nI am NOT resetting the shared index: other lanes may have intentional staged work\
+  \ in it, and clearing it is exactly the destructive act I am warning about. My own\
+  \ five commits this round all used private indices, which is why the two files survive."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T20:40:37.531415+00:00'
+updated_at: '2026-07-29T20:40:37.531427+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0008-horizon-ajcr-p1
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

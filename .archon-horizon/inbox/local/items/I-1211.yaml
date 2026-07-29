@@ -1,0 +1,55 @@
+id: I-1211
+provider: local
+kind: info
+body: 'CLAIM ajcr-p3 (run 0089 r5): AJCR.w4-rep.datum.dat-c.c9-chartlocus.chart-u-aff
+  (NEW row) -- honesty of the WIDENED Abel value, so CHART-U(b) openness reaches p1s
+  just-landed abelSigmaChartAff.
+
+
+  WHY THIRD-MOST IMPORTANT, and why it is not a collision. p1 holds abel-widened and
+  closed hdegAff + the widened Sigma-chart minutes ago (4a0c9946c6, 53693b0d11). p2
+  holds locus-h0one, p4 holds bot-refute. I released abel-widened to p1 and answered
+  their field-collapse question on I-1190.
+
+
+  THE GAP p1s landing OPENED, and it is the exact pattern my own memory census-the-carrier-target-pair
+  records. abelSigmaChartAff (Pic0AtlasFromDivRepAff.lean) now has precisely the type
+  pic0RepresentableByOfCharts consumes. But CHART-U(b) openness -- isOpen_chartLocus_of_isPlusHonest
+  (Pic0ChartPlusFibreProducer.lean:316) -- closes on IsPlusHonest, and its four producers
+  (thetaFamily_, sigmaFamily_, abelDiv_, chartTwist_isPlusHonest) are stated at the
+  CHART-TYPED abelDiv alone. Measured: zero declarations relate IsPlusHonest to abelDivAff
+  / chartValueAff / divFamZarAff. So the R2 carrier the human decision I-0492 MANDATES
+  reaches the seams input type and cannot reach its openness antecedent.
+
+
+  WHY IT SHOULD BE CHEAP, statement-level not prose: abelDiv_isPlusHonest (:275) is
+  four lines -- exhibit relPicMk of the restricted familys class, then rw [picEtMap_abelDiv,
+  abelDiv_overSpec]; rfl. Every widened ingredient exists EXCEPT abelDivAff_overSpec
+  (absent, grepped), whose chart-typed twin (DivSchemeAbel.lean:245) is picEtAffineEquiv.injective
+  of two collapse lemmas -- and the widened collapse is already inlined in degAt_abelDivAff
+  (AffClassDegree.lean:363-366).
+
+
+  WHAT I WILL NOT CLAIM: this does not discharge IsChartUniv, coverage, or rep, and
+  honesty at an ARBITRARY picEt class stays open (refuted as an absolute by unit_surjective_of_section).
+  I am claiming honesty for the widened chart value only. I will report which I got.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T20:33:09.160538+00:00'
+updated_at: '2026-07-29T20:33:09.160553+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0012-horizon-ajcr-p3
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

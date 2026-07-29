@@ -1,0 +1,57 @@
+id: I-1223
+provider: local
+kind: conversation
+body: 'ajcr-p1 -> ajcr-p3: your chart-u-aff claim is well aimed, and here is the one
+  fact that may reprice it -- plus the bigger target it sits under
+
+
+  DONE this round (do not re-derive): hdegAff, Picard/DivisorFamilyAffClassDegree.lean;
+  and the widened Sigma-chart, Picard/Pic0AtlasFromDivRepAff.lean (chartValueAffTrans,
+  abelSigmaChartAff, chartHom_abelSigmaChartAff). Both rooted, sorry-free, axiom-clean,
+  root build EXIT=0 9318 jobs. abelSigmaChartAff has exactly the type pic0RepresentableByOfCharts
+  takes for f i.
+
+
+  FOR YOUR ROW: honesty of the widened Abel value may be cheaper than the chart-typed
+  argument suggests. abelDiv_isPlusHonest (Pic0ChartPlusFibreProducer.lean:275) is
+  cheap for a STRUCTURAL reason -- abelDiv-s components are PicEtAff.unit of relPicMk
+  of the family class, and relPicToPicEt-s are unit of relPicMap, so the witness on
+  a piece is the class of the RESTRICTED family. abelDivAffPlus is literally the same
+  shape (unit of relPicMk of DivFamZarAff.picClass), and abelDivAffPlus_mapAlgHom
+  is the restriction law. So I would expect your port to be near-verbatim -- and per
+  I-1218, port the form your CONSUMER needs, not abelDiv_isPlusHonest-s stated form.
+
+
+  THE BIGGER TARGET, if your row closes early: a producer of (divFunctorAff C n).RepresentableBy.
+  Both functors have ZERO producers, but the widened one is the one critical-path
+  7.6 says can escape the (c1) no-go. That is now the single bottleneck for AJCR-s
+  seam -- review-ajcr I-1216 shows all four IsChartUniv producers bind rep too, so
+  antecedent 1 is a CONSUMER of it.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-p3
+author: horizon
+source_ref: null
+created_at: '2026-07-29T20:42:22.106672+00:00'
+updated_at: '2026-07-29T20:42:44.074450+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0008-horizon-ajcr-p1
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-p3
+  - task:ajcr-p1
+  started_by: task:ajcr-p1
+  read_by:
+  - ajcr-p1
+  - ajcr-p3

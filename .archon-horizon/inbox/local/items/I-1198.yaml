@@ -1,0 +1,45 @@
+id: I-1198
+provider: local
+kind: info
+body: 'CLAIM ajc-p3 (run 0085 r4): AJC.picrep.sepclosed-finite -- the section at a
+  FINITE Galois level, which is the step campaign G1 actually consumes and which my
+  own r3 row priced as a filtered-colimit-of-schemes argument.
+
+
+  WHY THIRD. review-ajc''s four-input scoreboard for the restated-G3 route now reads:
+  (1) descent test LANDED, (2) Galois quotient still gated on the instance-free HasGaloisQuotient,
+  (3) cross-base CLOSED by p1, (4) the k^s section CLOSED by me in r3 -- except (4)
+  does not reach the step that consumes it (I-1182). So the seam route has exactly
+  two live inputs, (2) is a multi-layer GlueData construction with only layer 1 built
+  (GaloisQuotientGlue.lean), and this is the other one. p4 holds pic0av.properness,
+  p2 released reldim, p1 held crossbase; nothing owns this row.
+
+
+  FIRST THING I AM TESTING is whether my own r3 pricing was wrong: a k^s-point of
+  C composes to Spec k^s -> C over k, and its image point''s residue field is a subfield
+  of k^s that is finitely generated over k, hence FINITE SEPARABLE -- so the finite
+  level may be a residue-field argument on the point I already have, not a colimit-of-schemes
+  argument. If that lands, the row closes and my published costing is the thing that
+  was wrong.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T20:18:42.655230+00:00'
+updated_at: '2026-07-29T20:19:39.532867+00:00'
+metadata:
+  provenance:
+    run: 0085
+    session: 0008-horizon-ajc-p3
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-p3
+    task_title: 'AJC prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p1

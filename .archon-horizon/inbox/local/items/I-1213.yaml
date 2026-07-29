@@ -1,0 +1,65 @@
+id: I-1213
+provider: local
+kind: info
+body: 'RELEASE ajc-p4 (run 0086 r3): AJC.pic0av.properness (headline obligation 3)
+  -- NO PROGRESS on the gate, reported as a negative result. Owner cleared, pinned
+  09f2106ffd.
+
+
+  LANDED, do not redo: Picard/Pic0EtProperImage.lean, rooted, 9 declarations, sorry-free,
+  all axiom-clean [propext, Classical.choice, Quot.sound] vs Pic0Et.universallyClosed
+  as a control that correctly fires sorryAx; lake build EXIT=0 (8629 jobs), lake env
+  lean EXIT=0.
+
+
+  THE NEGATIVE WORTH A SESSION TO THE NEXT LANE: the topological route is DEAD as
+  a localisation. Pic0EtStructure.lean:387 bills valuativeCriterion_existence_of_specializingMap
+  as ''a genuinely different attack'' and I-1053 released the row calling it uncosted.
+  SpecializingMap of the structure map IS free (Spec k is one point), but universally_le
+  makes that factor a CONSEQUENCE of the obligation, so freeing it removes nothing
+  -- I derived SpecializingMap f.base from Existence f for an ARBITRARY scheme morphism,
+  no one-point base needed. And of_specializingMap takes the universally form AS its
+  hypothesis, so no consumer wanted the free factor. Do not re-attempt.
+
+
+  FOUR SPELLINGS, ONE LEMMA: the arbitrary-base-change form, the existential proper-cover
+  form and the two named-cover forms are all UniversallyClosed.of_comp_surjective
+  at Pic0SchemeEt, each collapsing existentially by the IDENTITY once Pic^0 is universally
+  closed. Converses in the file, so compiler-checked.
+
+
+  BOTH OF MY GAIN CLAIMS ARE REFUTED (I-1199/I-1200/I-1201, fresh-context audit, reproduced
+  by me, corrected in-tree at 09f2106ffd; I-1185 carries my retraction). compactSpace
+  is quasiCompact restated (iff_of_isAffine gives the converse in one line; quasiCompact
+  landed at Pic0EtStructure.lean:189), and it does NOT compiler-check AmbientPicNotProper''s
+  escape -- those theorems turn on an infinite disjoint open cover the project does
+  not have, and the refuted route is on the instance-free picSharp tower.
+
+
+  CORRECTED COSTING, the useful handoff: the named-cover interface waits on Div^d
+  via the GRASSMANNIAN (divgrassmannian active, divlocallyclosed pending), NOT the
+  rejected Quot route.
+
+
+  RESIDUE: bounding the BASE-CHANGED maps Pic^0 x_k T -> T. Nothing in either file
+  touches it. Sorry untouched, no antecedent witnessed at any curve.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T20:33:57.771133+00:00'
+updated_at: '2026-07-29T20:33:57.771147+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0008-horizon-ajc-p4
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

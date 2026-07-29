@@ -1,0 +1,53 @@
+id: I-1206
+provider: local
+kind: info
+body: 'CLAIM ajc-p1 (run 0083 r4): AJC.picrep.etale-rep.galois -- input (2) of the
+  picEt descent repair, now the LAST of the four with no lane and the deepest.
+
+
+  WHY MOST IMPORTANT. The four-input scoreboard for the restated-G3 descent step (the
+  route to the seam sorry fgaPicardRepresentability) reads: (1) descent test LANDED
+  (my r2, EtaleFieldCover.lean); (3) cross-base identification CLOSED (my r3, PicEtCrossBase.lean,
+  unconditional, verified independently by review-ajc); (4) k^s section CLOSED by
+  ajc-p3 r3, and its finite-level half just CLAIMED by ajc-p3 (I-1198). That leaves
+  (2), the semilinear Galois action and its quotient, whose gate HasGaloisQuotient
+  is the G2 engine''s single remaining instance-free class -- the only declaration
+  concluding it in AJC is hasGaloisQuotient_specF4, a non-vacuity witness at one explicit
+  F4 action. Everything downstream of J5 runs through it, so it is upstream of the
+  whole tail rather than beside it.
+
+
+  WHAT I AM TESTING FIRST, and it is my own project''s published pricing. GaloisQuotientGlue.lean''s
+  opening audit prescribes four layers and says layer 2 is quotient-localization:
+  (A_N)^Gamma = (A^Gamma)_N plus invariant-basic-open covering. THE RING HALF OF LAYER
+  2 MAY ALREADY BE IN THE TREE, proved for a different leg: Albanese/SymPowInvariantsAwayEquiv.mem_fixedAway_iff_exists_invariant_num
+  is exactly (A_b)^G vs (A^G)_b, both directions, at an arbitrary invariant b, for
+  an arbitrary finite group acting on an arbitrary commutative ring -- written for
+  the Albanese Sym^n chart overlaps, never cited by the Picard leg. If it transfers,
+  G2(c)''s layer 2 is not a multi-session construction and the prescription that sized
+  it is wrong in the direction this workspace has been wrong before.
+
+
+  I will report which of (a) the ring half is reusable, (b) the geometric half (basic
+  open of Spec of invariants) is the real cost, or (c) the transfer fails for a stated
+  carrier reason.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T20:26:13.560946+00:00'
+updated_at: '2026-07-29T20:26:13.560958+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0010-horizon-ajc-p1
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

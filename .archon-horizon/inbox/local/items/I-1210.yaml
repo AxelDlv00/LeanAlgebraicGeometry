@@ -1,0 +1,52 @@
+id: I-1210
+provider: local
+kind: issue
+body: "VACUITY: Pic0.Bundle (Albanese/AlbaneseUP.lean:316) has five fields and NONE\
+  \ mentions C -- the HasDivFunctor shape, one hop above the seam, not on the excluded\
+  \ list.\n\nVERBATIM (:316-329):\n  structure Bundle {kbar : Type u} [Field kbar]\
+  \ [IsAlgClosed kbar]\n      (C : Over (Spec (.of kbar)))\n      [SmoothOfRelativeDimension\
+  \ 1 C.hom] [IsProper C.hom]\n      [GeometricallyIrreducible C.hom] where\n    scheme\
+  \ : Over (Spec (.of kbar))\n    grpObj : GrpObj scheme\n    proper : IsProper scheme.hom\n\
+  \    smooth : Smooth scheme.hom\n    geomIrred : GeometricallyIrreducible scheme.hom\n\
+  \nABSENT OBJECT: C. Fields speak only of the self-introduced 'scheme'; nothing ties\
+  \ it to Pic0Scheme C or Pic0SchemeEt C. Falsifier: none -- Spec kbar inhabits Bundle\
+  \ C for EVERY C. Docstring :313 sells it as 'Interface for Pic0_{C/kbar}'.\n\nEXPOSURE\
+  \ (differs from HasDivFunctor): the def 'bundle' (:360) DOES pin scheme := Scheme.Pic0Scheme\
+  \ C, so jacobianScheme C is pinned by unfolding. But no lemma records that equation\
+  \ -- grep finds no 'jacobianScheme = Pic0Scheme' statement, only the docstring assertion\
+  \ at Jacobian.lean:668 ('is Scheme.Pic0Scheme C, so the statements match on the\
+  \ nose'). The Albanese UP at AlbaneseUP.lean:620/656/733 is stated against jacobianScheme\
+  \ C. Any edit to 'bundle', or a second producer, silently changes what every Albanese\
+  \ theorem is about: no type error, no failing lemma.\n\nCOUNTS: producers = 1 (Pic0.bundle\
+  \ :360). Call sites binding an arbitrary Bundle = 0; consumers use projections of\
+  \ the fixed 'bundle C' -- 5 in AlbaneseUP (:377,:385,:389,:393,:397) and ~20 downstream\
+  \ jacobianScheme references in Albanese/.\n\nMISLEADING BELIEF: that a theorem about\
+  \ (bundle C).scheme is a theorem about the Picard identity component, when the type\
+  \ licenses nothing about C.\n\nREPAIR (not applied; reviewer is read-only on .lean):\
+  \ add 'theorem bundle_scheme : (bundle C).scheme = Scheme.Pic0Scheme C := rfl',\
+  \ or make it a field. One line; turns the Jacobian.lean:668 docstring claim into\
+  \ a checked fact. Same repair ClassDegreePinned made after ClassDegree collapsed\
+  \ (Picard/IdentityComponent.lean:1532).\n\nreview-ajc, vacuity/self-projection scan\
+  \ 2026-07-30, statements read at HEAD."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-29T20:33:06.749466+00:00'
+updated_at: '2026-07-29T20:33:06.749480+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0012-horizon-review-ajc
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge

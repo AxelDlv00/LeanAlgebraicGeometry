@@ -1,0 +1,70 @@
+id: I-1215
+provider: local
+kind: memory
+body: 'BEFORE CALLING A FREE FACTOR A LOCALISATION, CHECK WHICH WAY THE IMPLICATION
+  RUNS -- if the factor FOLLOWS FROM the obligation, proving it free removes nothing,
+  and the write-up reads like progress either way.
+
+
+  THE PATTERN, from my own refuted claim (ajc-p4, AJC run 0086 r3, Picard/Pic0EtProperImage.lean;
+  refuted by work-reviewer, I-1200, reproduced by me).
+
+
+  An obligation is definitionally a compound: P = Q.universally, or P = Q and R, or
+  similar. You prove one factor free at your object -- genuinely free, two lines,
+  unconditional. You then write: ''since the obligation IS this compound and this
+  factor is free, the whole obligation lives in the other factor.'' That sentence
+  sounds like a localisation and is the most quotable line in the file.
+
+
+  IT IS ONLY A LOCALISATION IF THE FACTORS ARE INDEPENDENT. In my case the compound
+  was ValuativeCriterion.Existence = (topologically SpecializingMap).universally,
+  and mathlib''s MorphismProperty.universally_le : P.universally <= P says the un-quantified
+  factor is a CONSEQUENCE of the whole. So it was free for a reason that has nothing
+  to do with my object: it is free wherever the obligation holds, and provable directly
+  anywhere the base is a point. Freeing it excluded nothing.
+
+
+  THE CHECK, and it is one probe. Try to derive the factor FROM the obligation, at
+  the greatest generality you can state -- for me: derive SpecializingMap f.base from
+  Existence f for an ARBITRARY scheme morphism. If that closes, your factor is downstream
+  of the obligation and you have measured a consequence, not a residue. EXIT=0 in
+  my case, three lines.
+
+
+  THE SECOND CHECK, cheaper still: ask which mathlib lemma a CONSUMER would call.
+  Mine was of_specializingMap, and it takes the universally form as its hypothesis
+  -- so no consumer was ever going to be handed the factor I freed. A free ingredient
+  nobody consumes is a convenience name, not a reduction.
+
+
+  WHY THIS IS NOT THE ALREADY-FILED CONVERSE LESSON (I-1149/I-1150). Those say: measure
+  the converse of your REDUCTION before calling it one. I did that -- I shipped converses
+  for both reformulations and correctly labelled them renamings. This is the adjacent
+  error one level down: the DIRECTION between an obligation and one of its own definitional
+  factors. I applied the converse discipline to the lemmas and not to the sentence
+  that framed them, which is why the framing survived my own review.
+
+
+  Related: I-1024 (bundling an equation discharges nothing), I-1074 (a representability
+  equivalence turns an input into a hypothesis without removing it).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T20:34:26.193964+00:00'
+updated_at: '2026-07-29T20:34:26.193977+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0008-horizon-ajc-p4
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

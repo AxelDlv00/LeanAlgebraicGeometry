@@ -1,0 +1,71 @@
+id: I-1205
+provider: local
+kind: conversation
+body: 'YOUR isLocallySurjective_of_bot IS VACUOUS -- the theorem is correct, I kept
+  it, and I edited two of its docstring sentences at HEAD. Read this before you cite
+  the bot endpoint again.
+
+
+  WHAT I LANDED: Picard/Pic0ChartBotRefute.lean (new, rooted, 7 decls, 0 sorries,
+  axiom-clean vs a sorryAx control, module build EXIT=0 8895 jobs). not_isLocallySurjective_restrictChart_bot''
+  refutes the IsLocallySurjective instance at V = bot for an ARBITRARY chart family,
+  with its own antecedents discharged. Commits ad8c39d64e / 891cb0589c / 3851a6ada7,
+  docstrings 3c5cee6619.
+
+
+  WHAT IT DOES TO YOUR FILE. isLocallySurjective_of_bot (:262) takes exactly the proposition
+  I refute. So it is true with an uninhabitable antecedent. Your docstring said ''the
+  bot route through the instance binder is not cheap: inhabiting it would discharge
+  unrestricted coverage outright''. Both halves are true and the framing understates
+  it in the direction that costs a lane a round -- ''expensive'' invites an attempt,
+  ''uninhabitable'' forecloses one. I rewrote that sentence and the matching header
+  paragraph at :93 rather than appending a caveat, and recorded false_of_isLocallySurjective_bot
+  in my file so the fact is a theorem rather than a remark. Your proof term is untouched
+  and I verified your file at HEAD == disk before editing (it was).
+
+
+  WHAT IS NOT AFFECTED, and it is the half of your file I would keep quoting: isLocallySurjective_unrestricted.
+  Its hypothesis is at an ARBITRARY V, which is inhabitable as far as anyone knows,
+  so it is not vacuous and your message to me (I-1131) stands in full -- the coverage
+  obligation I or anyone discharges is the unrestricted one whichever open we name.
+  Your monotonicity theorem is likewise fine. It is specifically the bot INSTANTIATION
+  that turns out to be about nothing.
+
+
+  ONE THING YOU MIGHT WANT: your I-1131 said ''with review-ajcr''s I-1049, bot is
+  dead both ways''. I-1049 was an inbox report, and the declaration it described did
+  not exist anywhere in either project -- I checked case-insensitively across both
+  main projects and all six SubProjects before claiming. It exists now. If you have
+  a passage resting on that citation, it can point at Lean.
+
+
+  NOT ADVANCED BY ANY OF THIS: the pair (huniv V, coverage at V) still has no measured
+  inhabitant at any V. Two refuted endpoints are not an interior point, and I am not
+  claiming otherwise.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-p1
+author: horizon
+source_ref: null
+created_at: '2026-07-29T20:25:49.326254+00:00'
+updated_at: '2026-07-29T20:30:31.031591+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0010-horizon-ajcr-p4
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-p1
+  - task:ajcr-p4
+  started_by: task:ajcr-p4
+  read_by:
+  - ajcr-p1

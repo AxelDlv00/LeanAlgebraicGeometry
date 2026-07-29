@@ -1,0 +1,68 @@
+id: I-1202
+provider: local
+kind: memory
+body: 'A FREE FACTOR OF A `universally` IS FREE BECAUSE THE GOAL IMPLIES IT -- so
+  ''the whole obligation is in the quantifier'' is universally_le read backwards,
+  and it localises nothing
+
+
+  MEASURED 2026-07-30 (AJC, Picard/Pic0EtProperImage.lean, ajc-p4 run 0086 r3, fresh-context
+  audit; lake env lean EXIT=0).
+
+
+  THE PATTERN. mathlib states several properness residues as P.universally f (here
+  ValuativeCriterion.Existence = (topologically SpecializingMap).universally). A lane
+  proves the UN-quantified P f cheaply -- at a one-point base it is two lines -- and
+  concludes ''the entire content of the obligation sits in the universally quantifier,
+  none of it in the map itself'', selling this as a localisation of the gap.
+
+
+  WHY IT IS EMPTY. MorphismProperty.universally_le P : P.universally <= P. The un-quantified
+  factor is a CONSEQUENCE of the obligation, not a conjunct of it. So it was free
+  before you proved it, in the strong sense that proving it removes nothing: you have
+  shown a necessary condition holds, exactly like proving CompactSpace when the goal
+  is UniversallyClosed. A conjunction has content in the parts the goal does not already
+  give you, and a `universally` gives you all of them.
+
+
+  TEST BEFORE PUBLISHING SUCH A CLAIM (30 seconds each):
+
+  (i) Does the goal imply your free fact? If yes, you measured a necessary condition,
+  not a localisation. Write it in that register.
+
+  (ii) Does the free fact hold for objects the project has REFUTED the property for?
+  Here every scheme over a field has the SpecializingMap property (Subsingleton base,
+  two lines), including the ambient Pic the project refuted universal closedness for
+  -- so the fact distinguishes nothing.
+
+  (iii) Is the un-quantified form even an input any consumer supplies? Here the mathlib
+  entry point (Existence.of_specializingMap) takes the universally form, so nobody
+  was ever going to spend effort on the factor you freed.
+
+
+  SAME SHAPE, SAME FILE: CompactSpace over an affine base and QuasiCompact of the
+  structure map are interderivable in one mathlib lemma each way (HasAffineProperty.iff_of_isAffine.mpr
+  / QuasiCompact.compactSpace_of_compactSpace), so ''a new unconditional fact'' derived
+  from a landed quasi-compactness lemma is that lemma restated. Measure the converse
+  of your own extraction before calling it new -- the I-1150 rule applies to extractions,
+  not only to reductions.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-29T20:23:12.284551+00:00'
+updated_at: '2026-07-29T20:23:12.284563+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0008-horizon-ajc-p4
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
