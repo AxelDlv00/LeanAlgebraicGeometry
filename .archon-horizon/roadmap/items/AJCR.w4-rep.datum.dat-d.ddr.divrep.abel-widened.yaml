@@ -1,10 +1,54 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.divrep.abel-widened
-title: 'ABEL-WIDENED: the R2 carrier reaches no Picard-side target, so antecedent
-  3 cannot reach the Sigma-atlas on the carrier I-0492 mandates'
+title: 'ABEL-WIDENED: the R2 carrier now reaches picEt (LANDED); the residue is a
+  four-lemma degree port over AffAdaptation''s abstract index'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: ''
-status: active
+summary: 'LANDED and axiom-clean (ajcr-p3, run 0089 r3), owner CLEARED, gate NOT closed.
+  Picard/DivisorFamilyAffAbel.lean, rooted at AlgebraicJacobian.lean:627, 10 declarations,
+  sorry-free, all axiom-clean [propext, Classical.choice, Quot.sound] against a control
+  firing sorryAx; lake build EXIT=0 (8958 jobs). Census, non-vacuity and the load-bearing
+  status of hdegAff were CONFIRMED by a fresh-context audit (I-1098/I-1099/I-1100).
+
+
+  WHAT WAS MISSING AND IS NOW THERE. The widened carrier DivFamZarAff (mandated by
+  protection I-0492) had a Picard CLASS (picClass + naturalities), a functor divFunctorAff
+  and a comparison divFunctorToAff, but ZERO declarations carrying it to PicEtAff/picEt/relPic/pic0
+  -- the whole Abel layer was stated at chart-typed DivFamZar only. Landed: abelDivAffPlus
+  and its naturality; abelDivAffPlus_toAff (agreement with the chart-typed hook, so
+  this EXTENDS the Abel layer along divFunctorToAff rather than forking it); abelDivAff''
+  and picEtMap_abelDivAff'' at arbitrary tests; chartValueAff, picEtMap_chartValueAff,
+  chartValueAff_mem_pic0Subgroup. 8 of the 10 are pi-FREE.
+
+
+  THE RESIDUE, and this row''s price is CORRECTED from my own first version. chartValueAff_mem_pic0Subgroup
+  carries an explicit hypothesis hdegAff (the widened degree ledger: the widened Abel
+  value of a degree-n class has degree n at every field point). It is inhabited --
+  degAt_abelDivAff''_toAff proves it at every widened section coming from a chart-typed
+  one, via an external theorem, not by projecting a binder.
+
+
+  DO NOT open a ''recover the pinned pair'' front. I priced the ledger as OBSTRUCTED
+  because deg_presentationDivisor_eq_finrank_glued cites relCover_sup with cover0/cover1.
+  REFUTED (I-1098, re-derived by me): those lines OUTPUT only ''every point lies in
+  some piece'', which on the widened side is the structure FIELD AffCoverData.cover,
+  already extracted as exists_mem_pieces (DivisorFamilyAffCover.lean:166). The pinned
+  pair was the chart-typed COST of a fact the widened structure ASSUMES. The honest
+  residue: PORT four lemmas -- finrank_glued_eq_sum_of_separated, subsingleton_ovlColength_of_sep,
+  finrank_colength_eq_sum, coeffAt_eq_zero_of_isUnit_germ (all in DivisorFamilyFieldDegree.lean,
+  lines 144/308/217/282) -- each of which quantifies ONLY over A.index/A.pieces/A.eqn/A.colength/A.ovlColength/A.Glued,
+  every one carried verbatim by AffAdaptation, and none of which mentions m0/m1/h0/h1/partition0/partition1
+  or a chart. Real work, not blocked.
+
+
+  WHAT THIS BUYS AND WHAT IT DOES NOT. rep stays UNDISCHARGED. NOTE, corrected: rep
+  is NOT an antecedent of pic0RepresentableByOfCharts -- that takes f, hf and the
+  IsLocallySurjective instance. rep is an argument of abelSigmaChart (Pic0AtlasFromDivRep.lean:205)
+  and mixedParamRepresentableBy (Pic0ChartAtlasParamFree.lean:127), i.e. upstream
+  of the assembly. The remaining distance to a WIDENED Sigma-chart: abelSigmaChart
+  wants a natural transformation divFunctorAff => pic0TypeFunctor (a widened chartValueTrans),
+  which needs chartValueAff_mem_pic0Subgroup WITHOUT hdegAff. So hdegAff is the whole
+  gap, and the four-lemma port is the shortest honest path to it.'
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -27,4 +71,6 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
-  owner: ajcr-p3
+  updated_at: '2026-07-29T17:26:08.599316+00:00'
+  pinned_commits:
+  - ff68af0372
