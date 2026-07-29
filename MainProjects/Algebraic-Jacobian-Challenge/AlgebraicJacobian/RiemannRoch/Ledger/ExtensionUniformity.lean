@@ -352,7 +352,17 @@ def UniformVanishing : Prop :=
 This is input (2) of the reduction, and it is the genuinely open one.  Over a single `κ`,
 `FiberBound.exists_base_subsingleton_of_isFinite_toP1` supplies such a `D₀` — namely `n₀ • F` —
 but with no control of `deg_κ D₀` as `κ` varies, because `n₀(κ)` is chosen by a Noetherian
-stabilization re-run at each base field. -/
+stabilization re-run at each base field.
+
+**This paragraph's diagnosis is the correct one, and it is now witnessed rather than described**
+(2026-07-29, lane `ajc-p2`).
+`Ledger/BaseDivisorEveryField.exists_base_subsingleton_baseChangeField`
+states exactly the "over a single `κ`" half *as a theorem quantified over every* `κ`, on the three
+curve binders and with no genus hypothesis — so of this definition's two clauses only the degree
+inequality is open.  Worth noting because the downstream index for this gap
+(`GenusFieldInvariance.lean` §Reduction) had priced it as a missing production from geometry
+confined to `genus C = 0`, which is a different and stricter claim than what this docstring says;
+that paragraph now carries a correction. -/
 def UniformBaseDivisor (d : ℤ) : Prop :=
   ∀ (κ : Type u) [Field κ] [Algebra k κ],
     letI : (Scheme.baseChangeField C κ).left.Over (Spec (CommRingCat.of κ)) :=

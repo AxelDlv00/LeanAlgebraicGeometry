@@ -435,8 +435,26 @@ its conclusion is `UniformBaseDivisor C 0` and its input is a property of `C` al
 prediction the paragraph made was right about the *form* — it came from geometry, via faithfully
 flat descent of the `H¹` comparison this file builds — and wrong about the *difficulty*, since it
 was one unused step away.  What it did not predict is how narrow the producer would be: its
-hypothesis `Subsingleton (H¹(𝒪_C))` is `genus C = 0`, so `genus C ≥ 1` is untouched and the
-sentence above still describes that case correctly. -/
+hypothesis `Subsingleton (H¹(𝒪_C))` is `genus C = 0`.
+
+**CORRECTION (2026-07-29, lane `ajc-p2`): the final clause above — that `genus C ≥ 1` is
+untouched and "the gap is a missing production from geometry" still describes it — is WRONG, and
+the diagnosis it carries is the load-bearing part.**  The production from geometry exists at
+*every* genus: `Ledger/BaseDivisorEveryField.exists_base_subsingleton_baseChangeField` exhibits,
+for every field extension `κ/k`, a divisor on `C_κ` with vanishing `H¹`, on the three curve
+binders and nothing else (kernel-checked, axiom-clean).  It is one term, from
+`Ledger/FiberBound.exists_base_subsingleton_of_isFinite_toP1` at `Scheme.baseChangeField C κ` —
+whose inputs (a finite dominant map to `ℙ¹`, and both cohomology finiteness binders) are theorems
+of this project on the curve, none of them genus-restricted.
+
+So the genus-0 ceiling belongs to `VanishingFieldDescent`'s *route*, not to the obligation:
+transporting the vanishing of the **unit** sheaf by faithful flatness forces the witness to be
+the zero divisor, hence forces `H¹(𝒪_C)` itself to vanish.  The obligation never needed the unit
+sheaf.  What `UniformBaseDivisor` still lacks is only its **degree clause** — a uniform bound on
+`deg_κ D₀ = n₀(κ) · deg_κ F_κ`, `n₀(κ)` being the Noetherian fibre-lattice stabilisation index
+(`Ledger/FiberVanishing.lean`) re-run at each base field.  Read
+`Ledger/BaseDivisorEveryField.lean` for the split and for why the in-tree vanishing theorems
+cannot supply that bound without circularity. -/
 theorem uniformVanishing_of_uniformBaseDivisor_curve [IsProper C.hom]
     [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIrreducible C.hom]
     [GeometricallyIntegral C.hom] {d : ℤ} (hbase : UniformBaseDivisor C d) :
@@ -450,7 +468,11 @@ carries only its second antecedent.
 
 `UniformBaseDivisor C d` — one degree bound `d` such that over *every* extension `κ/k` some
 divisor of degree `≤ d` already has vanishing `H¹` — is **the single remaining gap** in
-extension-uniformity.  It is open in AJC **for `genus C ≥ 1`**; at genus 0 it is discharged by
+extension-uniformity.  Since 2026-07-29 its two clauses are separated: the **existence** of a
+vanishing divisor over every `κ` is a theorem at every genus
+(`Ledger/BaseDivisorEveryField.exists_base_subsingleton_baseChangeField`), so what is open is the
+**degree bound on that divisor** and nothing else.  It is open in AJC **for `genus C ≥ 1`**; at
+genus 0 the whole conjunction is discharged by
 `Ledger/VanishingFieldDescent.uniformBaseDivisor_zero_of_genus_eq_zero` — and, since
 `Ledger/P1Vanishing.lean`, *witnessed* there rather than only implied
 (`P1Vanishing.uniformBaseDivisor_p1Over` at `ℙ¹`, where the hypothesis is a theorem).  The
