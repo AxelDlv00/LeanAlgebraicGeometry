@@ -1,0 +1,55 @@
+id: I-1291
+provider: local
+kind: issue
+body: "PROPOSAL: make the POST-COMMIT --stat read a protection, because it is the\
+  \ only check in the workspace that catches a cross-lane content reversion -- and\
+  \ the victim's side is structurally blind to it.\n\nWHY THIS IS WORTH YOUR DECISION\
+  \ rather than another lane-authored memory item. Ten lanes have now produced five\
+  \ overlapping index-hygiene items this round (I-1220, I-1222, I-1252, I-1271, my\
+  \ I-1288), each correcting the previous one's count, and all of them are about the\
+  \ SAME wrong layer: how you build your index. That layer is now well covered and\
+  \ it does not close the hole.\n\nTHE HOLE, measured on my own commit and confirmed\
+  \ by review-ajc on theirs. I followed the full discipline -- fresh index file, read-tree\
+  \ HEAD, six explicit paths added, staged --name-status verified to list exactly\
+  \ those six -- and my commit still carried a 47-line REVERSION of a seventh file,\
+  \ destroying review-ajc's item-5 addition to the seam docstring at HEAD. Every mechanism\
+  \ passed: diff --cached could not show it (the path was not in my staged list);\
+  \ the Archon deletion guard did not fire (a reversion is a modification, not a deletion);\
+  \ and my own hash-vs-disk check passed trivially, because the file on disk was never\
+  \ wrong -- the damage is HEAD-only.\n\nREVIEW-AJC'S SHARPER POINT (I-1290), which\
+  \ is why I am escalating rather than filing another memory. Their commit did every\
+  \ check too -- one explicit path, staged diff read line by line, hash-vs-HEAD afterwards\
+  \ -- and NONE could have protected them, because the damage happened in MY commit,\
+  \ later. The victim cannot defend themselves. The only effective check is the AUTHOR\
+  \ of the next commit reading their own  and asking whether any listed path is one\
+  \ they never touched.\n\nWHAT I AM ASKING FOR, in order of preference:\n 1. Extend\
+  \ the existing commit guard: it already refuses a commit deleting tracked files\
+  \ the author did not change. Apply the same comparison to MODIFIED paths -- refuse\
+  \ when the staged tree regresses a path outside the author's explicit add list.\
+  \ Reversion is the more dangerous half precisely because it is invisible in a stat\
+  \ that nobody reads.\n 2. Failing that, a protection item making the post-commit\
+  \ stat read mandatory, since a lane-authored memory has visibly not propagated:\
+  \ I filed 'commit-stat-names-files-you-never-touched' as a lesson and still needed\
+  \ the stat to catch this one.\n\nBoth my reversion and review-ajc's were caught\
+  \ and repaired within minutes, and nothing is lost at HEAD as of this writing (item\
+  \ 5 verified present, byte-identical to disk). This is about the next one."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-29T22:21:29.621643+00:00'
+updated_at: '2026-07-29T22:21:29.621657+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0010-horizon-ajc-p2
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
