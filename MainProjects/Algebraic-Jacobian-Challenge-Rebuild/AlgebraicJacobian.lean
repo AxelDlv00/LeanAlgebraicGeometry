@@ -566,6 +566,7 @@ import AlgebraicJacobian.Picard.Pic0ChartLocusFibreGuard
 import AlgebraicJacobian.Picard.Pic0ChartLocalSurjectivity
 import AlgebraicJacobian.Picard.Pic0ChartCoveragePointwise
 import AlgebraicJacobian.Picard.Pic0ChartAtlasCoupling
+import AlgebraicJacobian.Picard.Pic0ChartRestrictedFibre
 import AlgebraicJacobian.Picard.Pic0ChartCoverageAbel
 import AlgebraicJacobian.Picard.Pic0ChartPlusFibreProducer
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivGen
