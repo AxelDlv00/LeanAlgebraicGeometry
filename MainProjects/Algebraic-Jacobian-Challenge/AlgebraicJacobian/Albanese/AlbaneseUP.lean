@@ -312,7 +312,34 @@ below are projections from `bundle`. -/
 
 /-- Interface for `Pic⁰_{C/k̄}`: bundles the underlying `k̄`-scheme together
 with the four abelian-variety structural instances (group object, proper,
-smooth, geometrically irreducible). -/
+smooth, geometrically irreducible).
+
+**`C` OCCURS IN NO FIELD OF THIS STRUCTURE — it is a parameter the fields never
+mention** (`review-ajc`, 2026-07-30, kernel-measured). The five fields constrain
+`scheme` to be *some* proper smooth geometrically irreducible group object over
+`k̄`, i.e. an abelian variety; nothing in the type ties it to the curve `C`.
+Measured: for curves `C` and `D` with no relation whatever, `D`'s data inhabits
+`Bundle C` — the anonymous-constructor term built entirely from `bundle D`'s
+projections typechecks at type `Bundle C` (`lake env lean` EXIT=0). This is the
+`HasDivFunctor` shape (`I-0838`: a carrier advertised as being about an object
+that does not occur in its statement), one hop above the Picard seam.
+
+**What limits the damage, stated so this is not read as worse than it is.**
+`Bundle` is never *bound as a hypothesis*: the only term of this type in the
+project is the canonical `bundle C` below, which pins `scheme := Pic⁰_{C/k̄}`,
+and `jacobianScheme C = Scheme.Pic0Scheme C` holds by `rfl` (measured, with the
+producer's three gates in scope). So every current consumer really is about `C`,
+by definitional unfolding rather than by anything the type records.
+
+**The hazard is therefore for the next author, which is why it is labelled here
+rather than repaired.** Any future declaration that takes `(b : Bundle C)` as an
+argument — the shape the words "Interface for `Pic⁰_{C/k̄}`" invite — would be a
+theorem about an arbitrary abelian variety while reading as a theorem about the
+Jacobian of `C`, and `abelJacobi`/the Albanese universal property below are
+stated against `jacobianScheme C`, so the gap would not show up as a type error.
+If such a consumer is ever wanted, add a field pinning the moduli property (a
+`RepresentableBy` for the degree-zero part of `picEt C`, or an iso to
+`Scheme.Pic0Scheme C`) before writing it. -/
 structure Bundle {kbar : Type u} [Field kbar] [IsAlgClosed kbar]
     (C : Over (Spec (.of kbar)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]

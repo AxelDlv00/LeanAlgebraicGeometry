@@ -489,17 +489,37 @@ fields that everything else silently assumes). Present state:
    existence statement is still the instance-free class
    `AlgebraicJacobian.GaloisDescent.HasGaloisQuotient`.
    `AlgebraicJacobian.GaloisDescent.HasStableAffineCover` is **not** a second
-   gate — it has had a global instance since G2(a) landed, and two docstrings
-   previously double-counted it (`I-1077`). **Both names are fully qualified on
-   purpose**: they live in `Picard/FiniteGaloisQuotient.lean`, which this file
-   does *not* import, so a bare `#check HasGaloisQuotient` here fails and would
-   read as absence. That is the recorded "cited names need `#check`, not `grep`"
-   trap; import that module before probing either class.
-4. **a section over separably closed `k'` — NO PRODUCER IN THIS PROJECT.** Every
-   J-milestone assumes one; the only rational-point producer in the tree requires
-   `[IsAlgClosed]`, which campaign G1 explicitly forbids here (`k^s`, never
-   `k̄`), and `hasRationalPoint_baseChangeField` only *propagates* a section that
-   `I-0491` forbids the headline to carry. Measured with controls in `I-1135`.
+   gate, but the reason stated here until now was false (`review-ajc`,
+   2026-07-29 → corrected 2026-07-30 with controls both ways). It said the cover
+   class "has had a global instance since G2(a) landed"; that instance,
+   `hasStableAffineCover_of_orbitsInAffineOpen`, requires
+   `[ρ.OrbitsInAffineOpen]`, and `inferInstance` for `HasStableAffineCover` at an
+   **abstract** semilinear action carrying only `[FiniteDimensional K L]`
+   `[IsGalois K L]` **fails** with `synthInstanceFailed` (control: with the orbit
+   hypothesis in scope it succeeds). What is true is that the orbit hypothesis is
+   free *at the action this route uses*: `instOrbitsInAffineOpen_pullback`
+   discharges it for `pullbackSemilinearGalAction` over an arbitrary
+   `Spec K`-scheme, so the cover class synthesises there outright — while
+   `HasGaloisQuotient` at that same action does **not** (both measured in one
+   probe). That separation is what makes G2 one gate rather than two, and it is a
+   sharper statement than the absolute it replaces. **Both names are fully
+   qualified on purpose**: they live in `Picard/FiniteGaloisQuotient.lean`, which
+   this file does *not* import, so a bare `#check HasGaloisQuotient` here fails
+   and would read as absence. That is the recorded "cited names need `#check`,
+   not `grep`" trap; import that module before probing either class.
+4. **a section over separably closed `k'` — LANDED 2026-07-30, this item is
+   CLOSED.** This entry read "NO PRODUCER IN THIS PROJECT" and that is no longer
+   the state: `Curve/SeparablyClosedRationalPoint.lean`
+   (`hasRationalPoint_of_isSepClosed`, `sorry`-free, axiom-clean) is exactly the
+   producer it said was absent. What survives, and is the reason the descent step
+   is still open here, is narrower and was found on that closed item: campaign G1
+   consumes the section at a **finite** Galois level, where `IsSepClosed` is
+   false, so the `k^s` producer does not reach the step that needs it. That
+   residue is a filtered-colimit-of-schemes argument tracked as
+   `AJC.picrep.sepclosed-finite`. The old absolute is kept visible here because
+   the `[IsAlgClosed]` half of it is still true and still the trap: `k^s`, never
+   `k̄`, and `hasRationalPoint_baseChangeField` only *propagates* a section that
+   `I-0491` forbids the headline to carry.
    This one is upstream of the other three.
 
 Method note for whoever re-checks any absence claim in this area: a bare
