@@ -63,9 +63,20 @@ it.  What is actually landed is what the statements below say: the openness theo
 `DivFamZar.isOpen_setOf_isH1VanishingAt` is for an **affine** test `Spec S`, and the
 locality dictionary `isH1VanishingAt_comap_away_iff` crosses only an *away* piece of such a
 test.  The extension of the locus to a general (non-affine) test object is **open work**, owed
-by whoever needs the locus on a scheme rather than on `Spec S`; the affine-piece transport
-pattern it would follow is `isSplitWitness_fromSpecAffine_iff`
-(`Picard/Pic0ChartLocusGeneralTest.lean:147`), which carries its own `hinv` hypothesis.
+by whoever needs the locus on a scheme rather than on `Spec S`.
+
+It is, however, *cheaper than it looks*, because the sibling predicate has already made this
+exact crossing and its side condition is discharged.  `chartLocus`
+(`Picard/Pic0ChartLocus.lean:244`) is the `IsSplitWitness` locus, whose witness clause is the
+same `Subsingleton (Sheaf.HModule (divisorSheaf … W) 1)` as `IsH1VanishingAt`'s, and for it
+the general-test assembly is landed **unconditionally**:
+`isOpen_chartLocus_of_affineLocal` (`Picard/Pic0ChartLocusGeneralTest.lean:191`) reduces
+openness on `T` to openness on each affine open, `chartLocus_fromSpecAffine_eq_preimage`
+(`:168`) supplies the preimage identity across the carrier map, and the `hinv`
+(`IsSplitWitnessIsoInvariant`) hypothesis both of them carry is **proved**, not assumed —
+`isSplitWitnessIsoInvariant_holds` (`Picard/Pic0ChartLocusIsoInvariance.lean:263`), sorry-free.
+So a general-test statement for `IsH1VanishingAt` is a transport along that template plus the
+dictionary that identifies the two witness clauses, not a fresh piece of geometry.
 -/
 
 set_option autoImplicit false
