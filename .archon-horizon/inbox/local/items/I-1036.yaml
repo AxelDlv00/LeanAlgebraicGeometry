@@ -1,0 +1,71 @@
+id: I-1036
+provider: local
+kind: issue
+body: 'DAT-B''s COVERAGE OBLIGATION WAS OVER-QUANTIFIED: it is Zariski-LOCAL IN THE
+  TEST, so affine tests suffice — and every divisor-side producer here is RING-indexed,
+  so the row sent lanes across a gap they never had to cross
+
+
+  MEASURED and landed by ajcr-p2 (run 0088), 8ef1105ff, Picard/Pic0ChartCoverageAffineTest.lean.
+  lake build EXIT=0 (9307 jobs; all 13 sorry warnings in Challenge.lean only); four
+  declarations axiom-clean [propext, Classical.choice, Quot.sound] vs a control firing
+  sorryAx, oleans built BEFORE probing — the first probe attempt failed on a MISSING
+  olean rather than reporting success, the stale-import trap.
+
+
+  THE SITES. Pic0ChartCoveragePointwise.lean:128 and Pic0ChartLocalSurjectivity.lean:86
+  quantify the coverage datum over EVERY test SCHEME. The dat-b row prices the residue
+  as ''the chart-parameter/threshold reconciliation plus a datum producer''. None
+  mentions the obligation is local in the test.
+
+
+  WHY IT MATTERS. DivFamZar C S pi n (DivisorFamilyZar.lean:235) is indexed by an
+  ALGEBRA S. divFamZar at a general test (DivisorFamilyZarVehicle.lean:187) is only
+  the affine-opens LIMIT, collapsing to DivFamZar on an affine test (divFamZarAffineEquiv
+  :300). Same for DivisorFamilyFieldSurj.lean:147/:217 and divRepClassifyZar. So the
+  general-test quantifier forced an affine-to-general crossing before any machinery
+  could be touched.
+
+
+  chartsCoverLocally_of_affineLocal removes it: the pointwise datum over AFFINE tests
+  gives ChartsCoverLocally at EVERY test. Site-only: Sieve.pullback preserves iSup,
+  per index carries imageSieve s to imageSieve of the restricted s (Presheaf.pullback_imageSieve),
+  then transitive over Scheme.affineCover. FAMILY-GENERIC (arbitrary f), so it applies
+  verbatim to mixedParamChart.
+
+
+  NON-VACUITY, reproduced independently by a work-reviewer audit: at iota = PEmpty
+  the affine hypothesis is FALSE for any affine Y with a point and the conclusion
+  is the bottom sieve, covering only for an EMPTY test (I-0861 probes 5/6 at the affine
+  form). Satisfiable via a surjective chart.
+
+
+  NO GATE CLOSED. (1) The affine-test datum is still B-5''s open geometry; its residue
+  is a divisor family over a NEIGHBOURHOOD from data at a POINT — a spreading-out,
+  measured ABSENT for this carrier by two independent censuses. (2) Nothing pins V;
+  per I-1017/I-1012 both ends are bad, so any workable V is a proper intermediate
+  open and (huniv V, hcov V) has no measured inhabitant at any V.
+
+
+  ACTION for dat-b and chart-u: state the residue at an AFFINE test, and name the
+  spreading-out rather than ''a datum producer''.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T15:33:22.613178+00:00'
+updated_at: '2026-07-29T15:33:22.613192+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0004-horizon-ajcr-p2
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

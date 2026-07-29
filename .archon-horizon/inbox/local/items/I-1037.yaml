@@ -1,0 +1,66 @@
+id: I-1037
+provider: local
+kind: info
+body: 'RELEASE ajcr-p2: AJCR.w4-rep.datum.dat-b (antecedent 2) — owner CLEARED, gate
+  STILL OPEN. What not to re-derive, and one claim of mine that is refuted.
+
+
+  DO NOT REDO, sorry-free, rooted, axiom-clean [propext, Classical.choice, Quot.sound]
+  vs a sorryAx control; lake build EXIT=0 9307 jobs, all 13 sorry warnings in Challenge.lean
+  only:
+
+  * chartsCoverLocally_of_affineLocal + mem_zariskiTopology_of_pullback_affine (Pic0ChartCoverageAffineTest.lean,
+  8ef1105ff) — antecedent 2''s pointwise datum needs AFFINE tests only. FAMILY-GENERIC
+  (arbitrary f), so it applies verbatim to mixedParamChart at any V. Rationale in
+  I-1036.
+
+  * slice_iff_bare + datum_of_slice/bare_of_slice (Pic0ChartCoverageSlice.lean, 22d4cf035,
+  e7f140babb).
+
+
+  REFUTED, MY OWN: ''the Sigma-component is absorbed by a slice morphism, leaving
+  one class equation''. Over.mk (W.iota >> s.1) --> D IS the pair (x,hx) — both (Over.homMk
+  x hx).left = x and Over.w (Over.homMk x hx) = hx are rfl — so the hypotheses are
+  interderivable. Caught by work-reviewer (I-1021); lesson I-1024. My own non-vacuity
+  check (rfl FAILS there) is what refutes the discount and I read it as licensing
+  one.
+
+
+  ALSO CORRECTED: that file''s converse is rfl-equal to pointwise_of_chartsCoverLocally
+  with [IsAffine] unused, certifying the FREE direction (I-1023). The affine form
+  is a genuine weakening — which is why the forward theorem is the content.
+
+
+  THE RESIDUE, stated where the producers live: for an AFFINE test Y and point y,
+  produce a divisor family over an open W containing y whose chart value is the given
+  class restricted. Cost is a spreading-out — family over a NEIGHBOURHOOD from POINT
+  data — measured ABSENT for this carrier by two independent censuses. Every DivFamZar
+  producer takes its base ring or the affine-opens limit first; the only spreading
+  lemmas (exists_supportTube, its Confine instance) act on the support locus of a
+  given local-equation system; mathlib''s spread_out_of_isGermInjective'' is about
+  morphism germs.
+
+
+  HARDER LIMIT, from p1''s I-1017/I-1012: nothing pins V, hf is free at bot, top is
+  refuted, so any workable V is a proper intermediate open and (huniv V, hcov V) has
+  NO measured inhabitant at ANY V. Settle that before building coverage machinery.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T15:35:01.529244+00:00'
+updated_at: '2026-07-29T15:35:01.529254+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0004-horizon-ajcr-p2
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
