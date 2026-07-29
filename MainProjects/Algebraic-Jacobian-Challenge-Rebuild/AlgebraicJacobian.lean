@@ -630,6 +630,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyAffAbel
 -- separated-equalizer finrank additivity transcribes to AffAdaptation verbatim, confirming the
 -- repriced residue rather than assuming it.
 import AlgebraicJacobian.Picard.DivisorFamilyAffFieldDegree
+import AlgebraicJacobian.Picard.DivisorFamilyAffStalkEval
 import AlgebraicJacobian.Picard.DivRepGlobalAffLift
 import AlgebraicJacobian.Picard.DivRepAffPullIndep
 import AlgebraicJacobian.Picard.DivRepAwayPush
