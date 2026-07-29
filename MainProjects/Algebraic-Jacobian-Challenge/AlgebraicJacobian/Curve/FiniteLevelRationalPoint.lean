@@ -350,4 +350,81 @@ theorem level_factorization_of_curve {k : Type u} [Field k]
       Spec.map (CommRingCat.ofHom (k'.val.toRingHom)) ≫ q = p :=
   exists_finiteSeparable_level_factorization C.hom p hp
 
+/-! ## §6. The consumer's form: a `HasRationalPoint` at the finite level
+
+§4 says the point *factors through* `Spec k'`. That is not yet what campaign `G1` consumes, and
+an earlier revision of this file's header claimed the gap was closed here when nothing in the
+file mentioned `HasRationalPoint` (`I-1308`). Two steps close it, both cheap, and both are
+proved rather than priced — the route was measured by a fresh-context audit and reproduced here
+before landing (`lake env lean` EXIT=0 both times).
+
+The point is that "defined over `k'`" needs `q` to be a morphism **over** `Spec k'`, an equation
+§4's conclusion does not state. It does not need to: the inclusion `k' ↪ k^s` is flat and
+surjective on spectra, so `Spec` of it is an **epi**, and the equation follows by cancellation.
+-/
+
+/-- The base triangle: `Spec k^s → Spec k'  → Spec k` composes to `Spec k^s → Spec k`. Both maps
+are `Spec` of a ring hom, so this is `Spec.map_comp` plus a `congr` on the underlying algebra
+maps. -/
+theorem specMap_val_comp_specMap_algebraMap {k : Type u} [Field k]
+    (k' : IntermediateField k (SeparableClosure k)) :
+    Spec.map (CommRingCat.ofHom (k'.val.toRingHom)) ≫
+        Spec.map (CommRingCat.ofHom (algebraMap k k')) =
+      Spec.map (CommRingCat.ofHom (algebraMap k (SeparableClosure k))) := by
+  rw [← Spec.map_comp]; congr 1
+
+/-- **The factorising morphism really is a `k'`-morphism.** From §4's factorization equation plus
+`hp`, the map `q` satisfies `q ≫ f = Spec.map (algebraMap k k')` — i.e. `q` is a point of `X`
+*over* `Spec k'`, which is what "the point is defined over `k'`" means.
+
+The step is cancellation against an epi: `Spec.map` of the field inclusion `k' ↪ k^s` is flat and
+surjective, hence epi (`Flat.epi_of_flat_of_surjective`). Note it needs **no** finiteness and no
+`LocallyOfFiniteType` — it is about the two triangles only. -/
+theorem comp_eq_specMap_algebraMap_of_factorization {k : Type u} [Field k] {X : Scheme.{u}}
+    (f : X ⟶ Spec (CommRingCat.of k))
+    (p : Spec (CommRingCat.of (SeparableClosure k)) ⟶ X)
+    (hp : p ≫ f = Spec.map (CommRingCat.ofHom (algebraMap k (SeparableClosure k))))
+    (k' : IntermediateField k (SeparableClosure k)) (q : Spec (CommRingCat.of k') ⟶ X)
+    (hq : Spec.map (CommRingCat.ofHom (k'.val.toRingHom)) ≫ q = p) :
+    q ≫ f = Spec.map (CommRingCat.ofHom (algebraMap k k')) := by
+  have hepi : Epi (Spec.map (CommRingCat.ofHom (k'.val.toRingHom))) :=
+    Flat.epi_of_flat_of_surjective (Spec.map (CommRingCat.ofHom k'.val.toRingHom))
+  apply hepi.left_cancellation
+  rw [← Category.assoc, hq, hp, specMap_val_comp_specMap_algebraMap]
+
+/-- **A `k'`-point of `C` is a `Scheme.HasRationalPoint` for the base-changed curve `C_{k'}`.**
+The pullback universal property applied to the pair `(q, 𝟙)`; the section property is
+`pullback.lift_snd` on the nose. -/
+theorem hasRationalPoint_baseChangeField_of_comp_eq {k : Type u} [Field k]
+    (C : Over (Spec (CommRingCat.of k))) (k' : IntermediateField k (SeparableClosure k))
+    (q : Spec (CommRingCat.of k') ⟶ C.left)
+    (hqf : q ≫ C.hom = Spec.map (CommRingCat.ofHom (algebraMap k k'))) :
+    Scheme.HasRationalPoint (Scheme.baseChangeField C k') := by
+  refine ⟨⟨⟨Limits.pullback.lift q (𝟙 _) (by simpa using hqf), ?_⟩⟩⟩
+  change Limits.pullback.lift q (𝟙 _) _ ≫ Limits.pullback.snd _ _ = _
+  exact Limits.pullback.lift_snd _ _ _
+
+/-- **What `G1` asked for, at the level of a finite separable extension.** For a smooth curve `C`
+over an arbitrary field `k` and a `k^s`-point of `C` over `k`, there is a **finite separable**
+`k'/k` such that the base-changed curve `C_{k'}` has a `k'`-rational point.
+
+This is the composite of §4 with `comp_eq_specMap_algebraMap_of_factorization` and
+`hasRationalPoint_baseChangeField_of_comp_eq`, and it is the statement a `G1` consumer binds:
+`Scheme.HasRationalPoint` at a **finite** level, which
+`Curve/SeparablyClosedRationalPoint.lean` supplies only at `k^s` itself.
+
+**Still not Galois.** `k'` is finite separable, and `G1` spreads its datum to a finite *Galois*
+level. That remains open, by a normal-closure argument (`IntermediateField.normalClosure`), and
+this theorem must not be read as closing it. -/
+theorem exists_finiteSeparable_level_hasRationalPoint {k : Type u} [Field k]
+    (C : Over (Spec (CommRingCat.of k))) [SmoothOfRelativeDimension 1 C.hom]
+    (p : Spec (CommRingCat.of (SeparableClosure k)) ⟶ C.left)
+    (hp : p ≫ C.hom = Spec.map (CommRingCat.ofHom (algebraMap k (SeparableClosure k)))) :
+    ∃ (k' : IntermediateField k (SeparableClosure k)) (_ : FiniteDimensional k k')
+      (_ : Algebra.IsSeparable k k'),
+      Scheme.HasRationalPoint (Scheme.baseChangeField C k') := by
+  obtain ⟨k', hfd, hsep, q, hq⟩ := level_factorization_of_curve C p hp
+  exact ⟨k', hfd, hsep, hasRationalPoint_baseChangeField_of_comp_eq C k' q
+    (comp_eq_specMap_algebraMap_of_factorization C.hom p hp k' q hq)⟩
+
 end AlgebraicGeometry.Scheme
