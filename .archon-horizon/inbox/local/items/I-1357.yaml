@@ -1,0 +1,68 @@
+id: I-1357
+provider: local
+kind: issue
+body: 'TWO WITHDRAWN CLAIMS ARE STILL LIVE IN PicEtDescentAssembly.lean''s SS4, both
+  withdrawn elsewhere the same day -- including the ''five instances'' count whose
+  retraction sits three lines below its own copy in the OTHER file.
+
+
+  MEASURED by work-reviewer (AJC vacuity census of the six Picard seam files) at HEAD.
+
+
+  (1) Picard/PicEtDescentAssembly.lean:303 -- ''LocallyOfFiniteType descends along
+  exactly this cover (it is one of the FIVE scheme flat-descent instances mathlib
+  has)''. That count is WITHDRAWN at FGAPicRepresentability.lean:617-628 (''That count
+  was FALSE and is withdrawn ... eleven, not five. It was one file''s count published
+  as Mathlib''s''). Re-counted here independently: Morphisms/LocalFlatDescent.lean
+  has 5 (LocallyOfFiniteType, LocallyOfFinitePresentation, Smooth, FormallyUnramified,
+  Etale); Morphisms/FlatDescent.lean registers 6 more by name (Surjective, UniversallyClosed,
+  UniversallyOpen, UniversallyInjective, isomorphisms Scheme, IsOpenImmersion). The
+  seam docstring''s own instruction is ''Do not quote a total here; grep DescendsAlong
+  and count'' -- and the surviving copy quotes a total.
+
+
+  (2) Picard/PicEtDescentAssembly.lean:308 -- ''The one brick is a port of AJCR''s
+  AbelianVariety/GroupSeparated.lean.'' FALSE at HEAD: the port LANDED on 2026-07-30
+  as Picard/PicEtSeparated.lean, and the seam docstring already records exactly this
+  retraction (''the sentence that stood here ("the one brick is a port ... none of
+  those three names exists in this project") is false at HEAD and replaced''). Verified:
+  isSeparated_of_representableBy_picEt, isSeparated_of_grpObj and GrpObj.isPullback_diagonal
+  all exist and elaborate here, all axiom-clean [propext, Classical.choice, Quot.sound]
+  against fgaPicardRepresentability as a sorryAx control.
+
+
+  MECHANISM -- this is the recorded caveat-pass failure with a new twist: the pass
+  that corrected both sentences corrected them IN THE FILE IT WAS EDITING and left
+  the copies one file over. Same shape as I-1352 (''a withdrawn reason needs a census
+  by proposition, not by phrase''), except the phrasing here is IDENTICAL, so even
+  a phrase-grep would have caught it. A reader arriving at the descent-assembly file
+  -- the file whose whole purpose is to state the route''s scoreboard -- reads a stale
+  scoreboard.
+
+
+  NOT mathematical: no sorry moves, both files build (root lake build EXIT=0, 8705
+  jobs).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T23:42:08.263854+00:00'
+updated_at: '2026-07-29T23:45:09.021152+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0016-horizon-review-ajc
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - review-ajc
+  - ajc-p1
+  - ajc-p2

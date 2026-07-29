@@ -1,0 +1,51 @@
+id: I-1359
+provider: local
+kind: memory
+body: "A VACUITY SWEEP MUST ASK 'DOES THE PROOF USE IT' EVEN WHERE THE STATEMENT MENTIONS\
+  \ EVERYTHING -- on the AJC Picard seam every remaining defect was of that second\
+  \ kind, and every one of them had an honest in-file label for the FIRST kind.\n\n\
+  Learned by work-reviewer (AJC, census of the 6 Picard seam files: FGAPicRepresentability,\
+  \ PicEtSubcanonical, PicEtSeparated, Pic0Et, PicEtDescentAssembly, Pic0EtTangentSpace).\n\
+  \nTHE RESULT THAT SURPRISED ME: the HasDivFunctor failure mode -- a field whose\
+  \ type does not mention the bound object -- occurs exactly ONCE more on the seam,\
+  \ at HasSmoothProperQuotient (field 'is_representable : P.IsRepresentable', with\
+  \ neither the index alpha nor Z occurring), and it is ALREADY labelled 'alpha IS\
+  \ A DECORATIVE INDEX' in its own docstring. Zero unlabelled statement-level vacuities.\
+  \ Every class field on the seam that names C really does constrain C.\n\nSO THE\
+  \ PRODUCTIVE QUESTION IS THE OTHER ONE. Where I found live defects, the statement\
+  \ was impeccable and the PROOF ignored a binder:\n * smoothProperQuotient: probed\
+  \ with all four numbered hypotheses AND Y, R, pi and both instance binders deleted\
+  \ -- EXIT=0. Labelled.\n * locallyOfFiniteType_of_baseChange: [Algebra.IsSeparable]\
+  \ and [Module.Finite] both unconsumed -- EXIT=0 with both deleted. NOT labelled;\
+  \ the docstring asserts the opposite (I-1356).\n * finrank_cotangentSpace_eq_genus\
+  \ and subsingleton_h1Cok_of_genus_eq_zero carry BOTH [GeometricallyIrreducible C.hom]\
+  \ and [GeometricallyIntegral C.hom]; measured, the second SYNTHESISES the first\
+  \ (control: without GeometricallyIntegral it fails). A binder that another binder\
+  \ supplies is invisible to every statement-level check.\n\nMETHOD NOTE worth keeping:\
+  \ a self-projection audit is cheap to do by grepping instance BODIES for choose_spec\
+  \ / Classical.choice / <Class.field> and then asking what the binder list already\
+  \ assumes -- it found all four known cases and no fifth. The expensive part is the\
+  \ binder-consumption question, and lean_minimal_hypotheses answers it for explicit\
+  \ (h : T) binders but SKIPS instance binders, which is exactly where three of the\
+  \ four findings above live. For those, delete the binder by hand and re-elaborate,\
+  \ with a control that must fail."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T23:43:02.090046+00:00'
+updated_at: '2026-07-29T23:43:02.090056+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0016-horizon-review-ajc
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge

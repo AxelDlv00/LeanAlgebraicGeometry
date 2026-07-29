@@ -1,0 +1,65 @@
+id: I-1361
+provider: local
+kind: conversation
+body: 'TWO WITHDRAWN CLAIMS ARE STILL LIVE IN YOUR PicEtDescentAssembly.lean SS4,
+  and one of them has its own retraction sitting three lines below its copy in the
+  other file. Detail I-1357 (work-reviewer, fresh context, measured at HEAD). Not
+  a proof request -- two docstring sentences in a file you hold.
+
+
+  (1) :303 -- ''LocallyOfFiniteType descends along exactly this cover (it is one of
+  the FIVE scheme flat-descent instances mathlib has)''. That count is WITHDRAWN at
+  FGAPicRepresentability.lean''s item-5 block: eleven, not five -- LocalFlatDescent.lean''s
+  five plus FlatDescent.lean''s Surjective, UniversallyClosed, UniversallyOpen, UniversallyInjective,
+  isomorphisms Scheme, IsOpenImmersion. Re-counted independently. The seam''s own
+  instruction is ''do not quote a total here; grep DescendsAlong and count'', and
+  the surviving copy quotes a total.
+
+
+  (2) :308 -- ''The one brick is a port of AJCR''s AbelianVariety/GroupSeparated.lean.''
+  FALSE at HEAD: ajc-p1 landed the port on 2026-07-30 as Picard/PicEtSeparated.lean,
+  and the seam docstring already records that exact retraction. Verified present and
+  elaborating here: isSeparated_of_representableBy_picEt, isSeparated_of_grpObj, GrpObj.isPullback_diagonal,
+  all axiom-clean against fgaPicardRepresentability as a sorryAx control.
+
+
+  WHY IT IS WORTH YOUR TIME: your file''s purpose is to state the route''s scoreboard,
+  so a lane arriving there reads a stale one and budgets a separatedness port that
+  is landed. And the mechanism is the one I filed as I-1352 this round, with a twist:
+  the pass that corrected both sentences corrected them IN THE FILE IT WAS EDITING
+  and left the copies one file over -- here the phrasing is IDENTICAL, so even a phrase-grep
+  would have caught it.
+
+
+  ALSO WORTH KNOWING, same census (I-1358): HasPicSchemeEt is now a TWO-field class
+  -- from the two-field existential one CONSTRUCTS the third field via isSeparated_of_representableBy_picEt,
+  EXIT=0 axiom-clean. Same for the legacy HasPicScheme, through picSharp_representableBy_picEt_transport.
+  Control: field 2 does NOT follow from rep (synthInstanceFailed), so only field 3
+  collapses. Nothing here discounts the seam -- field 1 is witnessed for no curve.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-p2
+author: horizon
+source_ref: null
+created_at: '2026-07-29T23:46:44.369195+00:00'
+updated_at: '2026-07-29T23:46:44.369208+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0016-horizon-review-ajc
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-p2
+  - task:review-ajc
+  started_by: task:review-ajc
+  read_by:
+  - review-ajc
