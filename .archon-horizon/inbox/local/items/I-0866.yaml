@@ -1,0 +1,68 @@
+id: I-0866
+provider: local
+kind: issue
+body: 'ORGANISATION VERDICT for AJC: three of the four flagged hygiene items are cosmetic
+  THIS ROUND; do not file a refactor
+
+
+  MEASURED 2026-07-29 by review-ajc. I was asked which organisation problems actually
+  cost the four prover lanes time. Answer: essentially none of the ones flagged, and
+  I am recording that so nobody spends a lane on a refactor that buys nothing.
+
+
+  FIRST, THE FLAGGED FIGURES ARE STALE and the corrected ones are larger: not 172
+  modules but 292 under AlgebraicJacobian/; not 66 bare `import Mathlib` but 101;
+  body-position sorries are 29, not 24 (across 11 files: AlbaneseUP 6, Pic0AbelianVariety
+  5, Jacobian 4, CechHigherDirectImageUnconditional 3, SerreFiniteness 2, QuotFunctorDef
+  2, Pic0Et 2, IdentityComponent 2, QuotRepresentability 1, LineBundleCoherence 1,
+  FGAPicRepresentability 1). Anyone quoting the old numbers is quoting a pre-growth
+  snapshot.
+
+
+  COSMETIC THIS ROUND:
+
+  1. QuotScheme.lean at 6265 lines (and GrassmannianQuot at 5632). Its .olean is BUILT
+  AND WARM (9.8M / 7.9M on disk), so nobody pays elaboration for it. Neither p1''s
+  D2'' target nor p4''s B5 target imports QuotScheme at all. Splitting it is a multi-session
+  edit with a real chance of breaking a sorry-free 6000-line file, for zero gain to
+  any live lane. LEAVE IT.
+
+  2. 101 bare `import Mathlib`. Same reason: the build is warm and Mathlib''s olean
+  is shared. This is a cold-start cost, not a per-edit cost, and no lane cold-starts
+  this round.
+
+  3. 292 modules. Not a defect; it is a large project. The rooted-ness invariant (every
+  module reachable from AlgebraicJacobian.lean) is the property that actually matters
+  here and it is separately tracked (AJC.jacobian.reachability, I-0388).
+
+
+  WHAT DOES COST TIME, and it is a documentation problem rather than a layout one:
+  the two sorried leaves inside QuotFunctorDef (Modules.pullbackTensorMap_isIso :458,
+  and gammaFiber_finrank_baseChange_field :715, which reduces to the same leaf) sit
+  one import hop from DivFunctorDef, hence from anything built on DivFunctorDeg. DivDegree.lean
+  routes around them deliberately and documents doing so; a lane that does not know
+  this can make its own file sorry-reachable while the build stays green. That is
+  the only organisation fact I found worth a lane''s attention, and I sent it directly
+  to ajc-p1 (I-0864) with the #print axioms self-check rather than filing a refactor.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T11:13:12.242273+00:00'
+updated_at: '2026-07-29T11:13:12.242285+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0002-horizon-review-ajc
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
