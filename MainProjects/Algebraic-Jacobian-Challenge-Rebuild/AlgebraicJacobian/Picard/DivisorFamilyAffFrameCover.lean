@@ -5,6 +5,10 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.DivisorFamilyAffFraming
 import AlgebraicJacobian.Picard.DivSchemeFrameCover
+-- For `forall_not_isCertified_of_straddling`, the no-go `not_reachable_of_straddling` states.
+-- Imported rather than merely cited: a name that exists in source but not in this file's
+-- import closure is a nonexistent citation, and grep cannot tell the difference.
+import AlgebraicJacobian.Picard.DivisorFamilyAffStrict
 
 /-!
 # The ε frame cover, keyed on the WINDOW QUOTIENT rather than on a carrier
@@ -51,18 +55,28 @@ composite must be proved where it actually lives, on the submodule:
 ## What this does and does NOT establish
 
 It does **not** produce a widened divisor-representability, and no antecedent of
-`pic0RepresentableByOfCharts` moves.  Specifically: the three window-quotient facts are
-**hypotheses** here, and on the widened side the route to them runs through
-`AffAdaptation.windowQuotEquiv` (`Picard/DivisorFamilyAffTheta.lean:914`), which is itself
-conditional on surjectivity of the widened `thetaGluedEval` — a statement that file explicitly
-does not prove.  So the honest ledger is:
+`pic0RepresentableByOfCharts` moves.  The three window-quotient facts are **hypotheses** in the
+window layer, and the `Reachability` section below settles who can supply them — in both
+directions, which is the part worth reading:
 
-  the frame cover's chart dependence   REMOVED (this file)
-  the three window-quotient facts      OPEN on the widened side, reducing to widened
-                                       evaluation surjectivity
+* they ARE supplied, sorry-free, by a **chart-typed** certified adaptation on the same `d`
+  (`finite_/projective_/rankAtStalk_divisorWindow_quot_of_isCertified`).  So the layer is not
+  waiting on the widened `thetaGluedEval` surjectivity that
+  `Picard/DivisorFamilyAffTheta.lean` leaves open — a route exists.
+* and that route is **refuted exactly on the divisors R2 exists for**
+  (`not_reachable_of_straddling`): on a connected divisor straddling both pinned fibres, no
+  chart-typed adaptation is certified in any degree.
 
-That is a relocation of the obligation, not a discharge of it, and the relocation is worth
-recording because it replaces "restate a 24-module tower" with one named surjectivity.
+So the honest ledger is:
+
+  the frame cover's chart dependence   REMOVED (this file, sorry-free)
+  its three window-quotient inputs     REACHABLE chart-typed, REFUTED on the straddling
+                                       divisors, hence still open where the widening lives
+
+A predecessor version of this docstring said the inputs reduce to widened evaluation
+surjectivity.  That was the wrong limit and is corrected here: surjectivity is *one* route, the
+chart-typed certificate is another, and what actually blocks the widened side is the straddling
+no-go — which no repair to the surjectivity statement touches.
 
 ## Main declarations
 
@@ -71,6 +85,11 @@ recording because it replaces "restate a 24-module tower" with one named surject
 * `AlgebraicGeometry.windowBaseChange_windowBaseChange` — transitivity of the window
   pushforward.
 * `AlgebraicGeometry.map_divisorWindowGrOfQuot` — the tower transport, carrier-free.
+* `AlgebraicGeometry.exists_component_matrix_of_windowQuot` — the per-prime matrix
+  presentation, carrier-free.
+* `AlgebraicGeometry.finite_divisorWindow_quot_of_isCertified` and its two siblings — who
+  supplies the hypotheses.
+* `AlgebraicGeometry.not_reachable_of_straddling` — and where that supply fails.
 -/
 
 set_option autoImplicit false
@@ -325,6 +344,85 @@ theorem exists_component_matrix_of_windowQuot {r : ℕ}
   exact ⟨X, hX, I, hI, hdet, hXeq⟩
 
 end WindowLayer
+
+/-! ## Who can supply the three hypotheses — and the sharp limit on it
+
+The window layer above is carrier-free, so its three hypotheses may be discharged by *any*
+route to the window quotient.  The section records the one route that exists, and then the
+reason it does not rescue the widened carrier.  Both halves matter; publishing only the first
+would overstate the file. -/
+
+section Reachability
+
+-- `not_reachable_of_straddling` uses none of the ambient curve instances: the no-go is about
+-- the two pinned fibres and the support, not about smoothness or properness of `C`.  Measured,
+-- not assumed — the linter reported exactly this list.  Silenced rather than `omit`-ed because
+-- the ambient instances are mutually referenced and cannot be dropped individually.
+set_option linter.unusedSectionVars false
+
+variable (a : ℕ) (ha1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1)
+variable (hMa : windowM_choice π hπ g ≤ a)
+variable (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
+  (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
+variable {R : Type u} [CommRing R] [Algebra k R]
+
+include hπ hO hχ hMa in
+/-- **The three window-quotient hypotheses from a chart-typed certificate on the SAME `d`** —
+finiteness. -/
+theorem finite_divisorWindow_quot_of_isCertified {d : (relCurve C R).LocalEquations}
+    (A : DivisorAdaptation C R π d) (hc : A.IsCertified g) :
+    Module.Finite R ((R ⊗[k]
+      ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤)) ⧸ divisorWindow d ha1) :=
+  haveI := hc.finite_thetaGlued a
+  Module.Finite.equiv (windowQuotEquiv A ha1
+    (hc.thetaGluedEval_surjective (C := C) (π := π) hπ hO hχ ha1 hMa)).symm
+
+include hπ hO hχ hMa in
+/-- Projectivity, same route. -/
+theorem projective_divisorWindow_quot_of_isCertified {d : (relCurve C R).LocalEquations}
+    (A : DivisorAdaptation C R π d) (hc : A.IsCertified g) :
+    Module.Projective R ((R ⊗[k]
+      ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤)) ⧸ divisorWindow d ha1) :=
+  haveI := hc.projective_thetaGlued a
+  Module.Projective.of_equiv (windowQuotEquiv A ha1
+    (hc.thetaGluedEval_surjective (C := C) (π := π) hπ hO hχ ha1 hMa)).symm
+
+include hπ hO hχ hMa in
+/-- Constant fibre rank, same route. -/
+theorem rankAtStalk_divisorWindow_quot_of_isCertified {d : (relCurve C R).LocalEquations}
+    (A : DivisorAdaptation C R π d) (hc : A.IsCertified g) (p : PrimeSpectrum R) :
+    Module.rankAtStalk ((R ⊗[k]
+      ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤)) ⧸ divisorWindow d ha1) p = g := by
+  rw [congrFun (Module.rankAtStalk_eq_of_equiv (windowQuotEquiv A ha1
+    (hc.thetaGluedEval_surjective (C := C) (π := π) hπ hO hχ ha1 hMa))) p]
+  exact hc.rankAtStalk_thetaGlued a p
+
+/-- **THE LIMIT, as a theorem rather than a caveat: the route above is unavailable exactly on
+the divisors R2 exists for.**
+
+The three theorems above discharge the window-quotient hypotheses from a *chart-typed*
+certified adaptation on the same `d`.  On a connected divisor straddling both pinned vertical
+fibres — which is precisely the configuration human decision `I-0492` widened the carrier to
+admit, and the one `isCertified_affine_and_not_isCertified_chart`
+(`Picard/DivisorFamilyAffStrict.lean`) separates the carriers by — **no** chart-typed adaptation
+is certified in **any** degree.  So the antecedent of each reachability theorem is refuted
+there, and the route buys nothing on the widened side.
+
+This is stated so the file cannot be read as "the frame cover is now supplied widened".  What
+is supplied is the *chart-free window layer*; what is refuted, here, is the only route to its
+hypotheses that currently exists.  A widened route would have to go through a widened
+`thetaGluedEval` surjectivity (`Picard/DivisorFamilyAffTheta.lean`, not proved there), or
+around the window quotient entirely. -/
+theorem not_reachable_of_straddling [IsNoetherianRing R]
+    {d : (relCurve C R).LocalEquations}
+    (hconn : _root_.IsPreconnected d.supportLocus)
+    {x y : relCurve C R} (hx : x ∈ d.supportLocus) (hy : y ∈ d.supportLocus)
+    (hx₀ : x ∉ ((relCover C R (fiberTwoCover π)).V₀ : Set (relCurve C R)))
+    (hy₁ : y ∉ ((relCover C R (fiberTwoCover π)).V₁ : Set (relCurve C R))) :
+    ∀ (A : DivisorAdaptation C R π d) (m : ℕ), ¬ A.IsCertified m :=
+  forall_not_isCertified_of_straddling hconn hx hy hx₀ hy₁
+
+end Reachability
 
 end Curve
 
