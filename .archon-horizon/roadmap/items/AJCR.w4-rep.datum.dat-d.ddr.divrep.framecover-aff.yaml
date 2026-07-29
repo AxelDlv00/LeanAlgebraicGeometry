@@ -26,7 +26,7 @@ summary: 'CLAIMED ajcr-p1 (run 0087 r4). The one declaration between the R2 carr
   port is the three window-quotient facts, and the widened windowQuotEquiv that transports
   them ALREADY EXISTS (AffAdaptation.windowQuotEquiv, DivisorFamilyAffTheta.lean:914)
   conditional on widened-evaluation surjectivity.'
-status: active
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -49,10 +49,10 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
-  owner: ajcr-p1
   milestone: w4-gate
-  updated_at: '2026-07-29T22:52:51.422788+00:00'
+  updated_at: '2026-07-29T23:03:20.033026+00:00'
   pinned_commits:
+  - 62a1e37742
   - f76a7d6925
   - 8b49606a54
   - 361ae7e829
