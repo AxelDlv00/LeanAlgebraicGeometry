@@ -493,6 +493,7 @@ import AlgebraicJacobian.Tangent.EpsArrowIdentification
 import AlgebraicJacobian.Tangent.TwoChartKernelComparison
 import AlgebraicJacobian.Tangent.CollapseCechH1
 import AlgebraicJacobian.Tangent.EpsReductionSquare
+import AlgebraicJacobian.Tangent.EpsChartTrivialInstance
 import AlgebraicJacobian.Tangent.Pic0TangentSpace
 import AlgebraicJacobian.AbelianVariety.JacobianSmooth
 import AlgebraicJacobian.AbelianVariety.JacobianAbelianVariety

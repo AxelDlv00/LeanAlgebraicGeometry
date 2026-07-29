@@ -2550,3 +2550,42 @@ a `presheafCongr`-style ring transport at a single open is the shared vehicle. *
 as a prediction and not a measurement:** once the transport is applied at both sites, §7.9's item
 (4) and (T3-6) fall together. What it does *not* say is that either is then free — §8.1(1)'s
 elaboration cost is unmeasured and the additivity question is untouched.
+
+### 8.3 §7.9's ITEM (4) IS CLOSED — `hchart` is a landed declaration, and §8.2's prediction held
+
+*`Tangent/EpsChartTrivialInstance.lean`. Written immediately after §8.2, testing its own prediction
+rather than restating it.*
+
+**`chartTrivial_of_map_eq_one`** — a Čech Picard class on `C_{k[ε]}` killed by `ε ↦ 0` is trivial on
+the thickened affine chart over `W` — is now a declaration rather than §7.9's *"argument with every
+step verified"*. Four supporting statements: `resRingEquivOfEq` (+ two `@[simp]` projections),
+`epsChartDownAt` (the producer's `e'` at the transported open), `appLE_relCurveMap_eq` (`appLE` at the
+transported pair is `relSectionsMap` then the transport), and `hsq_at` (`EpsChartSquare`'s square as
+the producer's `hsq`). The geometric content is entirely `EpsChartSquare` and `ChartTrivialityGeo`;
+this file is the transport plus the composition, exactly as §8.2 predicted.
+
+**ONE MEASUREMENT WORTH THE SPACE, because it is a failure mode with no error message.** The first
+draft defined the transport the obvious way, `h ▸ RingEquiv.refl _`. Everything downstream
+*typechecks* — and `hsq_at`'s proof then cannot start: `rw [relSectionsMap, RingEquiv.symm_apply_eq,
+resRingEquivOfEq]` is a **silent no-op**. `lean_goal` before and after that `rw` returned
+character-for-character identical goals, and Lean reported **no error** (the `rw` "succeeded"). The
+cause is that nothing rewrites under a `▸`-transport whose motive is opaque. Rebuilt as
+`X.resHom (le_of_eq h)` in both directions — so that `Scheme.resHom_resHom` and `resHom_self` are
+applicable and the two projection lemmas give `rw` a handle — the same proof closes.
+
+> **The tell:** *a `rw` that changes nothing and reports nothing is a wrong definition, not a failing
+> tactic.* This is the mirror image of §7.7's lesson ("failed to synthesize instance" was not about
+> instances): there, an error message pointed at the wrong cause; here, the **absence** of an error
+> message hid the cause entirely. When a rewrite chain leaves the goal untouched, diff the goal — do
+> not add more rewrites.
+>
+> `Cohomology/RelThetaTransportCore.presheafCongr` had already arrived at the `resHom`-based design
+> for the same reason. Searching for an existing *shape* of transport, not just an existing lemma,
+> would have skipped this — the same lesson §7.6 recorded when `sectionsCollapse` beat this lane's
+> own `epsChartDown`.
+
+**What is still open after §8.3**, stated so the next session does not re-read the file to find out:
+`twoChartKernelEquiv` itself is still not instantiated — `hchart` is one of its three hypotheses and
+the other two are the surjectivity binders (`TwoChartHonestGenus`, `EpsZeroSurjective`). And (T3-6),
+the composite, is unwritten: §8.0's two halves exist, §8.1(1)'s cost is unmeasured, and additivity
+is untouched.

@@ -307,7 +307,10 @@ the property for `f` follows from the property for `g ≫ f` over any Zariski co
 So the obligation is not "hit every scheme point by a translation" but **"cover `d.J` by opens on
 each of which the count is `genus C`"** — and a translation of the identity's chart is such an open.
 Rational points do not have to *be* every point; their translated charts only have to **cover**.
-That is a weaker demand, and it is met by the same X2 transport §3 already cites.
+That is a weaker demand. ~~and it is met by the same X2 transport §3 already cites.~~
+**STRUCK 2026-07-29 (r8) — see §3.2.** X2 gives the count on *each* translated chart; it does **not**
+give that they cover, and the sibling lane has since shown the obvious route to that (rational
+translates exhausting the points) is *contradictory* for `g ≥ 1`. `hcov` is a genuine open input.
 
 **Consequence for the §5 contingency, stated carefully.** §3 said the codescent brick is "the
 contingency for exactly this caveat". The caveat as stated — pointwise unreachability — is
@@ -333,6 +336,39 @@ priced a consequence the statement does not have. Unfolding a class tells you wh
 produced; it does not tell you what *machinery exists to produce it*. Two `inferInstance` calls
 answered a question three paragraphs of correct reading had left open — and both are the kind of
 one-line probe §6.26 of the t4 worksheet says to run before pricing.
+
+### 3.2 THE SIBLING REFUTED THE POINT-INDEXED FORM OF `hcov`, AND §3/§3.1 OVERSELL WHO SUPPLIES IT
+
+*Recorded 2026-07-29 (run 0073 r8) from `ajc-pic0av`'s reply on the cross-project thread I-0495,
+which refutes **its own** r7 reduction of `dim Pic⁰ = g` and flags the consequence for this lane. I
+did not re-derive their proof; the argument below is theirs and is short enough to check by reading.*
+
+**Their result.** The "orbit condition" — *every point of `Pic⁰` is a translate of the identity by a
+`k`-rational section* — is not a cheap gap; it is **contradictory for `g ≥ 1`**. A translation is an
+iso hence a homeomorphism; the identity point is closed (a section of a morphism to `Spec k` is a
+closed immersion); homeomorphisms carry closed points to closed points; so the orbit condition makes
+every point closed, i.e. the space `T1`, and a nonempty sober `T1` space has `topologicalKrullDim 0`.
+
+**Why it lands here, and it is good news for the shape.** `ajc-pic0av` points out that
+`smoothOfRelativeDimension_of_translation_cover` quantifies over a `ZeroHypercover`, i.e. over
+**opens** — so it is immune to their refutation, and *"restate it over POINTS and the theorem is
+lost."* §3.1's reading is confirmed from the other side, by a lane that reached the contradiction the
+point-indexed form implies. That is worth more than my two `inferInstance` calls, because it says the
+opens-form is not merely *sufficient* but **necessary**.
+
+**But it also corrects a sentence of mine.** §3 step 3 says translation *"transports the count from
+the identity to every `x`"*, and §3.1 says the covering demand *"is met by the same X2 transport §3
+already cites"*. **That second clause is too strong and I am retracting it.** X2 gives, per rational
+point, an iso and hence (via `smoothOfRelativeDimension_pointTranslationIso`) the count on one
+translated chart. What it does **not** give is that those charts **cover** `d.J.left` — and the
+sibling's argument shows the natural way to close that gap (make the rational translates exhaust the
+points) is not merely unproved but *false* for `g ≥ 1`. So `hcov` is a genuine open input, not
+bookkeeping over a landed transport, and `RelativeDimensionLocal.lean`'s docstring is right to carry
+it as a hypothesis while §3.1's prose was not right to call it met.
+
+**What this does not change:** the numeral is still T5, S3 is still [M], and the `k̄`+§5-codescent
+contingency is untouched. What it changes is which of S3's two inputs a successor should expect to
+cost something: **both**, not one.
 
 ## §3.5 A warning for whoever takes P1 (not the S-cluster, but it belongs in a Wave-5 doc)
 
