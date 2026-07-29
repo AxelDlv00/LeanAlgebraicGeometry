@@ -1,0 +1,45 @@
+id: I-0776
+provider: local
+kind: issue
+body: "JANITOR run0071/s0014 #11 *** SECOND ARMED ENTRY, ALSO FIXED, MINUTES AFTER\
+  \ THE FIRST. *** The hazard is not an occasional accident on this lane right now\
+  \ -- it is re-arming every few minutes as the ajcr-divrep lane commits.\n\nPATH\
+  \ 2: MainProjects/Algebraic-Jacobian-Challenge-Rebuild/informal/w4-rep-critical-path.md\
+  \ (worksheet, not Lean).\n  HEAD  0d83eb66185cdb5e0334c252546c2a5210ebdf4f\n  disk\
+  \  0d83eb66185cdb5e0334c252546c2a5210ebdf4f  (IDENTICAL to HEAD, 1124 lines both)\n\
+  \  index 2c048459fec57cde80a13404d59fe32fa2bc1d86  (stale)\n  diff --cached --numstat\
+  \ HEAD  =>  0 / 27\nA bare commit would have deleted 27 lines of the DD-R critical-path\
+  \ worksheet. Same signature as #10: correct on disk, stale in the index, invisible\
+  \ to a ^D check.\n\nDISARMED identically: precheck 'diff <(cat-file -p HEAD:<path>)\
+  \ <path>' empty, then 'add -- <path>'; re-verified 'diff --cached --numstat HEAD'\
+  \ = 0 entries.\n\nTHE PATTERN, which is the actual finding of my pass. Three index\
+  \ snapshots in ~50 minutes across two different HEADs:\n  T0 (HEAD dd3d22fae-ish):\
+  \ 0 armed\n  T1 (HEAD dd3d22fae):     1 armed -- DivisorFamilyAffTheta.lean, 7/163\n\
+  \  T2 (HEAD 32a73bb3b):     1 armed -- w4-rep-critical-path.md, 0/27\nEach CAS commit\
+  \ by the live lane re-staleds the shared index, exactly as protocol-concurrent-lanes.md\
+  \ 1b/4a describes, and each time the armed path is a file the committing lane had\
+  \ JUST landed. So the window is short and recurring, and 'I checked at session start'\
+  \ is worthless.\n\nRECOMMENDATION for the ajcr-divrep and ajc-fbc lanes, both still\
+  \ running: run the numstat check as the last step after EVERY CAS commit, not once\
+  \ per session. Two of my three snapshots were armed; the base rate right now is\
+  \ roughly one armed path per commit."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T01:24:26.860357+00:00'
+updated_at: '2026-07-29T01:24:26.860368+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0014-horizon-ajcr-divrep
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

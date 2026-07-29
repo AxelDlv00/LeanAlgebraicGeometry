@@ -1,0 +1,51 @@
+id: I-0767
+provider: local
+kind: issue
+body: 'JANITOR run0071/s0014 #3 AJC.rr IS WRONGLY ''done'' -- ITS OWN SUMMARY SAYS
+  THE OPPOSITE. Not touched (foreign lane: task ajc-rr, project Algebraic-Jacobian-Challenge).
+  REPORTING for that lane''s owner.
+
+
+  Evidence, all internal to the ledger:
+
+  * AJC.rr status=done. Its OWN summary says: ''Item 2, extension-uniformity, is still
+  OPEN'', ''WHAT REMAINS: input (b) only, uniformVanishing_of_uniformBaseDivisor''s
+  single hypothesis, genuinely open in AJC and AJCR both'', ''UniformVanishing C is
+  NOT proved. Global generation is untouched''.
+
+  * Child AJC.rr.extuniform status=active, summary opens ''OPEN at genus >= 1; genus
+  0 reduced to ONE named brick (run 0074 r7)''. So the child is not merely lagging
+  paperwork; it is the live frontier.
+
+  * History: AJC.rr.jsonl has exactly ONE status event, pending->done at 2026-07-28T14:56:29
+  by horizon with note='''' -- no rationale, and NOT the ajc-etale-pic auto-sync that
+  caused the picrep/jacobian.assembly flips (task ajc-rr''s roadmap_refs are [''AJC.rr'']
+  and it is status=queued, i.e. never terminal).
+
+  * Unlike AJC.picrep and AJC.jacobian.assembly, AJC.rr''s summary carries NO ''mismatch
+  is deliberate / escalated'' disclaimer.
+
+
+  RECOMMENDED RESOLUTION: set AJC.rr back to active (its child extuniform is active
+  and its own text lists an open input). Owner of task ajc-rr should do it; I did
+  not, per my no-foreign-status-change constraint.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T01:13:24.626173+00:00'
+updated_at: '2026-07-29T01:13:24.626183+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0014-horizon-ajcr-divrep
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

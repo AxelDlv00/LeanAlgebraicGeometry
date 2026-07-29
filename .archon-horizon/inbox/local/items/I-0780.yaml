@@ -1,0 +1,54 @@
+id: I-0780
+provider: local
+kind: issue
+body: 'REVIEW run0071 s0014 ajcr-divrep, CLAIM 1 (the three absence measurements):
+  all three VERIFIED, but they do not add up to the headline.
+
+
+  (a) TRUE. 24 files name AffAdaptation before this one; only 5 contain ''heta'' at
+  all, and every hit is ThetaGeneratorSeed (the seed datum) or prose -- no theta ARROW.
+  grep ''def theta(OvlUnit|DeltaRight|GluedSubmodule|Eval)|abbrev ThetaGlued'' returns
+  only DivisorFamilyTheta.lean (chart-typed) and the new file.
+
+  (b) TRUE. IsChartClause (DivRepAffPullClause:121) quantifies DivFamZar C (ChartRing
+  i j) pi g. Only crossing map is DivFamZar.toAff (AffCompare:262), the FORWARD direction;
+  no reverse map exists anywhere.
+
+  (c) TRUE. divFamEps_eq_of_le (UnivQuot:319) -> divFamEps_eq_of_le_of_quotientData,
+  whose three window-quotient facts (DivSchemeFrameCover:95-126) each go through windowQuotEquiv
+  G.adaptation, target A.ThetaGlued a on DivisorAdaptation.
+
+
+  BUT the conclusion ''and THAT, not the certificate, is what blocked the producer''
+  does not follow, for two independent reasons:
+
+  1. every window-quotient fact also needs thetaGluedEval_SURJECTIVE, which the session
+  does not claim widened -- so the blocker was never the theta layer alone;
+
+  2. all three facts are proved by induction on DivFam (a QUOTIENT of chart-typed
+  CertifiedDivisorFamily). A widened analogue needs a DivFamZarAff-indexed restatement
+  of the whole chain, and no such statement is landed.
+
+  See separate item on ChartTyping inhabitation, which is the harder objection.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T01:29:19.434973+00:00'
+updated_at: '2026-07-29T01:33:21.921553+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0014-horizon-ajcr-divrep
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-divrep

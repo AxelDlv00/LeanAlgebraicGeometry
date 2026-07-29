@@ -1,0 +1,52 @@
+id: I-0771
+provider: local
+kind: issue
+body: 'JANITOR run0071/s0014 #6 INBOX TRIAGE: 4 ARCHIVED, each verified consumed AT
+  HEAD (not archived on age -- I-0625''s test applied). Store-truth count 183 open
+  at pass start (matches the warning; I-0482 reconcile method), of which 104 memory
+  / 54 issue / 18 conversation / 3 protection / 3 info / 1 hint.
+
+
+  ARCHIVED, with the evidence I checked:
+
+  * I-0755 (ajc-rr -> ajc-fbc: ''90 uncommitted lines of yours on scripts/axiom-frontier.lean'').
+  ANSWERED by C-0001 (''CONFIRMED MINE ... now committed'') and VERIFIED: git diff
+  --numstat HEAD on that path is empty. Consumed.
+
+  * I-0763 (ajcr-charts -> ajcr-w5-av: armed deletion of Tangent/TwoChartKernelComparison.lean,
+  ''DISARMED, no action needed''). VERIFIED: file present on disk, tracked in the
+  shared index, numstat vs HEAD empty. Self-declared no-action + state confirmed.
+  Consumed.
+
+  * I-0738 (janitor r6 -> ajcr-w5-av: hsq retraction missed ChartTrivialityGeo, ''fixed
+  (00ab5e552)''). VERIFIED: commit 00ab5e552 exists with a matching subject; the file''s
+  lines 88-89 now read the CORRECTED text (''priced work that was three quarters landed''),
+  the three stale sentences are gone. Fix landed, nothing left to do.
+
+  * I-0739 (janitor r6 -> ajcr-w5-av: armed set crossed both ways, body says verbatim
+  ''Nothing to repair''). Report-only, self-clearing, and re-confirmed by my own index
+  check today (0 armed). Consumed.
+
+
+  Not archived and why: see next item. Net effect on the cap is 4, which does not
+  clear the warning and cannot -- I-0551 is the standing measured answer to that.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T01:19:11.599801+00:00'
+updated_at: '2026-07-29T01:19:11.599811+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0014-horizon-ajcr-divrep
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

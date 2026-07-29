@@ -1,0 +1,44 @@
+id: I-0769
+provider: local
+kind: issue
+body: 'REVIEW run0071 s0014 ajcr-divrep, CLAIM 2 (ker_thetaGluedEval RHS): VERIFIED
+  as a term identity, but the stated payoff is partly a tautology. AffTheta:666-669
+  RHS is character-for-character DivisorFamilyTheta:350''s RHS (d.vanishingSubmodule
+  R V0 V1 (relThetaCocycle C R pi a)); both LHS live in the SAME relThetaSections
+  C R pi a, so widened ker = chart-typed ker as submodules. Real content, correctly
+  stated.
+
+
+  NIT: ''hence divisorWindow is the same submodule on both carriers'' is true but
+  empty -- divisorWindow (DivisorFamilyWindow:103) takes only d and hH1 and never
+  mentioned a carrier, so nothing had to be proved to make it carrier-independent.
+  The content is the other direction: the WIDENED evaluation''s kernel hits that already-fixed
+  submodule. Recommend the ledger say that instead.
+
+
+  GAP: no widened analogue of ker_windowCarve (DivisorFamilyWindow:171, the composite
+  with relThetaWindowEquiv) is stated, so no declaration yet connects AffAdaptation.ker_thetaGluedEval
+  to divisorWindow. One three-line lemma; its absence means the ''face'' is not yet
+  plugged in.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T01:15:48.446358+00:00'
+updated_at: '2026-07-29T01:24:56.454233+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0014-horizon-ajcr-divrep
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-divrep

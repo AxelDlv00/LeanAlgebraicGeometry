@@ -1,0 +1,58 @@
+id: I-0772
+provider: local
+kind: issue
+body: 'JANITOR run0071/s0014 #7 TASK QUEUE: ZERO ORPHANED ''running'' STATUSES, and
+  the fleet has shrunk 8 -> 2 CLEANLY. This is a delta on I-0648, not a re-derivation.
+
+
+  MEASURED: 30 task rows total -- 2 running, 11 queued, 9 done, 7 cancelled, 1 failed.
+  The 13-open figure I-0648 measured is now 13 again but with a completely different
+  split.
+
+
+  ORPHAN CHECK (the point of my dispatch): the 2 running rows are ajc-fbc and ajcr-divrep.
+  ''horizon ps'' shows exactly 2 live processes: run 0068 pid 647204 (task ajc-fbc)
+  and run 0071 pid 648098 (task ajcr-divrep). One-to-one, no row claims a pid that
+  is gone. ZERO ORPHANS.
+
+
+  WHAT CHANGED SINCE I-0648: six lanes that were ''running'' in that measurement --
+  ajc-albanese, ajc-pic0av, ajc-rr, ajcr-cert-r2, ajcr-charts, ajcr-w5-av -- are now
+  ''queued'', i.e. they exited and their rows were returned to the queue rather than
+  left dangling. That is the healthy outcome and worth recording, because ''running
+  with no pid'' is the failure mode this check exists for and the fleet just did six
+  clean hand-backs in a row. Corroborating: runs/0073/process.json is DELETED on disk
+  (unstaged) -- the normal exit cleanup for the ajcr-w5-av run.
+
+
+  QUEUE SIZE: 11 queued vs I-0648''s 5. The 6 new entries are exactly those hand-backs,
+  so the queue grew by lanes finishing, not by new work piling up. I-0648''s triage
+  axis still applies to the original 5 (T16 and ''rebuild'' are project CHARTERS and
+  stay queued indefinitely; ajc-truth, ajcr-w4-rep-free, ajc-optimize all have open
+  roadmap_refs). Nothing to close. The cap of 12 is exceeded by construction at this
+  fleet width, per I-0648.
+
+
+  NOTE: ''ajcr-w4-rep-free'' points at AJCR.w4-rep, whose TASK row (id ''AJCR.w4-rep'')
+  is cancelled while the ROADMAP row of the same name is active and held by live lanes
+  -- a name collision between the two stores, not a fault, but it will confuse a reader.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T01:20:34.117162+00:00'
+updated_at: '2026-07-29T01:20:34.117175+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0014-horizon-ajcr-divrep
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

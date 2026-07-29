@@ -1,0 +1,55 @@
+id: I-0779
+provider: local
+kind: issue
+body: 'REVIEW run0071 s0014 ajcr-divrep -- *** THE WIDENED THETA LAYER IS EMPTY EXACTLY
+  ON THE DIVISORS R2 EXISTS FOR. Kernel-verified, EXIT=0.
+
+
+  Every declaration in DivisorFamilyAffTheta.lean is indexed by (tau : ChartTyping
+  C R pi D). Proved:
+
+
+  theorem: if some piece D.pieces j contains a point x outside V0 AND a point y outside
+  V1, then IsEmpty (ChartTyping C R pi D).
+
+  Proof: 3 lines. tau.side j is false or true; piece_le_relPinnedChart tau j puts
+  the WHOLE piece inside V0 resp V1, contradicting x resp y. (Probe /tmp/ajcr_probe9.lean.)
+
+
+  Now compose with the lane''s own straddling setup. cert-r2''s producer runs through
+  exists_affCoverData_swallowedBy (AffStraddle:95): the support locus sits inside
+  ONE piece W. The straddling hypotheses (forall_not_isCertified_of_straddling, AffStrict:127)
+  are exactly ''support has a point outside V0 and a point outside V1''. Both points
+  are then in W. So on precisely the covers the widening was built to serve, ChartTyping
+  is EMPTY and no declaration in the new file has an instance.
+
+
+  Consequence for the headline claim: ''the widened carrier had no Theta layer, and
+  THAT is what blocked R2''s producer from feeding U2'' is not established. The new
+  layer is a genuine port and kernel-green, but it can only be instantiated on covers
+  whose every piece lies in a single pinned chart -- i.e. NOT the straddling ones.
+  The docstring''s I-0492-clause-3 argument (''the Theta layer may have ChartTyping
+  since the certificate does not'') is about what is PERMITTED, not about what is
+  INHABITED, and inhabitation is where this fails.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T01:28:29.419039+00:00'
+updated_at: '2026-07-29T01:33:16.718679+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0014-horizon-ajcr-divrep
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-divrep

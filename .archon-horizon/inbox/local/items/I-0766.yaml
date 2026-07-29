@@ -1,0 +1,46 @@
+id: I-0766
+provider: local
+kind: issue
+body: 'JANITOR run0071/s0014 #2 ROADMAP MISMATCHES: 2 of 3 ARE EXPECTED, 1 IS A REAL
+  WRONG STATUS (AJC.rr).
+
+
+  (a) AJC.jacobian.assembly pending, only child .reachability done => EXPECTED, LEAVE
+  ALONE. Its own summary says verbatim: ''THIS ITEM STAYS OPEN WITH ITS ONLY CHILD
+  DONE -- that status mismatch is deliberate and must not be "fixed". The parent is
+  the assembly step, not a container.'' History confirms someone already reverted
+  an auto-flip: pending->done 2026-07-28T06:04:16 ''synced from task ajc-etale-pic'',
+  then done->pending 06:35:22.
+
+
+  (b) AJC.picrep done / .tensor pending => EXPECTED, ESCALATED, LEAVE ALONE. Summary
+  tail: ''STATUS MISMATCH, KNOWN AND ESCALATED -- DO NOT RE-TRIAGE''. Root cause is
+  the same auto-propagation (history: pending->done 06:04:16 ''synced from task ajc-etale-pic'';
+  that task''s roadmap_refs are [.rational-point, picrep, .assembly, jacobian.assembly]).
+  Split verdict recorded in I-0543 / thread I-0538: .quot+.serre self-declare OFF-PATH
+  (want rejected/re-parent), .tensor is a LIVE input to Hilbert-function base change
+  and is the only real evidence the parent is premature. Decision is with the human
+  as I-0605.
+
+
+  (c) See next item -- AJC.rr is a genuine wrong status.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T01:13:06.530476+00:00'
+updated_at: '2026-07-29T01:13:06.530488+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0014-horizon-ajcr-divrep
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

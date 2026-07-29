@@ -1,0 +1,56 @@
+id: I-0768
+provider: local
+kind: issue
+body: 'JANITOR run0071/s0014 #4 UNROOTED-SORRY CENSUS (AJCR): 17 unrooted modules,
+  EXACTLY ONE carries a sorry as a term. Plus that file''s own STATUS block is STALE
+  BY HALF -- it advertises two sorries and has one.
+
+
+  Method: BFS of ''import AlgebraicJacobian.*'' from AlgebraicJacobian.lean; sorry
+  counted as a TERM (nested block comments and -- comments stripped, word-boundary
+  match), so docstring prose does not count.
+
+  Totals: 745 .lean under the project (744 in AlgebraicJacobian/ + the root), 728
+  rooted, 17 unrooted, 0 dangling imports.
+
+
+  THE ONE: AlgebraicJacobian/Picard/Pic0ThetaCocycle.lean -- 272 lines, 13 decls,
+  1 sorry at line 268 in pic0Theta_comp (W7 K-1b, the theta cocycle over a tower k->L->M).
+  Tracked, and disk == HEAD (I diffed against HEAD:<path>). Zero importers, deliberately:
+  the docstring says ''Do NOT import this file from the root until both sorrys are
+  closed''.
+
+
+  STALE STATUS BLOCK (lines 44-48): ''The two keystones pic0Theta_id/pic0Theta_comp
+  bottom out in a single sorry EACH''. False at HEAD -- pic0Theta_id (line 159) is
+  fully proved, ending ''exact rfl''; only pic0Theta_comp is open. So the gate to
+  rooting this file is ONE sorry, not two, and the file''s own text will mislead the
+  next session into pricing double. I am read-only on .lean so I did not edit it;
+  the W7/K-1 owner should refresh that paragraph.
+
+
+  The other 16 unrooted modules are sorry-free: 14 Picard/DivScheme* (Redesign* seeds/fibres/charts,
+  FlatteningBridge, SeedUnivSecondWindowMap), EntryIdeal.lean, ScratchChartLocal.lean.
+  Sorry-free but unreachable = the ''unrooted family hides a discharge'' pattern;
+  worth a separate look at whether any of the 14 DivScheme* files already discharge
+  a divrep row.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T01:15:09.174077+00:00'
+updated_at: '2026-07-29T01:15:09.174089+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0014-horizon-ajcr-divrep
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

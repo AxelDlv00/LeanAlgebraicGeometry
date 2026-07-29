@@ -1,0 +1,53 @@
+id: I-0781
+provider: local
+kind: issue
+body: 'REVIEW run0071 s0014 ajcr-divrep, CLAIM 3 (scope honesty + IsThetaPaired not
+  vacuous/false): the SCOPE claims hold, and IsThetaPaired is satisfiable -- but the
+  only witness I can build is the degenerate one, and that is the same degeneracy
+  as the emptiness item.
+
+
+  Scope: VERIFIED. No surjectivity of thetaEval/thetaGluedEval is stated anywhere
+  in the file (only ker_thetaGluedEval_eq_ker + ker_thetaGluedEval); no eps-value
+  identity, no divisorWindow/relThetaWindowEquiv occurrence outside the docstring;
+  IsThetaPaired is a plain def with no producer beyond isThetaPaired_of_one_mem (a
+  reduction, not a discharge). Nothing smuggled.
+
+
+  Not vacuous / not false: kernel-verified EXIT=0 (/tmp/ajcr_probe13.lean). If the
+  typing is ONE-SIDED (all tau.side j = b) then thetaOvlUnit tau a = 1 (relThetaSideUnit
+  at equal sides is rfl 1), so thetaGluedSubmodule = gluedSubmodule, 1 is glued, and
+  IsThetaPaired A tau a holds for EVERY a. So the Prop is inhabited and thetaSpan
+  * thetaInvSpan = 1 is satisfiable widened.
+
+
+  The sting: a one-sided typing is precisely the case where the cover is confined
+  to a single pinned chart, i.e. NOT widened at all. I could not produce any witness
+  with genuinely mixed sides -- there the pairing needs the cross-overlap coordinate
+  reciprocal (mk_ovlIdeal_coord_mul_aeval_eq_one, ThetaPairing:104), which is where
+  the chart-typed discharge spends its finiteness hypothesis (isThetaPaired_of_finite_colength:
+  c1 on the chart-1 pieces). So ''one named Prop with one named intended producer''
+  is right about the shape and understates that the producer''s input is still c1-finiteness
+  on one side''s pieces.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T01:31:18.740903+00:00'
+updated_at: '2026-07-29T01:33:27.093329+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0014-horizon-ajcr-divrep
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-divrep

@@ -1,0 +1,52 @@
+id: I-0777
+provider: local
+kind: issue
+body: 'JANITOR run0071/s0014 #12 CENSUS RE-CONFIRMED AT THE NEW HEAD (32a73bb3b),
+  and the project-wide sorry picture is only TWO files.
+
+
+  RE-MEASURED after the lane''s commits moved HEAD (my #4 was taken at dd3d22fae):
+  unchanged. 745 .lean, 728 rooted, 17 unrooted, and Pic0ThetaCocycle.lean is still
+  the ONLY unrooted file carrying a sorry as a term (1 sorry, in pic0Theta_comp; its
+  docstring still wrongly advertises two -- see #4).
+
+
+  WIDER CONTEXT I did not have when filing #4: project-wide there are exactly 16 sorry
+  TERMS in exactly 2 files.
+
+  * AlgebraicJacobian/Challenge.lean -- 15, ROOTED, and BY DESIGN. It is the self-contained
+  statement file (''A reviewer reads this one file, compares it against the original
+  challenge references/challenge.lean by Christian Merten''). Its own header states
+  the contract: ''The genuinely-missing pieces are sorry ... Proofs of the sorrys
+  live in the rest of the AlgebraicJacobian/ tree and must not weaken or restate any
+  signature below.'' So these 15 are the challenge''s open statements, not debt in
+  the ordinary sense, and they are the right thing to count when someone asks ''how
+  far is AJCR from done''.
+
+  * AlgebraicJacobian/Picard/Pic0ThetaCocycle.lean -- 1, UNROOTED, deliberately unimported
+  until closed.
+
+
+  So the answer to the unrooted-sorry question is: ONE file, ONE sorry, deliberate
+  and documented, and the other 16 unrooted modules (14 Picard/DivScheme*, EntryIdeal,
+  ScratchChartLocal) are sorry-free. No hidden debt found outside the root cone.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T01:25:10.383981+00:00'
+updated_at: '2026-07-29T01:25:10.383998+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0014-horizon-ajcr-divrep
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

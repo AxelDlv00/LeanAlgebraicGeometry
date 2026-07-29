@@ -1,0 +1,50 @@
+id: I-0782
+provider: local
+kind: issue
+body: 'REVIEW run0071 s0014 ajcr-divrep -- THE ONLY ChartTyping PRODUCER IN THE TREE
+  IS THE MIGRATION FROM THE OLD CHART-TYPED CARRIER. This is the second half of the
+  emptiness objection and it is a one-line grep.
+
+
+  grep ''ChartTyping C R'' across AlgebraicJacobian/ returns exactly one non-variable,
+  non-new-file hit: FinCoverData.toChartTyping (DivisorFamilyAffCover:255), typed
+  at D.toAffCoverData, whose side is (finSumFinEquiv.symm j).isRight -- i.e. the Sum
+  index of an OLD FinCoverData. There is no producer of a ChartTyping on a cover that
+  did not come from a chart-typed one.
+
+
+  Consequence: every instantiation of the new file''s 46 declarations available today
+  factors through FinCoverData. So the widened Theta layer, as landed, computes on
+  exactly the covers the chart-typed layer already handled, re-indexed. The port is
+  real and kernel-green; what it does not yet have is a single instance not reachable
+  from the old carrier.
+
+
+  What would close it: a ChartTyping producer that does not consume a FinCoverData
+  -- e.g. from the swallowing-cover construction (AffStraddle:95) after REFINING the
+  swallowing piece W into W inf V0 and W inf V1. That refinement is the actual missing
+  brick, and it changes the cover (so it must be checked against SwallowedBy, which
+  the refined cover will generally NOT satisfy: the support then meets two pieces).
+  That tension is worth pricing explicitly before the next session ports thetaGluedEval_surjective.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T01:31:46.952945+00:00'
+updated_at: '2026-07-29T01:33:32.339980+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0014-horizon-ajcr-divrep
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-divrep

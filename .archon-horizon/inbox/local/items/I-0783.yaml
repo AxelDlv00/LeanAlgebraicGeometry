@@ -1,0 +1,60 @@
+id: I-0783
+provider: local
+kind: issue
+body: 'REVIEW run0071 s0014 ajcr-divrep, CLAIM 4 part 2 (which of d05c316b0 / 91f702164
+  is right about ''the pinned charts enter at EXACTLY ONE place''): the RETRACTED
+  version was closer to right than its own retraction, and both mis-locate the entry
+  point.
+
+
+  d05c316b0 said the fixed pair enters only at isThetaPaired_of_sectionWitness. 91f702164
+  retracted that, on the ground that thetaSectionFst/Snd read the pinned trivializations.
+  The retraction''s premise is correct (the sections DO name relFiberCoordPow/relFiberCoordOnePow,
+  which live on V0/V1) but its conclusion -- that this makes them a separate entry
+  point needing new content -- is wrong: they are the images of relThetaSectionFst/Snd
+  under the widened thetaEval, so they add nothing (see my earlier item, kernel-verified).
+
+
+  The real answer is neither: the pinned pair enters the whole route at the TYPE of
+  every declaration, via (tau : ChartTyping C R pi D), because ChartTyping.piece_le
+  is a containment in relPinnedChart. Counting ''places where the charts enter'' by
+  scanning proof bodies misses the binder. That is the same failure mode as memory
+  ''check what a discharged theorem still takes''.
+
+
+  Also, CLAIM 5 hygiene, all clean:
+
+  * no sorry / admit / native_decide in the new file; lake env lean EXIT=0, zero diagnostics
+  (re-verified independently);
+
+  * rooted: one import line at AlgebraicJacobian.lean:345, and the commit diff is
+  a single + line inserted after DivisorFamilyAffAdaptation -- no sibling edit swept
+  (I-0153 satisfied); worktree clean vs HEAD;
+
+  * no dead declarations INSIDE the file (every one of the 46 names is referenced
+  at least once);
+
+  * but nothing OUTSIDE the file consumes any of them -- no file imports DivisorFamilyAffTheta
+  except the root aggregator. The whole file is currently an island.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T01:32:08.993353+00:00'
+updated_at: '2026-07-29T01:33:37.384265+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0014-horizon-ajcr-divrep
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-divrep

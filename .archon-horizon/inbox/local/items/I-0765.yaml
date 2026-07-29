@@ -1,0 +1,34 @@
+id: I-0765
+provider: local
+kind: issue
+body: "JANITOR run0071/s0014 (ajcr-divrep) #1 SHARED LEDGER INDEX: CLEAN.\n\nChecked\
+  \ at dispatch time:\n  git --git-dir=.archon-horizon/vcs/workspace.git --work-tree=<ws>\
+  \ diff --cached --name-only | wc -l  =>  0\n  status --porcelain | grep -c '^D'\
+  \  =>  0\n\nNo staged deletions, no staged entries of any kind. A bare 'git commit'\
+  \ by any lane right now would publish nothing (empty commit), NOT a revert. So protocol-concurrent-lanes.md\
+  \ 1b/4a hazard is not armed at this moment.\n\nNote for the record: the worktree\
+  \ has ~90 unstaged modifications (M) pending, incl. README.md, .mcp.json, 60+ AJC\
+  \ hgraph/nodes/*.md, and roadmap/inbox ledger files, plus untracked run-0073/session-0017\
+  \ and subagent dirs. Those are unstaged, so they are not a revert hazard, but they\
+  \ mean 'git commit -a' from any lane would sweep 90 foreign paths. Keep using explicit-path\
+  \ CAS commits."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T01:11:29.222491+00:00'
+updated_at: '2026-07-29T01:11:29.222504+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0014-horizon-ajcr-divrep
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

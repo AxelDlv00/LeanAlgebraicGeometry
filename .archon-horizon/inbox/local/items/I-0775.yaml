@@ -1,0 +1,45 @@
+id: I-0775
+provider: local
+kind: issue
+body: "JANITOR run0071/s0014 #10 *** FIXED: A LIVE ARMED REVERT OF 156 NET LINES ON\
+  \ THE ajcr-divrep LANE'S OWN FILE. *** It appeared BETWEEN my two checks, so #1's\
+  \ 'clean' was true and expired.\n\nTHE PATH: MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/DivisorFamilyAffTheta.lean\
+  \ (HEAD dd3d22fae).\n\nWHAT WAS ARMED. The index held a STALE PRE-EDIT blob:\n \
+  \ HEAD blob  027ba71586c0ebef10342ef46166985743298fd8\n  disk blob  027ba71586c0ebef10342ef46166985743298fd8\
+  \  (IDENTICAL to HEAD)\n  index blob 023e6db3a1b85bf31adba3813b4368e8cbc2c358  (neither)\n\
+  \  diff --cached --numstat HEAD  =>  7 / 163\nSo a bare 'git commit' by ANY lane\
+  \ would have published -163/+7 on a file whose disk content is already correct at\
+  \ HEAD: a silent revert of 156 lines of landed AffTheta work.\n\nWHY THE ^D CHECK\
+  \ MISSED IT -- ninth-plus instance of I-0718, and my #1 report demonstrates the\
+  \ trap in one pass: 'status --porcelain | grep -c ^D' read 0 BOTH times, because\
+  \ the file EXISTS; only the numstat/--cached comparison sees a stale non-deletion\
+  \ blob. USE 'diff --cached --numstat HEAD', never --diff-filter=D or ^D.\n\nREPAIR,\
+  \ done, non-destructive (I-0656 one-liner):\n  1. PRECHECK: diff <(git ... cat-file\
+  \ -p HEAD:<path>) <path>  =>  empty. Disk == HEAD, so re-staging cannot lose anything.\n\
+  \  2. git ... add -- <path>\n  3. VERIFIED BOTH DIRECTIONS: staged vs HEAD now 0\
+  \ entries; index blob == disk == HEAD == 027ba71. Nothing else armed.\n\nTHE TIMING\
+  \ LESSON, and it is the reusable part: my check #1 (start of pass) read 0 armed\
+  \ and I filed 'CLEAN'. ~40 minutes later, 1 armed. An armed-index report is a TIMESTAMP,\
+  \ not a state -- like I-0750 for snapshots. Re-run the numstat check as the LAST\
+  \ action of any pass that opened with it, or the earlier all-clear is the thing\
+  \ that misleads."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T01:23:42.007526+00:00'
+updated_at: '2026-07-29T01:23:42.007538+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0014-horizon-ajcr-divrep
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
