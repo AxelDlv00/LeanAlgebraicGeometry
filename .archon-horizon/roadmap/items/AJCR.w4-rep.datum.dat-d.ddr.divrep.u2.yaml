@@ -3,51 +3,85 @@ title: 'U2: the DDR9-U epsilon-identity at the universal point (the last gate of
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "U2: the DDR9-U epsilon-identity at the universal point (the last gate of\
-  \ divRep).\n\nRE-PRICED 2026-07-29 (run 0071 s0014, ajcr-divrep), REPLACING THE\
-  \ \"100% OF U2 IS THE CLASS\"\nVERDICT AT THE TOP OF THE PREVIOUS BODY. That verdict\
-  \ was right that the eps-value at a DivFam\nis discharged, and wrong about what\
-  \ remained: cert-r2 LANDED the class producer\n(divFamZarAff_of_swallowing_affineOpen,\
-  \ DivisorFamilyAffSeedGate.lean:205) and it still cannot\nfeed U2. The reason is\
-  \ not a certificate.\n\nTHE MEASUREMENT. U2's consumer DivRepChartFamily.IsChartClause\
-  \ (DivRepAffPullClause.lean:121)\nquantifies over DivFamZar C (ChartRing i j) pi\
-  \ g -- the CHART-TYPED value. cert-r2's producer\ngives a DivFamZarAff. There is\
-  \ no map DivFamZarAff -> DivFamZar and there cannot be (spec-dd-r\nADDENDUM 3 s2);\
-  \ only DivFamZar.toAff exists and it runs the wrong way. So the only route is to\n\
-  re-derive the eps-value facts widened -- and THAT was the absence: divFamEps_eq_of_le\
-  \ rests on\nprojectivity + constant rank g of the window quotient, landed unconditionally\
-  \ on DivFam\n(DivSchemeFrameCover.lean:106/:117) but ONLY via windowQuotEquiv, whose\
-  \ target A.ThetaGlued a\nwas defined solely on DivisorAdaptation. Cross-measured:\
-  \ of all files naming AffAdaptation,\nZERO defined any theta arrow.\n\nSO THE PARTITION\
-  \ NEEDS A THIRD ROW:\n  eps-value at a DivFam        DISCHARGED (s0012).\n  eps-value\
-  \ at a DivFamZarAff  was UNSTATEABLE -- no Theta-layer existed.\n  the class over\
-  \ the chart ring PRODUCED by cert-r2, in the wrong carrier.\nDivisorFamilyAffFraming\
-  \ is right that the eps STATEMENT is carrier-indifferent; the eps FACTS\nare not,\
-  \ and nobody had separated statement from facts.\n\nLANDED THIS SESSION (Picard/DivisorFamilyAffTheta.lean,\
-  \ commits d2e47343f 358ed7257 94d526b0e\nd05c316b0 91f702164; sorry-free, rooted,\
-  \ kernel EXIT=0 zero diagnostics, axiom-clean vs a\ncontrol reporting sorryAx):\n\
-  \n  AffAdaptation.thetaOvlUnit / thetaDeltaRight / thetaGluedSubmodule / ThetaGlued\n\
-  \  AffAdaptation.thetaEval / thetaGluedEval / thetaEval_mem / germ_eqn_span_eq_stalkIdeal\n\
-  \  AffAdaptation.ker_thetaGluedEval        -- LEFT EXACTNESS, the face that was\
-  \ missing\n  the (c2) substrate: gluedSubalgebra, unitGluedSubmodule (+_one, +_thetaOvlUnit\
-  \ by rfl),\n    mul_mem_unitGluedSubmodule, unitGluedOver, thetaSpan/thetaInvSpan,\n\
-  \    thetaSpan_mul_thetaInvSpan_le_one, IsThetaPaired, isThetaPaired_of_one_mem\n\
-  \  the sections: relFiberCoordSidePow, thetaSectionSide\n\nWHY ker_thetaGluedEval\
-  \ IS THE FACE: its RHS is LITERALLY the same term as the chart-typed\nDivisorAdaptation.ker_thetaGluedEval\
-  \ (DivisorFamilyTheta.lean:350) -- the vanishing submodule\nnames d and the two\
-  \ pinned charts and NO cover. So divisorWindow, its comap, is the same\nsubmodule\
-  \ on both carriers, and a widened windowQuotEquiv has its left-exactness half.\n\
-  \nIT WAS A PORT, NOT MATHEMATICS: the Theta layer's chart-dependence is one Bool\
-  \ per piece, and\nthe side-uniform API already existed and is used by ~60 files\
-  \ (relThetaResSide,\nrelThetaSideUnit, relThetaResSide_matching, DivSchemeFamilySide.lean:155/:180/:194),\
-  \ needing\nonly piece <= relPinnedChart (side j) -- verbatim ChartTyping.piece_le\n\
-  (DivisorFamilyAffCover.lean:204), the datum I-0492 clause 3 kept SEPARATE from the\
-  \ certificate\nso exactly this could happen.\n\nTWO MEASUREMENTS, NEITHER PREDICTED:\n\
-  \ * THE PORT IS SHORTER THAN THE ORIGINAL. Chart-typed thetaEval_mem runs a four-case\
-  \ rcases on\n   the Sum index with two hand-built containments and a Units.inv_mul\
-  \ step; widened it is ONE\n   relThetaResSide_matching. The whole (c2) substrate\
-  \ elaborated clean on the FIRST pass.\n * THE JOINT COVER ADDS ONE REAL STEP. Chart-typed,\
-  \ a point of V0 is always covered by a\n   chart-0 piece; jointly the piece containing\
-  \ z may be assigned to the OTHER chart, so the two\n   sides must be compared through\
+  \ divRep).\n\n*** REFUTATION AT THE TOP, 2026-07-29 (run 0071 s0014 close, ajcr-divrep).\
+  \ THE s0014 BODY BELOW\nANNOUNCES THAT THE WIDENED THETA-LAYER LETS cert-r2's PRODUCER\
+  \ REACH U2. THAT IS FALSE, AND THE\nCOUNTEREXAMPLE IS NOW A THEOREM IN THE FILE\
+  \ ITSELF (commit 4ee4ca6e3, kernel EXIT=0, axiom-clean).\n\n  AffAdaptation.isEmpty_chartTyping_of_straddling\n\
+  \    if ONE piece of a widened cover holds a point outside V0 AND a point outside\
+  \ V1, then\n    ChartTyping C R pi D is EMPTY.\n\nEvery declaration in Picard/DivisorFamilyAffTheta.lean\
+  \ is indexed by a ChartTyping. cert-r2's\nproducer runs through a cover whose support\
+  \ sits inside ONE piece W, and the straddling hypotheses\nof forall_not_isCertified_of_straddling\
+  \ say the support has a point outside V0 and one outside V1 --\nboth then in W.\
+  \ So ON EXACTLY THE DIVISORS I-0492's WIDENING EXISTS FOR, the index is uninhabited\n\
+  and every theorem in the new module is vacuous. Compounding it: the tree's ONLY\
+  \ ChartTyping producer\nis FinCoverData.toChartTyping, the migration FROM the chart-typed\
+  \ carrier, so every instantiation\navailable today factors through FinCoverData.\n\
+  \nMY ERROR, and it is the reusable part: I-0492 clause 3 keeps ChartTyping separate\
+  \ from the\ncertificate clauses so a certificate never REQUIRES a chart typing --\
+  \ a statement about what is\nPERMITTED. I read it as evidence about what is INHABITED.\
+  \ Only the second question decides whether a\nlayer indexed by that datum is usable.\
+  \ Recorded shape: isolating-a-residue-as-a-class. CHECK\nINHABITATION OF AN INDEX\
+  \ BEFORE PRICING ANYTHING STATED OVER IT.\n\nFound by a fresh-context review (I-0779/I-0782);\
+  \ re-proved independently before accepting.\n\nWHAT SURVIVES, all three independently\
+  \ confirmed (I-0780): the Theta-layer genuinely did not exist\non AffAdaptation;\
+  \ IsChartClause really is typed on DivFamZar with only the forward toAff crossing;\n\
+  divFamEps_eq_of_le really does route through windowQuotEquiv. The port is real,\
+  \ cheap, kernel-green\nand usable for any cover that DOES carry a chart typing.\
+  \ It is not a route to U2.\n\nALSO RETRACTED (I-0778): the body below prices thetaSectionSide_mem\
+  \ as 'genuine four-case cocycle\ncontent, not re-indexing'. That described the EXISTING\
+  \ chart-typed proof, not the widened\nobligation -- thetaSectionSide is thetaEval\
+  \ of an already-landed global section, so its membership\nfollows from thetaEval_mem\
+  \ in the same file. Over-priced in the same session I under-priced\ninhabitation.\n\
+  \nTHE LIVE QUESTION THIS LEAVES, for whoever picks the row up: a chart-free route\
+  \ to the eps-value,\nor a producer of a ChartTyping-free Theta layer. The straddling\
+  \ probe is NOT what decides it.\n\n--- the s0014 body follows; its 'this unblocks\
+  \ cert-r2's producer' framing is refuted above ---\n\nU2: the DDR9-U epsilon-identity\
+  \ at the universal point (the last gate of divRep).\n\nRE-PRICED 2026-07-29 (run\
+  \ 0071 s0014, ajcr-divrep), REPLACING THE \"100% OF U2 IS THE CLASS\"\nVERDICT AT\
+  \ THE TOP OF THE PREVIOUS BODY. That verdict was right that the eps-value at a DivFam\n\
+  is discharged, and wrong about what remained: cert-r2 LANDED the class producer\n\
+  (divFamZarAff_of_swallowing_affineOpen, DivisorFamilyAffSeedGate.lean:205) and it\
+  \ still cannot\nfeed U2. The reason is not a certificate.\n\nTHE MEASUREMENT. U2's\
+  \ consumer DivRepChartFamily.IsChartClause (DivRepAffPullClause.lean:121)\nquantifies\
+  \ over DivFamZar C (ChartRing i j) pi g -- the CHART-TYPED value. cert-r2's producer\n\
+  gives a DivFamZarAff. There is no map DivFamZarAff -> DivFamZar and there cannot\
+  \ be (spec-dd-r\nADDENDUM 3 s2); only DivFamZar.toAff exists and it runs the wrong\
+  \ way. So the only route is to\nre-derive the eps-value facts widened -- and THAT\
+  \ was the absence: divFamEps_eq_of_le rests on\nprojectivity + constant rank g of\
+  \ the window quotient, landed unconditionally on DivFam\n(DivSchemeFrameCover.lean:106/:117)\
+  \ but ONLY via windowQuotEquiv, whose target A.ThetaGlued a\nwas defined solely\
+  \ on DivisorAdaptation. Cross-measured: of all files naming AffAdaptation,\nZERO\
+  \ defined any theta arrow.\n\nSO THE PARTITION NEEDS A THIRD ROW:\n  eps-value at\
+  \ a DivFam        DISCHARGED (s0012).\n  eps-value at a DivFamZarAff  was UNSTATEABLE\
+  \ -- no Theta-layer existed.\n  the class over the chart ring PRODUCED by cert-r2,\
+  \ in the wrong carrier.\nDivisorFamilyAffFraming is right that the eps STATEMENT\
+  \ is carrier-indifferent; the eps FACTS\nare not, and nobody had separated statement\
+  \ from facts.\n\nLANDED THIS SESSION (Picard/DivisorFamilyAffTheta.lean, commits\
+  \ d2e47343f 358ed7257 94d526b0e\nd05c316b0 91f702164; sorry-free, rooted, kernel\
+  \ EXIT=0 zero diagnostics, axiom-clean vs a\ncontrol reporting sorryAx):\n\n  AffAdaptation.thetaOvlUnit\
+  \ / thetaDeltaRight / thetaGluedSubmodule / ThetaGlued\n  AffAdaptation.thetaEval\
+  \ / thetaGluedEval / thetaEval_mem / germ_eqn_span_eq_stalkIdeal\n  AffAdaptation.ker_thetaGluedEval\
+  \        -- LEFT EXACTNESS, the face that was missing\n  the (c2) substrate: gluedSubalgebra,\
+  \ unitGluedSubmodule (+_one, +_thetaOvlUnit by rfl),\n    mul_mem_unitGluedSubmodule,\
+  \ unitGluedOver, thetaSpan/thetaInvSpan,\n    thetaSpan_mul_thetaInvSpan_le_one,\
+  \ IsThetaPaired, isThetaPaired_of_one_mem\n  the sections: relFiberCoordSidePow,\
+  \ thetaSectionSide\n\nWHY ker_thetaGluedEval IS THE FACE: its RHS is LITERALLY the\
+  \ same term as the chart-typed\nDivisorAdaptation.ker_thetaGluedEval (DivisorFamilyTheta.lean:350)\
+  \ -- the vanishing submodule\nnames d and the two pinned charts and NO cover. So\
+  \ divisorWindow, its comap, is the same\nsubmodule on both carriers, and a widened\
+  \ windowQuotEquiv has its left-exactness half.\n\nIT WAS A PORT, NOT MATHEMATICS:\
+  \ the Theta layer's chart-dependence is one Bool per piece, and\nthe side-uniform\
+  \ API already existed and is used by ~60 files (relThetaResSide,\nrelThetaSideUnit,\
+  \ relThetaResSide_matching, DivSchemeFamilySide.lean:155/:180/:194), needing\nonly\
+  \ piece <= relPinnedChart (side j) -- verbatim ChartTyping.piece_le\n(DivisorFamilyAffCover.lean:204),\
+  \ the datum I-0492 clause 3 kept SEPARATE from the certificate\nso exactly this\
+  \ could happen.\n\nTWO MEASUREMENTS, NEITHER PREDICTED:\n * THE PORT IS SHORTER\
+  \ THAN THE ORIGINAL. Chart-typed thetaEval_mem runs a four-case rcases on\n   the\
+  \ Sum index with two hand-built containments and a Units.inv_mul step; widened it\
+  \ is ONE\n   relThetaResSide_matching. The whole (c2) substrate elaborated clean\
+  \ on the FIRST pass.\n * THE JOINT COVER ADDS ONE REAL STEP. Chart-typed, a point\
+  \ of V0 is always covered by a\n   chart-0 piece; jointly the piece containing z\
+  \ may be assigned to the OTHER chart, so the two\n   sides must be compared through\
   \ the matching unit. Genuine content -- and the template already\n   existed: ThetaGeneratorSeed.le_vanishingSubmodule\
   \ (DivSchemeFamily.lean:397) does exactly\n   this on D.piece z inf relPinnedChart\
   \ b with the side from a Bool.\n\nA SAME-SESSION SELF-CORRECTION: the (c2) commit\
@@ -131,8 +165,9 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
-  updated_at: '2026-07-29T01:24:54.142036+00:00'
+  updated_at: '2026-07-29T01:38:25.797441+00:00'
   pinned_commits:
+  - 4ee4ca6e3
   - dd3d22fae
   - 932f7ea38
   - 0a6351e5e
