@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.baseChange_idIso_hom_app_left
 type: lean
-updated: '2026-07-29T15:31:47'
+updated: '2026-07-29T18:21:29'
 ---
 theorem baseChange_idIso_hom_app_left (k : Type u) [Field k] (C : Over (Spec (.of k))) :
     ((baseChange.idIso k).hom.app C).left
@@ -23,10 +23,11 @@ theorem baseChange_idIso_hom_app_left (k : Type u) [Field k] (C : Over (Spec (.o
     eqToHom_app, pullbackId_hom_app_left, Over.eqToHom_left]
   exact pullback_fst_congr_left C.hom hσ _
 
-/-! ## K-1a: the θ identity coherence over `Over.pullbackId` -/
+/-! ## The Leg-4 atom, `snd` leg
 
-section Identity
+The K-1a Leg-4 atom is the scheme identity
+`((baseChange.idIso k).app C).inv ▷ overSpec k B).left = (crossBaseAffineIso k k C B).inv`,
+to be proved by `(Over.isPullback_left _ _).hom_ext` on the two projections.  The `snd` leg
+is below, closed; the `fst` leg is the file's residue (see the STATUS block). -/
 
-variable (k : Type u) [Field k]
-variable (C : Over (Spec (.of k)))
-  [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom]
+open MonoidalCategory CartesianMonoidalCategory in
