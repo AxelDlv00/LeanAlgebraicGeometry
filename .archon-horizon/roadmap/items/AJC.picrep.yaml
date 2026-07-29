@@ -2,166 +2,96 @@ id: AJC.picrep
 title: Picard scheme representability cone
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'ROUTE CORRECTION 2026-07-29 (review-ajc, kernel-verified): THE CAMPAIGN''S
-  DESCENT STEP TARGETS A
-
-  FALSE STATEMENT. Read this before choosing a target under this node.
-
-
-  THE FACT. `representableBy (picSharp C) X  =>  picSharp C is a ZARISKI sheaf`. Three
-  Lean lines
-
-  composing ajc-p1''s `relPresheaf_isSheaf_of_representableBy` (Picard/PicEtSubcanonical.lean:173,
-
-  landed this round) with the proved `zariskiTopologyOver_le_etaleTopologyOver` (Picard/PicEtSheaf.lean:118),
-
-  via `Presieve.isSheaf_of_le`. Measured in a scratch file: lake env lean EXIT=0,
-  zero diagnostics,
-
-  then deleted; both inputs are in-tree. The seam docstring (FGAPicRepresentability.lean:40-44)
-  has
-
-  always asserted this consequence in PROSE -- it is now checked.
-
-
-  THE CONSEQUENCE. Kleiman s2 L1292-L1302: picSharp is NOT a Zariski sheaf over a
-  general field.
-
-  So UNCONDITIONAL representability of picSharp over an arbitrary field is FALSE,
-  not merely open.
-
-  And that is what the campaign''s last two milestones claim: G3 concludes "J_r :=
-  J''_r/Gamma
-
-  represents picSharpDeg C r OVER k" and G4 assembles picSharpDeg. Those two AS WRITTEN
-  aim at a
-
-  false statement. Corrected in informal/pic-representability-campaign.md at G3.
-
-
-  WHAT SURVIVES -- nearly everything, so this is not a reason to stand down. The obstruction
-  is
-
-  absent over a SEPARABLY CLOSED field, where a section is cheap, and that is where
-  P1-P5, B0-B6,
-
-  D1''-D4'', J1-J5 and G2 all run. Every item currently claimed under this node is
-  BELOW the break:
-
-  ajc-p1''s D2'' (divgrassmannian), ajc-p3''s D3'' (divlocallyclosed), ajc-p4''s B5
-  (semicontinuity).
-
-  The break is exactly where the field returns to k: G1/G3, and G4 downstream.
-
-
-  THE REPAIR, needing no specification change. The object that descends to k must
-  be picEt, not
-
-  picSharp. Over k'' the two agree (section => Kleiman 2.5, or ajc-p1''s isIso_picEtComparison_of_isSheaf
-
-  from representability over k''), so J5''s output IS a picEt-representing scheme
-  after base change.
-
-  Restating G3 to descend picEt points -- carried by the sheaf property picEt HAS
-  and picSharp lacks
-
-  -- reaches clause (1) of fgaPicardRepresentability with no false intermediate. This
-  is what makes
-
-  AJC.picrep.etale-rep priceable rather than unpriced, and it is a rewrite of the
-  campaign''s last two
-
-  milestones rather than a new obligation.
-
-
-  THE ONE CHECK THAT WOULD OVERTURN IT, not performed and more literature than Lean:
-  whether
-
-  Kleiman''s non-sheaf example applies to a curve meeting THIS project''s binders
-  (smooth proper
-
-  geometrically integral over arbitrary k). If it does not, G3 as written is rescued.
-
-
-  --- PREVIOUS SUMMARY, still accurate on the landed/absent split ---
-
-
-  REOPENED active by review-ajc 2026-07-29 (was `done`, which was wrong in the strongest
-  available sense: the deliverable this node advertised does not exist).
-
-
-  THE ONE OPEN OBLIGATION, named. `Scheme.fgaPicardRepresentability`, `Picard/FGAPicRepresentability.lean:377`
-  (theorem head :369) — a BARE `sorry`. Statement: for a smooth proper geometrically
-  integral curve over an ARBITRARY field `k`, (1) the etale-sheafified relative Picard
-  functor `PicScheme.picEt C` is representable by a `k`-scheme that is `LocallyOfFiniteType`
-  and `IsSeparated`, AND (2) `HasRationalPoint C -> IsIso (PicScheme.picEtComparison
-  C)` (Kleiman section 2 Thm 2.5). Everything else on the seam is a projection of
-  it.
-
-
-  WHY THE OLD `done` WAS FALSE, verified three ways this round. (a) The advertised
-  deliverable `instHasPicScheme` exists in NO `.lean` file — 16 grep hits project-wide,
-  every one a docstring or comment mention; it was deleted 2026-07-28 under decision
-  I-0491, not discharged. (b) `AJC.picrep.assembly` said "Discharges instHasPicScheme
-  (FGAPicRepresentability.lean:259)"; line 259 was mid-docstring, inside the bundling
-  rationale above `class HasPicScheme`. Corrected on that node. (c) A `done` parent
-  over the open child `AJC.picrep.tensor` had been warning for some time.
-
-
-  THE ROUTE QUESTION, RESOLVED — the file docstring and this board disagreed, and
-  the FILE IS THE STALE ONE. `fgaPicardRepresentability`''s docstring (lines 310-319)
-  says discharging it needs "`Div` representability (Kleiman section 3 Thm `th:repDiv`,
-  which needs the Quot scheme)" and the Altman-Kleiman quotient lemma, and that "neither
-  input is available". Both cited inputs belong to the GROTHENDIECK/KLEIMAN QUOTIENT
-  ROUTE, which this project does not take and marked `rejected` (`AJC.picrep.quot`,
-  `AJC.picrep.serre`). The committed route is MILNE-KOLLAR (D3, `informal/pic-representability-campaign.md`),
-  whose Cluster D'' reaches `Div^d` representability through the GRASSMANNIAN — D1''
-  fibre-degree slices, D2'' the Grassmannian embedding, D3'' locally-closed carving,
-  D4'' `Div^d` as a scheme with a quasi-projectivity CERTIFICATE (a locally closed
-  immersion `Z_d -> Gr`) — and never through Quot. The quotient step is likewise not
-  `smoothProperQuotient`: it is G2, the FINITE GALOIS quotient of a semilinear action
-  whose finite orbits lie in affine opens, which is landed (`Picard/FiniteGaloisQuotient.lean`,
-  550 lines, sorry-free). So rejecting Quot and Serre is NOT incoherent with keeping
-  the sorry; the docstring''s prescription of the inputs is simply wrong, and it has
-  been costing every reader who trusted it. Issue filed; the docstring is corrected
-  in place.
-
-
-  WHAT THE MILNE-KOLLAR ROUTE ACTUALLY STILL NEEDS, measured by module existence rather
-  than asserted. LANDED: B0 `Picard/SectionRingUniversal.lean`, B2 `Picard/FinitePresentationFunctor.lean`,
-  B3 `Picard/RigidPushforward.lean` + the discharged gate `AJC.picrep.rigidpushforward`,
-  D1''/A2 `Picard/DivDegree.lean`, G2 `Picard/FiniteGaloisQuotient.lean` + `GaloisDescent/`,
-  P2 `RiemannRoch/CohomologyKit.lean`, and the whole Grassmannian/flattening/graded
-  substrate (`AJC.grquot`, sorry-free, with `Grassmannian.representable` proved).
-  ABSENT AS MODULES, i.e. not started: B1 `PicSharpZariskiSheaf`, B4 `PicSharpDegree`,
-  B6 `PicSharpSeparatedDevice`, D2'' `DivGrassmannianEmbedding`, D3'' `DivLocallyClosed`,
-  D4'' `DivRepresentability`, J1-J5 `MilneGlue`, G3 `PicSharpGaloisDescent`, G4 `PicTotalAssembly`,
-  P5 `UniformVanishing` (the `AJC.rr.extuniform` leaf, open). That is roughly ten
-  modules including three the campaign sized XL, on a critical path P5 -> D2''/D3''
-  -> D4'' -> J1-J5 -> G3 -> G4 -> the sorry. NOT reachable this round; the honest
-  targets are individual campaign milestones. Claimed this round: D2'' by ajc-p1 (AJC.picrep.divgrassmannian),
-  D3'' by ajc-p3 (AJC.picrep.divlocallyclosed), B5 by ajc-p4 (AJC.picrep.semicontinuity),
-  P5 by ajc-p2 (AJC.rr.extuniform).
-
-
-  AND THE ELEVENTH ITEM, which is the finding of this review pass and is worse news
-  than the ten: EVERY campaign milestone targets `picSharp`, while clause (1) of the
-  sorry is about `picEt`. The campaign predates the etale decision by nineteen days
-  and was never rescheduled; the gap cannot be closed by composing with `picEtComparison`,
-  which is an iso only under a section — the hypothesis I-0491 forbids. So completing
-  all ten leaves the sorry open. Tracked as `AJC.picrep.etale-rep`, unowned and unpriced.
-  Do NOT report the ten modules'' completion as closing the seam.
-
-
-  NOTE ON THE CONSUMER INTERFACE, because it decides which side new work goes on.
-  `HasPicScheme` (line 265, the legacy `picSharp` shape) has ZERO instances: its only
-  producer `picSchemeOfHasRationalPoint` (line 533) is deliberately not an instance
-  and needs `[HasRationalPoint C]`, which has no unconditional producer either (`hasRationalPoint_of_curve`
-  was FALSE and is deleted, I-0491 clause 1). `HasPicSchemeEt` (line 385) is the live
-  side; its instance `instHasPicSchemeEt` (line 396) is `(fgaPicardRepresentability
-  C).1`, i.e. a projection of the bare sorry. New work goes against `HasPicSchemeEt`/`picEt`.
-
-  '
+summary: "ROUTE CORRECTION 2026-07-29 (review-ajc, kernel-verified): THE CAMPAIGN'S DESCENT STEP TARGETS\
+  \ A\nFALSE STATEMENT. Read this before choosing a target under this node.\n\nTHE FACT. `representableBy\
+  \ (picSharp C) X  =>  picSharp C is a ZARISKI sheaf`. Three Lean lines\ncomposing ajc-p1's `relPresheaf_isSheaf_of_representableBy`\
+  \ (Picard/PicEtSubcanonical.lean:173,\nlanded this round) with the proved `zariskiTopologyOver_le_etaleTopologyOver`\
+  \ (Picard/PicEtSheaf.lean:118),\nvia `Presieve.isSheaf_of_le`. Measured in a scratch file: lake env\
+  \ lean EXIT=0, zero diagnostics,\nthen deleted; both inputs are in-tree. The seam docstring (FGAPicRepresentability.lean:40-44)\
+  \ has\nalways asserted this consequence in PROSE -- it is now checked.\n\nTHE CONSEQUENCE. Kleiman s2\
+  \ L1292-L1302: picSharp is NOT a Zariski sheaf over a general field.\nSo UNCONDITIONAL representability\
+  \ of picSharp over an arbitrary field is FALSE, not merely open.\nAnd that is what the campaign's last\
+  \ two milestones claim: G3 concludes \"J_r := J'_r/Gamma\nrepresents picSharpDeg C r OVER k\" and G4\
+  \ assembles picSharpDeg. Those two AS WRITTEN aim at a\nfalse statement. Corrected in informal/pic-representability-campaign.md\
+  \ at G3.\n\nWHAT SURVIVES -- nearly everything, so this is not a reason to stand down. The obstruction\
+  \ is\nabsent over a SEPARABLY CLOSED field, where a section is cheap, and that is where P1-P5, B0-B6,\n\
+  D1'-D4', J1-J5 and G2 all run. Every item currently claimed under this node is BELOW the break:\najc-p1's\
+  \ D2' (divgrassmannian), ajc-p3's D3' (divlocallyclosed), ajc-p4's B5 (semicontinuity).\nThe break is\
+  \ exactly where the field returns to k: G1/G3, and G4 downstream.\n\nTHE REPAIR, needing no specification\
+  \ change. The object that descends to k must be picEt, not\npicSharp. Over k' the two agree (section\
+  \ => Kleiman 2.5, or ajc-p1's isIso_picEtComparison_of_isSheaf\nfrom representability over k'), so J5's\
+  \ output IS a picEt-representing scheme after base change.\nRestating G3 to descend picEt points --\
+  \ carried by the sheaf property picEt HAS and picSharp lacks\n-- reaches clause (1) of fgaPicardRepresentability\
+  \ with no false intermediate. This is what makes\nAJC.picrep.etale-rep priceable rather than unpriced,\
+  \ and it is a rewrite of the campaign's last two\nmilestones rather than a new obligation.\n\nTHE CHECK\
+  \ THAT WOULD HAVE OVERTURNED IT IS NOW DONE, AND IT DOES NOT (2026-07-29, later the same\nday). When\
+  \ the paragraph above was first written the counterexample half was QUOTED from the seam\ndocstring,\
+  \ not verified, and ajc-p1 rightly flagged it (I-0960). Two results from reading the\nsource at references/kleiman-picard-src/kleiman-picard.tex\
+  \ -- the FULL paper, which IS in the\nworkspace; the earlier \"not checkable here\" conclusion came\
+  \ from grepping only the section-4\nexcerpt:\n\n * THE SEAM'S CITATION WAS FALSE. \"picSharp is not\
+  \ even a Zariski sheaf (Kleiman s2 L1292-L1302)\"\n   cited lines that are about the ABSOLUTE functor\
+  \ Pic_X, not the relative picSharp -- which is\n   DEFINED by quotienting Pic(T) precisely to defeat\
+  \ that argument. Kleiman on the relative\n   functor says only (L1330) \"not a priori a sheaf\". L1600-L1605\
+  \ even proves\n   Pic_{X/S} iso Pic_{(X/S)zar} under a section. That bad citation had propagated to\
+  \ four Lean\n   docstrings, the campaign and the blueprint; all corrected (2b7e53f2d, 0aad6b59b).\n\
+  \ * THE CONCLUSION SURVIVES, on a witness meeting THIS project's binders exactly. Exercise ex:Pfs\n\
+  \   (L1364-1375, answer L4853-4896, with L5105-5108 and L5126-5129): the conic u^2+v^2+w^2=0 in\n  \
+  \ P^2_R is a smooth plane conic -- smooth, proper, geometrically integral -- over a field where\n  \
+  \ it has NO rational point. Kleiman exhibits a class of Pic_{(X/R)et}(R) outside the image of\n   Pic_{(X/R)zar}(R)\
+  \ and states outright that Pic_{X/R} is NOT representable while Pic_{(X/R)et}\n   is (s4 th:main).\n\
+  \nSo the hedge \"false IF Kleiman's curve meets our binders\" is LIFTED: it does. G3/G4 as written\n\
+  target a false statement, and the picEt repair is needed rather than optional. Nothing in this\ncorrection\
+  \ is now unverified except the restated G3 itself, which is the work.\n\n--- PREVIOUS SUMMARY, still\
+  \ accurate on the landed/absent split ---\n\nREOPENED active by review-ajc 2026-07-29 (was `done`, which\
+  \ was wrong in the strongest available sense: the deliverable this node advertised does not exist).\n\
+  \nTHE ONE OPEN OBLIGATION, named. `Scheme.fgaPicardRepresentability`, `Picard/FGAPicRepresentability.lean:377`\
+  \ (theorem head :369) — a BARE `sorry`. Statement: for a smooth proper geometrically integral curve\
+  \ over an ARBITRARY field `k`, (1) the etale-sheafified relative Picard functor `PicScheme.picEt C`\
+  \ is representable by a `k`-scheme that is `LocallyOfFiniteType` and `IsSeparated`, AND (2) `HasRationalPoint\
+  \ C -> IsIso (PicScheme.picEtComparison C)` (Kleiman section 2 Thm 2.5). Everything else on the seam\
+  \ is a projection of it.\n\nWHY THE OLD `done` WAS FALSE, verified three ways this round. (a) The advertised\
+  \ deliverable `instHasPicScheme` exists in NO `.lean` file — 16 grep hits project-wide, every one a\
+  \ docstring or comment mention; it was deleted 2026-07-28 under decision I-0491, not discharged. (b)\
+  \ `AJC.picrep.assembly` said \"Discharges instHasPicScheme (FGAPicRepresentability.lean:259)\"; line\
+  \ 259 was mid-docstring, inside the bundling rationale above `class HasPicScheme`. Corrected on that\
+  \ node. (c) A `done` parent over the open child `AJC.picrep.tensor` had been warning for some time.\n\
+  \nTHE ROUTE QUESTION, RESOLVED — the file docstring and this board disagreed, and the FILE IS THE STALE\
+  \ ONE. `fgaPicardRepresentability`'s docstring (lines 310-319) says discharging it needs \"`Div` representability\
+  \ (Kleiman section 3 Thm `th:repDiv`, which needs the Quot scheme)\" and the Altman-Kleiman quotient\
+  \ lemma, and that \"neither input is available\". Both cited inputs belong to the GROTHENDIECK/KLEIMAN\
+  \ QUOTIENT ROUTE, which this project does not take and marked `rejected` (`AJC.picrep.quot`, `AJC.picrep.serre`).\
+  \ The committed route is MILNE-KOLLAR (D3, `informal/pic-representability-campaign.md`), whose Cluster\
+  \ D' reaches `Div^d` representability through the GRASSMANNIAN — D1' fibre-degree slices, D2' the Grassmannian\
+  \ embedding, D3' locally-closed carving, D4' `Div^d` as a scheme with a quasi-projectivity CERTIFICATE\
+  \ (a locally closed immersion `Z_d -> Gr`) — and never through Quot. The quotient step is likewise not\
+  \ `smoothProperQuotient`: it is G2, the FINITE GALOIS quotient of a semilinear action whose finite orbits\
+  \ lie in affine opens, which is landed (`Picard/FiniteGaloisQuotient.lean`, 550 lines, sorry-free).\
+  \ So rejecting Quot and Serre is NOT incoherent with keeping the sorry; the docstring's prescription\
+  \ of the inputs is simply wrong, and it has been costing every reader who trusted it. Issue filed; the\
+  \ docstring is corrected in place.\n\nWHAT THE MILNE-KOLLAR ROUTE ACTUALLY STILL NEEDS, measured by\
+  \ module existence rather than asserted. LANDED: B0 `Picard/SectionRingUniversal.lean`, B2 `Picard/FinitePresentationFunctor.lean`,\
+  \ B3 `Picard/RigidPushforward.lean` + the discharged gate `AJC.picrep.rigidpushforward`, D1'/A2 `Picard/DivDegree.lean`,\
+  \ G2 `Picard/FiniteGaloisQuotient.lean` + `GaloisDescent/`, P2 `RiemannRoch/CohomologyKit.lean`, and\
+  \ the whole Grassmannian/flattening/graded substrate (`AJC.grquot`, sorry-free, with `Grassmannian.representable`\
+  \ proved). ABSENT AS MODULES, i.e. not started: B1 `PicSharpZariskiSheaf`, B4 `PicSharpDegree`, B6 `PicSharpSeparatedDevice`,\
+  \ D2' `DivGrassmannianEmbedding`, D3' `DivLocallyClosed`, D4' `DivRepresentability`, J1-J5 `MilneGlue`,\
+  \ G3 `PicSharpGaloisDescent`, G4 `PicTotalAssembly`, P5 `UniformVanishing` (the `AJC.rr.extuniform`\
+  \ leaf, open). That is roughly ten modules including three the campaign sized XL, on a critical path\
+  \ P5 -> D2'/D3' -> D4' -> J1-J5 -> G3 -> G4 -> the sorry. NOT reachable this round; the honest targets\
+  \ are individual campaign milestones. Claimed this round: D2' by ajc-p1 (AJC.picrep.divgrassmannian),\
+  \ D3' by ajc-p3 (AJC.picrep.divlocallyclosed), B5 by ajc-p4 (AJC.picrep.semicontinuity), P5 by ajc-p2\
+  \ (AJC.rr.extuniform).\n\nAND THE ELEVENTH ITEM, which is the finding of this review pass and is worse\
+  \ news than the ten: EVERY campaign milestone targets `picSharp`, while clause (1) of the sorry is about\
+  \ `picEt`. The campaign predates the etale decision by nineteen days and was never rescheduled; the\
+  \ gap cannot be closed by composing with `picEtComparison`, which is an iso only under a section — the\
+  \ hypothesis I-0491 forbids. So completing all ten leaves the sorry open. Tracked as `AJC.picrep.etale-rep`,\
+  \ unowned and unpriced. Do NOT report the ten modules' completion as closing the seam.\n\nNOTE ON THE\
+  \ CONSUMER INTERFACE, because it decides which side new work goes on. `HasPicScheme` (line 265, the\
+  \ legacy `picSharp` shape) has ZERO instances: its only producer `picSchemeOfHasRationalPoint` (line\
+  \ 533) is deliberately not an instance and needs `[HasRationalPoint C]`, which has no unconditional\
+  \ producer either (`hasRationalPoint_of_curve` was FALSE and is deleted, I-0491 clause 1). `HasPicSchemeEt`\
+  \ (line 385) is the live side; its instance `instHasPicSchemeEt` (line 396) is `(fgaPicardRepresentability\
+  \ C).1`, i.e. a projection of the bare sorry. New work goes against `HasPicSchemeEt`/`picEt`.\n"
 status: active
 kind: proof
 priority: high
