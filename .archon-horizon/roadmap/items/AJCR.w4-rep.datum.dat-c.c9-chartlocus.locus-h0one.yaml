@@ -3,18 +3,41 @@ title: The chart locus supplies GAP-2's h0 = 1 binder for free (h1 = 0 + pinned 
   g + Riemann-Roch)
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'CLAIMED ajcr-p2 (run 0088 r3). HYPOTHESIS TO TEST: the chart locus is DEFINED
-  by an effective-witness-with-h1=0 clause (IsSplitWitness, Pic0ChartLocus.lean:151-161),
-  and degAt_chartTwist_eq_chartParam (Pic0ChartAbelForkReduce.lean:430) pins the fibre
-  degree of the twisted class to n. If n = genus, Riemann-Roch over the splitting
-  field (chi_divisorSheaf_classDeg_curve, RiemannRoch/Degree.lean:216, with genus_baseField)
-  gives chi = 1 - g + g = 1, and Sheaf.chi_eq_h0 (RiemannRoch/Chi.lean:115) turns
-  h1 = 0 into h0 = 1. That is EXACTLY the hone binder of Scheme.CurveDivisor.eq_of_picClass_eq_of_h0_one
-  (RiemannRoch/EffectiveUniqueness.lean:144) -- the field-level GAP-2 keystone that
-  the chart layer names as the residue of exists_factor. If it goes through the locus
-  supplies the uniqueness input at every one of its points with no new geometry. Measured
-  absence at claim time: zero declarations anywhere in the tree relate h0 or chi to
-  IsSplitWitness (case-insensitive grep, both projects).'
+summary: 'ADVANCED by ajcr-p2 (run 0088 r3), NO antecedent closed. Released. Full
+  note I-1260; finding I-1219; vacuity retraction I-1233/I-1258.
+
+
+  WHAT IS TRUE. GAP-2''s h0 = 1 binder and its two effectivity binders are NOT owed
+  on the chart locus. chartLocus is DEFINED through IsSplitWitness (Pic0ChartLocus.lean:151),
+  whose clause already supplies a divisor in the presenting class with vanishing H1
+  -- the rank anchor''s exact hypothesis (h0_eq_deg_add_chi_of_subsingleton_hModule_one,
+  RiemannRoch/FLVClass.lean:412). The missing ingredient was never effectivity but
+  DEGREE, and the chart-index constraint supplies it as exactly n. Landed: Picard/Pic0ChartLocusH0One.lean,
+  rooted, 5 decls, 0 code sorries, lake build EXIT=0 (8897 jobs), all axiom-clean
+  vs a sorryAx control.
+
+
+  FEED eq_of_picClass_eq_of_deg_of_subsingleton -- the keystone with hone traded for
+  (deg = n, Subsingleton H1). Three sites still overprice the binder: Pic0ChartLocus.lean:146-150,
+  Pic0ChartPair.lean:152-158, Pic0ChartUnivReduce.lean:160-161.
+
+
+  WHAT IS NOT TRUE, corrected in place. Both locus-level theorems were VACUOUS as
+  first published: the conclusion named only the splitting field and the divisor,
+  so L = kappa(t) with W = 0 discharged them on any curve with all four hypotheses
+  unused. Fixed -- the conclusions now pin the twisted-class presentation equation,
+  picClass(witness) = M and deg = n. Do NOT feed existsUnique_effective_of_mem_chartLocus
+  on the strength of the original release note; that instruction was backwards.
+
+
+  CLOSES NO ANTECEDENT, and this is the limit: everything is FIBREWISE over L/kappa(t)
+  at one point. Fibre-witness uniqueness is not general-test injectivity, so exists_factor
+  and RelPicSeparatesDivFamZar are untouched. n = genus is neither proved nor assumed.
+
+
+  NOT LANDED: the converse (the three clauses imply locus membership) is the identity
+  on the data but hits a defeq wall -- seven instance binders in an anonymous IsSplitWitness
+  constructor exceed isDefEq at 1.6M heartbeats. State it in Pic0ChartLocus.lean instead.'
 status: pending
 kind: proof
 priority: normal
@@ -38,4 +61,4 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c.c9-chartlocus
-  updated_at: '2026-07-29T21:27:29.950821+00:00'
+  updated_at: '2026-07-29T21:29:05.249364+00:00'
