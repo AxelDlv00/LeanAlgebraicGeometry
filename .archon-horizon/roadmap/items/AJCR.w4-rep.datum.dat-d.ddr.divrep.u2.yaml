@@ -194,7 +194,7 @@ summary: "*** THE VACUOUS INDEX THIS ROW IS BLOCKED ON HAS ALREADY BEEN REPLACED
   \ all pre-existing and none naming the new module. Nine\ncommits, all verified ancestors\
   \ of refs/heads/main, all touched paths byte-matching HEAD, shared\nindex carrying\
   \ no staged deletions."
-status: pending
+status: active
 kind: proof
 priority: normal
 depends_on: []
@@ -216,7 +216,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
-  updated_at: '2026-07-29T12:58:58.469581+00:00'
+  updated_at: '2026-07-29T13:21:13.378315+00:00'
   pinned_commits:
   - 4ee4ca6e3
   - dd3d22fae
@@ -226,3 +226,4 @@ metadata:
   - 909ad18ad
   - 0b3ab49b8
   milestone: w4-gate
+  owner: ajcr-p3
