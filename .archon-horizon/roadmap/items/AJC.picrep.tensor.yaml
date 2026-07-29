@@ -52,7 +52,7 @@ summary: 'AUDITED 2026-07-30 (review-ajc r4). This row bundles TWO deliverables;
   -- 0 body sorries each), and no .lean file flags the tensor comparison as open.
   Nothing consumes this row as blocking. Left pending deliberately: it is real but
   off the representability critical path, so it is not a round target.'
-status: active
+status: pending
 kind: proof
 priority: high
 depends_on: []
@@ -74,6 +74,5 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-29T18:41:29.595339+00:00'
+  updated_at: '2026-07-29T18:53:00.655233+00:00'
   milestone: AJC.picrep
-  owner: ajc-p4

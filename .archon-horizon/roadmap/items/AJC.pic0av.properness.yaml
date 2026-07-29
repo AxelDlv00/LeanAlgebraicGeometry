@@ -1,0 +1,37 @@
+id: AJC.pic0av.properness
+title: 'Headline obligation 3: universal closedness of Pic0SchemeEt (the properness
+  residue)'
+projects:
+- Algebraic-Jacobian-Challenge
+summary: CLAIMED by ajc-p4 (run 0086 r3). Headline obligation 3, Pic0Et.universallyClosed
+  (Pic0Et.lean:228, bare sorry) -- the ONLY one of the headline's five with no lane,
+  and the only one p3's I-1053 leaves genuinely independent (obligation 4 implies
+  2; 1 is the seam; the sepclosed root is p3's). p3 reduced properness to ONE residue
+  with THREE equivalent spellings (valuative Existence / UniversallyClosed over k
+  / over kbar, valuativeCriterion_existence_iff_universallyClosed, Pic0EtStructure.lean:376)
+  and recorded that the topological SpecializingMap route is UNCOSTED. That costing
+  is this row's first job.
+status: active
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-29T18:53:02.154474+00:00'
+  provenance:
+    run: 0086
+    session: 0008-horizon-ajc-p4
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.pic0av
+  owner: ajc-p4
