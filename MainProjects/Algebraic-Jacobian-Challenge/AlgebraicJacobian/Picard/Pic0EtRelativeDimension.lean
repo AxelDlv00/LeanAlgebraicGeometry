@@ -65,6 +65,14 @@ number the leaf needs is measured on chart algebras, not at the identity, and
 `finrank_cotangentSpace_eq_genus` (`Picard/Pic0EtTangentSpace.lean`) computes the latter.
 That much survives the audit and is the useful content of §2.
 
+**The same verdict applies to §2c, which was added after this paragraph and initially
+claimed to be the reduction §2 stopped short of.** It is not: mathlib's
+`smoothOfRelativeDimension_iff` (`@[mk_iff]`) and
+`HasRingHomProperty.iff_exists_appLE_locally` already supply the pointwise, `Locally`-free
+form, leaving only a per-algebra `iff`. §2c's header carries the refutation
+(`I-1179`/`I-1181`). Nothing in this file reduces obligation 4; what the file establishes
+is where the residue sits and, in §2d, which half of it descends.
+
 **And the `∀`-over-chart-pairs form is HARDER than the class, not easier.** The class field
 is *pointwise-existential* — `∀ x : X, ∃ U V affine …` — so it asks for **one** chart pair
 per point, while `leafB_iff_appLE`'s right-hand side asks for the condition at **every**
@@ -304,34 +312,63 @@ theorem locally_isStandardSmooth_appLE_of_smooth
 
 end Scheme.Pic0Et
 
-/-! ## §2c. The reduction: one chart per point, the rank on the chart algebra itself
+/-! ## §2c. Where the residue is: an `Ω`-rank on one chart algebra per point
 
-§2 and §2b say what leaf B *is*; this section reduces it. The two statements below are
-generic in the morphism — no Picard object occurs — and they are what makes the residue a
-rank computation rather than a class membership. -/
+**This section is about LOCUS, not about reduction — and an earlier revision of it claimed
+the latter.** It called the lemma below "the reduction §2 stopped short of". A
+fresh-context audit refuted that (`I-1179`/`I-1181`), and the refutation reproduces here:
 
-/-- **`SmoothOfRelativeDimension n f` is equivalent to a per-point condition on ONE affine
-chart pair: standard smoothness there, plus `Module.rank Ω = n` on the chart algebra.**
+* `SmoothOfRelativeDimension` carries `@[mk_iff]`, so mathlib's
+  `smoothOfRelativeDimension_iff` already hands over the whole pointwise-existential
+  prefix — the part that reads as the reduction;
+* mathlib also already ships the **`Locally`-free** pointwise form,
+  `HasRingHomProperty.iff_exists_appLE_locally`, and both of its side conditions are named
+  mathlib lemmas for this very property
+  (`RingHom.isStandardSmoothOfRelativeDimension_stableUnderCompositionWithLocalizationAway`,
+  `…_respectsIso`);
+* the only residual step is a **per-algebra** mathlib `iff`
+  (`Algebra.IsStandardSmoothOfRelativeDimension.iff_of_isStandardSmooth` one way,
+  `.isStandardSmooth` + `.rank_kaehlerDifferential` the other).
 
-This is the reduction §2 stopped short of. Compare the three forms now in the file:
+So the lemma below is `mk_iff` composed with a per-algebra `iff`, applied pointwise: the
+same *shape* as the `leafB_iff_appLE` overclaim that §2b already retracts, one round later.
+It is not `Iff.rfl` — the conjunct swap is real propositional content — but that content is
+entirely mathlib's, and **obligation 4 is not reduced by anything in this file**.
+
+What survives, and is the whole keepable content of §2c: leaf B's residue is
+`Module.rank Γ(Pic⁰,V) Ω[Γ(Pic⁰,V)⁄Γ(Spec k,U)] = genus C` on **one affine chart algebra per
+point**, and nothing in either project computes it. -/
+
+/-- **`SmoothOfRelativeDimension n f` in rank form: one affine chart pair per point, with
+standard smoothness there and `Module.rank Ω = n` on the chart algebra.**
+
+**Not a reduction — a restatement**; see §2c's header for the refutation and for the two
+mathlib declarations (`smoothOfRelativeDimension_iff`,
+`HasRingHomProperty.iff_exists_appLE_locally`) that already supply everything but the
+per-algebra conjunct swap. It is recorded because the rank spelling is the one that names
+the residue, and because two docstrings in this file had the residue in the wrong place.
+
+Comparison of the forms now present:
 
 * `leafB_iff_appLE` (mathlib's `HasRingHomProperty.iff_appLE`) tests **every** chart pair
-  and asks for `RingHom.Locally (IsStandardSmoothOfRelativeDimension n)` at each — so the
-  numeral is asserted of the *away-localisations* `Γ(X,V)_t`, not of `Γ(X,V)`;
-* `leafB_of_pointwise` is the class constructor: one chart pair per point, but with the
-  bare `RingHom.IsStandardSmoothOfRelativeDimension n` still to be produced;
-* this lemma replaces that last obligation by `Module.rank Γ(X,V) Ω[Γ(X,V)⁄Γ(Y,U)] = n`.
+  and asks for `RingHom.Locally (IsStandardSmoothOfRelativeDimension n)` at each — the
+  numeral on the *away-localisations* `Γ(X,V)_t`, not on `Γ(X,V)`;
+* `leafB_of_pointwise` is the class constructor: one chart pair per point, with the bare
+  property still to be produced;
+* this lemma spells that last obligation as `Module.rank Γ(X,V) Ω[Γ(X,V)⁄Γ(Y,U)] = n`.
 
-**The away-localisations are an artifact of the `iff_appLE` route, not of the leaf**, and
-that is the correction this section makes to §2's closing paragraph. The bare property
-implies the `Locally`-wrapped one for free (`RingHom.locally_of` with
-`RingHom.isStandardSmoothOfRelativeDimension_respectsIso`), while the converse is *not*
-available at a single chart — so a prover who reads the residue off `leafB_iff_appLE`
-inherits a localisation quantifier the class never asked for.
+**On the `Locally` wrapper, stated at the right strength.** The wrapper is an artifact of
+`iff_appLE` *as a lemma choice*, not of the leaf: `iff_exists_appLE_locally` discharges it
+generically for any `P` with `HasRingHomProperty P (Locally Q)`, and the class field never
+carried it. An earlier revision here said "what is discharged is the localisation
+quantifier" — mathlib discharges it, not this file. The asymmetry is real and measured
+though: bare implies `Locally` freely (`RingHom.locally_of`), the converse does not close at
+a single chart, and the graded property is not `OfLocalizationSpanTarget`, so the wrapper is
+not vacuous either.
 
-`Nontrivial Γ(X,V)` is **not** a hypothesis: it is free from the point, via
-`Scheme.component_nontrivial` and `x ∈ V`. An earlier revision of this file listed it
-among the things the chart-level conversion needs.
+`Nontrivial Γ(X,V)` is **not** a hypothesis: free from the point via
+`Scheme.component_nontrivial` (a mathlib instance needing only `Nonempty ↥V`) and `x ∈ V`.
+An earlier revision listed it among the conversion's needs.
 
 Mechanism, both directions from mathlib:
 `Algebra.IsStandardSmoothOfRelativeDimension.iff_of_isStandardSmooth` for `mpr`, and
@@ -396,9 +433,13 @@ theorem smooth_of_pullback_snd {X Y Y' : Scheme.{u}} (f : X ⟶ Y) (g : Y' ⟶ Y
 /-- **The numeral does NOT come with it, and this is where a `k̄`-first attack on leaf B
 stops.** `SmoothOfRelativeDimension n` *ascends* along base change
 (`smoothOfRelativeDimension_isStableUnderBaseChange`), but the descent direction is
-absent: mathlib registers `DescendsAlong` for `@Smooth`, `@UniversallyClosed`,
-`@UniversallyOpen`, `@Surjective`, `@IsOpenImmersion` and the isomorphisms, and **not**
-for `@SmoothOfRelativeDimension n`. `HasRingHomProperty.descendsAlong_flat` reduces that
+absent: mathlib registers `DescendsAlong (@Surjective ⊓ @Flat ⊓ @QuasiCompact)` for
+`@Smooth`, `@Etale`, `@Surjective`, `@UniversallyClosed`, `@UniversallyOpen`,
+`@UniversallyInjective`, `@IsOpenImmersion`, `@LocallyOfFiniteType`,
+`@LocallyOfFinitePresentation`, `@FormallyUnramified` and the isomorphisms, and **not**
+for `@SmoothOfRelativeDimension n`. (An earlier revision of this list omitted five of
+those; the omission did not touch the conclusion, but the list was presented as the
+registrations and was not complete — `I-1180`.) `HasRingHomProperty.descendsAlong_flat` reduces that
 to `RingHom.CodescendsAlong Q RingHom.FaithfullyFlat` for the registered `Q`, and while
 `RingHom.Smooth.codescendsAlong_faithfullyFlat` exists (as do the `Finite`, `Etale`,
 `FiniteType`, `FinitePresentation`, `FormallyUnramified` versions), there is no such
@@ -455,7 +496,16 @@ Still open, and stated so the distance is not misread: nothing in the tree compu
 `Module.rank Γ(Pic⁰, V) Ω[Γ(Pic⁰, V)⁄Γ(Spec k, U)]` for a single chart `V` of `Pic⁰`, and
 `Pic0Et.finrank_cotangentSpace_eq_genus` computes a different invariant at a different
 locus (the tangent space at the identity). This is an equivalence, so **no obligation is
-discharged here**; what is discharged is the localisation quantifier.
+discharged here** — and per §2c it is not even a reduction.
+
+**`finrank_cotangentSpace_eq_genus` is OUTSIDE this file's import closure** (it is
+`Picard/Pic0EtTangentSpace.lean:389`, and this module imports only `Pic0Et`,
+`GroupSchemeHomogeneity` and `Curve/GeometricallyReduced`). So `#check` on it *from here*
+reports "unknown constant", which must not be read as absence — it exists, in exactly that
+namespace. It is cited three times in this file (here and at the two §-header sites) and
+deliberately not imported: pulling `Pic0EtTangentSpace` in would push its own cone
+(`Pic0AbelianVariety`, the adelic genus chain) onto every downstream consumer of this
+module, for prose only. Flagged rather than fixed, per `I-1179`.
 
 **Axiom status, measured, and the two halves differ.** The generic
 `smoothOfRelativeDimension_iff_pointwise_rank` is axiom-clean *and stays clean when
