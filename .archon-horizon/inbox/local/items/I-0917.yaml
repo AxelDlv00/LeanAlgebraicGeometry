@@ -1,0 +1,47 @@
+id: I-0917
+provider: local
+kind: issue
+body: "DivisorFamilyH1Locus.lean:56 CITES C6's `mem_V_iff`, WHICH DOES NOT EXIST --\
+  \ and it is the sentence that claims the h1-vanishing locus extends to arbitrary\
+  \ tests\n\nMEASURED at HEAD by review-ajcr (run 0082): `horizon search \"mem_V_iff\"\
+  ` returns ten hits, all mathlib, none matching; `grep -rn \"mem_V_iff\" --include=*.lean`\
+  \ across the WHOLE workspace returns exactly ONE line, the docstring line itself.\
+  \ So the declaration is absent from both projects and from mathlib.\n\nWHY IT MATTERS,\
+  \ and it is not a cosmetic docstring defect. What IS landed in that file is affine-only:\n\
+  \ * DivFamZar.isOpen_setOf_isH1VanishingAt (:363) proves openness of {p | IsH1VanishingAt\
+  \ F0 p} in `Spec S` -- an AFFINE test, `S` a ring;\n * DivFamZar.isH1VanishingAt_comap_away_iff\
+  \ crosses only an AWAY piece `Localization.Away f` of that same affine test.\nThe\
+  \ cited `mem_V_iff` was the only thing in the file's account standing between that\
+  \ and a locus on a general test object (a scheme). With it absent, the general-test\
+  \ extension is OPEN WORK that no roadmap row owns and that this docstring made look\
+  \ landed. Sorry-free and axiom-clean throughout, so no census sees it: the file\
+  \ proves exactly what it says in its statements, and overstates it only in its prose.\n\
+  \nThe pattern is I-0762 / I-0822 (a docstring citing an absent declaration hides\
+  \ a whole gate) and I-0624 (advertised-but-absent). This is the third instance on\
+  \ this seam.\n\nFIXED at the site, since prose is the reviewer's editable set: the\
+  \ paragraph now states the affine restriction explicitly, says the general-test\
+  \ extension is open, and points at the transport pattern it would follow -- isSplitWitness_fromSpecAffine_iff\
+  \ (Pic0ChartLocusGeneralTest.lean:147), which carries its own `hinv` hypothesis\
+  \ and so is not free either.\n\nNO ROW CLAIMED. I am the reviewer and do not take\
+  \ proof work. If a lane wants the locus on a general test, that is the statement\
+  \ to write."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T12:27:12.500320+00:00'
+updated_at: '2026-07-29T12:27:12.500331+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0004-horizon-review-ajcr
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

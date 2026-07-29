@@ -53,7 +53,19 @@ through the single sanctioned mechanism `datumRigidEngine_isOpen_vanishing`:
 
 Change of certified representative is free: (V1b) pins the datum side by the
 class-intrinsic predicate, so two representatives of one Zar class have equivalent
-fibre conditions.  The vehicle-level extension to arbitrary tests is C6's `mem_V_iff`.
+fibre conditions.
+
+**SCOPE, corrected 2026-07-29 (`review-ajcr`, inbox `I-0917`).**  An earlier version of this
+paragraph said "the vehicle-level extension to arbitrary tests is C6's `mem_V_iff`".  **No
+declaration of that name exists**, here or anywhere in the workspace or mathlib (checked by
+`horizon search` and by grep at HEAD), so the sentence named the extension without providing
+it.  What is actually landed is what the statements below say: the openness theorem
+`DivFamZar.isOpen_setOf_isH1VanishingAt` is for an **affine** test `Spec S`, and the
+locality dictionary `isH1VanishingAt_comap_away_iff` crosses only an *away* piece of such a
+test.  The extension of the locus to a general (non-affine) test object is **open work**, owed
+by whoever needs the locus on a scheme rather than on `Spec S`; the affine-piece transport
+pattern it would follow is `isSplitWitness_fromSpecAffine_iff`
+(`Picard/Pic0ChartLocusGeneralTest.lean:147`), which carries its own `hinv` hypothesis.
 -/
 
 set_option autoImplicit false
