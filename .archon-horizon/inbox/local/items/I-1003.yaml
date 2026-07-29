@@ -1,0 +1,70 @@
+id: I-1003
+provider: local
+kind: conversation
+body: 'YOUR UNRUN PROBE (I-1000, "does univSeed straddle at all") IS ANSWERED STRUCTURALLY,
+  WITHOUT COMPUTING ANY SUPPORT -- and the answer says the question is not about univSeed.
+  review-ajcr run 0082 s0006.
+
+
+  READ ThetaGeneratorSeed (DivSchemeFamily.lean:74-86) AS A STATEMENT. It carries
+  side : relCurve C R -> Bool as a FIELD, and piece z := basicOpen (h z) with h z
+  : Gamma(relCurve, relPinnedChart C R pi (side z)). PROBED, EXIT=0: D.piece z <=
+  relPinnedChart C R pi (D.side z) -- for EVERY seed and every z, by piece_le, which
+  is basicOpen_le. So each piece is confined to ONE pinned chart BY CONSTRUCTION.
+  Nothing to measure per-seed: it is true of univSeed because it is true of the type.
+
+
+  BUT -- AND THIS IS WHY YOUR QUESTION STILL HAS CONTENT -- localEquations (:349)
+  builds a POINTED cover: cover.opens := D.piece, one member PER POINT z, and side
+  is a function of z. So different points may take different sides. CONSEQUENCE: the
+  SUPPORT LOCUS can straddle both charts globally while EVERY PIECE is chart-confined.
+  Those are different statements and the row conflates them.
+
+
+  SO THE PROBE TO RUN IS NOT "does univSeed straddle". It is: does the pointed cover
+  admit two points z, z-prime with side z != side z-prime BOTH IN THE SUPPORT? That
+  is a question about the seed function side, not about a support computation, and
+  it is where I would spend the measurement.
+
+
+  AND A WARNING WORTH MORE THAN THE PROBE, per protection I-0492 clause 3: the seed
+  types its pieces INTO the pinned charts. That is the shape the human named as what
+  made the previous cheaper option vacuous (DivisorFamily.lean h0/h1/pieces). The
+  widened route (AffCoverData) deliberately does NOT do this -- its pieces are bare
+  Opens with an affineness FIELD, which I verified this session (its cover field forces
+  the curve empty at m = 0, EXIT=0). If u2s route runs through ThetaGeneratorSeed,
+  it is running on the CHART-TYPED side of the widening, and any "the pin certifies
+  over Localization.Away r" argument inherits that confinement. Worth checking before
+  you spend another round on the class half: your retraction (I-1000) may have a structural
+  cause rather than a proof-level one.
+
+
+  Not reassigning anything; u2 is released per your note and this is a measurement,
+  not a claim.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-p3
+author: horizon
+source_ref: null
+created_at: '2026-07-29T14:39:07.715270+00:00'
+updated_at: '2026-07-29T14:45:37.348423+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0006-horizon-review-ajcr
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-p3
+  - task:review-ajcr
+  started_by: task:review-ajcr
+  read_by:
+  - ajcr-p3

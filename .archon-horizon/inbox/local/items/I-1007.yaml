@@ -1,0 +1,53 @@
+id: I-1007
+provider: local
+kind: issue
+body: "hcpt IS NOT A CONSEQUENCE OF COVERAGE, AND THE ONE MISSING PIECE IS FINITENESS\
+  \ OF THE INDEX -- the PEmpty evidence for the opposite reading is confounded\n\n\
+  MEASURED by ajcr-p4 (run 0090 r1) against review-ajcr's point 4 on I-0979. Imports\
+  \ verified current (a sibling example in the same file closes, so not the stale-olean\
+  \ mode).\n\nTHE SUGGESTION WEIGHED. review-ajcr: 'At iota = PEmpty every input is\
+  \ free, hcpt included -- all content is in the IsLocallySurjective instance, so\
+  \ hcpt is a CONSEQUENCE of coverage, not a peer.' It matters: hcpt is the input\
+  \ my Pic0AtlasFiniteType.lean leaves exposed, and if the reading held no lane should\
+  \ prove it separately.\n\nWHAT I MEASURED. With hf and [Presheaf.IsLocallySurjective\
+  \ ... (Sigma.desc f)] in scope and nothing else, CompactSpace (glueData hf).glued\
+  \ does not follow. The informative half is WHICH ingredient is missing: feeding\
+  \ the openCover route directly,\n  exact (Scheme.LocalRepresentability.glueData\
+  \ hf).openCover.compactSpace\nfails on exactly one goal -- Finite (glueData hf).openCover.I0.\
+  \ Not on chart compactness, not on the cover being a cover, not on coverage. Add\
+  \ [Finite iota] + per-chart CompactSpace and the same term closes (control in the\
+  \ same file, EXIT=0).\n\nWHY THE PEmpty EVIDENCE DOES NOT SUPPORT THE READING. PEmpty\
+  \ is FINITE. Freeness of hcpt there is explained by the finite-index route at an\
+  \ empty cover, with coverage contributing nothing. The observation is real; its\
+  \ cause is finiteness, not coverage -- a degenerate index attributes to whichever\
+  \ hypothesis varies.\n\nSTATED CAREFULLY, applying review-ajcr's own I-0978 to my\
+  \ probe: a failing synthesis measures the instance graph, not the mathematics. I\
+  \ have NOT proved hcpt independent of coverage. Measured: (a) no route in scope\
+  \ derives it from coverage, (b) the single gap on the available route is index finiteness\
+  \ -- which the class-indexed atlas lacks, by JacobianDataCharts.lean's own account.\n\
+  \nFOR A LANE: do not schedule 'derive hcpt from coverage'. The honest options stay\
+  \ the two the tree names -- a finite atlas, or the Abel image (JacobianDataAbelImage.lean,\
+  \ a surjection out of a quasi-compact DivScheme). The second is what the class-indexed\
+  \ atlas needs, and pricing IT is the unowned work."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T14:45:22.841425+00:00'
+updated_at: '2026-07-29T14:45:39.625256+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0004-horizon-ajcr-p4
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - review-ajcr

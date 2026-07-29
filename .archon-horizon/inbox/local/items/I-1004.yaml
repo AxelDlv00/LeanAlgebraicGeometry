@@ -1,0 +1,54 @@
+id: I-1004
+provider: local
+kind: issue
+body: "THE AJCR BLUEPRINT GRAPH HAS 108 NODES OVER FILES THE BUILD NEVER SEES, 104\
+  \ OF THEM MARKED lean_ok -- including throwaway 'controlSorry' probes from four\
+  \ prover lanes. graph frontier surfaces them as real work.\n\nMEASURED by ground\
+  \ (run 0082 s0006) over MainProjects/Algebraic-Jacobian-Challenge-Rebuild/hgraph/nodes\
+  \ (9272 nodes, 7980 with a file field), against an independently recomputed import\
+  \ closure of AlgebraicJacobian.lean.\n\nTWO BUCKETS.\n\n(1) 90 nodes over the 17\
+  \ UNROOTED modules, 88 marked lean_ok. Worst: EntryIdeal 23,\nDivSchemeRedesignRangeFlatBridge\
+  \ 16, Pic0ThetaCocycle 15 (13 lean_ok -- on the file whose own\nheader forbids rooting\
+  \ until its 2 sorries close, and which nothing has ever elaborated),\nDivSchemeRedesignRankOneFibre\
+  \ 7, DivSchemeFlatteningBridge 5, DivSchemeRedesignKappaZFibre 5.\nThe AJCR.w4-rep.build-reach\
+  \ row already predicts exactly this ('auto-synced lean_ok over an\nunrooted file\
+  \ remains a false statement about the project's state and nothing prevents it\n\
+  recurring'). It is still recurring; this is the count.\n\n(2) 18 nodes whose source\
+  \ file is under scratch_*, 16 marked lean_ok. These are lane probe\nscratchpads,\
+  \ not project content: scratch_p4/Probe2.lean, scratch_p1/ProbeRestricted.lean,\n\
+  scratch_review_p4/RProbeA.lean, scratch_w7/k1a.lean and probeC.lean. Two are visible\
+  \ at the TOP\nof  as 'controlA' and 'controlSorry' --\nthe deliberate sorry-firing\
+  \ CONTROLS lanes write to prove their axiom probe is not vacuous. The\nfrontier\
+  \ now ranks a lane's negative control as a blueprint node needing proof.\n\nWHY\
+  \ IT MATTERS BEYOND TIDINESS. lean_ok is the graph's assertion that a declaration\
+  \ is proved\nin the built project. Over an unrooted or scratch file it is false\
+  \ by construction, and it is\nfalse in the direction that inflates apparent progress.\
+  \ A session picking work from \nis being shown nodes that no kernel check covers.\n\
+  \nNEXT ACTION, and it is a policy not a sweep: exclude scratch_* from graph sync\
+  \ outright, and\nmake sync refuse to write lean_ok for a declaration whose file\
+  \ is outside the aggregator's\nimport closure (degrade to a distinct status). Deleting\
+  \ the 108 nodes without that leaves the\nmechanism intact -- the build-reach row\
+  \ has watched it recur once already.\n\nNOT CHECKED: whether the same two buckets\
+  \ exist in the sibling AJC project's graph."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T14:39:12.736208+00:00'
+updated_at: '2026-07-29T14:43:27.448667+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0006-horizon-review-ajcr
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - review-ajcr

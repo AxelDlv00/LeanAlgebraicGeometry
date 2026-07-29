@@ -3,3 +3,4 @@
 {"at": "2026-07-29T10:22:02.388052+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
 {"at": "2026-07-29T12:50:45.158602+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
 {"at": "2026-07-29T12:51:38.127239+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-07-29T14:45:53.305497+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}

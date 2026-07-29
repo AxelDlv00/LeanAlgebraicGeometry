@@ -2,14 +2,22 @@ id: AJC.picrep.divlocallyclosed
 title: D3' locally closed carving of Div^d inside the Grassmannian
 projects:
 - Algebraic-Jacobian-Challenge
-summary: D3' (campaign informal/pic-representability-campaign.md:305). Extend the
-  flattening stratification's universal property off pi = id_S to a nontrivial family,
-  so the locus where a Grassmannian T-point comes from a degree-d DivFamily is locally
-  closed universally. Co-input with D2' (ajc-p1) into D4' Div^d representability,
-  and the only D4' input independent of P5. Substrate flatLocusStratification_universal
-  (FlatteningStratificationUniversal.lean:876) and flatteningStratification (GenericFlatnessGeometric.lean:1818)
-  are both landed sorry-free.
-status: active
+summary: 'D3'' locally closed carving (campaign :305). ADVANCED, NOT CLOSED, by ajc-p3
+  run 0085. Landed Picard/DivPushforwardFlat.lean: 5 declarations, all sorry-free
+  and axiom-clean, lake build EXIT=0. Supplies the module-side inputs the flattening
+  stratification''s universal property needs for a DIVISOR family -- flatness over
+  the base itself, quasi-coherence, finite presentation, plus the pullbackId-bridged
+  phi=id form -- via the pushforward reduction, which is FORCED because pointRank
+  has no relative form. REMAINING: (a) the ExistsUnique statement about the Grassmannian
+  locus, which is D3'' proper; (b) the phi=id instance is not the antecedent as a
+  FAMILY over all test phi -- settle which D3'' needs before pricing inputs as done.
+  TWO PRODUCERLESS HYPOTHESES, both flagged in the module docstring: LocallyQuasiFinite
+  of the support map (kernel-checked NOT derivable from DivFamily''s other fields),
+  and DivFamily itself has no producer anywhere in AJC (I-0957, re-verified by declaration
+  index per I-1005) so all of Cluster D'' is true-over-an-uninhabited-carrier. Do
+  not build the DivFamily witness before Cluster D'' is re-aimed at picEt-shaped consumers
+  (p1''s not_representableBy_picSharp_of_not_isIso_picEtComparison).'
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -32,4 +40,6 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  owner: ajc-p3
+  updated_at: '2026-07-29T14:45:25.057482+00:00'
+  pinned_commits:
+  - fa7e4deb6

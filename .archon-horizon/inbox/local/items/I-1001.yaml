@@ -1,0 +1,100 @@
+id: I-1001
+provider: local
+kind: issue
+body: 'MY OWN IsPlusHonest CENSUS IS WRONG: ELEVEN DECLARATIONS, NOT SIX -- and the
+  five it dropped are exactly the PRODUCERS, the half that decides the pricing. Two
+  board rows carry the false count.
+
+
+  Found by ground (fresh context, run 0082 s0006) auditing review-ajcr''s own f272fe221.
+
+
+  THE ERROR. Rows AJCR.w4-rep.datum.dat-b and AJCR.w4-rep.datum.dat-c.c9-chartlocus.chart-u
+  say:
+
+  ''IsPlusHonest has exactly SIX declarations tree-wide (:200 def, .mul :209, .inv
+  :220, .pow
+
+  :230, chartLocusOpensOfIsPlusHonest :334, mem_ :343) -- none a spreading-out, a
+  field-point
+
+  reduction or a localisation statement.''
+
+
+  MECHANISM: the count came from a CASE-SENSITIVE grep for ''IsPlusHonest''. Lean
+  convention puts
+
+  the predicate in lowerCamelCase in SUFFIX position, so every producer is named
+
+  ''..._isPlusHonest'' and none matched. True census in Picard/Pic0ChartPlusFibreProducer.lean
+  is
+
+  ELEVEN -- add :245 thetaFamily_isPlusHonest, :256 sigmaFamily_isPlusHonest, :275
+
+  abelDiv_isPlusHonest, :294 chartTwist_isPlusHonest, :316 isOpen_chartLocus_of_isPlusHonest.
+
+
+  WHY IT IS NOT COSMETIC. The five dropped are the four PRODUCERS plus the consumer
+  paying
+
+  CHART-U(b). A census whose purpose was ''is there a producer of a useful shape''
+  enumerated only
+
+  the declarations that cannot be that thing, then read their absence-of-shape as
+  the shape''s
+
+  absence. The conclusion survives -- I checked all eleven, none is a spreading-out
+  or a
+
+  localisation -- but by luck; the count was evidence I did not have.
+
+
+  WHAT STANDS, re-read from statements: the DIRECTION finding is sound. chartLocus
+
+  (Pic0ChartLocus.lean:244-247) is a predicate on the IMAGE under picEtMap along Over.testPoint,
+
+  hence covariant and free; IsPlusHonest (:200-203) demands a PREIMAGE under relPicToPicEt
+  at
+
+  Gamma(T.left, U). Only the CENSUS sentence is false.
+
+
+  NEXT ACTION. Correct the count to eleven on both rows and name the four producers
+  -- a lane
+
+  told ''six declarations, no producer of the right shape'' may go build thetaFamily_isPlusHonest,
+
+  which exists. The genuine near-miss to cite instead is PicEtAff.unit_surjective_of_section
+
+  (EffectivityClose.lean:141) / .unitEquiv_of_section (:186), already on the row above.
+
+
+  REUSABLE: a case-sensitive grep for a Lean predicate misses its own producers, because
+  the
+
+  convention flips the first letter in suffix position. Grep case-insensitively when
+  a count is
+
+  load-bearing for an absence claim.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T14:38:46.788019+00:00'
+updated_at: '2026-07-29T14:39:25.071444+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0006-horizon-review-ajcr
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - review-ajcr

@@ -30,13 +30,13 @@ body: "RELEASE ajc-p2: AJC.rr.extuniform (P5) — owner cleared. The degree clau
   \ it in I-0904."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T12:41:09.242877+00:00'
-updated_at: '2026-07-29T12:41:09.242887+00:00'
+updated_at: '2026-07-29T14:43:00.184197+00:00'
 metadata:
   provenance:
     run: 0084

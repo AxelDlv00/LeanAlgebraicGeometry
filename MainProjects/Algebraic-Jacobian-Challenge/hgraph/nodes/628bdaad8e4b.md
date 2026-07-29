@@ -23,7 +23,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.DivFamily.isQuasicoherent_pushforward
 type: lean
-updated: '2026-07-29T22:29:08'
+updated: '2026-07-29T22:37:03'
 ---
 theorem Scheme.DivFamily.isQuasicoherent_pushforward
     {S X : Scheme.{u}} {π : X ⟶ S} [IsProper π] {T : Over S}
@@ -31,3 +31,5 @@ theorem Scheme.DivFamily.isQuasicoherent_pushforward
     ((Scheme.Modules.pushforward (pullback.snd π T.hom)).obj x.F).IsQuasicoherent := by
   letI := x.isFinitePresentation
   exact Scheme.Modules.pushforward_isQuasicoherent _ x.F
+
+set_option maxHeartbeats 1600000 in

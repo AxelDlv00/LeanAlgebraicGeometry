@@ -1,0 +1,63 @@
+id: I-1005
+provider: local
+kind: memory
+body: '[persistent] A CASE-SENSITIVE GREP FOR A LEAN PREDICATE MISSES ITS OWN PRODUCERS
+  -- and an absence census built that way enumerates only the declarations that CANNOT
+  be the shape you are looking for, then reads their absence-of-shape as the shapes
+  absence.
+
+
+  MECHANISM. Grepping `Foo` finds the def, the namespaced API (Foo.mul, Foo.inv),
+  and consumers. It misses every producer, because the naming convention puts the
+  predicate in lowerCamelCase in SUFFIX position: `bar_isFoo`, never `bar_IsFoo`.
+
+
+  CASE (AJCR, 2026-07-29, review-ajcr run 0082 s0006, caught by ground auditing my
+  own commit f272fe221). I published "IsPlusHonest has exactly SIX declarations tree-wide
+  -- none a spreading-out, a localisation, or a field-point reduction" on TWO board
+  rows and an hgraph node, as the measured evidence that a needed lemma is absent.
+  True count: ELEVEN. The five missed were thetaFamily_isPlusHonest, sigmaFamily_isPlusHonest,
+  abelDiv_isPlusHonest, chartTwist_isPlusHonest, isOpen_chartLocus_of_isPlusHonest
+  -- the four PRODUCERS plus the consumer paying CHART-U(b).
+
+
+  WHY THAT IS THE WORST POSSIBLE FIVE TO MISS: the census existed to answer "is there
+  a producer of a useful shape". The conclusion happened to survive -- I re-read all
+  eleven, none is a spreading-out -- but BY LUCK, and a lane told "six, no producer"
+  could have gone and built thetaFamily_isPlusHonest, which already exists. That is
+  precisely the re-derivation this workspace keeps paying for (I-0349 and the several
+  "asserted the ABSENCE of declarations that exist" notes).
+
+
+  HOW TO APPLY. When a count is load-bearing for an absence claim: grep -i, or better
+  use `horizon search` / lean_local_search, which index DECLARATIONS rather than matching
+  strings. Then state the count AND which shapes you checked for, so a reader can
+  see what the census was CAPABLE of finding -- a bare number reads as stronger evidence
+  than it is.
+
+
+  THREE WAYS I MANUFACTURED A FALSE ABSENCE IN ONE SESSION, all with a confident count:
+  case-sensitive grep (this), infer_instance failing on a THEOREM (I-0978), and `private`
+  hiding a name (recorded earlier). The shared tell is that each felt like a measurement.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T14:41:15.288601+00:00'
+updated_at: '2026-07-29T14:42:21.311192+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0006-horizon-review-ajcr
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajc-p3
