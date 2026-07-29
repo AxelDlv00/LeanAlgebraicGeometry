@@ -35,30 +35,50 @@ The reduction, in the direction a witness-builder needs, and its converse:
 * `abelChartApp_inj_iff` — the exact shape injectivity has at a test: it is *precisely*
   injectivity of `x ↦ ⟨x ≫ D.hom, chartValue … (rep.homEquiv …)⟩`, so no reformulation can
   avoid the Σ-component.
-* `not_injective_abelSigmaChart_of_divFamZar` — the version stated on the **divisor families**
+* `not_isChartLocusFibre_of_divFamZar` — the version stated on the **divisor families**
   rather than on the points, obtained by transporting along `rep.homEquiv`: two distinct
   families over one test with equal chart value.  This is the shape the linear-system argument
-  produces, and the transport is where `rep` does its work.
+  produces, and the transport is where `rep` does its work.  Note the Σ-component obligation
+  **disappears** here: both points are `(rep.homEquiv.symm sᵢ).left`, whose structure morphism
+  is the test's own by `Over.w`, so `hstruct` holds by construction rather than by hypothesis.
+  That is the payoff of stating it at the family level.
 
 ## What is NOT proved here, stated so this file is not over-read
 
-**Nothing here exhibits a curve on which the hypothesis holds.**  The reduction is
-`(∃ two families with equal chart value) → ¬ IsChartLocusFibre`, and its antecedent is open.
-The remaining obligation is exactly:
+**Nothing here exhibits a curve on which the hypothesis holds, and no theorem below closes the
+fork.**  Every statement here is an implication whose antecedent is open.  What remains is
+exactly:
 
-  for some curve, some test `T`, and `n = g`: two *distinct* elements of `divFamZar C π n T`
+  for some curve, some test `T`, and some `n`: two *distinct* elements of `divFamZar C π n T`
   whose `chartValue` agree.
 
-Over a field test that is the classical statement `h⁰(𝒪(D)) ≥ 2 ⇒ |D|` has two points, and
-`Scheme.CurveDivisor.eq_of_picClass_eq_of_h0_one` (`RiemannRoch/EffectiveUniqueness.lean:144`)
-is its exact contrapositive boundary: uniqueness holds **at** `h⁰ = 1` and the hypothesis to
-contradict is `h⁰ ≥ 2`.  What the tree does not have is the passage from two divisors to two
-*elements of `divFamZar`* — the families carry local equations, so distinctness of divisors does
-not immediately give distinctness of families, and that step is named here rather than assumed.
+Three things to know before pricing that, and the third is the one that moves.
 
-So: this file converts a prose fork into a named divisor-level obligation, and does not close
-the fork.  Whoever closes it should read `divFamZar`'s quotient (`DivisorFamilyZar.lean:235`)
-first — the equivalence there is what decides whether two local-equation data are one family.
+1. Over a field test it is the classical `h⁰(𝒪(D)) ≥ 2 ⇒ |D|` has two points.
+   `Scheme.CurveDivisor.eq_of_picClass_eq_of_h0_one` (`RiemannRoch/EffectiveUniqueness.lean:144`)
+   is the exact boundary: uniqueness holds **at** `h⁰ = 1`, so the hypothesis to arrange is
+   `h⁰ ≥ 2`.  It is the statement to contradict, not to apply.
+2. The passage from two *divisors* to two distinct *elements of `divFamZar`* is not free: the
+   families are a quotient of local-equation data (`DivisorFamilyZar.lean:235`), so distinct
+   divisors need not give distinct families until that equivalence is read.  Nothing here
+   assumes otherwise.
+3. **`n` is not free, and this is where the fork is actually decided.**  At `n = g` the chart's
+   own degree calibration makes the fibre a single point *for free*: an effective divisor of
+   degree `g` with `Subsingleton H¹` has `h⁰ = 1` exactly (`degAt_chartTwist`'s `+g` discussion
+   in `Pic0ChartLocus.lean:178-201`, and the rank anchor
+   `h0_eq_deg_add_chi_of_subsingleton_hModule_one`, `RiemannRoch/FLVClass.lean:412`, giving
+   `h⁰ = g + (1 − g) = 1`).  So at the representability degree the two branches of the fork are
+   *not* "is the Abel map a mono" in the abstract — they are **"does `DivScheme g` contain
+   points where `H¹` fails to vanish"**.  If it does not, the unrestricted chart is injective at
+   `n = g` and the three headers are wrong *at that degree*; if it does, the restriction to
+   `chartLocus` is precisely the restriction to the `H¹`-vanishing locus, which is why
+   `chartLocus` is the right `V` rather than an arbitrary one.
+
+Consequence for the two lanes reading this: the headers' claim is about a *positive-dimensional*
+linear system, i.e. `h⁰ ≥ 2`, i.e. `H¹ ≠ 0` at degree `g`.  A witness must therefore exhibit a
+point of the divisor scheme with non-vanishing `H¹`; a bare "two divisors in a linear system" is
+not enough, because at `n = g` with `h¹ = 0` there are none.  (The degree-`g`/`h⁰ = 1` link is
+`ajcr-p4`'s measurement, I-0888.)
 -/
 
 set_option autoImplicit false
@@ -163,7 +183,51 @@ theorem not_isChartLocusFibre_of_divFamZar {T : Over (Spec (.of k))}
     (s₁ s₂ : divFamZar C π n T) (hne : s₁ ≠ s₂)
     (hval : chartValue C π n m Z T s₁ = chartValue C π n m Z T s₂) :
     ¬ IsChartLocusFibre C π n rep m Z hdeg := by
-  sorry
+  set x₁ : T.left ⟶ D.left := (rep.homEquiv.symm s₁).left with hx₁
+  set x₂ : T.left ⟶ D.left := (rep.homEquiv.symm s₂).left with hx₂
+  -- both points have the test's own structure morphism, so the Σ-components agree
+  have hs₁ : x₁ ≫ D.hom = T.hom := Over.w _
+  have hs₂ : x₂ ≫ D.hom = T.hom := Over.w _
+  have hstruct : x₁ ≫ D.hom = x₂ ≫ D.hom := hs₁.trans hs₂.symm
+  -- `Over.homMk xᵢ` recovers the slice morphism `rep.homEquiv.symm sᵢ` was, hence `sᵢ`
+  have hrec₁ : rep.homEquiv (Over.homMk x₁ hs₁) = s₁ := by
+    refine (congrArg rep.homEquiv (Over.OverMorphism.ext ?_)).trans
+      (rep.homEquiv.apply_symm_apply s₁)
+    rfl
+  have hrec₂ : rep.homEquiv (Over.homMk x₂ (hstruct.symm.trans hs₁)) = s₂ := by
+    refine (congrArg rep.homEquiv (Over.OverMorphism.ext ?_)).trans
+      (rep.homEquiv.apply_symm_apply s₂)
+    rfl
+  refine not_isChartLocusFibre_of_points rep m Z hdeg x₁ x₂ ?_ hstruct ?_
+  · -- distinct families give distinct points, `rep.homEquiv.symm` being injective
+    intro h
+    exact hne (hrec₁.symm.trans ((congrArg rep.homEquiv
+      (Over.OverMorphism.ext h)).trans hrec₂))
+  · -- the two chart values are `hval` restricted along the identity-on-`T.left` slice
+    -- morphism `e`, so naturality of `chartValue` transports it
+    set e : Over.mk (x₁ ≫ D.hom) ⟶ T :=
+      Over.homMk (𝟙 T.left) ((Category.id_comp T.hom).trans hs₁.symm) with he
+    have hfac₁ : (Over.homMk x₁ rfl : Over.mk (x₁ ≫ D.hom) ⟶ D)
+        = e ≫ rep.homEquiv.symm s₁ :=
+      Over.OverMorphism.ext (Category.id_comp x₁).symm
+    have hfac₂ : (Over.homMk x₂ hstruct.symm : Over.mk (x₁ ≫ D.hom) ⟶ D)
+        = e ≫ rep.homEquiv.symm s₂ :=
+      Over.OverMorphism.ext (Category.id_comp x₂).symm
+    have hpull : ∀ s : divFamZar C π n T,
+        rep.homEquiv (e ≫ rep.homEquiv.symm s) = divFamZar.map C π n e s := by
+      intro s
+      rw [rep.homEquiv_comp, rep.homEquiv.apply_symm_apply]
+      rfl
+    have hstep : ∀ (s : divFamZar C π n T) (y : Over.mk (x₁ ≫ D.hom) ⟶ D),
+        y = e ≫ rep.homEquiv.symm s →
+        chartValue C π n m Z (Over.mk (x₁ ≫ D.hom)) (rep.homEquiv y)
+          = picEtMap C e (chartValue C π n m Z T s) := by
+      intro s y hy
+      subst hy
+      exact (congrArg (chartValue C π n m Z (Over.mk (x₁ ≫ D.hom))) (hpull s)).trans
+        (picEtMap_chartValue C π n m Z e s).symm
+    exact (hstep s₁ _ hfac₁).trans
+      ((congrArg (picEtMap C e) hval).trans (hstep s₂ _ hfac₂).symm)
 
 end
 
