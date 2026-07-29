@@ -167,7 +167,7 @@ theorem topologicalKrullDim_eq_zero_of_homogeneous {k : Type u} [Field k]
   haveI : T1Space (Pic0Scheme C).left := by
     refine t1Space_of_orbit_of_isClosed ((identitySection C).base default) ?_ ?_
     · exact isClosed_singleton_of_section (Pic0Scheme C).hom (identitySection C)
-        (identitySection_comp C) default
+        (identitySection_isSection C) default
     · intro z
       obtain ⟨x, y, hxy⟩ := htrans z
       exact ⟨Scheme.homeoOfIso (pointTranslationIso (Pic0Scheme C) x y), hxy⟩
