@@ -74,10 +74,28 @@ once and in a form the machine can use.
 
 ## What remains for D3'
 
-Feeding `flatLocusStratification_universal` needs two further binders on
-`q_* O_D`, `IsQuasicoherent` and `IsFinitePresentation`, and then the actual
-`∃!` statement about the Grassmannian locus. Nothing here closes D3'; this is its
-first input.
+`flatLocusStratification_universal` wants `IsNoetherian` on the base and both
+`IsQuasicoherent` and `IsFinitePresentation` on the module. Quasi-coherence of
+`q_* O_D` is free for a proper family and is recorded here as
+`DivFamily.isQuasicoherent_pushforward`. **Finite presentation is not** and is the
+next real obligation: `isFinitePresentation_of_finite_sections`
+(`Picard/RigidPushforwardTransfer.lean`) reduces it to `Module.Finite` of
+`Γ(q_* O_D, V)` on affine `V`, which is where the finiteness of the support map
+should be spent — it is available here (`IsFinite (i ≫ q)`), so the residue is a
+section-level transport across the descent isomorphism rather than new geometry.
+
+Beyond that, D3' still needs the `∃!` statement about the Grassmannian locus
+itself. Nothing in this file closes D3'.
+
+## Honest status of every antecedent
+
+`Scheme.DivFamily` itself has **no producer anywhere in this project** — 135
+mention sites, all consumers (measured 2026-07-29, inbox `I-0957`). So the
+theorems here, like the rest of Cluster D', are true statements about a carrier
+nobody has yet inhabited; that is a property of the cluster, not of this file, and
+it is recorded rather than hidden. The `LocallyQuasiFinite` binder has no producer
+either, and is *not* derivable from `DivFamily`'s other fields (kernel-checked),
+so it is genuine content and not a restatement of `properSupport`.
 -/
 
 universe u
@@ -191,5 +209,20 @@ theorem Scheme.DivFamily.coherentSheafFlat_id_pushforward
   exact coherentSheafFlat_of_iso (𝟙 (T.left : Scheme.{u}))
     ((Scheme.Modules.pushforwardComp i q).app N ≪≫
       (Scheme.Modules.pushforward q).mapIso hdesc.symm) h3 hU hV eV
+
+/-- **`q_* O_D` is quasi-coherent** when the ambient family is proper — the second
+of the three binders `Scheme.Modules.flatLocusStratification_universal` wants on
+the module it stratifies.
+
+Free: properness of `π` gives `QuasiCompact` and `QuasiSeparated` of the projection
+`q = pullback.snd π T.hom` by base change, and pushforward along a qcqs morphism
+preserves quasi-coherence. Recorded separately from the flatness statement because
+the two are consumed together and neither implies the other. -/
+theorem Scheme.DivFamily.isQuasicoherent_pushforward
+    {S X : Scheme.{u}} {π : X ⟶ S} [IsProper π] {T : Over S}
+    (x : Scheme.DivFamily π T) :
+    ((Scheme.Modules.pushforward (pullback.snd π T.hom)).obj x.F).IsQuasicoherent := by
+  letI := x.isFinitePresentation
+  exact Scheme.Modules.pushforward_isQuasicoherent _ x.F
 
 end AlgebraicGeometry
