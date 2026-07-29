@@ -2,10 +2,72 @@ id: AJCR.w4-rep
 title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "THE CRITICAL PATH TO Challenge.lean:99.  Re-framed round 4 as one ordered\
-  \ chain; REFRAMED AGAIN\nround 5, because the round-4 framing put the gate in the\
-  \ wrong place.  READ\ninformal/w4-rep-critical-path.md SECTION 7 FIRST -- it carries\
-  \ the per-link evidence.\n\nTARGET.  AlgebraicGeometry.Jacobian (Challenge.lean:96-99,\
+summary: "*** THE COSTING, RE-RANKED 2026-07-29 (run 0082, review-ajcr). THE THREE\
+  \ ANTECEDENTS ARE NOT THREE\nINDEPENDENT PRICES, AND NONE OF THEM CLOSES THIS WEEK.\
+  \ Read this before picking a leaf. ***\n\nWHAT IS GENUINELY SOUND, and it is worth\
+  \ stating first because it is unusual: pic0RepresentableByOfCharts\n(Picard/Pic0SigmaSheaf.lean:161)\
+  \ and mixedParamRepresentableBy (Pic0ChartAtlasParamFree.lean:125) are\nsorry-free,\
+  \ rooted, and honest. Given the three antecedents they WOULD produce a representing\
+  \ scheme.\nThe machine is correct. Nothing feeds it.\n\nTHE THREE ANTECEDENTS DO\
+  \ NOT COMPOSE AS THE ROWS IMPLY. Measured, `lake env lean` EXIT=0 (probes in\nrun\
+  \ 0082 session dir /probes):\n (1) `hf` = IsChartUniv (Pic0ChartPair.lean:173) is\
+  \ stated at a FREE `V : D.left.Opens`. At ι = PEmpty\n     the whole seam call elaborates\
+  \ with `hf := fun i => PEmpty.elim i` -- no charts, no rep, no\n     IsChartUniv.\
+  \ At V = bottom, injectivity is free (no nonempty test has a point of the empty\
+  \ open).\n     So `hf` at an arbitrary V carries NO CONTENT.\n (2) The seam is nonetheless\
+  \ NOT vacuous: at ι = PEmpty the sup sieve is BOTTOM, and the bottom sieve\n   \
+  \  is Zariski-covering only for an EMPTY test. So ALL the content forcing the atlas\
+  \ to be an atlas\n     sits in the LOCAL-SURJECTIVITY instance -- antecedent 2,\
+  \ not antecedent 1.\n (3) THE UNPRICED OBLIGATION, which no row owned before this\
+  \ pass: coverage\n     (chartsCoverLocally_of_pointwise, Pic0ChartCoveragePointwise.lean:128)\
+  \ must produce\n     `x : (W : Scheme) ⟶ X i`, i.e. INTO `(V i : Scheme)`. So coverage\
+  \ must hit the SAME V at which\n     `hf` was certified. chartLocus is an open of\
+  \ the TEST; V is an open of the DIVISOR SCHEME. Zero\n     files in the tree mention\
+  \ both IsChartUniv and ChartsCoverLocally. Now owned by\n     AJCR.w4-rep.datum.chart-restrict\
+  \ (ajcr-p1, I-0869/I-0872).\n\nWORSE, AND INDEPENDENTLY CONFIRMED WITH ajcr-p1:\
+  \ the only non-circular producer of `hf`,\nisChartUniv_of_isChartLocusFibre (Pic0ChartUnivReduce.lean:170),\
+  \ goes THROUGH the unrestricted\ncertificate -- its body is `isOpenImmersion_presheaf_of_chartFibrePresented`\
+  \ with the restriction\napplied afterwards. So IsChartLocusFibre implies IsOpenImmersion.presheaf\
+  \ of the UNRESTRICTED Abel\nchart, which three headers call false (|D| is not a\
+  \ point). QUALIFICATION I add: that falsity is a\nHEADER CLAIM, unproved -- isEmpty_forall_chartFibrePresented_of_not_injective\n\
+  (Pic0ChartOpenImmersionCriterion.lean:219) takes non-injectivity as a HYPOTHESIS\
+  \ and is never\ninstantiated. So the tree holds a reduction and its conditional\
+  \ refutation and has connected neither.\n\nTHE RANKING, corrected. Not by ease --\
+  \ by what a discharge would actually buy:\n 1. chart-restrict (the V-coupling +\
+  \ a fibre criterion at the RESTRICTED chart). Held by ajcr-p1.\n    Without it antecedents\
+  \ 1 and 2 cannot be composed at all, so it outranks both.\n 2. Antecedent 2, local\
+  \ surjectivity (dat-b B-5/B-6). It carries the content, and its packaging is\n \
+  \   complete: isLocallySurjective_sigmaDesc_of_pointwise takes B-5 to the instance\
+  \ in ONE step, with\n    a converse, so the pointwise form is not a strengthening\
+  \ chosen to be provable. What it owes is\n    geometry: the per-point datum, plus\
+  \ the chart-parameter/threshold reconciliation.\n 3. Antecedent 1, `hf`. Real but\
+  \ currently unreachable except through the unrestricted statement.\n 4. Antecedent\
+  \ 3, `rep i` (divrep/u2). Multi-round: U2 is refuted on the widened route\n    (isEmpty_chartTyping_of_straddling),\
+  \ and the live question is a chart-free eps-value.\n\nRE-PRICED LEAVES, both directions,\
+  \ all verified by reading the Lean rather than the prose:\n * OVER-PRICED (I-0870):\
+  \ dat-b, chart-u and c9b all say the per-affine-piece datum has NO PRODUCER.\n \
+  \  It has one -- exists_isChartDatumPlusFibre_of_mem_range (Pic0ChartPlusFibreProducer.lean:178),\n\
+  \   rooted and sorry-free, with chartLocusOpensOfIsPlusHonest (:334) giving c9b\
+  \ clause (i) as DATA and\n   haff DISCHARGED. Residue is IsPlusHonest at the coverage\
+  \ class, which is narrower.\n * MIS-ROUTED (I-0862): the rejection cluster's forwarding\
+  \ address, twist-atlas, is the GL_2(k) route\n   protection I-0492 FORBIDS (twistedP1Map\
+  \ = pi >> P1.autOfMatrix). Now rejected. The four rejections\n   themselves are\
+  \ each CORRECT, and three of them are ONE fact -- pieces confined to a fixed chart\n\
+  \   pair -- which R2 already removed.\n * dat-glue: unchanged and correctly deferred;\
+  \ it consumes the above.\n\nVERDICT TO THE HUMAN (also sent --to human): none of\
+  \ the three antecedents closes this week. The\nreachable wins this round are the\
+  \ coupling statement and the re-pricings, not a discharge.\n\nBUILD REACHABILITY\
+  \ IS FIXED, and the paragraph near the end of this row saying otherwise is STALE:\n\
+  93/620 unrooted is now 18/756, the entire DD-R tail is rooted, and the 18 remaining\
+  \ are essentially\nthe old triage's own DELETE list plus Pic0ThetaCocycle. See AJCR.w4-rep.build-reach.\
+  \ Exactly 17 code\nsorries project-wide: Challenge.lean 15 (the statement-only north\
+  \ star) and Pic0ThetaCocycle 2\n(unrooted). A naive sorry count reads AJCR as nearly\
+  \ done; it is not, and the sorries are not the\nmeasure -- the undischarged antecedents\
+  \ are.\n\n--- the round-5 body follows, still accurate except where marked stale\
+  \ above ---\n\nTHE CRITICAL PATH TO Challenge.lean:99.  Re-framed round 4 as one\
+  \ ordered chain; REFRAMED AGAIN\nround 5, because the round-4 framing put the gate\
+  \ in the wrong place.  READ\ninformal/w4-rep-critical-path.md SECTION 7 FIRST --\
+  \ it carries the per-link evidence.\n\nTARGET.  AlgebraicGeometry.Jacobian (Challenge.lean:96-99,\
   \ a bare sorry).  archon-protected.yaml\nFREEZES the signature, so a hypothesis-carrying\
   \ restatement is forbidden -- in particular a\nrepresentability theorem valid only\
   \ over infinite fields is NOT a discharge.  The sanctioned\ndischarge is Jacobian\
@@ -106,5 +168,5 @@ metadata:
   author: horizon
   created_at: '2026-07-14T01:20:10.654781+00:00'
   parent: AJCR.jacobian
-  updated_at: '2026-07-29T03:00:52.111140+00:00'
+  updated_at: '2026-07-29T11:21:26.904739+00:00'
   milestone: AJCR.w4-rep
