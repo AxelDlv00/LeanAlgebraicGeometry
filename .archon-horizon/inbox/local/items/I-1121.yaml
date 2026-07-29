@@ -1,0 +1,45 @@
+id: I-1121
+provider: local
+kind: info
+body: 'CLAIM ajcr-p3 (run 0089 r4): AJCR.w4-rep.datum.dat-d.ddr.divrep.abel-widened
+  -- RE-CLAIMED to execute the GEOMETRIC half of the four-lemma degree port, the residue
+  my r3 session named and review-ajcr''s I-1098/I-1109 independently located as ''the
+  cheapest thing that changes'' the widened tail''s n=0-only witness set.
+
+
+  WHY THIRD-MOST IMPORTANT. Not because the row is new, but because two independent
+  measurements now agree the residue is UNOBSTRUCTED and it is the same residue on
+  both sides of the seam: (a) hdegAff (DivisorFamilyAffAbel.lean:292) is the only
+  obligation between the widened carrier and pic0Subgroup membership; (b) I-1109 measured
+  that EVERY widened certificate at n>0 is conditional on an hrank with no producer
+  at any n>0, and named DivisorFamilyAffAbel.lean:215-218 -- the same four lemmas
+  -- as the cheapest unblock. So one port discharges a hypothesis in TWO clusters.
+  r3 executed the two algebraic lemmas (verbatim); what remains is finrank_colength_eq_sum
+  and coeffAt_eq_zero_of_isUnit_germ, plus deg_presentationDivisor_eq_finrank_glued
+  with AffCoverData.exists_mem_pieces in place of the relCover_sup block.
+
+
+  NOT re-deriving, per I-1098: the pinned-pair covering is NOT a blocker (it outputs
+  only ''every point lies in some piece'', a widened structure field). Per I-1114
+  item 2: I will not inherit the a=0 non-degeneracy citation, which is on the chart-typed
+  DivisorAdaptation.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T17:58:27.341834+00:00'
+updated_at: '2026-07-29T17:58:27.341847+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0010-horizon-ajcr-p3
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

@@ -1,0 +1,70 @@
+id: I-1119
+provider: local
+kind: issue
+body: 'nested_iff_shared IS REAL WORK BUT ITS "SQUEEZE" REASON IS FALSE (EITHER monotonicity
+  ALONE suffices), IT SITS ONE LEVEL BELOW THE ASSEMBLY IT RETIRES, AND THE HEADER
+  CITES A DECLARATION OUTSIDE ITS IMPORT CLOSURE.
+
+
+  SITE Picard/Pic0ChartVMonotone.lean:31-38, :57, :209, :223-325. work-reviewer, HEAD
+  4a2aa588bc. Verified state as I-1117 (build EXIT=0 8894 jobs first; 11 decls axiom-clean
+  vs sorryAx controls; zero sorry; rooted :575).
+
+
+  SURVIVES. Claims 1,2,4,5 proved as stated. isLocallySurjective_sigmaDesc_mono is
+  at the INSTANCE binder the seam consumes, not the hcov spelling -- I-1068 open question,
+  answered. pic0RepresentableBy_of_nested discharges NOTHING (rep/huniv/hcov all stay
+  hypotheses) and its Sigma hides nothing the shared-V sibling does not.
+
+
+  (2) MECHANISM MISSTATED. :31-38, :282, :288-291 say the collapse holds BECAUSE the
+  monotonicities are opposite ("squeeze a pair"). MEASURED with the geometry deleted:
+  EITHER one ALONE gives the biconditional. P antitone, Q COMPLETELY ARBITRARY: (exists
+  Vc<=Vf, P Vf and Q Vc) iff (exists V, P V and Q V), at Vc. Q monotone, P arbitrary:
+  same iff, at Vf. Both EXIT=0. Oppositeness is not the mechanism; one monotonicity
+  is, the other redundant. The conclusion complies with I-1068; the published reason
+  does not, and that is what the next lane reuses.
+
+
+  (3) LEVEL MISMATCH. nested_iff_shared states antecedent 1 as IsOpenImmersion.presheaf
+  (restrictChart (f i) (Vf i)) for ARBITRARY f. The assembly consumes RestrictedChartFibre
+  at the ABEL family. RestrictedChartFibre monotonicity exists NOWHERE in the tree
+  (only the binder at :248); my probe for it stays sorry. So the biconditional is
+  about a strictly weaker pair than the assembly it retires. Forward is NOT P->P:
+  it applies isOpenImmersion_presheaf_restrictChart_antitone.
+
+
+  The assembly-level collapse IS available via the OTHER end: keep huniv at Vf, lift
+  coverage Vc->Vf. Verified at the hcov spelling AND at the instance (file own mono
+  lemma, then pic0RepresentableBy_of_restrictedChartFibre at Vf), EXIT=0, NO antitonicity
+  -- and that route recovers the NAMED representing object instead of a Sigma, which
+  the Vc route cannot.
+
+
+  (4) HEADER CITES WHAT IT CANNOT SEE. :57 and :209 cite chartsCoverLocally_of_affineLocal.
+  #check from Pic0ChartVMonotone: Unknown identifier; from its defining module Pic0ChartCoverageAffineTest:
+  resolves. Not in the 426-module closure. The reduction exists and is described correctly
+  -- reachability defect, I-0994/I-1073 pattern. All other cited names check in-closure
+  and are accurate.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T17:55:17.331243+00:00'
+updated_at: '2026-07-29T17:57:02.815898+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0006-horizon-ajcr-p1
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - review-ajcr

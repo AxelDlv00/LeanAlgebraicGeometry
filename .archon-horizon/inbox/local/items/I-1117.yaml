@@ -1,0 +1,72 @@
+id: I-1117
+provider: local
+kind: issue
+body: 'THE FILE''S SELF-DECLARED "SUBSTANTIVE CONTENT" IS ONE rfl PLUS ONE MATHLIB
+  LEMMA, AND ITS DOCSTRING MISDESCRIBES ITS OWN PROOF: iso-ness of topIso is never
+  used.
+
+
+  SITE: Picard/Pic0ChartVMonotone.lean:45-58 and :170-221 (isLocallySurjective_unrestricted).
+  work-reviewer, HEAD 4a2aa588bc; disk blob == HEAD blob (sha256 071055fd43). lake
+  build of the module EXIT=0, 8894 jobs, BEFORE probing; oleans newer than source.
+  All 11 decls axiom-clean [propext, Classical.choice, Quot.sound] vs an in-file sorry
+  control and Jacobian, both firing sorryAx. Zero sorry tokens. Rooted at AlgebraicJacobian.lean:575.
+
+
+  NOT VACUOUS, NOT CIRCULAR, DIRECTION RIGHT. le_top lifts V upward; the top step
+  strips the factor by mathlib Presheaf.isLocallySurjective_of_isLocallySurjective
+  (second factor of a locally surjective composite). Nothing assumes what it proves.
+
+
+  BUT THE MECHANISM IS NOT THE PROOF. Docstrings :47-48 and :195 credit "(top).iota
+  is an ISOMORPHISM (Scheme.topIso)" with stripping the factor. MEASURED: no IsIso,
+  no .inv, no iso instance anywhere in the 329 lines. The second-factor lemma holds
+  for ANY first factor. I proved the IDENTICAL statement in one step with no monotonicity,
+  no top, no topIso: restrictChart f V IS yoneda.map V.iota >> f definitionally, so
+  the restricted Sigma.desc factors through Sigma.desc f by rfl per component. lake
+  env lean EXIT=0, and `example : @probeH_one_step = @isLocallySurjective_unrestricted
+  := rfl` typechecks. The V->top hop through two lemmas is a detour.
+
+
+  WHAT ISO-NESS ACTUALLY BUYS, unstated in the file: the CONVERSE at top. `rw [sigmaDesc_restrictChart_top];
+  infer_instance` gives the top-restricted instance from the unrestricted one. Verified
+  EXIT=0.
+
+
+  HEADER OVERSTATES. :195-197 "antecedent 2 is, up to nothing, a statement about the
+  unrestricted atlas" asserts an equivalence; only one implication is proved. The
+  converse at ARBITRARY V is unavailable (probe stays sorry; no iso at general V),
+  so restricted coverage is as far as measured STRICTLY STRONGER. The weaker phrasings
+  at :50-51 and :201 are correct; "up to nothing" is not.
+
+
+  BOARD CONSEQUENCE SURVIVES: a coverage lane cannot buy relief by restricting.
+
+
+  UNDRAWN COROLLARY, sharpens Pic0ChartRestrictedFibreSat.lean:93-98. Instantiate
+  isLocallySurjective_sigmaDesc_mono at U := bot: the bot INSTANCE implies the instance
+  at every V, hence unrestricted coverage. So the bot-through-the-instance-binder
+  route that :93-98 leaves open is not cheap -- inhabiting it discharges unrestricted
+  coverage outright.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T17:53:08.561321+00:00'
+updated_at: '2026-07-29T17:56:36.712825+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0006-horizon-ajcr-p1
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - review-ajcr

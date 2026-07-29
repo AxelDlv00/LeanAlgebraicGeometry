@@ -48,7 +48,7 @@ summary: 'LANDED and axiom-clean (ajcr-p3, run 0089 r3), owner CLEARED, gate NOT
   wants a natural transformation divFunctorAff => pic0TypeFunctor (a widened chartValueTrans),
   which needs chartValueAff_mem_pic0Subgroup WITHOUT hdegAff. So hdegAff is the whole
   gap, and the four-lemma port is the shortest honest path to it.'
-status: pending
+status: active
 kind: proof
 priority: normal
 depends_on: []
@@ -71,6 +71,7 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
-  updated_at: '2026-07-29T17:26:08.599316+00:00'
+  updated_at: '2026-07-29T17:58:00.681448+00:00'
   pinned_commits:
   - ff68af0372
+  owner: ajcr-p3

@@ -3,12 +3,36 @@ title: 'Headline obligation 5: the Albanese universal property of Pic0SchemeEt o
   an arbitrary field'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Headline obligation 5: isAlbanese_pic0Et (Jacobian.lean:576, bare sorry)
-  -- the Albanese universal property of Pic0SchemeEt over an ARBITRARY field, for
-  every k-rational marked point. The ONLY one of the headline''s five obligations
-  (Jacobian.lean:713-716) with no lane this round: p1 holds clause 1 (etale-rep),
-  p3 holds obligations 2+3 (pic0av.structure), p2 holds obligation 4 (pic0av.reldim).
-  Claimed by ajc-p4 run 0086 r2.'
+summary: "Headline obligation 5: isAlbanese_pic0Et (Jacobian.lean, bare sorry) --\
+  \ the Albanese universal property of Pic0SchemeEt over an ARBITRARY field. ADVANCED,\
+  \ NOT CLOSED by ajc-p4 (run 0086 r2); owner released.\n\nWHAT LANDED, all rooted\
+  \ in the umbrella, sorry-free, every declaration axiom-clean [propext, Classical.choice,\
+  \ Quot.sound] against controls that fired sorryAx (lake env lean EXIT=0; lake build\
+  \ EXIT=0, 8724 jobs):\n * Albanese/AVRigidityArbitraryField.lean -- BOTH Milne I.1\
+  \ rigidity corollaries over an arbitrary field. isMonHom_of_pointed_arbitraryField\
+  \ (I.1.2, pointed rigidity) was the open half and is the real content: IsMonHom\
+  \ is a PAIR OF EQUATIONS, so the faithful monoidal Over.pullback along k -> kbar\
+  \ reflects it. isCommMonObj_of_package_arbitraryField (I.1.4) is a WRAPPER over\
+  \ mathlib stacks 0BFD -- earns a name, adds no mathematics.\n * Albanese/AlbaneseArbitraryField.lean\
+  \ -- Milne III.6.1 and IsAlbanese over an arbitrary field, in this leaf's own shape\
+  \ (isAlbanese_of_symPowData_arbitraryField), plus exists_symPowData_hproj_tensorUnit\
+  \ as a compiler-checked non-vacuity witness.\n\nTHE FINDING: obligation 5's docstring\
+  \ priced the kbar -> k passage as 'the Galois-descent step of cluster G'. That is\
+  \ a MISPRICING (I-1112, corrected in-tree at the site, 972ef1f26d): Milne's argument\
+  \ never used the hypothesis -- the engine is generic in an arbitrary CartesianMonoidalCategory\
+  \ and consumes only the two rigidity inputs.\n\nTHE LIMIT, do not read the above\
+  \ as a discharge. The field is removable on the two rigidity INPUTS; it remains\
+  \ load-bearing where the descent datum is MANUFACTURED. Measured further (I-1115):\
+  \ that blocker is exactly ONE lemma, Milne 3.1 (indeterminacy_codimGe2_of_smooth_of_complete,\
+  \ CodimOneExtension.lean:1465) via its regularity-at-closed-points input at :806,\
+  \ which needs the residue field to BE k. Milne 3.3 never had the binder, so 3 of\
+  \ the 4 links in the extension chain are already field-agnostic.\n\nRESIDUE for\
+  \ the next lane: (1) Sym^g C, i.e. HasColimit (permDiagram C g) -- the leg's real\
+  \ wall, see AJC.albanese.symmetric; (2) the descent datum UNIFORMLY IN THE TARGET\
+  \ (IsAlbanese quantifies over A); (3) Milne 3.1 over a non-closed residue field,\
+  \ which is the bounded piece; (4) genus 0 (Mumford section 4), the basepoint condition,\
+  \ and the Abel-Jacobi transport to Pic0SchemeEt. The sorry is UNTOUCHED and no antecedent\
+  \ is witnessed at any curve."
 status: active
 kind: proof
 priority: normal
@@ -32,4 +56,4 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.pic0av
-  owner: ajc-p4
+  updated_at: '2026-07-29T17:51:06.328056+00:00'

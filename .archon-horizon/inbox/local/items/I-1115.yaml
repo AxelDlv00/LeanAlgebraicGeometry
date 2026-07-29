@@ -1,0 +1,53 @@
+id: I-1115
+provider: local
+kind: memory
+body: "THE ALBANESE SUPPLY ROUTE'S IsAlgClosed IS LOAD-BEARING AT EXACTLY ONE LEMMA\
+  \ (Milne 3.1), NOT ALONG THE WHOLE CHAIN -- and Milne 3.3 never had it. Measured\
+  \ so nobody prices the transport as a chain-wide descent.\n\nMEASURED by ajc-p4\
+  \ (run 0086 r2). Oleans rebuilt first (lake build Thm32RationalMapExtension EXIT=0,\
+  \ 8627 jobs), then lake env lean on a scratch probe.\n\nWHY THIS MATTERS. My repricing\
+  \ (I-1112) removed the field hypothesis from the two rigidity INPUTS of the Albanese\
+  \ engine, and named the descent-datum SUPPLY route as the place where [IsAlgClosed\
+  \ kbar] survives: exists_unique_descent_of_section / _of_birational (AlbaneseFromData.lean:266,\
+  \ :312) -> exists_unique_hom_restrict_eq_of_dense_open (DenseOpenDescent.lean:132)\
+  \ -> extend_to_av (Thm32RationalMapExtension.lean:231). The obvious next question\
+  \ is whether that is another stray variable-line binder like the two I just removed.\
+  \ IT IS NOT, and the localisation is sharper than 'the route needs k-bar':\n\n *\
+  \ Milne 3.3 -- indeterminacy_pure_codim_one_into_grpScheme (Milne33.lean:247) --\
+  \ has NO IsAlgClosed in its signature, in EITHER project. The group-variety half\
+  \ of extend_to_av's argument is already arbitrary-field.\n * Milne 3.1 -- indeterminacy_codimGe2_of_smooth_of_complete\
+  \ (CodimOneExtension.lean:1465) and its wrapper codimOneFree_of_smooth_of_complete\
+  \ (:1573) -- DOES bind it, and the binder is load-bearing, not decorative. Probe:\
+  \ restating Milne 3.1 over a bare field and calling it fails with 'failed to synthesize\
+  \ IsAlgClosed k' (EXIT=1). It is not a variable-line artefact: the binder is written\
+  \ on the declaration.\n * WHERE IT IS ACTUALLY USED, so a future lane knows what\
+  \ it must replace rather than delete: isRegularLocalRing_localizationAtPrime_of_isStandardSmooth_of_isAlgClosed\
+  \ (:806) needs the residue field at a closed point to BE k, via IsAlgClosed.algebraMap_bijective_of_isIntegral\
+  \ (:825). That is the regularity-at-closed-points input to the coheight >= 2 argument.\
+  \ Over a general k the residue field is a finite extension instead, so the statement\
+  \ needs a residue-degree-aware version, not a binder deletion.\n\nHOW TO APPLY.\
+  \ Do not price 'transport the Albanese descent to an arbitrary field' as a descent\
+  \ of the universal property or of the whole extension chain -- three of the four\
+  \ links are already field-agnostic. The single obligation is Milne 3.1's regularity\
+  \ input over a non-closed residue field. Related: I-1112 (the repricing), I-1105\
+  \ (the audit that narrowed my consumer/supply distinction)."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T17:50:41.682822+00:00'
+updated_at: '2026-07-29T17:50:41.682834+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0006-horizon-ajc-p4
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

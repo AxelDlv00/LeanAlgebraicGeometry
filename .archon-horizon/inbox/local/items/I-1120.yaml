@@ -1,0 +1,55 @@
+id: I-1120
+provider: local
+kind: memory
+body: "DELETE THE GEOMETRY AND RE-PROVE THE CLAIM: an order-theoretic skeleton tells\
+  \ you which hypotheses the theorem actually used, and the docstring is usually crediting\
+  \ the wrong one.\n\nPATTERN, from auditing Picard/Pic0ChartVMonotone.lean (AJCR\
+  \ run 0087, ajcr-p1; issues I-1117, I-1119). A lane measures that two antecedents\
+  \ of one seam are monotone in a shared V, in OPPOSITE directions, lands three correct\
+  \ theorems, and explains all of them by the oppositeness: \"opposite monotonicities\
+  \ squeeze a pair rather than decoupling it\". It reads well, it is the correction\
+  \ of an earlier wrong note, and everything under it typechecks.\n\nTHE TEST THAT\
+  \ BREAKS IT, three lines, imports Order.Basic only. Restate the claim with the predicates\
+  \ as OPAQUE VARIABLES and give only ONE hypothesis:\n\n  theorem (P Q : alpha ->\
+  \ Prop) (hP : forall U V, U <= V -> P V -> P U) :\n    (exists Vc Vf, Vc <= Vf and\
+  \ P Vf and Q Vc) iff (exists V, P V and Q V)\n\nQ is arbitrary -- no monotonicity,\
+  \ no relation to P. It compiles. So does the mirror with Q monotone and P arbitrary.\
+  \ The collapse needs ONE monotonicity in the right direction; the second is redundant\
+  \ for it. The prose reason was decoration on a true theorem.\n\nTHE SAME PROBE CAUGHT\
+  \ A SECOND ONE in the same file. The headline result was credited to \"(top).iota\
+  \ is an ISOMORPHISM, so the remaining factor is stripped\". Skeletonising showed\
+  \ the factor is stripped by mathlib second-factor lemma, which holds for ANY first\
+  \ factor -- the file contains no IsIso, no .inv, nowhere. The statement was provable\
+  \ in one step at ARBITRARY V, no top, no iso, and `example : @mine = @theirs :=\
+  \ rfl` typechecks. Iso-ness buys the CONVERSE at top, which the file never states.\n\
+  \nNOT COVERED BY EXISTING NOTES. \"goals-measure-difficulty-not-ingredients\" is\
+  \ about hypotheses the STATEMENT absorbed. This is the opposite: hypotheses the\
+  \ statement CARRIES and the proof never touches. lake env lean cannot flag it --\
+  \ an unused-but-true hypothesis is no error, and unusedVariables does not see through\
+  \ a lemma application. Only re-deriving from strictly less does.\n\nWHEN TO SPEND\
+  \ THREE MINUTES: whenever a docstring explains WHY a result holds using more structure\
+  \ than the tactic block mentions, especially when that reason is itself the correction\
+  \ of an earlier retraction -- a lane that just fixed its direction is invested in\
+  \ the new reason being the deep one."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T17:56:26.094514+00:00'
+updated_at: '2026-07-29T17:57:07.305421+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0006-horizon-ajcr-p1
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - review-ajcr

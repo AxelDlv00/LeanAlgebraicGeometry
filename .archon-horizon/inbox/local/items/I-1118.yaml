@@ -1,0 +1,51 @@
+id: I-1118
+provider: local
+kind: info
+body: "RELEASE ajc-p4 (run 0086 r2): AJC.pic0av.albanese-et (headline obligation 5)\
+  \ -- ADVANCED, not closed. Owner CLEARED, status active. Pinned fae9c8da72 / 4a2aa588bc\
+  \ / 972ef1f26d / a0ae925040.\n\nDO NOT REDO -- rooted, sorry-free, all five declarations\
+  \ axiom-clean [propext, Classical.choice, Quot.sound] vs controls that fired sorryAx;\
+  \ lake env lean EXIT=0; final lake build EXIT=0, 8866 jobs:\n * Albanese/AVRigidityArbitraryField.lean\
+  \ -- BOTH Milne I.1 rigidity corollaries over an ARBITRARY field. isMonHom_of_pointed_arbitraryField\
+  \ (I.1.2) is the real content: IsMonHom is a PAIR OF EQUATIONS, so the faithful\
+  \ monoidal Over.pullback along k -> kbar reflects it after the kbar engine runs\
+  \ upstairs. isCommMonObj_of_package_arbitraryField (I.1.4) is a WRAPPER over mathlib\
+  \ stacks 0BFD -- earns a name, adds no mathematics; do not cite as new.\n * Albanese/AlbaneseArbitraryField.lean\
+  \ -- Milne III.6.1 AND IsAlbanese over an arbitrary field, in obligation 5's own\
+  \ shape, plus exists_symPowData_hproj_tensorUnit as a compiler-checked non-vacuity\
+  \ witness.\n\nTHE GATE IS STILL OPEN: isAlbanese_pic0Et's sorry is UNTOUCHED, no\
+  \ antecedent witnessed at any curve.\n\nFINDING (I-1112, corrected in-tree at the\
+  \ site, 972ef1f26d): obligation 5's docstring priced the kbar -> k passage as 'the\
+  \ Galois-descent step of cluster G'. Mispricing -- Milne's argument never used the\
+  \ hypothesis.\n\nDO NOT INHERIT MY FIRST FRAMING (work-reviewer, I-1105). 'The field\
+  \ is not among the reasons this leaf is open' is too strong; correct is: removable\
+  \ on the two rigidity INPUTS, still load-bearing where the descent datum is MANUFACTURED.\
+  \ Also refuted from my own draft: 'no SymPowData for g >= 2' (false -- symPowDataTrivial\
+  \ at a terminal C, at every g; SymPowColimit.lean:344-352 corrects exactly that)\
+  \ and 'genus 0 is covered by g = 0' (false -- Fin 0 empty). All fixed at HEAD.\n\
+  \nBEST NEXT STEP, measured (I-1115): the supply-route blocker is ONE lemma, Milne\
+  \ 3.1 (CodimOneExtension.lean:1465) via its regularity-at-closed-points input at\
+  \ :806, needing the residue field to BE k. Milne 3.3 never had the binder, so 3\
+  \ of 4 links are already field-agnostic. Not a chain-wide descent.\n\nALSO: rooted\
+  \ the six orphaned B5 modules ajc-p2 found (a0ae925040), correcting my own I-1033.\
+  \ HEAD closure census now 303/306."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T17:54:07.858596+00:00'
+updated_at: '2026-07-29T17:54:07.858608+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0006-horizon-ajc-p4
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
