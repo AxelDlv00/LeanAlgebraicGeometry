@@ -45,16 +45,21 @@ Three observations, in the order that matters:
    certified family transports back along that isomorphism.  The argument is entirely on the
    BASE — no piece, cover, chart or partition occurs — which is why R2, which widened only
    where the pieces live on the curve, does not touch it.
-3. **Stating (2) in `DivEq` form avoids a lemma that does not exist.**  The chart-typed
-   collapse concludes `∃ G, G.toZar = F₀` and closes with `DivFam.toZar_mapAlgHom`
-   (`Picard/DivisorFamilyZarVehicle.lean:169`).  There is no widened twin of that lemma
-   (`toZarAff_mapAlgHom` / `mapAlg_toZarAff` do not exist), and `ajcr-p3`'s hand-off (`I-1187`,
-   conversation `I-1190`) prices building one as this row's remaining cost.  It is not needed:
-   `exists_certifiedAff_divEq` below concludes `∃ G, DivEq G.eqns d` instead, and (1) consumes
-   a `DivEq` rather than a class equality.  The quotient level is never re-entered, so the
-   missing naturality lemma is never called.  **The obligation was over-priced by one lemma,
-   and the lemma is avoidable rather than cheap** — recorded because the two are different
-   findings.
+3. **The naturality lemma two hand-offs priced as this row's cost is one line** —
+   `CertifiedDivisorFamilyAff.toZarAff_mapAlg` below, `mk_eq_mk_iff.mpr (divEq_refl _)`, the
+   widened twin of `DivFam.toZar_mapAlgHom` (`Picard/DivisorFamilyZarVehicle.lean:169`).
+   `ajcr-p3`'s hand-off (`I-1187`, conversation `I-1190`) and `review-ajcr`'s `I-1196` both
+   named it as what a lane still owed.
+
+   **AN EARLIER VERSION OF THIS ITEM CLAIMED MORE AND WAS WRONG.** It read: "stating (2) in
+   `DivEq` form *avoids* a lemma that does not exist … the quotient level is never re-entered,
+   so the missing naturality lemma is never called.  The obligation was over-priced by one
+   lemma, and the lemma is avoidable rather than cheap."  Refuted by a fresh-context audit
+   (`I-1229`) and reproduced: `DivFamZarAff.mk_eq_mk_iff` crosses between the `DivEq` level and
+   the quotient level **for free in both directions**, so the two forms are *equivalent* and no
+   naturality lemma was needed for either.  There was no avoidance to discover.  The honest
+   residue of the finding is only the first sentence: the step was over-priced, and it is cheap.
+   The `DivEq` form is still stated first because it is what (1) consumes.
 
 ## Main declarations
 
@@ -253,71 +258,26 @@ theorem CertifiedDivisorFamilyAff.toZarAff_mapAlg {R : Type u} [CommRing R] [Alg
     (F.mapAlg R' n hinf).toZarAff = DivFamZarAff.mapAlg R' n F.toZarAff :=
   DivFamZarAff.mk_eq_mk_iff.mpr (Scheme.LocalEquations.divEq_refl _)
 
-set_option maxHeartbeats 1600000 in
-/- Two `AlgHom`-induced algebra structures on `Localization.Away (g i)` and `K` must be unified
-against the instance-based `mapAlg`; within the `DivSchemeAbel` precedent for the chart-typed
-twin. -/
 /-- **The widened field collapse at the quotient level** — the exact analogue of
 `DivFam.exists_toZar_eq` (`Picard/DivSchemeAbel.lean:77`): over a field every widened class is
 the class of a *globally* certified widened family.
 
-Stronger than `exists_certifiedAff_divEq` (it fixes the class, not merely the divisor) and the
-form a consumer wanting a global representative should cite.  `classDeg_picClass` above needs
-only the `DivEq` form, which is why that one is stated separately and proved first. -/
+**This is EQUIVALENT to `exists_certifiedAff_divEq`, not stronger, and an earlier version of
+this docstring and of the module header both claimed otherwise.**  Refuted by a fresh-context
+audit (`I-1229`), reproduced here as the proof: `DivFamZarAff.mk_eq_mk_iff` crosses between the
+`DivEq` level and the quotient level for free in *both* directions, so this is a three-line
+corollary of the `DivEq` form rather than a separate result.  It previously duplicated fifty
+lines of that proof verbatim; the duplicate is deleted.
+
+The `DivEq` form is still the one stated first, because it is what
+`AffAdaptation.deg_presentationDivisor_of_divEq` consumes — but "the quotient level is never
+re-entered" was never a route discovery. -/
 theorem DivFamZarAff.exists_toZarAff_eq (F₀ : DivFamZarAff C K n) :
     ∃ G : CertifiedDivisorFamilyAff C K n, G.toZarAff = F₀ := by
-  obtain ⟨dp, hdp⟩ := Quotient.exists_rep F₀
-  obtain ⟨m, g, hspan, hG⟩ := dp.2
-  have hex : ∃ i, g i ≠ 0 := by
-    by_contra hall
-    have hall' : ∀ i, g i = 0 := fun i => by
-      by_contra hi
-      exact hall ⟨i, hi⟩
-    have hle : Ideal.span (Set.range g) ≤ ⊥ := Ideal.span_le.mpr (by
-      rintro x ⟨i, rfl⟩
-      rw [SetLike.mem_coe, Ideal.mem_bot]
-      exact hall' i)
-    rw [hspan, top_le_iff] at hle
-    exact one_ne_zero (Ideal.mem_bot.mp (hle ▸ Submodule.mem_top (x := (1 : K))))
-  obtain ⟨i, hgi⟩ := hex
-  haveI : IsOpenImmersion (relCurveMap C K (Localization.Away (g i))) :=
-    isOpenImmersion_relCurveMap_away C K (Localization.Away (g i)) (g i)
-  obtain ⟨Gᵢ, hGdiv⟩ := hG i
-  have hunits : Submonoid.powers (g i) ≤ IsUnit.submonoid K := by
-    rintro x ⟨e, rfl⟩
-    exact (isUnit_iff_ne_zero.mpr hgi).pow e
-  haveI : IsLocalization (Submonoid.powers (g i)) K :=
-    IsLocalization.of_le_isUnit hunits
-  let e₀ : K ≃ₐ[K] Localization.Away (g i) :=
-    IsLocalization.atUnits K (Submonoid.powers (g i)) hunits
-  let e : Localization.Away (g i) ≃ₐ[k] K := e₀.symm.restrictScalars k
-  letI : Algebra (Localization.Away (g i)) K := e.toAlgHom.toRingHom.toAlgebra
-  haveI : IsScalarTower k (Localization.Away (g i)) K :=
-    .of_algebraMap_eq fun a => (e.commutes a).symm
-  refine ⟨Gᵢ.mapAlg K n Gᵢ.cover.hasAffineOverlaps_of_isProper, ?_⟩
-  -- the local family names the restricted class
-  have htoZar : Gᵢ.toZarAff
-      = DivFamZarAff.mapAlg (Localization.Away (g i)) n (DivFamZarAff.mk dp.1 dp.2) := by
-    rw [CertifiedDivisorFamilyAff.toZarAff, DivFamZarAff.mapAlg_mk]
-    exact DivFamZarAff.mk_eq_mk_iff.mpr hGdiv
-  have hcomp : e.toAlgHom.comp (IsScalarTower.toAlgHom k K (Localization.Away (g i)))
-      = AlgHom.id k K := by
-    ext a
-    change e₀.symm (algebraMap K (Localization.Away (g i)) a) = a
-    rw [← e₀.commutes a]
-    exact e₀.symm_apply_apply _
-  calc (Gᵢ.mapAlg K n Gᵢ.cover.hasAffineOverlaps_of_isProper).toZarAff
-      = DivFamZarAff.mapAlg K n Gᵢ.toZarAff :=
-        Gᵢ.toZarAff_mapAlg K Gᵢ.cover.hasAffineOverlaps_of_isProper
-    _ = DivFamZarAff.mapAlgHom e.toAlgHom
-          (DivFamZarAff.mapAlgHom (IsScalarTower.toAlgHom k K (Localization.Away (g i)))
-            (DivFamZarAff.mk dp.1 dp.2)) := by
-        rw [DivFamZarAff.mapAlgHom_eq_mapAlg e.toAlgHom (fun _ => rfl), htoZar,
-          DivFamZarAff.mapAlgHom_eq_mapAlg
-            (IsScalarTower.toAlgHom k K (Localization.Away (g i))) (fun _ => rfl)]
-    _ = DivFamZarAff.mapAlgHom (AlgHom.id k K) (DivFamZarAff.mk dp.1 dp.2) := by
-        rw [← DivFamZarAff.mapAlgHom_comp, hcomp]
-    _ = F₀ := by rw [DivFamZarAff.mapAlgHom_id]; exact hdp
+  induction F₀ using Quotient.inductionOn with
+  | h dp =>
+    obtain ⟨G, hG⟩ := exists_certifiedAff_divEq dp.1 dp.2
+    exact ⟨G, DivFamZarAff.mk_eq_mk_iff.mpr hG⟩
 
 /-! ## Non-vacuity of the law, at an arbitrary degree -/
 
@@ -387,6 +347,7 @@ theorem picEtAffineEquiv_abelDivAff' (A : Type u) [CommRing A] [Algebra k A]
 set_option maxHeartbeats 1600000 in
 /- The five base-change instances plus the `picEtAffineEquiv` collapse; within the
 `degAt_abelDiv` precedent for the chart-typed twin. -/
+omit [GeometricallyReduced C.hom] in
 /-- **`hdegAff`, DISCHARGED** (`Picard/DivisorFamilyAffAbel.lean:309`): the widened Abel value
 of a degree-`n` widened class has degree `n` at every field point of every test.
 
@@ -418,6 +379,7 @@ theorem degAt_abelDivAff' {T : Over (Spec (.of k))} (s : divFamZarAff C n T)
     PicEtAff.degAff_unit, relPicDeg_relPicMk]
   exact DivFamZarAff.classDeg_picClass _
 
+omit [GeometricallyReduced C.hom] in
 /-- **The widened chart value lands in `pic⁰`, with `hdegAff` REMOVED from the signature** —
 `chartValueAff_mem_pic0Subgroup` (`Picard/DivisorFamilyAffAbel.lean:304`) with its only
 hypothesis discharged, so the statement now matches its chart-typed twin
