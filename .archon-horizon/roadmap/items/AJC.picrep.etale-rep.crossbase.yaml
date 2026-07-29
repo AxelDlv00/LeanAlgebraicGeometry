@@ -1,39 +1,43 @@
 id: AJC.picrep.etale-rep.crossbase
-title: 'UNOWNED: picEt cross-base compatibility -- the brick the repaired G3 needs
-  and no site prices'
+title: 'UNOWNED: picEt cross-base compatibility -- the brick the repaired G3 needs and no
+  site prices'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "MEASURED by review-ajc 2026-07-29 (run 0081 r3). The repaired route says\
-  \ \"descend picEt, not picSharp\". That repair has ONE input that no site in the\
-  \ project prices, and it is not the descent test p1 landed.\n\nTHE OBLIGATION. For\
-  \ finite separable k'/k and a k'-test T, the descent needs\n\n  (PicScheme.picEt\
-  \ C).obj (op ((Over.map (Spec.map (algebraMap k k'))).obj T))\n    <-- IDENTIFIED\
-  \ WITH --> (PicScheme.picEt (Scheme.baseChangeField C k')).obj (op T)\n  (an iso/identification\
-  \ of the two values; the '=/=' first written here was a typo\n   for a comparison\
-  \ and read as a disequality -- corrected by its author, review-ajc)\n\ni.e. picEt\
-  \ of the curve over k, evaluated on k'-tests, compared with picEt of the BASE-CHANGED\
-  \ curve on the same tests. Without it, a k'-representing scheme from J5 represents\
-  \ the wrong functor and there is nothing for the Galois action to act on.\n\nMEASURED,\
-  \ three ways. (1) STATABLE in AJC: baseChangeField C k' inherits both binders ([SmoothOfRelativeDimension\
-  \ 1], [IsProper] are stable under field base change, CurveBaseChange.lean:256),\
-  \ and the comparison type-checks -- lean_run_code EXIT=0, zero diagnostics. (2)\
-  \ ABSENT: horizon search returns nothing; the complete list of picEt-named declarations\
-  \ in AJC is picEt, picEtCommGrp, picEtCommGrpForgetIso, picEtComparison, picEtComparison_isIso_of_hasRationalPoint,\
-  \ picEt_ext_of_pullback_agrees, picEt_isSheaf_etaleTopologyOver, picEt_isSheaf_forget\
-  \ -- not one mentions a base change of the CURVE. (3) NOT PORTABLE from the sibling:\
-  \ AJCR proved exactly this as picEtCrossBaseEquiv (Picard/PicEtCrossBase.lean:316,\
-  \ a MulEquiv), but AJCR's picEt is a hand-built affine-opens limit of plus-classes\
-  \ (PicEt.lean:105 := picEtSubgroup C T) while AJC's is a categorical sheafification\
-  \ ((PicSharp.etaleSheaf C).obj compose forget, PicEtSheaf.lean:238). DIFFERENT OBJECTS,\
-  \ and there is no lake dependency edge between the projects. The 468-line AJCR file\
-  \ is a design lead, not an import.\n\nWHY IT MATTERS FOR THIS ROUND. p1's EtaleFieldCover.lean\
-  \ supplies the descent TEST (the cover is etale, picEt satisfies its sheaf axiom)\
-  \ and says so honestly -- it does not supply a descended object. G1/G2 supply the\
-  \ Galois action and the quotient. This row is the third thing: the identification\
-  \ that makes the descended object represent the right functor. Nothing in the campaign,\
-  \ on AJC.picrep, or in the seam docstring names it.\n\nNOT a blocker for any lane's\
-  \ current target -- everything through J5 is unaffected. It is a route input that\
-  \ must be visible before someone prices the descent step as \"restate G3\"."
+summary: "MEASURED by review-ajc 2026-07-29 (run 0081 r3). The repaired route says \"descend\
+  \ picEt, not picSharp\". That repair has ONE input that no site in the project prices, and\
+  \ it is not the descent test p1 landed.\n\nTHE OBLIGATION. For finite separable k'/k and\
+  \ a k'-test T, the descent needs\n\n  (PicScheme.picEt C).obj (op ((Over.map (Spec.map (algebraMap\
+  \ k k'))).obj T))\n    <-- IDENTIFIED WITH --> (PicScheme.picEt (Scheme.baseChangeField\
+  \ C k')).obj (op T)\n  (an iso/identification of the two values; the '=/=' first written\
+  \ here was a typo\n   for a comparison and read as a disequality -- corrected by its author,\
+  \ review-ajc)\n\ni.e. picEt of the curve over k, evaluated on k'-tests, compared with picEt\
+  \ of the BASE-CHANGED curve on the same tests. Without it, a k'-representing scheme from\
+  \ J5 represents the wrong functor and there is nothing for the Galois action to act on.\n\
+  \nMEASURED, three ways. (1) STATABLE in AJC: baseChangeField C k' inherits both binders\
+  \ ([SmoothOfRelativeDimension 1], [IsProper] are stable under field base change, CurveBaseChange.lean:256),\
+  \ and the comparison type-checks -- lean_run_code EXIT=0, zero diagnostics. (2) ABSENT:\
+  \ horizon search returns nothing; the complete list of picEt-named declarations in AJC is\
+  \ picEt, picEtCommGrp, picEtCommGrpForgetIso, picEtComparison, picEtComparison_isIso_of_hasRationalPoint,\
+  \ picEt_ext_of_pullback_agrees, isSheafFor_picEt_of_mem, isSheafFor_picEt_pullback_presieve,\
+  \ picEt_isSheaf_forget -- not one mentions a base change of the CURVE. (3) NOT PORTABLE\
+  \ from the sibling: AJCR proved exactly this as picEtCrossBaseEquiv (Picard/PicEtCrossBase.lean:316,\
+  \ a MulEquiv), but AJCR's picEt is a hand-built affine-opens limit of plus-classes (PicEt.lean:105\
+  \ := picEtSubgroup C T) while AJC's is a categorical sheafification ((PicSharp.etaleSheaf\
+  \ C).obj compose forget, PicEtSheaf.lean:238). DIFFERENT OBJECTS, and there is no lake dependency\
+  \ edge between the projects. The 468-line AJCR file is a design lead, not an import.\n\n\
+  WHY IT MATTERS FOR THIS ROUND. p1's EtaleFieldCover.lean supplies the descent TEST (the\
+  \ cover is etale, picEt satisfies its sheaf axiom) and says so honestly -- it does not supply\
+  \ a descended object. G1/G2 supply the Galois action and the quotient. This row is the third\
+  \ thing: the identification that makes the descended object represent the right functor.\
+  \ Nothing in the campaign, on AJC.picrep, or in the seam docstring names it.\n\nNOT a blocker\
+  \ for any lane's current target -- everything through J5 is unaffected. It is a route input\
+  \ that must be visible before someone prices the descent step as \"restate G3\".\n\nCENSUS\
+  \ CORRECTION (same day, by its author): this row first listed picEt_isSheaf_etaleTopologyOver\
+  \ among the picEt-named declarations. ajc-p1 deleted that theorem at d4e9f14b96 on finding\
+  \ it re-proved the existing picEt_isSheaf_forget by a different route (I-1075). The list\
+  \ above is as of that commit. The absence conclusion is unaffected -- a duplicate was removed,\
+  \ not a cross-base statement -- but the list was stale within the hour, which is the shape\
+  \ of every census in this project."
 status: pending
 kind: proof
 priority: high
@@ -53,8 +57,7 @@ metadata:
     round: '3'
     rounds: '8'
     task: review-ajc
-    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
-      quality'
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean quality'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.etale-rep
   milestone: AJC.picrep

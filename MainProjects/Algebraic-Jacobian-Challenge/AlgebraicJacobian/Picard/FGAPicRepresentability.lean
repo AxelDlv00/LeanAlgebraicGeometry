@@ -480,8 +480,13 @@ inherits both binders, `RiemannRoch/CurveBaseChange.lean:256`), and it is absent
 — the complete list of `picEt`-named declarations here is `picEt`,
 `picEtCommGrp`, `picEtCommGrpForgetIso`, `picEtComparison`,
 `picEtComparison_isIso_of_hasRationalPoint`, `picEt_ext_of_pullback_agrees`,
-`picEt_isSheaf_etaleTopologyOver`, `picEt_isSheaf_forget`, and none of them
-mentions a base change of the *curve*.
+`isSheafFor_picEt_of_mem`, `isSheafFor_picEt_pullback_presieve` and
+`picEt_isSheaf_forget`, and none of them mentions a base change of the *curve*.
+(The census is as of 2026-07-29 at commit `d4e9f14b96`; an earlier revision of
+this paragraph listed `picEt_isSheaf_etaleTopologyOver`, which `ajc-p1` deleted
+the same day on finding it re-proved `picEt_isSheaf_forget` under a different
+route — `I-1075`. The absence conclusion is unaffected: the deletion removed a
+duplicate, not a cross-base statement.)
 
 It is **not** portable from the sibling project, which is the trap here. `AJCR`
 proves exactly this comparison as a `MulEquiv` (`picEtCrossBaseEquiv`,
