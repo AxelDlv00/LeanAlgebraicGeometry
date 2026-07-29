@@ -8,7 +8,15 @@ import AlgebraicJacobian.Picard.DivisorFamilyAffCompare
 import AlgebraicJacobian.Picard.DivisorFamilyFieldDegree
 
 /-!
-# The degree ledger on the WIDENED adaptation: `deg D = n` over arbitrary affine pieces
+# The SUPPORT-SEPARATED degree ledger on the WIDENED adaptation
+
+**Read `Picard/DivisorFamilyAffStalkEval.lean` first if you want to consume the widened degree
+identity.**  That file proves the same conclusion with **no separation hypothesis**, for every
+widened adaptation, and it is the route a consumer should use.  This file proves the
+support-separated case: a shorter argument, but its `hsep` has zero producers in conclusion
+position anywhere in the project and is refutable against a support point in `V₀ ⊓ V₁`.  Both facts
+were measured after this file was written; the docstrings below carry the corrections at the
+statements they affect.
 
 The colength↔degree identity of `Picard/DivisorFamilyFieldDegree.lean`, ported from
 `DivisorAdaptation` (pieces typed into a fixed pair of pinned `P¹` charts) to `AffAdaptation`
@@ -59,10 +67,15 @@ by the covering was backwards (retracted at `Picard/DivisorFamilyAffAbel.lean`, 
 
 `hdegAff` (`Picard/DivisorFamilyAffAbel.lean`) is the *Abel-value* ledger — the widened Abel value
 of a degree-`n` widened class has degree `n` at every field point — and it is still an explicit
-hypothesis there.  This file supplies the identity that gate needed, not the gate: the remaining
-distance is the widened analogue of `DivFamZar.classDeg_picClass`, which routes the presentation
-divisor's degree through the field collapse to the Picard class.  Nothing here should be read as
-discharging `rep` or any antecedent of the atlas assembly.
+hypothesis there.  This file supplies an identity that gate needs, not the gate.
+
+One further correction, since the distance was misdescribed here too: the remaining step is **not**
+"the widened analogue of `DivFamZar.classDeg_picClass`" via *this* identity.  `classDeg_picClass`
+routes through `deg_divFamDivisor` (`Picard/DivisorFamilyFieldCRT.lean:376`), whose proof term calls
+the **CRT** `DivisorAdaptation.deg_presentationDivisor` — the separation-free route — and not the
+separated `_eq_finrank_glued` this file ports.  So the input a widened `classDeg_picClass` actually
+wants is `AffAdaptation.deg_presentationDivisor` in `Picard/DivisorFamilyAffStalkEval.lean`.
+Nothing here or there discharges `rep` or any antecedent of the atlas assembly.
 -/
 
 set_option autoImplicit false
@@ -335,17 +348,31 @@ theorem IsCertified.finrank_glued {n : ℕ} (hc : A.IsCertified n) :
 
 /-- **The degree of a support-separated widened certified adaptation is exactly `n`.**
 
-This is the statement the degree ledger wanted, and it is the first one in the widened tail that
-is not conditional on an `hrank` with no producer (I-1109): the geometric half is
-`deg_presentationDivisor_eq_finrank_glued` above, the field half is `IsCertified.finrank_glued`,
-and `IsCertified` is the certificate the widened carrier already builds.
+**SUPERSEDED — use `AffAdaptation.IsCertified.deg_presentationDivisor`
+(`Picard/DivisorFamilyAffStalkEval.lean`) instead.**  That one has the same conclusion with **no**
+`hsep` at all, for every widened adaptation, by evaluating the equalizer at stalks over the support
+rather than decomposing it over the cover.  This declaration is kept because the separated route is
+the shorter argument and a reader may want it, not because anything should consume it.
 
-Read the two hypotheses honestly.  `hsep` is a real assumption about the cover — support
-separation, the same one the chart-typed `deg_divFamDivisor_of_separated` makes, and the DD-1c
-backward map satisfies it by construction because its adaptations isolate the support points.
-`hc` is the certificate.  Neither is discharged here; what is discharged is that they SUFFICE
-over arbitrary affine pieces, which is what the pinned pair was previously believed to be
-paying for. -/
+Two corrections to what this docstring previously claimed, both from a `work-reviewer` audit and
+both material:
+
+* it said this was "the first statement in the widened tail not conditional on an `hrank` with no
+  producer (I-1109)".  Escaping *that* class was true and not worth much: `hsep` itself has **zero
+  producers in conclusion position** anywhere in the project, so the obligation moved rather than
+  went away;
+* it said "the DD-1c backward map satisfies it by construction because its adaptations isolate the
+  support points".  That sentence was inherited verbatim from the chart-typed
+  `deg_divFamDivisor_of_separated` and nothing stands behind it.  Worse, `hsep` is **refutable**: it
+  together with a support point in `V₀ ⊓ V₁` yields `False`.  So it holds only for fibre-confined
+  systems, and the non-vacuity witness below witnesses a pair that is jointly satisfiable but not
+  freely available.
+
+`hc` is the certificate and is genuinely inhabited at every `n`
+(`exists_divFam_divFamDivisor_eq`, `Picard/DivisorFamilyFieldSurj.lean:147`, whose certificate
+comes from the CRT identity with no rank hypothesis).  What this declaration establishes is that
+the two hypotheses SUFFICE over arbitrary affine pieces — which is what the pinned pair was
+believed to be paying for, and it was not. -/
 theorem deg_presentationDivisor_eq_of_isCertified {n : ℕ}
     (hsep : ∀ i j : D.index, i ≠ j → ∀ (z : relCurve C K) (hzi : z ∈ D.pieces i),
       z ∈ D.pieces j → IsUnit (((relCurve C K).presheaf.germ (D.pieces i) z hzi).hom (A.eqn i)))
