@@ -143,11 +143,19 @@ over `T`, because `divRepPullAt` is `mapAlgHom ω` and `mapAlgHom_comp` collapse
 restrictions.  The framing is untouched, and the conclusion transports because
 `algebraMap (ChartRing i j) T` factors as `(algebraMap S T).comp ω`.
 
-So a producer owes the identity-point statement only — the one `divUniversalFamily` is built
-to satisfy, whose left-hand side is `divUniversalFst` definitionally
-(`Picard/DivSchemeFamilyUniv.lean:72-79`).  Found by a fresh-context review of this file
-(inbox `I-0561`), which correctly observed that the interface as written advertises a *larger*
-debt than is owed.
+So a producer owes the identity-point statement only, whose left-hand side is
+`divUniversalFst` definitionally (`Picard/DivSchemeFamilyUniv.lean`).  Found by a
+fresh-context review of this file (inbox `I-0561`), which correctly observed that the
+interface as written advertises a *larger* debt than is owed.
+
+**A NAME CORRECTION, review-ajcr r6.**  This paragraph used to say the identity-point
+statement is "the one `divUniversalFamily` is built to satisfy".  There is no
+`divUniversalFamily` anywhere: a workspace-wide grep over `MainProjects` and `SubProjects`
+returns exactly one hit, the sentence itself, and `horizon search` returns only
+differently-named declarations.  The prescription a lane reads here therefore named a
+nonexistent witness for the debt it prices — and grep cannot distinguish that from a name
+merely out of scope, which is why it survived.  The surviving claim is the one about
+`divUniversalFst`, which does exist and is what the definitional identity is against.
 
 Note the curve-properness/irreducibility instances are genuinely unused here: the collapse is
 a base-change bookkeeping fact about the clause, with no curve geometry in it (the linter is
