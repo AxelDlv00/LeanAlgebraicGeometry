@@ -6,6 +6,7 @@ Authors: The AlgebraicJacobian Contributors
 import AlgebraicJacobian.Picard.DivisorFamilyAffAdaptation
 import AlgebraicJacobian.Picard.DivSchemeFamilySide
 import AlgebraicJacobian.Picard.DivisorFamilyThetaSections
+import AlgebraicJacobian.Picard.DivisorDatumInverse
 
 /-!
 # The Θ-LAYER OVER THE WIDENED CARRIER (R2): what actually blocked cert-r2's producer
@@ -145,6 +146,31 @@ separate `ChartTyping` datum rather than from the index type. -/
 noncomputable def thetaOvlUnit (i j : D.index) :
     Γ(relCurve C R, D.pieces i ⊓ D.pieces j)ˣ :=
   relThetaSideUnit a (τ.side i) (τ.side j) (pieces_inf_le_relPinnedChart_inf τ i j)
+
+/-- **The side matching unit at exponent `0` is trivial**, for any pair of sides.  The
+side-uniform form of `FinCoverData.thetaOvlUnit_zero` (`Picard/DivisorDatumInverse.lean:155`),
+whose four `Sum` cases are these four `Bool` cases.
+
+The split is over *variable* `Bool`s here (not over `τ.side j` at a use site), which is what
+keeps it out of the dependent-motive trap. -/
+lemma relThetaSideUnit_zero (b b' : Bool) {W : (relCurve C R).Opens}
+    (hW : W ≤ relPinnedChart C R π b ⊓ relPinnedChart C R π b') :
+    relThetaSideUnit (C := C) (R := R) (π := π) 0 b b' hW = 1 := by
+  cases b <;> cases b'
+  · rfl
+  · rw [show relThetaSideUnit (C := C) (R := R) (π := π) 0 false true hW
+        = (relCurve C R).unitsRestrict hW (relThetaCocycle C R π 0) from rfl,
+      relThetaCocycle_zero, map_one]
+  · rw [show relThetaSideUnit (C := C) (R := R) (π := π) 0 true false hW
+        = ((relCurve C R).unitsRestrict
+            (le_inf (hW.trans inf_le_right) (hW.trans inf_le_left))
+            (relThetaCocycle C R π 0))⁻¹ from rfl,
+      relThetaCocycle_zero, map_one, inv_one]
+  · rfl
+
+/-- The widened twisting unit is trivial at exponent `0`. -/
+lemma thetaOvlUnit_zero (i j : D.index) : thetaOvlUnit τ 0 i j = 1 :=
+  relThetaSideUnit_zero (τ.side i) (τ.side j) (pieces_inf_le_relPinnedChart_inf τ i j)
 
 /-! ## The Θ-twisted glued colength module -/
 
@@ -523,6 +549,45 @@ theorem isThetaPaired_of_one_mem
   refine le_antisymm (thetaSpan_mul_thetaInvSpan_le_one A τ a) ?_
   rw [Submodule.one_eq_span]
   exact Submodule.span_le.mpr (Set.singleton_subset_iff.mpr h)
+
+/-! ### The satisfiability probe on `IsThetaPaired`
+
+`IsThetaPaired` is a `Prop` this file defines and does not prove, so per the standing
+discipline it owes **two** probes.  "Not silently stronger" is discharged by
+`thetaSpan_mul_thetaInvSpan_le_one`: the automatic half is landed, so the content is exactly
+the reverse inclusion, the same content as chart-typed.
+
+The mirror risk is **unsatisfiability** — a `Prop` no widened cover can ever satisfy would make
+every consumer of it a vacuous theorem, which passes every `sorry` census and axiom probe.  The
+probe below rules that out with an unconditional witness, so the residue is genuinely open
+rather than false. -/
+
+/-- **THE SATISFIABILITY PROBE, DISCHARGED at the trivial twist.**  At `a = 0` the theta
+cocycle is `1`, so every `thetaOvlUnit` is `1`, both spans are the equalizer algebra itself, and
+the pairing holds **unconditionally** — for every widened cover, every adaptation and every
+chart typing.
+
+This does not make the pairing easy at `a > 0`: the content there is the manufactured sections,
+which is the open obligation. What it establishes is that `IsThetaPaired` is *satisfiable*, i.e.
+that the widened statement is not a reduction to a false hypothesis. -/
+theorem isThetaPaired_zero : IsThetaPaired A τ 0 := by
+  refine isThetaPaired_of_one_mem A τ 0 ?_
+  -- at the trivial twist both spans contain `1`
+  have hone : (1 : A.chartProd) ∈ unitGluedSubmodule A (thetaOvlUnit τ 0) := by
+    rw [mem_unitGluedSubmodule_iff]
+    intro p
+    rw [thetaOvlUnit_zero τ p.1 p.2]
+    rw [Pi.one_apply, Pi.one_apply, map_one, map_one, Units.val_one, map_one, mul_one]
+  have hinvunit : (thetaOvlUnit τ 0)⁻¹
+      = (thetaOvlUnit τ 0 : ∀ i j : D.index,
+          Γ(relCurve C R, D.pieces i ⊓ D.pieces j)ˣ) := by
+    funext i j
+    rw [Pi.inv_apply, Pi.inv_apply, thetaOvlUnit_zero τ i j, inv_one]
+  have hinv : (1 : A.chartProd) ∈ unitGluedSubmodule A (thetaOvlUnit τ 0)⁻¹ := by
+    rw [hinvunit]; exact hone
+  have := Submodule.mul_mem_mul (mem_thetaSpan_iff A τ 0 |>.mpr hone)
+    (mem_thetaInvSpan_iff A τ 0 |>.mpr hinv)
+  rwa [one_mul] at this
 
 end Pairing
 
