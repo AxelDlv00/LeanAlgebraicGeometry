@@ -33,14 +33,13 @@ which carries the full charter (target, constraints, working model, and phases).
 - `AlgebraicJacobian.lean` — the library root import list, and the index of what is actually
   checked: `lake build`'s default target is this module, so a new file is **not** elaborated by a
   bare `lake build` until it is imported here. Add the import, or check the file explicitly by
-  module name. **The gap is real but much smaller than it was:** of 742 `.lean` files under
-  `AlgebraicJacobian/`, **18 are unreachable** from the root and so never kernel-checked by a bare
-  `lake build` (re-measured transitively 2026-07-29 07:45) — 17 under `Picard/`: the
+  module name. **The gap is real but much smaller than it was:** of 743 `.lean` files under
+  `AlgebraicJacobian/`, **17 are unreachable** from the root and so never kernel-checked by a bare
+  `lake build` (re-measured transitively 2026-07-29 08:20) — all 17 under `Picard/`: the
   `DivSchemeRedesign*` family plus `DivSchemeFlatteningBridge`,
-  `DivSchemeSeedUnivSecondWindowMap`, `EntryIdeal`, `Pic0ThetaCocycle`, `ScratchChartLocal`;
-  and one under `Tangent/`: `TwoChartKernelComparison`.
-  The `DivSchemeHighWindow*` family and the three `Tangent/Probe*` are now fully rooted.
-  Measure reachability transitively, not by the root's import
+  `DivSchemeSeedUnivSecondWindowMap`, `EntryIdeal`, `Pic0ThetaCocycle`, `ScratchChartLocal`.
+  `Tangent/` is now fully rooted, as are the `DivSchemeHighWindow*` family and the three
+  `Tangent/Probe*`. Measure reachability transitively, not by the root's import
   lines, and re-measure rather than quoting — parallel lanes move these figures hourly. See roadmap
   row `AJCR.w4-rep.build-reach` for the triaged list and inbox `I-0624` for why it bites in both
   directions. Check the root before trusting a "landed" claim.

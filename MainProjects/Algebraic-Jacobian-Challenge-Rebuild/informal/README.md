@@ -1,8 +1,8 @@
 # `informal/` — index of design worksheets, specs, and recon dumps
 
-78 files, ~27k lines. This index exists so a new session can tell **which file is still
+78 files, ~31k lines. This index exists so a new session can tell **which file is still
 authoritative** without reading them. Created 2026-07-27 (janitor pass, run 0048 round 5);
-re-reconciled against the directory 2026-07-28 (janitor pass, run 0073).
+re-reconciled against the directory 2026-07-29 (janitor pass, run 0073 s0016).
 
 **How the status column was derived — read this before trusting it.** Each entry's title comes
 from reading the file's header. `SUPERSEDED-BY` is recorded **only** where the file itself (or its
@@ -106,7 +106,7 @@ that exists for them.
 |---|---|
 | `w5-recon.md` | Wave-5 recon — the `Pic⁰` abelian-variety package. Headline in §0. |
 | `w5-worksheet.md` | Wave-5 BINDING worksheet. §0 is the lane protocol (mandates `protocol-concurrent-lanes.md`). |
-| `w5-t4-worksheet.md` | W5-T4: the étale-plus/Zariski kernel crossing at `k[ε]` (risk R1). |
+| `w5-t4-worksheet.md` | **CURRENT for the T-chain.** W5-T4: the étale-plus/Zariski kernel crossing at `k[ε]` (risk R1, closed in §6.27–6.29); §7 then carries all of T3 — the five landed arrows of the ε-kernel chain and the composite that is still open. Read §7.8 first. |
 | `w5-s-worksheet.md` | **CURRENT.** W5 S-cluster: geometric reducedness (S1/R2), `Smooth` (S2, landed), the frozen numeral (S3/R3). Written 2026-07-28 by the AV lane; discharges `w5-worksheet.md` §1 D4's worksheet-first obligation. Its §2 corrects `w5-recon.md` on which S1 brick is hard. |
 
 ## Waves 6–7 — not yet started (`AJCR.w6-albanese`, `w7-functor` both **pending**)
