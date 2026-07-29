@@ -18,3 +18,7 @@
 # ...but the Rebuild is a first-class registered project (config.yaml), not a backup:
 !/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/
 .archon-horizon/cache/
+
+# Scratch Lean probes dropped at the workspace root by a session.
+# Keep probes worth retaining under the session's own probes/ directory instead.
+/*probe*.lean

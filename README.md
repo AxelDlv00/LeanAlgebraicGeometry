@@ -9,8 +9,12 @@ proposed by Christian Merten after Kevin Buzzard's differential-geometry challen
 > The workspace develops **two live routes** to the Algebraic Jacobian challenge. Follow the
 > project named by the active task rather than treating either route as reference-only.
 >
-> - `MainProjects/Algebraic-Jacobian-Challenge` continues the ambitious Picard-scheme route through
->   Grassmannians, Quot schemes, flattening stratification, `Pic^0`, and the Albanese property.
+> - `MainProjects/Algebraic-Jacobian-Challenge` continues the ambitious Picard-scheme route, building
+>   representability by the Milne–Kollár construction of `Pic^r`, then `Pic^0` and the Albanese
+>   property. Its Grassmannian, graded-algebra and flattening-stratification substrate is sorry-free
+>   and still consumed, but the Quot-scheme endgame it was first written for is not the path being
+>   built. Since 2026-07-28 its headline is stated over an arbitrary base field, with
+>   representability asked of the étale-sheafified Picard functor and no rational-point hypothesis.
 > - `MainProjects/Algebraic-Jacobian-Challenge-Rebuild` develops a cleaner curve-specialized route
 >   from protected target statements.
 
@@ -28,7 +32,7 @@ minutes before a new snapshot is visible.
 | Path | Role |
 | --- | --- |
 | `MainProjects/Algebraic-Jacobian-Challenge-Rebuild` | Cleaner curve-specialized AJC route and workspace default. |
-| `MainProjects/Algebraic-Jacobian-Challenge` | Ambitious Picard-scheme/Quot AJC route, maintained by scoped tasks. |
+| `MainProjects/Algebraic-Jacobian-Challenge` | Ambitious Picard-scheme AJC route (Milne–Kollár representability), maintained by scoped tasks. |
 | `SubProjects/` | Supporting, extracted, and related-paper formalizations available to the active project. |
 | `references/` | Shared mathematical sources and retrieval notes. |
 | `.archon-horizon/` | Workspace state: tasks, roadmap, inbox, run metadata, graphs, and ledger. |
@@ -46,7 +50,7 @@ The workspace currently registers these projects, in priority order:
 | Project | Purpose |
 | --- | --- |
 | **`Algebraic-Jacobian-Challenge-Rebuild`** | Cleaner curve-specialized route; default project in the workspace manifest. |
-| `Algebraic-Jacobian-Challenge` | Ambitious Picard-scheme, Quot, `Pic^0`, and Albanese route. |
+| `Algebraic-Jacobian-Challenge` | Ambitious Picard-scheme, `Pic^0`, and Albanese route. |
 | `Line-Bundle-Comparison-Iso` | Extracted line-bundle pullback, tensor, and dual comparison infrastructure. |
 | `Albanese` | Albanese universal property, rigidity, and rational-map-extension infrastructure. |
 | `Cech-Cohomology` | Čech computation of higher direct images and its cohomological substrate. |
@@ -80,6 +84,12 @@ horizon search "Jacobian Picard representability"
 
 The first command starts the local dashboard. The graph command shows the ranked proof frontier
 for the active project, and search queries declarations across the workspace and Mathlib.
+
+Treat `graph frontier` output as advisory and verify each row in the tree: neither main project has
+an `hgraph/config.yaml`, so `horizon graph … sync` is a no-op and the stored graph drifts behind
+landed work. Tracked in open inbox item `I-0501`. The scanner also invents declarations from
+docstring prose, and some arrive marked `sorry`, so the frontier can list nodes that do not exist
+(reproduced in `I-0472`, now archived; the defect itself was never fixed).
 
 ## Methodology
 
