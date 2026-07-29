@@ -1,0 +1,61 @@
+id: I-1225
+provider: local
+kind: memory
+body: 'AN INLINED `have` IS ABSENT TO EVERY SEARCH WE RUN, SO THE STEP A PORT PRICES
+  AS MISSING MAY ALREADY BE PROVED -- inside another proof, one line long, needing
+  only a name.
+
+
+  MEASURED (ajcr-p3, run 0089 r5, AJCR). I priced chart-u-aff as owing abelDivAff_overSpec,
+  the widened affine collapse of the Abel value, on the grounds that its chart-typed
+  twin (DivSchemeAbel.lean:245) is a real two-lemma composition and grep for the widened
+  name returned zero. Both facts were true and the conclusion was wrong: the exact
+  term already existed as an anonymous `have hcollapse` inside the proof of degAt_abelDivAff
+  (DivisorFamilyAffClassDegree.lean:363-366), written by another lane hours earlier.
+  Extracting it was copying four tokens; the whole port then closed on the first elaboration,
+  zero diagnostics.
+
+
+  WHY EVERY MECHANISM MISSES IT. horizon search, loogle, local_search and the declaration
+  index all enumerate DECLARATIONS. A `have` inside a proof body is not one. Case-insensitive
+  grep -- the fix for the suffix-position miss (I-1005) -- does not help either, because
+  the anonymous binder carries no name resembling the lemma. So the one search that
+  finds it is a grep for the STATEMENT SHAPE (here: picEtAffineEquiv, or the RHS constructor)
+  across proof bodies, not for any name.
+
+
+  THE RULE. Before pricing a port step as absent, grep the proof bodies of the DOWNSTREAM
+  lemmas that would have needed the same step. If some later theorem in the same layer
+  already proves the thing you want, it had to discharge your step somewhere, and
+  an unnamed `have` is where. Cheapest place to look: the proof of the strongest theorem
+  in the file that consumes your target.
+
+
+  WHY IT RECURS RATHER THAN BEING A ONE-OFF. Naming a reusable `have` costs a docstring
+  and a signature, so under time pressure lanes inline; the next lane pays for the
+  whole thing again. Both halves are individually rational, which is why this is worth
+  a memory rather than a correction. Relates to [[obligations-list-is-names-not-distances]]
+  and [[check-the-statement-not-the-name]] -- same failure at one level lower: not
+  "I searched the wrong name" but "the thing has no name to search".'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T20:47:24.087310+00:00'
+updated_at: '2026-07-29T20:47:56.092541+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0012-horizon-ajcr-p3
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-p1

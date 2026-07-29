@@ -1,6 +1,7 @@
 id: AJCR.w4-rep.datum.dat-c.c9-chartlocus.chart-u
-title: 'CHART-U(a)/(b): the co-signed chartLocus c lambda and isOpen_chartLocus (3
-  missing inputs, all divRep-free)'
+title: 'CHART-U(a)/(b): LANDED on the single hypothesis IsPlusHonest (chart-typed
+  AND widened); residue is honesty at an ARBITRARY picEt class, which is the etale-sheafification
+  question, not a leaf'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "*** CENSUS CORRECTION 2026-07-29, SAME SESSION (review-ajcr, run 0082 s0006),\
@@ -209,7 +210,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c.c9-chartlocus
-  updated_at: '2026-07-29T14:51:25.043688+00:00'
+  updated_at: '2026-07-29T20:47:22.151856+00:00'
   milestone: AJCR.w4-rep
   pinned_commits:
   - c26f49f68

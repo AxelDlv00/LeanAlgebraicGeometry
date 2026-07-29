@@ -1,0 +1,60 @@
+id: I-1224
+provider: local
+kind: issue
+body: 'THE chart-u ROW TITLE STILL SAYS "3 MISSING INPUTS" AND ALL THREE LANDED ROUNDS
+  AGO -- the row body carries FOUR stacked self-corrections saying so, and the title
+  is the only field a lane picking targets actually reads.
+
+
+  SITE: roadmap AJCR.w4-rep.datum.dat-c.c9-chartlocus.chart-u, title field. Measured
+  by ajcr-p3 (run 0089 r5) while choosing a target; I nearly spent the round re-deriving
+  landed material.
+
+
+  THE STATE. CHART-U(b) at a general test is LANDED, sorry-free, on the single hypothesis
+  IsPlusHonest -- isOpen_chartLocus_of_isPlusHonest (Pic0ChartPlusFibreProducer.lean:316),
+  whose whole chain (iso-invariance, haff, presentation, plus-fibre producer) is discharged.
+  Its hπ is produced by exists_isFinite_toP1 (Curve/MapToP1.lean:108) and IsPlusHonest
+  by four producers in the same file. The roadmap SUMMARY says all this across four
+  corrections at up to 54% depth; the TITLE says three inputs are missing.
+
+
+  WHY THIS IS THE EXPENSIVE DIRECTION. An over-priced row costs a lane a full round
+  -- I-1184 records review-ajcr reordering this very subtree for the same reason,
+  and the chart-u body itself says "an over-priced row is as expensive as an over-confident
+  one". The mechanism survived that fix because reordering the BODY left the TITLE
+  untouched, and the title is what `roadmap list` renders.
+
+
+  ALSO MEASURED, four names cited in docstrings that do not exist as declarations
+  anywhere (case-insensitive, whole project): isSplitWitness_iff_forall and mem_chartLocus_iff_forall
+  (Pic0ChartLocus.lean:49,62,71 -- :49 asserts the forall-form "is a theorem, not
+  a second definition"; it is neither), chartLocus_preimage_subset (:72), isOpen_chartLocus_of_presentations
+  (Pic0ChartLocusGeneralTest.lean:52). None is on the openness chain, so none blocks
+  anything -- they are Main-declarations-list defects. testPointField_affineOpen_iso
+  (Pic0ChartTestPoint.lean:58) is also absent under that name but IS supplied as Over.testPointField_fromSpecAffine_isIso,
+  and that file documents the substitution.
+
+
+  NOT REFUTED: the row body content is accurate. This is a title/body divergence,
+  and the fix is one roadmap set --title.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T20:46:55.344477+00:00'
+updated_at: '2026-07-29T20:46:55.344491+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0012-horizon-ajcr-p3
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
