@@ -14,7 +14,9 @@ file discharges the gate `HasStableAffineCover` (the EGA II 4.5.4 pattern) from 
 orbit-in-affine hypothesis `ρ.OrbitsInAffineOpen`: **every point of `X` has a
 `Γ`-stable affine open neighbourhood** (`hasStableAffineCover_of_orbitsInAffineOpen`,
 registered as the sanctioned instance).  This is the geometric step `G2(a)` feeding
-the quotient gluing `G2(c)`; the deep gate `HasGaloisQuotient` remains instance-free.
+the quotient gluing `G2(c)`; the deep gate `HasGaloisQuotient` is instance-free only for
+a **non-affine** total space — `Picard/GaloisQuotientAffineGeneral.lean` discharges it
+globally under `[IsAffine X]`.
 
 ## Pinned route (recorded before proving, per the campaign plan)
 
@@ -275,7 +277,8 @@ end SemilinearGalAction
 sanctioned instance): for finite Galois `L/K`, a semilinear `Γ`-action whose orbits
 lie in affine opens admits a `Γ`-stable affine cover.  The Hironaka trap (module
 docstring of `FiniteGaloisQuotient`) shows the orbit hypothesis cannot be dropped;
-`HasGaloisQuotient` remains instance-free. -/
+`HasGaloisQuotient` is instance-free only off the affine locus (discharged there by
+`Picard/GaloisQuotientAffineGeneral.lean`). -/
 instance hasStableAffineCover_of_orbitsInAffineOpen
     {K L : Type u} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]

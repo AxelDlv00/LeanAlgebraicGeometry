@@ -194,6 +194,14 @@ theorem hasStableAffineCover_specF4 :
 instance of this class could be stated, let alone proved.  With §1 it is discharged from
 `isGaloisQuotient_spec` (Speiser descent plus the globalized `T`-points property).
 
+**Superseded as a producer, kept as a witness (2026-07-30).**  This goal is now closed by
+`inferInstance` through `hasGaloisQuotient_of_isAffine`
+(`Picard/GaloisQuotientAffineGeneral.lean`), which discharges the gate for *every* semilinear
+action on an affine scheme rather than for this one action.  The explicit proof is retained
+because a named nontrivial-group witness is what makes the clauses of `IsGaloisQuotient`
+non-vacuous (see `nontrivial_aut_F4`), and because it is the control that showed the general
+instance actually fires.
+
 `Spec (𝔽₄^Γ) ⟶ Spec 𝔽₂` is the quotient; `𝔽₄^Γ` is `𝔽₂` by Artin, though the statement does
 not need that identification. -/
 theorem hasGaloisQuotient_specF4 : HasGaloisQuotient specActionF4 :=

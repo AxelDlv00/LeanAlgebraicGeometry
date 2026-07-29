@@ -301,8 +301,10 @@ covering sieve. That witness is §1–§3, and it is what the tree lacked.
 descended object. Turning a `k'`-representing scheme into a `k`-representing one
 needs the semilinear Galois action and the effectivity of the resulting descent
 datum — campaign `G1`/`G2`, `Picard/FiniteGaloisQuotient.lean`, whose existence
-gate `HasGaloisQuotient` has no instance. So this closes no `sorry` and witnesses
-no antecedent of `Scheme.fgaPicardRepresentability`. -/
+gate `HasGaloisQuotient` is discharged only for an **affine** total space
+(`Picard/GaloisQuotientAffineGeneral.lean`, 2026-07-30) while the object this route
+descends is glued, so the gate still bites here. So this closes no `sorry` and
+witnesses no antecedent of `Scheme.fgaPicardRepresentability`. -/
 theorem isSheafFor_picEt_pullback_presieve (C : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
     (T : Over (Spec (CommRingCat.of k))) :

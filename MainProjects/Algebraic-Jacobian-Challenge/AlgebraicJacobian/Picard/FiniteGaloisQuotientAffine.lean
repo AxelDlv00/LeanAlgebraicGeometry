@@ -43,8 +43,11 @@ Speiser descent only, never Noether invariant finiteness.
    uniqueness.  This order breaks the apparent circularity: overlap pieces of an
    affine cover of a non-separated `T` need not be affine.
 
-The gate `HasGaloisQuotient` remains instance-free (Hironaka trap, see the module
-docstring of `FiniteGaloisQuotient`); the affine-model theorem proved here is
+The gate `HasGaloisQuotient` is instance-free **only off the affine locus** now: this
+file's theorem was generalised from the affine *model* to every affine total space in
+`Picard/GaloisQuotientAffineGeneral.lean`, whose `hasGaloisQuotient_of_isAffine` is a
+global instance. The residue is the non-affine case, where the Hironaka trap bites (see
+the module docstring of `FiniteGaloisQuotient`). The affine-model theorem proved here is
 legitimately unconditional because `Spec A` *is* a single `Γ`-stable affine chart.
 **`HasStableAffineCover` is no longer instance-free** — `G2(a)` was discharged
 after this sentence was written, and `StableAffineCover.lean:279` derives it as a

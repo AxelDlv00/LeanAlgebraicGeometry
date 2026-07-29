@@ -12,6 +12,12 @@ Let `L/K` be a finite Galois extension with group `Γ = Gal(L/K)` and let `X` be
 scheme over `Spec L` with a semilinear `Γ`-action `ρ` (`SemilinearGalAction`).  This
 file opens the discharge of the last `G2` gate, `HasGaloisQuotient` (the gluing step
 `G2(c)`), with the **overlap audit** (recorded below, before any Lean) and the first
+construction layer.  **Update 2026-07-30:** layer 1 turned out to close the gate
+outright for an **affine** `X` — `Picard/GaloisQuotientAffineGeneral.lean` uses the
+`U = ⊤` instance of the section action below, plus transport along `X.isoSpec`, to get
+`hasGaloisQuotient_of_isAffine` as a global instance.  So the layers below are now
+needed only for the **non-affine** case (the campaign's glued `J'_r`), and layer 3 may
+quote a per-chart quotient instead of constructing one.  The first
 construction layer: on every `Γ`-stable open `U` the action transports sections,
 making `Γ(X, U)` an `L`-algebra with a semilinear `Γ`-action by ring automorphisms —
 the section-level face of `SemilinearGalAction`, i.e. exactly the input format of the

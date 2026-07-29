@@ -599,10 +599,24 @@ is that their conjunction is exactly this statement, so no reader had to take
 
 **What this does NOT mean, since it is the natural misreading.** It does not
 bring the seam closer. The hypothesis is the campaign's *undischarged output*,
-and over an arbitrary `k` it is FALSE, not merely unproved:
+and over an arbitrary `k` there is a refutation waiting for it —
 `PicScheme.not_exists_representing_picSharp_of_not_isIso`
-(`Picard/PicEtSubcanonical.lean`) plus Kleiman's pointless real conic refutes it.
-So the correct reading is about *shape*, not distance: whatever the campaign
+(`Picard/PicEtSubcanonical.lean`) turns any failure of
+`IsIso (picEtComparison C)` into a refutation of the existential, and Kleiman's
+pointless real conic is where that failure is expected.
+
+**Stated precisely, because the first version of this paragraph overstated it**
+(`review-ajc`, corrected within the same session): that refutation is
+*conditional* on `¬ IsIso (picEtComparison C)`, which is **quoted from Kleiman,
+not proved in this project** — `PicEtSubcanonical.lean` says so itself, and
+formalising it means exhibiting `φ*O(1)` in `picEt C (Spec ℝ)` outside the image
+via `h⁰` on `ℙ¹_ℂ`. So the honest word for the campaign's `picSharp` endpoint
+over arbitrary `k` is **unproved with a refutation route mapped out**, not
+"FALSE" — the reduction above is a theorem, its trigger is not. Writing "FALSE"
+here would be the same error the board row was corrected for in the opposite
+direction.
+
+Either way the consequence for planning is unchanged: whatever the campaign
 delivers must be delivered over a field where `picSharp` is representable (a
 separably closed one, or under a section), and the descent to `k` must carry
 `picEt` points — and if it does deliver that, this bundled statement is fully
