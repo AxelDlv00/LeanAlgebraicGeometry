@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.Pic0ChartAtlasParamFree
 import AlgebraicJacobian.Picard.JacobianDataCharts
+import AlgebraicJacobian.Picard.DivSchemeQProj
 
 /-!
 # THE FOURTH ANTECEDENT: the chart-finiteness certificate of the real atlas
@@ -49,6 +50,20 @@ So the fourth antecedent, at the **real** atlas (heterogeneous parameters, restr
 `mixedParamChart`, `Picard/Pic0ChartAtlasParamFree.lean`), reduces to
 `LocallyOfFiniteType (D i).hom`: a property of the divisor scheme with no Picard content, no
 chart parameter, and no dependence on the open `V i`.
+
+**And that reduction is not a relocation.**  At the carrier the divisor-representability lane's
+producers actually return — `DivOver`, a local notation for `divSchemeOver …` in
+`DivRepGlobalClassify.lean` / `DivRepChartRange.lean` / `DivRepAffPullClause.lean` — the property
+is a *global instance* (`locallyOfFiniteType_divSchemeOverHom`, `DivSchemeQProj.lean`), so it is
+free by `inferInstance` with no hypothesis at all.  Verified at that exact carrier, with the
+producer file's own variable bundle, rather than at `divSchemeOver` in the abstract: an
+object-level match can be true and irrelevant if the consumer binds a different carrier.  Here it
+does not.
+
+One incidental measurement, recorded because it is the reason the freeness was not already
+visible: `DivRepGlobalClassify.lean` — the file that *defines* `DivOver` — does not import
+`DivSchemeQProj.lean`, so inside it neither finiteness instance can be found. Nothing is wrong
+with either file; the instances simply never met the carrier.
 
 ## Main declarations
 
@@ -178,9 +193,9 @@ Read it as the corrected antecedent list of the *goal*:
   target; `Pic0AtlasFromDivRep.lean` takes it as a hypothesis and constructs no representation);
 * `hf` — the per-index chart certificate, i.e. `IsChartUniv`.  **Open**;
 * the `Presheaf.IsLocallySurjective` instance — DAT-B coverage.  **Open**;
-* `hD` — `LocallyOfFiniteType (D i).hom`.  **Discharged as an antecedent of the assembly** by the
-  theorem above: it no longer has to be proved *about the charts*, only about the divisor schemes,
-  where it is a standard finite-type statement carrying no Picard content;
+* `hD` — `LocallyOfFiniteType (D i).hom`.  **Discharged**, and at the carrier the producers of
+  `rep` return it is free by `inferInstance` (the `Discharged` section above).  So a lane that
+  produces `rep` supplies this input in the same breath;
 * `hcpt` — `CompactSpace` of the glued object.  **Open, and genuinely a-posteriori**: for the
   class-indexed atlas this is a theorem about the Jacobian (`JacobianDataCharts.lean` says so),
   and `JacobianData.ofChartsOfAbelImage` supplies it from a surjective Abel map.
@@ -205,6 +220,58 @@ def jacobianDataOfMixedParamCharts {ι : Type u} (nn : ι → ℕ)
     JacobianData C :=
   JacobianData.ofChartsOfCompactSpace C _ hf
     (locallyOfFiniteType_chartHom_mixedParamChart C π nn D rep m Z hdeg V hD) hcpt
+
+/-! ## `hD` is not merely reduced to — it is DISCHARGED at the carrier the producer returns
+
+The theorems above take `hD : ∀ i, LocallyOfFiniteType (D i).hom` as a hypothesis, which by
+itself would only *relocate* the fourth antecedent.  It does not: the divisor-representability
+lane's producers all return `RepresentableBy DivOver` with `DivOver` a local notation for
+`divSchemeOver …` (`DivRepGlobalClassify.lean`, `DivRepChartRange.lean`,
+`DivRepAffPullClause.lean`), and at *that* carrier both finiteness inputs are global instances
+(`locallyOfFiniteType_divSchemeOverHom`, `compactSpace_divScheme`, `DivSchemeQProj.lean`).
+
+Worth recording precisely, because the two are easy to confuse and the difference is the whole
+value of this section: the instances hold *at the carrier*, and they were nevertheless not in
+scope where the carrier is defined — `DivRepGlobalClassify.lean` does not import
+`DivSchemeQProj.lean`, so inside that file neither is findable.  Importing `DivSchemeQProj` here
+is what makes them available to a consumer of this module, and it is why the examples below are
+`inferInstance` rather than named applications. -/
+
+section Discharged
+
+open Scheme
+
+variable (k) in
+/-- **The fourth antecedent is free at the divisor-representability lane's own carrier**: for a
+`divSchemeOver`, `LocallyOfFiniteType` of the structure morphism needs no hypothesis.
+
+So a lane that produces `rep` supplies `hD` at the same moment, at no cost, and the fourth
+antecedent is *discharged* rather than relocated. -/
+example {X : Scheme.{u}} [X.Over (Spec (CommRingCat.of k))]
+    [SmoothOfRelativeDimension 1 (X ↘ Spec (CommRingCat.of k))] [IsIntegral X]
+    (A B : X.CurveDivisor) (n r₁ r₂ : ℕ)
+    (b₁ : Module.Basis (Fin r₁) k ↥(divisorSections k B ⊤))
+    (b₂ : Module.Basis (Fin r₂) k ↥(divisorSections k (A + B) ⊤)) :
+    LocallyOfFiniteType (divSchemeOver k A B n r₁ r₂ b₁ b₂).hom :=
+  inferInstance
+
+variable (k) in
+/-- **And so is the compactness input** of `JacobianData.ofCharts`'s finite route, at the same
+carrier — `DivScheme` is a closed subscheme of the compact Grassmannian pair.
+
+This does **not** discharge `hcpt` of the assembly below, and the distinction matters: `hcpt` is
+`CompactSpace` of the **glued** object, which for a class-indexed atlas is not the compactness of
+any one chart.  What is free is the *per-chart* compactness, i.e. exactly the hypothesis of the
+finite-index route `JacobianData.ofCharts`. -/
+example {X : Scheme.{u}} [X.Over (Spec (CommRingCat.of k))]
+    [SmoothOfRelativeDimension 1 (X ↘ Spec (CommRingCat.of k))] [IsIntegral X]
+    (A B : X.CurveDivisor) (n r₁ r₂ : ℕ)
+    (b₁ : Module.Basis (Fin r₁) k ↥(divisorSections k B ⊤))
+    (b₂ : Module.Basis (Fin r₂) k ↥(divisorSections k (A + B) ⊤)) :
+    CompactSpace (divSchemeOver k A B n r₁ r₂ b₁ b₂).left :=
+  inferInstance
+
+end Discharged
 
 @[simp]
 lemma jacobianDataOfMixedParamCharts_J {ι : Type u} (nn : ι → ℕ)
