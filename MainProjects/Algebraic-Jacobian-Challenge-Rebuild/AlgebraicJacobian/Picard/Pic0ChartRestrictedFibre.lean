@@ -99,12 +99,14 @@ chart — and the assembly that consumes both.  Nothing here re-proves either si
   `IsChartLocusFibre` did.  A lane picking this row up should produce that witness first, via the
   empty-test subsingleton above: it is the cheapest measurement here and it decides whether the
   repair is real.
-* **The weakening is not verified to be strict.**  A transport
-  `IsChartLocusFibre → RestrictedChartFibre` at every `V` is *not* proved here: it needs the
-  preimage `r ⁻¹ V` pushed forward along the open immersion `W.ι`, which is real work and buys
-  nothing (a lane holding the old form already gets `IsChartUniv` directly).  So this file does
-  not certify that `RestrictedChartFibre` is *strictly* weaker — only that it is weaker in the
-  way that matters, namely that it does not entail the unrestricted certificate.
+* **The relation to the old form IS measured, and an earlier draft mispriced it.**  That draft
+  said the transport `IsChartLocusFibre → RestrictedChartFibre` "needs the preimage `r ⁻¹ V`
+  pushed forward along `W.ι`, which is real work and buys nothing".  Both halves were wrong
+  (`I-0936`): it is `restrictedChartFibre_of_isChartLocusFibre` below, twelve lines, needing only
+  `IsOpenImmersion.lift` — and it buys the sharp statement, because its hypothesis is exactly the
+  coverage half's `hV`.  The "buys nothing" clause was the worse error: a lane holding the old
+  form gets `IsChartUniv` *through the certificate three headers call false*, which is this
+  file's whole premise.
 -/
 
 set_option autoImplicit false
@@ -159,12 +161,17 @@ theorem isChartUniv_of_restrictedChartFibre {D : Over (Spec (.of k))}
     IsChartUniv C π n rep m Z hdeg V :=
   isOpenImmersion_presheaf_of_chartFibrePresented _ fun T g => (h T g).some
 
-/-- **The content was relocated, not deleted**: the restricted datum still forces the
-restricted chart to be injective on every test.
+/-- The restricted datum forces the restricted chart to be injective on every test.
 
-This is what keeps the weakening honest — the relative form of DAT-C GAP-2 is still required,
-over `V` instead of over `D.left`.  At `V = ⊥` the statement is vacuous, which is the limit
-recorded in the module docstring. -/
+**This is NOT a non-vacuity check, and an earlier draft of this file claimed it was**
+(`I-0937`).  Two reasons it does not carry that weight: its conclusion is *free* at `V = ⊥` with
+no hypothesis at all (a test point of the empty open forces the test empty, hence initial); and
+at general `V` it is `injective_of_isChartUniv` (`Pic0ChartUnivReduce.lean:205`) composed with
+`isChartUniv_of_restrictedChartFibre`, i.e. a property of *any* hypothesis implying `IsChartUniv`,
+not evidence about this one.
+
+Kept because it is the right thing to cite when asking what a producer of the datum must
+establish — the relative form of DAT-C GAP-2, over `V` rather than over `D.left`. -/
 theorem necessity_of_restrictedChartFibre {D : Over (Spec (.of k))}
     (rep : (divFunctor C π n).RepresentableBy D)
     (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
@@ -175,6 +182,41 @@ theorem necessity_of_restrictedChartFibre {D : Over (Spec (.of k))}
     Function.Injective
       ((restrictChart (abelSigmaChart C π n rep m Z hdeg) V).app T) :=
   injective_of_chartFibrePresented _ (fun T' g => (h T' g).some) T
+
+/-! ## The transport, and what it says about the two halves of the coupling
+
+An earlier draft of this file priced this transport as "real work needing a pushforward" and
+declined to prove it.  **That was wrong** (inbox `I-0936`): no preimage and no pushforward are
+involved — keep the old datum's `W` and lift its `r` along `V.ι`. -/
+
+/-- **`IsChartLocusFibre` plus a range containment gives `RestrictedChartFibre`.**
+
+And the containment is the *same* one the coverage half owes: `hr` here is character-for-character
+the `hV` of `Pic0ChartAtlasCoupling.liftPointwiseToOpens`, asked on the fibre side instead of the
+coverage side.  So the two halves of the `V`-coupling are **not two obligations** — they are one
+range containment asked twice, from opposite directions.
+
+This is the sharp form of "the restricted datum is weaker", and it is what makes the repair
+precise rather than merely differently-shaped. -/
+theorem restrictedChartFibre_of_isChartLocusFibre {D : Over (Spec (.of k))}
+    (rep : (divFunctor C π n).RepresentableBy D)
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - (n : ℤ))
+    (V : D.left.Opens) (h : IsChartLocusFibre C π n rep m Z hdeg)
+    (hr : ∀ (T : Scheme.{u}) (g : yoneda.obj T ⟶ (pic0SigmaSheaf C).1),
+      Set.range (((h T g).some.r).base) ⊆ Set.range ((V.ι).base)) :
+    RestrictedChartFibre C π n rep m Z hdeg V := by
+  intro T g
+  refine ⟨⟨(h T g).some.W, IsOpenImmersion.lift V.ι ((h T g).some.r) (hr T g), ?_, ?_⟩⟩
+  · rw [restrictChart, ← Category.assoc, ← yoneda.map_comp, IsOpenImmersion.lift_fac]
+    exact (h T g).some.sq
+  · intro S v w hvw
+    obtain ⟨u, hu1, hu2⟩ := (h T g).some.exists_factor S (v ≫ V.ι) w (by
+      rw [← hvw, restrictChart]
+      rfl)
+    exact ⟨u, (cancel_mono V.ι).mp (by rw [Category.assoc, IsOpenImmersion.lift_fac]; exact hu1),
+      hu2⟩
 
 /-! ## The `V`-coupled assembly -/
 
@@ -214,9 +256,37 @@ def pic0RepresentableBy_of_restrictedChartFibre {ι : Type u} (nn : ι → ℕ)
       = (m i : ℤ) * classDeg k (thetaCechClass C) - (nn i : ℤ))
     (V : ∀ i, (D i).left.Opens)
     (huniv : ∀ i, RestrictedChartFibre C π (nn i) (rep i) (m i) (Z i) (hdeg i) (V i))
+    [Presheaf.IsLocallySurjective Scheme.zariskiTopology
+      (Sigma.desc (mixedParamChart C π nn D rep m Z hdeg V))] :
+    (pic0TypeFunctor C).RepresentableBy
+      (Over.mk ((Scheme.LocalRepresentability.representableBy
+        (mixedParamHf C π nn D rep m Z hdeg V huniv)).homEquiv
+        (𝟙 (Scheme.LocalRepresentability.glueData
+          (mixedParamHf C π nn D rep m Z hdeg V huniv)).glued)).1) :=
+  pic0RepresentableByOfCharts C (mixedParamChart C π nn D rep m Z hdeg V)
+    (mixedParamHf C π nn D rep m Z hdeg V huniv)
+
+variable (C π) in
+/-- **The same assembly with the local-surjectivity instance produced from coverage data**, so
+that the shared `V` is visible in the hypotheses rather than hidden in an instance binder.
+
+The instance version above states the seam at the named representing object (which is what the
+`JacobianData` layer consumes); this version is the one a *coverage* lane reads, because both of
+its geometric hypotheses mention the same `V i`: `huniv` certifies the charts there, and `hcov`'s
+range containment — `Pic0ChartAtlasCoupling`'s `hV` — puts the coverage witness there.
+
+The conclusion is stated as a `Σ` only because the named object above mentions the instance this
+definition constructs; the representing scheme is the same one. -/
+def pic0RepresentableBy_of_restrictedChartFibre_of_coverage {ι : Type u} (nn : ι → ℕ)
+    (D : ι → Over (Spec (.of k)))
+    (rep : ∀ i, (divFunctor C π (nn i)).RepresentableBy (D i))
+    (m : ι → ℕ) (Z : ι → (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : ∀ i, Scheme.CurveDivisor.deg k (Z i)
+      = (m i : ℤ) * classDeg k (thetaCechClass C) - (nn i : ℤ))
+    (V : ∀ i, (D i).left.Opens)
+    (huniv : ∀ i, RestrictedChartFibre C π (nn i) (rep i) (m i) (Z i) (hdeg i) (V i))
     (hcov : ∀ (T : Scheme.{u}) (s : (pic0SigmaSheaf C).1.obj (op T)) (t : ↥T),
-      ∃ (W : T.Opens) (_ : t ∈ W) (i : ι)
-        (x : (W : Scheme.{u}) ⟶ (D i).left),
+      ∃ (W : T.Opens) (_ : t ∈ W) (i : ι) (x : (W : Scheme.{u}) ⟶ (D i).left),
         (abelSigmaChart C π (nn i) (rep i) (m i) (Z i) (hdeg i)).app
             (op (W : Scheme.{u})) x
           = (pic0SigmaSheaf C).1.map (W.ι).op s ∧
@@ -226,8 +296,7 @@ def pic0RepresentableBy_of_restrictedChartFibre {ι : Type u} (nn : ι → ℕ)
       (Sigma.desc (mixedParamChart C π nn D rep m Z hdeg V)) :=
     isLocallySurjective_restrictChart_of_pointwise C
       (fun i => abelSigmaChart C π (nn i) (rep i) (m i) (Z i) (hdeg i)) V hcov
-  ⟨_, pic0RepresentableByOfCharts C (mixedParamChart C π nn D rep m Z hdeg V)
-    (mixedParamHf C π nn D rep m Z hdeg V huniv)⟩
+  ⟨_, pic0RepresentableBy_of_restrictedChartFibre C π nn D rep m Z hdeg V huniv⟩
 
 end
 
