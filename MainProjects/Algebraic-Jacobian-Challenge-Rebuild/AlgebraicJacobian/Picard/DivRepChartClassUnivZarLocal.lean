@@ -57,6 +57,9 @@ a hypothesis that is **not** an instance of the refuted `∀` — and, composed 
 * `AlgebraicGeometry.ThetaGeneratorSeed.isLocallyCertified_of_isCertified_not_conversely`
   — the direction record: the refuted side implies the pin, which is why the refutation
   does not propagate.
+* `AlgebraicGeometry.DivisorAdaptation.noLeak_input_degenerate_of_disjoint_pieces` — the
+  guard: the tube's consumer clause is inhabited only at an empty support once two pieces
+  are disjoint, so shrinking the base does not by itself deliver the away hypothesis.
 
 ## What this does NOT do, stated exactly
 
@@ -65,14 +68,22 @@ undischarged.  What changes is which statement a producer must target, and it is
 weaker than the one the leaf records: a certificate over some `Localization.Away r` per base
 prime, rather than one over the whole chart ring.
 
-**The hypothesis is not thereby known satisfiable, and this file does not claim it is.**  The
-no-go's own geometry is the reason to expect the away form to be the right target — it bites
-when the support meets both pinned fibres, and the support tube
-(`Scheme.LocalEquations.exists_basicOpen_supportTube`) exists precisely to isolate the support
-after shrinking the base — but *nothing here composes the tube with a certificate*, and until
-something does, the away hypothesis has no witness at any prime either.  So: the class half is
-**open, not refuted**.  Those are different claims and only the second one is what this file
-establishes.
+**The hypothesis is not thereby known satisfiable, and this file does not claim it is.**
+*Nothing here composes the support tube with a certificate*, so the away hypothesis has no
+witness at any prime.  The class half is **open, not refuted** — those are different claims
+and only the second is established here.
+
+**And one obvious route to the away hypothesis is measured shut, below.**  The tube's
+consumer chain named at `DivSchemeCertZarTube.lean:172-175` ends in
+`forall_noLeak_of_forall_supportLocus_subset`, whose input is the support inside **every**
+piece — not inside one.  `noLeak_input_degenerate_of_disjoint_pieces` shows that hypothesis
+forces the support **empty** as soon as two pieces of the adaptation are disjoint.  Since a
+chart-typed index is `Fin m₀ ⊕ Fin m₁` over the two pinned charts, that is the generic
+situation and not a corner.  So the tube does *not* hand the away hypothesis to the
+kernel-spanning assembler by itself, and a producer must either supply an adaptation whose
+pieces all contain the support (i.e. shrink the cover, not just the base) or reach
+`IsCertified` some other way.  Recorded because "the tube isolates the support, so shrink
+the base and certify there" is the sentence this seam invites, and it is not enough.
 -/
 
 set_option autoImplicit false
@@ -123,6 +134,45 @@ theorem isLocallyCertified_of_isCertified_not_conversely [IsNoetherianRing R] {n
 end Direction
 
 end ThetaGeneratorSeed
+
+/-! ## The guard on the obvious route to the away hypothesis -/
+
+namespace DivisorAdaptation
+
+section NoLeakGuard
+
+variable {k : Type u} [Field k] {C : Over (Spec (CommRingCat.of k))}
+variable {R : Type u} [CommRing R] [Algebra k R]
+variable {π : C.left ⟶ P1 k} [IsAffineHom π]
+variable {d : (relCurve C R).LocalEquations}
+
+/-- **The tube's consumer clause is degenerate once two pieces are disjoint.**
+
+`DivSchemeCertZarTube.lean:172-175` routes the tube into the certificate assemblers through
+`forall_noLeak_of_forall_supportLocus_subset`, whose hypothesis is
+`∀ j, d.supportLocus ⊆ A.pieces j` — the support inside **every** piece.  The tube delivers
+containment in **one** piece, and the gap is not a formality: if any two pieces are disjoint,
+the `∀`-form forces the support to be empty.
+
+A chart-typed adaptation is indexed by `Fin m₀ ⊕ Fin m₁`, basic opens of the two *pinned*
+charts, so disjoint pairs are the generic case rather than a corner.  Hence "the tube isolates
+the support, so shrink the base and certify there" does not close the away hypothesis of
+`PointwiseAchiever.ForallPrimeAwayCertified`: a producer must shrink the *cover* so that every
+piece contains the support, or reach `IsCertified` by another route.
+
+This is a statement about the assembler's interface, not about a failed proof attempt. -/
+theorem noLeak_input_degenerate_of_disjoint_pieces (A : DivisorAdaptation C R π d)
+    (hsub : ∀ j : A.index, d.supportLocus ⊆ (A.pieces j : Set (relCurve C R)))
+    {j₁ j₂ : A.index}
+    (hdisj : Disjoint (A.pieces j₁ : Set (relCurve C R))
+      (A.pieces j₂ : Set (relCurve C R))) :
+    d.supportLocus = (∅ : Set (relCurve C R)) :=
+  Set.eq_empty_of_subset_empty fun _ hx =>
+    (Set.disjoint_left.mp hdisj (hsub j₁ hx)) (hsub j₂ hx)
+
+end NoLeakGuard
+
+end DivisorAdaptation
 
 namespace PointwiseAchiever
 
