@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.TensorObjSubstrate.PullbackTensorIso
+import AlgebraicJacobian.Picard.TensorObjInverse
 
 /-!
 # The pullback–tensor comparison with one trivialised factor
@@ -53,15 +54,40 @@ measures how much of it is free.
 
 ## The honest accounting
 
-What this file buys is a strict reduction in the number of *inputs*, not a
-closed gate: D2''s twist previously needed either the sorried general statement
-or a local-triviality hypothesis on a sheaf that does not have one. It now needs
-`PullbackTensorRightUnit`, one statement about `P ⊗ 𝒪_X`. That residual is
-**not** free and this file does not pretend otherwise — no unitor-compatibility
-lemma for `pullbackTensorMap` exists in the project or in Mathlib `v4.31`
-(searched), so proving it means either a unitor-compatibility square for the
-comparison map or a repeat of the `pullbackTensorMap_unit_isIso` sheafification
-argument with one side left general.
+**D2''s twist comparison needs no gate at all** — `pullbackTensorIsoOfTwist`
+below builds `f^*(P ⊗ L) ≅ f^*P ⊗ f^*L` for an arbitrary `P` and an `L ≅ 𝒪_X`,
+sorry-free and unconditionally.
+
+An earlier version of this file gated that behind the class
+`PullbackTensorRightUnit` and asserted that "no unitor-compatibility lemma for
+`pullbackTensorMap` exists in the project or in Mathlib `v4.31`". **That absence
+claim was false**, and it is corrected here rather than quietly dropped: the
+square exists as `Modules.pullbackTensorMap_left_unitality`
+(`Picard/TensorObjInverse.lean:2377`), proved in a file with no `sorry` from the
+free presheaf coherence `Functor.OplaxMonoidal.left_unitality_hom`. It was
+declared `private`, which is why a search for it failed; it is now exported (the
+only edit this file's landing makes outside itself). The lesson, since the shape
+recurs: a symmetric operator has **two** unitor squares, and the search was run
+on the side the consumer happened to stand on.
+
+So the accounting is:
+
+* **left-hand unit case, arbitrary second factor** — unconditional
+  (`pullbackTensorMap_isIso_of_left_unit`), from that square;
+* **right-hand unit case, arbitrary first factor** — unconditional *as an
+  `Iso`* (`pullbackTensorIsoOfTwist`), by transporting the left case across
+  `tensorObj_braiding`, which is itself unconditional;
+* the class `PullbackTensorRightUnit` survives only for the residual it really
+  is: invertibility of the *specific map* `pullbackTensorMap f P 𝒪_X` **on the
+  nose**. Braiding transports the object and the isomorphism, not that map, so
+  the on-the-nose statement still wants a right-handed twin of
+  `pullbackTensorMap_left_unitality`. Mathlib carries
+  `Functor.OplaxMonoidal.right_unitality_hom`, the same free source the left one
+  transcribes, so that is a transcription of a proved argument — not the new
+  sheafification chase an earlier version of this docstring prescribed.
+
+Nothing here is an input to `Scheme.fgaPicardRepresentability`; the seam's
+obligation is untouched. The consumers are D2'/D4' on the Milne–Kollár route.
 
 Nothing here is an input to `Scheme.fgaPicardRepresentability`; the seam's
 obligation is untouched. The consumers are D2'/D4' on the Milne–Kollár route.
@@ -115,8 +141,85 @@ theorem pullbackTensorMap_isIso_of_right_iso_unit {X Y : Scheme.{u}} (f : Y ⟶ 
     (tensorObj_functoriality ((Scheme.Modules.pullback f).map (𝟙 P))
       ((Scheme.Modules.pullback f).map eQ.hom))
 
+/-- **The mirror of `pullbackTensorMap_isIso_of_right_iso_unit`**: first factor
+isomorphic to `𝒪_X`, second arbitrary. Same naturality argument with `𝟙 Q` in the
+second slot. -/
+theorem pullbackTensorMap_isIso_of_left_iso_unit {X Y : Scheme.{u}} (f : Y ⟶ X)
+    (P Q : X.Modules) (eP : P ≅ SheafOfModules.unit X.ringCatSheaf)
+    (h : IsIso (pullbackTensorMap f (SheafOfModules.unit X.ringCatSheaf) Q)) :
+    IsIso (pullbackTensorMap f P Q) := by
+  have hnat := pullbackTensorMap_natural f eP.hom (𝟙 Q)
+  haveI : IsIso (tensorObj_functoriality eP.hom (𝟙 Q)) :=
+    (tensorObjIsoOfIso eP (Iso.refl Q)).isIso_hom
+  haveI : IsIso ((Scheme.Modules.pullback f).map (tensorObj_functoriality eP.hom (𝟙 Q))) :=
+    Functor.map_isIso _ _
+  haveI hG : IsIso (tensorObj_functoriality ((Scheme.Modules.pullback f).map eP.hom)
+      ((Scheme.Modules.pullback f).map (𝟙 Q))) :=
+    (tensorObjIsoOfIso ((Scheme.Modules.pullback f).mapIso eP)
+      ((Scheme.Modules.pullback f).mapIso (Iso.refl Q))).isIso_hom
+  haveI hL : IsIso ((Scheme.Modules.pullback f).map (tensorObj_functoriality eP.hom (𝟙 Q)) ≫
+      pullbackTensorMap f (SheafOfModules.unit X.ringCatSheaf) Q) := inferInstance
+  rw [hnat] at hL
+  exact IsIso.of_isIso_comp_right (pullbackTensorMap f P Q)
+    (tensorObj_functoriality ((Scheme.Modules.pullback f).map eP.hom)
+      ((Scheme.Modules.pullback f).map (𝟙 Q)))
+
+/-- **The left-hand unit case is UNCONDITIONAL** — arbitrary second factor, no
+gate, no local triviality anywhere.
+
+`f^*(𝒪_X ⊗ M) ⟶ f^*𝒪_X ⊗ f^*M` is an isomorphism for every `f` and every `M`.
+This is `Modules.pullbackTensorMap_left_unitality`
+(`Picard/TensorObjInverse.lean:2377`) read as an invertibility statement: that
+square exhibits `pullbackTensorMap f 𝒪_X M`, post-composed with two
+isomorphisms, as `f^*` of the left unitor — itself an isomorphism — so the
+comparison is invertible by right cancellation. -/
+theorem pullbackTensorMap_isIso_of_left_unit {X Y : Scheme.{u}} (f : Y ⟶ X)
+    (M : X.Modules) :
+    IsIso (pullbackTensorMap f (SheafOfModules.unit X.ringCatSheaf) M) := by
+  have h := pullbackTensorMap_left_unitality f M
+  haveI : IsIso ((tensorObjIsoOfIso (pullbackUnitIso f)
+      (Iso.refl ((Scheme.Modules.pullback f).obj M))).hom) :=
+    (tensorObjIsoOfIso (pullbackUnitIso f) (Iso.refl _)).isIso_hom
+  haveI : IsIso ((tensorObj_left_unitor ((Scheme.Modules.pullback f).obj M)).hom) :=
+    (tensorObj_left_unitor _).isIso_hom
+  haveI h3 : IsIso ((Scheme.Modules.pullback f).map (tensorObj_left_unitor M).hom) :=
+    Functor.map_isIso _ _
+  rw [← h] at h3
+  exact IsIso.of_isIso_comp_right
+    (pullbackTensorMap f (SheafOfModules.unit X.ringCatSheaf) M)
+    ((tensorObjIsoOfIso (pullbackUnitIso f)
+        (Iso.refl ((Scheme.Modules.pullback f).obj M))).hom
+      ≫ (tensorObj_left_unitor ((Scheme.Modules.pullback f).obj M)).hom)
+
+/-- **The twist comparison D2' needs, UNCONDITIONALLY**: for an arbitrary `P` and
+an `L ≅ 𝒪_X`,
+`f^*(P ⊗ L) ≅ f^*P ⊗ f^*L`.
+
+No gate, no local triviality on `P`, and the sorried
+`Modules.pullbackTensorMap_isIso` is not consumed. Built by transporting
+`pullbackTensorMap_isIso_of_left_unit` across `tensorObj_braiding` (unconditional)
+on both sides, then re-typing with `asIso`.
+
+This supersedes `pullbackTensorIsoOfRightLocallyTrivial` below for every consumer
+that wants the isomorphism as *data* — which is what a twist by `L^{⊗m}` in the
+Grassmannian comparison wants. The gated version is retained only because it
+produces the comparison *as the specific map* `pullbackTensorMap f P Q`, which
+braiding does not. -/
+noncomputable def pullbackTensorIsoOfTwist {X Y : Scheme.{u}} (f : Y ⟶ X)
+    (P L : X.Modules) (eL : L ≅ SheafOfModules.unit X.ringCatSheaf) :
+    (Scheme.Modules.pullback f).obj (tensorObj P L) ≅
+      tensorObj ((Scheme.Modules.pullback f).obj P) ((Scheme.Modules.pullback f).obj L) :=
+  (Scheme.Modules.pullback f).mapIso (tensorObj_braiding P L) ≪≫
+    (@asIso _ _ _ _ (pullbackTensorMap f L P)
+      (pullbackTensorMap_isIso_of_left_iso_unit f L P eL
+        (pullbackTensorMap_isIso_of_left_unit f P))) ≪≫
+    tensorObj_braiding _ _
+
 /-- **The residual obligation of the one-sided comparison** — a true statement,
 carried as a hypothesis class with **no instance**.
+
+Note this is the residual of an *on-the-nose* statement only: the isomorphism
+D2' needs is available ungated as `pullbackTensorIsoOfTwist` above.
 
 `pullbackTensorMap f P 𝒪_X : f^*(P ⊗ 𝒪_X) ⟶ f^*P ⊗ 𝒪_Y` is an isomorphism for
 every morphism `f` and every module `P`. Both sides are canonically `f^*P` via

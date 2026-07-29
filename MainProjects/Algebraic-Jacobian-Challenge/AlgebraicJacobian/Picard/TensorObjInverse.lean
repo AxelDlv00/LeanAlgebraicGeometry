@@ -2374,7 +2374,13 @@ left-unitality coherence of the "oplax monoidal" structure (`δ = pullbackTensor
 instance `presheafPullbackOplaxMonoidal`), reconciled across the sheafification boundary by
 `pullbackUnitIso_eq_sheafify_eta` (η), `pullbackTensorMap_eq_sheafify_delta` (δ), and the
 `pullbackValIso`/`sheafifyUnitIso`/counit devices (the same B1 toolkit). -/
-private lemma pullbackTensorMap_left_unitality {X Y : Scheme.{u}} (f : Y ⟶ X) (M : X.Modules) :
+-- De-privatised (run 0083, ajc-p1): this is the unitor-compatibility square for
+-- `pullbackTensorMap`, and it makes the left-hand unit case of the comparison an
+-- isomorphism for an *arbitrary* second factor — see
+-- `Picard/PullbackTensorOneSided.lean`, which consumes it to build the twist
+-- comparison D2' needs with no gate at all. It was module-private, which is why an
+-- earlier absence claim in that file reported the coherence as missing.
+lemma pullbackTensorMap_left_unitality {X Y : Scheme.{u}} (f : Y ⟶ X) (M : X.Modules) :
     pullbackTensorMap f (SheafOfModules.unit X.ringCatSheaf) M
         ≫ (tensorObjIsoOfIso (pullbackUnitIso f)
             (Iso.refl ((pullback f).obj M))).hom
