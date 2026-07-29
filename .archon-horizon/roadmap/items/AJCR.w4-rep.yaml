@@ -32,20 +32,28 @@ summary: "======================================================================
   \ that -- the mpr\n   direction -- has been the producer's own implementation since\
   \ 07-27\n   (JacobianDataCharts.lean:216); the new content is the mp direction,\
   \ which\n   shows the identification cannot be undone. hcl still has no producer,\
-  \ so\n   nothing there is discharged.\n\nr4 REPRICING, DOWNWARD, one row: the chart\
-  \ parameter n is pinned to the genus by\nchi_moduleKSheaf (RiemannRoch/ChiCurve.lean:148)\
-  \ UNCONDITIONALLY, under instance\nbinders the chart files already carry. So abel-noninj\
-  \ owes no \"we are at n = g\"\nargument and its n > g branch is unreachable -- the\
-  \ fork is the carve question at\nONE degree. Do NOT quote the five-producer census\
-  \ for this (I-1136); it is false\nat DivRepKit.lean:113, which carries no chi hypothesis.\
-  \ See I-1152.\n\nSORRY COUNT IS NOT DEBT HERE: 17 sorries, all in Challenge.lean\
-  \ (15, the\nstatement-only north star) and Pic0ThetaCocycle.lean (2). A naive count\
-  \ reads\nAJCR as nearly done. It is not -- the gap is the three antecedents above,\
-  \ none of\nwhich is a sorry.\n\nANSWER TO THE COSTING QUESTION, unchanged this round:\
-  \ none of the three closes\nthis week (human-facing accounting at I-0984). The items\
-  \ where a single round can\nstill produce a DECISIVE result rather than partial\
-  \ progress are antecedent 1's\ninhabitation at one concrete V, and the abel-noninj\
-  \ carve question now that its\ndegree is pinned.\n\n================================================================================\n\
+  \ so\n   nothing there is discharged.\n\nr4 REPRICING -- WITHDRAWN BY ITS AUTHOR,\
+  \ same session. I wrote here that the chart\nparameter n is pinned to the genus\
+  \ by chi_moduleKSheaf UNCONDITIONALLY, so\nabel-noninj owed no \"we are at n = g\"\
+  \ argument and its n > g branch was\nunreachable. FALSE, refuted by a fresh-context\
+  \ audit (I-1176) and reproduced:\nchi_moduleKSheaf CONVERTS chi = 1 - n into n =\
+  \ genus C, it does not SUPPLY\nchi = 1 - n. With n free and no chi hypothesis the\
+  \ goal FAILS, and it still fails\nwith a representation at n in scope. My probe\
+  \ had hchi as a binder, so it measured\nthe conversion (I-1177).\n   THE STANDING\
+  \ PRICE is ajcr-p2's: n > g is unreachable for a chart built on a\nproducer IN THIS\
+  \ TREE, because each such producer carries an hchi at its own\nindex. That is a\
+  \ claim about producers and a lane must keep them in view.\nWhether an inhabitant\
+  \ exists at n != genus C is an OPEN inhabitation question\nabout DivRepAffinePullback\
+  \ -- mixedParamChart typechecks at arbitrary nn.\nabel-noninj's live target is unchanged:\
+  \ the carve question, does DivScheme g\ncontain points where H^1 fails to vanish.\n\
+  \nSORRY COUNT IS NOT DEBT HERE: 17 sorries, all in Challenge.lean (15, the\nstatement-only\
+  \ north star) and Pic0ThetaCocycle.lean (2). A naive count reads\nAJCR as nearly\
+  \ done. It is not -- the gap is the three antecedents above, none of\nwhich is a\
+  \ sorry.\n\nANSWER TO THE COSTING QUESTION, unchanged this round: none of the three\
+  \ closes\nthis week (human-facing accounting at I-0984). The items where a single\
+  \ round can\nstill produce a DECISIVE result rather than partial progress are antecedent\
+  \ 1's\ninhabitation at one concrete V, and the abel-noninj carve question now that\
+  \ its\ndegree is pinned.\n\n================================================================================\n\
   HISTORY FOLLOWS -- corrections in reverse chronological layers.\n================================================================================\n\
   \n*** hcpt CLAUSE RETRACTED 2026-07-29 (review-ajcr, run 0082 s0006), refuted by\
   \ ajcr-p4 (I-1007)\nwithin minutes of my writing it. THE DEGENERACY OBSERVATION\
@@ -415,5 +423,5 @@ metadata:
   author: horizon
   created_at: '2026-07-14T01:20:10.654781+00:00'
   parent: AJCR.jacobian
-  updated_at: '2026-07-29T19:05:47.930911+00:00'
+  updated_at: '2026-07-29T19:32:35.229288+00:00'
   milestone: AJCR.w4-rep

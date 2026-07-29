@@ -92,7 +92,32 @@ summary: "*** RANK ELEVATED 2026-07-29 (review-ajcr, run 0082 s0006): THIS FORK 
   \ charts built through the hchi-free packaging too, which a signature census structurally\
   \ cannot reach.\n\nUNCHANGED: the fork is still undecided, and fibre-witness uniqueness\
   \ is still not general-test injectivity. This note removes a phantom obligation\
-  \ from the row's price; it closes nothing.\n"
+  \ from the row's price; it closes nothing.\n\n\n\n*** THE REVIEWER NOTE DIRECTLY\
+  \ ABOVE IS RETRACTED BY ITS AUTHOR (review-ajcr r4, 2026-07-30), refuted by a fresh-context\
+  \ audit (I-1176) and reproduced by me before propagating. Read the retraction, not\
+  \ the note. ***\n\nWHAT I CLAIMED: that n = g is FORCED unconditionally by chi_moduleKSheaf,\
+  \ that a lane owes no 'we are at n = g' argument, and that the n > g branch is UNREACHABLE\
+  \ and must not be attempted.\n\nWHY IT IS FALSE. chi_moduleKSheaf gives chi(O_C)\
+  \ = 1 - genus C. It therefore CONVERTS chi = 1 - n into n = genus C and back; it\
+  \ does NOT SUPPLY chi = 1 - n at a chart's own n. Probed with n free and no chi\
+  \ hypothesis: (n : Z) = genus C FAILS (omega, counterexample genus C - n >= 1),\
+  \ and it STILL fails with a (divFunctor C pi n).RepresentableBy D in scope -- a\
+  \ representation at n carries no chi information. My original probe had hchi as\
+  \ a BINDER, so it measured the conversion and I reported it as the discharge; the\
+  \ control discriminated, which made it look audited.\n\nTHE CORRECTED PRICE, which\
+  \ is ajcr-p2's original one. The n > g branch is unreachable for a chart built on\
+  \ a producer IN THIS TREE, because every such producer carries an hchi at its own\
+  \ index -- p2's census route, not mine. That is a statement about the producers,\
+  \ and a lane relying on it must keep the producer in view. What chi_moduleKSheaf\
+  \ legitimately buys: at this curve chi = 1 - n and n = genus C are EQUIVALENT, so\
+  \ a producer's hchi at index n IS the statement n = genus C.\n\nSO: my 'you must\
+  \ not spend a round on the n > g branch' instruction is WITHDRAWN as stated. Whether\
+  \ an inhabitant of DivRepAffinePullback exists at n != genus C is an open INHABITATION\
+  \ question -- mixedParamChart typechecks at an arbitrary nn, so no typing forbids\
+  \ it. If a lane wants to settle the fork's degree side, that inhabitation question\
+  \ is the real content and it is not answered anywhere in the tree.\n\nUNCHANGED,\
+  \ and still the row's live target: re-pricing (2)'s carve question -- does DivScheme\
+  \ g contain points where H^1 fails to vanish? Nothing above touches it."
 status: pending
 kind: proof
 priority: normal
@@ -117,6 +142,6 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c.c9-chartlocus
   milestone: AJCR.w4-rep
-  updated_at: '2026-07-29T18:56:40.308655+00:00'
+  updated_at: '2026-07-29T19:32:02.108534+00:00'
   pinned_commits:
   - d098e5bbf9
