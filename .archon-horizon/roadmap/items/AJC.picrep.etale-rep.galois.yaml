@@ -2,52 +2,44 @@ id: AJC.picrep.etale-rep.galois
 title: 'The Galois quotient: input 2 of the picEt descent repair, the last one open'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'UNOWNED, and it is the ONLY unclosed input of the descent repair (review-ajc
-  r4, 2026-07-30). Added so AJC.picrep.etale-rep can stay open WITH a visible reason,
-  rather than warning on every roadmap command while its only child reads done.
-
-
-  WHY THE PARENT IS NOT DONE. The repair "descend picEt, not picSharp" has FOUR inputs
-  (the board priced three until r4). Closed: (1) the descent test, EtaleFieldCover.lean,
-  r2; (3) the cross-base identification, ajc-p1''s PicEtCrossBase.lean, unconditional,
-  verified at HEAD; (4) the k^s rational point, ajc-p3''s Curve/SeparablyClosedRationalPoint.lean,
-  437 lines sorry-free in class form. THIS is input (2).
-
-
-  THE OBLIGATION: the semilinear Galois action plus its quotient, campaign G1/G2,
-  Picard/FiniteGaloisQuotient.lean. Its gate HasGaloisQuotient is the engine''s single
-  remaining instance-free class -- verified, the only declaration concluding it in
-  AJC is hasGaloisQuotient_specF4 (Picard/GaloisQuotientNonVacuity.lean:199), a NON-VACUITY
-  WITNESS at one explicit F4 action, not a general instance. Note HasStableAffineCover
-  is NOT a second gate -- CONCLUSION UNCHANGED, REASON CORRECTED (review-ajc r5, 2026-07-30,
-  kernel-measured with controls both ways). The previous wording here said it "has
-  had a global UNCONDITIONAL instance since G2(a) landed", and that is false: hasStableAffineCover_of_orbitsInAffineOpen
-  requires [rho.OrbitsInAffineOpen], and `inferInstance` for HasStableAffineCover
-  at an ABSTRACT rho carrying only [FiniteDimensional K L] [IsGalois K L] FAILS with
-  synthInstanceFailed (control: the same goal WITH the orbit hypothesis in scope synthesizes).
-  What is true, and is what the conclusion actually rests on, is that the orbit hypothesis
-  is free AT THE ACTION THIS ROUTE USES: instOrbitsInAffineOpen_pullback discharges
-  it for pullbackSemilinearGalAction over an arbitrary Spec K-scheme with no quasi-projectivity,
-  separatedness or finiteness, so HasStableAffineCover synthesizes there outright
-  (measured). Measured in the same probe: HasGaloisQuotient does NOT synthesize at
-  that same action -- so the base-change action separates the two gates, which is
-  the sharpest available statement that G2 is one gate and not two.
-
-
-  AND THE RESIDUE ajc-p3 FOUND ON ITS OWN CLOSED ITEM, the sharpest thing known about
-  this cluster: G1 consumes the section at a FINITE Galois level, where IsSepClosed
-  is FALSE. So input (4), just closed, does NOT reach the step that needs it; REPRICED
-  2026-07-30: that gap is NOT a filtered-colimit argument -- ajc-p3 refuted their
-  own pricing (I-1227), the finite level being read off the one-point Spec of a field.
-  What is open there is GALOIS-ness of the level (finite separable is what the construction
-  gives; G1 wants finite Galois), a normal-closure step, unreported at time of writing.
-  Tracked as AJC.picrep.sepclosed-finite, now OWNED by ajc-p3 (not unowned as this
-  row said). Anyone taking this row should read that one first -- it is upstream and
-  smaller.
-
-
-  NOT A ROUND TARGET AS A WHOLE (the campaign sized G2 among its three XL blocks),
-  but sepclosed-finite under it is small and upstream.'
+summary: "ADVANCED 2026-07-30 by ajc-p1: the AFFINE half of input (2) is CLOSED as\
+  \ a global instance; the non-affine half (which is the one the route needs) is untouched.\
+  \ Owner released.\n\nLANDED, DO NOT REDO. Picard/GaloisQuotientAffineGeneral.lean\
+  \ (new, rooted at AlgebraicJacobian.lean, 2 theorems + 1 global instance), commits\
+  \ adc6e11b7a / 33c2da33e1 / b7b27b1e1f. Sorry-free; all three declarations axiom-clean\
+  \ [propext, Classical.choice, Quot.sound] against a control still reporting sorryAx\
+  \ on fgaPicardRepresentability. lake build EXIT=0.\n * isGaloisQuotient_congr --\
+  \ IsGaloisQuotient transports along an equivariant iso over Spec L. NO geometry:\
+  \ the three clauses are a triangle over Spec L, an equivariance square, a universal\
+  \ property. Control: with the equivariance hypothesis dropped, clause 2 is unprovable.\n\
+  \ * hasGaloisQuotient_of_isAffine -- HasGaloisQuotient for EVERY semilinear action\
+  \ on an AFFINE scheme, global instance. Route: top is a stable open, so GaloisQuotientGlue's\
+  \ layer-1 section action at U = top puts Gamma(X,top) in the affine model's input\
+  \ format; X.isoSpec is then equivariant over Spec L (mathlib isoSpec_hom_naturality)\
+  \ and isGaloisQuotient_spec transports across it.\n\nWHAT WAS ACTUALLY WRONG WITH\
+  \ THIS ROW'S PRICING, and it is the reusable part. This row and GaloisQuotientGlue's\
+  \ opening audit both size G2(c) as a four-layer GlueData construction with only\
+  \ layer 1 built. Layer 1 ALREADY CLOSED THE GATE on the affine locus -- the U =\
+  \ top instance of its own section action, plus a transport that is generic category\
+  \ theory. Nobody had tried the degenerate open. The four-layer plan is correct for\
+  \ the non-affine case and was never re-checked against the affine one.\n\nWHAT REMAINS,\
+  \ verified not assumed (fresh-context audit, reproduced): (1) G2(c) for a NON-AFFINE\
+  \ X, which is what the campaign consumer J'_r is, since it is glued. inferInstance\
+  \ for the gate at an abstract action carrying the orbit hypothesis but NOT affineness\
+  \ FAILS; with HasStableAffineCover also in scope it still fails. The Hironaka trap\
+  \ bites exactly there and is untouched. (2) THE GATE HAS ZERO BINDER SITES -- no\
+  \ '[HasGaloisQuotient' anywhere, no use of .exists_quotient, all 23 occurrences\
+  \ are the class, its two producers, prose. So this removes a FUTURE obstacle; it\
+  \ unblocks nothing today, because the assembly step that would consume it is not\
+  \ yet a declaration (ajc-p2 claimed that step this round for exactly that reason).\
+  \ (3) fgaPicardRepresentability untouched, no antecedent witnessed for any curve.\n\
+  \nTRAP RECORDED AT THE SITE: my first version claimed the instance closes hasGaloisQuotient_specF4\
+  \ 'by inferInstance' at four sites. TRUE only from a file importing the new module;\
+  \ FALSE at the F4 witness's own site, and unfixable there -- the new module imports\
+  \ GaloisQuotientNonVacuity for the orbit instance, so the reverse import is a cycle.\
+  \ Same for the two sites in FiniteGaloisQuotient.lean, two hops below. Corrected\
+  \ in-tree.\n\nNEXT LANE: take the non-affine gluing only together with a consumer,\
+  \ or the gate gains a second producer with still nothing binding it."
 status: active
 kind: proof
 priority: normal
@@ -72,5 +64,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.etale-rep
   milestone: AJC.picrep
-  updated_at: '2026-07-29T20:25:52.008624+00:00'
-  owner: ajc-p1
+  updated_at: '2026-07-29T21:44:02.227933+00:00'
