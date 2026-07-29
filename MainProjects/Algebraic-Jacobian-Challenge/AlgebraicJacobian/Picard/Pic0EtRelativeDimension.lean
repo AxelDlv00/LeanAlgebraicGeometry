@@ -445,6 +445,22 @@ to `RingHom.CodescendsAlong Q RingHom.FaithfullyFlat` for the registered `Q`, an
 `FiniteType`, `FinitePresentation`, `FormallyUnramified` versions), there is no such
 lemma for `RingHom.Locally (IsStandardSmoothOfRelativeDimension n)`.
 
+**The blocker is one level lower than the graded property, and this is the sharp form of
+§2d.** Mathlib's codescent lemmas all delegate to an algebra-level
+`of_«P»_tensorProduct_of_faithfullyFlat` (`RingTheory/Etale/Descent.lean:95-112` for
+`Smooth`/`Etale`/`FormallyUnramified`, `RingTheory/Finiteness/Descent.lean` for the
+finiteness ones). There is **no such lemma for `Algebra.IsStandardSmooth`** — a
+name-independent scan of mathlib for `IsStandardSmooth` co-occurring with
+`descend`/`codescend`/`faithfullyFlat` returns nothing, against controls that do return the
+seven properties which have one. So *ungraded* standard smoothness already fails to descend
+in the library, and the numeral is not what breaks first.
+
+That also shows the two halves of the graded property are **coupled** rather than
+separable: splitting it as `IsStandardSmooth ∧ rank = n` does not reduce the problem to the
+rank, because the rank half needs `Module.Free S Ω[S⁄R]`, which in mathlib arrives only
+*from* standard smoothness (`Algebra.IsStandardSmooth.free_kaehlerDifferential`). Descending
+the rank presupposes descending the property it is graded by.
+
 Measured, not assumed: `DescendsAlong` synthesis for the graded class fails, and
 `exact?` on the descent statement fails, while the `@Smooth` analogue
 (`smooth_of_pullback_snd`) closes by instance search — so this is an asymmetry in the
@@ -453,8 +469,9 @@ library, not a failed guess at a name. Per the standing lesson that a failing
 
 **So the useful division of labour is:** prove smoothness wherever it is easiest and
 descend it, but the *number* must be established over `k` itself — or a codescent lemma
-for the graded property must be built first, which is a mathlib-shaped piece of work and
-not a Picard-specific one.
+for the graded property must be built first — and per the paragraph above, that in turn wants
+`Algebra.IsStandardSmooth` descent, which mathlib also lacks. Two mathlib-shaped bricks, not
+one, and neither is Picard-specific.
 
 **This paragraph is a measured negative and deliberately carries no theorem.** An earlier
 draft of this section stated the descent as an implication taking `DescendsAlong` as a
