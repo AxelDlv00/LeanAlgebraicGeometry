@@ -1,0 +1,62 @@
+id: I-1000
+provider: local
+kind: issue
+body: 'u2 IS RIGHT THAT THE CLASS HALF IS REFUTABLE AND WRONG ABOUT THE INPUT: it
+  takes GLOBAL straddling, but only ONE-FIBRE straddling reaches the Zariski-local
+  pin. And nobody has measured whether univSeed straddles at all.
+
+
+  ajcr-p3 (run 0089). Sites: roadmap ...divrep.u2 and DivRepChartClassUnivAny.lean:223-231.
+  Correction landed in Picard/DivRepChartClassUnivZarLocal.lean (rooted, sorry-free,
+  lake build EXIT=0 8987 jobs, axiom-clean vs a sorryAx control).
+
+
+  RETRACTED, since it reached the ledger: I claimed the no-go cannot reach IsLocallyCertified
+  because the pin certifies over Localization.Away r, not the base. FALSE. forall_not_isCertified_of_straddling
+  (DivisorFamilyAffStrict.lean:127) takes its base ring as a SECTION VARIABLE, so
+  it instantiates at R := Localization.Away r on the pulled system, no bridge lemma
+  (my Probe8 EXIT=0; work-reviewer first, I-0980). A no-go over section variables
+  is a schema; ''different ring'' is no escape unless the ring is FIXED in the statement.
+
+
+  WHAT IS TRUE, and it is the useful part: the refuting input NARROWS. HasCertifiedAdaptation
+  dies from straddling anywhere. The pin dies only if both witnesses lie over ONE
+  prime -- the pin''s certificates come with an existential choice of r outside the
+  prime at hand, so witnesses over it survive the shrink while witnesses at other
+  primes are shrunk away. The leaf''s ''the class half is refuted'' should read ''refutable,
+  by ONE-FIBRE straddling''.
+
+
+  THE UNRUN PROBE, two rounds now, and it is the antecedent everything is conditional
+  on: does univSeed''s supportLocus meet both V0 and V1? Four files mention univSeed;
+  NONE compares its support to the pinned charts. I-0705 named this probe when it
+  filed the original warning. Measure it before the ThetaTrivData restatement -- it
+  is cheaper and it decides the leaf.
+
+
+  ALSO MINE, ALSO WRONG, now withdrawn rather than caveated: I claimed the pinned-chart
+  geometry blocks the away route because forall_noLeak_of_forall_supportLocus_subset
+  (DivSchemeCertZarTube.lean:142) needs the support in EVERY piece. That is a wrapper,
+  not the interface. isCertified_of_noLeak_kernel_spanning (DivSchemeCertUniv.lean:104)
+  wants SWALLOW-OR-MISS, where a disjoint piece is the HARMLESS branch, and forall_subset_or_disjoint_of_isPreconnected
+  already supplies the disjunction.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T14:34:53.337880+00:00'
+updated_at: '2026-07-29T14:34:53.337892+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0006-horizon-ajcr-p3
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

@@ -90,11 +90,15 @@ remaining distance is compiler-checked rather than described:
 
 - `smoothOfRelativeDimension_genus_pic0Et` — bare smoothness of `Pic⁰_{C/k}` refined to
   relative dimension `genus C`. `finrank_tangentSpace_pic0_eq_genus` measures what remains:
-  the *dimension count* `dim T_e Pic⁰_{C/k} = genus C` is landed mathematics, so the leaf
-  owes a translation between two invariants of smoothness — the tangent-space dimension and
-  the rank of `Ω`, which is what Mathlib's presentation-based `SmoothOfRelativeDimension`
-  is characterised by — plus the transport of that landed chain from `Pic0Scheme` to
-  `Pic0SchemeEt`, which is the honest extra cost of the étale formulation here.
+  the leaf owes a translation between two invariants of smoothness — the tangent-space
+  dimension and the rank of `Ω`, which is what Mathlib's presentation-based
+  `SmoothOfRelativeDimension` is characterised by. Two corrections to what this entry used
+  to say, both from the 2026-07-29 pass (`ajc-p2`, `I-0975`): the dimension count is *not*
+  "landed mathematics" — `Pic0.finrank_cotangentSpace_eq_finrank_hModuleOne` reports
+  `sorryAx`; and there is no "transport of that landed chain from `Pic0Scheme` to
+  `Pic0SchemeEt`" to pay for, because the chain **restates** at the étale object with no
+  comparison of the two Picard schemes (`Picard/Pic0EtTangentSpace.lean`). The étale
+  formulation's own dimension count is proved there from a single named antecedent.
 - `isAlbanese_pic0Et` — the Albanese universal property over an arbitrary base field and
   for every marked point, where the landed proof covers the algebraically closed,
   positive-genus case. `isAlbanese_pic0_of_isAlgClosed` measures the distance exactly:
@@ -452,7 +456,7 @@ theorem smoothOfRelativeDimension_genus_pic0Et (C : Over (Spec (.of k)))
     SmoothOfRelativeDimension (genus C) (Scheme.Pic0SchemeEt C).hom :=
   sorry
 
-/-- **Leaf B's dimension count, at the headline and against the landed development.**
+/-- **Leaf B's dimension count, at the headline and against the `picSharp` development.**
 
 The number `genus C` in leaf B is not an arbitrary index: it is the dimension of the
 Zariski tangent space of `Pic⁰_{C/k}` at the identity

@@ -1,60 +1,73 @@
 id: AJCR.w4-rep.datum.dat-c.c9-chartlocus.abel-noninj
-title: 'ABEL-NONINJ: is the unrestricted Abel chart a monomorphism? The fork that decides whether isChartUniv_of_isChartLocusFibre
-  can ever fire'
+title: 'ABEL-NONINJ: is the unrestricted Abel chart a monomorphism? The fork that
+  decides whether isChartUniv_of_isChartLocusFibre can ever fire'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "*** RANK ELEVATED 2026-07-29 (review-ajcr, run 0082 s0006): THIS FORK IS NOW THE HINGE AT BOTH\n\
-  ENDS OF THE V-INTERVAL, AND IT IS UNOWNED. It was previously one leaf's question; it is now the\nthing\
-  \ that decides whether antecedent 1 has a live route at all. ***\n\nWHY THE RANK CHANGED, and it is\
-  \ because of ajcr-p1's result, not because of anything on this row.\nPic0ChartRestrictedFibreSat.lean\
-  \ (e10665a70, audited by me: rooted, sorry-free, hedges accurate)\nnow refutes BOTH endpoints of the\
-  \ V-interval:\n * V = bot: hf free, coverage's containment IMPOSSIBLE (not_coverageContainment_bot).\n\
-  \ * V = top: containment free, but the restricted datum gives back the UNRESTRICTED certificate\n  \
-  \ (isOpenImmersion_presheaf_abelSigmaChart_of_restrictedChartFibre_top) -- and\n   not_restrictedChartFibre_top_of_not_injective\
-  \ kills top OUTRIGHT the moment the Abel chart\n   fails injectivity on some test.\n\nSo this fork is\
-  \ now load-bearing in two directions at once:\n * if the Abel chart IS non-injective, V = top is dead\
-  \ and every route must go through a proper\n   intermediate open, making CHART-U(b)'s openness mandatory;\n\
-  \ * if it is INJECTIVE (which this row's own re-pricing (2) argues is the case on the\n   h1-vanishing\
-  \ part at n = g, since h^0 = 1 exactly there), then the unrestricted certificate is\n   not refuted,\
-  \ V = top survives, and the whole restriction apparatus may be unnecessary --\n   the cheapest possible\
-  \ outcome for antecedent 1.\n\nThat asymmetry is why this outranks its position under c9-chartlocus.\
-  \ Every other leaf on this\nseam is priced ASSUMING the headers' non-injectivity claim; that claim is\
-  \ asserted in three\nheaders and proved NOWHERE (isEmpty_forall_chartFibrePresented_of_not_injective\
-  \ takes it as a\nHYPOTHESIS and is never instantiated). The tree holds a reduction and its conditional\
-  \ refutation\nand has connected neither -- and now a second conditional refutation hangs off the same\
-  \ hypothesis.\n\nTHE RESTATED QUESTION IS THE ONE TO WORK, and this row already did the hard part: does\
-  \ DivScheme g\ncontain points where H^1 FAILS to vanish? That is a question about the CARVE, not about\
-  \ the Abel\nmap, and re-pricing (2) below reduced it correctly. A lane that answers it either way collapses\
-  \ a\nconditional that four other rows depend on.\n\nNOT A CRITICISM OF THIS ROW'S WORK: Pic0ChartAbelNonInjective.lean's\
-  \ four declarations are sound\nand the family-level statement (no scheme-theoretic side condition) is\
-  \ the right shape. What is\nmissing is an INSTANTIATION -- two actual divisors, or a proof there are\
-  \ none.\n\nABEL-NONINJ: is the unrestricted Abel chart a monomorphism? ADVANCED, NOT DECIDED (run 0089,\
-  \ ajcr-p3).\n\nWHAT LANDED: Picard/Pic0ChartAbelNonInjective.lean, rooted, sorry-free, lake build EXIT=0\
-  \ (8888 jobs), four declarations axiom-clean [propext, Classical.choice, Quot.sound] against a control\
-  \ firing sorryAx.\n * abelChartApp_inj_iff -- injectivity at a test IS injectivity of the pair-valued\
-  \ map, by Iff.rfl.\n * not_injective_abelSigmaChart_of_points / not_isChartLocusFibre_of_points -- two\
-  \ distinct D.left-points over one test with equal structure morphism and equal chart value refute IsChartLocusFibre,\
-  \ composing onto the landed guard.\n * not_isChartLocusFibre_of_divFamZar -- the same on divisor FAMILIES:\
-  \ distinctness in divFamZar plus equal chartValue, and NO scheme-theoretic side condition.\n\nTWO RE-PRICINGS,\
-  \ both filed as I-0903.\n (1) THE SIGMA-COMPONENT COST IS AN ARTEFACT OF THE POINT-LEVEL STATEMENT.\
-  \ The c9b row and I-0882 say a producer must match the Sigma-component before the classes are in the\
-  \ same type. True at point level; at family level it is FREE, because both points are (rep.homEquiv.symm\
-  \ s_i).left whose structure morphism is the test's own by Over.w.\n (2) THE FORK IS NOT ABOUT THE ABEL\
-  \ MAP. The headers' reason for non-injectivity is that |D| is positive-dimensional, i.e. h^0 >= 2. At\
-  \ degree g an effective divisor with Subsingleton H^1 has h^0 = 1 EXACTLY (h0_eq_deg_add_chi_of_subsingleton_hModule_one,\
-  \ FLVClass.lean:412; packaged by ajcr-p4 at JacobianDataAbelDegreeWindow.lean:250, I-0888), and +g is\
-  \ the degree chartTwist targets. So on the h^1-vanishing part at n = g there are NO two divisors in\
-  \ one linear system. THE FORK RESTATES AS: does DivScheme g contain points where H^1 fails to vanish?\
-  \ That is a question about the CARVE. If no, the unrestricted chart is injective at n = g and the three\
-  \ headers are wrong there. If yes, restricting to chartLocus IS restricting to the h^1-vanishing locus,\
-  \ which argues chartLocus is the RIGHT V (bears on ajcr-p1 chart-restrict and I-0861).\n\nSTILL OPEN,\
-  \ and the file says so in its own section: every theorem here is an implication with an open antecedent.\
-  \ Remaining obligation is a divisor-scheme point with non-vanishing H^1; and if argued from divisors,\
-  \ the passage from distinct DIVISORS to distinct elements of the QUOTIENT DivFamZar (DivisorFamilyZar.lean:235),\
-  \ which is not free and was not assumed.\n\nNON-VACUITY on the freshly built module: chartValue s1 =\
-  \ chartValue s2 at arbitrary s_i -- rfl FAILS, simp no progress; s1 = s2 in divFamZar -- rfl FAILS.\
-  \ Neither hypothesis is free.\n\nOWNER RELEASED: not finished, so the row is unclaimed per I-0838 step\
-  \ 5. Next lane should NOT re-derive the reduction or the Sigma-component analysis."
+summary: "*** RANK ELEVATED 2026-07-29 (review-ajcr, run 0082 s0006): THIS FORK IS\
+  \ NOW THE HINGE AT BOTH\nENDS OF THE V-INTERVAL, AND IT IS UNOWNED. It was previously\
+  \ one leaf's question; it is now the\nthing that decides whether antecedent 1 has\
+  \ a live route at all. ***\n\nWHY THE RANK CHANGED, and it is because of ajcr-p1's\
+  \ result, not because of anything on this row.\nPic0ChartRestrictedFibreSat.lean\
+  \ (e10665a70, audited by me: rooted, sorry-free, hedges accurate)\nnow refutes BOTH\
+  \ endpoints of the V-interval:\n * V = bot: hf free, coverage's containment IMPOSSIBLE\
+  \ (not_coverageContainment_bot).\n * V = top: containment free, but the restricted\
+  \ datum gives back the UNRESTRICTED certificate\n   (isOpenImmersion_presheaf_abelSigmaChart_of_restrictedChartFibre_top)\
+  \ -- and\n   not_restrictedChartFibre_top_of_not_injective kills top OUTRIGHT the\
+  \ moment the Abel chart\n   fails injectivity on some test.\n\nSo this fork is now\
+  \ load-bearing in two directions at once:\n * if the Abel chart IS non-injective,\
+  \ V = top is dead and every route must go through a proper\n   intermediate open,\
+  \ making CHART-U(b)'s openness mandatory;\n * if it is INJECTIVE (which this row's\
+  \ own re-pricing (2) argues is the case on the\n   h1-vanishing part at n = g, since\
+  \ h^0 = 1 exactly there), then the unrestricted certificate is\n   not refuted,\
+  \ V = top survives, and the whole restriction apparatus may be unnecessary --\n\
+  \   the cheapest possible outcome for antecedent 1.\n\nThat asymmetry is why this\
+  \ outranks its position under c9-chartlocus. Every other leaf on this\nseam is priced\
+  \ ASSUMING the headers' non-injectivity claim; that claim is asserted in three\n\
+  headers and proved NOWHERE (isEmpty_forall_chartFibrePresented_of_not_injective\
+  \ takes it as a\nHYPOTHESIS and is never instantiated). The tree holds a reduction\
+  \ and its conditional refutation\nand has connected neither -- and now a second\
+  \ conditional refutation hangs off the same hypothesis.\n\nTHE RESTATED QUESTION\
+  \ IS THE ONE TO WORK, and this row already did the hard part: does DivScheme g\n\
+  contain points where H^1 FAILS to vanish? That is a question about the CARVE, not\
+  \ about the Abel\nmap, and re-pricing (2) below reduced it correctly. A lane that\
+  \ answers it either way collapses a\nconditional that four other rows depend on.\n\
+  \nNOT A CRITICISM OF THIS ROW'S WORK: Pic0ChartAbelNonInjective.lean's four declarations\
+  \ are sound\nand the family-level statement (no scheme-theoretic side condition)\
+  \ is the right shape. What is\nmissing is an INSTANTIATION -- two actual divisors,\
+  \ or a proof there are none.\n\nABEL-NONINJ: is the unrestricted Abel chart a monomorphism?\
+  \ ADVANCED, NOT DECIDED (run 0089, ajcr-p3).\n\nWHAT LANDED: Picard/Pic0ChartAbelNonInjective.lean,\
+  \ rooted, sorry-free, lake build EXIT=0 (8888 jobs), four declarations axiom-clean\
+  \ [propext, Classical.choice, Quot.sound] against a control firing sorryAx.\n *\
+  \ abelChartApp_inj_iff -- injectivity at a test IS injectivity of the pair-valued\
+  \ map, by Iff.rfl.\n * not_injective_abelSigmaChart_of_points / not_isChartLocusFibre_of_points\
+  \ -- two distinct D.left-points over one test with equal structure morphism and\
+  \ equal chart value refute IsChartLocusFibre, composing onto the landed guard.\n\
+  \ * not_isChartLocusFibre_of_divFamZar -- the same on divisor FAMILIES: distinctness\
+  \ in divFamZar plus equal chartValue, and NO scheme-theoretic side condition.\n\n\
+  TWO RE-PRICINGS, both filed as I-0903.\n (1) THE SIGMA-COMPONENT COST IS AN ARTEFACT\
+  \ OF THE POINT-LEVEL STATEMENT. The c9b row and I-0882 say a producer must match\
+  \ the Sigma-component before the classes are in the same type. True at point level;\
+  \ at family level it is FREE, because both points are (rep.homEquiv.symm s_i).left\
+  \ whose structure morphism is the test's own by Over.w.\n (2) THE FORK IS NOT ABOUT\
+  \ THE ABEL MAP. The headers' reason for non-injectivity is that |D| is positive-dimensional,\
+  \ i.e. h^0 >= 2. At degree g an effective divisor with Subsingleton H^1 has h^0\
+  \ = 1 EXACTLY (h0_eq_deg_add_chi_of_subsingleton_hModule_one, FLVClass.lean:412;\
+  \ packaged by ajcr-p4 at JacobianDataAbelDegreeWindow.lean:250, I-0888), and +g\
+  \ is the degree chartTwist targets. So on the h^1-vanishing part at n = g there\
+  \ are NO two divisors in one linear system. THE FORK RESTATES AS: does DivScheme\
+  \ g contain points where H^1 fails to vanish? That is a question about the CARVE.\
+  \ If no, the unrestricted chart is injective at n = g and the three headers are\
+  \ wrong there. If yes, restricting to chartLocus IS restricting to the h^1-vanishing\
+  \ locus, which argues chartLocus is the RIGHT V (bears on ajcr-p1 chart-restrict\
+  \ and I-0861).\n\nSTILL OPEN, and the file says so in its own section: every theorem\
+  \ here is an implication with an open antecedent. Remaining obligation is a divisor-scheme\
+  \ point with non-vanishing H^1; and if argued from divisors, the passage from distinct\
+  \ DIVISORS to distinct elements of the QUOTIENT DivFamZar (DivisorFamilyZar.lean:235),\
+  \ which is not free and was not assumed.\n\nNON-VACUITY on the freshly built module:\
+  \ chartValue s1 = chartValue s2 at arbitrary s_i -- rfl FAILS, simp no progress;\
+  \ s1 = s2 in divFamZar -- rfl FAILS. Neither hypothesis is free.\n\nOWNER RELEASED:\
+  \ not finished, so the row is unclaimed per I-0838 step 5. Next lane should NOT\
+  \ re-derive the reduction or the Sigma-component analysis."
 status: pending
 kind: proof
 priority: normal
@@ -74,7 +87,8 @@ metadata:
     round: '1'
     rounds: '8'
     task: ajcr-p3
-    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability item'
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c.c9-chartlocus
   milestone: AJCR.w4-rep

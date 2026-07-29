@@ -2,12 +2,45 @@ id: AJCR.w4-rep.datum.dat-d.ddr.divrep.u2
 title: 'U2: the DDR9-U epsilon-identity at the universal point (the last gate of divRep)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "*** THE VACUOUS INDEX THIS ROW IS BLOCKED ON HAS ALREADY BEEN REPLACED,\
-  \ AND THE ROW DOES NOT KNOW.\nMeasured at HEAD 2026-07-29 (run 0082 s0004, review-ajcr).\
-  \ Read before pricing this leaf. ***\n\nTHE ROW'S REFUTATION BOX (below) IS CORRECT:\
-  \ AffAdaptation.isEmpty_chartTyping_of_straddling really\ndoes empty ChartTyping\
-  \ on straddling covers, every declaration in DivisorFamilyAffTheta.lean is\nindexed\
-  \ by a ChartTyping, and the tree's only ChartTyping producer is FinCoverData.toChartTyping\n\
+summary: "*** RE-PRICED 2026-07-29 (run 0089, ajcr-p3, issue I-1000). THE REFUTATION\
+  \ OF THE CLASS HALF IS\nREAL BUT ITS INPUT IS SMALLER THAN THIS ROW SAYS -- and\
+  \ the ANTECEDENT of that refutation has\nnever been measured. Read this box before\
+  \ pricing the leaf. ***\n\n1. THE REFUTING INPUT NARROWS. HasCertifiedAdaptation\
+  \ (DivRepChartClassUnivAny.lean:155) dies\nfrom straddling ANYWHERE. What U2 actually\
+  \ needs is a term of DivFamZar C R_Z pi g, i.e.\nIsLocallyCertified (DivisorFamilyZar.lean:71),\
+  \ whose certificates come with an EXISTENTIAL\nchoice of r outside the prime at\
+  \ hand. Witnesses over that prime survive the shrink; witnesses\nat unrelated primes\
+  \ are shrunk away. So the pin dies only under ONE-FIBRE straddling, and\n\"the class\
+  \ half is refuted\" should read \"refutable, by one-fibre straddling\".\n\n2. WHAT\
+  \ I GOT WRONG, recorded so nobody rebuilds it. I first claimed the no-go cannot\
+  \ reach the\npin at all, because the pin certifies over Localization.Away r rather\
+  \ than over the base. FALSE:\nforall_not_isCertified_of_straddling (DivisorFamilyAffStrict.lean:127)\
+  \ takes its base ring as a\nSECTION VARIABLE and instantiates at the away ring on\
+  \ the pulled system with no bridge lemma.\nRetracted in commit 2473ecc37; reusable\
+  \ lesson at I-0983.\n\nTHE PROBE THIS LEAF OWES AND NOBODY HAS RUN IN TWO ROUNDS:\
+  \ does univSeed's supportLocus meet\nboth V0 and V1? Four files mention univSeed\
+  \ and NONE compares its support to the pinned charts.\nI-0705 named this probe when\
+  \ it filed the original warning. Everything above is conditional on\nit, it is cheaper\
+  \ than the ThetaTrivData restatement, and it DECIDES whether the chart-typed\nclass\
+  \ half is dead or merely open. Do it first.\n\nDO NOT RE-DERIVE. The eps-half is\
+  \ FREE: divFamEps_eq_of_le (DivRepChartClassUnivQuot.lean:319)\nneeds only the two\
+  \ containments, because DivFam.projective_window_quotient and\nrankAtStalk_window_quotient\
+  \ are unconditional on DivFam. The scalar 0 < windowBound is FREE from\ng != 0 (windowBound_pos_of_genus_ne_zero).\
+  \ Landed this session, rooted and sorry-free:\nPicard/DivRepChartClassUnivZarLocal.lean\
+  \ -- ForallPrimeAwayCertified (the away form of the class\nobligation) and divFamZarUnivOfForallPrimeAway\
+  \ (U2's class half from it). It produces NO\ncertificate at any prime, so rep stays\
+  \ UNDISCHARGED and no gate clears.\n\nDO NOT read the pinned-chart geometry as an\
+  \ obstruction. The assembler\nisCertified_of_noLeak_kernel_spanning (DivSchemeCertUniv.lean:104)\
+  \ wants SWALLOW-OR-MISS, for\nwhich a disjoint piece is the HARMLESS branch, and\
+  \ forall_subset_or_disjoint_of_isPreconnected\n(DivSchemeCertZarConn.lean:128) already\
+  \ supplies the disjunction for a connected support. I\nbriefly claimed the opposite\
+  \ and withdrew it.\n\n--- the run-0082 review-ajcr box and the run-0071 refutation\
+  \ box follow, both accurate on their\nown terms ---\n\n*** THE VACUOUS INDEX THIS\
+  \ ROW IS BLOCKED ON HAS ALREADY BEEN REPLACED, AND THE ROW DOES NOT KNOW.\nMeasured\
+  \ at HEAD 2026-07-29 (run 0082 s0004, review-ajcr). Read before pricing this leaf.\
+  \ ***\n\nTHE ROW'S REFUTATION BOX (below) IS CORRECT: AffAdaptation.isEmpty_chartTyping_of_straddling\
+  \ really\ndoes empty ChartTyping on straddling covers, every declaration in DivisorFamilyAffTheta.lean\
+  \ is\nindexed by a ChartTyping, and the tree's only ChartTyping producer is FinCoverData.toChartTyping\n\
   (DivisorFamilyAffCover.lean:255 -- verified, it is the ONLY one). All of that stands.\n\
   \nWHAT THE ROW MISSES: Picard/DivisorFamilyAffThetaTyping.lean exists at HEAD and\
   \ was written to fix\nexactly this. VERIFIED BY ME, not taken from its header:\n\
@@ -194,7 +227,7 @@ summary: "*** THE VACUOUS INDEX THIS ROW IS BLOCKED ON HAS ALREADY BEEN REPLACED
   \ all pre-existing and none naming the new module. Nine\ncommits, all verified ancestors\
   \ of refs/heads/main, all touched paths byte-matching HEAD, shared\nindex carrying\
   \ no staged deletions."
-status: active
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -216,7 +249,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
-  updated_at: '2026-07-29T13:21:13.378315+00:00'
+  updated_at: '2026-07-29T14:36:28.765919+00:00'
   pinned_commits:
   - 4ee4ca6e3
   - dd3d22fae
@@ -226,4 +259,3 @@ metadata:
   - 909ad18ad
   - 0b3ab49b8
   milestone: w4-gate
-  owner: ajcr-p3

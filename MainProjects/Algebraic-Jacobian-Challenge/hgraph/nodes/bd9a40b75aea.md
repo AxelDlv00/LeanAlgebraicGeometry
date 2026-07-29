@@ -25,15 +25,32 @@ docstring: '**A representable `picSharp` is a Zariski sheaf.**
 
   `RepresentableBy` against `picSharp` is FALSE rather than unproved, because
 
-  Kleiman §2 (L1292–L1302) gives a curve whose `picSharp` is not a Zariski sheaf
+  some curve has a `picSharp` that is not a Zariski sheaf, while a representable
 
-  while a representable functor is a sheaf for any subcanonical topology. This
+  functor is a sheaf for any subcanonical topology.
 
-  theorem is the second half of that argument, as a Lean statement rather than as
 
-  prose. Its contrapositive therefore says: over an arbitrary field, no scheme
+  **That prose argument does not close, and this theorem is only its first half**
 
-  represents `picSharp C` in general.
+  (`I-0970`). Its second half — a curve whose `picSharp` fails Zariski descent —
+
+  is not established by any source in the workspace: the seam''s original citation
+
+  (§2 L1292–L1302) is about the *absolute* functor, its first replacement
+
+  (`ex:Pfs`) compares the two *sheafifications*, and `th:cmp` part 1 in fact gives
+
+  `picSharp ↪ Pic_{(X/S)zar}` on these binders. What IS established, and needs no
+
+  sheaf step, is Kleiman''s own L5105–L5108: for the real conic `u²+v²+w²=0`
+
+  (smooth, proper, geometrically integral, no rational point) `Pic_{X/ℝ}` is not
+
+  representable while `Pic_{(X/ℝ)ét}` is. So the conclusion — over an arbitrary
+
+  field, no scheme represents `picSharp C` in general — stands on that quotation,
+
+  not on this theorem.
 
 
   The campaign milestones G3 and G4 conclude exactly that (G3: `J_r := J''_r/Γ`
@@ -47,21 +64,30 @@ docstring: '**A representable `picSharp` is a Zariski sheaf.**
   what makes the row a *route repair* rather than a missing theorem.
 
 
-  **Not formalised, and deliberately named as such**: that Kleiman''s non-sheaf
+  **The binder check, which the earlier text here left open, now closes**: the
 
-  curve is smooth, proper and geometrically integral — this project''s binders. It
+  witness is a smooth plane conic over `ℝ`, hence smooth, proper and
 
-  is quoted from the reference. Without that check the theorem below is a true
+  geometrically integral — this file''s exact binders — and it has no `ℝ`-point,
 
-  implication whose antecedent has not been *proved* uninhabitable, only reported
+  which is what makes the two functors differ. So the antecedent of this theorem
 
-  so by Kleiman.'
+  is genuinely uninhabitable in general, not merely unproved.
+
+
+  What remains unformalised is the *counterexample itself* (that `Pic_{X/ℝ}` of
+
+  that conic is not representable); it is quoted from Kleiman rather than
+
+  constructed in Lean. `not_representableBy_picSharp_of_not_isIso_picEtComparison`
+
+  below isolates exactly what a Lean version of it would have to supply.'
 file: AlgebraicJacobian/Picard/PicEtSubcanonical.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicScheme.picSharp_isSheaf_zariski_of_representableBy
 type: lean
-updated: '2026-07-29T21:18:38'
+updated: '2026-07-29T22:29:09'
 ---
 theorem picSharp_isSheaf_zariski_of_representableBy {k : Type u} [Field k]
     (C : Over (Spec (CommRingCat.of k)))

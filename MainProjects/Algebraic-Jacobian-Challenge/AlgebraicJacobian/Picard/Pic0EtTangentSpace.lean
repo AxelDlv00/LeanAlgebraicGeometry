@@ -56,13 +56,44 @@ Proved outright, with no rational point and no `[HasPicScheme C]`:
 `picEt`**), `cotangentSpaceDual_equiv_relPicEtKernel`, and
 `finiteDimensional_cotangentSpace`.
 
-The dimension identity itself is stated as an **implication**. Its single
-antecedent is `SemilinearCotangentComparisonEt`, the étale restatement of the
-`picSharp` side's own open residue `Pic0.semilinearComparison_cotangentSpaceDual_h1Cok`
-(`Pic0AbelianVariety.lean`, a bare `sorry`). So the étale formulation owes the
-**same one statement** the pointed formulation owes, and no more — which is the
-point of the file. This file adds **no `sorry` of its own**; the antecedent is a
-named hypothesis, not a discharged obligation.
+**What "axiom-clean" does and does not mean here**, since every declaration in this file
+binds `[HasPicSchemeEt C]` and `#print axioms` on each reports only
+`[propext, Classical.choice, Quot.sound]`. That is a statement about the *implications*: a
+bound instance argument is never unfolded. At any real use site the unconditional
+`instHasPicSchemeEt` fires, and its body is `(fgaPicardRepresentability C).1` — the
+project's central `sorry`. So instantiating any declaration below at a bare curve reports
+`sorryAx`. The honest phrasing, which the commit messages should have used: these add **no
+new `sorry`**, and are axiom-clean *conditional on the `sorry`-backed `HasPicSchemeEt`
+gate*. Nothing in this file is unconditional in the stronger sense of holding for a curve
+today. Recorded after a fresh-context audit (`I-0988`).
+
+The dimension identity itself is stated as an **implication**. Its single antecedent is
+`SemilinearCotangentComparisonEt`, which is clause for clause the same *shape* as the
+`picSharp` side's own open residue
+`Pic0.semilinearComparison_cotangentSpaceDual_h1Cok` (`Pic0AbelianVariety.lean`, a bare
+`sorry`): same `∀ S`, same `∃ i j`, same bijectivity, same intertwining. This file adds
+**no `sorry` of its own**; the antecedent is a named hypothesis, not a discharged
+obligation.
+
+**It is one statement, but not the *same* statement — corrected after a fresh-context
+audit (`I-0989`).** An earlier version of this paragraph said the étale formulation owes
+"the same one statement the pointed formulation owes, and no more". The count is right and
+the shape is right; the identification is not. The two antecedents compare **different
+carriers**:
+
+* on the `picSharp` side the kernel is a kernel of `PicSharp.relPresheaf`, whose elements
+  are honest invertible-sheaf classes (a quotient of `LineBundle.OnProduct`), and the
+  residue is priced there as a Čech-to-invertible-sheaves comparison at a non-affine
+  scheme;
+* here the kernel description lands in a kernel of `(PicSharp.etaleSheaf C).obj` — the
+  **sheafification** — so its elements are sheafification classes.
+
+Reusing the `picSharp` cocycle argument therefore needs a bridge from the sheafified
+kernel back to the presheaf kernel at `Spec k[ε]`, and no such lemma exists in the
+project. The two agree under a section (`picEtComparison_isIso_of_hasRationalPoint`), which
+is exactly the hypothesis `I-0491` forbids and that this formulation exists to avoid. So
+the étale antecedent additionally absorbs the sheafification-versus-presheaf step: not
+extra `sorry`s and not a weakening, but unnamed cost inside a named hypothesis, named here.
 
 What this file does **not** do, stated plainly because it is easy to overread:
 it does not close the headline leaf `smoothOfRelativeDimension_genus_pic0Et`.
@@ -234,13 +265,32 @@ rings intertwining the actions — exactly the data
 side across the residue-field identification, so neither
 `LinearEquiv.finrank_eq` nor `restrictScalars` applies.
 
-**Non-vacuity, and the honest state.** This is a hypothesis, not a theorem: it is
-the same single statement the pointed development owes, restated at the étale
-object. The mathematics still missing is what `Pic0AbelianVariety.lean` records
-at its own residue — exhibiting the map that sends a dual-number kernel class to
-its transition unit, i.e. a Čech-to-invertible-sheaves comparison at a
-*non-affine* scheme. Nothing here reduces that; what is established is that the
-étale side needs it once rather than twice, and needs nothing about a section. -/
+**Non-vacuity.** `C` occurs three times in the body — in the cover `S`, in the cotangent
+space, and in the sheaf `toModuleKSheaf C` — so this is not the `HasDivFunctor` failure
+mode, where the curve did not occur at all. It is a genuine two-sided constraint: it
+implies a non-trivial `finrank` identity, and it is not satisfiable by making the left
+carrier trivial (an `exact?` search cannot produce `Subsingleton` for it at these
+hypotheses). At `genus C = 0` the *right* carrier does become trivial — see
+`subsingleton_h1Cok_of_genus_eq_zero` below — but that discharges one carrier, not the
+hypothesis.
+
+**The honest state, and what this hypothesis costs.** Two pieces of missing mathematics,
+not one:
+
+1. what `Pic0AbelianVariety.lean` records at its own residue — exhibiting the map that
+   sends a dual-number kernel class to its transition unit, i.e. a
+   Čech-to-invertible-sheaves comparison at a *non-affine* scheme. Nothing here reduces
+   that;
+2. **and, specific to this side**, the passage between the sheafified kernel this
+   comparison is stated against and the `relPresheaf` kernel that argument is about. See
+   the module header: the `picSharp` residue's carrier is a quotient of
+   `LineBundle.OnProduct`, this one's is a sheafification class, and the project has no
+   lemma relating the two without a section.
+
+So the étale side needs one hypothesis rather than two, and needs nothing about a section —
+but that hypothesis is strictly harder than its `picSharp` namesake, and clause 2 is why.
+Recorded here rather than only in the inbox (`I-0989`) because a reader pricing future work
+off this file would otherwise inherit the understatement. -/
 def SemilinearCotangentComparisonEt (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
     [GeometricallyIntegral C.hom] [HasPicSchemeEt C] : Prop :=

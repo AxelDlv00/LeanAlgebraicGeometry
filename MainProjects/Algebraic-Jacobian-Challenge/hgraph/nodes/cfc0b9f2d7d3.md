@@ -17,22 +17,28 @@ docstring: "**THE PROJECT'S CENTRAL OPEN OBLIGATION — expected to stay open.**
   \ as `picSchemeOfHasRationalPoint` below, clearly\nlabelled as strictly weaker.\n\
   \n**Why sheafifying is what makes an unconditional statement possible.** The\nunsheafified\
   \ functor `picSharp C = T ↦ Pic(C ×_k T)/π_T^* Pic(T)` is *not*\nrepresentable over\
-  \ a general field — it is not even a Zariski sheaf (Kleiman §2\nL1292–L1302), and\
-  \ a representable functor is a sheaf for any subcanonical\ntopology. So an unconditional\
-  \ `RepresentableBy` against `picSharp` would be a\nFALSE statement, not merely an\
-  \ unproved one. Against `picEt` it is Kleiman's own\ntheorem. `PicScheme.picEt_isSheaf_forget`\
-  \ records the sheaf property that makes\nthe difference, and it is proved rather\
-  \ than assumed.\n\n**Expected to stay open, and that is the honest state rather\
-  \ than a defect.**\nThe project reaches this statement rather than proving it, and\
-  \ it is the single\nnamed `sorry` that the whole Jacobian headline rests on. Do\
-  \ not replace it with\na weaker conditional statement to make a count go down.\n\
-  \n**Which route discharges it — corrected 2026-07-29 (`review-ajc`), because the\n\
-  previous text named the inputs of a route this project does not take.** That\ntext\
-  \ said the inputs are `Div` representability \"which needs the Quot scheme\"\n(Kleiman\
-  \ §3 Thm `th:repDiv`) together with the Altman–Kleiman quotient lemma\n`smoothProperQuotient`.\
-  \ Both belong to the **Grothendieck/Kleiman quotient\nroute**, which is `rejected`\
-  \ on the board (`AJC.picrep.quot`,\n`AJC.picrep.serre`) — so a reader who trusted\
-  \ this docstring concluded, wrongly,\nthat the seam's own inputs had been abandoned.\n\
+  \ a general field, so an unconditional `RepresentableBy`\nagainst `picSharp` would\
+  \ be a FALSE statement, not merely an unproved one. The\nwitness is Kleiman L5105–L5108:\
+  \ the real conic `u²+v²+w²=0` in `ℙ²_ℝ`, smooth\nproper geometrically integral with\
+  \ no rational point, for which he states\n`Pic_{X/ℝ}` is not representable while\
+  \ `Pic_{(X/ℝ)ét}` is. (**Two citations have\nbeen wrong in this slot** — \"§2 L1292–L1302\"\
+  , which is about the *absolute*\nfunctor, and then `ex:Pfs`, which compares the\
+  \ two *sheafifications*. Neither\nshows `picSharp` failing Zariski descent, and\
+  \ `th:cmp` part 1 says it is in fact\nZariski-separated on these binders. Take the\
+  \ non-representability directly; see\nthe module docstring.) Against `picEt` it\
+  \ is Kleiman's own\ntheorem. `PicScheme.picEt_isSheaf_forget` records the sheaf\
+  \ property that makes\nthe difference, and it is proved rather than assumed.\n\n\
+  **Expected to stay open, and that is the honest state rather than a defect.**\n\
+  The project reaches this statement rather than proving it, and it is the single\n\
+  named `sorry` that the whole Jacobian headline rests on. Do not replace it with\n\
+  a weaker conditional statement to make a count go down.\n\n**Which route discharges\
+  \ it — corrected 2026-07-29 (`review-ajc`), because the\nprevious text named the\
+  \ inputs of a route this project does not take.** That\ntext said the inputs are\
+  \ `Div` representability \"which needs the Quot scheme\"\n(Kleiman §3 Thm `th:repDiv`)\
+  \ together with the Altman–Kleiman quotient lemma\n`smoothProperQuotient`. Both\
+  \ belong to the **Grothendieck/Kleiman quotient\nroute**, which is `rejected` on\
+  \ the board (`AJC.picrep.quot`,\n`AJC.picrep.serre`) — so a reader who trusted this\
+  \ docstring concluded, wrongly,\nthat the seam's own inputs had been abandoned.\n\
   \nThe committed route is **Milne–Kollár** (`informal/pic-representability-campaign.md`,\n\
   alternative D3), and it needs neither:\n\n* `Div^d` representability comes through\
   \ the **Grassmannian**, not Quot:\n  degree slices of `Scheme.DivFunctor` (`Picard/DivDegree.lean`,\
@@ -76,12 +82,19 @@ docstring: "**THE PROJECT'S CENTRAL OPEN OBLIGATION — expected to stay open.**
   \ and\n`picSharp_representableBy_picEt_transport` transports a `picSharp`\nrepresentation\
   \ to a `picEt` one with **no** rational-point hypothesis, the same\nscheme serving\
   \ both. So no supplementary étale-representability theorem is\nneeded.\n\n**What\
-  \ the correction costs instead, and it is a sharper constraint.** The same\nsubcanonicity\
-  \ proves that a representable `picSharp` is a *Zariski* sheaf\n(`PicScheme.picSharp_isSheaf_zariski_of_representableBy`),\
-  \ and the\nsheafification paragraph above records that Kleiman §2 (L1292–L1302)\
-  \ exhibits a\ncurve whose `picSharp` is not one. Contrapositive: representability\
-  \ of `picSharp`\nover an arbitrary field is FALSE, so **G3 and G4 target a false\
-  \ statement as\nwritten**, not a hard one. Everything through J5 runs over a separably\
+  \ the correction costs instead, and it is a sharper constraint.**\nRepresentability\
+  \ of `picSharp` over an arbitrary field is **FALSE**, so **G3 and\nG4 target a false\
+  \ statement as written**, not a hard one. The source says so\ndirectly: Kleiman\
+  \ L5105–L5108 on the conic `u²+v²+w²=0` in `ℙ²_ℝ` — smooth,\nproper, geometrically\
+  \ integral, no rational point — `Pic_{X/ℝ}` is not\nrepresentable while `Pic_{(X/ℝ)ét}`\
+  \ is.\n\n**This does not go through the Zariski-sheaf theorem, and an earlier revision\
+  \ of\nthis paragraph wrongly said it did** (`I-0970`). The Lean statement\n`PicScheme.picSharp_isSheaf_zariski_of_representableBy`\
+  \ is true and useful, but\nits contrapositive needs \"`picSharp` is not a Zariski\
+  \ sheaf\", which no source\nhere establishes — `ex:Pfs` compares the two *sheafifications*,\
+  \ and `th:cmp`\npart 1 shows `picSharp ↪ Pic_{(X/S)zar}` on these binders, so it\
+  \ is\nZariski-*separated*. The route that does work is\n`not_exists_representing_picSharp_of_not_isIso`\
+  \ (see the sheafification paragraph\nabove): comparison-failure alone refutes representability,\
+  \ with no topology in\nthe argument. Everything through J5 runs over a separably\
   \ closed\n`k'` where a section is available and the obstruction absent; the break\
   \ is the\ndescent step where the conclusion returns to `k`, and the repair is that\
   \ the\nobject descended must be `picEt` (which has the sheaf property that carries\n\
@@ -110,7 +123,7 @@ generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.Scheme.fgaPicardRepresentability
 type: lean
-updated: '2026-07-29T21:18:38'
+updated: '2026-07-29T22:29:08'
 ---
 theorem fgaPicardRepresentability {k : Type u} [Field k]
     (C : Over (Spec (.of k)))

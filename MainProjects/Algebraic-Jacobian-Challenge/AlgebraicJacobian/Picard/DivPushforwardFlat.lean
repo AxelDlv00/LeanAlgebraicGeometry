@@ -74,38 +74,45 @@ once and in a form the machine can use.
 
 ## What remains for D3'
 
-`flatLocusStratification_universal` wants `IsNoetherian` on the base and both
-`IsQuasicoherent` and `IsFinitePresentation` on the module. Quasi-coherence of
-`q_* O_D` is free for a proper family and is recorded here as
-`DivFamily.isQuasicoherent_pushforward`.
+`flatLocusStratification_universal` has exactly **two** binders:
+`[IsNoetherian S]` and `[F.IsFinitePresentation]`. `IsQuasicoherent` is a mathlib
+instance *from* finite presentation, so it is not a separate requirement;
+`DivFamily.isQuasicoherent_pushforward` below is kept because it is the cheap half
+and is wanted in its own right, not because `:876` asks for it.
 
-**Finite presentation is the one input still open, and its residue is measured
-rather than guessed.** `isFinitePresentation_of_finite_sections`
+Finite presentation of `q_* O_D` is `DivFamily.isFinitePresentation_pushforward`,
+proved here. `isFinitePresentation_of_finite_sections`
 (`Picard/RigidPushforwardTransfer.lean`) reduces it to `Module.Finite Γ(T,V)
-Γ(q_* O_D, V)` on affine `V`. That tower is *complete* — every link was checked to
-elaborate in scratch:
+Γ(q_* O_D, V)` on affine `V`, and that tower is:
 
 * `Module.Finite Γ(T,V) Γ(D,W)` for `W := (i ≫ q) ⁻¹ᵁ V`, from
   `IsFinite.finite_app` — this is where the finiteness of the support map is spent,
   and it is exactly what quasi-finiteness bought;
 * `Module.Finite Γ(D,W) Γ(N,W)` from `finite_sections_preimage_of_isAffineHom`
   together with `isFinitePresentation_pullback_schematicSupportι`;
-* the two compose by `Module.Finite.trans` once the `Γ(T,V)`-structure on `Γ(N,W)`
-  is provisioned as `Module.compHom` of `(i ≫ q).app V` and the scalar tower is
-  `IsScalarTower.of_algebraMap_smul (fun _ _ => rfl)`.
+* the two compose by `Module.Finite.trans`, and the result transports back across
+  `schematicSupportDescentIso` because `Γ(q_* F, V) = Γ(F, q ⁻¹ᵁ V)` and
+  `Γ(i_* N, q ⁻¹ᵁ V) = Γ(N, (i ≫ q) ⁻¹ᵁ V)` are both `rfl`, and the native
+  `Γ(T,V)`-action on `Γ(q_* F, V)` *is* `compHom` along `q.app V`, also `rfl`. The
+  semilinearity is `Scheme.Modules.Hom.app_smul`.
 
-What is *not* done is the last transport, from `Γ(N,W)` back to
-`Γ(q_* O_D, V)` across `schematicSupportDescentIso`. The section-level
-isomorphism itself is available (`(pushforward q).map hdesc.hom |>.app V`, whose
-inverse laws follow from `Scheme.Modules.Hom.comp_app` — also checked), so the
-obstacle is only that these sections are `Ab`-valued and carrying `Module.Finite`
-across them needs the semilinearity plumbing spelled out, not a further geometric
-input. Recording the shape so the next session does not re-derive the tower: the
-missing step is bookkeeping of a known kind, and the *mathematics* of this input
-is finished.
+## What remains for D3'
 
-Beyond that, D3' still needs the `∃!` statement about the Grassmannian locus
-itself. Nothing in this file closes D3'.
+Two things, and neither is supplied here.
+
+**A stated bridge, not a free fit.** `:876` stratifies a module on the base and
+quantifies its universal property over test morphisms `φ : T' ⟶ S`; its antecedent
+asks for `CoherentSheafFlat (𝟙 T') ((Modules.pullback φ).obj F)`. What
+`coherentSheafFlat_id_pushforward` gives is the `φ = 𝟙` case *before* the identity
+pullback is reduced, so feeding it needs
+`(Scheme.Modules.pullbackId T.left).app _` through `coherentSheafFlat_of_iso` —
+one line, but a line, and it discharges the `φ = 𝟙` **instance** rather than the
+antecedent as a family. Whether that instance is what D3' needs is not settled in
+this file and should be settled before D3' is priced as "inputs done".
+
+**The `∃!` statement about the Grassmannian locus itself**, which is D3' proper.
+
+Nothing in this file closes D3'.
 
 ## Honest status of every antecedent
 
@@ -244,5 +251,66 @@ theorem Scheme.DivFamily.isQuasicoherent_pushforward
     ((Scheme.Modules.pushforward (pullback.snd π T.hom)).obj x.F).IsQuasicoherent := by
   letI := x.isFinitePresentation
   exact Scheme.Modules.pushforward_isQuasicoherent _ x.F
+
+set_option maxHeartbeats 1600000 in
+/-- **`q_* O_D` is finitely presented** — the input
+`flatLocusStratification_universal` actually asks for.
+
+Reduced by `isFinitePresentation_of_finite_sections` to `Module.Finite` of the
+sections over each affine `V`, where the finiteness of the support map is spent:
+`Γ(T,V) → Γ(D,W)` is finite by `IsFinite.finite_app` (this is what quasi-finiteness
+bought), `Γ(D,W) → Γ(N,W)` by `finite_sections_preimage_of_isAffineHom`, and the two
+compose. The transport back to `Γ(q_* O_D, V)` is available because the two `Γ`
+identifications are `rfl` and the ambient action is `compHom` along `q.app V`. -/
+theorem Scheme.DivFamily.isFinitePresentation_pushforward
+    {S X : Scheme.{u}} {π : X ⟶ S} [IsProper π] {T : Over S}
+    [IsLocallyNoetherian (T.left : Scheme.{u})] (x : Scheme.DivFamily π T)
+    [LocallyQuasiFinite
+      (Scheme.Modules.schematicSupportι x.F ≫ pullback.snd π T.hom)] :
+    ((Scheme.Modules.pushforward (pullback.snd π T.hom)).obj x.F).IsFinitePresentation := by
+  letI := x.isFinitePresentation
+  haveI := x.isQuasicoherent_pushforward
+  refine Scheme.Modules.isFinitePresentation_of_finite_sections _ (fun V hV => ?_)
+  let q := pullback.snd π T.hom
+  let i := Scheme.Modules.schematicSupportι x.F
+  haveI : IsProper (i ≫ q) := x.properSupport
+  haveI : IsFinite (i ≫ q) := IsFinite.of_isProper_of_locallyQuasiFinite _
+  haveI : IsAffineHom i :=
+    inferInstanceAs (IsAffineHom (Scheme.Modules.annihilator x.F).subschemeι)
+  let D := Scheme.Modules.schematicSupport x.F
+  let W : D.Opens := (i ≫ q) ⁻¹ᵁ V
+  let N : D.Modules := (Scheme.Modules.pullback i).obj x.F
+  haveI : N.IsFinitePresentation :=
+    Scheme.Modules.isFinitePresentation_pullback_schematicSupportι x.F x.isFinitePresentation
+  -- the finiteness tower over the affine `V`
+  letI : Algebra Γ(T.left, V) Γ(D, W) := (Scheme.Hom.app (i ≫ q) V).hom.toAlgebra
+  letI : Module Γ(T.left, V) Γ(N, W) :=
+    Module.compHom _ (Scheme.Hom.app (i ≫ q) V).hom
+  haveI : Module.Finite Γ(T.left, V) Γ(D, W) := IsFinite.finite_app (i ≫ q) V hV
+  haveI : Module.Finite Γ(D, W) Γ(N, W) :=
+    Scheme.Modules.finite_sections_preimage_of_isAffineHom (i ≫ q) N hV
+  haveI : IsScalarTower Γ(T.left, V) Γ(D, W) Γ(N, W) :=
+    IsScalarTower.of_algebraMap_smul fun _ _ => rfl
+  haveI htrans : Module.Finite Γ(T.left, V) Γ(N, W) :=
+    Module.Finite.trans Γ(D, W) _
+  -- transport along the descent isomorphism; both `Γ`-identifications are `rfl`
+  have hdesc : x.F ≅ (Scheme.Modules.pushforward i).obj N :=
+    Scheme.Modules.schematicSupportDescentIso x.F
+  -- the two directions of the descent iso, at the section level over `V`
+  have hcomp : (((Scheme.Modules.pushforward q).map hdesc.hom).app V ≫
+      ((Scheme.Modules.pushforward q).map hdesc.inv).app V) =
+      𝟙 Γ((Scheme.Modules.pushforward q).obj x.F, V) := by
+    rw [← Scheme.Modules.Hom.comp_app, ← Functor.map_comp, hdesc.hom_inv_id]
+    simp
+  refine Module.Finite.of_surjective
+    ({ toFun := fun n => ((Scheme.Modules.pushforward q).map hdesc.inv).app V n
+       map_add' := fun a b => map_add _ a b
+       map_smul' := fun r n =>
+         Scheme.Modules.Hom.app_smul
+           ((Scheme.Modules.pushforward q).map hdesc.inv) r n } :
+      Γ(N, W) →ₗ[Γ(T.left, V)]
+        Γ((Scheme.Modules.pushforward q).obj x.F, V)) (fun z => ?_)
+  exact ⟨((Scheme.Modules.pushforward q).map hdesc.hom).app V z,
+    congrArg (fun f => f z) hcomp⟩
 
 end AlgebraicGeometry

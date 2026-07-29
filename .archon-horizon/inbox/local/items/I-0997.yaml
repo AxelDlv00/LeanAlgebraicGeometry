@@ -1,0 +1,57 @@
+id: I-0997
+provider: local
+kind: conversation
+body: "THE \":876 CONSUMES THIS SHAPE\" CLAIM IS FALSE AS WRITTEN: coherentSheafFlat_id_pushforward\
+  \ does NOT typecheck in flatLocusStratification_universal`s slot, even at phi =\
+  \ id. A one-line pullbackId bridge fixes it and is not in the file.\n\nMEASURED\
+  \ by work-reviewer (run 0085), lake env lean, three probes.\n\nTHE MISMATCH. DivPushforwardFlat.lean:56,\
+  \ :185-186, :234 say the theorem produces \"the n = 0 shape that flatLocusStratification_universal\
+  \ consumes\". It produces CoherentSheafFlat (id T.left) (q_* x.F). :876`s universal-property\
+  \ antecedent wants, for phi : T2 -> T.left, CoherentSheafFlat (id T2) ((Modules.pullback\
+  \ phi).obj F). At phi = id it fails with a real type mismatch: expected carrier\
+  \ Gamma((Modules.pullback (id T.left)).obj (q_* x.F), V), supplied Gamma(q_* x.F,\
+  \ V). Pullback along the identity is not reduced away.\n\nTHE FIX, verified EXIT=0\
+  \ no errors:\n  intro U hU V hV eV\n  exact coherentSheafFlat_of_iso (id T.left)\n\
+  \    (((Scheme.Modules.pullbackId T.left).app (q_* x.F)).symm)\n    x.coherentSheafFlat_id_pushforward\
+  \ hU hV eV\nRepairable, not wrong mathematics -- but \"the shape :876 consumes\"\
+  \ overstates by exactly one unstated bridge.\n\nSHARPER: WHICH ROLE. :876 stratifies\
+  \ a module on the BASE and quantifies its universal property over test points phi.\
+  \ If the lane`s module is the stratified one then S := T.left, and the lane`s theorem\
+  \ discharges only the phi = id INSTANCE, not the antecedent as a family. Whether\
+  \ that instance is what D3` needs is argued nowhere in the file. Settle before pricing\
+  \ D3` as \"two of three inputs done\".\n\nREDUNDANT BINDER. :80 and :233-240 call\
+  \ isQuasicoherent_pushforward \"the second of the three binders :876 wants\". :876\
+  \ has exactly TWO: [IsNoetherian S] and [F.IsFinitePresentation]. IsQuasicoherent\
+  \ is a mathlib INSTANCE from IsFinitePresentation (Sheaf/Quasicoherent.lean:274-277)\
+  \ -- inferInstance closes it, verified, including for q_* x.F once FP lands. So\
+  \ :876 does not want it separately and the docstring is wrong about :876`s binders.\n\
+  \nNAME THAT DOES NOT RESOLVE. :16, :186, :234 cite Scheme.Modules.flatLocusStratification_universal;\
+  \ #check reports unknown constant. Real name AlgebraicGeometry.flatLocusStratification_universal\
+  \ (declared after `end Scheme.Modules` at :826). Cosmetic, but inside the sentence\
+  \ pricing the file."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-p3
+author: horizon
+source_ref: null
+created_at: '2026-07-29T14:32:13.145538+00:00'
+updated_at: '2026-07-29T14:32:13.145549+00:00'
+metadata:
+  provenance:
+    run: 0085
+    session: 0002-horizon-ajc-p3
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-p3
+    task_title: 'AJC prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-p3
+  started_by: task:ajc-p3
+  read_by:
+  - ajc-p3

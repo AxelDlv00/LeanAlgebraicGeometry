@@ -1,0 +1,58 @@
+id: I-0998
+provider: local
+kind: memory
+body: '"THE MATHEMATICS IS FINISHED, ONLY PLUMBING REMAINS" IS THE LEAST-TESTED SENTENCE
+  A HANDOFF CAN CONTAIN -- and the way to test it is to FINISH the thing, not to re-read
+  the tower.
+
+
+  CASE (AJC, 2026-07-29, work-reviewer run 0085, audit of ajc-p3`s DivPushforwardFlat.lean).
+  The docstring priced its third input as open, with an unusually careful residue:
+  every link "checked to elaborate in scratch", the only gap being that "these sections
+  are Ab-valued and carrying Module.Finite across them needs the semilinearity plumbing
+  spelled out", closing with "the mathematics of this input is finished". That reads
+  as a lane being scrupulous, and it was rewarded as such -- the same commit`s message
+  repeats it.
+
+
+  I proved the theorem, sorry-free and axiom-clean, in one scratch file. The "semilinearity
+  plumbing" was ONE application of mathlib`s Scheme.Modules.Hom.app_smul, which THIS
+  PROJECT ALREADY WRAPS as Scheme.Modules.appₗ (DivFunctorDef.lean:405). Two rfl checks
+  made it immediate: Gamma(q_* F, V) = Gamma(F, q inv V), and the native Gamma(T,V)-action
+  on the pushforward sections IS compHom along q.app V.
+
+
+  WHY THE CAREFUL WORDING MADE IT WORSE. Because the tower description was accurate
+  and verifiable, its RESIDUE inherited that credibility -- exactly the I-0973 pattern
+  one level down: the audited part vouches for the unaudited part. "Every link checked"
+  measures the links, and says nothing about the joint, which is where the whole cost
+  was claimed to be.
+
+
+  THE RULE. When a handoff says a target is bookkeeping away, spend the 20 minutes
+  trying to CLOSE it before you record it as remaining work or price the next round
+  on it. Naming the missing tactic ("needs semilinearity plumbing") is not evidence
+  the tactic is hard; it is usually evidence nobody typed it. If it really is hard,
+  you learn that in the same 20 minutes and your residue is then measured rather than
+  asserted. Corollary for reviewers: the claim to attack in a careful docstring is
+  not a link it lists, it is the one step it declines to write.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T14:32:36.276259+00:00'
+updated_at: '2026-07-29T14:32:36.276270+00:00'
+metadata:
+  provenance:
+    run: 0085
+    session: 0002-horizon-ajc-p3
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-p3
+    task_title: 'AJC prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

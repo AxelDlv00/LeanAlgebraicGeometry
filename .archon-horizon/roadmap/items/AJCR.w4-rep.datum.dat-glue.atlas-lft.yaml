@@ -1,42 +1,50 @@
 id: AJCR.w4-rep.datum.dat-glue.atlas-lft
-title: 'ATLAS-LFT: the FOURTH antecedent of the north star -- hlft/qc of the REAL heterogeneous restricted
-  atlas, tracked by no board row'
+title: 'ATLAS-LFT: the FOURTH antecedent of the north star -- hlft/qc of the REAL
+  heterogeneous restricted atlas, tracked by no board row'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "*** REVIEWER AUDIT 2026-07-29 (review-ajcr, run 0082 s0006). THE WORK ON THIS ROW IS SOUND AND\n\
-  LANDED. TWO CLAIMS IN THE ROW'S OWN TEXT NEED NARROWING, and the second changes what the item IS. ***\n\
-  \n1. THE ABSOLUTE BELOW IS FALSE AS STATED. This row says \"the tree has exactly ONE declaration\nconcluding\
-  \ LocallyOfFiniteType in Picard/\". Enumerated at HEAD: FIVE non-local ones, plus 38\nlocal-instance\
+summary: "*** REVIEWER AUDIT 2026-07-29 (review-ajcr, run 0082 s0006). THE WORK ON\
+  \ THIS ROW IS SOUND AND\nLANDED. TWO CLAIMS IN THE ROW'S OWN TEXT NEED NARROWING,\
+  \ and the second changes what the item IS. ***\n\n1. THE ABSOLUTE BELOW IS FALSE\
+  \ AS STATED. This row says \"the tree has exactly ONE declaration\nconcluding LocallyOfFiniteType\
+  \ in Picard/\". Enumerated at HEAD: FIVE non-local ones, plus 38\nlocal-instance\
   \ re-derivations. The omitted ones include locallyOfFiniteType_grStructMap\n(GrassmannianScheme.lean:165)\
   \ and _grPairStructMap / _carveSchemeOverHom / _divSchemeOverHom\n(DivSchemeQProj.lean:93/:149/:199)\
-  \ -- and the last of those is the very instance\nPic0AtlasFiniteType.lean imports and cites to make\
-  \ hD free, so the absolute is refuted by the\nlanded file's own closing section. THE DEFENSIBLE FORM,\
-  \ which is what the row should say and which\nIS true: no producer AT A CHART.\n\n2. hD IS A RIDER ON\
-  \ antecedent 3, NOT A FOURTH ANTECEDENT -- and this is PROVED, not argued.\nPROBED, `lake env lean`\
-  \ EXIT=0, axioms [propext, Classical.choice, Quot.sound]: if\ndivFunctor C pi n is representable by\
-  \ D and by D', and D'.hom is locally of finite type, then\nD.hom is. Three lines via rep.uniqueUpToIso\
-  \ (e.hom.left is IsIso by Over.comp_left on hom_inv_id,\nthen rw [<- Over.w e.hom]). So LocallyOfFiniteType\
-  \ of the carrier is an INVARIANT OF THE FUNCTOR AT\nTHE PARAMETER: no producer of rep can choose a D\
-  \ that fails it.\n   Note this is STRONGER than the row's own justification, not weaker. The row prices\
-  \ hD as cheap\nbecause the carrier divRep returns TODAY has a global instance -- true, but contingent\
-  \ on that\ncarrier. The transport settles it for every future carrier at once.\n   CONSEQUENCE FOR THE\
-  \ BOARD: the item belongs on the rep row (divrep) as a rider, and the parent\nAJCR.w4-rep no longer\
-  \ counts it as a separate antecedent (corrected there, commit eae960cd0).\nThat is a correction to MY\
-  \ OWN arithmetic correction, not to this row's Lean.\n\n3. WHAT REMAINS TRUE AND VALUABLE, so this is\
-  \ not read as a demotion: nothing produced the\ncertificate AT A CHART before this row's work, on ANY\
-  \ route -- I checked two the row does not\nmention, PicRepDatum.lft (a structure FIELD, hence an assumption)\
-  \ and toJacobianData, which only\ncarries it across. chartHom_mixedParamChart composes two lemmas that\
-  \ were both present and never\nput together, and Pic0ChartPair.lean asserted the inheritance in prose\
-  \ without proving it. The\nqc/hcpt half remains genuinely open and is now the exposed finiteness input\
-  \ (see dat-j).\n\nCLAIMED by ajcr-p4 (run 0090 r1). The board tracks THREE antecedents of pic0RepresentableByOfCharts\
-  \ (IsChartUniv / local surjectivity / rep). The NORTH STAR is not that theorem: Challenge.lean's frozen\
-  \ Jacobian is (jacobianData C).J, and every producer of JacobianData C (ofCharts, ofChartsOfCompactSpace,\
-  \ ofChartsOfAbelImage, ofChartsOfAbelLifts, JacobianDataCharts.lean:189/:213) takes a FOURTH input the\
-  \ three-antecedent picture omits: hlft : forall i, LocallyOfFiniteType (chartHom C f i), plus a quasi-compactness\
-  \ input. Measured: the tree has exactly ONE declaration concluding LocallyOfFiniteType in Picard/ (locallyOfFiniteType_gluedHom),\
-  \ and it takes hlft as a hypothesis -- no producer at the real atlas. Pic0ChartPair.lean:197-203 asserts\
-  \ hlft is 'inherited by every restriction', which is TRUE and NEVER PROVED: chartHom_restrictChart gives\
-  \ the shape and mathlib's composition instance closes it, but no declaration composes them at mixedParamChart."
+  \ -- and the last of those is the very instance\nPic0AtlasFiniteType.lean imports\
+  \ and cites to make hD free, so the absolute is refuted by the\nlanded file's own\
+  \ closing section. THE DEFENSIBLE FORM, which is what the row should say and which\n\
+  IS true: no producer AT A CHART.\n\n2. hD IS A RIDER ON antecedent 3, NOT A FOURTH\
+  \ ANTECEDENT -- and this is PROVED, not argued.\nPROBED, `lake env lean` EXIT=0,\
+  \ axioms [propext, Classical.choice, Quot.sound]: if\ndivFunctor C pi n is representable\
+  \ by D and by D', and D'.hom is locally of finite type, then\nD.hom is. Three lines\
+  \ via rep.uniqueUpToIso (e.hom.left is IsIso by Over.comp_left on hom_inv_id,\n\
+  then rw [<- Over.w e.hom]). So LocallyOfFiniteType of the carrier is an INVARIANT\
+  \ OF THE FUNCTOR AT\nTHE PARAMETER: no producer of rep can choose a D that fails\
+  \ it.\n   Note this is STRONGER than the row's own justification, not weaker. The\
+  \ row prices hD as cheap\nbecause the carrier divRep returns TODAY has a global\
+  \ instance -- true, but contingent on that\ncarrier. The transport settles it for\
+  \ every future carrier at once.\n   CONSEQUENCE FOR THE BOARD: the item belongs\
+  \ on the rep row (divrep) as a rider, and the parent\nAJCR.w4-rep no longer counts\
+  \ it as a separate antecedent (corrected there, commit eae960cd0).\nThat is a correction\
+  \ to MY OWN arithmetic correction, not to this row's Lean.\n\n3. WHAT REMAINS TRUE\
+  \ AND VALUABLE, so this is not read as a demotion: nothing produced the\ncertificate\
+  \ AT A CHART before this row's work, on ANY route -- I checked two the row does\
+  \ not\nmention, PicRepDatum.lft (a structure FIELD, hence an assumption) and toJacobianData,\
+  \ which only\ncarries it across. chartHom_mixedParamChart composes two lemmas that\
+  \ were both present and never\nput together, and Pic0ChartPair.lean asserted the\
+  \ inheritance in prose without proving it. The\nqc/hcpt half remains genuinely open\
+  \ and is now the exposed finiteness input (see dat-j).\n\nCLAIMED by ajcr-p4 (run\
+  \ 0090 r1). The board tracks THREE antecedents of pic0RepresentableByOfCharts (IsChartUniv\
+  \ / local surjectivity / rep). The NORTH STAR is not that theorem: Challenge.lean's\
+  \ frozen Jacobian is (jacobianData C).J, and every producer of JacobianData C (ofCharts,\
+  \ ofChartsOfCompactSpace, ofChartsOfAbelImage, ofChartsOfAbelLifts, JacobianDataCharts.lean:189/:213)\
+  \ takes a FOURTH input the three-antecedent picture omits: hlft : forall i, LocallyOfFiniteType\
+  \ (chartHom C f i), plus a quasi-compactness input. Measured: the tree has exactly\
+  \ ONE declaration concluding LocallyOfFiniteType in Picard/ (locallyOfFiniteType_gluedHom),\
+  \ and it takes hlft as a hypothesis -- no producer at the real atlas. Pic0ChartPair.lean:197-203\
+  \ asserts hlft is 'inherited by every restriction', which is TRUE and NEVER PROVED:\
+  \ chartHom_restrictChart gives the shape and mathlib's composition instance closes\
+  \ it, but no declaration composes them at mixedParamChart."
 status: active
 kind: proof
 priority: normal
@@ -56,7 +64,8 @@ metadata:
     round: '1'
     rounds: '8'
     task: ajcr-p4
-    task_title: 'AJCR prover p4: claim and close the 4th-most important representability item'
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-glue
   owner: ajcr-p4

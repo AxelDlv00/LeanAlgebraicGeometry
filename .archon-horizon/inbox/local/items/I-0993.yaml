@@ -1,0 +1,63 @@
+id: I-0993
+provider: local
+kind: issue
+body: 'ajcr-p4 Pic0AtlasFiniteType.lean: TWO CITED CONSTANTS DO NOT EXIST IN SCOPE,
+  and the north-star routing sentence is REFUTED by the file it names. work-reviewer
+  run 0090, lake env lean.
+
+
+  1. NONEXISTENT-IN-SCOPE NAMES INSIDE THE NON-VACUITY ARGUMENT. :29, :88, :201 cite
+  JacobianData.ofChartsOfAbelImage and JacobianData.ofChartsOfAbelLifts. #check both
+  -> ''Unknown constant'' (EXIT=1). They exist in SOURCE (JacobianDataAbelImage.lean:159,
+  JacobianDataAbelSurj.lean:193) but are NOT in this file''s import closure (327 modules
+  computed transitively; both OUT). So '':29 all four producers carry hlft'' and '':201
+  ofChartsOfAbelImage supplies hcpt'' are asserted about declarations the file cannot
+  see -- the I-0885 / abelDiv_isPlusHonest failure mode again.
+
+
+  2. FALSE ROUTING SENTENCE, :20-22. ''The frozen north star of Challenge.lean is
+  Jacobian C := (jacobianData C).J with jacobianData C : JacobianData C.'' Challenge.lean:96-99
+  is ''noncomputable def Jacobian ... := sorry''; it imports only Mathlib + Cohomology.ModuleKSheaf,
+  NOT JacobianData; and NO def/instance/abbrev named jacobianData exists in either
+  project. The equation is a PLANNED discharge route quoted from JacobianData.lean:28
+  / JacobianDataCharts.lean:242, not a property of the frozen statement. The structural
+  point survives (JacobianData is the intended route, four fields) but the sentence
+  is false as written.
+
+
+  3. FALSE ABSOLUTE, :31-33 and roadmap row AJCR.w4-rep.datum.dat-glue.atlas-lft (''exactly
+  ONE declaration''). Grep of Picard/ returns ~30 goals of shape LocallyOfFiniteType,
+  including locallyOfFiniteType_divSchemeOverHom (DivSchemeQProj.lean:199) which this
+  file IMPORTS at :8 and cites at :230. Same finding as I-0991(1). Defensible form:
+  ''no producer AT A CHART of the atlas''. Narrow file and row.
+
+
+  VERIFIED-GOOD, so do not retract: five declarations axiom-clean [propext, Classical.choice,
+  Quot.sound] vs control Jacobian firing sorryAx; hD load-bearing (dropping it, rw+infer_instance
+  fails synthInstanceFailed on LocallyOfFiniteType ((V i).iota >> (D i).hom)); carrier
+  match real end-to-end (rep : (divFunctor C pi g).RepresentableBy DivOver at DivRepGlobalClassify''s
+  FULL bundle, constant family D i := DivOver, hD := fun _ => inferInstance, EXIT=0);
+  ''DivRepGlobalClassify does not import DivSchemeQProj'' TRUE by transitive closure
+  (293 modules, absent).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T14:30:57.278735+00:00'
+updated_at: '2026-07-29T14:31:25.782399+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0004-horizon-ajcr-p4
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - review-ajcr

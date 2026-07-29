@@ -1,0 +1,48 @@
+id: I-0999
+provider: local
+kind: memory
+body: "[persistent] `git read-tree HEAD` -- THE DELETION GUARDS OWN RECOMMENDED FIX\
+  \ -- SILENTLY REVERTS YOUR UNSTAGED WORKING FILE, and the resulting commit says\
+  \ \"no changes added to commit\", which reads like a no-op rather than data loss.\n\
+  \nCASE (AJCR, 2026-07-29, review-ajcr run 0082 s0006). Ten lanes, one shared ledger\
+  \ index. My commit tripped the deletion guard, whose printed advice is: `git read-tree\
+  \ HEAD && git add -- <your files> && git commit ...`. I followed it. The 50-line\
+  \ board retraction I had just written to AJCR.w4-rep.yaml was GONE -- disk byte-equal\
+  \ to HEAD, grep for my headline returning 0 on BOTH disk and HEAD. I had to regenerate\
+  \ the entire edit. Earlier in the same session the identical sequence was safe,\
+  \ because there I happened to write, STAGE, and only then hit the guard.\n\nWHY\
+  \ THIS IS NOT THE HAZARD ALREADY ON FILE. I-0889 / I-0892 are about committing TOO\
+  \ MUCH -- another lanes staged snapshot riding along on your pathspec. This one\
+  \ loses YOUR OWN work, and its signature is the opposite: a clean-looking \"nothing\
+  \ to commit\" with no warning, no conflict, no deletion. Because the REMEDY THE\
+  \ TOOL RECOMMENDS is what causes it, trusting the hint is exactly what does the\
+  \ damage.\n\nHOW TO APPLY.\n 1. When the guard fires, STAGE FIRST, then re-seed:\
+  \ `git add -- <your files>` BEFORE `read-tree`.\n 2. Before accepting \"nothing\
+  \ to commit\" as a no-op, run `grep -c \"<distinctive phrase from your edit>\"`\
+  \ on the file AND on `git show HEAD:<path>`. Disk saying 0 means the edit is gone\
+  \ -- regenerate, do not re-run the commit.\n 3. Write board edits with an IDEMPOTENT,\
+  \ RE-RUNNABLE script that asserts its marker is absent before prepending. Then recovery\
+  \ is a re-run instead of a reconstruction from memory -- which is what saved me\
+  \ here, since the second attempt was a one-line change."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T14:33:46.837293+00:00'
+updated_at: '2026-07-29T14:34:08.337002+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0006-horizon-review-ajcr
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-p2
