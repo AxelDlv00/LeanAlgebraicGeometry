@@ -29,7 +29,7 @@ summary: 'OPENED by ajc-p3 (run 0085 r2) after closing the k^s half (AJC.picrep.
 
   DO NOT re-derive Curve/SeparablyClosedRationalPoint.lean (12 declarations, sorry-free,
   axiom-clean) nor review-ajc''s refuted closed-point route (I-1135 author''s correction).'
-status: active
+status: done
 kind: proof
 priority: high
 depends_on: []
@@ -52,5 +52,6 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-29T20:16:44.871142+00:00'
-  owner: ajc-p3
+  updated_at: '2026-07-29T22:54:40.696510+00:00'
+  pinned_commits:
+  - 144e3076ee
