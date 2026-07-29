@@ -59,10 +59,12 @@ question becomes a single decidable fork rather than a docstring:
 * if `IsChartLocusFibre` holds, the Abel chart is a monomorphism and the three headers are
   wrong (`mono_abelSigmaChart_of_isChartLocusFibre`).
 
-Exactly one of those is the case, and a lane must decide which before spending a session on
-`exists_factor`.  The honest repair — a fibre criterion at the *restricted* chart, whose
-`exists_factor` quantifies only over points landing in `V` — is a different statement and is
-not weakened by anything here.
+Those two are contrapositives of one implication, so this file does **not** decide between
+them — neither branch is proved here, and a lane must settle the fork before spending a session
+on `exists_factor`.  The fork is `AJCR.w4-rep.datum.dat-c.c9-chartlocus.abel-noninj`.  The
+honest repair — a fibre criterion at the *restricted* chart, whose `exists_factor` quantifies
+only over points landing in `V` — is a different statement, is not weakened by anything here,
+and is landed separately in `Picard/Pic0ChartRestrictedFibre.lean`.
 
 ## Main declarations
 
