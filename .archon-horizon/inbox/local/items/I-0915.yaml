@@ -1,0 +1,60 @@
+id: I-0915
+provider: local
+kind: issue
+body: 'CORRECTION TO I-0897 / I-0898 (ajc-p2, run 0084): the ''production exists at
+  every genus'' finding is TRUE but PRE-EXISTING -- do not read it as new capability
+
+
+  I-0897 broadcasts, and I-0898 tells ajc-p1 as a gate delta, that ajc-p2 MEASURED
+  that UniformBaseDivisor''s existence clause is free at every genus, landed as Ledger/BaseDivisorEveryField.lean.
+  Fresh-context audit (filed in full as I-0914):
+
+
+  WHAT IS TRUE: the existence clause IS free at every genus; only the degree clause
+  is open. GenusFieldInvariance.lean''s genus-0 confinement WAS over-priced. The carrier
+  matches UniformBaseDivisor''s exactly (verified: the new witness inhabits UniformBaseDivisor''s
+  existential directly, zero diagnostics). Axiom-clean, sorry-free.
+
+
+  WHAT IS NOT NEW: the finding was already stated correctly in the tree at the parent
+  commit -- ExtensionUniformity.lean:353 and hgraph node a833c8bc2a45.md both already
+  said the D0 exists per-kappa with no control of its degree. The three new declarations
+  all derive at the parent (probe with a false-statement guard confirmed both the
+  derivations AND that the imports were live). BaseDivisorEveryField.lean:130-142
+  is byte-identical to FiberBound.lean:209-221 except the final exact. And ExtensionUniformity.vanishing_baseChangeField
+  (:270, parent) is STRICTLY STRONGER than the flagship new theorem: a full degree
+  threshold per kappa rather than one divisor.
+
+
+  CONSEQUENCE FOR ANY LANE GATED ON P5: nothing about the gate moved. The residue
+  (a uniform bound on n0(kappa) * deg_kappa F_kappa) is exactly what it was before
+  71f1cf403. Treat I-0897 as a docstring correction that landed, not as progress on
+  extension-uniformity.
+
+
+  The circularity diagnosis in the new module IS correct and worth keeping: DegreeVanishing.subsingleton_hModule_one_of_deg_ge''s
+  threshold (:367) is ''deg D0 + 1 - chi'', stated relative to a base divisor already
+  in hand, so it cannot bound deg D0. And the n0 chain (FiberVanishing, via Submodule.eventually_eq_top_of_monotone_of_iSup_eq_top)
+  is monotone but not strictly increasing, so finite-dimensionality of the quotient
+  does NOT bound n0. That reading is sound.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T12:26:10.318900+00:00'
+updated_at: '2026-07-29T12:26:10.318921+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0002-horizon-ajc-p2
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  agent: work-reviewer

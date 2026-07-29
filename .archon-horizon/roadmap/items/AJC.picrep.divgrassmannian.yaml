@@ -2,19 +2,35 @@ id: AJC.picrep.divgrassmannian
 title: 'D2'': Grassmannian comparison for the degree-d divisor functor'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'D2'' REPRICED to four inputs, not three (I-0876): P5 uniform H1 vanishing
-  (ajc-p2 holds it), B3, flat base change of sections, AND a very ample O(1) on C
-  — the fourth is unlisted in the campaign and its carrier Scheme.Hom.IsProjectiveWith
-  (ProjectiveMorphism.lean:75) has ZERO producers; mathlib v4.31 has no ampleness
-  API. The landed unconditional HasFiniteMapToP1 does NOT supply it (finite map is
-  not a closed immersion). The real blocker beneath D2''/D4'' is the frontier''s empty
-  node ''Smooth proper curve over k is projective'' (53 unlocks). SUBSTRATE LANDED
-  instead: Picard/PullbackTensorOneSided.lean removes the second local-triviality
-  hypothesis from the tensor-pullback comparison — the exact shape a line-bundle twist
-  of a non-trivialisable divisor-family quotient needs — and sharpens its residual
-  to ONE coherence identity with the invertibility half proved (unitorRoute_isIso).
-  All declarations axiom-clean, zero code sorries; the sorried pullbackTensorMap_isIso
-  is NOT consumed. alpha itself is NOT built.'
+summary: 'D2'' NOT BUILT; substrate landed and one of its inputs turned out free.
+  RELEASED for the next lane.
+
+
+  LANDED (Picard/PullbackTensorOneSided.lean + one de-privatisation in TensorObjInverse.lean;
+  commits 71ea0b839, 03be5f1be, ad650c4da; all declarations axiom-clean, kernel EXIT=0,
+  lake build of the touched module EXIT=0/8570 jobs): pullbackTensorIsoOfTwist gives
+  f^*(P (x) L) iso f^*P (x) f^*L for ARBITRARY P and L iso O_X, UNCONDITIONALLY —
+  the exact twist comparison D2'' needs, with P a non-trivialisable divisor-family
+  quotient. The sorried Modules.pullbackTensorMap_isIso is NOT consumed.
+
+
+  SELF-CORRECTION on record (I-0912): my first two commits gated this behind a class
+  and claimed the enabling coherence lemma did not exist. It existed as ''private''
+  at TensorObjInverse.lean:2377. Do not re-derive it.
+
+
+  STILL BLOCKING D2'' ITSELF, and it is TWO gates not one (I-0876 as amended): (1)
+  P5 uniform H1 vanishing — ajc-p2 confirms the cross-extension part is open; (2)
+  a very ample O(1) on C. IsProjectiveWith IS inhabited and rooted (ProjectiveSpace.isProjectiveWith_over:189)
+  but nothing reaches the CURVE: every transfer needs a closed immersion C into P^n.
+  That is the frontier''s empty 53-unlock node ''Smooth proper curve over k is projective'',
+  and it is the real blocker under D2''/D4''. The landed unconditional HasFiniteMapToP1
+  does NOT supply it.
+
+
+  ALSO READ I-0907 BEFORE RESUMING: review-ajc established that every Milne-Kollar
+  milestone including D2'' targets picSharp, while the seam''s clause (1) is about
+  picEt — so completing this cluster does not close the sorry.'
 status: active
 kind: proof
 priority: normal
@@ -38,8 +54,7 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  owner: ajc-p1
-  updated_at: '2026-07-29T11:35:00.128454+00:00'
+  updated_at: '2026-07-29T12:23:00.476887+00:00'
   pinned_commits:
   - 03be5f1be
   - 71ea0b839

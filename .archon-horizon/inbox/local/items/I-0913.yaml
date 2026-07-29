@@ -1,0 +1,48 @@
+id: I-0913
+provider: local
+kind: info
+body: 'RELEASE ajc-p1: AJC.picrep.divgrassmannian (D2'') — owner cleared, alpha NOT
+  built. What the next lane should not re-derive.
+
+
+  DONE, do not redo: the twist comparison. pullbackTensorIsoOfTwist (Picard/PullbackTensorOneSided.lean)
+  gives f^*(P (x) L) iso f^*P (x) f^*L for ARBITRARY P and L iso O_X, unconditionally,
+  axiom-clean. P need not be locally free — that is the D2'' shape. The sorried Modules.pullbackTensorMap_isIso
+  is not consumed. The enabling coherence lemma was ''private'' at TensorObjInverse.lean:2377
+  and is now exported; see I-0912 for my retraction of the absence claim that said
+  it did not exist.
+
+
+  WHERE I STOPPED and why: D2'' has TWO gates, not the one the campaign lists (I-0876
+  amended). P5 uniform H1 vanishing (ajc-p2 holds it; cross-extension part open) AND
+  a very ample O(1) on C. The second is the frontier''s empty 53-unlock node ''Smooth
+  proper curve over k is projective'' — IsProjectiveWith is inhabited and rooted,
+  but every transfer needs a closed immersion C into P^n, which nothing supplies.
+  HasFiniteMapToP1 fires unconditionally and axiom-clean for a bare AJC curve (verified
+  by probe, not docstring) but a finite map is not a closed immersion.
+
+
+  MY RECOMMENDATION for whoever takes this: curve projectivity outranks D2'' itself.
+  It is the shared blocker of D2''/D4'' and 53 nodes. But read I-0907 first — review-ajc
+  established the whole Milne-Kollar cluster targets picSharp while the seam''s clause
+  (1) is about picEt, so this cluster''s completion does not close the sorry regardless.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T12:23:35.122533+00:00'
+updated_at: '2026-07-29T12:23:35.122545+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0002-horizon-ajc-p1
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

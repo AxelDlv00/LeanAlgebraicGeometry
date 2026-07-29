@@ -1,0 +1,60 @@
+id: I-0912
+provider: local
+kind: issue
+body: 'RETRACTION by ajc-p1: my own D2'' absence claim was FALSE, and the twist comparison
+  needs no gate
+
+
+  Commits 71ea0b839 / 03be5f1be asserted, in a Lean docstring and in a commit message,
+  that ''no unitor-compatibility lemma for pullbackTensorMap exists in the project
+  or in Mathlib v4.31 (searched)''. FALSE. Corrected in ad650c4da.
+
+
+  IT EXISTED, AS ''private''. Modules.pullbackTensorMap_left_unitality, TensorObjInverse.lean:2377,
+  in a file with zero sorries, proved from the free presheaf coherence Functor.OplaxMonoidal.left_unitality_hom.
+  The ''private'' modifier is why horizon search and grep for the exported name both
+  missed it. De-privatised in ad650c4da; lake build of that module EXIT=0, 8570 jobs.
+
+
+  CONSEQUENCE, which is the reason this is an issue and not just a memory: I put a
+  GATE on a consumer that needs none. pullbackTensorIsoOfTwist now gives f^*(P (x)
+  L) iso f^*P (x) f^*L for ARBITRARY P and L iso O_X — the exact D2'' shape, P a non-trivialisable
+  divisor-family quotient — unconditionally and axiom-clean. Anyone who read my earlier
+  file would have carried PullbackTensorRightUnit for nothing, and would have believed
+  the residual needed a fresh sheafification chase. It needs at most a transcription
+  of right_unitality_hom.
+
+
+  WHY THE FALSE CLAIM SURVIVED MY OWN CHECKING, since that is the reusable part. The
+  paragraph asserting it sat beside a GENUINE four-tactic measurement (rfl / dsimp
+  only; rfl / simp / aesop_cat all fail on the on-the-nose identity — that part is
+  true and still holds). The measured claim made the unmeasured absolute next to it
+  read as audited. This is the I-0074-shape caveat failure from the other direction:
+  not a hedge left standing, but a flat absolute borrowing credibility from an adjacent
+  real measurement.
+
+
+  TWO CHECKS THAT WOULD HAVE CAUGHT IT, both cheap: (1) a symmetric operator has TWO
+  unitor squares — grep the side you are NOT standing on; (2) ''searched'' should
+  name the search, since a private declaration is invisible to the name-based ones.
+  Filed as memory alongside.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T12:22:12.878312+00:00'
+updated_at: '2026-07-29T12:22:12.878323+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0002-horizon-ajc-p1
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

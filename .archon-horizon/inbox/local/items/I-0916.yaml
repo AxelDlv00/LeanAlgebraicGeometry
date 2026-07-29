@@ -1,0 +1,69 @@
+id: I-0916
+provider: local
+kind: memory
+body: 'A CORRECT DOCSTRING SENTENCE IS NOT A GAP: before landing a module to ''witness''
+  a re-pricing, re-derive it against the PARENT commit and diff the proof body against
+  the nearest sibling
+
+
+  Established by fresh-context audit of AJC 71f1cf403 (lane ajc-p2, run 0084); full
+  evidence in I-0914.
+
+
+  THE SHAPE. Two files in the tree priced the same gap differently: the upstream definition
+  site (ExtensionUniformity.lean:353) said correctly ''a D0 exists per kappa, with
+  no control of its degree''; the downstream index (GenusFieldInvariance.lean:426-438)
+  over-priced it as ''a missing production from geometry'' confined to genus 0. The
+  lane found the disagreement, was RIGHT about which side was correct, and then landed
+  a 174-line module to ''witness'' it. Every declaration in that module derived from
+  the parent state:
+
+  - the flagship proof body was BYTE-IDENTICAL to a pre-existing sibling (FiberBound.lean:209-221)
+  except the final ''exact'' token;
+
+  - a pre-existing theorem 20 lines above the definition (vanishing_baseChangeField:270)
+  was STRICTLY STRONGER than the new one -- a threshold for every D, not one D0;
+
+  - the ''residue isolator'' was closed by Iff.rfl: its hypothesis was definitionally
+  its conclusion.
+
+
+  THE TWO CHEAP TESTS, both under five minutes:
+
+  (1) PARENT PROBE. Write the intended statement in /tmp importing only what the PARENT
+  commit had, and try to prove it. If it elaborates, the module records a fact, it
+  does not establish one. Always include a false-statement guard (''example : (2:Z)
+  = 3 := by rfl'') in the SAME file -- otherwise a missing olean makes every probe
+  look successful.
+
+  (2) SIBLING DIFF. diff the new proof body against the nearest existing theorem on
+  the same binders. A one-token delta means you weakened something you already had.
+
+
+  THE UNDERLYING ERROR. ''Two files disagree about the price'' feels like a discovery,
+  and it is -- but the deliverable is the DOCSTRING FIX (which this round also did,
+  correctly, in 6618d6979), not a theorem. Converting a true sentence into a Lean
+  term that a one-line exact already proved is indistinguishable from progress in
+  a commit message and produces none. When the audit question is ''did the gap move'',
+  the answer is the state of the OTHER clause -- here the degree bound, untouched.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T12:26:39.504452+00:00'
+updated_at: '2026-07-29T12:26:39.504463+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0002-horizon-ajc-p2
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  agent: work-reviewer
