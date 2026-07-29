@@ -250,7 +250,47 @@ theorem deg_presentationDivisor_eq_finrank_glued
     (hfin : ∀ j : D.index, Module.Finite K (A.colength j)) :
     Scheme.CurveDivisor.deg K (Scheme.presentationDivisor K d.presentation)
       = (finrank K A.Glued : ℤ) := by
-  sorry
+  classical
+  have hW : (finrank K A.Glued : ℤ) = ∑ j : D.index, (finrank K (A.colength j) : ℤ) := by
+    rw [A.finrank_glued_eq_sum_of_separated hfin
+      (fun i j hij => A.subsingleton_ovlColength_of_sep hsep i j hij), Nat.cast_sum]
+  -- the inner collapse: each supported point lies in a unique piece
+  have hinner : ∀ p ∈ (Scheme.presentationDivisor K d.presentation).support,
+      (∑ j : D.index, if p.1 ∈ D.pieces j then
+        coeffAt p.2 (Scheme.presentationDivisor K d.presentation)
+          * ((relCurve C K).residueDeg K p.1 : ℤ) else 0)
+        = coeffAt p.2 (Scheme.presentationDivisor K d.presentation)
+          * ((relCurve C K).residueDeg K p.1 : ℤ) := by
+    intro p hp
+    -- THE one substitution the widening makes: the chart-typed proof spends three lines here
+    -- (`relCover_sup` with `cover₀`/`cover₁`) to produce exactly this existential.  Widened, it
+    -- is the structure field `AffCoverData.cover`, extracted as `exists_mem_pieces`.
+    obtain ⟨j₀, hj₀⟩ : ∃ j : D.index, p.1 ∈ D.pieces j := D.exists_mem_pieces p.1
+    have huniq : ∀ b : D.index, p.1 ∈ D.pieces b → b = j₀ := by
+      intro b hb
+      by_contra hbne
+      exact (Finsupp.mem_support_iff.mp hp)
+        (A.coeffAt_eq_zero_of_isUnit_germ b hb p.2 (hsep b j₀ hbne p.1 hb hj₀))
+    rw [Finset.sum_eq_single j₀ (fun b _ hbne => if_neg fun hb => hbne (huniq b hb))
+      (fun h => absurd (Finset.mem_univ j₀) h), if_pos hj₀]
+  calc Scheme.CurveDivisor.deg K (Scheme.presentationDivisor K d.presentation)
+      = ∑ p ∈ (Scheme.presentationDivisor K d.presentation).support,
+          coeffAt p.2 (Scheme.presentationDivisor K d.presentation)
+            * ((relCurve C K).residueDeg K p.1 : ℤ) :=
+        Finset.sum_congr rfl fun p _ => rfl
+    _ = ∑ p ∈ (Scheme.presentationDivisor K d.presentation).support,
+          ∑ j : D.index, if p.1 ∈ D.pieces j then
+            coeffAt p.2 (Scheme.presentationDivisor K d.presentation)
+              * ((relCurve C K).residueDeg K p.1 : ℤ) else 0 :=
+        Finset.sum_congr rfl fun p hp => (hinner p hp).symm
+    _ = ∑ j : D.index, ∑ p ∈ (Scheme.presentationDivisor K d.presentation).support.filter
+          (fun p => p.1 ∈ D.pieces j),
+            coeffAt p.2 (Scheme.presentationDivisor K d.presentation)
+              * ((relCurve C K).residueDeg K p.1 : ℤ) := by
+        rw [Finset.sum_comm]; simp_rw [Finset.sum_filter]
+    _ = ∑ j : D.index, (finrank K (A.colength j) : ℤ) :=
+        Finset.sum_congr rfl fun j _ => (A.finrank_colength_eq_sum j).symm
+    _ = (finrank K A.Glued : ℤ) := hW.symm
 
 end Geometric
 
