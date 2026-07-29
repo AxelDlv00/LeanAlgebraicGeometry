@@ -49,10 +49,21 @@ cannot flag the connection, because both ends are sorry-free and axiom-clean.
 
 ## What this file does and does not settle
 
-It does **not** prove the Abel chart is non-injective — that is a statement about the linear
-system `|D|` in families and it is asserted by prose in three places and proved nowhere.  This
-file makes the conditional precise and machine-checked in both directions, so that the
-question becomes a single decidable fork rather than a docstring:
+It does **not** prove the Abel chart is non-injective — that is asserted by prose in three
+places and proved nowhere.  This file makes the conditional precise and machine-checked, so
+that the question becomes a single fork rather than a docstring:
+
+**AND THE THREE HEADERS' STATED REASON IS NOT AVAILABLE AT THE DEGREE THIS ATLAS USES**
+(`ajcr-p3`, 2026-07-29, inbox `I-0903`; `Picard/Pic0ChartAbelNonInjective.lean`).  They blame
+the linear systems `|D|`, i.e. `h⁰ ≥ 2`.  But at `deg D = g` with `Subsingleton H¹(𝒪(D))` the
+rank anchor forces `h⁰ = deg + χ = g + (1 - g) = 1` **exactly**
+(`h0_eq_deg_add_chi_of_subsingleton_hModule_one`, `RiemannRoch/FLVClass.lean:412` — verified at
+that line, not taken on report), and
+`n = g` is what `chartTwist` targets.  So the fibre is a single point precisely where the atlas
+reads it, and a non-injectivity witness must instead exhibit a divisor-scheme point where `H¹`
+*fails* to vanish — the fork is about the **carve**, not about `|D|`.  A generic-degree `|D|`
+argument is exactly the wrong instrument here, and an earlier draft of this header (and my own
+messages to two lanes) used it; retracted.  Read `I-0903` before pricing the fork:
 
 * if the Abel chart is non-injective on even one test, `IsChartLocusFibre` is FALSE
   (`not_isChartLocusFibre_of_not_injective`);
