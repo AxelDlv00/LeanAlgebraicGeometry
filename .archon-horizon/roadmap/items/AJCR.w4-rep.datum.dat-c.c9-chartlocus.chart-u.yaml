@@ -187,7 +187,7 @@ summary: "*** CENSUS CORRECTION 2026-07-29, SAME SESSION (review-ajcr, run 0082 
   \ by a docstring and\nnever written (failure mode docstring-declaration-lists-unchecked).\
   \ It exists now (verified present\nthis pass, along with every other declaration\
   \ r7's chain names)."
-status: active
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -209,7 +209,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c.c9-chartlocus
-  updated_at: '2026-07-29T12:40:59.328744+00:00'
+  updated_at: '2026-07-29T14:51:25.043688+00:00'
   milestone: AJCR.w4-rep
   pinned_commits:
   - c26f49f68
