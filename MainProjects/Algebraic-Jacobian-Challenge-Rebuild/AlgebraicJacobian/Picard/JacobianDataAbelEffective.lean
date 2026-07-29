@@ -50,6 +50,12 @@ file's.)
 * `AlgebraicGeometry.exists_effective_deg_eq_of_classDeg_eq` — over a curve with
   `χ(𝒪) = 1 − g`, every Čech Picard class of degree `g` has an effective representative
   **of degree `g`**.  General: any `X`, no relative curve, no `π`.
+* `AlgebraicGeometry.exists_effective_deg_eq_of_classDeg_eq_zero` — **the satisfiability
+  probe, and the form the campaign uses**: the hypothesis above is not vacuous, because
+  multiplying a degree-`0` class by a fixed degree-`g` class lands in it.  Since the classes
+  DAT-J holds are of degree *zero*, this is also the usable face.
+* `AlgebraicGeometry.exists_effective_of_classDeg_eq` — the not-silently-stronger probe: the
+  landed degree-free conclusion is recovered as a corollary.
 * `AlgebraicGeometry.exists_effective_deg_eq_relCurve` — the same at the fibre curve
   `relCurve C K` of the campaign bundle, with the base normalization `hχ` transported by
   `chi_relCurve` and the four fibre instances installed.
@@ -106,6 +112,46 @@ theorem exists_effective_deg_eq_of_classDeg_eq (g : ℕ)
   obtain ⟨E, hEeff, hEcl⟩ := exists_effective_of_picClass W hentry
   exact ⟨E, hEeff, hEcl.trans hW,
     (deg_eq_deg_of_picClass_eq K hEcl).trans hdegW⟩
+
+/-! ### The two probes this statement owes -/
+
+/-- **THE SATISFIABILITY PROBE, and it is the one that matters here.**  `L` is chosen by the
+consumer but *constrained* (`classDeg K L = g`), so the failure mode is not junk-inhabitation:
+it is that **no class of degree `g` exists**, in which case the theorem above is a vacuous
+truth that every `sorry` census and axiom probe passes.
+
+The probe comes back positive, and unconditionally on the curve: the degree map hits `g`
+because it hits every value of the form `deg E` for an effective `E`, and multiplication by a
+fixed degree-`g` class is a bijection of the degree-`0` layer onto the degree-`g` layer.  This
+lemma is the second half of that — the *shift* — and it is what makes the file usable at all,
+because the classes DAT-J actually holds are of degree **zero**.
+
+Given any divisor `Z` of degree `g` (the caller's fixed reference: in the campaign
+`m • fiberWeilDivisor π` for suitable `m`, whose degree is positive by
+`zero_lt_deg_fiberWeilDivisor`), every degree-`0` class `L₀` yields the degree-`g` class
+`L₀ · 𝒪(Z)`, and the theorem above then produces the effective degree-`g` divisor.  So the
+hypothesis of `exists_effective_deg_eq_of_classDeg_eq` is inhabited wherever a degree-`g`
+divisor exists, and the shift is one `classDeg_mul`. -/
+theorem exists_effective_deg_eq_of_classDeg_eq_zero (g : ℕ)
+    (hχ : Sheaf.chi (X.moduleKSheaf K) = 1 - (g : ℤ))
+    (Z : X.CurveDivisor) (hZ : CurveDivisor.deg K Z = (g : ℤ))
+    (L₀ : X.CechPic) (hL₀ : classDeg K L₀ = 0) :
+    ∃ E : X.CurveDivisor, 0 ≤ E ∧
+      CurveDivisor.picClass K E = L₀ * CurveDivisor.picClass K Z ∧
+      CurveDivisor.deg K E = (g : ℤ) := by
+  refine exists_effective_deg_eq_of_classDeg_eq K g hχ _ ?_
+  rw [classDeg_mul, hL₀, classDeg_picClass, hZ, zero_add]
+
+/-- **The not-silently-stronger probe**: the degree-`g` conclusion recovers the landed
+degree-free statement, so nothing was smuggled into the hypotheses.  Both directions of the
+pair "is it weaker / is it vacuous" are therefore discharged in the file itself, as
+`I-0571`'s safeguard asks. -/
+theorem exists_effective_of_classDeg_eq (g : ℕ)
+    (hχ : Sheaf.chi (X.moduleKSheaf K) = 1 - (g : ℤ))
+    (L : X.CechPic) (hL : classDeg K L = (g : ℤ)) :
+    ∃ E : X.CurveDivisor, 0 ≤ E ∧ CurveDivisor.picClass K E = L :=
+  let ⟨E, hE, hcl, _⟩ := exists_effective_deg_eq_of_classDeg_eq K g hχ L hL
+  ⟨E, hE, hcl⟩
 
 end General
 
