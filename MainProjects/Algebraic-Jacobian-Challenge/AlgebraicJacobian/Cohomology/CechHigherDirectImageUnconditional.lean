@@ -4287,4 +4287,146 @@ theorem inclusion_square_comm {V' W' : Scheme.{u}} (g' : X' ⟶ X)
         congrArg (fun m => (w.left : V' ⟶ W') ≫ m) hsqW.w.symm
     _ = ((w.left : V' ⟶ W') ≫ gW) ≫ W₀.ι := (Category.assoc _ _ _).symm
 
+/-! ### THE SECOND MATE IS ELIMINABLE TOO: the adjunct of `pushPullMap` (run 0068 r6)
+
+`bareBC_pullback_counit` above removed the Beck–Chevalley mate from half (a) by putting it under
+the left adjoint and past the counit.  It fired on **one side only**, and the recorded reason was
+precise: on the other side the mate sits at `σ' ∘ δᵏ` while the counit sits at `σ'`, separated by
+`pushPullMap (wmap …)`.  So what was missing was not a fact about the mate at all, but the
+**adjunct of `pushPullMap` itself** — the same "put it under `p^*` and past the counit" move
+applied to the restriction map instead of to the mate.
+
+`rawPushPullMap_pullback_counit_self` below is that lemma, and it has the same character as
+`bareBC_pullback_counit`: the *unit* that `rawPushPullMap` is built from **disappears**, leaving
+pullback-pseudofunctor coherence (`pullbackComp`) plus a single ordinary counit.  So both
+occurrences in `BcSquareCounitSide` can now be evaluated, not merely rewritten past each other.
+
+Two notes recorded because they cost this round's time, and neither is mathematics:
+
+* `pushforward (a ≫ p₁)` and `pushforward a ⋙ pushforward p₁` are `rfl`-equal but differently
+  *spelled*, and after `counit_comp_decomp` fires the goal is not type-correct at `instances`
+  transparency.  Plain `rw` then reports "did not find an occurrence" **and** an application type
+  mismatch naming exactly those two spellings — a spelling failure wearing a broken-goal costume.
+  `set_option backward.isDefEq.respectTransparency false` (as `pushPullMap_id` already does in
+  `CechHigherDirectImage.lean`) plus stating each naturality square as a `have` in the goal's own
+  spelling is what makes it go through; `erw`, `simp only [Functor.comp_obj]` and `set` do not.
+* Generalising the head to an arbitrary `v` is load-bearing, not cosmetic: with `v` a variable
+  every square can be supplied in term mode (`.inv.naturality _`, `.counit_naturality v`,
+  `.left_triangle_components _`), so no rewrite has to unify across the two spellings.
+
+Project-local.  Both declarations are axiom-clean. -/
+
+/-- **The composite counit factors through the pullback telescope.**  For `a ≫ p₁`, the counit of
+`pullback (a ≫ p₁) ⊣ pushforward (a ≫ p₁)` equals `pullbackComp`-inverse followed by the two
+single-morphism counits.  This is mathlib's `conjugateEquiv_counit` at the composed adjunction,
+transported along `conjugateEquiv_pullbackComp_inv` (and using that `pushforwardComp` is the
+identity on the nose, `pushforwardComp_hom_app_id`).  Project-local. -/
+theorem counit_comp_decomp {Z₁ Z₂ : Scheme.{u}} (a : Z₂ ⟶ Z₁) (p₁ : Z₁ ⟶ X)
+    (d : Z₂.Modules) :
+    (Scheme.Modules.pullbackPushforwardAdjunction (a ≫ p₁)).counit.app d
+      = (Scheme.Modules.pullbackComp a p₁).inv.app
+            ((Scheme.Modules.pushforward a ⋙ Scheme.Modules.pushforward p₁).obj d) ≫
+          (Scheme.Modules.pullback a).map
+            ((Scheme.Modules.pullbackPushforwardAdjunction p₁).counit.app
+              ((Scheme.Modules.pushforward a).obj d)) ≫
+          (Scheme.Modules.pullbackPushforwardAdjunction a).counit.app d := by
+  have h := CategoryTheory.conjugateEquiv_counit
+    ((Scheme.Modules.pullbackPushforwardAdjunction p₁).comp
+      (Scheme.Modules.pullbackPushforwardAdjunction a))
+    (Scheme.Modules.pullbackPushforwardAdjunction (a ≫ p₁))
+    (Scheme.Modules.pullbackComp a p₁).inv d
+  rw [Scheme.Modules.conjugateEquiv_pullbackComp_inv, pushforwardComp_hom_app_id,
+    Adjunction.comp_counit_app] at h
+  erw [CategoryTheory.Functor.map_id, Category.id_comp] at h
+  exact h
+
+set_option backward.isDefEq.respectTransparency false in
+/-- **THE ADJUNCT OF `pushPullMap`: under `p^*` and past the counit, its unit disappears.**
+The exact analogue for the restriction map `rawPushPullMap` of what `bareBC_pullback_counit` is for
+the Beck–Chevalley mate, and the brick half (a) was actually missing.
+
+`rawPushPullMap` is built from the `a`-unit (see `rawPushPullMap_self`).  Read under
+`(a ≫ p₁)^*` and post-composed with the `(a ≫ p₁)`-counit, that unit is cancelled by the left
+triangle identity, and what remains mentions **no unit and no mate**: only the pullback
+pseudofunctor's coherence iso `pullbackComp` and a single `p₁`-counit.
+
+Why this is the missing piece rather than one more restatement: `BcSquareCounitSide`'s left-hand
+side has the mate at `σ' ∘ δᵏ` and the counit at `σ'`, with `pushPullMap (wmap …)` in between, which
+is exactly why `bareBC_pullback_counit` fired on the right-hand side only.  Evaluating the
+restriction map's own adjunct is what lets the two be brought together, and it is not
+`Adjunction.counit_naturality` (that moves only maps already of the form `p_*ψ` past the counit; a
+`pushPullMap` has a pushforward along a *different* morphism as its source).
+
+No flatness, no quasi-coherence, no open immersion, no cartesian square: this is adjunction and
+pseudofunctor bookkeeping.  Project-local. -/
+theorem rawPushPullMap_pullback_counit_self {Z₁ Z₂ : Scheme.{u}} (a : Z₂ ⟶ Z₁) (p₁ : Z₁ ⟶ X)
+    (F : X.Modules) :
+    (Scheme.Modules.pullback (a ≫ p₁)).map (rawPushPullMap a p₁ (a ≫ p₁) rfl F) ≫
+        (Scheme.Modules.pullbackPushforwardAdjunction (a ≫ p₁)).counit.app
+          ((Scheme.Modules.pullback (a ≫ p₁)).obj F)
+      = (Scheme.Modules.pullbackComp a p₁).inv.app
+            ((Scheme.Modules.pushforward p₁).obj ((Scheme.Modules.pullback p₁).obj F)) ≫
+          (Scheme.Modules.pullback a).map
+            ((Scheme.Modules.pullbackPushforwardAdjunction p₁).counit.app
+              ((Scheme.Modules.pullback p₁).obj F)) ≫
+          (Scheme.Modules.pullbackComp a p₁).hom.app F := by
+  -- Generic head `v`: stating the step for an arbitrary `v` keeps every type in the
+  -- `pushforward p₁ ∘ pushforward a` spelling, so the naturality squares can be supplied
+  -- in term mode and no rewrite has to unify across the two spellings of `pushforward (a ≫ p₁)`.
+  have key : ∀ v : (Scheme.Modules.pullback p₁).obj F ⟶
+        (Scheme.Modules.pushforward a).obj ((Scheme.Modules.pullback (a ≫ p₁)).obj F),
+      (Scheme.Modules.pullback (a ≫ p₁)).map ((Scheme.Modules.pushforward p₁).map v) ≫
+          (Scheme.Modules.pullbackPushforwardAdjunction (a ≫ p₁)).counit.app
+            ((Scheme.Modules.pullback (a ≫ p₁)).obj F)
+        = (Scheme.Modules.pullbackComp a p₁).inv.app
+              ((Scheme.Modules.pushforward p₁).obj ((Scheme.Modules.pullback p₁).obj F)) ≫
+            (Scheme.Modules.pullback a).map
+              ((Scheme.Modules.pullbackPushforwardAdjunction p₁).counit.app
+                ((Scheme.Modules.pullback p₁).obj F)) ≫
+            (Scheme.Modules.pullback a).map v ≫
+              (Scheme.Modules.pullbackPushforwardAdjunction a).counit.app
+                ((Scheme.Modules.pullback (a ≫ p₁)).obj F) := by
+    intro v
+    rw [counit_comp_decomp]
+    -- naturality of the telescope inverse, written in the spelling the goal uses
+    have hnat : (Scheme.Modules.pullback (a ≫ p₁)).map
+            ((Scheme.Modules.pushforward p₁).map v) ≫
+          (Scheme.Modules.pullbackComp a p₁).inv.app
+            ((Scheme.Modules.pushforward a ⋙ Scheme.Modules.pushforward p₁).obj
+              ((Scheme.Modules.pullback (a ≫ p₁)).obj F))
+        = (Scheme.Modules.pullbackComp a p₁).inv.app
+              ((Scheme.Modules.pushforward p₁).obj ((Scheme.Modules.pullback p₁).obj F)) ≫
+            (Scheme.Modules.pullback a).map ((Scheme.Modules.pullback p₁).map
+              ((Scheme.Modules.pushforward p₁).map v)) :=
+      (Scheme.Modules.pullbackComp a p₁).inv.naturality _
+    -- counit naturality for `p₁`, again in the goal's spelling
+    have hc1 : (Scheme.Modules.pullback p₁).map ((Scheme.Modules.pushforward p₁).map v) ≫
+          (Scheme.Modules.pullbackPushforwardAdjunction p₁).counit.app
+            ((Scheme.Modules.pushforward a).obj ((Scheme.Modules.pullback (a ≫ p₁)).obj F))
+        = (Scheme.Modules.pullbackPushforwardAdjunction p₁).counit.app
+            ((Scheme.Modules.pullback p₁).obj F) ≫ v :=
+      (Scheme.Modules.pullbackPushforwardAdjunction p₁).counit_naturality v
+    rw [← Category.assoc, hnat, Category.assoc]
+    slice_lhs 2 3 => rw [← Functor.map_comp]
+    rw [hc1, Functor.map_comp, Category.assoc]
+  -- instantiate `key` at the actual head of `rawPushPullMap`
+  rw [rawPushPullMap_self, key, Functor.map_comp, Category.assoc]
+  -- counit naturality for `a`, then the left triangle kills the `a`-unit.
+  have hc2 : (Scheme.Modules.pullback a).map ((Scheme.Modules.pushforward a).map
+            ((Scheme.Modules.pullbackComp a p₁).hom.app F)) ≫
+          (Scheme.Modules.pullbackPushforwardAdjunction a).counit.app
+            ((Scheme.Modules.pullback (a ≫ p₁)).obj F)
+      = (Scheme.Modules.pullbackPushforwardAdjunction a).counit.app
+            ((Scheme.Modules.pullback a).obj ((Scheme.Modules.pullback p₁).obj F)) ≫
+          (Scheme.Modules.pullbackComp a p₁).hom.app F :=
+    (Scheme.Modules.pullbackPushforwardAdjunction a).counit_naturality _
+  have htri : (Scheme.Modules.pullback a).map
+          ((Scheme.Modules.pullbackPushforwardAdjunction a).unit.app
+            ((Scheme.Modules.pullback p₁).obj F)) ≫
+        (Scheme.Modules.pullbackPushforwardAdjunction a).counit.app
+          ((Scheme.Modules.pullback a).obj ((Scheme.Modules.pullback p₁).obj F))
+      = 𝟙 ((Scheme.Modules.pullback a).obj ((Scheme.Modules.pullback p₁).obj F)) :=
+    (Scheme.Modules.pullbackPushforwardAdjunction a).left_triangle_components _
+  rw [hc2, reassoc_of% htri]
+
 end AlgebraicGeometry
