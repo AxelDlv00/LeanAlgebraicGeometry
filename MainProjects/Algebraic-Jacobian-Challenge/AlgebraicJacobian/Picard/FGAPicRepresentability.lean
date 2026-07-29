@@ -484,10 +484,25 @@ fields that everything else silently assumes). Present state:
    about pullback projections rather than about étale covers. Finite-separability
    is item 1's constraint and was double-counted here. Do not budget a
    separability argument for a cross-base step.
-3. **the Galois action and quotient — G1/G2, substantially built, one gate.**
-   The affine case is proved and the gluing substrate exists; the general
-   existence statement is still the instance-free class
-   `AlgebraicJacobian.GaloisDescent.HasGaloisQuotient`.
+3. **the Galois action and quotient — G1/G2, substantially built; the gate now
+   bites only off the affine locus.** Updated 2026-07-30 (`ajc-p1`): the class
+   `AlgebraicJacobian.GaloisDescent.HasGaloisQuotient` is **no longer
+   instance-free**. `hasGaloisQuotient_of_isAffine`
+   (`Picard/GaloisQuotientAffineGeneral.lean`, global `instance`, `sorry`-free and
+   axiom-clean against a control that still reports `sorryAx` on this very
+   theorem) discharges it for **every** semilinear action on an affine total
+   space — not just for the affine *model* `specSemilinearGalAction`, which is
+   what `isGaloisQuotient_spec` had covered. The step was
+   `isGaloisQuotient_congr`, transport of `IsGaloisQuotient` along an equivariant
+   isomorphism over `Spec L`, applied to `X.isoSpec`; it subsumes the former
+   single-object witness `hasGaloisQuotient_specF4` by `inferInstance`.
+   **What this does not do, and it is the part that matters for this seam**: the
+   campaign consumer `J'_r` is a *glued* scheme, hence non-affine, and
+   `inferInstance` for the gate at an abstract action carrying the orbit
+   hypothesis but not affineness **fails** (measured, control both ways). So the
+   remaining `G2(c)` work is exactly the `Scheme.GlueData` assembly of the
+   per-chart quotients, and the Hironaka trap still bites there and is
+   untouched. Do not read "the gate has an instance" as "input 3 is closed".
    `AlgebraicJacobian.GaloisDescent.HasStableAffineCover` is **not** a second
    gate, but the reason stated here until now was false (`review-ajc`,
    2026-07-29 → corrected 2026-07-30 with controls both ways). It said the cover
@@ -1199,7 +1214,24 @@ Blueprint reference: `thm:fga_pic_representability`. -/
 It follows from `HasPicScheme` — the representing witness is
 `Classical.choose`-extracted, so its `choose_spec` is exactly this statement.
 The class survives to preserve the blueprint-pinned consumer signature of
-`representable`. -/
+`representable`.
+
+**THIS CLASS IS A SELF-PROJECTION AND CARRIES NO MATHEMATICS** (`review-ajc`,
+2026-07-30). The paragraph above states the mechanism and stops short of the
+conclusion, exactly as `PicSchemeLocallyOfFiniteType` below did until it was
+labelled: these are the *same* defect at two carriers, and labelling only one of
+them made the other look audited. `instPicSharpRepresentable` is
+`choose_spec.1` of the `[HasPicScheme C]` binder it assumes, so the class is
+definitionally whatever its own hypothesis already said — `P → P`. Discharging
+it is not a step toward anything.
+
+As with `PicSchemeLocallyOfFiniteType`: **do not write a new consumer against
+it** (binding `[PicSharpRepresentable C]` on top of `[HasPicScheme C]` is no
+more general — instance search discharges it from the first), and it is
+nonetheless **harmless to keep**, since `HasPicScheme` is `Prop`-valued so the
+projection is unique and the blueprint pins `representable`'s signature. The
+honest content is upstream: `HasPicScheme` has zero instances and over an
+arbitrary field cannot get one. -/
 class PicSharpRepresentable {k : Type u} [Field k] (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
     [GeometricallyIntegral C.hom] [HasPicScheme C] : Prop where
