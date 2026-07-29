@@ -519,6 +519,7 @@ import AlgebraicJacobian.Picard.Pic0ThetaAssembly
 import AlgebraicJacobian.Picard.JacobianDataAbel
 import AlgebraicJacobian.Picard.JacobianDataBaseChange
 import AlgebraicJacobian.Picard.JacobianDataBaseChangeAbel
+import AlgebraicJacobian.Picard.JacobianDataBaseChangeAbelCore
 import AlgebraicJacobian.Picard.DivSchemeQProj
 import AlgebraicJacobian.Picard.DivSchemeRelDivisor
 import AlgebraicJacobian.Picard.CompactImageQc
