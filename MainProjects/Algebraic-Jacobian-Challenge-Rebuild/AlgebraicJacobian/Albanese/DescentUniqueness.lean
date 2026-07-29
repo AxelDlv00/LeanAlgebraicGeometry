@@ -38,11 +38,14 @@ Two of those three items are not needed for uniqueness:
   needs only flatness and surjectivity of `Spec k̄ ⟶ Spec k`, neither of which sees
   finiteness.  §4.2's worry that the staging "at the *non-finite* extension k̄ is pinned
   nowhere" dissolves: there is nothing to stage;
-* **no representing-object comparison** — `(d.baseChange L).J` is the base change of
-  `d.J` by definition, so `uniqueUpToIso` is not in the path at all.  (A comparison
-  *is* needed if one insists on relating `d.baseChange L` to some independently produced
-  datum `dL` on `C_L`; `uniqueUpToIso` covers that, and `subsingleton_hom_of_descends`
-  below is stated so the caller may route through either.)
+* **no representing-object comparison, *for the transported datum*** —
+  `(d.baseChange L).J` is the base change of `d.J` by definition, so `uniqueUpToIso` is
+  not in the path.  Read this narrowly: if the `L`-side uniqueness is instead proved for
+  an independently produced datum `dL : JacobianData C_L` — which is how the geometry
+  over `k̄` would actually be available — then the comparison **is** needed.  §"The
+  general case" below does that explicitly.  It costs `uniqueUpToIso` plus two rewrites
+  (`subsingleton_hom_of_iso`), so it is not a new mathematical obligation; but it is
+  present, and the narrow claim should not be quoted as the general one.
 
 What remains genuinely Galois is **existence**: producing a `k`-morphism `d.J ⟶ A` from
 a `k̄`-morphism.  Nothing here addresses it.
@@ -56,6 +59,10 @@ a `k̄`-morphism.  Nothing here addresses it.
   Albanese `∃!` holds over `k`.
 * `AlgebraicGeometry.JacobianData.eq_of_baseChange_eq` — the raw descent of an equation
   between two morphisms out of the Jacobian.
+* `AlgebraicGeometry.JacobianData.subsingleton_hom_of_iso` /
+  `existsUnique_ofCurve_comp_of_baseChange_datum` — the same conclusion when the `L`-side
+  uniqueness is proved for an **arbitrary** datum `dL` on `C_L` rather than the transport
+  of `d`.  This one does route through `uniqueUpToIso`.
 -/
 
 set_option autoImplicit false
@@ -115,6 +122,49 @@ theorem existsUnique_ofCurve_comp_of_baseChange (d : JacobianData C)
     ∃! g : d.J ⟶ A, f = d.ofCurve P ≫ g := by
   obtain ⟨g, hg⟩ := hex
   exact ⟨g, hg, fun _ _ => (subsingleton_hom_baseChange_descends L d hL).elim _ _⟩
+
+/-! ## The general case: uniqueness proved for an *independently produced* datum over `L`
+
+The lemmas above take the `L`-side uniqueness at `(d.baseChange L).J`, the transport of
+`d`.  But the way the geometry is actually available is different: over `k̄` one produces
+a datum `dL : JacobianData C_L` in its own right (that is where the symmetric-power and
+birationality machinery lives), and there is no reason for `dL` to be `d.baseChange L` on
+the nose.
+
+This is exactly the place where a representing-object comparison *is* needed — so the
+claim "S10 needs no comparison" must be read narrowly: it holds for the transported
+datum, not for an arbitrary one.  The comparison is cheap, though, and it is already
+landed: `JacobianData.uniqueUpToIso` is an isomorphism of representing objects, and
+transporting a `Subsingleton` of a `Hom`-set along an isomorphism of its source costs
+two rewrites.  So the general case is not a new mathematical obligation, only one more
+step. -/
+
+/-- `Subsingleton` of a `Hom`-set transports along an isomorphism of the source. -/
+theorem subsingleton_hom_of_iso {D : Type*} [Category D] {X X' Y : D} (e : X ≅ X')
+    (h : Subsingleton (X' ⟶ Y)) : Subsingleton (X ⟶ Y) :=
+  ⟨fun f g => by
+    have hh : e.inv ≫ f = e.inv ≫ g := h.elim _ _
+    have := congrArg (fun t => e.hom ≫ t) hh
+    simpa using this⟩
+
+/-- **The S10 uniqueness half, for uniqueness proved at an arbitrary `L`-datum.**
+
+`dL : JacobianData C_L` is any datum on the base-changed curve — in particular one
+produced over `k̄` by the geometry, with no relation to `d` assumed.  Uniqueness at
+`dL.J` transports to `(d.baseChange L).J` through `uniqueUpToIso` (both represent
+`Pic⁰_{C_L/L}`, so they are canonically isomorphic), and thence down to `k` by
+faithfulness.
+
+Together with `existsUnique_ofCurve_comp_of_baseChange` this covers both stagings, and
+records honestly that the comparison is unavoidable in this one — cheap, but present. -/
+theorem existsUnique_ofCurve_comp_of_baseChange_datum (d : JacobianData C)
+    (dL : JacobianData ((AlgebraicGeometry.baseChange k L).obj C))
+    (P : 𝟙_ (Over (Spec (.of k))) ⟶ C) {A : Over (Spec (.of k))} (f : C ⟶ A)
+    (hex : ∃ g : d.J ⟶ A, f = d.ofCurve P ≫ g)
+    (hL : Subsingleton (dL.J ⟶ (AlgebraicGeometry.baseChange k L).obj A)) :
+    ∃! g : d.J ⟶ A, f = d.ofCurve P ≫ g :=
+  existsUnique_ofCurve_comp_of_baseChange L d P f hex
+    (subsingleton_hom_of_iso ((d.baseChange L).uniqueUpToIso dL) hL)
 
 end JacobianData
 
