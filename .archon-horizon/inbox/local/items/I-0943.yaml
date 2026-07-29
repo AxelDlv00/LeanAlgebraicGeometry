@@ -1,0 +1,53 @@
+id: I-0943
+provider: local
+kind: issue
+body: "VACUITY SWEEP OF THE AJCR CHART/CERTIFICATE SEAM: NO HasDivFunctor-STYLE VACUITY\
+  \ FOUND. Clean result, coverage stated so nobody re-runs it blind.\n\nreview-ajcr\
+  \ (run 0082 s0004), reading STATEMENTS not docstrings. The AJC cautionary case is\
+  \ a field asserting only that a presheaf category is Nonempty, the curve absent\
+  \ from the statement. Nothing of that shape is on this seam.\n\nCHART SIDE -- SUBSTANTIVE:\n\
+  \ * IsChartUniv (Pic0ChartPair.lean:173) unfolds to IsOpenImmersion.presheaf (restrictChart\
+  \ (abelSigmaChart ..) V): chart and V both occur; falsifiable.\n * ChartFibrePresented\
+  \ (Pic0ChartOpenImmersionCriterion.lean:129-141): fields W, r, sq, exists_factor.\
+  \ sq equates named morphisms; exists_factor quantifies over all S-points and demands\
+  \ a factorisation. Refutable -- isEmpty_forall_chartFibrePresented_of_not_injective\
+  \ (:219) is the tree's own proof it can be EMPTY.\n * IsPlusHonest (Pic0ChartPlusFibreProducer.lean:200):\
+  \ substantive; the finding there is the OPPOSITE mode -- too strong to prove of\
+  \ an arbitrary class (I-0920).\n\nCERTIFICATE SIDE (the deep tail, flagged highest-risk)\
+  \ -- SUBSTANTIVE:\n * DivisorAdaptation.IsCertified (DivisorFamily.lean:426) and\
+  \ AffAdaptation.IsCertified (DivisorFamilyAffAdaptation.lean:252): seven clauses\
+  \ each -- finite_colength, projective_colength, finite_glued, projective_glued,\
+  \ rankAtStalk_glued = n, flat_coker_incl, flat_coker_diff. Each names its own module\
+  \ and asserts finiteness/projectivity/flatness/rank. All falsifiable; none a bare\
+  \ Nonempty.\n * IsLocallyCertified (DivisorFamilyZar.lean:71): explicit span-top\
+  \ cover with a CertifiedDivisorFamily and a DivEq per piece.\n * DivFamZar (:224/:235):\
+  \ a Quotient of the certified subtype by divisor equality, so certificates sit structurally\
+  \ in the carrier -- which is why they are free on the consuming side.\n\nTHE ONE\
+  \ VACUITY IS AN INDEX, NOT A FIELD, and it is already fixed: ChartTyping is EMPTY\
+  \ on straddling covers (isEmpty_chartTyping_of_straddling), making every DivisorFamilyAffTheta.lean\
+  \ declaration vacuous there. The chart-free ThetaTrivData is inhabited at exponent\
+  \ 0 on exactly those covers -- unrooted and unrecorded until this pass (u2 row,\
+  \ I-0941).\n\nCOVERAGE LIMIT: I read the declarations named above; I did NOT sweep\
+  \ every Prop-valued definition in the DivScheme*/DivSchemeCert* cluster, and two\
+  \ subagent sweeps dispatched for breadth did not return. The wider DD-R cluster\
+  \ is spot-checked, not exhausted."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T13:03:26.567098+00:00'
+updated_at: '2026-07-29T13:03:26.567109+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0004-horizon-review-ajcr
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
