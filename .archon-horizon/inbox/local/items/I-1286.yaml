@@ -1,0 +1,72 @@
+id: I-1286
+provider: local
+kind: issue
+body: 'CLAUSE (1) OF THE SEAM IS A ONE-CONJUNCT OBLIGATION, NOT THREE. Both side conjuncts
+  are FREE -- and separatedness is free WITHOUT descending, because it CANNOT descend.
+
+
+  MEASURED review-ajc r6, two scratch files, lake env lean EXIT=0 each, axiom-clean
+  [propext, Classical.choice, Quot.sound] vs a control where fgaPicardRepresentability
+  fires sorryAx. Both deleted.
+
+
+  THE GAP. Clause (1) is a THREE-field existential: Nonempty ((PicScheme.picEt C).RepresentableBy
+  X) AND LocallyOfFiniteType X.hom AND IsSeparated X.hom. The seam''s four-input paragraph,
+  roadmap AJC.picrep.etale-rep + its three children, and ajc-p2''s descent-assembly
+  row price the FIRST field only: grep for LocallyOfFiniteType or IsSeparated across
+  the etale-rep rows returns ZERO hits.
+
+
+  RESULT 1: IsSeparated CANNOT descend in mathlib v4.31. No DescendsAlong @IsSeparated;
+  the diagonal route via isSeparated_eq_diagonal_isClosedImmersion fails because DescendsAlong
+  @IsClosedImmersion is ALSO absent (IsClosedImmersion is no HasRingHomProperty, so
+  descendsAlong_flat is inapplicable). Exactly five scheme flat-descent instances
+  exist: LocallyOfFiniteType, LocallyOfFinitePresentation, Smooth, FormallyUnramified,
+  Etale (Morphisms/LocalFlatDescent.lean:35-47).
+
+
+  Free anyway, never needing to descend: picEt is CommGrpCat-valued, so ANY representing
+  scheme is a group object by Yoneda transport (CommGrpObj.ofRepresentableBy X (picEtCommGrp
+  C) (rep.ofIso (picEtCommGrpForgetIso C))), and a group scheme over a field is separated.
+  From (rep : (PicScheme.picEt C).RepresentableBy X) alone, IsSeparated X.hom is a
+  theorem -- and [GeometricallyIntegral C.hom] is UNUSED (linter-flagged).
+
+
+  THE BRICK IS A PORT. Mathlib lacks ''group scheme over a field is separated'': infer_instance
+  for IsSeparated G.hom at [GrpObj G] over Spec K FAILS while IsClosedImmersion eta[G].left
+  SYNTHESIZES. AJCR has it -- GrpObj.isPullback_diagonal + isSeparated_of_isClosedImmersion_one
+  + instance isSeparated_of_grpObj, AbelianVariety/GroupSeparated.lean, 121 lines
+  sorry-free. AJC has none of the three names. I transcribed the two load-bearing
+  ones; they compiled UNCHANGED.
+
+
+  RESULT 2: LocallyOfFiniteType descends free. At the real cover (k''/k, [Module.Finite],
+  [Algebra.IsSeparable]) Spec.map (algebraMap k k'') is Surjective, Flat, QuasiCompact
+  all by inferInstance, so of_pullback_fst_of_descendsAlong closes it.
+
+
+  CONSEQUENCE: the assembly needs only the representability field. NOT a discount
+  on the seam -- k''-side representability is still the campaign''s undischarged output.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T22:12:47.452676+00:00'
+updated_at: '2026-07-29T22:29:25.203404+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0014-horizon-review-ajc
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p2
+  - review-ajc

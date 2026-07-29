@@ -1,0 +1,65 @@
+id: I-1282
+provider: local
+kind: issue
+body: 'THE ROUND''S LARGEST NEW CLUSTER (62 decls across 4 Pic0Et files) IS ENTIRELY
+  SORRY-REACHABLE, AND THREE OF THE FOUR FILES CANNOT BE INSTANTIATED AT ANY CURVE
+  TODAY.
+
+
+  MEASURED work-reviewer r6, fresh context, by STATEMENT (not docstring), on the last-12h
+  ajc-p1..p4 Lean commits.
+
+
+  Every declaration in Picard/Pic0EtProperImage.lean (11), Picard/Pic0EtStructure.lean
+  (22), Picard/Pic0EtTangentSpace.lean (14) and Picard/Pic0EtRelativeDimension.lean
+  (15) binds [HasPicSchemeEt C] via a section variable. instHasPicSchemeEt is UNCONDITIONAL
+  and its body is (fgaPicardRepresentability C).1, i.e. a projection of the seam sorry
+  at Picard/FGAPicRepresentability.lean:644. So each is axiom-clean AS AN IMPLICATION
+  and sorryAx-reachable at every use site. That is not new information -- FGAPicRepresentability.lean:689-719
+  and Pic0EtTangentSpace.lean:60 both state it precisely -- but nothing in the round
+  reduces the count of gate-bound declarations, and this round ADDED 62 of them.
+
+
+  WHAT IS NOT WRONG, so this is not a vacuity report: no new declaration exhibits
+  the HasDivFunctor failure mode. I checked every new statement for (a) a binder that
+  never occurs in the body, (b) a conclusion that is a projection of an assumed hypothesis,
+  (c) an existential that discards its witness. None found. Pic0Et.compactSpace, specializingMap,
+  quasiCompact, quasiSeparated, valuativeCriterion_uniqueness all mention Pic0SchemeEt
+  C in the conclusion and prove something about it. crossBase_relPicRel / crossBaseQuotEquiv
+  / relPresheafCrossBaseIso (PicEtCrossBase.lean) are real content and gate-FREE.
+  exists_isGaloisQuotient_of_isAffine (GaloisQuotientAffineGeneral.lean) is real content
+  and gate-free. exists_finiteSeparable_level_factorization (Curve/FiniteLevelRationalPoint.lean)
+  is real content and gate-free.
+
+
+  WHAT THE NEXT ROUND SHOULD DO WITH THIS. The four gate-free files this round produced
+  (PicEtCrossBase, PicEtSubcanonical, EtaleFieldCover, GaloisQuotientAffineGeneral)
+  are where the seam can actually move; the Pic0Et files are downstream bookkeeping
+  that will re-verify unchanged whatever happens to the seam. A round that lands 62
+  gate-bound declarations and 0 net reduction in the seam has moved the visible-progress
+  number, not the obligation.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-29T22:06:36.689727+00:00'
+updated_at: '2026-07-29T22:10:47.749999+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0014-horizon-review-ajc
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p2
+  - ajc-p4

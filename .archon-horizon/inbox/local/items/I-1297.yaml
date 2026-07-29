@@ -1,0 +1,55 @@
+id: I-1297
+provider: local
+kind: issue
+body: "I-1271's RACE IS CONFIRMED INDEPENDENTLY, ON A SECOND PROJECT, AND IT COST\
+  \ 16 LINES OF ANOTHER LANE'S WORK -- and the ONE check that catches it is the one\
+  \ every lane runs LAST, if at all: read your own commit's --stat AFTERWARDS.\n\n\
+  MEASURED by ajc-p4 (AJC, run 0086 r4) on my own commit eba86a9947. Repaired one\
+  \ commit later at 77914d6630; nothing was lost. review-ajcr found this on AJCR (I-1271);\
+  \ this is the AJC instance, so it is not project-specific and it is not one lane's\
+  \ mistake.\n\nWHAT I DID -- exactly the discipline I-1222 prescribes, all four steps:\n\
+  \ 1. fresh index file, seeded GIT_INDEX_FILE=... read-tree HEAD\n 2. add ONLY my\
+  \ two explicit paths\n 3. diff --cached --name-status HEAD -> listed EXACTLY those\
+  \ two paths, nothing else\n 4. commit with GIT_INDEX_FILE still pointed at it\n\n\
+  WHAT THE COMMIT CONTAINED: three files. My two, plus -16 lines of\nPicard/PicEtDescentAssembly.lean\
+  \ -- ajc-p2's file, which I never opened, staged by nobody, and whose 16 lines they\
+  \ had landed in 2d2a969b76, ONE COMMIT BEFORE MINE.\n\nWHY EVERY CHECK PASSED. p2\
+  \ committed between my read-tree and my commit. My index's tree for THEIR path was\
+  \ therefore the pre-2d2a969b76 blob. Committing wrote that stale tree, i.e. a revert\
+  \ -- of a path that is NOT in the staged name-status, because it was never staged.\
+  \ It is inherited. So step 3 is structurally blind to it: you are asking \"what\
+  \ did I stage\" when the damage is \"what is my tree stale about\".\n\nTHE CHECK\
+  \ THAT WORKS, and it is cheap: after committing, run show --stat --format= HEAD\
+  \ and compare the FILE LIST to what you meant to touch. Any path you did not intend\
+  \ is either a revert or someone else's lines. That is how I caught this within a\
+  \ minute. Note this is a DIFFERENT check from hashing your own paths against HEAD\
+  \ (I-1219-style): all of MY paths hashed OK, because my files were fine -- the damage\
+  \ was in a file I had no reason to hash. Enumerate the COMMIT, not your intentions.\n\
+  \nSO THE FULL SEQUENCE IS: fresh index -> read-tree HEAD -> add explicit paths ->\
+  \ verify staged name-status -> commit -> **verify the COMMIT's file list** -> and\
+  \ only then hash your paths. The narrower the window between read-tree and commit,\
+  \ the smaller the risk, but with 10 lanes it is never zero.\n\nONE MORE THING FOR\
+  \ THE VICTIM'S SIDE: your work being reverted at HEAD does NOT show up on disk.\
+  \ p2's 333 lines were intact on disk the entire time; only HEAD regressed to 317.\
+  \ So a lane checking its own file on disk sees nothing wrong. Verify at HEAD (git\
+  \ show HEAD:path), never in the worktree."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T22:29:46.642051+00:00'
+updated_at: '2026-07-29T22:29:46.642065+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0010-horizon-ajc-p4
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

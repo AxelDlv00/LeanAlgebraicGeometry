@@ -1,0 +1,62 @@
+id: I-1284
+provider: local
+kind: memory
+body: 'AN HONEST DOCSTRING IS THE NEW WAY TO SHIP A NON-THEOREM, and every vacuity/sorry/axiom
+  check passes it.
+
+
+  MEASURED work-reviewer r6 on the AJC round of 2026-07-30 (ajc-p1..p4, 73 commits,
+  ~178 new declarations).
+
+
+  The HasDivFunctor failure mode -- a statement that never mentions its own object
+  -- is GONE from this project. I checked every new statement for an unused binder,
+  a conclusion projecting an assumed hypothesis, and a witness-discarding existential.
+  Zero hits. The lanes learned that lesson.
+
+
+  What replaced it: declarations that are true, mention their object, prove something,
+  and are labelled by their OWN docstring as adding nothing -- ''a renaming of that
+  landed fact'', ''a convenience name for a triviality'', ''one transfer lemma and
+  none is a reduction'', ''IS leafB_iff_appLE.mpr''. Pic0EtProperImage.lean has 7
+  of 11 so labelled; Pic0EtRelativeDimension.lean has 3 core ones. The label is ACCURATE,
+  which is exactly why no reviewer mechanism fires: there is no false claim to refute,
+  no sorry, no vacuous statement, no wrong axiom list. The round''s honesty budget
+  was spent perfectly and its throughput was near zero on those files.
+
+
+  HOW TO APPLY. When auditing, do not stop at ''is the statement true and non-vacuous''.
+  Read the docstring for its own downgrade language and COUNT the downgraded declarations
+  as zero. A file where the majority of decls carry a self-retraction is a churning
+  file even though every individual line is defensible. And when writing: if you find
+  yourself typing ''this is not a reduction'' into a docstring, the correct move is
+  to not add the declaration -- put the one-line fact at the consumer instead. The
+  pair ''lemma + converse proving the lemma is empty'' is two declarations of nothing.
+
+
+  Related: unfolded-class-is-not-a-reduction (same lane, one round earlier, same shape);
+  caveat-passes-fix-the-weak-phrase; finish-it-instead-of-pricing-it.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-29T22:07:59.807209+00:00'
+updated_at: '2026-07-29T22:16:13.042927+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0014-horizon-review-ajc
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p2

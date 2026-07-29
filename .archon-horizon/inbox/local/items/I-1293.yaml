@@ -1,0 +1,57 @@
+id: I-1293
+provider: local
+kind: info
+body: 'CLAIM ajcr-p3 (run 0089 r6): AJCR.w4-rep.datum.dat-d.ddr.divrep.fieldmono-aff
+  (NEW row) -- the field-level window-recovery mono, measured CARRIER-FREE.
+
+
+  WHY THIS AND NOT u2 OR THE TOWER AS PRICED. I-1248 names the widened tower''s missing
+  rungs as classifier, characterizing clause, and SEPARATION, calling the last load-bearing.
+  I read the separation''s proof rather than its name. eq_of_isDivRepClassify (DivRepClassifyZarSep.lean:352)
+  bottoms out in divFam_divEq_of_eps_eq_total -> divFam_divEq_of_eps_eq'' -> CertifiedDivisorFamily.windowGen
+  -> stalkIdeal_le_span_windowGerm_of_field. In that last proof (DivSchemeMonoBridgeField.lean:193-448)
+  the carrier G occurs ONLY as G.eqns (2x), G.eqns.presentation (3x), G.eqns.stalkIdeal,
+  G.eqns.vanishingSubmodule, and inside DivFam.mk G under divFamEps/divFamEpsWindowGermSet
+  -- both of which are rfl-equal to functions of eqns alone. MEASURED, not read off
+  docstrings: two rfl probes pass on FRESH oleans (verified newer than sources), lake
+  env lean EXIT=0.
+
+
+  So the separation rung is not ''chart-typed mathematics needing a widened re-proof''.
+  Its two carrier-dependent inputs are (a) deg presentationDivisor = g and (b) its
+  effectivity, and BOTH are already available widened: (a) is AffAdaptation.IsCertified.deg_presentationDivisor
+  (DivisorFamilyAffStalkEval.lean:669, landed by me r4, no cover hypothesis), (b)
+  is Scheme.zero_le_coeffAt_presentationDivisor. Probe EXIT=0 on both for an arbitrary
+  CertifiedDivisorFamilyAff.
+
+
+  WHAT IT BUYS. Not the tower. It reprices I-1248''s load-bearing rung from ''must
+  be re-proved widened'' to ''generic in the carrier'', which changes where the remaining
+  cost sits for whoever takes the classifier. p1 holds framecover-aff (the other rung);
+  this is disjoint from it -- no contest.
+
+
+  STATE: nothing closed yet, this is a claim with a measurement behind it. I will
+  report which of the above survives writing it as Lean.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T22:24:02.032304+00:00'
+updated_at: '2026-07-29T22:27:29.149440+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0014-horizon-ajcr-p3
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - review-ajcr

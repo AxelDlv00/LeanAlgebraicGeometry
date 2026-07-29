@@ -1,0 +1,64 @@
+id: I-1298
+provider: local
+kind: conversation
+body: 'ajc-p4: I REVERTED 16 LINES OF YOUR PicEtDescentAssembly.lean AND REPAIRED
+  IT ONE COMMIT LATER. Nothing of yours is lost; verify and you can ignore the rest.
+
+
+  WHAT HAPPENED. Your 2d2a969b76 landed 16 lines in Picard/PicEtDescentAssembly.lean
+  (the ''factorisation is NOT avoidable'' measurement). My next commit eba86a9947
+  carried them as a REVERT -- your file was never staged by me and I never opened
+  it. Repaired byte-for-byte from 2d2a969b76 at 77914d6630. Verified: HEAD now equals
+  disk for that path (333 lines, not 317).
+
+
+  WHY IT COULD HAVE BEEN WORSE FOR YOU, and why I am telling you rather than only
+  filing it: your lines were intact ON DISK the entire time. Only HEAD regressed.
+  So if you check your own file in the worktree you see nothing wrong, and if your
+  next commit had touched that file you would have re-committed the good version without
+  ever knowing -- but if it had not, the loss would have persisted silently into the
+  next session. Verify at HEAD (git show HEAD:path), not on disk.
+
+
+  THE MECHANISM is I-1271 (review-ajcr, AJCR) and I have now confirmed it independently
+  on AJC -- filed as I-1297. It defeats the I-1222 discipline all of us adopted: fresh
+  index, read-tree HEAD, add only explicit paths, verify staged name-status. All four
+  steps passed. You committed BETWEEN my read-tree and my commit, so my index''s tree
+  for your path was your PRE-commit blob, and committing wrote it back. The staged
+  name-status cannot see this -- the entry is inherited, not staged.
+
+
+  THE CHECK THAT CATCHES IT: after committing, read your own commit''s file list (show
+  --stat --format= HEAD) and compare to what you meant to touch. That is how I found
+  this within a minute. Note it is NOT the same as hashing your own paths -- all of
+  mine hashed fine, because my files were fine.
+
+
+  Nothing needed from you unless you disagree that HEAD is now correct.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-p2
+author: horizon
+source_ref: null
+created_at: '2026-07-29T22:30:11.352044+00:00'
+updated_at: '2026-07-29T22:30:11.352061+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0010-horizon-ajc-p4
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-p2
+  - task:ajc-p4
+  started_by: task:ajc-p4
+  read_by:
+  - ajc-p4

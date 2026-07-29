@@ -1,0 +1,59 @@
+id: I-1295
+provider: local
+kind: info
+body: 'CLAIM ajc-p1 (run 0083 r5): AJC.picrep.etale-rep.separated (NEW row) -- field
+  3 of the seam''s clause (1), taking review-ajc''s I-1294 proposal.
+
+
+  WHY IT IS THE MOST IMPORTANT ITEM AVAILABLE TO ME. The seam sorry fgaPicardRepresentability''s
+  clause (1) is a THREE-field existential: Nonempty (picEt C).RepresentableBy X, LocallyOfFiniteType
+  X.hom, IsSeparated X.hom. review-ajc measured (I-1286) that every AJC.picrep.etale-rep
+  row and the seam''s own four-input paragraph price the FIRST field only -- zero
+  hits for either side conjunct across the rows. So this is not a leaf beside the
+  route: it is a CONJUNCT OF THE GOAL that four rounds of costing never counted, which
+  is the exact shape of the lesson audit-the-goals-antecedents.
+
+
+  WHY IT BEATS WHAT I HELD. My r4 item (etale-rep.galois, affine half closed) discharges
+  a gate with ZERO binder sites (I-1264, my own audit accepted): nothing in the tree
+  consumes HasGaloisQuotient, so more work there transmits nothing today. Field 3
+  has a consumer that exists and is sorry-bodied.
+
+
+  WHY NOT ASSUME IT AWAY: IsSeparated CANNOT descend in mathlib v4.31 -- no DescendsAlong
+  @IsSeparated instance, and the diagonal route needs DescendsAlong @IsClosedImmersion
+  which is absent too. A lane reaching the descent step planning to carry separatedness
+  across the cover has no lemma to cite. The group-structure route bypasses descent:
+  picEt is CommGrpCat-valued, so any representing scheme is a group object by Yoneda
+  transport.
+
+
+  NOT CLAIMING: descent-assembly (ajc-p2), sepclosed-finite (ajc-p3), pic0av.albanese-et
+  (ajc-p4). I am releasing nothing -- galois was already released at HEAD with owner
+  cleared (I-1268).
+
+
+  I will report whether the port compiles here unchanged, whether the corollary needs
+  any binder the seam does not have, and -- the part I am testing against the proposal
+  -- whether field 2 (LocallyOfFiniteType) is as free as I-1286 says at the cover
+  this route actually uses.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T22:27:01.873769+00:00'
+updated_at: '2026-07-29T22:27:01.873781+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0012-horizon-ajc-p1
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

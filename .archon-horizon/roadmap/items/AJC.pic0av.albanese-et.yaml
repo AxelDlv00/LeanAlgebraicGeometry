@@ -3,36 +3,70 @@ title: 'Headline obligation 5: the Albanese universal property of Pic0SchemeEt o
   an arbitrary field'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "Headline obligation 5: isAlbanese_pic0Et (Jacobian.lean, bare sorry) --\
-  \ the Albanese universal property of Pic0SchemeEt over an ARBITRARY field. ADVANCED,\
-  \ NOT CLOSED by ajc-p4 (run 0086 r2); owner released.\n\nWHAT LANDED, all rooted\
-  \ in the umbrella, sorry-free, every declaration axiom-clean [propext, Classical.choice,\
-  \ Quot.sound] against controls that fired sorryAx (lake env lean EXIT=0; lake build\
-  \ EXIT=0, 8724 jobs):\n * Albanese/AVRigidityArbitraryField.lean -- BOTH Milne I.1\
-  \ rigidity corollaries over an arbitrary field. isMonHom_of_pointed_arbitraryField\
-  \ (I.1.2, pointed rigidity) was the open half and is the real content: IsMonHom\
-  \ is a PAIR OF EQUATIONS, so the faithful monoidal Over.pullback along k -> kbar\
-  \ reflects it. isCommMonObj_of_package_arbitraryField (I.1.4) is a WRAPPER over\
-  \ mathlib stacks 0BFD -- earns a name, adds no mathematics.\n * Albanese/AlbaneseArbitraryField.lean\
-  \ -- Milne III.6.1 and IsAlbanese over an arbitrary field, in this leaf's own shape\
-  \ (isAlbanese_of_symPowData_arbitraryField), plus exists_symPowData_hproj_tensorUnit\
-  \ as a compiler-checked non-vacuity witness.\n\nTHE FINDING: obligation 5's docstring\
-  \ priced the kbar -> k passage as 'the Galois-descent step of cluster G'. That is\
-  \ a MISPRICING (I-1112, corrected in-tree at the site, 972ef1f26d): Milne's argument\
-  \ never used the hypothesis -- the engine is generic in an arbitrary CartesianMonoidalCategory\
-  \ and consumes only the two rigidity inputs.\n\nTHE LIMIT, do not read the above\
-  \ as a discharge. The field is removable on the two rigidity INPUTS; it remains\
-  \ load-bearing where the descent datum is MANUFACTURED. Measured further (I-1115):\
-  \ that blocker is exactly ONE lemma, Milne 3.1 (indeterminacy_codimGe2_of_smooth_of_complete,\
-  \ CodimOneExtension.lean:1465) via its regularity-at-closed-points input at :806,\
-  \ which needs the residue field to BE k. Milne 3.3 never had the binder, so 3 of\
-  \ the 4 links in the extension chain are already field-agnostic.\n\nRESIDUE for\
-  \ the next lane: (1) Sym^g C, i.e. HasColimit (permDiagram C g) -- the leg's real\
-  \ wall, see AJC.albanese.symmetric; (2) the descent datum UNIFORMLY IN THE TARGET\
-  \ (IsAlbanese quantifies over A); (3) Milne 3.1 over a non-closed residue field,\
-  \ which is the bounded piece; (4) genus 0 (Mumford section 4), the basepoint condition,\
-  \ and the Abel-Jacobi transport to Pic0SchemeEt. The sorry is UNTOUCHED and no antecedent\
-  \ is witnessed at any curve."
+summary: 'Headline obligation 5: isAlbanese_pic0Et (Jacobian.lean:660, bare sorry)
+  -- the Albanese universal property of Pic0SchemeEt over an ARBITRARY field. ADVANCED
+  in its SUPPLY ROUTE, obligation UNTOUCHED, by ajc-p4 (run 0086 r4). Owner released.
+
+
+  *** THE r2 COSTING ON THIS ROW WAS WRONG IN BOTH DIRECTIONS AND IS RETRACTED (I-1285,
+  my own item I-1115). Read this before pricing anything here. ***
+
+
+  WHAT r2 PUBLISHED: the leg''s IsAlgClosed is load-bearing at exactly ONE lemma,
+  Milne 3.1''s regularity input (isRegularLocalRing_localizationAtPrime_of_isStandardSmooth_of_isAlgClosed,
+  CodimOneExtension.lean:806), which "needs a residue-degree-aware version, not a
+  binder deletion"; and Milne 3.3 has NO IsAlgClosed in either project.
+
+
+  BOTH FALSE, and they point opposite ways.
+
+
+  (1) THE NAMED LEMMA IS NOT THE ONE THE CHAIN CALLS. isRegularLocalRing_stalk_of_smooth
+  (:1237) delegates to isRegularLocalRing_of_isLocalization_atPrime_of_isStandardSmooth_of_perfectField
+  (Albanese/SmoothPrimeRegularity.lean:665) -- sorry-free, ARBITRARY prime, PERFECT
+  field -- and says so in its own docstring. The residue-degree-aware theorem r2 asked
+  a lane to build was already in the tree and already in use.
+
+
+  LANDED as a consequence (50049b5f93, eba86a9947): Albanese/CodimOnePerfectField.lean,
+  rooted, 5 theorems, 0 sorries -- Stacks 00TT at every point, reducedness of a smooth
+  scheme, the codim-1 DVR, Milne Theorem 3.1 and its CodimOneFree phrasing, all over
+  [PerfectField k]. Plus Albanese/CodimOnePerfectFieldWitness.lean, 6 declarations,
+  0 sorries: NON-VACUITY BY INSTANTIATION at P^1 over Q and over F_5, with every binder
+  discharged by synthesis from the p1Over stack -- so the weakened binder is not forced
+  closed again by the remaining ones. All 11 axiom-clean [propext, Classical.choice,
+  Quot.sound] vs isAlbanese_pic0Et and fgaPicardRepresentability as controls that
+  BOTH fire sorryAx.
+
+
+  ONE ASYMMETRY WORTH INHERITING: reducedness does NOT widen by transcription. isReduced_of_smooth_of_isAlgClosed''s
+  chart-ring input IS the closed-point argument. The perfect-field version goes regular
+  local => domain => reduced at each stalk instead, naming no closed point.
+
+
+  (2) THE LIVE LINK IS MILNE 3.3, ONE HOP ABOVE WHERE r2 PUT IT. indeterminacy_pure_codim_one_into_grpScheme
+  binds [IsAlgClosed] on the section VARIABLE line (Milne33.lean:57) -- invisible
+  in the declaration header, visible to #check, which is how r2 came to report it
+  absent. MEASURED: restating it over [PerfectField] and closing by its own core FAILS
+  to synthesize. Site: mem_domain_of_selfDiag_mem_domain (Milne33RowSection.lean:82)
+  -> mathlib pointOfClosedPoint, needing the residue field at a closed point to BE
+  the base field. False already over Q. Only 3 of the 12 modules in that cone carry
+  the binder; the other two are the closed-point layers.
+
+
+  SO THE REMAINING DISTANCE ON THE SUPPLY ROUTE, corrected: Milne 3.3''s closed-point
+  row argument, and NOTHING ELSE in the Milne section I.3 chain. A lane must replace
+  the row argument''s k-rational-point construction at closed points by something
+  that survives a residue field strictly larger than k -- not weaken a binder.
+
+
+  NOT PROGRESS ON THE SORRY, stated plainly: isAlbanese_pic0Et is UNTOUCHED, no antecedent
+  is witnessed at any curve, and PerfectField is not Field -- the imperfect case (F_p(t))
+  is outside all five theorems (measured: PerfectField (RatFunc (ZMod 5)) does not
+  hold). The other residues from r2 stand unchanged: Sym^g C i.e. HasColimit (permDiagram
+  C g) -- see AJC.albanese.symmetric -- the descent datum uniformly in the target,
+  genus 0 (Mumford section 4), the basepoint condition, and the Abel-Jacobi transport
+  to Pic0SchemeEt.'
 status: active
 kind: proof
 priority: normal
@@ -56,5 +90,4 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.pic0av
-  updated_at: '2026-07-29T21:47:03.886131+00:00'
-  owner: ajc-p4
+  updated_at: '2026-07-29T22:30:47.676705+00:00'

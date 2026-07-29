@@ -1,0 +1,74 @@
+id: I-1276
+provider: local
+kind: issue
+body: 'THE univSeed STRADDLING PROBE U2 SAYS "NOBODY HAS RUN IN TWO ROUNDS" IS THE
+  WRONG QUESTION -- the seed''s cover is chart-subordinate BY CONSTRUCTION, as a structure
+  FIELD, so measuring its support decides nothing.
+
+
+  MEASURED work-reviewer, fresh context, by statement at HEAD. Row u2: "does univSeed''s
+  supportLocus meet both V0 and V1? ... it DECIDES whether the chart-typed class half
+  is dead or merely open. Do it first."
+
+
+  THREE LANDED FACTS:
+
+  1. ThetaGeneratorSeed (Picard/DivSchemeFamily.lean:74) has field `side : relCurve
+  C R -> Bool` plus `piece_le (z) : D.piece z <= relPinnedChart C R pi (D.side z)`
+  (:98). Every piece sits inside ONE pinned chart.
+
+  2. `localEquations` (:349) sets cover := { opens := D.piece, ... }; localEquations_cover_opens
+  is rfl. The LocalEquations the certificate is about has exactly those chart-confined
+  pieces.
+
+  3. univSeed (Picard/DivRepChartClassUniv.lean:131) = highWindowPointwiseGeneratorSeed,
+  side = `pointwiseSide z := (exists_mem_relPinnedChart z).choose` (Picard/DivSchemeSeedUnivPointwise.lean:89)
+  -- confirming I-1248''s trace.
+
+
+  So this seed family never yields a cover with a piece meeting both charts. The confinement
+  is a field, not an accident, which is why no file compares its support to V0/V1:
+  the no-go''s hypothesis is about the COVER, and the cover is chart-typed a priori.
+
+
+  STRONGER OBSTRUCTION THE ROW DOES NOT CITE: isClosed_supportLocus_inter_chart_of_isCertified
+  (Picard/DivSchemeCertZarConfine.lean, DivisorAdaptation namespace, axiom-clean)
+  forces BOTH chart traces of the support to be CLOSED with NO connectivity hypothesis.
+  The row cites only the preconnected form (forall_not_isCertified_of_straddling).
+
+
+  BOUND ON SCOPE: the fibre-Weil part of univSeed''s window divisors cannot straddle.
+  fiberWeilDivisor_coeffAt_of_mem_chart-1 (RiemannRoch/FLVFiberToolkit.lean, AlgebraicGeometry
+  ns) gives coefficient 0 at every non-generic point of fiberChart-1; the def''s docstring
+  says "Supported on V0 \ V1". Axiom-clean, re-applied in a scratch probe, lake env
+  lean EXIT=0. Caveat I did NOT close: fiberTwoCover_V0/V1 = fiberChart0/1 by rfl
+  (Cohomology/RigidEngine4Relative.lean:88), but relCover is a pullbackProd base change,
+  so the bridge to the relative curve is one unclosed step.
+
+
+  ACTION: do not spend a round measuring univSeed''s support. Restate the probe as:
+  can any route to U2''s class half present the divisor on a cover that is NOT chart-subordinate?
+  ThetaGeneratorSeed.piece_le answers no for this family.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-29T21:53:36.213327+00:00'
+updated_at: '2026-07-29T21:54:30.410503+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0014-horizon-review-ajcr
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer
+  read_by:
+  - review-ajcr

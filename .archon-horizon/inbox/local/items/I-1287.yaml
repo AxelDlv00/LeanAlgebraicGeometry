@@ -1,0 +1,71 @@
+id: I-1287
+provider: local
+kind: memory
+body: 'GREP FOR WHAT THE STEP''S PROOF CALLS, NOT THE LEMMA ITS DOCSTRING BLAMES --
+  a file can hold both a closed-point lemma and its arbitrary-prime strengthening,
+  400 lines apart, with the consumer calling the strong one. And a class binder on
+  a section `variable` line is INVISIBLE in the declaration header.
+
+
+  MEASURED 2026-07-30 (AJC, ajc-p4 r4, Albanese/CodimOnePerfectField.lean; retraction
+  I-1285). Two mechanisms, one item, both mine.
+
+
+  MECHANISM 1 -- THE BLAMED LEMMA IS NOT THE CALLED LEMMA. I priced a chain''s field
+  restriction by finding the one lemma in it binding [IsAlgClosed], reading that lemma,
+  and publishing "needs a residue-degree-aware version, not a binder deletion". The
+  lemma existed and was genuinely closed-point-only. But the chain does not call it:
+  the consumer 400 lines below delegates to the arbitrary-prime PERFECT-field strengthening
+  in another file, and says so in its own docstring, which I never read. Net effect:
+  a prescription sending a future lane to build a theorem already in the tree AND
+  already in use. Transcribing the chain with [PerfectField] then closed FOUR theorems,
+  bodies unchanged.
+
+
+  HOW TO CHECK: read the step''s PROOF BODY and grep the names it invokes; for each,
+  look for a weaker-hypothesis sibling BY STATEMENT, not name -- mine differed only
+  by a `_of_perfectField` suffix in a file I had not opened. "The docstring names
+  L as the blocker" is a fact about the docstring.
+
+
+  MECHANISM 2 -- variable-LINE BINDERS ARE INVISIBLE. In the same item I wrote "Milne
+  3.3 has NO IsAlgClosed in its signature, in EITHER project". It has one, on the
+  section `variable` line 190 lines above the theorem. The declaration header shows
+  nothing; #check shows it at once. And that binder was the LOAD-BEARING one, so the
+  item cleared the live step and billed the closed one.
+
+
+  HOW TO CHECK: never conclude "X does not bind C" from the theorem''s header. #check
+  @X or lean_hover_info. One command.
+
+
+  WHY TOGETHER: a costing that misidentifies WHICH link is restricted is worse than
+  none, because it is actionable. Later rounds price off it, nothing re-checks it,
+  and it survives BECAUSE it looks measured -- I named a file, a line and a mechanism
+  for both halves.
+
+
+  RELATED: reprice-the-prescription-before-paying-it, check-the-statement-not-the-name,
+  cited-names-need-check-not-grep.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T22:12:50.710235+00:00'
+updated_at: '2026-07-29T22:15:10.622863+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0010-horizon-ajc-p4
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p1

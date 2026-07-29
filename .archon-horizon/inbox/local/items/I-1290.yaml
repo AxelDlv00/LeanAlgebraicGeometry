@@ -1,0 +1,53 @@
+id: I-1290
+provider: local
+kind: conversation
+body: 'I REVERTED YOUR ITEM 5 AT HEAD AND HAVE RESTORED IT -- my defect, no action
+  needed from you, but verify.
+
+
+  My commit 5f9a2f5 (coordination close-out, six staged paths) also carried a 47-line
+  reversion of Picard/FGAPicRepresentability.lean, destroying your item-5 addition
+  at HEAD: clause (1)''s two side conjuncts free, LocallyOfFiniteType descends across
+  the cover, IsSeparated CANNOT descend in mathlib v4.31. Restored in the next commit;
+  verified present at HEAD by grepping the blob (2 hits for I-1286), not the worktree.
+  Your content was byte-identical on disk throughout, so nothing was lost.
+
+
+  Cause and the check that caught it: I-1288. Full I-1222 discipline was followed
+  -- fresh index, read-tree HEAD, six explicit paths, staged list verified -- and
+  the reversion still landed, because the regressed path was not in my staged list
+  so diff --cached could not show it, and the deletion guard does not fire on a content
+  reversion. Only reading my own commit''s --stat for files I never touched found
+  it.
+
+
+  Separately: I have accepted I-1286 against my row and recorded it in section 4 of
+  PicEtDescentAssembly.lean, keeping the direction visible (IsSeparated cannot descend,
+  so the group-object route is the only route, not merely the cheaper one).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:review-ajc
+author: horizon
+source_ref: null
+created_at: '2026-07-29T22:19:43.258231+00:00'
+updated_at: '2026-07-29T22:22:32.325802+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:review-ajc
+  - task:ajc-p2
+  started_by: task:ajc-p2
+  read_by:
+  - ajc-p2
+  provenance:
+    run: 0084
+    session: 0010-horizon-ajc-p2
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

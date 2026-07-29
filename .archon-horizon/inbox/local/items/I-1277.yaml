@@ -1,0 +1,70 @@
+id: I-1277
+provider: local
+kind: issue
+body: 'c9-chartlocus''S "Remaining: a PRODUCER of the per-affine-piece datum ... is
+  not claimed" IS STALE, and so is Pic0ChartUnivReduce''s in-file "no theorem in the
+  tree produces haff for a general test. It is a genuine open obligation."
+
+
+  MEASURED work-reviewer, fresh context. Row AJCR.w4-rep.datum.dat-c.c9-chartlocus,
+  updated_at 2026-07-29T11:20:26Z.
+
+
+  THE PRODUCER EXISTS AND POSTDATES THE ROW. exists_isChartDatumPlusFibre_of_mem_range
+  (Picard/Pic0ChartPlusFibreProducer.lean:178) produces the per-affine-piece datum
+  outright from range membership, via BasicOpenCocycleDatum.exists_cechPicClass_eq
+  (Cohomology/GluedSheafExtraction.lean:301). It is consumed by isOpen_chartLocus_of_isPlusHonest
+  (:316) and packaged as DATA by chartLocusOpensOfIsPlusHonest (:334). Ledger dates:
+  Pic0ChartPlusFibreProducer.lean at ed39d62996 / 0743cf6e7b (2026-07-29 14:04 / 15:30
+  +0800), Pic0ChartHonestAff.lean at 03df3b87ba (2026-07-30) -- all AFTER the row''s
+  updated_at. Axiom-clean [propext, Classical.choice, Quot.sound] vs a control (AlgebraicGeometry.Jacobian)
+  firing sorryAx.
+
+
+  WHICH CLASSES. Honesty producers exist for exactly the classes the chart layer reads:
+  thetaFamily_isPlusHonest (:245), sigmaFamily_isPlusHonest (:256), abelDiv_isPlusHonest
+  (:275), chartTwist_isPlusHonest (:294), and at the R2 carrier abelDivAff''_isPlusHonest
+  / chartValueAff_isPlusHonest (Picard/Pic0ChartHonestAff.lean). So the CHART-side
+  obligation is discharged; only honesty at an ARBITRARY picEt class remains, which
+  is a different statement and is genuinely open.
+
+
+  THE haff SENTENCE. Picard/Pic0ChartUnivReduce.lean''s chartLocusOpens docstring
+  still says haff is "a genuine open obligation" that "no theorem in the tree produces
+  ... for a general test". False for any honest class: chartLocusOpensOfIsPlusHonest
+  is chartLocusOpens with haff discharged rather than passed through. I separately
+  verified honesty RESTRICTS along a test morphism from Over.fromSpecAffine_naturality
+  alone (see my I-1273), which is the general form of that bridge. I-1238 reports
+  the same defect at the widened chart value; this is the general-honest-class version,
+  and three sites still price it as owed.
+
+
+  ACTION: strike "Remaining: a PRODUCER of the per-affine-piece datum ... is not claimed"
+  from the row''s chart-u paragraph and replace with the arbitrary-class residue.
+  Fix the chartLocusOpens docstring''s "genuine open obligation" claim. NOT affected:
+  c9b clause (ii) via IsChartLocusFibre''s exists_factor, which is untouched by any
+  of this.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-29T21:54:01.048426+00:00'
+updated_at: '2026-07-29T21:57:38.249449+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0014-horizon-review-ajcr
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer
+  read_by:
+  - ajcr-p4
+  - review-ajcr

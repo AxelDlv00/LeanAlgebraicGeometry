@@ -1,0 +1,69 @@
+id: I-1285
+provider: local
+kind: issue
+body: 'BOTH HALVES OF I-1115''s LOCALISATION ARE WRONG, AND THEY POINT OPPOSITE WAYS
+  -- the step I named as the chain''s single obligation was already discharged; the
+  step I cleared is the load-bearing one. AUTHOR''S RETRACTION of my own I-1115, by
+  ajc-p4 r4.
+
+
+  LANDED 50049b5f93 / 4756ecaa8b: Albanese/CodimOnePerfectField.lean, rooted, 5 theorems,
+  0 sorries, all axiom-clean [propext, Classical.choice, Quot.sound] vs isAlbanese_pic0Et
+  and fgaPicardRepresentability as controls that BOTH fire sorryAx. Imports rebuilt
+  FIRST (lake build EXIT=0, 8627 jobs), then lake env lean EXIT=0.
+
+
+  WRONG (1). I-1115 said the :806 closed-point regularity lemma "needs a residue-degree-aware
+  version, not a binder deletion". That version was ALREADY IN THE TREE -- isRegularLocalRing_of_isLocalization_atPrime_of_isStandardSmooth_of_perfectField
+  (SmoothPrimeRegularity.lean:665), sorry-free, ARBITRARY prime, PERFECT field --
+  and the chain''s consumer ALREADY CALLS IT: isRegularLocalRing_stalk_of_smooth (CodimOneExtension.lean:1237)
+  delegates to it, not to :806, and its docstring says so. I read :806 and never checked
+  what the step calls.
+
+
+  CONSEQUENCE: Milne 3.1 and its chain widen to a PERFECT field, bodies UNCHANGED
+  -- Q, every number field, every F_q. One real asymmetry: REDUCEDNESS does not transcribe
+  (its chart-ring input IS the closed-point argument), so isReduced_of_smooth_perfectField
+  goes regular local => domain => reduced at each stalk instead.
+
+
+  WRONG (2), the expensive one. I-1115: "Milne 3.3 has NO IsAlgClosed in its signature,
+  in EITHER project." FALSE -- it binds it on the section VARIABLE line (Milne33.lean:57),
+  invisible in the declaration header, visible to #check. MEASURED: restating Milne
+  3.3 over [PerfectField k] and closing by its own core FAILS to synthesize IsAlgClosed.
+  Site: mem_domain_of_selfDiag_mem_domain (Milne33RowSection.lean:82) -> mathlib pointOfClosedPoint,
+  needing the residue field at a closed point to BE the base field. False already
+  over Q.
+
+
+  SO THE RESTRICTION SITS ONE LINK ABOVE WHERE I PUT IT. A lane pricing the Albanese
+  descent off I-1115 attacks a closed step and leaves the live one alone: Milne 3.3''s
+  closed-point row argument, and nothing else in the chain.
+
+
+  SURVIVES: not a chain-wide descent; "three of four links field-agnostic" in spirit.
+  Only WHICH link was wrong.
+
+
+  STILL OPEN: isAlbanese_pic0Et UNTOUCHED, no antecedent witnessed at any curve, PerfectField
+  is not Field. Corrected at all three in-tree sites too.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T22:11:45.941328+00:00'
+updated_at: '2026-07-29T22:11:45.941340+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0010-horizon-ajc-p4
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

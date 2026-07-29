@@ -1,0 +1,119 @@
+## C-1 — "Remaining: a PRODUCER of the per-affine-piece datum … NOT CLAIMED"
+
+**Verdict: STALE** (and stale *at the time the row was written*).
+
+(a) The producer exists: `AlgebraicGeometry.exists_isChartDatumPlusFibre_of_mem_range`, `Picard/Pic0ChartPlusFibreProducer.lean:178`. Verified by `#check`; rooted (import-closure computation from `AlgebraicJacobian.lean`, 760 modules); zero code `sorry` in the file (the one `sorry` hit is the word inside a docstring at :52). Statement:
+```
+(μ : picEt C (overSpec k A)) → (∃ z, relPicToPicEt C (overSpec k A) z = μ)
+  → ∃ D, IsChartDatumPlusFibre C π μ D
+```
+That is exactly the per-affine-piece `hfib` shape `isOpen_chartLocus_of_plusFibre` and `chartLocusOpensOfPlusFibre` consume.
+
+(b) **For which classes.** The chart-side obligation is *fully discharged*, the arbitrary-class one is not. Whole-environment producer census of `IsPlusHonest` (elaborated, conclusion-position, not grep — 9 positive producers): `thetaFamily_isPlusHonest`, `sigmaFamily_isPlusHonest`, `abelDiv_isPlusHonest`, `chartTwist_isPlusHonest`, `abelDivAff'_isPlusHonest`, `chartValueAff_isPlusHonest`, plus the three closure lemmas `.mul/.inv/.pow`. Consumers: `isOpen_chartLocus_of_isPlusHonest` (:316), `chartLocusOpensOfIsPlusHonest` (:334) — full `#check`ed types carry **no** hypothesis beyond `IsPlusHonest`. Widened carrier: `isOpen_chartLocus_chartValueAff` (`Pic0ChartHonestAff.lean:181`) has **no hypothesis at all** on the section, and is axiom-clean `[propext, Classical.choice, Quot.sound]` (`lean_verify`).
+
+**Cheap win a prover lane can take right now:** there is **no chart-typed `chartValue_isPlusHonest`** — only the widened `chartValueAff_isPlusHonest`. I proved the chart-typed twin and the chart-typed CHART-U(b) as a probe, both closing on the four landed producers with no new mathematics:
+```lean
+theorem chartValue_isPlusHonest (n m : ℕ) (Z) (T) (s : divFamZar C π n T) :
+    IsPlusHonest C T (chartValue C π n m Z T s) :=
+  ((abelDiv_isPlusHonest C π T s).mul C (sigmaFamily_isPlusHonest C Z T)).mul C
+    ((thetaFamily_isPlusHonest C (thetaCechClass C) T).pow C m).inv
+-- and then isOpen_chartLocus_of_isPlusHonest C π hπ m Z T _ (above)
+```
+`lean_run_code` on the rooted environment: green (needs `maxHeartbeats 1000000`, same budget the file's neighbours carry). `chartValue = abelDiv · Σ · (θᵐ)⁻¹` (`DivSchemeAbel.lean:351-354`) mirrors `chartValueAff` (`DivisorFamilyAffAbel.lean:287-290`) term for term.
+
+(c) **Dating.** Ledger (paths are repo-root-relative, not `MainProjects/...` — the command as given returns empty):
+- `ed39d62996` **2026-07-29 06:04:42 UTC** "CHART-U(b)'s missing producer: on an affine test the field point IS the base change" — the producer + `isOpen_chartLocus_of_isPlusHonest` + `chartLocusOpensOfIsPlusHonest`.
+- `0743cf6e7b` **2026-07-29 07:30:55 UTC** — `abelDiv_isPlusHonest`.
+- Row `updated_at` **2026-07-29T11:20:26 UTC**.
+
+So the producer predates the row's own last write by ~5 hours and the Abel honesty witness by ~4 hours. `Pic0ChartHonestAff.lean` (`9e68b0ace9`, 2026-07-29 20:44:43 UTC) came later. Residual open obligation: `IsPlusHonest` at an **arbitrary** `picEt` class (the étale-sheafification direction) — real, and correctly stated in the row's own later re-pricings.
+
+## C-2 — "the gate is now clause (ii) ALONE, through IsChartLocusFibre's exists_factor"
+
+**Verdict: OVER-PRICED** on two counts.
+
+`IsChartLocusFibre` (`Picard/Pic0ChartUnivReduce.lean:166`) is `∀ T g, Nonempty (ChartFibrePresented C (abelSigmaChart …) g)`. `exists_factor` is a field of `ChartFibrePresented` (`Pic0ChartOpenImmersionCriterion.lean:140`):
+```
+∀ (S : Scheme) (v : S ⟶ X) (w : S ⟶ T), f.app (op S) v = g.app (op S) w
+  → ∃ u : S ⟶ W, u ≫ r = v ∧ u ≫ W.ι = w
+```
+i.e. joint surjectivity of the fibre square — the relative form of GAP-2.
+
+**Producer census (elaborated, whole rooted environment):** `IsChartLocusFibre` has **0** positive producers and **0** existential producers. `ChartFibrePresented` has exactly one declaration concluding in it (`.mk`); every use goes through `isOpenImmersion_presheaf_of_chartFibrePresented` or an anonymous `⟨W, r, sq, exists_factor⟩` inside a *transport* (`Pic0ChartRestrictedFibreSat.lean:322/378`, `Pic0ChartRestrictedFibre.lean:209`) — no standalone producer.
+
+Two reasons the pricing is over-stated:
+
+1. **`exists_factor` is not divRep/CERT-Σ-gated in the sense of needing the certificate.** It is *stated over* `rep : (divFunctor C π n).RepresentableBy D` as a section variable, which is the parametric idiom, not a producer dependency. The mathematical content is `Scheme.CurveDivisor.eq_of_picClass_eq_of_h0_one` (`RiemannRoch/EffectiveUniqueness.lean:144`, landed) in families. What blocks it is GAP-2-in-families, not the certificate.
+
+2. **`IsChartLocusFibre` may be the *wrong* target, and the tree already says so.** `restrictedChartFibre_top_iff` (`Pic0ChartRestrictedFibreSat.lean:355`) proves `RestrictedChartFibre … ⊤ ↔ IsChartLocusFibre`, and `not_restrictedChartFibre_top_of_not_injective` (:382) plus `mono_abelSigmaChart_of_isChartLocusFibre` / `not_isChartLocusFibre_of_divFamZar` (`Pic0ChartAbelForkReduce`/`Pic0ChartAbelNonInjective`, all `#check`ed) make `IsChartLocusFibre` **refutable** the moment the Abel chart fails injectivity on any test. So "the gate is clause (ii) via `IsChartLocusFibre`" prices a target three landed theorems say may be unsatisfiable. The cheaper sufficient version is `RestrictedChartFibre … V` at a *proper intermediate* `V` (2 producers: `restrictedChartFibre_bot`, `restrictedChartFibre_of_isChartLocusFibre`) — and the fork that decides which is live is the unowned `abel-noninj` row.
+
+## C-3 — "ZERO producers of DivRepGlobalData or DivRepAffinePullback"
+
+**Verdict: STALE.**
+
+Whole-environment census (conclusion-position after binder-stripping, plus a separate `Exists`-head pass):
+
+| structure | producers |
+|---|---|
+| `DivRepGlobalData` | `.mk`, **`DivRepAffinePullback.toGlobalData`** (`DivRepGlobalClassify.lean:289`) — 1 real |
+| `DivRepAffinePullback` | `.mk`, `.ofPull` (`DivRepAffPullbackReduce.lean:147`), **`divRepAffinePullback_ofChartClause`** (`DivRepAffPullClause.lean:461`) — 1 real, from a single hypothesis |
+| existential producers of either | **0** |
+
+So this is not the `DivFamily` shape (135 consumers / 0 producers). The chain terminates:
+`IsChartClause U` → `divRepAffinePullback_ofChartClause` → `DivRepAffinePullback.representableBy` (`DivRepGlobalClassify.lean:306`) → `(divFunctor C pi g).RepresentableBy DivOver`. Also `divFunctor_representableBy_of_chartClause` (`DivRepAffPullClause.lean:483`) and `divFunctor_representableBy_of_chartRange` (`DivRepChartRange.lean:225`) as one-hypothesis endpoints. Both files sorry-free and rooted.
+
+**`DivRepAffinePullback.representableBy` is a producer, not parametric-over-a-`RepresentableBy`.** Its `#check`ed type takes only curve instances, `hpi`, `g`, `hO`, `hchi`, `r1 r2 b1 b2` and a `DivRepAffinePullback` term. It carries `hO : h0 = 1` and `hchi : chi = 1 - g` as explicit propositional hypotheses (relevant if a consumer needs `n ≠ genus C`).
+
+So dat-b's C-0008 is right and C-0001 is stale. But note what the endpoint *actually* rests on: `IsChartClause` has exactly **one** producer, `IsChartClause.of_id` (`DivRepAffPullClause.lean:156`), which is only the quantifier collapse — U2 itself is unproved. `isChartClause_iff_forall_classify_eq` (`DivRepChartRange.lean:183`) reduces it to an equality of two already-existing morphisms `Spec R_Z(i,j) ⟶ DivScheme g`. **That equation, not a structure inhabitation, is the honest remaining cost.**
+
+## C-4 — "isOpen_chartLocus silently needs IsOpenMap + Surjective, which nothing discharges"
+
+**Verdict: STALE on both halves.**
+
+The named declaration is `AlgebraicGeometry.isOpen_of_isOpen_comap_preimage` (`Picard/Pic0ChartLocusOpen.lean:129`), with `isOpen_of_isOpen_preimage_of_isOpenMap_surjective` (:118) beneath it. It does carry `hopen`/`hsurj` as explicit hypotheses — but it is **dead code**: grep for it across all `AlgebraicJacobian/**/*.lean` returns its own declaration line and one docstring mention (`Pic0ChartHonest.lean:51`). Zero call sites.
+
+The live route bypasses it. `#check`ed full types of `isOpen_chartLocus_of_isPlusHonest`, `isOpen_chartLocus_of_plusFibre`, `chartLocusOpensOfIsPlusHonest`, `isOpen_chartLocus_chartValueAff` — **none carries an `IsOpenMap` or `Surjective` binder**. A transitive-constant walk (77k constants each) shows the live route reaches `PrimeSpectrum.isOpenMap_comap_of_hasGoingDown_of_finitePresentation` *as a discharged fact*, not as a hypothesis; the openness actually enters via `PrimeSpectrum.localization_away_isOpenEmbedding … .isOpenMap` (`DivisorFamilyH1Locus.lean:423`) and `isOpenEmbedding.isOpenMap` (`Pic0ChartLocusGeneralTest.lean:221`).
+
+**And mathlib discharges the claimed-absent fact outright.** Probe, green on the rooted environment:
+```lean
+example {A : Type} [CommRing A] (E : Algebra.EtaleCover A) :
+    IsOpenMap (PrimeSpectrum.comap (algebraMap A E.Carrier))
+      ∧ Function.Surjective (PrimeSpectrum.comap (algebraMap A E.Carrier)) :=
+  ⟨PrimeSpectrum.isOpenMap_comap_of_hasGoingDown_of_finitePresentation,
+   E.comap_surjective⟩
+```
+- `PrimeSpectrum.isOpenMap_comap_of_hasGoingDown_of_finitePresentation`, `Mathlib/RingTheory/Spectrum/Prime/Chevalley.lean:59`: `[Algebra.HasGoingDown R S] [Algebra.FinitePresentation R S] : IsOpenMap (comap (algebraMap R S))`.
+- `Algebra.HasGoingDown.of_flat`, `Mathlib/RingTheory/Ideal/GoingDown.lean:154`: instance from `Module.Flat`.
+- `PrimeSpectrum.comap_surjective_of_faithfullyFlat`, `Mathlib/RingTheory/Flat/FaithfullyFlat/Algebra.lean:149`.
+- For the project's `EtaleCover` (`Algebra/EtaleCover.lean:64`) both resolve by instance: `Algebra.Etale → FinitePresentation` (attribute-instance, `Etale/Basic.lean:226`), `Module.FaithfullyFlat` instance at `EtaleCover.lean:86`, `FaithfullyFlat extends Flat`. Surjectivity is the structure's own field `comap_surjective`.
+
+Olean freshness checked (all six relied-on files FRESH vs their `.lean`), so the probes are not stale-import artefacts.
+
+## C-5 — "a BasicOpenCocycleDatum TENSOR THAT DOES NOT EXIST" / "its MUL/TENSOR half is the live gate"
+
+**Verdict: absence is REAL; the prescription is STALE** — the live route does not need it, and the tree already proved that.
+
+Absence, measured: whole-environment census of declarations concluding in `BasicOpenCocycleDatum` gives **9**, all unary or nullary — `thetaIdealDatum`, `windowTransportDatum`, `divisorDatum`, `thetaChartDatum`, `baseChange`, `invDatum`, `inv`, `ofRefinement`, `.mk`. Grep (case-insensitive) for `mulDatum|tensorDatum|smulDatum|datumMul|datumTensor|BasicOpenCocycleDatum.mul|.tensor`: no declaration, only prose. Grep for two-datum binders (`(D D' : BasicOpenCocycleDatum`, `(D₁ D₂ :`): none. `Pic0ChartLocusFibreField.lean:179` takes `D` and `D'` but is a comparison lemma, not a combination. So the mul/tensor genuinely does not exist.
+
+**It is not needed, and `Pic0ChartTwistCollapse.lean` (`a5da2f1a15`, 2026-07-28 07:02 UTC) is the retraction, with two independent reasons — both `#check`ed:**
+
+1. `chartTwist_collapse`: `chartTwist C m Z T lam = lam * thetaFamily C (θ^m · (picClass k Z)⁻¹) T`. `sigmaFamily` *is* a `thetaFamily` by definition and `thetaFamily` is multiplicative in its class argument (`thetaFamily_mul/_inv/_pow`), so Σ and θᵐ fuse in the `CechPic` **group** over the fixed base `overSpec k k` before any datum is extracted. There is no datum-level product in the route.
+2. `BasicOpenCocycleDatum.exists_cechPicClass_eq` (`Cohomology/GluedSheafExtraction.lean:301`) is **surjectivity**: `∀ c : (relCurve C B).CechPic, ∃ D, D.cechPicClass = c`. So a datum for a product exists outright — recorded in the wanted shape as `exists_datum_cechPicClass_mul_inv` (`∃ D, D.cechPicClass = c * c'⁻¹`) and `exists_datum_cechPicClass_chartTwistClass`.
+
+**What presentation does not give (be explicit):** a *construction of the product datum from the two factors' data on a common cover refinement*. Consequently the cover of the presenting `D` is unrelated to the factors' covers, so any argument needing to *track index sets through the product* still has no route, and `cechPicClass_inv` (the class law of `invDatum`) remains unproved. Neither is on the CHART-U(b) path: the path needs *a* datum with the right class, and `exists_isChartDatumPlusFibre_of_mem_range` (C-1) consumes exactly `exists_cechPicClass_eq` to get one. Also stale within C-5: the `DivRepGlobalData`-with-zero-terms half is refuted by C-3. dat-b's C-0008 sentence "its MUL/TENSOR half is the live gate" was written 2026-07-28 04:38 UTC — ~2.5 hours before the retraction commit, and the worksheet itself now carries the strikethrough.
+
+## C-6 — "chart-u CANNOT START UNILATERALLY: the §1.6 co-sign acknowledgement has not been given"
+
+**Verdict: STALE.**
+
+`informal/w4-datb-worksheet.md` §1.6 opens with **"ACKNOWLEDGED AND BUILT, 2026-07-28 (run 0072, lane `ajcr-charts`). Both amendments are accepted as written and are now Lean."** Landed at `381178463e`, **2026-07-28 04:26:44 UTC** ("worksheets: CHART-U co-sign ACKNOWLEDGED and built; GAP-1 re-sized honestly"), confirmed by `git log -S"ACKNOWLEDGED AND BUILT"`. Comment C-0003 is dated **2026-07-26T17:05** — it predates the acknowledgement by ~1.5 days and was never revised. §4 row B-4 also reads `~~co-sign~~ **acknowledged**`.
+
+The built object matches the co-signed signature. (a-amendment) demanded the *split* form: `chartLocus` (`Picard/Pic0ChartLocus.lean:244`) is
+```lean
+{t : T.left | IsSplitWitness C (picEtMap C (Over.testPoint t) (chartTwist C m Z T lam))}
+```
+against `IsSplitWitness` (:151) — general test, twisted class, split predicate, exactly as co-signed. Sorry-free. Iso-invariance is discharged unconditionally by `isSplitWitnessIsoInvariant_holds` (`Pic0ChartLocusIsoInvariance.lean:263`). (b-amendment)'s route is assembled and, per C-5, its GAP-1 link is retracted rather than open. One convention a lane must not misread, stated in the file's own docstring: `IsSplitWitness` asks for **neither** `0 ≤ W` **nor** `deg W = g`; the degree is supplied externally via `degAt_chartTwist` (:202) and the chart-index constraint, and effectivity must be re-supplied wherever GAP-2 uniqueness is invoked.
+
+---
+
+**Method notes.** Every cited name was `#check`ed in a rooted `import AlgebraicJacobian` environment, not grepped. All producer counts are elaborated conclusion-position censuses over `env.constants`, which catches suffix-position lowerCamelCase names, `instance`s and anonymous constructors that a case-sensitive grep misses. Two names that appear only in docstrings and do **not** exist: `isChartLocusFibre_of_isChartUniv` (advertised at `Pic0ChartUnivReduce.lean:55`) and `BasicOpenCocycleDatum.mul`. Files relied on are all rooted and sorry-free except `DivisorFamilyH1Locus.lean`, whose single `sorry` hit is the word inside a docstring at :77.

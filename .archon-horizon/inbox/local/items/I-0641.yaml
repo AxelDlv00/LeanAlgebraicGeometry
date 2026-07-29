@@ -59,7 +59,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-28T14:58:16.364685+00:00'
-updated_at: '2026-07-29T06:15:01.213138+00:00'
+updated_at: '2026-07-29T22:29:27.100042+00:00'
 metadata:
   provenance:
     run: '0073'
@@ -73,3 +73,4 @@ metadata:
   agent: janitor
   read_by:
   - ajc-albanese
+  - ajc-p2

@@ -1,0 +1,57 @@
+id: I-1278
+provider: local
+kind: issue
+body: "DAT-B'S COVERAGE RESIDUE IS OVER-PRICED TWICE: the \"0 <= Sigma legality\"\
+  \ the files call \"the open question\" is not a hypothesis of the legality theorem\
+  \ at all, and the \"reconciliation of the chart parameter with the threshold\" is\
+  \ a PER-CHART calibration a landed theorem already absorbs.\n\nMEASURED work-reviewer,\
+  \ fresh context, two scratch probes, lake env lean EXIT=0, axiom-clean [propext,\
+  \ Classical.choice, Quot.sound] vs a control firing sorryAx.\n\n(1) LEGALITY NEEDS\
+  \ NO EFFECTIVITY. Pic0ChartCoverageIndexSlack.lean item 3 says the move is to let\
+  \ the index at parameter g carry the slack in Z, \"whose own legality (0 <= Sigma)\
+  \ is the open question\". But chartValue_mem_pic0Subgroup (Picard/DivSchemeAbel.lean:382)\
+  \ takes ONLY deg_k Z = m*d1 - n -- no effectivity, no 0 <= Z. I closed the slack\
+  \ instantiation directly:\n  chartValue_mem_pic0Subgroup C pi (g+e) m Z ?_ T s \
+  \  -- side goal by `rw [hZ]; push_cast; ring`\nfrom hZ : deg_k Z = m*d1 - g - e.\
+  \ The \"0 <= Sigma\" question is about the DROP's output, and coverage has no drop\
+  \ (Pic0ChartCoverageNoDrop.lean's own point).\n\n(2) THE CALIBRATION IS ALREADY\
+  \ PER-CHART. mixedParamRepresentableBy (Picard/Pic0ChartAtlasParamFree.lean:125)\
+  \ takes a per-index parameter nn : iota -> N with per-index (m i, Z i, hdeg i);\
+  \ its docstring states the engine never sees a chart parameter, so b = n is per-chart\
+  \ with no uniformity obligation. ledger_forces_b_eq_n then binds at each chart separately,\
+  \ and index_of_threshold satisfies it by construction. Axiom-clean.\n\nREAL RESIDUE\
+  \ THAT SURVIVES: per test point, a divisor of the twisted fibre class over the splitting\
+  \ field with vanishing H1 -- DAT-0a at the fibre field. Not a reconciliation, not\
+  \ a legality question.\n\nALSO STALE ON THIS ROW: (a) the \"separably closed level\"\
+  \ coverage staging is off the live route -- IsSepClosed occurs in exactly 3 files\
+  \ tree-wide (Curve/SepPointsDense, SeparablyClosedPoints, SeparablyClosedFibre)\
+  \ and NO Picard coverage/chart-locus file imports that layer, since the drop-free\
+  \ route deleted the point oracle; (b) chartsCoverLocally_of_affineLocal (Picard/Pic0ChartCoverageAffineTest.lean,\
+  \ landed 2026-07-29 21:59 +0800, AFTER the row's updated_at 15:33Z) reduces the\
+  \ obligation to AFFINE tests, which the summary never mentions.\n\nCAVEAT, measured\
+  \ not assumed: [Module.Finite] and [Algebra.IsSeparable] on mem_chartLocus_of_witness_h1\
+  \ ARE load-bearing (both fail to synthesise when deleted); they come from exists_splitting_of_picEt's\
+  \ output, so structural, not chosen."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-29T21:54:47.127816+00:00'
+updated_at: '2026-07-29T21:55:51.479242+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0014-horizon-review-ajcr
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer
+  read_by:
+  - ajcr-p4
