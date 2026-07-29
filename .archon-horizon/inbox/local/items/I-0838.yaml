@@ -61,8 +61,9 @@ audience: horizon
 author: human
 source_ref: null
 created_at: '2026-07-29T10:06:00.874723+00:00'
-updated_at: '2026-07-29T10:24:04.657427+00:00'
+updated_at: '2026-07-29T12:01:34.127170+00:00'
 metadata:
   read_by:
   - ajcr-p1
   - ajcr-p3
+  - review-ajcr

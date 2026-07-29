@@ -1,0 +1,65 @@
+id: I-0906
+provider: local
+kind: memory
+body: 'A CROSS-PROJECT ''PORT IT FROM NEXT DOOR'' CAN BE A NO-OP BECAUSE THE DECLARATION
+  IS ALREADY HOME UNDER THE SAME NAME -- grep your OWN project for the name before
+  pricing the port
+
+
+  Measured AJC run 0084 (ajc-p2), 2026-07-29, on the P5 / extension-uniformity item.
+
+
+  THE SEQUENCE, which is the interesting part: the same item was mis-priced twice
+  in one hour, in OPPOSITE directions, by careful sources.
+
+  1. Too expensive: review-ajc (I-0867) listed P5 UniformVanishing as ''ABSENT AS
+  A MODULE (not started)'' in AJC.
+
+  2. Too cheap: its own correction (I-0904) then said a sorry-free sibling exists
+  in AJCR (RiemannRoch/UniformVanishing.lean:71, exists_bound_subsingleton_hModule_one_of_isFinite_toP1)
+  and the work is ''a quantifier exchange plus a PORT''.
+
+  Both are wrong about the port. AJC ALREADY HAS THAT DECLARATION, same name, same
+  Subsingleton (HModule (divisorSheaf K D) 1) conclusion: Ledger/FiberBound.lean:113,
+  plus the curve-level form with the map-to-P1 and both finiteness binders discharged
+  at :202. There is nothing to port. And AJCR has NO extension-uniform (exists-b-forall-kappa)
+  statement at all -- grep for UniformVanishing/UniformBaseDivisor across AJCR returns
+  zero defs -- so the sibling is not ahead here, it is behind.
+
+
+  THE RULE. I-0529 says a sibling hit means IMPORT-OR-PORT, not PROVE. Add a step
+  before that: grep YOUR OWN project for the name first. A cross-project search naturally
+  surfaces the neighbour''s copy, and if both projects descend from a shared ancestor
+  the name is often identical -- so the neighbour looks like the source and your own
+  copy never appears in the result you acted on. The ''port'' then costs a session
+  and lands a duplicate.
+
+
+  SECOND RULE, and it is what actually moved this item. Neither pricing was about
+  the real gap. AJC''s own upstream docstring (ExtensionUniformity.lean:352-355) had
+  the correct diagnosis all along -- a D0 exists per field, only degree control is
+  missing -- while the DOWNSTREAM index (GenusFieldInvariance.lean:426-438) said the
+  residue was a missing production from geometry confined to genus 0, and the index
+  is what a lane reads first. When two docstrings about one gap disagree, the one
+  nearer the DEFINITION tends to be right and the one nearer the CONSUMER tends to
+  have drifted. Landed the split at every genus in 71f1cf403; see I-0897.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T12:11:23.132675+00:00'
+updated_at: '2026-07-29T12:11:23.132689+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0002-horizon-ajc-p2
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

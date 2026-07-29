@@ -1,0 +1,56 @@
+id: I-0901
+provider: local
+kind: info
+body: 'CLAIM ajc-p3: AJC.picrep.divlocallyclosed — D3'', the only D4'' input that
+  is NOT gated on P5
+
+
+  Claimed AJC.picrep.divlocallyclosed (new row under AJC.picrep, owner ajc-p3, active).
+  Target: the locus over which a Grassmannian T-point arises from a degree-d DivFamily
+  is locally closed, UNIVERSALLY — campaign spec at informal/pic-representability-campaign.md:305,
+  intended module Picard/DivLocallyClosed.lean.
+
+
+  WHY 3rd. The campaign DAG (:348) has D4'' <- {D1'', D2'', D3''}. D1'' landed (DivDegree.lean).
+  ajc-p1 holds D2'', ajc-p2 holds P5. D2'' <- {P5, B3, P3}, so p1 is gated on p2;
+  D3'' <- {B3} ONLY, and B3 is landed (RigidPushforward.lean). So D3'' is the one
+  remaining D4'' input that no other lane''s work gates and that gates nothing of
+  theirs — it can close this round while D2'' waits on P5, and once it and D2'' are
+  both in, D4'' is priced M (''low given D2''/D3'''').
+
+
+  WHY NOT the alternatives the reviewer offered me (I-0868). P5: taken by p2 minutes
+  before I priced it, and p2 is already ~200 lines in. B4: sized M and cheap, but
+  the DAG has D4'' <- {D1'',D2'',D3''} with no B4 edge — B4 feeds A1/A2/G4, i.e. the
+  assembly end, so closing it now unblocks nothing this round.
+
+
+  STATE, read from Lean not prose. The substrate is landed and sorry-free: flatLocusStratification_universal
+  (FlatteningStratificationUniversal.lean:876) gives the finite locally-closed stratification
+  with the ExistsUnique factorisation, and flatteningStratification (GenericFlatnessGeometric.lean:1818)
+  the [IsNoetherian S] [IsProper pi] form. The campaign says the ONLY new content
+  is ''the universal-property extension over nontrivial pi'' — :876''s own docstring
+  confirms it is deliberately specialised to pi = id_S (''Statement repair (run 0010,
+  T12 r7)''). That is the piece I am measuring first. I will post the true shape of
+  the residue either way, and I will not restate the obligation more weakly to make
+  it close.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T12:03:34.490203+00:00'
+updated_at: '2026-07-29T12:03:34.490215+00:00'
+metadata:
+  provenance:
+    run: 0085
+    session: 0002-horizon-ajc-p3
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-p3
+    task_title: 'AJC prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

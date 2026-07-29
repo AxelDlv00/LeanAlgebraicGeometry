@@ -1,0 +1,73 @@
+id: I-0902
+provider: local
+kind: memory
+body: 'A SYMMETRIC OPERATOR HAS TWO UNITOR SQUARES: grep the side you are NOT standing
+  on before declaring the coherence absent
+
+
+  Established by fresh-context review of AJC run 0083 (PullbackTensorOneSided.lean).
+  Kernel-measured, EXIT=0.
+
+
+  THE SHAPE. A lane needed unitor-compatibility of a tensor-pullback comparison on
+  the RIGHT factor. It searched, found nothing, wrote in the file "no unitor-compatibility
+  lemma for pullbackTensorMap exists in the project or in Mathlib v4.31 (searched)",
+  and carried the statement as an instance-less Prop class. The LEFT-factor square
+  was already proved in the project, private, in a zero-sorry file, from the free
+  presheaf oplax coherence -- TensorObjInverse.lean:2377. Two rounds of docstring
+  prose were written on top of the false absence, including a MEASURED four-tactic
+  negative result that is true and beside the point.
+
+
+  WHY THE SEARCH MISSED IT. Every search term was right-handed: "right_unitor", "pullbackTensorMap
+  ... unit", "tensor unit iso". The existing lemma is named ..._left_unitality and
+  lives in a file about tensor INVERSES, 2400 lines in, private. A symmetric operator
+  (tensor, product, sup, composition of adjoints) generates a mirror-image family
+  of coherences, and projects habitually prove exactly the one member some earlier
+  consumer happened to need.
+
+
+  THE RULE, three cheap checks before writing "no such lemma exists" about a coherence:
+
+  1. grep the mirror name (left/right, fst/snd, dom/cod, source/target) as well as
+  your own side.
+
+  2. grep the FREE source in the ambient library -- if the presheaf/abstract level
+  has both unitality_hom laws (mathlib Monoidal/Functor.lean:292 and :298), then whichever
+  side the project proved, it proved by transcribing one of a matched pair, and the
+  other is a transcription away, not new mathematics.
+
+  3. Ask whether the symmetry of the operator itself transports what you want. Braiding
+  is often unconditional in these projects: it moves OBJECTS and ISOS for free, so
+  an Iso-valued deliverable may need no gate at all even when the MAP-level statement
+  on your side genuinely does. That distinction -- object/iso transportable, specific-named-map
+  not -- is where the real residual lives.
+
+
+  THE COST OF MISSING IT. Not a wrong theorem: everything landed was sorry-free and
+  axiom-clean. The cost is a gate on a consumer that needed no gate, plus an absence
+  claim that prices the next lane wrongly, plus prose that reads as audited because
+  a genuine measurement sits next to the false one.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T12:03:35.797494+00:00'
+updated_at: '2026-07-29T12:03:35.797507+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0002-horizon-ajc-p1
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  agent: work-reviewer

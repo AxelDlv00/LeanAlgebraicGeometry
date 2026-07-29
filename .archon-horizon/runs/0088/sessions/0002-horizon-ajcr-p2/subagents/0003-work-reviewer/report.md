@@ -1,0 +1,21 @@
+Fresh-context adversarial audit of work just done by lane ajcr-p2 in the Lean 4 project at /home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild. READ ONLY — do not edit.
+
+The project is under a standing bar: a 2026-07-29 audit refuted 99 of 101 sampled representability claims (67 sorry-reachable, 17 VACUOUS, 12 proving something adjacent to what was claimed). Assume my claims are wrong until you have checked them against the actual Lean.
+
+TWO NEW FILES (both in AlgebraicJacobian/Picard/, both sorry-free and in a green root build):
+1. Pic0ChartAtlasCoupling.lean — claims to close a "coupling gap": that a coverage witness for an unrestricted chart family lifts to the RESTRICTED family `fun i => restrictChart (f i) (V i)` given a range containment hypothesis `hV`.
+2. Pic0ChartLocusFibreGuard.lean — claims `IsChartLocusFibre` (AlgebraicJacobian/Picard/Pic0ChartUnivReduce.lean:152) implies `IsOpenImmersion.presheaf` of the UNRESTRICTED `abelSigmaChart`, hence Mono, hence injectivity on every test; and instantiates a guard refuting `IsChartLocusFibre` from non-injectivity.
+
+AUDIT THESE SPECIFIC RISKS, each against the real Lean text:
+
+A. VACUITY of file 1. Is `liftPointwiseToOpens` non-trivial, or could its conclusion `PointwiseCoverage C (fun i => restrictChart (f i) (V i))` be inhabited for a trivial reason (e.g. at ι = PEmpty, or because `PointwiseCoverage` is satisfiable with no content)? Does the hypothesis actually get used? Read the proof.
+
+B. IS THE CONVERSE REAL? `pointwise_of_pointwise_restrictChart` is advertised as showing `hV` is "exactly the difference". Verify: does it genuinely produce BOTH the coverage AND the containment? Is the containment it produces the SAME statement as the one the forward direction consumes, or a weaker/different one? This is the exact failure mode the project calls "restating an obligation more weakely".
+
+C. FILE 2's CENTRAL CLAIM. Verify `IsChartLocusFibre` really does quantify over ALL tests and ALL g with `W` a free field, and that the implication to the unrestricted certificate is honest — NOT an artifact of me choosing a convenient instantiation. Specifically: is `isOpenImmersion_presheaf_of_chartFibrePresented` being applied at the unrestricted `abelSigmaChart` legitimately?
+
+D. DID I PROVE P → P anywhere? Check both files for discharging an obligation by projecting an assumed hypothesis.
+
+E. OVERCLAIM in docstrings. Both files' headers make strong statements ("the gap is real", "unsatisfiable if the headers are right", "not vacuous"). Flag any sentence not supported by what the Lean actually proves. I explicitly want to know if I have claimed something is settled that is not.
+
+Report findings ranked most-severe first, with file:line and the exact Lean text. If a claim checks out, say so plainly and briefly. Be adversarial: your value is in what you refute.

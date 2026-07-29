@@ -1,0 +1,32 @@
+You are a fresh-context adversarial reviewer of ONE lane's work in the Lean 4 project at /home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild (root module `AlgebraicJacobian`). READ-ONLY on source: do not edit Lean files. You MAY run `lake env lean` on scratch files in /tmp and `#print axioms`. Do NOT run a full `lake build` (other lanes hold the lock); the module is already built so `lake env lean` on a scratch importing it is cheap.
+
+CONTEXT. This round's bar is explicit and high: an audit refuted 99 of 101 sampled representability claims (67 sorry-reachable, 17 VACUOUS, 12 proved something adjacent to what they claimed, 3 nonexistent). Your job is to try to put my work in one of those buckets.
+
+WHAT I CLAIM, verbatim, so you can check each clause:
+File: AlgebraicJacobian/Picard/Pic0ChartAbelNonInjective.lean (ledger commits 41a9ec5df then d150fa7f6; also rooted via an import line in AlgebraicJacobian.lean).
+
+1. It is sorry-free, rooted, and its four declarations are axiom-clean [propext, Classical.choice, Quot.sound].
+2. `abelChartApp_inj_iff` — injectivity of `(abelSigmaChart ..).app (op Y)` IS injectivity of the explicit pair-valued map, by `Iff.rfl`.
+3. `not_injective_abelSigmaChart_of_points` — two distinct `D.left`-points over one test with equal structure morphism (`hstruct`) and equal chart value refute injectivity.
+4. `not_isChartLocusFibre_of_points` — hence refute `IsChartLocusFibre` (composing with the pre-existing `not_isChartLocusFibre_of_not_injective` in Pic0ChartLocusFibreGuard.lean).
+5. `not_isChartLocusFibre_of_divFamZar` — the same from two DISTINCT elements of `divFamZar C π n T` with equal `chartValue`, with **no scheme-theoretic side condition**, because at family level the Σ-component agreement holds by construction (`Over.w`).
+6. In the header I claim the fork restates as "does DivScheme g contain points where H¹ fails to vanish", because at degree g an effective divisor with `Subsingleton H¹` has `h⁰ = 1` exactly.
+7. I claim I did NOT decide the fork and that every theorem is an implication with an open antecedent.
+
+ATTACK THESE SPECIFICALLY:
+
+(A) VACUITY / TRIVIALITY. Are the hypotheses of #5 jointly satisfiable, or could they be contradictory (making the theorem vacuous)? In particular: is `divFamZar C π n T` possibly a SUBSINGLETON for all instantiations the tree can produce — which would make `s₁ ≠ s₂` unsatisfiable and my headline theorem vacuous? Look for any Subsingleton/uniqueness result about divFamZar or DivFamZar. Conversely, is `chartValue .. s₁ = chartValue .. s₂` perhaps provable in general (making it free)? I probed rfl/simp only.
+
+(B) IS #5 ACTUALLY WEAKER OR STRONGER THAN #3? Check that #5 is not secretly trivially derivable in a way that means it says less than I imply, and that I have not proved something ADJACENT to my claim. Specifically verify the `Over.w` argument: does `(rep.homEquiv.symm s).left ≫ D.hom = T.hom` really hold, and does that really make `hstruct` free?
+
+(C) `P → P` CHECK. Does any proof discharge its obligation by projecting its own hypothesis? Read the proof terms.
+
+(D) CLAIM #2's `Iff.rfl`. Is `abelChartApp_inj_iff` informative or a tautology dressed up? If it is literally `Iff.rfl`, say whether it earns its place or is padding.
+
+(E) CLAIM #6, the header mathematics. Verify `h0_eq_deg_add_chi_of_subsingleton_hModule_one` (RiemannRoch/FLVClass.lean:412) says what I use it for, and check my inference "so at n = g on the h¹-vanishing part there are no two divisors in one linear system" is valid — including whether the degree of the divisors in question really is g (I lean on `degAt_chartTwist` / Pic0ChartLocus.lean:178-201). Is the header claim over-stated?
+
+(F) DOCSTRING HONESTY. Grep EVERY declaration name cited in the file's header and docstrings and confirm each exists (this project has repeatedly shipped headers citing absent declarations). Report any that do not.
+
+(G) Does the file's "What is NOT proved here" section accurately bound what I proved, or does any docstring elsewhere in the file over-claim?
+
+Report each of A–G with a verdict (CONFIRMED / REFUTED / OVERSTATED / PADDING) and file:line evidence. Be adversarial — I would rather hear it from you than from the human. Your final message is the return value; make it a compact structured report.
