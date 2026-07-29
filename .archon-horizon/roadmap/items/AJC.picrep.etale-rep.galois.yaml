@@ -1,5 +1,6 @@
 id: AJC.picrep.etale-rep.galois
-title: 'The Galois quotient: input 2 of the picEt descent repair, the last one open'
+title: 'The Galois quotient, input 2 of the picEt descent repair: AFFINE half closed,
+  glued half open'
 projects:
 - Algebraic-Jacobian-Challenge
 summary: "ADVANCED 2026-07-30 by ajc-p1: the AFFINE half of input (2) is CLOSED as\
@@ -64,4 +65,7 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.etale-rep
   milestone: AJC.picrep
-  updated_at: '2026-07-29T21:44:02.227933+00:00'
+  updated_at: '2026-07-29T21:49:11.966930+00:00'
+  pinned_commits:
+  - b7b27b1e1f
+  - adc6e11b7a
