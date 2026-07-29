@@ -90,12 +90,18 @@ carries to `Pic0SchemeEt` is unmeasured, so do not assume it". It does carry, an
 
 ## Two measured negatives, recorded so they are not retried
 
-* **`IsProper` does not fpqc-descend at this mathlib.** Only its `UniversallyClosed`
-  conjunct does. `MorphismProperty.DescendsAlong @IsProper (@Surjective ⊓ @Flat ⊓
-  @QuasiCompact)` fails to synthesize at mathlib v4.31, while
-  `descendsAlong_universallyClosed_surjective_inf_flat_inf_quasicompact` is an
-  instance. So properness must be assembled conjunct-by-conjunct after descending
-  the closedness half — which is what `proper_of_baseChange` does.
+* **`IsProper` does not fpqc-descend at this mathlib**, so properness must be assembled
+  conjunct-by-conjunct after descending the closedness half — which is what
+  `proper_of_baseChange` does. `MorphismProperty.DescendsAlong @IsProper (@Surjective ⊓
+  @Flat ⊓ @QuasiCompact)` fails to synthesize at mathlib v4.31.
+
+  Of `IsProper`'s three conjuncts, **two of the three descend and only `IsSeparated`
+  does not**: `UniversallyClosed` via
+  `descendsAlong_universallyClosed_surjective_inf_flat_inf_quasicompact` and
+  `LocallyOfFiniteType` via `Mathlib/AlgebraicGeometry/Morphisms/LocalFlatDescent.lean`,
+  both instances; `DescendsAlong @IsSeparated (…)` is the one that fails. An earlier
+  revision of this file said only the `UniversallyClosed` conjunct descends — measured
+  and corrected (inbox `I-1065`).
 * **Mathlib has no Cartier theorem.** There is no result in
   `Mathlib/AlgebraicGeometry` making a group scheme reduced in characteristic zero,
   and no `CharZero` hypothesis anywhere in `Mathlib/AlgebraicGeometry/Group/`. The
@@ -115,9 +121,12 @@ carries to `Pic0SchemeEt` is unmeasured, so do not assume it". It does carry, an
   the statement — it is where the argument lives.
 
   Note the ring-level shape confirms this is the standard formulation:
-  `Algebra.isGeometricallyReduced_iff` *defines* geometric reducedness as
-  `IsReduced (k̄ ⊗[k] A)`. The equivalence proved below is the scheme-level image of
-  that iff, not a project-specific weakening.
+  `Algebra.isGeometricallyReduced_field_iff` characterises geometric reducedness over a
+  **field** as exactly `IsReduced (k̄ ⊗[k] A)`. The equivalence proved below is the
+  scheme-level image of that iff, not a project-specific weakening. (Cite the `_field_iff`
+  form, not `Algebra.isGeometricallyReduced_iff` — that one is the general-base statement,
+  quantified over primes of `R` and their residue fields, and does not say what this
+  sentence needs. An earlier revision of this file cited it; corrected per `I-1065`.)
 
 ## Honest accounting
 
@@ -334,6 +343,42 @@ theorem proper_of_valuativeCriterion_existence
   haveI : LocallyOfFiniteType (Pic0SchemeEt C).hom := locallyOfFiniteType C
   exact IsProper.of_valuativeCriterion _ (valuativeCriterion_of_existence C h)
 
+/-- **`UniversallyClosed` gives the valuative existence back** — so the two properness
+hypotheses of this file are interderivable, and there is only ONE properness obligation
+here rather than two.
+
+`UniversallyClosed.eq_valuativeCriterion` states
+`@UniversallyClosed = ValuativeCriterion.Existence ⊓ @QuasiCompact` as an equality of
+morphism properties; the first projection is this lemma. Note what makes it usable at
+all: the `QuasiCompact` factor is what one normally has to supply, and on this tower it
+is free (`quasiCompact`).
+
+CORRECTS AN EARLIER REVISION of this file, which said the valuative and `k̄` hypotheses
+were "not interderivable by anything in this file". They are, in both directions, and the
+sentence made the file's own result look weaker than it is. Found by a fresh-context
+adversarial audit of the first two commits (inbox `I-1064`). -/
+theorem valuativeCriterion_existence_of_universallyClosed
+    (h : UniversallyClosed (Pic0SchemeEt C).hom) :
+    ValuativeCriterion.Existence (Pic0SchemeEt C).hom := by
+  have e : @UniversallyClosed = ValuativeCriterion.Existence ⊓ @QuasiCompact :=
+    UniversallyClosed.eq_valuativeCriterion
+  exact (e ▸ h).1
+
+/-- **The properness residue is a single equivalence class.** The valuative existence
+hypothesis, universal closedness over `k`, and universal closedness over `k̄` are all
+equivalent on this tower.
+
+So `Pic0Et.universallyClosed` has exactly ONE residue with three interchangeable
+formulations — not three obligations, and not two independent routes as an earlier
+revision of this file claimed. A lane may attack whichever form is most convenient
+(valuation lifting, closedness over the algebraic closure, or the topological
+`SpecializingMap` form below) with no loss. -/
+theorem valuativeCriterion_existence_iff_universallyClosed :
+    ValuativeCriterion.Existence (Pic0SchemeEt C).hom ↔
+      UniversallyClosed (Pic0SchemeEt C).hom :=
+  ⟨universallyClosed_of_valuativeCriterion C,
+    valuativeCriterion_existence_of_universallyClosed C⟩
+
 /-- **A purely topological route to the properness residue.**
 `ValuativeCriterion.Existence.of_specializingMap`: universal specialization-lifting of
 the underlying continuous map suffices. Recorded because it needs no valuation rings and
@@ -426,8 +471,13 @@ theorem isAbelianVariety_of_baseChange
     geometricallyIrreducible C, grpObj C⟩
 
 /-- **The same package from the valuative form of properness.** Identical except that
-closedness comes from lifting valuations rather than from `k̄`; kept because the two
-properness hypotheses are not interderivable by anything in this file. -/
+closedness comes from lifting valuations rather than from `k̄`.
+
+Strictly a corollary of `isAbelianVariety_of_baseChange`, via
+`valuativeCriterion_existence_iff_universallyClosed` below: on this tower the two
+properness hypotheses *are* interderivable, so this is a convenience form rather than an
+independent assembly. An earlier revision of this docstring asserted the opposite; see
+that theorem for the correction. -/
 theorem isAbelianVariety_of_valuativeCriterion
     (hred : IsReduced (Limits.pullback (Pic0SchemeEt C).hom
       (Spec.map (CommRingCat.ofHom (algebraMap k (AlgebraicClosure k))))))
