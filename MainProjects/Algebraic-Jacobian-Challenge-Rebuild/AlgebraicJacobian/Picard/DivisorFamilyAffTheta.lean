@@ -278,6 +278,180 @@ lemma ker_thetaGluedEval_eq_ker :
     LinearMap.ker (thetaGluedEval A τ a) = LinearMap.ker (thetaEval A τ a) :=
   LinearMap.ker_codRestrict _ _ _
 
+/-! ## The kernel bridge — left exactness, and the seam with the chart-typed layer -/
+
+/-- The germ of a side component through a piece is the germ taken in the pinned chart:
+`relThetaResSide` is a restriction, so `germ_res_apply` moves the germ up. -/
+lemma germ_relThetaResSide_eq (x : relThetaSections C R π a) (b : Bool)
+    {W W' : (relCurve C R).Opens} (hW : W ≤ relPinnedChart C R π b) (hW' : W' ≤ W)
+    {z : relCurve C R} (hz : z ∈ W') :
+    ((relCurve C R).presheaf.germ W' z hz).hom (relThetaResSide a b (hW'.trans hW) x)
+      = ((relCurve C R).presheaf.germ W z (hW' hz)).hom (relThetaResSide a b hW x) := by
+  rw [← resHom_relThetaResSide a b hW hW' x]
+  exact TopCat.Presheaf.germ_res_apply _ _ _ _ _
+
+/-- **The two clauses of `vanishingSubmodule`, read side-uniformly.**  Its statement is a
+conjunction over the two pinned charts; this packages it as one statement over an arbitrary
+`Bool`, which is what a proof indexed by `τ.side j` needs.
+
+Factored out because `cases` on `τ.side j` at the use site fails with *"result is not type
+correct"*: the `Bool` occurs inside the germ's own open, so the motive is dependent and
+`subst` does not rescue it either (memory `cases-on-a-bool-a-type-mentions`).  Splitting
+over a *variable* `Bool` in a separate lemma is the fix. -/
+lemma germ_val_mem_stalkIdeal_of_forall_side (x : relThetaSections C R π a)
+    (h : (∀ (z : relCurve C R) (hz : z ∈ (⊤ : (relCurve C R).Opens) ⊓
+          (relCover C R (fiberTwoCover π)).V₀),
+        ((relCurve C R).presheaf.germ ((⊤ : (relCurve C R).Opens) ⊓
+          (relCover C R (fiberTwoCover π)).V₀) z hz).hom x.val.1 ∈ d.stalkIdeal z) ∧
+      ∀ (z : relCurve C R) (hz : z ∈ (⊤ : (relCurve C R).Opens) ⊓
+          (relCover C R (fiberTwoCover π)).V₁),
+        ((relCurve C R).presheaf.germ ((⊤ : (relCurve C R).Opens) ⊓
+          (relCover C R (fiberTwoCover π)).V₁) z hz).hom x.val.2 ∈ d.stalkIdeal z)
+    (b : Bool) {z : relCurve C R}
+    (hz : z ∈ (⊤ : (relCurve C R).Opens) ⊓ relPinnedChart C R π b) :
+    ((relCurve C R).presheaf.germ ((⊤ : (relCurve C R).Opens) ⊓ relPinnedChart C R π b)
+        z hz).hom (relThetaResSide a b inf_le_right x) ∈ d.stalkIdeal z := by
+  -- `simpa` discharges the identity restriction `relThetaResSide b inf_le_right x = x.val.b`
+  -- (`relThetaResSide_false`/`_true` plus `presheaf.map_id`), which is the only gap.
+  cases b with
+  | false => simpa using h.1 z hz
+  | true => simpa using h.2 z hz
+
+/-- **The germ of a side component of a killed section lies in `d`'s stalk ideal**, at a
+point of the piece `j`, read on the overlap of that piece with the pinned chart `b`.
+
+The proof follows `ThetaGeneratorSeed.le_vanishingSubmodule` (`Picard/DivSchemeFamily.lean:397`)
+step for step — that is the template, and it is what makes this a port: it already works on
+`D.piece z ⊓ relPinnedChart b` with the side taken from a `Bool`, so the only change is that
+the piece comes from the joint cover and its side from `τ` rather than from the seed. -/
+lemma germ_val_mem_stalkIdeal_of_thetaEval_eq_zero {x : relThetaSections C R π a}
+    (hker : ∀ j, thetaEval A τ a x j = 0) (b : Bool) (j : D.index)
+    {z : relCurve C R} (hzj : z ∈ D.pieces j)
+    (hz : z ∈ (⊤ : (relCurve C R).Opens) ⊓ relPinnedChart C R π b) :
+    ((relCurve C R).presheaf.germ ((⊤ : (relCurve C R).Opens) ⊓ relPinnedChart C R π b)
+        z hz).hom (Bool.rec x.val.1 x.val.2 b) ∈ d.stalkIdeal z := by
+  have hzW : z ∈ D.pieces j ⊓ relPinnedChart C R π b := ⟨hzj, hz.2⟩
+  -- the matching law comparing the pinned side `b` with the piece's assigned side
+  have hmatch := relThetaResSide_matching a b (τ.side j) (le_inf
+    (inf_le_right : D.pieces j ⊓ relPinnedChart C R π b ≤ _)
+    (inf_le_left.trans (piece_le_relPinnedChart τ j))) x
+  -- the assigned-side germ lies in the stalk ideal: the evaluation vanishes on the piece
+  have hgermside : ((relCurve C R).presheaf.germ
+      (D.pieces j ⊓ relPinnedChart C R π b) z hzW).hom
+        (relThetaResSide a (τ.side j)
+          ((le_inf (inf_le_right : D.pieces j ⊓ relPinnedChart C R π b ≤ _)
+            (inf_le_left.trans (piece_le_relPinnedChart τ j))).trans inf_le_right) x)
+      ∈ d.stalkIdeal z := by
+    rw [show relThetaResSide a (τ.side j)
+        ((le_inf (inf_le_right : D.pieces j ⊓ relPinnedChart C R π b ≤ _)
+          (inf_le_left.trans (piece_le_relPinnedChart τ j))).trans inf_le_right) x
+        = (relCurve C R).resHom (inf_le_left : D.pieces j ⊓ relPinnedChart C R π b
+            ≤ D.pieces j)
+          (relThetaResSide a (τ.side j) (piece_le_relPinnedChart τ j) x) from
+      (resHom_relThetaResSide a (τ.side j) (piece_le_relPinnedChart τ j) inf_le_left x).symm]
+    rw [show ((relCurve C R).presheaf.germ
+        (D.pieces j ⊓ relPinnedChart C R π b) z hzW).hom
+          ((relCurve C R).resHom (inf_le_left : D.pieces j ⊓ relPinnedChart C R π b
+            ≤ D.pieces j)
+            (relThetaResSide a (τ.side j) (piece_le_relPinnedChart τ j) x))
+        = ((relCurve C R).presheaf.germ (D.pieces j) z hzj).hom
+          (relThetaResSide a (τ.side j) (piece_le_relPinnedChart τ j) x) from
+      TopCat.Presheaf.germ_res_apply _ _ _ _ _]
+    -- vanishing of the evaluation at `j`: the side component is a multiple of `A.eqn j`
+    have hmem : relThetaResSide a (τ.side j) (piece_le_relPinnedChart τ j) x
+        ∈ Ideal.span {A.eqn j} := by
+      have h := hker j
+      rw [thetaEval_apply, Ideal.Quotient.eq_zero_iff_mem] at h
+      exact h
+    obtain ⟨c, hc⟩ := Ideal.mem_span_singleton.mp hmem
+    have hgerm := congrArg ((relCurve C R).presheaf.germ (D.pieces j) z hzj).hom hc
+    rw [map_mul] at hgerm
+    rw [← germ_eqn_span_eq_stalkIdeal A j hzj, hgerm]
+    exact Ideal.mul_mem_right _ _ (Ideal.subset_span rfl)
+  -- transport across the side unit
+  have hkey := congrArg ((relCurve C R).presheaf.germ
+    (D.pieces j ⊓ relPinnedChart C R π b) z hzW).hom hmatch
+  rw [map_mul] at hkey
+  have hgermb : ((relCurve C R).presheaf.germ
+      (D.pieces j ⊓ relPinnedChart C R π b) z hzW).hom
+        (relThetaResSide a b ((le_inf
+          (inf_le_right : D.pieces j ⊓ relPinnedChart C R π b ≤ _)
+          (inf_le_left.trans (piece_le_relPinnedChart τ j))).trans inf_le_left) x)
+      = ((relCurve C R).presheaf.germ
+          ((⊤ : (relCurve C R).Opens) ⊓ relPinnedChart C R π b) z hz).hom
+        (Bool.rec x.val.1 x.val.2 b) := by
+    cases b with
+    | false =>
+        rw [relThetaResSide_false]
+        exact TopCat.Presheaf.germ_res_apply _ _ _ _ _
+    | true =>
+        rw [relThetaResSide_true]
+        exact TopCat.Presheaf.germ_res_apply _ _ _ _ _
+  rw [hgermb] at hkey
+  rw [hkey]
+  exact Ideal.mul_mem_left _ _ hgermside
+
+/-- **THE KERNEL BRIDGE OVER THE WIDENED CARRIER** (left exactness of the Θ-twisted
+section sequence): the kernel of the widened Θ-twisted colength evaluation is exactly the
+**cover-independent** vanishing submodule of the family — the DD-4 spelling of
+`H⁰(𝒪(Θᵃ − d)) = ker (H⁰(𝒪(Θᵃ)) → W(d)^{Θᵃ})`.
+
+This is the statement that makes the widening *usable* rather than merely well-formed. Its
+right-hand side is **literally the same term** as in the chart-typed
+`DivisorAdaptation.ker_thetaGluedEval` (`Picard/DivisorFamilyTheta.lean:350`) — the
+vanishing submodule mentions `d` and the two pinned charts and no cover at all. Hence
+`divisorWindow` (`Picard/DivisorFamilyWindow.lean:103`), which is the comap of that
+submodule, is the *same submodule on both carriers*, and a widened
+`windowQuotEquiv`-analogue has the left-exactness half it needs.
+
+Two places where the widened proof differs from the chart-typed one, both in R2's
+direction:
+
+* the forward direction picks a piece containing the point out of the **joint** cover
+  (`AffCoverData.exists_mem_pieces`, `I-0492` clause 4(ii)) rather than out of one of the
+  two per-chart covers `cover₀`/`cover₁` — which is precisely the datum the widening
+  replaced the partitions of unity by;
+* the case analysis on which pinned chart a point lies in is driven by `τ.side j` for the
+  chosen piece, so the two directions never need the point's chart membership *a priori*.
+  The chart-typed proof gets that membership from the `Sum` index for free and pays for it
+  by being confined to a fixed pair. -/
+theorem ker_thetaGluedEval :
+    LinearMap.ker (thetaGluedEval A τ a)
+      = d.vanishingSubmodule R (relCover C R (fiberTwoCover π)).V₀
+          (relCover C R (fiberTwoCover π)).V₁ (relThetaCocycle C R π a) := by
+  rw [ker_thetaGluedEval_eq_ker]
+  ext x
+  rw [LinearMap.mem_ker, Scheme.LocalEquations.mem_vanishingSubmodule_iff, funext_iff]
+  constructor
+  · intro hker
+    -- pick a piece containing the point out of the JOINT cover, then compare sides
+    exact ⟨fun z hz =>
+        (D.exists_mem_pieces z).elim fun j hj =>
+          germ_val_mem_stalkIdeal_of_thetaEval_eq_zero A τ a hker false j hj hz,
+      fun z hz =>
+        (D.exists_mem_pieces z).elim fun j hj =>
+          germ_val_mem_stalkIdeal_of_thetaEval_eq_zero A τ a hker true j hj hz⟩
+  · intro h j
+    rw [thetaEval_apply, Pi.zero_apply, Ideal.Quotient.eq_zero_iff_mem]
+    refine Scheme.mem_span_singleton_of_forall_germ
+      (fun z hz => A.eqn_regular j z hz) (fun z hz => ?_)
+    -- the germ through the piece is the germ in the assigned chart, where `h` applies
+    rw [germ_eqn_span_eq_stalkIdeal A j hz]
+    have key : ((relCurve C R).presheaf.germ (D.pieces j) z hz).hom
+        (relThetaResSide a (τ.side j) (piece_le_relPinnedChart τ j) x)
+        = ((relCurve C R).presheaf.germ
+            ((⊤ : (relCurve C R).Opens) ⊓ relPinnedChart C R π (τ.side j)) z
+            ⟨trivial, piece_le_relPinnedChart τ j hz⟩).hom
+          (relThetaResSide a (τ.side j) inf_le_right x) :=
+      germ_relThetaResSide_eq a x (τ.side j) inf_le_right
+        (le_inf le_top (piece_le_relPinnedChart τ j)) hz
+    rw [key]
+    -- `cases` on `τ.side j` fails here with "result is not type correct": the Bool occurs
+    -- in the germ's OPEN, so the motive is dependent (memory `cases-on-a-bool-a-type-mentions`).
+    -- The split is therefore factored out over an arbitrary Bool.
+    exact germ_val_mem_stalkIdeal_of_forall_side a x h (τ.side j)
+      ⟨trivial, piece_le_relPinnedChart τ j hz⟩
+
 end AffAdaptation
 
 end AlgebraicGeometry
