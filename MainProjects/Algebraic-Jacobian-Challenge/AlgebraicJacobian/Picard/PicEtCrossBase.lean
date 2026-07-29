@@ -48,24 +48,27 @@ presheaf (`§5`). That reduction is the content: it converts a statement about
 an object defined by a universal property into a statement about an explicit
 quotient of line-bundle classes.
 
-**The presheaf-level face is reduced to naturality-and-bijectivity, not
-closed.** Two of its three layers are discharged here:
+**The presheaf-level face is reduced to NATURALITY, not closed.** Three of its
+four layers are discharged here:
 
 * the two total spaces are canonically isomorphic (`§2`, `crossBaseTotalIso`),
   by the single Mathlib lemma `pullbackLeftPullbackSndIso`;
-* the `H_T`-coset *relation* transports across that iso, with the **same** coset
-  witness `N` (`§3`, `crossBase_relPicRel`) — this is the layer where the two
-  subgroups being quotiented by have to correspond, and it is the substantive
-  one. It gives the componentwise map of carriers, `crossBaseQuotMap`.
+* the `H_T`-coset *relation* transports across that iso in **both** directions,
+  with the **same** coset witness `N` (`§3`, `crossBase_relPicRel` and
+  `crossBase_relPicRel_inv`) — this is the layer where the two subgroups being
+  quotiented by have to correspond, and it is the substantive one;
+* hence the two relative Picard groups are in canonical **bijection** for every
+  test (`crossBaseQuotEquiv`): the round trips reduce, through
+  `relPicRel_of_iso`, to `crossBaseTotalIso`'s own `hom_inv_id`/`inv_hom_id`.
 
-What is left open, as one explicit named `sorry` (`§4`,
-`relPresheaf_crossBaseIso`), is that `crossBaseQuotMap` is **bijective** and
-**natural in `T`**. Those are genuinely open, not asserted: the inverse needs
-the mirror-image transport along `crossBaseTotalIso.hom` plus the two round-trip
-identities, and naturality needs the base-change squares of `relFunctorial` to
-commute with the cancellation iso. No new *geometric* input is needed for
-either — the scheme-level iso is in hand — but they are not free and this file
-does not claim them.
+**What is left open is exactly NATURALITY IN `T`**, as one explicit named
+`sorry` (`§4`, `relPresheaf_crossBaseIso`). The pointwise bijection is proved;
+what is not proved is that it commutes with the base-change maps that
+`PicSharp.relFunctorial` acts by — and *a family of bijections that is not
+natural is not an isomorphism of functors*, so it cannot be fed to the reduction
+of `§5`. No new geometric input is needed, the scheme-level iso being in hand,
+but the `pullback.map`-versus-cancellation compatibility it needs is real work
+and this file does not claim it.
 
 **Nothing here closes the seam sorry, and no antecedent of
 `fgaPicardRepresentability` is witnessed for any curve by this file.** The
@@ -243,6 +246,65 @@ theorem crossBase_relPicRel (C : Over (Spec (CommRingCat.of k)))
     L'.isLocallyTrivial ≪≫ ?_
   exact Modules.tensorObjIsoOfIso ((crossBaseProjPullbackIso C T).app N) (Iso.refl _)
 
+/-- The **mirror transport**, along `crossBaseTotalIso.hom`: a line bundle on
+`C ×_k T` becomes one on `C_{k'} ×_{k'} T`. Same construction as
+`crossBaseOnProduct` in the other direction; both are needed for bijectivity. -/
+noncomputable def crossBaseOnProductInv (C : Over (Spec (CommRingCat.of k)))
+    (T : Over (Spec (CommRingCat.of k')))
+    (L : LineBundle.OnProduct C.hom ((restrictTest k k').obj T).hom) :
+    LineBundle.OnProduct (baseChangeField C k').hom T.hom :=
+  ⟨(Scheme.Modules.pullback (crossBaseTotalIso C T).hom).obj L.carrier,
+    L.isLocallyTrivial.pullback _⟩
+
+/-- The mirror of `crossBaseProjPullbackIso`, in the `hom` direction, from
+`crossBaseTotalIso_hom_snd`. -/
+noncomputable def crossBaseProjPullbackIsoInv (C : Over (Spec (CommRingCat.of k)))
+    (T : Over (Spec (CommRingCat.of k'))) :
+    Scheme.Modules.pullback (pullback.snd C.hom ((restrictTest k k').obj T).hom)
+        ⋙ Scheme.Modules.pullback (crossBaseTotalIso C T).hom
+      ≅ Scheme.Modules.pullback (pullback.snd (baseChangeField C k').hom T.hom) :=
+  Scheme.Modules.pullbackComp _ _ ≪≫
+    Scheme.Modules.pullbackCongr (crossBaseTotalIso_hom_snd C T)
+
+/-- **The mirror relation transport.** Symmetric to `crossBase_relPicRel`, with
+the same coset witness, via `crossBaseProjPullbackIsoInv`. -/
+theorem crossBase_relPicRel_inv (C : Over (Spec (CommRingCat.of k)))
+    (T : Over (Spec (CommRingCat.of k')))
+    {L L' : LineBundle.OnProduct C.hom ((restrictTest k k').obj T).hom}
+    (h : PicSharp.relPicRel C.hom ((restrictTest k k').obj T).hom L L') :
+    PicSharp.relPicRel (baseChangeField C k').hom T.hom
+      (crossBaseOnProductInv C T L) (crossBaseOnProductInv C T L') := by
+  obtain ⟨N, hN, ⟨e⟩⟩ := h
+  refine ⟨N, hN, ⟨?_⟩⟩
+  refine (Scheme.Modules.pullback (crossBaseTotalIso C T).hom).mapIso e ≪≫ ?_
+  refine Modules.pullbackTensorIsoOfLocallyTrivial _ _ _
+    (LineBundle.pullbackAlongProjection _ _ N hN).isLocallyTrivial
+    L'.isLocallyTrivial ≪≫ ?_
+  exact Modules.tensorObjIsoOfIso ((crossBaseProjPullbackIsoInv C T).app N) (Iso.refl _)
+
+/-- **Round trip on carriers, `inv` then `hom`**: transporting a bundle to the
+`C ×_k T` side and back returns an isomorphic bundle. Composition of pullbacks
+plus `crossBaseTotalIso.hom_inv_id`.
+
+Stated on carriers rather than on `OnProduct` because the local-triviality field
+is a `Prop` and plays no part. -/
+noncomputable def crossBaseRoundTripCarrier (C : Over (Spec (CommRingCat.of k)))
+    (T : Over (Spec (CommRingCat.of k')))
+    (L : LineBundle.OnProduct (baseChangeField C k').hom T.hom) :
+    (crossBaseOnProductInv C T (crossBaseOnProduct C T L)).carrier ≅ L.carrier :=
+  (Scheme.Modules.pullbackComp _ _).app L.carrier ≪≫
+    (Scheme.Modules.pullbackCongr (crossBaseTotalIso C T).hom_inv_id).app L.carrier ≪≫
+      (Scheme.Modules.pullbackId _).app L.carrier
+
+/-- Round trip the other way, from `crossBaseTotalIso.inv_hom_id`. -/
+noncomputable def crossBaseRoundTripCarrier' (C : Over (Spec (CommRingCat.of k)))
+    (T : Over (Spec (CommRingCat.of k')))
+    (L : LineBundle.OnProduct C.hom ((restrictTest k k').obj T).hom) :
+    (crossBaseOnProduct C T (crossBaseOnProductInv C T L)).carrier ≅ L.carrier :=
+  (Scheme.Modules.pullbackComp _ _).app L.carrier ≪≫
+    (Scheme.Modules.pullbackCongr (crossBaseTotalIso C T).inv_hom_id).app L.carrier ≪≫
+      (Scheme.Modules.pullbackId _).app L.carrier
+
 /-- **The induced map of relative Picard carriers**, one test at a time:
 `Pic(C_{k'} ×_{k'} T)/π_T^* Pic(T) ⟶ Pic(C ×_k T)/π_T^* Pic(T)`.
 
@@ -257,6 +319,61 @@ noncomputable def crossBaseQuotMap (C : Over (Spec (CommRingCat.of k)))
     (fun L => Quotient.mk _ (crossBaseOnProduct C T L))
     (fun _ _ h => Quotient.sound (crossBase_relPicRel C T h))
 
+/-- The mirror quotient map, from `crossBase_relPicRel_inv`. -/
+noncomputable def crossBaseQuotMapInv (C : Over (Spec (CommRingCat.of k)))
+    (T : Over (Spec (CommRingCat.of k'))) :
+    Quotient (PicSharp.relPicSetoid C.hom ((restrictTest k k').obj T).hom) →
+      Quotient (PicSharp.relPicSetoid (baseChangeField C k').hom T.hom) :=
+  Quotient.lift
+    (fun L => Quotient.mk _ (crossBaseOnProductInv C T L))
+    (fun _ _ h => Quotient.sound (crossBase_relPicRel_inv C T h))
+
+/-- **`crossBaseQuotMapInv` is a left inverse of `crossBaseQuotMap`.** On a
+class `⟦L⟧`, the round trip returns `⟦L''⟧` with `L''.carrier ≅ L.carrier`
+(`crossBaseRoundTripCarrier`), and an isomorphism of underlying bundles implies
+the `H_T`-coset relation (`relPicRel_of_iso`, take `N = 𝒪_T`) — so the two
+classes are equal. -/
+theorem crossBaseQuotMapInv_crossBaseQuotMap (C : Over (Spec (CommRingCat.of k)))
+    (T : Over (Spec (CommRingCat.of k')))
+    (x : Quotient (PicSharp.relPicSetoid (baseChangeField C k').hom T.hom)) :
+    crossBaseQuotMapInv C T (crossBaseQuotMap C T x) = x := by
+  induction x using Quotient.ind with | _ L => ?_
+  exact Quotient.sound (PicSharp.relPicRel_of_iso ⟨crossBaseRoundTripCarrier C T L⟩)
+
+/-- **…and a right inverse**, by the mirror round trip. -/
+theorem crossBaseQuotMap_crossBaseQuotMapInv (C : Over (Spec (CommRingCat.of k)))
+    (T : Over (Spec (CommRingCat.of k')))
+    (x : Quotient (PicSharp.relPicSetoid C.hom ((restrictTest k k').obj T).hom)) :
+    crossBaseQuotMap C T (crossBaseQuotMapInv C T x) = x := by
+  induction x using Quotient.ind with | _ L => ?_
+  exact Quotient.sound (PicSharp.relPicRel_of_iso ⟨crossBaseRoundTripCarrier' C T L⟩)
+
+/-- **The cross-base identification of relative Picard carriers, one test at a
+time — an EQUIVALENCE.**
+
+This is the pointwise half of the presheaf-level face, and it is now proved
+rather than assumed: the two relative Picard groups
+
+```
+Pic(C_{k'} ×_{k'} T) / π_T^* Pic(T)   and   Pic(C ×_k T) / π_T^* Pic(T)
+```
+
+are in canonical bijection for every `k'`-test `T`.
+
+**What this does and does not settle.** It settles bijectivity, which was one of
+the two items `relPresheaf_crossBaseIso` below owes. It does **not** settle
+naturality in `T`, which is the other, and without naturality this family of
+bijections is not an isomorphism of functors and cannot be fed to the
+sheafification reduction of `§5`. -/
+noncomputable def crossBaseQuotEquiv (C : Over (Spec (CommRingCat.of k)))
+    (T : Over (Spec (CommRingCat.of k'))) :
+    Quotient (PicSharp.relPicSetoid (baseChangeField C k').hom T.hom) ≃
+      Quotient (PicSharp.relPicSetoid C.hom ((restrictTest k k').obj T).hom) where
+  toFun := crossBaseQuotMap C T
+  invFun := crossBaseQuotMapInv C T
+  left_inv := crossBaseQuotMapInv_crossBaseQuotMap C T
+  right_inv := crossBaseQuotMap_crossBaseQuotMapInv C T
+
 /-! ## §4. The presheaf-level face — the one open obligation of this file -/
 
 /-- **The cross-base identification at the level of the UNSHEAFIFIED relative
@@ -269,24 +386,31 @@ evaluated on restricted tests.
 
 **What is already proved, and what precisely remains.** On a fixed test `T` the
 two carriers are `Pic(C_{k'} ×_{k'} T)/π_T^* Pic(T)` and
-`Pic(C ×_k T)/π_T^* Pic(T)`. Discharged above:
+`Pic(C ×_k T)/π_T^* Pic(T)`, and above they are shown to be **in canonical
+bijection** (`crossBaseQuotEquiv`) — total-space iso, relation transport both
+ways, both round trips.
 
-* the two total spaces are canonically isomorphic (`crossBaseTotalIso`);
-* the coset relation transports with the same witness, so the componentwise map
-  `crossBaseQuotMap` exists and is well defined (`crossBase_relPicRel`).
+**What the `sorry` stands for is naturality in `T`, and only that**: that the
+square
 
-Still owed, and this is what the `sorry` stands for:
+```
+  Pic^rel(C_{k'} ×_{k'} T)  ──crossBaseQuotEquiv──▶  Pic^rel(C ×_k T)
+          │ relFunctorial(g)                                │ relFunctorial(g)
+          ▼                                                 ▼
+  Pic^rel(C_{k'} ×_{k'} T') ──crossBaseQuotEquiv──▶  Pic^rel(C ×_k T')
+```
 
-1. **bijectivity** of `crossBaseQuotMap` — needs the mirror transport along
-   `crossBaseTotalIso.hom` and the two round-trip identities, for which
-   `Modules.pullbackComp`/`pullbackId` are the tools;
-2. **naturality in `T`** — that the cancellation iso commutes with the
-   base-change maps `relFunctorial` acts by.
+commutes for every test morphism `g : T' ⟶ T`. Both vertical maps are pullback
+along a `pullback.map`, and the horizontal ones are pullback along the
+cancellation iso; the content is that those two pullbacks commute, which is a
+`pullback.hom_ext` chase of the same kind as `relFunctorial_comp` in
+`Picard/RelPicFunctor.lean`.
 
-Neither needs a new geometric input; neither is free. **Do not read the
-`crossBaseQuotMap` above as making this a formality**: a well-defined map in one
-direction is not an isomorphism of functors, and the gap between them is exactly
-the two items listed.
+**Do not read `crossBaseQuotEquiv` as making this a formality.** A pointwise
+family of bijections is *not* an isomorphism of functors, and it is precisely the
+naturality that the sheafification reduction of `§5` consumes — its hypothesis is
+an `Iso` of functors, not a family of `Equiv`s. The gap is one square, and it is
+open.
 
 **Deliberately left as an explicit `sorry`.** Per the round's discipline this
 is a named open obligation, not a hidden one: no declaration in this file
