@@ -45,6 +45,15 @@ representing object has its class pulled back from a fixed degree-zero class `la
 divisor scheme along some field point.*  So a lane discharging the qc field discharges `hcpt`
 in the same breath, at no extra cost, and `hcpt` should not be counted as a separate distance.
 
+**AND THE SHARP FORM IS STRONGER THAN THAT, which corrects a claim of mine.**  I first reported
+`hcpt` as "a genuine fifth obligation of the goal with no lane".  It is not fifth and it is not
+new: `hcpt` is `CompactSpace` of the glued *space*, the `JacobianData.quasiCompact` field is
+`QuasiCompact` of the glued *morphism*, and over the affine base `Spec k` these are
+**interderivable** — `compactSpace_glued_iff_quasiCompact` below, both directions, one mathlib
+lemma each way.  `JacobianData` has four fields and `hcpt` is one of them.  What is genuinely
+double-counted is therefore not a field but a *row*: the atlas assembly and `dat-j` were holding
+the same obligation, and the `hcl` route is how it gets paid once.
+
 ## What this does NOT do, and the count that matters
 
 **No gate is closed and no antecedent is discharged.**  `hcl` has no producer — that is the
@@ -78,6 +87,9 @@ Two things worth being explicit about, since a reduction that merely renames is 
   mixed-parameter atlas from the qc field's `hcl` at the atlas's own representation.
 * `AlgebraicGeometry.jacobianDataOfCompactFromClass` — the assembly with `hcpt` replaced by
   `hcl`: four inputs, not five.
+* `AlgebraicGeometry.compactSpace_glued_iff_quasiCompact` — **the sharp form**: `hcpt` and the
+  `JacobianData.quasiCompact` field are one statement, both directions.  This is what makes the
+  double-counting a fact about two board rows rather than about a field count.
 * `AlgebraicGeometry.compactSpace_of_finite_atlas` — the finite-index route, recorded so the
   two hypotheses are visibly distinct.
 -/
@@ -228,6 +240,39 @@ lemma jacobianDataOfCompactFromClass_J {ι : Type u} (nn : ι → ℕ)
   rfl
 
 end FromClass
+
+/-! ## `hcpt` IS the `quasiCompact` field, in the other spelling
+
+The sharper form of the double-counting, and it is an **equivalence** rather than the one-way
+implication above.  `hcpt` is `CompactSpace` of the glued *space*; the `JacobianData` field is
+`QuasiCompact` of the glued *morphism*.  Over the affine base `Spec k` those are the same
+statement (`HasAffineProperty.iff_of_isAffine`), in both directions.
+
+So `hcpt` is not an atlas-specific extra input at all: it is the `quasiCompact` field of the
+target datum, which the board tracks on the `dat-j` row.  The atlas assembly and `dat-j` were
+holding one obligation between them.
+
+**This corrects my own claim note** (`I-1123`), which called `hcpt` "a genuine fifth obligation
+of the GOAL".  It is not a fifth anything — `JacobianData` has four fields and this is one of
+them.  The double-counting is real and it is *between rows*, not between field counts. -/
+
+variable (C) in
+/-- **`hcpt` and the `quasiCompact` field are one statement.**
+
+`CompactSpace (glueData hf).glued ↔ QuasiCompact (gluedHom C f hf)`: over the affine base both
+sides are `HasAffineProperty.iff_of_isAffine` read in the two directions.
+
+Stated as an `iff` deliberately.  The `mpr` direction alone would look like a reduction of the
+atlas's input to the datum's field; the `mp` direction is what shows there is nothing to reduce —
+a lane holding either holds the other, so no route can pay one and still owe the other. -/
+theorem compactSpace_glued_iff_quasiCompact {ι : Type u} {X : ι → Scheme.{u}}
+    (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1)
+    (hf : ∀ i, IsOpenImmersion.presheaf (f i))
+    [Presheaf.IsLocallySurjective Scheme.zariskiTopology (Sigma.desc f)] :
+    CompactSpace (Scheme.LocalRepresentability.glueData hf).glued
+      ↔ QuasiCompact (gluedHom C f hf) :=
+  ⟨fun h => HasAffineProperty.iff_of_isAffine.mpr h,
+    fun h => HasAffineProperty.iff_of_isAffine.mp h⟩
 
 /-! ## The other route, for contrast: `hcpt` is genuinely not free
 
