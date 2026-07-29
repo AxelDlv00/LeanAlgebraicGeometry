@@ -290,25 +290,15 @@ not one:
 So the étale side needs one hypothesis rather than two, and needs nothing about a section —
 but that hypothesis is strictly harder than its `picSharp` namesake, and clause 2 is why.
 Recorded here rather than only in the inbox (`I-0989`) because a reader pricing future work
-off this file would otherwise inherit the understatement.
-
-**QUANTIFIER WEAKENED 2026-07-29 r2, and the previous form overcharged the leaf**
-(`I-1059`, `work-reviewer`; the over-specification was mine). This was stated with
-`∀ S : C.left.AffineCoverMVSquare`, while its only consumer
-`finrank_cotangentSpace_eq_finrank_hModuleOne` instantiates it at exactly **one** cover —
-the one `Adelic.exists_affineCoverMVSquare_module_finite_H1Cok` hands it — so the
-universal quantifier was never used. As written, a future lane owed a semilinear
-comparison at *every* 2-affine cover of `C`; it owes one at a cover of its own choosing,
-and the supplied cover already carries the finiteness such a proof wants. The `∀`-form
-implies this one by instantiation, so nothing that consumed the old statement is
-weakened, and this is the form the theorem actually consumes. -/
+off this file would otherwise inherit the understatement. -/
 def SemilinearCotangentComparisonEt (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
     [GeometricallyIntegral C.hom] [HasPicSchemeEt C] : Prop :=
-  ∃ (S : C.left.AffineCoverMVSquare) (i : identityResidueField C → k)
+  ∀ S : C.left.AffineCoverMVSquare,
+    ∃ (i : identityResidueField C → k)
       (j : Module.Dual (identityResidueField C) (identityCotangentSpace C)
             ≃+ S.H1Cok (Scheme.toModuleKSheaf C)),
-    Function.Bijective i ∧ ∀ r x, j (r • x) = i r • j x
+      Function.Bijective i ∧ ∀ r x, j (r • x) = i r • j x
 
 /-- **The Kleiman §5 Thm. `thm:tgtsp` dimension identity for `Pic⁰_{C/k}`, étale
 formulation**: `dim_{κ(e)} m_e/m_e² = dim_k H¹(C, 𝒪_C)` at the identity, with
@@ -337,7 +327,8 @@ theorem finrank_cotangentSpace_eq_finrank_hModuleOne (C : Over (Spec (.of k)))
     Module.finrank (identityResidueField C) (identityCotangentSpace C)
       = Module.finrank k (Scheme.HModule k (Scheme.toModuleKSheaf C) 1) := by
   haveI := finiteDimensional_cotangentSpace C
-  obtain ⟨S, i, j, hi, hc⟩ := hcomp
+  obtain ⟨S, -⟩ := Adelic.exists_affineCoverMVSquare_module_finite_H1Cok C
+  obtain ⟨i, j, hi, hc⟩ := hcomp S
   calc Module.finrank (identityResidueField C) (identityCotangentSpace C)
       = Module.finrank (identityResidueField C)
           (Module.Dual (identityResidueField C) (identityCotangentSpace C)) :=
