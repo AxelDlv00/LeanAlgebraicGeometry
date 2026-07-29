@@ -4,7 +4,7 @@ title: 'FIELDMONO-AFF: the field-level window-recovery mono is CARRIER-FREE, so 
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: ''
-status: active
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -27,4 +27,6 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
-  owner: ajcr-p3
+  updated_at: '2026-07-29T23:51:19.067122+00:00'
+  pinned_commits:
+  - 64d309c665

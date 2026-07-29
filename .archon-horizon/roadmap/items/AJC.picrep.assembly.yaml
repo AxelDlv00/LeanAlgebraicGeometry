@@ -6,26 +6,25 @@ summary: 'STATUS AND ANCHOR CORRECTED by review-ajc 2026-07-29. This node was `d
   and cited a deliverable that does not exist; both were wrong.
 
 
-  WHAT THIS NODE DISCHARGES, repointed. `Scheme.fgaPicardRepresentability` in
-  `Picard/FGAPicRepresentability.lean` — a bare `sorry`, the project''s central open
-  obligation. The previous text said "Discharges instHasPicScheme
-  (FGAPicRepresentability.lean:259)". Both halves were stale: `instHasPicScheme` exists
-  in no `.lean` file (deleted 2026-07-28 under I-0491, never discharged; every grep hit
-  is prose — re-verified at HEAD 2026-07-30, 26 hits, all docstring or comment), and
-  line 259 fell mid-docstring, inside the bundling rationale above `class HasPicScheme`.
-  The live gate is `HasPicSchemeEt`, whose instance `instHasPicSchemeEt` is
-  `(fgaPicardRepresentability C).1` — a projection of that same sorry, so the gate
-  synthesizes freely and carries the sorry into every consumer.
+  WHAT THIS NODE DISCHARGES, repointed. `Scheme.fgaPicardRepresentability` in `Picard/FGAPicRepresentability.lean`
+  — a bare `sorry`, the project''s central open obligation. The previous text said
+  "Discharges instHasPicScheme (FGAPicRepresentability.lean:259)". Both halves were
+  stale: `instHasPicScheme` exists in no `.lean` file (deleted 2026-07-28 under I-0491,
+  never discharged; every grep hit is prose — re-verified at HEAD 2026-07-30, 26 hits,
+  all docstring or comment), and line 259 fell mid-docstring, inside the bundling
+  rationale above `class HasPicScheme`. The live gate is `HasPicSchemeEt`, whose instance
+  `instHasPicSchemeEt` is `(fgaPicardRepresentability C).1` — a projection of that
+  same sorry, so the gate synthesizes freely and carries the sorry into every consumer.
 
 
   AND THE REPOINT ITSELF WENT STALE, in the paragraph announcing it (review-ajc r7,
-  2026-07-30). The four numbers above — 347 for the theorem, 355 for the class, 366 for
-  the instance, 263 for `class HasPicScheme` — were all wrong at HEAD nine hours later:
-  the theorem head is 757, the sorry 765, and every one of 347/355/366 lands
+  2026-07-30). The four numbers above — 347 for the theorem, 355 for the class, 366
+  for the instance, 263 for `class HasPicScheme` — were all wrong at HEAD nine hours
+  later: the theorem head is 757, the sorry 765, and every one of 347/355/366 lands
   mid-docstring, i.e. the SAME defect this row was corrected for. They are now removed
-  rather than refreshed. Cite declaration names here; do not restore line numbers. This
-  is the fifth repetition of a failure this lane has filed four times, and the third
-  time the repair re-created it.
+  rather than refreshed. Cite declaration names here; do not restore line numbers.
+  This is the fifth repetition of a failure this lane has filed four times, and the
+  third time the repair re-created it.
 
 
   THE ASSEMBLY STEP, unchanged in substance. Glue the `h0=1` loci into `Pic^r` over
