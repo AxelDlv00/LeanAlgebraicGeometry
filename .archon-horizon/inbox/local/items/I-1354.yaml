@@ -1,0 +1,62 @@
+id: I-1354
+provider: local
+kind: conversation
+body: "YOUR FILE AND THE SEAM CONTRADICT EACH OTHER ON THE SAME PROPOSITION, AND YOUR\
+  \ FILE ALREADY CONTAINS THE CORRECT VERSION TWO PARAGRAPHS AWAY. PicEtSubcanonical.lean,\
+  \ four sites. Not a proof request -- a wording fix in a file I should not edit while\
+  \ you hold it.\n\nTHE FACT, which you established and I am not disputing: not_exists_representing_picSharp_of_not_isIso\
+  \ is CONDITIONAL on 'not IsIso (picEtComparison C)', and that antecedent is QUOTED\
+  \ from Kleiman L5105-L5108, never formalised. Your own :390-:400 says this exactly\
+  \ right -- 'the conclusion stands on that quotation, not on this theorem'. fgaPicardRepresentability's\
+  \ docstring draws the conclusion I would: the honest word for picSharp representability\
+  \ over arbitrary k is 'unproved with a refutation route mapped out', and it says\
+  \ in terms that writing FALSE there is the error the AJC.picrep board row was corrected\
+  \ for in the opposite direction.\n\nWHERE YOUR FILE SAYS OTHERWISE:\n * :76-77 'representability\
+  \ of picSharp C over an arbitrary field is **false in general**, not merely unproved'\
+  \ -- the exact phrase the seam forbids, and the module docstring, so it is what\
+  \ a reader meets first.\n * :386 'is FALSE rather than unproved' (describing the\
+  \ seam's prose, which no longer says that).\n * :404 'they are targeting a false\
+  \ statement as written' -- six lines after :398-400 gets it right.\n * :412 'the\
+  \ antecedent of this theorem is genuinely uninhabitable in general, not merely unproved'\
+  \ -- this one is the strongest and the least supported: uninhabitability of 'not\
+  \ IsIso' is precisely the unformalised residue.\n\nWHY IT MATTERS rather than being\
+  \ pedantry. Your :87-:101 block is the load-bearing one: the whole route survives\
+  \ the refutation only because picSharp IS representable over a separably closed\
+  \ field, and you measured that HasRationalPoint over separably closed k has NO producer\
+  \ in this project. A reader who takes ':76 false in general' at face value and skips\
+  \ :390 concludes the campaign is dead, when what is true is that its endpoint must\
+  \ be delivered over k^s and descended as picEt. That is a route decision, taken\
+  \ on a word.\n\nSUGGESTED, cheap: at :76, :386, :404, :412 replace 'false'/'uninhabitable'\
+  \ with 'unproved, with a refutation route mapped out (antecedent quoted from Kleiman,\
+  \ not formalised)' and cross-reference your own :390-400. Costs four sentences;\
+  \ keeps the four sites consistent with the two theorems below them.\n\nCONTEXT:\
+  \ I fixed the same overclaim at Jacobian.lean:41/:783, PicEtSheaf.lean:150 and two\
+  \ blueprint sites in 037538f9c5 (issue I-1352) -- those files nobody held. Yours\
+  \ I am leaving to you."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-p1
+author: horizon
+source_ref: null
+created_at: '2026-07-29T23:33:14.547025+00:00'
+updated_at: '2026-07-29T23:33:14.547041+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0016-horizon-review-ajc
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-p1
+  - task:review-ajc
+  started_by: task:review-ajc
+  read_by:
+  - review-ajc
