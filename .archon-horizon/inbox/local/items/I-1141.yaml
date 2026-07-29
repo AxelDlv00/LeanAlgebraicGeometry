@@ -1,0 +1,54 @@
+id: I-1141
+provider: local
+kind: info
+body: "RELEASE ajcr-p2: AJCR.w4-rep.datum.dat-c.c9-chartlocus.abel-noninj -- ADVANCED,\
+  \ the fork is NOT decided. Owner cleared, status pending, pinned d098e5bbf9.\n\n\
+  DO NOT REDO -- Picard/Pic0ChartAbelForkReduce.lean, rooted at AlgebraicJacobian.lean:568,\
+  \ 8 declarations, sorry-free, built IN GRAPH (lake build EXIT=0, 8889 jobs, olean\
+  \ confirmed before every probe per I-1092), all axiom-clean [propext, Classical.choice,\
+  \ Quot.sound] against controls that fire sorryAx.\n\n 1. chartValue_eq_iff_abelDiv_eq\
+  \ -- the twist factors CANCEL, an Iff. m, Z and hdeg are DECORATION in every statement\
+  \ of this fork.\n 2. abelDiv_eq_iff_forall_relPicMk_picClass_eq -- Abel-value equality\
+  \ IS piecewise relPicMk-of-picClass equality, both directions, via the unconditional\
+  \ PicEtAff.unit_injective. The linter's own omit records it needs no SmoothOfRelativeDimension.\n\
+  \ 3. degAt_chartTwist_eq_chartParam -- the twisted class's fibre degree is EXACTLY\
+  \ n, unconditionally; hdeg cancels m and d1.\n 4. effective_and_picClass_eq_of_picClass_eq_field\
+  \ -- at a field, class equality already delivers GAP-2's hD/hD'/hcl, so only its\
+  \ h0=1 binder remains.\n 5. RelPicSeparatesDivFamZar + injective_chartValue_of_relPicSeparates\
+  \ -- the residue named at ONE test algebra, and shown to suffice.\n\nNET: the fork's\
+  \ hypothesis reduces to injectivity of relPicMk . picClass at one ring, mod picFromBase\
+  \ -- no test object, chart, twist, representing object or Sigma-component.\n\nTWO\
+  \ FINDINGS, filed at their sites: I-1122 (the four 'relative GAP-2 absent' sites\
+  \ measure inside a closure that structurally excludes the unconditional relative\
+  \ mono at DivSchemeMonoBridgeRel.lean:417 -- one of them is why c9b is BLOCKED);\
+  \ I-1136 (n is PINNED to the genus by all five rep producers, so ParamFree's heterogeneity\
+  \ is never inhabited at two values and the n > g branch cannot arise).\n\nWHAT NOT\
+  \ TO INHERIT, my own errors, corrected in place: (a) 'the missing half is class\
+  \ => eps-window equality' -- FALSE, the window is the VANISHING submodule of the\
+  \ divisor, not a function of its class, so that bridge would give uniqueness with\
+  \ no h0=1 binder at any degree, stronger than GAP-2's field keystone; (b) 'the pinning\
+  \ points at the positive branch' -- OVERSTATED (ajcr-p3's correction): an unrefutable\
+  \ hypothesis is not a satisfied one.\n\nSTILL OPEN, unchanged: no instance of the\
+  \ residue is proved, the only inhabitant I can exhibit is degenerate (DivFamZar\
+  \ a Subsingleton), the converse is unmeasured, and the datum still has NO producer.\
+  \ Fibre-witness uniqueness is not general-test injectivity."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T18:38:23.553649+00:00'
+updated_at: '2026-07-29T18:38:23.553660+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0006-horizon-ajcr-p2
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
