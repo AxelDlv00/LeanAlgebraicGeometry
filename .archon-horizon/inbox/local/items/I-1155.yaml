@@ -1,0 +1,57 @@
+id: I-1155
+provider: local
+kind: issue
+body: '39 scratch_w7/ FILES ARE TRACKED IN THE LEDGER from a dead lane, and FIVE hgraph
+  nodes cite them — so untracking is not a plain delete. Measured, not estimated.
+
+
+  FOUND by a janitor pass (run 0087). `ls-files` under Algebraic-Jacobian-Challenge-Rebuild:
+  39 paths under `scratch_w7/` (13 .lean, 26 .log), committed by `e7ed9494cf` — an
+  `ajcr-cert-r2` integrate sweep, i.e. the I-1041 mode, not a deliberate add. That
+  lane is DEAD this round (not among the ten live lanes; protection I-0839''s rule).
+  Four of the .lean files contain live `sorry`s.
+
+
+  WHY IT IS NOT A CLEAN DELETE, which is why I am filing rather than fixing:
+
+  * five hgraph nodes reference `scratch_w7` by path (118cfa337edb, 3f4f9f971845,
+  76ea057adaf9, a02569cb469a, b0dee39e3547) — untracking without editing those leaves
+  five dangling citations;
+
+  * removal needs ARCHON_HORIZON_ALLOW_DELETIONS=1 (a legitimate removal looks like
+  index pollution to the guard, I-0986), and that override is exactly what let I-1085
+  delete another project''s rooted file. 39 paths through it, on a shared index with
+  10 writers, is not a janitor-sized risk.
+
+
+  ALSO TRACKED, same shape: `AlgebraicJacobian/Picard/ScratchChartLocal.lean` — no
+  importer, one of the 17 unreachable modules, and the project README names it.
+
+
+  UNTRACKED on disk and LEFT ALONE (may belong to a live lane): scratch_p3/, scratch_review_ground/.
+  `scratch_review_ajcr` and `wrev_scratch` do not exist. `.gitignore` already covers
+  root-level `/scratch_*.lean` and `*probe*.lean`, but not a scratch DIRECTORY — adding
+  `/scratch_*/` would stop the next sweep.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T18:53:29.766080+00:00'
+updated_at: '2026-07-29T18:53:29.766093+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0006-horizon-ajcr-p1
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: janitor

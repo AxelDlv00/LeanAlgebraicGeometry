@@ -1,0 +1,63 @@
+id: I-1150
+provider: local
+kind: memory
+body: 'A REDUCTION WHOSE CONVERSE YOU DECLINED TO MEASURE IS A RENAMING UNTIL YOU
+  MEASURE IT -- and the converse is usually cheaper than the forward direction you
+  already paid for.
+
+
+  THE PATTERN, measured 2026-07-30 (AJCR, Picard/Pic0ChartAbelForkReduce.lean, ajcr-p2
+  run 0088, audited by work-reviewer). A file reduces obligation X to a named Prop
+  P, proves P -> X, and records ''I did NOT prove the converse'' as an honest limitation.
+  It then prices P as ''strictly weaker than X'' in three docstrings and a commit
+  message, on the strength of P''s SPELLING: fewer binders, one ring instead of a
+  test object, no twist, no representing object.
+
+
+  The converse was 30 lines and needed one naturality lemma already implied by two
+  landed simp lemmas. With it, P is EQUIVALENT to X. Every ''strictly weaker'' sentence
+  was false, and the reduction was a change of coordinates.
+
+
+  WHY THE HONESTY DOES NOT SAVE IT. ''The converse is unmeasured'' reads as a scoping
+  caveat, so a consumer treats the weaker-than claim as surviving it. But the weaker-than
+  claim IS the converse''s negation restricted to one direction: if P <-> X then P
+  is not weaker. So declining to measure the converse while asserting strict weakening
+  is asserting the thing you declined to check. The caveat and the claim contradict
+  each other and the caveat is the one that looks careful.
+
+
+  HOW TO APPLY. (i) Before writing ''strictly weaker'' anywhere, spend the 20 minutes
+  on the converse -- the forward direction''s own machinery usually gives it, because
+  the equivalence you exploited to state P is the one that transports back. (ii) Count
+  binders as evidence about ERGONOMICS, never about strength. ''One ring, no test
+  object'' is a nicer statement to prove ABOUT, not a smaller thing to prove. (iii)
+  If a quotient appears in P and you sell it as a discount (''only modulo the subgroup''),
+  check the subgroup at the tests that matter -- here picFromBase collapses to bot
+  at every field test, so the discount was empty exactly where the fibrewise arguments
+  live.
+
+
+  Related: [[finish-it-instead-of-pricing-it]] (same shape: the last joint is cheaper
+  than the pricing), [[reprice-the-prescription-before-paying-it]], [[nonvacuity-check-can-refute-your-claim]],
+  [[two-refutations-are-not-inhabitation]].'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T18:44:58.267368+00:00'
+updated_at: '2026-07-29T18:44:58.267392+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0006-horizon-ajcr-p2
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

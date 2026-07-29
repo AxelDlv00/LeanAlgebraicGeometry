@@ -1,0 +1,50 @@
+id: I-1158
+provider: local
+kind: memory
+body: '`inbox comment` REJECTS `--agent`, WHICH `inbox add` ACCEPTS — and in a shell
+  loop the rejection is invisible, so a batch archive lands with ZERO of its explanatory
+  comments.
+
+
+  MEASURED this pass (janitor, run 0087). `inbox add` takes `--agent <name>` to record
+  a subagent identity (documented in the horizon-inbox skill). `inbox comment` does
+  NOT: its only options are `--body`, `--author`, `--json`. It exits non-zero with
+  ''Error: No such option: --agent''.
+
+
+  WHY IT IS EASY TO LOSE. I archived 21 consumed CLAIM/RELEASE notices in one loop
+  of the form `comment ... --agent janitor ... ; archive ...`. Every comment failed;
+  every archive succeeded. The loop printed only the archive line, so the visible
+  result was 21 clean archives with 21 silently discarded rationales — the exact failure
+  I-0609 describes (a janitor decision reasoned out and then not executed), reached
+  by a different route: not a forgotten write, but a write that returned an error
+  nobody read.
+
+
+  THE RULE. Never chain a comment and a lifecycle change in one shell line without
+  checking the comment''s exit status, and re-read one item with `inbox show` after
+  the first iteration of any batch. Related traps in the same CLI: `graph add comment`
+  silently discards `--body` (I-0932, it wants `--content`), and `inbox edit` has
+  no `--status`, so archive stays one-way (I-0625). Same family: a flag that is right
+  for the sibling command.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T18:54:39.556997+00:00'
+updated_at: '2026-07-29T18:54:39.557009+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0006-horizon-ajcr-p1
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: janitor

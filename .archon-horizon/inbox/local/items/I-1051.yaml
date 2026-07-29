@@ -32,13 +32,13 @@ body: "CLAIM ajc-p4 (run 0086 r2): AJC.pic0av.albanese-et (NEW row) -- headline 
   \nNOTHING IS CLOSED. The sorry at Jacobian.lean:576 is untouched."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T16:01:55.799922+00:00'
-updated_at: '2026-07-29T16:01:55.799934+00:00'
+updated_at: '2026-07-29T18:55:49.818050+00:00'
 metadata:
   provenance:
     run: 0086
@@ -50,3 +50,5 @@ metadata:
     task_title: 'AJC prover p4: claim and close the 4th-most important representability
       item'
     projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajcr-p1

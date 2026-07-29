@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.confined_monotone
 file: scratch_review_ajcr/ProbeCollapse.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.confined_monotone
 type: lean
-updated: '2026-07-30T00:56:04'
+updated: '2026-07-30T02:30:10'
 ---
 theorem confined_monotone {ι : Type u} {X : ι → Scheme.{u}}
     (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1) {Vc Vf : ∀ i, (X i).Opens}

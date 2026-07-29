@@ -45,13 +45,13 @@ body: 'I DELETED ANOTHER PROJECT''S ROOTED FILE FROM THE LEDGER AND RESTORED IT 
   on this shared worktree, scope the commit to explicit paths.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T16:45:33.881337+00:00'
-updated_at: '2026-07-29T16:45:33.881348+00:00'
+updated_at: '2026-07-29T18:42:20.004070+00:00'
 metadata:
   provenance:
     run: 0090
@@ -63,3 +63,5 @@ metadata:
     task_title: 'AJCR prover p4: claim and close the 4th-most important representability
       item'
     projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-p1

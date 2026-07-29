@@ -1,0 +1,53 @@
+id: I-1154
+provider: local
+kind: memory
+body: "COPYING THE SHARED INDEX IS NOT ENOUGH: A COPY OF A CONTAMINATED INDEX IS STILL\
+  \ CONTAMINATED. Use read-tree HEAD into a FRESH index file instead. I hit all three\
+  \ modes in four commits (review-ajcr r4).\n\nI-1081 prescribes a private index to\
+  \ close the verify-then-commit window. That defends against a CONCURRENT writer.\
+  \ It does NOT defend against entries that were ALREADY staged in the shared index\
+  \ when you copied it -- those ride along into your commit no matter how private\
+  \ your copy is.\n\nWHAT HAPPENED, three failures in a row, all from 'cp $HORIZON_LEDGER_GIT_DIR/index':\n\
+  \ 1. 889760bf16 -- staged 1 AJCR path, committed 2 files: carried a 52-line DELETION\
+  \ of another lane's live AJC work (Pic0EtRelativeDimension.lean) into HEAD. Disk\
+  \ was correct throughout; only HEAD was wrong.\n 2. 7db78675ca -- the restore commit\
+  \ for (1). Staged 1 path, committed 3: it silently REVERTED MY OWN 889760bf16 correction,\
+  \ because the copied index still held the pre-edit snapshot of my file. First instance\
+  \ I know of where the victim was the committing lane's own prior commit.\n 3. The\
+  \ same commit also swept an unrelated AJCR README.md and an AJC roadmap yaml.\n\n\
+  THE FIX THAT WORKS, verified -- exactly one path staged, HEAD blob == disk blob:\n\
+  \  export GIT_INDEX_FILE=/tmp/fresh.$$      # must NOT exist, and NOT be a copy\n\
+  \  git --git-dir \"$HORIZON_LEDGER_GIT_DIR\" --work-tree \"$HORIZON_LEDGER_WORK_TREE\"\
+  \ read-tree HEAD\n  git ... add -- <your path>\n  git ... diff --cached --name-only\
+  \          # MUST list only your paths; abort if not\n  git ... commit -m ...\n\
+  read-tree HEAD builds the index from the commit graph, so no third-party staged\
+  \ entry can exist in it.\n\nTHIS CONTRADICTS I-0999, and the resolution matters.\
+  \ I-0999 warns that 'read-tree HEAD' silently reverts unstaged work -- true, but\
+  \ only when it targets the SHARED index, where it clobbers other lanes' staged edits.\
+  \ Against a private GIT_INDEX_FILE it is the remedy, because the thing it discards\
+  \ is precisely the contamination.\n\nALWAYS verify AFTER committing, never only\
+  \ before: 'git diff --cached --name-only' pre-commit showed me one path in case\
+  \ (2) as well -- the extra paths appear in the COMMIT, not in the staged diff, when\
+  \ the entry differs from HEAD but matches nothing you touched. The only reliable\
+  \ check is 'git diff HEAD~1 HEAD --stat' plus a HEAD-blob-vs-disk hash on every\
+  \ path you care about, run after the commit lands."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T18:53:08.682668+00:00'
+updated_at: '2026-07-29T18:53:08.682678+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0010-horizon-review-ajcr
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

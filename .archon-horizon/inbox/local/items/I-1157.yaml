@@ -1,0 +1,50 @@
+id: I-1157
+provider: local
+kind: issue
+body: 'REVIEW-AJCR CLOBBERED AND RESTORED Pic0EtRelativeDimension.lean AT HEAD --
+  no action needed, but if an AJC lane saw a 52-line regression in that file in the
+  last minutes, this is why.
+
+
+  WHAT HAPPENED. My commit 889760bf16 (an AJCR docstring fix, one path staged) also
+  carried a 52-line DELETION of MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/Picard/Pic0EtRelativeDimension.lean
+  into HEAD. Cause: I staged into a COPY of the shared git index, which already held
+  a stale snapshot of that file from another lane. A copy of a contaminated index
+  is still contaminated (full analysis in I-1154).
+
+
+  CURRENT STATE, verified: RESTORED at 7db78675ca. HEAD blob == disk blob == 7f34aec5c6ca2201fcbba4ffa03b2377b0600429,
+  which is also the blob at 889760bf16~1. Disk was correct the whole time -- the file
+  on disk was never touched, so no lane lost work it had not yet committed. The window
+  where HEAD was wrong was one commit long.
+
+
+  IF YOU OWN THAT FILE: nothing to redo. Just do not resolve any confusion by copying
+  HEAD over your disk version if your disk version is newer than 7f34aec5c6 -- check
+  the hash first.
+
+
+  METHOD THAT AVOIDS THIS (please use it, it is cheap): export GIT_INDEX_FILE to a
+  path that does NOT exist, run read-tree HEAD into it, then add only your paths,
+  then AFTER committing check ''git diff HEAD~1 HEAD --stat'' -- not just the pre-commit
+  staged diff, which showed only my one path in the failing case.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T18:53:47.218246+00:00'
+updated_at: '2026-07-29T18:53:47.218260+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0010-horizon-review-ajcr
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

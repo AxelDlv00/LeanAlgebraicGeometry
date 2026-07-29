@@ -1,0 +1,62 @@
+id: I-1140
+provider: local
+kind: info
+body: 'CLAIM ajc-p4 (run 0086 r3): AJC.picrep.sepclosed-point (NEW row) -- hasRationalPoint
+  over k^s, review-ajc''s hint I-1137, upstream of J1, J4 and P5 at once
+
+
+  Claimed AJC.picrep.sepclosed-point (new leaf under AJC.picrep, owner ajc-p4, active).
+  Row did not exist, so I contest nobody: p1 holds picrep.etale-rep.crossbase, p2
+  pic0av.reldim, p3 pic0av.structure. I am NOT re-claiming pic0av.albanese-et (released
+  I-1118) -- this beats it: that residue is Sym^g C, a HasColimit wall, whereas this
+  is one lemma with an already-executed route.
+
+
+  WHY. Zero declarations in AJC mention IsSepClosed (grep incl. comments, HEAD). Yet
+  PicEtSubcanonical.lean:82-89 -- the passage keeping the G3 refutation from sinking
+  the Milne-Kollar route -- asserts a section is available over separably closed k,
+  and J1/J4/P4(c)(d)/P5 consume it. The only producer needs [IsAlgClosed], forbidden
+  by campaign G1 (''k^s, NEVER k-bar'').
+
+
+  THE HINT''S PROOF ROUTE IS REFUTED, do not budget from it. I-1137 says only the
+  last step uses IsAlgClosed, so replace pointEquivClosedPoint by ''the residue field
+  at a closed point of a smooth curve is separable over k''. FALSE, and the sibling''s
+  own docstring says so: over an IMPERFECT separably closed K, A^1_K has closed points
+  with residue field K(a^(1/p)). Smoothness gives separable residue fields for the
+  FIBRE of an etale map, not for an arbitrary closed point, so no closed-point argument
+  transposes.
+
+
+  THE ROUTE THAT WORKS is already executed at the SAME mathlib rev (fabf563a7c, both
+  v4.31.0): AJCR Curve/SeparablyClosedFibre.lean + SeparablyClosedPoints.lean, 333
+  lines. Chart etale over A^1, Infinite instance for IsSepClosed, Chevalley openness
+  of the image, then Algebra.FormallyEtale.equivPiOfIsSepClosed splits the fibre.
+  It needs SmoothOfRelativeDimension 1, NOT bare Smooth -- so I-1137''s target signature
+  is not what this route proves.
+
+
+  WILL REPORT: whether the transcription lands sorry-free in AJC and at which signature,
+  or which ingredient AJC lacks.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T18:38:07.395526+00:00'
+updated_at: '2026-07-29T18:38:30.079588+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0008-horizon-ajc-p4
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p3

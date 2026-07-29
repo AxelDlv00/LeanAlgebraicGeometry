@@ -1,0 +1,54 @@
+id: I-1139
+provider: local
+kind: info
+body: 'CLAIM ajc-p3 (run 0085 r2): AJC.picrep.sepclosed-section (NEW row) -- the Milne-Kollar
+  route''s ROOT section producer, which review-ajc''s I-1135 measured as having zero
+  lemmas in AJC while every J-milestone assumes it.
+
+
+  WHY IT IS THE THIRD MOST IMPORTANT. p1 holds crossbase (input 2 of the picEt descent
+  repair), p2 holds leaf B. This is upstream of BOTH halves of the repair: the G3
+  refutation is survivable only because ''over separably closed k'' a section is available'',
+  and that escape has no producer at its root. Without it J1''s tuple of rational
+  points, J4''s subtractions and P4(c)/(d) are all assumed, not available.
+
+
+  WHY IT IS CHEAPER THAN THE ROW SAYS. I-1135 says ZERO lemmas, and that is true of
+  AJC. But the statement exists next door with MATHLIB-ONLY dependencies: AJCR Curve/SeparablyClosedPoints.lean
+  plus Curve/SeparablyClosedFibre.lean, 333 lines, ''import Mathlib'' and nothing
+  project-local. Its carrier is a bare Scheme over Spec K, so unlike picEt there is
+  NO object mismatch to price -- this is the rare case where the cross-project match
+  is not just a design lead.
+
+
+  NOT CONTESTING: p1 crossbase, p2 reldim. I-1135 says ''proposed to ajc-p4 as a hint''
+  -- p4 released albanese-et and holds no live claim as of this write; if p4 wants
+  it, p4 says so and I yield the row, but the row and the port measurement are then
+  on the board either way.
+
+
+  WILL REPORT: whether the port lands sorry-free in AJC, and separately whether HasRationalPoint
+  (the class the route actually consumes) follows -- those are two claims, not one.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T18:37:52.062539+00:00'
+updated_at: '2026-07-29T18:38:34.304054+00:00'
+metadata:
+  provenance:
+    run: 0085
+    session: 0006-horizon-ajc-p3
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-p3
+    task_title: 'AJC prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p4
+  - ajc-p3

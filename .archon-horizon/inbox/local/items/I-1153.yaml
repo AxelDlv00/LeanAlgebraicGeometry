@@ -1,0 +1,73 @@
+id: I-1153
+provider: local
+kind: info
+body: 'CLOSED ajc-p1 (run 0083 r3): AJC.picrep.etale-rep.crossbase -- sorry-free,
+  axiom-clean, UNCONDITIONAL. Row done, pinned 33fe30e27a.
+
+
+  DO NOT REDO -- Picard/PicEtCrossBase.lean, rooted, 700 lines, NO sorry, all ten
+  declarations axiom-clean [propext, Classical.choice, Quot.sound] under lake env
+  lean vs a control that still fires sorryAx on fgaPicardRepresentability. lake build
+  EXIT=0 (8681 jobs), oleans rebuilt BEFORE every probe.
+
+
+  RESULT: picEt_crossBaseIso -- for a smooth proper curve C over k and ANY extension
+  k''/k, picEt of the base-changed curve is isomorphic on (Sch/k'')^op to picEt C
+  restricted along Over.map. Group form etaleSheaf_crossBaseIso. This was review-ajc''s
+  input 3 (I-1076), upstream of the Galois step.
+
+
+  FOUR FINDINGS FOR OTHER LANES.
+
+
+  (1) THE ROW AND SEAM DOCSTRING ASK TOO MUCH. Both state it for FINITE SEPARABLE
+  k''/k. Neither hypothesis is used -- the argument is about pullback PROJECTIONS,
+  not etale covers, so it holds for an arbitrary extension. Finite-separability is
+  the GALOIS input''s constraint, double-counted here. Stop budgeting separability
+  for a cross-base step.
+
+
+  (2) THE SHEAFIFICATION LAYER IS FREE, and this is the reusable half. picEt is a
+  CATEGORICAL sheafification, so mathlib''s Functor.pushforwardContinuousSheafificationCompatibility
+  lifts any presheaf-level identification to the sheaf level given continuity of the
+  restriction functor -- pure synthesis for Over.map between two localised etale topologies.
+  CONTROL: the stronger IsDenseSubsite at the SAME topologies does NOT synthesize,
+  so the pushforward is not an equivalence and the iso is not vacuous.
+
+
+  (3) THE STUBBORN RESIDUE WAS NOT GEOMETRIC. I priced the last layer three times
+  -- ''bookkeeping'', ''two items'', ''one square'' -- each too dear, each refuted
+  by my own next commit. Naturality is not a fact about curves: for an arbitrary category
+  with pullbacks it is pullback.hom_ext from the iso''s two projection identities.
+  LENS: delete the geometry from a stubborn residue''s statement; if it still typechecks
+  you were pricing a category-theoretic identity as though it were about your objects.
+
+
+  (4) AJCR''s 468-line picEtCrossBaseEquiv was rightly called not-portable, and sharper
+  than the carrier difference: most of its length is the scalar tower that finding
+  (2) makes unnecessary here.
+
+
+  NOT DONE: closes NO sorry in FGAPicRepresentability.lean, witnesses NO antecedent
+  for any curve. Per I-1135 the repair has FOUR inputs; the fourth is held by ajc-p3/ajc-p4.
+  Parent row left OPEN deliberately, rationale on the row.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T18:52:52.319961+00:00'
+updated_at: '2026-07-29T18:52:52.319972+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0008-horizon-ajc-p1
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

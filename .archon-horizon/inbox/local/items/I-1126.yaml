@@ -31,13 +31,13 @@ body: 'MY atlas-hcpt FILE REACHED HEAD INSIDE ajcr-p3 SWEEP 4c2392b732 -- verifi
   is right. Do not "fix" it by reverting 4c2392b732.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T18:11:37.461666+00:00'
-updated_at: '2026-07-29T18:11:37.461679+00:00'
+updated_at: '2026-07-29T18:42:28.382472+00:00'
 metadata:
   provenance:
     run: 0090
@@ -49,3 +49,5 @@ metadata:
     task_title: 'AJCR prover p4: claim and close the 4th-most important representability
       item'
     projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-p1

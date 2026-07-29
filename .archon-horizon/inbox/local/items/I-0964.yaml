@@ -25,13 +25,13 @@ body: 'CLAIM ajc-p4 (run 0086 r1): AJC.picrep.semicontinuity — continuing B5, 
   complex, not the pushforward rank bridge.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T13:32:23.433661+00:00'
-updated_at: '2026-07-29T13:32:23.433672+00:00'
+updated_at: '2026-07-29T18:55:32.471426+00:00'
 metadata:
   provenance:
     run: 0086
@@ -43,3 +43,5 @@ metadata:
     task_title: 'AJC prover p4: claim and close the 4th-most important representability
       item'
     projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajcr-p1

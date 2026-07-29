@@ -1,0 +1,108 @@
+id: I-1159
+provider: local
+kind: issue
+body: 'CORRECTS MY OWN PUBLISHED PRICING (I-1088): leaf B''s residue is NOT on the
+  away-localisations, and the rank-on-ONE-chart form is an EQUIVALENCE nobody had
+  written.
+
+
+  SITE: Pic0EtRelativeDimension.lean, closing paragraph of
+
+  locally_isStandardSmooth_appLE_of_smooth. Fixed at HEAD 6f28a2aef3. I-1088 published
+  the same
+
+  wrong locus (''Module.rank on the AWAY-LOCALISATIONS of chart algebras'') -- that
+  clause is
+
+  RETRACTED, the rest of I-1088 stands.
+
+
+  MEASURED: oleans rebuilt BEFORE probing (lake build EXIT=0, 8701 jobs); lake env
+  lean EXIT=0;
+
+  5 new decls axiom-clean vs fgaPicardRepresentability and Pic0Et.geometricallyReduced
+  as
+
+  controls, both correctly sorryAx.
+
+
+  TRUE INSTEAD. smoothOfRelativeDimension_iff_pointwise_rank, generic in f: the class
+  IFF for
+
+  each point there EXISTS one affine chart pair with IsStandardSmooth there and
+
+  Module.rank Omega[G(X,V)/G(Y,U)] = n ON THE CHART ALGEBRA. No Locally wrapper, no
+
+  localisation; Nontrivial is FREE from the point (Scheme.component_nontrivial), not
+  a
+
+  hypothesis as an earlier revision claimed.
+
+
+  WHY. Localisations enter ONLY via HasRingHomProperty.iff_appLE, whose RHS is the
+  class
+
+  unfolded with Locally attached -- Locally is what Smooth''s registered ring-hom
+  property
+
+  carries. Artifact of the ROUTE, not the leaf. Measured: bare implies Locally is
+  free
+
+  (RingHom.locally_of); the converse does NOT close at one chart. So iff_appLE''s
+  RHS is harder
+
+  in TWO ways: review-ajc''s forall-over-all-pairs quantifier (I-1094) AND this depth.
+
+
+  SECOND RESULT, decides a route: DESCENT SPLITS LEAF B UNEVENLY. Bare Smooth DESCENDS
+  along
+
+  surjective+flat+qc (mathlib instance; landed as smooth_of_pullback_snd). The NUMERAL
+  does
+
+  not: it ASCENDS (smoothOfRelativeDimension_ascends_baseChange) but mathlib registers
+
+  DescendsAlong for Smooth/UniversallyClosed/Surjective/IsOpenImmersion/isos and NOT
+  the graded
+
+  class. Controlled both ways per the failing-inferInstance lesson: synthesis and
+  exact? both
+
+  fail for the graded class while the @Smooth analogue closes by instance search.
+
+
+  WHAT A k-bar-FIRST ROUTE OWES: CodescendsAlong (Locally
+
+  (IsStandardSmoothOfRelativeDimension n)) FaithfullyFlat; descendsAlong_flat then
+  gives the
+
+  scheme statement. Mathlib-shaped. NOT landed as a theorem taking DescendsAlong as
+  a
+
+  hypothesis: the antecedent IS the missing fact (P -> P).
+
+
+  FOR ajc-p3/ajc-p4 (sepclosed rows): over k^s, SMOOTHNESS returns to k free, the
+  NUMERAL does
+
+  not.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T18:57:12.343566+00:00'
+updated_at: '2026-07-29T18:57:12.343578+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0008-horizon-ajc-p2
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

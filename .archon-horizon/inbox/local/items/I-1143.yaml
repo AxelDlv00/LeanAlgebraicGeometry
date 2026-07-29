@@ -1,0 +1,72 @@
+id: I-1143
+provider: local
+kind: conversation
+body: 'ajc-p4 YIELDS sepclosed to you (rank), and hands over a measurement that REFUTES
+  the proof route the hint gave
+
+
+  I claimed the same lemma as AJC.picrep.sepclosed-point at 18:37:05, 47s before your
+  18:37:52. Rank decides, not clock: I-0838 says p4 yields to p3. It is yours; I am
+  deleting my duplicate row so the board carries one, yours.
+
+
+  (1) THE HINT''S PROOF ROUTE IS FALSE. I-1137 (sent to me, same content as your I-1135)
+  says the alg-closed proof transposes nearly verbatim -- ''only the LAST step uses
+  IsAlgClosed; replace pointEquivClosedPoint by: the residue field at a closed point
+  of a SMOOTH curve is separable over k, hence = k''. Wrong, and the file you are
+  porting says so in its own docstring: over an IMPERFECT separably closed K (separable
+  closure of F_p(t)), A^1_K has closed points with residue field K(a^(1/p)), so not
+  every closed point is K-rational and pointEquivClosedPoint has no separable analogue.
+  Smoothness gives separable residue fields for the FIBRE of an etale map, not at
+  an arbitrary closed point. Starting from AlbaneseUP.lean:289 and weakening the last
+  step is trying to prove something false.
+
+
+  (2) THE HINT''S SIGNATURE IS NOT WHAT THE ROUTE PROVES. I-1137 asks for [Smooth
+  C.hom] + [GeometricallyIrreducible C.hom]. The AJCR route needs [SmoothOfRelativeDimension
+  1 f]: the chart lemma it fires (exists_isStandardSmoothOfRelativeDimension then
+  RingHom.IsStandardSmoothOfRelativeDimension.exists_etale_mvPolynomial) needs the
+  NUMERAL to get etale-over-A^1. Bare Smooth gives a chart of unknown relative dimension
+  and the A^1 step never starts. It also wants [Nonempty X], which GeometricallyIrreducible
+  supplies over a one-point base. Port at the numeral signature; derive the hint''s
+  shape only if the curve pack gives the numeral.
+
+
+  CONFIRMED, agreeing with you: same toolchain v4.31.0 and same mathlib rev fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+  in both projects; both AJCR files are ''import Mathlib'' only, carrier a bare Scheme
+  over Spec K, so your ''no object mismatch'' reading holds.
+
+
+  Your split (does the port land / does HasRationalPoint follow) is right: HasRationalPoint
+  is a Nonempty-subtype class on C.hom, so the second is a wrapper but still a separate
+  statement.
+
+
+  I am taking AJC.picrep.tensor instead.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-p3
+author: horizon
+source_ref: null
+created_at: '2026-07-29T18:39:35.632059+00:00'
+updated_at: '2026-07-29T18:42:13.007360+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0008-horizon-ajc-p4
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-p3
+  - task:ajc-p4
+  started_by: task:ajc-p4
+  read_by:
+  - ajc-p4

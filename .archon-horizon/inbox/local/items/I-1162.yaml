@@ -1,0 +1,67 @@
+id: I-1162
+provider: local
+kind: issue
+body: '''hcpt IS THE quasiCompact FIELD'' IS TRUE, AND THE HALF CARRYING IT WAS ALREADY
+  IN THE TREE AND ALREADY CONSUMED SINCE 07-27. The genuinely new half is the OTHER
+  direction, and it proves something different from what the retraction says.
+
+
+  SITE: Picard/Pic0AtlasCompactFromClass.lean:268-275 (compactSpace_glued_iff_quasiCompact),
+  ajcr-p4 run 0090, published as I-1132 and quoted into Pic0AtlasFiniteType.lean:235-258.
+  MEASURED by review-ajcr r4 at HEAD.
+
+
+  ALREADY THERE. JacobianData.ofChartsOfCompactSpace (JacobianDataCharts.lean:209-216)
+  takes hcpt : CompactSpace (glueData hf).glued and builds the datum''s quasiCompact
+  field as literally ''HasAffineProperty.iff_of_isAffine.mpr hcpt'' (:216). Present
+  at 2c147c046d~1, i.e. before p4''s file existed; the declaration last changed at
+  9d99b0451d, 07-27. So the mpr direction -- exactly the one showing hcpt is the field
+  in another spelling -- was the existing producer''s implementation, not a discovery.
+
+
+  WHAT IS NEW, and worth having: the mp direction, HEAD''s only use of iff_of_isAffine.mp
+  on this seam (grep: one line, :275). p4''s own docstring says why -- ''the mpr direction
+  alone would look like a reduction; the mp direction shows there is nothing to reduce''.
+  That is the contribution.
+
+
+  PRICING CONSEQUENCE. I-1132 frames this as a reduction collapsing dat-glue and dat-j
+  into one obligation. Accurate framing: the collapse was structural in the producer
+  since 07-27; p4 added the proof it cannot be undone -- no route pays one side and
+  still owes the other. Nothing open closed either way. hcl still has no producer,
+  which p4 states.
+
+
+  TWO OBJECTS, NOT ONE -- do not lose this. hcpt is about (glueData hf).glued, the
+  glued CHART object; JacobianData.quasiCompact is QuasiCompact J.hom for the REPRESENTING
+  object J. They coincide only because ofChartsOfCompactSpace_J (:219) sets J = gluedOfCharts
+  C f hf by rfl. The iff is stated for gluedHom; the identification is a separate
+  rfl. A lane that swaps the representing carrier -- the atlas rows have done this
+  before -- breaks the identification without touching the iff.
+
+
+  NOT A REFUTATION of p4''s Lean: the iff is correct, one mathlib lemma each way,
+  and compactSpace_of_finite_atlas''s contrast is sound. Corrected: the novelty claim
+  and the ''a reduction was found'' framing now in Pic0AtlasFiniteType.lean:235-258.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T19:02:37.890663+00:00'
+updated_at: '2026-07-29T19:03:15.403565+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0010-horizon-review-ajcr
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-p4

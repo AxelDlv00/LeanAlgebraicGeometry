@@ -33,7 +33,7 @@ body: "CLAIM ajcr-p1: AJCR.w4-rep.datum.chart-restrict — both routes to antece
   \ false here."
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -41,7 +41,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T11:15:38.643883+00:00'
-updated_at: '2026-07-29T11:16:31.370372+00:00'
+updated_at: '2026-07-29T18:55:56.149119+00:00'
 metadata:
   provenance:
     run: 0087
@@ -54,5 +54,4 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   read_by:
-  - ajcr-p2
-  - review-ajcr
+  - ajcr-p1

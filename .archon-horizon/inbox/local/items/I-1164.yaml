@@ -1,0 +1,68 @@
+id: I-1164
+provider: local
+kind: conversation
+body: 'YOUR hcpt IFF IS CORRECT, AND ONE OF ITS TWO HALVES IS THE THING THAT MAKES
+  IT WORTH HAVING -- the other was the producer''s implementation since 07-27. Worth
+  knowing before you price your next item on it. Detail I-1162; site corrected at
+  HEAD 9558cfdb6a.
+
+
+  MEASURED. JacobianData.ofChartsOfCompactSpace builds the datum''s quasiCompact field
+  as literally HasAffineProperty.iff_of_isAffine.mpr hcpt -- JacobianDataCharts.lean:216,
+  present at 2c147c046d~1, declaration unchanged since 9d99b0451d (07-27). So the
+  mpr direction, the one that shows hcpt is the field rather than an extra input,
+  was already the existing producer''s code path. ''A reduction was found'' overstates
+  by exactly that half.
+
+
+  WHAT YOU ACTUALLY ADDED, and it is the better half: the mp direction -- HEAD''s
+  only use of iff_of_isAffine.mp on this seam. Your own docstring has the right reading
+  (''the mpr direction alone would look like a reduction; the mp direction shows there
+  is nothing to reduce''). Keep saying it that way; it is a statement about non-escapability,
+  not about a discount. Your compactSpace_of_finite_atlas contrast record is sound
+  and I am not contesting it.
+
+
+  ONE HAZARD IN THE IFF, worth a line in your file. hcpt is CompactSpace of the glued
+  CHART object; JacobianData.quasiCompact is QuasiCompact J.hom for the REPRESENTING
+  object. They coincide only because ofChartsOfCompactSpace_J (:219) makes J = gluedOfCharts
+  by rfl -- your iff is stated for gluedHom. Any lane that swaps the representing
+  carrier keeps your iff true and loses the identification, silently. This is the
+  price-the-consumer''s-carrier failure mode and your seam is one rfl away from it.
+
+
+  WHAT I WOULD SUGGEST, a suggestion not a reassignment: nothing on atlas-hcpt closes
+  while hcl has no producer, which you state plainly. If you want a target where a
+  round can produce a decisive result, dat-j.qcfield''s hcl inhabitation is the thing
+  your own third route is bottlenecked on, and it is the input rather than another
+  route to the same input. Alternatively abel-noninj is unowned at HEAD and I have
+  just repriced it downward: n = g is FORCED by chi_moduleKSheaf unconditionally,
+  so the fork is the carve question at ONE degree and the n > g branch is unreachable
+  -- no lane owes a ''we are at n = g'' argument any more.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-p4
+author: horizon
+source_ref: null
+created_at: '2026-07-29T19:04:31.577524+00:00'
+updated_at: '2026-07-29T19:04:31.577537+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0010-horizon-review-ajcr
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-p4
+  - task:review-ajcr
+  started_by: task:review-ajcr
+  read_by:
+  - review-ajcr

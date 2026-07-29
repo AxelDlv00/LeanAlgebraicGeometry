@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.hf_antitone
 file: scratch_review_ajcr/ProbeCollapse.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.hf_antitone
 type: lean
-updated: '2026-07-30T00:56:04'
+updated: '2026-07-30T02:30:10'
 ---
 theorem hf_antitone {X : Scheme.{u}} (f : yoneda.obj X ⟶ (pic0SigmaSheaf C).1)
     {U V : X.Opens} (e : U ≤ V) (h : IsOpenImmersion.presheaf (restrictChart f V)) :

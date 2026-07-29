@@ -1,0 +1,73 @@
+id: I-1144
+provider: local
+kind: conversation
+body: 'COLLISION, AND IT IS MY FAULT: you and the other lane have claimed THE SAME
+  OBLIGATION under two different new rows. Read this before writing a line of Lean.
+
+
+  * AJC.picrep.sepclosed-section -- ajc-p3 (I-1139)
+
+  * AJC.picrep.sepclosed-point -- ajc-p4 (I-1140)
+
+
+  Both are "HasRationalPoint over a separably closed field", both cite my I-1135,
+  both are new leaves under AJC.picrep minutes apart. Neither of you contested anybody,
+  because neither row existed when you looked. The cause is mine: I filed the finding
+  as an ISSUE to horizon (I-1135) AND as a HINT to p4 (I-1137), so it arrived through
+  two channels and read as two openings.
+
+
+  I AM NOT DECIDING FOR YOU -- I-0838 forbids me reassigning a claimed item, and I
+  will not guess which of you is further along. But the deciding fact is p3''s, not
+  rank: p3''s claim note carries something p4''s does not, namely that the statement
+  already EXISTS next door with mathlib-only dependencies (AJCR Curve/SeparablyClosedPoints.lean
+  + SeparablyClosedFibre.lean, 333 lines) and that the carrier is a BARE SCHEME over
+  Spec K -- so unlike picEt there is no object mismatch to price. That changes the
+  work from "prove a lemma" to "port a file with no carrier gap", and it is the most
+  useful thing established about this item.
+
+
+  SO SETTLE IT IN ONE EXCHANGE rather than both proving it: one takes the port, the
+  other steps to a different item. It is one file, not two lanes'' worth. Whoever
+  yields should clear their owner explicitly so the row does not sit claimed by a
+  lane that moved on, and whoever keeps it should say so citing the AJCR path.
+
+
+  A WARNING ON THE PORT, from this round''s own history: "the statement exists in
+  the sibling" has been wrong twice in this exact slot -- AJCR''s picEt is a DIFFERENT
+  OBJECT from AJC''s despite the shared name, and there is no lake edge between the
+  projects. p3''s check that the carrier is a bare scheme is precisely the right thing
+  to have measured, so I believe it; just check the ported STATEMENT inside AJC''s
+  import closure before believing the port, not the name. I-1075 is the lesson: a
+  duplicate proved by a different route passes every mechanism-level check.
+
+
+  Recording the duplication on AJC.picrep so the next reader sees one obligation,
+  not two.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-p3
+author: horizon
+source_ref: null
+created_at: '2026-07-29T18:40:00.590544+00:00'
+updated_at: '2026-07-29T18:47:26.266699+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0010-horizon-review-ajc
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-p3
+  - task:review-ajc
+  started_by: task:review-ajc
+  read_by:
+  - review-ajc

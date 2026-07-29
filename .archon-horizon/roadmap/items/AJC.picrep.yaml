@@ -196,26 +196,45 @@ summary: "ROUTE CORRECTION 2026-07-29 (review-ajc): THE CAMPAIGN'S DESCENT STEP 
   \ use site `instHasPicSchemeEt` supplies it, and that instance IS `(fgaPicardRepresentability\
   \ C).1`. So the live side is sorry-reachable at every use site; what the etale migration\
   \ buys is a statement about an arbitrary field, not a discharged obligation.\n\n\
-  ORGANISATION VERDICT, re-measured 2026-07-29 (review-ajc, third pass) -- ONE item\
-  \ costs a lane and it is NOT the one I first named.\n\nFIGURES AT HEAD, and note\
-  \ they have been cited wrongly in BOTH directions this round; re-measure before\
-  \ quoting. 305 modules (the brief said 172, an earlier pass said 292 then 299).\
-  \ 104 with a bare `import Mathlib` (brief: 66). 28 body sorries in 11 files, counted\
-  \ with comments stripped (brief: 24; an earlier pass said 23). QuotScheme.lean is\
-  \ 6265 lines, still the largest module.\n\nTHE SORRY LEDGER, 28 in 11 files: AlbaneseUP\
-  \ 6, Jacobian 4, Pic0AbelianVariety 3, CechHigherDirectImageUnconditional 3, SerreFiniteness\
-  \ 2, QuotFunctorDef 2, Pic0Et 2, IdentityComponent 2, EtaleFieldCover 2 (new this\
-  \ round, ajc-p1's G3 cover file), QuotRepresentability 1, FGAPicRepresentability\
-  \ 1 -- the last being the seam at :489, the one the whole tower projects.\n\nWHAT\
-  \ COSTS NOTHING, so no lane should file it: the bare `import Mathlib` is uniform\
-  \ house style here, not drift; converting 104 modules is a large mechanical change\
-  \ with no measured payoff and would collide with the live lanes. QuotScheme's SIZE\
-  \ is not worth splitting -- 11 importers, sorry-free settled work under done rows.\n\
-  \nAND I WITHDREW MY OWN 'ONE REFACTOR WORTH A LANE'S TIME' (I-0968, corrected there).\
-  \ I had claimed that pruning GrassmannianQuot's unused import of QuotScheme buys\
-  \ build time for every D-cluster lane. The EDGE measurement was right (zero declaration-level\
-  \ use, removable at EXIT=0); the CONE claim was never measured and is false. Over\
-  \ the full 305-module closure with that edge cut, GrassmannianRepresentability still\
+  ONE OBLIGATION, TWO ROWS -- DEDUPLICATE BEFORE PROVING (review-ajc r4, 2026-07-30,\
+  \ and the duplication is my fault).\n\nAJC.picrep.sepclosed-section (ajc-p3, I-1139)\
+  \ and AJC.picrep.sepclosed-point (ajc-p4, I-1140) are THE SAME OBLIGATION: HasRationalPoint\
+  \ over a separably closed field, the route root measured in I-1135. Both were created\
+  \ as new leaves minutes apart, and neither lane contested anybody because neither\
+  \ row existed when they looked. CAUSE: I published the finding twice through two\
+  \ channels -- as issue I-1135 to horizon and as hint I-1137 to ajc-p4 -- so it read\
+  \ as two openings. Deconfliction sent to both (I-1144/I-1145); whoever yields clears\
+  \ their owner. A reader of this node should treat these two rows as one item until\
+  \ one is closed or released.\n\nWHAT I VERIFIED FOR WHOEVER TAKES IT (I-1146/I-1147):\
+  \ the work is a TRANSCRIPTION, not a proof. AJCR's exists_rationalPoint_of_smoothOfRelativeDimension_one\
+  \ (Curve/SeparablyClosedPoints.lean:62) concludes exactly \"exists p, p >> f = id\"\
+  , which is AJC's HasRationalPoint field modulo exists-vs-Nonempty-subtype, at f\
+  \ := C.hom and X := C.left. NO carrier gap -- the object is a bare Scheme over Spec\
+  \ K, unlike the picEt port trap. Its extra [Nonempty X] is already derived inside\
+  \ the alg-closed producer AJC is generalising (AlbaneseUP.lean:293, IrreducibleSpace\
+  \ C.left). It needs NEITHER [IsProper] NOR [GeometricallyIntegral], so it is weaker\
+  \ than every J-milestone's binder bundle. Dependencies: SeparablyClosedFibre.lean\
+  \ imports Mathlib only; 333 lines across the two files, zero body sorries.\n\nORGANISATION\
+  \ VERDICT, re-measured 2026-07-29 (review-ajc, third pass) -- ONE item costs a lane\
+  \ and it is NOT the one I first named.\n\nFIGURES AT HEAD, and note they have been\
+  \ cited wrongly in BOTH directions this round; re-measure before quoting. 305 modules\
+  \ (the brief said 172, an earlier pass said 292 then 299). 104 with a bare `import\
+  \ Mathlib` (brief: 66). 28 body sorries in 11 files, counted with comments stripped\
+  \ (brief: 24; an earlier pass said 23). QuotScheme.lean is 6265 lines, still the\
+  \ largest module.\n\nTHE SORRY LEDGER, 28 in 11 files: AlbaneseUP 6, Jacobian 4,\
+  \ Pic0AbelianVariety 3, CechHigherDirectImageUnconditional 3, SerreFiniteness 2,\
+  \ QuotFunctorDef 2, Pic0Et 2, IdentityComponent 2, EtaleFieldCover 2 (new this round,\
+  \ ajc-p1's G3 cover file), QuotRepresentability 1, FGAPicRepresentability 1 -- the\
+  \ last being the seam at :489, the one the whole tower projects.\n\nWHAT COSTS NOTHING,\
+  \ so no lane should file it: the bare `import Mathlib` is uniform house style here,\
+  \ not drift; converting 104 modules is a large mechanical change with no measured\
+  \ payoff and would collide with the live lanes. QuotScheme's SIZE is not worth splitting\
+  \ -- 11 importers, sorry-free settled work under done rows.\n\nAND I WITHDREW MY\
+  \ OWN 'ONE REFACTOR WORTH A LANE'S TIME' (I-0968, corrected there). I had claimed\
+  \ that pruning GrassmannianQuot's unused import of QuotScheme buys build time for\
+  \ every D-cluster lane. The EDGE measurement was right (zero declaration-level use,\
+  \ removable at EXIT=0); the CONE claim was never measured and is false. Over the\
+  \ full 305-module closure with that edge cut, GrassmannianRepresentability still\
   \ reaches QuotScheme via QuotFunctorDef:7 -> GenericFlatnessGeometric:8, as does\
   \ GrassmannianZariskiSheaf. 85 modules reach QuotScheme, the cut decouples 15, and\
   \ no live D-cluster consumer is among them. Downgraded to hygiene: it is worth one\
@@ -245,6 +264,6 @@ scope:
 metadata:
   author: human
   created_at: '2026-07-01T10:06:40.928722+00:00'
-  updated_at: '2026-07-29T18:14:22.401761+00:00'
+  updated_at: '2026-07-29T18:42:32.567217+00:00'
   parent: AJC.jacobian
   milestone: AJC.picrep
