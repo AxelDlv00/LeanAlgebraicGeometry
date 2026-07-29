@@ -192,6 +192,69 @@ theorem pullbackTensorRightUnit_of_iso_unit {X Y : Scheme.{u}} (f : Y ⟶ X)
     PullbackTensorRightUnit f P :=
   ⟨pullbackTensorMap_isIso_of_base_unit f eP (Iso.refl _)⟩
 
+/-! ## The residual, sharpened to a single coherence identity
+
+The three statements below narrow `PullbackTensorRightUnit` from "prove an
+`IsIso`" to "prove one equation", and prove everything in it except that
+equation. This is the measurement a lane taking the residual should start from.
+
+The unitor route: both sides of `pullbackTensorMap f P 𝒪_X` are canonically
+`f^*P`, so the map ought to be the composite
+
+```
+f^*(P ⊗ 𝒪_X) --f^*ρ_P--> f^*P --ρ⁻¹--> f^*P ⊗ 𝒪_Y --1 ⊗ (pullbackUnitIso)⁻¹--> f^*P ⊗ f^*𝒪_X
+```
+
+of `tensorObj_right_unitor`, its inverse downstairs, and `pullbackUnitIso`
+(`f^*𝒪_X ≅ 𝒪_Y`, unconditional). `unitorRoute_isIso` proves that composite is an
+isomorphism — with no hypothesis on `P`. So the residual is *exactly* the
+assertion that `pullbackTensorMap` agrees with it.
+
+Measured, so nobody re-derives it: that identity is **not** closed by `rfl`,
+`dsimp only; rfl`, `simp`, or `aesop_cat` (all four tried at these binders; the
+goal survives unchanged). It is a genuine coherence square at the sheafification
+level, of the same kind as `pullbackTensorMap_unit_isIso`'s proof
+(`Picard/TensorObjSubstrate.lean:1654`, via `pullbackEtaUnitSquare` and
+`isIso_sheafifyEta_of_unitSquare`) — which is the argument to imitate, with one
+side left general instead of both taken to be the unit. -/
+
+/-- **The unitor composite is an isomorphism** — PROVED, sorry-free, with no
+hypothesis on `P`.
+
+This is the "everything except the identity" half of the residual: the target
+composite of the unitor route is invertible because each of its three factors is
+(`tensorObj_right_unitor` twice, `pullbackUnitIso` once, all unconditional
+isomorphisms). Consequently `PullbackTensorRightUnit f P` follows from the single
+equation `pullbackTensorMap = ` this composite, and from nothing else. -/
+theorem unitorRoute_isIso {X Y : Scheme.{u}} (f : Y ⟶ X) (P : X.Modules) :
+    IsIso ((Scheme.Modules.pullback f).map (tensorObj_right_unitor P).hom
+      ≫ (tensorObj_right_unitor ((Scheme.Modules.pullback f).obj P)).inv
+      ≫ tensorObj_functoriality (𝟙 ((Scheme.Modules.pullback f).obj P))
+          (pullbackUnitIso f).inv) := by
+  haveI : IsIso ((Scheme.Modules.pullback f).map (tensorObj_right_unitor P).hom) :=
+    Functor.map_isIso _ _
+  haveI : IsIso ((tensorObj_right_unitor ((Scheme.Modules.pullback f).obj P)).inv) :=
+    (tensorObj_right_unitor _).isIso_inv
+  haveI : IsIso (tensorObj_functoriality (𝟙 ((Scheme.Modules.pullback f).obj P))
+      (pullbackUnitIso f).inv) :=
+    (tensorObjIsoOfIso (Iso.refl _) (pullbackUnitIso f).symm).isIso_hom
+  infer_instance
+
+/-- **The residual, as the one coherence identity it really is.** Supplying this
+equation discharges `PullbackTensorRightUnit f P`, by `unitorRoute_isIso`.
+
+Stated as a hypothesis rather than proved: see the section note for the four
+tactics that do not close it and for the sheafification argument that should. -/
+theorem pullbackTensorRightUnit_of_unitorRoute {X Y : Scheme.{u}} (f : Y ⟶ X)
+    (P : X.Modules)
+    (h : pullbackTensorMap f P (SheafOfModules.unit X.ringCatSheaf)
+      = (Scheme.Modules.pullback f).map (tensorObj_right_unitor P).hom
+        ≫ (tensorObj_right_unitor ((Scheme.Modules.pullback f).obj P)).inv
+        ≫ tensorObj_functoriality (𝟙 ((Scheme.Modules.pullback f).obj P))
+            (pullbackUnitIso f).inv) :
+    PullbackTensorRightUnit f P :=
+  ⟨h ▸ unitorRoute_isIso f P⟩
+
 end Scheme.Modules
 
 end AlgebraicGeometry
