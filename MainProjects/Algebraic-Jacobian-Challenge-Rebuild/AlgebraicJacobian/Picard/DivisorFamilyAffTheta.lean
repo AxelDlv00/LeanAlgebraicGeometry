@@ -181,6 +181,103 @@ lemma mem_thetaGluedSubmodule_iff (s : A.chartProd) :
 /-- The widened Θ-twisted glued colength module, as a type. -/
 noncomputable abbrev ThetaGlued : Type u := ↥(thetaGluedSubmodule A τ a)
 
+/-! ## The evaluation `H⁰(𝒪(Θᵃ)) → W(d)^{Θᵃ}` -/
+
+/-- **The germ of a widened equation spans the stalk ideal of the family.**  The widened
+counterpart of `DivisorAdaptation.germ_eqn_span_eq_stalkIdeal`
+(`Picard/DivisorFamilyTheta.lean:322`); its proof is the same one, and it ports because
+`eqn_rel` is stated pointwise on both carriers. -/
+theorem germ_eqn_span_eq_stalkIdeal (j : D.index) {z : relCurve C R}
+    (hz : z ∈ D.pieces j) :
+    Ideal.span {((relCurve C R).presheaf.germ (D.pieces j) z hz).hom (A.eqn j)}
+      = d.stalkIdeal z := by
+  obtain ⟨u, hu⟩ := A.eqn_rel j z
+  have hzW : z ∈ D.pieces j ⊓ d.cover.opens z := ⟨hz, d.cover.mem_opens z⟩
+  have hgerm : ((relCurve C R).presheaf.germ (D.pieces j) z hz).hom (A.eqn j)
+      = ((relCurve C R).presheaf.germ (D.pieces j ⊓ d.cover.opens z) z hzW).hom
+          (u : Γ(relCurve C R, D.pieces j ⊓ d.cover.opens z))
+        * ((relCurve C R).presheaf.germ (d.cover.opens z) z
+            (d.cover.mem_opens z)).hom (d.eqn z) := by
+    have h := congrArg ((relCurve C R).presheaf.germ
+      (D.pieces j ⊓ d.cover.opens z) z hzW).hom hu
+    rw [map_mul, TopCat.Presheaf.germ_res_apply, TopCat.Presheaf.germ_res_apply] at h
+    exact h
+  rw [hgerm, Ideal.span_singleton_mul_left_unit (u.isUnit.map
+    ((relCurve C R).presheaf.germ (D.pieces j ⊓ d.cover.opens z) z hzW).hom)]
+  exact d.germ_eqn_span_eq z z (d.cover.mem_opens z)
+
+/-- The per-piece evaluation of a global theta section: take the side component assigned to
+the piece, restrict it, and reduce mod `(f_j)`.  Where the chart-typed version splits on the
+`Sum` index (`DivisorAdaptation.thetaPieceEval`), this is one application of
+`relThetaResSide` at `τ.side j`. -/
+noncomputable def thetaPieceEval (j : D.index) :
+    relThetaSections C R π a →ₗ[R] A.colength j :=
+  (Ideal.Quotient.mkₐ R (Ideal.span {A.eqn j})).toLinearMap ∘ₗ
+    relThetaResSide a (τ.side j) (piece_le_relPinnedChart τ j)
+
+/-- **The section evaluation into the widened chart product.** -/
+noncomputable def thetaEval : relThetaSections C R π a →ₗ[R] A.chartProd :=
+  LinearMap.pi (thetaPieceEval A τ a)
+
+@[simp]
+lemma thetaEval_apply (x : relThetaSections C R π a) (j : D.index) :
+    thetaEval A τ a x j
+      = Ideal.Quotient.mk (Ideal.span {A.eqn j})
+          (relThetaResSide a (τ.side j) (piece_le_relPinnedChart τ j) x) := rfl
+
+/-- The left overlap arrow on a residue class: restrict into the overlap, then reduce.
+
+Stated here because both widened forms exist only as `private` lemmas of
+`Picard/DivisorFamilyAffCert.lean` (`toOvlLeft_mk'`/`toOvlRight_mk'`) — and both are `rfl`,
+so this is a name, not a proof (inbox `I-0712`: `private` hides the name, not the argument).
+The `resHom` spelling is the one the matching law below rewrites along. -/
+lemma toOvlLeft_mk (i j : D.index) (s : Γ(relCurve C R, D.pieces i)) :
+    A.toOvlLeft i j (Ideal.Quotient.mk (Ideal.span {A.eqn i}) s)
+      = Ideal.Quotient.mk (A.ovlIdeal i j)
+          ((relCurve C R).resHom inf_le_left s) :=
+  rfl
+
+/-- The right overlap arrow on a residue class. -/
+lemma toOvlRight_mk (i j : D.index) (s : Γ(relCurve C R, D.pieces j)) :
+    A.toOvlRight i j (Ideal.Quotient.mk (Ideal.span {A.eqn j}) s)
+      = Ideal.Quotient.mk (A.ovlIdeal i j)
+          ((relCurve C R).resHom inf_le_right s) :=
+  rfl
+
+/-- **The evaluation lands in the widened Θ-twisted glued module**: on each pairwise
+overlap, the global matching of the two side components through the theta cocycle *is* the
+Θ-twisted matching of the colengths.
+
+Where the chart-typed proof (`DivisorAdaptation.thetaEval_mem`) runs a four-case `Sum`
+split and calls `relThetaSections_matching` twice with hand-built containments, this is a
+single application of `relThetaResSide_matching` — the side-uniform form of the same
+matching law.  That collapse is the concrete payoff of taking the sides from a
+`ChartTyping` rather than from the index type. -/
+theorem thetaEval_mem (x : relThetaSections C R π a) :
+    thetaEval A τ a x ∈ thetaGluedSubmodule A τ a := by
+  rw [mem_thetaGluedSubmodule_iff]
+  rintro ⟨i, j⟩
+  rw [thetaEval_apply, thetaEval_apply, toOvlLeft_mk, toOvlRight_mk, ← map_mul]
+  refine congrArg _ ?_
+  -- both sides restrict the SAME section into the overlap; the side matching law compares
+  -- the two assigned sides there, and `thetaOvlUnit` is by definition its unit
+  rw [resHom_relThetaResSide (b := τ.side i), resHom_relThetaResSide (b := τ.side j)]
+  exact relThetaResSide_matching a (τ.side i) (τ.side j)
+    (pieces_inf_le_relPinnedChart_inf τ i j) x
+
+/-- **The evaluation `H⁰(𝒪(Θᵃ)) → W(d)^{Θᵃ}` over a widened cover.** -/
+noncomputable def thetaGluedEval :
+    relThetaSections C R π a →ₗ[R] ThetaGlued A τ a :=
+  LinearMap.codRestrict (thetaGluedSubmodule A τ a) (thetaEval A τ a) (thetaEval_mem A τ a)
+
+lemma thetaGluedEval_coe (x : relThetaSections C R π a) :
+    (thetaGluedEval A τ a x : A.chartProd) = thetaEval A τ a x := rfl
+
+/-- The kernel of the corestricted evaluation is the kernel of the evaluation. -/
+lemma ker_thetaGluedEval_eq_ker :
+    LinearMap.ker (thetaGluedEval A τ a) = LinearMap.ker (thetaEval A τ a) :=
+  LinearMap.ker_codRestrict _ _ _
+
 end AffAdaptation
 
 end AlgebraicGeometry
