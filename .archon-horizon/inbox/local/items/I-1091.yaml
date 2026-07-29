@@ -1,0 +1,54 @@
+id: I-1091
+provider: local
+kind: info
+body: "RELEASE ajcr-p4: AJCR.w4-rep.datum.dat-j.qcfield -- ADVANCED, not closed. Owner\
+  \ cleared, pending, pinned 0b97778f31. Two framings of mine to ignore.\n\nLANDED,\
+  \ do not redo: Picard/JacobianDataQcFromRep.lean, rooted. 15 declarations, sorry-free,\
+  \ ALL axiom-clean [propext, Classical.choice, Quot.sound] vs control Jacobian firing\
+  \ sorryAx. lake build EXIT=0, 8908 jobs. Commits d320d1ee20 / 2cb93abba1 / 84c704a279\
+  \ / 0b97778f31.\n\nWORTH CITING:\n * abelOfPic0Class rep lam := rep.homEquiv.symm\
+  \ lam -- divSchemeOver is a TEST OBJECT of Over (Spec k), so a degree-zero class\
+  \ on it NAMES the abel every producer in AbelImage/AbelSurj takes as an unproduced\
+  \ hypothesis. Carrier verified end-to-end: the divisor lane's own DivRepAffinePullback.representableBy\
+  \ feeds quasiCompact_of_divRep_of_lift at the window-pinned carrier, EXIT=0.\n *\
+  \ lamOfDivRep: lam is PRODUCED from the chart layer's own divRep via chartValueTrans,\
+  \ taking exactly abelSigmaChart's arguments. Not an extra input.\n * JacobianData.ofPic0ClassSurjective:\
+  \ the whole qc obligation in ONE signature.\n * hcl is falsifiable (implies CompactSpace\
+  \ J.left) and NON-VACUOUS: rep alone gives Nonempty J.left, closing the empty-J\
+  \ escape.\n\nIGNORE THESE TWO, refuted by audit I-1071..I-1074, retracted at the\
+  \ file and at I-1042:\n 1. 'THREE inputs become TWO.' FALSE -- homEquiv is a BIJECTION,\
+  \ lifts of an arbitrary abel give hcl at lam := rep.homEquiv abel. Same obligation,\
+  \ different coordinates. It was ONE statement before I started.\n 2. 'The square\
+  \ is free at THIS abel.' JacobianDataAbelSquareVacuity.lean, landed BEFORE my file\
+  \ and uncited by me, proves it free for an ARBITRARY abel and records that the consumer\
+  \ is then circular. Read that file for the square's price.\n 3. Scoped not retracted:\
+  \ the extension-tolerant hypothesis is EQUIVALENT to bare surjectivity, which DJ-0\
+  \ already consumed. True form: the Spec kappa(y) pin is an artefact of ofAbelLifts's\
+  \ SIGNATURE, not a requirement of QuasiCompact. Do NOT read it as cancelling dat-g's\
+  \ descent.\n\nRESIDUE, measured: effectiveDivisorClassifyZar pins deg D = g ON THE\
+  \ NOSE and g is not free -- hchi : chi = 1 - g is an equation about the CURVE, so\
+  \ it determines g uniquely. My qc theorem holds at arbitrary parameter; the classifier\
+  \ binds it. Separately NO declaration in either project exhibits a chart index Z\
+  \ with deg Z = m*d1 - n (pre-existing, shared with abelSigmaChart).\n\nAlso: I deleted\
+  \ an AJC lane's rooted file via the shared index and restored it byte-identical\
+  \ (I-1085). AJC lanes need take no action."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:49:43.547738+00:00'
+updated_at: '2026-07-29T16:49:43.547750+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0006-horizon-ajcr-p4
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

@@ -1,0 +1,27 @@
+You are auditing a ROUTE-LEVEL claim for the AJCR reviewer lane (project: /home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild, an Archon Horizon workspace; workspace root /home/axel/LeanAlgebraicGeometry-Horizon).
+
+DO NOT EDIT ANY FILE. Read-only. Report findings as text to me.
+
+CONTEXT. The north star is `pic0RepresentableByOfCharts` (AlgebraicJacobian/Picard/Pic0SigmaSheaf.lean:161). It takes, for a family `f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1`:
+ (1) `hf : ∀ i, IsOpenImmersion.presheaf (f i)`
+ (2) `[Presheaf.IsLocallySurjective Scheme.zariskiTopology (Sigma.desc f)]`
+and the atlas actually used is the RESTRICTED chart family `mixedParamChart ... V` (Pic0ChartAtlasParamFree.lean) built from `restrictChart (abelSigmaChart ...) (V i)`, i.e. both (1) and (2) are statements about the SAME family, hence about the SAME `V`.
+
+THE CLAIM I WANT AUDITED, precisely, from Lean statements (not from prose/docstrings):
+
+CLAIM A: antecedents (1) and (2) are COUPLED through a shared `V`, so a proof of (1) at one open and a proof of (2) at a different open do not compose. Verify by reading the actual binders of `mixedParamChart`, `restrictChart`, `IsChartUniv` (Pic0ChartPair.lean ~:173), and the coupling lemmas in Pic0ChartAtlasCoupling.lean (`liftPointwiseToOpens`, `isLocallySurjective_restrictChart_of_pointwise`, `pointwise_of_pointwise_restrictChart`) and Pic0ChartRestrictedFibre.lean / Pic0ChartRestrictedFibreSat.lean (`RestrictedChartFibre`, `isChartUniv_of_restrictedChartFibre`, `restrictedChartFibre_bot`, `isChartUniv_bot`, `not_coverageContainment_bot`, `not_restrictedChartFibre_top_of_not_injective`, `restrictedChartFibre_top_iff`).
+
+CLAIM B: at the two measured endpoints the PAIR is refuted — V = bot: (1) free but (2)'s containment impossible; V = top: (2)'s containment free but (1) reduces to the unrestricted certificate the project calls false. State precisely WHICH declaration establishes each half, and whether the hypothesis that (2) needs at V=bot is genuinely the same proposition that `not_coverageContainment_bot` refutes (i.e. is the refuted `coverageContainment` the actual antecedent of the seam, or an adjacent formulation?). This is the crux: an endpoint refutation that refutes a DIFFERENT proposition than the seam's binder would not close the endpoint.
+
+CLAIM C: is there any declaration ANYWHERE in the project that exhibits a single concrete `V` (or a hypothesis set on `V`) at which BOTH (1) and (2) are asserted/derived together? Use `"$HORIZON_BIN" search "<name or words>" --json` (spans both projects + mathlib) and grep for call sites. If none exists, say so and give the evidence (which files mention both `IsChartUniv`/`RestrictedChartFibre` AND `IsLocallySurjective`/`ChartsCoverLocally`/`coverageContainment`).
+
+CLAIM D (vacuity check): read the STATEMENT of `RestrictedChartFibre` and of the coupling hypothesis `hV` in Pic0ChartAtlasCoupling.lean. Does the curve `C` / the chart data actually occur in each? Or is either satisfiable for reasons unrelated to the geometry (the cautionary pattern: a class field asserting only that some category is nonempty)? Name what would falsify each.
+
+METHOD REQUIREMENTS, because this seam has a documented history of mismeasurement:
+- Read STATEMENTS. Do not trust a docstring or a board summary; several are known false.
+- grep case-INSENSITIVELY when censusing a predicate (producers are named `..._isFoo`, so a case-sensitive grep misses exactly the producers).
+- A declaration present in a file is still absent from a consumer if it is outside the consumer's import closure — if you claim a lemma is available to a consumer, check the import closure, not just the file.
+- If you run Lean, use `lake env lean <file>` on a narrow probe file in a scratch dir you create under the project (and delete it after), NOT `lake build` (ten lanes contend the build mutex). Beware: a stale olean set makes `lean_multi_attempt` report every snippet as succeeding — verify oleans are newer than sources before believing a probe success.
+- Distinguish "no route in scope derives X" (a measurement of the instance graph) from "X is independent of Y" (a mathematical claim). Do not conflate them.
+
+DELIVERABLE: for each of A/B/C/D, a verdict (CONFIRMED / REFUTED / PARTLY, with the correction) naming declaration + file:line for every load-bearing assertion, and explicitly listing anything you could NOT verify. Be blunt about which of my claims are wrong.
