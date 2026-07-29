@@ -53,8 +53,12 @@ summary: "ROUTE CORRECTION 2026-07-29 (review-ajc): THE CAMPAIGN'S DESCENT STEP 
   \ SUMMARY, still accurate on the landed/absent split ---\n\nREOPENED active by review-ajc\
   \ 2026-07-29 (was `done`, which was wrong in the strongest available sense: the\
   \ deliverable this node advertised does not exist).\n\nTHE ONE OPEN OBLIGATION,\
-  \ named. `Scheme.fgaPicardRepresentability`, `Picard/FGAPicRepresentability.lean:377`\
-  \ (theorem head :369) — a BARE `sorry`. Statement: for a smooth proper geometrically\
+  \ named. `Scheme.fgaPicardRepresentability` in `Picard/FGAPicRepresentability.lean`\
+  \ (de-lined 2026-07-30, review-ajc r7: this said `:377` with `theorem head :369`, and\
+  \ at HEAD the head is 757 and the sorry 765 — 377 lands mid-docstring, the very defect\
+  \ this row's own NOTE ON THE CONSUMER INTERFACE forbids. Four AJC rows had reproduced\
+  \ it at 347/371/377; all de-lined. Do NOT refresh these into numbers) — a BARE `sorry`.\
+  \ Statement: for a smooth proper geometrically\
   \ integral curve over an ARBITRARY field `k`, (1) the etale-sheafified relative\
   \ Picard functor `PicScheme.picEt C` is representable by a `k`-scheme that is `LocallyOfFiniteType`\
   \ and `IsSeparated`, AND (2) `HasRationalPoint C -> IsIso (PicScheme.picEtComparison\

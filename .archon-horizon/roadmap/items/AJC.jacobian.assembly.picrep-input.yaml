@@ -3,10 +3,19 @@ title: 'The representability input to the witness: fgaPicardRepresentability'
 projects:
 - Algebraic-Jacobian-Challenge
 summary: 'OPEN, and it is the reason AJC.jacobian.assembly is not done. The Jacobian
-  witness needs Scheme.fgaPicardRepresentability (Picard/FGAPicRepresentability.lean:347,
+  witness needs Scheme.fgaPicardRepresentability (Picard/FGAPicRepresentability.lean,
   a bare sorry) — representability of the etale-sheafified relative Picard functor
   over an arbitrary field, plus the Kleiman section 2 Thm 2.5 comparison under a rational
   point.
+
+
+  ANCHOR DE-LINED 2026-07-30 (review-ajc r7). This row said "…lean:347". At HEAD line
+  347 is mid-docstring; the theorem head is 757 and the sorry 765, and both will move
+  again — the file is 1584 lines and several lanes edit it hourly. Cite the DECLARATION
+  NAME, which one grep -n resolves and no docstring insertion invalidates. Do NOT
+  "refresh" this back into a line number: that is the failure AJC.picrep has now filed
+  four times, and it had reproduced itself at three fresh numbers (347, 371, 377)
+  across four AJC rows by the time I re-read them.
 
 
   ADDED 2026-07-29 by review-ajc to resolve a standing consistency warning HONESTLY.

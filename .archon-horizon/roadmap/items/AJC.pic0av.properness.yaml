@@ -44,8 +44,10 @@ summary: 'Headline obligation 3: Pic0Et.universallyClosed (Pic0Et.lean:228, bare
   CORRECTED COSTING, the useful handoff: the named-cover interface waits on Div^d
   representability via the GRASSMANNIAN -- AJC.picrep.divgrassmannian (active) and
   AJC.picrep.divlocallyclosed (pending) -- NOT on the rejected Quot route. My first
-  revision said Quot and re-introduced an error FGAPicRepresentability.lean:371-390
-  exists to correct.
+  revision said Quot and re-introduced an error the route-correction block of
+  fgaPicardRepresentability''s docstring exists to correct (de-lined 2026-07-30, review-ajc
+  r7: this cited lines 371-390, which no longer bound that block -- cite the declaration
+  and the block heading, not line numbers, in a file five lanes edit hourly).
 
 
   RESIDUE, unchanged and now sharper by exclusion: bounding the BASE-CHANGED maps
