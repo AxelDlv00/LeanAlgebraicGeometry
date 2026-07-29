@@ -3,14 +3,54 @@ title: 'Headline obligation 3: universal closedness of Pic0SchemeEt (the propern
   residue)'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: CLAIMED by ajc-p4 (run 0086 r3). Headline obligation 3, Pic0Et.universallyClosed
-  (Pic0Et.lean:228, bare sorry) -- the ONLY one of the headline's five with no lane,
-  and the only one p3's I-1053 leaves genuinely independent (obligation 4 implies
-  2; 1 is the seam; the sepclosed root is p3's). p3 reduced properness to ONE residue
-  with THREE equivalent spellings (valuative Existence / UniversallyClosed over k
-  / over kbar, valuativeCriterion_existence_iff_universallyClosed, Pic0EtStructure.lean:376)
-  and recorded that the topological SpecializingMap route is UNCOSTED. That costing
-  is this row's first job.
+summary: 'Headline obligation 3: Pic0Et.universallyClosed (Pic0Et.lean:228, bare sorry).
+  WORKED and RELEASED by ajc-p4 (run 0086 r3) with NO progress on the gate -- reported
+  as a negative result, not as advancement. Owner cleared.
+
+
+  WHAT LANDED: Picard/Pic0EtProperImage.lean, rooted, 9 declarations, sorry-free,
+  all axiom-clean [propext, Classical.choice, Quot.sound] against Pic0Et.universallyClosed
+  as a control that correctly fires sorryAx; lake build EXIT=0 (8629 jobs), lake env
+  lean EXIT=0. Pinned 09f2106ffd (the correcting commit; the first revision reached
+  HEAD at 2b59a2c5cc via another lane''s integrate sweep).
+
+
+  THE ONE THING A NEXT LANE SHOULD TAKE, and it is a negative that saves a session:
+  THE TOPOLOGICAL ROUTE IS DEAD AS A LOCALISATION. Pic0EtStructure.lean:387 bills
+  valuativeCriterion_existence_of_specializingMap as ''a genuinely different attack''
+  and I-1053 released the row calling it uncosted. It cannot help. SpecializingMap
+  of the structure map is FREE (Spec k is a one-point space) but MorphismProperty.universally_le
+  makes that factor a CONSEQUENCE of the obligation, so freeing it removes nothing
+  -- verified by deriving SpecializingMap f.base from Existence f for an ARBITRARY
+  scheme morphism, no one-point base needed. And of_specializingMap takes the universally
+  form AS its hypothesis, so no consumer ever wanted the free factor. Do not re-attempt
+  this direction.
+
+
+  FOUR SPELLINGS, ONE LEMMA, NONE A REDUCTION: the arbitrary-base-change SpecializingMap
+  form, the existential proper-cover form, and the two named-cover forms are all UniversallyClosed.of_comp_surjective
+  at Pic0SchemeEt, and each collapses existentially by the IDENTITY witness once Pic^0
+  is universally closed. Converses are in the file so this is compiler-checked.
+
+
+  MY OWN TWO GAIN CLAIMS ARE REFUTED (I-1199/I-1200/I-1201, fresh-context audit, reproduced
+  by me, corrected in-tree): compactSpace is quasiCompact restated (iff_of_isAffine
+  gives the converse in one line; quasiCompact landed at Pic0EtStructure.lean:189),
+  and it does NOT compiler-check AmbientPicNotProper''s escape -- those theorems turn
+  on an infinite disjoint open cover the project does not have, and the route they
+  refute is on the instance-free picSharp tower.
+
+
+  CORRECTED COSTING, the useful handoff: the named-cover interface waits on Div^d
+  representability via the GRASSMANNIAN -- AJC.picrep.divgrassmannian (active) and
+  AJC.picrep.divlocallyclosed (pending) -- NOT on the rejected Quot route. My first
+  revision said Quot and re-introduced an error FGAPicRepresentability.lean:371-390
+  exists to correct.
+
+
+  RESIDUE, unchanged and now sharper by exclusion: bounding the BASE-CHANGED maps
+  Pic^0 x_k T -> T. Neither this file nor Pic0EtStructure.lean touches that. The sorry
+  is untouched and no antecedent is witnessed at any curve.'
 status: active
 kind: proof
 priority: high
@@ -34,4 +74,6 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.pic0av
-  owner: ajc-p4
+  updated_at: '2026-07-29T20:33:29.206003+00:00'
+  pinned_commits:
+  - 09f2106ffd
