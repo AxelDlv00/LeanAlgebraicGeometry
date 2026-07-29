@@ -393,9 +393,45 @@ All milestones over sep. closed k' ⊇ k with `C' := C ×_k k'` (Λ-stability in
 (i) `X := ∐_{d:ℤ} X_d`, each `X_d` := copy of `J_r` relabelled through A1's translation `picSharpDeg d ≅ picSharpDeg r`. Mathlib verified: `HasColimitsOfShape (Discrete σ) Scheme.{u}` + `CoproductsOfShapeDisjoint` + disjoint `Sigma.ι` open covers (`AlgebraicGeometry/Limits.lean:187-225`); `LocallyOfFiniteType` along `Sigma.desc` via `sigmaDesc` (`Morphisms/Basic.lean:303`, verified) + FT-descent along `Spec k' → Spec k` (D2-M13: `k'⊗_k A₀` FT ⟹ A₀ FT). New bricks: `hom_sigma_decompose` (T-map = clopen partition + components, matched to B4), `isSeparated_sigma` (verified absent from mathlib; provable via `IsZariskiLocalAtTarget` + disjoint cover).
 (ii) `Picard/PicTotalAssembly.lean`. (iii) A1, B4, G2, G3. (iv) **M**. (v) `Small.{u} ℤ` trivial; audit the clopen-decomposition equivalence once, standalone.
 
-**G5 — Discharge `instHasPicScheme`.** `⟨X, ⟨representableBy⟩, lft, sep⟩` at `FGAPicRepresentability.lean:309`. Kernel-build the full inherited closure (memory lesson); `lean_verify` axiom-cleanliness of `instHasPicScheme`. (iv) **S**.
+**G5 — Discharge the seam's `sorry`.** `⟨X, ⟨representableBy⟩, lft, sep⟩` fed to clause (1) of `Scheme.fgaPicardRepresentability` (`FGAPicRepresentability.lean:481`, `sorry` at `:489`). Kernel-build the full inherited closure (memory lesson); `lean_verify` axiom-cleanliness of the seam theorem and of `instHasPicSchemeEt` (`:508`), which projects it. (iv) **S**.
 
-**H0 — Hygiene (anytime).** Fix stale docstrings (`QuotFunctorDef.lean:456`, `DivFunctorDef.lean:76-79`, `QuotScheme.lean:230/:301`, `IdentityComponent.lean:262`); note `HasDivFunctor` vacuity (`FGAPicRepresentability.lean:185`); repin `PicScheme.degree` (`IdentityComponent.lean:1452`) through B4's `picSharpDeg`; docstring-flag `HasSmoothProperQuotient` (:541) as permanently off-path.
+> **G5's TARGET WAS RENAMED OUT OF EXISTENCE — 2026-07-29 (`review-ajc`).** As written until
+> today this milestone said "discharge `instHasPicScheme` … at `FGAPicRepresentability.lean:309`".
+> Both halves were stale, and since G5 is the campaign's *terminal* step that made the plan end
+> at a declaration nobody can build:
+> * `instHasPicScheme` exists in **no** `.lean` file — 7 surviving mentions project-wide, every
+>   one a docstring or comment, one of which (`Jacobian.lean:376`) exists precisely to say
+>   "there is no `instHasPicScheme`". It was deleted on 2026-07-28 under `I-0491`, which removed
+>   the rational-point binder from the headline; it was never discharged.
+> * `:309` is mid-docstring — inside the bundling rationale that ends at `:311`, above
+>   `class HasPicScheme`. The class it pointed at is the **legacy `picSharp`-shaped** gate, which
+>   has zero instances and whose only producer needs `[HasRationalPoint C]`.
+>
+> The live terminal target is the one named above. Note the shape change this forces on the plan:
+> G5 is no longer "supply a witness to a gate" but "discharge a `sorry` whose clause (1) is about
+> **`picEt`**" — the same `picSharp`→`picEt` mismatch flagged at G3, arriving here as well. The
+> ten campaign modules feed `picSharp`; nothing in the plan yet produces the `picEt` witness G5
+> now needs. Tracked as `AJC.picrep.etale-rep`.
+
+**H0 — Hygiene (anytime).** Fix stale docstrings (`QuotFunctorDef.lean:456`, `DivFunctorDef.lean:76-79`, `QuotScheme.lean:230/:301`, `IdentityComponent.lean:262`); repin `PicScheme.degree` (`IdentityComponent.lean:1702`) through B4's `picSharpDeg`.
+
+> **H0's two labelling items are DONE, and all three of its `FGAPicRepresentability` anchors
+> were stale — 2026-07-29 (`review-ajc`).** Do not re-spend a lane on them:
+> * `HasDivFunctor`'s vacuity **is** labelled, at the class itself (`:243–:247`, "the class is
+>   vacuously true and carries no mathematical content"), not at the cited `:185` — which is the
+>   `open CategoryTheory Limits` line. Two further vacuities were labelled in the same file since
+>   the plan was written: `HasAbelMap` (`:803` ff.) and `HasSmoothProperQuotient`'s decorative
+>   field (`:910` ff.).
+> * `HasSmoothProperQuotient` **is** flagged off-path, at `:931–:932` and again as the explicit
+>   `P → P` labelling on `smoothProperQuotient` (`:925`, `:965`) — not at the cited `:541`, which
+>   is inside `PicSchemeEt`'s `Classical.choice` body.
+> * `PicScheme.degree` is at `:1702`, not `:1452`; `:1452` now lands inside an unrelated vacuity
+>   correction. The repin is the only part of H0 still open, and `degreeOfSection` (`:1597`) is
+>   the working sibling to repin *through*.
+>
+> Line-number anchors in this document have drifted by 150–400 lines as the files grew. Treat
+> every `file:line` below as approximate and re-grep the declaration name before acting on it;
+> an anchor that lands mid-docstring has already caused one `done` board row to be wrong.
 
 **Edges (summary):** G5←{G3,G4}; G4←{A1,B4,G2,G3}; G3←{B0,B1,G1,G2}; G1←{J5,B2}; J5←{J3,J4,B1,B6}; J4←{P4,P5,B5}; J3←{J2,B1,B2,B3}; J2←{B3,J1,A2,D4'}; J1←{D4',B5,P3}; D4'←{D1',D2',D3'}; D3'←{B3}; D2'←{P5,B3,P3}; D1'←∅; A2←{D1',B4}; A1←{B4}; B6←{B3,B5,P3,P4,B0}; B5←{B3}; B4←{B2,B3,P3}; B3←{P1,P2,P3}; B2←∅; B1←{B0}; B0←∅; P5←{P2,P3,P4}; P4←{P2,P3}; P3←{P2}; P2←{P1}; P1←∅; G2←∅.
 
