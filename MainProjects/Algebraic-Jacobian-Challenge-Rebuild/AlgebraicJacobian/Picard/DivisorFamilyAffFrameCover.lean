@@ -22,21 +22,34 @@ clause are expressible over the widened carrier, and recorded what it did not do
 > runs the certificate cover and the per-piece frame covers, which is real work and belongs to
 > whoever restates it.
 
-**This file measures that work, and the measurement is the content.**  The frame-cover
-keystone `divFamEps_exists_frameCover` (`Picard/DivSchemeFrameCover.lean:456`) reads its
-carrier `DivFam C S π g` at exactly **three** points, all inside
-`exists_frame_chart_at_prime`: `Module.Finite`, `Module.Projective` and
-`rankAtStalk … = g` of the window quotient
-`(R ⊗[k] H_a) ⧸ divisorWindow d`.  Everything downstream — `exists_away_free_pair`,
-`exists_component_matrix`, `exists_det_submatrix_notMem_of_mul_eq_one`,
-`exists_away_isUnit_of_notMem`, `map_component_chart` — consumes a Grassmannian *point* and a
-base ring, and never asks what produced the submodule.
+**This file measures that work, and the measurement is the content.**  Inside
+`exists_frame_chart_at_prime` the frame-cover keystone `divFamEps_exists_frameCover`
+(`Picard/DivSchemeFrameCover.lean:456`) reads its carrier `DivFam C S π g` at **eight** sites, of
+**two** kinds:
 
-And `divisorWindow d hH1` (`Picard/DivisorFamilyWindow.lean:103`) is a `Submodule.comap` of
-`d.vanishingSubmodule`: it takes the local-equation system and the H¹ vanishing, and mentions
-**no** adaptation, **no** cover and **no** chart typing.  So the window layer is not
-chart-typed at all; the chart typing entered only through the *route* by which the chart-typed
-files supplied those three facts (`windowQuotEquiv` from `IsCertified`'s (c2) clauses).
+* **six** are facts about the window *quotient* — `DivFam.finite_/projective_window_quotient`
+  at each of the two ledger windows (:347–357), and `F.window` in the `exists_away_free_pair`
+  call (:361, :365).  Constant fibre rank enters separately, through `divFamWindowGr`'s own
+  definition.  These are what the layer below restates as hypotheses.
+* **two** are *functoriality* of the carrier: `DivFam.window_mapAlg` in the closing `rfl` blocks
+  (:426, :443), i.e. "window of `mapAlg` = `windowBaseChange`".  These are **not** window-quotient
+  facts, and they are exactly what `windowBaseChange_windowBaseChange` below had to replace.
+
+Everything downstream of the helper — `exists_component_matrix`,
+`exists_det_submatrix_notMem_of_mul_eq_one`, `exists_away_isUnit_of_notMem`,
+`map_component_chart` — consumes a Grassmannian *point* and a base ring, and never asks what
+produced the submodule.
+
+*A predecessor version of this paragraph said "exactly three points" and listed
+finite/projective/rankAtStalk.  That both under-counted the reads and mis-classified the two
+that motivated this file's one new theorem; corrected here (audit `I-1336`).*
+
+`divisorWindow d hH1` (`Picard/DivisorFamilyWindow.lean:103`) is independent of the
+**adaptation** — of which cover refines `d` — which is what lets the declarations below typecheck
+carrier-free.  It is **not** independent of the pinned charts: it is a `Submodule.comap` of
+`d.vanishingSubmodule R (relCover C R (fiberTwoCover π)).V₀ … .V₁ …`, so the fixed two-chart pair
+occurs in its definition.  *A predecessor version said "no adaptation, no cover and no chart
+typing"; only the first clause is true (`I-1336`).*
 
 ## The one step that is genuinely new
 
@@ -55,28 +68,39 @@ composite must be proved where it actually lives, on the submodule:
 ## What this does and does NOT establish
 
 It does **not** produce a widened divisor-representability, and no antecedent of
-`pic0RepresentableByOfCharts` moves.  The three window-quotient facts are **hypotheses** in the
-window layer, and the `Reachability` section below settles who can supply them — in both
-directions, which is the part worth reading:
-
-* they ARE supplied, sorry-free, by a **chart-typed** certified adaptation on the same `d`
-  (`finite_/projective_/rankAtStalk_divisorWindow_quot_of_isCertified`).  So the layer is not
-  waiting on the widened `thetaGluedEval` surjectivity that
-  `Picard/DivisorFamilyAffTheta.lean` leaves open — a route exists.
-* and that route is **refuted exactly on the divisors R2 exists for**
-  (`not_reachable_of_straddling`): on a connected divisor straddling both pinned fibres, no
-  chart-typed adaptation is certified in any degree.
-
-So the honest ledger is:
+`pic0RepresentableByOfCharts` moves.  The window-quotient facts are **hypotheses** in the window
+layer.  The `Reachability` section below gives the chart-typed route to them; the correct ledger
+for the *widened* route is:
 
   the frame cover's chart dependence   REMOVED (this file, sorry-free)
-  its three window-quotient inputs     REACHABLE chart-typed, REFUTED on the straddling
-                                       divisors, hence still open where the widening lives
+  its window-quotient inputs           reachable chart-typed (below), and reachable WIDENED by
+                                       the same three-line proofs through
+                                       `AffAdaptation.windowQuotEquiv`
+                                       (`Picard/DivisorFamilyAffTheta.lean:914`) — whose source
+                                       is the SAME quotient — gated on surjectivity of the
+                                       widened `thetaGluedEval`, which that file leaves OPEN.
 
-A predecessor version of this docstring said the inputs reduce to widened evaluation
-surjectivity.  That was the wrong limit and is corrected here: surjectivity is *one* route, the
-chart-typed certificate is another, and what actually blocks the widened side is the straddling
-no-go — which no repair to the surjectivity statement touches.
+**Two corrections to predecessor versions of this docstring, both from an audit
+(`I-1335`/`I-1337`) that I reproduced before accepting.**  I first wrote that the inputs "reduce
+to widened evaluation surjectivity"; I then over-corrected to "the ONE route that exists" plus
+"REFUTED on the straddling divisors".  The second is worse than the first and is the one to
+retract loudly:
+
+* the widened route **exists** and is gated on a *missing proof*, not on a refutation;
+* and the straddling no-go **cannot** bear on it, because
+  `forall_not_isCertified_of_straddling` quantifies over `DivisorAdaptation` while the widened
+  route consumes `AffAdaptation`.  On exactly those divisors,
+  `isCertified_affine_and_not_isCertified_chart` (`Picard/DivisorFamilyAffStrict.lean`) proves
+  the *opposite* conjunction: some widened adaptation IS certified while no chart-typed one is.
+  So there the widened side is the one that works, and the no-go is evidence *for* it.
+
+One nuance neither the audit nor I had stated, added here because it is the actual widened
+residue: `AffAdaptation.windowQuotEquiv` also takes a `ChartTyping C R π D`, and
+`AffAdaptation.isEmpty_chartTyping_of_straddling` (same file) *empties* that index on a piece
+holding a point outside `V₀` and one outside `V₁`.  So the widened route owes **both** the
+evaluation surjectivity and a chart typing (or a `ThetaTrivData`-style replacement index — see
+`Picard/DivisorFamilyAffThetaTyping.lean`, inhabited at exponent `0`).  That is a second missing
+input, still not a refutation.
 
 ## Main declarations
 
@@ -87,9 +111,8 @@ no-go — which no repair to the surjectivity statement touches.
 * `AlgebraicGeometry.map_divisorWindowGrOfQuot` — the tower transport, carrier-free.
 * `AlgebraicGeometry.exists_component_matrix_of_windowQuot` — the per-prime matrix
   presentation, carrier-free.
-* `AlgebraicGeometry.finite_divisorWindow_quot_of_isCertified` and its two siblings — who
-  supplies the hypotheses.
-* `AlgebraicGeometry.not_reachable_of_straddling` — and where that supply fails.
+* `AlgebraicGeometry.finite_divisorWindow_quot_of_isCertified` and its two siblings — the
+  chart-typed supply of the hypotheses.
 -/
 
 set_option autoImplicit false
@@ -397,30 +420,31 @@ theorem rankAtStalk_divisorWindow_quot_of_isCertified {d : (relCurve C R).LocalE
     (hc.thetaGluedEval_surjective (C := C) (π := π) hπ hO hχ ha1 hMa))) p]
   exact hc.rankAtStalk_thetaGlued a p
 
-/-- **THE LIMIT, as a theorem rather than a caveat: the route above is unavailable exactly on
-the divisors R2 exists for.**
+/-! ### The scope of the chart-typed route, and why it is NOT a limit on the widened one
 
-The three theorems above discharge the window-quotient hypotheses from a *chart-typed*
-certified adaptation on the same `d`.  On a connected divisor straddling both pinned vertical
-fibres — which is precisely the configuration human decision `I-0492` widened the carrier to
-admit, and the one `isCertified_affine_and_not_isCertified_chart`
-(`Picard/DivisorFamilyAffStrict.lean`) separates the carriers by — **no** chart-typed adaptation
-is certified in **any** degree.  So the antecedent of each reachability theorem is refuted
-there, and the route buys nothing on the widened side.
+A predecessor of this file carried a theorem `not_reachable_of_straddling` here, asserting "the
+route above is unavailable exactly on the divisors R2 exists for".  **It is withdrawn**, and the
+reasoning is kept in its place because that is the reusable part (audit `I-1334`/`I-1335`/
+`I-1337`, reproduced before accepting).
 
-This is stated so the file cannot be read as "the frame cover is now supplied widened".  What
-is supplied is the *chart-free window layer*; what is refuted, here, is the only route to its
-hypotheses that currently exists.  A widened route would have to go through a widened
-`thetaGluedEval` surjectivity (`Picard/DivisorFamilyAffTheta.lean`, not proved there), or
-around the window quotient entirely. -/
-theorem not_reachable_of_straddling [IsNoetherianRing R]
-    {d : (relCurve C R).LocalEquations}
-    (hconn : _root_.IsPreconnected d.supportLocus)
-    {x y : relCurve C R} (hx : x ∈ d.supportLocus) (hy : y ∈ d.supportLocus)
-    (hx₀ : x ∉ ((relCover C R (fiberTwoCover π)).V₀ : Set (relCurve C R)))
-    (hy₁ : y ∉ ((relCover C R (fiberTwoCover π)).V₁ : Set (relCurve C R))) :
-    ∀ (A : DivisorAdaptation C R π d) (m : ℕ), ¬ A.IsCertified m :=
-  forall_not_isCertified_of_straddling hconn hx hy hx₀ hy₁
+Three things were wrong with it:
+
+1. it was a **verbatim restatement** of `forall_not_isCertified_of_straddling`
+   (`Picard/DivisorFamilyAffStrict.lean:127`) — same binders, same conclusion, body a direct
+   delegation — and that lemma is in this file's own import closure, so the restatement served
+   nobody;
+2. it carried `[IsNoetherianRing R]`, which its proof does not use;
+3. and the claim it was there to support is **false**.  The reachability theorems above are
+   about `DivisorAdaptation`, and so is the no-go.  The *widened* route to the same three
+   hypotheses runs through `AffAdaptation.windowQuotEquiv`, over `AffAdaptation`, which the
+   no-go's `∀` does not reach.  Worse for the old framing:
+   `isCertified_affine_and_not_isCertified_chart` proves that on exactly those straddling
+   divisors *some widened adaptation is certified* while no chart-typed one is — so there the
+   widened carrier is the one that works.
+
+What is true, and all that is true: the three theorems above are the **chart-typed** supply of
+the window-quotient hypotheses, and it is unavailable on straddling divisors.  Cite
+`forall_not_isCertified_of_straddling` directly for that; it needs no wrapper here. -/
 
 end Reachability
 
