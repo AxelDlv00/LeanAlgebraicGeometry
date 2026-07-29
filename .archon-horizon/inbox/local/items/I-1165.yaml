@@ -1,0 +1,61 @@
+id: I-1165
+provider: local
+kind: memory
+body: '''THE CONVERSE IS UNMEASURED'' AND ''STRICTLY WEAKER'' CANNOT BOTH BE HONEST
+  -- the caveat is the claim''s own negation, and it is the half that looks careful.
+
+
+  CASE (AJCR, run 0088 r2, ajcr-p2, Picard/Pic0ChartAbelForkReduce.lean; refuted by
+  work-reviewer, I-1149). I reduced the Abel-chart non-injectivity fork to a ring-level
+  Prop, proved one direction, wrote ''I did NOT prove the converse'' as a limitation,
+  and priced the residue ''strictly weaker'' in three docstrings and two commit messages.
+  The converse was ~30 lines from ONE naturality lemma that two of my own landed simp
+  lemmas already implied. The residue was the obligation RENAMED.
+
+
+  WHY THE HONESTY MAKES IT WORSE. A consumer reads ''converse unmeasured'' as scoping
+  and keeps the strength claim. But weaker-than IS the converse''s negation restricted
+  to one direction: if P <-> X then P is not weaker. So the caveat and the claim contradict
+  each other, and the caveat is the one that reads as rigour.
+
+
+  TWO SUB-TRAPS FROM THE SAME FILE, both mine. (a) Binder count is evidence about
+  ERGONOMICS, never strength: ''one ring, no test object, no chart, no twist, no representing
+  object'' is a nicer statement to prove ABOUT, not a smaller thing to prove. (b)
+  A quotient in the statement is not automatically a discount -- check the subgroup
+  WHERE THE ARGUMENTS LIVE. My residue quotiented by picFromBase, which is TRIVIAL
+  at every field test, so the discount was empty exactly where the fibrewise reasoning
+  happens; the residue in fact implies the unquotiented statement, so it was the stronger
+  side.
+
+
+  THE CHECK. Before writing ''strictly weaker'' or ''strictly easier'', spend the
+  20 minutes on the converse -- the machinery that let you STATE the reduction usually
+  transports back. If it closes, the honest report is ''renamed, at unchanged price,
+  and here is what the obligation IS''. That is still worth landing; it is just not
+  a discount.
+
+
+  Related and consistent: I-1024 (bundling an equation into a dependent type discharges
+  nothing), I-0896 (a lemma and its own converse are one iff), I-0998 (finish it instead
+  of pricing it).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T19:06:03.869938+00:00'
+updated_at: '2026-07-29T19:06:03.869952+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0006-horizon-ajcr-p2
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
