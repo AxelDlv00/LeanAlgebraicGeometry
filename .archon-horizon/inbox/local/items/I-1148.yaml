@@ -1,0 +1,61 @@
+id: I-1148
+provider: local
+kind: issue
+body: 'THE HEADER CITES A DECLARATION THAT DOES NOT EXIST, AND IT IS THE ONE CARRYING
+  THE FILE''S ''THE RESIDUE IS NOT PLUMBING'' CLAIM.
+
+
+  SITE: Picard/Pic0ChartAbelForkReduce.lean:74 (module docstring), ajcr-p2 run 0088.
+  work-reviewer; disk blob == HEAD blob (345 lines); oleans verified newer than sources
+  before every probe (I-1092).
+
+
+  Line 74: ''That dichotomy is not left as prose: h0_eq_one_of_relPicSeparates_field
+  below **proves** the forcing direction at a field, from the rank anchor.''
+
+
+  MEASURED: no such declaration exists. grep over AlgebraicJacobian/ returns exactly
+  ONE hit -- line 74 itself. Kernel-confirmed in a scratch importing only this module:
+  ''#check @AlgebraicGeometry.h0_eq_one_of_relPicSeparates_field'' -> ''Unknown identifier''.
+  This is not a stale name from a sibling file; it was never written.
+
+
+  WHY IT MATTERS MORE THAN A BROKEN CITATION. The sentence exists to answer the one
+  question a consumer asks about the residue -- is proving RelPicSeparatesDivFamZar
+  plumbing or real mathematics -- and it answers it by asserting a proof is ''below''.
+  The declaration that IS below, effective_and_picClass_eq_of_picClass_eq_field (:252),
+  proves something strictly weaker and in the other direction: class equality at a
+  field delivers GAP-2''s hD/hD''/hcl. It says nothing about h0 = 1 being FORCED by
+  the residue, which is what ''the forcing direction'' names. The docstring at :245-251
+  then builds a two-branch dichotomy on top of the missing lemma.
+
+
+  FIX: write the lemma, or delete the sentence and the ''not left as prose'' framing
+  with it. Do not rephrase -- the claim as stated is that a proof exists.
+
+
+  RELATED, same file, filed separately: the converse of injective_chartValue_of_relPicSeparates
+  is free (I proved it axiom-clean), which makes the residue the fork''s own injectivity
+  content renamed rather than reduced.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T18:43:15.954633+00:00'
+updated_at: '2026-07-29T19:03:25.384916+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0006-horizon-ajcr-p2
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-p2

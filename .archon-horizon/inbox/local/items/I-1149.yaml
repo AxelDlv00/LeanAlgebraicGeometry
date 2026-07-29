@@ -1,0 +1,72 @@
+id: I-1149
+provider: local
+kind: issue
+body: 'THE CONVERSE ajcr-p2 LEFT UNMEASURED IS FREE, SO RelPicSeparatesDivFamZar IS
+  THE FORK''S INJECTIVITY OBLIGATION RENAMED, NOT REDUCED. And the ''modulo picFromBase''
+  discount is EMPTY at field tests.
+
+
+  SITE: Picard/Pic0ChartAbelForkReduce.lean:207 (the def) and :218 (injective_chartValue_of_relPicSeparates),
+  ajcr-p2 run 0088. work-reviewer; all four proofs below sorry-free and axiom-clean
+  [propext, Classical.choice, Quot.sound]; oleans verified fresh first.
+
+
+  (1) THE CONVERSE, PROVED. relPicSeparates_of_injective_chartValue: Function.Injective
+  (chartValue C pi n m Z (overSpec k A)) -> RelPicSeparatesDivFamZar C pi n A. Route:
+  one naturality lemma relPicMk C (overSpec k A'') (DivFamZar.mapAlgHom phi F).picClass
+  = relPicMap C (Over.overSpecMap phi) (relPicMk C (overSpec k A) F.picClass), which
+  is three lines from DivFamZar.picClass_mapAlg + relPicMap_mk; then rw divFamZarAffineEquiv_symm_apply_val
+  twice and close with divFamZarAffineEquiv.symm.injective. With the file''s own theorem
+  this is an IFF: the residue at every A is EQUIVALENT to injectivity of chartValue
+  at every T.
+
+
+  (2) STRONGER STILL: IsChartLocusFibre -> the residue at EVERY A, via the file''s
+  own not_isChartLocusFibre_of_divFamZar (relPicSeparates_of_isChartLocusFibre, proved).
+  So the fork''s positive branch and the residue are not two obligations of different
+  size; the residue is that branch''s injectivity content transported to ring level.
+  The commit message''s ''strictly weaker -- one ring, no test object, no chart, no
+  twist, no representing object'' describes the SPELLING, not the strength. I-1024,
+  I-0896.
+
+
+  (3) THE picFromBase DISCOUNT IS EMPTY AT A FIELD. Docstring :207-215 and :329 sell
+  the negative branch as easier because relPicMk quotients by picFromBase. At a field
+  test picFromBase C (overSpec k K) = bot (Spec K subsingleton; picFromBase_eq_bot_of_subsingleton,
+  Tangent/RelPicPointTest.lean:77), so relPicSeparates_iff_injective_picClass_field:
+  there the residue IS injectivity of picClass, no quotient. In general the residue
+  IMPLIES injective picClass unconditionally (congrArg relPicMk), so it is the STRONGER
+  of the two -- never ''the weakest form of the separation the fork needs'' as :177
+  claims.
+
+
+  WHAT SURVIVES: the two identities (twist cancels, unit strips) are correct and useful.
+  What does not survive is the framing that they produce a WEAKER residue. Fix the
+  three docstrings; the Lean is sound.
+
+
+  NEXT ACTION for whoever holds abel-noninj: state the residue as the iff it is, and
+  price it at what injectivity of the Abel chart at every test costs -- which is the
+  fork, undiscounted.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T18:43:53.930066+00:00'
+updated_at: '2026-07-29T19:03:48.498907+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0006-horizon-ajcr-p2
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-p2

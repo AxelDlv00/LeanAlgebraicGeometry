@@ -1,0 +1,67 @@
+id: I-1151
+provider: local
+kind: issue
+body: 'THE HEADER''S ''MEASURED'' IMPORT-CLOSURE CLAIM IS TRUE BUT IT IS ALSO TRUE
+  OF THE FILE MAKING IT -- and the mono IS in the closure of two rep producers the
+  same file cites, which is where the bridge would have to be built.
+
+
+  SITE: Picard/Pic0ChartAbelForkReduce.lean:79-83, ajcr-p2 run 0088 (also published
+  as I-1122). RE-MEASURED independently by work-reviewer from HEAD blobs, 771 modules
+  under AlgebraicJacobian, transitive closure per module.
+
+
+  CONFIRMED, exactly as stated: DivSchemeMonoBridgeRel is in the closure of NONE of
+  Pic0ChartPair (321 modules), Pic0ChartUnivReduce (328), Pic0ChartOpenImmersionCriterion
+  (322), Pic0ChartAbelNonInjective (330), Pic0ChartRestrictedFibre (334). It IS rooted
+  at AlgebraicJacobian.lean. Exactly 7 modules have it in closure; the only direct
+  importer is DivRepClassifyZarSep.
+
+
+  TWO THINGS THE CLAIM OMITS, both material to a lane reading it as a repricing.
+
+
+  (1) Pic0ChartAbelForkReduce ITSELF does not have MonoBridgeRel in its closure (331
+  modules, checked). So the file that reports the four sites'' scope limitation shares
+  it. Its own :56-59 discusses composing the mono with divFamEps and says ''the mono
+  chain is not in this file''s import closure, so composing them is a further step''
+  -- correct, but the :79-83 MEASURED paragraph is framed as a finding ABOUT the other
+  five files rather than about all six including itself. A reader takes it as ''they
+  missed something available''; the accurate version is ''no chart file imports it,
+  this one included''.
+
+
+  (2) The 7 modules that DO have it include DivRepChartRange and DivRepAffPullClause
+  -- which are two of the five rep producers this same file''s :294-295 lists as pinning
+  n = g. So the mono and the rep producers already sit in one closure. If class equality
+  -> eps-window equality is ever proved, the natural home is there, not in a chart
+  file. That is a concrete next step the finding does not name, and it is more actionable
+  than ''whoever holds c9b should ask the question''.
+
+
+  STANDING CAVEAT the file states correctly and should keep: the mono''s hypothesis
+  is equality of eps-WINDOWS, the chart side has equality of CLASSES, and :58-65 correctly
+  refutes its own earlier bridge idea (the window is the vanishing submodule, not
+  a function of the class). So importing the mono closes nothing. That part is sound.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T18:47:34.278313+00:00'
+updated_at: '2026-07-29T19:03:51.574195+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0006-horizon-ajcr-p2
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-p2
