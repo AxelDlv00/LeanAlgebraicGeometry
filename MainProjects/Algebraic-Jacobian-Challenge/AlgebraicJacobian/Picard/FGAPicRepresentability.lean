@@ -1263,7 +1263,7 @@ signature.
 
 **THIS CLASS IS A SELF-PROJECTION AND CARRIES NO MATHEMATICS** (`review-ajc`,
 2026-07-30 — the paragraph above states the mechanism but never draws the
-conclusion, and 53 binder sites read it as content). Its sole producer
+conclusion, and 57 binder sites read it as content). Its sole producer
 `instPicSchemeLocallyOfFiniteType` below is `choose_spec.2.1` of the very
 `[HasPicScheme C]` binder it assumes, so the class is *definitionally* whatever
 its hypothesis already said: it proves nothing that naming `HasPicScheme` does
@@ -1278,9 +1278,9 @@ directions:
   discharged by instance search from the first. It costs a reader a lookup and
   buys nothing.
 * **It is nonetheless harmless to keep**, which is why it is labelled rather
-  than deleted: 61 signatures name it, `HasPicScheme` is `Prop`-valued so the
+  than deleted: 57 signatures name it, `HasPicScheme` is `Prop`-valued so the
   projection is unique, and the blueprint pins the consumer shape. Deleting it
-  is a 61-site edit for zero mathematical gain.
+  is a 57-site edit for zero mathematical gain.
 
 The honest content is upstream: `HasPicScheme` itself has **zero** instances,
 and over an arbitrary field it cannot get one (see `HasPicSchemeEt` below and
