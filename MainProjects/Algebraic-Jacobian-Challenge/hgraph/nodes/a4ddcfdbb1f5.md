@@ -14,10 +14,10 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.TwoTerm.isClosed_le_finrank_ker_baseChange
 type: lean
-updated: '2026-07-29T22:29:09'
+updated: '2026-07-29T23:31:12'
 ---
 theorem isClosed_le_finrank_ker_baseChange (n : ℕ) (k : K →ₗ[A] (Fin n → A))
-    [Module.FinitePresentation A K] [Module.Projective A K] (e : ℕ) :
+    [Module.FinitePresentation A K] (e : ℕ) :
     IsClosed {t : PrimeSpectrum A | e + 1 ≤ Module.finrank t.asIdeal.ResidueField
       (LinearMap.ker (k.baseChange t.asIdeal.ResidueField))} := by
   have hcompl : {t : PrimeSpectrum A | e + 1 ≤ Module.finrank t.asIdeal.ResidueField

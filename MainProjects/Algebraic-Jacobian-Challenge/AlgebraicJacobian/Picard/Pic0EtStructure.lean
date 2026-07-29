@@ -13,10 +13,24 @@ import AlgebraicJacobian.Curve.GeometricallyReduced
 
 The two remaining obligations of `Picard/Pic0Et.lean` —
 `Scheme.Pic0Et.geometricallyReduced` (`:170`) and
-`Scheme.Pic0Et.universallyClosed` (`:223`) — are two of the **five** obligations
+`Scheme.Pic0Et.universallyClosed` (`:223`) — are among the **five** obligations
 named under `picardJacobianWitness` (`Jacobian.lean`), which is the headline's
 witness. This file reduces each of them to a statement about a **single scheme**,
 and proves that both reductions are *equivalences* rather than weakenings.
+
+**The five obligations are not independent, and the list reads as if they were.**
+`Jacobian.lean`'s enumeration and this file's first draft both invited the reader to
+count `geometricallyReduced` and `smoothOfRelativeDimension_genus_pic0Et` (obligation
+4, `Jacobian.lean:454`) as two separate distances. They are not: obligation 4 implies
+this file's reducedness target, since
+`SmoothOfRelativeDimension.geometricallyReduced (genus C)` yields
+`GeometricallyReduced (Pic0SchemeEt C).hom` directly. Measured here and independently
+by the lane holding obligation 4 (inbox `I-1040`, `I-1039`). The arrow runs 4 ⟹ 2, so
+nothing proved about the reducedness half is wasted — but a reader adding the two gets
+a remaining distance that is too long by one.
+
+The **properness** half below is genuinely independent of obligation 4, and
+`quasiCompact` is the reason it is reachable at all on this tower.
 
 ## What is proved here, and what is not
 
@@ -79,8 +93,35 @@ carries to `Pic0SchemeEt` is unmeasured, so do not assume it". It does carry, an
   reducedness input below is therefore genuine mathematics and not a missing
   `import`; a lane looking for a cheap discharge of it will not find one in the
   pinned mathlib.
+* **There is no perfect-field shortcut, and this is the tempting wrong turn.**
+  Mathlib's generic smoothness `Scheme.Hom.dense_smoothLocus_of_perfectField` takes
+  `[PerfectField K] [IsReduced X]` — no algebraic closure — which suggests replacing
+  the base change by reducedness of `Pic⁰` *itself* over a perfect field. Measured: it
+  does not work. The translation half of the argument
+  (`smooth_of_grpObj_of_isAlgClosed'`, transcribed from mathlib) additionally needs
+  `pointEquivClosedPoint`, and elaborating it under `[PerfectField k]` alone fails to
+  synthesize `IsAlgClosed k`. Generic smoothness is only one of the two inputs; the
+  transitivity of translations on closed points is the other, and that one really does
+  want an algebraically closed field. So the `k̄` base change is not a convenience of
+  the statement — it is where the argument lives.
+
+  Note the ring-level shape confirms this is the standard formulation:
+  `Algebra.isGeometricallyReduced_iff` *defines* geometric reducedness as
+  `IsReduced (k̄ ⊗[k] A)`. The equivalence proved below is the scheme-level image of
+  that iff, not a project-specific weakening.
 
 ## Honest accounting
+
+**The hypotheses are not free — measured, and one of the four checks does not apply.**
+Three of the four antecedents used below fail to synthesize on their own, so the
+reductions are not vacuous: `IsReduced (Pic⁰ ×_k k̄)`, `UniversallyClosed` of the `k̄`
+pullback projection, and `GeometricallyReduced (Pic0SchemeEt C).hom` each report
+"failed to synthesize" at a probe site with the gate assumed. The fourth,
+`ValuativeCriterion.Existence`, is **not a class** — it is a plain `Prop`-valued
+definition, so no `infer_instance` test is meaningful for it and no such test is
+claimed here. Its non-freeness rests on the ordinary observation that it is an
+explicit hypothesis of the two theorems that use it and is discharged nowhere in this
+project.
 
 Every declaration in this file binds `[Scheme.HasPicSchemeEt C]`. That class *does*
 have an unconditional instance, but that instance is

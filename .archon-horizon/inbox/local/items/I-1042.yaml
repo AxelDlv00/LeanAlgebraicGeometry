@@ -1,0 +1,71 @@
+id: I-1042
+provider: local
+kind: issue
+body: 'THE SPLITTING-FIELD DESCENT IS NOT OWED BY THE qc FIELD, and the Abel MORPHISM
+  was never a missing brick.
+
+
+  MEASURED by ajcr-p4 (run 0090 r2), Picard/JacobianDataQcFromRep.lean, lake env lean
+  EXIT=0. Oleans rebuilt before every probe -- the first probe run FAILED ''object
+  file does not exist'', so not the stale-import mode. 12 declarations axiom-clean
+  [propext, Classical.choice, Quot.sound] vs control Jacobian firing sorryAx.
+
+
+  SITES THAT MADE THE CLAIM: JacobianDataAbelEffectivePoint.lean:44-48 (''the honest
+  limit'': divisor over splitting field L, hlift wants Spec kappa(y), descent is ''a
+  genuine further step, the dat-g lane''s business'') and JacobianDataAbelSquare.lean:80-83
+  AMENDMENT (''what the effectivity side still owes is DESCENT'').
+
+
+  WHY NOT OWED, for qc only. qc consumes hlift solely via surjective_of_forall_exists_residueField_lift
+  -> quasiCompact_of_surjective. Surjectivity needs SOME point of the source over
+  y; the residue field of the producing test is irrelevant. Landed quasiCompact_of_extensionTolerant_lift:
+  the lift may live over any k-test T with a point and a morphism T -> overSpec k
+  kappa(y) -- for a field extension that IS overSpec k L. SCOPED: hlift as typed in
+  ofAbelLifts (AbelSurj:153) still wants Spec kappa(y), other consumers still owe
+  descent; measured only that JacobianData.quasiCompact does not. Do not schedule
+  ''descent for DAT-J qc''.
+
+
+  SECOND FINDING. divSchemeOver is a TEST OBJECT of Over (Spec k), so a degree-zero
+  class on it NAMES a morphism to any representing object: abelOfPic0Class rep lam
+  := rep.homEquiv.symm lam. Every producer in AbelImage/AbelSurj takes that as an
+  unproduced hypothesis. At that abel the square is FREE: IsAbelClassifyCompatible
+  (AbelSquare:147) is the ''groups agree /= maps agree'' gap I-0525, about two INDEPENDENTLY
+  named morphisms; homEquiv is an Equiv, so equal classes give equal morphisms.
+
+
+  NET: qc goes from THREE inputs with no producer (abel, square, lifts) to TWO Pic-side
+  hypotheses.
+
+
+  NO GATE CLOSED -- lam, hcl, rep are hypotheses. hcl is not surjectivity restated,
+  and the honest check: the TEST-GENERAL form IS equivalent to surjectivity (T :=
+  divSchemeOver, q := id), so worthless and not landed. hcl is falsifiable not vacuous:
+  it implies CompactSpace J.left.
+
+
+  RESIDUE, now binding: effectiveDivisorClassifyZar (DivisorFamilyFieldSurj:217) pins
+  deg D = g on the nose, which the window form (JacobianDataAbelDegreeWindow) does
+  not deliver. That pin, not the descent, stands between the effectivity chain and
+  this route.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T15:40:34.485102+00:00'
+updated_at: '2026-07-29T15:40:34.485114+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0006-horizon-ajcr-p4
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
