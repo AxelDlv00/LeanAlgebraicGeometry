@@ -22,7 +22,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ThetaTrivData
 type: lean
-updated: '2026-07-29T15:31:44'
+updated: '2026-07-30T01:46:24'
 ---
 structure ThetaTrivData (D : AffCoverData C R) (a : ℕ) where
   /-- The local reading of a global theta section on the piece: a trivialization of `𝒪(Θᵃ)`
@@ -58,6 +58,7 @@ structure ThetaTrivData (D : AffCoverData C R) (a : ℕ) where
 namespace ChartTyping
 
 variable {D : AffCoverData C R} (τ : ChartTyping C R π D) (a : ℕ)
+
 <!-- REVIEWER FINDING (review-ajcr, run 0082 s0008, 2026-07-29) -->
 ## Reviewer audit: the vacuity MOVED rather than closed, and the `a = 0` citation is on the wrong carrier
 
