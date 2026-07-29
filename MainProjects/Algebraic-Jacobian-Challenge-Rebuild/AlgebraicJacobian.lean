@@ -619,6 +619,11 @@ import AlgebraicJacobian.Picard.DivisorFamilyAffGlueZar
 import AlgebraicJacobian.Picard.DivisorFamilyAffMapKit
 import AlgebraicJacobian.Picard.DivisorFamilyAffMap
 import AlgebraicJacobian.Picard.DivisorFamilyAffFunctorCompare
+-- The Abel hook on the R2 carrier (run 0089 r3, ajcr-p3): before this, the widened carrier
+-- I-0492 mandates had a Picard CLASS but nothing carrying it to PicEtAff/picEt, so a widened
+-- representability datum could not have reached the Sigma-atlas at all. Rooted so the axiom
+-- probe covers it -- an unrooted file is one nobody has measured (AJCR.w4-rep.build-reach).
+import AlgebraicJacobian.Picard.DivisorFamilyAffAbel
 import AlgebraicJacobian.Picard.DivRepGlobalAffLift
 import AlgebraicJacobian.Picard.DivRepAffPullIndep
 import AlgebraicJacobian.Picard.DivRepAwayPush

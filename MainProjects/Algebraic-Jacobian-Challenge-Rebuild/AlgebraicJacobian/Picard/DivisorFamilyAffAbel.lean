@@ -122,7 +122,64 @@ theorem abelDivAffPlus_mapAlgHom {A B : Type u} [CommRing A] [Algebra k A] [Comm
     _ = abelDivAffPlus C B (DivFamZarAff.mapAlgHom φ F₀) := by
         rw [abelDivAffPlus, hclass]
 
+omit [IsProper C.hom] in
+/-- **The widened hook extends the chart-typed one along `DivFamZar.toAff`**: the widened Abel
+value of the image of a chart-typed class is the chart-typed Abel value.
+
+This is what makes the file an *extension* of `Picard/DivSchemeAbel.lean` rather than a second,
+incompatible Abel layer: `DivFamZarAff.picClass_toAff` says the widening does not move the
+Picard class, and both hooks are `unit ∘ relPicMk` of that class. -/
+theorem abelDivAffPlus_toAff {A : Type u} [CommRing A] [Algebra k A]
+    {π : C.left ⟶ P1 k} [IsAffineHom π] (F₀ : DivFamZar C A π n) :
+    abelDivAffPlus C A F₀.toAff = abelDivPlus C π A F₀ := by
+  rw [abelDivAffPlus, abelDivPlus, DivFamZarAff.picClass_toAff]
+
 end AbelAff
+
+/-! ## The widened Abel transformation at an arbitrary test -/
+
+section AbelVehicle
+
+/- `picEtMap` (`Picard/PicEtMap.lean:206-207`) carries these two beyond `[IsProper C.hom]`; they
+are hypotheses of the whole DD-R lane, so this costs no generality, but they are stated rather
+than inherited silently. -/
+variable [GeometricallyIrreducible C.hom] [GeometricallyReduced C.hom]
+
+variable (C n) in
+/-- **The Abel transformation of a widened class at an arbitrary test object**: componentwise
+over the affine opens of the test, compatible by `abelDivAffPlus_mapAlgHom`.
+
+Verbatim `abelDiv` (`Picard/DivSchemeAbel.lean`) on the widened vehicle. -/
+def abelDivAff' (T : Over (Spec (.of k))) (s : divFamZarAff C n T) : picEt C T :=
+  ⟨fun U => abelDivAffPlus C Γ(T.left, U.1) (s.1 U), fun U V h => by
+    rw [abelDivAffPlus_mapAlgHom (Over.resAlgHom T h) (s.1 V), s.compat U V h]⟩
+
+omit [GeometricallyIrreducible C.hom] [GeometricallyReduced C.hom] in
+@[simp]
+lemma abelDivAff'_val (T : Over (Spec (.of k))) (s : divFamZarAff C n T)
+    (U : T.left.affineOpens) :
+    (abelDivAff' C n T s).1 U = abelDivAffPlus C Γ(T.left, U.1) (s.1 U) :=
+  rfl
+
+/-- **Naturality of the widened Abel transformation in the test object**: restriction of the
+widened Abel value along an arbitrary test morphism is the widened Abel value of the restricted
+family.
+
+The chart-typed proof (`picEtMap_abelDiv`) transported: both glued restrictions are pinned by
+their `∃!`-characterizations, and the widened one is `divFamZarAff.mapVal_spec`. -/
+theorem picEtMap_abelDivAff' {T T' : Over (Spec (.of k))} (f : T' ⟶ T)
+    (s : divFamZarAff C n T) :
+    picEtMap C f (abelDivAff' C n T s) = abelDivAff' C n T' (divFamZarAff.map C n f s) := by
+  refine picEt.ext fun W => ?_
+  rw [picEtMap_val]
+  refine picEtMapVal_eq_of C f (abelDivAff' C n T s) ?_
+  intro W₀ hW₀ V hV
+  rw [abelDivAff'_val, abelDivAff'_val, divFamZarAff.map_val,
+    abelDivAffPlus_mapAlgHom (Over.resAlgHom T' hW₀) (divFamZarAff.mapVal C n f s W),
+    abelDivAffPlus_mapAlgHom (Over.appLEAlgHom f V.1 W₀.1 hV) (s.1 V),
+    divFamZarAff.mapVal_spec C n f s W W₀ hW₀ V hV]
+
+end AbelVehicle
 
 end
 
