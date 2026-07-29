@@ -428,3 +428,9 @@ import AlgebraicJacobian.Albanese.RationalMapProd
 import AlgebraicJacobian.Albanese.SmoothPrimeRegularity
 import AlgebraicJacobian.Albanese.StandardSmoothDimension
 import AlgebraicJacobian.Albanese.Thm32RationalMapExtension
+-- The Milne section I.3 chain over a PERFECT field, and the measured negative
+-- saying which single link is not field-agnostic (Milne 3.3's closed-point row
+-- argument).  Corrects I-1115, which localised the chain's IsAlgClosed to the
+-- regularity input -- a step that was already discharged over perfect fields --
+-- and reported Milne 3.3 as carrying no such binder.
+import AlgebraicJacobian.Albanese.CodimOnePerfectField
