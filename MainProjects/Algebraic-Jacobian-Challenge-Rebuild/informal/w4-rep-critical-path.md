@@ -1095,3 +1095,30 @@ certified families cover Pic⁰, and §7.10.4's warning applies verbatim. What c
 widening now has the layer its consumer needs, so "the widened carrier cannot reach U2" is no longer
 a reason to defer confronting L8 — and the reason it could not reach U2 turned out to be an absent
 *re-indexing*, not absent mathematics, which is the same lesson §7.1 records about `MISSING` claims.
+
+### 7.13.5 What a fresh-context review corrected, same session
+
+Two corrections from the review filed as inbox `I-0769`, both taken rather than argued with.
+Commit `dd3d22fae`; root build re-run afterwards, `9286 jobs`, EXIT=0.
+
+**A real gap.** §7.13.2 above announced `ker_thetaGluedEval` as "the face that was missing" — but
+nothing connected it to `divisorWindow`. Chart-typed, that connection is `windowCarve` /
+`ker_windowCarve` (`Picard/DivisorFamilyWindow.lean:158/:166`), the composite with
+`relThetaWindowEquiv`, and no widened analogue existed. So the face was named and not plugged in.
+Now landed: `AffAdaptation.windowCarve`, `ker_windowCarve` (the kernel *is* `divisorWindow d`),
+`windowCarve_surjective`, and **`AffAdaptation.windowQuotEquiv`** — the vehicle whose absence made
+the ε-value at a `DivFamZarAff` unstateable, now conditional on nothing but surjectivity of the
+widened evaluation.
+
+**A vacuous phrasing, in three places.** "`ker_thetaGluedEval` shows `divisorWindow` is the same
+submodule on both carriers" is true and *empty*: `divisorWindow` takes only `d` and `hH1` and never
+mentioned a carrier, so nothing had to be proved. The content runs the other way — **the widened
+evaluation's kernel lands on that already-fixed submodule.** Corrected at all three sites (the
+module docstring, the theorem docstring, and this section), on the standing rule that a retraction
+belongs everywhere the claim was made, not only where it was noticed.
+
+**One thing the fix revealed.** The window-carve section is the *first* in the new module needing
+the curve-instance tower and the `Over` local instance. The whole Θ-layer and the entire (c2)
+substrate above it are instance-light — a measurement of how little of the chart-typed apparatus
+the port actually consumed, and independent evidence that the obstruction was re-indexing rather
+than mathematics.
