@@ -1,6 +1,0 @@
-import AlgebraicJacobian.Picard.DivisorFamilyAffFieldMono
-import AlgebraicJacobian.Challenge
-
-open CategoryTheory AlgebraicGeometry
-#print axioms AlgebraicGeometry.Jacobian
-#print axioms AlgebraicGeometry.Jacobian.comp_ofCurve

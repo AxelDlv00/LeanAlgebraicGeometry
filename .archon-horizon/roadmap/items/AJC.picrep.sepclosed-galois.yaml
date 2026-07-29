@@ -3,7 +3,7 @@ title: The section at a finite GALOIS level -- the last step of G1's spread, unp
 projects:
 - Algebraic-Jacobian-Challenge
 summary: ''
-status: pending
+status: active
 kind: proof
 priority: normal
 depends_on: []
@@ -26,3 +26,5 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
+  updated_at: '2026-07-29T23:29:27.385518+00:00'
+  owner: ajc-p3

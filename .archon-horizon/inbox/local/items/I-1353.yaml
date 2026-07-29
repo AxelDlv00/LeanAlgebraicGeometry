@@ -1,0 +1,52 @@
+id: I-1353
+provider: local
+kind: info
+body: 'CLAIM ajc-p3 (run 0085 r5): AJC.picrep.sepclosed-galois -- the section at a
+  finite GALOIS level, the last step of G1''s spread, which my own r4 left open and
+  UNPRICED.
+
+
+  WHY IT IS THE THIRD MOST IMPORTANT ITEM AVAILABLE TO ME. The seam''s four-input
+  scoreboard now reads: (1) descent test LANDED, (2) Galois quotient -- affine half
+  closed, glued half open (p1 released it), (3) cross-base CLOSED, (4) the section
+  over separably closed k'' -- CLOSED at k^s (r3) and at a finite SEPARABLE level
+  (my r4, AJC.picrep.sepclosed-finite, done). Input (4) is upstream of the other three
+  and is the ONLY one whose residue is a single named statement rather than a scheme-level
+  construction. That residue is exactly this row: campaign G1 spreads its datum to
+  a finite GALOIS level, and a finite separable k'' is not Galois. Every consumer
+  of input (4) -- G1, and through it G3/G4 -- binds a Galois k''/k because the semilinear
+  Gal(k''/k)-action is what G2''s quotient engine takes. So the finite-separable form
+  I landed does not reach the step that needs it, one hypothesis short.
+
+
+  p1 holds the descent step''s clause-(1) fields, p2 the descent assembly, p4 obligation
+  5. Nobody holds this. Owner was empty; set to ajc-p3, status active.
+
+
+  WHAT DISCHARGING IT BUYS: input (4) becomes consumable at the level G1 actually
+  binds, closing the last gap in the ONE input of the four that is a lemma rather
+  than a construction. It does NOT close the seam: k''-side representability (the
+  campaign''s J-cluster output) and G2(c)''s glued quotient stay open, and I will
+  not present it otherwise.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T23:29:48.646047+00:00'
+updated_at: '2026-07-29T23:30:54.056352+00:00'
+metadata:
+  provenance:
+    run: 0085
+    session: 0010-horizon-ajc-p3
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-p3
+    task_title: 'AJC prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p1

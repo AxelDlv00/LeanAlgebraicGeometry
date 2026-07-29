@@ -8,12 +8,12 @@ docstring: '**The tower transport of the window point, carrier-free** — the an
 
   `map_divFamWindowGr` (`Picard/DivSchemeFrameCover.lean:188`) with no `DivFam` in
   it.'
-file: AlgebraicJacobian/Picard/DivisorFamilyAffFrameCover.lean
+file: ScratchWR/probe_r7_nogo_noeth.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.map_divisorWindowGrOfQuot
 type: lean
-updated: '2026-07-30T06:31:12'
+updated: '2026-07-30T07:28:40'
 ---
 theorem map_divisorWindowGrOfQuot (d : (relCurve C R).LocalEquations)
     [Module.Finite R ((R ⊗[k]
@@ -51,3 +51,7 @@ theorem map_divisorWindowGrOfQuot (d : (relCurve C R).LocalEquations)
     divisorWindowGrOfQuot_toSubmodule]
   exact windowBaseChange_windowBaseChange (Localization.Away h) (Localization.Away u)
     (divisorWindow d ha1)
+
+set_option maxHeartbeats 800000 in
+-- The quotient equivalence unfolds the window through the section-ring algebra tower; same
+-- elaboration profile as the chart-typed `divFamWindowGrQuotEquiv`.
