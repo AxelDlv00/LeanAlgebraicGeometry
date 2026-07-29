@@ -367,6 +367,58 @@ theorem RingHom.locally_isStandardSmoothOfRelativeDimension_of
     RingHom.Locally (RingHom.IsStandardSmoothOfRelativeDimension n) f :=
   RingHom.locally_of RingHom.isStandardSmoothOfRelativeDimension_respectsIso f h
 
+/-! ### §2d. Descent splits leaf B unevenly: smoothness descends, the numeral does not
+
+This decides what a `k̄`- or `k^s`-first attack on leaf B can and cannot buy, and it is a
+measurement rather than a reading of the literature. -/
+
+/-- **Bare smoothness descends along a surjective flat quasi-compact cover.** Mathlib has
+the instance `DescendsAlong @Smooth (@Surjective ⊓ @Flat ⊓ @QuasiCompact)`; this is it
+applied, recorded because §2d's point is the contrast with the graded property.
+
+Consequence for the route: a proof of `Pic⁰`-smoothness over an extension field where the
+curve acquires a point transfers back to `k` for free. -/
+theorem smooth_of_pullback_snd {X Y Y' : Scheme.{u}} (f : X ⟶ Y) (g : Y' ⟶ Y)
+    [Surjective g] [Flat g] [QuasiCompact g]
+    (hup : Smooth (Limits.pullback.snd f g)) : Smooth f :=
+  MorphismProperty.of_pullback_snd_of_descendsAlong (P := @Smooth)
+    (Q := @Surjective ⊓ @Flat ⊓ @QuasiCompact) ⟨⟨‹_›, ‹_›⟩, ‹_›⟩ hup
+
+/-- **The numeral does NOT come with it, and this is where a `k̄`-first attack on leaf B
+stops.** `SmoothOfRelativeDimension n` *ascends* along base change
+(`smoothOfRelativeDimension_isStableUnderBaseChange`), but the descent direction is
+absent: mathlib registers `DescendsAlong` for `@Smooth`, `@UniversallyClosed`,
+`@UniversallyOpen`, `@Surjective`, `@IsOpenImmersion` and the isomorphisms, and **not**
+for `@SmoothOfRelativeDimension n`. `HasRingHomProperty.descendsAlong_flat` reduces that
+to `RingHom.CodescendsAlong Q RingHom.FaithfullyFlat` for the registered `Q`, and while
+`RingHom.Smooth.codescendsAlong_faithfullyFlat` exists (as do the `Finite`, `Etale`,
+`FiniteType`, `FinitePresentation`, `FormallyUnramified` versions), there is no such
+lemma for `RingHom.Locally (IsStandardSmoothOfRelativeDimension n)`.
+
+Measured, not assumed: `DescendsAlong` synthesis for the graded class fails, and
+`exact?` on the descent statement fails, while the `@Smooth` analogue
+(`smooth_of_pullback_snd`) closes by instance search — so this is an asymmetry in the
+library, not a failed guess at a name. Per the standing lesson that a failing
+`inferInstance` is not absence, the check was run in both directions.
+
+**So the useful division of labour is:** prove smoothness wherever it is easiest and
+descend it, but the *number* must be established over `k` itself — or a codescent lemma
+for the graded property must be built first, which is a mathlib-shaped piece of work and
+not a Picard-specific one.
+
+**This paragraph is a measured negative and deliberately carries no theorem.** An earlier
+draft of this section stated the descent as an implication taking `DescendsAlong` as a
+hypothesis. That is exactly the `P → P` shape this project has filed against — the
+antecedent *is* the missing fact — so it is recorded as prose plus the two controls above
+and below, not dressed as a result. What a future lane owes, precisely, is
+`RingHom.CodescendsAlong (RingHom.Locally (IsStandardSmoothOfRelativeDimension n))
+RingHom.FaithfullyFlat`; `HasRingHomProperty.descendsAlong_flat` then supplies the scheme
+statement, and `smoothOfRelativeDimension_isStableUnderBaseChange` is the converse already
+in hand. -/
+theorem smoothOfRelativeDimension_ascends_baseChange (n : ℕ) :
+    MorphismProperty.IsStableUnderBaseChange (@SmoothOfRelativeDimension n) :=
+  smoothOfRelativeDimension_isStableUnderBaseChange n
+
 namespace Scheme.Pic0Et
 
 variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
