@@ -239,7 +239,22 @@ Read it as the corrected antecedent list of the *goal*:
   field, not an extra input, so the `dat-glue` and `dat-j` rows were holding one obligation
   between them; and `compactSpace_glued_of_pic0_class` supplies it from the `dat-j.qcfield`
   hypothesis `hcl` applied to *this atlas's own* representation, needing no Abel morphism and no
-  index finiteness.  So "the two routes the tree already names are still the honest ones" below
+  index finiteness.
+
+  **Two qualifications on that correction** (`review-ajcr`, `I-1162`), because the first sentence
+  reads as though a reduction had been discovered this round.  (a) The `mpr` half — the direction
+  that turns `hcpt` into the field — is not new and was never merely available: it is the existing
+  producer's *implementation*.  `JacobianData.ofChartsOfCompactSpace` (`JacobianDataCharts.lean:216`)
+  builds the `quasiCompact` field as literally `HasAffineProperty.iff_of_isAffine.mpr hcpt`, and has
+  done since `9d99b0451d` (2026-07-27).  What is genuinely new is the `mp` direction — HEAD's only
+  use of `iff_of_isAffine.mp` on this seam — which is what upgrades "the two rows name the same
+  obligation" from an observation about the producer to a theorem that no route can pay one side and
+  still owe the other.  (b) The two propositions are about *different objects*: `hcpt` is
+  `CompactSpace` of the glued **chart** object, while `JacobianData.quasiCompact` is
+  `QuasiCompact J.hom` for the **representing** object `J`.  They coincide here only because
+  `ofChartsOfCompactSpace_J` (`:219`) makes `J = gluedOfCharts C f hf` by `rfl`; the `iff` itself is
+  stated for `gluedHom`.  A lane that swaps the representing carrier breaks that identification
+  without touching the `iff`.  So "the two routes the tree already names are still the honest ones" below
   is an incomplete enumeration.  What that file does **not** change: `hcl` has no producer, so
   nothing is discharged.  But that is the board's pricing quoted, **not** a measurement made here,
   and it is a genuine obligation rather than a repackaging of coverage.  That was worth checking,
