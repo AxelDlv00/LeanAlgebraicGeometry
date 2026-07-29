@@ -1,0 +1,71 @@
+id: I-0945
+provider: local
+kind: issue
+body: 'REVIEWER (AJCR) VERDICT, SECOND PASS: the antecedent that looked like a bounded
+  geometry bill needs a DECISION FROM YOU. Sharpens I-0873.
+
+
+  None of the three closes this week -- that stands. What changed is WHY antecedent
+  2 is expensive: it is the one item here no prover lane can settle.
+
+
+  ANTECEDENT 2 (Zariski-local surjectivity of Sigma.desc f; rows dat-b / chart-u)
+  was ranked #2 because "packaging is complete, what it owes is geometry". Tracing
+  the per-point datum through its producer chain rather than the rows, it ends at
+  ONE hypothesis -- IsPlusHonest (Pic0ChartPlusFibreProducer.lean:200): for every
+  affine open U, the class restricted to U lies in the RANGE of relPicToPicEt, i.e.
+  Zariski-locally comes from the UN-sheafified relPic.
+
+
+  That is the etale-sheafification gap, structurally. picEt rests on PicEtAff; PicEtAff
+  C A is a QUOTIENT OVER ALL ETALE COVERS; PicEtAff.unit, relPicToPicEt''s target,
+  is the TRIVIAL cover alone. So honesty asserts no nontrivial etale cover is needed
+  -- what the plus construction exists to permit to fail. Pic0ChartHonest.lean''s
+  own scope note agrees: honesty over Spec E.Carrier, NOT over Spec A, no descent
+  performed.
+
+
+  WHY A DECISION, NOT A LEMMA. Chart side is fine: chartValue = abelDiv * sigmaFamily
+  * (thetaFamily^m)^-1, honesty discharged per factor and closed under the group ops.
+  Coverage is not -- it quantifies over EVERY section of pic0SigmaSheaf; arbitrariness
+  is its content, and narrowing to chart-value shape is circular. The repair refines
+  to the etale carrier and descends: a Zariski-to-etale change of site this antecedent
+  will not absorb. So WHICH SITE should coverage be local for? Above the leaf layer
+  -- the shape of your I-0491 decision, one level down.
+
+
+  NOT a refutation: that needs a class not Zariski-locally in relPic''s image, and
+  this tree has no Brauer machinery. p1/p2 warned off (I-0926/I-0927); the cheap chart-side
+  half left available.
+
+
+  TWO SMALLER THINGS, actionable without you. (1) u2''s blocker is overstated: the
+  vacuous ChartTyping index HAS a chart-free replacement, inhabited at the exponent
+  divisorDatum runs at (DivisorFamilyAffThetaTyping.lean, lake env lean EXIT=0, zero
+  sorries) -- but UNROOTED, landed inside an unrelated Albanese commit, never kernel-checked
+  in-graph. Offered to p4 (I-0941). (2) A docstring named the h1-locus general-test
+  extension "C6''s mem_V_iff", which exists nowhere (I-0917); corrected.
+
+
+  SORRIES, re-measured: still exactly 17 in 2 files -- Challenge.lean 15 (frozen north
+  star), Pic0ThetaCocycle 2 (unrooted).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-29T13:05:58.963887+00:00'
+updated_at: '2026-07-29T13:05:58.963896+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0004-horizon-review-ajcr
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
