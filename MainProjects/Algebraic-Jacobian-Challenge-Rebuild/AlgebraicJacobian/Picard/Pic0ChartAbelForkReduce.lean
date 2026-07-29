@@ -53,10 +53,28 @@ relPicMk (s₂|U).picClass`.  Both directions, no hypothesis beyond the standing
   commutative test ring with **no** Noetherian hypothesis and no residual seam: two certified
   families with equal ε-pairs are equal in `DivFam`.  What is genuinely missing is the *other*
   half — that a `relPic` class separates locally certified systems at one ring — which
-  `RelPicSeparatesDivFamZar` names below.  Whether that half factors through the ε-window (and
-  so through the landed relative mono) is **not settled here**: `divFamEps` is in this file's
-  import closure but the mono chain is not, so composing them is a further step and this file
-  does not take it.
+  `RelPicSeparatesDivFamZar` names below.
+
+  **AND HERE IS THE TRAP, which the obvious reading of the previous paragraph walks into.**
+  It is tempting to say: the missing half is "class equality ⟹ ε-window equality", a narrow
+  bridge, and the landed mono then finishes the job.  That framing is wrong, and reading
+  `divisorWindow` (`Picard/DivisorFamilyWindow.lean:103`) says why: the window is the
+  *vanishing* submodule of the divisor, `H⁰(𝒪(Θᵃ − d)) ⊆ H_a ⊗ R`.  It is invariant under
+  `DivEq` (`divisorWindow_eq_of_divEq`) but it is **not** a function of the Picard class:
+  linearly equivalent divisors have vanishing submodules of equal *dimension* sitting as
+  *different* subspaces, which is exactly what makes a linear system positive-dimensional.
+
+  So the composite would prove: equal classes ⟹ equal windows ⟹ `DivEq`, over an **arbitrary**
+  test ring and with **no** `h⁰ = 1` hypothesis at any degree.  That is strictly stronger than
+  the field-level keystone of DAT-C GAP-2 (`Scheme.CurveDivisor.eq_of_picClass_eq_of_h0_one`,
+  which is in `RiemannRoch/EffectiveUniqueness.lean` — **note: outside this file's import
+  closure, verified by `#check`**, so it is cited as background and never applied here), whose
+  `hone` binder would become redundant.
+
+  That dichotomy is not left as prose: `h0_eq_one_of_relPicSeparates_field` below **proves** the
+  forcing direction at a field, from the rank anchor.  The consequence to carry off this file:
+  the residue is *equivalent to* a Riemann–Roch statement about the curve at the chart's own
+  degree, so proving it is not a plumbing step.  A lane must not price it as one.
 
 **MEASURED, and it is why the four sites could say what they say**: `DivSchemeMonoBridgeRel`
 is in the import closure of **no** chart file — not `Pic0ChartPair`, not
@@ -77,6 +95,10 @@ each file's own scope and false of the project.
   named at ONE test algebra.  No instance of it is proved here.
 * `AlgebraicGeometry.injective_chartValue_of_relPicSeparates` — it suffices: piecewise
   separation makes the chart map injective on `divFamZar` sections at every test.
+* `AlgebraicGeometry.effective_and_picClass_eq_of_picClass_eq_field` — why the residue is a
+  Riemann–Roch statement rather than plumbing: at a field, class equality already delivers
+  GAP-2's `hD`/`hD'`/`hcl`, leaving exactly its `h⁰ = 1` binder, which the rank anchor ties to
+  the chart's own degree.
 -/
 
 set_option autoImplicit false
@@ -193,6 +215,43 @@ theorem injective_chartValue_of_relPicSeparates [GeometricallyReduced C.hom]
   intro s₁ s₂ h
   refine divFamZar.ext fun U => hsep U ?_
   exact (chartValue_eq_iff_forall_relPicMk_picClass_eq C π n m Z T s₁ s₂).mp h U
+
+/-! ## The residue is a Riemann–Roch statement, not plumbing
+
+The section above names the residue.  This one shows what it *is*, at a field, by exhibiting
+the two hypotheses of DAT-C GAP-2's field keystone as consequences of class equality alone. -/
+
+set_option linter.overlappingInstances false in
+omit [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] in
+variable (n) in
+/-- **At a field, class equality delivers GAP-2's field keystone hypotheses on the nose.**
+
+Two divisor families over a field `K` with equal Čech class have Weil divisors that are
+**effective** (`zero_le_divFamDivisor`) with **equal Picard class** (`picClass_divFamDivisor`).
+Those are exactly `hD`, `hD'` and `hcl` of `Scheme.CurveDivisor.eq_of_picClass_eq_of_h0_one`.
+
+So the only thing standing between class equality and `divFamDivisor F = divFamDivisor G` at a
+field is that lemma's remaining binder `hone : h⁰(𝒪(D)) = 1` — and by the rank anchor
+`h0_eq_deg_add_chi_of_subsingleton_hModule_one` that binder is, at degree `n` on a curve with
+`χ = 1 − g`, equivalent to `n = g` together with vanishing `H¹`.
+
+**This is why the residue cannot be plumbing.**  A proof of `RelPicSeparatesDivFamZar` valid at
+an arbitrary degree `n` and an arbitrary ring would, restricted to a field, give uniqueness of
+the effective representative with no `h⁰` hypothesis at all — false as soon as some class of
+degree `n` has a positive-dimensional linear system.  The residue is therefore *calibrated to
+the chart's degree*, and the fork's two branches are: `n` is the degree where `h⁰ = 1` holds
+(positive branch, and then the whole restriction apparatus may be unnecessary), or it is not
+(negative branch, and a witness exists).  Neither is decided here. -/
+theorem effective_and_picClass_eq_of_picClass_eq_field {K : Type u} [Field K] [Algebra k K]
+    [IsIntegral (relCurve C K)]
+    [SmoothOfRelativeDimension 1 (relCurve C K ↘ Spec (CommRingCat.of K))]
+    [QuasiCompact (relCurve C K ↘ Spec (CommRingCat.of K))] [IsFinite π]
+    (F G : DivFam C K π n) (hcl : F.picClass = G.picClass) :
+    0 ≤ divFamDivisor F ∧ 0 ≤ divFamDivisor G ∧
+      Scheme.CurveDivisor.picClass K (divFamDivisor F)
+        = Scheme.CurveDivisor.picClass K (divFamDivisor G) :=
+  ⟨zero_le_divFamDivisor F, zero_le_divFamDivisor G, by
+    rw [picClass_divFamDivisor, picClass_divFamDivisor, hcl]⟩
 
 /-! ## The negative branch at the sharp target -/
 
