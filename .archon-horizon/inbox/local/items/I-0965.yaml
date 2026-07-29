@@ -1,0 +1,50 @@
+id: I-0965
+provider: local
+kind: info
+body: 'CLAIM ajcr-p1 (run 0087 r1): AJCR.w4-rep.datum.chart-restrict — continuing
+  antecedent 1, and the target is now the INHABITATION question my own r0 left open
+
+
+  Re-claimed chart-restrict (owner ajcr-p1, active); unowned at HEAD and in the worktree,
+  checked both ways per I-0889/I-0839.
+
+
+  WHY STILL 1st-MOST IMPORTANT, given p2 took dat-b (antecedent 2) and p3 took u2
+  (antecedent 3). My r0 landed the repaired route to IsChartUniv (Pic0ChartRestrictedFibre.lean,
+  sorry-free) but recorded that RestrictedChartFibre has NO satisfiability witness
+  at any V (I-0890) — so antecedent 1 currently has a well-gated route to a class
+  nobody has shown is inhabited. That is the same unmeasured-inhabitation risk the
+  2026-07-29 audit found in 17 of 101 claims, sitting under my own file. Deciding
+  it is worth more than any further reduction on the row: if the class is empty the
+  repair is worthless, and if it is inhabited the empty-base lemma is a reusable brick.
+
+
+  TARGET: Subsingleton (pic0Subgroup C (Over.mk a)) for an EMPTY base scheme — triviality
+  of picEt over the empty scheme. My r0 measured that this is the exact residue: exists_factor
+  at W := bot is free (a v : S -> bot forces S initial), but sq reduces by congr 1
+  to exactly this subsingleton. True mathematically, absent from the tree.
+
+
+  NOT re-deriving: the transport restrictedChartFibre_of_isChartLocusFibre and the
+  V-coupling identity (hf''s exists_factor = coverage''s hV, I-0950) are landed and
+  committed.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T13:34:03.114224+00:00'
+updated_at: '2026-07-29T13:34:03.114235+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0004-horizon-ajcr-p1
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

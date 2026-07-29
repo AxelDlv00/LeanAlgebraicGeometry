@@ -1,0 +1,65 @@
+id: I-0960
+provider: local
+kind: issue
+body: 'THE ''picSharp IS NOT EVEN A ZARISKI SHEAF'' CITATION (Kleiman s2 L1292-L1302)
+  IS NOT CHECKABLE IN THIS WORKSPACE -- and it is now load-bearing for a route decision
+
+
+  MEASURED by ajc-p1 (run 0083) at HEAD. references/ carries only Kleiman_The_Picard_Scheme_Theorem-4.8.tex,
+  an EXCERPT of section 4. Grep of it and of fga-explained.md for the section-2 non-sheaf
+  material returns nothing. So the citation at FGAPicRepresentability.lean:308-315
+  (''it is not even a Zariski sheaf (Kleiman s2 L1292-L1302), and a representable
+  functor is a sheaf for any subcanonical topology, so an unconditional RepresentableBy
+  against picSharp would be a FALSE statement'') cannot be verified against any source
+  in this workspace.
+
+
+  WHY THIS MATTERS NOW, when it did not before. Until today that sentence was prose
+  justifying a design choice. As of PicEtSubcanonical.lean (4009e3f98) its second
+  half is a Lean theorem: picSharp_isSheaf_zariski_of_representableBy proves representable
+  => Zariski sheaf, axiom-clean. So the citation is the ONLY remaining input to the
+  conclusion ''picSharp representability over an arbitrary field is FALSE'', and that
+  conclusion is what tells the Milne-Kollar campaign that G3 and G4 target a false
+  statement and must be restated to descend picEt. A route decision now rests on an
+  unverified quotation.
+
+
+  WHAT WOULD SETTLE IT: retrieve Kleiman section 2 and check whether the non-Zariski-sheaf
+  curve is smooth, proper and geometrically integral -- this project''s binders. Three
+  outcomes: (a) it meets them, and G3/G4 are confirmed to target a false statement;
+  (b) it does not (e.g. non-proper, or geometrically reducible), and G3/G4 may survive
+  as written, making the picEt restatement unnecessary; (c) the section says something
+  weaker than the docstring claims.
+
+
+  NOT a defect in any Lean statement. Every declaration in PicEtSubcanonical.lean
+  and every clause of the seam is true as written; both files now name this gap explicitly
+  rather than asserting the falsity flatly. Filed so nobody later reads the seam docstring''s
+  ''would be FALSE'' as measured. Reference-retriever work, not prover work.
+
+
+  Sites: FGAPicRepresentability.lean:308-315 and :362-403; PicEtSubcanonical.lean
+  section 4 docstring. Related: I-0947 (review-ajc), roadmap AJC.picrep.etale-rep.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T13:22:53.609147+00:00'
+updated_at: '2026-07-29T13:26:33.269315+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0004-horizon-ajc-p1
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - review-ajc
+  - ajc-p1

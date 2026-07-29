@@ -1,0 +1,25 @@
+You are a FRESH-CONTEXT REVIEWER auditing the work of a reviewer lane ("review-ajcr") that has just finished a session in the Archon Horizon workspace at /home/axel/LeanAlgebraicGeometry-Horizon. You are READ-ONLY: do not edit any file, roadmap row, or inbox item. Report your findings back to me as text. Be adversarial but fair; your value is in catching an overclaim, not in agreeing.
+
+THE CENTRAL CLAIM TO AUDIT. The session's headline finding is that a Lean predicate called `IsPlusHonest` (in MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0ChartPlusFibreProducer.lean, around line 200) is NOT an provable-in-principle open lemma but rather "the étale-sheafification gap asserted of an arbitrary section", and therefore that the roadmap's #2-ranked item (antecedent 2 of `pic0RepresentableByOfCharts`: Zariski-local surjectivity of `Sigma.desc f`) owes a ROUTE DECISION rather than a bounded piece of geometry.
+
+The argument, as the session made it, is:
+1. `IsPlusHonest C T mu` says: for every affine open U of T.left, mu restricted to U lies in the RANGE of `relPicToPicEt` over Γ(T.left, U).
+2. `picEt` is built on `PicEtAff` (see AlgebraicJacobian/Picard/PicEt.lean header, ~lines 9-21). `PicEtAff C A` (PicEtAff.lean ~line 218) is a QUOTIENT over ALL étale covers — its elements are `PicEtAff.mk E x`.
+3. `PicEtAff.unit` (PicEtAff.lean ~line 377), which is the target of `relPicToPicEt` (PicEtUnit.lean ~line 126), is `mk` at the TRIVIAL cover `.self A` only.
+4. Therefore honesty asserts that no nontrivial étale cover is needed on that piece — which is precisely what the one-step plus construction exists to allow to FAIL.
+5. Pic0ChartHonest.lean's own scope note says its honesty holds over `Spec E.Carrier` and NOT over `Spec A`, and that it performs no descent.
+6. Every one of the (claimed) seven sites where `IsPlusHonest` appears as a CONCLUSION is either a specific constructed class (thetaFamily_isPlusHonest ~:245, sigmaFamily_isPlusHonest ~:256, abelDiv_isPlusHonest ~:275) or a closure property (.mul ~:209, .inv ~:220, .pow ~:230, chartTwist_isPlusHonest ~:294). None concludes it for an arbitrary element of `picEt`.
+7. The chart side is therefore unaffected, because `chartValue = abelDiv * sigmaFamily * (thetaFamily^m)⁻¹` (DivSchemeAbel.lean ~line 351), so the discharged cases cover it.
+8. But coverage (`chartsCoverLocally_of_pointwise`, Pic0ChartCoveragePointwise.lean ~line 128) quantifies over EVERY section `s` of `pic0SigmaSheaf`, so arbitrariness is its content and it cannot be narrowed to chart-value shape without circularity.
+
+YOUR JOB: verify or refute each numbered step by READING THE LEAN STATEMENTS at those locations (do not trust the docstrings, and do not trust my summary above — check the actual code). In particular:
+- Is step 3 right that `relPicToPicEt`'s image is confined to the trivial cover? Read `relPicToPicEt` and `PicEtAff.unit` carefully. Could a class over a nontrivial cover nonetheless be EQUAL (in the quotient) to a `unit` class? If so, the argument in step 4 is too quick, because the range of `relPicToPicEt` could be larger than "classes presented on the trivial cover". This is the step most likely to be wrong — scrutinise it hardest, and say plainly whether the session overstated.
+- Is the count in step 6 accurate? Grep for `IsPlusHonest` as a CONCLUSION and report the actual list. Are there really none for an arbitrary class?
+- Is step 7's factorisation claim right, read from the definition of `chartValue` rather than prose?
+- Is step 8 right that coverage quantifies over arbitrary sections?
+
+ALSO CHECK, more briefly: the session claims that `mem_V_iff` (cited in a docstring at DivisorFamilyH1Locus.lean:56 as "C6's mem_V_iff") does not exist anywhere. Verify with grep across the workspace and with `cd /home/axel/LeanAlgebraicGeometry-Horizon && /home/axel/.archon-env/bin/horizon search "mem_V_iff" --json`. And the claim that DivisorFamilyAffThetaTyping.lean is UNROOTED (nothing imports it) while being sorry-free — verify both halves by grep.
+
+CONSTRAINTS: Do NOT run `lake build` (nine other agent lanes are live and contend the build mutex). `lake env lean <single file>` is acceptable if genuinely needed. If you use the Lean LSP MCP tools, note that a stale import state makes `lean_multi_attempt` report EVERY snippet as succeeding — never trust a probe success without confirming the file elaborates cleanly.
+
+DELIVERABLE: for each numbered step, VERIFIED / REFUTED / CANNOT-DETERMINE with the file:line evidence you actually read. Then a bottom line: is the session's headline claim sound, overstated, or wrong? If overstated, say exactly which sentence should be weakened and to what.

@@ -2,119 +2,17 @@ id: AJC.pic0av.tangent
 title: Cotangent space and H1 comparison
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Cotangent space and H1 comparison. ONE sorry: Picard/Pic0AbelianVariety.lean:853,
-
-  semilinearComparison_cotangentSpaceDual_h1Cok. THIS IS THE LOAD-BEARING OBLIGATION
-  OF THE
-
-  WHOLE A.3 LEG -- measured, not asserted: every declaration in this leg that reports
-  sorryAx
-
-  inherits it from here and from nowhere else, and the leg''s assembly
-
-  Pic0.isAbelianVariety_of_dimension_genus (Picard/GroupSchemeHomogeneity.lean) is
-  AXIOM-CLEAN
-
-  once this is supplied as a hypothesis.
-
-
-  WHAT IS ALREADY DISCHARGED around it: the set-level chain Dual(m_e/m_e^2) = T_0
-  Pic^0 = T_0 Pic
-
-  = ker(Pic#(k[eps]) -> Pic#(k)); the Mumford eps -> a*eps scaling with its action
-  laws; the
-
-  truncated-exponential unit splitting and its naturality; the two-chart Cech unit-cocycle
-  engine;
-
-  the Cech target H^1(C,O_C) = H1Cok on any 2-affine cover; finite-dimensionality
-  of both sides;
-
-  the scalar bijection kappa(e) = k. The old "linearity bookkeeping" leg is fully
-  discharged --
-
-  finrank_eq_of_addEquiv_of_bijective_smul consumes the semilinear package directly.
-
-
-  RESIDUE = CLAUSE (iii) ALONE: send a dual-number kernel class to its transition
-  unit. Clauses
-
-  (i) (chart triviality, via nilpotent Nakayama -- no finiteness of sections assumed)
-  and (ii)
-
-  (Gamma(V x Spec k[eps]) = Gamma(V)[eps]) are THEOREMS.
-
-
-  DO NOT RETRY THE AJCR TWO-CHART CechPic PORT. Refuted at the CARRIER, not on cost
-  (I-0689):
-
-  AJCR''s Scheme.CechPic is a self-contained definitional Picard group whose ONLY
-  bridge to
-
-  invertible SHEAVES is cechPicEquivPic, carrying [IsAffine X] irremovably (the proof
-  needs a
-
-  trivializing basic open per point plus span_tensor_free_eq_top over Gamma(X,top)).
-  Clause (iii)
-
-  lives on a PROPER CURVE -- non-affine precisely because the eps-kernel is nonzero.
-  60 files /
-
-  17k sorry-free lines would land on a carrier with no face onto LineBundle.OnProduct.
-  AJCR
-
-  confirmed the finding does not transfer to their side (their target IS that quotient),
-  which
-
-  strengthens it for us.
-
-
-  NOTE AJC''s LineBundle.OnProduct is a PREDICATE subtype -- {M : Modules // IsLocallyTrivial
-  M}
-
-  (LineBundlePullback.lean:136-137), not cover+trivialization data. So producing one
-  from a
-
-  cocycle requires proving invertibility of the glued sheaf, which is why the cocycle
-  route is not
-
-  direct here. AJCR''s Cohomology/GluedSheaf.lean + TwistedSheaf.lean do build sheaves
-
-  from cocycles over an ARBITRARY scheme with no [IsAffine] -- I chased that lead
-  and it FAILS on
-
-  a CATEGORY mismatch. AJC''s carrier is X.Modules = SheafOfModules X.ringCatSheaf
-  (sheaves of
-
-  O_X-modules, mathlib Modules/Sheaf.lean:37); AJCR''s gluedSheaf/twistSheaf is
-
-  Sheaf (Opens.grothendieckTopology X) (ModuleCat k), i.e. k-modules over the CONSTANT
-  base k
-
-  (GluedSheaf.lean:266). grep across ALL of AJCR: SheafOfModules.unit ZERO files,
-  Scheme.Modules
-
-  ZERO files, IsLocallyTrivial ZERO files. gluedTriv is a k-linear equivalence of
-  SECTION MODULES,
-
-  while IsLocallyTrivial demands an iso of SHEAVES OF O_U-MODULES onto SheafOfModules.unit
-  over an
-
-  AFFINE chart -- a change of enriching base, not bookkeeping, and the O_X-module
-  version of the
-
-  glue ports from nothing in AJCR. DO NOT RE-RUN THIS LEAD.
-
-
-  The genuinely missing statement, absent from both projects AND from mathlib (which
-  has no Picard
-
-  group of a SCHEME at all; CommRing.Pic is ring-level), is: Cech H^1(X, O^x) = isomorphism
-  classes
-
-  of invertible sheaves, for NON-AFFINE X.
-
-  '
+summary: 'Cotangent space and H1 comparison — REPOINTED TO THE ETALE SIDE (ajc-p2,
+  run 0084). Target: the tangent/cotangent dimension chain for Pic0SchemeEt, the development
+  behind headline leaf B (smoothOfRelativeDimension_genus_pic0Et, Jacobian.lean:427,
+  bare sorry). MEASURED: the Jacobian.lean:418-421 pricing — ''transporting the landed
+  chain to Pic0SchemeEt needs the comparison of the two Picard schemes, available
+  only under a section'' — is FALSE. Every engine in the dual-number leg (pointedDualNumberPointsEquivRepresentableFiber,
+  pointedDualNumberPointsEquivAddKernel, relPicKernelSMul, pointedDualNumberPointsEquivOfOpenImmersion,
+  overDualNumberSectionEquivCotangentSpaceDual) is quantified over an arbitrary functor
+  G and an arbitrary RepresentableBy; picSharp enters only at the two application
+  sites. representableEt is exactly that (G, rep) pair. I-0938''s ''the Et tower has
+  no counterpart'' is a statement about what is written, not about what is reachable.'
 status: active
 kind: proof
 priority: high
@@ -137,5 +35,6 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.pic0av
-  updated_at: '2026-07-29T10:29:21.244759+00:00'
+  updated_at: '2026-07-29T13:24:20.009728+00:00'
   milestone: AJC.pic0av
+  owner: ajc-p2

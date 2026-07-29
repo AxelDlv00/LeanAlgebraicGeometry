@@ -1,115 +1,141 @@
 id: AJCR.w4-rep.datum.dat-c.c9-chartlocus.chart-u
-title: 'CHART-U(a)/(b): the co-signed chartLocus c lambda and isOpen_chartLocus (3 missing inputs, all
-  divRep-free)'
+title: 'CHART-U(a)/(b): the co-signed chartLocus c lambda and isOpen_chartLocus (3
+  missing inputs, all divRep-free)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "*** SELF-CORRECTION 2026-07-29, SAME SESSION (review-ajcr, run 0082 s0004, after a fresh-context\n\
-  review of my own work). THE IsPlusHonest FINDING BELOW IS OVERSTATED ON THE STEP THAT CARRIES IT.\n\
-  The route-decision conclusion SURVIVES, for a different and better-evidenced reason. ***\n\nWHAT I GOT\
-  \ WRONG. I argued: relPicToPicEt lands in PicEtAff.unit, unit is mk at the TRIVIAL cover\n`.self A`\
-  \ alone, therefore honesty asserts that no nontrivial etale cover is needed. That step is\nFALSE. PicEtAff.unit_eq_mk\
-  \ (Picard/RelPicCoverInjective.lean:48) proves a unit class is presented on\nEVERY cover E, not only\
-  \ on `.self` -- so \"mk at the trivial cover\" describes one PRESENTATION, not\nthe RANGE, and nothing\
-  \ follows about which classes the range contains.\n\nAND THE ABSOLUTE FORM IS REFUTED BY A LANDED THEOREM\
-  \ IN THIS TREE:\nPicEtAff.unit_surjective_of_section (Picard/EffectivityClose.lean:141) proves the unit\
-  \ SURJECTIVE\nover a field test K admitting a curve point sigma, upgraded to a MulEquiv by\nPicEtAff.unitEquiv_of_section\
-  \ (:186). Over such tests honesty is DISCHARGED OUTRIGHT -- vacuously\ntrue, no etale cover needed anywhere.\
-  \ So \"IsPlusHonest is the sheafification gap asserted of an\narbitrary section\" is wrong as an absolute.\n\
-  \nTHE CORRECTED CLAIM, which is narrower and better supported. The gap is at a GENERAL AFFINE BASE\n\
-  WITH NO SECTION, and the tree documents exactly why:\n * the field route closes only through etale-cover\
-  \ cofinality in finite separable field extensions\n   (Algebra.EtaleCover.exists_finiteSeparableField_algHom,\
-  \ EtaleCover.lean:287) -- there is NO\n   general-base analogue of that cofinality;\n * EffectivityMoving.lean:41-48\
-  \ states plainly that for a merely quasi-finite (non-finite) etale\n   cover the moving statement is\
-  \ FALSE, with a counterexample sketch (B = A_u x A_v over a\n   2-dimensional normal local A with nontrivial\
-  \ local class group). So the [Module.Finite A B]\n   hypothesis in the effectivity layer is load-bearing,\
-  \ not convenience.\n\nSO THE OBSTRUCTION IS BASE-SHAPE, NOT ARBITRARINESS OF THE CLASS. Two consequences:\n\
-  \ 1. the split to hand a prover lane is NOT \"chart value (cheap) vs arbitrary section (blocked)\" but\n\
-  \    \"field test with a section (FREE) vs general sectionless affine base (OPEN)\". The delta between\n\
-  \    the chart side and the coverage side is NARROWER than I priced it;\n 2. antecedent 2 still owes\
-  \ a route decision -- which site coverage is local for -- because the\n    repair still refines covers\
-  \ and descends, and Zariski-local surjectivity still will not absorb\n    that. The conclusion stands;\
-  \ cite the module-finiteness counterexample, NOT the trivial-cover\n    claim, when repeating it.\n\n\
-  Also corrected, same review: I called DivisorFamilyAffThetaTyping.lean UNROOTED. It is ROOTED --\nAlgebraicJacobian.lean:346\
-  \ imports it at HEAD (commit 2b8cef366) and its .olean exists, so it IS\nkernel-checked. Another lane\
-  \ rooted it while I was auditing it and I did not re-run the grep before\npublishing. I-0941's step\
-  \ (i) is therefore already done; its step (ii) stands.\n\n--- the original finding follows; read its\
-  \ trivial-cover reasoning as retracted ---\n\n*** SECOND RE-PRICING 2026-07-29 (run 0082, review-ajcr,\
-  \ issue I-0920): THE \"GENUINELY OPEN\nQUESTION\" BELOW IS NOT OPEN, IT IS THE ETALE-SHEAFIFICATION\
-  \ GAP. Read this before targeting it. ***\n\nThe re-pricing further down is CORRECT and stands: the\
-  \ producer exists\n(exists_isChartDatumPlusFibre_of_mem_range, Pic0ChartPlusFibreProducer.lean:178),\
-  \ clause (i) is\npaid as DATA (chartLocusOpensOfIsPlusHonest, :334), and the residue is the single hypothesis\n\
-  IsPlusHonest (:200). What was wrong is the NEXT sentence -- \"THE GENUINELY OPEN QUESTION ... does\n\
-  IsPlusHonest hold for the class a COVERAGE witness produces? A lane picking this row up should\ntarget\
-  \ that.\" A lane that targets that will not find a proof, and here is why, read off the\nstatement rather\
-  \ than the prose:\n\nIsPlusHonest C T mu says: for every affine open U of T.left, mu|U is in the RANGE\
-  \ of\nrelPicToPicEt over Gamma(T.left,U) -- i.e. Zariski-locally the class comes from the UN-sheafified\n\
-  relPic. But picEt is built on PicEtAff (PicEt.lean:9-21), and PicEtAff C A (PicEtAff.lean:218) is a\n\
-  QUOTIENT OVER ALL ETALE COVERS, whose elements are PicEtAff.mk E x; PicEtAff.unit (:377) -- the\ntarget\
-  \ of relPicToPicEt (PicEtUnit.lean:126) -- is mk at the TRIVIAL cover `.self A` ALONE. So\nhonesty asserts\
-  \ that no nontrivial etale cover is needed on that piece, which is precisely what the\none-step plus\
-  \ construction exists to allow to FAIL.\n\nThe project already says this at the one place it measured\
-  \ it. Pic0ChartHonest.lean's own \"What this\ndoes and does not give\": honesty is obtained \"OVER Spec\
-  \ E.Carrier, NOT over Spec A\" -- purchased by\nCHANGING THE BASE (a cover splits over its own carrier),\
-  \ with \"Nothing here performs that descent\".\n\nWHICH CASES ARE DISCHARGED, and why the chart side\
-  \ is nonetheless fine: `IsPlusHonest C T` occurs as\na CONCLUSION at exactly seven sites, each either\
-  \ a SPECIFIC constructed class (thetaFamily_,\nsigmaFamily_, abelDiv_isPlusHonest at :245/:256/:275)\
-  \ or a closure property (.mul/.inv/.pow/\nchartTwist_isPlusHonest). None concludes it for a class given\
-  \ as an arbitrary element of picEt. The\nchart value IS abelDiv * Sigma * (theta^m)^{-1}, so the discharged\
-  \ cases cover it -- that is exactly\nwhy this row could be re-priced downward at all, and that part\
-  \ is real.\n\nWHERE IT BITES: coverage, and only coverage. chartsCoverLocally_of_pointwise\n(Pic0ChartCoveragePointwise.lean:128)\
-  \ quantifies over EVERY s : (pic0SigmaSheaf C).1.obj (op T) and\nmust produce a chart point hitting\
-  \ it. Arbitrariness is the whole content of coverage; restricting\ns to chart-value shape makes the\
-  \ statement circular. So:\n * honesty of coverage's own WITNESS -- cheap, fine, already covered;\n *\
-  \ honesty of the class s it must HIT -- the sheafification gap. The repair refines to the etale\n  \
-  \ carrier and descends, i.e. changes the site from Zariski to etale, which is the one thing\n   pic0RepresentableByOfCharts'\
-  \ Zariski-locality antecedent cannot absorb.\n\nSO THIS ROW'S REMAINING WORK IS NOT A LEMMA. It is a\
-  \ route decision about which site coverage is\nlocal for, and it belongs above the leaf layer. NOT A\
-  \ REFUTATION: proving IsPlusHonest false for an\narbitrary class needs a class not Zariski-locally in\
-  \ relPic's image, and this tree has no Brauer or\nnontrivial-etale-class machinery to build one. The\
-  \ claim is the weaker sufficient one.\n\n--- the run-0082 first re-pricing and the r7 body follow, both\
-  \ still accurate except as above ---\n\n*** RE-PRICED AT THE TOP 2026-07-29 (run 0082, review-ajcr).\
-  \ THE PRODUCER THIS ROW SAYS DOES NOT\nEXIST IS IN THE TREE, ROOTED AND SORRY-FREE. Read this before\
-  \ pricing anything below. ***\n\nTHE ROW'S CLAIM (r7, below): 'Remaining: a PRODUCER of the per-affine-piece\
-  \ datum, which is a\ndifferent obligation from every row in the chain and is not claimed.' dat-b repeats\
-  \ it ('plus a\nDATUM PRODUCER'); c9b repeats it ('closed modulo a producer').\n\nWHAT IS ACTUALLY THERE.\
-  \ Picard/Pic0ChartPlusFibreProducer.lean -- ROOTED (verified by import-closure\ncomputation from AlgebraicJacobian.lean)\
-  \ and carrying ZERO code sorries:\n * exists_isChartDatumPlusFibre_of_mem_range (:178) -- THE PRODUCER\
-  \ PROPER. For a class in the image\n   of relPicToPicEt, a datum with the plus-class property EXISTS:\
-  \ BasicOpenCocycleDatum.\n   exists_cechPicClass_eq applied to a Cech representative, with relPicMk_surjective\
-  \ supplying the\n   representative. No choice left to the caller.\n * isOpen_chartLocus_of_isPlusHonest\
-  \ -- CHART-U(b) WITH NO RESIDUE for an honest class.\n * chartLocusOpensOfIsPlusHonest (:334) -- the\
-  \ same open AS DATA, i.e. the shape the W field\n   consumes, with the haff argument DISCHARGED rather\
-  \ than passed through. Its own docstring:\n   'c9b's clause (i) paid in full for an honest class: not\
-  \ reduced to, but produced.'\n * testPoint_eq_overSpecMap -- the comparison that made it possible: on\
-  \ an affine test the canonical\n   field point IS the base-change morphism overSpecMap A kappa(t). The\
-  \ ingredient four sessions on\n   this leaf priced as missing mathematics was this identification.\n\
-  \nSO THE RESIDUE IS NOT A PRODUCER. It is IsPlusHonest (:200), a per-affine-piece range condition on\n\
-  the class, and the file discharges it for exactly the classes the Sigma-chart reads:\nchartTwist_isPlusHonest,\
-  \ thetaFamily_isPlusHonest, sigmaFamily_isPlusHonest, abelDiv_isPlusHonest --\nall four VERIFIED PRESENT\
-  \ (each grepped individually as a declaration, not as a docstring mention).\n\nTHE GENUINELY OPEN QUESTION,\
-  \ which is narrower and better-defined than 'a producer': does\nIsPlusHonest hold for the class a COVERAGE\
-  \ witness produces? That is not one of the four discharged\ncases. A lane picking this row up should\
-  \ target that, and should NOT re-derive clause (i).\n\nTHE FILE IS HONEST ABOUT ITSELF, which is why\
-  \ this is a BOARD defect and not a Lean one -- and it is\nthe fifth instance of this leaf's own pattern,\
-  \ now running in the opposite direction. Its header\nrecords that when first committed the non-vacuity\
-  \ paragraph cited abelDiv_isPlusHonest and that\ndeclaration did not exist; it has since been proved.\
-  \ So the file corrected itself and the ROWS were\nnever updated. r7 diagnosed the mechanism as 'THE\
-  \ PROSE IS NOT CHECKED'. The dual is now on the\nrecord: prose that UNDER-states what landed is equally\
-  \ unchecked, and it costs a lane a whole round\nbecause it sends them to build something that exists.\
-  \ An over-priced row is as expensive as an\nover-confident one.\n\n--- the r7 body follows; its 'a producer\
-  \ does not exist' framing is refuted above ---\n\nCHART-U(a)/(b). Reopened at r6 from done, and ADVANCED\
-  \ TO ITS ENDPOINT at r7 (run 0072, lane\najcr-charts): CHART-U(b) at a general test now holds from a\
-  \ WITNESS-FREE hypothesis alone.\n\nSTATE 2026-07-29 (r7). The chain composes. Reading bottom-up:\n\
-  \ * iso-invariance of the split predicate -- isSplitWitnessIsoInvariant_holds (r5, landed);\n * haff\
-  \ (affine-local openness) -- named ChartLocusAffineLocal at r6, DISCHARGED at r7;\n * haff from a per-piece\
+summary: "*** SELF-CORRECTION 2026-07-29, SAME SESSION (review-ajcr, run 0082 s0004,\
+  \ after a fresh-context\nreview of my own work). THE IsPlusHonest FINDING BELOW\
+  \ IS OVERSTATED ON THE STEP THAT CARRIES IT.\nThe route-decision conclusion SURVIVES,\
+  \ for a different and better-evidenced reason. ***\n\nWHAT I GOT WRONG. I argued:\
+  \ relPicToPicEt lands in PicEtAff.unit, unit is mk at the TRIVIAL cover\n`.self\
+  \ A` alone, therefore honesty asserts that no nontrivial etale cover is needed.\
+  \ That step is\nFALSE. PicEtAff.unit_eq_mk (Picard/RelPicCoverInjective.lean:48)\
+  \ proves a unit class is presented on\nEVERY cover E, not only on `.self` -- so\
+  \ \"mk at the trivial cover\" describes one PRESENTATION, not\nthe RANGE, and nothing\
+  \ follows about which classes the range contains.\n\nAND THE ABSOLUTE FORM IS REFUTED\
+  \ BY A LANDED THEOREM IN THIS TREE:\nPicEtAff.unit_surjective_of_section (Picard/EffectivityClose.lean:141)\
+  \ proves the unit SURJECTIVE\nover a field test K admitting a curve point sigma,\
+  \ upgraded to a MulEquiv by\nPicEtAff.unitEquiv_of_section (:186). Over such tests\
+  \ honesty is DISCHARGED OUTRIGHT -- vacuously\ntrue, no etale cover needed anywhere.\
+  \ So \"IsPlusHonest is the sheafification gap asserted of an\narbitrary section\"\
+  \ is wrong as an absolute.\n\nTHE CORRECTED CLAIM, which is narrower and better\
+  \ supported. The gap is at a GENERAL AFFINE BASE\nWITH NO SECTION, and the tree\
+  \ documents exactly why:\n * the field route closes only through etale-cover cofinality\
+  \ in finite separable field extensions\n   (Algebra.EtaleCover.exists_finiteSeparableField_algHom,\
+  \ EtaleCover.lean:287) -- there is NO\n   general-base analogue of that cofinality;\n\
+  \ * EffectivityMoving.lean:41-48 states plainly that for a merely quasi-finite (non-finite)\
+  \ etale\n   cover the moving statement is FALSE, with a counterexample sketch (B\
+  \ = A_u x A_v over a\n   2-dimensional normal local A with nontrivial local class\
+  \ group). So the [Module.Finite A B]\n   hypothesis in the effectivity layer is\
+  \ load-bearing, not convenience.\n\nSO THE OBSTRUCTION IS BASE-SHAPE, NOT ARBITRARINESS\
+  \ OF THE CLASS. Two consequences:\n 1. the split to hand a prover lane is NOT \"\
+  chart value (cheap) vs arbitrary section (blocked)\" but\n    \"field test with\
+  \ a section (FREE) vs general sectionless affine base (OPEN)\". The delta between\n\
+  \    the chart side and the coverage side is NARROWER than I priced it;\n 2. antecedent\
+  \ 2 still owes a route decision -- which site coverage is local for -- because the\n\
+  \    repair still refines covers and descends, and Zariski-local surjectivity still\
+  \ will not absorb\n    that. The conclusion stands; cite the module-finiteness counterexample,\
+  \ NOT the trivial-cover\n    claim, when repeating it.\n\nAlso corrected, same review:\
+  \ I called DivisorFamilyAffThetaTyping.lean UNROOTED. It is ROOTED --\nAlgebraicJacobian.lean:346\
+  \ imports it at HEAD (commit 2b8cef366) and its .olean exists, so it IS\nkernel-checked.\
+  \ Another lane rooted it while I was auditing it and I did not re-run the grep before\n\
+  publishing. I-0941's step (i) is therefore already done; its step (ii) stands.\n\
+  \n--- the original finding follows; read its trivial-cover reasoning as retracted\
+  \ ---\n\n*** SECOND RE-PRICING 2026-07-29 (run 0082, review-ajcr, issue I-0920):\
+  \ THE \"GENUINELY OPEN\nQUESTION\" BELOW IS NOT OPEN, IT IS THE ETALE-SHEAFIFICATION\
+  \ GAP. Read this before targeting it. ***\n\nThe re-pricing further down is CORRECT\
+  \ and stands: the producer exists\n(exists_isChartDatumPlusFibre_of_mem_range, Pic0ChartPlusFibreProducer.lean:178),\
+  \ clause (i) is\npaid as DATA (chartLocusOpensOfIsPlusHonest, :334), and the residue\
+  \ is the single hypothesis\nIsPlusHonest (:200). What was wrong is the NEXT sentence\
+  \ -- \"THE GENUINELY OPEN QUESTION ... does\nIsPlusHonest hold for the class a COVERAGE\
+  \ witness produces? A lane picking this row up should\ntarget that.\" A lane that\
+  \ targets that will not find a proof, and here is why, read off the\nstatement rather\
+  \ than the prose:\n\nIsPlusHonest C T mu says: for every affine open U of T.left,\
+  \ mu|U is in the RANGE of\nrelPicToPicEt over Gamma(T.left,U) -- i.e. Zariski-locally\
+  \ the class comes from the UN-sheafified\nrelPic. But picEt is built on PicEtAff\
+  \ (PicEt.lean:9-21), and PicEtAff C A (PicEtAff.lean:218) is a\nQUOTIENT OVER ALL\
+  \ ETALE COVERS, whose elements are PicEtAff.mk E x; PicEtAff.unit (:377) -- the\n\
+  target of relPicToPicEt (PicEtUnit.lean:126) -- is mk at the TRIVIAL cover `.self\
+  \ A` ALONE. So\nhonesty asserts that no nontrivial etale cover is needed on that\
+  \ piece, which is precisely what the\none-step plus construction exists to allow\
+  \ to FAIL.\n\nThe project already says this at the one place it measured it. Pic0ChartHonest.lean's\
+  \ own \"What this\ndoes and does not give\": honesty is obtained \"OVER Spec E.Carrier,\
+  \ NOT over Spec A\" -- purchased by\nCHANGING THE BASE (a cover splits over its\
+  \ own carrier), with \"Nothing here performs that descent\".\n\nWHICH CASES ARE\
+  \ DISCHARGED, and why the chart side is nonetheless fine: `IsPlusHonest C T` occurs\
+  \ as\na CONCLUSION at exactly seven sites, each either a SPECIFIC constructed class\
+  \ (thetaFamily_,\nsigmaFamily_, abelDiv_isPlusHonest at :245/:256/:275) or a closure\
+  \ property (.mul/.inv/.pow/\nchartTwist_isPlusHonest). None concludes it for a class\
+  \ given as an arbitrary element of picEt. The\nchart value IS abelDiv * Sigma *\
+  \ (theta^m)^{-1}, so the discharged cases cover it -- that is exactly\nwhy this\
+  \ row could be re-priced downward at all, and that part is real.\n\nWHERE IT BITES:\
+  \ coverage, and only coverage. chartsCoverLocally_of_pointwise\n(Pic0ChartCoveragePointwise.lean:128)\
+  \ quantifies over EVERY s : (pic0SigmaSheaf C).1.obj (op T) and\nmust produce a\
+  \ chart point hitting it. Arbitrariness is the whole content of coverage; restricting\n\
+  s to chart-value shape makes the statement circular. So:\n * honesty of coverage's\
+  \ own WITNESS -- cheap, fine, already covered;\n * honesty of the class s it must\
+  \ HIT -- the sheafification gap. The repair refines to the etale\n   carrier and\
+  \ descends, i.e. changes the site from Zariski to etale, which is the one thing\n\
+  \   pic0RepresentableByOfCharts' Zariski-locality antecedent cannot absorb.\n\n\
+  SO THIS ROW'S REMAINING WORK IS NOT A LEMMA. It is a route decision about which\
+  \ site coverage is\nlocal for, and it belongs above the leaf layer. NOT A REFUTATION:\
+  \ proving IsPlusHonest false for an\narbitrary class needs a class not Zariski-locally\
+  \ in relPic's image, and this tree has no Brauer or\nnontrivial-etale-class machinery\
+  \ to build one. The claim is the weaker sufficient one.\n\n--- the run-0082 first\
+  \ re-pricing and the r7 body follow, both still accurate except as above ---\n\n\
+  *** RE-PRICED AT THE TOP 2026-07-29 (run 0082, review-ajcr). THE PRODUCER THIS ROW\
+  \ SAYS DOES NOT\nEXIST IS IN THE TREE, ROOTED AND SORRY-FREE. Read this before pricing\
+  \ anything below. ***\n\nTHE ROW'S CLAIM (r7, below): 'Remaining: a PRODUCER of\
+  \ the per-affine-piece datum, which is a\ndifferent obligation from every row in\
+  \ the chain and is not claimed.' dat-b repeats it ('plus a\nDATUM PRODUCER'); c9b\
+  \ repeats it ('closed modulo a producer').\n\nWHAT IS ACTUALLY THERE. Picard/Pic0ChartPlusFibreProducer.lean\
+  \ -- ROOTED (verified by import-closure\ncomputation from AlgebraicJacobian.lean)\
+  \ and carrying ZERO code sorries:\n * exists_isChartDatumPlusFibre_of_mem_range\
+  \ (:178) -- THE PRODUCER PROPER. For a class in the image\n   of relPicToPicEt,\
+  \ a datum with the plus-class property EXISTS: BasicOpenCocycleDatum.\n   exists_cechPicClass_eq\
+  \ applied to a Cech representative, with relPicMk_surjective supplying the\n   representative.\
+  \ No choice left to the caller.\n * isOpen_chartLocus_of_isPlusHonest -- CHART-U(b)\
+  \ WITH NO RESIDUE for an honest class.\n * chartLocusOpensOfIsPlusHonest (:334)\
+  \ -- the same open AS DATA, i.e. the shape the W field\n   consumes, with the haff\
+  \ argument DISCHARGED rather than passed through. Its own docstring:\n   'c9b's\
+  \ clause (i) paid in full for an honest class: not reduced to, but produced.'\n\
+  \ * testPoint_eq_overSpecMap -- the comparison that made it possible: on an affine\
+  \ test the canonical\n   field point IS the base-change morphism overSpecMap A kappa(t).\
+  \ The ingredient four sessions on\n   this leaf priced as missing mathematics was\
+  \ this identification.\n\nSO THE RESIDUE IS NOT A PRODUCER. It is IsPlusHonest (:200),\
+  \ a per-affine-piece range condition on\nthe class, and the file discharges it for\
+  \ exactly the classes the Sigma-chart reads:\nchartTwist_isPlusHonest, thetaFamily_isPlusHonest,\
+  \ sigmaFamily_isPlusHonest, abelDiv_isPlusHonest --\nall four VERIFIED PRESENT (each\
+  \ grepped individually as a declaration, not as a docstring mention).\n\nTHE GENUINELY\
+  \ OPEN QUESTION, which is narrower and better-defined than 'a producer': does\n\
+  IsPlusHonest hold for the class a COVERAGE witness produces? That is not one of\
+  \ the four discharged\ncases. A lane picking this row up should target that, and\
+  \ should NOT re-derive clause (i).\n\nTHE FILE IS HONEST ABOUT ITSELF, which is\
+  \ why this is a BOARD defect and not a Lean one -- and it is\nthe fifth instance\
+  \ of this leaf's own pattern, now running in the opposite direction. Its header\n\
+  records that when first committed the non-vacuity paragraph cited abelDiv_isPlusHonest\
+  \ and that\ndeclaration did not exist; it has since been proved. So the file corrected\
+  \ itself and the ROWS were\nnever updated. r7 diagnosed the mechanism as 'THE PROSE\
+  \ IS NOT CHECKED'. The dual is now on the\nrecord: prose that UNDER-states what\
+  \ landed is equally unchecked, and it costs a lane a whole round\nbecause it sends\
+  \ them to build something that exists. An over-priced row is as expensive as an\n\
+  over-confident one.\n\n--- the r7 body follows; its 'a producer does not exist'\
+  \ framing is refuted above ---\n\nCHART-U(a)/(b). Reopened at r6 from done, and\
+  \ ADVANCED TO ITS ENDPOINT at r7 (run 0072, lane\najcr-charts): CHART-U(b) at a\
+  \ general test now holds from a WITNESS-FREE hypothesis alone.\n\nSTATE 2026-07-29\
+  \ (r7). The chain composes. Reading bottom-up:\n * iso-invariance of the split predicate\
+  \ -- isSplitWitnessIsoInvariant_holds (r5, landed);\n * haff (affine-local openness)\
+  \ -- named ChartLocusAffineLocal at r6, DISCHARGED at r7;\n * haff from a per-piece\
   \ IsChartDatumPresentation -- chartLocusAffineLocal_of_presentation (r6);\n * IsChartDatumPresentation\
-  \ from hfib + hplus -- isChartDatumPresentation_of_plusFibre (r6);\n * hplus FROM hfib -- isChartDatumPlusFibreAt_of_isScalarTower,\
-  \ NEW AT r7. This was the only\n   missing row, and it was missing WHILE BEING CITED BY NAME.\n\nTHE\
-  \ r7 FINDING, and it is about this lane's own text. Pic0ChartPresentationConverse's header said it\n\
-  does 'not silently assume the transport' because isChartDatumPlusFibreAt_of_isScalarTower was 'the\n\
-  honest statement'. THAT DECLARATION EXISTED NOWHERE IN THE TREE -- advertised by a docstring and\nnever\
-  \ written (failure mode docstring-declaration-lists-unchecked). It exists now (verified present\nthis\
-  \ pass, along with every other declaration r7's chain names)."
+  \ from hfib + hplus -- isChartDatumPresentation_of_plusFibre (r6);\n * hplus FROM\
+  \ hfib -- isChartDatumPlusFibreAt_of_isScalarTower, NEW AT r7. This was the only\n\
+  \   missing row, and it was missing WHILE BEING CITED BY NAME.\n\nTHE r7 FINDING,\
+  \ and it is about this lane's own text. Pic0ChartPresentationConverse's header said\
+  \ it\ndoes 'not silently assume the transport' because isChartDatumPlusFibreAt_of_isScalarTower\
+  \ was 'the\nhonest statement'. THAT DECLARATION EXISTED NOWHERE IN THE TREE -- advertised\
+  \ by a docstring and\nnever written (failure mode docstring-declaration-lists-unchecked).\
+  \ It exists now (verified present\nthis pass, along with every other declaration\
+  \ r7's chain names)."
 status: active
 kind: proof
 priority: normal

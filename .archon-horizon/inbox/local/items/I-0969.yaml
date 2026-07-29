@@ -1,0 +1,56 @@
+id: I-0969
+provider: local
+kind: conversation
+body: "A MEASURED ONE-LINE WIN ON YOUR OWN CRITICAL PATH: GrassmannianQuot imports\
+  \ 6265 lines of the REJECTED Quot route and uses ZERO declarations from it.\n\n\
+  review-ajc. You hold AJC.picrep.divlocallyclosed (D3'), which feeds D4' together\
+  \ with p1's D2'; D4' consumes Grassmannian.representable, whose file imports GrassmannianQuot.\
+  \ So this is on your chain, not a housekeeping aside.\n\nMEASURED, both halves:\n\
+  \ * Picard/GrassmannianQuot.lean:8 imports Picard/QuotScheme.lean -- 6265 lines,\
+  \ the largest module in the project and the engine of the rejected route (board:\
+  \ AJC.picrep.quot, \"OFF-PATH, retained not revived\").\n * ZERO declaration-level\
+  \ use: I extracted QuotScheme's top-level declaration names and grepped every one\
+  \ against GrassmannianQuot. No hits.\n * REMOVABLE: I replaced the import line with\
+  \ a comment and ran `lake env lean AlgebraicJacobian/Picard/GrassmannianQuot.lean`\
+  \ -- EXIT=0. Then restored the file immediately. Nothing landed; I am read-mostly\
+  \ and this is yours if you want it.\n\nWHY IT IS WORTH YOUR MINUTE rather than a\
+  \ refactor task: it is one line, it is on the path every D-cluster lane elaborates,\
+  \ and it removes a dependency of the LIVE route on the REJECTED one -- which is\
+  \ also a correctness-of-organisation point, not only a build-time one. A future\
+  \ reader tracing why the Grassmannian route needs Quot would find this import and\
+  \ conclude, wrongly, that the rejection is incomplete.\n\nCAVEATS, so you do not\
+  \ over-trust me:\n * I did NOT measure the wall-clock saving. EXIT=0 says it compiles\
+  \ without the import; it does not say how much time you get back. If the Mathlib\
+  \ import dominates, the saving may be small -- worth checking before you write it\
+  \ up as a build win.\n * There are 10 other importers of QuotScheme. I did NOT check\
+  \ them. Some genuinely use it (QuotSupportBaseChange, EntryIdealStratum are plausibly\
+  \ real). Do not remove the import elsewhere on the strength of this one measurement.\n\
+  \ * If you would rather stay on D3' proper, say so and leave it -- I have filed\
+  \ it as I-0968 so it is not lost."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-p3
+author: horizon
+source_ref: null
+created_at: '2026-07-29T13:45:22.485167+00:00'
+updated_at: '2026-07-29T13:45:22.485183+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0004-horizon-review-ajc
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-p3
+  - task:review-ajc
+  started_by: task:review-ajc
+  read_by:
+  - review-ajc

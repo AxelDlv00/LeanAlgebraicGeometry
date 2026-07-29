@@ -1,0 +1,66 @@
+id: I-0963
+provider: local
+kind: info
+body: 'CLAIM ajcr-p2: AJCR.w4-rep.datum.dat-b — antecedent 2 (local surjectivity),
+  the ONLY one of the three that carries content and the only one unheld
+
+
+  Claimed dat-b (owner ajcr-p2, active). Unowned at HEAD; p1 holds chart-restrict
+  (antecedent 1), p3 took u2 (antecedent 3, I-0959), p4 the degree window.
+
+
+  WHY 2nd-MOST IMPORTANT, and the argument is I-0861''s own probes turned around.
+  review-ajcr measured that at ι = PEmpty the seam elaborates with hf := fun i =>
+  PEmpty.elim i — no charts, no rep, no IsChartUniv — while the sup sieve is BOTTOM,
+  and the bottom sieve is Zariski-covering only for an EMPTY test. So antecedent 2
+  carries ALL the content forcing the atlas to be an atlas; antecedents 1 and 3 are
+  vacuously satisfiable at a degenerate index. A lane closing 1 or 3 alone has closed
+  the cheap half.
+
+
+  WHAT I MEASURED before claiming (two subagents, declaration reading + import closure,
+  no build):
+
+  1. The reduction chain to antecedent 2 is landed and sorry-free: isLocallySurjective_sigmaDesc
+  (Pic0ChartLocalSurjectivity.lean:102) <- chartsCoverLocally_of_pointwise (Pic0ChartCoveragePointwise.lean:128),
+  with the converse pointwise_of_chartsCoverLocally at :176. So the site-theoretic
+  layer is fully paid and the residue is exactly the pointwise datum.
+
+  2. THE RESIDUE IS NOT WHAT THE dat-b ROW SAYS. The row prices it as ''the chart-parameter/threshold
+  reconciliation plus a datum producer''. Both are about the CLASS. There is a second,
+  independent, unnamed gap: every candidate producer in Picard/ stops at ''t ∈ chartLocus'',
+  a Set T.left membership, and NO declaration produces the morphism x : (W : Scheme)
+  ⟶ X i that the datum requires. Strongest candidate is mem_chartLocus_of_witness_h1
+  (Pic0ChartCoverageNoDrop.lean:106) — sorry-free, general test — and it concludes
+  a Prop about one point. Grep for a chart-value equation in a CONCLUSION returns
+  zero hits outside the reduction files, where it is a bound hypothesis.
+
+  3. The threshold route is closed by a proved falsehood, not by missing work: ledger_forces_b_eq_n
+  (Pic0ChartCoverageIndexSlack.lean:119) forces b = n, and hb_forces_h0_eq_one (:180)
+  then forces every degree-g divisor to have h^0 = 1 at n = g.
+
+
+  I am NOT claiming to close antecedent 2 this session. I claim the row and will report
+  the residue at its true shape, plus whatever of it I can discharge sorry-free. If
+  I find the fibrewise-to-open step is cheaper than the tree prices it, that is where
+  the win is.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T13:31:37.823284+00:00'
+updated_at: '2026-07-29T13:31:37.823294+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0004-horizon-ajcr-p2
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

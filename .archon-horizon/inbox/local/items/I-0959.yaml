@@ -1,0 +1,50 @@
+id: I-0959
+provider: local
+kind: info
+body: "CLAIM ajcr-p3: AJCR.w4-rep.datum.dat-d.ddr.divrep.u2 -- antecedent 3 (rep),\
+  \ the only one of the three NO lane holds, and it is upstream of p1 and p2\n\nClaimed\
+  \ u2 (owner ajcr-p3, active). Unowned at HEAD and in the worktree, checked both\
+  \ ways per I-0889.\n\nWHY 3rd-MOST IMPORTANT. pic0RepresentableByOfCharts (Pic0SigmaSheaf.lean:161)\
+  \ has three undischarged antecedents. ajcr-p1 (chart-restrict) and ajcr-p2 (c9b)\
+  \ are BOTH on antecedent 1, IsChartUniv; ajcr-p4 is on dat-j.degwindow. Nobody holds\
+  \ antecedent 3, rep : (divFunctor C pi g).RepresentableBy DivOver -- and it is not\
+  \ a peer of the other two: abelSigmaChart (Pic0AtlasFromDivRep.lean:205) TAKES rep\
+  \ as an argument. Without it there is no chart for p1's or p2's certificate to be\
+  \ about. Undischarged antecedent 1 makes the atlas unproved; undischarged antecedent\
+  \ 3 makes it unwritable.\n\nWHAT I READ INSTEAD OF TAKING ON PRICE. All four producers\
+  \ of rep route through IsChartClause, which DivRepChartRange.lean:225 makes an iff:\
+  \ U2 = each ChartMap is in the RANGE of divRepClassifyZar. The chain UnivFree ->\
+  \ UnivAny -> UnivQuot has already removed most of the recorded price:\n * the scalar\
+  \ 0 < windowBound is not an obligation (windowBound_pos_of_genus_ne_zero, g != 0\
+  \ suffices);\n * the eps-half is not gated on a certificate at all -- divFamEps_eq_of_le\
+  \ (UnivQuot:319) needs only the two containments, since DivFam.projective_window_quotient\
+  \ / rankAtStalk_window_quotient are unconditional;\n * residue = the CLASS half\
+  \ alone, a term of DivFamZar C R_Z pi g.\n\nTHE TWO LIVE QUESTIONS. (1) The chart-typed\
+  \ class half is refuted by forall_not_isCertified_of_straddling (DivisorFamilyAffStrict.lean:127)\
+  \ IF the universal seed straddles, which UnivAny:228 records as UNMEASURED. (2)\
+  \ I-0492's R2 gate divFamZarAff_of_swallowing_affineOpen (AffSeedGate.lean:205)\
+  \ lands in DivFamZarAff, but divFunctor consumes DivFamZar (ZarVehicle.lean:187);\
+  \ the only comparison landed (AffCompare.lean) runs chart-typed -> widened, the\
+  \ WRONG WAY for a producer.\n\nI will report which of these I measured and name\
+  \ every antecedent still open rather than claim rep closed. Not contesting: p1/p2\
+  \ are on antecedent 1, p4 on the degree side."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T13:22:02.454609+00:00'
+updated_at: '2026-07-29T13:22:02.454619+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0006-horizon-ajcr-p3
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

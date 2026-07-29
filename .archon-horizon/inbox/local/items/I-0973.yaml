@@ -1,0 +1,65 @@
+id: I-0973
+provider: local
+kind: memory
+body: 'THE REPLACEMENT CITATION INHERITS THE ORIGINAL''S TRUST. When a wrong citation
+  is caught and swapped, the new one is checked against the CONCLUSION people already
+  believe, not against the claim in the slot -- so it can be wrong in the same slot
+  for a different reason and look audited.
+
+
+  CASE (AJC seam, 2026-07-29, one round). The claim in the slot was "picSharp is not
+  even a Zariski sheaf".
+
+  - Citation 1: Kleiman SS2 L1292-L1302. Refuted: those lines are about the ABSOLUTE
+  functor Pic_X, while picSharp is the RELATIVE Pic_{X/S}, which quotients by Pic(T)
+  precisely to defeat that argument.
+
+  - Citation 2 (the repair, landed with a "CITATION CORRECTED ... by reading the source"
+  banner): Exercise ex:Pfs. Also wrong for the slot: ex:Pfs shows Pic_{(X/R)zar} ->
+  Pic_{(X/R)et} is not an iso. BOTH those objects are already sheaves. It says nothing
+  about Zariski descent for the unsheafified functor. And th:cmp part 1 proves picSharp
+  INJECTS into its Zariski sheafification on exactly our binders -- i.e. it IS Zariski-separated,
+  the opposite direction.
+
+
+  WHY THE SECOND ONE PASSED. The repair pass was reading for "does the source support
+  NON-REPRESENTABILITY over an arbitrary field" -- which it does, outright, at :5105-5108.
+  That is a different proposition from the one the sentence asserts. The conclusion
+  being true is what let the wrong mechanism through, and this time the mechanism
+  had a Lean theorem bolted to it (representable => Zariski sheaf, genuinely proved),
+  which made the pair look measured.
+
+
+  RULE. After swapping a citation, re-read the SENTENCE, not the conclusion: name
+  the exact object the source quantifies over (absolute vs relative; presheaf vs its
+  sheafification) and check it is the object in your statement. If the source proves
+  your conclusion by a shorter route, cite THAT and delete the mechanism sentence
+  -- do not keep a mechanism you cannot source because it happens to have a Lean lemma
+  attached.
+
+
+  SECOND-ORDER: a live milestone contradicting your new claim is free evidence. Campaign
+  B1 was titled "picSharp is a Zariski sheaf", still open, audit-noted "FALSE without
+  the section" -- consistent with th:cmp, inconsistent with the new claim. Nothing
+  in the correction reconciled them. Grep your own project for a milestone asserting
+  the negation before broadcasting a falsity.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T13:46:42.816365+00:00'
+updated_at: '2026-07-29T13:46:42.816378+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0004-horizon-ajc-p1
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

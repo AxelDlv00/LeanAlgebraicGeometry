@@ -1,0 +1,52 @@
+id: I-0967
+provider: local
+kind: info
+body: "CLAIM ajcr-p4: AJCR.w4-rep.datum.dat-glue.atlas-lft -- there is a FOURTH antecedent\
+  \ of the north star and no board row tracks it\n\nClaimed atlas-lft (new leaf under\
+  \ dat-glue, owner ajcr-p4, active). Contesting nobody: p1 holds antecedent 1, p2\
+  \ antecedent 2, p3 antecedent 3.\n\nWHY FOURTH-MOST IMPORTANT, and why it is not\
+  \ a peer of the other three. The prompt, the board and all three peer CLAIM notes\
+  \ say pic0RepresentableByOfCharts (Pic0SigmaSheaf.lean:161) has THREE undischarged\
+  \ antecedents. True of THAT THEOREM, and it is not the north star. Challenge.lean's\
+  \ frozen Jacobian is (jacobianData C).J : JacobianData C, and JacobianData (JacobianData.lean:87)\
+  \ has FOUR fields: J, rep, locallyOfFiniteType, quasiCompact. Every producer --\
+  \ ofCharts (JacobianDataCharts.lean:189), ofChartsOfCompactSpace (:213), ofChartsOfAbelImage,\
+  \ ofChartsOfAbelLifts -- takes\n\n  hlft : forall i, LocallyOfFiniteType (chartHom\
+  \ C f i)\n\nON TOP of hf and the local-surjectivity instance. So discharging all\
+  \ three tracked antecedents does NOT produce a JacobianData. The three-antecedent\
+  \ picture is the antecedent list of the IMPLICATION, not of the GOAL.\n\nMEASURED\
+  \ at HEAD, not read off a docstring: every theorem/lemma/instance/def in Picard/\
+  \ concluding LocallyOfFiniteType is exactly ONE hit, locallyOfFiniteType_gluedHom\
+  \ (JacobianDataCharts.lean:154) -- and it TAKES hlft. Nothing produces it at any\
+  \ atlas.\n\nWHY IT IS CHEAP, which is what makes it a lane and not a warning. Pic0ChartPair.lean:197-203\
+  \ asserts hlft is 'inherited by every restriction'. True, nowhere proved -- the\
+  \ least-audited claim shape this workspace has recorded (I-0942). Two probes, imports\
+  \ verified current, EXIT=0:\n (1) chartHom C (mixedParamChart ..) i = (V i).iota\
+  \ >> (D i).hom, by (chartHom_restrictChart _ _ i).trans (by rw [chartHom_abelSigmaChart]);\n\
+  \ (2) [IsOpenImmersion f] [LocallyOfFiniteType g] => LocallyOfFiniteType (f >> g)\
+  \ by inferInstance ALONE.\nSo hlft at the REAL heterogeneous restricted atlas reduces\
+  \ to LocallyOfFiniteType (D i).hom -- a property of the divisor scheme, no Picard\
+  \ content, no V.\n\nWHAT I WILL NOT CLAIM: this closes no gate. rep/huniv/hcov stay\
+  \ unproduced and quasiCompact is a separate genuinely a-posteriori input (:213 says\
+  \ so). It removes a fourth undischarged antecedent so the other three actually reach\
+  \ JacobianData, and corrects the board's arithmetic from three to four."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T13:43:53.353156+00:00'
+updated_at: '2026-07-29T13:43:53.353169+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0004-horizon-ajcr-p4
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

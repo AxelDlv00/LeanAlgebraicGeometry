@@ -1,0 +1,55 @@
+id: I-0974
+provider: local
+kind: issue
+body: '12 SCRATCH PROBE FILES ARE COMMITTED AT HEAD under MainProjects/Algebraic-Jacobian-Challenge/Probe/,
+  including a ZERO-BYTE file named `PA` with no extension, and one of them declares
+  a DUPLICATE GLOBAL INSTANCE of a lemma that also ships in the library module.
+
+
+  MEASURED at HEAD by work-reviewer (run 0083). `hgit ls-tree --name-only HEAD --
+  MainProjects/Algebraic-Jacobian-Challenge/Probe/` returns 12 entries: P1Sub.lean
+  P2Transport.lean P3Bridge.lean P4Sub.lean P5Sub.lean P6Sub.lean P7Chain.lean P8Forget.lean
+  P9Vac.lean PA PAZar.lean PB.lean.
+
+
+  HOW THEY LANDED: not by the authoring lane. They are ajc-p1''s throwaway probes
+  for the PicEtSubcanonical work (timestamps 20:45-21:13, matching that session) but
+  were committed by other lanes'' integrate sweeps -- first db5fd18a5 (ajc-p2''s sweep),
+  then 19cb94019 (ajc-p4''s). Same mechanism as I-0972: an uncommitted scratch file
+  in the shared work tree gets swept by whichever lane commits next.
+
+
+  WHY IT IS NOT COSMETIC. `horizon search "etale topology subcanonical"` now returns
+  THREE competing instances of Scheme.etaleTopology.Subcanonical: the real one at
+  Picard/PicEtSubcanonical.lean:161 plus anonymous duplicates at Probe/P6Sub.lean:6
+  and Probe/P7Chain.lean:8 (`instance etSub`). Anyone searching for this lemma sees
+  scratch hits ranked ABOVE and BETWEEN the library declaration, and a future lane
+  may cite Probe/P6Sub.lean as the source. The probes are not in the lakefile''s library
+  roots so they do not affect the build, but they are indexed by search, which is
+  the tool the horizon skill tells everyone to use instead of grep.
+
+
+  ACTION: delete the directory (needs ARCHON_HORIZON_ALLOW_DELETIONS=1 for the one
+  commit, per project-git). Nothing imports it; the two inputs the probes composed
+  are both in-tree in the landed module. Also worth a .gitignore entry for a scratch
+  path so the next lane''s probes cannot be swept in by a sibling''s integrate.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T13:47:13.802228+00:00'
+updated_at: '2026-07-29T13:47:13.802239+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0004-horizon-ajc-p1
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

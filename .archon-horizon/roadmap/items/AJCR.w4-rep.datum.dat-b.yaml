@@ -1,92 +1,113 @@
 id: AJCR.w4-rep.datum.dat-b
-title: 'DAT-B: coverage + injectivity — every $\mathrm{pic}^0$ point is Zariski-locally a chart point
-  (RE-5 descent + engine + DAT-P points); injectivity from the separatedness lane'
+title: 'DAT-B: coverage + injectivity — every $\mathrm{pic}^0$ point is Zariski-locally
+  a chart point (RE-5 descent + engine + DAT-P points); injectivity from the separatedness
+  lane'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "*** SELF-CORRECTION 2026-07-29, SAME SESSION (review-ajcr, run 0082 s0004, after a fresh-context\n\
-  review of my own work). THE IsPlusHonest FINDING BELOW IS OVERSTATED ON THE STEP THAT CARRIES IT.\n\
-  The route-decision conclusion SURVIVES, for a different and better-evidenced reason. ***\n\nWHAT I GOT\
-  \ WRONG. I argued: relPicToPicEt lands in PicEtAff.unit, unit is mk at the TRIVIAL cover\n`.self A`\
-  \ alone, therefore honesty asserts that no nontrivial etale cover is needed. That step is\nFALSE. PicEtAff.unit_eq_mk\
-  \ (Picard/RelPicCoverInjective.lean:48) proves a unit class is presented on\nEVERY cover E, not only\
-  \ on `.self` -- so \"mk at the trivial cover\" describes one PRESENTATION, not\nthe RANGE, and nothing\
-  \ follows about which classes the range contains.\n\nAND THE ABSOLUTE FORM IS REFUTED BY A LANDED THEOREM\
-  \ IN THIS TREE:\nPicEtAff.unit_surjective_of_section (Picard/EffectivityClose.lean:141) proves the unit\
-  \ SURJECTIVE\nover a field test K admitting a curve point sigma, upgraded to a MulEquiv by\nPicEtAff.unitEquiv_of_section\
-  \ (:186). Over such tests honesty is DISCHARGED OUTRIGHT -- vacuously\ntrue, no etale cover needed anywhere.\
-  \ So \"IsPlusHonest is the sheafification gap asserted of an\narbitrary section\" is wrong as an absolute.\n\
-  \nTHE CORRECTED CLAIM, which is narrower and better supported. The gap is at a GENERAL AFFINE BASE\n\
-  WITH NO SECTION, and the tree documents exactly why:\n * the field route closes only through etale-cover\
-  \ cofinality in finite separable field extensions\n   (Algebra.EtaleCover.exists_finiteSeparableField_algHom,\
-  \ EtaleCover.lean:287) -- there is NO\n   general-base analogue of that cofinality;\n * EffectivityMoving.lean:41-48\
-  \ states plainly that for a merely quasi-finite (non-finite) etale\n   cover the moving statement is\
-  \ FALSE, with a counterexample sketch (B = A_u x A_v over a\n   2-dimensional normal local A with nontrivial\
-  \ local class group). So the [Module.Finite A B]\n   hypothesis in the effectivity layer is load-bearing,\
-  \ not convenience.\n\nSO THE OBSTRUCTION IS BASE-SHAPE, NOT ARBITRARINESS OF THE CLASS. Two consequences:\n\
-  \ 1. the split to hand a prover lane is NOT \"chart value (cheap) vs arbitrary section (blocked)\" but\n\
-  \    \"field test with a section (FREE) vs general sectionless affine base (OPEN)\". The delta between\n\
-  \    the chart side and the coverage side is NARROWER than I priced it;\n 2. antecedent 2 still owes\
-  \ a route decision -- which site coverage is local for -- because the\n    repair still refines covers\
-  \ and descends, and Zariski-local surjectivity still will not absorb\n    that. The conclusion stands;\
-  \ cite the module-finiteness counterexample, NOT the trivial-cover\n    claim, when repeating it.\n\n\
-  Also corrected, same review: I called DivisorFamilyAffThetaTyping.lean UNROOTED. It is ROOTED --\nAlgebraicJacobian.lean:346\
-  \ imports it at HEAD (commit 2b8cef366) and its .olean exists, so it IS\nkernel-checked. Another lane\
-  \ rooted it while I was auditing it and I did not re-run the grep before\npublishing. I-0941's step\
-  \ (i) is therefore already done; its step (ii) stands.\n\n--- the original finding follows; read its\
-  \ trivial-cover reasoning as retracted ---\n\n*** RE-PRICED 2026-07-29 (run 0082, review-ajcr, issue\
-  \ I-0920). THIS ROW SAYS ITS ONLY REMAINING\nDEBT IS \"GEOMETRY\". IT IS NOT: THE RESIDUE IS A ROUTE\
-  \ DECISION ABOUT WHICH SITE COVERAGE IS LOCAL\nFOR, AND NO LEAF-LEVEL LEMMA REACHES IT. ***\n\nThe row's\
-  \ structural claims below are all VERIFIED and stand: B-5 -> B-6 really is one step\n(isLocallySurjective_sigmaDesc_of_pointwise,\
-  \ Pic0ChartCoveragePointwise.lean:~150) with a genuine\nconverse (pointwise_of_chartsCoverLocally),\
-  \ so the pointwise form is not a strengthening chosen to\nbe provable; three files do carry the instance\
-  \ as an unproduced variable; the site-theoretic layer\nreally is gone. What is wrong is the pricing\
-  \ of the residue.\n\nTHE RESIDUE, TRACED. The row says the pointwise data needs \"the reconciliation\
-  \ itself plus a DATUM\nPRODUCER\". The producer EXISTS (exists_isChartDatumPlusFibre_of_mem_range,\n\
-  Pic0ChartPlusFibreProducer.lean:178, rooted, sorry-free) -- that was the run-0082 first re-pricing\n\
-  and it stands. Tracing what the producer then needs lands on ONE hypothesis, IsPlusHonest (:200),\n\
-  and that hypothesis is where this row's real cost is:\n\n  IsPlusHonest C T mu := for every affine open\
-  \ U of T.left, mu|U is in the RANGE of relPicToPicEt.\n\nThat is Zariski-local membership in the image\
-  \ of the UN-sheafified relPic. picEt is built on\nPicEtAff (PicEt.lean:9-21); PicEtAff C A (PicEtAff.lean:218)\
-  \ is a QUOTIENT OVER ALL ETALE COVERS;\nPicEtAff.unit (:377), the target of relPicToPicEt (PicEtUnit.lean:126),\
-  \ is the TRIVIAL cover alone.\nSo honesty says no nontrivial etale cover is needed -- exactly what the\
-  \ one-step plus construction\nexists to permit to fail. Pic0ChartHonest.lean, the tree's only honesty\
-  \ mechanism, is explicit that\nit delivers honesty over Spec E.Carrier and NOT over Spec A, and that\
-  \ it performs no descent.\n\nWHY THIS ROW AND NOT THE CHART ROWS. All seven IsPlusHonest conclusions\
-  \ in the tree are either a\nspecific constructed class (thetaFamily/sigmaFamily/abelDiv) or a closure\
-  \ property. The CHART value\nis abelDiv * Sigma * (theta^m)^{-1}, so those cases cover it and the chart\
-  \ side is genuinely fine.\nCOVERAGE is not: chartsCoverLocally_of_pointwise quantifies over EVERY\n\
-  s : (pic0SigmaSheaf C).1.obj (op T) and must produce a chart point hitting it. Arbitrariness IS the\n\
-  content of coverage -- restricting s to chart-value shape makes it circular.\n\nCONSEQUENCE FOR THE\
-  \ RANKING. The parent row ranks this leaf #2 with the note \"it carries the content,\nand its packaging\
-  \ is complete; what it owes is geometry\". Amend: what it owes is a DECISION. Refining\nto the etale\
-  \ carrier where honesty is available, then descending, is a Zariski-to-etale change of\nsite, and pic0RepresentableByOfCharts'\
-  \ antecedent is Zariski-local surjectivity. A lane cannot settle\nthat inside this leaf. FOR A PROVER\
-  \ LANE: the tractable sub-piece is honesty of coverage's OWN\nwitness (cheap, already covered by the\
-  \ discharged cases); the intractable one is honesty of the class\nit must hit. Do not conflate them\
-  \ -- the row's \"reconciliation\" language does.\n\n--- the r7 body follows, structurally accurate;\
-  \ read its \"DATUM PRODUCER\" as discharged ---\n\nDAT-B: coverage + injectivity -- every pic^0 point\
-  \ is Zariski-locally a chart point (RE-5 descent\n+ engine + DAT-P points); injectivity from the separatedness\
-  \ lane.\n\nSTATE 2026-07-29 (run 0072 r7, lane ajcr-charts). B-4 IS CLOSED AS A CHAIN; B-5/B-6 PACKAGING\
-  \ IS\nCOMPLETE; what DAT-B still owes is GEOMETRY, and it is now the only thing it owes.\n\nB-4 (the\
-  \ pointwise presentation, this row's long-standing residue): CLOSED modulo a producer.\nBoth halves\
-  \ of IsChartDatumPresentation are witness-free -- forward at r6 (trivial splitting),\nconverse at r6\
-  \ (plus-unit injectivity), and the hplus side condition the converse traded for is\nDISCHARGED at r7\
-  \ by isChartDatumPlusFibreAt_of_isScalarTower. So B-4 rests on\nIsChartDatumPlusFibre alone: no witness,\
-  \ no H1, no divisor, no certificate, no divRep. The r7\ningredient was a transport this lane's OWN docstring\
-  \ named and never wrote; full account on the\nchart-u row.\n\nB-5 -> B-6 (the site-theoretic packaging):\
-  \ COMPLETE since r6 and unchanged.\nisLocallySurjective_sigmaDesc_of_pointwise takes B-5 to the\n[Presheaf.IsLocallySurjective\
-  \ Scheme.zariskiTopology (Sigma.desc f)] instance in ONE step, and\npointwise_of_chartsCoverLocally\
-  \ is its converse, so the pointwise form is not a strengthening\nchosen to be provable. Three files\
-  \ carry that instance as an unproduced variable\n(JacobianDataCharts.lean:117, JacobianDataAbelSurj.lean:183,\
-  \ JacobianDataAbelImage.lean:131) and\nthe ONLY remaining input to it is B-5's pointwise data: per test\
-  \ point, an open neighbourhood, an\nindex, and a chart point over that open with the right class.\n\n\
-  WHAT REMAINS, stated as the one thing it is. The pointwise data is where the chart-parameter /\nthreshold\
-  \ reconciliation lives (exists_mem_chartLocus_of_vanishing_bound already gives the\nexistential form\
-  \ at a point given a splitting and a threshold hit). r7 supplies what that data\nneeds on the OPENNESS\
-  \ side -- chartLocusOpensOfPlusFibre is exactly an open neighbourhood of every\nchart point -- so the\
-  \ residue is the reconciliation itself plus a DATUM PRODUCER, not any\nsite-theoretic or openness step.\
-  \ No sibling lane gates either.\n\nALREADY LANDED AND UNCHANGED: coverage-drop, separably-closed points,\
-  \ divisor-family field\nsurjectivity, local chart openness, fibre-field invariance.\n\nVERIFICATION\
+summary: "*** SELF-CORRECTION 2026-07-29, SAME SESSION (review-ajcr, run 0082 s0004,\
+  \ after a fresh-context\nreview of my own work). THE IsPlusHonest FINDING BELOW\
+  \ IS OVERSTATED ON THE STEP THAT CARRIES IT.\nThe route-decision conclusion SURVIVES,\
+  \ for a different and better-evidenced reason. ***\n\nWHAT I GOT WRONG. I argued:\
+  \ relPicToPicEt lands in PicEtAff.unit, unit is mk at the TRIVIAL cover\n`.self\
+  \ A` alone, therefore honesty asserts that no nontrivial etale cover is needed.\
+  \ That step is\nFALSE. PicEtAff.unit_eq_mk (Picard/RelPicCoverInjective.lean:48)\
+  \ proves a unit class is presented on\nEVERY cover E, not only on `.self` -- so\
+  \ \"mk at the trivial cover\" describes one PRESENTATION, not\nthe RANGE, and nothing\
+  \ follows about which classes the range contains.\n\nAND THE ABSOLUTE FORM IS REFUTED\
+  \ BY A LANDED THEOREM IN THIS TREE:\nPicEtAff.unit_surjective_of_section (Picard/EffectivityClose.lean:141)\
+  \ proves the unit SURJECTIVE\nover a field test K admitting a curve point sigma,\
+  \ upgraded to a MulEquiv by\nPicEtAff.unitEquiv_of_section (:186). Over such tests\
+  \ honesty is DISCHARGED OUTRIGHT -- vacuously\ntrue, no etale cover needed anywhere.\
+  \ So \"IsPlusHonest is the sheafification gap asserted of an\narbitrary section\"\
+  \ is wrong as an absolute.\n\nTHE CORRECTED CLAIM, which is narrower and better\
+  \ supported. The gap is at a GENERAL AFFINE BASE\nWITH NO SECTION, and the tree\
+  \ documents exactly why:\n * the field route closes only through etale-cover cofinality\
+  \ in finite separable field extensions\n   (Algebra.EtaleCover.exists_finiteSeparableField_algHom,\
+  \ EtaleCover.lean:287) -- there is NO\n   general-base analogue of that cofinality;\n\
+  \ * EffectivityMoving.lean:41-48 states plainly that for a merely quasi-finite (non-finite)\
+  \ etale\n   cover the moving statement is FALSE, with a counterexample sketch (B\
+  \ = A_u x A_v over a\n   2-dimensional normal local A with nontrivial local class\
+  \ group). So the [Module.Finite A B]\n   hypothesis in the effectivity layer is\
+  \ load-bearing, not convenience.\n\nSO THE OBSTRUCTION IS BASE-SHAPE, NOT ARBITRARINESS\
+  \ OF THE CLASS. Two consequences:\n 1. the split to hand a prover lane is NOT \"\
+  chart value (cheap) vs arbitrary section (blocked)\" but\n    \"field test with\
+  \ a section (FREE) vs general sectionless affine base (OPEN)\". The delta between\n\
+  \    the chart side and the coverage side is NARROWER than I priced it;\n 2. antecedent\
+  \ 2 still owes a route decision -- which site coverage is local for -- because the\n\
+  \    repair still refines covers and descends, and Zariski-local surjectivity still\
+  \ will not absorb\n    that. The conclusion stands; cite the module-finiteness counterexample,\
+  \ NOT the trivial-cover\n    claim, when repeating it.\n\nAlso corrected, same review:\
+  \ I called DivisorFamilyAffThetaTyping.lean UNROOTED. It is ROOTED --\nAlgebraicJacobian.lean:346\
+  \ imports it at HEAD (commit 2b8cef366) and its .olean exists, so it IS\nkernel-checked.\
+  \ Another lane rooted it while I was auditing it and I did not re-run the grep before\n\
+  publishing. I-0941's step (i) is therefore already done; its step (ii) stands.\n\
+  \n--- the original finding follows; read its trivial-cover reasoning as retracted\
+  \ ---\n\n*** RE-PRICED 2026-07-29 (run 0082, review-ajcr, issue I-0920). THIS ROW\
+  \ SAYS ITS ONLY REMAINING\nDEBT IS \"GEOMETRY\". IT IS NOT: THE RESIDUE IS A ROUTE\
+  \ DECISION ABOUT WHICH SITE COVERAGE IS LOCAL\nFOR, AND NO LEAF-LEVEL LEMMA REACHES\
+  \ IT. ***\n\nThe row's structural claims below are all VERIFIED and stand: B-5 ->\
+  \ B-6 really is one step\n(isLocallySurjective_sigmaDesc_of_pointwise, Pic0ChartCoveragePointwise.lean:~150)\
+  \ with a genuine\nconverse (pointwise_of_chartsCoverLocally), so the pointwise form\
+  \ is not a strengthening chosen to\nbe provable; three files do carry the instance\
+  \ as an unproduced variable; the site-theoretic layer\nreally is gone. What is wrong\
+  \ is the pricing of the residue.\n\nTHE RESIDUE, TRACED. The row says the pointwise\
+  \ data needs \"the reconciliation itself plus a DATUM\nPRODUCER\". The producer\
+  \ EXISTS (exists_isChartDatumPlusFibre_of_mem_range,\nPic0ChartPlusFibreProducer.lean:178,\
+  \ rooted, sorry-free) -- that was the run-0082 first re-pricing\nand it stands.\
+  \ Tracing what the producer then needs lands on ONE hypothesis, IsPlusHonest (:200),\n\
+  and that hypothesis is where this row's real cost is:\n\n  IsPlusHonest C T mu :=\
+  \ for every affine open U of T.left, mu|U is in the RANGE of relPicToPicEt.\n\n\
+  That is Zariski-local membership in the image of the UN-sheafified relPic. picEt\
+  \ is built on\nPicEtAff (PicEt.lean:9-21); PicEtAff C A (PicEtAff.lean:218) is a\
+  \ QUOTIENT OVER ALL ETALE COVERS;\nPicEtAff.unit (:377), the target of relPicToPicEt\
+  \ (PicEtUnit.lean:126), is the TRIVIAL cover alone.\nSo honesty says no nontrivial\
+  \ etale cover is needed -- exactly what the one-step plus construction\nexists to\
+  \ permit to fail. Pic0ChartHonest.lean, the tree's only honesty mechanism, is explicit\
+  \ that\nit delivers honesty over Spec E.Carrier and NOT over Spec A, and that it\
+  \ performs no descent.\n\nWHY THIS ROW AND NOT THE CHART ROWS. All seven IsPlusHonest\
+  \ conclusions in the tree are either a\nspecific constructed class (thetaFamily/sigmaFamily/abelDiv)\
+  \ or a closure property. The CHART value\nis abelDiv * Sigma * (theta^m)^{-1}, so\
+  \ those cases cover it and the chart side is genuinely fine.\nCOVERAGE is not: chartsCoverLocally_of_pointwise\
+  \ quantifies over EVERY\ns : (pic0SigmaSheaf C).1.obj (op T) and must produce a\
+  \ chart point hitting it. Arbitrariness IS the\ncontent of coverage -- restricting\
+  \ s to chart-value shape makes it circular.\n\nCONSEQUENCE FOR THE RANKING. The\
+  \ parent row ranks this leaf #2 with the note \"it carries the content,\nand its\
+  \ packaging is complete; what it owes is geometry\". Amend: what it owes is a DECISION.\
+  \ Refining\nto the etale carrier where honesty is available, then descending, is\
+  \ a Zariski-to-etale change of\nsite, and pic0RepresentableByOfCharts' antecedent\
+  \ is Zariski-local surjectivity. A lane cannot settle\nthat inside this leaf. FOR\
+  \ A PROVER LANE: the tractable sub-piece is honesty of coverage's OWN\nwitness (cheap,\
+  \ already covered by the discharged cases); the intractable one is honesty of the\
+  \ class\nit must hit. Do not conflate them -- the row's \"reconciliation\" language\
+  \ does.\n\n--- the r7 body follows, structurally accurate; read its \"DATUM PRODUCER\"\
+  \ as discharged ---\n\nDAT-B: coverage + injectivity -- every pic^0 point is Zariski-locally\
+  \ a chart point (RE-5 descent\n+ engine + DAT-P points); injectivity from the separatedness\
+  \ lane.\n\nSTATE 2026-07-29 (run 0072 r7, lane ajcr-charts). B-4 IS CLOSED AS A\
+  \ CHAIN; B-5/B-6 PACKAGING IS\nCOMPLETE; what DAT-B still owes is GEOMETRY, and\
+  \ it is now the only thing it owes.\n\nB-4 (the pointwise presentation, this row's\
+  \ long-standing residue): CLOSED modulo a producer.\nBoth halves of IsChartDatumPresentation\
+  \ are witness-free -- forward at r6 (trivial splitting),\nconverse at r6 (plus-unit\
+  \ injectivity), and the hplus side condition the converse traded for is\nDISCHARGED\
+  \ at r7 by isChartDatumPlusFibreAt_of_isScalarTower. So B-4 rests on\nIsChartDatumPlusFibre\
+  \ alone: no witness, no H1, no divisor, no certificate, no divRep. The r7\ningredient\
+  \ was a transport this lane's OWN docstring named and never wrote; full account\
+  \ on the\nchart-u row.\n\nB-5 -> B-6 (the site-theoretic packaging): COMPLETE since\
+  \ r6 and unchanged.\nisLocallySurjective_sigmaDesc_of_pointwise takes B-5 to the\n\
+  [Presheaf.IsLocallySurjective Scheme.zariskiTopology (Sigma.desc f)] instance in\
+  \ ONE step, and\npointwise_of_chartsCoverLocally is its converse, so the pointwise\
+  \ form is not a strengthening\nchosen to be provable. Three files carry that instance\
+  \ as an unproduced variable\n(JacobianDataCharts.lean:117, JacobianDataAbelSurj.lean:183,\
+  \ JacobianDataAbelImage.lean:131) and\nthe ONLY remaining input to it is B-5's pointwise\
+  \ data: per test point, an open neighbourhood, an\nindex, and a chart point over\
+  \ that open with the right class.\n\nWHAT REMAINS, stated as the one thing it is.\
+  \ The pointwise data is where the chart-parameter /\nthreshold reconciliation lives\
+  \ (exists_mem_chartLocus_of_vanishing_bound already gives the\nexistential form\
+  \ at a point given a splitting and a threshold hit). r7 supplies what that data\n\
+  needs on the OPENNESS side -- chartLocusOpensOfPlusFibre is exactly an open neighbourhood\
+  \ of every\nchart point -- so the residue is the reconciliation itself plus a DATUM\
+  \ PRODUCER, not any\nsite-theoretic or openness step. No sibling lane gates either.\n\
+  \nALREADY LANDED AND UNCHANGED: coverage-drop, separably-closed points, divisor-family\
+  \ field\nsurjectivity, local chart openness, fibre-field invariance.\n\nVERIFICATION\
   \ r7: full root build GREEN, 9283 jobs, EXIT=0, zero errors, zero sorry warnings."
 status: active
 kind: proof

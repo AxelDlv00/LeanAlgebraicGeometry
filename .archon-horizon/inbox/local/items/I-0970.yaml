@@ -1,0 +1,73 @@
+id: I-0970
+provider: local
+kind: issue
+body: 'ex:Pfs DOES NOT SUPPORT "picSharp IS NOT A ZARISKI SHEAF" -- it refutes zar-vs-et,
+  not representable-vs-Zariski-sheaf. The SS4 falsity mechanism is unproven; the route
+  conclusion survives on a DIFFERENT citation.
+
+
+  Sites: Picard/PicEtSubcanonical.lean:60-69 and :311-331; Picard/FGAPicRepresentability.lean:330-340,
+  :414-424; informal/pic-representability-campaign.md:340-380.
+
+
+  THE LEAN THEOREM IS FINE. picSharp_isSheaf_zariski_of_representableBy is true, axiom-clean,
+  non-vacuous. The defect is the prose argument now built on it in three files.
+
+
+  ARGUMENT AS WRITTEN: (a) representable => Zariski sheaf [Lean, proved]; (b) ex:Pfs
+  gives a curve on our binders whose picSharp is NOT a Zariski sheaf [claimed]; so
+  picSharp representability over arbitrary k is FALSE.
+
+
+  (b) IS NOT WHAT ex:Pfs SAYS. references/kleiman-picard-src/kleiman-picard.tex:1364-1375
+  + answer :4853-4896: the exercise shows Pic_{(X/R)zar} -> Pic_{(X/R)et} is not an
+  iso, via a class in Pic_{(X/R)et}(R) outside the image of Pic_{(X/R)ZAR}(R). Both
+  are ALREADY SHEAVES (the two sheafifications). Nothing there is about Zariski descent
+  for the unsheafified picSharp. Kleiman nowhere asserts the relative functor fails
+  the Zariski sheaf condition; only the weak :1330 "not a priori a sheaf".
+
+
+  THE SOURCE POINTS THE OTHER WAY: th:cmp part 1 (:1391-1393) proves Pic_{X/S} INJECTS
+  into Pic_{(X/S)zar} when O_S = f_*O_X universally -- automatic on our binders. That
+  is Zariski SEPARATEDNESS. Any failure is gluing only, and ex:Pfs does not witness
+  it.
+
+
+  THE FIX, and the route conclusion survives: Kleiman :5105-5108 and :5126-5129 say
+  outright Pic_{X/R} is NOT REPRESENTABLE for the conic, "since the two functors differ".
+  Direct non-representability, no Zariski-sheaf step needed. So "G3/G4 target a false
+  statement; descend picEt not picSharp" STANDS -- withdraw only the Zariski-sheaf
+  MECHANISM and the claim that the Lean theorem supplies half the proof.
+
+
+  PATTERN: the original citation (SS2 L1292-L1302) was false because it was about
+  the ABSOLUTE Pic_X. Its REPLACEMENT is wrong in the same slot because it is about
+  the two SHEAFIFICATIONS. Twice asserted with a non-supporting citation; the second
+  time inside a Lean docstring beside a theorem that made it look measured.
+
+
+  CORROBORATION: campaign B1 (campaign md:265) is titled "picSharp is a Zariski sheaf",
+  still live, audit-noted "FALSE without the section". Consistent with th:cmp, inconsistent
+  with the SS4 claim. The correction block never reconciles them.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T13:45:44.063262+00:00'
+updated_at: '2026-07-29T13:46:07.656569+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0004-horizon-ajc-p1
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - review-ajc

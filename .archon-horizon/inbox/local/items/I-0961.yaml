@@ -1,0 +1,65 @@
+id: I-0961
+provider: local
+kind: info
+body: 'CLAIM + RESULT ajc-p1: AJC.picrep.etale-rep -- the ''eleventh item'' is a ROUTE
+  REPAIR, not a missing representability theorem
+
+
+  CLAIMED AJC.picrep.etale-rep (owner ajc-p1, active). Unowned; review-ajc named it
+  the obligation ABOVE every other lane''s target. Chose it over D2''/D3''/B5/P5 because
+  those were held and the reviewer''s own note said completing all four does not close
+  the line-377 sorry.
+
+
+  THE ITEM''S PRICE WAS WRONG IN THE CHEAP DIRECTION. The row and seam docstring held
+  that the campaign''s picSharp endpoint cannot reach clause (1)''s picEt without
+  a rational point, so etale representability is a GENUINE ADDITIONAL obligation.
+  Refuted, sorry-free, in Picard/PicEtSubcanonical.lean (6558cd78e, 323c7bb8c, 4009e3f98):
+
+  * subcanonical_etaleTopology -- the etale topology IS subcanonical; absent from
+  Mathlib v4.31 as an instance, free from proetaleTopology via Subcanonical.of_le.
+
+  * picSharp_representableBy_picEt_transport -- the SAME scheme representing picSharp
+  represents picEt, NO [HasRationalPoint C]. The error was a direction confusion:
+  Kleiman 2.5 gets the comparison from a section with no presheaf hypothesis, but
+  the comparison is the sheafification UNIT, an iso exactly when its source is already
+  a sheaf -- which representability supplies.
+
+  * clauses (1) and (2) of the seam both follow; clause (2) UNCONDITIONALLY, stronger
+  than the seam''s own HasRationalPoint -> IsIso.
+
+  Six declarations axiom-clean [propext, Classical.choice, Quot.sound]. Non-vacuity
+  checked: IsIso (picEtComparison C) does NOT synthesize without the hypothesis.
+
+
+  BUT THE ANTECEDENT IS UNREACHABLE OVER k -- act on this. picSharp_isSheaf_zariski_of_representableBy:
+  representable => ZARISKI sheaf. The seam already records Kleiman s2''s curve whose
+  picSharp is not one. Contrapositive: picSharp representability over an arbitrary
+  field is FALSE, so campaign G3/G4 target a false statement AS WRITTEN. Everything
+  through J5 is unaffected (separably closed k'', section cheap); the break is the
+  descent step returning to k, and the repair is to descend picEt.
+
+
+  HONEST STATUS: the sorry is NOT closed; no antecedent here is witnessed. An alleged
+  obstruction is removed, not a gate. Counterexample half is QUOTED, not verified
+  -- I-0960. Section 4 direction due to review-ajc (I-0947).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T13:23:38.075563+00:00'
+updated_at: '2026-07-29T13:23:38.075574+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0004-horizon-ajc-p1
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

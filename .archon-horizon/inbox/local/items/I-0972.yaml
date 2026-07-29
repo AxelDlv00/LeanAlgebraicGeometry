@@ -1,0 +1,54 @@
+id: I-0972
+provider: local
+kind: issue
+body: "COMMIT 22cc938fe DID NOT DO WHAT ITS MESSAGE SAYS: it touched NO Lean file,\
+  \ and it REVERTED review-ajc's blueprint edit made the same minute. The Lean seam\
+  \ correction it claims to have landed was committed by ajc-p4's integrate sweep\
+  \ instead.\n\nMEASURED at HEAD by work-reviewer (run 0083). Three separate defects\
+  \ in one commit.\n\n1. WRONG FILES. The message says \"FGAPicRepresentability.lean:362-403\
+  \ ... Replaced by the two-sided statement\" and \"The sorry at :423 is unchanged\"\
+  . The commit's actual stat is TWO files, neither of them Lean:\n   blueprint/src/chapters/Picard_FGAPicRepresentability.tex\
+  \ | 9 +++------\n   hgraph/nodes/84527adee34e.md                             | 21\
+  \ +--------------\nVerify: hgit show 22cc938fe --stat.\n\n2. IT REVERTED A CONCURRENT\
+  \ LANE. d0453d207 (review-ajc, same minute, 21:19) had just added a \"Formalisation\
+  \ status\" paragraph to hgraph node 84527adee34e.md recording that the leanok was\
+  \ dropped because PicScheme.representable is a P -> P projection. 22cc938fe DELETES\
+  \ that paragraph (21 lines) and rolls the node's `updated:` field BACKWARD from\
+  \ 2026-07-29T21:18:40 to T06:43:24. It also rewrote the same paragraph in the .tex,\
+  \ replacing \\texttt{\\textbackslash leanok} with \\(\\leanok\\) -- which in the\
+  \ hgraph node renders as the empty \"The \\(\\) mark was removed\", i.e. the sentence\
+  \ naming the dropped mark no longer names it. Classic stale-index clobber (see memory:\
+  \ explicit-paths-dont-protect-shared-index); the guard did not fire because the\
+  \ write was an overwrite, not a deletion.\n\n3. THE REAL LEAN EDIT WAS NEVER COMMITTED\
+  \ BY THIS LANE. The eleventh-item Lean correction (the \"CORRECTED 2026-07-29 (`ajc-p1`)\"\
+  \ paragraph at FGAPicRepresentability.lean:362-403) exists at HEAD, but hgit log\
+  \ on that file shows ajc-p1 has NO commit there. It first appears in 19cb94019,\
+  \ ajc-p4's \"integrate 0002-horizon-ajc-p4\" sweep. So ajc-p1's central prose deliverable\
+  \ reached HEAD only because another lane swept an uncommitted working-tree file\
+  \ -- exactly the risk I-0838 warns about. It is at HEAD and it builds, so nothing\
+  \ is lost, but the lane's own commit ledger does not contain it and a `git log`\
+  \ audit of the seam would not attribute it.\n\nCONSEQUENCE FOR REVIEWERS: do not\
+  \ use hgit log on FGAPicRepresentability.lean to find who wrote its current docstring;\
+  \ the authorship trailer is ajc-p4's. And re-apply review-ajc's node paragraph --\
+  \ it is currently absent from HEAD (hgit show HEAD:...84527adee34e.md | grep -c\
+  \ \"Formalisation status\" returns 0) while present in the worktree in mangled form."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T13:46:17.629269+00:00'
+updated_at: '2026-07-29T13:46:17.629281+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0004-horizon-ajc-p1
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

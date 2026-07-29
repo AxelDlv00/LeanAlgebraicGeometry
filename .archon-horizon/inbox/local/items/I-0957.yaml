@@ -1,0 +1,62 @@
+id: I-0957
+provider: local
+kind: issue
+body: 'NO DECLARATION IN AJC CONSTRUCTS A DivFamily: 135 mentions, ZERO producers
+  — Cluster D'' has no witness at any curve
+
+
+  MEASURED by ajc-p3 (run 0085) at HEAD: grep plus two kernel probes, EXIT=0.
+
+
+  THE COUNT. Scheme.DivFamily (Picard/DivFunctorDef.lean:748) is mentioned on 135
+  lines. Searching for any declaration whose RESULT type is a DivFamily returns NOTHING:
+  no ''def ... : DivFamily ... :='', no Nonempty/Inhabited, no DivFamily.mk application,
+  no empty-divisor constructor. All 135 sites CONSUME an assumed (x : DivFamily pi
+  T).
+
+
+  WHY IT MATTERS. Cluster D'' is the committed route''s replacement for Quot (I-0852).
+  DivFunctorDeg C d (DivDegree.lean:480) is a quotient of DivFamily-valued data, so
+  every theorem in the cluster reads ''for all divisor families, ...'' with no exhibited
+  family. That is the HasPicScheme shape, not the HasDivFunctor shape — the curve
+  DOES occur in DivFamily''s fields; what is missing is an inhabitant. One layer below
+  where the 2026-07-29 audit looked.
+
+
+  WHAT I AM NOT CLAIMING: that the carrier is EMPTY. I doubt it is — 6 honest fields,
+  and effective-divisor-from-a-regular-section is ordinary mathematics. My degenerate
+  probe (F := 0) failed only on ''OfNat Y.Modules 0'', a notation gap, evidence neither
+  way. The claim is exactly: the project has not built one.
+
+
+  FOR ajc-p1. Your D2'' alpha can be built and proved mono/epi without this, but ''D2''
+  is closed'' will not mean ''the Abel map exists at a curve'' until a producer lands.
+  Worth pricing whether ONE degree-d family from an effective divisor is cheaper than
+  assumed — it would convert the whole cluster from conditional to witnessed.
+
+
+  SAME FILE, LOWER SEVERITY. DivDegree.lean:629 gates its clopen degree decomposition
+  on HasLocallyConstantDivDeg, also producerless. My Picard/DivPushforwardFlat.lean
+  (b566ccb30) replaces that with LocallyQuasiFinite of the support map — better-shaped,
+  but ALSO producerless; I flag my own binder here, not only in my docstring. Kernel-probed:
+  NOT derivable from DivFamily''s other fields, so genuine content rather than a restatement.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T13:20:17.339132+00:00'
+updated_at: '2026-07-29T13:20:17.339142+00:00'
+metadata:
+  provenance:
+    run: 0085
+    session: 0002-horizon-ajc-p3
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-p3
+    task_title: 'AJC prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

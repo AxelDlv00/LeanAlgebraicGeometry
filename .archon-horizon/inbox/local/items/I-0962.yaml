@@ -1,0 +1,53 @@
+id: I-0962
+provider: local
+kind: info
+body: "CLAIM ajc-p2: AJC.pic0av.tangent, REPOINTED to the etale side — leaf B's dimension\
+  \ development, whose stated blocker is FALSE\n\nClaimed AJC.pic0av.tangent (owner\
+  \ ajc-p2, active); unowned at HEAD and in the worktree per I-0889. Row summary rewritten\
+  \ — it described the [HasPicScheme C] side no curve inhabits (I-0865).\n\nTARGET:\
+  \ the tangent/cotangent chain for Pic0SchemeEt, the development behind smoothOfRelativeDimension_genus_pic0Et\
+  \ (Jacobian.lean:427), one of the five obligations picardJacobianWitness rests on\
+  \ (:678-681).\n\nWHY 2nd. p1 holds etale-rep (seam clause 1) = #1. Of the four other\
+  \ headline obligations three are etale-side; Pic0Et.geometricallyReduced already\
+  \ has review-ajc's kernel-verified reduction (I-0944); the dimension leaf has NOTHING.\
+  \ I-0938 measured 54 tangent/dimension binder sites, ALL on HasPicScheme, ZERO etale,\
+  \ and named that absence as why leaf B is a bare sorry.\n\nTHE COSTING IT OVERTURNS,\
+  \ which is why it beats D2'/D3'/B5. Jacobian.lean:418-421 prices leaf B as needing\
+  \ 'the comparison of the two Picard schemes, available only under a section' — what\
+  \ I-0491 forbids. If true, leaf B is unreachable absent a spec change. FALSE, by\
+  \ reading the chain:\n * every dual-number engine is generic in functor and representation:\
+  \ pointedDualNumberPointsEquivRepresentableFiber (Pic0DualNumberCocycle.lean:363)\
+  \ takes {F => Type v} (rep : F.RepresentableBy X); pointedDualNumberPointsEquivAddKernel\
+  \ (:430) takes (G => AddCommGrpCat) (rep : (G ⋙ forget).RepresentableBy X); same\
+  \ for relPicKernelSMul (:570), pointedDualNumberPointsEquivOfOpenImmersion (Pic0TangentSpace.lean:160),\
+  \ overDualNumberSectionEquivCotangentSpaceDual (TangentSpaceIdentitySection.lean:123);\n\
+  \ * picSharp enters at exactly TWO sites, Pic0AbelianVariety.lean:538-539;\n * representableEt\
+  \ (FGAPicRepresentability.lean:451) IS that (G, rep) pair — picEt = (PicSharp.etaleSheaf\
+  \ C).obj ⋙ forget (PicEtSheaf.lean:221), the .obj AddCommGrpCat-valued (:149);\n\
+  \ * the other way: relPicKernelSMul:567 says distributivity needs G's sheaf condition\
+  \ against k[eps] x_k k[eps]. picEt IS a sheaf, picSharp is not — the etale side\
+  \ is the BETTER input.\n\nAlso filed separately: :418/:432-434 call the chain 'landed';\
+  \ it reports sorryAx via semilinearComparison_cotangentSpaceDual_h1Cok (Pic0AbelianVariety.lean:853),\
+  \ as :478-480 admits.\n\nNOT TOUCHING: D2' (p1 released), D3' (p3), B5 (p4), etale-rep/PicEtSubcanonical\
+  \ (p1), rr.extuniform, Pic0Et.geometricallyReduced. I will not restate leaf B weakly\
+  \ to close it."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T13:25:26.072824+00:00'
+updated_at: '2026-07-29T13:25:26.072836+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0004-horizon-ajc-p2
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

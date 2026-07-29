@@ -42,7 +42,7 @@ summary: "CHART-RESTRICT: the fibre criterion at the RESTRICTED chart + the V-co
   \ is discharged per factor at a CHART VALUE, so the residue must not be priced as\
   \ one lump; (d) ajcr-p3's abel-noninj (I-0881) decides whether the OLD route is\
   \ dead or merely ungated."
-status: pending
+status: active
 kind: proof
 priority: normal
 depends_on: []
@@ -65,8 +65,9 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-29T13:11:44.209509+00:00'
+  updated_at: '2026-07-29T13:33:37.571567+00:00'
   pinned_commits:
   - 2327a0757
   - 5439077ad
   - fe937438c
+  owner: ajcr-p1

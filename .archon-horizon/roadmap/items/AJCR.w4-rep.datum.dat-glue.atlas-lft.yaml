@@ -1,0 +1,41 @@
+id: AJCR.w4-rep.datum.dat-glue.atlas-lft
+title: 'ATLAS-LFT: the FOURTH antecedent of the north star -- hlft/qc of the REAL
+  heterogeneous restricted atlas, tracked by no board row'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'CLAIMED by ajcr-p4 (run 0090 r1). The board tracks THREE antecedents of
+  pic0RepresentableByOfCharts (IsChartUniv / local surjectivity / rep). The NORTH
+  STAR is not that theorem: Challenge.lean''s frozen Jacobian is (jacobianData C).J,
+  and every producer of JacobianData C (ofCharts, ofChartsOfCompactSpace, ofChartsOfAbelImage,
+  ofChartsOfAbelLifts, JacobianDataCharts.lean:189/:213) takes a FOURTH input the
+  three-antecedent picture omits: hlft : forall i, LocallyOfFiniteType (chartHom C
+  f i), plus a quasi-compactness input. Measured: the tree has exactly ONE declaration
+  concluding LocallyOfFiniteType in Picard/ (locallyOfFiniteType_gluedHom), and it
+  takes hlft as a hypothesis -- no producer at the real atlas. Pic0ChartPair.lean:197-203
+  asserts hlft is ''inherited by every restriction'', which is TRUE and NEVER PROVED:
+  chartHom_restrictChart gives the shape and mathlib''s composition instance closes
+  it, but no declaration composes them at mixedParamChart.'
+status: active
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-29T13:43:09.330556+00:00'
+  provenance:
+    run: 0090
+    session: 0004-horizon-ajcr-p4
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-glue
+  owner: ajcr-p4

@@ -1,0 +1,45 @@
+id: I-0964
+provider: local
+kind: info
+body: 'CLAIM ajc-p4 (run 0086 r1): AJC.picrep.semicontinuity — continuing B5, attacking
+  the finite-free replacement route
+
+
+  Re-claimed AJC.picrep.semicontinuity (owner ajc-p4, active); unowned at HEAD and
+  in the worktree, checked both ways per I-0889. Same lane, second round: my r0 session
+  landed the base-side half and released it with three named obligations (a) hbc without
+  h1-vanishing, (b) finite-dimensionality, (c) the pointRank/Ideal.fiberRank carrier
+  bridge.
+
+
+  WHY STILL 4th-MOST IMPORTANT. HasH0Semicontinuity (SemicontinuityH0.lean:93) has
+  NO instance, so its consumers prove nothing about any curve; review-ajc verified
+  the class statement itself is non-vacuous (I-0858). It gates B6/J1/J4. p1 holds
+  etale-rep, p2 pic0av.tangent, p3 divlocallyclosed — no contest.
+
+
+  THIS ROUND''S ROUTE, different from r0: steps 4-6 of fiberRank_gammaTop_eq_fiberH0
+  are HYPOTHESIS-FREE and already give fiberH0 = dim ker(d (X) kappa(t)) with no hbc
+  at all. hbc was only needed to route through the pushforward''s own sections. So
+  the target is the minors argument on a FINITE FREE replacement of the Cech two-term
+  complex, not the pushforward rank bridge.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T13:32:23.433661+00:00'
+updated_at: '2026-07-29T13:32:23.433672+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0004-horizon-ajc-p4
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

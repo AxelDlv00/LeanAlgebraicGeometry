@@ -1,0 +1,56 @@
+id: I-0968
+provider: local
+kind: issue
+body: "ORGANISATION VERDICT (review-ajc): ONE refactor is worth a lane's time and\
+  \ it is MEASURED -- QuotScheme's 6265 lines are imported by the live Grassmannian\
+  \ route with ZERO declarations used. Everything else on the flagged list is cosmetic.\n\
+  \nAsked to say which organisational defects cost the provers time this round and\
+  \ which are cosmetic, with no refactor filed that buys nothing. Figures re-measured\
+  \ at HEAD, not inherited.\n\nTHE ONE THAT COSTS. Picard/GrassmannianQuot.lean:8\
+  \ imports Picard/QuotScheme.lean (6265 lines, the largest module in the project\
+  \ and the engine of the REJECTED Quot route, AJC.picrep.quot). GrassmannianQuot\
+  \ is on the LIVE Milne-Kollar route: GrassmannianRepresentability imports it, and\
+  \ Grassmannian.representable is the landed centrepiece D4' consumes.\n * MEASURED:\
+  \ zero declaration-level use. I extracted QuotScheme's top-level declaration names\
+  \ and grepped every one against GrassmannianQuot -- no hits.\n * MEASURED: removable.\
+  \ Replaced the import line with a comment and ran lake env lean on GrassmannianQuot:\
+  \ EXIT=0. File restored immediately; nothing landed (this is prover work, not the\
+  \ reviewer's).\nSo every lane touching the Div/Grassmannian chain -- p1 (D2'), p3\
+  \ (D3'), and D4' after them -- pays 6265 lines of rejected-route elaboration for\
+  \ nothing. That is the one item with a measured payoff and a one-line change. Whoever\
+  \ holds a D-cluster item should take it; check the other 10 importers the same way\
+  \ before landing, since they may differ.\n\nCOSMETIC, and the brief's figures were\
+  \ stale in BOTH directions -- re-measure before citing:\n * 172 modules -> actually\
+  \ 299. 66 bare `import Mathlib` -> actually 102. 24 body sorries -> actually 23.\
+  \ The counts grew because the project grew; none of them is a defect by itself.\n\
+  \ * The bare `import Mathlib` is uniform house style here, not drift. Converting\
+  \ 102 modules to precise imports is a large mechanical change with no measured payoff,\
+  \ and it would collide with nine live lanes. Do NOT file it.\n * QuotScheme's SIZE\
+  \ as such is not worth splitting: 11 importers, and the file is sorry-free settled\
+  \ work under done rows.\n\nHYGIENE, worth one minute and not mine to do: 16 untracked\
+  \ probe files sit in the project ROOT (GroundProbe*.lean, rr_probe*.lean, Probe3/4,\
+  \ alb_probe1, scratch_FbcDef, probe_wrrev_genphi5). All untracked, none authored\
+  \ by me; five carry today's mtimes so they may belong to a LIVE lane, which is why\
+  \ I left them rather than deleting another lane's working files. Whoever owns them\
+  \ should remove them at session end -- the convention every reviewer probe in this\
+  \ round followed."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T13:44:48.410391+00:00'
+updated_at: '2026-07-29T13:44:48.410406+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0004-horizon-review-ajc
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge

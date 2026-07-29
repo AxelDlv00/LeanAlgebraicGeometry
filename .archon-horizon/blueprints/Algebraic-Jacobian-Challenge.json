@@ -18160,7 +18160,7 @@
     "macros": {},
     "states": {
       "blocked": 248,
-      "closed": 7397,
+      "closed": 7408,
       "formalized_open": 302,
       "informal": 175,
       "ready": 186
@@ -25574,7 +25574,7 @@
     },
     {
       "chapter": "FGA representability of the Picard scheme",
-      "comment_count": 2,
+      "comment_count": 3,
       "dep_count": 9,
       "descendant_count": 51,
       "group": "c1376",
@@ -25593,7 +25593,7 @@
       "review_count": 0,
       "sources": [],
       "state": "formalized_open",
-      "statement": "\\textit{Source: [Kleiman], ``The Picard scheme'', \\S 4, Main Thm.~4.8\n  + Cor.~4.18.3.}\n  Let \\(k\\) be a field and \\(C\\) a smooth proper geometrically integral curve\n  over \\(k\\) \\emph{with a \\(k\\)-rational point}\n  (\\cref{def:has_rational_point}). Then the relative Picard functor\n  \\(\\Pic^\\sharp_{C/k}\\) of \\cref{def:rel_pic_sharp} --- which under the\n  rational-point hypothesis coincides with its \\'etale sheafification\n  \\(\\Pic_{(C/k)\\et}\\), by Kleiman \\S 2, Thm.~2.5 --- is representable by a\n  \\(k\\)-scheme \\(\\Pic_{C/k}\\), separated and locally of finite type over\n  \\(k\\), which is a disjoint union of open quasi-projective\n  \\(k\\)-subschemes, each an increasing union of open quasi-projective\n  subschemes. The scheme \\(\\Pic_{C/k}\\) is called the \\emph{Picard scheme}\n  of \\(C/k\\).",
+      "statement": "\\textit{Source: [Kleiman], ``The Picard scheme'', \\S 4, Main Thm.~4.8\n  + Cor.~4.18.3.}\n  Let \\(k\\) be a field and \\(C\\) a smooth proper geometrically integral curve\n  over \\(k\\) \\emph{with a \\(k\\)-rational point}\n  (\\cref{def:has_rational_point}). Then the relative Picard functor\n  \\(\\Pic^\\sharp_{C/k}\\) of \\cref{def:rel_pic_sharp} --- which under the\n  rational-point hypothesis coincides with its \\'etale sheafification\n  \\(\\Pic_{(C/k)\\et}\\), by Kleiman \\S 2, Thm.~2.5 --- is representable by a\n  \\(k\\)-scheme \\(\\Pic_{C/k}\\), separated and locally of finite type over\n  \\(k\\), which is a disjoint union of open quasi-projective\n  \\(k\\)-subschemes, each an increasing union of open quasi-projective\n  subschemes. The scheme \\(\\Pic_{C/k}\\) is called the \\emph{Picard scheme}\n  of \\(C/k\\).\n\n  \\emph{Formalisation status.} The \\(\\) mark was removed from this\n  statement on 2026-07-29: the pinned declaration\n  \\texttt{PicScheme.representable} does not prove this theorem. It is the\n  \\texttt{choose\\_spec} projection of the hypothesis class\n  \\texttt{HasPicScheme}, which the declaration itself assumes as an instance\n  binder, so what is checked is \\(P \\to P\\) rather than the representability\n  above. That class has no instance: its only producer requires a\n  \\(k\\)-rational point (\\cref{def:has_rational_point}), and the leaf asserting\n  every such curve has one was \\emph{false} and has been deleted. The\n  mathematical content of this theorem is open, and is carried in Lean by the\n  named obligation \\texttt{fgaPicardRepresentability}, stated for the\n  \\'etale sheafification without a rational-point hypothesis\n  (\\cref{thm:fga_pic_representability_etale}). Note also that the statement\n  above --- with its rational-point hypothesis and its\n  \\(\\Pic^\\sharp_{C/k}\\) target --- is the \\emph{conditional} formulation, and\n  strictly weaker than what the project claims.",
       "title": "FGA representability of the Picard scheme",
       "type": "theorem",
       "unlocks": 51,
