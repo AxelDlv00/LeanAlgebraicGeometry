@@ -66,11 +66,25 @@ the class-side question, and per `Pic0ChartAtlasCoupling.lean` the range contain
 a further separate obligation.  What changes is that the residue is now stated where the
 tree's producers live.
 
-Nor does it weaken the obligation: `affineLocal_of_chartsCoverLocally` is the converse, so
-the affine form and the general form are *equivalent*, and this is a reduction rather than a
-restatement chosen to be provable (the `reduction-needs-its-converse` safeguard, and the
-`I-0896` refinement of it — an iff can still be a repackaging, so read the honest scope
-paragraph above rather than the biconditional alone).
+**On the converse, corrected.**  An earlier version of this paragraph said
+`affineLocal_of_chartsCoverLocally` makes the affine and general forms "equivalent", and cited
+that as discharging the `reduction-needs-its-converse` safeguard.  It does not: that
+declaration is `rfl`-equal to `pointwise_of_chartsCoverLocally`, its `[IsAffine Y]` binder is
+never used, and the direction it certifies is the *free* one — general pointwise data gives the
+affine data by `fun Y _ s y => h Y s y`.  So the affine form is a genuine **weakening** of the
+general one, which is exactly why `chartsCoverLocally_of_affineLocal` is worth having; the
+honest certificate is that theorem, not a no-op converse (audit `I-1023`).  The converse is
+kept only as the affine-test instance of the pointwise extraction, which is what it is.
+
+**On the atlas, and this is the sharper limit.**  Nothing here pins `V`.  The statements below
+take an arbitrary family `f`, which is what makes the site content reusable — but a consumer
+must supply coverage at the *same* `V` at which antecedent 1 was certified, and `ajcr-p1`
+measured both ends of that range to be bad: `hf` is free at `V = ⊥` (`isChartUniv_bot`, with a
+construction that never mentions the Abel chart), while `V = ⊤` returns the unrestricted
+certificate that three headers call false.  So any workable `V` is a proper intermediate open,
+CHART-U(b)'s openness is load-bearing, and the pair `(huniv V, hcov V)` has **no measured
+inhabitant at any `V`** (`I-1012`).  Two bad endpoints are two refutations, not a non-vacuity
+check.
 
 ## Main declarations
 
