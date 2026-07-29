@@ -29,13 +29,38 @@ docstring: '**The smooth-proper quotient lemma — Altman–Kleiman descent of a
 
   mathematical content (Altman–Kleiman effective-equivalence-relation descent
 
-  + EGA IV 8.11.5) lives at the use site supplying the instance.'
+  + EGA IV 8.11.5) lives at the use site supplying the instance.
+
+
+  **WHAT THIS THEOREM PROVES, stated flatly (`review-ajc`, 2026-07-29), because
+
+  the paragraphs above explain the situation without ever naming it.** Since
+
+  `HasSmoothProperQuotient α` is by definition `P.IsRepresentable`, this theorem
+
+  is `P.IsRepresentable → P.IsRepresentable`. All four numbered hypotheses are
+
+  unused in the body — they are named `_hZ`, `_hR`, `_hα` for exactly that
+
+  reason — as are `Y`, `R`, `π` and both instance binders on `π.left`. The class
+
+  has **zero instances** and this theorem has **zero call sites** in the project.
+
+  It is a blueprint-pinned record of the `lm:qt` interface and nothing more.
+
+  Do not cite it as evidence that a quotient is a scheme, do not write a consumer
+
+  against it, and do not claim its `\leanok` in the blueprint as a proof of
+
+  Kleiman `lm:qt`. The committed Milne–Kollár route does not need it at all
+
+  (finite Galois quotients with an orbit-in-affine hypothesis instead).'
 file: AlgebraicJacobian/Picard/FGAPicRepresentability.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicScheme.smoothProperQuotient
 type: lean
-updated: '2026-07-27T12:33:55'
+updated: '2026-07-29T20:27:12'
 ---
 theorem smoothProperQuotient {k : Type u} [Field k]
     {Z P : (Over (Spec (.of k)))ᵒᵖ ⥤ Type (u + 1)}

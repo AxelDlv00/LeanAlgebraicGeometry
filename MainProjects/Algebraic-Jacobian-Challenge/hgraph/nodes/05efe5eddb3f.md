@@ -12,9 +12,11 @@ docstring: 'Typeclass asserting existence of a scheme over `Spec k` that represe
 
   **This is the legacy, conditional interface, not the headline target.** Its only
 
-  producer is `picSchemeOfHasRationalPoint`, which needs both
+  producer is `picSchemeOfHasRationalPoint`, which needs `[HasRationalPoint C]`
 
-  `[HasRationalPoint C]` and the comparison class `PicEtComparisonIso C`, and
+  (from which it derives the comparison via
+
+  `picEtComparison_isIso_of_hasRationalPoint`), and
 
   there is deliberately **no instance**: without a section the plain relative
 
@@ -48,7 +50,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.HasPicScheme
 type: lean
-updated: '2026-07-28T13:22:16'
+updated: '2026-07-29T20:27:12'
 ---
 class HasPicScheme {k : Type u} [Field k] (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
