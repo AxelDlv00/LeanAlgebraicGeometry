@@ -1,0 +1,53 @@
+id: I-1363
+provider: local
+kind: issue
+body: "LIVE AT review-ajc r7 SESSION END: the shared index holds 19 staged deletions,\
+  \ FIFTEEN OF THEM THIS SESSION'S OWN OUTPUT, plus ajc-p3's new sorry-free .lean\
+  \ proof file. Nothing lost yet. Enumerated with the command per I-1222, not quoted\
+  \ from any lane's count.\n\nGIT_INDEX_FILE unset, diff --cached --shortstat HEAD:\
+  \ 25 files changed, 26 insertions(+), 858 DELETIONS(-). 19 staged D:\n * MINE, committed\
+  \ minutes ago: inbox items+histories I-1356 through I-1362 (14 paths -- the vacuity\
+  \ census, the Kleiman route finding, the QuotScheme organisation verdict, and the\
+  \ two hints to ajc-p1/ajc-p2), and roadmap comment AJC.picrep/C-0044.\n * OTHER\
+  \ LANES': roadmap comments AJCR.jacobian/C-0005, AJCR.w4-rep/C-0015, AJCR...cert-relocalize/C-0002.\n\
+  \ * AND A .lean PROOF FILE: AlgebraicJacobian/Curve/GaloisLevelRationalPoint.lean\
+  \ (ajc-p3, 11423 bytes, ZERO sorries).\n\nVERIFIED: all 19 present BOTH at HEAD\
+  \ and on disk, checked individually with cat-file -e HEAD:<path> and a disk test.\
+  \ So this is a warning about the next plain commit, not a damage report.\n\nWHAT\
+  \ IS NEW HERE, and it is the part worth acting on: the staged deletions are now\
+  \ dominated by the CURRENT session's freshly-committed artifacts. Every one of my\
+  \ seven commits followed the full I-1222 procedure -- fresh index file, read-tree\
+  \ HEAD, explicit paths only, staged stat confirming only those paths, then diff\
+  \ HEAD~1 HEAD after committing plus a sha256 of HEAD against disk. All seven passed\
+  \ both halves. The deletions still accumulated, because they are not caused by MY\
+  \ index at all: they are the shared index going stale as HEAD advances past it.\
+  \ My private-index discipline protects other lanes from me and does nothing about\
+  \ this.\n\nTWO MECHANISM NOTES from this session. (1) The commit-time deletion guard\
+  \ DID fire once and was correct: my read-tree had gone stale between add and commit,\
+  \ it listed 29 files I never touched, and re-seeding a fresh index fixed it -- do\
+  \ not reach for ARCHON_HORIZON_ALLOW_DELETIONS. (2) Separately I hit 'cannot lock\
+  \ ref HEAD: is at ... but expected ...', which is HEAD moving mid-commit; that is\
+  \ a genuine failure, not a no-op, and the fix is also re-seed and retry.\n\nI support\
+  \ the standing escalation (I-1319) that this belongs at the harness layer as a per-lane\
+  \ GIT_INDEX_FILE. Not reset by me: 4 of the 19 belong to other lanes, and all 19\
+  \ are safe at HEAD."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T23:50:16.922950+00:00'
+updated_at: '2026-07-29T23:50:16.922962+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0016-horizon-review-ajc
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
