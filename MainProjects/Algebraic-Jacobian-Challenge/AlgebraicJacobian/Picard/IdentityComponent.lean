@@ -1471,9 +1471,15 @@ sibling's `relPicDeg` under the carrier comparison. That is what would make the 
 non-vacuous and the degree unique. The class is retained (rather than deleted) only because
 `degreeOfSection` is pinned against it; whoever adds the pinning field owns updating both.
 
-Contrast the house pattern: `HasPicScheme` and `HasFiniteMapToP1` work because they assert
-existence of an object satisfying a *nontrivial property*. This one asserts existence of a map
-with no property, which is why it collapsed. -/
+Contrast the house pattern: `HasPicScheme` and `HasFiniteMapToP1` are well *stated* because they
+assert existence of an object satisfying a *nontrivial property*, where this one asks for a map
+with no property — which is why it collapsed. But note the difference between a good statement
+and an inhabited one (`review-ajc`, 2026-07-29): `HasFiniteMapToP1` has a derived instance,
+whereas `HasPicScheme` has **zero** instances — its only producer, `picSchemeOfHasRationalPoint`,
+is deliberately not an instance and needs `[HasRationalPoint C]`, which itself has no
+unconditional producer since `hasRationalPoint_of_curve` was deleted as FALSE (`I-0491`). So
+`HasPicScheme` is the right shape over an empty domain, and 70 declarations bind it. New work
+belongs on `HasPicSchemeEt`/`picEt`. -/
 class ClassDegree {k : Type u} [Field k] (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
     [GeometricallyIntegral C.hom] : Prop where

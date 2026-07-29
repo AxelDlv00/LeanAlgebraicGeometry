@@ -30,8 +30,8 @@ finite `π` and chart data `D`), which cannot be named in a theorem signature; t
 comparison must therefore be available for **all** 2-affine covers, i.e. the honest
 Čech-to-derived hypothesis is the `∀`-quantified instance gate
 `[∀ S, HasCechToHModuleIso (toModuleKSheaf C) S.coverFamily]` (a `Prop`-class
-hypothesis with no sorried instance, in the `HasPicScheme`/`HasFiniteMapToP1`
-gating pattern).  The full gate set of the consumable is
+hypothesis with no sorried instance, in the `HasFiniteMapToP1` gating pattern).
+The full gate set of the consumable is
 
 * `HasFiniteMapToP1 C` — node `N9`; derived in `FiniteMapToP1.lean` from the single
   strictly weaker gate `ExistsNonconstantMapToP1 C` under the ambient curve
