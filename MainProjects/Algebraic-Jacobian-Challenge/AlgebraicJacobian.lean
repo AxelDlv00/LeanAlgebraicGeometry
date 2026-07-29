@@ -126,6 +126,7 @@ import AlgebraicJacobian.Picard.TensorObjSubstrate.DualInverse.PresheafDualUnitP
 import AlgebraicJacobian.Picard.TensorObjSubstrate.DualInverse.PresheafDualPullbackNatural
 import AlgebraicJacobian.Picard.TensorObjSubstrate.PullbackTensorMapIso
 import AlgebraicJacobian.Picard.TensorObjSubstrate.PullbackTensorIso
+import AlgebraicJacobian.Picard.PullbackTensorOneSided
 import AlgebraicJacobian.Picard.TensorObjSubstrate.TrivialisationRestrict
 import AlgebraicJacobian.Picard.TensorObjInverse
 import AlgebraicJacobian.Picard.RelPicFunctor
