@@ -45,7 +45,7 @@ automatic:
 
 ## Main declarations
 
-* `AlgebraicGeometry.Over.testPoint_eq_overSpecMap` — **the comparison**: on an affine test the
+* `AlgebraicGeometry.testPoint_eq_overSpecMap` — **the comparison**: on an affine test the
   canonical field point is the base-change morphism.
 * `AlgebraicGeometry.isChartDatumPlusFibre_of_relPicToPicEt` — the producer, with the datum given.
 * `AlgebraicGeometry.exists_isChartDatumPlusFibre_of_mem_range` — **the producer proper**: for a
@@ -81,8 +81,6 @@ noncomputable section
 
 /-! ## The comparison: on an affine test the field point IS the base change -/
 
-namespace Over
-
 /-- **On an affine test, the canonical field point is the base-change morphism.**
 
 `Over.testPoint t : overSpec k κ(t) ⟶ overSpec k A` is built from mathlib's
@@ -99,25 +97,27 @@ sessions on this leaf priced the missing producer as the identification of a fib
 as geometry, when what was missing was a comparison of two spellings of one morphism. -/
 theorem testPoint_eq_overSpecMap {A : Type u} [CommRing A] [Algebra k A]
     (t : (overSpec k A).left) :
-    testPoint t = overSpecMap (k := k) A (testPointField (T := overSpec k A) t) := by
+    Over.testPoint t
+      = overSpecMap (k := k) A (Over.testPointField (T := overSpec k A) t) := by
   apply Over.OverMorphism.ext
-  simp only [testPoint_left, overSpecMap_left]
-  rw [algebraMap_testPointFieldAffine]
+  simp only [Over.testPoint_left, overSpecMap_left]
+  rw [Over.algebraMap_testPointFieldAffine]
   exact (Spec.map_preimage _).symm
 
+omit [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom]
+  [GeometricallyReduced C.hom] in
 /-- The whiskered form: the relative-curve comparison at the field point of an affine test is
 `relCurveMap`.  This is the shape `IsChartDatumPlusFibre` reads on its right-hand side. -/
 theorem relCurveMap_testPoint {A : Type u} [CommRing A] [Algebra k A]
     (t : (overSpec k A).left) :
-    (C ◁ testPoint t).left
-      = relCurveMap C A (testPointField (T := overSpec k A) t) := by
+    (C ◁ Over.testPoint t).left
+      = relCurveMap C A (Over.testPointField (T := overSpec k A) t) := by
   rw [testPoint_eq_overSpecMap]
   rfl
 
-end Over
-
 /-! ## The producer -/
 
+omit [GeometricallyReduced C.hom] in
 variable (C π) in
 /-- **THE PRODUCER, with the datum supplied**: if `μ` is the unit image of a relative Picard
 class presented by the Čech class `L₀`, then any datum whose class is `L₀` satisfies
@@ -126,12 +126,17 @@ class presented by the Čech class `L₀`, then any datum whose class is `L₀` 
 The proof is four rewrites and no geometry.  `picEtMap_relPicToPicEt` moves the restriction to
 `κ(t)` inside the unit; `picEtAffineEquiv_relPicToPicEt` collapses the affine comparison to
 `PicEtAff.unit`; `PicEtAff.map_id` deletes the identity restriction `κ(t) → κ(t)` that
-`IsChartDatumPlusFibre`'s left-hand side carries; and `Over.relCurveMap_testPoint` identifies
+`IsChartDatumPlusFibre`'s left-hand side carries; and `relCurveMap_testPoint` identifies
 the two spellings of the base change.
 
 Note which hypotheses are absent: no witness, no `H¹`, no divisor, no degree, no separability,
 and no certificate.  The plus-class identity was never geometry — it is the statement that the
-two ways of restricting a *unit* to a residue field agree. -/
+two ways of restricting a *unit* to a residue field agree.
+
+**A measurement, not a claim, and it is independent evidence for that reading**: this theorem does
+not use `GeometricallyReduced C.hom` either — the linter says so, hence the `omit`.  A statement
+about a fibre class would need the curve's geometry; this one needs the curve only to have the
+functor defined. -/
 theorem isChartDatumPlusFibre_of_relPicToPicEt {A : Type u} [CommRing A] [Algebra k A]
     (L₀ : (C ⊗ overSpec k A).left.CechPic) (D : BasicOpenCocycleDatum C A π)
     (hD : D.cechPicClass = L₀) :
@@ -139,8 +144,10 @@ theorem isChartDatumPlusFibre_of_relPicToPicEt {A : Type u} [CommRing A] [Algebr
       (relPicToPicEt C (overSpec k A) (relPicMk C (overSpec k A) L₀)) D := by
   intro t
   rw [picEtMap_relPicToPicEt, picEtAffineEquiv_relPicToPicEt, PicEtAff.map_id, hD,
-    relPicMap_mk, Over.relCurveMap_testPoint]
+    relPicMap_mk, relCurveMap_testPoint]
+  rfl
 
+omit [GeometricallyReduced C.hom] in
 variable (C π) in
 /-- **THE PRODUCER PROPER**: for a class in the image of the sheafification unit, a datum with
 the plus-class property EXISTS.
@@ -150,7 +157,8 @@ The datum comes from `BasicOpenCocycleDatum.exists_cechPicClass_eq` (the extract
 `relPicMk_surjective` supplies the representative.  So the existential
 `isOpen_chartLocus_of_plusFibre` asks for is met outright, with no choice left to the caller.
 
-This is the statement `Picard/Pic0ChartLocusPlusFibre.lean`'s header names as not claimed. -/
+This is the statement `Picard/Pic0ChartLocusPlusFibre.lean`'s header names as not claimed, and it
+too is `GeometricallyReduced`-free. -/
 theorem exists_isChartDatumPlusFibre_of_mem_range {A : Type u} [CommRing A] [Algebra k A]
     (μ : picEt C (overSpec k A))
     (hμ : ∃ z : relPic C (overSpec k A), relPicToPicEt C (overSpec k A) z = μ) :
@@ -178,6 +186,7 @@ def IsPlusHonest (T : Over (Spec (.of k))) (μ : picEt C T) : Prop :=
     relPicToPicEt C (overSpec k Γ(T.left, U.1)) z
       = picEtMap C (Over.fromSpecAffine T U) μ
 
+omit [SmoothOfRelativeDimension 1 C.hom] in
 variable (C) in
 /-- Honesty is closed under multiplication — the range of `relPicToPicEt` is a subgroup, and
 `picEtMap` is a homomorphism. -/
@@ -189,6 +198,7 @@ theorem IsPlusHonest.mul {T : Over (Spec (.of k))} {μ ν : picEt C T}
   obtain ⟨w, hw⟩ := hν U
   exact ⟨z * w, by rw [map_mul, hz, hw, map_mul]⟩
 
+omit [SmoothOfRelativeDimension 1 C.hom] in
 variable (C) in
 /-- Honesty is closed under inversion. -/
 theorem IsPlusHonest.inv {T : Over (Spec (.of k))} {μ : picEt C T}
@@ -198,6 +208,7 @@ theorem IsPlusHonest.inv {T : Over (Spec (.of k))} {μ : picEt C T}
   obtain ⟨z, hz⟩ := hμ U
   exact ⟨z⁻¹, by rw [map_inv, hz, map_inv]⟩
 
+omit [SmoothOfRelativeDimension 1 C.hom] in
 variable (C) in
 /-- Honesty is closed under powers. -/
 theorem IsPlusHonest.pow {T : Over (Spec (.of k))} {μ : picEt C T}
@@ -270,8 +281,8 @@ theorem isOpen_chartLocus_of_isPlusHonest
   isOpen_chartLocus_of_plusFibre C π hπ m Z T lam fun U =>
     exists_isChartDatumPlusFibre_of_mem_range C π _
       (by
-        rw [picEtMap_chartTwist]
-        exact chartTwist_isPlusHonest C m Z T hlam U)
+        obtain ⟨z, hz⟩ := chartTwist_isPlusHonest C m Z T hlam U
+        exact ⟨z, hz.trans (picEtMap_chartTwist m Z (Over.fromSpecAffine T U) lam)⟩)
 
 set_option linter.overlappingInstances false in
 variable (C π) in
