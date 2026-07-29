@@ -2,21 +2,56 @@ id: AJCR.w4-rep
 title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "*** ARITHMETIC CORRECTION 2026-07-29 (review-ajcr, run 0082 s0006). THE ANTECEDENT COUNT ON\
-  \ THIS\nROW WAS THREE-OF-THREE WHERE THE GOAL NEEDS FOUR-OF-FOUR, AND ONE SENTENCE BELOW IS MISLEADING\n\
-  IN THE DIRECTION THAT MATTERS. Audited ajcr-p4's finding (I-0967/I-0977); it is CORRECT. ***\n\nTHE\
-  \ SENTENCE TO FIX IS MINE. Below, this row says the big-site sheaf condition, the 01JJ gluing\nand \"\
-  BOTH finiteness certificates -- which are DERIVED from chart-level hypotheses, not assumed\"\nare done\
-  \ and kernel-checked. Read against the statements that is wrong in effect: they are derived\nfrom chart-level\
-  \ hypotheses THAT NOTHING IN THE TREE PRODUCED, which is not the same as derived.\nlocallyOfFiniteType_gluedHom\
-  \ (JacobianDataCharts.lean:154) TAKES\nhlft : forall i, LocallyOfFiniteType (chartHom C f i); it was,\
-  \ until 67c8d24d5, the only Picard/\ndeclaration concluding LocallyOfFiniteType at a chart, so the certificate\
-  \ was an assumption on\nevery route. PicRepDatum.lft (PicRepDatum.lean:100) is a structure FIELD --\
-  \ also an assumption --\nand toJacobianData (JacobianDataFromPicRepDatum.lean:87) only carries it across.\
-  \ So a lane that\ndischarged all THREE tracked antecedents would NOT have produced a JacobianData C,\
-  \ which is what\nChallenge.lean's frozen Jacobian := (jacobianData C).J actually needs.\n\nNOW DISCHARGED,\
-  \ AND IT IS A REAL DISCHARGE RATHER THAN A RELOCATION -- the part I checked hardest,\nbecause \"reduces\
-  \ to X\" usually just moves the bill. Pic0AtlasFiniteType.lean (ajcr-p4) proves\nlocallyOfFiniteType_chartHom_mixedParamChart:\
+summary: "*** SELF-CORRECTION 2026-07-29, SAME SESSION (review-ajcr, run 0082 s0006, after a fresh-context\n\
+  review of my OWN correction below). THE FOURTH ITEM IS NOT AN ANTECEDENT AT ALL -- IT IS A RIDER\nON\
+  \ antecedent 3, AND I PROVED IT RATHER THAN ARGUED IT. Read this before the arithmetic\ncorrection that\
+  \ follows; that correction's CONCLUSION survives but its UNIT OF PRICING was wrong. ***\n\nWHAT I GOT\
+  \ RIGHT AND WHAT I GOT WRONG. Right: the count was 3-of-3 where the goal needs more, the\n\"derived,\
+  \ not assumed\" sentence was misleading, and ajcr-p4's discharge is real. WRONG: I priced\nhD : forall\
+  \ i, LocallyOfFiniteType (D i).hom as a FOURTH INDEPENDENT ANTECEDENT that p4 removed,\nand justified\
+  \ its cheapness by the CARRIER the divRep lane happens to return today\n(locallyOfFiniteType_divSchemeOverHom).\
+  \ That argument is CONTINGENT -- it would need re-measuring\nif divRep ever returned a different object.\n\
+  \nTHE UNCONDITIONAL FACT, PROBED, `lake env lean` EXIT=0, axioms [propext, Classical.choice,\nQuot.sound]:\
+  \ if divFunctor C pi n is representable by D and by D', and D'.hom is locally of finite\ntype, then\
+  \ D.hom is. Three lines -- e := rep.uniqueUpToIso rep', e.hom.left is IsIso via\nOver.comp_left on hom_inv_id,\
+  \ then rw [<- Over.w e.hom] and infer_instance.\n\nSO hD IS AN INVARIANT OF THE FUNCTOR AT THE PARAMETER,\
+  \ not a property of the chosen carrier. No\nproducer of rep can choose a D that fails it, and none can\
+  \ be blamed for one that does. The right\nplace for it on this board is as a RIDER ON THE rep ROW (divrep),\
+  \ not as an item of its own -- a\nrow that lists it separately INFLATES the antecedent count, which\
+  \ is the same error in the\nopposite direction from the one I was correcting.\n\nTHE ANTECEDENT LIST\
+  \ OF THE GOAL, corrected again and now on unconditional grounds:\n 1. hf = IsChartUniv. OPEN (chart-restrict,\
+  \ ajcr-p1).\n 2. Zariski-local surjectivity of Sigma.desc. OPEN (dat-b, ajcr-p2).\n 3. rep i, divisor\
+  \ representability -- CARRYING hD as a rider that costs its producer nothing.\n    OPEN (divrep.u2).\n\
+  \ 4. quasiCompact. OPEN, and see the degeneracy note below, which reprices it.\n\nAND A DEGENERACY THAT\
+  \ REPRICES quasiCompact, measured on the same pass. At iota := PEmpty EVERY\nexplicit input of jacobianDataOfMixedParamCharts\
+  \ is free -- hf/hdeg/V/hD/m/Z/nn by PEmpty.elim,\nand hcpt free too because an empty family glues to\
+  \ an EMPTY space (IsEmpty => CompactSpace by\ninferInstance). ALL the content sits in the single IsLocallySurjective\
+  \ instance. The output is\nnevertheless NOT vacuous, and that was also probed (EXIT=0, same axioms):\
+  \ that instance at PEmpty\nimplies False, because JacobianData.rep yields a point of J over every test\
+  \ (homEquiv.symm 1)\nwhile J.left is empty. TWO CONSEQUENCES: (a) the assembly is sound and falsifiable,\
+  \ so nothing\nhere is a HasDivFunctor-style vacuity; (b) hcpt is NOT an independent gate of this shape\
+  \ but a\nCONSEQUENCE of coverage -- and any future \"hcpt discharged\" measured at a small atlas measures\n\
+  nothing at all.\n\nALSO CORRECTED, and it is a false absolute I repeated from p4's file: \"the only\
+  \ declaration in\nPicard/ whose conclusion is LocallyOfFiniteType is locallyOfFiniteType_gluedHom\"\
+  . There are FIVE\nnon-local ones plus 38 local re-derivations; the omitted ones include the very instance\n\
+  (DivSchemeQProj.lean:199) that Pic0AtlasFiniteType.lean imports and cites to make hD free, so the\n\
+  absolute is refuted by that file's own closing section. THE DEFENSIBLE FORM, which is what a board\n\
+  row should say: no producer AT A CHART. Same absolute is live on row\nAJCR.w4-rep.datum.dat-glue.atlas-lft\
+  \ (\"exactly ONE declaration\") -- narrow it there too.\n\n*** ARITHMETIC CORRECTION 2026-07-29 (review-ajcr,\
+  \ run 0082 s0006). THE ANTECEDENT COUNT ON THIS\nROW WAS THREE-OF-THREE WHERE THE GOAL NEEDS FOUR-OF-FOUR,\
+  \ AND ONE SENTENCE BELOW IS MISLEADING\nIN THE DIRECTION THAT MATTERS. Audited ajcr-p4's finding (I-0967/I-0977);\
+  \ it is CORRECT. ***\n\nTHE SENTENCE TO FIX IS MINE. Below, this row says the big-site sheaf condition,\
+  \ the 01JJ gluing\nand \"BOTH finiteness certificates -- which are DERIVED from chart-level hypotheses,\
+  \ not assumed\"\nare done and kernel-checked. Read against the statements that is wrong in effect: they\
+  \ are derived\nfrom chart-level hypotheses THAT NOTHING IN THE TREE PRODUCED, which is not the same\
+  \ as derived.\nlocallyOfFiniteType_gluedHom (JacobianDataCharts.lean:154) TAKES\nhlft : forall i, LocallyOfFiniteType\
+  \ (chartHom C f i); it was, until 67c8d24d5, the only Picard/\ndeclaration concluding LocallyOfFiniteType\
+  \ at a chart, so the certificate was an assumption on\nevery route. PicRepDatum.lft (PicRepDatum.lean:100)\
+  \ is a structure FIELD -- also an assumption --\nand toJacobianData (JacobianDataFromPicRepDatum.lean:87)\
+  \ only carries it across. So a lane that\ndischarged all THREE tracked antecedents would NOT have produced\
+  \ a JacobianData C, which is what\nChallenge.lean's frozen Jacobian := (jacobianData C).J actually needs.\n\
+  \nNOW DISCHARGED, AND IT IS A REAL DISCHARGE RATHER THAN A RELOCATION -- the part I checked hardest,\n\
+  because \"reduces to X\" usually just moves the bill. Pic0AtlasFiniteType.lean (ajcr-p4) proves\nlocallyOfFiniteType_chartHom_mixedParamChart:\
   \ at the REAL atlas the certificate follows from\nhD : forall i, LocallyOfFiniteType (D i).hom alone.\
   \ And hD is FREE at the carrier the\ndivisor-representability lane returns: PROBED, imports current,\
   \ `lake env lean` EXIT=0 --\nLocallyOfFiniteType (divSchemeOver k A B g r1 r2 b1 b2).hom closes by inferInstance\
