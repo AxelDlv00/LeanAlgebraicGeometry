@@ -11,7 +11,7 @@ summary: 'First assemble the finite-field avoidance endpoint: transport the resi
   genuine finite-field obstruction and depends on the twist-atlas architecture.'
 status: pending
 kind: proof
-priority: high
+priority: low
 depends_on: []
 inbox_refs: []
 task_refs: []
@@ -32,4 +32,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate.finite-field-avoid
   milestone: AJCR.w4-rep
-  updated_at: '2026-07-29T03:01:49.900032+00:00'
+  updated_at: '2026-07-29T16:30:45.305508+00:00'
