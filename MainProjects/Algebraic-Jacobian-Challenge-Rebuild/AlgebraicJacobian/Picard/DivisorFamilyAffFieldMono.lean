@@ -34,7 +34,17 @@ those are, by `rfl`, functions of `G.eqns` alone (`divFamEps` is `divisorWindow 
 two windows, `DivisorFamilyWindow.lean`).  The adaptation, the certificate, the cover and
 the chart typing never enter.
 
-So the field-level rung is not chart-typed at all: it is a statement about a bare
+**One correction to that sentence, and it is not cosmetic** (review-ajcr's I-1336 makes the
+same point against a sibling file): `divisorWindow` is independent of the ADAPTATION — which
+cover refines `d` — but it is NOT free of the pinned chart pair.  Unfolded, it is a
+`Submodule.comap` of `d.vanishingSubmodule` at `(relCover C R (fiberTwoCover π)).V₀` and
+`.V₁`, and `fiberTwoCover π` IS the pinned affine two-chart cover.  So the right statement is
+*adaptation-free and carrier-free, relative to a fixed pinned pair* — which is what the R2
+widening needs, since R2 widens the certificate's cover and leaves the window's pair alone.
+Anywhere below that this file says "carrier-free", read it in that sense.
+
+So the field-level rung does not depend on WHICH carrier certified the divisor: it is a
+statement about a bare
 `d : (relCurve C K).LocalEquations`, and what the certificate is used for is exactly two
 facts about the presentation divisor of `d`:
 
@@ -145,7 +155,7 @@ set_option maxRecDepth 8000 in
 
 The `omit` list is not cosmetic and was measured by binary search, not guessed: seven
 binders are dropped, and the eighth the linter flags cannot be (see the note above).  What
-the identification needs is the typing of the window, not the geometry of the divisor. -/
+the identification needs is the typing of the window, not which carrier produced it. -/
 lemma eqnsWindowGermSet_divFam (g : ℕ) (G : CertifiedDivisorFamily C K π g)
     (z : relCurve C K) :
     divFamEpsWindowGermSet hπ g (DivFam.mk G) z = eqnsWindowGermSet K hπ g G.eqns z :=
@@ -196,8 +206,10 @@ carrier deleted, including the `Submodule.map_comap_eq_of_surjective` step where
 `divisorWindow` unfolds to the vanishing submodule.
 
 The `omit` list is worth reading: **seven** binders drop, all of the fibre-curve geometry
-among them, so the easy inclusion is not merely carrier-free but geometry-free — it is the
-definitional content of `divisorWindow` as a `comap`.  The eighth,
+among them, so the easy inclusion needs no property of the relative curve beyond what types
+the statement — it is the definitional content of `divisorWindow` as a `comap`.  It is NOT
+independent of the pinned chart pair, which `divisorWindow` names through `fiberTwoCover π`;
+see the module docstring's correction.  The eighth,
 `SmoothOfRelativeDimension 1 C.hom`, is flagged unused and is again not omittable, for the
 same instance-argument reason recorded above. -/
 theorem span_eqnsWindowGermSet_le (g : ℕ) (d : (relCurve C K).LocalEquations)
@@ -273,7 +285,21 @@ being a function of the window alone), and the final upgrade is the carrier-free
 
 Note the hypothesis is on the FIRST components only, exactly as the chart-typed fibrewise
 step consumes it (`divFamDivisor_eq_of_divFamEps_fst_eq`) — the shifted window plays no part
-in the stalk-ideal recovery. -/
+in the stalk-ideal recovery.
+
+**VACUITY AUDIT, run rather than asserted** (I-0838's bar; the trap is my own memory
+`replace-the-distinguishing-input-with-the-trivial-one`).  Both hypotheses were checked
+load-bearing by deleting each and re-elaborating:
+
+* drop `hgen`/`hgen'` — the goal does not close, so the two inclusions are doing work and
+  "one remaining obligation" is not secretly zero;
+* drop `heps`, keep both `hgen`s — the goal reduces to equality of the two germ-set spans
+  and **`rfl` fails on it**.  That is the sharper check: had it succeeded, the theorem would
+  have said any two widened families are divisor-equal, which is false, and the `ε`-equality
+  would have been decoration.
+
+The positive control — the theorem applied to one family against itself — does close, so the
+statement is applicable and not merely unfalsifiable. -/
 theorem divEq_of_eps_eq_of_field_of_windowGen (g : ℕ)
     (F F' : CertifiedDivisorFamilyAff C K g)
     (heps : (F.eps hπ g).1 = (F'.eps hπ g).1)
