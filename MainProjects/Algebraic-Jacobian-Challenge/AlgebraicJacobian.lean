@@ -153,6 +153,10 @@ import AlgebraicJacobian.Picard.Pic0Dimension
 -- `thm:tgtsp` chain at `Pic0SchemeEt`, the object the headline binds. Rooted here
 -- for the same reason as `Pic0Dimension` above -- the axiom probe walks this cone.
 import AlgebraicJacobian.Picard.Pic0EtTangentSpace
+-- The ETALE smoothness/properness leg (run 0085, ajc-p3): the `k̄` and valuative
+-- reductions of `Pic0Et.geometricallyReduced` / `Pic0Et.universallyClosed`, the two
+-- `Pic0Et` obligations of `picardJacobianWitness`. Rooted here for the same reason.
+import AlgebraicJacobian.Picard.Pic0EtStructure
 import AlgebraicJacobian.Picard.AmbientPicNotProper
 import AlgebraicJacobian.Picard.GroupSchemeHomogeneity
 import AlgebraicJacobian.Picard.HomogeneityOrbitCollapse
