@@ -6,9 +6,10 @@ decl: ProbeP4b.controlSorry
 file: scratch_p4/Probe2.lean
 generated: lean
 lean_status: sorry
+stale: true
 title: ProbeP4b.controlSorry
 type: lean
-updated: '2026-07-30T00:05:11'
+updated: '2026-07-30T00:56:05'
 ---
 theorem controlSorry (J : Over (Spec (.of k))) : QuasiCompact J.hom := sorry
 

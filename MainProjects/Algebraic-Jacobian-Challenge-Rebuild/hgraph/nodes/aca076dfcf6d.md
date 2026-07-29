@@ -6,9 +6,10 @@ decl: ProbeP4c.qc_of_surj
 file: scratch_p4/Probe3.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: ProbeP4c.qc_of_surj
 type: lean
-updated: '2026-07-30T00:05:11'
+updated: '2026-07-30T00:56:05'
 ---
 theorem qc_of_surj (J : Over (Spec (.of k)))
     (rep : (pic0TypeFunctor C).RepresentableBy J)

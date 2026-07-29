@@ -13,9 +13,10 @@ docstring: 'And the classifier''s own signature carries that hchi at the SAME `n
 file: scratch_p4/Probe7.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: ProbeP4g.classifier_at_n
 type: lean
-updated: '2026-07-30T00:05:11'
+updated: '2026-07-30T00:56:05'
 ---
 noncomputable def classifier_at_n (n r₁ r₂ : ℕ)
     (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (n : ℤ))

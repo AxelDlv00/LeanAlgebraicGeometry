@@ -52,8 +52,11 @@ relPicMk (s₂|U).picClass`.  Both directions, no hypothesis beyond the standing
   (`Picard/DivSchemeMonoBridgeRel.lean:417`) is a **relative** mono over an *arbitrary*
   commutative test ring with **no** Noetherian hypothesis and no residual seam: two certified
   families with equal ε-pairs are equal in `DivFam`.  What is genuinely missing is the *other*
-  half, `relPic`-class equality ⟹ ε-window equality, which `RelPicClassSeparatesWindow` names
-  below.
+  half — that a `relPic` class separates locally certified systems at one ring — which
+  `RelPicSeparatesDivFamZar` names below.  Whether that half factors through the ε-window (and
+  so through the landed relative mono) is **not settled here**: `divFamEps` is in this file's
+  import closure but the mono chain is not, so composing them is a further step and this file
+  does not take it.
 
 **MEASURED, and it is why the four sites could say what they say**: `DivSchemeMonoBridgeRel`
 is in the import closure of **no** chart file — not `Pic0ChartPair`, not
@@ -70,8 +73,10 @@ each file's own scope and false of the project.
   fork's hypothesis, twist-free and unit-free.
 * `AlgebraicGeometry.not_isChartLocusFibre_of_relPicMk_picClass_eq` — the fork's negative
   branch restated at the sharp target.
-* `AlgebraicGeometry.RelPicClassSeparatesWindow` — the honest residue of the positive branch,
-  named, with the relative mono discharged from it.
+* `AlgebraicGeometry.RelPicSeparatesDivFamZar` — the honest residue of the positive branch,
+  named at ONE test algebra.  No instance of it is proved here.
+* `AlgebraicGeometry.injective_chartValue_of_relPicSeparates` — it suffices: piecewise
+  separation makes the chart map injective on `divFamZar` sections at every test.
 -/
 
 set_option autoImplicit false
@@ -112,6 +117,7 @@ theorem chartValue_eq_iff_abelDiv_eq (m : ℕ) (Z : (C ⊗ overSpec k k).left.Cu
 
 /-! ## Step 2: the plus unit is injective, piecewise -/
 
+omit [SmoothOfRelativeDimension 1 C.hom] in
 variable (C π n) in
 /-- **The Abel value determines, and is determined by, the piecewise `relPic` classes.**
 
@@ -120,14 +126,20 @@ that piece's class, and `PicEtAff.unit_injective` — unconditional on every aff
 — strips the unit.  Backward: congruence.
 
 This is the step no CHART-U row cites, and it is what makes the fork's target a statement
-about *classes* rather than about the sheafified group. -/
-theorem abelDiv_eq_iff_forall_relPicMk_picClass_eq
+about *classes* rather than about the sheafified group.
+
+**A measurement, not a claim**: the `omit` is the linter's, not decoration.  This step does
+not use `SmoothOfRelativeDimension 1 C.hom` — the curve enters only through `PicEtAff`'s
+étale separatedness, which needs properness and geometric integrality and nothing about
+dimension. -/
+theorem abelDiv_eq_iff_forall_relPicMk_picClass_eq [GeometricallyReduced C.hom]
     (T : Over (Spec (.of k))) (s₁ s₂ : divFamZar C π n T) :
     abelDiv C π n T s₁ = abelDiv C π n T s₂
       ↔ ∀ U : T.left.affineOpens,
           relPicMk C (overSpec k Γ(T.left, U.1)) (s₁.1 U).picClass
-            = relPicMk C (overSpec k Γ(T.left, U.1)) (s₂.1 U).picClass := by
-  sorry
+            = relPicMk C (overSpec k Γ(T.left, U.1)) (s₂.1 U).picClass :=
+  ⟨fun h U => PicEtAff.unit_injective C _ (congrFun (congrArg Subtype.val h) U),
+    fun h => picEt.ext fun U => congrArg (PicEtAff.unit C _) (h U)⟩
 
 /-! ## The composite: the fork's hypothesis, twist-free -/
 
@@ -143,6 +155,44 @@ theorem chartValue_eq_iff_forall_relPicMk_picClass_eq (m : ℕ)
             = relPicMk C (overSpec k Γ(T.left, U.1)) (s₂.1 U).picClass :=
   (chartValue_eq_iff_abelDiv_eq C π n m Z T s₁ s₂).trans
     (abelDiv_eq_iff_forall_relPicMk_picClass_eq C π n T s₁ s₂)
+
+/-! ## The honest residue of the positive branch, named -/
+
+variable (C π n) in
+/-- **THE RESIDUE, at one affine test algebra**: the `relPic` class of a locally certified
+divisor class determines the class.
+
+This is what the fork's positive branch actually owes, and it is *strictly weaker* than the
+"relative form of DAT-C GAP-2" that four sites price it at, in two independent ways:
+
+* it is about `relPicMk ∘ picClass` at a **single ring**, with no test object, no chart, no
+  twist, no representing object and no `Σ`-component;
+* it is the **only** thing left, because `chartValue`'s two other layers are now discharged:
+  the twist by cancellation and the plus unit by `PicEtAff.unit_injective`.
+
+**Read the quantifier carefully — this is a `Prop` about one `A`, deliberately.**  It is not
+asserted here for any `A`, and this file proves no instance of it.  Note also what it is *not*:
+it is not injectivity of `picClass` itself.  `relPicMk` quotients by `picFromBase`, so the
+demand is only that two locally certified systems whose Čech classes differ by a *base-pulled*
+class are already equal — the weakest form of the separation the fork needs. -/
+def RelPicSeparatesDivFamZar (A : Type u) [CommRing A] [Algebra k A] : Prop :=
+  Function.Injective
+    (fun F : DivFamZar C A π n => relPicMk C (overSpec k A) F.picClass)
+
+variable (C π n) in
+/-- **The residue suffices, at every test**: piecewise class separation makes the chart map
+injective on the sections of `divFamZar` — which is exactly the statement whose failure the
+fork's negative branch needs and whose truth the positive branch needs.
+
+So the whole fork reduces to `RelPicSeparatesDivFamZar` at the section algebras of the test.
+`m`, `Z` and `hdeg` do not appear in the hypothesis. -/
+theorem injective_chartValue_of_relPicSeparates [GeometricallyReduced C.hom]
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor) (T : Over (Spec (.of k)))
+    (hsep : ∀ U : T.left.affineOpens, RelPicSeparatesDivFamZar C π n Γ(T.left, U.1)) :
+    Function.Injective (chartValue C π n m Z T) := by
+  intro s₁ s₂ h
+  refine divFamZar.ext fun U => hsep U ?_
+  exact (chartValue_eq_iff_forall_relPicMk_picClass_eq C π n m Z T s₁ s₂).mp h U
 
 /-! ## The negative branch at the sharp target -/
 

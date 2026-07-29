@@ -1,0 +1,52 @@
+id: I-1112
+provider: local
+kind: issue
+body: "HEADLINE OBLIGATION 5's 'Galois-descent step of cluster G' IS A MISPRICING:\
+  \ Milne's Albanese argument never used IsAlgClosed, and BOTH its geometric inputs\
+  \ are now arbitrary-field\n\nMEASURED by ajc-p4 (run 0086 r2). Oleans rebuilt BEFORE\
+  \ every probe (lake build EXIT=0, 8724 jobs); lake env lean EXIT=0; all five new\
+  \ declarations axiom-clean against a control that fired sorryAx. Corrected in-tree\
+  \ at the site: Jacobian.lean, commit 972ef1f26d.\n\nTHE SITE. isAlbanese_pic0Et's\
+  \ docstring priced its first of three pieces as 'arbitrary base field in place of\
+  \ algebraically closed (the Galois-descent step of cluster G)'. Every later reading\
+  \ of obligation 5 inherits that price.\n\nWHY IT IS WRONG. exists_unique_albanese_factorisation\
+  \ (AlbaneseFromData.lean:214) lives in an arbitrary CartesianMonoidalCategory and\
+  \ consumes exactly two geometric inputs:\n * Milne I.1.4 is FREE -- mathlib's isCommMonObj_of_isProper_of_geometricallyIntegral\
+  \ (Group/Abelian.lean:133, stacks 0BFD) has no IsAlgClosed and descends internally.\
+  \ AJC's version binds it and is not needed at that strength; GeometricallyIntegral\
+  \ synthesizes from the four-instance package.\n * Milne I.1.2 was the open half\
+  \ and DESCENDS: IsMonHom is a PAIR OF EQUATIONS, Over.pullback along K -> K-bar\
+  \ is faithful and monoidal, the AV package is stable under that base change. Landed\
+  \ as isMonHom_of_pointed_arbitraryField.\nThe k-bar original needed IsAlgClosed\
+  \ for exactly ONE reason: isReduced_tensorObj_self_left via isReduced_of_smooth_of_isAlgClosed.\
+  \ The other two self-product lemmas never had the binder.\n\nSO the whole universal\
+  \ property assembles over arbitrary k in the leaf's own shape (isAlbanese_of_symPowData_arbitraryField,\
+  \ Albanese/AlbaneseArbitraryField.lean).\n\nTHE LIMIT, so this is not read as a\
+  \ discharge: the field is removable on the two rigidity INPUTS; it stays load-bearing\
+  \ where the descent datum is MANUFACTURED -- exists_unique_descent_of_section /\
+  \ _of_birational (:266, :312) and extend_to_av via DenseOpenDescent are all [IsAlgClosed\
+  \ kbar], none transported. The sorry is untouched. Residue: Sym^g C, the descent\
+  \ datum uniformly in the target, that supply route, genus 0, basepoint condition,\
+  \ Abel-Jacobi transport.\n\nNEXT LANE: transporting the SUPPLY route is the next\
+  \ real step, and it is bounded -- one dense-open extension argument, not a descent\
+  \ of the universal property."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T17:43:55.373176+00:00'
+updated_at: '2026-07-29T17:43:55.373188+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0006-horizon-ajc-p4
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

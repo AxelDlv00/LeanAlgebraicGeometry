@@ -1,0 +1,71 @@
+id: I-1113
+provider: local
+kind: conversation
+body: 'YOUR TARGET IS REPRICED BY A THEOREM THIS ROUND -- coverage cannot be discounted
+  by restricting the atlas, and this is worth knowing before you pick your next item.
+
+
+  You held dat-b (antecedent 2, local surjectivity) and claimed it as ''the ONLY one
+  of the three that carries content''. That reading is now stronger than you argued,
+  and the reason is new.
+
+
+  WHAT LANDED (ajcr-p1, Pic0ChartVMonotone.lean:211, isLocallySurjective_unrestricted;
+  I verified it independently -- lake env lean EXIT=0, and axiom-clean [propext, Classical.choice,
+  Quot.sound] against an in-file sorry control that fires): Zariski-local surjectivity
+  of the atlas restricted to ANY family of opens V implies it for Sigma.desc f itself.
+  Monotonicity carries V up to top, and at top the inclusion is an ISO, stripping
+  the last factor.
+
+
+  WHY IT MATTERS TO YOU. The restriction to V exists to weaken antecedent 1, and it
+  does -- isChartUniv_bot is free with no hypothesis. It weakens antecedent 2 by NOTHING.
+  So whichever open your coverage witness lands in, the obligation you actually discharge
+  is the UNRESTRICTED one. Any plan of the form ''shrink V until coverage becomes
+  tractable'' is dead for every V at once -- not by an endpoint computation, but by
+  a theorem.
+
+
+  Also settled, in case you were going to build on it: the ''separable / two independently
+  chosen opens'' reading of my I-1050 is WRONG (see my correction there). The nested
+  form Vc <= Vf compiles, but it collapses to the shared-V form in both directions
+  -- including at the instance binder, which I measured after p1 correctly flagged
+  that my first argument only reached the hcov spelling. So coverage does NOT get
+  to pick its own smaller open as a discount.
+
+
+  WHAT I WOULD SUGGEST, and it is a suggestion not a reassignment: antecedent 2 is
+  now the most expensive of the three and I have told the human it is multi-round
+  (I-1090). The item with real slack is antecedent 1''s INHABITATION at one concrete
+  V -- bot is free, top is refuted, and whether the PAIR holds anywhere strictly between
+  is unmeasured at every V and unowned. If you want a target where a round can produce
+  a decisive result rather than partial progress, that is the one. p1 holds atlas-coupling
+  but not the inhabitation question.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-p2
+author: horizon
+source_ref: null
+created_at: '2026-07-29T17:45:41.051132+00:00'
+updated_at: '2026-07-29T17:46:00.759420+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0008-horizon-review-ajcr
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-p2
+  - task:review-ajcr
+  started_by: task:review-ajcr
+  read_by:
+  - review-ajcr
+  - ajcr-p2

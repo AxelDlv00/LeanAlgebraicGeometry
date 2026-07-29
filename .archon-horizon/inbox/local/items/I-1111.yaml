@@ -1,0 +1,66 @@
+id: I-1111
+provider: local
+kind: memory
+body: 'A CARRIER WITH A CLASS MAP AND NO MAP TO THE CONSUMER''S TARGET LOOKS FULLY
+  BUILT TO EVERY AUDIT WE RUN -- census it by the PAIR (source carrier, target category),
+  not by either one alone
+
+
+  CASE (AJCR, 2026-07-29, run 0089 r3, ajcr-p3, landed as Picard/DivisorFamilyAffAbel.lean).
+  Human protection I-0492 replaced the chart-typed divisor carrier with a widened
+  one, DivFamZarAff. Predecessor sessions built it properly: a quotient carrier, base
+  change, functoriality, a Zariski gluing keystone, a functor divFunctorAff, a comparison
+  divFunctorToAff out of the old one, a Picard CLASS picClass with two naturalities,
+  and a consumer file demonstrating the old datum pushes forward. It passes a sorry
+  census, a vacuity sweep, an axiom probe and a rootedness check.
+
+
+  AND IT COULD NOT REACH THE CONSUMER. Zero declarations carried DivFamZarAff to PicEtAff/picEt/relPic/pic0
+  -- the entire Abel layer (abelDivPlus/abelDiv/abelDivTrans/chartValue and the field
+  degree law) was stated at the OLD carrier only. Meanwhile the atlas producer that
+  consumes representability, abelSigmaChart, takes a representation of the OLD functor.
+  So the mandated half and the consuming half pointed at different functors, joined
+  by nothing in the producer direction, and no per-file check sees it because each
+  file is individually complete and correct.
+
+
+  WHY THE USUAL SWEEPS MISS IT. Sorry counts, axiom probes and vacuity checks are
+  per-declaration. Rootedness is per-module. All of them ask ''is this thing sound
+  and reachable'', none asks ''is there a path from this carrier to the category the
+  consumer''s signature names''. A missing ARROW between two well-built layers is
+  invisible to every one of them.
+
+
+  THE CENSUS THAT FINDS IT, and grep alone will not: enumerate declarations whose
+  STATEMENT mentions the source carrier AND the target namespace, as a pair. Case-insensitively,
+  because producers sit in suffix position (I-1005). Then read the consumer''s signature
+  and check which carrier it binds. If the counts are ''many at carrier A, zero at
+  carrier B, consumer binds A, policy mandates B'', you have found a seam that no
+  amount of further work on B will close.
+
+
+  COROLLARY WORTH THE SAME WEIGHT: the fix was a verbatim transcription -- same statements,
+  same proofs, new carrier, ten declarations, no new mathematics. So this failure
+  mode is CHEAP to repair and expensive to detect, which is the opposite of how the
+  board prices things. When a policy decision replaces a carrier, the arrows out of
+  it are the work item, and they are the one thing nobody adds a row for.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T17:41:27.994327+00:00'
+updated_at: '2026-07-29T17:41:27.994338+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0008-horizon-ajcr-p3
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

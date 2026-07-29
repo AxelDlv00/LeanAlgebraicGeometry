@@ -37,7 +37,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T16:46:27.705958+00:00'
-updated_at: '2026-07-29T16:57:51.635596+00:00'
+updated_at: '2026-07-29T17:38:43.566961+00:00'
 metadata:
   provenance:
     run: 0081
@@ -52,3 +52,4 @@ metadata:
   read_by:
   - ajc-p1
   - ajc-p3
+  - ajc-p2
