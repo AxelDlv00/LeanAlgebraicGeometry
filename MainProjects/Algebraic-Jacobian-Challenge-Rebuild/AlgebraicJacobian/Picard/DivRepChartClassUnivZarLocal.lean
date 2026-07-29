@@ -73,6 +73,9 @@ input that binder still admits.
   — the direction record: the refuted side implies the pin.  Kept, with its name's `_not_
   conversely` read as a statement about the *implication*, not as a claim that the no-go
   fails to reach the pin — it does reach it, by instantiation at the away ring.
+* `AlgebraicGeometry.ThetaGeneratorSeed.side_straddle_gives_chart_separated_pieces` — the
+  probe's correct shape: opposite `side` values already separate the charts, so what is
+  measurable is the `side` function, not a support locus.
 
 ## What this does NOT do, stated exactly
 
@@ -83,12 +86,23 @@ which is a smaller and less exciting claim than the one this file's first draft 
 **The away hypothesis has no witness at any prime**, here or anywhere in the tree, and it is
 refutable exactly when the universal seed's support straddles within one fibre.
 
-**THE PROBE THIS SEAM STILL OWES, and it is not this file's contribution.**  Nothing measures
-whether `univSeed`'s `supportLocus` meets both `V₀` and `V₁` — grep finds four files mentioning
-`univSeed` and none comparing its support to the pinned charts.  Until that is measured the
-leaf is unpriced *in both directions*: two rounds have now argued about whether a refutation
-reaches its target instead of checking whether the refutation's antecedent holds.  A lane
-picking this row up should measure the antecedent first.
+**THE PROBE THIS SEAM STILL OWES, in the shape that is worth running.**  Nothing in the tree
+compares `univSeed`'s support to the pinned charts, and the leaf is unpriced in both directions
+until something does — two rounds have argued about whether a refutation reaches its target
+instead of checking whether its antecedent holds.  But "does `univSeed` straddle?" is the wrong
+spelling, and `side_straddle_gives_chart_separated_pieces` below says why:
+
+* every seed **piece** is confined to one pinned chart *by construction* — `piece_le` is
+  `basicOpen_le` at `relPinnedChart C R π (D.side z)`, so this is a fact about the *type*
+  `ThetaGeneratorSeed` and there is nothing seed-specific to measure;
+* but `localEquations` builds a **pointed** cover, one member per point, with `side` a function
+  *of the point*.  So the support locus may straddle both charts globally while every piece is
+  chart-confined.  Those are different statements.
+
+The measurement is therefore about the `side` **function**, not about a support computation:
+*do two points of the support take opposite sides?*  That is where a lane should spend the
+round.  (Established by `review-ajcr`, inbox `I-1003`; re-derived here rather than taken on
+report, and the transport is the theorem below.)
 
 **Do NOT read the pinned-chart geometry as an obstruction.**  The certificate assemblers
 (`DivisorAdaptation.isCertified_of_noLeak_kernel_spanning`, `Picard/DivSchemeCertUniv.lean:104`)
@@ -148,6 +162,41 @@ theorem isLocallyCertified_of_isCertified_not_conversely [IsNoetherianRing R] {n
   D.isLocallyCertified_of_isCertified hD hc
 
 end Direction
+
+end ThetaGeneratorSeed
+
+/-! ## The probe's correct shape: `side`, not the support -/
+
+namespace ThetaGeneratorSeed
+
+section SideStraddle
+
+variable {k : Type u} [Field k] {C : Over (Spec (CommRingCat.of k))}
+variable {R : Type u} [CommRing R] [Algebra k R]
+variable {π : C.left ⟶ P1 k} [IsFinite π] {a : ℕ}
+variable {K : Submodule R (relThetaSections C R π a)}
+
+/-- **Opposite `side` values put two pieces in opposite pinned charts** — so the straddling
+datum the no-go consumes is available from the seed's `side` *function*, with no support
+computation.
+
+This is the transport that fixes the shape of the probe `…divrep.u2` owes.  Piece confinement
+itself is free and carries no information: `D.piece_le z` holds for **every** seed at **every**
+point, being `basicOpen_le` into `relPinnedChart C R π (D.side z)`.  What is *not* free is
+whether the pointed cover of `D.localEquations` — one member per point, `side` varying with the
+point — actually takes both values on the support.  That, and not "does the support straddle",
+is the measurable question.
+
+Nothing here claims the hypothesis holds for the high-window universal seed.  It says that if a
+lane exhibits two support points with opposite sides, the chart separation the no-go wants
+follows immediately, and that a lane which instead sets out to compute a support locus is
+measuring the wrong object. -/
+theorem side_straddle_gives_chart_separated_pieces (D : ThetaGeneratorSeed C R π a K)
+    {z z' : relCurve C R} (hz : D.side z = false) (hz' : D.side z' = true) :
+    D.piece z ≤ relPinnedChart C R π false ∧ D.piece z' ≤ relPinnedChart C R π true :=
+  ⟨hz ▸ D.piece_le z, hz' ▸ D.piece_le z'⟩
+
+end SideStraddle
 
 end ThetaGeneratorSeed
 
