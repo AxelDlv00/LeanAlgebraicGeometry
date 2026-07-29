@@ -8,7 +8,7 @@ import AlgebraicJacobian.Picard.Pic0ChartVMonotone
 /-!
 # The `V = ⊥` endpoint of the seam, refuted at the INSTANCE level and unconditionally
 
-`Picard/Pic0ChartRestrictedFibreSat.lean:93-98` records a loophole in the two-endpoint story
+`Picard/Pic0ChartRestrictedFibreSat.lean` records a loophole in the two-endpoint story
 of the `V`-coupled seam.  At `V = ⊥` antecedent 1 is free (`isChartUniv_bot`, no hypothesis),
 so the *instance* form of the assembly reduces to the `IsLocallySurjective` binder alone — and
 `not_coverageContainment_bot` refutes only the `hcov` *spelling*, never the binder.  Several
@@ -50,7 +50,7 @@ That lemma had **zero citations** in this project before this file.
 * `not_chartsCoverLocally_bot` — the same refutation in the spelling a coverage producer
   actually attempts, since nobody proves the instance directly.
 * `false_of_isLocallySurjective_bot` — **the finding.**  `isLocallySurjective_of_bot`
-  (`Pic0ChartVMonotone.lean:284`) is *vacuous*: its hypothesis is precisely what is refuted here.
+  (`Pic0ChartVMonotone.lean`) is *vacuous*: its hypothesis is precisely what is refuted here.
   Its conclusion — that a `⊥`-based route would give unrestricted coverage — is correct, but it
   does not shut a cheap route; there was never a route to shut.
 * `isLocallySurjective_restrictChart_top` — the **control**, and the reason to believe the two
@@ -75,7 +75,7 @@ are inhabited by objects already in the tree, and the unconditional form follows
 `not_isLocallySurjective_restrictChart_bot'`, whose statement quantifies over nothing but the
 chart family.
 
-Read against `isLocallySurjective_of_bot` (`Pic0ChartVMonotone.lean:284`), the relationship is
+Read against `isLocallySurjective_of_bot` (`Pic0ChartVMonotone.lean`), the relationship is
 sharper than "closed from both sides": that theorem's hypothesis *is* what is refuted here, so
 it is vacuous, and the `⊥` loophole was never open in the first place.  Recorded as
 `false_of_isLocallySurjective_bot` below rather than only in prose, because "uninhabitable" and
@@ -91,6 +91,14 @@ The real one is `isLocallySurjective_restrictChart_top` below: at `⊤` the rest
 *inherits* coverage from the unrestricted one, because the inclusion is then an isomorphism.  So a
 `⊤` analogue of the refutation would refute DAT-B for every chart family — the endpoint is
 protected by the project's own target, not by a tactic breaking.
+
+## A note on citations, so the next pass does not undo it
+
+Cross-file references here name **declarations, not line numbers**, deliberately.  These modules
+are edited by several lanes an hour and every docstring insertion above a declaration moves it: the
+first version of this file cited three line anchors and all three were stale within the session,
+rotted by *this file's own* earlier commit inserting prose above them.  One `grep -n` resolves a
+name and nothing invalidates it.  Please do not "refresh" the names back into numbers.
 
 ## What is NOT closed here, stated plainly
 
@@ -224,14 +232,14 @@ theorem not_isLocallySurjective_restrictChart_bot' {ι : Type u} {X : ι → Sch
 /-! ## The consequence in the coordinates a coverage lane works in
 
 Nobody proves the instance directly: a coverage lane proves `ChartsCoverLocally`
-(`Pic0ChartLocalSurjectivity.lean:86`) and lets `isLocallySurjective_sigmaDesc` convert.  So the
+(`Pic0ChartLocalSurjectivity.lean`) and lets `isLocallySurjective_sigmaDesc` convert.  So the
 refutation is stated there too, otherwise a lane would have to notice the conversion itself. -/
 
 /-- **`ChartsCoverLocally` is false at `⊥`** — the refutation in the spelling a producer
 actually attempts.
 
 `not_isLocallySurjective_restrictChart_bot'` composed with `isLocallySurjective_sigmaDesc`.
-Compare `not_coverageContainment_bot` (`Pic0ChartRestrictedFibreSat.lean:257`), which refutes
+Compare `not_coverageContainment_bot` (`Pic0ChartRestrictedFibreSat.lean`), which refutes
 the `hcov` conjunct of the *coupled assembly* — a different and weaker statement, since it
 leaves the instance binder untouched.  This one closes the binder. -/
 theorem not_chartsCoverLocally_bot {ι : Type u} {X : ι → Scheme.{u}}
@@ -241,7 +249,8 @@ theorem not_chartsCoverLocally_bot {ι : Type u} {X : ι → Scheme.{u}}
 
 /-- **`isLocallySurjective_of_bot` is VACUOUS, and this is the file's finding for that lane.**
 
-`Pic0ChartVMonotone.lean:284` proves that inhabiting the coverage instance at `⊥` yields
+`isLocallySurjective_of_bot` (`Pic0ChartVMonotone.lean`) proves that inhabiting the coverage
+instance at `⊥` yields
 unrestricted coverage, and reads that as "the `⊥` route is not cheap".  The reading is right;
 the mechanism is stronger than advertised.  Its hypothesis is *exactly* the proposition refuted
 above, so the theorem is true with an uninhabitable antecedent — it does not shut a cheap route,
@@ -259,7 +268,7 @@ theorem false_of_isLocallySurjective_bot {ι : Type u} {X : ι → Scheme.{u}}
 
 /-- **The control for the refutation: at `⊤` the restricted atlas INHERITS coverage.**
 
-The converse of `isLocallySurjective_unrestricted` (`Pic0ChartVMonotone.lean:254`) at `V = ⊤`,
+The converse of `isLocallySurjective_unrestricted` (`Pic0ChartVMonotone.lean`) at `V = ⊤`,
 and the reason the refutation above is a fact about `⊥` rather than about the seam.  `⊤`'s
 inclusion is an isomorphism, so `sigmaDesc_restrictChart_top` exhibits the `⊤`-restricted atlas as
 an iso followed by the unrestricted one, and local surjectivity transfers by instance search.
