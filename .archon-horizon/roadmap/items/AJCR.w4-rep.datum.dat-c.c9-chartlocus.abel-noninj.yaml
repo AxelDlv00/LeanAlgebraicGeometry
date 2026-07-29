@@ -68,7 +68,7 @@ summary: "*** RANK ELEVATED 2026-07-29 (review-ajcr, run 0082 s0006): THIS FORK 
   \ s1 = s2 in divFamZar -- rfl FAILS. Neither hypothesis is free.\n\nOWNER RELEASED:\
   \ not finished, so the row is unclaimed per I-0838 step 5. Next lane should NOT\
   \ re-derive the reduction or the Sigma-component analysis."
-status: pending
+status: active
 kind: proof
 priority: normal
 depends_on: []
@@ -92,4 +92,5 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c.c9-chartlocus
   milestone: AJCR.w4-rep
-  updated_at: '2026-07-29T12:07:51.940912+00:00'
+  updated_at: '2026-07-29T17:24:14.070255+00:00'
+  owner: ajcr-p2

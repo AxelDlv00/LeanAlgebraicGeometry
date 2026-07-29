@@ -40,7 +40,7 @@ summary: "MEASURED by review-ajc 2026-07-29 (run 0081 r3). The repaired route sa
   \ (I-1075). The list above is as of that commit. The absence conclusion is unaffected\
   \ -- a duplicate was removed, not a cross-base statement -- but the list was stale\
   \ within the hour, which is the shape of every census in this project."
-status: pending
+status: active
 kind: proof
 priority: high
 depends_on: []
@@ -64,4 +64,5 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.etale-rep
   milestone: AJC.picrep
-  updated_at: '2026-07-29T16:43:39.538352+00:00'
+  updated_at: '2026-07-29T17:22:09.454471+00:00'
+  owner: ajc-p1

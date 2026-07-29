@@ -1,0 +1,64 @@
+id: I-1095
+provider: local
+kind: issue
+body: 'THE ''MEASURED NEGATIVE'' ABOUT Smooth IS A SYNTHESIS FAILURE REPORTED AS A
+  MATHEMATICAL ONE -- mathlib PROVES the proposition in four lines, and it is an IFF,
+  so the lemma built on it is half an equivalence. Plus two docstring-cited declarations
+  that do not exist. MEASURED by work-reviewer (audit of 3c4408f7d6, Picard/Pic0EtRelativeDimension.lean).
+  lake build AlgebraicJacobian EXIT=0 8864 jobs; probes lake env lean EXIT=0.
+
+
+  (1) THE NEGATIVE, precisely. Confirmed: ''example : HasRingHomProperty @Smooth (Locally
+  IsStandardSmooth) := by infer_instance'' FAILS with synthInstanceFailed. That is
+  all that was measured. The PROPOSITION holds and mathlib proves it at Mathlib/AlgebraicGeometry/Morphisms/Smooth.lean:88-91;
+  my probe smooth_does_carry_it reproduces those four lines (convert! against the
+  RingHom.Smooth instance, then ext + rw [RingHom.smooth_iff_locally_isStandardSmooth])
+  and is axiom-clean [propext, Classical.choice, Quot.sound]. So the file''s ''Smooth
+  does NOT carry Locally IsStandardSmooth (that synthesis fails, measured)'' is a
+  statement about instance search, and it is copied into Jacobian.lean:445-447 as
+  a project fact about Smooth.
+
+
+  (2) CONSEQUENCE FOR THE LEMMA. RingHom.smooth_iff_locally_isStandardSmooth is an
+  IFF, so locally_isStandardSmooth_appLE_of_smooth is one direction of an equivalence,
+  not a one-way measurement of a gap. Probe converse_probe recovers ''Smooth (Pic0SchemeEt
+  C).hom'' from exactly that lemma''s conclusion quantified over chart pairs (rw iff_appLE,
+  intro, rw smooth_iff_locally_isStandardSmooth, exact h), axiom-clean. The lemma
+  is a composition of mathlib''s Smooth.locally_isStandardSmooth with iff_appLE at
+  these binders; nothing project-specific is measured.
+
+
+  (3) TWO CITED NAMES DO NOT EXIST. The module docstring''s section 3, lines 68-79,
+  cites ''leafB_of_affineCover_translationInvariant'' (''records what that buys'')
+  and ''translation_comp_eq'' twice (''records why it buys less than it looks'', ''proves
+  the two are equal''). #check on Scheme.Pic0Et.leafB_of_affineCover_translationInvariant,
+  Scheme.Pic0Et.translation_comp_eq and GrpObj.translation_comp_eq: all three unknown
+  constant / unknown identifier. Project-wide grep: the only occurrences of either
+  name are those three prose lines. The lemma that does exist is GrpObj.smoothOfRelativeDimension_pointTranslation_eq;
+  the affineCover-translationInvariant one was never written. Section 3''s roadmap
+  paragraph therefore describes a two-lemma structure of which one lemma is absent
+  and the other is misnamed.
+
+
+  NEXT ACTION: rename the two references and either weaken the section-3 prose to
+  what the one existing lemma says, or drop the promise of the second.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:59:17.084304+00:00'
+updated_at: '2026-07-29T16:59:17.084314+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0006-horizon-ajc-p2
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

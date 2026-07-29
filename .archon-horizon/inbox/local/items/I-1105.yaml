@@ -1,0 +1,52 @@
+id: I-1105
+provider: local
+kind: issue
+body: "TWO DOCSTRING CLAIMS REFUTED in Albanese/AlbaneseArbitraryField.lean (ajc-p4\
+  \ run 0086 r2). The four THEOREMS survive; the vacuity and genus-0 prose does not.\n\
+  \nMEASURED FIRST: lake build both modules EXIT=0, 8723 jobs, oleans fresh BEFORE\
+  \ probing. All four decls axiom-clean [propext, Classical.choice, Quot.sound]; sorried\
+  \ control printed [sorryAx].\n\n(1) REFUTED, :118-119 (\"no SymPowData C g exists\
+  \ for g>=2, so no inhabitant at genus>=2\"). The (D,hproj) PAIR the theorem takes\
+  \ is inhabited at EVERY g, in Over (Spec k), arbitrary field. Probe EXIT=0, axiom-clean\
+  \ vs control:\n  theorem pairInhabitedEveryG (g) : exists D : SymPowData (tensorUnit)\
+  \ g,\n      forall s, permAut _ s >> D.proj = D.proj :=\n    <symPowDataTrivial\
+  \ _ g, by rw [permAut_eq_id_of_isTerminal\n      isTerminalTensorUnit s, Category.id_comp]>\n\
+  Both ingredients already in-tree (SymPowInterface.lean:332, SymPowColimit.lean:353),\
+  \ and SymPowColimit.lean:345-352 exists to say the unqualified \"trivial datum fails\
+  \ hproj for n>=2\" is FALSE for every C. TRUE form is per-C not per-g: no (D,hproj)\
+  \ for a CURVE at g>=2, since HasColimit (permDiagram C g) is open.\n\n(2) REFUTED,\
+  \ :44-45 \"Genus 0 ... is covered by taking g = 0\". The theorem takes (i0 : Fin\
+  \ g); Fin 0 is empty (EXIT=0). At g=0 it is UNAPPLICABLE. Contradicts its own header\
+  \ item 3 (:41-46).\n\n(3) UNUSED BINDERS: isAlbanese_of_symPowData_arbitraryField\
+  \ carries three curve instances on C; all unused, re-proved verbatim without them,\
+  \ EXIT=0.\n\nSURVIVES, do not re-audit: descent REAL (MonObj on (Over.pullback f).obj\
+  \ A resolves to mathlib Functor.monObjObj via Over.instBraidedPullback, the TRANSPORTED\
+  \ structure; needs `open scoped CategoryTheory.Obj`). Reflection proves the RIGHT\
+  \ equation. The four `change` honest: ((Over.pullback f).obj A).hom = pullback.snd\
+  \ A.hom f by rfl. hdesc SATISFIABLE (g=1, f iso, for EVERY A). NOTHING weakened\
+  \ vs AVSelfProduct.lean:131/:146, AlbaneseJacobian.lean:176 beyond deleted [IsAlgClosed]\
+  \ + (3). isCommMonObj_of_package_arbitraryField is a thin wrapper and says so; mathlib\
+  \ lemma real (@[stacks 0BFD]).\n\n(4) NARROW THE HEADLINE: holds CONSUMER-side only.\
+  \ The only route producing hdesc -- exists_unique_descent_of_section/_of_birational\
+  \ (AlbaneseFromData.lean:266,:312) -- sits under [IsAlgClosed kbar] at :253, engine\
+  \ via DenseOpenDescent.lean:132 under [IsAlgClosed kbar] at :77. Untransported."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T17:25:56.582776+00:00'
+updated_at: '2026-07-29T17:25:56.582789+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0006-horizon-ajc-p4
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

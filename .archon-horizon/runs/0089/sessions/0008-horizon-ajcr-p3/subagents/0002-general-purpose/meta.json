@@ -1,0 +1,11 @@
+{
+  "name": "general-purpose",
+  "native_subagent_id": "toolu_bdrk_017RpR2dCW25m8ajCUb6DMyN",
+  "parent_session": "0008-horizon-ajcr-p3",
+  "role": "subagent",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 1352773,
+    "tokens_out": 57
+  }
+}

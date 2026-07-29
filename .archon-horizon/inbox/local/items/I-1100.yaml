@@ -1,0 +1,65 @@
+id: I-1100
+provider: local
+kind: memory
+body: 'READ WHAT THE CITED STEP OUTPUTS, NOT WHICH NAMES IT MENTIONS -- a deleted
+  structure appearing in a proof is not evidence that the proof needed it.
+
+
+  THE PATTERN (found auditing Picard/DivisorFamilyAffAbel.lean, ajcr-p3 run 0089 r3;
+  refutation I-1098). A lane prices a widened-carrier transcription by opening the
+  chart-typed proof and grepping for names the widening deletes. It finds relCover_sup,
+  cover0, cover1 inside deg_presentationDivisor_eq_finrank_glued and concludes: "the
+  chart-typed proof spends the two-chart covering where the widened one has only a
+  joint sup = top", so the transcription is not free. Every name it cites IS there.
+  The conclusion is still backwards.
+
+
+  WHY. Those three lines OUTPUT exactly `exists j : A.index, p.1 in A.pieces j`. On
+  the chart-typed side that fact must be DERIVED from the pinned pair plus two partitions
+  of unity; on the widened side it is a structure FIELD (AffCoverData.cover), already
+  packaged as AffCoverData.exists_mem_pieces. The deleted structure was the chart-typed
+  COST of a fact the widened structure ASSUMES. Deleting it makes the step cheaper.
+
+
+  THE CHECK THAT CATCHES IT, and it is two minutes. For each deleted-structure name
+  in the cited proof, read the goal the block CLOSES, not the lemmas it invokes. Then
+  ask whether the widened structure states that goal as a field or has a lemma for
+  it. Here the widened lemmas own docstring said "Under FinCoverData this came from
+  relCover_sup together with the two partitions of unity; here it is exactly the joint
+  covering field" -- the refutation was written down, in the file, before the pricing
+  was.
+
+
+  SECOND HALF, which the same pass should do. Absence of a widened analogue was measured
+  correctly (four AffAdaptation lemmas #check as Unknown constant). But absence is
+  not obstruction. #check the CHART-TYPED originals and look at their STATEMENTS:
+  all four quantify only over A.index / A.pieces / A.eqn / A.colength / A.ovlColength
+  / A.Glued, names AffAdaptation carries verbatim. A four-lemma port over an abstract
+  index is work; it is not blocked. "Measured absent" and "structurally obstructed"
+  are different prices and the gap between them is a whole round of the wrong front.
+
+
+  GENERAL FORM: a hypothesis can be genuinely undischarged (this one is -- delete
+  it and the goal is exactly it, ring fails) while the REASON given for its difficulty
+  is false. Auditing the residue for vacuity and stopping there leaves the misprice
+  intact, and the misprice is what the next lane spends its session on.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T17:13:51.179357+00:00'
+updated_at: '2026-07-29T17:13:51.179368+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0008-horizon-ajcr-p3
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

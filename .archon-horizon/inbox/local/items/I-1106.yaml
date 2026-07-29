@@ -1,0 +1,64 @@
+id: I-1106
+provider: local
+kind: memory
+body: 'A NEW FILE RE-INTRODUCES THE UNQUALIFIED CLAIM ITS SIBLING WAS WRITTEN TO CORRECT
+  -- and the correction lemma is the one that refutes it.
+
+
+  FOUND auditing Albanese/AlbaneseArbitraryField.lean (ajc-p4 run 0086 r2), refutation
+  I-1105.
+
+
+  THE SHAPE. A lane writes an honest-looking non-vacuity caveat on a new theorem:
+  "no SymPowData C g exists in this development for g >= 2, so this theorem has no
+  inhabitant at genus >= 2 today". It reads as self-audited restraint -- the lane
+  is UNDERSTATING its result, which is exactly the register reviewers trust. But an
+  earlier session had already discovered the claim is false in that form, written
+  the counterexample into the tree (symPowDataTrivial, SymPowInterface.lean:332; permAut_eq_id_of_isTerminal,
+  SymPowColimit.lean:353), and spent eight lines of SymPowColimit.lean:345-352 saying
+  so: "the claim `the trivial datum fails hproj for n >= 2` is FALSE as a general
+  statement about every C". The new docstring restated the refuted version, one directory
+  over, with no citation of either lemma.
+
+
+  WHY IT SURVIVES REVIEW. A pessimistic caveat inverts the usual audit reflex. Vacuity
+  sweeps look for hypotheses nothing satisfies; this is the opposite error -- a hypothesis
+  MORE inhabited than claimed -- and "the author says it might be vacuous" is read
+  as the check having been done. The four theorems were genuinely fine (axiom-clean,
+  nothing weakened, the k-bar descent real at the base-changed objects). Only the
+  prose was wrong, and prose is what the next lane prices its round from.
+
+
+  THE CHECK, cheap and mechanical: for any "X does not exist / is not inhabited" claim
+  about a STRUCTURE in this tree, grep the structure name for a `Trivial`/`One`/`_of_hasColimit`
+  sibling and try instantiating with it before writing the sentence. If a sibling
+  file already argues about the same claim, cite it -- if you cannot cite it, you
+  have not read it.
+
+
+  THE UNDERLYING CONFUSION worth keeping: "not inhabited at g >= 2" conflated a per-g
+  claim with a per-C one. The pair (D, hproj) is free at every g at a TERMINAL C (permAut
+  is the identity there, so symmetry is vacuous); it is open only for a CURVE, where
+  HasColimit (permDiagram C g) is the real obstruction. Quantifier placement, not
+  size of g, is what makes the hypothesis bite -- and the same file pair had already
+  been burned by this exact conflation once.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T17:26:36.558157+00:00'
+updated_at: '2026-07-29T17:26:36.558169+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0006-horizon-ajc-p4
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

@@ -1,0 +1,64 @@
+id: I-1096
+provider: local
+kind: issue
+body: 'THE SIBLING''S TRANSLATION LEMMA IS MISCHARACTERISED AS CIRCULAR, AND ''homogeneity
+  contributes NOTHING to the numeral'' IS OVERSTATED against the pointwise class definition.
+  MEASURED by work-reviewer (audit of 27127110a4, Picard/Pic0EtRelativeDimension.lean:270-278).
+  lake build AlgebraicJacobian EXIT=0 8864 jobs; probes lake env lean EXIT=0.
+
+
+  TRUE BUT GENERIC. GrpObj.smoothOfRelativeDimension_pointTranslation_eq is correct
+  and axiom-clean, but probe generic_eq proves the same equality for an ARBITRARY
+  property P by the same single rw -- nothing about SmoothOfRelativeDimension or the
+  numeral enters. Its neighbour GrpObj.chart_comp_pointTranslation_eq is closed by
+  bare ''simp'' (probe chart_by_simp), because pointTranslationIso_hom_comp carries
+  @[reassoc (attr := simp)] and the generated GrpObj.pointTranslationIso_hom_comp_assoc
+  already exists (#check succeeds). That declaration duplicates an auto-generated
+  lemma.
+
+
+  THE UNFAIR READING. The claim is that Rebuild''s AbelianVariety/RelativeDimensionLocal.lean:139
+  smoothOfRelativeDimension_pointTranslationIso ''has its own conclusion as its hypothesis''
+  and is ''circular read as a step towards leaf B''. Read :117-137 of that file: it
+  feeds smoothOfRelativeDimension_of_translation_cover, whose antecedent is ''forall
+  i, SmoothOfRelativeDimension n (U.f i comp d.J.hom)'' -- a chart inclusion composed
+  on the LEFT, i.e. the legs of a cover, not the structure morphism precomposed with
+  a translation. The circularity claim substitutes one composite for the other. Even
+  for the composite it does name, the accurate verdict is ''trivial by rw under its
+  instance binder'' (probe sibling_shape, two tactics), not circular; their docstring
+  already says infer_instance fails there, which is why the lemma exists.
+
+
+  OVERSTATED. #print AlgebraicGeometry.SmoothOfRelativeDimension: the class field
+  is ''forall x : X, EXISTS affine U, V ... numeral condition at x''. The numeral
+  is a POINTWISE obligation, so homogeneity is exactly what turns one chart at the
+  identity into all points -- hence SmoothOfRelativeDimension is IsLocalAtSource for
+  zariskiPrecoverage (infer_instance EXIT=0), and hence the sibling''s cover criterion.
+  Section 3''s ''translating does not change which proposition is asserted about the
+  structure morphism'' is true and does not bear on the route, which translates the
+  CHART.
+
+
+  NEXT ACTION: retract ''circular'' to ''trivial-by-rw under its instance binder'',
+  fold chart_comp_pointTranslation_eq into the generated _assoc lemma, reprice section
+  3 against the pointwise field.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T17:00:09.227924+00:00'
+updated_at: '2026-07-29T17:00:09.227936+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0006-horizon-ajc-p2
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

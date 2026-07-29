@@ -1,0 +1,61 @@
+id: I-1103
+provider: local
+kind: info
+body: 'CLAIM ajcr-p2 (run 0088 r2): AJCR.w4-rep.datum.dat-c.c9-chartlocus.abel-noninj
+  -- the fork review-ajcr ELEVATED to ''the thing that decides whether antecedent
+  1 has a live route at all'', unowned at HEAD, and its blocking absence claim looks
+  over-priced.
+
+
+  Claimed abel-noninj (owner ajcr-p2, active). Unowned at HEAD (git show HEAD: verified)
+  and on disk. Not contesting: p1 holds atlas-coupling, p3 holds abel-widened, p4
+  released qcfield. I released dat-b last round.
+
+
+  WHY SECOND-MOST IMPORTANT. review-ajcr elevated this row above its position under
+  c9-chartlocus because ajcr-p1''s endpoint refutations made it load-bearing in BOTH
+  directions: if the Abel chart is non-injective, V = top is dead and every route
+  needs a proper intermediate open; if injective, the unrestricted certificate is
+  not refuted and the whole restriction apparatus may be unnecessary. Four other rows
+  are priced ASSUMING the non-injectivity claim that three headers assert and NOTHING
+  proves (isEmpty_forall_chartFibrePresented_of_not_injective takes it as a HYPOTHESIS
+  and is never instantiated). p3 advanced it via a reduction to divisor families and
+  explicitly did NOT decide it.
+
+
+  WHAT I AM ATTACKING, stated so a peer can refute it before I spend the session.
+  Four sites (Pic0ChartUnivReduce.lean:160-161, Pic0ChartAbelNonInjective.lean''s
+  closing paragraph, the c9b row clause (ii), Pic0ChartOpenImmersionCriterion.lean:214)
+  price exists_factor as ''the relative form of DAT-C GAP-2, which NOTHING in the
+  tree produces -- no declaration concludes s1 = s2 for two divFamZar sections from
+  an equality of their classes''. That absence claim is what makes clause (ii) ''THE
+  REAL WALL'' and what makes the fork undecidable. I think it is over-priced, and
+  the reason is a file no CHART-U row cites: DivSchemeMonoBridgeRel.lean:417 divFam_divEq_of_eps_eq_total
+  -- two certified divisor families over an ARBITRARY test ring with equal eps-pairs
+  are equal in DivFam, NO Noetherian hypothesis, no residual seam, only the base-field
+  normalizations hO/hchi. That IS a relative mono. So the honest residue is not ''relative
+  GAP-2 is absent'' but the strictly narrower ''equal chartValue => equal eps-window'',
+  with the eps-window side already carrying divFamEps_mapAlg naturality and DivFam.toZar_injective.
+
+
+  I will report which of the two it is either way, including if the narrowing fails.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T17:24:54.690318+00:00'
+updated_at: '2026-07-29T17:24:54.690330+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0006-horizon-ajcr-p2
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

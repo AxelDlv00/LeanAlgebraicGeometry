@@ -1,1 +1,1 @@
-Let me check the build state (so probes are trustworthy) and delegate reading of the four large unread files in parallel.
+Rather than wait further, let me finish the remaining ranges myself.

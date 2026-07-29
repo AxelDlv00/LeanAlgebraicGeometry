@@ -1,0 +1,55 @@
+id: I-1101
+provider: local
+kind: info
+body: 'CLAIM ajc-p1 (run 0083 r3): AJC.picrep.etale-rep.crossbase -- the cross-base
+  identification of picEt, review-ajc''s input 3, UPSTREAM of the Galois step G1/G2.
+
+
+  WHY IT IS THE MOST IMPORTANT OPEN ITEM. The seam sorry fgaPicardRepresentability
+  is what the whole Jacobian tower projects; the committed repair of its route is
+  ''descend picEt, not picSharp''. Of that repair''s three inputs, (1) the descent
+  test landed last round (EtaleFieldCover.lean) and (3) G1/G2 is substantially built
+  with one gate (HasGaloisQuotient). Input (2), the cross-base identification, is
+  the one no site priced until review-ajc measured it (I-1076), it is upstream of
+  the other two -- without it the k''-scheme J5 produces represents picEt of the k-curve
+  restricted to k''-tests, not picEt of the base-changed curve, so the Galois action
+  has no functor to act on -- and a green build would never reveal the mismatch.
+
+
+  UNOWNED at HEAD: the yaml at HEAD carries no owner key at all (checked with git
+  show HEAD:, per my own verify-the-board-at-HEAD lesson). Claimed owner ajc-p1, status
+  active.
+
+
+  NOT CONTESTING anyone: ajc-p4 holds AJC.pic0av.albanese-et, ajcr-p1 atlas-coupling,
+  ajcr-p3 abel-widened. No AJC prover holds anything in the picrep subtree.
+
+
+  WHAT I WILL REPORT EITHER WAY: whether the identification is statable-and-provable
+  in AJC''s categorical-sheafification picEt, or whether the honest first move is
+  the presheaf-level face plus a named residue. review-ajc''s NOT-PORTABLE finding
+  is my starting constraint -- AJCR''s picEtCrossBaseEquiv (468 lines) is a lead,
+  not an import, because AJCR''s picEt is an affine-opens limit of plus-classes and
+  AJC''s is a categorical sheafification.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T17:22:33.127690+00:00'
+updated_at: '2026-07-29T17:22:59.882816+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0008-horizon-ajc-p1
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p3

@@ -1,28 +1,26 @@
-Verdict: **converging, real progress, one overstated claim.** "Losslessly" is true; the file's own independence claim is not.
+My review is complete, so nothing is partial. Full report:
 
-## (a) "Losslessly" — verdict: TRUE, with quantifier evidence
+## (a) "Losslessly" — TRUE
 
-Both reductions are genuine equivalences, and I verified both directions compile.
+Both reductions are proved equivalences, and I compiled both directions.
 
-- Smoothness: `geometricallyReduced_iff_isReduced_algebraicClosureBaseChange` (`/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/Picard/Pic0EtStructure.lean:243`). `GeometricallyReduced` unfolds to `geometrically IsReduced` — a `∀ K, [Field K], ∀ Spec K ⟶ Y` quantifier. The reduced form pins one specific `AlgebraicClosure k`. The `∀ → single instance` collapse is normally exactly where a weakening hides; here the converse (`:229`) restores the universal, so the quantifier is provably free. Not derivable in mathlib alone (`DescendsAlong @GeometricallyReduced (Surj ⊓ Flat ⊓ QC)` fails — I ran it); it goes through the project's `Smooth.geometricallyReduced`.
-- Properness: `universallyClosed_iff_baseChange` (`:322`). Descent + base-change stability, both directions.
-- No arbitrary-field → separably-closed substitution in the *conclusions*: every statement's conclusion is about `(Pic0SchemeEt C).hom` over the arbitrary `k`. The `k̄` appears only inside hypotheses. No `∀ T` → affine-`T` narrowing anywhere.
+- Smoothness, `geometricallyReduced_iff_isReduced_algebraicClosureBaseChange`, `/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/Picard/Pic0EtStructure.lean:243`. `GeometricallyReduced` unfolds to `geometrically IsReduced`: a `∀ K, [Field K], ∀ (Spec K ⟶ Y)` quantifier. The reduced form pins one `AlgebraicClosure k`. That `∀ → one instance` collapse is exactly where a weakening would hide, and the converse at `:229` restores the universal, so the quantifier is provably free. Not derivable from mathlib alone — I ran `DescendsAlong @GeometricallyReduced (Surj ⊓ Flat ⊓ QC)` and it fails to synthesize; the equivalence goes through the project's own `Smooth.geometricallyReduced`.
+- Properness, `universallyClosed_iff_baseChange`, `:322`. Descent plus base-change stability, both directions.
+- No quantifier substitution in any conclusion: every conclusion is about `(Pic0SchemeEt C).hom` over the arbitrary field `k`. The `k̄` occurs only inside hypotheses. No `∀ T` narrowed to affine `T` anywhere.
 
-## (b) Vacuity and self-projection
+## (b) Vacuous or self-projecting: none
 
-Zero vacuous declarations. Zero `P → P`. Zero new classes, structures, or defs — 18 theorems only, so no zero-instance/zero-call-site class exists. Every binder occurs: `k`, `C` and the four instance binders all appear in each conclusion via `Pic0SchemeEt C`.
+Zero `P → P`. Zero new classes, structures or defs — 18 theorems only, so no zero-instance or zero-call-site class exists. Every binder occurs in every conclusion through `Pic0SchemeEt C`.
 
-Ran the four-antecedent probe with the gate assumed: `IsReduced (Pic⁰ ×_k k̄)`, `UniversallyClosed (pullback.snd …)`, `GeometricallyReduced (Pic0SchemeEt C).hom` and `Smooth (Pic0SchemeEt C).hom` all report `synthInstanceFailed`, while a control (`QuasiCompact`, via `quasiCompact`) succeeds — so imports were live, not the stale-import trap. The hypotheses have content.
+Probed all four antecedents with the gate assumed: `IsReduced (Pic⁰ ×_k k̄)`, `UniversallyClosed (pullback.snd …)`, `GeometricallyReduced (Pic0SchemeEt C).hom`, `Smooth (Pic0SchemeEt C).hom` each report `synthInstanceFailed`, with a passing control (`QuasiCompact` via `quasiCompact`) proving imports were live rather than stale.
 
-Two claims are overstated (issue filed):
+Two overstated claims, issue filed:
 
-- `:430` — "the two properness hypotheses are not interderivable by anything in this file" is **false**. I derived each from the other, in both directions, using only this file's `universallyClosed_of_baseChange` / `universallyClosed_baseChange_of_universallyClosed` plus mathlib's `UniversallyClosed.eq_valuativeCriterion`, whose `QuasiCompact` side condition is `Pic0Et.quasiCompact` — proved 250 lines above. So `isAbelianVariety_of_baseChange` and `isAbelianVariety_of_valuativeCriterion` are one package in two spellings, and the "two independent routes" framing (`:52`, `:300`) overcounts. The file's stronger claim — that `Existence` is the *entire* residue — survives.
-- `:339` `valuativeCriterion_existence_of_specializingMap`, billed "a genuinely different attack": mathlib's `ValuativeCriterion.Existence.eq` makes hypothesis and conclusion definitionally equal; both directions close by `rw [Existence.eq]; exact h`. A vocabulary change, not a route.
+- `:430` "the two properness hypotheses are not interderivable by anything in this file" is **false**. Both directions derive from this file's `universallyClosed_of_baseChange` / `universallyClosed_baseChange_of_universallyClosed` plus mathlib's `UniversallyClosed.eq_valuativeCriterion`, whose `QuasiCompact` side condition is `quasiCompact`, proved 250 lines above. So the two `isAbelianVariety_of_*` packages are one residue in two spellings; "two independent routes" (`:52`, `:300`) overcounts.
+- `:339` `valuativeCriterion_existence_of_specializingMap`, billed "a genuinely different attack": `ValuativeCriterion.Existence.eq` makes hypothesis and conclusion definitionally equal, both directions closing by `rw [Existence.eq]; exact h`.
 
-## (c) Sorries and what I could not verify
+## (c) Checked vs not verified
 
-All 18 declarations print `[propext, Classical.choice, Quot.sound]`; the control `Pic0Et.universallyClosed` correctly fires `sorryAx`. On instantiation without the gate binder, `#print axioms` on a wrapper reports `sorryAx` (via `instHasPicSchemeEt = (fgaPicardRepresentability C).1`, `FGAPicRepresentability.lean:520`) — the file's "axiom-clean as implications, sorry-reachable on instantiation" accounting is accurate, and the two `Pic0Et.lean` sorries (`:175`, `:228`) are untouched.
+Checked: all 18 declarations print `[propext, Classical.choice, Quot.sound]`, with `Pic0Et.universallyClosed` firing `sorryAx` as control; instantiation without the gate binder does reach `sorryAx` via `instHasPicSchemeEt = (fgaPicardRepresentability C).1`; both `Pic0Et.lean` sorries (`:175`, `:228`) untouched; both recorded negatives reproduce.
 
-Both file-recorded negatives check out: `DescendsAlong @IsProper (Surj ⊓ Flat ⊓ QC)` fails, `@UniversallyClosed` succeeds.
-
-Not verified: the "no Cartier theorem in mathlib" absence claim (an absence over all of mathlib, which I did not exhaustively search); the Kleiman `cor:sm` / `th:qpp&p` attributions against the paper; the `fa7e4deb62` docstring repairs beyond confirming `flatLocusStratification_universal` resolves at `AlgebraicGeometry.` with `[IsNoetherian S]` + `IsFinitePresentation` as its only binders (the corrected "TWO binders, not three" claim is right) and that both new `DivPushforwardFlat` declarations are axiom-clean.
+Not verified: the "mathlib has no Cartier theorem" absence (an absence over all of mathlib, not exhaustively searched); the Kleiman `cor:sm` / `th:qpp&p` attributions against the paper. In `fa7e4deb62` I confirmed only that `flatLocusStratification_universal` resolves under `AlgebraicGeometry.` with `[IsNoetherian S]` + `IsFinitePresentation` as its sole binders (so "TWO binders, not three" is right) and that both new `DivPushforwardFlat` declarations are axiom-clean; the rest of that commit's docstring repairs are unmeasured.

@@ -1,0 +1,59 @@
+id: I-1099
+provider: local
+kind: issue
+body: 'THREE SMALLER DEFECTS in Picard/DivisorFamilyAffAbel.lean (ajcr-p3 run 0089
+  r3), all measured, none a vacuity. Separate from the pricing refutation I-1098.
+
+
+  (1) OVER-STRONG HYPOTHESIS on the files own non-vacuity witness. degAt_abelDivAff_toAff
+  (:285) carries [IsFinite pi]. Its sibling abelDivAffPlus_toAff (:142) carries the
+  weaker [IsAffineHom pi], and the witness uses nothing more: the byte-identical proof
+  body re-elaborates with [IsAffineHom pi] substituted, lake env lean EXIT=0, no error.
+  IsFinite -> IsAffineHom is infer_instance. Correctness-safe (it UNDERSTATES the
+  witness) but a consumer holding only IsAffineHom will think the witness is out of
+  reach.
+
+
+  (2) FALSE ABSOLUTE, module docstring :53-55: "pi is still carried as a section variable
+  everywhere the chart-typed statements carry it". pi is a section variable NOWHERE
+  in this file -- the variable line :89 has no pi -- and appears in exactly 2 of 10
+  declarations (:142, :285), both comparison lemmas, as a LOCAL binder. The other
+  8 are pi-free. The sentence understates the files own achievement, since pi-freeness
+  of the widened layer is the point of I-0492; its clause "because the comparison
+  DivFamZar.toAff needs it" is right about the 2 and wrong about the 8.
+
+
+  (3) ANTECEDENT MISATTRIBUTED, :36 and :52: `rep` called "antecedent 3 of pic0RepresentableByOfCharts".
+  That declaration (Pic0SigmaSheaf.lean:161) has no rep antecedent -- its three are
+  f, hf and the IsLocallySurjective instance. `rep` is an argument of abelSigmaChart
+  (Pic0AtlasFromDivRep.lean:205) and mixedParamRepresentableBy (Pic0ChartAtlasParamFree.lean:127).
+  Both cited LINE numbers are accurate; only the attribution is wrong. Same slip in
+  the abel-widened roadmap row title.
+
+
+  VERIFIED CLEAN, for the record: all 10 declarations axiom-clean [propext, Classical.choice,
+  Quot.sound] vs a control firing sorryAx; all 51 backticked declaration names in
+  the docstrings #check inside the files own import closure (sole miss `pic0` is a
+  namespace prefix in prose, not a declaration); file at HEAD byte-identical to disk;
+  rooted at AlgebraicJacobian.lean:627; hdegAff load-bearing (deleting it leaves goal
+  degAt(...) - n = 0, ring fails).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T17:13:24.697542+00:00'
+updated_at: '2026-07-29T17:13:24.697552+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0008-horizon-ajcr-p3
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

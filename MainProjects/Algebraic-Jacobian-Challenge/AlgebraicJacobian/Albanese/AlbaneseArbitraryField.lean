@@ -6,6 +6,7 @@ Authors: The AlgebraicJacobian Contributors
 import Mathlib
 import AlgebraicJacobian.Albanese.AVRigidityArbitraryField
 import AlgebraicJacobian.Albanese.AlbaneseJacobian
+import AlgebraicJacobian.Albanese.SymPowColimit
 import AlgebraicJacobian.Jacobian
 
 /-!
@@ -27,6 +28,15 @@ pair of equations). So `isAlbanese_pic0Et`'s docstring pricing of the passage fr
 `k` as "the Galois-descent step of cluster `G`" overcharges for *this* step: no descent of
 the universal property is needed, because the argument never needed the hypothesis.
 
+**Consumer side only, and the distinction is load-bearing.** The field hypothesis is
+removable on the two rigidity *inputs* the engine consumes. It remains load-bearing where
+the descent datum is *manufactured*: the only geometric supply route,
+`exists_unique_descent_of_section` / `_of_birational` (`AlbaneseFromData.lean:266`, `:312`),
+sits under `[IsAlgClosed kbar]`, as does its engine `extend_to_av` through
+`DenseOpenDescent.lean`. These files do not touch that route. So the honest form is "the
+field is removable on the inputs, not yet on the supply", and a reader must not read the
+paragraph above as "the field is no longer a reason this leaf is open".
+
 **This is not a discharge of `isAlbanese_pic0Et`, and the antecedents below are not
 witnessed for any curve.** What is still owed, at any base field:
 
@@ -41,9 +51,11 @@ witnessed for any curve.** What is still owed, at any base field:
 3. `aj`, `f`, `hf`, `haj0` — the Abel–Jacobi map and its symmetrisation. For the étale
    tower these must additionally be carried from `Pic0Scheme` to `Pic0SchemeEt`.
 
-Genus `0` is not a separate case *of this theorem* — it is covered by taking `g = 0` — but
-the headline leaf also needs the genus-`0` instance of items 1–3, which is Mumford §4
-rigidity and is not addressed here.
+Genus `0` is **not** reached by these theorems, and an earlier version of this header
+claimed it was "covered by taking `g = 0`". That is false: both statements take
+`i₀ : Fin g`, and `Fin 0` is empty, so at `g = 0` they are *unapplicable* rather than
+trivially true. The genus-`0` case of the headline leaf is Mumford §4 rigidity and is not
+addressed here.
 
 ## Main results
 
@@ -115,12 +127,30 @@ is stated that way deliberately rather than for one `A`: a version taking the da
 single target would not produce `IsAlbanese`.
 
 What this reduces the obligation to is items 1–3 of the module header, none of which is
-witnessed here for any curve. In particular no `SymPowData C g` exists in this development
-for `g ≥ 2`, so this theorem has no inhabitant at a curve of genus `≥ 2` today; it is a
-reduction of the leaf's *field* hypothesis, not of its content. -/
+witnessed here **for a curve**. It is a reduction of the leaf's *field* hypothesis, not of
+its content.
+
+**The non-vacuity statement is per-`C`, not per-`g`.** An earlier version of this docstring
+said "no `SymPowData C g` exists in this development for `g ≥ 2`". That is false, and
+`SymPowColimit.lean:344–352` exists precisely to correct the unqualified form of it: at a
+*terminal* `C` the permutation automorphism is the identity
+(`permAut_eq_id_of_isTerminal`), so `symPowDataTrivial` (`SymPowInterface.lean:332`)
+together with `hproj` inhabits the pair at **every** `g`, over an arbitrary field. So this
+theorem does have inhabitants — they are just not curves.
+
+What is open is the *curve* case, and there the obstruction is exactly
+`HasColimit (permDiagram C g)` (`AJC.albanese.symmetric`): a curve has enough points to
+separate the projections (`permAut_swap_ne_id_of_points`), which is what makes `hproj`
+demand something at `g ≥ 2`. Read the reduction as: the field is gone, the symmetric power
+of the curve is not.
+
+`C` carries **no** curve hypotheses here, deliberately. A first version bound
+`[SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom]`;
+all three were unused — the same one-line proof elaborates without them — so they were
+decorative and made the statement look curve-specific when Milne's argument, once the
+symmetric power is given, never uses that `C` is a curve. -/
 theorem isAlbanese_of_symPowData_arbitraryField
-    (C : Over (Spec (.of k))) [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
-    [GeometricallyIrreducible C.hom]
+    (C : Over (Spec (.of k)))
     (g : ℕ) (D : SymPowData C g)
     (hproj : ∀ σ : Equiv.Perm (Fin g), permAut C σ ≫ D.proj = D.proj)
     (P : 𝟙_ (Over (Spec (.of k))) ⟶ C) (i₀ : Fin g)
@@ -141,5 +171,30 @@ theorem isAlbanese_of_symPowData_arbitraryField
   letI : IsCommMonObj A := isCommMonObj_of_package_arbitraryField A
   exact exists_unique_albanese_factorisation D f P i₀ hproj aj hf haj0 φ hφ
     (fun ψ hψ => isMonHom_of_pointed_arbitraryField ψ hψ) (hdesc A φ)
+
+/-! ## The non-vacuity probe, compiler-checked
+
+The theorems above quantify over `(D, hproj)`, and a docstring claim about which `(D, hproj)`
+exist is exactly the kind of claim this project has got wrong before — `SymPowInterface.lean`
+made the unqualified version and `SymPowColimit.lean:344–352` is the correction. So the
+statement is made here as a *theorem* rather than left as prose. -/
+
+/-- **The `(D, hproj)` pair is inhabited at every `g`, over an arbitrary field** — so the
+theorems above are not vacuous, and the honest reading of what is open is per-`C`.
+
+The witness is `symPowDataTrivial` at a *terminal* `C`, where `permAut C σ = 𝟙`
+(`permAut_eq_id_of_isTerminal`) because any two morphisms into a terminal object agree.
+
+This is emphatically **not** progress on the curve case: at an object with enough points to
+separate the projections (`permAut_swap_ne_id_of_points`) the trivial datum fails `hproj`,
+and for a curve the pair is exactly what `HasColimit (permDiagram C g)` supplies and nobody
+has built. The lemma exists so that "no inhabitant" is never again asserted unqualified. -/
+theorem exists_symPowData_hproj_tensorUnit (g : ℕ) :
+    ∃ D : SymPowData (𝟙_ (Over (Spec (.of k)))) g,
+      ∀ σ : Equiv.Perm (Fin g),
+        permAut (𝟙_ (Over (Spec (.of k)))) σ ≫ D.proj = D.proj := by
+  refine ⟨symPowDataTrivial _ g, fun σ => ?_⟩
+  rw [CategoryTheory.permAut_eq_id_of_isTerminal
+    (CartesianMonoidalCategory.isTerminalTensorUnit) σ, Category.id_comp]
 
 end AlgebraicGeometry

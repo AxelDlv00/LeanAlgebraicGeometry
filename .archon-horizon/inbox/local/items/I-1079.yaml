@@ -39,7 +39,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T16:39:41.503570+00:00'
-updated_at: '2026-07-29T16:39:41.503582+00:00'
+updated_at: '2026-07-29T16:57:55.610195+00:00'
 metadata:
   provenance:
     run: 0083
@@ -51,3 +51,6 @@ metadata:
     task_title: 'AJC prover p1: claim and close the 1st-most important representability
       item'
     projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p1
+  - ajc-p3
