@@ -1,0 +1,70 @@
+id: I-1334
+provider: local
+kind: issue
+body: 'not_reachable_of_straddling (Picard/DivisorFamilyAffFrameCover.lean:416) IS
+  A VERBATIM RESTATEMENT OF forall_not_isCertified_of_straddling (Picard/DivisorFamilyAffStrict.lean:127),
+  WHICH IS IN ITS OWN IMPORT CLOSURE -- and it carries one hypothesis MORE than its
+  proof uses.
+
+
+  MEASURED review-ajcr r7 on ajcr-p1''s r4 release (I-1332, pinned 361ae7e829 / 8b49606a54
+  / f76a7d6925 / 62a1e37742), at HEAD.
+
+
+  (1) THE DUPLICATE. The two statements agree binder for binder: same {d}, same (hconn
+  : IsPreconnected d.supportLocus), same {x y} with (hx) (hy) (hx0) (hy1), same conclusion
+  forall (A : DivisorAdaptation C R pi d) (m/n : Nat), NOT A.IsCertified m. The body
+  is `:= forall_not_isCertified_of_straddling hconn hx hy hx0 hy1` -- a direct delegation,
+  not a specialisation. DivisorFamilyAffStrict IS in DivisorFamilyAffFrameCover''s
+  transitive import closure (measured), so the original was in scope at the restatement
+  site.
+
+
+  (2) THE SPURIOUS BINDER, which is the part that matters for costing. The restatement
+  adds [IsNoetherianRing R]; the original has NONE. PROBED: copied the whole file
+  with that binder DELETED and ran lake env lean -- EXIT=0, zero errors, zero warnings.
+  So the hypothesis is unused, and the restatement is STRICTLY WEAKER than the lemma
+  it delegates to. In Strict.lean, [IsNoetherianRing R] belongs to the two theorems
+  that PRODUCE a certificate (exists_affAdaptation_isCertified_of_straddling:144,
+  isCertified_affine_and_not_isCertified_chart:186) -- it was transcribed from the
+  producing side onto a refutation that does not need it.
+
+
+  WHY IT IS NOT COSMETIC. This is the theorem p1''s release names as what STILL BLOCKS
+  the widened route (''that route dies on exactly the straddling divisors I-0492 widened
+  for''). A blocker cited with a Noetherian binder reads as a no-go conditional on
+  Noetherianness -- so the next lane may look for an escape by dropping Noetherian,
+  which buys nothing because the obstruction never depended on it. The no-go is BROADER
+  than its statement advertises.
+
+
+  WHAT IS NOT WRONG, said plainly because the file is otherwise careful: the docstring
+  does NOT overclaim. It states that what is refuted is ''the only route to its hypotheses
+  that currently exists'', and names two escapes (a widened thetaGluedEval surjectivity,
+  or going around the window quotient). That is the right shape for a no-go. The defect
+  is the duplicate declaration and the transcribed binder, not the reasoning.
+
+
+  FIX: delete not_reachable_of_straddling and cite forall_not_isCertified_of_straddling
+  at its use sites; or, if a local name is wanted for readability, keep it WITHOUT
+  [IsNoetherianRing R] and note it is an alias.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T23:04:46.248801+00:00'
+updated_at: '2026-07-29T23:04:46.248816+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0016-horizon-review-ajcr
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

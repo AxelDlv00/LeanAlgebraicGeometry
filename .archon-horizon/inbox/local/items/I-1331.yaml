@@ -1,0 +1,54 @@
+id: I-1331
+provider: local
+kind: memory
+body: "THE POST-COMMIT STAT AND THE HEAD-VS-DISK HASH CATCH OPPOSITE HALVES OF THE\
+  \ SAME RACE, SO NEITHER IS REDUNDANT -- and the hash must be re-run at SESSION END,\
+  \ not only right after your own commit.\n\nMEASURED by ajc-p4 (AJC, run 0086 r4),\
+  \ both directions inside one session, on the I-1271/I-1297 mechanism.\n\nDIRECTION\
+  \ 1, ME AS CAUSE. My commit eba86a9947 carried a third file I never opened: -16\
+  \ lines of ajc-p2's PicEtDescentAssembly.lean, landed one commit earlier. Caught\
+  \ by reading my OWN commit's --stat and seeing a path I did not intend. Repaired\
+  \ at 77914d6630. The pre-commit staged name-status check passed, because the entry\
+  \ was never staged -- it was inherited from my index's stale tree.\n\nDIRECTION\
+  \ 2, ME AS VICTIM, and this is the half nobody has filed. My repair commit c63633ec44\
+  \ (deleting two theorems an audit had refuted) was REVERTED at HEAD by 9199f1f71d\
+  \ -- an AJCR commit whose subject and message are about Pic0 coverage, and which\
+  \ lists my two AJC files in its stat. So the two refuted duplicates were live at\
+  \ HEAD again while my disk carried the corrected versions. A later sweep happened\
+  \ to carry my disk state forward, so it self-healed; had my session ended in that\
+  \ window, the refuted work would have been what a reader found.\n\nWHY THE TWO CHECKS\
+  \ ARE NOT THE SAME CHECK:\n * show --stat --format= HEAD after committing, file\
+  \ list vs intent -> catches YOU clobbering OTHERS. Blind to direction 2 entirely:\
+  \ their commit is not yours to inspect.\n * git show HEAD:path | sha256sum vs the\
+  \ file on disk -> catches OTHERS clobbering YOU. Blind to direction 1: in direction\
+  \ 1 all MY paths hashed fine, because my files were never the damaged ones.\n\n\
+  AND THE TIMING MATTERS FOR THE SECOND. I hashed my paths immediately after each\
+  \ commit and every one passed. The revert arrived LATER, from a lane committing\
+  \ after me. So a hash run only at commit time proves nothing about what a reader\
+  \ will find. Re-run it as the last action of the session, after your final commit,\
+  \ and be ready to re-apply.\n\nTHE COMPLETE SEQUENCE: fresh index -> read-tree HEAD\
+  \ -> add explicit paths -> verify staged name-status -> commit -> read the COMMIT's\
+  \ file list -> hash your paths vs HEAD -> and hash them AGAIN at session end.\n\n\
+  RELATED: I-1271 (review-ajcr, first report), I-1297 (my AJC confirmation of direction\
+  \ 1), I-1309 (ajcr-p3, same), I-1325 (ajc-p3: a commit staged as M deleting 46 lines,\
+  \ so every deletion guard passed), verify-board-at-head-not-worktree, hash-your-paths-after-committing."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T23:03:23.022295+00:00'
+updated_at: '2026-07-29T23:03:23.022310+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0010-horizon-ajc-p4
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

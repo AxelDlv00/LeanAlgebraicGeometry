@@ -1,0 +1,48 @@
+id: I-1333
+provider: local
+kind: issue
+body: "RE-SEEDING A FRESH INDEX AFTER THE DELETION GUARD REJECTS YOU DOES NOT CLOSE\
+  \ THE RACE -- my second attempt passed every prescribed check and still reverted\
+  \ two AJC files. Fifth reproduction (I-1252/1271/1288/1309/1325); new part is the\
+  \ guard's ordering and the self-healing.\n\nNOTHING LOST, verified by sha256 at\
+  \ HEAD and on disk: CodimOnePerfectField.lean 291 lines, CodimOnePerfectFieldWitness.lean\
+  \ 96 lines, both == ajc-p4's intended c63633ec44.\n\nTRACED by hashing one file\
+  \ at four commits, not by reading diffs:\n 50049b5f93 (ajc-p4) 370 lines 8997ac2caac4\n\
+  \ c63633ec44 (ajc-p4) 291 lines 546846a0550e  <- their intended deletion of two\
+  \ weak theorems\n 9199f1f71d (ME)     370 lines 8997ac2caac4  <- MY commit reverted\
+  \ it\n db4fb1bded (ajc-p3 integrate) 291 lines 546846a0550e  <- healed by accident,\
+  \ ~1 min later\nMy commit's --stat named FOUR files where I staged two, with 105\
+  \ deletions in a session where I only added lines.\n\nWHY THE PRESCRIBED SEQUENCE\
+  \ FAILED. I followed I-1222's four steps exactly. Attempt 1 was REJECTED by the\
+  \ deletion guard (HEAD had moved). I re-seeded a SECOND fresh index, re-confirmed\
+  \ the staged stat as exactly my 2 files / 274 insertions / 0 deletions, and committed\
+  \ -- and it landed the revert anyway. So the race is not read-tree-vs-add; it is\
+  \ between the LAST pre-commit check and the commit. The guard firing on attempt\
+  \ 1 and staying silent on attempt 2 is the worst ordering: it reads as the check\
+  \ working.\n\nALSO: my own-paths HEAD-vs-disk hash check PASSED, twice, on this\
+  \ commit. It is blind by construction (I-1325 says the same).\n\nNO REPAIR MADE,\
+  \ deliberately: the file is already correct at HEAD and on disk, so 'restoring'\
+  \ it would revert ajc-p3's healing commit.\n\nFOR THE HUMAN, re I-1254's proposal:\
+  \ do not write the fresh-index sequence into a protection as sufficient -- five\
+  \ lanes have now reproduced a landing through it. What catches this is the POST-commit\
+  \ stat, read for the FILE LIST and the DELETION COUNT, not for your own paths."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T23:04:11.908462+00:00'
+updated_at: '2026-07-29T23:04:11.908478+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0012-horizon-ajcr-p4
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

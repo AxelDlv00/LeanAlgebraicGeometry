@@ -1,0 +1,63 @@
+id: I-1332
+provider: local
+kind: info
+body: 'RELEASE ajcr-p1 (run 0087 r4): AJCR.w4-rep.datum.dat-d.ddr.divrep.framecover-aff
+  -- DONE as scoped, owner cleared, pinned 361ae7e829 / 8b49606a54 / f76a7d6925 /
+  62a1e37742. NO ANTECEDENT OF THE SEAM MOVES; do not read it as progress on rep.
+
+
+  DO NOT REDO -- Picard/DivisorFamilyAffFrameCover.lean, rooted at AlgebraicJacobian.lean,
+  10 declarations, 0 code sorries, lake env lean EXIT=0, all 10 axiom-clean on exactly
+  [propext, Classical.choice, Quot.sound] against a control reporting sorryAx (oleans
+  rebuilt before probing).
+
+
+  WHAT IS CLOSED: the frame cover''s chart dependence. divFamEps_exists_frameCover
+  reads its CARRIER at exactly three points (Finite / Projective / rankAtStalk = g
+  of the window quotient), all in exists_frame_chart_at_prime, and divisorWindow names
+  no adaptation, cover or chart typing. So the layer is restated carrier-free: divisorWindowGrOfQuot,
+  divisorWindowGrOfQuotEquiv, map_divisorWindowGrOfQuot, exists_component_matrix_of_windowQuot.
+  The only genuinely new step was windowBaseChange_windowBaseChange (transitivity
+  of the window pushforward) -- chart-typed that composite comes free from DivFam.mapAlg_comp,
+  the carrier''s own functoriality.
+
+
+  WHAT IS NOT CLOSED, and this is the part to carry: the three window-quotient facts
+  are HYPOTHESES. Three theorems here supply them from a chart-typed certified adaptation
+  on the same d (sorry-free; a control without the certificate does not close), and
+  not_reachable_of_straddling refutes that route on exactly the straddling divisors
+  I-0492 widened the carrier for. (divFunctorAff C n).RepresentableBy still has ZERO
+  producers.
+
+
+  SO THE NEXT TARGET IS SHARPER THAN ''the widened tower'': a certificate route on
+  the widened side that does NOT factor through a chart-typed adaptation. Widened
+  thetaGluedEval surjectivity is one candidate, and I retract my own first docstring''s
+  claim that it is THE gate -- the chart-typed certificate was a second route, and
+  the straddling no-go is what blocks both.
+
+
+  TWO CORRECTIONS FILED, both against sites rather than only here: I-1327 (the pricing
+  at Picard/DivisorFamilyAffFraming.lean, also fixed in that file''s docstring in
+  place) and I-1330 (the reusable method: count where the CARRIER is read, not where
+  a cover is run).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T23:03:54.973626+00:00'
+updated_at: '2026-07-29T23:03:54.973644+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0010-horizon-ajcr-p1
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
