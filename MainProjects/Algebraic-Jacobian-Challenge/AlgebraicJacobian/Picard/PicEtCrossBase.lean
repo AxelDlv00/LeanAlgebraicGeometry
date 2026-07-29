@@ -48,8 +48,9 @@ presheaf (`§5`). That reduction is the content: it converts a statement about
 an object defined by a universal property into a statement about an explicit
 quotient of line-bundle classes.
 
-**The presheaf-level face is reduced to NATURALITY, not closed.** Three of its
-four layers are discharged here:
+**The presheaf-level face is CLOSED too, so the identification is proved
+outright** (`picEt_crossBaseIso`, `§6`) — this file has no `sorry`. Its four
+layers:
 
 * the two total spaces are canonically isomorphic (`§2`, `crossBaseTotalIso`),
   by the single Mathlib lemma `pullbackLeftPullbackSndIso`;
@@ -60,20 +61,24 @@ four layers are discharged here:
 * hence the two relative Picard groups are in canonical **bijection** for every
   test (`crossBaseQuotEquiv`): the round trips reduce, through
   `relPicRel_of_iso`, to `crossBaseTotalIso`'s own `hom_inv_id`/`inv_hom_id`.
-
-**What is left open is exactly NATURALITY IN `T`**, as one explicit named
-`sorry` (`§4`, `relPresheaf_crossBaseIso`). The pointwise bijection is proved;
-what is not proved is that it commutes with the base-change maps that
-`PicSharp.relFunctorial` acts by — and *a family of bijections that is not
-natural is not an isomorphism of functors*, so it cannot be fed to the reduction
-of `§5`. No new geometric input is needed, the scheme-level iso being in hand,
-but the `pullback.map`-versus-cancellation compatibility it needs is real work
-and this file does not claim it.
+  It is additive (`crossBaseQuotMap_add`) because addition is descended tensor
+  and pullback preserves tensor products of locally trivial bundles;
+* and it is **natural in the test** (`crossBaseQuotMap_relFunctorial`), which is
+  what upgrades the family of bijections to an isomorphism of functors — the
+  distinction that matters, since `§5`'s reduction consumes an `Iso`, not a
+  family of `Equiv`s. Naturality reduces to
+  `pullbackLeftPullbackSndIso_naturality`, which holds in **any** category with
+  pullbacks: no geometry, no field, no curve.
 
 **Nothing here closes the seam sorry, and no antecedent of
-`fgaPicardRepresentability` is witnessed for any curve by this file.** The
-identification is one of three inputs to the *route*; the route's other two are
-the descent test (`Picard/EtaleFieldCover.lean`, landed) and `G1`/`G2`.
+`fgaPicardRepresentability` is witnessed for any curve by this file** — that
+distinction is the point of the round's bar. What is closed is one *input of the
+route*, in full and unconditionally; what remains open is the seam obligation
+itself. The route's other inputs are the descent test
+(`Picard/EtaleFieldCover.lean`, landed), `G1`/`G2` (whose single remaining gate
+is `HasGaloisQuotient`), and — below all three — a section over separably closed
+fields, which `I-1135` measured as having no producer in this project at all.
+So the repair has **four** inputs, not three, and this file closes one of them.
 
 ## Why not port the sibling project's version
 
@@ -83,10 +88,13 @@ lines). It is **not importable and not transcribable**: that project's `picEt`
 is a hand-built limit of plus-classes over affine opens, this one's is a
 categorical sheafification, and there is no `lake` edge between the projects.
 Most of its length is a section-ring scalar tower which — as `review-ajc`
-predicted and `§1` here confirms — a sheafification-based `picEt` does not
-need, because the sheafification layer is discharged by a Mathlib
-compatibility iso instead. The 468 lines were a design lead, and the lead was
-that they are not the seam.
+predicted, and as the outcome here confirms — a sheafification-based `picEt`
+does not need: the sheafification layer is discharged by a Mathlib compatibility
+iso instead. The 468 lines were a design lead, and the lead was that they are
+not the seam. **For the record: 700 lines here, of which the great majority is
+docstring** — the proof terms themselves are short, because each layer lands on
+a Mathlib lemma. Reading the sibling as a lead rather than transcribing it was
+worth more than the 468 lines would have been.
 
 ## Measurement discipline
 
@@ -374,7 +382,132 @@ noncomputable def crossBaseQuotEquiv (C : Over (Spec (CommRingCat.of k)))
   left_inv := crossBaseQuotMapInv_crossBaseQuotMap C T
   right_inv := crossBaseQuotMap_crossBaseQuotMapInv C T
 
-/-! ## §4. The presheaf-level face — the one open obligation of this file -/
+/-! ### The naturality square, at scheme level
+
+The remaining layer of the presheaf face is that the pointwise bijection commutes
+with base change in the test. That reduces to one identity of maps between
+pullbacks, and it holds in **any** category with pullbacks — no geometry, no
+field, no curve. It is stated at that generality below precisely because that is
+what its proof uses. -/
+
+/-- **Base cancellation is natural in the test object**, in an arbitrary
+category with pullbacks.
+
+For `f : X ⟶ S`, `φ : S' ⟶ S` and a map of `S'`-objects `g : (T', t') ⟶ (T, t)`,
+the square
+
+```
+  (X ×_S S') ×_{S'} T'  ──iso──▶  X ×_S T'
+        │ pullback.map g                │ pullback.map g
+        ▼                               ▼
+  (X ×_S S') ×_{S'} T   ──iso──▶  X ×_S T
+```
+
+commutes, where both horizontal maps are `pullbackLeftPullbackSndIso`. Proved by
+`pullback.hom_ext` from the iso's two projection identities.
+
+This is the naturality input the cross-base identification needs; it is
+formulated generically because the argument is entirely about pullback
+projections. -/
+theorem pullbackLeftPullbackSndIso_naturality {D : Type*} [Category D]
+    [Limits.HasPullbacks D] {X S : D} (f : X ⟶ S) {S' : D} (φ : S' ⟶ S)
+    {T T' : D} (t : T ⟶ S') (t' : T' ⟶ S') (g : T' ⟶ T) (hg : t' = g ≫ t) :
+    pullback.map (pullback.snd f φ) t' (pullback.snd f φ) t (𝟙 _) g (𝟙 _)
+        (by simp) (by simp [hg])
+        ≫ (pullbackLeftPullbackSndIso f φ t).hom
+      = (pullbackLeftPullbackSndIso f φ t').hom
+        ≫ pullback.map f (t' ≫ φ) f (t ≫ φ) (𝟙 _) g (𝟙 _) (by simp)
+            (by simp [hg]) := by
+  apply pullback.hom_ext
+  · simp only [Category.assoc, pullbackLeftPullbackSndIso_hom_fst,
+      pullback.lift_fst, pullback.lift_fst_assoc, pullback.map, Category.comp_id]
+  · simp only [Category.assoc, pullbackLeftPullbackSndIso_hom_snd,
+      pullback.lift_snd, pullback.map, Category.comp_id]
+    simp
+
+/-- **The naturality square for `crossBaseTotalIso`**, in the project's own
+spelling: the cancellation iso commutes with the base-change morphisms
+`PicSharp.baseChangeOverC` that `relFunctorial` acts by.
+
+This is `pullbackLeftPullbackSndIso_naturality` applied at
+`f = C.hom`, `φ = Spec k' ⟶ Spec k` — it needs no separate argument, because
+`baseChangeOverC` is by definition the `pullback.map` of the generic lemma and
+`crossBaseTotalIso` is by definition its `pullbackLeftPullbackSndIso`. -/
+theorem crossBaseTotalIso_naturality (C : Over (Spec (CommRingCat.of k)))
+    (T T' : Over (Spec (CommRingCat.of k'))) (g : T' ⟶ T) :
+    PicSharp.baseChangeOverC (baseChangeField C k').hom T.hom T'.hom g.left
+          (Over.w g).symm
+        ≫ (crossBaseTotalIso C T).hom
+      = (crossBaseTotalIso C T').hom
+        ≫ PicSharp.baseChangeOverC C.hom ((restrictTest k k').obj T).hom
+            ((restrictTest k k').obj T').hom g.left
+            (Over.w ((restrictTest k k').map g)).symm :=
+  pullbackLeftPullbackSndIso_naturality C.hom (specMapAlgebra k k') T.hom T'.hom
+    g.left (Over.w g).symm
+
+/-- The `inv`-direction form of `crossBaseTotalIso_naturality`, which is the
+orientation the transport of bundles uses (bundles pull back along `inv`). -/
+theorem crossBaseTotalIso_inv_naturality (C : Over (Spec (CommRingCat.of k)))
+    (T T' : Over (Spec (CommRingCat.of k'))) (g : T' ⟶ T) :
+    (crossBaseTotalIso C T').inv
+        ≫ PicSharp.baseChangeOverC (baseChangeField C k').hom T.hom T'.hom g.left
+            (Over.w g).symm
+      = PicSharp.baseChangeOverC C.hom ((restrictTest k k').obj T).hom
+            ((restrictTest k k').obj T').hom g.left
+            (Over.w ((restrictTest k k').map g)).symm
+        ≫ (crossBaseTotalIso C T).inv := by
+  rw [Iso.inv_comp_eq, ← Category.assoc, Iso.eq_comp_inv]
+  exact crossBaseTotalIso_naturality C T T' g
+
+/-- **The pointwise bijection is NATURAL in the test.**
+
+`crossBaseQuotEquiv` commutes with the base-change action
+`PicSharp.relFunctorial`, i.e. the square drawn at
+`relPresheaf_crossBaseIso` below commutes. On a class `⟦L⟧` both routes pull
+`L.carrier` back along composites of scheme maps that
+`crossBaseTotalIso_inv_naturality` shows are equal, and `Modules.pullbackComp`
+turns each composite into the corresponding composite of pullbacks. -/
+theorem crossBaseQuotMap_relFunctorial (C : Over (Spec (CommRingCat.of k)))
+    (T T' : Over (Spec (CommRingCat.of k'))) (g : T' ⟶ T)
+    (x : Quotient (PicSharp.relPicSetoid (baseChangeField C k').hom T.hom)) :
+    crossBaseQuotMap C T'
+        (PicSharp.relFunctorial (baseChangeField C k').hom T.hom T'.hom g.left
+          (Over.w g).symm x)
+      = PicSharp.relFunctorial C.hom ((restrictTest k k').obj T).hom
+          ((restrictTest k k').obj T').hom g.left
+          (Over.w ((restrictTest k k').map g)).symm (crossBaseQuotMap C T x) := by
+  induction x using Quotient.ind with | _ L => ?_
+  refine Quotient.sound (PicSharp.relPicRel_of_iso ⟨?_⟩)
+  refine (Scheme.Modules.pullbackComp _ _).app L.carrier ≪≫ ?_
+  exact (Scheme.Modules.pullbackCongr
+      (crossBaseTotalIso_inv_naturality C T T' g)).app L.carrier ≪≫
+    ((Scheme.Modules.pullbackComp _ _).app L.carrier).symm
+
+/-- **The transport is additive.** Addition on the relative Picard quotient is
+descended tensor product, and pullback along any morphism carries a tensor
+product of locally trivial bundles to the tensor product of the pullbacks
+(`Modules.pullbackTensorIsoOfLocallyTrivial`) — so the transport respects it. -/
+theorem crossBaseQuotMap_add (C : Over (Spec (CommRingCat.of k)))
+    (T : Over (Spec (CommRingCat.of k')))
+    (x y : Quotient (PicSharp.relPicSetoid (baseChangeField C k').hom T.hom)) :
+    crossBaseQuotMap C T (x + y)
+      = crossBaseQuotMap C T x + crossBaseQuotMap C T y := by
+  induction x using Quotient.ind with | _ L => ?_
+  induction y using Quotient.ind with | _ L' => ?_
+  exact Quotient.sound (PicSharp.relPicRel_of_iso
+    ⟨Modules.pullbackTensorIsoOfLocallyTrivial _ _ _ L.isLocallyTrivial
+      L'.isLocallyTrivial⟩)
+
+/-- The component of the cross-base identification as a **group** isomorphism,
+which is what a morphism of `AddCommGrpCat`-valued presheaves requires. -/
+noncomputable def crossBaseQuotAddEquiv (C : Over (Spec (CommRingCat.of k)))
+    (T : Over (Spec (CommRingCat.of k'))) :
+    Quotient (PicSharp.relPicSetoid (baseChangeField C k').hom T.hom) ≃+
+      Quotient (PicSharp.relPicSetoid C.hom ((restrictTest k k').obj T).hom) where
+  __ := crossBaseQuotEquiv C T
+  map_add' := crossBaseQuotMap_add C T
+
+/-! ## §4. The presheaf-level face — now PROVED -/
 
 /-- **The cross-base identification at the level of the UNSHEAFIFIED relative
 Picard presheaf.** This is the one statement this file leaves open, and it is
@@ -390,7 +523,7 @@ two carriers are `Pic(C_{k'} ×_{k'} T)/π_T^* Pic(T)` and
 bijection** (`crossBaseQuotEquiv`) — total-space iso, relation transport both
 ways, both round trips.
 
-**What the `sorry` stands for is naturality in `T`, and only that**: that the
+**Naturality — the last layer — is `crossBaseQuotMap_relFunctorial`**: the
 square
 
 ```
@@ -401,27 +534,43 @@ square
 ```
 
 commutes for every test morphism `g : T' ⟶ T`. Both vertical maps are pullback
-along a `pullback.map`, and the horizontal ones are pullback along the
-cancellation iso; the content is that those two pullbacks commute, which is a
-`pullback.hom_ext` chase of the same kind as `relFunctorial_comp` in
-`Picard/RelPicFunctor.lean`.
+along a `pullback.map` and the horizontal ones are pullback along the
+cancellation iso, so the content is that those commute — which
+`pullbackLeftPullbackSndIso_naturality` establishes in **any** category with
+pullbacks, by `pullback.hom_ext` from the iso's two projection identities. No
+geometry enters.
 
-**Do not read `crossBaseQuotEquiv` as making this a formality.** A pointwise
-family of bijections is *not* an isomorphism of functors, and it is precisely the
-naturality that the sheafification reduction of `§5` consumes — its hypothesis is
-an `Iso` of functors, not a family of `Equiv`s. The gap is one square, and it is
-open.
+**So this statement is now PROVED rather than assumed**, and the `sorry` is
+gone: the group-homomorphism property of each component is inherited from
+`relFunctorial`'s own additivity, since `crossBaseQuotMap` is built by
+`Quotient.lift` of a tensor-compatible transport. -/
+noncomputable def relPresheafCrossBaseIso (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] (k' : Type u) [Field k']
+    [Algebra k k'] :
+    PicSharp.relPresheaf (baseChangeField C k')
+      ≅ (restrictTest k k').op ⋙ PicSharp.relPresheaf C :=
+  NatIso.ofComponents
+    (fun T =>
+      { hom := AddCommGrpCat.ofHom (crossBaseQuotAddEquiv C T.unop).toAddMonoidHom
+        inv := AddCommGrpCat.ofHom (crossBaseQuotAddEquiv C T.unop).symm.toAddMonoidHom
+        hom_inv_id := by
+          ext x
+          exact (crossBaseQuotAddEquiv C T.unop).symm_apply_apply x
+        inv_hom_id := by
+          ext x
+          exact (crossBaseQuotAddEquiv C T.unop).apply_symm_apply x })
+    (fun {T T'} g => by
+      ext x
+      exact crossBaseQuotMap_relFunctorial C T.unop T'.unop g.unop x)
 
-**Deliberately left as an explicit `sorry`.** Per the round's discipline this
-is a named open obligation, not a hidden one: no declaration in this file
-consumes it, and `picEt_crossBaseIso_of_relPresheaf` below takes the
-corresponding iso as an explicit *hypothesis* rather than invoking this. -/
+/-- The `Nonempty` form, which is what a downstream consumer that only needs
+existence of the identification should cite. -/
 theorem relPresheaf_crossBaseIso (C : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] (k' : Type u) [Field k']
     [Algebra k k'] :
     Nonempty (PicSharp.relPresheaf (baseChangeField C k')
       ≅ (restrictTest k k').op ⋙ PicSharp.relPresheaf C) :=
-  sorry
+  ⟨relPresheafCrossBaseIso C k'⟩
 
 /-! ## §5. The reduction: sheafification adds nothing -/
 
@@ -491,6 +640,59 @@ noncomputable def picEt_baseChangeField_crossBaseIso_of_relPresheaf
       ≅ (restrictTest k k').op ⋙ PicSharp.relPresheaf C) :
     picEt (baseChangeField C k') ≅ (restrictTest k k').op ⋙ picEt C :=
   picEt_crossBaseIso_of_relPresheaf C (baseChangeField C k') e
+
+/-! ## §6. The cross-base identification, UNCONDITIONALLY -/
+
+/-- **THE CROSS-BASE IDENTIFICATION FOR `picEt`, with no hypotheses beyond the
+curve's own.** `AJC.picrep.etale-rep.crossbase`, closed.
+
+For a smooth proper curve `C` over `k` and any field extension `k'/k`,
+
+```
+picEt (C_{k'})  ≅  (restrictTest k k').op ⋙ picEt C
+```
+
+as functors on `(Sch/k')ᵒᵖ`: the étale-sheafified relative Picard functor of the
+base-changed curve agrees with that of `C` evaluated on restricted tests.
+
+This is the input the repaired descent route needs in order for the `k'`-scheme
+it produces to represent `picEt` **of the base-changed curve** rather than
+`picEt` of the `k`-curve restricted — the mismatch that no green build would
+reveal.
+
+Assembled from `relPresheafCrossBaseIso` (the presheaf face: total-space
+cancellation, coset-relation transport both ways, additivity, naturality) through
+`picEt_baseChangeField_crossBaseIso_of_relPresheaf` (the sheafification layer,
+free from Mathlib's continuity-compatibility iso).
+
+**Scope, stated precisely.** No hypothesis on `C(k)`, per `I-0491`; and no
+separability or finiteness hypothesis on `k'/k` either — the argument never
+needed one, because it is about pullback projections rather than about étale
+covers. The descent step that consumes it does need `k'/k` finite separable, but
+that is a constraint of the *Galois* input, not of this identification.
+
+**What it does NOT do**: it closes no `sorry` in
+`Picard/FGAPicRepresentability.lean`, and witnesses no antecedent of
+`fgaPicardRepresentability` for any curve. It is one input of three to the
+route's repair, and the route additionally rests on a section over separably
+closed fields which has no producer in this project (`I-1135`). -/
+noncomputable def picEt_crossBaseIso (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] (k' : Type u) [Field k']
+    [Algebra k k'] :
+    picEt (baseChangeField C k') ≅ (restrictTest k k').op ⋙ picEt C :=
+  picEt_baseChangeField_crossBaseIso_of_relPresheaf C k'
+    (relPresheafCrossBaseIso C k')
+
+/-- The group-valued form: the étale Picard **sheaf** of the base-changed curve
+agrees with the restriction of that of `C`. Same content as `picEt_crossBaseIso`
+before forgetting the group structure. -/
+noncomputable def etaleSheaf_crossBaseIso (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] (k' : Type u) [Field k']
+    [Algebra k k'] :
+    (PicSharp.etaleSheaf (baseChangeField C k')).obj
+      ≅ (restrictTest k k').op ⋙ (PicSharp.etaleSheaf C).obj :=
+  etaleSheaf_crossBaseIso_of_relPresheaf C (baseChangeField C k')
+    (relPresheafCrossBaseIso C k')
 
 end PicScheme
 
