@@ -1,0 +1,57 @@
+id: I-0955
+provider: local
+kind: issue
+body: "BOTH \"THE GATE FIRES\" WITNESSES IN GaloisQuotientNonVacuity.lean SIT WHERE\
+  \ HasStableAffineCover IS TRIVIALLY TRUE -- the norm-trick engine is never exercised\
+  \ by either\n\nVacuity sweep of the Picard seam (Ground, fresh context). No false\
+  \ statement anywhere: every declaration named is TRUE and proved. The defect is\
+  \ that a NON-VACUITY file certifies the gate at exactly the two objects where it\
+  \ needs none of the machinery built for it.\n\nTHE CLAIMS. GaloisQuotientNonVacuity.lean:145-148\
+  \ hasStableAffineCover_pullback and :186-190 hasStableAffineCover_specF4, both :=\
+  \ inferInstance through hasStableAffineCover_of_orbitsInAffineOpen (StableAffineCover.lean:279-285),\
+  \ whose engine is prime avoidance + the norm N = prod_gamma gamma(s) + reindexing\
+  \ (:188-270).\n\nMACHINE-VERIFIED (lean_run_code, zero diagnostics, nothing landed)\
+  \ -- both reachable WITHOUT that engine:\n(1) AFFINE TOTAL SPACE, covering specF4\
+  \ (Spec F4 is affine):\n    (rho : SemilinearGalAction K L X f) [IsAffine X] |-\
+  \ HasStableAffineCover K L rho\n      := <fun x => <top, isAffineOpen_top X, trivial,\
+  \ fun _ => rfl>>\n    NO [FiniteDimensional K L], NO [IsGalois K L], no prime avoidance,\
+  \ no norm; U = top is Gamma-stable by rfl.\n(2) THE REFERENCE BASE-CHANGE ACTION,\
+  \ i.e. hasStableAffineCover_pullback itself: fst^-1 U is Gamma-stable AS AN OPEN\
+  \ by pullbackGalMap_fst alone, affine by IsAffineOpen.preimage. Again NO FiniteDimensional,\
+  \ NO IsGalois. Proved directly.\n\nWRONG CONCLUSION A READER DRAWS. The docstring\
+  \ (:11-21, :49-70) frames the file as answering an audit that the engines \"gate\
+  \ on classes with zero producers ... so neither engine could fire at any object\"\
+  , and reports G2(a) as \"fired by synthesis ... the downstream consumer the audit\
+  \ asked for\". A reader concludes the norm-trick lemma was exercised. It was not:\
+  \ at both objects the conclusion holds with a one-line witness and strictly fewer\
+  \ hypotheses. The file notes the object \"is a point, not a curve's Picard scheme\"\
+  \ (:66-70) but never that the GATE ITSELF is trivial there.\n\nNOT AN ENGINE DEFECT.\
+  \ exists_stable_affineOpen_of_orbitsInAffineOpen is real and correct, just untested\
+  \ by these witnesses. HasGaloisQuotient's depth is untouched: hasGaloisQuotient_specF4\
+  \ (:199-200) rests on isGaloisQuotient_spec (Speiser descent), which is substantive.\n\
+  \nFIX. One docstring sentence recording that both witnesses sit where the gate is\
+  \ trivially satisfiable, so no lane reads them as coverage of the norm trick. Next\
+  \ step unchanged, already at :66-70: an action on a Pic-side scheme neither affine\
+  \ nor a base change."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-29T13:16:34.168949+00:00'
+updated_at: '2026-07-29T13:16:34.168960+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0004-horizon-review-ajc
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge

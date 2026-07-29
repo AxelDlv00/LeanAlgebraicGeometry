@@ -1,0 +1,57 @@
+id: I-0953
+provider: local
+kind: issue
+body: "HasAbelMap IS A PROPERTY-FREE DATA SLOT: the constant-zero transformation inhabits\
+  \ it, and abelMap_app_mk PROVABLY FAILS under the binder\n\nVacuity sweep of the\
+  \ Picard seam (Ground, fresh context). A SECOND HasDivFunctor-shaped defect in the\
+  \ SAME file, different shape: a data field with no defining property.\n\nWHERE.\
+  \ Picard/FGAPicRepresentability.lean:720-724 -- class HasAbelMap ... where abel\
+  \ : divFunctor C -> picSharp C. The one field constrains nothing beyond the TYPE.\n\
+  \nDOCSTRING FALSE, twice. :716-719 \"abelMap := HasAbelMap.abel inherits the concrete\
+  \ construction AND THE DEFINING PROPERTY abelMap_app_mk\"; :585-587 same claim.\n\
+  \nMACHINE-VERIFIED (lean_run_code, zero diagnostics, nothing landed):\n  zeroAbel:\
+  \ app T := fun _ => (0 : (PicSharp.relPresheaf C).obj T); naturality is\n    map_zero\
+  \ (PicSharp.relFunctorial ...) -- FREE, pullback maps are group homs\n  @[reducible]\
+  \ def zeroInst : HasAbelMap C := <zeroAbel C>          -- ELABORATES\n  example\
+  \ : @abelMap k _ C _ _ _ (zeroInst C) = zeroAbel C := rfl   -- ELABORATES\nInhabited\
+  \ with NO geometry: no divisor, no ideal sheaf, no kernel-pullback comparison.\n\
+  \nAND THE ADVERTISED PROPERTY FAILS UNDER THE BINDER. Probing abelMap_app_mk's exact\
+  \ conclusion (:750-757) against zeroInst, rfl FAILS: \"(abelMap C).app T [x] is\
+  \ not definitionally equal to -[<kernel x.q, _>]\". So abelMap_app_mk is about instHasAbelMap\
+  \ (:741) ALONE, never about the class.\n\nWRONG CONCLUSION A READER DRAWS: that\
+  \ [HasAbelMap C] is safe for consumers because the property is \"inherited\". Under\
+  \ that binder abelMap C may be constantly zero -- every divisor class maps to 0.\
+  \ This is the ClassDegree collapse (IdentityComponent.lean:1450-1461) one level\
+  \ up, in a class whose docstring asserts the opposite.\n\nBLAST RADIUS SMALL at\
+  \ HEAD -- issue, not protection. The ONLY declaration taking [HasAbelMap C] is abelMap\
+  \ itself (:735); real consumers route through abelMapWitness (DivDegree.lean:678-703;\
+  \ IdentityComponent.lean:1539).\n\nREPAIR, cheap preferred. (a) DELETE the class,\
+  \ use abelMapWitness directly -- nothing but abelMap depends on it, the remedy the\
+  \ HasDivFunctor caveat already prescribes. (b) ADD the pin as a field, as ClassDegreePinned\
+  \ did after its own collapse. Do NOT merely soften the docstring.\n\nGENERALISABLE.\
+  \ The acceptance test for this defect is ALREADY IN-TREE at IdentityComponent.lean:1506-1512\
+  \ (\"a class must be probed with the trivial witness\"). HasAbelMap was never run\
+  \ through it: a house rule in one file does not propagate to the sibling.\n\nRead-only\
+  \ lane: no edits, no task done."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-29T13:14:14.285477+00:00'
+updated_at: '2026-07-29T13:14:14.285490+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0004-horizon-review-ajc
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge

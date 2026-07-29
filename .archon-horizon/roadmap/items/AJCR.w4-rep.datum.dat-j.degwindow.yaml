@@ -3,8 +3,36 @@ title: 'DEG-WINDOW: decouple the effectivity/GAP-2 target degree from the genus 
   deg = g is not needed, g <= deg is, and at deg = g the h1 and h0 conditions coincide'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: ''
-status: active
+summary: 'DONE. Two files, rooted sorry-free, kernel EXIT=0 (8901 jobs), all eight
+  declarations axiom-clean on [propext, Classical.choice, Quot.sound].
+
+
+  Picard/JacobianDataAbelDegreeWindow.lean: exists_effective_deg_eq_of_le_classDeg
+  generalises the landed ''= g'' effectivity theorem to any target degree d with g
+  <= d (the d := g face is the original by rfl); exists_reference_divisor_le_deg produces
+  a divisor of degree >= d on any curve with a finite dominant map to P^1, non-vacuously
+  on the campaign''s own curve via thetaP1; h0_eq_one_of_subsingleton_hModule_one_of_deg_eq
+  turns h^1 = 0 into h^0 = 1 at degree g via the rank anchor.
+
+
+  Picard/Pic0ChartDegreePinFree.lean: deg_eq_of_picClass_eq_presenting_twist DERIVES
+  deg W = n from the chart-index constraint (ledger_forces_b_eq_n read in the supplying
+  direction), so at n = g a coverage witness gets GAP-2''s h^0 input with no degree
+  and no h^0 hypothesis.
+
+
+  DISCHARGES NO ANTECEDENT of pic0RepresentableByOfCharts. Two headline claims of
+  the first file were REFUTED by fresh-context review and withdrawn in place (I-0933,
+  I-0935): the reference divisor discharges the ''>= g'' face only -- the residue-degree
+  obstruction moved to the OUTPUT degree rather than dissolving; and ''coverage''s
+  hypothesis and GAP-2''s hypothesis are the same'' is false, since GAP-2 takes effectivity
+  on BOTH divisors and coverage carries neither. Correct figure: GAP-2 goes from four
+  inputs to three at degree g.
+
+
+  RESIDUE NOW: effectivity 0 <= W (IsSplitWitness does not assert it), plus the 0
+  <= Sigma legality of the chart index at parameter g (IndexSlack''s own open question).'
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -27,4 +55,4 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-j
-  owner: ajcr-p4
+  updated_at: '2026-07-29T13:10:39.795780+00:00'

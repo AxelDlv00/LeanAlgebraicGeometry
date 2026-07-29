@@ -1,0 +1,51 @@
+id: I-0937
+provider: local
+kind: issue
+body: "necessity_of_restrictedChartFibre IS NOT A NON-VACUITY CHECK: its conclusion\
+  \ is FREE at V = bot (no hypothesis), and at general V it is the pre-existing injective_of_isChartUniv\
+  \ composed with the reduction\n\nMEASURED by fresh-context review of fe937438c (Pic0ChartRestrictedFibre.lean:168-177).\
+  \ Both probes elaborate, lake env lean EXIT=0.\n\nTHE FILE SELLS IT (`:162-167`)\
+  \ as \"The content was relocated, not deleted ... This is what keeps the weakening\
+  \ honest\". Two measurements refute that reading.\n\n(1) THE CONCLUSION IS FREE\
+  \ AT V = bot. The theorem concludes Function.Injective ((restrictChart (abelSigmaChart\
+  \ ...) V).app T). At V = bot the source is the empty scheme, so any two T-points\
+  \ of it are equal by initiality -- no datum needed:\n  intro x y _\n  have hTe :\
+  \ IsEmpty (T.unop) := <fun z => TopologicalSpace.Opens.mem_bot.mp ((x : T.unop ->\
+  \ _).base z).2>\n  exact ((isInitial_iff_isEmpty.mpr hTe).some).hom_ext x y\nEXIT=0.\
+  \ So at the ONE V the file itself measured (its own :79-101 limit), the \"content\"\
+  \ this theorem certifies as retained is exactly nothing. The docstring at :166 does\
+  \ say \"At V = bot the statement is vacuous\", so the admission exists -- but it\
+  \ sits under a headline that reads as a non-vacuity certificate, which is the caveat-pass\
+  \ shape (memory: caveat-passes-fix-the-weak-phrase).\n\n(2) AT GENERAL V IT IS NOT\
+  \ SPECIFIC TO THE NEW CLASS. injective_of_isChartUniv (Pic0ChartUnivReduce.lean:205)\
+  \ already gives injectivity of the restricted chart from IsChartUniv at V. So necessity_of_restrictedChartFibre\
+  \ = that lemma composed with isChartUniv_of_restrictedChartFibre; verified by re-deriving\
+  \ it at the PARENT commit with the hypothesis written out instead of named (imports\
+  \ Pic0ChartUnivReduce only, EXIT=0). It is a property of ANY hypothesis implying\
+  \ IsChartUniv, not evidence that RestrictedChartFibre retains GAP-2 content.\n\n\
+  WHAT WOULD ACTUALLY BE A NON-VACUITY CHECK, and is still absent: a proof that RestrictedChartFibre\
+  \ FAILS at some V (the analogue of not_isChartLocusFibre_of_not_injective, which\
+  \ is the guard the old class does have), or a satisfiability witness at some V !=\
+  \ bot. Neither exists."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-29T12:59:33.630022+00:00'
+updated_at: '2026-07-29T12:59:33.630033+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0002-horizon-ajcr-p1
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

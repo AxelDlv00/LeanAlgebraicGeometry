@@ -3,36 +3,46 @@ title: 'B5: h0 upper semicontinuity — discharge the HasH0Semicontinuity gate f
   the landed B3 two-term complex'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "B5 (h0 upper semicontinuity). BASE-SIDE HALF LANDED sorry-free and axiom-clean;\
-  \ the FIBRE-CURVE half is open and its prescribed route is REFUTED (I-0884).\n\n\
-  LANDED (ajc-p4, run 0086; commits ea668debf, 866989ffb; kernel EXIT=0, axioms [propext,\
-  \ Classical.choice, Quot.sound]):\n * Picard/PointRankSemicontinuity.lean -- Scheme.Modules.isOpen_pointRank_le:\
-  \ {s | pointRank S F s <= e} is OPEN for F finitely presented quasi-coherent on\
-  \ locally noetherian S, with NO FLATNESS hypothesis; plus isClosed_le_pointRank,\
-  \ the superlevel form B6 consumes.\n * Picard/PointRankSemicontinuityWitness.lean\
-  \ -- non-vacuity on the campaign's OWN data: it fires on (pi_A)_* L for L merely\
-  \ LOCALLY TRIVIAL on C_A, no h1 hypothesis.\n * The proof is NOT the two-term complex.\
-  \ The locus IS the union over i <= e of chartLocus F i, and chartLocus is an S.Opens\
-  \ by construction. Inclusion = the Nakayama prolongation mem_chartLocus_of_pointRank_eq\
-  \ at i := pointRank F s; reverse = pointRank_le_of_mem_chartLocus. Both were already\
-  \ in the tree since the flattening-stratification work; the missing step was only\
-  \ that the union over i <= e IS the sublevel set. No monotonicity of IsPresentationChart\
-  \ is needed.\n * Distinct from the pre-existing isOpen_pointRank_pullback_eq (FlatteningStratificationUniversal.lean:701),\
-  \ which assumes CoherentSheafFlat and gives openness of the rank EQUALITY locus.\
-  \ Neither implies the other: drop flatness from that one and it is false; strengthen\
-  \ <= to = here and it is false.\n\nSTILL OPEN, and NOT weakened: Scheme.HasH0Semicontinuity\
-  \ (SemicontinuityH0.lean:93) has no instance. Its h0 is dim Gamma(C_t, L_t) on the\
-  \ scheme-theoretic fibre CURVE; pointRank is the fibre dimension of a module on\
-  \ the base. The gap is one comparison: pointRank (q_* L) t vs q.fiberH0 L t.\n\n\
-  COSTING REFUTED (I-0884): that comparison CANNOT come from the route the file prescribes.\
-  \ rank_pushforward_eq_fiberH0 (RigidPushforwardRank.lean:491) proves exactly the\
-  \ equation but carries hproj : Module.Projective, which the file itself proves load-bearing\
-  \ by counterexample -- and finite projective forces the rank LOCALLY CONSTANT, strictly\
+summary: "B5 (h0 upper semicontinuity). Base-side half LANDED sorry-free and axiom-clean.\
+  \ The gate HasH0Semicontinuity is STILL OPEN and its prescribed route is REFUTED.\
+  \ Released by ajc-p4; three named obligations remain.\n\nLANDED (ajc-p4, run 0086;\
+  \ commits ea668debf, 866989ffb, 140baa8f5, c5f4b684f; each kernel EXIT=0, all five\
+  \ theorems axiom-clean [propext, Classical.choice, Quot.sound]):\n * Picard/PointRankSemicontinuity.lean\
+  \ -- isOpen_pointRank_le: {s | pointRank S F s <= e} is OPEN for F finitely presented\
+  \ quasi-coherent on locally noetherian S, NO FLATNESS; plus isClosed_le_pointRank\
+  \ (the superlevel form B6 wants). Proof: the locus IS the union over i <= e of chartLocus\
+  \ F i, an S.Opens by construction; inclusion by mem_chartLocus_of_pointRank_eq at\
+  \ i := pointRank F s, reverse by pointRank_le_of_mem_chartLocus. Both were already\
+  \ in the tree; the missing step was only that the union over i <= e IS the sublevel\
+  \ set.\n * Picard/PointRankSemicontinuityWitness.lean -- non-vacuity on the campaign's\
+  \ own data: fires on (pi_A)_* L for L merely LOCALLY TRIVIAL on C_A, no h1 hypothesis.\
+  \ HasFiniteMapToP1 verified to have a real producer chain from the bare AJC curve\
+  \ binders.\n * Picard/FiberH0Comparison.lean -- fiberRank_gammaTop_eq_fiberH0: the\
+  \ fibre-h0 comparison with NO hproj and NO hfin. hproj/hfin are consumed ONLY in\
+  \ step 1 of rank_pushforward_eq_fiberH0 (Module.rankAtStalk_eq); steps 2-6 are hypothesis-free.\
+  \ Reviewer reproduced the original from this theorem by adding rankAtStalk_eq alone.\n\
+  \ * Independent of the pre-existing isOpen_pointRank_pullback_eq (FlatteningStratificationUniversal.lean:701),\
+  \ which assumes CoherentSheafFlat and gives the rank EQUALITY locus. Neither implies\
+  \ the other; not in mathlib.\n\nCOSTING REFUTED (I-0884): the route SemicontinuityH0.lean:55-57/:86-92\
+  \ prescribes -- discharge via the B3 two-term minors -- CANNOT work. Its bridge\
+  \ rank_pushforward_eq_fiberH0 carries hproj, which the file itself proves load-bearing\
+  \ by counterexample, and finite projective forces the rank LOCALLY CONSTANT, strictly\
   \ stronger than semicontinuity. Also measured: the B3 LEMMAS' antecedent FiberH1Vanishing\
   \ has NO PRODUCER in the tree (RigidPushforwardP1Witness.lean:50, :264), though\
-  \ B3's GATE is genuine and axiom-clean. Next lane needs the honest half of cohomology-and-base-change\
-  \ (Stacks 02KG), Nakayama-inequality direction; mathlib has no fibre-dimension semicontinuity\
-  \ at all."
+  \ B3's GATE is genuine and axiom-clean.\n\nTHREE OBLIGATIONS REMAIN (corrected after\
+  \ fresh-context review, I-0949 -- an earlier note said one):\n (a) hbc, kerBaseChange\
+  \ bijective over every algebra, WITHOUT h1-vanishing. Not free: A = Z, d = mult-by-2,\
+  \ B = Z/2 refutes it with both terms flat. Only in-tree producer needs surjectivity.\n\
+  \ (b) Finite-dimensionality of ker d over kappa(t). Module.finrank is junk 0 infinite-dimensionally\
+  \ on BOTH sides; the original's argument against a vacuous 0 = 0 ran entirely through\
+  \ the dropped hfin.\n (c) A CARRIER BRIDGE: the Ideal.fiberRank conclusion is NOT\
+  \ the same term as Scheme.Modules.pointRank -- rfl FAILS, different ring and different\
+  \ prime -- and rankAtStalk_sections_eq_pointRank, the only in-tree lemma relating\
+  \ them, carries the Flat + Finite binders this work drops.\n\nNEXT LANE: do not\
+  \ re-derive the chart-locus argument or the steps-2-6 reuse; both committed. Do\
+  \ not route through rank_pushforward_eq_fiberH0. Untried lead recorded in the file:\
+  \ TwoTermFiniteReplacement.h0_bijective holds for EVERY algebra with no surjectivity\
+  \ hypothesis."
 status: active
 kind: proof
 priority: high
@@ -56,5 +66,4 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  owner: ajc-p4
-  updated_at: '2026-07-29T11:40:06.609307+00:00'
+  updated_at: '2026-07-29T13:13:43.437751+00:00'

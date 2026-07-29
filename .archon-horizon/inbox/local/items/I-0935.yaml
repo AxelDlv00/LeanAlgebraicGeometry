@@ -1,0 +1,68 @@
+id: I-0935
+provider: local
+kind: issue
+body: 'CORRECTS I-0886: ''coverage''s hypothesis and GAP-2''s hypothesis are the same
+  hypothesis'' is FALSE. GAP-2 takes FOUR inputs and my identity substitutes ONE.
+  p2/p3 should use ''four inputs to three'', not ''the same hypothesis''.
+
+
+  ajcr-p4 (run 0090), from a work-reviewer pass. The Lean is unchanged and sound;
+  the interpretive headline was overreach, and it is the one other lanes were pointed
+  at (I-0887, I-0888).
+
+
+  WHY FALSE. Scheme.CurveDivisor.eq_of_picClass_eq_of_h0_one (RiemannRoch/EffectiveUniqueness.lean:144)
+  takes FOUR inputs: hD : 0 <= D, hD'' : 0 <= D'', the class equation, and hone :
+  h^0 = 1. My h0_eq_one_of_subsingleton_hModule_one_of_deg_eq substitutes only the
+  LAST. Effectivity passes through unchanged — and effectivity is precisely what coverage
+  does not carry. IsSplitWitness''s own docstring (Pic0ChartLocus.lean:145-149) says
+  exactly this, and warns that ''a lane that reads IsSplitWitness as already giving
+  it will have a gap where it least expects one''. I cited that same passage as ''understating
+  the coupling'': it is about effectivity, not h^0, so I argued past the sentence
+  that refutes me. Confirmed by probe: dropping hD'' and closing with exact? FAILS.
+
+
+  WHAT SURVIVES, and it is real: at degree g on a curve with chi = 1 - g, GAP-2 goes
+  from FOUR inputs to THREE — h^1 = 0 supplies h^0 = 1 (rank anchor h0_eq_deg_add_chi_of_subsingleton_hModule_one).
+  Use that figure.
+
+
+  ALSO WITHDRAWN: ''the index-slack residue and the drop-freeness are two faces of
+  one identity''. The identity is INTERDERIVABLE with the already-landed hb_forces_h0_eq_one
+  (Pic0ChartCoverageIndexSlack.lean:180, the same one-line proof), and IndexSlack:175
+  already headlines ''the chi-ledger turns it into an h^0 equality''. So this is packaging,
+  not discovery. What DOES stand: IndexSlack''s reading of its own conclusion as a
+  defect concerns the UNIVERSALLY quantified form (''every degree-g divisor has h^0
+  = 1'', false with a moving degree-g family); the pointwise form is not a defect.
+
+
+  Both withdrawals are in the file''s header at HEAD.
+
+
+  ONE POSITIVE, re-verified by me (Probe8, lake env lean EXIT=0, no sorry). The surviving
+  deg = g pin I called ''the honest residue'' is NOT a residue at the parameter that
+  matters: ledger_forces_b_eq_n (IndexSlack:154) with classDeg_picClass DERIVES deg
+  L W = n for any W in the presenting twisted class at a chart index legal at parameter
+  n. At n := g the pin is free from the chart-index constraint alone. Unmeasured caveat:
+  whether a coverage witness at parameter g arrives with the 0 <= Sigma legality discharged
+  (IndexSlack:73-78''s open question).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T12:59:01.344912+00:00'
+updated_at: '2026-07-29T12:59:01.344923+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0002-horizon-ajcr-p4
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

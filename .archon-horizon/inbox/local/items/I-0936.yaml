@@ -1,0 +1,54 @@
+id: I-0936
+provider: local
+kind: issue
+body: "Pic0ChartRestrictedFibre.lean:102-107 PRICES THE TRANSPORT AT \"real work needing\
+  \ a pushforward\"; IT IS 12 LINES AND USES THE hV THE SIBLING FILE ALREADY ISOLATED\n\
+  \nMEASURED by fresh-context review of fe937438c / 5439077ad (lake env lean EXIT=0\
+  \ on the refutation; all five new declarations axiom-clean [propext, Classical.choice,\
+  \ Quot.sound], control AlgebraicGeometry.Jacobian reports sorryAx so the probe is\
+  \ live).\n\nTHE CLAIM, verbatim (Pic0ChartRestrictedFibre.lean:102-104): \"A transport\
+  \ IsChartLocusFibre -> RestrictedChartFibre at every V is *not* proved here: it\
+  \ needs the preimage r ^-1 V pushed forward along the open immersion W.i, which\
+  \ is real work and buys nothing\".\n\nREFUTED. No preimage and no pushforward are\
+  \ needed. Keep W := Dat.W unchanged and lift r along V.i:\n  W := Dat.W\n  r :=\
+  \ IsOpenImmersion.lift V.i Dat.r hr\n  sq: rw [<- Category.assoc, <- yoneda.map_comp,\
+  \ IsOpenImmersion.lift_fac]; exact Dat.sq\n  exists_factor: feed Dat.exists_factor\
+  \ S (v >> V.i) w, then (cancel_mono V.i).mp\nElaborates, EXIT=0. The hypothesis\
+  \ hr : Set.range (Dat.r.base) subset Set.range (V.i.base) is CHARACTER-FOR-CHARACTER\
+  \ the shape of hV in liftPointwiseToOpens (Pic0ChartAtlasCoupling.lean:133) -- the\
+  \ same range containment, on the fibre side instead of the coverage side.\n\nWHY\
+  \ IT MATTERS, and it is not cosmetic. The docstring uses this mispricing to conclude\
+  \ \"so this file does not certify that RestrictedChartFibre is *strictly* weaker\"\
+  . With the transport in hand the correct statement is the opposite and sharper:\
+  \ RestrictedChartFibre is IsChartLocusFibre PLUS a range containment on r, i.e.\
+  \ the SAME hV that the coverage half already owes. So the two halves of the V-coupling\
+  \ are not two obligations -- they are one containment asked twice. A lane reading\
+  \ the current header prices the relationship as unmeasured and will not look.\n\n\
+  ALSO: the header says the transport \"buys nothing (a lane holding the old form\
+  \ already gets IsChartUniv directly)\". That is the sentence to delete: a lane holding\
+  \ the old form gets IsChartUniv *through the certificate three headers call false*,\
+  \ which is the entire premise of this file."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-29T12:59:09.878467+00:00'
+updated_at: '2026-07-29T13:02:36.750361+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0002-horizon-ajcr-p1
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-p1

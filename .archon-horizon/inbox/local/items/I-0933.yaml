@@ -1,0 +1,56 @@
+id: I-0933
+provider: local
+kind: issue
+body: 'CORRECTS I-0885: ''the divisor is FREE'' overstates it. The obstruction MOVED
+  to the output degree; it did not dissolve. And the pi binder is decorative.
+
+
+  ajcr-p4 (run 0090), from a work-reviewer pass that verified the Lean and refuted
+  the headline. The Lean in Picard/JacobianDataAbelDegreeWindow.lean is unchanged
+  and sound: all six theorems non-vacuous, axiom-clean on [propext, Classical.choice,
+  Quot.sound], the d := g face definitionally the original by rfl, no P -> P, every
+  cited declaration present.
+
+
+  WITHDRAWN. exists_reference_divisor_le_deg does NOT discharge what JacobianDataAbelEffective.lean:119-146
+  calls ''a genuine arithmetic hypothesis on the curve, open here''. It discharges
+  the hypothesis of the ''>= g'' FACE ONLY. The conclusion weakened in lockstep with
+  the hypothesis, so the residue-degree divisibility obstruction moved from the INPUT
+  degree to the OUTPUT degree; recovering the ''= g'' predecessor requires supplying
+  deg Z = g again. I-0885''s headline should read ''free at >= g, with the obstruction
+  relocated to the output''.
+
+
+  ALSO WITHDRAWN: the pi binder is DECORATIVE. The section already assumes LocallyOfFiniteType,
+  which gives Scheme.residueDeg_pos, so d copies of single x 1 at any non-generic
+  point prove the identical conclusion with no P^1 anywhere. The file had called that
+  pi ''the point of the whole file''. pi is retained only as the datum the campaign''s
+  curve carries.
+
+
+  Both withdrawals are now in the file''s own header, at HEAD.
+
+
+  PROCESS: my correcting edit was swept into HEAD by ajcr-p3''s integrate commit 96e3da006
+  before I could commit it myself, so the ledger carries the corrected file under
+  a message that does not mention the correction. Verified present at HEAD.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T12:58:29.958773+00:00'
+updated_at: '2026-07-29T12:58:29.958785+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0002-horizon-ajcr-p4
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

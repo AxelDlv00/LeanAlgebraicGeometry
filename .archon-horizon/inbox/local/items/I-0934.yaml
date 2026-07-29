@@ -1,0 +1,66 @@
+id: I-0934
+provider: local
+kind: issue
+body: 'scripts/axiom-frontier.lean STILL NAMES instHasPicScheme AS A LIVE SORRY-BODIED
+  SYNTHESISED GATE IN 6 PLACES -- that declaration does not exist, and the stale text
+  is the STATED REASON for the file''s five-not-four count
+
+
+  MEASURED 2026-07-29, fresh-context audit, read-only. lake build AlgebraicJacobian
+  EXIT=0, 8851 jobs. Kernel enumeration over the built env: INSTANCES concluding Scheme.HasPicScheme
+  = 0. Sole producer is the THEOREM Scheme.picSchemeOfHasRationalPoint (FGAPicRepresentability.lean:562,
+  needs [HasRationalPoint C]).
+
+
+  STALE SITES: scripts/axiom-frontier.lean :86, :415, :447, :497, :538, :1206. Two
+  are load-bearing:
+
+
+  * :447 -- the Section-0b header that exists to justify FIVE-not-four: "whose sole
+  producer is the sorry-bodied instHasPicScheme (Section 2) ... Discharging leaf A
+  does not remove the gate; it makes the gate FIRE." That mechanism is impossible
+  now. Verified: `example : Scheme.HasPicScheme C := by infer_instance` at the three
+  challenge binders fails with synthInstanceFailed.
+
+  * :415 -- "it makes instHasPicScheme fire instead of being assumed". Same defunct
+  mechanism.
+
+
+  WHAT SURVIVES: the count (five) and the leak. probe_pic0Scheme_named_of_isAlgClosed
+  still reports sorryAx, because picSchemeOfHasRationalPoint is NAMED in its body
+  and rests on fgaPicardRepresentability. What is false is the reason, and hence the
+  clean/leak contrast built on it at :456 ("The control assumes the gate instead of
+  synthesising it ... pins the leak to synthesis and to nothing else"). Nothing is
+  synthesised on either side; probe vs control is now NAMES-the-theorem vs assumes-the-class.
+
+
+  WHY IT MATTERS: TO_USER.md:37, Jacobian.lean:372 and README.md:77 all already say
+  the gate has no instance. The corrected wording exists in three places and did NOT
+  reach the one file the project tells readers to run before believing any completeness
+  number.
+
+
+  NEXT ACTION: prose-only fix at those 6 lines; the probes themselves compile and
+  are correct.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-29T12:58:54.431066+00:00'
+updated_at: '2026-07-29T12:58:54.431082+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0004-horizon-review-ajc
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge

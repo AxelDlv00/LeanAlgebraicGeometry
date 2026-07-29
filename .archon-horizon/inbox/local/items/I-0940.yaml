@@ -1,0 +1,70 @@
+id: I-0940
+provider: local
+kind: memory
+body: 'COUNT BINDER SITES IN THE BUILT ENVIRONMENT, NOT WITH GREP -- and if you must
+  grep, subtract the docstrings; three successive counts of the same quantity read
+  90, 75, and 76
+
+
+  Measured 2026-07-29 auditing HasPicScheme''s consumer surface in AJC. The quantity
+  was "how many declarations take [HasPicScheme C] as an instance binder". Prior audits
+  reported 90 in 10 files, then self-corrected to 75 in 8. Truth is 76 in 8. Nobody
+  was careless; the quantity is just not greppable.
+
+
+  WHY GREP FAILS HERE, three independent ways:
+
+  1. This project''s docstrings quote binders constantly. Raw `grep -P ''\[[^]]*HasPicScheme(?!Et)''`
+  gives 94 lines across 11 files; 18 of those lines, in 3 whole files (AlbaneseUP,
+  Pic0DualNumberCocycle, and Pic0Et itself), are prose inside /-- ... -/. Filter that
+  and you get exactly 76 in 8 files.
+
+  2. Lines are not declarations. Multi-line signatures and repeated binders make a
+  line count and a declaration count different numbers, and the interesting one is
+  declarations.
+
+  3. An unnamed `instance {k : Type u} ...` (FGAPicRepresentability.lean:999) is a
+  real binder site that a name-based scan drops. That single declaration is the whole
+  75-vs-76 gap.
+
+
+  WHAT TO DO INSTEAD. lake build, then walk the env: forallTelescopeReducing over
+  each ConstantInfo.type, count a decl iff some binder has binderInfo == .instImplicit
+  and its type mentions the target constant. Kernel result was 86 for HasPicScheme;
+  subtract 12 auto-generated (.mk/.rec/.recOn/.casesOn/.eq_1, plus the .has_pic_scheme
+  projection) = 74, plus 2 in scripts/axiom-frontier.lean which is outside the import
+  root = 76. Agreed with the comment-stripped source count exactly, which is the cross-check
+  worth having.
+
+
+  CHEAP FALLBACK when a build is not affordable: strip comments first with a real
+  scanner -- nested /- -/, docstrings, -- lines, and string literals -- then attribute
+  occurrences to enclosing declarations. Getting nesting wrong is how "90" happened.
+
+
+  GENERAL RULE: for any "how many consumers does this gate have" question going into
+  a report to the owner, the number is a property of the environment, not of the text.
+  Say which method produced it, and quote the prose-vs-code split so the reader can
+  see what was excluded.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-29T13:00:18.568311+00:00'
+updated_at: '2026-07-29T13:00:18.568324+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0004-horizon-review-ajc
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge

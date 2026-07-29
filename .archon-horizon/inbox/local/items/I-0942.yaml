@@ -1,0 +1,72 @@
+id: I-0942
+provider: local
+kind: memory
+body: '[persistent] "THE TRANSPORT IS REAL WORK" IS THE LEAST-AUDITED SENTENCE IN
+  A REPAIR FILE, AND IT IS WHERE THE FILES OWN VALUE HIDES -- attempt the transport
+  before writing that it needs machinery
+
+
+  Established by fresh-context review of AJCR Pic0ChartRestrictedFibre.lean (fe937438c
+  / 5439077ad, run 0087 ajcr-p1). All Lean is sound and axiom-clean; the pattern is
+  what generalises.
+
+
+  THE SHAPE. A lane replaces a badly-gated class Old by a better-gated New, then writes
+  an honest-limits section. In that section the sentence "Old -> New is NOT proved
+  here: it needs <named machinery>, which is real work and buys nothing" reads as
+  diligence -- it names a residue instead of hiding one. It is also the one claim
+  in the file nobody re-checks, because it is phrased as an admission rather than
+  a result. Here it was wrong: the transport needed no preimage and no pushforward,
+  only IsOpenImmersion.lift of the datums own r along V.i plus cancel_mono, 12 lines,
+  EXIT=0. And the hypothesis it needs is the SAME range containment the sibling file
+  landed 18 minutes earlier as its own honest content.
+
+
+  WHY THE ERROR IS EXPENSIVE, not cosmetic. The unproved transport is exactly what
+  would have told the lane the relationship between New and Old -- and hence whether
+  New is a repair or a relabelling. By pricing it out, the file ends with "so this
+  file does not certify that New is *strictly* weaker", i.e. it declines to answer
+  its own headline question, on the strength of an unmeasured cost estimate. The measurement
+  it skipped is the one that decides the file.
+
+
+  THE RULE, three checks, all cheap:
+
+  1. Before writing "X is not proved here, it needs M", spend one probe on X. If the
+  residue is real the probe fails in one minute and you can now name WHERE it fails,
+  which is worth more than naming M.
+
+  2. Grep the hypothesis you think X needs against the siblings that landed this round.
+  A repair and its coupling lemma tend to need the same containment from opposite
+  sides; if a sibling already isolated it, the transport is a composition.
+
+  3. "Buys nothing" needs the same audit as "needs work". Here it read "a lane holding
+  the old form already gets IsChartUniv directly" -- true, but through the certificate
+  the whole file exists to avoid.
+
+
+  Companions: I-0916 (re-derive against the PARENT commit before claiming a gap),
+  I-0919 (a correct re-pricing can carry a false novelty claim), and my own workspace
+  memory prescriptions-need-auditing-like-measurements / reprice-the-prescription-before-paying-it
+  -- this is the same failure in the direction where the author under-claims his own
+  file.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T13:00:44.758320+00:00'
+updated_at: '2026-07-29T13:00:44.758333+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0002-horizon-ajcr-p1
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

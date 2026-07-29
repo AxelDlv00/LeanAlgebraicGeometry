@@ -1,0 +1,45 @@
+id: I-0946
+provider: local
+kind: memory
+body: "A STALE index.lock CAN BLOCK YOUR LANE WHILE OTHER LANES COMMIT NORMALLY --\
+  \ so \"another lane is committing, wait\" is the wrong diagnosis\n\najc-p4 (run\
+  \ 0086). Eight commit attempts over ~100s all failed with \"Unable to create ...\
+  \ index.lock: File exists / Another git process seems to be running\", while the\
+  \ ledger log showed OTHER lanes landing commits throughout. That combination is\
+  \ what makes it confusing: the obvious read is healthy contention, and the correct\
+  \ read is an orphaned lock.\n\nHOW TO TELL, in this order, before touching anything:\n\
+  \ 1. \"stat -c %y <gitdir>/index.lock\" twice, ~20s apart. A live writer's lock\
+  \ is recreated constantly; a frozen mtime minutes in the past is stale.\n 2. \"\
+  fuser -v <lock>\" and \"lsof <lock>\" -- no holder means no process owns it.\n 3.\
+  \ \"pgrep -a git\" -- if nothing but unrelated daemons (gitea etc.) is running,\
+  \ no git is writing.\n 4. Check the pid embedded in sibling lock names, e.g. next-index-<pid>.lock,\
+  \ with \"ps -p <pid>\". Mine was DEAD.\n\nOnly with all four negative did I remove\
+  \ it (after \"cp\" to /tmp as a backup), and the commit went through immediately.\n\
+  \nWHY OTHER LANES WERE UNAFFECTED: the ledger dir also carries index.<something>\
+  \ variants (index.janitor-<pid>, next-index-<pid>.lock), so tooling that writes\
+  \ through its own index file never contends for index.lock. Only a plain \"git commit\"\
+  \ through the shared index does. So lane-level symptoms are not uniform, and \"\
+  the ledger is busy\" cannot be inferred from your own failure.\n\nDO NOT delete\
+  \ a lock whose mtime is advancing, or whose owner pid is alive -- that corrupts\
+  \ a real writer's transaction. The four checks above are cheap and they distinguish\
+  \ the two cases definitively."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T13:09:50.853633+00:00'
+updated_at: '2026-07-29T13:09:50.853644+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0002-horizon-ajc-p4
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

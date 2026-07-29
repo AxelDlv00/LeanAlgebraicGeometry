@@ -1,0 +1,75 @@
+id: I-0938
+provider: local
+kind: issue
+body: 'HasPicSchemeEt HAS NOT REPLACED HasPicScheme -- it exists BESIDE it, 15 binder
+  sites vs 76, and the Pic0 tangent-space/dimension development (54 sites) has NO
+  etale counterpart
+
+
+  MEASURED 2026-07-29, fresh-context audit, read-only, kernel-level. lake build AlgebraicJacobian
+  EXIT=0, 8851 jobs. Method: Lean env walk over declaration telescopes counting only
+  .instImplicit binders -- immune to docstring prose, which inflated an earlier count
+  to 90/94.
+
+
+  PLAIN [HasPicScheme C]: 76 decls, 8 files. Pic0AbelianVariety 34, IdentityComponent
+  14, FGAPicRepresentability 9, Pic0Dimension 6, GroupSchemeHomogeneity 5, Jacobian
+  4, HomogeneityOrbitCollapse 2, scripts/axiom-frontier 2.
+
+  ETALE [HasPicSchemeEt C]: 15 decls, 2 files. Pic0Et 10, FGAPicRepresentability 5.
+
+  ZERO decls bind BOTH -- not a half-migrated signature problem, but two disjoint
+  towers of unequal size.
+
+
+  WHAT DID MIGRATE: the headline chain is clean. picardJacobianWitness -> Pic0SchemeEt;
+  Jacobian / nonempty_jacobianWitness / jacobianWitness carry NO gate binder. Pic0Et
+  re-proves grpObj, geometricallyIrreducible, locallyOfFiniteType, isSeparated unconditionally;
+  2 sorries left (geometricallyReduced, universallyClosed).
+
+
+  WHAT DID NOT. Pic0SchemeEt appears in 3 files; Pic0Scheme''s development spans 8.
+  Pic0Et ports the 4 abelian-variety attributes and nothing else. With NO Et counterpart:
+  the whole tangent-space chain (tangentSpaceIso, finrank_cotangentSpace_eq_finrank_hModuleOne,
+  semilinearComparison_cotangentSpaceDual_h1Cok, pointedDualNumberPoints_equiv_*),
+  all of Pic0Dimension (6), all of GroupSchemeHomogeneity (5), and IdentityComponent''s
+  degree machinery (classOfSection, degreeOfSection, ClassDegree, finrank_eq_genus,
+  kPoints_iff_kerDegree -- 14).
+
+
+  CONSEQUENCE FOR THE HEADLINE, not tidiness: Jacobian.lean:424 smoothOfRelativeDimension_genus_pic0Et
+  is a BARE sorry, while its twin :390 _pic0 is backed by the landed tangent-space
+  chain. The Et tower has no dimension count at all -- that is what the missing 54
+  sites were for. Same for isAlbanese_pic0Et (:541, bare sorry) vs isAlbanese_pic0
+  (:511).
+
+
+  NEXT ACTION: decide explicitly whether the tangent-space/dimension chain is transported
+  to Pic0SchemeEt, or whether smoothOfRelativeDimension_genus_pic0Et is proved another
+  way. Today the headline''s dimension obligation has no development behind it, and
+  the development that exists is about a pointed curve.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-29T12:59:52.468219+00:00'
+updated_at: '2026-07-29T13:03:19.040540+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0004-horizon-review-ajc
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p2
+  - review-ajc

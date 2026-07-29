@@ -1,0 +1,55 @@
+id: I-0939
+provider: local
+kind: issue
+body: "pic0RepresentableBy_of_restrictedChartFibre: THE V-COUPLING IS REAL, BUT IT\
+  \ ALREADY EXISTED AT THE PARENT COMMIT AND THE NEW VERSION WEAKENS THE CONCLUSION\
+  \ TO A Sigma\n\nMEASURED by fresh-context review of fe937438c (Pic0ChartRestrictedFibre.lean:209-230).\
+  \ Probe elaborates, lake env lean EXIT=0.\n\nWHAT SURVIVES. The V-sharing is genuine,\
+  \ not cosmetic: huniv is at (V i) and hcov ends with Set.range (x.base) subset Set.range\
+  \ ((V i).i.base) at the SAME (V i), and the typing forces it -- mixedParamChart\
+  \ .. V i has source (V i : Scheme), and isLocallySurjective_restrictChart_of_pointwise\
+  \ is applied at that same V. Claim 4 stands.\n\nWHAT DOES NOT. The docstring calls\
+  \ it \"THE V-COUPLED ASSEMBLY -- the composition inbox I-0861 names as missing\"\
+  . The composition was NOT missing. Both halves were in the tree at fe937438c^:\n\
+  \  mixedParamRepresentableBy            (Pic0ChartAtlasParamFree.lean:125, landed\
+  \ 07-29 03:48)\n  isOpenImmersion_presheaf_mixedParamChart (same file, :103) --\
+  \ takes exactly IsChartUniv .. (V i)\n  isLocallySurjective_restrictChart_of_pointwise\
+  \ (Pic0ChartAtlasCoupling.lean:149, landed 07-29 19:15)\nI composed those three\
+  \ at the PARENT commit -- imports only those two sibling files, no RestrictedChartFibre\
+  \ -- and it elaborates, EXIT=0. So the assembly is a 4-line composition of two siblings,\
+  \ one of which landed 18 minutes earlier. Same shape as I-0895 on Pic0ChartLocusFibreGuard:\
+  \ the value is routing, not mathematics, and the header should say so.\n\nAND IT\
+  \ IS A STRICT WEAKENING OF ITS OWN SIBLING. mixedParamRepresentableBy returns\n\
+  \  (pic0TypeFunctor C).RepresentableBy (Over.mk ((...representableBy hf).homEquiv\
+  \ (1 (...glueData hf).glued)).1)\n-- the representing object NAMED, which JacobianData.ofRepresentableBy\
+  \ and the whole JacobianData layer consume. The new declaration returns\n  Sigma\
+  \ J : Over (Spec (.of k)), (pic0TypeFunctor C).RepresentableBy J\nwhich forgets\
+  \ which J it is. My probe delivers the NAMED form under the same hypotheses (EXIT=0),\
+  \ so the Sigma is not forced by the coupling. Any downstream consumer needing the\
+  \ glued object cannot use this declaration. The docstring at :183-184 even says\
+  \ mixedParamHf is \"Named because the representing object of the assembly below\
+  \ mentions it\" -- but the assembly as written does not mention it; it is under\
+  \ the Sigma.\n\nRECOMMENDED: restate with the named object (the probe is the proof),\
+  \ and reword the I-0861 attribution to \"stated, not newly provable\"."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-29T13:00:10.994987+00:00'
+updated_at: '2026-07-29T13:00:10.994999+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0002-horizon-ajcr-p1
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

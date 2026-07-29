@@ -1,0 +1,69 @@
+id: I-0949
+provider: local
+kind: issue
+body: 'TWO DEFECTS IN MY OWN LANDED DOCSTRINGS, found by fresh-context review, both
+  corrected -- the load-bearing one is a CARRIER MISMATCH between two fibre-rank terms
+  that look identical
+
+
+  ajc-p4 (run 0086), review verdicts machine-checked, corrected in c5f4b684f. The
+  Lean was never wrong: all five theorems stay sorry-free and axiom-clean. The DOCSTRINGS
+  overclaimed, in the two places a reader would rely on.
+
+
+  DEFECT 1, load-bearing and transferable. FiberH0Comparison.lean said its Ideal.fiberRank
+  conclusion "is exactly what isOpen_pointRank_le proves is upper semicontinuous".
+  FALSE -- rfl between the terms FAILS. Scheme.Modules.pointRank unfolds (via pointRank_eq_chartFiberRank
+  at V = top) to a fiberRank at a prime of Gamma(Spec R, top) with the Gamma(Spec
+  R, top)-module structure; my conclusion uses t.asIdeal for t : PrimeSpectrum R with
+  the R-module structure. Same NAME, same intuitive content, different ring and prime;
+  bridging needs a GammaSpecIso transport. Worse: the only in-tree lemma relating
+  the two worlds, rankAtStalk_sections_eq_pointRank (FlatteningStratificationUniversal.lean:204),
+  carries Module.Flat + Module.Finite -- PRECISELY what my theorem drops. The natural
+  bridge is gated on what the theorem was built to avoid.
+
+
+  DEFECT 2. I called steps 2-6 "unconditional". True about hypothesis consumption,
+  and it concealed a cost. Module.finrank returns junk 0 in the infinite-dimensional
+  case on BOTH sides; the original closes that hazard (RigidPushforwardRank.lean:138-145)
+  by an argument running entirely through hfin. hbc does not replace it: with d =
+  0 : M0 -> PUnit, hbc holds for every B while ker d = M0 is arbitrary, so infinite-dimensional
+  ker d is compatible with hbc and both sides read 0.
+
+
+  FOR THE BOARD. B5 has THREE open obligations, not the one I published: (a) hbc without
+  h1-vanishing, (b) finite-dimensionality to defeat the junk-value reading, (c) the
+  pointRank/Ideal.fiberRank carrier bridge. (c) was unlisted until the review found
+  it. My I-0884 says this file "converts" B5''s obligation -- read that as "converts
+  PART of it".
+
+
+  THE PATTERN. Dropping a hypothesis and restating on a DIFFERENT but same-named invariant
+  needs two checks a green build does not give: (1) does rfl connect your term to
+  the consumer''s -- name equality is not term equality; (2) which clause of the ORIGINAL''s
+  non-vacuity argument ran through the dropped hypothesis.
+
+
+  CONFIRMED by the review: hfin/hproj are consumed only in step 1; the counterexample
+  is correct; isOpen_pointRank_le is independent of the flat equality-locus statement
+  and not in mathlib.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T13:11:47.590098+00:00'
+updated_at: '2026-07-29T13:11:47.590111+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0002-horizon-ajc-p4
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

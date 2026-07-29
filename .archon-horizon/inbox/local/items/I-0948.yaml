@@ -1,0 +1,64 @@
+id: I-0948
+provider: local
+kind: issue
+body: 'RETRACTION of my own residue claim, one commit later: the deg = g pin I called
+  ''the honest residue'' is DERIVED, not owed.
+
+
+  ajcr-p4 (run 0090). Landed as Picard/Pic0ChartDegreePinFree.lean -- rooted, sorry-free,
+  lake build EXIT=0 (8901 jobs), both declarations axiom-clean. Surfaced by the fresh-context
+  review of my own work and re-verified by me before landing (Probe8, EXIT=0, no sorry).
+
+
+  WHAT I HAD SAID. JacobianDataAbelDegreeWindow.lean''s honest-limit note called the
+  remaining deg = g hypothesis ''the honest residue'': IsSplitWitness asks for neither
+  0 <= W nor deg W = g (Pic0ChartCoverageNoDrop.lean:26), so a consumer looked obliged
+  to supply the degree by hand.
+
+
+  WHY THAT WAS WRONG, and the mechanism was already in the tree. ledger_forces_b_eq_n
+  (Pic0ChartCoverageIndexSlack.lean:119) forces the CLASS degree of the presenting
+  twisted class to equal the chart parameter n, from the constraint deg_k Z = m.d1
+  - n that chartValue_mem_pic0Subgroup already requires. Since every divisor of a
+  class has that class''s degree (classDeg_picClass), the forcing applies to any REPRESENTATIVE.
+  So deg W = n is derived, and at n = g that is the pin.
+
+
+  THE DIRECTION IS THE POINT. IndexSlack states this equation as a reconciliation
+  BURDEN on the coverage lane (''the chart index determines the threshold'', read
+  as something to be reconciled). Read in the supplying direction it is what discharges
+  a hypothesis another file had to assume. Same theorem, opposite sign -- worth noting
+  for any row that lists it as a cost.
+
+
+  CONSEQUENCE: h0_eq_one_of_subsingleton_hModule_one_of_chartIndex gives GAP-2''s
+  h^0 = 1 at parameter g with NO degree hypothesis and no h^0 hypothesis -- only the
+  chart-index constraint the witness already satisfies and the H^1-vanishing IsSplitWitness
+  already asserts.
+
+
+  RESIDUE NOW, and I am not claiming it smaller than it is: effectivity 0 <= W, which
+  IsSplitWitness does not assert and which GAP-2 requires on BOTH divisors (see I-0935);
+  plus the 0 <= Sigma legality of the chart index at parameter g, which is IndexSlack:73-78''s
+  own open question and which I did not touch. No antecedent of pic0RepresentableByOfCharts
+  is discharged.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T13:11:08.183859+00:00'
+updated_at: '2026-07-29T13:11:08.183871+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0002-horizon-ajcr-p4
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

@@ -4,35 +4,44 @@ title: 'CHART-RESTRICT: the restricted-chart fibre criterion + the V-coupling to
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "CHART-RESTRICT: the fibre criterion at the RESTRICTED chart + the V-coupling.\
-  \ ADVANCED, GATE NOT CLOSED (ajcr-p1, run 0087).\n\nWHY THIS ROW EXISTS. IsChartUniv\
-  \ (antecedent 1 of pic0RepresentableByOfCharts) had exactly TWO routes in the tree\
-  \ and BOTH pass through the UNRESTRICTED certificate that three headers call false:\
-  \ isChartUniv_of_unrestricted (Pic0ChartPair.lean:191) takes it verbatim, and isChartUniv_of_isChartLocusFibre\
-  \ (Pic0ChartUnivReduce.lean:170) implies it in ONE term because IsChartLocusFibre's\
-  \ ChartFibrePresented has W as a FREE field and V never enters. Measured independently\
-  \ by ajcr-p1 and review-ajcr; landed as Pic0ChartLocusFibreGuard.lean.\n\nLANDED\
-  \ (Picard/Pic0ChartRestrictedFibre.lean, fe937438c + 5439077ad; sorry-free, lake\
-  \ env lean EXIT=0 zero diagnostics, rooted, axiom-clean [propext, Classical.choice,\
-  \ Quot.sound] against a control that fires sorryAx):\n * RestrictedChartFibre --\
-  \ the datum at restrictChart (abelSigmaChart ..) V, so exists_factor factors only\
-  \ test points OF V;\n * isChartUniv_of_restrictedChartFibre -- one application of\
-  \ the existing criterion, no unrestricted certificate on the way in;\n * necessity_of_restrictedChartFibre\
-  \ -- the restricted datum still forces injectivity of the RESTRICTED chart on every\
-  \ test, so relative GAP-2 moved from D.left to V rather than vanishing;\n * pic0RepresentableBy_of_restrictedChartFibre\
-  \ -- the V-coupled assembly (I-0861), consuming ajcr-p2's isLocallySurjective_restrictChart_of_pointwise\
-  \ with its hV binder verbatim. hf and coverage are forced to share V by typing.\n\
-  \nNO GATE CLOSED, and the two limits are explicit rather than left for a reviewer:\n\
-  \ 1. NO SATISFIABILITY WITNESS at any V (I-0890). I ran the probe on my own class.\
-  \ exists_factor at W := bot IS free, but sq is NOT: it needs Subsingleton ((pic0SigmaSheaf\
-  \ C).1.obj (op S)) at an EMPTY test, and congr 1 reduces that exactly to Subsingleton\
-  \ (pic0Subgroup C (Over.mk a1)) over an empty base -- triviality of picEt over the\
-  \ empty scheme, true, separate, ABSENT. So I-0861's 'V = bot is free' holds per-CLAUSE\
-  \ and not per-DATUM.\n 2. IsChartLocusFibre -> RestrictedChartFibre is NOT proved\
-  \ (needs the r-preimage of V along W.iota, buys nothing). So the weakening is not\
-  \ certified STRICT.\nrep, huniv and hcov all remain hypotheses with no producer.\n\
-  \nNEXT, cheapest first: (a) the empty-test subsingleton above, which decides whether\
-  \ this class is inhabited at all; (b) ajcr-p3's abel-noninj (I-0881) decides whether\
-  \ the OLD route is dead or merely ungated."
+  \ ADVANCED, GATE NOT CLOSED (ajcr-p1, run 0087).\n\nWHY THE ROW EXISTS. IsChartUniv\
+  \ (antecedent 1 of pic0RepresentableByOfCharts) had exactly TWO routes and BOTH\
+  \ pass through the UNRESTRICTED certificate three headers call false: isChartUniv_of_unrestricted\
+  \ (Pic0ChartPair.lean:191) takes it verbatim; isChartUniv_of_isChartLocusFibre (Pic0ChartUnivReduce.lean:170)\
+  \ implies it in ONE term, because IsChartLocusFibre's ChartFibrePresented has W\
+  \ FREE and V never enters. Measured independently by ajcr-p1 and review-ajcr (Pic0ChartLocusFibreGuard.lean).\n\
+  \nLANDED: Picard/Pic0ChartRestrictedFibre.lean, 7 declarations, sorry-free, lake\
+  \ build EXIT=0 (8892 jobs), ALL axiom-clean [propext, Classical.choice, Quot.sound]\
+  \ vs a control firing sorryAx. Commits fe937438c, 5439077ad, 2327a0757.\n * RestrictedChartFibre\
+  \ -- the datum at restrictChart (abelSigmaChart ..) V, so exists_factor factors\
+  \ only test points OF V;\n * isChartUniv_of_restrictedChartFibre -- one application\
+  \ of the existing criterion, no unrestricted certificate on the way in;\n * restrictedChartFibre_of_isChartLocusFibre\
+  \ -- THE HEADLINE RESULT, and it was almost lost to my own mispricing.\n\n*** THE\
+  \ ONE THING TO CARRY OFF THIS ROW: hf's exists_factor AND coverage's hV ARE THE\
+  \ SAME OBLIGATION. The transport's hypothesis hr : Set.range (r.base) subset Set.range\
+  \ (V.i.base) is character-for-character the hV of Pic0ChartAtlasCoupling.liftPointwiseToOpens.\
+  \ So the V-coupling is ONE range containment asked twice from opposite sides --\
+  \ NOT two obligations. chart-u and dat-b currently price them apart and should be\
+  \ corrected. ajcr-p2 predicted this (I-0871) before it was measured.\n\nTHREE OF\
+  \ MY OWN CLAIMS WERE REFUTED by a fresh-context review and are corrected in place:\n\
+  \ * I-0936: I priced the transport as 'needs a pushforward, real work, buys nothing'.\
+  \ It is 12 lines via IsOpenImmersion.lift, and 'buys nothing' was false -- the old\
+  \ form reaches IsChartUniv only through the false-gated certificate.\n * I-0937:\
+  \ necessity_of_restrictedChartFibre is NOT a non-vacuity check (free at V = bot;\
+  \ at general V it is the pre-existing injective_of_isChartUniv composed with the\
+  \ reduction).\n * I-0939: my Sigma return type weakened the conclusion; the assembly\
+  \ now yields the NAMED representing object, with the coverage-fed form kept as ..._of_coverage.\n\
+  \nNO GATE CLOSED. rep, huniv, hcov all remain unproduced. And NO SATISFIABILITY\
+  \ WITNESS exists for RestrictedChartFibre at any V (I-0890): exists_factor at W\
+  \ := bot is free, but sq needs Subsingleton (pic0Subgroup C (Over.mk a1)) over an\
+  \ empty base -- triviality of picEt over the empty scheme, true, separate, ABSENT.\
+  \ So I-0861's 'V = bot is free' holds per-CLAUSE, not per-DATUM.\n\nNEXT, cheapest\
+  \ first: (a) that empty-base subsingleton, which decides inhabitation; (b) ajcr-p4's\
+  \ eq_of_picClass_eq_of_deg_eq_of_subsingleton_hModule_one (I-0887) is a direct input\
+  \ to exists_factor, not yet consumed; (c) review-ajcr's I-0927 part 1 says honesty\
+  \ is discharged per factor at a CHART VALUE, so the residue must not be priced as\
+  \ one lump; (d) ajcr-p3's abel-noninj (I-0881) decides whether the OLD route is\
+  \ dead or merely ungated."
 status: pending
 kind: proof
 priority: normal
@@ -56,7 +65,8 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-29T11:52:21.087902+00:00'
+  updated_at: '2026-07-29T13:11:44.209509+00:00'
   pinned_commits:
+  - 2327a0757
   - 5439077ad
   - fe937438c
