@@ -434,3 +434,7 @@ import AlgebraicJacobian.Albanese.Thm32RationalMapExtension
 -- regularity input -- a step that was already discharged over perfect fields --
 -- and reported Milne 3.3 as carrying no such binder.
 import AlgebraicJacobian.Albanese.CodimOnePerfectField
+-- and its non-vacuity, by instantiation at P^1 over Q and over F_5: fields that
+-- are perfect and NOT algebraically closed, so the weakened binder is not
+-- forced closed again by the remaining ones.
+import AlgebraicJacobian.Albanese.CodimOnePerfectFieldWitness
