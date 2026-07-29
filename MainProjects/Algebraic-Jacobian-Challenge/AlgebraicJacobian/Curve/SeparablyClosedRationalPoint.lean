@@ -398,5 +398,40 @@ theorem hasRationalPoint_baseChangeField_separableClosure_of_geometricallyIrredu
   haveI : Nonempty (Scheme.baseChangeField C (SeparableClosure k)).left := inferInstance
   exact hasRationalPoint_of_isSepClosed (Scheme.baseChangeField C (SeparableClosure k))
 
+/-- **The density form at the base-changed curve** — the shape `J1` and `J4` consume, rather than
+the bare existence of one section.
+
+`J1` pins an `(r−g)`-tuple of rational points of `C'` and `J4` subtracts rational points, so what
+those milestones need is not a section but *points in prescribed opens*. This is
+`SeparablyClosed.exists_rationalPoint_mem` at `C_{k^s}`, stated so a consumer does not have to
+rebuild the base-change binders.
+
+It does **not** by itself produce a tuple of *distinct* points: that needs the opens to be chosen
+apart, which is the caller's business. What makes such a choice possible is recorded next. -/
+theorem exists_rationalPoint_mem_baseChangeField_separableClosure {k : Type u} [Field k]
+    (C : Over (Spec (CommRingCat.of k))) [SmoothOfRelativeDimension 1 C.hom]
+    [GeometricallyIrreducible C.hom]
+    (W : (Scheme.baseChangeField C (SeparableClosure k)).left.Opens)
+    (hW : (W : Set (Scheme.baseChangeField C (SeparableClosure k)).left).Nonempty) :
+    ∃ p : Spec (CommRingCat.of (SeparableClosure k)) ⟶
+        (Scheme.baseChangeField C (SeparableClosure k)).left,
+      p ≫ (Scheme.baseChangeField C (SeparableClosure k)).hom = 𝟙 _ ∧
+        p.base (IsLocalRing.closedPoint (SeparableClosure k)) ∈ W :=
+  SeparablyClosed.exists_rationalPoint_mem
+    (Scheme.baseChangeField C (SeparableClosure k)).hom W hW
+
+/-- **`C_{k^s}` is irreducible.** Paired with the density form above this is what lets a caller
+choose points apart: on an irreducible space any two nonempty opens meet, so removing finitely
+many closed points from `C_{k^s}` leaves a nonempty open to draw the next point from. Recorded
+because it is the missing half of `J1`'s tuple, and it is free — geometric irreducibility is
+stable under the field base change. -/
+theorem irreducibleSpace_baseChangeField_separableClosure {k : Type u} [Field k]
+    (C : Over (Spec (CommRingCat.of k))) [GeometricallyIrreducible C.hom] :
+    IrreducibleSpace (Scheme.baseChangeField C (SeparableClosure k)).left := by
+  haveI : GeometricallyIrreducible (Scheme.baseChangeField C (SeparableClosure k)).hom :=
+    MorphismProperty.pullback_snd _ _ ‹GeometricallyIrreducible C.hom›
+  exact irreducibleSpace_left_of_geometricallyIrreducible
+    (Scheme.baseChangeField C (SeparableClosure k))
+
 end AlgebraicGeometry.Scheme
 
