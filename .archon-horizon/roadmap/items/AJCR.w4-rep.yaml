@@ -14,19 +14,27 @@ summary: "*** THE COSTING, RE-RANKED 2026-07-29 (run 0082, review-ajcr). THE THR
   \ stated at a FREE `V : D.left.Opens`. At ι = PEmpty\n     the whole seam call elaborates\
   \ with `hf := fun i => PEmpty.elim i` -- no charts, no rep, no\n     IsChartUniv.\
   \ At V = bottom, injectivity is free (no nonempty test has a point of the empty\
-  \ open).\n     So `hf` at an arbitrary V carries NO CONTENT.\n (2) The seam is nonetheless\
-  \ NOT vacuous: at ι = PEmpty the sup sieve is BOTTOM, and the bottom sieve\n   \
-  \  is Zariski-covering only for an EMPTY test. So ALL the content forcing the atlas\
-  \ to be an atlas\n     sits in the LOCAL-SURJECTIVITY instance -- antecedent 2,\
-  \ not antecedent 1.\n (3) THE UNPRICED OBLIGATION, which no row owned before this\
-  \ pass: coverage\n     (chartsCoverLocally_of_pointwise, Pic0ChartCoveragePointwise.lean:128)\
-  \ must produce\n     `x : (W : Scheme) ⟶ X i`, i.e. INTO `(V i : Scheme)`. So coverage\
-  \ must hit the SAME V at which\n     `hf` was certified. chartLocus is an open of\
-  \ the TEST; V is an open of the DIVISOR SCHEME. Zero\n     files in the tree mention\
-  \ both IsChartUniv and ChartsCoverLocally. Now owned by\n     AJCR.w4-rep.datum.chart-restrict\
-  \ (ajcr-p1, I-0869/I-0872).\n\nWORSE, AND INDEPENDENTLY CONFIRMED WITH ajcr-p1:\
-  \ the only non-circular producer of `hf`,\nisChartUniv_of_isChartLocusFibre (Pic0ChartUnivReduce.lean:170),\
-  \ goes THROUGH the unrestricted\ncertificate -- its body is `isOpenImmersion_presheaf_of_chartFibrePresented`\
+  \ open).\n     So `hf` at an arbitrary V carries NO CONTENT.\n     QUALIFIED by\
+  \ ajcr-p1 (I-0890), correctly: 'free at V = bottom' is true of the INJECTIVITY clause\n\
+  \     and of exists_factor, and FALSE of the fibre DATUM -- its sq field at an empty\
+  \ test needs\n     Subsingleton (pic0Subgroup C ..) over an empty base, which is\
+  \ true, separate, and absent from the\n     tree. So the degenerate value shows\
+  \ a clause is cheap without exhibiting an inhabitant: CHEAP and\n     SATISFIABLE\
+  \ come apart, and several rows on this leaf have been priced by exactly that\n \
+  \    conflation. The ι = PEmpty conclusion below is unaffected -- it never used\
+  \ V = bottom.\n (2) The seam is nonetheless NOT vacuous: at ι = PEmpty the sup sieve\
+  \ is BOTTOM, and the bottom sieve\n     is Zariski-covering only for an EMPTY test.\
+  \ So ALL the content forcing the atlas to be an atlas\n     sits in the LOCAL-SURJECTIVITY\
+  \ instance -- antecedent 2, not antecedent 1.\n (3) THE UNPRICED OBLIGATION, which\
+  \ no row owned before this pass: coverage\n     (chartsCoverLocally_of_pointwise,\
+  \ Pic0ChartCoveragePointwise.lean:128) must produce\n     `x : (W : Scheme) ⟶ X\
+  \ i`, i.e. INTO `(V i : Scheme)`. So coverage must hit the SAME V at which\n   \
+  \  `hf` was certified. chartLocus is an open of the TEST; V is an open of the DIVISOR\
+  \ SCHEME. Zero\n     files in the tree mention both IsChartUniv and ChartsCoverLocally.\
+  \ Now owned by\n     AJCR.w4-rep.datum.chart-restrict (ajcr-p1, I-0869/I-0872).\n\
+  \nWORSE, AND INDEPENDENTLY CONFIRMED WITH ajcr-p1: the only non-circular producer\
+  \ of `hf`,\nisChartUniv_of_isChartLocusFibre (Pic0ChartUnivReduce.lean:170), goes\
+  \ THROUGH the unrestricted\ncertificate -- its body is `isOpenImmersion_presheaf_of_chartFibrePresented`\
   \ with the restriction\napplied afterwards. So IsChartLocusFibre implies IsOpenImmersion.presheaf\
   \ of the UNRESTRICTED Abel\nchart, which three headers call false (|D| is not a\
   \ point). QUALIFICATION I add: that falsity is a\nHEADER CLAIM, unproved -- isEmpty_forall_chartFibrePresented_of_not_injective\n\
@@ -168,5 +176,5 @@ metadata:
   author: horizon
   created_at: '2026-07-14T01:20:10.654781+00:00'
   parent: AJCR.jacobian
-  updated_at: '2026-07-29T11:21:26.904739+00:00'
+  updated_at: '2026-07-29T11:51:40.610786+00:00'
   milestone: AJCR.w4-rep
