@@ -78,6 +78,7 @@ set_option maxSynthPendingDepth 3
 universe u
 
 open CategoryTheory TopologicalSpace Opposite
+open scoped TensorProduct
 
 namespace AlgebraicGeometry
 
@@ -348,5 +349,209 @@ theorem nonempty_thetaTrivData_and_isEmpty_chartTyping (D : AffCoverData C R) (j
     AffAdaptation.isEmpty_chartTyping_of_straddling (π := π) D j hxj hyj hx₀ hy₁⟩
 
 end ZeroExponent
+
+/-! ## The Θ-layer, re-indexed on the chart-free datum
+
+Everything here is the corresponding declaration of `Picard/DivisorFamilyAffTheta.lean` with
+`τ : ChartTyping` replaced by `T : ThetaTrivData`, and it is a genuine re-indexing rather than
+a copy: each proof below invokes exactly one field of `T` where the chart-typed version invoked
+`relThetaResSide`/`relThetaResSide_matching` at `τ.side j`.  That correspondence is what
+`ChartTyping.thetaTrivData` makes precise — the old layer is the special case.
+
+The point of doing it here rather than editing that file: its declarations stay valid and
+consumed, and a producer may now choose either index.  `AffCoverData.thetaTrivDataZero` gives
+the widened one on every cover. -/
+
+namespace AffAdaptation
+
+variable {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
+variable (A : AffAdaptation D d) {a : ℕ} (T : ThetaTrivData (π := π) D a)
+
+/-- **The Θ-twisted right overlap arrow**, twisted by the datum's comparison unit. -/
+noncomputable def trivDeltaRight : A.chartProd →ₗ[R] A.ovlProd :=
+  LinearMap.pi (fun p : D.index × D.index =>
+    LinearMap.mulLeft R (Ideal.Quotient.mk (A.ovlIdeal p.1 p.2)
+        ((T.unit p.1 p.2 : Γ(relCurve C R, D.pieces p.1 ⊓ D.pieces p.2)ˣ) :
+          Γ(relCurve C R, D.pieces p.1 ⊓ D.pieces p.2))) ∘ₗ
+      (A.toOvlRight p.1 p.2).toLinearMap ∘ₗ LinearMap.proj p.2)
+
+/-- **The Θ-twisted glued colength module `W(d)^{Θᵃ}` over a chart-free datum.** -/
+noncomputable def trivGluedSubmodule : Submodule R A.chartProd :=
+  LinearMap.ker (A.deltaLeft - trivDeltaRight A T)
+
+lemma mem_trivGluedSubmodule_iff (s : A.chartProd) :
+    s ∈ trivGluedSubmodule A T ↔ ∀ p : D.index × D.index,
+      A.toOvlLeft p.1 p.2 (s p.1)
+        = Ideal.Quotient.mk (A.ovlIdeal p.1 p.2)
+            ((T.unit p.1 p.2 : Γ(relCurve C R, D.pieces p.1 ⊓ D.pieces p.2)ˣ) :
+              Γ(relCurve C R, D.pieces p.1 ⊓ D.pieces p.2))
+          * A.toOvlRight p.1 p.2 (s p.2) := by
+  simp only [trivGluedSubmodule, LinearMap.mem_ker, LinearMap.sub_apply, sub_eq_zero,
+    funext_iff, deltaLeft, trivDeltaRight, LinearMap.pi_apply, LinearMap.coe_comp,
+    Function.comp_apply, LinearMap.proj_apply, AlgHom.toLinearMap_apply,
+    LinearMap.mulLeft_apply]
+
+/-- The chart-free Θ-twisted glued colength module, as a type. -/
+noncomputable abbrev TrivGlued : Type u := ↥(trivGluedSubmodule A T)
+
+/-- The per-piece evaluation: the datum's reading, reduced mod `(f_j)`. -/
+noncomputable def trivPieceEval (j : D.index) :
+    relThetaSections C R π a →ₗ[R] A.colength j :=
+  (Ideal.Quotient.mkₐ R (Ideal.span {A.eqn j})).toLinearMap ∘ₗ T.read j
+
+/-- **The section evaluation into the widened chart product**, chart-free. -/
+noncomputable def trivEval : relThetaSections C R π a →ₗ[R] A.chartProd :=
+  LinearMap.pi (trivPieceEval A T)
+
+@[simp]
+lemma trivEval_apply (x : relThetaSections C R π a) (j : D.index) :
+    trivEval A T x j
+      = Ideal.Quotient.mk (Ideal.span {A.eqn j}) (T.read j x) := rfl
+
+/-- **The evaluation lands in the twisted glued module.**  Where the chart-typed proof calls
+`relThetaResSide_matching`, this calls the datum's `matching` field — the only input. -/
+theorem trivEval_mem (x : relThetaSections C R π a) :
+    trivEval A T x ∈ trivGluedSubmodule A T := by
+  rw [mem_trivGluedSubmodule_iff]
+  rintro ⟨i, j⟩
+  rw [trivEval_apply, trivEval_apply, toOvlLeft_mk, toOvlRight_mk, ← map_mul]
+  exact congrArg _ (T.matching i j x)
+
+/-- **The evaluation `H⁰(𝒪(Θᵃ)) → W(d)^{Θᵃ}` over a chart-free datum.** -/
+noncomputable def trivGluedEval :
+    relThetaSections C R π a →ₗ[R] TrivGlued A T :=
+  LinearMap.codRestrict (trivGluedSubmodule A T) (trivEval A T) (trivEval_mem A T)
+
+lemma ker_trivGluedEval_eq_ker :
+    LinearMap.ker (trivGluedEval A T) = LinearMap.ker (trivEval A T) :=
+  LinearMap.ker_codRestrict _ _ _
+
+/-! ### The kernel bridge, chart-free
+
+The one direction that needs the germ law.  Compare `ker_thetaGluedEval`
+(`Picard/DivisorFamilyAffTheta.lean:813`): there the germ of the reading IS the germ of the
+assigned chart component (the reading is a restriction), here it agrees with it up to a unit of
+the stalk — and a stalk ideal is closed under multiplication by units, so the argument is
+unchanged.  That unit is precisely the slack that buys chart-freedom. -/
+
+/-- **The germ of the reading of a killed section lies in `d`'s stalk ideal**, at a point of the
+piece, read against any pinned chart containing it.  The chart-free counterpart of
+`germ_val_mem_stalkIdeal_of_thetaEval_eq_zero`. -/
+lemma germ_read_mem_stalkIdeal_of_trivEval_eq_zero {x : relThetaSections C R π a}
+    (hker : ∀ j, trivEval A T x j = 0) (b : Bool) (j : D.index)
+    {z : relCurve C R} (hzj : z ∈ D.pieces j) (hzb : z ∈ relPinnedChart C R π b) :
+    ((relCurve C R).presheaf.germ ((⊤ : (relCurve C R).Opens) ⊓ relPinnedChart C R π b)
+        z ⟨trivial, hzb⟩).hom (relThetaResSide a b inf_le_right x) ∈ d.stalkIdeal z := by
+  obtain ⟨u, hu⟩ := T.germ_read j b z hzj hzb x
+  -- the reading's germ is in the stalk ideal: the evaluation vanishes on the piece
+  have hgermread : ((relCurve C R).presheaf.germ (D.pieces j) z hzj).hom (T.read j x)
+      ∈ d.stalkIdeal z := by
+    have hmem : T.read j x ∈ Ideal.span {A.eqn j} := by
+      have h := hker j
+      rw [trivEval_apply, Ideal.Quotient.eq_zero_iff_mem] at h
+      exact h
+    obtain ⟨c, hc⟩ := Ideal.mem_span_singleton.mp hmem
+    have hgerm := congrArg ((relCurve C R).presheaf.germ (D.pieces j) z hzj).hom hc
+    rw [map_mul] at hgerm
+    rw [← germ_eqn_span_eq_stalkIdeal A j hzj, hgerm]
+    exact Ideal.mul_mem_right _ _ (Ideal.subset_span rfl)
+  -- and the two differ by the unit `u`, which a stalk ideal absorbs
+  rw [hu] at hgermread
+  exact (Ideal.unit_mul_mem_iff_mem _ u.isUnit).mp hgermread
+
+/-- **THE KERNEL BRIDGE, CHART-FREE**: the kernel of the chart-free Θ-twisted evaluation is the
+cover-independent vanishing submodule of the family — the same right-hand side as the
+chart-typed `ker_thetaGluedEval` and as `AffAdaptation.ker_thetaGluedEval`, so all three kernels
+are the *same submodule* of `relThetaSections C R π a`.
+
+This is what makes the new index usable rather than merely inhabited: `divisorWindow` is a
+`Submodule.comap` of exactly this submodule, so `windowCarve`/`ker_windowCarve` transport
+verbatim (below).
+
+The forward direction picks a piece out of the JOINT cover (`AffCoverData.exists_mem_pieces`,
+obligation `I-0492` 4(ii)); the reverse direction needs the germ law's unit in the other
+direction, which is the same absorption. -/
+theorem ker_trivGluedEval :
+    LinearMap.ker (trivGluedEval A T)
+      = d.vanishingSubmodule R (relCover C R (fiberTwoCover π)).V₀
+          (relCover C R (fiberTwoCover π)).V₁ (relThetaCocycle C R π a) := by
+  rw [ker_trivGluedEval_eq_ker]
+  ext x
+  rw [LinearMap.mem_ker, Scheme.LocalEquations.mem_vanishingSubmodule_iff, funext_iff]
+  constructor
+  · intro hker
+    refine ⟨fun z hz => ?_, fun z hz => ?_⟩
+    · obtain ⟨j, hj⟩ := D.exists_mem_pieces z
+      have h := germ_read_mem_stalkIdeal_of_trivEval_eq_zero A T hker false j hj hz.2
+      simpa using h
+    · obtain ⟨j, hj⟩ := D.exists_mem_pieces z
+      have h := germ_read_mem_stalkIdeal_of_trivEval_eq_zero A T hker true j hj hz.2
+      simpa using h
+  · intro h j
+    rw [trivEval_apply, Pi.zero_apply, Ideal.Quotient.eq_zero_iff_mem]
+    refine Scheme.mem_span_singleton_of_forall_germ
+      (fun z hz => A.eqn_regular j z hz) (fun z hz => ?_)
+    rw [germ_eqn_span_eq_stalkIdeal A j hz]
+    -- the point lies in SOME pinned chart, and the germ law compares the reading there
+    have hzc : ∃ b : Bool, z ∈ relPinnedChart C R π b := by
+      have hz' : z ∈ (relCover C R (fiberTwoCover π)).V₀
+          ⊔ (relCover C R (fiberTwoCover π)).V₁ := by
+        rw [relCover_sup]; trivial
+      rcases Opens.mem_sup.mp hz' with hb | hb
+      · exact ⟨false, hb⟩
+      · exact ⟨true, hb⟩
+    obtain ⟨b, hzb⟩ := hzc
+    obtain ⟨u, hu⟩ := T.germ_read j b z hz hzb x
+    rw [hu]
+    exact Ideal.mul_mem_left _ _
+      (germ_val_mem_stalkIdeal_of_forall_side a x h b ⟨trivial, hzb⟩)
+
+/-! ### The window carve, chart-free
+
+`divisorWindow` is a `Submodule.comap` of the vanishing submodule and mentions no cover, so once
+`ker_trivGluedEval` identifies the kernel these are `LinearMap.ker_comp` and nothing else — the
+same three lines as the chart-typed versions (`Picard/DivisorFamilyAffTheta.lean:899`), now on an
+index every widened cover inhabits at `a = 0`. -/
+
+section WindowCarve
+
+noncomputable local instance instOverCleftTrivWindow :
+    C.left.Over (Spec (.of k)) := ⟨C.hom⟩
+
+variable [SmoothOfRelativeDimension 1 (C.left ↘ Spec (.of k))] [IsIntegral C.left]
+  [LocallyOfFiniteType (C.left ↘ Spec (.of k))] [QuasiCompact (C.left ↘ Spec (.of k))]
+  [IsDominant π]
+
+variable (hH1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1)
+
+/-- **The chart-free window carve arrow** `R ⊗[k] H_a → W(d)^{Θᵃ}`. -/
+noncomputable def trivWindowCarve :
+    R ⊗[k] ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤) →ₗ[R] TrivGlued A T :=
+  trivGluedEval A T ∘ₗ (relThetaWindowEquiv C R π a hH1).toLinearMap
+
+/-- **The face, plugged in on the chart-free index**: the kernel of the carve arrow is the window
+submodule `K_a(d)`. -/
+theorem ker_trivWindowCarve :
+    LinearMap.ker (trivWindowCarve A T hH1) = divisorWindow d hH1 := by
+  rw [trivWindowCarve, LinearMap.ker_comp, ker_trivGluedEval, divisorWindow]
+
+lemma trivWindowCarve_surjective (hsurj : Function.Surjective (trivGluedEval A T)) :
+    Function.Surjective (trivWindowCarve A T hH1) := by
+  rw [trivWindowCarve, LinearMap.coe_comp]
+  exact hsurj.comp (relThetaWindowEquiv C R π a hH1).surjective
+
+/-- **The chart-free corank identification**, conditional on the right-exactness heart exactly as
+the chart-typed one is: `(R ⊗[k] H_a) ⧸ K_a(d) ≃ W(d)^{Θᵃ}`.  Surjectivity of the widened
+evaluation is NOT proved here and remains the lane's open cohomological input. -/
+noncomputable def trivWindowQuotEquiv (hsurj : Function.Surjective (trivGluedEval A T)) :
+    ((R ⊗[k] ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤)) ⧸
+        divisorWindow d hH1) ≃ₗ[R] TrivGlued A T :=
+  (Submodule.quotEquivOfEq _ _ (ker_trivWindowCarve A T hH1).symm).trans
+    ((trivWindowCarve A T hH1).quotKerEquivOfSurjective
+      (trivWindowCarve_surjective A T hH1 hsurj))
+
+end WindowCarve
+
+end AffAdaptation
 
 end AlgebraicGeometry
