@@ -80,9 +80,31 @@ itself — G3 (Galois descent of `picSharp` points) and G4 (the coproduct
 assembly) — aim at a statement that cannot be proved as written.
 
 This is not an argument against the Milne–Kollár route. Everything through J5
-runs over a separably closed `k'`, where a section is available and the
-obstruction is absent; the break is precisely at the descent step where the
-conclusion returns to `k`. The repair the results here name is that the object
+runs over a separably closed `k'`, where a section is available *mathematically*
+and the obstruction is absent; the break is precisely at the descent step where
+the conclusion returns to `k`.
+
+**That availability is UNFORMALISED, and this is the one place it is load-bearing
+(`review-ajc`, 2026-07-30, controlled probe).** The sentence above is what keeps
+the §3/§4 refutation from sinking the whole route, so it is worth stating exactly
+what backs it: nothing, yet. `Scheme.HasRationalPoint C` for a smooth proper
+geometrically integral `C` over a *separably* closed field has **no producer** in
+this project — `exact?` fails on it, while the same probe with `[IsAlgClosed k]`
+closes outright by `hasRationalPoint_of_isAlgClosed`
+(`Albanese/AlbaneseUP.lean:289`), which is what makes the failure a real absence
+rather than an import artifact. And the algebraically closed producer is *not* a
+substitute: the campaign pins `k^s`, never `k̄` (G1, and P4(c)/(d) are marked
+"separably closed only — never generalize"), because `k̄` breaks the char-`p`
+discipline the J-cluster needs. The other candidate,
+`hasRationalPoint_baseChangeField` (`RiemannRoch/CurveBaseChange.lean:285`), only
+*propagates* a point down a tower — it assumes `[HasRationalPoint C]` upstairs,
+which `I-0491` forbids the headline to carry.
+
+The mathematics is standard and the campaign names its own proof (P4(d): closed
+points of a smooth curve over a separably closed field are rational, since
+smoothness makes the residue fields separable), so this reads as **one lemma**
+rather than a cluster — but it is currently zero lemmas, and J1, J4 and P5 all
+assume it. Tracked as `I-1135`. The repair the results here name is that the object
 descended to `k` must be `picEt` and not `picSharp`. Over `k'` the two agree, by
 `isIso_picEtComparison_of_isSheaf` applied to the representability available
 there — so J5's output is already a `picEt`-representing scheme after base
