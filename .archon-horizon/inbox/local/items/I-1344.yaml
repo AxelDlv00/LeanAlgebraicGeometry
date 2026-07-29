@@ -1,0 +1,69 @@
+id: I-1344
+provider: local
+kind: info
+body: 'RELEASE ajcr-p2 (run 0088 r5): AJCR.w4-rep.datum.dat-b.cover-threshold -- ADVANCED,
+  no antecedent closed. Owner cleared, pending, pinned 65d8e29aea. Verified at HEAD
+  with git show, not in the worktree.
+
+
+  DO NOT REDO -- Picard/Pic0ChartCoverageThreshold.lean, rooted, 6 decls, 0 sorries.
+  ROOT build EXIT=0 (9323 jobs, zero errors), my module at [9320/9323]. All six axiom-clean
+  [propext, Classical.choice, Quot.sound] vs TWO controls firing sorryAx (a fresh
+  in-probe sorry AND AlgebraicGeometry.Jacobian, so it discriminates on new terms
+  not stale oleans). Every authored path sha256 HEAD == disk at session end. Commits
+  a14a32a601 / 2e26acd32a / 042e9e1154 / 5f7144765f / a99e9a8893 / 65d8e29aea.
+
+
+  THE FINDING (I-1329; lesson I-1341). Three sites price B-5 step 3''s residue as
+  ''reconcile the chart parameter with the threshold'', treating DAT-0a''s bound at
+  the splitting field as per-fibre and unobtainable. HALF RIGHT: DAT-0a is not instantiable
+  at L -- it binds pi : Y -> P1 with [IsFinite] [IsDominant] and NO relCurve C L ->
+  P1 L exists in this tree. HALF WRONG: the threshold does not need DAT-0a. subsingleton_hModule_one_of_witness
+  (WindowFieldTransport.lean:87) is the PI-FREE peeling, windowN C L hpi g is a witness
+  at every L, and windowM_choice / windowdelta are BASE-field constants -- so M*delta
+  + g does not mention L. ONE threshold for all fibres. Zero prior occurrences of
+  windowN or that peeling in any Pic0Chart* file.
+
+
+  FEED THESE: subsingleton_h1_of_ledger_bound; exists_uniform_bound_forall_baseChange
+  (exists-b with the quantifier OUTSIDE the field); mem_chartLocus_of_ledgerIndex
+  (locus membership with BOTH numeric hypotheses of mem_chartLocus_of_vanishing_bound
+  discharged -- hb by the threshold, hdeg by classDeg_presenting_twist from the index
+  constraint alone).
+
+
+  NOT CLOSED, plainly: antecedent 2 untouched -- chartsCoverLocally_of_pointwise also
+  needs a chart POINT over a neighbourhood, the spreading-out Pic0ChartCoverageSlice
+  records absent for this carrier. hb_forces_h0_eq_one stands; M*delta + g exceeds
+  g, no route to b = g.
+
+
+  THE LIMIT, PROVED not hedged: genus_eq_zero_of_ledgerParam_eq_genus -- M*delta +
+  g = g forces g = 0. At positive genus the parameter coverage reaches and the one
+  divRep supplies rep at DIFFER. The replacement residue is PARAMETER MATCHING: two
+  named numbers, not a reconciliation, but not nothing.
+
+
+  Both old-price sites corrected in-tree (65d8e29aea), true half kept. My audit was
+  dispatched and had not reported when I stopped -- treat the docstring absence-claims
+  as author-measured, NOT independently verified.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T23:16:57.074942+00:00'
+updated_at: '2026-07-29T23:16:57.074954+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0010-horizon-ajcr-p2
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

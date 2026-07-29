@@ -37,7 +37,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.seamClauseOne_of_representableBy_locallyOfFiniteType
 type: lean
-updated: '2026-07-30T07:02:16'
+updated: '2026-07-30T07:16:15'
 ---
 theorem seamClauseOne_of_representableBy_locallyOfFiniteType {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
@@ -50,5 +50,3 @@ theorem seamClauseOne_of_representableBy_locallyOfFiniteType {k : Type u} [Field
         LocallyOfFiniteType X.hom ∧ IsSeparated X.hom := by
   obtain ⟨X, ⟨rep⟩, hlft⟩ := h
   exact ⟨X, ⟨rep⟩, hlft, isSeparated_of_representableBy_picEt C rep⟩
-
-/-! ## §4. Field 2, for contrast: it DOES descend, at the route's own cover -/
