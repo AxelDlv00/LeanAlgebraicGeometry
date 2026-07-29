@@ -561,7 +561,37 @@ Jacobian headline as resting on *six* open obligations where the mathematics has
 five. The bundling adds no strength — clause (2) is conditional on a section, so
 it says nothing about a pointless curve — and it keeps the frontier count honest
 in both directions. `scripts/axiom-frontier.lean` measures the result rather
-than asserting it. -/
+than asserting it.
+
+**"Adds no strength" is now MEASURED, and the measurement is sharper than the
+claim** (`review-ajc`, 2026-07-30; `lake env lean` EXIT=0 in a scratch file,
+since deleted). Both conjuncts of this theorem follow, *together*, from the
+single hypothesis
+
+  `∃ X, Nonempty ((PicScheme.picSharp C).RepresentableBy X) ∧`
+  `      LocallyOfFiniteType X.hom ∧ IsSeparated X.hom`
+
+— i.e. from the `picSharp`-shaped endpoint that the Milne–Kollár campaign's ten
+modules are built to produce, with **nothing left over**. Clause (1) is
+`hasPicSchemeEt_of_picSharp_representability` and clause (2) is
+`isIso_picEtComparison_of_picSharp_representability` (both
+`Picard/PicEtSubcanonical.lean`), the second discarding the section it is handed.
+Axiom-clean `[propext, Classical.choice, Quot.sound]`, against a control — the
+same conclusion *without* the hypothesis, i.e. this theorem — that correctly
+reports `sorryAx`. The two halves existed separately; what had not been measured
+is that their conjunction is exactly this statement, so no reader had to take
+"adds no strength" on trust.
+
+**What this does NOT mean, since it is the natural misreading.** It does not
+bring the seam closer. The hypothesis is the campaign's *undischarged output*,
+and over an arbitrary `k` it is FALSE, not merely unproved:
+`PicScheme.not_exists_representing_picSharp_of_not_isIso`
+(`Picard/PicEtSubcanonical.lean`) plus Kleiman's pointless real conic refutes it.
+So the correct reading is about *shape*, not distance: whatever the campaign
+delivers must be delivered over a field where `picSharp` is representable (a
+separably closed one, or under a section), and the descent to `k` must carry
+`picEt` points — and if it does deliver that, this bundled statement is fully
+discharged, with clause (2) costing zero extra work. -/
 theorem fgaPicardRepresentability {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
