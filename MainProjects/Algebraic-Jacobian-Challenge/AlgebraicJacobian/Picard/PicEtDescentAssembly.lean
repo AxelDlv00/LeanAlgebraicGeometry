@@ -45,9 +45,9 @@ the single morphism `T ×_k k' ⟶ T` is *injective* on `picEt`-classes, for eve
 
 **Proved, `sorry`-free** (§3): the transport that makes the `k'`-side hypothesis
 statable in the right variables (`representableByRestrict_of_baseChange`, free from
-input 2), and — sharper than §2 —
-`existsUnique_amalgamation_picEt_fieldCover`: a *compatible family* on the cover
-has a **unique** amalgamation, so the class-level descent is complete, both halves.
+input 2). The other half of the class-level descent — a compatible family has a
+unique amalgamation — is `Scheme.isSheafFor_picEt_pullback_presieve`
+(`Picard/EtaleFieldCover.lean`), cited in §3 rather than restated.
 
 **Not proved, and named rather than hidden** (§4): `G1` invariance — producing the
 compatible family from a Galois-invariant `k'`-class — and then the `G2` quotient
@@ -170,10 +170,11 @@ obvious refutation of this lemma ("the sheaf axiom gives injectivity directly, s
 the hand proof is redundant"), so it was probed rather than argued. Two routes,
 both `EXIT=1`:
 
-* deriving it from `existsUnique_amalgamation_picEt_fieldCover` below requires
-  exhibiting a `Presieve.FamilyOfElements` on the *whole* sieve for which both
-  classes are amalgamations, and constructing that family needs a value at every
-  sieve arrow — i.e. the same factorisation, relocated;
+* deriving it from the amalgamation statement
+  (`Scheme.isSheafFor_picEt_pullback_presieve`) requires exhibiting a
+  `Presieve.FamilyOfElements` on the *whole* sieve for which both classes are
+  amalgamations, and constructing that family needs a value at every sieve arrow —
+  i.e. the same factorisation, relocated;
 * discharging the sieve-indexed goal from the single-morphism hypothesis with no
   factorisation work fails: `exact h`, `simpa using h`, `congrArg _ h` and `aesop`
   all leave the goal open (`aesop` reports exhaustive search).
@@ -240,45 +241,35 @@ noncomputable def representableByRestrict_of_baseChange
     ((restrictTest k k').op ⋙ picEt C).RepresentableBy X' :=
   rep.ofIso (picEt_crossBaseIso C k')
 
-/-- **THE CLASS-LEVEL DESCENT IS COMPLETE AND FREE — both halves, not one.**
+/-! ### The other half — free, and already in the tree
 
-A *compatible family* of `picEt C`-classes on the field-extension cover of a
-`k`-test `T` has a **unique** amalgamation. So descent of classes along the cover
-is settled outright: nothing about it is owed.
+A *compatible family* of `picEt C`-classes on this cover has a **unique**
+amalgamation, so descent of classes along the cover is settled outright and nothing
+about it is owed. That is
+`AlgebraicGeometry.Scheme.isSheafFor_picEt_pullback_presieve`
+(`Picard/EtaleFieldCover.lean`), and it is cited rather than restated here.
 
-**This corrects this file's own first attempt.** An earlier revision added a
-`picEtRestrictEquiv_of_surjective` — restriction is a bijection *as soon as it is
-surjective* — and described surjectivity as "the sharp remaining class-level
-statement". That is too pessimistic, and it is the same
-already-in-the-tree error `Picard/EtaleFieldCover.lean` records at its own
-section 4: the amalgamation property of `picEt` is free at **every** covering
-sieve, `⊤` included, because it is `PicSharp.etaleSheaf`'s own `Sheaf.cond` pushed
-through the forgetful functor. Applied at *this* sieve — whose membership witness
-is what `EtaleFieldCover` contributes — it gives existence as well as uniqueness.
+**An earlier revision of this file restated it** as an
+`existsUnique_amalgamation_picEt_fieldCover`, describing the restatement's value as
+"the pricing consequence". A fresh-context audit measured the two `rfl`-equal —
+*proposition and term* — and pointed at `EtaleFieldCover.lean`'s own `:289`/`:294`,
+which already say "unique amalgamation" and "every covering sieve, `⊤` included,
+free from sheafification" (`I-1312`). So the pricing fact was in the tree as prose
+and the declaration added nothing; it is deleted rather than kept with a caveat, per
+`I-1284`. The same audit deleted a second self-downgraded lemma from this file.
 
-So the residue of the descent step is **not** in the sheaf theory at all. It is in
-the two places this file cannot reach:
+**The pricing fact itself stands**, and it is what a lane needs: the residue of the
+descent step is **not** in the sheaf theory. It is in two places this file does not
+reach —
 
-1. producing the *compatible family* from a Galois-invariant `k'`-class, which is
-   the Hilbert-90/invariance content of campaign `G1`; and
-2. the **scheme-level** quotient — turning the descended classes into a `k`-scheme
-   representing `picEt C` — which is campaign `G2` and is gated on
+1. producing the *compatible family* from a Galois-**invariant** `k'`-class, the
+   Hilbert-90/invariance content of campaign `G1`, where the group action enters; and
+2. the **scheme-level** quotient — turning descended classes into a `k`-scheme
+   representing `picEt C` — campaign `G2`, gated on
    `AlgebraicJacobian.GaloisDescent.HasGaloisQuotient`.
 
-A lane pricing the descent step should budget those two and *nothing* for the
-sheaf-theoretic halves. -/
-theorem existsUnique_amalgamation_picEt_fieldCover
-    [FiniteDimensional k k'] [Algebra.IsSeparable k k']
-    (C : Over (Spec (CommRingCat.of k)))
-    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
-    (T : Over (Spec (CommRingCat.of k)))
-    (x : Presieve.FamilyOfElements (picEt C)
-      (((Sieve.overEquiv T).symm
-        (Sieve.generate (Presieve.singleton
-          (pullback.fst T.hom (specMapAlgebra k k'))))) : Presieve T))
-    (hx : x.Compatible) :
-    ∃! t : (picEt C).obj (Opposite.op T), x.IsAmalgamation t :=
-  AlgebraicGeometry.Scheme.isSheafFor_picEt_pullback_presieve k' C T x hx
+Budget those two and *nothing* for the sheaf-theoretic halves.
+-/
 
 
 /-! ## §4. What still stands between this and the seam's clause (1)
