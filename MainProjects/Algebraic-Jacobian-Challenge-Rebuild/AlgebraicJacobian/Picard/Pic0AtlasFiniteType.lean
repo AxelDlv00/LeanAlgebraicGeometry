@@ -60,8 +60,9 @@ chart parameter, and no dependence on the open `V i`.
   locally of finite type over the base field, which is the `JacobianData` field itself.
 * `AlgebraicGeometry.jacobianDataOfMixedParamCharts` — **the assembly**: the mixed-parameter
   atlas plus `hf`, local surjectivity, per-index `LocallyOfFiniteType (D i).hom` and
-  quasi-compactness of the glued object produce `JacobianData C`.  Recorded so that the
-  remaining obligations are visible in one signature.
+  quasi-compactness of the glued object produce `JacobianData C`.  Landed so that the obligations
+  that remain are visible in **one signature** rather than spread over four files: everything in
+  it other than `hf`, the local-surjectivity instance and `rep` is now discharged.
 
 ## What this does NOT do, stated plainly
 
@@ -140,6 +141,87 @@ theorem locallyOfFiniteType_chartHom_mixedParamChart {ι : Type u} (nn : ι → 
   rw [chartHom_mixedParamChart]
   haveI := hD i
   infer_instance
+
+/-! ## The glued object, and the assembly to the north star's datum -/
+
+variable (C π) in
+/-- **The glued object of the real atlas is locally of finite type over the base field** — the
+`JacobianData.locallyOfFiniteType` field itself, from a property of the divisor schemes.
+
+`locallyOfFiniteType_gluedHom` descends the certificate from the charts (the property is local on
+the source and the glue maps cover), and the previous theorem supplies the charts.  Note that no
+finiteness of the index type is used anywhere on this route: the certificate descends to an
+infinite atlas exactly as it does to a finite one, which matters because the classical atlas is
+indexed by divisor classes. -/
+theorem locallyOfFiniteType_gluedHom_mixedParamChart {ι : Type u} (nn : ι → ℕ)
+    (D : ι → Over (Spec (.of k)))
+    (rep : ∀ i, (divFunctor C π (nn i)).RepresentableBy (D i))
+    (m : ι → ℕ) (Z : ι → (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : ∀ i, Scheme.CurveDivisor.deg k (Z i)
+      = (m i : ℤ) * classDeg k (thetaCechClass C) - (nn i : ℤ))
+    (V : ∀ i, (D i).left.Opens)
+    (hf : ∀ i, IsOpenImmersion.presheaf (mixedParamChart C π nn D rep m Z hdeg V i))
+    [Presheaf.IsLocallySurjective Scheme.zariskiTopology
+      (Sigma.desc (mixedParamChart C π nn D rep m Z hdeg V))]
+    (hD : ∀ i, LocallyOfFiniteType (D i).hom) :
+    LocallyOfFiniteType (gluedHom C (mixedParamChart C π nn D rep m Z hdeg V) hf) :=
+  locallyOfFiniteType_gluedHom C _ hf
+    (locallyOfFiniteType_chartHom_mixedParamChart C π nn D rep m Z hdeg V hD)
+
+variable (C π) in
+/-- **THE ASSEMBLY: the real atlas produces the north star's datum.**
+
+Every obligation of `JacobianData C` at the mixed-parameter restricted atlas, in one signature.
+Read it as the corrected antecedent list of the *goal*:
+
+* `rep` — a representation of the divisor functor at each parameter.  **Open** (another lane's
+  target; `Pic0AtlasFromDivRep.lean` takes it as a hypothesis and constructs no representation);
+* `hf` — the per-index chart certificate, i.e. `IsChartUniv`.  **Open**;
+* the `Presheaf.IsLocallySurjective` instance — DAT-B coverage.  **Open**;
+* `hD` — `LocallyOfFiniteType (D i).hom`.  **Discharged as an antecedent of the assembly** by the
+  theorem above: it no longer has to be proved *about the charts*, only about the divisor schemes,
+  where it is a standard finite-type statement carrying no Picard content;
+* `hcpt` — `CompactSpace` of the glued object.  **Open, and genuinely a-posteriori**: for the
+  class-indexed atlas this is a theorem about the Jacobian (`JacobianDataCharts.lean` says so),
+  and `JacobianData.ofChartsOfAbelImage` supplies it from a surjective Abel map.
+
+So this declaration is an *implication*, not a witness: it produces no `JacobianData` at any curve
+until the four open inputs above are produced.  Its value is that the fourth antecedent is no
+longer among them, and that the list is now checkable in one place instead of being distributed
+over `JacobianDataCharts`, `Pic0ChartPair`, `Pic0AtlasFromDivRep` and
+`Pic0ChartAtlasParamFree`. -/
+def jacobianDataOfMixedParamCharts {ι : Type u} (nn : ι → ℕ)
+    (D : ι → Over (Spec (.of k)))
+    (rep : ∀ i, (divFunctor C π (nn i)).RepresentableBy (D i))
+    (m : ι → ℕ) (Z : ι → (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : ∀ i, Scheme.CurveDivisor.deg k (Z i)
+      = (m i : ℤ) * classDeg k (thetaCechClass C) - (nn i : ℤ))
+    (V : ∀ i, (D i).left.Opens)
+    (hf : ∀ i, IsOpenImmersion.presheaf (mixedParamChart C π nn D rep m Z hdeg V i))
+    [Presheaf.IsLocallySurjective Scheme.zariskiTopology
+      (Sigma.desc (mixedParamChart C π nn D rep m Z hdeg V))]
+    (hD : ∀ i, LocallyOfFiniteType (D i).hom)
+    (hcpt : CompactSpace (Scheme.LocalRepresentability.glueData hf).glued) :
+    JacobianData C :=
+  JacobianData.ofChartsOfCompactSpace C _ hf
+    (locallyOfFiniteType_chartHom_mixedParamChart C π nn D rep m Z hdeg V hD) hcpt
+
+@[simp]
+lemma jacobianDataOfMixedParamCharts_J {ι : Type u} (nn : ι → ℕ)
+    (D : ι → Over (Spec (.of k)))
+    (rep : ∀ i, (divFunctor C π (nn i)).RepresentableBy (D i))
+    (m : ι → ℕ) (Z : ι → (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : ∀ i, Scheme.CurveDivisor.deg k (Z i)
+      = (m i : ℤ) * classDeg k (thetaCechClass C) - (nn i : ℤ))
+    (V : ∀ i, (D i).left.Opens)
+    (hf : ∀ i, IsOpenImmersion.presheaf (mixedParamChart C π nn D rep m Z hdeg V i))
+    [Presheaf.IsLocallySurjective Scheme.zariskiTopology
+      (Sigma.desc (mixedParamChart C π nn D rep m Z hdeg V))]
+    (hD : ∀ i, LocallyOfFiniteType (D i).hom)
+    (hcpt : CompactSpace (Scheme.LocalRepresentability.glueData hf).glued) :
+    (jacobianDataOfMixedParamCharts C π nn D rep m Z hdeg V hf hD hcpt).J
+      = gluedOfCharts C (mixedParamChart C π nn D rep m Z hdeg V) hf :=
+  rfl
 
 end
 
