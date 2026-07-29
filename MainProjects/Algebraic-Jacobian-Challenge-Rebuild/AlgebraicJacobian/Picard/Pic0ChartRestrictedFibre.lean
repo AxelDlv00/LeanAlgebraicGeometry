@@ -76,29 +76,28 @@ chart — and the assembly that consumes both.  Nothing here re-proves either si
 * **Nothing here produces any input.**  This file replaces a badly-gated route by a
   well-gated one; it discharges no antecedent.  `rep` (divisor representability) is a hypothesis
   throughout, and `IsChartUniv` is not even statable without it.
-* **`RestrictedChartFibre` at `V = ⊥` is expected to be cheap, and that is NOT verified here.**
-  The injectivity content plainly degenerates at `V = ⊥` (no nonempty test has a point of the
-  empty open subscheme — the shape `I-0861` measured for `hf`), so this class is *not* a
-  self-standing certificate of anything: it carries content only against a coverage hypothesis
-  reaching the same `V`, which is why the assembly takes both and why they are not offered
-  separately.  But an inhabitant at `V = ⊥` was **attempted and not obtained** in this session,
-  and the obstruction is informative rather than tactical.  Taking `W := ⊥` reduces `exists_factor`
-  to nothing (a `v : S ⟶ ↥⊥` forces `S` empty, hence initial) — that part is free, and is the part
-  `I-0861` measured.  The `sq` field is *not*: after `ext S x` it asks for two values of
-  `pic0SigmaFunctor C` at an **empty** test to agree, and that needs
-  `Subsingleton ((pic0SigmaSheaf C).1.obj (op S))` for empty `S`, which is *not* an available
-  instance.  Measured: the Σ-component of such an element is unique by initiality of `S`, so
-  `congr 1` reduces the goal exactly to
-  `(a b : (pic0TypeFunctor C).obj (op (Over.mk a₁))) → a = b` — i.e.
-  `Subsingleton (pic0Subgroup C (Over.mk a₁))` over an empty base.  That is the triviality of
-  `picEt` over the empty scheme: true, a genuinely separate lemma, and absent from the tree.
-* **Consequence, and it is the sharp form:** `I-0861`'s "`hf` at `V = ⊥` is free" is correct for
-  the *injectivity* clause and does **not** extend to the whole fibre datum.  So *no
-  satisfiability witness for `RestrictedChartFibre` exists in the tree at any `V`*, and until one
-  does this class carries the same unmeasured-inhabitation risk that `ChartTyping` (`I-0779`) and
-  `IsChartLocusFibre` did.  A lane picking this row up should produce that witness first, via the
-  empty-test subsingleton above: it is the cheapest measurement here and it decides whether the
-  repair is real.
+* **`RestrictedChartFibre` at `V = ⊥` IS inhabited — settled in
+  `Picard/Pic0ChartRestrictedFibreSat.lean`, and an earlier draft of this section priced it
+  wrongly.**  That draft said the `sq` field needs
+  `Subsingleton (pic0Subgroup C (Over.mk a₁))` over an empty base, "the triviality of `picEt`
+  over the empty scheme: true, a genuinely separate lemma, and absent from the tree", and
+  concluded that *no satisfiability witness exists at any `V`*.  **Both the pricing and the
+  conclusion were false.**  The error was in the reduction, not the census: the `congr 1` that
+  peeled the Σ-component and named `pic0Subgroup` threw away the fact that `pic0SigmaSheaf` is a
+  **sheaf**, and a sheaf's value at a scheme covered by the empty sieve is terminal.  So the goal
+  is closed by `Sheaf.isTerminalOfBotCover` applied to `Scheme.bot_mem_grothendieckTopology`
+  (both mathlib) with no fact about `picEt` at all — `restrictedChartFibre_bot`.  The
+  `exists_factor` half is free as `I-0861` measured; `sq` is free for a different and cheaper
+  reason than that draft supposed.
+* **Consequence, and it is the sharp form:** the class is non-empty, so the repaired route is not
+  a route to an uninhabitable hypothesis, and the unmeasured-inhabitation risk that `ChartTyping`
+  (`I-0779`) and `IsChartLocusFibre` carried does **not** apply here.  What that inhabitant also
+  shows is that `IsChartUniv` at `V = ⊥` is free (`isChartUniv_bot`) — antecedent 1 carries no
+  content in isolation.  That is not a vacuity of the assembly below, because the coverage clause
+  is *refuted* at the same value (`not_coverageContainment_bot`): `⊥` is precisely where `hf` is
+  free and coverage is impossible.  Those two together are the non-vacuity check for the
+  `V`-coupled assembly, and they are what `necessity_of_restrictedChartFibre` was wrongly claimed
+  to be.  The obligation is the *coupling*, not either side.
 * **The relation to the old form IS measured, and an earlier draft mispriced it.**  That draft
   said the transport `IsChartLocusFibre → RestrictedChartFibre` "needs the preimage `r ⁻¹ V`
   pushed forward along `W.ι`, which is real work and buys nothing".  Both halves were wrong
@@ -169,6 +168,11 @@ no hypothesis at all (a test point of the empty open forces the test empty, henc
 at general `V` it is `injective_of_isChartUniv` (`Pic0ChartUnivReduce.lean:205`) composed with
 `isChartUniv_of_restrictedChartFibre`, i.e. a property of *any* hypothesis implying `IsChartUniv`,
 not evidence about this one.
+
+The real non-vacuity statement for the assembly is the pair `isChartUniv_bot` /
+`not_coverageContainment_bot` in `Picard/Pic0ChartRestrictedFibreSat.lean`: `⊥` is where this
+side is free and the coverage side is impossible, so the two hypotheses cannot both be met at a
+convenient `V`.
 
 Kept because it is the right thing to cite when asking what a producer of the datum must
 establish — the relative form of DAT-C GAP-2, over `V` rather than over `D.left`. -/
