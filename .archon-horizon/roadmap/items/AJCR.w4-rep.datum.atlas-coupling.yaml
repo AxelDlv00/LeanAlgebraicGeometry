@@ -1,10 +1,46 @@
 id: AJCR.w4-rep.datum.atlas-coupling
-title: 'Atlas-coupling: the coverage witness must land in the SAME V the hf certificate
-  is at (was owned by no row)'
+title: 'Atlas-coupling: the coverage witness must land in a V CONTAINED IN the one
+  hf is certified at -- and the nesting buys nothing'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: ''
-status: active
+summary: "ATLAS-COUPLING: the V-quantifier of the seam, MEASURED. ADVANCED, NO GATE\
+  \ CLOSED (ajcr-p1, run 0087 r2).\n\nTHE ROW TITLE WAS WRONG IN THE LETTER, RIGHT\
+  \ IN THE SUBSTANCE. It said coverage must land in the SAME V as hf. Correct statement:\
+  \ NESTED opens Vc <= Vf suffice (pic0RepresentableBy_of_nested) -- and that generalisation\
+  \ is EQUIVALENT to the shared-V form (nested_iff_shared), so the nesting is not\
+  \ freedom.\n\nLANDED, Picard/Pic0ChartVMonotone.lean, rooted at AlgebraicJacobian.lean:575,\
+  \ sorry-free, lake build EXIT=0 (8894 jobs), ALL 13 declarations axiom-clean [propext,\
+  \ Classical.choice, Quot.sound] vs a control firing sorryAx:\n * isChartUniv_antitone\
+  \ -- antecedent 1 is ANTITONE in V. So isChartUniv_bot is free because bot is the\
+  \ EASIEST value, not because of the empty scheme: the Sat.lean endpoint becomes\
+  \ structural.\n * isLocallySurjective_sigmaDesc_mono -- antecedent 2 is MONOTONE,\
+  \ at the level of the INSTANCE the seam consumes, not the hcov spelling. The coproduct\
+  \ step is sigmaDesc_restrictChart_le + mathlib isLocallySurjective_of_isLocallySurjective.\n\
+  \ * isLocallySurjective_unrestricted -- antecedent 2 at ANY V implies UNRESTRICTED\
+  \ coverage. So the restriction relieves antecedent 1 (bot is free) and antecedent\
+  \ 2 by NOTHING: a coverage lane cannot buy relief by restricting, whichever open\
+  \ it names. CHEAP, one rfl plus one mathlib lemma -- I first called this the file\
+  \ substantive content and that was wrong (I-1117).\n * isLocallySurjective_of_bot\
+  \ -- CLOSES the loophole Sat.lean:93-98 left open, from the other side: inhabiting\
+  \ the instance binder at bot yields unrestricted coverage. Not a cheap route.\n\
+  \ * coverage_instance_of_nested -- the UPWARD collapse. Needs no antitonicity, so\
+  \ it composes with RestrictedChartFibre at Vf DIRECTLY and recovers the NAMED representing\
+  \ object rather than a Sigma.\n\nTWO REASONS OF MINE, RETRACTED at their sites after\
+  \ a fresh-context audit:\n (1) I-1117: iso-ness of Scheme.topIso is NEVER USED anywhere\
+  \ in the file; and only one implication is proved, not an equivalence.\n (2) I-1119:\
+  \ opposite monotonicities do NOT squeeze the pair. EITHER monotonicity alone gives\
+  \ the collapse. True form: a nesting generalisation buys nothing as soon as ONE\
+  \ hypothesis is monotone in the direction the nesting relaxes.\n\nLEVEL CAVEAT,\
+  \ and it decides what nested_iff_shared retires: it is stated at IsOpenImmersion.presheaf\
+  \ for an ARBITRARY chart family, while the assembly consumes RestrictedChartFibre\
+  \ at the ABEL family. Monotonicity of RestrictedChartFibre ITSELF is proved NOWHERE\
+  \ in the tree -- only its IsChartUniv consequence. The assembly-level collapse runs\
+  \ through coverage_instance_of_nested instead.\n\nNOT CLOSED. rep has no producer,\
+  \ so IsChartUniv is not statable without it; no chart is built at any V but bot;\
+  \ and INHABITATION OF THE PAIR (huniv V, hcov V) IS UNMEASURED AT EVERY V. This\
+  \ round removed a candidate escape from that question, it did not answer it. That\
+  \ question still gates the whole antecedent-1 side."
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -28,5 +64,6 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum
   milestone: AJCR.w4-rep
-  updated_at: '2026-07-29T16:09:27.881018+00:00'
-  owner: ajcr-p1
+  updated_at: '2026-07-29T18:09:56.554462+00:00'
+  pinned_commits:
+  - ba34a409f
