@@ -75,8 +75,14 @@ of `pic0RepresentableByOfCharts` (`IsChartUniv` and Zariski-local surjectivity o
 **No antecedent of the representability seam is discharged here.**  What is discharged is the
 last obligation standing between the R2 carrier and a widened `chartValueTrans`: the widened
 chart value is now known to be a degree-zero class unconditionally, which is what a widened
-Σ-chart needs of it.  Building that natural transformation, and the widened `abelSigmaChart`
-above it, remains open — the widened vehicle has no `divFunctorAff ⟹ pic0TypeFunctor` yet.
+Σ-chart needs of it.
+
+An earlier version of this paragraph added that "building that natural transformation, and the
+widened `abelSigmaChart` above it, remains open".  **That is no longer true and the sentence is
+withdrawn**: with `hdegAff` discharged both are the chart-typed definitions verbatim, and they
+are landed in `Picard/Pic0AtlasFromDivRepAff.lean` (`chartValueAffTrans`, `abelSigmaChartAff`).
+The remaining gap on that route is a *producer* of `(divFunctorAff C n).RepresentableBy`, which
+nothing supplies — the same hypothesis `abelSigmaChart` carries on the chart-typed side.
 -/
 
 set_option autoImplicit false
@@ -368,9 +374,9 @@ hypothesis discharged, so the statement now matches its chart-typed twin
 `chartValue_mem_pic0Subgroup` exactly.
 
 This is what the R2 carrier owed before a widened `chartValueTrans` could exist: the widened
-chart value is a degree-zero class unconditionally.  Building that natural transformation
-(`divFunctorAff ⟹ pic0TypeFunctor`) and the widened `abelSigmaChart` above it remains open — a
-widened Σ-chart needs the transformation, not merely this membership. -/
+chart value is a degree-zero class unconditionally.  That transformation and the widened
+`abelSigmaChart` above it are landed in `Picard/Pic0AtlasFromDivRepAff.lean`; what neither has
+is a producer of `(divFunctorAff C n).RepresentableBy`. -/
 theorem chartValueAff_mem_pic0Subgroup' (m : ℕ)
     (Z : (C ⊗ overSpec k k).left.CurveDivisor)
     (hdeg : Scheme.CurveDivisor.deg k Z
