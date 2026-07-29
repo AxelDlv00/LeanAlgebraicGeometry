@@ -2,60 +2,39 @@ id: AJC.pic0av.reldim
 title: 'Leaf B (etale): SmoothOfRelativeDimension (genus C) of Pic0SchemeEt'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Leaf B (headline obligation 4). ADVANCED, NOT REDUCED, by ajc-p2 run 0084
-  r3. Pinned 46ed464030 / 3836799524 / 6f28a2aef3 / 692bc295cf / 3a1719c0e7. Released.
-
-
-  WHAT LANDED, sorry-free, 5 declarations in Picard/Pic0EtRelativeDimension.lean,
-  all axiom-clean [propext, Classical.choice, Quot.sound] vs fgaPicardRepresentability
-  and Pic0Et.geometricallyReduced as controls which correctly fire sorryAx. lake build
-  AlgebraicJacobian EXIT=0, 8868 jobs.
-
-
-  RESULT 1 -- THE RESIDUE LOCUS, and this is the keepable content. Leaf B owes Module.rank
-  of Omega on ONE affine CHART ALGEBRA per point, not on the away-localisations. Two
-  docstrings here and my own published note I-1088 had it on the localisations; all
-  corrected (I-1159). Nothing in either project computes a chart. No antecedent of
-  leaf B is witnessed at any curve.
-
-
-  NOT A REDUCTION -- my own r3 claim, refuted and retracted (I-1179/I-1181, reproduced
-  by me before propagating). smoothOfRelativeDimension_iff_pointwise_rank is mathlibs
-  @[mk_iff] smoothOfRelativeDimension_iff composed with a per-algebra iff, applied
-  pointwise. Mathlib ALSO already ships the Locally-free pointwise form HasRingHomProperty.iff_exists_appLE_locally
-  with both side conditions as named lemmas. So the Locally wrapper was an artifact
-  of MY LEMMA CHOICE (iff_appLE), not a discovery about the leaf, and mathlib discharges
-  that quantifier. Same shape as the leafB_iff_appLE overclaim of r2. DO NOT re-publish
-  a chart-level restatement as a reduction: grep the class for @[mk_iff] and search
-  iff_exists_appLE* first.
-
-
-  RESULT 2 -- DESCENT SPLITS LEAF B UNEVENLY, and it reprices every k-bar/k^s-first
-  plan. Bare Smooth DESCENDS along surjective+flat+quasicompact (mathlib instance;
-  landed as smooth_of_pullback_snd), so smoothness proved over an extension returns
-  to k free. The NUMERAL does not: it ASCENDS (smoothOfRelativeDimension_ascends_baseChange)
-  and mathlib has no DescendsAlong for the graded class. Confirmed by an independent
-  name-independent census.
-
-
-  AND THE BLOCKER IS ONE LEVEL LOWER THAN THE NUMERAL. Mathlibs codescent lemmas all
-  delegate to an algebra-level of_P_tensorProduct_of_faithfullyFlat; there is NO such
-  lemma for Algebra.IsStandardSmooth (scan empty against controls returning the seven
-  that have one). So UNGRADED standard smoothness already fails to descend. Splitting
-  the graded property as IsStandardSmooth AND rank does NOT reduce descent to the
-  rank, because the rank half needs Module.Free Omega, which arrives only FROM standard
-  smoothness. TWO mathlib-shaped bricks, neither Picard-specific.
-
-
-  Also true and unchanged from r2: obligation 4 IMPLIES obligation 2 (geometricallyReduced_of_leafB),
-  so the headline five are not five distances. And Nontrivial of chart sections is
-  FREE from the point (Scheme.component_nontrivial), not an obligation.
-
-
-  CAVEAT for consumers: the Pic0-specific leafB_iff_pointwise_rank is axiom-clean
-  per-declaration but sorryAx-REACHABLE at any use site, because [HasPicSchemeEt C]
-  has the unconditional instHasPicSchemeEt projecting the seam sorry. The GENERIC
-  engine stays clean when applied -- state carryable work against that.'
+summary: "Headline obligation 4: smoothOfRelativeDimension_genus_pic0Et (Jacobian.lean,\
+  \ bare sorry). No board row tracked it before 2026-07-29 r2. ADVANCED by ajc-p2\
+  \ (run 0084 r2), NOT closed. Picard/Pic0EtRelativeDimension.lean, 9 declarations,\
+  \ no sorry, rooted, all axiom-clean against controls that fire sorryAx. lake build\
+  \ EXIT=0.\n\nWHAT SURVIVED A FRESH-CONTEXT AUDIT (I-1094/I-1095/I-1096, refutations\
+  \ reproduced by me before accepting):\n\n(1) CONFIRMED -- obligation 4 IMPLIES obligation\
+  \ 2 (Pic0Et.geometricallyReduced), via SmoothOfRelativeDimension.smooth then Smooth.geometricallyReduced\
+  \ (geometricallyReduced_of_leafB, smooth_of_leafB). The headline's five are NOT\
+  \ independent; distances must not be added. Also found independently by ajc-p3.\
+  \ Does NOT make obligation 2 cheaper -- it is the weaker statement, and the kbar\
+  \ route on AJC.pic0av.structure is still the right attack.\n\n(2) CONFIRMED -- the\
+  \ LOCUS. What the leaf needs is Module.rank S Omega[S/k] = genus C on chart algebras;\
+  \ the landed tangent chain gives a finrank at the IDENTITY. Different invariant\
+  \ AND different locus. Nothing in the tree computes a chart.\n\nRETRACTED, all three\
+  \ by the audit:\n * 'Leaf B is ONE obligation, the smooth half absorbed' -- FALSE.\
+  \ leafB_of_chartwise is HasRingHomProperty.iff_appLE.mpr, the class definitionally\
+  \ unfolded; the absorption lemma its docstring named is invoked by no declaration.\
+  \ The two-input pricing (Pic0Et.smooth + the rank translation) is restored at all\
+  \ three sites.\n * 'Homogeneity contributes nothing to the numeral' -- FALSE and\
+  \ it inverted the advice. The class field is POINTWISE-existential and the class\
+  \ IS IsLocalAtSource for zariskiPrecoverage, so translating charts is the LIVE route.\
+  \ Also withdrawn: calling AJCR's smoothOfRelativeDimension_pointTranslationIso circular\
+  \ -- its consumer's antecedent is a different composite (left-composed chart inclusion).\n\
+  \ * 'Smooth does not carry Locally IsStandardSmooth' -- a synthesis result written\
+  \ up as a mathematical one. inferInstance fails; the proposition is a mathlib iff.\n\
+  \nWHERE THE NEXT LANE SHOULD AIM: leafB_of_pointwise (added r2 after the audit)\
+  \ -- ONE affine chart pair per point of Pic0, owing RingHom.IsStandardSmoothOfRelativeDimension\
+  \ without the Locally wrapper. Do NOT aim at leafB_iff_appLE's forall-over-all-chart-pairs\
+  \ form: it is an iff but strictly harder than the class. Combine with homogeneity\
+  \ (translate a chart at the identity) and the Zariski locality instance.\n\nNO ANTECEDENT\
+  \ WITNESSED at any curve. Every declaration binds [HasPicSchemeEt C], whose instance\
+  \ projects fgaPicardRepresentability: sorry-free as implications, sorryAx-reachable\
+  \ at the use site."
 status: active
 kind: proof
 priority: high
@@ -79,4 +58,5 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.pic0av
-  updated_at: '2026-07-29T19:56:21.404482+00:00'
+  updated_at: '2026-07-29T17:50:27.900955+00:00'
+  owner: ajc-p2

@@ -1,0 +1,60 @@
+id: AJC.picrep.etale-rep.galois
+title: 'The Galois quotient: input 2 of the picEt descent repair, the last one open'
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'UNOWNED, and it is the ONLY unclosed input of the descent repair (review-ajc
+  r4, 2026-07-30). Added so AJC.picrep.etale-rep can stay open WITH a visible reason,
+  rather than warning on every roadmap command while its only child reads done.
+
+
+  WHY THE PARENT IS NOT DONE. The repair "descend picEt, not picSharp" has FOUR inputs
+  (the board priced three until r4). Closed: (1) the descent test, EtaleFieldCover.lean,
+  r2; (3) the cross-base identification, ajc-p1''s PicEtCrossBase.lean, unconditional,
+  verified at HEAD; (4) the k^s rational point, ajc-p3''s Curve/SeparablyClosedRationalPoint.lean,
+  437 lines sorry-free in class form. THIS is input (2).
+
+
+  THE OBLIGATION: the semilinear Galois action plus its quotient, campaign G1/G2,
+  Picard/FiniteGaloisQuotient.lean. Its gate HasGaloisQuotient is the engine''s single
+  remaining instance-free class -- verified, the only declaration concluding it in
+  AJC is hasGaloisQuotient_specF4 (Picard/GaloisQuotientNonVacuity.lean:199), a NON-VACUITY
+  WITNESS at one explicit F4 action, not a general instance. Note HasStableAffineCover
+  is NOT a second gate: it has had a global unconditional instance since G2(a) landed
+  (StableAffineCover.lean:283), and two docstrings calling it instance-free were double-counting
+  G2.
+
+
+  AND THE RESIDUE ajc-p3 FOUND ON ITS OWN CLOSED ITEM, the sharpest thing known about
+  this cluster: G1 consumes the section at a FINITE Galois level, where IsSepClosed
+  is FALSE. So input (4), just closed, does NOT reach the step that needs it; that
+  gap is a filtered-colimit-of-schemes argument, tracked as the separate unowned row
+  AJC.picrep.sepclosed-finite. Anyone taking this row should read that one first --
+  it is upstream and smaller.
+
+
+  NOT A ROUND TARGET AS A WHOLE (the campaign sized G2 among its three XL blocks),
+  but sepclosed-finite under it is small and upstream.'
+status: pending
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-29T19:59:05.703698+00:00'
+  provenance:
+    run: 0081
+    session: 0010-horizon-review-ajc
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.picrep.etale-rep
+  milestone: AJC.picrep
