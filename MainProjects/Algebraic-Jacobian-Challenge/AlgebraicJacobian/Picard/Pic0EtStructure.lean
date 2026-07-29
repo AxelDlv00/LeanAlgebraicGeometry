@@ -46,6 +46,15 @@ The **properness** half below is genuinely independent of obligation 4, and
 * `universallyClosed_of_valuativeCriterion` / `proper_of_valuativeCriterion` — the
   valuative route to properness, whose `QuasiCompact` side condition is *free* on
   this tower (`quasiCompact` below).
+* `proper_of_valuativeCriterion_existence` — the sharpest form: **every** side
+  condition of mathlib's `IsProper.of_valuativeCriterion` is a theorem here
+  (`quasiCompact`, `quasiSeparated`, `locallyOfFiniteType`) and so is the
+  `Uniqueness` half of the criterion (`valuativeCriterion_uniqueness`, from
+  separatedness). So `ValuativeCriterion.Existence` is *the entire* remaining content
+  of properness on this tower — not one of several missing pieces.
+* `valuativeCriterion_existence_of_specializingMap` — a purely **topological** route to
+  that same residue, needing no valuation rings: universal specialization-lifting of
+  the underlying map suffices.
 * `universallyClosed_of_baseChange` and its converse
   `universallyClosed_iff_baseChange` — universal closedness is fpqc-local, so it
   too reduces to `k̄` losslessly.
@@ -279,6 +288,61 @@ theorem proper_of_valuativeCriterion
   haveI : LocallyOfFiniteType (Pic0SchemeEt C).hom := locallyOfFiniteType C
   haveI := universallyClosed_of_valuativeCriterion C h
   constructor
+
+/-- **The uniqueness half of the valuative criterion is FREE on this tower.**
+
+`ValuativeCriterion` is `Existence ⊓ Uniqueness` (`ValuativeCriterion.eq`), and
+`IsSeparated.valuativeCriterion` supplies the second factor from separatedness — which
+is `Pic0Et.isSeparated`, a theorem. So the *whole* criterion reduces to `Existence`,
+with no second obligation hiding in the uniqueness clause. -/
+theorem valuativeCriterion_uniqueness :
+    ValuativeCriterion.Uniqueness (Pic0SchemeEt C).hom := by
+  haveI : IsSeparated (Pic0SchemeEt C).hom := isSeparated C
+  exact IsSeparated.valuativeCriterion _
+
+/-- **Quasi-separatedness is free too**, from separatedness. The third side condition of
+mathlib's `IsProper.of_valuativeCriterion`. -/
+theorem quasiSeparated : QuasiSeparated (Pic0SchemeEt C).hom := by
+  haveI : IsSeparated (Pic0SchemeEt C).hom := isSeparated C
+  infer_instance
+
+/-- **The full valuative criterion from `Existence` alone.** -/
+theorem valuativeCriterion_of_existence
+    (h : ValuativeCriterion.Existence (Pic0SchemeEt C).hom) :
+    ValuativeCriterion (Pic0SchemeEt C).hom :=
+  ValuativeCriterion.iff.mpr ⟨h, valuativeCriterion_uniqueness C⟩
+
+/-- **Properness directly from mathlib's `IsProper.of_valuativeCriterion`** — a second,
+independent assembly of properness, and the sharpest statement of the properness
+obligation available here.
+
+All three side conditions mathlib asks for are theorems on this tower:
+`QuasiCompact` (`quasiCompact`), `QuasiSeparated` (`quasiSeparated`) and
+`LocallyOfFiniteType` (`Pic0Et.locallyOfFiniteType`); the `Uniqueness` half of the
+criterion is `valuativeCriterion_uniqueness`. So `ValuativeCriterion.Existence` is
+**the entire remaining content of properness** for `Pic⁰` on the étale tower — not one
+of several missing pieces.
+
+Compare `proper_of_valuativeCriterion` above, which reaches the same conclusion through
+`UniversallyClosed`. Both are kept: this one shows the residue is exactly `Existence`,
+that one exhibits the `UniversallyClosed` conjunct explicitly for the `k̄` route. -/
+theorem proper_of_valuativeCriterion_existence
+    (h : ValuativeCriterion.Existence (Pic0SchemeEt C).hom) :
+    IsProper (Pic0SchemeEt C).hom := by
+  haveI : QuasiCompact (Pic0SchemeEt C).hom := quasiCompact C
+  haveI : QuasiSeparated (Pic0SchemeEt C).hom := quasiSeparated C
+  haveI : LocallyOfFiniteType (Pic0SchemeEt C).hom := locallyOfFiniteType C
+  exact IsProper.of_valuativeCriterion _ (valuativeCriterion_of_existence C h)
+
+/-- **A purely topological route to the properness residue.**
+`ValuativeCriterion.Existence.of_specializingMap`: universal specialization-lifting of
+the underlying continuous map suffices. Recorded because it needs no valuation rings and
+no invertible-sheaf extension argument — it is a statement about the topology of
+`Pic⁰_{C/k}` — and is therefore a genuinely different attack on the same obligation. -/
+theorem valuativeCriterion_existence_of_specializingMap
+    (h : (topologically @SpecializingMap).universally (Pic0SchemeEt C).hom) :
+    ValuativeCriterion.Existence (Pic0SchemeEt C).hom :=
+  ValuativeCriterion.Existence.of_specializingMap _ h
 
 /-- **Universal closedness descends from `k̄`** (Stacks 02KS, EGA IV₂ 2.6.4).
 
