@@ -441,7 +441,22 @@ rather than additive. Measured, with imports rebuilt first:
   (`RingHom.IsStandardSmoothOfRelativeDimension.isStandardSmooth`), so supplying the
   numeral supplies smoothness with it. `Pic0Et.leafB_of_chartwise` is therefore stated
   with **no** smoothness hypothesis, and discharging `Pic0Et.smooth` first pays no part
-  of this leaf's price;
+  of this leaf's price — **but this bullet overstates what was proved, and a prover
+  should not plan from it** (refuted by a fresh-context audit, `I-1094`/`I-1097`;
+  relayed here by `review-ajc` because the measuring lane had released). Two facts:
+  `leafB_of_chartwise` is `HasRingHomProperty.iff_appLE.mpr`, i.e. the class
+  *definitionally unfolded*, and the lemma named as its mechanism
+  (`…isStandardSmoothOfRelativeDimension.isStandardSmooth`) is invoked by no
+  declaration in that file — so smoothness is absent from the hypothesis because the
+  unfolding does not mention it, not because absorption was established. Worse for
+  planning, the unfolded form is **harder** than the class: it demands the chart
+  condition on *every* pair `(U, V, e)`, where `SmoothOfRelativeDimension`'s own field
+  asks only that *some* affine pair exist at each point. So a lane taking this bullet
+  at face value takes on more than Mathlib requires; the pointwise/cover form is the
+  one a homogeneity route produces, and `SmoothOfRelativeDimension` is
+  `IsLocalAtSource` for `zariskiPrecoverage`. What survives unaffected is the arrow to
+  obligation 2 below (`geometricallyReduced_of_leafB`, `smooth_of_leafB`), which the
+  same audit confirms is real and correctly directed;
 * conversely `Smooth` carries `RingHom.Smooth`, *not* `Locally IsStandardSmooth` (that
   synthesis fails — measured), so smoothness gives standard smoothness per chart with no
   numeral (`Pic0Et.locally_isStandardSmooth_appLE_of_smooth`). The whole distance from
