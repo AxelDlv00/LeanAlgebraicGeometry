@@ -1874,6 +1874,20 @@ STATE OF THE TWO DIRECTIONS (`Picard/Pic0Dimension.lean`):
   translation reaches — but it is a statement about *points*, not about dimension theory,
   and no bound on embedding dimensions is owed at all.
 
+  **RETRACTED (run 0067 r8): the orbit condition is not a "gap", it is CONTRADICTORY for
+  `g ≥ 1`, and a bound on embedding dimensions IS still owed.**
+  `Pic0.topologicalKrullDim_eq_zero_of_homogeneous`
+  (`Picard/HomogeneityOrbitCollapse.lean`) proves that the orbit condition alone forces
+  `topologicalKrullDim Pic⁰ = 0`, hence `genus C = 0`. The sentence above even contains the
+  reason without drawing the consequence: the points "no such translation reaches" are the
+  non-closed ones, and since a translation is a homeomorphism carrying the closed identity
+  point to a closed point, requiring it to reach *every* point makes `Pic⁰` a `T1` space —
+  dimension `0` for a nonempty sober space. So the residue is front (a), regularity at the
+  identity, and the uniform cotangent bound reinstated, the last needing a transport that
+  reaches non-closed points (an extension-valued translation, or density as in
+  `identityComponent_irreducibleSpace_of_isAlgClosed` above, which uses exactly that extra
+  step).
+
   Note on transporting a cotangent dimension, since this cost a search: mathlib v4.31 has
   **no** functoriality for `IsLocalRing.CotangentSpace` — no map along a ring
   homomorphism of any kind. The route is `Submodule.spanFinrank` (`Ideal.spanRank_map_le`

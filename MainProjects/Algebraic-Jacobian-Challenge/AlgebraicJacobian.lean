@@ -149,6 +149,7 @@ import AlgebraicJacobian.Picard.EmbeddingDimensionBound
 import AlgebraicJacobian.Picard.Pic0Dimension
 import AlgebraicJacobian.Picard.AmbientPicNotProper
 import AlgebraicJacobian.Picard.GroupSchemeHomogeneity
+import AlgebraicJacobian.Picard.HomogeneityOrbitCollapse
 import AlgebraicJacobian.Picard.FlatteningStratification
 import AlgebraicJacobian.Picard.EntryIdeal
 import AlgebraicJacobian.Picard.EntryIdealStratum
@@ -271,11 +272,17 @@ import AlgebraicJacobian.Albanese.SymPowInterface
 import AlgebraicJacobian.Albanese.SymPowColimit
 -- The affine symmetric-power carrier, rooted so the workspace axiom probe covers it
 -- (it did not until run 0069 r5; see inbox I-0659). `SymPowInvariants` names the carrier
--- of a ring-action quotient, `SymPowInvariantsLocalization` supplies `(A_b)^G = (A^G)_b`,
--- `SymPowTensorAction` the `S_n`-action on the tensor power that makes it Milne's
--- `(A^{⊗ n})^{S_n}`, and `SymPowInvariantsUnder` restates the identification over the base.
+-- of a ring-action quotient, `SymPowTensorAction` the `S_n`-action on the tensor power that
+-- makes it Milne's `(A^{⊗ n})^{S_n}`, and `SymPowInvariantsUnder` restates the identification
+-- over the base. For the chart-overlap comparison the split is: `SymPowInvariantsLocalization`
+-- proves the substantive HALF (a fixed element of `A_b` has an invariant numerator) and
+-- explicitly disclaims the equality in its own scope section; `SymPowInvariantsAwayEquiv` adds
+-- the action on `A_b`, the converse direction, and the biconditional. An earlier revision of
+-- this comment credited the equality `(A_b)^G = (A^G)_b` to the first file alone, which its
+-- header contradicts.
 import AlgebraicJacobian.Albanese.SymPowInvariants
 import AlgebraicJacobian.Albanese.SymPowInvariantsLocalization
+import AlgebraicJacobian.Albanese.SymPowInvariantsAwayEquiv
 import AlgebraicJacobian.Albanese.SymPowTensorAction
 import AlgebraicJacobian.Albanese.SymPowInvariantsUnder
 -- The `G`-stable affine cover for a bare finite group action: the same proof as

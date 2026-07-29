@@ -243,7 +243,40 @@ translations act transitively": the translations available here are indexed by s
 scheme has points whose residue field is a proper extension of `k`, and those are *not* reached
 by a `k`-rational translation. So the hypothesis is exactly the gap, and it is not a
 formality — over `k̄` it holds for closed points, in general it is a descent question. Naming
-it is the point: it moves the residue out of dimension theory. -/
+it is the point: it moves the residue out of dimension theory.
+
+**RETRACTED (run 0067 r8), and this is the FOURTH framing of this leg to be wrong. The orbit
+condition is not a gap that a descent argument can close: it is CONTRADICTORY for every curve
+of genus `≥ 1`, so the two theorems below are VACUOUS exactly where the A.3 leg needs them.**
+
+`Picard/HomogeneityOrbitCollapse.lean` proves
+`Pic0.topologicalKrullDim_eq_zero_of_homogeneous`: the `htrans` hypothesis alone forces
+`topologicalKrullDim Pic⁰_{C/k} = 0`, hence (with `hid`, `hreg`)
+`Pic0.genus_eq_zero_of_homogeneous` — `genus C = 0`.
+
+The error is visible in the paragraph above, in the phrase "over `k̄` it holds **for closed
+points**". The hypothesis quantifies over **all** points of `Pic⁰`, and translations are
+*isomorphisms of schemes*, hence homeomorphisms; the identity point is closed (it is the image
+of a section of a morphism to `Spec k`, so a closed immersion's range). A homeomorphism carries
+closed points to closed points, so `htrans` says every point of `Pic⁰` is closed — `T1` — and a
+nonempty sober `T1` space has topological Krull dimension `0`. Nothing about `k` or the descent
+question enters; the collapse is unconditional.
+
+The corroboration was already in this project: the sibling irreducibility proof
+(`identityComponent_irreducibleSpace_of_isAlgClosed`, `Picard/IdentityComponent.lean:866`)
+translates through **closed** points only and then needs *Jacobson density* to "sweep up the
+non-closed points". That extra step is exactly what a `k`-rational orbit cannot supply.
+
+So the `≤` half's uniform cotangent bound is still owed, and it needs a route that reaches
+**non-closed** points — transport along a translation by a point valued in an extension of `k`,
+or a generic-point/density argument in the shape the sibling proof uses. What the two theorems
+below establish remains true and is worth keeping as the *shape* of the reduction; what is
+withdrawn is the claim that their hypothesis set is satisfiable for `g ≥ 1`, and with it the
+"one point suffices" reading recorded at
+`Picard/EmbeddingDimensionBound.lean`, `Picard/Pic0Dimension.lean` and
+`Picard/IdentityComponent.lean`. The cotangent-invariance theorems above
+(`finrank_cotangentSpace_eq_of_ringEquiv`, `finrank_cotangentSpace_stalk_eq_of_isIso`) are
+about a single isomorphism and are untouched. -/
 
 namespace Scheme.Pic0
 
@@ -396,7 +429,17 @@ Its hypotheses are exactly, and only:
 
 Nothing else. Geometric irreducibility and the group-object structure are already theorems.
 So the A.3 leg is five statements, of which `hid` is the load-bearing one and `hreg` is free
-over a perfect field. -/
+over a perfect field.
+
+**WARNING (run 0067 r8): this theorem is VACUOUS for `g(C) ≥ 1`, because of `htrans`.** It is
+true, and its four other hypotheses are the honest content of their respective legs, but
+`Pic0.genus_eq_zero_of_homogeneous` (`Picard/HomogeneityOrbitCollapse.lean`) derives
+`genus C = 0` from `hid`, `hreg`, `htrans` alone — so on a positive-genus curve the hypothesis
+set cannot be satisfied and the conclusion says nothing. Do **not** quote this signature as "the
+A.3 leg over its honest inputs": the dimension conjunct is the one that spoils it. The
+`IsProper ∧ Smooth ∧ GeometricallyIrreducible ∧ GrpObj` part, over `hval` and `hred` only, is
+sound and is the reading to use — see the retraction above the section for what the dimension
+half actually needs. -/
 theorem isAbelianVariety_of_dimension_genus {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
@@ -428,6 +471,43 @@ theorem isAbelianVariety_of_dimension_genus {k : Type u} [Field k]
    AlgebraicGeometry.Scheme.Pic0.geometricallyIrreducible C,
    AlgebraicGeometry.Scheme.Pic0.grpObj C,
    topologicalKrullDim_eq_genus_of_homogeneous C hid hreg htrans⟩
+
+/-- **The A.3 abelian-variety conclusion over its two honest inputs — the NON-VACUOUS
+capstone** (run 0067 r8).
+
+`isAbelianVariety_of_dimension_genus` above adds the dimension conjunct, and pays for it with
+the orbit condition `htrans`, which is contradictory for `g(C) ≥ 1`
+(`Pic0.genus_eq_zero_of_homogeneous`, `Picard/HomogeneityOrbitCollapse.lean`). This theorem is
+that statement with the spoiled conjunct and its hypothesis removed: the four defining
+abelian-variety properties of Milne §I.1, over
+
+* `hval` — valuative existence, the whole of properness;
+* `hred` — `IsReduced` of the **single** scheme `Pic⁰ ×_{Spec k} Spec k̄`, the whole of
+  smoothness;
+
+and nothing else. Geometric irreducibility and the group-object structure are theorems of
+`Picard/Pic0AbelianVariety.lean`. Both hypotheses are satisfiable — neither constrains the
+genus — so unlike the five-input form this is the signature to quote for the A.3 leg, with the
+dimension statement `dim Pic⁰ = g` tracked separately as still owing the uniform cotangent
+bound.
+
+Same caveat as everything in this lane: measure axioms at a SYNTHESIS site. Stated over
+`[HasPicScheme C]`, which the caller discharges. -/
+theorem isAbelianVariety_of_valuative_of_isReduced {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C]
+    [PicScheme.PicSchemeLocallyOfFiniteType C]
+    (hval : ValuativeCriterion.Existence (Pic0Scheme C).hom)
+    (hred : IsReduced (Limits.pullback (Pic0Scheme C).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k (AlgebraicClosure k)))))) :
+    IsProper (Pic0Scheme C).hom ∧ Smooth (Pic0Scheme C).hom ∧
+      GeometricallyIrreducible (Pic0Scheme C).hom ∧
+      Nonempty (GrpObj (Pic0Scheme C)) :=
+  ⟨AlgebraicGeometry.Scheme.Pic0.proper_of_valuativeCriterion C hval,
+   AlgebraicGeometry.Scheme.Pic0.smooth_of_isReduced_algebraicClosureBaseChange C hred,
+   AlgebraicGeometry.Scheme.Pic0.geometricallyIrreducible C,
+   AlgebraicGeometry.Scheme.Pic0.grpObj C⟩
 
 end Scheme.Pic0
 

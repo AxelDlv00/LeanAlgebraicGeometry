@@ -320,7 +320,20 @@ translate orbit, and `Pic0.forall_finrank_cotangentSpace_le_of_homogeneous`
 orbit condition. Since the value at the identity is an equality, one point serves both
 directions of the dimension statement —
 `Pic0.topologicalKrullDim_eq_genus_of_homogeneous` is the resulting form, axiom-clean.
-Prefer that theorem to instantiating `hle` by hand. -/
+Prefer that theorem to instantiating `hle` by hand.
+
+**THE PRECEDING PARAGRAPH IS RETRACTED (run 0067 r8): `hle` IS STILL OPEN CONTENT, and the
+"one point plus the orbit condition" route is not merely unfinished but VACUOUS for `g ≥ 1`.**
+`Pic0.topologicalKrullDim_eq_zero_of_homogeneous`
+(`Picard/HomogeneityOrbitCollapse.lean`) shows the orbit condition alone forces
+`topologicalKrullDim Pic⁰ = 0`, hence `genus C = 0`. Reason: translations are isomorphisms of
+schemes hence homeomorphisms, the identity point is closed, so "every point is a translate of
+the identity" forces every point to be closed — `T1` — and a nonempty sober `T1` space has
+dimension `0`. So do **not** prefer that theorem: instantiating `hle` by hand is the honest
+route, and what it needs is a transport reaching **non-closed** points (a translation by a
+point valued in an extension of `k`, or a density argument as in
+`identityComponent_irreducibleSpace_of_isAlgClosed`). The general theorem below, which takes
+`hle` as a hypothesis, is unaffected and remains correct. -/
 theorem topologicalKrullDim_le_genus_of_forall_finrank_cotangentSpace_le
     {k : Type u} [Field k]
     (C : Over (Spec (.of k)))

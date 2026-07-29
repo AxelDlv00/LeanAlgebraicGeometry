@@ -102,6 +102,17 @@ regularity — so of the two directions of `dim Pic⁰ = g`, the one previously 
 > mathlib API" (refuted by unfolding the definition) and "no `ringKrullDim` upper bound
 > exists" (refuted: the wrong quantity had been searched for).
 >
+> **AND THAT SUPERSESSION IS ITSELF RETRACTED (run 0067 r8) — the FOURTH wrong framing.
+> The uniform bound below IS still the remaining input; the r7 "one point suffices" reading
+> was vacuous.** `Pic0.topologicalKrullDim_eq_zero_of_homogeneous`
+> (`Picard/HomogeneityOrbitCollapse.lean`) proves that the orbit condition alone forces
+> `topologicalKrullDim Pic⁰ = 0`, hence `genus C = 0`: translations are homeomorphisms and
+> the identity point is closed, so "every point is a translate of the identity" makes every
+> point closed (`T1`), and a nonempty sober `T1` space has dimension `0`. So the section
+> below is reinstated as an accurate statement of what is owed — with the correction that
+> what the bound needs is a transport reaching **non-closed** points, which is why the
+> `k`-rational orbit could never have supplied it.
+>
 > **What survives below, and is still worth reading:** the *general* theorems of this file
 > are untouched and remain the right bricks — they take the uniform bound as a hypothesis,
 > which is correct at the generality of an arbitrary scheme, where no group structure is
