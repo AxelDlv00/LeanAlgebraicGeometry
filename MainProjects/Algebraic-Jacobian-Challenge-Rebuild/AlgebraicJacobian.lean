@@ -565,6 +565,7 @@ import AlgebraicJacobian.Picard.Pic0ChartOpenImmersionCriterion
 import AlgebraicJacobian.Picard.Pic0ChartUnivReduce
 import AlgebraicJacobian.Picard.Pic0ChartLocusFibreGuard
 import AlgebraicJacobian.Picard.Pic0ChartAbelNonInjective
+import AlgebraicJacobian.Picard.Pic0ChartAbelForkReduce
 import AlgebraicJacobian.Picard.Pic0ChartLocalSurjectivity
 import AlgebraicJacobian.Picard.Pic0ChartCoveragePointwise
 import AlgebraicJacobian.Picard.Pic0ChartCoverageAffineTest
