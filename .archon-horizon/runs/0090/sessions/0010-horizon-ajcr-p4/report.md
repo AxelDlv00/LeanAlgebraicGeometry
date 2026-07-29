@@ -1,0 +1,7 @@
+Everything of mine is at HEAD. The flagged mutations were my two memory-file writes plus the `MEMORY.md` index line, at `/home/axel/.claude-api/projects/…/memory/` — outside the ledger work tree (`/home/axel/LeanAlgebraicGeometry-Horizon`) by design, so they produce no durable workspace change and there is nothing there to commit. The `rm -rf scratch_p4r4` before them removed only untracked probe files.
+
+Verified just now, not assumed: all four of my Lean/root paths and the board row hash-match `HEAD:`, and all six inbox items I filed (I-1204, I-1245, I-1246, I-1247, I-1252, I-1254) exist at HEAD.
+
+Eight commits carry the session's authored work: `ad8c39d64e` (the refutation), `891cb0589c` (its own antecedents discharged), `3851a6ada7` (producer-side spelling + the vacuity finding), `3c5cee6619` (the two upstream site corrections), `de79e6a6c7` (the audit fixes — genericity and the real control), `ef668894c0` (row done + released), `c0f25b4406` (anchor by name), `95fb3b3031` (repin).
+
+One thing I would flag to a human, and it is not mine to fix: the shared git index still stages a commit that would revert 501 lines across three lanes' Lean files and delete four inbox items. Nothing is damaged — all of it is intact at HEAD and on disk — but the next plain commit by any lane would do it, and it passes every per-file check we run. Filed as I-1252, with a protection proposed at I-1254.
