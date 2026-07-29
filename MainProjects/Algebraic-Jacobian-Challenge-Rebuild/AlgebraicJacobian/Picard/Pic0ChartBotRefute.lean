@@ -30,8 +30,14 @@ That lemma had **zero citations** in this project before this file.
 * `not_isLocallySurjective_restrictChart_bot` — **the refutation.**  For an *arbitrary* chart
   family `f`, given any test `T` carrying a point, the `⊥`-restricted atlas is not
   Zariski-locally surjective.  No divisor data, no chart data, no `rep`.
-* `not_isLocallySurjective_restrictChart_bot'` — **the same statement with its own antecedent
+* `not_isLocallySurjective_restrictChart_bot'` — **the same statement with its own antecedents
   discharged.**  This is the form the board should quote.  See below.
+* `not_chartsCoverLocally_bot` — the same refutation in the spelling a coverage producer
+  actually attempts, since nobody proves the instance directly.
+* `false_of_isLocallySurjective_bot` — **the finding.**  `isLocallySurjective_of_bot`
+  (`Pic0ChartVMonotone.lean:272`) is *vacuous*: its hypothesis is precisely what is refuted here.
+  Its conclusion — that a `⊥`-based route would give unrestricted coverage — is correct, but it
+  does not shut a cheap route; there was never a route to shut.
 
 ## Why the primed form exists, and it is the point of the file
 
@@ -43,9 +49,16 @@ are inhabited by objects already in the tree, and the unconditional form follows
 `not_isLocallySurjective_restrictChart_bot'`, whose statement quantifies over nothing but the
 chart family.
 
-Read together with `isLocallySurjective_of_bot` (`Pic0ChartVMonotone.lean:272`), the `⊥`
-endpoint is now closed from both sides: inhabiting the binder there would give unrestricted
-coverage, *and* the binder cannot be inhabited.
+Read against `isLocallySurjective_of_bot` (`Pic0ChartVMonotone.lean:272`), the relationship is
+sharper than "closed from both sides": that theorem's hypothesis *is* what is refuted here, so
+it is vacuous, and the `⊥` loophole was never open in the first place.  Recorded as
+`false_of_isLocallySurjective_bot` below rather than only in prose, because "uninhabitable" and
+"expensive" price a lane's round differently.
+
+**One thing the emptiness of `⊥` is genuinely doing here, checked and not assumed.**  Re-running
+the identical proof script with `⊤` in place of `⊥` fails at the last step (measured: the
+`isEmpty_of_hom_bot` application is a type mismatch, there being no morphism to an empty scheme).
+So this is a refutation *of the `⊥` endpoint*, not an accidental refutation of the seam.
 
 ## What is NOT closed here, stated plainly
 
@@ -154,6 +167,42 @@ theorem not_isLocallySurjective_restrictChart_bot' {ι : Type u} {X : ι → Sch
       (Sigma.desc fun i => restrictChart (f i) (⊥ : (X i).Opens)) :=
   not_isLocallySurjective_restrictChart_bot f _ (specSigmaSection C)
     nonempty_specObj_of_field.some
+
+/-! ## The consequence in the coordinates a coverage lane works in
+
+Nobody proves the instance directly: a coverage lane proves `ChartsCoverLocally`
+(`Pic0ChartLocalSurjectivity.lean:86`) and lets `isLocallySurjective_sigmaDesc` convert.  So the
+refutation is stated there too, otherwise a lane would have to notice the conversion itself. -/
+
+/-- **`ChartsCoverLocally` is false at `⊥`** — the refutation in the spelling a producer
+actually attempts.
+
+`not_isLocallySurjective_restrictChart_bot'` composed with `isLocallySurjective_sigmaDesc`.
+Compare `not_coverageContainment_bot` (`Pic0ChartRestrictedFibreSat.lean:248`), which refutes
+the `hcov` conjunct of the *coupled assembly* — a different and weaker statement, since it
+leaves the instance binder untouched.  This one closes the binder. -/
+theorem not_chartsCoverLocally_bot {ι : Type u} {X : ι → Scheme.{u}}
+    (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1) :
+    ¬ ChartsCoverLocally C (fun i => restrictChart (f i) (⊥ : (X i).Opens)) := fun h =>
+  not_isLocallySurjective_restrictChart_bot' f (isLocallySurjective_sigmaDesc _ h)
+
+/-- **`isLocallySurjective_of_bot` is VACUOUS, and this is the file's finding for that lane.**
+
+`Pic0ChartVMonotone.lean:272` proves that inhabiting the coverage instance at `⊥` yields
+unrestricted coverage, and reads that as "the `⊥` route is not cheap".  The reading is right;
+the mechanism is stronger than advertised.  Its hypothesis is *exactly* the proposition refuted
+above, so the theorem is true with an uninhabitable antecedent — it does not shut a cheap route,
+there was never a route.
+
+Recorded as a theorem rather than a remark because "this binder cannot be inhabited" and "this
+binder is expensive to inhabit" price a lane's round very differently, and only the first is
+true.  Nothing here criticises that file's proof, which is correct. -/
+theorem false_of_isLocallySurjective_bot {ι : Type u} {X : ι → Scheme.{u}}
+    (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1)
+    (h : Presheaf.IsLocallySurjective Scheme.zariskiTopology
+      (Sigma.desc fun i => restrictChart (f i) (⊥ : (X i).Opens))) :
+    False :=
+  not_isLocallySurjective_restrictChart_bot' f h
 
 end
 
