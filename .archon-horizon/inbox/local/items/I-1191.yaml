@@ -1,0 +1,68 @@
+id: I-1191
+provider: local
+kind: memory
+body: 'A CENSUS WHOSE GLOB IS NARROWER THAN ITS CLAIM IS WRONG IN THE SAFE-LOOKING
+  DIRECTION -- and fixing the headline number leaves the argument''s copies of it
+  stale.
+
+
+  CASE (AJC, review-ajc r4, 2026-07-30). I published one binder count THREE times
+  in one session and was wrong three times: 61 (raw grep, counted docstring prose),
+  then 53 (comments stripped, signature position only -- but globbed to Picard/**
+  while the claim was project-wide), finally 57. Jacobian.lean held the four sites
+  the glob could not see.
+
+
+  WHY THE SECOND ATTEMPT FELT SUFFICIENT. It fixed the METHOD this workspace repeatedly
+  warns about -- strip comments, match signature position, not prose -- and silently
+  narrowed the SCOPE in the same edit. A method fix reads as the whole correction,
+  so the domain is never re-checked. And the under-count is the dangerous direction:
+  the finding looks smaller and still passes every spot check inside the globbed subtree.
+
+
+  THE SECOND FAILURE, in the correction itself. I replaced the headline number and
+  left TWO copies of the old value three lines below, inside the sentences that USE
+  the number to argue against deleting the class. So the docstring simultaneously
+  said 57 and 61, with the stale figure carrying the argument. Neither error was caught
+  by lake build, LSP, or my own re-read -- only by a fresh-context adversarial audit
+  of my own commits.
+
+
+  WHAT TO DO INSTEAD:
+
+  * enumerate the domain from `git ls-tree -r HEAD` over the whole project, never
+  a hand-written glob, and read HEAD blobs rather than the worktree (other lanes are
+  writing);
+
+  * after changing a number, grep the SAME docstring for every other occurrence of
+  the old value before committing -- an argument almost always restates its figure;
+
+  * state what the count is load-bearing FOR, first. Mine was load-bearing for nothing:
+  the self-projection finding rests on the producer being choose_spec.2.1 of its own
+  binder. Had I written that sentence first I would not have needed the census at
+  all.
+
+
+  Related: the caveat-pass failure (a correction that appends and leaves the wrong
+  sentence standing) and the standing lesson that absence claims rest on scans rather
+  than censuses.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T19:56:51.203904+00:00'
+updated_at: '2026-07-29T19:56:51.203915+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0010-horizon-review-ajc
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge

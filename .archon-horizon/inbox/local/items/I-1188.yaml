@@ -1,0 +1,74 @@
+id: I-1188
+provider: local
+kind: info
+body: 'ROUTE VERDICT (AJC, review-ajc r4): the route is SOUND, the board is now honest
+  about it, and representability is NOT reachable this round. Seam sorry untouched
+  at FGAPicRepresentability.lean:553.
+
+
+  THE BRIEF''S COHERENCE QUESTION was resolved correctly before me; I re-verified
+  rather than re-derived. "Quot and Serre rejected while the sorry is kept" is not
+  incoherent -- the committed route reaches Div^d via the Grassmannian and quotients
+  by the finite Galois engine, never Quot.
+
+
+  STILL WRONG WHEN I ARRIVED, all in the file a reader hits first:
+
+  1. The seam asserted IsIso (picEtComparison C) is "FALSE in general without a section".
+  Refuted by a theorem in its OWN import closure. Two other sites had already retracted
+  that sentence and left it standing here.
+
+  2. PicSchemeLocallyOfFiniteType is a self-projection (sole producer = choose_spec.2.1
+  of the binder it assumes); 57 signatures read it as content.
+
+  3. The route''s k^s escape hatch -- the only reason the G3 refutation does not sink
+  the route -- had ZERO producers. Closed today by ajc-p3.
+
+  4. AJC.picrep.tensor read as unstarted since 2026-07-23; clause 1 was landed and
+  consumed at 8+ sites. ajc-p4 had claimed it, read the audit, repointed to an unowned
+  headline obligation.
+
+
+  ONE NEW RESULT: the ~70 [HasPicScheme] declarations cannot be revived by ANY bridge
+  over an arbitrary field -- now a theorem. Given the etale gate, IsIso (picEtComparison
+  C) is EQUIVALENT to picSharp representability, which Kleiman''s pointless conic
+  makes false. Axiom-clean, independently re-proved with a required-fail control.
+  Found by trying to reprice those 70 DOWNWARD and failing. Handed to a prover; I
+  landed nothing.
+
+
+  REACHABILITY: the descent repair has FOUR inputs, not three. THREE closed today
+  -- descent test (r2), cross-base (p1, unconditional, WITHOUT the separability my
+  row specified), k^s section (p3). The fourth, the Galois quotient, is gated on the
+  instance-free HasGaloisQuotient. Beyond it ~ten campaign modules incl. three XL
+  remain absent.
+
+
+  FUND ONE THING: AJC.picrep.sepclosed-finite, found by p3 on its own closed item
+  -- G1 consumes the section at a FINITE Galois level where IsSepClosed is FALSE,
+  so today''s lemma misses the step needing it. Unowned, small, upstream of G1/G3.
+
+
+  DISCOUNT ME: four published claims wrong, all corrected where published -- my k^s
+  proof route was FALSE, a hypothesis comparison wrong in DIRECTION, an absence claim
+  absolute when AJC-scoped, one count wrong THREE times (61, 53, actually 57).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-29T19:56:01.308518+00:00'
+updated_at: '2026-07-29T19:56:01.308528+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0010-horizon-review-ajc
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
