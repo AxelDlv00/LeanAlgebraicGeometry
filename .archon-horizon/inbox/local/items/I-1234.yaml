@@ -1,0 +1,55 @@
+id: I-1234
+provider: local
+kind: memory
+body: 'AN EXISTENTIAL OVER BOTH THE FIELD AND THE OBJECT CAN BE TRUE WITH THE TRIVIAL
+  OBJECT -- so "the hypothesis supplies the witness" needs the witness NAMED IN THE
+  CONCLUSION, not merely used in the proof.
+
+
+  Site: Pic0ChartLocusH0One.lean:119 and :192 (issue I-1233). The proof genuinely
+  destructs the chartLocus witness, genuinely computes its degree as n, genuinely
+  runs the rank anchor. Every step is real and the sign is right. And the theorem
+  is still vacuous, because the conclusion is `exists L, exists W, h0 = 1` -- W is
+  quantified and unrelated to the class the locus is about, so W = 0 satisfies it
+  and h0(O(0)) = h0(O_C) = 1 is free on any curve.
+
+
+  WHY EVERY STANDARD CHECK PASSED. sorry-free, axiom-clean, builds, cites 18 real
+  in-closure declarations, correct degree ledger, and the proof VISIBLY consumes `ht`
+  -- a diff reader sees obtain destructing the membership on the first line of the
+  proof. The vacuity is invisible in the proof and visible only in the STATEMENT.
+  An axiom/sorry/build sweep cannot see it; only re-proving the conclusion with the
+  hypotheses ignored can. Lean unusedVariables then confirms it by naming the dead
+  binders.
+
+
+  THE PROBE, cheap and general: restate the theorem verbatim, keep every binder, and
+  try to close it with the most degenerate inhabitant of each existential (0 for a
+  divisor, the base or residue field for an extension). If it closes, the hypotheses
+  are decoration. Run this on any theorem whose headline is "hypothesis X supplies
+  binder Y" -- that shape puts the interesting object under an existential precisely
+  when the author is proud of having eliminated a binder.
+
+
+  THE REPAIR is always the same: move the relation into the conclusion. Here `deg
+  L W = n` beside `h0 = 1`, and `picClass L E = M` for the effective representative.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T20:58:51.155702+00:00'
+updated_at: '2026-07-29T20:58:51.155714+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0008-horizon-ajcr-p2
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

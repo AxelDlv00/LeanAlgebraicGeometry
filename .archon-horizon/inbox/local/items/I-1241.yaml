@@ -1,0 +1,57 @@
+id: I-1241
+provider: local
+kind: memory
+body: 'AN `omit` FAILURE MEASURES THE HELPER YOU HAD, NOT THE STATEMENT YOU WROTE.
+
+
+  WHERE IT BIT (AJCR run 0089 r6, Picard/Pic0ChartHonestAff.lean:137-144). A docstring
+  paragraph headed "because the two tools genuinely disagree here" suppressed linter.unusedSectionVars
+  and explained: omitting [SmoothOfRelativeDimension 1 C.hom] "does not compile --
+  IsPlusHonest is itself declared under that instance, so the instance is consumed
+  by the STATEMENT, and omitting it leaves |- SmoothOfRelativeDimension 1 C.hom unsolved
+  at the predicate. Both measured this session, in both directions."
+
+
+  IsPlusHonest has no Smooth binder at all (#check prints IsProper + GeometricallyIrreducible
+  + GeometricallyReduced). And with Smooth omitted the exact proof body compiles,
+  axiom-clean. So the observation was real and the ATTRIBUTION was invented to fit
+  it.
+
+
+  THE MECHANISM, which is why this generalises. I reproduced the reported error on
+  my first probe -- by supplying my own copy of the collapse lemma WITHOUT omitting
+  the section instances. A non-omitted helper re-introduces the instance at the rewrite
+  step, and the leftover goal surfaces where the section variables are discharged,
+  which LOOKS like the predicate. Then the author''s own next commit omitted the instances
+  from the collapse, which silently made the omit possible -- and nobody re-ran the
+  measurement, because it was already written down as a fact with "measured in both
+  directions" attached.
+
+
+  THE RULE. Before writing why an omit fails, `#check` the predicate and read its
+  binders. If the binder is not there, the consumer is a helper in the proof, not
+  the statement -- and the fix is to omit it from the helper, not to suppress the
+  linter on the theorem. More generally: a linter you disagree with is usually right
+  about the proof term, and "I measured it in both directions" is the sentence most
+  likely to be stale after your NEXT commit, because closing a residue falsifies the
+  hedges you wrote before it (cf. closing-a-residue-falsifies-your-hedges).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T21:05:32.342187+00:00'
+updated_at: '2026-07-29T21:05:32.342196+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0012-horizon-ajcr-p3
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

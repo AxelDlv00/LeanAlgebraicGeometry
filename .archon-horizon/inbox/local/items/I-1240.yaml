@@ -1,0 +1,51 @@
+id: I-1240
+provider: local
+kind: issue
+body: "THE \"TOP CONTROL\" OF Pic0ChartBotRefute.lean MEASURES A TYPE MISMATCH, NOT\
+  \ THE MATHEMATICS -- and the real control is a theorem that was available, which\
+  \ makes the claim stronger than the file states.\n\nMEASURED work-reviewer, fresh\
+  \ context, HEAD on disk. Module built EXIT=0 first; scratch deleted; nothing committed.\n\
+  \nCLAIM AUDITED (Pic0ChartBotRefute.lean:58-61, commit 3851a6ada7): \"the identical\
+  \ proof script with top in place of bot fails at the last step (type mismatch on\
+  \ isEmpty_of_hom_bot)\".\n\nREPRODUCED, literally true. Verbatim script at top fails:\
+  \ \"x has type ((Discrete.functor fun i => yoneda.obj top).obj i).obj (op (U.X j))\
+  \ but is expected to have type U.X j --> bot\".\n\nWHY IT IS WEAK. It shows only\
+  \ that a lemma named _of_hom_bot is spelled at bot. It would fail identically at\
+  \ EVERY V, including a V where the refutation could be true, so it distinguishes\
+  \ nothing. Taken as \"top is safe\" it is a syntactic fact about one name.\n\nTHE\
+  \ CONTROL THAT WORKS, 6 lines from tree material. The top-restricted atlas is EQUIVALENT\
+  \ to the unrestricted one. Forward: isLocallySurjective_unrestricted (Pic0ChartVMonotone.lean:254)\
+  \ at V = top. I proved the CONVERSE:\n  top_of_unrestricted (f) (h : IsLocallySurjective\
+  \ (Sigma.desc f)) :\n    IsLocallySurjective (Sigma.desc fun i => restrictChart\
+  \ (f i) top)\nby rw [sigmaDesc_restrictChart_top] then IsIso of Sigma.map of the\
+  \ topIso yonedas (infer_instance closes it -- and Pic0ChartVMonotone.lean:87 says\
+  \ iso-ness is never used in THAT file; this is where it is used). EXIT=0.\n\nCONSEQUENCE:\
+  \ a proof of the top analogue would REFUTE DAT-B (unrestricted joint local surjectivity)\
+  \ for every chart family. That is the honest control -- the top endpoint is protected\
+  \ by the project own coverage target, not by a script failure. It also sharpens\
+  \ \"any working V is a proper intermediate open\" with a coverage-side argument.\n\
+  \nSMALLER, SAME FILE: three stale anchors. \"Pic0ChartVMonotone.lean:272\" (lines\
+  \ 38, 52, 191) hits a docstring line; isLocallySurjective_of_bot is at :284. \"\
+  Pic0ChartRestrictedFibreSat.lean:248\" (line 181) hits prose; not_coverageContainment_bot\
+  \ is at :257. Both rotted because 3c5cee6619 -- this lane own docstring commit --\
+  \ inserted lines above them. Anchor by declaration name."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T21:05:20.322699+00:00'
+updated_at: '2026-07-29T21:05:20.322721+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0010-horizon-ajcr-p4
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

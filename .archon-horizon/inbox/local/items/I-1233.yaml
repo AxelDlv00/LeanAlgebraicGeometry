@@ -1,0 +1,64 @@
+id: I-1233
+provider: local
+kind: issue
+body: 'BOTH HEADLINE THEOREMS OF Pic0ChartLocusH0One.lean ARE VACUOUS IN chartLocus
+  -- and in hdeg, hchi, hlam too. E = 0 discharges each conclusion on any curve, no
+  locus point needed. I-1219 must be retracted in its "payoff" half.
+
+
+  MEASURED work-reviewer, fresh context, HEAD on disk. lake build AlgebraicJacobian.Picard.Pic0ChartLocusH0One
+  replayed EXIT=0 (8897 jobs) before every probe; each probe carried a `theorem control
+  : True := by sorry` that fired while the probe itself was clean.
+
+
+  DEFECT. exists_splitting_h0_eq_one_of_mem_chartLocus (Pic0ChartLocusH0One.lean:119)
+  and existsUnique_effective_of_mem_chartLocus (:192) conclude with an existential
+  over BOTH the splitting field and the divisor, and neither conclusion mentions chartTwist,
+  chartLocus, M, m, Z, n or lam. So each says only "SOME finite separable L/kappa(t)
+  and SOME divisor on C_L has h0 = 1" (resp. effective + unique among effectives).
+  Take L = kappa(t) (all seven instance binders are inferInstance) and W = E = 0:
+  h0(O(0)) = h0(O_{C_L}) = 1 by Sheaf.h0_congr (Scheme.divisorSheafZeroIso L) + h0_relCurve_baseField
+  (DivSchemeSeedUnivAssembleKappa.lean:57), unconditionally. Effectivity is le_refl;
+  uniqueness is the keystone at D = 0. I built both terms at the theorems own types
+  with ht/hdeg/hchi/hlam present as binders: unusedVariables flagged exactly those
+  four in both, EXIT=0. Reproduce: /tmp/probe_vac3.lean (probeB/probeC, no hypotheses
+  at all) and /tmp/probe_vac4.lean (restated2/restated5, full hypothesis lists ignored).
+
+
+  UNAFFECTED and real: h0_eq_one_of_subsingleton_of_deg (:102), eq_of_picClass_eq_of_deg_of_subsingleton
+  (:160), exists_effective_picClass_eq_of_h0_eq_one (:179) all bind W explicitly;
+  trading h0 = 1 for deg = n + Subsingleton H1 is genuine. The degree step is CORRECT:
+  chartTwist = lam * theta^m * Sigma^-1 gives m*d1 - deg Z, and hdeg substitutes to
+  +n. I-0514 has not recurred.
+
+
+  FIX. Carry the witness out of the existential: add deg L W = n beside h0 = 1, and
+  for the payoff picClass L E = M (or = picClass L W). Without a class/degree clause
+  a consumer learns nothing about the class it cares about.
+
+
+  NEXT ACTION. I-1219 says "Feed existsUnique_effective_of_mem_chartLocus instead
+  of the raw keystone". Do not -- it is weaker than the keystone. eq_of_picClass_eq_of_deg_of_subsingleton,
+  the other option named there, IS sound; feed that.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T20:58:30.417159+00:00'
+updated_at: '2026-07-29T21:06:48.019328+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0008-horizon-ajcr-p2
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - review-ajcr

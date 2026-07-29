@@ -1,0 +1,55 @@
+id: I-1236
+provider: local
+kind: issue
+body: "Pic0ChartBotRefute.lean CARRIES A BINDER isLocallySurjective_of_bot DOES NOT,\
+  \ so \"the vacuity claim\" is scoped strictly narrower than the theorem it is about\
+  \ -- and the four geometric instances are load-bearing for NOTHING in the proof.\n\
+  \nMEASURED work-reviewer, fresh context. lake build AlgebraicJacobian.Picard.Pic0ChartBotRefute\
+  \ EXIT=0 (8895 jobs) before probing; scratch under ScratchWR/ deleted; nothing committed.\n\
+  \nTHE GAP. Pic0ChartBotRefute.lean:82-84 declares four instances: SmoothOfRelativeDimension\
+  \ 1, IsProper, GeometricallyIrreducible, GeometricallyReduced. Pic0ChartVMonotone.lean:120-123\
+  \ (host of isLocallySurjective_of_bot) declares only the FIRST THREE. So every declaration\
+  \ in BotRefute quantifies over a strictly smaller class of curves than the theorem\
+  \ false_of_isLocallySurjective_bot claims to make vacuous.\n\nWHY IT IS NOT A DEFECT,\
+  \ and this is the only reason: GeometricallyReduced is DERIVABLE from the other\
+  \ three. #synth in the three-instance context returns Smooth.geometricallyReduced\
+  \ C.hom. I re-proved the refutation inside isLocallySurjective_of_bot own exact\
+  \ binder set (no GeometricallyReduced in scope) and it closed, EXIT=0. So the vacuity\
+  \ claim is TRUE as stated. But nothing in the file records that the parity was checked,\
+  \ and the same shape was a real defect in DivisorFamilyAffClassDegree.lean this\
+  \ round (I-1230, fixed at b0068da5de). Add the omit or a one-line note.\n\nTHE LARGER\
+  \ FACT, and it is the one that reprices the file. NONE of the four instances is\
+  \ used by the proof, and neither is pic0SigmaSheaf. I re-proved the refutation for\
+  \ an ARBITRARY presheaf F : Scheme^op -> Type u, no field, no curve, no sheaf condition,\
+  \ with the proof script VERBATIM and restrictChart replaced by its definitional\
+  \ body yoneda.map bot.iota >>= f i:\n\n  theorem generic_not_isLocallySurjective_bot\
+  \ {F : Scheme^op => Type u} {iota : Type u}\n      {X : iota -> Scheme} (f : forall\
+  \ i, yoneda.obj (X i) --> F)\n      (T : Scheme) (s : F.obj (op T)) (t : T) :\n\
+  \    not (Presheaf.IsLocallySurjective Scheme.zariskiTopology\n      (Sigma.desc\
+  \ fun i => yoneda.map (bot : (X i).Opens).iota >>= f i))\n\nEXIT=0, and the landed\
+  \ theorem follows from it by defeq (verified: landed_from_generic typechecks with\
+  \ the generic one as its whole proof). The file own docstring says \"it would kill\
+  \ it for any presheaf whatsoever\" about isEmpty_of_hom_bot only; the same is true\
+  \ of the WHOLE refutation. Consequence for a reader: this is not a fact about pic0,\
+  \ so no lane should expect a pic0-specific repair to evade it, and the result belongs\
+  \ where any presheaf atlas can see it."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T21:04:16.045787+00:00'
+updated_at: '2026-07-29T21:04:16.045797+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0010-horizon-ajcr-p4
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

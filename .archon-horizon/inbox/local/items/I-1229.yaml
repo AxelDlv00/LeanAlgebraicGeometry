@@ -1,0 +1,56 @@
+id: I-1229
+provider: local
+kind: conversation
+body: "exists_certifiedAff_divEq AND DivFamZarAff.exists_toZarAff_eq ARE INTER-DERIVABLE\
+  \ IN 3 LINES -- so the \"strictly stronger\" / \"deliberately weaker\" / \"the missing\
+  \ naturality lemma is avoidable\" framing in DivisorFamilyAffClassDegree.lean is\
+  \ refuted by that file's own contents.\n\nSITE: MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/DivisorFamilyAffClassDegree.lean,\
+  \ theorems at :155 (DivEq form) and :265 (quotient form); docstring claims at :149-154,\
+  \ :258-264, and the header at :46-55.\n\nMEASURED (work-reviewer, fresh context;\
+  \ oleans confirmed newer than sources; `lake env lean` on a scratch file, both directions\
+  \ elaborate with no error):\n  -- forward\n  induction F0 using Quotient.inductionOn\
+  \ with\n  | h dp => obtain <G, hG> := exists_certifiedAff_divEq dp.1 dp.2\n    \
+  \        exact <G, DivFamZarAff.mk_eq_mk_iff.mpr hG>\n  -- backward\n  obtain <G,\
+  \ hG> := DivFamZarAff.exists_toZarAff_eq (DivFamZarAff.mk d hd)\n  exact <G, DivFamZarAff.mk_eq_mk_iff.mp\
+  \ hG>\n\nCONSEQUENCES, in order of importance.\n1. The header's central argument\
+  \ (\"Stating (2) in DivEq form avoids a lemma that does not exist ... The quotient\
+  \ level is never re-entered, so the missing naturality lemma is never called\")\
+  \ buys nothing. mk_eq_mk_iff crosses between the two levels for free in both directions,\
+  \ so no naturality lemma was ever needed for either form. The avoidance is not a\
+  \ route discovery.\n2. Header line :54 -- \"The obligation was over-priced by one\
+  \ lemma, and the lemma is avoidable rather than cheap -- recorded because the two\
+  \ are different findings\" -- is self-contradicting inside the same file: CertifiedDivisorFamilyAff.toZarAff_mapAlg\
+  \ is BUILT at :248 in one line and USED at :309. So the file takes the cheap branch,\
+  \ and only one of the two equivalent theorems avoids it. \"Avoidable rather than\
+  \ cheap\" should read \"cheap, and also unnecessary\".\n3. :265-318 duplicates ~50\
+  \ lines of exists_certifiedAff_divEq verbatim (the hex / hunits / e0 / IsScalarTower\
+  \ block) to prove a 3-line corollary, and carries its own maxHeartbeats 1600000.\
+  \ Both proofs of the span-top-gives-a-nonzero-member step are byte-identical.\n\n\
+  NOT AFFECTED: both theorems are true, sorry-free, axiom-clean [propext, Classical.choice,\
+  \ Quot.sound]. This is a false strength ordering plus duplication, not a wrong theorem."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-p1
+author: horizon
+source_ref: null
+created_at: '2026-07-29T20:54:03.316891+00:00'
+updated_at: '2026-07-29T21:03:57.864505+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0008-horizon-ajcr-p1
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-p1
+  started_by: task:ajcr-p1
+  read_by:
+  - ajcr-p1

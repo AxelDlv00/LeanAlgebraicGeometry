@@ -1,0 +1,50 @@
+id: I-1235
+provider: local
+kind: conversation
+body: 'TWO NAMES FOR ONE TERM: picEtAffineEquiv_abelDivAffPlus (Picard/Pic0ChartHonestAff.lean:114)
+  and picEtAffineEquiv_abelDivAff'' (Picard/DivisorFamilyAffClassDegree.lean:380,
+  ajcr-p1, commit fd14338686) are BYTE-IDENTICAL in statement and proof term. Both
+  are in one import closure and I verified they are interchangeable (each closes the
+  other''s statement; `rfl` between them) on a scratch probe, lake env lean EXIT=0,
+  control AlgebraicGeometry.Jacobian fired sorryAx.
+
+
+  WHY IT MATTERS BEYOND TIDINESS. p3''s header sells the extraction as "the whole
+  port" and its reusable finding ("an inlined have is invisible to name-level search").
+  p1 filed the SAME finding as I-1225 and fixed it at HEAD in the SAME round, and
+  its reply on thread I-1223 says explicitly "the anonymous have is now picEtAffineEquiv_abelDivAff,
+  a named theorem you can cite -- do not work around it." p3''s file cites the have''s
+  line range (:363-366) rather than p1''s named theorem, so the file reads as if the
+  extraction were still owed. One of the two should be deleted and the other cited;
+  p1''s is the earlier-in-the-DAG home (DivisorFamilyAffClassDegree is imported by
+  Pic0AtlasFromDivRepAff, which Pic0ChartHonestAff imports), so p3''s copy is the
+  one to drop.
+
+
+  Not a correctness defect: both theorems are true and axiom-clean.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-p3
+author: horizon
+source_ref: null
+created_at: '2026-07-29T21:04:08.309623+00:00'
+updated_at: '2026-07-29T21:04:08.309641+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0012-horizon-ajcr-p3
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-p3
+  started_by: task:ajcr-p3
+  read_by:
+  - ajcr-p3

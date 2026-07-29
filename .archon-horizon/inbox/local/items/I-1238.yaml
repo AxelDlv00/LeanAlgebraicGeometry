@@ -1,0 +1,54 @@
+id: I-1238
+provider: local
+kind: issue
+body: "THE NEW WIDENED OPENNESS *DOES* CLOSE THE chartLocusOpens `haff` BRIDGE FOR\
+  \ THE WIDENED CHART VALUE -- three sites still price that bridge as owed, and the\
+  \ author's own file says twice that it closes nothing.\n\nMEASURED work-reviewer,\
+  \ fresh context, on oleans I re-verified (control AlgebraicGeometry.Jacobian fires\
+  \ sorryAx; lake env lean on /tmp/wraudit/probe5.lean, EXIT=0, both results axiom-clean\
+  \ [propext, Classical.choice, Quot.sound]).\n\nWHAT I BUILT FROM THE LANDED THEOREM,\
+  \ with no new mathematics:\n  haff_discharged : forall U : T.left.affineOpens,\n\
+  \    IsOpen (chartLocus C m Z (picEtMap C (Over.fromSpecAffine T U) (chartValueAff\
+  \ C n m Z T s)))\n  -- proof: intro U; rw [picEtMap_chartValueAff]; exact isOpen_chartLocus_chartValueAff\
+  \ C pi n hpi m Z _ _\nand then chartLocusOpens C m Z T (chartValueAff ...) applied\
+  \ with NO argument left over. Two lines. The step that makes it work is picEtMap_chartValueAff\
+  \ (Picard/DivisorFamilyAffAbel.lean:295): restricting a widened chart value is again\
+  \ a widened chart value, so the new theorem applies to the restriction.\n\nSITES\
+  \ THAT NOW OVERSTATE THE DISTANCE:\n* Picard/Pic0ChartUnivReduce.lean:104-114 --\
+  \ \"no theorem in the tree produces haff for a general test. It is a genuine open\
+  \ obligation.\" True for a general lam; FALSE for a widened chart value, which is\
+  \ the lam DAT-C reads.\n* Picard/Pic0ChartAtlasCoupling.lean:53 and :142 -- \"the\
+  \ intended instantiation still owes the chartLocusOpens bridge (cost: haff, i.e.\
+  \ dat-b's B-4).\" Not owed at this lam any more.\n* Picard/Pic0ChartHonestAff.lean:42\
+  \ and :181-183 -- the author's OWN understatement, in bold, twice (\"This closes\
+  \ no antecedent\"). Strictly, still true of pic0RepresentableByOfCharts's two antecedents\
+  \ (IsChartUniv and Zariski-local surjectivity are genuinely untouched, and (divFunctorAff\
+  \ C n).RepresentableBy has no producer -- all three re-verified). But B-4/haff is\
+  \ a real gate that a downstream consumer prices, and it is now paid at the widened\
+  \ chart value. Understating it costs the next lane the same rediscovery p3 just\
+  \ paid for on the inlined `have`.\n\nNOT A CORRECTNESS DEFECT. Everything landed\
+  \ is true, sorry-free and axiom-clean, and chartLocusOpensOfIsPlusHonest (Pic0ChartPlusFibreProducer.lean:334)\
+  \ already did this for a general honest lam -- the new content is a PRODUCER of\
+  \ honesty at the widened carrier, which is what the four pre-existing producers\
+  \ (all chart-typed) could not supply. The gap is in the pricing prose, in the cheap\
+  \ direction."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T21:04:53.508282+00:00'
+updated_at: '2026-07-29T21:04:53.508298+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0012-horizon-ajcr-p3
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

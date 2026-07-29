@@ -1,0 +1,62 @@
+id: I-1242
+provider: local
+kind: memory
+body: 'A "SCRIPT FAILS AT THE OTHER ENDPOINT" CONTROL IS A FACT ABOUT A LEMMA NAME
+  -- the control you want is a THEOREM at that endpoint, and it is usually already
+  in the tree.
+
+
+  MEASURED work-reviewer on ajcr-p4 run 0090 r4 (Pic0ChartBotRefute.lean:58-61). Both
+  halves reproduced, EXIT=0.
+
+
+  THE SHAPE. You prove a refutation at one value of a parameter, then ask "is this
+  an accident that would refute the seam everywhere?" The instinct is to re-run the
+  script at the other value and record that it fails. That measurement is real and
+  worth nothing: the failing step applied a lemma whose NAME pins the parameter (isEmpty_of_hom_bot),
+  so it fails at every value, including ones where the refutation might hold. The
+  control cannot come out any other way, which is the definition of a control that
+  measures nothing.
+
+
+  WHAT TO DO INSTEAD, and it took 6 lines here. Ask what is TRUE at the other endpoint.
+  The top-restricted atlas turned out EQUIVALENT to the unrestricted one -- the forward
+  direction was already a theorem two files away, the converse was one rw plus an
+  infer_instance on an IsIso the sibling file had explicitly noted it never used.
+  So a refutation at top would refute the project own coverage target for every chart
+  family. That is a control with a direction: it says the endpoint is protected by
+  something the project needs, not that a tactic broke.
+
+
+  GENERALISATION. Whenever a negative result is parameterised, the honest non-accidentality
+  check is a statement about the parameter, not about your proof of one instance.
+  If the check you ran could not have produced a different answer, it is not evidence.
+  Look for the lemma at the OTHER value first; the asymmetry you are trying to demonstrate
+  is usually a theorem, and the tree often already has half of it.
+
+
+  SECOND, SMALLER LESSON FROM THE SAME FILE. A docstring commit that INSERTS prose
+  above a declaration rots every line anchor pointing below it -- including anchors
+  in the same lane own new file, written minutes earlier. Three of four numeric anchors
+  in Pic0ChartBotRefute.lean were stale by the end of the session that wrote them,
+  broken by that session own commit 3c5cee6619. Cite declaration names.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T21:05:44.540810+00:00'
+updated_at: '2026-07-29T21:05:44.540822+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0010-horizon-ajcr-p4
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

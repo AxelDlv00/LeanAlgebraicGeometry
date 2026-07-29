@@ -128,10 +128,18 @@ theorem exists_splitting_h0_eq_one_of_mem_chartLocus
         (_ : IsScalarTower k (Over.testPointField t) L)
         (_ : Module.Finite (Over.testPointField t) L)
         (_ : Algebra.IsSeparable (Over.testPointField t) L)
+        (M : (relCurve C L).CechPic)
         (W : ((C ⊗ overSpec k L).left).CurveDivisor),
+      -- `M` presents the TWISTED fibre class at `t`: this is what ties the conclusion to
+      -- `lam`, `m`, `Z` and `t`, and without it the statement is satisfied by `W = 0`.
+      PicEtAff.map C L
+          (picEtAffineEquiv C (Over.testPointField t)
+            (picEtMap C (Over.testPoint t) (chartTwist C m Z T lam)))
+        = PicEtAff.unit C L (relPicMk C (overSpec k L) M) ∧
+      Scheme.CurveDivisor.picClass L W = M ∧
+      Scheme.CurveDivisor.deg L W = (n : ℤ) ∧
       Sheaf.h0 ((C ⊗ overSpec k L).left.divisorSheaf L W) = 1 := by
   obtain ⟨L, hLf, hLa, hLKa, hLtow, hLfin, hLsep, M, hM, W, hWcl, hWh1⟩ := ht
-  refine ⟨L, hLf, hLa, hLKa, hLtow, hLfin, hLsep, W, ?_⟩
   haveI : IsIntegral (relCurve C L) := instIsIntegralBaseChange C L
   haveI : SmoothOfRelativeDimension 1 (relCurve C L ↘ Spec (CommRingCat.of L)) :=
     instSmoothOfRelativeDimensionBaseChange C L
@@ -153,7 +161,8 @@ theorem exists_splitting_h0_eq_one_of_mem_chartLocus
   -- `χ(𝒪)` transports to the base-changed curve
   have hχL : Sheaf.chi (((C ⊗ overSpec k L).left).moduleKSheaf L) = 1 - (n : ℤ) :=
     chi_relCurve_baseField C L n hχ
-  exact h0_eq_one_of_subsingleton_of_deg n hχL W hWdeg hWh1
+  exact ⟨L, hLf, hLa, hLKa, hLtow, hLfin, hLsep, M, W, hM, hWcl, hWdeg,
+    h0_eq_one_of_subsingleton_of_deg n hχL W hWdeg hWh1⟩
 
 /-- **GAP-2 UNIQUENESS AT A WITNESS OF THE PINNED DEGREE** — the keystone with its `h⁰`
 binder discharged rather than assumed. -/
@@ -201,10 +210,19 @@ theorem existsUnique_effective_of_mem_chartLocus
         (_ : IsScalarTower k (Over.testPointField t) L)
         (_ : Module.Finite (Over.testPointField t) L)
         (_ : Algebra.IsSeparable (Over.testPointField t) L)
+        (M : (relCurve C L).CechPic)
         (E : ((C ⊗ overSpec k L).left).CurveDivisor),
+      -- `M` presents the TWISTED fibre class at `t`, and `E` represents `M` itself.  Without
+      -- these two clauses the statement is satisfied by `L = κ(t)`, `E = 0` on any curve.
+      PicEtAff.map C L
+          (picEtAffineEquiv C (Over.testPointField t)
+            (picEtMap C (Over.testPoint t) (chartTwist C m Z T lam)))
+        = PicEtAff.unit C L (relPicMk C (overSpec k L) M) ∧
+      Scheme.CurveDivisor.picClass L E = M ∧
+      Scheme.CurveDivisor.deg L E = (n : ℤ) ∧
       0 ≤ E ∧
         ∀ E' : ((C ⊗ overSpec k L).left).CurveDivisor, 0 ≤ E' →
-          Scheme.CurveDivisor.picClass L E' = Scheme.CurveDivisor.picClass L E → E' = E := by
+          Scheme.CurveDivisor.picClass L E' = M → E' = E := by
   obtain ⟨L, hLf, hLa, hLKa, hLtow, hLfin, hLsep, M, hM, W, hWcl, hWh1⟩ := ht
   haveI : IsIntegral (relCurve C L) := instIsIntegralBaseChange C L
   haveI : SmoothOfRelativeDimension 1 (relCurve C L ↘ Spec (CommRingCat.of L)) :=
@@ -228,11 +246,59 @@ theorem existsUnique_effective_of_mem_chartLocus
     h0_eq_one_of_subsingleton_of_deg n hχL W hWdeg hWh1
   -- the effective representative of the SAME class, and its own `h⁰`/vanishing data
   obtain ⟨E, hEe, hEcl⟩ := exists_effective_picClass_eq_of_h0_eq_one W hone
-  refine ⟨L, hLf, hLa, hLKa, hLtow, hLfin, hLsep, E, hEe, fun E' hE'e hcl => ?_⟩
-  refine Scheme.CurveDivisor.eq_of_picClass_eq_of_h0_one (K := L) hEe hE'e hcl.symm ?_
-  -- `h⁰` is a class invariant, so `E` inherits the value proved for `W`
-  rw [h0_divisorSheaf_eq_of_picClass_eq (K := L) hEcl]
-  exact hone
+  -- `E` represents `M` too, has the same degree, and inherits `h⁰ = 1`
+  have hEM : Scheme.CurveDivisor.picClass L E = M := hEcl.trans hWcl
+  have hEone : Sheaf.h0 ((C ⊗ overSpec k L).left.divisorSheaf L E) = 1 := by
+    rw [h0_divisorSheaf_eq_of_picClass_eq (K := L) hEcl]; exact hone
+  have hEdeg : Scheme.CurveDivisor.deg L E = (n : ℤ) :=
+    (deg_eq_deg_of_picClass_eq (K := L) hEcl).trans hWdeg
+  refine ⟨L, hLf, hLa, hLKa, hLtow, hLfin, hLsep, M, E, hM, hEM, hEdeg, hEe,
+    fun E' hE'e hcl => ?_⟩
+  exact Scheme.CurveDivisor.eq_of_picClass_eq_of_h0_one (K := L) hEe hE'e
+    (hEM.trans hcl.symm) hEone
+
+/-! ## The non-vacuity check: the strengthened conclusion gives membership back
+
+An earlier version of the two theorems above stated only `h⁰ = 1` (and effectivity) under an
+existential over *both* the field and the divisor, mentioning neither `M` nor the twisted
+class.  That was **VACUOUS** and a fresh-context audit refuted it (`I-1233`): taking
+`L = κ(t)` — every instance binder is `inferInstance` — and `W = 0` gives
+`h⁰(𝒪) = 1` unconditionally on any curve, so the statement held with `ht`, `hdeg`, `hχ` and
+`hlam` all unused.  The repair was to move the *relations* into the conclusion, which the
+proof bodies already established and then discarded.
+
+This section is the check that the repair is sufficient rather than merely longer: the
+strengthened conclusion **implies** `t ∈ chartLocus C m Z lam`, so it is equivalent to
+membership and cannot be satisfied by a trivial divisor on a curve where the locus is empty. -/
+
+/-- **The conclusion of `exists_splitting_h0_eq_one_of_mem_chartLocus` implies membership.**
+
+So that theorem is an *equivalence* dressed as an implication, and in particular the `W = 0`
+inhabitant that refuted its earlier form is excluded: the clauses `hM` and `hWcl` are exactly
+`IsSplitWitness`' first two, and `h1` its third. -/
+set_option maxHeartbeats 1600000 in
+-- The `IsSplitWitness` anonymous constructor must unify seven instance binders against the
+-- section context; the default budget is not enough for that `isDefEq` (I-0198 escape hatch).
+theorem mem_chartLocus_of_conclusion
+    {T : Over (Spec (.of k))} (lam : picEt C T) (t : T.left)
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    {L : Type u} [Field L] [Algebra k L] [Algebra (Over.testPointField t) L]
+    [IsScalarTower k (Over.testPointField t) L]
+    [Module.Finite (Over.testPointField t) L]
+    [Algebra.IsSeparable (Over.testPointField t) L]
+    (M : (relCurve C L).CechPic)
+    (W : ((C ⊗ overSpec k L).left).CurveDivisor)
+    (hM : PicEtAff.map C L
+        (picEtAffineEquiv C (Over.testPointField t)
+          (picEtMap C (Over.testPoint t) (chartTwist C m Z T lam)))
+      = PicEtAff.unit C L (relPicMk C (overSpec k L) M))
+    (hWcl : Scheme.CurveDivisor.picClass L W = M)
+    (h1 : Subsingleton (Sheaf.HModule ((C ⊗ overSpec k L).left.divisorSheaf L W) 1)) :
+    t ∈ chartLocus C m Z lam :=
+  ⟨L, ‹Field L›, ‹Algebra k L›, ‹Algebra (Over.testPointField t) L›,
+    ‹IsScalarTower k (Over.testPointField t) L›,
+    ‹Module.Finite (Over.testPointField t) L›,
+    ‹Algebra.IsSeparable (Over.testPointField t) L›, M, hM, W, hWcl, h1⟩
 
 end
 

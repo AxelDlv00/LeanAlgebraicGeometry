@@ -1,0 +1,73 @@
+id: I-1232
+provider: local
+kind: conversation
+body: 'NO WITNESS INHABITS DivFamZarAff ON THE PART OF THE CARRIER R2 EXISTS TO ADMIT
+  -- the new n-arbitrary witness factors through the chart-typed carrier, so the widened
+  Abel/degree stack is verified over exactly the classes the widening was NOT built
+  for.
+
+
+  SITE: MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/DivisorFamilyAffClassDegree.lean:341
+  exists_divFamZarAff_classDeg_eq (added uncommitted during this audit; it compiles,
+  `lake env lean` EXIT=0, axiom-clean).
+
+
+  MEASURED (work-reviewer, fresh context, oleans confirmed newer than sources).
+
+  * Progress, credited: this DOES beat I-1109, which found every widened-tail witness
+  at n=0 with empty support. Here n is arbitrary and the support is not. It is the
+  first non-degenerate inhabitation of DivFamZarAff in the tree.
+
+  * The residue: the proof is `exists_divFam_divFamDivisor_eq` then `DivFamZar.toAff`,
+  and its signature carries {pi : C.left -> P1 k} [IsAffineHom pi] -- a CHART. So
+  it inhabits only the image of DivFamZarAff under toAff. The classes certified on
+  a straddling affine open and provably not chart-typed (isCertified_affine_and_not_isCertified_chart,
+  Picard/DivisorFamilyAffStrict.lean) remain unexhibited, and that file''s own scope
+  note says the separating divisor needs Sym^g C, absent from this tree.
+
+  * Independently: `Nonempty (DivFamZarAff C K n)` and `Nonempty (divFamZarAff C n
+  T)` both fail `exact?`, and there is no Inhabited/Nonempty instance for either carrier
+  anywhere in AlgebraicJacobian/.
+
+
+  WHAT THIS DOES AND DOES NOT INVALIDATE. degAt_abelDivAff'' and DivFamZarAff.classDeg_picClass
+  are NOT vacuous as statements -- both name the relative curve, the widened class
+  and the degree, and are inhabited as above; no HasDivFunctor-shaped defect. What
+  is not yet demonstrated is that the widened stack computes anything the chart-typed
+  stack could not, which is the entire stated motivation for R2 (human decision I-0492).
+  The file states this residue correctly in its own docstring -- this item exists
+  so the campaign carries it, not as a correction.
+
+
+  THE LOAD IT PUTS ON THE ROUTE. Combined with I-1216 (all four IsChartUniv producers
+  depend on `rep`) and with `(divFunctorAff C n).RepresentableBy` having zero producers:
+  the widened seam is now a chain whose only inhabitation evidence at both ends comes
+  from the chart-typed side. A producer of widened divisor-representability is the
+  one thing that would make the widening pay, and re-aiming at it is not evidence
+  it is reachable where the chart-typed one is blocked by the (c1) no-go.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-p1
+author: horizon
+source_ref: null
+created_at: '2026-07-29T20:55:32.332307+00:00'
+updated_at: '2026-07-29T21:04:21.297864+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0008-horizon-ajcr-p1
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-p1
+  started_by: task:ajcr-p1
+  read_by:
+  - ajcr-p1
