@@ -295,6 +295,121 @@ theorem locally_isStandardSmooth_appLE_of_smooth
 
 end Scheme.Pic0Et
 
+/-! ## §2c. The reduction: one chart per point, the rank on the chart algebra itself
+
+§2 and §2b say what leaf B *is*; this section reduces it. The two statements below are
+generic in the morphism — no Picard object occurs — and they are what makes the residue a
+rank computation rather than a class membership. -/
+
+/-- **`SmoothOfRelativeDimension n f` is equivalent to a per-point condition on ONE affine
+chart pair: standard smoothness there, plus `Module.rank Ω = n` on the chart algebra.**
+
+This is the reduction §2 stopped short of. Compare the three forms now in the file:
+
+* `leafB_iff_appLE` (mathlib's `HasRingHomProperty.iff_appLE`) tests **every** chart pair
+  and asks for `RingHom.Locally (IsStandardSmoothOfRelativeDimension n)` at each — so the
+  numeral is asserted of the *away-localisations* `Γ(X,V)_t`, not of `Γ(X,V)`;
+* `leafB_of_pointwise` is the class constructor: one chart pair per point, but with the
+  bare `RingHom.IsStandardSmoothOfRelativeDimension n` still to be produced;
+* this lemma replaces that last obligation by `Module.rank Γ(X,V) Ω[Γ(X,V)⁄Γ(Y,U)] = n`.
+
+**The away-localisations are an artifact of the `iff_appLE` route, not of the leaf**, and
+that is the correction this section makes to §2's closing paragraph. The bare property
+implies the `Locally`-wrapped one for free (`RingHom.locally_of` with
+`RingHom.isStandardSmoothOfRelativeDimension_respectsIso`), while the converse is *not*
+available at a single chart — so a prover who reads the residue off `leafB_iff_appLE`
+inherits a localisation quantifier the class never asked for.
+
+`Nontrivial Γ(X,V)` is **not** a hypothesis: it is free from the point, via
+`Scheme.component_nontrivial` and `x ∈ V`. An earlier revision of this file listed it
+among the things the chart-level conversion needs.
+
+Mechanism, both directions from mathlib:
+`Algebra.IsStandardSmoothOfRelativeDimension.iff_of_isStandardSmooth` for `mpr`, and
+`.isStandardSmooth` together with `.rank_kaehlerDifferential` for `mp`. -/
+theorem smoothOfRelativeDimension_iff_pointwise_rank {X Y : Scheme.{u}} (f : X ⟶ Y)
+    (n : ℕ) :
+    SmoothOfRelativeDimension n f ↔
+      ∀ x : X, ∃ (U : Y.Opens) (_ : IsAffineOpen U) (V : X.Opens)
+        (_ : IsAffineOpen V) (_ : x ∈ V) (e : V ≤ f ⁻¹ᵁ U),
+        (f.appLE U V e).hom.IsStandardSmooth ∧
+          (letI := (f.appLE U V e).hom.toAlgebra;
+            Module.rank Γ(X, V) (Ω[Γ(X, V)⁄Γ(Y, U)]) = (n : Cardinal)) := by
+  constructor
+  · intro h x
+    obtain ⟨U, hU, V, hV, hxV, e, hn⟩ := h.exists_isStandardSmoothOfRelativeDimension x
+    letI := (f.appLE U V e).hom.toAlgebra
+    haveI : Algebra.IsStandardSmoothOfRelativeDimension n Γ(Y, U) Γ(X, V) := hn
+    haveI : Nonempty (V : Type _) := ⟨⟨x, hxV⟩⟩
+    haveI : Nontrivial Γ(X, V) := Scheme.component_nontrivial X V
+    exact ⟨U, hU, V, hV, hxV, e,
+      Algebra.IsStandardSmoothOfRelativeDimension.isStandardSmooth (n := n),
+      Algebra.IsStandardSmoothOfRelativeDimension.rank_kaehlerDifferential n⟩
+  · intro h
+    refine ⟨fun x => ?_⟩
+    obtain ⟨U, hU, V, hV, hxV, e, hss, hr⟩ := h x
+    refine ⟨U, hU, V, hV, hxV, e, ?_⟩
+    letI := (f.appLE U V e).hom.toAlgebra
+    haveI : Algebra.IsStandardSmooth Γ(Y, U) Γ(X, V) := hss
+    haveI : Nonempty (V : Type _) := ⟨⟨x, hxV⟩⟩
+    haveI : Nontrivial Γ(X, V) := Scheme.component_nontrivial X V
+    exact (Algebra.IsStandardSmoothOfRelativeDimension.iff_of_isStandardSmooth
+      (R := Γ(Y, U)) (S := Γ(X, V)) n).mpr hr
+
+/-- **The bare per-chart property implies the `Locally`-wrapped one**, which is the
+half of the comparison that *is* free. Recorded because it is what makes the asymmetry
+in `smoothOfRelativeDimension_iff_pointwise_rank`'s docstring a measurement rather than
+a guess: this direction closes by `RingHom.locally_of`, and the converse at a single
+chart does not close at all. -/
+theorem RingHom.locally_isStandardSmoothOfRelativeDimension_of
+    {R S : Type u} [CommRing R] [CommRing S] (f : R →+* S) (n : ℕ)
+    (h : RingHom.IsStandardSmoothOfRelativeDimension n f) :
+    RingHom.Locally (RingHom.IsStandardSmoothOfRelativeDimension n) f :=
+  RingHom.locally_of RingHom.isStandardSmoothOfRelativeDimension_respectsIso f h
+
+namespace Scheme.Pic0Et
+
+variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
+  [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+  [GeometricallyIntegral C.hom] [HasPicSchemeEt C]
+
+/-- **Leaf B, reduced: for each point of `Pic⁰_{C/k}` exhibit ONE affine chart pair whose
+algebra is standard smooth over the base chart and has `Ω`-rank `genus C`.**
+
+This is `smoothOfRelativeDimension_iff_pointwise_rank` at the étale Picard object, and it
+is the form the remaining work has. What it changes relative to §2:
+
+* the numeral is asserted of the **chart algebra** `Γ(Pic⁰, V)`, not of the
+  away-localisations `Γ(Pic⁰, V)_t` that `RingHom.Locally` quantifies over in
+  `leafB_iff_appLE`. **This corrects the closing paragraph of
+  `locally_isStandardSmooth_appLE_of_smooth`**, which located the residue on those
+  localisations; they come from the `iff_appLE` route, not from the leaf;
+* the chart is chosen **per point**, so a homogeneity/translation argument that produces
+  one chart at the identity and moves it is a complete route — which is what
+  `SmoothOfRelativeDimension` being `IsLocalAtSource` for `zariskiPrecoverage` already
+  says, and what §3's retraction (`I-1096`) restored;
+* `Nontrivial` is not owed anywhere: it is free from the point.
+
+Still open, and stated so the distance is not misread: nothing in the tree computes
+`Module.rank Γ(Pic⁰, V) Ω[Γ(Pic⁰, V)⁄Γ(Spec k, U)]` for a single chart `V` of `Pic⁰`, and
+`Pic0Et.finrank_cotangentSpace_eq_genus` computes a different invariant at a different
+locus (the tangent space at the identity). This is an equivalence, so **no obligation is
+discharged here**; what is discharged is the localisation quantifier. -/
+theorem leafB_iff_pointwise_rank :
+    SmoothOfRelativeDimension (genus C) (Pic0SchemeEt C).hom ↔
+      ∀ x : ((Pic0SchemeEt C).left : Scheme.{u}),
+        ∃ (U : (Spec (CommRingCat.of k)).Opens) (_ : IsAffineOpen U)
+          (V : ((Pic0SchemeEt C).left : Scheme.{u}).Opens) (_ : IsAffineOpen V) (_ : x ∈ V)
+          (e : V ≤ (Pic0SchemeEt C).hom ⁻¹ᵁ U),
+          ((Pic0SchemeEt C).hom.appLE U V e).hom.IsStandardSmooth ∧
+            (letI := ((Pic0SchemeEt C).hom.appLE U V e).hom.toAlgebra;
+              Module.rank Γ(((Pic0SchemeEt C).left : Scheme.{u}), V)
+                  (Ω[Γ(((Pic0SchemeEt C).left : Scheme.{u}), V)⁄Γ(Spec (CommRingCat.of k), U)])
+                = (genus C : Cardinal)) :=
+  AlgebraicGeometry.smoothOfRelativeDimension_iff_pointwise_rank _ _
+
+end Scheme.Pic0Et
+
 /-! ## §3. Homogeneity gives the cover for free and the numeral not at all
 
 The measured negative that keeps a lane from spending a round on translation
