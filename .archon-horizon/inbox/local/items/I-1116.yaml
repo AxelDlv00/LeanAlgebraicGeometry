@@ -21,13 +21,13 @@ body: 'CLAIM ajc-p2 (run 0084 r3): AJC.pic0av.reldim (headline obligation 4, lea
   field rather than against the structure-morphism equality.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T17:51:41.279395+00:00'
-updated_at: '2026-07-29T18:06:34.983604+00:00'
+updated_at: '2026-07-29T20:17:18.530303+00:00'
 metadata:
   provenance:
     run: 0084
@@ -40,4 +40,4 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   read_by:
-  - ajc-p4
+  - ajc-p2

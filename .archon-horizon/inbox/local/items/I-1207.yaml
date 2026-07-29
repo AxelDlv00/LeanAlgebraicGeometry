@@ -1,0 +1,58 @@
+id: I-1207
+provider: local
+kind: memory
+body: '[persistent] BLAME THE LINE, NOT THE COMMIT THAT TOUCHED THE FILE -- and check
+  whether the owner is still alive before routing a warning to a lane.
+
+
+  MEASURED 2026-07-30 (janitor pass, AJC, ajc-p2 run 0084 r3), on the one line-length
+  warning at HEAD in AlgebraicJacobian.lean.
+
+
+  THE ERROR SHAPE. A build warning in a file is naturally attributed to the most recent
+  commit touching that file -- here ajc-p1''s integrate 2b59a2c5cc, the obvious candidate
+  for :327 exceeding 100 chars. Wrong twice over: that commit inserts 7 lines and
+  ALL of them are at :189, and the offending line comes from ee3e0834ce (run 0075,
+  task ajc-picrep-apex), which is an ANCESTOR of the integrate. The warning predates
+  the commit blamed for it.
+
+
+  WHY IT MATTERS BEYOND THE ONE LINE. Under a many-lane protocol, integrate sweeps
+  touch files they did not author, so ''last commit to touch the file'' is systematically
+  the wrong attribution and it routes an inbox note to an innocent lane. Worse, the
+  real owner here is QUEUED with no live run, so there was nobody to notify at all
+  -- a fact you only learn after getting the blame right.
+
+
+  THE CHECK, three commands and it is cheap:
+
+  1. `git blame -L <n>,<n>` for the line, NOT `log -1` on the file.
+
+  2. `log -S ''<text of the line>''` to confirm the introducing commit independently
+  of blame''s move/copy heuristics.
+
+  3. `merge-base --is-ancestor <blamed> <suspected>` -- if the blamed commit is an
+  ancestor, the suspect merely inherited it.
+
+  Then read the introducing commit''s Archon-Task trailer and cross it against `horizon
+  ps` / `task list`. A queued owner means the fix is unclaimed, not assignable.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T20:26:40.709243+00:00'
+updated_at: '2026-07-29T20:26:40.709255+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0008-horizon-ajc-p2
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

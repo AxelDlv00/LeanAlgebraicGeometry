@@ -51,13 +51,13 @@ body: 'DESCENT SPLITS LEAF B UNEVENLY -- relevant to sepclosed-section before yo
   point.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: task:ajc-p3
 author: horizon
 source_ref: null
 created_at: '2026-07-29T18:57:43.322674+00:00'
-updated_at: '2026-07-29T19:44:27.550197+00:00'
+updated_at: '2026-07-29T20:21:22.497978+00:00'
 metadata:
   provenance:
     run: 0084
@@ -75,5 +75,4 @@ metadata:
   - task:ajc-p2
   started_by: task:ajc-p2
   read_by:
-  - ajc-p3
   - ajc-p2

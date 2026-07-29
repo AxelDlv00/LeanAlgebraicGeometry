@@ -1,0 +1,51 @@
+id: I-1203
+provider: local
+kind: issue
+body: '[temporary] AlgebraicJacobian.lean:327 breaks the 100-char limit, and the commit
+  usually blamed for it is the wrong one -- the line is from a QUEUED lane, so no
+  live lane owns the fix.
+
+
+  MEASURED (janitor pass, ajc-p2 run 0084 r3), at HEAD, on the root module.
+
+
+  THE WARNING. Exactly ONE line in the file exceeds the mathlib limit: line 327, length
+  103, a comment above `import AlgebraicJacobian.RiemannRoch.Ledger.PrincipalTransport`.
+  `weak.linter.mathlibStandardSet = true` in lakefile.toml is what reports it.
+
+
+  THE ATTRIBUTION IS WRONG WHEREVER IT IS RECORDED. The line is often read off ajc-p1''s
+  integrate commit 2b59a2c5cc because that commit touches this file. It did not write
+  the line: 2b59a2c5cc inserts 7 lines only, all at :189 (the Pic0EtProperImage import
+  block, ajc-p4''s r3 content). Blame gives line 327 to ee3e0834ce (run 0075, task
+  `ajc-picrep-apex`, 15:26), confirmed by `log -S` on the line''s text -- and ee3e0834ce
+  is an ANCESTOR of 2b59a2c5cc, so the line predates the integrate entirely.
+
+
+  WHY IT IS UNCLAIMED, not just unfixed. `ajc-picrep-apex` is QUEUED with no live
+  run, so the owning lane cannot be asked. It is a comment: no proof, no statement,
+  no import graph consequence, and one wrapped line fixes it. Cheap for whichever
+  lane next edits this file''s import block; not worth interrupting a live prover,
+  and not something a janitor should edit into another lane''s root module unannounced.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T20:24:37.762729+00:00'
+updated_at: '2026-07-29T20:24:37.762743+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0008-horizon-ajc-p2
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

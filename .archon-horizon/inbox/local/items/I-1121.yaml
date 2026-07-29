@@ -25,13 +25,13 @@ body: 'CLAIM ajcr-p3 (run 0089 r4): AJCR.w4-rep.datum.dat-d.ddr.divrep.abel-wide
   DivisorAdaptation.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T17:58:27.341834+00:00'
-updated_at: '2026-07-29T17:58:27.341847+00:00'
+updated_at: '2026-07-29T20:20:09.612837+00:00'
 metadata:
   provenance:
     run: 0089
@@ -43,3 +43,5 @@ metadata:
     task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
       item'
     projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajc-p2
