@@ -10,29 +10,38 @@ summary: "SPLIT 2026-07-26 into c9a (DONE) and c9b (blocked). chart-u was reopen
   \ a witness-free hypothesis\n(isOpen_chartLocus_of_plusFibre, plus chartLocusOpensOfPlusFibre\
   \ giving the open as DATA). The\nhaff residue r6 named is discharged; B-4 is closed\
   \ as a chain. The one r7 ingredient was a\ntransport THAT THIS LANE'S OWN DOCSTRING\
-  \ ADVERTISED BY NAME AND NEVER WROTE -- see the row.\nRemaining: a PRODUCER of the\
-  \ per-affine-piece datum, which is a different obligation from every\nrow in the\
-  \ chain and is not claimed.\n\nc9b: still the deliverable proper, still blocked\
-  \ -- but the gate is now clause (ii) ALONE\n(CERT-Sigma/divRep through IsChartLocusFibre's\
-  \ exists_factor). Clauses (i) and (iii) are closed\nmodulo that producer and wait\
-  \ on no sibling lane.\n\nTHE PATTERN THIS LEAF KEEPS PRODUCING, and r7 is the FOURTH\
-  \ instance -- read this before pricing\nanything on it. Each session found the previous\
-  \ session's gate statement wrong in the SAME\ndirection, too confident that something\
-  \ was closed:\n * s0008: \"needs no new mathematics\" false by exactly one lemma\
-  \ (IsSplitWitnessIsoInvariant);\n * s0010/r5: priced the residue as \"map_map plus\
-  \ map_id\", missed the INSTANCE side;\n * r6: \"the W field costs zero\" false,\
-  \ and the thing it costs (B-4) had a residue itself short by\n   one ingredient\
-  \ that had been in the tree for weeks;\n * r7: the transport closing that residue\
-  \ was CITED BY NAME IN A DOCSTRING AND DID NOT EXIST, and\n   the sentence citing\
-  \ it made the obligation read as already discharged.\n\nr7 SHARPENS THE COMMON CAUSE.\
-  \ r6 diagnosed it as \"each closure was measured against the\nhypothesis the session\
-  \ had just removed rather than against ALL the hypotheses the theorem still\ncarries\"\
-  . True, and r7 adds the mechanism that lets it happen: THE PROSE IS NOT CHECKED.\
-  \ A\ndocstring may name a declaration that does not exist, and a `sorry` census,\
-  \ an axiom probe and a\ngreen root build are all silent about it. The cheap test\
-  \ is to grep the tree for every declaration\nname a header cites before trusting\
-  \ the sentence around it.\n\nAND ONE MORE, from r7's own self-correction: a hypothesis\
-  \ can be over-strong INSIDE A BINDER.\nhasWitnessH1Vanishing_of_isSplitWitness_at's\
+  \ ADVERTISED BY NAME AND NEVER WROTE -- see the row.\nRemaining, CORRECTED 2026-07-30\
+  \ (review-ajcr r6, issue I-1277): this used to read \"a PRODUCER of the\nper-affine-piece\
+  \ datum, which is a different obligation from every row in the chain and is not\n\
+  claimed\". THAT PRODUCER EXISTS and postdates this sentence --\nexists_isChartDatumPlusFibre_of_mem_range\
+  \ (Picard/Pic0ChartPlusFibreProducer.lean), documented in its\nown file as \"the\
+  \ producer proper\", consumed by isOpen_chartLocus_of_isPlusHonest and packaged\
+  \ as data\nby chartLocusOpensOfIsPlusHonest. Its honesty inputs also have producers,\
+  \ for every class the chart\nlayer reads (thetaFamily/sigmaFamily/abelDiv/chartTwist,\
+  \ plus abelDivAff' and chartValueAff at the R2\ncarrier). So the CHART-side obligation\
+  \ is discharged.\nWhat is actually remaining is honesty at an ARBITRARY picEt class\
+  \ -- a different statement, genuinely\nopen, whose only outright discharge needs\
+  \ a field test admitting a section (see dat-b).\n\nc9b: still the deliverable proper,\
+  \ still blocked -- but the gate is now clause (ii) ALONE\n(CERT-Sigma/divRep through\
+  \ IsChartLocusFibre's exists_factor). Clauses (i) and (iii) are closed\nmodulo that\
+  \ producer and wait on no sibling lane.\n\nTHE PATTERN THIS LEAF KEEPS PRODUCING,\
+  \ and r7 is the FOURTH instance -- read this before pricing\nanything on it. Each\
+  \ session found the previous session's gate statement wrong in the SAME\ndirection,\
+  \ too confident that something was closed:\n * s0008: \"needs no new mathematics\"\
+  \ false by exactly one lemma (IsSplitWitnessIsoInvariant);\n * s0010/r5: priced\
+  \ the residue as \"map_map plus map_id\", missed the INSTANCE side;\n * r6: \"the\
+  \ W field costs zero\" false, and the thing it costs (B-4) had a residue itself\
+  \ short by\n   one ingredient that had been in the tree for weeks;\n * r7: the transport\
+  \ closing that residue was CITED BY NAME IN A DOCSTRING AND DID NOT EXIST, and\n\
+  \   the sentence citing it made the obligation read as already discharged.\n\nr7\
+  \ SHARPENS THE COMMON CAUSE. r6 diagnosed it as \"each closure was measured against\
+  \ the\nhypothesis the session had just removed rather than against ALL the hypotheses\
+  \ the theorem still\ncarries\". True, and r7 adds the mechanism that lets it happen:\
+  \ THE PROSE IS NOT CHECKED. A\ndocstring may name a declaration that does not exist,\
+  \ and a `sorry` census, an axiom probe and a\ngreen root build are all silent about\
+  \ it. The cheap test is to grep the tree for every declaration\nname a header cites\
+  \ before trusting the sentence around it.\n\nAND ONE MORE, from r7's own self-correction:\
+  \ a hypothesis can be over-strong INSIDE A BINDER.\nhasWitnessH1Vanishing_of_isSplitWitness_at's\
   \ hplus quantified an instance too freely and was\nthereby unprovable from the thing\
   \ meant to supply it. A census sees argument positions, not the\ninstances they\
   \ quantify.\n\nVERIFICATION r7: full root build GREEN -- 9283 jobs, EXIT=0, zero\

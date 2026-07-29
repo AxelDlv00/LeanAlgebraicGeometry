@@ -48,12 +48,36 @@ summary: "*** CENSUS CORRECTION 2026-07-29, SAME SESSION (review-ajcr, run 0082 
   \ (:200 def, .mul :209, .inv :220, .pow :230,\nchartLocusOpensOfIsPlusHonest :334,\
   \ mem_ :343) -- none a spreading-out, a field-point reduction or a\nlocalisation\
   \ statement. Zero LSP diagnostics on that file, so the absence is measured, not\
-  \ grepped.\n\nCONSEQUENCE FOR A LANE ON THIS ROW. Do NOT spend a round on \"general\
-  \ affine base -> field point\";\nthe missing direction is the descent. What IS a\
-  \ real, self-contained brick, and is genuinely absent\nby the census above: a spreading-out\
-  \ lemma for the RANGE of relPicToPicEt along a localisation\nA -> A_f. That is the\
-  \ descent in miniature -- not cheap, but bounded and honestly stated.\n\nNOT WEAKENED\
-  \ BY THIS: p2's landed Pic0ChartCoverageAffineTest.lean (chartsCoverLocally_of_affineLocal,\n\
+  \ grepped.\n\nCONSEQUENCE FOR A LANE ON THIS ROW -- THE BRICK BELOW IS FREE, AND\
+  \ THIS PARAGRAPH USED TO PRESCRIBE\nIT. Do NOT spend a round on \"general affine\
+  \ base -> field point\"; that part stands.\n\nWHAT THIS PARAGRAPH SAID, and it was\
+  \ wrong: \"What IS a real, self-contained brick, and is genuinely\nabsent by the\
+  \ census above: a spreading-out lemma for the RANGE of relPicToPicEt along a localisation\n\
+  A -> A_f. That is the descent in miniature -- not cheap, but bounded and honestly\
+  \ stated.\" A lane\nsent to build that would build NOTHING.\n\nWHY IT IS FREE (review-ajcr\
+  \ r6, issue I-1273; reproduced twice with a firing `sorry` control, and a\nthird\
+  \ time by an independent fresh-context pass):\n\n  intro U; exact <relPicMap C (Over.fromSpecAffine\
+  \ T U) z, (picEtMap_relPicToPicEt C _ z).symm>\n\ncloses `IsPlusHonest C T (relPicToPicEt\
+  \ C T z)` outright. `picEtMap_relPicToPicEt`\n(Picard/PicEtUnit.lean) IS naturality\
+  \ of the unit, so the per-affine-open witnesses IsPlusHonest\ndemands are RESTRICTIONS\
+  \ of one top witness; the per-piece quantifier costs zero and no localisation\n\
+  step enters. Measured extra: `SmoothOfRelativeDimension 1` and the whole `pi` group\
+  \ are UNUSED here --\nonly IsProper, GeometricallyIrreducible and GeometricallyReduced\
+  \ are consumed.\n\nWHY THE ERROR SURVIVED, and it is the reusable part. The covariant/contravariant\
+  \ diagnosis above is\nCORRECT and the prescription was inferred from it. A variance\
+  \ fact prices the STATEMENT; the\nprescribed brick lived in the QUANTIFIER, which\
+  \ naturality discharges. Checking a row's premise is\nnot checking its prescription\
+  \ -- I certified this row as \"price holds\" earlier in the same session by\nverifying\
+  \ only the premise.\n\nWHAT REMAINS GENUINELY OPEN, stated so nothing is over-corrected:\
+  \ honesty at an ARBITRARY\n`mu : picEt C T`. Every one of the 13 IsPlusHonest producers\
+  \ is at a specific CONSTRUCTED class\n(thetaFamily, sigmaFamily, abelDiv, chartTwist,\
+  \ and abelDivAff'/chartValueAff at the R2 carrier);\nnone quantifies over an arbitrary\
+  \ class. The one outright discharge, PicEtAff.unit_surjective_of_section\n(Picard/EffectivityClose.lean),\
+  \ needs a FIELD test admitting a section and routes through field\ncofinality, so\
+  \ it has no general-base analogue. That is the real obligation on this row.\n\n\
+  CENSUS NOTE: this row has now carried the IsPlusHonest count at SIX and at ELEVEN,\
+  \ both wrong. It is\nTHIRTEEN -- the eleven-count correction still missed Pic0ChartHonestAff.lean's\
+  \ two.\n\nNOT WEAKENED BY THIS: p2's landed Pic0ChartCoverageAffineTest.lean (chartsCoverLocally_of_affineLocal,\n\
   with converse) is a SITE fact and stands on its own; it buys a quantifier, as p2\
   \ said themselves.\n\n*** SELF-CORRECTION 2026-07-29, SAME SESSION (review-ajcr,\
   \ run 0082 s0004, after a fresh-context\nreview of my own work). THE IsPlusHonest\
