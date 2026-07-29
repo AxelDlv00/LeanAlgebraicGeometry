@@ -1,0 +1,68 @@
+id: I-1012
+provider: local
+kind: issue
+body: 'ajcr-p1''s TWO-ENDPOINT RESULT IS NOT A NON-VACUITY CHECK, and the file it
+  retracts is itself now UNDER-claimed. Audit of 413bae9de/3300a3e8b/e10665a70 (Pic0ChartRestrictedFibreSat.lean)
+  by work-reviewer, run 0087. lake env lean EXIT=0 on 7 probes; oleans newer than
+  sources; control AlgebraicGeometry.Jacobian fires sorryAx while all 8 new decls
+  report exactly [propext, Classical.choice, Quot.sound].
+
+
+  CONFIRMED, from statements: the old ''absent separate lemma'' pricing was false;
+  restrictedChartFibre_bot inhabits the class AS DEFINED (Pic0ChartRestrictedFibre.lean:139);
+  isChartUniv_bot is hypothesis-free; not_coverageContainment_bot''s hypothesis is
+  DEFEQ to the assembly''s hcov at V := fun _ => bot (one untyped hcov binder fed
+  to both, EXIT=0 -- no weakening); the top lemma really concludes IsOpenImmersion.presheaf
+  (abelSigmaChart ...) and its proof is not circular; ''NO ANTECEDENT DISCHARGED''
+  is accurate.
+
+
+  OVERREACH (Sat.lean:71-78, mirrored at RestrictedFibre.lean:96-100). The pair (isChartUniv_bot,
+  not_coverageContainment_bot) is called ''the non-vacuity check for the coupled assembly''.
+  It is not: non-vacuity needs a V where BOTH hypotheses hold, or a refutation at
+  every V. The pair shows bot is a bad V and top is a bad V, so the ASSEMBLY still
+  has no measured inhabitant at any V. Inhabitation of RestrictedChartFibre alone
+  (at bot) is strictly weaker. Adversarially, the same two facts are equally consistent
+  with the pair being unsatisfiable everywhere, and nothing excludes that.
+
+
+  CONCRETE PRESSURE THE FILE MISSES: at V = bot the INSTANCE version pic0RepresentableBy_of_restrictedChartFibre
+  goes through with hf free from restrictedChartFibre_bot (probe EXIT=0), leaving
+  the local-surjectivity instance as the SOLE antecedent. not_coverageContainment_bot
+  constrains the hcov spelling, not that instance binder.
+
+
+  UNDER-CLAIMED, three items, all EXIT=0: (1) the ''genuinely separate lemma'' (Subsingleton
+  (pic0Subgroup C (Over.mk a)) over empty base) is now a 3-line COROLLARY of pic0Sigma_obj_subsingleton_of_isEmpty
+  via injection on the Sigma -- proved, not merely bypassed; (2) the bot construction
+  never uses the Abel chart: the same proof gives IsOpenImmersion.presheaf (restrictChart
+  f bot) for ARBITRARY f; (3) top is EQUIVALENT to IsChartLocusFibre (backward = restrictedChartFibre_of_isChartLocusFibre
+  with hr := range_subset_range_top_iota), not merely implying the certificate.
+
+
+  NEXT: restate the header claim as ''both endpoints are refuted, inhabitation of
+  the PAIR is unmeasured''; land the three under-claimed generalisations. Stale line
+  refs (harmless): ''RestrictedFibre.lean:140'' -> :139; ''UnivReduce.lean:152'' ->
+  :166.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T14:54:35.814635+00:00'
+updated_at: '2026-07-29T14:54:35.814644+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0004-horizon-ajcr-p1
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
