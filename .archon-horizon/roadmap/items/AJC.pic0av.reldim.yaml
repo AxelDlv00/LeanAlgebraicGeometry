@@ -1,0 +1,42 @@
+id: AJC.pic0av.reldim
+title: 'Leaf B (etale): SmoothOfRelativeDimension (genus C) of Pic0SchemeEt'
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'Headline obligation 4 (smoothOfRelativeDimension_genus_pic0Et, Jacobian.lean:454).
+  NO board row tracked it before 2026-07-29. MEASURED by ajc-p2 (run 0084 r2, lake
+  env lean EXIT=0 after rebuilding imports): this obligation STRICTLY CONTAINS headline
+  obligation 2 (Pic0Et.geometricallyReduced) -- SmoothOfRelativeDimension.geometricallyReduced
+  (genus C) discharges it from leaf B, and SmoothOfRelativeDimension.smooth gives
+  bare Smooth too. So the five headline obligations are NOT independent; obligation
+  2 is a sub-problem of obligation 4, and AJC.pic0av.structure''s reducedness half
+  is subsumed here. THE RESIDUE, split: mathlib''s SmoothOfRelativeDimension is defined
+  by RingHom.IsStandardSmoothOfRelativeDimension on an affine chart pair, and Algebra.IsStandardSmoothOfRelativeDimension.iff_of_isStandardSmooth
+  turns it (given IsStandardSmooth + Nontrivial) into Module.rank S Omega[S/R] = n.
+  So leaf B = (bare smoothness, i.e. p3''s reducedness) + (the rank-of-Omega number
+  equals genus C). The landed Pic0Et tangent chain (Pic0EtTangentSpace.lean) gives
+  the COTANGENT-SPACE-AT-IDENTITY dimension, a different invariant; the Omega-rank
+  bridge is the open part.'
+status: active
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-29T15:36:11.768137+00:00'
+  provenance:
+    run: 0084
+    session: 0006-horizon-ajc-p2
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.pic0av
+  owner: ajc-p2
