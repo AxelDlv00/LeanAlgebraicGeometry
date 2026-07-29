@@ -2,17 +2,26 @@ id: AJC.pic0av.tangent
 title: Cotangent space and H1 comparison
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Cotangent space and H1 comparison — REPOINTED TO THE ETALE SIDE (ajc-p2,
-  run 0084). Target: the tangent/cotangent dimension chain for Pic0SchemeEt, the development
-  behind headline leaf B (smoothOfRelativeDimension_genus_pic0Et, Jacobian.lean:427,
-  bare sorry). MEASURED: the Jacobian.lean:418-421 pricing — ''transporting the landed
-  chain to Pic0SchemeEt needs the comparison of the two Picard schemes, available
-  only under a section'' — is FALSE. Every engine in the dual-number leg (pointedDualNumberPointsEquivRepresentableFiber,
-  pointedDualNumberPointsEquivAddKernel, relPicKernelSMul, pointedDualNumberPointsEquivOfOpenImmersion,
-  overDualNumberSectionEquivCotangentSpaceDual) is quantified over an arbitrary functor
-  G and an arbitrary RepresentableBy; picSharp enters only at the two application
-  sites. representableEt is exactly that (G, rep) pair. I-0938''s ''the Et tower has
-  no counterpart'' is a statement about what is written, not about what is reachable.'
+summary: 'Cotangent space and H1 comparison. ETALE SIDE LANDED (ajc-p2, run 0084):
+  Picard/Pic0EtTangentSpace.lean, 11 declarations, no new sorry. The whole Kleiman
+  thm:tgtsp chain at Pic0SchemeEt -- identitySection, the 0B28 dictionary, the representability
+  leg AGAINST picEt (pointedDualNumberPoints_equiv_relPicEtKernel), finiteDimensional_cotangentSpace,
+  the dimension identity, finrank = genus C, and the keystone tangentSpaceIso. CORRECTED
+  A FALSE PRICING (I-0975): Jacobian.lean:418-421 said transporting the chain to Pic0SchemeEt
+  ''needs the comparison of the two Picard schemes, available only under a section''
+  -- what I-0491 forbids the headline to carry. It restates instead: every dual-number
+  engine is generic in (functor, RepresentableBy), and representableEt is that pair.
+  Also corrected: the same file called the picSharp chain ''landed''; it fires sorryAx.
+  NOT CLOSED, three honest residues. (1) The dimension results are IMPLICATIONS from
+  one named antecedent, SemilinearCotangentComparisonEt -- same clause-shape as the
+  picSharp residue but a STRICTLY HARDER statement: its kernel carrier is the SHEAFIFICATION,
+  the picSharp one''s is a quotient of LineBundle.OnProduct, and no lemma bridges
+  them without a section (I-0989). (2) All declarations bind [HasPicSchemeEt C], whose
+  unconditional instance projects the central sorry, so they are sorry-REACHABLE when
+  instantiated (I-0988). (3) Leaf B itself still owes Pic0Et.smooth plus the tangent-dimension-to-SmoothOfRelativeDimension
+  translation. Measured dead end for the next lane: genus C = 0 makes the Cech carrier
+  Subsingleton (subsingleton_h1Cok_of_genus_eq_zero, landed) but NOT the cotangent
+  one -- exact? fails -- so the degenerate instantiation gets halfway and stops.'
 status: active
 kind: proof
 priority: high
@@ -35,6 +44,9 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.pic0av
-  updated_at: '2026-07-29T13:59:21.308619+00:00'
+  updated_at: '2026-07-29T14:38:18.741527+00:00'
   milestone: AJC.pic0av
-  owner: ajc-p2
+  pinned_commits:
+  - 8267a5be2
+  - 4ed49a1c8
+  - 952c13f09
