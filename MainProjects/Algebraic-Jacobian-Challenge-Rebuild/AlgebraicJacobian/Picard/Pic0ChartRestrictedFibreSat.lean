@@ -38,6 +38,10 @@ a free goal look like a missing lemma.  Recorded because the prose pricing outli
   unmeasured-inhabitation risk `Pic0ChartRestrictedFibre.lean` flagged against itself (and that
   `ChartTyping` and `IsChartLocusFibre` carried) is discharged for this class.
 * `isChartUniv_bot` — hence `IsChartUniv C π n rep m Z hdeg ⊥` holds with **no hypothesis**.
+* `range_subset_range_top_ι`,
+  `isOpenImmersion_presheaf_abelSigmaChart_of_restrictedChartFibre_top` and
+  `not_restrictedChartFibre_top_of_not_injective` — the opposite end of the interval; see the
+  table below.
 
 ## The consequence, and it is a statement about the seam rather than about this file
 
@@ -50,11 +54,26 @@ refuted at the same value:
   some test has a point.  Its witness `x` would have range inside `Set.range ((⊥).ι.base) = ∅`
   while `t ∈ W` exhibits a point of the source.
 
-Put together, these two say precisely where the mathematics lives: `⊥` is the value at which
-`hf` is free and coverage is impossible, and any `V` at which coverage becomes possible is one
-at which `hf` must be re-earned.  The `V`-coupling is therefore not bookkeeping — it is the
-whole obligation, and the pair (`huniv`, `hcov`) cannot be discharged at a convenient `V` by
-either side alone.  This is the non-vacuity check for
+## Both ends of the `V`-interval, and why the coupling has an interior
+
+The two endpoints are priced in **opposite** directions, and that is the file's main content:
+
+* at `V = ⊥`: `hf` is **free** (`restrictedChartFibre_bot`), and coverage's containment is
+  **impossible** (`not_coverageContainment_bot`);
+* at `V = ⊤`: coverage's containment is **free** (`range_subset_range_top_ι`), and `hf` is the
+  **unrestricted certificate** (`isOpenImmersion_presheaf_abelSigmaChart_of_…_top`).
+
+At `⊤` the restricted datum returns exactly the certificate the restriction was introduced to
+avoid — the one `Pic0AtlasFromDivRep.lean:54`, `Pic0ChartPair.lean:14` and
+`Pic0ChartOpenImmersionCriterion.lean:214` assert to be false for the Abel chart.  So the
+restriction is not a formality that a lane could undo by taking `V` large.
+
+Hence: **no endpoint discharges the assembly, and any `V` that works is a proper intermediate
+open** (`not_restrictedChartFibre_top_of_not_injective` makes the `⊤` end an outright refutation,
+conditional on the `abel-noninj` fork).  That is what the chart locus is for, and it is why
+CHART-U(b)'s openness is a real obligation rather than bookkeeping.  The `V`-coupling is the whole
+burden; neither an `hf` lane nor a coverage lane can retreat to a convenient `V`.  This is the
+non-vacuity check for
 `Pic0ChartRestrictedFibre.lean`'s assembly that `necessity_of_restrictedChartFibre` was
 wrongly claimed to be (`I-0937`).
 
@@ -188,6 +207,83 @@ theorem not_coverageContainment_bot {ι : Type u} (nn : ι → ℕ)
   obtain ⟨W, htW, i, x, -, hrange⟩ := hcov T s t
   obtain ⟨y, -⟩ := hrange (Set.mem_range_self (⟨t, htW⟩ : ↥W))
   exact y.2
+
+/-! ## The other end: at `V = ⊤` the prices are exactly swapped
+
+`⊥` is where `hf` is free and coverage is impossible.  This section shows `⊤` is where coverage's
+containment is free and `hf` is *maximally* expensive — it returns the very certificate the
+restriction was introduced to avoid.  Together the two ends say the `V`-coupling has a genuine
+interior: there is no endpoint at which both sides are cheap, so the seam cannot be closed by
+either lane choosing a convenient `V`. -/
+
+/-- **At `V = ⊤` the coverage containment is free.**  Hence the `hcov` hypothesis of
+`pic0RepresentableBy_of_restrictedChartFibre_of_coverage` collapses at `⊤` to plain
+`PointwiseCoverage` — the unrestricted coverage datum, with no extra content.
+
+Contrast `not_coverageContainment_bot`, where the same conjunct is unsatisfiable. -/
+theorem range_subset_range_top_ι {Y : Scheme.{u}} {X : Scheme.{u}} (f : Y ⟶ X) :
+    Set.range (f.base) ⊆ Set.range ((⊤ : X.Opens).ι.base) := by
+  intro y _
+  exact ⟨⟨_, trivial⟩, rfl⟩
+
+variable (C π n) in
+/-- **At `V = ⊤` the restricted datum gives back the UNRESTRICTED certificate** — the statement
+`Pic0AtlasFromDivRep.lean:54`, `Pic0ChartPair.lean:14` and
+`Pic0ChartOpenImmersionCriterion.lean:214` all assert to be false for the Abel chart, the linear
+system `|D|` being its fibres.
+
+So the restriction to `V` is not a formality that could be undone by taking `V` large: at the
+largest `V` the repaired hypothesis is exactly as strong as the one it replaced.  Read with
+`Pic0ChartPair.lean:184` — "the hypothesis of that lemma is false for the Abel chart at
+`V = ⊤`" — this is the converse of `isChartUniv_of_unrestricted` at `⊤`, and it makes that
+sentence a statement about `RestrictedChartFibre` too.
+
+**Consequence for the seam, and this is the point of the file.**  Combining with
+`restrictedChartFibre_bot` and `not_coverageContainment_bot`: the pair (`huniv`, `hcov`) is
+free-and-impossible at `⊥`, and possible-and-maximal at `⊤`.  Neither endpoint discharges the
+assembly, so any `V` that works is a proper intermediate open — which is what the chart locus is
+for, and why CHART-U(b)'s openness is not optional bookkeeping.
+
+The proof re-applies the criterion at the unrestricted chart, using the `⊤`-datum's own `W` and
+composing its `r` with `(⊤).ι`; `exists_factor` transfers because every `v : S ⟶ X` lifts through
+`(⊤).ι` by `range_subset_range_top_ι`. -/
+theorem isOpenImmersion_presheaf_abelSigmaChart_of_restrictedChartFibre_top
+    {D : Over (Spec (.of k))}
+    (rep : (divFunctor C π n).RepresentableBy D)
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - (n : ℤ))
+    (h : RestrictedChartFibre C π n rep m Z hdeg ⊤) :
+    IsOpenImmersion.presheaf (abelSigmaChart C π n rep m Z hdeg) := by
+  refine isOpenImmersion_presheaf_of_chartFibrePresented _ fun T g => ?_
+  refine ⟨(h T g).some.W, (h T g).some.r ≫ (⊤ : D.left.Opens).ι, ?_, ?_⟩
+  · rw [yoneda.map_comp, Category.assoc]
+    exact (h T g).some.sq
+  · intro S v w hvw
+    obtain ⟨u, hu1, hu2⟩ := (h T g).some.exists_factor S
+      (IsOpenImmersion.lift (⊤ : D.left.Opens).ι v (range_subset_range_top_ι v)) w
+      (by rw [restrictChart_app_apply, IsOpenImmersion.lift_fac]; exact hvw)
+    refine ⟨u, ?_, hu2⟩
+    rw [← Category.assoc, hu1, IsOpenImmersion.lift_fac]
+
+/-- The sharp form of the two ends, as one statement a board row can cite: at `⊤` the restricted
+datum is unsatisfiable **as soon as** the Abel chart fails to be injective on some test.
+
+This is `isEmpty_forall_chartFibrePresented_of_not_injective`'s guard, transported to the
+restricted class at `V = ⊤`.  Note it is conditional: the non-injectivity is asserted in three
+headers and proved nowhere (the `abel-noninj` fork), so this says "if the headers are right, `⊤`
+is dead", not "`⊤` is dead". -/
+theorem not_restrictedChartFibre_top_of_not_injective {D : Over (Spec (.of k))}
+    (rep : (divFunctor C π n).RepresentableBy D)
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - (n : ℤ))
+    (T : Scheme.{u}ᵒᵖ)
+    (hT : ¬ Function.Injective ((abelSigmaChart C π n rep m Z hdeg).app T)) :
+    ¬ RestrictedChartFibre C π n rep m Z hdeg ⊤ := fun h =>
+  hT (injective_of_isOpenImmersion_presheaf
+    (isOpenImmersion_presheaf_abelSigmaChart_of_restrictedChartFibre_top
+      C π n rep m Z hdeg h) T)
 
 end
 
