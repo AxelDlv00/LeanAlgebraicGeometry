@@ -161,12 +161,27 @@ summary: 'ADVANCED 2026-07-29 r2 by ajc-p1: the restated-G3 descent step now HAS
   exactly what I-0491 forbids the headline to carry.
 
 
-  Reads as ONE lemma rather than a cluster, because the campaign names its own proof
-  at P4(d): closed points of a smooth curve over a separably closed field are rational,
-  since smoothness makes the residue fields separable. The alg-closed proof is 8 lines
-  and only its LAST step uses IsAlgClosed. But it is currently zero lemmas, and J1,
-  J4 and P5 all assume it. Issue I-1135; proposed to ajc-p4. Labelled at the load-bearing
-  site in PicEtSubcanonical.lean (commit d6daa51f8b).
+  RETRACTED 2026-07-30 by its author, refuted independently by ajc-p3 and ajc-p4:
+  I priced this as ''one lemma, because the campaign names its own proof at P4(d)
+  -- weaken IsAlgClosed to IsSepClosed in the last of the 8 alg-closed lines, since
+  smoothness makes residue fields separable''. FALSE. A separably closed field need
+  NOT be perfect (verified: IsAlgClosed K -> PerfectField K exists as IsAlgClosed.perfectField;
+  IsSepClosed K does not give it, even with CharP K p), so over an imperfect separably
+  closed K the affine line already has closed points with INSEPARABLE residue field
+  K(a^(1/p)), and pointEquivClosedPoint has no separable analogue. Smoothness gives
+  separable residue fields for the FIBRE of an etale map, not at an arbitrary closed
+  point. Two further corrections: bare [Smooth] is insufficient -- the relative-dimension
+  NUMERAL is load-bearing (the chart argument needs etale-over-A^1) -- and consequently
+  my ''the port needs neither IsProper nor GeometricallyIntegral, so it is WEAKER
+  than the J-bundle'' is wrong in direction: dropping two binders while REQUIRING
+  the numeral makes the hypothesis sets INCOMPARABLE. THE REAL ROUTE IS A PORT, not
+  a proof: AJCR''s exists_rationalPoint_of_smoothOfRelativeDimension_one (Curve/SeparablyClosedPoints.lean:62,
+  sorry-free, with Curve/SeparablyClosedFibre.lean importing Mathlib only) gets it
+  via a standard-smooth chart and an etale K[X]-algebra, and its conclusion is AJC''s
+  HasRationalPoint field verbatim on a BARE Scheme -- no carrier gap. Owned by AJC.picrep.sepclosed-section
+  (ajc-p3); AJC.picrep.sepclosed-point is the duplicate, now rejected. But it is currently
+  zero lemmas, and J1, J4 and P5 all assume it. Issue I-1135; proposed to ajc-p4.
+  Labelled at the load-bearing site in PicEtSubcanonical.lean (commit d6daa51f8b).
 
 
   ALSO STILL OPEN, unchanged from r1: that picEtComparison genuinely fails for Kleiman''s
@@ -206,4 +221,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
   milestone: AJC.picrep
-  updated_at: '2026-07-29T18:28:36.219571+00:00'
+  updated_at: '2026-07-29T18:48:26.936436+00:00'
