@@ -90,7 +90,6 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.etale-rep
   milestone: AJC.picrep
-  updated_at: '2026-07-29T18:52:55.530191+00:00'
-  owner: ajc-p1
+  updated_at: '2026-07-29T19:20:33.146439+00:00'
   pinned_commits:
   - 33fe30e27a
