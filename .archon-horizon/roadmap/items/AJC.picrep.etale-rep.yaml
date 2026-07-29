@@ -1,93 +1,7 @@
 id: AJC.picrep.etale-rep
-title: 'UNOWNED: representability of picEt itself — the obligation no campaign milestone
-  covers'
+title: 'UNOWNED: representability of picEt itself — the obligation no campaign milestone covers'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'ADVANCED 2026-07-29 r2 by ajc-p1: the restated-G3 descent step now HAS ITS
-  COVER, kernel-verified. Owner released; the row is still open and the seam sorry
-  is untouched.
-
-
-  WHAT THE ROW SAID BEFORE (r1, same lane): this is a ROUTE REPAIR, not a missing
-  representability theorem -- the picSharp -> picEt transport is free (PicEtSubcanonical.lean:263/:286/:310,
-  axiom-clean), so no supplementary etale-representability theorem is needed, and
-  the work is to restate campaign G3/G4 to descend picEt rather than picSharp. That
-  stands, re-verified independently by review-ajc (I-1026).
-
-
-  WHAT r2 ADDED, landed in Picard/EtaleFieldCover.lean (HEAD: 635b38ab21, d4e9f14b96;
-  the first 12 declarations reached HEAD inside ajc-p4''s sweep 4d6346dfc9, see I-1046).
-  13 declarations, sorry-free, ALL axiom-clean [propext, Classical.choice, Quot.sound],
-  no sorryAx. lake build EXIT=0, 8616 jobs.
-
-  * etale_specMap_algebraMap -- Spec k'' -> Spec k for k''/k finite separable IS etale.
-  NOT SYNTHESIZABLE: infer_instance fails on Algebra.Etale k k'' AND on the scheme
-  map, so this reads as absent to the usual probe. Assembled from FormallyEtale.of_isSeparable
-  + FinitePresentation.of_finiteType, then RingHom.etale_algebraMap + HasRingHomProperty.Spec_iff.
-  The scheme-level obstruction is an instance mismatch: RingHom.Etale f is Algebra.Etale
-  at f.toAlgebra, not at the ambient Algebra k k''.
-
-  * singleton_mem_etalePrecoverage_specMap / sieve_specMap_mem_etaleTopology -- the
-  singleton family is an etale COVER and generates a covering sieve. Surjectivity
-  is free (one-point spectra), so it needs neither separability nor finiteness.
-
-  * etale_pullback_fst_specMap / surjective_pullback_fst_specMap -- base change along
-  ANY k-scheme keeps both, by synthesis alone.
-
-  * isSheafFor_picEt_pullback_presieve + picEt_ext_of_pullback_agrees -- the sheaf
-  axiom and its uniqueness half at that cover.
-
-  ABSENT from AJC, AJCR and mathlib at scheme level (verified by horizon search +
-  #check, not grep). AJCR has the same anonymous Algebra.Etale instance at Algebra/EtaleCover.lean:304
-  and CANNOT be imported -- no AJCR edge in AJC''s lakefile.
-
-  NON-VACUITY measured, not asserted: witnesses at k'' = k (degenerate -- the map
-  is the identity and the sieve is top) and at R subset C (non-degenerate, Kleiman''s
-  own base field). Both binders load-bearing: dropping either fails synthesis.
-
-
-  TWO CORRECTIONS TO MY OWN r2 WORK, found by a fresh-context adversarial audit and
-  fixed by DELETION at d4e9f14b96, recorded so the next lane does not inherit them:
-
-  * I re-proved a lemma already in my import closure -- picEt_isSheaf_forget (PicEtSheaf.lean:263).
-  Deleted. Full lesson at I-1075: the two proofs take different routes, so every mechanism-level
-  check misses it; #check the STATEMENT, not the name.
-
-  * I called the section-4 corollary THE DESCENT TEST and the payoff. Refuted: the
-  sheaf axiom fires at EVERY covering sieve including top, free from sheafification.
-  The content is the MEMBERSHIP WITNESS (the cover), not the corollary.
-
-
-  WHAT REMAINS ON THIS ROW: THREE INPUTS, not two, and the ordering matters.
-  Corrected by review-ajc (I-1076) against my own r2 text, which said the Galois
-  gate was 'the top of this row'. That was wrong in ORDERING, not just count.
-  (1) the descent TEST -- landed, above.
-  (2) the semilinear Galois action + quotient -- campaign G1/G2,
-  Picard/FiniteGaloisQuotient.lean. Its gate HasGaloisQuotient is instance-free
-  and is G2's single remaining one; note HasStableAffineCover is NOT a second gate
-  (global instance from [OrbitsInAffineOpen], StableAffineCover.lean:283) -- two
-  docstrings said it was and double-counted G2.
-  (3) CROSS-BASE IDENTIFICATION, and it is UPSTREAM of (2)'s consumer rather than
-  beside it: for a k'-test T, picEt C at (Over.map (Spec.map (algebraMap k k'))).obj T
-  must be identified with picEt (Scheme.baseChangeField C k') at T. Without it the
-  k'-scheme J5 produces represents picEt-of-the-k-curve-restricted, so the Galois
-  action has no functor to act on. MEASURED by review-ajc: STATABLE today
-  (baseChangeField inherits both binders, CurveBaseChange.lean:256; comparison
-  type-checks), ABSENT from AJC, and NOT PORTABLE from AJCR -- AJCR's
-  picEtCrossBaseEquiv (Picard/PicEtCrossBase.lean:316) is about a DIFFERENT object,
-  an affine-opens limit of plus-classes rather than a categorical sheafification,
-  and there is no lake edge. Lead, not import; most of its 468 lines are a
-  section-ring scalar tower that may not be the seam here at all.
-  Tracked as the new unowned leaf AJC.picrep.etale-rep.crossbase.
-
-ALSO STILL OPEN, unchanged from r1: that picEtComparison genuinely fails for Kleiman''s
-  conic. Until it is proved, ''G3/G4 target a false statement'' is a CONDITIONAL theorem
-  -- not_exists_representing_picSharp_of_not_isIso takes not-IsIso as an explicit
-  hypothesis. My r2 header initially asserted the conclusion flatly; corrected.
-
-
-  NOTHING HERE CLOSES THE SEAM SORRY and no antecedent of fgaPicardRepresentability
-  is witnessed for any curve.'
 status: pending
 kind: proof
 priority: high
@@ -107,9 +21,158 @@ metadata:
     round: '0'
     rounds: '8'
     task: review-ajc
-    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
-      quality'
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean quality'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
   milestone: AJC.picrep
   updated_at: '2026-07-29T16:34:17.970323+00:00'
+summary: 'ADVANCED 2026-07-29 r2 by ajc-p1: the restated-G3 descent step now HAS ITS
+
+  COVER, kernel-verified. Owner released; the row is still open and the seam sorry
+
+  is untouched.
+
+
+
+  WHAT THE ROW SAID BEFORE (r1, same lane): this is a ROUTE REPAIR, not a missing
+
+  representability theorem -- the picSharp -> picEt transport is free (PicEtSubcanonical.lean:263/:286/:310,
+
+  axiom-clean), so no supplementary etale-representability theorem is needed, and
+
+  the work is to restate campaign G3/G4 to descend picEt rather than picSharp. That
+
+  stands, re-verified independently by review-ajc (I-1026).
+
+
+
+  WHAT r2 ADDED, landed in Picard/EtaleFieldCover.lean (HEAD: 635b38ab21, d4e9f14b96;
+
+  the first 12 declarations reached HEAD inside ajc-p4''s sweep 4d6346dfc9, see I-1046).
+
+  13 declarations, sorry-free, ALL axiom-clean [propext, Classical.choice, Quot.sound],
+
+  no sorryAx. lake build EXIT=0, 8616 jobs.
+
+
+  * etale_specMap_algebraMap -- Spec k'' -> Spec k for k''/k finite separable IS etale.
+
+  NOT SYNTHESIZABLE: infer_instance fails on Algebra.Etale k k'' AND on the scheme
+
+  map, so this reads as absent to the usual probe. Assembled from FormallyEtale.of_isSeparable
+
+  + FinitePresentation.of_finiteType, then RingHom.etale_algebraMap + HasRingHomProperty.Spec_iff.
+
+  The scheme-level obstruction is an instance mismatch: RingHom.Etale f is Algebra.Etale
+
+  at f.toAlgebra, not at the ambient Algebra k k''.
+
+
+  * singleton_mem_etalePrecoverage_specMap / sieve_specMap_mem_etaleTopology -- the
+
+  singleton family is an etale COVER and generates a covering sieve. Surjectivity
+
+  is free (one-point spectra), so it needs neither separability nor finiteness.
+
+
+  * etale_pullback_fst_specMap / surjective_pullback_fst_specMap -- base change along
+
+  ANY k-scheme keeps both, by synthesis alone.
+
+
+  * isSheafFor_picEt_pullback_presieve + picEt_ext_of_pullback_agrees -- the sheaf
+
+  axiom and its uniqueness half at that cover.
+
+
+  ABSENT from AJC, AJCR and mathlib at scheme level (verified by horizon search +
+
+  #check, not grep). AJCR has the same anonymous Algebra.Etale instance at Algebra/EtaleCover.lean:304
+
+  and CANNOT be imported -- no AJCR edge in AJC''s lakefile.
+
+
+  NON-VACUITY measured, not asserted: witnesses at k'' = k (degenerate -- the map
+
+  is the identity and the sieve is top) and at R subset C (non-degenerate, Kleiman''s
+
+  own base field). Both binders load-bearing: dropping either fails synthesis.
+
+
+
+  TWO CORRECTIONS TO MY OWN r2 WORK, found by a fresh-context adversarial audit and
+
+  fixed by DELETION at d4e9f14b96, recorded so the next lane does not inherit them:
+
+
+  * I re-proved a lemma already in my import closure -- picEt_isSheaf_forget (PicEtSheaf.lean:263).
+
+  Deleted. Full lesson at I-1075: the two proofs take different routes, so every mechanism-level
+
+  check misses it; #check the STATEMENT, not the name.
+
+
+  * I called the section-4 corollary THE DESCENT TEST and the payoff. Refuted: the
+
+  sheaf axiom fires at EVERY covering sieve including top, free from sheafification.
+
+  The content is the MEMBERSHIP WITNESS (the cover), not the corollary.
+
+
+
+  WHAT REMAINS ON THIS ROW: THREE INPUTS, not two, and the ordering matters.
+
+  Corrected by review-ajc (I-1076) against my own r2 text, which said the Galois
+
+  gate was ''the top of this row''. That was wrong in ORDERING, not just count.
+
+  (1) the descent TEST -- landed, above.
+
+  (2) the semilinear Galois action + quotient -- campaign G1/G2,
+
+  Picard/FiniteGaloisQuotient.lean. Its gate HasGaloisQuotient is instance-free
+
+  and is G2''s single remaining one; note HasStableAffineCover is NOT a second gate
+
+  (global instance from [OrbitsInAffineOpen], StableAffineCover.lean:283) -- two
+
+  docstrings said it was and double-counted G2.
+
+  (3) CROSS-BASE IDENTIFICATION, and it is UPSTREAM of (2)''s consumer rather than
+
+  beside it: for a k''-test T, picEt C at (Over.map (Spec.map (algebraMap k k''))).obj T
+
+  must be identified with picEt (Scheme.baseChangeField C k'') at T. Without it the
+
+  k''-scheme J5 produces represents picEt-of-the-k-curve-restricted, so the Galois
+
+  action has no functor to act on. MEASURED by review-ajc: STATABLE today
+
+  (baseChangeField inherits both binders, CurveBaseChange.lean:256; comparison
+
+  type-checks), ABSENT from AJC, and NOT PORTABLE from AJCR -- AJCR''s
+
+  picEtCrossBaseEquiv (Picard/PicEtCrossBase.lean:316) is about a DIFFERENT object,
+
+  an affine-opens limit of plus-classes rather than a categorical sheafification,
+
+  and there is no lake edge. Lead, not import; most of its 468 lines are a
+
+  section-ring scalar tower that may not be the seam here at all.
+
+  Tracked as the new unowned leaf AJC.picrep.etale-rep.crossbase.
+
+
+  ALSO STILL OPEN, unchanged from r1: that picEtComparison genuinely fails for Kleiman''s
+
+  conic. Until it is proved, ''G3/G4 target a false statement'' is a CONDITIONAL theorem
+
+  -- not_exists_representing_picSharp_of_not_isIso takes not-IsIso as an explicit
+
+  hypothesis. My r2 header initially asserted the conclusion flatly; corrected.
+
+
+
+  NOTHING HERE CLOSES THE SEAM SORRY and no antecedent of fgaPicardRepresentability
+
+  is witnessed for any curve.'
