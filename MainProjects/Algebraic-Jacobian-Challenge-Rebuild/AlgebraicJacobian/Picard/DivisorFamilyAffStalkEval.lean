@@ -40,6 +40,16 @@ under the same name.
   each of its points, so the piece-local data is adaptation-free at stalks.
 * `AffAdaptation.isUnit_germ_eqn_of_coeffAt_eq_zero` — vanishing coefficient means unit germ.
 * `AffAdaptation.stalkColEval`, `stalkColEval_mk` — the piece colength evaluated at a stalk.
+* `AffAdaptation.ovlStalkColEval`, `ovlStalkColEval_toOvlLeft`/`_toOvlRight` — the overlap
+  variant, intertwining the two equalizer arrows.
+* `AffAdaptation.stalkColEval_glued` — **piece independence on the equalizer**: two pieces
+  seeing the same point read the same stalk value on `W(d)`.
+* `AffAdaptation.eqn_ne_zero`, `moduleFinite_stalkQuot`, `finrank_stalkQuot_eq_coeffAt_mul` —
+  the pointwise divisor dictionary `finrank K (𝒪_z ⧸ I_d(z)) = coeff_z(div d) · [κ(z) : K]`.
+* `AffAdaptation.pieceStalkEval`, `pieceStalkEval_injective`, `pieceStalkEval_bijective` — the
+  per-piece CRT decomposition.
+* `AffAdaptation.gluedStalkEval`, `gluedStalkEval_injective`, `gluedStalkEval_surjective` — the
+  glued CRT decomposition `W(d) ≅ Π_{z ∈ supp} 𝒪_z ⧸ I_d(z)`.
 * `AffAdaptation.deg_presentationDivisor` — **the identity with no `hsep`**, for every widened
   adaptation.
 * `AffAdaptation.IsCertified.deg_presentationDivisor` — `deg D = n`, unconditionally on the cover.
@@ -501,10 +511,10 @@ Copied as `private` rather than referenced because the chart-typed
 there.
 
 Its statement mentions the adaptation only through the index, which on the widened side is
-`D.index` rather than `A.index`, so `A` is included by hand to keep the `A.pieceTarget`
-spelling of the two call sites. -/
-include A in
-private noncomputable def pieceTarget
+`D.index` rather than `A.index`, so the adaptation is taken as an EXPLICIT argument (shadowing
+the section variable) instead of being auto-included; that keeps the `A.pieceTarget` dot
+spelling of the two call sites, which an `include`d section variable does not support. -/
+private noncomputable def pieceTarget (_A : AffAdaptation D d)
     (a : ∀ p : {p // p ∈ (Scheme.presentationDivisor K d.presentation).support},
       ((relCurve C K).presheaf.stalk p.1.1 ⧸ d.stalkIdeal p.1.1)) (j : D.index) :
     ∀ p : {p // p ∈ (Scheme.presentationDivisor K d.presentation).support.filter
@@ -595,16 +605,61 @@ lemma gluedStalkEval_surjective : Function.Surjective A.gluedStalkEval := by
 
 /-! ## The general colength↔degree identity -/
 
-/-- **The colength↔degree identity for EVERY widened adaptation** — no separation hypothesis. -/
+/-- **The colength↔degree identity for EVERY widened adaptation** — no separation hypothesis.
+
+The glued equalizer is the product of the stalk colengths over the support
+(`gluedStalkEval` bijective), and each stalk colength reads the local degree
+(`finrank_stalkQuot_eq_coeffAt_mul`).  Since the left-hand side is adaptation-free and
+cover-free, adaptation-independence of the glued rank is a corollary, not an input.
+
+Verbatim `DivisorAdaptation.deg_presentationDivisor` (`Picard/DivisorFamilyFieldCRT.lean:324`)
+apart from the piece-choice, which is `D.exists_mem_pieces` (the joint-covering field) instead
+of the chart-typed lemma of the same name. -/
 theorem deg_presentationDivisor :
     Scheme.CurveDivisor.deg K (Scheme.presentationDivisor K d.presentation)
       = (finrank K A.Glued : ℤ) := by
-  sorry
+  have e :
+      A.Glued ≃ₗ[K]
+        ∀ p : {p // p ∈ (Scheme.presentationDivisor K d.presentation).support},
+          ((relCurve C K).presheaf.stalk p.1.1 ⧸ d.stalkIdeal p.1.1) :=
+    LinearEquiv.ofBijective A.gluedStalkEval
+      ⟨A.gluedStalkEval_injective, A.gluedStalkEval_surjective⟩
+  haveI : ∀ p : {p // p ∈ (Scheme.presentationDivisor K d.presentation).support},
+      Module.Finite K ((relCurve C K).presheaf.stalk p.1.1 ⧸ d.stalkIdeal p.1.1) :=
+    fun p => A.moduleFinite_stalkQuot (D.exists_mem_pieces p.1.1).choose
+      (D.exists_mem_pieces p.1.1).choose_spec p.1.2
+  haveI : ∀ p : {p // p ∈ (Scheme.presentationDivisor K d.presentation).support},
+      Module.Free K ((relCurve C K).presheaf.stalk p.1.1 ⧸ d.stalkIdeal p.1.1) :=
+    fun p => Module.Free.of_divisionRing _ _
+  calc Scheme.CurveDivisor.deg K (Scheme.presentationDivisor K d.presentation)
+      = ∑ p ∈ (Scheme.presentationDivisor K d.presentation).support,
+          coeffAt p.2 (Scheme.presentationDivisor K d.presentation)
+            * ((relCurve C K).residueDeg K p.1 : ℤ) :=
+        Finset.sum_congr rfl fun p _ => rfl
+    _ = ∑ p ∈ (Scheme.presentationDivisor K d.presentation).support,
+          (finrank K ((relCurve C K).presheaf.stalk p.1 ⧸ d.stalkIdeal p.1) : ℤ) :=
+        Finset.sum_congr rfl fun p _ =>
+          (A.finrank_stalkQuot_eq_coeffAt_mul (D.exists_mem_pieces p.1).choose
+            (D.exists_mem_pieces p.1).choose_spec p.2).symm
+    _ = ((∑ p ∈ (Scheme.presentationDivisor K d.presentation).support,
+          finrank K ((relCurve C K).presheaf.stalk p.1 ⧸ d.stalkIdeal p.1) : ℕ) : ℤ) := by
+        rw [Nat.cast_sum]
+    _ = ((finrank K
+          (∀ p : {p // p ∈ (Scheme.presentationDivisor K d.presentation).support},
+            ((relCurve C K).presheaf.stalk p.1.1 ⧸ d.stalkIdeal p.1.1)) : ℕ) : ℤ) := by
+        rw [Module.finrank_pi_fintype K, Finset.sum_coe_sort
+          (Scheme.presentationDivisor K d.presentation).support
+          (fun q : {x : relCurve C K // x ≠ genericPoint (relCurve C K)} =>
+            finrank K ((relCurve C K).presheaf.stalk q.1 ⧸ d.stalkIdeal q.1))]
+    _ = (finrank K A.Glued : ℤ) := by rw [← e.finrank_eq]
 
-/-- **`deg D = n` for every widened certified adaptation**, with no hypothesis on the cover. -/
+/-- **`deg D = n` for every widened certified adaptation**, with no hypothesis on the cover:
+the general identity above against the field half of the widened certificate
+(`AffAdaptation.IsCertified.finrank_glued`, `Picard/DivisorFamilyAffFieldDegree.lean`).  This
+supersedes `deg_presentationDivisor_eq_of_isCertified`, which needed `hsep`. -/
 theorem IsCertified.deg_presentationDivisor {n : ℕ} (hc : A.IsCertified n) :
     Scheme.CurveDivisor.deg K (Scheme.presentationDivisor K d.presentation) = (n : ℤ) := by
-  sorry
+  rw [A.deg_presentationDivisor, hc.finrank_glued]
 
 end AffAdaptation
 
