@@ -1,0 +1,4 @@
+import AlgebraicJacobian.Picard.DivRepChartClassUnivZarLocal
+import AlgebraicJacobian
+#print axioms AlgebraicGeometry.Jacobian
+#print axioms AlgebraicGeometry.DivisorAdaptation.noLeak_input_degenerate_of_disjoint_pieces

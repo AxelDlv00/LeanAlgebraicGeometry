@@ -1,0 +1,10 @@
+import AlgebraicJacobian.Picard.DivRepChartClassUnivZarLocal
+import AlgebraicJacobian.Picard.DivisorFamilyAffStrict
+import AlgebraicJacobian.Picard.DivSchemeCertZarConn
+import AlgebraicJacobian.Picard.DivSchemeCertZarSwallow
+import AlgebraicJacobian.Picard.DivSchemeCertZarTube
+open AlgebraicGeometry
+#check @AlgebraicGeometry.forall_not_isCertified_of_straddling
+#check @AlgebraicGeometry.DivisorAdaptation.forall_subset_or_disjoint_of_isPreconnected
+#check @AlgebraicGeometry.DivisorAdaptation.forall_noLeak_of_forall_subset_or_disjoint
+#check @AlgebraicGeometry.DivisorAdaptation.forall_noLeak_of_forall_supportLocus_subset

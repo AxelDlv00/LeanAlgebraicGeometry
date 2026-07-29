@@ -2,3 +2,4 @@
 {"at": "2026-07-29T10:11:40.638155+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "roadmap_refs, inbox_refs updated"}
 {"at": "2026-07-29T10:22:07.027591+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
 {"at": "2026-07-29T14:49:48.859503+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-07-29T14:50:26.950489+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}

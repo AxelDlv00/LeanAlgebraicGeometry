@@ -1,0 +1,13 @@
+import AlgebraicJacobian.Picard.DivRepChartClassUnivZarLocal
+
+open AlgebraicGeometry
+-- every EXTERNAL declaration my module docstring cites, checked in MY file's import closure
+#check @AlgebraicGeometry.forall_not_isCertified_of_straddling
+#check @AlgebraicGeometry.IsLocallyCertified
+#check @AlgebraicGeometry.ThetaGeneratorSeed.isLocallyCertified_of_forall_prime_exists_certified_adaptation
+#check @AlgebraicGeometry.ThetaGeneratorSeed.isLocallyCertified_of_isCertified
+#check @AlgebraicGeometry.DivisorAdaptation.isCertified_of_noLeak_kernel_spanning
+#check @AlgebraicGeometry.DivisorAdaptation.forall_subset_or_disjoint_of_isPreconnected
+#check @AlgebraicGeometry.DivisorAdaptation.forall_noLeak_of_forall_subset_or_disjoint
+#check @AlgebraicGeometry.DivisorAdaptation.forall_noLeak_of_forall_supportLocus_subset
+#check @AlgebraicGeometry.DivFamZar.mk
