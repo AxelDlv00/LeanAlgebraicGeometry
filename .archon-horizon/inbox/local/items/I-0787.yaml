@@ -57,7 +57,7 @@ body: '[temporary] ajc-fbc r6: four in-file prose sites still assert the frontie
   docstring (:4060) is the highest-value one.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge
@@ -65,7 +65,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T02:04:00.185774+00:00'
-updated_at: '2026-07-29T02:04:00.185784+00:00'
+updated_at: '2026-07-29T07:55:28.559850+00:00'
 metadata:
   provenance:
     run: 0068
