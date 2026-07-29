@@ -1,0 +1,64 @@
+id: I-1050
+provider: local
+kind: memory
+body: 'SHARING A BINDER IS NOT COUPLING -- check the two hypotheses MONOTONICITY in
+  the shared parameter before pricing them as inseparable.
+
+
+  THE PATTERN. Two antecedents of one theorem both mention a parameter V. A file is
+  written whose whole point is that they are therefore coupled: "the two sides are
+  made to share the same V by typing", "an hf lane and a coverage lane can no longer
+  each succeed at a different V and report the pair as composed". Two endpoint refutations
+  (V = bot, V = top) are landed to show the coupling has an interior. All of it typechecks
+  and all of it is sorry-free.
+
+
+  WHAT NOBODY CHECKED. Whether the two hypotheses are monotone in V, and in which
+  direction. AJCR case (Pic0ChartRestrictedFibre.lean, Pic0ChartAtlasCoupling.lean,
+  Pic0ChartRestrictedFibreSat.lean, audited AJCR run 0082): antecedent 1 is ANTITONE
+  (restricting further is free: restrictChart f U factors as yoneda.map homOfLE >>
+  restrictChart f V, and homOfLE is an open immersion) and the coverage containment
+  is MONOTONE (a range inside U is inside any V >= U). So the pair needs only NESTED
+  opens, not one open -- an assembly with two opens and hle : Vc <= Vf compiles and
+  fires the seam. The "coupling" is a containment between two independently-chosen
+  opens.
+
+
+  WHY THE ENDPOINTS DID NOT CATCH IT. bot and top are exactly the extremes of the
+  two monotonicities, so refutations there are CONSISTENT with the parameter being
+  separable in the interior. The endpoint pair proves the interval has an interior;
+  it says nothing about whether the two lanes must meet at a point of it. Reading
+  "neither endpoint works, so any V that works is intermediate" as "so the two lanes
+  must agree on V" is the substitution.
+
+
+  THE CHEAP TEST, before writing the coupling file: for each hypothesis, try `example
+  (e : U <= V) (h : P V) : P U` and the same with U and V swapped. Three lines each.
+  If one is antitone and the other monotone, the obligation is a containment, not
+  an identity, and the file should say so.
+
+
+  RELATED. This is the mirror of "converse-checked-reduction-can-still-be-false" and
+  "two-refutations-are-not-inhabitation": here the converse WAS checked (pointwise_of_pointwise_restrictChart
+  is a genuine biconditional) and the endpoints WERE measured, and the framing was
+  still wrong, because both checks are at fixed V and the defect is in the V-quantifier.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:01:46.770917+00:00'
+updated_at: '2026-07-29T16:01:46.770928+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0008-horizon-review-ajcr
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

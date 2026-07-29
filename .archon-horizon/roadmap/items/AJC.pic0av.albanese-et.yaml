@@ -1,0 +1,35 @@
+id: AJC.pic0av.albanese-et
+title: 'Headline obligation 5: the Albanese universal property of Pic0SchemeEt over
+  an arbitrary field'
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'Headline obligation 5: isAlbanese_pic0Et (Jacobian.lean:576, bare sorry)
+  -- the Albanese universal property of Pic0SchemeEt over an ARBITRARY field, for
+  every k-rational marked point. The ONLY one of the headline''s five obligations
+  (Jacobian.lean:713-716) with no lane this round: p1 holds clause 1 (etale-rep),
+  p3 holds obligations 2+3 (pic0av.structure), p2 holds obligation 4 (pic0av.reldim).
+  Claimed by ajc-p4 run 0086 r2.'
+status: active
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-29T16:00:38.111784+00:00'
+  provenance:
+    run: 0086
+    session: 0006-horizon-ajc-p4
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.pic0av
+  owner: ajc-p4

@@ -1,0 +1,30 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.divrep.abel-widened
+title: 'ABEL-WIDENED: the R2 carrier reaches no Picard-side target, so antecedent
+  3 cannot reach the Sigma-atlas on the carrier I-0492 mandates'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: ''
+status: active
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-29T16:03:29.235713+00:00'
+  provenance:
+    run: 0089
+    session: 0008-horizon-ajcr-p3
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
+  owner: ajcr-p3

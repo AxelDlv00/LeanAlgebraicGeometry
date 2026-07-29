@@ -1,0 +1,52 @@
+id: I-1051
+provider: local
+kind: info
+body: "CLAIM ajc-p4 (run 0086 r2): AJC.pic0av.albanese-et (NEW row) -- headline obligation\
+  \ 5, the only one of the five with no lane\n\nClaimed AJC.pic0av.albanese-et (new\
+  \ leaf under AJC.pic0av, owner ajc-p4, active). Unowned at HEAD; no row tracked\
+  \ this leaf. The AJC.albanese.* rows track the k-bar ARGUMENT and the missing Sym^g\
+  \ object, not the headline sorry.\n\nWHY FOURTH. picardJacobianWitness (Jacobian.lean:720)\
+  \ depends on exactly five obligations, named at :713-716. p1 = clause 1 (etale-rep);\
+  \ p3 = obligations 2+3 (pic0av.structure); p2 = obligation 4 (pic0av.reldim, which\
+  \ per I-1044 subsumes 2). That leaves isAlbanese_pic0Et (Jacobian.lean:576, BARE\
+  \ sorry) with no lane. Rank 4 by elimination.\n\nITS DOCSTRING (:562-568) prices\
+  \ three pieces: (a) arbitrary field for algebraically closed, called 'the Galois-descent\
+  \ step of cluster G'; (b) genus 0 as well as positive; (c) the basepoint condition;\
+  \ plus transport of Pic0.abelJacobi to Pic0SchemeEt.\n\nMEASURED -- imports rebuilt\
+  \ FIRST (lake build AlbaneseJacobian + AVSelfProduct + Jacobian EXIT=0, 8721 jobs),\
+  \ then LSP, zero diagnostics:\n * Milne I.1.4 (commutativity of an AV) is FREE over\
+  \ an ARBITRARY field. Mathlib's isCommMonObj_of_isProper_of_geometricallyIntegral\
+  \ (stacks 0BFD, Group/Abelian.lean:133) has NO IsAlgClosed -- it descends from k-bar\
+  \ internally via (Over.pullback f).map_injective on the commutator equation. AJC's\
+  \ isCommMonObj_of_isProper_smooth_of_package (AVSelfProduct.lean:131) binds [IsAlgClosed\
+  \ kbar] and is not needed at that strength: GeometricallyIntegral synthesizes from\
+  \ the four-instance package and the mathlib route applies verbatim.\n * The Albanese\
+  \ ENGINE is already field-agnostic: exists_unique_albanese_factorisation lives in\
+  \ an arbitrary CartesianMonoidalCategory (AlbaneseFromData.lean:101-104). Only the\
+  \ AlgebraicGeometry instantiation at :253 binds IsAlgClosed.\n\nSO piece (a) is\
+  \ not uniformly 'Galois descent of the universal property'. It splits, and one of\
+  \ the two rigidity inputs is already available over k. Now measuring the other,\
+  \ pointed rigidity (isMonHom_of_pointed, AVSelfProduct.lean:146), whose engine av_regularMap_isHom_of_zero\
+  \ (RigidityLemma.lean:884) does bind IsAlgClosed. Whether IsMonHom descends by 0BFD's\
+  \ own faithfulness trick decides this leaf's price; I will report either answer.\n\
+  \nNOTHING IS CLOSED. The sorry at Jacobian.lean:576 is untouched."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:01:55.799922+00:00'
+updated_at: '2026-07-29T16:01:55.799934+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0006-horizon-ajc-p4
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

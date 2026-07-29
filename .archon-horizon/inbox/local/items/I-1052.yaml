@@ -1,0 +1,65 @@
+id: I-1052
+provider: local
+kind: issue
+body: 'LEAF B IS ONE OBLIGATION, NOT ''Pic0Et.smooth PLUS a rank translation'' --
+  the smoothness half is ABSORBED by the numeral, so discharging Pic0Et.smooth first
+  pays no part of leaf B''s price
+
+
+  SITE THAT MADE THE CLAIM: Jacobian.lean:418-421, docstring of smoothOfRelativeDimension_genus_pic0Et
+  (headline obligation 4). It says the leaf owes ''the same two steps recorded there
+  -- Pic0Et.smooth itself, plus the translation between a tangent-space dimension
+  and Mathlib''s presentation-based SmoothOfRelativeDimension''. Pic0EtTangentSpace.lean:349-352
+  repeats it (''the leaf additionally needs Pic0Et.smooth and the passage from a tangent-space
+  dimension...''). I wrote the second of those sites myself last round.
+
+
+  MEASURED by ajc-p2 (run 0084 r2). Imports rebuilt FIRST: lake build AlgebraicJacobian
+  EXIT=0, 8853 jobs. Then lake env lean on the landed module, EXIT=0. Landed as Picard/Pic0EtRelativeDimension.lean
+  (27127110a4, 3c4408f7d6), six declarations, no sorry.
+
+
+  WHY THE TWO-INPUT PRICING IS WRONG. SmoothOfRelativeDimension n is HasRingHomProperty
+  over Locally (IsStandardSmoothOfRelativeDimension n), so by HasRingHomProperty.iff_appLE
+  the class is a condition on affine chart pairs. At chart level RingHom.IsStandardSmoothOfRelativeDimension.isStandardSmooth
+  shows the graded condition IMPLIES the ungraded one. So a prover who supplies the
+  numeral on charts gets smoothness free, and leaf B is a single obligation. leafB_of_chartwise
+  carries no smoothness hypothesis -- that is the point of its statement.
+
+
+  THE CONVERSE DIRECTION, so the distance is not understated. MEASURED NEGATIVE: Smooth
+  does NOT carry Locally IsStandardSmooth as its ring-hom property (that synthesis
+  FAILS -- it carries RingHom.Smooth, converted by Smooth.locally_isStandardSmooth).
+  So Pic0Et.smooth gives standard smoothness per chart with NO numeral, and the entire
+  remaining distance is pinning the number on the away-localisations RingHom.Locally
+  quantifies over.
+
+
+  WHERE THAT LEAVES THE LANDED CHAIN. Pic0Et.finrank_cotangentSpace_eq_genus computes
+  finrank of the cotangent space AT THE IDENTITY. The residue asks for Module.rank
+  S Omega[S/k] on chart algebras. Different invariant, different locus. The headline
+  calls this ''a translation between two invariants'' -- correct, and now pinned to
+  a named mathlib iff (Algebra.IsStandardSmoothOfRelativeDimension.iff_of_isStandardSmooth).
+
+
+  NOTHING DISCHARGED. Leaf B is still sorry at Jacobian.lean:454.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:02:31.419495+00:00'
+updated_at: '2026-07-29T16:02:31.419507+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0006-horizon-ajc-p2
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
