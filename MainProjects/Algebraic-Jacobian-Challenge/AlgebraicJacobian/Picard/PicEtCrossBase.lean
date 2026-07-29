@@ -91,7 +91,7 @@ Most of its length is a section-ring scalar tower which — as `review-ajc`
 predicted, and as the outcome here confirms — a sheafification-based `picEt`
 does not need: the sheafification layer is discharged by a Mathlib compatibility
 iso instead. The 468 lines were a design lead, and the lead was that they are
-not the seam. **For the record: 700 lines here, of which the great majority is
+not the seam. **For the record: 701 lines here, of which the great majority is
 docstring** — the proof terms themselves are short, because each layer lands on
 a Mathlib lemma. Reading the sibling as a lead rather than transcribing it was
 worth more than the 468 lines would have been.
