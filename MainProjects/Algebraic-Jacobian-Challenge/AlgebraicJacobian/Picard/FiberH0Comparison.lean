@@ -81,6 +81,29 @@ So B5 has **three** open obligations, not one: (a) `hbc` without
 (c) this carrier bridge between `pointRank` and `Ideal.fiberRank`.  (c) was
 unlisted until a fresh-context review found it.
 
+**CORRECTED, and both corrections are against this list, not against the Lean
+below.** Two of those three have since been repriced or closed:
+
+* **(b) is CLOSED** — `Picard/TwoTermKernelSemicontinuity.lean`.  Stated on a
+  two-term complex `k : K → Aⁿ` with `K` merely `Module.Finite`,
+  finite-dimensionality of both fibres is *synthesised*, not supplied: it is a
+  consequence of the shape, so no hypothesis defeats the junk-value reading —
+  there is nothing to defeat.
+* **(a) was MISPRICED, and the misprice is mine.**  The counterexample below is
+  correct and `hbc` really is not free.  But `hbc` is consumed in **step 3
+  only**, whose job is to cross from `ker (d ⊗ κ(t))` to `κ(t) ⊗ ker d` — that
+  is, to reach *this* theorem's conclusion about `Γ(p_* M, ⊤)`.  Steps 4-6 alone
+  already give `dim ker (d ⊗ κ(t)) = p.fiberH0 M t`, with no `hbc` at all;
+  that is `finrank_ker_moduleSectionDiffBase_baseChange_eq_fiberH0`
+  (`Picard/FiberH0CechKernel.lean`).  So `hbc` identifies the fibre of the
+  *pushforward's section module*; it does **not** identify the fibre `h⁰`, and a
+  route through the fibrewise Čech kernel does not owe it.
+
+(c) stands, unchanged.  What replaces (a) is a different obligation: the Čech
+difference map must be *replaced* by a complex of the engine's shape, and
+`TwoTermFiniteReplacement.h0_bijective` — not `kerBaseChange` — is where the
+residual cohomology-and-base-change content sits.
+
 ## What is still open
 
 The remaining hypothesis `hbc` — bijectivity of

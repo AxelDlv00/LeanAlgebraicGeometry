@@ -55,6 +55,38 @@ Kleiman, *The Picard scheme* (FGA Explained), §5.
 instances** anywhere; discharged by the B3/B5 session via the minors of the
 Mumford two-term complex, then deleted).  The closed direction and the
 `n = 0` degenerate case are proved here, unconditionally, from the gate.
+
+## Route status (2026-07-29) — the prescription above is REFUTED, read this first
+
+"Discharged via the minors of the Mumford two-term complex" named
+`rank_pushforward_eq_fiberH0` (`Picard/RigidPushforwardRank.lean`) as the
+bridge.  That **cannot work** (measured, filed as I-0884): the bridge carries
+`hproj`, which its own file proves load-bearing by counterexample, and finite
+projectivity forces the fibre rank *locally constant* — strictly stronger than
+the semicontinuity this gate asks for.  The prescription inverts the difficulty.
+
+What is landed instead, all sorry-free and axiom-clean, none of it instantiating
+this gate:
+
+* `Ideal.isOpen_fiberRank_le` (`Picard/FiberRankSemicontinuity.lean`) — the
+  fibre-rank sublevel locus is open over any commutative ring, no flatness, no
+  noetherian hypothesis;
+* `AlgebraicJacobian.TwoTerm.isOpen_finrank_ker_baseChange_le`
+  (`Picard/TwoTermKernelSemicontinuity.lean`) — the engine: `dim H⁰` of a
+  two-term complex `k : K → Aⁿ` with `K` finitely presented projective is upper
+  semicontinuous.  Projectivity sits on `K`, where the replacement supplies it
+  for free; the jumping comes from the cokernel;
+* `AlgebraicGeometry.finrank_ker_moduleSectionDiffBase_baseChange_eq_fiberH0`
+  (`Picard/FiberH0CechKernel.lean`) — `p.fiberH0 M t` *is* the dimension of the
+  base-changed Čech kernel, with no base-change hypothesis.
+
+**Two obligations stand between those and this gate**, and a lane taking it
+should start from them rather than from the minors: (i) replacing the Čech
+difference map by a complex of the engine's shape, where
+`TwoTermFiniteReplacement.h0_bijective` is the residual content, and (ii) the
+carrier transport across `Scheme.ΓSpecIso` between a bare ring's
+`PrimeSpectrum` and `Γ(Spec R, ⊤)`.  See
+`Picard/FiberH0Comparison.lean`'s corrected obligation list.
 -/
 
 set_option autoImplicit false
