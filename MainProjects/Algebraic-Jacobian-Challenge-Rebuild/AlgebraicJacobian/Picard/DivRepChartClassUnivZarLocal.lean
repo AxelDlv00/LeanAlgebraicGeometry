@@ -104,6 +104,20 @@ The measurement is therefore about the `side` **function**, not about a support 
 round.  (Established by `review-ajcr`, inbox `I-1003`; re-derived here rather than taken on
 report, and the transport is the theorem below.)
 
+**Neither direction is settled by any of this, and the asymmetry is easy to mis-quote.**
+Per-piece chart-confinement together with a `side` *function* **permits** global straddling; it
+does not **produce** it.  So "the seed is chart-confined" must not be read as "it straddles",
+and equally must not be read as "it cannot" — the first is what a producer needs ruled out, the
+second is what a producer would need proved, and this file supplies neither.
+
+**One further thing unmeasured here, and it may be decisive** (`review-ajcr`, `I-1003`):
+`ThetaGeneratorSeed` types its pieces *into* the pinned charts, which is the shape protection
+`I-0492` clause 3 names as what made the earlier cheaper option vacuous.  If U2's class half
+routes through the seed at all, it is on the **chart-typed** side of the widening by
+construction, and the away-localization argument above inherits that confinement.  Were that so,
+the retraction at the top of this file would have a *structural* cause rather than a proof-level
+one.  Not measured here; worth testing before another round is spent on the away route.
+
 **Do NOT read the pinned-chart geometry as an obstruction.**  The certificate assemblers
 (`DivisorAdaptation.isCertified_of_noLeak_kernel_spanning`, `Picard/DivSchemeCertUniv.lean:104`)
 consume a *swallow-or-miss* clause, and a **disjoint** piece is its harmless branch:
