@@ -4,7 +4,7 @@ title: 'atlas hcpt: the CompactSpace input of jacobianDataOfMixedParamCharts -- 
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: ''
-status: active
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -27,8 +27,8 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-glue
-  owner: ajcr-p4
   milestone: AJCR.w4-rep
-  updated_at: '2026-07-29T18:11:35.569712+00:00'
+  updated_at: '2026-07-29T19:23:41.720082+00:00'
   pinned_commits:
+  - 333c51064e
   - 4c2392b732
