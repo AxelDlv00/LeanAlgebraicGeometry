@@ -1,0 +1,9 @@
+import AlgebraicJacobian.Picard.JacobianDataAbelDegreeWindow
+
+open AlgebraicGeometry
+#print axioms AlgebraicGeometry.exists_effective_deg_eq_of_le_classDeg
+#print axioms AlgebraicGeometry.exists_effective_of_classDeg_eq_zero_of_le_deg
+#print axioms AlgebraicGeometry.exists_reference_divisor_le_deg
+#print axioms AlgebraicGeometry.exists_effective_of_classDeg_eq_zero_of_toP1
+#print axioms AlgebraicGeometry.h0_eq_one_of_subsingleton_hModule_one_of_deg_eq
+#print axioms AlgebraicGeometry.eq_of_picClass_eq_of_deg_eq_of_subsingleton_hModule_one
