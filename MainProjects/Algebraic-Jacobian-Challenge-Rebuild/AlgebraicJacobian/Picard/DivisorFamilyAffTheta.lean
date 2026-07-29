@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.DivisorFamilyAffAdaptation
 import AlgebraicJacobian.Picard.DivSchemeFamilySide
+import AlgebraicJacobian.Picard.DivisorFamilyThetaSections
 
 /-!
 # The Θ-LAYER OVER THE WIDENED CARRIER (R2): what actually blocked cert-r2's producer
@@ -406,6 +407,62 @@ lemma mem_unitGluedOver_iff {x : A.chartProd} :
   Iff.rfl
 
 end UnitTwist
+
+/-! ## The manufactured sections, side-uniformly
+
+`DivisorAdaptation.thetaSectionFst/Snd` (`Picard/DivisorFamilyThetaSections.lean:271/:278`)
+are the two sections `σ = (t₀ᵃ; 1)`, `τ = (1; t₁ᵃ)` whose pairing discharges
+`IsThetaPaired` chart-typed.  They read the `Sum` index to decide *which side's coordinate
+to use on this piece* — and that decision is again a `Bool`, so the side-uniform coordinate
+below carries them to the widened cover. -/
+
+section Sections
+
+/-- **The side-uniform coordinate power** `t_bᵃ` on the pinned chart of side `b`: `t₀ᵃ` on
+`false`, `t₁ᵃ` on `true`.  The `Bool`-indexed form of `relFiberCoordPow` /
+`relFiberCoordOnePow`, which the widened sections need for the same reason
+`relThetaResSide` was needed for the twisting unit. -/
+noncomputable def relFiberCoordSidePow (n : ℕ) : ∀ b : Bool,
+    Γ(relCurve C R, relPinnedChart C R π b)
+  | false => relFiberCoordPow C R π n
+  | true => relFiberCoordOnePow C R π n
+
+@[simp]
+lemma relFiberCoordSidePow_false (n : ℕ) :
+    relFiberCoordSidePow (C := C) (R := R) (π := π) n false
+      = relFiberCoordPow C R π n := rfl
+
+@[simp]
+lemma relFiberCoordSidePow_true (n : ℕ) :
+    relFiberCoordSidePow (C := C) (R := R) (π := π) n true
+      = relFiberCoordOnePow C R π n := rfl
+
+/-- **The widened manufactured section at side `b`**: on each piece, the coordinate power of
+its *assigned* side when that side is `b`, and `1` otherwise.
+
+At `b = false` this is `thetaSectionFst` and at `b = true` it is `thetaSectionSnd`, with the
+`Sum`-match replaced by a `Bool` comparison against `τ.side j`. -/
+noncomputable def thetaSectionSide (b : Bool) : A.chartProd := fun j =>
+  if h : τ.side j = b then
+    Ideal.Quotient.mk (Ideal.span {A.eqn j})
+      ((relCurve C R).resHom (piece_le_relPinnedChart τ j)
+        (h ▸ relFiberCoordSidePow (C := C) (R := R) (π := π) a (τ.side j)))
+  else 1
+
+@[simp]
+lemma thetaSectionSide_of_side_eq {b : Bool} {j : D.index} (h : τ.side j = b) :
+    thetaSectionSide A τ a b j
+      = Ideal.Quotient.mk (Ideal.span {A.eqn j})
+          ((relCurve C R).resHom (piece_le_relPinnedChart τ j)
+            (h ▸ relFiberCoordSidePow (C := C) (R := R) (π := π) a (τ.side j))) :=
+  dif_pos h
+
+@[simp]
+lemma thetaSectionSide_of_side_ne {b : Bool} {j : D.index} (h : τ.side j ≠ b) :
+    thetaSectionSide A τ a b j = 1 :=
+  dif_neg h
+
+end Sections
 
 /-! ## The pairing input, widened
 
