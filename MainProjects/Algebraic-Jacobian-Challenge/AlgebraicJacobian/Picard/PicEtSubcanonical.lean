@@ -185,6 +185,80 @@ theorem relPresheaf_isSheaf_of_representableBy {k : Type u} [Field k]
 
 end PicScheme
 
+/-! ## §3. The transport, with no rational point anywhere -/
+
+/-- **The transport: a scheme representing `picSharp C` also represents
+`picEt C`, with no hypothesis on `C(k)`.**
+
+This is the statement the seam docstring and the board row `AJC.picrep.etale-rep`
+declare impossible without a section. The proof composes §1 and §2: the
+representing scheme makes `relPresheaf C` an étale sheaf
+(`relPresheaf_isSheaf_of_representableBy`, i.e. subcanonicity), being a sheaf
+makes the sheafification unit an isomorphism
+(`isIso_picEtComparison_of_isSheaf`), and `Functor.RepresentableBy.ofIso`
+carries the representation across it.
+
+Note what is and is not proved. `X` is *given* here — the theorem consumes
+`picSharp` representability rather than producing it, and that antecedent is
+exactly the undischarged output of the Milne–Kollár campaign. What the theorem
+establishes is that no *further* representability theorem is needed on top of
+the campaign, contradicting the "eleventh item" pricing. -/
+noncomputable def picSharp_representableBy_picEt_transport {k : Type u} [Field k]
+    (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    {X : Over (Spec (CommRingCat.of k))}
+    (rep : (PicScheme.picSharp C).RepresentableBy X) :
+    (PicScheme.picEt C).RepresentableBy X :=
+  rep.ofIso (@asIso _ _ _ _ (PicScheme.picEtComparison C)
+    (PicScheme.isIso_picEtComparison_of_isSheaf C
+      (PicScheme.relPresheaf_isSheaf_of_representableBy C rep)))
+
+/-- **Clause (1) of the seam follows from its `picSharp` analogue.**
+
+Same content as `picSharp_representableBy_picEt_transport`, packaged in the
+seam's own existential shape so the comparison with
+`Scheme.fgaPicardRepresentability` is direct: the local-finiteness and
+separatedness conjuncts are carried across unchanged, because the transport
+does not move the representing scheme — it is the *same* `X`.
+
+The hypothesis is stated as the `picSharp`-shaped existential rather than as
+`[HasPicScheme C]`, deliberately: `HasPicScheme` pins the witness to
+`PicScheme C` and has no instance, so quantifying over it would make this
+theorem consume an uninhabited class. Here the witness is universally
+quantified and the statement is a genuine implication. -/
+theorem hasPicSchemeEt_of_picSharp_representability {k : Type u} [Field k]
+    (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    (h : ∃ X : Over (Spec (CommRingCat.of k)),
+        Nonempty ((PicScheme.picSharp C).RepresentableBy X) ∧
+          LocallyOfFiniteType X.hom ∧ IsSeparated X.hom) :
+    ∃ X : Over (Spec (CommRingCat.of k)),
+      Nonempty ((PicScheme.picEt C).RepresentableBy X) ∧
+        LocallyOfFiniteType X.hom ∧ IsSeparated X.hom := by
+  obtain ⟨X, ⟨rep⟩, hft, hsep⟩ := h
+  exact ⟨X, ⟨picSharp_representableBy_picEt_transport C rep⟩, hft, hsep⟩
+
+/-- **Clause (2) follows too, and unconditionally** — which is strictly stronger
+than the seam's own second conjunct `HasRationalPoint C → IsIso …`.
+
+Given representability of `picSharp C`, the comparison
+`PicScheme.picEtComparison C` is an isomorphism outright, with no section. So
+under the campaign's endpoint the rational-point hypothesis of Kleiman §2
+Thm 2.5 becomes redundant *for this curve*: it was buying a sheaf property that
+representability already supplies.
+
+This is not a proof of Kleiman 2.5 — that theorem asserts the comparison is an
+isomorphism from the section alone, with no representability input, and remains
+unformalised. -/
+theorem isIso_picEtComparison_of_picSharp_representability {k : Type u} [Field k]
+    (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    {X : Over (Spec (CommRingCat.of k))}
+    (rep : (PicScheme.picSharp C).RepresentableBy X) :
+    IsIso (PicScheme.picEtComparison C) :=
+  PicScheme.isIso_picEtComparison_of_isSheaf C
+    (PicScheme.relPresheaf_isSheaf_of_representableBy C rep)
+
 end Scheme
 
 end AlgebraicGeometry
