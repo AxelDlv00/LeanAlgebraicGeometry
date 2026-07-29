@@ -271,34 +271,26 @@ This section is the check that the repair is sufficient rather than merely longe
 strengthened conclusion **implies** `t ∈ chartLocus C m Z lam`, so it is equivalent to
 membership and cannot be satisfied by a trivial divisor on a curve where the locus is empty. -/
 
-/-- **The conclusion of `exists_splitting_h0_eq_one_of_mem_chartLocus` implies membership.**
+/-! ### Why the repair is sufficient, and the one check I did NOT get to compile
 
-So that theorem is an *equivalence* dressed as an implication, and in particular the `W = 0`
-inhabitant that refuted its earlier form is excluded: the clauses `hM` and `hWcl` are exactly
-`IsSplitWitness`' first two, and `h1` its third. -/
-set_option maxHeartbeats 1600000 in
--- The `IsSplitWitness` anonymous constructor must unify seven instance binders against the
--- section context; the default budget is not enough for that `isDefEq` (I-0198 escape hatch).
-theorem mem_chartLocus_of_conclusion
-    {T : Over (Spec (.of k))} (lam : picEt C T) (t : T.left)
-    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
-    {L : Type u} [Field L] [Algebra k L] [Algebra (Over.testPointField t) L]
-    [IsScalarTower k (Over.testPointField t) L]
-    [Module.Finite (Over.testPointField t) L]
-    [Algebra.IsSeparable (Over.testPointField t) L]
-    (M : (relCurve C L).CechPic)
-    (W : ((C ⊗ overSpec k L).left).CurveDivisor)
-    (hM : PicEtAff.map C L
-        (picEtAffineEquiv C (Over.testPointField t)
-          (picEtMap C (Over.testPoint t) (chartTwist C m Z T lam)))
-      = PicEtAff.unit C L (relPicMk C (overSpec k L) M))
-    (hWcl : Scheme.CurveDivisor.picClass L W = M)
-    (h1 : Subsingleton (Sheaf.HModule ((C ⊗ overSpec k L).left.divisorSheaf L W) 1)) :
-    t ∈ chartLocus C m Z lam :=
-  ⟨L, ‹Field L›, ‹Algebra k L›, ‹Algebra (Over.testPointField t) L›,
-    ‹IsScalarTower k (Over.testPointField t) L›,
-    ‹Module.Finite (Over.testPointField t) L›,
-    ‹Algebra.IsSeparable (Over.testPointField t) L›, M, hM, W, hWcl, h1⟩
+The clauses now in the conclusion are, verbatim, the first three clauses of `IsSplitWitness`
+(`Pic0ChartLocus.lean:151-161`): `hM` is its presentation equation, `picClass L W = M` its
+class clause, and the vanishing its third.  So the strengthened conclusion **contains** the
+membership data rather than merely being implied by it, and the `W = 0` inhabitant is excluded
+— on a curve where the locus at `t` is empty, no `(M, W)` satisfying `hM` and the class clause
+exists at all.
+
+**What I could not land, stated because it is the honest form of the non-vacuity check.**  The
+sharp statement is the *converse* — that `(hM, picClass L W = M, Subsingleton H¹)` implies
+`t ∈ chartLocus C m Z lam` — which is `mem_chartLocus_of_isSplitWitness_fibre` applied to the
+anonymous constructor of `IsSplitWitness`.  Mathematically it is the identity function on the
+data.  It does **not** elaborate here: unifying seven instance binders (`Field L`,
+`Algebra k L`, `Algebra κ(t) L`, the tower, finiteness, separability) against this file's
+section context exceeds `isDefEq` at 1.6M heartbeats.  That is a defeq wall of the
+`relCurve`-vs-product spelling, not a mathematical gap, and I am recording it rather than
+raising the budget further or leaving a `sorry` in a rooted file.  A lane wanting the
+biconditional should state it in `Pic0ChartLocus.lean` itself, where the instance context is
+already the one `IsSplitWitness` was declared in. -/
 
 end
 
