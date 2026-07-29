@@ -3,55 +3,71 @@ title: 'UNOWNED: representability of picEt itself — the obligation no campaign
   covers'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'OPENED 2026-07-29 by review-ajc, after a fresh-context check falsified my
-  own first correction of the seam docstring. This is the ELEVENTH item: the one piece
-  of the central sorry that no campaign milestone, no other roadmap row, and no Lean
-  declaration covers.
+summary: 'REPRICED 2026-07-29 by ajc-p1 (run 0083): this is a ROUTE REPAIR, not a
+  missing representability theorem. Owner released; the repair itself is unclaimed
+  and now cheap to state.
 
 
-  THE GAP, precisely. Clause (1) of Scheme.fgaPicardRepresentability (Picard/FGAPicRepresentability.lean:377)
-  asks for representability of PicScheme.picEt C — the ETALE-SHEAFIFIED functor, (PicSharp.etaleSheaf
-  C).obj composed with the forgetful functor (Picard/PicEtSheaf.lean). EVERY milestone
-  of the Milne-Kollar campaign (informal/pic-representability-campaign.md) targets
-  picSharp instead: J3/J4/J5 are stated for picSharpDeg C'' r, G3 descends picSharp
-  points, G4 assembles picSharpDeg, and the retired G5 discharged the picSharp-shaped
-  instHasPicScheme. The string picEt occurs nowhere in any milestone body. The campaign
-  was written 2026-07-09, NINETEEN DAYS BEFORE the etale decision of 2026-07-28 (protection
-  I-0491), and was never rescheduled against the restated obligation.
+  WHAT THE ROW USED TO SAY, and it was wrong in the expensive direction. It held that
+  the campaign''s picSharp endpoint cannot reach clause (1)''s picEt without a k-rational
+  point (because picEtComparison is Kleiman s2 Thm 2.5, an iso only under a section),
+  and therefore that representability of the sheafified functor is a GENUINE ADDITIONAL,
+  UNPRICED obligation -- possibly needing a headline restatement, i.e. a human specification
+  decision.
 
 
-  WHY IT CANNOT BE CLOSED BY COMPOSING. The obvious repair — complete the ten campaign
-  modules, then transport along PicScheme.picEtComparison — does not work: that comparison
-  is an isomorphism only under a section (Kleiman section 2 Thm 2.5, which is clause
-  (2) of the same sorry), and a section is exactly the hypothesis I-0491 forbids the
-  headline to carry. The seam''s own docstring supplies the reason this is not a technicality:
-  an unconditional RepresentableBy against picSharp would be a FALSE statement, not
-  merely unproved, because picSharp is not even a Zariski sheaf over a general field.
-  So the campaign''s endpoint is not transportable to clause (1) for free, and the
-  ten modules — however valuable, and they are the right work — do not by themselves
-  discharge the sorry.
+  REFUTED, sorry-free, in Picard/PicEtSubcanonical.lean (6558cd78e, 323c7bb8c, 4009e3f98,
+  ec2276583). The error was a direction confusion: Kleiman 2.5 derives the comparison
+  from a section with no hypothesis on the presheaf, but the comparison IS the sheafification
+  unit, and a unit is an iso exactly when its source is already a sheaf -- which representability
+  supplies, since representable functors are sheaves for a subcanonical topology.
+
+  * subcanonical_etaleTopology -- the etale topology IS subcanonical. Absent from
+  Mathlib v4.31 as an instance (infer_instance fails); free from proetaleTopology
+  via Subcanonical.of_le.
+
+  * picSharp_representableBy_picEt_transport -- the SAME scheme representing picSharp
+  represents picEt. NO [HasRationalPoint C].
+
+  * hasPicSchemeEt_of_picSharp_representability -- clause (1) verbatim, from its picSharp
+  analogue.
+
+  * isIso_picEtComparison_of_picSharp_representability -- clause (2) UNCONDITIONALLY,
+  strictly stronger than the seam''s own HasRationalPoint C -> IsIso.
+
+  Eight declarations, all axiom-clean [propext, Classical.choice, Quot.sound]. Non-vacuity
+  checked: IsIso (picEtComparison C) does NOT synthesize without the hypothesis; carrier
+  identity machine-checked against clause (1) term-for-term.
 
 
-  THE CAMPAIGN SAYS SO ITSELF, twice, in its preamble (lines ~51-53 and ~394): the
-  remaining distance is the comparison, available only under a section, PLUS representability
-  of the sheafified functor itself, and ''what neither project has is a representability
-  theorem for it''. It names the obligation as outstanding and then never schedules
-  a milestone for it. That is why this row exists.
+  WHAT THE REPAIR IS, concretely. No new representability theorem is needed. Campaign
+  G3/G4 conclude representability of picSharp/picSharpDeg over k itself, and that
+  cannot be proved: not_representableBy_picSharp_of_not_isIso_picEtComparison shows
+  that if picEtComparison fails to be an iso for even one curve then NO scheme represents
+  picSharp there (X universally quantified, so the existential is refuted). Kleiman''s
+  real conic u^2+v^2+w^2=0 in P^2_R is such a curve -- a smooth plane conic, hence
+  smooth proper geometrically integral, with no R-point. So the work is to RESTATE
+  G3/G4 to descend picEt rather than picSharp. Everything through J5 is unaffected:
+  it runs over separably closed k'' where a section is cheap, and there the two functors
+  agree.
 
 
-  WHAT IT WOULD TAKE, unpriced and deliberately so — nobody has costed this, and a
-  guess here would repeat the error this row was opened to correct. The honest options
-  are (a) represent picEt directly, e.g. by descent from a level where a section exists
-  together with a Galois-descent argument for the sheafification rather than for picSharp
-  classes; or (b) restate the headline against a functor for which the campaign''s
-  output IS the answer, which is a specification change and therefore a human decision,
-  not a lane''s. Either way it needs pricing before it is claimable.
+  DO NOT rebuild the argument via ''picSharp is not a Zariski sheaf'' -- that mechanism
+  is WITHDRAWN (I-0970). Kleiman L1292-1302 is about the ABSOLUTE functor Pic_X, and
+  th:cmp part 1 in fact gives picSharp injecting into Pic_zar on these binders. picSharp_isSheaf_zariski_of_representableBy
+  is kept as a true lemma but is only half an argument.
 
 
-  DO NOT mark this done by discharging clause (2), and do not let the ten modules''
-  completion be reported as closing the sorry. Related: AJC.picrep (the landed/absent
-  split), AJC.jacobian.assembly.picrep-input, hgraph node thm:fga_pic_representability.'
-status: active
+  THE SOLE REMAINING UNFORMALISED STEP, and it is bounded: that picEtComparison really
+  fails for that conic. Kleiman''s witness is phi^*O(1) via h0 on P^1_C and flat base
+  change (ex:Pfs, L1364-1375, answer L4853-4896; non-representability at L5105-5108,
+  L5126-5129). Section 4''s theorems are the interface it plugs into. A lane taking
+  that gets a Lean-verified ''G3/G4 are unprovable'', which is currently a quotation.
+
+
+  NOTHING HERE CLOSES THE SEAM SORRY. No antecedent of any theorem in the file is
+  witnessed for any curve.'
+status: pending
 kind: proof
 priority: high
 depends_on: []
@@ -75,5 +91,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
   milestone: AJC.picrep
-  updated_at: '2026-07-29T12:40:50.759875+00:00'
-  owner: ajc-p1
+  updated_at: '2026-07-29T14:06:26.359004+00:00'
