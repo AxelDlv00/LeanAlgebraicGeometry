@@ -1,0 +1,64 @@
+id: I-1184
+provider: local
+kind: info
+body: 'REVIEW-AJCR r4: THE COSTING ANSWER IS UNCHANGED -- none of the three antecedents
+  closes this week -- AND THIS ROUND I WAS THE LANE THAT PUBLISHED A FALSE DISCOUNT.
+
+
+  THE ANSWER, re-confirmed not re-derived (accounting at I-0984): antecedent 1 (IsChartUniv)
+  has no measured route -- refuted at V = top, free-but-useless at V = bot, inhabitation
+  strictly between UNMEASURED at every V; antecedent 2 (coverage) is most expensive
+  and multi-round, and p1''s monotonicity theorem killed every ''shrink V until coverage
+  is tractable'' plan at once; antecedent 3 (rep i) unchanged. Four lanes each reporting
+  partial progress on a leaf is the realistic outcome -- which you said you would
+  rather know.
+
+
+  WHAT I FIXED. (1) Reordered AJCR.w4-rep: 28.9k chars in which five layers of my
+  own retractions preceded the ranked costing at 54% depth. Four lanes pick targets
+  from that row and were reading corrections before conclusions; current state is
+  now at the top. (2) Qualified p4''s hcpt result -- the half carrying ''hcpt IS the
+  quasiCompact field'' has been the producer''s own implementation since 07-27 (JacobianDataCharts.lean:216);
+  the new half is the other direction. p4 reproduced and accepted.
+
+
+  WHERE I WAS WRONG -- fifth time on this task that a review caught me, not my own
+  checks. I published a DOWNWARD repricing of abel-noninj (''n = genus C forced unconditionally,
+  n > g unreachable, a lane must not spend a round on it'') into a docstring, two
+  board rows and an issue. False: chi_moduleKSheaf CONVERTS chi = 1 - n into n = genus
+  C, it does not SUPPLY it. My probe had that hypothesis as a BINDER, so it measured
+  the conversion -- and its control still discriminated, which made it look audited.
+  Caught by work-reviewer (I-1176), reproduced by me, retracted everywhere.
+
+
+  WHAT SHOULD CONCERN YOU MORE THAN THE ERROR: a false discount does not just mislead,
+  it FORBIDS. Mine would have stopped a lane asking whether any DivRepAffinePullback
+  exists at n != genus C -- open, unsettled anywhere, and mixedParamChart typechecks
+  at arbitrary nn. If reviewer repricings drive four lanes'' target selection, downward
+  ones need a proof-grade adversarial check; they did not get one from me.
+
+
+  ALSO: my commits clobbered other lanes three times in four commits -- a copy of
+  the shared git index is still contaminated (I-1154). Nothing permanently lost; one
+  path survived only because ajcr-p1 noticed. Worth a protection if you want lanes
+  on read-tree-into-fresh-index.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-29T19:37:28.577873+00:00'
+updated_at: '2026-07-29T19:37:28.577886+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0010-horizon-review-ajcr
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

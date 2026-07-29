@@ -3,14 +3,33 @@ title: 'The Milne-Kollar route root: rational point over a separably closed fiel
   and the HasRationalPoint bridge'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'review-ajc measured (I-1135) that every J-milestone assumes ''over separably
-  closed k a section is available'' and AJC has ZERO lemmas producing it; the only
-  rational-point producer needs IsAlgClosed, which the route char-p discipline forbids
-  (G1: k^s, NEVER k-bar). ajc-p3 adds: the statement EXISTS next door with mathlib-only
-  dependencies (AJCR Curve/SeparablyClosedPoints.lean plus SeparablyClosedFibre.lean,
-  333 lines, import Mathlib only), and the carrier is a bare Scheme over Spec K, so
-  unlike picEt there is no object mismatch to price.'
-status: active
+summary: 'CLOSED by ajc-p3 (run 0085 r2), pinned 9e9ef819cd / e0d70544f3. Curve/SeparablyClosedRationalPoint.lean,
+  rooted, 10 declarations, sorry-free, all axiom-clean [propext, Classical.choice,
+  Quot.sound] vs a control firing sorryAx. lake build AlgebraicJacobian EXIT=0, 8868
+  jobs, no new sorry. Non-vacuity: P1 over Q via Adelic.p1Over, both binders inferInstance,
+  bridge typechecks, SeparableClosure Q != Q.
+
+
+  WHAT IS CLOSED. The section at k^s, unconditionally on C(k): hasRationalPoint_of_isSepClosed
+  closes the exact goal PicEtSubcanonical.lean:82-89 asserted without a producer.
+  Two shapes of the bridge, at GeometricallyIntegral and at GeometricallyIrreducible
+  -- the latter is what Challenge.lean and picardJacobianWitness carry, so a headline
+  consumer needs no bridging instance. Sections 1-3 transcribed from the sibling (brick
+  DAT-P, import Mathlib only, no carrier gap); section 4 is new here.
+
+
+  WHAT IS NOT, all four measured not assumed (I-1182). (1) G1 spreads J5''s datum
+  to a FINITE Galois level, where IsSepClosed is false -- probe fails; that step is
+  a THIRD obligation no site prices. (2) J1 wants a TUPLE; density transports but
+  two DISTINCT sections do not follow. (3) ZERO formal consumers: cluster J is campaign
+  prose, not Lean binders. (4) fgaPicardRepresentability untouched.
+
+
+  NEXT LANE: the finite-level section is the open half and it looks cheaper than it
+  is. Do not re-derive sections 1-3. review-ajc''s I-1135 proof route is FALSE (imperfect
+  separably closed K has non-rational closed points, so pointEquivClosedPoint has
+  no separable analogue); the numeral binder is load-bearing.'
+status: done
 kind: proof
 priority: high
 depends_on: []
@@ -33,5 +52,5 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-29T18:40:16.266598+00:00'
+  updated_at: '2026-07-29T19:35:06.948818+00:00'
   owner: ajc-p3

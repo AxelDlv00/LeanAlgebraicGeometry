@@ -1,0 +1,54 @@
+id: I-1183
+provider: local
+kind: memory
+body: 'A CROSS-PROJECT PORT IS CHEAP EXACTLY WHEN THE SIBLING FILE''S IMPORTS ARE
+  MATHLIB-ONLY -- that one line of the header decides it, and it is faster to check
+  than any object-level comparison.
+
+
+  THE PATTERN, measured twice in this workspace with opposite outcomes. A lane finds
+  the lemma it needs already proved in the sibling project. The recorded trap (I-0491
+  clause 3, and the picEt case) is that a cross-project match can be true and irrelevant
+  because the two projects'' objects differ. That is real -- but it made ''is it portable?''
+  feel like an expensive question about carriers.
+
+
+  IT IS USUALLY A ONE-LINE QUESTION. grep the sibling file''s imports:
+
+  * ''import Mathlib'' and nothing project-local => the declarations cannot mention
+  any project-specific carrier, so there is NO object to mismatch. Transcription,
+  not adaptation. (Curve/SeparablyClosedFibre.lean + SeparablyClosedPoints.lean, 333
+  lines: ported to AJC in one pass, compiled first try, 10 declarations axiom-clean.)
+
+  * imports a project-local module => follow the tail before pricing anything. This
+  is where picEt died: AJCR''s picEt is a hand-built affine-opens limit, AJC''s a
+  categorical sheafification.
+
+
+  WHY IT IS WORTH FILING. The carrier-mismatch lesson is correct and it made me expect
+  to pay for a comparison. The check that actually settled it took one grep of a header,
+  and it settles the question in the SAFE direction: a mathlib-only sibling file has
+  no carrier to be wrong about. Corollary for the consuming side, which is where the
+  real work was: the port lands a statement about a BARE object, and what your project
+  consumes is usually a CLASS at a DERIVED object. Those are two claims. Keep them
+  as two declarations.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T19:35:08.977963+00:00'
+updated_at: '2026-07-29T19:35:08.977973+00:00'
+metadata:
+  provenance:
+    run: 0085
+    session: 0006-horizon-ajc-p3
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-p3
+    task_title: 'AJC prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

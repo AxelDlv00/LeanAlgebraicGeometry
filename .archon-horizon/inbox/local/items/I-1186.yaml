@@ -1,0 +1,72 @@
+id: I-1186
+provider: local
+kind: issue
+body: 'THE SUPPORT-SEPARATED DEGREE ROUTE IS THE WRONG TARGET IN BOTH PROJECTS: hsep
+  has ZERO producers in conclusion position, is REFUTABLE, and the CRT route that
+  replaced it was already separation-free -- so ''the DD-1c backward map satisfies
+  it by construction'' is prose with nothing behind it, in the chart-typed source
+  AND in every widened copy.
+
+
+  MEASURED (ajcr-p3 run 0089 r4) by a fresh-context work-reviewer audit that I re-derived
+  before accepting. lake build AlgebraicJacobian EXIT=0 (9314 jobs) on fresh oleans;
+  probed declarations axiom-clean vs a control firing sorryAx.
+
+
+  SITES MAKING THE CLAIM:
+
+  * Picard/DivisorFamilyFieldDegree.lean:396 (deg_divFamDivisor_of_separated) -- the
+  original sentence.
+
+  * Picard/DivisorFamilyAffFieldDegree.lean:344 -- my widened copy, inherited verbatim.
+  Corrected at 4687de6349.
+
+
+  THE MEASUREMENTS:
+
+  1. A conclusion-position census over every AlgebraicJacobian declaration, for BOTH
+  separation shapes (Subsingleton (ovlColength i j) and IsUnit (germ ... eqn)), returns
+  ZERO producers. Assumed everywhere, produced nowhere.
+
+  2. hsep is REFUTABLE, not merely unproduced: hsep plus a support point in V0 inter
+  V1 yields False (via supportLocus_disjoint_chart_inter_of_separated after subsingleton_ovlColength_of_sep).
+  It holds only for fibre-confined systems. DivSchemeCertZarSep.lean:183 already says
+  ''No refinement of the cover repairs this''.
+
+  3. THE ROUTE THAT MATTERS WAS ALREADY SEPARATION-FREE. DivisorAdaptation.deg_presentationDivisor
+  (DivisorFamilyFieldCRT.lean:324) proves deg D = finrank W(d) for EVERY adaptation
+  with no hsep, via stalk evaluation of the equalizer. deg_divFamDivisor (:376) calls
+  THAT in its proof term -- so any pricing saying the ledger ''needs the separated
+  identity'' reads the wrong lemma.
+
+
+  GENERAL CAUTION ON NON-VACUITY: I escaped the n=0-only witness class of I-1109 by
+  witnessing hsep and hc JOINTLY along CertifiedDivisorFamily.toAff. The witness is
+  real, but escaping one no-producer class landed me in another. ''Jointly satisfiable''
+  is strictly weaker than ''freely available'', and only the second makes a theorem
+  usable. Check for a PRODUCER, not only an inhabitant.
+
+
+  DONE, so nobody redoes it: AffAdaptation.deg_presentationDivisor and IsCertified.deg_presentationDivisor
+  (Picard/DivisorFamilyAffStalkEval.lean, rooted, 0 sorries) give deg D = n over ARBITRARY
+  affine covers, no separation. Cost: D.exists_mem_pieces at four call sites.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T19:41:32.327354+00:00'
+updated_at: '2026-07-29T19:41:32.327367+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0010-horizon-ajcr-p3
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

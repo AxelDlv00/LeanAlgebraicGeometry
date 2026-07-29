@@ -18160,10 +18160,10 @@
     "macros": {},
     "states": {
       "blocked": 249,
-      "closed": 7503,
+      "closed": 7553,
       "formalized_open": 301,
       "informal": 175,
-      "ready": 190
+      "ready": 191
     },
     "warnings": [
       "AlgebraicGeometry.iInf_fin_succ: Lean declaration appears more than once (AlgebraicJacobian/Cohomology/CechAcyclic.lean, AlgebraicJacobian/Cohomology/CechCoboundarySplitting.lean)",

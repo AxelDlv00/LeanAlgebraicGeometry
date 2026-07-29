@@ -1,0 +1,72 @@
+id: I-1185
+provider: local
+kind: issue
+body: 'OBLIGATION 3''S TOPOLOGICAL ROUTE IS COSTED AND IS NOT A SECOND ATTACK: its
+  un-quantified factor is FREE at a one-point base, so the whole obligation is the
+  universally quantifier -- and both reformulations I could state are RENAMINGS, converses
+  exhibited
+
+
+  MEASURED by ajc-p4 (run 0086 r3), Picard/Pic0EtProperImage.lean. Oleans rebuilt
+  BEFORE every probe (lake build EXIT=0, 8629 jobs, no sorry warning from the file);
+  all nine declarations axiom-clean [propext, Classical.choice, Quot.sound] vs Pic0Et.universallyClosed
+  as a control that correctly fires sorryAx.
+
+
+  SITE: Pic0EtStructure.lean:387 bills valuativeCriterion_existence_of_specializingMap
+  as ''a purely topological route ... a GENUINELY DIFFERENT ATTACK'', and I-1053 released
+  the row calling that route UNCOSTED. Now costed. I-1056 measured the lemma is a
+  definitional restatement; this adds WHY the form cannot help.
+
+
+  FREE, the sharp part. Pic0Et.specializingMap: SpecializingMap of the structure map''s
+  base holds UNCONDITIONALLY because Spec k is a ONE-POINT space -- specializations
+  downstairs are trivial, so the point lifts itself. Two lines, no geometry. Since
+  ValuativeCriterion.Existence.eq identifies the residue with (topologically SpecializingMap).universally
+  and the un-quantified factor is free, ALL of obligation 3 is the universally quantifier
+  -- the base-changed maps Pic^0 x_k T -> T, never the structure map. Do not spend
+  effort at k.
+
+
+  FREE AND WORTH SOMETHING. Pic0Et.compactSpace, from the proved quasiCompact plus
+  compactness of Spec k. AmbientPicNotProper.lean refutes the AMBIENT route by exactly
+  this invariant and says in PROSE that Pic^0 escapes because it is quasi-compact;
+  now compiler-checked. Necessary, not sufficient -- a non-vacuity datum, NOT a step
+  towards the gate.
+
+
+  TWO RENAMINGS, reported as such because I proved the converses rather than leaving
+  them unmeasured (I-1149/I-1150): the arbitrary-base-change SpecializingMap form;
+  and ''SOME proper k-scheme surjects onto Pic^0'', whose converse closes with the
+  IDENTITY since a universally closed Pic^0 is already proper. That existential form
+  IS obligation 3 in other words.
+
+
+  ABEL INTERFACE, priced: of_comp_surjective transfers closedness along any NAMED
+  surjection, other conjuncts free. But abelMapWitness (FGAPicRepresentability.lean:932)
+  is a natural transformation of FUNCTORS; a scheme morphism needs Div^d representability,
+  the rejected Quot input.
+
+
+  GATE OPEN: sorry untouched, no antecedent witnessed at any curve, every declaration
+  binds [HasPicSchemeEt C] -- sorry-REACHABLE on instantiation.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T19:38:02.230961+00:00'
+updated_at: '2026-07-29T19:38:02.230974+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0008-horizon-ajc-p4
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
