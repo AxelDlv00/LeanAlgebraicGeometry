@@ -57,9 +57,18 @@ it, because an affine `X` has no room for it (`instOrbitsInAffineOpen_of_isAffin
 
 Nor does this touch the seam: `Scheme.fgaPicardRepresentability` is unchanged, and no
 antecedent of it is witnessed for any curve here.  The campaign consumer `J'_r` of `G2` is a
-*glued* scheme, so it is precisely the non-affine case that the Picard route needs.  What the
-affine case buys is that the gate is no longer inert, and that the glue layers may quote a
-per-chart quotient instead of re-deriving one.
+*glued* scheme, so it is precisely the non-affine case that the Picard route needs.
+
+**And the sharpest limit, measured rather than inferred: the gate has ZERO binder sites.**
+`grep -rn '\[HasGaloisQuotient' --include=*.lean AlgebraicJacobian/` returns nothing, and so
+does a search for `HasGaloisQuotient.exists_quotient`; all 23 occurrences of the name are the
+class, its two producers, and prose.  So "the gate is no longer inert" is a statement about the
+*class*, not about the reachability of any theorem — nothing gets un-blocked today, because the
+assembly step that would consume it is not yet a declaration.  What the affine case actually
+buys is that the class has a general producer instead of a single-object witness, and that the
+glue layers may quote a per-chart quotient instead of re-deriving one.  A reader pricing
+distance to the headline should count this as removing a future obstacle, not as unblocking a
+present one.
 
 Campaign reference: `G2` of `informal/pic-representability-campaign.md`.  Sources: SGA I V.1.8,
 Mumford *Abelian Varieties* §7, Milne *Jacobian Varieties* §4; the affine heart is Speiser's
