@@ -67,17 +67,30 @@ summary: "T3 IS FIVE ARROWS AND ALL FIVE ARE LANDED (run 0073 r7); only the COMP
   \ that instance fine in a standalone probe. The failure was elaboration order --\
   \ instance search cannot key on a metavariable. Naming both subgroups closes it.\
   \ Check whether the instance's ARGUMENTS are metavariables before reading the message\
-  \ as an absence.\n\nT3'S RESIDUE: the COMPOSITE, and nothing else. (T3-1) h1AddEquivTruncExpCechKernel,\
-  \ (T3-2), (T3-3), (T3-4), (T3-5) are five landed statements; H1(C,O) ~+ ker(CechPic(C_eps)\
-  \ -> CechPic(C)) is their composite and is written nowhere. UNMEASURED, and specifically\
-  \ including WHETHER IT COMES OUT ADDITIVE: every arrow is a MulEquiv or a bare Equiv,\
-  \ Additive-wrapping happens only on the (T3-1) leg, and T5 needs the semilinear\
-  \ form on top of that. Per 7.4/7.6's rule, print the types before pricing it --\
-  \ doing exactly that is what found (T3-5), so the instrument has now paid twice\
-  \ in one session.\n\nSTILL TRUE AND STILL THE TRAP FOR T5: what T3 must hand T5\
-  \ is the SEMILINEAR comparison (AddEquiv plus intertwining across kappa(e) ~+* k),\
-  \ NOT a bare kernel bijection -- finrank does not transport along a bijection of\
-  \ sets. The .t5 row records it, and Pic0TangentSpace.finrank_eq_of_addEquiv_of_bijective_smul\
+  \ as an absence.\n\nT3'S RESIDUE: the COMPOSITE (T3-6), and nothing else. (T3-1)\
+  \ h1AddEquivTruncExpCechKernel, (T3-2), (T3-3), (T3-4), (T3-5) are five landed statements;\
+  \ H1(C,O) ~+ ker(CechPic(C_eps) -> CechPic(C)) is their composite and is written\
+  \ nowhere.\n\n(T3-6) IS MEASURED, NOT UNMEASURED -- worksheet 7.8, written after\
+  \ the five arrows landed, by writing the square and reading the leftover goal rather\
+  \ than guessing. PRICE [S], NO MISSING INPUT IDENTIFIED. The composite reduces to\
+  \ ONE section-level equation:\n  (relCurve C k).resHom ((relCurveMap C k[eps] k).appLE\
+  \ (dualNumberSections C u)) = collapseUnits C (U0 inf U1) (unitsFst u)\ni.e. restrict\
+  \ the eps |-> 0 image of the thickened section and get the collapse of fst u. What\
+  \ reduced for free: the opens transport (two rw then rfl), unitsReduction on a generator\
+  \ IS unitsFst (one show), and the quotient/Units peeling. Its one plausible-looking\
+  \ input -- sectionsCollapse vs Over.sectionsBaseChange -- is NOT a brick: two rewrites\
+  \ and a rfl, probed green (7.8 retracts its own first draft, which called it absent\
+  \ after searching names instead of trying rfl). What remains is the Units.ext-level\
+  \ assembly: coercion bookkeeping across Units.map / appLE / ConcreteCategory.hom,\
+  \ the I-0685 family. A SUCCESSOR SHOULD EXPECT SPELLING, NOT MATHEMATICS -- and\
+  \ 7.8 flags that as its prediction rather than its measurement.\n\nSTILL GENUINELY\
+  \ OPEN AND SEPARATE: WHETHER THE COMPOSITE COMES OUT ADDITIVE. Every arrow is a\
+  \ MulEquiv or a bare Equiv; Additive-wrapping happens only on the (T3-1) leg, and\
+  \ T5 needs the semilinear form on top of that. That question is not answered by\
+  \ 7.8's [S].\n\nSTILL TRUE AND STILL THE TRAP FOR T5: what T3 must hand T5 is the\
+  \ SEMILINEAR comparison (AddEquiv plus intertwining across kappa(e) ~+* k), NOT\
+  \ a bare kernel bijection -- finrank does not transport along a bijection of sets.\
+  \ The .t5 row records it, and Pic0TangentSpace.finrank_eq_of_addEquiv_of_bijective_smul\
   \ is the landed bridge that consumes it.\n"
 status: pending
 kind: proof
@@ -92,5 +105,5 @@ metadata:
   author: horizon
   created_at: '2026-07-16T17:13:44.680736+00:00'
   parent: AJCR.w5-av
-  updated_at: '2026-07-29T00:12:53.278740+00:00'
+  updated_at: '2026-07-29T00:21:53.307825+00:00'
   owner: ajcr-w5-av
