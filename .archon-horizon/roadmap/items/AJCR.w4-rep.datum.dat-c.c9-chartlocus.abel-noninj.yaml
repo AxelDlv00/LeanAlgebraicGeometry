@@ -67,7 +67,32 @@ summary: "*** RANK ELEVATED 2026-07-29 (review-ajcr, run 0082 s0006): THIS FORK 
   \ chartValue s1 = chartValue s2 at arbitrary s_i -- rfl FAILS, simp no progress;\
   \ s1 = s2 in divFamZar -- rfl FAILS. Neither hypothesis is free.\n\nOWNER RELEASED:\
   \ not finished, so the row is unclaimed per I-0838 step 5. Next lane should NOT\
-  \ re-derive the reduction or the Sigma-component analysis."
+  \ re-derive the reduction or the Sigma-component analysis.\n\n*** REVIEWER NOTE\
+  \ 2026-07-30 (review-ajcr r4): RE-PRICING (2) IS RIGHT, AND ITS 'AT n = g' QUALIFIER\
+  \ IS NOT A RESTRICTION -- n = g IS FORCED. Measured, HEAD 4ee25a3d66. ***\n\nRe-pricing\
+  \ (2) reduces the fork to: does DivScheme g contain points where H^1 fails to vanish?\
+  \ It states the h^0 = 1 computation 'at degree g' / 'at n = g', which reads like\
+  \ one degree among several that a lane might have to argue it is in. It is not --\
+  \ it is the ONLY degree any chart of this atlas can be built at.\n\nWHY, and the\
+  \ argument is ONE THEOREM, not a census. chi_moduleKSheaf (RiemannRoch/ChiCurve.lean:148)\
+  \ proves chi(O_C) = 1 - genus C UNCONDITIONALLY under [IsProper] [SmoothOfRelativeDimension\
+  \ 1] [GeometricallyIrreducible] -- exactly the instance binders the chart files\
+  \ already carry. So any parameter n admitting chi = 1 - n satisfies n = genus C.\
+  \ Controlled probe (lake env lean, oleans verified fresh): both positives elaborate;\
+  \ the off-by-one control fails, omega reports a counterexample, EXIT=1.\n\nCONSEQUENCE\
+  \ FOR A LANE TAKING THIS ROW. You do not owe a 'we are at n = g' argument, and you\
+  \ must not spend a round trying to reach the n > g branch where h^0 >= 2 would supply\
+  \ a refuting witness -- that branch is UNREACHABLE for any chart the atlas can contain.\
+  \ The fork is the carve question at the single degree n = genus C.\n\nDO NOT quote\
+  \ the five-producer census for this (Pic0ChartAbelForkReduce.lean:292-298 as it\
+  \ stood, and I-1136): it is FALSE at one of its five sites -- DivRepKit.lean:113\
+  \ produces (divFunctor C pi g).RepresentableBy DivOver with no chi hypothesis at\
+  \ all; grep -c hchi on that file = 0. Corrected in the file at HEAD 4ee25a3d66,\
+  \ detail in I-1152. The theorem route is correct AND strictly stronger: it pins\
+  \ charts built through the hchi-free packaging too, which a signature census structurally\
+  \ cannot reach.\n\nUNCHANGED: the fork is still undecided, and fibre-witness uniqueness\
+  \ is still not general-test injectivity. This note removes a phantom obligation\
+  \ from the row's price; it closes nothing.\n"
 status: pending
 kind: proof
 priority: normal
@@ -92,6 +117,6 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c.c9-chartlocus
   milestone: AJCR.w4-rep
-  updated_at: '2026-07-29T18:37:54.873071+00:00'
+  updated_at: '2026-07-29T18:56:40.308655+00:00'
   pinned_commits:
   - d098e5bbf9
