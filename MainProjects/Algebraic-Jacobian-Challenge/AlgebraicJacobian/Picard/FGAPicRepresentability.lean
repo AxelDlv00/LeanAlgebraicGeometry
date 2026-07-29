@@ -1241,7 +1241,33 @@ disjoint union of open quasi-projective `k`-subschemes, hence locally of
 finite type). The `HasPicScheme` existential carries local finiteness, so the
 property of the `Classical.choose` witness is its second `choose_spec`
 component; the class survives to preserve the blueprint-pinned consumer
-signature. -/
+signature.
+
+**THIS CLASS IS A SELF-PROJECTION AND CARRIES NO MATHEMATICS** (`review-ajc`,
+2026-07-30 — the paragraph above states the mechanism but never draws the
+conclusion, and 53 binder sites read it as content). Its sole producer
+`instPicSchemeLocallyOfFiniteType` below is `choose_spec.2.1` of the very
+`[HasPicScheme C]` binder it assumes, so the class is *definitionally* whatever
+its hypothesis already said: it proves nothing that naming `HasPicScheme` does
+not. Discharging it is not a step toward anything.
+
+Two consequences worth stating separately, because they pull in opposite
+directions:
+
+* **Do not write a new consumer against it.** A statement binding
+  `[PicSchemeLocallyOfFiniteType C]` on top of `[HasPicScheme C]` is not more
+  general than one binding `[HasPicScheme C]` alone — the extra binder is
+  discharged by instance search from the first. It costs a reader a lookup and
+  buys nothing.
+* **It is nonetheless harmless to keep**, which is why it is labelled rather
+  than deleted: 61 signatures name it, `HasPicScheme` is `Prop`-valued so the
+  projection is unique, and the blueprint pins the consumer shape. Deleting it
+  is a 61-site edit for zero mathematical gain.
+
+The honest content is upstream: `HasPicScheme` itself has **zero** instances,
+and over an arbitrary field it cannot get one (see `HasPicSchemeEt` below and
+`Picard/PicEtSubcanonical.lean:427`). So neither this class nor its 61 consumers
+currently speaks about any curve. -/
 class PicSchemeLocallyOfFiniteType {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
