@@ -2,46 +2,52 @@ id: AJC.picrep.etale-rep.galois
 title: 'The Galois quotient: input 2 of the picEt descent repair, the last one open'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'UNOWNED, and it is the ONLY unclosed input of the descent repair (review-ajc r4, 2026-07-30).
-  Added so AJC.picrep.etale-rep can stay open WITH a visible reason, rather than warning on every roadmap
-  command while its only child reads done.
+summary: 'UNOWNED, and it is the ONLY unclosed input of the descent repair (review-ajc
+  r4, 2026-07-30). Added so AJC.picrep.etale-rep can stay open WITH a visible reason,
+  rather than warning on every roadmap command while its only child reads done.
 
 
-  WHY THE PARENT IS NOT DONE. The repair "descend picEt, not picSharp" has FOUR inputs (the board priced
-  three until r4). Closed: (1) the descent test, EtaleFieldCover.lean, r2; (3) the cross-base identification,
-  ajc-p1''s PicEtCrossBase.lean, unconditional, verified at HEAD; (4) the k^s rational point, ajc-p3''s
-  Curve/SeparablyClosedRationalPoint.lean, 437 lines sorry-free in class form. THIS is input (2).
+  WHY THE PARENT IS NOT DONE. The repair "descend picEt, not picSharp" has FOUR inputs
+  (the board priced three until r4). Closed: (1) the descent test, EtaleFieldCover.lean,
+  r2; (3) the cross-base identification, ajc-p1''s PicEtCrossBase.lean, unconditional,
+  verified at HEAD; (4) the k^s rational point, ajc-p3''s Curve/SeparablyClosedRationalPoint.lean,
+  437 lines sorry-free in class form. THIS is input (2).
 
 
-  THE OBLIGATION: the semilinear Galois action plus its quotient, campaign G1/G2, Picard/FiniteGaloisQuotient.lean.
-  Its gate HasGaloisQuotient is the engine''s single remaining instance-free class -- verified, the
-  only declaration concluding it in AJC is hasGaloisQuotient_specF4 (Picard/GaloisQuotientNonVacuity.lean:199),
-  a NON-VACUITY WITNESS at one explicit F4 action, not a general instance. Note HasStableAffineCover
-  is NOT a second gate -- CONCLUSION UNCHANGED, REASON CORRECTED (review-ajc r5, 2026-07-30, kernel-measured
-  with controls both ways). The previous wording here said it "has had a global UNCONDITIONAL instance
-  since G2(a) landed", and that is false: hasStableAffineCover_of_orbitsInAffineOpen requires [rho.OrbitsInAffineOpen],
-  and `inferInstance` for HasStableAffineCover at an ABSTRACT rho carrying only [FiniteDimensional K
-  L] [IsGalois K L] FAILS with synthInstanceFailed (control: the same goal WITH the orbit hypothesis
-  in scope synthesizes). What is true, and is what the conclusion actually rests on, is that the orbit
-  hypothesis is free AT THE ACTION THIS ROUTE USES: instOrbitsInAffineOpen_pullback discharges it for
-  pullbackSemilinearGalAction over an arbitrary Spec K-scheme with no quasi-projectivity, separatedness
-  or finiteness, so HasStableAffineCover synthesizes there outright (measured). Measured in the same
-  probe: HasGaloisQuotient does NOT synthesize at that same action -- so the base-change action separates
-  the two gates, which is the sharpest available statement that G2 is one gate and not two.
+  THE OBLIGATION: the semilinear Galois action plus its quotient, campaign G1/G2,
+  Picard/FiniteGaloisQuotient.lean. Its gate HasGaloisQuotient is the engine''s single
+  remaining instance-free class -- verified, the only declaration concluding it in
+  AJC is hasGaloisQuotient_specF4 (Picard/GaloisQuotientNonVacuity.lean:199), a NON-VACUITY
+  WITNESS at one explicit F4 action, not a general instance. Note HasStableAffineCover
+  is NOT a second gate -- CONCLUSION UNCHANGED, REASON CORRECTED (review-ajc r5, 2026-07-30,
+  kernel-measured with controls both ways). The previous wording here said it "has
+  had a global UNCONDITIONAL instance since G2(a) landed", and that is false: hasStableAffineCover_of_orbitsInAffineOpen
+  requires [rho.OrbitsInAffineOpen], and `inferInstance` for HasStableAffineCover
+  at an ABSTRACT rho carrying only [FiniteDimensional K L] [IsGalois K L] FAILS with
+  synthInstanceFailed (control: the same goal WITH the orbit hypothesis in scope synthesizes).
+  What is true, and is what the conclusion actually rests on, is that the orbit hypothesis
+  is free AT THE ACTION THIS ROUTE USES: instOrbitsInAffineOpen_pullback discharges
+  it for pullbackSemilinearGalAction over an arbitrary Spec K-scheme with no quasi-projectivity,
+  separatedness or finiteness, so HasStableAffineCover synthesizes there outright
+  (measured). Measured in the same probe: HasGaloisQuotient does NOT synthesize at
+  that same action -- so the base-change action separates the two gates, which is
+  the sharpest available statement that G2 is one gate and not two.
 
 
-  AND THE RESIDUE ajc-p3 FOUND ON ITS OWN CLOSED ITEM, the sharpest thing known about this cluster:
-  G1 consumes the section at a FINITE Galois level, where IsSepClosed is FALSE. So input (4), just closed,
-  does NOT reach the step that needs it; REPRICED 2026-07-30: that gap is NOT a filtered-colimit argument
-  -- ajc-p3 refuted their own pricing (I-1227), the finite level being read off the one-point Spec of
-  a field. What is open there is GALOIS-ness of the level (finite separable is what the construction
-  gives; G1 wants finite Galois), a normal-closure step, unreported at time of writing. Tracked as AJC.picrep.sepclosed-finite,
-  now OWNED by ajc-p3 (not unowned as this row said). Anyone taking this row should read that one first
-  -- it is upstream and smaller.
+  AND THE RESIDUE ajc-p3 FOUND ON ITS OWN CLOSED ITEM, the sharpest thing known about
+  this cluster: G1 consumes the section at a FINITE Galois level, where IsSepClosed
+  is FALSE. So input (4), just closed, does NOT reach the step that needs it; REPRICED
+  2026-07-30: that gap is NOT a filtered-colimit argument -- ajc-p3 refuted their
+  own pricing (I-1227), the finite level being read off the one-point Spec of a field.
+  What is open there is GALOIS-ness of the level (finite separable is what the construction
+  gives; G1 wants finite Galois), a normal-closure step, unreported at time of writing.
+  Tracked as AJC.picrep.sepclosed-finite, now OWNED by ajc-p3 (not unowned as this
+  row said). Anyone taking this row should read that one first -- it is upstream and
+  smaller.
 
 
-  NOT A ROUND TARGET AS A WHOLE (the campaign sized G2 among its three XL blocks), but sepclosed-finite
-  under it is small and upstream.'
+  NOT A ROUND TARGET AS A WHOLE (the campaign sized G2 among its three XL blocks),
+  but sepclosed-finite under it is small and upstream.'
 status: active
 kind: proof
 priority: normal
@@ -61,7 +67,8 @@ metadata:
     round: '4'
     rounds: '8'
     task: review-ajc
-    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean quality'
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.etale-rep
   milestone: AJC.picrep

@@ -1,0 +1,37 @@
+id: AJC.picrep.etale-rep.descent-assembly
+title: 'The restated-G3 ASSEMBLY: k''-representability of picEt + Galois descent =>
+  k-representability (the theorem that consumes inputs 1-4)'
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'CLAIMED by ajc-p2 run 0084 r4. The four inputs of the picEt descent repair
+  each have a lane or are landed; NOTHING IN THE TREE STATES THE THEOREM THAT CONSUMES
+  THEM. Measured at HEAD: no declaration in AlgebraicJacobian/ concludes Nonempty
+  ((PicScheme.picEt C).RepresentableBy X) from a representation over a larger field;
+  the only sites with that conclusion shape are PicEtSubcanonical.lean:338 (takes
+  a picSharp representation over the SAME field) and FGAPicRepresentability.lean:629/:656
+  (the class field and the sorry itself). Objective: state the assembly at the shape
+  the seam consumes and measure which antecedents are real.'
+status: active
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-29T21:20:13.180248+00:00'
+  provenance:
+    run: 0084
+    session: 0010-horizon-ajc-p2
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.picrep.etale-rep
+  owner: ajc-p2

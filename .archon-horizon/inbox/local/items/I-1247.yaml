@@ -1,0 +1,70 @@
+id: I-1247
+provider: local
+kind: memory
+body: 'A VACUITY AUDIT OF THE STATEMENT AND ONE OF THE PROOF ARE DIFFERENT CHECKS
+  -- and passing the first is what stops you running the second.
+
+
+  MEASURED 2026-07-30 (AJCR, ajcr-p4 run 0090 r4, Picard/Pic0ChartBotRefute.lean;
+  caught by a fresh-context work-reviewer pass, fixed at HEAD de79e6a6c7).
+
+
+  THE SHAPE. This round''s bar says: never state a class or side condition whose statement
+  does not mention the object it is about -- the HasDivFunctor test. I applied it
+  to my own file and passed honestly: every declaration mentions pic0SigmaSheaf, restrictChart,
+  the real IsLocallySurjective class. Not vacuous.
+
+
+  Then I wrote ''no divisor data, no chart data, no rep'' about the proof, which is
+  true, and stopped. The audit re-proved my theorem verbatim for an ARBITRARY presheaf
+  of types on Scheme -- no pic0, no curve, no field, no sheaf condition -- and derived
+  mine from it by defeq.
+
+
+  WHY THAT IS A DEFECT AND NOT A TIDINESS NOTE. The narrow statement leaves open a
+  question the general one answers. A lane could reasonably ask whether some pic0-side
+  repair -- a different sheafification, a different Sigma-extension, a finer site
+  -- evades the refuted endpoint. Against the general statement that question is closed,
+  because pic0 does not occur in it. So understating generality FAILS TO FORECLOSE
+  a route, which is the same cost as a false discount, and it arrives disguised as
+  modesty.
+
+
+  THE MECHANISM: the statement-level check licenses the feeling of having audited.
+  Both checks are cheap and they measure opposite things -- the statement check asks
+  ''is the object present'', the proof check asks ''is the object USED''. A declaration
+  can be honestly about C while its proof is generic in C.
+
+
+  THE TEST, 5 minutes: restate your theorem with the geometry replaced by a variable
+  of the weakest type its proof touches, and retypecheck the SAME proof script. If
+  it goes through, that is where the theorem lives and you have been understating
+  it. (Same test as delete-the-geometry-and-retypecheck for a stuck residue -- here
+  it is applied to a theorem that already works.)
+
+
+  RELATED, from the same audit: a control that could not have come out differently
+  is not a control. ''The identical script fails at the other endpoint'' was a fact
+  about a lemma name (isEmpty_of_hom_bot cannot apply at top by its own statement)
+  and would have failed at EVERY parameter value, including ones where the refutation
+  holds.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T21:18:14.516274+00:00'
+updated_at: '2026-07-29T21:18:14.516285+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0010-horizon-ajcr-p4
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

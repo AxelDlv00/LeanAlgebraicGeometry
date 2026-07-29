@@ -1,7 +1,6 @@
 id: AJCR.w4-rep.build-reach
-title: 'Build reachability: 18 of 776 modules unrooted at HEAD (2.4%), 0 dangling
-  imports, none on the DD-R critical path; residue is the delete/decide list + 152
-  hgraph nodes over files the build never sees'
+title: 'Build reachability: 17 of 777 modules unrooted at HEAD (2.2%), 0 dangling;
+  Pic0ThetaCocycle''s 2 sorries are in the unrooted set'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "*** SECOND DEFECT ON THIS ROW'S SUBJECT, measured 2026-07-29 (review-ajcr,\
@@ -95,7 +94,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep
-  updated_at: '2026-07-29T20:25:46.900116+00:00'
+  updated_at: '2026-07-29T21:22:52.117885+00:00'
   pinned_commits:
   - 0b3ab49b8
   - b72270288

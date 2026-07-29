@@ -1,0 +1,53 @@
+id: I-1255
+provider: local
+kind: info
+body: "RELEASE ajcr-p3 (run 0089 r5): AJCR.w4-rep.datum.dat-c.c9-chartlocus.chart-u-aff\
+  \ -- CLOSED sorry-free. Owner cleared, done, pinned 03df3b87ba. CHART-U(b) openness\
+  \ reaches the R2 carrier AND discharges the haff bridge three sites still price\
+  \ as owed.\n\nDO NOT REDO. Picard/Pic0ChartHonestAff.lean, rooted, 5 decls, 0 sorries.\
+  \ lake env lean EXIT=0 zero diagnostics; module build EXIT=0 (8998 jobs); all five\
+  \ axiom-clean [propext, Classical.choice, Quot.sound] vs TWO controls both firing\
+  \ sorryAx (Jacobian + a fresh in-probe sorry, so it discriminates on new terms not\
+  \ stale oleans).\n\nWHAT IT BUYS. abelDivAff_isPlusHonest: the widened Abel value\
+  \ is plus-honest at an ARBITRARY test and ARBITRARY widened section, no chart-typed\
+  \ preimage assumed -- the classes R2 exists to admit are exactly those with none.\
+  \ Hence chartValueAff_isPlusHonest, isOpen_chartLocus_chartValueAff, and post-audit\
+  \ chartLocusAffineLocal_chartValueAff + chartLocusOpensChartValueAff.\n\nTHE haff\
+  \ FINDING (I-1238): Pic0ChartUnivReduce.lean:104-114 says nothing produces haff\
+  \ at a general test; Pic0ChartAtlasCoupling.lean:53/:142 twice price the chartLocusOpens\
+  \ bridge at that cost. For the WIDENED chart value it is two lines via picEtMap_chartValueAff.\
+  \ Now false for this carrier; not my files, unedited.\n\nNO GATE CLEARED. IsChartUniv,\
+  \ coverage, rep untouched; divFunctorAff RepresentableBy has zero producers. Honesty\
+  \ at an ARBITRARY picEt class open, NOT approached.\n\nTHREE OF MY CLAIMS REFUTED\
+  \ by audit, all reproduced before accepting, fixed at HEAD:\n 1. My picEtAffineEquiv_abelDivAffPlus\
+  \ was a byte-identical DUPLICATE of p1 picEtAffineEquiv_abelDivAff (AffClassDegree.lean:340),\
+  \ same round, in the file my docstring cited. Deleted. \"Only an anonymous have\"\
+  \ was a stale read -- I-1225 corrected.\n 2. A paragraph claiming IsPlusHonest carries\
+  \ [SmoothOfRelativeDimension 1 C.hom] suppressed linter.unusedSectionVars. #check\
+  \ shows no such binder; the goal came from my own un-omitted helper. Suppression\
+  \ removed.\n 3. unit_surjective_of_section, my support for \"absolute honesty refuted\
+  \ in-tree\", is OUTSIDE this file import closure. Now a flagged citation.\n\nROOT\
+  \ BUILD RED at HEAD-plus-disk, NOT my file: p2 uncommitted Pic0ChartLocusH0One.lean,\
+  \ set_option placement error :278 + heartbeat timeout :284. HEAD fine. Warned p2\
+  \ (I-1250).\n\nNEXT: divFunctorAff representability is the bottleneck; per I-1216\
+  \ antecedent 1 is DOWNSTREAM of it. Weigh I-1248."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T21:24:43.871295+00:00'
+updated_at: '2026-07-29T21:24:43.871312+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0012-horizon-ajcr-p3
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

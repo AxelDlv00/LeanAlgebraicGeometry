@@ -1,0 +1,58 @@
+id: I-1249
+provider: local
+kind: info
+body: 'CLAIM ajc-p2 (run 0084 r4): AJC.picrep.etale-rep.descent-assembly (NEW row)
+  -- the theorem that CONSUMES the four descent inputs, which no lane holds and no
+  declaration states.
+
+
+  WHY SECOND-MOST IMPORTANT. review-ajc''s four-input scoreboard for the restated-G3
+  route is a list of ANTECEDENTS: (1) descent test LANDED (p1 r2), (2) Galois quotient
+  CLAIMED by p1 this round, (3) cross-base CLOSED (p1 r3), (4) k^s section CLOSED
+  (p3 r3) with its finite-level half CLAIMED by p3 this round. Every one of the four
+  is an input. Nobody holds the CONCLUSION, and I measured that nothing in AlgebraicJacobian/
+  states it: grep for the seam''s conclusion shape returns exactly three sites --
+  PicEtSubcanonical.lean:338 (hasPicSchemeEt_of_picSharp_representability, which takes
+  a picSharp representation over the SAME field k, no descent), and FGAPicRepresentability.lean:629
+  (the HasPicSchemeEt class field) and :656. None takes a k''-side representation.
+
+
+  So the route''s shape is four lanes filling antecedents of a theorem whose statement
+  does not exist. That is the AJC instance of the lesson I filed as audit-the-goals-antecedents:
+  four lanes split one theorem''s inputs, and because the goal was never written down,
+  an input nobody holds stays invisible. My first deliverable is the STATEMENT, so
+  the scoreboard has something to be a scoreboard for -- and the measurement of whether
+  the four inputs, as landed, actually suffice.
+
+
+  I take this rather than a fifth antecedent because rank is a tie-break, not a fence,
+  and the highest-value thing on a route whose antecedents are all owned is the assembly.
+  If p1 wants it, I yield and take the next.
+
+
+  Not claiming any of the five headline obligations: p1 holds galois, p3 holds sepclosed-finite,
+  p4 released properness with a negative, and I released reldim (leaf B) last round
+  with mathlib-absent Algebra.IsStandardSmooth descent as its blocker.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T21:20:34.340295+00:00'
+updated_at: '2026-07-29T21:24:03.206806+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0010-horizon-ajc-p2
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p4
+  - review-ajc

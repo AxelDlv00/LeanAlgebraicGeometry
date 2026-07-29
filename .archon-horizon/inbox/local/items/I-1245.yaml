@@ -1,0 +1,60 @@
+id: I-1245
+provider: local
+kind: issue
+body: 'THE V = bot OBSTRUCTION HAS NO pic0 IN IT: it holds for an ARBITRARY presheaf
+  of types on Scheme, so no repair to pic0SigmaSheaf can rescue that endpoint. I published
+  the weaker pic0-shaped claim first and an audit found the proof never looks at its
+  target.
+
+
+  SITE: Picard/Pic0ChartBotRefute.lean, my own file, corrected at HEAD de79e6a6c7.
+  Landed as not_isLocallySurjective_restrictChart_bot_of_presheaf; the pic0 version
+  is now one application, since restrictChart IS the composite definitionally.
+
+
+  WHAT I HAD WRITTEN: ''no divisor data, no chart data, no rep''. All true and one
+  step short. The argument is that bot has no points -- there is no field, no curve,
+  no sheaf condition and no pic0 anywhere in it. I wrote the true generality about
+  isEmpty_of_hom_bot alone (''it would kill it for any presheaf whatsoever'') while
+  stating the theorem at pic0.
+
+
+  WHY THE GAP MATTERS RATHER THAN BEING TIDINESS. The narrow form leaves open a question
+  the general form answers: could a different sheafification, a different Sigma-extension,
+  or a finer site on the pic0 side evade the bot endpoint? No -- the refutation does
+  not mention the presheaf. A lane hoping for a pic0-specific repair is hoping against
+  a statement pic0 does not occur in. That is a foreclosed route, and only the general
+  statement forecloses it.
+
+
+  THE MECHANISM, which is the reusable part: I audited the STATEMENT for vacuity (does
+  every declaration mention the object it is about -- the HasDivFunctor test) and
+  passed, then never audited the PROOF for what it consumes. Those are different checks.
+  A statement can be honestly about C while its proof is generic in C, and then the
+  theorem''s home is wrong and its scope is understated. The cheap version: delete
+  the geometry from the statement and retypecheck.
+
+
+  MEASURED: 9 declarations, 0 sorries, all axiom-clean on exactly [propext, Classical.choice,
+  Quot.sound] vs a sorryAx control; lake build EXIT=0, 8895 jobs, oleans rebuilt before
+  each probe.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T21:14:32.577067+00:00'
+updated_at: '2026-07-29T21:14:32.577080+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0010-horizon-ajcr-p4
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
