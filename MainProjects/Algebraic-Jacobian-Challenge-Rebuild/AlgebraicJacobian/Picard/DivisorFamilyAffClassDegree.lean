@@ -7,6 +7,8 @@ import AlgebraicJacobian.Picard.DivisorFamilyAffStalkEval
 import AlgebraicJacobian.Picard.DivisorFamilyAffGlueZarKit
 import AlgebraicJacobian.Picard.DivisorFamilyAffFace
 import AlgebraicJacobian.Picard.DivisorFamilyAffAbel
+import AlgebraicJacobian.Picard.DivisorFamilyAffCompare
+import AlgebraicJacobian.Picard.DivisorFamilyFieldSurj
 
 /-!
 # `hdegAff` DISCHARGED: the widened class-degree law and the widened Abel ledger
@@ -316,6 +318,37 @@ theorem DivFamZarAff.exists_toZarAff_eq (F₀ : DivFamZarAff C K n) :
     _ = DivFamZarAff.mapAlgHom (AlgHom.id k K) (DivFamZarAff.mk dp.1 dp.2) := by
         rw [← DivFamZarAff.mapAlgHom_comp, hcomp]
     _ = F₀ := by rw [DivFamZarAff.mapAlgHom_id]; exact hdp
+
+/-! ## Non-vacuity of the law, at an arbitrary degree -/
+
+/-- **The class-degree law is not vacuous, at every `n`**: over a field, every effective Weil
+divisor of degree `n` yields a widened class whose `classDeg` the law computes.
+
+This is the check trap (c) of the axiom-probe catalogue (`I-0442`) asks for, and it is stated
+because prior reviews found the widened certificate tail witnessed **only** at `n = 0` with empty
+support (`I-1109`).  Here `n` is arbitrary and the support is not: the witness is
+`exists_divFam_divFamDivisor_eq` (`Picard/DivisorFamilyFieldSurj.lean`) followed by
+`DivFamZar.toAff`.
+
+**What it does NOT witness, and the distinction is the whole point of R2.**  The witness factors
+through the *chart-typed* carrier, so it inhabits `DivFamZarAff` only at classes that already had
+a chart-typed preimage.  The classes the widening exists to admit — those certified on a
+straddling affine open and provably *not* chart-typed
+(`isCertified_affine_and_not_isCertified_chart`, `Picard/DivisorFamilyAffStrict.lean`) — are
+**not** exhibited here, and that file's own scope note explains why: the separating divisor needs
+`Symᵍ C`, which this tree does not construct.  So the law is non-vacuous, and its non-vacuity is
+not yet witnessed on the part of the carrier that motivated widening it. -/
+theorem exists_divFamZarAff_classDeg_eq {π : C.left ⟶ P1 k} [IsAffineHom π]
+    [IsIntegral (relCurve C K)]
+    [SmoothOfRelativeDimension 1 (relCurve C K ↘ Spec (CommRingCat.of K))]
+    [QuasiCompact (relCurve C K ↘ Spec (CommRingCat.of K))]
+    [Module.Finite K (Sheaf.HModule ((relCurve C K).moduleKSheaf K) 0)]
+    [Module.Finite K (Sheaf.HModule ((relCurve C K).moduleKSheaf K) 1)]
+    (D : (relCurve C K).CurveDivisor) (hD : 0 ≤ D)
+    (hdeg : Scheme.CurveDivisor.deg K D = (n : ℤ)) :
+    ∃ G : DivFamZarAff C K n, classDeg K G.picClass = (n : ℤ) := by
+  obtain ⟨F, _⟩ := exists_divFam_divFamDivisor_eq (π := π) (n := n) D hD hdeg
+  exact ⟨(F.toZar).toAff, DivFamZarAff.classDeg_picClass _⟩
 
 /-! ## `hdegAff`, discharged -/
 
