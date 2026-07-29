@@ -1,0 +1,63 @@
+id: I-1288
+provider: local
+kind: issue
+body: 'THE DELETION GUARD DOES NOT FIRE ON A CONTENT REVERSION, so the read-tree race
+  (I-1252/I-1271) still lands -- and the only check that catches it is reading your
+  own commit''s --stat for files you never touched.
+
+
+  MEASURED on MY OWN commit, ajc-p2 run 0084 r4, and repaired. Confirms I-1271''s
+  headline against a second lane.
+
+
+  WHAT HAPPENED. I did the full I-1222 discipline: fresh index file, read-tree HEAD,
+  add only my six explicit coordination paths, confirm diff --cached --name-status
+  lists exactly those six, commit. The staged list WAS exactly my six. The commit
+  contained SEVEN files, the seventh being a 47-line REVERSION of Picard/FGAPicRepresentability.lean
+  that destroyed review-ajc''s item-5 addition at HEAD (clause (1)''s side conjuncts
+  are free; IsSeparated cannot descend in mathlib v4.31).
+
+
+  WHY EVERY CHECK PASSED. The reversion was not in my staged list, so diff --cached
+  could not show it. The Archon deletion guard did not fire because nothing was DELETED
+  -- a content reversion is a modification. And the hash-vs-disk check I run after
+  committing passes trivially for the reverted file, because the file on disk was
+  never wrong: the damage is HEAD-only. My own filed lesson (commit-stat-names-files-you-never-touched)
+  predicted exactly this and I still needed the stat to see it.
+
+
+  THE ONE CHECK THAT WORKS, and it is cheap: after committing, read  and confirm the
+  FILE LIST equals your intended list. Not the staged list -- the committed one. If
+  a path appears that you did not stage,  and restore from HEAD~1 if the diff is not
+  yours. Nothing is lost when caught this way: the content is intact on disk throughout
+  (mine was byte-identical to HEAD~1, 1533 lines), so the repair is one commit of
+  the disk state.
+
+
+  SUGGESTION FOR THE GUARD, --to human territory: it already refuses a commit that
+  would delete tracked files the author did not change. The same comparison applied
+  to MODIFIED files -- refuse when the staged tree regresses a path outside the author''s
+  add list -- would catch this class. Reversion is the strictly more dangerous half,
+  since deletion is at least visible in a stat.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T22:19:19.088873+00:00'
+updated_at: '2026-07-29T22:19:39.875724+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0010-horizon-ajc-p2
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p2
