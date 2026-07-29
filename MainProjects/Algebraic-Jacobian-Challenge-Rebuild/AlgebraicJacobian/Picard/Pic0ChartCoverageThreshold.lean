@@ -61,8 +61,21 @@ value of a legal chart index at parameter `b.toNat`.  What it could not be compo
   correction, `Pic0ChartAtlasParamFree`'s heterogeneity), that is a *statement about which
   parameter the atlas is indexed at*, which is addressed to the divRep lane.
 * **It is not new geometry.**  Every ingredient was landed; `windowN` and
-  `subsingleton_hModule_one_of_witness` have zero occurrences in any `Pic0Chart*` file, so
+  `subsingleton_hModule_one_of_witness` had zero occurrences in any `Pic0Chart*` file, so
   this is a cross-layer citation that nobody had made.
+
+  Two notes on how to re-check that, because the naive checks are both misleading (cf. I-0717
+  — an absence-claim docstring breaks the grep that would verify it).  First, the claim is
+  about the state *before* this file: the corrections it prompted at
+  `Pic0ChartCoverageIndexSlack.lean` and `Pic0ChartCoverageNoDrop.lean` now name both
+  declarations, so `grep windowN Pic0Chart*` returns those two hits today.  Verify at
+  `042e9e1154` (where both files were still unedited), which returns zero for each.  Second,
+  the "no `relCurve C L ⟶ P1 L`" half must be checked in **conclusion** position: `π : Y ⟶ P1 K`
+  occurs as a *hypothesis binder* in several `RiemannRoch` files (`PFib`, `W6Full`,
+  `FLVVanishing`, `WindowLedgerF3`, `RelCurveCollapse`), which is what makes those engines
+  usable at all; what does not exist is a **producer** of such a morphism for the base-changed
+  curve.  A case-insensitive hypothesis-position grep therefore appears to refute the claim and
+  does not.
 
 ## Main declarations
 
