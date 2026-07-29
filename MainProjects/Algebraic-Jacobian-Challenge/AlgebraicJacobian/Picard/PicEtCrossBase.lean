@@ -91,15 +91,16 @@ Most of its length is a section-ring scalar tower which — as `review-ajc`
 predicted, and as the outcome here confirms — a sheafification-based `picEt`
 does not need: the sheafification layer is discharged by a Mathlib compatibility
 iso instead. The 468 lines were a design lead, and the lead was that they are
-not the seam. **For the record: 701 lines here, of which the great majority is
-docstring** — the proof terms themselves are short, because each layer lands on
-a Mathlib lemma. Reading the sibling as a lead rather than transcribing it was
-worth more than the 468 lines would have been.
+not the seam. **For the record, measured rather than estimated: ~711 lines, of
+which ~330 comment, ~275 code, ~106 blank** — so a little over half is prose, not
+"the great majority" as an earlier revision of this sentence guessed. The proof
+terms are short because each layer lands on a Mathlib lemma. Reading the sibling
+as a lead rather than transcribing its 468 lines was the cheaper move.
 
 ## Measurement discipline
 
 Every synthesis claim below was checked with `lake build` first (oleans fresh,
-EXIT=0, 8865 jobs) — a stale-import environment reports every probe as
+EXIT=0, 8681 jobs for this module) — a stale-import environment reports every probe as
 succeeding (`I-1057`). The continuity claim of `§1` carries a control: the
 strictly stronger `IsDenseSubsite` at the *same* two topologies does **not**
 synthesize, so the pushforward is not an equivalence and the compatibility iso
@@ -370,11 +371,12 @@ Pic(C_{k'} ×_{k'} T) / π_T^* Pic(T)   and   Pic(C ×_k T) / π_T^* Pic(T)
 
 are in canonical bijection for every `k'`-test `T`.
 
-**What this does and does not settle.** It settles bijectivity, which was one of
-the two items `relPresheaf_crossBaseIso` below owes. It does **not** settle
-naturality in `T`, which is the other, and without naturality this family of
-bijections is not an isomorphism of functors and cannot be fed to the
-sheafification reduction of `§5`. -/
+**Bijectivity alone is not the presheaf face.** A pointwise family of bijections
+is not an isomorphism of functors and cannot be fed to the sheafification
+reduction of `§5`, whose hypothesis is an `Iso`. What upgrades this family is
+`crossBaseQuotMap_add` (additivity) together with
+`crossBaseQuotMap_relFunctorial` (naturality in `T`), both proved below; the
+assembled functor isomorphism is `relPresheafCrossBaseIso`. -/
 noncomputable def crossBaseQuotEquiv (C : Over (Spec (CommRingCat.of k)))
     (T : Over (Spec (CommRingCat.of k'))) :
     Quotient (PicSharp.relPicSetoid (baseChangeField C k').hom T.hom) ≃
@@ -615,10 +617,12 @@ forgetful functor: `picEt` is `etaleSheaf ⋙ forget`, and whiskering an iso is
 an iso. Stated separately because `picEt`, not the group-valued sheaf, is the
 functor the seam's `RepresentableBy` clause is about.
 
-**This is an implication, not a closure.** Its hypothesis `e` is exactly the
-open obligation `relPresheaf_crossBaseIso`, and it is passed in explicitly
-rather than synthesized, so no consumer can mistake this for the full
-identification. -/
+**This is the implication half, stated separately from its discharge.** Its
+hypothesis `e` is the presheaf-level identification, which `§4` *proves*
+(`relPresheafCrossBaseIso`); it is taken as an explicit argument here rather than
+synthesized so that the sheafification step is usable against any presheaf-level
+iso, not only that one. The composite with the proof supplied is
+`picEt_crossBaseIso` in `§6`. -/
 noncomputable def picEt_crossBaseIso_of_relPresheaf
     (C : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
