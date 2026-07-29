@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Axel Delaval
 -/
 import AlgebraicJacobian.Picard.FGAPicRepresentability
+import AlgebraicJacobian.Picard.EtaleFieldCover
 
 /-!
 # Field 3 of the seam's clause (1): separatedness comes from the group structure
@@ -50,9 +51,11 @@ scheme over a field is separated. No cover, no descent, no field extension.
 Contrast field 2: `LocallyOfFiniteType` *does* descend freely at the real cover
 — `Spec.map (algebraMap k k')` is `Surjective`, `Flat` and `QuasiCompact` by
 synthesis for `k'/k` finite separable, and the `DescendsAlong` instance for
-`LocallyOfFiniteType` exists (all four checked here). The two side conjuncts are
-therefore free for *opposite* reasons, and only one of them is a descent
-argument.
+`LocallyOfFiniteType` exists. §4 carries that out
+(`locallyOfFiniteType_of_baseChange`), so the contrast is compiler-checked rather
+than asserted: **the two side conjuncts are free for opposite reasons**, and only
+one of them is a descent argument. A costing that treats them as one item gets
+one of them right for the wrong reason.
 
 ## The brick, and where it came from
 
@@ -76,7 +79,7 @@ evidence is that they elaborate here.
 It does not close the seam `sorry` and does not witness field 1 for any curve.
 `k'`-side representability of `picEt` is still the campaign's undischarged
 output, and §3's reduction takes it as a hypothesis. Nothing here is
-`sorry`-reachable: all four declarations report
+`sorry`-reachable: all five declarations report
 `[propext, Classical.choice, Quot.sound]` against
 `Scheme.fgaPicardRepresentability` as a control that reports `sorryAx`, per
 `I-1251` — on this seam the axiom list discriminates and provability does not,
@@ -217,5 +220,34 @@ theorem seamClauseOne_of_representableBy_locallyOfFiniteType {k : Type u} [Field
         LocallyOfFiniteType X.hom ∧ IsSeparated X.hom := by
   obtain ⟨X, ⟨rep⟩, hlft⟩ := h
   exact ⟨X, ⟨rep⟩, hlft, isSeparated_of_representableBy_picEt C rep⟩
+
+/-! ## §4. Field 2, for contrast: it DOES descend, at the route's own cover -/
+
+/-- **Field 2 descends along the field-extension cover.** If the base change of
+`X` to `k'` is locally of finite type over `Spec k'`, then `X` is locally of
+finite type over `Spec k`, for `k'/k` finite separable.
+
+Recorded here, beside field 3, because the *contrast* is the planning fact: field
+2 is free by a **descent** argument (Mathlib has
+`DescendsAlong @LocallyOfFiniteType (@Surjective ⊓ @Flat ⊓ @QuasiCompact)`, and
+`Spec.map (algebraMap k k')` satisfies all three by synthesis — surjectivity from
+`Scheme.surjective_specMap_algebraMap`, the other two outright), while field 3 is
+free *only* because descent is unavailable for it and the group structure
+substitutes. A lane that priced the two conjuncts together would get one of them
+right for the wrong reason.
+
+Nothing about `picEt` occurs: this is a statement about an arbitrary `k`-scheme,
+and it is stated at that generality on purpose so that no reader takes it for a
+fact about the Picard functor. -/
+theorem locallyOfFiniteType_of_baseChange {k : Type u} [Field k] (k' : Type u)
+    [Field k'] [Algebra k k'] [Algebra.IsSeparable k k'] [Module.Finite k k']
+    {X : Over (Spec (.of k))}
+    (h : LocallyOfFiniteType
+      (Limits.pullback.fst (Spec.map (CommRingCat.ofHom (algebraMap k k'))) X.hom)) :
+    LocallyOfFiniteType X.hom := by
+  have hQ : (@Surjective ⊓ @Flat ⊓ @QuasiCompact : MorphismProperty Scheme)
+      (Spec.map (CommRingCat.ofHom (algebraMap k k'))) :=
+    ⟨⟨Scheme.surjective_specMap_algebraMap k k', inferInstance⟩, inferInstance⟩
+  exact MorphismProperty.of_pullback_fst_of_descendsAlong hQ h
 
 end AlgebraicGeometry
