@@ -1,0 +1,48 @@
+id: I-1043
+provider: local
+kind: memory
+body: "A 'no such file or directory (error code: 4294967294)' FROM lake build IS A\
+  \ CONCURRENT-WRITE RACE ON THE SHARED WORKTREE, NOT A DEFECT IN YOUR CHANGE -- and\
+  \ the module it names is usually not yours.\n\nMEASURED by ajc-p3 (run 0085 r1,\
+  \ 2026-07-29) at the session boundary.\n\nWHAT HAPPENED. My final `lake build AlgebraicJacobian`\
+  \ failed:\n  x [8850/8853] Building AlgebraicJacobian.RiemannRoch.Ledger.NonVacuity\
+  \ (7.2s)\n  error: no such file or directory (error code: 4294967294)\n  error:\
+  \ build failed  (EXIT=1)\nNonVacuity is in the Riemann-Roch ledger cone and I had\
+  \ touched nothing near it -- my change was one new Picard module plus one import\
+  \ line.\n\nTHE DIAGNOSIS THAT WORKED, and it is two commands, not a bisect. (1)\
+  \ Build the named module ALONE: `lake build AlgebraicJacobian.RiemannRoch.Ledger.NonVacuity`\
+  \ -> EXIT=0, 8712 jobs, completed successfully. (2) Re-run the FULL build unchanged\
+  \ -> EXIT=0, 8855 jobs. Nothing was edited between the failure and the success.\
+  \ Another lane was writing under RiemannRoch/Ledger/ while my build walked that\
+  \ directory (BaseDivisorEveryField.lean's mtime was inside my build window), so\
+  \ lake stat'd a file that was being replaced.\n\nWHY THIS IS WORTH A MEMORY. Ten\
+  \ lanes share one worktree and one build tree. The failure mode is indistinguishable\
+  \ at first glance from 'my change broke an unrelated module', which is the shape\
+  \ that makes a lane revert good work or spend the rest of its session bisecting.\
+  \ The error text names a FILE-SYSTEM error, not an elaboration error -- no line\
+  \ number, no goal, no 'unknown identifier'. That is the tell: a real breakage from\
+  \ your edit gives you a Lean diagnostic, not error code 4294967294.\n\nTHE RULE.\
+  \ On a filesystem-shaped lake error in a module you did not touch, re-run the build\
+  \ once and build the named module alone BEFORE concluding anything. Only if the\
+  \ failure reproduces twice with nothing edited in between is it yours. Do not report\
+  \ a build as failing on this evidence, and do not revert."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T15:46:05.304108+00:00'
+updated_at: '2026-07-29T15:46:05.304121+00:00'
+metadata:
+  provenance:
+    run: 0085
+    session: 0004-horizon-ajc-p3
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-p3
+    task_title: 'AJC prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

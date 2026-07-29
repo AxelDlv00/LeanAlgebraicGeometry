@@ -1,0 +1,55 @@
+id: I-1049
+provider: local
+kind: issue
+body: "THE bot-ENDPOINT GAP Pic0ChartRestrictedFibreSat.lean:93-98 LEAVES OPEN IS\
+  \ CLOSED, AND IT CLOSES AGAINST THE ROUTE: the INSTANCE binder itself (not just\
+  \ the hcov spelling) is refutable at V = bot. So the bot endpoint is a genuine refutation\
+  \ of the seam, not only of one formulation.\n\nWHAT THE FILE SAYS (Pic0ChartRestrictedFibreSat.lean:93-98,\
+  \ verbatim): \"at V = bot the *instance* form pic0RepresentableBy_of_restrictedChartFibre\
+  \ goes through with huniv supplied free by restrictedChartFibre_bot, leaving the\
+  \ IsLocallySurjective instance binder as the sole remaining antecedent. not_coverageContainment_bot\
+  \ constrains the hcov *spelling* of coverage, not that instance binder -- so it\
+  \ does not by itself rule out a bot-based route through the instance version.\"\
+  \ That caveat is correct about what was measured and is now superseded.\n\nMEASURED\
+  \ by work-reviewer (AJCR run 0082). lake env lean EXIT=0; oleans verified newer\
+  \ than sources for the 8-file cluster before believing the probe. Scratch deleted.\n\
+  \nTHE PROOF, ~10 lines, no chart data, no divisor data, arbitrary chart family f:\n\
+  \  not_isLocallySurjective_restrictChart_bot :\n    forall (T : Scheme) (s : (pic0SigmaSheaf\
+  \ C).1.obj (op T)) (t : T),\n    not (Presheaf.IsLocallySurjective Scheme.zariskiTopology\n\
+  \      (Sigma.desc (fun i => restrictChart (f i) (bot : (X i).Opens))))\nSteps:\
+  \ hls.imageSieve_mem (U := T) s gives a covering sieve; Scheme.mem_grothendieckTopology_iff.mp\
+  \ extracts a cover; the member at the index hitting t lies in the image sieve, so\
+  \ it has a preimage in the coproduct presheaf at that member; FunctorToTypes.jointly_surjective\
+  \ (F := Discrete.functor fun i => yoneda.obj (X i)) -- the brick that was missing\
+  \ -- produces a component witness x : cover-member -> (bot : (X i).Opens); x.base.hom.1.isEmpty\
+  \ makes the cover member empty, contradicting the point of T it covers.\n\nMISSING\
+  \ BRICK NAMED: CategoryTheory.FunctorToTypes.jointly_surjective / jointly_surjective\
+  \ (mathlib). Nothing in AlgebraicJacobian/ cites either; that is why the coproduct-presheaf\
+  \ step looked unavailable.\n\nCONSEQUENCE. Both halves of the two-endpoint story\
+  \ are now instance-level, not spelling-level: bot refutes antecedent 2 outright,\
+  \ top returns the unrestricted certificate for antecedent 1. Update Pic0ChartRestrictedFibreSat.lean:93-98\
+  \ to record that the loophole it flagged is shut, and note the guard applies to\
+  \ ANY chart family (it is stated for arbitrary f, so no lane can escape it by changing\
+  \ charts).\n\nSTILL OPEN, unchanged: the pair has NO measured inhabitant at any\
+  \ V. Two refutations at two bad values are not inhabitation -- the file is right\
+  \ about that and this measurement does not improve it."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:01:23.332463+00:00'
+updated_at: '2026-07-29T16:01:23.332475+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0008-horizon-review-ajcr
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

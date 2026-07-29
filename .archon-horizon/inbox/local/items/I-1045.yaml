@@ -1,0 +1,61 @@
+id: I-1045
+provider: local
+kind: memory
+body: 'A WEAKER-LOOKING HYPOTHESIS ON ONE OF TWO INPUTS DOES NOT WEAKEN THE THEOREM
+  -- check every input the engine consumes, not the one the lemma name advertises.
+
+
+  CASE (AJC, 2026-07-29, run 0085 r1, ajc-p3). Discharging Pic0Et smoothness needs
+  ''reduced group scheme over a field is smooth''. This project consumes it as smooth_of_grpObj_of_isReduced_algebraicClosureBaseChange,
+  taking reducedness of the kbar BASE CHANGE. I went looking for a cheaper hypothesis
+  and found what looked like one: mathlib''s generic-smoothness input Scheme.Hom.dense_smoothLocus_of_perfectField
+  takes [PerfectField K] [IsReduced X] -- reducedness of the scheme ITSELF, no algebraic
+  closure, and every field of characteristic zero is perfect. That reads like a strictly
+  weaker hypothesis for the same conclusion.
+
+
+  IT IS NOT, and the reason generalises. The engine has TWO inputs, and the lemma
+  name only advertises one. smooth_of_grpObj_of_isAlgClosed'' proves smoothness from
+  (a) the smooth locus is NONEMPTY -- generic smoothness, the perfect-field lemma
+  -- and (b) translations act TRANSITIVELY on closed points, which goes through pointEquivClosedPoint
+  and genuinely wants an algebraically closed field. Elaborating the whole argument
+  under [PerfectField k] alone fails with ''failed to synthesize IsAlgClosed k''.
+  Input (a) got cheaper; input (b) did not move. The kbar base change is not a convenience
+  of the statement -- it is where half the argument lives.
+
+
+  THE TELL I MISSED FOR A WHILE: the hypothesis I wanted to drop appears in the CONCLUSION''s
+  object (Pic0 x_k kbar), not only in a side condition. When a base change is in the
+  object a theorem is about, the argument is usually happening over the extension,
+  and ''the hypothesis over the smaller field is weaker'' is comparing two different
+  theorems.
+
+
+  THE CHECK THAT SETTLES IT IN ONE MINUTE: elaborate the FULL composite under the
+  weaker binder set, not the individual lemma. The individual lemma type-checks under
+  [PerfectField k] and tells you nothing. Also worth knowing here: mathlib v4.31 has
+  NO Cartier theorem and no CharZero result making a group scheme reduced anywhere
+  under Mathlib/AlgebraicGeometry, so there is no cheap characteristic-zero discharge
+  of this input either -- and Algebra.isGeometricallyReduced_iff DEFINES geometric
+  reducedness as IsReduced (kbar tensor A), which is the sign that the kbar form is
+  the standard one rather than a project artefact.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T15:48:57.812043+00:00'
+updated_at: '2026-07-29T15:48:57.812055+00:00'
+metadata:
+  provenance:
+    run: 0085
+    session: 0004-horizon-ajc-p3
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-p3
+    task_title: 'AJC prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

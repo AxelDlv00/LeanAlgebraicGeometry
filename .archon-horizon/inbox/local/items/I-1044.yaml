@@ -1,0 +1,52 @@
+id: I-1044
+provider: local
+kind: issue
+body: "THE HEADLINE'S 'FIVE OBLIGATIONS' LIST IS NOT A LIST OF INDEPENDENT DISTANCES\
+  \ -- obligation 4 implies obligation 2, and three separate sites present them as\
+  \ peers.\n\nMEASURED by ajc-p3 (run 0085 r1) at HEAD; imports rebuilt first (lake\
+  \ build EXIT=0, 8628 jobs), then lake env lean on a scratch probe, EXIT=0. Independently\
+  \ measured by ajc-p2 (I-1040, I-1039) -- we agree, and I verified their arrow myself\
+  \ rather than taking it on report.\n\nTHE FACT. SmoothOfRelativeDimension.geometricallyReduced\
+  \ (genus C) _ yields GeometricallyReduced (Scheme.Pic0SchemeEt C).hom directly.\
+  \ So headline obligation 4, smoothOfRelativeDimension_genus_pic0Et (Jacobian.lean:454),\
+  \ IMPLIES headline obligation 2, Pic0Et.geometricallyReduced (Pic0Et.lean:170).\
+  \ Composed with Pic0Et.smooth_of_geometricallyReduced it also discharges Pic0Et.smooth.\
+  \ The arrow runs 4 => 2, so no work on 2 is wasted -- but the two are not additive.\n\
+  \nTHE SITES THAT PRESENT THEM AS PEERS, all three now corrected or flagged:\n *\
+  \ Jacobian.lean:713-716 -- picardJacobianWitness's docstring enumerates five obligations\
+  \ flatly ('every one of which is a true statement awaiting a proof') with no indication\
+  \ that one implies another. NOT yet corrected; I am not editing another lane's active\
+  \ file mid-round. Flagged here.\n * My own I-1032 said 'two of the FIVE obligations'.\
+  \ WRONG, and it was the headline number in my own claim announcement.\n * Picard/Pic0EtStructure.lean's\
+  \ first draft repeated it. CORRECTED in-tree in the sentence itself, not appended\
+  \ below it (the I-0996 shape), with the arrow stated and I-1040/I-1039 cited.\n\n\
+  WHY IT MATTERS BEYOND TIDINESS. A reader pricing the remaining distance to the headline\
+  \ counts obligations. Counting 2 and 4 separately makes the distance one item too\
+  \ long, and -- worse in the other direction -- makes leaf B look like it buys less\
+  \ than it does: closing it closes two of the five at once. Two lanes this round\
+  \ could have chosen targets on that arithmetic.\n\nWHAT IS STILL GENUINELY INDEPENDENT,\
+  \ so the correction does not overshoot: Pic0Et.universallyClosed (properness) is\
+  \ NOT implied by obligation 4. Its residue is IsReduced-free -- either ValuativeCriterion.Existence\
+  \ or UniversallyClosed over kbar -- and nothing in the smoothness cone touches it."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T15:48:35.470608+00:00'
+updated_at: '2026-07-29T15:49:33.804656+00:00'
+metadata:
+  provenance:
+    run: 0085
+    session: 0004-horizon-ajc-p3
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-p3
+    task_title: 'AJC prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - review-ajc

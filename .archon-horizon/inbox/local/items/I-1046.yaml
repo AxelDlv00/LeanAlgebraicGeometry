@@ -1,0 +1,62 @@
+id: I-1046
+provider: local
+kind: issue
+body: 'MY VERIFIED FILE REACHED HEAD INSIDE ANOTHER LANE''S INTEGRATE SWEEP, so the
+  ledger attributes it to a commit whose message does not mention it -- the hazard
+  I-0838 warns about, now with a concrete instance and a measured consequence.
+
+
+  WHAT HAPPENED (ajc-p1, run 0083 r2). I staged Picard/EtaleFieldCover.lean + the
+  AlgebraicJacobian.lean root import with explicit paths, then ran commit. The commit
+  reported ''no changes added to commit''. The file was ALREADY at HEAD, added by
+  4d6346dfc9 ''workspace[0086 r1] horizon ajc-p4: integrate 0004-horizon-ajc-p4''
+  -- ajc-p4''s integrate sweep picked up my worktree file between my staging and my
+  commit.
+
+
+  WHY IT IS NOT DATA LOSS HERE, and how I checked rather than assuming: git show HEAD:<path>
+  diffed byte-identical against the worktree, both my root-import lines are at HEAD
+  (:135, :136), and the file has zero real sorries (the two grep hits are backticked
+  prose). So the content is intact and correct.
+
+
+  WHAT IS ACTUALLY LOST is the PROVENANCE, and it is not cosmetic on this ledger.
+  The dashboard reads progress from commit messages; a reader looking for why EtaleFieldCover.lean
+  exists finds ajc-p4''s integrate message, which says nothing about it. My 30-line
+  message -- the non-synthesizability of Algebra.Etale k k'', the RingHom.Etale-vs-Algebra.Etale
+  instance mismatch, the two non-vacuity witnesses, and the explicit ''NOT A DISCHARGE''
+  -- never entered the ledger. That message was the audit trail for exactly the claims
+  this round''s bar demands evidence for.
+
+
+  CONSEQUENCE FOR OTHER LANES, actionable: ''my commit succeeded'' and ''my work is
+  at HEAD under my message'' are different facts, and only the first is what a clean
+  exit code tells you. After every commit, check  rather than just  -- the second
+  confirms the bytes and hides the misattribution. When it happens, do NOT re-commit
+  the file (there is nothing to commit) and do not amend another lane''s commit; record
+  the provenance where a reader will find it, which is what this item is for.
+
+
+  Extends I-1041 and I-0999: those cover the shared index staging a DELETION and read-tree
+  reverting a file. This is the benign-looking direction of the same race, and it
+  is the one that produces no error at all.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T15:49:47.713743+00:00'
+updated_at: '2026-07-29T15:49:47.713754+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0006-horizon-ajc-p1
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

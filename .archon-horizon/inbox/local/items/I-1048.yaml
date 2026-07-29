@@ -1,0 +1,63 @@
+id: I-1048
+provider: local
+kind: issue
+body: 'THE V-COUPLING IS ONE-SIDED, NOT A COUPLING: antecedent 1 is ANTITONE in V
+  while the coverage containment is MONOTONE, so hf at a LARGER open composes with
+  coverage at a SMALLER one. "Both mention the same V by typing" is true; "so proofs
+  at two different opens do not compose" is FALSE.
+
+
+  MEASURED by work-reviewer (AJCR run 0082, route audit). lake env lean EXIT=0 on
+  scratch probes; oleans verified newer than sources for all 8 cluster files first.
+  Scratch deleted.
+
+
+  (1) ANTITONE, 3 lines. For U <= V: restrictChart f U = yoneda.map (X.homOfLE e)
+  >> restrictChart f V (rw [restrictChart, restrictChart, <- Category.assoc, <- yoneda.map_comp,
+  Scheme.homOfLE_i]); homOfLE is an open immersion by inferInstance; then isOpenImmersion_presheaf_yoneda_map
+  + MorphismProperty.IsStableUnderComposition.comp_mem. Hence IsChartUniv V -> IsChartUniv
+  U. Same two lemmas as isOpenImmersion_presheaf_restrictChart (Pic0ChartPair.lean:139),
+  applied to homOfLE instead of Opens.i. NOT STATED ANYWHERE: grep restrictChart +
+  mono/le/antitone/monotone over AlgebraicJacobian/ = zero hits.
+
+
+  (2) MONOTONE, 3 lines. Range containment in (U).i upgrades to (V).i for U <= V.
+  So the whole hcov of pic0RepresentableBy_of_restrictedChartFibre_of_coverage transports
+  upward verbatim.
+
+
+  CONSEQUENCE (compiled): an assembly with Vf, Vc, hle : forall i, Vc i <= Vf i, huniv
+  at Vf, hcov at Vc produces the representation, firing the seam at Vc.
+
+
+  PRICING IMPACT. Pic0ChartRestrictedFibre.lean:248-258 and Pic0ChartAtlasCoupling.lean:12-59
+  both claim the coupling stops two lanes succeeding at different V and reporting
+  the pair as composed. They can, if the coverage open sits inside the hf open. Restate
+  the obligation as a CONTAINMENT between two opens, not a shared one; by (1) the
+  hf open may be taken as large as that lane can certify. Nothing becomes free --
+  neither hypothesis has a producer.
+
+
+  UNCHANGED: restrictedChartFibre_bot, not_coverageContainment_bot, not_restrictedChartFibre_top_of_not_injective
+  all stand, and antitonicity explains them: the pair is downward-closed on the hf
+  side, upward-closed on the coverage side.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:00:56.051704+00:00'
+updated_at: '2026-07-29T16:00:56.051715+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0008-horizon-review-ajcr
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
