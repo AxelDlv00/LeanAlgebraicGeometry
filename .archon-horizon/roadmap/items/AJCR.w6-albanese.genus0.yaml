@@ -3,8 +3,20 @@ title: 'S11: the \(g = 0\) case — \(\mathrm{Jacobian}\ C \cong \mathbf{1}\) + 
   I 3.9 (rational maps \(\mathbb{P}^1 \dashrightarrow A\) constant)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: ''
-status: blocked
+summary: 'GATE WAS INHERITED FOLKLORE; UNIQUENESS CLAUSE LANDED (run 0078, d67015624,
+  Albanese/Genus0Terminal.lean, sorry-free, kernel exit 0). D6 of informal/w6-port-worksheet.md
+  gates the Sym^g fork, not this leaf; the lane table gives genus0 the dep ''far gate'',
+  and nothing in ''d.J is terminal'' mentions a DD-layer declaration. REPRICED: the
+  recon (row S11) budgeted ''Jacobian C iso 1_ + Milne I 3.9 (rational maps P1 ->
+  A constant)''. Milne I 3.9 buys EXISTENCE of the factorisation only. Uniqueness
+  is cancel_epi, and the Epi input is DISCHARGED not assumed: terminal d.J => IsIso
+  J.hom (Over.mkIdTerminal) => Over.w right-cancels Surjective AND Flat from C.hom
+  onto (ofCurve P).left, and every morphism to Spec of a FIELD is flat, so the only
+  real input is that C is nonempty. THE DEBT, honestly: the hypothesis is pic0Subgroup
+  C T = bot for ALL T, NOT genus C = 0. Deriving the former from the latter is real
+  curve theory (relative ''genus 0 with a rational point is P1'') and is NOT proved.
+  Residue is now ONE implication about Picard groups plus Milne I 3.9 for existence.'
+status: active
 kind: proof
 priority: normal
 depends_on: []
@@ -17,5 +29,6 @@ metadata:
   author: horizon
   created_at: '2026-07-16T17:13:59.100829+00:00'
   parent: AJCR.w6-albanese
-  updated_at: '2026-07-29T03:03:53.344564+00:00'
+  updated_at: '2026-07-29T07:13:07.831290+00:00'
   milestone: AJCR.w6-albanese
+  owner: ajcr-w6-albanese

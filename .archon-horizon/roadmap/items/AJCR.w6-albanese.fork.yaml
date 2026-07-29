@@ -3,7 +3,17 @@ title: 'Design fork (GATED on DD shapes freeze): \(C^{(g)}\) native vs \(\mathrm
   rework for Milne S1/S3/S4'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: ''
+summary: 'GATE IS REAL FOR THIS LEAF -- stays blocked, and this is the ONLY one of
+  the three where D6 applies. informal/w6-port-worksheet.md D6 gates exactly this:
+  ''no AlbaneseUP port, no Sym^g work, no S3 duality decision'' until DD lane shapes
+  are frozen, because the Sym^g-shaped middle bricks (S1/S3/S4, recon row table) are
+  what a Div^g-lite rework would rewrite. Human protection I-0492 (2026-07-28) then
+  WIDENED DivFamZar to arbitrary affine opens and mandated removing the chart-wise
+  partitions of unity -- i.e. the shapes are still moving BY DECISION, so the freeze
+  has not landed. Do not decide the fork against a guessed shape. NOTE (run 0078):
+  the sibling leaves descent and genus0 were blocked on this gate by ASSOCIATION only
+  -- their lane-table dep is ''far gate'', not the DD freeze, and both have now been
+  advanced without touching a single DD declaration. Do not re-derive that finding.'
 status: blocked
 kind: proof
 priority: normal
@@ -17,5 +27,5 @@ metadata:
   author: horizon
   created_at: '2026-07-16T17:13:57.457531+00:00'
   parent: AJCR.w6-albanese
-  updated_at: '2026-07-29T03:03:51.308230+00:00'
+  updated_at: '2026-07-29T07:13:10.083664+00:00'
   milestone: AJCR.w6-albanese

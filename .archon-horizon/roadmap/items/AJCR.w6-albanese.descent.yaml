@@ -2,8 +2,22 @@ id: AJCR.w6-albanese.descent
 title: 'S10: \(\bar{k} \to k\) uniqueness-first Galois descent (Milne 6.4 pattern)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: ''
-status: blocked
+summary: 'GATE WAS INHERITED FOLKLORE for this leaf; UNIQUENESS HALF NOW LANDED (run
+  0078). The ''DD shapes freeze'' gate comes from informal/w6-port-worksheet.md D6,
+  whose text gates the Sym^g/AlbaneseUP fork ONLY; the lane table gives descent the
+  dep ''far gate'', not the DD freeze, and nothing in a kbar->k statement about morphisms
+  out of d.J mentions any DD-layer declaration. Proceeded, and the uniqueness clause
+  is DONE, sorry-free: Albanese/BaseFieldFaithful.lean + Albanese/DescentUniqueness.lean
+  (a65d53c86). Mechanism: Spec L -> Spec k is flat+surjective for EVERY field extension,
+  so Over.pullback of it is FAITHFUL, and faithfulness IS ''an equation of k-morphisms
+  may be checked over kbar''. This kills TWO of the three items the recon budgeted
+  (informal/w6-albanese-port-recon.md row S10): no finite-level spreading out (faithfulness
+  does not see finiteness, so S4.2''s worry about staging at the non-finite kbar has
+  nothing to pin), and no representing-object comparison ((d.baseChange L).J IS (baseChange
+  k L).obj d.J by definition, so uniqueUpToIso is not in the path). WHAT REMAINS:
+  descending EXISTENCE of the k-morphism -- the genuine Galois cocycle. That is the
+  whole residue of this leaf.'
+status: active
 kind: proof
 priority: normal
 depends_on: []
@@ -16,5 +30,6 @@ metadata:
   author: horizon
   created_at: '2026-07-16T17:13:58.263335+00:00'
   parent: AJCR.w6-albanese
-  updated_at: '2026-07-29T03:03:49.344211+00:00'
+  updated_at: '2026-07-29T07:12:06.628856+00:00'
   milestone: AJCR.w6-albanese
+  owner: ajcr-w6-albanese
