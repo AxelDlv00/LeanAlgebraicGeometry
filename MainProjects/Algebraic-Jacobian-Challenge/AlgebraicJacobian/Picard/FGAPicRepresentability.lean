@@ -467,7 +467,10 @@ moved twice, so it is stated here as a history rather than as a fact.
 "Descend `picEt` instead of `picSharp`" was priced at two inputs (2026-07-29
 `ajc-p1`), then three (`review-ajc`, adding the cross-base identification), and
 is now **four** (`review-ajc`, `I-1135`, adding the section over separably closed
-fields that everything else silently assumes).
+fields that everything else silently assumes) — **plus a fifth entry added
+2026-07-30 which is a subtraction, not an input**: all four price the
+`RepresentableBy` field of clause (1), and the *other two fields of that same
+clause* are free (item 5 below, `I-1286`).
 
 **And a list of inputs is not a route — corrected 2026-07-30 (`ajc-p2`), because
 for four rounds this paragraph was one.** Every entry below is an *antecedent*.
@@ -548,7 +551,8 @@ Present state of the four:
    and would read as absence. That is the recorded "cited names need `#check`,
    not `grep`" trap; import that module before probing either class.
 4. **a section over separably closed `k'` — LANDED 2026-07-30, this item is
-   CLOSED.** This entry read "NO PRODUCER IN THIS PROJECT" and that is no longer
+   CLOSED.** (Read item 5 below first if you are pricing the descent: the
+   four-input list prices clause (1)'s *first* field only.) This entry read "NO PRODUCER IN THIS PROJECT" and that is no longer
    the state: `Curve/SeparablyClosedRationalPoint.lean`
    (`hasRationalPoint_of_isSepClosed`, `sorry`-free, axiom-clean) is exactly the
    producer it said was absent. What survives, and is the reason the descent step
@@ -561,6 +565,47 @@ Present state of the four:
    `k̄`, and `hasRationalPoint_baseChangeField` only *propagates* a section that
    `I-0491` forbids the headline to carry.
    This one is upstream of the other three.
+5. **THE TWO SIDE CONJUNCTS OF CLAUSE (1) ARE FREE — added 2026-07-30
+   (`review-ajc`, `I-1286`), because items 1–4 above priced the *first* field of
+   clause (1) and never mentioned the other two.** Clause (1) is a three-field
+   existential; the four-input list, and every roadmap row under
+   `AJC.picrep.etale-rep`, speak only about `RepresentableBy`. Measured, `lake
+   env lean` EXIT=0, axiom-clean against a control that fires `sorryAx` here:
+   * `LocallyOfFiniteType` **descends** across the cover. At `k'/k` with
+     `[Module.Finite k k']` `[Algebra.IsSeparable k k']`,
+     `Spec.map (algebraMap k k')` is `Surjective`, `Flat` and `QuasiCompact` all
+     by `inferInstance`, and Mathlib's
+     `DescendsAlong @LocallyOfFiniteType (@Surjective ⊓ @Flat ⊓ @QuasiCompact)`
+     (`Morphisms/LocalFlatDescent.lean`) then closes it via
+     `of_pullback_fst_of_descendsAlong`.
+   * `IsSeparated` **cannot** descend with Mathlib `v4.31` — and does not need
+     to. There is no `DescendsAlong @IsSeparated` instance, and the diagonal
+     route through `IsSeparated.isSeparated_eq_diagonal_isClosedImmersion` fails
+     too, because `DescendsAlong @IsClosedImmersion` is *also* absent
+     (`IsClosedImmersion` is not a `HasRingHomProperty`, so
+     `HasRingHomProperty.descendsAlong_flat` does not apply). Mathlib has exactly
+     five such scheme instances: `LocallyOfFiniteType`,
+     `LocallyOfFinitePresentation`, `Smooth`, `FormallyUnramified`, `Etale`.
+     **So do not budget a separatedness-descent argument: the lemma it would cite
+     does not exist.** Separatedness instead comes from the *group structure of
+     the represented object*: `picEt` is `CommGrpCat`-valued (`picEtCommGrp`), so
+     ANY scheme representing it is a group object over `Spec k` by Yoneda
+     transport (`CommGrpObj.ofRepresentableBy _ (picEtCommGrp C)
+     (rep.ofIso (picEtCommGrpForgetIso C))`), and a group scheme over a field is
+     separated. From a bare `(PicScheme.picEt C).RepresentableBy X` this is a
+     theorem — it does not even use `[GeometricallyIntegral C.hom]`.
+   The one brick is a **port, not a proof**, and it is in the sibling project:
+   Mathlib does *not* have "group scheme over a field is separated"
+   (`infer_instance` for `IsSeparated G.hom` at `[GrpObj G]` over `Spec K`
+   FAILS, while `IsClosedImmersion η[G].left` synthesises), but
+   `Algebraic-Jacobian-Challenge-Rebuild`'s
+   `AbelianVariety/GroupSeparated.lean` proves it in 121 `sorry`-free lines
+   (`GrpObj.isPullback_diagonal`, `isSeparated_of_isClosedImmersion_one`,
+   `instance isSeparated_of_grpObj`). None of those three names exists in this
+   project; the two load-bearing ones compiled here unchanged.
+   **This is not a discount on the seam**: `k'`-side representability is still
+   the campaign's undischarged output. It removes two obligations nobody had
+   counted, and forecloses one dead end.
 
 Method note for whoever re-checks any absence claim in this area: a bare
 `horizon search picEt` returns ten hits, **all from the sibling project**, because
