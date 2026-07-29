@@ -53,7 +53,7 @@ the configured build kernel-checks. `UNROOTED` means the declaration exists in s
 | L8 | its input (b): `Presheaf.IsLocallySurjective … (Sigma.desc f)` | roadmap `dat-b` B-6 | MISSING |
 | L9 | what L7/L8 are built from: `(divFunctor C pi g).RepresentableBy DivOver` | `Picard/DivRepKit.lean:114` `representableBy` | UNROOTED |
 | L10 | its input: a term of `DivRepGlobalData` | `Picard/DivRepKit.lean:69` | **MISSING — zero producers** |
-| L11 | the affine→general lift `DivRepGlobalData.ofAffine` | — | **MISSING, never attempted** (§3) |
+| L11 | the affine→general lift `DivRepGlobalData.ofAffine` | `Picard/DivRepGlobalClassify.lean:288` `toGlobalData` (+ `:306` `representableBy`) | **DISCHARGED** — row corrected in place 2026-07-29 (§7.14.1); see §7.7 |
 | L12 | the affine package `DivRepAffinePullback` | `Picard/DivRepAffKit.lean:167` | structure LANDED, no producer |
 | L13 | its `pull` / `isDivRepClassify_pull` fields | — | MISSING, this is **U2** |
 | L14 | U2's gate: a certificate for the universal chart family | roadmap `ddr.certificate` | **BLOCKED** (§2) |
@@ -198,7 +198,7 @@ Roadmap row `AJCR.w4-rep.build-reach` owns this.
 |---|---|---|
 | L2 | `jacobianData` MISSING, no producer anywhere | **`JacobianData.ofCharts`** (`Picard/JacobianDataCharts.lean:182`) — a conditional producer, sorry-free, rooted, kernel-checked. `JacobianData` had zero producers before this round; it has two now (`ofRepresentableBy` :71 and `ofCharts` :182). |
 | L9 | `(divFunctor C π g).RepresentableBy DivOver` exists but **UNROOTED** | **rooted.** `Picard/DivRepGlobalLift.lean` imports `DivRepKit`, and the root aggregator imports `DivRepGlobalLift`. L9 is kernel-checked. |
-| L11 | `DivRepGlobalData.ofAffine` **MISSING, never attempted** | its **forward half is landed**: `DivRepAffinePullback.pullGlobal` (`Picard/DivRepGlobalLift.lean:102`) is the `pull` field and `pullGlobal_comp` (:132) is the `pull_comp` field, both from the affine package alone. What is left of L11 is the general-test **classifier** and the two inverse laws. |
+| L11 | `DivRepGlobalData.ofAffine` **MISSING, never attempted** | its **forward half is landed**: `DivRepAffinePullback.pullGlobal` (`Picard/DivRepGlobalLift.lean:102`) is the `pull` field and `pullGlobal_comp` (:132) is the `pull_comp` field, both from the affine package alone. **CORRECTED IN PLACE 2026-07-29:** the classifier and both inverse laws are landed too — `classifyGlobal` (`Picard/DivRepGlobalClassify.lean:204`), `pullGlobal_classifyGlobal` (:252), `classifyGlobal_pullGlobal` (:269), `toGlobalData` (:288). **L11 is fully discharged**; this row's earlier "what is left" clause was itself stale and is retracted here rather than only in an amendment (§7.14.1). |
 | L4 | field of L3 | the two finiteness certificates of L3/L4 are no longer obligations: `locallyOfFiniteType_gluedHom` (:154) and `quasiCompact_gluedHom` (:164) derive them from properties of the charts. |
 
 `DivRepGlobalLift.lean` was written in round 4 but landed only through that round's integration
@@ -1186,12 +1186,21 @@ to warn about: `Picard/DivRepGlobalClassify.lean` (commits `31930badb`, `aeb77e1
 > `classifyGlobal_pullGlobal` (:269) — **both inverse laws**; `toGlobalData` (:288);
 > `representableBy` (:306).
 
-So **nothing below the divisor-representability endpoint remains**. The task brief for this session
-still listed the classifier and the inverse laws as the deliverable. Three faces are available to a
-consumer, weakest last: `DivRepAffinePullback.representableBy`,
+So the **L11 row specifically** is fully discharged — the *lift*, not the chain. The task brief for
+this session still listed the classifier and the inverse laws as the deliverable. Three faces are
+available to a consumer, weakest last: `DivRepAffinePullback.representableBy`,
 `divFunctor_representableBy_of_chartClause` (`DivRepAffPullClause.lean:482`), and
-`divFunctor_representableBy_of_id` (:502). The only surviving hypothesis is U2, and
+`divFunctor_representableBy_of_id` (:502). What still gates the chain is **L12/L13**, i.e. U2, and
 `DivRepChartRange.lean:183` makes it an **iff** with an equation of morphisms.
+
+**Two corrections a fresh-context audit forced on this subsection's first draft (`I-0803`), both
+taken.** (i) It said "nothing below the divisor-representability endpoint remains", which over-reads
+its own evidence — L12/L13 remain, as the next sentence then conceded. (ii) It presented the L11
+measurement as a discovery, but **§7.7 above already recorded it**, with the same five line numbers
+and the same two commits. This is the *third* identical record, and appending a fourth amendment
+while leaving the source rows stale is what manufactures the next round's staleness. So the fix was
+applied where the claim lives: **§1's L11 row and §7.1's L11 row are both corrected in place**, and
+this subsection is the note, not the repair.
 
 ### 7.14.2 DAT-J's effectivity half is not divRep-gated — three landed theorems
 
@@ -1226,11 +1235,34 @@ for this brick. And the five steps from a *point* to a divisor are all landed an
 was hiding a discharged half behind a gated one. What *is* divRep-gated is only the Abel
 **square** — naming `abel` at all requires the representation.
 
-**The honest limit, recorded rather than left for a reviewer.** The divisor produced at a point
-lives over the **splitting field `L`**, while `hlift` wants a morphism out of `Spec κ(y)`.
-Descending `L ↝ κ(y)` is finite separable descent, i.e. the `dat-g` lane's work, and this session
-did not take it. Also unchanged: the satisfiability face needs a degree-`g` reference divisor `Z`
-from the caller, which over a small finite field is a real hypothesis and not bookkeeping.
+**THE LIMITS, and the audit found the binding one was NOT the one I disclosed (`I-0799`,
+`I-0802`, `I-0800`).** My first draft named the descent limit — the divisor lives over the
+**splitting field `L`** while `hlift` wants `Spec κ(y)`, which is `dat-g`'s work. That is real but
+it is the *second* limit. Three corrections, all taken and all applied at the declarations too:
+
+* **The reference divisor is the binding hypothesis, and it has no producer.** I called the
+  degree-`0` face a *satisfiability probe* and wrote that the degree map hits `g`
+  "unconditionally on the curve". **False.** `CurveDivisor.deg` is weighted by residue degrees
+  (`RiemannRoch/Divisor.lean:61`), so its image is `index · ℤ`: on a genus-`1` curve of index `3`
+  over `ℚ` there is no divisor of degree `1 = g` and the theorem is a *vacuous truth*. The
+  campaign's own reference does not escape it — `deg (m • fiberWeilDivisor π) = m · δ`
+  (`WindowLedger.lean:133`) needs `δ ∣ g`. So the face **relocates** the hypothesis; it does not
+  discharge it. This is the failure mode I recorded in §7.12/§7.13 for *other people's* rows —
+  a reduction to a hypothesis that may be false passes every census because it is then a theorem.
+* **At a point, the hypothesis is uniform and therefore stronger still.** Since `L` is produced
+  existentially inside the proof, the caller cannot name it, so the binder became
+  `∀ L, deg L (Zof L) = g` — over *every* extension at once, `L = k` included. Undisclosed in
+  the first draft; now in that file's docstring.
+* **The cone is not `Challenge`-free**, which `w4-datj` §0.5/§3.4 make binding for a DAT-J
+  producer: `DivisorDatumRankOne` → `Cohomology/H1BaseFieldInvariance:6` → `Challenge`. And
+  §0.5's own claim that `FLVClass` is Challenge-free is false at HEAD too
+  (`RiemannRoch/Degree.lean:7` → `ChiCurve` → `Challenge`), so the standing "never
+  `riemann_inequality_curve`" rule no longer avoids the cycle. Pre-existing and tree-wide, but it
+  means "available today" does **not** mean "consumable by DJ-2/DJ-3 today".
+
+So the honest headline is narrower than §7.14.2's title: the effectivity half is **divRep-free**
+(that survives, cone-checked over 323 files), and it is **not unconditional** — it rests on an
+arithmetic hypothesis about the curve's index that nothing in the tree produces.
 
 ### 7.14.3 §7.6 still stands, for the fourth consecutive session
 

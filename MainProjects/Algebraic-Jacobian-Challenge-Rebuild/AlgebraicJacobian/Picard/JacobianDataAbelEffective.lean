@@ -50,10 +50,11 @@ file's.)
 * `AlgebraicGeometry.exists_effective_deg_eq_of_classDeg_eq` — over a curve with
   `χ(𝒪) = 1 − g`, every Čech Picard class of degree `g` has an effective representative
   **of degree `g`**.  General: any `X`, no relative curve, no `π`.
-* `AlgebraicGeometry.exists_effective_deg_eq_of_classDeg_eq_zero` — **the satisfiability
-  probe, and the form the campaign uses**: the hypothesis above is not vacuous, because
-  multiplying a degree-`0` class by a fixed degree-`g` class lands in it.  Since the classes
-  DAT-J holds are of degree *zero*, this is also the usable face.
+* `AlgebraicGeometry.exists_effective_deg_eq_of_classDeg_eq_zero` — **the degree-`0` face, the
+  form the campaign uses** (the classes DAT-J holds have degree `0`).  It takes a degree-`g`
+  reference divisor `Z` as an *argument*, so it **relocates** the hypothesis rather than
+  discharging it — see the retraction at that declaration: a degree-`g` divisor need not exist,
+  because `deg` is residue-degree weighted.
 * `AlgebraicGeometry.exists_effective_of_classDeg_eq` — the not-silently-stronger probe: the
   landed degree-free conclusion is recovered as a corollary.
 * `AlgebraicGeometry.exists_effective_deg_eq_relCurve` — the same at the fibre curve
@@ -120,11 +121,22 @@ consumer but *constrained* (`classDeg K L = g`), so the failure mode is not junk
 it is that **no class of degree `g` exists**, in which case the theorem above is a vacuous
 truth that every `sorry` census and axiom probe passes.
 
-The probe comes back positive, and unconditionally on the curve: the degree map hits `g`
-because it hits every value of the form `deg E` for an effective `E`, and multiplication by a
-fixed degree-`g` class is a bijection of the degree-`0` layer onto the degree-`g` layer.  This
-lemma is the second half of that — the *shift* — and it is what makes the file usable at all,
-because the classes DAT-J actually holds are of degree **zero**.
+**RETRACTED 2026-07-29, same session, after a fresh-context audit (`I-0799`).**  The first
+draft of this docstring said the probe "comes back positive, and **unconditionally on the
+curve**: the degree map hits `g`".  **That is false**, and it is false arithmetically, not
+merely unlanded: `CurveDivisor.deg` is weighted by residue degrees
+(`deg D = ∑ₓ Dₓ · [κ(x) : K]`, `RiemannRoch/Divisor.lean:61`), so its image is `index · ℤ` for
+the index of the curve.  On a curve of index `3` and genus `1` over `ℚ` there is **no** divisor
+of degree `1 = g`, and `exists_effective_deg_eq_of_classDeg_eq` is then a vacuous truth.  The
+campaign's own reference divisors do not escape this: `deg (m • fiberWeilDivisor π) = m · δ`
+(`RiemannRoch/WindowLedger.lean:133`), so `= g` needs `δ ∣ g`.
+
+**So what this lemma does is RELOCATE the hypothesis, not discharge it** — `Z` is an argument.
+That is still worth having, because it is the *shape* a `Pic⁰` consumer meets (the classes
+DAT-J holds have degree `0`, not `g`, so without this face the degree-`g` statement would be
+a theorem nobody could instantiate).  But the honest reading is conditional: **given a
+degree-`g` divisor `Z` over the field in question**, every degree-`0` class yields an effective
+degree-`g` divisor.  Producing `Z` is a genuine arithmetic hypothesis on the curve, open here.
 
 Given any divisor `Z` of degree `g` (the caller's fixed reference: in the campaign
 `m • fiberWeilDivisor π` for suitable `m`, whose degree is positive by

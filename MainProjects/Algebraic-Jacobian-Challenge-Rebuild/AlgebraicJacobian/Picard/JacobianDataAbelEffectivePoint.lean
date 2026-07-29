@@ -47,14 +47,41 @@ further step (finite separable descent — the `dat-g` lane's business), and thi
 take it.  What it settles is that the effectivity content is available, unconditionally, at
 every point of every `Pic⁰`-representing object.
 
+## TWO FURTHER LIMITS, from a fresh-context audit of this file (`I-0802`, `I-0800`)
+
+**(a) The reference divisor is quantified UNIFORMLY, which is strictly stronger than the
+degree-`0` face asks.**  Because the splitting field `L` is produced *existentially inside the
+proof*, the caller cannot name it in advance, so the hypothesis had to become
+`Zof : ∀ L, (relCurve C L).CurveDivisor` together with `hZ : ∀ L, deg L (Zof L) = g` — a
+degree-`g` divisor over **every** field extension at once, including `L = k`.  Compare the
+single `Z` of `exists_effective_deg_eq_of_classDeg_eq_zero`.  This has **no producer anywhere
+in the tree**, and it is unsatisfiable exactly when the index of the curve does not divide `g`
+(`deg` is residue-degree weighted, `RiemannRoch/Divisor.lean:61`).  It is the *binding* limit of
+this file — stronger than the descent limit named above, which is the one the first draft
+disclosed.
+
+**(b) A `PicRepDatum` face is NOT provided.**  The first draft of this docstring advertised
+`PicRepDatum.exists_effective_deg_eq_at_point`, "the degree-zero class supplied by the universal
+property rather than assumed".  **No such declaration exists** — it was never written, so the
+one face that would consume the `Pic⁰` universal property is absent and `lam`/`hlam` remain
+hypotheses the caller supplies.  Recorded rather than quietly deleted, because an advertised
+declaration list is unchecked by any build.
+
+**(c) The cone is NOT `Challenge`-free**, and `w4-datj-worksheet.md` §0.5/§3.4 make that
+binding for a DAT-J producer.  This file reaches `Challenge.lean` through
+`Picard/DivisorDatumRankOne` → `Cohomology/H1BaseFieldInvariance:6`.  Verified by reading the
+import lines, not inferred.  §0.5's own claim that `FLVClass.lean` is Challenge-free is *also*
+false at HEAD (`RiemannRoch/Degree.lean:7` → `ChiCurve.lean` → `Challenge`), so the standing
+"use `exists_effective_of_picClass`, never `riemann_inequality_curve`" rule no longer avoids the
+cycle — both are downstream of `Challenge`.  That is a pre-existing tree-wide condition, not
+something this file introduced, but it does mean the effectivity content is **not** yet
+consumable by the planned DJ-2/DJ-3 discharge.
+
 ## Main declarations
 
 * `AlgebraicGeometry.exists_effective_deg_eq_of_pic0_at_point` — from a degree-zero class on
   `J` and a point `y`, an effective degree-`g` divisor over a finite separable extension of
-  `κ(y)`, presenting the shifted class.
-* `AlgebraicGeometry.PicRepDatum.exists_effective_deg_eq_at_point` — the same read off a
-  `PicRepDatum`, where the degree-zero class at `y` is supplied by the universal property
-  rather than assumed.
+  `κ(y)`, presenting the shifted class.  Conditional on (a) above.
 -/
 
 set_option autoImplicit false
