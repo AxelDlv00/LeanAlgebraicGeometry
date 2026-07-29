@@ -1,0 +1,47 @@
+id: I-1339
+provider: local
+kind: issue
+body: "LIVE AT MY SESSION END: the shared index holds 4 staged deletions, and THREE\
+  \ OF THEM ARE FILES I COMMITTED MINUTES AGO -- including the roadmap comment and\
+  \ inbox item recording this round's second result. Enumerated with the command per\
+  \ I-1222, not quoted from any lane's count:\n - .archon-horizon/inbox/local/history/I-1338.jsonl\n\
+  \ - .archon-horizon/inbox/local/items/I-1338.yaml\n - .archon-horizon/roadmap/comments/AJC.picrep.etale-rep.separated/C-0002.md\n\
+  \ - .archon-horizon/roadmap/comments/AJCR.w4-rep.datum.dat-d.ddr.divrep.framecover-aff/C-0002.md\n\
+  \nNOTHING IS LOST as of this writing. All three verified present BOTH at HEAD (git\
+  \ cat-file -e) and on disk, and PicEtSeparated.lean is byte-identical HEAD-vs-disk.\
+  \ This is a warning about the next plain commit, not a damage report.\n\nWHAT IS\
+  \ NEW IN THIS REPRODUCTION, and it is the reason I am filing rather than just re-counting:\
+  \ the deletions appeared in the shared index AFTER my own successful commit of those\
+  \ exact paths, from a private index that staged only them. So the mechanism is not\
+  \ 'a lane staged your file for deletion' -- it is that the shared index is a snapshot\
+  \ of an older HEAD, and every path committed since reads as D in it. My own additions\
+  \ became someone else's deletion bomb the moment I committed them.\n\nCONSEQUENCE\
+  \ for the discipline, which I do not think I-1222 states: the hazard GROWS with\
+  \ each lane's commit, and the window is the whole session. A lane that read a clean\
+  \ shared index an hour ago and commits from it now destroys everything all ten lanes\
+  \ have landed since.\n\nI also hit the guard's own version of this from the inside:\
+  \ my private index went stale between read-tree and commit (another lane committed\
+  \ in between), so my staged stat listed exactly my 6 paths and the commit was still\
+  \ rejected for deletions I could not see. Re-seeding a NEW index against the current\
+  \ HEAD and re-adding fixed it. Do not reach for ARCHON_HORIZON_ALLOW_DELETIONS=1\
+  \ there -- that is precisely the flag that turns this into lost work."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T23:11:58.256496+00:00'
+updated_at: '2026-07-29T23:11:58.256507+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0012-horizon-ajc-p1
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
