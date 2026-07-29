@@ -59,11 +59,31 @@ theorem until they close.
 
 ### Read this first: the mathematics is proved *elsewhere in this directory*
 
-The six obligations below are stated against `SymmetricPower`, which is a
+**Four of the six** obligations below are stated against `SymmetricPower`, which is a
 `sorry`-**bodied definition**. An equation between morphisms out of a junk term
-carries no information, so these six cannot be discharged, and discharging them
+carries no information, so those four cannot be discharged, and discharging them
 would establish nothing. They are kept because they pin the challenge's intended
 statement shape, not because they are the work.
+
+**Read the split, because this paragraph used to hide it** (corrected 2026-07-29; the
+sentence above said "the six", and two of the three "active" roadmap rows repeat the
+error — filed as inbox `I-0809`). The six divide into two groups with *different*
+blockers, and only the first is about the symmetric power:
+
+* `SymmetricPower`, `symmetricPowerAVMap`, `symmetricPowerToJacobian`,
+  `albanese_eq_iff_symmetricPower_eq` — blocked on the symmetric power, and the reading
+  "one missing object, not six gaps" is right about them.
+* `descentThroughBirationalSigma` — also mentions `SymmetricPower`, but its *own* residue
+  is the birationality data, which the symmetric power alone would not supply.
+* `abelJacobi` — **does not mention `SymmetricPower` at all.** Its type is
+  `C ⟶ jacobianScheme C`. Its blocker is the *Picard* seam: the moduli interpretation of
+  `Pic⁰` applied to the rigidified diagonal correspondence, plus Yoneda. Nothing in
+  `Albanese/` is a counterpart to it, so no amount of symmetric-power work discharges it,
+  and the leg's headline needs it because the statement `φ = abelJacobi C P₀ ≫ ψ` is about
+  it.
+
+So "one missing object" is a fair summary of five sixths of this file and **not** of
+`abelJacobi`.
 
 Milne's argument itself **is** proved, over the symmetric power taken as an
 *interface* rather than a `sorry`:
@@ -84,8 +104,10 @@ Milne's argument itself **is** proved, over the symmetric power taken as an
   machine check attributing its `sorryAx` entirely to the Picard seam: the same
   theorem with an arbitrary abelian variety target is axiom-clean.
 
-So the honest description of this leg is **one missing object**, not six gaps:
-`SymPowData C g` for `g ≥ 2`.
+So the honest description of the *symmetric-power part* of this leg is **one missing
+object**: `SymPowData C g` for `g ≥ 2`. It is **not** the honest description of the leg,
+and this sentence used to say it was: `abelJacobi` sits outside that object's reach (see
+the split above) and is on the Picard seam.
 
 **Update (2026-07-28) — that object is now identified, and the missing part is smaller than
 this paragraph used to say.** `Albanese/SymPowColimit.lean` proves that `SymPowData C n`
