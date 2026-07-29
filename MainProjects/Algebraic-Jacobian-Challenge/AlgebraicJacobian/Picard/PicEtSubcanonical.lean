@@ -53,9 +53,36 @@ is a different thing, and the honest statement of what remains is:
 * what changes is the *shape* of the remaining work. Before this file, a reader
   of the seam docstring concluded that finishing the campaign leaves a further
   unpriced obligation ("represent `picEt` directly, or restate the headline").
-  After it, finishing the campaign suffices: `picEt` representability follows
-  from `picSharp` representability by `Subcanonical` + `isIso_toSheafify`, both
-  already in Mathlib.
+  After it, no supplementary étale-representability theorem is needed: `picEt`
+  representability follows from `picSharp` representability by `Subcanonical` +
+  `isIso_toSheafify`, both already in Mathlib.
+
+**But the antecedent must not be read as reachable over `k`, and §4 is why.**
+The same subcanonicity that powers the transport also proves that a
+representable `picSharp` is a *Zariski* sheaf
+(`PicScheme.picSharp_isSheaf_zariski_of_representableBy`). Kleiman §2
+(L1292–L1302) exhibits a curve over a field for which `picSharp` is **not** a
+Zariski sheaf. Contrapositive: representability of `picSharp C` over an
+arbitrary field is **false in general**, not merely unproved. So the campaign
+milestones that conclude representability of `picSharp`/`picSharpDeg` over `k`
+itself — G3 (Galois descent of `picSharp` points) and G4 (the coproduct
+assembly) — aim at a statement that cannot be proved as written.
+
+This is not an argument against the Milne–Kollár route. Everything through J5
+runs over a separably closed `k'`, where a section is available and the
+obstruction is absent; the break is precisely at the descent step where the
+conclusion returns to `k`. The repair the results here name is that the object
+descended to `k` must be `picEt`, which *has* the sheaf property that carries
+descent, and not `picSharp`, which lacks it. Over `k'` the two agree, by
+`isIso_picEtComparison_of_isSheaf` applied to the representability available
+there — so J5's output is already a `picEt`-representing scheme after base
+change.
+
+What is **not** established here: that Kleiman's non-sheaf example satisfies
+this project's binders (smooth, proper, geometrically integral) — it is quoted
+from the reference, not formalised — and no restated G3. The Lean content of §4
+is exactly the implication "representable ⇒ Zariski sheaf"; the falsity of the
+antecedent is a consequence *given* the quoted counterexample.
 
 There is one genuine subtlety, and it is not a section. The transport proves
 that the *same* scheme represents both functors, so it does not produce
@@ -88,6 +115,9 @@ lemma proved here.
 * `Scheme.isIso_picEtComparison_of_picSharp_representability` — and clause (2)
   follows too, *unconditionally*, which is strictly stronger than the seam's
   own `HasRationalPoint C → IsIso …`.
+* `Scheme.PicScheme.picSharp_isSheaf_zariski_of_representableBy` — §4: a
+  representable `picSharp` is a Zariski sheaf, the implication whose
+  contrapositive limits what the campaign's descent step may target.
 
 ## References
 
@@ -258,6 +288,58 @@ theorem isIso_picEtComparison_of_picSharp_representability {k : Type u} [Field k
     IsIso (PicScheme.picEtComparison C) :=
   PicScheme.isIso_picEtComparison_of_isSheaf C
     (PicScheme.relPresheaf_isSheaf_of_representableBy C rep)
+
+/-! ## §4. The limit on the antecedent: representable implies *Zariski* sheaf
+
+The transport of §3 says the campaign needs no supplementary étale
+representability theorem. This section says where the campaign may not put its
+conclusion, and the two together are what actually price the board row.
+
+Attribution: this direction was pointed out by `review-ajc` on the §1–§3
+commit, as a corollary of `relPresheaf_isSheaf_of_representableBy`. -/
+
+namespace PicScheme
+
+/-- **A representable `picSharp` is a Zariski sheaf.**
+
+Immediate from subcanonicity of the *Zariski* topology on `(Sch/k)`
+(`Scheme.subcanonical_zariskiTopology` through
+`GrothendieckTopology.subcanonical_over`) — the étale route of §1 is not even
+needed, though `zariskiTopologyOver_le_etaleTopologyOver` (`Picard/PicEtSheaf.lean`)
+would also transport it from there.
+
+**What this rules out.** The seam docstring
+(`Picard/FGAPicRepresentability.lean`, "Why sheafifying is what makes an
+unconditional statement possible") argues *in prose* that an unconditional
+`RepresentableBy` against `picSharp` is FALSE rather than unproved, because
+Kleiman §2 (L1292–L1302) gives a curve whose `picSharp` is not a Zariski sheaf
+while a representable functor is a sheaf for any subcanonical topology. This
+theorem is the second half of that argument, as a Lean statement rather than as
+prose. Its contrapositive therefore says: over an arbitrary field, no scheme
+represents `picSharp C` in general.
+
+The campaign milestones G3 and G4 conclude exactly that (G3: `J_r := J'_r/Γ`
+represents `picSharpDeg C r` over `k`; G4 assembles `picSharpDeg`), so they are
+targeting a false statement as written and need restating against `picEt`. That
+restatement is the content of the board row `AJC.picrep.etale-rep`, and it is
+what makes the row a *route repair* rather than a missing theorem.
+
+**Not formalised, and deliberately named as such**: that Kleiman's non-sheaf
+curve is smooth, proper and geometrically integral — this project's binders. It
+is quoted from the reference. Without that check the theorem below is a true
+implication whose antecedent has not been *proved* uninhabitable, only reported
+so by Kleiman. -/
+theorem picSharp_isSheaf_zariski_of_representableBy {k : Type u} [Field k]
+    (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    {X : Over (Spec (CommRingCat.of k))}
+    (rep : (picSharp C).RepresentableBy X) :
+    Presieve.IsSheaf (Scheme.zariskiTopology.over (Spec (CommRingCat.of k)))
+      (picSharp C) := by
+  haveI : (picSharp C).IsRepresentable := ⟨X, ⟨rep⟩⟩
+  exact GrothendieckTopology.Subcanonical.isSheaf_of_isRepresentable _
+
+end PicScheme
 
 end Scheme
 
