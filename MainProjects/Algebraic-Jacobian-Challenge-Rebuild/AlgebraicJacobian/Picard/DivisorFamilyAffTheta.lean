@@ -278,6 +278,197 @@ lemma ker_thetaGluedEval_eq_ker :
     LinearMap.ker (thetaGluedEval A τ a) = LinearMap.ker (thetaEval A τ a) :=
   LinearMap.ker_codRestrict _ _ _
 
+/-! ## The equalizer algebra and the unit-twisted glued modules
+
+Everything in this section is **cover-generic**: it names `D.pieces`, `A.ovlIdeal`,
+`A.toOvlLeft/Right` and nothing about a chart, so it ports from
+`Picard/DivisorFamilyThetaRank.lean:77-231` with `AffAdaptation` in place of
+`DivisorAdaptation` and no other change.  It is the substrate a widened `IsThetaPaired` —
+the honest cohomological residue of the (c2)-transport — is stated over. -/
+
+/-- **The equalizer algebra `A_D` over a widened cover**: the glued colength module is an
+`R`-subalgebra of the piece product, because the overlap-restriction arrows are algebra
+maps. -/
+noncomputable def gluedSubalgebra : Subalgebra R A.chartProd where
+  carrier := A.gluedSubmodule
+  add_mem' := fun hx hy => A.gluedSubmodule.add_mem hx hy
+  mul_mem' := by
+    intro x y hx hy
+    rw [SetLike.mem_coe, mem_gluedSubmodule_iff] at hx hy ⊢
+    intro p
+    rw [Pi.mul_apply, Pi.mul_apply, map_mul, map_mul, hx p, hy p]
+  one_mem' := by
+    rw [SetLike.mem_coe, mem_gluedSubmodule_iff]
+    intro p
+    rw [Pi.one_apply, Pi.one_apply, map_one, map_one]
+  algebraMap_mem' := by
+    intro r
+    rw [SetLike.mem_coe, mem_gluedSubmodule_iff]
+    intro p
+    rw [Pi.algebraMap_apply, Pi.algebraMap_apply, AlgHom.commutes, AlgHom.commutes]
+
+lemma mem_gluedSubalgebra_iff {x : A.chartProd} :
+    x ∈ gluedSubalgebra A ↔ x ∈ A.gluedSubmodule :=
+  Iff.rfl
+
+/-- The equalizer algebra and the glued module have the same carrier, `R`-linearly. -/
+noncomputable def gluedSubalgebraEquiv : ↥(gluedSubalgebra A) ≃ₗ[R] A.Glued where
+  toFun x := ⟨x.1, x.2⟩
+  invFun x := ⟨x.1, x.2⟩
+  map_add' _ _ := rfl
+  map_smul' _ _ := rfl
+  left_inv _ := rfl
+  right_inv _ := rfl
+
+section UnitTwist
+
+variable (u v : ∀ i j : D.index, Γ(relCurve C R, D.pieces i ⊓ D.pieces j)ˣ)
+
+/-- The `u`-twisted right overlap arrow for an arbitrary unit family on the piece
+overlaps. -/
+noncomputable def unitDeltaRight : A.chartProd →ₗ[R] A.ovlProd :=
+  LinearMap.pi (fun p : D.index × D.index =>
+    LinearMap.mulLeft R (Ideal.Quotient.mk (A.ovlIdeal p.1 p.2)
+        ((u p.1 p.2 : Γ(relCurve C R, D.pieces p.1 ⊓ D.pieces p.2)ˣ) :
+          Γ(relCurve C R, D.pieces p.1 ⊓ D.pieces p.2))) ∘ₗ
+      (A.toOvlRight p.1 p.2).toLinearMap ∘ₗ LinearMap.proj p.2)
+
+/-- The `u`-twisted glued colength module. -/
+noncomputable def unitGluedSubmodule : Submodule R A.chartProd :=
+  LinearMap.ker (A.deltaLeft - unitDeltaRight A u)
+
+/-- The `u`-twisted equalizer description. -/
+lemma mem_unitGluedSubmodule_iff (s : A.chartProd) :
+    s ∈ unitGluedSubmodule A u ↔ ∀ p : D.index × D.index,
+      A.toOvlLeft p.1 p.2 (s p.1)
+        = Ideal.Quotient.mk (A.ovlIdeal p.1 p.2)
+            ((u p.1 p.2 : Γ(relCurve C R, D.pieces p.1 ⊓ D.pieces p.2)ˣ) :
+              Γ(relCurve C R, D.pieces p.1 ⊓ D.pieces p.2))
+          * A.toOvlRight p.1 p.2 (s p.2) := by
+  simp only [unitGluedSubmodule, LinearMap.mem_ker, LinearMap.sub_apply, sub_eq_zero,
+    funext_iff, deltaLeft, unitDeltaRight, LinearMap.pi_apply, LinearMap.coe_comp,
+    Function.comp_apply, LinearMap.proj_apply, AlgHom.toLinearMap_apply,
+    LinearMap.mulLeft_apply]
+
+/-- At the trivial unit family, the twisted glued module is the glued module. -/
+lemma unitGluedSubmodule_one : unitGluedSubmodule A 1 = A.gluedSubmodule := by
+  ext s
+  rw [mem_unitGluedSubmodule_iff, mem_gluedSubmodule_iff]
+  refine forall_congr' fun p => ?_
+  rw [Pi.one_apply, Pi.one_apply, Units.val_one, map_one, one_mul]
+
+/-- At the Θ unit family, the twisted glued module is the widened `W(d)^{Θᵃ}` — by `rfl`,
+exactly as chart-typed, which is what lets the pairing layer be stated over `thetaOvlUnit`
+without a transport. -/
+lemma unitGluedSubmodule_thetaOvlUnit :
+    unitGluedSubmodule A (thetaOvlUnit τ a) = thetaGluedSubmodule A τ a :=
+  rfl
+
+variable {u v}
+
+/-- **Twists multiply**: the componentwise product of a `u`-twisted and a `v`-twisted glued
+family is `(u * v)`-twisted. -/
+theorem mul_mem_unitGluedSubmodule {s t : A.chartProd}
+    (hs : s ∈ unitGluedSubmodule A u) (ht : t ∈ unitGluedSubmodule A v) :
+    s * t ∈ unitGluedSubmodule A (u * v) := by
+  rw [mem_unitGluedSubmodule_iff] at hs ht ⊢
+  intro p
+  have h1 : (s * t) p.1 = s p.1 * t p.1 := rfl
+  have h2 : (s * t) p.2 = s p.2 * t p.2 := rfl
+  have h3 : (((u * v) p.1 p.2 : Γ(relCurve C R, D.pieces p.1 ⊓ D.pieces p.2)ˣ) :
+      Γ(relCurve C R, D.pieces p.1 ⊓ D.pieces p.2))
+      = ((u p.1 p.2 : Γ(relCurve C R, D.pieces p.1 ⊓ D.pieces p.2)ˣ) :
+          Γ(relCurve C R, D.pieces p.1 ⊓ D.pieces p.2))
+        * ((v p.1 p.2 : Γ(relCurve C R, D.pieces p.1 ⊓ D.pieces p.2)ˣ) :
+          Γ(relCurve C R, D.pieces p.1 ⊓ D.pieces p.2)) := rfl
+  rw [h1, h2, h3, map_mul, map_mul, map_mul, hs p, ht p]
+  ring
+
+variable (u) in
+/-- The `u`-twisted glued module as a module over the equalizer algebra `A_D`. -/
+noncomputable def unitGluedOver : Submodule ↥(gluedSubalgebra A) A.chartProd where
+  carrier := unitGluedSubmodule A u
+  add_mem' := fun hx hy => (unitGluedSubmodule A u).add_mem hx hy
+  zero_mem' := (unitGluedSubmodule A u).zero_mem
+  smul_mem' := by
+    intro c x hx
+    have hc : (c : A.chartProd) ∈ unitGluedSubmodule A 1 := by
+      rw [unitGluedSubmodule_one]
+      exact c.2
+    have hmul := mul_mem_unitGluedSubmodule A hc hx
+    rw [one_mul] at hmul
+    have hsmul : c • x = (c : A.chartProd) * x := Algebra.smul_def c x
+    rw [SetLike.mem_coe, hsmul]
+    exact hmul
+
+lemma mem_unitGluedOver_iff {x : A.chartProd} :
+    x ∈ unitGluedOver A u ↔ x ∈ unitGluedSubmodule A u :=
+  Iff.rfl
+
+end UnitTwist
+
+/-! ## The pairing input, widened
+
+`IsThetaPaired` is the honest cohomological residue of the (c2)-transport: it is what
+`finite/projective/rankAtStalk_thetaGlued` consume, and therefore what a widened
+`divisorWindowGr` needs beyond the left-exactness bridge below.  The *statement* and its
+automatic half port verbatim; the pairing itself is **not** proved here (chart-typed it is
+discharged by manufactured sections through the pinned trivializations, which is where the
+two charts genuinely enter). -/
+
+section Pairing
+
+/-- The widened `W(d)^{Θᵃ}` as an `A_D`-submodule. -/
+noncomputable def thetaSpan : Submodule ↥(gluedSubalgebra A) A.chartProd :=
+  unitGluedOver A (thetaOvlUnit τ a)
+
+/-- The widened inverse-twisted glued module as an `A_D`-submodule. -/
+noncomputable def thetaInvSpan : Submodule ↥(gluedSubalgebra A) A.chartProd :=
+  unitGluedOver A (thetaOvlUnit τ a)⁻¹
+
+lemma mem_thetaSpan_iff {x : A.chartProd} :
+    x ∈ thetaSpan A τ a ↔ x ∈ thetaGluedSubmodule A τ a :=
+  Iff.rfl
+
+lemma mem_thetaInvSpan_iff {x : A.chartProd} :
+    x ∈ thetaInvSpan A τ a ↔ x ∈ unitGluedSubmodule A (thetaOvlUnit τ a)⁻¹ :=
+  Iff.rfl
+
+/-- Products of `Θᵃ`- and `Θ⁻ᵃ`-sections are untwisted: the pairing lands in the equalizer
+algebra.  This is the automatic half, and it ports verbatim. -/
+theorem thetaSpan_mul_thetaInvSpan_le_one :
+    thetaSpan A τ a * thetaInvSpan A τ a ≤ 1 := by
+  rw [Submodule.mul_le]
+  intro s hs t ht
+  have hmul := mul_mem_unitGluedSubmodule A
+    (mem_thetaSpan_iff A τ a |>.mp hs) (mem_thetaInvSpan_iff A τ a |>.mp ht)
+  rw [mul_inv_cancel, unitGluedSubmodule_one] at hmul
+  rw [Submodule.one_eq_range]
+  exact ⟨⟨s * t, hmul⟩, rfl⟩
+
+/-- **The widened pairing input**: the `Θᵃ`- and `Θ⁻ᵃ`-twisted glued modules pair onto the
+full equalizer algebra.  Named so the remaining (c2)-transport obligation over the widened
+carrier is a *statement in the tree* rather than a gap in prose.
+
+**This is not proved here, and the reason is precise.** Chart-typed, it is discharged by
+`isThetaPaired_of_sectionWitness` from two manufactured global sections `σ = (t₀ᵃ, 1)`,
+`τ = (1, t₁ᵃ)` read through the **pinned chart trivializations** — that is where the fixed
+pair genuinely enters the Θ-layer, and nothing above needed it.  A widened witness must
+produce the analogous sections from the `ChartTyping` instead; whether the per-piece
+coordinates suffice is the open question. -/
+def IsThetaPaired : Prop :=
+  thetaSpan A τ a * thetaInvSpan A τ a = 1
+
+/-- The widened pairing input reduces to hitting `1`. -/
+theorem isThetaPaired_of_one_mem
+    (h : (1 : A.chartProd) ∈ thetaSpan A τ a * thetaInvSpan A τ a) :
+    IsThetaPaired A τ a := by
+  refine le_antisymm (thetaSpan_mul_thetaInvSpan_le_one A τ a) ?_
+  rw [Submodule.one_eq_span]
+  exact Submodule.span_le.mpr (Set.singleton_subset_iff.mpr h)
+
+end Pairing
+
 /-! ## The kernel bridge — left exactness, and the seam with the chart-typed layer -/
 
 /-- The germ of a side component through a piece is the germ taken in the pinned chart:
