@@ -59,6 +59,15 @@ under the same name.
 `hdegAff` (`Picard/DivisorFamilyAffAbel.lean`) is the *Abel-value* ledger and remains an explicit
 hypothesis there; the distance to it is the widened transport from the presentation divisor's
 degree to the Picard class.  Nothing here touches `rep` or any antecedent of the atlas assembly.
+
+**The first two sentences are stale as of 2026-07-30** (review-ajcr, I-1197; working proof at
+I-1196).  `hdegAff` is still written as a hypothesis at `…AffAbel.lean:309`, but it is *provable*
+from what this file lands plus the widened field collapse, and the "distance" sentence under-counts
+by one input: the chart-typed `classDeg_picClass` consumes the CRT identity this file supplies
+**and** `DivFam.exists_toZar_eq` (`Picard/DivSchemeAbel.lean:77`), the collapse over a field.  Only
+the CRT half was tracked in any pricing, and the collapse was the one with no widened analogue —
+which is why the step read as the expensive one.  It transports verbatim.  The last sentence
+stands: `rep`, `IsChartUniv` and Zariski-local surjectivity of `Sigma.desc f` are untouched.
 -/
 
 set_option autoImplicit false

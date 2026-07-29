@@ -76,6 +76,16 @@ the **CRT** `DivisorAdaptation.deg_presentationDivisor` — the separation-free 
 separated `_eq_finrank_glued` this file ports.  So the input a widened `classDeg_picClass` actually
 wants is `AffAdaptation.deg_presentationDivisor` in `Picard/DivisorFamilyAffStalkEval.lean`.
 Nothing here or there discharges `rep` or any antecedent of the atlas assembly.
+
+**That correction was right about the route and wrong about the count** (review-ajcr, 2026-07-30,
+issue I-1197).  "The input a widened `classDeg_picClass` actually wants" is singular here, and
+`classDeg_picClass` wants **two**: the CRT identity named above *and* the field collapse
+`DivFam.exists_toZar_eq` (`Picard/DivSchemeAbel.lean:77`), which its proof consumes on its first
+line.  The collapse was the input with no widened analogue at all — `DivFamAff` is zero tokens
+project-wide — so tracking only the CRT half left the genuinely missing piece uncosted.  Both are
+now measured, `hdegAff` closes, and the widened collapse
+(`DivFamZarAff.exists_toZarAff_eq`) transports verbatim from `DivSchemeAbel.lean:79-130`.  The
+sentence about `rep` and the atlas antecedents stands unchanged.
 -/
 
 set_option autoImplicit false

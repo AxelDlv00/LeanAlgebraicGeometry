@@ -214,6 +214,27 @@ degree ledger: `degAt_abelDiv` rests on `DivFamZar.classDeg_picClass`, whose pro
 the field collapse `DivFam.exists_toZar_eq` and the CRT identity `deg_divFamDivisor`, whose
 degree half is `DivisorAdaptation.deg_presentationDivisor_eq_finrank_glued`.
 
+**MEASURED CLOSED, 2026-07-30 (review-ajcr, issue I-1197; working proof handed to the owning
+lane at I-1196).**  `hdegAff` below is no longer owed: it closes on landed material, sorry-free
+and axiom-clean against a control firing `sorryAx`.  Read the sentence above carefully, because
+it is the one that named the defect and then failed to act on it — it lists **two** inputs of
+`classDeg_picClass`, the field collapse *and* the CRT identity, while every pricing downstream
+of it (and `Picard/DivisorFamilyAffFieldDegree.lean`, `…AffStalkEval.lean`, and the board row)
+tracked only the CRT half.  The collapse was the input with no widened analogue at all
+(`DivFamAff`: zero tokens project-wide), so the half that looked absent was the half nobody
+costed.  It is cheap: the chart-typed proof (`DivSchemeAbel.lean:79-130`) transports verbatim,
+both of its widening touch-points already existed (`CertifiedDivisorFamilyAff.mapAlg`, whose
+`hinf` is free under `[IsProper C.hom]`; the explicit face `DivFamZarAff.mapAlgHom_*`,
+`Picard/DivisorFamilyAffFace.lean:84-127`), and the two steps that had no name — the widened
+`toZar_mapAlg` and the widened affine collapse — are one line each.
+
+The rule worth keeping from this: to price a **port**, read the *proof term* of what is being
+ported, not its statement.  A statement lists what a lemma wants from its reader; the proof
+lists what it wants from the library, and a port pays the second.  Anything a proof obtains by
+`obtain … := <lemma>` in its opening lines is a port obligation no signature-level reading
+shows you.  Nothing here touches `rep`, `IsChartUniv`, or Zariski-local surjectivity of
+`Sigma.desc f`.
+
 **RETRACTED, and the correction is the useful part.**  A first version of this paragraph priced
 that step as *obstructed*, on the grounds that its proof cites `relCover_sup` together with
 `cover₀`/`cover₁` — the pinned pair R2 deletes.  The citation is real
@@ -298,6 +319,20 @@ through `DivFamZar.classDeg_picClass`, i.e. from the presentation divisor's degr
 class of the widened section, and that transport has no widened analogue yet.  `hdegAff` is
 therefore still a real obligation — but a strictly smaller and differently-located one than this
 docstring previously claimed.
+
+**SUPERSEDED 2026-07-30 (review-ajcr, I-1197 / I-1196): `hdegAff` CLOSES, so this hypothesis is
+dischargeable and the paragraph above over-states the distance.**  "That transport has no widened
+analogue yet" was true as a statement about names and misleading as a price.  The transport needs
+the widened *field collapse* (`DivFamZarAff.exists_toZarAff_eq`, the analogue of
+`DivFam.exists_toZar_eq`), which nothing had built, plus three one-to-six-line steps; all of it
+transports from the chart-typed originals with the two substitutions R2 already paid for.  With
+those, this theorem's `hdegAff` argument is provable outright — verified sorry-free and
+axiom-clean against a same-file `sorryAx` control.
+
+Whoever discharges it should **drop the `hdegAff` binder from this statement** rather than
+supplying it at call sites; that changes every consumer's signature, and it is a deliberate
+consumer repair, not a rename.  See the header for the generalisable rule about pricing ports
+from proof terms rather than statements.
 
 Everything else in the degree-zero-ness argument transports unchanged: the three degrees still
 sum to zero under the chart-index constraint, because the twist factors are cover-free. -/
