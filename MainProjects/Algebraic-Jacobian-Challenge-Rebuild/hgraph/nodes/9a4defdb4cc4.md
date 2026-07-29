@@ -5,12 +5,24 @@ created: '2026-07-29T05:13:21'
 decl: AlgebraicGeometry.IsChartLocusFibre
 docstring: "**The residue of C9b, named**: for every test point of the Σ-sheaf, the\
   \ chart point over\nits chart locus together with the two properties the criterion\
-  \ needs.\n\nThis is `ChartFibrePresented` with its `W` field already discharged\
-  \ — it is `chartLocus`,\nopen unconditionally — so what a lane owes is precisely:\n\
-  \n* `r`: the divisor family over the locus whose class is the given one.  This is\
-  \ the\n  classifier `divRepClassifyZar` applied to the canonical-section family,\
-  \ i.e. CHART-U(c)'s\n  construction;\n* `sq`: that its chart value *is* the given\
-  \ class, which is the classifier's characterising\n  property;\n* `exists_factor`:\
+  \ needs.\n\n**THE NEXT SENTENCE WAS FALSE AND IS RETRACTED (2026-07-29,\n`Picard/Pic0ChartLocusFibreGuard.lean`).**\
+  \  It read: \"This is `ChartFibrePresented` with its\n`W` field already discharged\
+  \ — it is `chartLocus`, open unconditionally\".  The `W` field is\n**free**: it\
+  \ is a field of the structure, quantified inside the `Nonempty` below, and\n`chartLocus`\
+  \ occurs nowhere in this definition — nor does `chartLocus` or `V` enter the proof\n\
+  of `isChartUniv_of_isChartLocusFibre`.  The criterion consumes the datum for the\n\
+  **unrestricted** chart, so this statement implies\n`IsOpenImmersion.presheaf (abelSigmaChart\
+  \ …)` at `V = ⊤`, hence `Mono`, hence injectivity on\nevery test — which `Pic0AtlasFromDivRep.lean:54`,\
+  \ `Pic0ChartPair.lean:14` and\n`Pic0ChartOpenImmersionCriterion.lean:214` all cite\
+  \ as FALSE for the Abel chart (its fibres\nare the linear systems `|D|`).  If those\
+  \ headers are right this definition is\n**unsatisfiable** and `isChartUniv_of_isChartLocusFibre`,\
+  \ though sorry-free, can never fire.\nSee `not_isChartLocusFibre_of_not_injective`\
+  \ for the guard instantiated here, and inbox\n`I-0874`.  A lane must decide that\
+  \ fork before attacking `exists_factor`.\n\nModulo that retraction, what a lane\
+  \ owes is:\n\n* `r`: the divisor family over the locus whose class is the given\
+  \ one.  This is the\n  classifier `divRepClassifyZar` applied to the canonical-section\
+  \ family, i.e. CHART-U(c)'s\n  construction;\n* `sq`: that its chart value *is*\
+  \ the given class, which is the classifier's characterising\n  property;\n* `exists_factor`:\
   \ that two points with the same class agree, i.e. the **relative form of\n  DAT-C\
   \ GAP-2** (`Scheme.CurveDivisor.eq_of_picClass_eq_of_h0_one` in families).\n\nStated\
   \ as a `Prop` over an arbitrary presenting datum rather than as a structure carrying\
@@ -21,7 +33,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.IsChartLocusFibre
 type: lean
-updated: '2026-07-29T15:31:47'
+updated: '2026-07-29T20:00:06'
 ---
 def IsChartLocusFibre {D : Over (Spec (.of k))} (rep : (divFunctor C π n).RepresentableBy D)
     (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
