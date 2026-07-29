@@ -251,6 +251,79 @@ theorem map_divisorWindowGrOfQuot (d : (relCurve C R).LocalEquations)
   exact windowBaseChange_windowBaseChange (Localization.Away h) (Localization.Away u)
     (divisorWindow d ha1)
 
+set_option maxHeartbeats 800000 in
+-- The quotient equivalence unfolds the window through the section-ring algebra tower; same
+-- elaboration profile as the chart-typed `divFamWindowGrQuotEquiv`.
+/-- The quotient of the packaged window point is the base change of the `R`-level quotient —
+`divFamWindowGrQuotEquiv` (`Picard/DivSchemeFrameCover.lean:161`) with no carrier: it was
+already a statement about the submodule alone. -/
+noncomputable def divisorWindowGrOfQuotEquiv (d : (relCurve C R).LocalEquations)
+    (R' : Type u) [CommRing R'] [Algebra k R'] [Algebra R R'] [IsScalarTower k R R']
+    [Module.Finite R ((R ⊗[k]
+      ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤)) ⧸ divisorWindow d ha1)]
+    [Module.Projective R ((R ⊗[k]
+      ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤)) ⧸ divisorWindow d ha1)]
+    (hrank : ∀ p : PrimeSpectrum R, Module.rankAtStalk ((R ⊗[k]
+      ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤)) ⧸ divisorWindow d ha1) p = g) :
+    ((R' ⊗[k] ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤)) ⧸
+        (divisorWindowGrOfQuot g a ha1 d R' hrank).toSubmodule) ≃ₗ[R']
+      R' ⊗[R] ((R ⊗[k]
+        ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤)) ⧸ divisorWindow d ha1) :=
+  (Submodule.quotEquivOfEq _ _
+      (windowBaseChange_eq_ker_baseChangeMkQ R' (divisorWindow d ha1))).trans
+    (Module.Grassmannian.baseChangeMkQEquiv (divisorWindow d ha1))
+
+set_option maxHeartbeats 800000 in
+-- Instantiates the free-quotient/matrix kit at the window types; elaboration cost, as for the
+-- chart-typed `exists_component_matrix` this replaces.
+/-- **One window component, presented over the free locus — carrier-free.**  The analogue of
+the private `exists_component_matrix` (`Picard/DivSchemeFrameCover.lean:238`) with the `DivFam`
+hypothesis replaced by the three window-quotient facts.
+
+This is the atom the frame cover is built from, and its proof is the chart-typed one verbatim:
+freeness transports to the coordinate point, `exists_matrixPoint_eq_of_free` presents it, and
+`exists_det_submatrix_notMem_of_mul_eq_one` selects a frame minor off the prime.  Nothing in it
+mentions a cover or a chart typing, which is the point. -/
+theorem exists_component_matrix_of_windowQuot {r : ℕ}
+    (b : Module.Basis (Fin r) k
+      ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤))
+    (d : (relCurve C R).LocalEquations)
+    [Module.Finite R ((R ⊗[k]
+      ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤)) ⧸ divisorWindow d ha1)]
+    [Module.Projective R ((R ⊗[k]
+      ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤)) ⧸ divisorWindow d ha1)]
+    (hrank : ∀ p : PrimeSpectrum R, Module.rankAtStalk ((R ⊗[k]
+      ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤)) ⧸ divisorWindow d ha1) p = g)
+    (h : R) (pl : PrimeSpectrum (Localization.Away h))
+    (hfree : Module.Free (Localization.Away h) (Localization.Away h ⊗[R] ((R ⊗[k]
+      ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤)) ⧸ divisorWindow d ha1))) :
+    ∃ (X : Matrix (Fin g) (Fin r) (Localization.Away h))
+      (hX : Function.Surjective (matrixProj k g r (Localization.Away h) X))
+      (I : Finset (Fin r)) (hI : I.card = g),
+      (frameMinor k g r (Localization.Away h) X I hI).det ∉ pl.asIdeal ∧
+      matrixPoint k g r (Localization.Away h) X hX
+        = congrAmbient b.equivFun
+            (divisorWindowGrOfQuot g a ha1 d (Localization.Away h) hrank) := by
+  haveI : Nontrivial (Localization.Away h) := by
+    rcases subsingleton_or_nontrivial (Localization.Away h) with hs | hn
+    · exact absurd (pl.asIdeal.eq_top_iff_one.mpr
+        (by rw [Subsingleton.elim (1 : Localization.Away h) 0]; exact zero_mem _))
+        pl.isPrime.ne_top
+    · exact hn
+  have hfreeP : Module.Free (Localization.Away h)
+      ((Localization.Away h ⊗[k]
+        ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤)) ⧸
+        (divisorWindowGrOfQuot g a ha1 d (Localization.Away h) hrank).toSubmodule) :=
+    haveI := hfree
+    Module.Free.of_equiv
+      (divisorWindowGrOfQuotEquiv g a ha1 d (Localization.Away h) hrank).symm
+  obtain ⟨X, hX, hXeq⟩ := exists_matrixPoint_eq_of_free
+    (congrAmbient b.equivFun (divisorWindowGrOfQuot g a ha1 d (Localization.Away h) hrank))
+    (free_quotient_congrAmbient b.equivFun _ hfreeP)
+  obtain ⟨Y, hY⟩ := exists_mul_eq_one_of_matrixProj_surjective k g r _ X hX
+  obtain ⟨I, hI, hdet⟩ := exists_det_submatrix_notMem_of_mul_eq_one pl.asIdeal X Y hY
+  exact ⟨X, hX, I, hI, hdet, hXeq⟩
+
 end WindowLayer
 
 end Curve
