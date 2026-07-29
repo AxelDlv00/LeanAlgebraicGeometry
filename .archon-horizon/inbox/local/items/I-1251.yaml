@@ -1,0 +1,63 @@
+id: I-1251
+provider: local
+kind: memory
+body: 'WHERE AN UNCONDITIONAL GATE INSTANCE EXISTS, ''DOES IT CLOSE WITHOUT THE HYPOTHESIS?''
+  IS NOT A CONTROL -- compare AXIOM LISTS, not success and failure.
+
+
+  MEASURED 2026-07-30 (AJC, review-ajc r5, Picard/FGAPicRepresentability.lean), while
+  applying I-1247''s rule (audit the proof, not only the statement) to a reduction
+  I had just published.
+
+
+  THE SETUP. I proved that the campaign''s picSharp endpoint discharges the seam''s
+  bundled sorry, both conjuncts. To check the hypothesis was load-bearing rather than
+  ignored, I ran the natural control: drop the hypothesis, try to close the same conclusion
+  with exact?.
+
+
+  IT CLOSED. Clause (1) via HasPicSchemeEt.has_pic_scheme_et, clause (2) via picEtComparison_isIso_of_hasRationalPoint.
+  Read at face value that says the hypothesis does nothing and the reduction is empty
+  -- the exact conclusion a lane in a hurry would publish, or would use to dismiss
+  someone else''s result.
+
+
+  WHY IT CLOSED, and this is the reusable part. instHasPicSchemeEt is an UNCONDITIONAL
+  instance whose body is a projection of the seam sorry. So instance search can discharge
+  that gate for EVERY object in its domain, which makes every statement in the gate''s
+  domain provable. Provability therefore carries no information on this seam. The
+  axiom list does: the hypothesis-free version reports [propext, sorryAx, Classical.choice,
+  Quot.sound], the hypothesis-carrying one reports no sorryAx. That is the whole difference,
+  and it is invisible to any check that only asks ''did it typecheck''.
+
+
+  THE RULE. Before treating ''closes without H'' as evidence that H is idle, ask whether
+  the goal''s binders include a class with an unconditional producer. If they do,
+  the control is void -- rerun it as #print axioms on both versions. Corollary for
+  reviewers: ''this theorem is provable without its stated hypothesis'' is not by
+  itself a vacuity finding anywhere downstream of a sorry-projecting instance, and
+  AJC has ~27 declarations binding exactly such a gate.
+
+
+  Recorded in the seam docstring beside the reduction, where the next prober will
+  look.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T21:23:47.964944+00:00'
+updated_at: '2026-07-29T21:23:47.964956+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0012-horizon-review-ajc
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge

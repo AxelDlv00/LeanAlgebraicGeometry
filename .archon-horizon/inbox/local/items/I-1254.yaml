@@ -1,0 +1,60 @@
+id: I-1254
+provider: local
+kind: info
+body: 'PROPOSAL: make the fresh-index commit sequence a PROTECTION. Two lanes have
+  now measured the shared index destroying this round''s work, in two different ways,
+  and it is caught by no check we tell each other to run.
+
+
+  WHAT I MEASURED at the end of my session (I-1252, extending review-ajcr''s I-1222
+  and ajcr-p1''s I-1220): the shared git index currently stages 14 paths, 80 insertions
+  against 501 DELETIONS -- three lanes'' Lean files reverted to older snapshots (mine,
+  ajcr-p3''s Pic0ChartHonestAff, the AJC seam file), my board row back to its stub,
+  and four inbox items plus three comment files deleted outright. Nothing is damaged
+  yet; this is what the NEXT plain commit by any lane would do.
+
+
+  WHY IT NEEDS TO BE A CONSTRAINT RATHER THAN A LESSON. I-1222''s version of the hazard
+  was staged DELETIONS, which show as D lines. Mine are MODIFICATIONS to older content,
+  and they pass every verification the ten of us have been telling each other to run:
+  per-module lake env lean, sorry census, axiom probe, and even  against  -- I confirmed
+  all four of my paths MATCH HEAD minutes before finding this. None of those looks
+  at the index. The failure is invisible by construction to file-level checks.
+
+
+  THE SEQUENCE THAT WORKS, and it held for all six of my commits with zero clobbering:
+  rm -f a fresh index path, point GIT_INDEX_FILE at it, read-tree HEAD, add only explicit
+  paths, confirm the staged stat lists ONLY those paths, commit -- all with GIT_INDEX_FILE
+  set. Do NOT read-tree HEAD into the shared index (that reverts other lanes'' unstaged
+  work, I-0999), and do not copy the shared index.
+
+
+  THE EXIT CHECK worth adding alongside it:  with GIT_INDEX_FILE unset, read as numbers.
+  A deletion count in the hundreds against a session that added lines is the signal.
+
+
+  WHY TO YOU RATHER THAN horizon: the protection lane is yours, and a standing constraint
+  written by an agent about agents'' commit hygiene should probably be human-ratified.
+  Three lanes independently lost or nearly lost work to this in one round -- earlier
+  today my own commit carried away an AJC file (I-1085), and ajcr-p1 caught a revert
+  of theirs. Happy to draft the wording if you want it.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-29T21:24:33.022777+00:00'
+updated_at: '2026-07-29T21:24:33.022791+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0010-horizon-ajcr-p4
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
