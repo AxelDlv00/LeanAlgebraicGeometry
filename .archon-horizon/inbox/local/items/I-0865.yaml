@@ -1,0 +1,69 @@
+id: I-0865
+provider: local
+kind: issue
+body: '90 instance-binder sites quantify over the UNINHABITED HasPicScheme; the etale
+  replacement has 15 — the honest state of the AJC seam
+
+
+  MEASURED 2026-07-29 by review-ajc (grep of instance binders, docstring mentions
+  excluded).
+
+
+  HasPicScheme (FGAPicRepresentability.lean:265) HAS ZERO INSTANCES. Its only producer
+  is the theorem picSchemeOfHasRationalPoint (:503), deliberately not an instance,
+  requiring [HasRationalPoint C]. And HasRationalPoint has no unconditional producer
+  either: hasRationalPoint_of_curve was FALSE and is deleted (I-0491 clause 1); what
+  remains are hasRationalPoint_of_isAlgClosed (AlbaneseUP.lean:289, needs IsAlgClosed)
+  and hasRationalPoint_baseChangeField (CurveBaseChange.lean:285, needs the hypothesis
+  already). So the class is DOUBLY unreachable for a general curve, and everything
+  binding it is conditional on an assumption the project cannot presently supply.
+
+
+  THE 90 BINDER SITES, per file: Pic0AbelianVariety 35, IdentityComponent 14, FGAPicRepresentability
+  14, Jacobian 7, Pic0Dimension 6, GroupSchemeHomogeneity 6, AlbaneseUP 4, HomogeneityOrbitCollapse
+  2, Pic0Et 1, Pic0DualNumberCocycle 1.
+
+
+  THE ETALE SIDE HAS NOT REPLACED IT: [HasPicSchemeEt C] appears at 15 sites in 2
+  files only (Pic0Et 10, FGAPicRepresentability 5). Ratio 90:15. HasPicSchemeEt IS
+  inhabited — instHasPicSchemeEt (:366) is unconditional — but only because it is
+  ⟨(fgaPicardRepresentability C).1⟩, a projection of the bare sorry at :347. So the
+  inhabited side is sorry-reachable by construction, and the sorry-free side is uninhabited.
+  That pair of facts is the seam.
+
+
+  WHAT IT MEANS CONCRETELY, since two of the four headline leaves are on the dead
+  side: smoothOfRelativeDimension_genus_pic0 (Jacobian.lean:394) and isAlbanese_pic0
+  (:519) both bind [Scheme.HasPicScheme C] and [PicSchemeLocallyOfFiniteType C]. Their
+  etale twins (:427, :548) do not, and are the ones that count toward the headline.
+  The Pic0AbelianVariety tangent-space chain — 35 sites, the largest block — is entirely
+  on the dead side; restating it against picEt is the single largest piece of debt
+  in the project and needs the comparison isomorphism, available only under a section.
+
+
+  NOT A DEFECT TO FIX BY PROVING SOMETHING. Recorded on the board (AJC.picrep summary)
+  and in the blueprint (def:inst_pic_sharp_representable now says the hypothesis is
+  uninhabited). New work must be stated against HasPicSchemeEt / picEt; all four ajc-p*
+  lanes were told so (I-0850..I-0853).'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T11:11:43.595909+00:00'
+updated_at: '2026-07-29T11:11:43.595924+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0002-horizon-review-ajc
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
