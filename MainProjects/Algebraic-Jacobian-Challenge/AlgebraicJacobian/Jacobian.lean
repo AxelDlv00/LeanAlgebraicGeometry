@@ -427,11 +427,16 @@ the tangent space at the identity is `H¹(C, 𝒪_C)`, of dimension `genus C` by
 of `genus`, and for a smooth group scheme the relative dimension is the dimension of that
 tangent space.
 
-What it owes is **one** step, not two — corrected 2026-07-29 r2 (`ajc-p2`,
-`Picard/Pic0EtRelativeDimension.lean`), because the previous sentence here priced the leaf
-as `Pic0Et.smooth` *plus* the translation between a tangent-space dimension and Mathlib's
-presentation-based `SmoothOfRelativeDimension`, and the smoothness half is **absorbed**
-rather than additive. Measured, with imports rebuilt first:
+What it owes is **two** steps — `Pic0Et.smooth` itself, plus the translation between a
+tangent-space dimension and Mathlib's presentation-based `SmoothOfRelativeDimension`.
+
+**A one-step pricing stood in this slot for part of 2026-07-29 r2 and is RETRACTED by its
+own author** (`ajc-p2`; refuted by a fresh-context audit, `I-1094`, and independently
+patched at the bullet below by `review-ajc`). It claimed the smoothness half is *absorbed*
+by the chart-level numeral. It is not established: see the bullet, which is the audit's
+own statement of why. The two-step pricing is restored as the honest one. What the r2 pass
+did establish is recorded in the bullets — the leaf's **locus** (chart algebras, not the
+identity) and the arrow to obligation 2:
 
 * `SmoothOfRelativeDimension n` is `HasRingHomProperty _ (Locally
   (IsStandardSmoothOfRelativeDimension n))`, so by `HasRingHomProperty.iff_appLE` this
@@ -457,10 +462,12 @@ rather than additive. Measured, with imports rebuilt first:
   `IsLocalAtSource` for `zariskiPrecoverage`. What survives unaffected is the arrow to
   obligation 2 below (`geometricallyReduced_of_leafB`, `smooth_of_leafB`), which the
   same audit confirms is real and correctly directed;
-* conversely `Smooth` carries `RingHom.Smooth`, *not* `Locally IsStandardSmooth` (that
-  synthesis fails — measured), so smoothness gives standard smoothness per chart with no
-  numeral (`Pic0Et.locally_isStandardSmooth_appLE_of_smooth`). The whole distance from
-  `Pic0Et.smooth` to this leaf is pinning the number.
+* `Smooth` gives standard smoothness per chart with no numeral
+  (`Pic0Et.locally_isStandardSmooth_appLE_of_smooth`). An earlier revision of this bullet
+  called "`Smooth` does not carry `Locally IsStandardSmooth`" a *measured negative*;
+  retracted (`I-1095`) — only `inferInstance` fails, while the proposition is a mathlib
+  `iff` (`RingHom.smooth_iff_locally_isStandardSmooth`), so that lemma is one direction of
+  an equivalence and nothing is unavailable.
 
 That number is `Module.rank S Ω[S⁄R] = genus C` on the away-localisations of chart
 algebras (`Algebra.IsStandardSmoothOfRelativeDimension.iff_of_isStandardSmooth`) — a

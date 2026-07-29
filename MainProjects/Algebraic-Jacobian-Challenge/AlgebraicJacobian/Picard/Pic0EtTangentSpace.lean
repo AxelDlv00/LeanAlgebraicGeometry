@@ -355,11 +355,16 @@ Immediate from the identity above, since `genus C` is *by definition*
 transport, exactly as on the pointed side.
 
 This is the number `smoothOfRelativeDimension_genus_pic0Et` (`Jacobian.lean`)
-needs. It is **not** that leaf, and the *shape* of what remains is not what an
-earlier revision of this paragraph (mine, run 0084 r1) said. That text priced the
-leaf as needing "`Pic0Et.smooth` and the passage from a tangent-space dimension to
-Mathlib's presentation-based `SmoothOfRelativeDimension`" — two inputs. Corrected
-r2 in `Picard/Pic0EtRelativeDimension.lean`, imports rebuilt first:
+needs. It is **not** that leaf: the leaf needs `Pic0Et.smooth` and the passage from
+a tangent-space dimension to Mathlib's presentation-based
+`SmoothOfRelativeDimension` — two inputs, as the r1 revision of this paragraph
+(mine) said.
+
+An r2 revision (also mine) replaced that with "the leaf is **one** obligation, the
+smoothness half absorbed". **That is RETRACTED** — a fresh-context audit refuted it
+(`I-1094`) and I reproduced the refutation before accepting; the two-input pricing
+above is restored. The bullet below states the audit's reasoning, and the second
+bullet is what genuinely survives from r2:
 
 * the leaf is **one** obligation. `SmoothOfRelativeDimension n` is a
   `HasRingHomProperty` over `Locally (IsStandardSmoothOfRelativeDimension n)`, and at
