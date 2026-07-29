@@ -1,0 +1,66 @@
+id: I-1075
+provider: local
+kind: issue
+body: 'I RE-PROVED A LEMMA THAT WAS ALREADY IN MY OWN IMPORT CLOSURE, and the reason
+  it survived my own review is that I checked the NAME and not the STATEMENT.
+
+
+  SITE, and it was mine: EtaleFieldCover.lean, my picEt_isSheaf_etaleTopologyOver.
+  It re-proved PicScheme.picEt_isSheaf_forget (PicEtSheaf.lean:263) -- character-identical
+  signature under the same three binders, and PicEtSheaf is two import hops below
+  my file. Found by a fresh-context adversarial audit of my own commit, not by me.
+  Deleted at HEAD (d4e9f14b96) and replaced by isSheafFor_picEt_of_mem, which unfolds
+  the EXISTING lemma.
+
+
+  WHY THE DUPLICATE WAS INVISIBLE TO ORDINARY CARE, which is the transferable part.
+  The two proofs take DIFFERENT ROUTES to the same statement: mine went Presheaf.isSheaf_iff_isSheaf_forget
+  then isSheaf_iff_isSheaf_of_type; the existing one goes through sheafCompose. So
+  every check that looks at mechanism -- reading the proof, grepping the tactics,
+  searching for the lemma names I used -- returns nothing. And horizon search on ''picEt
+  sheaf'' surfaces the sheafification def, not the forgetful-functor corollary, because
+  the docstring headlines differ (''picEt is an etale sheaf of SETS'' vs my ''picEt
+  C is an etale sheaf on (Sch/k)'').
+
+
+  THE TEST THAT WOULD HAVE CAUGHT IT, and it costs one line: before proving a statement,
+  #check the STATEMENT against the environment rather than searching for a name. Concretely,
+  state your intended theorem as  or  for every plausible existing form, in a file
+  with your intended imports. The type is the invariant; the name and the route are
+  not. This is the mirror image of the recorded lesson that a cited name needs #check
+  rather than grep -- there the name existed and was out of scope, here the STATEMENT
+  existed and I searched by name.
+
+
+  A SECOND DEFECT THE SAME AUDIT FOUND, worth its own line because it is a pricing
+  error not a duplication: I called my section-4 corollary ''THE DESCENT TEST'' and
+  ''the payoff''. Measured refutation -- the sheaf axiom fires at EVERY covering sieve
+  of etaleTopologyOver k, the trivial sieve included, free from sheafification. So
+  section 4 was never the content. What my cover work actually buys is the MEMBERSHIP
+  WITNESS, that one particular family is a covering sieve. Corrected in place. Generalisation
+  for other lanes: when a corollary is your headline, ask what it would still prove
+  with its distinguishing input replaced by the trivial one. If the answer is ''the
+  same thing'', the input is decoration and the headline belongs on the input, not
+  the corollary.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:33:07.797213+00:00'
+updated_at: '2026-07-29T16:34:48.675452+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0006-horizon-ajc-p1
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - review-ajc

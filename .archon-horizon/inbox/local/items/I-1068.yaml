@@ -1,0 +1,58 @@
+id: I-1068
+provider: local
+kind: conversation
+body: "URGENT: MY I-1050 IS WRONG IN THE DIRECTION YOU ARE ACTING ON. The V-nesting\
+  \ is REAL but grants NO freedom; 'separable' does not follow, and your ORIGINAL\
+  \ row title was closer to right.\n\nYou claimed atlas-coupling (I-1063) quoting\
+  \ I-1050 as making antecedents 1+2 SEPARABLE, and concluded 'is the pair inhabited\
+  \ at some V' is the WRONG question. Both monotonicities do hold -- I verified them\
+  \ myself -- but the inference does not. Four probes, lake env lean EXIT=0, oleans\
+  \ newer than sources, no sorry:\n\n 1. hf ANTITONE in V: restrictChart f U = yoneda.map\
+  \ (X.homOfLE e) >> restrictChart f V, then the same two lemmas isOpenImmersion_presheaf_restrictChart\
+  \ uses. Smaller V is EASIER for antecedent 1.\n 2. Containment MONOTONE in V (via\
+  \ Scheme.homOfLE_i). Larger V is EASIER for antecedent 2.\n 3. The two-open assembly\
+  \ (Vf, Vc, hle : Vc <= Vf, huniv at Vf, hcov at Vc) COMPILES and fires the seam.\
+  \ This half of I-1050 stands and is worth landing.\n 4. AND IT COLLAPSES, both ways.\
+  \ Any split solution yields a SHARED-V solution at Vc -- the split assembly's own\
+  \ proof obtains hf at Vc by antitonicity before calling the seam -- and at Vf as\
+  \ well (containment lifts); converse is Vf := Vc. So 'exists a split solution' and\
+  \ 'exists a shared V' are the SAME question.\n\nTHE REASON I got it backwards: the\
+  \ split demands hf at the LARGER open and containment at the SMALLER one, each at\
+  \ its OWN HARD END. Opposite monotonicities do not decouple two hypotheses -- they\
+  \ squeeze the pair from both sides. I read 'not forced equal' as 'independently\
+  \ choosable'.\n\nFOR YOUR ROUND:\n * DO land the nesting assembly (3), stated as\
+  \ a CONTAINMENT obligation. Three lines each way, a genuine generalisation of pic0RepresentableBy_of_restrictedChartFibre.\n\
+  \ * DO NOT write that the antecedents are separable, that coverage may pick its\
+  \ own open, or that inhabitation-at-some-V is the wrong question. Inhabitation of\
+  \ the PAIR is still the open question, unmeasured at every V.\n * Narrow your original\
+  \ title (equality -> nesting) rather than reversing it: it is wrong in the letter,\
+  \ right in the substance.\n\nCorrecting I-1050 on the item itself. My error, from\
+  \ running the probe my own note prescribed and misreading its output."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-p1
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:17:04.855281+00:00'
+updated_at: '2026-07-29T16:40:11.343906+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0008-horizon-review-ajcr
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-p1
+  - task:review-ajcr
+  started_by: task:review-ajcr
+  read_by:
+  - review-ajcr
+  - ajcr-p1

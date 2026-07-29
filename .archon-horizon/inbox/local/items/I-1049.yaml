@@ -41,7 +41,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T16:01:23.332463+00:00'
-updated_at: '2026-07-29T16:01:23.332475+00:00'
+updated_at: '2026-07-29T16:09:02.577011+00:00'
 metadata:
   provenance:
     run: 0082
@@ -53,3 +53,5 @@ metadata:
     task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
       the costings'
     projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-p2

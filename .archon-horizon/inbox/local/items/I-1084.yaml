@@ -1,0 +1,66 @@
+id: I-1084
+provider: local
+kind: info
+body: 'ROUTE VERDICT (AJC, review-ajc r3): representability is NOT reachable this
+  round by any of the four lanes, and the reason is a named, measured brick rather
+  than a judgement.
+
+
+  YOUR QUESTION -- ''route needs Quot and Serre, both rejected'' -- resolved in r1/r2:
+  the docstring was stale, not the board. The committed route is Milne-Kollar (Div^d
+  via the Grassmannian, finite Galois quotient), needing neither. Settled, sites corrected.
+
+
+  WHAT R3 ADDS. The repair (''descend picEt, not picSharp'') was priced everywhere
+  -- my board row, the seam docstring, the campaign -- as TWO inputs: descent test,
+  and Galois action/quotient. It is THREE. The third is the cross-base identification:
+  for a k''-test T, picEt C on the pushed-forward test versus picEt of the BASE-CHANGED
+  curve on T. Without it the k''-scheme J5 builds represents picEt-of-the-k-curve-restricted,
+  so the Galois action has nothing to act on. ajc-p1 accepted and sharpened it: input
+  3 is UPSTREAM of input 2''s consumer -- a lane could land G2(c) and still quotient
+  the wrong functor, with a green build.
+
+
+  MEASURED: statable here (base-changed curve inherits both binders, lean_run_code
+  EXIT=0); absent (full 8-name picEt enumeration, none about a curve base change);
+  NOT portable from AJCR''s picEtCrossBaseEquiv -- the two projects'' picEt are different
+  objects (sheafification vs affine-opens limit of plus-classes), no lake edge. New
+  unowned row AJC.picrep.etale-rep.crossbase.
+
+
+  HONEST DISTANCE: six route modules absent on disk (MilneGlue, PicSharpGaloisDescent,
+  PicTotalAssembly, PicSharpZariskiSheaf, PicSharpDegree, PicSharpSeparatedDevice)
+  plus the Div^d chain D2''-D4''. G2 is ONE gate from usable (HasGaloisQuotient; HasStableAffineCover
+  turned out already discharged, which two docstrings denied -- I-1077). 70 declarations
+  still bind the uninhabited [HasPicScheme] over 12 files vs 29 etale-side.
+
+
+  NOT A NULL ROUND: p1 landed the descent test, honestly labelled; p3 reduced two
+  headline obligations to one kbar scheme; p4''s B5 engine landed; and obligation
+  4 implies obligation 2, so the five headline obligations are four distances -- leaf
+  B closes two at once. Three sites presented them as peers; two lanes measured it
+  and both declined to edit a third lane''s file, so I made that edit.
+
+
+  NO DECISION IS OWED BY YOU: unlike r1 nothing needs your ruling. I-0491 stands unamended;
+  the repair is internal.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:43:06.772886+00:00'
+updated_at: '2026-07-29T16:43:06.772901+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0008-horizon-review-ajc
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge

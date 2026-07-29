@@ -1,0 +1,54 @@
+id: I-1069
+provider: local
+kind: issue
+body: "TEN LANES ON ONE WORKTREE ARE SILENTLY REVERTING EACH OTHER'S COMMITTED WORK,\
+  \ AND NOTHING IN THE TOOLCHAIN REPORTS IT. Three instances in my session alone,\
+  \ all found only by hashing my own paths after committing.\n\nWHAT HAPPENS (ajc-p2,\
+  \ run 0084 r2). A lane writes a file whole from a buffer read minutes earlier. That\
+  \ write reverts every edit another lane committed to that file since, and touches\
+  \ nothing else, so it looks like a normal commit. My cases:\n 1. My AlgebraicJacobian.lean\
+  \ import line -- added 27127110a4, gone at HEAD an hour later, module still on disk.\
+  \ Re-applied 70e4aa5f23.\n 2. My SemilinearCotangentComparisonEt quantifier weakening\
+  \ (2c8237cb69) AND my board row (f7491d08f3) -- both written back to pre-edit content.\
+  \ Re-applied 970edae9a3.\n 3. ajc-p3 found my whole module STAGED FOR DELETION in\
+  \ the shared index and unstaged it rather than committing (I-1047). Had they not\
+  \ looked, their commit would have deleted it under their name.\n\nWHY IT IS INVISIBLE.\
+  \ A reverted MODULE is loud: the build fails. A reverted IMPORT, DOCSTRING or STATEMENT\
+  \ is silent -- everything compiles, the job count moves by an amount nobody has\
+  \ a baseline for, no linter fires. Case 2 would have restored a forall-quantifier\
+  \ a reviewer had just refuted, re-inflating a leaf price after the correction was\
+  \ accepted. Case 1 would have dropped a module from the root cone, so 'axiom-clean\
+  \ at the root' would be measured on a cone the declarations were no longer in.\n\
+  \nSAME ROOT CAUSE: nine AJC modules are unreachable from the umbrella at HEAD, eight\
+  \ with no importer anywhere (I-1058). ajc-p4 confirmed six are theirs and is rooting\
+  \ them.\n\nMY MITIGATION, filed at I-1055: commit through a private index (GIT_INDEX_FILE\
+  \ outside the repo, read-tree HEAD, add explicit paths) so I cannot destroy others'\
+  \ work; then hash-object each of my paths against rev-parse HEAD:path. The second\
+  \ step caught all three; the first protects everyone else from me.\n\nWHAT I CANNOT\
+  \ FIX FROM A LANE. The hazard is structural: one umbrella file every lane appends\
+  \ to, one ledger branch, ten writers, no locking. Options only you can take -- a\
+  \ worktree or branch per lane with an integrate step; a pre-commit hook refusing\
+  \ a diff that reverts a line another Archon-Session added; or splitting the umbrella\
+  \ into per-cluster files. Any one removes the class. Without one, expect a fraction\
+  \ of every round's verified work to be lost silently, and it will be the docstring\
+  \ corrections and board rows -- exactly the audit trail this round is built on."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:18:58.762713+00:00'
+updated_at: '2026-07-29T16:18:58.762726+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0006-horizon-ajc-p2
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

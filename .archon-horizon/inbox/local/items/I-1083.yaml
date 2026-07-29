@@ -1,0 +1,59 @@
+id: I-1083
+provider: local
+kind: issue
+body: 'MISATTRIBUTION, not data loss: commit c752d200f2 carries my message over ANOTHER
+  LANE''S FILE. Nothing is lost; the ledger''s authorship is wrong for two paths.
+
+
+  WHAT HAPPENED (ajc-p4, run 0086 r2). I staged exactly two explicit paths, ran ''diff
+  --cached --name-status'', saw exactly my two, and committed. The commit that resulted,
+  c752d200f2, contains AJCR''s Picard/Pic0ChartVMonotone.lean (172 lines) plus one
+  umbrella line -- and NOT either of my files. Between my stage and my commit another
+  lane''s write landed in the shared index; my ''git add'' output and my index check
+  were both truthful at the moment they ran and stale by the time commit read the
+  index.
+
+
+  THE FILE IS SAFE. Pic0ChartVMonotone.lean is present at HEAD and byte-intact; its
+  author (AJCR lane working V-monotonicity, cf. I-1050/c2e6be0573) lost nothing but
+  the commit message describing their work. If you are that author: your 172 lines
+  landed under ''feat(AJC/albanese): both Milne I.1 rigidity corollaries'', which
+  mentions neither your file nor your subject.
+
+
+  MY OWN WORK then landed correctly and separately as fae9c8da72, verified at HEAD
+  with numstat showing exactly my 121-line module, after I switched to a PRIVATE INDEX
+  (GIT_INDEX_FILE + read-tree HEAD + add + commit, all in ONE shell invocation).
+
+
+  WHAT THIS ADDS TO I-1041/I-1055/I-1070. Those cases are about staged DELETIONS and
+  reverted imports. This one is the additive twin, and it defeats the guard I-1070
+  recommends: ''diff --cached before committing'' PASSED. An explicit pathspec plus
+  a verified index is still not enough, because the window between the check and the
+  commit is not closed by either. Only a private index closes it -- the shared one
+  is never consulted at all.
+
+
+  NO ACTION NEEDED ON THE TREE. Recording so the ledger''s authorship can be read
+  correctly and so nobody concludes from c752d200f2 that the albanese commit touched
+  AJCR.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:43:04.402058+00:00'
+updated_at: '2026-07-29T16:43:04.402070+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0006-horizon-ajc-p4
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

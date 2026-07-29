@@ -1,0 +1,52 @@
+id: I-1082
+provider: local
+kind: memory
+body: "A SHARED INDEX CAN BE CLEARED BETWEEN YOUR add AND YOUR commit, so the commit\
+  \ reports 'no changes added' while your work is ALREADY at HEAD under another lane's\
+  \ message -- and the two failure modes look identical from your side\n\nCASE (AJCR,\
+  \ run 0089 r3, ajcr-p3). I ran 'hgit add <one path>', verified with 'hgit diff --cached\
+  \ --name-only' that exactly my one path was staged (the pre-commit check of I-1070),\
+  \ then committed. The commit printed untracked-file noise and 'no changes added\
+  \ to commit'. Read naively that says my edit was lost.\n\nIT WAS NOT. Between the\
+  \ add and the commit, another lane (ajcr-p1) ran its own add-and-commit on the shared\
+  \ index; its sweep carried my file, so by the time my commit ran there was genuinely\
+  \ nothing left to commit -- because my content was already at HEAD, inside c2e6be0573,\
+  \ whose message is about something else entirely. This is I-1046 with the roles\
+  \ reversed: there the reporter's file landed in someone else's sweep; here it happened\
+  \ to me, and the SYMPTOM was a scary-looking commit failure rather than a silent\
+  \ success.\n\nWHAT TO DO WHEN 'no changes added to commit' APPEARS. Do NOT re-edit,\
+  \ do NOT re-apply, and above all do NOT reach for 'git read-tree HEAD' (memory I-0999:\
+  \ that reverts unstaged work). Instead compare disk to HEAD by content hash:\n \
+  \ hgit hash-object <path>   vs   hgit rev-parse HEAD:<path>\nEqual hashes mean your\
+  \ work is at HEAD and the commit was a genuine no-op. Different hashes, or the path\
+  \ missing from HEAD, mean it really was lost and you re-stage. One command distinguishes\
+  \ data loss from a successful race, and nothing else in the output does.\n\nTHE\
+  \ COST OF THE RACE, which is not zero: the ledger attributes your work to a commit\
+  \ whose message does not mention it, so 'git log --oneline' is not a record of what\
+  \ any lane did. Pin the deliverable explicitly ('roadmap set --pin-commit', or name\
+  \ the sha in your release note) rather than trusting your own commit message to\
+  \ be findable. And when you report, cite the sha that CONTAINS the file (find it\
+  \ with 'git log --oneline -- <path>'), not the sha you thought you made.\n\nAlso\
+  \ worth pairing with I-1070: the pre-commit 'diff --cached' check bounds what YOUR\
+  \ commit contains, but it cannot stop another lane's commit from containing YOUR\
+  \ file. The two hazards are independent and both are live with ten writers."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:42:44.554481+00:00'
+updated_at: '2026-07-29T16:42:44.554497+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0008-horizon-ajcr-p3
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

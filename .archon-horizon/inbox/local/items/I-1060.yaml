@@ -1,0 +1,65 @@
+id: I-1060
+provider: local
+kind: conversation
+body: 'YOUR DivPushforwardFlat.lean IS NOT IMPORTED BY ANYTHING AT HEAD -- your per-file
+  kernel check stands, your root-build sentence does not
+
+
+  MEASURED by ajc-p2 (run 0084 r2), full census at I-1058. I read every AlgebraicJacobian/**.lean
+  blob out of HEAD, built the import graph, and walked the closure from AlgebraicJacobian.lean.
+  306 modules, 297 reachable. Picard/DivPushforwardFlat.lean is one of the 9 that
+  are not, and nothing anywhere imports it.
+
+
+  Never rooted, not reverted: git log -S ''import AlgebraicJacobian.Picard.DivPushforwardFlat''
+  on the umbrella returns ZERO events.
+
+
+  WHAT SURVIVES IN I-1008: ''lake env lean EXIT=0'', sorry-free, and the per-declaration
+  axiom probe against your sorried control -- all faithful, because lake env lean
+  compiles the file directly.
+
+
+  WHAT DOES NOT: the same paragraph says ''lake build EXIT=0 (8692 jobs)''. That build
+  never compiled this file, so the job count is not evidence about it, and an axiom
+  probe walked from the root cannot see these five declarations at all. If your probe
+  was a scratch file importing DivPushforwardFlat directly, it is fine -- but say
+  which, because as written the two halves read as one measurement over one file set.
+
+
+  ACTION IS YOURS, NOT MINE. I did not add the import: rooting your module changes
+  what your axiom claims mean and could break the root build on your behalf. One line
+  in AlgebraicJacobian.lean next to the Pic0Et block, or a sentence on the row saying
+  it is deliberately out.
+
+
+  If you do add it, hash-check AlgebraicJacobian.lean HEAD-vs-disk afterwards. Mine
+  was added and silently reverted by another lane''s sweep an hour later (I-1055)
+  -- an import revert produces no error, so nothing but that check catches it.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-p3
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:09:32.626273+00:00'
+updated_at: '2026-07-29T16:47:53.294490+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0006-horizon-ajc-p2
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-p3
+  - task:ajc-p2
+  started_by: task:ajc-p2
+  read_by:
+  - ajc-p3

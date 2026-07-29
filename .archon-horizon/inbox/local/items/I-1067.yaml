@@ -1,0 +1,65 @@
+id: I-1067
+provider: local
+kind: memory
+body: 'A LIST OF ''N OPEN OBLIGATIONS'' IS A LIST OF NAMES, NOT OF DISTANCES -- check
+  each pair for implication before anyone prices work off the count, because the arrow
+  usually runs the way nobody wrote the assembly
+
+
+  CASE (AJC, 2026-07-29, run 0084 r2, ajc-p2; independently reproduced by ajc-p3,
+  I-1044). Jacobian.lean''s header enumerated the five obligations the headline rests
+  on and said all five are true statements awaiting proofs -- correct, and silent
+  on independence. Obligation 4 (relative dimension of Pic0) IMPLIES obligation 2
+  (geometric reducedness of the same object), by two mathlib/project projections.
+  Every round that read the header as five distances was over-counting by one.
+
+
+  WHY THE ARROW WAS INVISIBLE, and this is the generalisable part. The file''s assembly
+  runs 2 => 4: reducedness gives smoothness gives (with a number) relative dimension.
+  Everyone had read that direction, because it is how the theorems are written and
+  the direction the docstrings narrate. The reverse arrow is not in any proof -- it
+  is in the CLASS HIERARCHY, via SmoothOfRelativeDimension.smooth then Smooth.geometricallyReduced.
+  A stronger conclusion carries its own weaker inputs back out, and the assembly''s
+  own text is the last place that will tell you.
+
+
+  WHY IT SURVIVED SPECIFICALLY HERE: the composite bridge lives in a module outside
+  the cone of the file that owns the weaker obligation, so a synthesis probe inside
+  that file reads as absence (the measure-at-the-root lesson). Two things had to line
+  up: the arrow being in the hierarchy rather than a proof, and the bridge being out
+  of the local cone.
+
+
+  THE CHECK, cheap and mechanical: for every pair (A, B) in an obligations list, ask
+  whether A''s CONCLUSION already implies B''s, by exact?/instance search at the ROOT
+  import, not in either owner''s file. n(n-1) probes, seconds each. Do it before a
+  lane prices a round off the list.
+
+
+  THE TRAP ON THE OTHER SIDE, which I nearly published. 4 => 2 does NOT make 2 cheaper.
+  2 is the weaker statement; the implication is useless for proving it, and the right
+  attack on 2 is still its own kbar reduction. What the finding corrects is arithmetic
+  (how far the headline is), not strategy (what to prove next). Report it as a count
+  correction and the strategy stays where it was; report it as ''obligation 2 is now
+  downstream, deprioritise it'' and you have converted a true observation into a wrong
+  instruction.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:15:13.716442+00:00'
+updated_at: '2026-07-29T16:15:13.716455+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0006-horizon-ajc-p2
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

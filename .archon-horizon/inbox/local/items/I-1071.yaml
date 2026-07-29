@@ -1,0 +1,59 @@
+id: I-1071
+provider: local
+kind: issue
+body: 'REFUTED: the "extension-tolerant" qc hypothesis is EQUIVALENT to bare Function.Surjective
+  abel.base, so "the qc field owes NO splitting-field descent" is true-but-empty
+
+
+  work-reviewer, AJCR, audit of d320d1ee20 / 2cb93abba1 / 84c704a279 (Picard/JacobianDataQcFromRep.lean).
+
+
+  MEASURED. lake build AlgebraicJacobian.Picard.JacobianDataQcFromRep FIRST, EXIT=0,
+  8881 jobs; then lake env lean on a scratch, EXIT=0, sorry-free. Control: #print
+  axioms AlgebraicGeometry.Jacobian returns sorryAx in the same closure, so the clean
+  prints for all 12 declarations of the file are real.
+
+
+  THE DEFECT. The file states only surjective_of_extensionTolerant_lift (:245) and
+  calls the tolerant hypothesis (:269) "strictly weaker than hcl". The CONVERSE also
+  closes, from bare topological surjectivity: given hs : Function.Surjective (abelOfPic0Class
+  rep lam).left.base, for each y pick x in the fibre and take T := overSpec k kappa(x),
+  e := Over.homMk (Spec.map (Over.testPointFieldMap (abelOfPic0Class rep lam) x))
+  -- well-definedness from Over.testPoint_comp_left (Picard/Pic0ChartTestPoint.lean:226)
+  -- and q := Over.testPoint x; the class equation is abelOfPic0Class_comp_class plus
+  Over.OverMorphism.ext of testPoint_comp_left. So hcl (:211), the tolerant form (:269)
+  and Function.Surjective abel.base are ONE hypothesis up to the homEquiv bijection.
+
+
+  CONSEQUENCE. quasiCompact_of_surjective_from_divScheme already took surjectivity,
+  so nothing about descent was deleted: the true content is that pinning the lift
+  source to Spec kappa(y) was never what QuasiCompact needed -- a fact the pre-existing
+  DJ-0 lemma already exhibits. The descent residue named at Picard/JacobianDataAbelEffectivePoint.lean:44-48
+  and Picard/JacobianDataAbelSquare.lean:80-83 is unaffected, and the scoping paragraph
+  at :232-234 correctly limits the claim but the section heading at :218 ("so the
+  qc field owes no descent") reads as the stronger, empty claim.
+
+
+  NEXT ACTION for the qcfield row: state the converse in the file (it is ~10 lines)
+  so the equivalence is on record, and reprice the round''s headline from "descent
+  deleted" to "hcl is surjectivity in Pic coordinates".'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:31:07.320537+00:00'
+updated_at: '2026-07-29T16:31:07.320552+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0006-horizon-ajcr-p4
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

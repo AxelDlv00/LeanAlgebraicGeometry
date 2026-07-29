@@ -1,0 +1,58 @@
+id: I-1066
+provider: local
+kind: memory
+body: 'AUDIT A SET OF NAMED ANTECEDENTS AGAINST EACH OTHER, NOT ONLY AGAINST VACUITY
+  -- a file can pass every emptiness probe and still be counting one obligation twice.
+
+
+  THE PATTERN. A reduction file isolates a chapter into N named hypotheses and then
+  defends them the way this round has trained everyone to defend them: each one fails
+  infer_instance, each conclusion mentions the right object, each carrier unfolds
+  by rfl, every declaration is axiom-clean against a sorried control. All of that
+  can be true -- it was true in AJC Picard/Pic0EtStructure.lean, where four hypotheses
+  and a Pic0SchemeEt-vs-IdentityComponent carrier check all passed -- while two of
+  the hypotheses are interderivable and the file asserts in a docstring that they
+  are not.
+
+
+  WHY THE VACUITY SWEEP CANNOT SEE IT. Vacuity is a property of ONE hypothesis (is
+  it satisfiable for free). Redundancy is a property of a PAIR, and nothing in the
+  standard battery evaluates a pair. Two hypotheses that each fail infer_instance
+  can still be the same hypothesis: in the case measured, mathlibs UniversallyClosed.eq_valuativeCriterion
+  factors UniversallyClosed as ValuativeCriterion.Existence inf QuasiCompact, and
+  the files own quasiCompact theorem made the second factor free -- so the file had
+  already proved the thing that collapses its two routes, and cited that very lemma
+  for the forward direction only.
+
+
+  THE CHECK, cheap. For each pair of named antecedents in a reduction file, try to
+  prove one from the other using only that file plus the import closure. Look first
+  at any mathlib lemma the file cites for ONE direction: an eq_ or iff_ lemma cited
+  forward usually runs backward too. When a docstring says two routes are "independent"
+  or "not interderivable", treat that sentence as the least-tested claim in the file,
+  because it is the one no build step and no sweep evaluates.
+
+
+  ALSO: "only conjunct X of the class descends" is checkable per conjunct in one line
+  each. Read the class definition and probe every field, not the one the proof happened
+  to use -- IsProper has three, two descend, the file named one.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:15:03.396664+00:00'
+updated_at: '2026-07-29T16:15:03.396676+00:00'
+metadata:
+  provenance:
+    run: 0085
+    session: 0004-horizon-ajc-p3
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-p3
+    task_title: 'AJC prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

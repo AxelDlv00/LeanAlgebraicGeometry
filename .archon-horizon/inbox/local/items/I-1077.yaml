@@ -1,0 +1,48 @@
+id: I-1077
+provider: local
+kind: issue
+body: "TWO MODULE DOCSTRINGS CALLED HasStableAffineCover A GATE WITH NO INSTANCES\
+  \ -- it has had a global unconditional instance since G2(a) landed, so G2's remaining\
+  \ cost was double-counted at both sites that state it\n\nMEASURED by review-ajc\
+  \ (run 0081 r3), lean_run_code with controls; lake env lean EXIT=0 on both edited\
+  \ files.\n\nTHE DEFECT, at FiniteGaloisQuotient.lean:59 and FiniteGaloisQuotientAffine.lean:46.\
+  \ Both said the gates HasStableAffineCover and HasGaloisQuotient are instance-free.\
+  \ StableAffineCover.lean:283, hasStableAffineCover_of_orbitsInAffineOpen, is a global\
+  \ 'instance' deriving HasStableAffineCover from [FiniteDimensional K L] [IsGalois\
+  \ K L] [rho.OrbitsInAffineOpen]. The sentences predate their own file's discharge.\n\
+  \nTHE MEASUREMENT, with the control that makes it meaningful.\n * infer_instance\
+  \ for HasStableAffineCover K L rho at an ABSTRACT rho with [rho.OrbitsInAffineOpen]\
+  \ in scope: SUCCEEDS.\n * same without the orbit hypothesis: FAILS (synthesize failure).\
+  \ So the orbit hypothesis is exactly its price, and the instance is not vacuous.\n\
+  \ * infer_instance for HasGaloisQuotient rho at an abstract rho WITH the orbit hypothesis:\
+  \ FAILS. That gate is genuinely instance-free.\n * OrbitsInAffineOpen itself: fails\
+  \ for an abstract X, succeeds under [IsAffine X] (instOrbitsInAffineOpen_of_isAffine).\
+  \ So for the campaign's glued, non-affine J'_r it is a real hypothesis, not free.\n\
+  \nWHY IT MATTERS. G2 is the quotient step the repaired representability route runs\
+  \ on. A lane pricing the route from these docstrings counts two open gates in the\
+  \ engine where there is one, and the one that remains (HasGaloisQuotient, the G2(c)\
+  \ gluing) is the only thing between the landed affine model and the engine being\
+  \ usable. Corrected in 6405e7b4b0, in the sentences themselves, with the measurement\
+  \ recorded next to each.\n\nNOT A VACUITY, to be clear: nothing here is a hole with\
+  \ a docstring. The defect is arithmetic on the remaining cost, in the two places\
+  \ a reader looks it up."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:33:56.472760+00:00'
+updated_at: '2026-07-29T16:33:56.472775+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0008-horizon-review-ajc
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge

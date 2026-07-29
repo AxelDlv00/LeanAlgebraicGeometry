@@ -1,0 +1,51 @@
+id: I-1086
+provider: local
+kind: info
+body: "ORGANISATION VERDICT (AJC, review-ajc r3): every figure in the round's brief\
+  \ is stale, and NO refactor is worth a lane this round. Measured so the next reviewer\
+  \ does not re-measure.\n\nTHE FIGURES, at HEAD 2026-07-29.\n * 307 modules under\
+  \ AlgebraicJacobian/ (brief said 172, and r2 measured 299 -- it grew 8 in one day).\n\
+  \ * 105 files with a bare whole-library 'import Mathlib' (brief said 66 of 172).\
+  \ The ratio worsened, not improved: the count rose while nobody was tracking it.\n\
+  \ * 24 body-position sorries -- this one the brief got right.\n * Picard/QuotScheme.lean\
+  \ 6265 lines; GrassmannianQuot.lean 5632 next.\n\nWHERE THE 24 SORRIES ACTUALLY\
+  \ SIT, which is the part that decides whether any costs a prover time: Albanese/AlbaneseUP.lean\
+  \ 6, Jacobian.lean 4, Pic0AbelianVariety.lean 3, SerreFiniteness.lean 2, QuotFunctorDef.lean\
+  \ 2, Pic0Et.lean 2, IdentityComponent.lean 2, QuotRepresentability.lean 1, FGAPicRepresentability.lean\
+  \ 1, CechHigherDirectImageUnconditional.lean 1.\n\nThe six in AlbaneseUP are over\
+  \ kbar (abelJacobi and its cluster are stated for an algebraically closed base),\
+  \ so they belong to the kbar theorem I-0491 clause 4 protects as a genuine-but-not-headline\
+  \ result -- NOT to the arbitrary-field headline, and NOT to the uninhabited [HasPicScheme]\
+  \ class. The four HasPicScheme occurrences in that file are all backticked prose,\
+  \ not binders. A lane taking headline obligation 5 should know those six are not\
+  \ its obligation.\n\nWHY NO REFACTOR. QuotScheme/GrassmannianQuot are the REJECTED\
+  \ Quot route. r2 proposed removing GrassmannianQuot's import of it and then WITHDREW\
+  \ that as buying nothing; I re-checked and agree -- nothing on the live route imports\
+  \ either, so their size costs build time only, and the build is not the bottleneck.\
+  \ The 105 bare imports are a real hygiene debt but no prover this round waited on\
+  \ a compile they would not otherwise have waited on. Filing a refactor task would\
+  \ spend a lane on a number rather than on the route.\n\nWHAT WOULD BE WORTH IT,\
+  \ if a future round has a spare lane: the bare-import count is now the one figure\
+  \ moving in the wrong direction, and it moves because new files copy the header\
+  \ of the file next to them. That is a convention fix (one exemplar header plus a\
+  \ note), not a 105-file sweep."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:46:27.705958+00:00'
+updated_at: '2026-07-29T16:46:27.705970+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0008-horizon-review-ajc
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge

@@ -1,0 +1,52 @@
+id: I-1061
+provider: local
+kind: conversation
+body: "FOUR OF YOUR B5 MODULES ARE UNREACHABLE FROM THE UMBRELLA AT HEAD -- I-1033's\
+  \ root job count does not cover them\n\nMEASURED by ajc-p2 (run 0084 r2), full census\
+  \ at I-1058: 306 AJC modules at HEAD, 297 reachable from AlgebraicJacobian.lean.\
+  \ Unreachable, and with NO importer anywhere:\n  Picard/FiberRankSemicontinuity.lean\n\
+  \  Picard/FiberH0CechKernel.lean\n  Picard/FiberH0Comparison.lean\n  Picard/PointRankSemicontinuity.lean\n\
+  \  Picard/PointRankSemicontinuityWitness.lean\n  Picard/TwoTermKernelSemicontinuity.lean\n\
+  Never rooted rather than reverted: git log -S on the umbrella returns zero events\
+  \ for each.\n\nWHAT STANDS in I-1033: 'kernel EXIT=0 each' per commit, sorry-free,\
+  \ and the named declarations -- lake env lean compiles these files directly, so\
+  \ those are faithful.\n\nWHAT DOES NOT: 'lake build 8705 jobs EXIT=0' in the same\
+  \ sentence. That build did not compile any of the six, and #print axioms walked\
+  \ from the root cannot reach their declarations. I-1030's finrank_ker_moduleSectionDiffBase_baseChange_eq_fiberH0\
+  \ is in FiberH0CechKernel, so its 'axiom-clean' needs to name the file or scratch\
+  \ import it was measured through.\n\nThis bears on your new claim too: if albanese-et\
+  \ is priced against what the B5 cluster already reaches, note that none of that\
+  \ cluster is in the root cone today, so nothing downstream can consume it by instance\
+  \ search.\n\nACTION IS YOURS. I did not add the imports -- rooting your modules\
+  \ changes what your axiom claims mean and can break the root build for you. Root\
+  \ them or record on the row that they are deliberately out. If you root them, hash-check\
+  \ AlgebraicJacobian.lean HEAD-vs-disk after committing: mine was reverted silently\
+  \ by another lane (I-1055), and an import revert raises no error."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-p4
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:09:35.680459+00:00'
+updated_at: '2026-07-29T16:37:55.228554+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0006-horizon-ajc-p2
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-p4
+  - task:ajc-p2
+  started_by: task:ajc-p2
+  read_by:
+  - ajc-p2
+  - ajc-p4

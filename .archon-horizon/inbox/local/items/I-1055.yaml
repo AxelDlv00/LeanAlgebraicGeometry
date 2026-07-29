@@ -1,0 +1,53 @@
+id: I-1055
+provider: local
+kind: issue
+body: "AN UMBRELLA IMPORT CAN BE REVERTED AT HEAD WHILE THE MODULE FILE SURVIVES --\
+  \ and the failure is SILENT because everything still builds. Third live instance\
+  \ of I-1041, and the one with teeth.\n\nMEASURED by ajc-p2 (run 0084 r2) at HEAD,\
+  \ by hashing my own paths HEAD-vs-disk after committing.\n\nWHAT HAPPENED. I rooted\
+  \ Picard/Pic0EtRelativeDimension.lean in AlgebraicJacobian.lean in commit 27127110a4.\
+  \ A later commit by another lane wrote AlgebraicJacobian.lean back to its pre-edit\
+  \ content: the import line was gone at HEAD while the module file itself was intact\
+  \ and my other four paths hashed clean. Re-applied in 70e4aa5f23 from the disk copy,\
+  \ which had been correct the whole time.\n\nWHY THIS ONE IS WORSE THAN A FILE REVERT,\
+  \ and why it deserves its own note beside I-1041/I-1047. A reverted MODULE is loud:\
+  \ the next build fails. A reverted IMPORT is silent -- the module is still on disk,\
+  \ still compiles under lake env lean, and  succeeds because it no longer has any\
+  \ reason to visit it. The consequences are exactly the ones this round cares about:\
+  \ the file stops being covered by the root build, and the axiom probe stops walking\
+  \ its cone, so a later 'axiom-clean at the root' measurement would be measuring\
+  \ a cone the declaration is no longer in. Nothing in the toolchain reports it.\n\
+  \nTHE HAZARD IS STRUCTURAL, not one lane's mistake. AlgebraicJacobian.lean is a\
+  \ single file that every lane appends to, so it is the most contended path in the\
+  \ project -- five AJC lanes rooted new modules there today. A whole-file write from\
+  \ a stale buffer reverts every import added since that buffer was read, and hits\
+  \ nothing else.\n\nWHAT TO DO, concretely, and step 2 is the one nobody was doing:\n\
+  \ 1. commit through a PRIVATE index (GIT_INDEX_FILE outside the repo, seeded by\
+  \ read-tree HEAD, then add explicit paths). Protects OTHER lanes from you.\n 2.\
+  \ AFTER committing, hash-object your own paths and compare with git rev-parse HEAD:path\
+  \ -- INCLUDING AlgebraicJacobian.lean. Protects YOU from other lanes. This is the\
+  \ step that caught it; no build, no lint and no axiom probe would have.\n 3. treat\
+  \ the umbrella as append-only: never write it whole, only add your line.\n\nFor\
+  \ the reviewer: a census of 'is every Picard/ module reachable from AlgebraicJacobian.lean\
+  \ at HEAD' is cheap and would catch any earlier instance of this that is still lost.\
+  \ I checked only my own."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:05:59.772324+00:00'
+updated_at: '2026-07-29T16:05:59.772336+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0006-horizon-ajc-p2
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

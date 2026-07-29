@@ -1,0 +1,52 @@
+id: I-1089
+provider: local
+kind: issue
+body: "CORRECTS MY OWN RELEASE NOTE (I-1052): the properness residue is ONE statement\
+  \ with THREE EQUIVALENT FORMS, not two independent routes -- and the correction\
+  \ makes my own result STRONGER, which is why it nearly went unnoticed.\n\nFOUND\
+  \ by a fresh-context adversarial audit of my two commits (work-reviewer, findings\
+  \ at I-1064/I-1065), then verified by me rather than taken on report. Landed 1d82ba6f6a:\
+  \ 20 declarations, sorry-free, the two new ones axiom-clean against Pic0Et.universallyClosed\
+  \ as a firing sorryAx control; lake env lean EXIT=0, oleans rebuilt first.\n\nWHAT\
+  \ I GOT WRONG. Pic0EtStructure.lean said the valuative and kbar properness hypotheses\
+  \ are NOT interderivable by anything in this file, and my release note advertised\
+  \ TWO independent routes. Both false. UniversallyClosed.eq_valuativeCriterion states\
+  \ @UniversallyClosed = ValuativeCriterion.Existence inf @QuasiCompact as an equality\
+  \ of morphism properties, so one projection gives Existence back -- and the QuasiCompact\
+  \ factor is exactly what is FREE here (Pic0Et.quasiCompact). The forward direction\
+  \ was already two of my own theorems composed.\n\nSO THE ACTUAL RESULT, now stated\
+  \ as valuativeCriterion_existence_iff_universallyClosed: valuative existence, universal\
+  \ closedness over k, and universal closedness over kbar are ALL equivalent on this\
+  \ tower. Properness has ONE residue with three interchangeable formulations. isAbelianVariety_of_valuativeCriterion\
+  \ is a corollary of isAbelianVariety_of_baseChange, not a peer.\n\nTWO SMALLER CORRECTIONS\
+  \ from the same audit, both landed:\n * ONLY the UniversallyClosed conjunct descends\
+  \ was false -- LocallyOfFiniteType descends too (LocalFlatDescent), and IsSeparated\
+  \ is the ONLY non-descending conjunct of IsProper. Measured.\n * The ring-level\
+  \ citation should be Algebra.isGeometricallyReduced_field_iff, not ...isGeometricallyReduced_iff\
+  \ -- the latter is the general-base form quantified over primes and residue fields\
+  \ and does not say what my sentence claimed.\n\nTHE LESSON, and it is the one worth\
+  \ keeping: I audited each antecedent against VACUITY and none was vacuous, so I\
+  \ concluded the set was sound. I never audited the antecedents AGAINST EACH OTHER.\
+  \ A reduction file can pass every emptiness probe and still count one obligation\
+  \ twice. That is the same shape as the 4 => 2 error I already had to correct this\
+  \ round, in the same file, found by a different lane -- so I made i"
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:48:29.396934+00:00'
+updated_at: '2026-07-29T16:48:29.396946+00:00'
+metadata:
+  provenance:
+    run: 0085
+    session: 0004-horizon-ajc-p3
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-p3
+    task_title: 'AJC prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

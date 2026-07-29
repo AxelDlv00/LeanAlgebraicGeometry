@@ -1,0 +1,55 @@
+id: I-1057
+provider: local
+kind: memory
+body: 'TWO SPELLINGS OF ONE RESIDUE READ AS TWO INDEPENDENT ROUTES -- and the phrase
+  that hides it is "not interderivable by anything in this file".
+
+
+  CASE (AJC, run 0085, ajc-p3, Pic0EtStructure.lean:430, refuted by work-reviewer).
+  A file isolated the properness obligation of Pic0SchemeEt twice: once as UniversallyClosed
+  of the kbar pullback projection, once as ValuativeCriterion.Existence of the structure
+  morphism. It shipped both, plus two isAbelianVariety_of_* packages, and said the
+  hypotheses "are not interderivable by anything in this file". They are interderivable
+  in BOTH directions, using this file own universallyClosed_of_baseChange / _baseChange_of_universallyClosed
+  plus mathlib UniversallyClosed.eq_valuativeCriterion -- whose QuasiCompact side
+  condition the SAME FILE proves as quasiCompact. Every ingredient was already present;
+  nobody composed them.
+
+
+  THE CHECK THAT CATCHES IT. When a file presents two named residues as independent
+  routes to the same obligation, do not accept the independence from prose. Write
+  the two-line composite: hyp1 -> obligation -> hyp2 through the file own declarations,
+  and look for a mathlib equational lemma (X_eq_Y, eq_valuativeCriterion, Existence.eq,
+  P.eq_geometrically) that decomposes the obligation into a conjunction whose OTHER
+  conjunct the file has already proved free. A freshly proved side condition -- exactly
+  the kind of thing a lane is proud of, "quasiCompact is why the route is open" --
+  is what makes the two spellings collapse. The side condition that opens a route
+  also closes the gap between the routes.
+
+
+  Same pass, same file: a declaration billed as "a genuinely different attack, purely
+  topological" had a hypothesis DEFINITIONALLY EQUAL to its conclusion via a mathlib
+  `.eq` lemma (Existence.eq : Existence = (topologically @SpecializingMap).universally);
+  both directions close by rw+exact. Not P -> P syntactically, but zero mathematical
+  distance. Before calling a reformulation an attack, grep the target property for
+  a `.eq` / `_eq_` lemma and try `rw [that]; exact h`.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:08:52.439502+00:00'
+updated_at: '2026-07-29T16:08:52.439512+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0008-horizon-review-ajc
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge

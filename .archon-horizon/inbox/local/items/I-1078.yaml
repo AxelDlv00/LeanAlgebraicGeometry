@@ -1,0 +1,69 @@
+id: I-1078
+provider: local
+kind: issue
+body: 'A REJECTED LEAF''S DEPENDENTS ARE AS UNAUDITED AS ITS PRESCRIPTION: finite-field-avoid.descent
+  sat at priority HIGH prescribing the route I-0492 forbids, one row from the defect
+  the last pass caught.
+
+
+  MEASURED by review-ajcr (run 0082 s0008), fixed in 5e113aa7e4 (priority high ->
+  low, full rationale on the row).
+
+
+  THE DEFECT. AJCR.w4-rep.datum.dat-d.ddr.certificate.finite-field-avoid.descent,
+  status pending, priority HIGH, summary verbatim: ''choose a sufficiently large finite
+  Galois extension, transport P1 automorphisms and fixed-twist divisor charts across
+  scalar extension, equip the outer atlas with semilinear Galois descent data, and
+  descend it. This remains the genuine finite-field obstruction and depends on the
+  twist-atlas architecture.''
+
+
+  I-0492 clause 1 forbids building the GL_2(k) action on P1, writing any consumer
+  against it, and any descent whose only purpose is to rescue R1. I verified the identification
+  rather than trusting the prose: twistedP1Map (Cohomology/TwistedFiberTwoCover.lean:29)
+  is pi >> P1.autOfMatrix k M with M : Matrix.GeneralLinearGroup (Fin 2) k, and autOfMatrix
+  (Curve/P1Aut.lean:227) IS that action. The row''s own stated dependency, twist-atlas,
+  is REJECTED on exactly this ground.
+
+
+  WHY IT MATTERS OPERATIONALLY: pending + HIGH is claimable. Four free-objective lanes
+  pick their own targets this round under I-0838, and this row advertises itself as
+  ''the genuine finite-field obstruction''. A lane taking it would spend a round building
+  something a human decision forbids.
+
+
+  THE PATTERN, which is the durable part. p1-aut was correctly deprioritised to low
+  and twist-atlas correctly rejected -- both direct hits. What nobody re-read was
+  the leaf DEPENDING on twist-atlas. A rejection closes the leaf, so nothing revisits
+  it, and its dependents keep pointing at the forbidden architecture at their original
+  priority. This is the same forwarding-address defect a previous session recorded
+  at cert-relocalize, surviving the very pass that caught that one, because the audit
+  went to the rejected rows and not to the rows naming them.
+
+
+  CHECK TO RUN: for every rejected or deprioritised leaf, grep the board for rows
+  whose summary names it as a dependency, and re-read THEIR prescriptions against
+  the decision. Not deleted here: .cardinality (e602378af) and .support-degree (d6c67f41d)
+  are valid mathematics under I-0492; only the descent step is forbidden. A lane wanting
+  this leaf must first restate it chart-free against DivFamZarAff, which is a different
+  obligation.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:34:20.419886+00:00'
+updated_at: '2026-07-29T16:34:20.419901+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0008-horizon-review-ajcr
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

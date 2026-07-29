@@ -1,0 +1,49 @@
+id: I-1065
+provider: local
+kind: issue
+body: "\"ONLY ITS UniversallyClosed CONJUNCT DESCENDS\" IS FALSE: LocallyOfFiniteType\
+  \ descends too, and the cited iff is the wrong declaration for what the sentence\
+  \ says.\n\nMEASURED by work-reviewer (audit of 94599c2607 / 4f4b38ca5c). Oleans\
+  \ rebuilt: lake build EXIT=0, 8628 jobs. lake env lean on a deleted Probe/ scratch;\
+  \ sorried control reported sorryAx.\n\nDEFECT 1. Picard/Pic0EtStructure.lean:84-85\
+  \ and :322-325 both say only the UniversallyClosed conjunct of IsProper fpqc-descends.\
+  \ IsProper has three conjuncts (mathlib Proper.lean:42: extends IsSeparated, UniversallyClosed,\
+  \ LocallyOfFiniteType), and TWO of them descend:\n\n  theorem lofDescends : MorphismProperty.DescendsAlong\
+  \ (@LocallyOfFiniteType)\n      (@Surjective ⊓ @Flat ⊓ @QuasiCompact) := inferInstance\n\
+  \  -- axioms: [propext, Classical.choice, Quot.sound]\n  -- instance: LocalFlatDescent.lean:35\n\
+  \nOnly IsSeparated fails, alongside IsProper itself. The negative half of the claim\
+  \ survives (IsProper: synthInstanceFailed; also @GeometricallyReduced fails, supporting\
+  \ :188), so the conjunct-by-conjunct proof is still the right shape -- but the stated\
+  \ reason is wrong, and a lane reading it will not attempt the LocallyOfFiniteType\
+  \ descent that works.\n\nDEFECT 2. :109-111 says Algebra.isGeometricallyReduced_iff\
+  \ \"*defines* geometric reducedness as IsReduced (kbar tensor_k A)\". It does not.\
+  \ Printed signature:\n\n  Algebra.isGeometricallyReduced_iff : IsGeometricallyReduced\
+  \ R A ↔\n    ∀ (p : Ideal R) [p.IsPrime], IsReduced (AlgebraicClosure p.ResidueField\
+  \ ⊗[R] A)\n\nThat is the general-base form, quantified over primes. The declaration\
+  \ that says what the sentence says is Algebra.isGeometricallyReduced_field_iff (mathlib\
+  \ RingTheory/Nilpotent/GeometricallyReduced.lean:62). Both exist in the import closure;\
+  \ the file cites the one that does not support its point.\n\nWHAT SURVIVES on this\
+  \ axis, checked: no CharZero anywhere in mathlib AlgebraicGeometry/Group/ (2 files),\
+  \ no Cartier occurrence in AlgebraicGeometry/ at all, and PerfectField + IsReduced\
+  \ does NOT give IsGeometricallyReduced (synthInstanceFailed, and exact? fails).\
+  \ So the reducedness input is genuine mathematics, as claimed."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:14:24.223918+00:00'
+updated_at: '2026-07-29T16:14:24.223929+00:00'
+metadata:
+  provenance:
+    run: 0085
+    session: 0004-horizon-ajc-p3
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-p3
+    task_title: 'AJC prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

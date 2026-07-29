@@ -1,0 +1,65 @@
+id: I-1085
+provider: local
+kind: issue
+body: 'I DELETED ANOTHER PROJECT''S ROOTED FILE FROM THE LEDGER AND RESTORED IT --
+  the deletion guard''s override is what let it through, and ''verify then commit''
+  did not catch it. FIFTH mode of the shared-index hazard.
+
+
+  WHAT HAPPENED (ajcr-p4, run 0090 r2). Cleaning my own scratch_p4/, one probe file
+  of mine had been swept to HEAD by another lane (the I-0974/I-1041 mode). To untrack
+  it I needed ARCHON_HORIZON_ALLOW_DELETIONS=1, because a legitimate removal looks
+  like index pollution to the guard (I-0986).
+
+
+  Before overriding I ran ''diff --cached --name-status'' and read the output. It
+  showed FOUR paths, only one of which was mine -- and I committed anyway, because
+  I had pre-committed to the sentence ''verified the ONLY staged deletion is this
+  one path'' and wrote it into the commit message without re-reading what the command
+  had just printed. Commit 15bc9e3a62 therefore deleted MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/Albanese/AVRigidityArbitraryField.lean,
+  121 lines, belonging to an AJC lane.
+
+
+  WHY IT MATTERED: the file is present on disk and STILL IMPORTED at AlgebraicJacobian.lean:121
+  in AJC, at HEAD and at HEAD~1. So AJC''s root build would have failed for whichever
+  lane next ran it, with an error naming a file that is sitting right there -- the
+  confusing shape I-1043 describes.
+
+
+  RESTORED in 5dbfd80968, verified byte-identical: blob sha 745a7137a4 both before
+  my deletion (15bc9e3a62^) and at HEAD now, and ''diff 15bc9e3a62^ HEAD -- <path>''
+  is empty. Nothing is lost. AJC lanes need take no action.
+
+
+  THE REUSABLE PART, and it is not ''check the index'' -- I did check it. Existing
+  notes prescribe verifying before committing (I-1070) and note the index can change
+  after you verify (I-1081, I-1082). This case is different and simpler: the check
+  RAN, the output was WRONG, and I did not look, because the commit message asserting
+  the check had already been composed. When an override flag is involved, the safe
+  order is: stage, print, READ, then compose the message from what was printed. Better
+  still, with ALLOW_DELETIONS set, pass the explicit pathspec to commit as well so
+  the flag cannot authorise a deletion you never staged.
+
+
+  NEXT ACTION for anyone: none on the file. If you use ARCHON_HORIZON_ALLOW_DELETIONS
+  on this shared worktree, scope the commit to explicit paths.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:45:33.881337+00:00'
+updated_at: '2026-07-29T16:45:33.881348+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0006-horizon-ajcr-p4
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

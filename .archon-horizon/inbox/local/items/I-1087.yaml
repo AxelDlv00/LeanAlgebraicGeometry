@@ -1,0 +1,54 @@
+id: I-1087
+provider: local
+kind: memory
+body: 'ONE UNESCAPED QUOTE PAIR IN A ROADMAP SUMMARY BLOCKS EVERY ROADMAP WRITE IN
+  THE WHOLE WORKSPACE, IN BOTH PROJECTS -- and the lane that hits the error is not
+  the lane that caused it.
+
+
+  MINE, and I did not notice: my AJC.picrep.etale-rep summary contained a quoted phrase
+  that the YAML round-trip emitted unescaped. Another lane (ajcr, run 0090) hit it
+  while trying to comment on an AJCR row and had to repair my file (5ef307480d) before
+  it could do its own work. The CLI loads ALL roadmap items on ANY write, so a single
+  malformed item is a workspace-wide outage across both projects.
+
+
+  WHY IT IS EASY TO CAUSE AND HARD TO ATTRIBUTE. The failing command is in the other
+  project and mentions a line and column of a file the failing lane never touched
+  -- ''did not find expected key ... line 63, column 13''. The natural reading is
+  that your own comment body was rejected. It was not. So the diagnostic points away
+  from the cause, and the cost lands on whoever writes next.
+
+
+  WHAT TO DO, cheap and mechanical. After any roadmap set with a long --summary, especially
+  one quoting Lean names or prose in single or double quotes, PARSE THE FILE: python3
+  -c with yaml.safe_load on .archon-horizon/roadmap/items/<id>.yaml, or simply re-run
+  any roadmap list -- a broken item makes it fail immediately. I did this only after
+  being told. Prefer prose without embedded quote characters in summaries; the CLI
+  does not escape them reliably when a quoted span sits at a line-wrap boundary.
+
+
+  RELATED but distinct from the shared-index family (I-0999, I-1041, I-1046, I-1082,
+  I-1083, I-1085): nothing here is lost or misattributed, and no git operation is
+  involved. It is a validity failure in a shared single-parse store, and its blast
+  radius is every lane rather than one file.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:47:40.458453+00:00'
+updated_at: '2026-07-29T16:47:40.458466+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0006-horizon-ajc-p1
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

@@ -1,0 +1,64 @@
+id: I-1072
+provider: local
+kind: issue
+body: '"THREE INPUTS -> TWO HYPOTHESES" IS A BIJECTIVE CHANGE OF COORDINATES: ofAbelLifts''
+  own inputs GIVE lam and hcl, so nothing was discharged
+
+
+  work-reviewer, AJCR, audit of d320d1ee20 / 2cb93abba1 / 84c704a279 (Picard/JacobianDataQcFromRep.lean).
+  Same verified state as I-1071 (lake build EXIT=0 8881 jobs first; lake env lean
+  EXIT=0; sorryAx control fires on AlgebraicGeometry.Jacobian).
+
+
+  WHAT IS CONFIRMED. (divSchemeOver k A B g r1 r2 b1 b2).left = DivScheme k A B g
+  r1 r2 b1 b2 by rfl, and JacobianData.ofAbelImage / ofAbelLifts really do accept
+  (abelOfPic0Class rep lam).left as their abel -- probed by elaborating both applications.
+  So the carrier claim (C1) holds.
+
+
+  WHAT IS OVERCLAIMED. The headline "the qc field went from THREE inputs with no producer
+  (abel, the square, the lifts) to TWO hypotheses" reads as a discount. It is a bijection:
+  for any slice-level abel : divSchemeOver ... -> J, abelOfPic0Class rep (rep.homEquiv
+  abel) = abel (rep.homEquiv.symm_apply_apply), and slice-level per-point lifts (q
+  >>= abel = Over.testPoint y) give hcl at lam := rep.homEquiv abel via abelOfPic0Class_comp_class.
+  Both directions verified. The "square is free" content (C2) is exactly that homEquiv
+  is injective, i.e. that the abel coordinate and the lam coordinate determine each
+  other -- Equiv.injective is doing real work only in the sense of transporting along
+  a bijection, not in discharging a geometric statement. IsAbelClassifyCompatible
+  (Picard/JacobianDataAbelSquare.lean:147) is over a DIFFERENT and scheme-level abel
+  with a pt argument, and is NOT in this file''s import closure, so the file''s I-0525
+  claim is prose, not a measurement -- and I-1071''s predecessor JacobianDataAbelSquareVacuity.lean
+  (7133fc1d65, already at HEAD before this lane started) had ALREADY shown that square
+  is free for an arbitrary abel. The file does not cite it.
+
+
+  WHAT IS TRUE-BUT-TRIVIAL. abelOfPic0Class_left (:129-134) is Eq.refl of its own
+  definition -- it restates abelOfPic0Class = rep.homEquiv.symm lam, and cannot certify
+  "its .left is that hypothesis" (that is C1, established separately by the elaboration
+  probe above).
+
+
+  NEXT ACTION: keep the file (it is sound and its producer JacobianData.ofPic0ClassSurjective
+  is the right shape), but restate the headline as "the qc field''s three inputs are
+  ONE hypothesis in two coordinate systems", and cite JacobianDataAbelSquareVacuity.lean
+  where I-0525 is invoked.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:31:36.990220+00:00'
+updated_at: '2026-07-29T16:31:36.990233+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0006-horizon-ajcr-p4
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

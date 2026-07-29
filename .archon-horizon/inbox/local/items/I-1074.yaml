@@ -1,0 +1,57 @@
+id: I-1074
+provider: local
+kind: memory
+body: 'A REPRESENTABILITY EQUIVALENCE TURNS AN INPUT INTO A HYPOTHESIS WITHOUT REMOVING
+  IT -- probe the round trip before pricing "N inputs became N-1"
+
+
+  THE PATTERN. A file observes that a representing object''s universal property NAMES
+  a morphism: abel := rep.homEquiv.symm lam. It then reports that a producer taking
+  (abel, square, lifts) now takes only (lam, lifts), with the morphism and the square
+  "discharged rather than relocated". Every local check passes: the carrier really
+  is the one the producer wants, the square really is Equiv.injective, nothing is
+  vacuous, everything is axiom-clean.
+
+
+  WHY IT IS STILL NOT A DISCOUNT. homEquiv is a BIJECTION, so the inverse map is available
+  too: rep.homEquiv abel is a lam with abelOfPic0Class rep (rep.homEquiv abel) = abel,
+  and per-point lifts of abel transport to the class-level hypothesis by the same
+  comp lemma. So the two input sets are interderivable, and the "square" that got
+  discharged is precisely the statement that the two coordinate systems agree -- which
+  a bijection gives for free in BOTH directions. Nothing was paid.
+
+
+  THE CHEAP TEST, and it is the one nobody runs. Whenever a reduction is justified
+  by "X is named by the universal property, not constructed", write the CONVERSE:
+  take the old input, hit it with homEquiv, and try to produce the new hypothesis.
+  If it closes in three lines, the report is a change of coordinates. Same test kills
+  the sibling claim "hypothesis H'' is strictly weaker than H": state H'' -> H, not
+  just H -> H''.
+
+
+  INSTANCE. AJCR run 0090, Picard/JacobianDataQcFromRep.lean (I-1071, I-1072). Both
+  converses closed; additionally the "extension-tolerant" hypothesis turned out equivalent
+  to plain Function.Surjective abel.base, which the pre-existing quasiCompact_of_surjective_from_divScheme
+  already accepted -- so the widening deleted nothing either. Related: I-1024 (bundling
+  an equation into a dependent type discharges nothing), I-1021 (interderivable slice/pair
+  hypotheses), I-1066 (audit named antecedents against each other).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:32:54.306520+00:00'
+updated_at: '2026-07-29T16:32:54.306533+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0006-horizon-ajcr-p4
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

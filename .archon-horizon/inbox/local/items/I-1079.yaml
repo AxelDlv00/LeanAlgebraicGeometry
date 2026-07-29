@@ -1,0 +1,53 @@
+id: I-1079
+provider: local
+kind: info
+body: "RELEASE ajc-p1 (run 0083 r2): AJC.picrep.etale-rep -- ADVANCED, not closed.\
+  \ Owner CLEARED.\n\nDO NOT REDO -- Picard/EtaleFieldCover.lean at HEAD (635b38ab21,\
+  \ d4e9f14b96; first 12 declarations landed inside ajc-p4's sweep 4d6346dfc9, see\
+  \ I-1046). 13 declarations, sorry-free, ALL axiom-clean, no sorryAx. lake build\
+  \ EXIT=0, 8616 jobs.\n* Spec k' -> Spec k for k'/k FINITE SEPARABLE is a SINGLETON\
+  \ ETALE COVERING, and its base change along any k-scheme is again one. WORTH KNOWING:\
+  \ neither Algebra.Etale k k' NOR Etale (Spec.map ..) synthesizes, so this reads\
+  \ ABSENT to the usual probe. Assemble from FormallyEtale.of_isSeparable + FinitePresentation.of_finiteType,\
+  \ then RingHom.etale_algebraMap + HasRingHomProperty.Spec_iff; the obstruction is\
+  \ that RingHom.Etale f is Algebra.Etale at f.toAlgebra, not the ambient instance.\
+  \ Surjectivity is free from one-point spectra and needs NEITHER hypothesis; both\
+  \ binders ARE load-bearing for etaleness.\n* Absent from AJC, AJCR and mathlib at\
+  \ scheme level; AJCR's twin instance (EtaleCover.lean:304) has no lake edge to import.\n\
+  * Non-vacuity measured: k' = k (degenerate) and R subset C (non-degenerate, Kleiman's\
+  \ base field).\n\nTWO ERRORS OF MINE, fresh-context audit, fixed by DELETION at\
+  \ d4e9f14b96:\n* I re-proved picEt_isSheaf_forget (PicEtSheaf.lean:263), already\
+  \ two import hops below my file. Lesson I-1075: different proof routes, so mechanism-level\
+  \ checks miss it -- #check the STATEMENT, not the name.\n* I called the section-4\
+  \ corollary THE DESCENT TEST and the payoff. Refuted: the sheaf axiom fires at EVERY\
+  \ covering sieve including top, free from sheafification. The content is the cover,\
+  \ not the corollary.\n\nREMAINING, three inputs in order (review-ajc I-1076 corrected\
+  \ my ordering):\n (1) descent test -- landed. (2) CROSS-BASE IDENTIFICATION, UPSTREAM\
+  \ of (3): without it J5's k'-scheme represents picEt-of-the-k-curve-restricted and\
+  \ the Galois action has no functor to act on. Statable today, absent, NOT portable\
+  \ from AJCR (different object). New unowned row AJC.picrep.etale-rep.crossbase.\
+  \ (3) Galois action + quotient G1/G2; single gate HasGaloisQuotient, HasStableAffineCover\
+  \ is NOT a second one.\n\nCAVEAT from r1: 'G3/G4 target a false statement' is CONDITIONAL\
+  \ -- not_exists_representing_picSharp_of_not_isIso takes not-IsIso as an explicit\
+  \ hypothesis, proved for no curve.\n\nSEAM SORRY NOT CLOSED; no antecedent of fgaPicardRepresentability\
+  \ witnessed for any curve."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:39:41.503570+00:00'
+updated_at: '2026-07-29T16:39:41.503582+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0006-horizon-ajc-p1
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

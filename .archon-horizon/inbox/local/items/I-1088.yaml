@@ -1,0 +1,71 @@
+id: I-1088
+provider: local
+kind: info
+body: 'RELEASE ajc-p2: AJC.pic0av.reldim (headline leaf B) -- ADVANCED, not closed.
+  Owner cleared, status active. Pinned 27127110a4 / 3c4408f7d6 / 6b706df968 / 70e4aa5f23
+  / 2c8237cb69 / 970edae9a3.
+
+
+  LANDED, DO NOT REDO -- Picard/Pic0EtRelativeDimension.lean, ROOTED, 8 declarations,
+  no sorry, all axiom-clean [propext, Classical.choice, Quot.sound] against controls
+  (Pic0Et.geometricallyReduced, smoothOfRelativeDimension_genus_pic0Et) that correctly
+  fire sorryAx. lake build AlgebraicJacobian EXIT=0, 8864 jobs.
+
+
+  TWO RESULTS.
+
+  1. Obligation 4 IMPLIES obligation 2 (smooth_of_leafB, geometricallyReduced_of_leafB).
+  The headline''s five are not independent; reducedness is a SUB-problem of the dimension
+  leaf. Reproduced independently by ajc-p3 (I-1044). NOT a strategy change -- obligation
+  2 is the weaker statement, so the kbar route on AJC.pic0av.structure is still the
+  right attack; only the count was wrong.
+
+  2. Leaf B is ONE obligation, not ''Pic0Et.smooth plus a rank''. leafB_iff_appLE
+  / leafB_iff_affineCover unfold the class to an affine-chart condition (one cover
+  of Pic0, base being affine); leafB_of_chartwise takes it with NO smoothness hypothesis,
+  because at chart level the graded condition implies the ungraded one. Three docstring
+  sites repaired (I-1052), one of them mine from r1.
+
+
+  MEASURED NEGATIVES, both worth not re-deriving:
+
+  * Smooth does NOT carry Locally IsStandardSmooth (synthesis fails); it carries RingHom.Smooth.
+  So Pic0Et.smooth gives standard smoothness per chart with no numeral.
+
+  * Homogeneity is EMPTY at the numeral. Translations are automorphisms OVER the base,
+  so translating the structure morphism yields an EQUAL proposition (GrpObj.smoothOfRelativeDimension_pointTranslation_eq).
+  Free for covering, nothing for the number. AJCR''s smoothOfRelativeDimension_pointTranslationIso,
+  read as a step toward this leaf, has its conclusion as its hypothesis.
+
+
+  STILL OPEN, precisely: Module.rank S Omega[S/k] = genus C on the away-localisations
+  of affine chart algebras of Pic0. The landed tangent chain gives a finrank at the
+  IDENTITY -- different invariant AND different locus. Nothing in the tree computes
+  a chart. No antecedent of leaf B is witnessed at any curve.
+
+
+  SEPARATELY, and it affects other lanes: I weakened SemilinearCotangentComparisonEt
+  from forall-cover to exists-cover (accepting I-1059), a real price cut on the tangent
+  chain''s single obligation. And two infrastructure findings -- I-1055 (an umbrella
+  import can be reverted silently) and I-1058 (nine modules unreachable from the umbrella
+  at HEAD), escalated to the human as I-1069.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:47:48.040818+00:00'
+updated_at: '2026-07-29T16:47:48.040828+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0006-horizon-ajc-p2
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

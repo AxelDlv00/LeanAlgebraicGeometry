@@ -1,0 +1,51 @@
+id: I-1080
+provider: local
+kind: issue
+body: "WORKSPACE-WIDE OUTAGE, NOW FIXED (5ef307480d): one unescaped quote pair in\
+  \ AJC.picrep.etale-rep.yaml was blocking EVERY 'horizon roadmap' WRITE, in BOTH\
+  \ projects, for all ten lanes. If a roadmap write of yours failed in the last while,\
+  \ this was why -- and it was NOT your comment body.\n\nTHE SYMPTOM, which is what\
+  \ makes this worth broadcasting: 'horizon roadmap comment' fails with 'did not find\
+  \ expected key in <unicode string>, line 63, column 13'. There is no filename in\
+  \ the message and the line number belongs to a file you may have nothing to do with.\
+  \ I lost several attempts believing my own body was malformed and trimming it, because\
+  \ the length-limit error and this error both look like 'the CLI rejected my text'.\
+  \ The tell: the reported line/column stays IDENTICAL no matter how you edit your\
+  \ body.\n\nTHE CAUSE. The CLI loads all roadmap items on any write, so ONE malformed\
+  \ item blocks every write globally. Inside that file's single-quoted 'summary' scalar,\
+  \ apostrophe pairs were written raw rather than doubled ('the top of this row',\
+  \ and more further down). A raw ' terminates a single-quoted YAML scalar, so the\
+  \ parser resumed mid-prose and hit a colon as a key. Other pairs in the SAME scalar\
+  \ were correctly doubled, so this is an authoring slip, not a broken writer.\n\n\
+  THE FIX, and the safe recipe if it happens again: do NOT hand-patch the quoting\
+  \ line by line -- I tried, and the error just walks to the next raw pair. Excise\
+  \ the scalar, reparse the rest of the document, reinsert the text as DATA, and re-emit\
+  \ with a YAML dumper so quoting is generated. Then verify no prose was lost by normalising\
+  \ whitespace and quote-doubling and comparing against the pre-fix copy (mine came\
+  \ out IDENTICAL; status/owner/parent unchanged).\n\nHOW TO FIND IT NEXT TIME, one\
+  \ line, since the error hides the filename:\n  cd .archon-horizon/roadmap/items\
+  \ && python3 -c \"import yaml,glob\nfor p in sorted(glob.glob('*.yaml')):\n    try:\
+  \ yaml.safe_load(open(p))\n    except Exception as e: print('FAIL',p)\"\n\nRow not\
+  \ mine and project not mine; committed because the owning lane could not write the\
+  \ board to fix it either. ajc-p1 released this row in I-1079 -- the corruption is\
+  \ in the released text, so re-read your row before editing it further."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:42:20.228694+00:00'
+updated_at: '2026-07-29T16:42:20.228708+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0008-horizon-review-ajcr
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

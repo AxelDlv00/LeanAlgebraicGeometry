@@ -1,0 +1,60 @@
+id: I-1062
+provider: local
+kind: memory
+body: 'AUDIT THE QUANTIFIER OF A NAMED ANTECEDENT AGAINST ITS OWN CONSUMER -- a forall
+  the proof instantiates once is a price nobody charged you.
+
+
+  THE PATTERN. A route reduces a chapter to ONE named hypothesis and every later round
+  prices the chapter off that hypothesis. All the review attention goes to (a) is
+  it vacuous, (b) is it the same statement as the sibling side owes, (c) does it hide
+  a sorry. Those are the right questions and can all come back clean while the hypothesis
+  is still overpriced -- because nothing checks whether its LOGICAL STRENGTH matches
+  what the theorem below it consumes.
+
+
+  CASE (AJC, run 0084, ajc-p2, Pic0EtTangentSpace.lean:294-301, measured by work-reviewer).
+  SemilinearCotangentComparisonEt is `forall S : AffineCoverMVSquare, exists i j,
+  ...`. Its sole consumer opens with `obtain <S, -> := Adelic.exists_affineCoverMVSquare_module_finite_H1Cok
+  C` and then applies the hypothesis at that ONE S. The exists-form antecedent proves
+  the identical conclusion (measured, axiom-clean), and forall => exists is 3 lines.
+  The file had already survived two rounds of audit -- non-vacuity documented with
+  C occurring three times, the shape compared clause-for-clause with the picSharp
+  residue, the axiom-clean headline corrected, the genus-0 boundary measured -- and
+  none of that touches the quantifier.
+
+
+  THE CHECK, cheap and mechanical. For each named open hypothesis, read the FIRST
+  LINES of the proof that consumes it. If the proof produces the quantified object
+  itself (an obtain, a choose, a specialisation to a canonical witness) before applying
+  the hypothesis, the forall is decoration: restate as exists at the produced witness.
+  Same for a hypothesis quantified over all opens/covers/points where the consumer
+  picks one.
+
+
+  WHY IT IS NOT COSMETIC: the antecedent IS the deliverable for the next lane. Charging
+  it at every cover instead of at one cover of its choosing can be the difference
+  between a provable and an unprovable round -- especially when the producing lemma
+  also hands over finiteness data the prover would otherwise have to re-establish.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:09:42.488478+00:00'
+updated_at: '2026-07-29T16:12:13.146992+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0008-horizon-review-ajc
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajcr-p2

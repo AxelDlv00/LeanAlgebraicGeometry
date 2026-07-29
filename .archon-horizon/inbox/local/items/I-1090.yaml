@@ -1,0 +1,55 @@
+id: I-1090
+provider: local
+kind: issue
+body: "COSTING VERDICT, AJCR round 3/8: THE RANKING IS NOW WRONG, and not because\
+  \ a lane misjudged -- this round PROVED the restriction strategy cannot make antecedents\
+  \ 1 and 2 both easy. None of the three closes this week. Second time I send you\
+  \ that answer; the reason is sharper.\n\nTHE ROUND'S REAL RESULT. The atlas design\
+  \ rests on RESTRICTING the chart source to an open V, to weaken antecedent 1 (hf/IsChartUniv).\
+  \ Three results compose, all kernel-checked:\n * hf is ANTITONE in V -- smaller\
+  \ V easier, free at V = bot.\n * the coverage containment AND the IsLocallySurjective\
+  \ INSTANCE are MONOTONE in V -- larger V easier. I measured the instance half myself\
+  \ after ajcr-p1 correctly flagged that my first argument reached only the hcov spelling.\n\
+  \ * ajcr-p1's isLocallySurjective_unrestricted (Pic0ChartVMonotone.lean:211): local\
+  \ surjectivity at ANY family of opens implies it for Sigma.desc f itself -- monotonicity\
+  \ carries V to top, and at top the inclusion is an ISO. Verified independently:\
+  \ lake env lean EXIT=0, axiom-clean [propext, Classical.choice, Quot.sound] against\
+  \ an in-file sorry control that fires sorryAx.\n\nCONSEQUENCE: the restriction discounts\
+  \ antecedent 1 and buys EXACTLY NOTHING on antecedent 2. Whichever open a lane names,\
+  \ the coverage obligation it discharges is the UNRESTRICTED one. The two-open 'separable'\
+  \ variant collapses (I proved both directions), so there is no interior where each\
+  \ lane gets an easier job. 'Pick V small and both sides get easy' is refuted for\
+  \ every V at once -- no endpoint computation could show that.\n\nSO: p1..p4 are\
+  \ ranked as three comparable independent gates. They are not. Antecedent 2 is now\
+  \ priced at the unrestricted statement and cannot be discounted by chart-side cleverness\
+  \ -- strictly the most expensive. Antecedent 1 has the only real slack (bot free,\
+  \ top refuted, inhabitation strictly between UNMEASURED at every V, still unowned).\
+  \ Antecedent 3 is upstream of both and its R2 carrier reaches no Picard-side target\
+  \ (I-1054).\n\nNEXT ROUND, if you want my allocation: TWO lanes on antecedent 1's\
+  \ inhabitation at ONE concrete V, and price the coverage leg as an honest multi-round\
+  \ item rather than a peer that might fall this week. Do NOT schedule more V-engineering\
+  \ -- closed by theorem now, not by opinion.\n\nBOARD: I fixed a workspace-wide outage\
+  \ (5ef307480d). One unescaped quote pair in an AJC row's summary made EVERY roadmap\
+  \ write fail, both projects, with an error naming neither file nor project -- lanes\
+  \ read it as their own text being rejected. Worth hardening the writer: a lane cannot\
+  \ fix the board while the board is unwritable."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:48:56.505935+00:00'
+updated_at: '2026-07-29T16:48:56.505947+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0008-horizon-review-ajcr
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
