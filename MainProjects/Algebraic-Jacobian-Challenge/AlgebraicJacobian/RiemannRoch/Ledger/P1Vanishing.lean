@@ -213,7 +213,17 @@ theorem LaurentChartData.span_ladder_overlap (D : LaurentChartData Y) :
 
 /-- **The datum's own 2-affine cover.**  The `π = 𝟙` case of `LaurentChartData.pullbackSquare`,
 stated without a morphism so that it carries no `IsFinite` binder (the identity is finite, but a
-statement about `Y` should not have to mention a map to `Y`). -/
+statement about `Y` should not have to mention a map to `Y`).
+
+Not a duplicate of `Adelic.p1CoverSquare` (`Adelic/FinitenessP1.lean`), which is built directly on
+the concrete `ℙ(ULift (Fin 2); Spec k)`: this one is generic in the *datum*, which is what lets
+§3's vanishing be stated for any `Y` carrying one.  Checked rather than assumed: the two are *not* defined in terms of each other — `p1CoverSquare`
+and `p1LaurentChartData` independently take their opens from the same `p1Chart`/
+`isAffineOpen_p1Chart`/`p1Chart_sup_eq_top` lemmas, and the `isAffineOpen_inf` field is proved
+differently on each side (`isAffineOpen_p1Chart_inf` there, via `inf_eq_basicOpen_x` here).  So at
+`ℙ¹` they agree on `U₁`, `U₂` and `cover` by having the same definitions plugged in, not by one
+delegating to the other.  Nothing downstream has to choose: the §4 statements go through
+`chartSquare` because `subsingleton_h1Cok` is stated at it. -/
 noncomputable def LaurentChartData.chartSquare (D : LaurentChartData Y) :
     Y.left.AffineCoverMVSquare where
   U₁ := D.V₀
@@ -289,7 +299,15 @@ variable (k : Type u) [Field k]
 comparison `hModuleOneEquivH1Cok_curve` (every 2-affine cover, every field).
 
 This is the statement `Ledger/VanishingFieldDescent.lean`'s `§NON-VACUITY` recorded as **absent
-from AJC**, and `I-0746` scoped as the missing brick. -/
+from AJC**, and `I-0746` scoped as the missing brick.
+
+Re-checked rather than inherited, since that absence claim is what makes this file worth landing.
+One other declaration in AJC concludes `genus C = 0`: `Pic0.genus_eq_zero_of_homogeneous`
+(`Picard/HomogeneityOrbitCollapse.lean`).  It is **not** a competing witness and does not weaken
+the claim — it is a *no-go*, deriving `genus C = 0` from four heavy hypotheses (including the
+sorried `HasPicScheme`) in order to show they are inconsistent with positive genus.  It exhibits
+no curve.  This file is the first declaration in AJC that concludes vanishing, or genus zero, at a
+*named object*. -/
 theorem subsingleton_hModule_one_p1Over :
     Subsingleton (Scheme.HModule k (Scheme.toModuleKSheaf (p1Over k)) 1) :=
   ((p1LaurentChartData k).chartSquare.hModuleOneEquivH1Cok_curve).toEquiv.subsingleton_congr.mpr

@@ -69,7 +69,10 @@ vanishing established over *any* single extension — however large, e.g. `k̄` 
   `GenusFieldInvariance.uniformVanishing_of_uniformBaseDivisor_curve`: **`UniformVanishing C` is
   a theorem when `H¹(𝒪_C)` vanishes.**  This is the first *producer* of `UniformVanishing` in AJC
   — previously the type had none, only the reduction.  It is an **implication, not an
-  unconditional instance**, and AJC exhibits no curve satisfying its hypothesis; see §NON-VACUITY.
+  unconditional instance**.  When this was written AJC exhibited no curve satisfying its
+  hypothesis; `Ledger/P1Vanishing.lean` now does (`uniformVanishing_p1Over`, at `ℙ¹`).  It is
+  still an implication, not an unconditional instance — the hypothesis is real and false for
+  `genus C ≥ 1`.  See §NON-VACUITY.
 * `uniformBaseDivisor_zero_of_genus_eq_zero`, `uniformVanishing_of_genus_eq_zero` — the same two
   with the hypothesis in the `genus C = 0` form a consumer meets.
 
@@ -103,19 +106,32 @@ hypothesis?" is asked in Lean here rather than assumed.  Applying that test to �
 the producer's *ambient* hypotheses are inhabited.  Its *own* hypothesis is not discharged
 anywhere.
 
-**Searched, and absent: AJC has no `Subsingleton (H¹(𝒪_{ℙ¹}))` and no `genus (p1Over k) = 0`.**
-Checked semantically as well as by name (workspace index and `exact?` on the goal), because this
-lane has shipped absence claims that only surveyed part of the project.  So `genus C = 0` is a
-hypothesis AJC can *state* at a concrete curve but cannot yet *verify* at one, and consequently:
+**SUPERSEDED — the gap this section named is now closed by `Ledger/P1Vanishing.lean`.**  The
+paragraphs below describe the state as of the round that wrote them and are kept because the
+distinction they draw (a producer versus a witnessed case) is the one that mattered; the *absence*
+they record is no longer the state.  `P1Vanishing.subsingleton_hModule_one_p1Over` and
+`genus_p1Over_eq_zero` supply exactly the two statements said to be missing, so
+`uniformVanishing_of_subsingleton_h1` below now HAS an exhibited instance
+(`P1Vanishing.uniformVanishing_p1Over`).  Read on for the original scoping, not for current
+status.
 
-* `uniformVanishing_of_subsingleton_h1` is **not known to be non-vacuous**.  It is a true
-  implication with no exhibited instance.  Nothing here claims otherwise, and the honest reading
-  of "the first `UniformVanishing` instance in AJC" is *the first producer of that type* — not
-  the first curve for which extension-uniform vanishing is known.
-* the missing brick is small and worth naming for whoever wants it: `h¹(𝒪_{ℙ¹}) = 0`, which on
-  the two-chart Laurent cover is the statement that the Čech cokernel of
-  `k[t] × k[t⁻¹] → k[t, t⁻¹]` vanishes.  `Adelic.LaurentChartData` supplies the cover; the
-  cokernel computation is not in AJC.
+*As of the round that wrote this section:* **searched, and absent: AJC has no
+`Subsingleton (H¹(𝒪_{ℙ¹}))` and no `genus (p1Over k) = 0`.**
+Checked semantically as well as by name (workspace index and `exact?` on the goal), because this
+lane has shipped absence claims that only surveyed part of the project.  So `genus C = 0` was a
+hypothesis AJC could *state* at a concrete curve but not yet *verify* at one, and consequently:
+
+* `uniformVanishing_of_subsingleton_h1` was **not known to be non-vacuous**: a true implication
+  with no exhibited instance.  The honest reading of "the first `UniformVanishing` instance in
+  AJC" was *the first producer of that type* — not the first curve for which extension-uniform
+  vanishing is known.  **`Ledger/P1Vanishing.lean` closed this**: `uniformVanishing_p1Over` is
+  the first witnessed curve, so the two readings now both hold.
+* the missing brick was named as small: `h¹(𝒪_{ℙ¹}) = 0`, which on the two-chart Laurent cover is
+  the statement that the Čech cokernel of `k[t] × k[t⁻¹] → k[t, t⁻¹]` vanishes.
+  `Adelic.LaurentChartData` supplies the cover.  **Landed** as
+  `P1Vanishing.LaurentChartData.subsingleton_h1Cok`, and it needed no new `LaurentChartData` field:
+  the overlap span `I-0746` priced as a structural obstacle is derivable from the fields already
+  present (`P1Vanishing.LaurentChartData.span_ladder_overlap`).
 
 Recording this rather than leaving it implicit, because "produces `UniformBaseDivisor` from a
 hypothesis" and "produces it at a curve this project has" are different claims, and a reader who
@@ -344,7 +360,9 @@ either.  The uniform threshold is `0 + genus C`, which is `0` exactly when the h
 
 **This is an implication, not an unconditional instance.**  An earlier version of this docstring
 said "the first unconditional instance", which is false: the statement carries an explicit
-hypothesis, and AJC discharges it at no curve (§NON-VACUITY in the module docstring).  The word
+hypothesis.  (When that correction was made AJC discharged the hypothesis at no curve;
+`Ledger/P1Vanishing.lean` now discharges it at `ℙ¹`, which makes the statement non-vacuous but
+still not unconditional — see §NON-VACUITY in the module docstring.)  The word
 survived the round that added the non-vacuity caveat, which is exactly how a caveat fails —
 it corrected the weaker phrase and left the stronger one standing.  Caught by a fresh-context
 review.
@@ -373,8 +391,11 @@ theorem uniformBaseDivisor_zero_of_genus_eq_zero (hg : genus C = 0) :
 
 /-- **Extension-uniform bounded vanishing for a curve of genus zero** (★★).
 
-Read `§NON-VACUITY` in the module docstring before citing this: AJC exhibits **no** curve with
-`genus C = 0`, so it is a true implication with no known instance, not a settled case. -/
+**Non-vacuity: settled, at `ℙ¹` only.**  When this was written AJC exhibited no curve with
+`genus C = 0`, making it a true implication with no known instance.
+`Ledger/P1Vanishing.genus_p1Over_eq_zero` supplies one, and
+`P1Vanishing.uniformVanishing_p1Over` is this theorem applied there.  Still not a settled *case*
+in general: the hypothesis is false for `genus C ≥ 1`. -/
 theorem uniformVanishing_of_genus_eq_zero (hg : genus C = 0) : UniformVanishing C :=
   uniformVanishing_of_subsingleton_h1 C
     ((subsingleton_hModule_one_iff_genus_eq_zero C).mpr hg)

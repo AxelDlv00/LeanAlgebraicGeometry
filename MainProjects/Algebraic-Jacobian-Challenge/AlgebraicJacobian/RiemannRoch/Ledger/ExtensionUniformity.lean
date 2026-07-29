@@ -142,14 +142,16 @@ route.  Note the shape of the two projects' cover carriers differs — AJCR uses
 AJC `AffineCoverMVSquare` (and `AffineTwoCover` does not occur anywhere in AJC) — so a port
 crosses a second carrier boundary that the `rfl` above does *not* cover.
 
-**Input (2), a uniform base-divisor degree bound: open for `genus C ≥ 1`; closed at genus 0.**
+**Input (2), a uniform base-divisor degree bound: open for `genus C ≥ 1`; closed at genus 0, and
+since `Ledger/P1Vanishing.lean` witnessed at `ℙ¹` rather than only implied.**
 It asks for one `d` with a vanishing `D₀` of degree `≤ d` over *every* `κ`.  Nothing in AJC
 bounds `n₀(κ)` uniformly, and `n₀` is a `Classical.choose` on Noetherian stabilization of the
 fiber-lattice chain (`Ledger/FiberVanishing.lean`), re-run at each base field with no numeric
 extraction — so the route "bound AJC's own `n₀` uniformly" is not available.
 
-What *is* available, and is the genus-0 closure: `Ledger/VanishingFieldDescent.lean` bypasses
-`n₀` entirely.  Instead of transporting the *stabilization index*, it transports the *vanishing
+What *is* available, and is the genus-0 closure (producer in `Ledger/VanishingFieldDescent.lean`,
+witness in `Ledger/P1Vanishing.lean` — see item 2 below on why both are needed to say "closed"):
+that file bypasses `n₀` entirely.  Instead of transporting the *stabilization index*, it transports the *vanishing
 statement*, using faithful flatness of `κ/k` on `GenusFieldInvariance`'s `Ȟ¹` comparison.  The
 witness divisor is then `0` at every `κ`, whose degree is `0` with no choice involved.  That
 works exactly when `H¹(𝒪_C)` already vanishes, i.e. `genus C = 0`.
@@ -181,11 +183,21 @@ because a caller who has a genus bound by some other route may still want it.
    **The genus identity is now proved** (`Ledger/GenusFieldInvariance.lean`), so the open half is
    *exactly* the base-divisor bound — one input, not two.  Open in AJC for `genus C ≥ 1`.
 
-   **Genus 0 is now closed** (`Ledger/VanishingFieldDescent.lean`): `H¹(𝒪)` vanishing is
-   base-field invariant in *both* directions by faithfully flat descent of the `Ȟ¹` comparison,
-   which produces `UniformBaseDivisor C 0` and hence `UniformVanishing C` whenever
-   `H¹(𝒪_C)` vanishes.  That is the whole of what is closed: for `genus C ≥ 1` the hypothesis is
-   false and the base-divisor bound is still a missing production from geometry.
+   **Genus 0: the producer is in `Ledger/VanishingFieldDescent.lean` and its witness is in
+   `Ledger/P1Vanishing.lean`.**  `H¹(𝒪)` vanishing is base-field invariant in *both* directions by
+   faithfully flat descent of the `Ȟ¹` comparison, which produces `UniformBaseDivisor C 0` and
+   hence `UniformVanishing C` whenever `H¹(𝒪_C)` vanishes.
+
+   That producer stood for one round with **no curve satisfying its hypothesis** — a true
+   implication with no instance, recorded as such in its own `§NON-VACUITY`.  Saying "genus 0 is
+   closed" of that state was too strong, and it is corrected here rather than left standing: what
+   was closed was the implication, not a case.  `Ledger/P1Vanishing.lean` now supplies the missing
+   antecedent (`genus_p1Over_eq_zero`, from `Ȟ¹(𝒪) = 0` on the Laurent chart cover), so
+   `uniformVanishing_p1Over` is extension-uniform bounded vanishing **at a curve this project
+   has**, threshold `0`.
+
+   That is the whole of what is closed: for `genus C ≥ 1` the hypothesis is false and the
+   base-divisor bound is still a missing production from geometry.
 
    On AJCR: whether it has input (2) was measured this round and the answer is **effectively no,
    for AJC's purposes**.  `WindowFieldTransport.deg_windowN` does give a `κ`-independent degree

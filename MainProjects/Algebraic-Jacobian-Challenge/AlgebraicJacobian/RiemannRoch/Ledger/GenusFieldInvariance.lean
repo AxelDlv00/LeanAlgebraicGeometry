@@ -451,8 +451,10 @@ carries only its second antecedent.
 `UniformBaseDivisor C d` — one degree bound `d` such that over *every* extension `κ/k` some
 divisor of degree `≤ d` already has vanishing `H¹` — is **the single remaining gap** in
 extension-uniformity.  It is open in AJC **for `genus C ≥ 1`**; at genus 0 it is discharged by
-`Ledger/VanishingFieldDescent.uniformBaseDivisor_zero_of_genus_eq_zero`.  The threshold produced
-here is `d + genus C`, an honest constant of `C` with no `κ` in it.
+`Ledger/VanishingFieldDescent.uniformBaseDivisor_zero_of_genus_eq_zero` — and, since
+`Ledger/P1Vanishing.lean`, *witnessed* there rather than only implied
+(`P1Vanishing.uniformBaseDivisor_p1Over` at `ℙ¹`, where the hypothesis is a theorem).  The
+threshold produced here is `d + genus C`, an honest constant of `C` with no `κ` in it.
 
 **Two corrections to what this paragraph used to say**, both found by a fresh-context review of
 the round that was itself correcting this file's gap index — which is how a stale claim survives a

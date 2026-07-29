@@ -75,7 +75,8 @@ Three statements stay apart, as everywhere in this cluster:
    `genus C ≥ 1`.  **Two clauses of this sentence were stale and are corrected here**: it said
    input (2) is open "in AJC and AJCR both", which was withdrawn elsewhere in the cluster (AJCR
    *has* the content, on a carrier 88–139 files away), and it gave no genus qualifier, though
-   genus 0 is discharged by `Ledger/VanishingFieldDescent.lean`.  This was the **fifth** surviving
+   genus 0 is discharged by `Ledger/VanishingFieldDescent.lean` (and witnessed at `ℙ¹` by
+   `Ledger/P1Vanishing.lean`).  This was the **fifth** surviving
    copy of the withdrawn claim and it was found by grepping the claim's *text* rather than the
    files being edited — the correction pass that withdrew it never opened this file;
 3. **global generation** — untouched, and in particular nothing here makes generation uniform
