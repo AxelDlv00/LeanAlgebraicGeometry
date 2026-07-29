@@ -90,11 +90,15 @@ test-side reduction of `Picard/Pic0ChartCoverageAffineTest.lean` is orthogonal a
 change this — it reduces the *test*, while this is about the chart *source*.  (That file is not
 in this module's import closure, so nothing here consumes it.)
 
-**One corollary worth having, and it closes the `⊥` loophole the sibling file flagged.**
-Instantiating the monotone direction at `U := ⊥` shows the `⊥` *instance* implies the instance
-at every `V`, hence unrestricted coverage.  So the "`⊥`-based route through the instance
-binder" that `Pic0ChartRestrictedFibreSat.lean:93-98` leaves open is not cheap: inhabiting it
-would discharge unrestricted coverage outright.  That is `isLocallySurjective_of_bot` below.
+**One corollary about the `⊥` loophole the sibling file flagged — and it is now known to be
+VACUOUS.**  Instantiating the monotone direction at `U := ⊥` shows the `⊥` *instance* implies the
+instance at every `V`, hence unrestricted coverage.  That is `isLocallySurjective_of_bot` below,
+and it is true.  But its hypothesis is refutable: `not_isLocallySurjective_restrictChart_bot'`
+(`Picard/Pic0ChartBotRefute.lean`, downstream of this file, so the name does not resolve here)
+refutes the `⊥` instance outright for an arbitrary chart family, with its own antecedents
+discharged.  So the corollary does not price a route as expensive — **there is no route**, and an
+earlier draft of this passage read "not cheap", which understates it in the direction that costs a
+lane a round.
 
 ## What is NOT closed here, stated plainly
 
@@ -259,13 +263,21 @@ theorem isLocallySurjective_unrestricted {ι : Type u} {X : ι → Scheme.{u}}
     (J := Scheme.zariskiTopology)
     (Limits.Sigma.map fun i => yoneda.map (X i).topIso.hom) (Sigma.desc f)
 
-/-- **The `⊥` instance binder is not a cheap route** — it implies unrestricted coverage.
+/-- **The `⊥` instance binder implies unrestricted coverage — and the binder is UNINHABITABLE, so
+this theorem is vacuous.**
 
 `Pic0ChartRestrictedFibreSat.lean:93-98` records that at `V = ⊥` antecedent 1 is free, so the
 *instance* form of the assembly reduces to the `IsLocallySurjective` binder alone, and that
-`not_coverageContainment_bot` refutes the `hcov` *spelling* without touching the binder.  This
-closes that loophole from the other side: whoever inhabits the binder at `⊥` has thereby
-inhabited it for the unrestricted atlas, which is the full coverage obligation.
+`not_coverageContainment_bot` refutes the `hcov` *spelling* without touching the binder.  The
+statement below approaches that loophole from the other side: whoever inhabits the binder at `⊥`
+has thereby inhabited it for the unrestricted atlas.
+
+**The honest reading, added after the binder was refuted.**  `Pic0ChartBotRefute.lean` proves the
+hypothesis below is false for *every* chart family, so nothing will ever be fed to this theorem.
+It is not "the `⊥` route costs the full coverage obligation" — there is no `⊥` route.  Keep the
+theorem: the implication is what makes the refutation's *consequence* for larger `V` immediate, and
+`isLocallySurjective_unrestricted` (its non-vacuous sibling, hypothesis at an arbitrary `V`) is
+unaffected.
 
 Monotonicity at `U := ⊥` followed by `isLocallySurjective_unrestricted`.  Nothing about the Abel
 chart enters. -/

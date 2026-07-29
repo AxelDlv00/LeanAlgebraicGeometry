@@ -97,15 +97,24 @@ remaining antecedent.  `not_coverageContainment_bot` constrains the `hcov` *spel
 not that instance binder — so it does not by itself rule out a `⊥`-based route through the
 instance version.
 
-**That loophole is now shut, from two directions, and neither is in this file.**
+**That loophole is now shut, and it turns out never to have been open.**  Both declarations
+named below live in modules *downstream* of this one, so neither name resolves in this file's
+import closure — `#check` them from `Picard/Pic0ChartBotRefute.lean`, not from here.  (Recorded
+because a bare name in a docstring that grep confirms and `#check` refutes has cost this project
+several rounds.)
 
-* `Picard/Pic0ChartVMonotone.lean`'s `isLocallySurjective_of_bot`: antecedent 2 is *monotone* in
-  `V`, so inhabiting the instance binder at `⊥` yields it at every `V` and hence for the
-  **unrestricted** atlas.  The `⊥` route is therefore not cheap — it costs the full coverage
-  obligation.  (Same file: coverage at *any* `V` implies unrestricted coverage, so the restriction
-  relieves this side by nothing at all.)
-* Independently, inbox `I-1049` refutes the instance binder at `⊥` outright, for an arbitrary
-  chart family.
+* `Picard/Pic0ChartBotRefute.lean`'s `not_isLocallySurjective_restrictChart_bot'` refutes the
+  instance binder at `⊥` **outright**, for an arbitrary chart family and with its own antecedents
+  discharged (`Spec k` is the test, the identity class the section, and a field's spectrum
+  supplies the point).  So the loophole was never open.  The producer-side spelling is
+  `not_chartsCoverLocally_bot` in the same file.
+* `Picard/Pic0ChartVMonotone.lean`'s `isLocallySurjective_of_bot` reaches the same endpoint by
+  monotonicity — inhabiting the binder at `⊥` would yield it at every `V`, hence for the
+  **unrestricted** atlas — and reads that as "the `⊥` route is not cheap".  Given the refutation
+  above, that theorem is **vacuous**: its hypothesis is precisely what is refuted, so it is not
+  pricing a route, and `false_of_isLocallySurjective_bot` records that.  Its companion result is
+  unaffected and remains the useful one: coverage at *any* `V` implies unrestricted coverage, so
+  the restriction relieves this side by nothing at all.
 
 So both endpoints are now refuted at *instance* level rather than at the level of one
 formulation, and the conditional below ("any `V` that works must be a proper intermediate open")
