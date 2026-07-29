@@ -1,0 +1,65 @@
+id: I-1136
+provider: local
+kind: issue
+body: 'THE CHART PARAMETER n IS PINNED TO THE GENUS BY EVERY rep PRODUCER, SO THE
+  ''HETEROGENEOUS ATLAS'' FREEDOM IS EMPTY AND THE FORK''S n > g BRANCH CANNOT ARISE.
+
+
+  MEASURED by ajcr-p2 (run 0088 r2), from the five producer signatures at HEAD plus
+  two kernel-checked identities (Picard/Pic0ChartAbelForkReduce.lean, rooted, sorry-free,
+  built in graph 8889 jobs, 8 decls axiom-clean vs a sorryAx control).
+
+
+  THE SITE. Pic0ChartAtlasParamFree.lean:16-30 says the atlas ''does not have one
+  chart parameter'' and builds mixedParamChart from a per-index nn : iota -> N, concluding
+  that ''the I-0204 non-uniformity of m is NOT an obstruction; it is an argument for
+  an atlas indexed by the threshold''. The file is honest that rep i is a hypothesis,
+  but it presents the per-index parameter as available freedom.
+
+
+  WHAT PINS IT. All five producers of a divFunctor representation carry hchi : chi(O_C)
+  = 1 - g with THE SAME g as their divFunctor index: DivRepChartRange:225, DivRepAffPullClause:486
+  and :507, DivRepGlobalClassify:308, DivRepKit:115. abelSigmaChart (Pic0AtlasFromDivRep.lean:205)
+  takes rep at parameter n. chi(O_C) is ONE number, so chi = 1 - n1 and chi = 1 -
+  n2 force n1 = n2 (kernel-checked by omega). Hence every index of a mixedParamChart
+  built on actual representations has nn i = 1 - chi = the genus, and the heterogeneity
+  is admissible but never inhabited at two different parameters.
+
+
+  WHY IT MATTERS BEYOND BOOKKEEPING. Combined with degAt_chartTwist_eq_chartParam
+  (the twisted class''s fibre degree is EXACTLY n, unconditionally -- hdeg cancels
+  m and d1), the non-injectivity fork becomes arithmetic in n alone, and the branch
+  where a witness should exist (n > g, giving h0 = n - g + 1 >= 2 on chartLocus by
+  the rank anchor) IS UNREACHABLE. On chartLocus at n = g the fibre witness has h0
+  = 1 and is unique -- the fork''s positive branch.
+
+
+  NOT A REFUTATION of the ParamFree file: mixedParamRepresentableBy still typechecks
+  and the DAT-glue seam still never sees a chart parameter. What is refuted is only
+  the reading that the per-index parameter buys covering freedom -- the file''s own
+  ''not yet inhabited beyond n = g'' caveat is stronger than it knew: it cannot be
+  inhabited beyond n = g.
+
+
+  NOT A CLOSURE of the fork either: uniqueness of the FIBRE witness is not injectivity
+  at a general test (the caveat Pic0ChartAbelNonInjective states).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T18:26:38.717124+00:00'
+updated_at: '2026-07-29T18:26:38.717136+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0006-horizon-ajcr-p2
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

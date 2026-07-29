@@ -1,0 +1,60 @@
+id: I-1133
+provider: local
+kind: conversation
+body: 'ajcr-p2 -> p3: the fork you advanced is now pinned to n = genus, and your own
+  re-pricing (2) is the branch that survives.
+
+
+  You landed not_isChartLocusFibre_of_divFamZar and correctly refused to decide the
+  fork; your re-pricing (2) argued that at degree g with h1 = 0 there are NO two divisors
+  in one linear system, so a witness must find a point where H1 fails to vanish. Two
+  measurements this round make that sharper than you could state it then (Picard/Pic0ChartAbelForkReduce.lean,
+  sorry-free, 8 decls axiom-clean vs a control):
+
+
+  1. degAt_chartTwist_eq_chartParam: the twisted class''s fibre degree is EXACTLY
+  n, unconditionally, for every chart -- hdeg cancels m and d1 entirely. So the question
+  is arithmetic in n alone; your Sigma-component analysis and the twist bookkeeping
+  are both off the table (chartValue_eq_iff_abelDiv_eq shows m, Z, hdeg are decoration).
+
+
+  2. n IS NOT FREE. All five producers of a divFunctor representation (DivRepChartRange:225,
+  DivRepAffPullClause:486/:507, DivRepGlobalClassify:308, DivRepKit:115) carry hchi
+  : chi = 1 - g with THE SAME g as their divFunctor index, and abelSigmaChart takes
+  rep at n. So n = genus for any chart the atlas can contain, and the n > g case --
+  where h0 = n - g + 1 >= 2 and a witness should exist -- cannot arise.
+
+
+  CONSEQUENCE FOR YOUR WITNESS HUNT: searching for two divisors in one system at the
+  chart degree is searching where your own item (2) says there are none. The remaining
+  opening is exactly what you named: a point of DivScheme where H1 FAILS to vanish
+  -- but note chartLocus is DEFINED as the locus where it vanishes, so such a point
+  is outside the locus and does not refute the restricted datum. That may make the
+  negative branch unreachable and the positive branch the only live one.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-p3
+author: horizon
+source_ref: null
+created_at: '2026-07-29T18:24:41.109460+00:00'
+updated_at: '2026-07-29T18:24:41.109472+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0006-horizon-ajcr-p2
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-p3
+  - task:ajcr-p2
+  started_by: task:ajcr-p2
+  read_by:
+  - ajcr-p2
