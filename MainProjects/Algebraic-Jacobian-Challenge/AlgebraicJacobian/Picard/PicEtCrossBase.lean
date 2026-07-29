@@ -44,17 +44,28 @@ commutes with restriction along a continuous functor. Restriction along
 `Over.map φ` *is* continuous for the two localised étale topologies (by
 synthesis — `§1`), so the sheaf-level identification reduces, with no residue,
 to the same statement one level down at the *unsheafified* relative Picard
-presheaf (`§2`). That reduction is the content: it converts a statement about
+presheaf (`§5`). That reduction is the content: it converts a statement about
 an object defined by a universal property into a statement about an explicit
 quotient of line-bundle classes.
 
-**The presheaf-level face is NOT proved here** and is left as one explicit,
-named `sorry` (`§3`, `relPresheaf_crossBaseIso`). Its geometric heart is
-identified and *is* discharged (`§2`, `crossBaseTotalIso`): the two total
-spaces `C_{k'} ×_{k'} T` and `C ×_k T` are canonically isomorphic by a single
-Mathlib lemma, `pullbackLeftPullbackSndIso`. What remains on top of that
-scheme-level iso is bookkeeping — transporting the `H_T`-coset quotient along
-it and checking naturality in `T` — not a further geometric input.
+**The presheaf-level face is reduced to naturality-and-bijectivity, not
+closed.** Two of its three layers are discharged here:
+
+* the two total spaces are canonically isomorphic (`§2`, `crossBaseTotalIso`),
+  by the single Mathlib lemma `pullbackLeftPullbackSndIso`;
+* the `H_T`-coset *relation* transports across that iso, with the **same** coset
+  witness `N` (`§3`, `crossBase_relPicRel`) — this is the layer where the two
+  subgroups being quotiented by have to correspond, and it is the substantive
+  one. It gives the componentwise map of carriers, `crossBaseQuotMap`.
+
+What is left open, as one explicit named `sorry` (`§4`,
+`relPresheaf_crossBaseIso`), is that `crossBaseQuotMap` is **bijective** and
+**natural in `T`**. Those are genuinely open, not asserted: the inverse needs
+the mirror-image transport along `crossBaseTotalIso.hom` plus the two round-trip
+identities, and naturality needs the base-change squares of `relFunctorial` to
+commute with the cancellation iso. No new *geometric* input is needed for
+either — the scheme-level iso is in hand — but they are not free and this file
+does not claim them.
 
 **Nothing here closes the seam sorry, and no antecedent of
 `fgaPicardRepresentability` is witnessed for any curve by this file.** The
@@ -81,7 +92,7 @@ EXIT=0, 8865 jobs) — a stale-import environment reports every probe as
 succeeding (`I-1057`). The continuity claim of `§1` carries a control: the
 strictly stronger `IsDenseSubsite` at the *same* two topologies does **not**
 synthesize, so the pushforward is not an equivalence and the compatibility iso
-of `§2` is not a triviality.
+of `§5` is not a triviality.
 -/
 
 universe u
@@ -169,7 +180,84 @@ theorem crossBaseTotalIso_hom_snd (C : Over (Spec (CommRingCat.of k)))
       = pullback.snd (baseChangeField C k').hom T.hom :=
   pullbackLeftPullbackSndIso_hom_snd _ _ _
 
-/-! ## §3. The presheaf-level face — the one open obligation of this file -/
+/-! ## §3. The `H_T`-coset relation transports across the base change
+
+The two carriers of the presheaf-level face are `H_T`-coset quotients of
+line bundles on the two total spaces of `§2`. This section proves that
+`crossBaseTotalIso` carries the coset *relation* to the coset relation — which
+is the step where the two subgroups being quotiented by have to correspond, and
+therefore the load-bearing part of the presheaf face. -/
+
+/-- **Pullback along the total-space iso matches the two projection pullbacks.**
+
+`crossBaseTotalIso C T` was built by base-cancellation, so composing it with
+the projection to `T` on the `C_{k'}`-side gives the projection to `T` on the
+`C`-side (`pullbackLeftPullbackSndIso_inv_snd_snd`). Hence pulling a bundle
+back from `T` and then along the iso is the same as pulling it back from `T`
+directly.
+
+This is what makes the subgroups `H_T = im π_T^*` on the two sides correspond,
+and it is stated at *functor* level deliberately: the object-level form sends
+`isDefEq` into a heartbeat blow-up on these pullback towers, while the functor
+form is immediate. -/
+noncomputable def crossBaseProjPullbackIso (C : Over (Spec (CommRingCat.of k)))
+    (T : Over (Spec (CommRingCat.of k'))) :
+    Scheme.Modules.pullback (pullback.snd (baseChangeField C k').hom T.hom)
+        ⋙ Scheme.Modules.pullback (crossBaseTotalIso C T).inv
+      ≅ Scheme.Modules.pullback (pullback.snd C.hom ((restrictTest k k').obj T).hom) :=
+  Scheme.Modules.pullbackComp _ _ ≪≫
+    Scheme.Modules.pullbackCongr
+      (pullbackLeftPullbackSndIso_inv_snd_snd C.hom (specMapAlgebra k k') T.hom)
+
+/-- **Transport of a relative line bundle across the base change**: a line
+bundle on `C_{k'} ×_{k'} T` becomes one on `C ×_k T` by pullback along
+`crossBaseTotalIso`, local triviality being preserved
+(`IsLocallyTrivial.pullback`). -/
+noncomputable def crossBaseOnProduct (C : Over (Spec (CommRingCat.of k)))
+    (T : Over (Spec (CommRingCat.of k')))
+    (L : LineBundle.OnProduct (baseChangeField C k').hom T.hom) :
+    LineBundle.OnProduct C.hom ((restrictTest k k').obj T).hom :=
+  ⟨(Scheme.Modules.pullback (crossBaseTotalIso C T).inv).obj L.carrier,
+    L.isLocallyTrivial.pullback _⟩
+
+/-- **The `H_T`-coset relation is preserved by the cross-base transport.**
+
+If `L ~ L'` on `C_{k'} ×_{k'} T` with coset witness `N` on `T`, then the
+transported bundles are related on `C ×_k T` **with the same witness `N`** —
+the witness does not change, because both sides quotient by the pullback of
+`Pic(T)` along projections that `crossBaseProjPullbackIso` identifies.
+
+This is the substantive half of the presheaf-level face: it says the two
+quotients are quotients of isomorphic groups by *corresponding* subgroups. -/
+theorem crossBase_relPicRel (C : Over (Spec (CommRingCat.of k)))
+    (T : Over (Spec (CommRingCat.of k')))
+    {L L' : LineBundle.OnProduct (baseChangeField C k').hom T.hom}
+    (h : PicSharp.relPicRel (baseChangeField C k').hom T.hom L L') :
+    PicSharp.relPicRel C.hom ((restrictTest k k').obj T).hom
+      (crossBaseOnProduct C T L) (crossBaseOnProduct C T L') := by
+  obtain ⟨N, hN, ⟨e⟩⟩ := h
+  refine ⟨N, hN, ⟨?_⟩⟩
+  refine (Scheme.Modules.pullback (crossBaseTotalIso C T).inv).mapIso e ≪≫ ?_
+  refine Modules.pullbackTensorIsoOfLocallyTrivial _ _ _
+    (LineBundle.pullbackAlongProjection _ _ N hN).isLocallyTrivial
+    L'.isLocallyTrivial ≪≫ ?_
+  exact Modules.tensorObjIsoOfIso ((crossBaseProjPullbackIso C T).app N) (Iso.refl _)
+
+/-- **The induced map of relative Picard carriers**, one test at a time:
+`Pic(C_{k'} ×_{k'} T)/π_T^* Pic(T) ⟶ Pic(C ×_k T)/π_T^* Pic(T)`.
+
+Well defined by `crossBase_relPicRel`. This is the componentwise map of the
+presheaf-level face; what `relPresheaf_crossBaseIso` below still owes is that
+it is bijective and natural in `T`. -/
+noncomputable def crossBaseQuotMap (C : Over (Spec (CommRingCat.of k)))
+    (T : Over (Spec (CommRingCat.of k'))) :
+    Quotient (PicSharp.relPicSetoid (baseChangeField C k').hom T.hom) →
+      Quotient (PicSharp.relPicSetoid C.hom ((restrictTest k k').obj T).hom) :=
+  Quotient.lift
+    (fun L => Quotient.mk _ (crossBaseOnProduct C T L))
+    (fun _ _ h => Quotient.sound (crossBase_relPicRel C T h))
+
+/-! ## §4. The presheaf-level face — the one open obligation of this file -/
 
 /-- **The cross-base identification at the level of the UNSHEAFIFIED relative
 Picard presheaf.** This is the one statement this file leaves open, and it is
@@ -179,15 +267,26 @@ What it says: the relative Picard presheaf of the base-changed curve `C_{k'}`,
 as a functor on `k'`-tests, agrees with the relative Picard presheaf of `C`
 evaluated on restricted tests.
 
-**Why it is plausible and what remains.** On a fixed test `T` the two carriers
-are `Pic(C_{k'} ×_{k'} T)/π_T^* Pic(T)` and `Pic(C ×_k T)/π_T^* Pic(T)`, and
-the two total spaces are canonically isomorphic — that is `crossBaseTotalIso`
-above, proved. What is left is to transport the `H_T`-coset quotient along that
-iso (the subgroup being quotiented by is the pullback of `Pic(T)` on both
-sides, and `crossBaseTotalIso_hom_snd` says the two projections to `T` agree,
-which is what makes the subgroups correspond) and to check naturality in `T`.
-That is bookkeeping over an established scheme-level iso, not a further
-geometric input.
+**What is already proved, and what precisely remains.** On a fixed test `T` the
+two carriers are `Pic(C_{k'} ×_{k'} T)/π_T^* Pic(T)` and
+`Pic(C ×_k T)/π_T^* Pic(T)`. Discharged above:
+
+* the two total spaces are canonically isomorphic (`crossBaseTotalIso`);
+* the coset relation transports with the same witness, so the componentwise map
+  `crossBaseQuotMap` exists and is well defined (`crossBase_relPicRel`).
+
+Still owed, and this is what the `sorry` stands for:
+
+1. **bijectivity** of `crossBaseQuotMap` — needs the mirror transport along
+   `crossBaseTotalIso.hom` and the two round-trip identities, for which
+   `Modules.pullbackComp`/`pullbackId` are the tools;
+2. **naturality in `T`** — that the cancellation iso commutes with the
+   base-change maps `relFunctorial` acts by.
+
+Neither needs a new geometric input; neither is free. **Do not read the
+`crossBaseQuotMap` above as making this a formality**: a well-defined map in one
+direction is not an isomorphism of functors, and the gap between them is exactly
+the two items listed.
 
 **Deliberately left as an explicit `sorry`.** Per the round's discipline this
 is a named open obligation, not a hidden one: no declaration in this file
@@ -200,7 +299,7 @@ theorem relPresheaf_crossBaseIso (C : Over (Spec (CommRingCat.of k)))
       ≅ (restrictTest k k').op ⋙ PicSharp.relPresheaf C) :=
   sorry
 
-/-! ## §4. The reduction: sheafification adds nothing -/
+/-! ## §5. The reduction: sheafification adds nothing -/
 
 /-- **The sheafification layer of the cross-base identification is free.**
 
