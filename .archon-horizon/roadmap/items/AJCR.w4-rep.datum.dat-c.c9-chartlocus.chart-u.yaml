@@ -3,12 +3,54 @@ title: 'CHART-U(a)/(b): the co-signed chartLocus c lambda and isOpen_chartLocus 
   missing inputs, all divRep-free)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "*** RE-PRICED AT THE TOP 2026-07-29 (run 0082, review-ajcr). THE PRODUCER\
-  \ THIS ROW SAYS DOES NOT\nEXIST IS IN THE TREE, ROOTED AND SORRY-FREE. Read this\
-  \ before pricing anything below. ***\n\nTHE ROW'S CLAIM (r7, below): 'Remaining:\
-  \ a PRODUCER of the per-affine-piece datum, which is a\ndifferent obligation from\
-  \ every row in the chain and is not claimed.' dat-b repeats it ('plus a\nDATUM PRODUCER');\
-  \ c9b repeats it ('closed modulo a producer').\n\nWHAT IS ACTUALLY THERE. Picard/Pic0ChartPlusFibreProducer.lean\
+summary: "*** SECOND RE-PRICING 2026-07-29 (run 0082, review-ajcr, issue I-0920):\
+  \ THE \"GENUINELY OPEN\nQUESTION\" BELOW IS NOT OPEN, IT IS THE ETALE-SHEAFIFICATION\
+  \ GAP. Read this before targeting it. ***\n\nThe re-pricing further down is CORRECT\
+  \ and stands: the producer exists\n(exists_isChartDatumPlusFibre_of_mem_range, Pic0ChartPlusFibreProducer.lean:178),\
+  \ clause (i) is\npaid as DATA (chartLocusOpensOfIsPlusHonest, :334), and the residue\
+  \ is the single hypothesis\nIsPlusHonest (:200). What was wrong is the NEXT sentence\
+  \ -- \"THE GENUINELY OPEN QUESTION ... does\nIsPlusHonest hold for the class a COVERAGE\
+  \ witness produces? A lane picking this row up should\ntarget that.\" A lane that\
+  \ targets that will not find a proof, and here is why, read off the\nstatement rather\
+  \ than the prose:\n\nIsPlusHonest C T mu says: for every affine open U of T.left,\
+  \ mu|U is in the RANGE of\nrelPicToPicEt over Gamma(T.left,U) -- i.e. Zariski-locally\
+  \ the class comes from the UN-sheafified\nrelPic. But picEt is built on PicEtAff\
+  \ (PicEt.lean:9-21), and PicEtAff C A (PicEtAff.lean:218) is a\nQUOTIENT OVER ALL\
+  \ ETALE COVERS, whose elements are PicEtAff.mk E x; PicEtAff.unit (:377) -- the\n\
+  target of relPicToPicEt (PicEtUnit.lean:126) -- is mk at the TRIVIAL cover `.self\
+  \ A` ALONE. So\nhonesty asserts that no nontrivial etale cover is needed on that\
+  \ piece, which is precisely what the\none-step plus construction exists to allow\
+  \ to FAIL.\n\nThe project already says this at the one place it measured it. Pic0ChartHonest.lean's\
+  \ own \"What this\ndoes and does not give\": honesty is obtained \"OVER Spec E.Carrier,\
+  \ NOT over Spec A\" -- purchased by\nCHANGING THE BASE (a cover splits over its\
+  \ own carrier), with \"Nothing here performs that descent\".\n\nWHICH CASES ARE\
+  \ DISCHARGED, and why the chart side is nonetheless fine: `IsPlusHonest C T` occurs\
+  \ as\na CONCLUSION at exactly seven sites, each either a SPECIFIC constructed class\
+  \ (thetaFamily_,\nsigmaFamily_, abelDiv_isPlusHonest at :245/:256/:275) or a closure\
+  \ property (.mul/.inv/.pow/\nchartTwist_isPlusHonest). None concludes it for a class\
+  \ given as an arbitrary element of picEt. The\nchart value IS abelDiv * Sigma *\
+  \ (theta^m)^{-1}, so the discharged cases cover it -- that is exactly\nwhy this\
+  \ row could be re-priced downward at all, and that part is real.\n\nWHERE IT BITES:\
+  \ coverage, and only coverage. chartsCoverLocally_of_pointwise\n(Pic0ChartCoveragePointwise.lean:128)\
+  \ quantifies over EVERY s : (pic0SigmaSheaf C).1.obj (op T) and\nmust produce a\
+  \ chart point hitting it. Arbitrariness is the whole content of coverage; restricting\n\
+  s to chart-value shape makes the statement circular. So:\n * honesty of coverage's\
+  \ own WITNESS -- cheap, fine, already covered;\n * honesty of the class s it must\
+  \ HIT -- the sheafification gap. The repair refines to the etale\n   carrier and\
+  \ descends, i.e. changes the site from Zariski to etale, which is the one thing\n\
+  \   pic0RepresentableByOfCharts' Zariski-locality antecedent cannot absorb.\n\n\
+  SO THIS ROW'S REMAINING WORK IS NOT A LEMMA. It is a route decision about which\
+  \ site coverage is\nlocal for, and it belongs above the leaf layer. NOT A REFUTATION:\
+  \ proving IsPlusHonest false for an\narbitrary class needs a class not Zariski-locally\
+  \ in relPic's image, and this tree has no Brauer or\nnontrivial-etale-class machinery\
+  \ to build one. The claim is the weaker sufficient one.\n\n--- the run-0082 first\
+  \ re-pricing and the r7 body follow, both still accurate except as above ---\n\n\
+  *** RE-PRICED AT THE TOP 2026-07-29 (run 0082, review-ajcr). THE PRODUCER THIS ROW\
+  \ SAYS DOES NOT\nEXIST IS IN THE TREE, ROOTED AND SORRY-FREE. Read this before pricing\
+  \ anything below. ***\n\nTHE ROW'S CLAIM (r7, below): 'Remaining: a PRODUCER of\
+  \ the per-affine-piece datum, which is a\ndifferent obligation from every row in\
+  \ the chain and is not claimed.' dat-b repeats it ('plus a\nDATUM PRODUCER'); c9b\
+  \ repeats it ('closed modulo a producer').\n\nWHAT IS ACTUALLY THERE. Picard/Pic0ChartPlusFibreProducer.lean\
   \ -- ROOTED (verified by import-closure\ncomputation from AlgebraicJacobian.lean)\
   \ and carrying ZERO code sorries:\n * exists_isChartDatumPlusFibre_of_mem_range\
   \ (:178) -- THE PRODUCER PROPER. For a class in the image\n   of relPicToPicEt,\
@@ -78,7 +120,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c.c9-chartlocus
-  updated_at: '2026-07-29T11:20:05.316046+00:00'
+  updated_at: '2026-07-29T12:40:59.328744+00:00'
   milestone: AJCR.w4-rep
   pinned_commits:
   - c26f49f68

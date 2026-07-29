@@ -1,0 +1,76 @@
+id: I-0920
+provider: local
+kind: issue
+body: '`IsPlusHonest` (the dat-b/chart-u residue) IS THE ETALE-SHEAFIFICATION GAP
+  ASSERTED OF AN ARBITRARY SECTION -- not an open lemma. Do not send a lane at it
+  as stated.
+
+
+  review-ajcr (run 0082), against chart-u''s own sentence: "THE GENUINELY OPEN QUESTION
+  ... does IsPlusHonest hold for the class a COVERAGE witness produces? A lane picking
+  this row up should target that."
+
+
+  STATEMENT (Pic0ChartPlusFibreProducer.lean:200, read not paraphrased): for every
+  affine open U of T.left, mu|U lies in the RANGE of relPicToPicEt over Gamma(T.left,U)
+  -- Zariski-locally the class comes from the UN-sheafified relPic.
+
+
+  WHY STRUCTURAL. picEt rests on PicEtAff (PicEt.lean:9-21); PicEtAff C A (:218) is
+  a QUOTIENT OVER ALL ETALE COVERS (elements PicEtAff.mk E x). PicEtAff.unit (:377),
+  the target of relPicToPicEt (PicEtUnit.lean:126), is mk at the TRIVIAL cover `.self
+  A` alone. So honesty says no nontrivial etale cover is needed on that piece -- exactly
+  what the one-step plus construction exists to permit to fail.
+
+
+  THE PROJECT SAYS SO WHERE IT MEASURED IT: Pic0ChartHonest.lean''s own "does not
+  give" -- honesty holds "OVER Spec E.Carrier, NOT over Spec A", bought by CHANGING
+  THE BASE, and "Nothing here performs that descent".
+
+
+  DISCHARGED CASES: `IsPlusHonest C T` occurs as a CONCLUSION at exactly seven sites
+  -- either a SPECIFIC constructed class (thetaFamily/sigmaFamily/abelDiv_isPlusHonest,
+  :245/:256/:275, each verified present) or a closure property (.mul/.inv/.pow/chartTwist).
+  NONE concludes it for an arbitrary element of picEt.
+
+
+  WHY ONLY COVERAGE BITES. Chart-side uses are fine: the chart value IS abelDiv*Sigma*(theta^m)^-1,
+  so those cases cover it -- which is why the row could be re-priced downward at all.
+  But chartsCoverLocally_of_pointwise (Pic0ChartCoveragePointwise.lean:128) quantifies
+  over EVERY s and must hit it; arbitrariness is coverage''s content, and a chart-value-shaped
+  s is circular.
+
+
+  COSTING. Honesty of coverage''s own WITNESS is cheap. Honesty of the class s it
+  must HIT is the gap: the repair refines to the etale carrier and descends -- a Zariski-to-etale
+  change of site, which pic0RepresentableByOfCharts'' Zariski-locality antecedent
+  does not absorb. Antecedent 2 owes a DECISION about which site coverage is local
+  for, not a lemma.
+
+
+  NOT A REFUTATION: proving it false needs a class not Zariski-locally in relPic''s
+  image, and this tree has no Brauer machinery. The weaker sufficient claim: it is
+  not a lemma about the tree''s own constructions, and a lane told to "target that"
+  will not find a proof.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T12:40:17.355703+00:00'
+updated_at: '2026-07-29T12:40:41.537226+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0004-horizon-review-ajcr
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-p2
