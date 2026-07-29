@@ -100,9 +100,12 @@ each file's own scope and false of the project.
   GAP-2's `hD`/`hD'`/`hcl`, leaving exactly its `h⁰ = 1` binder, which the rank anchor ties to
   the chart's own degree.
 * `AlgebraicGeometry.degAt_chartTwist_eq_chartParam` — the chart parameter **is** the fibre
-  degree of the twisted class, unconditionally.  So which branch of the fork holds is arithmetic
-  in `n` alone: `n = g` gives `h⁰ = 1` on `chartLocus` (positive branch), `n > g` gives
-  `h⁰ = n − g + 1 ≥ 2` (negative branch).
+  degree of the twisted class, unconditionally.  So where the fork is asked is arithmetic in `n`
+  alone: on `chartLocus` the fibre witness has `h⁰ = n − g + 1`, which is `1` at `n = g` and
+  `≥ 2` for `n > g`.  Since every `rep` producer pins `n = g` (see that theorem's docstring), the
+  `n > g` case — where a refuting witness would live — cannot arise for a chart the atlas can
+  contain.  **That closes no branch**: an unrefutable hypothesis is not a satisfied one, and the
+  datum still has no producer.
 -/
 
 set_option autoImplicit false
@@ -294,12 +297,19 @@ every producer of such a representation in the tree — `DivRepChartRange`, `Div
 five sites).  So a chart built on an actual representation has `χ = 1 − n`, i.e. `n` *is* the
 genus, and the case `n > g` cannot arise for any chart the atlas can contain.
 
-That is the useful consequence and it points at the **positive** branch: on `chartLocus`, at the
-only degree a chart can be built at, the fibre witness has `h⁰ = 1` and is unique.  It does not
-close the fork, because uniqueness of the *fibre* witness is not injectivity at a general test —
-and `Pic0ChartAtlasParamFree.lean` is precisely the observation that the atlas may be
-heterogeneous in `n`, which this remark constrains rather than contradicts (each index still
-carries its own `rep`, hence its own `hchi`, hence `nn i = g` for every `i`). -/
+So on `chartLocus`, at the only degree a chart can be built at, the fibre witness has `h⁰ = 1`
+and is unique.  `Pic0ChartAtlasParamFree.lean`'s heterogeneous atlas is constrained rather than
+contradicted by this: each index still carries its own `rep`, hence its own `hchi`, hence
+`nn i = g` for every `i`, so the freedom is admissible but never inhabited at two parameters.
+
+**WHAT THIS DOES NOT SAY, and the distinction is the whole point** (ajcr-p3's correction, and
+they are right): *unreachability of the refutation is not reachability of the positive branch.*
+Two separate gaps remain, and neither is narrowed by anything above.  (i) Uniqueness of the
+**fibre** witness is not injectivity at a general test — the caveat
+`Picard/Pic0ChartAbelNonInjective.lean` states, which nothing here weakens.  (ii) The datum
+still needs a **producer**, and the definition of `chartLocus` that shields it from refutation
+supplies none: a hypothesis that cannot be refuted is not thereby satisfied.  A lane must not
+read the pinning as evidence that `exists_factor` holds. -/
 theorem degAt_chartTwist_eq_chartParam (m : ℕ)
     (Z : (C ⊗ overSpec k k).left.CurveDivisor)
     (hdeg : Scheme.CurveDivisor.deg k Z
