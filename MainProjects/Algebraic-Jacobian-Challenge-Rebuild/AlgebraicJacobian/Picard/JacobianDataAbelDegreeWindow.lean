@@ -45,19 +45,31 @@ separate are the **same condition**.  With `χ(𝒪) = 1 − g` the rank anchor
 
 so **`h¹ = 0` alone forces `h⁰ = 1`** for a degree-`g` divisor.  `h¹ = 0` is what coverage
 asks for (`IsSplitWitness`, and `Pic0ChartCoverageNoDrop.lean`'s drop-free membership);
-`h⁰ = 1` is what DAT-C GAP-2 and the chart map's injectivity ask for
-(`Scheme.CurveDivisor.eq_of_picClass_eq_of_h0_one`).  `Pic0ChartCoverageNoDrop.lean` says
-effectivity and `h⁰ = 1` "are what the *chart map's injectivity* needs, not what *membership*
-needs", which is true of the *hypotheses as written* and understates the coupling: at degree
-`g` the membership hypothesis already delivers the injectivity hypothesis.
+`h⁰ = 1` is one of the four inputs of DAT-C GAP-2
+(`Scheme.CurveDivisor.eq_of_picClass_eq_of_h0_one`).
 
-That is also the sharp form of `Pic0ChartCoverageIndexSlack.lean`'s `hb_forces_h0_eq_one`.
-That theorem reads its own conclusion as a defect ("`hb` at `b = g` forces **every**
-degree-`g` divisor to have `h⁰ = 1`, false on a curve with a moving degree-`g` family") — and
-it is right that the *universally quantified* form is too strong.  What this file adds is that
-the pointwise form is not a defect but the χ-ledger: for one divisor, at degree `g`, `h⁰ = 1`
-*is* `h¹ = 0`.  So the index-slack residue and the drop-freeness of coverage are two faces of
-one identity rather than two independent findings.
+**SCOPED, 2026-07-29, by a fresh-context review of this file, before anything consumed it.**
+A first draft of this paragraph said coverage's hypothesis and GAP-2's hypothesis are "the same
+hypothesis", and that the index-slack residue and coverage's drop-freeness are "two faces of one
+identity".  **Both sentences were too strong and are withdrawn.**  `eq_of_picClass_eq_of_h0_one`
+takes **four** inputs — `0 ≤ D`, `0 ≤ D'`, the class equation, and `h⁰ = 1` — and the identity
+below substitutes only the last.  **Effectivity is passed through unchanged, and effectivity is
+precisely what coverage does not carry**: `IsSplitWitness`'s own docstring
+(`Pic0ChartLocus.lean:145-149`) says so, and warns in terms that apply exactly here that "a lane
+that reads `IsSplitWitness` as already giving it will have a gap where it least expects one".
+Dropping `0 ≤ D'` from the theorem below and closing with `exact?` fails.
+
+What survives, and it is worth having but smaller: **GAP-2 goes from four inputs to three** at
+degree `g`.  Two further scopings of record, both from the same review:
+
+* the identity is *interderivable* with the already-landed `hb_forces_h0_eq_one`
+  (`Pic0ChartCoverageIndexSlack.lean:180`, the same one-line proof), and `IndexSlack:175` already
+  headlines "the χ-ledger turns it into an `h⁰` equality" — so the χ-ledger reading is not new
+  here, only packaged;
+* `IndexSlack`'s reading of its own conclusion as a defect concerns the *universally quantified*
+  form ("**every** degree-`g` divisor has `h⁰ = 1`", false with a moving degree-`g` family).  The
+  pointwise form below is not a defect.  That distinction stands; the claim that it *unifies* the
+  two findings does not.
 
 ## Main declarations
 
@@ -68,8 +80,17 @@ one identity rather than two independent findings.
   with the reference divisor's degree only **bounded below**, which is what removes the
   arithmetic hypothesis.
 * `AlgebraicGeometry.exists_reference_divisor_le_deg` — and the reference divisor at that
-  bound **exists on every curve of the campaign bundle**, so the face above is inhabited, not
-  relocated.  This is the declaration that discharges the retraction's "open here".
+  bound **exists on every curve of the campaign bundle**, so the face above is inhabited rather
+  than conditional.  **It does NOT discharge the retraction's "open here"** — a first draft said
+  it did, and that was withdrawn by a fresh-context review of this file: the conclusion weakened
+  in lockstep with the hypothesis, so the divisibility obstruction moved from the *input* degree
+  to the *output* degree rather than dissolving.  See the honest-limit paragraph on
+  `exists_effective_of_classDeg_eq_zero_of_toP1`, and the review's own generalisation of the
+  pattern (a weakened hypothesis can look like a discharged obstruction when it only relocated
+  the same obstruction to the output).  The `π` in this statement is also **not load-bearing**:
+  the section's `[LocallyOfFiniteType]` already gives `Scheme.residueDeg_pos`, so `d` copies of
+  any non-generic point prove the identical conclusion with no `ℙ¹` anywhere.  `π` is kept
+  because it is the datum the campaign's curve actually carries.
 * `AlgebraicGeometry.h0_eq_one_of_subsingleton_hModule_one_of_deg_eq` — the identity: at
   degree `g` with `χ = 1 − g`, `h¹ = 0` forces `h⁰ = 1`.
 * `AlgebraicGeometry.eq_of_picClass_eq_of_deg_eq_of_subsingleton_hModule_one` — GAP-2's
@@ -174,16 +195,28 @@ variable (K : Type u) [Field K] {Y : Scheme.{u}} [IsIntegral Y]
 `d` copies of the fibre divisor: `deg (d • F) = d · deg F` (`deg_nsmul'`) and `1 ≤ deg F`
 (`one_le_classDeg_fiberTwist_one` read through `classDeg_fiberTwist_one`).
 
-**This is what makes `exists_effective_of_classDeg_eq_zero_of_le_deg` inhabited rather than
-conditional, and it is the point of the whole file.**  The `= g` predecessor needed a divisor
-of degree *exactly* `g`, which need not exist — `deg` is weighted by residue degrees, so the
-image of `deg` is `index · ℤ`, and the campaign's own reference has `deg (m • F) = m · δ`, hence
-`= g` requires `δ ∣ g`.  A *lower bound* asks nothing of `δ` beyond `1 ≤ δ`, which is landed.
+This makes `exists_effective_of_classDeg_eq_zero_of_le_deg` inhabited rather than conditional.
+The `= g` predecessor needed a divisor of degree *exactly* `g`, which need not exist — `deg` is
+weighted by residue degrees, so the image of `deg` is `index · ℤ`, and the campaign's own
+reference has `deg (m • F) = m · δ`, hence `= g` requires `δ ∣ g`.  A *lower bound* asks nothing
+of `δ` beyond `1 ≤ δ`, which is landed.
 
 No rational point, no hypothesis on the index, no condition relating `g` and `δ`.  On the
 campaign's curve the map is supplied unconditionally by `exists_isFinite_isDominant_toP1`
 (`Curve/MapToP1.lean`), whose `thetaP1` face (`Picard/ThetaShift.lean`) is what the chart layer
-already uses. -/
+already uses.
+
+**TWO SCOPINGS, from a fresh-context review of this file (2026-07-29).**
+
+1. A first draft called this "the point of the whole file" and said it *discharges* the
+   predecessor's "genuine arithmetic hypothesis on the curve, open here".  Withdrawn.  What it
+   discharges is the hypothesis *of the `≥ g` face*; the obstruction did not dissolve, it moved
+   to the output degree (`exists_effective_of_classDeg_eq_zero_of_toP1`'s limit paragraph).
+2. `π` is **decorative here**.  The section already assumes
+   `[LocallyOfFiniteType (Y ↘ Spec K)]`, which gives `Scheme.residueDeg_pos`, so `d` copies of
+   `single x 1` at any non-generic `x` prove the same conclusion with no `ℙ¹` at all.  The
+   `π`-spelling is retained only because it is the datum the campaign's curve carries and the
+   one `thetaP1` supplies; a consumer with a point and no map to `ℙ¹` is equally served. -/
 theorem exists_reference_divisor_le_deg (π : Y ⟶ P1 K) [IsDominant π] [IsFinite π] (d : ℕ) :
     ∃ Z : Y.CurveDivisor, (d : ℤ) ≤ CurveDivisor.deg K Z := by
   refine ⟨d • fiberWeilDivisor π, ?_⟩
