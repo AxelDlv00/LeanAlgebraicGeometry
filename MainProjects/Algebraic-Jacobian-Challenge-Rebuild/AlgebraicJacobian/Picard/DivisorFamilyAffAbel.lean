@@ -225,14 +225,21 @@ theorem to be re-earned but the structure **field** `AffCoverData.cover`, alread
 says so.  At the step named, the widening is *cheaper*: the pinned pair was the chart-typed
 **cost** of a fact `AffCoverData` assumes.
 
-So the honest price, measured from the statements: there is no widened analogue of
-`finrank_glued_eq_sum_of_separated`, `subsingleton_ovlColength_of_sep`, `finrank_colength_eq_sum`
-or `coeffAt_eq_zero_of_isUnit_germ` in the `DivisorFamilyAff*` family — but each of the four
-chart-typed originals quantifies **only** over `A.index`, `A.pieces`, `A.eqn`, `A.colength`,
-`A.ovlColength`, `A.Glued`, every one of which `AffAdaptation` carries verbatim; none mentions
-`m₀`, `m₁`, `h₀`, `h₁`, `partition₀`/`partition₁` or a chart.  The residue is a **four-lemma
-port over an abstract index** — real work, and not blocked.  Nobody should open a "recover the
-pinned pair" front, and no consumer should be written against one.
+**THE PORT IS NOW DONE, and this paragraph records what it actually cost.**  It priced the
+residue as a four-lemma port over an abstract index — real work, not blocked — on the grounds
+that each chart-typed original quantifies **only** over `A.index`, `A.pieces`, `A.eqn`,
+`A.colength`, `A.ovlColength`, `A.Glued`, all carried verbatim by `AffAdaptation`, and none
+mentions `m₀`, `m₁`, `h₀`, `h₁`, `partition₀`/`partition₁` or a chart.  That reasoning held.
+The count did not: it is **five** lemmas, the omitted one being `coeffAt_eq_toAdd_ordZ_eqn`, the
+coefficient dictionary that both `finrank_colength_eq_sum` and `coeffAt_eq_zero_of_isUnit_germ`
+call.  All five are proved in `Picard/DivisorFamilyAffFieldDegree.lean`, together with the
+assembly `AffAdaptation.deg_presentationDivisor_eq_finrank_glued`, the field half
+`AffAdaptation.IsCertified.finrank_glued`, and `deg = n`
+(`AffAdaptation.deg_presentationDivisor_eq_of_isCertified`) — sorry-free, and not one proof step
+of any of the five differs from its chart-typed original.  The "recover the pinned pair" front
+stays closed: exactly two steps needed the chart typing, and both are structure fields on the
+widened side (`AffCoverData.isAffineOpen_pieces` for the colength keystone, whose consumer takes
+`IsAffineOpen V` as an argument, and `exists_mem_pieces` for the covering).
 
 So the degree ledger is stated below as an explicit hypothesis `hdegAff` on the widened Abel
 transformation, at exactly the shape `degAt_abelDiv` has.  It is **not** discharged here, and it
@@ -277,10 +284,20 @@ variable (C n) in
 
 `hdegAff` is the widened form of `degAt_abelDiv` and it is the single statement this file does
 not prove: *the widened Abel value of a degree-`n` widened class has degree `n` at every field
-point*.  Read the dependency honestly — the chart-typed ledger goes through
-`DivFamZar.classDeg_picClass`, whose degree half consumes the pinned-pair covering
-(`relCover_sup`, `cover₀`/`cover₁`) that R2 deletes, so this is a genuine obligation and not
-bookkeeping.
+point*.
+
+Read the dependency honestly, and note that an earlier version of this docstring read it wrongly:
+it said the degree half "consumes the pinned-pair covering (`relCover_sup`, `cover₀`/`cover₁`)
+that R2 deletes".  It does not — that block outputs only "every point lies in some piece", which
+is a field of `AffCoverData`, and the whole colength↔degree identity is now proved over arbitrary
+affine pieces in `Picard/DivisorFamilyAffFieldDegree.lean`.  So the pinned pair is not what stands
+between here and `hdegAff`.
+
+What genuinely remains is the step *above* the degree identity: the chart-typed ledger routes
+through `DivFamZar.classDeg_picClass`, i.e. from the presentation divisor's degree to the Picard
+class of the widened section, and that transport has no widened analogue yet.  `hdegAff` is
+therefore still a real obligation — but a strictly smaller and differently-located one than this
+docstring previously claimed.
 
 Everything else in the degree-zero-ness argument transports unchanged: the three degrees still
 sum to zero under the chart-index constraint, because the twist factors are cover-free. -/
