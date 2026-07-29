@@ -6,6 +6,13 @@ Authors: The AlgebraicJacobian Contributors
 import AlgebraicJacobian.Picard.JacobianDataAbelSurj
 import AlgebraicJacobian.Picard.Pic0ChartTestPoint
 import AlgebraicJacobian.Picard.Pic0AtlasFromDivRep
+-- The four modules below are imported so that every declaration this file's docstrings CITE is
+-- in its own import closure.  A cited name that resolves only by `grep` is a name this file
+-- cannot see, and that failure mode has recurred four times in this project (I-1073, I-0994).
+import AlgebraicJacobian.Picard.JacobianDataAbelSquareVacuity
+import AlgebraicJacobian.Picard.JacobianDataAbelEffectivePoint
+import AlgebraicJacobian.Picard.DivisorFamilyFieldSurj
+import AlgebraicJacobian.Picard.JacobianDataAbelDegreeWindow
 
 /-!
 # DAT-J's `quasiCompact` field: the Abel map is not an input, it is `rep.homEquiv.symm`
@@ -29,18 +36,34 @@ degree-zero class `lam : pic⁰(divSchemeOver …)` names a morphism `divSchemeO
 outright, as `rep.homEquiv.symm lam`, for *any* representing object `J`.  Its `.left` is the
 `abel` every `JacobianData` producer above asks for.
 
-Two consequences, and the second is the one that reprices a lane's plan.
+**WHAT THIS IS AND IS NOT — corrected in place after a fresh-context audit (`I-1071`–`I-1074`),
+because the first draft of this header priced it wrongly and the wrong price is the dangerous
+part.**
 
-**(1) The compatibility square is free at this `abel`.**  `IsAbelClassifyCompatible`
-(`Picard/JacobianDataAbelSquare.lean:147`) is the recorded "groups agree ≠ maps agree" gap
-(`I-0525`): a bijection between divisor classes and `DivScheme`-points is unusable until the
-square relating the two *named* morphisms lands.  That gap is real for an `abel` given
-abstractly.  It does not arise for `rep.homEquiv.symm lam`, because `homEquiv` is an
-**equivalence**: two morphisms into `J` are equal as soon as their classes are, and
-`RepresentableBy.homEquiv_comp` computes the class of a composite as `pic0Map`.  So the square
-is discharged by `Equiv.injective`, not assumed.
+It is a **change of coordinates**, not a reduction in the number of obligations.  The first
+draft said "three inputs with no producer (`abel`, the square, the lifts) become two"; that is
+**false**, and the refutation is the same `Equiv` the file runs on.  `homEquiv` is a
+*bijection*, so the passage runs both ways: `abelOfPic0Class rep (rep.homEquiv abel) = abel`,
+and per-point lifts of an arbitrary `abel` give `hcl` at `lam := rep.homEquiv abel`.  So the
+morphism-coordinates obligation and the class-coordinates obligation are **the same
+obligation**, and no input was removed.
 
-**(2) What is left is one statement, and it mentions no divisor scheme morphism.**
+Two further corrections of record:
+
+* **The square was already known free, for an *arbitrary* `abel`.**
+  `Picard/JacobianDataAbelSquareVacuity.lean` (landed before this file) proves
+  `exists_isAbelClassifyCompatible`: because the interface takes the point map `pt` as an
+  *argument*, a consumer may choose it, and the square becomes a case split with no geometry.
+  So "the square is free at *this* `abel`" is a weaker statement than what the tree already
+  had, and citing `I-0525` as though the gap were live here was wrong.
+* **What survives is one statement in either coordinate system.**  That is worth stating
+  because `dat-j`'s row once counted the square as a separate obligation, and it is not one.
+
+What this file therefore contributes is the **Pic-side spelling** of that single obligation,
+`JacobianData.ofPic0ClassSurjective` (the assembly in one signature), and the two measurements
+below — the extension-tolerance characterisation and the falsifiability of `hcl`.
+
+**The single surviving statement, spelled here as a class condition.**
 `quasiCompact_of_pic0_class_surjective` below takes exactly:
 
 > for every point `y` of `J.left`, some `q : overSpec k κ(y) ⟶ divSchemeOver …` with
@@ -54,21 +77,20 @@ the fibrewise classifier (`effectiveDivisorClassifyZar`,
 
 ## Scope, stated because this file closes no gate
 
-`lam` is a **hypothesis**, and so is `hcl`.  Nothing here produces either, and nothing here
-produces `rep`.  What changes is the obligation list: DAT-J's qc field went from *three* inputs
-with no producer (`abel`, the square, the lifts) to *two* hypotheses of Pic-side shape (`lam`
-and `hcl`), with the morphism and the square discharged rather than relocated.  In particular
-`hcl` is **not** `Function.Surjective abel.base` restated — it quantifies over classes and field
-points, and the passage to the topological surjection is the proof, not the statement.
+`rep`, `lam` and `hcl` are all **hypotheses**, and nothing here produces any of them.  No
+antecedent of the north star is discharged.
 
-The honest residues, unchanged by this file and both recorded elsewhere:
+`hcl` is *not* a weakening of `Function.Surjective abel.base`: it is that statement in class
+coordinates, and the audit closed the round trip in both directions.  A reader pricing this
+route should count **one** open statement, in whichever spelling, and should not add the
+morphism or the square as separate items — the square is free for an arbitrary `abel` already
+(`Picard/JacobianDataAbelSquareVacuity.lean`).
 
-* the effectivity chain produces its divisor over a finite separable *splitting field* of `κ(y)`,
-  while `hcl` wants `overSpec k κ(y)` itself — finite separable descent, the `dat-g` lane's
-  business (`Picard/JacobianDataAbelEffectivePoint.lean`, "the honest limit");
-* `effectiveDivisorClassifyZar` pins `deg D = g` on the nose, which the window form of the
-  effectivity leg does not deliver (`Picard/JacobianDataAbelDegreeWindow.lean`, the limit
-  paragraph on `exists_effective_of_classDeg_eq_zero_of_toP1`).
+The honest residue, recorded elsewhere and unchanged: `effectiveDivisorClassifyZar` pins
+`deg D = g` **on the nose**, which the window form of the effectivity leg does not deliver
+(`Picard/JacobianDataAbelDegreeWindow.lean`).  And that `g` is not a free parameter a producer
+may choose: the classifier's own `hχ : χ(𝒪) = 1 − g` is an equation about the *curve*, so it
+determines `g` uniquely — two parameters cannot both satisfy it.  Measured, not argued.
 
 ## Main declarations
 
@@ -215,23 +237,28 @@ theorem quasiCompact_of_pic0_class_surjective {J : Over (Spec (.of k))}
   quasiCompact_of_forall_residueField_lift_from_divScheme A B g r₁ r₂ b₁ b₂ J
     (abelOfPic0Class rep lam).left (residueField_lift_of_pic0_class rep lam hcl)
 
-/-! ### The lift may live over an EXTENSION of `κ(y)` — so the qc field owes no descent
+/-! ### The `κ(y)` pin was never what `QuasiCompact` needed
 
 `hcl` above pins the lift's source to `overSpec k κ(y)`.  That pin is **not needed**: point
-surjectivity only asks for *some* point of the divisor scheme lying over `y`, and the source
-field of the test that produces it is irrelevant.
+surjectivity only asks for *some* point of the divisor scheme lying over `y`, and the residue
+field of the test that produces it is irrelevant.  So a divisor produced over a finite separable
+*splitting field* `L` of `κ(y)` — which is what the effectivity chain
+(`Picard/JacobianDataAbelEffectivePoint.lean`) actually delivers — is accepted as produced, with
+no descent step.
 
-This matters because it deletes an obligation two files record as the honest remaining cost of
-this route.  `Picard/JacobianDataAbelEffectivePoint.lean` ("the honest limit") and
-`Picard/JacobianDataAbelSquare.lean` (§ AMENDMENT) both say the effectivity chain produces its
-divisor over a *finite separable splitting field* `L` of `κ(y)` while `hlift` wants `Spec κ(y)`
-itself, and both name descending `L ↝ κ(y)` as the residue.  For the **quasi-compactness field**
-that descent is not owed: `L` is a `k`-test with a morphism to the field point of `y`, which is
-exactly what the extension-tolerant form accepts.
+**SCOPED after a fresh-context audit (`I-1072`), because the first draft of this heading claimed
+more than the theorem.**  It said the widening "deletes an obligation two files record as the
+honest remaining cost".  It does not delete anything: the extension-tolerant hypothesis is
+**equivalent** to bare `Function.Surjective (abelOfPic0Class rep lam).left.base`, not weaker
+than it (converse: pick `x` in the fibre over `y`, take `T := overSpec k κ(x)` with `q :=
+Over.testPoint x`).  Since `quasiCompact_of_surjective_from_divScheme` already consumed bare
+surjectivity, DJ-0 was never asking for the pin in the first place.
 
-(The descent may of course still be owed by *other* consumers — `hlift` as literally typed in
-`JacobianData.ofAbelLifts` does want `Spec κ(y)`.  The claim here is scoped to what `QuasiCompact`
-needs, which is all `JacobianData.quasiCompact` consumes.) -/
+What survives, and it is a characterisation rather than a discount: the `Spec κ(y)` pin in
+`JacobianData.ofAbelLifts`'s `hlift` (`Picard/JacobianDataAbelSurj.lean:153`) is an artefact of
+that signature, not a requirement of quasi-compactness.  A lane reading those two files' "what
+remains is DESCENT" should check whether its consumer is the qc field — for that consumer there
+is nothing to descend — and any *other* consumer of the `hlift` signature still owes it. -/
 
 /-- **The extension-tolerant lift hypothesis gives point surjectivity.**
 
