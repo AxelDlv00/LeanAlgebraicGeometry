@@ -3,60 +3,69 @@ title: 'UNOWNED: picEt cross-base compatibility -- the brick the repaired G3 nee
   and no site prices'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'CLOSED 2026-07-30 by ajc-p1 (run 0083 r3): Picard/PicEtCrossBase.lean, rooted
-  at AlgebraicJacobian.lean, 700 lines, NO sorry, all ten declarations axiom-clean
-  [propext, Classical.choice, Quot.sound] under lake env lean against a control --
-  fgaPicardRepresentability still reports sorryAx in the same run. Commits 3f050878cc,
-  ca4dc7a9b1, 38d60641ac, 33fe30e27a.
-
-
-  THE RESULT. picEt_crossBaseIso: for a smooth proper curve C over k and ANY field
-  extension k-prime, picEt of the base-changed curve is isomorphic to picEt C restricted
-  along Over.map -- as functors on (Sch/k-prime)^op. Group-valued form etaleSheaf_crossBaseIso.
-
-
-  THIS ROW ASKED FOR TOO MUCH, and the next reader should know: the row text and the
-  seam docstring both state the obligation for FINITE SEPARABLE k-prime/k. NEITHER
-  hypothesis is needed. The argument is about pullback PROJECTIONS, not about etale
-  covers, so it holds for an arbitrary field extension. Finite-separability is a constraint
-  of the GALOIS input (EtaleFieldCover.lean, input 1) and was double-counted onto
-  this brick.
-
-
-  HOW IT DECOMPOSED, four layers, three of them nearly free. (1) Total-space cancellation:
-  one mathlib lemma, pullbackLeftPullbackSndIso -- baseChangeField C k-prime IS by
-  definition the pullback of C.hom along phi, so C_k-prime x_k-prime T and C x_k T
-  are canonically isomorphic. (2) The H_T-coset relation transports both ways with
-  the SAME coset witness N, because the two projections to T agree -- this is the
-  layer where the two subgroups being quotiented by have to correspond, and it is
-  the substantive one. (3) Hence a bijection per test, the round trips being the isos
-  own hom_inv_id/inv_hom_id through relPicRel_of_iso; additive because addition is
-  descended tensor. (4) Naturality in T -- and THIS was the surprise: it is not a
-  fact about curves at all. Stated for an ARBITRARY category with pullbacks (pullbackLeftPullbackSndIso_naturality)
-  it falls to pullback.hom_ext from the isos two projection identities, and the project-spelling
-  square is that lemma applied, since baseChangeOverC IS the generic pullback.map.
-
-
-  THE SHEAFIFICATION LAYER IS FREE, which is the finding that prices the row: picEt
-  is a CATEGORICAL sheafification, and mathlibs Functor.pushforwardContinuousSheafificationCompatibility
-  says sheafification commutes with restriction along a continuous functor. Restriction
-  along Over.map is continuous for the two localised etale topologies by pure synthesis.
-  CONTROL, so this is not a stale-import artifact: the strictly stronger IsDenseSubsite
-  at the SAME two topologies does NOT synthesize, so the induced pushforward is not
-  an equivalence and the compatibility iso is not vacuous.
-
-
-  AJCR WAS CORRECTLY CALLED NOT-PORTABLE by review-ajc (I-1076). Its picEtCrossBaseEquiv
-  is 468 lines mostly spent on a section-ring scalar tower, which a sheafification-based
-  picEt does not need -- exactly because of the mathlib lemma above. The lead was
-  worth more than the transcription.
-
-
-  WHAT THIS DOES NOT DO, since sorry-free is not sufficient: it closes NO sorry in
-  FGAPicRepresentability.lean and witnesses NO antecedent of fgaPicardRepresentability
-  for any curve. It closes one INPUT of the routes repair. Per review-ajc I-1135 the
-  repair has FOUR inputs, not three: below all of them sits a section over separably
-  closed fields with no producer in AJC (now held by ajc-p3/ajc-p4 as sepclosed rows).'
+summary: "CLOSED 2026-07-30 by ajc-p1, VERIFIED INDEPENDENTLY by review-ajc at HEAD,\
+  \ and delivered under WEAKER hypotheses than this row specified.\n\nTHE DELIVERABLE:\
+  \ picEt_crossBaseIso (Picard/PicEtCrossBase.lean:679) --\n  picEt (baseChangeField\
+  \ C k')  iso  (restrictTest k k').op comp picEt C\nplus the group-valued form etaleSheaf_crossBaseIso\
+  \ (:689). File is 701 lines, ZERO body sorries (comments stripped), rooted at AlgebraicJacobian.lean:155.\
+  \ Ten declarations axiom-clean against a sorryAx control that still fires on fgaPicardRepresentability.\n\
+  \nTHE HYPOTHESIS CORRECTION, and it is this row's author being wrong in the project's\
+  \ favour: I specified the obligation \"for finite separable k'/k\". It needs NO\
+  \ separability -- only [SmoothOfRelativeDimension 1 C.hom], [IsProper C.hom] and\
+  \ [Algebra k k']. p1's reason (PicEtCrossBase.lean:670-672) is that the identification\
+  \ is about pullback PROJECTIONS rather than about etale COVERS, so finite separability\
+  \ is a constraint of the GALOIS input that consumes this, not of the identification\
+  \ itself. Anyone pricing the Galois step must therefore NOT assume separability\
+  \ was already spent here.\n\nWHAT IT DOES NOT DO, from the file's own disclaimer\
+  \ (:674-678) which I checked and am not softening: it closes no sorry in FGAPicRepresentability.lean\
+  \ and witnesses no antecedent of fgaPicardRepresentability for any curve.\n\nREPAIR\
+  \ SCOREBOARD after this landing -- FOUR inputs, two closed: (1) descent test, landed\
+  \ r2 (EtaleFieldCover.lean); (3) THIS, cross-base identification, landed; (2) semilinear\
+  \ Galois action + quotient, still gated on the instance-free HasGaloisQuotient;\
+  \ (4) the k^s section, which has no producer in AJC (I-1135) and is ajc-p3's port\
+  \ under AJC.picrep.sepclosed-section.\n\n--- ORIGINAL SPECIFICATION BELOW (its \"\
+  finite separable k'/k\" is the clause corrected above) ---\n\nCLOSED 2026-07-30\
+  \ by ajc-p1 (run 0083 r3): Picard/PicEtCrossBase.lean, rooted at AlgebraicJacobian.lean,\
+  \ 700 lines, NO sorry, all ten declarations axiom-clean [propext, Classical.choice,\
+  \ Quot.sound] under lake env lean against a control -- fgaPicardRepresentability\
+  \ still reports sorryAx in the same run. Commits 3f050878cc, ca4dc7a9b1, 38d60641ac,\
+  \ 33fe30e27a.\n\nTHE RESULT. picEt_crossBaseIso: for a smooth proper curve C over\
+  \ k and ANY field extension k-prime, picEt of the base-changed curve is isomorphic\
+  \ to picEt C restricted along Over.map -- as functors on (Sch/k-prime)^op. Group-valued\
+  \ form etaleSheaf_crossBaseIso.\n\nTHIS ROW ASKED FOR TOO MUCH, and the next reader\
+  \ should know: the row text and the seam docstring both state the obligation for\
+  \ FINITE SEPARABLE k-prime/k. NEITHER hypothesis is needed. The argument is about\
+  \ pullback PROJECTIONS, not about etale covers, so it holds for an arbitrary field\
+  \ extension. Finite-separability is a constraint of the GALOIS input (EtaleFieldCover.lean,\
+  \ input 1) and was double-counted onto this brick.\n\nHOW IT DECOMPOSED, four layers,\
+  \ three of them nearly free. (1) Total-space cancellation: one mathlib lemma, pullbackLeftPullbackSndIso\
+  \ -- baseChangeField C k-prime IS by definition the pullback of C.hom along phi,\
+  \ so C_k-prime x_k-prime T and C x_k T are canonically isomorphic. (2) The H_T-coset\
+  \ relation transports both ways with the SAME coset witness N, because the two projections\
+  \ to T agree -- this is the layer where the two subgroups being quotiented by have\
+  \ to correspond, and it is the substantive one. (3) Hence a bijection per test,\
+  \ the round trips being the isos own hom_inv_id/inv_hom_id through relPicRel_of_iso;\
+  \ additive because addition is descended tensor. (4) Naturality in T -- and THIS\
+  \ was the surprise: it is not a fact about curves at all. Stated for an ARBITRARY\
+  \ category with pullbacks (pullbackLeftPullbackSndIso_naturality) it falls to pullback.hom_ext\
+  \ from the isos two projection identities, and the project-spelling square is that\
+  \ lemma applied, since baseChangeOverC IS the generic pullback.map.\n\nTHE SHEAFIFICATION\
+  \ LAYER IS FREE, which is the finding that prices the row: picEt is a CATEGORICAL\
+  \ sheafification, and mathlibs Functor.pushforwardContinuousSheafificationCompatibility\
+  \ says sheafification commutes with restriction along a continuous functor. Restriction\
+  \ along Over.map is continuous for the two localised etale topologies by pure synthesis.\
+  \ CONTROL, so this is not a stale-import artifact: the strictly stronger IsDenseSubsite\
+  \ at the SAME two topologies does NOT synthesize, so the induced pushforward is\
+  \ not an equivalence and the compatibility iso is not vacuous.\n\nAJCR WAS CORRECTLY\
+  \ CALLED NOT-PORTABLE by review-ajc (I-1076). Its picEtCrossBaseEquiv is 468 lines\
+  \ mostly spent on a section-ring scalar tower, which a sheafification-based picEt\
+  \ does not need -- exactly because of the mathlib lemma above. The lead was worth\
+  \ more than the transcription.\n\nWHAT THIS DOES NOT DO, since sorry-free is not\
+  \ sufficient: it closes NO sorry in FGAPicRepresentability.lean and witnesses NO\
+  \ antecedent of fgaPicardRepresentability for any curve. It closes one INPUT of\
+  \ the routes repair. Per review-ajc I-1135 the repair has FOUR inputs, not three:\
+  \ below all of them sits a section over separably closed fields with no producer\
+  \ in AJC (now held by ajc-p3/ajc-p4 as sepclosed rows)."
 status: done
 kind: proof
 priority: high
@@ -81,7 +90,7 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.etale-rep
   milestone: AJC.picrep
-  updated_at: '2026-07-29T18:50:10.699223+00:00'
+  updated_at: '2026-07-29T18:52:55.530191+00:00'
   owner: ajc-p1
   pinned_commits:
   - 33fe30e27a
