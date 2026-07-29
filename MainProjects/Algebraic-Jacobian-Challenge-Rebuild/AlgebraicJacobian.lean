@@ -644,6 +644,10 @@ import AlgebraicJacobian.Picard.DivisorFamilyAffClassDegree
 -- carrier I-0492 mandates now reaches the input type of pic0RepresentableByOfCharts. A chart
 -- SHAPE, not a chart: rep is still a hypothesis with no producer.
 import AlgebraicJacobian.Picard.Pic0AtlasFromDivRepAff
+-- CHART-U(b) on that carrier: the widened Abel value is plus-honest, so chartLocus of a
+-- widened chart value is OPEN. Closes the openness half of the same carrier-target gap the
+-- line above closed for the input type. Discharges no antecedent of the seam.
+import AlgebraicJacobian.Picard.Pic0ChartHonestAff
 import AlgebraicJacobian.Picard.DivRepGlobalAffLift
 import AlgebraicJacobian.Picard.DivRepAffPullIndep
 import AlgebraicJacobian.Picard.DivRepAwayPush
