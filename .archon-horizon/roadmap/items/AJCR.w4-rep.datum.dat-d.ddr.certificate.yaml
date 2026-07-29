@@ -1,60 +1,72 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.certificate
-title: 'DD-R certificate: inherited certificate, epsilon projection, U1/U2, and inverse
-  laws'
+title: 'DD-R certificate: inherited certificate, epsilon projection, U1/U2, and inverse laws'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "DECIDED BY THE HUMAN 2026-07-28: R2 — GENERALIZE THE PIECE TYPE. Binding\
-  \ form: protection I-0492.\nFull reasoning: I-0346. Spec: informal/spec-dd-r.md\
-  \ ADDENDUM 5-11.\n\n=== THE REJECTION CLUSTER, ADJUDICATED 2026-07-29 (run 0082,\
-  \ review-ajcr). READ THIS FIRST. ===\n\nFour rejections and one block under this\
-  \ parent looked like a formulation error. It is not. The four\nrejections are each\
-  \ CORRECT, three of them are ONE fact, and the defect is in this parent's\nFORWARDING,\
-  \ not in its formulation.\n\nTHE FOUR REJECTIONS ARE SOUND, checked at declaration\
-  \ level, not taken on their notes' word:\n * joint-cover  — a TYPING fact: FinCoverData\
-  \ types its pieces INTO the two pinned charts\n   (DivisorFamily.lean:160-176, h0/h1\
-  \ land in Gamma(relCurve, V0/V1)), so relaxing the partition\n   FIELDS cannot move\
-  \ where pieces live. Correct, and no Lean was needed to see it.\n * tube-fibre \
-  \  — SUPERSEDED: its reformulation is equivalent to closedness of the two chart\
-  \ traces\n   (isClosed_supportLocus_inter_chart_of_forall_noLeak), which is chart-avoid's\
-  \ business.\n * leak-image   — route (a) is chart-avoid, route (b) is dead (a finer\
-  \ cover imposes MORE\n   closed-trace constraints on the same fixed union). Correct.\n\
-  \ * cert-relocalize — a fixed-pi classifier cannot internalize coordinate twists.\
-  \ Correct.\n\nTHREE OF THE FOUR ARE THE SAME FACT. joint-cover, leak-image and tube-fibre\
-  \ are all symptoms of\nPIECES CONFINED TO A FIXED CHART PAIR, which is precisely\
-  \ what R2 removes. They are not four\nindependent dead ends; they are one obstruction\
-  \ discovered three times from three directions, plus\ncert-relocalize, which is\
-  \ about the CLASSIFIER rather than the pieces. So the cluster is evidence\nthe pre-R2\
-  \ formulation was wrong — and R2 already replaced it. Nothing here needs restating\
-  \ as\nmathematics.\n\nWHAT IS ACTUALLY BROKEN: THE PRESCRIPTION. cert-relocalize's\
-  \ note forwards its obligations to\ntwist-atlas ('Those obligations are tracked\
-  \ by twist-atlas'), and twist-atlas instantiates\neverything at twistedP1Map pi\
-  \ M = pi >> P1.autOfMatrix k M — the GL_2(k) action that protection\nI-0492 clause\
-  \ 1 FORBIDS, plus the transition/descent work clause 1's second sentence also forbids.\n\
-  cert-relocalize was rejected 2026-07-27; I-0492 landed 2026-07-28; nobody re-read\
-  \ the forwarding\naddress. twist-atlas is now REJECTED (see its row). A rejected\
-  \ leaf's forwarding address is the\nleast-audited text on a board.\n\nTHE BLOCK\
-  \ (away-kerspan) IS CORRECTLY BLOCKED and is not part of the cluster's story: it\
-  \ is\ndischarged on exactly the straddling covers R2 directs the lane to use\n(isCertified_of_swallowedBy_of_c1)\
-  \ and open in general. Its own row is honest about which case a\nconsumer is in.\
-  \ Leave it blocked.\n\n=== EXECUTED AND VERIFIED (unchanged, run 0070 s0016) ===\n\
-  \nThe widened carrier has a PRODUCER FROM GEOMETRY:\nThetaGeneratorSeed.divFamZarAff_of_swallowing_affineOpen\
-  \ (Picard/DivisorFamilyAffSeedGate.lean:205),\nplus divFunctorAffSection (…AffSeedSection.lean:91).\
-  \ Before s0016 every producer of a widened value\nproduced it from ANOTHER widened\
-  \ value (mapAlg, divFamZarAff.map, the trivial one-member glue), so\nno consumer\
-  \ could migrate onto a carrier geometry could not produce. That is fixed.\n\nLIMITS,\
-  \ measured not glossed (ADDENDUM 11 §11.4): (a) the gate's closure is free of FinCoverData,\n\
-  ChartTyping and relCover_sup, but relPinnedChart IS in the closure via ThetaGeneratorSeed's\
-  \ own\nfields (DivSchemeFamily.lean:74) — a limit on the claim, not a breach of\
-  \ clause 3, since the 0B8B\nopen W is unrelated to V0/V1; (b) the n = 0 / empty-support\
-  \ inhabitation caveat is inherited from\nthe endpoint and now stated with its witness.\n\
-  \nRESIDUE. (1) The subordinate Stacks 0B8B input (I-0565 half (a)), assumed per\
-  \ I-0492 clause 2 — the\nlane's only geometric residue. (2) A ThetaGeneratorSeed\
-  \ base change along R -> Localization.Away r,\nNAMED rather than owed. (3) The 49-file\
-  \ consumer migration, open and reachable.\n\nFROZEN SHAPES for downstream lanes\
-  \ (announced on I-0494): AffCoverData — m / pieces : Fin m -> Opens\n/ isAffineOpen\
-  \ / cover (iSup = top); NO pi, NO partitions, NO Sum index, NO chart typing.\ndivFamZarAff\
-  \ C n T + map/map_id/map_comp; divFunctorAff; divFunctorToAff : divFunctor ==> Aff.\n\
-  DivFamZar.toAff receives every chart-typed value; picClass preserved."
+summary: "=== VACUITY SWEEP OF THE WIDENED ROUTE: CLEAN, AND THE COVERAGE GAP IS NOW CLOSED\n(review-ajcr,\
+  \ run 0082 s0006). Recorded here so nobody re-runs it. ===\n\nThe earlier sweep (I-0943) found no HasDivFunctor-style\
+  \ vacuity on this seam but stated honestly\nthat it SPOT-CHECKED the DivisorFamily*/DivSchemeCert* cluster\
+  \ rather than exhausting it. The\nwidening holds the newest Prop-valued definitions, so it is where\
+  \ such a defect would survive\nlongest. Now read, statement by statement -- all SUBSTANTIVE:\n\n * AffCoverData\
+  \ (DivisorFamilyAffCover.lean:145) and the ONE degeneracy that would matter,\n   PROBED, EXIT=0: from\
+  \ D.m = 0 the `cover` field FORCES (top : (relCurve C R).Opens) = bot. So an\n   empty cover is admissible\
+  \ only over an EMPTY relative curve -- the covering field is obligation\n   I-0492 4(ii) discharged\
+  \ structurally, not decoration.\n * AffAdaptation (DivisorFamilyAffAdaptation.lean:75): eqn_rel demands\
+  \ a UNIT relating the\n   restricted eqn to d.eqn on every overlap; both objects occur.\n * SwallowedBy\
+  \ (DivisorFamilyAffSwallow.lean:75): distinguished piece containing supportLocus AND\n   disjointness\
+  \ from all others -- two-sided, no trivial witness.\n * IsLocallyCertifiedAff (DivisorFamilyAffZar.lean:103):\
+  \ explicit span-top family, a certified\n   family per localisation, a DivEq against the pulled equations.\n\
+  \ * HasAffineOverlaps (DivisorFamilyAffMapAlg.lean:65): a real hypothesis of mapAlg.\n\nAND THE CLAUSE-3\
+  \ CHECK THE HUMAN ASKED FOR: AffCoverData.pieces are (relCurve C R).Opens with an\naffineness FIELD\
+  \ -- they are NOT typed into the charts. The vacuity pattern I-0492 clause 3 warns\nabout (DivisorFamily.lean\
+  \ h0/h1/pieces landing in Gamma of V0/V1, which made the earlier cheaper\noption vacuous) is ABSENT\
+  \ from the widened structure. That is what makes the widening real rather\nthan cosmetic, and it is\
+  \ the thing a consumer-repair session should not undo.\n\nCOVERAGE LIMIT, stated so the next sweep is\
+  \ not blind: every Prop-valued def/structure in\nDivisorFamily*.lean and DivSchemeCert*.lean has now\
+  \ been read. DivSchemeRedesign* was NOT read --\n11 of those modules are unrooted and on the documented\
+  \ DELETE list (build-reach row), so a vacuity\nthere is unreachable by any consumer. If one is ever\
+  \ rooted, it needs this pass.\n\nDECIDED BY THE HUMAN 2026-07-28: R2 — GENERALIZE THE PIECE TYPE. Binding\
+  \ form: protection I-0492.\nFull reasoning: I-0346. Spec: informal/spec-dd-r.md ADDENDUM 5-11.\n\n===\
+  \ THE REJECTION CLUSTER, ADJUDICATED 2026-07-29 (run 0082, review-ajcr). READ THIS FIRST. ===\n\nFour\
+  \ rejections and one block under this parent looked like a formulation error. It is not. The four\n\
+  rejections are each CORRECT, three of them are ONE fact, and the defect is in this parent's\nFORWARDING,\
+  \ not in its formulation.\n\nTHE FOUR REJECTIONS ARE SOUND, checked at declaration level, not taken\
+  \ on their notes' word:\n * joint-cover  — a TYPING fact: FinCoverData types its pieces INTO the two\
+  \ pinned charts\n   (DivisorFamily.lean:160-176, h0/h1 land in Gamma(relCurve, V0/V1)), so relaxing\
+  \ the partition\n   FIELDS cannot move where pieces live. Correct, and no Lean was needed to see it.\n\
+  \ * tube-fibre   — SUPERSEDED: its reformulation is equivalent to closedness of the two chart traces\n\
+  \   (isClosed_supportLocus_inter_chart_of_forall_noLeak), which is chart-avoid's business.\n * leak-image\
+  \   — route (a) is chart-avoid, route (b) is dead (a finer cover imposes MORE\n   closed-trace constraints\
+  \ on the same fixed union). Correct.\n * cert-relocalize — a fixed-pi classifier cannot internalize\
+  \ coordinate twists. Correct.\n\nTHREE OF THE FOUR ARE THE SAME FACT. joint-cover, leak-image and tube-fibre\
+  \ are all symptoms of\nPIECES CONFINED TO A FIXED CHART PAIR, which is precisely what R2 removes. They\
+  \ are not four\nindependent dead ends; they are one obstruction discovered three times from three directions,\
+  \ plus\ncert-relocalize, which is about the CLASSIFIER rather than the pieces. So the cluster is evidence\n\
+  the pre-R2 formulation was wrong — and R2 already replaced it. Nothing here needs restating as\nmathematics.\n\
+  \nWHAT IS ACTUALLY BROKEN: THE PRESCRIPTION. cert-relocalize's note forwards its obligations to\ntwist-atlas\
+  \ ('Those obligations are tracked by twist-atlas'), and twist-atlas instantiates\neverything at twistedP1Map\
+  \ pi M = pi >> P1.autOfMatrix k M — the GL_2(k) action that protection\nI-0492 clause 1 FORBIDS, plus\
+  \ the transition/descent work clause 1's second sentence also forbids.\ncert-relocalize was rejected\
+  \ 2026-07-27; I-0492 landed 2026-07-28; nobody re-read the forwarding\naddress. twist-atlas is now REJECTED\
+  \ (see its row). A rejected leaf's forwarding address is the\nleast-audited text on a board.\n\nTHE\
+  \ BLOCK (away-kerspan) IS CORRECTLY BLOCKED and is not part of the cluster's story: it is\ndischarged\
+  \ on exactly the straddling covers R2 directs the lane to use\n(isCertified_of_swallowedBy_of_c1) and\
+  \ open in general. Its own row is honest about which case a\nconsumer is in. Leave it blocked.\n\n===\
+  \ EXECUTED AND VERIFIED (unchanged, run 0070 s0016) ===\n\nThe widened carrier has a PRODUCER FROM GEOMETRY:\n\
+  ThetaGeneratorSeed.divFamZarAff_of_swallowing_affineOpen (Picard/DivisorFamilyAffSeedGate.lean:205),\n\
+  plus divFunctorAffSection (…AffSeedSection.lean:91). Before s0016 every producer of a widened value\n\
+  produced it from ANOTHER widened value (mapAlg, divFamZarAff.map, the trivial one-member glue), so\n\
+  no consumer could migrate onto a carrier geometry could not produce. That is fixed.\n\nLIMITS, measured\
+  \ not glossed (ADDENDUM 11 §11.4): (a) the gate's closure is free of FinCoverData,\nChartTyping and\
+  \ relCover_sup, but relPinnedChart IS in the closure via ThetaGeneratorSeed's own\nfields (DivSchemeFamily.lean:74)\
+  \ — a limit on the claim, not a breach of clause 3, since the 0B8B\nopen W is unrelated to V0/V1; (b)\
+  \ the n = 0 / empty-support inhabitation caveat is inherited from\nthe endpoint and now stated with\
+  \ its witness.\n\nRESIDUE. (1) The subordinate Stacks 0B8B input (I-0565 half (a)), assumed per I-0492\
+  \ clause 2 — the\nlane's only geometric residue. (2) A ThetaGeneratorSeed base change along R -> Localization.Away\
+  \ r,\nNAMED rather than owed. (3) The 49-file consumer migration, open and reachable.\n\nFROZEN SHAPES\
+  \ for downstream lanes (announced on I-0494): AffCoverData — m / pieces : Fin m -> Opens\n/ isAffineOpen\
+  \ / cover (iSup = top); NO pi, NO partitions, NO Sum index, NO chart typing.\ndivFamZarAff C n T + map/map_id/map_comp;\
+  \ divFunctorAff; divFunctorToAff : divFunctor ==> Aff.\nDivFamZar.toAff receives every chart-typed value;\
+  \ picClass preserved."
 status: active
 kind: proof
 priority: high
