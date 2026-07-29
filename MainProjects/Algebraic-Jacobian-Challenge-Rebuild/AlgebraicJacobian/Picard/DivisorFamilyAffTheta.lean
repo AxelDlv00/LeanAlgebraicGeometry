@@ -10,13 +10,28 @@ import AlgebraicJacobian.Picard.DivisorDatumInverse
 import AlgebraicJacobian.Picard.DivisorFamilyWindow
 
 /-!
-# The Θ-LAYER OVER THE WIDENED CARRIER (R2): what actually blocked cert-r2's producer
+# The Θ-LAYER OVER A CHART-TYPED WIDENED COVER: a real absence, on an index that R2 empties
+
+> **READ `isEmpty_chartTyping_of_straddling` (below) BEFORE THIS DOCSTRING'S ARGUMENT.**
+> This module's original headline was "the widened carrier had no Θ-layer, and supplying it lets
+> cert-r2's producer reach U2". **The first clause is true; the second is refuted, in Lean, in
+> this file.** Every declaration here is indexed by a `ChartTyping C R π D`, and a cover with a
+> straddling piece admits *none* — which is exactly the case protection `I-0492`'s widening
+> exists to handle. So on those divisors every theorem below is vacuous, and the tree's only
+> `ChartTyping` producer is the migration *from* the old chart-typed carrier. Refutation and its
+> consequences: `isEmpty_chartTyping_of_straddling`; reviewer items `I-0779`/`I-0782`.
+>
+> What survives is worth keeping and is not the headline: the Θ-layer genuinely did not exist on
+> `AffAdaptation` (measurements below, independently confirmed as `I-0780`), it ports cleanly, and
+> it is now available for any cover that *does* carry a chart typing.
 
 Protection `I-0492` widened the certificate carrier to arbitrary affine opens, and the
 widened lane now produces a class from geometry
 (`ThetaGeneratorSeed.divFamZarAff_of_swallowing_affineOpen`,
 `Picard/DivisorFamilyAffSeedGate.lean`).  That producer still cannot feed U2, and the
-reason recorded across five sessions — "U2 needs a certificate" — is **not** it.
+reason recorded across five sessions — "U2 needs a certificate" — is **not** it.  The
+argument below correctly identifies the *absence*; where it overreaches is in treating
+supplying that absence as sufficient.
 
 ## The measurement that renames the seam
 
@@ -603,6 +618,55 @@ theorem isThetaPaired_zero : IsThetaPaired A τ 0 := by
   rwa [one_mul] at this
 
 end Pairing
+
+/-! ## THE LIMIT OF THIS ENTIRE FILE, PROVED RATHER THAN CAVEATED
+
+A fresh-context review (inbox `I-0779`) refuted this module's headline, and the refutation is
+three lines, so it is landed here rather than left in prose.  **Every declaration in this file is
+indexed by a `ChartTyping`, and a cover with a straddling piece admits none.** -/
+
+section Emptiness
+
+/-- **NO `ChartTyping` EXISTS ON A COVER WITH A STRADDLING PIECE.**  If one piece contains a
+point outside `V₀` *and* a point outside `V₁`, then `ChartTyping C R π D` is empty: the piece is
+assigned some side, `piece_le` puts the *whole* piece inside that pinned chart, and each witness
+contradicts one of the two options.
+
+**This is the honest limit of the whole module, and it cuts against the headline.**  The claim
+this file was built on is that the widened carrier lacked a Θ-layer and that supplying it lets
+cert-r2's producer reach U2.  The first half stands (see the module docstring's measurements,
+independently confirmed as `I-0780`).  The second half does **not**: cert-r2's producer runs
+through a cover in which the support sits inside **one** piece `W`
+(`exists_affCoverData_swallowedBy`), while the straddling hypotheses of
+`forall_not_isCertified_of_straddling` (`Picard/DivisorFamilyAffStrict.lean:127`) say precisely
+that the support has a point outside `V₀` and a point outside `V₁` — and both then lie in `W`.
+So on exactly the divisors protection `I-0492`'s widening exists to handle, this file's index
+type is uninhabited and every theorem in it is vacuous.
+
+**Compounding it** (`I-0782`): the tree's only producer of a `ChartTyping` is
+`FinCoverData.toChartTyping` (`Picard/DivisorFamilyAffCover.lean:255`), the migration *from* the
+old chart-typed carrier. So every instantiation available today factors through `FinCoverData`,
+i.e. this layer currently computes on the covers the chart-typed layer already handled,
+re-indexed.
+
+**What the module docstring got wrong, and it is a real methodological error.** `I-0492` clause 3
+keeps `ChartTyping` separate from the certificate clauses so that a certificate never *requires*
+a chart typing. That is a statement about what is **permitted**, and I read it as evidence about
+what is **inhabited**. Those are different questions, and only the second one decides whether a
+layer indexed by that datum is usable. The recorded shape is `isolating-a-residue-as-a-class`:
+check inhabitation of an index before pricing anything stated over it. -/
+theorem isEmpty_chartTyping_of_straddling (D : AffCoverData C R) (j : D.index)
+    {x y : relCurve C R} (hxj : x ∈ D.pieces j) (hyj : y ∈ D.pieces j)
+    (hx₀ : x ∉ ((relCover C R (fiberTwoCover π)).V₀ : Set (relCurve C R)))
+    (hy₁ : y ∉ ((relCover C R (fiberTwoCover π)).V₁ : Set (relCurve C R))) :
+    IsEmpty (ChartTyping C R π D) := by
+  refine ⟨fun τ => ?_⟩
+  have h := piece_le_relPinnedChart (π := π) τ j
+  cases hb : τ.side j with
+  | false => rw [hb] at h; exact hx₀ (h hxj)
+  | true => rw [hb] at h; exact hy₁ (h hyj)
+
+end Emptiness
 
 /-! ## The kernel bridge — left exactness, and the seam with the chart-typed layer -/
 
