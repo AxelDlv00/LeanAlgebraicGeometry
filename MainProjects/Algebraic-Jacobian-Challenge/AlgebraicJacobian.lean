@@ -57,6 +57,7 @@ import AlgebraicJacobian.RigidityLemma
 -- Picard/FGA development runs under.
 import AlgebraicJacobian.Curve.GeometricallyReduced
 import AlgebraicJacobian.Curve.FiniteLevelRationalPoint
+import AlgebraicJacobian.Curve.GaloisLevelRationalPoint
 import AlgebraicJacobian.Curve.SeparablyClosedRationalPoint
 import AlgebraicJacobian.Jacobian
 import AlgebraicJacobian.AbelJacobi

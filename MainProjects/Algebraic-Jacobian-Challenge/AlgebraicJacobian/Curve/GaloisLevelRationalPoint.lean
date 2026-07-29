@@ -1,0 +1,186 @@
+/-
+Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: The AlgebraicJacobian Contributors
+-/
+import Mathlib
+import AlgebraicJacobian.Curve.FiniteLevelRationalPoint
+
+/-!
+# A rational point at a finite *Galois* level, with no hypothesis on `C(k)`
+
+Campaign `G1` (`informal/pic-representability-campaign.md`) spreads `J5`'s datum from `k^s` down
+to a **finite Galois** extension `k'/k`, because the object it hands `G2` is a *semilinear
+`Gal(k'/k)`-action* — and `Gal(k'/k)` is only the right group when `k'/k` is Galois. Two
+neighbouring files stop one step short of that:
+
+* `Curve/SeparablyClosedRationalPoint.lean` gives a section over `k^s` itself, where
+  `IsSepClosed` holds; `IsSepClosed k'` is false at every finite level, so it does not reach `G1`.
+* `Curve/FiniteLevelRationalPoint.lean` (`exists_finiteSeparable_level_hasRationalPoint`) gives
+  one at a finite **separable** level. A finite separable extension need not be Galois, and its
+  own docstring says so: "Still not Galois. … That remains open, by a normal-closure argument
+  (`IntermediateField.normalClosure`), and this theorem must not be read as closing it."
+
+This file closes exactly that step, and the roadmap row `AJC.picrep.sepclosed-galois` that
+recorded it as open and **unpriced**.
+
+## What is proved here
+
+* `Scheme.hasRationalPoint_baseChangeField_of_pullbackSection` — a section of the base-changed
+  curve's structure morphism yields a `κ`-point of `C` over `Spec k`, at the pullback spelling.
+* `Scheme.exists_finiteGalois_level_hasRationalPoint` — from a `k^s`-point of `C` over `k`, a
+  finite **Galois** `k''/k` with `Scheme.HasRationalPoint (Scheme.baseChangeField C k'')`.
+* `Scheme.exists_finiteGalois_level_hasRationalPoint_of_geometricallyIrreducible` — the same
+  conclusion with **no antecedent at all** beyond the curve binders `Challenge.lean` already
+  carries. This is the form a consumer binds.
+
+## The price the row quoted, and what it actually cost
+
+The row (and my own `r4` release note) left this "unpriced". Measured: the normal closure of a
+finite separable `k' ⊆ k^s` is again inside `k^s`, is again finite over `k`, and *is* Galois —
+all three by mathlib instances that synthesise (`normalClosure.is_finiteDimensional`,
+`IsGalois.normalClosure`, `IntermediateField.le_normalClosure`), with no separability argument
+re-run and no `Algebra.IsSeparable` hypothesis needed in the conclusion. Pushing the point up the
+inclusion `k' ≤ k''` is `Spec.map_comp` plus one `congr 1`, the same two-line triangle as the
+sibling file's `specMap_val_comp_specMap_algebraMap`. So the step is cheap, and saying so is part
+of the result: a lane sent to build a filtered-colimit or a descent argument here would build
+nothing.
+
+## What this does **not** do
+
+It does not close the seam `Scheme.fgaPicardRepresentability`, and it does not close campaign
+`G1`. `G1` also needs the *datum* — the finitely many `J^Σ ↪ Gr`, the gluing isomorphisms, the
+universal families — spread to that level; this supplies only the **section**, which is input (4)
+of the four-input descent repair. The `k'`-side representability output of cluster `J` and the
+glued (non-affine) half of `G2(c)` are untouched and remain open.
+
+It also carries **no** hypothesis on `C(k)`, per protection `I-0491`: the point appears only after
+a separable base extension. `Scheme.HasRationalPoint C` itself is never assumed, and nothing here
+may be read as progress toward a headline that carries it.
+-/
+
+universe u
+
+open CategoryTheory AlgebraicGeometry Limits
+
+namespace AlgebraicGeometry.Scheme
+
+/-! ## §1. A section of the base-changed curve is a point over the extension
+
+`Scheme.baseChangeField C κ` is `Over.mk (pullback.snd C.hom (Spec.map (algebraMap k κ)))`, so a
+`Scheme.HasRationalPoint` for it is a section `σ` of that second projection. Composing with the
+*first* projection gives a morphism `Spec κ ⟶ C.left`, and the pullback square turns the section
+equation into the over-`Spec k` equation that §2 consumes.
+
+The statement is deliberately at the **pullback** spelling rather than at `baseChangeField`:
+`baseChangeField` is semireducible, so a goal phrased through it is not type-correct at
+`instances` transparency and `rw [pullback.condition]` reports "did not find an occurrence" on a
+goal that visibly contains the pattern. Stating it at the pullback and letting the caller's
+`obtain` supply the section is what makes the proof two lines instead of a transport. -/
+
+/-- **A section of the base change is a point over the extension field.** For `κ/k` any field
+extension and `σ` a section of `pullback.snd C.hom (Spec.map (algebraMap k κ))` — i.e. a
+`Scheme.HasRationalPoint` witness for `Scheme.baseChangeField C κ` — the composite
+`σ ≫ pullback.fst` is a `κ`-point of `C` lying over `Spec.map (algebraMap k κ)`.
+
+Pure pullback bookkeeping: `pullback.condition` swaps the two legs and the section equation
+cancels. No finiteness, no separability, no curve hypothesis. -/
+theorem hasRationalPoint_baseChangeField_of_pullbackSection {k κ : Type u} [Field k] [Field κ]
+    [Algebra k κ] (C : Over (Spec (CommRingCat.of k)))
+    (σ : Spec (CommRingCat.of κ) ⟶
+      Limits.pullback C.hom (Spec.map (CommRingCat.ofHom (algebraMap k κ))))
+    (hσ : σ ≫ Limits.pullback.snd C.hom (Spec.map (CommRingCat.ofHom (algebraMap k κ))) = 𝟙 _) :
+    (σ ≫ Limits.pullback.fst C.hom (Spec.map (CommRingCat.ofHom (algebraMap k κ)))) ≫ C.hom
+      = Spec.map (CommRingCat.ofHom (algebraMap k κ)) := by
+  rw [Category.assoc, Limits.pullback.condition, ← Category.assoc, hσ, Category.id_comp]
+
+/-! ## §2. Separable to Galois: the normal closure
+
+The sibling file produces a finite **separable** level `k'`. Its normal closure `k''` inside `k^s`
+is finite over `k` and Galois, and contains `k'`, so the point pushes up the inclusion. The three
+facts are mathlib instances; the push-up is one triangle. -/
+
+/-- **The section at a finite GALOIS level.** For a smooth curve `C` over an arbitrary field `k`
+and a `k^s`-point of `C` over `k`, there is a finite **Galois** `k''/k` inside `k^s` such that the
+base-changed curve `C_{k''}` has a `k''`-rational point.
+
+This is what campaign `G1` consumes: `G2`'s quotient engine takes a semilinear
+`Gal(k''/k)`-action, and `[IsGalois k k'']` is the hypothesis that makes that group the right one.
+`exists_finiteSeparable_level_hasRationalPoint` supplies a finite *separable* level only, which
+is one hypothesis short.
+
+`k''` is `IntermediateField.normalClosure k k' (SeparableClosure k)` for the `k'` the sibling
+file produces. `FiniteDimensional k k''` is `normalClosure.is_finiteDimensional`, `IsGalois k k''`
+is `IsGalois.normalClosure` (available because `SeparableClosure k` is normal over `k`), and
+`k' ≤ k''` is `IntermediateField.le_normalClosure`; the point is transported along
+`IntermediateField.inclusion` and the two base triangles agree by `Spec.map_comp`.
+
+Note the conclusion does **not** carry `Algebra.IsSeparable k k''`: it is true (a Galois extension
+is separable) but no consumer of a `Gal`-action needs it stated, and `IsGalois` already implies it
+by `IsGalois.to_isSeparable`. -/
+theorem exists_finiteGalois_level_hasRationalPoint {k : Type u} [Field k]
+    (C : Over (Spec (CommRingCat.of k))) [SmoothOfRelativeDimension 1 C.hom]
+    (p : Spec (CommRingCat.of (SeparableClosure k)) ⟶ C.left)
+    (hp : p ≫ C.hom = Spec.map (CommRingCat.ofHom (algebraMap k (SeparableClosure k)))) :
+    ∃ (k'' : IntermediateField k (SeparableClosure k)) (_ : FiniteDimensional k k'')
+      (_ : IsGalois k k''),
+      Scheme.HasRationalPoint (Scheme.baseChangeField C k'') := by
+  obtain ⟨k', hfd, hsep, q, hq⟩ := Scheme.level_factorization_of_curve C p hp
+  have hqf : q ≫ C.hom = Spec.map (CommRingCat.ofHom (algebraMap k k')) :=
+    Scheme.comp_eq_specMap_algebraMap_of_factorization C.hom p hp k' q hq
+  have hle : k' ≤ IntermediateField.normalClosure k k' (SeparableClosure k) :=
+    IntermediateField.le_normalClosure k'
+  refine ⟨IntermediateField.normalClosure k k' (SeparableClosure k), inferInstance, inferInstance,
+    Scheme.hasRationalPoint_baseChangeField_of_comp_eq C _
+      (Spec.map (CommRingCat.ofHom ((IntermediateField.inclusion hle).toRingHom)) ≫ q) ?_⟩
+  rw [Category.assoc, hqf, ← Spec.map_comp]
+  congr 1
+
+/-! ## §3. The antecedent is discharged: the unconditional form
+
+§2 still takes a `k^s`-point as a hypothesis. It need not: `Curve/SeparablyClosedRationalPoint.lean`
+**produces** one for every curve satisfying the binders `Challenge.lean` carries, and §1 converts
+its section into exactly the `hp` §2 wants. So the conclusion holds with no antecedent beyond the
+curve hypotheses — which is what makes it a theorem about curves rather than an implication. -/
+
+/-- **The unconditional form — no antecedent, no hypothesis on `C(k)`.** For a smooth
+geometrically irreducible curve `C` over an *arbitrary* field `k`, there is a finite **Galois**
+`k''/k` with `Scheme.HasRationalPoint (Scheme.baseChangeField C k'')`.
+
+Every antecedent of §2 is witnessed here rather than assumed:
+`hasRationalPoint_baseChangeField_separableClosure_of_geometricallyIrreducible` produces the
+`k^s`-section from `[SmoothOfRelativeDimension 1 C.hom]` and `[GeometricallyIrreducible C.hom]`
+alone, and §1 turns it into the over-`Spec k` equation. `GeometricallyIrreducible` is the binder
+`AlgebraicJacobian/Challenge.lean` and the headline `picardJacobianWitness` actually carry, so a
+consumer needs no bridging instance.
+
+There is **no** `[HasRationalPoint C]`, and there must not be (`I-0491`): the point exists only
+after the separable base extension. -/
+theorem exists_finiteGalois_level_hasRationalPoint_of_geometricallyIrreducible {k : Type u}
+    [Field k] (C : Over (Spec (CommRingCat.of k))) [SmoothOfRelativeDimension 1 C.hom]
+    [GeometricallyIrreducible C.hom] :
+    ∃ (k'' : IntermediateField k (SeparableClosure k)) (_ : FiniteDimensional k k'')
+      (_ : IsGalois k k''),
+      Scheme.HasRationalPoint (Scheme.baseChangeField C k'') := by
+  obtain ⟨⟨σ, hσ⟩⟩ :=
+    (Scheme.hasRationalPoint_baseChangeField_separableClosure_of_geometricallyIrreducible
+      C).nonempty_section
+  exact exists_finiteGalois_level_hasRationalPoint C _
+    (hasRationalPoint_baseChangeField_of_pullbackSection C σ hσ)
+
+/-- The same, at the `GeometricallyIntegral` spelling. Both spellings have callers in this
+project (`GeometricallyIntegral` is what `FGAPicRepresentability.lean`'s classes bind,
+`GeometricallyIrreducible` what `Challenge.lean` does), so both are recorded rather than one
+being left to a bridging instance the caller has to find. -/
+theorem exists_finiteGalois_level_hasRationalPoint_of_geometricallyIntegral {k : Type u}
+    [Field k] (C : Over (Spec (CommRingCat.of k))) [SmoothOfRelativeDimension 1 C.hom]
+    [GeometricallyIntegral C.hom] :
+    ∃ (k'' : IntermediateField k (SeparableClosure k)) (_ : FiniteDimensional k k'')
+      (_ : IsGalois k k''),
+      Scheme.HasRationalPoint (Scheme.baseChangeField C k'') := by
+  obtain ⟨⟨σ, hσ⟩⟩ :=
+    (Scheme.hasRationalPoint_baseChangeField_separableClosure C).nonempty_section
+  exact exists_finiteGalois_level_hasRationalPoint C _
+    (hasRationalPoint_baseChangeField_of_pullbackSection C σ hσ)
+
+end AlgebraicGeometry.Scheme
