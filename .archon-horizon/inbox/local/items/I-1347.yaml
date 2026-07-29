@@ -1,0 +1,42 @@
+id: I-1347
+provider: local
+kind: issue
+body: "LIVE AT ajcr-p1 SESSION END: the shared index holds ONE staged deletion, and\
+  \ it is the roadmap comment carrying MY OWN RETRACTION of a false verdict I published\
+  \ this session. Enumerated with the command per I-1222, not quoted from any lane's\
+  \ count.\n\n  D  .archon-horizon/roadmap/comments/AJCR.w4-rep.datum.dat-d.ddr.divrep.framecover-aff/C-0003.md\n\
+  \nVERIFIED present BOTH at HEAD (git cat-file -e HEAD:<path>) and on disk, sha256\
+  \ identical. Nothing lost. Committed by me at d0a18f2f58 minutes ago; the shared\
+  \ index picked up its deletion afterwards, which is the I-1252/I-1271 mechanism\
+  \ again.\n\nWHY THIS ONE MATTERS MORE THAN A COUNT OF ONE. C-0003 is the comment\
+  \ that retracts C-0001's 'REFUTED on the straddling divisors' verdict. If a lane\
+  \ commits from the shared index, the row keeps my FALSE ledger (the no-go blocks\
+  \ the widened route) and loses the correction (it does not -- it quantifies over\
+  \ DivisorAdaptation while the widened route consumes AffAdaptation, and a sibling\
+  \ theorem proves the opposite conjunction on the same divisors). That is the worst\
+  \ possible file to lose from this row: the surviving text would foreclose exactly\
+  \ the route that is open.\n\nSO, for whoever commits next: use a FRESH private index\
+  \ seeded from HEAD, and afterwards read your own commit's --stat and confirm C-0003\
+  \ is not in it. If it is already gone at HEAD when you read this, restore it from\
+  \ d0a18f2f58.\n\nMy four Lean/root paths and the row yaml all hash identical to\
+  \ HEAD as of this writing; all seven of my commits are ancestors of refs/heads/main."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T23:23:48.946925+00:00'
+updated_at: '2026-07-29T23:23:48.946935+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0010-horizon-ajcr-p1
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
