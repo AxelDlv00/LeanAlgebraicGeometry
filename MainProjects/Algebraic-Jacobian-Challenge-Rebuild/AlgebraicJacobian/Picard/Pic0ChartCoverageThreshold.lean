@@ -155,6 +155,79 @@ theorem subsingleton_h1_of_ledger_bound {π : C.left ⟶ P1 k} [IsFinite π] [Is
   rw [deg_windowN, chi_relCurve (n := g) hχ L]
   linarith
 
+/-- **The threshold in DAT-0a's own `∃ b` shape, with the `∃` OUTSIDE the quantifier over
+the field.**
+
+`exists_bound_subsingleton_hModule_one_of_isFinite_toP1` reads
+`∃ b, ∀ D, b ≤ deg D → H¹ = 0` at *one* curve over *one* field.  The coverage layer needs it
+at the splitting field of each test point, and the pricing in
+`Picard/Pic0ChartCoverageIndexSlack.lean` reasons about "the threshold `b_L`" as though the
+`∃` had to sit inside the choice of `L`.  It does not: this is the same shape with the
+quantifiers in the order that makes the calibration a single equation rather than a family of
+them.
+
+Stated separately from `subsingleton_h1_of_ledger_bound` because *this* is the statement the
+residue was priced against, and having it as an `∃` makes the comparison mechanical rather
+than a reading of two docstrings.  The witness is the ledger value, which is why it does not
+depend on `L`. -/
+theorem exists_uniform_bound_forall_baseChange {π : C.left ⟶ P1 k} [IsFinite π] [IsDominant π]
+    (hπ : π ≫ P1.structureMap k = C.left ↘ Spec (CommRingCat.of k)) (g : ℕ)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ)) :
+    ∃ b : ℤ, ∀ (L : Type u) (_ : Field L) (_ : Algebra k L),
+      ∀ (_ : IsIntegral (relCurve C L))
+        (_ : SmoothOfRelativeDimension 1 (relCurve C L ↘ Spec (CommRingCat.of L)))
+        (_ : QuasiCompact (relCurve C L ↘ Spec (CommRingCat.of L)))
+        (_ : Module.Finite L (Sheaf.HModule ((relCurve C L).moduleKSheaf L) 0))
+        (_ : Module.Finite L (Sheaf.HModule ((relCurve C L).moduleKSheaf L) 1)),
+      ∀ D : (relCurve C L).CurveDivisor, b ≤ Scheme.CurveDivisor.deg L D →
+        Subsingleton (Sheaf.HModule ((relCurve C L).divisorSheaf L D) 1) :=
+  ⟨(windowM_choice π hπ g : ℤ) * windowδ π + (g : ℤ),
+    fun L _ _ _ _ _ _ _ D hD => subsingleton_h1_of_ledger_bound hπ g hχ L D hD⟩
+
+/-! ## Coverage with the threshold discharged
+
+`mem_chartLocus_of_vanishing_bound` (`Picard/Pic0ChartCoverageNoDrop.lean:154`) takes `hb`
+(the threshold) and `hdeg` (the calibration).  The threshold is now available at the
+splitting field, so the composite below carries only the calibration — which is what
+`Pic0ChartCoverageIndexSlack`'s `index_of_threshold` is about. -/
+
+/-- **Coverage's locus membership with the threshold hypothesis DISCHARGED.**
+
+Verbatim `mem_chartLocus_of_vanishing_bound` with `hb` supplied by
+`subsingleton_h1_of_ledger_bound` at the ledger bound, so the only numeric input left is
+`hdeg` — the calibration equating the twisted presenting class's degree with the bound.
+
+Note what remains and what does not.  Gone: the per-fibre existence of a threshold, which the
+coverage prose treated as the blocker.  Still here: `hdeg`, and by `ledger_forces_b_eq_n` that
+pins the chart parameter to `windowM_choice π hπ g * windowδ π + g`.  Since `n` is free
+throughout the chart layer, that is admissible — but it is *not* `n = g`, and
+`hb_forces_h0_eq_one` continues to show why it cannot be. -/
+theorem mem_chartLocus_of_ledger_bound {π : C.left ⟶ P1 k} [IsFinite π] [IsDominant π]
+    (hπ : π ≫ P1.structureMap k = C.left ↘ Spec (CommRingCat.of k)) (g : ℕ)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
+    {T : Over (Spec (.of k))} (lam : picEt C T) (t : T.left)
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    {L : Type u} [Field L] [Algebra k L] [Algebra (Over.testPointField t) L]
+    [IsScalarTower k (Over.testPointField t) L]
+    [Module.Finite (Over.testPointField t) L]
+    [Algebra.IsSeparable (Over.testPointField t) L]
+    (M₀ : (relCurve C L).CechPic)
+    (hM₀ : PicEtAff.map C L
+        (picEtAffineEquiv C (Over.testPointField t) (picEtMap C (Over.testPoint t) lam))
+      = PicEtAff.unit C L (relPicMk C (overSpec k L) M₀))
+    [IsIntegral (relCurve C L)]
+    [SmoothOfRelativeDimension 1 (relCurve C L ↘ Spec (CommRingCat.of L))]
+    [QuasiCompact (relCurve C L ↘ Spec (CommRingCat.of L))]
+    [Module.Finite L (Sheaf.HModule ((relCurve C L).moduleKSheaf L) 0)]
+    [Module.Finite L (Sheaf.HModule ((relCurve C L).moduleKSheaf L) 1)]
+    (hdeg : classDeg L (M₀ * Scheme.CechPic.map (relCurveMap C k L)
+      (chartTwistClass C m Z))
+      = (windowM_choice π hπ g : ℤ) * windowδ π + (g : ℤ)) :
+    t ∈ chartLocus C m Z lam :=
+  mem_chartLocus_of_vanishing_bound C lam t m Z M₀ hM₀
+    ((windowM_choice π hπ g : ℤ) * windowδ π + (g : ℤ))
+    (fun D hD => subsingleton_h1_of_ledger_bound hπ g hχ L D hD) hdeg
+
 end
 
 end AlgebraicGeometry
