@@ -284,7 +284,22 @@ Neither branch is proved here — `chartLocus` membership is a hypothesis about 
 theorem about the chart, and the `h⁰ = 1` reading is fibrewise while the obligation is at a
 general test (the caveat `Picard/Pic0ChartAbelNonInjective.lean` states and I do not weaken).
 What is settled is that the question is **arithmetic in `n` alone**: no chart parameter, no
-twist exponent and no `Z` enters it. -/
+twist exponent and no `Z` enters it.
+
+**AND `n` IS NOT FREE, WHICH DECIDES WHICH BRANCH IS LIVE.**  `abelSigmaChart`
+(`Picard/Pic0AtlasFromDivRep.lean:205`) takes `rep : (divFunctor C π n).RepresentableBy D`, and
+every producer of such a representation in the tree — `DivRepChartRange`, `DivRepAffPullClause`
+(two), `DivRepGlobalClassify`, `DivRepKit` — carries the hypothesis
+`hchi : χ(𝒪_C) = 1 − g` with **the same `g` as its `divFunctor` index** (checked at each of the
+five sites).  So a chart built on an actual representation has `χ = 1 − n`, i.e. `n` *is* the
+genus, and the case `n > g` cannot arise for any chart the atlas can contain.
+
+That is the useful consequence and it points at the **positive** branch: on `chartLocus`, at the
+only degree a chart can be built at, the fibre witness has `h⁰ = 1` and is unique.  It does not
+close the fork, because uniqueness of the *fibre* witness is not injectivity at a general test —
+and `Pic0ChartAtlasParamFree.lean` is precisely the observation that the atlas may be
+heterogeneous in `n`, which this remark constrains rather than contradicts (each index still
+carries its own `rep`, hence its own `hchi`, hence `nn i = g` for every `i`). -/
 theorem degAt_chartTwist_eq_chartParam (m : ℕ)
     (Z : (C ⊗ overSpec k k).left.CurveDivisor)
     (hdeg : Scheme.CurveDivisor.deg k Z
