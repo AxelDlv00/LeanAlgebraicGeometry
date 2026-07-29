@@ -3,78 +3,16 @@ title: 'Twist atlas: glue fixed-coordinate divisor charts over their common divi
   loci'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'REJECTED 2026-07-29 (run 0082, review-ajcr) — SUPERSEDED BY PROTECTION I-0492,
-  which this leaf''s
-
-  route directly violates. Not rejected for being wrong mathematics; rejected because
-  a lane must not
-
-  pick it up.
-
-
-  THE MEASUREMENT. This leaf''s own text says: ''For every fixed M, instantiate the
-  existing DivFamZar,
-
-  theta-window, cocycle, evaluation, DivOver, and DivRepGlobalData classifier at twistedP1Map
-  pi M.''
-
-  And twistedP1Map (Cohomology/TwistedFiberTwoCover.lean:29) is pi >> P1.autOfMatrix
-  k M with
-
-  M : Matrix.GeneralLinearGroup (Fin 2) k; P1.autOfMatrix (Curve/P1Aut.lean:227) is
-  documented as
-
-  ''THE GL_2(k)-TWIST OF THE PROJECTIVE LINE''. So the M this leaf quantifies over
-  IS the GL_2(k)
-
-  action, and the transition isomorphisms it asks for ARE the descent that makes varying
-  the pinned
-
-  pair work.
-
-
-  Protection I-0492 clause 1 forbids exactly both halves: ''DO NOT BUILD THE GL_2(k)
-  ACTION ON P1 ...
-
-  no consumer may be written against it. Same for any descent work whose only purpose
-  is to rescue
-
-  R1.'' Leaf p1-aut is DEPRIORITISED on the same ground and stays that way.
-
-
-  WHY THIS SURVIVED, and it is the reusable lesson. cert-relocalize was rejected 2026-07-27
-  and its
-
-  note routes its obligations here (''Those obligations are tracked by twist-atlas'').
-  I-0492 landed
-
-  2026-07-28. The rejection''s PRESCRIPTION was never re-read against the human decision
-  it precedes
-
-  by one day. A rejected leaf''s forwarding address is the least-audited text on a
-  board: the leaf is
-
-  closed, so nothing revisits it, and the leaf it points AT inherits an authority
-  nobody granted.
-
-
-  WHAT REPLACES IT: nothing new. The live route is R2/widened, and it has a producer
-  from geometry --
-
-  ThetaGeneratorSeed.divFamZarAff_of_swallowing_affineOpen (Picard/DivisorFamilyAffSeedGate.lean:205).
-
-  cert-relocalize''s actual residue (a fixed-pi classifier cannot internalize coordinate
-  twists) is
-
-  answered by generalizing the PIECE TYPE, which is R2, not by an outer twist index.
-
-
-  If the large-field acceleration is ever wanted, it is p1-aut + descent (leaf field-size
-  proves the
-
-  bound is sharp iff |P1(k)| >= g+2) and it needs a fresh human decision, not this
-  leaf.'
-status: rejected
+summary: Replace the rejected in-place cert-relocalize formulation by an outer atlas.
+  For every fixed M, instantiate the existing DivFamZar, theta-window, cocycle, evaluation,
+  DivOver, and DivRepGlobalData classifier at twistedP1Map pi M. Define the image
+  locus inside the common underlying relative-divisor functor and prove it is open
+  on test schemes using support confinement. On pairwise intersections, identify the
+  two charts through equality of their underlying divisors, construct transition isomorphisms,
+  and prove identity, symmetry, and cocycle laws. Glue the fixed-M representing charts
+  and expose the resulting atlas to the downstream Pic0 construction. Do not place
+  M inside DivRepGlobalData.equiv.
+status: pending
 kind: refactor
 priority: high
 depends_on: []
@@ -97,4 +35,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
   milestone: AJCR.w4-rep
-  updated_at: '2026-07-29T11:04:12.662507+00:00'
+  updated_at: '2026-07-29T03:02:06.077700+00:00'
