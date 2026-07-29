@@ -591,11 +591,23 @@ modules are built to produce, with **nothing left over**. Clause (1) is
 `hasPicSchemeEt_of_picSharp_representability` and clause (2) is
 `isIso_picEtComparison_of_picSharp_representability` (both
 `Picard/PicEtSubcanonical.lean`), the second discarding the section it is handed.
-Axiom-clean `[propext, Classical.choice, Quot.sound]`, against a control — the
-same conclusion *without* the hypothesis, i.e. this theorem — that correctly
-reports `sorryAx`. The two halves existed separately; what had not been measured
-is that their conjunction is exactly this statement, so no reader had to take
-"adds no strength" on trust.
+Axiom-clean `[propext, Classical.choice, Quot.sound]`. The two halves existed
+separately; what had not been measured is that their conjunction is exactly this
+statement, so no reader had to take "adds no strength" on trust.
+
+**The control here has a trap in it, and the trap is worth more than the
+result.** The obvious control — "does the conclusion close *without* the campaign
+hypothesis?" — **succeeds**, so read naively it says the reduction is empty.
+`exact?` closes clause (1) hypothesis-free via
+`HasPicSchemeEt.has_pic_scheme_et`, and clause (2) via
+`picEtComparison_isIso_of_hasRationalPoint`. Both are legitimate terms; both
+route through `instHasPicSchemeEt`, which *is* a projection of the `sorry` below.
+Measured: the hypothesis-free version reports
+`[propext, sorryAx, Classical.choice, Quot.sound]` while the version above
+reports no `sorryAx`. So on this seam **provability is not a discriminating
+control and the axiom list is** — because an unconditional gate instance makes
+every statement in its domain provable. Anyone probing a reduction anywhere near
+`HasPicSchemeEt` should compare axiom lists, not success and failure.
 
 **What this does NOT mean, since it is the natural misreading.** It does not
 bring the seam closer. The hypothesis is the campaign's *undischarged output*,
