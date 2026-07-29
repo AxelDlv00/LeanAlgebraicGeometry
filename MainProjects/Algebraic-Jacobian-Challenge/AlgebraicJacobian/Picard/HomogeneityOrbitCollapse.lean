@@ -69,7 +69,8 @@ of the hypothesis those theorems were assembled behind.
 
 universe u
 
-open CategoryTheory Topology TopologicalSpace Order AlgebraicGeometry
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj
+open Topology TopologicalSpace Order AlgebraicGeometry
 
 namespace AlgebraicGeometry
 
