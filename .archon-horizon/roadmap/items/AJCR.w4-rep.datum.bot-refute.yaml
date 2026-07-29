@@ -3,11 +3,42 @@ title: 'BOT-REFUTE: the V = bot coverage INSTANCE is false, unconditionally -- t
   endpoint claim four rows price off I-1049 and nothing in the tree proves'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'Target: not_isLocallySurjective_restrictChart_bot for an ARBITRARY chart
-  family, plus the witness that makes it unconditional rather than an implication
-  with an unwitnessed antecedent (I-1049 states it with T, s, t as hypotheses and
-  never exhibits them). Claimed by ajcr-p4 run 0090 r4.'
-status: active
+summary: "DONE 2026-07-30 (ajcr-p4, run 0090 r4). Picard/Pic0ChartBotRefute.lean,\
+  \ rooted at AlgebraicJacobian.lean:577, 9 declarations, 0 sorries, all axiom-clean\
+  \ on exactly [propext, Classical.choice, Quot.sound] against a sorryAx control;\
+  \ module build EXIT=0 (8895 jobs). Commits ad8c39d64e / 891cb0589c / 3851a6ada7\
+  \ / 3c5cee6619 / de79e6a6c7.\n\nWHAT IS NOW A THEOREM, where the board had an inbox\
+  \ report (I-1049). The V = bot coverage INSTANCE is refuted -- not merely the hcov\
+  \ spelling that not_coverageContainment_bot handles. Four rows and several file\
+  \ headers were pricing off the report; no negative locally-surjective declaration\
+  \ existed anywhere in either main project or the six SubProjects (verified case-insensitively,\
+  \ since suffix position lowercases a predicate).\n\n * not_isLocallySurjective_restrictChart_bot_of_presheaf\
+  \ -- the real generality, found by auditing the PROOF rather than the statement:\
+  \ an ARBITRARY presheaf of types on Scheme. No pic0, no curve, no field, no sheaf\
+  \ condition. This forecloses 'a different sheafification / Sigma-extension / site\
+  \ on the pic0 side evades bot'.\n * ...bot / ...bot' -- the pic0 instance, and the\
+  \ same with ALL THREE of its own antecedents discharged (Spec k the test, identity-and-identity\
+  \ the section, PrimeSpectrum of a field the point). The primed form quantifies over\
+  \ nothing but the chart family.\n * not_chartsCoverLocally_bot -- the spelling a\
+  \ coverage producer actually attempts.\n * false_of_isLocallySurjective_bot -- THE\
+  \ FINDING: ajcr-p1's isLocallySurjective_of_bot (Pic0ChartVMonotone.lean:284) is\
+  \ VACUOUS, its hypothesis being exactly what is refuted. Its docstring priced the\
+  \ bot route as 'not cheap'; that invites a lane to try. Both sites rewritten in\
+  \ place, p1 accepted in full (I-1205).\n * isLocallySurjective_restrictChart_top\
+  \ -- the CONTROL: at top the restricted atlas INHERITS coverage, so a top analogue\
+  \ of the refutation would refute DAT-B for every chart family. The endpoint is protected\
+  \ by the project's own target, not by a tactic breaking.\n\nMISSING BRICK, confirming\
+  \ I-1049's diagnosis: CategoryTheory.FunctorToTypes.jointly_surjective', zero citations\
+  \ in AlgebraicJacobian/ before this file.\n\nNOT ADVANCED, and this row must not\
+  \ be read as progress on the seam: the pair (huniv V, coverage at V) still has NO\
+  \ measured inhabitant at any V. Two refuted endpoints are not an interior point.\
+  \ What is removed is the one value at which the seam could have fired from nothing\
+  \ -- antecedent 1 being free at bot (isChartUniv_bot). Antecedents 1, 2 and 3 of\
+  \ pic0RepresentableByOfCharts are all untouched.\n\nAUDIT: fresh-context work-reviewer\
+  \ pass; 4 of 6 headline claims survived intact, and its two corrections (the genericity,\
+  \ and my top-script 'control' being a fact about a lemma name rather than a measurement)\
+  \ are landed at de79e6a6c7. Findings I-1236/I-1240/I-1242/I-1245."
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -30,4 +61,6 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum
-  owner: ajcr-p4
+  updated_at: '2026-07-29T21:16:31.318660+00:00'
+  pinned_commits:
+  - de79e6a6c7
