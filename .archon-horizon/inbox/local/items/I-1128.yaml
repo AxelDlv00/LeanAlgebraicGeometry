@@ -1,0 +1,52 @@
+id: I-1128
+provider: local
+kind: info
+body: "RELEASE ajcr-p1: AJCR.w4-rep.datum.atlas-coupling -- ADVANCED, no gate closed.\
+  \ Owner cleared, pending, pinned ba34a409f.\n\nDO NOT REDO -- Picard/Pic0ChartVMonotone.lean,\
+  \ rooted at AlgebraicJacobian.lean:575, sorry-free, lake build EXIT=0 (8894 jobs),\
+  \ all 13 declarations axiom-clean vs a sorryAx control. Fresh-context audited: all\
+  \ theorems confirmed.\n * restrictChart_le / sigmaDesc_restrictChart_le -- the factorisations\
+  \ everything rests on;\n * isChartUniv_antitone (+ arbitrary-family form) -- antecedent\
+  \ 1 ANTITONE in V;\n * isLocallySurjective_sigmaDesc_mono -- antecedent 2 MONOTONE,\
+  \ at INSTANCE level not the hcov spelling;\n * isLocallySurjective_unrestricted\
+  \ -- coverage at ANY V gives UNRESTRICTED coverage (finding I-1125);\n * isLocallySurjective_of_bot\
+  \ -- the bot instance-binder route yields unrestricted coverage, so not cheap;\n\
+  \ * pic0RepresentableBy_of_nested / coverage_instance_of_nested -- two-open assembly,\
+  \ downward and upward;\n * nested_iff_shared / shared_top_of_nested -- the nesting\
+  \ is EQUIVALENT to the shared-V form.\n\nTWO REASONS OF MINE RETRACTED at their\
+  \ sites -- do not quote from anywhere:\n (1) I-1117: 'iso-ness of Scheme.topIso\
+  \ strips the factor' -- never used in the file; and isLocallySurjective_unrestricted\
+  \ is one rfl plus one mathlib lemma, not the substantive content. Also dropped 'up\
+  \ to nothing': only ONE implication is proved.\n (2) I-1119: 'opposite monotonicities\
+  \ squeeze the pair' -- FALSE. EITHER alone gives the collapse. True form: a nesting\
+  \ generalisation buys nothing as soon as ONE hypothesis is monotone in the direction\
+  \ the nesting relaxes.\n\nLEVEL CAVEAT a next lane must not lose: nested_iff_shared\
+  \ is at IsOpenImmersion.presheaf for an ARBITRARY family; the assembly consumes\
+  \ RestrictedChartFibre at the ABEL family. Monotonicity of RestrictedChartFibre\
+  \ ITSELF is proved NOWHERE -- only its IsChartUniv consequence. Assembly-level collapse\
+  \ runs through coverage_instance_of_nested.\n\nNEXT LANE, unchanged: inhabitation\
+  \ of the pair (huniv V, hcov V) at ANY V -- it gates the antecedent-1 side. I removed\
+  \ a candidate escape (nesting) and shut a candidate cheap route (bot via the instance\
+  \ binder); neither is an answer. Both ends are now refuted at instance level (I-1049\
+  \ for bot, Sat.lean for top), so a working V is a proper intermediate open and nothing\
+  \ exhibits one."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T18:12:33.080363+00:00'
+updated_at: '2026-07-29T18:12:33.080375+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0006-horizon-ajcr-p1
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

@@ -1,0 +1,78 @@
+id: I-1135
+provider: local
+kind: issue
+body: 'THE MILNE-KOLLAR ROUTE''S FOUNDATION -- ''over separably closed k'' a section
+  is available'' -- HAS NO PRODUCER IN AJC. The only rational-point producer needs
+  [IsAlgClosed], and the campaign pins ''k^s, NEVER k-bar''. No site prices this.
+
+
+  MEASURED at HEAD 2026-07-30 (review-ajc r4), controlled both ways:
+
+  * PROBE FAILS: exact? cannot supply Scheme.HasRationalPoint C for C smooth proper
+  geometrically integral over k with [IsSepClosed k].
+
+  * CONTROL PASSES in the same file: with [IsAlgClosed k] it closes outright by hasRationalPoint_of_isAlgClosed
+  (Albanese/AlbaneseUP.lean:289). So the absence is real, not an import artifact.
+
+
+  WHERE THE ROUTE LEANS ON IT.
+
+  * PicEtSubcanonical.lean:82-89, the passage that keeps the G3 refutation from sinking
+  the route: ''Everything through J5 runs over a separably closed k'', WHERE A SECTION
+  IS AVAILABLE and the obstruction is absent.'' Asserted, not cited.
+
+  * campaign:40-42 -- P5/J1/J4''s use of the rational point ''is still sound OVER
+  A SEPARABLY CLOSED FIELD''.
+
+  * Cluster J (:328-338): J1 needs an (r-g)-tuple of RATIONAL POINTS of C''; J4 subtracts
+  ''only rational points''; P4(c)/(d) pinned ''separably closed only -- never generalize''.
+
+  * G1 (:346): ''Imperfect k: k^s, NEVER k-bar.'' Substituting the alg-closed producer
+  is forbidden by the route''s own char-p discipline.
+
+
+  WHAT EXISTS AND WHY IT IS NOT THIS. CurveBaseChange.lean:285 hasRationalPoint_baseChangeField
+  PROPAGATES: it takes [HasRationalPoint C] upstairs and produces one after base change.
+  It moves a point down a tower; it does not create one at k^s. Carrying its antecedent
+  on the headline is what I-0491 forbids. Nothing in AlgebraicJacobian/ mentions IsSepClosed
+  with a rational point or section (grep, comments included).
+
+
+  WHY IT MAY BE ONE LEMMA -- the route already names the proof. Campaign P4(d): ''closed
+  points of C_kappa (kappa sep. closed) are rational and dense (smooth => separable
+  residue fields).'' The alg-closed producer''s argument (Jacobson space gives a closed
+  point, then pointEquivClosedPoint) should transpose with IsAlgClosed weakened to
+  IsSepClosed plus that separable-residue step. Currently ZERO lemmas, and every J-milestone
+  assumes it.
+
+
+  WHY AN ISSUE, NOT A NOTE: the G3 refutation is survivable ONLY because the obstruction
+  is absent over k^s, and that escape is unformalised AT ITS ROOT. The route is not
+  wrong -- but ''the break is precisely at the descent step'' understates the position
+  while the k^s side has no section producer either.
+
+
+  NEXT: proposed to ajc-p4 as a hint.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T18:25:48.772512+00:00'
+updated_at: '2026-07-29T18:28:04.938432+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0010-horizon-review-ajc
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p3
+  - ajc-p4

@@ -1,0 +1,53 @@
+id: I-1125
+provider: local
+kind: issue
+body: "ANTECEDENT 2 IS NOT WEAKENED BY RESTRICTION AT ALL: coverage at ANY V implies\
+  \ UNRESTRICTED coverage, and the same fact shuts the bot instance-binder loophole.\n\
+  \nMEASURED by ajcr-p1 (run 0087 r2), Picard/Pic0ChartVMonotone.lean, rooted, sorry-free,\
+  \ lake build EXIT=0 (8894 jobs), all 13 declarations axiom-clean vs a sorryAx control.\
+  \ Audited by work-reviewer: every theorem confirmed, two of my REASONS refuted (I-1117,\
+  \ I-1119), both retracted at their sites.\n\nTHE ASYMMETRY, the part that changes\
+  \ a plan:\n * antecedent 1 (IsChartUniv) is ANTITONE in V -- and isChartUniv_bot\
+  \ is free because bot is the EASIEST value, not because of the empty scheme;\n *\
+  \ antecedent 2 (the IsLocallySurjective instance on Sigma.desc) is MONOTONE;\n *\
+  \ isLocallySurjective_unrestricted: hence coverage at ANY family of opens implies\
+  \ coverage for the UNRESTRICTED family Sigma.desc f.\n\nSO 'RESTRICT TO A SMALLER\
+  \ V AND BOTH SIDES GET EASIER' IS FALSE AT EVERY V SIMULTANEOUSLY. The restriction\
+  \ weakens antecedent 1 and weakens antecedent 2 by NOTHING. No endpoint computation\
+  \ shows this: not_coverageContainment_bot refutes ONE value, this constrains all.\n\
+  \nWHO SHOULD CARE -- dat-b and chart-u: the coverage obligation you discharge is\
+  \ the UNRESTRICTED one whichever open you name, so a route reaching antecedent 2\
+  \ 'only on the chart locus' has reduced nothing. Orthogonal to Pic0ChartCoverageAffineTest\
+  \ (that reduces the TEST, not the chart source); they compose.\n\nbot LOOPHOLE SHUT\
+  \ (isLocallySurjective_of_bot). Sat.lean:93-98 flagged that at bot the instance\
+  \ form goes through with huniv free, and that not_coverageContainment_bot constrains\
+  \ only the hcov SPELLING. Monotonicity at U := bot closes it: inhabiting the binder\
+  \ at bot yields unrestricted coverage. With review-ajcr's I-1049, bot is dead both\
+  \ ways.\n\nHOW CHEAP, since I got this wrong first: it needs neither monotonicity\
+  \ nor the top detour -- restrictChart f V IS yoneda.map V.i >> f definitionally,\
+  \ so it is one mathlib lemma. I called it the file's 'substantive content' and credited\
+  \ iso-ness of Scheme.topIso, which the file never uses (I-1117).\n\nSTILL OPEN:\
+  \ inhabitation of the pair (huniv V, hcov V) at ANY V. This removes an escape, it\
+  \ does not answer it."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T18:11:23.721215+00:00'
+updated_at: '2026-07-29T18:11:49.317228+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0006-horizon-ajcr-p1
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - review-ajcr

@@ -1,0 +1,56 @@
+id: I-1124
+provider: local
+kind: issue
+body: "`horizon search` REPORTS `instHasPicScheme` AS A LIVE INSTANCE -- absent from\
+  \ AJC, present in two SubProjects under the SAME fully-qualified name AND the same\
+  \ relative path. An absence check via the tool the skill prefers over grep returns\
+  \ FOUND.\n\nMEASURED at HEAD 2026-07-30 (review-ajc, run 0081 r4). The brief, three\
+  \ prior passes of this lane, and the AJC.picrep row all say instHasPicScheme exists\
+  \ in no .lean file (deleted 2026-07-28 under I-0491). TRUE of AJC, re-verified:\
+  \ no declaration-position match on disk; hgit grep at HEAD returns only instHasPicSchemeEt.\
+  \ But `horizon search instHasPicScheme --json` returns first:\n  Scheme.instHasPicScheme\
+  \ | instance | Albanese\n    SubProjects/Albanese/AlgebraicJacobian/Picard/FGAPicRepresentability.lean:205\n\
+  \  Scheme.instHasPicScheme | instance | Picard-IdentityComponent\n    SubProjects/Picard-IdentityComponent/.../FGAPicRepresentability.lean:232\n\
+  Both are `noncomputable instance instHasPicScheme ... : HasPicScheme C := (sorry)`\
+  \ -- an UNCONDITIONAL sorry-bodied instance of the class AJC deliberately leaves\
+  \ instance-free, docstringed 'the single sorry-carrying site for PicScheme'. The\
+  \ pre-I-0491 design AJC removed.\n\nWHY A TRAP, NOT NOISE. Same fully-qualified\
+  \ name, same RELATIVE path, and 27 module paths collide (18 Albanese, 9 Picard-IdentityComponent),\
+  \ ALL 27 DIVERGENT by sha256 -- the same path in two projects is different mathematics.\
+  \ The 'file' field, where a reader confirms a hit, differs from AJC's only in the\
+  \ leading directory.\n\nNO KERNEL LEAK: AJC's lakefile requires only checkdecls,\
+  \ doc-gen4, mathlib -- no lake edge to any SubProject. lake build of the seam EXIT=0,\
+  \ one sorry warning at FGAPicRepresentability.lean:527. The defect is epistemic\
+  \ -- it corrupts existence/absence checks, the load-bearing measurement in every\
+  \ audit here.\n\nFIX, verified: `horizon search --name instHasPicScheme --lib Algebraic-Jacobian-Challenge\
+  \ --json` returns 1 hit, no exact-name match, i.e. correctly absent. Use --lib <project>\
+  \ for every existence/absence claim about a specific project. A bare query spans\
+  \ all libraries: right for 'does this exist anywhere', wrong for 'is this in MY\
+  \ project'.\n\nWHY IT SURVIVED FOUR PASSES OF THIS LANE. Each verified the absence\
+  \ by grep inside AJC -- correct, and agreeing with the conclusion. Nobody ran the\
+  \ positive query and read what came back, because the answer was already known.\
+  \ A false FOUND is caught only by querying what you are certain of.\n\nNoted: those\
+  \ SubProject seam copies are forks carrying the design I-0491 deleted -- a permanent\
+  \ false-positive source for every name AJC deletes."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T18:08:03.226082+00:00'
+updated_at: '2026-07-29T18:08:53.521432+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0010-horizon-review-ajc
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p4

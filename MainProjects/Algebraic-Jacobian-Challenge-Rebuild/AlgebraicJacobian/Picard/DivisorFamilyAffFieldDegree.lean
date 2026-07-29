@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.DivisorFamilyAffAbel
+import AlgebraicJacobian.Picard.DivisorFamilyAffCompare
 import AlgebraicJacobian.Picard.DivisorFamilyFieldDegree
 
 /-!
@@ -292,8 +293,104 @@ theorem deg_presentationDivisor_eq_finrank_glued
         Finset.sum_congr rfl fun j _ => (A.finrank_colength_eq_sum j).symm
     _ = (finrank K A.Glued : ℤ) := hW.symm
 
+omit [IsIntegral (relCurve C K)]
+  [SmoothOfRelativeDimension 1 (relCurve C K ↘ Spec (CommRingCat.of K))]
+  [QuasiCompact (relCurve C K ↘ Spec (CommRingCat.of K))] in
+/-- **The field half of the degree identity, widened.**  Over a field every module is free, so
+the constant fibre rank of the glued colength module is its `K`-dimension: a widened certificate
+of degree `n` forces `finrank K W(d) = n`.
+
+Verbatim `DivisorAdaptation.IsCertified.finrank_glued` — it reads only `rankAtStalk_glued`, a
+clause `AffAdaptation.IsCertified` carries unchanged (`DivisorFamilyAffAdaptation.lean`: "nothing
+is added and nothing is dropped"), so the widening cannot touch it. -/
+theorem IsCertified.finrank_glued {n : ℕ} (hc : A.IsCertified n) :
+    finrank K A.Glued = n := by
+  haveI : Module.Free K A.Glued := Module.Free.of_divisionRing K A.Glued
+  have h := congrFun (Module.rankAtStalk_eq_finrank_of_free (R := K) (M := A.Glued))
+    (⊥ : PrimeSpectrum K)
+  rw [hc.rankAtStalk_glued ⊥] at h
+  simpa using h.symm
+
+/-- **The degree of a support-separated widened certified adaptation is exactly `n`.**
+
+This is the statement the degree ledger wanted, and it is the first one in the widened tail that
+is not conditional on an `hrank` with no producer (I-1109): the geometric half is
+`deg_presentationDivisor_eq_finrank_glued` above, the field half is `IsCertified.finrank_glued`,
+and `IsCertified` is the certificate the widened carrier already builds.
+
+Read the two hypotheses honestly.  `hsep` is a real assumption about the cover — support
+separation, the same one the chart-typed `deg_divFamDivisor_of_separated` makes, and the DD-1c
+backward map satisfies it by construction because its adaptations isolate the support points.
+`hc` is the certificate.  Neither is discharged here; what is discharged is that they SUFFICE
+over arbitrary affine pieces, which is what the pinned pair was previously believed to be
+paying for. -/
+theorem deg_presentationDivisor_eq_of_isCertified {n : ℕ}
+    (hsep : ∀ i j : D.index, i ≠ j → ∀ (z : relCurve C K) (hzi : z ∈ D.pieces i),
+      z ∈ D.pieces j → IsUnit (((relCurve C K).presheaf.germ (D.pieces i) z hzi).hom (A.eqn i)))
+    (hc : A.IsCertified n) :
+    Scheme.CurveDivisor.deg K (Scheme.presentationDivisor K d.presentation) = (n : ℤ) := by
+  rw [A.deg_presentationDivisor_eq_finrank_glued hsep hc.finite_colength, hc.finrank_glued]
+
 end Geometric
 
 end AffAdaptation
+
+/-! ## Non-vacuity of the pair, at every `n`
+
+The audit standard for this project is that a discharged implication is worth what its
+antecedents are worth, and I-1109 measured the specific failure mode in this tail: every widened
+certificate at `n > 0` was conditional on an `hrank` with no producer at any `n > 0`, so the only
+exhibited inhabitant anywhere was the zero divisor.
+
+That is not the situation for `deg_presentationDivisor_eq_of_isCertified`, and the reason is that
+its two hypotheses transport TOGETHER along the migration `DivisorAdaptation.toAff`.  The lemma
+below is deliberately the joint statement rather than two separate ones: witnessing `hsep` and
+`hc` at different adaptations would prove nothing about the conjunction.
+
+What this does NOT claim: it does not say the degree ledger holds for a widened class with no
+chart-typed preimage.  It says the theorem's hypotheses are simultaneously satisfiable at every
+`n`, which is what separates a real hypothesis from an unsatisfiable one. -/
+
+section NonVacuity
+
+variable {π : C.left ⟶ P1 k} [IsAffineHom π]
+
+/-- **Chart-typed separation is widened separation on the migrated cover.**  The migrated index
+is the chart-typed index relabelled by `finSumFinEquiv`, and both `pieces` and `eqn` are that
+relabelling applied, so distinctness pulls back through `reindexEquiv.injective` and the germ
+statement is the same one. -/
+lemma DivisorAdaptation.sep_toAff {d : (relCurve C K).LocalEquations}
+    (A : DivisorAdaptation C K π d)
+    (hsep : ∀ i j : A.index, i ≠ j → ∀ (z : relCurve C K) (hzi : z ∈ A.pieces i),
+      z ∈ A.pieces j → IsUnit (((relCurve C K).presheaf.germ (A.pieces i) z hzi).hom (A.eqn i))) :
+    ∀ i j : (A.toFinCoverData.toAffCoverData).index, i ≠ j →
+      ∀ (z : relCurve C K) (hzi : z ∈ (A.toFinCoverData.toAffCoverData).pieces i),
+      z ∈ (A.toFinCoverData.toAffCoverData).pieces j →
+      IsUnit (((relCurve C K).presheaf.germ
+        ((A.toFinCoverData.toAffCoverData).pieces i) z hzi).hom (A.toAff.eqn i)) := by
+  intro i j hij z hzi hzj
+  exact hsep _ _ (fun h => hij (A.reindexEquiv.injective h)) z hzi hzj
+
+/-- **The widened degree identity is inhabited at every `n`.**  Given a chart-typed certified
+family of degree `n` whose adaptation is support-separated, the migrated widened adaptation
+satisfies BOTH hypotheses of `deg_presentationDivisor_eq_of_isCertified`, and the conclusion is
+its degree identity — so the pair `(hsep, hc)` is satisfiable for every `n`, not only `n = 0`.
+
+The certificate half is `CertifiedDivisorFamily.toAff`, unconditional; the separation half is
+`sep_toAff` above. -/
+theorem exists_widened_deg_eq_of_certifiedFamily_sep [IsIntegral (relCurve C K)]
+    [SmoothOfRelativeDimension 1 (relCurve C K ↘ Spec (CommRingCat.of K))]
+    [QuasiCompact (relCurve C K ↘ Spec (CommRingCat.of K))] {n : ℕ}
+    (F : CertifiedDivisorFamily C K π n)
+    (hsep : ∀ i j : F.adaptation.index, i ≠ j → ∀ (z : relCurve C K)
+      (hzi : z ∈ F.adaptation.pieces i), z ∈ F.adaptation.pieces j →
+      IsUnit (((relCurve C K).presheaf.germ (F.adaptation.pieces i) z hzi).hom
+        (F.adaptation.eqn i))) :
+    Scheme.CurveDivisor.deg K (Scheme.presentationDivisor K F.toAff.eqns.presentation)
+      = (n : ℤ) :=
+  F.toAff.adaptation.deg_presentationDivisor_eq_of_isCertified
+    (F.adaptation.sep_toAff hsep) F.toAff.certified
+
+end NonVacuity
 
 end AlgebraicGeometry
