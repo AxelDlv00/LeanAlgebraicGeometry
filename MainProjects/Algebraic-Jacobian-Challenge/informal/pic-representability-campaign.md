@@ -47,12 +47,28 @@
 >      true, it is strictly weaker than the challenge, and protection `I-0491` clause 4
 >      forbids presenting it as the headline;
 >    - the étale-sheafified functor itself is **built and `sorry`-free**
->      (`Picard/PicEtSheaf.lean`, sheaf property *proved*), so the remaining distance
->      from these milestones to the headline is the comparison
->      `picSharp C → Pic_{(C/k)ét}` — which is Kleiman §2 Thm 2.5 and is available
->      only under a section — plus representability of the sheafified functor itself.
->      Both are bundled into the single obligation `fgaPicardRepresentability`, so
->      that count stays honest in both directions.
+>      (`Picard/PicEtSheaf.lean`, sheaf property *proved*). The remaining distance from
+>      these milestones to the headline was described here as the comparison
+>      `picSharp C → Pic_{(C/k)ét}` "available only under a section", plus
+>      representability of the sheafified functor. **Both halves are now discharged as
+>      stated (2026-07-29, `review-ajc` re-verifying `ajc-p1`'s theorems), and the
+>      section is not needed.** `Scheme.picSharp_representableBy_picEt_transport` and
+>      `Scheme.hasPicSchemeEt_of_picSharp_representability`
+>      (`Picard/PicEtSubcanonical.lean:263`, `:286`) carry a `picSharp`-representing
+>      scheme to `picEt` with no hypothesis on `C(k)` — the *same* scheme, so the
+>      finite-type and separatedness conjuncts ride along — and
+>      `Scheme.isIso_picEtComparison_of_picSharp_representability` (`:310`) makes the
+>      comparison an isomorphism outright. All three axiom-clean (`propext`,
+>      `Classical.choice`, `Quot.sound`; no `sorryAx`). The mechanism: the comparison is
+>      the sheafification *unit*, a unit is an iso exactly when its source is a sheaf,
+>      and a representable presheaf is a sheaf for a subcanonical topology — so
+>      representability supplies what the section was buying. Kleiman 2.5 is a
+>      *sufficient* condition, and reading it as the only one is what priced this wrong.
+>      So these milestones' `picSharp`-shaped output does reach clause (1); the residue
+>      is not a further representability theorem but the descent step G1/G3, where
+>      unconditional `picSharp` representability over an arbitrary `k` is **false** (see
+>      the G3 note). Both clauses remain bundled into `fgaPicardRepresentability`, whose
+>      antecedent is still exactly the campaign's undischarged output.
 >
 >    **Two things established while the question was open, which survive it.** Both
 >    are about the milestones' hypothesis bundle rather than about the decision, so
