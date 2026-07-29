@@ -61,6 +61,32 @@ Three statements, all now machine-checked, none of which was the one the roadmap
 3. Hence the residue is neither "instantiate DAT-0a" (the roadmap's claim, too optimistic) nor
    "restate with slack" (the reviewer's repair, which as they themselves note runs into the
    `0 ≤ Σ` legality of the index).  It is: **reconcile the chart parameter with the threshold.**
+
+**SHARPENED 2026-07-30 (`Picard/Pic0ChartCoverageThreshold.lean`, inbox `I-1329`): item 3
+above reasons about "the threshold" as a per-fibre quantity still to be obtained.  It is not
+per-fibre, and it is already available.**  The two halves:
+
+* DAT-0a itself really is *not* instantiable at a splitting field `L` — it binds
+  `π : Y ⟶ ℙ¹` with `[IsFinite]`/`[IsDominant]`, and no `relCurve C L ⟶ P1 L` exists anywhere
+  in this tree.  That much of the pricing is right, and is presumably why nobody tried.
+* But the threshold does not need DAT-0a.  `subsingleton_hModule_one_of_witness`
+  (`RiemannRoch/WindowFieldTransport.lean:87`) is the **π-free** peeling — one witness with
+  vanishing `H¹` bounds every divisor of degree `≥ deg W₀ + 1 − χ` — and `windowN C L hπ g` is
+  such a witness at every `L`.  Since `windowM_choice` and `windowδ` are *base-field* ledger
+  constants, the resulting bound `M·δ + g` does not mention `L`: **one threshold for all
+  fibres** (`subsingleton_h1_of_ledger_bound`, and
+  `exists_uniform_bound_forall_baseChange` for the `∃ b, ∀ L` shape).
+
+Where this account went wrong is worth naming, since the sentence reads as measured: "no
+uniform `m₀` exists" (I-0204) is about the per-field ledger *constants* not transporting —
+true, and why the window lane transports window *facts*.  It does not follow that the induced
+*threshold* is per-field, because the transported witness carries a base-field degree.
+
+**What is not affected.**  Items 1 and 2 stand verbatim; in particular `hb_forces_h0_eq_one`
+is untouched, and `M·δ + g` exceeds `g` (as `δ ≥ 1`), so the uniform threshold is *not* a route
+to `b = g`.  The residue that replaces item 3 is **parameter matching**: coverage now reaches
+the parameter `M·δ + g`, the divRep endpoint supplies `rep` at the parameter its own `hchi`
+pins, and `genus_eq_zero_of_ledgerParam_eq_genus` proves those coincide only when `g = 0`.
    The chart family the atlas glues may be indexed by `m`, and `d₁ = classDeg k Θ > 0`, so the
    available move is to let the chart index *at parameter g* carry the slack in `Z` rather than
    in `n` — which is exactly `classDeg_presenting_twist_eq_add`'s `g + e` shape, whose own
