@@ -3,114 +3,112 @@ title: 'U2: the DDR9-U epsilon-identity at the universal point (the last gate of
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "U2: the DDR9-U epsilon-identity at the universal point (the last gate of\
-  \ divRep).\n\nRE-PRICED 2026-07-29 (run 0071 s0012, ajcr-divrep), REPLACING THE\
-  \ \"UNPRICED\" VERDICT AT THE TOP\nOF THE PREVIOUS BODY. That verdict came from\
-  \ I-0705: forall_not_isCertified_of_straddling\n(Picard/DivisorFamilyAffStrict.lean:127)\
-  \ concludes forall (A : DivisorAdaptation ..) (n), NOT\nA.IsCertified n, which negates\
-  \ HasCertifiedAdaptation at the same binder, so the row's residue\nmight be FALSE\
-  \ rather than open. That was correct about the CLASS half and wrong about the\n\
-  EPSILON half, and the two are now separated in Lean.\n\nLANDED (Picard/DivRepChartClassUnivQuot.lean,\
-  \ commit ae01cfcb2; sorry-free, rooted, lock-free\nscratch-olean check EXIT=0, zero\
-  \ warnings):\n\n  divisorWindow_eq_of_le_of_quotientData\n    a Grassmannian point\
-  \ x contained in the window submodule K_a(d) EQUALS it as soon as the\n    window\
-  \ quotient (R (x)_k H_a) / K_a(d) is projective over R of constant fibre rank g.\n\
-  \    No DivisorAdaptation, no IsCertified, no cover, no chart typing.\n  divFamEps_eq_of_le_of_quotientData\n\
-  \    the epsilon-PAIR identity at an ARBITRARY F : DivFam C R pi g, from window-quotient\
-  \ data at\n    the two pinned windows. Feedable from EITHER carrier.\n  divisorWindow_eq_of_le_of_isCertified_of_quotientData\n\
-  \    the landed chart-typed statement recovered as a COROLLARY, so the generalisation\
-  \ is\n    machine-checked rather than asserted in prose.\n\nWHY THE REFUTATION MISSES\
-  \ THE EPSILON HALF. The no-go's proof runs through certificate clause\n(c1): finiteness\
-  \ of the CHART-LOCAL COLENGTH modules forces supportLeak = empty, hence\nsupportLocus_subset_chart_of_isCertified,\
-  \ hence confinement to one pinned chart. A hypothesis\nabout d's WINDOW QUOTIENT\
-  \ quantifies over no adaptation, so it is not an instance of that\nforall. The epsilon\
-  \ half is OPEN, not false.\n\nTHE HONEST PARTITION OF U2, which is what this row\
-  \ should now be read as:\n  epsilon-VALUE : d's window quotient is projective of\
-  \ constant rank g -- no-go-IMMUNE, open.\n  the CLASS     : a term of DivFamZar\
-  \ C R_Z pi g (a LOCALLY CERTIFIED family) -- this carries\n                  the\
-  \ WHOLE bite of I-0705, and it is precisely the face protection I-0492's\n     \
-  \             widening (R2) exists to supply.\n\nCONSEQUENCE FOR THE CERT-R2 SEAM,\
-  \ posted on I-0494: the epsilon layer needs NO\nAffAdaptation.IsCertified -> DivisorAdaptation.IsCertified\
-  \ bridge. The type mismatch this row\nrecorded on 2026-07-28 as \"the whole critical\
-  \ path\" is off the epsilon path entirely; it remains\nrelevant only to the class\
-  \ half, where cert-r2's divFamZarAff_of_swallowing_affineOpen\n(DivisorFamilyAffSeedGate.lean)\
-  \ is the live candidate.\n\nONE FREE SUB-FINDING, measured not assumed: FINITENESS\
-  \ OF THE WINDOW QUOTIENT IS NOT AN INPUT.\nThe rank engine Submodule.eq_of_le_of_rankAtStalk_quotient_eq\
-  \ (DivSchemeEps.lean:115) takes its\nModule.Finite slot at the GRASSMANNIAN POINT's\
-  \ quotient, which grFunctorAff carries as a field;\nso the window side owes only\
-  \ projectivity plus the rank equation. Caught by the unusedVariables\nlinter on\
-  \ the first elaboration -- I had written finiteness in by analogy with the landed\n\
-  statement, which threads finiteness of A.ThetaGlued for its own reasons.\n\nSTANDING\
-  \ AND STILL BINDING:\n * U2 IS NOT PROVED AND NO GATE HAS CLEARED. Nothing produces\
-  \ a DivFamZar term over the chart\n   ring, hence no IsChartClause and no DivRepAffinePullback.\n\
-  \ * The straddling probe (is (univSeed ..).localEquations' supportLocus preconnected\
-  \ while\n   meeting both pinned fibres?) is STILL UNMEASURED. It now decides only\
-  \ the class half.\n * The endpoint still carries hO, hchi and the ambient curve\
-  \ instances, so this describes the\n   DEBT, not representability for an arbitrary\
-  \ curve.\n * critical-path 7.6 is untouched: L8, local surjectivity of the Abel\
-  \ map out of a too-small\n   divisor functor, remains the campaign's real gate and\
-  \ is arguably FALSE as stated. Two\n   spellings collapsing is not progress toward\
-  \ it.\n\n--- the previous body follows; its \"unpriced\" verdict is superseded for\
-  \ the epsilon half only ---\n\nWHAT SURVIVES from the earlier scoping: the epsilon-layer\
-  \ reduction is sound and kernel-checked\n-- the identity genuinely does not care\
-  \ WHICH adaptation carries the certificate\n(HasCertifiedAdaptation, DivRepChartClassUnivAny.lean),\
-  \ and now does not care whether there is\nan adaptation at all. The scalar is discharged:\
-  \ windowBound_pos_of_genus_ne_zero\n(DivRepChartClassUnivFree.lean) reduces hb to\
-  \ a genus disjunction whose degenerate branch is\ngenus_eq_zero_of_windowBound_nonpos\
-  \ (RiemannRoch/WindowLedgerF3.lean:68). The generator clause\nis free over R_Z (isGenerator_highWindowPointwiseGeneratorSeed,\n\
-  DivSchemeHighWindowPointwiseGenerator.lean:89).\n\nMethodological error of s0010\
-  \ recorded as I-0707: that session crossed its new existential\nagainst the certificate\
-  \ lane's PRODUCERS and never against the tree's REFUTATIONS. The\ncomplement, recorded\
-  \ this session: it then accepted the refutation without asking which CLAUSE\nof\
-  \ IsCertified the refutation's proof consumes.\n\n\nVERIFICATION, FINAL AND MEASURED\
-  \ (appended at s0012 close, superseding the 'no full lake build'\ncaveat above):\
-  \ lake build AlgebraicJacobian -> 'Build completed successfully (9279 jobs)', EXIT=0,\n\
-  ZERO errors and ZERO 'uses sorry' warnings in the whole log. Neither new module\
-  \ appears anywhere\nin the log, so neither contributed an error or a linter warning.\
-  \ Axiom probe with a CONTROL that\nfires (I-0661): AlgebraicGeometry.Jacobian reports\
-  \ sorryAx, while all six new theorems report only\n[propext, Classical.choice, Quot.sound].\
-  \ Both modules rooted in AlgebraicJacobian.lean.\n\nTHE HONEST LIMIT OF THIS ROW'S\
-  \ HEADLINE, added at s0012 close after ajcr-charts pointed out on\nI-0494 that a\
-  \ reduction owes TWO probes and I had run only one on my own. 'The eps-half is OPEN,\n\
-  not false' is a claim about the NO-GO: forall_not_isCertified_of_straddling does\
-  \ not bear on a\nhypothesis naming no adaptation. IT IS SILENT ABOUT SATISFIABILITY.\
-  \ The mirror risk is real and\nUNMEASURED: if the window quotient at the universal\
-  \ point can never be projective of constant\nrank g, then the eps-half has been\
-  \ reduced to a FALSE hypothesis -- which passes every sorry\ncensus and every axiom\
-  \ probe, because it is then a theorem.\n\nNote the asymmetry with the junk probe\
-  \ that refuted DAT-J's Abel square: that residue was vacuous\nbecause its witness\
-  \ was CONSUMER-CHOSEN. Here the window quotient is determined by d, so vacuity\n\
-  is impossible and satisfiability is the only live failure mode. The 'not silently\
-  \ stronger' probe\nIS discharged (divisorWindow_eq_of_le_of_isCertified_of_quotientData\
-  \ recovers the landed\nchart-typed statement as a corollary); the satisfiability\
-  \ probe is owed and is the cheapest next\nmeasurement on this row.\n\nSUPERSEDING\
-  \ THE SATISFIABILITY CAVEAT ABOVE -- I RAN THE PROBE AND THE EPS-HALF IS DISCHARGED,\
-  \ NOT\nMERELY OPEN (s0012 close, commit 32476f85a, root build 9280 jobs EXIT=0,\
-  \ divFamEps_eq_of_le\naxiom-clean vs a control that fires sorryAx).\n\n  divFamEps_eq_of_le\
-  \ (Picard/DivRepChartClassUnivQuot.lean)\n    the eps-pair identity at an ARBITRARY\
-  \ F : DivFam C R pi g from THE TWO CONTAINMENTS ALONE --\n    no projectivity hypothesis,\
-  \ no rank hypothesis, no certificate.\n\nWHY: Picard/DivSchemeFrameCover.lean ALREADY\
-  \ carries DivFam.projective_window_quotient (:106) and\nDivFam.rankAtStalk_window_quotient\
-  \ (:117) for EVERY F at EVERY window a >= windowM_choice,\ndischarged inside from\
-  \ the representative's own certificate -- which DivFam has BY CONSTRUCTION,\nCertifiedDivisorFamily\
-  \ being the triple (eqns, adaptation, certified). So the window-quotient facts\n\
-  were not merely satisfiable: they were landed unconditionally, and this lane had\
-  \ restated them as\nhypotheses.\n\nTHE SHARP READING, and it retracts this row's\
-  \ own framing across five sessions: THE EPS-HALF OF U2\nWAS NEVER GATED ON A CERTIFICATE\
-  \ AT ALL -- not on the original (D.divisorAdaptation hD).IsCertified\ng, and not\
-  \ on the weakened HasCertifiedAdaptation this lane landed at s0010. What every re-scope\n\
-  read as 'U2 needs a certificate' was the CLASS requirement leaking into the eps\
-  \ statement THROUGH\nTHE CARRIER: one cannot WRITE divFamEps hpi g F without an\
-  \ F, and every F carries a certificate.\nThe eps layer never asked for one beyond\
-  \ that.\n\nSO THE PARTITION IS NOT 'eps open, class refuted'. It is: eps DISCHARGED,\
-  \ and 100% of U2's\nremaining content is PRODUCING THE CLASS over the chart ring\
-  \ -- exactly the face protection I-0492's\nwidening exists to supply, and cert-r2's\
-  \ divFamZarAff_of_swallowing_affineOpen is the live\ncandidate. The straddling probe\
-  \ now decides that and nothing else.\n\nMETHOD NOTE, worth more than the result:\
-  \ this came from running the probe ajcr-charts named on\nI-0494 -- a reduction owes\
-  \ BOTH 'not vacuous' and 'not silently stronger'. My hypothesis was\nDETERMINED\
-  \ by the data rather than consumer-chosen, so the live risk was UNSATISFIABILITY\
-  \ rather\nthan vacuity; checking it turned a caveat into a theorem and refuted my\
-  \ own headline of an hour\nearlier."
+  \ divRep).\n\nRE-PRICED 2026-07-29 (run 0071 s0014, ajcr-divrep), REPLACING THE\
+  \ \"100% OF U2 IS THE CLASS\"\nVERDICT AT THE TOP OF THE PREVIOUS BODY. That verdict\
+  \ was right that the eps-value at a DivFam\nis discharged, and wrong about what\
+  \ remained: cert-r2 LANDED the class producer\n(divFamZarAff_of_swallowing_affineOpen,\
+  \ DivisorFamilyAffSeedGate.lean:205) and it still cannot\nfeed U2. The reason is\
+  \ not a certificate.\n\nTHE MEASUREMENT. U2's consumer DivRepChartFamily.IsChartClause\
+  \ (DivRepAffPullClause.lean:121)\nquantifies over DivFamZar C (ChartRing i j) pi\
+  \ g -- the CHART-TYPED value. cert-r2's producer\ngives a DivFamZarAff. There is\
+  \ no map DivFamZarAff -> DivFamZar and there cannot be (spec-dd-r\nADDENDUM 3 s2);\
+  \ only DivFamZar.toAff exists and it runs the wrong way. So the only route is to\n\
+  re-derive the eps-value facts widened -- and THAT was the absence: divFamEps_eq_of_le\
+  \ rests on\nprojectivity + constant rank g of the window quotient, landed unconditionally\
+  \ on DivFam\n(DivSchemeFrameCover.lean:106/:117) but ONLY via windowQuotEquiv, whose\
+  \ target A.ThetaGlued a\nwas defined solely on DivisorAdaptation. Cross-measured:\
+  \ of all files naming AffAdaptation,\nZERO defined any theta arrow.\n\nSO THE PARTITION\
+  \ NEEDS A THIRD ROW:\n  eps-value at a DivFam        DISCHARGED (s0012).\n  eps-value\
+  \ at a DivFamZarAff  was UNSTATEABLE -- no Theta-layer existed.\n  the class over\
+  \ the chart ring PRODUCED by cert-r2, in the wrong carrier.\nDivisorFamilyAffFraming\
+  \ is right that the eps STATEMENT is carrier-indifferent; the eps FACTS\nare not,\
+  \ and nobody had separated statement from facts.\n\nLANDED THIS SESSION (Picard/DivisorFamilyAffTheta.lean,\
+  \ commits d2e47343f 358ed7257 94d526b0e\nd05c316b0 91f702164; sorry-free, rooted,\
+  \ kernel EXIT=0 zero diagnostics, axiom-clean vs a\ncontrol reporting sorryAx):\n\
+  \n  AffAdaptation.thetaOvlUnit / thetaDeltaRight / thetaGluedSubmodule / ThetaGlued\n\
+  \  AffAdaptation.thetaEval / thetaGluedEval / thetaEval_mem / germ_eqn_span_eq_stalkIdeal\n\
+  \  AffAdaptation.ker_thetaGluedEval        -- LEFT EXACTNESS, the face that was\
+  \ missing\n  the (c2) substrate: gluedSubalgebra, unitGluedSubmodule (+_one, +_thetaOvlUnit\
+  \ by rfl),\n    mul_mem_unitGluedSubmodule, unitGluedOver, thetaSpan/thetaInvSpan,\n\
+  \    thetaSpan_mul_thetaInvSpan_le_one, IsThetaPaired, isThetaPaired_of_one_mem\n\
+  \  the sections: relFiberCoordSidePow, thetaSectionSide\n\nWHY ker_thetaGluedEval\
+  \ IS THE FACE: its RHS is LITERALLY the same term as the chart-typed\nDivisorAdaptation.ker_thetaGluedEval\
+  \ (DivisorFamilyTheta.lean:350) -- the vanishing submodule\nnames d and the two\
+  \ pinned charts and NO cover. So divisorWindow, its comap, is the same\nsubmodule\
+  \ on both carriers, and a widened windowQuotEquiv has its left-exactness half.\n\
+  \nIT WAS A PORT, NOT MATHEMATICS: the Theta layer's chart-dependence is one Bool\
+  \ per piece, and\nthe side-uniform API already existed and is used by ~60 files\
+  \ (relThetaResSide,\nrelThetaSideUnit, relThetaResSide_matching, DivSchemeFamilySide.lean:155/:180/:194),\
+  \ needing\nonly piece <= relPinnedChart (side j) -- verbatim ChartTyping.piece_le\n\
+  (DivisorFamilyAffCover.lean:204), the datum I-0492 clause 3 kept SEPARATE from the\
+  \ certificate\nso exactly this could happen.\n\nTWO MEASUREMENTS, NEITHER PREDICTED:\n\
+  \ * THE PORT IS SHORTER THAN THE ORIGINAL. Chart-typed thetaEval_mem runs a four-case\
+  \ rcases on\n   the Sum index with two hand-built containments and a Units.inv_mul\
+  \ step; widened it is ONE\n   relThetaResSide_matching. The whole (c2) substrate\
+  \ elaborated clean on the FIRST pass.\n * THE JOINT COVER ADDS ONE REAL STEP. Chart-typed,\
+  \ a point of V0 is always covered by a\n   chart-0 piece; jointly the piece containing\
+  \ z may be assigned to the OTHER chart, so the two\n   sides must be compared through\
+  \ the matching unit. Genuine content -- and the template already\n   existed: ThetaGeneratorSeed.le_vanishingSubmodule\
+  \ (DivSchemeFamily.lean:397) does exactly\n   this on D.piece z inf relPinnedChart\
+  \ b with the side from a Bool.\n\nA SAME-SESSION SELF-CORRECTION: the (c2) commit\
+  \ claimed the pinned charts enter that route at\nEXACTLY ONE place (isThetaPaired_of_sectionWitness).\
+  \ Imprecise, retracted: thetaSectionFst/Snd's\nSum-match only decides which side's\
+  \ coordinate to use, the same Bool, so the sections port too.\n\nWHAT IS GENUINELY\
+  \ STILL OWED ON THIS ROUTE, three items:\n 1. thetaSectionSide_mem -- the widened\
+  \ membership. This is the four-case cocycle argument\n    (thetaSectionFst_mem,\
+  \ DivisorFamilyThetaSections.lean:321): each case a different identity\n    (1,\
+  \ the cocycle, its inverse, 1), the inr/inl case needing a resHom_relFiberCoordPow\
+  \ rewrite\n    through the chart overlap. REAL CONTENT, not re-indexing. NOT ported.\n\
+  \ 2. the widened IsThetaPaired, from 1 via a widened isThetaPaired_of_sectionWitness.\n\
+  \ 3. the widened finite/projective/rankAtStalk_thetaGlued (mechanical from 2 --\n\
+  \    InvertibleModuleTransfer is carrier-generic), hence a widened windowQuotEquiv\
+  \ and the\n    eps-value over the widened carrier.\n\nTHE PROBE I OWE AND HAVE NOT\
+  \ RUN: IsThetaPaired is a named Prop I define and do not prove. It is\nNOT silently\
+  \ stronger (thetaSpan_mul_thetaInvSpan_le_one is the automatic half, so the content\
+  \ is\nexactly the reverse inclusion, as chart-typed). Whether it is SATISFIABLE\
+  \ over a widened cover is\nopen, and it is item 1. Recording the limit rather than\
+  \ leaving it for a reviewer.\n\nSTANDING AND STILL BINDING:\n * U2 IS NOT PROVED\
+  \ AND NO GATE HAS CLEARED. Nothing produces an IsChartClause, and the widened\n\
+  \   route still owes the three items above before it can produce an eps-value.\n\
+  \ * The endpoint still carries hO, hchi and the ambient curve instances.\n * critical-path\
+  \ 7.6 is untouched: L8, local surjectivity of the Abel map out of a too-small\n\
+  \   divisor functor, remains the campaign's real gate and is arguably FALSE as stated.\
+  \ A type\n   obstruction removed is not the gate moved -- 7.10.4's warning, third\
+  \ session running.\n\nFull write-up: informal/w4-rep-critical-path.md section 7.13.\n\
+  \n\nAPPENDED AT s0014 CLOSE -- THE PROBE I SAID I OWED, RUN, AND IT COMES BACK POSITIVE\
+  \ (commit\n932f7ea38, kernel EXIT=0, axiom-clean vs a control reporting sorryAx).\n\
+  \n  AffAdaptation.isThetaPaired_zero : IsThetaPaired A tau 0\n\nholds for EVERY\
+  \ widened cover, adaptation and chart typing: at a = 0 the theta cocycle is 1\n\
+  (relThetaCocycle_zero), so every thetaOvlUnit is 1 (new side-uniform relThetaSideUnit_zero\
+  \ /\nthetaOvlUnit_zero -- the Bool form of FinCoverData.thetaOvlUnit_zero), both\
+  \ spans are the\nequalizer algebra itself, and the pairing is unconditional.\n\n\
+  SO THE WIDENED IsThetaPaired IS SATISFIABLE, and the residue at a > 0 is genuinely\
+  \ OPEN rather\nthan a reduction to a false hypothesis. That closes the second of\
+  \ the two probes this row owed;\nthe first (not silently stronger) was already discharged\
+  \ by thetaSpan_mul_thetaInvSpan_le_one.\n\nWHAT THE PROBE DOES NOT SHOW: nothing\
+  \ about a > 0. The content there is item 1 above -- the\nmanufactured sections'\
+  \ membership, a genuine four-case cocycle argument. The probe separates\n'open'\
+  \ from 'false'; it does not shrink the obligation.\n\nFINAL APPEND, s0014 close.\
+  \ A FRESH-CONTEXT REVIEW (I-0769) FOUND THE FACE WAS NAMED AND NOT\nPLUGGED IN,\
+  \ and it is now plugged in (commit dd3d22fae): nothing connected\nAffAdaptation.ker_thetaGluedEval\
+  \ to divisorWindow, because the chart-typed connection runs through\nwindowCarve\
+  \ / ker_windowCarve (DivisorFamilyWindow:158/:166) and no widened analogue existed.\n\
+  \n  AffAdaptation.windowCarve / ker_windowCarve / windowCarve_surjective\n  AffAdaptation.windowQuotEquiv\
+  \  -- THE VEHICLE whose absence made the eps-value at a\n                      \
+  \              DivFamZarAff unstateable. Now conditional on NOTHING except\n   \
+  \                                 surjectivity of the widened evaluation.\n\nSo\
+  \ item 3 of the ledger above is reduced: the widened windowQuotEquiv EXISTS, and\
+  \ what remains\nbetween it and the widened eps-value is exactly widened-evaluation\
+  \ surjectivity (which is the\n(c2) transport, i.e. items 1-2).\n\nALSO CORRECTED,\
+  \ against my own phrasing in three places: 'divisorWindow is the same submodule\
+  \ on\nboth carriers' is true and EMPTY -- divisorWindow takes only d and hH1 and\
+  \ never mentioned a\ncarrier. The content is that the WIDENED KERNEL LANDS ON THAT\
+  \ ALREADY-FIXED SUBMODULE. Fixed in\nthe module docstring, the theorem docstring\
+  \ and critical-path 7.13.5.\n\nCLOSING VERIFICATION: full root build 'Build completed\
+  \ successfully (9286 jobs)', EXIT=0, ZERO\nerrors and ZERO 'uses sorry'; 129 warnings\
+  \ all pre-existing and none naming the new module. Nine\ncommits, all verified ancestors\
+  \ of refs/heads/main, all touched paths byte-matching HEAD, shared\nindex carrying\
+  \ no staged deletions."
 status: pending
 kind: proof
 priority: normal
@@ -133,8 +131,10 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
-  updated_at: '2026-07-28T23:34:36.618582+00:00'
+  updated_at: '2026-07-29T01:24:54.142036+00:00'
   pinned_commits:
+  - dd3d22fae
+  - 932f7ea38
   - 0a6351e5e
   - 0b67179bb
   - 909ad18ad

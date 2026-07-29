@@ -4,13 +4,38 @@ title: 'DD-R divRep: affine classification, Zariski/global representability, and
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "DD-R divRep: affine classification, Zariski/global representability, and\
-  \ consumer export.\n\nRE-PRICED 2026-07-29 (run 0071 s0012, ajcr-divrep). THE \"\
-  UNPRICED\" VERDICT AT THE TOP OF THE\nPREVIOUS BODY IS SUPERSEDED FOR ONE OF ITS\
-  \ TWO HALVES. Full detail on the child row\n...divrep.u2; the short form:\n\nU2\
-  \ SPLITS, AND THE STANDING REFUTATION BITES ONLY ONE HALF.\n  epsilon-VALUE : d's\
-  \ window quotient is projective of constant rank g -- no-go-IMMUNE, OPEN.\n  the\
-  \ CLASS     : a term of DivFamZar C R_Z pi g (a LOCALLY CERTIFIED family) -- carries\
-  \ the\n                  WHOLE bite of I-0705.\n\nLANDED (Picard/DivRepChartClassUnivQuot.lean,\
+  \ consumer export.\n\nCORRECTED 2026-07-29 (run 0071 s0014, ajcr-divrep). THE s0012\
+  \ BODY BELOW SAYS THE CLASS HALF IS\nALL THAT REMAINS AND NAMES cert-r2's divFamZarAff_of_swallowing_affineOpen\
+  \ AS THE LIVE CANDIDATE.\ncert-r2 LANDED IT, AND IT STILL CANNOT FEED U2 -- and\
+  \ the reason is not a certificate.\n\nU2's consumer IsChartClause (DivRepAffPullClause.lean:121)\
+  \ is typed on the CHART-TYPED DivFamZar;\nthat producer gives a DivFamZarAff; no\
+  \ map DivFamZarAff -> DivFamZar exists or can (ADDENDUM 3\ns2). So the route is\
+  \ re-deriving the eps-value facts widened -- and the absence was that the\nWIDENED\
+  \ CARRIER HAD NO THETA-LAYER AT ALL: divFamEps_eq_of_le rests on window-quotient\n\
+  projectivity and rank, landed unconditionally on DivFam but ONLY via windowQuotEquiv,\
+  \ whose\ntarget A.ThetaGlued a was defined solely on DivisorAdaptation. Of all files\
+  \ naming AffAdaptation,\nZERO defined a theta arrow.\n\nLANDED: Picard/DivisorFamilyAffTheta.lean\
+  \ -- the widened Theta-layer through LEFT EXACTNESS\n(AffAdaptation.ker_thetaGluedEval),\
+  \ whose RHS is literally the chart-typed one's, so divisorWindow\nis the SAME submodule\
+  \ on both carriers; plus the whole (c2) substrate and the side-uniform\nsections.\
+  \ Sorry-free, rooted, kernel EXIT=0, axiom-clean vs a firing control. It was a PORT:\
+  \ the\nchart-dependence is one Bool per piece and ChartTyping supplies exactly that.\n\
+  \nSTILL OWED on this route, three items, detail on the u2 child row: thetaSectionSide_mem\
+  \ (the\nfour-case cocycle argument -- REAL CONTENT, not re-indexing), then the widened\
+  \ IsThetaPaired, then\nthe mechanical (c2) transports. IsThetaPaired is a named\
+  \ Prop I do not prove and whose\nsatisfiability probe I have not run; that limit\
+  \ is recorded, not hidden.\n\nNO GATE HAS CLEARED. A type obstruction was removed;\
+  \ nothing produces an IsChartClause, and\ncritical-path 7.6 stands -- L8 remains\
+  \ the real gate and is arguably FALSE as stated.\n\nFull write-up: informal/w4-rep-critical-path.md\
+  \ section 7.13.\n\n--- the s0012 body follows; its \"the class half is all that\
+  \ remains\" framing is corrected above ---\n\nDD-R divRep: affine classification,\
+  \ Zariski/global representability, and consumer export.\n\nRE-PRICED 2026-07-29\
+  \ (run 0071 s0012, ajcr-divrep). THE \"UNPRICED\" VERDICT AT THE TOP OF THE\nPREVIOUS\
+  \ BODY IS SUPERSEDED FOR ONE OF ITS TWO HALVES. Full detail on the child row\n...divrep.u2;\
+  \ the short form:\n\nU2 SPLITS, AND THE STANDING REFUTATION BITES ONLY ONE HALF.\n\
+  \  epsilon-VALUE : d's window quotient is projective of constant rank g -- no-go-IMMUNE,\
+  \ OPEN.\n  the CLASS     : a term of DivFamZar C R_Z pi g (a LOCALLY CERTIFIED family)\
+  \ -- carries the\n                  WHOLE bite of I-0705.\n\nLANDED (Picard/DivRepChartClassUnivQuot.lean,\
   \ commit ae01cfcb2; sorry-free, rooted, lock-free\nscratch-olean check EXIT=0, zero\
   \ warnings): divisorWindow_eq_of_le_of_quotientData and\ndivFamEps_eq_of_le_of_quotientData\
   \ state the epsilon-projection identity with NO\nDivisorAdaptation, NO IsCertified,\
@@ -120,9 +145,12 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-28T23:34:40.057372+00:00'
+  updated_at: '2026-07-29T01:08:09.813802+00:00'
   owner: ajcr-divrep
   pinned_commits:
+  - 91f702164
+  - d05c316b0
+  - 94d526b0e
   - 0b67179bb
   - 994e0d5ea
   - 406b5b242
