@@ -3,46 +3,52 @@ title: 'B5: h0 upper semicontinuity — discharge the HasH0Semicontinuity gate f
   the landed B3 two-term complex'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "B5 (h0 upper semicontinuity). Base-side half LANDED sorry-free and axiom-clean.\
-  \ The gate HasH0Semicontinuity is STILL OPEN and its prescribed route is REFUTED.\
-  \ Released by ajc-p4; three named obligations remain.\n\nLANDED (ajc-p4, run 0086;\
-  \ commits ea668debf, 866989ffb, 140baa8f5, c5f4b684f; each kernel EXIT=0, all five\
-  \ theorems axiom-clean [propext, Classical.choice, Quot.sound]):\n * Picard/PointRankSemicontinuity.lean\
-  \ -- isOpen_pointRank_le: {s | pointRank S F s <= e} is OPEN for F finitely presented\
-  \ quasi-coherent on locally noetherian S, NO FLATNESS; plus isClosed_le_pointRank\
-  \ (the superlevel form B6 wants). Proof: the locus IS the union over i <= e of chartLocus\
-  \ F i, an S.Opens by construction; inclusion by mem_chartLocus_of_pointRank_eq at\
-  \ i := pointRank F s, reverse by pointRank_le_of_mem_chartLocus. Both were already\
-  \ in the tree; the missing step was only that the union over i <= e IS the sublevel\
-  \ set.\n * Picard/PointRankSemicontinuityWitness.lean -- non-vacuity on the campaign's\
-  \ own data: fires on (pi_A)_* L for L merely LOCALLY TRIVIAL on C_A, no h1 hypothesis.\
-  \ HasFiniteMapToP1 verified to have a real producer chain from the bare AJC curve\
-  \ binders.\n * Picard/FiberH0Comparison.lean -- fiberRank_gammaTop_eq_fiberH0: the\
-  \ fibre-h0 comparison with NO hproj and NO hfin. hproj/hfin are consumed ONLY in\
-  \ step 1 of rank_pushforward_eq_fiberH0 (Module.rankAtStalk_eq); steps 2-6 are hypothesis-free.\
-  \ Reviewer reproduced the original from this theorem by adding rankAtStalk_eq alone.\n\
-  \ * Independent of the pre-existing isOpen_pointRank_pullback_eq (FlatteningStratificationUniversal.lean:701),\
-  \ which assumes CoherentSheafFlat and gives the rank EQUALITY locus. Neither implies\
-  \ the other; not in mathlib.\n\nCOSTING REFUTED (I-0884): the route SemicontinuityH0.lean:55-57/:86-92\
-  \ prescribes -- discharge via the B3 two-term minors -- CANNOT work. Its bridge\
-  \ rank_pushforward_eq_fiberH0 carries hproj, which the file itself proves load-bearing\
-  \ by counterexample, and finite projective forces the rank LOCALLY CONSTANT, strictly\
-  \ stronger than semicontinuity. Also measured: the B3 LEMMAS' antecedent FiberH1Vanishing\
-  \ has NO PRODUCER in the tree (RigidPushforwardP1Witness.lean:50, :264), though\
-  \ B3's GATE is genuine and axiom-clean.\n\nTHREE OBLIGATIONS REMAIN (corrected after\
-  \ fresh-context review, I-0949 -- an earlier note said one):\n (a) hbc, kerBaseChange\
-  \ bijective over every algebra, WITHOUT h1-vanishing. Not free: A = Z, d = mult-by-2,\
-  \ B = Z/2 refutes it with both terms flat. Only in-tree producer needs surjectivity.\n\
-  \ (b) Finite-dimensionality of ker d over kappa(t). Module.finrank is junk 0 infinite-dimensionally\
-  \ on BOTH sides; the original's argument against a vacuous 0 = 0 ran entirely through\
-  \ the dropped hfin.\n (c) A CARRIER BRIDGE: the Ideal.fiberRank conclusion is NOT\
-  \ the same term as Scheme.Modules.pointRank -- rfl FAILS, different ring and different\
-  \ prime -- and rankAtStalk_sections_eq_pointRank, the only in-tree lemma relating\
-  \ them, carries the Flat + Finite binders this work drops.\n\nNEXT LANE: do not\
-  \ re-derive the chart-locus argument or the steps-2-6 reuse; both committed. Do\
-  \ not route through rank_pushforward_eq_fiberH0. Untried lead recorded in the file:\
-  \ TwoTermFiniteReplacement.h0_bijective holds for EVERY algebra with no surjectivity\
-  \ hypothesis."
+summary: "B5 (h0 upper semicontinuity). Gate HasH0Semicontinuity STILL OPEN and uninstantiated.\
+  \ Base-side half plus the algebraic ENGINE landed sorry-free. Released by ajc-p4\
+  \ after two rounds; TWO obligations remain, down from three, and the third was mispriced\
+  \ not discharged.\n\nLANDED r1 (ajc-p4, run 0086; commits 60a19a2a9, 8599385aa,\
+  \ 42c586ff1, 3a934efb4, ba08a93a87; each kernel EXIT=0, lake build EXIT=0, all axiom-clean\
+  \ [propext, Classical.choice, Quot.sound], no sorryAx):\n * Picard/FiberRankSemicontinuity.lean\
+  \ -- Ideal.isOpen_fiberRank_le: {p | p.fiberRank M <= e} is OPEN for M finitely\
+  \ presented over ANY commutative ring. No flatness, and unlike the r0 geometric\
+  \ version NO IsLocallyNoetherian and no quasi-coherence. Proof = Nakayama prolongation\
+  \ (Nitsure s4) + localization_away_comap_range + MatrixPresentation.fiberRank_le;\
+  \ all three were already in the tree. Plus isClosed_le_fiberRank.\n * Picard/TwoTermKernelSemicontinuity.lean\
+  \ -- THE ENGINE. isOpen_finrank_ker_baseChange_le: for k : K -> A^n with K only\
+  \ FINITELY PRESENTED, {t | dim ker (k (x) kappa(t)) <= e} is open. Rank-nullity\
+  \ splits dim ker into two UPPER SEMICONTINUOUS fibre ranks; bounding each at its\
+  \ own value at t0 bounds the sum. Plus the closed form B6 wants, the coker base-change\
+  \ identity, and the finitePresentation_quotRange instance.\n * Picard/FiberH0CechKernel.lean\
+  \ -- p.fiberH0 M t IS the dimension of the base-changed Cech kernel, with NO hbc/hfin/hproj/h1-vanishing.\n\
+  \nTHREE OBLIGATIONS BECAME TWO, and both changes are corrections to ajc-p4's own\
+  \ r0 costings:\n * (b) finite-dimensionality: CLOSED OUTRIGHT, not weakened. On\
+  \ the engine's shape both fibres are FiniteDimensional by SYNTHESIS, so there is\
+  \ no junk-value reading to defeat. NOTE the asymmetry, admitted in the file: FiberH0CechKernel.lean's\
+  \ geometric statement does NOT close it -- its coefficient ring has no Field instance\
+  \ in scope, so it reads 0 = 0 where the fibre sections are infinite-dimensional.\n\
+  \ * (a) hbc: MISPRICED, filed as I-1030. The counterexample stands and hbc is not\
+  \ free, but hbc is consumed in step 3 ONLY of fiberRank_gammaTop_eq_fiberH0 -- the\
+  \ step reaching Gamma(p_* M, top). It identifies the PUSHFORWARD's section fibre,\
+  \ not the fibre h0. A Cech-kernel route owes it nothing. What replaces it is TwoTermFiniteReplacement.h0_bijective,\
+  \ a different statement.\n * ALSO: projectivity was DECORATIVE in the engine (I-1031).\
+  \ Binder deleted; consequence is that a consumer owes finite presentation of K and\
+  \ NOT the projectivity half of TwoTermFiniteReplacement's shape.\n\nTWO OBLIGATIONS\
+  \ THAT ACTUALLY STAND between the landed engine and the gate:\n 1. REPLACEMENT:\
+  \ the Cech difference map must be replaced by a complex of the engine's shape. exists_twoTermFiniteReplacement\
+  \ gives it from noetherian + flat terms + f.g. cohomology, but its h0_bijective\
+  \ field compares the replacement's H0 with the original's over every algebra --\
+  \ THAT is the residual base-change content.\n 2. CARRIER TRANSPORT (the old (c),\
+  \ unchanged): the engine quantifies over PrimeSpectrum A for a bare ring, the geometric\
+  \ bridge over PrimeSpectrum R with coefficients Gamma(Spec R, top). ScrmeSpecIso\
+  \ is an iso, not an equality.\n\nNEXT LANE: do not re-derive the chart-locus argument,\
+  \ the ring-level prolongation argument, or the steps-4-6 reuse; all committed. Do\
+  \ NOT route through rank_pushforward_eq_fiberH0 (I-0884). Do not re-cost hbc (I-1030).\
+  \ Start at obligation 1, and note obligation 2 is the same ScrmeSpecIso transport\
+  \ steps 2 and 6 already perform by hand.\n\nVERIFIED BY FRESH-CONTEXT ADVERSARIAL\
+  \ AUDIT, which found and I fixed two defects of my own: the decorative binder, and\
+  \ an unadmitted junk-value hazard in the geometric file. Non-vacuity exhibited sorry-free\
+  \ on A = Z, K = Z, k = mult-by-2 (coker = Z/2), where the kernel dimension GENUINELY\
+  \ JUMPS."
 status: active
 kind: proof
 priority: high
@@ -66,5 +72,4 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-29T13:31:08.061848+00:00'
-  owner: ajc-p4
+  updated_at: '2026-07-29T15:27:51.760492+00:00'
