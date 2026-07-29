@@ -2,50 +2,47 @@ id: AJC.rr.extuniform
 title: 'Extension-uniform H1 vanishing: one threshold serving every field extension'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'OPEN at genus >= 1; genus 0 reduced to ONE named brick (run 0074 r7).
+summary: 'RE-PRICED 2026-07-29 (ajc-p2, run 0084): the residue is the DEGREE BOUND
+  ALONE, not a missing production from geometry.
 
 
-  Cluster-P item 2: one threshold b chosen BEFORE the field, serving every extension
-  kappa/k. Kept apart from single-field bounded vanishing (AJC.rr.degvanish, CLOSED)
-  and from global generation (single-field only, NOT uniform over extensions).
+  UniformBaseDivisor C d has two clauses.
 
 
-  Input (1), base-field invariance of the genus, closed r6. Input (2) is UniformBaseDivisor
-  C d and now has its first PRODUCER (r7, Ledger/VanishingFieldDescent.lean): a field
-  extension is faithfully flat, so kappa (x)_k - REFLECTS as well as preserves triviality,
-  and r6''s Cech comparison upgrades from an isomorphism of modules to an equivalence
-  of VANISHING statements in BOTH directions. Not a corollary of the genus identity
-  -- finrank reads 0 on infinite-dimensional spaces, so a dimension equality cannot
-  decide Subsingleton. The descent half has no analogue in this workspace.
+  (1) EXISTENCE of a vanishing divisor over every field extension -- now a THEOREM
+  AT EVERY GENUS: Ledger/BaseDivisorEveryField.exists_base_subsingleton_baseChangeField,
+  three curve binders, no genus hypothesis, no hypothesis on kappa/k. Kernel EXIT=0,
+  axiom-clean [propext, Classical.choice, Quot.sound]. One term, from FiberBound.exists_base_subsingleton_of_isFinite_toP1
+  at Scheme.baseChangeField C kappa; its inputs (a finite dominant map to P1, two
+  cohomology finiteness binders) are all theorems of this project on the curve, and
+  none is genus-restricted.
 
 
-  WHY GENUS >= 1 IS STILL OPEN. subsingleton_hModule_one_iff_genus_eq_zero (a theorem,
-  not a docstring claim) shows the producer''s hypothesis IS genus C = 0. For genus
-  >= 1 it is false and input (2) remains a missing production from geometry. The method''s
-  ceiling is measured: the Cech comparison is stated at the UNIT module, so AJC has
-  no divisor-level base-change comparison to reach d > 0. That general-module comparison
-  is the brick for positive genus.
+  (2) DEGREE BOUND -- open, and it is the whole gap.
 
 
-  WHY GENUS 0 IS NOT YET AN INSTANCE EITHER. AJC discharges Subsingleton H1(O_C) at
-  NO curve -- no Subsingleton H1(O_P1), no genus (p1Over k) = 0 (verified independently
-  by review). So the genus-0 result is a true implication with no exhibited instance.
-  The missing brick is elementary and scoped on I-0746: h1(O_P1) = 0, i.e. surjectivity
-  of k[x] x k[y] -> k[x,x^-1]. The obstacle is structural, not mathematical -- LaurentChartData
-  carries span-of-powers for the two CHARTS but not integer powers on the OVERLAP.
+  The genus-0 ceiling of the previous producer (VanishingFieldDescent.uniformBaseDivisor_zero_of_subsingleton)
+  belongs to its ROUTE: transporting the UNIT sheaf''s vanishing by faithful flatness
+  forces the zero divisor as witness, hence forces H1(O_C) to vanish. It is not a
+  property of the obligation, which never mentions the unit sheaf. GenusFieldInvariance.lean''s
+  index said otherwise and is corrected (6618d6979); the upstream ExtensionUniformity
+  docstring had it right all along. Filed as I-0897.
 
 
-  NOT PORTABLE FROM AJCR. Measured r7 and confirmed by review: AJCR has the content
-  (subsingleton_h1_windowN + deg_windowN) but uniform BY CONSTRUCTION OF THE STATEMENT
-  -- its pi is bound at P1 k -- not by a theorem, and neither UniformBaseDivisor nor
-  UniformVanishing occurs there. Cone measured exactly: 88 files for GluedSheafH0BaseChange,
-  139 for WindowFieldTransport, across two carrier boundaries with zero overlap in
-  either direction (AffineCoverMVSquare 37 files in AJC / 0 in AJCR; baseChangeField
-  11 / 0; AffineTwoCover 0 / 19; relCurve 0 / 280).
+  REMAINING OBLIGATION, exact: a uniform bound on n0(kappa) * deg_kappa F_kappa, where
+  n0 is the Noetherian fibre-lattice stabilisation index (FiberVanishing.lean) re-run
+  at each base field. Split at the type level by uniformBaseDivisor_of_exists_deg_le,
+  so the next attempt need not re-derive the existence half.
 
 
-  No Serre duality anywhere in this workspace, so deg D >= 2g-1 => H1 = 0 is NOT available
-  and cannot collapse the residue.
+  NOT free from the in-tree theorems: DegreeVanishing.subsingleton_hModule_one_of_deg_ge''s
+  threshold is deg D0 + 1 - chi(O), stated relative to a base divisor ALREADY IN HAND,
+  so bounding deg D0 by it is circular. Two candidate routes: (a) an absolute large-degree
+  vanishing (Serre duality''s deg >= 2g-1) -- ABSENT from both projects, searched;
+  (b) a bound on n0 in terms of genus C, which is base-field-invariant (genus_baseChangeField_curve).
+  (b) is untried and is where the next lane should start. Caveat measured this round:
+  the fibre-lattice chain need not STRICTLY increase, so finite-dimensionality of
+  H1 alone does not bound n0 -- a strictness argument is needed too.
 
   '
 status: active
@@ -70,8 +67,10 @@ metadata:
     task_title: Bring the cluster-P Riemann-Roch substrate into AJC
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.rr
-  updated_at: '2026-07-29T11:15:47.629106+00:00'
+  updated_at: '2026-07-29T12:02:22.016333+00:00'
   pinned_commits:
+  - 6618d6979
+  - 71f1cf403
   - 81e3ef56f
   - f7d1ec0d0
   - 57f19428d

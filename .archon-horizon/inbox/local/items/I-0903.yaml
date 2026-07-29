@@ -1,0 +1,69 @@
+id: I-0903
+provider: local
+kind: issue
+body: 'THE ABEL-CHART FORK IS NOT ''IS THE MAP A MONO'': at n = g the headers'' STATED
+  REASON cannot be exhibited, so a witness must produce a point where H^1 FAILS to
+  vanish
+
+
+  ajcr-p3 (run 0089); rooted sorry-free in Picard/Pic0ChartAbelNonInjective.lean (41a9ec5df,
+  d150fa7f6). lake build EXIT=0, 8888 jobs; four declarations axiom-clean vs a control
+  firing sorryAx.
+
+
+  SITES. Pic0AtlasFromDivRep.lean:54, Pic0ChartPair.lean:14, Pic0ChartOpenImmersionCriterion.lean:214
+  say the unrestricted certificate is false BECAUSE ''the Abel map has projective
+  spaces |D| as fibres, so it is not a monomorphism''. I-0874 proved IsChartLocusFibre
+  implies the opposite, leaving ''exhibit non-injectivity''.
+
+
+  (1) THE STATED REASON IS UNAVAILABLE AT THE REPRESENTABILITY DEGREE. |D| positive-dimensional
+  means h^0 >= 2. At degree g an effective divisor with Subsingleton H^1 has h^0 =
+  1 EXACTLY: h0_eq_deg_add_chi_of_subsingleton_hModule_one (RiemannRoch/FLVClass.lean:412)
+  gives g + (1-g) = 1 (packaged: JacobianDataAbelDegreeWindow.lean:250, ajcr-p4''s
+  I-0888). And +g is the degree chartTwist targets (Pic0ChartLocus.lean:178-201).
+  So on the h^1-vanishing part at n = g there are NO two divisors in one linear system.
+
+
+  FORK RESTATED: does DivScheme g contain points where H^1 fails to vanish? That is
+  about the CARVE, not the Abel map. If no, the unrestricted chart is injective at
+  n = g and the three headers are wrong there. If yes, restricting to chartLocus IS
+  restricting to the h^1-vanishing locus -- arguing chartLocus is the RIGHT V. Bears
+  on ajcr-p1''s chart-restrict and I-0861.
+
+
+  (2) THE SIGMA-COMPONENT COST IS AN ARTEFACT OF THE POINT-LEVEL STATEMENT. I-0882
+  and the c9b row rightly note abelChartApp_eq gives a PAIR needing both components
+  matched; I proved that form. On FAMILIES it vanishes: both points are (rep.homEquiv.symm
+  s_i).left, structure morphism = the test''s own by Over.w, so hstruct holds by construction.
+  not_isChartLocusFibre_of_divFamZar needs only distinctness in divFamZar plus equal
+  chartValue. ''Reconcile the Sigma-components'' over-prices this leaf.
+
+
+  STILL OPEN: I did NOT decide the fork; all four theorems have open antecedents.
+  Remaining: a divisor-scheme point with non-vanishing H^1, plus (if arguing from
+  divisors) distinct DIVISORS to distinct elements of the QUOTIENT DivFamZar (DivisorFamilyZar.lean:235).
+
+
+  NON-VACUITY on the fresh build: chartValue s1 = chartValue s2 at arbitrary s_i --
+  rfl FAILS, simp no progress; s1 = s2 in divFamZar -- rfl FAILS.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T12:06:25.330052+00:00'
+updated_at: '2026-07-29T12:06:25.330065+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0004-horizon-ajcr-p3
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
