@@ -968,7 +968,7 @@ proved it: window-quotient finiteness (never an input at all, §7.12.1) and then
 rank (landed unconditionally). The instrument is the same in both directions — search for the
 *hypothesis*, not only for the conclusion.
 
-### 7.12.5 §7.6 still stands
+### 7.12.5 §7.6 still stands (see also §7.13.4, which repeats it a third time)
 
 **L8 remains the gate and is arguably false as stated.** Two rows moved this session and neither
 touches local surjectivity of the Abel map out of a too-small divisor functor. §7.12.4 *discharges*
@@ -976,3 +976,122 @@ the ε-half of U2 and §7.12.2 *removes* a row from DAT-J's ledger; both shrink 
 §7.10.4's warning applies verbatim — a shrinking tail is not progress toward L8. Note this session
 shrank the tail three times and moved the gate zero times, which is exactly the pattern §7.10.4
 warned would invite the opposite reading.
+
+## 7.13 ROUND-0071 s0014 AMENDMENT: the R2 seam was never the certificate — the widened carrier had no Θ-layer
+
+*Run 0071 session 0014, task `ajcr-divrep`, 2026-07-29. All Lean below is sorry-free, kernel-checked
+(`lake env lean` EXIT=0 per file, zero diagnostics), rooted in `AlgebraicJacobian.lean`, and
+axiom-clean (`propext, Classical.choice, Quot.sound`) against a control that reports `sorryAx`.
+Five commits, one new module `Picard/DivisorFamilyAffTheta.lean`.*
+
+§7.12.4 closed by saying the ε-half of U2 is discharged and "100% of U2's remaining content is
+producing the class over the chart ring — cert-r2's `divFamZarAff_of_swallowing_affineOpen` is the
+live candidate". **cert-r2 landed that producer, and it still cannot feed U2. This section is why,
+and the reason is not a certificate.**
+
+### 7.13.1 Every route from the widened producer to U2 dies in the same place
+
+Measured at HEAD:
+
+* `ThetaGeneratorSeed.divFamZarAff_of_swallowing_affineOpen` (`Picard/DivisorFamilyAffSeedGate.lean:205`)
+  produces a **`DivFamZarAff`**.
+* U2's consumer `DivRepChartFamily.IsChartClause` (`Picard/DivRepAffPullClause.lean:121`) quantifies
+  over **`DivFamZar C (ChartRing i j) π g`** — the chart-typed value.
+* There is no map `DivFamZarAff → DivFamZar` and there cannot be: `spec-dd-r.md` ADDENDUM 3 §2 says a
+  straddling divisor has no chart-typed certificate. Only `DivFamZar.toAff`
+  (`Picard/DivisorFamilyAffCompare.lean:262`) exists, and it runs the wrong way.
+
+So the only usable route is to re-derive the **ε-value facts** on the widened carrier. And that is
+where the absence is: `divFamEps_eq_of_le` (§7.12.4) needs projectivity and constant rank `g` of the
+window quotient; on `DivFam` those are landed *unconditionally* (`Picard/DivSchemeFrameCover.lean:106/:117`),
+but their **only** proof route is `windowQuotEquiv` (`Picard/DivisorFamilyWindow.lean:179`), whose
+target is `A.ThetaGlued a` — and `ThetaGlued` / `thetaGluedEval` / `thetaOvlUnit` / `thetaDeltaRight` /
+`ker_thetaGluedEval` were defined **only** on `DivisorAdaptation`. Cross-measured: of the files
+mentioning `AffAdaptation`, **zero** defined any theta arrow.
+
+**So the partition of §7.12.4 needs a third row.** `DivisorFamilyAffFraming.lean` is right that the
+ε-pair *statement* is carrier-indifferent (both carriers have the same `eqns` field and
+`divisorWindow` reads nothing else). The ε-pair **facts** are not, and statement was never separated
+from facts:
+
+| half | status |
+|---|---|
+| ε-value at a `DivFam` | **DISCHARGED** (§7.12.4) |
+| ε-value at a `DivFamZarAff` | was **UNSTATEABLE** — no Θ-layer existed |
+| the class over the chart ring | produced by cert-r2, in the wrong carrier |
+
+### 7.13.2 It is a port, and the port is shorter than the original
+
+The Θ-layer's chart-dependence is exactly **one `Bool` per piece**, and the side-uniform API already
+existed and is consumed by some sixty files: `relThetaResSide`, `relThetaSideUnit`,
+`relThetaResSide_matching`, `resHom_relThetaResSide` (`Picard/DivSchemeFamilySide.lean:155/:180/:194/:172`).
+Each needs only `piece ≤ relPinnedChart (side j)` — **verbatim** the field `ChartTyping.piece_le`
+(`Picard/DivisorFamilyAffCover.lean:204`), the datum protection `I-0492` clause 3 deliberately kept
+*separate* from the certificate clauses. `FinCoverData.thetaOvlUnit`'s four-case `Sum` split *is*
+`relThetaSideUnit` at the two assigned sides.
+
+Landed in `Picard/DivisorFamilyAffTheta.lean`:
+
+> `AffAdaptation.thetaOvlUnit`, `thetaDeltaRight`, `thetaGluedSubmodule`, `ThetaGlued`,
+> `thetaEval`, `thetaGluedEval`, `thetaEval_mem`, `germ_eqn_span_eq_stalkIdeal`,
+> **`ker_thetaGluedEval`** — left exactness; then the (c2) substrate `gluedSubalgebra`,
+> `unitGluedSubmodule` (+ `_one`, `_thetaOvlUnit` by `rfl`), `mul_mem_unitGluedSubmodule`,
+> `unitGluedOver`, `thetaSpan`/`thetaInvSpan`, `thetaSpan_mul_thetaInvSpan_le_one`,
+> `IsThetaPaired`, `isThetaPaired_of_one_mem`; and the sections `relFiberCoordSidePow`,
+> `thetaSectionSide`.
+
+**Why `ker_thetaGluedEval` is the face that was missing.** Its right-hand side is *literally the same
+term* as the chart-typed `DivisorAdaptation.ker_thetaGluedEval` (`Picard/DivisorFamilyTheta.lean:350`):
+the vanishing submodule names `d` and the two pinned charts and **no cover**. Hence `divisorWindow`,
+its comap, is the *same submodule on both carriers*, and a widened `windowQuotEquiv` has its
+left-exactness half.
+
+**Two measurements, one in each direction, and neither was predicted.**
+
+* **The port is shorter than the original.** `DivisorAdaptation.thetaEval_mem` (`:278`) runs a
+  four-case `rcases` on the `Sum` index, calls `relThetaSections_matching` twice with hand-built
+  containments, and needs a `Units.inv_mul` rearrangement on the `inr`/`inl` branch. Widened it is
+  **one** application of `relThetaResSide_matching`. The split existed only because the sides were
+  read off the index *type*. Likewise the whole (c2) substrate elaborated clean on the **first** pass.
+* **The joint cover adds one real step.** Chart-typed, a point of `V₀` is always covered by a chart-`0`
+  piece, so the germ is read on the piece's own side. Under a joint cover the piece containing `z` may
+  be assigned to the *other* chart, so the two sides must be compared through the matching unit. That
+  is genuine content — and the template for it already existed:
+  `ThetaGeneratorSeed.le_vanishingSubmodule` (`Picard/DivSchemeFamily.lean:397`) does exactly this on
+  `D.piece z ⊓ relPinnedChart b` with the side taken from a `Bool`. The widened proof follows it step
+  for step.
+
+### 7.13.3 A same-session self-correction, and what is genuinely still owed
+
+The commit landing the (c2) substrate claimed the two pinned charts enter that whole route at
+**exactly one** place — `isThetaPaired_of_sectionWitness`, where the sections `σ = (t₀ᵃ, 1)`,
+`τ = (1, t₁ᵃ)` are "read through the pinned trivializations". **That was imprecise in the direction
+that matters, and it is retracted here.** Reading `thetaSectionFst`/`Snd`
+(`Picard/DivisorFamilyThetaSections.lean:271/:278`), their `Sum`-match only decides *which side's
+coordinate to use on this piece* — the same `Bool` as everywhere else. So the sections port too, and
+`relFiberCoordSidePow` / `thetaSectionSide` are landed.
+
+**What does not reduce to a `Bool`, measured rather than assumed.** `thetaSectionFst_mem` (`:321`) is
+a genuine four-case argument on the *pair* of sides: each case is a different cocycle identity
+(`1`, the cocycle value, its inverse, `1`), and the `inr`/`inl` case needs a
+`resHom_relFiberCoordPow` rewrite through the chart overlap. That is real content, not re-indexing,
+and it is **not** ported. So the honest remaining ledger on this route is:
+
+1. `thetaSectionSide_mem` — the widened membership, the four-case cocycle argument;
+2. the widened pairing `IsThetaPaired` itself, from 1 via the widened `isThetaPaired_of_sectionWitness`;
+3. the widened `finite`/`projective`/`rankAtStalk_thetaGlued` (mechanical from 2 —
+   `InvertibleModuleTransfer` is carrier-generic), hence a widened `windowQuotEquiv` and the ε-value.
+
+**`IsThetaPaired` is a named `Prop` I do not prove.** Per the standing discipline it owes both probes,
+and only one is discharged: it is **not silently stronger** (`thetaSpan_mul_thetaInvSpan_le_one` gives
+the automatic half, so the content is exactly the reverse inclusion, as chart-typed). Whether it is
+**satisfiable** over a widened cover is open and is item 1 above — that is precisely the risk
+§7.12.4's own general form warns about, and I am recording it rather than leaving it for a reviewer.
+
+### 7.13.4 §7.6 still stands, for the third consecutive session
+
+**L8 remains the gate.** This session moved a *type* obstruction, not the gate: nothing here makes
+certified families cover Pic⁰, and §7.10.4's warning applies verbatim. What changed is that the R2
+widening now has the layer its consumer needs, so "the widened carrier cannot reach U2" is no longer
+a reason to defer confronting L8 — and the reason it could not reach U2 turned out to be an absent
+*re-indexing*, not absent mathematics, which is the same lesson §7.1 records about `MISSING` claims.
