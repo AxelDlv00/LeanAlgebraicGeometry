@@ -1,6 +1,7 @@
 id: AJCR.w4-rep.build-reach
-title: 'Build reachability: 17 of 778 modules unrooted at HEAD, 0 dangling; Pic0ThetaCocycle''s
-  2 sorries are in the unrooted set'
+title: 'Build reachability: 17 of 781 modules unrooted at HEAD, 0 dangling, 0 cycles;
+  NO done row rests on an unrooted module (measured r7); Pic0ThetaCocycle''s 2 sorries
+  are in the unrooted set'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "*** SECOND DEFECT ON THIS ROW'S SUBJECT, measured 2026-07-29 (review-ajcr,\
@@ -94,7 +95,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep
-  updated_at: '2026-07-29T22:21:23.705768+00:00'
+  updated_at: '2026-07-29T22:56:16.077104+00:00'
   pinned_commits:
   - 0b3ab49b8
   - b72270288
