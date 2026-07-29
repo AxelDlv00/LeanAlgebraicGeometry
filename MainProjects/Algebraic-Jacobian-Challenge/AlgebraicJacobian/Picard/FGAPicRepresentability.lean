@@ -104,9 +104,11 @@ the existence of a scheme representing the étale-sheafified relative Picard
 functor `Pic_{(C/k)ét}` and separated and locally of finite type over `k`, for
 an arbitrary field `k` and **no** hypothesis on `C(k)`. Mathematically this is
 Kleiman §4 Thm `th:main`(1) together with Cor `cor:algsch`. It is the project's
-central open obligation and is **expected to stay open**: discharging it needs
-`Div` representability (Kleiman §3 `th:repDiv`, blocked on Quot) and the
-Altman–Kleiman quotient lemma. Everything else here — the representing scheme,
+central open obligation and is **expected to stay open**. Its inputs are the
+Milne–Kollár ones — `Div^d` through the Grassmannian and a finite Galois
+quotient — *not* Quot and *not* `smoothProperQuotient`; see the "Which route
+discharges it" paragraph on `fgaPicardRepresentability` below, which corrects an
+earlier claim here that the inputs were blocked on Quot. Everything else here — the representing scheme,
 its representability, local finiteness, separatedness and group-scheme
 structure, and the conditional `picSchemeOfHasRationalPoint` — is derived from
 that one existence statement.
@@ -308,15 +310,43 @@ theorem. `PicScheme.picEt_isSheaf_forget` records the sheaf property that makes
 the difference, and it is proved rather than assumed.
 
 **Expected to stay open, and that is the honest state rather than a defect.**
-Discharging it means formalising the Kleiman §4 existence proof: the Abel-map
-slice `Div^d_{C/k} → Pic^d_{C/k}` is a smooth proper equivalence relation whose
-quotient is a scheme (`smoothProperQuotient`, itself gated on
-`HasSmoothProperQuotient` because Mathlib `v4.31` has no quasi-projectivity
-vocabulary), together with `Div` representability (Kleiman §3 Thm `th:repDiv`,
-which needs the Quot scheme). Neither input is available; the project reaches
-this statement rather than proving it, and it is the single named `sorry` that
-the whole Jacobian headline rests on. Do not replace it with a weaker
-conditional statement to make a count go down.
+The project reaches this statement rather than proving it, and it is the single
+named `sorry` that the whole Jacobian headline rests on. Do not replace it with
+a weaker conditional statement to make a count go down.
+
+**Which route discharges it — corrected 2026-07-29 (`review-ajc`), because the
+previous text named the inputs of a route this project does not take.** That
+text said the inputs are `Div` representability "which needs the Quot scheme"
+(Kleiman §3 Thm `th:repDiv`) together with the Altman–Kleiman quotient lemma
+`smoothProperQuotient`. Both belong to the **Grothendieck/Kleiman quotient
+route**, which is `rejected` on the board (`AJC.picrep.quot`,
+`AJC.picrep.serre`) — so a reader who trusted this docstring concluded, wrongly,
+that the seam's own inputs had been abandoned.
+
+The committed route is **Milne–Kollár** (`informal/pic-representability-campaign.md`,
+alternative D3), and it needs neither:
+
+* `Div^d` representability comes through the **Grassmannian**, not Quot:
+  degree slices of `Scheme.DivFunctor` (`Picard/DivDegree.lean`, landed), an
+  embedding into `Scheme.Grassmannian` of the section module, locally closed
+  carving, and `Grassmannian.representable`
+  (`Picard/GrassmannianRepresentability.lean`, proved) — campaign milestones
+  D1′–D4′. D4′ also delivers the locally closed immersion into `Gr` that serves
+  as the quasi-projectivity certificate.
+* the quotient is the **finite Galois** quotient of a semilinear action whose
+  finite orbits lie in affine opens — campaign G2, landed and `sorry`-free in
+  `Picard/FiniteGaloisQuotient.lean` with Speiser descent under
+  `Picard/GaloisDescent/`. It is *not* `smoothProperQuotient`, which is false as
+  stated in Lean (see the §4 note below) and must not be built against.
+
+What genuinely remains is roughly ten campaign modules, none of them Quot:
+uniform `H¹` vanishing (P5, the open `AJC.rr.extuniform` leaf), the `picSharp`
+Zariski-sheaf/degree/separatedness devices (B1, B4, B6), the `Div^d` chain
+(D2′–D4′), the Milne glue over a separably closed field (J1–J5, which also needs
+a universe bridge since `picSharp` is `Type (u+1)`-valued while Mathlib's 01JJ
+engine wants `Type u`), Galois descent of `picSharp` points (G3), and the
+coproduct assembly (G4). The board node `AJC.picrep` carries the current
+landed/absent split.
 
 This is the **sole** `sorry` of the seam: everything else below — the
 representing scheme `PicSchemeEt`, its representability, local finiteness,
@@ -757,7 +787,20 @@ stated internally), `P` is representable.
 
 The Lean body extracts the conclusion from the hypothesis class; the
 mathematical content (Altman–Kleiman effective-equivalence-relation descent
-+ EGA IV 8.11.5) lives at the use site supplying the instance. -/
++ EGA IV 8.11.5) lives at the use site supplying the instance.
+
+**WHAT THIS THEOREM PROVES, stated flatly (`review-ajc`, 2026-07-29), because
+the paragraphs above explain the situation without ever naming it.** Since
+`HasSmoothProperQuotient α` is by definition `P.IsRepresentable`, this theorem
+is `P.IsRepresentable → P.IsRepresentable`. All four numbered hypotheses are
+unused in the body — they are named `_hZ`, `_hR`, `_hα` for exactly that
+reason — as are `Y`, `R`, `π` and both instance binders on `π.left`. The class
+has **zero instances** and this theorem has **zero call sites** in the project.
+It is a blueprint-pinned record of the `lm:qt` interface and nothing more.
+Do not cite it as evidence that a quotient is a scheme, do not write a consumer
+against it, and do not claim its `\leanok` in the blueprint as a proof of
+Kleiman `lm:qt`. The committed Milne–Kollár route does not need it at all
+(finite Galois quotients with an orbit-in-affine hypothesis instead). -/
 theorem smoothProperQuotient {k : Type u} [Field k]
     {Z P : (Over (Spec (.of k)))ᵒᵖ ⥤ Type (u + 1)}
     (α : Z ⟶ P)

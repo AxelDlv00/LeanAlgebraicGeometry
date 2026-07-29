@@ -363,10 +363,19 @@ The structural lemma underlying step 4 above is recorded separately
 because it is the abstract content allowing descent from
 \(Z = \mathrm{Div}^{\phi_0}_0\) to the representing Picard piece.
 
-\begin{lemma}[Smooth-proper quotient of \'etale sheaves]\leanok
+\begin{lemma}[Smooth-proper quotient of \'etale sheaves]
   \label{lem:smooth_proper_quotient}
   \lean{AlgebraicGeometry.Scheme.PicScheme.smoothProperQuotient}
   \uses{def:has_smooth_proper_quotient}
+  % \leanok REMOVED 2026-07-29 (review-ajc). The Lean declaration named above
+  % does NOT formalise the statement below. It cannot express hypothesis (ii)
+  % (quasi-projectivity of Z), so it takes the conclusion as the hypothesis
+  % class HasSmoothProperQuotient, whose single field IS P.IsRepresentable:
+  % the Lean theorem is P.IsRepresentable -> P.IsRepresentable, with all four
+  % numbered hypotheses unused, zero instances and zero call sites. The
+  % mathematics below is stated and proved on paper only. See
+  % \cref{rem:smooth_proper_quotient_hypothesis} for why (ii) cannot be dropped,
+  % and note the Milne--Kollar route needs neither this lemma nor the class.
   % SOURCE: [Kleiman], ``The Picard scheme'', \S 4, Lem.~lm:qt;
   % arXiv:math/0504020, p.~31 (read from
   % references/kleiman-picard-src/kleiman-picard.tex, L2368-L2375).
@@ -875,19 +884,27 @@ when the predicate is inhabited.
   the group-valued presheaf.
 \end{proof}
 
-\begin{definition}[Existence of the relative-divisor functor]\leanok
+\begin{definition}[Vacuous carrier, not the existence of \(\Div_{C/k}\)]
   \label{def:has_div_functor}
   \lean{AlgebraicGeometry.Scheme.PicScheme.HasDivFunctor}
-  The predicate \(\mathrm{HasDivFunctor}(C)\) asserts that the category of
-  presheaves of types on \((\Sch/k)^{op}\) contains the
-  relative-effective-divisor functor \(\mathrm{Div}_{C/k}\), sending a
-  \(k\)-scheme \(T\) to the set of relative effective Cartier divisors on
-  \(C \times_k T\) flat over \(T\). It is the existence assertion for
-  \(\mathrm{Div}_{C/k}\).
+  % \leanok REMOVED and statement CORRECTED 2026-07-29 (review-ajc). The former
+  % text claimed this predicate asserts that the presheaf category contains the
+  % relative-effective-divisor functor of C. It does not: the Lean field is
+  %   has_div_functor : Nonempty ((Over (Spec (.of k)))^op \functor Type (u+1))
+  % in which C DOES NOT OCCUR. Any functor whatsoever witnesses it, so the
+  % predicate is vacuously true and carries no content about C. It was carrying
+  % \leanok as "the existence of the relative divisor functor", which is how the
+  % vacuity survived. The real functor is \cref{def:div_functor_carrier}.
+  The predicate \(\mathrm{HasDivFunctor}(C)\) asserts only that the category of
+  presheaves of types on \((\Sch/k)^{op}\) is \emph{nonempty}. The curve \(C\)
+  does not occur in the assertion, so it is vacuously true --- a constant functor
+  witnesses it --- and it must never be cited as the existence of
+  \(\Div_{C/k}\). Use \cref{def:div_functor_carrier} for that; it is a genuine
+  definition instantiating \cref{def:div_functor} at \(C \to \Spec k\).
 \end{definition}
 
 \begin{proof}
-  This is the defining predicate.
+  This is the defining predicate. It is vacuous, as recorded above.
 \end{proof}
 
 \begin{definition}[The relative-divisor functor]\leanok
@@ -907,18 +924,24 @@ when the predicate is inhabited.
   \(X = C\), \(S = \Spec k\), \(\pi\) the structural morphism.
 \end{proof}
 
-\begin{definition}[Relative-divisor functor exists]\leanok
+\begin{definition}[The vacuous carrier is inhabited]\leanok
   \label{def:inst_has_div_functor}
   \lean{AlgebraicGeometry.Scheme.PicScheme.instHasDivFunctor}
   \uses{def:has_div_functor, def:div_functor_carrier}
-  The relative-divisor functor of \cref{def:div_functor_carrier} witnesses
-  \cref{def:has_div_functor} for every such curve \(C/k\).
+  % Title corrected 2026-07-29 (review-ajc): was "Relative-divisor functor
+  % exists", which overstated it. \leanok is retained -- the Lean instance does
+  % discharge its (vacuous) statement -- but what it discharges is
+  % \cref{def:has_div_functor}, a nonemptiness claim in which C does not occur.
+  The relative-divisor functor of \cref{def:div_functor_carrier} is supplied as
+  the witness for \cref{def:has_div_functor}. Since that predicate does not
+  mention \(C\), any functor would serve equally well: this instance records a
+  choice of witness, not the existence of \(\Div_{C/k}\).
 \end{definition}
 
 \begin{proof}\leanok
   \uses{def:div_functor_carrier}
   The functor \(\mathrm{Div}_{C/k}\) of \cref{def:div_functor_carrier} is an
-  object of the presheaf category, witnessing the existential.
+  object of the presheaf category, witnessing the (vacuous) existential.
 \end{proof}
 
 \subsection{Abel-map predicate}
@@ -1172,6 +1195,16 @@ when the predicate is inhabited.
   The scheme \(\Pic_{C/k}\) is the chosen witness of
   \cref{def:has_pic_scheme}; the first component of that witness identifies
   it as a representing object for \(\Pic^\sharp_{C/k}\).
+
+  \emph{Scope} (added 2026-07-29, \texttt{review-ajc}). This is a projection of
+  the hypothesis \cref{def:has_pic_scheme}, not an independent result: its
+  \texttt{\textbackslash leanok} certifies only that extraction from the
+  existence package elaborates. And that hypothesis is currently
+  \emph{uninhabited} in Lean --- \(\mathrm{HasPicScheme}\) has no instance, its
+  only producer requires a \(k\)-rational point, and no unconditional producer of
+  such a point exists either. Every statement in this section quantifying over
+  \cref{def:has_pic_scheme} is therefore conditional on an assumption nothing
+  can presently supply; the unconditional interface is the \'etale one.
 \end{definition}
 
 \begin{proof}\leanok
