@@ -102,6 +102,51 @@ theorem isClosedImmersion_homOfVector_of_span_eq_top
     ∑ x, f.appTop.hom (c x) * a x
   rfl
 
+/-- A specified finite algebra-generating family in the affine source ring
+defines a closed immersion into affine space over the base. Unlike the
+module-spanning criterion above, this applies directly to a family combining
+base-ring coordinates with module generators. -/
+theorem isClosedImmersion_homOfVector_of_adjoin_eq_top
+    {X Y : Scheme.{u}} (f : X ⟶ Y) [IsAffine X] [IsAffine Y]
+    {n : Type u} [Finite n] (a : n → Γ(X, ⊤))
+    (hgen :
+      letI : Algebra Γ(Y, ⊤) Γ(X, ⊤) := RingHom.toAlgebra f.appTop.hom
+      Algebra.adjoin Γ(Y, ⊤) (Set.range a) = ⊤) :
+    IsClosedImmersion (AffineSpace.homOfVector f a) := by
+  classical
+  letI : Fintype n := Fintype.ofFinite n
+  letI : Algebra Γ(Y, ⊤) Γ(X, ⊤) := RingHom.toAlgebra f.appTop.hom
+  let i : X ⟶ 𝔸(n; Y) := AffineSpace.homOfVector f a
+  have hsurj : Function.Surjective
+      (MvPolynomial.aeval (R := Γ(Y, ⊤)) a) := by
+    rw [← AlgHom.range_eq_top, ← Algebra.adjoin_range_eq_range_aeval]
+    exact hgen
+  apply IsClosedImmersion.of_surjective_of_isAffine
+  intro x
+  obtain ⟨p, rfl⟩ := hsurj x
+  refine ⟨(AffineSpace.isoOfIsAffine n Y).hom.appTop
+    ((Scheme.ΓSpecIso (.of (MvPolynomial n Γ(Y, ⊤)))).inv p), ?_⟩
+  rw [AffineSpace.isoOfIsAffine_hom_appTop]
+  simp only [CommRingCat.comp_apply, Iso.inv_hom_id_apply]
+  change (i.appTop.hom.comp
+    (eval₂Hom (𝔸(n; Y) ↘ Y).appTop.hom (AffineSpace.coord Y))) p =
+      MvPolynomial.aeval a p
+  have heval :
+      i.appTop.hom.comp
+        (eval₂Hom (𝔸(n; Y) ↘ Y).appTop.hom (AffineSpace.coord Y)) =
+        eval₂Hom f.appTop.hom a := by
+    apply MvPolynomial.ringHom_ext
+    · intro r
+      simp only [RingHom.comp_apply, eval₂Hom_C]
+      have h := congrArg Scheme.Hom.appTop
+        (AffineSpace.homOfVector_over f a)
+      rw [Scheme.Hom.comp_appTop] at h
+      exact congrArg (fun e : Γ(Y, ⊤) ⟶ Γ(X, ⊤) => e.hom r) h
+    · intro j
+      simp [i]
+  rw [heval]
+  rfl
+
 /-- A finite morphism over an affine target is a closed subscheme of a
 finite-dimensional affine space over that target. -/
 theorem exists_closedImmersion_affineSpace {X Y : Scheme.{u}} (f : X ⟶ Y)
