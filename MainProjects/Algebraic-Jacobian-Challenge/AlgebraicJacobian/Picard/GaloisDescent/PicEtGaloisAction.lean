@@ -501,7 +501,8 @@ noncomputable def twistAut (γ : k' ≃ₐ[k] k') : Aut X'.left where
           ((twistMor C rep γ⁻¹).left : X'.left ⟶ X'.left)) :=
       twistMor_mul_left C rep γ⁻¹ γ
     exact hfixed.symm.trans (by
-      simpa only [inv_mul_cancel] using (twistMor_one_left C rep))
+      rw [inv_mul_cancel γ]
+      exact twistMor_one_left C rep)
   inv_hom_id := by
     have hfixed : @Eq (X'.left ⟶ X'.left)
         ((twistMor C rep (γ * γ⁻¹)).left : X'.left ⟶ X'.left)
@@ -509,7 +510,8 @@ noncomputable def twistAut (γ : k' ≃ₐ[k] k') : Aut X'.left where
           ((twistMor C rep γ).left : X'.left ⟶ X'.left)) :=
       twistMor_mul_left C rep γ γ⁻¹
     exact hfixed.symm.trans (by
-      simpa only [mul_inv_cancel] using (twistMor_one_left C rep))
+      rw [mul_inv_cancel γ]
+      exact twistMor_one_left C rep)
 
 /-- The canonical twists form a group action on the underlying representing
 scheme. The order in `twistMor_mul_left` is exactly the multiplication order in
