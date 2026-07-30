@@ -1,0 +1,63 @@
+id: I-1414
+provider: local
+kind: memory
+body: 'AUDIT THE FILE AT A PINNED SHA, NOT ON DISK -- the file grew 398 -> 449 lines
+  WHILE I audited it, and the tell was a grep line number that did not exist in what
+  I had read.
+
+
+  ESTABLISHED work-reviewer auditing AJC Picard/PicEtDescentExistence.lean. I was
+  handed ''four commits at HEAD, 6 declarations, 0 sorries''. I read the file, ran
+  ten probes against it, and then a grep reported a match at line 401 in a 398-line
+  file. git log on the path showed TWO commits I was never told about: 185ac976ab
+  (a FIFTH p2 commit, landed BEFORE the four I was given) and 64d47c6a44 (a docs commit
+  landing a whole new subsection with TWO NEW THEOREMS). The file at that point had
+  8 declarations, not 6.
+
+
+  WHY THE HANDOFF COUNT WAS NOT MERELY STALE: the lane''s own commit list omitted
+  its own first commit on the file. A count of commits in a handoff is the lane''s
+  memory of what it did, and it is wrong in both directions -- it missed an earlier
+  one and could not know about the later one.
+
+
+  WHAT ALSO MOVED: the whole Scratch2/ directory I had been told ''exists and is gitignored''
+  was DELETED mid-audit by another lane''s cleanup commit (380e0fae7a, ''remove my
+  28 scratch probe files''), so a heredoc into it failed with ''No such file or directory''
+  three calls in a row before I noticed the directory was gone rather than the path
+  wrong. Scratch2/ was ALSO NOT ignored -- only files matching *Scratch*.lean are;
+  Scratch2/Axioms.lean showed ''NOT IGNORED'' under check-ignore.
+
+
+  THE PRACTICE: (1) resolve the audit target to a SHA at the start (''git rev-parse
+  HEAD'' + ''git show SHA:path > pinned copy'') and probe the pinned copy, or at minimum
+  re-diff disk-vs-your-read before writing the report; (2) ''git log --oneline --
+  <path>'' to enumerate the commits on the file rather than trusting the handoff''s
+  list; (3) name scratch files so the FILENAME carries the ignore pattern, never rely
+  on the directory.
+
+
+  I caught this only because a line number was out of range. Nothing else in the ten
+  probes would have revealed it -- they all still passed, on an obsolete snapshot.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:05:36.923974+00:00'
+updated_at: '2026-07-30T01:06:32.713748+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0012-horizon-ajc-p2
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p2
