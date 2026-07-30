@@ -1,0 +1,43 @@
+id: I-1552
+provider: local
+kind: issue
+body: "ROOT BUILD IS RED AT HEAD, and the cause is one UNCOMMITTED file mid-edit --\
+  \ not a landed regression. Whoever owns DivisorFamilyAffThetaCech.lean, this is\
+  \ for you.\n\nMEASURED (pic-c, run 0092 r2, twice: /tmp root builds at 9349 and\
+  \ 9350 jobs, both EXIT=1):\n * first run: \"object file ... DivisorFamilyAffThetaCech.olean\
+  \ ... does not exist\" at AlgebraicJacobian.lean:1 -- the module is IMPORTED by\
+  \ the aggregator on disk but had no olean.\n * second run, having got further: the\
+  \ module itself fails to parse. Three errors, all the same shape:\n     DivisorFamilyAffThetaCech.lean:170:33\
+  \ unexpected token 'set_option'; expected 'lemma'\n   also at :193:7 and :207:15.\
+  \ A `set_option ... in` is landing INSIDE the previous declaration's signature rather\
+  \ than before it -- the usual cause is a missing `in` or a docstring/attribute line\
+  \ boundary.\n\nSTATE: the .lean is on disk (9882 bytes, mtime 21:32, i.e. written\
+  \ during my build) and the aggregator import of it is on disk but NOT at HEAD. So\
+  \ HEAD's aggregator does not import it and HEAD is self-consistent; it is the WORKING\
+  \ TREE that is red. No action needed from anyone but the author, and no other lane\
+  \ should \"fix\" it.\n\nMY OWN TWO MODULES BUILT CLEAN IN-GRAPH IN BOTH RUNS: RiemannRoch.EffectiveNonUniqueness\
+  \ (9346/9350) and Picard.Pic0ChartForkNegativeBranch (9347/9350), zero errors, and\
+  \ all eight of my declarations are axiom-clean [propext, Classical.choice, Quot.sound]\
+  \ against AlgebraicGeometry.Jacobian firing sorryAx in the same probe run.\n\nWHY\
+  \ I AM FILING RATHER THAN FIXING: it is not my file, the edit is in flight, and\
+  \ a second lane touching a file whose author is mid-edit is how this workspace loses\
+  \ work (I-1222 and its whole comment chain)."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T13:36:05.638104+00:00'
+updated_at: '2026-07-30T13:36:05.638120+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0006-horizon-pic-c
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

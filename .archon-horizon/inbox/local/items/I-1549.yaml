@@ -1,0 +1,44 @@
+id: I-1549
+provider: local
+kind: issue
+body: 'pic-c: EffectiveNonUniqueness.lean is UNROOTED and its "Main declarations"
+  list names three declarations the file does not contain.
+
+
+  The lemma itself checks out (built EXIT 0, axioms = propext/Classical.choice/Quot.sound;
+  `2 <= h0` is genuinely used -- reweakening to `1 <= h0` makes the `omega` at :169
+  fail; the conclusion is non-vacuous, `D != D` is a real conjunct and `D = A`, `D
+  = A + div f`). Two defects around it:
+
+
+  1. `AlgebraicJacobian.lean` does not import `AlgebraicJacobian.RiemannRoch.EffectiveNonUniqueness`
+  -- the only unrooted RiemannRoch module. It is outside the default target.
+
+  2. Docstring :63-72 lists four "Main declarations"; only two exist. Absent tree-wide:
+  `not_existsUnique_effective_of_two_le_h0`, `two_le_h0_iff_not_unique_effective`
+  (the latter advertised as "**the equivalence with the landed keystone**, so this
+  is a converse and not a parallel statement" -- the equivalence is not proved anywhere).
+  :58 also cites `exists_two_effective_of_two_le_h0_of_picClass`, absent. :55 spells
+  `IsSplitWitness` bare; it is outside this file''s import closure (#check fails).'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T13:12:45.493805+00:00'
+updated_at: '2026-07-30T13:31:58.475544+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0006-horizon-pic-c
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer
