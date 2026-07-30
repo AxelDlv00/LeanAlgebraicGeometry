@@ -1,55 +1,15 @@
 id: AJC.picrep.etale-rep.hcov
-title: 'hcov: the Gal-indexed sections COVER the self-pullback -- the single named
-  antecedent four landed descent theorems carry undischarged'
+title: 'hcov: Gal-indexed kernel-pair sections form an etale cover'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "ADVANCED 2026-07-30 by pic-a (run 0091), owner pic-a. THE ETALE HALF OF\
-  \ hcov IS FREE, and the board's standing prescription for the other half is over-priced.\
-  \ Seam sorry untouched; no antecedent of fgaPicardRepresentability witnessed for\
-  \ any curve.\n\nLANDED, DO NOT REDO. Picard/GaloisDescent/PicEtGaloisCover.lean,\
-  \ rooted at AlgebraicJacobian.lean, 4 declarations, ZERO code sorries, ALL FOUR\
-  \ axiom-clean [propext, Classical.choice, Quot.sound] against fgaPicardRepresentability\
-  \ firing sorryAx in the same probe. lake build of the module EXIT=0, 8689 jobs,\
-  \ zero warnings from the file.\n * etale_coverSelfSection_left -- each gamma-section\
-  \ is Etale on underlying schemes, for arbitrary gamma, arbitrary test T, arbitrary\
-  \ finite separable k'/k. NO [IsGalois].\n * hcov_of_jointlySurjective -- hcov from\
-  \ JOINT SURJECTIVITY ON POINTS ALONE. No sieve, no morphism property, no picEt,\
-  \ no slice left in the hypothesis.\n * projections_agree_of_jointlySurjective, exists_unique_descend_picEt_of_jointlySurjective\
-  \ -- the two PicEtGaloisBridge consumers restated on the point-level hypothesis,\
-  \ so a G1 consumer aims at a set-theoretic statement.\n\nTHE REPRICING, and it is\
-  \ the finding. I-1458 and the hcov_iff_scheme_level docstring both split hcov into\
-  \ a free TOPOLOGY half and a 'genuinely owed' OPEN-IMMERSION half, and prescribed\
-  \ base-changing selfTensorSpecCoproduct along T_k' -> Spec k' to match the coproduct's\
-  \ gamma-component to coverSelfSection T gamma. NONE OF THAT IS NEEDED for the morphism-property\
-  \ half:\n * the etale precoverage criterion (Scheme.ofArrows_mem_precoverage_iff)\
-  \ asks for Etale of each member, NOT IsOpenImmersion -- IsOpenImmersion is strictly\
-  \ stronger than the site needs, which is exactly why inferInstance fails on it;\n\
-  \ * coverSelfSection T gamma is a SECTION of pullback.fst (coverSelfSection_fst),\
-  \ and Etale carries MorphismProperty.HasOfPostcompProperty @Etale, so cancelling\
-  \ the projection off the identity gives the section's etaleness;\n * Over.forget\
-  \ sends the SLICE pullback to a SCHEME pullback (pullback is a connected shape,\
-  \ so PreservesLimitsOfShape is an instance), which is the step nobody had used --\
-  \ it is what makes (pullback.fst _ _).left a base change of (coverMap T).left.\n\
-  selfTensorSpecCoproduct, sigmaSpec and IsGalois are ALL ABSENT from the landed file.\n\
-  \nWHAT REMAINS, exactly one statement: joint surjectivity of the gamma-sections\
-  \ on points of (T_k' x_T T_k').left.\n\nAND ITS ROUTE IS NOW MEASURED LINK BY LINK,\
-  \ all four existing (probed at lake env lean EXIT=0, scratch, gitignored):\n (1)\
-  \ pullbackSpecIso k k' k' : Spec k' x_{Spec k} Spec k' iso Spec (k' tensor_k k')\
-  \ -- MATHLIB, exact shape;\n (2) composed with selfTensorSpecCoproduct: the Spec-level\
-  \ self-pullback IS the Gal-indexed coproduct, and the comparison is IsIso by synthesis;\n\
-  \ (3) Scheme is FinitaryPreExtensive BY SYNTHESIS, and FinitaryPreExtensive.isIso_sigmaDesc_fst\
-  \ distributes pullback over the coproduct;\n (4) THE ONE CONSTRAINT, not guessable:\
-  \ isIso_sigmaDesc_fst binds alpha : Type (Type 0) while Gal(k'/k) : Type u. Gal\
-  \ is FINITE hence Small.{0} (inferInstance), and Limits.Sigma.reindex (equivShrink\
-  \ _).symm crosses it -- probed, closes. Budget the reindex, not a new extensivity\
-  \ lemma.\nAlso landed in probe, worth a line: coverMap is FINITE (IsFinite.SpecMap_iff\
-  \ + RingHom.finite_algebraMap, then base change), which inferInstance does not give.\n\
-  \nI-1454 STANDS, restated at the site: the Mono witness satisfies the new hypothesis\
-  \ for the trivial reason that coverSelfSection T 1 is an iso (landed as an example\
-  \ in the axiom probe), and there the CONSEQUENT is free too. So this is satisfiability,\
-  \ NOT a non-degenerate model. What changed is the PRICE of building one: only the\
-  \ point-level statement is left, and its route has no unknown link."
-status: active
+summary: CLOSED 2026-07-30 by pic-f, no new hypotheses. GaloisKernelCover proves that
+  the graph sections indexed by Gal(L/k) cover the field self-pullback, transports
+  this to every relative kernel pair, proves the projection identities and joint surjectivity,
+  and packages coverSelfSection_generate_mem_etaleTopology. The former hcov antecedent
+  is now a theorem from the existing finite Galois cover data. Verified by focused
+  builds and full lake build AlgebraicJacobian (8912 jobs); axiom audit is only propext,
+  Classical.choice, Quot.sound.
+status: done
 kind: proof
 priority: high
 depends_on: []
@@ -72,5 +32,6 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.etale-rep
-  updated_at: '2026-07-30T20:17:00.489681+00:00'
-  owner: pic-f
+  updated_at: '2026-07-30T22:34:26.893437+00:00'
+  pinned_commits:
+  - 53fd1bf6ba12a0dbf3ca77bf6858b17dd3e920b1

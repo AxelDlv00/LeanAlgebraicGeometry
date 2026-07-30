@@ -1,16 +1,18 @@
 id: AJC.picrep.etale-rep.galois
-title: 'Galois quotient: stable-affine GlueData closed; global witness open'
+title: 'Finite Galois quotient: glued global witness and consumer closed'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'ADVANCED 2026-07-30 by pic-f: the projection-aware stable-affine quotient
-  gluing datum is complete and rooted. Restricted affine quotients retain full universal
-  T-points and pinned projections; pair/triple transitions satisfy factorization and
-  cocycle; gluedQuotientOver is the concrete quotient candidate; sourceOpenCover exposes
-  the existing HasStableAffineCover producer. No new hypotheses. Remaining: construct
-  one global projection-carrying witness (glued projection, base-change isomorphism,
-  universal T-points). The canonical Pic twist action has no OrbitsInAffineOpen producer,
-  so that binder must not be added at the consumer.'
-status: active
+summary: 'CLOSED 2026-07-30 by pic-f, no new hypotheses relative to the existing finite-Galois
+  quotient boundary. The stable-affine local quotients glue with a canonical projection;
+  kernel-pair base change and effective-epimorphism descent give the full universal
+  property; isGaloisQuotient_glued and hasGaloisQuotient_of_orbitsInAffineOpen provide
+  the global witness and instance. PicEtGaloisQuotient consumes that instance and
+  the proved hcov, eliminating the explicit quotient and hcov inputs from the clause-one
+  seam wrapper. Focused builds and full lake build AlgebraicJacobian (8912 jobs) pass;
+  axiom audit is only propext, Classical.choice, Quot.sound. This closes the quotient
+  row, not the headline: the independent representability witness and the canonical
+  Pic twist action OrbitsInAffineOpen producer remain separate obligations.'
+status: done
 kind: proof
 priority: high
 depends_on: []
@@ -34,8 +36,13 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.etale-rep
   milestone: AJC.picrep
-  updated_at: '2026-07-30T18:36:01.657814+00:00'
+  updated_at: '2026-07-30T22:33:54.462665+00:00'
   pinned_commits:
+  - 5f67b00a9d3841eea0b3d6a3ee2dbcbe82015843
+  - 34c0d25a7ceafdaa427eacb5867a2f3a12d9af48
+  - 5fb60f8f3ce3d5b90dcdb480f816575aa8a2270c
+  - 80623a62dd48d60a61dc8afa7ae1f208ea54c8d0
+  - 53fd1bf6ba12a0dbf3ca77bf6858b17dd3e920b1
   - e5a6cefdab
   - a329ea310c
   - eef9305fe6
@@ -50,4 +57,3 @@ metadata:
   - 95086a643c
   - b7b27b1e1f
   - adc6e11b7a
-  owner: pic-f
