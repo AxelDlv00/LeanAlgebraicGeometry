@@ -490,13 +490,12 @@ half is owed:
   that theorem applies.
 
 **THE SECOND BULLET AND THE PARAGRAPH BELOW IT ARE WITHDRAWN — the
-morphism-property half is FREE, and `IsOpenImmersion` was the wrong target**
-(`pic-a`, 2026-07-30, landed as
+morphism-property half is FREE, and `IsOpenImmersion` is not what the site
+asks for** (`pic-a`, 2026-07-30, landed as
 `Picard/GaloisDescent/PicEtGaloisCover.lean`'s `etale_coverSelfSection_left`,
 `sorry`-free and axiom-clean). The étale precoverage criterion
 (`Scheme.ofArrows_mem_precoverage_iff`) asks for `Etale` of each member, **not**
-`IsOpenImmersion` — the latter is strictly stronger than the site needs, which is
-exactly why `inferInstance` fails on it and succeeds on the cheap route. And the
+`IsOpenImmersion`. And the
 cheap route is post-composition cancellation: `coverSelfSection T γ` is a
 *section* of `pullback.fst` (`coverSelfSection_fst`), `Etale` carries
 `MorphismProperty.HasOfPostcompProperty @Etale`, and `Over.forget` sends this
@@ -507,13 +506,28 @@ used, and it is what makes `(pullback.fst _ _).left` a base change of
 are **all absent** from that file, and nothing about the coproduct is needed for
 this half.
 
+**The bullet above is withdrawn for its CONCLUSION, not for its content, and an
+earlier revision of this correction got that backwards** (`I-1510`, `I-1513`,
+fresh-context audit). It said `IsOpenImmersion` is "strictly stronger than the
+site needs, which is exactly why `inferInstance` fails on it and succeeds on the
+cheap route". **Both clauses were false**: `inferInstance` fails on the `Etale`
+goal too, and `IsOpenImmersion` is *equivalent* here — it is now landed as
+`isOpenImmersion_coverSelfSection_left`, proved **from**
+`etale_coverSelfSection_left` via `mono_of_mono_fac` and
+`IsOpenImmersion.of_flat_of_mono`. So the prescription this bullet gave was
+**less direct, not more expensive**, and its target is a corollary of the cheap
+route.
+
 **What is actually owed, all of it**: joint surjectivity of the `γ`-sections on
 points of `(T_{k'} ×_T T_{k'}).left`. `hcov_of_jointlySurjective` derives `hcov`
 from that alone — one statement about points, with no sieve, no morphism
 property, no `picEt` and no slice in it. Aim there, and read that file's route
-note before budgeting it: every link (`pullbackSpecIso`, `FinitaryPreExtensive`
-by synthesis, and a `Sigma.reindex` for the `Type 0` vs `Type u` index) has been
-probed to exist. -/
+note before budgeting it — but read it for what it says: the *library* links
+(`pullbackSpecIso`, `FinitaryPreExtensive` by synthesis, a `Sigma.reindex` for
+the `Type 0` vs `Type u` index) are probed to exist, while the two
+content-bearing steps — base change along `T_{k'} ⟶ Spec k'`, and matching the
+coproduct's `γ`-component to `coverSelfSection T γ` — are **still owed**, and
+they are the two this bullet named. -/
 theorem hcov_iff_scheme_level (T : Over (Spec (CommRingCat.of k))) :
     Sieve.generate (Presieve.ofArrows
         (fun _ : k' ≃ₐ[k] k' => (restrictTest k k').obj (baseTest (k' := k') T))
