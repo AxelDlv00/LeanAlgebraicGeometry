@@ -43,16 +43,26 @@ is why: if `M·δ` is a multiple of `d₁`, then `IsDivisorDegree C (M·δ + g)`
 **genus** is a divisor degree.  So the open question is one hypothesis about `π` versus
 `thetaP1 C` (are their fibre degrees commensurable?) plus one about the curve at `g`.
 
-Two of the three pieces of that are free, and only the third is open:
+**And the "if" costs nothing** (`isDegree_ledger_add_iff`): read on `C.left`, `δ = windowδ π` *is*
+the degree of a divisor — the fibre divisor of the ledger's own `π` — so `M` copies of it shift
+the target by `M·δ` in both directions, with no hypothesis.
 
-* `windowδ (thetaP1 C) = classDeg k (thetaCechClass C)` holds **by `rfl`** — both unfold to
-  `classDeg k (fiberTwist (thetaP1 C) 1)`.  So no `windowδ`-versus-`classDeg` plumbing is owed;
-* the two **curves** are the same, up to a landed isomorphism: `isDivisorDegree_iff_left` below
-  transports the whole predicate to `C.left`.  A first draft of this paragraph asserted the
-  opposite and was wrong; see that theorem's docstring;
-* what is genuinely open is the two **maps**: `π : C.left ⟶ P1 k` versus `thetaP1 C`, a
-  commensurability question between two finite dominant maps on **one** curve.  Plus the question
-  at `g` itself.
+So the residue of the coverage route at the ledger parameter is exactly one question:
+
+> **is the genus `g` the degree of a divisor on `C.left`?**
+
+No ledger constant, no θ-class, no chart, no second map.  It is still open — `deg_k` is
+residue-degree weighted, so nothing forces `g` into its image over an arbitrary base field, and
+the tree's only residue-degree-one point needs `[IsSepClosed k]`
+(`Over.dense_baseChange_rationalPoints`, `Curve/SepPointsDense.lean:278`), which the
+arbitrary-field statement forbids assuming.
+
+**Two earlier versions of this paragraph priced that residue higher, and both were refuted** —
+first "two maps on two different curves, unrelated in the tree", then "a commensurability question
+between `π` and `thetaP1 C`".  Each was measured, each was wrong in the expensive direction, and
+each is recorded at the theorem that refuted it (`isDivisorDegree_iff_left`,
+`isDegree_ledger_add_iff`).  The `rfl` fact `windowδ (thetaP1 C) = classDeg k (thetaCechClass C)`
+survives from the first round and is what `isDegree_mul_thetaDeg_add_iff` rests on.
 
 ## The chart index this route produces is UNIFORM in the point — read against `I-1389`
 
@@ -86,6 +96,11 @@ to antecedent 2 is `I-1389`'s open question and is untouched here.
   added was the same proposition and was removed.
 * `AlgebraicGeometry.exists_uniform_chartIndex_forall_mem_chartLocus_of_isDegree` — the same, with
   the chart index hoisted out of every per-point binder, so the uniformity is in the statement.
+* `AlgebraicGeometry.isDivisorDegree_iff_left` — the predicate transports to `C.left`; the
+  base-changed curve is not a second curve.
+* `AlgebraicGeometry.isDegree_ledger_add_iff` — the ledger constants drop out unconditionally.
+* `AlgebraicGeometry.mem_chartLocus_of_ledgerIndex_of_isDegree_genus` — **the endpoint**: coverage's
+  locus membership at the ledger parameter from `IsDivisorDegree C g` alone.
 -/
 
 set_option autoImplicit false
@@ -166,6 +181,48 @@ theorem isDivisorDegree_iff_left {c : ℤ} :
       classDeg_cechPicMap_of_isIso k (fst C (overSpec k k)).left (fst_left_self_over C),
       classDeg_picClass k W, hW]
 
+/-- **THE LEDGER CONSTANTS DROP OUT UNCONDITIONALLY**: the ledger target `M·δ + g` is a divisor
+degree if and only if `g` is — with **no** commensurability hypothesis.
+
+This is the third and last correction to this file's own residue pricing, and it removes the
+hypothesis the previous two rounds of prose treated as the open question.  The argument, once the
+predicate is read on `C.left` (`isDivisorDegree_iff_left`), is one line: `δ = windowδ π` **is**
+the degree of a divisor on `C.left`, namely the fibre divisor of `π` itself
+(`deg_fiberWeilDivisor_windowδ`).  So `M` copies of it shift the target by exactly `M·δ`, in both
+directions.
+
+What the two withdrawn versions said, recorded because each was measured and each was wrong in
+the same direction — too expensive:
+
+1. "the ledger constants are unrelated to `d₁`, two maps on two different curves" — refuted by
+   `isDivisorDegree_iff_left`: the curves are isomorphic;
+2. "so the residue is a commensurability question between `π` and `thetaP1 C` on one curve" —
+   refuted here: no comparison between the two maps is needed at all, because the *ledger's own*
+   `π` supplies the shift.  `isDegree_mul_thetaDeg_add_iff` does the same job through `d₁` and is
+   the θ-side statement; this is the `π`-side one, and it is the one the ledger consumer needs.
+
+**So the entire residue of the coverage route at the ledger parameter is: is the GENUS a divisor
+degree on `C.left`?**  That is one question about one curve, with no ledger constant, no θ-class
+and no chart in it.  It is still open — `deg_k` is residue-degree weighted, so nothing forces `g`
+into its image over an arbitrary base field, and the tree's only residue-degree-one point needs
+`[IsSepClosed k]` (`Over.dense_baseChange_rationalPoints`, `Curve/SepPointsDense.lean:278`),
+which the arbitrary-field statement forbids assuming. -/
+theorem isDegree_ledger_add_iff {π : C.left ⟶ P1 k} [IsFinite π] [IsDominant π]
+    (M : ℕ) (c : ℤ) :
+    IsDivisorDegree C ((M : ℤ) * windowδ π + c) ↔ IsDivisorDegree C c := by
+  rw [isDivisorDegree_iff_left, isDivisorDegree_iff_left]
+  constructor
+  · rintro ⟨W, hW⟩
+    refine ⟨W - M • fiberWeilDivisor π, ?_⟩
+    rw [Scheme.CurveDivisor.deg_sub' k, hW, Scheme.CurveDivisor.deg_nsmul' k,
+      deg_fiberWeilDivisor_windowδ]
+    ring
+  · rintro ⟨W, hW⟩
+    refine ⟨W + M • fiberWeilDivisor π, ?_⟩
+    rw [Scheme.CurveDivisor.deg_add, hW, Scheme.CurveDivisor.deg_nsmul' k,
+      deg_fiberWeilDivisor_windowδ]
+    ring
+
 /-- **Coverage's locus membership at the ledger parameter, with the chart index replaced by an
 arithmetic hypothesis on the base field.**
 
@@ -199,6 +256,45 @@ theorem mem_chartLocus_of_ledgerIndex_of_isDegree
     ∃ (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor), t ∈ chartLocus C m Z lam := by
   obtain ⟨m, Z, hZ⟩ := chartIndex_of_isDegree C hadm
   exact ⟨m, Z, mem_chartLocus_of_ledgerIndex hπ g hχ lam t hlam m Z hZ M₀ hM₀⟩
+
+/-- **THE ENDPOINT: coverage at the ledger parameter from the GENUS alone.**
+
+`mem_chartLocus_of_ledgerIndex_of_isDegree` asks for `IsDivisorDegree C (M·δ + g)`, a condition
+mentioning two ledger constants.  `isDegree_ledger_add_iff` says that is the same condition as
+`IsDivisorDegree C g`, so the ledger constants can be dropped from the interface entirely.
+
+This is the honest headline of the whole `param-admissible` line of work: **coverage's locus
+membership at the ledger parameter follows from one arithmetic fact about the curve — that its
+genus is a divisor degree — plus the splitting data coverage already has.**  Nothing about charts,
+certificates, θ-classes or representability remains in the hypothesis.
+
+It does **not** discharge antecedent 2, and none of the three seam antecedents moves: this is
+locus membership at a point, and `Pic0ChartCoverageSlice.lean` records that the pointwise datum
+coverage needs also wants a chart *point over a neighbourhood* — a spreading-out absent for this
+carrier.  Nor is `IsDivisorDegree C g` known to hold; see the module docstring. -/
+theorem mem_chartLocus_of_ledgerIndex_of_isDegree_genus
+    {π : C.left ⟶ P1 k} [IsFinite π] [IsDominant π]
+    (hπ : π ≫ P1.structureMap k = C.left ↘ Spec (CommRingCat.of k)) (g : ℕ)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
+    (hg : IsDivisorDegree C (g : ℤ))
+    {T : Over (Spec (.of k))} (lam : picEt C T) (t : T.left)
+    (hlam : degAt lam (Over.testPoint t) = 0)
+    {L : Type u} [Field L] [Algebra k L] [Algebra (Over.testPointField t) L]
+    [IsScalarTower k (Over.testPointField t) L]
+    [Module.Finite (Over.testPointField t) L]
+    [Algebra.IsSeparable (Over.testPointField t) L]
+    (M₀ : (C ⊗ overSpec k L).left.CechPic)
+    (hM₀ : PicEtAff.map C L
+        (picEtAffineEquiv C (Over.testPointField t) (picEtMap C (Over.testPoint t) lam))
+      = PicEtAff.unit C L (relPicMk C (overSpec k L) M₀))
+    [IsIntegral (relCurve C L)]
+    [SmoothOfRelativeDimension 1 (relCurve C L ↘ Spec (CommRingCat.of L))]
+    [QuasiCompact (relCurve C L ↘ Spec (CommRingCat.of L))]
+    [Module.Finite L (Sheaf.HModule ((relCurve C L).moduleKSheaf L) 0)]
+    [Module.Finite L (Sheaf.HModule ((relCurve C L).moduleKSheaf L) 1)] :
+    ∃ (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor), t ∈ chartLocus C m Z lam :=
+  mem_chartLocus_of_ledgerIndex_of_isDegree hπ g hχ
+    ((isDegree_ledger_add_iff (windowM_choice π hπ g) (g : ℤ)).mpr hg) lam t hlam M₀ hM₀
 
 /-- **The chart index is UNIFORM in the point — hoisted out of every per-point binder.**
 
