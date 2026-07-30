@@ -3,44 +3,54 @@ title: 'The Galois quotient, input 2 of the picEt descent repair: AFFINE half cl
   glued half open'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "ADVANCED 2026-07-30 by ajc-p1: the AFFINE half of input (2) is CLOSED as\
-  \ a global instance; the non-affine half (which is the one the route needs) is untouched.\
-  \ Owner released.\n\nLANDED, DO NOT REDO. Picard/GaloisQuotientAffineGeneral.lean\
-  \ (new, rooted at AlgebraicJacobian.lean, 2 theorems + 1 global instance), commits\
-  \ adc6e11b7a / 33c2da33e1 / b7b27b1e1f. Sorry-free; all three declarations axiom-clean\
-  \ [propext, Classical.choice, Quot.sound] against a control still reporting sorryAx\
-  \ on fgaPicardRepresentability. lake build EXIT=0.\n * isGaloisQuotient_congr --\
-  \ IsGaloisQuotient transports along an equivariant iso over Spec L. NO geometry:\
-  \ the three clauses are a triangle over Spec L, an equivariance square, a universal\
-  \ property. Control: with the equivariance hypothesis dropped, clause 2 is unprovable.\n\
-  \ * hasGaloisQuotient_of_isAffine -- HasGaloisQuotient for EVERY semilinear action\
-  \ on an AFFINE scheme, global instance. Route: top is a stable open, so GaloisQuotientGlue's\
-  \ layer-1 section action at U = top puts Gamma(X,top) in the affine model's input\
-  \ format; X.isoSpec is then equivariant over Spec L (mathlib isoSpec_hom_naturality)\
-  \ and isGaloisQuotient_spec transports across it.\n\nWHAT WAS ACTUALLY WRONG WITH\
-  \ THIS ROW'S PRICING, and it is the reusable part. This row and GaloisQuotientGlue's\
-  \ opening audit both size G2(c) as a four-layer GlueData construction with only\
-  \ layer 1 built. Layer 1 ALREADY CLOSED THE GATE on the affine locus -- the U =\
-  \ top instance of its own section action, plus a transport that is generic category\
-  \ theory. Nobody had tried the degenerate open. The four-layer plan is correct for\
-  \ the non-affine case and was never re-checked against the affine one.\n\nWHAT REMAINS,\
-  \ verified not assumed (fresh-context audit, reproduced): (1) G2(c) for a NON-AFFINE\
-  \ X, which is what the campaign consumer J'_r is, since it is glued. inferInstance\
-  \ for the gate at an abstract action carrying the orbit hypothesis but NOT affineness\
-  \ FAILS; with HasStableAffineCover also in scope it still fails. The Hironaka trap\
-  \ bites exactly there and is untouched. (2) THE GATE HAS ZERO BINDER SITES -- no\
-  \ '[HasGaloisQuotient' anywhere, no use of .exists_quotient, all 23 occurrences\
-  \ are the class, its two producers, prose. So this removes a FUTURE obstacle; it\
-  \ unblocks nothing today, because the assembly step that would consume it is not\
-  \ yet a declaration (ajc-p2 claimed that step this round for exactly that reason).\
-  \ (3) fgaPicardRepresentability untouched, no antecedent witnessed for any curve.\n\
-  \nTRAP RECORDED AT THE SITE: my first version claimed the instance closes hasGaloisQuotient_specF4\
-  \ 'by inferInstance' at four sites. TRUE only from a file importing the new module;\
-  \ FALSE at the F4 witness's own site, and unfixable there -- the new module imports\
-  \ GaloisQuotientNonVacuity for the orbit instance, so the reverse import is a cycle.\
-  \ Same for the two sites in FiniteGaloisQuotient.lean, two hops below. Corrected\
-  \ in-tree.\n\nNEXT LANE: take the non-affine gluing only together with a consumer,\
-  \ or the gate gains a second producer with still nothing binding it."
+summary: "ADVANCED 2026-07-30 by ajc-p3 (run 0085 r5): layer 2's ALGEBRA half is closed,\
+  \ and the localized chart now HAS a quotient rather than needing one built. The\
+  \ non-affine gate is NOT discharged. Owner still ajc-p3 while the round runs.\n\n\
+  LANDED, DO NOT REDO. Picard/GaloisDescent/InvariantsLocalization.lean, rooted at\
+  \ AlgebraicJacobian.lean, 10 declarations, ZERO code sorries, ALL TEN axiom-clean\
+  \ [propext, Classical.choice, Quot.sound] against fgaPicardRepresentability as a\
+  \ control that fires sorryAx in the same run, with oleans rebuilt BEFORE the probe\
+  \ (I-1057). lake env lean EXIT=0; lake build of the module EXIT=0.\n * powers_map_eq\
+  \ -- gamma carries Submonoid.powers N onto itself. The ONE place invariance of N\
+  \ is spent, and the reason the whole construction is about invariant elements.\n\
+  \ * awayAut / awayAut_algebraMap / awayAutHom / awayAction -- the transported automorphism,\
+  \ its value on the image of A, multiplicativity, and the action. Both action laws\
+  \ are IsLocalization.ringHom_ext against awayAut_algebraMap.\n * isSemilinear_away\
+  \ -- THE PAYLOAD: the transported action is semilinear, which is the hypothesis\
+  \ of invariantsSubalgebra, descentAlgHom and Speiser's descentAlgEquiv. So the affine-quotient\
+  \ engine applies to a localized chart with no new descent argument.\n * isGaloisQuotient_away\
+  \ -- the localized chart HAS a Galois quotient, Spec of its own invariants, all\
+  \ three clauses including the universal T-points property. Nothing new is proved:\
+  \ it is isGaloisQuotient_spec once semilinearity is known. Same simplification layer\
+  \ 1 got for the affine case.\n\nWHAT WAS ACTUALLY WRONG WITH THIS ROW'S PRICING,\
+  \ and it is the reusable part. The row and GaloisQuotientGlue's audit both size\
+  \ layer 2 as \"quotient-localization (A_N)^Gamma = (A^Gamma)_N plus openness of\
+  \ pi_U(V)\". That names an EQUALITY of invariants as the deliverable. The step that\
+  \ was actually missing and that gates everything else is one level earlier: THERE\
+  \ IS NO Gamma-ACTION ON A_N AT ALL until you prove the denominators are preserved,\
+  \ and mathlib does not supply it. Once the action is there and semilinear, the per-chart\
+  \ quotient is a citation rather than a construction -- so the equality of invariants\
+  \ is not what layer 3 needs from layer 2.\n\nNON-VACUITY, as a theorem rather than\
+  \ a failing exact?. powers_map (the invariance-free general fact: the image is powers\
+  \ of the MOVED element) plus powers_map_eq_forces_pow: the conclusion of powers_map_eq\
+  \ FORCES gamma . N to be a power of N. So hN is load-bearing. Recorded this way\
+  \ because a failing exact? on a composite goal measures only the absence of a ONE-LEMMA\
+  \ proof (I-1402, filed this round by ajc-p2).\n\nMEASURED CAVEAT, stated because\
+  \ it is the obvious attack and I did not fully close it: I could satisfy every binder\
+  \ of isGaloisQuotient_away at a NON-DEGENERATE site -- A = L (x)[K] K[X] with N\
+  \ = 1 (x) X, an invariant NON-unit, all five instances including both towers synthesising\
+  \ by inferInstance at top level -- but the corollary's own application at that site\
+  \ did NOT elaborate, failing to synthesize IsSemilinear K L (L (x)[K] K[X]) inside\
+  \ the letI chain even though the same goal closes by inferInstance one line up.\
+  \ So the binders are jointly satisfiable and the localization is non-trivial there,\
+  \ and the composition is UNMEASURED. A lane consuming this should elaborate its\
+  \ own site rather than trust that it composes.\n\nREMAINING FOR THE ROW, unchanged\
+  \ in scope: layer 2's covering half (a stable open inside a chart is covered by\
+  \ invariant basic opens; pi_U(V) is open), layer 3's Scheme.GlueData with overlap\
+  \ isos, layer 4's glued base-change iso. The Hironaka trap bites at layer 3 and\
+  \ is untouched. HasGaloisQuotient still has an instance only on the affine locus.\n\
+  \nWITNESSES NO ANTECEDENT of fgaPicardRepresentability for any curve, and closes\
+  \ no sorry in FGAPicRepresentability.lean."
 status: active
 kind: proof
 priority: normal
@@ -65,7 +75,7 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.etale-rep
   milestone: AJC.picrep
-  updated_at: '2026-07-30T01:54:21.910245+00:00'
+  updated_at: '2026-07-30T02:23:25.696541+00:00'
   pinned_commits:
   - b7b27b1e1f
   - adc6e11b7a

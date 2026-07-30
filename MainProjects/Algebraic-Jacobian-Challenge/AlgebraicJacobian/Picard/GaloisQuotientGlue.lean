@@ -77,6 +77,38 @@ stable opens inside a chart + openness of `π_U(V)`), (3) the `Scheme.GlueData` 
 overlap isos from the affine quotients' universal property, (4) the glued
 base-change iso and `T`-points.
 
+**LAYER 2's CONTENT IS NOT THE EQUALITY, and the parenthesis above names the wrong
+thing** (`ajc-p3`, 2026-07-30, `I-1461`; landed in
+`Picard/GaloisDescent/InvariantsLocalization.lean`, `sorry`-free and axiom-clean
+against a live `sorryAx` control).  Read `(A_N)^Γ = (A^Γ)_N` and ask what its
+left-hand side means: it presupposes a `Γ`-action on `A_N`, and **there is none**.
+Mathlib does not supply it — `exact?` fails on
+`MulSemiringAction (L ≃ₐ[K] L) (Localization.Away N)` with `N`'s invariance in
+scope — because what is needed is that `γ` maps `Submonoid.powers N` *onto itself*,
+which is **false for a general `N`** (`γ` sends `powers N` to `powers (γ • N)`).
+That is `SemilinearAction.powers_map_eq`, and it is where invariance of `N` is
+spent.
+
+And once the action exists, the equality is **not what layer 3 needs**: layer 3
+wants a *quotient* at each piece of a stable cover, not an identification of two
+invariant rings.  `SemilinearAction.isSemilinear_away` gives the transported
+action's semilinearity, which is exactly the hypothesis of `invariantsSubalgebra`,
+`descentAlgHom` and `descentAlgEquiv` — so `isGaloisQuotient_spec` applies verbatim
+and `isGaloisQuotient_away` is a *citation* rather than a construction.  That is
+the same simplification the 2026-07-30 update above records for the **affine** case
+at layer 1 ("layer 3 may quote a per-chart quotient instead of constructing one");
+this paragraph carries it to layer 2, which the layer list did not.
+
+So layer 2 splits as: **(a)** the action and its semilinearity — *landed*, and it
+was the gating step; **(b)** the invariant-basic-open covering and openness of
+`π_U(V)` — *open*, and genuinely a covering fact rather than an algebra one;
+**(c)** the invariants equality — possibly not needed at all, since the per-piece
+quotient comes from Speiser at the localized ring directly.  **(c) is a reading,
+not a measurement**: a lane building the `GlueData` should check whether the
+*overlap isomorphisms* need it, since that is where two per-piece quotients are
+compared.  Nothing here discharges the gate off the affine locus, and the Hironaka
+trap still bites at layer 3.
+
 ## Main definitions and results (milestone 1)
 
 * `SemilinearGalAction.actApp ρ hU γ : Γ(X, U) ⟶ Γ(X, U)` — transport of sections

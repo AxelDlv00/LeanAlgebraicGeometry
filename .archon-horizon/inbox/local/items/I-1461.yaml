@@ -1,0 +1,72 @@
+id: I-1461
+provider: local
+kind: issue
+body: 'LAYER 2 OF G2(c) IS MISPRICED AT BOTH SITES THAT NAME IT: they name an EQUALITY
+  OF INVARIANTS as the deliverable, but the step that gates layer 3 is one level earlier
+  -- there is no Galois action on the localization AT ALL until you prove the denominators
+  are preserved, and mathlib does not supply it.
+
+
+  MEASURED by ajc-p3 (AJC run 0085 r5), landed in Picard/GaloisDescent/InvariantsLocalization.lean:
+  10 decls, 0 code sorries, all ten axiom-clean vs a live sorryAx control on fgaPicardRepresentability,
+  oleans rebuilt before the probe.
+
+
+  SITES: GaloisQuotientGlue.lean:74-78 ("(2) quotient-localization ((A_N)^Gamma =
+  (A^Gamma)_N + invariant-basic-open covering + openness of pi_U(V))") and roadmap
+  AJC.picrep.etale-rep.galois, which inherited it. Both honest about layer 2''s SIZE,
+  both naming the wrong content.
+
+
+  WHAT THE PRICE MISSES. The equality''s left side presupposes a Gamma-action on A_N.
+  There is none: exact? fails on MulSemiringAction Gal(L/K) (Localization.Away N)
+  with invariance in scope. What is missing is that gamma maps Submonoid.powers N
+  ONTO itself -- FALSE for general N, since gamma sends powers N to powers (gamma
+  . N). That is powers_map_eq, the one place invariance is spent.
+
+
+  AND THE PRICED DELIVERABLE IS NOT WHAT LAYER 3 NEEDS: it wants a QUOTIENT per piece,
+  not an identification of two invariant rings. isSemilinear_away gives semilinearity,
+  exactly the hypothesis of invariantsSubalgebra / descentAlgEquiv, so isGaloisQuotient_spec
+  applies verbatim and isGaloisQuotient_away is a citation. GaloisQuotientGlue''s
+  header records that simplification for the AFFINE case at layer 1; its layer list
+  did not carry it to layer 2.
+
+
+  CORRECTED SHAPE: (a) action + semilinearity -- LANDED, the gating step; (b) the
+  covering half -- OPEN, genuinely a covering fact; (c) the invariants equality --
+  possibly NOT needed, since the per-piece quotient comes from Speiser at the localized
+  ring. (c) is my reading, NOT measured: check whether the overlap ISOS need it, which
+  is where two per-piece quotients get compared.
+
+
+  WHAT I DID NOT CLOSE, the obvious attack on my own file: every binder of isGaloisQuotient_away
+  is jointly satisfiable at a NON-DEGENERATE site (A = L (x)[K] K[X], N = 1 (x) X,
+  invariant NON-unit, five instances by inferInstance at top level), but the APPLICATION
+  there did not elaborate -- IsSemilinear fails to synthesize inside the letI chain
+  while closing by inferInstance one line above. Likely competing instances; UNMEASURED.
+  Elaborate your own site.
+
+
+  NOT A DISCOUNT: HasGaloisQuotient still affine-only; 2(b)/3/4 open; Hironaka untouched;
+  no antecedent witnessed for any curve.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T02:24:35.909861+00:00'
+updated_at: '2026-07-30T02:24:35.909873+00:00'
+metadata:
+  provenance:
+    run: 0085
+    session: 0012-horizon-ajc-p3
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-p3
+    task_title: 'AJC prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
