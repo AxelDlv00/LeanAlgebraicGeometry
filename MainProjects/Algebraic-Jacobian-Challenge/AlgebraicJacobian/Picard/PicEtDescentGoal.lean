@@ -174,6 +174,71 @@ theorem descentMor_comp {T T' : Over (Spec (CommRingCat.of k))}
 
 end DescentClass
 
+/-! ## §2b. Clause 3 of `IsGaloisQuotient` with its forward map PINNED to `descentMor`
+
+`quotientHomEquiv` and `quotientHomEquiv_uniform` (`Picard/PicEtQuotientHom.lean`)
+give the bijection only inside a `Nonempty`, so `.some` is an anonymous `Equiv`
+about which nothing further can be proved. The version below is the same bijection
+with its `toFun` **fixed** to be `descentMor`, which is what makes the naturality of
+§4 provable at all. -/
+
+section QuotientHomPinned
+
+variable {C : Over (Spec (CommRingCat.of k))}
+  [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+  {X' : Over (Spec (CommRingCat.of k'))}
+  {Y : Over (Spec (CommRingCat.of k))}
+
+set_option maxHeartbeats 1000000 in
+-- Heartbeat headroom: the `Over`/`pullback` coercion chain of `descentMor` is
+-- unfolded repeatedly against `IsGaloisQuotient`'s bare-scheme spelling.
+/-- **Clause 3, as an `Equiv` in the slice with a named forward map.**
+
+Extracted from a quotient's structural iso `e` rather than from
+`IsGaloisQuotient` as a whole, so that the forward map is `descentMor e he` on the
+nose. Injectivity and surjectivity are the uniqueness and existence halves of
+clause 3's `∃!`, exactly as in `quotientHomEquiv`. -/
+noncomputable def quotientHomEquivOfIso
+    (ρ : SemilinearGalAction k k' X'.left X'.hom)
+    (e : Limits.pullback Y.hom (specMapAlgebra k k') ≅ X'.left)
+    (he : e.hom ≫ X'.hom = pullback.snd Y.hom (specMapAlgebra k k'))
+    (heq : (pullbackSemilinearGalAction k k' Y.hom).IsEquivariant ρ e.hom)
+    (huniv : ∀ (T : Scheme.{u}) (t : T ⟶ Spec (CommRingCat.of k))
+      (h : Limits.pullback t (specMapAlgebra k k') ⟶ X'.left),
+      h ≫ X'.hom = pullback.snd t (specMapAlgebra k k') →
+      (pullbackSemilinearGalAction k k' t).IsEquivariant ρ h →
+      ∃! u : {u : T ⟶ Y.left // u ≫ Y.hom = t},
+        pullbackBaseChange k k' Y.hom t u.1 u.2 ≫ e.hom = h)
+    (T : Over (Spec (CommRingCat.of k))) :
+    (T ⟶ Y) ≃ {h : Limits.pullback T.hom (specMapAlgebra k k') ⟶ X'.left //
+      h ≫ X'.hom = pullback.snd T.hom (specMapAlgebra k k') ∧
+        (pullbackSemilinearGalAction k k' T.hom).IsEquivariant ρ h} := by
+  have hsnd : ∀ u : T ⟶ Y,
+      (pullbackBaseChange k k' Y.hom T.hom u.left (Over.w u) ≫ e.hom) ≫ X'.hom
+        = pullback.snd T.hom (specMapAlgebra k k') := fun u => by
+    rw [Category.assoc, he, pullbackBaseChange_snd]
+  have hfwd : ∀ u : T ⟶ Y,
+      (pullbackSemilinearGalAction k k' T.hom).IsEquivariant ρ
+        (pullbackBaseChange k k' Y.hom T.hom u.left (Over.w u) ≫ e.hom) := fun u =>
+    SemilinearGalAction.isEquivariant_pullbackBaseChange_comp
+      (g := Y.hom) (t := T.hom) ρ (he := heq) u.left (Over.w u)
+  refine Equiv.ofBijective
+    (fun u => ⟨pullbackBaseChange k k' Y.hom T.hom u.left (Over.w u) ≫ e.hom,
+      hsnd u, hfwd u⟩) ⟨?_, ?_⟩
+  · intro a b hab
+    obtain ⟨w, -, hwu⟩ := huniv T.left T.hom
+      (pullbackBaseChange k k' Y.hom T.hom b.left (Over.w b) ≫ e.hom)
+      (hsnd b) (hfwd b)
+    refine CategoryTheory.Over.OverMorphism.ext ?_
+    exact congrArg Subtype.val
+      ((hwu ⟨a.left, Over.w a⟩ (congrArg Subtype.val hab)).trans
+        (hwu ⟨b.left, Over.w b⟩ rfl).symm)
+  · rintro ⟨h, hh1, hh2⟩
+    obtain ⟨w, hw, -⟩ := huniv T.left T.hom h hh1 hh2
+    exact ⟨Over.homMk w.1 w.2, Subtype.ext hw⟩
+
+end QuotientHomPinned
+
 /-! ## §3. The composite Equiv at one test -/
 
 /-- **Leg 1 ∘ leg 3, as an `Equiv` onto the `Γ`-invariant classes on `T_{k'}`,
@@ -182,22 +247,33 @@ given the `G1` match.**
 `Hom_k(T, Y) ≃ {equivariant T_{k'} ⟶ X'} ≃ {equivariant-image classes}
              = {Γ-invariant classes}`,
 
-where the first step is clause 3 of `IsGaloisQuotient`
-(`homEquiv_equivariant_of_galoisQuotient`), the second is `rep` restricted to its
+where the first step is clause 3 of `IsGaloisQuotient` (`quotientHomEquivOfIso`)
+, the second is `rep` restricted to its
 image (`range_equivariantToClass`), and the third is the hypothesis
-`IsInvariantMatch` transported along `picEt_crossBaseIso`. -/
+`IsInvariantMatch` transported along `picEt_crossBaseIso`.
+
+Its forward map is `descentClass` (`galInvariantEquivOfQuotient_val`), which is
+what makes the naturality of §4 provable — see `§2b`. -/
 noncomputable def galInvariantEquivOfQuotient
-    (C : Over (Spec (CommRingCat.of k)))
+    {C : Over (Spec (CommRingCat.of k))}
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
     {X' : Over (Spec (CommRingCat.of k'))}
     (rep : (picEt (Scheme.baseChangeField C k')).RepresentableBy X')
     (ρ : SemilinearGalAction k k' X'.left X'.hom)
     {Y : Over (Spec (CommRingCat.of k))}
-    (hq : IsGaloisQuotient ρ Y.hom)
+    (e : Limits.pullback Y.hom (specMapAlgebra k k') ≅ X'.left)
+    (he : e.hom ≫ X'.hom = pullback.snd Y.hom (specMapAlgebra k k'))
+    (heq : (pullbackSemilinearGalAction k k' Y.hom).IsEquivariant ρ e.hom)
+    (huniv : ∀ (T : Scheme.{u}) (t : T ⟶ Spec (CommRingCat.of k))
+      (h : Limits.pullback t (specMapAlgebra k k') ⟶ X'.left),
+      h ≫ X'.hom = pullback.snd t (specMapAlgebra k k') →
+      (pullbackSemilinearGalAction k k' t).IsEquivariant ρ h →
+      ∃! u : {u : T ⟶ Y.left // u ≫ Y.hom = t},
+        pullbackBaseChange k k' Y.hom t u.1 u.2 ≫ e.hom = h)
     (hmatch : ∀ T, IsInvariantMatch C rep ρ T)
     (T : Over (Spec (CommRingCat.of k))) :
     (T ⟶ Y) ≃ GalInvariant (k' := k') C T := by
-  refine (homEquiv_equivariant_of_galoisQuotient ρ hq T).some.trans ?_
+  refine (quotientHomEquivOfIso ρ e he heq huniv T).trans ?_
   -- the subtype of bare equivariant morphisms is the subtype of slice morphisms
   have eA : {h : pullback T.hom (specMapAlgebra k k') ⟶ X'.left //
         h ≫ X'.hom = pullback.snd T.hom (specMapAlgebra k k') ∧
@@ -224,25 +300,178 @@ noncomputable def galInvariantEquivOfQuotient
       (fun c => hmatch T c)))
   exact Equiv.subtypeEquiv rep.homEquiv (fun _ => by rw [Equiv.symm_apply_apply])
 
-/-- The underlying class of `galInvariantEquivOfQuotient` is `rep.homEquiv` of the
-equivariant morphism, transported across the cross-base identification. Unfolded
-here once so the naturality proof below can work with the components. -/
+set_option maxHeartbeats 1000000 in
+-- Heartbeat headroom: same `Over`/`pullback` coercion chain as
+-- `quotientHomEquivOfIso`, unfolded once more through the composite's three legs.
+/-- **The value of the composite Equiv IS the descent class.**
+
+This is the identity that makes naturality provable: the composite's underlying
+class is `descentClass`, which §2 proved functorial. With
+`quotientHomEquiv_uniform`'s `.some` in the forward slot there would be no such
+formula. -/
 theorem galInvariantEquivOfQuotient_val
-    (C : Over (Spec (CommRingCat.of k)))
+    {C : Over (Spec (CommRingCat.of k))}
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
     {X' : Over (Spec (CommRingCat.of k'))}
     (rep : (picEt (Scheme.baseChangeField C k')).RepresentableBy X')
     (ρ : SemilinearGalAction k k' X'.left X'.hom)
     {Y : Over (Spec (CommRingCat.of k))}
-    (hq : IsGaloisQuotient ρ Y.hom)
+    (e : Limits.pullback Y.hom (specMapAlgebra k k') ≅ X'.left)
+    (he : e.hom ≫ X'.hom = pullback.snd Y.hom (specMapAlgebra k k'))
+    (heq : (pullbackSemilinearGalAction k k' Y.hom).IsEquivariant ρ e.hom)
+    (huniv : ∀ (T : Scheme.{u}) (t : T ⟶ Spec (CommRingCat.of k))
+      (h : Limits.pullback t (specMapAlgebra k k') ⟶ X'.left),
+      h ≫ X'.hom = pullback.snd t (specMapAlgebra k k') →
+      (pullbackSemilinearGalAction k k' t).IsEquivariant ρ h →
+      ∃! u : {u : T ⟶ Y.left // u ≫ Y.hom = t},
+        pullbackBaseChange k k' Y.hom t u.1 u.2 ≫ e.hom = h)
     (hmatch : ∀ T, IsInvariantMatch C rep ρ T)
     (T : Over (Spec (CommRingCat.of k))) (u : T ⟶ Y) :
-    (galInvariantEquivOfQuotient C rep ρ hq hmatch T u).1
-      = (picEt_crossBaseIso C k').hom.app (op (baseTest (k' := k') T))
-          (rep.homEquiv (Over.homMk
-            ((homEquiv_equivariant_of_galoisQuotient ρ hq T).some u).1
-            ((homEquiv_equivariant_of_galoisQuotient ρ hq T).some u).2.1)) :=
-  rfl
+    (galInvariantEquivOfQuotient rep ρ e he heq huniv hmatch T u).1
+      = descentClass rep e he T u := by
+  exact congrArg (fun m => (picEt_crossBaseIso C k').hom.app _ (rep.homEquiv m))
+    (CategoryTheory.Over.OverMorphism.ext (descentMor_left e he T u)).symm
+
+/-! ## §4. Naturality of the descent class -/
+
+set_option maxHeartbeats 1000000 in
+-- Heartbeat headroom: as above; the cross-base naturality square is checked
+-- against the `Over.pullback`/`coverFunctor` spellings of the same functor.
+/-- **The descent class is natural in the test.**
+
+Two steps, both already available: `descentMor` is functorial (§2) so
+`rep.homEquiv_comp` moves the class along `picEt (C_{k'})`, and
+`picEt_crossBaseIso` is a natural isomorphism, so transporting commutes with that
+map. This is the clause `representableBy_of_galInvariantEquiv` needs and the one
+a `.some`-based `Equiv` cannot supply. -/
+theorem descentClass_natural
+    {C : Over (Spec (CommRingCat.of k))}
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    {X' : Over (Spec (CommRingCat.of k'))}
+    (rep : (picEt (Scheme.baseChangeField C k')).RepresentableBy X')
+    {Y : Over (Spec (CommRingCat.of k))}
+    (e : Limits.pullback Y.hom (specMapAlgebra k k') ≅ X'.left)
+    (he : e.hom ≫ X'.hom = pullback.snd Y.hom (specMapAlgebra k k'))
+    {T T' : Over (Spec (CommRingCat.of k))} (f : T ⟶ T') (g : T' ⟶ Y) :
+    descentClass rep e he T (f ≫ g)
+      = ((coverFunctor (k := k) (k' := k')).op ⋙ picEt C).map f.op
+          (descentClass rep e he T' g) := by
+  have hstep : rep.homEquiv (descentMor e he T (f ≫ g))
+      = (picEt (Scheme.baseChangeField C k')).map
+          ((Over.pullback (specMapAlgebra k k')).map f).op
+          (rep.homEquiv (descentMor e he T' g)) :=
+    (congrArg rep.homEquiv (descentMor_comp e he f g)).trans
+      (rep.homEquiv_comp _ _)
+  change (picEt_crossBaseIso C k').hom.app (op (baseTest (k' := k') T))
+      (rep.homEquiv (descentMor e he T (f ≫ g))) = _
+  rw [hstep]
+  have hnat := NatTrans.naturality_apply (picEt_crossBaseIso C k').hom
+    (X := op (baseTest (k' := k') T')) (Y := op (baseTest (k' := k') T))
+    ((Over.pullback (specMapAlgebra k k')).map f).op
+    (rep.homEquiv (descentMor e he T' g))
+  exact hnat
+
+/-! ## §5. THE DESCENT GOAL -/
+
+set_option maxHeartbeats 1000000 in
+-- Heartbeat headroom: as above.
+/-- **THE THEOREM THE SEAM'S FOUR ANTECEDENTS ARE ANTECEDENTS OF.**
+
+For a smooth proper curve `C` over an **arbitrary** field `k` and an extension
+`k'/k` (finite separable, which is input 1's price — see below):
+
+> a `k'`-scheme `X'` **representing** `picEt (C_{k'})`, whose canonical semilinear
+> Galois action has a **Galois quotient** `Y` over `k`, and for which the `G1`
+> predicate match holds at every test — yields
+> **`(picEt C).RepresentableBy Y`**, i.e. field 1 of clause (1) of
+> `Scheme.fgaPicardRepresentability`, over `k`.
+
+**Why this is not `P → P`.** The hypothesis is a representation of the Picard
+functor of the **base-changed** curve over `k'`. The conclusion is a representation
+of `picEt C` over `k`. Neither `HasPicSchemeEt C` nor the conclusion's own shape
+occurs in any hypothesis, and the theorem genuinely crosses the descent step —
+which is precisely what `I-1312` found `Picard/PicEtDescentAssembly.lean`'s
+`representableByRestrict_of_baseChange` does *not* do.
+
+**What it does not do, stated because it is the natural over-reading.**
+
+* It closes **no** `sorry`. `rep` is the Milne–Kollár campaign's undischarged
+  output; `IsGaloisQuotient` at a *glued* (non-affine) `X'` is the open `G2(c)`
+  gate; `hcov` is `AJC.picrep.etale-rep.hcov`; and `IsInvariantMatch` is `G1`. All
+  four are **explicit hypotheses here**, none is discharged, and clause (1) field 1
+  is therefore still witnessed for no curve.
+* The `hcov` and `IsInvariantMatch` hypotheses are quantified over **every** test,
+  which is what `representableBy_of_galInvariantEquiv` consumes; a lane closing
+  either must close it at that generality.
+* Per `I-0491` there is no `HasRationalPoint` binder. -/
+noncomputable def representableBy_picEt_of_galoisQuotient
+    [Algebra.IsSeparable k k'] [Module.Finite k k']
+    {C : Over (Spec (CommRingCat.of k))}
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    {X' : Over (Spec (CommRingCat.of k'))}
+    (rep : (picEt (Scheme.baseChangeField C k')).RepresentableBy X')
+    (ρ : SemilinearGalAction k k' X'.left X'.hom)
+    {Y : Over (Spec (CommRingCat.of k))}
+    (e : Limits.pullback Y.hom (specMapAlgebra k k') ≅ X'.left)
+    (he : e.hom ≫ X'.hom = pullback.snd Y.hom (specMapAlgebra k k'))
+    (heq : (pullbackSemilinearGalAction k k' Y.hom).IsEquivariant ρ e.hom)
+    (huniv : ∀ (T : Scheme.{u}) (t : T ⟶ Spec (CommRingCat.of k))
+      (h : Limits.pullback t (specMapAlgebra k k') ⟶ X'.left),
+      h ≫ X'.hom = pullback.snd t (specMapAlgebra k k') →
+      (pullbackSemilinearGalAction k k' t).IsEquivariant ρ h →
+      ∃! u : {u : T ⟶ Y.left // u ≫ Y.hom = t},
+        pullbackBaseChange k k' Y.hom t u.1 u.2 ≫ e.hom = h)
+    (hcov : ∀ T : Over (Spec (CommRingCat.of k)), Sieve.generate (Presieve.ofArrows
+        (fun _ : k' ≃ₐ[k] k' => (restrictTest k k').obj (baseTest (k' := k') T))
+        (fun γ => coverSelfSection T γ)) ∈
+      etaleTopologyOver k (Limits.pullback (coverMap (k := k) (k' := k') T)
+        (coverMap (k := k) (k' := k') T)))
+    (hmatch : ∀ T, IsInvariantMatch C rep ρ T) :
+    (picEt C).RepresentableBy Y :=
+  representableBy_of_galInvariantEquiv (k' := k') C hcov
+    (galInvariantEquivOfQuotient rep ρ e he heq huniv hmatch)
+    (fun {T T'} f g => by
+      rw [galInvariantEquivOfQuotient_val, galInvariantEquivOfQuotient_val]
+      exact descentClass_natural rep e he f g)
+
+/-- **The same conclusion in the seam's own shape**: clause (1) of
+`Scheme.fgaPicardRepresentability`, in full, from the same hypotheses.
+
+The two side conjuncts are free — `LocallyOfFiniteType` needs the descent of
+`Picard/PicEtSeparated.lean`'s `locallyOfFiniteType_of_baseChange` and
+`IsSeparated` is `isSeparated_of_representableBy_picEt`, both from the bare
+representation. So this restates the theorem above at the shape the `sorry`
+consumes, and the local-finiteness hypothesis is the *only* thing it adds. -/
+theorem seamClauseOne_of_galoisQuotient
+    [Algebra.IsSeparable k k'] [Module.Finite k k']
+    {C : Over (Spec (CommRingCat.of k))}
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    {X' : Over (Spec (CommRingCat.of k'))}
+    (rep : (picEt (Scheme.baseChangeField C k')).RepresentableBy X')
+    (ρ : SemilinearGalAction k k' X'.left X'.hom)
+    {Y : Over (Spec (CommRingCat.of k))}
+    (e : Limits.pullback Y.hom (specMapAlgebra k k') ≅ X'.left)
+    (he : e.hom ≫ X'.hom = pullback.snd Y.hom (specMapAlgebra k k'))
+    (heq : (pullbackSemilinearGalAction k k' Y.hom).IsEquivariant ρ e.hom)
+    (huniv : ∀ (T : Scheme.{u}) (t : T ⟶ Spec (CommRingCat.of k))
+      (h : Limits.pullback t (specMapAlgebra k k') ⟶ X'.left),
+      h ≫ X'.hom = pullback.snd t (specMapAlgebra k k') →
+      (pullbackSemilinearGalAction k k' t).IsEquivariant ρ h →
+      ∃! u : {u : T ⟶ Y.left // u ≫ Y.hom = t},
+        pullbackBaseChange k k' Y.hom t u.1 u.2 ≫ e.hom = h)
+    (hcov : ∀ T : Over (Spec (CommRingCat.of k)), Sieve.generate (Presieve.ofArrows
+        (fun _ : k' ≃ₐ[k] k' => (restrictTest k k').obj (baseTest (k' := k') T))
+        (fun γ => coverSelfSection T γ)) ∈
+      etaleTopologyOver k (Limits.pullback (coverMap (k := k) (k' := k') T)
+        (coverMap (k := k) (k' := k') T)))
+    (hmatch : ∀ T, IsInvariantMatch C rep ρ T)
+    (hlft : LocallyOfFiniteType Y.hom) :
+    ∃ Z : Over (Spec (CommRingCat.of k)),
+      Nonempty ((picEt C).RepresentableBy Z) ∧
+        LocallyOfFiniteType Z.hom ∧ IsSeparated Z.hom :=
+  seamClauseOne_of_representableBy_locallyOfFiniteType C
+    ⟨Y, ⟨representableBy_picEt_of_galoisQuotient rep ρ e he heq huniv hcov hmatch⟩,
+      hlft⟩
 
 end PicScheme
 
