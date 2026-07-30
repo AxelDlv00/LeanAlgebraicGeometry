@@ -647,6 +647,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyAffFieldDegree
 import AlgebraicJacobian.Picard.DivisorFamilyAffStalkEval
 import AlgebraicJacobian.Picard.DivisorFamilyAffFibreData
 import AlgebraicJacobian.Picard.DivisorFamilyAffFibreRank
+import AlgebraicJacobian.Picard.DivisorFamilyAffThetaRestriction
 -- The field-level window-recovery mono is CARRIER-FREE (run 0089 r6, ajcr-p3): the rung
 -- I-1248 named as the widened tower's load-bearing missing piece reads its carrier only
 -- through `eqns`, so the widened analogue needs no widened mathematics. Rooted so the
