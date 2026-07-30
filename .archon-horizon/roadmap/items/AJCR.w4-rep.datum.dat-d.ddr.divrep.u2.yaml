@@ -7,17 +7,17 @@ summary: 'LIVE TARGET (R2, no new hypotheses): prove that the cover-independent 
   frame/classifier route to (divFunctorAff C g).RepresentableBy. The old chart-typed
   universal-epsilon description is obsolete and must not be rebuilt.\n\nVERIFIED PRODUCERS:
   29f746e25b gives widened fibre degree and the N(a)-d_p Picard/H1 witness; b8c18b13a4
-  gives surjective theta evaluation through an auxiliary chart presentation and an
-  equivalence from the cover-independent quotient, without certifying that chart adaptation;
-  f9da5c6ad6 computes every field fibre dimension as g by Phi/Riemann-Roch; 80ce9e83b2
-  proves that the intrinsic cocycle-glued theta sheaf has invertible sections on every
-  arbitrary affine piece by finite basic refinement and faithfully flat descent. No
-  producer assumes ChartTyping, Noetherianity, or a rational point.\n\nNEXT PRODUCER:
-  restrict those intrinsic invertible section modules to each finite divisor piece,
-  glue them over the widened equalizer algebra, and identify the result with the window
-  quotient. InvertibleModuleTransfer then supplies finite/projective/stalk-rank data
-  from the existing certificate. After that, prove widened window base change, the
-  frame cover, epsilon carve/classifier separation, and the RepresentableBy endpoint.
+  gives surjective theta evaluation and a cover-independent window-quotient equivalence
+  without certifying its auxiliary chart presentation; f9da5c6ad6 computes every field
+  fibre dimension as g; 80ce9e83b2 proves intrinsic theta sections invertible on every
+  arbitrary affine piece; 80363e8b32 base-changes those sections to every certified
+  colength algebra and transfers invertibility, finiteness, and projectivity over
+  R. No producer assumes ChartTyping, Noetherianity, or a rational point.\n\nNEXT
+  PRODUCER: glue the landed ThetaPieceRestriction modules across overlap colength
+  algebras into an invertible module over the widened equalizer algebra, and identify
+  it with the window quotient. InvertibleModuleTransfer then supplies global finite/projective/stalk-rank
+  data from the existing certificate. After that, prove widened window base change,
+  the frame cover, epsilon carve/classifier separation, and the RepresentableBy endpoint.
   ThetaTrivData at positive exponent and the obsolete fixed-pair chart route are not
   substitutes for this seam.'
 status: active
@@ -42,8 +42,9 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
-  updated_at: '2026-07-30T07:18:08.131575+00:00'
+  updated_at: '2026-07-30T07:41:27.473607+00:00'
   pinned_commits:
+  - 80363e8b32
   - 80ce9e83b2
   - f9da5c6ad6
   - b8c18b13a4
