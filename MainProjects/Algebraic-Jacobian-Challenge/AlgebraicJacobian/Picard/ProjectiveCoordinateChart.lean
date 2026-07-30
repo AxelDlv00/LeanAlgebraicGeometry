@@ -155,6 +155,20 @@ def chartHom (i : J) (c : J → B) (hi : c i = 1) :
     Away (homogeneousSubmodule J (ULift.{u} ℤ)) (X i) →+* B :=
   awayLift (X i) (eval c) (by rw [eval_X, hi]; exact isUnit_one)
 
+/-- The normalized coordinate `X_j / X_i` on the `i`-th projective chart. -/
+def chartCoord (i j : J) :
+    Away (homogeneousSubmodule J (ULift.{u} ℤ)) (X i) :=
+  Away.mk (homogeneousSubmodule J (ULift.{u} ℤ)) (X_mem_deg_one i) 1 (X j)
+    (by simpa using X_mem_deg_one j)
+
+/-- The localization element attached to `X_j` is the normalized coordinate
+`X_j / X_i`. -/
+theorem isLocalizationElem_eq_chartCoord (i j : J) :
+    Away.isLocalizationElem (X_mem_deg_one i) (X_mem_deg_one j) =
+      chartCoord i j := by
+  apply HomogeneousLocalization.val_injective
+  simp [chartCoord]
+
 /-- Post-composition commutes with a standard-chart classifying map. -/
 theorem comp_chartHom (r : B →+* B') (i : J) (c : J → B) (hi : c i = 1) :
     r.comp (chartHom i c hi) =
@@ -175,6 +189,12 @@ theorem chartHom_mk (i : J) (c : J → B) (hi : c i = 1)
     (by rw [eval_X, hi]; exact isUnit_one) n a ha
   simpa [chartHom, hi] using h
 
+@[simp]
+theorem chartHom_chartCoord (i j : J) (c : J → B) (hi : c i = 1) :
+    chartHom i c hi (chartCoord i j) = c j := by
+  rw [chartCoord, chartHom_mk]
+  exact eval_X c j
+
 /-- The affine morphism into the `i`-th standard chart classified by a
 coordinate family whose `i`-th coordinate is one. -/
 def fromSpec (i : J) (c : J → B) (hi : c i = 1) :
@@ -182,6 +202,21 @@ def fromSpec (i : J) (c : J → B) (hi : c i = 1) :
   Spec.map (CommRingCat.ofHom (chartHom i c hi)) ≫
     Proj.awayι (homogeneousSubmodule J (ULift.{u} ℤ))
       (X i) (X_mem_deg_one i) Nat.zero_lt_one
+
+/-- The inverse image of `D_+(X_j)` under a normalized coordinate map is the
+ordinary principal open where the coordinate `c_j` is nonzero. -/
+theorem fromSpec_preimage_basicOpen (i j : J) (c : J → B) (hi : c i = 1) :
+    fromSpec i c hi ⁻¹ᵁ
+        Proj.basicOpen (homogeneousSubmodule J (ULift.{u} ℤ)) (X j) =
+      PrimeSpectrum.basicOpen (c j) := by
+  rw [fromSpec, Scheme.Hom.comp_preimage]
+  rw [Proj.awayι_preimage_basicOpen (homogeneousSubmodule J (ULift.{u} ℤ))
+    (X_mem_deg_one i) Nat.one_pos (X_mem_deg_one j) Nat.one_pos]
+  rw [SpecMap_preimage_basicOpen]
+  congr 1
+  change chartHom i c hi
+      (Away.isLocalizationElem (X_mem_deg_one i) (X_mem_deg_one j)) = c j
+  rw [isLocalizationElem_eq_chartCoord, chartHom_chartCoord]
 
 /-- `fromSpec` is natural in the affine coordinate ring. -/
 theorem SpecMap_fromSpec (r : B →+* B') (i : J) (c : J → B)
