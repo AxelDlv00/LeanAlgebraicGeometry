@@ -22,12 +22,31 @@ the cokernel of the restriction-difference map (`TwoCover.h1CokEquiv`).
 difference map is surjective, so the cokernel is trivial, so `H¹` is.  This file is that
 composite, plus the genus corollary.
 
-## Why the direction matters, and why `Subsingleton` comes first
+## The two forms are INTERDERIVABLE here — an earlier version of this section said otherwise
 
-`genus` is a `Module.finrank`, and `finrank` reads `0` on an infinite-dimensional space.  So a
-`genus = 0` statement is *weaker* than vanishing and cannot be used to recover it.  Here the
-`Subsingleton` is the theorem and the genus is its corollary — the direction in which the result
-is usable.
+This section used to argue that `Subsingleton` is strictly stronger than `genus = 0`, because
+`finrank` reads `0` on an infinite-dimensional space, and concluded that the `Subsingleton` is
+"the theorem" and the genus "its corollary, not the reverse".  **The general fact is true and it
+is idle in this tree**, so the conclusion was wrong: `Cohomology/Finiteness.lean` registers
+`moduleFinite_hModule_one` as a *global instance* at every curve carrying the three binders, and
+under `Module.Finite` mathlib's `Module.finrank_zero_iff` is an **iff**.  Compiler-checked, at
+exactly the carrier `P1.subsingleton_hModule_one` states:
+
+```
+theorem converse {k} [Field k] (C : Over (Spec (.of k))) [IsProper C.hom]
+    [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIrreducible C.hom] (h : genus C = 0) :
+    letI : C.left.Over (Spec (.of k)) := .ofHom C.hom
+    Subsingleton (Sheaf.HModule (C.left.moduleKSheaf k) 1) := by
+  letI : C.left.Over (Spec (.of k)) := .ofHom C.hom
+  haveI := moduleFinite_hModule_one C
+  rw [genus] at h; exact (Module.finrank_zero_iff (R := k)).mp h
+```
+
+So cite either form freely.  The order below is a convenience of proof, not a strength gap: the
+two-cover bridge produces a `Subsingleton` directly, so that is what gets proved first.  The one
+real asymmetry is mechanical: the `Module.Finite` instance is keyed on the `letI` spelling `genus`
+uses, so recovering the vanishing from the genus at the `(P1 k).moduleKSheaf` spelling needs that
+instance routed in by hand rather than found by search.
 
 ## Why this is a representability fact
 
@@ -37,13 +56,25 @@ testwise `pic⁰` vanishing.  Neither could be *instantiated* at any object unti
 `Curve/P1Curve.lean` gave the project a curve.  This file supplies the other half of the pair at
 that same curve: `ℙ¹` now carries both the three curve binders and `genus = 0`.
 
-**What is still missing, stated precisely.**  The step from `genus C = 0` to
-`pic0Subgroup C T = ⊥` at every test `T` is *not* proved here and is not proved anywhere in the
-tree — it is exactly the debt `Genus0Terminal`'s header names.  So this file does **not** close
-`pic⁰` representability at `ℙ¹`; it closes the *cohomological* input to that debt and leaves the
-debt itself.  What it does remove is the possibility of treating `genus = 0` as unreachable: the
-hypothesis is now discharged at a concrete curve, and what remains between here and a
-`JacobianData` is one implication about Picard groups.
+**What is still missing — THREE inputs, not one, and an earlier version of this paragraph said
+"one implication about Picard groups", which was false about the Albanese target.**  Counted at
+the two different destinations, because they cost different things:
+
+* to a **`JacobianData`** at `ℙ¹`, one input remains: `pic0Subgroup C T = ⊥` at every test `T`,
+  the debt `Genus0Terminal`'s header names, proved nowhere in the tree.  It needs the relative
+  statement `Pic(ℙ¹_T) ≅ Pic(T) × ℤ`; a base-field-only version does **not** discharge the
+  `∀ T` binder.  Given it, `isTerminal_of_pic0Subgroup_eq_bot` and `jacobianData_of_subsingleton`
+  do the rest — verified, `jacobianData_of_subsingleton (P1.asOver k) h` elaborates and
+  `Surjective (P1.asOver k).hom` is `inferInstance`;
+* to the challenge's **`exists_unique_ofCurve_comp`**, two *further* inputs, and
+  `Genus0Terminal` only ever discharges the uniqueness half: a **`k`-rational point**
+  `P : 𝟙_ ⟶ P1.asOver k`, which this project does not construct at `ℙ¹` (no `HasRationalPoint`
+  producer there), and the **existence** hypothesis `hex`, which is Milne I 3.9 and which
+  `Genus0Terminal.lean:160-167` states is not removable.
+
+So this file closes the *cohomological* input and leaves those.  What it does remove is the
+possibility of treating `genus = 0` as unreachable: the hypothesis is now discharged at a
+concrete curve.
 
 ## Main declarations
 
@@ -146,9 +177,10 @@ set_option synthInstance.maxHeartbeats 400000 in
 /-- **`genus (ℙ¹_k) = 0`**, for every field `k` — the corollary, in the weaker numerical form.
 
 `genus` is `Module.finrank k (Sheaf.HModule (moduleKSheaf k) 1)` and the vanishing above makes
-that module a subsingleton, so the rank is `0`.  Note the direction: this is *implied by* the
-`Subsingleton` and does not imply it back, which is why `subsingleton_hModule_one` is the theorem
-to cite and this is the convenience form.
+that module a subsingleton, so the rank is `0`.  This used to say the implication runs one way
+only; it does not — `Cohomology/Finiteness.lean`'s `moduleFinite_hModule_one` makes
+`Module.finrank_zero_iff` an iff at every curve with the three binders, so the two forms are
+interderivable (see the header for the compiler-checked converse).  Cite whichever is convenient.
 
 The three binders `genus` requires are the ones `Curve/P1Curve.lean` supplies, so this statement
 is only expressible because that file exists. -/
