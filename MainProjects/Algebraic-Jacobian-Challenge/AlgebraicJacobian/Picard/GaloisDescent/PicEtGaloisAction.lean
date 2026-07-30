@@ -176,6 +176,39 @@ theorem restrictTest_twistTestFunctor_iso_hom_app_left (γ : k' ≃ₐ[k] k')
     ((restrictTest_twistTestFunctor_iso (k := k) γ).hom.app T).left = 𝟙 T.left := by
   simp [restrictTest_twistTestFunctor_iso, Over.mapComp, Over.mapCongr]
 
+/-- Twisting by `γ * τ` is canonically the same as twisting first by `τ` and
+then by `γ`. The order matches the contravariance of `Spec`: the base map for
+`γ * τ` is the composite of the base maps for `τ` and `γ`. -/
+noncomputable def twistTestFunctor_mulIso (γ τ : k' ≃ₐ[k] k') :
+    twistTestFunctor (k := k) (γ * τ) ≅
+      twistTestFunctor (k := k) τ ⋙ twistTestFunctor (k := k) γ :=
+  Over.mapCongr _ _ (toSpecAut_mul_hom (k' ≃ₐ[k] k') k' γ τ) ≪≫
+    Over.mapComp _ _
+
+/-- The comparison between a product twist and the corresponding iterated twist
+does not change the underlying scheme. -/
+@[simp]
+theorem twistTestFunctor_mulIso_hom_app_left (γ τ : k' ≃ₐ[k] k')
+    (T : Over (Spec (CommRingCat.of k'))) :
+    ((twistTestFunctor_mulIso (k := k) γ τ).hom.app T).left = 𝟙 T.left := by
+  simp [twistTestFunctor_mulIso, Over.mapComp, Over.mapCongr]
+
+/-- The comparison identifying a twisted test after restriction satisfies the
+group-law cocycle. This is an equality in the slice over `Spec k`; all three
+maps have identity underlying scheme map. -/
+theorem restrictTest_twistTestFunctor_iso_mul_hom_app (γ τ : k' ≃ₐ[k] k')
+    (T : Over (Spec (CommRingCat.of k'))) :
+    (restrictTest_twistTestFunctor_iso (k := k) (γ * τ)).hom.app T =
+      (restrictTest k k').map ((twistTestFunctor_mulIso (k := k) γ τ).hom.app T) ≫
+        (restrictTest_twistTestFunctor_iso (k := k) γ).hom.app
+          ((twistTestFunctor (k := k) τ).obj T) ≫
+        (restrictTest_twistTestFunctor_iso (k := k) τ).hom.app T := by
+  apply Over.OverMorphism.ext
+  simp only [Over.map_obj_left, restrictTest_twistTestFunctor_iso_hom_app_left,
+    Over.comp_left, Over.map_map_left, twistTestFunctor_mulIso_hom_app_left,
+    Category.comp_id]
+  rfl
+
 /-! ## §2. The Galois action on the Picard functor -/
 
 section Action
