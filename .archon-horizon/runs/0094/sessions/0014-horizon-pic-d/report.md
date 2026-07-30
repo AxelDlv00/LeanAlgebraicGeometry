@@ -1,0 +1,1 @@
+The Lean source lookup is also waiting on the shared dependency cache, so I’m not going to stack more LSP requests behind it. I’ll use the project’s already-landed finite-cover gluing infrastructure and the scout’s declaration-level analysis to choose a checkable low-import unit.

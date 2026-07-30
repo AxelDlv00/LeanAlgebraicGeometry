@@ -1,0 +1,2 @@
+import AlgebraicJacobian.Picard.Pic0VanishingFieldTest
+#print axioms AlgebraicGeometry.P1.subsingleton_pic0Subgroup_overSpec_field

@@ -431,4 +431,42 @@ theorem crossBaseAffineIso_inv_tower
   · exact hfst
   · exact hsnd
 
+/-- The inverse affine base-field shuffle over a scalar tower is the composite of the two
+successive inverse shuffles and transport along the frozen curve comparison. -/
+theorem PicEtAff.baseFieldShuffle_symm_tower
+    (k L M : Type u) [Field k] [Field L] [Field M]
+    [Algebra k L] [Algebra L M] [Algebra k M] [IsScalarTower k L M]
+    (C : Over (Spec (.of k))) (B : Type u) [CommRing B]
+    [Algebra k B] [Algebra L B] [Algebra M B]
+    [IsScalarTower k L B] [IsScalarTower L M B] [IsScalarTower k M B]
+    (a : PicEtAff ((baseChange k M).obj C) B) :
+    (PicEtAff.baseFieldShuffle k M C B).symm a =
+      (PicEtAff.baseFieldShuffle k L C B).symm
+        ((PicEtAff.baseFieldShuffle L M ((baseChange k L).obj C) B).symm
+          (PicEtAff.curveMap B ((baseChange.compIso k L M).app C).inv a)) := by
+  let g : (baseChange L M).obj ((baseChange k L).obj C) ⟶ (baseChange k M).obj C :=
+    ((baseChange.compIso k L M).app C).inv
+  change (crossBaseTransportFamilyInv k M C).picEtAffHom B a =
+    (crossBaseTransportFamilyInv k L C).picEtAffHom B
+      ((crossBaseTransportFamilyInv L M ((baseChange k L).obj C)).picEtAffHom B
+        ((curveTransportFamily g).picEtAffHom B a))
+  induction a using PicEtAff.ind with
+  | mk U x =>
+    rw [RelPicTransportFamily.picEtAffHom_mk, RelPicTransportFamily.picEtAffHom_mk,
+      RelPicTransportFamily.picEtAffHom_mk, RelPicTransportFamily.picEtAffHom_mk]
+    refine congrArg (PicEtAff.mk C U) (Subtype.ext ?_)
+    rw [RelPicTransportFamily.descentHom_coe, RelPicTransportFamily.descentHom_coe,
+      RelPicTransportFamily.descentHom_coe, RelPicTransportFamily.descentHom_coe]
+    generalize (x : relPic ((baseChange k M).obj C) (overSpec M U.Carrier)) = y
+    induction y using relPic.ind with
+    | mk Λ =>
+      rw [RelPicTransportFamily.relPicHom_mk, RelPicTransportFamily.relPicHom_mk,
+        RelPicTransportFamily.relPicHom_mk, RelPicTransportFamily.relPicHom_mk]
+      refine congrArg (relPicMk C (overSpec k U.Carrier)) ?_
+      rw [← MonoidHom.comp_apply, ← MonoidHom.comp_apply,
+        ← Scheme.CechPic.map_comp, ← Scheme.CechPic.map_comp,
+        crossBaseTransportFamilyInv_hom, crossBaseTransportFamilyInv_hom,
+        crossBaseTransportFamilyInv_hom, curveTransportFamily_hom,
+        crossBaseAffineIso_inv_tower k L M C U.Carrier]
+
 end AlgebraicGeometry

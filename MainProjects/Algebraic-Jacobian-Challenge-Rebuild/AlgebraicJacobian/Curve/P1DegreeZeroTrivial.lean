@@ -95,7 +95,7 @@ theorem chi_baseChange_eq_one :
   rw [hg, h0] at hchi
   -- `(baseChangeBundle C K).left` is `(C ⊗ overSpec k K).left` by `rfl`; the two spellings
   -- differ only in which one typeclass resolution keys the `Over` instance on.
-  show Sheaf.chi ((baseChangeBundle (P1.asOver k) K).left.moduleKSheaf K) = 1
+  change Sheaf.chi ((baseChangeBundle (P1.asOver k) K).left.moduleKSheaf K) = 1
   simpa using hchi
 
 /-- **A degree-zero Čech Picard class on `ℙ¹_K` is trivial**, for every field extension
