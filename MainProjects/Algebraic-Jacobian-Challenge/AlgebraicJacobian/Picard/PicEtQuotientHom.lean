@@ -52,21 +52,46 @@ with the first map a bijection and the second the representation's `homEquiv`.
   two predicates is `G1`, roadmap `AJC.picrep.etale-rep.invariance` (`ajc-p2`),
   and is deliberately left as the named residue rather than assumed. §3 states
   precisely what remains.
-* **`IsGaloisQuotient` is `Prop`-valued**, so `quotientHomEquiv` must conclude
-  `Nonempty (… ≃ …)`: `Exists.casesOn` cannot eliminate into `Type`. Measured, not
-  worked around — the data-valued form is *unprovable* from this hypothesis, and a
-  lane wanting the `Equiv` itself must strengthen `IsGaloisQuotient` to a
-  structure. That is recorded here because it is a fact about the project's own
-  gate, not about this file.
+## Two claims this file published and then withdrew
 
-## What the proofs use, measured
+Both were refuted by a fresh-context audit (`I-1405`, `I-1406`, `I-1409`,
+`I-1411`), reproduced by the author, and are corrected here at the sentence that
+made them rather than annotated beneath it.
 
-`quotientHomEquiv` does **not** use `[FiniteDimensional K L]` or `[IsGalois K L]`
-— the linter flags both as unused, and they are `omit`ted below. The clause-3
-content is a bijection between a `∃!` and its own witness set; finiteness and
-Galois-ness of `L/K` enter `IsGaloisQuotient`'s *inhabitation*
-(`HasGaloisQuotient`), never this extraction. So a lane pricing this step should
-not budget any field theory for it.
+**WITHDRAWN 1 — "the data-valued `Equiv` is unprovable, so a lane wanting it must
+strengthen `IsGaloisQuotient` to a structure".** FALSE, and it was a false price on
+the project's own gate. `Classical.choice` eliminates a `Prop`-valued `Exists` into
+`Type`, and this file already depends on it: `(quotientHomEquiv ρ hq T t).some` *is*
+the `Equiv`, as a `noncomputable def`. What is true is only that the `Nonempty`
+form is what a `Prop`-valued hypothesis gives *without* choice. The gate needs no
+strengthening for this step. A separate true observation from the same audit, not
+acted on here: the per-`T` `Nonempty` cannot carry a naturality square, and the
+uniform `Nonempty (∀ T t, … ≃ …)` follows from the same proof script — a consumer
+building a `RepresentableBy` will want the uniform form.
+
+**WITHDRAWN 2 — "no `omit` is needed because the linter flags both instances as
+unused".** There is no `omit` in this file and there never was: the section binds
+only `[Field K] [Field L] [Algebra K L]`, so `[FiniteDimensional K L]` and
+`[IsGalois K L]` were never in scope and no linter could have flagged them. The
+*mathematical* claim survives and is stronger for being read off the signature:
+`quotientHomEquiv` needs no field theory at all, because clause 3's content is a
+bijection between a `∃!` and its own witness set. Finiteness and Galois-ness enter
+`IsGaloisQuotient`'s *inhabitation* (`HasGaloisQuotient`), never this extraction.
+The description of how that was measured was fabricated; the fact is checkable from
+the binders.
+
+## And the correction that matters for planning
+
+The image of the Hom-map **is** characterised outright, with no invariance input:
+see `range_equivariantToClass`. So the earlier sentence "what is missing is the
+characterisation of the image, which is campaign `G1`" over-priced `G1`. What `G1`
+actually owes is narrower — matching the predicate "the representing morphism is
+`Γ`-equivariant" against "the class is `Γ`-invariant", two predicates on one
+object. And the "not surjective" claim was refuted by this file's own boasted
+generality: with no hypothesis on `k'/k`, `k' = k` is in the domain, `Γ` is trivial,
+equivariance is vacuous, and the leg is surjective
+(`surjective_equivariantToClass_of_subsingleton`). Both are now theorems here
+rather than assertions.
 -/
 
 universe u
@@ -93,11 +118,15 @@ The forward map is `u ↦ (u ×_K L) ≫ e.hom`, i.e. base-change the descended
 morphism and compare along the quotient's structural isomorphism. Injectivity and
 surjectivity are the uniqueness and existence halves of clause 3's `∃!`.
 
-`Nonempty` rather than a bare `≃` is forced: `IsGaloisQuotient` is a `Prop`, so
-its witness `e` cannot be eliminated into `Type`. See the module docstring.
+`Nonempty` is what a `Prop`-valued hypothesis gives directly. It is **not** a
+limitation: `(quotientHomEquiv ρ hq T t).some` is the `Equiv` itself as a
+`noncomputable def`, since `Classical.choice` eliminates `Exists` into `Type`. An
+earlier revision of this docstring claimed the data-valued form was *unprovable* and
+that the gate needed strengthening; that is withdrawn (`I-1405`, module docstring).
 
-**No field-theoretic hypothesis is used** — neither `[FiniteDimensional K L]` nor
-`[IsGalois K L]` appears, and neither is needed. -/
+**No field-theoretic hypothesis is used**, and this is read off the binders rather
+than from a linter: the section binds only `[Field K] [Field L] [Algebra K L]`, so
+`[FiniteDimensional K L]` and `[IsGalois K L]` never enter. -/
 theorem quotientHomEquiv {X : Scheme.{u}} {f : X ⟶ Spec (CommRingCat.of L)}
     (ρ : SemilinearGalAction K L X f) {Y : Scheme.{u}}
     {g : Y ⟶ Spec (CommRingCat.of K)} (hq : IsGaloisQuotient ρ g)
@@ -201,12 +230,13 @@ noncomputable def equivariantToClass
 `Over.homMk` is injective in its underlying map, so forgetting equivariance
 does not merge two morphisms — it only fails to be *surjective*.
 
-This sharpens the residue and is the reason the composite below is injective
-rather than merely a map: what `G1` owes is not injectivity but the
-**characterisation of the image**, i.e. which `picEt (C_{k'})`-classes are
-`Γ`-invariant. An earlier draft of this file's docstrings said only "the second leg
-is a map, not a bijection", which is true and leaves the reader to guess which half
-fails; this measures it. -/
+An earlier draft of this file's docstrings said only "the second leg is a map, not
+a bijection", which leaves the reader to guess which half fails, and then said the
+missing half was "the characterisation of the image, which is campaign `G1`". The
+second sentence is **withdrawn**: the image is characterised outright by
+`range_equivariantToClass`, and surjectivity can even *hold*
+(`surjective_equivariantToClass_of_subsingleton`). Injectivity is what this lemma
+adds; see the module docstring for what `G1` is actually owed. -/
 theorem equivariantToClass_injective
     (C : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
@@ -219,6 +249,79 @@ theorem equivariantToClass_injective
   have h1 : (Over.homMk a.1 a.2.1 : PicScheme.baseTest (k' := k') T ⟶ X')
       = Over.homMk b.1 b.2.1 := rep.homEquiv.injective hab
   exact Subtype.ext (congrArg CategoryTheory.Over.Hom.left h1)
+
+/-- **The image of the second leg, characterised outright** — with no invariance
+input, no hypothesis on `k'/k`, and no appeal to campaign `G1`.
+
+A class `c` on `T_{k'}` comes from an equivariant morphism exactly when the
+morphism `rep` already assigns to it is equivariant. That is a tautology once
+stated, and stating it is the point: an earlier revision of this file priced "the
+characterisation of the image" as `G1`'s work. It is not. What `G1` owes is
+narrower — matching *this* predicate, "`rep.homEquiv.symm c` is `Γ`-equivariant",
+against "`c` is a `Γ`-invariant `picEt`-class". Those are two predicates on one
+object, and the reduction between them is what an invariance lemma must supply.
+
+Recorded as a theorem rather than a remark because the assertion it replaces was
+believed for the length of three commits (`I-1406`). -/
+theorem range_equivariantToClass
+    (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    {X' : Over (Spec (CommRingCat.of k'))}
+    (rep : (PicScheme.picEt (Scheme.baseChangeField C k')).RepresentableBy X')
+    (ρ : AlgebraicJacobian.GaloisDescent.SemilinearGalAction k k' X'.left X'.hom)
+    (T : Over (Spec (CommRingCat.of k))) :
+    Set.range (equivariantToClass C rep ρ T)
+      = {c | (AlgebraicJacobian.GaloisDescent.pullbackSemilinearGalAction k k'
+                T.hom).IsEquivariant ρ (rep.homEquiv.symm c).left} := by
+  ext c
+  constructor
+  · rintro ⟨h, rfl⟩
+    simp only [equivariantToClass, Set.mem_setOf_eq, Equiv.symm_apply_apply]
+    exact h.2.2
+  · intro hc
+    refine ⟨⟨(rep.homEquiv.symm c).left, Over.w (rep.homEquiv.symm c), hc⟩, ?_⟩
+    simp only [equivariantToClass]
+    rw [show (Over.homMk (rep.homEquiv.symm c).left (Over.w (rep.homEquiv.symm c))
+      : PicScheme.baseTest (k' := k') T ⟶ X') = rep.homEquiv.symm c from
+        CategoryTheory.Over.homMk_eta _ _]
+    exact rep.homEquiv.apply_symm_apply c
+
+/-- **The second leg can be surjective**, so "it is injective but not surjective"
+was false as stated.
+
+The refutation uses nothing but the generality this file advertises: no
+separability or finiteness on `k'/k` is assumed anywhere, so `k' = k` is in the
+domain; there `Gal(k'/k)` is a subsingleton, the equivariance condition holds for
+the only group element, and every class is hit.
+
+This is the degenerate substitution that a "strictly weaker than" or "not
+surjective" claim needs before publication — the parameter the boast leaves
+unconstrained is the one to try first (`I-1413`). -/
+theorem surjective_equivariantToClass_of_subsingleton
+    [Subsingleton (k' ≃ₐ[k] k')]
+    (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    {X' : Over (Spec (CommRingCat.of k'))}
+    (rep : (PicScheme.picEt (Scheme.baseChangeField C k')).RepresentableBy X')
+    (ρ : AlgebraicJacobian.GaloisDescent.SemilinearGalAction k k' X'.left X'.hom)
+    (T : Over (Spec (CommRingCat.of k))) :
+    Function.Surjective (equivariantToClass C rep ρ T) := by
+  intro c
+  refine ⟨⟨(rep.homEquiv.symm c).left, Over.w (rep.homEquiv.symm c), ?_⟩, ?_⟩
+  · intro γ
+    have h1 : γ = 1 := Subsingleton.elim _ _
+    subst h1
+    change ((AlgebraicJacobian.GaloisDescent.pullbackSemilinearGalAction k k'
+      T.hom).act 1).hom ≫ _ = _ ≫ (ρ.act 1).hom
+    rw [map_one, map_one]
+    change (Iso.refl _).hom ≫ _ = _ ≫ (Iso.refl _).hom
+    rw [Iso.refl_hom, Category.id_comp]
+    rw [Iso.refl_hom, Category.comp_id]
+  · simp only [equivariantToClass]
+    rw [show (Over.homMk (rep.homEquiv.symm c).left (Over.w (rep.homEquiv.symm c))
+      : PicScheme.baseTest (k' := k') T ⟶ X') = rep.homEquiv.symm c from
+        CategoryTheory.Over.homMk_eta _ _]
+    exact rep.homEquiv.apply_symm_apply c
 
 /-- **The Hom-side of the descent goal, with the curve in the conclusion.**
 
