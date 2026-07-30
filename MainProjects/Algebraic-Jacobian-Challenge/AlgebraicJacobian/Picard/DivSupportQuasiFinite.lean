@@ -392,6 +392,28 @@ theorem locallyQuasiFinite_of_fibers (x : DivFamily π T)
     LocallyQuasiFinite (Modules.schematicSupportι x.F ≫ pullback.snd π T.hom) :=
   Modules.locallyQuasiFinite_schematicSupportι_comp_of_fibers _ _ h
 
+/-- **The binder upgrades the support map from proper to FINITE**, which is what
+`Picard/DivPushforwardFlat.lean` actually spends it on.
+
+That file's reduction reads "a proper *quasi-finite* morphism is finite
+(`IsFinite.of_isProper_of_locallyQuasiFinite`), hence affine, and
+`Scheme.CoherentSheafFlat` transfers along an affine pushforward". This states the
+first step as a named theorem at a `DivFamily`, so the two inputs — the
+`properSupport` field and the binder — are visibly the whole cost of `IsFinite`,
+and a consumer citing "the divisor is finite over the base" has a name instead of
+an inlined `haveI`.
+
+Stated because the finiteness, not the quasi-finiteness, is what the downstream
+`Module.Finite` tower consumes (`IsFinite.finite_app` in that file's own account
+of where the hypothesis is spent). -/
+theorem isFinite_support (x : DivFamily π T)
+    (hqf : LocallyQuasiFinite (Modules.schematicSupportι x.F ≫ pullback.snd π T.hom)) :
+    IsFinite (Modules.schematicSupportι x.F ≫ pullback.snd π T.hom) :=
+  haveI : IsProper (Modules.schematicSupportι x.F ≫ pullback.snd π T.hom) :=
+    x.properSupport
+  haveI := hqf
+  IsFinite.of_isProper_of_locallyQuasiFinite _
+
 /-- **THE BINDER HAS A PRODUCER: it holds at the empty divisor, for an arbitrary
 `π` and an arbitrary test object.**
 
@@ -418,6 +440,31 @@ theorem locallyQuasiFinite_zero :
       ≫ pullback.snd π T.hom) :=
   Modules.locallyQuasiFinite_schematicSupportι_comp_of_isEmpty _ _
     (Scheme.Modules.isEmpty_schematicSupport_of_isZero (Limits.isZero_zero _))
+
+/-- **The whole chain in one step: fibrewise quasi-finiteness gives a FINITE
+divisor over the base.**
+
+The composite of `locallyQuasiFinite_of_fibers` with `isFinite_support`, stated
+because it is the single implication a lane closing the row's geometry wants to
+apply: hypothesis a statement per fibre over a field, conclusion the finiteness
+that `Picard/DivPushforwardFlat.lean`'s `Module.Finite` tower consumes.
+
+So the divisor side's remaining distance is exactly the antecedent here, and
+nothing between it and finiteness is unbuilt. -/
+theorem isFinite_support_of_fibers (x : DivFamily π T)
+    (h : ∀ t : (T.left : Scheme.{u}), LocallyQuasiFinite
+      ((Modules.schematicSupportι x.F ≫
+        pullback.snd π T.hom).fiberToSpecResidueField t)) :
+    IsFinite (Modules.schematicSupportι x.F ≫ pullback.snd π T.hom) :=
+  x.isFinite_support (x.locallyQuasiFinite_of_fibers h)
+
+/-- **The empty divisor is finite over the base**, for an arbitrary `π` and
+test object — the producer chain run to its end. Composed rather than reproved so
+that the two links are exercised at the tree's one family. -/
+theorem isFinite_support_zero :
+    IsFinite (Modules.schematicSupportι (DivFamily.zero π T).F
+      ≫ pullback.snd π T.hom) :=
+  (DivFamily.zero π T).isFinite_support locallyQuasiFinite_zero
 
 end DivFamily
 
