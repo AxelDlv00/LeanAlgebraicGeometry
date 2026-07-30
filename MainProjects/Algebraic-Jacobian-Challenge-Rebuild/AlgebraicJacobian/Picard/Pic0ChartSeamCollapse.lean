@@ -274,6 +274,71 @@ theorem exists_retraction_of_seam {X : Scheme.{u}}
     rw [← Category.assoc]; exact IsIso.hom_inv_id (restrictChart f V)
   rw [h1, h2, ← yoneda.map_id]
 
+/-! ## The retraction collapses the interval on a DENSE open
+
+The retraction above is a statement about an arbitrary open.  On a *dense* one it forces
+`V = ⊤`, which sends the seam back to the endpoint literature's `⊤` case — and that case is
+refuted the moment the Abel chart fails to be injective.  So on the geometrically natural
+candidates for `V` the interval has no interior at all. -/
+
+/-- **A dense working `V` in a reduced separated ambient scheme is `⊤`.**
+
+The retraction `r` is a *left* inverse of `V.ι`; to promote it to a two-sided one we need
+`r ≫ V.ι = 𝟙 X`, and that follows from mathlib's agreement principle
+`ext_of_isDominant`: the two morphisms `r ≫ V.ι` and `𝟙 X` agree after precomposition with
+the dominant `V.ι`, and `X` is reduced and separated.  An iso open inclusion is surjective on
+points, hence `V = ⊤`.
+
+`IsDominant V.ι` is exactly density of `V` (mathlib's `IsDominant` is denseness of the range),
+and for an *irreducible* ambient scheme every nonempty open is dense — which is the case the
+divisor scheme is expected to be in.  So this is not an exotic side condition: on an
+irreducible reduced separated chart source, **every nonempty working `V` is `⊤`**.
+
+The hypotheses `[IsReduced X]`, `[X.IsSeparated]`, `[IsDominant V.ι]` are all load-bearing and
+none is about `pic⁰`: this is a general fact about split-mono open immersions. -/
+theorem eq_top_of_retraction_of_isDominant {X : Scheme.{u}} [IsReduced X] [X.IsSeparated]
+    (V : X.Opens) [IsDominant (V.ι)]
+    (r : X ⟶ (V : Scheme.{u})) (hr : V.ι ≫ r = 𝟙 _) :
+    V = ⊤ := by
+  haveI : IsIso (V.ι) := by
+    refine ⟨r, hr, ?_⟩
+    refine ext_of_isDominant (X := X) (Y := X) (W := (V : Scheme.{u})) (V.ι) ?_
+    rw [← Category.assoc, hr, Category.id_comp, Category.comp_id]
+  have hsurj : Function.Surjective (V.ι).base :=
+    (TopCat.homeoOfIso (asIso (Scheme.forgetToTop.map (V.ι)))).surjective
+  refine top_le_iff.mp fun x _ => ?_
+  obtain ⟨y, rfl⟩ := hsurj x
+  exact y.2
+
+variable (C) in
+/-- **THE INTERVAL HAS NO INTERIOR ON DENSE OPENS**: the two antecedents at a dense `V` force
+`V = ⊤`.
+
+Composite of `exists_retraction_of_seam` with `eq_top_of_retraction_of_isDominant`.  This is
+the statement to read against the four rows that call the inhabitation question open: they are
+right that it is open, and this says **where** it can be open.  Every candidate `V` that is
+dense in the chart source — which, on an irreducible chart source, means every nonempty
+candidate — is `⊤`.  And `⊤` is refuted by
+`not_restrictedChartFibre_top_of_not_injective` (`Pic0ChartRestrictedFibreSat.lean`, downstream
+of this file so the name does not resolve here) as soon as the Abel chart fails to be injective
+on one test — the `abel-noninj` fork.
+
+**What this does NOT prove, stated because the temptation is exactly the error this project has
+made before** (`two-refutations-are-not-inhabitation`).  It does not refute the pair.  Two
+things stand between this and a refutation, and neither is supplied here: the chart source must
+be shown irreducible (or the candidate `V` shown dense), and the `abel-noninj` fork must be
+decided in the negative — which three file headers assert and no declaration proves.  What is
+established is that a lane hunting for a working `V` in the interior of the interval must
+either exhibit a **non-dense** one or first settle the fork. That is a genuine narrowing of the
+search, not a closure of it. -/
+theorem eq_top_of_seam_of_isDominant {X : Scheme.{u}} [IsReduced X] [X.IsSeparated]
+    (f : yoneda.obj X ⟶ (pic0SigmaSheaf C).1) (V : X.Opens) [IsDominant (V.ι)]
+    (hf : IsOpenImmersion.presheaf (restrictChart f V))
+    (hcov : Presheaf.IsLocallySurjective Scheme.zariskiTopology (restrictChart f V)) :
+    V = ⊤ := by
+  obtain ⟨r, hr⟩ := exists_retraction_of_seam C f V hf hcov
+  exact eq_top_of_retraction_of_isDominant V r hr
+
 end
 
 end AlgebraicGeometry
