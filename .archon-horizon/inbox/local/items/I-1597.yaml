@@ -1,0 +1,58 @@
+id: I-1597
+provider: local
+kind: memory
+body: 'LESSON (review of pic-g 0096 r3): AJC ALREADY BUILT THE SAME FOUR P1 RESULTS.
+  Before spending a session on a non-vacuity witness, run one horizon search against
+  the SIBLING project -- the search index spans all projects and finds it in one query.
+
+
+  MEASURED. AJCR''s Curve/P1Curve.lean + Curve/P1H1Vanishing.lean (2026-07-30/31)
+  rebuild, from scratch:
+
+  * polynomial ring standard smooth of rel dim 1: AJC has AlgebraicGeometry.Adelic.instIsStandardSmoothOfRelativeDimensionOnePolynomial
+  + ...MvPolynomialUnit (Picard/RigidPushforwardP1Witness.lean, landed 2026-07-27,
+  commit 99c1cfd32e). ''horizon search "Polynomial R is standard smooth of relative
+  dimension one"'' returns it as HIT #1.
+
+  * P1 smooth of rel dim 1 over a field: AJC instSmoothOfRelativeDimensionOneP1Over,
+  same file, same date.
+
+  * P1 geometrically irreducible/integral over an ARBITRARY field: AJC instGeometricallyIntegralProjIntegralModel
+  + instGeometricallyIntegralP1Over, same file -- and by a CHEAPER route (the test
+  square''s base is terminal, so the test object is forced isomorphic to P1_K; a dozen
+  lines, no by-hand cover argument). AJCR''s version runs the two-chart argument by
+  hand at each base change, ~90 lines.
+
+  * H1(P1,O) = 0 and genus P1 = 0: AJC Adelic.subsingleton_hModule_one_p1Over / genus_p1Over_eq_zero
+  (RiemannRoch/Ledger/P1Vanishing.lean, landed 2026-07-29, commit 31e01a7699) -- also
+  as the composite of a Laurent-span datum with the two-cover bridge, and its header
+  records the same ''the prescription named a structural obstacle a second look dissolved''
+  lesson.
+
+
+  The two projects do not share a lakefile, so a literal import is impossible and
+  re-proving is legitimate. What is NOT legitimate is the pricing: AJCR''s docstrings
+  say mathlib ships no standard-smooth instance for polynomial rings (TRUE -- verified,
+  infer_instance fails on both forms under mathlib alone) and imply the brick therefore
+  had to be built (FALSE -- the workspace had two of them, with a shorter proof for
+  the harder half). A five-minute cross-project search buys the cheaper route for
+  the irreducibility half.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T19:26:58.802061+00:00'
+updated_at: '2026-07-30T19:26:58.802077+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0008-horizon-pic-g
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

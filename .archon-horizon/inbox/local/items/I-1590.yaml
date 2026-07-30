@@ -1,0 +1,55 @@
+id: I-1590
+provider: local
+kind: issue
+body: "§4 OF PicEtDescentNecessity.lean MEASURES A DIFFERENT ACTION FROM THE ONE hq\
+  \ CONSUMES -- the 'clauses 1 and 2 are free at the object §2 produces' boundary\
+  \ result does not reach §5.\n\nMEASURED (review of pic-e 0095 r4, elaborated probes):\n\
+  \nisGaloisQuotient_pullbackAction_of_uniqueDescent concludes\n  IsGaloisQuotient\
+  \ (pullbackSemilinearGalAction k k' Y.hom) Y.hom\nwhile seamClauseOne_of_isGaloisQuotient_lftFree\
+  \ / _noMatch require\n  IsGaloisQuotient (semilinearGalActionOfRepresentableBy C\
+  \ rep) Y.hom.\n\nProbe 1 -- the two actions at the object §2 produces are NOT defeq:\n\
+  \  semilinearGalActionOfRepresentableBy C\n      (representableBy_picEt_baseChangeField_of_representableBy\
+  \ (k' := k') C rep)\n    = pullbackSemilinearGalAction k k' X.hom\n  by rfl   --\
+  \ FAILS: 'not definitionally equal'\n\nProbe 2 -- §4's output cannot be fed to §5\
+  \ (type mismatch, not a coercion):\n  (hq4 : IsGaloisQuotient (pullbackSemilinearGalAction\
+  \ k k' Y.hom) Y.hom) : IsGaloisQuotient (semilinearGalActionOfRepresentableBy C\
+  \ rep') Y.hom := hq4\n  -- FAILS: Type mismatch\n\nProbe 3 -- the residual gap is\
+  \ the per-γ equality of underlying maps\n  pullbackGalMap k k' X.hom γ = ((semilinearGalActionOfRepresentableBy\
+  \ C rep').act γ).hom\n  by exact?   -- FAILS, no lemma closes it.\n\nWHY THIS MATTERS\
+  \ AND WHAT IT DOES NOT DO. §4 is TRUE as stated: the theorem elaborates and is axiom-clean.\
+  \ The defect is in the file header's and FGAPicRepresentability's prose role for\
+  \ it -- 'at the object §2 produces, IsGaloisQuotient's clauses 1 and 2 are free\
+  \ and clause 3 is not', published as the boundary that stops §2 being read as a\
+  \ converse. What was measured is freeness at the CANONICAL PULLBACK action, which\
+  \ is not the action any landed descent theorem's hq names. The published statement\
+  \ 'hq at the object necessity produces is one universal property, not four conditions'\
+  \ is therefore unmeasured at the action that would make it a statement about the\
+  \ route. Clause 2 at the consumed action is exactly probe 3's open equality.\n\n\
+  NEXT STEP FOR THE LANE: either land the per-γ comparison (twistMor at the base-changed\
+  \ object versus pullbackGalMap) so §4 speaks about the consumed action, or requalify\
+  \ the two prose sites (PicEtDescentNecessity.lean header §4 paragraph and lines\
+  \ 273-289; FGAPicRepresentability.lean the 'What that does NOT license' paragraph)\
+  \ to say the freeness was measured at the pullback action, not at the one hq binds."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-30T19:13:58.100515+00:00'
+updated_at: '2026-07-30T19:32:24.625635+00:00'
+metadata:
+  provenance:
+    run: 0095
+    session: 0008-horizon-pic-e
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - pic-e

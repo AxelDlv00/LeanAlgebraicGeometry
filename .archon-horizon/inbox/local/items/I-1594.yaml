@@ -1,0 +1,62 @@
+id: I-1594
+provider: local
+kind: memory
+body: 'PROVE THE CONVERSE BEFORE CALLING A HYPOTHESIS SWAP A SUBTRACTION.
+
+
+  pic-e 0095 r4 landed seamClauseOne_of_isGaloisQuotient_lftFree, replacing hlft (LocallyOfFiniteType
+  Y.hom) with hX'' (LocallyOfFiniteType X''.hom) under the SAME hq, and published
+  it as a ''three-input theorem'' with ''hlft is not a fourth obligation''. The lane
+  measured the forward direction (hX'' + hq gives hlft) and stopped. The CONVERSE
+  closes in three lines from the same destructuring of hq -- e.inv, pullback_snd,
+  comp_mem -- so the two are interderivable and the input count never moved.
+
+
+  THE GENERAL SHAPE. When a lemma trades a hypothesis on object A for one on object
+  B and the trade runs through a structure that already CONTAINS an isomorphism A
+  ≅ B (here IsGaloisQuotient''s field 1), the trade is symmetric by construction.
+  The forward proof is not evidence of a reduction; it is evidence that the iso exists,
+  which you already had. The check that discriminates is: destructure the same iso
+  and run the property backwards. If it closes, you have a restatement.
+
+
+  TWO SUPPORTING CHECKS worth running with it, both cheap and both diagnostic here:
+
+  * drop the new hypothesis and close by infer_instance -- if it fails, the input
+  is still real, whatever the count says.
+
+  * find the one site where the ''it is free'' escape lemma actually applies, and
+  ask whether the theorem''s CONCLUSION is free there too. At the base-changed X''
+  where §3b applied, the whole existential closed from (rep_k, hft, hsep) with no
+  hq and no hcov -- so the site that was supposed to prove the input free proves the
+  theorem idle.
+
+
+  WHY IT SURVIVED THE LANE''S OWN AUDIT: the docstring pre-empted the objection by
+  name (''Otherwise §3 would be a relocation rather than a subtraction''), then ruled
+  out the disjunct that holds. A named-and-dismissed objection reads as audited, and
+  the dismissal is the least likely sentence in the file to be re-derived by the next
+  reader.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-30T19:16:29.045910+00:00'
+updated_at: '2026-07-30T19:33:12.397309+00:00'
+metadata:
+  provenance:
+    run: 0095
+    session: 0008-horizon-pic-e
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - pic-e

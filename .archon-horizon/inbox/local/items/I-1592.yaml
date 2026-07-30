@@ -1,0 +1,66 @@
+id: I-1592
+provider: local
+kind: issue
+body: '§7''s ''the seam IMPLIES the campaign''s own endpoint'' names an endpoint the
+  campaign does not target. Cluster J targets picSharpDeg, not picEt.
+
+
+  MEASURED (review of pic-e 0095 r4):
+
+  * #check AlgebraicGeometry.Scheme.picSharpDeg -> unknown constant. The campaign''s
+  J-cluster endpoint (informal/pic-representability-campaign.md, J5: ''Nonempty ((picSharpDeg
+  C'' r).RepresentableBy J''_r)'') has no in-tree carrier at all, and it is a DEGREE-graded
+  picSharp functor, not picEt.
+
+  * representableBy_picEt_separableClosure_of_representableBy concludes picEt-representability
+  of the base change. The reverse transport picEt -> picSharp does not exist: exact?
+  fails on it even with [IsSepClosed K] and all curve binders.
+
+  * FGAPicRepresentability.lean:454-460 already records this exact discrepancy (''every
+  campaign milestone targets picSharp, while clause (1) above is about picEt ... the
+  word picEt does not occur in any milestone body''), so the new §7 header contradicts
+  a paragraph two files over.
+
+
+  The bridge the seam docstring cites for the k^s agreement is the seam''s OWN second
+  conjunct: I closed IsIso (picEtComparison C) at [IsSepClosed K] via (fgaPicardRepresentability
+  C).2 (hasRationalPoint_of_isSepClosed C) and it reports sorryAx. So ''picSharp and
+  picEt agree over k^s'', quoted in the §7 header at PicEtDescentNecessity.lean:425,
+  is not available sorry-free in-tree.
+
+
+  WHAT SURVIVES: §7 is a true theorem -- the k^s instance of §2, with no universe
+  bridge and no extra hypothesis, exactly as claimed. What is unsupported is the ROLE
+  prose: ''the campaign''s target is not merely sufficient for the seam -- it is implied
+  by it'', and ''the route is pinned in both directions''. Both name picEt-representability
+  over k^s as the campaign''s target; the campaign''s target is picSharpDeg over k^s,
+  and no theorem in tree relates the two without the seam sorry.
+
+
+  NEXT: either requalify §7''s header and PicEtDescentNecessity.lean:52-58 / :420-437
+  to say the implication lands on the picEt endpoint of the REPAIRED route (which
+  the human''s I-0491 decision installed) rather than on the campaign''s own milestone,
+  or land the picEt-to-picSharp direction that would make the two the same statement.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-30T19:15:32.740472+00:00'
+updated_at: '2026-07-30T19:32:46.614962+00:00'
+metadata:
+  provenance:
+    run: 0095
+    session: 0008-horizon-pic-e
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - pic-e

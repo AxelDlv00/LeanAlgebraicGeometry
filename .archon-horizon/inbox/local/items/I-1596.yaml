@@ -1,0 +1,51 @@
+id: I-1596
+provider: local
+kind: issue
+body: 'SCOPE ERROR in pic-g 0096 r3''s headline (roadmap row AJCR.w4-rep.datum.p1-witness,
+  inbox I-1582, and Curve/P1H1Vanishing.lean:46): ''what remains between here and
+  a JacobianData at P1 is one implication about Picard groups'' / ''THE ONE REMAINING
+  STEP''.
+
+
+  TRUE for JacobianData. FALSE for the challenge target, and the row/note do not distinguish
+  them. VERIFIED: jacobianData_of_subsingleton (P1.asOver k) h elaborates, and Surjective
+  (P1.asOver k).hom is now inferInstance -- so given the vanishing, JacobianData at
+  P1 is reached. But the row''s own next sentence chains through Genus0Terminal to
+  exists_unique_ofCurve_comp, and that chain needs TWO MORE inputs the row never names:
+
+
+  * a rational point P : 1_ (Over (Spec k)) -> P1.asOver k. NOT in the tree: ''exact?''
+  finds no inhabitant of Nonempty (1_ ... -> P1.asOver k), and AJCR has no HasRationalPoint
+  producer at P1 at all. Every Genus0Terminal theorem in the chain (existsUnique_ofCurve_comp_of_epi,
+  existsUnique_ofCurve_comp_of_pic0Subgroup_eq_bot) takes P explicitly.
+
+  * hex, the EXISTENCE half = Milne I 3.9 (Albanese/Genus0Terminal.lean:26-27, 165-167,
+  and Genus0VanishingDatum.lean:51-52 both say so explicitly, in the file the row
+  cites). Genus0Terminal only ever discharges UNIQUENESS.
+
+
+  So the correct sentence is: ''one implication about Picard groups remains between
+  here and a JacobianData; the Albanese property additionally needs a rational point
+  at P1 (absent) and Milne I 3.9 (open, an explicit hex binder)''. As written, a lane
+  pricing off the row will believe the S11 leaf is one theorem from done.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T19:26:31.544210+00:00'
+updated_at: '2026-07-30T19:26:31.544223+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0008-horizon-pic-g
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

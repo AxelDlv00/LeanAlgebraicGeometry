@@ -1,0 +1,53 @@
+id: I-1591
+provider: local
+kind: issue
+body: "seamClauseOne_of_isGaloisQuotient_lftFree IS A RELABELLING, NOT A SUBTRACTION.\
+  \ The two hypothesis sets are INTERDERIVABLE from hq alone, so the 'three-input\
+  \ theorem' / 'not a fourth obligation' prose overstates it.\n\nMEASURED (review\
+  \ of pic-e 0095 r4). §3 proves hlft (on Y) from hX' (on X') using only hq. I closed\
+  \ the CONVERSE with three lines, so under hq they imply each other:\n\n  obtain\
+  \ ⟨e, he, -, -⟩ := hq\n  have h : X'.hom = e.inv ≫ pullback.snd Y.hom (specMapAlgebra\
+  \ k k') := by\n    rw [← he, Iso.inv_hom_id_assoc]\n  rw [h]\n  exact MorphismProperty.comp_mem\
+  \ _ _ _ inferInstance (MorphismProperty.pullback_snd _ _ hY)\n  -- EXIT=0\n\nand\
+  \ recovered the four-input landed theorem from the 'three-input' one:\n  seamClauseOne_of_isGaloisQuotient_lftFree\
+  \ rep hq hcov (zz_lft_X'_of_hq _ hq hlft)  -- EXIT=0\n\nTwo supporting probes:\n\
+  (a) hX' is load-bearing: dropping it and closing by infer_instance FAILS (synthInstanceFailed\
+  \ LocallyOfFiniteType X'.hom). It is a real fourth input, as hlft was.\n(b) §3b\
+  \ does not escape it. locallyOfFiniteType_pullback_of_locallyOfFiniteType only discharges\
+  \ the condition at X' = (Over.pullback ...).obj X; lftFree's X' is arbitrary (type\
+  \ mismatch, measured). And at the one site where §3b applies, the whole CONCLUSION\
+  \ of lftFree is free from (rep_k, hft, hsep) with no hq and no hcov (⟨X, ⟨rep⟩,\
+  \ hft, hsep⟩, EXIT=0) -- so that site cannot witness a removed input.\n\nLIVE SENTENCES\
+  \ TO REPAIR: PicEtDescentNecessity.lean:205-208 ('not a fourth obligation ... nothing\
+  \ here has been relocated'), :237-242 (§3b header 'Otherwise §3 would be a relocation\
+  \ rather than a subtraction'), :54 and :314-317 ('three-input theorem'); FGAPicRepresentability.lean:556-566\
+  \ ('a consequence, not an input ... the three-input form').\n\nWHAT IS TRUE and\
+  \ worth keeping: the fourth input may be stated on X' instead of Y, whichever a\
+  \ consumer holds. Genuine convenience, not a shorter antecedent list.\n\nSCOPE NOTE\
+  \ on the two-directions pinning: lftFree binds [Module.Finite k k'], so it does\
+  \ NOT instantiate at k' = SeparableClosure k (synthInstanceFailed Module.Finite\
+  \ k (SeparableClosure k), measured). §7 runs at k^s, §5 only at finite k'/k, so\
+  \ the 'both directions' loop is not closed at one field."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-30T19:15:00.271824+00:00'
+updated_at: '2026-07-30T19:32:35.484792+00:00'
+metadata:
+  provenance:
+    run: 0095
+    session: 0008-horizon-pic-e
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - pic-e

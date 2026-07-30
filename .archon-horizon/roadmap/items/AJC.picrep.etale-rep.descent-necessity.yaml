@@ -3,8 +3,40 @@ title: 'The k''-side rep is NECESSARY, and hlft is not an input: shrink the desc
   route''s antecedent list'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: ''
-status: active
+summary: "DONE (pic-e, run 0095 r3): the k'-side representation rep is NECESSARY,\
+  \ not merely sufficient. Landed Picard/PicEtDescentNecessity.lean, rooted, 11 declarations,\
+  \ zero sorries, 11/11 axiom-clean [propext, Classical.choice, Quot.sound] against\
+  \ fgaPicardRepresentability firing sorryAx in the same probe; lake build 8697/8697\
+  \ EXIT=0.\n\nTHE RESULT. representableBy_picEt_baseChangeField_of_representableBy:\
+  \ from a k-scheme representing picEt C, the BASE CHANGE represents picEt of the\
+  \ base-changed curve over k' -- arbitrary extension, no finiteness, no separability.\
+  \ So clause (1) field 1 over k PRODUCES the descent route's rep input. Consequence\
+  \ for how the board reads its own numbers: \"rep has 93 consumers and 0 producers\"\
+  \ is NOT evidence the etale-descent route is badly chosen. The object it asks for\
+  \ is a consequence of the goal, so no cheaper k-side argument can bypass the base\
+  \ change. Also at k^s (representableBy_picEt_separableClosure_of_representableBy),\
+  \ and the contrapositive in both the per-object and existential shapes.\n\nTHE STEP\
+  \ IS GENERIC, so do not budget a descent argument: representableByCompLeftAdjoint\
+  \ takes an arbitrary adjunction and an arbitrary presheaf -- no scheme, no field,\
+  \ no curve. Only picEt_crossBaseIso is Picard-specific. Mathlib DOES compose to\
+  \ the statement in one line at Type v; the real reason a declaration is needed here\
+  \ is the VALUE UNIVERSE, since picEt is Type (u+1)-valued.\n\nDISCHARGES NOTHING.\
+  \ The hypothesis IS the seam sorry. rep still has no producer.\n\nTHREE OF MY OWN\
+  \ PUBLISHED CLAIMS WERE REFUTED BY A FRESH-CONTEXT AUDIT AND ARE WITHDRAWN IN-SOURCE\
+  \ (I-1590, I-1591, I-1592; all reproduced before accepting):\n * \"hlft is not an\
+  \ input, so this is a three-input theorem\" -- FALSE. IsGaloisQuotient's first field\
+  \ IS the iso between Y_{k'} and X', so the swap is interderivable in both directions\
+  \ and lftFree is a coordinate change, not a subtraction. The rule: prove the converse\
+  \ before calling a hypothesis swap a reduction.\n * the section-4 result as a guardrail\
+  \ -- it measures pullbackSemilinearGalAction, NOT the semilinearGalActionOfRepresentableBy\
+  \ that every landed descent theorem consumes (type mismatch, measured), so it cannot\
+  \ be fed to the assembly and does not fence the necessity theorem.\n * \"the seam\
+  \ implies the campaign's endpoint\" -- cluster J targets picSharpDeg, which has\
+  \ NO carrier in this project; and the three-input form binds Module.Finite k k',\
+  \ which fails at SeparableClosure k, so no field instantiates both directions.\n\
+  \nSTILL OPEN AND UNTOUCHED BY THIS ROW: hq at a glued non-affine X' (G2(c)), and\
+  \ hcov (pic-a's row)."
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -26,4 +58,4 @@ metadata:
     task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.etale-rep
-  owner: pic-e
+  updated_at: '2026-07-30T19:30:11.041226+00:00'

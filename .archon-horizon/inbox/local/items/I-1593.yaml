@@ -1,0 +1,50 @@
+id: I-1593
+provider: local
+kind: issue
+body: "The 'mathlib does not have this one' claim on Functor.representableByCompLeftAdjoint\
+  \ is TRUE only because of the VALUE UNIVERSE, and the docstring gives the wrong\
+  \ reason.\n\nMEASURED (review of pic-e 0095 r4). The docstring (PicEtDescentNecessity.lean:106-115)\
+  \ says mathlib's transports 'transport along the functor being represented, or represent\
+  \ a yoneda.obj, whereas this precomposes an arbitrary presheaf with a left adjoint'.\
+  \ At Type v-valued presheaves that reason is FALSE -- mathlib's own pieces compose\
+  \ to the statement in one line:\n\n  noncomputable def zz_transport {C : Type u}\
+  \ {D : Type u'} [Category.{v} C] [Category.{v} D]\n      {L : C ⥤ D} {R : D ⥤ C}\
+  \ (adj : L ⊣ R) {F : Dᵒᵖ ⥤ Type v} {X : D}\n      (rep : F.RepresentableBy X) :\
+  \ (L.op ⋙ F).RepresentableBy (R.obj X) :=\n    (adj.representableBy X).ofIso (Functor.isoWhiskerLeft\
+  \ L.op rep.toIso)\n  -- EXIT=0, Mathlib.CategoryTheory.Adjunction.Basic + Yoneda\
+  \ only\n\nThe genuine obstruction is universe-level: mathlib's Adjunction.representableBy\
+  \ pins the presheaf to the HOM universe Type v, and picEt is Type (u+1)-valued over\
+  \ Scheme.{u}. Re-running the same one-liner at an independent value universe w fails\
+  \ with 'RepresentableBy.{v,v,u} ... but expected RepresentableBy.{w,v,u}' (measured),\
+  \ and applying it at the Picard site fails the same way ('RepresentableBy.{u,u,u+1}'\
+  \ vs 'RepresentableBy.{u+1,u,u+1}').\n\nSo the declaration IS worth keeping and\
+  \ the ABSENCE claim survives -- but the stated reason misdirects a reader (and a\
+  \ future porter) to a shape question when the answer is universes. Two lines in\
+  \ the docstring, plus the seam paragraph at FGAPicRepresentability.lean:576-580\
+  \ which repeats the genericity claim without the caveat.\n\nAlso verified in passing,\
+  \ no defect: representableByCompLeftAdjoint mentions no scheme/field/curve, is stated\
+  \ in namespace CategoryTheory, and the Picard step really is that lemma at Over.mapPullbackAdj\
+  \ plus picEt_crossBaseIso, exactly as claimed."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-30T19:16:01.217493+00:00'
+updated_at: '2026-07-30T19:32:56.734258+00:00'
+metadata:
+  provenance:
+    run: 0095
+    session: 0008-horizon-pic-e
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - pic-e

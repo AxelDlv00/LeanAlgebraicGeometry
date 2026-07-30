@@ -1,0 +1,75 @@
+id: I-1599
+provider: local
+kind: info
+body: 'RESULT/RELEASE pic-e (0095 r3): rep IS NECESSARY -- read before pricing "93
+  consumers, 0 producers" as a route defect. Three of my own claims this session are
+  also WITHDRAWN; read those.
+
+
+  LANDED. Picard/PicEtDescentNecessity.lean, rooted, 11 decls, zero sorries, 11/11
+  axiom-clean with fgaPicardRepresentability firing sorryAx in the same probe. lake
+  build 8697/8697 EXIT=0. Commits 7d9481e115, 1e29d93e06, 08b9966d27, 637f5f1de7,
+  11adbc131f.
+
+
+  THE RESULT: clause (1) field 1 over k PRODUCES a k''-side representation of picEt
+  of the base-changed curve -- the base change of the representing scheme, at an ARBITRARY
+  extension, hence also at k^s. Contrapositive landed in both the per-object and the
+  existential shape the sorry consumes.
+
+
+  WHY IT MATTERS FOR EVERY AJC LANE. "rep has 93 consumers, 0 producers" is NOT evidence
+  the etale-descent route is misaimed: the object rep asks for is a CONSEQUENCE of
+  the goal, so no k-side argument can close clause (1) field 1 while leaving picEt
+  (C_{k''}) unrepresentable. A route avoiding the base change does not exist.
+
+
+  GENERIC -- do not spend a session on it: representableByCompLeftAdjoint is an arbitrary
+  adjunction and presheaf, no scheme/field/curve. Mathlib composes to it in ONE LINE
+  at Type v; the only obstruction is the VALUE UNIVERSE (picEt is Type (u+1)-valued).
+  My first docstring gave a wrong reason (I-1593).
+
+
+  DISCHARGES NOTHING: the hypothesis IS the seam sorry.
+
+
+  THREE OF MY CLAIMS ARE FALSE (I-1590/91/92, reproduced by me, corrected at the sentence
+  in both Lean files):
+
+  1. "hlft is not an input, THREE-input theorem" -- FALSE. IsGaloisQuotient''s FIRST
+  FIELD IS AN ISO Y_{k''} = X'', so the swap is interderivable both ways and lftFree
+  is a coordinate change. The step still has four hypotheses. RULE: when a hypothesis
+  swap runs through a structure already containing an iso between the two objects,
+  prove the converse before publishing a reduction.
+
+  2. My section-4 "guardrail" measures pullbackSemilinearGalAction; every landed descent
+  theorem consumes semilinearGalActionOfRepresentableBy. Type mismatch, so it cannot
+  feed the assembly. This cuts against my round.
+
+  3. "seam implies the campaign endpoint / pinned both directions" -- picSharpDeg
+  has NO carrier in AJC, and the three-input form binds Module.Finite k k'', which
+  fails at SeparableClosure k.
+
+
+  NOT TOUCHED: pic-a hcov (I-1560), pic-f galois (I-1545), pic-b projectivity (I-1481).
+  Row descent-necessity -> done, owner cleared; descent-assembly stays open and unowned,
+  its content (hq at a glued non-affine X'', plus hcov) unchanged.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T19:31:22.391959+00:00'
+updated_at: '2026-07-30T19:31:22.391976+00:00'
+metadata:
+  provenance:
+    run: 0095
+    session: 0008-horizon-pic-e
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
