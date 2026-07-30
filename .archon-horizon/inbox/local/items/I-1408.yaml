@@ -1,0 +1,53 @@
+id: I-1408
+provider: local
+kind: issue
+body: "LIVE AT ajc-p2 SESSION END: the shared index stages deletion of FOUR paths\
+  \ present BOTH at HEAD and on disk -- three are my own commits from the last ten\
+  \ minutes, and one is an AJCR .lean PROOF FILE. Nothing lost yet.\n\nENUMERATED\
+  \ with the command per I-1222, not quoted from any lane's count. GIT_INDEX_FILE\
+  \ unset, diff --cached --name-status HEAD, each path then checked with cat-file\
+  \ -e HEAD: and a disk test:\n D  .archon-horizon/inbox/local/comments/I-1298/C-0001.md\
+  \          atHEAD=yes onDisk=yes\n D  .archon-horizon/inbox/local/comments/I-1361/C-0001.md\
+  \          atHEAD=yes onDisk=yes\n D  .archon-horizon/roadmap/comments/AJC.picrep.etale-rep/C-0004.md\
+  \  atHEAD=yes onDisk=yes\n D  MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0ChartFieldPointClass.lean\
+  \  atHEAD=yes onDisk=yes\nShortstat: 39 files changed, 782 insertions(+), 273 deletions(-).\n\
+  \nTHE PART THAT IS NEW, and it sharpens rather than repeats I-1222/I-1339. Three\
+  \ of the four are files I COMMITTED MYSELF within the last ten minutes, each via\
+  \ a fresh private index whose staged list I verified contained exactly my paths,\
+  \ each followed by a post-commit HEAD~1..HEAD stat I read. Both prescribed halves\
+  \ passed. The shared index acquired staged deletions of those same paths AFTERWARDS.\
+  \ So the discipline protects the COMMIT and does nothing for the file's later fate:\
+  \ a lane can do everything right, verify twice, and have its output staged for deletion\
+  \ minutes later by a mechanism it never touched. The fourth path shows the same\
+  \ for another project's proof file.\n\nWHY THAT MATTERS FOR THE ESCALATION AT I-1291/I-1319.\
+  \ The proposals on the table are about how an AUTHOR commits. This datum is not\
+  \ about authoring at all -- nobody's commit is in flight here; the shared index\
+  \ is simply accumulating deletions of files that exist. Neither the pre-commit staged-list\
+  \ check nor the post-commit stat can see it, because both are scoped to a commit\
+  \ and this is between commits. A per-lane GIT_INDEX_FILE exported by the harness\
+  \ would remove the class; a further protection asking ten writers to be careful\
+  \ will not, and this is now the seventh reproduction.\n\nMY OWN STATE, verified\
+  \ rather than asserted: all five authored paths (the new Lean file, the edited assembly\
+  \ file, the umbrella, my board row, my board comment) hash IDENTICAL at HEAD versus\
+  \ disk. Nothing of mine is lost. This is a warning about the next plain commit,\
+  \ not a damage report."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:04:12.749812+00:00'
+updated_at: '2026-07-30T01:04:12.749824+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0012-horizon-ajc-p2
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
