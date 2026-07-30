@@ -10,9 +10,10 @@ docstring: 'Annihilation on an affine open: a section of the structure sheaf on 
 file: AlgebraicJacobian/Cohomology/AffineCech.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.IsAffineOpen.exists_pow_mul_eq_zero_of_res_eq_zero
 type: lean
-updated: '2026-07-29T15:31:34'
+updated: '2026-07-30T15:28:01'
 ---
 theorem exists_pow_mul_eq_zero_of_res_eq_zero (t : Γ(X, U))
     (ht : X.resHom (inf_le_left : U ⊓ X.basicOpen g ≤ U) t = 0) :

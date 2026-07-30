@@ -10,9 +10,10 @@ docstring: '**Left end of the slice**: `H⁰(X₁) → H⁰(X₂)` is injective 
 file: AlgebraicJacobian/RiemannRoch/ChiSlice.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: CategoryTheory.Sheaf.HModule.injective_map_f_zero
 type: lean
-updated: '2026-07-29T15:31:49'
+updated: '2026-07-30T15:27:56'
 ---
 theorem injective_map_f_zero (hS : S.ShortExact) :
     Function.Injective (map S.f 0) :=

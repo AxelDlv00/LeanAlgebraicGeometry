@@ -12,9 +12,10 @@ docstring: 'The structure morphism of a **terminal** object of `Over (Spec k)` i
 file: AlgebraicJacobian/Albanese/Genus0Terminal.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.JacobianData.isIso_hom_of_isTerminal
 type: lean
-updated: '2026-07-29T15:31:33'
+updated: '2026-07-30T15:28:02'
 ---
 theorem isIso_hom_of_isTerminal {J : Over (Spec (.of k))} (hJ : IsTerminal J) :
     IsIso J.hom := by

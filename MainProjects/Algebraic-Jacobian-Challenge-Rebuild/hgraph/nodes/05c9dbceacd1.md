@@ -19,9 +19,10 @@ docstring: '**The `ε`-window germ set of a bare local-equation system.**  This 
 file: AlgebraicJacobian/Picard/DivisorFamilyAffFieldMono.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.eqnsWindowGermSet
 type: lean
-updated: '2026-07-30T07:59:14'
+updated: '2026-07-30T15:27:56'
 ---
 noncomputable def eqnsWindowGermSet (g : ℕ) (d : (relCurve C K).LocalEquations)
     (z : relCurve C K) : Set ((relCurve C K).presheaf.stalk z) :=

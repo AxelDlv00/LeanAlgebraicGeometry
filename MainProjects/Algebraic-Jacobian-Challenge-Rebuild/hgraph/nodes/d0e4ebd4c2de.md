@@ -8,9 +8,10 @@ docstring: The shifted arbitrary-index transition preserves the recursive relati
 file: AlgebraicJacobian/Picard/DivSchemeHighWindowTransitionRelation.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.map_divUniversalHighWindowShiftedRelationTransitionOfLE_relation_le
 type: lean
-updated: '2026-07-29T15:31:40'
+updated: '2026-07-30T15:28:04'
 ---
 theorem map_divUniversalHighWindowShiftedRelationTransitionOfLE_relation_le
     (side : Bool) (n m : Nat) (h : n ≤ m) :

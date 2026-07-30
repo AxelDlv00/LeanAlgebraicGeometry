@@ -10,9 +10,10 @@ docstring: '**The easy inclusion**: germs of vanishing sections lie in the stalk
 file: AlgebraicJacobian/Picard/DivSchemeMonoBridge.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.span_twistGermSet_le_stalkIdeal
 type: lean
-updated: '2026-07-29T15:31:41'
+updated: '2026-07-30T15:27:59'
 ---
 lemma span_twistGermSet_le_stalkIdeal (d : X.LocalEquations)
     {T : Set ↥(twistSubmodule A V₀ V₁ gc ⊤)}

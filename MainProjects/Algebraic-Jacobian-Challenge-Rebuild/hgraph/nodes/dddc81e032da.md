@@ -17,9 +17,10 @@ docstring: '**The twisted sheaf `F_g`** of a unit cocycle `g ∈ Γ(X, V₀ ⊓ 
 file: AlgebraicJacobian/Cohomology/TwistedSheaf.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.twistSheaf
 type: lean
-updated: '2026-07-29T15:31:36'
+updated: '2026-07-30T15:28:04'
 ---
 noncomputable def twistSheaf :
     Sheaf (Opens.grothendieckTopology (X : TopCat)) (ModuleCat.{u} k) :=

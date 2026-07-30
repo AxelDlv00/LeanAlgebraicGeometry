@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.DivFamZarAff.picClass_mk
 file: AlgebraicJacobian/Picard/DivisorFamilyAffZar.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.DivFamZarAff.picClass_mk
 type: lean
-updated: '2026-07-29T15:31:44'
+updated: '2026-07-30T15:28:05'
 ---
 lemma picClass_mk (d : (relCurve C R).LocalEquations)
     (hd : IsLocallyCertifiedAff n d) : picClass (mk d hd) = d.picClass :=

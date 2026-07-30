@@ -13,9 +13,10 @@ docstring: '**The module-coefficient clause** (Kleiman `eq:Q`, worksheet §1.2):
 file: AlgebraicJacobian/Cohomology/RigidEngine4Assembly.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.TwoCoverPairData.h0TensorEquiv
 type: lean
-updated: '2026-07-29T15:31:36'
+updated: '2026-07-30T15:27:58'
 ---
 noncomputable def h0TensorEquiv (hH1 : Subsingleton (dat.pair hU₀ hU₁).H1)
     [Module.Flat R (F.obj.obj (op (U₀ ⊓ U₁)))]

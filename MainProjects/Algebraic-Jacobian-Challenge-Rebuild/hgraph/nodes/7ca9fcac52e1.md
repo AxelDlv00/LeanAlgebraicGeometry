@@ -10,9 +10,10 @@ docstring: 'The pulled glued module is carried onto the kernel of `id ⊗ δ` by
 file: AlgebraicJacobian/Picard/DivisorFamilyPullbackGlued.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.DivisorAdaptation.map_pulledGluedSubmodule_symm
 type: lean
-updated: '2026-07-29T15:31:45'
+updated: '2026-07-30T15:28:00'
 ---
 lemma map_pulledGluedSubmodule_symm :
     (A.pulledGluedSubmodule R').map

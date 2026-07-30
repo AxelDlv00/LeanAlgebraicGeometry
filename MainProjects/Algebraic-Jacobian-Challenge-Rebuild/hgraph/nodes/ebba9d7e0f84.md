@@ -31,9 +31,10 @@ docstring: '**COVERAGE, DROP-FREE** — `w4-datb` §1.2 with steps 4, 5 and 6 de
 file: AlgebraicJacobian/Picard/Pic0ChartCoverageNoDrop.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.mem_chartLocus_of_witness_h1
 type: lean
-updated: '2026-07-29T15:31:47'
+updated: '2026-07-30T15:28:05'
 ---
 theorem mem_chartLocus_of_witness_h1 {T : Over (Spec (.of k))} (lam : picEt C T) (t : T.left)
     (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)

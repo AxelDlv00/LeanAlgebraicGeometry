@@ -12,9 +12,10 @@ docstring: '**The chart-term base change on a pure tensor**: `b'' ⊗ s` goes to
 file: AlgebraicJacobian/Cohomology/GluedSheafTermBaseChangeEquiv.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.BasicOpenCocycleDatum.termBaseChange_tmul
 type: lean
-updated: '2026-07-29T15:31:35'
+updated: '2026-07-30T15:28:02'
 ---
 theorem termBaseChange_tmul
     (hV : IsCompact (V : Set C.left)) (hV' : IsQuasiSeparated (V : Set C.left))

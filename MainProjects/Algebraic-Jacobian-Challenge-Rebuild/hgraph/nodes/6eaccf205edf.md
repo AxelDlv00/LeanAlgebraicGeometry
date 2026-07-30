@@ -6,9 +6,10 @@ decl: RingTheory.Module.exists_minimalSurjection_finite_localRing
 file: AlgebraicJacobian/Algebra/ABSyzygy.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: RingTheory.Module.exists_minimalSurjection_finite_localRing
 type: lean
-updated: '2026-07-29T15:31:33'
+updated: '2026-07-30T15:28:00'
 ---
 lemma exists_minimalSurjection_finite_localRing
     (R : Type u) [CommRing R] [IsLocalRing R]

@@ -22,9 +22,10 @@ docstring: '**The per-piece descent unit of a coherent comparison unit is a desc
 file: AlgebraicJacobian/Picard/EffectivityDescentDatum.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: Module.isDescentCocycle_comparisonDescentUnit
 type: lean
-updated: '2026-07-29T15:31:46'
+updated: '2026-07-30T15:27:57'
 ---
 theorem isDescentCocycle_comparisonDescentUnit {v : (S ⊗[A] (B ⊗[A] B))ˣ}
     (hlmul : Algebra.TensorProduct.map (AlgHom.id S S) (Algebra.TensorProduct.lmul' A) v.val

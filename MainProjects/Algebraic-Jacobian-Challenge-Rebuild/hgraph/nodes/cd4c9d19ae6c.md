@@ -8,9 +8,10 @@ docstring: The canonical `A`-algebra map on triple overlaps `W i j k →ₐ[A] W
 file: AlgebraicJacobian/Algebra/LocalizationCocycleBaseChange.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: IsLocalization.AwayCover.mapTriple
 type: lean
-updated: '2026-07-29T15:31:34'
+updated: '2026-07-30T15:28:04'
 ---
 noncomputable def mapTriple (i j k : ι) : W i j k →ₐ[A] W' i j k :=
   IsLocalization.Away.algHomOfIsUnit (S := W i j k) (W' i j k) (f i * (f j * f k)) <| by

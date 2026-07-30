@@ -7,9 +7,10 @@ docstring: '**The embedding bound at `s`**: `b ≤ s·δ`.'
 file: AlgebraicJacobian/RiemannRoch/WindowLedger.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.windowBound_le_S_mul
 type: lean
-updated: '2026-07-29T15:31:50'
+updated: '2026-07-30T15:28:04'
 ---
 theorem windowBound_le_S_mul (g : ℕ) :
     windowBound π hπ ≤ (windowS_choice π hπ g : ℤ) * windowδ π := by

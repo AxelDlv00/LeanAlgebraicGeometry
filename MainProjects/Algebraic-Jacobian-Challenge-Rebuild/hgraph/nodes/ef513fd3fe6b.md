@@ -16,9 +16,10 @@ docstring: 'The free sheaf of `R`-modules on an object `U` of the site: the shea
 file: AlgebraicJacobian/Cohomology/OverOpen.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: CategoryTheory.Sheaf.freeModuleSheaf
 type: lean
-updated: '2026-07-29T15:31:35'
+updated: '2026-07-30T15:28:05'
 ---
 noncomputable def freeModuleSheaf (U : C) : Sheaf J (ModuleCat.{u} R) :=
   (presheafToSheaf J _).obj (yoneda.obj U ⋙ ModuleCat.free R)

@@ -9,9 +9,10 @@ docstring: 'The composite `w₁₃ ≫ u₂` is the third insertion, by the simp
 file: AlgebraicJacobian/Picard/AmitsurProductCover.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.face₁₃_comp_inr
 type: lean
-updated: '2026-07-29T15:31:37'
+updated: '2026-07-30T15:28:04'
 ---
 lemma face₁₃_comp_inr : w₁₃ ≫ (u₂) = v₃ :=
   (Over.whiskerLeft_face₁₃_inr (k := k) (A := A) (B := B) C).trans

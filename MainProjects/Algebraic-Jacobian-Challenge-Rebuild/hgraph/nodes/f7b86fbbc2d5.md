@@ -7,9 +7,10 @@ docstring: The overlap term base change on a pure tensor.
 file: AlgebraicJacobian/Cohomology/GluedSheafH0BaseChange.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.BasicOpenCocycleDatum.termBaseChangeInf_tmul
 type: lean
-updated: '2026-07-29T15:31:35'
+updated: '2026-07-30T15:28:06'
 ---
 theorem termBaseChangeInf_tmul (b' : B')
     (s : D.sheaf.obj.obj (op ((relCover C B (fiberTwoCover π)).V₀ ⊓

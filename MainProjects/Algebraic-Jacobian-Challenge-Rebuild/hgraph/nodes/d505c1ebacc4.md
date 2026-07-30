@@ -10,9 +10,10 @@ docstring: 'Exactness at `H¹''(X₄)`: a degree-one class of `X₄` restricting
 file: AlgebraicJacobian/Cohomology/MayerVietoris.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: CategoryTheory.GrothendieckTopology.MayerVietorisSquare.exists_moduleDelta_eq
 type: lean
-updated: '2026-07-29T15:31:35'
+updated: '2026-07-30T15:28:04'
 ---
 theorem exists_moduleDelta_eq (y : Sheaf.HModule' F S.X₄ 1)
     (h₂ : Sheaf.HModule'.res S.f₂₄ F 1 y = 0)

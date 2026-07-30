@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.HighWindowTransitionKit.transitionOfLE_read
 file: AlgebraicJacobian/Picard/DivSchemeHighWindowTransitions.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.HighWindowTransitionKit.transitionOfLE_read
 type: lean
-updated: '2026-07-29T15:31:41'
+updated: '2026-07-30T15:28:04'
 ---
 theorem transitionOfLE_read
     (read : ∀ n, G n → B)

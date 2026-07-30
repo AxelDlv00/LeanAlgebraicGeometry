@@ -13,9 +13,10 @@ docstring: '**Kernels of surjections of regular local rings, Krull-dimension for
 file: AlgebraicJacobian/Albanese/Milne33KernelGen.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: RingTheory.CohenMacaulay.exists_ofList_eq_ker_length_add_ringKrullDim
 type: lean
-updated: '2026-07-29T15:31:33'
+updated: '2026-07-30T15:28:03'
 ---
 theorem exists_ofList_eq_ker_length_add_ringKrullDim
     [IsRegularLocalRing B] [IsRegularLocalRing A]

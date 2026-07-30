@@ -7,9 +7,10 @@ docstring: '**`H¹(𝒪(Θⁿ)) ≃ₗ[k] H¹` of the field pair.**'
 file: AlgebraicJacobian/Cohomology/RelThetaTransport.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.thetaFieldH1PairEquiv
 type: lean
-updated: '2026-07-29T15:31:35'
+updated: '2026-07-30T15:27:59'
 ---
 noncomputable def thetaFieldH1PairEquiv :
     Sheaf.HModule (thetaTwistSheaf π n) 1 ≃ₗ[k] (thetaFieldPair C π n).H1 :=

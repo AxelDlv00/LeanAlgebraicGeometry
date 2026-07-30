@@ -6,9 +6,10 @@ decl: CategoryTheory.PresheafOfGroups.OneCochain.mul_evInf
 file: AlgebraicJacobian/Picard/UnitsCocycle.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: CategoryTheory.PresheafOfGroups.OneCochain.mul_evInf
 type: lean
-updated: '2026-07-29T15:31:48'
+updated: '2026-07-30T15:28:04'
 ---
 lemma OneCochain.mul_evInf (γ₁ γ₂ : OneCochain G U) (i j : I) :
     (γ₁ * γ₂).evInf i j = γ₁.evInf i j * γ₂.evInf i j :=

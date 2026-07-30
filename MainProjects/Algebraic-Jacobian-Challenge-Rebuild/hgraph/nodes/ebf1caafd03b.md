@@ -10,9 +10,10 @@ docstring: '**The pulled local-equation system**, widened: `d` pulls back along 
 file: AlgebraicJacobian/Picard/DivisorFamilyAffBaseChange.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.AffAdaptation.pulledEquations
 type: lean
-updated: '2026-07-29T15:31:43'
+updated: '2026-07-30T15:28:05'
 ---
 noncomputable def pulledEquations (hproj : ∀ j, Module.Projective R (A.colength j)) :
     (relCurve C R').LocalEquations :=

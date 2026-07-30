@@ -10,9 +10,10 @@ file: AlgebraicJacobian/Picard/ComparisonUnique.lean
 generated: lean
 lean_status: lean_ok
 private: true
+stale: true
 title: AlgebraicGeometry.coboundary_div_congr
 type: lean
-updated: '2026-07-29T15:31:38'
+updated: '2026-07-30T15:28:02'
 ---
 private lemma coboundary_div_congr {G : Type u} [CommGroup G] {a a' b b' P Q : G}
     (h : a * P = Q * b) (h' : a' * P = Q * b') : a / a' = b / b' := by

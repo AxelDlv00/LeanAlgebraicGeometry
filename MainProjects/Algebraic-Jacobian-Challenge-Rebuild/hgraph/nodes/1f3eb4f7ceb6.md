@@ -18,9 +18,10 @@ docstring: '**(b) The universal seed section at every seed-base prime** (I-0278 
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivGen.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.exists_sec_windowCompare_ne_zero_seedPrime
 type: lean
-updated: '2026-07-29T15:31:42'
+updated: '2026-07-30T15:27:57'
 ---
 theorem exists_sec_windowCompare_ne_zero_seedPrime
     (p : PrimeSpectrum (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)

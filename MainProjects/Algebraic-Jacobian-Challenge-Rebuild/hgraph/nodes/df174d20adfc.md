@@ -19,9 +19,10 @@ file: AlgebraicJacobian/Picard/DivisorFamilyH1Locus.lean
 generated: lean
 lean_status: lean_ok
 private: true
+stale: true
 title: AlgebraicGeometry.subsingleton_tensor_residueField_comap_iff
 type: lean
-updated: '2026-07-29T15:31:45'
+updated: '2026-07-30T15:28:04'
 ---
 private theorem subsingleton_tensor_residueField_comap_iff
     {S₀ R' : Type u} [CommRing S₀] [CommRing R'] [Algebra S₀ R'] (M₀ : Submonoid S₀)

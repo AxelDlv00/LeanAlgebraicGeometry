@@ -18,9 +18,10 @@ docstring: '**Pullback expansion of a glued twisted unit, in composite normal fo
 file: AlgebraicJacobian/Picard/EffectivityComparisonUnit.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.Hom.unitsAppLE_glued_trivTwist
 type: lean
-updated: '2026-07-29T15:31:46'
+updated: '2026-07-30T15:27:58'
 ---
 theorem Scheme.Hom.unitsAppLE_glued_trivTwist {X' : Scheme.{u}} (r₁ r₂ : Y ⟶ Z)
     (φ : X' ⟶ Y) (m₁ m₂ : X' ⟶ Z) (hm₁ : φ ≫ r₁ = m₁) (hm₂ : φ ≫ r₂ = m₂)

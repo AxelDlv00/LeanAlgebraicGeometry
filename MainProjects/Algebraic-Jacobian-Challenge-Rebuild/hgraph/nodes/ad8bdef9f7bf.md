@@ -8,9 +8,10 @@ docstring: 'The curve-product diagonal retracts the first coprojection: `Δ ≫ 
 file: AlgebraicJacobian/Picard/ComparisonDiagonal.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.whiskerLeft_lmul'_inl
 type: lean
-updated: '2026-07-29T15:31:38'
+updated: '2026-07-30T15:28:02'
 ---
 lemma whiskerLeft_lmul'_inl : Δx ≫ (u₁) = 𝟙 (XB) := by
   rw [← Over.comp_left, ← MonoidalCategory.whiskerLeft_comp, ← Over.overSpecMap_comp,

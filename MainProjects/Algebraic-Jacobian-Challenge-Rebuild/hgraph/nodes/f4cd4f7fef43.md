@@ -10,9 +10,10 @@ docstring: 'The function-field map of a morphism of integral schemes is injectiv
 file: AlgebraicJacobian/Curve/BaseFieldTransition.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.Hom.functionFieldMap_injective
 type: lean
-updated: '2026-07-29T15:31:36'
+updated: '2026-07-30T15:28:06'
 ---
 theorem Scheme.Hom.functionFieldMap_injective [IsIntegral X] [IsIntegral Y] (f : X ⟶ Y)
     (h : f.base (genericPoint X) = genericPoint Y) :

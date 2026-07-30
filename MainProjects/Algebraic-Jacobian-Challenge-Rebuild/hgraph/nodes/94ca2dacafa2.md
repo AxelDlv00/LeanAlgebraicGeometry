@@ -33,9 +33,10 @@ docstring: '**Chart triviality from freeness of the reduction** — the form cla
 file: AlgebraicJacobian/Tangent/ReductionTrivialCyclic.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: DualNumber.free_of_free_baseChange_eps
 type: lean
-updated: '2026-07-29T15:31:50'
+updated: '2026-07-30T15:28:01'
 ---
 theorem free_of_free_baseChange_eps
     (M : Type u) [AddCommGroup M] [Module (DualNumber A) M]

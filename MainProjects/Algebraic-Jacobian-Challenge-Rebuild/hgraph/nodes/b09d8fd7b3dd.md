@@ -10,9 +10,10 @@ docstring: '**Denominator clearing on a piece**: every basic sub-open `D(f)` of 
 file: AlgebraicJacobian/Picard/DivSchemeSeed.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.ThetaGeneratorSeed.basicOpen_eq_basicOpen_mul
 type: lean
-updated: '2026-07-29T15:31:42'
+updated: '2026-07-30T15:28:02'
 ---
 lemma basicOpen_eq_basicOpen_mul (z : relCurve C R)
     (f : Γ(relCurve C R, D.piece z)) :

@@ -15,9 +15,10 @@ docstring: '**The pointing law** (the `comp_ofCurve` input, design §4.6): restr
 file: AlgebraicJacobian/Picard/AbelElement.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.abelElement_map_point
 type: lean
-updated: '2026-07-29T15:31:37'
+updated: '2026-07-30T15:28:02'
 ---
 theorem abelElement_map_point (P : 𝟙_ (Over (Spec (.of k))) ⟶ C) :
     (pic0Functor C).map P.op (abelElement C P) = 1 := by

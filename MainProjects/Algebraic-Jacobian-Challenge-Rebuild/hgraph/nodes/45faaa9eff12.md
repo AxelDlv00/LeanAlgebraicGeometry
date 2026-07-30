@@ -29,9 +29,10 @@ docstring: '**Integrality of the self-product `X ×_{k̄} X`.** For a smooth, ge
 file: AlgebraicJacobian/Albanese/CodimOneSmoothReduced.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.isIntegral_pullback_self
 type: lean
-updated: '2026-07-29T15:31:33'
+updated: '2026-07-30T15:27:59'
 ---
 theorem isIntegral_pullback_self
     {kbar : Type u} [Field kbar] [IsAlgClosed kbar]

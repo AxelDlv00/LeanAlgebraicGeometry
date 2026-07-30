@@ -9,9 +9,10 @@ file: AlgebraicJacobian/Descent/InvertibleModule.lean
 generated: lean
 lean_status: lean_ok
 private: true
+stale: true
 title: Module.dual_ext
 type: lean
-updated: '2026-07-29T15:31:37'
+updated: '2026-07-30T15:27:58'
 ---
 private theorem dual_ext {X : Type u} [AddCommGroup X] [Module A X]
     {F G : Dual B (B ⊗[A] X)} (h : ∀ x : X, F (1 ⊗ₜ x) = G (1 ⊗ₜ x)) : F = G := by

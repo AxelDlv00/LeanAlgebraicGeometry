@@ -9,9 +9,10 @@ docstring: 'On an irreducible sober scheme, every point other than the generic p
 file: AlgebraicJacobian/Albanese/Milne33TransportLocal.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.one_le_coheight_of_ne_genericPoint
 type: lean
-updated: '2026-07-29T15:31:33'
+updated: '2026-07-30T15:27:57'
 ---
 lemma Scheme.one_le_coheight_of_ne_genericPoint {Y : Scheme.{u}}
     [IrreducibleSpace ↥Y] {z : ↥Y} (hz : z ≠ genericPoint ↥Y) :

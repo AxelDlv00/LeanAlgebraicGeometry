@@ -31,9 +31,10 @@ docstring: '**Brick 1 at the chart level, from the carve pin `hsub_chart`**: the
 file: AlgebraicJacobian/Picard/DivSchemeRedesignFreeFlatChart.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.ThetaGeneratorSeed.forall_flat_colength_quotient_of_hsub_free
 type: lean
-updated: '2026-07-29T15:31:42'
+updated: '2026-07-30T15:27:58'
 ---
 theorem forall_flat_colength_quotient_of_hsub_free
     (K : Submodule R (relThetaSections C R π a)) (b : Bool) [Module.Finite R ↥K]

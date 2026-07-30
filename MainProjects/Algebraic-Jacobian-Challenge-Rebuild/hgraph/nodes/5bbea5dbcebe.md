@@ -6,9 +6,10 @@ decl: CategoryTheory.Sheaf.constModuleSheafHomEquiv_naturality
 file: AlgebraicJacobian/Cohomology/ModuleKSheaf.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: CategoryTheory.Sheaf.constModuleSheafHomEquiv_naturality
 type: lean
-updated: '2026-07-29T15:31:35'
+updated: '2026-07-30T15:27:59'
 ---
 lemma constModuleSheafHomEquiv_naturality {F G : Sheaf J (ModuleCat.{u} R)}
     (φ : constModuleSheaf J R ⟶ F) (f : F ⟶ G) :

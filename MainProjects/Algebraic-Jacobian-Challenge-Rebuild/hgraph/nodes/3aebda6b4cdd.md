@@ -10,9 +10,10 @@ docstring: '**The relative chart-0 coordinate** `t₀ᴿ ∈ Γ(C_R, V₀ᴿ)`: 
 file: AlgebraicJacobian/Cohomology/RigidEngine4Relative.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.relFiberCoord₀
 type: lean
-updated: '2026-07-29T15:31:36'
+updated: '2026-07-30T15:27:58'
 ---
 noncomputable def relFiberCoord₀ [IsAffineHom π] :
     Γ(relCurve C R, (relCover C R (fiberTwoCover π)).V₀) :=

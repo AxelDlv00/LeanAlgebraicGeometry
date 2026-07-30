@@ -16,9 +16,10 @@ docstring: '**Amitsur exactness in degrees `â‰¤ 1`**: for a faithfully flat `A â
 file: AlgebraicJacobian/Descent/ModuleDescent.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: Module.DescentDatum.exact_mk_coactionSub
 type: lean
-updated: '2026-07-29T15:31:37'
+updated: '2026-07-30T15:28:06'
 ---
 theorem exact_mk_coactionSub (N : Type u) [AddCommGroup N] [Module A N] :
     Function.Exact (TensorProduct.mk A B N 1) (baseChange A B N).coactionSub := by

@@ -12,9 +12,10 @@ docstring: "If the degree-one cohomology of both pieces vanishes, the connecting
 file: AlgebraicJacobian/Cohomology/MayerVietoris.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: CategoryTheory.GrothendieckTopology.MayerVietorisSquare.range_moduleDiff_le_ker_moduleDelta
 type: lean
-updated: '2026-07-29T15:31:35'
+updated: '2026-07-30T15:28:04'
 ---
 theorem range_moduleDiff_le_ker_moduleDelta :
     LinearMap.range (S.moduleDiff F) ≤ LinearMap.ker (S.moduleDelta F) := by

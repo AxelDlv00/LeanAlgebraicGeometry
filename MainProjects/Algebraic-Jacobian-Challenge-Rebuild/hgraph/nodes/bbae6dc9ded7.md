@@ -13,9 +13,10 @@ docstring: '**The degree-zero certificate of the Abel class**: at every field po
 file: AlgebraicJacobian/Picard/AbelElement.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.degAt_abelPicEt
 type: lean
-updated: '2026-07-29T15:31:37'
+updated: '2026-07-30T15:28:03'
 ---
 theorem degAt_abelPicEt (P : 𝟙_ (Over (Spec (.of k))) ⟶ C) {K : Type u} [Field K]
     [Algebra k K] (t : overSpec k K ⟶ C) :

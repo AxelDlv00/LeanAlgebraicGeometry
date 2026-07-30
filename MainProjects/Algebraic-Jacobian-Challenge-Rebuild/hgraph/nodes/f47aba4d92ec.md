@@ -7,9 +7,10 @@ docstring: 'The telescoping identity for transition units: the Čech 1-cocycle r
 file: AlgebraicJacobian/Algebra/BaseChangeTrivialization.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: Module.transitionUnit_mul_transitionUnit
 type: lean
-updated: '2026-07-29T15:31:33'
+updated: '2026-07-30T15:28:06'
 ---
 lemma transitionUnit_mul_transitionUnit :
     transitionUnit t₂ t₃ * transitionUnit t₁ t₂ = transitionUnit t₁ t₃ :=

@@ -13,9 +13,10 @@ docstring: '**The complement of the diagonal**, as an open of the curve square: 
 file: AlgebraicJacobian/Curve/DiagonalClosed.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.diagonalComplement
 type: lean
-updated: '2026-07-29T15:31:36'
+updated: '2026-07-30T15:27:58'
 ---
 noncomputable def diagonalComplement : (C ⊗ C).left.Opens :=
   ⟨(Set.range (diagonal C).left.base)ᶜ, (isClosed_range_diagonal C).isOpen_compl⟩

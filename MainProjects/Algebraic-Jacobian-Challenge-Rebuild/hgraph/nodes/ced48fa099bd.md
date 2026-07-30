@@ -7,9 +7,10 @@ docstring: '**`AEval''` chart finiteness, chart 1**.'
 file: AlgebraicJacobian/Cohomology/GluedSheafEngine.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.BasicOpenCocycleDatum.moduleFinite_aeval'_pair_t₁
 type: lean
-updated: '2026-07-29T15:31:35'
+updated: '2026-07-30T15:28:04'
 ---
 theorem moduleFinite_aeval'_pair_t₁ (hπ : π ≫ P1.structureMap k = C.hom) :
     Module.Finite (Polynomial B) (Module.AEval'

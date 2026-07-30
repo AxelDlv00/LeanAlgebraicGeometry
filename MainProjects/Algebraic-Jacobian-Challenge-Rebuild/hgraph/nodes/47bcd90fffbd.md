@@ -10,9 +10,10 @@ docstring: 'Transition units are compatible with pushforward of trivializations 
 file: AlgebraicJacobian/Algebra/BaseChangeTrivialization.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: Module.map_transitionUnit
 type: lean
-updated: '2026-07-29T15:31:33'
+updated: '2026-07-30T15:27:59'
 ---
 lemma map_transitionUnit (h : C →ₐ[A] C') :
     transitionUnit (trivializationPush h t₁) (trivializationPush h t₂)

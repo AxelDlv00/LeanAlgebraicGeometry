@@ -21,9 +21,10 @@ docstring: '**The atlas-level factorisation**: `Sigma.desc` of the smaller restr
 file: AlgebraicJacobian/Picard/Pic0ChartVMonotone.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.sigmaDesc_restrictChart_le
 type: lean
-updated: '2026-07-30T00:56:03'
+updated: '2026-07-30T15:28:03'
 ---
 theorem sigmaDesc_restrictChart_le {ι : Type u} {X : ι → Scheme.{u}}
     (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1)

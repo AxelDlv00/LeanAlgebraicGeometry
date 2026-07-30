@@ -26,9 +26,10 @@ docstring: '**The tube-fibre reduction.** If at a base prime `p` the support fib
 file: AlgebraicJacobian/Picard/DivSchemeCertZarTube.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.exists_away_supportLocus_subset_of_fibre_subset
 type: lean
-updated: '2026-07-29T15:31:39'
+updated: '2026-07-30T15:28:05'
 ---
 theorem exists_away_supportLocus_subset_of_fibre_subset
     (d : (relCurve C R).LocalEquations) (U : (relCurve C R).Opens) {p : PrimeSpectrum R}

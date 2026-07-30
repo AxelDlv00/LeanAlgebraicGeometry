@@ -7,9 +7,10 @@ docstring: The twisted differential elementwise.
 file: AlgebraicJacobian/Cohomology/RigidEngine4BaseChange.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.relTwistDiff_apply
 type: lean
-updated: '2026-07-29T15:31:36'
+updated: '2026-07-30T15:28:04'
 ---
 lemma relTwistDiff_apply
     (p : ↥(twistSubmodule R (relCover C R D).V₀ (relCover C R D).V₁ g

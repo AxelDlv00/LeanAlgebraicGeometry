@@ -1,0 +1,48 @@
+id: I-1512
+provider: local
+kind: issue
+body: 'AJC hcov: hcov_of_jointlySurjective cites its own satisfiability witness by
+  a name that proves a DIFFERENT statement, and the real witness exists only in a
+  gitignored probe.
+
+
+  PicEtGaloisCover.lean:168-171 says the new point-level hypothesis is "satisfiable
+  -- at Mono (specMapAlgebra k k'') the γ=1 section is an isomorphism (`etaleTopology_generate_coverSelfSection_of_mono`)".
+  That named theorem concludes SIEVE MEMBERSHIP (hcov itself), not joint surjectivity
+  on points; the two are not the same proposition and hcov does not imply the point
+  statement. The actual witness is `probe_pica_ax.lean:25-41`, which is matched by
+  /probe_*.lean in the project .gitignore and is NOT tracked -- confirmed by `git
+  check-ignore -v` and `ls-files --error-unmatch`.
+
+
+  I reproduced the satisfiability myself (axiom-clean [propext, Classical.choice,
+  Quot.sound], live sorryAx control), so the claim is TRUE. But this is exactly the
+  I-1413/I-1454 pattern the same docstring invokes: the antecedent-audit declaration
+  must be IN the file, not in a scratch file that is deleted at session end. As it
+  stands the file cites a wrong name for its only non-triviality evidence.
+
+
+  FIX: land the Mono-site joint-surjectivity witness as a theorem next to hcov_of_jointlySurjective
+  and cite that name.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T06:20:52.377993+00:00'
+updated_at: '2026-07-30T06:20:52.378008+00:00'
+metadata:
+  provenance:
+    run: 0091
+    session: 0002-horizon-pic-a
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: pic-a
+    task_title: 'Pic rep lane A: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
+  agent: work-reviewer

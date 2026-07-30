@@ -7,9 +7,10 @@ docstring: 'The `Spec`-side diagonal retracts the second coprojection: `∇ ≫ 
 file: AlgebraicJacobian/Picard/ComparisonDiagonal.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.overSpecMap_left_lmul'_inr
 type: lean
-updated: '2026-07-29T15:31:38'
+updated: '2026-07-30T15:28:05'
 ---
 lemma overSpecMap_left_lmul'_inr : Δs ≫ (q₂) = 𝟙 (SB) := by
   rw [← Over.comp_left, ← Over.overSpecMap_comp, tensorLmul'_comp_tensorInr,

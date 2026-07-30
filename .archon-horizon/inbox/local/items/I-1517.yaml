@@ -1,0 +1,54 @@
+id: I-1517
+provider: local
+kind: issue
+body: "A PRIVATE INDEX DOES NOT PROTECT THE COMMIT MESSAGE: MY COMMIT CARRIES ANOTHER\
+  \ LANE'S MESSAGE VERBATIM. New mechanism, not covered by I-1222 or I-1507.\n\nMEASURED\
+  \ (pic-g, run 0096). Full I-1222 procedure held: fresh GIT_INDEX_FILE (rm -f, read-tree\
+  \ HEAD), ONE explicit path added, name-status listed exactly it, shortstat \"1 file\
+  \ changed, 165 insertions(+)\", zero deletions. Then commit -m.\n\nWHAT LANDED as\
+  \ a0721f2819: the DIFF is exactly my file and the Archon-* trailers are correctly\
+  \ MINE (Run 0096, Session 0004-horizon-pic-g, Task pic-g). The SUBJECT AND BODY\
+  \ are pic-a's -- \"fix(AJC/hcov): four audit findings against my own claims\" --\
+  \ about the etale site, unrelated to my payload. pic-a's own 05b2fb2a7d carries\
+  \ the identical text.\n\nTHE MECHANISM. GIT_INDEX_FILE redirects the index and NOTHING\
+  \ else. `git commit -m` writes the message into the SHARED $GIT_DIR/COMMIT_EDITMSG,\
+  \ runs prepare-commit-msg on it, reads it back. A lane committing in that window\
+  \ replaces the file, so you commit YOUR tree with THEIR prose. Trailers are right\
+  \ because the hook appends from YOUR env -- which is what makes it invisible: provenance\
+  \ says pic-g, message says pic-a.\n\nWHY IT BEATS EVERY EXISTING CHECK. Pre-commit\
+  \ stat, commit's own printed stat, post-commit diff HEAD~1 HEAD --stat, HEAD-vs-disk\
+  \ sha256 -- all four are about PATHS AND CONTENT, and nothing is wrong with either.\
+  \ The ledger is how each lane's reasoning is read; this misattributes it while leaving\
+  \ the code correct.\n\nTHE FIX, one line: use `git commit-tree`, which takes the\
+  \ message on STDIN and never touches COMMIT_EDITMSG, then move the ref with a CAS:\n\
+  \  T=$(\"$HORIZON_GIT\" write-tree)            # GIT_INDEX_FILE still set\n  N=$(\"\
+  $HORIZON_GIT\" commit-tree \"$T\" -p \"$OLD\" -F /tmp/msg.txt)\n  \"$HORIZON_GIT\"\
+  \ update-ref refs/heads/main \"$N\" \"$OLD\"\nWrite the Archon-* trailers into the\
+  \ message file yourself (no hook on commit-tree). The old-value argument makes update-ref\
+  \ FAIL rather than clobber if HEAD moved, which also closes I-1222-C0001's \"cannot\
+  \ lock ref HEAD\" case.\n\nADD TO THE CHECKLIST: read the SUBJECT LINE of your own\
+  \ commit, not only its stat. I did NOT amend a0721f2819 -- two lanes' commits already\
+  \ sit on top, and rewriting shared history to fix prose is worse than the wrong\
+  \ prose."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T07:21:15.285535+00:00'
+updated_at: '2026-07-30T07:23:26.120011+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0004-horizon-pic-g
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-d
+  - pic-f

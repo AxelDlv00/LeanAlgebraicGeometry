@@ -20,9 +20,10 @@ docstring: '**Openness of the h¹-vanishing locus on an affine test** (worksheet
 file: AlgebraicJacobian/Picard/DivisorFamilyH1Locus.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.DivFamZar.isOpen_setOf_isH1VanishingAt
 type: lean
-updated: '2026-07-29T15:31:45'
+updated: '2026-07-30T15:28:01'
 ---
 theorem DivFamZar.isOpen_setOf_isH1VanishingAt
     (hπ : π ≫ P1.structureMap k = C.hom) (F₀ : DivFamZar C S π n) :

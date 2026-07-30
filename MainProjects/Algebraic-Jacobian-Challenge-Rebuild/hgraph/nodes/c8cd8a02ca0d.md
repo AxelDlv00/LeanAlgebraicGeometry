@@ -13,9 +13,10 @@ docstring: 'The carrier translation at an **affine** open — the form the two-c
 file: AlgebraicJacobian/Tangent/DualNumberCarrier.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.dualNumberSectionsOfIsAffineOpen
 type: lean
-updated: '2026-07-29T15:31:50'
+updated: '2026-07-30T15:28:04'
 ---
 noncomputable def Over.dualNumberSectionsOfIsAffineOpen {W : C.left.Opens}
     (hW : IsAffineOpen W) :

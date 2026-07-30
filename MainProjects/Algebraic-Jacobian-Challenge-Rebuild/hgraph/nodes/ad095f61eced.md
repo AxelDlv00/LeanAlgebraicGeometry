@@ -14,9 +14,10 @@ docstring: '**The reduction map of two-chart Čech `Ȟ¹`-of-units groups**
 file: AlgebraicJacobian/Tangent/TruncExpCech.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: TruncExpCech.cechUnitsReduction
 type: lean
-updated: '2026-07-29T15:31:50'
+updated: '2026-07-30T15:28:02'
 ---
 noncomputable def cechUnitsReduction (ρ₁ : A₁ →+* B) (ρ₂ : A₂ →+* B) :
     ((B[ε])ˣ ⧸ cechCoboundaryUnits (mapRingHom ρ₁) (mapRingHom ρ₂)) →*

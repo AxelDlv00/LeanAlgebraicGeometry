@@ -17,9 +17,10 @@ docstring: '**Naturality of the Picard class of a descent cocycle in the base ri
 file: AlgebraicJacobian/Descent/UnitDescentBaseChange.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: Module.IsDescentCocycle.picClass_baseChange
 type: lean
-updated: '2026-07-29T15:31:37'
+updated: '2026-07-30T15:28:02'
 ---
 theorem IsDescentCocycle.picClass_baseChange [Module.FaithfullyFlat A B]
     [Module.FaithfullyFlat A' (A' ⊗[A] B)] {u : (B ⊗[A] B)ˣ} (hu : IsDescentCocycle u) :

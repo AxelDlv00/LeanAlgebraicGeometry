@@ -7,9 +7,10 @@ docstring: '**The glued carve locus is separated** (absolutely).'
 file: AlgebraicJacobian/Picard/DivSchemeQProj.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.isSeparated_carveScheme
 type: lean
-updated: '2026-07-29T15:31:41'
+updated: '2026-07-30T15:28:02'
 ---
 theorem isSeparated_carveScheme : (carveScheme k g r₁ r₂ μ).IsSeparated := by
   haveI : IsSeparated (carveSchemeι k g r₁ r₂ μ ≫ grPairStructMap k g r₁ g r₂) :=

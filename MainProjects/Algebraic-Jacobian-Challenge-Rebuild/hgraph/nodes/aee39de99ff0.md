@@ -21,9 +21,10 @@ docstring: 'The base change of the field extension morphism `Spec L ⟶ Spec k` 
 file: AlgebraicJacobian/Albanese/BaseFieldFaithful.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.epi_pullback_fst_algebraMap
 type: lean
-updated: '2026-07-29T15:31:33'
+updated: '2026-07-30T15:28:02'
 ---
 theorem epi_pullback_fst_algebraMap {Z : Scheme.{u}} (g : Z ⟶ Spec (.of k)) :
     Epi (pullback.fst g (Spec.map (CommRingCat.ofHom (algebraMap k L)))) := by

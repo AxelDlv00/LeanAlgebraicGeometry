@@ -10,9 +10,10 @@ docstring: 'The descent coboundary of a unit `β : Bˣ`: the unit `(1 ⊗ₜ β)
 file: AlgebraicJacobian/Descent/UnitDescent.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: Module.descentCoboundary
 type: lean
-updated: '2026-07-29T15:31:37'
+updated: '2026-07-30T15:28:02'
 ---
 noncomputable def descentCoboundary (β : Bˣ) : (B ⊗[A] B)ˣ :=
   Units.map (descentIncl₂ A B).toRingHom.toMonoidHom β

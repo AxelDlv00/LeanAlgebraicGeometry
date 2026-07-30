@@ -10,9 +10,10 @@ docstring: 'From stage one onward, every base-field multiplier transition preser
 file: AlgebraicJacobian/Picard/DivSchemeHighWindowTransitionRelation.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.map_divUniversalHighWindowBaseMultiplierTransition_relation_succ_le
 type: lean
-updated: '2026-07-29T15:31:40'
+updated: '2026-07-30T15:28:06'
 ---
 theorem map_divUniversalHighWindowBaseMultiplierTransition_relation_succ_le
     (n : Nat) (a : HS) :

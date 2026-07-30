@@ -9,9 +9,10 @@ docstring: '**CM unmixedness, quotient-dimension form**: `dim R/p = dim R` for e
 file: AlgebraicJacobian/Albanese/Milne33CMEquidim.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: RingTheory.CohenMacaulay.ringKrullDim_quotient_eq_of_isAssociatedPrime
 type: lean
-updated: '2026-07-29T15:31:33'
+updated: '2026-07-30T15:28:04'
 ---
 theorem ringKrullDim_quotient_eq_of_isAssociatedPrime [CohenMacaulay R]
     {p : Ideal R} (hp : IsAssociatedPrime p R) :

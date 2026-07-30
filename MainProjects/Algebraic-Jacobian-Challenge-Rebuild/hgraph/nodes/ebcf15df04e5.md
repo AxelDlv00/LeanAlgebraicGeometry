@@ -7,9 +7,10 @@ docstring: The carrier of the trivial cover is the base ring.
 file: AlgebraicJacobian/Algebra/EtaleCover.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: Algebra.EtaleCover.selfEquiv
 type: lean
-updated: '2026-07-29T15:31:34'
+updated: '2026-07-30T15:28:05'
 ---
 noncomputable def selfEquiv (A : Type u) [CommRing A] : (self A).Carrier ≃ₐ[A] A :=
   ofEquiv A _

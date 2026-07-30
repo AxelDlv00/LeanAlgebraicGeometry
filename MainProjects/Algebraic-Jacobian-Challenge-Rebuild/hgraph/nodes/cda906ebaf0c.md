@@ -14,9 +14,10 @@ docstring: '**The residue-field extension a morphism of tests induces at a point
 file: AlgebraicJacobian/Picard/Pic0ChartTestPoint.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.testPointFieldMap
 type: lean
-updated: '2026-07-29T15:31:47'
+updated: '2026-07-30T15:28:04'
 ---
 def testPointFieldMap {T T' : Over (Spec (.of k))} (f : T' ⟶ T) (t : T'.left) :
     CommRingCat.of (testPointField (T := T) (f.left.base t))

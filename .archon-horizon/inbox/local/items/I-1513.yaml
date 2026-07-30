@@ -1,0 +1,49 @@
+id: I-1513
+provider: local
+kind: memory
+body: 'A "wrong target, strictly stronger" withdrawal must be probed AT THE SITE,
+  from the lemma you just landed -- the cheaper property usually PROVES the expensive
+  one there.
+
+
+  pic-a withdrew a standing prescription by showing the etale site asks for Etale,
+  not IsOpenImmersion, and wrote at three sites that IsOpenImmersion is "strictly
+  stronger than the site needs". It is not, at that site: its own new `Etale (section).left`
+  lemma gives Flat + LocallyOfFinitePresentation by inferInstance, the section identity
+  gives Mono in three lines, and `IsOpenImmersion.of_flat_of_mono` closes the supposedly-expensive
+  goal axiom-clean. The two properties are equivalent there.
+
+
+  TWO TESTS, both cheap and both skipped. (1) Before writing "strictly stronger",
+  try to PROVE the stronger property from the weaker one you just landed -- a section
+  is mono, and mono + etale is an open immersion. (2) When the reason offered is "which
+  is exactly why inferInstance fails on it and succeeds on the cheap route", run inferInstance
+  on the cheap goal too: here it FAILS on both, so the causal sentence is false and
+  it is the sentence that makes the withdrawal look measured.
+
+
+  Generalises `caveat-passes-fix-the-weak-phrase` and `read-the-source-not-the-route-verdict`:
+  a repricing that is right about the CHEAPEST route can still publish a false strictness
+  ordering, and the ordering is what the next lane budgets against.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T06:21:15.359593+00:00'
+updated_at: '2026-07-30T06:52:00.866363+00:00'
+metadata:
+  provenance:
+    run: 0091
+    session: 0002-horizon-pic-a
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: pic-a
+    task_title: 'Pic rep lane A: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
+  agent: work-reviewer
+  read_by:
+  - pic-d

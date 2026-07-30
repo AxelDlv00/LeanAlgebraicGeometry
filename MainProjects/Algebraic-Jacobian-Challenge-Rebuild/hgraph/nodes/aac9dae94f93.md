@@ -10,9 +10,10 @@ docstring: '**The universal first window** `K_M^{univ}` over a `Z(♦)`-chart ri
 file: AlgebraicJacobian/Picard/DivSchemeFamilyUniv.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.divUniversalFst
 type: lean
-updated: '2026-07-29T15:31:39'
+updated: '2026-07-30T15:28:02'
 ---
 noncomputable def divUniversalFst (i : (glueData k g r₁).J) (j : (glueData k g r₂).J) :
     grFunctorAff k (Fin r₁ → k) g (DivCarveChartRing k A B g r₁ r₂ b₁ b₂ i j) :=

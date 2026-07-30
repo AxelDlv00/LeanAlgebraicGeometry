@@ -7,9 +7,10 @@ docstring: Multiply the pointwise base-locus seed by the RD-N annihilator cutter
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwiseGenerator.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.PointwiseAchiever.pointwiseGeneratorSeed
 type: lean
-updated: '2026-07-29T15:31:43'
+updated: '2026-07-30T15:28:04'
 ---
 noncomputable def pointwiseGeneratorSeed
     (hrdn : PointwiseSeedRDN C hpi g r1 r2 b1 b2 i j hO hchi) :

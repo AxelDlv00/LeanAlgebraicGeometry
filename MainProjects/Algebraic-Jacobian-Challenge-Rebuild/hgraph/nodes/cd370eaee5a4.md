@@ -8,9 +8,10 @@ docstring: The second-factor push `B ⊗[Polynomial k] B → B ⊗[Polynomial k]
 file: AlgebraicJacobian/Algebra/PointFiberIdeal.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicJacobian.Diagonal.mapRightTwo
 type: lean
-updated: '2026-07-29T15:31:34'
+updated: '2026-07-30T15:28:04'
 ---
 noncomputable def mapRightTwo :
     B ⊗[Polynomial k] B →ₐ[Polynomial k] B ⊗[Polynomial k] F :=

@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.P1.isUnit_dehomogenize_X_self
 file: AlgebraicJacobian/Curve/P1.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.P1.isUnit_dehomogenize_X_self
 type: lean
-updated: '2026-07-29T15:31:37'
+updated: '2026-07-30T15:28:03'
 ---
 theorem isUnit_dehomogenize_X_self (i : Fin 2) :
     IsUnit ((dehomogenize k i).toRingHom (X i)) := by

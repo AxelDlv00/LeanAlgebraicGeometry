@@ -16,9 +16,10 @@ docstring: 'The universal matrix `X^I` maps to the normalised frame `X_I⁻¹ X`
 file: AlgebraicJacobian/Picard/GrassmannianChartFrame.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Grassmannian.universalMatrix_map_chartFrameMap
 type: lean
-updated: '2026-07-29T15:31:46'
+updated: '2026-07-30T15:27:56'
 ---
 theorem universalMatrix_map_chartFrameMap (X : Matrix (Fin d) (Fin r) S)
     (I : Finset (Fin r)) (hI : I.card = d) (hu : IsUnit (frameMinor k d r S X I hI).det) :

@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.divFam.toZarVehicle_val
 file: AlgebraicJacobian/Picard/DivisorFamilyZarVehicle.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.divFam.toZarVehicle_val
 type: lean
-updated: '2026-07-29T15:31:45'
+updated: '2026-07-30T15:27:59'
 ---
 lemma divFam.toZarVehicle_val {T : Over (Spec (.of k))} (s : divFam C π n T)
     (U : T.left.affineOpens) :

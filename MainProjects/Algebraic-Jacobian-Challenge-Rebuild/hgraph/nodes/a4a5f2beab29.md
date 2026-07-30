@@ -10,9 +10,10 @@ docstring: 'The base-field shuffle is compatible with the unit of the plus const
 file: AlgebraicJacobian/Picard/PicEtAffBaseFieldShuffle.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.PicEtAff.baseFieldShuffle_unit
 type: lean
-updated: '2026-07-29T15:31:47'
+updated: '2026-07-30T15:28:02'
 ---
 theorem baseFieldShuffle_unit (x : relPic C (overSpec k A)) :
     baseFieldShuffle k L C A (unit C A x)

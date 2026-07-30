@@ -8,9 +8,10 @@ docstring: On `Spec`, the structure map of a stalk is the canonical map `Spec ğ
 file: AlgebraicJacobian/Curve/RationalToP1.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.Hom.Spec_map_structureStalk
 type: lean
-updated: '2026-07-29T15:31:37'
+updated: '2026-07-30T15:28:01'
 ---
 theorem Scheme.Hom.Spec_map_structureStalk (x : X) :
     Spec.map (f.structureStalk x) = X.fromSpecStalk x â‰« f := by

@@ -10,9 +10,10 @@ docstring: '**The whole-chart cover data**: the two pinned charts themselves, ea
 file: AlgebraicJacobian/Cohomology/RelCurveCollapse.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.thetaChartCover
 type: lean
-updated: '2026-07-29T15:31:35'
+updated: '2026-07-30T15:28:02'
 ---
 noncomputable def thetaChartCover : BasicOpenCoverData C B π where
   J₀ := PUnit

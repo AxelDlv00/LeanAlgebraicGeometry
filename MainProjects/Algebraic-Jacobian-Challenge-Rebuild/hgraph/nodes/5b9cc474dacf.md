@@ -14,9 +14,10 @@ docstring: '**Evaluation of a base-changed function at a `k`-point**: the `k`-al
 file: AlgebraicJacobian/Curve/SepPointsDenseKit.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.tensorPointEval
 type: lean
-updated: '2026-07-29T15:31:37'
+updated: '2026-07-30T15:27:59'
 ---
 noncomputable def tensorPointEval (φ : A →ₐ[k] k) : A ⊗[k] L →ₐ[k] L :=
   (Algebra.TensorProduct.lid k L).toAlgHom.comp

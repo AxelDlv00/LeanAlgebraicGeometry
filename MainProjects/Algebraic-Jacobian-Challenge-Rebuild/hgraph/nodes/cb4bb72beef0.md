@@ -10,7 +10,8 @@ docstring: '**The `tmul` computation rule** (D5 (ii)): on a pure tensor `s âŠ—â‚
 file: AlgebraicJacobian/Curve/ProductCharts.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.productChartSections_tmul
 type: lean
-updated: '2026-07-29T15:31:37'
+updated: '2026-07-30T15:28:04'
 ---

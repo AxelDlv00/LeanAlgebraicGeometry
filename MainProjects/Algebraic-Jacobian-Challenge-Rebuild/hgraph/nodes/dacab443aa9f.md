@@ -7,9 +7,10 @@ docstring: Naturality of the action map in `B`-linear maps.
 file: AlgebraicJacobian/Descent/ModuleDescent.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: Module.actionMap_baseChange
 type: lean
-updated: '2026-07-29T15:31:37'
+updated: '2026-07-30T15:28:04'
 ---
 theorem actionMap_baseChange [Module B X] [IsScalarTower A B X]
     [AddCommGroup Y] [Module A Y] [Module B Y] [IsScalarTower A B Y]

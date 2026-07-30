@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.unitsTrivTwistCochain_def
 file: AlgebraicJacobian/Picard/EffectivityComparisonUnit.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.unitsTrivTwistCochain_def
 type: lean
-updated: '2026-07-29T15:31:46'
+updated: '2026-07-30T15:27:56'
 ---
 lemma unitsTrivTwistCochain_def (r₁ r₂ : Y ⟶ Z)
     (𝒞 : Y.PointedCover) (𝒩 : Z.PointedCover)

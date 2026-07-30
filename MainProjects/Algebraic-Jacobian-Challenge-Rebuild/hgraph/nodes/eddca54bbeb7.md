@@ -10,9 +10,10 @@ docstring: 'The point-evaluation kernel is contained in the sum of the point-gen
 file: AlgebraicJacobian/Algebra/PointFiberIdeal.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicJacobian.Diagonal.ker_pointEv_le_sup
 type: lean
-updated: '2026-07-29T15:31:34'
+updated: '2026-07-30T15:28:05'
 ---
 lemma ker_pointEv_le_sup :
     RingHom.ker (pointEv c)

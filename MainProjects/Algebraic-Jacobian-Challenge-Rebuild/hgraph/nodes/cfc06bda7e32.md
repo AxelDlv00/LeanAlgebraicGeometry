@@ -40,9 +40,10 @@ file: AlgebraicJacobian/Albanese/CodimOneStalkRegularity.lean
 generated: lean
 lean_status: lean_ok
 private: true
+stale: true
 title: AlgebraicGeometry.Scheme.exists_algebra_isStandardSmooth_section_stalk_isLocalization_of_smooth
 type: lean
-updated: '2026-07-29T15:31:33'
+updated: '2026-07-30T15:28:04'
 ---
 private theorem exists_algebra_isStandardSmooth_section_stalk_isLocalization_of_smooth
     {kbar : Type u} [Field kbar] [IsAlgClosed kbar]

@@ -16,9 +16,10 @@ docstring: '**The regular-generators mini-lemma** (worksheet D3): if `span {a} =
 file: AlgebraicJacobian/Curve/DiagonalEquations.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.exists_isUnit_of_span_singleton_eq
 type: lean
-updated: '2026-07-29T15:31:36'
+updated: '2026-07-30T15:27:59'
 ---
 theorem exists_isUnit_of_span_singleton_eq {R : Type*} [CommRing R] {a b : R}
     (hab : Ideal.span {a} = Ideal.span {b}) (ha : a ∈ R⁰) :

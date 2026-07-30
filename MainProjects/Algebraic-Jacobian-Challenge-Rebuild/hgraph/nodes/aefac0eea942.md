@@ -8,9 +8,10 @@ file: AlgebraicJacobian/Cohomology/RigidEngine4Relative.lean
 generated: lean
 lean_status: lean_ok
 private: true
+stale: true
 title: AlgebraicGeometry.relSectionsBaseChange_mul_fiberCoord₁
 type: lean
-updated: '2026-07-29T15:31:36'
+updated: '2026-07-30T15:28:02'
 ---
 private lemma relSectionsBaseChange_mul_fiberCoord₁ [IsAffineHom π] (a : R)
     (s : Γ(C.left, fiberChart₁ π)) :

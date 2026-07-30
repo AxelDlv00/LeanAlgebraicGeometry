@@ -14,9 +14,10 @@ docstring: '**Precomposition of a rational map with an open morphism.** For `f :
 file: AlgebraicJacobian/Albanese/RationalMapPrecomp.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.RationalMap.precomp
 type: lean
-updated: '2026-07-29T15:31:33'
+updated: '2026-07-30T15:28:02'
 ---
 noncomputable def RationalMap.precomp (f : X ⤏ Y) (p : W ⟶ X) (hp : IsOpenMap p.base) :
     W ⤏ Y :=

@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.Over.amitsurProductCover_le_w₂₃
 file: AlgebraicJacobian/Picard/AmitsurProductCover.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.amitsurProductCover_le_w₂₃
 type: lean
-updated: '2026-07-29T15:31:37'
+updated: '2026-07-30T15:28:06'
 ---
 lemma amitsurProductCover_le_w₂₃ (𝒲 : (Xq).PointedCover) (z : Xcb) :
     (amitsurProductCover C 𝒲).opens z ≤ (w₂₃) ⁻¹ᵁ 𝒲.opens ((w₂₃).base z) :=

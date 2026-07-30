@@ -31,9 +31,10 @@ docstring: '**THE FACE, PLUGGED IN**: the kernel of the widened window carve arr
 file: AlgebraicJacobian/Picard/DivisorFamilyAffTheta.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.AffAdaptation.ker_windowCarve
 type: lean
-updated: '2026-07-29T15:31:44'
+updated: '2026-07-30T15:28:01'
 ---
 theorem ker_windowCarve :
     LinearMap.ker (windowCarve A τ a hH1) = divisorWindow d hH1 := by

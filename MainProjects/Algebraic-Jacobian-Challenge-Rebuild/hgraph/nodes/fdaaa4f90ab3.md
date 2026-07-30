@@ -12,9 +12,10 @@ docstring: '**The Čech differential square**: the overlap collapse intertwines 
 file: AlgebraicJacobian/Cohomology/RelThetaTransportCore.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.twistCollapseN_diff
 type: lean
-updated: '2026-07-29T15:31:35'
+updated: '2026-07-30T15:28:06'
 ---
 lemma twistCollapseN_diff
     (z : (thetaTwistSheaf π n).obj.obj (op (fiberChart₀ π)) ×

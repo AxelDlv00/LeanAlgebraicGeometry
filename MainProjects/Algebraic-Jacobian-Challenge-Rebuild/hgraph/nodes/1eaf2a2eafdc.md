@@ -19,9 +19,10 @@ docstring: '**The piece restriction of the descending class is trivial** (D2 ite
 file: AlgebraicJacobian/Picard/EffectivityPieceDescent.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.cechPicMap_pieceι_eq_one
 type: lean
-updated: '2026-07-29T15:31:46'
+updated: '2026-07-30T15:27:57'
 ---
 theorem cechPicMap_pieceι_eq_one {𝒩 : (XB).PointedCover} {γ : (XB).unitsCocycle 𝒩}
     {V : (XA).Opens} (T : PieceTrivialization C 𝒩 γ V) :

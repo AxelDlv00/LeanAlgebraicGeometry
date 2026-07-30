@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.thetaFieldPointedCover_opens
 file: AlgebraicJacobian/Picard/DivisorFamilyFieldDictionaryCore.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.thetaFieldPointedCover_opens
 type: lean
-updated: '2026-07-29T15:31:45'
+updated: '2026-07-30T15:28:05'
 ---
 lemma thetaFieldPointedCover_opens (x : relCurve C K) :
     (thetaFieldPointedCover C K π).opens x

@@ -21,9 +21,10 @@ docstring: '**The ambient colength finiteness `hcolFin` from a fibrewise no-leak
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivColFin.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.ThetaGeneratorSeed.hcolFin_of_forall_fibre
 type: lean
-updated: '2026-07-29T15:31:42'
+updated: '2026-07-30T15:28:01'
 ---
 theorem hcolFin_of_forall_fibre
     (hfib : ∀ (z : relCurve C R) (s : Spec (CommRingCat.of R)),

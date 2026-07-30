@@ -7,9 +7,10 @@ docstring: The product chart lies in the first-projection preimage of its first 
 file: AlgebraicJacobian/Curve/ProductCharts.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.productChart_le_fst_preimage
 type: lean
-updated: '2026-07-29T15:31:37'
+updated: '2026-07-30T15:28:01'
 ---
 lemma productChart_le_fst_preimage (U : X.left.Opens) (V : T.left.Opens) :
     productChart X T U V ≤ (fst X T).left ⁻¹ᵁ U :=

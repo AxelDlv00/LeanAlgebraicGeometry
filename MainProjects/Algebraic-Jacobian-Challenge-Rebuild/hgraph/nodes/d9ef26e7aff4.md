@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.shiftMap_coe
 file: AlgebraicJacobian/RiemannRoch/JumpDimension.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.shiftMap_coe
 type: lean
-updated: '2026-07-29T15:31:49'
+updated: '2026-07-30T15:28:04'
 ---
 @[simp] lemma shiftMap_coe (a : ℤ) (g : ↥(pointLattice K hx a)) :
     (shiftMap K hx a g : X.functionField) = uniformizer K hx ^ a * (g : X.functionField) :=

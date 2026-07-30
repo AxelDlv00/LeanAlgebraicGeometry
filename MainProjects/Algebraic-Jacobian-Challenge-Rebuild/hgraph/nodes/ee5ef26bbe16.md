@@ -12,9 +12,10 @@ docstring: '**The overlap comparison map**: sections on a double overlap of piec
 file: AlgebraicJacobian/Cohomology/GluedSheafDatumBaseChange.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.BasicOpenCoverData.overlapMap
 type: lean
-updated: '2026-07-29T15:31:34'
+updated: '2026-07-30T15:28:05'
 ---
 noncomputable def overlapMap (i j : D.index) :
     Γ(relCurve C B, D.pieces i ⊓ D.pieces j) →+*

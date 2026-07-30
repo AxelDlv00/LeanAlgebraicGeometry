@@ -14,9 +14,10 @@ file: AlgebraicJacobian/Picard/Rigidification.lean
 generated: lean
 lean_status: lean_ok
 private: true
+stale: true
 title: AlgebraicGeometry.Over.overSpecMap_comp_section
 type: lean
-updated: '2026-07-29T15:31:48'
+updated: '2026-07-30T15:28:02'
 ---
 private lemma overSpecMap_comp_section {E : Algebra.EtaleCover A} {R : Type u}
     [CommRing R] [Algebra k R] [Algebra A R] [IsScalarTower k A R]

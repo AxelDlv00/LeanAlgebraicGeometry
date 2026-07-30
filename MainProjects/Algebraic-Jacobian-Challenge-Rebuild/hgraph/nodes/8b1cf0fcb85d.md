@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.Scheme.divisorVal_coe
 file: AlgebraicJacobian/RiemannRoch/DivisorSheaf.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.divisorVal_coe
 type: lean
-updated: '2026-07-29T15:31:49'
+updated: '2026-07-30T15:28:01'
 ---
 lemma divisorVal_coe {D : X.CurveDivisor} {W : X.Opens} (s : divisorSections K D W) :
     divisorVal K (D := D) (W := W) s = (s : X.functionField) := rfl

@@ -10,9 +10,10 @@ docstring: '**Pullback along an isomorphism is injective on Čech Picard classes
 file: AlgebraicJacobian/Tangent/CechPicIsoTransport.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.cechPicMap_injective_of_isIso
 type: lean
-updated: '2026-07-29T15:31:50'
+updated: '2026-07-30T15:28:06'
 ---
 theorem cechPicMap_injective_of_isIso (f : X ⟶ Y) [IsIso f] :
     Function.Injective (CechPic.map f) := by

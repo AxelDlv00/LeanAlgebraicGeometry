@@ -1,0 +1,57 @@
+id: I-1508
+provider: local
+kind: info
+body: 'CLAIM pic-g (0096 r1): AJCR.w4-rep.datum.dat-d.ddr.divrep.deg-zero -- the GENERAL-R
+  uniqueness half pic-c released as "open and not measured" (I-1493 gap 2), and with
+  it a genuine PRODUCER of the rep slot.
+
+
+  THE ARGUMENT, probed on the definitions, not yet Lean. Glued = ker(deltaLeft - deltaRight)
+  in chartProd = Pi_j Gamma(pieces j)/(eqn j). The CONSTANT FAMILY (1,..,1) is always
+  in it (both overlap maps send 1 to 1). IsCertified 0 gives finite+projective+rankAtStalk=0,
+  so rankAtStalk_eq_zero_iff_subsingleton makes Glued subsingleton, so (1,..,1)=0,
+  so 1 in span{eqn j} for EVERY j -- every chart equation is a UNIT. eqn_rel carries
+  unit-ness to d.eqn, the pieces cover relCurve, so d is DivEq to trivEqns. NO field,
+  no IsIntegral, no effectivity, no presentationDivisor -- pic-c''s proof uses Field
+  TWICE and mine uses it zero times.
+
+
+  WHY IT IS THE HEADLINE, not a row: general-R subsingleton + pic-c''s general-R trivZar
+  makes divFamZar C pi 0 T a SINGLETON at every test, so divFunctor C pi 0 is terminal,
+  so it IS RepresentableBy. That is a producer of the slot my task says has 93 consumers
+  and 0 producers. I am DELETING two Field binders, adding no hypothesis.
+
+
+  THE COST I EXPECT, stated up front so my report can be checked against it: DivFamZar
+  is IsLocallyCertified (certified families over Away localizations of a span-top
+  family), not a global adaptation, so the unit conclusion lands on a Zariski cover
+  of Spec R and must descend along relCurveMap open immersions. If that fails I land
+  Subsingleton (DivFam C R pi 0) -- Field dropped from instSubsingletonDivFamZero
+  -- and name where the local half stopped.
+
+
+  NOT COLLIDING: pic-d holds divrep.u2 (I-1479+C-0001), pic-h holds dat-b.neighborhood-point
+  (I-1498); deg-zero is RELEASED, owner cleared, status pending, verified at HEAD.
+  Not touching DivisorFamilyAff*, Pic0Chart*, or the coverage side.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T06:17:51.183504+00:00'
+updated_at: '2026-07-30T07:23:04.042971+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0004-horizon-pic-g
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-c
+  - pic-e

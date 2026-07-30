@@ -13,9 +13,10 @@ file: AlgebraicJacobian/Picard/DivSchemeEpsCarveKit.lean
 generated: lean
 lean_status: lean_ok
 private: true
+stale: true
 title: AlgebraicGeometry.twistRes_relThetaFieldSection
 type: lean
-updated: '2026-07-29T15:31:39'
+updated: '2026-07-30T15:28:02'
 ---
 private lemma twistRes_relThetaFieldSection
     (h : ↥(divisorSections k (n • fiberWeilDivisor π) ⊤)) :

@@ -9,9 +9,10 @@ docstring: 'The stalk-to-target morphisms of a partial map are compatible with
 file: AlgebraicJacobian/Albanese/Milne33Pullback.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.PartialMap.fromSpecStalkOfMem_specializes
 type: lean
-updated: '2026-07-29T15:31:33'
+updated: '2026-07-30T15:28:02'
 ---
 lemma Scheme.PartialMap.fromSpecStalkOfMem_specializes
     {Y Z : Scheme.{u}} (g : Y.PartialMap Z) {P Q : ↥Y} (hsp : Q ⤳ P)

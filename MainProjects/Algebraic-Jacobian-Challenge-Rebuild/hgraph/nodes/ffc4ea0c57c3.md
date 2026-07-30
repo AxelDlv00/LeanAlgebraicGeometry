@@ -13,9 +13,10 @@ docstring: '**The diagonal overlap colength is the piece colength.**  Restrictio
 file: AlgebraicJacobian/Picard/DivisorFamilyAffGlue.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.AffAdaptation.sectionsInfSelfEquiv
 type: lean
-updated: '2026-07-29T15:31:43'
+updated: '2026-07-30T15:28:06'
 ---
 noncomputable def sectionsInfSelfEquiv (i : D.index) :
     Γ(relCurve C R, D.pieces i ⊓ D.pieces i) ≃ₐ[R] Γ(relCurve C R, D.pieces i) where

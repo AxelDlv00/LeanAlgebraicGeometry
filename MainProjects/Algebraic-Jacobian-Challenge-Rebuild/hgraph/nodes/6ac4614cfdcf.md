@@ -18,9 +18,10 @@ docstring: '**An effective witness of a class of large degree.** If a Weil divis
 file: AlgebraicJacobian/RiemannRoch/FLVClass.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.exists_effective_of_picClass
 type: lean
-updated: '2026-07-29T15:31:49'
+updated: '2026-07-30T15:28:00'
 ---
 lemma exists_effective_of_picClass (W : X.CurveDivisor)
     (hW : 1 ≤ CurveDivisor.deg K W + Sheaf.chi (X.moduleKSheaf K)) :

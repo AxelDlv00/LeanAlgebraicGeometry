@@ -7,9 +7,10 @@ file: AlgebraicJacobian/Picard/SpecDegeneracy.lean
 generated: lean
 lean_status: lean_ok
 private: true
+stale: true
 title: AlgebraicGeometry.descentMul₁₂_comp_descentFace₁₂
 type: lean
-updated: '2026-07-29T15:31:48'
+updated: '2026-07-30T15:27:59'
 ---
 private lemma descentMul₁₂_comp_descentFace₁₂ :
     (descentMul₁₂ (A := A) (B := B)).comp (Module.descentFace₁₂ A B)

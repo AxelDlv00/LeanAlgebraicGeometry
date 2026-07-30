@@ -7,9 +7,10 @@ docstring: Index-wise face hitting tensor positions `1, 3`.
 file: AlgebraicJacobian/Algebra/TensorAwayPi.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: Algebra.TensorProduct.faceA₁₃
 type: lean
-updated: '2026-07-29T15:31:34'
+updated: '2026-07-30T15:28:05'
 ---
 noncomputable def faceA₁₃ (i j k : ι) : (S i ⊗[A] S k) →ₐ[A] S i ⊗[A] (S j ⊗[A] S k) :=
   Algebra.TensorProduct.map (AlgHom.id A (S i)) Algebra.TensorProduct.includeRight

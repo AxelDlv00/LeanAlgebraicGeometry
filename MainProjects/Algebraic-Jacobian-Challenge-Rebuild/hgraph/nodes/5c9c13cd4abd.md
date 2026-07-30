@@ -10,9 +10,10 @@ docstring: '**The three window-quotient hypotheses from a chart-typed certificat
 file: ScratchWR/probe_r7_nogo_noeth.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.finite_divisorWindow_quot_of_isCertified
 type: lean
-updated: '2026-07-30T13:28:01'
+updated: '2026-07-30T15:27:59'
 ---
 theorem finite_divisorWindow_quot_of_isCertified {d : (relCurve C R).LocalEquations}
     (A : DivisorAdaptation C R π d) (hc : A.IsCertified g) :

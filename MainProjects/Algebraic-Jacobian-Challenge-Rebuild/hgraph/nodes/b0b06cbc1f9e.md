@@ -8,9 +8,10 @@ docstring: The underlying rational function of `moduleToDivisorZeroApp` is the g
 file: AlgebraicJacobian/RiemannRoch/DivisorSheafZero.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.moduleToDivisorZeroApp_coe
 type: lean
-updated: '2026-07-29T15:31:49'
+updated: '2026-07-30T15:28:02'
 ---
 lemma moduleToDivisorZeroApp_coe {U : X.Opens} (hηU : genericPoint X ∈ U) (s : Γ(X, U)) :
     ((moduleToDivisorZeroApp K hηU s : divisorSections K 0 U) : X.functionField)

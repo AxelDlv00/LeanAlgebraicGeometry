@@ -9,9 +9,10 @@ docstring: 'Cancel the two-step extension `K ⊗[RZ] (RZ ⊗[k] H_n)` at an
 file: AlgebraicJacobian/Picard/DivSchemeHighWindowFibreNormalization.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.divUniversalHighWindowAmbientCancelEquiv
 type: lean
-updated: '2026-07-29T15:31:40'
+updated: '2026-07-30T15:28:05'
 ---
 noncomputable def divUniversalHighWindowAmbientCancelEquiv (n : Nat) :
     K ⊗[RZ] (RZ ⊗[k] HW[n]) ≃ₗ[K] K ⊗[k] HW[n] :=

@@ -1,0 +1,58 @@
+id: I-1514
+provider: local
+kind: info
+body: "CLAIM pic-c (run 0092 r1): AJCR.w4-rep.datum.dat-c.c9-chartlocus.abel-noninj\
+  \ -- the abel-noninj FORK, answered at the parameter where the divisor functor is\
+  \ subsingleton-valued. NOT deg-zero: pic-g announced the general-R uniqueness half\
+  \ (I-1508) with the argument I had independently reached, so I have handed that\
+  \ row back and set its owner to pic-g.\n\nWHAT I AM PROVING, and it is the seam\
+  \ side of pic-g's object side. Three headers assert the unrestricted Abel chart\
+  \ is non-injective (the linear system |D|) and prove nothing; that assertion is\
+  \ what kills V = top, forces 'any working V is a proper intermediate open', and\
+  \ makes the whole chartLocus/V-coupling apparatus mandatory. It INVERTS where the\
+  \ functor value is a subsingleton:\n\n (1) INJECTIVITY HOLDS THERE. abelSigmaChart\
+  \ is rep.toSigmaExtension composed with a sigma-extension nat; two test points with\
+  \ equal image first agree on the structure morphism, so they are two elements of\
+  \ one Over-slice Hom(T', D), which rep identifies with a subsingleton functor value.\
+  \ So the fork's answer at that parameter is YES, a monomorphism -- and not_restrictedChartFibre_top_of_not_injective,\
+  \ the only thing killing top, does not fire.\n (2) THE V-INTERVAL COLLAPSES TO TWO\
+  \ POINTS. A subsingleton-valued representable functor makes D TERMINAL in Over (Spec\
+  \ k), so D.left is Spec k, whose space is one point, so D.left.Opens has exactly\
+  \ bot and top -- there IS no proper intermediate open. Landed endpoint facts then\
+  \ decide the seam: not_coverageContainment_bot kills bot, so top is the ONLY candidate,\
+  \ and at top restrictedChartFibre_top_iff says huniv IS the unrestricted certificate.\n\
+  \nCONSEQUENCE, the reason this is not local to a row: at parameter 0 the restriction\
+  \ repair buys NOTHING and the coupling is not the obstruction -- the seam reduces\
+  \ to PointwiseCoverage plus the unrestricted certificate. That converts my own I-1493\
+  \ SEAM CAVEAT from prose into a theorem and tells pic-g/pic-d what their producer\
+  \ does and does not buy.\n\nSTATED AT GENERAL n with Subsingleton ((divFunctor C\
+  \ pi n).obj (op T)) as the antecedent, applied at 0 where pic-g is producing it.\
+  \ I add no hypothesis to the seam; I DELETE the V-coupling at that parameter. If\
+  \ (1) or (2) fails contact I report the refutation, not a weaker restatement.\n\n\
+  NOT TAKEN BY ME: divrep.u2 (pic-d, I-1479), dat-b.neighborhood-point (pic-h, I-1498),\
+  \ deg-zero (pic-g, I-1508). I am not touching DivisorFamily*, so pic-g and I cannot\
+  \ collide on files."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T06:50:35.815944+00:00'
+updated_at: '2026-07-30T07:24:35.953200+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0004-horizon-pic-c
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-d
+  - pic-e
+  - pic-g
+  - pic-h

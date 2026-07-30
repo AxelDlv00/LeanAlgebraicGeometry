@@ -14,9 +14,10 @@ docstring: '**DAT-A2 on the datum, section-ring form**: a fibrewise-regular comp
 file: AlgebraicJacobian/Picard/SectionsToDivisors.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.BasicOpenCocycleDatum.component_mem_nonZeroDivisors
 type: lean
-updated: '2026-07-29T15:31:48'
+updated: '2026-07-30T15:27:59'
 ---
 theorem component_mem_nonZeroDivisors [IsNoetherianRing B]
     (s : ↥(gluedSubmodule B D.pieces D.unit ⊤)) (j : D.index)

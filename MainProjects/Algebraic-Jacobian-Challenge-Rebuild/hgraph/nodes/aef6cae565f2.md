@@ -31,9 +31,10 @@ docstring: '**INDEX SEPARATION IS NOT FREE, AND NOT IMPLIED BY PER-CHART INJECTI
 file: AlgebraicJacobian/Picard/Pic0ChartMultiIndexInterval.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.not_indexSeparated_duplicated
 type: lean
-updated: '2026-07-30T13:25:27'
+updated: '2026-07-30T15:28:02'
 ---
 theorem not_indexSeparated_duplicated :
     ¬ IndexSeparated C (duplicatedSpecFamily C) := by

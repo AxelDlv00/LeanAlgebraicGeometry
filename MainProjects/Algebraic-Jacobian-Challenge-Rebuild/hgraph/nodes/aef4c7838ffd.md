@@ -13,9 +13,10 @@ docstring: '**Freeness of the pinned chart sections over the test ring**: `Γ(C_
 file: AlgebraicJacobian/Picard/DivSchemeRedesignFreeFlatChart.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.free_sections_relPinnedChart
 type: lean
-updated: '2026-07-29T15:31:42'
+updated: '2026-07-30T15:28:02'
 ---
 theorem free_sections_relPinnedChart (C : Over (Spec (.of k))) (R : Type u) [CommRing R]
     [Algebra k R] (π : C.left ⟶ P1 k) [IsFinite π] (b : Bool) :

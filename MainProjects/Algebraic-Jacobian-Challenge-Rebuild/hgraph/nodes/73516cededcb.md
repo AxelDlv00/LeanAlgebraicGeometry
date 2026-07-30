@@ -14,9 +14,10 @@ docstring: 'The canonical `B₁ ⊗[A] B₂`-algebra structure on `Si ⊗[A] Sj`
 file: AlgebraicJacobian/Algebra/TensorAway.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: IsLocalization.Away.tensorAwayAlgebra
 type: lean
-updated: '2026-07-29T15:31:34'
+updated: '2026-07-30T15:28:00'
 ---
 @[reducible] noncomputable def tensorAwayAlgebra : Algebra (B₁ ⊗[A] B₂) (Si ⊗[A] Sj) :=
   (tensorMap A B₁ B₂ Si Sj).toRingHom.toAlgebra

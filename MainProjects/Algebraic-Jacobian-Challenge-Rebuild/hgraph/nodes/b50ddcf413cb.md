@@ -7,9 +7,10 @@ docstring: '`k[t] → (k[X₀,X₁]_(Xᵢ))₀`, `t ↦ Xⱼ/Xᵢ`. Bijective fo
 file: AlgebraicJacobian/Curve/P1.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.P1.polyToAway
 type: lean
-updated: '2026-07-29T15:31:37'
+updated: '2026-07-30T15:28:03'
 ---
 noncomputable def polyToAway (i j : Fin 2) : Polynomial k →ₐ[k] Away 𝒜 (X i) :=
   Polynomial.aeval (chartCoord k i j)

@@ -15,9 +15,10 @@ docstring: '**The slicing criterion, module form** (Kleiman `lm:ctn` (iii)⟹(i)
 file: AlgebraicJacobian/Picard/SlicingFlat.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: Module.Flat.of_surjective_exact_of_forall_rTensor_residueField_injective
 type: lean
-updated: '2026-07-29T15:31:48'
+updated: '2026-07-30T15:28:04'
 ---
 theorem Module.Flat.of_surjective_exact_of_forall_rTensor_residueField_injective
     [IsNoetherianRing R] [Module.Flat R M] (φ : M →ₗ[R] M) (π : M →ₗ[R] Q)

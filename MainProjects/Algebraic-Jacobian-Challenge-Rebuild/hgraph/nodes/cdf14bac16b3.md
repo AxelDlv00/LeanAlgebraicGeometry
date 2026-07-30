@@ -10,9 +10,10 @@ docstring: '**The product rule for pole bounds**: `H⁰(𝒪(A)) · H⁰(𝒪(B)
 file: AlgebraicJacobian/RiemannRoch/SectionSpaces.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.mul_mem_divisorSections_top
 type: lean
-updated: '2026-07-29T15:31:50'
+updated: '2026-07-30T15:28:04'
 ---
 theorem mul_mem_divisorSections_top {A B : X.CurveDivisor} {f h : X.functionField}
     (hfA : f ∈ divisorSections K A ⊤) (hhB : h ∈ divisorSections K B ⊤) :

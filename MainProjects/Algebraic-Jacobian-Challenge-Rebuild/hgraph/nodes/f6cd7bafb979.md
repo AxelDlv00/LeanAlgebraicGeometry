@@ -8,9 +8,10 @@ file: AlgebraicJacobian/Picard/WitnessTransport.lean
 generated: lean
 lean_status: lean_ok
 private: true
+stale: true
 title: AlgebraicGeometry.Over.faceA₁₃_algebraMap
 type: lean
-updated: '2026-07-29T15:31:48'
+updated: '2026-07-30T15:28:06'
 ---
 private lemma faceA₁₃_algebraMap (i j l : P.ι) (w : B ⊗[A] B) :
     letI := IsLocalization.Away.tensorAwayAlgebra A B B Γ(XB, (XB).basicOpen (P.r j))

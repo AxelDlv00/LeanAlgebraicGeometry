@@ -12,9 +12,10 @@ docstring: 'The members of the extension of a pointed cover across a clopen piec
 file: AlgebraicJacobian/Picard/CechPicClopenGlue.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.CechPic.extOpens
 type: lean
-updated: '2026-07-29T15:31:37'
+updated: '2026-07-30T15:28:02'
 ---
 noncomputable def extOpens (y : Y) : Y.Opens :=
   if hy : y ∈ w.opensRange then w ''ᵁ (𝒰₀.opens hy.choose) else Ω'

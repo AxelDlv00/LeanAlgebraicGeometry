@@ -13,9 +13,10 @@ docstring: '**Faithful flatness of the cover piece over the base piece.** When `
 file: AlgebraicJacobian/Picard/EffectivityPieces.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.faithfullyFlat_pieceCover
 type: lean
-updated: '2026-07-29T15:31:46'
+updated: '2026-07-30T15:28:01'
 ---
 theorem faithfullyFlat_pieceCover [Module.FaithfullyFlat A B] {U : (XA).Opens}
     (hU : IsAffineOpen U) :

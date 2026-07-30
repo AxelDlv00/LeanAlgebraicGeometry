@@ -17,9 +17,10 @@ docstring: '**The germ-range spreading criterion (Milne 3.3, substep 3).** Let
 file: AlgebraicJacobian/Albanese/Milne33Pullback.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.RationalMap.mem_domain_of_forall_germ_mem_range
 type: lean
-updated: '2026-07-29T15:31:33'
+updated: '2026-07-30T15:28:04'
 ---
 theorem Scheme.RationalMap.mem_domain_of_forall_germ_mem_range
     {Y Z S : Scheme.{u}} [IsIntegral Y] [IsAffine S] (qY : Y ⟶ S) (qZ : Z ⟶ S)

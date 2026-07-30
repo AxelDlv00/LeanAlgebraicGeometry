@@ -6,9 +6,10 @@ decl: Submodule.directedSystem_directedQuotientMap
 file: AlgebraicJacobian/Algebra/DirectLimitQuotient.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: Submodule.directedSystem_directedQuotientMap
 type: lean
-updated: '2026-07-29T15:31:34'
+updated: '2026-07-30T15:27:58'
 ---
 noncomputable instance directedSystem_directedQuotientMap
     (N : ι → Submodule R M) (hN : Monotone N) :

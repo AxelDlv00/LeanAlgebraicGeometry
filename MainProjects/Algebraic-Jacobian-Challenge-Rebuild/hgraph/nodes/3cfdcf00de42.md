@@ -7,9 +7,10 @@ docstring: The comparison morphism commutes with the first projections.
 file: AlgebraicJacobian/Cohomology/RelativeSectionsLinear.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.relCurveMap_fst
 type: lean
-updated: '2026-07-29T15:31:36'
+updated: '2026-07-30T15:27:58'
 ---
 lemma relCurveMap_fst :
     relCurveMap C R R' ≫ (fst C (overSpec k R)).left = (fst C (overSpec k R')).left :=

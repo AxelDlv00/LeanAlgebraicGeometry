@@ -12,9 +12,10 @@ docstring: '**The vanishing law (the DDR-5 containment half)**: every element of
 file: AlgebraicJacobian/Picard/DivSchemeFamily.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.ThetaGeneratorSeed.le_vanishingSubmodule
 type: lean
-updated: '2026-07-29T15:31:39'
+updated: '2026-07-30T15:28:03'
 ---
 theorem le_vanishingSubmodule [IsNoetherianRing R] (hD : D.IsGenerator) :
     K ≤ (D.localEquations hD).vanishingSubmodule R

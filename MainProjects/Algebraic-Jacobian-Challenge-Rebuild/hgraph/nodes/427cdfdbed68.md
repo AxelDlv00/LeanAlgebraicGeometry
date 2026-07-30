@@ -17,9 +17,10 @@ docstring: '**Localize-and-flatten** ((C2) effectivity, brick E4): every point o
 file: AlgebraicJacobian/Picard/EffectivityOverlap.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.exists_flat_pieceTrivialization_of_le
 type: lean
-updated: '2026-07-29T15:31:46'
+updated: '2026-07-30T15:27:58'
 ---
 theorem exists_flat_pieceTrivialization_of_le [Module.FaithfullyFlat A B]
     [IsProper C.hom] [GeometricallyIrreducible C.hom] [GeometricallyReduced C.hom]

@@ -24,9 +24,10 @@ docstring: '**`hfield` reduced to fibre divisibility**: if every `K`-side compon
 file: AlgebraicJacobian/Picard/DivSchemeUnivFibreKerSpan.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.ThetaGeneratorSeed.hfield_of_forall_pinnedPieceSectionsMap_mem
 type: lean
-updated: '2026-07-29T15:31:43'
+updated: '2026-07-30T15:28:02'
 ---
 theorem hfield_of_forall_pinnedPieceSectionsMap_mem
     (hdiv : ∀ (z : relCurve C R) (p : PrimeSpectrum R) ⦃ψ : relThetaSections C R π a⦄,

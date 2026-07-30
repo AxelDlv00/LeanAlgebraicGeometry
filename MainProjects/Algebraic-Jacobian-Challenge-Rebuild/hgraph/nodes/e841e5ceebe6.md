@@ -28,9 +28,10 @@ docstring: '**Brick 1, `∀ z` package from the cleanest carve statement `hsub`*
 file: AlgebraicJacobian/Picard/DivSchemeRedesignJFlat.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.ThetaGeneratorSeed.forall_flat_colength_quotient_of_hsub
 type: lean
-updated: '2026-07-29T15:31:42'
+updated: '2026-07-30T15:28:05'
 ---
 theorem forall_flat_colength_quotient_of_hsub [Module.Finite R ↥K]
     (hcolFin : ∀ z : relCurve C R,

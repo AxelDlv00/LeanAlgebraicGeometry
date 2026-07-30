@@ -10,9 +10,10 @@ docstring: 'The image of the point of `p` under the diagonal equals its image un
 file: AlgebraicJacobian/Albanese/Milne33Rows.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.selfDiag_base_eq_rowFst_base
 type: lean
-updated: '2026-07-29T15:31:33'
+updated: '2026-07-30T15:27:59'
 ---
 lemma selfDiag_base_eq_rowFst_base (s : ↥(Spec (.of kbar))) :
     (selfDiag X).base (p.base s) = (rowFst p hp).base (p.base s) := by

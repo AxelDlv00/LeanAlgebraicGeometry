@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.AffCoverData.pieceQuotBaseChange_one_tmul_mk
 file: AlgebraicJacobian/Picard/DivisorFamilyAffBaseChange.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.AffCoverData.pieceQuotBaseChange_one_tmul_mk
 type: lean
-updated: '2026-07-29T15:31:43'
+updated: '2026-07-30T15:28:05'
 ---
 lemma pieceQuotBaseChange_one_tmul_mk (j : D.index)
     (E : Set Γ(relCurve C R, D.pieces j)) (s : Γ(relCurve C R, D.pieces j)) :

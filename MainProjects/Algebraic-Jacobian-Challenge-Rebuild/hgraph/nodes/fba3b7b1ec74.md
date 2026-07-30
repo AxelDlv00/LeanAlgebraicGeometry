@@ -6,9 +6,10 @@ decl: Module.DescentDatum.projective_descended
 file: AlgebraicJacobian/Descent/InvertibleModule.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: Module.DescentDatum.projective_descended
 type: lean
-updated: '2026-07-29T15:31:37'
+updated: '2026-07-30T15:28:06'
 ---
 theorem projective_descended [Module.Finite B M] [Projective B M] :
     Projective A D.descended := by

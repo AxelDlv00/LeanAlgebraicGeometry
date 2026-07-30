@@ -8,9 +8,10 @@ docstring: A successor multiplication source is finite when its input relation m
 file: AlgebraicJacobian/Picard/DivSchemeHighWindowRelations.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.finite_divUniversalHighWindowMulSource
 type: lean
-updated: '2026-07-29T15:31:40'
+updated: '2026-07-30T15:28:04'
 ---
 theorem finite_divUniversalHighWindowMulSource (n : Nat)
     (K : Submodule RZ

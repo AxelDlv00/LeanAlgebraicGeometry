@@ -10,9 +10,10 @@ docstring: '**Any two degree-zero certified families are divisor-equal**, since 
 file: AlgebraicJacobian/Picard/DivisorFamilyDegreeZeroUnique.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.divEq_of_isCertified_zero
 type: lean
-updated: '2026-07-30T12:49:24'
+updated: '2026-07-30T15:28:02'
 ---
 theorem divEq_of_isCertified_zero
     {d d' : (relCurve C K).LocalEquations}

@@ -10,9 +10,10 @@ docstring: '**The obstruction.** If the chart-0 trace of the system is not close
 file: AlgebraicJacobian/Picard/DivSchemeCertZarChartTrace.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.DivisorAdaptation.not_forall_noLeak_of_not_isClosed_chart₀
 type: lean
-updated: '2026-07-29T15:31:39'
+updated: '2026-07-30T15:28:06'
 ---
 theorem not_forall_noLeak_of_not_isClosed_chart₀
     (hnc : ¬ IsClosed (d.supportLocus

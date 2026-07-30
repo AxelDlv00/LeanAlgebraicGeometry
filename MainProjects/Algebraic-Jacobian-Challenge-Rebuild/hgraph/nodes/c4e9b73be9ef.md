@@ -6,9 +6,10 @@ decl: CategoryTheory.PresheafOfGroups.OneCochain.one_evInf
 file: AlgebraicJacobian/Picard/UnitsCocycle.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: CategoryTheory.PresheafOfGroups.OneCochain.one_evInf
 type: lean
-updated: '2026-07-29T15:31:48'
+updated: '2026-07-30T15:28:03'
 ---
 lemma OneCochain.one_evInf (i j : I) : (1 : OneCochain G U).evInf i j = 1 :=
   rfl

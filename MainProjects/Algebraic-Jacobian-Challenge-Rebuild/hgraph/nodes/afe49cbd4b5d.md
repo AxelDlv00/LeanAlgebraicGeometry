@@ -25,9 +25,10 @@ docstring: '**The bridge** (I-0254 wall A, span level): if the fibre window `div
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivBridge.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.exists_windowCompare_ne_zero_of_divUniversalFibreKM_ne_bot
 type: lean
-updated: '2026-07-29T15:31:42'
+updated: '2026-07-30T15:28:02'
 ---
 theorem exists_windowCompare_ne_zero_of_divUniversalFibreKM_ne_bot
     (hne : divUniversalFibreKM C hπ g r₁ r₂ b₁ i j K ≠ ⊥) :

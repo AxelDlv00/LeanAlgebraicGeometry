@@ -17,9 +17,10 @@ docstring: '**A piece equation generates the stalk ideal at each of its points, 
 file: AlgebraicJacobian/Picard/DivSchemeMonoBridge.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.DivisorAdaptation.stalkIdeal_eq_span_germ_eqn
 type: lean
-updated: '2026-07-29T15:31:41'
+updated: '2026-07-30T15:27:59'
 ---
 lemma stalkIdeal_eq_span_germ_eqn (j : A.index) {z : relCurve C R}
     (hz : z ∈ A.pieces j) :

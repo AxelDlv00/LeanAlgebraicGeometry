@@ -12,9 +12,10 @@ docstring: '**The affine comparison**: on an affine test `overSpec k A`, the veh
 file: AlgebraicJacobian/Picard/GrassmannianFunctor.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Grassmannian.grFunctorAffineEquiv
 type: lean
-updated: '2026-07-29T15:31:46'
+updated: '2026-07-30T15:28:02'
 ---
 noncomputable def grFunctorAffineEquiv :
     grFunctor k H d (overSpec k A) ≃ grFunctorAff k H d A where

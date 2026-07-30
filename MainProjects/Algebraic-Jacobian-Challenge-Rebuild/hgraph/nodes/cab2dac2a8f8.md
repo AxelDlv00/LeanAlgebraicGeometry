@@ -14,9 +14,10 @@ docstring: 'At a point of a pulled adaptation piece, the pulled piece equation i
 file: AlgebraicJacobian/Picard/DivSchemeAdaptationFibreRegular.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.DivisorAdaptation.exists_germ_pulledEqn_eq_unit_mul_pullbackEqn
 type: lean
-updated: '2026-07-29T15:31:39'
+updated: '2026-07-30T15:28:04'
 ---
 theorem exists_germ_pulledEqn_eq_unit_mul_pullbackEqn
     (j : A.index) (z : relCurve C R')

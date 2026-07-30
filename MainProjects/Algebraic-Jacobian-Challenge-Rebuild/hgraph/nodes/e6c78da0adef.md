@@ -12,9 +12,10 @@ docstring: '**The difference map is a `k̄`-rational map.** Right-composing `Φ`
 file: AlgebraicJacobian/Albanese/DifferenceMap.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.RationalMap.differenceRationalMap_compHom_over
 type: lean
-updated: '2026-07-29T15:31:33'
+updated: '2026-07-30T15:28:05'
 ---
 theorem differenceRationalMap_compHom_over
     (f : X.left.RationalMap G.left)

@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.divUniversalHighWindowRelation_zero
 file: AlgebraicJacobian/Picard/DivSchemeHighWindowRelations.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.divUniversalHighWindowRelation_zero
 type: lean
-updated: '2026-07-29T15:31:40'
+updated: '2026-07-30T15:28:03'
 ---
 theorem divUniversalHighWindowRelation_zero :
     divUniversalHighWindowRelation (C := C) (pi := pi)

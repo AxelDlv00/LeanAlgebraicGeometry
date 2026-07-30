@@ -15,9 +15,10 @@ docstring: '**The base-field comparison of the degree-zero subgroups**: for an `
 file: AlgebraicJacobian/Picard/Pic0ThetaAssembly.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.pic0CrossBaseEquiv
 type: lean
-updated: '2026-07-29T15:31:47'
+updated: '2026-07-30T15:28:02'
 ---
 noncomputable def pic0CrossBaseEquiv (T : Over (Spec (.of L))) :
     pic0Subgroup ((baseChange k L).obj C) T

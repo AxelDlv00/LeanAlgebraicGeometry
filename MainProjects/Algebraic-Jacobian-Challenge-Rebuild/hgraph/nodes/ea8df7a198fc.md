@@ -9,9 +9,10 @@ docstring: 'After transporting the target finite product, the range of the
 file: AlgebraicJacobian/Picard/DivSchemeHighWindowKoszul.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.range_piRightHom_comp_baseChange_finiteKoszulBoundary
 type: lean
-updated: '2026-07-29T15:31:40'
+updated: '2026-07-30T15:28:05'
 ---
 theorem range_piRightHom_comp_baseChange_finiteKoszulBoundary
     (step : ι → L →ₗ[R] M) :

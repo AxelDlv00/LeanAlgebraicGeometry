@@ -39,9 +39,10 @@ docstring: "**THE B-5 ASSEMBLY** (`w4-datb` §1.2, everything except the two per
 file: AlgebraicJacobian/Picard/Pic0ChartCoverageTest.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.mem_chartLocus_of_drop
 type: lean
-updated: '2026-07-29T15:31:47'
+updated: '2026-07-30T15:28:00'
 ---
 theorem mem_chartLocus_of_drop {T : Over (Spec (.of k))} (lam : picEt C T) (t : T.left)
     (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)

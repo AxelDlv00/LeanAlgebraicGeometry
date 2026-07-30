@@ -10,9 +10,10 @@ docstring: 'The pushed idempotent lift evaluates to zero: the graph chart contai
 file: AlgebraicJacobian/RiemannRoch/GraphChart.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.graphTensorEval_graphElift
 type: lean
-updated: '2026-07-29T15:31:49'
+updated: '2026-07-30T15:28:04'
 ---
 lemma graphTensorEval_graphElift : graphTensorEval C t (graphElift C t) = 0 := by
   rw [graphElift, graphTensorEval_map,

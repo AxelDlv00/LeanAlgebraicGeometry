@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.divUniversalHighWindowChartRead_one_comp_oneEquiv_eq_snd
 file: AlgebraicJacobian/Picard/DivSchemeHighWindowRelationRead.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.divUniversalHighWindowChartRead_one_comp_oneEquiv_eq_sndWindowChartRead
 type: lean
-updated: '2026-07-29T15:31:40'
+updated: '2026-07-30T15:28:05'
 ---
 theorem divUniversalHighWindowChartRead_one_comp_oneEquiv_eq_sndWindowChartRead
     (side : Bool) :

@@ -13,9 +13,10 @@ docstring: '**The Abel Čech class** on the test `T = C`: the class `𝒪(Δ) ·
 file: AlgebraicJacobian/Picard/AbelElement.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.abelCechClass
 type: lean
-updated: '2026-07-29T15:31:37'
+updated: '2026-07-30T15:28:04'
 ---
 def abelCechClass (P : 𝟙_ (Over (Spec (.of k))) ⟶ C) : (C ⊗ C).left.CechPic :=
   Over.graphPicClass C (𝟙 C) * (Over.graphPicClass C (toUnit C ≫ P))⁻¹

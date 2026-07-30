@@ -20,9 +20,10 @@ docstring: '**Swallow or miss gives no-leak at that piece.**  Swallowing: the tr
 file: AlgebraicJacobian/Picard/DivisorFamilyAffPerPiece.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.AffAdaptation.supportLeak_eq_empty_of_subset_or_disjoint
 type: lean
-updated: '2026-07-29T15:31:44'
+updated: '2026-07-30T15:28:00'
 ---
 theorem supportLeak_eq_empty_of_subset_or_disjoint (U : (relCurve C R).Opens)
     (h : d.supportLocus ⊆ (U : Set (relCurve C R))

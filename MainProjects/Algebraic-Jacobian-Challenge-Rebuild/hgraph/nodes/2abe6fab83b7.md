@@ -7,9 +7,10 @@ docstring: Uniform submodule form of base-field multiplier compatibility.
 file: AlgebraicJacobian/Picard/DivSchemeHighWindowTransitionRelation.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.map_divUniversalHighWindowBaseMultiplierTransition_le_mulSpan
 type: lean
-updated: '2026-07-29T15:31:40'
+updated: '2026-07-30T15:27:58'
 ---
 theorem map_divUniversalHighWindowBaseMultiplierTransition_le_mulSpan
     (n : Nat) (K : Submodule RZ (G n)) (a : HS) :

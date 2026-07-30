@@ -7,9 +7,10 @@ docstring: A standard smooth algebra over a domain is reduced.
 file: AlgebraicJacobian/Curve/GeometricallyReduced.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: Algebra.IsStandardSmooth.isReduced_of_isDomain
 type: lean
-updated: '2026-07-29T15:31:37'
+updated: '2026-07-30T15:28:05'
 ---
 theorem Algebra.IsStandardSmooth.isReduced_of_isDomain (B S : Type*) [CommRing B] [CommRing S]
     [IsDomain B] [Algebra B S] [Algebra.IsStandardSmooth B S] : IsReduced S :=

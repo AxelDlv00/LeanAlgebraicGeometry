@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.Scheme.germGenericUnits_val
 file: AlgebraicJacobian/Picard/MeromorphicPresentation.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.germGenericUnits_val
 type: lean
-updated: '2026-07-29T15:31:46'
+updated: '2026-07-30T15:28:05'
 ---
 lemma germGenericUnits_val {U : X.Opens} (hηU : genericPoint X ∈ U) (u : Γ(X, U)ˣ) :
     (germGenericUnits hηU u : X.functionField)

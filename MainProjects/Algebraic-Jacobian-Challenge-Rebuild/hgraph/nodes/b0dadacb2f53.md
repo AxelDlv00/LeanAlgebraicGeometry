@@ -11,9 +11,10 @@ docstring: '**A piece that misses the support has vanishing colength**: its equa
 file: AlgebraicJacobian/Picard/DivisorFamilyAffPerPiece.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.AffAdaptation.subsingleton_colength_of_disjoint_supportLocus
 type: lean
-updated: '2026-07-29T15:31:44'
+updated: '2026-07-30T15:28:02'
 ---
 lemma subsingleton_colength_of_disjoint_supportLocus (j : D.index)
     (hdisj : ∀ z : relCurve C R, z ∈ D.pieces j → z ∉ d.supportLocus) :

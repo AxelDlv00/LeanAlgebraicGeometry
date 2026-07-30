@@ -23,9 +23,10 @@ docstring: '**Base change of a module along a field extension preserves triviali
 file: AlgebraicJacobian/Picard/Pic0ChartLocusFibreField.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.subsingleton_tensorProduct_field_ext_iff
 type: lean
-updated: '2026-07-29T15:31:47'
+updated: '2026-07-30T15:28:02'
 ---
 theorem subsingleton_tensorProduct_field_ext_iff
     {S L L' H : Type u} [CommRing S] [Field L] [Field L'] [Algebra S L] [Algebra S L']

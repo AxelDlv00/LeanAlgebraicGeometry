@@ -13,9 +13,10 @@ docstring: 'The quotient of the packaged window point is the base change of the 
 file: ScratchWR/probe_r7_nogo_noeth.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.divisorWindowGrOfQuotEquiv
 type: lean
-updated: '2026-07-30T13:28:01'
+updated: '2026-07-30T15:27:58'
 ---
 noncomputable def divisorWindowGrOfQuotEquiv (d : (relCurve C R).LocalEquations)
     (R' : Type u) [CommRing R'] [Algebra k R'] [Algebra R R'] [IsScalarTower k R R']

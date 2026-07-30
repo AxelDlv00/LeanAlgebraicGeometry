@@ -10,9 +10,10 @@ docstring: '**The componentwise mutual-inverse law**: chart coordinates multiply
 file: AlgebraicJacobian/Cohomology/GluedSheafPair.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.gluedQsmul_inv_of_mul_res_eq_one
 type: lean
-updated: '2026-07-29T15:31:35'
+updated: '2026-07-30T15:28:03'
 ---
 lemma gluedQsmul_inv_of_mul_res_eq_one (r₀ : Γ(X, V₀)) (r₁ : Γ(X, V₁))
     (hmul : X.resHom (inf_le_left : V₀ ⊓ V₁ ≤ V₀) r₀ *

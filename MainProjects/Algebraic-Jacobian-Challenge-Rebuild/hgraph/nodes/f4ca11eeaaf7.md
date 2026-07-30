@@ -17,9 +17,10 @@ docstring: '**The comparison of divisor functors**: the chart-typed locally cert
 file: AlgebraicJacobian/Picard/DivisorFamilyAffFunctorCompare.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.divFunctorToAff
 type: lean
-updated: '2026-07-29T15:31:43'
+updated: '2026-07-30T15:28:06'
 ---
 def divFunctorToAff : divFunctor C π n ⟶ divFunctorAff C n where
   app T := ↾divFamZarToAffVehicle C n π

@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.divFamZarAff.eval_apply
 file: AlgebraicJacobian/Picard/DivisorFamilyAffVehicle.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.divFamZarAff.eval_apply
 type: lean
-updated: '2026-07-29T15:31:44'
+updated: '2026-07-30T15:28:05'
 ---
 lemma eval_apply (U : T.left.affineOpens) (s : divFamZarAff C n T) :
     eval C n T U s = s.1 U :=

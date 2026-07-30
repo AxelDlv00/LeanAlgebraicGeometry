@@ -7,9 +7,10 @@ docstring: '**The per-piece degree reading**, widened.'
 file: AlgebraicJacobian/Picard/DivisorFamilyAffFieldDegree.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.AffAdaptation.finrank_colength_eq_sum
 type: lean
-updated: '2026-07-30T02:30:06'
+updated: '2026-07-30T15:28:06'
 ---
 lemma finrank_colength_eq_sum (j : D.index) :
     (finrank K (A.colength j) : ℤ)

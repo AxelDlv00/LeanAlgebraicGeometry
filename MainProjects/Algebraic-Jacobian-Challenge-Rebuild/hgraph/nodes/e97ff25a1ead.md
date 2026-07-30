@@ -30,9 +30,10 @@ docstring: '**The dichotomy at `mixedParamChart`**, i.e. at the real atlas.
 file: AlgebraicJacobian/Picard/Pic0ChartMultiIndexInterval.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.exists_crossing_or_not_injective_mixedParamChart
 type: lean
-updated: '2026-07-30T12:49:24'
+updated: '2026-07-30T15:28:05'
 ---
 theorem exists_crossing_or_not_injective_mixedParamChart {ι : Type u} (nn : ι → ℕ)
     (D : ι → Over (Spec (.of k)))
