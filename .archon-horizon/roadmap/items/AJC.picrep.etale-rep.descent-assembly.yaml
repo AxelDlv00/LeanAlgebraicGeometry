@@ -3,7 +3,48 @@ title: 'The restated-G3 ASSEMBLY: k''-representability of picEt + Galois descent
   k-representability (the theorem that consumes inputs 1-4)'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "CLOSED AS AN IMPLICATION by ajc-p2 run 0084 r6: the GOAL now exists, crosses\
+summary: "THE GOAL NOW EXISTS AS A THEOREM (pic-e, run 0095 r1). Owner pic-e. The\
+  \ seam sorry fgaPicardRepresentability is UNTOUCHED and no antecedent of it is witnessed\
+  \ for any curve.\n\nLANDED, DO NOT REDO. Picard/PicEtDescentGoal.lean, rooted at\
+  \ AlgebraicJacobian.lean, 15 declarations (COUNTED by declaration keyword, not recalled\
+  \ -- I first wrote 16), ZERO sorries, lake build EXIT=0 (8695 jobs), ALL axiom-clean\
+  \ [propext, Classical.choice, Quot.sound] against fgaPicardRepresentability firing\
+  \ sorryAx in the same probe.\n\nWHAT WAS MISSING AND IS NOW THERE. FGAPicRepresentability.lean\
+  \ said of the four descent inputs: \"Every entry below is an antecedent. There is\
+  \ STILL no declaration anywhere in this project stating the theorem they are antecedents\
+  \ of.\" That sentence was false at HEAD after my commit and I have corrected it\
+  \ in place rather than leaving it to read as audited self-criticism.\n * representableBy_picEt_of_galoisQuotient\
+  \ -- rep : (picEt (C_{k'})).RepresentableBy X' + a Galois quotient Y of a semilinear\
+  \ action + hcov + the G1 predicate match ==> (picEt C).RepresentableBy Y. Hypothesis\
+  \ over k', conclusion over k, and neither HasPicSchemeEt C nor the conclusion's\
+  \ shape occurs in any hypothesis. Contrast representableByRestrict_of_baseChange,\
+  \ refuted at I-1312 for concluding about a k'-OBJECT.\n * seamClauseOne_of_isGaloisQuotient\
+  \ and _canonical -- clause (1) in its full three-field shape via PicEtSeparated's\
+  \ free side conjuncts. _canonical eliminates the action binder too, through semilinearGalActionOfRepresentableBy,\
+  \ so its inputs are: a k'-representation, a Galois quotient of the action that representation\
+  \ already determines, hcov, the G1 match, LocallyOfFiniteType of Y.\n * IsInvariantMatch\
+  \ -- G1's predicate match as a NAMED hypothesis rather than absorbed, so a lane\
+  \ closing G1 has a definition to discharge.\n\nTHREE MEASUREMENTS OTHER LANES SHOULD\
+  \ USE.\n * A Prop/Type ELIMINATION BARRIER sits between the class form and the data\
+  \ form, found by elaborating an application rather than trusting my own component\
+  \ theorem: destructuring the Prop-valued IsGaloisQuotient into the Type-valued RepresentableBy\
+  \ conclusion FAILS (\"Exists.casesOn can only eliminate into Prop\"). The Nonempty\
+  \ form is where Classical.choice is spent; clause (1), being an existential, needs\
+  \ none. So the component theorem was NOT usable by any G2 consumer until the bundled\
+  \ forms were added.\n * quotientHomEquiv_uniform's Nonempty CANNOT carry the naturality\
+  \ square a RepresentableBy needs -- I-1405's own caveat, now confirmed at a use\
+  \ site rather than predicted. So clause 3 is re-derived as quotientHomEquivOfIso\
+  \ with its forward map PINNED to descentMor, and descentMor goes through mathlib's\
+  \ Over.pullback FUNCTOR so functoriality is Functor.map_comp, not a pullback computation.\n\
+  \ * hcov's spelling matches representableBy_of_galInvariantEquiv's on the nose (Scheme.etaleTopologyOver,\
+  \ sieve of coverSelfSection, over ALL tests), so pic-a's hcov row plugs in without\
+  \ restatement.\n\nWHAT REMAINS, every item an EXPLICIT undischarged hypothesis rather\
+  \ than a hidden one: (a) k'-side representability of picEt (C_{k'}), the campaign's\
+  \ output, still nothing behind it; (b) IsGaloisQuotient at a GLUED non-affine X'\
+  \ -- pic-f's G2(c) row; (c) hcov at a nontrivial Galois level -- pic-a's row; (d)\
+  \ IsInvariantMatch -- G1, whose satisfiability I did NOT measure beyond the degenerate\
+  \ k' = k, so treat its non-vacuity as open and mine.\n\n--- earlier row text follows\
+  \ ---\n\nCLOSED AS AN IMPLICATION by ajc-p2 run 0084 r6: the GOAL now exists, crosses\
   \ the descent step, and its converse is proved so it is coordinates rather than\
   \ a discount. Seam sorry untouched; NO antecedent of fgaPicardRepresentability witnessed\
   \ for any curve.\n\nLANDED, do not redo. Picard/PicEtDescentRepresentability.lean,\
@@ -64,9 +105,10 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.etale-rep
-  updated_at: '2026-07-30T03:01:26.268764+00:00'
+  updated_at: '2026-07-30T11:49:57.205945+00:00'
   pinned_commits:
   - 5e98db31b2
   - 561cb77159
   - 282c9335e3
   - f64de9d18d
+  owner: pic-e
