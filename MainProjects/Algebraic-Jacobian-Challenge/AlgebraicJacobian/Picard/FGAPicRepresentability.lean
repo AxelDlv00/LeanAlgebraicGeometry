@@ -553,6 +553,46 @@ the Galois quotient at a glued non-affine `X'`, and `hcov`. Consumers should cal
 the `k'`-side representation is the campaign's undischarged output, and clause (1)
 field 1 is witnessed for no curve.
 
+**AND THE THIRD ANTECEDENT WAS NEVER ONE** (`pic-e`, 2026-07-30,
+`Picard/PicEtDescentNecessity.lean`). The paragraph above counts the *named* inputs
+correctly and still under-reports what a consumer must supply, because
+`seamClauseOne_of_isGaloisQuotient_noMatch` also takes
+`hlft : LocallyOfFiniteType Y.hom`. That one is a **consequence**, not an input: the
+quotient's own comparison isomorphism `e` identifies `Y_{k'}` with `X'`, so
+`locallyOfFiniteType_of_baseChange` descends the property from the `k'`-side condition,
+and that condition is itself free by base change from the `k`-side one. Consumers
+should call `seamClauseOne_of_isGaloisQuotient_lftFree`, which is the **three**-input
+form: `rep`, `hq`, `hcov`. Two of the Galois binders a first draft of that lemma
+carried are also deleted — neither `SemilinearGalAction` nor `IsGaloisQuotient` binds
+`[IsGalois]` or `[FiniteDimensional]`, checked at the `variable` line, so the word
+"Galois" in both names is about the intended application and not about a hypothesis.
+
+**AND `rep` IS NECESSARY, WHICH CHANGES WHAT ITS "0 PRODUCERS" MEANS.**
+`PicScheme.representableBy_picEt_baseChangeField_of_representableBy` derives a
+`k'`-side representation *from* clause (1) field 1 over `k` — the base change of the
+representing scheme, for an **arbitrary** field extension, and hence
+(`representableBy_picEt_separableClosure_of_representableBy`) at `k^s`, where campaign
+cluster `J` lives. So this route is not one sufficient strategy that a cheaper `k`-side
+argument might bypass: every solution of clause (1) field 1 contains a solution of
+`rep`, and the campaign's separably-closed endpoint is a *consequence* of the seam
+rather than something stronger than it. The step is generic — an arbitrary adjunction,
+no scheme, no field, no curve
+(`CategoryTheory.Functor.representableByCompLeftAdjoint`) — plus `picEt_crossBaseIso`;
+do not budget a descent argument for it.
+
+**What that does NOT license, since it is the natural over-reading.** It discharges
+nothing: its hypothesis is this very `sorry`. And it is **not** a converse of the
+descent theorem — at the object it produces, clauses 1 and 2 of `IsGaloisQuotient` are
+free but clause 3 is not (`isGaloisQuotient_pullbackAction_of_uniqueDescent` isolates
+it), so `hq` remains owed and "the inputs are equivalent to the conclusion" is false.
+
+**Every name in the two paragraphs above lives DOWNSTREAM of this file** — in
+`Picard/PicEtDescentNecessity.lean`, which imports the seam through
+`Picard/PicEtInvariantMatch.lean`. So a bare `#check` for any of them *here* fails with
+`unknownIdentifier` (verified, not assumed), and that failure is import direction, not
+absence. Same trap the `HasGaloisQuotient`/`HasStableAffineCover` note in item 3 below
+records; import the module before probing.
+
 Two measurements from building it that a consumer needs.
 `quotientHomEquiv_uniform`'s `Nonempty` cannot carry the naturality
 square a `RepresentableBy` needs, so clause 3 had to be re-derived with its
