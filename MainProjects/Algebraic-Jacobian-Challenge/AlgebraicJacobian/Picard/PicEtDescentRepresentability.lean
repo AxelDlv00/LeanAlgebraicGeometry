@@ -6,6 +6,7 @@ Authors: Axel Delaval
 import Mathlib
 import AlgebraicJacobian.Picard.PicEtDescentExistence
 import AlgebraicJacobian.Picard.PicEtQuotientHom
+import AlgebraicJacobian.Picard.GaloisDescent.PicEtGaloisBridge
 
 /-!
 # The descent ASSEMBLY: a `k`-representation of `picEt C` from cover-compatible classes
@@ -178,6 +179,88 @@ noncomputable def representableBy_of_coverCompatibleEquiv
         ((restrictCompatEquiv (k' := k') C T').symm (e T' g))).1
     rw [Equiv.apply_symm_apply]
     exact he f g
+
+/-! ### The Γ-INVARIANT form, which is what a `G1` consumer holds -/
+
+/-- A class on `T_{k'}` fixed by every `γ ∈ Gal(k'/k)`, in `ajc-p1`'s `twistTest`
+spelling. -/
+def IsGalInvariant (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    (T : Over (Spec (CommRingCat.of k)))
+    (x : (picEt C).obj (op ((coverFunctor (k := k) (k' := k')).obj T))) : Prop :=
+  ∀ γ : k' ≃ₐ[k] k',
+    (picEt C).map (twistTest (k' := k') T γ).op x = x
+
+omit [Algebra.IsSeparable k k'] [Module.Finite k k'] in
+/-- **`IsCoverCompatible` implies `IsGalInvariant`, unconditionally** — `ajc-p1`'s
+`invariant_of_projections_agree`, in this file's predicate spelling. -/
+theorem isGalInvariant_of_isCoverCompatible (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    (T : Over (Spec (CommRingCat.of k)))
+    {x : (picEt C).obj (op ((coverFunctor (k := k) (k' := k')).obj T))}
+    (hx : IsCoverCompatible (k' := k') C T x) :
+    IsGalInvariant (k' := k') C T x :=
+  fun γ => invariant_of_projections_agree C T x hx γ
+
+omit [Algebra.IsSeparable k k'] [Module.Finite k k'] in
+/-- **The converse, with `ajc-p1`'s covering antecedent `hcov` carried explicitly
+and NOT discharged.** -/
+theorem isCoverCompatible_of_isGalInvariant (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    (T : Over (Spec (CommRingCat.of k)))
+    (hcov : Sieve.generate (Presieve.ofArrows
+        (fun _ : k' ≃ₐ[k] k' => (restrictTest k k').obj (baseTest (k' := k') T))
+        (fun γ => coverSelfSection T γ)) ∈
+      etaleTopologyOver k (pullback (coverMap (k := k) (k' := k') T)
+        (coverMap (k := k) (k' := k') T)))
+    {x : (picEt C).obj (op ((coverFunctor (k := k) (k' := k')).obj T))}
+    (hx : IsGalInvariant (k' := k') C T x) :
+    IsCoverCompatible (k' := k') C T x :=
+  projections_agree_of_invariant C T hcov x hx
+
+/-- **The Γ-invariant classes on `T_{k'}`.** -/
+def GalInvariant (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    (T : Over (Spec (CommRingCat.of k))) : Type (u + 1) :=
+  {x : (picEt C).obj (op ((coverFunctor (k := k) (k' := k')).obj T)) //
+    IsGalInvariant (k' := k') C T x}
+
+/-- The two subtypes AGREE, given `hcov` at every test — one inclusion is free,
+the other is `hcov`. -/
+noncomputable def coverCompatibleEquivGalInvariant (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    (T : Over (Spec (CommRingCat.of k)))
+    (hcov : Sieve.generate (Presieve.ofArrows
+        (fun _ : k' ≃ₐ[k] k' => (restrictTest k k').obj (baseTest (k' := k') T))
+        (fun γ => coverSelfSection T γ)) ∈
+      etaleTopologyOver k (pullback (coverMap (k := k) (k' := k') T)
+        (coverMap (k := k) (k' := k') T))) :
+    CoverCompatible (k' := k') C T ≃ GalInvariant (k' := k') C T where
+  toFun x := ⟨x.1, isGalInvariant_of_isCoverCompatible C T x.2⟩
+  invFun x := ⟨x.1, isCoverCompatible_of_isGalInvariant C T hcov x.2⟩
+  left_inv _ := rfl
+  right_inv _ := rfl
+
+/-- **THE ASSEMBLY, in the Γ-invariant form a `G1`/quotient consumer produces.**
+
+A `k`-scheme `Y` whose points are naturally the `Γ`-INVARIANT `picEt C`-classes on
+`T_{k'}` represents `picEt C` — given `hcov` at every test. -/
+noncomputable def representableBy_of_galInvariantEquiv
+    (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    {Y : Over (Spec (CommRingCat.of k))}
+    (hcov : ∀ T : Over (Spec (CommRingCat.of k)), Sieve.generate (Presieve.ofArrows
+        (fun _ : k' ≃ₐ[k] k' => (restrictTest k k').obj (baseTest (k' := k') T))
+        (fun γ => coverSelfSection T γ)) ∈
+      etaleTopologyOver k (pullback (coverMap (k := k) (k' := k') T)
+        (coverMap (k := k) (k' := k') T)))
+    (e : ∀ T : Over (Spec (CommRingCat.of k)), (T ⟶ Y) ≃ GalInvariant (k' := k') C T)
+    (he : ∀ {T T' : Over (Spec (CommRingCat.of k))} (f : T ⟶ T') (g : T' ⟶ Y),
+      (e T (f ≫ g)).1 = ((coverFunctor (k := k) (k' := k')).op ⋙ picEt C).map f.op (e T' g).1) :
+    (picEt C).RepresentableBy Y :=
+  representableBy_of_coverCompatibleEquiv (k' := k') C
+    (fun T => (e T).trans (coverCompatibleEquivGalInvariant C T (hcov T)).symm)
+    (fun f g => he f g)
 
 end Descend
 

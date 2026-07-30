@@ -159,6 +159,7 @@ import AlgebraicJacobian.Picard.EtaleFieldCover
 import AlgebraicJacobian.Picard.PicEtCrossBase
 import AlgebraicJacobian.Picard.PicEtDescentAssembly
 import AlgebraicJacobian.Picard.PicEtDescentExistence
+import AlgebraicJacobian.Picard.PicEtDescentRepresentability
 import AlgebraicJacobian.Picard.PicEtQuotientHom
 import AlgebraicJacobian.Picard.PicEtSeparated
 import AlgebraicJacobian.Picard.RigidifiedPic
