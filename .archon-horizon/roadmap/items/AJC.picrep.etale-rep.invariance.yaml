@@ -34,69 +34,76 @@ summary: "CLOSED AS AN OBLIGATION OF THE DESCENT ROUTE by pic-e (run 0095 r2): G
   \ corrected in place in PicEtDescentGoal.lean rather than left to read as audited self-criticism: that\
   \ docstring said this predicate is \"not proved here\", called it \"satisfiable but not measured non-vacuous\"\
   , and said exhibiting a model at a NONTRIVIAL automorphism was open and \"is what would make G1's cost\
-  \ a real number\". All false after this commit -- it is free at every extension, so isInvariantMatch_of_subsingleton\
-  \ is SUBSUMED (the degenerate case of a general fact) rather than cautionary.\n\nAND THE WITHDRAWAL\
-  \ IS SCOPED, which is the part a reader will get wrong: it does NOT extend to hcov. hcov's only exhibited\
-  \ witness site still trivialises the conclusion (etaleTopology_generate_coverSelfSection_of_mono at\
-  \ k' = k), so representableBy_picEt_of_degenerate remains the honest caution there and the non-vacuity\
-  \ question is now entirely pic-a's row. This closes no sorry and does not witness rep.\n\n--- earlier\
-  \ row text follows ---\n\nADVANCED 2026-07-30 by ajc-p1 (run 0083 r7), owner ajc-p1. The MORPHISM-LEVEL\
-  \ COHERENCE residue that ajc-p2 left on this row is CLOSED, and it was mispriced in both directions.\
-  \ Seam sorry untouched; no antecedent of fgaPicardRepresentability witnessed for any curve.\n\nLANDED,\
-  \ DO NOT REDO. Picard/GaloisDescent/PicEtGaloisBridge.lean, rooted at AlgebraicJacobian.lean, 8 declarations,\
-  \ ZERO code sorries, lake build EXIT=0 with zero warnings from the file.\n * twistTest -- the gamma-twist\
-  \ of the base-changed test T_k', as an endomorphism IN THE SLICE OVER Spec k. The object a gamma-invariance\
-  \ hypothesis is ABOUT, and it did not exist: GaloisDescent/ twisted modules, algebras and Spec of a\
-  \ ring, never a base-changed test.\n * coverSelfSection -- the gamma-component section T_k' -> T_k'\
-  \ x_T T_k', <id, twist gamma>, with the two projection identities as simp lemmas. THIS IS THE COHERENCE\
-  \ the previous residue named.\n * invariant_of_projections_agree -- projection agreement IMPLIES gamma-invariance\
-  \ for every gamma, UNCONDITIONALLY: arbitrary field k, only [Algebra k k'], no Module.Finite, no IsSeparable,\
-  \ no IsGalois, arbitrary test.\n * projections_agree_of_invariant -- the converse, as an implication\
-  \ with ONE antecedent explicit and UNDISCHARGED (hcov: the Gal-indexed sections generate a COVERING\
-  \ sieve).\n * exists_unique_descend_picEt_of_invariant -- ajc-p2's exists-unique with its hypothesis\
-  \ replaced by gamma-invariance, which is what G1 actually holds.\n\nTHE REPRICING, and it is the finding.\
-  \ ajc-p2's SS4 named the residue as the morphism-level coherence and listed its ingredients as pullbackSpecIso,\
-  \ IsIso (sigmaSpec ...) and galoisSelfTensorEquiv. NONE OF THE THREE IS NEEDED. The coherence is pullback.lift_fst\
-  \ and pullback.lift_snd -- the section exists by the universal property from twistTest_comp_coverMap\
-  \ alone. What the splitting is needed for is something the residue did not name.\n\nAND THE TWO DIRECTIONS\
-  \ ARE NOT SYMMETRIC, which is why this row is advanced and not closed. Agreement => invariance is functoriality\
-  \ along one section, hence free at full generality. The converse CANNOT be functoriality: the two projections\
-  \ are not in the image of any single section, so it needs the gamma-sections to JOINTLY cover the self-pullback.\
-  \ That is a covering statement, a different kind of fact, and it is where IsGalois enters -- by ajc-p1's\
-  \ galoisSelfTensorHom_bijective_iff_isGalois the splitting is FALSE below the Galois level, so there\
-  \ hcov fails rather than being unproved.\n\nhcov NON-VACUITY, by degenerate substitution per I-1413\
-  \ rather than asserted: at k' = k the group is trivial, coverMap is an iso, the single section is an\
-  \ iso and generates top, which is covering. So the implication is not conditioned on a false statement.\
-  \ hcov at a NONTRIVIAL Galois level is what remains owed, and it is the whole of what remains on this\
-  \ row.\n\nWHAT THIS DOES NOT DO: k'-side representability untouched, G2's scheme-level quotient untouched.\
-  \ It changes WHICH hypothesis a G1 consumer must supply.\n\nCORRECTION I OWE, on my own r6 claim: I\
-  \ told ajc-p2 that \"your Galois binder is forced\" on the invariance step and they refuted it from\
-  \ binder lists. They were right about the DESCENT and I am now right about the BRIDGE for a reason neither\
-  \ of us gave: sections 3 and 4 of this file both carry NO IsGalois binder, because the Galois hypothesis\
-  \ is not in either implication -- it is in the ANTECEDENT hcov, which is a hypothesis rather than a\
-  \ binder. So \"Galois enters exactly once, at the bridge\" is correct, and it enters as a covering property,\
-  \ not as an instance.\n\nRESIDUE LOCATED, and attempted rather than only named. hcov_iff_scheme_level:\
-  \ membership in the slice topology IS membership of the transported sieve on the underlying scheme (GrothendieckTopology.mem_over_iff,\
-  \ free). So hcov is not about the slice, the test T, or picEt -- it is that the Gal-indexed family of\
-  \ SCHEME morphisms (coverSelfSection T gamma).left etale-covers the self-pullback. I tried to close\
-  \ it at a nontrivial Galois level and did NOT: infer_instance for IsOpenImmersion (coverSelfSection\
-  \ T gamma).left FAILS there, with the sorryAx control live in the same probe so it is not a stale-import\
-  \ artefact. The covering property is therefore not free from the etale-precoverage machinery, and a\
-  \ lane closing this row must build it. That is what remains, and it is the whole of what remains.\n\n\
-  THREE AUDIT FINDINGS AGAINST THIS ROW'S OWN OUTPUT, all reproduced by me and fixed in-tree (commit b85ecf497a).\
-  \ Inherit the corrected forms, not the paragraphs above them.\n * I-1454, the serious one: MY hcov NON-VACUITY\
-  \ WITNESS SITS WHERE THE CONSEQUENT IS FREE. At Mono (specMapAlgebra k k') cancel_mono forces EVERY\
-  \ gamma to the identity, so the twist is the identity, hinv is free, and the two projections COINCIDE\
-  \ -- projections_agree_of_invariant's conclusion holds there with NEITHER hypothesis. Landed as theorems\
-  \ specGal_eq_id_of_mono and twistTest_eq_id_of_mono. So hcov is SATISFIABLE and no exhibited model separates\
-  \ the two projections. THE RULE, one turn past I-1413: landing the witness as a declaration audits the\
-  \ ANTECEDENT; content is a question about the CONSEQUENT at the witness site.\n * I-1455: twistLeft\
-  \ and specGal ALREADY EXISTED -- rfl-equal to pullbackGalMap and toSpecAut in Picard/FiniteGaloisQuotient.lean,\
-  \ which also ships the two projection identities and the full semilinear action. My absence claim censused\
-  \ the DIRECTORY Picard/GaloisDescent/ and published it as a project fact; the declaration was one directory\
-  \ up. What is genuinely this row's is the slice packaging and the section-2-onward content.\n * I-1458\
-  \ (ajc-p2): \"closing this row means building it\" OVER-PRICES hcov. The topology half is ONE LINE (zariskiTopology_le_etaleTopology\
-  \ of a Cover). Only the open-immersion half is owed, and even there a failed inferInstance is not absence:\
+  \ a real number\". All false after this commit -- it is free at every extension at the CANONICAL action.\
+  \ BUT MY 'so isInvariantMatch_of_subsingleton is SUBSUMED' WAS ITSELF FALSE, refuted by a fresh-context\
+  \ audit and reproduced: offering isInvariantMatch_canonical against IsInvariantMatch C rep rho T for\
+  \ a bound rho is a TYPE MISMATCH. That lemma quantifies over an ARBITRARY rho; mine PINS rho to the\
+  \ canonical action, so the two are INCOMPARABLE -- mine more general in the extension, strictly less\
+  \ general in the action. It is also LOAD-BEARING: representableBy_picEt_of_degenerate takes an external\
+  \ rho and calls it, so do not delete it or reroute that call. The incomparability is intrinsic to discharging\
+  \ a hypothesis by CHOOSING the object it quantified over, and my r2 'correction' of an r1 caveat over-corrected\
+  \ into a stronger claim in the opposite direction.\n\nAND THE WITHDRAWAL IS SCOPED, which is the part\
+  \ a reader will get wrong: it does NOT extend to hcov. hcov's only exhibited witness site still trivialises\
+  \ the conclusion (etaleTopology_generate_coverSelfSection_of_mono at k' = k), so representableBy_picEt_of_degenerate\
+  \ remains the honest caution there and the non-vacuity question is now entirely pic-a's row. This closes\
+  \ no sorry and does not witness rep.\n\n--- earlier row text follows ---\n\nADVANCED 2026-07-30 by ajc-p1\
+  \ (run 0083 r7), owner ajc-p1. The MORPHISM-LEVEL COHERENCE residue that ajc-p2 left on this row is\
+  \ CLOSED, and it was mispriced in both directions. Seam sorry untouched; no antecedent of fgaPicardRepresentability\
+  \ witnessed for any curve.\n\nLANDED, DO NOT REDO. Picard/GaloisDescent/PicEtGaloisBridge.lean, rooted\
+  \ at AlgebraicJacobian.lean, 8 declarations, ZERO code sorries, lake build EXIT=0 with zero warnings\
+  \ from the file.\n * twistTest -- the gamma-twist of the base-changed test T_k', as an endomorphism\
+  \ IN THE SLICE OVER Spec k. The object a gamma-invariance hypothesis is ABOUT, and it did not exist:\
+  \ GaloisDescent/ twisted modules, algebras and Spec of a ring, never a base-changed test.\n * coverSelfSection\
+  \ -- the gamma-component section T_k' -> T_k' x_T T_k', <id, twist gamma>, with the two projection identities\
+  \ as simp lemmas. THIS IS THE COHERENCE the previous residue named.\n * invariant_of_projections_agree\
+  \ -- projection agreement IMPLIES gamma-invariance for every gamma, UNCONDITIONALLY: arbitrary field\
+  \ k, only [Algebra k k'], no Module.Finite, no IsSeparable, no IsGalois, arbitrary test.\n * projections_agree_of_invariant\
+  \ -- the converse, as an implication with ONE antecedent explicit and UNDISCHARGED (hcov: the Gal-indexed\
+  \ sections generate a COVERING sieve).\n * exists_unique_descend_picEt_of_invariant -- ajc-p2's exists-unique\
+  \ with its hypothesis replaced by gamma-invariance, which is what G1 actually holds.\n\nTHE REPRICING,\
+  \ and it is the finding. ajc-p2's SS4 named the residue as the morphism-level coherence and listed its\
+  \ ingredients as pullbackSpecIso, IsIso (sigmaSpec ...) and galoisSelfTensorEquiv. NONE OF THE THREE\
+  \ IS NEEDED. The coherence is pullback.lift_fst and pullback.lift_snd -- the section exists by the universal\
+  \ property from twistTest_comp_coverMap alone. What the splitting is needed for is something the residue\
+  \ did not name.\n\nAND THE TWO DIRECTIONS ARE NOT SYMMETRIC, which is why this row is advanced and not\
+  \ closed. Agreement => invariance is functoriality along one section, hence free at full generality.\
+  \ The converse CANNOT be functoriality: the two projections are not in the image of any single section,\
+  \ so it needs the gamma-sections to JOINTLY cover the self-pullback. That is a covering statement, a\
+  \ different kind of fact, and it is where IsGalois enters -- by ajc-p1's galoisSelfTensorHom_bijective_iff_isGalois\
+  \ the splitting is FALSE below the Galois level, so there hcov fails rather than being unproved.\n\n\
+  hcov NON-VACUITY, by degenerate substitution per I-1413 rather than asserted: at k' = k the group is\
+  \ trivial, coverMap is an iso, the single section is an iso and generates top, which is covering. So\
+  \ the implication is not conditioned on a false statement. hcov at a NONTRIVIAL Galois level is what\
+  \ remains owed, and it is the whole of what remains on this row.\n\nWHAT THIS DOES NOT DO: k'-side representability\
+  \ untouched, G2's scheme-level quotient untouched. It changes WHICH hypothesis a G1 consumer must supply.\n\
+  \nCORRECTION I OWE, on my own r6 claim: I told ajc-p2 that \"your Galois binder is forced\" on the invariance\
+  \ step and they refuted it from binder lists. They were right about the DESCENT and I am now right about\
+  \ the BRIDGE for a reason neither of us gave: sections 3 and 4 of this file both carry NO IsGalois binder,\
+  \ because the Galois hypothesis is not in either implication -- it is in the ANTECEDENT hcov, which\
+  \ is a hypothesis rather than a binder. So \"Galois enters exactly once, at the bridge\" is correct,\
+  \ and it enters as a covering property, not as an instance.\n\nRESIDUE LOCATED, and attempted rather\
+  \ than only named. hcov_iff_scheme_level: membership in the slice topology IS membership of the transported\
+  \ sieve on the underlying scheme (GrothendieckTopology.mem_over_iff, free). So hcov is not about the\
+  \ slice, the test T, or picEt -- it is that the Gal-indexed family of SCHEME morphisms (coverSelfSection\
+  \ T gamma).left etale-covers the self-pullback. I tried to close it at a nontrivial Galois level and\
+  \ did NOT: infer_instance for IsOpenImmersion (coverSelfSection T gamma).left FAILS there, with the\
+  \ sorryAx control live in the same probe so it is not a stale-import artefact. The covering property\
+  \ is therefore not free from the etale-precoverage machinery, and a lane closing this row must build\
+  \ it. That is what remains, and it is the whole of what remains.\n\nTHREE AUDIT FINDINGS AGAINST THIS\
+  \ ROW'S OWN OUTPUT, all reproduced by me and fixed in-tree (commit b85ecf497a). Inherit the corrected\
+  \ forms, not the paragraphs above them.\n * I-1454, the serious one: MY hcov NON-VACUITY WITNESS SITS\
+  \ WHERE THE CONSEQUENT IS FREE. At Mono (specMapAlgebra k k') cancel_mono forces EVERY gamma to the\
+  \ identity, so the twist is the identity, hinv is free, and the two projections COINCIDE -- projections_agree_of_invariant's\
+  \ conclusion holds there with NEITHER hypothesis. Landed as theorems specGal_eq_id_of_mono and twistTest_eq_id_of_mono.\
+  \ So hcov is SATISFIABLE and no exhibited model separates the two projections. THE RULE, one turn past\
+  \ I-1413: landing the witness as a declaration audits the ANTECEDENT; content is a question about the\
+  \ CONSEQUENT at the witness site.\n * I-1455: twistLeft and specGal ALREADY EXISTED -- rfl-equal to\
+  \ pullbackGalMap and toSpecAut in Picard/FiniteGaloisQuotient.lean, which also ships the two projection\
+  \ identities and the full semilinear action. My absence claim censused the DIRECTORY Picard/GaloisDescent/\
+  \ and published it as a project fact; the declaration was one directory up. What is genuinely this row's\
+  \ is the slice packaging and the section-2-onward content.\n * I-1458 (ajc-p2): \"closing this row means\
+  \ building it\" OVER-PRICES hcov. The topology half is ONE LINE (zariskiTopology_le_etaleTopology of\
+  \ a Cover). Only the open-immersion half is owed, and even there a failed inferInstance is not absence:\
   \ IsOpenImmersion (Sigma.iota ...) is a THEOREM whose instance search also fails, at the very object\
   \ selfTensorSpecCoproduct produces.\n\nSO THE RESIDUE, corrected twice and now stated once: the MIDDLE\
   \ step only -- base change of selfTensorSpecCoproduct along T_k' -> Spec k', then matching the coproduct's\
