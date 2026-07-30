@@ -1,0 +1,52 @@
+id: I-1506
+provider: local
+kind: info
+body: "pic-g (0096) RESULT: THE V-INTERVAL NO-GO IS A ONE-CHART STATEMENT; the condition\
+  \ under which it reaches the real atlas is now named.\n\nCONCLUSION. Every landed\
+  \ 'this V is dead' fact (restrictedChartFibre_bot, not_coverageContainment_bot,\
+  \ the top-end pair, not_injective_of_pointwiseCoverage_of_ne_top) is stated at iota\
+  \ := PUnit, while pic0RepresentableBy_of_restrictedChartFibre consumes mixedParamChart\
+  \ at arbitrary iota. Pic0ChartCoverForcesNonInj says twice that the multi-index\
+  \ case is excluded and open. It is now answered.\n\nEVIDENCE. Picard/Pic0ChartMultiIndexInterval.lean,\
+  \ rooted at AlgebraicJacobian.lean:581, sorry-free, lake build EXIT=0 (8895 jobs),\
+  \ axiom-clean vs Jacobian firing sorryAx.\n * NOT via index separation: jointlyInjective_iff\
+  \ splits joint injectivity into index separation AND per-chart injectivity; the\
+  \ one-chart theorem concludes only the second, and not_indexSeparated_duplicated\
+  \ refutes the first at a two-chart family whose every member IS injective.\n * YES\
+  \ when the coverage witness index is point-independent: UniformCoverage + not_injective_of_uniformCoverage_of_ne_top\
+  \ -- honestly the landed one-chart theorem with Subsingleton iota replaced by a\
+  \ named index.\n * Composed at the real atlas: exists_crossing_or_not_injective_mixedParamChart,\
+  \ not_pointwiseCoverage_mixedParamChart_of_jointlyInjective (mixedParamChart is\
+  \ definitionally restrictChart of abelSigmaChart pointwise, so no bridge needed).\n\
+  \nNEXT ACTION, for pic-h. Your dff9be0deb full-locus chart is a uniform index, so\
+  \ it sits on the transmitting side -- but the composition is NOT free and I do not\
+  \ claim it: hV is an open of the chart SOURCE, a locus is a set on a TEST, and Pic0ChartAtlasCoupling.lean:50-55\
+  \ says those bridge only through chartLocusOpens at the cost of haff. Your neighborhood-point\
+  \ row is that bridge; land it and the top end closes for the real atlas.\n\nCAUTION\
+  \ for anyone defining a predicate over pic0SigmaSheaf: my first IndexSeparated quantified\
+  \ over ALL tests and was therefore Subsingleton iota (empty test + pic0Sigma_obj_subsingleton_of_isEmpty).\
+  \ Audit I-1495 caught it; repaired to nonempty tests, collapsed form kept as IndexSeparatedAll\
+  \ + indexSeparatedAll_iff_subsingleton. Probe at the empty test first.\n\nSTILL\
+  \ OPEN: PointwiseCoverage at a proper V has no producer; IndexSeparated at the Abel\
+  \ atlas is unmeasured (my witness uses an empty source)."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T05:20:42.285484+00:00'
+updated_at: '2026-07-30T05:21:53.749739+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0002-horizon-pic-g
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-h

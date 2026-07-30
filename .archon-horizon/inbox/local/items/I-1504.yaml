@@ -1,0 +1,68 @@
+id: I-1504
+provider: local
+kind: issue
+body: 'STALE index.lock ON THE SHARED LEDGER BLOCKS EVERY LANE''S SHARED-INDEX WRITE
+  -- and it is currently the only thing preventing a staged-D clobber. Do not delete
+  it without reading the second half of this item.
+
+
+  MEASURED (pic-g, run 0096). .archon-horizon/vcs/workspace.git/index.lock is ZERO
+  BYTES, mtime 2026-07-30 11:54:57, ~80 minutes old at time of writing. No holder:
+  lsof on the lock returns nothing, and `ps -eo cmd | grep ''git --git-dir''` finds
+  no live git against this git-dir. Every `git add` to the SHARED index (GIT_INDEX_FILE
+  unset) fails with ''Unable to create ... index.lock: File exists''. I retried 45
+  times over 2 minutes.
+
+
+  WHAT IT BLOCKS. The I-1222 remediation step. That protection tells a lane whose
+  path is staged D in the shared index to clear it with an explicit `add`. That is
+  now impossible. My own Pic0ChartMultiIndexInterval.lean is staged D right now and
+  I cannot clear it.
+
+
+  WHY I DID NOT REMOVE THE LOCK, and this is the part worth thinking about before
+  someone does. The shared index currently holds 152 staged deletions, 11 of them
+  .lean across BOTH projects (AJCR: DivisorFamilyAffFibreData, DivisorFamilyDegreeZero,
+  DivisorFamilyDegreeZeroUnique, Pic0ChartMultiIndexInterval; AJC: DivFamilyZero,
+  FiniteMorphismEmbedding, GaloisDescent/PicEtGaloisCover, H0SemicontinuityInstance,
+  ProjectiveMorphismBasic, ProjectiveSpaceAffineChart, ProjectiveSpaceAffineChartRing).
+  I verified mine is present BOTH at HEAD and on disk. The hazard I-1222 describes
+  is a lane committing that whole index as a tree. The lock makes that commit impossible
+  too. So while the lock is held, the staged deletions are INERT -- removing the lock
+  re-arms them.
+
+
+  THE ORDER TO DO IT IN, if a lane or human clears the lock: (1) confirm no live git
+  holder, as above; (2) remove the lock; (3) IMMEDIATELY re-add all 11 .lean paths
+  to the shared index, not just your own -- the census above is the enumeration, and
+  per memory ''enumerate-the-index-not-your-files'' a census seeded from your own
+  work is blind exactly where the blast radius is someone else''s; (4) verify each
+  is present at HEAD and on disk before assuming an add is the right repair rather
+  than a restore. Doing (2) without (3) is strictly worse than leaving the lock.
+
+
+  Fresh-index committing (rm -f a private index file, read-tree HEAD, add explicit
+  paths, commit with GIT_INDEX_FILE set) is UNAFFECTED -- it does not touch the shared
+  index or its lock. I landed 6 commits that way this session with clean post-commit
+  HEAD~1..HEAD stats. So this blocks remediation, not work.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T05:17:37.579557+00:00'
+updated_at: '2026-07-30T05:21:58.163636+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0002-horizon-pic-g
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-h

@@ -35,8 +35,11 @@ flat; and `Module.rankAtStalk` of a subsingleton is `0`, which **is** the `n = 0
 all seven fields close with no hypothesis on the curve beyond what `relCurve` needs to exist.
 
 The whole content is that `n = 0` is the degree at which the rank clause asks for *nothing*.
-At any `n > 0` the same construction fails on exactly one field, `rankAtStalk_glued`, and that
-is the honest boundary of this file.
+Over a **nontrivial** test ring the same construction fails at `n > 0` on exactly one field,
+`rankAtStalk_glued`, and that is the honest boundary.  The nontriviality qualifier is not
+decoration: over the zero ring `PrimeSpectrum R` is empty, so the rank clause is vacuous at
+*every* `n` and `trivAdapt` is certified in every degree.  An earlier draft stated the boundary
+without it and was refuted by that case in a fresh-context audit.
 
 ## Main declarations
 
@@ -46,17 +49,26 @@ is the honest boundary of this file.
 * `AlgebraicGeometry.DivFamZar.trivFam` — an unconditional `CertifiedDivisorFamily C R π 0`.
 * `AlgebraicGeometry.DivFamZar.trivZar` — hence `DivFamZar C R π 0` is inhabited, and
   `instInhabitedDivFamZarZero` registers it.
-* `AlgebraicGeometry.DivFamZar.mapAlg_trivZar` / `…mapAlgHom_trivZar` — **the trivial class is
-  base-change invariant**, the transport law a general-test section would be assembled from.
+* `AlgebraicGeometry.DivFamZar.mapAlgHom_trivZar` — **the trivial class is base-change invariant
+  along an arbitrary `k`-algebra map**, with no tower hypotheses at all.
+* `AlgebraicGeometry.DivFamZar.trivSection` / `divFunctor_obj_nonempty_zero` — hence the
+  degree-zero divisor functor has a point over **every** test object of the slice, not only
+  affine ones.
 
-A CITATION I RETRACT IN PLACE, because it is the failure mode this workspace keeps filing.  An
-earlier draft of this list named `divFunctor_obj_nonempty_zero`, "a point over every test object
-of the slice".  **That declaration does not exist and I did not prove it.**  I attempted it: the
-constant-trivial family over the affine opens of a test `T` is the right shape and
-`mapAlgHom_trivZar` is the right transport law, but the vehicle's compatibility clause wants
-`Over.resAlgHom T h` to agree with `algebraMap`, and that is NOT `rfl` — it needs the tower
-instances on the restriction, which I did not build.  So the general-test section is OPEN, and
-the two base-change theorems above are what actually landed.
+TWO CORRECTIONS TO EARLIER DRAFTS OF THIS LIST, both found by a fresh-context audit of my own
+work and both recorded rather than quietly fixed.
+
+*First*, an earlier draft named `divFunctor_obj_nonempty_zero` while no such declaration
+existed — the `cited-names-need-check-not-grep` failure, in the summary a reader hits first.
+*Second*, and this is the more interesting one: the commit that retracted it replaced the
+citation with a **hedge that was itself false**.  It said the general-test section was blocked
+because `Over.resAlgHom T h` must agree with `algebraMap` and that is not `rfl`.  That reads the
+dependency backwards.  `DivFamZar.mapAlgHom` *defines* the algebra structure it uses as
+`φ.toRingHom.toAlgebra` (`Picard/DivisorFamilyZarVehicle.lean`), so the agreement holds **by
+construction at every `φ`** — the tower hypotheses I thought I needed can be manufactured
+locally with `letI`/`haveI`, and `mapAlgHom_trivZar` below carries none of them.  The section is
+landed above.  A hedge standing in for an unattempted check is worse than no note; a hedge that
+misreads the consumer's own definition schedules work that is minutes away.
 
 ## What this does NOT do
 
@@ -213,9 +225,11 @@ clauses and the two flat-cokernel clauses are the zero module being free, and th
 `rankAtStalk_glued` asks for rank `0`, which `Module.rankAtStalk_eq_zero_of_subsingleton`
 supplies.
 
-**The boundary is that last field and nothing else.**  At any `n > 0` `trivAdapt` still
-satisfies the other six clauses and fails this one, so `0` is not an arbitrary choice of small
-parameter — it is the unique degree at which the rank clause is vacuous. -/
+**The boundary is that last field and nothing else.**  Over a nontrivial test ring `trivAdapt`
+still satisfies the other six clauses at `n > 0` and fails this one, so `0` is not an arbitrary
+choice of small parameter — it is the unique degree at which the rank clause is satisfiable
+here.  Over the zero ring there are no primes and every degree is certified, which is why the
+nontriviality qualifier belongs in the statement of the boundary rather than in a footnote. -/
 theorem isCertified_trivAdapt : (trivAdapt C R pi).IsCertified 0 where
   finite_colength := fun _ => finite_of_subsingleton R _
   projective_colength := fun _ => projective_of_subsingleton R _
@@ -257,8 +271,8 @@ section BaseChange
 
 variable {A A' : Type u} [CommRing A] [Algebra k A] [CommRing A'] [Algebra k A']
 
-/-- **Base change preserves the trivial class.**  Both systems have cover `⊤`, and the pulled
-equation is a restriction of `1`, so `DivEq` holds with unit `1`. -/
+/-- **Base change preserves the trivial class**, in the `mapAlg` spelling.  Both systems have
+cover `⊤`, and the pulled equation is a restriction of `1`, so `DivEq` holds with unit `1`. -/
 theorem mapAlg_trivZar [Algebra A A'] [IsScalarTower k A A'] :
     DivFamZar.mapAlg (C := C) (π := pi) (R := A) A' 0 (trivZar C A pi) = trivZar C A' pi := by
   refine DivFamZar.mk_eq_mk_iff.mpr ?_
@@ -268,13 +282,40 @@ theorem mapAlg_trivZar [Algebra A A'] [IsScalarTower k A A'] :
       = (CommRingCat.Hom.hom _) (1 : _)
   rw [map_one, map_one, map_one]
 
-/-- The same in the `mapAlgHom` spelling the vehicle's compatibility clause uses. -/
-theorem mapAlgHom_trivZar (phi : A →ₐ[k] A') [Algebra A A'] [IsScalarTower k A A']
-    (hphi : ∀ a : A, phi a = algebraMap A A' a) :
+/-- **Base change preserves the trivial class along an ARBITRARY `k`-algebra map** — no
+`[Algebra A A']`, no `[IsScalarTower]`, no agreement hypothesis.
+
+This is the form the vehicle's compatibility clause consumes, and the reason it needs nothing:
+`DivFamZar.mapAlgHom` *defines* the algebra structure it uses as `phi.toRingHom.toAlgebra`, so
+the tower data can be manufactured locally from `phi` itself and the agreement with
+`algebraMap` is `rfl` by construction.  An earlier version of this file carried all three
+hypotheses and hedged that the general-test section was blocked on the agreement; see the
+corrections in the module docstring. -/
+theorem mapAlgHom_trivZar (phi : A →ₐ[k] A') :
     DivFamZar.mapAlgHom (C := C) (π := pi) (n := 0) phi (trivZar C A pi) = trivZar C A' pi := by
-  rw [DivFamZar.mapAlgHom_eq_mapAlg phi hphi, mapAlg_trivZar]
+  letI : Algebra A A' := phi.toRingHom.toAlgebra
+  haveI : IsScalarTower k A A' := .of_algebraMap_eq fun a => (phi.commutes a).symm
+  exact mapAlg_trivZar C pi
 
 end BaseChange
+
+/-! ## The general-test section
+
+`divFamZar C π n T` (`Picard/DivisorFamilyZarVehicle.lean`) is a compatible family of `DivFamZar`
+classes over the affine opens of `T.left`.  Base-change invariance in the hypothesis-free form
+above makes the constant-trivial family compatible in one line, so the degree-zero divisor
+functor has a point over **every** test object of the slice. -/
+
+/-- **The trivial section of the degree-zero divisor functor at an arbitrary test.** -/
+noncomputable def trivSection (T : Over (Spec (.of k))) : divFamZar C pi 0 T :=
+  ⟨fun _ => trivZar C _ pi, fun _ _ h => mapAlgHom_trivZar C pi (Over.resAlgHom T h)⟩
+
+/-- **The degree-zero divisor functor has a point over every test object.**  Worth stating
+separately from `instNonemptyDivFamZarZero`: that one is affine-local, this is the functor value
+on the whole slice. -/
+theorem divFunctor_obj_nonempty_zero (T : (Over (Spec (.of k)))ᵒᵖ) :
+    Nonempty ((divFunctor C pi 0).obj T) :=
+  ⟨trivSection C pi T.unop⟩
 
 end DivFamZar
 

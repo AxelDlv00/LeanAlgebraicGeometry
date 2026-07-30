@@ -43,7 +43,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_uniform_bound_forall_baseChange
 type: lean
-updated: '2026-07-30T07:28:28'
+updated: '2026-07-30T12:49:24'
 ---
 theorem exists_uniform_bound_forall_baseChange {π : C.left ⟶ P1 k} [IsFinite π] [IsDominant π]
     (hπ : π ≫ P1.structureMap k = C.left ↘ Spec (CommRingCat.of k)) (g : ℕ)
@@ -59,9 +59,14 @@ theorem exists_uniform_bound_forall_baseChange {π : C.left ⟶ P1 k} [IsFinite 
   ⟨(windowM_choice π hπ g : ℤ) * windowδ π + (g : ℤ),
     fun L _ _ _ _ _ _ _ D hD => subsingleton_h1_of_ledger_bound hπ g hχ L D hD⟩
 
-/-! ## Coverage with the threshold discharged
+/-! ## An unconditional admissible parameter above the bound
 
-`mem_chartLocus_of_vanishing_bound` (`Picard/Pic0ChartCoverageNoDrop.lean:154`) takes `hb`
-(the threshold) and `hdeg` (the calibration).  The threshold is now available at the
-splitting field, so the composite below carries only the calibration — which is what
-`Pic0ChartCoverageIndexSlack`'s `index_of_threshold` is about. -/
+The ledger value `B = M·δ + g` is a sufficient vanishing bound, not a parameter to which the
+chart degree must be equal.  Requiring equality created the false residue
+`IsDivisorDegree C g`: over an arbitrary field the genus need not be a divisor degree.
+
+The repair is to choose a larger parameter which is visibly a divisor degree.  The pinned
+theta degree `d₁` is positive, so `B·d₁ ≥ B`; it is also a divisor degree by construction.
+This section packages that choice and composes it with the existing finite-separable splitting
+producer.  No field, divisor, splitting, or arithmetic hypothesis is added.
+-/

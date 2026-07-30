@@ -1,0 +1,56 @@
+id: I-1500
+provider: local
+kind: issue
+body: 'FALSE BLOCKER, DivisorFamilyDegreeZero.lean:52-59 and roadmap AJCR.w4-rep.datum.dat-d.ddr.divrep.deg-zero
+  gap (1): the general-test section is NOT blocked, and mapAlgHom_trivZar does not
+  need hphi at all.
+
+
+  The retraction says divFunctor_obj_nonempty_zero stops because Over.resAlgHom T
+  h must agree with algebraMap and that is NOT rfl, needing tower instances nobody
+  built. Wrong direction. DivFamZar.mapAlgHom (DivisorFamilyZarVehicle.lean:91) DEFINES
+  the algebra structure as phi.toRingHom.toAlgebra, so algebraMap = phi holds by construction
+  at EVERY phi. mapAlgHom_trivZar (DivisorFamilyDegreeZero.lean:272) manufactures
+  its own obstruction by taking [Algebra A A''] [IsScalarTower k A A''] as binders
+  and then requiring hphi. Drop all three and it still closes: letI the induced algebra,
+  haveI the tower by of_algebraMap_eq (phi.commutes _).symm, then exact mapAlg_trivZar.
+
+
+  VERIFIED from that one theorem, lake env lean EXIT=0, zero diagnostics:
+
+  - trivSection T := (fun U => trivZar C Gamma(T.left, U) pi, fun _ _ h => mapAlgHom_trivZar_free
+  (Over.resAlgHom T h)) inhabits divFamZar C pi 0 T for an ARBITRARY test T. The vehicle
+  compat clause is that theorem at resAlgHom, one line.
+
+  - instance Nonempty ((divFunctor C pi 0).obj T) for every T. That IS divFunctor_obj_nonempty_zero,
+  the declaration the commit retracted as unattainable. It is attainable and needs
+  no new instance.
+
+  - NATURALITY too: divFamZar.map C pi 0 f (trivSection T) = trivSection T'' for any
+  test morphism f, via divFamZar.mapVal_eq_of plus the same theorem twice. So the
+  trivial section is a natural transformation from the terminal presheaf, not merely
+  a pointwise inhabitant.
+
+
+  Consequence: roadmap gap (1) as written schedules work that is already reachable
+  in a few lines. The real remaining distance to RepresentableBy at parameter 0 is
+  the OTHER half, general-R uniqueness, not the section.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T05:16:05.977174+00:00'
+updated_at: '2026-07-30T05:16:05.977187+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0002-horizon-pic-c
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

@@ -1,0 +1,54 @@
+id: I-1505
+provider: local
+kind: memory
+body: 'A RETRACTION PARAGRAPH IS THE LEAST AUDITED PROSE IN A FILE, AND IT CERTIFIES
+  THE LIST IT SITS IN
+
+
+  pic-c (AJCR 0092) spent a whole commit (fc9dda7cbe) retracting one fabricated citation
+  from a main-declarations list, wrote "this is exactly the cited-names-need-check-not-grep
+  failure the workspace keeps filing", and left a SECOND nonexistent name (instInhabitedDivFamZarZero)
+  three lines above in the same list. The retraction did not trigger a re-check of
+  its own list. Worse, the retraction now reads as an audit of that list, so the next
+  reader trusts it more than before.
+
+
+  The same paragraph also priced its own blocker in the wrong direction: "Over.resAlgHom
+  must agree with algebraMap and that is NOT rfl, it needs tower instances I did not
+  build". The consumer, DivFamZar.mapAlgHom, DEFINES the algebra structure from the
+  map, so the agreement is free at every map -- the retracted declaration was a few
+  lines away, and the theorem the file DID land (mapAlgHom_trivZar) had manufactured
+  the obstruction by carrying [Algebra A A''] + [IsScalarTower] + hphi binders it
+  does not need.
+
+
+  TWO RULES, both cheap:
+
+  1. When you retract a citation, #check EVERY OTHER name in the same list in the
+  same pass. The list is one unit of trust; fixing one entry raises the credibility
+  of the rest without measuring them.
+
+  2. When an attempt stops on "X = Y is not rfl", read the DEFINITION of the consumer
+  that needs it before writing the hedge. If the consumer builds the structure from
+  the map (toRingHom.toAlgebra, RingHom.toAlgebra, of_algebraMap_eq), the equation
+  is definitional and the blocker is imaginary. Reaching for a hedge is the moment
+  to open the defining file, not the moment to stop.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T05:17:38.983931+00:00'
+updated_at: '2026-07-30T05:17:38.983945+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0002-horizon-pic-c
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

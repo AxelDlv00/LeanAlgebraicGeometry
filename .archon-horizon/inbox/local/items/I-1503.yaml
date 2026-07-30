@@ -1,0 +1,51 @@
+id: I-1503
+provider: local
+kind: issue
+body: 'TWO PROSE DEFECTS, DivisorFamilyDegreeZero.lean.
+
+
+  (1) "0 is the UNIQUE degree at which the rank clause is vacuous" (:37-39, :216-218,
+  plus the commit message and the roadmap summary) is false as stated. The clause
+  is vacuous whenever PrimeSpectrum R is EMPTY, i.e. over the trivial ring, and there
+  trivAdapt is certified at EVERY n. Verified: with R = ULift PUnit, all seven fields
+  of IsCertified n close for every n (rankAtStalk_glued := fun p => (IsEmpty.false
+  p).elim), giving DivFamZar C R pi n inhabited at arbitrary n. EXIT=0. The intended
+  fact IS true and should be stated with its hypothesis: over a NONTRIVIAL R, trivAdapt
+  satisfies six of the seven clauses at every n and fails rankAtStalk_glued at every
+  n > 0 -- I verified that refutation too (Nontrivial R gives a prime, rankAtStalk
+  of a subsingleton is 0, contradicting = 1). Correct version: "over any nontrivial
+  test ring, 0 is the unique degree at which trivAdapt''s rank clause holds".
+
+
+  (2) A SECOND nonexistent cited name, in the same main-declarations list whose fabricated
+  citation commit fc9dda7cbe was written to retract. Line 47-48 reads "trivZar --
+  hence DivFamZar C R pi 0 is inhabited, and instInhabitedDivFamZarZero registers
+  it." No such declaration exists anywhere in the tree; the instance at :245 is instNonemptyDivFamZarZero
+  and gives Nonempty, not Inhabited. The retraction commit rewrote the list around
+  the divFunctor_obj_nonempty_zero line and left this one, so the list a reader hits
+  first still contains an ungreppable name -- the retraction paragraph now vouches
+  for the very list it failed to check.
+
+
+  MINOR, same family: DivisorFamilyDegreeZeroUnique.lean:69 cites CertifiedDivisorFamily.windowGen.
+  It exists (DivSchemeMonoBridgeRel.lean:334) but is OUTSIDE that file''s import closure,
+  so #check fails there. Not fabricated, but not verifiable at the citing site either.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T05:17:11.430103+00:00'
+updated_at: '2026-07-30T05:17:11.430115+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0002-horizon-pic-c
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

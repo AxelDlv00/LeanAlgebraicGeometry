@@ -16,3 +16,4 @@
 {"at": "2026-07-29T23:06:57.973294+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
 {"at": "2026-07-29T23:07:28.727306+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
 {"at": "2026-07-30T00:41:54.181970+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-07-30T05:10:36.455142+00:00", "actor": "horizon", "field": "status", "from": "queued", "to": "cancelled", "note": "", "provenance": {"run": "0098", "session": "0004-horizon-pic-h", "role": "horizon", "round": "1", "rounds": "8", "task": "pic-h", "task_title": "Pic rep lane H: close Pic representability, no new hypotheses", "projects": "Algebraic-Jacobian-Challenge-Rebuild"}}

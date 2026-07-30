@@ -1,0 +1,20 @@
+You are auditing lane pic-c's work in run 0092 on project MainProjects/Algebraic-Jacobian-Challenge-Rebuild (workspace root /home/axel/LeanAlgebraicGeometry-Horizon). Read the actual Lean at HEAD, not the prose about it.
+
+THE THREE COMMITS: 5297f1bec1, 3015fd7fad, fc9dda7cbe.
+THE TWO FILES: AlgebraicJacobian/Picard/DivisorFamilyDegreeZero.lean and AlgebraicJacobian/Picard/DivisorFamilyDegreeZeroUnique.lean.
+
+THE CLAIMS I MADE, each of which you should try to refute:
+
+1. "The degree-zero colength certificate is FREE": all seven fields of DivisorAdaptation.IsCertified 0 (DivisorFamily.lean:426) hold for `trivAdapt` with no hypothesis on the curve beyond those needed for relCurve to exist. Check the actual binder list of isCertified_trivAdapt against the section variables — is any curve hypothesis (IsIntegral, properness, smoothness, IsDominant, Module.Finite of cohomology, hO/hchi) silently in scope and load-bearing?
+
+2. "rankAtStalk_glued is the ONE field of the seven that fails at n > 0 for this adaptation, so 0 is the unique degree at which the rank clause is vacuous." Is that true? Verify by checking whether any OTHER field's proof depends on n.
+
+3. "DivFamZar C K pi 0 is a SINGLETON over a field" — instSubsingletonDivFamZarZero plus instNonemptyDivFamZarZero. IS THE STATEMENT NON-VACUOUS? Specifically: are the instance binders of the uniqueness file (IsIntegral (relCurve C K), SmoothOfRelativeDimension 1, QuasiCompact, LocallyOfFiniteType on relCurve C K over Spec K) SATISFIABLE for an actual curve C and field K in this tree, or is the subsingleton a statement about an empty hypothesis class? This is the single most important check — an unsatisfiable binder set would make the whole uniqueness file vacuous.
+
+4. Are all declarations in both files sorry-free and axiom-clean? Run an axiom probe (#print axioms) on DivFamZar.trivZar, isCertified_trivAdapt, instSubsingletonDivFamZarZero, DivFamZar.uniqueZeroOfField, mapAlg_trivZar, against a control declaration that DOES fire sorryAx (e.g. AlgebraicGeometry.Jacobian from Challenge.lean) in the SAME probe run so you know the probe discriminates. Report the exact axiom lists.
+
+5. DOES ANY OF THIS ALREADY EXIST? I claimed nothing in the tree inhabits DivFamZar or CertifiedDivisorFamily at any parameter. Check that by statement, not by name: search for any other producer of CertifiedDivisorFamily, DivFam, or DivFamZar that is not conditional on a hypothesis nobody has discharged. If a producer exists, my headline is wrong and I need to know.
+
+6. Every "what this does NOT do" sentence in both module docstrings and in the roadmap row AJCR.w4-rep.datum.dat-d.ddr.divrep.deg-zero. Those hedges are the least-audited prose in the workspace and can be wrong in the CHEAP direction (scheduling work already done). In particular check: (a) is the general-test section really blocked on Over.resAlgHom = algebraMap not being rfl, or is there a landed lemma that supplies it? (b) is general-R uniqueness really open, or does some landed Zariski-locality lemma (DivFamZar.eq_of_away_eq, DivisorFamilyZarMapAlg.lean:240) already reduce it to the field case?
+
+Report concrete findings with file:line. Do not fix anything — I want the audit. If a claim survives, say so plainly; if one fails, state the correct version.

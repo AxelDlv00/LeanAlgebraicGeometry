@@ -1,0 +1,48 @@
+id: I-1502
+provider: local
+kind: issue
+body: "DUPLICATION, DivisorFamilyDegreeZeroUnique.lean: the headline \"the FIRST inhabitant\
+  \ of DivFamZar at ANY parameter\" is FALSE over a field, and the uniqueness proof\
+  \ re-derives what two landed quotient-level lemmas already give.\n\nINHABITATION\
+  \ WAS NOT FIRST. exists_divFam_divFamDivisor_eq (DivisorFamilyFieldSurj.lean:143,\
+  \ the landed B-3 hsurj) at D = 0 gives a DivFam C K pi 0 with divFamDivisor = 0,\
+  \ hence DivFamZar C K pi 0 via toZar; divFamFieldEquiv.symm (0, le_rfl, by simp)\
+  \ gives the same class directly, and Quotient.out of it gives a CertifiedDivisorFamily\
+  \ C K pi 0. VERIFIED in a probe importing ONLY DivisorFamilyFieldSurj + DivSchemeAbel,\
+  \ no pic-c file, lake env lean EXIT=0. The correct claim is narrower and still worth\
+  \ having: trivZar is the first inhabitant at a GENERAL TEST RING R, where no field-surjectivity\
+  \ route applies.\n\nUNIQUENESS RE-DERIVES A LANDED LEMMA. presentationDivisor_eq_zero_of_isCertified_zero\
+  \ + divEq_of_isCertified_zero (:103, :114) work per-adaptation and then re-run divEq_of_presentationDivisor_eq.\
+  \ But divFamDivisor_injective (DivisorFamilyFieldEquiv.lean:177) is exactly that\
+  \ step already packaged at the QUOTIENT level, and DivisorFamilyDegreeZeroUnique.lean\
+  \ imports DivisorFamilyFieldEquiv directly. With zero_le_divFamDivisor (DivisorFamilyField.lean:165)\
+  \ and deg_divFamDivisor (DivisorFamilyFieldCRT.lean:376), both also in closure,\
+  \ the whole file's math is:\n  hx : divFamDivisor x = 0 := eq_zero_of_deg_le_zero\
+  \ K (zero_le_divFamDivisor x) (deg rewrite; norm_num)\n  same for y; exact divFamDivisor_injective\
+  \ (hx.trans hy.symm)\nVERIFIED at the file's exact import list minus DivisorFamilyDegreeZero,\
+  \ EXIT=0. Two of the three declarations in the \"Main declarations\" list are avoidable,\
+  \ and the docstring's \"in one line each\" argument describes the longer of two\
+  \ routes without noting the shorter one exists.\n\nALSO: instSubsingletonDivFamZarZero\
+  \ and uniqueZeroOfField carry [LocallyOfFiniteType (relCurve C K over Spec K)] which\
+  \ is NOT load-bearing: it is inferInstance from the SmoothOfRelativeDimension 1\
+  \ binder two lines up (Smooth => LocallyOfFiniteType). Verified by re-elaborating\
+  \ both without it, EXIT=0."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T05:16:41.518282+00:00'
+updated_at: '2026-07-30T05:16:41.518297+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0002-horizon-pic-c
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
