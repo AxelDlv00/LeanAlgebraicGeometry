@@ -264,7 +264,10 @@ multi-index analogue, and a glueing atlas, whose charts overlap by construction,
 the shape that evades it. -/
 theorem not_indexSeparated_duplicated :
     ¬ IndexSeparated C (duplicatedSpecFamily C) := by
-  sorry
+  intro hsep
+  have hne : (⟨false⟩ : ULift.{u} Bool) ≠ ⟨true⟩ := by simp
+  exact hne (hsep (op (Spec (CommRingCat.of k))) ⟨false⟩ ⟨true⟩
+    (𝟙 (Spec (CommRingCat.of k))) (𝟙 (Spec (CommRingCat.of k))) rfl)
 
 variable (C) in
 /-- The same fact at the level the coverage step consumes: the duplicated family is not jointly
