@@ -129,12 +129,25 @@ theorem isGaloisQuotient_overlap [FiniteDimensional K L] [IsGalois K L]
   exact SemilinearGalAction.isGaloisQuotient_quotientOpenOfStableSubopen
     ρ i.stable i.affine inf_le_left (inf_stable ρ i j)
 
+/-- The quotient map from the source intersection to its quotient-side overlap. -/
+noncomputable def overlapQuotientMap [FiniteDimensional K L]
+    (i j : StableAffineOpen ρ) :
+    (i.U ⊓ j.U).toScheme ⟶ quotientOverlap ρ i j := by
+  letI := ρ.sectionsMulSemiringAction i.stable
+  letI := SemilinearGalAction.sectionsAlgebra f i.U
+  letI := SemilinearGalAction.sectionsAlgebraK (K := K) f i.U
+  letI := SemilinearGalAction.sections_isScalarTower (K := K) f i.U
+  letI := ρ.isSemilinear_sections i.stable
+  exact SemilinearGalAction.stableAffineQuotientMapRestrict
+    ρ i.stable i.affine inf_le_left (inf_stable ρ i j)
+
 /-- The specified restricted quotient witness on a pairwise overlap. -/
 noncomputable def overlapWitness [FiniteDimensional K L] [IsGalois K L]
     (i j : StableAffineOpen ρ) :
-    GaloisQuotientWitness (ρ.restrict (inf_stable ρ i j))
+    GaloisQuotientWitnessWithProjection (ρ.restrict (inf_stable ρ i j))
       (quotientOverlap ρ i j)
-      (quotientOverlapι ρ i j ≫ quotientChartMap ρ i) := by
+      (quotientOverlapι ρ i j ≫ quotientChartMap ρ i)
+      (overlapQuotientMap ρ i j) := by
   letI := ρ.sectionsMulSemiringAction i.stable
   letI := SemilinearGalAction.sectionsAlgebra f i.U
   letI := SemilinearGalAction.sectionsAlgebraK (K := K) f i.U
@@ -184,12 +197,27 @@ theorem isGaloisQuotient_triple [FiniteDimensional K L] [IsGalois K L]
     ρ i.stable i.affine (le_trans inf_le_left inf_le_left)
       (triple_stable ρ i j k)
 
+/-- The quotient map from the source triple intersection to its quotient open. -/
+noncomputable def tripleQuotientMap [FiniteDimensional K L]
+    (i j k : StableAffineOpen ρ) :
+    ((i.U ⊓ j.U) ⊓ (i.U ⊓ k.U)).toScheme ⟶
+      quotientTriple ρ i j k := by
+  letI := ρ.sectionsMulSemiringAction i.stable
+  letI := SemilinearGalAction.sectionsAlgebra f i.U
+  letI := SemilinearGalAction.sectionsAlgebraK (K := K) f i.U
+  letI := SemilinearGalAction.sections_isScalarTower (K := K) f i.U
+  letI := ρ.isSemilinear_sections i.stable
+  exact SemilinearGalAction.stableAffineQuotientMapRestrict
+    ρ i.stable i.affine (le_trans inf_le_left inf_le_left)
+      (triple_stable ρ i j k)
+
 /-- The specified restricted quotient witness on a triple overlap. -/
 noncomputable def tripleWitness [FiniteDimensional K L] [IsGalois K L]
     (i j k : StableAffineOpen ρ) :
-    GaloisQuotientWitness (ρ.restrict (triple_stable ρ i j k))
+    GaloisQuotientWitnessWithProjection (ρ.restrict (triple_stable ρ i j k))
       (quotientTriple ρ i j k)
-      (quotientTripleι ρ i j k ≫ quotientChartMap ρ i) := by
+      (quotientTripleι ρ i j k ≫ quotientChartMap ρ i)
+      (tripleQuotientMap ρ i j k) := by
   letI := ρ.sectionsMulSemiringAction i.stable
   letI := SemilinearGalAction.sectionsAlgebra f i.U
   letI := SemilinearGalAction.sectionsAlgebraK (K := K) f i.U
@@ -254,9 +282,12 @@ theorem isGaloisQuotient_triple_rot [FiniteDimensional K L] [IsGalois K L]
 /-- The next cyclic triple witness, transported to the source triple action. -/
 noncomputable def tripleWitnessRot [FiniteDimensional K L] [IsGalois K L]
     (i j k : StableAffineOpen ρ) :
-    GaloisQuotientWitness (ρ.restrict (triple_stable ρ i j k))
+    GaloisQuotientWitnessWithProjection (ρ.restrict (triple_stable ρ i j k))
       (quotientTriple ρ j k i)
-      (quotientTripleι ρ j k i ≫ quotientChartMap ρ j) := by
+      (quotientTripleι ρ j k i ≫ quotientChartMap ρ j)
+      ((X.isoOfEq (show ((i.U ⊓ j.U) ⊓ (i.U ⊓ k.U)) =
+        ((j.U ⊓ k.U) ⊓ (j.U ⊓ i.U)) by ac_rfl)).hom ≫
+          tripleQuotientMap ρ j k i) := by
   let eOpen : ((i.U ⊓ j.U) ⊓ (i.U ⊓ k.U)) =
       ((j.U ⊓ k.U) ⊓ (j.U ⊓ i.U)) := by ac_rfl
   let e := X.isoOfEq eOpen
@@ -265,7 +296,7 @@ noncomputable def tripleWitnessRot [FiniteDimensional K L] [IsGalois K L]
         ((i.U ⊓ j.U) ⊓ (i.U ⊓ k.U)).ι ≫ f := by
     dsimp only [e]
     rw [← Category.assoc, Scheme.isoOfEq_hom_ι]
-  exact GaloisQuotientWitness.transport
+  exact GaloisQuotientWitnessWithProjection.transport
     (ρ.restrict (triple_stable ρ i j k))
     (ρ.restrict (triple_stable ρ j k i))
     e hef (SemilinearGalAction.restrict_isoOfEq_isEquivariant ρ _ _ _)
@@ -277,7 +308,8 @@ noncomputable def tripleIso [FiniteDimensional K L] [IsGalois K L]
     (i j k : StableAffineOpen ρ) :
     quotientTriple ρ i j k ≅ quotientTriple ρ j k i :=
   GaloisQuotientWitness.uniqueIso
-    (tripleWitness ρ i j k) (tripleWitnessRot ρ i j k)
+    (tripleWitness ρ i j k).toGaloisQuotientWitness
+    (tripleWitnessRot ρ i j k).toGaloisQuotientWitness
 
 /-- The triple-overlap transition in the shape required by
 `CategoryTheory.GlueData.t'`. -/
@@ -308,14 +340,15 @@ theorem isGaloisQuotient_overlap_rev [FiniteDimensional K L] [IsGalois K L]
 action as `overlapWitness ρ i j`. -/
 noncomputable def overlapWitnessRev [FiniteDimensional K L] [IsGalois K L]
     (i j : StableAffineOpen ρ) :
-    GaloisQuotientWitness (ρ.restrict (inf_stable ρ i j))
+    GaloisQuotientWitnessWithProjection (ρ.restrict (inf_stable ρ i j))
       (quotientOverlap ρ j i)
-      (quotientOverlapι ρ j i ≫ quotientChartMap ρ j) := by
+      (quotientOverlapι ρ j i ≫ quotientChartMap ρ j)
+      ((X.isoOfEq (inf_comm i.U j.U)).hom ≫ overlapQuotientMap ρ j i) := by
   let e := X.isoOfEq (inf_comm i.U j.U)
   have hef : e.hom ≫ ((j.U ⊓ i.U).ι ≫ f) = (i.U ⊓ j.U).ι ≫ f := by
     dsimp only [e]
     rw [← Category.assoc, Scheme.isoOfEq_hom_ι]
-  exact GaloisQuotientWitness.transport
+  exact GaloisQuotientWitnessWithProjection.transport
     (ρ.restrict (inf_stable ρ i j)) (ρ.restrict (inf_stable ρ j i))
     e hef (SemilinearGalAction.restrict_isoOfEq_isEquivariant ρ _ _ _)
     (overlapWitness ρ j i)
@@ -330,7 +363,23 @@ noncomputable def overlapIso [FiniteDimensional K L] [IsGalois K L]
   · subst j
     exact Iso.refl _
   · exact GaloisQuotientWitness.uniqueIso
-      (overlapWitness ρ i j) (overlapWitnessRev ρ i j)
+      (overlapWitness ρ i j).toGaloisQuotientWitness
+      (overlapWitnessRev ρ i j).toGaloisQuotientWitness
+
+/-- The overlap transition intertwines the two pinned quotient projections. -/
+@[reassoc]
+theorem overlapIso_hom_quotientMap [FiniteDimensional K L] [IsGalois K L]
+    (i j : StableAffineOpen ρ) :
+    overlapQuotientMap ρ i j ≫ (overlapIso ρ i j).hom =
+      (X.isoOfEq (inf_comm i.U j.U)).hom ≫
+        overlapQuotientMap ρ j i := by
+  classical
+  by_cases h : i = j
+  · subst j
+    simp [overlapIso]
+  · simpa [overlapIso, h, GaloisQuotientWitness.uniqueIso] using
+      GaloisQuotientWitness.comparison_quotientMap
+        (overlapWitness ρ i j) (overlapWitnessRev ρ i j)
 
 /-- The overlap transition lies over `Spec K`. -/
 @[reassoc]
@@ -345,7 +394,8 @@ theorem overlapIso_hom_base [FiniteDimensional K L] [IsGalois K L]
     simp [overlapIso]
   · simpa [overlapIso, h, GaloisQuotientWitness.uniqueIso] using
       (GaloisQuotientWitness.comparison
-        (overlapWitness ρ i j) (overlapWitnessRev ρ i j)).2
+        (overlapWitness ρ i j).toGaloisQuotientWitness
+        (overlapWitnessRev ρ i j).toGaloisQuotientWitness).2
 
 /-- The self-transition is the identity. -/
 @[simp]
