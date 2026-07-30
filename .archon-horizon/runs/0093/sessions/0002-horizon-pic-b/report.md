@@ -1,0 +1,1 @@
+No additional commit is needed. Integration commit `c5fafd7214` captured the final inbox comments, history, and closed `I-1516` state; their disk blobs exactly match `HEAD`. Remaining differences are live Horizon event/hook runtime state, not authored project changes.
