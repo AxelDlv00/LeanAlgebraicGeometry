@@ -314,6 +314,11 @@ def incl : affineChartAt J i S ⟶ ℙ(J; S) :=
   pullback.fst (toProjInt J S)
     (Proj.awayι P[J] (X i) (X_i_mem_deg_one J i) Nat.zero_lt_one)
 
+/-- Projection from the relative chart to the affine integral chart. -/
+def toSpecAway : affineChartAt J i S ⟶ Spec (.of (Away P[J] (X i))) :=
+  pullback.snd (toProjInt J S)
+    (Proj.awayι P[J] (X i) (X_i_mem_deg_one J i) Nat.zero_lt_one)
+
 instance : IsOpenImmersion (incl J i S) := by
   dsimp [incl]
   exact MorphismProperty.pullback_fst _ _
@@ -418,6 +423,27 @@ theorem isoAffineSpace_hom_over :
   rw [Iso.trans_hom, Category.assoc, asIso_hom, changeChartHom_over,
     flattenIso_hom_over]
   rfl
+
+/-- Under the affine-space identification, the integral polynomial-space
+projection is the chart projection followed by the chart-ring equivalence. -/
+@[reassoc]
+theorem isoAffineSpace_hom_toSpecMvPoly :
+    (isoAffineSpace J i S).hom ≫
+        AffineSpace.toSpecMvPoly {j : J // j ≠ i} S =
+      toSpecAway J i S ≫ (specAwayIso J i).hom := by
+  change ((flattenIso J i S).hom ≫ changeChartHom J i S) ≫
+      pullback.snd _ _ = _
+  rw [Category.assoc]
+  change (flattenIso J i S).hom ≫
+      (pullback.lift _ _ _ ≫ pullback.snd _ _) = _
+  rw [pullback.lift_snd]
+  change (flattenIso J i S).hom ≫
+      pullback.snd (terminal.from S)
+        (integralChartIncl J i ≫ terminal.from (Proj P[J])) ≫
+        (specAwayIso J i).hom =
+    pullback.snd (ProjectiveSpace.toProjInt J S) (integralChartIncl J i) ≫
+      (specAwayIso J i).hom
+  exact pullbackLeftPullbackSndIso_hom_snd_assoc _ _ _ _
 
 end IsoAffineSpace
 
