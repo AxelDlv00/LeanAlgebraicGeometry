@@ -346,6 +346,35 @@ noncomputable def twistMor (γ : k' ≃ₐ[k] k') :
   rep.homEquiv.symm
     ((galoisActionPicEt C γ).inv.app (Opposite.op X') (rep.homEquiv (𝟙 X')))
 
+/-- The universal class of `twistMor γ` is the inverse functor action applied to
+the universal class of the representing object. -/
+@[simp]
+theorem homEquiv_twistMor (γ : k' ≃ₐ[k] k') :
+    rep.homEquiv (twistMor C rep γ) =
+      (galoisActionPicEt C γ).inv.app (Opposite.op X') (rep.homEquiv (𝟙 X')) :=
+  Equiv.apply_symm_apply _ _
+
+/-- The canonical twist morphisms satisfy the Galois group law in the slice.
+The product-twist comparison is the only bookkeeping map in the formula. -/
+theorem twistMor_mul (γ τ : k' ≃ₐ[k] k') :
+    twistMor C rep (γ * τ) =
+      (twistTestFunctor_mulIso (k := k) γ τ).hom.app X' ≫
+        (twistTestFunctor (k := k) γ).map (twistMor C rep τ) ≫
+        twistMor C rep γ := by
+  apply rep.homEquiv.injective
+  rw [homEquiv_twistMor, rep.homEquiv_comp, rep.homEquiv_comp,
+    homEquiv_twistMor]
+  change _ = (picEt (Scheme.baseChangeField C k')).map
+    ((twistTestFunctor_mulIso (k := k) γ τ).hom.app X').op
+      (((twistTestFunctor (k := k) γ).op ⋙
+        picEt (Scheme.baseChangeField C k')).map (twistMor C rep τ).op
+          ((galoisActionPicEt C γ).inv.app (Opposite.op X')
+            (rep.homEquiv (𝟙 X'))))
+  rw [← NatTrans.naturality_apply (galoisActionPicEt C γ).inv
+    (twistMor C rep τ).op (rep.homEquiv (𝟙 X'))]
+  rw [← rep.homEquiv_eq, homEquiv_twistMor]
+  exact galoisActionPicEt_mul_inv_app C γ τ X' (rep.homEquiv (𝟙 X'))
+
 /-- **The underlying map of the twist IS an endomorphism of `X'.left`**, stated as a
 proposition about types rather than left to the reader: `Over.map` does not touch the
 underlying scheme, so no transport is needed to feed
