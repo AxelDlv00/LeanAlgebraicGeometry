@@ -31,6 +31,7 @@ set_option autoImplicit false
 universe u
 
 open CategoryTheory Opposite TopologicalSpace
+open scoped TensorProduct
 
 namespace AlgebraicGeometry
 
@@ -125,6 +126,15 @@ noncomputable abbrev ThetaOverlapQuotient (A : AffAdaptation D d) (a : ℕ)
     A.thetaOverlapSectionsModule (π := π) a i j
   A.ThetaOverlapSections (π := π) a i j ⧸
     A.thetaOverlapVanishing (π := π) a i j
+
+/-- Base change of intrinsic theta sections to the symmetric overlap colength algebra. -/
+noncomputable abbrev ThetaOverlapRestriction (A : AffAdaptation D d) (a : ℕ)
+    (i j : D.index) : Type u :=
+  letI : Module Γ(relCurve C R, D.pieces i ⊓ D.pieces j)
+      (A.ThetaOverlapSections (π := π) a i j) :=
+    A.thetaOverlapSectionsModule (π := π) a i j
+  A.ovlColength i j ⊗[Γ(relCurve C R, D.pieces i ⊓ D.pieces j)]
+    A.ThetaOverlapSections (π := π) a i j
 
 /-- The tensor restriction from the previous module is canonically the intrinsic quotient
 by the local equation. -/
@@ -337,6 +347,75 @@ noncomputable def thetaOverlapQuotientBaseModule (A : AffAdaptation D d) (a : �
 
 attribute [local instance] thetaPieceQuotientModule thetaOverlapQuotientModule
   thetaPieceQuotientBaseModule thetaOverlapQuotientBaseModule
+
+/-- The tensor/quotient comparison is linear over the piece colength algebra, not merely
+over the ambient section ring. -/
+noncomputable def thetaPieceRestrictionEquivColength (A : AffAdaptation D d) (a : ℕ)
+    (j : D.index) :
+    A.ThetaPieceRestriction (π := π) a j ≃ₗ[A.colength j]
+      A.ThetaPieceQuotient (π := π) a j := by
+  let e := A.thetaPieceRestrictionEquiv (π := π) a j
+  refine
+    { __ := e.toEquiv
+      map_add' := e.map_add
+      map_smul' := fun c x => ?_ }
+  obtain ⟨r, rfl⟩ := Ideal.Quotient.mk_surjective c
+  change e (r • x) = r • e x
+  exact e.map_smul r x
+
+/-- The tensor/quotient comparison on an overlap is linear over its symmetric colength
+algebra. -/
+noncomputable def thetaOverlapRestrictionEquivColength (A : AffAdaptation D d) (a : ℕ)
+    (i j : D.index) :
+    A.ThetaOverlapRestriction (π := π) a i j ≃ₗ[A.ovlColength i j]
+      A.ThetaOverlapQuotient (π := π) a i j := by
+  let e := TensorProduct.quotTensorEquivQuotSMul
+    (A.ThetaOverlapSections (π := π) a i j) (A.ovlIdeal i j)
+  refine
+    { __ := e.toEquiv
+      map_add' := e.map_add
+      map_smul' := fun c x => ?_ }
+  obtain ⟨r, rfl⟩ := Ideal.Quotient.mk_surjective c
+  change e (r • x) = r • e x
+  exact e.map_smul r x
+
+omit [IsProper C.hom] in
+/-- The canonical quotient model on a widened piece is invertible over that piece's
+colength algebra. -/
+theorem invertible_thetaPieceQuotient (A : AffAdaptation D d) (a : ℕ) (j : D.index) :
+    Module.Invertible (A.colength j) (A.ThetaPieceQuotient (π := π) a j) := by
+  letI : Module.Invertible (A.colength j) (A.ThetaPieceRestriction (π := π) a j) :=
+    A.invertible_thetaPieceRestriction (π := π) a j
+  exact Module.Invertible.congr (A.thetaPieceRestrictionEquivColength (π := π) a j)
+
+/-- Base change of the intrinsic theta line to a symmetric overlap is invertible. -/
+theorem invertible_thetaOverlapRestriction (A : AffAdaptation D d) (a : ℕ)
+    (i j : D.index) :
+    Module.Invertible (A.ovlColength i j) (A.ThetaOverlapRestriction (π := π) a i j) := by
+  let M := A.thetaOverlapSectionsModel (π := π) a i j
+  letI : Scheme.QcohOn (thetaChartDatum C R π a).sheaf
+      (D.pieces i ⊓ D.pieces j) := M.qcoh
+  letI : Module Γ(relCurve C R, D.pieces i ⊓ D.pieces j)
+      (A.ThetaOverlapSections (π := π) a i j) :=
+    A.thetaOverlapSectionsModule (π := π) a i j
+  haveI : Module.Invertible Γ(relCurve C R, D.pieces i ⊓ D.pieces j)
+      (A.ThetaOverlapSections (π := π) a i j) := M.invertible
+  change Module.Invertible (A.ovlColength i j)
+    (A.ovlColength i j ⊗[Γ(relCurve C R, D.pieces i ⊓ D.pieces j)]
+      A.ThetaOverlapSections (π := π) a i j)
+  infer_instance
+
+/-- The canonical quotient model on a widened overlap is invertible over the symmetric
+overlap colength algebra. -/
+theorem invertible_thetaOverlapQuotient (A : AffAdaptation D d) (a : ℕ)
+    (i j : D.index) :
+    Module.Invertible (A.ovlColength i j)
+      (A.ThetaOverlapQuotient (π := π) a i j) := by
+  letI : Module.Invertible (A.ovlColength i j)
+      (A.ThetaOverlapRestriction (π := π) a i j) :=
+    A.invertible_thetaOverlapRestriction (π := π) a i j
+  exact Module.Invertible.congr
+    (A.thetaOverlapRestrictionEquivColength (π := π) a i j)
 
 /-- The left quotient restriction, viewed over the common test algebra `R`. -/
 noncomputable def thetaToOverlapLeftLinear (A : AffAdaptation D d) (a : ℕ)
