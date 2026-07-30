@@ -1,0 +1,7 @@
+import AlgebraicJacobian.Picard.Pic0ChartSeamCollapse
+open AlgebraicGeometry
+#check @AlgebraicGeometry.chartIso_of_seam
+#check @AlgebraicGeometry.eq_top_of_retraction_of_isDominant
+#print axioms AlgebraicGeometry.chartIso_of_isChartUniv
+#print axioms AlgebraicGeometry.exists_retraction_of_isChartUniv
+#print axioms AlgebraicGeometry.Jacobian

@@ -1,0 +1,5 @@
+import AlgebraicJacobian.Picard.Pic0ChartSeamCollapse
+open AlgebraicGeometry
+#print axioms AlgebraicGeometry.isDominant_opens_ι_of_irreducibleSpace
+#print axioms AlgebraicGeometry.eq_top_of_seam_of_irreducible
+#print axioms AlgebraicGeometry.Jacobian

@@ -1,0 +1,4 @@
+import AlgebraicJacobian.Picard.Pic0ChartSeamCollapse
+open AlgebraicGeometry
+#print axioms AlgebraicGeometry.injective_abelSigmaChart_of_seam_of_irreducible
+#print axioms AlgebraicGeometry.Jacobian
