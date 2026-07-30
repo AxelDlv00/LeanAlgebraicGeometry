@@ -377,6 +377,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyZarMapKit
 import AlgebraicJacobian.Picard.DivisorFamilyZarMap
 import AlgebraicJacobian.Picard.DivisorFamilyZarSheaf
 import AlgebraicJacobian.Picard.DivisorFamilyZarFunctor
+import AlgebraicJacobian.Picard.DivisorFamilyDegreeZero
 import AlgebraicJacobian.Picard.DivisorFamilyVehicle
 import AlgebraicJacobian.Picard.DivisorStalkIdeal
 import AlgebraicJacobian.Picard.DivisorFamilyTheta
@@ -640,6 +641,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyAffAbel
 -- repriced residue rather than assuming it.
 import AlgebraicJacobian.Picard.DivisorFamilyAffFieldDegree
 import AlgebraicJacobian.Picard.DivisorFamilyAffStalkEval
+import AlgebraicJacobian.Picard.DivisorFamilyAffFibreData
 -- The field-level window-recovery mono is CARRIER-FREE (run 0089 r6, ajcr-p3): the rung
 -- I-1248 named as the widened tower's load-bearing missing piece reads its carrier only
 -- through `eqns`, so the widened analogue needs no widened mathematics. Rooted so the
