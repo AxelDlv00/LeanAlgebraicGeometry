@@ -19,6 +19,13 @@
 !/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/
 .archon-horizon/cache/
 
-# Scratch Lean probes dropped at the workspace root by a session.
-# Keep probes worth retaining under the session's own probes/ directory instead.
+# Scratch Lean probes dropped by a session. The rule was ROOT-ANCHORED and matched
+# only the substring "probe", so it covered nothing inside a member project and nothing
+# named otherwise: pic-e's zz_pice_axioms*.lean reached HEAD via another lane's
+# integrate sweep in run 0095. Both gaps widened. Keep probes worth retaining under the
+# session's own probes/ directory instead.
 /*probe*.lean
+*probe*.lean
+zz_*.lean
+scratch_*.lean
+.palimpsest/

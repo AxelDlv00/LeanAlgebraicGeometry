@@ -1,5 +1,0 @@
-import AlgebraicJacobian.Picard.DivFamilyZeroAbel
-#print axioms AlgebraicGeometry.Scheme.fgaPicardRepresentability
-#print axioms AlgebraicGeometry.Scheme.PicSharp.kernelClass_divFamilyZero
-#print axioms AlgebraicGeometry.Scheme.PicScheme.abelMap_zero
-#print axioms AlgebraicGeometry.Scheme.PicScheme.abelDeg_zero
