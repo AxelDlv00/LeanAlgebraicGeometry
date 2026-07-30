@@ -243,6 +243,55 @@ theorem LaurentChartData.nonempty_finiteMapGenerators
   rw [map_pow, ← ht] at hi
   exact hi
 
+/-- The finite generator index lifted to the ambient scheme universe. -/
+abbrev LaurentChartData.FiniteMapGenerators.LiftedIndex
+    {D : LaurentChartData Y} {pi : C ⟶ Y} (G : D.FiniteMapGenerators pi) :=
+  ULift.{u} (Fin G.n0 ⊕ Fin G.n1)
+
+/-- The first generator family on the universe-lifted index. -/
+def LaurentChartData.FiniteMapGenerators.liftedAA
+    {D : LaurentChartData Y} {pi : C ⟶ Y} (G : D.FiniteMapGenerators pi) :
+    G.LiftedIndex → Γ(C.left, pi.left ⁻¹ᵁ D.V₀) :=
+  fun i => G.aa i.down
+
+/-- The second generator family on the same universe-lifted index. -/
+def LaurentChartData.FiniteMapGenerators.liftedBB
+    {D : LaurentChartData Y} {pi : C ⟶ Y} (G : D.FiniteMapGenerators pi) :
+    G.LiftedIndex → Γ(C.left, pi.left ⁻¹ᵁ D.V₁) :=
+  fun i => G.bb i.down
+
+@[simp]
+theorem LaurentChartData.FiniteMapGenerators.liftedAA_up
+    {D : LaurentChartData Y} {pi : C ⟶ Y} (G : D.FiniteMapGenerators pi)
+    (i : Fin G.n0 ⊕ Fin G.n1) : G.liftedAA (ULift.up i) = G.aa i :=
+  rfl
+
+@[simp]
+theorem LaurentChartData.FiniteMapGenerators.liftedBB_up
+    {D : LaurentChartData Y} {pi : C ⟶ Y} (G : D.FiniteMapGenerators pi)
+    (i : Fin G.n0 ⊕ Fin G.n1) : G.liftedBB (ULift.up i) = G.bb i :=
+  rfl
+
+theorem LaurentChartData.FiniteMapGenerators.range_liftedAA
+    {D : LaurentChartData Y} {pi : C ⟶ Y} (G : D.FiniteMapGenerators pi) :
+    Set.range G.liftedAA = Set.range G.aa := by
+  ext z
+  constructor
+  · rintro ⟨i, rfl⟩
+    exact ⟨i.down, rfl⟩
+  · rintro ⟨i, rfl⟩
+    exact ⟨ULift.up i, rfl⟩
+
+theorem LaurentChartData.FiniteMapGenerators.range_liftedBB
+    {D : LaurentChartData Y} {pi : C ⟶ Y} (G : D.FiniteMapGenerators pi) :
+    Set.range G.liftedBB = Set.range G.bb := by
+  ext z
+  constructor
+  · rintro ⟨i, rfl⟩
+    exact ⟨i.down, rfl⟩
+  · rintro ⟨i, rfl⟩
+    exact ⟨ULift.up i, rfl⟩
+
 /-- The complete first-chart twisted coordinates algebra-generate the source
 chart over `k`. This discharges the algebra-generation premise of the affine
 closed-immersion criterion. -/
@@ -250,18 +299,22 @@ theorem LaurentChartData.FiniteMapGenerators.adjoin_chart0
     (D : LaurentChartData Y) (pi : C ⟶ Y) (G : D.FiniteMapGenerators pi) :
     Algebra.adjoin k (Set.range
       (AlgebraicJacobian.TwoChart.TwistedCoordinates.chart0
-        G.d (D.pullbackX pi) G.aa)) = ⊤ := by
+        (R0 := Γ(C.left, pi.left ⁻¹ᵁ D.V₀))
+        G.d (D.pullbackX pi) G.liftedAA)) = ⊤ := by
   letI : Algebra Γ(Y.left, D.V₀) Γ(C.left, pi.left ⁻¹ᵁ D.V₀) :=
     RingHom.toAlgebra (pi.left.app D.V₀).hom
   letI : IsScalarTower k Γ(Y.left, D.V₀)
       Γ(C.left, pi.left ⁻¹ᵁ D.V₀) :=
     IsScalarTower.of_algebraMap_eq fun c => (app_algebraMap pi D.V₀ c).symm
   change Algebra.adjoin k (Set.range
-    (AlgebraicJacobian.TwoChart.TwistedCoordinates.chart0 G.d
-      (algebraMap Γ(Y.left, D.V₀)
-        Γ(C.left, pi.left ⁻¹ᵁ D.V₀) D.x) G.aa)) = ⊤
+    (AlgebraicJacobian.TwoChart.TwistedCoordinates.chart0
+      (R0 := Γ(C.left, pi.left ⁻¹ᵁ D.V₀))
+      G.d (algebraMap Γ(Y.left, D.V₀)
+        Γ(C.left, pi.left ⁻¹ᵁ D.V₀) D.x) G.liftedAA)) = ⊤
   exact AlgebraicJacobian.TwoChart.TwistedCoordinates.adjoin_chart0
-    G.d G.pos D.x G.aa D.span_pow_x G.span0
+    G.d G.pos D.x G.liftedAA D.span_pow_x (by
+      rw [G.range_liftedAA]
+      exact G.span0)
 
 /-- The complete second-chart twisted coordinates algebra-generate the source
 chart over `k`. -/
@@ -269,17 +322,21 @@ theorem LaurentChartData.FiniteMapGenerators.adjoin_chart1
     (D : LaurentChartData Y) (pi : C ⟶ Y) (G : D.FiniteMapGenerators pi) :
     Algebra.adjoin k (Set.range
       (AlgebraicJacobian.TwoChart.TwistedCoordinates.chart1
-        G.d (D.pullbackY pi) G.bb)) = ⊤ := by
+        (R1 := Γ(C.left, pi.left ⁻¹ᵁ D.V₁))
+        G.d (D.pullbackY pi) G.liftedBB)) = ⊤ := by
   letI : Algebra Γ(Y.left, D.V₁) Γ(C.left, pi.left ⁻¹ᵁ D.V₁) :=
     RingHom.toAlgebra (pi.left.app D.V₁).hom
   letI : IsScalarTower k Γ(Y.left, D.V₁)
       Γ(C.left, pi.left ⁻¹ᵁ D.V₁) :=
     IsScalarTower.of_algebraMap_eq fun c => (app_algebraMap pi D.V₁ c).symm
   change Algebra.adjoin k (Set.range
-    (AlgebraicJacobian.TwoChart.TwistedCoordinates.chart1 G.d
-      (algebraMap Γ(Y.left, D.V₁)
-        Γ(C.left, pi.left ⁻¹ᵁ D.V₁) D.y) G.bb)) = ⊤
+    (AlgebraicJacobian.TwoChart.TwistedCoordinates.chart1
+      (R1 := Γ(C.left, pi.left ⁻¹ᵁ D.V₁))
+      G.d (algebraMap Γ(Y.left, D.V₁)
+        Γ(C.left, pi.left ⁻¹ᵁ D.V₁) D.y) G.liftedBB)) = ⊤
   exact AlgebraicJacobian.TwoChart.TwistedCoordinates.adjoin_chart1
-    G.d G.pos D.y G.bb D.span_pow_y G.span1
+    G.d G.pos D.y G.liftedBB D.span_pow_y (by
+      rw [G.range_liftedBB]
+      exact G.span1)
 
 end AlgebraicGeometry.Adelic
