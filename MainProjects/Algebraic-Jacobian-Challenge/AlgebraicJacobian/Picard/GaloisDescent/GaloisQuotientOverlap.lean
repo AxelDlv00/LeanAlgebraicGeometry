@@ -824,6 +824,106 @@ charts. -/
 noncomputable def gluedQuotient [FiniteDimensional K L] [IsGalois K L] :
     Scheme := (quotientGlueData ρ).glued
 
+/-- The quotient projection on a stable affine chart, followed by its inclusion
+into the glued quotient. -/
+noncomputable def quotientChartProjection [FiniteDimensional K L] [IsGalois K L]
+    (i : StableAffineOpen ρ) : i.U.toScheme ⟶ gluedQuotient ρ :=
+  SemilinearGalAction.stableAffineQuotientMap ρ i.stable i.affine ≫
+    (quotientGlueData ρ).ι i
+
+/-- The local quotient projections agree on the intersection of two stable
+affine charts. -/
+theorem quotientChartProjection_inf [FiniteDimensional K L] [IsGalois K L]
+    (i j : StableAffineOpen ρ) :
+    X.homOfLE (show i.U ⊓ j.U ≤ i.U from inf_le_left) ≫
+        quotientChartProjection ρ i =
+      X.homOfLE (show i.U ⊓ j.U ≤ j.U from inf_le_right) ≫
+        quotientChartProjection ρ j := by
+  have hswap :
+      (X.isoOfEq (inf_comm i.U j.U)).hom ≫
+          X.homOfLE (show j.U ⊓ i.U ≤ j.U from inf_le_left) =
+        X.homOfLE (show i.U ⊓ j.U ≤ j.U from inf_le_right) := by
+    rw [← cancel_mono j.U.ι]
+    simp
+  have hglue := (quotientGlueData ρ).glue_condition i j
+  change (overlapIso ρ i j).hom ≫ quotientOverlapι ρ j i ≫
+      (quotientGlueData ρ).ι j =
+    quotientOverlapι ρ i j ≫ (quotientGlueData ρ).ι i at hglue
+  simp only [quotientChartProjection]
+  calc
+    X.homOfLE inf_le_left ≫
+          (SemilinearGalAction.stableAffineQuotientMap ρ i.stable i.affine ≫
+            (quotientGlueData ρ).ι i) =
+        (X.homOfLE inf_le_left ≫
+            SemilinearGalAction.stableAffineQuotientMap ρ i.stable i.affine) ≫
+          (quotientGlueData ρ).ι i := (Category.assoc _ _ _).symm
+    _ = (overlapQuotientMap ρ i j ≫ quotientOverlapι ρ i j) ≫
+          (quotientGlueData ρ).ι i :=
+      congrArg (fun z ↦ z ≫ (quotientGlueData ρ).ι i)
+        (overlapQuotientMap_fac ρ i j).symm
+    _ = overlapQuotientMap ρ i j ≫
+          (quotientOverlapι ρ i j ≫ (quotientGlueData ρ).ι i) :=
+      Category.assoc _ _ _
+    _ = overlapQuotientMap ρ i j ≫
+          ((overlapIso ρ i j).hom ≫ quotientOverlapι ρ j i ≫
+            (quotientGlueData ρ).ι j) :=
+      congrArg (fun z ↦ overlapQuotientMap ρ i j ≫ z) hglue.symm
+    _ = (overlapQuotientMap ρ i j ≫ (overlapIso ρ i j).hom) ≫
+          quotientOverlapι ρ j i ≫ (quotientGlueData ρ).ι j := by
+      simp only [Category.assoc]
+    _ = ((X.isoOfEq (inf_comm i.U j.U)).hom ≫
+          overlapQuotientMap ρ j i) ≫ quotientOverlapι ρ j i ≫
+          (quotientGlueData ρ).ι j := by
+      rw [overlapIso_hom_quotientMap]
+    _ = ((X.isoOfEq (inf_comm i.U j.U)).hom ≫
+          (overlapQuotientMap ρ j i ≫ quotientOverlapι ρ j i)) ≫
+          (quotientGlueData ρ).ι j := by
+      simp only [Category.assoc]
+    _ = ((X.isoOfEq (inf_comm i.U j.U)).hom ≫
+          (X.homOfLE inf_le_left ≫
+            SemilinearGalAction.stableAffineQuotientMap ρ j.stable j.affine)) ≫
+          (quotientGlueData ρ).ι j :=
+      congrArg
+        (fun z ↦ ((X.isoOfEq (inf_comm i.U j.U)).hom ≫ z) ≫
+          (quotientGlueData ρ).ι j)
+        (overlapQuotientMap_fac ρ j i)
+    _ = (X.homOfLE inf_le_right ≫
+          SemilinearGalAction.stableAffineQuotientMap ρ j.stable j.affine) ≫
+          (quotientGlueData ρ).ι j := by
+      rw [← Category.assoc, hswap]
+    _ = X.homOfLE inf_le_right ≫
+          (SemilinearGalAction.stableAffineQuotientMap ρ j.stable j.affine ≫
+            (quotientGlueData ρ).ι j) := Category.assoc _ _ _
+
+/-- The stable-affine quotient projections satisfy the pullback compatibility
+required by `Scheme.OpenCover.glueMorphisms`. -/
+theorem quotientChartProjection_compatible
+    [FiniteDimensional K L] [IsGalois K L]
+    (i j : StableAffineOpen ρ) :
+    pullback.fst i.U.ι j.U.ι ≫ quotientChartProjection ρ i =
+      pullback.snd i.U.ι j.U.ι ≫ quotientChartProjection ρ j := by
+  rw [← cancel_epi (isPullback_opens_inf i.U j.U).isoPullback.hom]
+  simpa only [IsPullback.isoPullback_hom_fst_assoc,
+    IsPullback.isoPullback_hom_snd_assoc] using
+      quotientChartProjection_inf ρ i j
+
+/-- The quotient projection from the acted scheme to the quotient obtained by
+gluing its stable affine quotient charts. -/
+noncomputable def gluedQuotientProjection
+    [FiniteDimensional K L] [IsGalois K L] [HasStableAffineCover K L ρ] :
+    X ⟶ gluedQuotient ρ :=
+  (sourceOpenCover ρ).glueMorphisms (quotientChartProjection ρ)
+    (quotientChartProjection_compatible ρ)
+
+/-- Restricting the global quotient projection to a stable affine chart recovers
+the pinned local quotient projection. -/
+@[reassoc]
+theorem sourceOpenCover_f_gluedQuotientProjection
+    [FiniteDimensional K L] [IsGalois K L] [HasStableAffineCover K L ρ]
+    (i : StableAffineOpen ρ) :
+    i.U.ι ≫ gluedQuotientProjection ρ = quotientChartProjection ρ i := by
+  exact (sourceOpenCover ρ).ι_glueMorphisms _ _ i
+
 /-- The structure maps of the invariant-ring quotient charts glue to a map to
 `Spec K`. -/
 noncomputable def gluedQuotientMap [FiniteDimensional K L] [IsGalois K L] :
