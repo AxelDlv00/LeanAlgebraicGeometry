@@ -581,6 +581,7 @@ import AlgebraicJacobian.Picard.Pic0ChartBotRefute
 import AlgebraicJacobian.Picard.Pic0ChartCoverForcesNonInj
 import AlgebraicJacobian.Picard.Pic0ChartMultiIndexInterval
 import AlgebraicJacobian.Picard.Pic0ChartSubsingletonCollapse
+import AlgebraicJacobian.Picard.Pic0ChartMonoUnconditional
 import AlgebraicJacobian.Picard.Pic0ChartSeamCollapse
 import AlgebraicJacobian.Picard.Pic0ChartCoverageAbel
 import AlgebraicJacobian.Picard.Pic0ChartLocusH0One
