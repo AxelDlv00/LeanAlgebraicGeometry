@@ -123,18 +123,16 @@ theorem coversTop_singleton_top :
     (Opens.grothendieckTopology (Y : TopCat)).CoversTop
       (fun _ : PUnit.{u+1} => (⊤ : TopologicalSpace.Opens (Y : TopCat))) := by
   intro V
-  have h : Sieve.ofObjects (fun _ : PUnit.{u+1} => (⊤ : TopologicalSpace.Opens (Y : TopCat))) V = ⊤ := by
+  have h : Sieve.ofObjects
+      (fun _ : PUnit.{u+1} => (⊤ : TopologicalSpace.Opens (Y : TopCat))) V = ⊤ := by
     ext W _
     simp only [Sieve.top_apply, iff_true]
     exact ⟨PUnit.unit, ⟨homOfLE le_top⟩⟩
   rw [h]
   exact GrothendieckTopology.top_mem _ _
 
-set_option synthInstance.maxHeartbeats 1600000 in
+set_option synthInstance.maxHeartbeats 1600000 in -- slice-site sheafification blow-up
 set_option maxHeartbeats 2000000 in
--- Headroom: `overFunctor` is `pushforward (id)`, so `hom_ext` unfolds the slice-site
--- sheafification instances -- the same blow-up documented at
--- `QuotScheme.presentationPullbackIotaOfQuasicoherentData`.
 /-- **The restriction functor to an open preserves zero morphisms.**
 
 `SheafOfModules.overFunctor` is `SheafOfModules.pushforward (𝟙 _)`, which acts as the
@@ -230,7 +228,7 @@ instance zeroPresentation_isFinite
   isFiniteType_relations :=
     zeroGeneratingSections_isFiniteType (isZero_kernel_zeroGeneratingSections hM)
 
-set_option synthInstance.maxHeartbeats 1600000 in
+set_option synthInstance.maxHeartbeats 1600000 in -- slice-site sheafification blow-up
 set_option maxHeartbeats 2000000 in
 /-- **The quasi-coherence datum of a zero sheaf of modules**: the singleton cover
 `{⊤}`, with the empty presentation on it.
@@ -243,10 +241,8 @@ theorem isZero_over_of_isZero {M : Y.Modules} (hM : IsZero M)
   haveI := preservesZeroMorphisms_overFunctor (Y := Y) U
   Functor.map_isZero (SheafOfModules.overFunctor Y.ringCatSheaf U) hM
 
-set_option synthInstance.maxHeartbeats 1600000 in
+set_option synthInstance.maxHeartbeats 1600000 in -- slice-site `Over top` instances
 set_option maxHeartbeats 2000000 in
--- Headroom: the cover-member presentation is elaborated on the slice site `Over top`,
--- provisioning its `HasWeakSheafify`/`WEqualsLocallyBijective` instances under a binder.
 noncomputable def zeroQuasicoherentData {M : Y.Modules} (hM : IsZero M) :
     M.QuasicoherentData where
   I := PUnit.{u+1}
@@ -254,16 +250,14 @@ noncomputable def zeroQuasicoherentData {M : Y.Modules} (hM : IsZero M) :
   coversTop := coversTop_singleton_top
   presentation _ := zeroPresentation (isZero_over_of_isZero hM _)
 
-set_option synthInstance.maxHeartbeats 1600000 in
+set_option synthInstance.maxHeartbeats 1600000 in -- as `zeroQuasicoherentData` above
 set_option maxHeartbeats 2000000 in
--- Headroom: same slice-site instance provisioning as `zeroQuasicoherentData` above.
 instance zeroQuasicoherentData_isFinitePresentation {M : Y.Modules} (hM : IsZero M) :
     (zeroQuasicoherentData hM).IsFinitePresentation where
   isFinite_presentation _ := zeroPresentation_isFinite (isZero_over_of_isZero hM _)
 
-set_option synthInstance.maxHeartbeats 1600000 in
+set_option synthInstance.maxHeartbeats 1600000 in -- `shrink` re-enters slice synthesis
 set_option maxHeartbeats 2000000 in
--- Headroom: `shrink` re-derives the covering sieve, re-entering the slice-site synthesis.
 /-- **A zero sheaf of modules on a scheme is finitely presented.**
 
 Absent from Mathlib: measured, `infer_instance` and `exact?` both fail on
@@ -277,6 +271,133 @@ theorem isFinitePresentation_of_isZero {M : Y.Modules} (hM : IsZero M) :
       { isFinite_presentation := fun _ =>
           zeroPresentation_isFinite (isZero_over_of_isZero hM _) }⟩
 
+/-! ## §2. Flatness and proper support of a zero sheaf of modules -/
+
 end Scheme.Modules
+
+/-- **A subsingleton module is flat**, over any commutative ring.
+
+Absent from Mathlib as a usable lemma: `exact?` offers `Module.Flat.of_shrink`, whose
+universe parameters cannot be inferred here (it leaves a metavariable). The direct
+route is that a subsingleton module is linearly equivalent to `PUnit`, which is flat
+by synthesis. -/
+theorem Module.Flat.of_subsingleton' {R : Type u} [CommRing R] {M : Type u}
+    [AddCommGroup M] [Module R M] [Subsingleton M] : Module.Flat R M :=
+  Module.Flat.of_linearEquiv
+    (({ toFun := fun _ => PUnit.unit, invFun := fun _ => 0,
+        left_inv := fun _ => Subsingleton.elim _ _, right_inv := fun _ => rfl,
+        map_add' := fun _ _ => rfl,
+        map_smul' := fun _ _ => rfl } : M ≃ₗ[R] PUnit.{u+1}))
+
+namespace Scheme.Modules
+
+variable {Y : Scheme.{u}}
+
+/-- **The sections of a zero sheaf of modules over any open form a subsingleton.**
+
+`Scheme.Modules.toPresheaf` is additive, so it carries `M` to a zero presheaf of
+abelian groups, whose value at `V` is a zero object of `Ab` and hence a
+subsingleton. -/
+theorem subsingleton_sections_of_isZero {M : Y.Modules} (hM : IsZero M)
+    (V : Y.Opens) : Subsingleton Γ(M, V) :=
+  AddCommGrpCat.subsingleton_of_isZero
+    ((Functor.map_isZero (Scheme.Modules.toPresheaf Y) hM).obj _)
+
+/-- **A zero sheaf of modules is flat over any base morphism**, with no hypothesis on
+the morphism at all.
+
+`CoherentSheafFlat` asks each section module `Γ(M, V)` to be flat over `Γ(S, U)`. The
+section modules are subsingletons (`subsingleton_sections_of_isZero`), and a
+subsingleton module is flat. -/
+theorem coherentSheafFlat_of_isZero {S' : Scheme.{u}} (g : Y ⟶ S') {M : Y.Modules}
+    (hM : IsZero M) : Scheme.CoherentSheafFlat g M := by
+  intro U _ V _ e
+  letI : Module Γ(S', U) Γ(M, V) := Module.compHom _ (g.appLE U V e).hom
+  haveI := subsingleton_sections_of_isZero hM V
+  exact Module.Flat.of_subsingleton'
+
+/-- **The annihilator ideal sheaf of a zero sheaf of modules is `⊤`.**
+
+Each affine-local annihilator is the whole ring (`Module.annihilator_eq_top_iff` at a
+subsingleton module), and `ofIdeals` of the constant-`⊤` family is `⊤` because `⊤` is
+itself an ideal sheaf below it. -/
+theorem annihilator_of_isZero {M : Y.Modules} (hM : IsZero M) :
+    Scheme.Modules.annihilator M = ⊤ :=
+  top_le_iff.mp (le_sSup (by
+    intro U
+    haveI := subsingleton_sections_of_isZero hM U.1
+    exact le_of_eq (Module.annihilator_eq_top_iff.mpr inferInstance).symm))
+
+/-- **The schematic support of a zero sheaf of modules is empty.**
+
+Its annihilator is `⊤`, and the subscheme cut out by the unit ideal sheaf has empty
+carrier. -/
+theorem isEmpty_schematicSupport_of_isZero {M : Y.Modules} (hM : IsZero M) :
+    IsEmpty (Scheme.Modules.schematicSupport M) := by
+  rw [Scheme.Modules.schematicSupport, annihilator_of_isZero hM]
+  infer_instance
+
+/-- **A zero sheaf of modules has proper support over any base**, unconditionally.
+
+The support is empty, and a morphism out of an empty scheme is finite, hence proper.
+This is the field of `DivFamily` that is a *real* hypothesis for a nonempty divisor —
+properness of `D → T` — and it is free for the empty one, with **no** properness
+assumption on the ambient morphism. -/
+theorem hasProperSupport_of_isZero {S' : Scheme.{u}} (g : Y ⟶ S') {M : Y.Modules}
+    (hM : IsZero M) : Scheme.Modules.HasProperSupport g M := by
+  haveI := isEmpty_schematicSupport_of_isZero hM
+  exact IsProper.instOfIsFinite _
+
+end Scheme.Modules
+
+/-! ## §3. The empty divisor -/
+
+namespace Scheme
+
+variable {S X : Scheme.{u}} (π : X ⟶ S) (T : Over S)
+
+/-- **The structure sheaf is locally trivial of rank one.**
+
+`RelPicFunctor.isLocallyTrivial_unit` is `private`, so it is restated here rather
+than reused: on any affine open the identity is the required trivialisation. -/
+theorem isLocallyTrivial_unit' {Y : Scheme.{u}} :
+    LineBundle.IsLocallyTrivial (SheafOfModules.unit Y.ringCatSheaf) := by
+  intro x
+  obtain ⟨W, hW_aff, hxW, -⟩ :=
+    exists_isAffineOpen_mem_and_subset (X := Y) (x := x) (U := ⊤)
+      (show x ∈ (⊤ : Y.Opens) from trivial)
+  exact ⟨W, hxW, hW_aff,
+    ⟨(Scheme.Modules.restrictFunctorIsoPullback W.ι).app _ ≪≫ Modules.pullbackUnitIso W.ι⟩⟩
+
+/-- **THE EMPTY DIVISOR**, and with it the first inhabitant of `Scheme.DivFamily` for
+any `π : X ⟶ S` and any test object `T`.
+
+`F = 0`, `q = 0`. The kernel ideal is then all of `O_{X_T}` — via
+`Limits.kernelZeroIsoSource`, since the source of `q` is the pulled-back unit — which
+is invertible, so the *divisor condition* holds for the geometric reason it should:
+`O_{X_T}/O_{X_T} = 0` cuts out `D = ∅`, an effective relative divisor.
+
+No hypothesis on `π`: not proper, not smooth, not even separated. Compare the general
+case, where `properSupport` and `flat` are substantive conditions. -/
+noncomputable def DivFamily.zero : DivFamily π T where
+  F := 0
+  isFinitePresentation := Modules.isFinitePresentation_of_isZero (isZero_zero _)
+  flat := Modules.coherentSheafFlat_of_isZero _ (isZero_zero _)
+  properSupport := Modules.hasProperSupport_of_isZero _ (isZero_zero _)
+  q := 0
+  epi := (isZero_zero _).epi _
+  kerLocallyTrivial :=
+    LineBundle.IsLocallyTrivial.of_iso
+      (Limits.kernelZeroIsoSource (X := (Scheme.Modules.pullback
+        (Limits.pullback.fst π T.hom)).obj (SheafOfModules.unit X.ringCatSheaf))
+        (Y := (0 : (Limits.pullback π T.hom).Modules))).symm
+      (LineBundle.IsLocallyTrivial.of_iso
+        (Modules.pullbackUnitIso (Limits.pullback.fst π T.hom)).symm
+        isLocallyTrivial_unit')
+
+instance DivFamily.instNonempty : Nonempty (DivFamily π T) :=
+  ⟨DivFamily.zero π T⟩
+
+end Scheme
 
 end AlgebraicGeometry

@@ -127,6 +127,7 @@ import AlgebraicJacobian.Albanese.AVRigidityArbitraryField
 -- field hypothesis is not owed.  Its content (Sym^g C, the descent datum, Abel-Jacobi) is.
 import AlgebraicJacobian.Albanese.AlbaneseArbitraryField
 import AlgebraicJacobian.Picard.DivDegree
+import AlgebraicJacobian.Picard.DivFamilyZero
 import AlgebraicJacobian.Picard.FinitePresentationFunctor
 import AlgebraicJacobian.Picard.FiniteGaloisQuotient
 import AlgebraicJacobian.Picard.FiniteGaloisQuotientAffine
