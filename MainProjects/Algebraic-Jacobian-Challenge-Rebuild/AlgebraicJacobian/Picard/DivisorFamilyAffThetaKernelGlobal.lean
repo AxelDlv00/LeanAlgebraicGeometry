@@ -1,0 +1,139 @@
+/-
+Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: The AlgebraicJacobian Contributors
+-/
+import AlgebraicJacobian.Picard.DivisorFamilyAffThetaKernel
+
+/-!
+# The global intrinsic theta kernel
+
+The intrinsic theta evaluation on an arbitrary widened affine cover has exactly the
+cover-independent vanishing submodule as its kernel.  The proof uses the componentwise
+principal-ideal criterion from `DivisorFamilyAffThetaKernel`; it neither assigns a pinned
+chart to a widened piece nor assumes such an assignment exists.
+-/
+
+set_option autoImplicit false
+
+universe u
+
+open CategoryTheory Opposite TopologicalSpace
+
+namespace AlgebraicGeometry
+
+attribute [local instance] Scheme.overModule Scheme.overSectionsAlgebra
+
+variable {k : Type u} [Field k] {C : Over (Spec (.of k))}
+variable {R : Type u} [CommRing R] [Algebra k R]
+variable {π : C.left ⟶ P1 k} [IsFinite π] [IsProper C.hom]
+variable {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
+
+namespace AffAdaptation
+
+attribute [local instance] thetaPieceSectionsModule
+
+omit [IsProper C.hom] in
+private lemma intrinsicThetaPiece_germ_inl (a : ℕ)
+    (x : relThetaSections C R π a) (j : D.index) (z : relCurve C R)
+    (hz : z ∈ D.pieces j ⊓
+      (thetaChartDatum C R π a).pieces (Sum.inl PUnit.unit)) :
+    ((relCurve C R).presheaf.germ
+        (D.pieces j ⊓ (thetaChartDatum C R π a).pieces (Sum.inl PUnit.unit)) z hz).hom
+        ((secRes (thetaChartDatum C R π a).sheaf le_top
+          ((gluedTwistEquiv C R π a (⊤ : (relCurve C R).Opens)).symm x)).val
+            (Sum.inl PUnit.unit)) =
+      ((relCurve C R).presheaf.germ
+        ((⊤ : (relCurve C R).Opens) ⊓ (relCover C R (fiberTwoCover π)).V₀) z
+          ⟨trivial, by
+            exact thetaChartCover_pieces_le_inl C R π PUnit.unit hz.2⟩).hom
+        x.val.1 := by
+  change ((relCurve C R).presheaf.germ _ z hz).hom
+      ((relCurve C R).resHom _ ((relCurve C R).resHom _ x.val.1)) = _
+  calc
+    _ = _ := TopCat.Presheaf.germ_res_apply _ _ _ _ _
+    _ = _ := TopCat.Presheaf.germ_res_apply _ _ _ _ _
+
+omit [IsProper C.hom] in
+private lemma intrinsicThetaPiece_germ_inr (a : ℕ)
+    (x : relThetaSections C R π a) (j : D.index) (z : relCurve C R)
+    (hz : z ∈ D.pieces j ⊓
+      (thetaChartDatum C R π a).pieces (Sum.inr PUnit.unit)) :
+    ((relCurve C R).presheaf.germ
+        (D.pieces j ⊓ (thetaChartDatum C R π a).pieces (Sum.inr PUnit.unit)) z hz).hom
+        ((secRes (thetaChartDatum C R π a).sheaf le_top
+          ((gluedTwistEquiv C R π a (⊤ : (relCurve C R).Opens)).symm x)).val
+            (Sum.inr PUnit.unit)) =
+      ((relCurve C R).presheaf.germ
+        ((⊤ : (relCurve C R).Opens) ⊓ (relCover C R (fiberTwoCover π)).V₁) z
+          ⟨trivial, by
+            exact thetaChartCover_pieces_le_inr C R π PUnit.unit hz.2⟩).hom
+        x.val.2 := by
+  change ((relCurve C R).presheaf.germ _ z hz).hom
+      ((relCurve C R).resHom _ ((relCurve C R).resHom _ x.val.2)) = _
+  calc
+    _ = _ := TopCat.Presheaf.germ_res_apply _ _ _ _ _
+    _ = _ := TopCat.Presheaf.germ_res_apply _ _ _ _ _
+
+/-- The kernel of intrinsic theta evaluation on every widened affine adaptation is the
+cover-independent vanishing submodule of the divisor family. -/
+theorem ker_intrinsicThetaEvalRel (A : AffAdaptation D d) (a : ℕ) :
+    LinearMap.ker (A.intrinsicThetaEvalRel (π := π) a) =
+      d.vanishingSubmodule R (relCover C R (fiberTwoCover π)).V₀
+        (relCover C R (fiberTwoCover π)).V₁ (relThetaCocycle C R π a) := by
+  ext x
+  rw [LinearMap.mem_ker, Scheme.LocalEquations.mem_vanishingSubmodule_iff]
+  constructor
+  · intro hx
+    have hpiece (j : D.index) :
+        secRes (thetaChartDatum C R π a).sheaf le_top
+            ((gluedTwistEquiv C R π a (⊤ : (relCurve C R).Opens)).symm x) ∈
+          A.thetaPieceVanishing (π := π) a j := by
+      letI : Module Γ(relCurve C R, D.pieces j)
+          (A.ThetaPieceSections (π := π) a j) :=
+        A.thetaPieceSectionsModule (π := π) a j
+      have hxj := congrArg
+        (fun y : A.IntrinsicThetaGlued (π := π) a =>
+          (y : A.ThetaPieceProd (π := π) a) j) hx
+      change Submodule.Quotient.mk
+          (secRes (thetaChartDatum C R π a).sheaf le_top
+            ((gluedTwistEquiv C R π a (⊤ : (relCurve C R).Opens)).symm x)) = 0 at hxj
+      exact (Submodule.Quotient.mk_eq_zero
+        (A.thetaPieceVanishing (π := π) a j)).mp hxj
+    constructor
+    · intro z hz
+      obtain ⟨j, hj⟩ := D.exists_mem_pieces z
+      have hlocal := (A.mem_thetaPieceVanishing_iff_forall_germ (π := π) a j _).mp
+        (hpiece j) (Sum.inl PUnit.unit) z ⟨hj, by
+          exact (thetaChartCover_pieces_inl C R π PUnit.unit).ge hz.2⟩
+      rwa [intrinsicThetaPiece_germ_inl (C := C) (R := R) (π := π) a x j] at hlocal
+    · intro z hz
+      obtain ⟨j, hj⟩ := D.exists_mem_pieces z
+      have hlocal := (A.mem_thetaPieceVanishing_iff_forall_germ (π := π) a j _).mp
+        (hpiece j) (Sum.inr PUnit.unit) z ⟨hj, by
+          exact (thetaChartCover_pieces_inr C R π PUnit.unit).ge hz.2⟩
+      rwa [intrinsicThetaPiece_germ_inr (C := C) (R := R) (π := π) a x j] at hlocal
+  · rintro ⟨hx₀, hx₁⟩
+    apply Subtype.ext
+    funext j
+    letI : Module Γ(relCurve C R, D.pieces j)
+        (A.ThetaPieceSections (π := π) a j) :=
+      A.thetaPieceSectionsModule (π := π) a j
+    change Submodule.Quotient.mk
+        (secRes (thetaChartDatum C R π a).sheaf le_top
+          ((gluedTwistEquiv C R π a (⊤ : (relCurve C R).Opens)).symm x)) = 0
+    rw [Submodule.Quotient.mk_eq_zero (A.thetaPieceVanishing (π := π) a j)]
+    apply (A.mem_thetaPieceVanishing_iff_forall_germ (π := π) a j _).mpr
+    rintro (q | q) z hz
+    · cases q
+      rw [intrinsicThetaPiece_germ_inl (C := C) (R := R) (π := π) a x j]
+      exact hx₀ z ⟨trivial, by
+        exact thetaChartCover_pieces_le_inl C R π PUnit.unit hz.2⟩
+    · cases q
+      rw [intrinsicThetaPiece_germ_inr (C := C) (R := R) (π := π) a x j]
+      exact hx₁ z ⟨trivial, by
+        exact thetaChartCover_pieces_le_inr C R π PUnit.unit hz.2⟩
+
+end AffAdaptation
+
+end AlgebraicGeometry

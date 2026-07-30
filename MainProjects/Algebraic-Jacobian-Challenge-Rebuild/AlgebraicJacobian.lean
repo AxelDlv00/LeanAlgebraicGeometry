@@ -550,6 +550,7 @@ import AlgebraicJacobian.Picard.Pic0ChartTwistSplit
 import AlgebraicJacobian.Picard.Pic0ChartCoverageDegree
 import AlgebraicJacobian.Picard.Pic0ChartRationalGraph
 import AlgebraicJacobian.Picard.Pic0ChartFiniteExtension
+import AlgebraicJacobian.Picard.Pic0RepAmitsurDatum
 import AlgebraicJacobian.Picard.Pic0ChartCoverageFibre
 import AlgebraicJacobian.Picard.Pic0ChartCoverageTest
 import AlgebraicJacobian.Picard.Pic0ChartPresentationHalf
@@ -652,6 +653,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyAffFibreRank
 import AlgebraicJacobian.Picard.DivisorFamilyAffThetaRestriction
 import AlgebraicJacobian.Picard.DivisorFamilyAffThetaDescent
 import AlgebraicJacobian.Picard.DivisorFamilyAffThetaKernel
+import AlgebraicJacobian.Picard.DivisorFamilyAffThetaKernelGlobal
 import AlgebraicJacobian.Picard.DivisorFamilyAffThetaCech
 -- The field-level window-recovery mono is CARRIER-FREE (run 0089 r6, ajcr-p3): the rung
 -- I-1248 named as the widened tower's load-bearing missing piece reads its carrier only
