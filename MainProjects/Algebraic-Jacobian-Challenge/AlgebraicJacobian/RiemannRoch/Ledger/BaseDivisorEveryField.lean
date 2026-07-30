@@ -51,67 +51,24 @@ The obligation never needed the unit sheaf.
 
 ## What remains open, stated exactly
 
-One bound on one integer.  The divisor produced at `C_κ` is `n₀(κ) • F_κ`, where `F_κ` is the
-fibre divisor of the finite dominant map to `ℙ¹_κ` and `n₀(κ)` is a Noetherian stabilisation
-index of the fibre-lattice chain (`Ledger/FiberVanishing.lean`), re-run at each base field.  So
-`deg_κ (n₀(κ) • F_κ) = n₀(κ) · deg_κ F_κ`, and `UniformBaseDivisor C d` follows from a uniform
-bound on that product.  Nothing in this file bounds it, and the honest statement of the gap is
-that product rather than "a missing production from geometry".
+The quantitative fiber-lattice theorem now proves the explicit vanishing
 
-The reason the bound is not free from the vanishing theorems already in the tree: the degree
-threshold of `Ledger/DegreeVanishing.subsingleton_hModule_one_of_deg_ge` is
-`deg D₀ + 1 − χ(𝒪)`, i.e. it is stated *relative to a base divisor already in hand*, so using it
-to bound `deg D₀` is circular.  Breaking the circle needs an absolute large-degree vanishing
-theorem — Serre duality's `deg ≥ 2g − 1`, which this workspace does not have — or a bound on the
-stabilisation index in terms of `genus C`, which is base-field-invariant
-(`Ledger/GenusFieldInvariance.genus_baseChangeField_curve`).
+`H¹(𝒪(genus(C_κ) • F_{πκ})) = 0`.
 
-**The second route is the live one, and `finrank_stabilisationAmbient_eq_h1` below is the
-measurement that makes it concrete.**  `n₀(κ)` is produced by
-`Submodule.eventually_eq_top_of_monotone_of_iSup_eq_top` from a monotone chain `Aₙ` inside
-`N = 𝒪(D)(V₀ ⊓ V₁)`, and the quotient it stabilises in is *exactly* `H¹(𝒪(D + n·F))` — so at
-`D = 0` the ambient has dimension `genus C_κ = genus C`, the same number for every `κ`.  If the
-chain strictly increased until it reached the top, `n₀ ≤ genus C` would follow at once and the
-degree clause would close with `d := genus C · deg_κ F_κ`.
+Thus the stabilization multiplier is no longer open: it is `genus(C_κ) = genus(C)`. The remaining
+integer is `deg_κ F_{πκ}`. The current proof constructs a fresh finite dominant map
+`πκ : C_κ ⟶ ℙ¹_κ` at every extension, so it gives no uniform bound on this degree.
 
-What is missing is **strictness**: a monotone chain in a `g`-dimensional space may repeat a term
-without having reached `⊤`, and nothing in the tree rules that out for `Aₙ`.  So the honest
-statement of the remaining obligation is either strictness of `n ↦ Aₙ` below the top, or any other
-argument bounding `n₀` by a base-field-invariant quantity.  This is *not* claimed here, and the
-bound `n₀ ≤ genus` must not be cited as available.
+A complete producer should choose one finite map over `k`, base-change it to every `κ`, identify
+the target with Ledger's `P1 κ`, and prove that the associated fiber divisor has the original
+degree. No rational point or other hypothesis on the curve is involved.
 
-## HOW MUCH OF THIS IS NEW: almost none of it, and that is the honest label
+## Provenance
 
-A fresh-context audit of this module (2026-07-29) established, and this file records rather than
-hides, that **it adds no new mathematics**:
-
-* Both existence theorems **derive at the parent commit** — no new lemma, instance or import was
-  needed. `exists_base_subsingleton_curve`'s proof is `Ledger/FiberBound.lean`'s
-  `exists_bound_subsingleton_hModule_one_curve` with the final `exact` renamed to
-  `exists_base_subsingleton_of_isFinite_toP1`; the instance prologue is identical.
-* `uniformBaseDivisor_of_exists_deg_le` is **the identity**: its hypothesis is *definitionally*
-  `UniformBaseDivisor C d` (`Iff.rfl` closes the equivalence), and its body is η-expansion. Its
-  earlier description as "bookkeeping" was too generous — it separates the two clauses only
-  typographically, since they were already conjuncts at `ExtensionUniformity.lean:356`.
-* The re-pricing conclusion was **already in the tree**: `ExtensionUniformity.lean`'s
-  `UniformBaseDivisor` docstring already said a `D₀` is supplied per field with no control of its
-  degree.
-
-What the round contributes is therefore the *correction of a downstream index that contradicted
-that sentence* (`GenusFieldInvariance.lean` priced the residue as a missing production from
-geometry confined to genus 0) and `finrank_stabilisationAmbient_eq_h1`, which locates the actual
-obstruction. Read the theorems as a named restatement, not as progress on the degree clause —
-that clause is untouched.
-
-**One clause of the audit does not hold, and it is worth recording because it is the reason these
-statements are not simply redundant.** The audit called the pre-existing
-`ExtensionUniformity.vanishing_baseChangeField` (a *threshold* `b` past which every `D` of degree
-`≥ b` has vanishing `H¹`) *strictly stronger*, hence this module a weakening. It does not imply
-these statements without an extra input: extracting "some `D₀` vanishes" from a threshold needs a
-divisor of degree `≥ b` to exist, i.e. `exists_deg_ge`, whose hypothesis is a non-generic point of
-positive residue degree — and no closed point of `C` is available for free (verified: the
-existential over `C.left` does not close). The two statements are therefore incomparable inputs,
-not a chain, which is exactly why the existence clause needed stating at all.
+The per-field existence layer predates the quantitative result. The new content used here is
+`FiberLattice.fiberLattice_stable` and the exact `h¹`-index vanishing theorem in
+`Ledger/FiberVanishing.lean`, exposed on curves by
+`subsingleton_hModule_divisorSheaf_one_genus_smul_fiber_curve`.
 
 ## Contents
 
@@ -121,11 +78,8 @@ not a chain, which is exactly why the existence clause needed stating at all.
   *bounded degree* gives `UniformBaseDivisor`.  Recorded so the degree clause is the only thing a
   consumer has to supply, and deliberately **not** advertised as progress: it is the definition
   with the existence clause discharged, which is exactly what the two theorems above buy.
-* `finrank_stabilisationAmbient_eq_h1` — where the next attempt should start: the space in which
-  `n₀` is chosen has dimension `h¹(𝒪(D + n·F))`, so at `D = 0` it has dimension the *genus*,
-  which is base-field-invariant.  A strictness argument for the chain would therefore bound `n₀`
-  by `genus C` uniformly in `κ` and close the degree clause.  Strictness is **not** proved here
-  and is the one missing step; see the declaration's docstring.
+* `finrank_stabilisationAmbient_eq_h1` — the quotient-dimension measurement consumed by the
+  quantitative stabilization theorem.
 -/
 
 set_option autoImplicit false
@@ -172,7 +126,8 @@ theorem exists_base_subsingleton_curve :
   obtain ⟨π, hfin, hdom, hcomp⟩ := exists_isFinite_isDominant_toP1 (k := k) (C := C)
   haveI := hfin
   haveI := hdom
-  exact exists_base_subsingleton_of_isFinite_toP1 π hcomp
+  refine ⟨genus C • fiberWeilDivisor π, ?_⟩
+  exact subsingleton_hModule_divisorSheaf_one_genus_smul_fiber_curve C π hcomp
 
 /-- **The existence clause of `UniformBaseDivisor`, over every field extension** (★★): for every
 `κ/k`, finite or infinite, separable or not, there is a divisor on `C_κ` whose `H¹` vanishes.
@@ -184,8 +139,9 @@ instances is exhibited in the spelling the consumer elaborates against (`FiberBo
 "SUPERSEDED"), this is stated at `C_κ` itself rather than as a stability claim.
 
 What it does **not** give, and the whole of what `UniformBaseDivisor` still needs: any bound on
-`CurveDivisor.deg κ D₀` as `κ` varies.  The witness is `n₀(κ) • F_κ` with `n₀(κ)` a Noetherian
-stabilisation index re-run at each base field. -/
+`CurveDivisor.deg κ D₀` as `κ` varies. The proof now chooses
+`D₀ = genus(C_κ) • F_{πκ}`: the multiplier is uniform by genus invariance, but the construction
+still chooses a fresh `πκ`, so the degree of `F_{πκ}` remains uncontrolled. -/
 theorem exists_base_subsingleton_baseChangeField (κ : Type u) [Field κ] [Algebra k κ] :
     letI : (Scheme.baseChangeField C κ).left.Over (Spec (CommRingCat.of κ)) :=
       .ofHom (Scheme.baseChangeField C κ).hom
@@ -228,9 +184,7 @@ theorem uniformBaseDivisor_of_exists_deg_le {d : ℤ}
 
 end BaseDivisor
 
-/-! ## Where the degree clause should be attacked
-
-One measurement, isolating the quantity a bound on `n₀` would have to control. -/
+/-! ## The quantitative stabilization measurement -/
 
 section Stabilisation
 
@@ -245,23 +199,15 @@ variable {K : Type u} [Field K] {Y : Scheme.{u}} [IsIntegral Y]
   [QuasiCompact (Y ↘ Spec (CommRingCat.of K))]
   (π : Y ⟶ P1 K) [IsDominant π] [IsAffineHom π]
 
-/-- **The stabilisation happens in a space of dimension `h¹`** — the measurement that says where
-the degree clause should be attacked.
+/-- **The stabilization quotient is exactly twisted `H¹`.** The former open strictness step is
+now closed by `fiberLattice_stable` and
+`Submodule.eq_top_at_finrank_quotient_of_monotone_of_iSup_eq_top_of_stable`, yielding the theorem
+`subsingleton_hModule_divisorSheaf_one_at_h1_of_isDominant_toP1`. This identity remains useful for
+reading every quotient dimension as the corresponding `h¹`.
 
-`n₀` is produced by `Submodule.eventually_eq_top_of_monotone_of_iSup_eq_top` applied to the
-fibre-lattice chain `Aₙ` inside the fixed ambient `N = 𝒪(D)(V₀ ⊓ V₁)`.  This records that the
-quotient it stabilises in is *exactly* the twisted `H¹`, so its dimension is `h¹(𝒪(D + n·F))` —
-and at `D = 0` that is `h¹(𝒪) = genus`, **the same number over every base field**
-(`Ledger/GenusFieldInvariance.genus_baseChangeField_curve`).
-
-So a bound `n₀ ≤ genus C` would close the degree clause of `UniformBaseDivisor` with
-`d := genus C · deg_κ F_κ`, uniformly in `κ`.
-
-**It does not follow from this, and the gap is precisely strictness.**  A monotone chain in a
-`g`-dimensional space can repeat a term without having reached `⊤`, so bounded dimension alone
-bounds nothing; one needs `Aₙ ⊊ Aₙ₊₁` while `Aₙ ≠ ⊤`.  Nothing in the tree proves that for the
-fibre lattice.  Stated as a `finrank` identity and nothing more, so that the reduction is visible
-without any part of it being asserted. -/
+At `D = 0`, the explicit index is `h¹(𝒪) = genus`, uniformly over field extensions. The remaining
+uniform-degree issue is therefore not stabilization: it is controlling `deg F_π` while choosing
+the maps `π` compatibly across extensions. -/
 theorem finrank_stabilisationAmbient_eq_h1 (D : Y.CurveDivisor) (n : ℕ) :
     Module.finrank K
         (divisorSections K D (fiberChart₀ π ⊓ fiberChart₁ π) ⧸ fiberLatticeOverlap π D n)
