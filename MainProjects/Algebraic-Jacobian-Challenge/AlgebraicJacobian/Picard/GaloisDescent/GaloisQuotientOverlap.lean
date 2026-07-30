@@ -819,6 +819,22 @@ noncomputable def quotientGlueData [FiniteDimensional K L] [IsGalois K L] :
   t_fac i j k := overlapTransition'_fac ρ i j k
   cocycle i j k := overlapTransition'_cocycle ρ i j k
 
+/-- In a glued quotient chart, the inverse image of another chart is exactly
+the quotient overlap used in the gluing datum. -/
+theorem quotientGlueData_chart_preimage_opensRange
+    [FiniteDimensional K L] [IsGalois K L]
+    (i j : StableAffineOpen ρ) :
+    (quotientGlueData ρ).ι j ⁻¹ᵁ
+        ((quotientGlueData ρ).ι i).opensRange =
+      (quotientOverlapι ρ j i).opensRange := by
+  let D := quotientGlueData ρ
+  have h := D.vPullbackConeIsLimit j i
+  change D.ι j ⁻¹ᵁ (D.ι i).opensRange = (D.f j i).opensRange
+  rw [← Scheme.Hom.opensRange_pullbackFst]
+  rw [← h.isoPullback_hom_fst]
+  rw [Scheme.Hom.opensRange_comp, Scheme.Hom.opensRange_of_isIso]
+  simp
+
 /-- The scheme obtained by gluing all stable affine invariant-ring quotient
 charts. -/
 noncomputable def gluedQuotient [FiniteDimensional K L] [IsGalois K L] :
@@ -830,6 +846,29 @@ noncomputable def quotientChartProjection [FiniteDimensional K L] [IsGalois K L]
     (i : StableAffineOpen ρ) : i.U.toScheme ⟶ gluedQuotient ρ :=
   SemilinearGalAction.stableAffineQuotientMap ρ i.stable i.affine ≫
     (quotientGlueData ρ).ι i
+
+/-- A local quotient projection pulls a glued quotient chart back to the
+corresponding source-chart intersection. -/
+theorem quotientChartProjection_preimage_opensRange
+    [FiniteDimensional K L] [IsGalois K L]
+    (i j : StableAffineOpen ρ) :
+    quotientChartProjection ρ j ⁻¹ᵁ
+        ((quotientGlueData ρ).ι i).opensRange =
+      j.U.ι ⁻¹ᵁ i.U := by
+  letI := ρ.sectionsMulSemiringAction j.stable
+  letI := SemilinearGalAction.sectionsAlgebra f j.U
+  letI := SemilinearGalAction.sectionsAlgebraK (K := K) f j.U
+  letI := SemilinearGalAction.sections_isScalarTower (K := K) f j.U
+  letI := ρ.isSemilinear_sections j.stable
+  unfold quotientChartProjection
+  rw [Scheme.Hom.comp_preimage, quotientGlueData_chart_preimage_opensRange]
+  unfold quotientOverlapι quotientOverlap quotientChart
+  rw [Scheme.Opens.opensRange_ι]
+  rw [SemilinearGalAction.stableAffineQuotientMap_preimage_quotientOpen
+    ρ j.stable j.affine inf_le_left (inf_stable ρ j i)]
+  simp only [Scheme.Hom.preimage_inf]
+  rw [Scheme.Opens.preimage_self]
+  exact top_inf_eq
 
 /-- The quotient projection of a stable affine chart lies over `Spec K`. -/
 @[reassoc]
@@ -1123,6 +1162,22 @@ theorem sourceOpenCover_f_gluedQuotientProjection
     i.U.ι ≫ gluedQuotientProjection ρ = quotientChartProjection ρ i := by
   exact (sourceOpenCover ρ).ι_glueMorphisms _ _ i
 
+/-- The global quotient projection pulls a glued quotient chart back to the
+stable affine source chart from which it was built. -/
+theorem gluedQuotientProjection_preimage_opensRange
+    [FiniteDimensional K L] [IsGalois K L] [HasStableAffineCover K L ρ]
+    (i : StableAffineOpen ρ) :
+    gluedQuotientProjection ρ ⁻¹ᵁ
+        ((quotientGlueData ρ).ι i).opensRange = i.U := by
+  ext x
+  obtain ⟨j, y, rfl⟩ := (sourceOpenCover ρ).exists_eq x
+  change gluedQuotientProjection ρ (j.U.ι y) ∈
+      ((quotientGlueData ρ).ι i).opensRange ↔ j.U.ι y ∈ i.U
+  rw [← Scheme.Hom.comp_apply, sourceOpenCover_f_gluedQuotientProjection]
+  change y ∈ quotientChartProjection ρ j ⁻¹ᵁ
+      ((quotientGlueData ρ).ι i).opensRange ↔ y ∈ j.U.ι ⁻¹ᵁ i.U
+  rw [quotientChartProjection_preimage_opensRange]
+
 /-- The structure maps of the invariant-ring quotient charts glue to a map to
 `Spec K`. -/
 noncomputable def gluedQuotientMap [FiniteDimensional K L] [IsGalois K L] :
@@ -1226,6 +1281,68 @@ instance quotientChartBaseChangeToGlued_isOpenImmersion
   unfold quotientChartBaseChangeToGlued pullbackBaseChange
   infer_instance
 
+/-- The image of a base-changed quotient chart is the inverse image of the
+corresponding chart in the glued quotient. -/
+theorem quotientChartBaseChangeToGlued_opensRange
+    [FiniteDimensional K L] [IsGalois K L] (i : StableAffineOpen ρ) :
+    (quotientChartBaseChangeToGlued ρ i).opensRange =
+      pullback.fst (gluedQuotientMap ρ)
+          (Spec.map (CommRingCat.ofHom (algebraMap K L))) ⁻¹ᵁ
+        ((quotientGlueData ρ).ι i).opensRange := by
+  apply Opens.ext
+  rw [Scheme.Hom.coe_opensRange]
+  change Set.range (quotientChartBaseChangeToGlued ρ i) =
+    (pullback.fst (gluedQuotientMap ρ)
+      (Spec.map (CommRingCat.ofHom (algebraMap K L)))).base ⁻¹'
+      (((quotientGlueData ρ).ι i).opensRange : Set _)
+  unfold quotientChartBaseChangeToGlued pullbackBaseChange
+  rw [Scheme.Pullback.range_map]
+  rw [Scheme.Hom.coe_opensRange]
+  have hid : Function.Surjective
+      (𝟙 (Spec (CommRingCat.of L)) :
+        Spec (CommRingCat.of L) ⟶ Spec (CommRingCat.of L)) :=
+    fun x ↦ ⟨x, rfl⟩
+  rw [Set.range_eq_univ.mpr hid, Set.preimage_univ, Set.inter_univ]
+
+/-- The inverse image of a base-changed quotient chart under the global
+base-change morphism is the original stable affine source chart. -/
+theorem gluedQuotientBaseChangeLift_preimage_opensRange
+    [FiniteDimensional K L] [IsGalois K L] [HasStableAffineCover K L ρ]
+    (i : StableAffineOpen ρ) :
+    gluedQuotientBaseChangeLift ρ ⁻¹ᵁ
+        (quotientChartBaseChangeToGlued ρ i).opensRange = i.U := by
+  rw [quotientChartBaseChangeToGlued_opensRange]
+  rw [← Scheme.Hom.comp_preimage]
+  rw [gluedQuotientBaseChangeLift_fst]
+  exact gluedQuotientProjection_preimage_opensRange ρ i
+
+/-- The base change of the glued quotient is covered by the base changes of
+its invariant-ring quotient charts. -/
+noncomputable def gluedQuotientBaseChangeOpenCover
+    [FiniteDimensional K L] [IsGalois K L] :
+    Scheme.OpenCover
+      (pullback (gluedQuotientMap ρ)
+        (Spec.map (CommRingCat.ofHom (algebraMap K L)))) where
+  I₀ := StableAffineOpen ρ
+  X i := pullback (quotientChartMap ρ i)
+    (Spec.map (CommRingCat.ofHom (algebraMap K L)))
+  f i := quotientChartBaseChangeToGlued ρ i
+  mem₀ := by
+    rw [Scheme.presieve₀_mem_precoverage_iff]
+    constructor
+    · intro x
+      obtain ⟨i, y, hy⟩ := (quotientGlueData ρ).ι_jointly_surjective
+        (pullback.fst (gluedQuotientMap ρ)
+          (Spec.map (CommRingCat.ofHom (algebraMap K L))) x)
+      have hx : x ∈ (quotientChartBaseChangeToGlued ρ i).opensRange := by
+        rw [quotientChartBaseChangeToGlued_opensRange]
+        exact ⟨y, hy⟩
+      change x ∈ Set.range (quotientChartBaseChangeToGlued ρ i) at hx
+      obtain ⟨z, hz⟩ := hx
+      exact ⟨i, z, hz⟩
+    · intro i
+      infer_instance
+
 @[simp, reassoc]
 theorem quotientChartBaseChangeToGlued_fst
     [FiniteDimensional K L] [IsGalois K L] (i : StableAffineOpen ρ) :
@@ -1276,6 +1393,47 @@ theorem sourceOpenCover_f_gluedQuotientBaseChangeLift
   · simp only [Category.assoc, gluedQuotientBaseChangeLift_snd,
       quotientChartBaseChangeToGlued_snd]
     exact (quotientChartBaseChangeIso_inv_snd ρ i).symm
+
+/-- A source chart is the pullback of the corresponding base-changed quotient
+chart along the global base-change morphism. -/
+theorem quotientChartBaseChange_isPullback
+    [FiniteDimensional K L] [IsGalois K L] [HasStableAffineCover K L ρ]
+    (i : StableAffineOpen ρ) :
+    IsPullback (quotientChartBaseChangeIso ρ i).inv i.U.ι
+      (quotientChartBaseChangeToGlued ρ i)
+      (gluedQuotientBaseChangeLift ρ) := by
+  apply IsOpenImmersion.isPullback
+  · exact sourceOpenCover_f_gluedQuotientBaseChangeLift ρ i
+  · rw [gluedQuotientBaseChangeLift_preimage_opensRange]
+    exact Scheme.Opens.opensRange_ι i.U
+
+/-- The acted scheme is the base change to `Spec L` of its glued quotient. -/
+instance gluedQuotientBaseChangeLift_isIso
+    [FiniteDimensional K L] [IsGalois K L] [HasStableAffineCover K L ρ] :
+    IsIso (gluedQuotientBaseChangeLift ρ) := by
+  apply MorphismProperty.of_zeroHypercover_target
+    (P := MorphismProperty.isomorphisms Scheme)
+    (gluedQuotientBaseChangeOpenCover ρ)
+  intro i
+  change IsIso
+    (pullback.snd (gluedQuotientBaseChangeLift ρ)
+      (quotientChartBaseChangeToGlued ρ i))
+  rw [← (quotientChartBaseChange_isPullback ρ i).flip.isoPullback_hom_snd]
+  infer_instance
+
+/-- The global base-change isomorphism, oriented from the base-changed glued
+quotient to the original acted scheme. -/
+noncomputable def gluedQuotientBaseChangeIso
+    [FiniteDimensional K L] [IsGalois K L] [HasStableAffineCover K L ρ] :
+    pullback (gluedQuotientMap ρ)
+        (Spec.map (CommRingCat.ofHom (algebraMap K L))) ≅ X :=
+  (asIso (gluedQuotientBaseChangeLift ρ)).symm
+
+@[simp]
+theorem gluedQuotientBaseChangeIso_inv
+    [FiniteDimensional K L] [IsGalois K L] [HasStableAffineCover K L ρ] :
+    (gluedQuotientBaseChangeIso ρ).inv =
+      gluedQuotientBaseChangeLift ρ := rfl
 
 /-- The glued quotient as an object over `Spec K`, in the exact category used
 by Picard representability. -/
