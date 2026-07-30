@@ -36,7 +36,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.TwoChart.fg_ker_cechDiff_of_laurent
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-07-30T16:21:22'
 ---
 theorem fg_ker_cechDiff_of_laurent {A C₀ C₁ C₀₁ M₀ M₁ V : Type*} [CommRing A]
     [CommRing C₀] [CommRing C₁] [CommRing C₀₁]
@@ -66,61 +66,8 @@ theorem fg_ker_cechDiff_of_laurent {A C₀ C₁ C₀₁ M₀ M₁ V : Type*} [Co
     rw [← mul_pow, htu, one_pow]
   haveI hNC₀ : IsNoetherianRing C₀ := isNoetherianRing_of_top_le_span_pow hspan₀
   -- ### Step 1: the uniform twisted generating family
-  obtain ⟨n₀, g, hg⟩ := Module.Finite.exists_fin (R := C₀) (M := M₀)
-  obtain ⟨n₁, g', hg'⟩ := Module.Finite.exists_fin (R := C₁) (M := M₁)
-  choose nb b hb using fun i : Fin n₀ => hext₁ (σ₀ (g i))
-  choose ma a ha using fun j : Fin n₁ => hext₀ (σ₁ (g' j))
-  set d : ℕ := max (Finset.univ.sup nb) (Finset.univ.sup ma) with hd
-  have hdb : ∀ i, nb i ≤ d := fun i =>
-    le_trans (Finset.le_sup (Finset.mem_univ i)) (le_max_left _ _)
-  have hda : ∀ j, ma j ≤ d := fun j =>
-    le_trans (Finset.le_sup (Finset.mem_univ j)) (le_max_right _ _)
-  set aa : Fin n₀ ⊕ Fin n₁ → M₀ :=
-    Sum.elim g (fun j => x ^ (d - ma j) • a j) with haa
-  set bb : Fin n₀ ⊕ Fin n₁ → M₁ :=
-    Sum.elim (fun i => y ^ (d - nb i) • b i) g' with hbb
-  have hab : ∀ i, σ₀ (aa i) = ρ₀ x ^ d • σ₁ (bb i) := by
-    rintro (i | j)
-    · have e1 : σ₁ (bb (Sum.inl i)) = ρ₁ y ^ (d - nb i) • σ₁ (b i) := by
-        simp only [hbb, Sum.elim_inl]
-        rw [hσ₁, map_pow]
-      have e2 : ρ₀ x ^ d * ρ₁ y ^ (d - nb i) = ρ₀ x ^ nb i := by
-        have hsplit : ρ₀ x ^ d = ρ₀ x ^ nb i * ρ₀ x ^ (d - nb i) := by
-          rw [← pow_add]
-          congr 1
-          have := hdb i
-          omega
-        rw [hsplit, mul_assoc, hpow (d - nb i), mul_one]
-      calc σ₀ (aa (Sum.inl i)) = σ₀ (g i) := by simp only [haa, Sum.elim_inl]
-        _ = (1 : C₀₁) • σ₀ (g i) := (one_smul _ _).symm
-        _ = (ρ₀ x ^ nb i * ρ₁ y ^ nb i) • σ₀ (g i) := by rw [hpow]
-        _ = ρ₀ x ^ nb i • (ρ₁ y ^ nb i • σ₀ (g i)) := by rw [mul_smul]
-        _ = ρ₀ x ^ nb i • σ₁ (b i) := by rw [hb i]
-        _ = (ρ₀ x ^ d * ρ₁ y ^ (d - nb i)) • σ₁ (b i) := by rw [e2]
-        _ = ρ₀ x ^ d • (ρ₁ y ^ (d - nb i) • σ₁ (b i)) := by rw [mul_smul]
-        _ = ρ₀ x ^ d • σ₁ (bb (Sum.inl i)) := by rw [← e1]
-    · have e3 : (d - ma j) + ma j = d := by
-        have := hda j
-        omega
-      calc σ₀ (aa (Sum.inr j)) = σ₀ (x ^ (d - ma j) • a j) := by simp only [haa, Sum.elim_inr]
-        _ = ρ₀ x ^ (d - ma j) • σ₀ (a j) := by rw [hσ₀, map_pow]
-        _ = ρ₀ x ^ (d - ma j) • (ρ₀ x ^ ma j • σ₁ (g' j)) := by rw [ha j]
-        _ = (ρ₀ x ^ (d - ma j) * ρ₀ x ^ ma j) • σ₁ (g' j) := by rw [mul_smul]
-        _ = ρ₀ x ^ d • σ₁ (bb (Sum.inr j)) := by
-              rw [← pow_add, e3]
-              simp only [hbb, Sum.elim_inr]
-  have hspanaa : Submodule.span C₀ (Set.range aa) = ⊤ := by
-    refine le_antisymm le_top ?_
-    rw [← hg]
-    refine Submodule.span_mono ?_
-    rintro _ ⟨i, rfl⟩
-    exact ⟨Sum.inl i, by simp only [haa, Sum.elim_inl]⟩
-  have hspanbb : Submodule.span C₁ (Set.range bb) = ⊤ := by
-    refine le_antisymm le_top ?_
-    rw [← hg']
-    refine Submodule.span_mono ?_
-    rintro _ ⟨j, rfl⟩
-    exact ⟨Sum.inr j, by simp only [hbb, Sum.elim_inr]⟩
+  obtain ⟨n₀, n₁, d, aa, bb, -, hab, hspanaa, hspanbb⟩ :=
+    exists_uniform_twisted_generators ρ₀ ρ₁ x y htu σ₀ σ₁ hσ₀ hσ₁ hext₀ hext₁
   -- ### Step 2: the twisted free datum `E` and its chart surjections
   set φ₀ : (Fin n₀ ⊕ Fin n₁ → C₀) →ₗ[C₀] M₀ := Fintype.linearCombination C₀ aa with hφ₀
   set φ₁ : (Fin n₀ ⊕ Fin n₁ → C₁) →ₗ[C₁] M₁ := Fintype.linearCombination C₁ bb with hφ₁

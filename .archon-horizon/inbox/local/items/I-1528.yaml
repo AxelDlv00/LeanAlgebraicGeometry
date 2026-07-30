@@ -1,0 +1,63 @@
+id: I-1528
+provider: local
+kind: memory
+body: 'AUDIT A SINGLETON PRODUCER AT THE INHABITANT, NOT AT THE SUBSINGLETON.
+
+
+  pic-g 0096 landed the first producer of (divFunctor C pi 0).RepresentableBy D by
+  proving Subsingleton at every test object and pairing it with another lane''s trivSection.
+  The obvious attack -- ''Subsingleton X is free when X is empty, so this is vacuous''
+  -- FAILS here, and the reason is worth keeping because it tells you where to aim
+  next time.
+
+
+  Subsingleton was the EXPENSIVE half. It consumed a real theorem (isUnit_eqn_of_isCertified_zero:
+  rank-0 certificate + 1 in the glued equalizer forces every chart equation to be
+  a unit) plus a genuine Zariski descent through IsLocallyCertified''s Away localizations.
+  Nonempty was the free half, imported: trivZar/trivSection, unconditional, another
+  lane''s landed work.
+
+
+  So the vacuity probe passes trivially -- both halves are landed and Unique is a
+  real singleton. What that probe CANNOT see, and what the defects actually were:
+
+
+  1. The two-line docstring ''Main declarations'' census of the producer''s own file
+  named a declaration that exists nowhere in the workspace (I-1525), and it was precisely
+  the carrier the chain does NOT cover (globally certified DivFam vs locally certified
+  DivFamZar). A singleton-producer file has two carriers one import apart; the census
+  is where they get conflated.
+
+  2. The producer''s own ''what this does NOT do'' paragraph carried an unproved absolute
+  -- ''coverage is provably impossible at this parameter'' -- inherited from the cited
+  file and stated MORE strongly than the cited theorem, whose conclusion is about
+  chartLocus while the assembly''s hypothesis is about an arbitrary open (I-1526,
+  I-1521). Direction of the error was against the lane''s own interest, which is exactly
+  why nobody re-read it.
+
+
+  THE RULE: when a lane produces a singleton, do not spend the audit on Subsingleton.
+  Spend it on (a) which of the several nearby carriers the chain actually quotients,
+  and (b) the self-limiting sentences, because a limit stated harsher than proved
+  reads as audited and forecloses a route nobody has refuted.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-30T08:48:56.122502+00:00'
+updated_at: '2026-07-30T08:48:56.122513+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0004-horizon-pic-g
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

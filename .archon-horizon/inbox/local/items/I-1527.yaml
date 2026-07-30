@@ -1,0 +1,55 @@
+id: I-1527
+provider: local
+kind: issue
+body: 'AUDIT pic-g 0096: THE ''~53 CONSUMERS'' FIGURE IS NOT MEASURABLE AS STATED,
+  AND THE FIELD-DROP CLAIM IS TRUE BUT UNDER-STATES WHAT WAS DROPPED.
+
+
+  (1) THE COUNT. Commit 8ae54e4bc9 says ''The rep hypothesis has ~53 consumers in
+  this tree''; the task objective says 93. Enumerating declarations whose HEADER binds
+  rep : (divFunctor ...).RepresentableBy gives 37 (script over AlgebraicJacobian/**.lean,
+  header = text up to := or where), plus 2 section-level  binders (Pic0ChartAbelNonInjective.lean:134,
+  Pic0ChartLocusFibreGuard.lean:107) whose scope adds more. Raw grep for the substring
+  ''rep : (divFunctor'' gives 44; occurrences of ''RepresentableBy'' anywhere is 356
+  across 69 files. No method yields 53. Not a defect in the mathematics, but the number
+  is quoted as a measurement in a commit message that will be read as the round''s
+  headline; state the method or drop the figure.
+
+
+  (2) THE FIELD CLAIM IS TRUE, and the audit confirms it: instSubsingletonDivFamZarZero
+  (Unique.lean:139) binds {K : Type u} [Field K] [Algebra k K] AND FOUR curve instances
+  on relCurve C K -- IsIntegral, SmoothOfRelativeDimension 1, QuasiCompact, LocallyOfFiniteType.
+  instSubsingletonDivFamZarZeroGeneral (Rep.lean:143) binds only [CommRing R] [Algebra
+  k R] [IsAffineHom pi]. Verified by #check on both. So the test-ring Field binder
+  is genuinely gone, and so are four instance binders the lane never claimed credit
+  for. Field k (the base) remains in both, as it must -- it is in relCurve''s own
+  signature -- and the lane''s wording (''the TEST-ring field binder is gone'') is
+  precise about this.
+
+
+  WORTH RECORDING FOR THE OPPOSITE REASON TO USUAL: the achieved drop is LARGER than
+  advertised. Rep.lean:142''s ''needs Field K twice; this needs no field at all''
+  names only the two Field uses and misses that the four relCurve C K geometry instances
+  also vanish. Those four are the ones a consumer at a general test ring cannot supply,
+  so they are the load-bearing part of the improvement.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-30T08:48:22.266409+00:00'
+updated_at: '2026-07-30T08:48:22.266422+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0004-horizon-pic-g
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

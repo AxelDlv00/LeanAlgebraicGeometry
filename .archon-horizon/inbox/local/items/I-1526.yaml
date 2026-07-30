@@ -1,0 +1,67 @@
+id: I-1526
+provider: local
+kind: issue
+body: 'AUDIT pic-g 0096: ''COVERAGE IS PROVABLY IMPOSSIBLE AT n = 0'' IS NOT A THEOREM,
+  AND pic-g STATES IT MORE STRONGLY THAN THE FILE IT CITES. Overlaps I-1521 (same
+  defect, pic-c''s file); this records the propagation into pic-g''s two new files
+  and their commit messages, which is where it now reads as audited.
+
+
+  THE SENTENCES. DivisorFamilyDegreeZeroRep.lean:195-196: ''Coverage needs the locus
+  inhabited, so this branch cannot have coverage **at its own parameter** -- not merely
+  "lacks the high-n coverage chart".'' Line 199: ''where coverage is *provably impossible*
+  for g >= 2''. DivisorFamilyDegreeZeroUseSite.lean:37-39 repeats it, and both commit
+  messages (8ae54e4bc9, 5144d7c4ce) carry ''CANNOT HAVE COVERAGE AT ITS OWN PARAMETER''
+  / ''coverage is impossible''.
+
+
+  WHY FALSE. The cited theorem not_mem_chartLocus_of_two_le_genus_zero_param concludes
+  t ∉ chartLocus C m Z lam. The assembly''s coverage hypothesis is PointwiseCoverage
+  (Pic0ChartAtlasCoupling.lean:99-103), which quantifies over an ARBITRARY open W
+  with t ∈ W and never mentions chartLocus. chartsCoverLocally_of_pointwise (Pic0ChartCoveragePointwise.lean:112)
+  calls chartLocusOpens only ''the INTENDED instantiation'' of W. Pic0ChartAtlasCoupling.lean:52-55
+  states outright that the carriers DO NOT MEET (V i is an open of the chart source;
+  chartLocus is a set on a test) and that NO declaration in the tree relates them.
+  So ''coverage needs the locus inhabited'' is the missing implication, not a consequence.
+
+
+  Additionally the cited theorem carries hlam : degAt lam (Over.testPoint t) = 0 and
+  hchi, neither of which pic-g''s sentence mentions -- so even the locus-route claim
+  is conditional on inputs the prose drops.
+
+
+  DEFENSIBLE VERSION: at n = 0, g >= 2 the chartLocus-MEDIATED route to coverage is
+  dead. Refuting the assembly''s actual coverage hypothesis at n = 0 is OPEN and strictly
+  stronger.
+
+
+  DIRECTION OF THE ERROR IS AGAINST THE LANE''S INTEREST, which is why it survived
+  review: it makes the new producer look more boxed-in than measured. But it is still
+  an unproved absolute, and it is the load-bearing sentence of both new module docstrings
+  and both commit messages -- a later lane reading ''coverage provably impossible
+  at 0'' will not attempt the n = 0 coverage route, which is not currently refuted.
+
+
+  Failure mode: exculpatory-sentence-is-a-claim + gap-list-is-the-least-audited-prose
+  with the sign flipped.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-30T08:47:47.879937+00:00'
+updated_at: '2026-07-30T08:47:47.879948+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0004-horizon-pic-g
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

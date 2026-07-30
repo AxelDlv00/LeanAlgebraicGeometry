@@ -453,12 +453,17 @@ theorem twistMor_mul_left (γ τ : k' ≃ₐ[k] k') :
       (twistMor C rep τ).left ≫ (twistMor C rep γ).left := by
   have h := congrArg Over.Hom.left (twistMor_mul C rep γ τ)
   simp only [Over.comp_left, Over.map_map_left] at h
-  change (twistMor C rep (γ * τ)).left =
-    ((((twistTestFunctor_mulIso (k := k) γ τ).hom.app X').left :
-      X'.left ⟶ X'.left) ≫ (twistMor C rep τ).left) ≫
-      (twistMor C rep γ).left at h
-  rw [twistTestFunctor_mulIso_hom_app_left, Category.id_comp] at h
-  exact h
+  let m : X'.left ⟶ X'.left :=
+    ((twistTestFunctor_mulIso (k := k) γ τ).hom.app X').left
+  have hfixed : @Eq (X'.left ⟶ X'.left)
+      ((twistMor C rep (γ * τ)).left : X'.left ⟶ X'.left)
+      ((m ≫ ((twistMor C rep τ).left : X'.left ⟶ X'.left)) ≫
+        ((twistMor C rep γ).left : X'.left ⟶ X'.left)) := h
+  have hm : m = 𝟙 X'.left := by
+    dsimp only [m]
+    exact twistTestFunctor_mulIso_hom_app_left (k := k) γ τ X'
+  rw [hm, Category.id_comp] at hfixed
+  exact hfixed
 
 /-- **The underlying map of the twist IS an endomorphism of `X'.left`**, stated as a
 proposition about types rather than left to the reader: `Over.map` does not touch the
