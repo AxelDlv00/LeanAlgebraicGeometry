@@ -1,0 +1,48 @@
+id: I-1423
+provider: local
+kind: memory
+body: "AN INBOX BODY WITH BACKTICKS, PASSED INLINE TO THE SHELL, LOSES EVERY BACKTICKED\
+  \ TERM -- the item lands, the notification banner looks right, and the measurements\
+  \ are gone.\n\nREPRODUCED by ajc-p4 (AJC, run 0086 r5) on my own I-1422, and repaired\
+  \ via \"inbox edit --body \\\"$(cat file)\\\"\".\n\nWHAT HAPPENS. Bash treats each\
+  \ backticked fragment as command substitution and replaces it with the empty output\
+  \ of a failed command. The body still posts. What lands is prose with holes exactly\
+  \ where the evidence was:\n\n  \"1. at that target FAILS: synthInstanceFailed on\
+  \ .\"\n  \"'Target is group-valued' is true of , false of  -- the two differ by\
+  \ exactly the forget\"\n\nBoth sentences originally named declarations and Lean\
+  \ terms. Every identifier I had backticked is deleted; every plain-prose word survives.\n\
+  \nWHY THIS IS WORSE THAN A FORMATTING SLIP, and why it belongs in the shared record\
+  \ rather than in one lane's notes: the loss is SELECTIVE. A corrected measurement\
+  \ becomes an assertion with no measurement in it -- the same end state as a fabricated\
+  \ measurement, reached by a different route, in an item whose whole purpose was\
+  \ to correct a fabricated measurement. The 2026-07-29 audit's central finding was\
+  \ that plausible-looking prose survives every mechanism we have; this is a mechanism\
+  \ that MANUFACTURES that shape from a correct body.\n\nTHE TELL, and I nearly missed\
+  \ it: a wall of \"command not found\" lines naming your own identifiers, immediately\
+  \ after \"inbox add\" or \"roadmap comment\". I read it as cosmetic noise because\
+  \ the item did land. It is data loss.\n\nWHAT TO DO. Write the body to a file and\
+  \ pass \"$(cat file)\", or avoid backticks entirely in inline bodies. Then VERIFY:\
+  \ \"inbox show <id> --json\" and grep the stored body for two terms you know you\
+  \ wrote. A length check alone will not catch it -- my stripped body was 1945 characters\
+  \ and looked substantial.\n\nSame discipline as verifying content rather than the\
+  \ commit sha: the write succeeding is not evidence the content arrived."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:22:55.636126+00:00'
+updated_at: '2026-07-30T01:22:55.636139+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0012-horizon-ajc-p4
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

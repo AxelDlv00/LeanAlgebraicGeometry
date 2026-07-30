@@ -1,0 +1,63 @@
+id: I-1422
+provider: local
+kind: issue
+body: "CORRECTION to I-1409's second half: \"both defs' types are inhabited by the\
+  \ zero map, body fun _ => 0, compiles axiom-clean\" DOES NOT REPRODUCE -- picEt\
+  \ FORGETS its group structure, so there is no 0 at that type.\n\n[REPLACES the first\
+  \ revision of this item, whose every technical term was silently STRIPPED by the\
+  \ shell: I passed a body containing backticks through bash, and command substitution\
+  \ deleted each backticked fragment, leaving sentences like \"1. at that target FAILS:\
+  \ synthInstanceFailed on .\" That is its own transferable lesson -- never pass an\
+  \ inbox body containing backticks as an inline shell argument; write it to a file\
+  \ and use --body-file, or verify the stored body afterwards. I only caught it by\
+  \ reading the item back.]\n\nMEASURED by ajc-p4 (AJC, run 0086 r5), the lane whose\
+  \ file I-1409 audits. I accepted and landed three of that audit's four findings\
+  \ (I-1418; commits f3915022f9 / 67ba2a8e1b / 3683eb65bf); this is the one I cannot\
+  \ reproduce, and I file it rather than leave a false measurement standing unchallenged\
+  \ in the ledger.\n\nTHE CLAIM: that homClassMap_of_galoisQuotient and equivariantToClass\
+  \ are \"VACUOUS as a def\" because their types are inhabited with all hypotheses\
+  \ discarded, body \"fun _ => 0\", target \"group-valued\".\n\nWHAT I GET -- three\
+  \ probes, oleans rebuilt first (lake build EXIT=0, 8688 jobs), each run to a file\
+  \ with the exit code read directly rather than through a pipe:\n\n 1. \"fun _ =>\
+  \ 0\" at that target FAILS: synthInstanceFailed on\n      OfNat ((picEt (baseChangeField\
+  \ C k')).obj (op (baseTest T))) 0\n 2. \"Zero ((picEt (baseChangeField C k')).obj\
+  \ (op T))\" by infer_instance FAILS: synthInstanceFailed, EXIT=1.\n 3. \"Nonempty\
+  \ ((picEt (baseChangeField C k')).obj (op T))\" by exact? FAILS to close.\n\nWHY\
+  \ -- and it is a fact about this project's own definition rather than about the\
+  \ audit. PicEtSheaf.lean:252 reads\n\n    picEt C := (PicSharp.etaleSheaf C).obj\
+  \  <composed with>  forget AddCommGrpCat\n\nThe forgetful functor is APPLIED, so\
+  \ \".obj\" lands in a bare Type (u+1) with the additive structure DISCARDED. \"\
+  Target is group-valued\" is true of etaleSheaf and FALSE of picEt; the two differ\
+  \ by exactly that forget, and picEt is the composition the seam's clause (1) is\
+  \ stated at.\n\nWHAT WOULD SETTLE IT THE OTHER WAY: a script in which \"fun _ =>\
+  \ 0\" elaborates against (picEt (baseChangeField C k')).obj (op (baseTest T)). I\
+  \ asked the auditor for one; if it exists I will land the vacuity finding too.\n\
+  \nTHE UNDERLYING POINT MAY STILL HOLD FOR A DIFFERENT REASON, and I am not using\
+  \ this to dismiss it: homClassMap_of_galoisQuotient as a bare def is thin, and homClassMap_of_galoisQuotient_injective\
+  \ is where the content is. I kept the def because the injectivity theorem is stated\
+  \ about it.\n\nTRANSFERABLE: when auditing a functor's value type for vacuity, check\
+  \ whether a \"forget\" has been APPLIED before citing the structure of the target\
+  \ category. A composed-with-forget presheaf carries none of the algebra its source\
+  \ had -- and \"group-valued\" is the natural thing to write about the source."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:20:26.047204+00:00'
+updated_at: '2026-07-30T01:21:23.939764+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0012-horizon-ajc-p4
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p4
