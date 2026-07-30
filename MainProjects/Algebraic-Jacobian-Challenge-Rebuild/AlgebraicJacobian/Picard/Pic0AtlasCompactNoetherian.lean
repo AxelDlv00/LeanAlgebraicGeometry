@@ -4,6 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.Pic0AtlasCompactFromClass
+-- Imported so that the coverage lemma this file's docstrings CITE is in its own import closure:
+-- a cited name that resolves only by `grep` is a name this file cannot see, and that failure mode
+-- has recurred in this project (I-1073, I-0994).  `pointwise_of_pointwise_restrictChart` is the
+-- converse that makes single-index coverage equivalent to unrestricted one-chart coverage, which
+-- is why `Finite ι` below is not cheap.
+import AlgebraicJacobian.Picard.Pic0ChartAtlasCoupling
 
 /-!
 # The per-chart half of `hcpt` was NOT free: the charts are OPENS, and openness needs noetherianity
@@ -50,6 +56,21 @@ subtraction from the three-route picture — the class route's `hcl`
 (`Pic0AtlasCompactFromClass.lean`) and the Abel image are no longer the only ways to pay it at a
 finite atlas — and it is **not** a producer of `hcpt` for the classical class-indexed atlas, which
 has no finiteness.
+
+**AND FINITENESS IS NOT CHEAP, which is the part a reader would otherwise get wrong here.**  A
+`PUnit`-indexed atlas is `Finite` and elaborates against this file's assembly (probed), so it
+looks as though finiteness could be met by simply taking one chart.  It cannot be met *that* way:
+per inbox `I-1389`, single-index coverage implies **unrestricted one-chart coverage** through the
+landed converse `pointwise_of_pointwise_restrictChart`
+(`Pic0ChartAtlasCoupling.lean`), and one-chart coverage is the configuration the heterogeneous
+atlas exists to avoid needing (`Pic0ChartCoveragePointwise.lean`,
+`Pic0ChartCoverageIndexSlack.lean`, `Pic0ChartAtlasParamFree.lean`).  So a finite atlas is not
+obtained by shrinking the index: the honest reading is that this file moves the whole cost of
+`hcpt` onto `Finite ι`, and that `Finite ι` is coupled to coverage rather than free.  Neither
+those two files nor `I-1389` *proves* the non-uniformity they assert, so whether a finite atlas
+covers is open in both directions.
+
+No claim is made here that a finite atlas exists.
 
 No antecedent of the seam moves.  `rep`, `IsChartUniv` and Zariski-local surjectivity are
 untouched, and this file produces no `JacobianData` at any curve.
@@ -204,7 +225,12 @@ hypothesis its docstring calls the exposed one, and `jacobianDataOfCompactFromCl
 **This produces no `JacobianData` at any curve.**  The three open antecedents are unchanged and
 `Finite ι` is a fourth hypothesis, not a discharge: for the classical class-indexed atlas it is
 false.  What the signature records is that at a *finite* atlas the compactness input is free —
-so a lane assembling a finite atlas owes `rep`, `hf` and coverage, and nothing else. -/
+so a lane assembling a finite atlas owes `rep`, `hf` and coverage, and nothing else.
+
+**Do not read that as "so build a finite atlas".**  `Finite ι` interacts with the coverage
+instance: at a one-element index the instance is equivalent to unrestricted one-chart coverage
+(`I-1389`), which three files in this tree expect to fail.  The signature is a statement about
+where the cost sits, not a recommendation of a route. -/
 def jacobianDataOfFiniteMixedParamCharts {ι : Type u} [Finite ι] (nn : ι → ℕ)
     (gg : ι → ℕ)
     (rep : ∀ i, (divFunctor C π (nn i)).RepresentableBy
