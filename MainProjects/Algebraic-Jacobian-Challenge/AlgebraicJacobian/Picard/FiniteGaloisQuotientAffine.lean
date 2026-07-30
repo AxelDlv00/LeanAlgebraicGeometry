@@ -467,22 +467,31 @@ theorem affineQuotient_hom_unique {T : Scheme.{u}}
     (hEU.unique (y₁ := ⟨T.affineOpenCover.f i ≫ u₁, by rw [Category.assoc, hu₁]⟩)
       (y₂ := ⟨T.affineOpenCover.f i ≫ u₂, by rw [Category.assoc, hu₂]⟩) h₁ h₂)
 
-/-! ## The main theorem -/
+/-! ## The fixed-isomorphism universal property and the main theorem -/
 
-/-- **The affine finite Galois quotient theorem** (campaign `G2`, wave-2 milestone):
-for the affine model `specSemilinearGalAction` of a semilinear `Gal(L/K)`-action on
-`Spec A`, the canonical morphism `Spec (A^Γ) ⟶ Spec K` is a finite Galois quotient —
-the full `IsGaloisQuotient` predicate: the `Γ`-equivariant base-change isomorphism
-over `Spec L` (`affineQuotientPullbackIso`, Speiser descent) together with the
-universal `T`-points property `Hom_K(T, Spec A^Γ) ≅ Hom_L(T_L, Spec A)^Γ` for
-**all** schemes `T` (affine case via `affineGaloisQuotientHomEquiv`, globalized by
-gluing along an affine open cover of `T`). -/
-theorem isGaloisQuotient_spec :
-    IsGaloisQuotient (specSemilinearGalAction K L A)
-      (Spec.map (CommRingCat.ofHom (algebraMap K (invariantsSubalgebra K L A)))) := by
-  refine ⟨affineQuotientPullbackIso K L A, affineQuotientPullbackIso_hom_specMap K L A,
-    isEquivariant_affineQuotientPullbackIso_hom K L A, ?_⟩
-  intro T t h hover hequiv
+/-- **The universal `T`-points property for the named affine quotient
+isomorphism** `affineQuotientPullbackIso`.
+
+This is clause 3 of `isGaloisQuotient_spec`, exposed before it is packaged into
+the proposition-valued `IsGaloisQuotient`.  Open restriction needs the equation
+against this particular isomorphism: choosing an arbitrary existential witness
+from the packaged predicate could twist the resulting quotient projection by an
+automorphism. -/
+theorem affineQuotient_existsUnique (T : Scheme.{u})
+    (t : T ⟶ Spec (CommRingCat.of K))
+    (h : pullback t (Spec.map (CommRingCat.ofHom (algebraMap K L))) ⟶
+      Spec (CommRingCat.of A))
+    (hover : h ≫ Spec.map (CommRingCat.ofHom (algebraMap L A)) =
+      pullback.snd t (Spec.map (CommRingCat.ofHom (algebraMap K L))))
+    (hequiv : (pullbackSemilinearGalAction K L t).IsEquivariant
+      (specSemilinearGalAction K L A) h) :
+    ∃! u : {u : T ⟶ Spec (CommRingCat.of (invariantsSubalgebra K L A)) //
+        u ≫ Spec.map (CommRingCat.ofHom
+          (algebraMap K (invariantsSubalgebra K L A))) = t},
+      pullbackBaseChange K L
+          (Spec.map (CommRingCat.ofHom
+            (algebraMap K (invariantsSubalgebra K L A)))) t u.1 u.2 ≫
+        (affineQuotientPullbackIso K L A).hom = h := by
   -- local affine solutions on the pieces of an affine open cover
   have hloc : ∀ i : T.affineOpenCover.I₀,
       ∃ u : {u : Spec (T.affineOpenCover.X i) ⟶
@@ -591,6 +600,21 @@ theorem isGaloisQuotient_spec :
       pullbackBaseChange_congr K L _ (T.affineOpenCover.f i ≫ t) (hι i) _, hv i]
   exact ⟨⟨w, hwt⟩, hmain, fun y hy => Subtype.ext
     (affineQuotient_hom_unique K L A y.2 hwt (hy.trans hmain.symm))⟩
+
+/-- **The affine finite Galois quotient theorem** (campaign `G2`, wave-2 milestone):
+for the affine model `specSemilinearGalAction` of a semilinear `Gal(L/K)`-action on
+`Spec A`, the canonical morphism `Spec (A^Γ) ⟶ Spec K` is a finite Galois quotient —
+the full `IsGaloisQuotient` predicate: the `Γ`-equivariant base-change isomorphism
+over `Spec L` (`affineQuotientPullbackIso`, Speiser descent) together with the
+universal `T`-points property `Hom_K(T, Spec A^Γ) ≅ Hom_L(T_L, Spec A)^Γ` for
+**all** schemes `T` (affine case via `affineGaloisQuotientHomEquiv`, globalized by
+gluing along an affine open cover of `T`). -/
+theorem isGaloisQuotient_spec :
+    IsGaloisQuotient (specSemilinearGalAction K L A)
+      (Spec.map (CommRingCat.ofHom (algebraMap K (invariantsSubalgebra K L A)))) :=
+  ⟨affineQuotientPullbackIso K L A, affineQuotientPullbackIso_hom_specMap K L A,
+    isEquivariant_affineQuotientPullbackIso_hom K L A,
+    affineQuotient_existsUnique K L A⟩
 
 end AffineGaloisQuotient
 
