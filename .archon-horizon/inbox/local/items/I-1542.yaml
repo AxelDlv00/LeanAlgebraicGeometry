@@ -1,0 +1,56 @@
+id: I-1542
+provider: local
+kind: issue
+body: "CLOBBER BY pic-c, RESTORED -- and it REFUTES the fix I-1517 prescribes. TO\
+  \ pic-e AND pic-a: your paths were out of HEAD for one commit; nothing was lost;\
+  \ verify anyway.\n\nWHAT HAPPENED. My commit 052f90443d (one new AJCR file, 200\
+  \ insertions) reverted 13 paths belonging to other lanes. Restored byte-identical\
+  \ from disk in 3656070a52, and all 13 now verified sha256 disk == HEAD.\n\nVICTIMS,\
+  \ read from the paths' own Archon-Task trailers rather than guessed:\n * pic-e:\
+  \ Picard/PicEtDescentGoal.lean (-13) and Picard/FGAPicRepresentability.lean (-35)\
+  \ -- PicEtDescentGoal is the descent goal you announced as I-1541 MINUTES before\
+  \ my commit, which is the I-1222 sharpening again: the work destroyed is the most\
+  \ recently committed and least re-read.\n * pic-a: the AJC.picrep.etale-rep.galois\
+  \ roadmap row, its comment C-0001 and its history.\n * inbox I-1536 and I-1540 (whole\
+  \ items + histories, both deleted), and reverted edits to I-1514/I-1529.\n\nTHE\
+  \ PART THAT IS NEW, AND IT CONTRADICTS I-1517's ONE-LINE FIX. I-1517 says to replace\
+  \  with  + , on the grounds that 'the old-value argument makes update-ref FAIL rather\
+  \ than clobber if HEAD moved, which also closes I-1222-C0001's cannot-lock-ref case'.\
+  \ I DID EXACTLY THAT AND IT CLOBBERED ANYWAY, because the CAS guards the wrong thing:\n\
+  \n  update-ref's old-value compares the REF to what YOU PASS. I read OLD with rev-parse\
+  \ HEAD immediately before write-tree, so the value I passed was current and the\
+  \ CAS SUCCEEDED. What was stale was the TREE -- built by a read-tree from an earlier\
+  \ HEAD. A CAS on the ref cannot detect a stale index.\n\nSo the CAS closes only\
+  \ the case where you cache OLD early. To actually close the race you would have\
+  \ to re-read HEAD and compare it to the commit your read-tree used, and abort if\
+  \ they differ -- i.e.  as a separate check before update-ref. I did not have that;\
+  \ my OLD was re-read, which is what made the CAS pass.\n\nI held every other step\
+  \ of I-1222: fresh index file (rm -f, not a copy), read-tree HEAD, ONE explicit\
+  \ path added, name-status listing exactly that path, shortstat '1 file changed,\
+  \ 200 insertions(+)' with ZERO deletions. All of it passed. The ONLY thing that\
+  \ caught this was step 2, the post-commit  read path by path -- and my commit's\
+  \ own printed stat was not available to compare, because commit-tree prints nothing,\
+  \ which is a cost of the I-1517 fix nobody has recorded.\n\nFIFTH INDEPENDENT LANE\
+  \ to hit this in two rounds. It is not fixable by being quick: my window was about\
+  \ 30 seconds."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T11:50:02.060126+00:00'
+updated_at: '2026-07-30T12:07:00.024886+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0006-horizon-pic-c
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-e

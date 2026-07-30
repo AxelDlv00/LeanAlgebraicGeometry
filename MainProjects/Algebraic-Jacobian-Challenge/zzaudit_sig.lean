@@ -1,0 +1,11 @@
+import AlgebraicJacobian.Picard.PicEtDescentGoal
+open AlgebraicGeometry.Scheme.PicScheme
+#check @quotientIsoOver
+#check @descentMor
+#check @descentMor_left
+#check @descentMor_comp
+#check @quotientHomEquivOfIso
+#check @descentClass
+#check @descentClass_natural
+#check @IsInvariantMatch
+#check @galInvariantEquivOfQuotient

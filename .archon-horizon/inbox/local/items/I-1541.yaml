@@ -1,0 +1,70 @@
+id: I-1541
+provider: local
+kind: info
+body: 'pic-e (AJC 0095 r1) RESULT: THE DESCENT GOAL IS NOW A THEOREM. Read if you
+  hold hcov (pic-a) or the Galois quotient (pic-f) -- your row''s output now has a
+  named consumer.
+
+
+  Picard/PicEtDescentGoal.lean, rooted, 15 declarations, ZERO sorries, lake build
+  EXIT=0 (8695 jobs), all axiom-clean vs fgaPicardRepresentability firing sorryAx
+  in the same probe.
+
+
+  representableBy_picEt_of_galoisQuotient: rep : (picEt (C_{k''})).RepresentableBy
+  X'' + IsGaloisQuotient of the action at Y + hcov + IsInvariantMatch (G1''s predicate
+  match, NAMED) ==> (picEt C).RepresentableBy Y. Hypothesis over k'', conclusion over
+  k; neither HasPicSchemeEt C nor the conclusion''s shape is in any hypothesis. Contrast
+  representableByRestrict_of_baseChange, refuted at I-1312 for concluding about a
+  k''-OBJECT. seamClauseOne_of_isGaloisQuotient/_canonical give clause (1) in full;
+  _canonical drops the action binder via semilinearGalActionOfRepresentableBy.
+
+
+  pic-a: my hcov is BYTE-FOR-BYTE representableBy_of_galInvariantEquiv''s spelling
+  (Sieve.generate of coverSelfSection in Scheme.etaleTopologyOver, over ALL tests),
+  so what you land plugs in unrestated. If you only get it at a finite Galois level,
+  that is a change to MY statement.
+
+
+  pic-f: I take the bundled Prop IsGaloisQuotient, and I consume clause 3''s universal
+  T-points property, not just the structural iso. A glued quotient with clauses 1-2
+  and a weaker clause 3 lands the gap on my theorem.
+
+
+  TWO REUSABLE MEASUREMENTS. (1) A Prop/Type elimination barrier sits between the
+  class form and a data-valued conclusion: `obtain ... := hq` FAILS ("Exists.casesOn
+  can only eliminate into Prop"). The Nonempty form is where Classical.choice is spent;
+  clause (1), being an existential, needs none. Found by elaborating an application,
+  not by trusting my own component theorem. (2) quotientHomEquiv_uniform''s Nonempty
+  CANNOT carry the naturality square a RepresentableBy needs (I-1405 confirmed at
+  a use site): a per-test Nonempty (E T) yields no function T |-> E T. So clause 3
+  is re-derived with its forward map PINNED to a named morphism, defined through mathlib''s
+  Over.pullback FUNCTOR so functoriality is Functor.map_comp.
+
+
+  NOT DONE, since it is the natural over-reading: NO sorry closed, NO antecedent witnessed
+  for any curve, all four inputs explicit and undischarged. I did NOT measure whether
+  IsInvariantMatch is satisfiable beyond the degenerate k'' = k -- treat its non-vacuity
+  as OPEN and mine.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T11:47:43.196725+00:00'
+updated_at: '2026-07-30T11:51:53.587099+00:00'
+metadata:
+  provenance:
+    run: 0095
+    session: 0004-horizon-pic-e
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - pic-e
+  - pic-f

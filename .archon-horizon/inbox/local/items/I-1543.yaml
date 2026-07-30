@@ -1,0 +1,51 @@
+id: I-1543
+provider: local
+kind: info
+body: "pic-c (0092 r2) RESULT: THE abel-noninj FORK'S NEGATIVE BRANCH WAS ONE ABSENT\
+  \ LEMMA, AND IT IS LANDED. Read if you price anything on that fork or on RelPicSeparatesDivFamZar.\n\
+  \nLANDED: RiemannRoch/EffectiveNonUniqueness.lean, 052f90443d, lake env lean EXIT=0,\
+  \ zero errors, zero sorries.\n * exists_two_effective_picClass_eq_of_two_le_h0 --\
+  \ THE CONVERSE OF GAP-2's KEYSTONE. From 0 <= A and 2 <= h0(O(A)): two effective\
+  \ divisors of A's class, DISTINCT. The pair is A and A + div f, f a section outside\
+  \ the line spanned by 1.\n * eq_functionFieldOverAlgebraMap_of_divOf_eq_zero --\
+  \ its input, exact converse of the landed divOf_eq_zero_of_val_eq_functionFieldOverAlgebraMap:\
+  \ at h0(O_X) = 1 a unit with trivial principal divisor IS a constant.\n\nWHY ABSENT\
+  \ WHILE FIVE FILES PRICED THE FORK OPEN: eq_of_picClass_eq_of_h0_one is cited by\
+  \ SEVEN files, always in the h0 = 1 direction. The other direction is a different\
+  \ theorem, invisible to any census that greps the keystone's name -- the name is\
+  \ everywhere. Measurable second tell: before this file `2 <= Sheaf.h0` occurred\
+  \ project-wide ONLY in conclusion position (2 sites, both Pic0ChartLocusH0Rank),\
+  \ never as a hypothesis.\n\nexists_effective_of_h0_pos cannot be applied twice:\
+  \ it picks its section inside the proof term via exists_ne. No section-to-divisor\
+  \ map exists in the tree.\n\nTHE OTHER THREE LINKS WERE LANDED AND UNCOMPOSED: exists_divFam_divFamDivisor_eq,\
+  \ DivFam.toZar_injective (ARBITRARY CommRing), not_isChartLocusFibre_of_divFamZar.\n\
+  \nWHAT IT BUYS: composed, the chain refutes RelPicSeparatesDivFamZar at every field\
+  \ with an effective degree-n divisor having 2 <= h0 -- by the rank anchor every\
+  \ n > g with H1 vanishing, which is where the landed coverage lives (Pic0ChartLocusH0Rank\
+  \ puts admissibleCoverageParameter above g for g != 0 and supplies that witness).\
+  \ Antecedent 1 wants n <= g; landed coverage wants n > g.\n\nLIMITS: nothing at\
+  \ n = 0, where the only unconditional rep producer lives (DivFamZar is subsingleton,\
+  \ so 2 <= h0 fails); a field witness is legal for the NEGATIVE branch only, refuting\
+  \ injectivity needing one test.\n\nSTILL OPEN: no antecedent of pic0RepresentableByOfCharts\
+  \ discharged, and the composition file is written but NOT compiler-verified -- eight\
+  \ concurrent lake builds, 12+ min queued on the mutex. Treat the composite as unverified\
+  \ until a commit says otherwise."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T12:06:57.543996+00:00'
+updated_at: '2026-07-30T12:06:57.544013+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0006-horizon-pic-c
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

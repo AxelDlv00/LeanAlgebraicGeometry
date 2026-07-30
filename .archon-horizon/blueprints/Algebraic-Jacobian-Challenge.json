@@ -18176,7 +18176,7 @@
     "macros": {},
     "states": {
       "blocked": 249,
-      "closed": 7903,
+      "closed": 7965,
       "formalized_open": 301,
       "informal": 175,
       "ready": 197
@@ -18224,14 +18224,14 @@
       "AlgebraicGeometry.Adelic.subsingleton_hModule_one_p1Over: Lean declaration appears more than once (AlgebraicJacobian/RiemannRoch/Ledger/P1Vanishing.lean, rr_probe_p1h1.lean)",
       "AlgebraicGeometry.Adelic.genus_p1Over_eq_zero: Lean declaration appears more than once (AlgebraicJacobian/RiemannRoch/Ledger/P1Vanishing.lean, rr_probe_p1h1.lean)",
       "AlgebraicGeometry.BcSquareCoherence: Lean declaration appears more than once (AlgebraicJacobian/Cohomology/CechTwistedCoherenceReduction.lean, scratch_FbcDef.lean)",
-      "lem:pushforwardPullbackBaseChange_restrict_naturality: \\lean{AlgebraicGeometry.pushforwardPullbackBaseChange_restrict_naturality} not found in Lean sources",
-      "lem:pushforwardPullbackBaseChange_abHom: \\lean{AlgebraicGeometry.pushforwardPullbackBaseChangeAbHom} not found in Lean sources",
-      "lem:pushforwardPullbackBaseChange_linHom: \\lean{AlgebraicGeometry.pushforwardPullbackBaseChangeHom} not found in Lean sources",
-      "lem:pushforwardPullbackBaseChange_natIso: \\lean{AlgebraicGeometry.pushforwardPullbackBaseChangeNatIso} not found in Lean sources",
-      "lem:toSheaf_preservesFiniteColimits: \\lean{AlgebraicGeometry.toSheaf_preservesFiniteColimits} not found in Lean sources",
-      "lem:to_sheaf_preserves_epi: \\lean{AlgebraicGeometry.toSheaf_preservesEpimorphisms} not found in Lean sources",
-      "lem:tilde_restrict_basicOpen: \\lean{AlgebraicGeometry.tilde_restrict_basicOpen} not found in Lean sources",
-      "lem:presentation_restrict_basicOpen: \\lean{AlgebraicGeometry.presentation_restrict_basicOpen} not found in Lean sources"
+      "AlgebraicGeometry.Scheme.PicScheme.nec_no_sep_fin: Lean declaration appears more than once (zzaudit_all.lean, zzaudit_nec.lean)",
+      "AlgebraicGeometry.Scheme.PicScheme.gen_quotientIsoOver: Lean declaration appears more than once (zzaudit_gen.lean, zzaudit_r2.lean)",
+      "AlgebraicGeometry.Scheme.PicScheme.gen_descentMor: Lean declaration appears more than once (zzaudit_gen.lean, zzaudit_r2.lean)",
+      "AlgebraicGeometry.Scheme.PicScheme.gen_descentMor_left: Lean declaration appears more than once (zzaudit_gen.lean, zzaudit_r2.lean)",
+      "AlgebraicGeometry.Scheme.PicScheme.gen_descentMor_comp: Lean declaration appears more than once (zzaudit_gen.lean, zzaudit_r2.lean)",
+      "AlgebraicGeometry.Scheme.PicScheme.gen_quotientHomEquivOfIso: Lean declaration appears more than once (zzaudit_gen.lean, zzaudit_r2.lean)",
+      "AlgebraicGeometry.Scheme.PicScheme.gen_descentClass: Lean declaration appears more than once (zzaudit_gen.lean, zzaudit_r2.lean)",
+      "AlgebraicGeometry.Scheme.PicScheme.gen_descentClass_natural: Lean declaration appears more than once (zzaudit_gen.lean, zzaudit_r2.lean)"
     ]
   },
   "nodes": [

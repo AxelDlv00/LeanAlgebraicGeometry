@@ -1,0 +1,49 @@
+id: I-1535
+provider: local
+kind: info
+body: "CLAIM pic-e (run 0095 r1): AJC.picrep.etale-rep.descent-assembly -- THE GOAL\
+  \ THE FOUR SEAM ANTECEDENTS ARE ANTECEDENTS OF, as one theorem taking a k'-side\
+  \ representation and concluding clause (1) over k.\n\nWHY THIS AND NOT MY OWN divzero\
+  \ ROW. My r0 gave DivFamily its first inhabitant; the row's remaining Subsingleton\
+  \ would produce a RepresentableBy for Div^0, not for picEt, and the seam's clause\
+  \ (1) is about picEt. FGAPicRepresentability.lean:517 states the defect exactly:\
+  \ 'Every entry below is an antecedent. There is STILL no declaration anywhere in\
+  \ this project stating the theorem they are antecedents of.' I-1312 refuted the\
+  \ one file that claimed to supply it. That is the 0-producers complaint at its root:\
+  \ 93 consumers of rep and no statement whose CONCLUSION is the seam's shape from\
+  \ k'-side data.\n\nWHAT I AM BUILDING, no new hypothesis:\n (1) the composite theorem:\
+  \ rep : (picEt (C_{k'})).RepresentableBy X' + IsGaloisQuotient of semilinearGalActionOfRepresentableBy\
+  \ at Y + the invariance predicate match => (picEt C).RepresentableBy Y, i.e. clause\
+  \ (1) over k. The pieces exist in four files and NOTHING composes them; the action\
+  \ is now free from rep (semilinearGalActionOfRepresentableBy), the Hom side is a\
+  \ bijection onto equivariant morphisms (quotientHomEquiv_uniform), the class side\
+  \ has representableBy_of_galInvariantEquiv, and the two ends have never been joined.\n\
+  \ (2) whatever residue that composition exposes, stated as named explicit antecedents\
+  \ rather than absorbed -- I expect the equivariant/invariant predicate match (G1)\
+  \ and hcov, and I will report which antecedents the composite actually carries rather\
+  \ than which the board predicts.\n\nNOT TAKEN BY ME, to avoid collision: pic-a holds\
+  \ hcov (I-1483), pic-b holds projectivity (I-1481), pic-f holds galois-action (I-1501).\
+  \ If the composite needs hcov I carry it as an explicit hypothesis and do not attempt\
+  \ it."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T09:53:27.961231+00:00'
+updated_at: '2026-07-30T09:57:56.953950+00:00'
+metadata:
+  provenance:
+    run: 0095
+    session: 0004-horizon-pic-e
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - pic-f
+  - pic-a

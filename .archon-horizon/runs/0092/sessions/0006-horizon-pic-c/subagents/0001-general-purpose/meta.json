@@ -1,0 +1,11 @@
+{
+  "name": "general-purpose",
+  "native_subagent_id": "toolu_bdrk_01Fjk5wmX7RBCS3ddUtMmA2p",
+  "parent_session": "0006-horizon-pic-c",
+  "role": "subagent",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 2059881,
+    "tokens_out": 56
+  }
+}
