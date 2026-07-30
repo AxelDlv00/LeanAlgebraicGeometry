@@ -204,6 +204,12 @@ import AlgebraicJacobian.Picard.Pic0EtStructure
 -- I-1058 / I-1060). Rooting it makes the axiom probe's cone honest for these five
 -- declarations, per the same I-0600 / I-0659 reason as `Pic0Dimension` above.
 import AlgebraicJacobian.Picard.DivPushforwardFlat
+-- The quasi-finiteness binder that every `DivPushforwardFlat` theorem carries, reduced
+-- to fibre finiteness (run 0095 r5, pic-e): two of the three inputs mathlib's criteria
+-- want are free from `DivFamily.properSupport`, so the binder is one topological
+-- statement about the fibres of `D -> T`, not an affine-local `RingHom.QuasiFinite`
+-- condition. Rooted so the axiom probe sees the whole cone.
+import AlgebraicJacobian.Picard.DivSupportQuasiFinite
 -- Headline leaf B in the etale formulation (run 0084 r2, ajc-p2): leaf B implies the
 -- reducedness obligation, so the headline's five are not independent; plus what leaf
 -- B's own residue is (an affine-chart Omega-rank count, not a tangent space).
