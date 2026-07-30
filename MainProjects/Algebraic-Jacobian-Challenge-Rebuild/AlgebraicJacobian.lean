@@ -671,6 +671,7 @@ import AlgebraicJacobian.Picard.DivRepChartClassUnivQuot
 import AlgebraicJacobian.Picard.DivRepChartClassUnivZarLocal
 import AlgebraicJacobian.Picard.Pic0AtlasFiniteType
 import AlgebraicJacobian.Picard.Pic0AtlasCompactFromClass
+import AlgebraicJacobian.Picard.Pic0AtlasCompactNoetherian
 import AlgebraicJacobian.Picard.JacobianDataAbelDegreeWindow
 import AlgebraicJacobian.Picard.JacobianDataAbelEffective
 import AlgebraicJacobian.Picard.JacobianDataAbelEffectivePoint
