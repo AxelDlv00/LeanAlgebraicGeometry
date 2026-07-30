@@ -321,10 +321,15 @@ for a one-chart atlas:
 * if it is injective, coverage holds at **no** proper `V`
   (`not_pointwiseCoverage_of_injective_of_ne_top`), and with `⊥` refuted here only `⊤` survives.
 
-Hence a lane cannot adopt the restriction repair and stay agnostic about the fork: "any working
-`V` is proper" *is* the fork's negative branch.  Scope: one chart.  At a general index coverage
-may return an index other than the one tested, and nothing follows — see that file's own limits
-section.
+Hence a lane cannot adopt the restriction repair and stay agnostic about the fork.  **The
+implication runs one way only**: "any working `V` is proper" is *implied by* the fork's negative
+branch, and an earlier version of this paragraph said the two are equivalent, which is REFUTED —
+the converse needs `∃ V, both clauses hold`, and the CORRECTED FRAMING section above says that
+has never been measured at any `V` (audit `I-1379`).  Two further limits: the argument is for
+**one chart** (at a general index coverage may return an index other than the one tested), and
+its coverage antecedent is correspondingly *stronger* than DAT-B coverage, since
+`pointwise_of_pointwise_restrictChart` converts it to unrestricted coverage by a single chart —
+which `Pic0ChartCoveragePointwise.lean` says is not expected to hold.
 
 The proof re-applies the criterion at the unrestricted chart, using the `⊤`-datum's own `W` and
 composing its `r` with `(⊤).ι`; `exists_factor` transfers because every `v : S ⟶ X` lifts through
