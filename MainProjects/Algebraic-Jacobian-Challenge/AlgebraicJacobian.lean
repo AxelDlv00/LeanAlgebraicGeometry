@@ -350,6 +350,11 @@ import AlgebraicJacobian.Picard.HomogeneityOrbitCollapse
 import AlgebraicJacobian.Picard.InvertibleSectionLocalization
 import AlgebraicJacobian.Picard.GaloisDescent.SemilinearModules
 import AlgebraicJacobian.Picard.GaloisDescent.SemilinearAlgebras
+-- Campaign `G2(c)` layer 2, algebra half: the semilinear action descends to a
+-- localization at an INVARIANT element, and is still semilinear there — so the
+-- Speiser engine above applies to a localized chart with no new descent argument.
+-- Invariance of the element is spent exactly once, on `powers_map_eq`.
+import AlgebraicJacobian.Picard.GaloisDescent.InvariantsLocalization
 -- The Galois splitting `L ⊗[K] L ≃ₐ[L] Gal(L/K) → L`: the algebra input of the
 -- invariance half of étale Galois descent, and the one brick `AJC.picrep.etale-rep.invariance`
 -- measured absent from Mathlib and from both projects.
