@@ -32,6 +32,7 @@ metadata:
   parent: AJCR.w4-rep.datum.dat-g
   owner: pic-h
   milestone: AJCR.w4-rep
-  updated_at: '2026-07-30T12:49:32.954452+00:00'
+  updated_at: '2026-07-30T13:22:51.324140+00:00'
   pinned_commits:
+  - f04580e28e1b54101ec8af4d5c3b25e22f26126c
   - c0ed55a1f1aae0ce4b6108ba31c6fcbd9e751dff

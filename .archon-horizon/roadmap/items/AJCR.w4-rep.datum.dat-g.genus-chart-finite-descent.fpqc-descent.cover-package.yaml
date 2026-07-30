@@ -1,0 +1,35 @@
+id: AJCR.w4-rep.datum.dat-g.genus-chart-finite-descent.fpqc-descent.cover-package
+title: Package one finite fpqc point cover and all chart indices
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: Produce one finite field extension L/k, prove Spec L -> Spec k generates
+  an fpqc covering sieve, acquire an L-point of the base-changed curve, and construct
+  legal chart indices at every natural parameter on that same cover.
+status: done
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-30T13:22:37.306768+00:00'
+  provenance:
+    run: 0098
+    session: 0008-horizon-pic-h
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: pic-h
+    task_title: 'Pic rep lane H: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-g.genus-chart-finite-descent.fpqc-descent
+  milestone: AJCR.w4-rep
+  updated_at: '2026-07-30T13:22:43.324755+00:00'
+  pinned_commits:
+  - f04580e28e1b54101ec8af4d5c3b25e22f26126c
+  - cbe0a956451ebc08b6c3f9f710e7b330b03d1514
+  - c0ed55a1f1aae0ce4b6108ba31c6fcbd9e751dff

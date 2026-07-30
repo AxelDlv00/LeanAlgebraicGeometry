@@ -1,0 +1,33 @@
+id: AJCR.w4-rep.datum.dat-g.genus-chart-finite-descent.fpqc-descent.effectivity
+title: Build and effect the fpqc descent datum for the chart atlas
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: Construct the overlap cocycle for the representing scheme and restricted
+  chart atlas over the finite fpqc cover, prove effectiveness of that scheme-valued
+  descent datum, and transport the open-immersion and covering-sieve clauses to k.
+  Mathlib supplies the fpqc topology and morphism-property descent, but no ready RepresentableBy
+  or Scheme-object descent theorem was found.
+status: active
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-30T13:22:40.309017+00:00'
+  provenance:
+    run: 0098
+    session: 0008-horizon-pic-h
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: pic-h
+    task_title: 'Pic rep lane H: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-g.genus-chart-finite-descent.fpqc-descent
+  owner: pic-h
+  milestone: AJCR.w4-rep
