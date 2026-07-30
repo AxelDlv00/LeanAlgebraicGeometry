@@ -382,6 +382,37 @@ instance mono_coverMap_of_mono [Mono (specMapAlgebra k k')]
     exact pullback.fst_of_mono
   exact Functor.mono_of_mono_map _ h
 
+/-- **`hcov` is a SCHEME-level covering statement — the reduction, free.**
+
+The slice topology `etaleTopologyOver k` is `Scheme.etaleTopology.over (Spec k)`, so
+membership is by definition membership of the transported sieve on the underlying
+scheme (`GrothendieckTopology.mem_over_iff`). Recorded because it says where the
+remaining obligation lives: `hcov` is not a statement about the slice, the test `T`,
+or `picEt` at all — it is that the `Gal`-indexed family of *scheme* morphisms
+`(coverSelfSection T γ).left` is an étale covering of `(T_{k'} ×_T T_{k'}).left`.
+
+**What is measured about that obligation, rather than described**: the sections are
+**not** open immersions by synthesis — `infer_instance` for
+`IsOpenImmersion (coverSelfSection T γ).left` **fails** at a finite Galois `k'/k`
+(control in the same probe file: `#print axioms fgaPicardRepresentability` reports
+`sorryAx`, so the environment is live and the failure is not a stale-import
+artefact, `I-1057`). So the covering property is not available from the
+étale-precoverage machinery for free, and closing this row means building it. That
+is the honest state of the residue, and it is a different obligation from the
+coherence identities of §2, which are `pullback.lift_fst`. -/
+theorem hcov_iff_scheme_level (T : Over (Spec (CommRingCat.of k))) :
+    Sieve.generate (Presieve.ofArrows
+        (fun _ : k' ≃ₐ[k] k' => (restrictTest k k').obj (baseTest (k' := k') T))
+        (fun γ => coverSelfSection T γ)) ∈
+      etaleTopologyOver k (pullback (coverMap (k := k) (k' := k') T)
+        (coverMap (k := k) (k' := k') T))
+    ↔ Sieve.overEquiv _ (Sieve.generate (Presieve.ofArrows
+        (fun _ : k' ≃ₐ[k] k' => (restrictTest k k').obj (baseTest (k' := k') T))
+        (fun γ => coverSelfSection T γ)))
+      ∈ Scheme.etaleTopology (pullback (coverMap (k := k) (k' := k') T)
+        (coverMap (k := k) (k' := k') T)).left :=
+  GrothendieckTopology.mem_over_iff _ _
+
 /-- **`hcov` IS INHABITABLE**: at any extension whose `Spec` map is a
 monomorphism — `k' = k` in particular, by `specMapAlgebra_self` — the
 `Gal`-indexed section family generates `⊤`, hence a covering sieve.
