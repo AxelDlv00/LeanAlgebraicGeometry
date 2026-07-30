@@ -182,6 +182,7 @@ private lemma adjoin_eq_top_of_span_eq_top
   exact hle (by rw [haa]; trivial)
 
 set_option maxHeartbeats 800000 in
+-- Kernel reduction of the nested `adjoin_eq_adjoin_union` proof exceeds the default budget.
 /-- If the base ring is spanned by powers of `x` and `aa` spans the source as
 a module over the base, the complete first-chart coordinate family generates
 the source as a `k`-algebra. -/
@@ -211,6 +212,7 @@ theorem adjoin_chart0 {k A B : Type u}
     exact ⟨Sum.inr i, rfl⟩
 
 set_option maxHeartbeats 800000 in
+-- The symmetric nested-adjoin proof has the same kernel reduction cost.
 /-- If the base ring is spanned by powers of `y` and `bb` spans the source as
 a module over the base, the complete second-chart coordinate family generates
 the source as a `k`-algebra. -/
