@@ -334,6 +334,78 @@ theorem tripleQuotientMap_tripleToOverlapLeft [FiniteDimensional K L]
     (show i.U ⊓ j.U ≤ i.U from inf_le_left), Category.assoc]
   rfl
 
+/-- The triple quotient open in chart `i` also lies in its pairwise overlap
+with chart `k`. -/
+theorem quotientTriple_le_overlapRight [FiniteDimensional K L]
+    (i j k : StableAffineOpen ρ) :
+    letI := ρ.sectionsMulSemiringAction i.stable
+    letI := SemilinearGalAction.sectionsAlgebra f i.U
+    letI := SemilinearGalAction.sectionsAlgebraK (K := K) f i.U
+    letI := SemilinearGalAction.sections_isScalarTower (K := K) f i.U
+    letI := ρ.isSemilinear_sections i.stable
+    SemilinearGalAction.quotientOpenOfStableSubopen ρ i.stable
+        ((i.U ⊓ j.U) ⊓ (i.U ⊓ k.U)) ≤
+      SemilinearGalAction.quotientOpenOfStableSubopen ρ i.stable
+        (i.U ⊓ k.U) := by
+  letI := ρ.sectionsMulSemiringAction i.stable
+  letI := SemilinearGalAction.sectionsAlgebra f i.U
+  letI := SemilinearGalAction.sectionsAlgebraK (K := K) f i.U
+  letI := SemilinearGalAction.sections_isScalarTower (K := K) f i.U
+  letI := ρ.isSemilinear_sections i.stable
+  exact SemilinearGalAction.quotientOpenOfStableSubopen_mono
+    ρ i.stable i.affine
+    (le_trans inf_le_left inf_le_left) inf_le_left inf_le_right
+    (triple_stable ρ i j k) (inf_stable ρ i k)
+
+/-- The canonical restriction from a triple quotient open to its right
+pairwise overlap. -/
+noncomputable def tripleToOverlapRight [FiniteDimensional K L]
+    (i j k : StableAffineOpen ρ) :
+    quotientTriple ρ i j k ⟶ quotientOverlap ρ i k := by
+  letI := ρ.sectionsMulSemiringAction i.stable
+  letI := SemilinearGalAction.sectionsAlgebra f i.U
+  letI := SemilinearGalAction.sectionsAlgebraK (K := K) f i.U
+  letI := SemilinearGalAction.sections_isScalarTower (K := K) f i.U
+  letI := ρ.isSemilinear_sections i.stable
+  unfold quotientTriple quotientOverlap
+  exact Scheme.homOfLE _ (quotientTriple_le_overlapRight ρ i j k)
+
+/-- Restricting a triple quotient open to the right pairwise overlap and then
+including it recovers the triple inclusion. -/
+@[reassoc]
+theorem tripleToOverlapRight_fac [FiniteDimensional K L]
+    (i j k : StableAffineOpen ρ) :
+    tripleToOverlapRight ρ i j k ≫ quotientOverlapι ρ i k =
+      quotientTripleι ρ i j k := by
+  letI := ρ.sectionsMulSemiringAction i.stable
+  letI := SemilinearGalAction.sectionsAlgebra f i.U
+  letI := SemilinearGalAction.sectionsAlgebraK (K := K) f i.U
+  letI := SemilinearGalAction.sections_isScalarTower (K := K) f i.U
+  letI := ρ.isSemilinear_sections i.stable
+  unfold tripleToOverlapRight quotientOverlapι quotientTripleι
+    quotientOverlap quotientTriple
+  exact Scheme.homOfLE_ι _ (quotientTriple_le_overlapRight ρ i j k)
+
+/-- The pinned triple projection restricts to the pinned right pairwise
+quotient projection. -/
+@[reassoc]
+theorem tripleQuotientMap_tripleToOverlapRight [FiniteDimensional K L]
+    (i j k : StableAffineOpen ρ) :
+    tripleQuotientMap ρ i j k ≫ tripleToOverlapRight ρ i j k =
+      X.homOfLE inf_le_right ≫ overlapQuotientMap ρ i k := by
+  letI := ρ.sectionsMulSemiringAction i.stable
+  letI := SemilinearGalAction.sectionsAlgebra f i.U
+  letI := SemilinearGalAction.sectionsAlgebraK (K := K) f i.U
+  letI := SemilinearGalAction.sections_isScalarTower (K := K) f i.U
+  letI := ρ.isSemilinear_sections i.stable
+  rw [← cancel_mono (quotientOverlapι ρ i k)]
+  rw [Category.assoc, tripleToOverlapRight_fac]
+  rw [tripleQuotientMap_fac, Category.assoc, overlapQuotientMap_fac]
+  rw [← Scheme.homOfLE_homOfLE X
+    (show ((i.U ⊓ j.U) ⊓ (i.U ⊓ k.U)) ≤ i.U ⊓ k.U from inf_le_right)
+    (show i.U ⊓ k.U ≤ i.U from inf_le_left), Category.assoc]
+  rfl
+
 /-- The pullback of two quotient overlaps in a chart is the quotient of their
 triple source intersection. -/
 noncomputable def pullbackOverlapIsoTriple [FiniteDimensional K L]
