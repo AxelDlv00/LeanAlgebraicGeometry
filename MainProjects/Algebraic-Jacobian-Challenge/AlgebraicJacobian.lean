@@ -364,6 +364,7 @@ import AlgebraicJacobian.Picard.GaloisDescent.GaloisSelfTensor
 -- converse is an implication whose one named antecedent is that the `Gal`-indexed
 -- sections generate a covering sieve.
 import AlgebraicJacobian.Picard.GaloisDescent.PicEtGaloisBridge
+import AlgebraicJacobian.Picard.GaloisDescent.PicEtGaloisAction
 import AlgebraicJacobian.Albanese.AlbaneseUP
 import AlgebraicJacobian.Albanese.AuslanderBuchsbaum
 import AlgebraicJacobian.Albanese.CodimOneExtension
