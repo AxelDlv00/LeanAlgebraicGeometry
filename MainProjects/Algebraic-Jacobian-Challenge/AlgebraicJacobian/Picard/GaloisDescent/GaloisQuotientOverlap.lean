@@ -129,6 +129,20 @@ theorem isGaloisQuotient_overlap [FiniteDimensional K L] [IsGalois K L]
   exact SemilinearGalAction.isGaloisQuotient_quotientOpenOfStableSubopen
     ρ i.stable i.affine inf_le_left (inf_stable ρ i j)
 
+/-- The specified restricted quotient witness on a pairwise overlap. -/
+noncomputable def overlapWitness [FiniteDimensional K L] [IsGalois K L]
+    (i j : StableAffineOpen ρ) :
+    GaloisQuotientWitness (ρ.restrict (inf_stable ρ i j))
+      (quotientOverlap ρ i j)
+      (quotientOverlapι ρ i j ≫ quotientChartMap ρ i) := by
+  letI := ρ.sectionsMulSemiringAction i.stable
+  letI := SemilinearGalAction.sectionsAlgebra f i.U
+  letI := SemilinearGalAction.sectionsAlgebraK (K := K) f i.U
+  letI := SemilinearGalAction.sections_isScalarTower (K := K) f i.U
+  letI := ρ.isSemilinear_sections i.stable
+  exact SemilinearGalAction.galoisQuotientWitness_quotientOpenOfStableSubopen
+    ρ i.stable i.affine inf_le_left (inf_stable ρ i j)
+
 /-- The source open underlying the triple overlap in chart `i` is stable. -/
 theorem triple_stable (i j k : StableAffineOpen ρ) :
     ρ.IsStableOpen ((i.U ⊓ j.U) ⊓ (i.U ⊓ k.U)) := by
@@ -167,6 +181,21 @@ theorem isGaloisQuotient_triple [FiniteDimensional K L] [IsGalois K L]
   letI := SemilinearGalAction.sections_isScalarTower (K := K) f i.U
   letI := ρ.isSemilinear_sections i.stable
   exact SemilinearGalAction.isGaloisQuotient_quotientOpenOfStableSubopen
+    ρ i.stable i.affine (le_trans inf_le_left inf_le_left)
+      (triple_stable ρ i j k)
+
+/-- The specified restricted quotient witness on a triple overlap. -/
+noncomputable def tripleWitness [FiniteDimensional K L] [IsGalois K L]
+    (i j k : StableAffineOpen ρ) :
+    GaloisQuotientWitness (ρ.restrict (triple_stable ρ i j k))
+      (quotientTriple ρ i j k)
+      (quotientTripleι ρ i j k ≫ quotientChartMap ρ i) := by
+  letI := ρ.sectionsMulSemiringAction i.stable
+  letI := SemilinearGalAction.sectionsAlgebra f i.U
+  letI := SemilinearGalAction.sectionsAlgebraK (K := K) f i.U
+  letI := SemilinearGalAction.sections_isScalarTower (K := K) f i.U
+  letI := ρ.isSemilinear_sections i.stable
+  exact SemilinearGalAction.galoisQuotientWitness_quotientOpenOfStableSubopen
     ρ i.stable i.affine (le_trans inf_le_left inf_le_left)
       (triple_stable ρ i j k)
 
@@ -222,14 +251,33 @@ theorem isGaloisQuotient_triple_rot [FiniteDimensional K L] [IsGalois K L]
     e hef (SemilinearGalAction.restrict_isoOfEq_isEquivariant ρ _ _ _)
     (isGaloisQuotient_triple ρ j k i)
 
+/-- The next cyclic triple witness, transported to the source triple action. -/
+noncomputable def tripleWitnessRot [FiniteDimensional K L] [IsGalois K L]
+    (i j k : StableAffineOpen ρ) :
+    GaloisQuotientWitness (ρ.restrict (triple_stable ρ i j k))
+      (quotientTriple ρ j k i)
+      (quotientTripleι ρ j k i ≫ quotientChartMap ρ j) := by
+  let eOpen : ((i.U ⊓ j.U) ⊓ (i.U ⊓ k.U)) =
+      ((j.U ⊓ k.U) ⊓ (j.U ⊓ i.U)) := by ac_rfl
+  let e := X.isoOfEq eOpen
+  have hef : e.hom ≫
+      (((j.U ⊓ k.U) ⊓ (j.U ⊓ i.U)).ι ≫ f) =
+        ((i.U ⊓ j.U) ⊓ (i.U ⊓ k.U)).ι ≫ f := by
+    dsimp only [e]
+    rw [← Category.assoc, Scheme.isoOfEq_hom_ι]
+  exact GaloisQuotientWitness.transport
+    (ρ.restrict (triple_stable ρ i j k))
+    (ρ.restrict (triple_stable ρ j k i))
+    e hef (SemilinearGalAction.restrict_isoOfEq_isEquivariant ρ _ _ _)
+    (tripleWitness ρ j k i)
+
 /-- The canonical cyclic comparison between two presentations of a triple
 quotient overlap. -/
 noncomputable def tripleIso [FiniteDimensional K L] [IsGalois K L]
     (i j k : StableAffineOpen ρ) :
     quotientTriple ρ i j k ≅ quotientTriple ρ j k i :=
-  quotientUniqueIso (ρ.restrict (triple_stable ρ i j k))
-    (isGaloisQuotient_triple ρ i j k)
-    (isGaloisQuotient_triple_rot ρ i j k)
+  GaloisQuotientWitness.uniqueIso
+    (tripleWitness ρ i j k) (tripleWitnessRot ρ i j k)
 
 /-- The triple-overlap transition in the shape required by
 `CategoryTheory.GlueData.t'`. -/
@@ -256,14 +304,33 @@ theorem isGaloisQuotient_overlap_rev [FiniteDimensional K L] [IsGalois K L]
     e hef (SemilinearGalAction.restrict_isoOfEq_isEquivariant ρ _ _ _)
     (isGaloisQuotient_overlap ρ j i)
 
+/-- The reversed pairwise overlap witness, transported to the same restricted
+action as `overlapWitness ρ i j`. -/
+noncomputable def overlapWitnessRev [FiniteDimensional K L] [IsGalois K L]
+    (i j : StableAffineOpen ρ) :
+    GaloisQuotientWitness (ρ.restrict (inf_stable ρ i j))
+      (quotientOverlap ρ j i)
+      (quotientOverlapι ρ j i ≫ quotientChartMap ρ j) := by
+  let e := X.isoOfEq (inf_comm i.U j.U)
+  have hef : e.hom ≫ ((j.U ⊓ i.U).ι ≫ f) = (i.U ⊓ j.U).ι ≫ f := by
+    dsimp only [e]
+    rw [← Category.assoc, Scheme.isoOfEq_hom_ι]
+  exact GaloisQuotientWitness.transport
+    (ρ.restrict (inf_stable ρ i j)) (ρ.restrict (inf_stable ρ j i))
+    e hef (SemilinearGalAction.restrict_isoOfEq_isEquivariant ρ _ _ _)
+    (overlapWitness ρ j i)
+
 /-- The canonical transition isomorphism between the two quotient presentations
 of an overlap. -/
 noncomputable def overlapIso [FiniteDimensional K L] [IsGalois K L]
     (i j : StableAffineOpen ρ) :
-    quotientOverlap ρ i j ≅ quotientOverlap ρ j i :=
-  quotientUniqueIso (ρ.restrict (inf_stable ρ i j))
-    (isGaloisQuotient_overlap ρ i j)
-    (isGaloisQuotient_overlap_rev ρ i j)
+    quotientOverlap ρ i j ≅ quotientOverlap ρ j i := by
+  classical
+  by_cases h : i = j
+  · subst j
+    exact Iso.refl _
+  · exact GaloisQuotientWitness.uniqueIso
+      (overlapWitness ρ i j) (overlapWitnessRev ρ i j)
 
 /-- The overlap transition lies over `Spec K`. -/
 @[reassoc]
@@ -271,18 +338,20 @@ theorem overlapIso_hom_base [FiniteDimensional K L] [IsGalois K L]
     (i j : StableAffineOpen ρ) :
     (overlapIso ρ i j).hom ≫
         (quotientOverlapι ρ j i ≫ quotientChartMap ρ j) =
-      quotientOverlapι ρ i j ≫ quotientChartMap ρ i :=
-  quotientUniqueIso_hom_base (ρ.restrict (inf_stable ρ i j))
-    (isGaloisQuotient_overlap ρ i j)
-    (isGaloisQuotient_overlap_rev ρ i j)
+      quotientOverlapι ρ i j ≫ quotientChartMap ρ i := by
+  classical
+  by_cases h : i = j
+  · subst j
+    simp [overlapIso]
+  · simpa [overlapIso, h, GaloisQuotientWitness.uniqueIso] using
+      (GaloisQuotientWitness.comparison
+        (overlapWitness ρ i j) (overlapWitnessRev ρ i j)).2
 
 /-- The self-transition is the identity. -/
 @[simp]
 theorem overlapIso_self [FiniteDimensional K L] [IsGalois K L]
     (i : StableAffineOpen ρ) : overlapIso ρ i i = Iso.refl _ := by
-  have hproof : isGaloisQuotient_overlap_rev ρ i i =
-      isGaloisQuotient_overlap ρ i i := Subsingleton.elim _ _
-  rw [overlapIso, hproof, quotientUniqueIso_self]
+  simp [overlapIso]
 
 end StableAffineOpen
 
