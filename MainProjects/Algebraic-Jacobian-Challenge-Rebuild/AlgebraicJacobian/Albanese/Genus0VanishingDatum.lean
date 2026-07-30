@@ -48,6 +48,13 @@ object, and the uniqueness clause of the Albanese property.
 proves it.  Nothing below weakens that; what changes is that the vanishing is now the *only*
 input, where before it was the vanishing *plus* a datum.
 
+Note what has changed *around* it, though, because it decides where to attack the implication:
+its antecedent is no longer out of reach.  `Curve/P1Curve.lean` supplies the three curve binders
+at `P1.asOver k` and `Curve/P1H1Vanishing.lean` proves `genus (P1.asOver k) = 0` there, for an
+arbitrary field — so the implication now has a concrete instance to be proved *at*, rather than
+only a variable `C`.  What it needs at that instance is the relative statement
+`Pic(ℙ¹_T) ≅ Pic(T) × ℤ`; a base-field-only computation would not discharge the `∀ T` binder.
+
 Also still open, and equally unchanged: the *existence* half of the Albanese `∃!`, which is
 Milne I 3.9.  It appears as the explicit `hex` hypothesis, exactly as upstream.
 
