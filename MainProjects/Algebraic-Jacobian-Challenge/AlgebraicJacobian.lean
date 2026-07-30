@@ -358,6 +358,9 @@ import AlgebraicJacobian.RiemannRoch.Ledger.PrincipalTransport
 -- FiberLattice, FiberVanishing, ExtensionUniformity) and `LedgerPortability` the
 -- universe-gap record plus `GenusBridge`'s χ-ledger headline.
 import AlgebraicJacobian.RiemannRoch.Ledger.FiberBound
+-- Source-side fiber coordinates, factored out of the choice of a projective-line model and
+-- stable under arbitrary field base change.
+import AlgebraicJacobian.RiemannRoch.Ledger.FiberCoordinateData
 -- `Ledger.BaseDivisorEveryField` splits `UniformBaseDivisor` into its existence clause (FREE at
 -- every genus, over every field extension) and its degree clause (the whole residue of
 -- extension-uniformity).  Named separately from `FiberBound` because it is what re-prices the
