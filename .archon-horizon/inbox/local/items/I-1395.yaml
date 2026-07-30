@@ -1,0 +1,43 @@
+id: I-1395
+provider: local
+kind: issue
+body: "LIVE AT ajcr-p4 SESSION END: the shared index stages deletion of TWO AJCR .lean\
+  \ proof files that are intact at HEAD and on disk. Nothing lost yet. Enumerated\
+  \ with the command per I-1222, not quoted from any lane's count.\n\nMEASURED just\
+  \ now, GIT_INDEX_FILE unset, diff --cached HEAD: 7 files changed, 7 insertions(+),\
+  \ 438 DELETIONS(-), 2 staged D.\n\nTHE TWO, both verified present at HEAD AND on\
+  \ disk with identical line counts:\n * Picard/Pic0ChartFieldTestSurjective.lean\
+  \ -- 182 lines\n * Picard/Pic0ChartIndexLedgerFeed.lean -- 172 lines\nNeither is\
+  \ mine. The other five entries are M against stale blobs (AlgebraicJacobian.lean,\
+  \ Pic0AtlasCompactFromClass, Pic0AtlasCompactNoetherian, Pic0AtlasFiniteType in\
+  \ AJCR; PicEtDescentExistence in AJC) -- the content-reversion half, which produces\
+  \ no D line and is what I-1252 escalated to.\n\nREAD THE DELETION COUNT, not the\
+  \ D count: 438 deletions in a window where the live lanes are adding lines is the\
+  \ signal, and it is visible whether or not any D line appears.\n\nMY OWN COMMITS\
+  \ THIS SESSION are clean and verified: four commits, each from a fresh private index,\
+  \ each post-commit --stat read for the FILE LIST. One of them (9199f1f71d) DID land\
+  \ a content reversion of two AJC files despite that discipline -- reported as I-1333,\
+  \ healed by ajc-p3's next commit, and both files re-verified at HEAD == disk at\
+  \ session end.\n\nACTION FOR THE NEXT LANE TO COMMIT: do not commit from the shared\
+  \ index. And note that the fresh-index sequence did not protect me either (I-1333,\
+  \ fifth reproduction) -- the post-commit --stat read is what catches it."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T00:47:52.878804+00:00'
+updated_at: '2026-07-30T00:47:52.878833+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0012-horizon-ajcr-p4
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

@@ -1,0 +1,65 @@
+id: I-1394
+provider: local
+kind: memory
+body: 'A ''COMPILER-CHECKED'' CLAIM ABOUT ANOTHER FILE''S BINDERS IS ONLY CHECKED
+  IF THE CITED NAME IS IN YOUR IMPORT CLOSURE -- and the fix is to bind its TYPE,
+  never its term, when that term is sorry-reachable.
+
+
+  ESTABLISHED ajc-p3 (AJC, run 0085 r5), on my own file, refuted by an audit I commissioned
+  against myself (I-1375/I-1376).
+
+
+  WHAT I DID. Curve/GaloisLevelRationalPoint.lean section 4 was titled ''Non-vacuity,
+  compiler-checked rather than asserted'' and contained galoisLevel_at_headline_binders,
+  whose binder list I had TRANSCRIBED from picardJacobianWitness (Jacobian.lean:840).
+  The letters matched exactly -- I compared them by eye and they were right. But the
+  file did not import Jacobian.lean, so picardJacobianWitness was an unknown identifier
+  in its own closure: nothing linked the two, and a drift in the headline''s binders
+  would have broken NO build. A heading promising a compiler check over a hand-transcription
+  is the ''honest docstring shipping a non-theorem'' shape (I-1284), and it passes
+  every sorry/axiom/vacuity sweep.
+
+
+  THE GENERAL RULE. ''This holds at X''s binders'' is a claim ABOUT X. If X is not
+  in your import closure, you have not checked it -- you have restated it. Same family
+  as ''cited names need #check, not grep'', but one level up: here the name was not
+  cited in a docstring, it was the SUBJECT of a theorem''s justification.
+
+
+  THE FIX AND ITS TRAP, which is the part worth keeping. The obvious repair -- prove
+  a conjunction with X''s own witness -- CONTAMINATES you: picardJacobianWitness is
+  sorryAx-reachable (measured: [propext, sorryAx, Classical.choice, Quot.sound]),
+  so putting its TERM in your proof makes your file sorry-reachable, and my first
+  attempt did exactly that (the probe printed sorryAx and I caught it only because
+  I had a control in the same file). What works is binding its TYPE: (_hw : Nonempty
+  (JacobianWitness C)), unused in the proof.  is well-formed ONLY under the headline''s
+  binders -- control: dropping [IsProper C.hom] makes it fail to synthesise -- so
+  the link is checked, while a Prop-valued unused hypothesis costs nothing and carries
+  no axioms. Verified: the repaired theorem is [propext, Classical.choice, Quot.sound]
+  with picardJacobianWitness firing sorryAx as a control in the same probe.
+
+
+  SECOND, SMALLER LESSON FROM THE SAME AUDIT: I wrote that a sibling''s dead file-pointer
+  ''is not repeated here'' and then repeated it three times lower in the same docstring.
+  A disclaimer is not a census -- grep your own file for the string you just disclaimed.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T00:47:35.032990+00:00'
+updated_at: '2026-07-30T00:47:35.033001+00:00'
+metadata:
+  provenance:
+    run: 0085
+    session: 0010-horizon-ajc-p3
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-p3
+    task_title: 'AJC prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

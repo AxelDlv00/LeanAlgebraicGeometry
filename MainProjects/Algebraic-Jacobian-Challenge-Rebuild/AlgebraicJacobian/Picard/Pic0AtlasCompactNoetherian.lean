@@ -87,6 +87,9 @@ untouched, and this file produces no `JacobianData` at any curve.
   morphism.
 * `AlgebraicGeometry.jacobianDataOfFiniteMixedParamCharts` — the assembly with `hcpt` gone and
   `Finite ι` in its place.
+* `AlgebraicGeometry.quasiCompact_jacobianDataOfFiniteMixedParamCharts` — the consequence for the
+  `dat-j.qcfield` row: that row's field is *discharged* at a finite atlas, so `hcl` is what pays it
+  at an **infinite** one.
 -/
 
 set_option autoImplicit false
@@ -249,6 +252,35 @@ def jacobianDataOfFiniteMixedParamCharts {ι : Type u} [Finite ι] (nn : ι → 
     (fun i => divSchemeOver k A B (gg i) r₁ r₂ b₁ b₂) rep m Z hdeg V hf
     (fun _ => inferInstance)
     (compactSpace_glued_of_finite_mixedParamChart C π nn gg rep m Z hdeg V hf)
+
+variable (C π) in
+/-- **The `quasiCompact` field of `JacobianData` is discharged at a finite atlas** — the form that
+matters to the `dat-j.qcfield` lane, so it is stated rather than left to be read off.
+
+`Pic0AtlasCompactFromClass.lean` proves `hcpt` and the `JacobianData.quasiCompact` field are one
+statement in both directions (`compactSpace_glued_iff_quasiCompact`), and `dat-j.qcfield` prices
+that field as having no producer of any shape.  At a *finite* atlas over the divisor carrier it
+does: the field of the datum above is already proved, with no `hcl` and no Abel morphism.
+
+**So `hcl` is what pays the `quasiCompact` field at an INFINITE atlas**, which is the accurate
+form of "the field has no producer".  The classical class-indexed atlas is infinite, so `hcl` is
+not superseded — see the finiteness caveat in this file's header. -/
+theorem quasiCompact_jacobianDataOfFiniteMixedParamCharts {ι : Type u} [Finite ι] (nn : ι → ℕ)
+    (gg : ι → ℕ)
+    (rep : ∀ i, (divFunctor C π (nn i)).RepresentableBy
+      (divSchemeOver k A B (gg i) r₁ r₂ b₁ b₂))
+    (m : ι → ℕ) (Z : ι → (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : ∀ i, Scheme.CurveDivisor.deg k (Z i)
+      = (m i : ℤ) * classDeg k (thetaCechClass C) - (nn i : ℤ))
+    (V : ∀ i, (divSchemeOver k A B (gg i) r₁ r₂ b₁ b₂).left.Opens)
+    (hf : ∀ i, IsOpenImmersion.presheaf (mixedParamChart C π nn
+      (fun i => divSchemeOver k A B (gg i) r₁ r₂ b₁ b₂) rep m Z hdeg V i))
+    [Presheaf.IsLocallySurjective Scheme.zariskiTopology
+      (Sigma.desc (mixedParamChart C π nn
+        (fun i => divSchemeOver k A B (gg i) r₁ r₂ b₁ b₂) rep m Z hdeg V))] :
+    QuasiCompact
+      (jacobianDataOfFiniteMixedParamCharts C π nn gg rep m Z hdeg V hf).J.hom :=
+  (jacobianDataOfFiniteMixedParamCharts C π nn gg rep m Z hdeg V hf).quasiCompact
 
 end Atlas
 

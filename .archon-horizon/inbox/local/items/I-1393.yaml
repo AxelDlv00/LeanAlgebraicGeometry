@@ -1,0 +1,70 @@
+id: I-1393
+provider: local
+kind: issue
+body: 'I-1384''S HAZARD IS NO LONGER HYPOTHETICAL: 24 SCRATCH PROBE FILES ARE AT HEAD
+  IN AJC, THREE OF THEM CONTAIN sorry, AND NO BUILD CAN SEE THEM.
+
+
+  MEASURED ajc-p3 (run 0085 r5) at HEAD, after commit b1413065db (''workspace[0081
+  r7] horizon review-ajc: integrate 0016-horizon-review-ajc'') which added them:
+
+
+  * git ls-tree -r --name-only HEAD -- MainProjects/Algebraic-Jacobian-Challenge/Scratch2/
+  | wc -l  =>  24
+
+  * git grep -c sorry HEAD -- .../Scratch2/  =>  Axioms.lean, Exist1.lean, Split2.lean,
+  one each.
+
+  * They are NOT rooted: grep for ''Scratch2'' in AlgebraicJacobian.lean and the lakefile
+  returns nothing. So  never elaborates them and never reports their sorries.
+
+
+  WHY THIS MATTERS MORE THAN TIDINESS, and it is not the same complaint as I-1384:
+
+  1. ANY sorry CENSUS OVER *.lean IS NOW WRONG for AJC. A count by grep picks up three
+  phantom sorries in files that are not part of the project; a count by  warnings
+  misses them. The two methods now disagree by construction, and this workspace has
+  already had two rounds of arguments about sorry counts (I-1222''s lineage). A lane
+  reconciling those numbers will burn a session on files nobody meant to commit.
+
+  2. THEY ARE PROBE FILES, so their CONTENTS are deliberately wrong -- scratch attempts,
+  deliberate controls, statements written to FAIL. Axioms.lean, Bridge.lean, Exist1-3.lean,
+  Rel1-5.lean, Sieve1.lean, Split1-2.lean, Join.lean, Generic.lean, Fam.lean, Binder.lean.
+  Two of them (Generic.lean, Join.lean) import Curve/GaloisLevelRationalPoint.lean,
+  so a consumer census over imports counts them as consumers of my file. They are
+  not.
+
+  3. The same commit is how MY OWN section 5 reached HEAD -- I built it, verified
+  it (lake build EXIT=0 8737 jobs, 8 decls axiom-clean, both controls firing sorryAx),
+  and another lane''s integrate sweep committed it before my own commit ran, so my  matched
+  zero changes. Content verified intact by sha256 HEAD-vs-disk and by enumerating
+  all 8 declarations at HEAD. Nothing of mine was lost. But I did not author that
+  commit and would not have included Scratch2.
+
+
+  FIX, and I am deliberately NOT doing it unilaterally mid-round: either gitignore
+  per-project scratch dirs (I-1384 measured that .gitignore:24''s ''/*probe*.lean''
+  is ANCHORED to the workspace root and so does not match these), or git rm the 24
+  paths. Deleting 24 files another lane just committed is exactly the blast radius
+  the commit discipline exists to prevent, so this needs the reviewer or the human,
+  not me.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T00:47:08.710578+00:00'
+updated_at: '2026-07-30T00:47:08.710589+00:00'
+metadata:
+  provenance:
+    run: 0085
+    session: 0010-horizon-ajc-p3
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-p3
+    task_title: 'AJC prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

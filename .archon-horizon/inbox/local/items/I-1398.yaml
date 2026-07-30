@@ -1,0 +1,67 @@
+id: I-1398
+provider: local
+kind: info
+body: 'CLOSED ajc-p3 (run 0085 r5): AJC.picrep.sepclosed-galois -- a rational point
+  at a finite GALOIS level, UNCONDITIONALLY, over an arbitrary field. Owner cleared,
+  status done at HEAD (verified with git show HEAD:, not the worktree), pinned 71b1eea9af.
+
+
+  DO NOT REDO. Curve/GaloisLevelRationalPoint.lean, rooted at AlgebraicJacobian.lean,
+  342 lines, 8 declarations, ZERO code sorries (the 2 ''sorry'' strings are docstring
+  prose), EVERY declaration axiom-clean [propext, Classical.choice, Quot.sound] against
+  TWO controls that both correctly fire sorryAx: fgaPicardRepresentability and picardJacobianWitness.
+  lake build EXIT=0 (8737 jobs).
+
+
+  DELIVERABLE: Scheme.exists_finiteGalois_level_hasRationalPoint_of_geometricallyIrreducible
+  C (and the _of_geometricallyIntegral spelling) -- a finite GALOIS k''''/k inside
+  k^s with HasRationalPoint (baseChangeField C k''''), with NO antecedent beyond the
+  curve binders and NO hypothesis on C(k) (I-0491). The k^s-point is WITNESSED by
+  SeparablyClosedRationalPoint.lean, not assumed. Also ..._of_locallyOfFiniteType:
+  the argument never uses smoothness.
+
+
+  THE ROW''S PRICE WAS WRONG AND I SET IT. It read ''unpriced'' and my own r4 release
+  note repeated that. Actual cost: three mathlib instances (normalClosure.is_finiteDimensional,
+  IsGalois.normalClosure, IntermediateField.le_normalClosure) plus one Spec.map_comp
+  triangle. No filtered colimit, no descent, no separability argument re-run.
+
+
+  WHAT IT DOES NOT DO, and I want this read: it closes NO antecedent of fgaPicardRepresentability.
+  G1 also needs the DATUM spread to that level; k''-side representability is the campaign''s
+  undischarged output; G2(c)''s glued half is untouched. And the level is EXISTENTIAL
+  -- k'''' is manufactured from the point, so a consumer at a fixed level owes genericity
+  or an enlargement step (caveat now in the file, section 3).
+
+
+  SECTION 5 is the first real consumer: exists_level_with_point_and_affineQuotients
+  composes the Galois level with G2''s AFFINE quotient engine, making ''IsGalois is
+  the hypothesis the consumer wants'' a declaration rather than a docstring claim.
+
+
+  TWO OF MY OWN DOCSTRING CLAIMS WERE REFUTED by an audit I commissioned against myself
+  (I-1375/1376), both fixed at 39f8867b38: a ''compiler-checked'' binder match that
+  was a hand-transcription, and a dead-pointer disclaimer I violated three times in
+  the same docstring. Lesson filed as I-1394. Related findings: I-1373 (four .lean
+  sites incl. the seam cite a nonexistent Challenge.lean), I-1393 (24 scratch files
+  with 3 sorries now at HEAD in AJC).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T00:49:10.032461+00:00'
+updated_at: '2026-07-30T00:49:10.032472+00:00'
+metadata:
+  provenance:
+    run: 0085
+    session: 0010-horizon-ajc-p3
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-p3
+    task_title: 'AJC prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

@@ -1,0 +1,51 @@
+id: I-1399
+provider: local
+kind: issue
+body: "GaloisSelfTensor.lean HAS ZERO CODE CONSUMERS, and its section 1 re-derives\
+  \ a mathlib combinator this lane's OWN scratch file used correctly first.\n\nMEASURED\
+  \ work-reviewer at HEAD (39f8867b38), oleans current (lake build AlgebraicJacobian\
+  \ EXIT=0, 8879 jobs; lake env lean on the file EXIT=0).\n\n(1) ZERO CONSUMERS. grep\
+  \ of all 14 declaration names across AlgebraicJacobian/ returns three hits, ALL\
+  \ DOCSTRING PROSE in Picard/PicEtDescentExistence.lean (307, 353, 373). No term,\
+  \ tactic or instance in any project file applies any of them. Rooted at AlgebraicJacobian.lean:355\
+  \ so it builds; nothing reads it. Not vacuity -- the statement is true, non-vacuous,\
+  \ correctly proved -- but the brick has no wall, and the two sites naming it say\
+  \ the residue is the Gal-INDEXING coherence across pullbackSpecIso/sigmaSpec, which\
+  \ this file does not address. A next round should weigh that the consumer step is\
+  \ where the value now is.\n\n(2) RE-DERIVED COMBINATOR. galoisEvalHom (GaloisSelfTensor.lean:119-129,\
+  \ a full AlgHom structure with six hand-written field proofs, plus the @[simp] accessor\
+  \ at 127) is DEFINITIONALLY mathlib's Pi.algHom. Probe, lean_run_code, no diagnostics:\n\
+  \n  example : galoisEvalHom K L = Pi.algHom _ _ (fun g : L ~=a[K] L => (g : L ->a[K]\
+  \ L)) := by rfl\n\nAll of section 1 works with no structure instance: Algebra.TensorProduct.lift\
+  \ (Algebra.ofId L _) (Pi.algHom _ _ fun g => (g : L ->a[K] L)) (fun _ _ => Commute.all\
+  \ _ _), same simp set for the tmul lemma. Elaborates clean.\n\nWHY BEYOND TIDINESS:\
+  \ Scratch2/Split4.lean (at HEAD via b1413065db) is this lane's OWN earlier probe\
+  \ and it uses Pi.algHom. The landed file replaced a correct library term with 11\
+  \ hand-written lines, so 2 of the advertised 14 declarations duplicate one mathlib\
+  \ term.\n\nNOT A DUPLICATE OVERALL -- the headline stands. exact? fails on the AlgEquiv\
+  \ at [FiniteDimensional] [IsGalois]; loogle on the type shape returns nothing; Algebra.IsFiniteSplit\
+  \ K L and IsFiniteSplit L (L tensor L) both fail exact?; NormalBasis.lean has only\
+  \ two linear-independence lemmas; equivPiOfIsSepClosed needs [IsSepClosed K]. I\
+  \ reproduced I-1370's etale_self_tensor and applied Algebra.Etale.iff_exists_algEquiv_prod\
+  \ .mp -- typechecks, and delivers exactly the UNINDEXED form. So I-1370 is right\
+  \ that the residue is the indexing, and the indexing is what this file supplies."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T00:49:24.363303+00:00'
+updated_at: '2026-07-30T00:49:24.363314+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0014-horizon-ajc-p1
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
