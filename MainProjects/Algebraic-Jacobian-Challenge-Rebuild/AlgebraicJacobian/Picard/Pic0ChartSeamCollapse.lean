@@ -89,6 +89,15 @@ restriction is to the *index*, not to the *spelling*.
   weakening.
 * `AlgebraicGeometry.representableBy_of_seam` — the representation, engine-free.
 * `AlgebraicGeometry.exists_retraction_of_seam` — `V.ι` is a split mono.
+* `AlgebraicGeometry.eq_top_of_retraction_of_isDominant` and
+  `AlgebraicGeometry.eq_top_of_seam_of_isDominant` — a **dense** working `V` is `⊤`.
+* `AlgebraicGeometry.isDominant_opens_ι_of_irreducibleSpace` and
+  `AlgebraicGeometry.eq_top_of_seam_of_irreducible` — **the constraint's final form**: on an
+  irreducible reduced separated chart source every *nonempty* working `V` is `⊤`, so a working
+  `V` in the interior of the interval requires a **reducible** chart source.
+* `AlgebraicGeometry.chartIso_of_isChartUniv` and
+  `AlgebraicGeometry.exists_retraction_of_isChartUniv` — the applicability check at the Abel
+  chart, fed by `IsChartUniv` itself.
 -/
 
 set_option autoImplicit false
@@ -290,10 +299,13 @@ The retraction `r` is a *left* inverse of `V.ι`; to promote it to a two-sided o
 the dominant `V.ι`, and `X` is reduced and separated.  An iso open inclusion is surjective on
 points, hence `V = ⊤`.
 
-`IsDominant V.ι` is exactly density of `V` (mathlib's `IsDominant` is denseness of the range),
-and for an *irreducible* ambient scheme every nonempty open is dense — which is the case the
-divisor scheme is expected to be in.  So this is not an exotic side condition: on an
-irreducible reduced separated chart source, **every nonempty working `V` is `⊤`**.
+`IsDominant V.ι` is exactly density of `V` (mathlib's `IsDominant` is denseness of the range).
+**An earlier version of this docstring hedged that "for an irreducible ambient every nonempty
+open is dense — so this is not an exotic side condition", i.e. it asserted the bridge in prose
+instead of proving it.  That was understated in the file's own disfavour: the bridge is two
+lines** (`isDominant_opens_ι_of_irreducibleSpace` below), so the hypothesis is not density at
+all — it is **irreducibility plus nonemptiness**, which is a property of the chart source rather
+than of the candidate open.  `eq_top_of_seam_of_irreducible` states it that way.
 
 The hypotheses `[IsReduced X]`, `[X.IsSeparated]`, `[IsDominant V.ι]` are all load-bearing and
 none is about `pic⁰`: this is a general fact about split-mono open immersions. -/
@@ -353,6 +365,51 @@ family `Pic0AtlasFromDivRep` builds and the one `IsChartUniv` is stated for, wit
 in the hypothesis position rather than a bare `IsOpenImmersion.presheaf`.  They take no
 hypothesis the seam does not already carry.  That is the evidence that this file's results have
 a site; it is deliberately *not* evidence that the site is inhabited. -/
+
+/-! ## Density is irreducibility: the hypothesis restated where it belongs -/
+
+/-- **On an irreducible scheme every nonempty open is dominant.**
+
+Two lines: `isDominant_iff` unfolds to `DenseRange`, `Scheme.Opens.range_ι` identifies the range
+with the open, and `IsOpen.dense` is the topological fact.  Landed as a named lemma because the
+docstring above previously *asserted* it as a reason not to worry about the `IsDominant` binder,
+which is the "prose standing in for a theorem" failure mode.
+
+The sibling project has the density form of this (`isDominant_opens_ι`,
+`AlgebraicJacobian/Albanese/AlbaneseFromData.lean:280` in Algebraic-Jacobian-Challenge, outside
+this project's import closure); the irreducibility form is what a consumer here wants, because
+irreducibility is a property of the *chart source* and can be discharged once, whereas density
+is a property of each candidate `V`. -/
+theorem isDominant_opens_ι_of_irreducibleSpace {X : Scheme.{u}} [IrreducibleSpace X]
+    (V : X.Opens) (hne : (V : Set X).Nonempty) :
+    IsDominant (V.ι) := by
+  rw [isDominant_iff]
+  simpa [DenseRange, Scheme.Opens.range_ι] using V.2.dense hne
+
+variable (C) in
+/-- **THE CONSTRAINT IN ITS FINAL FORM**: on an irreducible reduced separated chart source,
+**every nonempty working `V` is `⊤`**.
+
+This is `eq_top_of_seam_of_isDominant` with the density hypothesis traded for irreducibility of
+the ambient — the form in which the constraint is checkable once per carrier rather than once
+per candidate open.
+
+So the shape of the remaining question is now completely explicit.  A working `V` in the
+*interior* of the interval requires the chart source to be **reducible** (or the candidate to be
+empty, which `not_isLocallySurjective_restrictChart_bot'` in `Pic0ChartBotRefute.lean` refutes).
+Otherwise the only candidate is `⊤`, which dies with the `abel-noninj` fork.
+
+**Neither disjunct is settled here**, and that is the whole honest content: I do not prove the
+divisor scheme irreducible, and I do not decide the fork.  What is established is that those two
+are now the *only* two places a working `V` can come from. -/
+theorem eq_top_of_seam_of_irreducible {X : Scheme.{u}} [IsReduced X] [X.IsSeparated]
+    [IrreducibleSpace X] (f : yoneda.obj X ⟶ (pic0SigmaSheaf C).1) (V : X.Opens)
+    (hne : (V : Set X).Nonempty)
+    (hf : IsOpenImmersion.presheaf (restrictChart f V))
+    (hcov : Presheaf.IsLocallySurjective Scheme.zariskiTopology (restrictChart f V)) :
+    V = ⊤ :=
+  letI := isDominant_opens_ι_of_irreducibleSpace V hne
+  eq_top_of_seam_of_isDominant C f V hf hcov
 
 variable (C π n) in
 /-- **The collapse at the Abel chart**, so `IsChartUniv` — the seam's own antecedent 1, not a
