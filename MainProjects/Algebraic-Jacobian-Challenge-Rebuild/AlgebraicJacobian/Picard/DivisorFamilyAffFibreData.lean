@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.DivisorFamilyAffCert
 import AlgebraicJacobian.Picard.DivisorFamilyAffStalkEval
+import AlgebraicJacobian.Picard.DivisorFamilyExtraction
 import AlgebraicJacobian.Picard.DivisorThetaFibreData
 
 /-!
@@ -30,6 +31,9 @@ widened carrier and introduces no new premise.
 * `AffAdaptation.IsCertified.fibrewise_thetaSub_h1_witness` -- at every residue field, the
   explicit divisor `N(a) - d_p` has the transported theta-minus-family class and vanishing
   `H1` once `a` is in the existing high window.
+* `AffAdaptation.IsCertified.exists_chartAdaptation_thetaGluedEval_surjective` -- an auxiliary
+  finite chart presentation of the same local equations has surjective high-window evaluation;
+  the chart presentation is extracted, not assumed or certified.
 -/
 
 set_option autoImplicit false
@@ -182,6 +186,53 @@ theorem IsCertified.fibrewise_thetaSub_h1_witness
     rw [hdeg]
     have := Int.natCast_nonneg g
     linarith
+
+/-- The widened fibre witnesses fire the existing right-exactness engine on an auxiliary finite
+chart presentation of the same local-equation system.  Such a presentation exists for every
+`d`; it is neither an input nor required to be certified.  Its theta-ideal datum has the
+intrinsic class `[Theta^a] * [d]^-1`, so the widened witness supplies exactly the residue-field
+divisor and `H1` vanishing that `thetaGluedEval_surjective_of_fibre_witness` consumes.
+
+This is the chart-free right-exactness bridge at the cover-independent window: the resulting
+evaluation has kernel `d.vanishingSubmodule`, hence its window carve has kernel
+`divisorWindow d ha1`, while the original widened certificate is used only to produce the
+fibre witnesses. -/
+theorem IsCertified.exists_chartAdaptation_thetaGluedEval_surjective
+    {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
+    {A : AffAdaptation D d} {g : Nat} (hc : A.IsCertified g)
+    (hpi : pi ≫ P1.structureMap k = C.hom)
+    (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
+    (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : Int))
+    {a : Nat} (ha1 : Subsingleton (relTwistPair C k pi (relThetaCocycle C k pi a)).H1)
+    (hMa : windowM_choice pi hpi g ≤ a) :
+    ∃ B : DivisorAdaptation C R pi d, Function.Surjective (B.thetaGluedEval a) := by
+  obtain ⟨B⟩ := exists_divisorAdaptation C R pi d
+  refine ⟨B, B.thetaGluedEval_surjective_of_fibre_witness hpi (fun p => ?_)⟩
+  obtain ⟨W, hWclass, hWH1⟩ :=
+    hc.fibrewise_thetaSub_h1_witness C R pi hpi hO hchi ha1 hMa p
+  refine ⟨W, ?_, hWH1⟩
+  rw [BasicOpenCocycleDatum.cechPicClass_baseChange,
+    B.cechPicClass_thetaIdealDatum]
+  exact hWclass
+
+/-- The cover-independent widened window quotient therefore has a finite chart presentation:
+it is linearly equivalent to the theta-twisted colength module of an extracted adaptation.
+No certificate is transported to that adaptation (which would contradict the strict R2
+examples); only the intrinsic local equations and the right-exactness witness are used. -/
+theorem IsCertified.exists_chartAdaptation_windowQuotEquiv
+    {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
+    {A : AffAdaptation D d} {g : Nat} (hc : A.IsCertified g)
+    (hpi : pi ≫ P1.structureMap k = C.hom)
+    (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
+    (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : Int))
+    {a : Nat} (ha1 : Subsingleton (relTwistPair C k pi (relThetaCocycle C k pi a)).H1)
+    (hMa : windowM_choice pi hpi g ≤ a) :
+    ∃ B : DivisorAdaptation C R pi d,
+      Nonempty (((R ⊗[k] ↥(Scheme.divisorSections k (a • fiberWeilDivisor pi) ⊤)) ⧸
+          divisorWindow d ha1) ≃ₗ[R] B.ThetaGlued a) := by
+  obtain ⟨B, hsurj⟩ := hc.exists_chartAdaptation_thetaGluedEval_surjective
+    C R pi hpi hO hchi ha1 hMa
+  exact ⟨B, ⟨windowQuotEquiv B ha1 hsurj⟩⟩
 
 end AffAdaptation
 
