@@ -135,6 +135,17 @@ theorem ker_intrinsicThetaEvalRel (A : AffAdaptation D d) (a : ℕ) :
       exact hx₁ z ⟨trivial, by
         exact thetaChartCover_pieces_le_inr C R π PUnit.unit hz.2⟩
 
+/-- The quotient by divisor-family vanishing is canonically the actual range of intrinsic
+theta evaluation.  Thus right exactness is precisely the assertion that this range is the
+whole intrinsic descent module. -/
+noncomputable def intrinsicThetaQuotEquivRange (A : AffAdaptation D d) (a : ℕ) :
+    (relThetaSections C R π a ⧸
+        d.vanishingSubmodule R (relCover C R (fiberTwoCover π)).V₀
+          (relCover C R (fiberTwoCover π)).V₁ (relThetaCocycle C R π a)) ≃ₗ[R]
+      ↥(LinearMap.range (A.intrinsicThetaEvalRel (π := π) a)) :=
+  (Submodule.quotEquivOfEq _ _ (A.ker_intrinsicThetaEvalRel (π := π) a).symm).trans
+    (A.intrinsicThetaEvalRel (π := π) a).quotKerEquivRange
+
 /-! ## The intrinsic high-window carve -/
 
 noncomputable local instance instOverCleftAffThetaKernelWindow :
@@ -160,6 +171,16 @@ theorem ker_intrinsicWindowCarve (A : AffAdaptation D d) (a : ℕ)
       divisorWindow d hH1 := by
   rw [intrinsicWindowCarve, LinearMap.ker_comp, A.ker_intrinsicThetaEvalRel,
     divisorWindow]
+
+/-- The established high-window quotient is canonically the range of the intrinsic
+chart-free carve, with no surjectivity premise. -/
+noncomputable def intrinsicWindowQuotEquivRange (A : AffAdaptation D d) (a : ℕ)
+    (hH1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1) :
+    ((R ⊗[k] ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤)) ⧸
+        divisorWindow d hH1) ≃ₗ[R]
+      ↥(LinearMap.range (A.intrinsicWindowCarve (π := π) a hH1)) :=
+  (Submodule.quotEquivOfEq _ _ (A.ker_intrinsicWindowCarve (π := π) a hH1).symm).trans
+    (A.intrinsicWindowCarve (π := π) a hH1).quotKerEquivRange
 
 end AffAdaptation
 
