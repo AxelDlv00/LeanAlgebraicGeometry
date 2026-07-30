@@ -11,6 +11,17 @@ import AlgebraicJacobian.RiemannRoch.WindowFieldTransport
 /-!
 # B-5 step 3: the vanishing threshold at the splitting field is UNIFORM, and it is π-free
 
+## Current endpoint (2026-07-30)
+
+The earlier analysis below correctly proves that a legal index calibrated at a threshold `b`
+has chart parameter `n = b`, but it silently specialised `b` to the *smallest named bound*
+`B = M·δ + g`.  Vanishing is monotone: any `n ≥ B` is equally valid.  The declarations
+`admissibleCoverageParameter` through `exists_uniform_admissibleCoverageChart_eq_univ` choose
+`n = B·d₁`, prove it is both above `B` and a divisor degree, produce one legal chart index, and
+show that its chart locus is `Set.univ` for every `pic⁰` class.  Thus the former residue
+`IsDivisorDegree C g` is not an obligation of coverage; it belongs only to the fixed-`B` branch
+retained later in this file and in `Pic0ChartIndexLedgerFeed`.
+
 `Picard/Pic0ChartCoverageIndexSlack.lean` settles that at a chart index legal at parameter
 `n` the coverage hypothesis `hb` of `mem_chartLocus_of_vanishing_bound` forces `b = n`, and
 that `b = g` is false in general (`hb_forces_h0_eq_one`).  Its item 3 then names the residue:
@@ -85,12 +96,11 @@ value of a legal chart index at parameter `b.toNat`.  What it could not be compo
   *existence of the chart point*, i.e. the pointwise datum of
   `chartsCoverLocally_of_pointwise`; this file supplies one hypothesis of one theorem on the
   route to the locus-membership half.
-* **`hb_forces_h0_eq_one` stands.**  The threshold here is `M·δ + g`, which for `M ≥ 1` and
-  `δ ≥ 1` is strictly above `g`; it is *not* a route to `b = g`, and nothing here weakens that
-  refutation.  What it says is that the chart parameter has to be `(M·δ + g)`, not `g` — and
-  since `n` is free throughout the chart layer (`Pic0ChartCoverageIndexSlack`'s own
-  correction, `Pic0ChartAtlasParamFree`'s heterogeneity), that is a *statement about which
-  parameter the atlas is indexed at*, which is addressed to the divRep lane.
+* **`hb_forces_h0_eq_one` stands.**  Taking the threshold to be `g` is false in general.  The
+  earlier conclusion that the chart parameter therefore has to be the minimal bound `M·δ + g`
+  is superseded: it may be any larger admissible parameter.  `admissibleCoverageParameter`
+  supplies one unconditionally; representability at that larger parameter remains the join with
+  the divRep lane.
 * **It is not new geometry, and the threshold is not even new Lean** — see the
   re-derivation section above.  `windowN` and `subsingleton_hModule_one_of_witness` did have
   zero occurrences in any `Pic0Chart*` file before this one, but that measured the wrong thing:
@@ -118,6 +128,11 @@ value of a legal chart index at parameter `b.toNat`.  What it could not be compo
 * `AlgebraicGeometry.exists_chartIndex_mem_chartLocus_of_ledger_bound` — the composite with
   `index_of_threshold`'s direction: at the ledger parameter there is a legal chart index whose
   locus contains the point.
+* `AlgebraicGeometry.admissibleCoverageParameter` — a multiple of the positive theta degree
+  above the uniform bound, hence unconditionally a divisor degree.
+* `AlgebraicGeometry.exists_uniform_admissibleCoverageChart_eq_univ` — one legal chart locus is
+  `Set.univ` for every `pic⁰` class, uniformly in the test; no splitting or arithmetic input
+  remains.
 -/
 
 set_option autoImplicit false
@@ -574,13 +589,12 @@ If `M·δ + g = g` then `g = 0`.  Since `δ ≥ 1` (`one_le_windowδ`), the equa
 while the left-hand side dominates `windowBound` — and `genus_eq_zero_of_windowBound_nonpos`
 concludes.
 
-**What this means for the reduction above, stated as the limit it is.** Coverage is now
-available at parameter `M·δ + g`, and the divRep endpoint supplies `rep` at the parameter its
-own `hchi` pins.  On a curve of positive genus those are different parameters, so the two
-halves do not yet co-instantiate — the numeric half of B-5 step 3 is discharged, and the
-*parameter matching* is what replaces it.  That is a strictly better-posed question than
-"reconcile the chart parameter with the threshold" (it names two specific numbers rather than a
-reconciliation), but it is not nothing, and I do not claim otherwise. -/
+**Current reading.**  This theorem still rules out identifying the *minimal named bound*
+`M·δ + g` with the genus on a positive-genus curve.  It is no longer a coupling limit for the
+coverage route: `admissibleCoverageParameter` chooses a larger parameter, and
+`exists_uniform_admissibleCoverageChart_eq_univ` proves the corresponding chart-locus endpoint
+without a genus-degree hypothesis.  The remaining join is representability at that larger
+parameter, not equality of the minimal bound with `g`. -/
 theorem genus_eq_zero_of_ledgerParam_eq_genus {π : Y ⟶ P1 K} [IsFinite π] [IsDominant π]
     (hπ : π ≫ P1.structureMap K = Y ↘ Spec (CommRingCat.of K)) (g : ℕ)
     (hO : Sheaf.h0 (Y.moduleKSheaf K) = 1)

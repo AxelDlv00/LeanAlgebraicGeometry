@@ -7,7 +7,17 @@ import AlgebraicJacobian.Picard.Pic0ChartIndexAdmissible
 import AlgebraicJacobian.Picard.Pic0ChartCoverageThreshold
 
 /-!
-# The chart-index reduction reaches the coverage consumer — so the residue is ONE arithmetic fact
+# The fixed-ledger-parameter reduction reaches the coverage consumer
+
+## Current status (2026-07-30): this is no longer the route endpoint
+
+Every theorem below remains true, but the advertised `IsDivisorDegree C g` residue was created
+by fixing the chart parameter to the minimal ledger bound `M·δ + g`.  Coverage only needs a
+parameter *at least* that bound.  `Pic0ChartCoverageThreshold.admissibleCoverageParameter`
+chooses a larger positive-theta-degree multiple, and
+`exists_uniform_admissibleCoverageChart_eq_univ` proves unconditionally that one resulting
+legal chart locus is all of every `pic⁰` test.  Read the reductions below as the exact cost of
+the fixed-parameter branch, not as an open hypothesis of DAT-B.
 
 `Picard/Pic0ChartIndexAdmissible.lean` reduces the chart layer's `hdeg` binder to
 `IsDivisorDegree C c` ("`c` is the degree of some divisor on `C_k`").  That is a statement about
@@ -23,7 +33,7 @@ exactly that clause from `IsDivisorDegree`, with the twist exponent chosen for u
 
 ## What this buys, stated exactly
 
-Coverage's locus membership at the ledger parameter now rests on **one arithmetic hypothesis**
+Coverage's locus membership at the fixed ledger parameter rests on **one arithmetic hypothesis**
 about the base field — `IsDivisorDegree C (M·δ + g)` — in place of an unexhibited pair `(m, Z)`.
 The splitting/degree-zero inputs are unchanged, and the following are **untouched**: antecedent 1
 (`IsChartUniv`), the pointwise-to-neighbourhood spreading-out that `Pic0ChartCoverageSlice.lean`
@@ -47,7 +57,7 @@ is why: if `M·δ` is a multiple of `d₁`, then `IsDivisorDegree C (M·δ + g)`
 the degree of a divisor — the fibre divisor of the ledger's own `π` — so `M` copies of it shift
 the target by `M·δ` in both directions, with no hypothesis.
 
-So the residue of the coverage route at the ledger parameter is exactly one question:
+So the residue of the fixed-ledger-parameter branch is exactly one question:
 
 > **is the genus `g` the degree of a divisor on `C.left`?**
 
@@ -84,9 +94,10 @@ for a reader to work out:
   the hoisted form the splitting data `L`, `M₀`, `hM₀` stays quantified per point *inside* the
   conclusion.  What is uniform is the chart index alone.
 
-Neither observation is a refutation or a discharge of anything.  It locates the non-uniformity:
-on this route it is in the **splitting data**, not in the chart parameter.  Whether that matters
-to antecedent 2 is `I-1389`'s open question and is untouched here.
+For this historical branch, the non-uniformity is in the **splitting data**, not in the chart
+parameter.  The newer admissible-parameter endpoint eliminates that splitting input internally
+and hoists the chart index across every test and class.  Neither result produces the remaining
+neighbourhood morphism into the chart.
 
 ## Main declarations
 
@@ -99,8 +110,9 @@ to antecedent 2 is `I-1389`'s open question and is untouched here.
 * `AlgebraicGeometry.isDivisorDegree_iff_left` — the predicate transports to `C.left`; the
   base-changed curve is not a second curve.
 * `AlgebraicGeometry.isDegree_ledger_add_iff` — the ledger constants drop out unconditionally.
-* `AlgebraicGeometry.mem_chartLocus_of_ledgerIndex_of_isDegree_genus` — **the endpoint**: coverage's
-  locus membership at the ledger parameter from `IsDivisorDegree C g` alone.
+* `AlgebraicGeometry.mem_chartLocus_of_ledgerIndex_of_isDegree_genus` — the fixed-parameter
+  endpoint: locus membership at the ledger parameter from `IsDivisorDegree C g`; superseded as
+  the live route by `exists_uniform_admissibleCoverageChart_eq_univ`.
 -/
 
 set_option autoImplicit false
