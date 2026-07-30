@@ -194,6 +194,81 @@ theorem subsingleton_pic0Subgroup_forall_iff_overSpec :
   ⟨fun h A _ _ => subsingleton_pic0Subgroup_overSpec_of_forall C h A,
     fun h => subsingleton_pic0Subgroup_of_overSpec C h⟩
 
+/-! ## The field-point quantifier is ring-level too -/
+
+/-- **Every field point of an affine test is `Spec` of an algebra map.**
+
+`pic0Subgroup` is cut out by degree vanishing at every field point `t : overSpec k K ⟶ T`
+(`Pic0Functor.lean:107`), which at a general test is a morphism of schemes.  At an affine test
+it is not: `Spec.preimage` inverts `Spec.map` on morphisms between affine schemes, and the
+triangle over `Spec k` becomes the scalar-tower identity `algebraMap k K = φ ∘ algebraMap k A`
+by `Spec.map_injective`.
+
+Together with the reduction above, this is what makes the reduced hypothesis *entirely*
+ring-level: no scheme, open, or morphism of schemes occurs in it. -/
+theorem exists_algHom_eq_of_overSpec_hom (A K : Type u) [CommRing A] [Field K]
+    [Algebra k A] [Algebra k K] (t : overSpec k K ⟶ overSpec k A) :
+    ∃ phi : A →ₐ[k] K, t = Over.overSpecMap phi := by
+  have hw : t.left ≫ (overSpec k A).hom = (overSpec k K).hom := Over.w t
+  set psi : CommRingCat.of A ⟶ CommRingCat.of K := Spec.preimage t.left with hpsi
+  have hmap : Spec.map psi = t.left := Spec.map_preimage t.left
+  have htower : CommRingCat.ofHom (algebraMap k A) ≫ psi
+      = CommRingCat.ofHom (algebraMap k K) := by
+    apply Spec.map_injective
+    rw [Spec.map_comp, hmap]
+    exact hw
+  have hcom : ∀ r : k, psi.hom (algebraMap k A r) = algebraMap k K r := fun r =>
+    congrArg (fun f => f r) (congrArg CommRingCat.Hom.hom htower)
+  refine ⟨{ __ := psi.hom, commutes' := hcom }, ?_⟩
+  ext : 1
+  exact hmap.symm
+
+/-! ## The reduced hypothesis in plus-class coordinates -/
+
+/-- **The reduced hypothesis transported through the affine comparison**: a *separation*
+statement about the plus classes `PicEtAff C A` of the test algebra.
+
+`picEtAffineEquiv` (`PicEt.lean:235`) is a group isomorphism `picEt C (overSpec k A) ≃*
+PicEtAff C A`, so a degree-zero class of an affine test is a plus class of `A` whose
+`degAt`-pullbacks vanish.  This is the spelling to attack: `PicEtAff C A` is the one-step étale
+plus of the relative Picard group at a commutative ring, with no scheme-level machinery
+between it and the hypothesis. -/
+theorem subsingleton_pic0Subgroup_of_picEtAff_sep
+    (h : ∀ (A : Type u) [CommRing A] [Algebra k A] (q q' : PicEtAff C A),
+      (∀ (K : Type u) (_ : Field K) (_ : Algebra k K) (t : overSpec k K ⟶ overSpec k A),
+        degAt ((picEtAffineEquiv C A).symm q) t = 0) →
+      (∀ (K : Type u) (_ : Field K) (_ : Algebra k K) (t : overSpec k K ⟶ overSpec k A),
+        degAt ((picEtAffineEquiv C A).symm q') t = 0) →
+      q = q')
+    (A : Type u) [CommRing A] [Algebra k A] :
+    Subsingleton (pic0Subgroup C (overSpec k A)) := by
+  refine ⟨fun s t => Subtype.ext ?_⟩
+  refine (picEtAffineEquiv C A).injective ?_
+  refine h A (picEtAffineEquiv C A s.1) (picEtAffineEquiv C A t.1) ?_ ?_
+  · intro K _ _ tt
+    rw [MulEquiv.symm_apply_apply]
+    exact s.2 K tt
+  · intro K _ _ tt
+    rw [MulEquiv.symm_apply_apply]
+    exact t.2 K tt
+
+/-! ## The producer, with the quantifier already reduced -/
+
+/-- **`JacobianData C` from vanishing at affine tests only.**
+
+The composite of the reduction with `jacobianData_of_subsingleton`
+(`Pic0VanishingRoute.lean`).  Its hypothesis mentions no test object: only the degree-zero
+Picard group of the curve at a commutative `k`-algebra.
+
+This is the shape a lane computing `Pic⁰` over rings should target — and note what it does
+*not* need: no atlas, no chart certificate, no coverage clause, no divisor representability,
+no index finiteness, no rational point. -/
+def jacobianData_of_overSpec_subsingleton
+    (h : ∀ (A : Type u) [CommRing A] [Algebra k A],
+      Subsingleton (pic0Subgroup C (overSpec k A))) :
+    JacobianData C :=
+  jacobianData_of_subsingleton C (subsingleton_pic0Subgroup_of_overSpec C h)
+
 end
 
 end AlgebraicGeometry
