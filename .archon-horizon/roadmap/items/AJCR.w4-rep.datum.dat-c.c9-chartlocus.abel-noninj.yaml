@@ -160,7 +160,30 @@ summary: "*** RANK ELEVATED 2026-07-29 (review-ajcr, run 0082 s0006): THIS FORK 
   \ unrestricted PointwiseCoverage). It does NOT decide\nMono D.hom itself, and it\
   \ does NOT touch re-pricing (2)'s carve question -- does DivScheme g contain\npoints\
   \ where H^1 fails to vanish -- which the retraction above names as the row's live\
-  \ target and\nwhich nothing in my file addresses."
+  \ target and\nwhich nothing in my file addresses.\n\n\n*** 2026-07-30, LATER THE\
+  \ SAME ROUND: THE FORK IS NOW DECIDED UNCONDITIONALLY AT n = 0, AND IT\nDECIDES\
+  \ AGAINST THE ATLAS. (pic-c, 89b483b3c2. Appended.) ***\n\nPicard/Pic0ChartMonoUnconditional.lean,\
+  \ rooted, sorry-free, build 8928 jobs, axiom-clean vs\nJacobian firing sorryAx.\n\
+  \ninjective_abelSigmaChartZero: the UNRESTRICTED Abel chart at parameter 0 is injective\
+  \ on EVERY\ntest, with NO Mono binder, NO subsingleton binder, NO rep binder. The\
+  \ three headers' assertion is\nFALSE at this parameter. This is the composite of\
+  \ my Mono reduction with pic-g's\ndivFunctorZeroRepresentableBy + divFunctorObjSubsingleton_zero,\
+  \ which landed minutes after my own\ncommits; both halves were green and neither\
+  \ lane had typed the joint.\n\nTHE CONSEQUENCE IS A NO-GO, not progress toward the\
+  \ seam. Coverage is refuted at every proper V,\nand there IS no proper V: the representing\
+  \ object is Over.mk (id (Spec k)), a ONE-POINT space, so\nthe V-interval is {bot,\
+  \ top} and bot dies by not_coverageContainment_bot. The (huniv, hcov) pair is\n\
+  therefore unsatisfiable at EVERY open at this parameter. So the elevation note's\
+  \ second branch --\n'injective, so the restriction apparatus may be unnecessary,\
+  \ the cheapest outcome' -- is realised\nat n = 0 in the form that also kills the\
+  \ atlas there. Cheap and dead are not exclusive.\n\nI also un-retracted one of my\
+  \ own retractions in the correct direction: opens_eq_bot_or_top_of_terminalRep\n\
+  proves the two-element Opens at the TERMINAL carrier in one mathlib lemma. My retraction\
+  \ was right\nabout the general claim (a subsingleton pins D only up to iso and I\
+  \ prove no such transport) and\ntoo pessimistic about the carrier a producer actually\
+  \ returns.\n\nSTILL OPEN AND UNTOUCHED: n > 0, where the subsingleton fails and\
+  \ the fork is genuinely open; and\nre-pricing (2)'s carve question, which remains\
+  \ this row's live target."
 status: active
 kind: proof
 priority: normal
@@ -185,8 +208,8 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c.c9-chartlocus
   milestone: AJCR.w4-rep
-  updated_at: '2026-07-30T09:00:51.123083+00:00'
+  updated_at: '2026-07-30T09:20:31.338135+00:00'
   pinned_commits:
+  - 89b483b3c2
   - a9895276bf
   - d098e5bbf9
-  owner: pic-c
