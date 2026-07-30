@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.P1SectionsFinite
 import AlgebraicJacobian.Picard.ProjectiveCoordinateChart
+import Mathlib.RingTheory.Adjoin.Basic
 
 /-!
 # Projective coordinates from two aligned Laurent charts
@@ -154,6 +155,87 @@ theorem span_chart1 {A : Type u} [Semiring A] [Module A R1]
   apply Submodule.span_mono
   rintro z ⟨i, rfl⟩
   exact ⟨Sum.inr i, rfl⟩
+
+private lemma adjoin_singleton_eq_top_of_span_pow_eq_top
+    {k A : Type u} [CommRing k] [CommRing A] [Algebra k A] (x : A)
+    (hpow : ⊤ ≤ Submodule.span k (Set.range fun n : ℕ => x ^ n)) :
+    Algebra.adjoin k ({x} : Set A) = ⊤ := by
+  have hle : Submodule.span k (Set.range fun n : ℕ => x ^ n) ≤
+      (Algebra.adjoin k ({x} : Set A)).toSubmodule := by
+    apply Submodule.span_le.mpr
+    rintro _ ⟨n, rfl⟩
+    exact Subalgebra.pow_mem _
+      (Algebra.subset_adjoin (Set.mem_singleton x)) n
+  apply top_unique
+  intro z _
+  exact hle (hpow (by trivial))
+
+private lemma adjoin_eq_top_of_span_eq_top
+    {A B I : Type u} [CommRing A] [CommRing B] [Algebra A B]
+    (aa : I → B) (haa : Submodule.span A (Set.range aa) = ⊤) :
+    Algebra.adjoin A (Set.range aa) = ⊤ := by
+  have hle : Submodule.span A (Set.range aa) ≤
+      (Algebra.adjoin A (Set.range aa)).toSubmodule :=
+    Submodule.span_le.mpr fun _ hz => Algebra.subset_adjoin hz
+  apply top_unique
+  intro z _
+  exact hle (by rw [haa]; trivial)
+
+/-- If the base ring is spanned by powers of `x` and `aa` spans the source as
+a module over the base, the complete first-chart coordinate family generates
+the source as a `k`-algebra. -/
+theorem adjoin_chart0 {k A B : Type u}
+    [CommRing k] [CommRing A] [CommRing B]
+    [Algebra k A] [Algebra A B] [Algebra k B] [IsScalarTower k A B]
+    (d : ℕ) (hd : 0 < d) (x : A) (aa : I → B)
+    (hpow : ⊤ ≤ Submodule.span k (Set.range fun n : ℕ => x ^ n))
+    (haa : Submodule.span A (Set.range aa) = ⊤) :
+    Algebra.adjoin k
+      (Set.range (chart0 d (algebraMap A B x) aa)) = ⊤ := by
+  have hx := adjoin_singleton_eq_top_of_span_pow_eq_top x hpow
+  have haa' := adjoin_eq_top_of_span_eq_top aa haa
+  have hunion : Algebra.adjoin k
+      ((algebraMap A B '' ({x} : Set A)) ∪ Set.range aa) = ⊤ := by
+    rw [← Algebra.adjoin_eq_adjoin_union k ({x} : Set A) (Set.range aa) hx,
+      haa']
+    rfl
+  apply top_unique
+  rw [← hunion]
+  apply Algebra.adjoin_mono
+  rintro z (hz | hz)
+  · obtain ⟨w, rfl, rfl⟩ := hz
+    exact ⟨Sum.inl ⟨1, Nat.succ_lt_succ hd⟩,
+      chart0_one d hd (algebraMap A B w) aa⟩
+  · obtain ⟨i, rfl⟩ := hz
+    exact ⟨Sum.inr i, rfl⟩
+
+/-- If the base ring is spanned by powers of `y` and `bb` spans the source as
+a module over the base, the complete second-chart coordinate family generates
+the source as a `k`-algebra. -/
+theorem adjoin_chart1 {k A B : Type u}
+    [CommRing k] [CommRing A] [CommRing B]
+    [Algebra k A] [Algebra A B] [Algebra k B] [IsScalarTower k A B]
+    (d : ℕ) (hd : 0 < d) (y : A) (bb : I → B)
+    (hpow : ⊤ ≤ Submodule.span k (Set.range fun n : ℕ => y ^ n))
+    (hbb : Submodule.span A (Set.range bb) = ⊤) :
+    Algebra.adjoin k
+      (Set.range (chart1 d (algebraMap A B y) bb)) = ⊤ := by
+  have hy := adjoin_singleton_eq_top_of_span_pow_eq_top y hpow
+  have hbb' := adjoin_eq_top_of_span_eq_top bb hbb
+  have hunion : Algebra.adjoin k
+      ((algebraMap A B '' ({y} : Set A)) ∪ Set.range bb) = ⊤ := by
+    rw [← Algebra.adjoin_eq_adjoin_union k ({y} : Set A) (Set.range bb) hy,
+      hbb']
+    rfl
+  apply top_unique
+  rw [← hunion]
+  apply Algebra.adjoin_mono
+  rintro z (hz | hz)
+  · obtain ⟨w, rfl, rfl⟩ := hz
+    exact ⟨Sum.inl ⟨d - 1, by omega⟩,
+      chart1_one d hd (algebraMap A B w) bb⟩
+  · obtain ⟨i, rfl⟩ := hz
+    exact ⟨Sum.inr i, rfl⟩
 
 /-- The two normalized affine-chart maps into projective space agree after
 restriction to the overlap. This is the gluing equation for the finite-map
