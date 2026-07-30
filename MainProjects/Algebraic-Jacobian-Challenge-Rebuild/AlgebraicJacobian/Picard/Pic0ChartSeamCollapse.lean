@@ -71,8 +71,16 @@ divisors, charts or the curve enters any proof below.
 
 Every statement here is for a **`PUnit`-indexed** atlas.  That is not a convenience: for a
 general `ι` the two antecedents are about *different* morphisms (`f i` versus `Sigma.desc f`),
-`Sigma.desc f` is not a map out of a representable, and the collapse genuinely fails to
-typecheck.  The one-chart case is not a caricature either — `Pic0AtlasFromDivRep.lean` builds a
+and `Sigma.desc f` is not a map out of a representable, so `chartSheafHom` cannot even be
+*formed* on it: the collapse needs the **source** to be a sheaf, and a coproduct of
+representables is not one in general — subcanonicity gives the sheaf property of
+`yoneda.obj X`, not of `∐ i, yoneda.obj (X i)`.  (Measured rather than asserted: an `exact?`
+on `Presheaf.IsSheaf Scheme.zariskiTopology (∐ fun i => yoneda.obj (X i))` finds nothing, which
+is weak evidence of absence on a composite goal but is the right *reason* — the coproduct
+presheaf is a sheaf only after sheafification, and that is a different object from the one the
+seam's antecedent 2 is stated about.)
+
+The one-chart case is not a caricature either — `Pic0AtlasFromDivRep.lean` builds a
 one-chart atlas, and `IsChartUniv`, `RestrictedChartFibre` and `restrictedChartFibre_top_iff`
 are all stated for one.  But a lane must not read `chartIso_of_seam` as a statement about
 `mixedParamChart` at arbitrary `ι`.  `isLocallySurjective_oneChart` below is the bridge that
