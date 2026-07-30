@@ -827,13 +827,25 @@ theorem quotientGlueData_chart_preimage_opensRange
     (quotientGlueData ρ).ι j ⁻¹ᵁ
         ((quotientGlueData ρ).ι i).opensRange =
       (quotientOverlapι ρ j i).opensRange := by
-  let D := quotientGlueData ρ
-  have h := D.vPullbackConeIsLimit j i
-  change D.ι j ⁻¹ᵁ (D.ι i).opensRange = (D.f j i).opensRange
+  have hp := IsPullback.of_isLimit
+    ((quotientGlueData ρ).vPullbackConeIsLimit j i)
+  change (quotientGlueData ρ).ι j ⁻¹ᵁ
+      ((quotientGlueData ρ).ι i).opensRange =
+    ((quotientGlueData ρ).f j i).opensRange
   rw [← Scheme.Hom.opensRange_pullbackFst]
-  rw [← h.isoPullback_hom_fst]
-  rw [Scheme.Hom.opensRange_comp, Scheme.Hom.opensRange_of_isIso]
-  simp
+  have hfst := hp.isoPullback_hom_fst
+  change hp.isoPullback.hom ≫
+      pullback.fst ((quotientGlueData ρ).ι j) ((quotientGlueData ρ).ι i) =
+    (quotientGlueData ρ).f j i at hfst
+  have hrange :
+      (hp.isoPullback.hom ≫
+        pullback.fst ((quotientGlueData ρ).ι j) ((quotientGlueData ρ).ι i)).opensRange =
+      (pullback.fst ((quotientGlueData ρ).ι j)
+        ((quotientGlueData ρ).ι i)).opensRange := by
+    rw [Scheme.Hom.opensRange_comp, Scheme.Hom.opensRange_of_isIso]
+    simp
+  rw [← hrange]
+  congr 1
 
 /-- The scheme obtained by gluing all stable affine invariant-ring quotient
 charts. -/
@@ -855,20 +867,28 @@ theorem quotientChartProjection_preimage_opensRange
     quotientChartProjection ρ j ⁻¹ᵁ
         ((quotientGlueData ρ).ι i).opensRange =
       j.U.ι ⁻¹ᵁ i.U := by
-  letI := ρ.sectionsMulSemiringAction j.stable
-  letI := SemilinearGalAction.sectionsAlgebra f j.U
-  letI := SemilinearGalAction.sectionsAlgebraK (K := K) f j.U
-  letI := SemilinearGalAction.sections_isScalarTower (K := K) f j.U
-  letI := ρ.isSemilinear_sections j.stable
   unfold quotientChartProjection
-  rw [Scheme.Hom.comp_preimage, quotientGlueData_chart_preimage_opensRange]
-  unfold quotientOverlapι quotientOverlap quotientChart
-  rw [Scheme.Opens.opensRange_ι]
-  rw [SemilinearGalAction.stableAffineQuotientMap_preimage_quotientOpen
-    ρ j.stable j.affine inf_le_left (inf_stable ρ j i)]
-  simp only [Scheme.Hom.preimage_inf]
-  rw [Scheme.Opens.preimage_self]
-  exact top_inf_eq
+  rw [Scheme.Hom.comp_preimage]
+  calc
+    _ = SemilinearGalAction.stableAffineQuotientMap
+          ρ j.stable j.affine ⁻¹ᵁ
+        (quotientOverlapι ρ j i).opensRange :=
+      congrArg
+        (fun U ↦ SemilinearGalAction.stableAffineQuotientMap
+          ρ j.stable j.affine ⁻¹ᵁ U)
+        (quotientGlueData_chart_preimage_opensRange ρ i j)
+    _ = _ := by
+      letI := ρ.sectionsMulSemiringAction j.stable
+      letI := SemilinearGalAction.sectionsAlgebra f j.U
+      letI := SemilinearGalAction.sectionsAlgebraK (K := K) f j.U
+      letI := SemilinearGalAction.sections_isScalarTower (K := K) f j.U
+      letI := ρ.isSemilinear_sections j.stable
+      unfold quotientOverlapι quotientOverlap quotientChart
+      rw [Scheme.Opens.opensRange_ι]
+      rw [SemilinearGalAction.stableAffineQuotientMap_preimage_quotientOpen
+        ρ j.stable j.affine inf_le_left (inf_stable ρ j i)]
+      simp only [Scheme.Hom.preimage_inf]
+      simp
 
 /-- The quotient projection of a stable affine chart lies over `Spec K`. -/
 @[reassoc]
@@ -958,22 +978,16 @@ theorem restrict_act_hom_stableAffineQuotientMap
   let W := quotientChartTopOpen ρ i
   have hfac : q ≫ W.ι =
       SemilinearGalAction.stableAffineQuotientMap ρ i.stable i.affine := by
+    dsimp only [q, W, quotientChartTopOpen, quotientChart]
     simpa only [Scheme.homOfLE_rfl, Category.id_comp] using
       (SemilinearGalAction.stableAffineQuotientMapRestrict_fac
         ρ i.stable i.affine le_rfl i.stable)
   have hinv := GaloisQuotientWitnessWithProjection.act_hom_comp_quotientMap
     (quotientChartTopWitness ρ i) gamma
-  change ((ρ.restrict i.stable).act gamma).hom ≫ _ = _ at hinv
-  calc
-    ((ρ.restrict i.stable).act gamma).hom ≫
-          SemilinearGalAction.stableAffineQuotientMap ρ i.stable i.affine =
-        ((ρ.restrict i.stable).act gamma).hom ≫ (q ≫ W.ι) :=
-      congrArg (fun z ↦ ((ρ.restrict i.stable).act gamma).hom ≫ z) hfac.symm
-    _ = (((ρ.restrict i.stable).act gamma).hom ≫ q) ≫ W.ι :=
-      (Category.assoc _ _ _).symm
-    _ = q ≫ W.ι := congrArg (fun z ↦ z ≫ W.ι) hinv
-    _ = SemilinearGalAction.stableAffineQuotientMap
-        ρ i.stable i.affine := hfac
+  change ((ρ.restrict i.stable).act gamma).hom ≫ q = q at hinv
+  rw [← hfac]
+  change (((ρ.restrict i.stable).act gamma).hom ≫ q) ≫ W.ι = q ≫ W.ι
+  exact congrArg (fun z ↦ z ≫ W.ι) hinv
 
 /-- The local projection into the glued quotient is Galois-invariant. -/
 @[reassoc]
@@ -1203,6 +1217,7 @@ theorem sourceOpenCover_f_gluedQuotientProjection
     i.U.ι ≫ gluedQuotientProjection ρ = quotientChartProjection ρ i := by
   exact (sourceOpenCover ρ).ι_glueMorphisms _ _ i
 
+set_option backward.isDefEq.respectTransparency false in
 /-- The global projection to the glued quotient is Galois-invariant. -/
 @[reassoc]
 theorem act_hom_gluedQuotientProjection
@@ -1212,11 +1227,14 @@ theorem act_hom_gluedQuotientProjection
       gluedQuotientProjection ρ := by
   apply (sourceOpenCover ρ).hom_ext
   intro i
-  simp only [Category.assoc]
-  rw [← SemilinearGalAction.actRes_ι]
+  change StableAffineOpen ρ at i
+  change (i.U.ι ≫ (ρ.act gamma).hom) ≫ gluedQuotientProjection ρ =
+    i.U.ι ≫ gluedQuotientProjection ρ
+  rw [← SemilinearGalAction.actRes_ι ρ i.stable gamma]
   rw [Category.assoc, sourceOpenCover_f_gluedQuotientProjection]
-  rw [restrict_act_hom_quotientChartProjection]
-  exact sourceOpenCover_f_gluedQuotientProjection ρ i
+  change ((ρ.restrict i.stable).act gamma).hom ≫
+    quotientChartProjection ρ i = quotientChartProjection ρ i
+  exact restrict_act_hom_quotientChartProjection ρ i gamma
 
 /-- The global quotient projection pulls a glued quotient chart back to the
 stable affine source chart from which it was built. -/
@@ -1345,20 +1363,21 @@ theorem quotientChartBaseChangeToGlued_opensRange
       pullback.fst (gluedQuotientMap ρ)
           (Spec.map (CommRingCat.ofHom (algebraMap K L))) ⁻¹ᵁ
         ((quotientGlueData ρ).ι i).opensRange := by
+  unfold gluedQuotient
   apply Opens.ext
   rw [Scheme.Hom.coe_opensRange]
   change Set.range (quotientChartBaseChangeToGlued ρ i) =
     (pullback.fst (gluedQuotientMap ρ)
       (Spec.map (CommRingCat.ofHom (algebraMap K L)))).base ⁻¹'
-      (((quotientGlueData ρ).ι i).opensRange : Set _)
+      Set.range ((quotientGlueData ρ).ι i)
   unfold quotientChartBaseChangeToGlued pullbackBaseChange
   rw [Scheme.Pullback.range_map]
-  rw [Scheme.Hom.coe_opensRange]
   have hid : Function.Surjective
       (𝟙 (Spec (CommRingCat.of L)) :
         Spec (CommRingCat.of L) ⟶ Spec (CommRingCat.of L)) :=
     fun x ↦ ⟨x, rfl⟩
   rw [Set.range_eq_univ.mpr hid, Set.preimage_univ, Set.inter_univ]
+  rfl
 
 /-- The inverse image of a base-changed quotient chart under the global
 base-change morphism is the original stable affine source chart. -/
@@ -1461,9 +1480,10 @@ theorem quotientChartBaseChange_isPullback
   apply IsOpenImmersion.isPullback
   · exact sourceOpenCover_f_gluedQuotientBaseChangeLift ρ i
   · rw [gluedQuotientBaseChangeLift_preimage_opensRange]
-    exact Scheme.Opens.opensRange_ι i.U
+    exact (Scheme.Opens.opensRange_ι i.U).symm
 
-/-- The acted scheme is the base change to `Spec L` of its glued quotient. -/
+/- The acted scheme is the base change to `Spec L` of its glued quotient. -/
+set_option backward.isDefEq.respectTransparency false in
 instance gluedQuotientBaseChangeLift_isIso
     [FiniteDimensional K L] [IsGalois K L] [HasStableAffineCover K L ρ] :
     IsIso (gluedQuotientBaseChangeLift ρ) := by
@@ -1471,12 +1491,20 @@ instance gluedQuotientBaseChangeLift_isIso
     (P := MorphismProperty.isomorphisms Scheme)
     (gluedQuotientBaseChangeOpenCover ρ)
   intro i
+  change StableAffineOpen ρ at i
   change IsIso
     (pullback.snd (gluedQuotientBaseChangeLift ρ)
       (quotientChartBaseChangeToGlued ρ i))
-  rw [← (quotientChartBaseChange_isPullback ρ i).flip.isoPullback_hom_snd]
+  let h := (quotientChartBaseChange_isPullback ρ i).flip
+  change MorphismProperty.isomorphisms Scheme
+    (pullback.snd (gluedQuotientBaseChangeLift ρ)
+      (quotientChartBaseChangeToGlued ρ i))
+  rw [← (MorphismProperty.isomorphisms Scheme).cancel_left_of_respectsIso
+    h.isoPullback.hom]
+  rw [h.isoPullback_hom_snd]
   infer_instance
 
+set_option backward.isDefEq.respectTransparency false in
 /-- The inverse global base-change isomorphism intertwines the given action
 with the canonical action on the base change. -/
 theorem gluedQuotientBaseChangeLift_isEquivariant
@@ -1490,6 +1518,7 @@ theorem gluedQuotientBaseChangeLift_isEquivariant
     exact act_hom_gluedQuotientProjection ρ gamma
   · simp only [Category.assoc, gluedQuotientBaseChangeLift_snd,
       pullbackSemilinearGalAction_act_hom, pullbackGalMap_snd]
+    rw [← Category.assoc, gluedQuotientBaseChangeLift_snd]
     exact ρ.compat gamma
 
 /-- The global base-change isomorphism, oriented from the base-changed glued
@@ -1506,6 +1535,7 @@ theorem gluedQuotientBaseChangeIso_inv
     (gluedQuotientBaseChangeIso ρ).inv =
       gluedQuotientBaseChangeLift ρ := rfl
 
+set_option backward.isDefEq.respectTransparency false in
 /-- The global base-change isomorphism lies over `Spec L`. -/
 @[reassoc]
 theorem gluedQuotientBaseChangeIso_hom_f
@@ -1513,21 +1543,58 @@ theorem gluedQuotientBaseChangeIso_hom_f
     (gluedQuotientBaseChangeIso ρ).hom ≫ f =
       pullback.snd (gluedQuotientMap ρ)
         (Spec.map (CommRingCat.ofHom (algebraMap K L))) := by
-  rw [← cancel_epi (gluedQuotientBaseChangeIso ρ).inv]
-  simp only [Category.assoc, Iso.inv_hom_id_assoc,
-    gluedQuotientBaseChangeIso_inv, gluedQuotientBaseChangeLift_snd]
+  apply (cancel_epi (gluedQuotientBaseChangeIso ρ).inv).1
+  calc
+    (gluedQuotientBaseChangeIso ρ).inv ≫
+          ((gluedQuotientBaseChangeIso ρ).hom ≫ f) =
+        ((gluedQuotientBaseChangeIso ρ).inv ≫
+          (gluedQuotientBaseChangeIso ρ).hom) ≫ f :=
+      (Category.assoc _ _ _).symm
+    _ = f := (gluedQuotientBaseChangeIso ρ).inv_hom_id_assoc f
+    _ = gluedQuotientBaseChangeLift ρ ≫
+        pullback.snd (gluedQuotientMap ρ)
+          (Spec.map (CommRingCat.ofHom (algebraMap K L))) :=
+      (gluedQuotientBaseChangeLift_snd ρ).symm
+    _ = (gluedQuotientBaseChangeIso ρ).inv ≫
+        pullback.snd (gluedQuotientMap ρ)
+          (Spec.map (CommRingCat.ofHom (algebraMap K L))) := by
+      rw [gluedQuotientBaseChangeIso_inv]
 
+set_option backward.isDefEq.respectTransparency false in
 /-- The global base-change isomorphism is Galois-equivariant. -/
 theorem gluedQuotientBaseChangeIso_isEquivariant
     [FiniteDimensional K L] [IsGalois K L] [HasStableAffineCover K L ρ] :
     (pullbackSemilinearGalAction K L (gluedQuotientMap ρ)).IsEquivariant ρ
       (gluedQuotientBaseChangeIso ρ).hom := by
   intro gamma
-  rw [← cancel_epi (gluedQuotientBaseChangeIso ρ).inv]
-  simp only [Category.assoc, Iso.inv_hom_id, Category.id_comp,
-    gluedQuotientBaseChangeIso_inv]
-  rw [← Category.assoc, ← gluedQuotientBaseChangeLift_isEquivariant]
-  simp
+  apply (cancel_epi (gluedQuotientBaseChangeIso ρ).inv).1
+  have h := gluedQuotientBaseChangeLift_isEquivariant ρ gamma
+  have h' : (ρ.act gamma).hom ≫ (gluedQuotientBaseChangeIso ρ).inv =
+      (gluedQuotientBaseChangeIso ρ).inv ≫
+        ((pullbackSemilinearGalAction K L (gluedQuotientMap ρ)).act gamma).hom := by
+    simpa only [gluedQuotientBaseChangeIso_inv] using h
+  calc
+    (gluedQuotientBaseChangeIso ρ).inv ≫
+          (((pullbackSemilinearGalAction K L
+            (gluedQuotientMap ρ)).act gamma).hom ≫
+            (gluedQuotientBaseChangeIso ρ).hom) =
+        ((gluedQuotientBaseChangeIso ρ).inv ≫
+          ((pullbackSemilinearGalAction K L
+            (gluedQuotientMap ρ)).act gamma).hom) ≫
+            (gluedQuotientBaseChangeIso ρ).hom :=
+      (Category.assoc _ _ _).symm
+    _ = ((ρ.act gamma).hom ≫
+          (gluedQuotientBaseChangeIso ρ).inv) ≫
+            (gluedQuotientBaseChangeIso ρ).hom :=
+      congrArg (fun z => z ≫ (gluedQuotientBaseChangeIso ρ).hom) h'.symm
+    _ = (ρ.act gamma).hom := by
+      rw [Category.assoc, Iso.inv_hom_id, Category.comp_id]
+    _ = ((gluedQuotientBaseChangeIso ρ).inv ≫
+          (gluedQuotientBaseChangeIso ρ).hom) ≫ (ρ.act gamma).hom := by
+      rw [Iso.inv_hom_id, Category.id_comp]
+    _ = (gluedQuotientBaseChangeIso ρ).inv ≫
+        ((gluedQuotientBaseChangeIso ρ).hom ≫
+          (ρ.act gamma).hom) := Category.assoc _ _ _
 
 /-- The glued quotient as an object over `Spec K`, in the exact category used
 by Picard representability. -/
