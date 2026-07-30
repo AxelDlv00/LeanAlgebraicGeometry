@@ -29,9 +29,16 @@ of the atlas are not the representing objects.  `mixedParamChart` is
 > `example … (V : (divSchemeOver …).left.Opens) : CompactSpace (V : Scheme) := by infer_instance`
 
 fails.  Compactness does not pass to open subspaces, so the sentence three sites carry is true of
-`divSchemeOver` and false of the object the hypothesis is about.  Since `V ≠ ⊤` is forced — the
-`hf` certificate is false for the Abel chart at `V = ⊤` (`Pic0ChartPair.lean:134`) — the gap is
-not a corner case: **every** atlas the seam can use has proper chart opens.
+`divSchemeOver` and false of the object the hypothesis is about.
+
+**How large the gap is depends on a claim this tree does not prove, and an earlier version of this
+header asserted it as fact.**  That version said `V ≠ ⊤` is *forced*, because "the `hf` certificate
+is false for the Abel chart at `V = ⊤`", citing `Pic0ChartPair.lean:134`.  That line is a
+docstring assertion, not a theorem: there is **no** `¬ IsOpenImmersion.presheaf` declaration
+anywhere in this project (measured by search, not by grep for one spelling).  So the honest form is
+weaker — for `V = ⊤` the ambient instance would suffice and the gap would be invisible, and nothing
+in Lean rules that `V` out.  What *is* certain is that the lemma below is needed for a general `V`,
+which is what `mixedParamChart` quantifies over; whether `V = ⊤` is admissible is open.
 
 ## What closes it, and it is not a new hypothesis
 
@@ -57,18 +64,26 @@ subtraction from the three-route picture — the class route's `hcl`
 finite atlas — and it is **not** a producer of `hcpt` for the classical class-indexed atlas, which
 has no finiteness.
 
-**AND FINITENESS IS NOT CHEAP, which is the part a reader would otherwise get wrong here.**  A
-`PUnit`-indexed atlas is `Finite` and elaborates against this file's assembly (probed), so it
-looks as though finiteness could be met by simply taking one chart.  It cannot be met *that* way:
-per inbox `I-1389`, single-index coverage implies **unrestricted one-chart coverage** through the
-landed converse `pointwise_of_pointwise_restrictChart`
-(`Pic0ChartAtlasCoupling.lean`), and one-chart coverage is the configuration the heterogeneous
-atlas exists to avoid needing (`Pic0ChartCoveragePointwise.lean`,
-`Pic0ChartCoverageIndexSlack.lean`, `Pic0ChartAtlasParamFree.lean`).  So a finite atlas is not
-obtained by shrinking the index: the honest reading is that this file moves the whole cost of
-`hcpt` onto `Finite ι`, and that `Finite ι` is coupled to coverage rather than free.  Neither
-those two files nor `I-1389` *proves* the non-uniformity they assert, so whether a finite atlas
-covers is open in both directions.
+**AND FINITENESS IS NOT CHEAP FOR THE ASSEMBLY — but that caveat is about the assembly, NOT about
+the compactness lemma, and an earlier version of this header attached it to both.**  A
+`PUnit`-indexed atlas is `Finite` and elaborates against `jacobianDataOfFiniteMixedParamCharts`
+(probed), so it looks as though finiteness could be met by simply taking one chart.  For the
+*assembly* it cannot be met that way: per inbox `I-1389`, single-index coverage implies
+**unrestricted one-chart coverage** through the landed converse
+`pointwise_of_pointwise_restrictChart` (`Pic0ChartAtlasCoupling.lean`), and one-chart coverage is
+the configuration the heterogeneous atlas exists to avoid needing
+(`Pic0ChartCoveragePointwise.lean`, `Pic0ChartCoverageIndexSlack.lean`,
+`Pic0ChartAtlasParamFree.lean`).  Neither those files nor `I-1389` *proves* the non-uniformity they
+assert, so whether a finite atlas covers is open in both directions.
+
+**The compactness lemma is coverage-free, which is stronger than the caveat suggested** (`I-1430`).
+`compactSpace_glued_of_finite_mixedParamChart` carries the `IsLocallySurjective` instance binder
+only to match the assembly's shape: the binder is **idle**, and the statement compiles with it
+deleted (measured).  `glueData` does not depend on coverage — mathlib introduces that instance
+only at `representableBy` (`Sites/Representability.lean`).  So `hcpt` costs `Finite ι` *and
+nothing about coverage*; the I-1389 coupling bites when the assembly consumes coverage for `rep`,
+not here.  The binder is kept so that a consumer holding the assembly's hypotheses can apply this
+lemma without reshaping them, and this paragraph exists so nobody prices the idle binder as a cost.
 
 No claim is made here that a finite atlas exists.
 
@@ -82,6 +97,9 @@ untouched, and this file produces no `JacobianData` at any curve.
 * `AlgebraicGeometry.isNoetherian_divSchemeOver` — and noetherian, with `compactSpace_divScheme`.
 * `AlgebraicGeometry.compactSpace_isOpen_divSchemeOver` — **the step the three sites skipped**:
   every open of the divisor scheme is a compact space.
+* `AlgebraicGeometry.compactSpace_of_representableBy` — and it is a property of the **functor**:
+  compactness of a representing object transports between representations, the companion of
+  `locallyOfFiniteType_of_representableBy`.
 * `AlgebraicGeometry.compactSpace_glued_of_finite_mixedParamChart` — `hcpt` for a finite
   mixed-parameter atlas at the divisor-representability carrier, with **no** `hcl` and no Abel
   morphism.
@@ -118,10 +136,15 @@ variable (k : Type u) [Field k]
 isLocallyNoetherian` transports.  Nothing about the curve `X` is used beyond what the divisor
 scheme's own construction needs.
 
-Spelled with `@` and the named instance rather than through `inferInstance`, because the
-`LocallyOfFiniteType` binder does **not** synthesise when it is elaborated as an instance goal
-inside a tactic block (`haveI … := inferInstance` fails at exactly this position) while the
-named instance applies directly. -/
+Spelled with `@` and the named instance because `locallyOfFiniteType_divSchemeOverHom` takes `k`
+*explicitly*, so it is not found by `inferInstance` at an implicit `k`.
+
+**An earlier version of this docstring gave a different and FALSE reason** — that the
+`LocallyOfFiniteType` binder "does not synthesise inside a tactic block". It does:
+`exact LocallyOfFiniteType.isLocallyNoetherian (divSchemeOver …).hom` compiles in tactic mode
+(measured, `I-1432`). The binder that fails to synthesise where this lemma is *consumed* is
+`IsLocallyNoetherian`, which is why the consumers below introduce it with `haveI`. Corrected
+rather than deleted, because a false justification in a docstring reads as audited. -/
 theorem isLocallyNoetherian_divSchemeOver {X : Scheme.{u}} [X.Over (Spec (CommRingCat.of k))]
     [SmoothOfRelativeDimension 1 (X ↘ Spec (CommRingCat.of k))] [IsIntegral X]
     (A B : X.CurveDivisor) (n r₁ r₂ : ℕ)
@@ -132,7 +155,12 @@ theorem isLocallyNoetherian_divSchemeOver {X : Scheme.{u}} [X.Over (Spec (CommRi
     (locallyOfFiniteType_divSchemeOverHom k A B n r₁ r₂ b₁ b₂) inferInstance
 
 /-- **The divisor scheme is noetherian**: locally noetherian (above) and compact
-(`compactSpace_divScheme`, DD-Q). -/
+(`compactSpace_divScheme`, DD-Q).
+
+Only the `IsLocallyNoetherian` parent needs introducing — `compactSpace_divScheme` is already an
+instance, so `constructor` finds the second field on its own.  Kept as a named theorem because
+`IsNoetherian` is the hypothesis a reader expects behind "every open is compact", even though the
+payload below no longer routes through it. -/
 theorem isNoetherian_divSchemeOver {X : Scheme.{u}} [X.Over (Spec (CommRingCat.of k))]
     [SmoothOfRelativeDimension 1 (X ↘ Spec (CommRingCat.of k))] [IsIntegral X]
     (A B : X.CurveDivisor) (n r₁ r₂ : ℕ)
@@ -140,8 +168,6 @@ theorem isNoetherian_divSchemeOver {X : Scheme.{u}} [X.Over (Spec (CommRingCat.o
     (b₂ : Module.Basis (Fin r₂) k ↥(divisorSections k (A + B) ⊤)) :
     IsNoetherian (divSchemeOver k A B n r₁ r₂ b₁ b₂).left := by
   haveI := isLocallyNoetherian_divSchemeOver k A B n r₁ r₂ b₁ b₂
-  haveI : CompactSpace (divSchemeOver k A B n r₁ r₂ b₁ b₂).left :=
-    compactSpace_divScheme k A B n r₁ r₂ b₁ b₂
   constructor
 
 /-- **THE STEP THREE SITES SKIPPED**: every open subscheme of the divisor scheme is a compact
@@ -149,12 +175,19 @@ space.
 
 This is what the atlas's per-chart hypothesis actually asks for, and it is *not* the instance
 `CompactSpace (divSchemeOver …).left` that `Pic0AtlasFiniteType.lean`'s `Discharged` section
-exhibits: compactness does not pass to open subspaces.  It holds here because the divisor scheme
-is noetherian, so **every** subset of it is compact (`NoetherianSpace.isCompact`).
+exhibits: compactness does not pass to open subspaces.
+
+**It needs only LOCAL noetherianity**, not `IsNoetherian`: on a locally noetherian scheme the
+inclusion of an open is quasi-compact (mathlib's `quasiCompact_of_noetherianSpace_source` via
+`IsLocallyNoetherian`'s affine-local noetherian spaces, stacks 01OX), and
+`QuasiCompact.compactSpace_of_compactSpace V.ι` then transports compactness *down* from the
+ambient.  An earlier proof here went through `IsNoetherian` → `NoetherianSpace` →
+`NoetherianSpace.isCompact`, two hops longer, and made the lemma look as though it needed
+compactness of the ambient scheme as a hypothesis rather than as an instance already in scope
+(`I-1431`).
 
 Stated for an arbitrary `V`, with no `V ≠ ⊤` or affineness hypothesis, because the chart opens of
-the atlas are arbitrary — `mixedParamChart` takes `V : ∀ i, (D i).left.Opens` unconstrained, and
-the `hf` certificate forces `V ≠ ⊤` rather than any positive description. -/
+the atlas are arbitrary — `mixedParamChart` takes `V : ∀ i, (D i).left.Opens` unconstrained. -/
 theorem compactSpace_isOpen_divSchemeOver {X : Scheme.{u}} [X.Over (Spec (CommRingCat.of k))]
     [SmoothOfRelativeDimension 1 (X ↘ Spec (CommRingCat.of k))] [IsIntegral X]
     (A B : X.CurveDivisor) (n r₁ r₂ : ℕ)
@@ -162,14 +195,55 @@ theorem compactSpace_isOpen_divSchemeOver {X : Scheme.{u}} [X.Over (Spec (CommRi
     (b₂ : Module.Basis (Fin r₂) k ↥(divisorSections k (A + B) ⊤))
     (V : (divSchemeOver k A B n r₁ r₂ b₁ b₂).left.Opens) :
     CompactSpace (V : Scheme.{u}) := by
-  haveI := isNoetherian_divSchemeOver k A B n r₁ r₂ b₁ b₂
-  haveI : TopologicalSpace.NoetherianSpace
-      (divSchemeOver k A B n r₁ r₂ b₁ b₂).left := inferInstance
-  exact isCompact_iff_compactSpace.mp
-    (TopologicalSpace.NoetherianSpace.isCompact
-      (V.carrier : Set (divSchemeOver k A B n r₁ r₂ b₁ b₂).left))
+  haveI := isLocallyNoetherian_divSchemeOver k A B n r₁ r₂ b₁ b₂
+  exact QuasiCompact.compactSpace_of_compactSpace V.ι
 
 end Noetherian
+
+/-! ## The per-chart half belongs to the FUNCTOR, not to `divSchemeOver`
+
+The section above is stated at `divSchemeOver`, which is where the divisor-representability lane's
+producers land — but that carrier is not where the property lives, and `Pic0AtlasFiniteType.lean`
+had already made exactly this argument for the *other* finiteness input:
+`locallyOfFiniteType_of_representableBy` proves `hD` transports between any two representations of
+`divFunctor C π n`, with a header paragraph on why a carrier-specific argument is the worse one.
+
+Compactness transports the same way and for the same reason, so the same paragraph applies.
+Recorded after an audit observed that this file's correction had inherited the narrowness of the
+claim it was correcting (`I-1431`, `I-1433`): the wrong-object defect was fixed at one carrier,
+while the fix's own scope went unexamined. -/
+
+section Transport
+
+variable {k : Type u} [Field k] {C : Over (Spec (.of k))}
+variable {π : C.left ⟶ P1 k} [IsAffineHom π]
+
+variable (C π) in
+/-- **Compactness of a representing object is a property of the divisor functor.**
+
+If `divFunctor C π n` is represented by `D` and by `D'`, and `D'.left` is compact, so is `D.left`.
+Representing objects are isomorphic over the base (`Functor.RepresentableBy.uniqueUpToIso`), the
+component `e.hom.left` is then an isomorphism of schemes, and compactness transports along the
+induced homeomorphism.
+
+The companion of `locallyOfFiniteType_of_representableBy` (`Pic0AtlasFiniteType.lean`), and stated
+for the same reason: a producer of `rep` does not get to choose a representing object that fails
+the per-chart half.  Uses none of the curve's geometry — smoothness, properness and geometric
+irreducibility are not in scope in this section at all, which is the evidence that this is a
+statement about representability rather than about the divisor scheme. -/
+theorem compactSpace_of_representableBy {n : ℕ} {D D' : Over (Spec (.of k))}
+    (rep : (divFunctor C π n).RepresentableBy D)
+    (rep' : (divFunctor C π n).RepresentableBy D')
+    (h : CompactSpace D'.left) :
+    CompactSpace D.left := by
+  have e := rep.uniqueUpToIso rep'
+  have hiso : IsIso e.hom.left :=
+    ⟨e.inv.left, by rw [← Over.comp_left, e.hom_inv_id]; rfl,
+      by rw [← Over.comp_left, e.inv_hom_id]; rfl⟩
+  haveI := h
+  exact (Scheme.homeoOfIso (asIso e.hom.left)).symm.compactSpace
+
+end Transport
 
 /-! ## `hcpt` at a finite atlas over the divisor-representability carrier -/
 

@@ -123,11 +123,12 @@ representing objects — `mixedParamChart` is `restrictChart … (V i)`, whose s
 to open subspaces, and `CompactSpace (V : Scheme)` for `V` an open of `divSchemeOver` is **not**
 an instance (measured: `infer_instance` fails).  The `Discharged` example below is true of
 `divSchemeOver` and is not the hypothesis `Scheme.OpenCover.compactSpace` consumes.  What makes
-the per-chart half genuinely free is *noetherianity* of the divisor scheme — locally of finite
-type over the noetherian base `Spec k`, plus `compactSpace_divScheme`, so every subset is compact
+the per-chart half genuinely free is *local noetherianity* — the structure morphism is locally of
+finite type over `Spec k`, so the inclusion of an open is quasi-compact
 (`compactSpace_isOpen_divSchemeOver`).  The conclusion of that paragraph survives; its reason did
-not.  Since `hf` is false at `V = ⊤` (`Pic0ChartPair.lean`), the gap is not a corner case: every
-usable atlas has proper chart opens.
+not.  And the property belongs to the *functor*, not to this carrier:
+`compactSpace_of_representableBy` there is the companion of
+`locallyOfFiniteType_of_representableBy` below.
 
 What is removed is a fourth undischarged antecedent — proved nowhere, though the `dat-glue` row
 did name it — so that discharging the three tracked antecedents now genuinely reaches the datum
