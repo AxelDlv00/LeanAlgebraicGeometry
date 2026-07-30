@@ -1,1 +1,1 @@
-The instances work with the explicit form but not through the `abbrev AA`. Let me inline it.
+The instance succeeds at line 19 but not at 24. Likely the lakefile's `maxSynthPendingDepth` isn't applied to `lake env lean`.
