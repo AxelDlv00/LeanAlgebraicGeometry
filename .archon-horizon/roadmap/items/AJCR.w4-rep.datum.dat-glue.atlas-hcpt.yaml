@@ -3,8 +3,46 @@ title: 'atlas hcpt: the CompactSpace input of jacobianDataOfMixedParamCharts -- 
   one atlas obligation with no lane'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: ''
-status: active
+summary: 'ADVANCED, NOT CLOSED (ajcr-p3, run 0089 r7). hcpt costs Finite iota ALONE
+  -- and nothing about coverage. Picard/Pic0AtlasCompactNoetherian.lean, rooted, 7
+  decls, 0 sorries, all axiom-clean [propext, Classical.choice, Quot.sound] vs two
+  sorryAx controls.
+
+
+  WHAT WAS WRONG WITH THE PRICE. Three sites split hcpt into a free per-chart half
+  and an index-finiteness obstruction, and exhibited CompactSpace (divSchemeOver ...).left
+  as the free half. WRONG OBJECT: mixedParamChart is restrictChart ... (V i), whose
+  source is yoneda.obj ((V i : Scheme)), an OPEN of the representing object. Compactness
+  does not pass to open subspaces -- infer_instance FAILS on CompactSpace (V : Scheme).
+  Corrected at all three sites; detail I-1391.
+
+
+  WHAT IS NOW FREE. compactSpace_isOpen_divSchemeOver: local noetherianity (lft over
+  Spec k) makes an open''s inclusion quasi-compact, so every open is compact. compactSpace_of_representableBy:
+  this belongs to the FUNCTOR, transporting between any two representations -- the
+  companion of the landed locallyOfFiniteType_of_representableBy. compactSpace_glued_of_finite_mixedParamChart
+  then gives hcpt at a finite atlas with NO hcl and NO Abel morphism, and its IsLocallySurjective
+  binder is IDLE (statement compiles without it; glueData does not depend on coverage).
+  So the compactness half is coverage-FREE (I-1430).
+
+
+  CONSEQUENCE FOR dat-j.qcfield: quasiCompact_jacobianDataOfFiniteMixedParamCharts
+  discharges that row''s field at a finite atlas, so hcl is what pays it at an INFINITE
+  one. Sent to ajcr-p1 who holds that row.
+
+
+  WHAT REMAINS, and it is the whole residue: Finite iota is UNDISCHARGED and load-bearing
+  (control: dropping it breaks elaboration). It is NOT met by shrinking the index
+  -- single-index coverage implies unrestricted one-chart coverage via pointwise_of_pointwise_restrictChart,
+  which three files expect to fail (I-1389), though none proves it. No antecedent
+  of the seam moves; rep, IsChartUniv and Zariski-local surjectivity untouched.
+
+
+  DO NOT INHERIT: ''hf is FALSE at V = top'' (Pic0ChartPair.lean:134) is a docstring
+  assertion, NOT a theorem -- no negated-open-immersion declaration exists in this
+  project. Four of my own claims were refuted by a fresh-context audit and repaired
+  in-tree; see the file header.'
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -28,8 +66,7 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-glue
   milestone: AJCR.w4-rep
-  updated_at: '2026-07-30T00:32:11.247493+00:00'
+  updated_at: '2026-07-30T01:48:01.202755+00:00'
   pinned_commits:
   - 333c51064e
   - 4c2392b732
-  owner: ajcr-p3
