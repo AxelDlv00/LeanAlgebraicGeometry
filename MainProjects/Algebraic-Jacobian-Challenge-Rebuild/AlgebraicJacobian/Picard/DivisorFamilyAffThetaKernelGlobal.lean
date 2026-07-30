@@ -19,6 +19,7 @@ set_option autoImplicit false
 universe u
 
 open CategoryTheory Opposite TopologicalSpace
+open scoped TensorProduct
 
 namespace AlgebraicGeometry
 
@@ -133,6 +134,32 @@ theorem ker_intrinsicThetaEvalRel (A : AffAdaptation D d) (a : ℕ) :
       rw [intrinsicThetaPiece_germ_inr (C := C) (R := R) (π := π) a x j]
       exact hx₁ z ⟨trivial, by
         exact thetaChartCover_pieces_le_inr C R π PUnit.unit hz.2⟩
+
+/-! ## The intrinsic high-window carve -/
+
+noncomputable local instance instOverCleftAffThetaKernelWindow :
+    C.left.Over (Spec (.of k)) := ⟨C.hom⟩
+
+variable [SmoothOfRelativeDimension 1 (C.left ↘ Spec (.of k))] [IsIntegral C.left]
+  [LocallyOfFiniteType (C.left ↘ Spec (.of k))]
+  [QuasiCompact (C.left ↘ Spec (.of k))] [IsDominant π]
+
+/-- The high-window sections evaluated in the intrinsic, chart-free theta restriction. -/
+noncomputable def intrinsicWindowCarve (A : AffAdaptation D d) (a : ℕ)
+    (hH1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1) :
+    R ⊗[k] ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤) →ₗ[R]
+      A.IntrinsicThetaGlued (π := π) a :=
+  (A.intrinsicThetaEvalRel (π := π) a).comp
+    (relThetaWindowEquiv C R π a hH1).toLinearMap
+
+/-- The intrinsic high-window carve has exactly the established divisor window as its
+kernel, without typing widened pieces into either pinned chart. -/
+theorem ker_intrinsicWindowCarve (A : AffAdaptation D d) (a : ℕ)
+    (hH1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1) :
+    LinearMap.ker (A.intrinsicWindowCarve (π := π) a hH1) =
+      divisorWindow d hH1 := by
+  rw [intrinsicWindowCarve, LinearMap.ker_comp, A.ker_intrinsicThetaEvalRel,
+    divisorWindow]
 
 end AffAdaptation
 
