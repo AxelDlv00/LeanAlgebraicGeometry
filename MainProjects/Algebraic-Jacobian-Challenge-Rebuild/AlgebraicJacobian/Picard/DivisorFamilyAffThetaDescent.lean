@@ -136,6 +136,10 @@ noncomputable abbrev ThetaOverlapRestriction (A : AffAdaptation D d) (a : ℕ)
   A.ovlColength i j ⊗[Γ(relCurve C R, D.pieces i ⊓ D.pieces j)]
     A.ThetaOverlapSections (π := π) a i j
 
+/-- Global sections of the intrinsic theta sheaf before restricting to the divisor. -/
+noncomputable abbrev ThetaGlobalSections (_A : AffAdaptation D d) (a : ℕ) : Type u :=
+  (thetaChartDatum C R π a).sheaf.obj.obj (op (⊤ : (relCurve C R).Opens))
+
 /-- The tensor restriction from the previous module is canonically the intrinsic quotient
 by the local equation. -/
 noncomputable def thetaPieceRestrictionEquiv (A : AffAdaptation D d) (a : ℕ)
@@ -447,6 +451,34 @@ noncomputable def thetaOverlapQuotientBaseModule (A : AffAdaptation D d) (a : �
 attribute [local instance] thetaPieceQuotientModule thetaOverlapQuotientModule
   thetaPieceQuotientBaseModule thetaOverlapQuotientBaseModule
 
+@[simp]
+lemma thetaToOverlapLeft_mk (A : AffAdaptation D d) (a : ℕ) (i j : D.index)
+    (s : A.ThetaPieceSections (π := π) a i) :
+    letI : Module Γ(relCurve C R, D.pieces i)
+        (A.ThetaPieceSections (π := π) a i) :=
+      A.thetaPieceSectionsModule (π := π) a i
+    letI : Module Γ(relCurve C R, D.pieces i ⊓ D.pieces j)
+        (A.ThetaOverlapSections (π := π) a i j) :=
+      A.thetaOverlapSectionsModule (π := π) a i j
+    A.thetaToOverlapLeft (π := π) a i j (Submodule.Quotient.mk s) =
+      Submodule.Quotient.mk
+        (secRes (thetaChartDatum C R π a).sheaf inf_le_left s) := by
+  rfl
+
+@[simp]
+lemma thetaToOverlapRight_mk (A : AffAdaptation D d) (a : ℕ) (i j : D.index)
+    (s : A.ThetaPieceSections (π := π) a j) :
+    letI : Module Γ(relCurve C R, D.pieces j)
+        (A.ThetaPieceSections (π := π) a j) :=
+      A.thetaPieceSectionsModule (π := π) a j
+    letI : Module Γ(relCurve C R, D.pieces i ⊓ D.pieces j)
+        (A.ThetaOverlapSections (π := π) a i j) :=
+      A.thetaOverlapSectionsModule (π := π) a i j
+    A.thetaToOverlapRight (π := π) a i j (Submodule.Quotient.mk s) =
+      Submodule.Quotient.mk
+        (secRes (thetaChartDatum C R π a).sheaf inf_le_right s) := by
+  rfl
+
 /-- The tensor/quotient comparison is linear over the piece colength algebra, not merely
 over the ambient section ring. -/
 noncomputable def thetaPieceRestrictionEquivColength (A : AffAdaptation D d) (a : ℕ)
@@ -516,6 +548,35 @@ theorem invertible_thetaOverlapQuotient (A : AffAdaptation D d) (a : ℕ)
   exact Module.Invertible.congr
     (A.thetaOverlapRestrictionEquivColength (π := π) a i j)
 
+/-- Restrict a global intrinsic theta section to one widened piece and reduce it modulo
+that piece's divisor equation. -/
+noncomputable def intrinsicThetaPieceEval (A : AffAdaptation D d) (a : ℕ)
+    (j : D.index) :
+    A.ThetaGlobalSections (π := π) a →ₗ[R]
+      A.ThetaPieceQuotient (π := π) a j := by
+  let Mj := A.thetaPieceSectionsModel (π := π) a j
+  letI : Scheme.QcohOn (thetaChartDatum C R π a).sheaf (D.pieces j) := Mj.qcoh
+  letI : Module Γ(relCurve C R, D.pieces j)
+      (A.ThetaPieceSections (π := π) a j) :=
+    A.thetaPieceSectionsModule (π := π) a j
+  letI : IsScalarTower R Γ(relCurve C R, D.pieces j)
+      (A.ThetaPieceSections (π := π) a j) :=
+    isScalarTower_coeff R (thetaChartDatum C R π a).pieces
+      (thetaChartDatum C R π a).unit Mj.qsmul_eq (le_refl _)
+  refine
+    { toFun := fun s => Submodule.Quotient.mk
+        (secRes (thetaChartDatum C R π a).sheaf le_top s)
+      map_add' := fun x y => by
+        rw [(secRes (thetaChartDatum C R π a).sheaf le_top).map_add]
+        rfl
+      map_smul' := fun r x => ?_ }
+  change Submodule.Quotient.mk
+      (secRes (thetaChartDatum C R π a).sheaf le_top (r • x)) =
+    Submodule.Quotient.mk
+      ((algebraMap R Γ(relCurve C R, D.pieces j) r) •
+        secRes (thetaChartDatum C R π a).sheaf le_top x)
+  rw [map_smul, IsScalarTower.algebraMap_smul]
+
 /-- The left quotient restriction, viewed over the common test algebra `R`. -/
 noncomputable def thetaToOverlapLeftLinear (A : AffAdaptation D d) (a : ℕ)
     (i j : D.index) :
@@ -558,6 +619,23 @@ noncomputable abbrev ThetaPieceProd (A : AffAdaptation D d) (a : ℕ) : Type u :
 noncomputable abbrev ThetaOverlapProd (A : AffAdaptation D d) (a : ℕ) : Type u :=
   ∀ p : D.index × D.index, A.ThetaOverlapQuotient (π := π) a p.1 p.2
 
+/-- Piecewise evaluation of a global theta section on the widened divisor cover. -/
+noncomputable def intrinsicThetaEvalRaw (A : AffAdaptation D d) (a : ℕ) :
+    A.ThetaGlobalSections (π := π) a →ₗ[R] A.ThetaPieceProd (π := π) a :=
+  LinearMap.pi fun j => A.intrinsicThetaPieceEval (π := π) a j
+
+omit [IsProper C.hom] in
+@[simp]
+lemma intrinsicThetaEvalRaw_apply (A : AffAdaptation D d) (a : ℕ)
+    (s : A.ThetaGlobalSections (π := π) a) (j : D.index) :
+    letI : Module Γ(relCurve C R, D.pieces j)
+        (A.ThetaPieceSections (π := π) a j) :=
+      A.thetaPieceSectionsModule (π := π) a j
+    A.intrinsicThetaEvalRaw (π := π) a s j =
+      Submodule.Quotient.mk
+        (secRes (thetaChartDatum C R π a).sheaf le_top s) := by
+  rfl
+
 /-- The left arrow in the intrinsic theta descent equalizer. -/
 noncomputable def thetaIntrinsicDeltaLeft (A : AffAdaptation D d) (a : ℕ) :
     A.ThetaPieceProd (π := π) a →ₗ[R] A.ThetaOverlapProd (π := π) a :=
@@ -593,6 +671,40 @@ lemma mem_intrinsicThetaGluedSubmodule_iff (A : AffAdaptation D d) (a : ℕ)
 /-- The intrinsic globally descended theta restriction, as an `R`-module type. -/
 noncomputable abbrev IntrinsicThetaGlued (A : AffAdaptation D d) (a : ℕ) : Type u :=
   ↥(A.intrinsicThetaGluedSubmodule (π := π) a)
+
+/-- Piecewise evaluation of a global theta section satisfies the intrinsic overlap
+equalizer. -/
+theorem intrinsicThetaEvalRaw_mem (A : AffAdaptation D d) (a : ℕ)
+    (s : A.ThetaGlobalSections (π := π) a) :
+    A.intrinsicThetaEvalRaw (π := π) a s ∈
+      A.intrinsicThetaGluedSubmodule (π := π) a := by
+  apply (A.mem_intrinsicThetaGluedSubmodule_iff (π := π) a _).mpr
+  rintro ⟨i, j⟩
+  rw [A.intrinsicThetaEvalRaw_apply, A.intrinsicThetaEvalRaw_apply,
+    A.thetaToOverlapLeft_mk, A.thetaToOverlapRight_mk,
+    secRes_secRes, secRes_secRes]
+
+/-- The canonical evaluation from global intrinsic theta sections to their restriction on
+the widened divisor. -/
+noncomputable def intrinsicThetaEval (A : AffAdaptation D d) (a : ℕ) :
+    A.ThetaGlobalSections (π := π) a →ₗ[R] A.IntrinsicThetaGlued (π := π) a :=
+  LinearMap.codRestrict (A.intrinsicThetaGluedSubmodule (π := π) a)
+    (A.intrinsicThetaEvalRaw (π := π) a) (A.intrinsicThetaEvalRaw_mem (π := π) a)
+
+@[simp]
+lemma intrinsicThetaEval_coe (A : AffAdaptation D d) (a : ℕ)
+    (s : A.ThetaGlobalSections (π := π) a) :
+    (A.intrinsicThetaEval (π := π) a s : A.ThetaPieceProd (π := π) a) =
+      A.intrinsicThetaEvalRaw (π := π) a s :=
+  rfl
+
+/-- The canonical intrinsic evaluation in the existing two-chart presentation of global
+theta sections.  Only the source presentation uses the pinned theta charts; the divisor
+cover and the target remain arbitrary affine opens. -/
+noncomputable def intrinsicThetaEvalRel (A : AffAdaptation D d) (a : ℕ) :
+    relThetaSections C R π a →ₗ[R] A.IntrinsicThetaGlued (π := π) a :=
+  (A.intrinsicThetaEval (π := π) a).comp
+    (gluedTwistEquiv C R π a (⊤ : (relCurve C R).Opens)).symm.toLinearMap
 
 /-- The left overlap map is linear for the induced map of colength algebras. -/
 lemma thetaToOverlapLeft_smul (A : AffAdaptation D d) (a : ℕ) (i j : D.index)
