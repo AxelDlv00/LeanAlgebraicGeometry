@@ -129,6 +129,79 @@ theorem isGaloisQuotient_overlap [FiniteDimensional K L] [IsGalois K L]
   exact SemilinearGalAction.isGaloisQuotient_quotientOpenOfStableSubopen
     ρ i.stable i.affine inf_le_left (inf_stable ρ i j)
 
+/-- The source open underlying the triple overlap in chart `i` is stable. -/
+theorem triple_stable (i j k : StableAffineOpen ρ) :
+    ρ.IsStableOpen ((i.U ⊓ j.U) ⊓ (i.U ⊓ k.U)) := by
+  intro γ
+  simp only [Scheme.Hom.preimage_inf, i.stable γ, j.stable γ, k.stable γ]
+
+/-- The quotient open corresponding to the triple overlap in chart `i`. -/
+noncomputable def quotientTriple (i j k : StableAffineOpen ρ) : Scheme.{u} := by
+  letI := ρ.sectionsMulSemiringAction i.stable
+  letI := SemilinearGalAction.sectionsAlgebra f i.U
+  letI := SemilinearGalAction.sectionsAlgebraK (K := K) f i.U
+  letI := SemilinearGalAction.sections_isScalarTower (K := K) f i.U
+  letI := ρ.isSemilinear_sections i.stable
+  exact (SemilinearGalAction.quotientOpenOfStableSubopen ρ i.stable
+    ((i.U ⊓ j.U) ⊓ (i.U ⊓ k.U))).toScheme
+
+/-- The triple-overlap inclusion into its quotient chart. -/
+noncomputable def quotientTripleι (i j k : StableAffineOpen ρ) :
+    quotientTriple ρ i j k ⟶ quotientChart ρ i := by
+  letI := ρ.sectionsMulSemiringAction i.stable
+  letI := SemilinearGalAction.sectionsAlgebra f i.U
+  letI := SemilinearGalAction.sectionsAlgebraK (K := K) f i.U
+  letI := SemilinearGalAction.sections_isScalarTower (K := K) f i.U
+  letI := ρ.isSemilinear_sections i.stable
+  exact (SemilinearGalAction.quotientOpenOfStableSubopen ρ i.stable
+    ((i.U ⊓ j.U) ⊓ (i.U ⊓ k.U))).ι
+
+/-- The triple quotient open has the full quotient universal property. -/
+theorem isGaloisQuotient_triple [FiniteDimensional K L] [IsGalois K L]
+    (i j k : StableAffineOpen ρ) :
+    IsGaloisQuotient (ρ.restrict (triple_stable ρ i j k))
+      (quotientTripleι ρ i j k ≫ quotientChartMap ρ i) := by
+  letI := ρ.sectionsMulSemiringAction i.stable
+  letI := SemilinearGalAction.sectionsAlgebra f i.U
+  letI := SemilinearGalAction.sectionsAlgebraK (K := K) f i.U
+  letI := SemilinearGalAction.sections_isScalarTower (K := K) f i.U
+  letI := ρ.isSemilinear_sections i.stable
+  exact SemilinearGalAction.isGaloisQuotient_quotientOpenOfStableSubopen
+    ρ i.stable i.affine (le_trans inf_le_left inf_le_left)
+      (triple_stable ρ i j k)
+
+/-- The pullback of two quotient overlaps in a chart is the quotient of their
+triple source intersection. -/
+noncomputable def pullbackOverlapIsoTriple [FiniteDimensional K L]
+    (i j k : StableAffineOpen ρ) :
+    pullback (quotientOverlapι ρ i j) (quotientOverlapι ρ i k) ≅
+      quotientTriple ρ i j k := by
+  letI := ρ.sectionsMulSemiringAction i.stable
+  letI := SemilinearGalAction.sectionsAlgebra f i.U
+  letI := SemilinearGalAction.sectionsAlgebraK (K := K) f i.U
+  letI := SemilinearGalAction.sections_isScalarTower (K := K) f i.U
+  letI := ρ.isSemilinear_sections i.stable
+  unfold quotientOverlapι quotientOverlap quotientChart quotientTriple
+  let A := SemilinearGalAction.quotientOpenOfStableSubopen
+    ρ i.stable (i.U ⊓ j.U)
+  let B := SemilinearGalAction.quotientOpenOfStableSubopen
+    ρ i.stable (i.U ⊓ k.U)
+  let Q := Spec (CommRingCat.of
+    (SemilinearAction.invariantsSubalgebra K L Γ(X, i.U)))
+  have himage : A.ι ''ᵁ (A.ι ⁻¹ᵁ B) = A ⊓ B := by
+    rw [Scheme.Hom.image_preimage_eq_opensRange_inf,
+      Scheme.Opens.opensRange_ι]
+  have hinf :
+      SemilinearGalAction.quotientOpenOfStableSubopen ρ i.stable
+          ((i.U ⊓ j.U) ⊓ (i.U ⊓ k.U)) = A ⊓ B :=
+    SemilinearGalAction.quotientOpenOfStableSubopen_inf
+      ρ i.stable i.affine inf_le_left inf_le_left
+      (inf_stable ρ i j) (inf_stable ρ i k)
+  exact pullbackRestrictIsoRestrict A.ι B ≪≫
+    A.ι.isoImage (A.ι ⁻¹ᵁ B) ≪≫
+    Q.isoOfEq himage ≪≫
+    Q.isoOfEq hinf.symm
+
 /-- The quotient constructed from the reversed chart is also a quotient of the
 restriction to `i.U ⊓ j.U`, transported along commutativity of intersection. -/
 theorem isGaloisQuotient_overlap_rev [FiniteDimensional K L] [IsGalois K L]
