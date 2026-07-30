@@ -9,7 +9,7 @@ summary: 'Produce legal h0=1 chart indices after finite-separable base change, w
   IsDivisorDegree C g, an additional hypothesis forbidden by the challenge. The first
   unit is the finite-separable chart-index producer; the endpoint is a k-side local-representability
   input, not a new curve hypothesis.'
-status: active
+status: rejected
 kind: proof
 priority: high
 depends_on: []
@@ -31,5 +31,5 @@ metadata:
     task_title: 'Pic rep lane H: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-g
-  owner: pic-h
   milestone: AJCR.w4-rep
+  updated_at: '2026-07-30T12:49:12.911723+00:00'

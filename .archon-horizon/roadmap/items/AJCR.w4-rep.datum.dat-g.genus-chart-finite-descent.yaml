@@ -1,0 +1,37 @@
+id: AJCR.w4-rep.datum.dat-g.genus-chart-finite-descent
+title: 'DAT-G genus charts: finite extension and fpqc descent'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'Produce every legal natural chart index after a finite field extension,
+  then descend the restricted chart atlas and its covering sieve along the resulting
+  finite faithfully-flat cover. The finite-extension producer is unconditional and
+  replaces both the rejected base-field genus route and the false claim that an arbitrary
+  closed point on a smooth curve has separable residue field. Endpoint: a k-side local-representability
+  input with no new curve hypothesis.'
+status: active
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-30T12:49:14.995732+00:00'
+  provenance:
+    run: 0098
+    session: 0008-horizon-pic-h
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: pic-h
+    task_title: 'Pic rep lane H: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-g
+  owner: pic-h
+  milestone: AJCR.w4-rep
+  updated_at: '2026-07-30T12:49:32.954452+00:00'
+  pinned_commits:
+  - c0ed55a1f1aae0ce4b6108ba31c6fcbd9e751dff
