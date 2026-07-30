@@ -14,17 +14,25 @@ docstring: '**The seam implies representability over the separable closure.**
   `k'' := SeparableClosure k` and nothing else.
 
 
-  Named because campaign cluster `J` targets exactly this object, and because a lane
+  Named because `k^s` is the field campaign cluster `J` works over, so a lane can
+  cite
 
-  should be able to cite "the campaign''s endpoint is a consequence of the seam" without
+  this instance without re-deriving the base change. **Not** because it is cluster
+  `J`''s
 
-  re-deriving the base change.'
+  target: that target is a graded `picSharp` with no carrier in this project, and
+  the
+
+  section header above records why the identification is unproved. Do not cite this
+  as
+
+  "the campaign''s endpoint follows from the seam".'
 file: AlgebraicJacobian/Picard/PicEtDescentNecessity.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicScheme.representableBy_picEt_separableClosure_of_representableBy
 type: lean
-updated: '2026-07-31T02:29:40'
+updated: '2026-07-31T03:47:21'
 ---
 noncomputable def representableBy_picEt_separableClosure_of_representableBy
     (C : Over (Spec (CommRingCat.of k)))

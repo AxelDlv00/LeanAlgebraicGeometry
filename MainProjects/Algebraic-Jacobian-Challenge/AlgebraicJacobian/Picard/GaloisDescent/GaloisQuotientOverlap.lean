@@ -944,6 +944,47 @@ noncomputable def quotientChartTopWitness
   exact SemilinearGalAction.galoisQuotientWitness_quotientOpenOfStableSubopen
     ρ i.stable i.affine le_rfl i.stable
 
+/-- The affine quotient map on a stable chart is invariant under the restricted
+Galois action. -/
+@[reassoc]
+theorem restrict_act_hom_stableAffineQuotientMap
+    [FiniteDimensional K L] [IsGalois K L]
+    (i : StableAffineOpen ρ) (gamma : L ≃ₐ[K] L) :
+    ((ρ.restrict i.stable).act gamma).hom ≫
+        SemilinearGalAction.stableAffineQuotientMap ρ i.stable i.affine =
+      SemilinearGalAction.stableAffineQuotientMap ρ i.stable i.affine := by
+  let q := SemilinearGalAction.stableAffineQuotientMapRestrict
+    ρ i.stable i.affine le_rfl i.stable
+  let W := quotientChartTopOpen ρ i
+  have hfac : q ≫ W.ι =
+      SemilinearGalAction.stableAffineQuotientMap ρ i.stable i.affine := by
+    simpa only [Scheme.homOfLE_rfl, Category.id_comp] using
+      (SemilinearGalAction.stableAffineQuotientMapRestrict_fac
+        ρ i.stable i.affine le_rfl i.stable)
+  have hinv := GaloisQuotientWitnessWithProjection.act_hom_comp_quotientMap
+    (quotientChartTopWitness ρ i) gamma
+  change ((ρ.restrict i.stable).act gamma).hom ≫ _ = _ at hinv
+  calc
+    ((ρ.restrict i.stable).act gamma).hom ≫
+          SemilinearGalAction.stableAffineQuotientMap ρ i.stable i.affine =
+        ((ρ.restrict i.stable).act gamma).hom ≫ (q ≫ W.ι) :=
+      congrArg (fun z ↦ ((ρ.restrict i.stable).act gamma).hom ≫ z) hfac.symm
+    _ = (((ρ.restrict i.stable).act gamma).hom ≫ q) ≫ W.ι :=
+      (Category.assoc _ _ _).symm
+    _ = q ≫ W.ι := congrArg (fun z ↦ z ≫ W.ι) hinv
+    _ = SemilinearGalAction.stableAffineQuotientMap
+        ρ i.stable i.affine := hfac
+
+/-- The local projection into the glued quotient is Galois-invariant. -/
+@[reassoc]
+theorem restrict_act_hom_quotientChartProjection
+    [FiniteDimensional K L] [IsGalois K L]
+    (i : StableAffineOpen ρ) (gamma : L ≃ₐ[K] L) :
+    ((ρ.restrict i.stable).act gamma).hom ≫
+        quotientChartProjection ρ i = quotientChartProjection ρ i := by
+  unfold quotientChartProjection
+  rw [← Category.assoc, restrict_act_hom_stableAffineQuotientMap]
+
 /-- Base change of the whole-chart quotient-open inclusion to `Spec L`. -/
 noncomputable def quotientChartTopPullbackMap
     [FiniteDimensional K L] [IsGalois K L] (i : StableAffineOpen ρ) :
@@ -1161,6 +1202,21 @@ theorem sourceOpenCover_f_gluedQuotientProjection
     (i : StableAffineOpen ρ) :
     i.U.ι ≫ gluedQuotientProjection ρ = quotientChartProjection ρ i := by
   exact (sourceOpenCover ρ).ι_glueMorphisms _ _ i
+
+/-- The global projection to the glued quotient is Galois-invariant. -/
+@[reassoc]
+theorem act_hom_gluedQuotientProjection
+    [FiniteDimensional K L] [IsGalois K L] [HasStableAffineCover K L ρ]
+    (gamma : L ≃ₐ[K] L) :
+    (ρ.act gamma).hom ≫ gluedQuotientProjection ρ =
+      gluedQuotientProjection ρ := by
+  apply (sourceOpenCover ρ).hom_ext
+  intro i
+  simp only [Category.assoc]
+  rw [← SemilinearGalAction.actRes_ι]
+  rw [Category.assoc, sourceOpenCover_f_gluedQuotientProjection]
+  rw [restrict_act_hom_quotientChartProjection]
+  exact sourceOpenCover_f_gluedQuotientProjection ρ i
 
 /-- The global quotient projection pulls a glued quotient chart back to the
 stable affine source chart from which it was built. -/

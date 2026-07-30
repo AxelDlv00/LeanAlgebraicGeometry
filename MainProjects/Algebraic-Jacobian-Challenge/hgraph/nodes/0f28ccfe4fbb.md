@@ -22,10 +22,9 @@ docstring: 'The two FGA *chapter* carriers that a blueprint `\leanok` is most li
 file: scripts/axiom-frontier.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.leakProbe_instPicSharpRepresentable
 type: lean
-updated: '2026-07-31T02:29:52'
+updated: '2026-07-31T03:47:24'
 ---
 theorem leakProbe_instPicSharpRepresentable [HasRationalPoint C] :
     haveI := picSchemeOfHasRationalPoint C

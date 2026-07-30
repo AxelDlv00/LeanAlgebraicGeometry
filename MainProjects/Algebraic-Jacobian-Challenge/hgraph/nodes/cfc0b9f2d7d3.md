@@ -48,23 +48,19 @@ docstring: "**THE PROJECT'S CENTRAL OPEN OBLIGATION — expected to stay open.**
   proof reduces (1) to (2) and then runs exactly the two named inputs: the Abel map\n\
   `Div_{X/S} → P` with `Div_{X/S}` an open subscheme of the **Hilbert** scheme by\n\
   `th:repDiv`, descended by `lm:qt`. So the original text was naming the inputs of\n\
-  the published proof of this file's own conclusion.\n\n**With one gap, which must\
-  \ be stated because it is the difference between \"a\ntheorem in the literature\"\
-  \ and \"our theorem\"** (`review-ajc`, from a\nfresh-context audit of the paragraph\
-  \ above, which had said the former flatly).\n`th:main`'s hypothesis is `f` **projective**\
-  \ Zariski-locally and flat with\nintegral geometric fibres. This file's binders\
-  \ are\n`[SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]\n[GeometricallyIntegral\
-  \ C.hom]` over a field. The implication *smooth proper curve\nover a field ⟹ projective*\
-  \ is classical, and it is **not formalised anywhere in\nthis project**: no declaration\
-  \ combines projectivity with\n`SmoothOfRelativeDimension 1`, and the three sites\
-  \ that assert it\n(`Picard/FlatteningStratification.lean`, `Picard/Pic0AbelianVariety.lean`,\n\
-  `Picard/Pic0Et.lean`) assert it as unproved prose. So clause (1) is a theorem in\n\
-  the literature *for projective curves*, and reaching this file's statement from\n\
-  `th:main` needs that bridge as a genuine, currently-absent input. Do not cite\n\
-  this paragraph as \"clause (1) is known\"; cite it as \"clause (1) is known\nprojectively,\
-  \ and the projectivity bridge is unformalised here\".\n\nTwo things follow, and\
-  \ both matter for planning. `th:repDiv` is **Hilb, not\nQuot** (its statement: \"\
-  `Div_{X/S}` is representable by an open subscheme of the\nHilbert scheme `Hilb_{X/S}`\"\
+  the published proof of this file's own conclusion.\n\n**The projectivity gap identified\
+  \ by the fresh-context audit is now closed\n(2026-07-30, `pic-b`).** `th:main`'s\
+  \ hypothesis is `f` **projective**\nZariski-locally and flat with integral geometric\
+  \ fibres. This file's binders are\n`[SmoothOfRelativeDimension 1 C.hom] [IsProper\
+  \ C.hom]\n[GeometricallyIntegral C.hom]` over a field. The rooted theorem\n`Adelic.isProjective_of_smoothProperGeometricallyIntegral`\n\
+  (`Picard/CurveProjectivity.lean`) proves exactly the previously missing\nimplication,\
+  \ by constructing a finite map to `ℙ¹`, embedding the two pulled-back\nLaurent charts\
+  \ into relative projective space, and applying properness to the\nresulting immersion.\
+  \ It adds no rational-point or projectivity hypothesis.\nThus projectivity is no\
+  \ longer an open antecedent in the comparison with\nKleiman's clause (1); the representability\
+  \ construction itself remains the\nobligation described below.\n\nTwo things follow,\
+  \ and both matter for planning. `th:repDiv` is **Hilb, not\nQuot** (its statement:\
+  \ \"`Div_{X/S}` is representable by an open subscheme of the\nHilbert scheme `Hilb_{X/S}`\"\
   ), so rejecting `AJC.picrep.quot` never rejected it.\nAnd the campaign below is\
   \ **one** route to clause (1); Kleiman's is a second,\nwhose `lm:qt` interface this\
   \ project already pins as `smoothProperQuotient`\n(§4 below — currently `P → P`,\
@@ -179,19 +175,23 @@ docstring: "**THE PROJECT'S CENTRAL OPEN OBLIGATION — expected to stay open.**
   \ antecedents:\nthe Galois quotient at a glued non-affine `X'`, and `hcov`. Consumers\
   \ should call\n`seamClauseOne_of_isGaloisQuotient_noMatch`. **Still nothing here\
   \ is discharged**:\nthe `k'`-side representation is the campaign's undischarged\
-  \ output, and clause (1)\nfield 1 is witnessed for no curve.\n\n**AND THE THIRD\
-  \ ANTECEDENT WAS NEVER ONE** (`pic-e`, 2026-07-30,\n`Picard/PicEtDescentNecessity.lean`).\
-  \ The paragraph above counts the *named* inputs\ncorrectly and still under-reports\
-  \ what a consumer must supply, because\n`seamClauseOne_of_isGaloisQuotient_noMatch`\
-  \ also takes\n`hlft : LocallyOfFiniteType Y.hom`. That one is a **consequence**,\
-  \ not an input: the\nquotient's own comparison isomorphism `e` identifies `Y_{k'}`\
-  \ with `X'`, so\n`locallyOfFiniteType_of_baseChange` descends the property from\
-  \ the `k'`-side condition,\nand that condition is itself free by base change from\
-  \ the `k`-side one. Consumers\nshould call `seamClauseOne_of_isGaloisQuotient_lftFree`,\
-  \ which is the **three**-input\nform: `rep`, `hq`, `hcov`. Two of the Galois binders\
-  \ a first draft of that lemma\ncarried are also deleted — neither `SemilinearGalAction`\
-  \ nor `IsGaloisQuotient` binds\n`[IsGalois]` or `[FiniteDimensional]`, checked at\
-  \ the `variable` line, so the word\n\"Galois\" in both names is about the intended\
+  \ output, and clause (1)\nfield 1 is witnessed for no curve.\n\n**ONE CORRECTION\
+  \ TO THE COUNT, AND IT IS SMALLER THAN THIS PARAGRAPH FIRST SAID**\n(`pic-e`, 2026-07-30,\
+  \ `Picard/PicEtDescentNecessity.lean`; the first revision of this\nbox claimed a\
+  \ *third* antecedent \"was never one\", and that claim is **withdrawn** —\n`I-1591`,\
+  \ reproduced by its author). The genuine point is only that the paragraph above\n\
+  counts the *named* inputs and `seamClauseOne_of_isGaloisQuotient_noMatch` also takes\n\
+  `hlft : LocallyOfFiniteType Y.hom`, so a consumer supplies four things, not two.\n\
+  \n`hlft` can be *restated* at the `k'` side — but that is a **relocation, not a\n\
+  subtraction**, and the reason is structural: `IsGaloisQuotient`'s first field is\
+  \ an\nisomorphism `Y_{k'} ≅ X'`, so any property transported along it goes both\
+  \ ways, and the\nfour-input form is recoverable from the relocated one in three\
+  \ lines. Do not budget\n`hlft` as free. The transferable rule: when a hypothesis\
+  \ swap runs through a structure\nthat already contains an iso between the two objects,\
+  \ prove the converse before\npublishing a reduction.\n\nWhat *is* clean: the Galois\
+  \ binders a first draft of that lemma carried are deletable —\nneither `SemilinearGalAction`\
+  \ nor `IsGaloisQuotient` binds `[IsGalois]` or\n`[FiniteDimensional]`, checked at\
+  \ the `variable` line, so the word \"Galois\" in both\nnames is about the intended\
   \ application and not about a hypothesis.\n\n**AND `rep` IS NECESSARY, WHICH CHANGES\
   \ WHAT ITS \"0 PRODUCERS\" MEANS.**\n`PicScheme.representableBy_picEt_baseChangeField_of_representableBy`\
   \ derives a\n`k'`-side representation *from* clause (1) field 1 over `k` — the base\
@@ -199,20 +199,29 @@ docstring: "**THE PROJECT'S CENTRAL OPEN OBLIGATION — expected to stay open.**
   \ hence\n(`representableBy_picEt_separableClosure_of_representableBy`) at `k^s`,\
   \ where campaign\ncluster `J` lives. So this route is not one sufficient strategy\
   \ that a cheaper `k`-side\nargument might bypass: every solution of clause (1) field\
-  \ 1 contains a solution of\n`rep`, and the campaign's separably-closed endpoint\
-  \ is a *consequence* of the seam\nrather than something stronger than it. The step\
-  \ is generic — an arbitrary adjunction,\nno scheme, no field, no curve\n(`CategoryTheory.Functor.representableByCompLeftAdjoint`)\
-  \ — plus `picEt_crossBaseIso`;\ndo not budget a descent argument for it.\n\n**What\
-  \ that does NOT license, since it is the natural over-reading.** It discharges\n\
-  nothing: its hypothesis is this very `sorry`. And it is **not** a converse of the\n\
-  descent theorem — at the object it produces, clauses 1 and 2 of `IsGaloisQuotient`\
-  \ are\nfree but clause 3 is not (`isGaloisQuotient_pullbackAction_of_uniqueDescent`\
-  \ isolates\nit), so `hq` remains owed and \"the inputs are equivalent to the conclusion\"\
-  \ is false.\n\n**Every name in the two paragraphs above lives DOWNSTREAM of this\
-  \ file** — in\n`Picard/PicEtDescentNecessity.lean`, which imports the seam through\n\
-  `Picard/PicEtInvariantMatch.lean`. So a bare `#check` for any of them *here* fails\
-  \ with\n`unknownIdentifier` (verified, not assumed), and that failure is import\
-  \ direction, not\nabsence. Same trap the `HasGaloisQuotient`/`HasStableAffineCover`\
+  \ 1 contains a solution of\n`rep`. The step is generic — an arbitrary adjunction,\
+  \ no scheme, no field, no curve\n(`CategoryTheory.Functor.representableByCompLeftAdjoint`)\
+  \ — plus `picEt_crossBaseIso`;\ndo not budget a descent argument for it.\n\n**It\
+  \ does NOT say the campaign's endpoint is a consequence of the seam, and the first\n\
+  revision of this box did say that** (withdrawn, `I-1592`). What follows at `k^s`\
+  \ is\nrepresentability of `picEt (C_{k^s})`. Cluster `J`'s stated target is\n`picSharpDeg\
+  \ C' r`, a graded `picSharp` which **has no carrier in this project** —\n`#check\
+  \ picSharpDeg` returns `unknownIdentifier` — which is the same fact the\n\"eleventh\
+  \ item\" paragraph above records from the other side. Identifying the two over\n\
+  `k^s` routes through this theorem's own second conjunct, so it is not available\
+  \ as an\nargument.\n\n**What that does NOT license, since it is the natural over-reading.**\
+  \ It discharges\nnothing: its hypothesis is this very `sorry`. And it is **not**\
+  \ a converse of the\ndescent theorem: `hq` at the action these theorems consume\n\
+  (`semilinearGalActionOfRepresentableBy C rep`) is untouched by it, including a per-γ\n\
+  equality no lemma in the tree closes. So \"the inputs are equivalent to the conclusion\"\
+  \nis false. (`isGaloisQuotient_pullbackAction_of_uniqueDescent` was first published\
+  \ here\nas the measurement establishing that; it is stated at the *pullback* action\
+  \ instead, not\ninterchangeable with the consumed one — `I-1590`, withdrawn as the\
+  \ guardrail while\nremaining true of what it does state.)\n\n**Every name in the\
+  \ two paragraphs above lives DOWNSTREAM of this file** — in\n`Picard/PicEtDescentNecessity.lean`,\
+  \ which imports the seam through\n`Picard/PicEtInvariantMatch.lean`. So a bare `#check`\
+  \ for any of them *here* fails with\n`unknownIdentifier` (verified, not assumed),\
+  \ and that failure is import direction, not\nabsence. Same trap the `HasGaloisQuotient`/`HasStableAffineCover`\
   \ note in item 3 below\nrecords; import the module before probing.\n\nTwo measurements\
   \ from building it that a consumer needs.\n`quotientHomEquiv_uniform`'s `Nonempty`\
   \ cannot carry the naturality\nsquare a `RepresentableBy` needs, so clause 3 had\
@@ -468,7 +477,7 @@ generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.Scheme.fgaPicardRepresentability
 type: lean
-updated: '2026-07-31T02:29:39'
+updated: '2026-07-31T03:47:19'
 ---
 theorem fgaPicardRepresentability {k : Type u} [Field k]
     (C : Over (Spec (.of k)))

@@ -8,10 +8,9 @@ docstring: 'A consumer: exact Riemann-Roch fires at a curve with only the three 
 file: scripts/ajcrr-fibervanishing-axioms.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: probe_curve_consumer
 type: lean
-updated: '2026-07-31T02:29:54'
+updated: '2026-07-31T03:47:23'
 ---
 theorem probe_curve_consumer :
     letI : C.left.Over (Spec (CommRingCat.of k)) := .ofHom C.hom

@@ -35,9 +35,12 @@ docstring: '**THE NECESSITY THEOREM: field 1 of clause (1) over `k` PRODUCES the
   **What it does NOT buy.** Its hypothesis is the seam''s own open obligation, so
   it
 
-  witnesses nothing. It also does not give `hq`: see §4, where clauses 1 and 2 of
+  witnesses nothing. It also does not give `hq` at the action the route consumes:
+  §4
 
-  `IsGaloisQuotient` are free at this object and clause 3 is not.
+  measures the *pullback* action instead, and per `I-1590` the two are not interchangeable,
+
+  so `hq` is untouched here.
 
 
   Two hypotheses it does *not* carry, both of which a reader would expect: no
@@ -54,7 +57,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicScheme.representableBy_picEt_baseChangeField_of_representableBy
 type: lean
-updated: '2026-07-31T02:29:40'
+updated: '2026-07-31T03:47:21'
 ---
 noncomputable def representableBy_picEt_baseChangeField_of_representableBy
     (C : Over (Spec (CommRingCat.of k)))

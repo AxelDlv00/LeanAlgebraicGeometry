@@ -7,10 +7,9 @@ docstring: 'The vanishing at a concrete field: `k := ULift.{u} ℚ`.'
 file: scripts/ajcrr-p1vanishing-axioms.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: synth_subsingleton_h1_p1
 type: lean
-updated: '2026-07-31T02:29:53'
+updated: '2026-07-31T03:47:23'
 ---
 theorem synth_subsingleton_h1_p1 :
     Subsingleton (Scheme.HModule (ULift.{u} ℚ)

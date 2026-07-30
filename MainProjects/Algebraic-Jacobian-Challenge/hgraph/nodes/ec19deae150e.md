@@ -21,14 +21,21 @@ docstring: '**Local finiteness of the quotient is free from the `k''`-side.**
   it to `Y.hom`.
 
 
-  **So `hlft` is not a fourth obligation.** A lane closing the descent step should
-  call
+  **This does NOT make `hlft` a non-obligation, and the first revision of this docstring
 
-  `seamClauseOne_of_isGaloisQuotient_lftFree` below, which asks for the `k''`-side
+  said it did.** The converse closes from the same `⟨e, he, -, -⟩` (see the module
+  header''s
 
-  condition instead — and §3b shows *that* condition is itself free from the `k`-side
+  correction, `I-1591`), so the two conditions are interderivable under `hq` and §5
+  is a
 
-  one, so nothing here has been relocated into a new hypothesis.
+  coordinate change. Dropping `hX''` entirely and closing by `infer_instance` **fails**,
+  so
+
+  it is still a real hypothesis. Call `seamClauseOne_of_isGaloisQuotient_lftFree`
+  only when
+
+  what you hold is the `k''`-side condition.
 
 
   **Note the binder set, because the first draft of this lemma got it wrong in the
@@ -66,7 +73,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicScheme.locallyOfFiniteType_of_isGaloisQuotient
 type: lean
-updated: '2026-07-31T02:29:40'
+updated: '2026-07-31T03:47:21'
 ---
 theorem locallyOfFiniteType_of_isGaloisQuotient
     {X' : Over (Spec (CommRingCat.of k'))}
@@ -84,7 +91,9 @@ theorem locallyOfFiniteType_of_isGaloisQuotient
 
 /-! ### §3b. And the `k'`-side condition is free from the `k`-side one
 
-Otherwise §3 would be a relocation rather than a subtraction: it would trade a
-hypothesis about `Y` for one about `X'` with no net gain. It is a subtraction because
-the object §2 produces satisfies the `k'`-side condition whenever `X` satisfies the
-`k`-side one, by plain base-change stability — no descent, no field hypothesis. -/
+§3 **is** a relocation (header, `I-1591`), and this section does not rescue it: these
+two lemmas apply to the object §2 *produces*, i.e. to a base change, whereas §5's `X'`
+is arbitrary. So what they buy is narrower than the first revision claimed — they say
+the `k'`-side conditions hold at the §2 object, which is what a lane checking that §2
+lands inside the campaign's `k'`-side endpoint needs, and nothing about §5's hypothesis
+being free. -/
