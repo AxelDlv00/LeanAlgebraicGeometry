@@ -107,6 +107,105 @@ theorem comparison_projection
     _ = w₂.e.inv ≫ pullback.fst g₂
         (Spec.map (CommRingCat.ofHom (algebraMap K L))) := by rw [hinv]
 
+/-- Transport a specified quotient witness along an equivariant isomorphism of
+the acted source schemes. -/
+noncomputable def transport
+    {K L : Type u} [Field K] [Field L] [Algebra K L]
+    {X X' : Scheme.{u}}
+    {f : X ⟶ Spec (CommRingCat.of L)}
+    {f' : X' ⟶ Spec (CommRingCat.of L)}
+    (rho : SemilinearGalAction K L X f)
+    (rho' : SemilinearGalAction K L X' f')
+    (e : X ≅ X') (hef : e.hom ≫ f' = f)
+    (he : rho.IsEquivariant rho' e.hom)
+    {Y : Scheme.{u}} {g : Y ⟶ Spec (CommRingCat.of K)}
+    (w : GaloisQuotientWitness rho' Y g) :
+    GaloisQuotientWitness rho Y g := by
+  refine ⟨w.e ≪≫ e.symm, ?_, ?_, ?_⟩
+  · rw [Iso.trans_hom, Category.assoc, ← hef, Iso.symm_hom,
+      Iso.inv_hom_id_assoc, w.over]
+  · intro γ
+    have hinv : e.inv ≫ (rho.act γ).hom = (rho'.act γ).hom ≫ e.inv := by
+      rw [Iso.inv_comp_eq, ← Category.assoc, ← he γ, Category.assoc,
+        Iso.hom_inv_id, Category.comp_id]
+    change _ ≫ w.e.hom ≫ e.inv = (w.e.hom ≫ e.inv) ≫ _
+    rw [← Category.assoc, w.equivariant γ, Category.assoc, Category.assoc, hinv]
+  · intro T t h hover hequiv
+    obtain ⟨v, hv, hvuniq⟩ := w.universal T t (h ≫ e.hom)
+      (by rw [Category.assoc, hef, hover])
+      (by
+        intro γ
+        rw [← Category.assoc, hequiv γ, Category.assoc, he γ, Category.assoc])
+    refine ⟨v, ?_, fun y hy => hvuniq y ?_⟩
+    · change _ ≫ w.e.hom ≫ e.inv = h
+      rw [← Category.assoc, hv, Category.assoc, Iso.hom_inv_id, Category.comp_id]
+    · change _ ≫ w.e.hom = h ≫ e.hom
+      have hy' : pullbackBaseChange K L g t y.1 y.2 ≫
+          w.e.hom ≫ e.inv = h := hy
+      rw [← Category.assoc] at hy'
+      rw [← hy', Category.assoc, Iso.inv_hom_id, Category.comp_id]
+
+/-- Comparing a specified quotient witness with itself gives the identity. -/
+theorem comparison_self
+    {K L : Type u} [Field K] [Field L] [Algebra K L]
+    {X : Scheme.{u}} {f : X ⟶ Spec (CommRingCat.of L)}
+    {rho : SemilinearGalAction K L X f}
+    {Y : Scheme.{u}} {g : Y ⟶ Spec (CommRingCat.of K)}
+    (w : GaloisQuotientWitness rho Y g) :
+    (comparison w w).1 = 𝟙 Y := by
+  classical
+  have hbc : pullbackBaseChange K L g g (𝟙 Y) (Category.id_comp g) = 𝟙 _ := by
+    apply pullback.hom_ext <;> simp
+  have hid : pullbackBaseChange K L g g (𝟙 Y) (Category.id_comp g) ≫
+      w.e.hom = w.e.hom := by rw [hbc, Category.id_comp]
+  have heq := (w.universal Y g w.e.hom w.over w.equivariant).unique
+    (y₁ := comparison w w) (y₂ := ⟨𝟙 Y, Category.id_comp g⟩)
+    (comparison_spec w w) hid
+  exact congrArg Subtype.val heq
+
+/-- Comparisons of specified quotient witnesses compose transitively. -/
+theorem comparison_comp
+    {K L : Type u} [Field K] [Field L] [Algebra K L]
+    {X : Scheme.{u}} {f : X ⟶ Spec (CommRingCat.of L)}
+    {rho : SemilinearGalAction K L X f}
+    {Y₁ Y₂ Y₃ : Scheme.{u}}
+    {g₁ : Y₁ ⟶ Spec (CommRingCat.of K)}
+    {g₂ : Y₂ ⟶ Spec (CommRingCat.of K)}
+    {g₃ : Y₃ ⟶ Spec (CommRingCat.of K)}
+    (w₁ : GaloisQuotientWitness rho Y₁ g₁)
+    (w₂ : GaloisQuotientWitness rho Y₂ g₂)
+    (w₃ : GaloisQuotientWitness rho Y₃ g₃) :
+    (comparison w₁ w₂).1 ≫ (comparison w₂ w₃).1 =
+      (comparison w₁ w₃).1 := by
+  classical
+  let v₁₂ := comparison w₁ w₂
+  let v₂₃ := comparison w₂ w₃
+  have hbase : (v₁₂.1 ≫ v₂₃.1) ≫ g₃ = g₁ := by
+    rw [Category.assoc, v₂₃.2, v₁₂.2]
+  have hcomp : pullbackBaseChange K L g₃ g₁ (v₁₂.1 ≫ v₂₃.1) hbase ≫
+      w₃.e.hom = w₁.e.hom := by
+    rw [pullbackBaseChange_comp K L g₃ g₂ g₁ v₂₃.1 v₂₃.2 v₁₂.1 v₁₂.2,
+      Category.assoc, comparison_spec w₂ w₃, comparison_spec w₁ w₂]
+  have heq := (w₃.universal Y₁ g₁ w₁.e.hom w₁.over w₁.equivariant).unique
+    (y₁ := ⟨v₁₂.1 ≫ v₂₃.1, hbase⟩) (y₂ := comparison w₁ w₃)
+    hcomp (comparison_spec w₁ w₃)
+  exact congrArg Subtype.val heq
+
+/-- The canonical isomorphism determined by two specified quotient witnesses. -/
+noncomputable def uniqueIso
+    {K L : Type u} [Field K] [Field L] [Algebra K L]
+    {X : Scheme.{u}} {f : X ⟶ Spec (CommRingCat.of L)}
+    {rho : SemilinearGalAction K L X f}
+    {Y₁ Y₂ : Scheme.{u}}
+    {g₁ : Y₁ ⟶ Spec (CommRingCat.of K)}
+    {g₂ : Y₂ ⟶ Spec (CommRingCat.of K)}
+    (w₁ : GaloisQuotientWitness rho Y₁ g₁)
+    (w₂ : GaloisQuotientWitness rho Y₂ g₂) : Y₁ ≅ Y₂ where
+  hom := (comparison w₁ w₂).1
+  inv := (comparison w₂ w₁).1
+  hom_inv_id := by rw [comparison_comp, comparison_self]
+  inv_hom_id := by rw [comparison_comp, comparison_self]
+
 end GaloisQuotientWitness
 
 /-- Extract the full quotient witness from the proposition-valued predicate.
