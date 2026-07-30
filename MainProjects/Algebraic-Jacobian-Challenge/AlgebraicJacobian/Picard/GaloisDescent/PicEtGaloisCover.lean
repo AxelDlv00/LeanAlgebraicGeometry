@@ -72,6 +72,32 @@ that `coverSelfSection T 1` is an isomorphism, and there the *consequent* of §4
 is free too. So this file does not exhibit a non-degenerate model; it removes
 one of the two things a lane building one would have had to pay for.
 
+## The route to joint surjectivity, measured link by link
+
+Not built here, but every link probed to exist (`lake env lean` `EXIT=0`), so a
+lane closing this owes no search:
+
+1. `AlgebraicGeometry.pullbackSpecIso k k' k'` — Mathlib, and in *exactly* the
+   shape needed: `Spec k' ×_{Spec k} Spec k' ≅ Spec (k' ⊗_k k')`.
+2. Composed with `selfTensorSpecCoproduct` (already in
+   `PicEtGaloisBridge.lean` §6, needs `[IsGalois k k']`), the `Spec`-level
+   self-pullback **is** the `Gal`-indexed coproduct of copies of `Spec k'`, and
+   the comparison is `IsIso` by synthesis.
+3. `Scheme` is `FinitaryPreExtensive` **by synthesis**, and
+   `CategoryTheory.FinitaryPreExtensive.isIso_sigmaDesc_fst` is the lemma that
+   distributes a pullback over that coproduct. No new extensivity lemma is
+   needed.
+4. **The one constraint, and it is not guessable**: `isIso_sigmaDesc_fst` binds
+   its index at `Type` (i.e. `Type 0`), while `k' ≃ₐ[k] k'` lives in `Type u`.
+   `Gal(k'/k)` is finite, hence `Small.{0}` by `inferInstance`, and
+   `Limits.Sigma.reindex (equivShrink _).symm` crosses the gap. Budget that
+   reindex; it is the only friction in the chain.
+
+One further fact measured on the way and recorded because `inferInstance` does
+**not** give it: `coverMap T` is `IsFinite` on underlying schemes, via
+`IsFinite.SpecMap_iff` + `RingHom.finite_algebraMap` and then base change along
+`T.hom`.
+
 ## Main declarations
 
 * `etale_coverSelfSection_left` — each `γ`-section is `Etale` on underlying

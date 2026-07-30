@@ -285,6 +285,17 @@ at the level of underlying schemes, all of `hcov` closes axiom-clean via one fur
 `rw [Sieve.overEquiv_ofArrows]`. So the residue is exactly two named facts about the
 morphisms `(coverSelfSection T γ).left`, with nothing else between them and `hcov`.
 
+**Corrected 2026-07-30 (`pic-a`): the residue is ONE fact, not two, and the
+open-immersion half is not among them.** `Picard/GaloisDescent/PicEtGaloisCover.lean`
+proves `etale_coverSelfSection_left` — each `γ`-section is `Etale` on underlying
+schemes, `sorry`-free and axiom-clean, with no `[IsGalois]` and no coproduct input —
+because the étale precoverage asks for `Etale`, not `IsOpenImmersion`, and `Etale`
+of a section is post-composition cancellation
+(`MorphismProperty.HasOfPostcompProperty @Etale`). `IsOpenImmersion` is *strictly
+stronger* than the site needs; that it is a theorem is true and beside the point.
+So `hcov_of_jointlySurjective` reduces `hcov` to **joint surjectivity on points
+alone**, and that single statement is the whole residue.
+
 Two further measurements, both with `fgaPicardRepresentability` firing `sorryAx` in
 the same probe file (`I-1057`):
 

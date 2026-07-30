@@ -489,9 +489,31 @@ half is owed:
   `selfTensorSpecCoproduct` the object here *is* a `Gal`-indexed coproduct, where
   that theorem applies.
 
-So what is owed is the **middle**: base change along `T_{k'} ⟶ Spec k'`, and
-matching the coproduct's `γ`-component to `coverSelfSection T γ`. Not the topology,
-and not a from-scratch covering argument. -/
+**THE SECOND BULLET AND THE PARAGRAPH BELOW IT ARE WITHDRAWN — the
+morphism-property half is FREE, and `IsOpenImmersion` was the wrong target**
+(`pic-a`, 2026-07-30, landed as
+`Picard/GaloisDescent/PicEtGaloisCover.lean`'s `etale_coverSelfSection_left`,
+`sorry`-free and axiom-clean). The étale precoverage criterion
+(`Scheme.ofArrows_mem_precoverage_iff`) asks for `Etale` of each member, **not**
+`IsOpenImmersion` — the latter is strictly stronger than the site needs, which is
+exactly why `inferInstance` fails on it and succeeds on the cheap route. And the
+cheap route is post-composition cancellation: `coverSelfSection T γ` is a
+*section* of `pullback.fst` (`coverSelfSection_fst`), `Etale` carries
+`MorphismProperty.HasOfPostcompProperty @Etale`, and `Over.forget` sends this
+slice pullback to a *scheme* pullback (pullback is a connected shape, so
+`PreservesLimitsOfShape` is an instance) — which is the step no site here had
+used, and it is what makes `(pullback.fst _ _).left` a base change of
+`(coverMap T).left`. So `selfTensorSpecCoproduct`, `sigmaSpec` and `[IsGalois]`
+are **all absent** from that file, and nothing about the coproduct is needed for
+this half.
+
+**What is actually owed, all of it**: joint surjectivity of the `γ`-sections on
+points of `(T_{k'} ×_T T_{k'}).left`. `hcov_of_jointlySurjective` derives `hcov`
+from that alone — one statement about points, with no sieve, no morphism
+property, no `picEt` and no slice in it. Aim there, and read that file's route
+note before budgeting it: every link (`pullbackSpecIso`, `FinitaryPreExtensive`
+by synthesis, and a `Sigma.reindex` for the `Type 0` vs `Type u` index) has been
+probed to exist. -/
 theorem hcov_iff_scheme_level (T : Over (Spec (CommRingCat.of k))) :
     Sieve.generate (Presieve.ofArrows
         (fun _ : k' ≃ₐ[k] k' => (restrictTest k k').obj (baseTest (k' := k') T))
