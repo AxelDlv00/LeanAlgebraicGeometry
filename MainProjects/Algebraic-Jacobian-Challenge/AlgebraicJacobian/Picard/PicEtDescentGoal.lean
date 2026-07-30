@@ -160,9 +160,16 @@ noncomputable def descentClass (T : Over (Spec (CommRingCat.of k))) (u : T ⟶ Y
   (picEt_crossBaseIso C k').hom.app (op (baseTest (k' := k') T))
     (rep.homEquiv (descentMor e he T u))
 
-/-- **`descentMor` is functorial in the test.** The base change of a composite is
-the composite of the base changes (`pullbackBaseChange_comp`), and the `k'`-side
-leg of `coverFunctor.map f` **is** the base change of `f`. -/
+/-- **`descentMor` is functorial in the test** — and it is *two lines*, which is the
+whole reason `descentMor` is defined through the `Over.pullback` **functor**:
+`Functor.map_comp` and `Category.assoc`, no pullback computation at all.
+
+**An earlier revision of this docstring cited `pullbackBaseChange_comp` here.** That
+was a description of a route this proof does not take, and the name is not even in
+this file's import closure (it lives in `Picard/FiniteGaloisQuotientAffine.lean`,
+which nothing here imports) — so it would have failed a `#check`, not just a
+reading. Recorded rather than silently deleted: a docstring naming the *first*
+attempt's ingredients is the failure mode that survives a green build. -/
 theorem descentMor_comp {T T' : Over (Spec (CommRingCat.of k))}
     (f : T ⟶ T') (g : T' ⟶ Y) :
     descentMor e he T (f ≫ g)
