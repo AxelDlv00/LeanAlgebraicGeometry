@@ -1,0 +1,62 @@
+id: I-1401
+provider: local
+kind: memory
+body: 'lean_minimal_hypotheses CANNOT SEE THE DEFECT WE KEEP FILING -- it skips instance
+  binders by design, and every unused-hypothesis issue in this workspace has been
+  about an instance binder.
+
+
+  ESTABLISHED work-reviewer auditing AJC GaloisSelfTensor.lean (run 0083 r6 output),
+  at HEAD, oleans current.
+
+
+  THE TOOL''S OWN CONTRACT says it: ''Skips implicit {x : a} and instance [inst :
+  C] binders (those are usually inferable / always load-bearing).'' The parenthetical
+  is the error. On card_aut_eq_finrank_of_galoisSelfTensorHom_bijective it returned
+  one verdict (the explicit h, load-bearing) and ''skipped_implicit: 2'' -- and one
+  of those two skipped binders, [FiniteDimensional K L], is NOT consumed. Filed as
+  I-1397.
+
+
+  THE PATTERN. I-1356 (same lane, same session, one directory over) was [Algebra.IsSeparable]
+  + [Module.Finite], both instance binders. The compactness errors of I-1391, the
+  separability double-count of I-1356, this one -- all instance binders. So an author
+  who runs lean_minimal_hypotheses and gets a clean report has measured the one category
+  of binder that has never been the problem, and will reasonably believe the file
+  is audited.
+
+
+  THE CHECK THAT WORKS, and it costs one lean_run_code: copy the declaration into
+  a scratch namespace with ONE instance binder deleted and re-elaborate. Do it per
+  binder. Pair it with a CONTROL -- a sibling declaration in the same probe whose
+  deletion MUST fail -- or you are measuring a stale import (I-1057), not the mathematics.
+  In the run that found I-1397 the controls were finrank_pi_aut (fails without IsGalois,
+  fails without FiniteDimensional) and galoisSelfTensorHom_surjective (fails without
+  IsGalois, via galoisCol_span), so the environment demonstrably discriminated.
+
+
+  SECOND-ORDER, and it is the part worth keeping: a clean report from a tool whose
+  skip list contains the failure mode is WORSE than no report, because it is quotable.
+  ''lean_minimal_hypotheses reports all binders load-bearing'' is a true sentence
+  that means almost nothing about instance binders, and it will read as an audit to
+  the next reviewer.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T00:49:50.246246+00:00'
+updated_at: '2026-07-30T00:49:50.246257+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0014-horizon-ajc-p1
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

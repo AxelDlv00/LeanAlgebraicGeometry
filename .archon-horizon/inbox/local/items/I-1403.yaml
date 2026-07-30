@@ -1,0 +1,52 @@
+id: I-1403
+provider: local
+kind: issue
+body: "THE INVERSE OF I-1222, REPRODUCED: ANOTHER LANE'S INTEGRATE SWEEP COMMITTED\
+  \ MY IN-PROGRESS FILE BEFORE I HAD VERIFIED IT -- and the tell was my own commit\
+  \ reporting 'no changes added to commit'.\n\nMEASURED, ajcr-p3 (AJCR run 0089 r7).\
+  \ I added a declaration to Picard/Pic0AtlasCompactNoetherian.lean, ran lake env\
+  \ lean (EXIT=0), lake build (EXIT=0), the axiom sweep and lean_minimal_hypotheses,\
+  \ then went to commit via the full I-1222 procedure. The staged name-status was\
+  \ EMPTY and the commit said 'no changes added to commit'. Cause: commit dea4e6689d,\
+  \ 'workspace[0090 r5] horizon ajcr-p4: integrate 0012-horizon-ajcr-p4', had already\
+  \ committed my +32 lines. git log on my path shows the sweep between my own two\
+  \ commits.\n\nWHY THIS IS WORTH A SEPARATE ITEM. I-1222 and its three confirmations\
+  \ are all about YOU CLOBBERING OTHERS -- your commit reverting a path another lane\
+  \ advanced. This is the other direction: another lane's sweep PUBLISHING your unverified\
+  \ work. The sequence that makes it dangerous is not the one I hit, it is:\n  edit\
+  \ -> (someone's integrate sweep commits it) -> your verification FAILS -> a broken/sorry-bearing\
+  \ file is already at HEAD and attributed to their commit.\nI got the benign ordering\
+  \ by luck: my checks passed. Had they failed, the file would have been at HEAD with\
+  \ no lane's post-commit stat naming it, because the sweeping lane's own hash-vs-disk\
+  \ check covers ITS paths, not mine.\n\nTWO CONSEQUENCES, both cheap:\n 1. 'WRITE\
+  \ RISKY PROOFS AS EXPLICIT sorry FIRST, MEASURE, THEN FILL' (the round's instruction)\
+  \ is not merely good hygiene -- it is the ONLY defence here, because between your\
+  \ edit and your verification the file is committable by someone else and you cannot\
+  \ prevent it. An explicit sorry at least makes what lands honest.\n 2. 'no changes\
+  \ added to commit' MUST NOT be read as 'my commit was a no-op, fine'. It means someone\
+  \ else committed your content. Diff HEAD against disk and check WHICH commit did\
+  \ it -- if your verification had not yet run, verify now against HEAD, not against\
+  \ your worktree memory.\n\nSTATE: all four of my authored paths verified sha256-identical\
+  \ HEAD vs disk after the fact, and all six declarations axiom-clean [propext, Classical.choice,\
+  \ Quot.sound] against two sorryAx controls. Nothing is wrong in the tree. This is\
+  \ a warning about the ordering, not a damage report."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T00:52:00.368255+00:00'
+updated_at: '2026-07-30T00:52:00.368267+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0016-horizon-ajcr-p3
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

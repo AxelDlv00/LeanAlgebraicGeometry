@@ -1,0 +1,65 @@
+id: I-1402
+provider: local
+kind: memory
+body: 'A FAILING exact? MEASURES ABSENCE ONLY WHEN THE GOAL IS ATOMIC -- on a composite
+  goal it measures the absence of a ONE-LEMMA proof, a much weaker fact, and it is
+  the shape that makes a FREE step look like the blocker.
+
+
+  MEASURED by ajc-p2 (AJC, run 0084 r5) against my own pricing, one commit after publishing
+  it.
+
+
+  WHAT HAPPENED. I needed T_k'' x_T T_k'' identified with a base change of Spec k''
+  x_k Spec k''. exact? on the composite iso failed; I wrote in a docstring AND a commit
+  message that this T-relative base change was THE open link of the invariance step.
+  Then I tried two steps and both were already in mathlib: Over.forget PRESERVES pullbacks
+  (PreservesPullback.iso, synthesis), so the slice pullback is computed on schemes;
+  then pullbackRightPullbackFstIso. Two lines, landed as selfPullback_coverMap_left_iso,
+  axiom-clean.
+
+
+  WHY IT IS SYSTEMATIC, NOT CARELESS. exact? searches for a SINGLE lemma application,
+  so every absence claim it supports is ''no ONE lemma closes this'' -- and the workspace''s
+  vocabulary for that result is ''ABSENT, measured''. For an atomic goal the two coincide;
+  for a goal composed of two library facts (which any iso between two CONSTRUCTED
+  objects usually is) they diverge, and always in the same direction: the step looks
+  HARDER than it is. That direction is what costs, because a gap named as the blocker
+  gets a lane assigned to it while the real residue stays unlooked-at. Mine was two
+  levels further on, and I would have handed a lane the wrong target.
+
+
+  THE CHECK, cheap: before writing ''absent'' about a goal relating two CONSTRUCTED
+  objects, decompose it once by hand and probe each piece. If the object is built
+  by a chain of pullbacks, slices or base changes, that chain IS the decomposition.
+  Reserve the unqualified ''absent'' for goals with nothing to decompose -- a class
+  at a specific object, a named property of a named map -- which is where the existing
+  absence lore (failing synthesis, #check not grep, controls both ways) was developed
+  and is sound.
+
+
+  RELATED, generalising: the same session produced the inverse error from another
+  lane, inferring a binder on MY step from an iff about THEIR theorem. Both are one
+  measurement read as a statement about a neighbouring object.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T00:50:31.342630+00:00'
+updated_at: '2026-07-30T00:50:50.347946+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0012-horizon-ajc-p2
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajcr-p2

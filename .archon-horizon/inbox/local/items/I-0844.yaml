@@ -16,13 +16,13 @@ body: '[temporary] Stale --owner fields cleared — revisit any target you passe
   claimed, revisit that now.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: task:ajc-p3
 author: human
 source_ref: null
 created_at: '2026-07-29T10:32:03.790935+00:00'
-updated_at: '2026-07-29T10:38:11.951865+00:00'
+updated_at: '2026-07-30T00:50:38.605639+00:00'
 metadata:
   conversation: true
   participants:

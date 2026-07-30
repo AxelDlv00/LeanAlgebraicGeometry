@@ -1,0 +1,53 @@
+id: I-1400
+provider: local
+kind: info
+body: "RELEASE ajc-p2 (run 0084 r5): AJC.picrep.etale-rep.invariance -- ADVANCED,\
+  \ seam sorry untouched. Owner cleared at HEAD (verified with git show, not the worktree),\
+  \ status active.\n\nDO NOT REDO. Picard/PicEtDescentExistence.lean, rooted, 6 declarations,\
+  \ ZERO sorries, ALL axiom-clean [propext, Classical.choice, Quot.sound] against\
+  \ fgaPicardRepresentability as a control firing sorryAx in the same run. lake build\
+  \ AlgebraicJacobian EXIT=0 (8879 jobs).\n * generate_singleton_coverMap_eq -- the\
+  \ SLICE singleton sieve on coverMap T EQUALS the overEquiv-transport of the SCHEME\
+  \ sieve on pullback.fst. This is why nothing could consume the landed sheaf axiom,\
+  \ and why PicEtDescentAssembly's uniqueness proof redid the factorisation inline.\n\
+  \ * isSheafFor_picEt_singleton_coverMap, exists_unique_descend_picEt -- the existence\
+  \ half in single-morphism form: the statement PicEtDescentAssembly SS4 recorded\
+  \ as absent.\n * compatible_of_pullback_projections + exists_unique_descend_picEt_of_projections\
+  \ -- compatibility reduces to the TWO canonical projections, the form a gamma-invariance\
+  \ consumer can aim at.\n * selfPullback_coverMap_left_iso -- the slice self-pullback\
+  \ IS a base change of Spec k' x_k Spec k'.\n\nNON-VACUITY: both obvious refutations\
+  \ probed and OPEN. Dropping the compatibility hypothesis leaves the exists-unique\
+  \ open; the same conclusion at an ARBITRARY morphism is open.\n\nRESIDUE, narrower\
+  \ than any site previously said: NOT the splitting (p1 landed galoisSelfTensorEquiv),\
+  \ NOT the T-relative base change (free). It is the MORPHISM-LEVEL COHERENCE -- the\
+  \ Gal-coproduct's gamma-component inclusion composed with the two projections giving\
+  \ id and gamma. Ingredients all exist; what is owed is a computation.\n\nBINDER\
+  \ FINDING, contradicting a claim made to me: p1 showed the splitting is bijective\
+  \ IFF IsGalois and inferred a Galois binder is forced on invariance. FALSE about\
+  \ the descent -- from full signatures per I-1292, mine carry [IsSeparable]+[Module.Finite],\
+  \ NO IsGalois; the iso only [Algebra k k']. Descent of CLASSES works at ANY finite\
+  \ separable level; Galois enters exactly ONCE, at the bridge.\n\nTWO RETRACTIONS\
+  \ of my own, fixed in-tree: I priced the T-relative base change as the open link\
+  \ on a failing exact? (it decomposes into two mathlib lemmas); and I-1367 said p3's\
+  \ r4 closed the finite-Galois residue -- it did not.\n\nCLOSES NO seam sorry, witnesses\
+  \ NO antecedent for any curve."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T00:49:42.152101+00:00'
+updated_at: '2026-07-30T00:49:42.152123+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0012-horizon-ajc-p2
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
