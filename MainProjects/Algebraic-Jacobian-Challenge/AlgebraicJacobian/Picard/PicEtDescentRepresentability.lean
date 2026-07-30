@@ -13,7 +13,65 @@ import AlgebraicJacobian.Picard.GaloisDescent.PicEtGaloisBridge
 
 `AJC.picrep.etale-rep.descent-assembly`.
 
-WORK IN PROGRESS — bodies are `sorry` while the statements are measured.
+## What this file is, and what it is not
+
+Four lanes have been filling **antecedents** of the `picEt` field-descent step, and
+for four rounds nothing stated the theorem they are antecedents *of*. Three sites
+measured that absence independently: `Picard/FGAPicRepresentability.lean`'s
+four-input paragraph ("There is **still** no declaration anywhere in this project
+stating the theorem they are antecedents *of*"), `I-1312`, and
+`Picard/PicEtDescentAssembly.lean`'s own §4. That is the recorded
+*scoreboard-of-antecedents-has-no-goal* shape, at the exact seam that named it.
+
+This file writes the consumer. `representableBy_of_coverCompatibleEquiv` takes data
+**over the cover** and concludes a `RepresentableBy` **over `k`** — so it crosses
+the descent step rather than restating one side of it, which is what
+`representableByRestrict_of_baseChange` was refuted for doing (`I-1312`).
+
+**It closes no `sorry` and witnesses no antecedent of
+`Scheme.fgaPicardRepresentability` for any curve.** `Y` and the `Equiv` family are
+hypotheses; `hcov` is undischarged above the monomorphism level. What changes is
+that `ajc-p1`'s invariance bridge and `ajc-p4`'s Hom side now have a stated
+consumer, so their outputs are *checkably composable* instead of believed to be.
+
+## The three things measured here rather than asserted
+
+**1. The cover is Mathlib's, and `coverMap` is an adjunction counit.** `T ↦ T_{k'}`
+is `Over.pullback (specMapAlgebra k k') ⋙ Over.map (specMapAlgebra k k')`, and
+`coverMap_eq_counit` proves (by `simp`) that `PicEtDescentAssembly.lean`'s hand-built
+`coverMap` **is** the counit of `Over.map ⊣ Over.pullback`. Consequences: the cover
+is functorial for free, the cover square is counit naturality
+(`coverFunctor_map_comp_coverMap`), and `coverRestrictNat` is
+`whiskerRight (NatTrans.op counit) (picEt C)` rather than a hand-built
+`NatTrans`. A lane extending the cover should take its functoriality from there.
+
+**2. The invariance bridge needs no finiteness or separability — on EITHER side.**
+`isGalInvariant_of_isCoverCompatible` and `isCoverCompatible_of_isGalInvariant`
+both carry `omit [Algebra.IsSeparable k k'] [Module.Finite k k']`, linter-confirmed.
+So in this whole cluster those binders are consumed at exactly **one** place —
+covering-sieve membership, i.e. `isSheafFor_picEt_singleton_coverMap` — and nowhere
+else. They are *not* the price of the Galois side.
+
+**3. The assembly is a CHANGE OF COORDINATES, not a strengthening**, and that is
+recorded as a theorem (`coverCompatibleEquiv_of_representableBy`) rather than as a
+hedge. A representation of `picEt C` yields back exactly the data the assembly
+consumes, naturality included, so the two are inter-derivable. The honest reading:
+*to represent `picEt C` it is equivalent to represent the cover-compatible-classes
+functor.* That is a real repricing — the right-hand side is what a Galois quotient
+of a `k'`-side representation produces — but it is **not** a discount on the seam.
+
+## What is still owed, named at the declaration and not restated more cheaply
+
+* the `Equiv` family itself, from a `k'`-side representation and its Galois
+  quotient — `ajc-p4`'s `homClassMap_of_galoisQuotient` is its injective half, and
+  the scheme-level quotient (`G2(c)`, non-affine) is `ajc-p3`'s row;
+* `hcov`, `ajc-p1`'s covering antecedent, carried per-test by
+  `representableBy_of_galInvariantEquiv`. Inhabited at every extension with
+  `Mono (specMapAlgebra k k')` (`etaleTopology_generate_coverSelfSection_of_mono`),
+  hence not vacuous, and **open at a nontrivial Galois level**;
+* `k'`-side representability itself — the campaign's undischarged output.
+
+**No hypothesis on `C(k)`** (`I-0491`).
 -/
 
 set_option autoImplicit false
@@ -179,6 +237,34 @@ noncomputable def representableBy_of_coverCompatibleEquiv
         ((restrictCompatEquiv (k' := k') C T').symm (e T' g))).1
     rw [Equiv.apply_symm_apply]
     exact he f g
+
+/-- **THE CONVERSE — so the assembly is a CHANGE OF COORDINATES, not a
+strengthening, and this file says so as a theorem rather than as a caveat.**
+
+A representation of `picEt C` by `Y` yields exactly the data
+`representableBy_of_coverCompatibleEquiv` consumes: the per-test `Equiv` *and* its
+naturality. Composed with that theorem, the two are **inter-derivable**.
+
+This is the check a "reduction" claim owes before publication. Both directions are
+proved, so the honest description of the assembly is: *to represent `picEt C` it is
+equivalent to represent the cover-compatible-classes functor*. That is a genuine
+repricing — the right-hand side is what a Galois quotient of a `k'`-side
+representation produces, and the left-hand side is clause (1) field 1 — but it is
+**not** a discount on the seam and must not be reported as one. -/
+noncomputable def coverCompatibleEquiv_of_representableBy
+    (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    {Y : Over (Spec (CommRingCat.of k))}
+    (rep : (picEt C).RepresentableBy Y) :
+    Σ' e : ∀ T : Over (Spec (CommRingCat.of k)), (T ⟶ Y) ≃ CoverCompatible (k' := k') C T,
+      ∀ {T T' : Over (Spec (CommRingCat.of k))} (f : T ⟶ T') (g : T' ⟶ Y),
+        (e T (f ≫ g)).1
+          = ((coverFunctor (k := k) (k' := k')).op ⋙ picEt C).map f.op (e T' g).1 :=
+  ⟨fun T => rep.homEquiv.trans (restrictCompatEquiv (k' := k') C T), by
+    intro T T' f g
+    change (picEt C).map (coverMap (k' := k') T).op (rep.homEquiv (f ≫ g)) = _
+    rw [rep.homEquiv_comp]
+    exact restrictCompatEquiv_naturality (k' := k') C f (rep.homEquiv g)⟩
 
 /-! ### The Γ-INVARIANT form, which is what a `G1` consumer holds -/
 
