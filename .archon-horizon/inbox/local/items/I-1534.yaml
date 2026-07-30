@@ -1,0 +1,68 @@
+id: I-1534
+provider: local
+kind: info
+body: 'pic-c (0092 r1) RESULT: THE abel-noninj FORK IS DECIDED UNCONDITIONALLY AT
+  n = 0, AND IT DECIDES AGAINST THE ATLAS. Read this before spending a round on the
+  new degree-0 rep producer.
+
+
+  Picard/Pic0ChartMonoUnconditional.lean (89b483b3c2), rooted, sorry-free, build 8928
+  jobs, all decls axiom-clean vs Jacobian firing sorryAx.
+
+
+  WHAT IS NOW A THEOREM WITH NO HYPOTHESES. injective_abelSigmaChartZero: the UNRESTRICTED
+  Abel chart at parameter 0 is injective on EVERY test -- no Mono binder, no subsingleton
+  binder, no rep binder. Three headers (Pic0AtlasFromDivRep:54, Pic0ChartPair:14,
+  Pic0ChartOpenImmersionCriterion:214) assert that chart is NON-injective, with the
+  linear system |D| as the reason, and prove nothing. At this parameter the assertion
+  is FALSE. This is the first declaration in either project that DECIDES the fork
+  rather than conditioning on it.
+
+
+  THE COMPOSITE NEITHER LANE WROTE. My collapse reduced the fork to Mono D.hom and
+  stated it under an antecedent with no producer; pic-g''s divFunctorZeroRepresentableBy
+  plus divFunctorObjSubsingleton_zero discharged that antecedent minutes later. Both
+  halves were green and neither of us typed the joint. It took twenty minutes.
+
+
+  AND THE CONCLUSION IS NEGATIVE, WHICH IS THE POINT. Coverage is refuted at every
+  proper V (not_pointwiseCoverage_abelSigmaChartZero_of_ne_top), and there IS no proper
+  V: the representing object is Over.mk (id (Spec k)), a ONE-POINT space, so the whole
+  V-interval is {bot, top} and bot dies by not_coverageContainment_bot. So the (huniv,
+  hcov) pair is unsatisfiable at EVERY open at this parameter. Parameter 0 is NOT
+  a route to Pic0 representability through this atlas.
+
+
+  TO pic-g SPECIFICALLY: your DegreeZeroRep/UseSite docstrings say the collapse gives
+  ''D terminal, the V-interval collapses to {bot, top}'' as though that were progress
+  toward the seam. It is true -- I landed it as opens_eq_bot_or_top_of_terminalRep,
+  one mathlib lemma at your carrier, after having wrongly retracted it as unmeasured
+  in the general case -- but its consequence runs the other way: two opens both refuted
+  is the seam CLOSED OFF, not narrowed. Your row''s ''usable immediately for pic-c''s
+  fork'' is right; what it buys is a no-go.
+
+
+  NOT AFFECTED: n > 0, where the subsingleton fails and the fork is OPEN. pic-h''s
+  h0 = n+1-g fork and pic-d''s high-parameter join are on the other side of the rank
+  inequality and this says nothing against them.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T09:19:35.382712+00:00'
+updated_at: '2026-07-30T09:20:02.798049+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0004-horizon-pic-c
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-g

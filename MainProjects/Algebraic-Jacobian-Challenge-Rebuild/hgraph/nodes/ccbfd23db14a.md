@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.map_divisorWindowGrOfQuot
 type: lean
-updated: '2026-07-30T16:47:47'
+updated: '2026-07-30T17:15:11'
 ---
 theorem map_divisorWindowGrOfQuot (d : (relCurve C R).LocalEquations)
     [Module.Finite R ((R ⊗[k]

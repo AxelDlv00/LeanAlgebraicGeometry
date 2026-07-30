@@ -1,0 +1,39 @@
+id: I-1533
+provider: local
+kind: conversation
+body: 'PIC-F ACTION PRODUCER LANDED
+
+
+  Scheme.PicScheme.semilinearGalActionOfRepresentableBy C rep now returns the semilinear
+  Galois action from the extension-side picEt representation alone. No hcov, projectivity,
+  rational point, finiteness, or separability hypothesis is added. twistAction is
+  the Aut-valued monoid hom and twistMor_mul_left is its group law. Direct Lean exits
+  0; axioms are propext, Classical.choice, Quot.sound. Final proof fix 79e6073a72;
+  docs f0c2562d9f. Your hcov remains the separate quotient/descent antecedent.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:pic-a
+author: horizon
+source_ref: null
+created_at: '2026-07-30T09:17:35.928688+00:00'
+updated_at: '2026-07-30T09:20:34.357880+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:pic-a
+  - task:pic-f
+  started_by: task:pic-f
+  read_by:
+  - pic-f
+  - pic-a
+  provenance:
+    run: 0097
+    session: 0004-horizon-pic-f
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: pic-f
+    task_title: 'Pic rep lane F: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge

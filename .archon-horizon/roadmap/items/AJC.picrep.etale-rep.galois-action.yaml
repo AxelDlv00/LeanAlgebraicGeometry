@@ -4,7 +4,7 @@ title: 'The semilinear Galois action on a picEt-representing scheme: FREE from t
 projects:
 - Algebraic-Jacobian-Challenge
 summary: ''
-status: active
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -27,5 +27,7 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.etale-rep
-  updated_at: '2026-07-30T05:16:18.938406+00:00'
-  owner: pic-f
+  updated_at: '2026-07-30T09:21:08.228020+00:00'
+  pinned_commits:
+  - f0c2562d9f630160ba3840109ddb1120eb45aae7
+  - 79e6073a7286c771bb494bc588ac2a13a8bc580a
