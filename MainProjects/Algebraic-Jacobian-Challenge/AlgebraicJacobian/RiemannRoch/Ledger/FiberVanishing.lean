@@ -55,11 +55,11 @@ submodule-of-submodule bridge, paid once behind the named submodule
 
 ## The endgame
 
-`Submodule.eventually_eq_top_of_monotone_of_iSup_eq_top` is the pure linear-algebra
-stabilization: an increasing `ℕ`-chain of submodules with join `⊤` whose base has
-Noetherian quotient is eventually `⊤` (images in the quotient by the base stabilize by
-`monotone_stabilizes_iff_noetherian`, and the stabilized value must be everything).
-Instantiated with `Aₙ` inside `N`:
+`Submodule.eventually_eq_top_of_monotone_of_iSup_eq_top` is the qualitative linear-algebra
+stabilization. The quantitative refinement
+`Submodule.eq_top_at_finrank_quotient_of_monotone_of_iSup_eq_top_of_stable` reaches the top by
+the dimension of the initial quotient whenever one plateau propagates to the next. Instantiated
+with `Aₙ` inside `N`:
 
 * the chain is increasing (`fiberLattice_mono`) and exhausts `N` (`iSup_fiberLattice`,
   THE EXHAUSTION — pole clearing at the finite fiber over `[1 : 0]`);
@@ -67,21 +67,25 @@ Instantiated with `Aₙ` inside `N`:
   every divisor sheaf has finite `H¹` by the landed dévissage
   (`moduleFinite_hModule_divisorSheaf_one`, `Ledger/ChiFiniteness.lean`)
   — the only place the base finiteness (properness) inputs enter;
+* multiplication by the inverse fiber coordinate advances the chart-zero summand and preserves
+  the chart-one summand, so a plateau propagates (`fiberLattice_stable`).
 
-so `Aₙ = ⊤` for all large `n`, and through the identification the twisted `H¹` is a
-subsingleton — **the fibrewise large-twist vanishing**
+Thus `Aₙ = ⊤` by `n = dim (N ⧸ A₀) = h¹(𝒪(D))`, yielding the explicit theorem
+`subsingleton_hModule_divisorSheaf_one_at_h1_of_isDominant_toP1`. The qualitative
+**fibrewise large-twist vanishing**
 (`AlgebraicGeometry.subsingleton_hModule_divisorSheaf_one_of_isDominant_toP1`): per-`D`
-`n₀`, no duality, no `R¹f_*`. The form for a finite dominant `π` compatible with the structure
-morphisms (`subsingleton_hModule_divisorSheaf_one_of_isFinite_toP1`) discharges the base
+`n₀`, no duality, no `R¹f_*`, remains as a compatibility interface. The finite-map forms
+(`subsingleton_hModule_divisorSheaf_one_of_isFinite_toP1` and
+`subsingleton_hModule_divisorSheaf_one_at_h1_of_isFinite_toP1`) discharge the base
 `H¹(𝒪_Y)`-finiteness input from finiteness of `π`
 (`moduleFinite_hModule_one_of_isFinite_toP1`).
 
 ## Provenance
 
-AJCR `RiemannRoch/FLVVanishing.lean`, bodies unchanged.  The mathematics is AJCR's, argument
-and all; what is AJC's is the carrier substitution described in `Ledger/DivisorSheafQcoh.lean`
-(the Picard presentation cone dropped for the `coeffAt` calculus) and the reading of the result
-against AJC's own χ-ledger in `Ledger/FiberBound.lean`.  Do not read this as new mathematics.
+The quotient carrier and qualitative stabilization originated in AJCR
+`RiemannRoch/FLVVanishing.lean`. AJC adds the plateau-propagation and explicit `h¹` bound here;
+the carrier substitution is described in `Ledger/DivisorSheafQcoh.lean` and the result is read
+against AJC's own χ-ledger in `Ledger/FiberBound.lean`.
 -/
 
 set_option autoImplicit false
@@ -124,6 +128,87 @@ theorem Submodule.eventually_eq_top_of_monotone_of_iSup_eq_top {R : Type u} {M :
   have hcomap := congrArg (Submodule.comap (A 0).mkQ) hfn
   rwa [Submodule.comap_map_mkQ, Submodule.comap_top,
     sup_eq_right.mpr (hmono (Nat.zero_le n))] at hcomap
+
+/-- **Quantitative stabilization of a plateau-propagating chain.** An exhausting increasing
+chain in a finite-dimensional space reaches the top by the ambient dimension, provided any
+equality between consecutive terms propagates to the following step. Indeed, before the top is
+reached every inclusion is strict, so each step raises finrank. -/
+theorem Submodule.eq_top_at_finrank_of_monotone_of_iSup_eq_top_of_stable
+    {K : Type u} {M : Type v} [Field K] [AddCommGroup M] [Module K M]
+    [FiniteDimensional K M] {A : ℕ → Submodule K M}
+    (hmono : Monotone A) (hsup : ⨆ n, A n = ⊤)
+    (hstable : ∀ n, A n = A n.succ → A n.succ = A n.succ.succ) :
+    A (Module.finrank K M) = ⊤ := by
+  have hplateau_top (n : ℕ) (h : A n = A n.succ) : A n = ⊤ := by
+    have hstep : ∀ k : ℕ, A (n + k) = A (n + k).succ := by
+      intro k
+      induction k with
+      | zero => simpa only [Nat.add_zero] using h
+      | succ k ih =>
+        rw [Nat.add_succ]
+        exact hstable (n + k) ih
+    have htail : ∀ k : ℕ, A (n + k) = A n := by
+      intro k
+      induction k with
+      | zero => simp only [Nat.add_zero]
+      | succ k ih =>
+        rw [Nat.add_succ, ← hstep k, ih]
+    apply eq_top_iff.mpr
+    rw [← hsup]
+    refine iSup_le (fun m => ?_)
+    rcases le_total m n with hmn | hnm
+    · exact hmono hmn
+    · obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le hnm
+      rw [htail k]
+  have hstrict (n : ℕ) (hn : A n ≠ ⊤) : A n < A n.succ := by
+    refine lt_of_le_of_ne (hmono (Nat.le_succ n)) ?_
+    exact fun h => hn (hplateau_top n h)
+  by_contra htop
+  have hdim : ∀ n ≤ Module.finrank K M, n ≤ Module.finrank K (A n) := by
+    intro n hn
+    induction n with
+    | zero => exact Nat.zero_le _
+    | succ n ih =>
+      have hn' : n ≤ Module.finrank K M := Nat.le_trans (Nat.le_succ n) hn
+      have hne : A n ≠ ⊤ := by
+        intro hAn
+        have hle : A n ≤ A (Module.finrank K M) := hmono hn'
+        exact htop (eq_top_mono hle hAn)
+      have hlt := Submodule.finrank_lt_finrank_of_lt (hstrict n hne)
+      exact Nat.succ_le_of_lt (ih hn' |>.trans_lt hlt)
+  have hlt := Submodule.finrank_lt htop
+  exact (not_lt_of_ge (hdim _ le_rfl)) hlt
+
+/-- Quotient form of quantitative stabilization. The bound is the dimension of the initial
+quotient rather than the generally much larger ambient module. -/
+theorem Submodule.eq_top_at_finrank_quotient_of_monotone_of_iSup_eq_top_of_stable
+    {K : Type u} {M : Type v} [Field K] [AddCommGroup M] [Module K M]
+    {A : ℕ → Submodule K M} (hmono : Monotone A) (hsup : ⨆ n, A n = ⊤)
+    [FiniteDimensional K (M ⧸ A 0)]
+    (hstable : ∀ n, A n = A n.succ → A n.succ = A n.succ.succ) :
+    A (Module.finrank K (M ⧸ A 0)) = ⊤ := by
+  let B : ℕ → Submodule K (M ⧸ A 0) := fun n => (A n).map (A 0).mkQ
+  have hmonoB : Monotone B := fun _ _ h => Submodule.map_mono (hmono h)
+  have hsupB : ⨆ n, B n = ⊤ := by
+    calc
+      (⨆ n, B n) = Submodule.map (A 0).mkQ (⨆ n, A n) :=
+        (Submodule.map_iSup _ _).symm
+      _ = ⊤ := by rw [hsup, Submodule.map_top, Submodule.range_mkQ]
+  have hstableB : ∀ n, B n = B n.succ → B n.succ = B n.succ.succ := by
+    intro n h
+    have hc := congrArg (Submodule.comap (A 0).mkQ) h
+    change Submodule.comap (A 0).mkQ (Submodule.map (A 0).mkQ (A n)) =
+      Submodule.comap (A 0).mkQ (Submodule.map (A 0).mkQ (A n.succ)) at hc
+    rw [Submodule.comap_map_mkQ, Submodule.comap_map_mkQ,
+      sup_eq_right.mpr (hmono (Nat.zero_le n)),
+      sup_eq_right.mpr (hmono (Nat.zero_le n.succ))] at hc
+    exact congrArg (Submodule.map (A 0).mkQ) (hstable n hc)
+  have hB := Submodule.eq_top_at_finrank_of_monotone_of_iSup_eq_top_of_stable
+    hmonoB hsupB hstableB
+  change Submodule.map (A 0).mkQ (A (Module.finrank K (M ⧸ A 0))) = ⊤ at hB
+  have hc := congrArg (Submodule.comap (A 0).mkQ) hB
+  rwa [Submodule.comap_map_mkQ, Submodule.comap_top,
+    sup_eq_right.mpr (hmono (Nat.zero_le _))] at hc
 
 end Stabilization
 
@@ -176,6 +261,24 @@ theorem iSup_fiberLatticeOverlap (D : Y.CurveDivisor) :
   obtain ⟨m, hm⟩ := (Submodule.mem_iSup_of_directed _
     (monotone_nat_of_le_succ (fiberLattice_mono π D)).directed_le).mp hs
   exact Submodule.mem_iSup_of_mem m hm
+
+/-- A plateau in the fiber lattice remains a plateau after passing to the fixed overlap
+ambient. This is the stability input for quantitative finite-dimensional stabilization. -/
+theorem fiberLatticeOverlap_stable (D : Y.CurveDivisor) (n : ℕ)
+    (h : fiberLatticeOverlap π D n = fiberLatticeOverlap π D n.succ) :
+    fiberLatticeOverlap π D n.succ = fiberLatticeOverlap π D n.succ.succ := by
+  have hfull : fiberLattice π D n = fiberLattice π D n.succ := by
+    apply le_antisymm
+    · exact fiberLattice_mono π D n
+    · intro s hs
+      have hsN : s ∈ divisorSections K D (fiberChart₀ π ⊓ fiberChart₁ π) :=
+        fiberLattice_le_overlap π D n.succ hs
+      have hs' : (⟨s, hsN⟩ : divisorSections K D (fiberChart₀ π ⊓ fiberChart₁ π)) ∈
+          fiberLatticeOverlap π D n.succ := hs
+      rw [← h] at hs'
+      exact hs'
+  unfold fiberLatticeOverlap
+  rw [fiberLattice_stable π D n hfull]
 
 variable [IsAffineHom π]
 
@@ -283,6 +386,45 @@ noncomputable def fiberLatticeH1Equiv (D : Y.CurveDivisor) (n : ℕ) :
           (divisorSections_add_nsmul_fiberWeilDivisor_overlap π D n)
           (fiberLattice π D n))))
 
+/-- **Explicit fiber-twist vanishing at the initial `h¹`.** The fiber lattice reaches the
+overlap ambient after at most
+`h¹(𝒪(D)) = dim (N / A₀)` strict steps. Consequently twisting `D` by exactly that many copies
+of the fiber divisor kills `H¹`. This is the quantitative form needed for field-uniform
+arguments: its index is intrinsic to `D`, rather than an independently chosen stabilization
+threshold. -/
+theorem subsingleton_hModule_divisorSheaf_one_at_h1_of_isDominant_toP1
+    [Module.Finite K (Sheaf.HModule (Y.moduleKSheaf K) 0)]
+    [Module.Finite K (Sheaf.HModule (Y.moduleKSheaf K) 1)]
+    (D : Y.CurveDivisor) :
+    Subsingleton (Sheaf.HModule (Y.divisorSheaf K
+      (D + Sheaf.h1 (Y.divisorSheaf K D) • fiberWeilDivisor π)) 1) := by
+  haveI hfin : Module.Finite K
+      (divisorSections K D (fiberChart₀ π ⊓ fiberChart₁ π)
+        ⧸ fiberLatticeOverlap π D 0) :=
+    Module.Finite.equiv (fiberLatticeH1Equiv π D 0)
+  have htop :=
+    Submodule.eq_top_at_finrank_quotient_of_monotone_of_iSup_eq_top_of_stable
+      (fiberLatticeOverlap_mono π D) (iSup_fiberLatticeOverlap π D)
+      (fiberLatticeOverlap_stable π D)
+  have hindex : Module.finrank K
+      (divisorSections K D (fiberChart₀ π ⊓ fiberChart₁ π)
+        ⧸ fiberLatticeOverlap π D 0) = Sheaf.h1 (Y.divisorSheaf K D) := by
+    have hzero : D + (0 : ℕ) • fiberWeilDivisor π = D := by
+      simp
+    change Module.finrank K
+      (divisorSections K D (fiberChart₀ π ⊓ fiberChart₁ π)
+        ⧸ fiberLatticeOverlap π D 0) =
+          Module.finrank K (Sheaf.HModule (Y.divisorSheaf K D) 1)
+    have heq := (LinearEquiv.finrank_eq (fiberLatticeH1Equiv π D 0)).symm
+    rw [hzero] at heq
+    exact heq
+  rw [hindex] at htop
+  haveI : Subsingleton
+      (divisorSections K D (fiberChart₀ π ⊓ fiberChart₁ π)
+        ⧸ fiberLatticeOverlap π D (Sheaf.h1 (Y.divisorSheaf K D))) :=
+    Submodule.Quotient.subsingleton_iff.mpr htop
+  exact (fiberLatticeH1Equiv π D (Sheaf.h1 (Y.divisorSheaf K D))).toEquiv.subsingleton
+
 /-- **Fibrewise large-twist vanishing** (the headline; conditional form
 for a dominant affine `π : Y ⟶ ℙ¹`): for every Weil divisor `D` on the curve bundle `Y`,
 the degree-one cohomology of the twisted divisor sheaf `𝒪(D + n·F)`, `F` the fiber divisor
@@ -335,6 +477,18 @@ theorem subsingleton_hModule_divisorSheaf_one_of_isFinite_toP1
   haveI : Module.Finite K (Sheaf.HModule (Y.moduleKSheaf K) 1) :=
     moduleFinite_hModule_one_of_isFinite_toP1 π hπ
   subsingleton_hModule_divisorSheaf_one_of_isDominant_toP1 π D
+
+/-- Finite-map form of explicit fiber-twist vanishing at the initial `h¹`; finiteness of `π`
+supplies the structure-sheaf `H¹` finiteness input. -/
+theorem subsingleton_hModule_divisorSheaf_one_at_h1_of_isFinite_toP1
+    [Module.Finite K (Sheaf.HModule (Y.moduleKSheaf K) 0)]
+    (π : Y ⟶ P1 K) [IsFinite π] [IsDominant π]
+    (hπ : π ≫ P1.structureMap K = Y ↘ Spec (CommRingCat.of K)) (D : Y.CurveDivisor) :
+    Subsingleton (Sheaf.HModule (Y.divisorSheaf K
+      (D + Sheaf.h1 (Y.divisorSheaf K D) • fiberWeilDivisor π)) 1) := by
+  haveI : Module.Finite K (Sheaf.HModule (Y.moduleKSheaf K) 1) :=
+    moduleFinite_hModule_one_of_isFinite_toP1 π hπ
+  exact subsingleton_hModule_divisorSheaf_one_at_h1_of_isDominant_toP1 π D
 
 end Main
 

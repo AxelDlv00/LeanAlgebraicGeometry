@@ -255,6 +255,75 @@ private lemma mem_boundedSections_unit_iff (s : Y.functionFieldˣ) (A : Y.CurveD
   refine forall_congr' (fun x => forall_congr' (fun hx => imp_congr_right (fun _ => ?_)))
   rw [Scheme.ord_val_eq K s hx, divisorBound_le_iff hx, CurveDivisor.coeffAt_neg]
 
+/-! ## Propagation of plateaus -/
+
+/-- Multiplication by the inverse fiber coordinate preserves the constant chart-one lattice. -/
+private lemma chart1_mul_inv_map_le (D : Y.CurveDivisor) :
+    Submodule.map (mulByUnit K (fiberCoordUnit π)⁻¹).toLinearMap
+        (divisorSections K D (fiberChart₁ π))
+      ≤ divisorSections K D (fiberChart₁ π) := by
+  rintro _ ⟨s, hs, rfl⟩
+  by_cases hs0 : (s : Y.functionField) = 0
+  · simp [hs0]
+  let s' : Y.functionFieldˣ := Units.mk0 (s : Y.functionField) hs0
+  have hne : (fiberChart₁ π : Set Y).Nonempty :=
+    ⟨genericPoint Y, (genericPoint_mem_preimage_inf π).2⟩
+  rw [divisorSections_of_nonempty K hne] at hs ⊢
+  simp only [LinearEquiv.coe_coe, Scheme.mulByUnit_apply]
+  have hs' : (s' : Y.functionField) ∈ Scheme.boundedSections K D (fiberChart₁ π) := hs
+  change (((fiberCoordUnit π)⁻¹ * s' : Y.functionFieldˣ) : Y.functionField)
+      ∈ Scheme.boundedSections K D (fiberChart₁ π)
+  rw [mem_boundedSections_unit_iff]
+  intro x hx hxV₁
+  have hsx := (mem_boundedSections_unit_iff s' D (fiberChart₁ π)).mp hs' x hx hxV₁
+  have hg : 0 ≤ coeffAt hx
+      (Scheme.divOf (Y ↘ Spec (CommRingCat.of K)) (fiberCoordUnit π)⁻¹) := by
+    rw [coeffAt_divOf_inv]
+    exact neg_nonneg.mpr
+      (fiberCoordUnit_coeffAt_divOf_nonpos_of_mem_chart₁ π hx hxV₁)
+  rw [Scheme.divOf_mul, CurveDivisor.coeffAt_add]
+  linarith
+
+/-- Multiplication by the inverse fiber coordinate carries the chart-zero lattice at step `n`
+exactly onto the chart-zero lattice at step `n + 1`. -/
+private lemma chart0_mul_inv_map (D : Y.CurveDivisor) (n : ℕ) :
+    Submodule.map (mulByUnit K (fiberCoordUnit π)⁻¹).toLinearMap
+        (divisorSections K (D + n • fiberWeilDivisor π) (fiberChart₀ π))
+      = divisorSections K (D + n.succ • fiberWeilDivisor π) (fiberChart₀ π) := by
+  rw [divisorSections_add_nsmul_fiberWeilDivisor_chart₀,
+    divisorSections_add_nsmul_fiberWeilDivisor_chart₀, ← Submodule.map_comp]
+  congr 1
+  ext s
+  simp only [LinearMap.coe_comp, LinearEquiv.coe_coe, Function.comp_apply,
+    Scheme.mulByUnit_apply, pow_succ', Units.val_mul, Units.val_inv_eq_inv_val]
+  ac_rfl
+
+/-- One application of multiplication by the inverse fiber coordinate advances the entire
+fiber lattice by one step, after adjoining its constant chart-one summand. -/
+private lemma fiberLattice_step (D : Y.CurveDivisor) (n : ℕ) :
+    Submodule.map (mulByUnit K (fiberCoordUnit π)⁻¹).toLinearMap (fiberLattice π D n)
+        ⊔ divisorSections K D (fiberChart₁ π)
+      = fiberLattice π D n.succ := by
+  rw [fiberLattice, fiberLattice, Submodule.map_sup, chart0_mul_inv_map,
+    divisorSections_add_nsmul_fiberWeilDivisor_chart₁,
+    divisorSections_add_nsmul_fiberWeilDivisor_chart₁, sup_assoc,
+    sup_eq_right.mpr (chart1_mul_inv_map_le π D)]
+
+/-- **A plateau propagates.** If two consecutive fiber lattices agree, then the following two
+also agree. Multiplication by the inverse fiber coordinate advances the growing chart-zero
+summand exactly one step and preserves the constant chart-one summand. -/
+theorem fiberLattice_stable (D : Y.CurveDivisor) (n : ℕ)
+    (h : fiberLattice π D n = fiberLattice π D n.succ) :
+    fiberLattice π D n.succ = fiberLattice π D n.succ.succ := by
+  calc
+    fiberLattice π D n.succ =
+        Submodule.map (mulByUnit K (fiberCoordUnit π)⁻¹).toLinearMap
+            (fiberLattice π D n) ⊔ divisorSections K D (fiberChart₁ π) :=
+      (fiberLattice_step π D n).symm
+    _ = Submodule.map (mulByUnit K (fiberCoordUnit π)⁻¹).toLinearMap
+          (fiberLattice π D n.succ) ⊔ divisorSections K D (fiberChart₁ π) := by rw [h]
+    _ = fiberLattice π D n.succ.succ := fiberLattice_step π D n.succ
+
 /-- On `V₀` the twist coefficient is that of `div u` (nonnegative), and `≥ 1` off `V₁`. -/
 private lemma coeffAt_add_nsmul_chart₀ (D : Y.CurveDivisor) (n : ℕ) {x : Y}
     (hx : x ≠ genericPoint Y) (_hxV₀ : x ∈ fiberChart₀ π) :
