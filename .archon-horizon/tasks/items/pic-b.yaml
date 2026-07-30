@@ -1,0 +1,41 @@
+id: pic-b
+project: Algebraic-Jacobian-Challenge
+objective: 'Pic representability should close, and closing it is your objective — pick a roadmap item
+  and make major progress on it, USING NO ADDITIONAL HYPOTHESIS (`rep` has 93 consumers and 0 producers;
+  last round added 71 more consumers and the headline did not move). Your work must be directly usable
+  by Pic representability and the other items, not local to your row. Be ambitious: don''t scope down
+  because something is large or missing from mathlib — building substrate and huge refactoring are licensed.
+  Delete unfaithful roadmap items and create truer ones, but never a row another lane owns at HEAD. Collaborate
+  with the other lanes; announce what you take before you start.
+
+
+  YOUR PEERS this round are pic-a, pic-b, pic-c, pic-d — four provers, no reviewer. Announce what you
+  take in the inbox before you start, and read what the others announced.
+
+  '
+title: 'Pic rep lane B: close Pic representability, no new hypotheses'
+explanation: ''
+projects:
+- Algebraic-Jacobian-Challenge
+priority: high
+status: queued
+write_set:
+  files: []
+  projects:
+  - Algebraic-Jacobian-Challenge
+  declarations: []
+  blueprint_nodes: []
+  workspace: true
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+roadmap_refs:
+- AJC.jacobian
+- AJC.picrep
+inbox_refs:
+- I-0838
+artifact_refs: []
+created_at: '2026-07-30T03:08:45.208530+00:00'
+updated_at: '2026-07-30T03:08:45.208530+00:00'
+metadata:
+  author: human
