@@ -209,6 +209,79 @@ theorem exists_unique_descend_picEt (C : Over (Spec (CommRingCat.of k)))
   rw [Presieve.isSheafFor_singleton] at h
   exact h x hx
 
+omit [Algebra.IsSeparable k k'] [Module.Finite k k'] in
+/-- **Compatibility reduces to the TWO canonical projections.**
+
+`exists_unique_descend_picEt`'s hypothesis quantifies over *every* pair of
+morphisms agreeing over `T`. This says it is enough to check the single pair
+`pullback.fst`, `pullback.snd` of the cover's self-pullback — so the hypothesis is
+a *checkable* condition on one object rather than a family of conditions.
+
+This is the step that makes the Galois bridge attachable: the standard
+`k' ⊗_k k' ≅ ∏_{Gal} k'` argument says something about exactly these two
+projections and nothing about arbitrary pairs. Without this reduction a consumer
+holding `γ`-invariance would have no target to aim at.
+
+Pure universal property — `pullback.lift` on the pair, then functoriality. **The
+`omit` is a measurement, not tidying**: neither `[Algebra.IsSeparable k k']` nor
+`[Module.Finite k k']` is consumed, which the linter confirms, so the reduction is
+not a fact about *this* cover at all — it holds at any morphism with a
+self-pullback. Recorded because "the step needs the cover" is exactly the sort of
+claim that gets inherited from a section header (`I-1316`). What needs the cover is
+`isSheafFor_picEt_singleton_coverMap`, one lemma up. -/
+theorem compatible_of_pullback_projections (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    (T : Over (Spec (CommRingCat.of k)))
+    (x : (picEt C).obj (Opposite.op ((restrictTest k k').obj (baseTest (k' := k') T))))
+    (h : (picEt C).map (pullback.fst (coverMap (k := k) (k' := k') T)
+              (coverMap (k := k) (k' := k') T)).op x
+        = (picEt C).map (pullback.snd (coverMap (k := k) (k' := k') T)
+              (coverMap (k := k) (k' := k') T)).op x)
+    {W : Over (Spec (CommRingCat.of k))}
+    (p₁ p₂ : W ⟶ (restrictTest k k').obj (baseTest (k' := k') T))
+    (hp : p₁ ≫ coverMap (k' := k') T = p₂ ≫ coverMap (k' := k') T) :
+    (picEt C).map p₁.op x = (picEt C).map p₂.op x := by
+  set l := pullback.lift (f := coverMap (k := k) (k' := k') T)
+    (g := coverMap (k := k) (k' := k') T) p₁ p₂ hp with hl
+  have h1 : l ≫ pullback.fst (coverMap (k := k) (k' := k') T)
+      (coverMap (k := k) (k' := k') T) = p₁ := pullback.lift_fst _ _ _
+  have h2' : l ≫ pullback.snd (coverMap (k := k) (k' := k') T)
+      (coverMap (k := k) (k' := k') T) = p₂ := pullback.lift_snd _ _ _
+  calc (picEt C).map p₁.op x
+      = (picEt C).map (l ≫ pullback.fst (coverMap (k := k) (k' := k') T)
+          (coverMap (k := k) (k' := k') T)).op x := by rw [h1]
+    _ = (picEt C).map l.op ((picEt C).map (pullback.fst
+          (coverMap (k := k) (k' := k') T) (coverMap (k := k) (k' := k') T)).op x) := by
+          simp only [op_comp, Functor.map_comp, CategoryTheory.comp_apply]
+    _ = (picEt C).map l.op ((picEt C).map (pullback.snd
+          (coverMap (k := k) (k' := k') T) (coverMap (k := k) (k' := k') T)).op x) := by
+          rw [h]
+    _ = (picEt C).map (l ≫ pullback.snd (coverMap (k := k) (k' := k') T)
+          (coverMap (k := k) (k' := k') T)).op x := by
+          simp only [op_comp, Functor.map_comp, CategoryTheory.comp_apply]
+    _ = (picEt C).map p₂.op x := by rw [h2']
+
+/-- **The descent step in the form a consumer can discharge**: agreement of the
+two canonical projections suffices for a unique descended class.
+
+`exists_unique_descend_picEt` composed with `compatible_of_pullback_projections`.
+This is the statement a `G1` consumer should aim at — its hypothesis is an equation
+between two specific restrictions of one class, which is what the Galois splitting
+translates `γ`-invariance into. -/
+theorem exists_unique_descend_picEt_of_projections
+    (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    (T : Over (Spec (CommRingCat.of k)))
+    (x : (picEt C).obj (Opposite.op ((restrictTest k k').obj (baseTest (k' := k') T))))
+    (h : (picEt C).map (pullback.fst (coverMap (k := k) (k' := k') T)
+              (coverMap (k := k) (k' := k') T)).op x
+        = (picEt C).map (pullback.snd (coverMap (k := k) (k' := k') T)
+              (coverMap (k := k) (k' := k') T)).op x) :
+    ∃! y : (picEt C).obj (Opposite.op T),
+      (picEt C).map (coverMap (k' := k') T).op y = x :=
+  exists_unique_descend_picEt (k' := k') C T x
+    (fun p₁ p₂ hp => compatible_of_pullback_projections C T x h p₁ p₂ hp)
+
 end Cover
 
 /-! ## §3. The level this runs at is the level a curve reaches — the join
@@ -235,27 +308,46 @@ has no rational point.
 
 ## §4. What is still owed, named rather than restated more cheaply
 
-The hypothesis of `exists_unique_descend_picEt` is **agreement of two pullbacks**.
-Campaign `G1` produces something else: a class fixed by the semilinear
-`Gal(k'/k)`-action. The bridge is the Galois splitting
-`k' ⊗_k k' ≅ ∏_{Gal(k'/k)} k'` — under it the two projections of the cover become
-the identity and the `γ`-twist, so pullback-agreement becomes `γ`-invariance for
-every `γ`. That splitting is **absent from Mathlib** (measured: `exact?` fails on
-both the `AlgEquiv` and the `RingEquiv` form; `Algebra.Etale K (L ⊗[K] L)` fails
-synthesis — though note `ajc-p3` observes that this project's own
-`etale_of_finite_isSeparable` supplies the étale half, so the residue is the
-`Gal`-**indexing** rather than étaleness) and is `ajc-p1`'s row
-`AJC.picrep.etale-rep.galois-splitting`. This file does not assume it and does not
-weaken the invariance step to something the splitting would make free.
+The hypothesis of `exists_unique_descend_picEt_of_projections` is **agreement of
+the cover's two canonical projections**. Campaign `G1` produces something else: a
+class fixed by the semilinear `Gal(k'/k)`-action. The bridge is the Galois
+splitting `k' ⊗_k k' ≅ ∏_{Gal(k'/k)} k'` — under it the two projections become the
+identity and the `γ`-twist, so projection-agreement becomes `γ`-invariance for
+every `γ`.
+
+**The ALGEBRA half of that bridge landed while this file was being written**:
+`ajc-p1`'s `Picard/GaloisDescent/GaloisSelfTensor.lean`
+(`galoisSelfTensorEquiv`, row `AJC.picrep.etale-rep.galois-splitting`). It was
+absent from Mathlib when I measured it — `exact?` failed on both the `AlgEquiv` and
+the `RingEquiv` form and `Algebra.Etale K (L ⊗[K] L)` failed synthesis — and it is
+now in this project. So the residue is **not** the splitting.
+
+**What the residue actually is, measured rather than inferred.** The splitting is a
+statement about `Spec k' ×_{Spec k} Spec k'`; the compatibility hypothesis above is
+about `T_{k'} ×_T T_{k'}`, the self-pullback of `coverMap` **in the slice over
+`Spec k`, relative to an arbitrary test `T`**. Both scheme-level ingredients of the
+translation exist and were checked here (`AlgebraicGeometry.pullbackSpecIso` for
+`Spec` of the tensor; `IsIso (sigmaSpec …)` for the finite product, by synthesis
+once `Fintype (k' ≃ₐ[k] k')` is in scope). What does **not** exist is the
+`T`-relative comparison identifying `T_{k'} ×_T T_{k'}` with the `Gal`-indexed
+coproduct of copies of `T_{k'}`: `exact?` on that iso fails. That base-change step,
+not the splitting, is the open link — and it is the kind of gap that reads as closed
+from either end, because the splitting is genuinely landed and the sheaf side is
+genuinely landed.
+
+This file does not assume the bridge and does not weaken the invariance step to
+something the splitting alone would make free.
 
 Beyond that bridge, the scheme-level `G2` quotient is unchanged and untouched: it
 is what turns descended *classes* into a representing *scheme*, and it is gated on
 `AlgebraicJacobian.GaloisDescent.HasGaloisQuotient`, which has an instance only on
 the affine locus while the object this route descends is glued.
 
-So: sheaf-theoretic side of the existence half **closed** at one morphism;
-Galois-to-pullback translation **open**; `k'`-side representability and the `G2`
-quotient **open** and not made cheaper by anything here.
+So: sheaf-theoretic side of the existence half **closed** at one morphism and
+reduced to a two-projection check; the Galois splitting **landed** (`ajc-p1`); the
+`T`-relative base change of that splitting **open**, and it is now the single link
+between `γ`-invariance and a descended class; `k'`-side representability and the
+`G2` quotient **open** and not made cheaper by anything here.
 -/
 
 end PicScheme
