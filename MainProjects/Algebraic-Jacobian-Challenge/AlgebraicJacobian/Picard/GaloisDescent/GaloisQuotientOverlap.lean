@@ -141,6 +141,23 @@ noncomputable def overlapQuotientMap [FiniteDimensional K L]
   exact SemilinearGalAction.stableAffineQuotientMapRestrict
     ρ i.stable i.affine inf_le_left (inf_stable ρ i j)
 
+/-- The pairwise overlap projection followed by its chart inclusion is the
+ambient affine quotient map restricted from the source overlap. -/
+@[reassoc]
+theorem overlapQuotientMap_fac [FiniteDimensional K L]
+    (i j : StableAffineOpen ρ) :
+    overlapQuotientMap ρ i j ≫ quotientOverlapι ρ i j =
+      X.homOfLE inf_le_left ≫
+        SemilinearGalAction.stableAffineQuotientMap
+          ρ i.stable i.affine := by
+  letI := ρ.sectionsMulSemiringAction i.stable
+  letI := SemilinearGalAction.sectionsAlgebra f i.U
+  letI := SemilinearGalAction.sectionsAlgebraK (K := K) f i.U
+  letI := SemilinearGalAction.sections_isScalarTower (K := K) f i.U
+  letI := ρ.isSemilinear_sections i.stable
+  exact SemilinearGalAction.stableAffineQuotientMapRestrict_fac
+    ρ i.stable i.affine inf_le_left (inf_stable ρ i j)
+
 /-- The specified restricted quotient witness on a pairwise overlap. -/
 noncomputable def overlapWitness [FiniteDimensional K L] [IsGalois K L]
     (i j : StableAffineOpen ρ) :
@@ -211,6 +228,24 @@ noncomputable def tripleQuotientMap [FiniteDimensional K L]
     ρ i.stable i.affine (le_trans inf_le_left inf_le_left)
       (triple_stable ρ i j k)
 
+/-- The triple-overlap projection followed by its chart inclusion is the
+ambient affine quotient map restricted from the source triple intersection. -/
+@[reassoc]
+theorem tripleQuotientMap_fac [FiniteDimensional K L]
+    (i j k : StableAffineOpen ρ) :
+    tripleQuotientMap ρ i j k ≫ quotientTripleι ρ i j k =
+      X.homOfLE (le_trans inf_le_left inf_le_left) ≫
+        SemilinearGalAction.stableAffineQuotientMap
+          ρ i.stable i.affine := by
+  letI := ρ.sectionsMulSemiringAction i.stable
+  letI := SemilinearGalAction.sectionsAlgebra f i.U
+  letI := SemilinearGalAction.sectionsAlgebraK (K := K) f i.U
+  letI := SemilinearGalAction.sections_isScalarTower (K := K) f i.U
+  letI := ρ.isSemilinear_sections i.stable
+  exact SemilinearGalAction.stableAffineQuotientMapRestrict_fac
+    ρ i.stable i.affine (le_trans inf_le_left inf_le_left)
+      (triple_stable ρ i j k)
+
 /-- The specified restricted quotient witness on a triple overlap. -/
 noncomputable def tripleWitness [FiniteDimensional K L] [IsGalois K L]
     (i j k : StableAffineOpen ρ) :
@@ -278,6 +313,26 @@ theorem tripleToOverlapLeft_fac [FiniteDimensional K L]
   unfold tripleToOverlapLeft quotientOverlapι quotientTripleι
     quotientOverlap quotientTriple
   exact Scheme.homOfLE_ι _ (quotientTriple_le_overlapLeft ρ i j k)
+
+/-- The pinned triple quotient projection restricts to the pinned pairwise
+quotient projection. -/
+@[reassoc]
+theorem tripleQuotientMap_tripleToOverlapLeft [FiniteDimensional K L]
+    (i j k : StableAffineOpen ρ) :
+    tripleQuotientMap ρ i j k ≫ tripleToOverlapLeft ρ i j k =
+      X.homOfLE inf_le_left ≫ overlapQuotientMap ρ i j := by
+  letI := ρ.sectionsMulSemiringAction i.stable
+  letI := SemilinearGalAction.sectionsAlgebra f i.U
+  letI := SemilinearGalAction.sectionsAlgebraK (K := K) f i.U
+  letI := SemilinearGalAction.sections_isScalarTower (K := K) f i.U
+  letI := ρ.isSemilinear_sections i.stable
+  rw [← cancel_mono (quotientOverlapι ρ i j)]
+  rw [Category.assoc, tripleToOverlapLeft_fac]
+  rw [tripleQuotientMap_fac, Category.assoc, overlapQuotientMap_fac]
+  rw [← Scheme.homOfLE_homOfLE X
+    (show ((i.U ⊓ j.U) ⊓ (i.U ⊓ k.U)) ≤ i.U ⊓ j.U from inf_le_left)
+    (show i.U ⊓ j.U ≤ i.U from inf_le_left), Category.assoc]
+  rfl
 
 /-- The pullback of two quotient overlaps in a chart is the quotient of their
 triple source intersection. -/
