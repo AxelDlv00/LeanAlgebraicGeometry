@@ -2,13 +2,13 @@ id: AJC.picrep.projectivity
 title: Smooth proper curves over a field are projective
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Constructed, without new hypotheses, a relative morphism C -> P(J; Spec
-  k) from the Laurent two-chart finite map: normalized coordinates algebra-generate
-  both source charts, the local maps glue globally, and the composite to Spec k is
-  C.hom. Remaining: identify arbitrary coordinate charts D_+(X_i) with affine space,
-  transport the local factors, apply the landed generator-to-closed-immersion theorem,
-  then use target-local immersion and proper + immersion => projective.'
-status: active
+summary: Closed without new hypotheses. Arbitrary relative projective coordinate charts
+  are identified with affine space; the two normalized chart factors are closed immersions;
+  their target opens have exact preimages equal to the pulled-back Laurent charts
+  and cover the global map's range; target-locality gives an immersion, and properness
+  gives projectivity. The rooted theorem isProjective_of_smoothProperGeometricallyIrreducible
+  uses exactly the AJC smooth/proper/geometrically irreducible binders.
+status: done
 kind: proof
 priority: high
 depends_on: []
@@ -32,8 +32,17 @@ metadata:
   parent: AJC.picrep
   owner: pic-b
   milestone: AJC.picrep
-  updated_at: '2026-07-30T16:20:44.660977+00:00'
+  updated_at: '2026-07-30T18:48:12.639177+00:00'
   pinned_commits:
+  - 2339b2aeb2f75c2c0c66bce6eaa5624281a9e740
+  - 5adafce2560906da1b9fe35e3f61e09ea5657c48
+  - e8f79578fe8b0f7ed208b47825fbb90c9dc43d54
+  - bbe9ee47522a381c3a870728bdf8a17741715639
+  - 758b36935475a1efa90d97e9fd75ca17dd8cc099
+  - 32103db768d0c10d00525654e71572151dbe0323
+  - 5aa3071340606ebb2da78003c1c95371b3ab889b
+  - ea921818f1e83921f7553728389ae69aeadf33c8
+  - 2f42ed5e93ae9bc12c1e75469fa1c3136b863a23
   - efcf18ae59554efb4958e1ceeb126ede2b6c0b06
   - 8020466b657b51f4c4f27e15cb694a0f68c51031
   - b22178e30ea14b51f503a2735981cb4bca68ec6b
