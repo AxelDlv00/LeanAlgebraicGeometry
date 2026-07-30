@@ -43,27 +43,46 @@ unproduced hypothesis for another unproduced hypothesis is not progress, and thi
 claim it is.  What it claims is narrower and checkable: **given coverage, the per-point half of
 `hcl` costs nothing**, so a lane pricing DAT-J should not schedule it as separate work.
 
-Three specific gaps that survive, none of them touched:
+**THE GAP LIST BELOW WAS WRONG TWICE, BOTH TIMES IN MY OWN FAVOUR** — found by a fresh-context
+adversarial audit of this file and reproduced by me before accepting (`I-1434`, `I-1436`; lesson
+`I-1437`: a gap list written as the honest-ledger section reads as already-audited, so nobody
+probes it).  The original list had three items; item 1 was smaller than stated and item 3 had
+been closed fifteen minutes before this file landed.  Corrected list:
 
-1. **The carrier is the chart source, not a divisor scheme.**  The point produced lands in
-   `(V i : Scheme)`, an *open of* `(D i).left`.  `hcl` as stated in `JacobianDataQcFromRep.lean`
-   wants a point of `divSchemeOver …`.  These agree only when the atlas is built on that carrier,
-   and even then `V i` is an open of it.
-2. **The index varies with the point.**  That is deliberate — see
+1. **ONE Σ-TRANSPORT, not a carrier mismatch.**  The original text said the point produced lands
+   in `(V i : Scheme)`, "an *open of* `(D i).left`", while `hcl` wants a point of the divisor
+   scheme.  That clause is **idle**: `restrictChart` *is* `yoneda.map V.ι ≫ f`, so composing the
+   produced `x` with `(V i).ι` and packaging by `Over.homMk` against
+   `(congrArg Sigma.fst hx).trans (Over.testPoint y).w` gives an honest `⟶ D i` — measured, it
+   elaborates.  What genuinely remains is the Σ *second* component: `Over.sigmaExtension_snd_eq`
+   leaves `(pic0TypeFunctor C).map (Over.mkCongr hfst).op`, and `mkCongr hfst` is not `rfl`-provably
+   the identity.  `Over.sigmaExtension_map_mk_eq_iff` (`Picard/OverSigmaExtension.lean`) is the
+   seam built for exactly this.  So: **one transport lemma**, named, not a carrier problem.
+2. **The index varies with the point.**  This item stands, and it is the one real residue.  See
    `Picard/JacobianDataQcFiniteFamily.lean`, which moves the qc field's index quantifier inside
    for exactly this reason, and ajcr-p4's `I-1389`, which shows a *fixed*-index coverage
-   hypothesis is strictly **stronger** than DAT-B coverage.  But the finite-family form needs the
+   hypothesis is strictly **stronger** than DAT-B coverage.  The finite-family form needs the
    family of answering carriers finite, and coverage supplies no bound on how many indices the
    points of `J` use.
-3. **Compactness of the chart sources is not free.**  Per ajcr-p3's `I-1391`, `CompactSpace` of
-   an *open* of the divisor scheme does not follow by instance resolution — that correction was
-   applied at three sites.  ajcr-p3's noetherian route
-   (`Picard/Pic0AtlasCompactNoetherian.lean`) supplies it at the divRep carrier, and that is a
-   different argument from anything here.
+3. **WITHDRAWN — compactness of the chart sources is NOT owed.**  The original item cited
+   ajcr-p3's `I-1391` for the negative half (`CompactSpace` of an open does not follow by
+   instance resolution — true) and missed the *positive* half from that lane's same commit:
+   `compactSpace_isOpen_divSchemeOver` (`Picard/Pic0AtlasCompactNoetherian.lean`) proves
+   `CompactSpace (V : Scheme)` for **every** open of `divSchemeOver`, which is exactly the chart
+   sources.  Verified by `#check`.
 
-So the honest ledger: DAT-J's qc field owed one statement; its per-point half is free given
-coverage, and what remains owed is the *quantifier bookkeeping* of gaps 1–3, not a geometric
-input.  That is a repricing in the cheap direction and it is all this file establishes.
+**AND A PREMISE THIS FILE INHERITED THAT NEEDS A QUALIFIER.**  The opening paragraph's "no
+producer of any shape" is, at HEAD, false as an unqualified sentence:
+`quasiCompact_jacobianDataOfFiniteMixedParamCharts` (`Picard/Pic0AtlasCompactNoetherian.lean`)
+discharges the `quasiCompact` field outright at a **finite** atlas, with no `hcl` and no Abel
+morphism — and per ajcr-p3's `I-1430` that route does not even need DAT-B coverage, the
+`IsLocallySurjective` binder there being idle.  `hcl` is the route for the **infinite**
+(class-indexed) atlas, which is the one the tree plans to build.  Read every "no producer"
+sentence in this file and in `Picard/JacobianDataQcFiniteFamily.lean` with that qualifier.
+
+So the corrected ledger: DAT-J's qc field, **at an infinite atlas**, owed one statement.  Its
+per-point half is free given coverage; what remains owed is one named Σ-transport and the index
+quantifier.  Not a geometric input either way — a repricing in the cheap direction, twice over.
 -/
 
 set_option autoImplicit false

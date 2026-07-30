@@ -13,6 +13,15 @@ import AlgebraicJacobian.Picard.JacobianDataQcFromRep
 degree-zero class `lam` along some field point of `divSchemeOver …`*.  That statement is
 **single-carrier**: one divisor scheme, one class, quantified before the point.
 
+**QUALIFIER, and it is not optional** (audit `I-1436`; ajcr-p3's `I-1430`): `hcl` is the route to
+the `quasiCompact` field **at an infinite atlas**.  At a *finite* atlas that field is discharged
+outright by `quasiCompact_jacobianDataOfFiniteMixedParamCharts`
+(`Picard/Pic0AtlasCompactNoetherian.lean`) with no `hcl`, no Abel morphism, and — the
+`IsLocallySurjective` binder there being idle — not even DAT-B coverage.  Any sentence in this
+file reading "the qc field has no producer" is to be read with "at an infinite atlas" attached.
+The class-indexed atlas the tree plans to build is the infinite one, which is why `hcl` is still
+the live route.
+
 The heterogeneous atlas the tree actually plans to build is not single-carrier.
 `mixedParamChart` (`Picard/Pic0ChartAtlasParamFree.lean`) carries a *per-index* parameter
 `nn i` with its own representing object `D i`, precisely so that different points may use
@@ -33,8 +42,13 @@ This file removes that mismatch.  The quasi-compactness argument never needed on
   `lam i` to the class of `y`"*.
 
 `quasiCompact_of_pic0_class_surjective` is the one-element case
-(`quasiCompact_of_finite_family_pic0_class_of_single`), so nothing is weakened: this is the
-same obligation with the index quantifier moved inside, which is where the atlas puts it.
+(`finite_family_pic0_class_of_single` below), so nothing is weakened: this is the same obligation
+with the index quantifier moved inside, which is where the atlas puts it.  (An earlier draft of
+this line cited that lemma as
+`quasiCompact_of_finite_family_pic0_class_of_single`, **which does not exist** — caught by audit
+`I-1436`.  A `#check` in a file that imports this one reports unknown identifier; grep found only
+the docstring citing itself.  This project's recurring "grep resolves it, the import closure does
+not" failure, in its worst form.)
 
 ## What this does NOT do
 
@@ -46,6 +60,16 @@ advance.
 
 Two honest limits, both measured rather than assumed:
 
+* **the `[∀ i, CompactSpace (X i)]` binder is discharged here but NOT at the atlas's chart
+  objects** (ajcr-p3, `I-1443`/`I-1391`).  In `quasiCompact_of_finite_family_pic0_class` the
+  sources are the `DivScheme …` themselves, where `compactSpace_divScheme` is an instance, so the
+  binder costs nothing.  A consumer that reshapes them into the atlas's chart sources is asking
+  about `(V i : Scheme)`, an **open** of the representing object, and `CompactSpace` of an open is
+  *not* an instance — three sites priced it as free by citing the ambient object.  The fix is
+  `compactSpace_isOpen_divSchemeOver` (`Picard/Pic0AtlasCompactNoetherian.lean`), which proves it
+  for every open by local noetherianity; `compactSpace_of_representableBy` in that file transports
+  it between any two representations of `divFunctor C π n`, so a consumer need not land at
+  `divSchemeOver` to get it.
 * **finiteness of the index is a real hypothesis here**, and it is *not* the same as
   `[Finite ι]` on the atlas: this family indexes the *carriers a producer chooses to answer
   with*, not the atlas.  A producer answering with one scheme per point needs the point set
