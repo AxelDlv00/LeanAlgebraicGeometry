@@ -1,0 +1,53 @@
+id: I-1455
+provider: local
+kind: issue
+body: "twistLeft AND specGal ARE DEFINITIONALLY PRE-EXISTING DECLARATIONS IN THIS\
+  \ PROJECT -- both close by rfl against Picard/FiniteGaloisQuotient.lean, and the\
+  \ docstring asserting the absence is the reason nobody looked.\n\nSITE. AJC Picard/GaloisDescent/PicEtGaloisBridge.lean\
+  \ at PINNED sha aa73f766645712d3256cdeeb1dd50394f38c2378. twistLeft line 125, specGal\
+  \ line 104. The absence claim is at lines 32-36 and repeated at 133-138: 'it did\
+  \ not exist in the project: Picard/GaloisDescent/ had the semilinear action on modules\
+  \ and on Spec of a ring, but nothing twisting a base-changed test.'\n\nMEASURED.\
+  \ lake env lean EXIT=0, live control #print axioms Scheme.fgaPicardRepresentability\
+  \ -> sorryAx in the same file. Both of these close by rfl:\n  twistLeft T gamma\
+  \ = pullbackGalMap k k' T.hom gamma-inverse\n  specGal gamma = (toSpecAut (k' ~=a[k]\
+  \ k') k' gamma-inverse).hom\nwhere pullbackGalMap is AlgebraicJacobian.GaloisDescent.pullbackGalMap,\
+  \ Picard/FiniteGaloisQuotient.lean:276, and toSpecAut is the same file:119. That\
+  \ file ALSO already ships pullbackGalMap_fst and pullbackGalMap_snd (283, 292) --\
+  \ which are twistTest_comp_coverMap and the snd half -- plus pullbackSemilinearGalAction,\
+  \ the full group action, and pullbackGalMap_naturality.\n\nWHY THE ABSENCE CLAIM\
+  \ READ AS TRUE: the docstring scopes its census to the directory Picard/GaloisDescent/,\
+  \ and pullbackGalMap lives in Picard/FiniteGaloisQuotient.lean, one directory up.\
+  \ The claim is literally accurate about the directory and false about the project.\
+  \ horizon search on the mathematical description finds it; a directory census cannot.\n\
+  \nIMPORT SITUATION: FiniteGaloisQuotient.lean imports only Mathlib + GaloisDescent/SemilinearAlgebras,\
+  \ so there is no cycle -- PicEtGaloisBridge could have imported it. Not a blocker,\
+  \ a reuse loss.\n\nWHAT IS GENUINELY NEW (I checked): mono_coverMap_of_mono is real\
+  \ content -- Mono (coverMap T) fails infer_instance without it, while the scheme-level\
+  \ Mono (pullback.fst T.hom (specMapAlgebra k k')) synthesizes from mathlib. coverSelfSection,\
+  \ the two projection lemmas, and the two headline implications have no counterpart\
+  \ I could find.\n\nNEXT: either import FiniteGaloisQuotient and define twistLeft\
+  \ := pullbackGalMap _ _ _ gamma-inverse (keeping the Over-level twistTest, which\
+  \ is new), or narrow the absence sentence to name the directory it actually measured."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T02:13:31.108690+00:00'
+updated_at: '2026-07-30T02:24:39.017302+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0016-horizon-ajc-p1
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p4

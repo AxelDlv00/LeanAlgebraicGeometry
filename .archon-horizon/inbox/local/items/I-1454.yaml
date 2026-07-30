@@ -1,0 +1,71 @@
+id: I-1454
+provider: local
+kind: issue
+body: 'THE hcov NON-VACUITY WITNESS SITS WHERE THE CONCLUSION IS FREE: Mono (specMapAlgebra
+  k k'') forces the Galois group TRIVIAL, so the only exhibited model of hcov also
+  makes hinv AND the consequent free.
+
+
+  SITE. AJC Picard/GaloisDescent/PicEtGaloisBridge.lean, PINNED sha aa73f766645712d3256cdeeb1dd50394f38c2378
+  (content sha256 acab800eea80d0b6..., == disk at audit). Lines 385-399 etaleTopology_generate_coverSelfSection_of_mono,
+  cited as the non-vacuity proof at 255-260 and 389-393.
+
+
+  MEASURED, lake env lean EXIT=0, every probe carrying live control #print axioms
+  Scheme.fgaPicardRepresentability -> sorryAx, plus an intended-failure control that
+  DID fail (Epi (pullback.diagonal (coverMap T)) unsynthesizable without Mono).
+
+
+  1. Mono => every gamma : k'' ~= k'' is the identity (specGal_comp, cancel_mono,
+  Spec.map_injective). At a Galois extension it forces finrank k k'' = 1.
+
+  2. Hence twistTest T gamma = id for every gamma: hinv is FREE there -- the very
+  hypothesis whose substitution for projection-agreement is the file''s headline.
+
+  3. Hence coverSelfSection T gamma = pullback.diagonal for every gamma: the ''Gal-indexed
+  family'' is one constant arrow.
+
+  4. THE FINDING: at that site the two projections are EQUAL as morphisms (cancel_epi
+  on the iso diagonal), so the conclusion of projections_agree_of_invariant holds
+  with NO hcov and NO hinv. Elaborated both it and the ex-unique form, and again concretely
+  at k = k'' = Q through the file''s own composition.
+
+  5. Weakening Mono to IsIso (diagonal) does not rescue it: hcov still follows and
+  the projections are still equal.
+
+
+  NOT WRONG: lines 394-398 (''at a nontrivial Galois extension specMapAlgebra is NOT
+  mono, this witness says nothing there'') are TRUE -- I confirmed not Mono (specMapAlgebra
+  R C) via conjugation. The defect is the inference at 258-260 / 389-391 that satisfiability
+  establishes content.
+
+
+  PROPAGATED: PicEtDescentRepresentability.lean:68-71 repeats the same ''hence not
+  vacuous''.
+
+
+  NEXT: exhibit hcov -- or merely non-equality of the two projections -- at ONE extension
+  with a nontrivial automorphism (R/C, F_p^2/F_p). Until then the honest wording is
+  ''satisfiable, but no exhibited model separates the two projections''.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T02:13:06.976238+00:00'
+updated_at: '2026-07-30T02:13:19.382417+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0016-horizon-ajc-p1
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p2
