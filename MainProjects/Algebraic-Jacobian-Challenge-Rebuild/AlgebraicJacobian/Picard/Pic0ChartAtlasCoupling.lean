@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.Pic0ChartCoveragePointwise
+import AlgebraicJacobian.Picard.Pic0ChartIndexAdmissible
 import AlgebraicJacobian.Picard.Pic0ChartUnivReduce
 
 /-!
@@ -202,6 +203,53 @@ theorem pointwise_of_pointwise_restrictChart {ι : Type u} {X : ι → Scheme.{u
   intro z hz
   obtain ⟨w, rfl⟩ := hz
   exact ⟨u.base w, rfl⟩
+
+/-! ## A multi-index atlas does not remove chart-index arithmetic -/
+
+variable (C) in
+/-- Pointwise coverage has a genuinely inhabited chart index.  The witness is read at
+`Spec k`, not at the empty test, where every index-valued condition collapses. -/
+theorem nonempty_index_of_pointwiseCoverage {ι : Type u} {X : ι → Scheme.{u}}
+    (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1)
+    (hcov : PointwiseCoverage C f) : Nonempty ι := by
+  classical
+  let s : (pic0SigmaSheaf C).1.obj (op (Spec (.of k))) := ⟨𝟙 _, 1⟩
+  let t : Spec (.of k) := Classical.choice inferInstance
+  obtain ⟨_, _, i, _, _⟩ := hcov (Spec (.of k)) s t
+  exact ⟨i⟩
+
+variable (C) in
+/-- A nonempty family of legal chart indices at one parameter exists exactly when that
+parameter is a divisor degree.  Allowing arbitrarily many indices does not weaken the
+arithmetic condition carried by one legal index. -/
+theorem exists_nonempty_legal_chart_index_family_iff_isDivisorDegree (n : ℕ) :
+    (∃ (ι : Type u) (_ : Nonempty ι) (m : ι → ℕ)
+        (Z : ι → (C ⊗ overSpec k k).left.CurveDivisor),
+      ∀ i, Scheme.CurveDivisor.deg k (Z i)
+        = (m i : ℤ) * classDeg k (thetaCechClass C) - (n : ℤ))
+      ↔ IsDivisorDegree C (n : ℤ) := by
+  constructor
+  · rintro ⟨ι, hι, m, Z, hdeg⟩
+    let i : ι := Classical.choice hι
+    exact isDegree_of_chartIndex C (m i) (Z i) (hdeg i)
+  · intro hn
+    obtain ⟨m, Z, hdeg⟩ := chartIndex_of_isDegree C hn
+    exact ⟨PUnit, inferInstance, fun _ => m, fun _ => Z, fun _ => hdeg⟩
+
+variable (C) in
+/-- Any pointwise-covering family indexed by legal charts at parameter `n` forces `n` to be
+a divisor degree.  In particular, a genus-parameter multi-index atlas cannot be produced
+unconditionally by replacing one base-field chart with many base-field charts. -/
+theorem isDivisorDegree_of_pointwiseCoverage_legal_chart_index_family
+    {ι : Type u} {X : ι → Scheme.{u}}
+    (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1)
+    (hcov : PointwiseCoverage C f) (n : ℕ) (m : ι → ℕ)
+    (Z : ι → (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : ∀ i, Scheme.CurveDivisor.deg k (Z i)
+      = (m i : ℤ) * classDeg k (thetaCechClass C) - (n : ℤ)) :
+    IsDivisorDegree C (n : ℤ) := by
+  let i : ι := Classical.choice (nonempty_index_of_pointwiseCoverage C f hcov)
+  exact isDegree_of_chartIndex C (m i) (Z i) (hdeg i)
 
 end
 
