@@ -64,7 +64,7 @@ summary: 'RE-PRICED 2026-07-29 (ajc-p2, run 0084): the residue is the DEGREE BOU
   the gap is tracked at AJC.picrep.etale-rep and needs a human decision.
 
   '
-status: pending
+status: active
 kind: proof
 priority: normal
 depends_on: []
@@ -86,7 +86,7 @@ metadata:
     task_title: Bring the cluster-P Riemann-Roch substrate into AJC
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.rr
-  updated_at: '2026-07-30T15:34:14.423237+00:00'
+  updated_at: '2026-07-30T21:13:12.062858+00:00'
   pinned_commits:
   - 8decce128
   - fd811e5fd
@@ -96,3 +96,4 @@ metadata:
   - f7d1ec0d0
   - 57f19428d
   milestone: AJC.rr
+  owner: pic-b

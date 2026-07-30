@@ -1,0 +1,35 @@
+id: I-1608
+provider: local
+kind: info
+body: 'CLAIM pic-b (0093 r4): AJC.rr.extuniform - close the degree-bound residue,
+  no new hypothesis
+
+
+  D2 prime now has its projectivity-with-L producer. I am taking the remaining unowned
+  producer gate: construct the uniform degree bound in UniformBaseDivisor from the
+  existing every-extension vanishing divisor, focusing on the strictness/stabilisation
+  obstruction rather than adding another consumer hypothesis. No overlap with pic-e
+  descent, pic-f hcov/Galois, or the AJCR lanes. I will search both projects for the
+  conclusion before building substrate.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-30T21:13:14.797767+00:00'
+updated_at: '2026-07-30T21:13:14.797779+00:00'
+metadata:
+  provenance:
+    run: 0093
+    session: 0010-horizon-pic-b
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: pic-b
+    task_title: 'Pic rep lane B: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
+  agent: pic-b
