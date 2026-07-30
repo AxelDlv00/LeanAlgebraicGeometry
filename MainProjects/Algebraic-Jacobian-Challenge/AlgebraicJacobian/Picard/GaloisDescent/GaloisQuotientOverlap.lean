@@ -481,6 +481,20 @@ noncomputable def tripleWitnessRot [FiniteDimensional K L] [IsGalois K L]
     e hef (SemilinearGalAction.restrict_isoOfEq_isEquivariant ρ _ _ _)
     (tripleWitness ρ j k i)
 
+/-- Rotating a triple intersection and then restricting to `j ∩ i` agrees
+with first restricting to `i ∩ j` and commuting the two factors. -/
+@[reassoc]
+theorem tripleSourceToOverlapRev (i j k : StableAffineOpen ρ) :
+    X.homOfLE
+        (show ((i.U ⊓ j.U) ⊓ (i.U ⊓ k.U)) ≤ i.U ⊓ j.U from inf_le_left) ≫
+        (X.isoOfEq (inf_comm i.U j.U)).hom =
+      (X.isoOfEq (show ((i.U ⊓ j.U) ⊓ (i.U ⊓ k.U)) =
+        ((j.U ⊓ k.U) ⊓ (j.U ⊓ i.U)) by ac_rfl)).hom ≫
+        X.homOfLE
+          (show ((j.U ⊓ k.U) ⊓ (j.U ⊓ i.U)) ≤ j.U ⊓ i.U from inf_le_right) := by
+  rw [← cancel_mono ((j.U ⊓ i.U).ι)]
+  simp
+
 /-- The canonical cyclic comparison between two presentations of a triple
 quotient overlap. -/
 noncomputable def tripleIso [FiniteDimensional K L] [IsGalois K L]
@@ -489,6 +503,19 @@ noncomputable def tripleIso [FiniteDimensional K L] [IsGalois K L]
   GaloisQuotientWitness.uniqueIso
     (tripleWitness ρ i j k).toGaloisQuotientWitness
     (tripleWitnessRot ρ i j k).toGaloisQuotientWitness
+
+/-- The cyclic triple comparison intertwines the two pinned quotient
+projections. -/
+@[reassoc]
+theorem tripleIso_hom_quotientMap [FiniteDimensional K L] [IsGalois K L]
+    (i j k : StableAffineOpen ρ) :
+    tripleQuotientMap ρ i j k ≫ (tripleIso ρ i j k).hom =
+      (X.isoOfEq (show ((i.U ⊓ j.U) ⊓ (i.U ⊓ k.U)) =
+        ((j.U ⊓ k.U) ⊓ (j.U ⊓ i.U)) by ac_rfl)).hom ≫
+          tripleQuotientMap ρ j k i := by
+  simpa [tripleIso, GaloisQuotientWitness.uniqueIso] using
+    GaloisQuotientWitness.comparison_quotientMap
+      (tripleWitness ρ i j k) (tripleWitnessRot ρ i j k)
 
 /-- The triple-overlap transition in the shape required by
 `CategoryTheory.GlueData.t'`. -/
@@ -559,6 +586,58 @@ theorem overlapIso_hom_quotientMap [FiniteDimensional K L] [IsGalois K L]
   · simpa [overlapIso, h, GaloisQuotientWitness.uniqueIso] using
       GaloisQuotientWitness.comparison_quotientMap
         (overlapWitness ρ i j) (overlapWitnessRev ρ i j)
+
+/-- On a triple overlap, the pairwise transition agrees with the canonical
+cyclic comparison of the two triple quotient presentations. -/
+@[reassoc]
+theorem tripleToOverlapLeft_overlapIso [FiniteDimensional K L] [IsGalois K L]
+    (i j k : StableAffineOpen ρ) :
+    tripleToOverlapLeft ρ i j k ≫ (overlapIso ρ i j).hom =
+      (tripleIso ρ i j k).hom ≫ tripleToOverlapRight ρ j k i := by
+  letI : Epi (tripleQuotientMap ρ i j k) :=
+    GaloisQuotientWitnessWithProjection.epi_quotientMap
+      (tripleWitness ρ i j k)
+  rw [← cancel_epi (tripleQuotientMap ρ i j k)]
+  calc
+    tripleQuotientMap ρ i j k ≫
+          (tripleToOverlapLeft ρ i j k ≫ (overlapIso ρ i j).hom) =
+        (tripleQuotientMap ρ i j k ≫ tripleToOverlapLeft ρ i j k) ≫
+          (overlapIso ρ i j).hom := (Category.assoc _ _ _).symm
+    _ = (X.homOfLE inf_le_left ≫ overlapQuotientMap ρ i j) ≫
+          (overlapIso ρ i j).hom := by
+      rw [tripleQuotientMap_tripleToOverlapLeft]
+    _ = X.homOfLE inf_le_left ≫
+          (overlapQuotientMap ρ i j ≫ (overlapIso ρ i j).hom) :=
+      Category.assoc _ _ _
+    _ = X.homOfLE inf_le_left ≫
+          ((X.isoOfEq (inf_comm i.U j.U)).hom ≫
+            overlapQuotientMap ρ j i) := by
+      rw [overlapIso_hom_quotientMap]
+    _ = (X.homOfLE inf_le_left ≫
+          (X.isoOfEq (inf_comm i.U j.U)).hom) ≫
+            overlapQuotientMap ρ j i := (Category.assoc _ _ _).symm
+    _ = ((X.isoOfEq (show ((i.U ⊓ j.U) ⊓ (i.U ⊓ k.U)) =
+          ((j.U ⊓ k.U) ⊓ (j.U ⊓ i.U)) by ac_rfl)).hom ≫
+          X.homOfLE inf_le_right) ≫ overlapQuotientMap ρ j i := by
+      rw [tripleSourceToOverlapRev]
+    _ = (X.isoOfEq (show ((i.U ⊓ j.U) ⊓ (i.U ⊓ k.U)) =
+          ((j.U ⊓ k.U) ⊓ (j.U ⊓ i.U)) by ac_rfl)).hom ≫
+          (X.homOfLE inf_le_right ≫ overlapQuotientMap ρ j i) :=
+      Category.assoc _ _ _
+    _ = (X.isoOfEq (show ((i.U ⊓ j.U) ⊓ (i.U ⊓ k.U)) =
+          ((j.U ⊓ k.U) ⊓ (j.U ⊓ i.U)) by ac_rfl)).hom ≫
+          (tripleQuotientMap ρ j k i ≫ tripleToOverlapRight ρ j k i) := by
+      rw [tripleQuotientMap_tripleToOverlapRight]
+    _ = ((X.isoOfEq (show ((i.U ⊓ j.U) ⊓ (i.U ⊓ k.U)) =
+          ((j.U ⊓ k.U) ⊓ (j.U ⊓ i.U)) by ac_rfl)).hom ≫
+          tripleQuotientMap ρ j k i) ≫ tripleToOverlapRight ρ j k i :=
+      (Category.assoc _ _ _).symm
+    _ = (tripleQuotientMap ρ i j k ≫ (tripleIso ρ i j k).hom) ≫
+          tripleToOverlapRight ρ j k i := by
+      rw [tripleIso_hom_quotientMap]
+    _ = tripleQuotientMap ρ i j k ≫
+          ((tripleIso ρ i j k).hom ≫ tripleToOverlapRight ρ j k i) :=
+      Category.assoc _ _ _
 
 /-- The overlap transition lies over `Spec K`. -/
 @[reassoc]
