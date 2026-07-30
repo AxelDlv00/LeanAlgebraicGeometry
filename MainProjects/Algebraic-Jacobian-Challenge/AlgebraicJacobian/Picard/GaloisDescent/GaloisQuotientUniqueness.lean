@@ -39,6 +39,17 @@ structure GaloisQuotientWitness
       ∃! v : {v : T ⟶ Y // v ≫ g = t},
         pullbackBaseChange K L g t v.1 v.2 ≫ e.hom = h
 
+/-- A quotient witness together with the quotient projection induced by its
+pinned base-change isomorphism. -/
+structure GaloisQuotientWitnessWithProjection
+    {K L : Type u} [Field K] [Field L] [Algebra K L]
+    {X : Scheme.{u}} {f : X ⟶ Spec (CommRingCat.of L)}
+    (rho : SemilinearGalAction K L X f)
+    (Y : Scheme.{u}) (g : Y ⟶ Spec (CommRingCat.of K))
+    (q : X ⟶ Y) extends GaloisQuotientWitness rho Y g where
+  projection : e.inv ≫ pullback.fst g
+    (Spec.map (CommRingCat.ofHom (algebraMap K L))) = q
+
 namespace GaloisQuotientWitness
 
 /-- The comparison morphism defined from two specified quotient witnesses. -/
@@ -106,6 +117,35 @@ theorem comparison_projection
       rfl
     _ = w₂.e.inv ≫ pullback.fst g₂
         (Spec.map (CommRingCat.ofHom (algebraMap K L))) := by rw [hinv]
+
+/-- Comparing witnesses with specified quotient projections intertwines those
+projections. -/
+theorem comparison_quotientMap
+    {K L : Type u} [Field K] [Field L] [Algebra K L]
+    {X : Scheme.{u}} {f : X ⟶ Spec (CommRingCat.of L)}
+    {rho : SemilinearGalAction K L X f}
+    {Y₁ Y₂ : Scheme.{u}}
+    {g₁ : Y₁ ⟶ Spec (CommRingCat.of K)}
+    {g₂ : Y₂ ⟶ Spec (CommRingCat.of K)}
+    {q₁ : X ⟶ Y₁} {q₂ : X ⟶ Y₂}
+    (w₁ : GaloisQuotientWitnessWithProjection rho Y₁ g₁ q₁)
+    (w₂ : GaloisQuotientWitnessWithProjection rho Y₂ g₂ q₂) :
+    q₁ ≫ (comparison w₁.toGaloisQuotientWitness
+      w₂.toGaloisQuotientWitness).1 = q₂ := by
+  calc
+    q₁ ≫ (comparison w₁.toGaloisQuotientWitness
+        w₂.toGaloisQuotientWitness).1 =
+        (w₁.e.inv ≫ pullback.fst g₁
+          (Spec.map (CommRingCat.ofHom (algebraMap K L)))) ≫
+          (comparison w₁.toGaloisQuotientWitness
+            w₂.toGaloisQuotientWitness).1 :=
+      congrArg (fun z => z ≫ (comparison w₁.toGaloisQuotientWitness
+        w₂.toGaloisQuotientWitness).1) w₁.projection.symm
+    _ = w₂.e.inv ≫ pullback.fst g₂
+        (Spec.map (CommRingCat.ofHom (algebraMap K L))) :=
+      comparison_projection w₁.toGaloisQuotientWitness
+        w₂.toGaloisQuotientWitness
+    _ = q₂ := w₂.projection
 
 /-- Transport a specified quotient witness along an equivariant isomorphism of
 the acted source schemes. -/
