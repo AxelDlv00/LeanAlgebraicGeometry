@@ -224,6 +224,205 @@ def chartLocusOpensChartValueAff (hπ : π ≫ P1.structureMap k = C.hom)
   chartLocusOpens C m Z T (chartValueAff C n m Z T s)
     (chartLocusAffineLocal_chartValueAff C π n hπ m Z T s)
 
+/-! ## The universal widened source open
+
+The preceding definition produces an open for every widened family.  A representation of
+`divFunctorAff C n` carries a distinguished universal family, so it also determines a
+distinguished open of the representing object.  This section makes that open, and the exact
+range-containment condition used by `liftPointwiseToOpens`, available as named data.
+
+There are two deliberately separate steps.
+
+* `DivFamZarAff.HasFiniteSeparableH1Witness` is a class-intrinsic field predicate.  It asks for
+  precisely the finite separable witness appearing in `IsSplitWitness`, but names the class as
+  the base change of a widened divisor family rather than as an anonymous Cech class.
+* `universalChartSourceAff` specializes `chartLocusOpensChartValueAff` to the universal family
+  `rep.homEquiv (𝟙 D)`.  Its range law turns the set-theoretic containment required by the
+  restricted-atlas coupling into the pointwise predicate above.
+
+This does not produce `rep`, `IsChartUniv`, or coverage.  It produces the source open `V` that
+those constructions use once widened divisor representability is available, and identifies
+membership in `V` without an extra hypothesis or a chart-typed representative.
+-/
+
+/-- A widened divisor class over a field has a finite-separable `H¹` witness if, after some
+finite separable field extension, its base-changed Cech class is represented by a divisor with
+vanishing first cohomology.
+
+This is the class-intrinsic content of `IsSplitWitness`: the anonymous presenting class in that
+predicate is pinned here to the widened family's Picard class. -/
+def DivFamZarAff.HasFiniteSeparableH1Witness {K : Type u} [Field K] [Algebra k K]
+    (F : DivFamZarAff C K n) : Prop :=
+  ∃ (L : Type u) (_ : Field L) (_ : Algebra k L) (_ : Algebra K L)
+      (_ : IsScalarTower k K L) (_ : Module.Finite K L) (_ : Algebra.IsSeparable K L)
+      (W : ((C ⊗ overSpec k L).left).CurveDivisor),
+    Scheme.CurveDivisor.picClass L W =
+        Scheme.CechPic.map (relCurveMap C K L) F.picClass
+      ∧ Subsingleton (Sheaf.HModule
+          ((C ⊗ overSpec k L).left.divisorSheaf L W) 1)
+
+omit [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIrreducible C.hom]
+    [GeometricallyReduced C.hom] in
+/-- The affine Abel value of a widened family is the plus-unit of its Picard class after every
+field extension.  This pins the presenting class used by `IsSplitWitness`. -/
+theorem abelDivAff'_fibreClass
+    {K L : Type u} [Field K] [Algebra k K] [Field L] [Algebra k L]
+    [Algebra K L] [IsScalarTower k K L]
+    (s : divFamZarAff C n (overSpec k K)) :
+    PicEtAff.map C L (picEtAffineEquiv C K (abelDivAff' C n (overSpec k K) s))
+      = PicEtAff.unit C L (relPicMk C (overSpec k L)
+          (Scheme.CechPic.map (relCurveMap C K L)
+            (divFamZarAffAffineEquiv C n K s).picClass)) := by
+  rw [picEtAffineEquiv_abelDivAff', abelDivAffPlus, PicEtAff.map_unit, relPicAlgMap_mk]
+  refine congrArg (PicEtAff.unit C L) ?_
+  refine congrArg (relPicMk C (overSpec k L)) ?_
+  have hcurve : relCurveMap C K L =
+      (C ◁ Over.overSpecMap (IsScalarTower.toAlgHom k K L)).left := by
+    refine congrArg (fun q : overSpec k L ⟶ overSpec k K => (C ◁ q).left) ?_
+    exact Over.OverMorphism.ext rfl
+  rw [hcurve]
+  rfl
+
+/-- The widened finite-separable `H¹` predicate is exactly `IsSplitWitness` for the widened
+Abel value.
+
+The reverse implication uses injectivity of the plus unit and of `relPicMk` to identify the
+anonymous Cech class supplied by `IsSplitWitness` with the base-changed widened class. -/
+theorem DivFamZarAff.hasFiniteSeparableH1Witness_iff
+    (K : Type u) [Field K] [Algebra k K]
+    (s : divFamZarAff C n (overSpec k K)) :
+    (divFamZarAffAffineEquiv C n K s).HasFiniteSeparableH1Witness
+      ↔ IsSplitWitness C (abelDivAff' C n (overSpec k K) s) := by
+  constructor
+  · rintro ⟨L, hLf, hLk, hLK, htow, hfin, hsep, W, hW, hW1⟩
+    letI : Field L := hLf
+    letI : Algebra k L := hLk
+    letI : Algebra K L := hLK
+    letI : IsScalarTower k K L := htow
+    letI : Module.Finite K L := hfin
+    letI : Algebra.IsSeparable K L := hsep
+    exact isSplitWitness_of_presenting_witness C _ _ (abelDivAff'_fibreClass s) W hW hW1
+  · rintro ⟨L, hLf, hLk, hLK, htow, hfin, hsep, M, hM, W, hW, hW1⟩
+    letI : Field L := hLf
+    letI : Algebra k L := hLk
+    letI : Algebra K L := hLK
+    letI : IsScalarTower k K L := htow
+    letI : Module.Finite K L := hfin
+    letI : Algebra.IsSeparable K L := hsep
+    have hid : PicEtAff.unit C L (relPicMk C (overSpec k L) M)
+        = PicEtAff.unit C L (relPicMk C (overSpec k L)
+            (Scheme.CechPic.map (relCurveMap C K L)
+              (divFamZarAffAffineEquiv C n K s).picClass)) :=
+      hM.symm.trans (abelDivAff'_fibreClass s)
+    have hMcl : M = Scheme.CechPic.map (relCurveMap C K L)
+        (divFamZarAffAffineEquiv C n K s).picClass :=
+      relPicMk_injective_of_subsingleton C (overSpec k L)
+        (PicEtAff.unit_injective C L hid)
+    refine Exists.intro L ?_
+    refine Exists.intro hLf ?_
+    refine Exists.intro hLk ?_
+    refine Exists.intro hLK ?_
+    refine Exists.intro htow ?_
+    refine Exists.intro hfin ?_
+    refine Exists.intro hsep ?_
+    refine Exists.intro W ?_
+    exact ⟨hW.trans hMcl, hW1⟩
+
+/-- The finite-separable `H¹` predicate at a point of a general test, evaluated on the widened
+family pulled to that point's residue field. -/
+def divFamZarAff.HasFiniteSeparableH1WitnessAt {T : Over (Spec (.of k))}
+    (s : divFamZarAff C n T) (t : T.left) : Prop :=
+  (divFamZarAffAffineEquiv C n (Over.testPointField t)
+    (divFamZarAff.map C n (Over.testPoint t) s)).HasFiniteSeparableH1Witness
+
+omit [GeometricallyReduced C.hom] in
+/-- `chartTwist` cancels the twist in the widened chart value, just as it does for the
+chart-typed value. -/
+theorem chartTwist_chartValueAff (m : ℕ)
+    (Z : (C ⊗ overSpec k k).left.CurveDivisor) (T : Over (Spec (.of k)))
+    (s : divFamZarAff C n T) :
+    chartTwist C m Z T (chartValueAff C n m Z T s) = abelDivAff' C n T s := by
+  rw [chartTwist, chartValueAff]
+  group
+
+/-- Membership in the chart locus of a widened chart value is exactly the widened family's
+finite-separable `H¹` predicate at that point.  In particular the result is independent of the
+chosen twist parameters, although those parameters remain part of the chart map. -/
+theorem DivFamZarAff.hasFiniteSeparableH1WitnessAt_iff_mem_chartLocus
+    {T : Over (Spec (.of k))} (s : divFamZarAff C n T) (t : T.left)
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor) :
+    s.HasFiniteSeparableH1WitnessAt t
+      ↔ t ∈ chartLocus C m Z (chartValueAff C n m Z T s) := by
+  rw [mem_chartLocus_iff, chartTwist_chartValueAff, picEtMap_abelDivAff']
+  exact DivFamZarAff.hasFiniteSeparableH1Witness_iff (C := C) (n := n)
+    (Over.testPointField t) _
+
+/-- The universal widened divisor family selected by a representation of `divFunctorAff`. -/
+def universalDivFamAff {D : Over (Spec (.of k))}
+    (rep : (divFunctorAff C n).RepresentableBy D) : divFamZarAff C n D :=
+  rep.homEquiv (𝟙 D)
+
+omit [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIrreducible C.hom]
+    [GeometricallyReduced C.hom] in
+/-- Pulling back the universal widened family along `q` gives the family classified by `q`. -/
+theorem universalDivFamAff_map {D T : Over (Spec (.of k))}
+    (rep : (divFunctorAff C n).RepresentableBy D) (q : T ⟶ D) :
+    divFamZarAff.map C n q (universalDivFamAff rep) = rep.homEquiv q := by
+  have h := rep.homEquiv_comp q (𝟙 D)
+  rw [Category.comp_id] at h
+  exact h.symm
+
+/-- The actual source open `V` on a representing object: the chart locus of its universal
+widened divisor family.  Openness is supplied by `chartLocusOpensChartValueAff`. -/
+def universalChartSourceAff {D : Over (Spec (.of k))}
+    (rep : (divFunctorAff C n).RepresentableBy D)
+    (hπ : π ≫ P1.structureMap k = C.hom)
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor) : D.left.Opens :=
+  chartLocusOpensChartValueAff C π n hπ m Z D (universalDivFamAff rep)
+
+/-- A point lies in the universal source open exactly when the universal widened family has a
+finite-separable `H¹` witness there. -/
+theorem mem_universalChartSourceAff_iff {D : Over (Spec (.of k))}
+    (rep : (divFunctorAff C n).RepresentableBy D)
+    (hπ : π ≫ P1.structureMap k = C.hom)
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor) (y : D.left) :
+    y ∈ universalChartSourceAff (C := C) (π := π) rep hπ m Z
+      ↔ (universalDivFamAff rep).HasFiniteSeparableH1WitnessAt y := by
+  exact (DivFamZarAff.hasFiniteSeparableH1WitnessAt_iff_mem_chartLocus
+    (universalDivFamAff rep) y m Z).symm
+
+/-- The range condition consumed by `liftPointwiseToOpens`, specialized to the universal
+widened source open, is equivalent to a pointwise finite-separable `H¹` witness for the
+universal family at every image point.
+
+This is an iff: it neither strengthens the range condition nor hides a coverage obligation. -/
+theorem range_subset_universalChartSourceAff_iff {D T : Over (Spec (.of k))}
+    (rep : (divFunctorAff C n).RepresentableBy D)
+    (hπ : π ≫ P1.structureMap k = C.hom)
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor) (q : T ⟶ D) :
+    Set.range q.left.base ⊆
+        Set.range ((universalChartSourceAff (C := C) (π := π) rep hπ m Z).ι.base)
+      ↔ ∀ t : T.left,
+        (universalDivFamAff rep).HasFiniteSeparableH1WitnessAt (q.left.base t) := by
+  constructor
+  · intro h t
+    apply (mem_universalChartSourceAff_iff (C := C) (π := π) rep hπ m Z _).mp
+    have hr := h ⟨t, rfl⟩
+    rwa [Scheme.Opens.range_ι] at hr
+  · intro h y hy
+    obtain ⟨t, rfl⟩ := hy
+    rw [Scheme.Opens.range_ι]
+    exact (mem_universalChartSourceAff_iff (C := C) (π := π) rep hπ m Z _).mpr (h t)
+
+/-- The chart value of the universal widened family restricts to the chart value of the family
+classified by a test morphism. -/
+theorem picEtMap_chartValueAff_universal {D T : Over (Spec (.of k))}
+    (rep : (divFunctorAff C n).RepresentableBy D)
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor) (q : T ⟶ D) :
+    picEtMap C q (chartValueAff C n m Z D (universalDivFamAff rep))
+      = chartValueAff C n m Z T (rep.homEquiv q) := by
+  rw [picEtMap_chartValueAff, universalDivFamAff_map]
+
 end
 
 end AlgebraicGeometry
