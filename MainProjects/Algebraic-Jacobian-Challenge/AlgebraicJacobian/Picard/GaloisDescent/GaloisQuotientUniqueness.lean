@@ -282,6 +282,37 @@ theorem inverse_comp_snd
   rw [← w.over]
   simp
 
+/-- The pinned quotient projection is invariant under the Galois action. -/
+@[reassoc]
+theorem act_hom_comp_quotientMap
+    {K L : Type u} [Field K] [Field L] [Algebra K L]
+    {X : Scheme.{u}} {f : X ⟶ Spec (CommRingCat.of L)}
+    {rho : SemilinearGalAction K L X f}
+    {Y : Scheme.{u}} {g : Y ⟶ Spec (CommRingCat.of K)}
+    {q : X ⟶ Y}
+    (w : GaloisQuotientWitnessWithProjection rho Y g q)
+    (gamma : L ≃ₐ[K] L) :
+    (rho.act gamma).hom ≫ q = q := by
+  have hinv : (rho.act gamma).hom ≫ w.e.inv =
+      w.e.inv ≫
+        ((pullbackSemilinearGalAction K L g).act gamma).hom := by
+    rw [← cancel_mono w.e.hom]
+    simp only [Category.assoc, Iso.inv_hom_id, Category.comp_id]
+    calc
+      (rho.act gamma).hom =
+          (w.e.inv ≫ w.e.hom) ≫ (rho.act gamma).hom := by simp
+      _ = w.e.inv ≫ (w.e.hom ≫ (rho.act gamma).hom) :=
+        Category.assoc _ _ _
+      _ = w.e.inv ≫
+          (((pullbackSemilinearGalAction K L g).act gamma).hom ≫
+            w.e.hom) :=
+        congrArg (fun z ↦ w.e.inv ≫ z) (w.equivariant gamma).symm
+      _ = (w.e.inv ≫
+          ((pullbackSemilinearGalAction K L g).act gamma).hom) ≫
+            w.e.hom := (Category.assoc _ _ _).symm
+  rw [← w.projection, ← Category.assoc, hinv, Category.assoc]
+  rw [pullbackSemilinearGalAction_act_hom, pullbackGalMap_fst]
+
 /-- The quotient projection specified by a Galois quotient witness is an
 epimorphism.  It is an isomorphism followed by the flat surjective base change
 of `Spec L ⟶ Spec K`. -/
