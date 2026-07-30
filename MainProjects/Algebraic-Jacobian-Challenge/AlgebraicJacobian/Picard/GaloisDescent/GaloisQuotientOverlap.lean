@@ -831,6 +831,36 @@ noncomputable def quotientChartProjection [FiniteDimensional K L] [IsGalois K L]
   SemilinearGalAction.stableAffineQuotientMap ρ i.stable i.affine ≫
     (quotientGlueData ρ).ι i
 
+/-- The quotient projection of a stable affine chart lies over `Spec K`. -/
+@[reassoc]
+theorem stableAffineQuotientMap_quotientChartMap
+    [FiniteDimensional K L] [IsGalois K L] (i : StableAffineOpen ρ) :
+    SemilinearGalAction.stableAffineQuotientMap ρ i.stable i.affine ≫
+        quotientChartMap ρ i =
+      (i.U.ι ≫ f) ≫ Spec.map (CommRingCat.ofHom (algebraMap K L)) := by
+  let w := SemilinearGalAction.galoisQuotientWitness_quotientOpenOfStableSubopen
+    ρ i.stable i.affine le_rfl i.stable
+  have hw := GaloisQuotientWitnessWithProjection.quotientMap_comp_base w
+  have hfac := SemilinearGalAction.stableAffineQuotientMapRestrict_fac
+    ρ i.stable i.affine le_rfl i.stable
+  calc
+    SemilinearGalAction.stableAffineQuotientMap ρ i.stable i.affine ≫
+          quotientChartMap ρ i =
+        (X.homOfLE le_rfl ≫
+          SemilinearGalAction.stableAffineQuotientMap ρ i.stable i.affine) ≫
+            quotientChartMap ρ i := by rw [Scheme.homOfLE_rfl, Category.id_comp]
+    _ = (SemilinearGalAction.stableAffineQuotientMapRestrict
+          ρ i.stable i.affine le_rfl i.stable ≫
+        (SemilinearGalAction.quotientOpenOfStableSubopen ρ i.stable i.U).ι) ≫
+          quotientChartMap ρ i :=
+      congrArg (fun z ↦ z ≫ quotientChartMap ρ i) hfac.symm
+    _ = SemilinearGalAction.stableAffineQuotientMapRestrict
+          ρ i.stable i.affine le_rfl i.stable ≫
+        ((SemilinearGalAction.quotientOpenOfStableSubopen ρ i.stable i.U).ι ≫
+          quotientChartMap ρ i) := Category.assoc _ _ _
+    _ = (i.U.ι ≫ f) ≫
+        Spec.map (CommRingCat.ofHom (algebraMap K L)) := hw
+
 /-- The local quotient projections agree on the intersection of two stable
 affine charts. -/
 theorem quotientChartProjection_inf [FiniteDimensional K L] [IsGalois K L]
@@ -944,6 +974,43 @@ theorem quotientGlueData_ι_gluedQuotientMap
     [FiniteDimensional K L] [IsGalois K L] (i : StableAffineOpen ρ) :
     (quotientGlueData ρ).ι i ≫ gluedQuotientMap ρ = quotientChartMap ρ i :=
   Multicoequalizer.π_desc _ _ _ _ _
+
+/-- A local quotient projection followed by the glued structure map is its
+source chart's structure map over `Spec K`. -/
+@[reassoc]
+theorem quotientChartProjection_gluedQuotientMap
+    [FiniteDimensional K L] [IsGalois K L] (i : StableAffineOpen ρ) :
+    quotientChartProjection ρ i ≫ gluedQuotientMap ρ =
+      (i.U.ι ≫ f) ≫ Spec.map (CommRingCat.ofHom (algebraMap K L)) := by
+  have hchart := quotientGlueData_ι_gluedQuotientMap ρ i
+  calc
+    quotientChartProjection ρ i ≫ gluedQuotientMap ρ =
+        SemilinearGalAction.stableAffineQuotientMap ρ i.stable i.affine ≫
+          ((quotientGlueData ρ).ι i ≫ gluedQuotientMap ρ) := by
+      unfold quotientChartProjection
+      exact Category.assoc _ _ _
+    _ = SemilinearGalAction.stableAffineQuotientMap ρ i.stable i.affine ≫
+          quotientChartMap ρ i :=
+      congrArg
+        (fun z ↦ SemilinearGalAction.stableAffineQuotientMap
+          ρ i.stable i.affine ≫ z)
+        hchart
+    _ = (i.U.ι ≫ f) ≫ Spec.map (CommRingCat.ofHom (algebraMap K L)) :=
+      stableAffineQuotientMap_quotientChartMap ρ i
+
+/-- The global quotient projection lies over `Spec K`. -/
+@[reassoc]
+theorem gluedQuotientProjection_gluedQuotientMap
+    [FiniteDimensional K L] [IsGalois K L] [HasStableAffineCover K L ρ] :
+    gluedQuotientProjection ρ ≫ gluedQuotientMap ρ =
+      f ≫ Spec.map (CommRingCat.ofHom (algebraMap K L)) := by
+  apply (sourceOpenCover ρ).hom_ext
+  intro i
+  change i.U.ι ≫ (gluedQuotientProjection ρ ≫ gluedQuotientMap ρ) =
+    i.U.ι ≫ (f ≫ Spec.map (CommRingCat.ofHom (algebraMap K L)))
+  rw [← Category.assoc, sourceOpenCover_f_gluedQuotientProjection]
+  rw [quotientChartProjection_gluedQuotientMap]
+  simp only [Category.assoc]
 
 /-- The glued quotient as an object over `Spec K`, in the exact category used
 by Picard representability. -/
