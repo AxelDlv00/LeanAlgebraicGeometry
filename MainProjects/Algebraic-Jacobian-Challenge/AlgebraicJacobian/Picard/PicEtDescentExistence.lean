@@ -5,6 +5,7 @@ Authors: Axel Delaval
 -/
 import Mathlib
 import AlgebraicJacobian.Picard.PicEtDescentAssembly
+import AlgebraicJacobian.Picard.GaloisDescent.GaloisSelfTensor
 
 /-!
 # The EXISTENCE half of the `picEt` field-descent step, at one morphism
@@ -90,6 +91,7 @@ below; a stale-import environment reports every probe as succeeding (`I-1057`).
 universe u
 
 open CategoryTheory AlgebraicGeometry Limits
+open scoped TensorProduct
 
 namespace AlgebraicGeometry
 
@@ -316,6 +318,36 @@ noncomputable def selfPullback_coverMap_left_iso (T : Over (Spec (CommRingCat.of
     (coverMap (k := k) (k' := k') T) (coverMap (k := k) (k' := k') T)) ≪≫
   pullbackRightPullbackFstIso T.hom (specMapAlgebra k k')
     (pullback.fst T.hom (specMapAlgebra k k'))
+
+/-! ### The two legs of the Galois bridge, at the ring level
+
+The bridge from `γ`-invariance to projection-agreement needs the `γ`-component of
+`ajc-p1`'s splitting to send the cover's two legs to `id` and `γ`. These are those
+two identities, at the ring level where they live; the scheme-level transport is
+`Spec` applied to them.
+
+Recorded here rather than left as prose because my own §4 named this coherence as
+the residue, and a residue worth naming is worth *checking is not free* — these two
+are, from `galoisSelfTensorEquiv_apply_tmul`. `Picard/GaloisDescent/GaloisSelfTensor.lean`
+had **zero** code consumers when this landed (`I-1399`); these are the first, which
+is also the check that the brick's `simp` lemmas are usable rather than merely true.
+
+The `change` on the first leg is load-bearing: `includeLeftRingHom a` does not
+`simp`-normalise to `a ⊗ₜ 1` on its own, and without it instance resolution gets
+stuck on a metavariable in `SMulCommClass`. -/
+theorem galoisSelfTensor_includeLeft (k' : Type u) [Field k'] [Algebra k k']
+    [FiniteDimensional k k'] [IsGalois k k'] (γ : k' ≃ₐ[k] k') (a : k') :
+    AlgebraicJacobian.GaloisDescent.galoisSelfTensorEquiv k k'
+      (Algebra.TensorProduct.includeLeftRingHom a) γ = a := by
+  change AlgebraicJacobian.GaloisDescent.galoisSelfTensorEquiv k k'
+    (a ⊗ₜ[k] (1 : k')) γ = a
+  simp [AlgebraicJacobian.GaloisDescent.galoisSelfTensorEquiv_apply_tmul]
+
+theorem galoisSelfTensor_includeRight (k' : Type u) [Field k'] [Algebra k k']
+    [FiniteDimensional k k'] [IsGalois k k'] (γ : k' ≃ₐ[k] k') (a : k') :
+    AlgebraicJacobian.GaloisDescent.galoisSelfTensorEquiv k k'
+      ((1 : k') ⊗ₜ[k] a) γ = γ a := by
+  simp [AlgebraicJacobian.GaloisDescent.galoisSelfTensorEquiv_apply_tmul]
 
 /-! ## §3. The level this runs at is the level a curve reaches — the join
 

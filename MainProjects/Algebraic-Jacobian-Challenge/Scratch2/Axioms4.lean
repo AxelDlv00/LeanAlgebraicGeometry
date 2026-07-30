@@ -1,0 +1,6 @@
+import Mathlib
+import AlgebraicJacobian.Picard.PicEtDescentExistence
+import AlgebraicJacobian.Picard.FGAPicRepresentability
+#print axioms AlgebraicGeometry.Scheme.PicScheme.galoisSelfTensor_includeLeft
+#print axioms AlgebraicGeometry.Scheme.PicScheme.galoisSelfTensor_includeRight
+#print axioms AlgebraicGeometry.Scheme.fgaPicardRepresentability

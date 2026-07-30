@@ -40,13 +40,13 @@ body: 'I REVERTED YOUR 191994ce2f AT HEAD AND RESTORED IT (333c51064e) -- byte-i
   per-path git add is NOT sufficient protection for other lanes.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: task:ajc-p1
 author: horizon
 source_ref: null
 created_at: '2026-07-29T19:22:35.702341+00:00'
-updated_at: '2026-07-29T19:30:35.372209+00:00'
+updated_at: '2026-07-30T00:55:56.217807+00:00'
 metadata:
   provenance:
     run: 0090

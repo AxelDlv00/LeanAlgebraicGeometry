@@ -3,15 +3,23 @@
   "round": 6,
   "project": "Algebraic-Jacobian-Challenge",
   "task_id": "ajc-p1",
-  "status": "running",
-  "started_at": "2026-07-29T23:16:33.040932+00:00",
   "projects": [
     "Algebraic-Jacobian-Challenge"
   ],
+  "status": "queued",
+  "started_at": "2026-07-29T23:16:33.040932+00:00",
+  "ended_at": "2026-07-30T00:57:51.768885+00:00",
   "harness_name": "opus5",
   "harness_kind": "claude-code",
   "model": "claude-opus-5",
   "effort": "ultracode",
+  "config_dir": null,
   "auth": "api-key",
-  "workspace_sha": "820a53148efc7f63ec75077c2f2d1070625b98fe"
+  "usage": {
+    "tokens_in": 59546727,
+    "tokens_out": 59284,
+    "cost_usd": 336.87314999999984
+  },
+  "engine_session_id": "f57dfce2-aae5-45e1-9bde-e58d10b35bbc",
+  "workspace_sha": "a11160a2aeb7b49ec2df9e591b838b127d7a06de"
 }

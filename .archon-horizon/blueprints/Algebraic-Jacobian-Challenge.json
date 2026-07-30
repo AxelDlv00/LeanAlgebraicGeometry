@@ -18160,10 +18160,10 @@
     "macros": {},
     "states": {
       "blocked": 249,
-      "closed": 7650,
+      "closed": 7657,
       "formalized_open": 301,
       "informal": 175,
-      "ready": 192
+      "ready": 193
     },
     "warnings": [
       "AlgebraicGeometry.iInf_fin_succ: Lean declaration appears more than once (AlgebraicJacobian/Cohomology/CechAcyclic.lean, AlgebraicJacobian/Cohomology/CechCoboundarySplitting.lean)",
@@ -18193,7 +18193,12 @@
       "AlgebraicGeometry.secRes_naturality: Lean declaration appears more than once (AlgebraicJacobian/RiemannRoch/Ledger/AffineVanishing.lean, AlgebraicJacobian/RiemannRoch/Ledger/QcohSections.lean)",
       "AlgebraicGeometry.secRes_moduleKSheaf: Lean declaration appears more than once (AlgebraicJacobian/RiemannRoch/Ledger/AffineVanishing.lean, AlgebraicJacobian/RiemannRoch/Ledger/QcohSections.lean)",
       "AlgebraicGeometry.Scheme.one_le_coheight_of_ne_genericPoint: Lean declaration appears more than once (AlgebraicJacobian/Albanese/Milne33TransportLocal.lean, AlgebraicJacobian/RiemannRoch/WeilDivisor.lean)",
+      "Probe.specSelfPullbackIso: Lean declaration appears more than once (Scratch2/Consume.lean, Scratch2/Consume2.lean)",
       "Probe.isSheafFor_singleton: Lean declaration appears more than once (Scratch2/Exist3.lean, Scratch2/Join.lean)",
+      "generic_compat: Lean declaration appears more than once (Scratch2/ScratchDup.lean, Scratch2/ScratchMathlibIff.lean)",
+      "generic_compat: Lean declaration appears more than once (Scratch2/ScratchDup.lean, Scratch2/ScratchMathlibIff2.lean)",
+      "generic_compat: Lean declaration appears more than once (Scratch2/ScratchDup.lean, Scratch2/ScratchMathlibIff3.lean)",
+      "generic_exists_unique: Lean declaration appears more than once (Scratch2/ScratchMathlibIff2.lean, Scratch2/ScratchMathlibIff3.lean)",
       "Probe.splitHom: Lean declaration appears more than once (Scratch2/Split1.lean, Scratch2/Split2.lean)",
       "Probe.splitHom: Lean declaration appears more than once (Scratch2/Split1.lean, Scratch2/Split3.lean)",
       "Probe.splitHom_tmul: Lean declaration appears more than once (Scratch2/Split2.lean, Scratch2/Split3.lean)",
@@ -18210,12 +18215,7 @@
       "AlgebraicGeometry.Adelic.LaurentChartData.chartSquare: Lean declaration appears more than once (AlgebraicJacobian/RiemannRoch/Ledger/P1Vanishing.lean, rr_probe_p1h1.lean)",
       "AlgebraicGeometry.Adelic.LaurentChartData.subsingleton_h1Cok: Lean declaration appears more than once (AlgebraicJacobian/RiemannRoch/Ledger/P1Vanishing.lean, rr_probe_p1h1.lean)",
       "AlgebraicGeometry.Adelic.subsingleton_hModule_one_p1Over: Lean declaration appears more than once (AlgebraicJacobian/RiemannRoch/Ledger/P1Vanishing.lean, rr_probe_p1h1.lean)",
-      "AlgebraicGeometry.Adelic.genus_p1Over_eq_zero: Lean declaration appears more than once (AlgebraicJacobian/RiemannRoch/Ledger/P1Vanishing.lean, rr_probe_p1h1.lean)",
-      "AlgebraicGeometry.BcSquareCoherence: Lean declaration appears more than once (AlgebraicJacobian/Cohomology/CechTwistedCoherenceReduction.lean, scratch_FbcDef.lean)",
-      "lem:pushforwardPullbackBaseChange_restrict_naturality: \\lean{AlgebraicGeometry.pushforwardPullbackBaseChange_restrict_naturality} not found in Lean sources",
-      "lem:pushforwardPullbackBaseChange_abHom: \\lean{AlgebraicGeometry.pushforwardPullbackBaseChangeAbHom} not found in Lean sources",
-      "lem:pushforwardPullbackBaseChange_linHom: \\lean{AlgebraicGeometry.pushforwardPullbackBaseChangeHom} not found in Lean sources",
-      "lem:pushforwardPullbackBaseChange_natIso: \\lean{AlgebraicGeometry.pushforwardPullbackBaseChangeNatIso} not found in Lean sources"
+      "AlgebraicGeometry.Adelic.genus_p1Over_eq_zero: Lean declaration appears more than once (AlgebraicJacobian/RiemannRoch/Ledger/P1Vanishing.lean, rr_probe_p1h1.lean)"
     ]
   },
   "nodes": [

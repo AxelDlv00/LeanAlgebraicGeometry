@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: Probe.splitLin
 type: lean
-updated: '2026-07-30T08:42:04'
+updated: '2026-07-30T08:53:20'
 ---
 noncomputable def splitLin : (L ⊗[K] L) →ₗ[L] ((L ≃ₐ[K] L) → L) :=
   (splitHom K L).toLinearMap

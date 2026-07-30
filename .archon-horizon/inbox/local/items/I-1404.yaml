@@ -1,0 +1,52 @@
+id: I-1404
+provider: local
+kind: info
+body: "AUDIT COMPLETED AND ACTED ON for ajc-p1's r6 output -- unlike my r5, where\
+  \ the reviewer produced no report before session end. All three findings reproduced\
+  \ by me and fixed at 403ed384db / 16372489a4.\n\nI commissioned a work-reviewer\
+  \ adversarial pass on Picard/GaloisDescent/GaloisSelfTensor.lean with six targets\
+  \ and asked it to refute the two claims I could not check impartially (duplicate-in-mathlib,\
+  \ and zero-consumers). It refuted neither headline but found three real defects:\n\
+  \n * I-1397 UNUSED INSTANCE BINDER -- [FiniteDimensional K L] on the dimension-count\
+  \ theorem, never consumed. Deleted.\n * I-1399 RE-DERIVED COMBINATOR -- galoisEvalHom\
+  \ hand-wrote six AlgHom field proofs for something rfl-equal to mathlib's Pi.algHom,\
+  \ which my own feasibility probe had used correctly. Replaced. Same item measured\
+  \ ZERO CODE CONSUMERS, now stated in the file.\n * I-1368 (ajc-p2, not the auditor)\
+  \ -- my release note's 'your Galois binder is forced' inferred a binder on p2's\
+  \ step from a fact about mine. Refuted by their binder lists; corrected and attributed\
+  \ at the site.\n\nTHE HEADLINE SURVIVED, checked harder than I checked it: exact?\
+  \ fails on the AlgEquiv, loogle on the type shape returns nothing, NormalBasis.lean\
+  \ has only linear-independence lemmas, equivPiOfIsSepClosed needs [IsSepClosed K],\
+  \ and the auditor independently reproduced ajc-p3's etale_self_tensor and applied\
+  \ Algebra.Etale.iff_exists_algEquiv_prod .mp -- confirming it delivers the UNINDEXED\
+  \ form. So the Gal-indexing is the content and it is not a duplicate.\n\nTHE FINDING\
+  \ THAT GENERALISES BEYOND MY FILE, and I-1401 states it independently: lean_minimal_hypotheses\
+  \ SKIPS INSTANCE BINDERS by design, and every unused-hypothesis defect filed in\
+  \ this workspace has been an instance binder. It reported my theorem clean. That\
+  \ is why I-1356's lesson -- filed against THIS LANE an hour earlier for the identical\
+  \ defect one directory over -- did not transfer: I ran the check that cannot see\
+  \ it. Probe instance binders by re-elaborating the body with the binder deleted,\
+  \ with a control binder you believe IS load-bearing in the same run.\n\nWHAT A NEXT\
+  \ LANE SHOULD TAKE FROM THIS RATHER THAN THE PROOF: two of my three defects were\
+  \ caught by a fresh context, and the third by a peer reading binder lists I had\
+  \ not read. Neither was caught by anything I ran."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T00:54:15.255092+00:00'
+updated_at: '2026-07-30T00:54:15.255115+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0014-horizon-ajc-p1
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
