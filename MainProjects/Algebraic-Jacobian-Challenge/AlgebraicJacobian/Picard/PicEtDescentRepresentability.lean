@@ -110,6 +110,46 @@ noncomputable def restrictCompatEquiv (C : Over (Spec (CommRingCat.of k)))
     (picEt C).obj (op T) ≃ CoverCompatible (k' := k') C T :=
   Equiv.ofBijective _ (restrictCompat_bijective (k' := k') C T)
 
+@[simp]
+theorem restrictCompatEquiv_apply (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    (T : Over (Spec (CommRingCat.of k))) (y : (picEt C).obj (op T)) :
+    ((restrictCompatEquiv (k' := k') C T) y).1
+      = (picEt C).map (coverMap (k' := k') T).op y := rfl
+
+/-- **Restriction along the cover as a NATURAL TRANSFORMATION** `picEt C ⟶ coverᵒᵖ ⋙ picEt C`.
+
+Naturality is the counit square of `Over.map ⊣ Over.pullback`, opposed. -/
+noncomputable def coverRestrictNat (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] :
+    picEt C ⟶ (coverFunctor (k := k) (k' := k')).op ⋙ picEt C :=
+  Functor.whiskerRight
+    (NatTrans.op (Over.mapPullbackAdj (specMapAlgebra k k')).counit) (picEt C)
+
+omit [Algebra.IsSeparable k k'] [Module.Finite k k'] in
+@[simp]
+theorem coverRestrictNat_app (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    (T : Over (Spec (CommRingCat.of k))) (y : (picEt C).obj (op T)) :
+    (coverRestrictNat (k' := k') C).app (op T) y
+      = (picEt C).map (coverMap (k' := k') T).op y := by
+  change (picEt C).map ((Over.mapPullbackAdj (specMapAlgebra k k')).counit.app T).op y = _
+  rw [coverMap_eq_counit]
+  rfl
+
+/-- The descent equivalence is NATURAL in the test: its underlying map is the
+component of `coverRestrictNat`. -/
+theorem restrictCompatEquiv_naturality (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    {T T' : Over (Spec (CommRingCat.of k))} (f : T ⟶ T')
+    (y : (picEt C).obj (op T')) :
+    ((restrictCompatEquiv (k' := k') C T) ((picEt C).map f.op y)).1
+      = ((coverFunctor (k := k) (k' := k')).op ⋙ picEt C).map f.op
+          ((restrictCompatEquiv (k' := k') C T') y).1 := by
+  rw [restrictCompatEquiv_apply, restrictCompatEquiv_apply,
+    ← coverRestrictNat_app (k' := k') C T, ← coverRestrictNat_app (k' := k') C T']
+  exact NatTrans.naturality_apply (coverRestrictNat (k' := k') C) f.op y
+
 end Descend
 
 end PicScheme
