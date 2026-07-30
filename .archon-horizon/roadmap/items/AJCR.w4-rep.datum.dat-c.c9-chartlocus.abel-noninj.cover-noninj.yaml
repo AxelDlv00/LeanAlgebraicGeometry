@@ -4,8 +4,53 @@ title: 'COVER-NONINJ: does coverage at a PROPER V produce the non-injectivity th
   same question'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: ''
-status: active
+summary: "COVER-NONINJ: ADVANCED, no antecedent closed (ajcr-p4, run 0090 r5). The\
+  \ fork is answered from\nthe coverage side, and the answer LINKS two rows that were\
+  \ tracked apart.\n\nLANDED, do not redo: Picard/Pic0ChartCoverForcesNonInj.lean,\
+  \ rooted at AlgebraicJacobian.lean,\n10 declarations, 0 sorries, ALL axiom-clean\
+  \ [propext, Classical.choice, Quot.sound] vs a control\n(AlgebraicGeometry.Jacobian)\
+  \ firing sorryAx; lake build EXIT=0 (8894 jobs). Pins 9199f1f71d\n(module), cd3c0ba351\
+  \ (two site corrections), b3ccc19917 (audit repairs).\n\nTHE RESULT. not_injective_of_pointwiseCoverage_of_ne_top:\
+  \ for an ARBITRARY map of big-site\npresheaves f into pic0SigmaSheaf and an open\
+  \ V != top, PointwiseCoverage for restrictChart f V\nexhibits a test on which f\
+  \ is NOT injective. Witness: the TAUTOLOGICAL section f.app (op X) (id)\nread at\
+  \ a point outside V -- the coverage witness factors through V, the tautological\
+  \ one does\nnot, and naturality at W.iota identifies their chart values. No divisor,\
+  \ chart index, twist, rep\nor pic^0 fact enters (an auditor re-proved it for an\
+  \ arbitrary presheaf on Scheme).\n\nWHAT IT LINKS. Composed at abelSigmaChart it\
+  \ closes the top end of the V-interval WITHOUT\ndeciding the abel-noninj fork: coverage\
+  \ SUPPLIES the non-injectivity that\nnot_restrictedChartFibre_top_of_not_injective\
+  \ takes as a hypothesis, and\nrestrictedChartFibre_top_iff carries it to IsChartLocusFibre.\
+  \ So this row's fork is not only a\nquestion about the CARVE (does DivScheme g carry\
+  \ a point with non-vanishing H1); it is also a\nquestion coverage answers. A witness\
+  \ of the kind this row's item 3 prescribes is not the only\nroute to the negative\
+  \ branch.\n\nAND THE POSITIVE BRANCH NOW COSTS SOMETHING. By the contrapositive\n\
+  not_pointwiseCoverage_of_injective_of_ne_top, an injective chart admits coverage\
+  \ at NO proper V;\nbot is refuted (not_coverageContainment_bot); and top dies too,\
+  \ since the only thing keeping top\nalive consumes the negative branch. So under\
+  \ injectivity the seam is unsatisfiable at EVERY V.\nThat is sharper than the dichotomy\
+  \ I first wrote, which said only top survives.\n\nTHREE OF MY OWN CLAIMS WERE REFUTED\
+  \ by a fresh-context audit and are fixed at HEAD; do not\ninherit them (I-1377/I-1378/I-1379/I-1380):\n\
+  \ * the EQUIVALENCE is one-directional. N -> Q holds (N = fork's negative branch,\
+  \ Q = \"any working\n   V is proper\"). Q -> N does NOT follow: Works == False satisfies\
+  \ all three landed facts and Q\n   vacuously with N false. The converse needs an\
+  \ inhabitant of the seam, which\n   Pic0ChartRestrictedFibreSat's CORRECTED FRAMING\
+  \ says has never been measured at any V.\n * the NON-VACUITY WITNESS was off-target.\
+  \ It cited restrictChart f bot -- injective, but its\n   source has a subsingleton\
+  \ open lattice so admits no V != top, and every map out of yoneda.obj\n   of bot\
+  \ is injective for free. Replaced by Spec k with the tautological section\n   (specSecMap_injective\
+  \ + bot_ne_top_specObj), whose source HAS a proper open.\n * \"all three refutations\
+  \ consume chart_map_iota_apply\" -- one does.\n\nTHE LIMIT THAT MATTERS TO OTHER\
+  \ LANES, filed as I-1389: the antecedent is coverage by a SINGLE\nchart, and pointwise_of_pointwise_restrictChart\
+  \ converts it to UNRESTRICTED one-chart coverage --\nwhich Pic0ChartCoveragePointwise\
+  \ and Pic0ChartCoverageIndexSlack both say should not hold. So it\nis STRONGER than\
+  \ DAT-B coverage and may be refutable; a lane must not read it as antecedent 2.\n\
+  The multi-index version does not go through as written: coverage returns SOME index,\
+  \ not the one\nwhose tautological section was tested.\n\nNOT CLOSED. rep still has\
+  \ no producer; coverage at a proper V has no producer; the pair\n(huniv V, hcov\
+  \ V) still has no measured inhabitant at any V. Every theorem here is an implication\n\
+  between open propositions. OWNER RELEASED per I-0838 step 5.\n"
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -28,4 +73,8 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c.c9-chartlocus.abel-noninj
-  owner: ajcr-p4
+  updated_at: '2026-07-30T00:40:23.707501+00:00'
+  pinned_commits:
+  - b3ccc19917
+  - cd3c0ba351
+  - 9199f1f71d
