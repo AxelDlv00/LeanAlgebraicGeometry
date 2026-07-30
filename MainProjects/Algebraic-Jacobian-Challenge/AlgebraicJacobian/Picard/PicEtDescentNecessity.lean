@@ -330,6 +330,80 @@ theorem seamClauseOne_of_isGaloisQuotient_lftFree
   seamClauseOne_of_isGaloisQuotient_noMatch rep hq hcov
     (locallyOfFiniteType_of_isGaloisQuotient _ hq hX')
 
+/-! ## §6. What §2 buys for the OTHER open rows: `rep` is a lower bound
+
+§2's real use is not on the descent route at all — it is that `rep` may now be quoted
+as a **necessary condition** anywhere in the tree. Two consequences worth naming,
+because both are statements a lane could otherwise spend a session trying to avoid.
+
+`not_representableBy_picEt_of_not_representableBy_baseChangeField` is §2
+contrapositive: a refutation of `k'`-side representability refutes the seam. That is
+the same *shape* as `Picard/PicEtSubcanonical.lean`'s
+`not_exists_representing_picSharp_of_not_isIso`, but on the object the board's chosen
+route actually holds, and with no comparison map in it.
+
+And it forecloses one hope explicitly: no argument can close clause (1) field 1 over
+`k` while leaving `picEt (C_{k'})` unrepresentable. A lane looking for a route that
+"avoids the base change" is looking for something that does not exist.
+
+**THE CAVEAT THESE TWO THEOREMS OWE, measured rather than argued.** Their hypothesis —
+"no `k'`-scheme represents `picEt (C_{k'})`" — is **refutable inside this project**,
+and a lane must know that before quoting them as live constraints. `instHasPicSchemeEt`
+is an *unconditional* instance, its binders base-change (`baseChangeField` carries
+`SmoothOfRelativeDimension 1`, `IsProper` and `GeometricallyIntegral` as named
+instances), so `HasPicSchemeEt.has_pic_scheme_et` at `C_{k'}` produces a representing
+object and contradicts the hypothesis. Reproduced in a scratch probe (since deleted):
+the derivation of `False` elaborates.
+
+**But it reports `sorryAx`, and the theorems below do not.** That is the whole
+distinction, and it is the discipline the seam docstring records for this exact area:
+near `HasPicSchemeEt`, provability is not a discriminating control and the axiom list
+is. So the honest reading is that the hypothesis is *mathematically* open — Kleiman's
+pointless real conic is where a failure would be sought, over `ℝ` rather than over an
+extension — while *in-tree* it contradicts a projection of the very `sorry` these
+theorems are about. Both statements below are therefore genuine implications whose
+antecedent nobody can currently satisfy in Lean without first removing the seam's
+unconditional gate instance. Do not present either as a refutation of anything, and do
+not present the in-tree contradiction as evidence the hypothesis is false. -/
+
+/-- **The contrapositive of §2: refuting `k'`-side representability refutes the seam.**
+
+If `picEt (C_{k'})` is representable by *no* `k'`-scheme, then `picEt C` is
+representable by no `k`-scheme, so clause (1) field 1 of
+`Scheme.fgaPicardRepresentability` is false and the seam statement is false as a
+whole. Stated for an arbitrary field extension.
+
+This is the form in which §2 is a genuine constraint rather than an observation: it
+converts any future non-representability result over an extension into a refutation of
+the headline's representability input, exactly as
+`not_exists_representing_picSharp_of_not_isIso` does for the `picSharp` endpoint — but
+here on `picEt`, which is the object protection `I-0491` chose. -/
+theorem not_representableBy_picEt_of_not_representableBy_baseChangeField
+    (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    (h : ∀ X' : Over (Spec (CommRingCat.of k')),
+      ¬ Nonempty ((picEt (Scheme.baseChangeField C k')).RepresentableBy X')) :
+    ∀ X : Over (Spec (CommRingCat.of k)), ¬ Nonempty ((picEt C).RepresentableBy X) :=
+  fun _ hX => h _ (hX.map (representableBy_picEt_baseChangeField_of_representableBy C))
+
+/-- **Clause (1) itself is refuted by `k'`-side non-representability.**
+
+The seam's clause (1) is a three-field existential; this kills its first field, hence
+the whole conjunct, for every candidate `Z`. Recorded separately from the previous
+theorem because the seam consumes the existential, not the per-object statement, and a
+lane checking whether a refutation "reaches the sorry" needs the existential form. -/
+theorem not_seamClauseOne_of_not_representableBy_baseChangeField
+    (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    (h : ∀ X' : Over (Spec (CommRingCat.of k')),
+      ¬ Nonempty ((picEt (Scheme.baseChangeField C k')).RepresentableBy X')) :
+    ¬ ∃ Z : Over (Spec (CommRingCat.of k)),
+        Nonempty ((picEt C).RepresentableBy Z) ∧
+          LocallyOfFiniteType Z.hom ∧ IsSeparated Z.hom := by
+  rintro ⟨Z, hZ, -, -⟩
+  exact not_representableBy_picEt_of_not_representableBy_baseChangeField
+    (k' := k') C h Z hZ
+
 end PicScheme
 
 end Scheme
