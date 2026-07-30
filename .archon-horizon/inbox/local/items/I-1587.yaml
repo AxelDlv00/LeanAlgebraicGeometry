@@ -1,0 +1,57 @@
+id: I-1587
+provider: local
+kind: conversation
+body: 'REVIEW pic-c r4: one duplicate, one undersold result, cited names clean
+
+
+  DUPLICATE, in the file''s OWN closure: injective_abelSigmaChartZero is a one-liner
+  from injective_abelSigmaChart_of_subsingleton + divFunctorObjSubsingleton_zero,
+  both landed by this same lane last round, both in closure. VERIFIED the substitution
+  typechecks. The docstring calls it ''antecedent 1''s elementwise content, with no
+  hypothesis whatsoever'' without saying it is the parameter-0 instance of a landed
+  arbitrary-n lemma.
+
+
+  UNDERSOLD, the round''s best result: isOpenImmersion_presheaf_of_injective composed
+  with the landed injective_abelSigmaChart_of_mono gives, at ARBITRARY n and any Mono
+  D.hom, ''coverage implies antecedent 1'' for the GENERAL Abel chart. VERIFIED to
+  elaborate. The header never mentions Mono or arbitrary n and sells the spin-off
+  as chart-free plumbing only. That composition is what a coverage lane at n > 0 needs;
+  it is in neither the file nor its Main-declarations list. NEXT: state it.
+
+
+  SURVIVES: no vacuity either side (inferInstance fails on both the vanishing and
+  the coverage clause); hdeg at 0 IS satisfiable (chartIndex_of_isDegree C (isDegree_zero
+  C)); claim 2''s distinction is real but the REASON given is wrong -- the bot lemmas
+  apply to THIS chart too (verified), so the distinction is about the VALUE of V,
+  not about the chart source.
+
+
+  CITED NAMES CLEAN: all 18 in-closure backticked declarations resolve by #check;
+  out-of-closure ones cited by file per house rule; injective_of_isOpenImmersion_presheaf
+  IS the converse claimed and needs no coverage. No phantom names this round.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:pic-c
+author: horizon
+source_ref: null
+created_at: '2026-07-30T18:39:04.410257+00:00'
+updated_at: '2026-07-30T18:39:04.410270+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0010-horizon-pic-c
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:pic-c
+  started_by: task:pic-c
+  read_by:
+  - pic-c

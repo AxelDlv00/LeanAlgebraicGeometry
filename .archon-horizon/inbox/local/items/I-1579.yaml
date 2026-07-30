@@ -1,0 +1,63 @@
+id: I-1579
+provider: local
+kind: conversation
+body: "CLAIM pic-g (0096 r3): AJCR HAS NO CURVE. I am giving it one.\n\nMEASURED FIRST,\
+  \ and it is the whole reason. In AJCR, lake env lean on a probe importing only Curve/P1.lean:\n\
+  \  IsProper (P1.asOver k).hom                     -- inferInstance SUCCEEDS\n  SmoothOfRelativeDimension\
+  \ 1 (P1.asOver k).hom  -- synthInstanceFailed\n  GeometricallyIrreducible (P1.asOver\
+  \ k).hom     -- synthInstanceFailed\nEvery 'instance ... IsProper / SmoothOfRelativeDimension\
+  \ 1 / GeometricallyIrreducible' in AJCR is a base-change, a restriction, or the\
+  \ sorried Jacobian: NO object here carries all three. So none of rep's 93 consumer\
+  \ theorems can be instantiated at a concrete curve -- no lane can exhibit a witness\
+  \ for ANY of them, whatever it proves. My r2 report left this as a caveat; I am\
+  \ fixing it instead of restating it.\n\nWHAT I TAKE, no new hypothesis: SmoothOfRelativeDimension\
+  \ 1 and GeometricallyIrreducible for AJCR's P1.asOver k. Both proofs exist next\
+  \ door, over an ARBITRARY field, Mathlib-only imports, for the same object: SubProjects/Albanese/.../Genus0BaseObjects/ChartIso.lean,\
+  \ projectiveLineBar_smoothOfRelDim:456 and projectiveLineBar_geomIrred:599 -- Albanese's\
+  \ ProjectiveLineBarScheme is Proj (MvPolynomial.homogeneousSubmodule (Fin 2) k),\
+  \ AJCR's P1 k verbatim, same structure morphism. AJCR's P1.lean already has the\
+  \ chart iso the smooth proof needs (P1.awayAlgEquiv). I port to the consumer's shape,\
+  \ not by transcription.\n\nWHAT I DO NOT CLAIM: no representation, no chart, no\
+  \ coverage, no JacobianData; genus 0 is not proved and the pic0 vanishing my r2\
+  \ producer consumes is not supplied. It removes the reason nobody can exhibit a\
+  \ witness for a curve-binder theorem, and nothing more.\n\nNO OVERLAP visible: pic-c\
+  \ has the parameter-0 seam, pic-d the widened Cech seam, pic-h released its Galois\
+  \ substrate. Nobody is in Curve/P1.lean or the instance graph at P1. Say so if I\
+  \ am wrong and I move."
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: task:pic-c, task:pic-d, task:pic-h, task:pic-a, task:pic-b, task:pic-e,
+  task:pic-f
+author: horizon
+source_ref: null
+created_at: '2026-07-30T16:52:36.671798+00:00'
+updated_at: '2026-07-30T17:26:01.732200+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0008-horizon-pic-g
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:pic-c
+  - task:pic-d
+  - task:pic-h
+  - task:pic-a
+  - task:pic-b
+  - task:pic-e
+  - task:pic-f
+  - task:pic-g
+  started_by: task:pic-g
+  read_by:
+  - pic-d
+  - pic-h
+  - pic-g

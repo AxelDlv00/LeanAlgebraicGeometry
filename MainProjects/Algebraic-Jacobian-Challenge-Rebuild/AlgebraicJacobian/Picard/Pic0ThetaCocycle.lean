@@ -3,69 +3,14 @@ Copyright (c) 2026 The AlgebraicJacobian Contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
-import AlgebraicJacobian.Picard.Pic0ThetaAssembly
-import AlgebraicJacobian.Picard.Pic0Pullback
+import AlgebraicJacobian.Picard.Pic0ThetaCocycleIdentity
 
 /-!
-# The θ-cocycle coherence of the degree-zero Picard functor (Wave 7, K-1)
+# The tower cocycle for the degree-zero Picard base-change comparison
 
-For the base-field comparison θ of the degree-zero Picard functor
-(`Picard/Pic0ThetaAssembly.lean`), this file proves the two coherences that make θ a
-coherent system over the tower of field extensions — the datum-level θ-cocycle
-consumed by the frozen `baseChangeIso_id`/`baseChangeIso_comp` at DAT-J:
-
-* `AlgebraicGeometry.pic0Theta_id` — **the θ identity coherence**: `θ` over `k → k` is
-  the trivial comparison, pinned against the frozen `baseChange.idIso` vehicle. The
-  base-changed curve collapses to `C` (via `pic0PullbackNat` of `baseChange.idIso`) and
-  the pushed test collapses to the test (`σ_{kk} = 𝟙`, `Over.mapId`).
-* `AlgebraicGeometry.pic0Theta_comp` — **the θ cocycle coherence** over a tower
-  `k → L → M`: `θ_{k,M} = θ_{k,L} ∘ θ_{L,M}` read across `Over.pullbackComp`, pinned
-  against the frozen `baseChange.compIso` vehicle. The RHS transports the source along the
-  curve `compIso` (an iso — hence `pic0PullbackNat`), applies `θ_{L,M}`, whiskers `θ_{k,L}`
-  through `(Over.map σ_{LM}).op`, and reassociates the two σ-pushes into the single
-  `σ_{kM}`-push (the `Over.mapComp` mirror of `compIso`).
-
-Both equalities are stated in bundled `CommGrpCat`-natiso form with the RHSs assembled
-through the frozen `baseChange.idIso`/`compIso` vehicles, and proved by reduction to
-per-test-object components (`NatTrans.ext` + `CommGrpCat` `hom_ext`) then to the
-underlying `picEt` classes (`Subtype.ext`), never a `Grp (Over …)` diagram chase. The
-genuinely new content is the section-ring **cocycle over the tower**: the base-field
-shuffle for `k → M` is the two-step `k → L` then `L → M`, a `restrictScalars`-tower
-identity on `sectionShuffle`. Every seam-crossing step is term-mode (I-0216 notes 1–4).
-
-The θ-cocycle is stated on the curve `C` alone — no `JacobianData` argument — since θ is a
-functor comparison; the datum enters only at DAT-J (the W7 datum idiom, D1).
-
-## STATUS (WORK IN PROGRESS — unrooted; two open `sorry`s)
-
-**Corrected 2026-07-29 (run 0079, task `ajcr-w7-functor`).** The status block previously
-here claimed the Leg-1..3 component reduction of `pic0Theta_id` was complete, with only a
-Leg-4 `sorry` remaining. That was not the file's state:
-
-* **`pic0Theta_id` ended in `by exact rfl` nested inside a bare `by` in tactic position
-  (former :193), which is a SYNTAX ERROR** — `unexpected token 'by'; expected command`,
-  reproduced at HEAD. So the declaration never elaborated, and neither did anything after
-  it in the file.
-* **The file has no `.olean`, `.ilean`, `.trace` or hash, and is imported by nothing**, so
-  no claim in it had ever been checked by any tool (also recorded in the roadmap row's
-  build-reach triage, I-0361).
-
-What IS now measured, at HEAD, by `lake env lean` on scratch probes (run 0079):
-
-* the K-1a headline `pic0Theta k k C = cocycleIdRHS k C` **does** state and elaborate, and
-  the Leg-1..3 `change` step below **does** typecheck — the worksheet's §1.1/§6 probe-K-d
-  claim survives independent re-measurement;
-* **the Leg-4 atom's `snd` leg is CLOSED** (below, in the flipped orientation that
-  `IsPullback.hom_ext` actually presents): `crossBaseAffineIso_inv_snd` plus
-  `whiskerRight_snd`, term-mode — `rw` fails here because the identity base change spells
-  its codomain `(𝟭 _).obj C`;
-* **the atom's `fst` leg is the whole residue.** `Over.crossBaseIso_inv_fst` is stated
-  about the composite `(fst …).left ≫ pullback.fst C.hom σ`, whereas `hom_ext` on
-  `Over.isPullback_left` presents `(fst …).left` alone, so the landed projection lemma does
-  not apply as-is. That mismatch, not op/associator bookkeeping, is what a next session
-  faces.
-
-Do NOT import this file from the root until both `sorry`s are closed.
+This file contains the composition coherence for `pic0Theta` over a tower of field
+extensions.  The identity coherence is proved in `Pic0ThetaCocycleIdentity`; separating the
+two units keeps each large natural-isomorphism calculation independently kernel-checkable.
 -/
 
 set_option autoImplicit false
@@ -75,179 +20,6 @@ universe u
 open CategoryTheory
 
 namespace AlgebraicGeometry
-
-/-! ## Congruence of étale-plus transports (the reduction key)
-
-Both the base-field shuffle (`PicEtAff.baseFieldShuffle`, via `crossBaseTransportFamily`) and
-the curve transport (`PicEtAff.curveMap`, via `curveTransportFamily`) are
-`RelPicTransportFamily.picEtAffHom`s, and `picEtAffHom_mk`/`descentHom_coe`/`relPicHom_mk`
-express the transport as `CechPic.map` of the family's `hom` scheme morphism. Hence two
-families with pointwise-equal `hom` fields induce equal transports — the lemma through which
-the two θ-cocycle atoms reduce to a scheme-morphism identity on the product carriers. -/
-theorem RelPicTransportFamily.picEtAffHom_congr {kD kE kT : Type u}
-    [Field kD] [Field kE] [Field kT] [Algebra kD kT] [Algebra kE kT]
-    {D : Over (Spec (.of kD))} {E : Over (Spec (.of kE))}
-    (S T : RelPicTransportFamily kT D E)
-    (h : ∀ (B : Type u) [CommRing B] [Algebra kD B] [Algebra kE B] [Algebra kT B]
-      [IsScalarTower kD kT B] [IsScalarTower kE kT B], S.hom B = T.hom B)
-    (A : Type u) [CommRing A] [Algebra kD A] [Algebra kE A] [Algebra kT A]
-    [IsScalarTower kD kT A] [IsScalarTower kE kT A] (a : PicEtAff E A) :
-    S.picEtAffHom A a = T.picEtAffHom A a := by
-  induction a using PicEtAff.ind with
-  | _ U x =>
-    rw [RelPicTransportFamily.picEtAffHom_mk, RelPicTransportFamily.picEtAffHom_mk]
-    refine congrArg (PicEtAff.mk D U) (Subtype.ext ?_)
-    rw [RelPicTransportFamily.descentHom_coe, RelPicTransportFamily.descentHom_coe]
-    generalize (x : relPic E (overSpec kE U.Carrier)) = y
-    induction y using relPic.ind with
-    | mk L =>
-      rw [RelPicTransportFamily.relPicHom_mk, RelPicTransportFamily.relPicHom_mk, h]
-
-/-! ## Base-change-identity/composite pullback helpers -/
-
-open Limits in
-/-- `Over.pullbackId`'s forward comparison has first projection the identity: the
-base-change-along-`𝟙` section reads off the original object on the first factor. -/
-theorem pullbackId_hom_app_left.{w} {D : Type w} [Category.{u} D] [HasPullbacks D]
-    {S : D} (X : Over S) :
-    (Over.pullbackId.hom.app X).left = pullback.fst X.hom (𝟙 S) := by
-  simp [Over.pullbackId]
-
-open Limits in
-/-- Transport of `pullback.fst` along an equality of the second leg (proof-irrelevant
-`eqToHom` cast). -/
-private theorem pullback_fst_congr_left.{w} {D : Type w} [Category.{u} D] {W S T : D}
-    (a : W ⟶ S) {f g : T ⟶ S} (hfg : f = g) [HasPullback a f] [HasPullback a g]
-    (heq : Limits.pullback a f = Limits.pullback a g) :
-    eqToHom heq ≫ pullback.fst a g = pullback.fst a f := by
-  subst hfg; exact Category.id_comp _
-
-open Limits in
-set_option maxHeartbeats 1000000 in
--- The `eqToIso`/`pullbackId` cast term is large; the kernel needs a wider budget.
-/-- The forward identity base-change iso on the frozen `Challenge` spelling has first
-projection `pullback.fst` along the trivial base map. -/
-theorem baseChange_idIso_hom_app_left (k : Type u) [Field k] (C : Over (Spec (.of k))) :
-    ((baseChange.idIso k).hom.app C).left
-      = pullback.fst C.hom (Spec.map (CommRingCat.ofHom (algebraMap k k))) := by
-  have hσ : Spec.map (CommRingCat.ofHom (algebraMap k k)) = 𝟙 (Spec (.of k)) := by
-    rw [Algebra.algebraMap_self, CommRingCat.ofHom_id, Spec.map_id]
-  simp only [baseChange.idIso, Iso.trans_hom, NatTrans.comp_app, Over.comp_left, eqToIso.hom,
-    eqToHom_app, pullbackId_hom_app_left, Over.eqToHom_left]
-  exact pullback_fst_congr_left C.hom hσ _
-
-/-! ## The Leg-4 atom, `snd` leg
-
-The K-1a Leg-4 atom is the scheme identity
-`((baseChange.idIso k).app C).inv ▷ overSpec k B).left = (crossBaseAffineIso k k C B).inv`,
-to be proved by `(Over.isPullback_left _ _).hom_ext` on the two projections.  The `snd` leg
-is below, closed; the `fst` leg is the file's residue (see the STATUS block). -/
-
-open MonoidalCategory CartesianMonoidalCategory in
-/-- **The `snd` leg of the K-1a Leg-4 atom**: the whiskered identity base-change comparison
-and the affine same-carrier comparison agree on the second projection — both are
-`(snd C (overSpec k B)).left`.
-
-Term-mode by necessity: the identity base change spells its codomain `(𝟭 _).obj C`, so `rw`
-reports "did not find an occurrence" on a goal that visibly contains the pattern (the R4/R5
-spelling friction of I-0216, measured here). -/
-theorem crossBaseAffineIso_inv_whiskerRight_snd (k : Type u) [Field k]
-    (C : Over (Spec (.of k))) [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
-    [GeometricallyIrreducible C.hom] (B : Type u) [CommRing B] [Algebra k B] :
-    (((baseChange.idIso k).app C).inv ▷ overSpec k B).left
-        ≫ (Limits.snd ((baseChange k k).obj C) (overSpec k B)).left
-      = (crossBaseAffineIso k k C B).inv
-          ≫ (Limits.snd ((baseChange k k).obj C) (overSpec k B)).left :=
-  Eq.trans
-    (congrArg Over.Hom.left
-      (MonoidalCategory.whiskerRight_snd (((baseChange.idIso k).app C).inv) (overSpec k B)))
-    (crossBaseAffineIso_inv_snd k k C B).symm
-
-/-! ## K-1a: the θ identity coherence over `Over.pullbackId` -/
-
-section Identity
-
-variable (k : Type u) [Field k]
-variable (C : Over (Spec (.of k)))
-  [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom]
-
-/-- The iso-grade curve transport at the identity base change: `pic0PullbackNat` of the
-frozen `baseChange.idIso`. -/
-noncomputable def eCurveId : pic0Functor ((baseChange k k).obj C) ≅ pic0Functor C where
-  hom := pic0PullbackNat ((baseChange.idIso k).app C).inv
-  inv := pic0PullbackNat ((baseChange.idIso k).app C).hom
-  hom_inv_id := by rw [← pic0PullbackNat_comp, Iso.hom_inv_id, pic0PullbackNat_id]
-  inv_hom_id := by rw [← pic0PullbackNat_comp, Iso.inv_hom_id, pic0PullbackNat_id]
-
-/-- The σ-side collapse at `k → k`: the pushforward `Over.map σ_{kk}` is the identity, via
-`σ_{kk} = 𝟙` and `Over.mapId`. -/
-noncomputable def mIdσ :
-    Over.map (Spec.map (CommRingCat.ofHom (algebraMap k k))) ≅ 𝟭 (Over (Spec (.of k))) :=
-  eqToIso (by rw [show Spec.map (CommRingCat.ofHom (algebraMap k k)) = 𝟙 _ by
-    rw [Algebra.algebraMap_self, CommRingCat.ofHom_id, Spec.map_id]]) ≪≫ Over.mapId _
-
-/-- The collapse of the pushed-test functor at `k → k` to the identity. -/
-noncomputable def σkkCollapse :
-    (Over.map (Spec.map (CommRingCat.ofHom (algebraMap k k)))).op ⋙ pic0Functor C
-      ≅ pic0Functor C :=
-  Functor.isoWhiskerRight (NatIso.op (mIdσ k)).symm (pic0Functor C)
-    ≪≫ Functor.leftUnitor (pic0Functor C)
-
-/-- The right-hand side of the θ identity coherence, assembled through the frozen
-`baseChange.idIso` vehicle. -/
-noncomputable def cocycleIdRHS :
-    pic0Functor ((baseChange k k).obj C)
-      ≅ (Over.map (Spec.map (CommRingCat.ofHom (algebraMap k k)))).op ⋙ pic0Functor C :=
-  eCurveId k C ≪≫ (σkkCollapse k C).symm
-
-/-- **K-1a — the θ identity coherence** (θ over `Over.pullbackId`): θ at `k → k` is the
-trivial comparison, the base-changed curve collapsing to `C` and the pushed test to the
-test. -/
-theorem pic0Theta_id : pic0Theta k k C = cocycleIdRHS k C := by
-  apply Iso.ext
-  ext T lam
-  refine Subtype.ext ?_
-  change picEtCrossBaseInv k k C (Opposite.unop T) lam.1
-    = picEtMap C ((mIdσ k).hom.app (Opposite.unop T))
-        (picEtPullback ((baseChange.idIso k).app C).inv (Opposite.unop T) lam.1)
-  refine picEt.ext fun W => ?_
-  rw [picEtCrossBaseInv_val, picEtMap_val]
-  -- REMAINING ATOM (Leg 4), now with its `snd` leg discharged in
-  -- `crossBaseAffineIso_inv_whiskerRight_snd` above; only the `fst` leg is open. Goal:
-  --   `(sectionShuffle k k C T.unop W.1).symm (lam.1.1 W)`
-  --     `= picEtMapVal C ((mIdσ k).hom.app T.unop)`
-  --         `(picEtPullback ((baseChange.idIso k).app C).inv T.unop lam.1) W`.
-  -- PLAN (all pieces below verified in isolation this session except the scheme identity):
-  --  (1) `sectionShuffle k k C T.unop W.1 = baseFieldShuffle k k C Γ(T.left,W.1)` (rfl),
-  --      whose `.symm` is `(crossBaseTransportFamilyInv k k C).picEtAffHom Γ(…)`.
-  --  (2) The RHS `picEtMapVal` along `(mIdσ k).hom.app T.unop` — whose `.left` is the
-  --      carrier-identity (`eqToHom`/`𝟙`) — collapses via `picEtMapVal_eq_mapAlg` (V := W,
-  --      the preimage `≤` from the carrier identity) to `picEtPullback`'s value, i.e.
-  --      `PicEtAff.curveMap Γ(…) ((baseChange.idIso k).app C).inv = `
-  --      `(curveTransportFamily ((baseChange.idIso k).app C).inv).picEtAffHom Γ(…)`.
-  --      Use `Over.isScalarTower_sections_map`-ascribed `letI` at the `T.left` spelling;
-  --      seam crossings term-mode only (I-0216 notes 1–2).
-  --  (3) Close by `RelPicTransportFamily.picEtAffHom_congr` (above) fed the SCHEME IDENTITY
-  --      `(crossBaseAffineIso k k C B).inv = ((baseChange.idIso k).app C).inv ▷ overSpec k B).left`
-  --      (both are `hom B` of the two families; typechecked this session). Prove it by
-  --      `(Over.isPullback_left ((baseChange k k).obj C) (overSpec k B)).hom_ext`:
-  --        · snd-leg: `crossBaseAffineIso_inv_snd` and `whiskerRight_snd` both give
-  --          `(snd C (overSpec k B)).left`;
-  --        · fst-leg: `(g ▷ X) ≫ fst = fst ≫ g` (`whiskerRight_fst`) gives
-  --          `(fst C _).left ≫ ((baseChange.idIso k).app C).inv.left`; match against
-  --          `crossBaseAffineIso`'s fst (the `whiskerLeftIso C mapOverSpecIso` only touches
-  --          snd, so its fst is `crossBaseIso`'s, via `Over.crossBaseIso_hom_fst`), using
-  --          `baseChange.idIso = eqToIso _ ≪≫ Over.pullbackId` so `g.left` is `pullbackId`.
-  --      MEASURED 2026-07-29: step (3)'s snd leg is DONE
-  --      (`crossBaseAffineIso_inv_whiskerRight_snd`). Its fst leg is the residue, and the
-  --      plan's appeal to `Over.crossBaseIso_hom_fst` does not apply verbatim: the landed
-  --      `_inv_fst` lemma is about `(fst …).left ≫ pullback.fst C.hom σ`, while `hom_ext`
-  --      on `Over.isPullback_left` presents `(fst …).left` alone.
-  sorry
-
-end Identity
-
-/-! ## K-1b: the θ cocycle coherence over `Over.pullbackComp` -/
 
 section Cocycle
 
@@ -266,8 +38,7 @@ noncomputable def eCurve :
   hom_inv_id := by rw [← pic0PullbackNat_comp, Iso.hom_inv_id, pic0PullbackNat_id]
   inv_hom_id := by rw [← pic0PullbackNat_comp, Iso.inv_hom_id, pic0PullbackNat_id]
 
-/-- The σ-side reassociation: the `Over.mapComp` mirror of `baseChange.compIso`, on the
-covariant `Over.map` side at `σ_{kM}`. -/
+/-- The `Over.mapComp` reassociation of the covariant base-change maps. -/
 noncomputable def σMapCompIso :
     Over.map (Spec.map (CommRingCat.ofHom (algebraMap k M)))
       ≅ Over.map (Spec.map (CommRingCat.ofHom (algebraMap L M)))
@@ -275,48 +46,31 @@ noncomputable def σMapCompIso :
   eqToIso (by rw [show Spec.map (CommRingCat.ofHom (algebraMap k M))
       = Spec.map (CommRingCat.ofHom (algebraMap L M))
           ≫ Spec.map (CommRingCat.ofHom (algebraMap k L)) by
-    rw [← Spec.map_comp, ← CommRingCat.ofHom_comp, ← IsScalarTower.algebraMap_eq]]) ≪≫
+    rw [← Spec.map_comp, ← CommRingCat.ofHom_comp, ← IsScalarTower.algebraMap_eq]]) ≪≅≫
     Over.mapComp _ _
 
-/-- The op-side bridge: `(σ_{LM}).op ⋙ (σ_{kL}).op = (σ_{LM} ≫ σ_{kL}).op` is definitional
-(`eqToIso rfl`), composed with the op of the `Over.mapComp` reassociation. -/
+/-- The opposite-side bridge from the iterated pushforward to the composite pushforward. -/
 noncomputable def αOp :
     (Over.map (Spec.map (CommRingCat.ofHom (algebraMap L M)))).op
         ⋙ (Over.map (Spec.map (CommRingCat.ofHom (algebraMap k L)))).op
       ≅ (Over.map (Spec.map (CommRingCat.ofHom (algebraMap k M)))).op :=
-  eqToIso rfl ≪≫ (NatIso.op (σMapCompIso k L M))
+  eqToIso rfl ≪≅≫ NatIso.op (σMapCompIso k L M)
 
-/-- The right-hand side of the θ cocycle coherence, assembled through the frozen
-`baseChange.compIso` vehicle. -/
+/-- The iterated right-hand side of the theta tower coherence. -/
 noncomputable def cocycleRHS :
     pic0Functor ((baseChange k M).obj C)
-      ≅ (Over.map (Spec.map (CommRingCat.ofHom (algebraMap k M)))).op ⋙ pic0Functor C :=
+      ≅ (Over.map (Spec.map (CommRingCat.ofHom (algebraMap k M)))).op ⋙
+          pic0Functor C :=
   eCurve k L M C
-    ≪≫ pic0Theta L M ((baseChange k L).obj C)
-    ≪≫ Functor.isoWhiskerLeft
+    ≪≅≫ pic0Theta L M ((baseChange k L).obj C)
+    ≪≅≫ Functor.isoWhiskerLeft
         (Over.map (Spec.map (CommRingCat.ofHom (algebraMap L M)))).op (pic0Theta k L C)
-    ≪≫ (Functor.associator _ _ _).symm
-    ≪≫ Functor.isoWhiskerRight (αOp k L M) (pic0Functor C)
+    ≪≅≫ (Functor.associator _ _ _).symm
+    ≪≅≫ Functor.isoWhiskerRight (αOp k L M) (pic0Functor C)
 
-/-- **K-1b — the θ cocycle coherence** (θ over `Over.pullbackComp`): `θ_{k,M}` factors as
-`θ_{k,L} ∘ θ_{L,M}` read across the tower `k → L → M`. -/
+/-- The theta comparison for `k → M` is the composite of the comparisons for
+`k → L` and `L → M`, transported across the canonical pullback reassociation. -/
 theorem pic0Theta_comp : pic0Theta k M C = cocycleRHS k L M C := by
-  -- REDUCTION (mirror of `pic0Theta_id`): `apply Iso.ext; ext T lam; refine Subtype.ext ?_`,
-  -- then `change` to the underlying `picEt`-class composite (the RHS collapses by defeq:
-  -- `Functor.leftUnitor`/`isoWhiskerLeft`/`isoWhiskerRight`/`associator`/`NatIso.op` components
-  -- through `pic0Functor_map`+`pic0Map_coe`, `pic0PullbackNat_app`+`pic0Pullback_coe`, and
-  -- `pic0Theta_hom_app`+`pic0CrossBaseEquiv_apply_coe`), landing at the TOWER ATOM: the
-  -- backward shuffle for `k → M` equals the composite `shuffle_{L→M} ∘ shuffle_{k→L}`
-  -- transported along the curve `baseChange.compIso`, with the `σMapCompIso` reindex.
-  -- Close as in `pic0Theta_id`: reduce `sectionShuffle`/`curveMap` to `picEtAffHom`s and apply
-  -- `RelPicTransportFamily.picEtAffHom_congr` fed the SCHEME IDENTITY
-  --   `(crossBaseAffineIso k M C B).inv`
-  --     `= ((crossBaseAffineIso L M _ B).inv ≫ (crossBaseAffineIso k L C B).inv-transported)`
-  --   composed with `((baseChange.compIso k L M).app C).inv ▷ overSpec k B).left`,
-  -- proved by `(Over.isPullback_left …).hom_ext` on fst/snd (fst uses `whiskerRight_fst`,
-  -- `Over.crossBaseIso_hom_fst`, and `baseChange.compIso = eqToIso _ ≪≫ Over.pullbackComp`).
-  -- Authorized reorientation bail (worksheet §2) applies here if the op/associator bookkeeping
-  -- balloons: prove the `.symm`/inv orientation the frozen `baseChangeIso` consumes.
   sorry
 
 end Cocycle

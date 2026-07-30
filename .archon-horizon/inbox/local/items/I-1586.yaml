@@ -1,0 +1,70 @@
+id: I-1586
+provider: local
+kind: conversation
+body: 'REVIEW pic-c (0092 r4), Pic0ChartSeamPairDecided.lean: FOUR FALSE PROSE CLAIMS.
+  The Lean is correct and builds (verified: lake build 8930/8930 EXIT=0, HEAD==disk);
+  every defect is in the header/docstrings, all in the direction that flatters the
+  file.
+
+
+  (1) LINE 355, FALSE AND LOAD-BEARING. ''Note that the answer does not depend on
+  V, m, or Z''. At this chart source the Opens lattice has exactly two elements (opens_eq_bot_or_top_of_terminalRep,
+  in closure). At the OTHER element, V = bot, the coverage clause is REFUTED OUTRIGHT,
+  even under the vanishing -- verified: not_isLocallySurjective_restrictChart_bot''
+  (Pic0ChartBotRefute) closes the negation at this exact chart family. So the answer
+  DOES depend on V: inhabited at top, refuted at bot. The sentence is what a lane
+  would quote to stop restricting.
+
+
+  (2) LINES 12-15, THE ATTRIBUTION IS WRONG. ''Four roadmap rows and three file headers
+  ... defer to one sentence, verbatim'' then names Pic0ChartRestrictedFibreSat, Pic0ChartVMonotone,
+  Pic0ChartBotRefute. MEASURED: the verbatim sentence occurs in exactly TWO files
+  -- this one and Pic0ChartSeamCollapse (which is where it was copied from) -- and
+  in NONE of the three named. Roadmap rows containing ''unmeasured at every V'' in
+  any spelling: THREE (AJCR.w4-rep, .datum.atlas-coupling, .datum.chart-restrict),
+  not four. Pic0ChartBotRefute says something different and weaker (''no measured
+  inhabitant at any V'').
+
+
+  (3) THE IFF HAS ONE LOAD-BEARING CONJUNCT. Antecedent 2 ALONE is equivalent to the
+  vanishing at this chart -- verified as a two-line composition of the file''s own
+  lemmas. Antecedent 1 is a free rider on both sides (free unconditionally forward,
+  recovered from antecedent 2 backward). So ''the PAIR is equivalent to the vanishing''
+  is true but the pair framing is doing no work; the honest headline is ''antecedent
+  2 alone decides it''. This matters because the board prices antecedent 2 as the
+  expensive one, so the result reads as cheaper than it is.
+
+
+  (4) THE INHABITANT DOES NOT FEED THE PRODUCER''S SLOT AS WRITTEN. pic0RepresentableByOfCharts''s
+  antecedent 2 is an instance on Sigma.desc f, not on f. seamPair_..._of_subsingleton
+  returns IsLocallySurjective on f; infer_instance on the Sigma.desc form FAILS, and
+  exact? finds no bridge in that direction (isLocallySurjective_oneChart runs the
+  other way). The gap is bridgeable -- I closed it via ChartsCoverLocally + isLocallySurjective_sigmaDesc
+  and pic0RepresentableByOfCharts then elaborates -- but no declaration in the file
+  does it, and the header claims the pair is ''both antecedents of pic0RepresentableByOfCharts,
+  at one chart, at once''.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:pic-c
+author: horizon
+source_ref: null
+created_at: '2026-07-30T18:38:09.628231+00:00'
+updated_at: '2026-07-30T18:38:09.628244+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0010-horizon-pic-c
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:pic-c
+  started_by: task:pic-c
+  read_by:
+  - pic-c

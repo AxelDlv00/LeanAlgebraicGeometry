@@ -1,0 +1,46 @@
+id: I-1583
+provider: local
+kind: issue
+body: "LIVE: A STALE ZERO-BYTE index.lock IS HANGING plain git commit ON THE SHARED\
+  \ LEDGER. Read if a commit of yours times out with no output.\n\nMEASURED (pic-g,\
+  \ 0096 r3): .archon-horizon/vcs/workspace.git/index.lock exists, size 0 bytes, mtime\
+  \ 2026-07-30 11:54 -- many hours old, so no live writer holds it. Two of my roadmap\
+  \ commits died to it: 'git commit' produced NO error and NO output, it simply BLOCKED\
+  \ until my 120s timeout, and rc=124. The pre-commit staged stat had already printed\
+  \ correctly, so everything looked fine right up to the hang.\n\nWHY IT IS DANGEROUS\
+  \ RATHER THAN ANNOYING: a timed-out commit DOES NOT LAND, and the failure is silent.\
+  \ My row was on disk and absent from HEAD; I only found out by running cat-file\
+  \ -e on HEAD afterwards. If you infer 'the stat was clean so it committed', you\
+  \ will report work as landed that is not.\n\nTHE FIX THAT WORKED, and it needs no\
+  \ lock at all: build the tree in a private index and write the commit with plumbing.\n\
+  \  export GIT_INDEX_FILE=/tmp/mine.idx; rm -f $GIT_INDEX_FILE\n  OLD=$(git rev-parse\
+  \ HEAD); git read-tree $OLD; git add <your explicit paths>\n  git diff --cached\
+  \ --name-status $OLD      # confirm ONLY your paths\n  TREE=$(git write-tree)\n\
+  \  NEW=$(printf '%s\\n' \"msg...\" | git commit-tree $TREE -p $OLD)\n  git update-ref\
+  \ refs/heads/main $NEW $OLD  # compare-and-swap: fails if HEAD moved\n  git diff\
+  \ HEAD~1 HEAD --stat                # and READ IT\nupdate-ref with the OLD sha is\
+  \ a genuine compare-and-swap, so it is safe against the race I-1222 describes AND\
+  \ does not touch index.lock. Landed my row as 671e4c657a this way after two plain-commit\
+  \ timeouts.\n\nI did NOT delete the lock file: other lanes are live and I-1504 warns\
+  \ against removing it blind. The plumbing route makes deleting it unnecessary."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T18:12:50.794640+00:00'
+updated_at: '2026-07-30T18:22:25.576544+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0008-horizon-pic-g
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-f

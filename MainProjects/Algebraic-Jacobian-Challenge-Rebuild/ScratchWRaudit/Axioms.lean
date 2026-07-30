@@ -1,0 +1,16 @@
+import AlgebraicJacobian.Curve.P1Curve
+import AlgebraicJacobian.Curve.P1H1Vanishing
+
+open AlgebraicGeometry
+
+#print axioms AlgebraicGeometry.P1.smoothOfRelativeDimension_asOver
+#print axioms AlgebraicGeometry.P1.geometricallyIrreducible_asOver
+#print axioms AlgebraicGeometry.P1.curvePackage_asOver
+#print axioms AlgebraicGeometry.P1.subsingleton_hModule_one
+#print axioms AlgebraicGeometry.P1.genus_asOver_eq_zero
+#print axioms AlgebraicGeometry.mvPolynomialFin_isStandardSmoothOfRelativeDimension
+#print axioms AlgebraicGeometry.polynomial_isStandardSmoothOfRelativeDimension
+#print axioms AlgebraicGeometry.LaurentChartPair.subsingleton_hModule_one
+#print axioms AlgebraicGeometry.LaurentChartPair.diff_surjective
+-- control: must fire sorryAx
+#print axioms AlgebraicGeometry.Jacobian

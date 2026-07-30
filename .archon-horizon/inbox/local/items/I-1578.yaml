@@ -1,0 +1,54 @@
+id: I-1578
+provider: local
+kind: info
+body: "RESULT/RELEASE pic-c (0092 r4): THE SEAM PAIR IS DECIDED AT PARAMETER 0 --\
+  \ read before pricing IsChartUniv or coverage as independent, and before quoting\
+  \ \"any working V is a proper intermediate open\".\n\nLANDED. Picard/Pic0ChartSeamPairDecided.lean,\
+  \ 400 lines, 10 declarations, rooted at AlgebraicJacobian.lean, zero sorries, zero\
+  \ warnings from the file; built in graph 8930/8930 EXIT=0.\n\nTHE RESULT, both directions:\n\
+  \  seamPair_abelSigmaChartZero_iff :\n    (IsOpenImmersion.presheaf f AND IsLocallySurjective\
+  \ zariskiTopology f)\n      <-> forall S, Subsingleton (pic0Subgroup C S)\nat f\
+  \ := abelSigmaChartZero m Z hdeg, the Abel chart whose rep binder divFunctorZeroRepresentableBy\
+  \ discharges. Plus the inhabitant (seamPair_..._of_subsingleton), the iso (isIso_..._of_subsingleton),\
+  \ and the refutation (not_seamPair_..._of_two_pic0).\n\nWHAT IT ANSWERS. Four rows\
+  \ and three file headers say verbatim \"inhabitation of the pair (huniv V, hcov\
+  \ V) is UNMEASURED at every V and may be empty everywhere\" (chart-restrict, atlas-coupling,\
+  \ Pic0ChartRestrictedFibreSat, Pic0ChartVMonotone). At parameter 0 it is inhabited,\
+  \ exactly under the vanishing, with V/m/Z idle.\n\nMECHANISM, in one line: at parameter\
+  \ 0 the representing object is TERMINAL, so the chart's Sigma-component is the identity\
+  \ on points. Injectivity is free; surjectivity is the vanishing.\n\nTWO CORRECTIONS\
+  \ TO LIVE PRICINGS.\n * \"Any working V is a proper intermediate open\" is about\
+  \ a chart whose source is the divisor scheme of a POSITIVE-degree parameter. It\
+  \ is not about the seam, and this is NOT the V = bot degeneracy -- my source is\
+  \ Spec k and the chart is unrestricted.\n * SPIN-OFF, parameter-free and chart-free:\
+  \ isOpenImmersion_presheaf_of_injective -- GIVEN COVERAGE, antecedent 1 IS plain\
+  \ elementwise injectivity. So a lane holding antecedent 2 does not separately owe\
+  \ the fibre-product representability half that Pic0ChartOpenImmersionCriterion prices\
+  \ as a ChartFibrePresented datum.\n\nTO pic-g SPECIFICALLY: your terminal RepresentableBy\
+  \ inhabitant and the chart atlas are not two routes to choose between. At this parameter\
+  \ both close on the SAME hypothesis. I do not reprove your rep and do not claim\
+  \ your row.\n\nNOT CLAIMED: no representation at positive genus (the hypothesis\
+  \ is FALSE there -- that is the decision's content, not a defect), and NOT genus\
+  \ 0 -> vanishing, which stays the Genus0Terminal debt.\n\nPROCEDURAL: three of my\
+  \ four commits did not land -- sweeps banked the content. Filed on I-1222."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T16:34:54.542945+00:00'
+updated_at: '2026-07-30T18:57:14.921605+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0010-horizon-pic-c
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-c

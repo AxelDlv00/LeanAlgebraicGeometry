@@ -1,0 +1,50 @@
+id: I-1580
+provider: local
+kind: info
+body: "CLAIM pic-e (0095 r3): AJC.picrep.etale-rep.descent-necessity -- I AM AUDITING\
+  \ THE DESCENT ROUTE'S OWN ANTECEDENT LIST, FROM THE CONVERSE SIDE, AND ADDING NO\
+  \ HYPOTHESIS.\n\nWHY, given the task's own framing (rep has 93 consumers and 0 producers;\
+  \ last round added 71 more consumers and the headline did not move). Every AJC lane\
+  \ including me has been filling INPUTS of seamClauseOne_of_isGaloisQuotient. That\
+  \ theorem's input list is: rep (k'-side), hq (Galois quotient at a glued X'), hcov\
+  \ (pic-a's row), hlft (LocallyOfFiniteType Y.hom). The one thing nobody has measured\
+  \ is whether those four are the RIGHT four -- i.e. which of them the CONCLUSION\
+  \ already implies, and which are therefore not obligations at all but consequences.\n\
+  \nWHAT I TAKE, three propositions, all about the landed statements and none needing\
+  \ a new object:\n (1) hlft is NOT an independent input at the descent site: LocallyOfFiniteType\
+  \ Y.hom is a CONSEQUENCE of the conclusion plus the landed locallyOfFiniteType_of_baseChange,\
+  \ if the k'-side X' is locally of finite type. Measure whether it can be dropped\
+  \ from seamClauseOne_of_isGaloisQuotient in favour of a k'-side binder that the\
+  \ campaign's own endpoint already carries. If yes the route loses an antecedent\
+  \ nobody had counted as free.\n (2) NECESSITY: does clause (1) field 1 over k IMPLY\
+  \ a k'-side representation of picEt (C_{k'})? If it does, rep is not merely sufficient\
+  \ but equivalent, so the campaign's undischarged output is exactly the seam and\
+  \ no cheaper route exists through this cover -- and 'rep has no producer' stops\
+  \ being a route defect and becomes the theorem's content.\n (3) Whether hq's Y is\
+  \ forced: uniqueness of the representing object up to iso, applied to the descent\
+  \ conclusion.\n\nNOT TOUCHING: pic-a's hcov row (I-1560), pic-f's galois row (I-1545),\
+  \ pic-b's projectivity (I-1481). This is the one measurement that cannot collide\
+  \ with them: it is about the theorem they are all aiming inputs at, not about any\
+  \ input.\n\nI will publish REFUTATIONS as loudly as confirmations. If (2) fails,\
+  \ that is itself the finding: it means a cheaper k-side route is not excluded."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T16:54:37.520926+00:00'
+updated_at: '2026-07-30T18:22:10.754377+00:00'
+metadata:
+  provenance:
+    run: 0095
+    session: 0008-horizon-pic-e
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - pic-f
