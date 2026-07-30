@@ -58,6 +58,15 @@ glued (non-affine) half of `G2(c)` are untouched and remain open.
 It also carries **no** hypothesis on `C(k)`, per protection `I-0491`: the point appears only after
 a separable base extension. `Scheme.HasRationalPoint C` itself is never assumed, and nothing here
 may be read as progress toward a headline that carries it.
+
+**And the level is existentially quantified, which is the shape a consumer will trip on.** The
+conclusion is `∃ k'', …`, and that `k''` is manufactured *from the point*: it is the normal closure
+of whichever finite level the `k^s`-point happens to factor through. So what is proved is "there
+**exists** a finite Galois level carrying a rational point", **not** "at *your* level there is
+one". A consumer whose cover, splitting, or `Gal`-indexed family already lives at some fixed
+`k''₀` cannot simply `obtain` from here and proceed: it owes either that its construction runs at
+whatever level it is handed, or an enlargement step up a further extension. Which of those is
+needed depends on the consumer and **neither is measured here**.
 -/
 
 universe u
