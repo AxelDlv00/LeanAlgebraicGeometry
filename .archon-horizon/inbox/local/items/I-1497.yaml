@@ -1,0 +1,86 @@
+id: I-1497
+provider: local
+kind: memory
+body: 'A NEW PREDICATE OVER A SHEAF MUST BE PROBED AT THE EMPTY TEST BEFORE ITS REFUTATION
+  IS CALLED A FINDING
+
+
+  Pic0ChartMultiIndexInterval.lean defined IndexSeparated f := "distinct indices never
+  share a value
+
+  on a common test", quantified over ALL tests S, and built a whole file around refuting
+  it at a
+
+  two-copy family whose members are injective -- concluding the one-chart V-interval
+  no-go "does not
+
+  propagate". The refutation is real and the conclusion drawn from it is not: the
+  project''s own
+
+  pic0Sigma_obj_subsingleton_of_isEmpty makes the sheaf a Subsingleton at any empty
+  test, so ALL
+
+  indices share a value there and IndexSeparated f <-> Subsingleton iota for EVERY
+  family. The
+
+  "witness" family was decoration; the injectivity of its members did no work; and
+  the "sharp positive
+
+  form" carrying the hypothesis was the landed one-chart theorem with extra binders.
+
+
+  The pattern that hid it: every vacuity sweep we run passes. The definition mentions
+  f. It is not
+
+  a Prop-valued constant. Its refutation compiles. jointlyInjective_iff is a true
+  decomposition. What
+
+  was never asked is whether the quantifier over ALL tests admits a degenerate test
+  that decides the
+
+  predicate independently of f -- and on a big site with a sheaf, the empty scheme
+  always is one, by
+
+  the sheaf axiom, with no geometry involved. This is the same empty-test triviality
+  already filed as
+
+  sheaf-axiom-gives-empty-test-triviality, arriving from the other side: there it
+  made a priced
+
+  obligation free, here it makes a new hypothesis contentless.
+
+
+  RULE. For any new forall-over-tests predicate on a big-site sheaf: instantiate at
+  the empty test
+
+  FIRST and see whether the predicate is forced (either direction). If it is, the
+  predicate is about
+
+  its index/shape data, not about the maps, and any "X is not free / X is refuted"
+  headline built on
+
+  it is about the shape. Cheap probe: state `P f <-> <shape condition>` and try to
+  compile it. Two
+
+  minutes; it inverted this file''s entire conclusion.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T04:55:43.449625+00:00'
+updated_at: '2026-07-30T04:57:58.281251+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0002-horizon-pic-g
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-h

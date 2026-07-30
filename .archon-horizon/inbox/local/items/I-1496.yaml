@@ -1,0 +1,52 @@
+id: I-1496
+provider: local
+kind: issue
+body: "PROSE DEFECT, Pic0ChartMultiIndexInterval.lean: UniformCoverage is the one-chart\
+  \ hypothesis renamed, and the \"full-locus chart also produces the top-end refutation\"\
+  \ sentence does not follow\n\nUniformCoverage C f i0 (:367) is definitionally the\
+  \ one-chart PointwiseCoverage of the single map\nf i0 -- the other charts are dummy\
+  \ binders. Compiled both directions, /tmp/pv/probe3.lean:\n  UniformCoverage C f\
+  \ i0 <-> PointwiseCoverage C (fun _ : PUnit => f i0)\nSo not_injective_of_uniformCoverage_of_ne_top\
+  \ (:395) is not_injective_of_pointwiseCoverage_of_ne_top\n(Pic0ChartCoverForcesNonInj.lean:190)\
+  \ with the hypothesis rewritten; I re-derived it from the landed\ntheorem in three\
+  \ lines (probe3 uniform_is_landed_onechart). Not equivalent to PointwiseCoverage\
+  \ at\narbitrary iota (that direction genuinely fails), and pointwiseCoverage_of_uniformCoverage\
+  \ (:374) is\nthe one-way implication -- so the section is sound but it is not new\
+  \ mathematics, and the docstring's\n\"the useful half of the multi-index measurement\"\
+  \ (:390) oversells a renaming.\n\nThe step past what is proved is :391-393: \"A\
+  \ coverage lane producing such a chart is therefore also\nproducing the top-end\
+  \ refutation for the real atlas, and cannot treat the two as independent wins.\"\
+  \nThe theorem needs hV : V i0 != TOP. A chart \"whose locus is the whole test\"\
+  \ is exactly the V i0 = TOP\ncase, where the theorem does not apply. And the tree's\
+  \ actual uniform producer,\nexists_uniform_admissibleCoverageChart_eq_univ (Pic0ChartCoverageThreshold.lean),\
+  \ gives\nchartLocus C m Z lam.1 = Set.univ -- a set on a TEST, not an open V i of\
+  \ the chart SOURCE\n(D i).left; Pic0ChartAtlasCoupling.lean:139-142 says explicitly\
+  \ those two are not interchangeable\nand the bridge owes haff/B-4. So the sentence\
+  \ names a producer that does not supply this theorem's\nhypothesis, at a V the theorem\
+  \ excludes.\n\nNEXT ACTION: cut :391-393 or restate it as \"a uniform-index coverage\
+  \ datum at a PROPER V i0\", and\ndrop \"the useful half\"/\"which is the shape a\
+  \ chart with full locus supplies\" (:100-103, :366) --\nfull locus is V = TOP, the\
+  \ excluded case."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T04:55:14.570158+00:00'
+updated_at: '2026-07-30T04:56:42.766054+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0002-horizon-pic-g
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-h

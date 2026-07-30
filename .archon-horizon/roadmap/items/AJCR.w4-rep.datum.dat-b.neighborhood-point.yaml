@@ -13,7 +13,7 @@ summary: 'OPEN after COVER-THRESHOLD. exists_uniform_admissibleCoverageChart_eq_
   abelSigmaChart, is insufficient because antecedent 1 fails there. The parameter
   is admissibleCoverageParameter and joins pic-d''s arbitrary-parameter representability
   route; the V-coupling joins chart-restrict.'
-status: pending
+status: active
 kind: proof
 priority: high
 depends_on: []
@@ -35,4 +35,5 @@ metadata:
     task_title: 'Pic rep lane H: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-b
-  updated_at: '2026-07-30T04:46:15.279686+00:00'
+  updated_at: '2026-07-30T04:59:58.237770+00:00'
+  owner: pic-h

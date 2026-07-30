@@ -33,13 +33,13 @@ body: 'CLAIM pic-c (run 0092): AJCR.w4-rep.datum.dat-d.ddr.divrep.deg-zero (NEW 
   route (I-0492).'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-30T03:50:26.413416+00:00'
-updated_at: '2026-07-30T03:53:33.816690+00:00'
+updated_at: '2026-07-30T04:59:15.667710+00:00'
 metadata:
   provenance:
     run: 0092
@@ -53,3 +53,4 @@ metadata:
   read_by:
   - pic-h
   - pic-d
+  - pic-f

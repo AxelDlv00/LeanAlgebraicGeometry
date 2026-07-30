@@ -21,9 +21,10 @@ docstring: '**THE WIRING IS CONSUMED, not merely stated** — the strongest line
 file: scripts/axiom-frontier.lean
 generated: lean
 lean_status: sorry
+stale: true
 title: AlgebraicGeometry.leakProbe_wiringConsumed
 type: lean
-updated: '2026-07-29T12:10:04'
+updated: '2026-07-30T11:48:48'
 ---
 noncomputable def leakProbe_wiringConsumed (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
     (h : IsPullback g' f' f g) (𝒰 : X.OpenCover) [Finite 𝒰.I₀]

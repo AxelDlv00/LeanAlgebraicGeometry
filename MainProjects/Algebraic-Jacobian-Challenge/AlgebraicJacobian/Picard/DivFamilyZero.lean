@@ -132,6 +132,9 @@ theorem coversTop_singleton_top :
 
 set_option synthInstance.maxHeartbeats 1600000 in
 set_option maxHeartbeats 2000000 in
+-- Headroom: `overFunctor` is `pushforward (id)`, so `hom_ext` unfolds the slice-site
+-- sheafification instances -- the same blow-up documented at
+-- `QuotScheme.presentationPullbackIotaOfQuasicoherentData`.
 /-- **The restriction functor to an open preserves zero morphisms.**
 
 `SheafOfModules.overFunctor` is `SheafOfModules.pushforward (𝟙 _)`, which acts as the
@@ -242,6 +245,8 @@ theorem isZero_over_of_isZero {M : Y.Modules} (hM : IsZero M)
 
 set_option synthInstance.maxHeartbeats 1600000 in
 set_option maxHeartbeats 2000000 in
+-- Headroom: the cover-member presentation is elaborated on the slice site `Over top`,
+-- provisioning its `HasWeakSheafify`/`WEqualsLocallyBijective` instances under a binder.
 noncomputable def zeroQuasicoherentData {M : Y.Modules} (hM : IsZero M) :
     M.QuasicoherentData where
   I := PUnit.{u+1}
@@ -251,12 +256,14 @@ noncomputable def zeroQuasicoherentData {M : Y.Modules} (hM : IsZero M) :
 
 set_option synthInstance.maxHeartbeats 1600000 in
 set_option maxHeartbeats 2000000 in
+-- Headroom: same slice-site instance provisioning as `zeroQuasicoherentData` above.
 instance zeroQuasicoherentData_isFinitePresentation {M : Y.Modules} (hM : IsZero M) :
     (zeroQuasicoherentData hM).IsFinitePresentation where
   isFinite_presentation _ := zeroPresentation_isFinite (isZero_over_of_isZero hM _)
 
 set_option synthInstance.maxHeartbeats 1600000 in
 set_option maxHeartbeats 2000000 in
+-- Headroom: `shrink` re-derives the covering sieve, re-entering the slice-site synthesis.
 /-- **A zero sheaf of modules on a scheme is finitely presented.**
 
 Absent from Mathlib: measured, `infer_instance` and `exact?` both fail on

@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: thm:ringKrullDim_stalk_eq_coheight
 lean_status: lean_ok
-order: 1736
+order: 1738
 title: Coheight-to-Krull-dim bridge for a scheme point
 type: tex
-updated: '2026-07-29T06:43:25'
+updated: '2026-07-30T11:51:47'
 ---
 Let \(X\) be a scheme and let \(z \in X\) be any point. Then
   \[

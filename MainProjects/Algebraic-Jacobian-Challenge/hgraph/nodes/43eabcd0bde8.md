@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:elemMap_apply
 lean_status: lean_ok
-order: 1765
+order: 1767
 title: Evaluation of the elementary map
 type: tex
-updated: '2026-07-29T06:43:25'
+updated: '2026-07-30T11:51:47'
 ---
 For \(x \in R^m\) one has \(E_{i,j}(x) = \text{Pi.single}\,i\,(x_j)\): the elementary
   map reads off the \(j\)-th coordinate and places it in the \(i\)-th slot.

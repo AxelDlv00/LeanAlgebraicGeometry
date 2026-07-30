@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.ProjectiveMorphismBasic
-import AlgebraicJacobian.Picard.ProjectiveSpaceAffineChart
+import AlgebraicJacobian.Picard.ProjectiveSpaceAffineChartRing
 import Mathlib.AlgebraicGeometry.AffineSpace
 import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
 

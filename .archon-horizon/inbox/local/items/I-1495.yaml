@@ -1,0 +1,53 @@
+id: I-1495
+provider: local
+kind: issue
+body: "MATH DEFECT, Pic0ChartMultiIndexInterval.lean: IndexSeparated IS Subsingleton\
+  \ iota, so the file's headline is inverted\n\nPicard/Pic0ChartMultiIndexInterval.lean:143\
+  \ IndexSeparated mentions f but does not constrain it.\nThe empty test refutes it\
+  \ for EVERY family: pic0Sigma_obj_subsingleton_of_isEmpty\n(Pic0ChartRestrictedFibreSat.lean:160)\
+  \ makes the Sigma-sheaf a Subsingleton at any empty test, and\nevery X i has the\
+  \ empty open with a unique map out. Compiled, exit 0, /tmp/pv/probe2.lean:\n  IndexSeparated\
+  \ C f <-> Subsingleton iota      (indexSeparated_iff_subsingleton)\n  JointlyInjective\
+  \ C f -> Subsingleton iota     (subsingleton_of_jointlyInjective)\n\nConsequences,\
+  \ all compiled (/tmp/pv/probe3.lean, probe4.lean):\n1. not_indexSeparated_duplicated\
+  \ (:459) is not about the duplicated family -- the same proof\n   refutes IndexSeparated\
+  \ for ANY two-index family, injective members or not.\n   injective_duplicated (:443)\
+  \ and \"at a family whose every member is injective\" (:50) are\n   decoration;\
+  \ the two notions differ only because one implies Subsingleton iota.\n2. not_jointlyInjective_of_pointwiseCoverage_of_ne_top\
+  \ (:194): at two distinct indices the\n   conclusion is free with hcov and hV UNUSED.\
+  \ It has content only at Subsingleton iota, i.e. the\n   already-landed one-chart\
+  \ case.\n3. not_pointwiseCoverage_mixedParamChart_of_jointlyInjective (:341), advertised\
+  \ (:92-95) as the\n   measurement \"about the real assembly\", is VACUOUS once the\
+  \ Abel atlas has two indices: hinj is\n   then unsatisfiable.\n4. not_injective_of_pointwiseCoverage_of_indexSeparated_of_ne_top\
+  \ (:230), the \"sharp positive\n   form\", reduces to the landed one-chart theorem:\
+  \ hsep collapses coverage to the single chart i0.\n\nThe docstring reads this backwards.\
+  \ It says (:47-52) index separation is refuted by overlapping\ncharts, hence the\
+  \ no-go does not propagate. What is true: IndexSeparated was never a hypothesis\n\
+  about the charts, so it could not transmit the one-chart argument to arbitrary iota\
+  \ under any\ncircumstances. NEXT ACTION: either restate the multi-index hypothesis\
+  \ so it survives the empty test\n(index separation over nonempty tests only), or\
+  \ withdraw JointlyInjective/IndexSeparated and keep\nonly the UniformCoverage half,\
+  \ which is the one with real content."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T04:54:47.217053+00:00'
+updated_at: '2026-07-30T04:55:35.442246+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0002-horizon-pic-g
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-h
