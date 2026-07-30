@@ -227,6 +227,7 @@ import AlgebraicJacobian.Cohomology.GluedSheafDatumFibre
 import AlgebraicJacobian.Cohomology.DescentSkeleton
 import AlgebraicJacobian.Cohomology.RigidEngine5Toolkit
 import AlgebraicJacobian.Cohomology.DatumDescent
+import AlgebraicJacobian.RiemannRoch.GenusZeroDegreeTrivial
 import AlgebraicJacobian.RiemannRoch.GluedDivisorSheaf
 import AlgebraicJacobian.RiemannRoch.W6Full
 import AlgebraicJacobian.Picard.DegreeZero

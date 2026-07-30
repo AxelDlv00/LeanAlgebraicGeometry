@@ -256,7 +256,8 @@ Two points a lane must not misread.
 -- closure -- `AlgebraicJacobian.lean` failed with "environment already contains".  The suffix
 -- names the route used below: the Σ-component of the chart value IS the point.  Nothing else
 -- changed, and no external declaration referenced the old name.
-theorem injective_abelSigmaChartZero_sigmaComponent (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+theorem injective_abelSigmaChartZero_sigmaComponent (m : ℕ)
+    (Z : (C ⊗ overSpec k k).left.CurveDivisor)
     (hdeg : Scheme.CurveDivisor.deg k Z
       = (m : ℤ) * classDeg k (thetaCechClass C) - ((0 : ℕ) : ℤ))
     (T : Scheme.{u}ᵒᵖ) :
