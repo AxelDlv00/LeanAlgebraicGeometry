@@ -85,6 +85,15 @@ theorem chart0_one (d : ℕ) (hd : 0 < d) (x : R0) (aa : I → R0) :
     chart0 d x aa (Sum.inl ⟨1, Nat.succ_lt_succ hd⟩) = x := by
   simp
 
+/-- A positive twist ensures that the second family contains the base
+coordinate `y` itself. -/
+@[simp]
+theorem chart1_one (d : ℕ) (hd : 0 < d) (y : R1) (bb : I → R1) :
+    chart1 d y bb (Sum.inl ⟨d - 1, by omega⟩) = y := by
+  simp [chart1]
+  congr
+  omega
+
 /-- The complete chart families differ by the common factor rho0 x ^ d on
 the overlap. The base-monomial case is the identity
 t^r = t^d * u^(d-r) following from t * u = 1. -/
@@ -169,5 +178,41 @@ theorem fromSpec_compat [Finite I]
       (lambda := rho0 x ^ d)
   · exact (IsUnit.of_mul_eq_one _ htu).pow d
   · exact map_chart rho0 rho1 x y htu d aa bb hab
+
+/-- The normalized coordinate maps on two scheme opens agree after
+restriction to their intersection. This is the direct input expected by the
+scheme morphism gluing API. -/
+theorem fromOpen_compat [Finite I] {X : Scheme.{u}} (U0 U1 : X.Opens)
+    (x : Γ(X, U0)) (y : Γ(X, U1))
+    (htu :
+      (X.presheaf.map
+          (homOfLE (inf_le_left : U0 ⊓ U1 ≤ U0)).op).hom x *
+        (X.presheaf.map
+          (homOfLE (inf_le_right : U0 ⊓ U1 ≤ U1)).op).hom y = 1)
+    (d : ℕ) (aa : I → Γ(X, U0)) (bb : I → Γ(X, U1))
+    (hab : ∀ i,
+      (X.presheaf.map
+          (homOfLE (inf_le_left : U0 ⊓ U1 ≤ U0)).op).hom (aa i) =
+        (X.presheaf.map
+          (homOfLE (inf_le_left : U0 ⊓ U1 ≤ U0)).op).hom x ^ d *
+          (X.presheaf.map
+            (homOfLE (inf_le_right : U0 ⊓ U1 ≤ U1)).op).hom (bb i)) :
+    X.homOfLE inf_le_left ≫
+        ProjectiveSpace.Coordinates.fromOpen U0
+          (Sum.inl ⟨0, Nat.zero_lt_succ d⟩) (chart0 d x aa)
+          (chart0_zero d x aa) =
+      X.homOfLE inf_le_right ≫
+        ProjectiveSpace.Coordinates.fromOpen U1
+          (Sum.inl ⟨d, Nat.lt_succ_self d⟩) (chart1 d y bb)
+          (chart1_last d y bb) := by
+  simp only [ProjectiveSpace.Coordinates.fromOpen, Category.assoc]
+  rw [← Scheme.Opens.toSpecΓ_SpecMap_presheaf_map_assoc,
+    ← Scheme.Opens.toSpecΓ_SpecMap_presheaf_map_assoc]
+  rw [fromSpec_compat
+    (X.presheaf.map
+      (homOfLE (inf_le_left : U0 ⊓ U1 ≤ U0)).op).hom
+    (X.presheaf.map
+      (homOfLE (inf_le_right : U0 ⊓ U1 ≤ U1)).op).hom
+    x y htu d aa bb hab]
 
 end AlgebraicJacobian.TwoChart.TwistedCoordinates

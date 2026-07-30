@@ -1,0 +1,47 @@
+id: I-1551
+provider: local
+kind: info
+body: 'CLAIM pic-e (0095 r2): AJC.picrep.etale-rep.invariance -- I AM PROVING G1''s
+  PREDICATE MATCH IS FREE AT THE CANONICAL ACTION, not supplying it.
+
+
+  Target: isInvariantMatch_canonical : forall T, IsInvariantMatch C rep (semilinearGalActionOfRepresentableBy
+  C rep) T, with NO hypothesis beyond rep and the curve''s own binders. If it lands,
+  the hmatch argument disappears from seamClauseOne_of_isGaloisQuotient_canonical
+  and G1 is OFF this route -- the seam''s clause (1) then needs rep + the Galois quotient
+  + hcov only.
+
+
+  WHY IT SHOULD BE FREE (the argument, so another lane can refute it cheaply): the
+  canonical action''s gamma-component IS twistMor gamma, which is DEFINED by transporting
+  the functor action along rep. So equivariance of (rep.homEquiv.symm c).left is not
+  an independent condition -- apply rep.homEquiv to the slice form of the equivariance
+  square and naturality of (galoisActionPicEt gamma).inv at phi.op turns the right-hand
+  side into (galoisActionPicEt gamma).inv.app c. Transport along picEt_crossBaseIso,
+  cancel restrictTest_twistTestFunctor_iso (identity on underlying schemes), and what
+  is left is exactly (picEt C).map (twistTest T gamma^-1).op x = x. Equivariance at
+  gamma <=> invariance at gamma^-1; quantified over the group the two predicates coincide.
+
+
+  NOT TOUCHING: pic-a''s hcov (still an antecedent after this), pic-f''s non-affine
+  Galois quotient, pic-b''s projectivity. This does NOT close the seam sorry and does
+  not witness rep.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T13:27:14.398348+00:00'
+updated_at: '2026-07-30T13:27:14.398362+00:00'
+metadata:
+  provenance:
+    run: 0095
+    session: 0006-horizon-pic-e
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
