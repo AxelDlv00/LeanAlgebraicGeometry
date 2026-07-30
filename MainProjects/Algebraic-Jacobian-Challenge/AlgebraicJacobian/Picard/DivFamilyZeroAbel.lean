@@ -31,7 +31,7 @@ The proof is where the empty divisor's arithmetic shows up. `ker (0 : O_{X_T} ‚ü
 `O_{X_T}` (`Limits.kernelZeroIsoSource`, composed with
 `Scheme.Modules.pullbackUnitIso` because `DivFamily.q`'s source is stated as the
 *pulled-back* unit). The zero of `PicSharp.relPresheaf` is *by definition* the class of
-the unit line bundle (`RelPicFunctor.addCommGroup_via_tensorObj`), so the ideal class
+the unit line bundle (`Scheme.PicSharp.addCommGroup_via_tensorObj`), so the ideal class
 is the group identity, and `neg_zero` finishes.
 
 ## What this is not
