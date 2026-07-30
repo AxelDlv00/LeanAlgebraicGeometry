@@ -74,10 +74,15 @@ could be believed, and which no lane had settled in either direction.
 
 **One caveat, stated because it is the natural over-reading.** The degree-zero slice
 being inhabited does *not* make `DivFunctorDeg π 0` representable by the terminal
-object: that would need the slice to be a *singleton* at every test object, which is
-false as soon as `X_T` has a nonzero invertible ideal with zero-degree quotient, and
-is not proved here in either direction. The row `AJC.picrep.divzero` records the
-open question; §5 states the two halves that would settle it.
+object `Over.mk (𝟙 S)`. That would need the slice to be a *singleton* at every test
+object, and this file proves only the `Nonempty` half. The missing half is
+`Subsingleton ((DivFunctorDeg π 0).obj (op T))` — i.e. that the empty divisor is the
+*only* relative divisor of degree `0`. That is the expected statement (a degree-`0`
+effective divisor on a fibre of a relative curve is empty), but it is a fact about
+`fiberDeg`, not a formality: `fiberDeg` is a `finrank` with a junk value at
+infinite dimension, so the implication `fiberDeg = 0 → F` is zero needs finiteness of
+the fibre sections. Neither direction is proved here, and no lane holds it. The row
+`AJC.picrep.divzero` records it as the open question this file leaves.
 
 ## Main declarations
 
@@ -87,9 +92,18 @@ open question; §5 states the two halves that would settle it.
 * `Scheme.DivFamily.fiberDeg_zero` / `hasFiberDeg_zero` — the empty divisor has
   fibre degree `0` at every point.
 * `Scheme.DivFunctor.zeroClass` / `Scheme.DivFunctorDeg.zeroClass` — the resulting
-  inhabitants of the functor and of its degree-`0` slice.
+  inhabitants of the functor and of its degree-`0` slice, with
+  `Scheme.DivFunctor.map_zeroClass` making the first a global section.
 * `Scheme.Modules.isFinitePresentation_of_isZero` — reusable: a zero sheaf of
   modules on any scheme is finitely presented. Absent from Mathlib.
+* `Module.Flat.of_subsingleton'`, `Scheme.Modules.coversTop_singleton_top`,
+  `Scheme.Modules.preservesZeroMorphisms_overFunctor`,
+  `Scheme.Modules.isZero_free_pempty` — the other reusable bricks §1 needed.
+
+Every declaration here is `sorry`-free and axiom-clean
+(`[propext, Classical.choice, Quot.sound]`), measured against
+`Scheme.fgaPicardRepresentability` reporting `sorryAx` in the same probe file with the
+oleans rebuilt first.
 
 Reference: Kleiman, "The Picard scheme", §3 Def. `df:red`/`df:div`, Ex. `ex:DivC`
 (arXiv:math/0504020).
@@ -397,6 +411,83 @@ noncomputable def DivFamily.zero : DivFamily π T where
 
 instance DivFamily.instNonempty : Nonempty (DivFamily π T) :=
   ⟨DivFamily.zero π T⟩
+
+/-! ## §4. Base change, fibre degree, and the degree-zero slice
+
+The empty divisor is not just a fibrewise accident: base change carries it to the
+empty divisor of the new test object, so its classes assemble into a **global section**
+of `DivFunctor`, and its fibre degree is `0` at every point of every base. -/
+
+/-- **The pulled-back empty divisor is the empty divisor**, up to the divisor
+equivalence — both `F`-sheaves are zero and any two morphisms into a zero object
+agree.
+
+This is what makes `zeroClass` below a genuine global section of `DivFunctor` rather
+than an unrelated choice at each test object. -/
+theorem DivFamily.pullbackAlong_zero {T' : Over S} (ψ : T' ⟶ T) :
+    ((DivFamily.zero π T).pullbackAlong ψ).Rel (DivFamily.zero π T') :=
+  ⟨(Functor.map_isZero (Scheme.Modules.pullback (quotBaseMap π ψ))
+      (isZero_zero _)).iso (isZero_zero _),
+    (isZero_zero _).eq_of_tgt _ _⟩
+
+/-- **The fibre of the empty divisor is zero** — `fiberModule` is a module pullback,
+which is additive. -/
+theorem DivFamily.isZero_fiberModule_zero (t : (T.left : Scheme.{u})) :
+    IsZero ((Limits.pullback.snd π T.hom).fiberModule t (DivFamily.zero π T).F) :=
+  Functor.map_isZero _ (isZero_zero _)
+
+/-- **The empty divisor has fibre degree `0`**, at every point of every base.
+
+`deg ∅ = dim_{κ(t)} Γ(∅, O_∅) = 0`: the fibre is the zero module, its global sections
+are a subsingleton, and `finrank` of a subsingleton is `0`. -/
+theorem DivFamily.fiberDeg_zero (t : (T.left : Scheme.{u})) :
+    (DivFamily.zero π T).fiberDeg t = 0 := by
+  letI := (Limits.pullback.snd π T.hom).fiberSectionsModule t
+    ((Limits.pullback.snd π T.hom).fiberModule t (DivFamily.zero π T).F)
+  haveI : Subsingleton
+      Γ((Limits.pullback.snd π T.hom).fiberModule t (DivFamily.zero π T).F, ⊤) :=
+    Modules.subsingleton_sections_of_isZero (DivFamily.isZero_fiberModule_zero π T t) _
+  exact Module.finrank_zero_of_subsingleton
+
+/-- **The empty divisor has constant fibre degree `0`** — `HasFiberDeg zero 0`, the
+predicate the degree-`d` subfunctor `DivFunctorDeg` is cut out by. -/
+theorem DivFamily.hasFiberDeg_zero : (DivFamily.zero π T).HasFiberDeg 0 :=
+  fun t => DivFamily.fiberDeg_zero π T t
+
+/-- **The class of the empty divisor** in `Div_{X/S}(T)`: the first inhabitant of the
+relative-divisor functor's value at any test object. -/
+noncomputable def DivFunctor.zeroClass : (DivFunctor π).obj (Opposite.op T) :=
+  Quotient.mk _ (DivFamily.zero π T)
+
+instance DivFunctor.instNonemptyObj : Nonempty ((DivFunctor π).obj (Opposite.op T)) :=
+  ⟨DivFunctor.zeroClass π T⟩
+
+/-- **`DivFunctor` carries the zero class to the zero class**, i.e. `zeroClass` is a
+*global section* of `Div_{X/S}` — a compatible family over all test objects, not a
+choice per object. -/
+theorem DivFunctor.map_zeroClass {T' : Over S} (ψ : T' ⟶ T) :
+    (DivFunctor π).map ψ.op (DivFunctor.zeroClass π T) = DivFunctor.zeroClass π T' :=
+  Quotient.sound (DivFamily.pullbackAlong_zero π T ψ)
+
+/-- **The empty divisor's class has degree `0`**, in the class-level predicate the
+degree slices use. -/
+theorem DivFunctor.classHasFiberDeg_zeroClass :
+    DivFamily.ClassHasFiberDeg (π := π) 0 (DivFunctor.zeroClass π T) :=
+  DivFamily.hasFiberDeg_zero π T
+
+/-- **The degree-`0` slice `Div⁰_{X/S}(T)` is inhabited**, for every `π` and every
+test object.
+
+This is the statement that turns the whole degree apparatus of `Picard/DivDegree.lean`
+from vacuous into tested. Note what it is *not*: an identification of the slice with a
+point. See the file docstring — singleton-ness at every test object is what
+representability by the terminal object would need, and that is open. -/
+noncomputable def DivFunctorDeg.zeroClass : (DivFunctorDeg π 0).obj (Opposite.op T) :=
+  ⟨DivFunctor.zeroClass π T, DivFunctor.classHasFiberDeg_zeroClass π T⟩
+
+instance DivFunctorDeg.instNonemptyObjZero :
+    Nonempty ((DivFunctorDeg π 0).obj (Opposite.op T)) :=
+  ⟨DivFunctorDeg.zeroClass π T⟩
 
 end Scheme
 
