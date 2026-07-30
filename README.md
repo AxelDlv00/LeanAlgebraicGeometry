@@ -87,9 +87,9 @@ for the active project, and search queries declarations across the workspace and
 
 Treat `graph frontier` output as advisory and verify each row in the tree: neither main project has
 an `hgraph/config.yaml`, so `horizon graph … sync` is a no-op and the stored graph drifts behind
-landed work. Tracked in open inbox item `I-0501`. The scanner also invents declarations from
-docstring prose, and some arrive marked `sorry`, so the frontier can list nodes that do not exist
-(reproduced in `I-0472`, now archived; the defect itself was never fixed).
+landed work (archived inbox item `I-0501`). The scanner also invents declarations from docstring
+prose, and some arrive marked `sorry`, so the frontier can list nodes that do not exist (archived
+`I-0472`). Both defects were reproduced and neither was fixed.
 
 ## Methodology
 

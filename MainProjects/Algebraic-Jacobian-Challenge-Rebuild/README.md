@@ -28,18 +28,18 @@ which carries the full charter (target, constraints, working model, and phases).
 - `AlgebraicJacobian/Challenge.lean` — the single, reviewable **statement file**: every signature a
   reviewer must trust, and nothing else. Agents own the proofs, never these signatures.
 - `AlgebraicJacobian/` — the infrastructure that discharges the statement (added as the rebuild
-  proceeds; house limit 500 lines per file, currently exceeded by 21 files tracked in inbox
+  proceeds; house limit 500 lines per file, currently exceeded by 27 files tracked in inbox
   `I-0220`; layout mirrors the mathematical structure of the paper).
 - `AlgebraicJacobian.lean` — the library root import list, and the index of what is actually
   checked: `lake build`'s default target is this module, so a new file is **not** elaborated by a
   bare `lake build` until it is imported here. Add the import, or check the file explicitly by
-  module name. Of 771 `.lean` files under `AlgebraicJacobian/`, **17 are unreachable** from the root
-  and so never kernel-checked by a bare `lake build` — all 17 under `Picard/`: the twelve
+  module name. Of 818 `.lean` files under `AlgebraicJacobian/`, **18 are unreachable** from the root
+  and so never kernel-checked by a bare `lake build` — all 18 under `Picard/`: eleven
   `DivSchemeRedesign*` plus `DivSchemeFlatteningBridge`, `DivSchemeSeedUnivSecondWindowMap`,
-  `EntryIdeal`, `Pic0ThetaCocycle`, `ScratchChartLocal`. Measure reachability **transitively**, not
-  by the root's import lines, and re-measure rather than quoting: parallel lanes move these figures
-  hourly. See roadmap row `AJCR.w4-rep.build-reach` for the triaged list and inbox `I-0624` for why
-  it bites in both directions. Check the root before trusting a "landed" claim.
+  `EntryIdeal`, `Pic0ThetaCocycle`, `Pic0ThetaCocycleIdentity`, `ScratchChartLocal`. Measure
+  reachability **transitively**, not by the root's import lines, and re-measure rather than quoting:
+  parallel lanes move these figures hourly. See roadmap row `AJCR.w4-rep.build-reach` for the
+  triaged list. Check the root before trusting a "landed" claim.
 - `informal/` — 79 design worksheets, brick specs, and recon dumps (~32k lines). **Start from
   [`informal/README.md`](informal/README.md)**, which says what each file is for and which are
   superseded; several are pinned to routes that have since been abandoned.
