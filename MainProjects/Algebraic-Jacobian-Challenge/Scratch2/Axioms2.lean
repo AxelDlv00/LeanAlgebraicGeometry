@@ -1,6 +1,0 @@
-import Mathlib
-import AlgebraicJacobian.Picard.PicEtDescentExistence
-import AlgebraicJacobian.Picard.FGAPicRepresentability
-#print axioms AlgebraicGeometry.Scheme.PicScheme.compatible_of_pullback_projections
-#print axioms AlgebraicGeometry.Scheme.PicScheme.exists_unique_descend_picEt_of_projections
-#print axioms AlgebraicGeometry.Scheme.fgaPicardRepresentability

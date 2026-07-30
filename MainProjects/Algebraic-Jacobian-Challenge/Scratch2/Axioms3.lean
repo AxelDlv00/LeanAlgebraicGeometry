@@ -1,5 +1,0 @@
-import Mathlib
-import AlgebraicJacobian.Picard.PicEtDescentExistence
-import AlgebraicJacobian.Picard.FGAPicRepresentability
-#print axioms AlgebraicGeometry.Scheme.PicScheme.selfPullback_coverMap_left_iso
-#print axioms AlgebraicGeometry.Scheme.fgaPicardRepresentability
