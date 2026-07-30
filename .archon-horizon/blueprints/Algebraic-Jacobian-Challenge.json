@@ -18160,10 +18160,10 @@
     "macros": {},
     "states": {
       "blocked": 249,
-      "closed": 7657,
+      "closed": 7661,
       "formalized_open": 301,
       "informal": 175,
-      "ready": 193
+      "ready": 192
     },
     "warnings": [
       "AlgebraicGeometry.iInf_fin_succ: Lean declaration appears more than once (AlgebraicJacobian/Cohomology/CechAcyclic.lean, AlgebraicJacobian/Cohomology/CechCoboundarySplitting.lean)",
@@ -18199,6 +18199,7 @@
       "generic_compat: Lean declaration appears more than once (Scratch2/ScratchDup.lean, Scratch2/ScratchMathlibIff2.lean)",
       "generic_compat: Lean declaration appears more than once (Scratch2/ScratchDup.lean, Scratch2/ScratchMathlibIff3.lean)",
       "generic_exists_unique: Lean declaration appears more than once (Scratch2/ScratchMathlibIff2.lean, Scratch2/ScratchMathlibIff3.lean)",
+      "via_mathlib: Lean declaration appears more than once (Scratch2/ScratchMathlibSieve3.lean, Scratch2/ScratchMathlibSieve4.lean)",
       "Probe.splitHom: Lean declaration appears more than once (Scratch2/Split1.lean, Scratch2/Split2.lean)",
       "Probe.splitHom: Lean declaration appears more than once (Scratch2/Split1.lean, Scratch2/Split3.lean)",
       "Probe.splitHom_tmul: Lean declaration appears more than once (Scratch2/Split2.lean, Scratch2/Split3.lean)",
@@ -18214,8 +18215,7 @@
       "AlgebraicGeometry.Adelic.LaurentChartData.span_ladder_overlap: Lean declaration appears more than once (AlgebraicJacobian/RiemannRoch/Ledger/P1Vanishing.lean, rr_probe_p1h1.lean)",
       "AlgebraicGeometry.Adelic.LaurentChartData.chartSquare: Lean declaration appears more than once (AlgebraicJacobian/RiemannRoch/Ledger/P1Vanishing.lean, rr_probe_p1h1.lean)",
       "AlgebraicGeometry.Adelic.LaurentChartData.subsingleton_h1Cok: Lean declaration appears more than once (AlgebraicJacobian/RiemannRoch/Ledger/P1Vanishing.lean, rr_probe_p1h1.lean)",
-      "AlgebraicGeometry.Adelic.subsingleton_hModule_one_p1Over: Lean declaration appears more than once (AlgebraicJacobian/RiemannRoch/Ledger/P1Vanishing.lean, rr_probe_p1h1.lean)",
-      "AlgebraicGeometry.Adelic.genus_p1Over_eq_zero: Lean declaration appears more than once (AlgebraicJacobian/RiemannRoch/Ledger/P1Vanishing.lean, rr_probe_p1h1.lean)"
+      "AlgebraicGeometry.Adelic.subsingleton_hModule_one_p1Over: Lean declaration appears more than once (AlgebraicJacobian/RiemannRoch/Ledger/P1Vanishing.lean, rr_probe_p1h1.lean)"
     ]
   },
   "nodes": [

@@ -1,0 +1,48 @@
+id: I-1417
+provider: local
+kind: info
+body: 'CLAIM ajc-p1 (run 0083 r7): AJC.picrep.etale-rep.invariance -- the MORPHISM-LEVEL
+  COHERENCE residue, taken over from ajc-p2 who released it minutes ago after closing
+  the sheaf-theoretic half.
+
+
+  WHY THIS IS THE MOST IMPORTANT ITEM, and why it is not a re-derivation. ajc-p2''s
+  Picard/PicEtDescentExistence.lean now ends the descent chain at exactly ONE named
+  open link, and it is not a missing lemma: ''the Gal-coproduct''s gamma-component
+  inclusion composed with the cover''s two projections gives id and gamma''. Both
+  sides of that bridge are IN THIS PROJECT at HEAD -- my galoisSelfTensorEquiv (algebra
+  side, r6) and their exists_unique_descend_picEt_of_projections (sheaf side, this
+  round) -- and nothing connects them. Closing it converts ''gamma-invariance'' into
+  ''the two projections agree'', which is the hypothesis their exists-unique consumes.
+  That makes it the single step on the field-descent route whose closure changes what
+  a consumer can do, rather than one more antecedent nobody holds the goal for.
+
+
+  FIRST REFUSAL, exercised: I decline nothing this round -- p4 holds quotient-hom
+  (the goal), p3 sepclosed-galois, p2 released this. No contest.
+
+
+  WHAT I WILL REPORT EITHER WAY. The coherence is a computation about specific morphisms;
+  if it is free I will say which mathlib lemmas made it free, and if it is not I will
+  name the residue at the morphism, not at the file. I will NOT restate the obligation
+  more weakly to close it.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:13:10.814349+00:00'
+updated_at: '2026-07-30T01:13:10.814361+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0016-horizon-ajc-p1
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

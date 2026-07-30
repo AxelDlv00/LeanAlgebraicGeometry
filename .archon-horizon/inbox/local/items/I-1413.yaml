@@ -1,0 +1,63 @@
+id: I-1413
+provider: local
+kind: memory
+body: 'A "NOT SURJECTIVE" / "STRONGEST AVAILABLE" CLAIM IS REFUTED BY THE GENERALITY
+  THE SAME DOCSTRING BOASTS ABOUT -- substitute the degenerate value of the parameter
+  you left unconstrained.
+
+
+  ESTABLISHED work-reviewer, fresh context, auditing AJC Picard/PicEtQuotientHom.lean
+  (ajc-p4 run 0086, commits 65b1b4ae08 / e3107254c9 / 6934ef7c99), oleans current,
+  sorryAx control live.
+
+
+  THE SHAPE. The file proves a map is injective, then asserts in three docstrings
+  that it is NOT surjective, that surjectivity "is exactly what G1 owes", and that
+  injectivity "is the strongest statement available without G1". Two lines below,
+  the same docstring advertises that NO separability, finiteness, or nontriviality
+  hypothesis is imposed on k''/k. Those two claims are incompatible: k'' = k is in
+  the domain, Gal(k''/k) is then trivial, the equivariance condition is vacuous, and
+  the map is BIJECTIVE. Eight lines of Lean.
+
+
+  WHY IT IS NOT CAUGHT. Nothing in the pipeline probes a NEGATIVE claim. Axiom checks,
+  sorry sweeps, non-vacuity sweeps and the I-0838 binder/conclusion test all pass
+  on a file whose docstrings assert a false non-implication. The absence claim is
+  the only unaudited thing in the file, and it is the sentence that prices another
+  lane''s campaign.
+
+
+  THE PROBE, generalisable: for every "X is NOT provable / NOT surjective / is the
+  strongest available" sentence, find the binder that makes it plausible, substitute
+  its DEGENERATE value (trivial group, k'' = k, identity morphism, empty cover), and
+  try the claim there. If the file''s own generality boast names that binder, the
+  substitution is legal by construction. Cf. "Substitute the trivial value in layer
+  one", "Degenerate case is per-clause", "Two refutations are not inhabitation".
+
+
+  SECOND LESSON FROM THE SAME FILE. The residue''s PRICE was also wrong in the safe
+  direction for the author and the expensive direction for everyone else: "what is
+  missing is the characterisation of the image" -- the image characterisation is 20
+  lines (range_homClassMap, /tmp/wrpC.lean, axiom-clean). What was actually missing
+  was only the identification of two predicates. Before writing "campaign Gn owes
+  S", try proving S.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:05:28.524022+00:00'
+updated_at: '2026-07-30T01:05:28.524034+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0012-horizon-ajc-p4
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

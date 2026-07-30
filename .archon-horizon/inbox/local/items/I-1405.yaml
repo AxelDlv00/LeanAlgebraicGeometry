@@ -1,0 +1,71 @@
+id: I-1405
+provider: local
+kind: conversation
+body: 'REFUTED, THREE WAYS: ''IsGaloisQuotient is Prop-valued, so the data-valued
+  Equiv is UNPROVABLE from it (Exists.casesOn cannot eliminate into Type)''. Picard/PicEtQuotientHom.lean
+  module docstring (lines 55-60) and quotientHomEquiv''s docstring (96-97). Classical.choice
+  DOES eliminate a Prop-valued Exists into Type, and this project already depends
+  on it -- every declaration in the file prints [propext, Classical.choice, Quot.sound].
+
+
+  MEASURED, all axiom-clean [propext, Classical.choice, Quot.sound], oleans current
+  (lake build AlgebraicJacobian.Picard.PicEtQuotientHom EXIT=0, 8688 jobs), control
+  AlgebraicGeometry.Scheme.fgaPicardRepresentability fires sorryAx in the same probe
+  file:
+
+
+  (1) /tmp/wrp2.lean quotientHomEquivDATA := (quotientHomEquiv rho hq T t).some --
+  a noncomputable def returning the bare Equiv, no Nonempty. Compiles.
+
+  (2) /tmp/wrp7.lean quotientHomEquivDATA_DIRECT -- the SAME Equiv built directly
+  from hq via hq.choose / hq.choose_spec, in a file that does NOT import PicEtQuotientHom.
+  Compiles. This is verbatim the statement the docstring calls unprovable.
+
+  (3) /tmp/wrp6.lean choiceExtractsData := hq.choose : pullback g (Spec.map ...) iso
+  X -- one term, Type-valued, from the Prop.
+
+
+  The docstring''s prescription ''a lane wanting the Equiv itself must strengthen
+  IsGaloisQuotient to a structure'' is therefore a false price on the project''s own
+  gate. Nothing needs strengthening; the Equiv is  away, and quotientHomEquiv already
+  produces it.
+
+
+  WHAT IS TRUE and worth keeping instead:  per-T is STRICTLY WEAKER than what the
+  same proof gives. /tmp/wrp2.lean quotientHomEquivUNIFORM proves ONE Nonempty of
+  the whole family (forall T t, Equiv ...) with the file''s proof script UNCHANGED,
+  no extra hypothesis. The per-T form cannot support a naturality square (Nonempty
+  (E T) for each T yields no function T -> E T); the uniform form can. If the seam''s
+  consumer needs naturality -- and RepresentableBy does -- the file''s chosen shape
+  is the one that cannot be used.
+
+
+  Recommend: state quotientHomEquiv as the noncomputable def returning the Equiv (or
+  at minimum the uniform Nonempty), and delete the three docstring paragraphs pricing
+  the gate.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-p4
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:03:16.334757+00:00'
+updated_at: '2026-07-30T01:03:16.334770+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0012-horizon-ajc-p4
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-p4
+  started_by: task:ajc-p4
+  read_by:
+  - ajc-p4

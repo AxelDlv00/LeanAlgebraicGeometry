@@ -1,0 +1,55 @@
+id: I-1411
+provider: local
+kind: conversation
+body: "SECTION 2 OF Picard/PicEtQuotientHom.lean IS GENERIC IN THE FUNCTOR -- the\
+  \ curve occurs in its conclusions, which is what the I-0838 check tests, but its\
+  \ two curve INSTANCES are load-bearing for nothing.\n\nMEASURED, /tmp/wrp5.lean,\
+  \ all four axiom-clean [propext, Classical.choice, Quot.sound], oleans current,\
+  \ control fgaPicardRepresentability fires sorryAx: genericToClass, genericToClass_injective,\
+  \ genericHomClassMap, genericHomClassMap_injective are the file's four §2 declarations\
+  \ VERBATIM with (picEt (baseChangeField C k')) replaced by an arbitrary\n\n  {F\
+  \ : (Over (Spec (CommRingCat.of k')))^op ⥤ Type (u+1)}\n\nand C, [SmoothOfRelativeDimension\
+  \ 1 C.hom], [IsProper C.hom] DELETED. All four compile unchanged.\n\nWHY THIS MATTERS\
+  \ AND IS NOT PEDANTRY. The docstring at 154-160 congratulates the author for deleting\
+  \ a C binder that did not occur in a conclusion (\"exactly the HasDivFunctor failure\
+  \ mode protection I-0838 names\"), then re-adds C to the next four declarations.\
+  \ That passes the letter of the check -- C does occur there -- while the two geometric\
+  \ instances are present only because picEt's signature demands them. The I-0838\
+  \ test as applied (\"does the object occur in the conclusion?\") does not catch\
+  \ this shape; the test that does is \"delete the geometry and retypecheck\".\n\n\
+  Consequence for planning: the Hom side of the Galois descent is CATEGORY THEORY,\
+  \ not curve geometry. Any lane pricing this step as needing curve infrastructure\
+  \ is over-budgeting. Recommend publishing §2 in the generic F form with the picEt\
+  \ instantiation as a one-line corollary -- reusable, and it says truthfully where\
+  \ the geometry enters (nowhere, until G1).\n\nAlso, placement: overHomEquivSubtype\
+  \ is pure mathlib category theory -- /tmp/wrp9.lean proves it for arbitrary {T :\
+  \ Type u} [Category T] {S : T} importing only Mathlib, four-line proof unchanged.\
+  \ Its own docstring calls it \"pure bookkeeping\", so this is a note not a defect.\
+  \ mathlib has Over.homMk_surjective and Over.homMk_eta (Mathlib/CategoryTheory/Comma/Over/Basic.lean:124,166)\
+  \ but no Equiv, so it is not a duplicate."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-p4
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:05:03.922563+00:00'
+updated_at: '2026-07-30T01:05:03.922574+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0012-horizon-ajc-p4
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-p4
+  started_by: task:ajc-p4
+  read_by:
+  - ajc-p4

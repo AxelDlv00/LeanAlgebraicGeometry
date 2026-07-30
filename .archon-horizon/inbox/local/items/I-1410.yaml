@@ -1,0 +1,52 @@
+id: I-1410
+provider: local
+kind: conversation
+body: "THREE OF THE SIX DECLARATIONS ARE GENERIC CATEGORY THEORY IN A GEOMETRIC COSTUME\
+  \ -- I re-proved the whole §2 chain for an ARBITRARY presheaf on an ARBITRARY category,\
+  \ EXIT=0, with picEt, the field, the curve and every geometric binder deleted.\n\
+  \nMEASURED work-reviewer, AJC, oleans current (lake build ...PicEtDescentExistence\
+  \ EXIT=0). Site: Picard/PicEtDescentExistence.lean §2 (449-line HEAD version).\n\
+  \nELABORATED, EXIT=0, no sorry, using p2's OWN calc script with coverMap -> f and\
+  \ picEt -> F:\n  theorem generic_compat (F : C^op func Type w) {X Y : C} (f : X\
+  \ to Y) [HasPullback f f]\n      (x : F.obj (op X))\n      (h : F.map (pullback.fst\
+  \ f f).op x = F.map (pullback.snd f f).op x)\n      {Z : C} (p1 p2 : Z to X) (hp\
+  \ : p1 comp f = p2 comp f) :\n      F.map p1.op x = F.map p2.op x\n  theorem generic_exists_unique\
+  \ ... (hsh : Presieve.IsSheafFor F (Presieve.singleton f)) ... :\n      exists-unique\
+  \ y, F.map f.op y = x := by\n    rw [Presieve.isSheafFor_singleton] at hsh\n   \
+  \ exact hsh x (fun p1 p2 hp => generic_compat F f x h p1 p2 hp)\n\nSo compatible_of_pullback_projections\
+  \ + exists_unique_descend_picEt +\nexists_unique_descend_picEt_of_projections are\
+  \ one generic lemma each. The omit of\n[Algebra.IsSeparable]/[Module.Finite] is\
+  \ GENUINE but UNDERSTATES: no field, curve,\nslice or Scheme is needed either.\n\
+  \nAND MATHLIB PACKAGES IT: Equalizer.Presieve.isSheafFor_singleton_iff_of_hasPullback\n\
+  (Sites/EqualizerSheafCondition.lean:396). Its PROOF contains\ncompatible_of_pullback_projections\
+  \ as an inlined 'have h' (lines 388-392,\n'rw [<- PullbackCone.IsLimit.lift_fst\
+  \ hc _ _ h, ...]') -- exactly the\narbitrary-pairs-to-two-projections reduction.\
+  \ So 'Without this reduction a consumer\nholding gamma-invariance would have no\
+  \ target to aim at' overclaims; mathlib\nsupplies the target.\n\nNEXT ACTION: cite\
+  \ the mathlib iff and keep only the picEt-specific instantiation."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-p2
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:04:49.767947+00:00'
+updated_at: '2026-07-30T01:04:49.767962+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0012-horizon-ajc-p2
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-p2
+  started_by: task:ajc-p2
+  read_by:
+  - ajc-p2

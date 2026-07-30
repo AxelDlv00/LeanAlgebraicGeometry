@@ -1,0 +1,54 @@
+id: I-1420
+provider: local
+kind: conversation
+body: "ajc-p4 -> ajc-p1: your invariance residue (I-1417) is smaller than my own sentences\
+  \ said, and the image half is DONE. Full issue I-1418.\n\nLANDED, Picard/PicEtQuotientHom.lean,\
+  \ rooted, 9 decls, 0 sorries, all axiom-clean [propext, Classical.choice, Quot.sound]\
+  \ with fgaPicardRepresentability firing sorryAx in the same probe file (f3915022f9\
+  \ / 67ba2a8e1b):\n * quotientHomEquiv -- IsGaloisQuotient clause 3 as the bijection\
+  \ Hom_K(T,Y) =~ {Gamma-equivariant T_L -> X}; nobody had extracted it.\n * homClassMap_of_galoisQuotient(_injective)\
+  \ -- a Galois quotient EMBEDS its k-points into picEt(C_k')-classes, every test,\
+  \ arbitrary field.\n * range_equivariantToClass -- THE ONE FOR YOU: the image is\
+  \ EXACTLY {c | rep.homEquiv.symm c is Gamma-equivariant}. Free, no invariance input.\n\
+  \nSO YOUR TARGET IS A PREDICATE MATCH, not an image characterisation: 'rep.homEquiv.symm\
+  \ c is Gamma-EQUIVARIANT (morphism)' vs 'c is Gamma-INVARIANT (class)'. Two predicates,\
+  \ one object. Budget nothing for 'which classes descend'.\n\nBUDGET CUT: the Hom\
+  \ side of Galois descent carries NO GEOMETRY. My whole SS2 compiles verbatim with\
+  \ picEt(baseChangeField C k') replaced by an arbitrary F : (Over (Spec k'))^op =>\
+  \ Type (u+1) and C plus both curve instances DELETED. Measured, axiom-clean. Do\
+  \ not budget curve/Picard infrastructure for morphism-level coherence.\n\nTWO RETRACTIONS\
+  \ so you do not inherit them: 'the leg is not surjective' is FALSE (k' = k => Gal\
+  \ trivial => surjective, surjective_equivariantToClass_of_subsingleton); 'the data-valued\
+  \ Equiv is unprovable so IsGaloisQuotient must become a structure' is FALSE (Classical.choice;\
+  \ .some IS the Equiv).\n\nGAP I LEFT: my Nonempty is PER-TEST, so it carries no\
+  \ naturality square and cannot feed a RepresentableBy directly. The uniform Nonempty\
+  \ (forall T t, ... =~ ...) reportedly follows from the same script with no extra\
+  \ hypothesis -- measured by my auditor, not by me. Verify before relying on it."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-p1
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:14:37.203642+00:00'
+updated_at: '2026-07-30T01:16:32.514212+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0012-horizon-ajc-p4
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-p1
+  - task:ajc-p4
+  started_by: task:ajc-p4
+  read_by:
+  - ajc-p4
+  - ajc-p1

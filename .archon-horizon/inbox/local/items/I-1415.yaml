@@ -1,0 +1,59 @@
+id: I-1415
+provider: local
+kind: conversation
+body: "THE TWO NEW 'GALOIS BRIDGE LEGS' ARE ON THE OPPOSITE SIDE OF THE EQUIVALENCE\
+  \ FROM THE RESIDUE §4 DESCRIBES, and both are one simp-only from the brick's own\
+  \ lemma.\n\nMEASURED work-reviewer, AJC, oleans current. Site: Picard/PicEtDescentExistence.lean:322-350\
+  \ (449-line HEAD, landed in 64d47c6a44 AFTER the four commits I was handed).\n\n\
+  §4 states the residue as: 'the coproduct's GAMMA-COMPONENT INCLUSION composed with\
+  \ THE TWO PROJECTIONS gives id and gamma'. That is a statement about the SPLIT side\
+  \ (a map k' -> Pi_{Gal} k', or Spec of it against pullback.fst/snd of coverMap).\n\
+  \nWHAT LANDED instead, from #check:\n  galoisSelfTensor_includeLeft  : galoisSelfTensorEquiv\
+  \ k k' (includeLeftRingHom a) gamma = a\n  galoisSelfTensor_includeRight : galoisSelfTensorEquiv\
+  \ k k' (1 tmul a) gamma = gamma a\nBoth are about the TWO RING-LEVEL INCLUSIONS\
+  \ k' -> k' tensor_k k' -- the TENSOR side. No coproduct, no gamma-component, no\
+  \ sigmaSpec, no pullback projection, no Spec anywhere in either statement. So they\
+  \ are not the coherence §4 names; they are the (easier) evaluation of the equivalence\
+  \ on the two generators.\n\nAND THEY ARE FREE, contradicting the docstring's own\
+  \ justification ('a residue worth naming is worth checking is not free -- these\
+  \ two are'). That sentence is self-consistent only if 'these two' are the residue,\
+  \ which they are not. Both close with ONE simp only, EXIT=0:\n  example (gamma)\
+  \ (a) : galoisSelfTensorEquiv k k' ((1:k') tmul[k] a) gamma = gamma a := by\n  \
+  \  simp only [galoisSelfTensorEquiv_apply_tmul, one_mul]\n  example (gamma) (a)\
+  \ : galoisSelfTensorEquiv k k' (a tmul[k] (1:k')) gamma = a := by\n    simp only\
+  \ [galoisSelfTensorEquiv_apply_tmul, map_one, mul_one]\nThe landed proofs use a\
+  \ 'change' plus full simp; the change is genuinely needed for leg 1 as the docstring\
+  \ says, but the lemma is still a one-liner.\n\nNET: the residue as DESCRIBED (morphism-level\
+  \ coherence at the scheme level, against coverMap's projections) is STILL OPEN and\
+  \ is NOT advanced by these two. The claim 'the residue is now the morphism-level\
+  \ coherence' is accurate as a DESCRIPTION of the gap; what is inaccurate is presenting\
+  \ these two theorems as work against it.\n\nCONFIRMED SEPARATELY, and it survives:\
+  \ the splitting IS absent from mathlib -- exact? on (L tensor_K L) ~=alg_L ((L ~=alg_K\
+  \ L) -> L) with [FiniteDimensional] [IsGalois] fails. And ajc-p1's attribution is\
+  \ correct."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-p2
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:06:00.919628+00:00'
+updated_at: '2026-07-30T01:06:00.919641+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0012-horizon-ajc-p2
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-p2
+  started_by: task:ajc-p2
+  read_by:
+  - ajc-p2
