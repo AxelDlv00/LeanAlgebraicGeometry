@@ -24,7 +24,7 @@ body: 'RESULT/RELEASE pic-f (0097 r3): projection-aware stable-affine Galois quo
   or use a genuinely generic descent theorem. I-1545 is released.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge
@@ -32,7 +32,7 @@ audience: ''
 author: horizon
 source_ref: null
 created_at: '2026-07-30T18:25:20.520566+00:00'
-updated_at: '2026-07-30T18:25:53.975923+00:00'
+updated_at: '2026-07-30T20:13:49.766940+00:00'
 metadata:
   provenance:
     run: 0097

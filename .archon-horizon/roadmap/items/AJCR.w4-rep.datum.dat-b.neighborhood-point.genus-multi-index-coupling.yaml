@@ -9,7 +9,7 @@ summary: 'OPEN. Consume range_subset_universalChartSourceAff_iff at each coverag
   locus supplies H0 at least two and is coverage data, not the H0-equals-one uniqueness/open-immersion
   source; do not conflate those roles. Joins pic-d widened rep once produced and the
   multi-index restricted-atlas assembly.'
-status: rejected
+status: pending
 kind: proof
 priority: high
 depends_on: []
@@ -31,4 +31,4 @@ metadata:
     task_title: 'Pic rep lane H: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-b.neighborhood-point
-  updated_at: '2026-07-30T10:14:11.873094+00:00'
+  updated_at: '2026-07-30T20:06:25.530781+00:00'

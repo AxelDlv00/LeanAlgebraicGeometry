@@ -30,9 +30,8 @@ metadata:
     task_title: 'Pic rep lane B: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  owner: pic-b
   milestone: AJC.picrep
-  updated_at: '2026-07-30T18:48:12.639177+00:00'
+  updated_at: '2026-07-30T20:04:46.396620+00:00'
   pinned_commits:
   - 2339b2aeb2f75c2c0c66bce6eaa5624281a9e740
   - 5adafce2560906da1b9fe35e3f61e09ea5657c48
