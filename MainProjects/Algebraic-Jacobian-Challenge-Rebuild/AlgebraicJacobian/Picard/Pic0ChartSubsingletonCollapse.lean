@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.Pic0ChartRestrictedFibreSat
 import AlgebraicJacobian.Picard.Pic0ChartCoverForcesNonInj
+import AlgebraicJacobian.Picard.Pic0ChartLocusH0Rank
 
 /-!
 # WHERE THE DIVISOR FUNCTOR IS SUBSINGLETON-VALUED, THE `V`-COUPLING IS NOT THE OBSTRUCTION
@@ -60,6 +61,9 @@ than transcribed from a draft.
   with no `V` and no containment.
 * `AlgebraicGeometry.isChartUniv_top_of_isChartLocusFibre` — certificate to antecedent 1 in one
   name.
+* `AlgebraicGeometry.not_mem_chartLocus_of_two_le_genus_zero_param` — **the boundary**: at
+  parameter `0` and genus `≥ 2` the chart locus is empty, so the collapse's coverage input
+  cannot be met at the parameter where its other input is known.
 
 ## The generic core, and why it is stated separately
 
@@ -84,6 +88,15 @@ applies to any other slice-represented functor this project introduces.
   `|D|`" means, and this file is consistent with the three headers rather than a refutation of
   them.  Read it as: the fork's answer is parameter-dependent, and the apparatus is needed only
   where the answer is negative.
+* **AND THE COLLAPSE DOES NOT DELIVER A REPRESENTATION AT `n = 0`, FOR A REASON THAT HAS
+  NOTHING TO DO WITH THE SUBSINGLETON.**  This is the sharp limit and it is proved below rather
+  than hedged: `not_mem_chartLocus_of_two_le_genus_zero_param` shows that at parameter `0` on a
+  curve of genus `≥ 2` the chart locus is **empty** — `Pic0ChartLocusH0Rank`'s rank formula
+  gives `h⁰ = n + 1 - g`, which at `n = 0` is negative, and `h⁰` is a natural number.  So the
+  coverage input of `pic0RepresentableBy_of_isChartLocusFibre_of_coverage` is *unavailable* at
+  the one parameter where the subsingleton is known: the two hypotheses of that assembly are
+  cheap at disjoint parameters.  The collapse is a statement about which obligation the seam
+  owes, and emphatically not a route to closing it at `0`.
 * **The `⊥`/`⊤` dichotomy is NOT claimed for the opens of the representing object.**  A
   subsingleton-valued represented functor makes `D` terminal in the slice, which would force
   `D.left ≅ Spec k` and hence make `D.left.Opens` two-element; that argument is *not* landed
@@ -317,6 +330,53 @@ theorem isChartUniv_top_of_isChartLocusFibre {D : Over (Spec (.of k))}
     IsChartUniv C π n rep m Z hdeg ⊤ :=
   isChartUniv_of_restrictedChartFibre rep m Z hdeg ⊤
     ((restrictedChartFibre_top_iff C π n rep m Z hdeg).mpr h)
+
+/-! ## THE BOUNDARY: the collapse's coverage input is unavailable at the parameter where its
+other input is known
+
+Everything above is conditional on `DivFunctorObjSubsingleton`, and the only parameter where that
+is landed is `n = 0` (over a field, `instSubsingletonDivFamZarZero`; the general-`R` half is the
+`deg-zero` row).  So the natural next move is to feed
+`pic0RepresentableBy_of_isChartLocusFibre_of_coverage` at `n = 0`.  **That is blocked, and not by
+the certificate**: `Picard/Pic0ChartLocusH0Rank.lean`'s rank formula makes the chart locus
+literally empty there for a curve of genus `≥ 2`.
+
+Landing this as a theorem rather than a caveat, because a limit stated in prose is the part of a
+file nobody re-checks — and here the limit is what stops the collapse from being read as a route
+to representability at `0`. -/
+
+/-- **At parameter `0` on a curve of genus `≥ 2` the chart locus is EMPTY.**
+
+`exists_splitting_h0_formula_of_mem_chartLocus` extracts from chart-locus membership a splitting
+witness with `h⁰ = n + 1 - g`.  At `n = 0` that is `1 - g ≤ -1`, while `h⁰` is a cast natural
+number, hence nonnegative — contradiction.
+
+**Consequence for this file, and it is the honest limit of the collapse.**  The two inputs of
+`pic0RepresentableBy_of_isChartLocusFibre_of_coverage` are cheap at *disjoint* parameters: the
+subsingleton (hence the whole `V`-collapse) is known only at `0`, and coverage needs the locus to
+be inhabited, which fails at `0` as soon as `g ≥ 2`.  So the collapse tells the seam **which**
+obligation it owes at a subsingleton parameter; it does not put the seam within reach there.
+
+The complement is the high-parameter branch: above the genus the same formula gives `h⁰ ≥ 2`
+(`exists_splitting_two_le_h0_of_mem_chartLocus`), which is where coverage is available and where
+the subsingleton must fail.  That is the same inequality read from the other side, and it is why
+these are two branches rather than one route. -/
+theorem not_mem_chartLocus_of_two_le_genus_zero_param
+    {T : Over (Spec (.of k))} (lam : picEt C T) (t : T.left)
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor) (g : ℕ)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - (0 : ℤ))
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
+    (hlam : degAt lam (Over.testPoint t) = 0) (hg : 2 ≤ g) :
+    t ∉ chartLocus C m Z lam := by
+  intro ht
+  obtain ⟨L, hLf, hLa, hLKa, hLtow, hLfin, hLsep, M, W, hM, hWcl, hWdeg, hWh1, hrank⟩ :=
+    exists_splitting_h0_formula_of_mem_chartLocus lam t m Z 0 g (by simpa using hdeg) hχ
+      hlam ht
+  have h0nonneg : (0 : ℤ)
+      ≤ (Sheaf.h0 ((C ⊗ overSpec k L).left.divisorSheaf L W) : ℤ) := Int.natCast_nonneg _
+  rw [hrank] at h0nonneg
+  omega
 
 end
 
