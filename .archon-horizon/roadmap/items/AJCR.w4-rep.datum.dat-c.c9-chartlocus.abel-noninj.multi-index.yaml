@@ -3,8 +3,39 @@ title: 'MULTI-INDEX: do the one-chart V-interval refutations propagate to mixedP
   the atlas the seam actually consumes?'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: ''
-status: active
+summary: "MULTI-INDEX: ANSWERED, no antecedent closed (pic-g, run 0096). Picard/Pic0ChartMultiIndexInterval.lean,\
+  \ rooted at AlgebraicJacobian.lean:580, sorry-free, lake build EXIT=0 (8895 jobs),\
+  \ all declarations axiom-clean [propext, Classical.choice, Quot.sound] vs AlgebraicGeometry.Jacobian\
+  \ firing sorryAx.\n\nTHE QUESTION. Pic0ChartRestrictedFibreSat and Pic0ChartCoverForcesNonInj\
+  \ refute both ends of the V-interval, and BOTH are stated at iota := PUnit; the\
+  \ latter's limits section says twice that mixedParamChart at arbitrary iota is excluded\
+  \ and open. But pic0RepresentableBy_of_restrictedChartFibre (Pic0ChartRestrictedFibre.lean:259)\
+  \ consumes mixedParamChart at arbitrary iota. So every landed 'this V is dead' fact\
+  \ was about an atlas the assembly does not use.\n\nTHE ANSWER, two halves.\n * The\
+  \ no-go does NOT transmit via an index-separation premise. not_jointlyInjective_of_pointwiseCoverage_of_ne_top\
+  \ runs the tautological-section argument at a general family, but its conclusion\
+  \ is about the FAMILY: jointlyInjective_iff decomposes joint injectivity as index\
+  \ separation AND per-chart injectivity, and the one-chart theorem concludes only\
+  \ the second. not_indexSeparated_duplicated refutes the first at a two-chart family\
+  \ whose every member IS injective.\n * It DOES transmit when the coverage witness\
+  \ index is point-independent: UniformCoverage + not_injective_of_uniformCoverage_of_ne_top.\
+  \ That is the landed one-chart theorem with Subsingleton iota replaced by a named\
+  \ index -- honestly labelled as such in the file, not sold as new mathematics.\n\
+  Both composed at the real atlas: exists_crossing_or_not_injective_mixedParamChart\
+  \ and not_pointwiseCoverage_mixedParamChart_of_jointlyInjective. mixedParamChart\
+  \ is definitionally restrictChart of abelSigmaChart pointwise, so no bridge is needed.\n\
+  \nMY OWN VACUITY, CAUGHT AND REPAIRED IN-SESSION (audit I-1495, reproduced). The\
+  \ first version quantified IndexSeparated over ALL tests. That form IS Subsingleton\
+  \ iota for every family -- the empty test decides it via pic0Sigma_obj_subsingleton_of_isEmpty\
+  \ plus each X i's bot open -- so its refutation was a fact about the index type\
+  \ and the headline read backwards. Fixed: the naive form is kept as IndexSeparatedAll\
+  \ with indexSeparatedAll_iff_subsingleton as its epitaph, and the live definitions\
+  \ are restricted to NONEMPTY tests. Then checked the repair is not a slower vacuity:\
+  \ indexSeparated_satFam satisfies it at ULift Bool.\n\nTHE BOUND. The satisfying\
+  \ witness uses an EMPTY chart source, so satisfiability at the Abel atlas is open\
+  \ and the index-separation theorems are implications, not measurements. PointwiseCoverage\
+  \ at a proper V still has no producer. Refuting a refutation is not an inhabitation."
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -28,3 +59,4 @@ metadata:
   parent: AJCR.w4-rep.datum.dat-c.c9-chartlocus.abel-noninj
   owner: pic-g
   milestone: AJCR.w4-rep
+  updated_at: '2026-07-30T05:10:44.709615+00:00'
