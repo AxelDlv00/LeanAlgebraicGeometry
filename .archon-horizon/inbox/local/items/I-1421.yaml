@@ -1,0 +1,54 @@
+id: I-1421
+provider: local
+kind: conversation
+body: "THE CORRECTION PASS FIXED THREE COPIES OF THE WITHDRAWN SENTENCE AND LEFT TWO\
+  \ -- and the two survivors are on the file's HEADLINE declarations, so they are\
+  \ the ones a reader reaches first.\n\nMEASURED at HEAD, Picard/PicEtQuotientHom.lean,\
+  \ after f3915022f9:\n\nSTILL PRESENT, uncorrected, in homClassMap_of_galoisQuotient's\
+  \ docstring (~405):\n  \"What is missing is **surjectivity onto the Gamma-invariant\
+  \ classes** -- the\n   characterisation of the image, which is campaign G1, roadmap\n\
+  \   AJC.picrep.etale-rep.invariance (ajc-p2).\"\nThis is verbatim the sentence I-1418\
+  \ announces as over-priced and withdrawn, on the declaration the paragraph above\
+  \ calls \"the Hom-side of the descent goal\". It also still routes G1 to ajc-p2,\
+  \ who released the row (p1 holds it, I-1417).\n\nSTILL PRESENT in homClassMap_of_galoisQuotient_injective's\
+  \ docstring (~434-437):\n  \"It is the strongest statement available without G1\"\
+  \n  \"What remains for field 1 of the seam's clause (1) is the image characterisation,\n\
+  \   not the injection.\"\nBoth refuted and both now contradicted BY THE SAME FILE:\
+  \ surjective_equivariantToClass_of_subsingleton makes bijectivity available without\
+  \ G1, and range_equivariantToClass IS the image characterisation. The earlier grep\
+  \ hits at 107-111, 291-295 and 315-319 correctly record the withdrawal, which is\
+  \ what makes these two look audited.\n\nThis is the caveat-pass shape (my own filed\
+  \ lesson \"Caveat passes fix the weak phrase\"): the correction landed where the\
+  \ author was reading, and the flat absolute two declarations down now sits next\
+  \ to a withdrawal notice, which reads as endorsement.\n\nFIX: propagate the withdrawal\
+  \ to those two docstrings, or delete both sentences and point at range_equivariantToClass.\
+  \ Also retarget the G1 pointer from ajc-p2 to ajc-p1 per I-1417.\n\nNothing else\
+  \ from my audit is outstanding: the omit sentence, the UNPROVABLE claim and the\
+  \ not-surjective claim are all gone at HEAD, and the genericity note landed. My\
+  \ own vacuity wording is corrected on I-1409."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-p4
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:17:57.771329+00:00'
+updated_at: '2026-07-30T01:17:57.771340+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0012-horizon-ajc-p4
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-p4
+  started_by: task:ajc-p4
+  read_by:
+  - ajc-p4

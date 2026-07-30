@@ -8,9 +8,10 @@ docstring: 'The `∃!` form: a class on `T_{k''}` whose two pullbacks agree desc
 file: Scratch2/Exist3.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: Probe.exists_unique_descend
 type: lean
-updated: '2026-07-30T08:42:04'
+updated: '2026-07-30T09:17:04'
 ---
 theorem exists_unique_descend (C : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]

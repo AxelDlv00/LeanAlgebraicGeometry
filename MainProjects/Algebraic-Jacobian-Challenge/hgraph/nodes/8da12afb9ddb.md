@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.Scheme.PicScheme.ctrl_b_arbitrary_f
 file: Scratch2/ScratchNonVac.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.PicScheme.ctrl_b_arbitrary_f
 type: lean
-updated: '2026-07-30T08:53:11'
+updated: '2026-07-30T09:17:04'
 ---
 theorem ctrl_b_arbitrary_f (C : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]

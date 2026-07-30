@@ -10,24 +10,26 @@ docstring: '**The second leg is injective.** `rep.homEquiv` is an equivalence an
   does not merge two morphisms — it only fails to be *surjective*.
 
 
-  This sharpens the residue and is the reason the composite below is injective
+  An earlier draft of this file''s docstrings said only "the second leg is a map,
+  not
 
-  rather than merely a map: what `G1` owes is not injectivity but the
+  a bijection", which leaves the reader to guess which half fails, and then said the
 
-  **characterisation of the image**, i.e. which `picEt (C_{k''})`-classes are
+  missing half was "the characterisation of the image, which is campaign `G1`". The
 
-  `Γ`-invariant. An earlier draft of this file''s docstrings said only "the second
-  leg
+  second sentence is **withdrawn**: the image is characterised outright by
 
-  is a map, not a bijection", which is true and leaves the reader to guess which half
+  `range_equivariantToClass`, and surjectivity can even *hold*
 
-  fails; this measures it.'
+  (`surjective_equivariantToClass_of_subsingleton`). Injectivity is what this lemma
+
+  adds; see the module docstring for what `G1` is actually owed.'
 file: AlgebraicJacobian/Picard/PicEtQuotientHom.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicScheme.equivariantToClass_injective
 type: lean
-updated: '2026-07-30T08:42:03'
+updated: '2026-07-30T09:17:02'
 ---
 theorem equivariantToClass_injective
     (C : Over (Spec (CommRingCat.of k)))

@@ -353,6 +353,11 @@ import AlgebraicJacobian.Picard.GaloisDescent.SemilinearAlgebras
 -- invariance half of étale Galois descent, and the one brick `AJC.picrep.etale-rep.invariance`
 -- measured absent from Mathlib and from both projects.
 import AlgebraicJacobian.Picard.GaloisDescent.GaloisSelfTensor
+-- The Galois bridge: `γ`-invariance of a `picEt`-class versus agreement of the
+-- descent cover's two projections. Agreement ⟹ invariance is unconditional; the
+-- converse is an implication whose one named antecedent is that the `Gal`-indexed
+-- sections generate a covering sieve.
+import AlgebraicJacobian.Picard.GaloisDescent.PicEtGaloisBridge
 import AlgebraicJacobian.Albanese.AlbaneseUP
 import AlgebraicJacobian.Albanese.AuslanderBuchsbaum
 import AlgebraicJacobian.Albanese.CodimOneExtension
