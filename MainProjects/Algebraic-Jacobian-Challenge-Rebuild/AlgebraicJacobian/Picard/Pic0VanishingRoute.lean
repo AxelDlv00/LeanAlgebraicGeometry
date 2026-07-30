@@ -94,11 +94,17 @@ the genus-0 debt: deriving the vanishing hypothesis from `genus C = 0` is the cu
 `jacobianData_of_subsingleton` is **not** a witness that `JacobianData C` is inhabited for
 the challenge curve.
 
-**And the hypothesis is not merely strong, it is UNMEASURED in this tree** (`I-1573`).  Nothing
-here proves the vanishing or its negation for any curve, and no object in the tree carries all
-three of `SmoothOfRelativeDimension 1`, `IsProper`, `GeometricallyIrreducible` — so the sentence
-above about positive genus rests on mathematics outside the tree, not on anything formalized.
-Stated because "false at positive genus" reads as a measurement and is not one.
+**And the hypothesis is still UNMEASURED in this tree**, though one clause of the original note
+has since become false and the correction narrows what remains.  Nothing here proves the
+vanishing or its negation for any curve.  What the note *also* said — "no object in the tree
+carries all three of `SmoothOfRelativeDimension 1`, `IsProper`, `GeometricallyIrreducible`" —
+**was true when written and is now false**: `Curve/P1Curve.lean` supplies all three at
+`P1.asOver k` for an arbitrary field, and `jacobianData_of_subsingleton (P1.asOver k) h`
+elaborates.  So the producer below is applicable at a concrete curve; what it still lacks there
+is the hypothesis `h`, since `genus (P1.asOver k) = 0` is a cohomological computation nothing in
+the tree performs.  The sentence above about positive genus still rests on mathematics outside
+the formalization — `ℙ¹` is the genus-`0` object and gives no positive-genus witness — so
+"false at positive genus" still reads as a measurement and still is not one.
 
 ## Main declarations
 
