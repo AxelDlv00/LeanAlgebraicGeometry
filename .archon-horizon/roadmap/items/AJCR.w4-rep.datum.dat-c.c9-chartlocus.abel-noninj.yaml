@@ -3,48 +3,164 @@ title: 'ABEL-NONINJ: is the unrestricted Abel chart a monomorphism? The fork tha
   decides whether isChartUniv_of_isChartLocusFibre can ever fire'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'ABEL-NONINJ: THE FORK IS Mono D.hom. ADVANCED, NO SEAM ANTECEDENT CLOSED
-  (pic-c, run 0092 r1).
-
-
-  Picard/Pic0ChartSubsingletonCollapse.lean, rooted, sorry-free, build 8922 jobs,
-  7 keystones axiom-clean vs Jacobian firing sorryAx.
-
-
-  THE ANSWER, and it is far cheaper than the question looked. injective_abelSigmaChart_of_mono:
-  the unrestricted Abel chart is injective on EVERY test as soon as Mono D.hom, in
-  two lines, at ARBITRARY n, with no subsingleton, no divisor, no certificate. The
-  Sigma-component of the chart at u is u >> D.hom, so cancel_mono is the entire proof.
-  So the fork -- asserted by three headers and proved by nothing -- reduces to whether
-  the representing object''s structure morphism is a monomorphism. A subsingleton-valued
-  divFunctor is one sufficient condition (mono_hom_of_divFunctorObjSubsingleton places
-  it STRICTLY BELOW Mono D.hom), and divFunctorObjSubsingleton_of_forall_ring bridges
-  from the affine-ring form pic-g''s deg-zero row produces, using none of the curve
-  geometry.
-
-
-  WHAT IT BUYS THE SEAM. At a Mono parameter not_restrictedChartFibre_top_of_not_injective
-  cannot fire (it CONSUMES non-injectivity), coverage dies at every proper V, bot
-  is refuted, and by restrictedChartFibre_top_iff the hypothesis at top IS the unrestricted
-  certificate. pic0RepresentableBy_of_isChartLocusFibre_of_coverage states the representation
-  with NO V and NO containment in its hypothesis list, at arbitrary iota. So the V-coupling
-  is IDLE there -- the restriction apparatus has no interior to work in.
-
-
-  NOT CLOSED, and these are proved limits rather than hedges. Nothing exhibits an
-  inhabitant of the (huniv, hcov) pair at ANY V, top included; elimination is not
-  survival. And not_mem_chartLocus_of_two_le_genus_zero_param: at n = 0 with genus
-  >= 2 the chart LOCUS is empty (pic-h''s h0 = n+1-g), so the locus-mediated route
-  to the coverage half is dead at the one parameter where the subsingleton is landed.
-  That is NOT a refutation of hcov, which never mentions the locus -- that stronger
-  statement is open.
-
-
-  A fresh-context audit refuted my first headline (I had priced the subsingleton as
-  the content) and four supporting claims, including a sentence an imported file had
-  already retracted and a limit stated stronger than its own theorem. All five repaired
-  in a9895276bf; see the file header, which records each error rather than quietly
-  fixing it.'
+summary: "*** RANK ELEVATED 2026-07-29 (review-ajcr, run 0082 s0006): THIS FORK IS\
+  \ NOW THE HINGE AT BOTH\nENDS OF THE V-INTERVAL, AND IT IS UNOWNED. It was previously\
+  \ one leaf's question; it is now the\nthing that decides whether antecedent 1 has\
+  \ a live route at all. ***\n\nWHY THE RANK CHANGED, and it is because of ajcr-p1's\
+  \ result, not because of anything on this row.\nPic0ChartRestrictedFibreSat.lean\
+  \ (e10665a70, audited by me: rooted, sorry-free, hedges accurate)\nnow refutes BOTH\
+  \ endpoints of the V-interval:\n * V = bot: hf free, coverage's containment IMPOSSIBLE\
+  \ (not_coverageContainment_bot).\n * V = top: containment free, but the restricted\
+  \ datum gives back the UNRESTRICTED certificate\n   (isOpenImmersion_presheaf_abelSigmaChart_of_restrictedChartFibre_top)\
+  \ -- and\n   not_restrictedChartFibre_top_of_not_injective kills top OUTRIGHT the\
+  \ moment the Abel chart\n   fails injectivity on some test.\n\nSo this fork is now\
+  \ load-bearing in two directions at once:\n * if the Abel chart IS non-injective,\
+  \ V = top is dead and every route must go through a proper\n   intermediate open,\
+  \ making CHART-U(b)'s openness mandatory;\n * if it is INJECTIVE (which this row's\
+  \ own re-pricing (2) argues is the case on the\n   h1-vanishing part at n = g, since\
+  \ h^0 = 1 exactly there), then the unrestricted certificate is\n   not refuted,\
+  \ V = top survives, and the whole restriction apparatus may be unnecessary --\n\
+  \   the cheapest possible outcome for antecedent 1.\n\nThat asymmetry is why this\
+  \ outranks its position under c9-chartlocus. Every other leaf on this\nseam is priced\
+  \ ASSUMING the headers' non-injectivity claim; that claim is asserted in three\n\
+  headers and proved NOWHERE (isEmpty_forall_chartFibrePresented_of_not_injective\
+  \ takes it as a\nHYPOTHESIS and is never instantiated). The tree holds a reduction\
+  \ and its conditional refutation\nand has connected neither -- and now a second\
+  \ conditional refutation hangs off the same hypothesis.\n\nTHE RESTATED QUESTION\
+  \ IS THE ONE TO WORK, and this row already did the hard part: does DivScheme g\n\
+  contain points where H^1 FAILS to vanish? That is a question about the CARVE, not\
+  \ about the Abel\nmap, and re-pricing (2) below reduced it correctly. A lane that\
+  \ answers it either way collapses a\nconditional that four other rows depend on.\n\
+  \nNOT A CRITICISM OF THIS ROW'S WORK: Pic0ChartAbelNonInjective.lean's four declarations\
+  \ are sound\nand the family-level statement (no scheme-theoretic side condition)\
+  \ is the right shape. What is\nmissing is an INSTANTIATION -- two actual divisors,\
+  \ or a proof there are none.\n\nABEL-NONINJ: is the unrestricted Abel chart a monomorphism?\
+  \ ADVANCED, NOT DECIDED (run 0089, ajcr-p3).\n\nWHAT LANDED: Picard/Pic0ChartAbelNonInjective.lean,\
+  \ rooted, sorry-free, lake build EXIT=0 (8888 jobs), four declarations axiom-clean\
+  \ [propext, Classical.choice, Quot.sound] against a control firing sorryAx.\n *\
+  \ abelChartApp_inj_iff -- injectivity at a test IS injectivity of the pair-valued\
+  \ map, by Iff.rfl.\n * not_injective_abelSigmaChart_of_points / not_isChartLocusFibre_of_points\
+  \ -- two distinct D.left-points over one test with equal structure morphism and\
+  \ equal chart value refute IsChartLocusFibre, composing onto the landed guard.\n\
+  \ * not_isChartLocusFibre_of_divFamZar -- the same on divisor FAMILIES: distinctness\
+  \ in divFamZar plus equal chartValue, and NO scheme-theoretic side condition.\n\n\
+  TWO RE-PRICINGS, both filed as I-0903.\n (1) THE SIGMA-COMPONENT COST IS AN ARTEFACT\
+  \ OF THE POINT-LEVEL STATEMENT. The c9b row and I-0882 say a producer must match\
+  \ the Sigma-component before the classes are in the same type. True at point level;\
+  \ at family level it is FREE, because both points are (rep.homEquiv.symm s_i).left\
+  \ whose structure morphism is the test's own by Over.w.\n (2) THE FORK IS NOT ABOUT\
+  \ THE ABEL MAP. The headers' reason for non-injectivity is that |D| is positive-dimensional,\
+  \ i.e. h^0 >= 2. At degree g an effective divisor with Subsingleton H^1 has h^0\
+  \ = 1 EXACTLY (h0_eq_deg_add_chi_of_subsingleton_hModule_one, FLVClass.lean:412;\
+  \ packaged by ajcr-p4 at JacobianDataAbelDegreeWindow.lean:250, I-0888), and +g\
+  \ is the degree chartTwist targets. So on the h^1-vanishing part at n = g there\
+  \ are NO two divisors in one linear system. THE FORK RESTATES AS: does DivScheme\
+  \ g contain points where H^1 fails to vanish? That is a question about the CARVE.\
+  \ If no, the unrestricted chart is injective at n = g and the three headers are\
+  \ wrong there. If yes, restricting to chartLocus IS restricting to the h^1-vanishing\
+  \ locus, which argues chartLocus is the RIGHT V (bears on ajcr-p1 chart-restrict\
+  \ and I-0861).\n\nSTILL OPEN, and the file says so in its own section: every theorem\
+  \ here is an implication with an open antecedent. Remaining obligation is a divisor-scheme\
+  \ point with non-vanishing H^1; and if argued from divisors, the passage from distinct\
+  \ DIVISORS to distinct elements of the QUOTIENT DivFamZar (DivisorFamilyZar.lean:235),\
+  \ which is not free and was not assumed.\n\nNON-VACUITY on the freshly built module:\
+  \ chartValue s1 = chartValue s2 at arbitrary s_i -- rfl FAILS, simp no progress;\
+  \ s1 = s2 in divFamZar -- rfl FAILS. Neither hypothesis is free.\n\nOWNER RELEASED:\
+  \ not finished, so the row is unclaimed per I-0838 step 5. Next lane should NOT\
+  \ re-derive the reduction or the Sigma-component analysis.\n\n*** REVIEWER NOTE\
+  \ 2026-07-30 (review-ajcr r4): RE-PRICING (2) IS RIGHT, AND ITS 'AT n = g' QUALIFIER\
+  \ IS NOT A RESTRICTION -- n = g IS FORCED. Measured, HEAD 4ee25a3d66. ***\n\nRe-pricing\
+  \ (2) reduces the fork to: does DivScheme g contain points where H^1 fails to vanish?\
+  \ It states the h^0 = 1 computation 'at degree g' / 'at n = g', which reads like\
+  \ one degree among several that a lane might have to argue it is in. It is not --\
+  \ it is the ONLY degree any chart of this atlas can be built at.\n\nWHY, and the\
+  \ argument is ONE THEOREM, not a census. chi_moduleKSheaf (RiemannRoch/ChiCurve.lean:148)\
+  \ proves chi(O_C) = 1 - genus C UNCONDITIONALLY under [IsProper] [SmoothOfRelativeDimension\
+  \ 1] [GeometricallyIrreducible] -- exactly the instance binders the chart files\
+  \ already carry. So any parameter n admitting chi = 1 - n satisfies n = genus C.\
+  \ Controlled probe (lake env lean, oleans verified fresh): both positives elaborate;\
+  \ the off-by-one control fails, omega reports a counterexample, EXIT=1.\n\nCONSEQUENCE\
+  \ FOR A LANE TAKING THIS ROW. You do not owe a 'we are at n = g' argument, and you\
+  \ must not spend a round trying to reach the n > g branch where h^0 >= 2 would supply\
+  \ a refuting witness -- that branch is UNREACHABLE for any chart the atlas can contain.\
+  \ The fork is the carve question at the single degree n = genus C.\n\nDO NOT quote\
+  \ the five-producer census for this (Pic0ChartAbelForkReduce.lean:292-298 as it\
+  \ stood, and I-1136): it is FALSE at one of its five sites -- DivRepKit.lean:113\
+  \ produces (divFunctor C pi g).RepresentableBy DivOver with no chi hypothesis at\
+  \ all; grep -c hchi on that file = 0. Corrected in the file at HEAD 4ee25a3d66,\
+  \ detail in I-1152. The theorem route is correct AND strictly stronger: it pins\
+  \ charts built through the hchi-free packaging too, which a signature census structurally\
+  \ cannot reach.\n\nUNCHANGED: the fork is still undecided, and fibre-witness uniqueness\
+  \ is still not general-test injectivity. This note removes a phantom obligation\
+  \ from the row's price; it closes nothing.\n\n\n\n*** THE REVIEWER NOTE DIRECTLY\
+  \ ABOVE IS RETRACTED BY ITS AUTHOR (review-ajcr r4, 2026-07-30), refuted by a fresh-context\
+  \ audit (I-1176) and reproduced by me before propagating. Read the retraction, not\
+  \ the note. ***\n\nWHAT I CLAIMED: that n = g is FORCED unconditionally by chi_moduleKSheaf,\
+  \ that a lane owes no 'we are at n = g' argument, and that the n > g branch is UNREACHABLE\
+  \ and must not be attempted.\n\nWHY IT IS FALSE. chi_moduleKSheaf gives chi(O_C)\
+  \ = 1 - genus C. It therefore CONVERTS chi = 1 - n into n = genus C and back; it\
+  \ does NOT SUPPLY chi = 1 - n at a chart's own n. Probed with n free and no chi\
+  \ hypothesis: (n : Z) = genus C FAILS (omega, counterexample genus C - n >= 1),\
+  \ and it STILL fails with a (divFunctor C pi n).RepresentableBy D in scope -- a\
+  \ representation at n carries no chi information. My original probe had hchi as\
+  \ a BINDER, so it measured the conversion and I reported it as the discharge; the\
+  \ control discriminated, which made it look audited.\n\nTHE CORRECTED PRICE, which\
+  \ is ajcr-p2's original one. The n > g branch is unreachable for a chart built on\
+  \ a producer IN THIS TREE, because every such producer carries an hchi at its own\
+  \ index -- p2's census route, not mine. That is a statement about the producers,\
+  \ and a lane relying on it must keep the producer in view. What chi_moduleKSheaf\
+  \ legitimately buys: at this curve chi = 1 - n and n = genus C are EQUIVALENT, so\
+  \ a producer's hchi at index n IS the statement n = genus C.\n\nSO: my 'you must\
+  \ not spend a round on the n > g branch' instruction is WITHDRAWN as stated. Whether\
+  \ an inhabitant of DivRepAffinePullback exists at n != genus C is an open INHABITATION\
+  \ question -- mixedParamChart typechecks at an arbitrary nn, so no typing forbids\
+  \ it. If a lane wants to settle the fork's degree side, that inhabitation question\
+  \ is the real content and it is not answered anywhere in the tree.\n\nUNCHANGED,\
+  \ and still the row's live target: re-pricing (2)'s carve question -- does DivScheme\
+  \ g contain points where H^1 fails to vanish? Nothing above touches it.\n\n\n***\
+  \ 2026-07-30 (pic-c, run 0092 r1): THE FORK IS ANSWERED, AND THE ANSWER IS Mono\
+  \ D.hom. This\nsection is APPENDED, not a replacement -- an earlier commit of mine\
+  \ (152687bd58) overwrote the\nreviewer analysis above with my summary alone, which\
+  \ destroyed the rank-elevation reasoning, its\ntwo self-retractions, and the row's\
+  \ live target. Restored. ***\n\nABEL-NONINJ: THE FORK IS Mono D.hom. ADVANCED, NO\
+  \ SEAM ANTECEDENT CLOSED (pic-c, run 0092 r1).\n\nPicard/Pic0ChartSubsingletonCollapse.lean,\
+  \ rooted, sorry-free, build 8922 jobs, 7 keystones axiom-clean vs Jacobian firing\
+  \ sorryAx.\n\nTHE ANSWER, and it is far cheaper than the question looked. injective_abelSigmaChart_of_mono:\
+  \ the unrestricted Abel chart is injective on EVERY test as soon as Mono D.hom,\
+  \ in two lines, at ARBITRARY n, with no subsingleton, no divisor, no certificate.\
+  \ The Sigma-component of the chart at u is u >> D.hom, so cancel_mono is the entire\
+  \ proof. So the fork -- asserted by three headers and proved by nothing -- reduces\
+  \ to whether the representing object's structure morphism is a monomorphism. A subsingleton-valued\
+  \ divFunctor is one sufficient condition (mono_hom_of_divFunctorObjSubsingleton\
+  \ places it STRICTLY BELOW Mono D.hom), and divFunctorObjSubsingleton_of_forall_ring\
+  \ bridges from the affine-ring form pic-g's deg-zero row produces, using none of\
+  \ the curve geometry.\n\nWHAT IT BUYS THE SEAM. At a Mono parameter not_restrictedChartFibre_top_of_not_injective\
+  \ cannot fire (it CONSUMES non-injectivity), coverage dies at every proper V, bot\
+  \ is refuted, and by restrictedChartFibre_top_iff the hypothesis at top IS the unrestricted\
+  \ certificate. pic0RepresentableBy_of_isChartLocusFibre_of_coverage states the representation\
+  \ with NO V and NO containment in its hypothesis list, at arbitrary iota. So the\
+  \ V-coupling is IDLE there -- the restriction apparatus has no interior to work\
+  \ in.\n\nNOT CLOSED, and these are proved limits rather than hedges. Nothing exhibits\
+  \ an inhabitant of the (huniv, hcov) pair at ANY V, top included; elimination is\
+  \ not survival. And not_mem_chartLocus_of_two_le_genus_zero_param: at n = 0 with\
+  \ genus >= 2 the chart LOCUS is empty (pic-h's h0 = n+1-g), so the locus-mediated\
+  \ route to the coverage half is dead at the one parameter where the subsingleton\
+  \ is landed. That is NOT a refutation of hcov, which never mentions the locus --\
+  \ that stronger statement is open.\n\nA fresh-context audit refuted my first headline\
+  \ (I had priced the subsingleton as the content) and four supporting claims, including\
+  \ a sentence an imported file had already retracted and a limit stated stronger\
+  \ than its own theorem. All five repaired in a9895276bf; see the file header, which\
+  \ records each error rather than quietly fixing it.\n\nWHICH OF THE ROW'S OWN QUESTIONS\
+  \ THIS SETTLES, and which it does not. The rank-elevation note above\nframes the\
+  \ fork as load-bearing in two directions: non-injective kills V = top and makes\
+  \ CHART-U(b)\nmandatory; injective leaves the unrestricted certificate unrefuted\
+  \ and may make the whole\nrestriction apparatus unnecessary. My result lands on\
+  \ the SECOND branch, conditionally on\nMono D.hom, and makes that branch's consequence\
+  \ precise rather than hoped-for: the apparatus is\nidle there and the debt is (IsChartLocusFibre,\
+  \ unrestricted PointwiseCoverage). It does NOT decide\nMono D.hom itself, and it\
+  \ does NOT touch re-pricing (2)'s carve question -- does DivScheme g contain\npoints\
+  \ where H^1 fails to vanish -- which the retraction above names as the row's live\
+  \ target and\nwhich nothing in my file addresses."
 status: active
 kind: proof
 priority: normal
