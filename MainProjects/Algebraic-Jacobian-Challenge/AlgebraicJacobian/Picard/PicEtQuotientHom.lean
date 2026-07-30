@@ -80,6 +80,27 @@ bijection between a `∃!` and its own witness set. Finiteness and Galois-ness e
 The description of how that was measured was fabricated; the fact is checkable from
 the binders.
 
+## The Hom side of Galois descent carries no geometry — measured
+
+Every declaration of §2 below compiles **verbatim** with
+`picEt (baseChangeField C k')` replaced by an arbitrary
+`{F : (Over (Spec (CommRingCat.of k')))ᵒᵖ ⥤ Type (u+1)}` and with `C` and its two
+curve instances **deleted** — `lake env lean` EXIT=0, axiom-clean, with
+`fgaPicardRepresentability` firing `sorryAx` in the same file. So the curve is
+*carried* here, not used.
+
+The declarations below nonetheless keep `C`, because that is the shape the seam's
+clause (1) consumes and a generic-`F` restatement would be a second name for one
+theorem. What matters is the planning consequence: **a lane budgeting curve or
+Picard infrastructure for the Hom side of Galois descent is over-budgeting.** The
+geometry enters at the `k'`-side representation `rep` (the campaign's undischarged
+output) and at `IsGaloisQuotient`'s *inhabitation*, never at this bookkeeping.
+
+Note also which test this passes and which it fails: every declaration mentions its
+object in the conclusion, so the `I-0838` reading of the vacuity test is satisfied —
+and the geometry is still idle. "Delete the geometry and retypecheck" is the sharper
+probe (`I-1411`).
+
 ## And the correction that matters for planning
 
 The image of the Hom-map **is** characterised outright, with no invariance input:
