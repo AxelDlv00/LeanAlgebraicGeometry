@@ -18160,10 +18160,10 @@
     "macros": {},
     "states": {
       "blocked": 249,
-      "closed": 7762,
+      "closed": 7764,
       "formalized_open": 301,
       "informal": 175,
-      "ready": 196
+      "ready": 197
     },
     "warnings": [
       "AlgebraicGeometry.iInf_fin_succ: Lean declaration appears more than once (AlgebraicJacobian/Cohomology/CechAcyclic.lean, AlgebraicJacobian/Cohomology/CechCoboundarySplitting.lean)",
@@ -18193,6 +18193,11 @@
       "AlgebraicGeometry.secRes_naturality: Lean declaration appears more than once (AlgebraicJacobian/RiemannRoch/Ledger/AffineVanishing.lean, AlgebraicJacobian/RiemannRoch/Ledger/QcohSections.lean)",
       "AlgebraicGeometry.secRes_moduleKSheaf: Lean declaration appears more than once (AlgebraicJacobian/RiemannRoch/Ledger/AffineVanishing.lean, AlgebraicJacobian/RiemannRoch/Ledger/QcohSections.lean)",
       "AlgebraicGeometry.Scheme.one_le_coheight_of_ne_genericPoint: Lean declaration appears more than once (AlgebraicJacobian/Albanese/Milne33TransportLocal.lean, AlgebraicJacobian/RiemannRoch/WeilDivisor.lean)",
+      "Probe.twistLeft_fst: Lean declaration appears more than once (probe_p3_hcov2.lean, probe_p3_hcov4.lean)",
+      "Probe.twistLeft_snd: Lean declaration appears more than once (probe_p3_hcov2.lean, probe_p3_hcov4.lean)",
+      "Probe.twistLeft_comp: Lean declaration appears more than once (probe_p3_hcov2.lean, probe_p3_hcov4.lean)",
+      "Probe.twistLeft_one: Lean declaration appears more than once (probe_p3_hcov2.lean, probe_p3_hcov4.lean)",
+      "Probe.isIso_twistLeft: Lean declaration appears more than once (probe_p3_hcov2.lean, probe_p3_hcov4.lean)",
       "AlgebraicGeometry.exists_bound_section_drop_curve: Lean declaration appears more than once (AlgebraicJacobian/RiemannRoch/Ledger/UniformRiemannRoch.lean, rr_probe_curvegen.lean)",
       "AlgebraicGeometry.exists_bound_generated_curve: Lean declaration appears more than once (AlgebraicJacobian/RiemannRoch/Ledger/UniformRiemannRoch.lean, rr_probe_curvegen.lean)",
       "AlgebraicGeometry.Adelic.sup_eq_top_of_laurent_pair_span_one: Lean declaration appears more than once (AlgebraicJacobian/RiemannRoch/Ledger/P1Vanishing.lean, rr_probe_p1h1.lean)",
@@ -18210,12 +18215,7 @@
       "lem:toSheaf_preservesFiniteColimits: \\lean{AlgebraicGeometry.toSheaf_preservesFiniteColimits} not found in Lean sources",
       "lem:to_sheaf_preserves_epi: \\lean{AlgebraicGeometry.toSheaf_preservesEpimorphisms} not found in Lean sources",
       "lem:tilde_restrict_basicOpen: \\lean{AlgebraicGeometry.tilde_restrict_basicOpen} not found in Lean sources",
-      "lem:presentation_restrict_basicOpen: \\lean{AlgebraicGeometry.presentation_restrict_basicOpen} not found in Lean sources",
-      "lem:isQuasicoherent_restrict_basicOpen: \\lean{AlgebraicGeometry.isQuasicoherent_restrict_basicOpen} not found in Lean sources",
-      "lem:qcoh_localized_sections: \\lean{AlgebraicGeometry.qcoh_localized_sections} not found in Lean sources",
-      "lem:qcoh_global_generation: \\lean{AlgebraicGeometry.qcoh_global_generation} not found in Lean sources",
-      "lem:qcoh_kernel_qcoh: \\lean{AlgebraicGeometry.qcoh_kernel_qcoh} not found in Lean sources",
-      "thm:rel_pic_sharp_presheaf: \\leanok present but no \\lean{...} target is attached"
+      "lem:presentation_restrict_basicOpen: \\lean{AlgebraicGeometry.presentation_restrict_basicOpen} not found in Lean sources"
     ]
   },
   "nodes": [
