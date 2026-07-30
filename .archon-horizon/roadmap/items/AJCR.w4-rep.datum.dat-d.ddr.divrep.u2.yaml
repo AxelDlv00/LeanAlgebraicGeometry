@@ -5,15 +5,20 @@ projects:
 summary: 'LIVE TARGET (R2, no new hypotheses): prove that the cover-independent widened
   window quotient is finite projective of constant stalk rank g, then feed the widened
   frame/classifier route to (divFunctorAff C g).RepresentableBy. The old chart-typed
-  universal-epsilon description is obsolete and must not be rebuilt.\n\nVERIFIED PRODUCERS:
-  29f746e25b gives widened fibre degree and the N(a)-d_p Picard/H1 witness; b8c18b13a4
-  gives surjective theta evaluation and a cover-independent window-quotient equivalence
-  without certifying its auxiliary chart presentation; f9da5c6ad6 computes every field
-  fibre dimension as g; 80ce9e83b2 proves intrinsic theta sections invertible on every
-  arbitrary affine piece; 80363e8b32 base-changes those sections to every certified
-  colength algebra and transfers invertibility, finiteness, and projectivity over
-  R. No producer assumes ChartTyping, Noetherianity, or a rational point.\n\nNEXT
-  PRODUCER: glue the landed ThetaPieceRestriction modules across overlap colength
+  universal-epsilon description is obsolete and must not be rebuilt.
+
+
+  VERIFIED PRODUCERS: 29f746e25b gives widened fibre degree and the N(a)-d_p Picard/H1
+  witness; b8c18b13a4 gives surjective theta evaluation and a cover-independent window-quotient
+  equivalence without certifying its auxiliary chart presentation; f9da5c6ad6 computes
+  dimension g for every pulled-equations field quotient; 80ce9e83b2 proves intrinsic
+  theta sections invertible on every arbitrary affine piece; 80363e8b32 base-changes
+  those sections to every certified colength algebra, proving invertibility over that
+  algebra and finiteness/projectivity over R. No producer assumes ChartTyping, Noetherianity,
+  or a rational point.
+
+
+  NEXT PRODUCER: glue the landed ThetaPieceRestriction modules across overlap colength
   algebras into an invertible module over the widened equalizer algebra, and identify
   it with the window quotient. InvertibleModuleTransfer then supplies global finite/projective/stalk-rank
   data from the existing certificate. After that, prove widened window base change,
@@ -42,7 +47,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
-  updated_at: '2026-07-30T07:41:27.473607+00:00'
+  updated_at: '2026-07-30T08:03:17.344484+00:00'
   pinned_commits:
   - 80363e8b32
   - 80ce9e83b2
