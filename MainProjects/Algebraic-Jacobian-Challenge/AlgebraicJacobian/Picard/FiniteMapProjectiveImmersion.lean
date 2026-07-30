@@ -585,8 +585,9 @@ theorem isImmersion_toProjectiveSpace [IsFinite pi.left] :
 
 include G
 
+-- The target-local immersion proof elaborates through two nested pullback
+-- presentations, so it needs a larger bounded heartbeat budget.
 set_option maxHeartbeats 800000 in
--- The target-local proof elaborates through two nested pullback presentations.
 /-- A proper source carrying a finite two-chart map is projective over the
 base field. -/
 theorem isProjective [IsFinite pi.left] [IsProper C.hom] :

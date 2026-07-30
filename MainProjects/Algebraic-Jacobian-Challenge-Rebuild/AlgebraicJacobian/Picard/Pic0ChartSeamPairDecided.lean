@@ -9,13 +9,20 @@ import AlgebraicJacobian.Picard.Pic0ChartSeamCollapse
 /-!
 # THE SEAM PAIR IS INHABITED, AND ITS INHABITANT IS EXACTLY VANISHING `pic⁰`
 
-Four roadmap rows and three file headers in this project defer to one sentence, verbatim:
-**"inhabitation of the pair `(huniv V, hcov V)` is UNMEASURED at every `V` and may be empty
-everywhere"** (`AJCR.w4-rep.datum.chart-restrict`, repeated on `…datum.atlas-coupling`, and
-in `Pic0ChartRestrictedFibreSat`, `Pic0ChartVMonotone`, `Pic0ChartBotRefute`).  Every
-predecessor result on it is an *endpoint refutation* — the pair fails at `V = ⊤`, is
-degenerate at `V = ⊥` — and `Pic0ChartSeamCollapse` identifies the pair with `IsIso` of the
-chart map without exhibiting or refuting one.
+**Three** roadmap rows defer to one sentence — *"inhabitation of the pair `(huniv V, hcov V)`
+is UNMEASURED at every `V` and may be empty everywhere"* — namely `AJCR.w4-rep`,
+`…datum.atlas-coupling` and `…datum.chart-restrict`; in Lean the sentence appears verbatim in
+exactly one other file, `Pic0ChartSeamCollapse.lean:13`, from which the paragraph you are
+reading inherited it.  (**An earlier version of this paragraph said "four rows and three file
+headers" and named `Pic0ChartRestrictedFibreSat`, `Pic0ChartVMonotone` and
+`Pic0ChartBotRefute` as carrying it.  A normalized-whitespace search finds it in none of the
+three** — `Pic0ChartBotRefute.lean:107` says the materially weaker "no measured inhabitant at
+any `V`".  Corrected because inflating the count inflates what this file unblocks.)
+
+Every predecessor result is an *endpoint* result — the pair's coverage clause is refuted at
+`V = ⊥`, antecedent 1 is free there, and antecedent 1 is maximal at `V = ⊤` — and
+`Pic0ChartSeamCollapse` identifies the pair with `IsIso` of the chart map without exhibiting
+or refuting one.
 
 **This file decides it.**  At the chart whose `rep` slot is filled by the landed degree-zero
 producer, the pair is *equivalent* to a hypothesis that already has a name elsewhere in the
@@ -64,17 +71,21 @@ and nothing more.
 
 ## What this does NOT do
 
-* **It does not represent `pic⁰` for a curve of positive genus.**  The hypothesis is false
-  there — `Picard/Pic0ChartForkNegativeBranch.lean` refutes chart-map injectivity at any field
-  carrying an effective divisor of the chart degree with two sections, and this file's
-  `not_seamPair_abelSigmaChartZero_of_two_pic0` is the corresponding refutation of the pair.
-  That is the *content* of the decision, not a defect of it: the pair is inhabited exactly
-  where the Jacobian is a point.
+* **It does not represent `pic⁰` for a curve of positive genus.**  Mathematically the
+  hypothesis is false there, and `not_seamPair_abelSigmaChartZero_of_two_pic0` converts any two
+  distinct degree-zero classes over one test into a refutation of the pair.  **But note what
+  is and is not landed**: nothing in this tree proves `0 < genus C → ∃ S, ¬ Subsingleton
+  (pic0Subgroup C S)`, so the refutation is a *conditional* one awaiting that input, not a
+  theorem about positive-genus curves.  (`Picard/Pic0ChartForkNegativeBranch.lean` refutes
+  chart-map injectivity at a degree with two sections; that is a statement about `divFamZar`
+  sections at parameter `n`, **not** about two `pic0Subgroup` elements, so it does not supply
+  this bullet's input either.)
 * **It does not supply the vanishing.**  `genus C = 0 → pic0Subgroup C S = ⊥` is real curve
   theory, is the debt `Albanese/Genus0Terminal.lean` isolates, and nothing here proves it.
 * **It says nothing about a `V` strictly between `⊥` and `⊤` at a positive-genus curve.**  The
-  interval question those four rows ask is answered *at this parameter only*, and there the
-  answer is that no restriction is needed: the pair holds at `V = ⊤` under the vanishing.
+  interval question those three rows ask is answered *at this parameter only*, and there the
+  `Opens` lattice of the chart source has no interior to ask about: it is `{⊥, ⊤}`, inhabited
+  at `⊤` under the vanishing and refuted at `⊥`.
 
 ## Main declarations
 
@@ -95,6 +106,14 @@ and nothing more.
 * `AlgebraicGeometry.seamPair_abelSigmaChartZero_iff` — **the decision**, as an iff.
 * `AlgebraicGeometry.not_seamPair_abelSigmaChartZero_of_two_pic0` — the refutation at any
   curve with two distinct degree-zero classes at one test.
+* `AlgebraicGeometry.isLocallySurjective_abelSigmaChartZero_iff` — **the sharp form**:
+  antecedent 2 *alone* is the equivalence; antecedent 1 rides free on both sides.
+* `AlgebraicGeometry.exists_representableBy_pic0TypeFunctor_of_subsingleton` — **the producer
+  fires**: `pic0RepresentableByOfCharts` actually runs on this input, across the
+  `Sigma.desc` gap that the pair statement alone does not cross.
+* `AlgebraicGeometry.isOpenImmersion_presheaf_abelSigmaChart_of_mono_of_cov` — **the repricing
+  at arbitrary parameter**, and the most reusable statement here: with `Mono D.hom`, coverage
+  implies antecedent 1 for the general Abel chart at any `n`.
 -/
 
 set_option autoImplicit false
@@ -204,13 +223,25 @@ variable (C pi) in
 /-- **ANTECEDENT 1'S ELEMENTWISE CONTENT IS UNCONDITIONAL AT THIS CHART**: the terminal chart
 is injective on points at every test, with no hypothesis whatsoever.
 
+**Not new content, and the docstring should say so.**  This is the parameter-`0` instance of a
+landed arbitrary-`n` lemma in this file's own import closure:
+`injective_abelSigmaChart_of_subsingleton rep m Z hdeg divFunctorObjSubsingleton_zero T`
+typechecks as a direct replacement for the proof below.  The direct proof is kept because it
+exhibits the *reason* — the Σ-component is the point — which is what the rest of this section
+consumes; the credit for the fact belongs upstream.
+
 Two points a lane must not misread.
 
 * This is **not** the `V = ⊥` degeneracy of `isChartUniv_bot`
-  (`Pic0ChartRestrictedFibreSat`).  There the source is the empty scheme and injectivity is
-  vacuous; here the source is `Spec k`, the chart is **unrestricted** (`V = ⊤` in the
-  interval literature's coordinates), and the map is injective because the Σ-component
-  *is* the point.
+  (`Pic0ChartRestrictedFibreSat`) — but **an earlier version of this bullet gave the wrong
+  reason**, and the wrong reason matters because it would send a lane looking in the wrong
+  place.  It said the distinction is that "here the source is `Spec k`, not the empty scheme".
+  That is not it: `isOpenImmersion_presheaf_restrictChart_bot` applies to *this* chart too, so
+  the bot degeneracy is available at this source as well.  The real distinction is the **value
+  of `V`**: the bot lemmas give antecedent 1 at `V = ⊥`, where by `isChartUniv_antitone`
+  (`Pic0ChartVMonotone`) it is *easiest*, and coverage is refuted; what is new here is
+  antecedent 1 at `V = ⊤`, unconditionally, where antitonicity makes it *hardest*.
+  Antitonicity therefore cannot derive this from the bot results — it runs the other way.
 * It is also not in tension with `Pic0ChartForkNegativeBranch`'s refutation of chart-map
   injectivity.  That refutation is at a chart of degree `n` with two distinct effective
   divisors in one class, which needs `2 ≤ h⁰`; at parameter `0` the functor value is a
@@ -320,9 +351,15 @@ omit [GeometricallyReduced C.hom] in
 variable (C pi) in
 /-- **THE INHABITANT OF THE SEAM PAIR.**
 
-Both antecedents of `pic0RepresentableByOfCharts`, at one chart, at once — the thing four
-roadmap rows record as unmeasured.  Antecedent 1 is `MorphismProperty.of_isIso`; antecedent 2
-is the instance an iso carries.
+Both seam clauses at one chart, at once — the thing three roadmap rows record as unmeasured.
+Antecedent 1 is `MorphismProperty.of_isIso`; antecedent 2 is the instance an iso carries.
+
+**Read the clauses' shapes, not their names.**  An earlier version of this docstring said this
+gives "both antecedents of `pic0RepresentableByOfCharts` at once", which is false *as an
+applicability claim*: that producer takes its coverage antecedent as an instance on
+`Sigma.desc f`, not on `f`, and `inferInstance` does not cross the gap.  The producer really
+does fire — see `exists_representableBy_pic0TypeFunctor_of_subsingleton` below, which supplies
+the `Sigma.ι_desc` factorisation — but this theorem alone does not reach it.
 
 Read against the endpoint literature: `Pic0ChartRestrictedFibreSat` shows the pair's clauses
 fail at `V = ⊤` for the *unrestricted divisor scheme* chart and degenerate at `V = ⊥`, and
@@ -350,12 +387,26 @@ surjectivity that antecedent 2 gives — via the collapse, which turns local sur
 (free) injectivity into an honest isomorphism, hence honest surjectivity at every test.  The
 backward direction is the inhabitant above.
 
-**This is what the four rows were asking, answered at this parameter.**  The pair is neither
+**This is what those rows were asking, answered at this parameter.**  The pair is neither
 empty nor unconditionally inhabited: it is inhabited precisely on the curves whose Jacobian is
-a point.  Note that the answer does not depend on `V`, `m`, or `Z` — the arithmetic data of
-the chart is idle here, which is itself information: at parameter `0` the chart index carries
-nothing, matching `chartIndex_iff_isDegree`'s finding that `hdeg` is pure arithmetic and
-`isDegree_zero`'s that it is free at `0`. -/
+a point.
+
+Two scope notes, the first a correction.
+
+* **`m` and `Z` are idle; `V` is NOT.**  An earlier version of this docstring said "the answer
+  does not depend on `V`, `m`, or `Z`".  The `m`/`Z` half is right — they appear in no
+  hypothesis of the iff, matching `chartIndex_iff_isDegree`'s finding that `hdeg` is pure
+  arithmetic and `isDegree_zero`'s that it is free at `0`.  The `V` half is **false**: the
+  chart source's `Opens` lattice is `{⊥, ⊤}` (`opens_eq_bot_or_top_of_terminalRep`), and at
+  `⊥` the coverage clause is refuted outright *even under the vanishing*
+  (`not_isLocallySurjective_restrictChart_bot'`, `Pic0ChartBotRefute.lean`, unconditional and
+  for an arbitrary chart family).  So the answer is: inhabited at `⊤`, refuted at `⊥`.  What
+  is true is that no *restriction* is needed, which is a statement about `V = ⊤` and not about
+  `V`-independence.
+* **Antecedent 2 alone carries the equivalence**, since antecedent 1 is unconditional forward
+  and recovered from antecedent 2 backward — see `isLocallySurjective_abelSigmaChartZero_iff`
+  below, which is the sharp form.  So "the *pair* is decided" should not be read as a discount
+  on antecedent 1: it is a discount on nothing, and antecedent 2 is the whole content. -/
 theorem seamPair_abelSigmaChartZero_iff
     (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
     (hdeg : Scheme.CurveDivisor.deg k Z
@@ -394,6 +445,88 @@ theorem not_seamPair_abelSigmaChartZero_of_two_pic0
           (abelSigmaChartZero (C := C) (pi := pi) m Z hdeg)) := by
   intro hpair
   exact hxy (((seamPair_abelSigmaChartZero_iff C pi m Z hdeg).mp hpair S).allEq x y)
+
+omit [GeometricallyReduced C.hom] in
+variable (C pi) in
+/-- **THE SHARP FORM: antecedent 2 ALONE is equivalent to the vanishing.**
+
+The pair statement above is not wrong, but it is not sharp: antecedent 1 is a free rider on
+both sides of it — unconditional in the forward direction
+(`injective_abelSigmaChartZero`) and recovered from antecedent 2 in the backward one
+(`isOpenImmersion_presheaf_of_injective`).  Stated because the board prices antecedent 2 as
+the *most expensive* of the three, so "the pair is decided" would read as a larger discount
+than the truth: nothing about antecedent 1 is being bought here, and coverage is the whole
+content. -/
+theorem isLocallySurjective_abelSigmaChartZero_iff
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - ((0 : ℕ) : ℤ)) :
+    Presheaf.IsLocallySurjective Scheme.zariskiTopology
+        (abelSigmaChartZero (C := C) (pi := pi) m Z hdeg)
+      ↔ ∀ S : Over (Spec (.of k)), Subsingleton (pic0Subgroup C S) :=
+  ⟨fun hcov => (seamPair_abelSigmaChartZero_iff C pi m Z hdeg).mp
+      ⟨isOpenImmersion_presheaf_of_injective C _
+        (injective_abelSigmaChartZero C pi m Z hdeg) hcov, hcov⟩,
+   fun hvan => (seamPair_abelSigmaChartZero_of_subsingleton C pi m Z hdeg hvan).2⟩
+
+/-! ## The seam fired, and the arbitrary-parameter form of the repricing -/
+
+omit [GeometricallyReduced C.hom] in
+variable (C) in
+/-- **THE PRODUCER FIRES.**  Under the vanishing, `pic0TypeFunctor C` is representable.
+
+Stated as an `∃`/`Nonempty` because the representing object `pic0RepresentableByOfCharts`
+returns is spelled through mathlib's glue data of the very `hf` being supplied, so naming it
+in the conclusion would force the reader to reconstruct the term.  What matters is that the
+seam machine *runs* on this input: an earlier version of this file claimed
+`seamPair_abelSigmaChartZero_of_subsingleton` gave "both antecedents of
+`pic0RepresentableByOfCharts` at once", which was **false as an applicability claim** — the
+producer's antecedent 2 is an instance on `Sigma.desc f`, not on `f`, and `inferInstance` does
+not cross that gap.  The `Sigma.ι_desc` factorisation below is the missing line, and this
+theorem exists so that the gap cannot silently reopen. -/
+theorem exists_representableBy_pic0TypeFunctor_of_subsingleton
+    (pi' : C.left ⟶ P1 k) [IsAffineHom pi']
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - ((0 : ℕ) : ℤ))
+    (hvan : ∀ S : Over (Spec (.of k)), Subsingleton (pic0Subgroup C S)) :
+    ∃ J : Over (Spec (.of k)), Nonempty ((pic0TypeFunctor C).RepresentableBy J) := by
+  set f := fun _ : PUnit.{u+1} => abelSigmaChartZero (C := C) (pi := pi') m Z hdeg with hfdef
+  have hpair := seamPair_abelSigmaChartZero_of_subsingleton C pi' m Z hdeg hvan
+  haveI : Presheaf.IsLocallySurjective Scheme.zariskiTopology (Sigma.desc f) := by
+    haveI := hpair.2
+    exact Presheaf.isLocallySurjective_of_isLocallySurjective_fac
+      (J := Scheme.zariskiTopology)
+      (f₁ := Sigma.ι (fun _ : PUnit.{u+1} =>
+        yoneda.obj (Over.mk (𝟙 (Spec (CommRingCat.of k)))).left) PUnit.unit)
+      (f₂ := Sigma.desc f) (Sigma.ι_desc f PUnit.unit)
+  exact ⟨_, ⟨pic0RepresentableByOfCharts C f (fun _ => hpair.1)⟩⟩
+
+variable (C pi) in
+/-- **THE REPRICING AT ARBITRARY PARAMETER**, which is what a coverage lane at `n > 0` needs.
+
+`isOpenImmersion_presheaf_of_injective` is stated for an arbitrary presheaf morphism, so it
+composes with the *landed* `injective_abelSigmaChart_of_mono` (`Pic0ChartSubsingletonCollapse`)
+to give: for the general Abel chart at **any** parameter `n`, with `Mono D.hom` on the
+representing object, **coverage implies antecedent 1**.
+
+This is strictly more useful than the parameter-`0` statements above, and it is not about the
+terminal chart at all.  A lane holding antecedent 2 at `n > 0` owes `Mono D.hom` and nothing
+else on the antecedent-1 side — no `ChartFibrePresented` datum, no relative GAP-2, no
+certificate.  `Mono D.hom` is itself a real obligation, and `Pic0ChartForkNegativeBranch`
+refutes chart injectivity (hence `Mono`, hence antecedent 1) wherever an effective divisor of
+degree `n` has two sections; so this is a reduction of antecedent 1 to a divisor-scheme
+property, not a discharge of it. -/
+theorem isOpenImmersion_presheaf_abelSigmaChart_of_mono_of_cov {n : ℕ}
+    {D : Over (Spec (.of k))} (rep : (divFunctor C pi n).RepresentableBy D) [Mono D.hom]
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - (n : ℤ))
+    (hcov : Presheaf.IsLocallySurjective Scheme.zariskiTopology
+      (abelSigmaChart C pi n rep m Z hdeg)) :
+    IsOpenImmersion.presheaf (abelSigmaChart C pi n rep m Z hdeg) :=
+  isOpenImmersion_presheaf_of_injective C _
+    (injective_abelSigmaChart_of_mono rep m Z hdeg) hcov
 
 end
 
