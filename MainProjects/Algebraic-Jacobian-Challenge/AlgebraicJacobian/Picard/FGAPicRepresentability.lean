@@ -515,35 +515,16 @@ clause* are free (item 5 below, `I-1286`).
 
 **And a list of inputs is not a route — corrected 2026-07-30 (`ajc-p2`), because
 for four rounds this paragraph was one.** Every entry below is an *antecedent*.
-For four rounds there was **no declaration anywhere in this project stating the
-theorem they are antecedents *of***, and an earlier revision of this paragraph —
-written by the lane that added `Picard/PicEtDescentAssembly.lean` — claimed that
-file supplied one. **It does not** (refuted by a fresh-context audit, `I-1312`,
-reproduced and accepted by its author): none of that file's declarations takes a
-`k'`-side representation and concludes over `k`. Its
+There is **still** no declaration anywhere in this project stating the theorem they
+are antecedents *of*, and an earlier revision of this paragraph — written by the
+lane that added `Picard/PicEtDescentAssembly.lean` — claimed that file supplied
+one. **It does not** (refuted by a fresh-context audit, `I-1312`, reproduced and
+accepted by its author): none of that file's declarations takes a `k'`-side
+representation and concludes over `k`. Its
 `representableByRestrict_of_baseChange` concludes a `RepresentableBy` for a
 `k'`-**object**, i.e. it restates the `k'`-side input in the right variables rather
-than crossing the descent step.
-
-**THAT GAP IS NOW CLOSED, 2026-07-30 (`pic-e`), and the sentence above is kept in
-the past tense rather than deleted** because the census it rests on is still the
-right way to check this: `Picard/PicEtDescentGoal.lean`'s
-`PicScheme.representableBy_picEt_of_galoisQuotient` takes a representation of
-`picEt (C_{k'})` over `k'` plus a Galois quotient of its canonical semilinear
-action plus `hcov` plus a named `G1` predicate match (`IsInvariantMatch`), and
-concludes `(picEt C).RepresentableBy Y` over `k`;
-`seamClauseOne_of_isGaloisQuotient` is clause (1) in full through the free side
-conjuncts. `sorry`-free and axiom-clean against this theorem as a `sorryAx`
-control. **It closes nothing here**: all four of its inputs are explicit
-undischarged hypotheses, so what changed is that the goal is now a statement a
-lane can aim an input at, not that any input is in hand. Two measurements from
-building it that a consumer needs: the bundled `Prop`-valued `IsGaloisQuotient`
-cannot be destructured into the `Type`-valued `RepresentableBy` conclusion
-directly (`Exists.casesOn` eliminates only into `Prop`), so the `Nonempty` form is
-where `Classical.choice` is spent while clause (1), being an existential, needs
-none; and `quotientHomEquiv_uniform`'s `Nonempty` cannot carry the naturality
-square a `RepresentableBy` needs, so clause 3 had to be re-derived with its
-forward map pinned to a named morphism. The conclusion shape
+than crossing the descent step. The census below is accurate; the remedy is not
+applied. The conclusion shape
 `Nonempty ((PicScheme.picEt C).RepresentableBy X)` occurred at exactly three sites
 — the `HasPicSchemeEt` class field and the seam `sorry` below, plus
 `hasPicSchemeEt_of_picSharp_representability` — and all three are **same-field**,
