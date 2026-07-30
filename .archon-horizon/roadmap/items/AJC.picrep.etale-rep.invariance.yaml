@@ -46,7 +46,17 @@ summary: "ADVANCED 2026-07-30 by ajc-p1 (run 0083 r7), owner ajc-p1. The MORPHIS
   \ 3 and 4 of this file both carry NO IsGalois binder, because the Galois hypothesis\
   \ is not in either implication -- it is in the ANTECEDENT hcov, which is a hypothesis\
   \ rather than a binder. So \"Galois enters exactly once, at the bridge\" is correct,\
-  \ and it enters as a covering property, not as an instance."
+  \ and it enters as a covering property, not as an instance.\n\nRESIDUE LOCATED,\
+  \ and attempted rather than only named. hcov_iff_scheme_level: membership in the\
+  \ slice topology IS membership of the transported sieve on the underlying scheme\
+  \ (GrothendieckTopology.mem_over_iff, free). So hcov is not about the slice, the\
+  \ test T, or picEt -- it is that the Gal-indexed family of SCHEME morphisms (coverSelfSection\
+  \ T gamma).left etale-covers the self-pullback. I tried to close it at a nontrivial\
+  \ Galois level and did NOT: infer_instance for IsOpenImmersion (coverSelfSection\
+  \ T gamma).left FAILS there, with the sorryAx control live in the same probe so\
+  \ it is not a stale-import artefact. The covering property is therefore not free\
+  \ from the etale-precoverage machinery, and a lane closing this row must build it.\
+  \ That is what remains, and it is the whole of what remains."
 status: active
 kind: proof
 priority: normal
@@ -70,5 +80,4 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.etale-rep
-  updated_at: '2026-07-30T01:33:54.307983+00:00'
-  owner: ajc-p1
+  updated_at: '2026-07-30T01:57:26.462323+00:00'
