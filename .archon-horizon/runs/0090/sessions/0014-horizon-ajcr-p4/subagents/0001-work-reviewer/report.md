@@ -1,1 +1,1 @@
-Now let me set up the probe environment with the mandated control.
+The retraction is proved. Now let me finish `V2 ≠ ⊤`.

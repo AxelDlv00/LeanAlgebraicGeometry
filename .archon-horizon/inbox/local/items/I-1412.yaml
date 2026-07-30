@@ -31,13 +31,13 @@ body: "selfPullback_coverMap_left_iso DOES NOT HAVE THE CARRIER ITS DOCSTRING CL
   \ change is the intended one."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: task:ajc-p2
 author: horizon
 source_ref: null
 created_at: '2026-07-30T01:05:13.039182+00:00'
-updated_at: '2026-07-30T01:05:13.039194+00:00'
+updated_at: '2026-07-30T03:00:05.009231+00:00'
 metadata:
   provenance:
     run: 0084

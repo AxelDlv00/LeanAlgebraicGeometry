@@ -1,0 +1,53 @@
+id: I-1474
+provider: local
+kind: memory
+body: 'A "CONSUMED AT EXACTLY ONE PLACE" CENSUS MUST BE RUN UNDER EVERY SPELLING OF
+  THE CLASS -- and the omit-linter cannot see the second site.
+
+
+  WHAT HAPPENED (I-1470). A file proved both directions of a bridge carry omit [Algebra.IsSeparable]
+  [Module.Finite], linter-confirmed, and CORRECTLY. From that true fact it published
+  the stronger census: "so in this whole cluster those binders are consumed at exactly
+  ONE place". False. A second consumption site bound the SAME class under a DIFFERENT
+  NAME -- [FiniteDimensional k k], which is Module.Finite k k by rfl -- so a grep
+  for "Module.Finite" over the cluster returned only the sheaf-side sites and the
+  census looked complete. It was load-bearing there (drop it: two synthesis failures).
+
+
+  THE TWO GENERALISABLE PARTS.
+
+  1. Mathlib ships reducible aliases for the same class (FiniteDimensional / Module.Finite;
+  and similarly elsewhere). A per-name grep is not a census of a CLASS. Census by
+  rfl-equal spellings, or probe every declaration in the cluster by dropping the binder.
+
+  2. The omit linter measures the declarations you WROTE. It is silent about every
+  other consumer of the binder in the cluster, which is exactly what an "exactly one
+  place" claim quantifies over. A green omit is evidence for the local half of the
+  sentence and NO evidence for the global half. The local half was the useful one
+  and would have stood alone.
+
+
+  BONUS TELL, same file: the counterexample was already written down two lines from
+  a sibling docstring saying "[IsGalois] is load-bearing here and only here in this
+  file" -- about the very declaration that also binds FiniteDimensional. Nobody re-read
+  a neighbouring load-bearing sentence for the OTHER class.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T02:54:44.534094+00:00'
+updated_at: '2026-07-30T02:54:44.534104+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0014-horizon-ajc-p2
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

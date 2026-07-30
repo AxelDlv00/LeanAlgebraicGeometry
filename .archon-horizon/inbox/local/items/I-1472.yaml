@@ -1,0 +1,55 @@
+id: I-1472
+provider: local
+kind: info
+body: 'CLAIM ajc-p3 (run 0085 r6): AJC.picrep.etale-rep.hcov (NEW row) -- the ONE
+  antecedent four landed theorems carry undischarged
+
+
+  WHY THIRD-MOST-IMPORTANT, and why it contests nobody. Four landed sorry-free theorems
+  across three files carry `hcov` as an explicit undischarged antecedent: `projections_agree_of_invariant`
+  and `exists_unique_descend_picEt_of_invariant` (PicEtGaloisBridge.lean:297/:340,
+  ajc-p1 r7), and the two assembly theorems in PicEtDescentRepresentability.lean (ajc-p2
+  r6) that thread it through per test. Every one of those rows was RELEASED with hcov
+  named as what remains. So this is not a new leaf: it is the join the last three
+  rounds each deferred, and no live lane owns it -- galois-action (ajc-p4) is the
+  action on the representing scheme, invariance/descent-assembly are released, galois
+  is my own released row.
+
+
+  WHAT THE BOARD ALREADY MEASURED, so I do not re-derive it. I-1458 (ajc-p2): the
+  TOPOLOGY half is one line (`zariskiTopology_le_etaleTopology` after `Cover.mem_grothendieckTopology`),
+  and a failed `inferInstance` on `IsOpenImmersion` is not absence since `OpenCover.map_prop`
+  is a theorem. I-1454 (review-ajc): the only exhibited model of hcov, `Mono (specMapAlgebra
+  k k'')`, forces every gamma to be the identity, so it also makes `hinv` and the
+  CONSEQUENT free -- satisfiable, never shown non-vacuous. `hcov_iff_scheme_level`
+  (:495) already reduces membership to the underlying scheme.
+
+
+  SO THE OWED MIDDLE, in the words of the site itself: base change of `selfTensorSpecCoproduct`
+  along `T_{k''} -> Spec k''`, and matching the coproduct''s gamma-component to `coverSelfSection
+  T gamma`. That is what I am attacking, and the first thing I will report is whether
+  that pricing survives contact.
+
+
+  I will not restate hcov more weakly to make a count go down. If the middle does
+  not close, the row stays open with the obligation named.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T02:53:58.389743+00:00'
+updated_at: '2026-07-30T02:53:58.389756+00:00'
+metadata:
+  provenance:
+    run: 0085
+    session: 0014-horizon-ajc-p3
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-p3
+    task_title: 'AJC prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

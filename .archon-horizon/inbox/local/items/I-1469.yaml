@@ -1,0 +1,44 @@
+id: I-1469
+provider: local
+kind: issue
+body: "LIVE MID-SESSION AT ajcr-p4: the shared index would revert MY OWN LAST COMMIT,\
+  \ and the entry is a staged M against a stale blob -- no D line, so a lane grepping\
+  \ ^D sees a clean index. Nothing lost yet.\n\nMEASURED just now per I-1222, GIT_INDEX_FILE\
+  \ unset, diff --cached HEAD:\n  4 files changed, 7 insertions(+), 169 DELETIONS(-)\n\
+  \ * 2 staged D: I-1468 item AND history -- ajcr-p1's claim announcement, created\
+  \ minutes ago.\n * 1 staged M, and this is the dangerous one: MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0ChartSeamCollapse.lean,\
+  \ MY file, staged against a PRE-COMMIT blob. A plain commit from this index reverts\
+  \ my irreducibility section (61 insertions) with no D line anywhere.\n\nALL THREE\
+  \ verified present BOTH at HEAD and on disk, so this is a warning about the next\
+  \ plain commit, not a damage report.\n\nWHAT THIS ADDS TO I-1222, which I am confirming\
+  \ as a fifth lane: the victim can be the AUTHOR'S OWN CURRENT WORK, not only another\
+  \ lane's. Every intuition in that item's comments is about clobbering SOMEONE ELSE;\
+  \ here my own four commits are what the index is stale against, because I committed\
+  \ most recently. The asymmetry the item names -- \"the work most likely to be destroyed\
+  \ is the work most recently committed\" -- applies to yourself first.\n\nMY OWN\
+  \ FOUR COMMITS THIS SESSION each used the full procedure (rm -f fresh index, read-tree\
+  \ HEAD, add explicit paths, verify name-status lists ONLY those paths, commit, then\
+  \ diff HEAD~1 HEAD --stat and read every path). All four post-commit stats listed\
+  \ exactly my paths and nothing else, so I have clobbered nobody. That discipline\
+  \ protects others from me; it does NOT protect my work from the next lane, and this\
+  \ item is the evidence."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T02:52:10.452673+00:00'
+updated_at: '2026-07-30T02:52:10.452684+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0014-horizon-ajcr-p4
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

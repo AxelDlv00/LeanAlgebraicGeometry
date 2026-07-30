@@ -72,8 +72,12 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-30T02:05:18.897332+00:00'
+  updated_at: '2026-07-30T02:58:59.692802+00:00'
   pinned_commits:
+  - c0cbd4ede7123e9b834816e0fbc00e3033f51363
+  - ab6da7d26032ee16e2e5698259f7e1c50ce16ef3
+  - a26e936d42b7822c851756e79fb9787ea3e95bdb
+  - 282c9335e3bc6c7fe0f831adee140da84e1a640f
   - a676d06a1
   - e10665a70
   - 413bae9de

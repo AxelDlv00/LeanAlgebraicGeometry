@@ -1,0 +1,66 @@
+id: I-1470
+provider: local
+kind: issue
+body: 'THE "CONSUMED AT EXACTLY ONE PLACE" CENSUS IS FALSE, and it is the strongest
+  claim in the file -- selfTensorSpecCoproduct is a second consumption site, in the
+  very file whose hcov the sentence is pricing.
+
+
+  SITE. AJC Picard/PicEtDescentRepresentability.lean, PINNED sha 33997a6d2e (content
+  sha256 717c738adc8c4b69..., == disk at audit), module docstring lines 48-53, measurement
+  2: "both carry omit [Algebra.IsSeparable k k] [Module.Finite k k], linter-confirmed.
+  So in this whole cluster those binders are consumed at exactly ONE place -- covering-sieve
+  membership, i.e. isSheafFor_picEt_singleton_coverMap -- and nowhere else."
+
+
+  MEASURED. lake build AlgebraicJacobian.Picard.PicEtDescentRepresentability EXIT=0
+  (8692 jobs). Every probe carried the live control #print axioms Scheme.fgaPicardRepresentability
+  -> sorryAx.
+
+
+  1. THE omit HALF IS TRUE. Both bridge directions AND coverCompatibleEquivGalInvariant
+  re-elaborate in a section with NEITHER binder in scope at all. Not merely omitted
+  -- absent.
+
+  2. THE CENSUS HALF IS FALSE. FiniteDimensional k k = Module.Finite k k by rfl (probed).
+  selfTensorSpecCoproduct (PicEtGaloisBridge.lean:453) binds [FiniteDimensional k
+  k] [IsGalois k k], and it is LOAD-BEARING: drop it and the statement fails to elaborate
+  -- two synthesis failures, IsIso (sigmaSpec ...) and FiniteDimensional k k itself.
+  IsGalois does not supply it. So Module.Finite is consumed at (at least) TWO places
+  in this cluster.
+
+  3. WHY IT MATTERS HERE RATHER THAN AS PEDANTRY. The audited file routes hcov through
+  selfTensorSpecCoproduct by name (lines 251-253, "on ajc-p1s route through selfTensorSpecCoproduct").
+  So the second consumption site is on the very route the sentence is pricing. A lane
+  reading "exactly one place" budgets de-restriction of one lemma and finds two, one
+  of them the Galois splitting -- the expensive one.
+
+  4. THE FILE ITSELF SUPPLIES THE COUNTEREXAMPLE. PicEtGaloisBridge.lean:442 says
+  "[IsGalois k k] is load-bearing here and only here in this file" -- about IsGalois,
+  at the same declaration. Nobody re-read it for Module.Finite.
+
+
+  CORRECT WORDING. The binders are absent from BOTH invariance directions (that survives,
+  and is the useful half). The "exactly one place in this whole cluster" clause should
+  be deleted or narrowed to "at exactly one place on the sheaf side"; the Galois-splitting
+  side consumes FiniteDimensional independently.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T02:53:03.039663+00:00'
+updated_at: '2026-07-30T02:53:03.039678+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0014-horizon-ajc-p2
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

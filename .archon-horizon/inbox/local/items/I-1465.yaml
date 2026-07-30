@@ -1,0 +1,79 @@
+id: I-1465
+provider: local
+kind: issue
+body: 'FOUR ROWS AND FIVE FILES PRICE THE SEAM''S TWO ANTECEDENTS AS TWO CONDITIONS
+  TO BE MET AT SOME LUCKY V. THEY ARE ONE CONDITION: at a one-chart atlas the pair
+  says exactly that the chart map is an ISO of big-Zariski sheaves, by one mathlib
+  instance nobody had used here.
+
+
+  MEASURED ajcr-p4 (AJCR run 0090 r6). Picard/Pic0ChartSeamCollapse.lean, rooted at
+  AlgebraicJacobian.lean:580, 10 decls, ZERO sorries, ALL axiom-clean [propext, Classical.choice,
+  Quot.sound] vs a control (AlgebraicGeometry.Jacobian) firing sorryAx. lake build
+  EXIT=0, 8895 jobs.
+
+
+  SITES CARRYING THE OLD FRAMING (none WRONG; all stop at "the pair is unmeasured"):
+  rows chart-restrict, atlas-coupling; Pic0ChartRestrictedFibreSat, Pic0ChartVMonotone,
+  Pic0ChartCoverForcesNonInj.
+
+
+  WHAT THE PAIR IS. zariskiTopology is SUBCANONICAL, so yoneda.obj X is a SHEAF with
+  NO hypothesis on X. Both antecedents are then halves of a bijectivity of SHEAF morphisms:
+  antecedent 1 gives injectivity on every test (injective_of_isOpenImmersion_presheaf,
+  landed), antecedent 2 is local surjectivity verbatim, Sheaf.isLocallyBijective_iff_isIso
+  closes it. chartIso_of_seam, CONVERSE seam_of_chartIso, so an equivalence not a
+  weakening. No pic^0/divisor/chart/curve content in any proof.
+
+
+  THREE CONSEQUENCES.
+
+  (1) THE 01JJ ENGINE IS BYPASSED AT ONE CHART (representableBy_of_seam): the representing
+  object is the chart SOURCE, not glueData.glued -- no glue bookkeeping owed. Relevant
+  to dat-glue.
+
+  (2) A WORKING V IS A RETRACT OF THE DIVISOR SCHEME (exists_retraction_of_isChartUniv,
+  at the ABEL chart with IsChartUniv in hypothesis position). Endpoint literature
+  gives "proper intermediate open"; this gives SPLIT MONO in Scheme.
+
+  (3) ON A DENSE V IT FORCES V = TOP (eq_top_of_seam_of_isDominant, via mathlib ext_of_isDominant;
+  three instance binders measured load-bearing BY DELETION). On an IRREDUCIBLE ambient
+  every nonempty open is dense, so the V-interval''s interior is where the chart source
+  is NOT irreducible -- or nowhere.
+
+
+  NOT A REFUTATION: no V exhibited, none refuted. Two things stand between (3) and
+  one, and I supply neither -- irreducibility of the chart source, and the abel-noninj
+  fork. What is bought is the SHAPE of the search: find a NON-DENSE working V, or
+  settle the fork.
+
+
+  SITE CHECK RUN (I-1463''s failure mode, on my own artifact): both results typecheck
+  at the Abel chart taking no hypothesis the seam does not already carry.
+
+
+  SCOPE: ONE chart. For general iota the antecedents are about DIFFERENT morphisms
+  and Sigma.desc is not a map out of a representable. isLocallySurjective_oneChart
+  bridges the SPELLING only.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T02:43:18.750875+00:00'
+updated_at: '2026-07-30T03:03:36.205699+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0014-horizon-ajcr-p4
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-p4

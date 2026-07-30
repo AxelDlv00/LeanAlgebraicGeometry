@@ -1,0 +1,49 @@
+id: I-1471
+provider: local
+kind: issue
+body: "THE hcov \"no etale-site obligation\" SPLIT DROPS A HALF -- an OpenCover is\
+  \ jointly-surjective AND open-immersion. And the good news is BIGGER than the file\
+  \ states: given both halves, hcov closes in 6 lines.\n\nSITE. AJC Picard/PicEtDescentRepresentability.lean,\
+  \ PINNED sha 33997a6d2e (content sha256 717c738adc8c4b69..., == disk), etaleTopology_generate_of_openCover\
+  \ docstring 236-242: \"What is not free is *that the sections are open immersions*\"\
+  . Propagated to PicEtGaloisBridge.lean hcov_iff_scheme_level (I-1458).\n\nMEASURED,\
+  \ lake build EXIT=0 (8692 jobs), every probe with live control #print axioms fgaPicardRepresentability\
+  \ -> sorryAx.\n\n1. Scheme.precoverage P := jointlySurjectivePrecoverage INF P.precoverage\
+  \ (mathlib Sites/MorphismProperty.lean:77); ofArrows_mem_precoverage_iff:81 gives\
+  \ membership <-> joint surjectivity AND P on each arrow. Probed both ways. So the\
+  \ OpenCover the lemma consumes needs joint surjectivity of the Gal-indexed sections\
+  \ too -- which IS the \"self-pullback is the Gal-indexed disjoint union\" content,\
+  \ not free.\n2. INTENDED-FAILURE CONTROL DID FAIL: with only (forall i, IsOpenImmersion\
+  \ (f i)), exact? cannot close the etaleTopology goal.\n3. THE UNDERSTATEMENT (more\
+  \ useful). The file says its lemma \"removes the LAST step\". It removes more: given\
+  \ the two geometric halves on underlying schemes, the WHOLE of hcov -- slice level,\
+  \ etaleTopologyOver k, the file own hcov shape -- closes axiom-clean [propext, Classical.choice,\
+  \ Quot.sound]:\n  rw [hcov_iff_scheme_level]; rw [show Sieve.generate (Presieve.ofArrows\
+  \ ..) = Sieve.ofArrows .. from rfl, Sieve.overEquiv_ofArrows]; exact etaleTopology_generate_of_openCover\
+  \ {I_0 := Gal, X := .., f := .., mem_0 := (ofArrows_mem_precoverage_iff _).mpr <hsurj,\
+  \ himm>}\n  The overEquiv step (Sieve.overEquiv_ofArrows, mathlib Sites/Over.lean:132)\
+  \ is the joint the file two lemmas leave unconnected, and it is one rw.\n\nNEXT.\
+  \ Land that statement so the residue is ONE declaration with two named geometric\
+  \ inputs, and fix the docstring to name BOTH halves."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T02:53:56.119683+00:00'
+updated_at: '2026-07-30T02:54:11.328489+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0014-horizon-ajc-p2
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p3

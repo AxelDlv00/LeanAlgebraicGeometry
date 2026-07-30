@@ -1,0 +1,62 @@
+id: I-1473
+provider: local
+kind: issue
+body: 'THE ASSEMBLY IS BASE-FREE CATEGORY THEORY: both directions close with Scheme/Field/Algebra/picEt/cover/descent
+  ALL DELETED. The file self-assessment ("change of coordinates, not a strengthening")
+  is CORRECT but understated -- the coordinates are generic, not geometric. Plus one
+  false provenance sentence.
+
+
+  SITE. AJC Picard/PicEtDescentRepresentability.lean, PINNED sha 33997a6d2e (content
+  sha256 717c738adc8c4b69..., == disk, 415 lines, 24 decls). lake build EXIT=0 (8692
+  jobs); ALL 24 decls axiom-clean [propext, Classical.choice, Quot.sound], zero sorries,
+  control #print axioms fgaPicardRepresentability -> sorryAx in every probe.
+
+
+  1. TRANSCRIBED WITH ALL GEOMETRY DELETED (arbitrary category D, arbitrary presheaf
+  F : D^op -> Type v, arbitrary family G : D -> Type v, arbitrary per-object phi :
+  F.obj (op T) ~= G T): BOTH representableBy_of_coverCompatibleEquiv and coverCompatibleEquiv_of_representableBy
+  close, [propext, Quot.sound] only. Proof bodies are Equiv.trans / Equiv.apply_symm_apply
+  / rep.homEquiv_comp. The geometry lives ENTIRELY in the input restrictCompatEquiv
+  (which IS real descent, PicEtDescentExistence.lean) -- not in the assembly.
+
+  2. SO THE ROUND TRIP IS THE HONEST READING, and it is provable: assembly o converse
+  : RepresentableBy Y -> RepresentableBy Y, and the hypothesis package is iff-equivalent
+  to Nonempty ((picEt C).RepresentableBy Y) -- both elaborated, axiom-clean. The file
+  says "inter-derivable"; what it does not say is that a reader can substitute ANY
+  per-test equiv family for CoverCompatible and get the same theorem. A lane deciding
+  whether to build on it should know the assembly buys Equiv.trans and the descent
+  lemma buys everything else.
+
+  3. FALSE PROVENANCE SENTENCE. Lines 74-76: "Mono (specMapAlgebra k k) forces every
+  gamma to be the identity -- REPRODUCED HERE from specGal_comp and cancel_mono".
+  Grepped the pinned file: it contains NO Mono declaration, no specGal_comp, no cancel_mono.
+  specGal_eq_id_of_mono and twistTest_eq_id_of_mono live in PicEtGaloisBridge.lean:514/528,
+  a DIFFERENT file. "Reproduced here" is false; it should read "reproduced in PicEtGaloisBridge.lean".
+
+
+  SURVIVED. The withdrawal wording (item 3 of the audit brief) is correct and not
+  overstated. Carriers non-vacuous: C occurs in all four predicates, IsCoverCompatible/IsGalInvariant
+  are Iff.rfl to the two-projection / twistTest statements respectively, coverFunctor
+  = Over.pullback o Over.map by rfl, CoverCompatible inhabited via restrictCompat
+  of 0. coverMap_eq_counit CONFIRMED. No duplicates found.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T02:54:23.382818+00:00'
+updated_at: '2026-07-30T02:54:23.382829+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0014-horizon-ajc-p2
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
