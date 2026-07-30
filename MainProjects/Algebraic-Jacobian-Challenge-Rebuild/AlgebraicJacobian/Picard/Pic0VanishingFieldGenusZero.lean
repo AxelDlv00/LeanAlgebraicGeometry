@@ -71,10 +71,10 @@ variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
 variable [IsProper C.hom] [SmoothOfRelativeDimension 1 C.hom]
 variable [GeometricallyIrreducible C.hom] [GeometricallyReduced C.hom]
 
-omit [GeometricallyReduced C.hom] in
 set_option maxHeartbeats 1600000 in
 -- The base-change instance stack of `Curve.BaseChangeInstances` is resolved twice here (both
 -- Betti numbers), which exceeds the default budget; within the DAT-2/PicEtMap precedent.
+omit [GeometricallyReduced C.hom] in
 /-- **`χ(𝒪) = 1` at the base-changed curve**, at every field extension of the base, from
 `genus C = 0`.
 
@@ -95,6 +95,7 @@ theorem chi_moduleKSheaf_baseChange_eq_one_of_genus_zero
 
 set_option maxHeartbeats 1600000 in
 -- Same base-change instance stack as the χ lemma above, plus the `relPic.ind` elimination.
+omit [GeometricallyReduced C.hom] in
 /-- **THE FIELD-TEST LAYER**: at genus `0`, a relative Picard class of relative degree `0`
 over any field extension of the base is trivial.
 
@@ -114,6 +115,7 @@ theorem relPic_eq_one_of_relPicDeg_eq_zero_of_genus_zero
 
 set_option maxHeartbeats 1600000 in
 -- Carries the same base-change instance stack through both directions.
+omit [GeometricallyReduced C.hom] in
 /-- The iff form: at genus `0` the relative degree over a field extension vanishes exactly on
 the trivial class.  The reverse direction is `map_one`. -/
 theorem relPicDeg_eq_zero_iff_of_genus_zero
