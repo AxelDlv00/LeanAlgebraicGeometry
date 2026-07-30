@@ -94,7 +94,7 @@ hypothesis on the equations, the degree, or the ring. -/
 theorem one_mem_gluedSubmodule : (1 : A.chartProd) ∈ A.gluedSubmodule := by
   rw [A.mem_gluedSubmodule_iff]
   intro p
-  show A.toOvlLeft p.1 p.2 1 = A.toOvlRight p.1 p.2 1
+  change A.toOvlLeft p.1 p.2 1 = A.toOvlRight p.1 p.2 1
   rw [map_one, map_one]
 
 /-! ## The unit extraction -/
