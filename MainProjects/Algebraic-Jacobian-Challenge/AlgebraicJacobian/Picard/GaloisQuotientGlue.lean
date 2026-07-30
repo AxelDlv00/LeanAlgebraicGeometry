@@ -71,11 +71,12 @@ manageable.  `U ⊓ V` is always `Γ`-stable and open, but **need not be affine*
 
 **Consequence for the construction plan**: both routes (unconditional and fallback)
 consume the *same* layer-1 substrate built here — the section-level semilinear
-action on stable opens and its Spec-functoriality.  The remaining layers are:
-(2) quotient-localization (`(A_N)^Γ = (A^Γ)_N` + invariant-basic-open covering of
-stable opens inside a chart + openness of `π_U(V)`), (3) the `Scheme.GlueData` with
-overlap isos from the affine quotients' universal property, (4) the glued
-base-change iso and `T`-points.
+action on stable opens and its Spec-functoriality.  Layer 2 is now complete:
+`GaloisDescent.InvariantQuotientOpen` constructs the quotient-side open of every
+stable subopen, identifies its pullback exactly, and proves that it is the actual
+open image.  The remaining layers are (3) restriction of the full bundled
+`IsGaloisQuotient` to those opens and the resulting `Scheme.GlueData`, and (4) the
+glued base-change iso and `T`-points.
 
 **LAYER 2's CONTENT IS NOT THE EQUALITY, and the parenthesis above names the wrong
 thing** (`ajc-p3`, 2026-07-30, `I-1461`; landed in
@@ -99,15 +100,17 @@ the same simplification the 2026-07-30 update above records for the **affine** c
 at layer 1 ("layer 3 may quote a per-chart quotient instead of constructing one");
 this paragraph carries it to layer 2, which the layer list did not.
 
-So layer 2 splits as: **(a)** the action and its semilinearity — *landed*, and it
-was the gating step; **(b)** the invariant-basic-open covering — *landed below* as
-`exists_invariant_basicOpen_le` — while openness of `π_U(V)` remains open;
-**(c)** the invariants equality — possibly not needed at all, since the per-piece
-quotient comes from Speiser at the localized ring directly.  **(c) is a reading,
-not a measurement**: a lane building the `GlueData` should check whether the
-*overlap isomorphisms* need it, since that is where two per-piece quotients are
-compared.  Nothing here discharges the gate off the affine locus, and the Hironaka
-trap still bites at layer 3.
+So layer 2 is closed: **(a)** the action and its semilinearity landed first;
+**(b)** `exists_invariant_basicOpen_le` and `iSup_invariantBasicOpen_eq` give the
+invariant-basic-open covering; and **(c)** `GaloisDescent.InvariantQuotientOpen`
+constructs the quotient open, proves its exact-preimage identity, and identifies it
+with the open image of the stable subopen.  The invariants equality may not be
+needed at all, since the per-piece quotient comes from Speiser at the localized ring
+directly.  The next layer must prove that restricting the affine quotient to these
+opens preserves the full bundled `IsGaloisQuotient`, including its universal
+`T`-points clause; that uniqueness statement then supplies the overlap isomorphisms.
+Nothing here yet discharges the gate off the affine locus, and the Hironaka trap
+still bites at layer 3.
 
 ## Main definitions and results (milestone 1)
 
