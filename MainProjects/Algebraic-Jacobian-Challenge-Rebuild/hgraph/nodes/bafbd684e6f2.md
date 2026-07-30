@@ -6,9 +6,10 @@ decl: ProbeP1Bridge.controlSorry
 file: ScratchP1/probe_bridge.lean
 generated: lean
 lean_status: sorry
+stale: true
 title: ProbeP1Bridge.controlSorry
 type: lean
-updated: '2026-07-30T08:49:44'
+updated: '2026-07-30T10:04:23'
 ---
 theorem controlSorry : True := by
   have : 1 = 1 := by sorry

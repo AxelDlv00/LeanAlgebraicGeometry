@@ -1,0 +1,16 @@
+## Checklist
+
+- [x] Started Horizon task ajc-p1.
+- [x] Report saved: .archon-horizon/runs/0083/sessions/0016-horizon-ajc-p1/report.md.
+- [ ] Horizon task ajc-p1 did not record a terminal status; returned it to queued for the next round.
+- [x] Finished Horizon task ajc-p1 with status: queued.
+- [x] Integrated horizon session 0016-horizon-ajc-p1: dbd9789; projects Algebraic-Jacobian-Challenge; 109 files: .archon-horizon/events.jsonl, .archon-horizon/inbox/local/comments/I-1368/C-0009.md, .archon-horizon/inbox/local/comments/I-1368/C-0010.md, .archon-horizon/inbox/local/comments/I-1368/C-0011.md, .archon-horizon/inbox/local/comments/I-1368/C-0012.md, .archon-horizon/inbox/local/comments/I-1368/C-0013.md, .archon-horizon/inbox/local/comments/I-1368/C-0014.md, .archon-horizon/inbox/local/comments/I-1368/C-0015.md, +101 more.
+- [x] Inbox synced.
+- [x] Synced hgraph JSON cache(s): Algebraic-Jacobian-Challenge (1962 nodes, 4538 edges).
+- [x] Published deterministic artifacts (1 hgraph JSON cache(s)).
+- [x] Finished run 0083.
+- [x] Integrated run 0083 into workspace: 2824ac3.
+
+## Issues
+
+- Horizon task ajc-p1 did not record a terminal status; returned it to queued for the next round.

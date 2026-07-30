@@ -1,1 +1,1 @@
-The instance succeeds at line 19 but not at 24. Likely the lakefile's `maxSynthPendingDepth` isn't applied to `lake env lean`.
+All required instances synthesize independently. The failure must be `Polynomial KK` at `Type` vs `Type u_2` universe mismatch, or the `letI N` shadowing. Let me isolate.
