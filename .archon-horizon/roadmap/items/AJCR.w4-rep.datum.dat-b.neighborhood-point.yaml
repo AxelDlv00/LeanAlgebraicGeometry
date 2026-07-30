@@ -24,7 +24,7 @@ summary: 'OPEN after COVER-THRESHOLD. The remaining antecedent is still the same
   route boundary: the old single uniform high-parameter reading is mis-scoped for
   a source that must also support h0=1 uniqueness/open immersion. No impossibility
   theorem for all multi-index local lifts is claimed.'
-status: pending
+status: rejected
 kind: proof
 priority: high
 depends_on: []
@@ -46,7 +46,7 @@ metadata:
     task_title: 'Pic rep lane H: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-b
-  updated_at: '2026-07-30T09:11:53.682838+00:00'
+  updated_at: '2026-07-30T10:15:21.484552+00:00'
   pinned_commits:
   - 5757c8c15908b26b5e7f2d09b5512bd7f0895574
   - ea59eeb02274fb06635ddf0c4c6e1dbcdf22a660
