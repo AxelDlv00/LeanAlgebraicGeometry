@@ -3,6 +3,7 @@ Copyright (c) 2026 Axel Delaval. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Axel Delaval
 -/
+import AlgebraicJacobian.Picard.DivFamilyZero
 import AlgebraicJacobian.Picard.DivPushforwardFlat
 
 /-!
@@ -266,6 +267,27 @@ theorem finite_fiber_schematicSupportι_comp_of_finite
   rw [hpre]
   exact hfin.preimage (schematicSupportι F).isEmbedding.injective.injOn
 
+/-- **The binder holds outright when the support is empty**, with no proper-support
+hypothesis at all — a morphism out of an empty scheme is finite, hence locally
+quasi-finite, by synthesis.
+
+This is the degenerate producer, and it is what makes the reduction of §3
+*testable* rather than a statement about an uninhabited situation: it fires at
+`DivFamily.zero` (`Picard/DivFamilyZero.lean`), whose support is empty by
+`isEmpty_schematicSupport_of_isZero`.
+
+**What it does not show.** Emptiness is exactly the case where the fibre statement
+carries no geometry, so this producer is evidence of satisfiability and not of
+content — the pattern `I-1494` warns about. The non-degenerate case is a *nonempty*
+effective Cartier divisor on a relative curve, and nothing here reaches it. Stated
+anyway, because a reduction nobody can instantiate even once is worth less than one
+that is instantiated at the tree's only family. -/
+theorem locallyQuasiFinite_schematicSupportι_comp_of_isEmpty
+    (he : IsEmpty (schematicSupport F)) :
+    LocallyQuasiFinite (schematicSupportι F ≫ f) :=
+  haveI := he
+  inferInstance
+
 end Composite
 
 end Modules
@@ -332,6 +354,33 @@ field. -/
 theorem quasiCompact_support (x : DivFamily π T) :
     QuasiCompact (Modules.schematicSupportι x.F ≫ pullback.snd π T.hom) :=
   Modules.quasiCompact_schematicSupportι_comp _ _ x.properSupport
+
+/-- **THE BINDER HAS A PRODUCER: it holds at the empty divisor, for an arbitrary
+`π` and an arbitrary test object.**
+
+So `Picard/DivPushforwardFlat.lean`'s theorems are no longer statements nobody can
+instantiate: composing this with `DivFamily.zero` discharges their binder, and
+their conclusions become facts about an actual family rather than an implication
+with an unwitnessed antecedent.
+
+**Read the strength of this correctly, since the natural over-reading is
+available.** The empty divisor is the case where fibre finiteness is *free*, so
+this is a satisfiability witness, not the geometry. It does two things and no
+more: it shows the binder is not vacuous-by-uninhabitability, and it lets a
+reader check that the reduction of
+`Modules.locallyQuasiFinite_schematicSupportι_comp_iff_finite_fibers` composes in
+the intended direction at a real object. The obligation that remains — a nonempty
+effective Cartier divisor on a relative curve has finite fibres — is untouched,
+and is the whole content of the row.
+
+Stated with `π` and `T` fully general because `DivFamily.zero` is
+(`Picard/DivFamilyZero.lean`: no properness, smoothness or separatedness on `π`),
+so there is no curve hypothesis to be double-counted here. -/
+theorem locallyQuasiFinite_zero :
+    LocallyQuasiFinite (Modules.schematicSupportι (DivFamily.zero π T).F
+      ≫ pullback.snd π T.hom) :=
+  Modules.locallyQuasiFinite_schematicSupportι_comp_of_isEmpty _ _
+    (Scheme.Modules.isEmpty_schematicSupport_of_isZero (Limits.isZero_zero _))
 
 end DivFamily
 
