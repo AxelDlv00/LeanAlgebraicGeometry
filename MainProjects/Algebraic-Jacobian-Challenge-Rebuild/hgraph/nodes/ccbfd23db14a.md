@@ -8,12 +8,12 @@ docstring: '**The tower transport of the window point, carrier-free** — the an
 
   `map_divFamWindowGr` (`Picard/DivSchemeFrameCover.lean:188`) with no `DivFam` in
   it.'
-file: ScratchWR/probe_r7_nogo_noeth.lean
+file: AlgebraicJacobian/Picard/DivisorFamilyAffFrameCover.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.map_divisorWindowGrOfQuot
 type: lean
-updated: '2026-07-30T21:44:21'
+updated: '2026-07-30T23:41:24'
 ---
 theorem map_divisorWindowGrOfQuot (d : (relCurve C R).LocalEquations)
     [Module.Finite R ((R ⊗[k]

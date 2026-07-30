@@ -7,25 +7,36 @@ import AlgebraicJacobian.Albanese.Genus0Terminal
 import AlgebraicJacobian.Picard.Pic0VanishingRoute
 
 /-!
-# S11 with the datum binder REMOVED: the degenerate Albanese leaf needs no `JacobianData`
+# S11 with the datum SUPPLIED from the vanishing, not assumed alongside it
 
 `Albanese/Genus0Terminal.lean` closes the uniqueness half of the frozen
 `exists_unique_ofCurve_comp` in the degenerate case, and every one of its statements takes a
 `(d : JacobianData C)` as its first argument.  That binder is not free: `JacobianData` is the
-Wave-4 north star, and at the time that file was written it had no producer that did not run
-through the chart atlas, i.e. through `rep`, `IsChartUniv` and coverage.
+Wave-4 north star.
 
-So the S11 leaf read as *gated on DAT-D* — which is how the roadmap prices it, and which is
-why the row sits behind the divisor-representability lane.
+`Picard/Pic0VanishingRoute.lean` produces a `JacobianData` from the *same* vanishing hypothesis
+that `Genus0Terminal`'s theorems already assume.  Feeding it to those theorems supplies the
+binder from the hypothesis already in hand, so the chain below needs no datum from elsewhere.
 
-**It is not gated on DAT-D.**  `Picard/Pic0VanishingRoute.lean` produces a `JacobianData` from
-the *same* vanishing hypothesis that `Genus0Terminal`'s theorems already assume.  Feeding it
-to those theorems deletes the binder: every consequence there becomes a statement about the
-curve alone.
+## Two things a draft of this header claimed and I have deleted (`I-1575`)
 
-That is the whole content of this file, and it is worth exactly one observation: the datum
-binder and the vanishing hypothesis were never independent.  A file that assumes both is
-assuming the second twice.
+Both were wrong in the direction that flatters this file, which is the direction nobody checks.
+
+* It said the `AJCR.w6-albanese.genus0` row **prices the leaf as gated behind `divRep`**, and
+  that this file refutes that.  The row does not.  It opens with `GATE WAS INHERITED FOLKLORE`,
+  carries `depends_on: []`, and states that D6 gates the `Sym^g` fork and not this leaf; its only
+  "far gate" text is a *quotation* of the worksheet, presented as the thing being refuted — in
+  run 0078, by a different argument.  **The row already agrees**, and arguing with it was the
+  overclaim.
+* It said **"the datum binder and the vanishing hypothesis were never independent"**, and that a
+  file assuming both assumes the second twice.  False.  `Genus0Terminal`'s theorems hold at an
+  *arbitrary* `d`.  The statements below instantiate at one carrier, and their conclusions' types
+  mention `(jacobianData_of_vanishing C h).J`, so a consumer holding a *different* datum cannot
+  use them.  The binder is **instantiated, not removed** — this is the
+  `d := Over.mk (𝟙 (Spec k))` face of a strictly more general theorem, not a strengthening of it.
+
+So read the declarations below as: *at this carrier*, the S11 chain runs from the vanishing
+alone.  That is smaller than "the leaf is ungated" and it is what is proved.
 
 ## What is unconditional here, and what is not
 
@@ -96,16 +107,17 @@ def isTerminal_jacobianData_of_vanishing
 end
 
 variable (C) in
-/-- **S11's UNIQUENESS CLAUSE, WITH THE `JacobianData` BINDER GONE.**
+/-- **S11's uniqueness clause with the datum supplied rather than assumed.**
 
 `JacobianData.existsUnique_ofCurve_comp_of_pic0Subgroup_eq_bot` is the upstream assembly; it
 takes a datum, the vanishing, surjectivity of the curve's structure morphism, a rational
-point, and the existence half `hex`.  This is the same theorem with the datum *supplied*, so
-the hypotheses are: the vanishing, a nonempty curve, a rational point, and `hex`.
+point, and the existence half `hex`.  This is the same theorem with the datum *built from the
+vanishing*, so the hypotheses are: the vanishing, a nonempty curve, a rational point, and `hex`.
 
-Read against the `AJCR.w6-albanese.genus0` row, which records the leaf as gated behind
-`divRep`: it is not, and never was — the gate was the datum binder, and the vanishing that
-the row's own hypothesis carries is enough to build one.
+**Not a generalisation of the upstream theorem** (`I-1575`): that one holds at an arbitrary `d`,
+and this is its `d := jacobianData_of_vanishing C h` face.  The conclusion's type names that
+carrier, so a consumer holding a different datum must use the upstream form.  What is bought is
+that the chain runs from the vanishing alone, with no datum from elsewhere.
 
 `hex` is Milne I 3.9 and is still open, exactly as upstream. -/
 theorem existsUnique_ofCurve_comp_of_vanishing

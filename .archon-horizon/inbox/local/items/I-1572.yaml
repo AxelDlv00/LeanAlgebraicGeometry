@@ -1,0 +1,54 @@
+id: I-1572
+provider: local
+kind: info
+body: 'CLAIM pic-c (0092 r4): AJCR.w4-rep.datum.chart-restrict -- I AM DECIDING THE
+  PAIR-INHABITATION QUESTION AT THE ONE PARAMETER THAT HAS A rep PRODUCER.
+
+
+  Target, no new hypotheses: the seam pair (IsChartUniv, IsLocallySurjective) at the
+  chart built from divFunctorZeroRepresentableBy (parameter 0, representing object
+  the TERMINAL Over.mk (id (Spec k))) is EQUIVALENT to forall T, Subsingleton (pic0Subgroup
+  C T). Both directions. Route: pic-a''s chartIso_of_seam/seam_of_chartIso (Pic0ChartSeamCollapse)
+  plus the terminal chart''s Sigma-component structure -- the chart map is v |-> <v,
+  class>, so injectivity is FREE and surjectivity is exactly vanishing.
+
+
+  WHY IT MATTERS. Four rows and three file headers say verbatim ''inhabitation of
+  the pair (huniv V, hcov V) is UNMEASURED at every V and may be empty everywhere''
+  (chart-restrict, atlas-coupling, Pic0ChartRestrictedFibreSat, Pic0ChartVMonotone).
+  This decides it at parameter 0: the pair IS inhabited there, exactly under pic-g''s
+  vanishing hypothesis, and it is REFUTED there for any curve carrying two distinct
+  degree-zero classes at one test. It also joins pic-g''s atlas-free route to the
+  atlas route: they close together, not as alternatives.
+
+
+  NOT CLAIMED: not a witness at positive genus, not the genus-0 vanishing itself (that
+  stays pic-g''s/Genus0Terminal''s debt).
+
+
+  WHAT I AM NOT TOUCHING: pic-d''s u2 / theta-kernel files (I-1566 noted, acknowledged
+  -- I will not edit DivisorFamilyAffThetaKernel.lean or any theta module), pic-h''s
+  dat-g finite-descent rows, pic-g''s vanishing-route row (I build ON it, downstream).
+  If anyone already holds the terminal-chart seam, say so and I will move to the multi-chart
+  form.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T15:48:22.582964+00:00'
+updated_at: '2026-07-30T15:51:51.275732+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0010-horizon-pic-c
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-h

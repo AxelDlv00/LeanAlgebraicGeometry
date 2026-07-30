@@ -6,19 +6,32 @@ Authors: The AlgebraicJacobian Contributors
 import AlgebraicJacobian.Picard.JacobianDataCharts
 
 /-!
-# A SECOND ROUTE TO `JacobianData`, WITH NONE OF THE THREE ATLAS ANTECEDENTS
+# A NON-ATLAS INHABITANT OF THE `pic0TypeFunctor` REPRESENTABILITY SLOT
 
-Every producer of `JacobianData C` in this tree — `JacobianData.ofCharts`,
-`ofChartsOfCompactSpace`, `ofAbelImage`, `ofChartsOfAbelImage`,
-`jacobianDataOfMixedParamCharts`, `jacobianDataOfCompactFromClass`,
-`jacobianDataOfFiniteMixedParamCharts` — consumes the same chart family.  So the three
-antecedents the board tracks (`rep`, `IsChartUniv`, coverage) are antecedents of **one
-route**, not of the goal, and every result about them is conditional on that route being
-the one that closes.
+**HEADLINE CORRECTED after a fresh-context audit (`I-1573`), and the correction is the more
+useful statement.**  This file first claimed to be "a second route to `JacobianData` with none
+of the three atlas antecedents", on the strength of an enumeration of seven producers said to
+consume the same chart family.  **That enumeration was wrong three ways**, and a lane pricing
+work off it would be misled:
 
-This file builds a different route.  It is not a better route in general; it is a route
-whose inputs are *disjoint* from the atlas's, and writing it down turns "the goal needs
-`rep`" into "the *atlas* needs `rep`", which is a different and true statement.
+* it *omitted* producers — `JacobianData.ofRepresentableBy`, `ofAbelLifts`,
+  `ofChartsOfAbelLifts`, `ofPic0ClassSurjective`, `PicRepDatum.toJacobianData`,
+  `toJacobianDataOfAbelLifts`, `JacobianData.baseChange`;
+* two of the seven it *did* name take an arbitrary representation and no chart at all
+  (`ofAbelImage`, and `toJacobianData` in the `PicRepDatum` file), so "the antecedents belong
+  to one route" was already legible in two pre-existing signatures.  This file is **not** what
+  blocks that inference;
+* and `jacobianData_of_subsingleton` below **is** `JacobianData.ofRepresentableBy` applied to a
+  new `rep`.  So it is not a second route to the goal at all.
+
+What it actually is, and this is defensible: **the first inhabitant of
+`(pic0TypeFunctor C).RepresentableBy` that is not built from a chart atlas.**  Before it, the
+only producers of that slot were `pic0RepresentableByOfCharts` (`Pic0SigmaSheaf.lean:161`) and
+its chart-family derivatives — every one of them carrying `IsChartUniv` and the coverage
+instance.  The slot now has an inhabitant that carries neither, and the general constructor
+`ofRepresentableBy` turns it into the goal object for free.
+
+Read that as a statement about the **slot**, not about the goal.  Census the slot you fill.
 
 ## The mechanism
 
@@ -44,9 +57,11 @@ The hypothesis is **strong** — it says the Jacobian is a point — and it is *
 every curve of positive genus.  That is not a defect of the route; it is the route's
 content.  Three things follow that are not available without it:
 
-1. **The three antecedents are route-specific, provably.**  `jacobianData_of_subsingleton`
-   produces the goal object with none of them in scope.  A reader can no longer conclude
-   from "`rep` has no producer" that `JacobianData` has no producer.
+1. **The `rep` slot has a non-atlas inhabitant.**  `pic0RepresentableBy_terminal_of_subsingleton`
+   fills `(pic0TypeFunctor C).RepresentableBy` with no `IsChartUniv` and no coverage instance in
+   scope, which no prior producer of that slot does.  *(This bullet used to say the file made
+   the three antecedents "route-specific, provably"; that was the overclaim corrected at the top
+   — two pre-existing signatures already showed it.)*
 2. **`Genus0Terminal` gains its missing direction.**  `Albanese/Genus0Terminal.lean` proves
    a datum *plus* vanishing gives a terminal `d.J`, and its header records the vanishing
    implication as "the single mathematical debt of S11".  Nobody wrote the direction that
@@ -54,12 +69,20 @@ content.  Three things follow that are not available without it:
    is landed downstream, in `Albanese/Genus0VanishingDatum.lean` — not here, because
    `Genus0Terminal` imports the Abel material and this file sits below it.  Its consequence
    is that the whole S11 leaf, uniqueness clause included, no longer waits on DAT-D at all.
-3. **The debt becomes a statement about RINGS.**  `picEt C T` is by construction a subgroup
-   of a *product* over `T.left.affineOpens` valued in `PicEtAff C Γ(T.left, U)`, so a
-   subsingleton at every test *algebra* gives one at every test *object* componentwise —
-   no cover, no gluing, no naturality (`subsingleton_picEt_of_affine`).  And the converse
-   holds by the affine comparison (`subsingleton_picEtAff_of_forall`), so the reduction is
-   an equivalence rather than a weakening.
+3. **A `picEt`-level sufficient condition, statable over RINGS.**  `picEt C T` is by
+   construction a subgroup of a *product* over `T.left.affineOpens` valued in
+   `PicEtAff C Γ(T.left, U)`, so a subsingleton at every test *algebra* gives one at every test
+   *object* componentwise — no cover, no gluing, no naturality
+   (`subsingleton_picEt_of_affine`), and the converse holds by the affine comparison
+   (`subsingleton_picEtAff_of_forall`).  So the two *`picEt`* quantifiers are one hypothesis.
+
+   **CORRECTED (`I-1574`): this is NOT "the debt becomes a statement about rings".**  The bridge
+   from there to the hypothesis this file actually consumes is `subsingleton_pic0_of_affine`,
+   which runs **one way only** — as its own docstring says.  Vanishing `picEt` is strictly
+   stronger than vanishing `pic⁰`, and the genus-0 curve is exactly a case where `pic⁰` vanishes
+   and `picEt` need not: a degree-one class is a `picEt` class and is not degree zero.  So the
+   ring form is a *sufficient condition*, and an attack on the real debt should target
+   `pic0Subgroup` directly.
 
 ## What this does NOT do
 
@@ -67,16 +90,22 @@ It does not represent `pic0Functor` for a curve of positive genus, and it does n
 the genus-0 debt: deriving the vanishing hypothesis from `genus C = 0` is the curve theory
 `Genus0Terminal`'s header isolates, and nothing here supplies it.  In particular
 `jacobianData_of_subsingleton` is **not** a witness that `JacobianData C` is inhabited for
-the challenge curve — it is a witness that the three atlas antecedents are not the goal's.
+the challenge curve.
+
+**And the hypothesis is not merely strong, it is UNMEASURED in this tree** (`I-1573`).  Nothing
+here proves the vanishing or its negation for any curve, and no object in the tree carries all
+three of `SmoothOfRelativeDimension 1`, `IsProper`, `GeometricallyIrreducible` — so the sentence
+above about positive genus rests on mathematics outside the tree, not on anything formalized.
+Stated because "false at positive genus" reads as a measurement and is not one.
 
 ## Main declarations
 
-* `AlgebraicGeometry.pic0RepresentableBy_terminal_of_subsingleton` — the `rep` field at the
-  terminal object, from vanishing `pic⁰`.
-* `AlgebraicGeometry.jacobianData_of_subsingleton` — **the atlas-free producer.**
+* `AlgebraicGeometry.pic0RepresentableBy_terminal_of_subsingleton` — **the non-atlas inhabitant
+  of the `rep` slot**, at the terminal object, from vanishing `pic⁰`.
+* `AlgebraicGeometry.jacobianData_of_subsingleton` — `ofRepresentableBy` applied to it.
 * `AlgebraicGeometry.subsingleton_picEt_of_affine` / `subsingleton_pic0_of_affine` — the
-  reduction to test rings, componentwise.
-* `AlgebraicGeometry.subsingleton_picEtAff_of_forall` — its converse.
+  `picEt`-level reduction to test rings, componentwise, and its one-way descent to `pic⁰`.
+* `AlgebraicGeometry.subsingleton_picEtAff_of_forall` — the converse of the *first* of those.
 * `AlgebraicGeometry.jacobianData_of_affine_subsingleton` — the producer with the
   ring-level hypothesis.
 * `AlgebraicGeometry.pic0Subgroup_eq_bot_of_subsingleton` /
@@ -148,22 +177,22 @@ def pic0RepresentableBy_terminal_of_subsingleton
     apply Subsingleton.elim
 
 variable (C) in
-/-- **THE ATLAS-FREE PRODUCER OF THE NORTH STAR'S DATUM.**
+/-- **The datum from vanishing `pic⁰` alone**, via the general constructor.
 
-`JacobianData C` from vanishing `pic⁰` alone.  Read the input list against
-`jacobianDataOfMixedParamCharts`, whose docstring enumerates `rep`, `hf`, the
-`IsLocallySurjective` instance, `hD` and `hcpt`: **none of the five appears here.**
+This is `JacobianData.ofRepresentableBy` fed the non-atlas `rep` above and the two identity
+certificates.  So it carries none of the five inputs `jacobianDataOfMixedParamCharts`'
+docstring enumerates (`rep`, `hf`, the `IsLocallySurjective` instance, `hD`, `hcpt`).
 
-That is the point of the declaration.  Those five are the antecedents of the *chart* route,
-and until this file existed the tree had no second route to compare them against — so a
-reader auditing "what does `JacobianData` cost" would read the atlas's price as the goal's.
-It is not: the goal costs whichever route one takes, and this route costs one hypothesis
-about the functor's values.
+**What that is and is not evidence of** — corrected after audit (`I-1573`).  It is *not* a
+"second route" establishing that the chart antecedents belong to one route: `ofAbelImage`
+(`JacobianDataAbelImage.lean`) and `PicRepDatum.toJacobianData`
+(`JacobianDataFromPicRepDatum.lean`) already take an arbitrary representation and no chart, so
+two pre-existing signatures showed that.  This declaration is the *composition* of the general
+constructor with a new inhabitant of the `rep` slot, and the new part is the inhabitant.
 
-**The hypothesis is strong and this is not hidden.**  `Subsingleton (pic0Subgroup C T)` at
-every `T` says the Jacobian is a point, which for a curve of positive genus is false.  So
-this produces a datum for *degenerate* curves only.  What it establishes unconditionally is
-the structure of the problem, plus the genus-0 leaf below. -/
+**The hypothesis is strong, and its truth value is unmeasured here.**  `Subsingleton
+(pic0Subgroup C T)` at every `T` says the Jacobian is a point.  Nothing in this tree proves it
+or refutes it for any curve; that it fails at positive genus is mathematics from outside. -/
 def jacobianData_of_subsingleton
     (h : ∀ T : Over (Spec (.of k)), Subsingleton (pic0Subgroup C T)) :
     JacobianData C :=

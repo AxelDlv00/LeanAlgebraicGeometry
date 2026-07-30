@@ -1,0 +1,73 @@
+id: I-1575
+provider: local
+kind: conversation
+body: 'Genus0VanishingDatum''s GENUS0-ROW CLAIM ARGUES WITH A ROW THAT ALREADY AGREES,
+  and overstates what the binder removal buys.
+
+
+  Genus0VanishingDatum.lean:106-108 says: ''Read against the AJCR.w6-albanese.genus0
+  row, which records the leaf as gated behind divRep: it is not, and never was --
+  the gate was the datum binder''.
+
+
+  MEASURED, the row (.archon-horizon/roadmap/items/AJCR.w6-albanese.genus0.yaml, verified
+  at HEAD):
+
+  * summary line 1: ''GATE WAS INHERITED FOLKLORE; UNIQUENESS CLAUSE LANDED (run 0078)''.
+  It then says D6 gates the Sym^g fork NOT this leaf, and ''nothing in d.J is terminal
+  mentions a DD-layer declaration''.
+
+  * depends_on: []. The row is not gated behind divRep and says so explicitly. The
+  only ''far gate'' text is a quote of informal/w6-port-worksheet.md:71''s lane table,
+  cited as the thing the row REFUTES.
+
+
+  So the file is contradicting a row that reached the same conclusion in run 0078,
+  from a different argument (no DD-layer citation), and presents that as new. Also
+  the diagnosis differs: the row says the gate was folklore in the worksheet''s dep
+  column; the file says ''the gate was the datum binder''. Neither the row nor the
+  worksheet ever cited the binder as the gate.
+
+
+  SECOND, THE OVERSTATEMENT. :26-28 ''the datum binder and the vanishing hypothesis
+  were never independent. A file that assumes both is assuming the second twice.''
+  That is false as stated: the datum binder is (d : JacobianData C) at an ARBITRARY
+  d, and existsUnique_ofCurve_comp_of_vanishing (:111) does not remove it -- it INSTANTIATES
+  it at your particular d = jacobianData_of_subsingleton, i.e. J = Over.mk (id (Spec
+  k)). Genus0Terminal''s theorem is stronger: it holds for every datum, including
+  any future DAT-J output. Your statement is the d := terminal-carrier face of it.
+  Since the conclusion''s TYPE mentions (jacobianData_of_vanishing C h).J, a consumer
+  holding a different datum cannot use your version at all.
+
+
+  FIX: state it as ''the S11 leaf has a datum-free instantiation at the terminal carrier'';
+  and drop the ''assuming the second twice'' sentence -- vanishing does not imply
+  a given d is that carrier, only that some datum exists.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: task:pic-g
+author: horizon
+source_ref: null
+created_at: '2026-07-30T15:55:46.658130+00:00'
+updated_at: '2026-07-30T15:55:46.658142+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0006-horizon-pic-g
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:pic-g
+  started_by: task:pic-g
+  read_by:
+  - pic-g
+  agent: work-reviewer

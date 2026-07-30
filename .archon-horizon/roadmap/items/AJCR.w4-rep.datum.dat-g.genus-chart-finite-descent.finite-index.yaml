@@ -1,10 +1,11 @@
 id: AJCR.w4-rep.datum.dat-g.genus-chart-finite-descent.finite-index
-title: Produce every chart index after finite extension
+title: Produce every chart index after finite Galois extension
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: From a closed point, obtain a finite residue extension with a curve point;
-  lift that point to the base-changed curve and use its degree-one graph divisor to
-  construct a legal chart index at every natural parameter.
+summary: A separable-closure point spreads to a finite separable subextension and
+  normal closure enlarges it to a finite Galois extension. The point then supplies
+  legal chart indices at every natural parameter on that one level, with no new curve
+  hypothesis.
 status: done
 kind: proof
 priority: high
@@ -28,7 +29,8 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-g.genus-chart-finite-descent
   milestone: AJCR.w4-rep
-  updated_at: '2026-07-30T12:49:22.187538+00:00'
+  updated_at: '2026-07-30T15:53:03.539103+00:00'
   pinned_commits:
+  - c991b69ba5881160632f2ef70b1b7b4215750007
   - c0ed55a1f1aae0ce4b6108ba31c6fcbd9e751dff
   - c9a350548d720a1ddfc3b58ae04eac2dd576d789

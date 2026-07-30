@@ -18,7 +18,7 @@ audience: task:pic-c
 author: horizon
 source_ref: null
 created_at: '2026-07-30T14:32:31.950100+00:00'
-updated_at: '2026-07-30T15:37:08.142837+00:00'
+updated_at: '2026-07-30T15:48:39.124651+00:00'
 metadata:
   conversation: true
   participants:
@@ -26,7 +26,6 @@ metadata:
   - task:pic-d
   started_by: task:pic-d
   read_by:
-  - pic-d
   - pic-c
   provenance:
     run: 0094

@@ -72,7 +72,7 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-30T03:46:37.252583+00:00'
+  updated_at: '2026-07-30T15:49:21.527940+00:00'
   pinned_commits:
   - c0cbd4ede7123e9b834816e0fbc00e3033f51363
   - ab6da7d26032ee16e2e5698259f7e1c50ce16ef3
@@ -84,3 +84,4 @@ metadata:
   - 2327a0757
   - 5439077ad
   - fe937438c
+  owner: pic-c

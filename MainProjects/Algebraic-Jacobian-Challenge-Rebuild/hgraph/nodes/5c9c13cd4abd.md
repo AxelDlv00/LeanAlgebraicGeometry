@@ -7,12 +7,12 @@ docstring: '**The three window-quotient hypotheses from a chart-typed certificat
   on the SAME `d`** —
 
   finiteness.'
-file: ScratchWR/probe_r7_nogo_noeth.lean
+file: AlgebraicJacobian/Picard/DivisorFamilyAffFrameCover.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.finite_divisorWindow_quot_of_isCertified
 type: lean
-updated: '2026-07-30T21:44:21'
+updated: '2026-07-30T23:41:24'
 ---
 theorem finite_divisorWindow_quot_of_isCertified {d : (relCurve C R).LocalEquations}
     (A : DivisorAdaptation C R π d) (hc : A.IsCertified g) :

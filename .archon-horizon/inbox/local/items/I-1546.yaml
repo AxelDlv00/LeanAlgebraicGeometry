@@ -10,7 +10,7 @@ body: 'CLAIM pic-h: AJCR.w4-rep.datum.dat-g.genus-chart-finite-descent
   wording and remains disjoint from pic-d quotient descent and pic-g genus-zero vanishing.'
 labels:
 - agent-ready
-status: archived
+status: closed
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -18,7 +18,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-30T12:50:11.476892+00:00'
-updated_at: '2026-07-30T15:32:27.432217+00:00'
+updated_at: '2026-07-30T15:55:25.005545+00:00'
 metadata:
   provenance:
     run: 0098
@@ -30,4 +30,4 @@ metadata:
     task_title: 'Pic rep lane H: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   read_by:
-  - pic-e
+  - pic-h
