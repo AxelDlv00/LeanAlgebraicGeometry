@@ -436,16 +436,41 @@ measurement**: the comparison *decomposes*, and both steps are free —
 `selfPullback_coverMap_left_iso` below is the two-line composite. So the
 `T`-relative base change is **not** the residue either.
 
-What is genuinely left is narrower than either: transporting the
-`Gal`-**indexing** across `pullbackSpecIso` and the `sigmaSpec` iso so that the two
-projections become the identity and the `γ`-twist *as morphisms*, and then reading
-`picEt` along that identification. The ingredients all exist
-(`AlgebraicGeometry.pullbackSpecIso`; `IsIso (sigmaSpec …)` by synthesis once
-`Fintype (k' ≃ₐ[k] k')` is in scope; `ajc-p1`'s `galoisSelfTensorEquiv`); what
-nothing supplies is the *coherence* — that the coproduct's `γ`-component inclusion
-composed with the two projections gives `id` and `γ`. That is a computation about
-specific morphisms, not a missing lemma, and it is the honest description of what a
-lane closing this owes. §2's two tensor-inclusion lemmas are the **ring-level** input
+**What is genuinely left — CORRECTED 2026-07-30 (`ajc-p1`, `I-1438`), because the
+version of this paragraph that stood here was wrong in both directions.** That
+version said the residue was "transporting the `Gal`-**indexing** across
+`pullbackSpecIso` and the `sigmaSpec` iso so that the two projections become the
+identity and the `γ`-twist *as morphisms*", listed those two plus
+`galoisSelfTensorEquiv` as the ingredients, and called the missing piece "the
+*coherence* — that the coproduct's `γ`-component inclusion composed with the two
+projections gives `id` and `γ` … a computation about specific morphisms".
+
+**The coherence is free and needs NONE of those three.**
+`Picard/GaloisDescent/PicEtGaloisBridge.lean` builds the `γ`-component as
+`coverSelfSection T γ := pullback.lift (𝟙 _) (twistTest T γ)` — from the universal
+property of the pullback and `twistTest_comp_coverMap` alone — and the two
+identities this paragraph asked for *are* `pullback.lift_fst` and
+`pullback.lift_snd`. No `pullbackSpecIso`, no `sigmaSpec`, no
+`galoisSelfTensorEquiv` occurs in any proof term there. What a consumer needs is a
+*section of the self-pullback*, not a transport of the `Gal`-indexing.
+
+**And the two directions are not symmetric, which this paragraph did not
+separate.** `invariant_of_projections_agree` derives `γ`-invariance from the
+agreement hypothesis above **unconditionally** — arbitrary field, only
+`[Algebra k k']`, no finiteness, separability or `IsGalois` — by one restriction
+along that section. The *converse*, which is the direction `G1` needs, cannot be
+functoriality at all: the two projections lie in the image of no single section, so
+the `γ`-sections must **jointly cover** the self-pullback.
+`projections_agree_of_invariant` carries exactly that as an explicit, undischarged
+antecedent, and `exists_unique_descend_picEt_of_invariant` is this file's `∃!` with
+`γ`-invariance in place of projection-agreement.
+
+So what a lane closing this owes is a **covering** statement about the `Gal`-indexed
+section family — a different kind of fact from a coherence identity — and that is
+where `[IsGalois]` enters the route: by `galoisSelfTensorHom_bijective_iff_isGalois`
+the splitting is *false* below the Galois level, so there the antecedent fails
+rather than merely being unproved. `galoisSelfTensorEquiv` is the algebra input to
+*that*, not to the coherence. §2's two tensor-inclusion lemmas are the **ring-level** input
 to that computation and are explicitly *not* the computation itself (`I-1415`).
 
 This file does not assume the bridge and does not weaken the invariance step to
@@ -489,11 +514,18 @@ So, corrected and stated once:
 * the Galois splitting — **landed** (`ajc-p1`), with its two generator evaluations
   consumed here;
 * the `T`-relative base change of the compatibility object — **landed** here;
-* the `Gal`-**indexed** identification of that object, i.e. transporting the two
-  ring identities through `Spec` and `sigmaSpec` so they become the cover's two
-  *projections* — **OPEN**. Attempted this session and not landed: the composite
-  sticks on `Scheme.Spec.map` versus `Spec.map` under the instance transparency the
-  rewrite needs. Ring content done, categorical plumbing owed.
+* the `Gal`-**indexed** identification of that object — **the entry that this list
+  got wrong, corrected 2026-07-30 (`ajc-p1`, `I-1438`)**. It read: "transporting the
+  two ring identities through `Spec` and `sigmaSpec` so they become the cover's two
+  *projections* — OPEN. Attempted this session and not landed: the composite sticks
+  on `Scheme.Spec.map` versus `Spec.map` … Ring content done, categorical plumbing
+  owed." That transport is **not needed**: `Picard/GaloisDescent/PicEtGaloisBridge.lean`
+  gets the `γ`-component from `pullback.lift` and the two projection identities from
+  `pullback.lift_fst`/`lift_snd`, with `sigmaSpec` and `pullbackSpecIso` absent from
+  every proof term. So the plumbing this entry called owed was never on the route.
+  What *is* open is one level up and is a different kind of statement: that the
+  `Gal`-indexed **section family covers** the self-pullback (`hcov` there). The free
+  half — projection-agreement ⟹ `γ`-invariance — is **landed** and unconditional.
 * `k'`-side representability and the `G2` quotient — **open**, and not made cheaper
   by anything here.
 
