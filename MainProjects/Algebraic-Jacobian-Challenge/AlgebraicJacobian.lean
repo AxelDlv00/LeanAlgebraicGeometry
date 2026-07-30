@@ -245,6 +245,7 @@ import AlgebraicJacobian.Picard.GradedPiecesFinite
 import AlgebraicJacobian.Picard.ChartSectionsFinite
 import AlgebraicJacobian.Picard.ProjectiveMorphism
 import AlgebraicJacobian.Picard.FiniteMorphismEmbedding
+import AlgebraicJacobian.Picard.FiniteMapProjectiveGluing
 import AlgebraicJacobian.Picard.SerreFiniteness
 import AlgebraicJacobian.Picard.ZariskiDescentRepresentability
 import AlgebraicJacobian.Picard.GrassmannianZariskiSheaf
