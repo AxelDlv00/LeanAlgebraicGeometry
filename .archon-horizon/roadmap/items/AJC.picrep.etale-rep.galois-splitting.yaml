@@ -1,0 +1,55 @@
+id: AJC.picrep.etale-rep.galois-splitting
+title: The Galois splitting k' (x)_k k' = prod over Gal(k'/k) of k' -- CLOSED sorry-free,
+  and bijective IFF Galois
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'CLAIMED ajc-p1 (run 0083 r6). Pure algebra, no picEt: for an arbitrary finite
+  Galois L/K, the L-algebra equivalence L (x)[K] L ~=a[L] ((L ~=a[K] L) -> L), a (x)
+  b |-> (gamma |-> a * gamma b).
+
+
+  WHY IT IS A ROW. ajc-p2''s I-1367 (claiming AJC.picrep.etale-rep.invariance) measured
+  this as the SINGLE absent input of the G1 invariance step. p1 declined invariance
+  in its favour and took the brick, so the two land in parallel rather than one lane
+  doing both. Absence reproduced independently by p1 before claiming: exact? fails
+  on Function.Bijective of exactly this map at lake env lean; no name-shaped search
+  over mathlib + both projects returns it. Nearest mathlib relatives -- Algebra.Etale.iff_exists_algEquiv_prod
+  (product of SOME finite separable extensions, not Gal-indexed) and RingTheory/Etale/Field.equivPiOfIsSepClosed
+  (needs [IsSepClosed K]) -- are different statements.
+
+
+  ENGINE ALREADY IN-TREE: GaloisDescent/SemilinearModules.lean''s galoisCol_span L-spans
+  (Gal -> L) by the columns (gamma |-> gamma (b i)), which are the images of 1 (x)
+  b i under this map.
+
+
+  WHAT IT DOES NOT BUY: no antecedent of fgaPicardRepresentability. It is the algebra
+  input of one of the two steps between the landed sheaf axiom and a descended class;
+  the G2 scheme quotient stays open.'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-30T00:03:14.957394+00:00'
+  provenance:
+    run: 0083
+    session: 0014-horizon-ajc-p1
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.picrep.etale-rep
+  updated_at: '2026-07-30T00:35:39.748774+00:00'
+  pinned_commits:
+  - 7b135daed5
+  - c6bcc83500
