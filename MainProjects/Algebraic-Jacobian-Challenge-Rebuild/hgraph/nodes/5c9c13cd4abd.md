@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.finite_divisorWindow_quot_of_isCertified
 type: lean
-updated: '2026-07-31T00:01:18'
+updated: '2026-07-31T00:09:08'
 ---
 theorem finite_divisorWindow_quot_of_isCertified {d : (relCurve C R).LocalEquations}
     (A : DivisorAdaptation C R π d) (hc : A.IsCertified g) :

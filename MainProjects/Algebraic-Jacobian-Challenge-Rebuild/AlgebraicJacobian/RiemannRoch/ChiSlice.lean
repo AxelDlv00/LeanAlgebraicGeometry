@@ -113,6 +113,35 @@ theorem surjective_map_f (hS : S.ShortExact) (n : ℕ) [Subsingleton (HModule S.
     Function.Surjective (map S.f n) := fun y =>
   (exact_map_f_map_g hS n y).mp (Subsingleton.elim _ 0)
 
+/-- **Right exactness on degree-zero cohomology**: `H⁰(X₂) → H⁰(X₃)` is
+surjective when `H¹(X₁)` vanishes. -/
+theorem surjective_map_g_zero (hS : S.ShortExact) [Subsingleton (HModule S.X₁ 1)] :
+    Function.Surjective (map S.g 0) := fun y =>
+  (exact_map_g_delta hS rfl y).mp (Subsingleton.elim _ 0)
+
+/-- The degree-zero right-exactness statement on sections over a terminal object of the
+site. -/
+theorem surjective_app_g_zero (hS : S.ShortExact) {T : C} (hT : IsTerminal T)
+    [Subsingleton (HModule S.X₁ 1)] :
+    Function.Surjective (S.g.hom.app (op T)).hom := by
+  intro y
+  obtain ⟨x, hx⟩ := surjective_map_g_zero hS
+    ((linearEquiv₀ J hT S.X₃).symm y)
+  refine ⟨linearEquiv₀ J hT S.X₂ x, ?_⟩
+  rw [linearEquiv₀_naturality (hT := hT) (f := S.g), hx,
+    LinearEquiv.apply_symm_apply]
+
+/-- If `H¹(F)` vanishes, the cokernel projection of a monomorphism `F ⟶ G` is
+surjective on sections over a terminal object. -/
+theorem cokernelπ_app_surjective_of_subsingleton_h1
+    {F G : Sheaf J (ModuleCat.{u} R)} (ι : F ⟶ G) [Mono ι]
+    {T : C} (hT : IsTerminal T) [Subsingleton (HModule F 1)] :
+    Function.Surjective ((cokernel.π ι).hom.app (op T)).hom := by
+  let S := ShortComplex.mk ι (cokernel.π ι) (cokernel.condition ι)
+  have hS : S.ShortExact :=
+    { exact := ShortComplex.exact_of_g_is_cokernel _ (cokernelIsCokernel ι) }
+  exact surjective_app_g_zero hS hT
+
 section FinitenessTransfer
 
 variable {C : Type u} [SmallCategory C] {J : GrothendieckTopology C}

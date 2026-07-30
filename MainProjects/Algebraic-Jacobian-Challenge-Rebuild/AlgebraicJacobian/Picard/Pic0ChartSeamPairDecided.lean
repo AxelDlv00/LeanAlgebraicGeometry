@@ -88,10 +88,10 @@ and nothing more.
   unconditionally**, at the unrestricted chart.
 * `AlgebraicGeometry.surjective_app_abelSigmaChartZero_of_subsingleton` /
   `subsingleton_pic0Subgroup_of_surjective_app` — surjectivity **is** the vanishing, both ways.
+* `AlgebraicGeometry.isIso_abelSigmaChartZero_of_subsingleton` — the chart is an isomorphism
+  of presheaves under the vanishing.
 * `AlgebraicGeometry.seamPair_abelSigmaChartZero_of_subsingleton` — **THE INHABITANT**: both
   seam antecedents at once.
-* `AlgebraicGeometry.pic0RepresentableBy_abelSigmaChartZero_of_subsingleton` — the seam fired:
-  a representation of `pic0TypeFunctor C` through `pic0RepresentableByOfCharts`.
 * `AlgebraicGeometry.seamPair_abelSigmaChartZero_iff` — **the decision**, as an iff.
 * `AlgebraicGeometry.not_seamPair_abelSigmaChartZero_of_two_pic0` — the refutation at any
   curve with two distinct degree-zero classes at one test.
@@ -290,6 +290,110 @@ theorem subsingleton_pic0Subgroup_of_surjective_app
   have : (⟨S.hom, x⟩ : (pic0SigmaSheaf C).1.obj (op S.left)) = ⟨S.hom, y⟩ := by
     rw [← hvx, ← hvy, hx, hy]
   exact eq_of_heq (Sigma.mk.inj this).2
+
+/-! ## THE INHABITANT, AND THE DECISION
+
+The two sections above meet here.  Injectivity is free, surjectivity is the vanishing, and
+`isIso_iff_bijective` at every test turns the pair into `IsIso` — from which both seam
+antecedents follow, antecedent 1 because `MorphismProperty.relative` contains the isomorphisms
+and antecedent 2 because an iso is locally surjective. -/
+
+omit [GeometricallyReduced C.hom] in
+variable (C pi) in
+/-- **The terminal chart is an isomorphism of presheaves under the vanishing.**
+
+The bridge lemma of this section: injective (free) plus surjective (the vanishing) at every
+test is bijective at every test, and a pointwise-iso natural transformation is an iso. -/
+theorem isIso_abelSigmaChartZero_of_subsingleton
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - ((0 : ℕ) : ℤ))
+    (hvan : ∀ S : Over (Spec (.of k)), Subsingleton (pic0Subgroup C S)) :
+    IsIso (abelSigmaChartZero (C := C) (pi := pi) m Z hdeg) := by
+  haveI : ∀ T, IsIso ((abelSigmaChartZero (C := C) (pi := pi) m Z hdeg).app T) := fun T =>
+    (isIso_iff_bijective _).mpr
+      ⟨injective_abelSigmaChartZero C pi m Z hdeg T,
+       surjective_app_abelSigmaChartZero_of_subsingleton C pi m Z hdeg hvan T⟩
+  exact NatIso.isIso_of_isIso_app _
+
+omit [GeometricallyReduced C.hom] in
+variable (C pi) in
+/-- **THE INHABITANT OF THE SEAM PAIR.**
+
+Both antecedents of `pic0RepresentableByOfCharts`, at one chart, at once — the thing four
+roadmap rows record as unmeasured.  Antecedent 1 is `MorphismProperty.of_isIso`; antecedent 2
+is the instance an iso carries.
+
+Read against the endpoint literature: `Pic0ChartRestrictedFibreSat` shows the pair's clauses
+fail at `V = ⊤` for the *unrestricted divisor scheme* chart and degenerate at `V = ⊥`, and
+concludes "any working `V` is a proper intermediate open".  That conclusion is about *that*
+chart.  Here the chart source is `Spec k`, and no restriction is used at all — the honest
+statement of the interval result is that a working `V` is proper *for a chart whose source is
+the divisor scheme of a positive-degree parameter*. -/
+theorem seamPair_abelSigmaChartZero_of_subsingleton
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - ((0 : ℕ) : ℤ))
+    (hvan : ∀ S : Over (Spec (.of k)), Subsingleton (pic0Subgroup C S)) :
+    IsOpenImmersion.presheaf (abelSigmaChartZero (C := C) (pi := pi) m Z hdeg) ∧
+      Presheaf.IsLocallySurjective Scheme.zariskiTopology
+        (abelSigmaChartZero (C := C) (pi := pi) m Z hdeg) := by
+  haveI := isIso_abelSigmaChartZero_of_subsingleton C pi m Z hdeg hvan
+  exact ⟨MorphismProperty.of_isIso (P := IsOpenImmersion.presheaf) _, inferInstance⟩
+
+variable (C pi) in
+/-- **THE DECISION, as an iff.**  The seam pair at the terminal chart holds *exactly* when
+`pic⁰` vanishes at every test.
+
+The forward direction is `subsingleton_pic0Subgroup_of_surjective_app` applied to the
+surjectivity that antecedent 2 gives — via the collapse, which turns local surjectivity plus
+(free) injectivity into an honest isomorphism, hence honest surjectivity at every test.  The
+backward direction is the inhabitant above.
+
+**This is what the four rows were asking, answered at this parameter.**  The pair is neither
+empty nor unconditionally inhabited: it is inhabited precisely on the curves whose Jacobian is
+a point.  Note that the answer does not depend on `V`, `m`, or `Z` — the arithmetic data of
+the chart is idle here, which is itself information: at parameter `0` the chart index carries
+nothing, matching `chartIndex_iff_isDegree`'s finding that `hdeg` is pure arithmetic and
+`isDegree_zero`'s that it is free at `0`. -/
+theorem seamPair_abelSigmaChartZero_iff
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - ((0 : ℕ) : ℤ)) :
+    (IsOpenImmersion.presheaf (abelSigmaChartZero (C := C) (pi := pi) m Z hdeg) ∧
+        Presheaf.IsLocallySurjective Scheme.zariskiTopology
+          (abelSigmaChartZero (C := C) (pi := pi) m Z hdeg))
+      ↔ ∀ S : Over (Spec (.of k)), Subsingleton (pic0Subgroup C S) := by
+  refine ⟨fun ⟨_, hcov⟩ S => ?_, seamPair_abelSigmaChartZero_of_subsingleton C pi m Z hdeg⟩
+  -- coverage plus free injectivity make the chart an iso, hence surjective on the nose
+  letI : IsIso (abelSigmaChartZero (C := C) (pi := pi) m Z hdeg) := by
+    haveI := chartIso_of_injective C (abelSigmaChartZero (C := C) (pi := pi) m Z hdeg)
+      (injective_abelSigmaChartZero C pi m Z hdeg) hcov
+    exact (inferInstance : IsIso ((sheafToPresheaf Scheme.zariskiTopology (Type u)).map
+      (chartSheafHom C (abelSigmaChartZero (C := C) (pi := pi) m Z hdeg))))
+  exact subsingleton_pic0Subgroup_of_surjective_app C pi m Z hdeg
+    (fun T => (isIso_iff_bijective _).mp inferInstance |>.2) S
+
+omit [GeometricallyReduced C.hom] in
+variable (C pi) in
+/-- **THE REFUTATION.**  Two distinct degree-zero classes at one test kill the pair, at every
+`m` and `Z`.
+
+Contrapositive of the iff, stated separately because it is the direction a lane looking for a
+counterexample needs, and because it makes the decision's *content* explicit: this is not a
+sufficient condition dressed up as an equivalence.  Any curve for which the tree can exhibit
+two degree-zero classes over one test — which is what positive genus means concretely — has no
+seam pair at this parameter, and no choice of chart index or restricting open changes that. -/
+theorem not_seamPair_abelSigmaChartZero_of_two_pic0
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - ((0 : ℕ) : ℤ))
+    {S : Over (Spec (.of k))} {x y : pic0Subgroup C S} (hxy : x ≠ y) :
+    ¬ (IsOpenImmersion.presheaf (abelSigmaChartZero (C := C) (pi := pi) m Z hdeg) ∧
+        Presheaf.IsLocallySurjective Scheme.zariskiTopology
+          (abelSigmaChartZero (C := C) (pi := pi) m Z hdeg)) := by
+  intro hpair
+  exact hxy (((seamPair_abelSigmaChartZero_iff C pi m Z hdeg).mp hpair S).allEq x y)
 
 end
 

@@ -32,13 +32,13 @@ body: "pic-e's G1-FREE HEADLINE SURVIVES AUDIT. ONE PUBLISHED SENTENCE IS FALSE:
   \ is still hcov_of_jointlySurjective (PicEtGaloisCover.lean:260)."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-30T15:16:28.750144+00:00'
-updated_at: '2026-07-30T15:16:28.750155+00:00'
+updated_at: '2026-07-30T16:15:03.052006+00:00'
 metadata:
   provenance:
     run: 0095
@@ -49,3 +49,5 @@ metadata:
     task: pic-e
     task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - pic-d

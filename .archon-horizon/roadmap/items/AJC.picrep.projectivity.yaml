@@ -2,10 +2,12 @@ id: AJC.picrep.projectivity
 title: Smooth proper curves over a field are projective
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Prove the blueprint node lem:smooth_proper_curve_projective with no added
-  hypothesis. Use the landed finite map C -> P^1 and build reusable finite-morphism/projective-composition
-  substrate, supplying the projectivity input required by Kleiman Pic representability
-  and three existing AJC modules.
+summary: 'Constructed, without new hypotheses, a relative morphism C -> P(J; Spec
+  k) from the Laurent two-chart finite map: normalized coordinates algebra-generate
+  both source charts, the local maps glue globally, and the composite to Spec k is
+  C.hom. Remaining: identify arbitrary coordinate charts D_+(X_i) with affine space,
+  transport the local factors, apply the landed generator-to-closed-immersion theorem,
+  then use target-local immersion and proper + immersion => projective.'
 status: active
 kind: proof
 priority: high
@@ -30,8 +32,19 @@ metadata:
   parent: AJC.picrep
   owner: pic-b
   milestone: AJC.picrep
-  updated_at: '2026-07-30T11:45:15.404835+00:00'
+  updated_at: '2026-07-30T16:20:44.660977+00:00'
   pinned_commits:
+  - efcf18ae59554efb4958e1ceeb126ede2b6c0b06
+  - 8020466b657b51f4c4f27e15cb694a0f68c51031
+  - b22178e30ea14b51f503a2735981cb4bca68ec6b
+  - a43df2730a842b2cb29e6bd7094def21a557f04d
+  - a912c259d12cffd25a57185ffff8dab6140a8802
+  - 8a09dc8788448964de62d26bc37799c13b278b1a
+  - 49a56b1e1d99bb577eef6e419b66606fc3a8c811
+  - d66a2117c819ae5d33929af5de2d7d34753dbf68
+  - 92add4713220e8098674c5a4c35e8a0d7056369e
+  - 12ec4ceead3419f53fa1e7b0c7a016a7c2ae5f82
+  - 50a408174a40dc79052a2c79036d969390ea39b1
   - 2cbebd638661f98abf2a61632e27beead41d304b
   - dfc92a21ad78247c632d9b1f6246342cfc214bc7
   - 709a6376dfdb530314daab3d16c9b0dd960134a4

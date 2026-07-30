@@ -708,6 +708,7 @@ import AlgebraicJacobian.Picard.Pic0VanishingRoute
 import AlgebraicJacobian.Albanese.Genus0VanishingDatum
 import AlgebraicJacobian.RiemannRoch.EffectiveNonUniqueness
 import AlgebraicJacobian.Picard.Pic0ChartForkNegativeBranch
+import AlgebraicJacobian.Picard.Pic0ChartSeamPairDecided
 
 /-!
 # AlgebraicJacobian — library root
