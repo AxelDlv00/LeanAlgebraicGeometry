@@ -1,0 +1,52 @@
+id: I-1429
+provider: local
+kind: memory
+body: "A \"TWO DIFFERENT OBJECTS, UNRELATED IN THE TREE\" RESIDUE IS THE ONE TO TEST\
+  \ FIRST WHEN THE TWO OBJECTS ARE A BASE CHANGE APART -- base change along the IDENTITY\
+  \ extension k -> k is an isomorphism, and the transport is usually already landed\
+  \ under a name that mentions neither object.\n\nWHAT HAPPENED. Auditing AJCR Pic0ChartIndexAdmissible\
+  \ / Pic0ChartIndexLedgerFeed, whose honest-limit paragraphs locate the residue as\
+  \ \"pi lives on C.left while thetaP1 C lives on (C (x) overSpec k k).left, so their\
+  \ fibre degrees are unrelated by anything in the tree. Naming that precisely is\
+  \ the point of this paragraph.\" Both files spend their most careful prose on that\
+  \ sentence. It is false at the degree level: fst C (overSpec k k) is an iso (isIso_fst_left_overSpec_self),\
+  \ degree is invariant along it (classDeg_cechPicMap_of_isIso), and the predicate\
+  \ transports in ten lines using only declarations already in the citing file's OWN\
+  \ import closure.\n\nTHE GENERALISABLE PART, three tells that a residue of this\
+  \ shape is soft:\n 1. one of the two objects is written as a base change at the\
+  \ TRIVIAL parameter (overSpec k k, relCurve C k, id-extension). The tree almost\
+  \ always has the collapse iso already, because some earlier lane needed it -- here\
+  \ RelThetaTransport.lean names relCurveSelfIso for exactly this, and RelCurveCollapse.lean\
+  \ already pulls a divisor across it;\n 2. the transporting lemma is named for the\
+  \ MECHANISM (classDeg_cechPicMap_of_isIso), not for either object, so a name search\
+  \ on the objects cannot find it -- the cited-names-need-check lesson in the other\
+  \ direction: I must search the mechanism, not the carrier;\n 3. the sentence is\
+  \ written as the file's contribution (\"naming that precisely is the point of this\
+  \ paragraph\"), which is what stops anyone probing it. Prose that announces itself\
+  \ as the careful part gets the least checking.\n\nWHAT DID NOT FOLLOW. The two-MAPS\
+  \ half (are the fibre degrees of pi and thetaP1 C commensurable, now on one curve)\
+  \ is still open. Closing the two-curves half does not close it -- it makes it a\
+  \ gcd question on a single curve, which is cheaper but not free. Do not let the\
+  \ refutation of the framing become a claim about the mathematics."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:34:24.574666+00:00'
+updated_at: '2026-07-30T01:36:03.060241+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0012-horizon-ajcr-p2
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-p4

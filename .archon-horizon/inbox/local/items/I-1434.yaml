@@ -1,0 +1,53 @@
+id: I-1434
+provider: local
+kind: issue
+body: "GAP 1 OF THE THREE-GAP LEDGER IS NOT A GAP: the carrier upgrade is free from\
+  \ the file's own Sigma first component, and the file already holds the other half.\
+  \ So \"what remains owed is the quantifier bookkeeping of gaps 1-3\" over-prices\
+  \ its own artifact by one item.\n\nSITE. Picard/Pic0ChartFieldPointClass.lean:48-51,\
+  \ gap 1: \"The carrier is the chart source, not a divisor scheme ... These agree\
+  \ only when the atlas is built on that carrier, and even then V i is an open of\
+  \ it.\"\n\nMEASURED (AJCR run 0087 r5, work-reviewer, fresh context, ScratchP1 probes\
+  \ at lake env lean, sorry control firing sorryAx in each; oleans confirmed fresh\
+  \ first).\n\n1. THE MORPHISM IS FREE, no new hypothesis. From the theorem's own\
+  \ output ⟨i, x, hx⟩, the composite x ≫ (V i).iota is a SLICE morphism overSpec k\
+  \ kappa(y) ⟶ D i, because congrArg Sigma.fst hx together with (Over.testPoint y).w\
+  \ IS the Over triangle:\n  have hfst : (x ≫ (V i).iota) ≫ (D i).hom = (overSpec\
+  \ k (Over.testPointField y)).hom :=\n    (congrArg Sigma.fst hx).trans ((Over.testPoint\
+  \ y).w)\n  refine ⟨i, Over.homMk (x ≫ (V i).iota) hfst, ?_⟩\nBoth steps elaborate.\
+  \ The \"open of\" clause is idle: restrictChart is yoneda.map V.iota then f, and\
+  \ (restrictChart f V).app x = f.app (x ≫ V.iota) by rfl.\n\n2. THE TARGET SHAPE\
+  \ TYPECHECKS WITH NO TRANSPORT: exists i q, pic0Map C q (lamOfDivRep (nn i) (rep\
+  \ i) (m i) (Z i) (hdeg i)) = prep.homEquiv (Over.testPoint y). So \"agree only when\
+  \ the atlas is built on that carrier\" is false as stated -- the carrier a producer\
+  \ needs is D i, the chart's own representing object.\n\n3. pic0Map_lamOfDivRep,\
+  \ THIS FILE'S OWN FIRST THEOREM, applies: apply Subtype.ext; rw [pic0Map_lamOfDivRep]\
+  \ succeeds. And the Sigma snd of hx is literally chartValueTrans at (rep i).homEquiv\
+  \ (x ≫ V.iota) -- the other side of that same bridge.\n\nWHAT REMAINS (repricing,\
+  \ not refutation): ONE transport. sigmaExtension_snd_eq gives the equation modulo\
+  \ (pic0TypeFunctor C).map (Over.mkCongr hfst).op, and mkCongr hfst is not rfl-provably\
+  \ the identity. Over.sigmaExtension_map_mk_eq_iff (OverSigmaExtension.lean:176)\
+  \ is the seam for exactly this, at g := identity with w := (Category.id_comp _).trans\
+  \ hfst.symm.\n\nNEXT ACTION. Rewrite gap 1 as \"one Sigma-transport\", or close\
+  \ it. The two REAL residues are gap 2 (index quantifier) and the finiteness of the\
+  \ answering family."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:47:35.110030+00:00'
+updated_at: '2026-07-30T01:47:35.110041+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0012-horizon-ajcr-p1
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

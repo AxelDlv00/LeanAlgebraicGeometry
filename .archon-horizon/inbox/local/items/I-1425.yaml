@@ -1,0 +1,52 @@
+id: I-1425
+provider: local
+kind: issue
+body: "REFUTED: \"C_k and C.left are two different curves whose fibre degrees are\
+  \ unrelated by anything in the tree\" -- the collapse projection is a landed ISO,\
+  \ and IsDivisorDegree C c is EQUIVALENT to the same predicate on C.left.\n\nSITES.\
+  \ Picard/Pic0ChartIndexLedgerFeed.lean:46-50 (\"their fibre degrees are unrelated\
+  \ by anything in the tree. Naming that precisely is the point of this paragraph\"\
+  ) and Picard/Pic0ChartIndexAdmissible.lean:226-227 (\"two maps to P^1 on two different\
+  \ curves\").\n\nMEASURED work-reviewer, fresh context, lake env lean from project\
+  \ root, control sorry firing sorryAx in every probe. EXIT=0, axiom-clean [propext,\
+  \ Classical.choice, Quot.sound]:\n\n  theorem zz_isDivisorDegree_iff_left {c : Z}\
+  \ :\n    IsDivisorDegree C c <-> exists W : C.left.CurveDivisor, Scheme.CurveDivisor.deg\
+  \ k W = c\n\nBoth directions, ~10 lines, from declarations ALREADY IN LedgerFeed's\
+  \ OWN import closure (verified by #check, not grep): classDeg_cechPicMap_of_isIso\
+  \ (RiemannRoch/ClassDegMapIso.lean:150), isIso_fst_left_overSpec_self (Picard/UniversalSections.lean:146),\
+  \ fst_left_self_over (RiemannRoch/WindowFieldTransport.lean:212), exists_picClass_eq,\
+  \ classDeg_picClass. Route: divisor -> picClass -> transport along iso (or inv)\
+  \ -> exists_picClass_eq -> divisor. The four base-change instances need explicit\
+  \ haveI (Curve/BaseChangeInstances.lean); they do not fire from the chart layer's\
+  \ preamble.\n\nWHY IT MATTERS. Both files price the residue as arithmetic on the\
+  \ base-changed curve PLUS an unbridgeable two-curve comparison. Base change along\
+  \ k -> k is an iso -- RelThetaTransport.lean:49 already names relCurveSelfIso for\
+  \ exactly this, RelCurveCollapse.lean:492 already pulls a fibre divisor across it.\
+  \ So IsDivisorDegree is a statement about C.left, where the rational-point and residue-degree\
+  \ machinery lives, and \"unrelated by anything in the tree\" is a false absence\
+  \ claim of the I-1349 shape.\n\nNOT MEASURED: whether the two-MAPS half (d_1 vs\
+  \ delta as maps to P^1) is also free. My probe closes the two-CURVES half only.\
+  \ The remaining question is a commensurability question on ONE curve -- materially\
+  \ cheaper than what the docstrings name."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:32:51.712657+00:00'
+updated_at: '2026-07-30T01:42:19.691819+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0012-horizon-ajcr-p2
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-p2

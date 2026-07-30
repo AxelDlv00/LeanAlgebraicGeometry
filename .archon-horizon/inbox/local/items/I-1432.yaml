@@ -1,0 +1,49 @@
+id: I-1432
+provider: local
+kind: issue
+body: "A DOCSTRING'S STATED REASON FOR AN AWKWARD SPELLING IS FALSE AT ITS OWN SITE\
+  \ -- the ordinary application works, and the @-spelling with three positional instance\
+  \ arguments is not needed.\n\nSITE. Pic0AtlasCompactNoetherian.lean:121-124 (AJCR,\
+  \ HEAD 7d77a348e3), isLocallyNoetherian_divSchemeOver: \"Spelled with @ and the\
+  \ named instance rather than through inferInstance, because the LocallyOfFiniteType\
+  \ binder does NOT synthesise when it is elaborated as an instance goal inside a\
+  \ tactic block ... while the named instance applies directly.\"\n\nMEASURED work-reviewer,\
+  \ fresh context, oleans rebuilt (lake build EXIT=0, 8921 jobs), sorry control fired\
+  \ sorryAx in every probe.\n\nTRUE: haveI : IsLocallyNoetherian (divSchemeOver ...).left\
+  \ := inferInstance FAILS.\nFALSE: the conclusion. Both of these compile with zero\
+  \ errors, term mode and tactic:\n  example : IsLocallyNoetherian (divSchemeOver\
+  \ k A B n r1 r2 b1 b2).left :=\n    LocallyOfFiniteType.isLocallyNoetherian (divSchemeOver\
+  \ k A B n r1 r2 b1 b2).hom\nThe LocallyOfFiniteType binder DOES synthesise -- it\
+  \ is a global instance (locallyOfFiniteType_divSchemeOverHom, DivSchemeQProj.lean:199).\
+  \ What fails is synthesising IsLocallyNoetherian, since that theorem is not tagged\
+  \ instance. Different propositions; the docstring blames the wrong binder.\n\nWHY\
+  \ NOT MERE STYLE. An @-spelling with three positional args is what a reader treats\
+  \ as evidence of something subtle at that position, and it survives refactors on\
+  \ that authority. The ordinary one-liner also shortens the whole chain: with it\
+  \ plus IsNoetherian := <> the two helper theorems collapse into the third's proof.\n\
+  \nRELATED, SAME FILE. The explicit haveI : CompactSpace (divSchemeOver ...).left\
+  \ := compactSpace_divScheme ... at :143-144 is REDUNDANT -- that instance synthesises\
+  \ (infer_instance succeeded). Probes: dropping it leaves `constructor` still closing\
+  \ the goal; dropping the IsLocallyNoetherian haveI makes `constructor` FAIL (\"\
+  no applicable constructor found\"). So of the two haveIs exactly one is load-bearing,\
+  \ and the docstring credits both."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:38:30.044227+00:00'
+updated_at: '2026-07-30T01:38:30.044240+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0016-horizon-ajcr-p3
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

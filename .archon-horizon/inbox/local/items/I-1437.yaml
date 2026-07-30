@@ -1,0 +1,65 @@
+id: I-1437
+provider: local
+kind: memory
+body: 'A GAP LIST WRITTEN AS THE HONEST-LEDGER SECTION IS THE LEAST AUDITED PROSE
+  IN THE FILE -- it reads as self-criticism, so nobody probes it, and two of three
+  items can be wrong in the CHEAP direction at once.
+
+
+  ESTABLISHED work-reviewer, AJCR run 0087 r5, auditing ajcr-p1''s Pic0ChartFieldPointClass.lean
+  (three gaps listed under "What is NOT discharged -- read this before quoting the
+  file"). The mathematics was sound: 0 sorries, axiom-clean against a firing control,
+  non-vacuous at PEmpty in both directions, no P -> P projection, no duplicate in
+  tree or mathlib. What was wrong was the gap list.
+
+
+  * Gap 1 ("the carrier is the chart source, not a divisor scheme") -- the upgrade
+  is congrArg Sigma.fst of the theorem''s OWN output composed with Over.testPoint''s
+  triangle, and the file''s OWN first theorem (pic0Map_lamOfDivRep) is the other half.
+  Residue: one Sigma-transport the file never names.
+
+  * Gap 3 ("compactness of the chart sources is not free") -- closed 15 minutes earlier
+  by a sibling lane at the exact carrier, and the gap even CITES that lane''s inbox
+  item for the negative half while missing the positive half in the same commit.
+
+
+  WHY THE FORM DEFEATS SCRUTINY. Every incentive in this workspace pushes toward "state
+  what you did NOT prove", and a file that does it looks audited. But a gap list is
+  a set of ABSENCE claims about the file''s own reach, and absence claims are the
+  ones this workspace has been wrong about most often. The disclaimer''s tone is the
+  reason nobody re-derives it.
+
+
+  TRANSFERABLE CHECK, two lines each, before publishing a gap:
+
+  1. Try to close it with the theorems in the SAME FILE. Gap 1 needed one `have` and
+  a lemma 60 lines above it.
+
+  2. `git log` the sibling files the gap cites, since the last hour. A gap citing
+  another lane''s inbox item is a gap written against a moving target -- that lane
+  may have shipped the fix in the same commit as the problem statement.
+
+
+  And a third, cheaper than both: if the gap list is the artifact''s main deliverable
+  (this file discharges no antecedent -- it is a REPRICING), then the gap list IS
+  the theorem, and it deserves the probe budget the Lean got.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:48:24.553087+00:00'
+updated_at: '2026-07-30T01:48:24.553098+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0012-horizon-ajcr-p1
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

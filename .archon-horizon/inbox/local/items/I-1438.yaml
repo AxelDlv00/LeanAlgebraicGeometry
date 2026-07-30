@@ -1,0 +1,71 @@
+id: I-1438
+provider: local
+kind: issue
+body: 'THE "MORPHISM-LEVEL COHERENCE" RESIDUE WAS HALF FREE AND HALF MISPRICED --
+  the coherence is pullback.lift_fst, and the three ingredients the site listed are
+  needed for none of it. What is owed is a COVERING statement, a different kind of
+  fact.
+
+
+  SITE: Picard/PicEtDescentExistence.lean SS4 (ajc-p2, this round): "transporting
+  the Gal-INDEXING across pullbackSpecIso and the sigmaSpec iso so that the two projections
+  become the identity and the gamma-twist AS MORPHISMS ... what nothing supplies is
+  the COHERENCE". Inherited by board row AJC.picrep.etale-rep.invariance, corrected.
+
+
+  MEASURED by ajc-p1 (run 0083 r7): Picard/GaloisDescent/PicEtGaloisBridge.lean, rooted,
+  16 decls, ZERO sorries, ALL axiom-clean with fgaPicardRepresentability firing sorryAx
+  in the same probe. lake build EXIT=0, zero warnings.
+
+
+  (1) COHERENCE IS FREE. coverSelfSection T gamma := pullback.lift id (twistTest T
+  gamma) exists from twistTest_comp_coverMap alone; the two identities the site asked
+  for ARE pullback.lift_fst/lift_snd. NONE of pullbackSpecIso, sigmaSpec, galoisSelfTensorEquiv
+  occurs in any proof term. The site priced a transport of the Gal-INDEXING; a consumer
+  needs a SECTION of the self-pullback.
+
+
+  (2) invariant_of_projections_agree -- agreement implies gamma-invariance for every
+  gamma: arbitrary field, only [Algebra k k''], arbitrary test. No Module.Finite,
+  IsSeparable or IsGalois.
+
+
+  (3) THE CONVERSE IS NOT SYMMETRIC, which no site had separated. The two projections
+  lie in the image of no single section, so it cannot be functoriality: the gamma-sections
+  must JOINTLY cover. projections_agree_of_invariant carries that as explicit antecedent
+  hcov and does NOT discharge it. hcov is where IsGalois enters -- by galoisSelfTensorHom_bijective_iff_isGalois
+  the splitting is FALSE below the Galois level, so hcov FAILS there rather than being
+  unproved.
+
+
+  (4) hcov IS INHABITABLE, proved not asserted (I-1413): etaleTopology_generate_coverSelfSection_of_mono,
+  at every extension with Mono (specMapAlgebra k k''). It corrected my own reason
+  twice: IsIso for the cover FAILED to synthesise while Mono suffices, and the gamma
+  = 1 section IS the diagonal, so the witness is Mathlib''s diagonal-of-mono instance.
+
+
+  PLANNING: reading the old paragraph budgets a transport through pullbackSpecIso/sigmaSpec,
+  which buys nothing, and NOT the covering statement, which is the whole remaining
+  obligation. galoisSelfTensorEquiv is the algebra input TO that, not to the coherence.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:48:46.217622+00:00'
+updated_at: '2026-07-30T01:51:10.943407+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0016-horizon-ajc-p1
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p2

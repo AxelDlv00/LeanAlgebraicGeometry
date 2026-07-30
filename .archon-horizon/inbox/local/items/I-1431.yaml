@@ -1,0 +1,53 @@
+id: I-1431
+provider: local
+kind: issue
+body: "THE NEW hcpt LEMMA PINS THE CARRIER TO divSchemeOver, AND THE SIBLING FILE\
+  \ ALREADY PROVED THE ARGUMENT THAT MAKES THAT UNNECESSARY -- per-chart compactness\
+  \ is REPRESENTATION-INDEPENDENT, exactly as Pic0AtlasFiniteType.lean proved for\
+  \ hD, and the new file cites that reasoning for hD without applying it to itself.\n\
+  \nMEASURED work-reviewer, fresh context, AJCR Pic0AtlasCompactNoetherian.lean at\
+  \ HEAD (7d77a348e3). Oleans rebuilt first, lake build EXIT=0 at 8921 jobs; every\
+  \ probe carried a sorry control that fired sorryAx.\n\nTHE ASYMMETRY. Pic0AtlasFiniteType.lean:335\
+  \ locallyOfFiniteType_of_representableBy proves LocallyOfFiniteType belongs to the\
+  \ FUNCTOR divFunctor C pi n, not to the representing object, and that header argues\
+  \ why: \"it covers the parameters n != g at which no representation has been built;\
+  \ a carrier-specific argument would not\". compactSpace_glued_of_finite_mixedParamChart\
+  \ is the carrier-specific argument that header warns against -- its rep binder is\
+  \ typed at divSchemeOver k A B (gg i) r1 r2 b1 b2.\n\nMEASURED, two probes compiled\
+  \ clean:\n (1) CompactSpace transports across uniqueUpToIso: from CompactSpace D'.left\
+  \ and two representations of divFunctor C pi n, conclude CompactSpace D.left. Body\
+  \ (Scheme.homeoOfIso ((Over.forget _).mapIso (rep.uniqueUpToIso rep'))).symm.compactSpace\
+  \ plus one haveI fixing the Over.forget carrier defeq.\n (2) Hence the full per-chart\
+  \ half at ANY representing object D: (1) + locallyOfFiniteType_of_representableBy\
+  \ + LocallyOfFiniteType.isLocallyNoetherian + QuasiCompact.compactSpace_of_compactSpace\
+  \ V.iota. Both ingredients landed; nothing new to prove.\n\nSHORTER AND MORE GENERAL\
+  \ BODY FOR THE LANDED STEP. compactSpace_isOpen_divSchemeOver routes via IsNoetherian\
+  \ and NoetherianSpace.isCompact. Measured: with ONLY IsLocallyNoetherian in scope,\
+  \ QuasiCompact.compactSpace_of_compactSpace V.iota closes it -- mathlib stacks-01OX\
+  \ makes every open immersion into a locally noetherian scheme quasi-compact, so\
+  \ that hop is unnecessary. And it holds for arbitrary D with [LocallyOfFiniteType\
+  \ D.hom] [CompactSpace D.left]: no curve, divisor, basis, smoothness or integrality.\n\
+  \nCOULD NOT REFUTE: the defect claim. infer_instance really fails on CompactSpace\
+  \ (V : Scheme) for V an open of divSchemeOver, and IsLocallyNoetherian / IsNoetherian\
+  \ / NoetherianSpace of divSchemeOver.left were each NOT instances. The conclusion\
+  \ is real; the statement is narrower than what was proved."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:37:23.338900+00:00'
+updated_at: '2026-07-30T01:37:23.338912+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0016-horizon-ajcr-p3
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

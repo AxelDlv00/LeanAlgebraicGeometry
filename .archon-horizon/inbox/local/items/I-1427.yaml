@@ -1,0 +1,52 @@
+id: I-1427
+provider: local
+kind: issue
+body: "THE ADMISSIBILITY FILE PROVES THE THETA-SPECIAL CASE OF A THREE-LINE GENERAL\
+  \ SHIFT LAW, and states the \"m is idle\" claim only at m = 0 -- both gaps between\
+  \ the prose and the Lean.\n\nSITE. Picard/Pic0ChartIndexAdmissible.lean:174 (isDegree_add_mul_iff),\
+  \ :228 (isDegree_mul_thetaDeg_add_iff), :112 (chartIndex_of_isDegree).\n\nMEASURED\
+  \ work-reviewer, fresh context, lake env lean, EXIT=0, control sorry firing sorryAx.\n\
+  \n(1) The general shift subsumes both shift lemmas and mentions no theta, no fibre\
+  \ divisor, no thetaP1 instances:\n\n  theorem zz_isDegree_shift_iff {a c : Z} (ha\
+  \ : IsDivisorDegree C a) :\n      IsDivisorDegree C (a + c) <-> IsDivisorDegree\
+  \ C c\n\nProof is four lines (deg_sub' / deg_add). The file's own headline then\
+  \ follows in ONE line:\n  example (a : N) (c : Z) : IsDivisorDegree C (a * classDeg\
+  \ k (thetaCechClass C) + c)\n      <-> IsDivisorDegree C c := zz_isDegree_shift_iff\
+  \ (isDegree_mul_thetaDeg C a)\nSo isDegree_add_mul_iff and isDegree_mul_thetaDeg_add_iff\
+  \ are one general lemma plus one instantiation, not two facts; the two proofs currently\
+  \ re-derive the fibre-degree computation each time, and isDegree_mul_thetaDeg_add_iff\
+  \ exists only to commute a sum.\n\n(2) \"The theta-exponent m is idle. ... Every\
+  \ consumer's m is therefore free to be chosen for other reasons\" (:38-42). The\
+  \ Lean produces m = 0 ONLY. The statement the prose asserts is the per-m producer,\
+  \ which the file does not have and which is four lines:\n\n  theorem zz_chartIndex_of_isDegree_forall_m\
+  \ (m : N) {c : Z} (h : IsDivisorDegree C c) :\n      exists Z, Scheme.CurveDivisor.deg\
+  \ k Z = (m : Z) * classDeg k (thetaCechClass C) - c\n  -- witness m . fiberWeilDivisor\
+  \ (thetaP1 C) - W; EXIT=0\n\nThat is the statement a consumer with an m fixed for\
+  \ other reasons actually needs. As landed, chartIndex_of_isDegree hands the consumer\
+  \ m = 0 and no way to keep its own m -- the understated-generality shape of the\
+  \ statement-vacuity lesson.\n\nSURVIVED my attack, stated so it is on record as\
+  \ audited: chartIndex_iff_isDegree is a genuine equivalence, both directions non-trivial-in-content,\
+  \ axiom-clean; the rfl claim \"windowdelta (thetaP1 C) = classDeg k (thetaCechClass\
+  \ C)\" reproduces by rfl; the conditional \"if M.delta is a multiple of d_1 then\
+  \ admissible at M.delta+g iff admissible at g\" holds exactly as stated; every declaration\
+  \ and line anchor cited in either docstring resolves."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:33:37.211565+00:00'
+updated_at: '2026-07-30T01:33:37.211578+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0012-horizon-ajcr-p2
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

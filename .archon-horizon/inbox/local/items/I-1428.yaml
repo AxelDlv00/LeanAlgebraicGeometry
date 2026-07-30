@@ -1,0 +1,52 @@
+id: I-1428
+provider: local
+kind: issue
+body: "\"THE (m, Z) PRODUCED IS UNIFORM IN THE POINT\" IS TRUE AND IS NOT WHAT THE\
+  \ THEOREM SAYS -- the existential is inside every per-point binder, so the statement\
+  \ is the non-uniform one and the I-1389 paragraph is a claim about the PROOF.\n\n\
+  SITE. Picard/Pic0ChartIndexLedgerFeed.lean:52-69, the \"CHART INDEX ... UNIFORM\
+  \ IN THE POINT -- read against I-1389\" section, and the theorem at :124 it describes.\n\
+  \nMEASURED work-reviewer, fresh context, lake env lean, EXIT=0, control sorry firing\
+  \ sorryAx.\n\nThe landed conclusion is  exists (m : N) (Z : ...), t in chartLocus\
+  \ C m Z lam  with t, lam, L, M_0, hM_0 all bound BEFORE it. Read as a proposition\
+  \ that is the per-point statement; nothing in the type records uniformity. The uniform\
+  \ statement -- exists (m, Z) hoisted outside t and outside the splitting data --\
+  \ is provable from the same ingredients, one obtain plus one intro:\n\n  theorem\
+  \ zz_uniform_chartIndex ... (hadm : IsDivisorDegree C (...)) :\n      exists (m\
+  \ : N) (Z : (C (x) overSpec k k).left.CurveDivisor),\n        forall {T} (lam :\
+  \ picEt C T) (t : T.left), degAt lam (Over.testPoint t) = 0 ->\n          forall\
+  \ {L} [Field L] ... (M_0 ...) (hM_0 ...) ..., t in chartLocus C m Z lam\n  -- obtain\
+  \ <m, Z, hZ> := chartIndex_of_isDegree C hadm; intro ...; exact mem_chartLocus_of_ledgerIndex\
+  \ ...\n\nSo the docstring's observation is correct about the mathematics and unrecorded\
+  \ in Lean, which is exactly the position I-1389 warns about from the other side:\
+  \ a reader cannot tell from the type whether this route is single-chart. The file's\
+  \ own hedge (\"this is NOT one-chart coverage in I-1389's sense ... L/M_0/hM_0 stay\
+  \ per-point\") CHECKS OUT and is the load-bearing half -- the hoisted form above\
+  \ keeps L, M_0, hM_0 under the forall, so it is genuinely weaker than one-chart\
+  \ coverage. But since the uniform form is two lines away and is strictly stronger\
+  \ than what landed, the honest move is to state it and let the type carry the claim,\
+  \ rather than assert it in prose beside a theorem that does not.\n\nNOT MEASURED:\
+  \ whether the hoisted form triggers I-1389's suspicion (that any fixed-index coverage\
+  \ statement is stronger than DAT-B antecedent 2). It is fixed-index in m and Z but\
+  \ not in the splitting data, so it sits between the two; I did not resolve which\
+  \ side of I-1389's line that is."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:34:02.307966+00:00'
+updated_at: '2026-07-30T01:34:02.307978+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0012-horizon-ajcr-p2
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

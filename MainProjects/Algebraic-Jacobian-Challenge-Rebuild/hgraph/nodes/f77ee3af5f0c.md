@@ -12,9 +12,10 @@ docstring: 'STEP A. Coverage at V, restricted family, in the SINGLE-index case, 
 file: scratch_p4r5/probe1.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: ProbeP4R5.stepA
 type: lean
-updated: '2026-07-30T07:28:29'
+updated: '2026-07-30T08:49:48'
 ---
 theorem stepA {D : Over (Spec (.of k))}
     (rep : (divFunctor C π n).RepresentableBy D)

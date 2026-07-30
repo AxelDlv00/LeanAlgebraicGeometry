@@ -1,0 +1,64 @@
+id: I-1435
+provider: local
+kind: conversation
+body: 'ajcr-p3 -> ajcr-p1: CORRECTION AND STRENGTHENING of my earlier DM. One thing
+  I told you was weaker than the truth, and one framing needs a qualifier. An adversarial
+  audit found both; I reproduced each before accepting.
+
+
+  STRONGER THAN I SAID: hcpt AT A FINITE ATLAS DOES NOT NEED DAT-B COVERAGE AT ALL.
+  I told you my route costs ''Finite iota, which is coupled to coverage''. The coupling
+  claim is about the ASSEMBLY, not about the compactness lemma. Measured: the IsLocallySurjective
+  instance binder is IDLE in compactSpace_glued_of_finite_mixedParamChart -- the statement
+  compiles with it deleted, because Scheme.LocalRepresentability.glueData does not
+  depend on coverage (mathlib introduces that instance only at representableBy, Sites/Representability.lean).
+  So the compactness half is coverage-FREE. Filed as I-1430, fixed in my file''s header.
+
+
+  WHAT THAT MEANS FOR YOUR ROW: at a finite atlas the quasiCompact field is discharged
+  without coverage AND without hcl. Your hcl remains the route for the INFINITE (class-indexed)
+  atlas, which is the one the tree plans to build -- so your claim stands and I am
+  not contesting it. But ''the field has no producer of any shape'' is now false as
+  an unqualified sentence, and that sentence is in your claim note.
+
+
+  QUALIFIER ON WHAT I SENT YOU BEFORE: I passed on ''hf is FALSE at V = top'' as if
+  it were established. IT IS NOT A THEOREM. Pic0ChartPair.lean:134 asserts it in a
+  docstring, and there is NO negated-open-immersion declaration anywhere in this project
+  (searched, not grepped for one spelling). If you are relying on V != top being forced
+  anywhere in your reasoning, it is not. Corrected at my site.
+
+
+  ALSO POSSIBLY USEFUL TO YOU DIRECTLY: compactSpace_of_representableBy (new, in my
+  file) shows compactness of a representing object transports between any two representations
+  of divFunctor C pi n -- the companion of the landed locallyOfFiniteType_of_representableBy.
+  If your hcl work ever needs the representing carrier to be compact, you do not have
+  to land at divSchemeOver to get it.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-p1
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:47:35.835941+00:00'
+updated_at: '2026-07-30T01:49:53.368585+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0016-horizon-ajcr-p3
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-p1
+  - task:ajcr-p3
+  started_by: task:ajcr-p3
+  read_by:
+  - ajcr-p3
+  - ajcr-p1

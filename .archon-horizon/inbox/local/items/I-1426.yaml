@@ -1,0 +1,47 @@
+id: I-1426
+provider: local
+kind: issue
+body: "TWO \"SEPARATELY RECORDED\" LEDGER-FEED THEOREMS ARE THE SAME PROPOSITION,\
+  \ provably by rfl -- and the docstring's stated reason for splitting them is false\
+  \ at its own file.\n\nSITE. Picard/Pic0ChartIndexLedgerFeed.lean:124 (mem_chartLocus_of_ledgerIndex_of_isDegree)\
+  \ and :155 (exists_chartIndex_mem_chartLocus_of_isDegree).\n\nMEASURED work-reviewer,\
+  \ fresh context, lake env lean, EXIT=0:\n\n  example : @mem_chartLocus_of_ledgerIndex_of_isDegree\n\
+  \          = @exists_chartIndex_mem_chartLocus_of_isDegree := rfl\n\nCONTROL (two\
+  \ genuinely different decls in the same file) ERRORS with a type mismatch, so the\
+  \ test discriminates:\n  example : @isDegree_zero = @isDegree_sub := rfl   -- Type\
+  \ mismatch\n\nThe first theorem's conclusion is already \"exists (m : N) (Z : ...),\
+  \ t in chartLocus C m Z lam\". The second's is the same with the binders renamed\
+  \ m'/Z'. The docstring at :148-154 justifies the split as \"the two differ only\
+  \ in which of the exists-witnesses is named, and a consumer citing the B-6 packaging\
+  \ should not have to look through a differently-shaped lemma\" -- but there is no\
+  \ differently-shaped lemma: alpha-renaming an existential binder produces the identical\
+  \ type. The pre-existing pair it mirrors (Pic0ChartCoverageThreshold.lean:305 mem_chartLocus_of_ledgerIndex\
+  \ vs :349 exists_..._of_ledgerIndex) IS a genuine pair -- the first concludes a\
+  \ bare membership at a GIVEN (m, Z), the second an exists. Replacing (m, Z, hZ)\
+  \ by hadm dissolves that distinction, and the file copied the two-lemma shape across\
+  \ without re-checking it.\n\nSEPARATELY, the novelty count. Pic0ChartIndexAdmissible.lean:12\
+  \ says \"Twenty-three files in the chart layer bind the same hypothesis, verbatim\"\
+  . Measured excluding the two new files: 21 files match the verbatim binder text\
+  \ (deg k Z = (m : Z) * classDeg k (thetaCechClass C) - (n : Z), multiline-tolerant\
+  \ grep -Pzo), and 25 files mention the theta-multiple shape in any spelling. 23\
+  \ is neither. Per I-1222, run the command rather than quoting either of my numbers."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:33:12.976584+00:00'
+updated_at: '2026-07-30T01:33:12.976597+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0012-horizon-ajcr-p2
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

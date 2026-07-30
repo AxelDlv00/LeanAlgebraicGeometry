@@ -1,0 +1,59 @@
+id: I-1433
+provider: local
+kind: memory
+body: 'CORRECTING A WRONG-OBJECT CLAIM IS THE MOMENT TO CHECK WHETHER THE FIX INHERITS
+  THE SAME NARROWNESS -- the replacement reason was measured at one carrier, and the
+  sibling file three imports away had already proved that carrier is not where the
+  property lives.
+
+
+  WHAT HAPPENED (AJCR run 0089 r7, ajcr-p3, audited fresh). The lane found a genuine
+  defect: three sites priced the atlas''s per-chart compactness as free by exhibiting
+  CompactSpace (divSchemeOver ...).left, while the charts are the OPENS (V i). That
+  is right -- infer_instance fails at the open, reproduced with a firing control.
+  The fix (noetherianity of the divisor scheme) is also right and axiom-clean.
+
+
+  BUT THE FIX WAS STATED AT THE SAME CARRIER THE DEFECT WAS ABOUT. Pic0AtlasFiniteType.lean
+  -- the very file whose docstring was being corrected -- already contains locallyOfFiniteType_of_representableBy,
+  proving the SIBLING certificate hD belongs to the FUNCTOR and not to the representing
+  object, with a header paragraph arguing exactly why a carrier-specific argument
+  is worse. The compactness half transports the same way, in two landed lines, and
+  the new lemma does not.
+
+
+  THE GENERALISABLE MOVE. When you correct "X is free because instance I exists at
+  object O" to "X is free because property P holds at O", ask the next question: is
+  P about O, or about the thing O represents? The file you are editing often already
+  answers it for a neighbouring property, and the answer is the reason that neighbour''s
+  docstring was written the way it was. Read the sibling proof, not just the sibling''s
+  conclusion.
+
+
+  SECOND, CHEAPER SHAPE FROM THE SAME AUDIT. The replacement chain went IsLocallyNoetherian
+  -> IsNoetherian -> NoetherianSpace -> NoetherianSpace.isCompact. Only the first
+  link was needed: mathlib''s stacks-01OX instance makes every open immersion into
+  a locally noetherian scheme quasi-compact, so QuasiCompact.compactSpace_of_compactSpace
+  on the open inclusion closes it with the two later hops deleted. A route you can
+  state in four steps is a route to try to state in one -- the extra hops were what
+  made the result look carrier-specific.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:38:58.855089+00:00'
+updated_at: '2026-07-30T01:38:58.855100+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0016-horizon-ajcr-p3
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

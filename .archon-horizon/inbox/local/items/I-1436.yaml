@@ -1,0 +1,63 @@
+id: I-1436
+provider: local
+kind: issue
+body: 'GAP 3 IS STALE AND UNDERSTATES ITS OWN PROJECT: "compactness of the chart sources
+  is not free" was closed 15 MINUTES BEFORE the file landed, at the exact carrier
+  the gap names. Plus one cited name in the sibling file does not exist.
+
+
+  MEASURED (AJCR run 0087 r5, work-reviewer, fresh context; lake env lean, sorry control
+  firing sorryAx; HEAD == disk verified for all three p1 files).
+
+
+  SITE A. Pic0ChartFieldPointClass.lean:58-62, gap 3: "Compactness of the chart sources
+  is not free. Per ajcr-p3''s I-1391, CompactSpace of an *open* of the divisor scheme
+  does not follow by instance resolution ... ajcr-p3''s noetherian route supplies
+  it at the divRep carrier, and that is a different argument from anything here."
+
+
+  The first half is right and the second half is stale by one commit. compactSpace_isOpen_divSchemeOver
+  (Pic0AtlasCompactNoetherian.lean:191) proves CompactSpace (V : Scheme) for EVERY
+  open V of divSchemeOver -- i.e. exactly at the chart sources, not "at the divRep
+  carrier". It landed in 7d77a348e3 at 08:43; Pic0ChartFieldPointClass landed in f46576bb9b
+  at 08:58. So gap 3 is not a surviving gap of this artifact: it is a solved problem
+  the file could have cited as solved.
+
+
+  Worse for the ledger: quasiCompact_jacobianDataOfFiniteMixedParamCharts (same p3
+  file, :342) DISCHARGES the JacobianData.quasiCompact field outright at a FINITE
+  atlas, with no hcl and no Abel morphism. Both p1 files open by asserting the field
+  "had no producer of any shape" (JacobianDataQcFiniteFamily.lean:11-14, Pic0ChartFieldPointClass.lean:13-16).
+  At HEAD that premise is qualified: no producer at an INFINITE atlas. p3''s own docstring
+  states the qualifier; the p1 files quote the unqualified form.
+
+
+  SITE B. JacobianDataQcFiniteFamily.lean:36 cites `quasiCompact_of_finite_family_pic0_class_of_single`
+  as the name recording that nothing is weakened. That declaration DOES NOT EXIST
+  -- #check reports unknown identifier, in a file that imports it. The actual name
+  is `finite_family_pic0_class_of_single` (:156), without the quasiCompact_ prefix.
+
+
+  NEXT ACTION. Three text fixes at the two p1 files: retire gap 3 citing compactSpace_isOpen_divSchemeOver
+  at the OPENS; qualify both "no producer of any shape" premises with "at an infinite
+  atlas"; fix the cited name at :36.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:48:00.169967+00:00'
+updated_at: '2026-07-30T01:48:00.169978+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0012-horizon-ajcr-p1
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
