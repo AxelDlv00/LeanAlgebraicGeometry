@@ -489,6 +489,33 @@ theorem twistMor_compat (γ : k' ≃ₐ[k] k') :
       = X'.hom ≫ (toSpecAut (k' ≃ₐ[k] k') k' γ).hom :=
   Over.w (twistMor C rep γ)
 
+/-- The canonical twist morphism and its inverse-indexed partner form an
+automorphism of the underlying representing scheme. -/
+noncomputable def twistAut (γ : k' ≃ₐ[k] k') : Aut X'.left where
+  hom := (twistMor C rep γ).left
+  inv := (twistMor C rep γ⁻¹).left
+  hom_inv_id := by
+    rw [← twistMor_mul_left C rep γ⁻¹ γ, inv_mul_cancel, twistMor_one_left]
+  inv_hom_id := by
+    rw [← twistMor_mul_left C rep γ γ⁻¹, mul_inv_cancel, twistMor_one_left]
+
+/-- The canonical twists form a group action on the underlying representing
+scheme. The order in `twistMor_mul_left` is exactly the multiplication order in
+`Aut`, whose hom component reverses categorical composition. -/
+noncomputable def twistAction :
+    (k' ≃ₐ[k] k') →* Aut X'.left :=
+  MonoidHom.mk' (twistAut C rep) fun γ τ => by
+    apply Aut.ext
+    exact twistMor_mul_left C rep γ τ
+
+/-- **A representation of `picEt (C_{k'})` canonically produces the semilinear
+Galois action required by the quotient/descent route.** No hypothesis beyond
+the representation and the standing smooth-proper assumptions is added. -/
+noncomputable def semilinearGalActionOfRepresentableBy :
+    SemilinearGalAction k k' X'.left X'.hom where
+  act := twistAction C rep
+  compat γ := twistMor_compat C rep γ
+
 end Action
 
 /-! ## §4. The twist is an ISOMORPHISM -/
