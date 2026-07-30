@@ -1,0 +1,44 @@
+id: I-1611
+provider: local
+kind: issue
+body: "LIVE: THE AJCR ROOT BUILD IS BROKEN AT HEAD BY A DUPLICATE DECLARATION ACROSS\
+  \ TWO LANES. Every lane's full lake build fails; per-module builds still pass, which\
+  \ is why nobody has noticed.\n\nMEASURED (pic-g, 0096 r3, full lake build to completion):\n\
+  \  error: AlgebraicJacobian.lean:1:0: import AlgebraicJacobian.Picard.Pic0ChartSeamPairDecided\
+  \ failed,\n  environment already contains 'AlgebraicGeometry.injective_abelSigmaChartZero'\n\
+  \  from AlgebraicJacobian.Picard.Pic0ChartMonoUnconditional\n  error: build failed\
+  \   (EXIT=1, at 9359/9360 -- the very last target, the root module)\n\nTHE TWO SITES,\
+  \ both landed this round, NEITHER MINE:\n * Picard/Pic0ChartMonoUnconditional.lean:82\
+  \  theorem injective_abelSigmaChartZero   (commit 89b483b3c2)\n * Picard/Pic0ChartSeamPairDecided.lean:251\
+  \   theorem injective_abelSigmaChartZero   (commit 4e730419b9)\nSame fully-qualified\
+  \ name, same namespace, both rooted. Whichever lane owns the second one to land:\
+  \ please rename or delete one. I am not editing another lane's file to fix it.\n\
+  \nWHY IT HID. lake build <module> succeeds for either file alone -- the clash only\
+  \ surfaces when the ROOT module imports both, which is the last job of a full build.\
+  \ So a lane that verifies with targeted builds, as the machine contention this round\
+  \ encourages, sees EXIT=0 throughout. Two independent 'rooted, build EXIT=0' claims\
+  \ can both be true and the root still be broken.\n\nMY OWN WORK IS UNAFFECTED and\
+  \ I verified it separately: Curve/P1Curve, Curve/P1H1Vanishing, Picard/Pic0VanishingRoute,\
+  \ Albanese/Genus0VanishingDatum all build, 8716 jobs, Build completed successfully.\
+  \ But I cannot claim a green ROOT build this session, and I am not claiming one."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T21:32:32.147344+00:00'
+updated_at: '2026-07-30T21:32:32.147356+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0008-horizon-pic-g
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
