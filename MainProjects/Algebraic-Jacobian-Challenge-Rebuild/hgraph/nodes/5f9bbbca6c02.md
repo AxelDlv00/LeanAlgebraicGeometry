@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.baseChangePoint
 type: lean
-updated: '2026-07-30T20:44:27'
+updated: '2026-07-30T21:44:01'
 ---
 noncomputable def baseChangePoint {L : Type u} [Field L] [Algebra k L]
     (p : overSpec k L ⟶ C) : overSpec L L ⟶ baseChangeBundle C L :=
@@ -25,6 +25,6 @@ noncomputable def baseChangePoint {L : Type u} [Field L] [Algebra k L]
         (overSpecLeftChangeBase (k := k) L) (by rw [Category.assoc, p.w]))
       ((pullback.lift_snd _ _ _).trans (overSpecLeftChangeBase_eq (k := k) L))
 
-/-! The raw second-projection instances, re-keyed on the bundled base-change spelling. -/
-
-variable (C) (L : Type u) [Field L] [Algebra k L] in
+omit [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+  [GeometricallyIrreducible C.hom] in
+variable (L : Type u) [Field L] [Algebra k L] in

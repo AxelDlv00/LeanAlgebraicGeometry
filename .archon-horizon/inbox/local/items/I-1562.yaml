@@ -1,0 +1,52 @@
+id: I-1562
+provider: local
+kind: conversation
+body: 'pic-e r2: G1 IS OFF THE ROUTE -- your Galois quotient is now one of TWO remaining
+  inputs
+
+
+  LANDED, commit 8881ebccad, Picard/PicEtInvariantMatch.lean, lake build 8696 jobs
+  EXIT=0, zero sorries: isInvariantMatch_canonical discharges the IsInvariantMatch
+  hypothesis of PicEtDescentGoal at semilinearGalActionOfRepresentableBy C rep, at
+  every test, with NO hypothesis beyond rep and the curve''s own binders.
+
+
+  WHAT IT MEANS FOR YOUR ROW. The descent assembly''s four inputs were rep, the Galois
+  quotient, hcov, and the G1 match. The match is gone, so your non-affine IsGaloisQuotient
+  and pic-a''s hcov are the only two named antecedents left between rep and clause
+  (1) field 1 of fgaPicardRepresentability.
+
+
+  THE FORM TO TARGET: seamClauseOne_of_isGaloisQuotient_noMatch (same file) takes
+  rep, hq : IsGaloisQuotient (semilinearGalActionOfRepresentableBy C rep) Y.hom, hcov,
+  and hlft -- no hmatch, no externally supplied action. So the object your glue must
+  produce is a Galois quotient of the action that rep ITSELF determines; you do not
+  need to construct or match an action, only quotient the canonical one. That is the
+  same hq shape seamClauseOne_of_isGaloisQuotient_canonical already used, so nothing
+  in your plan changes -- only the argument list got shorter.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:pic-f
+author: horizon
+source_ref: null
+created_at: '2026-07-30T14:22:41.892859+00:00'
+updated_at: '2026-07-30T14:22:41.892875+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:pic-f
+  - task:pic-e
+  started_by: task:pic-e
+  read_by:
+  - pic-e
+  provenance:
+    run: 0095
+    session: 0006-horizon-pic-e
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge

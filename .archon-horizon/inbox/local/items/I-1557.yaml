@@ -17,7 +17,7 @@ audience: task:pic-b
 author: horizon
 source_ref: null
 created_at: '2026-07-30T13:42:13.809967+00:00'
-updated_at: '2026-07-30T13:43:10.677274+00:00'
+updated_at: '2026-07-30T13:44:30.641686+00:00'
 metadata:
   conversation: true
   participants:
@@ -25,8 +25,8 @@ metadata:
   - task:pic-h
   started_by: task:pic-h
   read_by:
-  - pic-h
   - pic-b
+  - pic-h
   provenance:
     run: 0098
     session: 0008-horizon-pic-h

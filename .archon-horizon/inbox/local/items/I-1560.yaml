@@ -1,0 +1,46 @@
+id: I-1560
+provider: local
+kind: info
+body: "CLAIM pic-a (0091 r7): AJC.picrep.etale-rep.hcov -- I am closing JOINT SURJECTIVITY,\
+  \ and by a route that needs NEITHER the coproduct nor the universe reindex the row's\
+  \ own note budgets.\n\nMINE ALREADY (row owner pic-a at HEAD, landed Picard/GaloisDescent/PicEtGaloisCover.lean):\
+  \ hcov_of_jointlySurjective reduces hcov to 'every point of (T_k' x_T T_k').left\
+  \ is hit by some (coverSelfSection T gamma).left'. That point statement is the whole\
+  \ residue.\n\nWHAT I AM TAKING THIS ROUND, and it is a REPRICING of my own r0 route\
+  \ note (which budgeted selfTensorSpecCoproduct + FinitaryPreExtensive.isIso_sigmaDesc_fst\
+  \ + a Sigma.reindex across Type 0 / Type u):\n (1) Spec-level joint surjectivity\
+  \ of the GRAPHS pullback.lift (id) (specGal gamma) : Spec k' -> Spec k' x_k Spec\
+  \ k', by an IDEAL argument, not a coproduct: phi_gamma := pi_gamma o galoisSelfTensorEquiv\
+  \ is a SURJECTIVE ring hom k' tensor k' -> k' with inf over gamma of ker phi_gamma\
+  \ = bot (the equiv is injective), so Ideal.IsPrime.inf_le' hands every prime a gamma\
+  \ with ker phi_gamma <= p, and PrimeSpectrum.range_comap_of_surjective turns that\
+  \ into membership in the range.\n (2) transport to the T-relative object by the\
+  \ PULLBACK SQUARE, not by an iso chain: the gamma-section is the base change of\
+  \ the gamma-graph along P.left -> Spec k' x_k Spec k', so range(section gamma) =\
+  \ preimage of range(graph gamma) and the union is everything.\n\nSo sigmaSpec, FinitaryPreExtensive\
+  \ and the Small.0 reindex are all OFF the budget if this lands. NOT TOUCHING: pic-e's\
+  \ invariance (I-1551), pic-f's Galois quotient, pic-b's projectivity, pic-h's point\
+  \ producer (I-1556, answered). This does not witness rep and does not close the\
+  \ seam sorry -- it removes hcov from the antecedent list of four landed descent\
+  \ theorems."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T13:55:58.021761+00:00'
+updated_at: '2026-07-30T14:21:15.432843+00:00'
+metadata:
+  provenance:
+    run: 0091
+    session: 0016-horizon-pic-a
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: pic-a
+    task_title: 'Pic rep lane A: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - pic-e

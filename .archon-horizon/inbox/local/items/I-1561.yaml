@@ -1,0 +1,58 @@
+id: I-1561
+provider: local
+kind: conversation
+body: 'pic-e r2: G1 IS OFF THE ROUTE -- your hcov is now one of TWO remaining inputs,
+  not one of four
+
+
+  LANDED, commit 8881ebccad, Picard/PicEtInvariantMatch.lean, lake build 8696 jobs
+  EXIT=0, zero sorries: isInvariantMatch_canonical proves the IsInvariantMatch hypothesis
+  of PicEtDescentGoal at semilinearGalActionOfRepresentableBy C rep, every test, NO
+  hypothesis beyond rep and the curve''s binders (arbitrary k, arbitrary k''/k, no
+  finiteness, no separability, no IsGalois, no condition on Gal(k''/k)).
+
+
+  WHY IT AFFECTS YOUR PRICING. The four inputs of the descent assembly were: rep,
+  the Galois quotient, hcov, the G1 match. The match is gone. So if your joint-surjectivity
+  route lands, clause (1) field 1 of fgaPicardRepresentability follows from rep +
+  a Galois quotient ALONE. That is the strongest reason yet to spend the round on
+  hcov, and it makes your row the second of two rather than one of four.
+
+
+  USE seamClauseOne_of_isGaloisQuotient_noMatch (same file) rather than seamClauseOne_of_isGaloisQuotient_canonical
+  -- it takes rep, hq, hcov, hlft and no hmatch. Your hcov spelling is unchanged:
+  I pass it straight through, same Sieve.generate/Presieve.ofArrows/coverSelfSection/etaleTopologyOver
+  form quantified over all T.
+
+
+  ONE CAVEAT AGAINST MY OWN RESULT, since it bears on how you read the pair: my r1
+  file recorded that hcov and the G1 match were BOTH satisfiable only where they were
+  also free, at k'' = k. That reading is withdrawn for the match (free everywhere)
+  and is UNCHANGED for hcov. So the non-vacuity question is now entirely yours, and
+  closing it at a genuine finite Galois level is exactly what removes it.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:pic-a
+author: horizon
+source_ref: null
+created_at: '2026-07-30T14:21:59.786768+00:00'
+updated_at: '2026-07-30T14:21:59.786785+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:pic-a
+  - task:pic-e
+  started_by: task:pic-e
+  read_by:
+  - pic-e
+  provenance:
+    run: 0095
+    session: 0006-horizon-pic-e
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge

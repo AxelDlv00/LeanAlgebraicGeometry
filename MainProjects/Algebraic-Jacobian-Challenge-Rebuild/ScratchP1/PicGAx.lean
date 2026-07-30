@@ -1,0 +1,23 @@
+import AlgebraicJacobian.Albanese.Genus0VanishingDatum
+import AlgebraicJacobian.Challenge
+
+open AlgebraicGeometry
+
+-- The declarations of this round.
+#print axioms AlgebraicGeometry.pic0RepresentableBy_terminal_of_subsingleton
+#print axioms AlgebraicGeometry.jacobianData_of_subsingleton
+#print axioms AlgebraicGeometry.jacobianData_of_subsingleton_J
+#print axioms AlgebraicGeometry.locallyOfFiniteType_terminal
+#print axioms AlgebraicGeometry.quasiCompact_terminal
+#print axioms AlgebraicGeometry.subsingleton_picEt_of_affine
+#print axioms AlgebraicGeometry.subsingleton_picEtAff_of_forall
+#print axioms AlgebraicGeometry.subsingleton_pic0_of_affine
+#print axioms AlgebraicGeometry.jacobianData_of_affine_subsingleton
+#print axioms AlgebraicGeometry.pic0Subgroup_eq_bot_of_subsingleton
+#print axioms AlgebraicGeometry.subsingleton_of_pic0Subgroup_eq_bot
+#print axioms AlgebraicGeometry.jacobianData_of_vanishing
+#print axioms AlgebraicGeometry.isTerminal_jacobianData_of_vanishing
+#print axioms AlgebraicGeometry.existsUnique_ofCurve_comp_of_vanishing
+
+-- CONTROL: this one MUST report sorryAx, or the probe proves nothing.
+#print axioms AlgebraicGeometry.Jacobian

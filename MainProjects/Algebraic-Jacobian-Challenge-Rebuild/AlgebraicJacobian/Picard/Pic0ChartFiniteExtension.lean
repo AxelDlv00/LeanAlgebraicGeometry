@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.Pic0ChartRationalGraph
+import AlgebraicJacobian.Picard.Pic0FiniteSeparablePoint
 import Mathlib.AlgebraicGeometry.Sites.Fpqc
 
 /-!
@@ -11,15 +12,21 @@ import Mathlib.AlgebraicGeometry.Sites.Fpqc
 
 This file supplies the positive replacement for a base-field genus divisor-degree assumption.
 Every challenge curve has a closed point; its residue field is a finite extension over which the
-curve has a rational point.  The graph of that point then produces a legal chart index at every
-natural parameter, in particular at the genus.  No separability claim is made: over an imperfect
-field, even a smooth curve can have inseparable closed points, and finite faithful-flat descent
-does not require the extension to be separable.
+curve has a rational point.  More strongly, a point over a separable closure spreads through the
+cofiltered limit of finite subextensions, producing a point over a finite separable extension.
+The graph of either point then produces a legal chart index at every natural parameter, in
+particular at the genus.  The stronger construction matters over imperfect fields: an arbitrary
+closed point can be inseparable even though smoothness guarantees that a separable one can be
+chosen.
 
 ## Main declarations
 
 * `AlgebraicGeometry.exists_finite_point` — every challenge curve acquires a point over a
   finite extension, obtained from a closed point and its residue field.
+* `AlgebraicGeometry.exists_finiteSubextension_point_of_point` — a point over an algebraic
+  extension of a finitely presented scheme spreads to one finite subextension.
+* `AlgebraicGeometry.exists_finite_separable_point` — every challenge curve acquires a point
+  over a finite separable extension, with no point or divisor-degree hypothesis.
 * `AlgebraicGeometry.baseChangePoint` — the fibre-product lift of an extension-valued point to
   a rational point of the base-changed curve.
 * `AlgebraicGeometry.overSpecFieldExtension_mem_fpqcTopology` — a field extension is an fpqc
@@ -150,25 +157,6 @@ theorem exists_fpqc_pointCover :
   letI : Module.Finite k L := hfinite
   exact ⟨L, inferInstance, inferInstance, inferInstance,
     overSpecFieldExtension_mem_fpqcTopology (k := k) L, hp⟩
-
-/-! The raw second-projection instances, re-keyed on the bundled base-change spelling. -/
-
-variable (C) (L : Type u) [Field L] [Algebra k L] in
-/-- Smooth relative dimension one, keyed on the bundled base-changed curve. -/
-instance instSmoothOfRelativeDimensionBaseChangeBundle :
-    SmoothOfRelativeDimension 1 (baseChangeBundle C L).hom :=
-  instSmoothOfRelativeDimensionSndLeft C L
-
-variable (C) (L : Type u) [Field L] [Algebra k L] in
-/-- Properness, keyed on the bundled base-changed curve. -/
-instance instIsProperBaseChangeBundle : IsProper (baseChangeBundle C L).hom :=
-  instIsProperSndLeft C L
-
-variable (C) (L : Type u) [Field L] [Algebra k L] in
-/-- Geometric irreducibility, keyed on the bundled base-changed curve. -/
-instance instGeometricallyIrreducibleBaseChangeBundle :
-    GeometricallyIrreducible (baseChangeBundle C L).hom :=
-  instGeometricallyIrreducibleSndLeft C L
 
 variable (C) in
 /-- One finite fpqc cover supports legal chart indices at every natural parameter.
