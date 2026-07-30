@@ -217,6 +217,7 @@ import AlgebraicJacobian.Cohomology.GluedSheafTermBaseChange
 import AlgebraicJacobian.Cohomology.GluedSheafTermBaseChangeEquiv
 import AlgebraicJacobian.Cohomology.GluedSheafH0BaseChange
 import AlgebraicJacobian.Cohomology.GluedSheafExtraction
+import AlgebraicJacobian.Cohomology.GluedSheafAffineProjective
 import AlgebraicJacobian.Cohomology.GluedSheafCongr
 import AlgebraicJacobian.Cohomology.GluedSheafFibre
 import AlgebraicJacobian.Cohomology.GluedSheafSubord
@@ -701,4 +702,3 @@ Aggregator for the Jacobian-challenge rebuild. The single statement file
 added here builds the infrastructure that discharges them. Keep this import list in
 dependency order and keep each imported file under 500 lines.
 -/
-import AlgebraicJacobian.Cohomology.GluedSheafAffineProjective
