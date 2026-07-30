@@ -8,9 +8,10 @@ docstring: The first pullback of `J` represents the first restriction of the `L`
 file: AlgebraicJacobian/Picard/Pic0RepAmitsurDatum.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.pic0OverlapRepresentableByInl
 type: lean
-updated: '2026-07-30T23:41:24'
+updated: '2026-07-31T00:01:07'
 ---
 noncomputable def pic0OverlapRepresentableByInl :
     ((Over.map (picRepOverlapSpecInl k L)).op ⋙

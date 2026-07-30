@@ -1,6 +1,6 @@
 id: AJCR.w4-rep.datum.vanishing-route
-title: 'ATLAS-FREE ROUTE to JacobianData: represent pic0TypeFunctor by the TERMINAL
-  object when Pic^0 vanishes, and reduce that vanishing to affine test rings'
+title: NON-ATLAS INHABITANT of the pic0TypeFunctor representability slot, under testwise
+  vanishing -- headline retracted from 'second route to JacobianData'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'CLAIMED pic-g (0096 r2). The three atlas antecedents (rep, IsChartUniv,
@@ -11,7 +11,7 @@ summary: 'CLAIMED pic-g (0096 r2). The three atlas antecedents (rep, IsChartUniv
   no atlas, no divisor representability, no coverage. Then reduce the vanishing hypothesis
   from all tests to affine test RINGS, so it is attackable without scheme-level machinery.
   NO NEW HYPOTHESIS is added to any existing statement.'
-status: active
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -33,8 +33,7 @@ metadata:
     task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum
-  owner: pic-g
-  updated_at: '2026-07-30T12:35:25.921821+00:00'
+  updated_at: '2026-07-30T16:03:40.614608+00:00'
   pinned_commits:
   - dc63ffdbf7
   - f9f885abbd

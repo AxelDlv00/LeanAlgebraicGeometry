@@ -7,9 +7,10 @@ docstring: The two overlap projections have the same composite to `Spec k`.
 file: AlgebraicJacobian/Picard/Pic0RepAmitsurDatum.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.picRepOverlapSpec_comp_base
 type: lean
-updated: '2026-07-30T23:41:24'
+updated: '2026-07-31T00:01:07'
 ---
 lemma picRepOverlapSpec_comp_base :
     picRepOverlapSpecInl k L ≫ picRepBaseSpecMap k L =

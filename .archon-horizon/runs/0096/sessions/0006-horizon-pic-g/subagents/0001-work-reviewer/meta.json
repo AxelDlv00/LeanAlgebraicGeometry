@@ -1,0 +1,11 @@
+{
+  "name": "work-reviewer",
+  "native_subagent_id": "toolu_bdrk_01Xt46muVhBUxMdjJziSPZhN",
+  "parent_session": "0006-horizon-pic-g",
+  "role": "subagent",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 2937815,
+    "tokens_out": 77
+  }
+}

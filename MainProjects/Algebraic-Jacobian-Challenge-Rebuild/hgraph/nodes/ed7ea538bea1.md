@@ -7,10 +7,9 @@ file: ScratchP1/probe_affine_fibre.lean
 generated: lean
 lean_status: lean_ok
 private: true
-stale: true
 title: AlgebraicGeometry.picClass_neg_probe
 type: lean
-updated: '2026-07-30T23:41:27'
+updated: '2026-07-31T00:01:01'
 ---
 private lemma picClass_neg_probe {K : Type u} [Field K] {X : Scheme.{u}}
     [X.Over (Spec (CommRingCat.of K))] [IsIntegral X]

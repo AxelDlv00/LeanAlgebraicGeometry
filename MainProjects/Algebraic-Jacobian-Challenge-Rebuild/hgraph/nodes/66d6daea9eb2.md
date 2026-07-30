@@ -8,9 +8,10 @@ docstring: Equality of the two presentations of the first projection from the tr
 file: AlgebraicJacobian/Picard/Pic0RepAmitsurDatum.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.picRepTripleLeg1
 type: lean
-updated: '2026-07-30T23:41:24'
+updated: '2026-07-31T00:01:06'
 ---
 lemma picRepTripleLeg1 :
     picRepFace12Spec k L ≫ picRepOverlapSpecInl k L =

@@ -7,9 +7,10 @@ docstring: The canonical double-overlap isomorphism on a scheme representing `Pi
 file: AlgebraicJacobian/Picard/Pic0RepAmitsurDatum.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.picRepOverlapIso
 type: lean
-updated: '2026-07-30T23:41:24'
+updated: '2026-07-31T00:01:07'
 ---
 noncomputable def picRepOverlapIso :
     (Over.pullback (picRepOverlapSpecInl k L)).obj J ≅

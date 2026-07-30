@@ -3,7 +3,7 @@ author: sync
 content_type: theorem
 created: '2026-07-30T20:44:25'
 decl: AlgebraicGeometry.existsUnique_ofCurve_comp_of_vanishing
-docstring: '**S11''s UNIQUENESS CLAUSE, WITH THE `JacobianData` BINDER GONE.**
+docstring: '**S11''s uniqueness clause with the datum supplied rather than assumed.**
 
 
   `JacobianData.existsUnique_ofCurve_comp_of_pic0Subgroup_eq_bot` is the upstream
@@ -12,19 +12,23 @@ docstring: '**S11''s UNIQUENESS CLAUSE, WITH THE `JacobianData` BINDER GONE.**
   takes a datum, the vanishing, surjectivity of the curve''s structure morphism, a
   rational
 
-  point, and the existence half `hex`.  This is the same theorem with the datum *supplied*,
-  so
+  point, and the existence half `hex`.  This is the same theorem with the datum *built
+  from the
 
-  the hypotheses are: the vanishing, a nonempty curve, a rational point, and `hex`.
+  vanishing*, so the hypotheses are: the vanishing, a nonempty curve, a rational point,
+  and `hex`.
 
 
-  Read against the `AJCR.w6-albanese.genus0` row, which records the leaf as gated
-  behind
+  **Not a generalisation of the upstream theorem** (`I-1575`): that one holds at an
+  arbitrary `d`,
 
-  `divRep`: it is not, and never was — the gate was the datum binder, and the vanishing
-  that
+  and this is its `d := jacobianData_of_vanishing C h` face.  The conclusion''s type
+  names that
 
-  the row''s own hypothesis carries is enough to build one.
+  carrier, so a consumer holding a different datum must use the upstream form.  What
+  is bought is
+
+  that the chain runs from the vanishing alone, with no datum from elsewhere.
 
 
   `hex` is Milne I 3.9 and is still open, exactly as upstream.'
@@ -33,7 +37,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.existsUnique_ofCurve_comp_of_vanishing
 type: lean
-updated: '2026-07-30T20:44:25'
+updated: '2026-07-31T00:00:59'
 ---
 theorem existsUnique_ofCurve_comp_of_vanishing
     (h : ∀ T : Over (Spec (.of k)), pic0Subgroup C T = ⊥) (hs : Surjective C.hom)

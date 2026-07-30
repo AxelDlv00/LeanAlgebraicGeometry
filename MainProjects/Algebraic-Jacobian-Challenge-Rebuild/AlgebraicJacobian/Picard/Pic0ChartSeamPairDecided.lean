@@ -171,6 +171,126 @@ theorem isOpenImmersion_presheaf_of_injective {X : Scheme.{u}}
       (chartSheafHom C f)))
   exact MorphismProperty.of_isIso (P := IsOpenImmersion.presheaf) f
 
+/-! ## The terminal chart at parameter `0`
+
+`abelSigmaChartZero` (`Picard/DivisorFamilyDegreeZeroUseSite.lean`) is the Abel chart whose
+`rep` binder is discharged by `divFunctorZeroRepresentableBy`, i.e. by the degree-zero
+producer.  Its representing object is the *terminal* object of the slice, so its source is
+`Spec k` and the chart's Σ-component is the identity on points.  That single structural fact
+drives both directions below. -/
+
+variable {pi : C.left ⟶ P1 k} [IsAffineHom pi] [IsIntegral (C ⊗ overSpec k k).left]
+
+omit [GeometricallyReduced C.hom] in
+variable (C pi) in
+/-- **The Σ-component of the terminal chart's value is the point itself.**
+
+`abelSigmaChart` sends `v` to the Σ-element with structure morphism `v ≫ D.hom`
+(`toSigmaExtension_app_fst`), and at parameter `0` the representing object is
+`Over.mk (𝟙 (Spec k))`, so `D.hom` is the identity.  Hence reading off the Σ-component
+recovers `v` on the nose — no transport, no naturality.
+
+Everything in this section is this lemma read in one of two directions. -/
+lemma sigmaComponent_abelSigmaChartZero (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - ((0 : ℕ) : ℤ))
+    (T : Scheme.{u}) (v : T ⟶ (Over.mk (𝟙 (Spec (CommRingCat.of k)))).left) :
+    ((abelSigmaChartZero (C := C) (pi := pi) m Z hdeg).app (op T) v).1 = v := by
+  change v ≫ 𝟙 _ = v
+  rw [Category.comp_id]
+
+omit [GeometricallyReduced C.hom] in
+variable (C pi) in
+/-- **ANTECEDENT 1'S ELEMENTWISE CONTENT IS UNCONDITIONAL AT THIS CHART**: the terminal chart
+is injective on points at every test, with no hypothesis whatsoever.
+
+Two points a lane must not misread.
+
+* This is **not** the `V = ⊥` degeneracy of `isChartUniv_bot`
+  (`Pic0ChartRestrictedFibreSat`).  There the source is the empty scheme and injectivity is
+  vacuous; here the source is `Spec k`, the chart is **unrestricted** (`V = ⊤` in the
+  interval literature's coordinates), and the map is injective because the Σ-component
+  *is* the point.
+* It is also not in tension with `Pic0ChartForkNegativeBranch`'s refutation of chart-map
+  injectivity.  That refutation is at a chart of degree `n` with two distinct effective
+  divisors in one class, which needs `2 ≤ h⁰`; at parameter `0` the functor value is a
+  singleton (`instSubsingletonDivFamZarSectionZero`), so there is no pair to separate.  The
+  fork's negative branch and this lemma live at different parameters, and the fork's own
+  hypothesis `2 ≤ Sheaf.h0` is what keeps them apart. -/
+theorem injective_abelSigmaChartZero (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - ((0 : ℕ) : ℤ))
+    (T : Scheme.{u}ᵒᵖ) :
+    Function.Injective ((abelSigmaChartZero (C := C) (pi := pi) m Z hdeg).app T) := by
+  intro v₁ v₂ h
+  have h₁ := sigmaComponent_abelSigmaChartZero C pi m Z hdeg T.unop v₁
+  have h₂ := sigmaComponent_abelSigmaChartZero C pi m Z hdeg T.unop v₂
+  rw [← h₁, ← h₂, h]
+
+/-! ## Surjectivity IS the vanishing
+
+The Σ-component being the identity on points means the chart's app is surjective exactly when
+the fibre components are forced — and there is at most one thing to hit per structure
+morphism precisely when `pic⁰` is a singleton there.  Both directions below are that
+observation; neither uses the sheaf property, the site, or a cover. -/
+
+omit [GeometricallyReduced C.hom] in
+variable (C pi) in
+/-- **Surjectivity of the terminal chart's app, from vanishing `pic⁰`.**
+
+Given a Σ-element `⟨a, ξ⟩` over `T`, the point `a : T ⟶ Spec k` is already a point of the
+chart source, and its chart value has Σ-component `a` by
+`sigmaComponent_abelSigmaChartZero`.  The two fibre components then live in the same
+`pic0Subgroup C (Over.mk a)`, where the hypothesis identifies them — so the transport is
+`Over.sigmaExtension_ext` with `Subsingleton.allEq`, and no cohomology, cover or naturality
+enters. -/
+theorem surjective_app_abelSigmaChartZero_of_subsingleton
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - ((0 : ℕ) : ℤ))
+    (hvan : ∀ S : Over (Spec (.of k)), Subsingleton (pic0Subgroup C S))
+    (T : Scheme.{u}ᵒᵖ) :
+    Function.Surjective ((abelSigmaChartZero (C := C) (pi := pi) m Z hdeg).app T) := by
+  rintro ⟨a, xi⟩
+  refine ⟨a, ?_⟩
+  refine Over.sigmaExtension_ext (pic0TypeFunctor C)
+    (show a ≫ 𝟙 _ = a from Category.comp_id a) ?_
+  exact (hvan _).allEq _ _
+
+omit [GeometricallyReduced C.hom] in
+variable (C pi) in
+/-- **THE CONVERSE: surjectivity FORCES the vanishing.**
+
+If the chart's app is surjective at the test `S.left`, then every degree-zero class over
+`Over.mk S.hom` — i.e. over `S` itself, since `Over.mk S.hom = S` by `rfl` — is the chart
+value of some point, and by the previous lemma's Σ-component computation that point is
+`S.hom` itself.  So the class is determined, and two classes over `S` coincide.
+
+This is what makes the decision an equivalence rather than a sufficient condition, and it is
+the reason this file's headline is not a weakening: a curve with two distinct degree-zero
+classes at one test has no hope at this chart, whatever `V` one restricts to
+(`not_seamPair_abelSigmaChartZero_of_two_pic0`). -/
+theorem subsingleton_pic0Subgroup_of_surjective_app
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - ((0 : ℕ) : ℤ))
+    (hsurj : ∀ T : Scheme.{u}ᵒᵖ,
+      Function.Surjective ((abelSigmaChartZero (C := C) (pi := pi) m Z hdeg).app T))
+    (S : Over (Spec (.of k))) :
+    Subsingleton (pic0Subgroup C S) := by
+  refine ⟨fun x y => ?_⟩
+  -- both classes name a Σ-element over `S.left` with structure morphism `S.hom`
+  obtain ⟨vx, hvx⟩ := hsurj (op S.left) ⟨S.hom, x⟩
+  obtain ⟨vy, hvy⟩ := hsurj (op S.left) ⟨S.hom, y⟩
+  -- the Σ-components pin the two points to `S.hom`, hence to each other
+  have hx : vx = S.hom := by
+    rw [← sigmaComponent_abelSigmaChartZero C pi m Z hdeg S.left vx, hvx]
+  have hy : vy = S.hom := by
+    rw [← sigmaComponent_abelSigmaChartZero C pi m Z hdeg S.left vy, hvy]
+  have : (⟨S.hom, x⟩ : (pic0SigmaSheaf C).1.obj (op S.left)) = ⟨S.hom, y⟩ := by
+    rw [← hvx, ← hvy, hx, hy]
+  exact eq_of_heq (Sigma.mk.inj this).2
+
 end
 
 end AlgebraicGeometry
