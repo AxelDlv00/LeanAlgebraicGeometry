@@ -88,6 +88,7 @@ noncomputable def thetaOverlapSectionsModule (A : AffAdaptation D d) (a : ℕ)
 attribute [local instance] thetaPieceSectionsModule thetaOverlapSectionsModule
 
 /-- The equation-generated submodule of theta sections on one piece. -/
+@[reducible]
 noncomputable def thetaPieceVanishing (A : AffAdaptation D d) (a : ℕ)
     (j : D.index) :
     letI : Module Γ(relCurve C R, D.pieces j)
@@ -98,6 +99,7 @@ noncomputable def thetaPieceVanishing (A : AffAdaptation D d) (a : ℕ)
   Ideal.span {A.eqn j} • ⊤
 
 /-- The symmetric overlap ideal acting on intrinsic theta sections. -/
+@[reducible]
 noncomputable def thetaOverlapVanishing (A : AffAdaptation D d) (a : ℕ)
     (i j : D.index) :
     letI : Module Γ(relCurve C R, D.pieces i ⊓ D.pieces j)
@@ -413,6 +415,80 @@ lemma mem_intrinsicThetaGluedSubmodule_iff (A : AffAdaptation D d) (a : ℕ)
 /-- The intrinsic globally descended theta restriction, as an `R`-module type. -/
 noncomputable abbrev IntrinsicThetaGlued (A : AffAdaptation D d) (a : ℕ) : Type u :=
   ↥(A.intrinsicThetaGluedSubmodule (π := π) a)
+
+/-- The left overlap map is linear for the induced map of colength algebras. -/
+lemma thetaToOverlapLeft_smul (A : AffAdaptation D d) (a : ℕ) (i j : D.index)
+    (c : A.colength i) (x : A.ThetaPieceQuotient (π := π) a i) :
+    A.thetaToOverlapLeft (π := π) a i j (c • x) =
+      A.toOvlLeft i j c • A.thetaToOverlapLeft (π := π) a i j x := by
+  obtain ⟨r, rfl⟩ := Ideal.Quotient.mk_surjective c
+  induction x using Submodule.Quotient.induction_on with
+  | _ m =>
+    change Submodule.Quotient.mk
+        (A.thetaSectionsToOverlapLeft (π := π) a i j (r • m)) =
+      Submodule.Quotient.mk
+        ((relResAlgHom C R
+          (inf_le_left : D.pieces i ⊓ D.pieces j ≤ D.pieces i)) r •
+            A.thetaSectionsToOverlapLeft (π := π) a i j m)
+    rw [(A.thetaSectionsToOverlapLeft (π := π) a i j).map_smulₛₗ]
+    rfl
+
+/-- The right overlap map is linear for the induced map of colength algebras. -/
+lemma thetaToOverlapRight_smul (A : AffAdaptation D d) (a : ℕ) (i j : D.index)
+    (c : A.colength j) (x : A.ThetaPieceQuotient (π := π) a j) :
+    A.thetaToOverlapRight (π := π) a i j (c • x) =
+      A.toOvlRight i j c • A.thetaToOverlapRight (π := π) a i j x := by
+  obtain ⟨r, rfl⟩ := Ideal.Quotient.mk_surjective c
+  induction x using Submodule.Quotient.induction_on with
+  | _ m =>
+    change Submodule.Quotient.mk
+        (A.thetaSectionsToOverlapRight (π := π) a i j (r • m)) =
+      Submodule.Quotient.mk
+        ((relResAlgHom C R
+          (inf_le_right : D.pieces i ⊓ D.pieces j ≤ D.pieces j)) r •
+            A.thetaSectionsToOverlapRight (π := π) a i j m)
+    rw [(A.thetaSectionsToOverlapRight (π := π) a i j).map_smulₛₗ]
+    rfl
+
+/-- Evaluation of the widened equalizer algebra on one piece colength algebra. -/
+noncomputable def gluedSubalgebraPieceMap (A : AffAdaptation D d) (j : D.index) :
+    ↥(gluedSubalgebra A) →ₐ[R] A.colength j :=
+  (Pi.evalAlgHom R (fun i : D.index => A.colength i) j).comp
+    (gluedSubalgebra A).val
+
+/-- A piece theta quotient is a module over the widened equalizer algebra by evaluation on
+that piece. -/
+@[reducible]
+noncomputable def thetaPieceQuotientGluedModule (A : AffAdaptation D d) (a : ℕ)
+    (j : D.index) :
+    Module ↥(gluedSubalgebra A) (A.ThetaPieceQuotient (π := π) a j) :=
+  letI : Module (A.colength j) (A.ThetaPieceQuotient (π := π) a j) :=
+    A.thetaPieceQuotientModule (π := π) a j
+  Module.compHom (A.ThetaPieceQuotient (π := π) a j)
+    (A.gluedSubalgebraPieceMap j).toRingHom
+
+attribute [local instance] thetaPieceQuotientGluedModule
+
+/-- The intrinsic theta equalizer is stable under the widened equalizer algebra `A_D`. -/
+noncomputable def intrinsicThetaGluedOver (A : AffAdaptation D d) (a : ℕ) :
+    Submodule ↥(gluedSubalgebra A) (A.ThetaPieceProd (π := π) a) where
+  carrier := A.intrinsicThetaGluedSubmodule (π := π) a
+  add_mem' := fun hx hy => (A.intrinsicThetaGluedSubmodule (π := π) a).add_mem hx hy
+  zero_mem' := (A.intrinsicThetaGluedSubmodule (π := π) a).zero_mem
+  smul_mem' := by
+    intro c x hx
+    have hx' := (A.mem_intrinsicThetaGluedSubmodule_iff (π := π) a x).mp hx
+    apply (A.mem_intrinsicThetaGluedSubmodule_iff (π := π) a (c • x)).mpr
+    intro p
+    change A.thetaToOverlapLeft (π := π) a p.1 p.2 (c.1 p.1 • x p.1) =
+      A.thetaToOverlapRight (π := π) a p.1 p.2 (c.1 p.2 • x p.2)
+    rw [A.thetaToOverlapLeft_smul, A.thetaToOverlapRight_smul]
+    have hc := (A.mem_gluedSubmodule_iff (c : A.chartProd)).mp c.2
+    rw [hc p, hx' p]
+
+/-- The intrinsic globally descended theta restriction as an `A_D`-module. -/
+noncomputable abbrev IntrinsicThetaGluedOver (A : AffAdaptation D d) (a : ℕ) : Type u :=
+  ↥(A.intrinsicThetaGluedOver (π := π) a)
 
 end AffAdaptation
 
