@@ -178,6 +178,10 @@ theorem isEquivariant_iff_galTwistMor (T : Over (Spec (CommRingCat.of k)))
   · intro h γ; exact congrArg Over.Hom.left (h γ)
 
 set_option maxHeartbeats 1000000 in
+-- Heartbeat headroom: the `Over`/`pullback`/`baseTest` coercion chain is unfolded
+-- repeatedly against `IsEquivariant`'s and `picEt`'s differing spellings of one
+-- object, as in `PicEtDescentGoal.lean`'s §2b. Not a slow proof: each is a rewrite
+-- chain, but elaborating the statement costs the default budget on its own.
 /-- **Step 2, the step that makes `G1` free: the square's right-hand side is the
 functor action.**
 
@@ -201,6 +205,10 @@ theorem homEquiv_twist_comp (T : Over (Spec (CommRingCat.of k)))
   exact hnat.symm
 
 set_option maxHeartbeats 1000000 in
+-- Heartbeat headroom: the `Over`/`pullback`/`baseTest` coercion chain is unfolded
+-- repeatedly against `IsEquivariant`'s and `picEt`'s differing spellings of one
+-- object, as in `PicEtDescentGoal.lean`'s §2b. Not a slow proof: each is a rewrite
+-- chain, but elaborating the statement costs the default budget on its own.
 /-- **Step 3: the inverse action, transported across the cross-base identification,
 is `picEt C` applied to an identity-underlying comparison.**
 
@@ -220,6 +228,10 @@ theorem crossBaseIso_galoisActionPicEt_inv (D : Over (Spec (CommRingCat.of k')))
   rfl
 
 set_option maxHeartbeats 1000000 in
+-- Heartbeat headroom: the `Over`/`pullback`/`baseTest` coercion chain is unfolded
+-- repeatedly against `IsEquivariant`'s and `picEt`'s differing spellings of one
+-- object, as in `PicEtDescentGoal.lean`'s §2b. Not a slow proof: each is a rewrite
+-- chain, but elaborating the statement costs the default budget on its own.
 /-- **Precomposing with the identity-underlying comparison is injective on classes,
 and cancels.** Both directions of the final iff are this lemma; it is stated once
 rather than inlined twice because the two orientations of `Iso.hom_inv_id_app` are
@@ -247,6 +259,10 @@ theorem picEt_map_comparison_eq_iff (D : Over (Spec (CommRingCat.of k')))
   · intro h; rw [h]
 
 set_option maxHeartbeats 1000000 in
+-- Heartbeat headroom: the `Over`/`pullback`/`baseTest` coercion chain is unfolded
+-- repeatedly against `IsEquivariant`'s and `picEt`'s differing spellings of one
+-- object, as in `PicEtDescentGoal.lean`'s §2b. Not a slow proof: each is a rewrite
+-- chain, but elaborating the statement costs the default budget on its own.
 /-- The same cancellation in the orientation the composite's endgame presents: an
 equation against `map (hom) c` is the same as `map (inv)` of the left side being `c`.
 `w` is a class on the **twisted** restricted test, which is why this is not a
@@ -283,6 +299,10 @@ theorem picEt_comparison_eq_iff_map_inv (D : Over (Spec (CommRingCat.of k')))
 /-! ## §3. THE MATCH, DISCHARGED -/
 
 set_option maxHeartbeats 1000000 in
+-- Heartbeat headroom: the `Over`/`pullback`/`baseTest` coercion chain is unfolded
+-- repeatedly against `IsEquivariant`'s and `picEt`'s differing spellings of one
+-- object, as in `PicEtDescentGoal.lean`'s §2b. Not a slow proof: each is a rewrite
+-- chain, but elaborating the statement costs the default budget on its own.
 /-- **Equivariance at `γ` IS invariance at `γ⁻¹`**, per automorphism, with no
 hypothesis. This is §1–§3 composed at a single `γ`; the headline below only has to
 reindex. -/
@@ -331,6 +351,10 @@ theorem galTwistMor_eq_iff_map_twistTest (T : Over (Spec (CommRingCat.of k)))
   exact picEt_comparison_eq_iff_map_inv (C := C) (baseTest (k' := k') T) γ _ _
 
 set_option maxHeartbeats 1000000 in
+-- Heartbeat headroom: the `Over`/`pullback`/`baseTest` coercion chain is unfolded
+-- repeatedly against `IsEquivariant`'s and `picEt`'s differing spellings of one
+-- object, as in `PicEtDescentGoal.lean`'s §2b. Not a slow proof: each is a rewrite
+-- chain, but elaborating the statement costs the default budget on its own.
 /-- **`G1`'S PREDICATE MATCH IS FREE AT THE CANONICAL ACTION.**
 
 For a smooth proper curve `C` over an **arbitrary** field `k`, an **arbitrary**
@@ -372,6 +396,92 @@ theorem isInvariantMatch_canonical (T : Over (Spec (CommRingCat.of k))) :
     intro h γ
     refine (galTwistMor_eq_iff_map_twistTest rep T c γ).mpr ?_
     exact h γ⁻¹
+
+/-! ## §4. THE PAYOFF: the descent goal with `G1` deleted
+
+The theorems of `Picard/PicEtDescentGoal.lean` §5–§6 take `hmatch` as an argument.
+Restated here at the canonical action with `hmatch` supplied by §3, so a consumer
+never mentions it. These are the forms a lane closing `G2(c)` or `hcov` should aim
+at. -/
+
+section Payoff
+
+variable [Algebra.IsSeparable k k'] [Module.Finite k k']
+
+set_option maxHeartbeats 1000000 in
+-- Heartbeat headroom: the `Over`/`pullback`/`baseTest` coercion chain is unfolded
+-- repeatedly against `IsEquivariant`'s and `picEt`'s differing spellings of one
+-- object, as in `PicEtDescentGoal.lean`'s §2b. Not a slow proof: each is a rewrite
+-- chain, but elaborating the statement costs the default budget on its own.
+/-- **THE DESCENT GOAL, THREE INPUTS.**
+
+A `k'`-scheme `X'` representing `picEt (C_{k'})`, a Galois quotient `Y` over `k` of
+the action that representation itself determines, and `hcov` — yield
+`(picEt C).RepresentableBy Y`, i.e. field 1 of clause (1) of
+`Scheme.fgaPicardRepresentability`, over `k`.
+
+Compare `representableBy_picEt_of_galoisQuotient`, which additionally takes the `G1`
+predicate match and an externally-supplied action. Both are gone: the action is free
+by `semilinearGalActionOfRepresentableBy` and the match is free by §3. -/
+noncomputable def representableBy_picEt_of_galoisQuotient_canonical
+    {C : Over (Spec (CommRingCat.of k))}
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    {X' : Over (Spec (CommRingCat.of k'))}
+    (rep : (picEt (Scheme.baseChangeField C k')).RepresentableBy X')
+    {Y : Over (Spec (CommRingCat.of k))}
+    (e : Limits.pullback Y.hom (specMapAlgebra k k') ≅ X'.left)
+    (he : e.hom ≫ X'.hom = Limits.pullback.snd Y.hom (specMapAlgebra k k'))
+    (heq : (pullbackSemilinearGalAction k k' Y.hom).IsEquivariant
+      (semilinearGalActionOfRepresentableBy C rep) e.hom)
+    (huniv : ∀ (T : Scheme.{u}) (t : T ⟶ Spec (CommRingCat.of k))
+      (h : Limits.pullback t (specMapAlgebra k k') ⟶ X'.left),
+      h ≫ X'.hom = Limits.pullback.snd t (specMapAlgebra k k') →
+      (pullbackSemilinearGalAction k k' t).IsEquivariant
+        (semilinearGalActionOfRepresentableBy C rep) h →
+      ∃! u : {u : T ⟶ Y.left // u ≫ Y.hom = t},
+        pullbackBaseChange k k' Y.hom t u.1 u.2 ≫ e.hom = h)
+    (hcov : ∀ T : Over (Spec (CommRingCat.of k)), Sieve.generate (Presieve.ofArrows
+        (fun _ : k' ≃ₐ[k] k' => (restrictTest k k').obj (baseTest (k' := k') T))
+        (fun γ => coverSelfSection T γ)) ∈
+      Scheme.etaleTopologyOver k (Limits.pullback (coverMap (k := k) (k' := k') T)
+        (coverMap (k := k) (k' := k') T))) :
+    (picEt C).RepresentableBy Y :=
+  representableBy_picEt_of_galoisQuotient rep
+    (semilinearGalActionOfRepresentableBy C rep) e he heq huniv hcov
+    (fun T => isInvariantMatch_canonical rep T)
+
+set_option maxHeartbeats 1000000 in
+-- Heartbeat headroom: the `Over`/`pullback`/`baseTest` coercion chain is unfolded
+-- repeatedly against `IsEquivariant`'s and `picEt`'s differing spellings of one
+-- object, as in `PicEtDescentGoal.lean`'s §2b. Not a slow proof: each is a rewrite
+-- chain, but elaborating the statement costs the default budget on its own.
+/-- **CLAUSE (1) OF THE SEAM, FROM THREE INPUTS**, in the bundled form a `G2`
+consumer holds: a `k'`-representation, a Galois quotient of the action it determines,
+`hcov`, and local finiteness of the quotient.
+
+This is the sharpest statement of what the seam's clause (1) now costs on this route.
+`seamClauseOne_of_isGaloisQuotient_canonical` is this theorem with a fourth argument
+`hmatch`, which §3 discharges. -/
+theorem seamClauseOne_of_isGaloisQuotient_noMatch
+    {C : Over (Spec (CommRingCat.of k))}
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    {X' : Over (Spec (CommRingCat.of k'))}
+    (rep : (picEt (Scheme.baseChangeField C k')).RepresentableBy X')
+    {Y : Over (Spec (CommRingCat.of k))}
+    (hq : IsGaloisQuotient (semilinearGalActionOfRepresentableBy C rep) Y.hom)
+    (hcov : ∀ T : Over (Spec (CommRingCat.of k)), Sieve.generate (Presieve.ofArrows
+        (fun _ : k' ≃ₐ[k] k' => (restrictTest k k').obj (baseTest (k' := k') T))
+        (fun γ => coverSelfSection T γ)) ∈
+      Scheme.etaleTopologyOver k (Limits.pullback (coverMap (k := k) (k' := k') T)
+        (coverMap (k := k) (k' := k') T)))
+    (hlft : LocallyOfFiniteType Y.hom) :
+    ∃ Z : Over (Spec (CommRingCat.of k)),
+      Nonempty ((picEt C).RepresentableBy Z) ∧
+        LocallyOfFiniteType Z.hom ∧ IsSeparated Z.hom :=
+  seamClauseOne_of_isGaloisQuotient_canonical rep hq hcov
+    (fun T => isInvariantMatch_canonical rep T) hlft
+
+end Payoff
 
 end Steps
 

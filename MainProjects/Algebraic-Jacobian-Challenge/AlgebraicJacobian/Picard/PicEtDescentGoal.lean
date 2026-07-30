@@ -107,26 +107,39 @@ Leg 3 of the descent composite lands on the classes whose representing morphism 
 two predicates agree — two predicates on one object, which is all that campaign
 `G1` is owed on this route (`Picard/PicEtQuotientHom.lean`, module docstring).
 
-It is carried as an explicit hypothesis of everything below and is **not proved
-here**. Stated as a definition so that a lane closing `G1` has a name to discharge
-and so that the composite's obligations are countable rather than inlined.
+It is carried as an explicit hypothesis of everything below. Stated as a definition so
+that a lane closing `G1` has a name to discharge and so that the composite's
+obligations are countable rather than inlined.
 
-**SATISFIABLE BUT NOT MEASURED NON-VACUOUS, and the only exhibited witness site
-trivialises the theorem it feeds** (fresh-context audit; `isInvariantMatch_of_subsingleton`
-and `representableBy_picEt_of_degenerate` below are that measurement, landed as Lean
-rather than left as prose). At `Subsingleton (k' ≃ₐ[k] k')` this predicate is
-**free** — and `k' = k` is such a site, where `Mono (specMapAlgebra k k)` also holds,
-so `hcov` is free there too by
-`etaleTopology_generate_coverSelfSection_of_mono`. There the theorem's four "inputs"
-are two.
+**AND IT IS NOW DISCHARGED AT THE CANONICAL ACTION, so `G1` IS NO LONGER AN INPUT OF
+THIS ROUTE.** `PicScheme.isInvariantMatch_canonical`
+(`Picard/PicEtInvariantMatch.lean`) proves
+`IsInvariantMatch C rep (semilinearGalActionOfRepresentableBy C rep) T` for every `T`,
+with no hypothesis beyond `rep` and the curve's own binders — arbitrary `k`, arbitrary
+`k'/k`, no finiteness, no separability, no `IsGalois`, no condition on `Gal(k'/k)`. The
+reason it is free is that the canonical action's `γ`-component **is** `twistMor γ`,
+which is defined by transporting `galoisActionPicEt` along `rep`, so equivariance and
+invariance are two readings of one functor-level equation and naturality converts
+between them. Use `seamClauseOne_of_isGaloisQuotient_noMatch` there rather than
+supplying `hmatch`; the paragraphs below are kept because the *definition* is still
+what a non-canonical action would have to satisfy.
 
-This is verbatim the trap `Picard/PicEtDescentRepresentability.lean` records for
-`hcov` itself — *a satisfiable antecedent whose only witness also trivialises the
-conclusion establishes satisfiability and **not** content* — now reproduced for this
-file's own new hypothesis. Exhibiting a model at an extension with a **nontrivial**
-automorphism (`ℂ/ℝ`, `𝔽_{p²}/𝔽_p`) is **open**, and is what would make `G1`'s cost
-here a real number. Do not read the theorems of §5–§6 as instantiable at a
-nondegenerate site on the strength of this definition being inhabited. -/
+**THE PARAGRAPH THAT USED TO STAND HERE said this predicate was "satisfiable but not
+measured non-vacuous, and the only exhibited witness site trivialises the theorem it
+feeds", with `isInvariantMatch_of_subsingleton` and `representableBy_picEt_of_degenerate`
+below as that measurement.** Both theorems stand and are still true; the *reading* is
+withdrawn. `isInvariantMatch_of_subsingleton` is now the degenerate case of a fact that
+holds at **every** extension, so it is subsumed rather than cautionary, and "exhibiting
+a model at an extension with a nontrivial automorphism is open" is no longer the
+question for this hypothesis — it is free at all of them.
+
+**What the withdrawal does NOT extend to, and this is the half that survives:** `hcov`.
+Its only exhibited witness site still trivialises the conclusion
+(`etaleTopology_generate_coverSelfSection_of_mono` at `k' = k`), so the trap
+`Picard/PicEtDescentRepresentability.lean` records for `hcov` is untouched, and
+`representableBy_picEt_of_degenerate` below still shows that at `k' = k` the remaining
+inputs collapse. Do not read the theorems of §5–§6 as instantiable at a nondegenerate
+site: the reason is now `hcov` and the `k'`-side representation alone. -/
 def IsInvariantMatch (C : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
     {X' : Over (Spec (CommRingCat.of k'))}
