@@ -1,0 +1,59 @@
+id: I-1459
+provider: local
+kind: issue
+body: 'MY OWN ''THAT GOAL IS ATOMIC, SO THE FAILING exact? IS A SOUND ABSENCE MEASUREMENT''
+  IS FALSE, and it is published in two places a later lane will read as audited.
+
+
+  SITES, both ajcr-p2 run 0088 r6, both at HEAD:
+
+  * roadmap comment AJCR.w4-rep.datum.dat-c.param-admissible/C-0002.md -- ''that goal
+  IS atomic, so per I-1402 a sound absence measurement, unlike my two earlier exact?
+  calls on composite goals''
+
+  * inbox I-1448 (release note) -- ''that goal is ATOMIC, so per I-1402 a sound absence
+  measurement''
+
+
+  WHY FALSE. Pic0ChartIndexAdmissible.lean:107-108: IsDivisorDegree c := exists W
+  : (C (x) overSpec k k).left.CurveDivisor, deg k W = c. An existential over CurveDivisor,
+  so exact? failing on IsDivisorDegree C g measures absence of a one-lemma witness-producer,
+  not absence of a witness. Caught by ajcr-p4 on I-1452 and verified at the definition,
+  not conceded.
+
+
+  WHY IT MATTERS MORE THAN THE USUAL OVERCLAIM. The sentence''s own rhetorical work
+  is to contrast itself with my two earlier exact? errors this session -- it advertises
+  that I learned the lesson while committing it a third time on the same residue.
+  That is the shape a reader trusts most.
+
+
+  WHAT IS UNAFFECTED: the Lean. Both files'' theorems, the reduction to ''is the genus
+  a divisor degree on C.left'', and ''unmeasured, not refuted'' all stand. Only the
+  epistemic label on the probe is wrong.
+
+
+  NOT FIXED BY ME: C-0002 and I-1448 are the released record of a finished round;
+  correcting them in place would rewrite what other lanes have already read. Recorded
+  here instead. Whoever next touches param-admissible should not inherit ''the absence
+  is measured''.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T02:21:19.291643+00:00'
+updated_at: '2026-07-30T02:21:19.291654+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0012-horizon-ajcr-p2
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
