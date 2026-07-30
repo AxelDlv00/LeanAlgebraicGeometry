@@ -95,6 +95,10 @@ restriction is to the *index*, not to the *spelling*.
   `AlgebraicGeometry.eq_top_of_seam_of_irreducible` — **the constraint's final form**: on an
   irreducible reduced separated chart source every *nonempty* working `V` is `⊤`, so a working
   `V` in the interior of the interval requires a **reducible** chart source.
+* `AlgebraicGeometry.injective_abelSigmaChart_of_seam_of_irreducible` — **the sharpest form**:
+  the seam at any *nonempty* `V` over an irreducible reduced separated divisor scheme forces the
+  UNRESTRICTED Abel chart to be injective, i.e. reduces the whole `V`-interval question to the
+  `abel-noninj` fork.
 * `AlgebraicGeometry.chartIso_of_isChartUniv` and
   `AlgebraicGeometry.exists_retraction_of_isChartUniv` — the applicability check at the Abel
   chart, fed by `IsChartUniv` itself.
@@ -429,6 +433,65 @@ theorem chartIso_of_isChartUniv {D : Over (Spec (.of k))}
       (restrictChart (abelSigmaChart C π n rep m Z hdeg) V)) :
     IsIso (chartSheafHom C (restrictChart (abelSigmaChart C π n rep m Z hdeg) V)) :=
   chartIso_of_seam C _ huniv hcov
+
+-- `GeometricallyReduced C.hom` is genuinely idle in the theorem below (linter-flagged and
+-- omitted rather than left in the binder list): the conclusion is about the chart map's
+-- injectivity, and the sheaf property of `pic0SigmaSheaf` — the only thing that instance feeds —
+-- is consumed inside `eq_top_of_seam_of_irreducible`, whose own statement carries it.
+omit [GeometricallyReduced C.hom] in
+variable (C π n) in
+/-- **THE SEAM AT ANY NONEMPTY `V` FORCES THE UNRESTRICTED ABEL CHART TO BE INJECTIVE.**
+
+This is the sharpest form of everything above, and it turns the `V`-interval question into the
+`abel-noninj` fork outright.
+
+The chain: on an irreducible reduced separated divisor scheme the two antecedents at a nonempty
+`V` force `V = ⊤` (`eq_top_of_seam_of_irreducible`); at `⊤` the restricted chart is
+precomposition with `D.left.topIso.hom`, an **isomorphism** (`restrictChart_top`,
+`Pic0ChartVMonotone.lean`), and `IsOpenImmersion.presheaf` cancels isomorphisms on the left
+(`MorphismProperty.cancel_left_of_respectsIso`); so antecedent 1 at `⊤` *is* the unrestricted
+certificate, which implies injectivity on every test.
+
+**What this means for the board.**  Three file headers assert the Abel chart is *not* injective
+(its fibres are the linear systems `|D|`) and no declaration proves it — the `abel-noninj` fork.
+If those headers are right, this theorem says the seam is **unsatisfiable at every nonempty
+`V`** on an irreducible chart source, and the `⊥` case is refuted separately
+(`not_isLocallySurjective_restrictChart_bot'`, `Pic0ChartBotRefute.lean`).  So the interval
+question is not merely narrowed — it is *reduced to the fork*, plus irreducibility of the
+divisor scheme.
+
+**And what it does not mean.**  It is still an implication, not a refutation.  I do not prove
+the divisor scheme irreducible (no `IrreducibleSpace`/`IsReduced` instance on `divSchemeOver`
+was found by grep in `Picard/`, but the synthesis probe that would settle it was blocked by
+unrelated `P1 k` instances, so that is **unmeasured**, not an absence claim), and I do not
+decide the fork.  Note also the caution of the memory `generic-degree-intuition-fails-at-the-
+pinned-degree`: at the pinned degree `n = g` with fibrewise `H¹`-vanishing the rank anchor
+forces `h⁰ = 1`, so the `|D|` argument the three headers give for non-injectivity is *not*
+available at the degree the atlas actually reads.  The fork may well go the other way, in which
+case this theorem is satisfied rather than contradicted — and then `V = ⊤` is the only candidate
+and `representableBy_of_seam` hands over the representation directly. -/
+theorem injective_abelSigmaChart_of_seam_of_irreducible {D : Over (Spec (.of k))}
+    [IsReduced D.left] [D.left.IsSeparated] [IrreducibleSpace D.left]
+    (rep : (divFunctor C π n).RepresentableBy D)
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - (n : ℤ))
+    (V : D.left.Opens) (hne : (V : Set D.left).Nonempty)
+    (huniv : IsChartUniv C π n rep m Z hdeg V)
+    (hcov : Presheaf.IsLocallySurjective Scheme.zariskiTopology
+      (restrictChart (abelSigmaChart C π n rep m Z hdeg) V))
+    (T : Scheme.{u}ᵒᵖ) :
+    Function.Injective ((abelSigmaChart C π n rep m Z hdeg).app T) := by
+  obtain rfl : V = ⊤ :=
+    eq_top_of_seam_of_irreducible C (abelSigmaChart C π n rep m Z hdeg) V hne huniv hcov
+  have hr : restrictChart (abelSigmaChart C π n rep m Z hdeg) (⊤ : D.left.Opens)
+      = yoneda.map D.left.topIso.hom ≫ abelSigmaChart C π n rep m Z hdeg :=
+    restrictChart_top (C := C) _
+  have h2 : IsOpenImmersion.presheaf
+      (yoneda.map D.left.topIso.hom ≫ abelSigmaChart C π n rep m Z hdeg) := hr ▸ huniv
+  exact injective_of_isOpenImmersion_presheaf
+    ((MorphismProperty.cancel_left_of_respectsIso (P := IsOpenImmersion.presheaf)
+      (yoneda.map D.left.topIso.hom) (abelSigmaChart C π n rep m Z hdeg)).mp h2) T
 
 variable (C π n) in
 /-- **The retraction at the Abel chart**: the seam's two antecedents at `V` make `V` a retract
