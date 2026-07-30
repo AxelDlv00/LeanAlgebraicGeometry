@@ -549,6 +549,7 @@ import AlgebraicJacobian.Picard.Pic0ChartPair
 import AlgebraicJacobian.Picard.Pic0ChartTwistSplit
 import AlgebraicJacobian.Picard.Pic0ChartCoverageDegree
 import AlgebraicJacobian.Picard.Pic0ChartRationalGraph
+import AlgebraicJacobian.Picard.Pic0ChartFiniteExtension
 import AlgebraicJacobian.Picard.Pic0ChartCoverageFibre
 import AlgebraicJacobian.Picard.Pic0ChartCoverageTest
 import AlgebraicJacobian.Picard.Pic0ChartPresentationHalf
@@ -701,6 +702,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyDegreeZeroGeneral
 import AlgebraicJacobian.Picard.DivisorFamilyDegreeZeroRep
 import AlgebraicJacobian.Picard.DivisorFamilyDegreeZeroUseSite
 import AlgebraicJacobian.Picard.Pic0VanishingRoute
+import AlgebraicJacobian.Albanese.Genus0VanishingDatum
 
 /-!
 # AlgebraicJacobian — library root

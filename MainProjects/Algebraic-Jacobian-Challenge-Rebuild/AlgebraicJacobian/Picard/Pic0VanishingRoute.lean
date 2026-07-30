@@ -47,12 +47,13 @@ content.  Three things follow that are not available without it:
 1. **The three antecedents are route-specific, provably.**  `jacobianData_of_subsingleton`
    produces the goal object with none of them in scope.  A reader can no longer conclude
    from "`rep` has no producer" that `JacobianData` has no producer.
-2. **`Genus0Terminal` gains its missing direction.**  That file proves a datum *plus*
-   vanishing gives a terminal `d.J`, and its header records the vanishing implication as
-   "the single mathematical debt of S11".  Nobody wrote the direction that *produces* the
-   datum from the vanishing, which is the direction with no antecedents, and which makes
-   the whole S11 leaf — uniqueness clause included — unconditional on DAT-D.
-   `existsUnique_ofCurve_comp_of_vanishing` below is that composite.
+2. **`Genus0Terminal` gains its missing direction.**  `Albanese/Genus0Terminal.lean` proves
+   a datum *plus* vanishing gives a terminal `d.J`, and its header records the vanishing
+   implication as "the single mathematical debt of S11".  Nobody wrote the direction that
+   *produces* the datum from the vanishing, which is the direction with no antecedents.  It
+   is landed downstream, in `Albanese/Genus0VanishingDatum.lean` — not here, because
+   `Genus0Terminal` imports the Abel material and this file sits below it.  Its consequence
+   is that the whole S11 leaf, uniqueness clause included, no longer waits on DAT-D at all.
 3. **The debt becomes a statement about RINGS.**  `picEt C T` is by construction a subgroup
    of a *product* over `T.left.affineOpens` valued in `PicEtAff C Γ(T.left, U)`, so a
    subsingleton at every test *algebra* gives one at every test *object* componentwise —
