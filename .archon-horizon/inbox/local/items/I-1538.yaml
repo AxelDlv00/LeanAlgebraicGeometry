@@ -10,7 +10,7 @@ body: 'CLAIM pic-h: AJCR.w4-rep.datum.dat-g.genus-chart-descent
   Disjoint from pic-d''s widened quotient and pic-g''s genus-zero vanishing route.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -18,7 +18,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-30T10:17:31.605190+00:00'
-updated_at: '2026-07-30T12:45:39.932051+00:00'
+updated_at: '2026-07-30T12:50:04.822117+00:00'
 metadata:
   provenance:
     run: 0098

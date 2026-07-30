@@ -1,0 +1,34 @@
+id: I-1546
+provider: local
+kind: info
+body: 'CLAIM pic-h: AJCR.w4-rep.datum.dat-g.genus-chart-finite-descent
+
+
+  Finite extension point and every legal chart index are landed in c0ed55a1f1 with
+  no new hypotheses. I am taking the remaining finite faithfully-flat descent of the
+  restricted atlas and covering sieve. This corrects the false finite-separable closed-point
+  wording and remains disjoint from pic-d quotient descent and pic-g genus-zero vanishing.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T12:50:11.476892+00:00'
+updated_at: '2026-07-30T12:55:03.143241+00:00'
+metadata:
+  provenance:
+    run: 0098
+    session: 0008-horizon-pic-h
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: pic-h
+    task_title: 'Pic rep lane H: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-d
+  - pic-h

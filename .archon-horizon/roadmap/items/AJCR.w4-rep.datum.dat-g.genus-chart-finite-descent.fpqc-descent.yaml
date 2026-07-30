@@ -1,0 +1,32 @@
+id: AJCR.w4-rep.datum.dat-g.genus-chart-finite-descent.fpqc-descent
+title: Descend the restricted chart atlas along the finite cover
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: Use the finite faithfully-flat cover Spec L -> Spec k supplied by the finite-index
+  producer to descend the base-changed restricted chart atlas, its covering sieve,
+  and the resulting local representability datum back to k, without assuming a base-field
+  divisor degree or rational point.
+status: active
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-30T12:54:10.889080+00:00'
+  provenance:
+    run: 0098
+    session: 0008-horizon-pic-h
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: pic-h
+    task_title: 'Pic rep lane H: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-g.genus-chart-finite-descent
+  owner: pic-h
+  milestone: AJCR.w4-rep
