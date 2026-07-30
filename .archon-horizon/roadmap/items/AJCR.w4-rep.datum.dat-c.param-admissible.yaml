@@ -3,11 +3,51 @@ title: 'PARAM-ADMISSIBLE: is the chart-index binder hdeg satisfiable, and at whi
   n?'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 23 chart files bind hdeg (deg_k Z = m*d1 - n) and NO file produces one. review-ajcr's
-  I-1345 comment locates parameter matching in exactly two places -- hdeg i and hcov;
-  this is the hdeg half, and it gates every chart at every index regardless of what
-  the other antecedents get.
-status: active
+summary: "*** MEASURED AND LANDED 2026-07-30 (run 0088 r6, ajcr-p2). THE BINDER IS\
+  \ EXACTLY AN ARITHMETIC FACT, AND THE THETA-EXPONENT IS IDLE. Read this before pricing\
+  \ any chart-parameter question. ***\n\nTHE MEASUREMENT. 23 chart files bind hdeg\
+  \ (deg_k Z = m*d1 - n) and ZERO produced one; the two theorems that conclude an\
+  \ exists over (m, Z) take the same constraint as a hypothesis and say so. Picard/Pic0ChartIndexAdmissible.lean\
+  \ now proves, both directions:\n\n  chartIndex_iff_isDegree :  (exists m Z, deg_k\
+  \ Z = m*d1 - c)  <->  IsDivisorDegree C c\n\ni.e. the binder carries EXACTLY 'c\
+  \ is in the image of deg_k' and nothing else -- no chart, no certificate, no representation.\
+  \ Two consequences, both correcting live pricings:\n * THE THETA-EXPONENT m IS IDLE.\
+  \ The producer direction takes m = 0, Z = -W. So hdeg imposes NO coupling of m to\
+  \ n; any such coupling comes from the chart PARAMETER (ledger_forces_b_eq_n), not\
+  \ from this hypothesis.\n * ADMISSIBILITY IS SHIFT-INVARIANT AND SUBGROUP-CLOSED\
+  \ (isDegree_add_mul_iff, isDegree_sub, isDegree_zero, isDegree_mul_thetaDeg). So\
+  \ admissibility at n and at n + a*d1 are the SAME statement -- the parameter-matching\
+  \ consequence (I-1345). Multiples of d1 are admissible unconditionally.\n\nIT REACHES\
+  \ THE CONSUMER. Picard/Pic0ChartIndexLedgerFeed.lean: mem_chartLocus_of_ledgerIndex_of_isDegree\
+  \ replaces exists_chartIndex_mem_chartLocus_of_ledgerIndex's unexhibited (m, Z)\
+  \ with IsDivisorDegree C (M*delta + g) -- discharging the clause that theorem's\
+  \ own docstring calls 'a divisor-side existence statement this file does not prove\
+  \ and does not claim'.\n\nWHAT IS NOT DONE, and it is the whole remaining price.\
+  \ IsDivisorDegree C (M*delta + g) IS NOT KNOWN TO HOLD, and I do not claim it. Over\
+  \ an arbitrary base field deg_k is residue-degree weighted, so its image is a proper\
+  \ subgroup index*Z in general; PROBED that the tree cannot prove deg_k surjective\
+  \ (exact? fails on IsDivisorDegree C c for a variable c) and that the tree's only\
+  \ residue-degree-one point needs [IsSepClosed k] (Over.dense_baseChange_rationalPoints,\
+  \ Curve/SepPointsDense.lean:278), which the arbitrary-field statement forbids. NO\
+  \ ANTECEDENT OF pic0RepresentableByOfCharts MOVES: IsChartUniv, the pointwise-to-neighbourhood\
+  \ spreading-out, and rep at every parameter are untouched.\n\nTWO PROBES I RAN AND\
+  \ THE ANSWERS, so nobody repeats them:\n * is windowdelta pi = classDeg k (thetaCechClass\
+  \ C)? NOT PROVABLE BY exact? -- different carriers (C.left over k vs the base-changed\
+  \ product curve). If it WERE, M*delta would be a multiple of d1 and shift-invariance\
+  \ would reduce the ledger target to g alone. That transport is the cheapest known\
+  \ route to inhabiting the residue and NOBODY HAS BUILT IT.\n * read against I-1389:\
+  \ the (m, Z) this route produces is UNIFORM in the point (hadm does not mention\
+  \ t), but this is NOT one-chart coverage -- L, M0, hM0 stay per-point. The non-uniformity\
+  \ is in the SPLITTING DATA, not the chart parameter.\n\nNEXT, in cost order: (1)\
+  \ the windowdelta-vs-d1 transport above; (2) state 'the image of deg_k is index*Z'\
+  \ as a theorem -- three files assert it in prose (JacobianDataAbelDegreeWindow.lean:23,\
+  \ :200, JacobianDataAbelEffective.lean:128) and none states it, and isDegree_sub\
+  \ is the subgroup half already.\n\nVERIFICATION: both modules rooted in AlgebraicJacobian.lean\
+  \ and built IN GRAPH, lake build EXIT=0 (8900 jobs); all 10 declarations axiom-clean\
+  \ [propext, Classical.choice, Quot.sound] against a control where Jacobian correctly\
+  \ reports sorryAx; the consumer-feed probe discriminates (fails at +1). Zero sorries\
+  \ in both files."
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -30,5 +70,8 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c
-  owner: ajcr-p2
   milestone: w4-gate
+  updated_at: '2026-07-30T00:50:15.422886+00:00'
+  pinned_commits:
+  - e8352f09f7
+  - 7e90a01d09
