@@ -62,7 +62,43 @@ theorem isClosedImmersion_homOfVector_of_span_eq_top
       letI : Algebra Γ(Y, ⊤) Γ(X, ⊤) := RingHom.toAlgebra f.appTop.hom
       Submodule.span Γ(Y, ⊤) (Set.range a) = ⊤) :
     IsClosedImmersion (AffineSpace.homOfVector f a) := by
-  sorry
+  classical
+  letI : Fintype n := Fintype.ofFinite n
+  letI : Algebra Γ(Y, ⊤) Γ(X, ⊤) := RingHom.toAlgebra f.appTop.hom
+  let i : X ⟶ 𝔸(n; Y) := AffineSpace.homOfVector f a
+  have hsurj : Function.Surjective (Fintype.linearCombination Γ(Y, ⊤) a) := by
+    rw [← LinearMap.range_eq_top, Fintype.range_linearCombination, hspan]
+  apply IsClosedImmersion.of_surjective_of_isAffine
+  intro x
+  obtain ⟨c, rfl⟩ := hsurj x
+  let p : MvPolynomial n Γ(Y, ⊤) :=
+    ∑ j, C (c j) * MvPolynomial.X j
+  refine ⟨(AffineSpace.isoOfIsAffine n Y).hom.appTop
+    ((Scheme.ΓSpecIso (.of (MvPolynomial n Γ(Y, ⊤)))).inv p), ?_⟩
+  rw [AffineSpace.isoOfIsAffine_hom_appTop]
+  simp only [CommRingCat.comp_apply, Iso.inv_hom_id_apply]
+  change (i.appTop.hom.comp
+    (eval₂Hom (𝔸(n; Y) ↘ Y).appTop.hom (AffineSpace.coord Y))) p =
+      Fintype.linearCombination Γ(Y, ⊤) a c
+  have heval :
+      i.appTop.hom.comp
+        (eval₂Hom (𝔸(n; Y) ↘ Y).appTop.hom (AffineSpace.coord Y)) =
+        eval₂Hom f.appTop.hom a := by
+    apply MvPolynomial.ringHom_ext
+    · intro r
+      simp only [RingHom.comp_apply, eval₂Hom_C]
+      have h := congrArg Scheme.Hom.appTop
+        (AffineSpace.homOfVector_over f a)
+      rw [Scheme.Hom.comp_appTop] at h
+      exact congrArg (fun e : Γ(Y, ⊤) ⟶ Γ(X, ⊤) => e.hom r) h
+    · intro j
+      simp [i]
+  rw [heval, Fintype.linearCombination_apply]
+  simp only [p, map_sum, map_mul, coe_eval₂Hom, eval₂_C, eval₂_X,
+    Algebra.smul_def]
+  change (∑ x, f.appTop.hom (c x) * a x) =
+    ∑ x, f.appTop.hom (c x) * a x
+  rfl
 
 /-- A finite morphism over an affine target is a closed subscheme of a
 finite-dimensional affine space over that target. -/
