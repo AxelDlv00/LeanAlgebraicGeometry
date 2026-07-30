@@ -57,12 +57,17 @@ index-by-`m` atlas of `Pic0ChartCoverageIndexSlack`) exists precisely so differe
 different charts.  The warning applies to this file, so the position is stated rather than left
 for a reader to work out:
 
-* the `(m, Z)` produced below comes from `hadm`, which **does not mention the point** `t`.  So the
-  chart index really is uniform in `t` — on this route the chart-index heterogeneity the atlas
-  apparatus was built to absorb is not needed, because there is none to absorb;
-* but this is **not** one-chart coverage in `I-1389`'s sense, and does not imply it.  The
-  remaining inputs — the splitting field `L`, the presenting class `M₀` and `hM₀` — are per-point
-  and stay per-point.  What is uniform is the chart index alone.
+* the `(m, Z)` comes from `hadm`, which **does not mention the point** `t`, so the chart index
+  really is uniform in `t`.  **But that is a fact about the proof, not about the statement** —
+  `mem_chartLocus_of_ledgerIndex_of_isDegree` puts its `∃ m Z` *inside* the per-point binders, so
+  read literally it is the non-uniform claim.  A first draft asserted the uniformity only in this
+  paragraph; since `I-1389`'s whole point is that a chart-index claim must say which of the two it
+  is, the uniform form is now a theorem —
+  `exists_uniform_chartIndex_forall_mem_chartLocus_of_isDegree`, with `∃ m Z` hoisted outside
+  every binder.  (Found by a fresh-context audit of this file.)
+* it is nonetheless **not** one-chart coverage in `I-1389`'s sense and does not imply it: even in
+  the hoisted form the splitting data `L`, `M₀`, `hM₀` stays quantified per point *inside* the
+  conclusion.  What is uniform is the chart index alone.
 
 Neither observation is a refutation or a discharge of anything.  It locates the non-uniformity:
 on this route it is in the **splitting data**, not in the chart parameter.  Whether that matters
@@ -71,9 +76,11 @@ to antecedent 2 is `I-1389`'s open question and is untouched here.
 ## Main declarations
 
 * `AlgebraicGeometry.mem_chartLocus_of_ledgerIndex_of_isDegree` — locus membership at the ledger
-  parameter from `IsDivisorDegree`, replacing the unexhibited `(m, Z)`.
-* `AlgebraicGeometry.exists_chartIndex_mem_chartLocus_of_isDegree` — the `∃`-form DAT-B B-6
-  packages, with the same replacement.
+  parameter from `IsDivisorDegree`, replacing the unexhibited `(m, Z)`.  This is *already* the
+  `∃`-form DAT-B B-6 packages; the last section records why a second declaration a first draft
+  added was the same proposition and was removed.
+* `AlgebraicGeometry.exists_uniform_chartIndex_forall_mem_chartLocus_of_isDegree` — the same, with
+  the chart index hoisted out of every per-point binder, so the uniformity is in the statement.
 -/
 
 set_option autoImplicit false
@@ -145,36 +152,64 @@ theorem mem_chartLocus_of_ledgerIndex_of_isDegree
   obtain ⟨m, Z, hZ⟩ := chartIndex_of_isDegree C hadm
   exact ⟨m, Z, mem_chartLocus_of_ledgerIndex hπ g hχ lam t hlam m Z hZ M₀ hM₀⟩
 
-/-- **The B-6 packaging form**, identical statement to
-`exists_chartIndex_mem_chartLocus_of_ledgerIndex` with its `(m, Z, hZ)` triple replaced by the
-single arithmetic hypothesis.
+/-- **The chart index is UNIFORM in the point — hoisted out of every per-point binder.**
 
-Recorded separately from the theorem above because the two differ only in which of the
-`∃`-witnesses is named, and a consumer citing the B-6 packaging should not have to look through
-a differently-shaped lemma to find it. -/
-theorem exists_chartIndex_mem_chartLocus_of_isDegree
+`mem_chartLocus_of_ledgerIndex_of_isDegree` concludes `∃ m Z, t ∈ chartLocus C m Z lam` *inside*
+the per-point binders, so as a statement it is the NON-uniform one: read literally, each `t` may
+get its own `(m, Z)`.  The uniformity is a fact about the proof, and `I-1389` is precisely the
+warning that a chart-index claim must say which of the two it is.  So it is said here, in Lean.
+
+The single `(m, Z)` serves **every** point of every test, at every splitting field: it comes from
+`hadm`, which does not mention `t`.  Per `I-1389` this is still **not** one-chart coverage — the
+splitting data `L`, `M₀`, `hM₀` remains quantified per point inside the conclusion, and that is
+where the route's non-uniformity actually lives. -/
+theorem exists_uniform_chartIndex_forall_mem_chartLocus_of_isDegree
     {π : C.left ⟶ P1 k} [IsFinite π] [IsDominant π]
     (hπ : π ≫ P1.structureMap k = C.left ↘ Spec (CommRingCat.of k)) (g : ℕ)
     (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
-    (hadm : IsDivisorDegree C ((windowM_choice π hπ g : ℤ) * windowδ π + (g : ℤ)))
-    {T : Over (Spec (.of k))} (lam : picEt C T) (t : T.left)
-    (hlam : degAt lam (Over.testPoint t) = 0)
-    {L : Type u} [Field L] [Algebra k L] [Algebra (Over.testPointField t) L]
-    [IsScalarTower k (Over.testPointField t) L]
-    [Module.Finite (Over.testPointField t) L]
-    [Algebra.IsSeparable (Over.testPointField t) L]
-    (M₀ : (C ⊗ overSpec k L).left.CechPic)
-    (hM₀ : PicEtAff.map C L
-        (picEtAffineEquiv C (Over.testPointField t) (picEtMap C (Over.testPoint t) lam))
-      = PicEtAff.unit C L (relPicMk C (overSpec k L) M₀))
-    [IsIntegral (relCurve C L)]
-    [SmoothOfRelativeDimension 1 (relCurve C L ↘ Spec (CommRingCat.of L))]
-    [QuasiCompact (relCurve C L ↘ Spec (CommRingCat.of L))]
-    [Module.Finite L (Sheaf.HModule ((relCurve C L).moduleKSheaf L) 0)]
-    [Module.Finite L (Sheaf.HModule ((relCurve C L).moduleKSheaf L) 1)] :
-    ∃ (m' : ℕ) (Z' : (C ⊗ overSpec k k).left.CurveDivisor),
-      t ∈ chartLocus C m' Z' lam :=
-  mem_chartLocus_of_ledgerIndex_of_isDegree hπ g hχ hadm lam t hlam M₀ hM₀
+    (hadm : IsDivisorDegree C ((windowM_choice π hπ g : ℤ) * windowδ π + (g : ℤ))) :
+    ∃ (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor),
+      ∀ {T : Over (Spec (.of k))} (lam : picEt C T) (t : T.left),
+        degAt lam (Over.testPoint t) = 0 →
+        ∀ {L : Type u} [Field L] [Algebra k L] [Algebra (Over.testPointField t) L],
+          ∀ [IsScalarTower k (Over.testPointField t) L]
+            [Module.Finite (Over.testPointField t) L]
+            [Algebra.IsSeparable (Over.testPointField t) L]
+            (M₀ : (C ⊗ overSpec k L).left.CechPic),
+            PicEtAff.map C L
+                (picEtAffineEquiv C (Over.testPointField t)
+                  (picEtMap C (Over.testPoint t) lam))
+              = PicEtAff.unit C L (relPicMk C (overSpec k L) M₀) →
+            ∀ [IsIntegral (relCurve C L)]
+              [SmoothOfRelativeDimension 1 (relCurve C L ↘ Spec (CommRingCat.of L))]
+              [QuasiCompact (relCurve C L ↘ Spec (CommRingCat.of L))]
+              [Module.Finite L (Sheaf.HModule ((relCurve C L).moduleKSheaf L) 0)]
+              [Module.Finite L (Sheaf.HModule ((relCurve C L).moduleKSheaf L) 1)],
+              t ∈ chartLocus C m Z lam := by
+  obtain ⟨m, Z, hZ⟩ := chartIndex_of_isDegree C hadm
+  refine ⟨m, Z, ?_⟩
+  intro T lam t hlam L _ _ _ _ _ _ M₀ hM₀ _ _ _ _ _
+  exact mem_chartLocus_of_ledgerIndex hπ g hχ lam t hlam m Z hZ M₀ hM₀
+
+/-! ## The B-6 packaging form is the SAME proposition, not a second lemma
+
+`Pic0ChartCoverageThreshold.lean` states its ledger result twice — `mem_chartLocus_of_ledgerIndex`
+(bare membership at a given `(m, Z)`) and `exists_chartIndex_mem_chartLocus_of_ledgerIndex` (the
+`∃`-form B-6 packages).  There the split is genuine: the two conclusions differ.
+
+**Here it is not, and a first draft of this file shipped both anyway.**  Once the `(m, Z, hZ)`
+triple is replaced by `hadm`, the witnesses move inside the existential and the "bare" form *is*
+the `∃`-form: `mem_chartLocus_of_ledgerIndex_of_isDegree` already concludes
+`∃ m Z, t ∈ chartLocus C m Z lam`.  A second declaration differed from it only by renaming the
+bound `m`/`Z` to `m'`/`Z'`, and `@f = @g := rfl` typechecked between them (control: the same
+equation between two genuinely different lemmas of this file errors).  It was removed.
+
+Recorded rather than silently deleted because the mechanism is reusable: the two-lemma shape was
+transcribed from the file being reduced, and the reduction is exactly what collapsed the
+distinction.  **A duplicate can be created by the very step that makes it a duplicate**, and no
+`sorry` census, axiom probe or build sees it.  Found by a fresh-context audit of this file, and
+reproduced with the `rfl` test above before removal.
+-/
 
 end
 
