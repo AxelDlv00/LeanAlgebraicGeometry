@@ -200,8 +200,6 @@ theorem IsCertified.range_thetaIdealCokernelToIntrinsic
     (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
     {a : ℕ} (ha1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1)
     (hMa : windowM_choice π hπ g ≤ a) :
-    let B := Classical.choose
-      (hc.exists_chartAdaptation_subsingleton_thetaIdealH1 C R π hπ hO hχ ha1 hMa)
     LinearMap.range
         (hc.thetaIdealCokernelToIntrinsic C R π hπ hO hχ ha1 hMa) =
       LinearMap.range (A.intrinsicThetaEvalRel (π := π) a) := by
@@ -224,13 +222,12 @@ theorem IsCertified.thetaIdealCokernelToIntrinsic_injective
     (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
     {a : ℕ} (ha1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1)
     (hMa : windowM_choice π hπ g ≤ a) :
-    let B := Classical.choose
-      (hc.exists_chartAdaptation_subsingleton_thetaIdealH1 C R π hπ hO hχ ha1 hMa)
     Function.Injective
       (hc.thetaIdealCokernelToIntrinsic C R π hπ hO hχ ha1 hMa) := by
   let e := hc.thetaIdealCokernelEquivIntrinsicRange C R π hπ hO hχ ha1 hMa
   change Function.Injective ((Submodule.subtype _).comp e.toLinearMap)
-  exact (Submodule.subtype _).injective.comp e.injective
+  exact (LinearMap.range (A.intrinsicThetaEvalRel (π := π) a)).injective_subtype.comp
+    e.injective
 
 end AffAdaptation
 
