@@ -252,12 +252,13 @@ agreement, with no further input about `picEt`, the curve, or the classes. The
 sieve, from `isSheafFor_picEt_of_mem`, which holds at *every* covering sieve — and
 the rest is §2's two identities.
 
-**Non-vacuity of `hcov`, checked by degenerate substitution rather than asserted**
-(the discipline of `I-1413`): at `k' = k` the group `Gal(k/k)` is trivial and
-`coverMap` is an isomorphism, so the single section `coverSelfSection T 1` is an
-isomorphism and generates `⊤`, which is covering. So `hcov` is an inhabitable
-hypothesis and this implication is not conditioned on a false statement. It is
-`hcov` *at a nontrivial Galois level* that this file does not supply. -/
+**Non-vacuity of `hcov` is PROVED in §6, not asserted here** (the discipline of
+`I-1413`: a non-vacuity claim in prose is an unaudited theorem).
+`etaleTopology_generate_coverSelfSection_of_mono` exhibits `hcov` at every
+extension whose `Spec` map is a monomorphism — `k' = k` in particular, by
+`specMapAlgebra_self`. So this implication is not conditioned on a false
+statement. It is `hcov` *at a nontrivial Galois level* that this file does not
+supply. -/
 theorem projections_agree_of_invariant (C : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
     (T : Over (Spec (CommRingCat.of k)))
@@ -317,6 +318,101 @@ theorem exists_unique_descend_picEt_of_invariant (C : Over (Spec (CommRingCat.of
     (projections_agree_of_invariant C T hcov x hinv)
 
 end Cover
+
+/-! ## §6. `hcov` is inhabitable — the witness, as theorems
+
+§4's antecedent `hcov` is a hypothesis on the `Gal`-indexed section family. A file
+that leaves an antecedent open owes a demonstration that the antecedent is not
+*false*, or the implication is vacuous. That demonstration is below, as
+declarations rather than as a docstring sentence.
+
+The witness turns out to be sharper than the degenerate substitution that motivated
+it: what makes the family cover is not "`k' = k`" but **`Spec (k'/k)` being a
+monomorphism**, and at such an extension the `γ = 1` section is literally the
+diagonal, which is an isomorphism exactly because `coverMap` is then mono. -/
+
+/-- `Spec` of the identity extension is the identity morphism. -/
+theorem specMapAlgebra_self : specMapAlgebra k k = 𝟙 _ := by
+  rw [specMapAlgebra]
+  have h : (CommRingCat.ofHom (algebraMap k k)) = 𝟙 (CommRingCat.of k) := by
+    ext x; rfl
+  rw [h, Spec.map_id]
+
+/-- `Spec 1 = 𝟙`: the trivial automorphism twists nothing. -/
+theorem specGal_one : specGal (1 : k' ≃ₐ[k] k') = 𝟙 _ := by
+  rw [specGal]
+  have h : (CommRingCat.ofHom ((1 : k' ≃ₐ[k] k') : k' →+* k')) = 𝟙 (CommRingCat.of k') := by
+    ext x; rfl
+  rw [h, Spec.map_id]
+
+/-- The `γ = 1` twist is the identity endomorphism of `T_{k'}`. -/
+theorem twistTest_one (T : Over (Spec (CommRingCat.of k))) :
+    twistTest (k' := k') T 1 = 𝟙 _ := by
+  apply Over.OverMorphism.ext
+  change twistLeft T (1 : k' ≃ₐ[k] k') = _
+  rw [twistLeft]
+  refine pullback.hom_ext ?_ ?_
+  · rw [pullback.lift_fst]
+    change _ = 𝟙 _ ≫ _
+    rw [Category.id_comp]
+  · rw [pullback.lift_snd, specGal_one, Category.comp_id]
+    change _ = 𝟙 _ ≫ _
+    rw [Category.id_comp]
+
+/-- **The `γ = 1` component of the section family IS the diagonal of the cover.**
+
+Immediate from `twistTest_one` and the two projection identities, and it is what
+makes the non-vacuity witness below a two-line argument instead of a computation:
+`pullback.diagonal` of a *mono* is an isomorphism by a Mathlib instance. -/
+theorem coverSelfSection_one (T : Over (Spec (CommRingCat.of k))) :
+    coverSelfSection (k' := k') T 1 = pullback.diagonal (coverMap (k' := k') T) := by
+  rw [coverSelfSection]
+  refine pullback.hom_ext ?_ ?_
+  · rw [pullback.lift_fst, pullback.diagonal_fst]
+  · rw [pullback.lift_snd, pullback.diagonal_snd, twistTest_one]
+
+/-- The cover morphism is a monomorphism whenever `Spec (k'/k)` is — base change of
+a mono, reflected into the slice by `Over.forget`. -/
+instance mono_coverMap_of_mono [Mono (specMapAlgebra k k')]
+    (T : Over (Spec (CommRingCat.of k))) : Mono (coverMap (k := k) (k' := k') T) := by
+  have h : Mono ((Over.forget (Spec (CommRingCat.of k))).map
+      (coverMap (k := k) (k' := k') T)) := by
+    change Mono (coverMap (k := k) (k' := k') T).left
+    rw [coverMap_left]
+    exact pullback.fst_of_mono
+  exact Functor.mono_of_mono_map _ h
+
+/-- **`hcov` IS INHABITABLE**: at any extension whose `Spec` map is a
+monomorphism — `k' = k` in particular, by `specMapAlgebra_self` — the
+`Gal`-indexed section family generates `⊤`, hence a covering sieve.
+
+So `projections_agree_of_invariant` and
+`exists_unique_descend_picEt_of_invariant` are implications with a *satisfiable*
+antecedent, and neither is vacuously true. The proof: `coverSelfSection T 1` is the
+diagonal (`coverSelfSection_one`), the diagonal of a mono is an isomorphism, and a
+sieve containing an isomorphism is `⊤`.
+
+**What this does NOT witness, stated because it is the whole open obligation**: at a
+nontrivial Galois extension `Spec (k'/k)` is *not* mono, so this witness says
+nothing there, and `hcov` at such a level is exactly what remains owed. The point of
+proving it here is that the §4 implication has content, not that the route is
+finished. -/
+theorem etaleTopology_generate_coverSelfSection_of_mono [Mono (specMapAlgebra k k')]
+    (T : Over (Spec (CommRingCat.of k))) :
+    Sieve.generate (Presieve.ofArrows
+        (fun _ : k' ≃ₐ[k] k' => (restrictTest k k').obj (baseTest (k' := k') T))
+        (fun γ => coverSelfSection T γ)) ∈
+      etaleTopologyOver k (pullback (coverMap (k := k) (k' := k') T)
+        (coverMap (k := k) (k' := k') T)) := by
+  have hiso : IsIso (coverSelfSection (k' := k') T 1) := by
+    rw [coverSelfSection_one]; infer_instance
+  have htop : Sieve.generate (Presieve.ofArrows
+      (fun _ : k' ≃ₐ[k] k' => (restrictTest k k').obj (baseTest (k' := k') T))
+      (fun γ => coverSelfSection T γ)) = ⊤ :=
+    Sieve.id_mem_iff_eq_top.mp ⟨_, inv (coverSelfSection (k' := k') T 1),
+      coverSelfSection T 1, Presieve.ofArrows.mk 1, by simp⟩
+  rw [htop]
+  exact GrothendieckTopology.top_mem _ _
 
 end PicScheme
 
