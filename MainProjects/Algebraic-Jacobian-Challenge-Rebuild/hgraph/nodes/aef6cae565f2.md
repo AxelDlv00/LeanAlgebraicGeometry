@@ -33,13 +33,21 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.not_indexSeparated_duplicated
 type: lean
-updated: '2026-07-30T12:49:24'
+updated: '2026-07-30T13:25:27'
 ---
 theorem not_indexSeparated_duplicated :
     ¬ IndexSeparated C (duplicatedSpecFamily C) := by
   intro hsep
   have hne : (⟨false⟩ : ULift.{u} Bool) ≠ ⟨true⟩ := by simp
-  exact hne (hsep (op (Spec (CommRingCat.of k))) ⟨false⟩ ⟨true⟩
+  -- the test is `Spec k`, which HAS a point: this is the nonempty-test form, so the refutation
+  -- is a fact about the family and not the `Subsingleton ι` collapse of `IndexSeparatedAll`
+  exact hne (hsep (Spec (CommRingCat.of k))
+    (inferInstanceAs (Nonempty (PrimeSpectrum k))) ⟨false⟩ ⟨true⟩
     (𝟙 (Spec (CommRingCat.of k))) (𝟙 (Spec (CommRingCat.of k))) rfl)
 
-variable (C) in
+/-! ### `IndexSeparated` is satisfiable at two indices — the repair is not a second vacuity
+
+Restricting to nonempty tests removes the `Subsingleton ι` collapse; it would be an empty
+victory if the restricted condition were *unsatisfiable* whenever `ι` has two elements.  It is
+not, and this section proves it, so `IndexSeparated` is a genuine hypothesis with a genuine
+witness at `|ι| = 2` rather than a condition that merely fails more slowly. -/

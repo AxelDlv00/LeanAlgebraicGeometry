@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divisorWindowGrOfQuotEquiv
 type: lean
-updated: '2026-07-30T12:49:48'
+updated: '2026-07-30T13:28:01'
 ---
 noncomputable def divisorWindowGrOfQuotEquiv (d : (relCurve C R).LocalEquations)
     (R' : Type u) [CommRing R'] [Algebra k R'] [Algebra R R'] [IsScalarTower k R R']

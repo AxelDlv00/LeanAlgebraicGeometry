@@ -21,17 +21,18 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.jointlyInjective_iff
 type: lean
-updated: '2026-07-30T12:49:24'
+updated: '2026-07-30T13:25:27'
 ---
 theorem jointlyInjective_iff {ι : Type u} {X : ι → Scheme.{u}}
     (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1) :
     JointlyInjective C f ↔
-      IndexSeparated C f ∧ ∀ (i : ι) (S : Scheme.{u}ᵒᵖ), Function.Injective ((f i).app S) := by
+      IndexSeparated C f ∧ ∀ (i : ι) (S : Scheme.{u}) (_ : Nonempty S),
+        Function.Injective ((f i).app (op S)) := by
   constructor
   · intro h
-    refine ⟨fun S i j x y hxy => ?_, fun i S x y hxy => ?_⟩
-    · exact congrArg Sigma.fst (h S i j x y hxy)
-    · exact eq_of_heq (Sigma.mk.injEq .. ▸ h S i i x y hxy).2
-  · rintro ⟨hsep, hinj⟩ S i j x y hxy
-    obtain rfl : i = j := hsep S i j x y hxy
-    exact congrArg (fun z => (⟨i, z⟩ : Σ i, (yoneda.obj (X i)).obj S)) (hinj i S hxy)
+    refine ⟨fun S hS i j x y hxy => ?_, fun i S hS x y hxy => ?_⟩
+    · exact congrArg Sigma.fst (h S hS i j x y hxy)
+    · exact eq_of_heq (Sigma.mk.injEq .. ▸ h S hS i i x y hxy).2
+  · rintro ⟨hsep, hinj⟩ S hS i j x y hxy
+    obtain rfl : i = j := hsep S hS i j x y hxy
+    exact congrArg (fun z => (⟨i, z⟩ : Σ i, (yoneda.obj (X i)).obj (op S))) (hinj i S hS hxy)

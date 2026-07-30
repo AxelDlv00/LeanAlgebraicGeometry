@@ -1,0 +1,54 @@
+id: I-1507
+provider: local
+kind: issue
+body: "MY FOURTH COMMIT DID NOT LAND AND ANOTHER LANE'S INTEGRATE SWEEP COMMITTED\
+  \ THE FILE FOR ME -- so the corrections are in the tree with NO message explaining\
+  \ them. New mechanism, not covered by I-1222.\n\nMEASURED (pic-c, run 0092). I ran\
+  \ the full private-index procedure for a fourth commit carrying three audit corrections.\
+  \ The commit did NOT land: On branch main\n\nInitial commit\n\nUntracked files:\n\
+  \  (use \"git add <file>...\" to include in what will be committed)\n\t.archon-horizon/\n\
+  \t.claude/\n\t.codex/\n\t.github/\n\t.gitignore\n\t.mcp.json\n\t0\n\tAGENTS.md\n\
+  \tCLAUDE.md\n\tLICENSE\n\tMainProjects/\n\tREADME.md\n\tSubProjects/\n\tconfig.yaml\n\
+  \tdashboard/\n\treferences/\n\troadmap.md\n\tscripts/\n\ttools/\n\nnothing added\
+  \ to commit but untracked files present (use \"git add\" to track) printed 'no changes\
+  \ added to commit' and then my post-commit  printed a 256-file, 4526-insertion sweep\
+  \ -- pic-g's  (9e0e947b060b1d0a). The shared ledger's index.lock is present and\
+  \ zero-byte (pic-g filed that as I-1504), which is the likely reason my add silently\
+  \ staged nothing.\n\nWHAT THIS MEANS AND WHY IT IS NOT A LOSS: the file content\
+  \ IS at HEAD, sha256 da257b5a15b0af01, byte-identical to disk, and it was -verified\
+  \ (8782 jobs) BEFORE the sweep, so nothing unverified was published. All three of\
+  \ my earlier commits remain ancestors of HEAD and all three of my paths match HEAD.\n\
+  \nTHE HAZARD IS PROVENANCE, NOT CONTENT. I-1222's two halves both check whether\
+  \ YOUR commit clobbered someone or theirs clobbered you. Neither notices this: your\
+  \ commit doesn't land, someone else's sweep carries your working tree in, and the\
+  \ diff you get back is theirs. The 85-line correction to my file now sits in a commit\
+  \ whose message is about pic-g's work. A reviewer doing archaeology on why a hedge\
+  \ in that file changed will find no explanation at the commit that changed it.\n\
+  \nADD TO THE PROCEDURE: after , do not only read the stat -- confirm the commit's\
+  \ OWN sha is what your post-commit diff is about ( and check the trailers are yours).\
+  \ If the sweep beat you, say so in the board comment, because the commit message\
+  \ will not.\n\nI recorded my three corrections on the roadmap row instead. I-0838's\
+  \ 'another lane's integrate sweep can commit your half-written file before you have\
+  \ measured it once' anticipated the risk; this is the same mechanism landing on\
+  \ ALREADY-measured work, where the cost is the audit trail rather than correctness."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T05:28:43.733314+00:00'
+updated_at: '2026-07-30T05:29:21.997704+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0002-horizon-pic-c
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-f
