@@ -45,7 +45,7 @@ That shape is what makes both directions cheap, and in *opposite* ways:
 
 * **Antecedent 1 is free**, because the Σ-component of the chart value **is** the point:
   reading it off recovers `v`, so the map is injective on the nose at every test
-  (`injective_abelSigmaChartZero`).  This is not the `V = ⊥` degeneracy — the source is
+  (`injective_abelSigmaChartZero_sigmaComponent`).  This is not the `V = ⊥` degeneracy — the source is
   nonempty and the statement is at the unrestricted chart.
 * **Antecedent 2 is exactly the vanishing**, because the Σ-component is *surjective* for free
   and the fibre component then has to be hit, which at a singleton `pic⁰` it is
@@ -95,7 +95,7 @@ and nothing more.
   is elementwise injectivity.**  Chart-free, divisor-free, curve-free.
 * `AlgebraicGeometry.sigmaComponent_abelSigmaChartZero` — the Σ-component of the terminal
   chart's value is the point itself.
-* `AlgebraicGeometry.injective_abelSigmaChartZero` — **antecedent 1's elementwise content,
+* `AlgebraicGeometry.injective_abelSigmaChartZero_sigmaComponent` — **antecedent 1's elementwise content,
   unconditionally**, at the unrestricted chart.
 * `AlgebraicGeometry.surjective_app_abelSigmaChartZero_of_subsingleton` /
   `subsingleton_pic0Subgroup_of_surjective_app` — surjectivity **is** the vanishing, both ways.
@@ -248,7 +248,15 @@ Two points a lane must not misread.
   singleton (`instSubsingletonDivFamZarSectionZero`), so there is no pair to separate.  The
   fork's negative branch and this lemma live at different parameters, and the fork's own
   hypothesis `2 ≤ Sheaf.h0` is what keeps them apart. -/
-theorem injective_abelSigmaChartZero (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+-- RENAMED by pic-g (0096 r3), not by this file's author, to unbreak the ROOT build.
+-- This theorem was declared here as `injective_abelSigmaChartZero`, which
+-- `Pic0ChartMonoUnconditional.lean:82` had already taken for the SAME statement nine hours
+-- earlier by a different route (via `injective_abelSigmaChart_of_subsingleton`).  Neither file
+-- imports the other, so each compiled alone and the clash appeared only in the root's import
+-- closure -- `AlgebraicJacobian.lean` failed with "environment already contains".  The suffix
+-- names the route used below: the Σ-component of the chart value IS the point.  Nothing else
+-- changed, and no external declaration referenced the old name.
+theorem injective_abelSigmaChartZero_sigmaComponent (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
     (hdeg : Scheme.CurveDivisor.deg k Z
       = (m : ℤ) * classDeg k (thetaCechClass C) - ((0 : ℕ) : ℤ))
     (T : Scheme.{u}ᵒᵖ) :
@@ -343,7 +351,7 @@ theorem isIso_abelSigmaChartZero_of_subsingleton
     IsIso (abelSigmaChartZero (C := C) (pi := pi) m Z hdeg) := by
   haveI : ∀ T, IsIso ((abelSigmaChartZero (C := C) (pi := pi) m Z hdeg).app T) := fun T =>
     (isIso_iff_bijective _).mpr
-      ⟨injective_abelSigmaChartZero C pi m Z hdeg T,
+      ⟨injective_abelSigmaChartZero_sigmaComponent C pi m Z hdeg T,
        surjective_app_abelSigmaChartZero_of_subsingleton C pi m Z hdeg hvan T⟩
   exact NatIso.isIso_of_isIso_app _
 
@@ -419,7 +427,7 @@ theorem seamPair_abelSigmaChartZero_iff
   -- coverage plus free injectivity make the chart an iso, hence surjective on the nose
   letI : IsIso (abelSigmaChartZero (C := C) (pi := pi) m Z hdeg) := by
     haveI := chartIso_of_injective C (abelSigmaChartZero (C := C) (pi := pi) m Z hdeg)
-      (injective_abelSigmaChartZero C pi m Z hdeg) hcov
+      (injective_abelSigmaChartZero_sigmaComponent C pi m Z hdeg) hcov
     exact (inferInstance : IsIso ((sheafToPresheaf Scheme.zariskiTopology (Type u)).map
       (chartSheafHom C (abelSigmaChartZero (C := C) (pi := pi) m Z hdeg))))
   exact subsingleton_pic0Subgroup_of_surjective_app C pi m Z hdeg
@@ -452,7 +460,7 @@ variable (C pi) in
 
 The pair statement above is not wrong, but it is not sharp: antecedent 1 is a free rider on
 both sides of it — unconditional in the forward direction
-(`injective_abelSigmaChartZero`) and recovered from antecedent 2 in the backward one
+(`injective_abelSigmaChartZero_sigmaComponent`) and recovered from antecedent 2 in the backward one
 (`isOpenImmersion_presheaf_of_injective`).  Stated because the board prices antecedent 2 as
 the *most expensive* of the three, so "the pair is decided" would read as a larger discount
 than the truth: nothing about antecedent 1 is being bought here, and coverage is the whole
@@ -466,7 +474,7 @@ theorem isLocallySurjective_abelSigmaChartZero_iff
       ↔ ∀ S : Over (Spec (.of k)), Subsingleton (pic0Subgroup C S) :=
   ⟨fun hcov => (seamPair_abelSigmaChartZero_iff C pi m Z hdeg).mp
       ⟨isOpenImmersion_presheaf_of_injective C _
-        (injective_abelSigmaChartZero C pi m Z hdeg) hcov, hcov⟩,
+        (injective_abelSigmaChartZero_sigmaComponent C pi m Z hdeg) hcov, hcov⟩,
    fun hvan => (seamPair_abelSigmaChartZero_of_subsingleton C pi m Z hdeg hvan).2⟩
 
 /-! ## The seam fired, and the arbitrary-parameter form of the repricing -/
