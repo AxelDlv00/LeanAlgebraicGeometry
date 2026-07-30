@@ -49,6 +49,19 @@ better-aimed; it discharges nothing. In particular it is **not** a producer of
 Fact 2 is a genuine subtraction from the antecedent list of a landed theorem, and it
 is the reusable half.
 
+## What the two facts do together, and where the slack is
+
+§5 states clause (1) from **three** inputs: `rep`, the Galois quotient `hq`, and
+`hcov`. §7 shows the seam *implies* `rep` even at the separable closure, which is where
+campaign cluster `J` lives. So the route is pinned in both directions modulo `hq` and
+`hcov`, and those two are the only slack: no cheaper `k`-side argument can bypass the
+base change, because the base-changed representation is a consequence of the goal.
+
+§4 is the boundary of that pinning, and it is deliberately a negative result: at the
+object §2 produces, `IsGaloisQuotient`'s clauses 1 and 2 are free and clause 3 is not.
+Necessity hands over the object; the quotient's universal property is still owed. So
+"the inputs are equivalent to the conclusion" is **false**.
+
 ## What is NOT claimed
 
 * **No `sorry` is closed.** `Scheme.fgaPicardRepresentability` is untouched and is
@@ -403,6 +416,43 @@ theorem not_seamClauseOne_of_not_representableBy_baseChangeField
   rintro ⟨Z, hZ, -, -⟩
   exact not_representableBy_picEt_of_not_representableBy_baseChangeField
     (k' := k') C h Z hZ
+
+/-! ## §7. At the separable closure: the seam IMPLIES the campaign's own endpoint
+
+§2 holds at an arbitrary extension, so it holds at `k^s`. That instance is worth its
+own name because of *where* the Milne–Kollár campaign lives: cluster `J` is stated over
+a separably closed field, which is exactly where a section is available
+(`Curve/SeparablyClosedRationalPoint.lean`) and where `picSharp` and `picEt` agree.
+
+So the campaign's target is not merely *sufficient* for the seam — it is **implied by**
+it. Together with the descent theorems this pins the relationship in both directions:
+the campaign endpoint plus `hq` plus `hcov` gives the seam (`§5`), and the seam gives
+the campaign endpoint (`§7`, unconditionally). The route is therefore correctly aimed,
+and the two remaining named antecedents are the only slack in it.
+
+**This is not a discharge and the direction is the whole point.** §7's hypothesis is
+clause (1) field 1 over `k`, i.e. what the seam owes. It says nothing about how to
+produce either side. What it removes is the worry that the campaign might be proving
+something stronger than needed at `k^s` — it is not: what it targets there is a
+consequence of the goal. -/
+
+/-- **The seam implies representability over the separable closure.**
+
+The `k^s` instance of §2. `SeparableClosure k` is a `Type u` field with a `k`-algebra
+structure, so no universe bridge and no extra hypothesis is involved: this is §2 with
+`k' := SeparableClosure k` and nothing else.
+
+Named because campaign cluster `J` targets exactly this object, and because a lane
+should be able to cite "the campaign's endpoint is a consequence of the seam" without
+re-deriving the base change. -/
+noncomputable def representableBy_picEt_separableClosure_of_representableBy
+    (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    {X : Over (Spec (CommRingCat.of k))}
+    (rep : (picEt C).RepresentableBy X) :
+    (picEt (Scheme.baseChangeField C (SeparableClosure k))).RepresentableBy
+      ((Over.pullback (specMapAlgebra k (SeparableClosure k))).obj X) :=
+  representableBy_picEt_baseChangeField_of_representableBy C rep
 
 end PicScheme
 
