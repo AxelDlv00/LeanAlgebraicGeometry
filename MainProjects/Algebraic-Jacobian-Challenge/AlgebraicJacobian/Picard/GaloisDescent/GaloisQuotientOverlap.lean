@@ -202,6 +202,45 @@ noncomputable def pullbackOverlapIsoTriple [FiniteDimensional K L]
     Q.isoOfEq himage ≪≫
     Q.isoOfEq hinf.symm
 
+/-- The next cyclic chart's triple quotient is a quotient of the same restricted
+action, transported along associativity and commutativity of intersection. -/
+theorem isGaloisQuotient_triple_rot [FiniteDimensional K L] [IsGalois K L]
+    (i j k : StableAffineOpen ρ) :
+    IsGaloisQuotient (ρ.restrict (triple_stable ρ i j k))
+      (quotientTripleι ρ j k i ≫ quotientChartMap ρ j) := by
+  let eOpen : ((i.U ⊓ j.U) ⊓ (i.U ⊓ k.U)) =
+      ((j.U ⊓ k.U) ⊓ (j.U ⊓ i.U)) := by ac_rfl
+  let e := X.isoOfEq eOpen
+  have hef : e.hom ≫
+      (((j.U ⊓ k.U) ⊓ (j.U ⊓ i.U)).ι ≫ f) =
+        ((i.U ⊓ j.U) ⊓ (i.U ⊓ k.U)).ι ≫ f := by
+    dsimp only [e]
+    rw [← Category.assoc, Scheme.isoOfEq_hom_ι]
+  exact isGaloisQuotient_congr
+    (ρ.restrict (triple_stable ρ i j k))
+    (ρ.restrict (triple_stable ρ j k i))
+    e hef (SemilinearGalAction.restrict_isoOfEq_isEquivariant ρ _ _ _)
+    (isGaloisQuotient_triple ρ j k i)
+
+/-- The canonical cyclic comparison between two presentations of a triple
+quotient overlap. -/
+noncomputable def tripleIso [FiniteDimensional K L] [IsGalois K L]
+    (i j k : StableAffineOpen ρ) :
+    quotientTriple ρ i j k ≅ quotientTriple ρ j k i :=
+  quotientUniqueIso (ρ.restrict (triple_stable ρ i j k))
+    (isGaloisQuotient_triple ρ i j k)
+    (isGaloisQuotient_triple_rot ρ i j k)
+
+/-- The triple-overlap transition in the shape required by
+`CategoryTheory.GlueData.t'`. -/
+noncomputable def overlapTransition' [FiniteDimensional K L] [IsGalois K L]
+    (i j k : StableAffineOpen ρ) :
+    pullback (quotientOverlapι ρ i j) (quotientOverlapι ρ i k) ⟶
+      pullback (quotientOverlapι ρ j k) (quotientOverlapι ρ j i) :=
+  (pullbackOverlapIsoTriple ρ i j k).hom ≫
+    (tripleIso ρ i j k).hom ≫
+    (pullbackOverlapIsoTriple ρ j k i).inv
+
 /-- The quotient constructed from the reversed chart is also a quotient of the
 restriction to `i.U ⊓ j.U`, transported along commutativity of intersection. -/
 theorem isGaloisQuotient_overlap_rev [FiniteDimensional K L] [IsGalois K L]
