@@ -1,0 +1,33 @@
+id: AJCR.w4-rep.datum.dat-b.neighborhood-point.genus-multi-index-coupling
+title: Couple genus-parameter multi-index coverage into universal source opens
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'OPEN. Consume range_subset_universalChartSourceAff_iff at each coverage
+  witness: choose a genus-parameter chart index and a classifying morphism whose image
+  points carry HasFiniteSeparableH1WitnessAt for that chart universal family. This
+  is the exact same-V residue after 5757c8c159. The uniform admissible high-parameter
+  locus supplies H0 at least two and is coverage data, not the H0-equals-one uniqueness/open-immersion
+  source; do not conflate those roles. Joins pic-d widened rep once produced and the
+  multi-index restricted-atlas assembly.'
+status: pending
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-30T09:03:36.248184+00:00'
+  provenance:
+    run: 0098
+    session: 0006-horizon-pic-h
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: pic-h
+    task_title: 'Pic rep lane H: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-b.neighborhood-point

@@ -1,5 +1,5 @@
 id: AJCR.w4-rep.datum.dat-b.neighborhood-point
-title: 'DAT-B restricted-neighborhood point: lift coverage into the same chart open'
+title: 'DAT-B same-V coupling: universal source open plus genus multi-index coverage'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'OPEN after COVER-THRESHOLD. The remaining antecedent is still the same-V
@@ -14,8 +14,17 @@ summary: 'OPEN after COVER-THRESHOLD. The remaining antecedent is still the same
   but does NOT refute a high-parameter same-V local lift. Honest next routes are relative
   spreading inside the high-parameter restricted chart, or a genus-parameter multi-index
   atlas. The parameter still joins pic-d arbitrary-parameter representability; the
-  same-V condition joins chart-restrict.'
-status: active
+  same-V condition joins chart-restrict.
+
+
+  UPDATE 5757c8c159: the row is now split. DONE child universal-source-aff constructs
+  the actual open V on any widened representing object and proves its range-containment
+  iff finite-separable H1 witnesses at every image point. OPEN child genus-multi-index-coupling
+  must make coverage land in those V_i at the genus parameter. Ground sharpened the
+  route boundary: the old single uniform high-parameter reading is mis-scoped for
+  a source that must also support h0=1 uniqueness/open immersion. No impossibility
+  theorem for all multi-index local lifts is claimed.'
+status: pending
 kind: proof
 priority: high
 depends_on: []
@@ -37,8 +46,8 @@ metadata:
     task_title: 'Pic rep lane H: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-b
-  updated_at: '2026-07-30T07:50:51.697251+00:00'
+  updated_at: '2026-07-30T09:11:53.682838+00:00'
   pinned_commits:
+  - 5757c8c15908b26b5e7f2d09b5512bd7f0895574
   - ea59eeb02274fb06635ddf0c4c6e1dbcdf22a660
   - 132a56f9840406006e53c076939fbccee8a2acc5
-  owner: pic-h
