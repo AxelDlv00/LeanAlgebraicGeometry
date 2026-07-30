@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.GaloisDescent.SemilinearAlgebras
+import AlgebraicJacobian.Picard.FiniteGaloisQuotientAffine
 
 /-!
 # The semilinear action descends to a localization at an invariant element
@@ -257,5 +258,62 @@ theorem isSemilinear_away :
 end Semilinear
 
 end SemilinearAction
+
+/-! ## §4. The payoff: the localized chart HAS a Galois quotient
+
+This is what layer 2 is for, and it is stated because the value of
+`isSemilinear_away` is not visible from the statement of `isSemilinear_away`.
+-/
+
+section LocalizedQuotient
+
+variable (K L : Type u) [Field K] [Field L] [Algebra K L]
+  [FiniteDimensional K L] [IsGalois K L]
+variable {A : Type u} [CommRing A] [Algebra K A] [Algebra L A] [IsScalarTower K L A]
+  [MulSemiringAction (L ≃ₐ[K] L) A] [IsSemilinear K L A]
+variable (N : A) (hN : ∀ γ : L ≃ₐ[K] L, γ • N = N)
+variable (S : Type u) [CommRing S] [Algebra A S] [IsLocalization.Away N S]
+  [Algebra K S] [Algebra L S] [IsScalarTower K L S] [IsScalarTower L A S]
+
+omit [Algebra K A] [IsScalarTower K L A] in
+/-- **A localization at an invariant element has a Galois quotient, namely `Spec` of
+its own invariants.**
+
+`Spec S` with the action `awayAction` transported in §2 satisfies
+`IsGaloisQuotient` against `Spec (S^Γ)` — all three clauses, including the
+universal `T`-points property, for every `T`.
+
+**Nothing new is proved here and that is the point.** The whole content is
+`isSemilinear_away`: once the transported action is known semilinear,
+`isGaloisQuotient_spec` (`Picard/FiniteGaloisQuotientAffine.lean`) applies
+verbatim, Speiser and all. So layer 3, gluing per-chart quotients along stable
+opens, can quote a quotient at each localized piece instead of constructing one —
+which is the same simplification `GaloisQuotientGlue.lean`'s header records for
+the affine case at layer 1.
+
+**The universe is `Type u` throughout, not `Type v`, and this is a real
+constraint rather than tidying**: `isGaloisQuotient_spec` lives at `Scheme.{u}`,
+so it does not apply to a `Type v` ring. §§1–3 above are universe-polymorphic in
+`A`; only this corollary is pinned, and a consumer whose section ring sits at
+another level owes a universe bridge here and nowhere else.
+
+Still **no** discharge of `HasGaloisQuotient` for a non-affine `X`: this is one
+piece of a cover, and assembling the pieces is layer 3, where the Hironaka trap
+bites.
+
+`[Algebra K A]` and `[IsScalarTower K L A]` are `omit`ted: inherited from
+`isSemilinear_away`, consumed by neither (linter-confirmed). What the corollary
+needs of `A` is only that it acts and maps to `S`. -/
+theorem isGaloisQuotient_away :
+    letI := SemilinearAction.awayAction K L N hN S
+    letI := SemilinearAction.isSemilinear_away K L N hN S
+    IsGaloisQuotient (specSemilinearGalAction K L S)
+      (AlgebraicGeometry.Spec.map (CommRingCat.ofHom
+        (algebraMap K (SemilinearAction.invariantsSubalgebra K L S)))) := by
+  letI := SemilinearAction.awayAction K L N hN S
+  letI := SemilinearAction.isSemilinear_away K L N hN S
+  exact isGaloisQuotient_spec K L S
+
+end LocalizedQuotient
 
 end AlgebraicJacobian.GaloisDescent
