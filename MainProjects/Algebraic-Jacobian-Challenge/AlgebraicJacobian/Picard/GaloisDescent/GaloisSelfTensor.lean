@@ -98,6 +98,25 @@ campaign's undischarged output — is untouched. Nothing here mentions `picEt`, 
 supplying the *compatible family* from an invariant class still requires
 identifying the sieve's two pullback legs through this equivalence, which is
 `AJC.picrep.etale-rep.invariance` (`ajc-p2`) and not done here.
+
+**ZERO CODE CONSUMERS at the time of writing** (`I-1399`, measured by grep of all
+declaration names across the project): the three hits outside this file are
+docstring prose in `Picard/PicEtDescentExistence.lean`. The file is rooted so it
+builds; nothing reads it. That is not a vacuity — the statement is true and
+non-vacuous — but the honest description is that a named absent brick is now
+present, *not* that anything already written is unblocked. The value has moved to
+the consumer step.
+
+**And do not infer a binder on the descent from the `iff`** — an earlier revision of
+this paragraph's release note did, and `ajc-p2` refuted it by reading the binder
+lists (`I-1368`). Descent of `picEt`-**classes** runs at any finite *separable*
+level: `isSheafFor_picEt_singleton_coverMap` and
+`exists_unique_descend_picEt_of_projections` carry `[Algebra.IsSeparable]` and
+`[Module.Finite]` and **no** `IsGalois`. Étaleness is all the sheaf side consumes,
+and it does not need normality. Galois enters the route **exactly once**, at the
+invariance bridge — and there because this file's `iff` makes the splitting *false*
+below Galois, not for want of a lemma. The `iff` constrains where the splitting can
+be used; it says nothing about what the sheaf theory requires.
 -/
 
 universe u v
@@ -115,14 +134,15 @@ variable (K L : Type u) [Field K] [Field L] [Algebra K L]
 
 This is the "second leg" of the splitting: the copy of `L` that the Galois group
 acts on.  It is a `K`-algebra map and not an `L`-algebra map, which is exactly why
-the target is a product over `G` rather than a single copy of `L`. -/
-def galoisEvalHom : L →ₐ[K] ((L ≃ₐ[K] L) → L) where
-  toFun b := fun γ => γ b
-  map_one' := by ext γ; simp
-  map_mul' x y := by ext γ; simp
-  map_zero' := by ext γ; simp
-  map_add' x y := by ext γ; simp
-  commutes' r := by ext γ; simp
+the target is a product over `G` rather than a single copy of `L`.
+
+It is `Pi.algHom` at the family `γ ↦ (γ : L →ₐ[K] L)`, and is *defined* that way:
+an earlier revision hand-wrote the six `AlgHom` field proofs, which a fresh-context
+audit measured `rfl`-equal to the library term (`I-1399`) — 11 lines re-deriving a
+mathlib combinator this lane's own feasibility probe had used correctly. The
+abbreviation is kept only because the name reads at the use sites. -/
+def galoisEvalHom : L →ₐ[K] ((L ≃ₐ[K] L) → L) :=
+  Pi.algHom _ _ fun γ : L ≃ₐ[K] L => (γ : L →ₐ[K] L)
 
 @[simp] lemma galoisEvalHom_apply (b : L) (γ : L ≃ₐ[K] L) :
     galoisEvalHom K L b γ = γ b := rfl
@@ -249,12 +269,25 @@ machine-checked and needs no witness. -/
 /-- **The converse dimension count**: if the splitting map is bijective then the
 automorphism group has order `[L : K]`.
 
-Consequence: `[IsGalois K L]` in `galoisSelfTensorHom_bijective` is *necessary*.
-Any finite separable extension that is not normal has `#Aut(L/K) < [L : K]`, hence
-a splitting map that is not bijective — the failure is in the target's dimension,
-not in the choice of map. -/
+Fed to Mathlib's Galois criterion this gives the `iff` below, which is what makes
+`[IsGalois K L]` the content of `galoisSelfTensorHom_bijective` rather than a
+hypothesis it happens to consume.
+
+**No finiteness binder**, and that is measured, not stylistic (`I-1397`): an earlier
+revision carried `[FiniteDimensional K L]` and the proof never touched it — the body
+verbatim elaborates without it, `lake env lean` `EXIT=0`. `finrank` of a
+non-finite-dimensional module is `0` by definition, so both sides degenerate
+consistently; the only finiteness the statement reads is `[Fintype (L ≃ₐ[K] L)]`,
+already explicit. The `iff` below *does* need `[FiniteDimensional K L]`
+(`AlgEquiv.fintype`, and Mathlib's criterion), so the two are stated separately
+rather than bundled.
+
+Note for whoever checks the next one of these: `lean_minimal_hypotheses` **cannot
+see this defect** — it skips instance binders by design, and it reported this
+theorem clean. Instance binders have to be probed by re-elaborating the body with
+the binder deleted. -/
 theorem card_aut_eq_finrank_of_galoisSelfTensorHom_bijective
-    [FiniteDimensional K L] [Fintype (L ≃ₐ[K] L)]
+    [Fintype (L ≃ₐ[K] L)]
     (h : Function.Bijective (galoisSelfTensorHom K L)) :
     Fintype.card (L ≃ₐ[K] L) = finrank K L := by
   have hlin : Function.Bijective ((galoisSelfTensorHom K L).toLinearMap) := h
