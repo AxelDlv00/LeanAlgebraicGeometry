@@ -66,9 +66,21 @@ of a `k'`-side representation produces — but it is **not** a discount on the s
   quotient — `ajc-p4`'s `homClassMap_of_galoisQuotient` is its injective half, and
   the scheme-level quotient (`G2(c)`, non-affine) is `ajc-p3`'s row;
 * `hcov`, `ajc-p1`'s covering antecedent, carried per-test by
-  `representableBy_of_galInvariantEquiv`. Inhabited at every extension with
-  `Mono (specMapAlgebra k k')` (`etaleTopology_generate_coverSelfSection_of_mono`),
-  hence not vacuous, and **open at a nontrivial Galois level**;
+  `representableBy_of_galInvariantEquiv`. It is **satisfiable** — at every extension
+  with `Mono (specMapAlgebra k k')`, by
+  `etaleTopology_generate_coverSelfSection_of_mono` — and the sentence that stood
+  here, *"hence not vacuous"*, is **WITHDRAWN as a non-sequitur** (`I-1454`,
+  fresh-context audit of `PicEtGaloisBridge.lean`; the inference was inherited from
+  that file and repeated here). `Mono (specMapAlgebra k k')` forces every
+  `γ : k' ≃ₐ[k] k'` to be the identity — reproduced here from `specGal_comp` and
+  `cancel_mono` before this paragraph was changed — so at the only exhibited model
+  the group is trivial, `twistTest T γ` is the identity, the two projections of the
+  cover coincide, and the *consequent* holds with neither `hcov` nor invariance. A
+  satisfiable antecedent whose only witness also trivialises the conclusion
+  establishes satisfiability and **not** content. The honest wording, which is what
+  a lane should budget against: *satisfiable, but no exhibited model separates the
+  two projections*, and exhibiting one at an extension with a nontrivial
+  automorphism (`ℂ/ℝ`, `𝔽_{p²}/𝔽_p`) is open;
 * `k'`-side representability itself — the campaign's undischarged output.
 
 **No hypothesis on `C(k)`** (`I-0491`).
@@ -208,6 +220,52 @@ theorem restrictCompatEquiv_naturality (C : Over (Spec (CommRingCat.of k)))
   rw [restrictCompatEquiv_apply, restrictCompatEquiv_apply,
     ← coverRestrictNat_app (k' := k') C T, ← coverRestrictNat_app (k' := k') C T']
   exact NatTrans.naturality_apply (coverRestrictNat (k' := k') C) f.op y
+
+/-! ## What `hcov` costs — the topology half is one line -/
+
+omit [Algebra.IsSeparable k k'] [Module.Finite k k'] in
+/-- **An open cover's sieve is an ÉTALE covering sieve** — one line, and it reprices
+`ajc-p1`'s `hcov`.
+
+`PicEtGaloisBridge.lean`'s `hcov_iff_scheme_level` reduces `hcov` to a covering
+statement about the scheme morphisms `(coverSelfSection T γ).left`, and its docstring
+records — correctly, with a live `sorryAx` control — that
+`IsOpenImmersion (coverSelfSection T γ).left` does **not** synthesise, concluding
+"the covering property is not available from the étale-precoverage machinery for
+free, and closing this row means building it".
+
+**The second clause needs splitting, and this lemma is the reason.** What is not
+free is *that the sections are open immersions*. What IS free, once one has an
+`OpenCover`, is everything topological: `Cover.mem_grothendieckTopology` plus
+`zariskiTopology_le_etaleTopology`. So `hcov` is **not** a topology obligation at
+all; it is exactly the geometric statement *the `Gal`-indexed sections are an open
+cover of the self-pullback*, and no étale-site work sits between that and `hcov`.
+
+Two further measurements, both with `fgaPicardRepresentability` firing `sorryAx` in
+the same probe file (`I-1057`):
+
+* `IsOpenImmersion (Sigma.ι g i)` fails by `inferInstance` **but is a theorem**:
+  `(sigmaOpenCover g).map_prop i` closes it. So a failed synthesis on a coproduct
+  inclusion is not evidence of absence (`I-1402`, at an instance goal rather than a
+  tactic).
+* consequently, on `ajc-p1`'s route through `selfTensorSpecCoproduct`, the step from
+  "the self-pullback IS the `Gal`-indexed coproduct" to `hcov` is library work:
+  a coproduct in `Scheme` carries `sigmaOpenCover`, and this lemma converts it.
+
+**What this does NOT do**: it does not prove `hcov`. The base change of
+`selfTensorSpecCoproduct` along `T_{k'} ⟶ Spec k'` and the identification of its
+`γ`-component with `coverSelfSection T γ` are still owed, and they are where the
+work is. This lemma removes the *last* step from that list, not the first. -/
+theorem etaleTopology_generate_of_openCover {X : Scheme.{u}} (U : X.OpenCover) :
+    Sieve.generate (Presieve.ofArrows U.X U.f) ∈ Scheme.etaleTopology X :=
+  Scheme.zariskiTopology_le_etaleTopology _ U.mem_grothendieckTopology
+
+omit [Algebra.IsSeparable k k'] [Module.Finite k k'] in
+/-- **A coproduct inclusion in `Scheme` IS an open immersion** — recorded because
+`inferInstance` fails on it, which is how it gets read as absent. -/
+theorem isOpenImmersion_sigmaι {σ : Type u} [Small.{u} σ] (g : σ → Scheme.{u}) (i : σ) :
+    IsOpenImmersion (Sigma.ι g i) :=
+  (sigmaOpenCover g).map_prop i
 
 /-! ## The assembly: from cover-compatible classes to a `k`-representation -/
 
