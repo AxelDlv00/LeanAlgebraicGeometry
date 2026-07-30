@@ -63,6 +63,23 @@ theorem inf_stable (i j : StableAffineOpen ρ) :
   intro γ
   rw [Scheme.Hom.preimage_inf, i.stable γ, j.stable γ]
 
+/-- The open cover of the acted scheme indexed by all stable affine opens.
+The existing `HasStableAffineCover` producer supplies joint surjectivity. -/
+noncomputable def sourceOpenCover [HasStableAffineCover K L ρ] :
+    Scheme.OpenCover X where
+  I₀ := StableAffineOpen ρ
+  X i := i.U.toScheme
+  f i := i.U.ι
+  mem₀ := by
+    rw [Scheme.presieve₀_mem_precoverage_iff]
+    constructor
+    · intro x
+      obtain ⟨U, hUa, hx, hU⟩ :=
+        HasStableAffineCover.exists_stable_affineOpen (ρ := ρ) x
+      exact ⟨⟨U, hUa, hU⟩, ⟨x, hx⟩, rfl⟩
+    · intro i
+      infer_instance
+
 /-- The affine invariant-ring quotient chart attached to a stable affine open. -/
 noncomputable def quotientChart (i : StableAffineOpen ρ) : Scheme.{u} := by
   letI := ρ.sectionsMulSemiringAction i.stable
