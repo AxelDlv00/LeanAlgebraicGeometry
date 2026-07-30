@@ -115,6 +115,26 @@ instance quotientOverlapι_isOpenImmersion (i j : StableAffineOpen ρ) :
   unfold quotientOverlapι quotientOverlap quotientChart
   infer_instance
 
+/-- A chart overlaps itself in the whole quotient chart. -/
+theorem quotientOverlapι_self_isIso [FiniteDimensional K L]
+    (i : StableAffineOpen ρ) : IsIso (quotientOverlapι ρ i i) := by
+  letI := ρ.sectionsMulSemiringAction i.stable
+  letI := SemilinearGalAction.sectionsAlgebra f i.U
+  letI := SemilinearGalAction.sectionsAlgebraK (K := K) f i.U
+  letI := SemilinearGalAction.sections_isScalarTower (K := K) f i.U
+  letI := ρ.isSemilinear_sections i.stable
+  have htop :
+      SemilinearGalAction.quotientOpenOfStableSubopen ρ i.stable
+        (i.U ⊓ i.U) = ⊤ := by
+    simpa only [inf_idem] using
+      (SemilinearGalAction.quotientOpenOfStableSubopen_self
+        ρ i.stable i.affine)
+  apply isIso_of_isOpenImmersion_of_opensRange_eq_top
+  unfold quotientOverlapι
+  exact (Scheme.Opens.opensRange_ι
+    (SemilinearGalAction.quotientOpenOfStableSubopen ρ i.stable
+      (i.U ⊓ i.U))).trans htop
+
 /-- Each quotient-side overlap represents the full Galois quotient of the
 restricted action on the corresponding source overlap. -/
 theorem isGaloisQuotient_overlap [FiniteDimensional K L] [IsGalois K L]
@@ -765,6 +785,27 @@ theorem overlapIso_hom_base [FiniteDimensional K L] [IsGalois K L]
 theorem overlapIso_self [FiniteDimensional K L] [IsGalois K L]
     (i : StableAffineOpen ρ) : overlapIso ρ i i = Iso.refl _ := by
   simp [overlapIso]
+
+/-- The gluing datum of invariant-ring quotient charts attached to all stable
+affine opens of the acted scheme. -/
+noncomputable def quotientGlueData [FiniteDimensional K L] [IsGalois K L] :
+    Scheme.GlueData where
+  J := StableAffineOpen ρ
+  U i := quotientChart ρ i
+  V p := quotientOverlap ρ p.1 p.2
+  f i j := quotientOverlapι ρ i j
+  f_id i := quotientOverlapι_self_isIso ρ i
+  f_open i j := quotientOverlapι_isOpenImmersion ρ i j
+  t i j := (overlapIso ρ i j).hom
+  t_id i := by rw [overlapIso_self]; rfl
+  t' i j k := overlapTransition' ρ i j k
+  t_fac i j k := overlapTransition'_fac ρ i j k
+  cocycle i j k := overlapTransition'_cocycle ρ i j k
+
+/-- The scheme obtained by gluing all stable affine invariant-ring quotient
+charts. -/
+noncomputable def gluedQuotient [FiniteDimensional K L] [IsGalois K L] :
+    Scheme := (quotientGlueData ρ).glued
 
 end StableAffineOpen
 
