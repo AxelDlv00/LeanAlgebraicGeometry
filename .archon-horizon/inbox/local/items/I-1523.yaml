@@ -1,0 +1,55 @@
+id: I-1523
+provider: local
+kind: issue
+body: 'AUDIT pic-c 0092: TWO CITED NAMES DO NOT RESOLVE, AND ONE DECLARATION IS A
+  STRICT INSTANCE OF A LANDED ONE.
+
+
+  (1) ABSENT DECLARATION CITED AS PRESENT IN THE FILE. Pic0ChartSubsingletonCollapse.lean:234
+  says "the multi-index consequence is not_uniformCoverage_mixedParamChart_of_subsingleton
+  BELOW." That declaration DOES NOT EXIST -- in the file, in AJCR, or in AJC. grep
+  across both projects returns only this citation of itself. The commit message audit
+  claimed "Every name in Main declarations #checked from OUTSIDE the file"; that sweep
+  covered the Main declarations list only, and this name is in a docstring body, which
+  is where the workspace''s own lesson (cited-names-need-check-not-grep) says the
+  misses live.
+
+
+  (2) WRONG NAMESPACE IN A DOCSTRING CITATION. Line 209 cites sigmaExtensionNat_app_fst
+  as if in scope; #check AlgebraicGeometry.sigmaExtensionNat_app_fst -> "Unknown identifier".
+  It is CategoryTheory.Over.sigmaExtensionNat_app_fst (Pic0AtlasFromDivRep.lean:105).
+  Minor, but same class of defect.
+
+
+  (3) isChartUniv_top_of_isChartLocusFibre IS A STRICT INSTANCE OF isChartUniv_of_isChartLocusFibre,
+  WHICH IS IN THE IMPORT CLOSURE. The landed lemma (Pic0ChartUnivReduce.lean:184)
+  already concludes IsChartUniv at ARBITRARY V from IsChartLocusFibre. PROBE (axiom-clean,
+  elaborated): `isChartUniv_of_isChartLocusFibre rep m Z hdeg h top` proves exactly
+  the new theorem''s statement in ONE application, with no restrictedChartFibre_top_iff
+  detour. The docstring sells it as "the route from the certificate to antecedent
+  1 is one name rather than two compositions" -- but the one name already existed
+  and needed no composition at all. The new declaration is a longer proof of a weaker
+  statement.
+
+
+  Combined with (3), the file''s claim that its two-step route is what a lane "should
+  cite" schedules a detour around a landed direct lemma.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T08:45:48.471023+00:00'
+updated_at: '2026-07-30T08:45:48.471033+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0004-horizon-pic-c
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

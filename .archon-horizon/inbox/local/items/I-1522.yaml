@@ -1,0 +1,58 @@
+id: I-1522
+provider: local
+kind: issue
+body: 'AUDIT pic-c 0092: "V = TOP IS THE ONLY SURVIVOR" IS THE EXACT SENTENCE Pic0ChartCoverForcesNonInj.lean
+  ALREADY RETRACTED AS WRONG IN ITS OWN FAVOUR.
+
+
+  Pic0ChartSubsingletonCollapse.lean says at three places (header line 36, docstring
+  line 228, docstring 284-286): with proper V refuted and bot refuted by not_coverageContainment_bot,
+  "V = top is the ONLY survivor" / "the only value left standing".
+
+
+  Pic0ChartCoverForcesNonInj.lean:60-67 -- which the collapse file IMPORTS and cites
+  -- says the opposite, under the same injectivity hypothesis: "AND TOP DIES TOO,
+  which an earlier version of this paragraph got wrong in its own favour by saying
+  ''the only V at which the seam can close is top'': the only thing keeping top alive
+  is not_restrictedChartFibre_top_of_not_injective, which CONSUMES the negative branch.
+  So under injectivity the seam is unsatisfiable at EVERY V (audit I-1378)."
+
+
+  Read carefully the collapse''s claim is not literally false the way that one was:
+  it says top is the only candidate NOT REFUTED BY THE TWO NAMED LEMMAS, and that
+  is true, because the lemma refuting top consumes non-injectivity which the collapse
+  denies. But "only survivor" reads as "the seam can close there", and that is unmeasured:
+  nothing exhibits an inhabitant of (huniv top, hcov top). Pic0ChartRestrictedFibreSat.lean
+  already files this as the standing "two refutations are not inhabitation" error
+  for this exact seam.
+
+
+  DEFENSIBLE VERSION: at a subsingleton parameter the landed endpoint refutations
+  no longer eliminate top, so the obligation the seam owes there is (IsChartLocusFibre,
+  unrestricted PointwiseCoverage). NOT: top is the value at which it closes, NOR that
+  the V-interval has been decided.
+
+
+  Also: the header''s framing that the restriction apparatus "exists because that
+  assertion is believed, since it is what kills V = top" is only one of the two things
+  killing top; not_restrictedChartFibre_top_of_pointwiseCoverage_of_ne_top kills it
+  from coverage with NO fork input.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T08:45:24.026196+00:00'
+updated_at: '2026-07-30T08:45:24.026208+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0004-horizon-pic-c
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

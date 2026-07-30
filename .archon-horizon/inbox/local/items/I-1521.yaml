@@ -1,0 +1,53 @@
+id: I-1521
+provider: local
+kind: issue
+body: 'AUDIT pic-c 0092 (Pic0ChartSubsingletonCollapse.lean): THE BOUNDARY THEOREM
+  DOES NOT PROVE WHAT ITS DOCSTRING SAYS. not_mem_chartLocus_of_two_le_genus_zero_param
+  is TRUE and axiom-clean, but the docstring/header conclusion -- "the coverage input
+  of pic0RepresentableBy_of_isChartLocusFibre_of_coverage is UNAVAILABLE at n = 0"
+  / "coverage needs the locus inhabited" -- is NOT established by it and is not established
+  anywhere in the tree.
+
+
+  MEASURED. PointwiseCoverage (Pic0ChartAtlasCoupling.lean:99) quantifies over an
+  ARBITRARY open W with t in W. It never mentions chartLocus. chartsCoverLocally_of_pointwise
+  (Pic0ChartCoveragePointwise.lean:110-113) says chartLocusOpens is only "the INTENDED
+  instantiation" of W. Pic0ChartAtlasCoupling.lean:50-53 states outright that the
+  two carriers DO NOT MEET: V i is an open of the divisor scheme, chartLocus C m Z
+  lam is a set on a TEST, bridged only by chartLocusOpens at the cost of haff (dat-b
+  B-4). So "empty chartLocus at n=0" does not refute the hcov hypothesis of the assembly;
+  it refutes only the chartLocus-mediated ROUTE to it.
+
+
+  Consequence for the round: the file''s headline limit ("the two inputs are cheap
+  at DISJOINT parameters", "emphatically not a route to closing it at 0") is a claim
+  about one intended construction, not a theorem about the assembly''s hypothesis.
+  The defensible version: at n = 0, g >= 2 the chartLocus-mediated route to coverage
+  is dead. Refuting hcov itself at n = 0 is OPEN and is a strictly stronger statement
+  nobody has.
+
+
+  Note the direction of the error is the CHEAP one for the lane: it makes the limit
+  look harsher and more audited than it is, which is the "gap list is the least audited
+  prose" failure mode with the sign flipped.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T08:44:56.231449+00:00'
+updated_at: '2026-07-30T08:45:34.109224+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0004-horizon-pic-c
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-g

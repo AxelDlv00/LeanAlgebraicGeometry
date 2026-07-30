@@ -1,0 +1,46 @@
+id: I-1525
+provider: local
+kind: issue
+body: "AUDIT pic-g 0096: General.lean ADVERTISES A DECLARATION THAT EXISTS NOWHERE,\
+  \ AND IT IS THE GLOBALLY-CERTIFIED HALF.\n\nDivisorFamilyDegreeZeroGeneral.lean:50-51\
+  \ 'Main declarations' says:\n  * AlgebraicGeometry.instSubsingletonDivFamZeroGeneral\
+  \ -- Subsingleton (DivFam C R pi 0) for **every** R, dropping the Field K of instSubsingletonDivFamZero.\n\
+  \nMEASURED: that name does not exist. grep across the whole workspace returns exactly\
+  \ one hit, line 50 itself. #check @AlgebraicGeometry.instSubsingletonDivFamZeroGeneral\
+  \ fails with unknownIdentifier (lake env lean, import closure of DivisorFamilyDegreeZeroUseSite).\
+  \ No Subsingleton (DivFam C R pi 0) exists anywhere; the only DivFam-level subsingleton\
+  \ is instSubsingletonDivFamZero (DivisorFamilyDegreeZeroUnique.lean:128), over a\
+  \ FIELD.\n\nTwo more bullets of the same list (instSubsingletonDivFamZarZeroGeneral,\
+  \ DivFamZar.uniqueZero) are real but defined in DivisorFamilyDegreeZeroRep.lean,\
+  \ one import hop UP -- so three of five advertised contents are not in the file.\n\
+  \nWHY IT IS NOT COSMETIC: the missing bullet is exactly the GLOBALLY certified carrier.\
+  \ The landed chain is DivEq -> IsLocallyCertified -> DivFamZar and never touches\
+  \ divFamSetoid, so general-R uniqueness on DivFam is still open while the docstring\
+  \ records it as delivered. A reader wanting the DivFam form is sent to a name that\
+  \ does not resolve.\n\nFIX: either land it (from divEq_trivEqns_of_isCertified_zero\
+  \ via Quotient.sound on divFamSetoid it should be ~4 lines, the same shape as instSubsingletonDivFamZero)\
+  \ or delete the bullet. Landing is better: it is the cheap direction and it makes\
+  \ the 'subsumes the field file' sentence at line 59 true of both carriers instead\
+  \ of one.\n\nFailure mode: cited-names-need-check-not-grep, applied to the file's\
+  \ own contents list."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-30T08:47:09.694626+00:00'
+updated_at: '2026-07-30T08:47:09.694639+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0004-horizon-pic-g
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

@@ -3,20 +3,77 @@ title: 'Div-zero: the first DivFamily producer, and Div^0 representable by the t
   object'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'CLAIMED pic-e (run 0095). Scheme.DivFamily (Picard/DivFunctorDef.lean) has
-  ~148 mentions in AJC and ZERO producers -- its own docstring says so, measured with
-  exact?. So the ENTIRE divisor side of the Milne-Kollar campaign (D1''-D4'', DivDegree,
-  DivPushforwardFlat, IdentityComponent''s ClassDegreePinned) is quantified over an
-  uninhabited structure and every green build over it is evidence about elaboration
-  only. TARGET, all unconditional in pi and T (no new hypothesis): (1) DivFamily.zero
-  -- the EMPTY divisor family, F = 0, q = 0, whose kernel ideal is the whole structure
-  sheaf and hence invertible; (2) its fibre degree is 0; (3) naturality: pullbackAlong
-  psi of zero is Rel-equivalent to zero, so the classes assemble into a global section
-  of DivFunctor; (4) hence Div^0_{X/S} is REPRESENTED BY THE TERMINAL OBJECT of Over
-  S whenever the degree-0 part is a singleton, i.e. the first RepresentableBy producer
-  on the divisor side. This is directly usable by every divisor-cluster consumer and
-  by the seam''s D1''/D4'' milestones.'
-status: active
+summary: 'ADVANCED, NOT CLOSED, by pic-e (run 0095). Owner released. Scheme.DivFamily
+  HAS AN INHABITANT; the seam sorry fgaPicardRepresentability is untouched and NO
+  antecedent of it is witnessed for any curve.
+
+
+  LANDED, DO NOT REDO. Picard/DivFamilyZero.lean + Picard/DivFamilyZeroAbel.lean,
+  both rooted at AlgebraicJacobian.lean. 34 declarations across the two files, ZERO
+  code sorries, ALL 34 axiom-clean [propext, Classical.choice, Quot.sound] against
+  fgaPicardRepresentability firing sorryAx in the same probe with oleans rebuilt FIRST.
+  Verified independently by a fresh-context audit which found four defects, all accepted
+  and fixed (see below).
+
+
+  * DivFamily.zero pi T -- the EMPTY DIVISOR, for ARBITRARY pi : X -> S and T : Over
+  S. F = 0, q = 0, so ker q = O_{X_T} and the divisor condition holds because O/O
+  = 0 cuts out D = empty. No hypothesis on pi: not proper, not smooth, not separated.
+  THE FIRST INHABITANT: at the parent commit, 148 mentions of DivFamily in AJC and
+  zero producers (audited independently; both numbers exactly confirmed).
+
+  * WHY IT IS NOT VACUOUS, measured not asserted: IsLocallyTrivial (0 : Y.Modules)
+  is FALSE at every point (restrict-of-zero is zero, forcing subsingleton sections,
+  contra Scheme.component_nontrivial). So kerLocallyTrivial at F = 0 asserts a rank-ONE
+  statement and genuinely excludes the rival ''unit divisor'' F = O, q = id.
+
+  * Base change: pullbackAlong_zero, so DivFunctor.map_zeroClass makes zeroClass a
+  GLOBAL SECTION of Div, not a per-object choice. fiberDeg_zero / hasFiberDeg_zero
+  give degree 0 everywhere, hence an inhabitant of (DivFunctorDeg pi 0).obj T.
+
+  * PicScheme.abelMap_zero: A([empty]) = 0, Kleiman''s O(empty) = O normalisation
+  and the FIRST COMPUTED VALUE of abelMap in the project (audited: no prior declaration
+  evaluates abelMap/abelDeg/abelMapWitness at a closed term). abelDeg_zero is the
+  same through the degree-refined map. Stated at abelMapWitness''s instance with no
+  [HasAbelMap C] binder, so the trivial constant-zero inhabitant cannot satisfy it.
+
+  * REUSABLE BRICKS ABSENT FROM MATHLIB (audited against mathlib + both projects):
+  Modules.isFinitePresentation_of_isZero (a zero sheaf of modules is finitely presented
+  -- not synthesizable), Modules.coversTop_singleton_top, Modules.preservesZeroMorphisms_overFunctor
+  (proved; instance search fails at 1.6M heartbeats), Modules.isZero_free_pempty.
+
+
+  WHAT IS STILL OPEN, and it is the row''s remaining content. Div^0 is NOT represented
+  by the terminal object: this file proves the Nonempty half only. The missing half
+  is Subsingleton ((DivFunctorDeg pi 0).obj T) -- that the empty divisor is the ONLY
+  degree-0 one. AUDIT-CONFIRMED that Nonempty + Subsingleton at every T SUFFICES,
+  with naturality free (homEquiv_comp closes by Subsingleton.elim). So this row is
+  one Subsingleton away from a genuine RepresentableBy producer on the divisor side.
+
+
+  DO NOT re-derive it from the sibling. AJCR has the analogous Subsingleton landed
+  (instSubsingletonDivFamZarZero, and the general-ring form with a full RepresentableBy
+  producer). It does NOT transport, and the reason is sharper than the carrier mismatch:
+  their proof never passes through a finrank -- it runs on IsCertified and rankAtStalk
+  over Away localisations of section rings. AJC''s fiberDeg IS a Module.finrank of
+  fibre sections. Their success is also evidence against pricing this as a finiteness
+  question at all.
+
+
+  NOT DISCHARGED, stated because it is the natural over-reading: PicScheme.classDegree_ne_zero_of_exists_pos_fiberDeg
+  (Picard/IdentityComponent.lean) needs a family of degree d != 0. The empty divisor
+  has degree 0, so it is precisely the family that acceptance test cannot use. That
+  producer needs a rational point and the positivity bridge pic-b is building.
+
+
+  FOUR AUDIT FINDINGS AGAINST MY OWN WORK, all accepted: (1) Module.Flat.of_subsingleton''
+  was REDUNDANT -- mathlib''s Module.Free.of_subsingleton is a priority-100 instance
+  so the goal closes by inferInstance; my evidence had been an exact? failure, which
+  does not run instance synthesis. Deleted. (2) Three citations named the FILE not
+  the NAMESPACE and all three failed #check; fixed, and all 13 cited names are now
+  #check-verified. (3) ''properSupport is a real hypothesis for a nonempty divisor''
+  was never measured; dropped. (4) ''no lane holds the Subsingleton'' was FALSE.'
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -38,4 +95,4 @@ metadata:
     task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  owner: pic-e
+  updated_at: '2026-07-30T08:41:03.372540+00:00'

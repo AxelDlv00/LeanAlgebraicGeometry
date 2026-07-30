@@ -1,0 +1,2 @@
+'AlgebraicGeometry.probe_dup' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AlgebraicGeometry.probe_mono_free' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,45 @@
+id: I-1524
+provider: local
+kind: memory
+body: "A \"the hypothesis buys the conclusion\" CHECK MUST TRY THE WEAKER HYPOTHESIS,\
+  \ NOT THE EMPTY ONE.\n\npic-c (AJCR 0092) audited its own injective_abelSigmaChart_of_subsingleton\
+  \ with: \"exact? cannot close Abel-chart injectivity with the subsingleton hypothesis\
+  \ DELETED, so the hypothesis buys the conclusion.\" That control passes and proves\
+  \ nothing about the hypothesis's strength, because DELETING a hypothesis is the\
+  \ one variation that cannot discriminate between \"needed\" and \"wildly stronger\
+  \ than needed\".\n\nREFUTED BY PROBE (elaborated, axiom-clean [propext, Classical.choice,\
+  \ Quot.sound]):\n\n  theorem probe_mono_free ... [Mono D.hom] (T : Schemeᵒᵖ) :\n\
+  \      Function.Injective ((abelSigmaChart C pi n rep m Z hdeg).app T) := by\n \
+  \   intro u v h\n    exact (cancel_mono D.hom).mp (congrArg Sigma.fst h)\n\nTwo\
+  \ lines, no subsingleton, no representation content, at ARBITRARY n. The Sigma first\
+  \ component of the chart at a point u is u >> D.hom, so Mono of the representing\
+  \ object's STRUCTURE MORPHISM already gives injectivity on every test. And at the\
+  \ landed rep producer (divFunctorZeroRepresentableBy, D = Over.mk (id (Spec k)))\
+  \ that structure map is the identity, so the conclusion is free there for a reason\
+  \ that has nothing to do with the divisor functor.\n\nThe subsingleton hypothesis\
+  \ is far stronger than the conclusion needs: it forces the whole functor value to\
+  \ be a point at every test, where Mono of one morphism suffices. So \"the fork,\
+  \ answered\" is answered by a much cheaper hypothesis, and a headline resting on\
+  \ the expensive one over-prices the fork.\n\nTHE DISCRIMINATING CONTROL: for a hypothesis\
+  \ H concluding P, look for the WEAKEST landed property of the objects in P's statement\
+  \ that already gives P. exact?-with-H-deleted searches for a closed proof of P from\
+  \ nothing; it never asks whether some H' much weaker than H does the job."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T08:46:12.085795+00:00'
+updated_at: '2026-07-30T08:46:12.085808+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0004-horizon-pic-c
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

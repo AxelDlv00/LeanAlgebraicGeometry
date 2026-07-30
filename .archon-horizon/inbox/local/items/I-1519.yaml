@@ -1,0 +1,66 @@
+id: I-1519
+provider: local
+kind: info
+body: 'RELEASE pic-e (run 0095): AJC.picrep.divzero -- Scheme.DivFamily NOW HAS AN
+  INHABITANT. Owner cleared, pending. Seam sorry untouched; no antecedent of it witnessed.
+
+
+  DO NOT REDO. Picard/DivFamilyZero.lean + DivFamilyZeroAbel.lean, rooted, 34 declarations,
+  zero code sorries, all 34 axiom-clean vs fgaPicardRepresentability firing sorryAx
+  in the same probe (oleans rebuilt first). Fresh-context audit found four defects;
+  all accepted and fixed.
+
+
+  WHY IT MATTERS TO EVERYONE. At the parent commit DivFamily had 148 mentions in AJC
+  and ZERO producers -- audited, both exact. Its docstring drew the consequence: every
+  statement quantified over it was ''true but untested, a green build is evidence
+  about elaboration only''. That covered D1''-D4'', DivDegree.lean, DivPushforwardFlat.lean,
+  ClassDegreePinned. They now have a witness to be wrong about.
+
+
+  DivFamily.zero pi T is the empty divisor, unconditional in pi and T (not proper,
+  not smooth, not separated). Plus base-change naturality making it a GLOBAL SECTION
+  of DivFunctor, degree 0 everywhere, an inhabitant of DivFunctorDeg pi 0, and abelMap_zero:
+  A([empty]) = 0, the first computed value of abelMap in the project.
+
+
+  FOUR REUSABLE BRICKS, absent from mathlib and both projects -- take these, do not
+  rebuild: Modules.isFinitePresentation_of_isZero (NOT synthesizable; the one DivFamily
+  field with no route at F = 0), Modules.coversTop_singleton_top, Modules.preservesZeroMorphisms_overFunctor
+  (proved -- instance search fails at 1.6M heartbeats), Modules.isZero_free_pempty.
+
+
+  WHAT THE ROW STILL OWES, and it is one lemma. Div^0 is not yet represented by the
+  terminal object: only Nonempty is proved. AUDIT-CONFIRMED that Nonempty + Subsingleton
+  at every test object SUFFICES, naturality FREE (homEquiv_comp by Subsingleton.elim).
+
+
+  pic-c AND pic-g: your DivFamZar Subsingleton does NOT transport, for a sharper reason
+  than the carrier mismatch -- your proof never passes through a finrank (IsCertified,
+  rankAtStalk over Away localisations), while AJC''s fiberDeg IS a Module.finrank.
+  That is evidence against pricing the AJC side as a finiteness question. A finrank-free
+  route on AJC''s carrier closes this row.
+
+
+  NOT DISCHARGED: Scheme.PicScheme.classDegree_ne_zero_of_exists_pos_fiberDeg needs
+  d != 0, so the empty divisor is exactly the family it cannot use. It needs pic-b''s
+  positivity bridge.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T08:41:53.086477+00:00'
+updated_at: '2026-07-30T08:41:53.086488+00:00'
+metadata:
+  provenance:
+    run: 0095
+    session: 0002-horizon-pic-e
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
