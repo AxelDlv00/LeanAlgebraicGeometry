@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.GaloisDescent.GaloisQuotientRestrict
+import AlgebraicJacobian.Picard.GaloisDescent.GaloisQuotientDescent
 import AlgebraicJacobian.Picard.GaloisDescent.GaloisQuotientUniqueness
 import AlgebraicJacobian.Picard.GaloisQuotientAffineGeneral
 
@@ -1595,6 +1596,47 @@ theorem gluedQuotientBaseChangeIso_isEquivariant
     _ = (gluedQuotientBaseChangeIso ρ).inv ≫
         ((gluedQuotientBaseChangeIso ρ).hom ≫
           (ρ.act gamma).hom) := Category.assoc _ _ _
+
+set_option backward.isDefEq.respectTransparency false in
+/-- The pinned global base-change isomorphism induces the glued quotient
+projection. -/
+theorem gluedQuotientBaseChangeIso_inv_fst
+    [FiniteDimensional K L] [IsGalois K L] [HasStableAffineCover K L ρ] :
+    (gluedQuotientBaseChangeIso ρ).inv ≫
+        pullback.fst (gluedQuotientMap ρ)
+          (Spec.map (CommRingCat.ofHom (algebraMap K L))) =
+      gluedQuotientProjection ρ := by
+  rw [gluedQuotientBaseChangeIso_inv, gluedQuotientBaseChangeLift_fst]
+
+/-- The glued invariant-ring quotient charts carry a specified global finite
+Galois quotient witness. -/
+noncomputable def gluedGaloisQuotientWitness
+    [FiniteDimensional K L] [IsGalois K L] [HasStableAffineCover K L ρ] :
+    GaloisQuotientWitnessWithProjection ρ (gluedQuotient ρ)
+      (gluedQuotientMap ρ) (gluedQuotientProjection ρ) :=
+  galoisQuotientWitnessOfInvariantProjection ρ (gluedQuotientProjection ρ)
+    (gluedQuotientBaseChangeIso ρ)
+    (gluedQuotientBaseChangeIso_hom_f ρ)
+    (gluedQuotientBaseChangeIso_isEquivariant ρ)
+    (gluedQuotientBaseChangeIso_inv_fst ρ)
+    (act_hom_gluedQuotientProjection ρ)
+
+/-- The quotient obtained by gluing stable affine invariant-ring charts is the
+finite Galois quotient of the original semilinear action. -/
+theorem isGaloisQuotient_glued
+    [FiniteDimensional K L] [IsGalois K L] [HasStableAffineCover K L ρ] :
+    IsGaloisQuotient ρ (gluedQuotientMap ρ) := by
+  let w := gluedGaloisQuotientWitness ρ
+  exact ⟨w.e, w.over, w.equivariant, w.universal⟩
+
+/-- Every finite Galois action whose orbits lie in affine opens has a scheme
+quotient.  The orbit hypothesis is already a parameter of
+`HasGaloisQuotient`; no additional hypothesis is introduced here. -/
+instance hasGaloisQuotient_of_orbitsInAffineOpen
+    [FiniteDimensional K L] [IsGalois K L] [ρ.OrbitsInAffineOpen] :
+    HasGaloisQuotient ρ where
+  exists_quotient :=
+    ⟨gluedQuotient ρ, gluedQuotientMap ρ, isGaloisQuotient_glued ρ⟩
 
 /-- The glued quotient as an object over `Spec K`, in the exact category used
 by Picard representability. -/
