@@ -175,7 +175,7 @@ theorem smoothOfRelativeDimension_chartι (i : Fin 2) :
     · exact ⟨0, by decide⟩
   rw [chartι_structureMap, HasRingHomProperty.Spec_iff (P := @SmoothOfRelativeDimension 1)]
   apply RingHom.locally_of RingHom.isStandardSmoothOfRelativeDimension_respectsIso
-  show RingHom.IsStandardSmoothOfRelativeDimension 1 (algebraMap k (Away 𝒜 (X i)))
+  change RingHom.IsStandardSmoothOfRelativeDimension 1 (algebraMap k (Away 𝒜 (X i)))
   rw [RingHom.isStandardSmoothOfRelativeDimension_algebraMap]
   exact isStandardSmoothOfRelativeDimension_away k hij
 
@@ -194,7 +194,7 @@ def twoChartCover : (P1 k).AffineOpenCover where
     have hx : x ∈ chartOpen k 0 ⊔ chartOpen k 1 := (chartOpen_sup k).ge (Set.mem_univ x)
     by_cases h0 : x ∈ chartOpen k 0
     · rw [if_pos h0]
-      show x ∈ (chartι k 0).opensRange
+      change x ∈ (chartι k 0).opensRange
       rw [opensRange_chartι]
       exact h0
     · have h1 : x ∈ chartOpen k 1 := by
@@ -202,7 +202,7 @@ def twoChartCover : (P1 k).AffineOpenCover where
         · exact absurd h h0
         · exact h
       rw [if_neg h0]
-      show x ∈ (chartι k 1).opensRange
+      change x ∈ (chartι k 1).opensRange
       rw [opensRange_chartι]
       exact h1
 
@@ -220,6 +220,177 @@ every curve theorem in this project consumes. -/
 instance smoothOfRelativeDimension_asOver :
     SmoothOfRelativeDimension 1 (asOver k).hom :=
   inferInstanceAs (SmoothOfRelativeDimension 1 (structureMap k))
+
+/-! ## §3 Geometric irreducibility
+
+The base change `ℙ¹_K` is covered by the two pulled-back charts.  Each is `Spec` of
+`Away 𝒜 (Xᵢ) ⊗[k] K ≅ K[t]`, a domain, hence irreducible; and both contain any preimage of the
+generic point of `ℙ¹_k`.  A space covered by two *meeting* irreducible opens is irreducible. -/
+
+/-- **Topological input**: a space covered by two irreducible opens with nonempty intersection is
+irreducible.  Purely topological — no scheme, no grading, no field. -/
+theorem irreducibleSpace_of_two_irreducible_opens {α : Type*} [TopologicalSpace α]
+    {U V : Set α} (hVo : IsOpen V) (hU : IsIrreducible U) (hV : IsIrreducible V)
+    (hUV : (U ∩ V).Nonempty) (hcov : ∀ x : α, x ∈ U ∨ x ∈ V) :
+    IrreducibleSpace α := by
+  obtain ⟨w, hwU, hwV⟩ := hUV
+  refine { toNonempty := ⟨w⟩, isPreirreducible_univ := ?_ }
+  intro u v hu hv hune hvne
+  obtain ⟨a, -, hau⟩ := hune
+  obtain ⟨b, -, hbv⟩ := hvne
+  rw [Set.univ_inter]
+  -- Any nonempty open meeting `U` also meets `V`, through `U`'s irreducibility and the
+  -- common point `w`.  So `u` and `v` both meet `V`, and `V`'s irreducibility finishes.
+  have key : ∀ {u' : Set α}, IsOpen u' → ∀ {c : α}, c ∈ u' → c ∈ U →
+      (U ∩ (u' ∩ V)).Nonempty := fun {u'} hu' {c} hcu' hcU =>
+    hU.2 u' V hu' hVo ⟨c, hcU, hcu'⟩ ⟨w, hwU, hwV⟩
+  have hu_meets_V : (V ∩ u).Nonempty := by
+    rcases hcov a with haU | haV
+    · obtain ⟨c, -, hcu, hcV⟩ := key hu hau haU
+      exact ⟨c, hcV, hcu⟩
+    · exact ⟨a, haV, hau⟩
+  have hv_meets_V : (V ∩ v).Nonempty := by
+    rcases hcov b with hbU | hbV
+    · obtain ⟨c, -, hcv, hcV⟩ := key hv hbv hbU
+      exact ⟨c, hcV, hcv⟩
+    · exact ⟨b, hbV, hbv⟩
+  obtain ⟨c, -, hcu, hcv⟩ := hV.2 u v hu hv hu_meets_V hv_meets_V
+  exact ⟨c, hcu, hcv⟩
+
+/-- **Ring-level input**: the chart ring stays a domain after base change to any field extension
+`K/k`, because `k[t] ⊗[k] K ≅ K[t]`. -/
+theorem isDomain_tensor_away {i j : Fin 2} (hij : i ≠ j)
+    (K : Type u) [Field K] [Algebra k K] :
+    IsDomain (TensorProduct k (Away 𝒜 (X i)) K) := by
+  have hPoly : IsDomain (TensorProduct k (Polynomial k) K) := by
+    have e2 : TensorProduct k (Polynomial k) K ≃+* TensorProduct k K (Polynomial k) :=
+      (Algebra.TensorProduct.comm k (Polynomial k) K).toRingEquiv
+    have e1 : TensorProduct k K (Polynomial k) ≃+* Polynomial K :=
+      (polyEquivTensor' k K).symm.toRingEquiv
+    exact Function.Injective.isDomain (e1.toRingHom.comp e2.toRingHom)
+      (e1.injective.comp e2.injective)
+  have e : TensorProduct k (Away 𝒜 (X i)) K ≃+* TensorProduct k (Polynomial k) K :=
+    (Algebra.TensorProduct.congr (awayAlgEquiv k hij) AlgEquiv.refl).toRingEquiv
+  exact Function.Injective.isDomain e.toRingHom e.injective
+
+/-- **Each chart of `ℙ¹` is geometrically irreducible over `Spec k`**: the base change of
+`Spec (Away 𝒜 (Xᵢ))` along any `Spec K ⟶ Spec k` is `Spec` of a domain. -/
+theorem geometricallyIrreducible_chartι (i : Fin 2) :
+    GeometricallyIrreducible (chartι k i ≫ structureMap k) := by
+  obtain ⟨j, hij⟩ : ∃ j : Fin 2, i ≠ j := by
+    fin_cases i
+    · exact ⟨1, by decide⟩
+    · exact ⟨0, by decide⟩
+  rw [chartι_structureMap]
+  refine ⟨?_⟩
+  rw [geometrically_iff_of_commRing_of_isClosedUnderIsomorphisms]
+  intro K _ _
+  haveI := isDomain_tensor_away k hij K
+  haveI hirr : IrreducibleSpace (Spec (CommRingCat.of
+      (TensorProduct k (Away 𝒜 (X i)) K))) := by
+    change IrreducibleSpace (PrimeSpectrum (TensorProduct k (Away 𝒜 (X i)) K))
+    infer_instance
+  exact (pullbackSpecIso k _ K).symm.hom.homeomorph.irreducibleSpace_iff.mp hirr
+
+/-- **The generic point of `ℙ¹`**: the zero homogeneous prime, which does not contain the
+irrelevant ideal because `X 0 ≠ 0`.  It is the point that puts the two charts in the same
+irreducible component. -/
+def genericPt : ↥(P1 k) :=
+  show ProjectiveSpectrum 𝒜 from
+    ⟨⊥, Ideal.isPrime_bot, fun hle => by
+      have h0 := hle (HomogeneousIdeal.mem_irrelevant_of_mem _ Nat.zero_lt_one
+        (isHomogeneous_X k 0))
+      rw [← HomogeneousIdeal.mem_iff, HomogeneousIdeal.toIdeal_bot, Ideal.mem_bot] at h0
+      exact X_ne_zero (R := k) _ h0⟩
+
+set_option backward.isDefEq.respectTransparency false in
+/-- The generic point lies in every basic open of a nonzero element — in particular in both
+charts. -/
+theorem genericPt_mem_basicOpen (f : MvPolynomial (Fin 2) k) (hf : f ≠ 0) :
+    genericPt k ∈ Proj.basicOpen 𝒜 f := by
+  rw [Proj.mem_basicOpen]
+  intro hmem
+  rw [show (genericPt k).asHomogeneousIdeal = (⊥ : HomogeneousIdeal 𝒜) from rfl,
+    ← HomogeneousIdeal.mem_iff, HomogeneousIdeal.toIdeal_bot, Ideal.mem_bot] at hmem
+  exact hf hmem
+
+set_option backward.isDefEq.respectTransparency false in
+/-- **`ℙ¹` is geometrically irreducible over `Spec k`, for an arbitrary field `k`.**
+
+Unlike smoothness this is *not* Zariski-local on the source, so the two-chart argument has to be
+run by hand at each base change: `ℙ¹_K` is covered by the two pulled-back charts, each
+irreducible by `geometricallyIrreducible_chartι`, and both contain a preimage of `genericPt`
+(which exists because the base change projection is surjective, `y` being a morphism of `Spec`s
+of fields).  Two meeting irreducible opens covering a space make it irreducible. -/
+instance geometricallyIrreducible_structureMap :
+    GeometricallyIrreducible (structureMap k) := by
+  rw [geometricallyIrreducible_iff]
+  intro K _ y Z fst snd h
+  suffices hmain : IrreducibleSpace ↥(pullback (structureMap k) y) by
+    exact h.isoPullback.hom.homeomorph.irreducibleSpace_iff.mpr hmain
+  set p : pullback (structureMap k) y ⟶ P1 k := pullback.fst (structureMap k) y with hp
+  set V : Fin 2 → Set ↥(pullback (structureMap k) y) :=
+    fun i => (p ⁻¹ᵁ chartOpen k i : TopologicalSpace.Opens _) with hV
+  -- each pulled-back chart is irreducible, being a base change of an irreducible chart
+  have hVirr : ∀ i : Fin 2, IsIrreducible (V i) := by
+    intro i
+    haveI hWi : IrreducibleSpace ↥(pullback p (chartι k i)) := by
+      haveI := geometricallyIrreducible_chartι k i
+      have hpb : IrreducibleSpace ↥(pullback (chartι k i ≫ structureMap k) y) :=
+        pullback_of_geometrically GeometricallyIrreducible.geometrically_irreducibleSpace K y
+      exact ((pullbackSymmetry p (chartι k i)) ≪≫
+        pullbackRightPullbackFstIso (structureMap k) y
+          (chartι k i)).hom.homeomorph.irreducibleSpace_iff.mpr hpb
+    have hr := IsOpenImmersion.range_pullbackFst (f := chartι k i) (g := p)
+    rw [opensRange_chartι] at hr
+    change IsIrreducible ((p ⁻¹ᵁ chartOpen k i :
+      TopologicalSpace.Opens ↥(pullback (structureMap k) y)) :
+        Set ↥(pullback (structureMap k) y))
+    rw [← hr, ← Set.image_univ]
+    exact (IrreducibleSpace.isIrreducible_univ _).image _
+      (pullback.fst p (chartι k i)).continuous.continuousOn
+  -- they cover, because the two charts cover `ℙ¹`
+  have hcov : ∀ z : ↥(pullback (structureMap k) y), z ∈ V 0 ∨ z ∈ V 1 := by
+    intro z
+    have hmem : p.base z ∈ chartOpen k 0 ⊔ chartOpen k 1 :=
+      (chartOpen_sup k).ge (Set.mem_univ _)
+    rcases hmem with hz | hz
+    · exact Or.inl hz
+    · exact Or.inr hz
+  -- and they meet, at any preimage of the generic point
+  haveI hy_surj : Surjective y := by
+    constructor
+    intro q
+    obtain ⟨x⟩ : Nonempty ↥(Spec (CommRingCat.of K)) := inferInstance
+    exact ⟨x, Subsingleton.elim _ _⟩
+  haveI hp_surj : Surjective p := MorphismProperty.pullback_fst _ _ hy_surj
+  obtain ⟨z0, hz0⟩ := p.surjective (genericPt k)
+  have hz0i : ∀ i : Fin 2, z0 ∈ V i := by
+    intro i
+    change p.base z0 ∈ Proj.basicOpen 𝒜 (X i)
+    rw [hz0]
+    exact genericPt_mem_basicOpen k _ (X_ne_zero i)
+  exact irreducibleSpace_of_two_irreducible_opens
+    (p ⁻¹ᵁ chartOpen k 1 : TopologicalSpace.Opens _).isOpen
+    (hVirr 0) (hVirr 1) ⟨z0, hz0i 0, hz0i 1⟩ hcov
+
+/-- **`ℙ¹` as an object over `Spec k` is geometrically irreducible.** -/
+instance geometricallyIrreducible_asOver :
+    GeometricallyIrreducible (asOver k).hom :=
+  inferInstanceAs (GeometricallyIrreducible (structureMap k))
+
+/-! ## §4 The package
+
+With `IsProper` from `Curve/P1.lean`, `ℙ¹` now satisfies all three binders, so it is a legal
+value of the section variable `C` in every curve theorem of this project. -/
+
+/-- **`ℙ¹` satisfies the whole curve package** — the project's first object that does.  Stated in
+one place so a reviewer sees all three at once, and so that the file fails to compile if any of
+them regresses. -/
+theorem curvePackage_asOver :
+    IsProper (asOver k).hom ∧ SmoothOfRelativeDimension 1 (asOver k).hom
+      ∧ GeometricallyIrreducible (asOver k).hom :=
+  ⟨inferInstance, inferInstance, inferInstance⟩
 
 end P1
 
