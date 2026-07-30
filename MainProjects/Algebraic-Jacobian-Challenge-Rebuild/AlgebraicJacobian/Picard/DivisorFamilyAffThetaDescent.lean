@@ -148,7 +148,30 @@ noncomputable def thetaSectionsToOverlapLeft (A : AffAdaptation D d) (a : ℕ)
     A.ThetaPieceSections (π := π) a i →ₛₗ[
       (relResAlgHom C R (inf_le_left : D.pieces i ⊓ D.pieces j ≤ D.pieces i)).toRingHom]
       A.ThetaOverlapSections (π := π) a i j := by
-  sorry
+  let Mi := A.thetaPieceSectionsModel (π := π) a i
+  let Mij := A.thetaOverlapSectionsModel (π := π) a i j
+  letI : Scheme.QcohOn (thetaChartDatum C R π a).sheaf (D.pieces i) := Mi.qcoh
+  letI : Scheme.QcohOn (thetaChartDatum C R π a).sheaf
+      (D.pieces i ⊓ D.pieces j) := Mij.qcoh
+  refine
+    { toFun := secRes (thetaChartDatum C R π a).sheaf inf_le_left
+      map_add' := (secRes (thetaChartDatum C R π a).sheaf inf_le_left).map_add
+      map_smul' := fun r s => ?_ }
+  change
+    secRes (thetaChartDatum C R π a).sheaf inf_le_left
+        (Scheme.QcohOn.qsmul (F := (thetaChartDatum C R π a).sheaf)
+          (le_refl (D.pieces i)) r s) =
+      Scheme.QcohOn.qsmul (F := (thetaChartDatum C R π a).sheaf)
+        (le_refl (D.pieces i ⊓ D.pieces j))
+        ((relResAlgHom C R inf_le_left).toRingHom r)
+        (secRes (thetaChartDatum C R π a).sheaf inf_le_left s)
+  rw [Mi.qsmul_eq, Mij.qsmul_eq]
+  exact (gluedRes_gluedQsmul R (thetaChartDatum C R π a).pieces
+      (thetaChartDatum C R π a).unit inf_le_left (le_refl (D.pieces i)) r s).trans
+    (gluedQsmul_res R (thetaChartDatum C R π a).pieces
+      (thetaChartDatum C R π a).unit (le_refl (D.pieces i ⊓ D.pieces j))
+      inf_le_left r (gluedRes R (thetaChartDatum C R π a).pieces
+        (thetaChartDatum C R π a).unit inf_le_left s)).symm
 
 /-- Restriction of intrinsic theta sections from the right piece to an overlap. -/
 noncomputable def thetaSectionsToOverlapRight (A : AffAdaptation D d) (a : ℕ)
@@ -162,7 +185,30 @@ noncomputable def thetaSectionsToOverlapRight (A : AffAdaptation D d) (a : ℕ)
     A.ThetaPieceSections (π := π) a j →ₛₗ[
       (relResAlgHom C R (inf_le_right : D.pieces i ⊓ D.pieces j ≤ D.pieces j)).toRingHom]
       A.ThetaOverlapSections (π := π) a i j := by
-  sorry
+  let Mj := A.thetaPieceSectionsModel (π := π) a j
+  let Mij := A.thetaOverlapSectionsModel (π := π) a i j
+  letI : Scheme.QcohOn (thetaChartDatum C R π a).sheaf (D.pieces j) := Mj.qcoh
+  letI : Scheme.QcohOn (thetaChartDatum C R π a).sheaf
+      (D.pieces i ⊓ D.pieces j) := Mij.qcoh
+  refine
+    { toFun := secRes (thetaChartDatum C R π a).sheaf inf_le_right
+      map_add' := (secRes (thetaChartDatum C R π a).sheaf inf_le_right).map_add
+      map_smul' := fun r s => ?_ }
+  change
+    secRes (thetaChartDatum C R π a).sheaf inf_le_right
+        (Scheme.QcohOn.qsmul (F := (thetaChartDatum C R π a).sheaf)
+          (le_refl (D.pieces j)) r s) =
+      Scheme.QcohOn.qsmul (F := (thetaChartDatum C R π a).sheaf)
+        (le_refl (D.pieces i ⊓ D.pieces j))
+        ((relResAlgHom C R inf_le_right).toRingHom r)
+        (secRes (thetaChartDatum C R π a).sheaf inf_le_right s)
+  rw [Mj.qsmul_eq, Mij.qsmul_eq]
+  exact (gluedRes_gluedQsmul R (thetaChartDatum C R π a).pieces
+      (thetaChartDatum C R π a).unit inf_le_right (le_refl (D.pieces j)) r s).trans
+    (gluedQsmul_res R (thetaChartDatum C R π a).pieces
+      (thetaChartDatum C R π a).unit (le_refl (D.pieces i ⊓ D.pieces j))
+      inf_le_right r (gluedRes R (thetaChartDatum C R π a).pieces
+        (thetaChartDatum C R π a).unit inf_le_right s)).symm
 
 /-- The left restriction sends equation multiples into the symmetric overlap ideal. -/
 theorem thetaSectionsToOverlapLeft_vanishing_le (A : AffAdaptation D d) (a : ℕ)
