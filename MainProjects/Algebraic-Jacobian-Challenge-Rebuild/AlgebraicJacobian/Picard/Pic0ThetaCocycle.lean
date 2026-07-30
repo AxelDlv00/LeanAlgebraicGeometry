@@ -43,10 +43,12 @@ noncomputable def σMapCompIso :
     Over.map (Spec.map (CommRingCat.ofHom (algebraMap k M)))
       ≅ Over.map (Spec.map (CommRingCat.ofHom (algebraMap L M)))
           ⋙ Over.map (Spec.map (CommRingCat.ofHom (algebraMap k L))) :=
-  eqToIso (by rw [show Spec.map (CommRingCat.ofHom (algebraMap k M))
-      = Spec.map (CommRingCat.ofHom (algebraMap L M))
-          ≫ Spec.map (CommRingCat.ofHom (algebraMap k L)) by
-    rw [← Spec.map_comp, ← CommRingCat.ofHom_comp, ← IsScalarTower.algebraMap_eq]]) ≪≅≫
+  Over.mapCongr _ _ (by
+    rw [show Spec.map (CommRingCat.ofHom (algebraMap k M)) =
+      Spec.map (CommRingCat.ofHom (algebraMap L M)) ≫
+        Spec.map (CommRingCat.ofHom (algebraMap k L)) by
+      rw [← Spec.map_comp, ← CommRingCat.ofHom_comp,
+        ← IsScalarTower.algebraMap_eq]]) ≪≫
     Over.mapComp _ _
 
 /-- The opposite-side bridge from the iterated pushforward to the composite pushforward. -/
@@ -54,7 +56,7 @@ noncomputable def αOp :
     (Over.map (Spec.map (CommRingCat.ofHom (algebraMap L M)))).op
         ⋙ (Over.map (Spec.map (CommRingCat.ofHom (algebraMap k L)))).op
       ≅ (Over.map (Spec.map (CommRingCat.ofHom (algebraMap k M)))).op :=
-  eqToIso rfl ≪≅≫ NatIso.op (σMapCompIso k L M)
+  eqToIso rfl ≪≫ NatIso.op (σMapCompIso k L M)
 
 /-- The iterated right-hand side of the theta tower coherence. -/
 noncomputable def cocycleRHS :
@@ -62,11 +64,11 @@ noncomputable def cocycleRHS :
       ≅ (Over.map (Spec.map (CommRingCat.ofHom (algebraMap k M)))).op ⋙
           pic0Functor C :=
   eCurve k L M C
-    ≪≅≫ pic0Theta L M ((baseChange k L).obj C)
-    ≪≅≫ Functor.isoWhiskerLeft
+    ≪≫ pic0Theta L M ((baseChange k L).obj C)
+    ≪≫ Functor.isoWhiskerLeft
         (Over.map (Spec.map (CommRingCat.ofHom (algebraMap L M)))).op (pic0Theta k L C)
-    ≪≅≫ (Functor.associator _ _ _).symm
-    ≪≅≫ Functor.isoWhiskerRight (αOp k L M) (pic0Functor C)
+    ≪≫ (Functor.associator _ _ _).symm
+    ≪≫ Functor.isoWhiskerRight (αOp k L M) (pic0Functor C)
 
 /-- The theta comparison for `k → M` is the composite of the comparisons for
 `k → L` and `L → M`, transported across the canonical pullback reassociation. -/
