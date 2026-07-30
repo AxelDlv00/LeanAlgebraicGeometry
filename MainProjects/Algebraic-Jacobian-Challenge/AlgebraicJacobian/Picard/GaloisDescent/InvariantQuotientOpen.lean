@@ -182,6 +182,30 @@ theorem stableAffineQuotientMap_surjective [FiniteDimensional K L]
   exact (SemilinearAction.affineQuotientMap_surjective K L Γ(X, U)).comp
     (CategoryTheory.ConcreteCategory.bijective_of_isIso hUa.isoSpec.hom.base).2
 
+/-- The quotient open attached to the whole stable affine chart is the whole
+quotient chart. -/
+theorem quotientOpenOfStableSubopen_self [FiniteDimensional K L]
+    (hUa : IsAffineOpen U) :
+    letI := ρ.sectionsMulSemiringAction hU
+    letI := sectionsAlgebra f U
+    letI := sectionsAlgebraK (K := K) f U
+    letI := sections_isScalarTower (K := K) f U
+    letI := ρ.isSemilinear_sections hU
+    quotientOpenOfStableSubopen ρ hU U = ⊤ := by
+  letI := ρ.sectionsMulSemiringAction hU
+  letI := sectionsAlgebra f U
+  letI := sectionsAlgebraK (K := K) f U
+  letI := sections_isScalarTower (K := K) f U
+  letI := ρ.isSemilinear_sections hU
+  apply Opens.ext
+  apply Set.preimage_injective.mpr
+    (stableAffineQuotientMap_surjective ρ hU hUa)
+  change (↑((stableAffineQuotientMap ρ hU hUa) ⁻¹ᵁ
+      quotientOpenOfStableSubopen ρ hU U) : Set U.toScheme) =
+    (↑((stableAffineQuotientMap ρ hU hUa) ⁻¹ᵁ ⊤) : Set U.toScheme)
+  rw [stableAffineQuotientMap_preimage_quotientOpen ρ hU hUa le_rfl hU]
+  simp
+
 /-- Quotient opens of stable subopens preserve binary intersections.  This is
 the common-target identity used for triple overlaps in the quotient gluing
 datum. -/
