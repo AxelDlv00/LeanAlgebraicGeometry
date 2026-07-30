@@ -309,6 +309,23 @@ theorem galoisActionPicEt_inv_app_apply (γ : k' ≃ₐ[k] k')
           ((picEt_crossBaseIso C k').hom.app (Opposite.op T) x)) := by
   rfl
 
+/-- The inverse action on `picEt` satisfies the Galois cocycle. The comparison
+map only changes the presentation of a product twist as an iterated twist. -/
+theorem galoisActionPicEt_mul_inv_app (γ τ : k' ≃ₐ[k] k')
+    (T : Over (Spec (CommRingCat.of k')))
+    (x : (picEt (Scheme.baseChangeField C k')).obj (Opposite.op T)) :
+    (galoisActionPicEt C (γ * τ)).inv.app (Opposite.op T) x =
+      (picEt (Scheme.baseChangeField C k')).map
+        ((twistTestFunctor_mulIso (k := k) γ τ).hom.app T).op
+        ((galoisActionPicEt C γ).inv.app
+          (Opposite.op ((twistTestFunctor (k := k) τ).obj T))
+          ((galoisActionPicEt C τ).inv.app (Opposite.op T) x)) := by
+  simp only [galoisActionPicEt_inv_app_apply]
+  rw [galoisActionRestricted_mul_inv_app]
+  simp only [Iso.inv_hom_id_app_apply]
+  exact NatTrans.naturality_apply (picEt_crossBaseIso C k').inv
+    ((twistTestFunctor_mulIso (k := k) γ τ).hom.app T).op _
+
 /-! ## §3. Transport to a representing object — and the free semilinearity square -/
 
 variable {X' : Over (Spec (CommRingCat.of k'))}
