@@ -172,20 +172,48 @@ noncomputable def cocycleIdRHS :
       ≅ (Over.map (Spec.map (CommRingCat.ofHom (algebraMap k k)))).op ⋙ pic0Functor C :=
   eCurveId k C ≪≫ (σkkCollapse k C).symm
 
-set_option maxHeartbeats 2000000 in
--- Rewriting the affine-open limit evaluations requires a wider local budget.
+set_option maxHeartbeats 1000000 in
+-- Each affine value is compared before extensionality assembles the compatible family.
 private theorem picEtCrossBaseInv_identity (T : (Over (Spec (.of k)))ᵒᵖ)
     (lam : (pic0Functor ((baseChange k k).obj C)).obj T) :
     picEtCrossBaseInv k k C (Opposite.unop T) lam.1 =
       picEtMap C ((mIdσ k).hom.app (Opposite.unop T))
         (picEtPullback ((baseChange.idIso k).app C).inv (Opposite.unop T) lam.1) := by
-  refine picEt.ext fun W => ?_
-  rw [picEtCrossBaseInv_val, picEtMap_val]
+  apply Subtype.ext
+  funext W
   have hW : W.1 ≤ ((mIdσ k).hom.app (Opposite.unop T)).left ⁻¹ᵁ W.1 := by
     rw [mIdσ_hom_app_left]
     exact le_rfl
-  rw [picEtMapVal_eq_mapAlg C _ _ (V := W) hW, picEtPullback_val]
-  exact sectionShuffle_symm_identity k C (Opposite.unop T) W hW _
+  calc
+    (picEtCrossBaseInv k k C (Opposite.unop T) lam.1).1 W =
+        (sectionShuffle k k C (Opposite.unop T) W.1).symm
+          (lam.1.1 ⟨W.1, W.2⟩) :=
+      picEtCrossBaseInv_val k k C (Opposite.unop T) lam.1 W
+    _ = PicEtAff.mapAlg C
+        (Over.appLEAlgHom ((mIdσ k).hom.app (Opposite.unop T)) W.1 W.1 hW)
+        (PicEtAff.curveMap Γ((Opposite.unop T).left, W.1)
+          ((baseChange.idIso k).app C).inv (lam.1.1 ⟨W.1, W.2⟩)) :=
+      sectionShuffle_symm_identity k C (Opposite.unop T) W hW _
+    _ = PicEtAff.mapAlg C
+        (Over.appLEAlgHom ((mIdσ k).hom.app (Opposite.unop T)) W.1 W.1 hW)
+        ((picEtPullback ((baseChange.idIso k).app C).inv
+          (Opposite.unop T) lam.1).1 W) :=
+      congrArg (PicEtAff.mapAlg C
+        (Over.appLEAlgHom ((mIdσ k).hom.app (Opposite.unop T)) W.1 W.1 hW))
+        (picEtPullback_val ((baseChange.idIso k).app C).inv
+          (Opposite.unop T) lam.1 W).symm
+    _ = picEtMapVal C ((mIdσ k).hom.app (Opposite.unop T))
+        (picEtPullback ((baseChange.idIso k).app C).inv
+          (Opposite.unop T) lam.1) W :=
+      (picEtMapVal_eq_mapAlg C ((mIdσ k).hom.app (Opposite.unop T))
+        (picEtPullback ((baseChange.idIso k).app C).inv (Opposite.unop T) lam.1)
+        (W := W) (V := W) hW).symm
+    _ = (picEtMap C ((mIdσ k).hom.app (Opposite.unop T))
+        (picEtPullback ((baseChange.idIso k).app C).inv
+          (Opposite.unop T) lam.1)).1 W :=
+      (picEtMap_val C ((mIdσ k).hom.app (Opposite.unop T))
+        (picEtPullback ((baseChange.idIso k).app C).inv
+          (Opposite.unop T) lam.1) W).symm
 
 set_option maxHeartbeats 1000000 in
 -- Unfolding both natural isomorphisms at one test object requires a wider local budget.
