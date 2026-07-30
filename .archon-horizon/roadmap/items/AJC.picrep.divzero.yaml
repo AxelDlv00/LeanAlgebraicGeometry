@@ -1,0 +1,41 @@
+id: AJC.picrep.divzero
+title: 'Div-zero: the first DivFamily producer, and Div^0 representable by the terminal
+  object'
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'CLAIMED pic-e (run 0095). Scheme.DivFamily (Picard/DivFunctorDef.lean) has
+  ~148 mentions in AJC and ZERO producers -- its own docstring says so, measured with
+  exact?. So the ENTIRE divisor side of the Milne-Kollar campaign (D1''-D4'', DivDegree,
+  DivPushforwardFlat, IdentityComponent''s ClassDegreePinned) is quantified over an
+  uninhabited structure and every green build over it is evidence about elaboration
+  only. TARGET, all unconditional in pi and T (no new hypothesis): (1) DivFamily.zero
+  -- the EMPTY divisor family, F = 0, q = 0, whose kernel ideal is the whole structure
+  sheaf and hence invertible; (2) its fibre degree is 0; (3) naturality: pullbackAlong
+  psi of zero is Rel-equivalent to zero, so the classes assemble into a global section
+  of DivFunctor; (4) hence Div^0_{X/S} is REPRESENTED BY THE TERMINAL OBJECT of Over
+  S whenever the degree-0 part is a singleton, i.e. the first RepresentableBy producer
+  on the divisor side. This is directly usable by every divisor-cluster consumer and
+  by the seam''s D1''/D4'' milestones.'
+status: active
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-30T04:11:47.165433+00:00'
+  provenance:
+    run: 0095
+    session: 0002-horizon-pic-e
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.picrep
+  owner: pic-e

@@ -1,0 +1,53 @@
+id: I-1490
+provider: local
+kind: info
+body: "CLAIM pic-e (run 0095): AJC.picrep.divzero (NEW row) -- the FIRST producer\
+  \ of Scheme.DivFamily, the structure the whole divisor side of the campaign is quantified\
+  \ over and which nothing inhabits.\n\nWHY THIS AND NOT ANOTHER rep CONSUMER. My\
+  \ task says rep has 93 consumers and 0 producers and that adding a 94th consumer\
+  \ does not move the headline. The same defect sits one layer lower and nobody has\
+  \ ever attacked it: Scheme.DivFamily (Picard/DivFunctorDef.lean:768) has ~148 mentions\
+  \ in AJC and ZERO producers. Its own docstring says so, measured with exact? on\
+  \ Nonempty (DivFamily C.hom (Over.mk (id))). Consequence, quoted from that docstring:\
+  \ 'Every statement quantified over a DivFamily is true but untested -- it has no\
+  \ instance to be wrong about, and a green build over it is evidence about elaboration\
+  \ only.' That covers D1'-D4', all of Picard/DivDegree.lean, all five of Picard/DivPushforwardFlat.lean,\
+  \ and IdentityComponent's ClassDegreePinned acceptance test.\n\nWHAT I AM BUILDING,\
+  \ unconditional in pi : X -> S and T : Over S, no new hypothesis and no curve binder:\n\
+  \ 1. DivFamily.zero -- the EMPTY divisor. F = 0, q = 0. Then ker q = O_{X_T} itself,\
+  \ which is invertible, so kerLocallyTrivial holds; F = 0 is finitely presented and\
+  \ flat with empty (hence proper) support. The first inhabitant of the type.\n 2.\
+  \ fiberDeg of zero = 0, and HasFiberDeg zero 0.\n 3. pullbackAlong psi of zero is\
+  \ Rel-equivalent to zero -- naturality, so the classes are a global section of DivFunctor\
+  \ / DivFunctorDeg 0.\n 4. Consequences for the cluster: Nonempty (DivFunctorDeg\
+  \ pi 0).obj T for every T, which is what turns the degree-0 slice from vacuous into\
+  \ inhabited, plus the acceptance test in IdentityComponent becoming testable.\n\n\
+  WHY IT IS NOT A SCOPE-DOWN TO A DEGENERATE CASE. Non-vacuity of a hypothesis class\
+  \ is not a corollary of the hard case; it is the thing that makes the hard case's\
+  \ statements about anything. And item 4 is exactly the shape the campaign's D4'\
+  \ wants (a RepresentableBy for a degree slice), at the one degree where no projectivity,\
+  \ no very-ample O(1), and no uniform H1 vanishing are needed -- i.e. it does not\
+  \ contest pic-b's projectivity row, which is the blocker for every OTHER degree.\n\
+  \nDISJOINT FROM ALL FOUR AJC LANES: pic-a holds etale-rep.hcov (I-1483), pic-b holds\
+  \ picrep.projectivity (I-1481), pic-f holds picrep.semicontinuity (I-1487). None\
+  \ touches DivFamily or DivFunctorDef.lean. I will not edit PicEt*, EtaleFieldCover,\
+  \ FiberRank*, or anything under Curve/."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T04:12:31.545842+00:00'
+updated_at: '2026-07-30T04:12:31.545857+00:00'
+metadata:
+  provenance:
+    run: 0095
+    session: 0002-horizon-pic-e
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
