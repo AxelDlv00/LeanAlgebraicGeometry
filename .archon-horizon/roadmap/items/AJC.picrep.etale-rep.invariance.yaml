@@ -56,7 +56,33 @@ summary: "ADVANCED 2026-07-30 by ajc-p1 (run 0083 r7), owner ajc-p1. The MORPHIS
   \ T gamma).left FAILS there, with the sorryAx control live in the same probe so\
   \ it is not a stale-import artefact. The covering property is therefore not free\
   \ from the etale-precoverage machinery, and a lane closing this row must build it.\
-  \ That is what remains, and it is the whole of what remains."
+  \ That is what remains, and it is the whole of what remains.\n\nTHREE AUDIT FINDINGS\
+  \ AGAINST THIS ROW'S OWN OUTPUT, all reproduced by me and fixed in-tree (commit\
+  \ b85ecf497a). Inherit the corrected forms, not the paragraphs above them.\n * I-1454,\
+  \ the serious one: MY hcov NON-VACUITY WITNESS SITS WHERE THE CONSEQUENT IS FREE.\
+  \ At Mono (specMapAlgebra k k') cancel_mono forces EVERY gamma to the identity,\
+  \ so the twist is the identity, hinv is free, and the two projections COINCIDE --\
+  \ projections_agree_of_invariant's conclusion holds there with NEITHER hypothesis.\
+  \ Landed as theorems specGal_eq_id_of_mono and twistTest_eq_id_of_mono. So hcov\
+  \ is SATISFIABLE and no exhibited model separates the two projections. THE RULE,\
+  \ one turn past I-1413: landing the witness as a declaration audits the ANTECEDENT;\
+  \ content is a question about the CONSEQUENT at the witness site.\n * I-1455: twistLeft\
+  \ and specGal ALREADY EXISTED -- rfl-equal to pullbackGalMap and toSpecAut in Picard/FiniteGaloisQuotient.lean,\
+  \ which also ships the two projection identities and the full semilinear action.\
+  \ My absence claim censused the DIRECTORY Picard/GaloisDescent/ and published it\
+  \ as a project fact; the declaration was one directory up. What is genuinely this\
+  \ row's is the slice packaging and the section-2-onward content.\n * I-1458 (ajc-p2):\
+  \ \"closing this row means building it\" OVER-PRICES hcov. The topology half is\
+  \ ONE LINE (zariskiTopology_le_etaleTopology of a Cover). Only the open-immersion\
+  \ half is owed, and even there a failed inferInstance is not absence: IsOpenImmersion\
+  \ (Sigma.iota ...) is a THEOREM whose instance search also fails, at the very object\
+  \ selfTensorSpecCoproduct produces.\n\nSO THE RESIDUE, corrected twice and now stated\
+  \ once: the MIDDLE step only -- base change of selfTensorSpecCoproduct along T_k'\
+  \ -> Spec k', then matching the coproduct's gamma-component to coverSelfSection\
+  \ T gamma. Not the topology, not a from-scratch covering argument. And the right\
+  \ FIRST target is strictly weaker than hcov: mere projection INEQUALITY at any extension\
+  \ with a nontrivial automorphism, which would give this row the non-degenerate model\
+  \ it still lacks."
 status: active
 kind: proof
 priority: normal
@@ -80,4 +106,4 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.etale-rep
-  updated_at: '2026-07-30T01:57:26.462323+00:00'
+  updated_at: '2026-07-30T02:20:34.371959+00:00'
