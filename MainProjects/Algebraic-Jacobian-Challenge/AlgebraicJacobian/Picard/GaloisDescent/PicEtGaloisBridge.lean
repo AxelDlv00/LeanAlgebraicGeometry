@@ -30,10 +30,16 @@ both halves.
 ## What is proved
 
 * `twistTest` — the `γ`-twist of the base-changed test `T_{k'}`, as an endomorphism
-  **in the slice over `Spec k`** (§1). This is the morphism a `γ`-invariance
-  hypothesis is *about*, and it did not exist in the project: `Picard/GaloisDescent/`
-  had the semilinear action on modules and on `Spec` of a ring, but nothing twisting
-  a base-changed test.
+  **in the slice over `Spec k`** (§1). **Its scheme-level ingredients are NOT new,
+  and the first version of this line said they were** (`I-1455`, fresh-context
+  audit, reproduced here): `twistLeft` and `specGal` are `rfl`-equal to
+  `AlgebraicJacobian.GaloisDescent.pullbackGalMap … γ⁻¹` and `toSpecAut … γ⁻¹`
+  (`Picard/FiniteGaloisQuotient.lean`), which also ships `pullbackGalMap_fst`/`_snd`
+  — the content of `twistTest_comp_coverMap` — and the full
+  `pullbackSemilinearGalAction`. That version's census was scoped to the directory
+  `Picard/GaloisDescent/` and published as a claim about the project; the sought
+  declaration was one directory up. What is genuinely this file's is the *slice*
+  packaging and everything from §2 on.
 * `coverSelfSection` — the `γ`-component section
   `T_{k'} ⟶ T_{k'} ×_T T_{k'}`, `⟨id, twist γ⟩` (§2). This is the coherence, and
   §2's two `simp` lemmas are its content: the section's composites with the two
@@ -146,11 +152,16 @@ noncomputable def twistLeft (T : Over (Spec (CommRingCat.of k))) (γ : k' ≃ₐ
 /-- **The `γ`-twist as an endomorphism of the base-changed test, in the slice over
 `Spec k`.**
 
-This is the morphism a `γ`-invariance hypothesis is a statement about, and the
-project did not have it: `Picard/GaloisDescent/` twists modules
-(`SemilinearModules.lean`), algebras (`SemilinearAlgebras.lean`) and `Spec` of a
-ring, but nothing twisted a *base-changed test* `T_{k'}` — which is the object
-`picEt`-classes on the `k'` side live on.
+This is the morphism a `γ`-invariance hypothesis is a statement about. **The
+scheme-level twist already existed and an earlier revision of this docstring denied
+it** (`I-1455`): `twistLeft` is `rfl`-equal to
+`AlgebraicJacobian.GaloisDescent.pullbackGalMap k k' T.hom γ⁻¹`
+(`Picard/FiniteGaloisQuotient.lean`, which also has the two projection identities
+and the whole semilinear action). The denial was a census scoped to
+`Picard/GaloisDescent/` reported as a fact about the project — literally true of the
+directory, false of the tree, and exactly the trap that makes a lane rebuild a
+landed construction. What this file adds is the **slice-over-`Spec k`** packaging,
+which is what `picEt` consumes.
 
 It is a slice morphism over `Spec k`, not over `Spec k'`: the twist moves the
 `k'`-structure and is *not* `k'`-linear, which is exactly the semilinearity of the
@@ -267,13 +278,22 @@ agreement, with no further input about `picEt`, the curve, or the classes. The
 sieve, from `isSheafFor_picEt_of_mem`, which holds at *every* covering sieve — and
 the rest is §2's two identities.
 
-**Non-vacuity of `hcov` is PROVED in §6, not asserted here** (the discipline of
-`I-1413`: a non-vacuity claim in prose is an unaudited theorem).
-`etaleTopology_generate_coverSelfSection_of_mono` exhibits `hcov` at every
-extension whose `Spec` map is a monomorphism — `k' = k` in particular, by
-`specMapAlgebra_self`. So this implication is not conditioned on a false
-statement. It is `hcov` *at a nontrivial Galois level* that this file does not
-supply. -/
+**`hcov` is SATISFIABLE, but no exhibited model separates the two projections —
+and the first version of this paragraph drew the wrong conclusion from the first
+half.** `etaleTopology_generate_coverSelfSection_of_mono` (§6) exhibits `hcov` at
+every extension whose `Spec` map is a monomorphism. That version then said "so this
+implication is not conditioned on a false statement", implying content. **It does
+not follow, and a fresh-context audit (`I-1454`) refuted the inference, reproduced
+here as `specGal_eq_id_of_mono` and `twistTest_eq_id_of_mono`**: at `Mono` every
+`γ` is forced to be the identity, so the `γ`-twist is the identity, `hinv` is
+*also* free, and the two projections coincide — the conclusion holds there with
+neither hypothesis. So the witness establishes satisfiability and **not**
+non-vacuity in the sense that matters.
+
+The honest statement is therefore: `hcov` is satisfiable; **no model in this file
+has a nontrivial automorphism**, hence none separates the two projections; and
+exhibiting `hcov` — or merely projection *in*equality — at one extension with a
+nontrivial automorphism is open, alongside `hcov` at a genuine Galois level. -/
 theorem projections_agree_of_invariant (C : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
     (T : Over (Spec (CommRingCat.of k)))
@@ -334,17 +354,29 @@ theorem exists_unique_descend_picEt_of_invariant (C : Over (Spec (CommRingCat.of
 
 end Cover
 
-/-! ## §6. `hcov` is inhabitable — the witness, as theorems
+/-! ## §6. `hcov` is satisfiable — and the witness site is degenerate
 
 §4's antecedent `hcov` is a hypothesis on the `Gal`-indexed section family. A file
 that leaves an antecedent open owes a demonstration that the antecedent is not
-*false*, or the implication is vacuous. That demonstration is below, as
-declarations rather than as a docstring sentence.
+*false*. That demonstration is below, as declarations rather than as a docstring
+sentence, and what makes the family cover is not "`k' = k`" but **`Spec (k'/k)`
+being a monomorphism** — at such an extension the `γ = 1` section is literally the
+diagonal, an isomorphism because `coverMap` is then mono.
 
-The witness turns out to be sharper than the degenerate substitution that motivated
-it: what makes the family cover is not "`k' = k`" but **`Spec (k'/k)` being a
-monomorphism**, and at such an extension the `γ = 1` section is literally the
-diagonal, which is an isomorphism exactly because `coverMap` is then mono. -/
+**And the demonstration is weaker than what §4's implication needs, which the first
+version of this section claimed it established.** A fresh-context audit
+(`I-1454`, `I-1456`) showed the witness site *also* makes the hypothesis `hinv` and
+the consequent free — `specGal_eq_id_of_mono` and `twistTest_eq_id_of_mono`, both
+landed above — so it proves satisfiability and not content. The transferable rule,
+one turn of the screw past `I-1413`: landing the non-vacuity witness as a
+declaration audits the *antecedent*; whether the implication has content is a
+question about the **consequent at the witness site**, and nothing in a sorry sweep,
+axiom check, or satisfiability witness asks it.
+
+What remains genuinely open on this row is therefore two things, not one: `hcov` at
+a nontrivial Galois level, and — strictly weaker, and the right first target —
+`hcov` or mere projection *inequality* at any extension with a nontrivial
+automorphism. -/
 
 /-- `Spec` of the identity extension is the identity morphism. -/
 theorem specMapAlgebra_self : specMapAlgebra k k = 𝟙 _ := by
@@ -435,15 +467,31 @@ remaining obligation lives: `hcov` is not a statement about the slice, the test 
 or `picEt` at all — it is that the `Gal`-indexed family of *scheme* morphisms
 `(coverSelfSection T γ).left` is an étale covering of `(T_{k'} ×_T T_{k'}).left`.
 
-**What is measured about that obligation, rather than described**: the sections are
-**not** open immersions by synthesis — `infer_instance` for
+**What is measured about that obligation**: `infer_instance` for
 `IsOpenImmersion (coverSelfSection T γ).left` **fails** at a finite Galois `k'/k`
-(control in the same probe file: `#print axioms fgaPicardRepresentability` reports
+(control in the same probe: `#print axioms fgaPicardRepresentability` reports
 `sorryAx`, so the environment is live and the failure is not a stale-import
-artefact, `I-1057`). So the covering property is not available from the
-étale-precoverage machinery for free, and closing this row means building it. That
-is the honest state of the residue, and it is a different obligation from the
-coherence identities of §2, which are `pullback.lift_fst`. -/
+artefact, `I-1057`).
+
+**But the conclusion the first version of this docstring drew from that — "the
+covering property is not available from the étale-precoverage machinery for free,
+and closing this row means building it" — OVER-PRICES the residue, and is corrected
+here** (`I-1458`, `ajc-p2`, measured). The obligation splits in two and only one
+half is owed:
+
+* the **topology** half is free: for any `OpenCover`, the generated sieve is an
+  étale covering sieve in one line
+  (`zariskiTopology_le_etaleTopology` ∘ `Cover.mem_grothendieckTopology`), so no
+  étale-site work sits between "the `γ`-sections are an open cover" and `hcov`;
+* the **open-immersion** half is genuinely owed — but a failed `infer_instance` is
+  not absence: `IsOpenImmersion (Sigma.ι …)` is a *theorem*
+  (`(sigmaOpenCover _).map_prop`) on which `inferInstance` also fails, and by §6's
+  `selfTensorSpecCoproduct` the object here *is* a `Gal`-indexed coproduct, where
+  that theorem applies.
+
+So what is owed is the **middle**: base change along `T_{k'} ⟶ Spec k'`, and
+matching the coproduct's `γ`-component to `coverSelfSection T γ`. Not the topology,
+and not a from-scratch covering argument. -/
 theorem hcov_iff_scheme_level (T : Over (Spec (CommRingCat.of k))) :
     Sieve.generate (Presieve.ofArrows
         (fun _ : k' ≃ₐ[k] k' => (restrictTest k k').obj (baseTest (k' := k') T))
@@ -457,9 +505,48 @@ theorem hcov_iff_scheme_level (T : Over (Spec (CommRingCat.of k))) :
         (coverMap (k := k) (k' := k') T)).left :=
   GrothendieckTopology.mem_over_iff _ _
 
-/-- **`hcov` IS INHABITABLE**: at any extension whose `Spec` map is a
+/-- **The `Mono` witness site is DEGENERATE: it forces every `γ` to be the
+identity.** Reproduced from a fresh-context audit of this file (`I-1454`).
+
+If `Spec (k'/k)` is a monomorphism then `specGal_comp` plus `cancel_mono` collapse
+every `γ ∈ Gal(k'/k)` to `𝟙`. So the "`Gal`-indexed family" at the only site where
+this file exhibits `hcov` is a single constant arrow. -/
+theorem specGal_eq_id_of_mono [Mono (specMapAlgebra k k')] (γ : k' ≃ₐ[k] k') :
+    specGal γ = 𝟙 _ := by
+  have h : specGal γ ≫ specMapAlgebra k k' = 𝟙 _ ≫ specMapAlgebra k k' := by
+    rw [Category.id_comp, specGal_comp]
+  exact (cancel_mono (specMapAlgebra k k')).mp h
+
+/-- **Hence `hinv` is ALSO free at the witness site** — which is why exhibiting
+`hcov` there does not show §4's implication has content.
+
+The `γ`-twist is the identity, so `(picEt C).map (twistTest T γ).op x = x` holds for
+every class `x` with no hypothesis at all. Landed as a theorem rather than left as
+the prose remark the audit refuted (`I-1454`, `I-1456`): a satisfiable antecedent is
+not a non-vacuous implication, and the check that separates them is whether the
+witness site also makes the *consequent* free. Here it does. -/
+theorem twistTest_eq_id_of_mono [Mono (specMapAlgebra k k')]
+    (T : Over (Spec (CommRingCat.of k))) (γ : k' ≃ₐ[k] k') :
+    twistTest (k' := k') T γ = 𝟙 _ := by
+  apply Over.OverMorphism.ext
+  change twistLeft T γ = _
+  rw [twistLeft]
+  refine pullback.hom_ext ?_ ?_
+  · rw [pullback.lift_fst]
+    change _ = 𝟙 _ ≫ _
+    rw [Category.id_comp]
+  · rw [pullback.lift_snd, specGal_eq_id_of_mono, Category.comp_id]
+    change _ = 𝟙 _ ≫ _
+    rw [Category.id_comp]
+
+/-- **`hcov` IS SATISFIABLE**: at any extension whose `Spec` map is a
 monomorphism — `k' = k` in particular, by `specMapAlgebra_self` — the
 `Gal`-indexed section family generates `⊤`, hence a covering sieve.
+
+**This is satisfiability and NOT non-vacuity**, and the two declarations above are
+why: at this very site every `γ` is the identity, so `hinv` is free too and the two
+projections coincide. `hcov` — or merely projection *in*equality — at an extension
+with a nontrivial automorphism is open.
 
 So `projections_agree_of_invariant` and
 `exists_unique_descend_picEt_of_invariant` are implications with a *satisfiable*
