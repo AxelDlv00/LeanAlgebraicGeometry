@@ -1,0 +1,68 @@
+id: AJCR.w4-rep.datum.p1-witness
+title: 'P1 WITNESS: the project has a curve and its genus is 0; the one remaining
+  step to a JacobianData at P1 is relative Pic0 vanishing'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'LANDED pic-g (0096 r3), no new hypothesis anywhere. Curve/P1Curve.lean +
+  Curve/P1H1Vanishing.lean, rooted, 0 sorries, lake build 8568 jobs EXIT=0 zero warnings,
+  all declarations axiom-clean [propext, Classical.choice, Quot.sound] vs a control
+  (AlgebraicGeometry.Jacobian) firing sorryAx.
+
+
+  WHY THE ROW EXISTS. Before this round NO OBJECT IN AJCR carried the three curve
+  binders every rep consumer is stated under. Measured: at P1.asOver k, IsProper was
+  inferInstance but SmoothOfRelativeDimension 1 and GeometricallyIrreducible were
+  synthInstanceFailed, and every other instance of those classes in the tree is a
+  base change, a restriction, or the sorried Jacobian. So none of rep''s ~93 consumer
+  theorems could be instantiated at a concrete curve -- each was an implication whose
+  antecedent list had never been checked against an object. That is now fixed for
+  an ARBITRARY field.
+
+
+  LANDED, do not redo: (1) smoothness, Zariski-local over the two charts, reduced
+  by chartI_structureMap + HasRingHomProperty.Spec_iff to Algebra.IsStandardSmoothOfRelativeDimension
+  1 k k[t], transported along the existing awayAlgEquiv; mathlib ships NO standard-smooth
+  instance for polynomial rings (exact? fails on both forms) so the canonical relation-free
+  submersive presentation of MvPolynomial is included as a supplement. (2) geometric
+  irreducibility, run at each base change: two pulled-back charts, each irreducible
+  since Away(X i) tensor K is a domain, both containing a preimage of the generic
+  point. (3) H1(P1,O) = 0 as the composite of TWO FACTS ALREADY IN THE TREE that nobody
+  had connected -- P1Charts'' Laurent span and TwoCover''s Mayer-Vietoris bridge.
+  (4) genus (asOver k) = 0, only expressible because of (1)+(2).
+
+
+  THE ONE REMAINING STEP, and it is a theorem not a residue: pic0Subgroup (asOver
+  k) T = bot for EVERY test T. That is Genus0Terminal''s stated single debt of S11,
+  still proved nowhere. Given it, isTerminal_of_pic0Subgroup_eq_bot plus jacobianData_of_subsingleton
+  produce a JacobianData at P1 with no atlas, no chart, no coverage. It needs relative
+  Pic(P1_T) = Pic(T) x Z, which the tree does not have; a base-field-only version
+  would NOT discharge the forall-T binder.
+
+
+  NOT CLAIMED: no rep, chart, coverage or JacobianData is produced by this row, and
+  P1 gives no positive-genus witness, so ''false at positive genus'' remains reasoning
+  from outside the formalization.'
+status: pending
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-30T18:05:38.259126+00:00'
+  provenance:
+    run: 0096
+    session: 0008-horizon-pic-g
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum
+  owner: pic-g
+  updated_at: '2026-07-30T18:06:18.681721+00:00'
