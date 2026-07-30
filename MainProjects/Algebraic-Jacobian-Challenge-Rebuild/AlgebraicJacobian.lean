@@ -550,7 +550,6 @@ import AlgebraicJacobian.Picard.Pic0ChartTwistSplit
 import AlgebraicJacobian.Picard.Pic0ChartCoverageDegree
 import AlgebraicJacobian.Picard.Pic0ChartRationalGraph
 import AlgebraicJacobian.Picard.Pic0ChartFiniteExtension
-import AlgebraicJacobian.Picard.Pic0RepAmitsurDatum
 import AlgebraicJacobian.Picard.Pic0ChartCoverageFibre
 import AlgebraicJacobian.Picard.Pic0ChartCoverageTest
 import AlgebraicJacobian.Picard.Pic0ChartPresentationHalf
