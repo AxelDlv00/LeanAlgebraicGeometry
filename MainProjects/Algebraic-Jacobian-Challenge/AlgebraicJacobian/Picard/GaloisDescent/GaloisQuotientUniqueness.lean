@@ -39,6 +39,76 @@ structure GaloisQuotientWitness
       ∃! v : {v : T ⟶ Y // v ≫ g = t},
         pullbackBaseChange K L g t v.1 v.2 ≫ e.hom = h
 
+namespace GaloisQuotientWitness
+
+/-- The comparison morphism defined from two specified quotient witnesses. -/
+noncomputable def comparison
+    {K L : Type u} [Field K] [Field L] [Algebra K L]
+    {X : Scheme.{u}} {f : X ⟶ Spec (CommRingCat.of L)}
+    {rho : SemilinearGalAction K L X f}
+    {Y₁ Y₂ : Scheme.{u}}
+    {g₁ : Y₁ ⟶ Spec (CommRingCat.of K)}
+    {g₂ : Y₂ ⟶ Spec (CommRingCat.of K)}
+    (w₁ : GaloisQuotientWitness rho Y₁ g₁)
+    (w₂ : GaloisQuotientWitness rho Y₂ g₂) :
+    {v : Y₁ ⟶ Y₂ // v ≫ g₂ = g₁} :=
+  (w₂.universal Y₁ g₁ w₁.e.hom w₁.over w₁.equivariant).choose
+
+/-- Base change of a witness-level comparison identifies the two pinned
+base-change isomorphisms. -/
+theorem comparison_spec
+    {K L : Type u} [Field K] [Field L] [Algebra K L]
+    {X : Scheme.{u}} {f : X ⟶ Spec (CommRingCat.of L)}
+    {rho : SemilinearGalAction K L X f}
+    {Y₁ Y₂ : Scheme.{u}}
+    {g₁ : Y₁ ⟶ Spec (CommRingCat.of K)}
+    {g₂ : Y₂ ⟶ Spec (CommRingCat.of K)}
+    (w₁ : GaloisQuotientWitness rho Y₁ g₁)
+    (w₂ : GaloisQuotientWitness rho Y₂ g₂) :
+    pullbackBaseChange K L g₂ g₁ (comparison w₁ w₂).1
+        (comparison w₁ w₂).2 ≫ w₂.e.hom = w₁.e.hom :=
+  (w₂.universal Y₁ g₁ w₁.e.hom w₁.over w₁.equivariant).choose_spec.1
+
+/-- A witness-level comparison intertwines the quotient projections determined
+by the two pinned base-change isomorphisms. -/
+theorem comparison_projection
+    {K L : Type u} [Field K] [Field L] [Algebra K L]
+    {X : Scheme.{u}} {f : X ⟶ Spec (CommRingCat.of L)}
+    {rho : SemilinearGalAction K L X f}
+    {Y₁ Y₂ : Scheme.{u}}
+    {g₁ : Y₁ ⟶ Spec (CommRingCat.of K)}
+    {g₂ : Y₂ ⟶ Spec (CommRingCat.of K)}
+    (w₁ : GaloisQuotientWitness rho Y₁ g₁)
+    (w₂ : GaloisQuotientWitness rho Y₂ g₂) :
+    (w₁.e.inv ≫ pullback.fst g₁
+      (Spec.map (CommRingCat.ofHom (algebraMap K L)))) ≫
+        (comparison w₁ w₂).1 =
+      w₂.e.inv ≫ pullback.fst g₂
+        (Spec.map (CommRingCat.ofHom (algebraMap K L))) := by
+  let v := comparison w₁ w₂
+  let bc := pullbackBaseChange K L g₂ g₁ v.1 v.2
+  have hinv : w₁.e.inv ≫ bc = w₂.e.inv := by
+    rw [← cancel_mono w₂.e.hom]
+    dsimp only [bc, v]
+    simp only [Category.assoc, comparison_spec]
+    simp
+  calc
+    (w₁.e.inv ≫ pullback.fst g₁
+        (Spec.map (CommRingCat.ofHom (algebraMap K L)))) ≫ v.1 =
+        w₁.e.inv ≫
+          (pullbackBaseChange K L g₂ g₁ v.1 v.2 ≫
+            pullback.fst g₂
+              (Spec.map (CommRingCat.ofHom (algebraMap K L)))) := by
+      rw [pullbackBaseChange_fst]
+      simp only [Category.assoc]
+    _ = (w₁.e.inv ≫ bc) ≫ pullback.fst g₂
+        (Spec.map (CommRingCat.ofHom (algebraMap K L))) := by
+      rfl
+    _ = w₂.e.inv ≫ pullback.fst g₂
+        (Spec.map (CommRingCat.ofHom (algebraMap K L))) := by rw [hinv]
+
+end GaloisQuotientWitness
+
 /-- Extract the full quotient witness from the proposition-valued predicate.
 This is the sole use of choice in the comparison construction. -/
 noncomputable def IsGaloisQuotient.witness
