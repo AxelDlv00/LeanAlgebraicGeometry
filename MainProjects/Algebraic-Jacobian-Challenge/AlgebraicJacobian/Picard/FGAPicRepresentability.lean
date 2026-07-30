@@ -583,10 +583,17 @@ and term (`I-1312`). Its `picEt_injective_restrict_baseTest` is the
 sieve-to-single-morphism reduction; that step is unavoidable, but it is **not
 geometric** — the same statement closes in an arbitrary category with pullbacks,
 with every geometric hypothesis deleted (`I-1312`, `I-1316`). So what remains is the
-invariance step producing a compatible family from a Galois-**invariant** `k'`-class
-(`G1`, where the group action enters), the **scheme-level** quotient (`G2`, item 3),
-and `k'`-side representability itself. `I-1280` states the pricing consequence and
+**scheme-level** quotient (`G2`, item 3), the covering statement `hcov`, and
+`k'`-side representability itself. `I-1280` states the pricing consequence and
 `I-1312` corrects that item's overclaims.
+
+**This sentence used to begin with the invariance step** — "producing a compatible
+family from a Galois-invariant `k'`-class (`G1`, where the group action enters)" —
+and that item is **gone as of 2026-07-30** (`pic-e`): the predicate match `G1` owed
+is free at the canonical action (`PicScheme.isInvariantMatch_canonical`,
+`Picard/PicEtInvariantMatch.lean`), for an arbitrary extension, so the group action
+does not enter as an obligation here at all. The clause is removed rather than
+struck because it was a list of what remains, and it no longer does.
 
 Present state of the four:
 

@@ -164,48 +164,67 @@ docstring: "**THE PROJECT'S CENTRAL OPEN OBLIGATION — expected to stay open.**
   \ (`IsInvariantMatch`), and\nconcludes `(picEt C).RepresentableBy Y` over `k`;\n\
   `seamClauseOne_of_isGaloisQuotient` is clause (1) in full through the free side\n\
   conjuncts. `sorry`-free and axiom-clean against this theorem as a `sorryAx`\ncontrol.\
-  \ **It closes nothing here**: all four of its inputs are explicit\nundischarged\
-  \ hypotheses, so what changed is that the goal is now a statement a\nlane can aim\
-  \ an input at, not that any input is in hand. Two measurements from\nbuilding it\
-  \ that a consumer needs: the bundled `Prop`-valued `IsGaloisQuotient`\ncannot be\
-  \ destructured into the `Type`-valued `RepresentableBy` conclusion\ndirectly (`Exists.casesOn`\
-  \ eliminates only into `Prop`), so the `Nonempty` form is\nwhere `Classical.choice`\
-  \ is spent while clause (1), being an existential, needs\nnone; and `quotientHomEquiv_uniform`'s\
-  \ `Nonempty` cannot carry the naturality\nsquare a `RepresentableBy` needs, so clause\
-  \ 3 had to be re-derived with its\nforward map pinned to a named morphism. The conclusion\
-  \ shape\n`Nonempty ((PicScheme.picEt C).RepresentableBy X)` occurred at exactly\
-  \ three sites\n— the `HasPicSchemeEt` class field and the seam `sorry` below, plus\n\
-  `hasPicSchemeEt_of_picSharp_representability` — and all three are **same-field**,\n\
-  none taking a representation over a larger field and concluding over `k`\n(measured\
-  \ by `ajc-p2`, re-measured independently by `review-ajc`, `I-1256`). With\nthe goal\
-  \ unwritten, an input nobody held would not have shown up as missing.\n\nWhat *is*\
-  \ settled, and it is a pricing fact rather than a step: do **not** budget\neffectivity\
-  \ of `picEt`-**classes** along the field-extension cover. Both halves are\nfree\
-  \ from sheafification — `Picard/EtaleFieldCover.lean` already says so in prose at\n\
-  its own §4 (`:289`, `:294`: \"unique amalgamation\", \"every covering sieve, `⊤`\n\
-  included, free from sheafification\"), and `PicEtDescentAssembly.lean`'s\n`existsUnique_amalgamation_picEt_fieldCover`\
-  \ is that lemma `rfl`-equal, proposition\nand term (`I-1312`). Its `picEt_injective_restrict_baseTest`\
-  \ is the\nsieve-to-single-morphism reduction; that step is unavoidable, but it is\
-  \ **not\ngeometric** — the same statement closes in an arbitrary category with pullbacks,\n\
-  with every geometric hypothesis deleted (`I-1312`, `I-1316`). So what remains is\
-  \ the\ninvariance step producing a compatible family from a Galois-**invariant**\
-  \ `k'`-class\n(`G1`, where the group action enters), the **scheme-level** quotient\
-  \ (`G2`, item 3),\nand `k'`-side representability itself. `I-1280` states the pricing\
-  \ consequence and\n`I-1312` corrects that item's overclaims.\n\nPresent state of\
-  \ the four:\n\n1. **the descent test — LANDED.** `Picard/EtaleFieldCover.lean` proves\n\
-  \   `Spec k' ⟶ Spec k` is an étale cover for `k'/k` finite separable and that\n\
-  \   `picEt` satisfies the sheaf axiom at that cover.\n2. **the cross-base identification\
-  \ — CLOSED** (`Picard/PicEtCrossBase.lean`,\n   `PicScheme.picEt_crossBaseIso`,\
-  \ `sorry`-free and axiom-clean). Without it the\n   scheme `J5` produces over `k'`\
-  \ would represent `picEt` *of the curve over `k`,\n   restricted to `k'`-tests*\
-  \ rather than `picEt` of the base-changed curve, and\n   there would be no functor\
-  \ for the descent datum to be a datum *for* — a\n   mismatch no green build would\
-  \ reveal. **Note the hypotheses it does NOT\n   carry**: earlier revisions of this\
-  \ paragraph, and the board row, both stated\n   the obligation for `k'/k` *finite\
-  \ separable*; the theorem needs neither\n   hypothesis and holds for an arbitrary\
-  \ field extension, because the argument is\n   about pullback projections rather\
-  \ than about étale covers. Finite-separability\n   is item 1's constraint and was\
-  \ double-counted here. Do not budget a\n   separability argument for a cross-base\
+  \ **It closes nothing here**, and what changed is that the goal is now a\nstatement\
+  \ a lane can aim an input at, not that any input is in hand.\n\n**AND ONE OF THE\
+  \ FOUR IS SINCE GONE — proved free, not supplied** (`pic-e`, same\nday; this sentence\
+  \ replaces \"all four of its inputs are explicit undischarged\nhypotheses\", which\
+  \ that commit falsified).\n`PicScheme.isInvariantMatch_canonical` (`Picard/PicEtInvariantMatch.lean`)\
+  \ proves\nthe `G1` predicate match at the canonical action for every test, with\
+  \ **no**\nhypothesis beyond the representation and the curve's own binders — no\
+  \ finiteness,\nno separability, no `IsGalois`, no condition on `Gal(k'/k)`. It is\
+  \ free because the\ncanonical action's `γ`-component *is* `twistMor γ`, which is\
+  \ defined by\ntransporting the functor action along `rep`, so equivariance and invariance\
+  \ are two\nreadings of one equation and naturality converts between them. So the\
+  \ route from a\n`k'`-side representation to clause (1) field 1 carries **two** named\
+  \ antecedents:\nthe Galois quotient at a glued non-affine `X'`, and `hcov`. Consumers\
+  \ should call\n`seamClauseOne_of_isGaloisQuotient_noMatch`. **Still nothing here\
+  \ is discharged**:\nthe `k'`-side representation is the campaign's undischarged\
+  \ output, and clause (1)\nfield 1 is witnessed for no curve.\n\nTwo measurements\
+  \ from building it that a consumer needs.\n`quotientHomEquiv_uniform`'s `Nonempty`\
+  \ cannot carry the naturality\nsquare a `RepresentableBy` needs, so clause 3 had\
+  \ to be re-derived with its\nforward map pinned to a named morphism. And there is\
+  \ an asymmetry in what\n`Classical.choice` is spent on: the `RepresentableBy` form\
+  \ needs it, while\nclause (1), being an existential, eliminates the quotient's `∃`\
+  \ into a `Prop` and\nneeds none — which is why `seamClauseOne_of_isGaloisQuotient`\
+  \ is a `theorem` and\nnot a `noncomputable def`. (An earlier revision of this paragraph\
+  \ gave a *stronger*\nreason — that the `Prop`-valued `IsGaloisQuotient` \"cannot\
+  \ be destructured\" into the\n`Type`-valued conclusion, so the `Nonempty` form was\
+  \ forced. That was withdrawn at\n`PicEtDescentGoal.lean` §6 the day it was written:\
+  \ `Exists.choose` elaborates\ndirectly, only the `obtain` *tactic* cannot, and the\
+  \ same paragraph was already\ninvoking choice. The asymmetry is what survived.)\
+  \ The conclusion shape\n`Nonempty ((PicScheme.picEt C).RepresentableBy X)` occurred\
+  \ at exactly three sites\n— the `HasPicSchemeEt` class field and the seam `sorry`\
+  \ below, plus\n`hasPicSchemeEt_of_picSharp_representability` — and all three are\
+  \ **same-field**,\nnone taking a representation over a larger field and concluding\
+  \ over `k`\n(measured by `ajc-p2`, re-measured independently by `review-ajc`, `I-1256`).\
+  \ With\nthe goal unwritten, an input nobody held would not have shown up as missing.\n\
+  \nWhat *is* settled, and it is a pricing fact rather than a step: do **not** budget\n\
+  effectivity of `picEt`-**classes** along the field-extension cover. Both halves\
+  \ are\nfree from sheafification — `Picard/EtaleFieldCover.lean` already says so\
+  \ in prose at\nits own §4 (`:289`, `:294`: \"unique amalgamation\", \"every covering\
+  \ sieve, `⊤`\nincluded, free from sheafification\"), and `PicEtDescentAssembly.lean`'s\n\
+  `existsUnique_amalgamation_picEt_fieldCover` is that lemma `rfl`-equal, proposition\n\
+  and term (`I-1312`). Its `picEt_injective_restrict_baseTest` is the\nsieve-to-single-morphism\
+  \ reduction; that step is unavoidable, but it is **not\ngeometric** — the same statement\
+  \ closes in an arbitrary category with pullbacks,\nwith every geometric hypothesis\
+  \ deleted (`I-1312`, `I-1316`). So what remains is the\ninvariance step producing\
+  \ a compatible family from a Galois-**invariant** `k'`-class\n(`G1`, where the group\
+  \ action enters), the **scheme-level** quotient (`G2`, item 3),\nand `k'`-side representability\
+  \ itself. `I-1280` states the pricing consequence and\n`I-1312` corrects that item's\
+  \ overclaims.\n\nPresent state of the four:\n\n1. **the descent test — LANDED.**\
+  \ `Picard/EtaleFieldCover.lean` proves\n   `Spec k' ⟶ Spec k` is an étale cover\
+  \ for `k'/k` finite separable and that\n   `picEt` satisfies the sheaf axiom at\
+  \ that cover.\n2. **the cross-base identification — CLOSED** (`Picard/PicEtCrossBase.lean`,\n\
+  \   `PicScheme.picEt_crossBaseIso`, `sorry`-free and axiom-clean). Without it the\n\
+  \   scheme `J5` produces over `k'` would represent `picEt` *of the curve over `k`,\n\
+  \   restricted to `k'`-tests* rather than `picEt` of the base-changed curve, and\n\
+  \   there would be no functor for the descent datum to be a datum *for* — a\n  \
+  \ mismatch no green build would reveal. **Note the hypotheses it does NOT\n   carry**:\
+  \ earlier revisions of this paragraph, and the board row, both stated\n   the obligation\
+  \ for `k'/k` *finite separable*; the theorem needs neither\n   hypothesis and holds\
+  \ for an arbitrary field extension, because the argument is\n   about pullback projections\
+  \ rather than about étale covers. Finite-separability\n   is item 1's constraint\
+  \ and was double-counted here. Do not budget a\n   separability argument for a cross-base\
   \ step.\n3. **the Galois action and quotient — G1/G2, substantially built; the gate\
   \ now\n   bites only off the affine locus.** Updated 2026-07-30 (`ajc-p1`): the\
   \ class\n   `AlgebraicJacobian.GaloisDescent.HasGaloisQuotient` is **no longer\n\
@@ -409,7 +428,7 @@ generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.Scheme.fgaPicardRepresentability
 type: lean
-updated: '2026-07-30T20:02:40'
+updated: '2026-07-30T22:32:48'
 ---
 theorem fgaPicardRepresentability {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
