@@ -46,8 +46,17 @@ is the honest boundary of this file.
 * `AlgebraicGeometry.DivFamZar.trivFam` — an unconditional `CertifiedDivisorFamily C R π 0`.
 * `AlgebraicGeometry.DivFamZar.trivZar` — hence `DivFamZar C R π 0` is inhabited, and
   `instInhabitedDivFamZarZero` registers it.
-* `AlgebraicGeometry.divFunctor_obj_nonempty_zero` — the degree-zero divisor functor has a
-  point over **every** test object of the slice, not only affine ones.
+* `AlgebraicGeometry.DivFamZar.mapAlg_trivZar` / `…mapAlgHom_trivZar` — **the trivial class is
+  base-change invariant**, the transport law a general-test section would be assembled from.
+
+A CITATION I RETRACT IN PLACE, because it is the failure mode this workspace keeps filing.  An
+earlier draft of this list named `divFunctor_obj_nonempty_zero`, "a point over every test object
+of the slice".  **That declaration does not exist and I did not prove it.**  I attempted it: the
+constant-trivial family over the affine opens of a test `T` is the right shape and
+`mapAlgHom_trivZar` is the right transport law, but the vehicle's compatibility clause wants
+`Over.resAlgHom T h` to agree with `algebraMap`, and that is NOT `rfl` — it needs the tower
+instances on the restriction, which I did not build.  So the general-test section is OPEN, and
+the two base-change theorems above are what actually landed.
 
 ## What this does NOT do
 
@@ -236,6 +245,38 @@ noncomputable def trivZar : DivFamZar C R pi 0 :=
 instance instNonemptyDivFamZarZero : Nonempty (DivFamZar C R pi 0) :=
   ⟨trivZar C R pi⟩
 
+/-! ## The trivial class is base-change invariant, hence a GENERAL-TEST section
+
+`divFamZar C π n T` (`Picard/DivisorFamilyZarVehicle.lean:187`) is a compatible family of
+`DivFamZar` classes over the affine opens of `T.left`.  Taking the trivial class at every
+affine open gives such a family precisely because base change sends the trivial class to the
+trivial class — and it does, for the cheapest possible reason: the pulled system's equation is
+the *restriction of* `1`, and restriction is a ring hom. -/
+
+section BaseChange
+
+variable {A A' : Type u} [CommRing A] [Algebra k A] [CommRing A'] [Algebra k A']
+
+/-- **Base change preserves the trivial class.**  Both systems have cover `⊤`, and the pulled
+equation is a restriction of `1`, so `DivEq` holds with unit `1`. -/
+theorem mapAlg_trivZar [Algebra A A'] [IsScalarTower k A A'] :
+    DivFamZar.mapAlg (C := C) (π := pi) (R := A) A' 0 (trivZar C A pi) = trivZar C A' pi := by
+  refine DivFamZar.mk_eq_mk_iff.mpr ?_
+  refine ⟨(trivEqns C A').cover, fun _ => le_top, le_rfl, fun _ => ⟨1, ?_⟩⟩
+  rw [Units.val_one, one_mul, Scheme.LocalEquations.pullback_eqn]
+  change (CommRingCat.Hom.hom _) ((CommRingCat.Hom.hom _) (1 : _))
+      = (CommRingCat.Hom.hom _) (1 : _)
+  rw [map_one, map_one, map_one]
+
+/-- The same in the `mapAlgHom` spelling the vehicle's compatibility clause uses. -/
+theorem mapAlgHom_trivZar (phi : A →ₐ[k] A') [Algebra A A'] [IsScalarTower k A A']
+    (hphi : ∀ a : A, phi a = algebraMap A A' a) :
+    DivFamZar.mapAlgHom (C := C) (π := pi) (n := 0) phi (trivZar C A pi) = trivZar C A' pi := by
+  rw [DivFamZar.mapAlgHom_eq_mapAlg phi hphi, mapAlg_trivZar]
+
+end BaseChange
+
 end DivFamZar
 
 end AlgebraicGeometry
+
