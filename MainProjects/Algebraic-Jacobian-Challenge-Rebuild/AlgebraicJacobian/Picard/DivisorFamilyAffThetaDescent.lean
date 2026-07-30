@@ -216,7 +216,24 @@ theorem thetaSectionsToOverlapLeft_vanishing_le (A : AffAdaptation D d) (a : ℕ
     A.thetaPieceVanishing (π := π) a i ≤
       Submodule.comap (A.thetaSectionsToOverlapLeft (π := π) a i j)
         (A.thetaOverlapVanishing (π := π) a i j) := by
-  sorry
+  change Ideal.span {A.eqn i} •
+      (⊤ : Submodule Γ(relCurve C R, D.pieces i) (A.ThetaPieceSections (π := π) a i)) ≤
+    Submodule.comap (A.thetaSectionsToOverlapLeft (π := π) a i j)
+      (A.ovlIdeal i j •
+        (⊤ : Submodule Γ(relCurve C R, D.pieces i ⊓ D.pieces j)
+          (A.ThetaOverlapSections (π := π) a i j)))
+  rw [Submodule.smul_le]
+  intro r hr s _
+  change A.thetaSectionsToOverlapLeft (π := π) a i j (r • s) ∈
+    A.ovlIdeal i j •
+      (⊤ : Submodule Γ(relCurve C R, D.pieces i ⊓ D.pieces j)
+        (A.ThetaOverlapSections (π := π) a i j))
+  rw [(A.thetaSectionsToOverlapLeft (π := π) a i j).map_smulₛₗ]
+  apply Submodule.smul_mem_smul ?_ Submodule.mem_top
+  rw [Ideal.mem_span_singleton] at hr
+  obtain ⟨c, rfl⟩ := hr
+  rw [map_mul]
+  exact Ideal.mul_mem_right _ _ (Ideal.subset_span (Set.mem_insert _ _))
 
 /-- The right restriction sends equation multiples into the symmetric overlap ideal. -/
 theorem thetaSectionsToOverlapRight_vanishing_le (A : AffAdaptation D d) (a : ℕ)
@@ -224,7 +241,24 @@ theorem thetaSectionsToOverlapRight_vanishing_le (A : AffAdaptation D d) (a : �
     A.thetaPieceVanishing (π := π) a j ≤
       Submodule.comap (A.thetaSectionsToOverlapRight (π := π) a i j)
         (A.thetaOverlapVanishing (π := π) a i j) := by
-  sorry
+  change Ideal.span {A.eqn j} •
+      (⊤ : Submodule Γ(relCurve C R, D.pieces j) (A.ThetaPieceSections (π := π) a j)) ≤
+    Submodule.comap (A.thetaSectionsToOverlapRight (π := π) a i j)
+      (A.ovlIdeal i j •
+        (⊤ : Submodule Γ(relCurve C R, D.pieces i ⊓ D.pieces j)
+          (A.ThetaOverlapSections (π := π) a i j)))
+  rw [Submodule.smul_le]
+  intro r hr s _
+  change A.thetaSectionsToOverlapRight (π := π) a i j (r • s) ∈
+    A.ovlIdeal i j •
+      (⊤ : Submodule Γ(relCurve C R, D.pieces i ⊓ D.pieces j)
+        (A.ThetaOverlapSections (π := π) a i j))
+  rw [(A.thetaSectionsToOverlapRight (π := π) a i j).map_smulₛₗ]
+  apply Submodule.smul_mem_smul ?_ Submodule.mem_top
+  rw [Ideal.mem_span_singleton] at hr
+  obtain ⟨c, rfl⟩ := hr
+  rw [map_mul]
+  exact Ideal.mul_mem_right _ _ (Ideal.subset_span (Set.mem_insert_of_mem _ rfl))
 
 /-- The induced left overlap map on divisor-restricted theta sections. -/
 noncomputable def thetaToOverlapLeft (A : AffAdaptation D d) (a : ℕ)
