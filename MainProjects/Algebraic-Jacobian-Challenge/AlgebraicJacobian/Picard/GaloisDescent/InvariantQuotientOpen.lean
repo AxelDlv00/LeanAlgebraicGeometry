@@ -219,6 +219,35 @@ theorem quotientOpenOfStableSubopen_inf [FiniteDimensional K L]
     stableAffineQuotientMap_preimage_quotientOpen ρ hU hUa hWU hW,
     Scheme.Hom.preimage_inf]
 
+/-- The quotient-open construction is monotone on stable subopens of a fixed
+stable affine chart. -/
+theorem quotientOpenOfStableSubopen_mono [FiniteDimensional K L]
+    (hUa : IsAffineOpen U) {V W : X.Opens}
+    (hVU : V ≤ U) (hWU : W ≤ U) (hVW : V ≤ W)
+    (hV : ρ.IsStableOpen V) (hW : ρ.IsStableOpen W) :
+    letI := ρ.sectionsMulSemiringAction hU
+    letI := sectionsAlgebra f U
+    letI := sectionsAlgebraK (K := K) f U
+    letI := sections_isScalarTower (K := K) f U
+    letI := ρ.isSemilinear_sections hU
+    quotientOpenOfStableSubopen ρ hU V ≤
+      quotientOpenOfStableSubopen ρ hU W := by
+  letI := ρ.sectionsMulSemiringAction hU
+  letI := sectionsAlgebra f U
+  letI := sectionsAlgebraK (K := K) f U
+  letI := sections_isScalarTower (K := K) f U
+  letI := ρ.isSemilinear_sections hU
+  intro y hy
+  obtain ⟨x, rfl⟩ := stableAffineQuotientMap_surjective ρ hU hUa y
+  have hxV : x ∈ U.ι ⁻¹ᵁ V := by
+    rw [← stableAffineQuotientMap_preimage_quotientOpen
+      ρ hU hUa hVU hV]
+    exact hy
+  have hxW : x ∈ U.ι ⁻¹ᵁ W := hVW hxV
+  rw [← stableAffineQuotientMap_preimage_quotientOpen
+    ρ hU hUa hWU hW] at hxW
+  exact hxW
+
 /-- **The quotient-side open is exactly the image of the stable subopen.**
 
 Surjectivity upgrades `stableAffineQuotientMap_preimage_quotientOpen` from a
