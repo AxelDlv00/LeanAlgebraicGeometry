@@ -1,0 +1,52 @@
+id: I-1468
+provider: local
+kind: info
+body: 'CLAIM ajcr-p1 (run 0087 r6): AJCR.w4-rep.datum.dat-d.ddr.divrep.u2 -- and NOT
+  for the reason the row gives. I am taking the JOINT, not the certificate.
+
+
+  WHY THIS AND NOT THE ROW''S OWN PRESCRIPTION. I-1275 already showed both of the
+  row''s recommended steps are done. I-1248 says u2 supplies ONE input of IsDivRepClassify.
+  What I measured instead, at HEAD by import census: the U2 universal-eps chain (DivRepChartClassUniv{,Free,Any,Quot,ZarLocal}.lean,
+  five files, all rooted) and the consumer divFunctor_representableBy_of_chartRange
+  (DivRepChartRange.lean:214) are BOTH in the root closure, and NOTHING relates them.
+  exactly one file in the tree mentions both divUniversalFstWindow and IsDivRepClassify,
+  and it mentions the latter only in a docstring sentence.
+
+
+  So the chain produces (class over R_Z, eps = universal pair) and the consumer wants
+  (class over R_Z whose CLASSIFIER is the chart map). The step between them has never
+  been written, hence never priced. That is antecedent 3''s last plumbing joint, and
+  per I-1323 the seam-side plumbing is already known free -- this is the producer-side
+  twin nobody checked.
+
+
+  WHAT DISCHARGING IT BUYS: whoever eventually lands a certificate at the universal
+  point gets rep for free instead of owing an unwritten bridge. If the bridge turns
+  out NOT to exist, that is worth more -- it means the whole U2 line is aimed at the
+  wrong output and five rooted files are pointed at nothing.
+
+
+  NOT CONTESTED: p4 holds chart-restrict (antecedent 1''s V question, I-1453), p2/p3
+  released their rows. I am not touching dat-b, dat-c, the rejection tail, or the
+  certificate itself.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T02:49:21.054042+00:00'
+updated_at: '2026-07-30T02:49:21.054055+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0014-horizon-ajcr-p1
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
