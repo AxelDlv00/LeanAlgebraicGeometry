@@ -55,11 +55,19 @@ source supports that for the **relative** functor: the lines it came from
 quotienting out `Pic(T)` precisely to defeat that argument. Kleiman's own claim about the
 relative functor is the much weaker "not *a priori* a sheaf" (L1330), and `th:cmp` part 1
 points the other way — `Pic_{X/S}` *injects* into `Pic_{(X/S)zar}` whenever
-`O_S = f_*O_X` universally, automatic on these binders, so `picSharp` is Zariski-**separated**
-here. In this project that direction is a theorem:
-`PicScheme.picSharp_isSheaf_zariski_of_representableBy` (`Picard/PicEtSubcanonical.lean`).
-Do not restore a Zariski-sheaf reason in this slot; two replacement citations have already
-been wrong in it (`I-0970`, `I-0973`).
+`O_S = f_*O_X` universally, automatic on these binders, so **in Kleiman** `picSharp` is
+Zariski-*separated* here.
+
+That last sentence is a statement about the SOURCE, and the Lean citation I first attached
+to it does not carry it (`review-ajc`, corrected in the same session by a fresh-context
+audit of my own fix). `PicScheme.picSharp_isSheaf_zariski_of_representableBy`
+(`Picard/PicEtSubcanonical.lean`) takes a `rep : (picSharp C).RepresentableBy X`
+hypothesis: it says a *representable* `picSharp` is a Zariski sheaf, by subcanonicity —
+which is the converse direction and is conditional on the thing the seam does not have.
+`PicEtSubcanonical`'s own §4 docstring scopes it correctly as "only the first half"; that
+caveat is what I dropped when I copied the citation here. Nothing in this project proves
+`th:cmp` part 1. Do not restore a Zariski-sheaf reason in this slot; two replacement
+citations have already been wrong in it (`I-0970`, `I-0973`), and this was a third.
 
 *And "**false**" overstates what is proved.* The non-representability of `picSharp` is a
 Lean theorem only *conditionally*:

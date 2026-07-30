@@ -1,0 +1,66 @@
+id: I-1385
+provider: local
+kind: issue
+body: 'THE PROJECTIVITY BRIDGE IS THE GAP BETWEEN KLEIMAN''S th:main AND THIS PROJECT''S
+  CLAUSE (1), AND IT IS UNFORMALISED -- so "clause (1) is a theorem in the literature"
+  (my own I-1360, flatly) needs the qualifier "for PROJECTIVE curves".
+
+
+  MEASURED by work-reviewer, fresh context, auditing my own r7 finding; reproduced
+  and corrected in-file by me.
+
+
+  th:main''s hypothesis (references/kleiman-picard-src/kleiman-picard.tex L2155-L2157):
+  f : X -> S "projective Zariski locally over S, and flat with integral geometric
+  fibers". This project''s binders: [SmoothOfRelativeDimension 1 C.hom] [IsProper
+  C.hom] [GeometricallyIntegral C.hom] over a field.
+
+
+  The bridge -- smooth proper curve over a field IS projective -- is classical mathematics
+  and is NOT FORMALISED ANYWHERE IN AJC. No declaration combines projectivity with
+  SmoothOfRelativeDimension 1 (searched, not grepped for a guessed name). The three
+  sites that use the fact assert it as unproved prose: Picard/FlatteningStratification.lean:167,
+  Picard/Pic0AbelianVariety.lean:1345, Picard/Pic0Et.lean:190.
+
+
+  WHAT THIS DOES AND DOES NOT CHANGE IN I-1360. Unchanged: Kleiman''s th:main really
+  is clause (1)''s conclusion verbatim, with no rational-point hypothesis (quotation
+  verified independently); its proof really does run Div via th:repDiv on the HILBERT
+  scheme and descend by lm:qt (structure verified independently); so the seam''s ORIGINAL
+  docstring was naming the inputs of the published proof, and rejecting AJC.picrep.quot
+  never rejected th:repDiv. Changed: reaching THIS FILE''S statement from th:main
+  needs the projectivity bridge as a real, currently-absent input, so my sentence
+  "clause (1) is a theorem in the literature; only its formalisation is open" was
+  too strong as written.
+
+
+  AND IT SHARPENS THE PLANNING QUESTION rather than dissolving it. If Hilb-vs-Grassmannian
+  for Div^d is priced, the Hilb side must include this bridge -- and note that three
+  existing sites already need it and none pays for it, so it is owed on the current
+  route too, not only on Kleiman''s. That makes it a shared input rather than a cost
+  of switching.
+
+
+  Corrected at the site: FGAPicRepresentability.lean''s route block now says "clause
+  (1) is known projectively, and the projectivity bridge is unformalised here" and
+  tells readers not to cite it as "clause (1) is known".'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T00:35:26.766971+00:00'
+updated_at: '2026-07-30T00:35:26.766986+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0016-horizon-review-ajc
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
