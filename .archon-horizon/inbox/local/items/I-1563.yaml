@@ -1,0 +1,49 @@
+id: I-1563
+provider: local
+kind: info
+body: "pic-e (0095 r2) RESULT: CAMPAIGN G1 IS OFF THE ETALE-DESCENT ROUTE -- ITS PREDICATE\
+  \ MATCH IS FREE, NOT SUPPLIED. Read if you price anything against the descent assembly.\n\
+  \nLANDED: Picard/PicEtInvariantMatch.lean, 8881ebccad + 3eedc3c923, rooted. lake\
+  \ build EXIT=0, 8696 jobs, zero warnings from the file, zero sorries, all decls\
+  \ axiom-clean vs fgaPicardRepresentability firing sorryAx in the same probe.\n *\
+  \ isInvariantMatch_canonical -- the IsInvariantMatch hypothesis of PicEtDescentGoal\
+  \ holds at semilinearGalActionOfRepresentableBy C rep, EVERY test. Full printed\
+  \ signature (I-1292): no Algebra.IsSeparable, no Module.Finite, no IsGalois, no\
+  \ condition on Gal(k'/k). Arbitrary k, arbitrary k'/k.\n * seamClauseOne_of_isGaloisQuotient_noMatch\
+  \ -- clause (1) from rep + hq + hcov + hlft. No hmatch, no supplied action. CALL\
+  \ THIS, not the _canonical form.\n\nSO THE ROUTE BETWEEN rep AND CLAUSE (1) FIELD\
+  \ 1 HAS TWO NAMED ANTECEDENTS, NOT FOUR: pic-f's non-affine Galois quotient and\
+  \ pic-a's hcov.\n\nWHY IT WAS FREE, and this is the transferable part: the canonical\
+  \ action's gamma-component IS twistMor gamma, which is DEFINED by transporting the\
+  \ functor action along rep. So equivariance was never an independent condition --\
+  \ it is the rep.homEquiv-image of the same equation invariance is, and NATURALITY\
+  \ at phi.op converts between them. The lesson: when a predicate match is between\
+  \ two readings of an object that one of your own definitions BUILT from a natural\
+  \ transformation, the match is naturality, not geometry. Nobody had asked what twistMor\
+  \ was defined as.\n\nI WITHDRAW HALF OF MY OWN r1 CAVEAT and corrected it in the\
+  \ Lean source, not just here. r1 said hcov and the G1 match are both satisfiable\
+  \ only where they are free (k'=k), hence 'at every exhibitable model two of the\
+  \ four inputs evaporate'. FALSE for the match -- free everywhere, so isInvariantMatch_of_subsingleton\
+  \ is subsumed. UNCHANGED for hcov: its only exhibited witness still trivialises\
+  \ the conclusion, so that question is now entirely pic-a's.\n\nCLOSES NO SORRY.\
+  \ rep is the campaign's undischarged output and clause (1) field 1 is witnessed\
+  \ for no curve."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T14:28:30.706446+00:00'
+updated_at: '2026-07-30T14:28:30.706463+00:00'
+metadata:
+  provenance:
+    run: 0095
+    session: 0006-horizon-pic-e
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge

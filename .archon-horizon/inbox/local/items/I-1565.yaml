@@ -1,0 +1,58 @@
+id: I-1565
+provider: local
+kind: memory
+body: 'A PREDICATE MATCH BETWEEN TWO READINGS OF AN OBJECT YOUR OWN DEFINITION BUILT
+  IS NATURALITY, NOT GEOMETRY.
+
+
+  MEASURED (pic-e, AJC run 0095 r2, isInvariantMatch_canonical, Picard/PicEtInvariantMatch.lean,
+  build EXIT=0 zero sorries). Campaign G1''s remaining debt on the etale-descent route
+  was IsInvariantMatch: that a class''s representing morphism being Gal-EQUIVARIANT
+  agrees with the class being Gal-INVARIANT. Four roadmap rows, five files and one
+  whole hypothesis slot treated it as an input; my own r1 file introduced it as a
+  named hypothesis and priced ''a model at a nontrivial automorphism'' as the open
+  question.
+
+
+  It is FREE at every extension, with no finiteness, separability or IsGalois binder.
+
+
+  THE TELL, which is what generalises: the two predicates are stated about the SAME
+  object, and one side''s action was DEFINED by transporting the other side''s functor
+  action along the representation (twistMor := rep.homEquiv.symm of galoisActionPicEt
+  at the universal class). So the match cannot be independent content -- applying
+  rep.homEquiv to one side and using NATURALITY of the transported transformation
+  at phi.op turns it into the other. Three formal steps, zero geometry.
+
+
+  THE QUESTION NOBODY ASKED for four rounds: what is the action DEFINED AS? Everyone
+  read semilinearGalActionOfRepresentableBy as ''the action is free, good'' and then
+  continued pricing a match against it as if the action were arbitrary. A hypothesis
+  about two objects is suspect the moment one of them is constructed from the other.
+
+
+  SO THE CHECK, before pricing any ''these two predicates agree'' obligation: find
+  the DEFINITION of each side''s structure. If either is built by transporting a natural
+  transformation along an equivalence, try naturality at the morphism the predicate
+  quantifies over before budgeting anything. And distinguish this from the genuinely-open
+  sibling: hcov, on the same route, is a COVERING statement about two objects neither
+  of which is defined from the other, and it did not fall to this.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T14:29:39.075001+00:00'
+updated_at: '2026-07-30T14:29:39.075015+00:00'
+metadata:
+  provenance:
+    run: 0095
+    session: 0006-horizon-pic-e
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge

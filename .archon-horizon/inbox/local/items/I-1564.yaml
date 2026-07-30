@@ -1,0 +1,69 @@
+id: I-1564
+provider: local
+kind: info
+body: 'RESULT/RELEASE pic-g (0096 r2): JacobianData HAS A PRODUCER WITH NONE OF THE
+  THREE ATLAS ANTECEDENTS. Read before pricing rep / IsChartUniv / coverage as the
+  GOAL''s cost.
+
+
+  LANDED. Picard/Pic0VanishingRoute.lean (f9f885abbd, dc63ffdbf7) + Albanese/Genus0VanishingDatum.lean.
+  Rooted; lake build EXIT=0 (8714 jobs), zero errors, zero messages naming either
+  file; all 14 declarations axiom-clean [propext, Classical.choice, Quot.sound] with
+  AlgebraicGeometry.Jacobian firing sorryAx in the same probe.
+
+
+  THE RESULT. jacobianData_of_subsingleton : (forall T, Subsingleton (pic0Subgroup
+  C T)) -> JacobianData C. At J := Over.mk (id (Spec k)) the structure morphism IS
+  an identity, so locallyOfFiniteType and quasiCompact are inferInstance -- both obligations
+  dat-j and dat-glue.atlas-hcpt exist for. rep is then a bijection of a singleton
+  Hom-set with pic0(T). No atlas, no rep, no chart certificate, no coverage, no Abel
+  map, no index finiteness.
+
+
+  WHY IT MATTERS THOUGH THE HYPOTHESIS IS FALSE AT POSITIVE GENUS (the file says so
+  plainly). All seven JacobianData producers in AJCR consume the SAME chart family,
+  so the three antecedents are antecedents of ONE ROUTE. The tree had no second route
+  to compare them against, so ''rep has no producer'' read as ''JacobianData has no
+  producer''. That inference is now blocked by a theorem.
+
+
+  NON-DEGENERATE PAYOFF. S11''s uniqueness clause loses its JacobianData binder: Genus0Terminal''s
+  statements all take (d : JacobianData C), which is why AJCR.w6-albanese.genus0 reads
+  as gated behind divRep. It is not -- the datum and the vanishing were never independent.
+  existsUnique_ofCurve_comp_of_vanishing supplies the datum from the row''s own hypothesis.
+  Still open there: the vanishing, and Milne I 3.9 (explicit hex).
+
+
+  THE HYPOTHESIS IS NOW ABOUT RINGS. subsingleton_picEt_of_affine reduces it to test
+  ALGEBRAS componentwise (picEt is a subgroup of a product over affineOpens, so picEt.ext
+  is the whole proof -- no cover, no S-lemma, no gluing). subsingleton_picEtAff_of_forall
+  is the CONVERSE, so it is not a weakening. Both omit the curve''s geometry.
+
+
+  NOT CLAIMED: not a witness that JacobianData C is inhabited for the challenge curve.
+
+
+  PROCEDURAL (I-1507 shape): TWO OF MY THREE PATHS REACHED HEAD UNDER pic-d''s SWEEP
+  adf289ba79, not a commit of mine -- Genus0VanishingDatum.lean (120 lines) and my
+  header correction. Verified sha256 HEAD == disk on all three after the fact; build
+  and axiom audit ran against exactly that content. The file was banked BEFORE I had
+  measured it.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T14:28:36.399020+00:00'
+updated_at: '2026-07-30T14:28:36.399036+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0006-horizon-pic-g
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

@@ -534,16 +534,38 @@ action plus `hcov` plus a named `G1` predicate match (`IsInvariantMatch`), and
 concludes `(picEt C).RepresentableBy Y` over `k`;
 `seamClauseOne_of_isGaloisQuotient` is clause (1) in full through the free side
 conjuncts. `sorry`-free and axiom-clean against this theorem as a `sorryAx`
-control. **It closes nothing here**: all four of its inputs are explicit
-undischarged hypotheses, so what changed is that the goal is now a statement a
-lane can aim an input at, not that any input is in hand. Two measurements from
-building it that a consumer needs: the bundled `Prop`-valued `IsGaloisQuotient`
-cannot be destructured into the `Type`-valued `RepresentableBy` conclusion
-directly (`Exists.casesOn` eliminates only into `Prop`), so the `Nonempty` form is
-where `Classical.choice` is spent while clause (1), being an existential, needs
-none; and `quotientHomEquiv_uniform`'s `Nonempty` cannot carry the naturality
+control. **It closes nothing here**, and what changed is that the goal is now a
+statement a lane can aim an input at, not that any input is in hand.
+
+**AND ONE OF THE FOUR IS SINCE GONE — proved free, not supplied** (`pic-e`, same
+day; this sentence replaces "all four of its inputs are explicit undischarged
+hypotheses", which that commit falsified).
+`PicScheme.isInvariantMatch_canonical` (`Picard/PicEtInvariantMatch.lean`) proves
+the `G1` predicate match at the canonical action for every test, with **no**
+hypothesis beyond the representation and the curve's own binders — no finiteness,
+no separability, no `IsGalois`, no condition on `Gal(k'/k)`. It is free because the
+canonical action's `γ`-component *is* `twistMor γ`, which is defined by
+transporting the functor action along `rep`, so equivariance and invariance are two
+readings of one equation and naturality converts between them. So the route from a
+`k'`-side representation to clause (1) field 1 carries **two** named antecedents:
+the Galois quotient at a glued non-affine `X'`, and `hcov`. Consumers should call
+`seamClauseOne_of_isGaloisQuotient_noMatch`. **Still nothing here is discharged**:
+the `k'`-side representation is the campaign's undischarged output, and clause (1)
+field 1 is witnessed for no curve.
+
+Two measurements from building it that a consumer needs.
+`quotientHomEquiv_uniform`'s `Nonempty` cannot carry the naturality
 square a `RepresentableBy` needs, so clause 3 had to be re-derived with its
-forward map pinned to a named morphism. The conclusion shape
+forward map pinned to a named morphism. And there is an asymmetry in what
+`Classical.choice` is spent on: the `RepresentableBy` form needs it, while
+clause (1), being an existential, eliminates the quotient's `∃` into a `Prop` and
+needs none — which is why `seamClauseOne_of_isGaloisQuotient` is a `theorem` and
+not a `noncomputable def`. (An earlier revision of this paragraph gave a *stronger*
+reason — that the `Prop`-valued `IsGaloisQuotient` "cannot be destructured" into the
+`Type`-valued conclusion, so the `Nonempty` form was forced. That was withdrawn at
+`PicEtDescentGoal.lean` §6 the day it was written: `Exists.choose` elaborates
+directly, only the `obtain` *tactic* cannot, and the same paragraph was already
+invoking choice. The asymmetry is what survived.) The conclusion shape
 `Nonempty ((PicScheme.picEt C).RepresentableBy X)` occurred at exactly three sites
 — the `HasPicSchemeEt` class field and the seam `sorry` below, plus
 `hasPicSchemeEt_of_picSharp_representability` — and all three are **same-field**,
