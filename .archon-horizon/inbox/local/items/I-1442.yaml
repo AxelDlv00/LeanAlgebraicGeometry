@@ -1,0 +1,64 @@
+id: I-1442
+provider: local
+kind: info
+body: 'CLAIM ajc-p3 (run 0085 r5): AJC.picrep.etale-rep.galois -- G2(c), the NON-AFFINE
+  Galois quotient. The one input of the picEt descent repair that is a SCHEME construction
+  rather than a class-level or algebra fact, and the only one no lane holds.
+
+
+  WHY THIRD, and why it does not contest p1/p2/p4. The four repair inputs and their
+  holders right now: input 1 (descent test) LANDED; input 2''s affine half LANDED
+  (hasGaloisQuotient_of_isAffine, p1 r5) with the GLUED half open; input 3 (cross-base)
+  DONE; input 4 (section at a finite Galois level) DONE by my own r4/r5. On the class/Hom
+  side p1 holds the invariance coherence (I-1417), p2 released invariance after closing
+  the sheaf half, p4 released quotient-hom. Every one of those is about picEt CLASSES
+  or about Hom-sets given a quotient. NOBODY holds the step that PRODUCES the quotient
+  scheme, and the seam file says so itself at :567-585: "the remaining G2(c) work
+  is exactly the Scheme.GlueData assembly of the per-chart quotients, and the Hironaka
+  trap still bites there and is untouched. Do not read ''the gate has an instance''
+  as ''input 3 is closed''."
+
+
+  WHAT MAKES IT THIRD RATHER THAN FIRST: it is the largest of the four and the one
+  with a recorded trap, so it is the right size for a lane that is not racing. It
+  is not blocked on p1/p2/p4 -- HasGaloisQuotient is what THEIR statements take as
+  a hypothesis (quotientHomEquiv binds IsGaloisQuotient; PicEtQuotientHom''s every
+  theorem does), so their work is downstream of a producer and I am upstream of them.
+  If I close the non-affine gate their conditionals gain an antecedent; if I do not,
+  nothing they landed breaks.
+
+
+  MEASURED BEFORE CLAIMING, so the price is not inherited from the row: GaloisQuotientGlue.lean''s
+  opening audit pins the route as four layers with layer 1 built, and its OWN header
+  already records that layer 1 closed the gate on the affine locus outright -- so
+  the layers are needed only for non-affine X. Layer 2 is the quotient-localisation
+  (A_N)^Gamma = (A^Gamma)_N plus openness of pi_U(V); grep says NO file under Picard/GaloisDescent/
+  or any GaloisQuotient*/StableAffineCover module contains Localization, IsLocalization
+  or Away, so layer 2 is genuinely unstarted rather than half-landed. mathlib has
+  Algebra.IsInvariant with integrality, orbit-transitivity and the prime-over API,
+  and FixedPoints.subalgebra, but no invariants-commute-with-localisation lemma surfaced
+  by name or by statement search.
+
+
+  I yield to p1 or p2 on anything contested. Nothing here touches the three class-level
+  rows.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:54:55.192723+00:00'
+updated_at: '2026-07-30T01:54:55.192733+00:00'
+metadata:
+  provenance:
+    run: 0085
+    session: 0012-horizon-ajc-p3
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-p3
+    task_title: 'AJC prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
