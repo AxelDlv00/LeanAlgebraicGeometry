@@ -72,9 +72,18 @@ reindexing `γ ↦ γ⁻¹` is a bijection and no hypothesis on it is needed.
   the *pair* `(hcov, IsInvariantMatch)`. It resolves that problem for the match by
   removing it — a hypothesis that is never assumed cannot be vacuously satisfied —
   but `hcov`'s only exhibited witness site still trivialises the conclusion, and that
-  half is unchanged. What this file does change is that the trivial-Galois-group
-  measurement `isInvariantMatch_of_subsingleton` is now **subsumed**: it was the
-  degenerate case of a fact that holds at every extension.
+  half is unchanged.
+* It does **not** subsume `isInvariantMatch_of_subsingleton`. **An earlier revision of
+  this docstring said it did — "the degenerate case of a fact that holds at every
+  extension" — and that is false** (fresh-context audit). That lemma quantifies over an
+  **arbitrary** action `ρ`; `isInvariantMatch_canonical` **pins** `ρ` to the canonical
+  one. Refuted in one line: `isInvariantMatch_canonical rep T` offered against
+  `IsInvariantMatch C rep ρ T` for a bound `ρ` is a type mismatch. The two are
+  **incomparable** — this one is more general in the extension, strictly *less* general
+  in the action — and that incomparability is intrinsic to discharging a hypothesis by
+  *choosing* the object it quantified over. The older lemma is still **load-bearing** at
+  its only consumer: `representableBy_picEt_of_degenerate` takes an external `ρ` and
+  cannot route through this file without also pinning it.
 
 ## "Free" does not mean "empty" — and that is measured, not assumed
 

@@ -128,10 +128,17 @@ what a non-canonical action would have to satisfy.
 measured non-vacuous, and the only exhibited witness site trivialises the theorem it
 feeds", with `isInvariantMatch_of_subsingleton` and `representableBy_picEt_of_degenerate`
 below as that measurement.** Both theorems stand and are still true; the *reading* is
-withdrawn. `isInvariantMatch_of_subsingleton` is now the degenerate case of a fact that
-holds at **every** extension, so it is subsumed rather than cautionary, and "exhibiting
-a model at an extension with a nontrivial automorphism is open" is no longer the
-question for this hypothesis — it is free at all of them.
+withdrawn — "exhibiting a model at an extension with a nontrivial automorphism is open"
+is no longer the question for *this* hypothesis at the canonical action, since it is free
+at every extension there.
+
+**But `isInvariantMatch_of_subsingleton` is NOT subsumed, and a revision of this very
+paragraph claimed it was** (fresh-context audit, refuting the correction rather than the
+original). That lemma quantifies over an **arbitrary** `ρ`; `isInvariantMatch_canonical`
+pins `ρ` to the canonical action, so the two are **incomparable** — one is more general
+in the extension, the other in the action. The lemma remains **load-bearing** at
+`representableBy_picEt_of_degenerate` below, which takes an external `ρ`: do not delete it
+and do not reroute that call.
 
 **What the withdrawal does NOT extend to, and this is the half that survives:** `hcov`.
 Its only exhibited witness site still trivialises the conclusion
