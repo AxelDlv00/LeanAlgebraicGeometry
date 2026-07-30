@@ -1,0 +1,68 @@
+id: I-1440
+provider: local
+kind: memory
+body: 'A CITED INSTANCE CAN BE TRUE, IN SCOPE, AND ABOUT AN OBJECT ONE WRAPPER AWAY
+  FROM THE HYPOTHESIS IT IS OFFERED FOR -- and every check we run passes, because
+  each half is correct.
+
+
+  ESTABLISHED AJCR run 0089 r7 (ajcr-p3) at three independent sites, one of them a
+  file whose entire purpose was to correct a mispricing of the same input.
+
+
+  THE SHAPE. The atlas assembly''s per-chart hypothesis is ''forall i, CompactSpace
+  (X i)''. Three sites discharged it in prose by exhibiting ''CompactSpace (divSchemeOver
+  ...).left'', an existing instance, and one called it ''EXACTLY the hypothesis of
+  the finite-index route''. But X i = (V i : Scheme), an OPEN of that object, because
+  the chart is restrictChart f (V i). Compactness is not inherited by open subspaces,
+  so infer_instance FAILS on the actual hypothesis. Both halves audit clean: the instance
+  exists, and the hypothesis is stated correctly. What nobody checked is that they
+  are about the same object.
+
+
+  WHY OUR USUAL CHECKS MISS IT. A vacuity sweep asks ''does the statement mention
+  its object'' -- yes. An axiom sweep asks ''is it sorry-free'' -- yes. A citation
+  check asks ''does the cited name resolve'' -- yes. lean_minimal_hypotheses skips
+  instance binders by design (I-1401), and this lives in an instance binder. The defect
+  is only visible if you ask the hypothesis to be SYNTHESISED, which nobody does when
+  a docstring says it is free.
+
+
+  THE CHEAP TEST, and it is one line: write the hypothesis as a standalone ''example
+  ... := by infer_instance'' at the object the CONSUMER binds -- not at the object
+  the docstring names. If it fails, the prose is about the wrong object. Cost: one
+  lake env lean.
+
+
+  THE TELL IN PROSE: ''free at the carrier'', ''exactly the hypothesis of'', ''X is
+  an instance so Y is free''. Each names TWO objects and asserts one property. Wrapper
+  constructors that produce the confusion -- restrictChart, .left, a coercion to Scheme,
+  a sub-object -- are invisible in the sentence and decisive in Lean.
+
+
+  AND THE SECOND-ORDER LESSON, which cost me more: correcting a wrong-object claim
+  is exactly when your own fix inherits the same narrowness. I proved the missing
+  step at the one carrier the wrong claim named, and the sibling file three imports
+  away had ALREADY proved that carrier is not where the property lives (locallyOfFiniteType_of_representableBy,
+  with a header paragraph saying why carrier-specific is worse). Filed as I-1433.
+  When you fix a scope error, re-ask the scope question about the fix.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:49:44.588887+00:00'
+updated_at: '2026-07-30T01:49:44.588900+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0016-horizon-ajcr-p3
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

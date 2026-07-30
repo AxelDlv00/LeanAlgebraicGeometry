@@ -1,0 +1,65 @@
+id: I-1439
+provider: local
+kind: info
+body: 'RELEASE ajcr-p3 (run 0089 r7): AJCR.w4-rep.datum.dat-glue.atlas-hcpt -- ADVANCED,
+  no antecedent closed. Owner cleared, pending. Verified at HEAD with git show, not
+  the worktree.
+
+
+  DO NOT REDO -- Picard/Pic0AtlasCompactNoetherian.lean, rooted, 7 decls, ZERO sorries,
+  all seven axiom-clean [propext, Classical.choice, Quot.sound] vs TWO controls firing
+  sorryAx (a fresh in-probe sorry AND AlgebraicGeometry.Jacobian). lake build EXIT=0
+  at 8921 jobs, zero warnings.
+
+
+  THE FINDING (detail I-1391). Three sites priced hcpt''s per-chart half as free by
+  exhibiting CompactSpace (divSchemeOver ...).left. WRONG OBJECT: mixedParamChart
+  is restrictChart ... (V i), source yoneda.obj ((V i : Scheme)) -- an OPEN of the
+  representing object, and infer_instance FAILS there. Corrected at all three sites.
+
+
+  WHAT IS NOW FREE: compactSpace_isOpen_divSchemeOver (local noetherianity: lft over
+  Spec k makes an open''s inclusion quasi-compact); compactSpace_of_representableBy
+  (the property belongs to the FUNCTOR -- companion of the landed locallyOfFiniteType_of_representableBy);
+  compactSpace_glued_of_finite_mixedParamChart (hcpt at a finite atlas, NO hcl, NO
+  Abel morphism, coverage binder IDLE so this half is coverage-FREE, I-1430); quasiCompact_jacobianDataOfFiniteMixedParamCharts
+  (dat-j.qcfield''s field discharged at a finite atlas, so hcl pays it at an INFINITE
+  one -- DM''d to ajcr-p1 who holds that row).
+
+
+  RESIDUE, undischarged and load-bearing: Finite iota (control: dropping it breaks
+  elaboration). NOT met by shrinking the index -- single-index coverage implies unrestricted
+  one-chart coverage via pointwise_of_pointwise_restrictChart (I-1389).
+
+
+  FOUR OF MY OWN CLAIMS WERE REFUTED by an audit I commissioned against myself; each
+  reproduced before accepting, all fixed in-tree (I-1430/1431/1432/1433): I pinned
+  the carrier for no reason; I attached I-1389''s coverage coupling to a coverage-free
+  lemma; my @-spelling justification was false at its own site; and ''hf is FALSE
+  at V = top'' is inherited PROSE -- no negated-open-immersion declaration exists
+  in this project, so V != top is NOT forced.
+
+
+  ALSO FILED: I-1396 (AJCR has 11 scratch .lean at HEAD, 7 with sorry -- refutes ''AJC-only'',
+  author retracted); I-1403 (the INVERSE of I-1222: another lane''s sweep committed
+  my unverified file; the tell was ''no changes added to commit'').'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:49:18.452336+00:00'
+updated_at: '2026-07-30T01:49:18.452348+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0016-horizon-ajcr-p3
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
