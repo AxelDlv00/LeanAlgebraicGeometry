@@ -366,6 +366,35 @@ theorem exists_invariant_basicOpen_le [FiniteDimensional K L]
       simpa using hs_le
     exact hle.trans hs_le'
 
+/-- Invariant basic opens of the stable affine chart `U` which are contained in
+`V`.  This is the index type used by the quotient-chart cover in layer 3. -/
+def InvariantBasicOpenIndex (V : X.Opens) : Type u :=
+  letI := ρ.sectionsMulSemiringAction hU
+  {N : Γ(X, U) // (∀ γ : L ≃ₐ[K] L, γ • N = N) ∧ X.basicOpen N ≤ V}
+
+/-- Every member of `InvariantBasicOpenIndex` cuts out a stable open. -/
+lemma invariantBasicOpen_isStable {V : X.Opens}
+    (i : InvariantBasicOpenIndex ρ hU V) :
+    ρ.IsStableOpen (X.basicOpen i.1) := by
+  letI := ρ.sectionsMulSemiringAction hU
+  exact ρ.isStableOpen_basicOpen_of_smul_eq hU i.1 i.2.1
+
+/-- **The invariant basic opens contained in a stable subopen cover it.**  This is
+the lattice form of `exists_invariant_basicOpen_le`, ready for `OpenCover` and
+`Scheme.GlueData`: the point-indexed existence theorem has been assembled into the
+exact supremum identity required by gluing. -/
+theorem iSup_invariantBasicOpen_eq [FiniteDimensional K L]
+    (hUa : IsAffineOpen U) {V : X.Opens} (hVU : V ≤ U)
+    (hV : ρ.IsStableOpen V) :
+    (⨆ i : InvariantBasicOpenIndex ρ hU V, X.basicOpen i.1) = V := by
+  apply le_antisymm
+  · exact iSup_le fun i => i.2.2
+  · intro x hx
+    obtain ⟨N, hN, hxN, hNV, -⟩ :=
+      ρ.exists_invariant_basicOpen_le hU hUa hVU hV hx
+    rw [TopologicalSpace.Opens.mem_iSup]
+    exact ⟨⟨N, hN, hNV⟩, hxN⟩
+
 end ActApp
 
 /-! ## The structure map on sections of a scheme over `Spec L` -/
