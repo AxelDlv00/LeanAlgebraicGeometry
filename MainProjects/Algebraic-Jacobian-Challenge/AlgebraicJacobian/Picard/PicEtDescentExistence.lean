@@ -38,10 +38,14 @@ single-morphism datum without the identification, which is why
 hand inside its own proof rather than cite a lemma.
 
 `generate_singleton_coverMap_eq` is that identification, as an equality of sieves
-on `T` in the slice. With it:
+on `T` in the slice — **and it is Mathlib's `Sieve.overEquiv_ofArrows` at a
+one-element index, not new work** (`I-1407`; the first revision of this file
+re-proved it in 26 lines and claimed "nothing identified them"). With it:
 
 * `isSheafFor_picEt_singleton_coverMap` — the sheaf axiom holds for the
-  **slice-level singleton presieve** on `coverMap T`;
+  **slice-level singleton presieve** on `coverMap T`. **This is the file's only
+  geometric content**: it is where the covering-sieve witness of
+  `Picard/EtaleFieldCover.lean` is consumed.
 * `exists_unique_descend_picEt` — the existence-and-uniqueness statement in the
   form the descent step consumes: a class `x` on `T_{k'}` whose two pullbacks to
   any common test agree descends to a **unique** class on `T`.
@@ -50,6 +54,18 @@ The uniqueness half of `exists_unique_descend_picEt` is *not* a second proof of
 `picEt_injective_restrict_baseTest`; it is the `∃!` that the sheaf condition
 delivers in one piece, and the earlier lemma is the form that takes two classes
 rather than a compatibility hypothesis.
+
+**Honest accounting of what is and is not new here** (`I-1407`, `I-1410`,
+fresh-context audits, both reproduced and accepted). Of the eight declarations, the
+sieve identification is Mathlib's; the `∃!` chain and the two-projection reduction
+are **generic category theory** — a reviewer re-proved all three for an arbitrary
+presheaf on an arbitrary category using this file's own script, and Mathlib packages
+the pair as `Equalizer.Presieve.isSheafFor_singleton_iff_of_hasPullback`; the two
+tensor-inclusion lemmas are one `simp` each. What this file genuinely contributes is
+**assembly**: putting the landed cover, the landed sheaf axiom and those generic
+facts together so that the descent step is a citable theorem in the variables a `G1`
+consumer holds, which it was not. That is worth having and is not a new theorem, and
+the docstrings below say so at each site.
 
 ## What remains owed, and why this is not the invariance step
 
@@ -60,10 +76,11 @@ bridge between them is the Galois-splitting comparison
 `k' ⊗_k k' ≅ ∏_{Gal(k'/k)} k'` — under which the two projections
 `T_{k'} ×_T T_{k'} ⟶ T_{k'}` become the identity and the `γ`-twist, so that
 "the two pullbacks agree" becomes "`γ` fixes the class, for every `γ`". That
-splitting is `ajc-p1`'s row `AJC.picrep.etale-rep.galois-splitting`; it is
-**absent from mathlib** (measured: `exact?` fails on both the `AlgEquiv` and the
-`RingEquiv` form, and `Algebra.Etale K (L ⊗[K] L)` fails synthesis) and this file
-does **not** assume it.
+splitting is `ajc-p1`'s row `AJC.picrep.etale-rep.galois-splitting`; it was absent
+from Mathlib when measured (`exact?` failed on both the `AlgEquiv` and the
+`RingEquiv` form) and **landed during this session** as
+`AlgebraicJacobian.GaloisDescent.galoisSelfTensorEquiv`. What this file assumes of
+it is only the two generator evaluations in §2; the `Spec`-side transport is open.
 
 So the honest statement of what is closed here is: *the sheaf-theoretic content
 of the existence half, in single-morphism form*. The Galois-to-pullback
@@ -103,51 +120,44 @@ variable {k : Type u} [Field k] {k' : Type u} [Field k'] [Algebra k k']
 
 /-! ## §1. The two presieves are one sieve -/
 
-/-- **The slice-level singleton sieve on `coverMap` IS the transported
-scheme-level one.**
+/-- **A slice-level singleton sieve is the `overEquiv`-transport of its
+scheme-level shadow** — generic in the category and the slice.
 
 `Picard/EtaleFieldCover.lean` establishes covering-sieve membership and the sheaf
-axiom for `(Sieve.overEquiv T).symm (Sieve.generate (Presieve.singleton
-(pullback.fst …)))` — a sieve described on the *underlying schemes* and pulled
-back into the slice. A consumer of the descent step instead holds a datum indexed
-by the slice morphism `coverMap T`. This says the two sieves are **equal**, so
-every statement proved for one applies verbatim to the other.
+axiom for a sieve described on the *underlying schemes* and pulled back into the
+slice; a consumer of the descent step instead holds a datum indexed by one slice
+morphism. This is the identification that lets every statement proved for the one
+apply verbatim to the other.
 
-Both inclusions are the same factorisation, in opposite directions: an arrow of
-either sieve factors through the cover on underlying schemes, and the lift to the
-slice over `Spec k` is where `pullback.condition` is consumed. The forward
-direction additionally uses that `restrictTest` does not move the underlying
-scheme, so `Over.Hom.left` of a slice factorisation *is* a scheme factorisation.
+**This is Mathlib's `Sieve.overEquiv_ofArrows` at a one-element index, and the
+first revision of this file re-proved it in 26 lines of `ext`/`rintro`** — a
+duplicate of a lemma in its own import closure, found by a fresh-context audit
+(`I-1407`) and replaced by the two-line derivation. Two claims that stood in this
+docstring are withdrawn with it: that "nothing identified the two" (Mathlib does,
+generically), and the paragraph describing the proof as a two-directional
+factorisation consuming `pullback.condition` (it consumes neither — `ofArrows_pUnit`
+plus the Mathlib lemma).
 
-No hypothesis on `k'/k` beyond `[Algebra k k']`: this is bookkeeping about the
-slice, and neither finiteness nor separability enters. Those are consumed only by
-the covering-sieve *membership* witness, one file over. -/
+What survives is the *use*: the statement is not `rfl` and not `⊤`, and §2 needs it.
+The specialisation below is kept as a named form because it is what the geometric
+statements cite, but the content is Mathlib's and no lane should budget for it.
+
+No hypothesis on `k'/k` at all — not even `[Algebra k k']` is used by the general
+form. -/
+theorem generate_singleton_overEquiv_symm {C : Type*} [Category C] {X : C}
+    {Y Z : Over X} (f : Z ⟶ Y) :
+    Sieve.generate (Presieve.singleton f) =
+      (Sieve.overEquiv Y).symm (Sieve.generate (Presieve.singleton f.left)) := by
+  rw [Equiv.eq_symm_apply, ← Presieve.ofArrows_pUnit.{_, _, 0} f,
+    ← Presieve.ofArrows_pUnit.{_, _, 0} f.left]
+  exact Sieve.overEquiv_ofArrows (fun _ : PUnit => Z) (fun _ => f)
+
 theorem generate_singleton_coverMap_eq (T : Over (Spec (CommRingCat.of k))) :
     Sieve.generate (Presieve.singleton (coverMap (k := k) (k' := k') T)) =
       (Sieve.overEquiv T).symm
         (Sieve.generate (Presieve.singleton
-          (pullback.fst T.hom (specMapAlgebra k k')))) := by
-  ext W g
-  constructor
-  · rintro ⟨Z, a, b, hb, hfac⟩
-    cases hb
-    rw [Sieve.overEquiv_symm_iff]
-    refine ⟨_, a.left, _, Presieve.singleton.mk, ?_⟩
-    rw [← hfac]
-    rfl
-  · intro hg
-    rw [Sieve.overEquiv_symm_iff] at hg
-    obtain ⟨Z, a, b, hb, hfac⟩ := hg
-    cases hb
-    refine ⟨_, Over.homMk a (by
-      rw [← Over.w g]
-      simp only [restrictTest, Over.map_obj_hom, baseTest, Over.mk_hom, ← hfac]
-      rw [Category.assoc]
-      exact congrArg (a ≫ ·) pullback.condition.symm), coverMap (k' := k') T,
-      Presieve.singleton.mk, ?_⟩
-    apply Over.OverMorphism.ext
-    change a ≫ pullback.fst T.hom (specMapAlgebra k k') = Over.Hom.left g
-    exact hfac
+          (pullback.fst T.hom (specMapAlgebra k k')))) :=
+  generate_singleton_overEquiv_symm _
 
 /-! ## §2. The sheaf axiom at the cover morphism, and the `∃!` descent -/
 
@@ -230,7 +240,21 @@ Pure universal property — `pullback.lift` on the pair, then functoriality. **T
 not a fact about *this* cover at all — it holds at any morphism with a
 self-pullback. Recorded because "the step needs the cover" is exactly the sort of
 claim that gets inherited from a section header (`I-1316`). What needs the cover is
-`isSheafFor_picEt_singleton_coverMap`, one lemma up. -/
+`isSheafFor_picEt_singleton_coverMap`, one lemma up.
+
+**And the `omit` UNDERSTATES it** (`I-1410`, fresh-context audit, accepted and
+reproduced): a work-reviewer re-proved this lemma *and* both `∃!` statements below
+for an **arbitrary presheaf on an arbitrary category**, using this file's own `calc`
+script with `picEt ↦ F` and `coverMap ↦ f`, with the field, the curve, the slice and
+`Scheme` all deleted. So these three declarations are generic category theory in a
+geometric costume; the geometric binders they carry are inherited from the section,
+not consumed. Mathlib moreover packages the pair as
+`Equalizer.Presieve.isSheafFor_singleton_iff_of_hasPullback`
+(`Sites/EqualizerSheafCondition.lean`, verified present), whose own proof contains
+this reduction as an inlined `have`. They are kept in geometric form because that is
+what the descent step cites, but **nothing here is a geometric fact** and no lane
+should budget for re-deriving them. The geometric content of this file is exactly
+`isSheafFor_picEt_singleton_coverMap`'s appeal to the covering-sieve witness. -/
 theorem compatible_of_pullback_projections (C : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
     (T : Over (Spec (CommRingCat.of k)))
@@ -291,8 +315,8 @@ end Cover
 /-- **The object the compatibility hypothesis lives on, identified.**
 
 The slice self-pullback `T_{k'} ×_T T_{k'}` of `coverMap T`, read on underlying
-schemes, is the base change of the field-extension self-pullback along
-`T_{k'} ⟶ Spec k`. Two free steps:
+schemes, is `T_{k'} ×_{Spec k} Spec k'` — i.e. `T ×_k k' ×_k k'`, **two**
+`k'`-factors over `k`. Two free steps:
 
 1. `Over.forget` **preserves pullbacks** (by synthesis), so the slice pullback is
    computed on schemes — this is `PreservesPullback.iso`;
@@ -305,10 +329,17 @@ iso. `exact?` failing on a one-shot query is not a measurement of absence when t
 statement decomposes; here it does, into two lemmas that both already exist. Both
 `HasPullback` instances arrive by synthesis.
 
-No hypothesis on `k'/k` beyond `[Algebra k k']`: this is base change, not covering.
-Combined with `ajc-p1`'s `galoisSelfTensorEquiv` (which identifies
-`Spec k' ×_k Spec k'` with a `Gal`-indexed finite coproduct) it is what a
-`γ`-invariance consumer needs, modulo the morphism-level coherence §4 names. -/
+**A correction to this docstring's own earlier headline** (`I-1412`, fresh-context
+audit, accepted): it said the right-hand side was "the base change of the
+field-extension **self**-pullback along `T_{k'} ⟶ Spec k`". That is a *different
+object* — it would carry **three** `k'`-factors, second leg
+`pullback.fst _ _ ≫ specMapAlgebra k k'`, whereas the landed second leg is
+`specMapAlgebra k k'` itself. The iso is true and axiom-clean; the description was
+off by one `k'`-factor, and that factor is exactly where the `Gal`-indexing lives.
+So this iso brings the compatibility object into `Spec`-of-a-tensor form; it does
+**not** already exhibit the `Gal`-indexed decomposition.
+
+No hypothesis on `k'/k` beyond `[Algebra k k']`: this is base change, not covering. -/
 noncomputable def selfPullback_coverMap_left_iso (T : Over (Spec (CommRingCat.of k))) :
     (pullback (coverMap (k := k) (k' := k') T)
       (coverMap (k := k) (k' := k') T)).left ≅
@@ -319,18 +350,26 @@ noncomputable def selfPullback_coverMap_left_iso (T : Over (Spec (CommRingCat.of
   pullbackRightPullbackFstIso T.hom (specMapAlgebra k k')
     (pullback.fst T.hom (specMapAlgebra k k'))
 
-/-! ### The two legs of the Galois bridge, at the ring level
+/-! ### Evaluating the splitting on the two tensor inclusions
 
-The bridge from `γ`-invariance to projection-agreement needs the `γ`-component of
-`ajc-p1`'s splitting to send the cover's two legs to `id` and `γ`. These are those
-two identities, at the ring level where they live; the scheme-level transport is
-`Spec` applied to them.
+The `γ`-component of `ajc-p1`'s splitting, evaluated on the two ring inclusions
+`k' → k' ⊗_k k'`, gives `a` and `γ a`.
 
-Recorded here rather than left as prose because my own §4 named this coherence as
-the residue, and a residue worth naming is worth *checking is not free* — these two
-are, from `galoisSelfTensorEquiv_apply_tmul`. `Picard/GaloisDescent/GaloisSelfTensor.lean`
-had **zero** code consumers when this landed (`I-1399`); these are the first, which
-is also the check that the brick's `simp` lemmas are usable rather than merely true.
+**These are NOT the residue §4 names, and the first revision of this section said
+they were** (`I-1415`, fresh-context audit, accepted). §4's residue is a statement
+about the *coproduct* side — a `γ`-component **inclusion** `Spec k' → Spec k' ×_k
+Spec k'` composed with the cover's two **projections**. What is below mentions no
+coproduct, no `sigmaSpec`, no pullback projection and no `Spec`: it is the
+(easier) evaluation of the equivalence on the two generators of the **tensor**
+side. The withdrawn sentence claimed "a residue worth naming is worth checking is
+not free — these two are", which was self-consistent only under the false
+identification.
+
+What they are good for, kept because it is real: they are the **first code
+consumers** of `Picard/GaloisDescent/GaloisSelfTensor.lean`, measured at **zero**
+when it landed (`I-1399`), so they check that the brick's `simp` lemmas are usable
+rather than merely true. They are also the ring-level input any `Spec`-side
+coherence proof will need. They are cheap and are not presented otherwise.
 
 The `change` on the first leg is load-bearing: `includeLeftRingHom a` does not
 `simp`-normalise to `a ⊗ₜ 1` on its own, and without it instance resolution gets
@@ -406,7 +445,8 @@ projections become the identity and the `γ`-twist *as morphisms*, and then read
 nothing supplies is the *coherence* — that the coproduct's `γ`-component inclusion
 composed with the two projections gives `id` and `γ`. That is a computation about
 specific morphisms, not a missing lemma, and it is the honest description of what a
-lane closing this owes.
+lane closing this owes. §2's two tensor-inclusion lemmas are the **ring-level** input
+to that computation and are explicitly *not* the computation itself (`I-1415`).
 
 This file does not assume the bridge and does not weaken the invariance step to
 something the splitting alone would make free.
@@ -435,11 +475,35 @@ is what turns descended *classes* into a representing *scheme*, and it is gated 
 `AlgebraicJacobian.GaloisDescent.HasGaloisQuotient`, which has an instance only on
 the affine locus while the object this route descends is glued.
 
-So: sheaf-theoretic side of the existence half **closed** at one morphism and
-reduced to a two-projection check; the Galois splitting **landed** (`ajc-p1`); the
-`T`-relative base change of that splitting **open**, and it is now the single link
-between `γ`-invariance and a descended class; `k'`-side representability and the
-`G2` quotient **open** and not made cheaper by anything here.
+**The summary that stood here contradicted the paragraph above it** and both
+sentences were mine, in one docstring, about one object (`I-1412`): the body said
+the `T`-relative base change "is **not** the residue either", and the summary
+called it "**open**, and now the single link". The base change is landed
+(`selfPullback_coverMap_left_iso`); it is the `Gal`-**indexing** that is open. A
+reader planning from the summary would have re-derived a landed lemma.
+
+So, corrected and stated once:
+
+* the sheaf-theoretic side of the existence half — **closed** at one morphism and
+  reduced to a two-projection check;
+* the Galois splitting — **landed** (`ajc-p1`), with its two generator evaluations
+  consumed here;
+* the `T`-relative base change of the compatibility object — **landed** here;
+* the `Gal`-**indexed** identification of that object, i.e. transporting the two
+  ring identities through `Spec` and `sigmaSpec` so they become the cover's two
+  *projections* — **OPEN**. Attempted this session and not landed: the composite
+  sticks on `Scheme.Spec.map` versus `Spec.map` under the instance transparency the
+  rewrite needs. Ring content done, categorical plumbing owed.
+* `k'`-side representability and the `G2` quotient — **open**, and not made cheaper
+  by anything here.
+
+**A pattern this file's history is evidence for, and the reason to distrust the
+line above.** Every residue named on this step during one session turned out cheaper
+than named — the splitting (closed within the hour), the `T`-relative base change
+(two Mathlib lemmas), the morphism coherence as I first stated it (one `simp` each,
+and on the wrong side of the equivalence). Three retractions in three commits. A
+lane inheriting the item above should probe it before budgeting for it, and should
+read `I-1402`: a failing `exact?` measures absence only when the goal is atomic.
 -/
 
 end PicScheme
