@@ -6,6 +6,7 @@ Authors: The AlgebraicJacobian Contributors
 import AlgebraicJacobian.Picard.ProjectiveMorphismBasic
 import AlgebraicJacobian.Picard.ProjectiveCoordinateChart
 import AlgebraicJacobian.Picard.ProjectiveSpaceAffineChartIso
+import AlgebraicJacobian.Picard.FiniteMapLaurentGenerators
 import AlgebraicJacobian.Picard.TwistedProjectiveCoordinates
 import Mathlib.AlgebraicGeometry.AffineSpace
 import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
