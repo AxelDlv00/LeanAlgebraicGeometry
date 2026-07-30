@@ -2,18 +2,20 @@ id: AJCR.w4-rep.datum.dat-b.neighborhood-point
 title: 'DAT-B restricted-neighborhood point: lift coverage into the same chart open'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'OPEN after COVER-THRESHOLD. exists_uniform_admissibleCoverageChart_eq_univ
-  gives one fixed legal (m,Z) whose unrestricted chart locus contains every fibre
-  point of every pic^0 class. That membership alone does not instantiate the representability
-  atlas. For every T, class s, and t, this row must produce an open W containing t,
-  the corresponding restricted chart open V, and x : (W : Scheme) -> (V : Scheme),
-  with the mixedParamChart value of x equal to s restricted to W; V must be the same
-  open carrying RestrictedChartFibre/IsChartUniv. This is exactly the input shape
-  of chartsCoverLocally_of_pointwise. A map only W -> D.left, or a lift through unrestricted
-  abelSigmaChart, is insufficient because antecedent 1 fails there. The parameter
-  is admissibleCoverageParameter and joins pic-d''s arbitrary-parameter representability
-  route; the V-coupling joins chart-restrict.'
-status: active
+summary: 'OPEN after COVER-THRESHOLD. The remaining antecedent is still the same-V
+  neighborhood lift: for every T, degree-zero class s, and t, produce an open W containing
+  t, the restricted chart source open V carrying RestrictedChartFibre/IsChartUniv,
+  and x : (W : Scheme) -> (V : Scheme) whose mixedParamChart value is s|W. A lift
+  only to the unrestricted divisor scheme is insufficient. Newly measured at 132a56f984/ea59eeb022:
+  any chart-locus membership at parameter n supplies a splitting witness with h0 =
+  n+1-g; for g != 0, g < admissibleCoverageParameter, so the actual uniform full-locus
+  chart supplies an h0 >= 2 witness at every degree-zero fibre point. This separates
+  high-parameter vanishing/coverage from the genus-parameter h0=1 uniqueness route,
+  but does NOT refute a high-parameter same-V local lift. Honest next routes are relative
+  spreading inside the high-parameter restricted chart, or a genus-parameter multi-index
+  atlas. The parameter still joins pic-d arbitrary-parameter representability; the
+  same-V condition joins chart-restrict.'
+status: pending
 kind: proof
 priority: high
 depends_on: []
@@ -35,5 +37,7 @@ metadata:
     task_title: 'Pic rep lane H: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-b
-  updated_at: '2026-07-30T04:59:58.237770+00:00'
-  owner: pic-h
+  updated_at: '2026-07-30T07:29:59.822940+00:00'
+  pinned_commits:
+  - ea59eeb02274fb06635ddf0c4c6e1dbcdf22a660
+  - 132a56f9840406006e53c076939fbccee8a2acc5
