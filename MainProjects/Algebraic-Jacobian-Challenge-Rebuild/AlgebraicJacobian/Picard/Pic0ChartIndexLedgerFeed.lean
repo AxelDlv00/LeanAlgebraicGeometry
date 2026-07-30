@@ -43,11 +43,16 @@ is why: if `M·δ` is a multiple of `d₁`, then `IsDivisorDegree C (M·δ + g)`
 **genus** is a divisor degree.  So the open question is one hypothesis about `π` versus
 `thetaP1 C` (are their fibre degrees commensurable?) plus one about the curve at `g`.
 
-The plumbing half of that is already free, `rfl`-checked: `windowδ (thetaP1 C)` and
-`classDeg k (thetaCechClass C)` are literally the same term.  The gap is that the ledger's `π`
-lives on `C.left` while `thetaP1 C` lives on the base-changed `(C ⊗ overSpec k k).left`, so
-their fibre degrees are unrelated by anything in the tree.  Naming that precisely is the point
-of this paragraph; neither this file nor `Pic0ChartIndexAdmissible` closes it.
+Two of the three pieces of that are free, and only the third is open:
+
+* `windowδ (thetaP1 C) = classDeg k (thetaCechClass C)` holds **by `rfl`** — both unfold to
+  `classDeg k (fiberTwist (thetaP1 C) 1)`.  So no `windowδ`-versus-`classDeg` plumbing is owed;
+* the two **curves** are the same, up to a landed isomorphism: `isDivisorDegree_iff_left` below
+  transports the whole predicate to `C.left`.  A first draft of this paragraph asserted the
+  opposite and was wrong; see that theorem's docstring;
+* what is genuinely open is the two **maps**: `π : C.left ⟶ P1 k` versus `thetaP1 C`, a
+  commensurability question between two finite dominant maps on **one** curve.  Plus the question
+  at `g` itself.
 
 ## The chart index this route produces is UNIFORM in the point — read against `I-1389`
 
@@ -117,6 +122,49 @@ variable [Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 0)]
   [Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 1)]
 
 noncomputable section
+
+/-! ## The predicate is about `C.left`, not the base-changed curve
+
+A first draft of this file, and of `Pic0ChartIndexAdmissible`, named the residue as arithmetic on
+the base-changed curve **plus** an unbridgeable comparison between two curves: "their fibre
+degrees are unrelated by anything in the tree.  Naming that precisely is the point of this
+paragraph."  **That sentence was false**, found by a fresh-context audit and reproduced here
+before being replaced: base change along the identity extension `k → k` is an *isomorphism*, and
+the transport of degrees across it is landed.  `RelThetaTransport.lean:49` already names
+`relCurveSelfIso` for this collapse and `RelCurveCollapse.lean:492` already pulls a fibre divisor
+across it.
+
+So `IsDivisorDegree C c` is a statement about `C.left` — the curve where the residue-degree and
+rational-point machinery lives — and the two-*curves* half of the residue costs nothing.  What
+remains open is the two-*maps* half: `π : C.left ⟶ P1 k` versus `thetaP1 C`, a commensurability
+question on **one** curve, materially cheaper than what the withdrawn sentence named. -/
+theorem isDivisorDegree_iff_left {c : ℤ} :
+    IsDivisorDegree C c ↔ ∃ W : C.left.CurveDivisor, Scheme.CurveDivisor.deg k W = c := by
+  haveI := isIso_fst_left_overSpec_self C
+  haveI := instSmoothOfRelativeDimensionBaseChange (C := C) (K := k)
+  haveI := instQuasiCompactBaseChange (C := C) (K := k)
+  haveI := instModuleFiniteHModuleZeroBaseChange (C := C) (K := k)
+  haveI := instModuleFiniteHModuleOneBaseChange (C := C) (K := k)
+  constructor
+  · rintro ⟨W, hW⟩
+    -- transport `W`'s class along the inverse iso, then re-present it by a divisor on `C.left`
+    obtain ⟨W', hW'⟩ := Scheme.CurveDivisor.exists_picClass_eq (K := k)
+      (X := C.left) (Scheme.CechPic.map (CategoryTheory.inv (fst C (overSpec k k)).left)
+        (Scheme.CurveDivisor.picClass k W))
+    refine ⟨W', ?_⟩
+    rw [← classDeg_picClass k W', hW']
+    rw [classDeg_cechPicMap_of_isIso k (CategoryTheory.inv (fst C (overSpec k k)).left) ?_,
+      classDeg_picClass k W, hW]
+    · rw [CategoryTheory.IsIso.inv_comp_eq]
+      exact (fst_left_self_over C).symm
+  · rintro ⟨W, hW⟩
+    obtain ⟨W', hW'⟩ := Scheme.CurveDivisor.exists_picClass_eq (K := k)
+      (X := (C ⊗ overSpec k k).left)
+      (Scheme.CechPic.map (fst C (overSpec k k)).left (Scheme.CurveDivisor.picClass k W))
+    refine ⟨W', ?_⟩
+    rw [← classDeg_picClass k W', hW',
+      classDeg_cechPicMap_of_isIso k (fst C (overSpec k k)).left (fst_left_self_over C),
+      classDeg_picClass k W, hW]
 
 /-- **Coverage's locus membership at the ledger parameter, with the chart index replaced by an
 arithmetic hypothesis on the base field.**

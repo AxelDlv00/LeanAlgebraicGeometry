@@ -9,9 +9,15 @@ import AlgebraicJacobian.RiemannRoch.SectionSpaces
 /-!
 # The chart-index binder `hdeg` is EXACTLY "`n` is a divisor degree" — and the θ-exponent is idle
 
-Twenty-three files in the chart layer bind the same hypothesis, verbatim
+**Twenty-one** files in the chart layer bind the same hypothesis verbatim
 (`Pic0ChartPair.lean:176`, `Pic0ChartRestrictedFibre.lean:147`, `Pic0SigmaSheaf`'s consumers
-through `abelSigmaChart`, …):
+through `abelSigmaChart`, …).  A first draft of this line said twenty-three; re-measure rather
+than quote it — the count is
+`grep -rl "classDeg k (thetaCechClass C) - (n : ℤ))" AlgebraicJacobian/`, excluding this file and
+`Pic0ChartIndexLedgerFeed`.  Counting *any* spelling of the shape (so including the per-index
+`(nn i : ℤ)` form) gives 26, and 65 files bind a hypothesis *named* `hdeg` in some form; the
+figure that matters for this file is the first, since it is the exact binder the theorems below
+are about.  The hypothesis:
 
   `hdeg : deg_k Z = (m : ℤ) * classDeg k (thetaCechClass C) - (n : ℤ)`
 
@@ -223,8 +229,13 @@ hypothesis about `π` versus `thetaP1 C` and is **not** proved anywhere.
 
 What *is* free, measured by `rfl` and recorded so nobody prices it: `windowδ (thetaP1 C)` and
 `classDeg k (thetaCechClass C)` are the same term, both unfolding to
-`classDeg k (fiberTwist (thetaP1 C) 1)`.  So the open gap is `π` versus `thetaP1 C` — two maps
-to `ℙ¹` on two different curves — and not any plumbing between `windowδ` and `classDeg`. -/
+`classDeg k (fiberTwist (thetaP1 C) 1)`.  So no `windowδ`-versus-`classDeg` plumbing is owed.
+
+A first draft added "so the open gap is two maps to `ℙ¹` on **two different curves**", and that
+was **false** — the two curves differ by base change along `k → k`, which is an isomorphism, and
+`Pic0ChartIndexLedgerFeed.isDivisorDegree_iff_left` transports this whole predicate to `C.left`
+from declarations that were already in scope.  Withdrawn.  The open gap is the two **maps** on
+**one** curve: is `deg (fibre of π)` commensurable with `deg (fibre of thetaP1 C)`? -/
 theorem isDegree_mul_thetaDeg_add_iff (a : ℕ) (c : ℤ) :
     IsDivisorDegree C ((a : ℤ) * classDeg k (thetaCechClass C) + c)
       ↔ IsDivisorDegree C c := by
