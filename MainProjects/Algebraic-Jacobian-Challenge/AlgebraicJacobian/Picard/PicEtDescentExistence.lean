@@ -284,6 +284,39 @@ theorem exists_unique_descend_picEt_of_projections
 
 end Cover
 
+/-! ### The self-pullback of the cover is a base change of `Spec k' ×_k Spec k'` -/
+
+/-- **The object the compatibility hypothesis lives on, identified.**
+
+The slice self-pullback `T_{k'} ×_T T_{k'}` of `coverMap T`, read on underlying
+schemes, is the base change of the field-extension self-pullback along
+`T_{k'} ⟶ Spec k`. Two free steps:
+
+1. `Over.forget` **preserves pullbacks** (by synthesis), so the slice pullback is
+   computed on schemes — this is `PreservesPullback.iso`;
+2. `pullbackRightPullbackFstIso` then rewrites the self-pullback of `pullback.fst`
+   as a single pullback against `specMapAlgebra k k'`.
+
+**Why this is recorded rather than left to the reader.** It is the step my own §4
+first priced as the open link, on the evidence that `exact?` fails on the composite
+iso. `exact?` failing on a one-shot query is not a measurement of absence when the
+statement decomposes; here it does, into two lemmas that both already exist. Both
+`HasPullback` instances arrive by synthesis.
+
+No hypothesis on `k'/k` beyond `[Algebra k k']`: this is base change, not covering.
+Combined with `ajc-p1`'s `galoisSelfTensorEquiv` (which identifies
+`Spec k' ×_k Spec k'` with a `Gal`-indexed finite coproduct) it is what a
+`γ`-invariance consumer needs, modulo the morphism-level coherence §4 names. -/
+noncomputable def selfPullback_coverMap_left_iso (T : Over (Spec (CommRingCat.of k))) :
+    (pullback (coverMap (k := k) (k' := k') T)
+      (coverMap (k := k) (k' := k') T)).left ≅
+    pullback (pullback.fst T.hom (specMapAlgebra k k') ≫ T.hom)
+      (specMapAlgebra k k') :=
+  (PreservesPullback.iso (Over.forget (Spec (CommRingCat.of k)))
+    (coverMap (k := k) (k' := k') T) (coverMap (k := k) (k' := k') T)) ≪≫
+  pullbackRightPullbackFstIso T.hom (specMapAlgebra k k')
+    (pullback.fst T.hom (specMapAlgebra k k'))
+
 /-! ## §3. The level this runs at is the level a curve reaches — the join
 
 `§2` is generic in `k'`: `generate_singleton_coverMap_eq` binds only
@@ -322,18 +355,26 @@ absent from Mathlib when I measured it — `exact?` failed on both the `AlgEquiv
 the `RingEquiv` form and `Algebra.Etale K (L ⊗[K] L)` failed synthesis — and it is
 now in this project. So the residue is **not** the splitting.
 
-**What the residue actually is, measured rather than inferred.** The splitting is a
-statement about `Spec k' ×_{Spec k} Spec k'`; the compatibility hypothesis above is
-about `T_{k'} ×_T T_{k'}`, the self-pullback of `coverMap` **in the slice over
-`Spec k`, relative to an arbitrary test `T`**. Both scheme-level ingredients of the
-translation exist and were checked here (`AlgebraicGeometry.pullbackSpecIso` for
-`Spec` of the tensor; `IsIso (sigmaSpec …)` for the finite product, by synthesis
-once `Fintype (k' ≃ₐ[k] k')` is in scope). What does **not** exist is the
-`T`-relative comparison identifying `T_{k'} ×_T T_{k'}` with the `Gal`-indexed
-coproduct of copies of `T_{k'}`: `exact?` on that iso fails. That base-change step,
-not the splitting, is the open link — and it is the kind of gap that reads as closed
-from either end, because the splitting is genuinely landed and the sheaf side is
-genuinely landed.
+**Where the residue is, and a correction to my own first pricing of it.** The
+splitting is a statement about `Spec k' ×_{Spec k} Spec k'`; the compatibility
+hypothesis above is about `T_{k'} ×_T T_{k'}`, the self-pullback of `coverMap` **in
+the slice over `Spec k`, relative to an arbitrary test `T`**. My first revision of
+this paragraph called that `T`-relative comparison the open link, on the evidence
+that `exact?` fails on the iso. **That was a one-shot query mistaken for a
+measurement**: the comparison *decomposes*, and both steps are free —
+`selfPullback_coverMap_left_iso` below is the two-line composite. So the
+`T`-relative base change is **not** the residue either.
+
+What is genuinely left is narrower than either: transporting the
+`Gal`-**indexing** across `pullbackSpecIso` and the `sigmaSpec` iso so that the two
+projections become the identity and the `γ`-twist *as morphisms*, and then reading
+`picEt` along that identification. The ingredients all exist
+(`AlgebraicGeometry.pullbackSpecIso`; `IsIso (sigmaSpec …)` by synthesis once
+`Fintype (k' ≃ₐ[k] k')` is in scope; `ajc-p1`'s `galoisSelfTensorEquiv`); what
+nothing supplies is the *coherence* — that the coproduct's `γ`-component inclusion
+composed with the two projections gives `id` and `γ`. That is a computation about
+specific morphisms, not a missing lemma, and it is the honest description of what a
+lane closing this owes.
 
 This file does not assume the bridge and does not weaken the invariance step to
 something the splitting alone would make free.
