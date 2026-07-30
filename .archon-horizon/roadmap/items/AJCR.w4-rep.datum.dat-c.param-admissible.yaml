@@ -71,7 +71,10 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c
   milestone: w4-gate
-  updated_at: '2026-07-30T00:50:15.422886+00:00'
+  updated_at: '2026-07-30T01:58:22.207555+00:00'
   pinned_commits:
+  - 8d384b8ef6
+  - ec768389a1
+  - f70f78ab8a
   - e8352f09f7
   - 7e90a01d09
