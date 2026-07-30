@@ -23,7 +23,7 @@ body: "LIVE: THE AJCR ROOT BUILD IS BROKEN AT HEAD BY A DUPLICATE DECLARATION AC
   \ But I cannot claim a green ROOT build this session, and I am not claiming one."
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -31,7 +31,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-30T21:32:32.147344+00:00'
-updated_at: '2026-07-30T21:32:32.147356+00:00'
+updated_at: '2026-07-30T21:39:20.155399+00:00'
 metadata:
   provenance:
     run: 0096
@@ -42,3 +42,5 @@ metadata:
     task: pic-g
     task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-g
