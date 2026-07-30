@@ -1,14 +1,18 @@
 id: AJCR.w4-rep.datum.dat-b.neighborhood-point
-title: 'DAT-B neighborhood point: spread uniform chart-locus membership into the chart'
+title: 'DAT-B restricted-neighborhood point: lift coverage into the same chart open'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'OPEN after COVER-THRESHOLD. exists_uniform_admissibleCoverageChart_eq_univ
-  gives one fixed legal (m,Z) whose chart locus contains every fibre point of every
-  pic^0 class. DAT-B still needs the pointwise datum consumed by chartsCoverLocally_of_pointwise:
-  around each t, a Zariski neighborhood W and a morphism W -> D.left whose chart value
-  is the restricted class. This joins representability at admissibleCoverageParameter
-  (pic-d''s arbitrary-parameter route); do not replace the construction by an IsPlusHonest
-  or chart-point hypothesis.'
+  gives one fixed legal (m,Z) whose unrestricted chart locus contains every fibre
+  point of every pic^0 class. That membership alone does not instantiate the representability
+  atlas. For every T, class s, and t, this row must produce an open W containing t,
+  the corresponding restricted chart open V, and x : (W : Scheme) -> (V : Scheme),
+  with the mixedParamChart value of x equal to s restricted to W; V must be the same
+  open carrying RestrictedChartFibre/IsChartUniv. This is exactly the input shape
+  of chartsCoverLocally_of_pointwise. A map only W -> D.left, or a lift through unrestricted
+  abelSigmaChart, is insufficient because antecedent 1 fails there. The parameter
+  is admissibleCoverageParameter and joins pic-d''s arbitrary-parameter representability
+  route; the V-coupling joins chart-restrict.'
 status: pending
 kind: proof
 priority: high
@@ -31,3 +35,4 @@ metadata:
     task_title: 'Pic rep lane H: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-b
+  updated_at: '2026-07-30T04:46:15.279686+00:00'
