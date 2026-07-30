@@ -47,10 +47,21 @@ is functorial for free, the cover square is counit naturality
 
 **2. The invariance bridge needs no finiteness or separability — on EITHER side.**
 `isGalInvariant_of_isCoverCompatible` and `isCoverCompatible_of_isGalInvariant`
-both carry `omit [Algebra.IsSeparable k k'] [Module.Finite k k']`, linter-confirmed.
-So in this whole cluster those binders are consumed at exactly **one** place —
-covering-sieve membership, i.e. `isSheafFor_picEt_singleton_coverMap` — and nowhere
-else. They are *not* the price of the Galois side.
+both carry `omit [Algebra.IsSeparable k k'] [Module.Finite k k']`, linter-confirmed,
+and a fresh-context audit strengthened this: both, *and*
+`coverCompatibleEquivGalInvariant`, re-elaborate in a section with neither binder in
+scope at all.
+
+**The global census that stood here is FALSE and is withdrawn** (`I-1470`). It said
+those binders are consumed in this cluster at exactly *one* place, covering-sieve
+membership. `selfTensorSpecCoproduct` (`GaloisDescent/PicEtGaloisBridge.lean`) is a
+second, load-bearing site: `FiniteDimensional k k'` **is** `Module.Finite k k'` by
+`rfl`, dropping it gives two synthesis failures, and `[IsGalois k k']` does not
+supply it. A name-level grep misses this because the alias is spelled differently —
+which is exactly why an "exactly one place" claim needs a census and this one did not
+have one. It is a second site *on the route this file's own §`hcov` paragraph
+prices*. What survives is the local fact, which is all the bridge needs: **the
+invariance correspondence itself is free of both binders**.
 
 **3. The assembly is a CHANGE OF COORDINATES, not a strengthening**, and that is
 recorded as a theorem (`coverCompatibleEquiv_of_representableBy`) rather than as a
@@ -59,6 +70,19 @@ consumes, naturality included, so the two are inter-derivable. The honest readin
 *to represent `picEt C` it is equivalent to represent the cover-compatible-classes
 functor.* That is a real repricing — the right-hand side is what a Galois quotient
 of a `k'`-side representation produces — but it is **not** a discount on the seam.
+
+**And the coordinates are GENERIC, which is the sentence a lane deciding whether to
+build on this file needs** (`I-1471`, fresh-context audit; the paragraph above was
+true and left this implicit). Both `representableBy_of_coverCompatibleEquiv` and its
+converse were re-derived with `Scheme`, `Field`, `Algebra`, `picEt`, the cover and
+the descent **all deleted** — an arbitrary category, an arbitrary presheaf, an
+arbitrary per-object `Equiv` family — closing on `[propext, Quot.sound]`. The bodies
+are `Equiv.trans`, `Equiv.apply_symm_apply` and `rep.homEquiv_comp`. So **no
+geometry lives in the two assembly theorems**: substitute any per-test equiv family
+and the same statement holds. All the geometry is in the *input*
+`restrictCompatEquiv`, which is genuine descent (`PicEtDescentExistence.lean`'s `∃!`
+at the covering sieve). Budget accordingly: the assembly is plumbing that was
+missing, not a theorem about curves.
 
 ## What is still owed, named at the declaration and not restated more cheaply
 
@@ -72,8 +96,12 @@ of a `k'`-side representation produces — but it is **not** a discount on the s
   here, *"hence not vacuous"*, is **WITHDRAWN as a non-sequitur** (`I-1454`,
   fresh-context audit of `PicEtGaloisBridge.lean`; the inference was inherited from
   that file and repeated here). `Mono (specMapAlgebra k k')` forces every
-  `γ : k' ≃ₐ[k] k'` to be the identity — reproduced here from `specGal_comp` and
-  `cancel_mono` before this paragraph was changed — so at the only exhibited model
+  `γ : k' ≃ₐ[k] k'` to be the identity — reproduced in a scratch probe (since
+  deleted) from `GaloisDescent/PicEtGaloisBridge.lean`'s `specGal_comp` and
+  `cancel_mono`, before this paragraph was changed. The first revision of this
+  sentence said "reproduced **here**", which reads as *in this file* and is false:
+  neither name occurs below, and both live two files away (`I-1471`) — so at the
+  only exhibited model
   the group is trivial, `twistTest T γ` is the identity, the two projections of the
   cover coincide, and the *consequent* holds with neither `hcov` nor invariance. A
   satisfiable antecedent whose only witness also trivialises the conclusion
@@ -234,12 +262,28 @@ records — correctly, with a live `sorryAx` control — that
 "the covering property is not available from the étale-precoverage machinery for
 free, and closing this row means building it".
 
-**The second clause needs splitting, and this lemma is the reason.** What is not
-free is *that the sections are open immersions*. What IS free, once one has an
-`OpenCover`, is everything topological: `Cover.mem_grothendieckTopology` plus
-`zariskiTopology_le_etaleTopology`. So `hcov` is **not** a topology obligation at
-all; it is exactly the geometric statement *the `Gal`-indexed sections are an open
-cover of the self-pullback*, and no étale-site work sits between that and `hcov`.
+**The second clause needs splitting, and this lemma is the reason.** What IS free,
+once one has an `OpenCover`, is everything topological:
+`Cover.mem_grothendieckTopology` plus `zariskiTopology_le_etaleTopology`. So `hcov`
+is **not** a topology obligation at all; it is exactly the geometric statement *the
+`Gal`-indexed sections are an open cover of the self-pullback*, and no étale-site
+work sits between that and `hcov`.
+
+**How many geometric facts that is: TWO, not one** (`I-1473`, fresh-context audit
+correcting the first revision of this paragraph, which said "what is not free is
+*that the sections are open immersions*" — one of the two). `Scheme.OpenCover` is
+`Cover (precoverage @IsOpenImmersion)` and `Scheme.precoverage P` is
+`jointlySurjectivePrecoverage ⊓ P.precoverage`, so an `OpenCover` bundles **joint
+surjectivity** as well as the property. The second fact is that the `γ`-sections are
+*jointly surjective* onto the self-pullback — which is the "self-pullback IS the
+`Gal`-indexed disjoint union" content, i.e. the substance of the covering claim
+rather than a side condition. Intended-failure control fired: with only the
+open-immersion half in hand, `exact?` cannot close the `etaleTopology` goal.
+
+**And the same audit sharpened the win in the other direction**: given *both* halves
+at the level of underlying schemes, all of `hcov` closes axiom-clean via one further
+`rw [Sieve.overEquiv_ofArrows]`. So the residue is exactly two named facts about the
+morphisms `(coverSelfSection T γ).left`, with nothing else between them and `hcov`.
 
 Two further measurements, both with `fgaPicardRepresentability` firing `sorryAx` in
 the same probe file (`I-1057`):
