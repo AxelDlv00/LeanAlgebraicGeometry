@@ -3,6 +3,7 @@ Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
+import Mathlib.RingTheory.Invariant.Basic
 import AlgebraicJacobian.Picard.GaloisQuotientGlue
 
 /-!
@@ -20,9 +21,10 @@ result is the exact saturation identity
 
 `stableAffineQuotientMap ⁻¹(V/Gal(L/K)) = U.ι ⁻¹(V)`.
 
-Thus stable overlaps already determine honest opens on the affine quotient
-charts.  Constructing and gluing the resulting overlap isomorphisms is a
-separate step.
+The affine quotient map is surjective, so this open is also exactly the image of
+`V` and the image is open.  Thus stable overlaps already determine honest opens
+on the affine quotient charts.  Constructing and gluing the resulting overlap
+isomorphisms is a separate step.
 
 ## Main declarations
 
@@ -34,6 +36,8 @@ separate step.
   affine chart.
 * `SemilinearGalAction.stableAffineQuotientMap_preimage_quotientOpen` proves the
   saturation identity above.
+* `SemilinearGalAction.stableAffineQuotientMap_image_stableSubopen` identifies
+  the constructed open with the actual image of the stable subopen.
 -/
 
 set_option autoImplicit false
@@ -55,6 +59,25 @@ the inclusion of the invariant subalgebra. -/
 noncomputable def affineQuotientMap :
     Spec (CommRingCat.of A) ⟶ Spec (CommRingCat.of (invariantsSubalgebra K L A)) :=
   Spec.map (CommRingCat.ofHom (invariantsSubalgebra K L A).val)
+
+/-- The affine quotient map is surjective on points for a finite Galois-automorphism
+group.  The inclusion `A^Gal(L/K) ⟶ A` is integral because every element satisfies
+its orbit polynomial, so lying over applies.
+
+Only finiteness of the automorphism group is used; no `IsGalois K L` instance is
+needed for this topological conclusion. -/
+theorem affineQuotientMap_surjective [FiniteDimensional K L] :
+    Function.Surjective (affineQuotientMap K L A).base := by
+  let I := invariantsSubalgebra K L A
+  letI : SMulCommClass (L ≃ₐ[K] L) I A :=
+    ⟨fun γ n a => by
+      change γ • ((n : A) * a) = (n : A) * (γ • a)
+      rw [smul_mul', n.2 γ]⟩
+  letI : Algebra.IsInvariant I A (L ≃ₐ[K] L) :=
+    ⟨fun a ha => ⟨⟨a, ha⟩, rfl⟩⟩
+  letI := Algebra.IsInvariant.isIntegral I A (L ≃ₐ[K] L)
+  change Function.Surjective (PrimeSpectrum.comap (algebraMap I A))
+  exact Algebra.IsIntegral.comap_surjective I A
 
 end SemilinearAction
 
@@ -140,6 +163,71 @@ theorem stableAffineQuotientMap_preimage_quotientOpen [FiniteDimensional K L]
     _ = U.ι ⁻¹ᵁ (⨆ i : InvariantBasicOpenIndex ρ hU V, X.basicOpen i.1) :=
       (Scheme.Hom.preimage_iSup U.ι _).symm
     _ = U.ι ⁻¹ᵁ V := by rw [ρ.iSup_invariantBasicOpen_eq hU hUa hVU hV]
+
+/-- The quotient map of a stable affine chart is surjective on points. -/
+theorem stableAffineQuotientMap_surjective [FiniteDimensional K L]
+    (hUa : IsAffineOpen U) :
+    letI := ρ.sectionsMulSemiringAction hU
+    letI := sectionsAlgebra f U
+    letI := sectionsAlgebraK (K := K) f U
+    letI := sections_isScalarTower (K := K) f U
+    letI := ρ.isSemilinear_sections hU
+    Function.Surjective (stableAffineQuotientMap ρ hU hUa).base := by
+  letI := ρ.sectionsMulSemiringAction hU
+  letI := sectionsAlgebra f U
+  letI := sectionsAlgebraK (K := K) f U
+  letI := sections_isScalarTower (K := K) f U
+  letI := ρ.isSemilinear_sections hU
+  rw [stableAffineQuotientMap]
+  exact (SemilinearAction.affineQuotientMap_surjective K L Γ(X, U)).comp
+    (CategoryTheory.ConcreteCategory.bijective_of_isIso hUa.isoSpec.hom.base).2
+
+/-- **The quotient-side open is exactly the image of the stable subopen.**
+
+Surjectivity upgrades `stableAffineQuotientMap_preimage_quotientOpen` from a
+saturation statement to an image equality. -/
+theorem stableAffineQuotientMap_image_stableSubopen [FiniteDimensional K L]
+    (hUa : IsAffineOpen U) {V : X.Opens} (hVU : V ≤ U)
+    (hV : ρ.IsStableOpen V) :
+    letI := ρ.sectionsMulSemiringAction hU
+    letI := sectionsAlgebra f U
+    letI := sectionsAlgebraK (K := K) f U
+    letI := sections_isScalarTower (K := K) f U
+    letI := ρ.isSemilinear_sections hU
+    (stableAffineQuotientMap ρ hU hUa).base ''
+        ((U.ι ⁻¹ᵁ V : U.toScheme.Opens) : Set U.toScheme) =
+      (quotientOpenOfStableSubopen ρ hU V : Set _) := by
+  letI := ρ.sectionsMulSemiringAction hU
+  letI := sectionsAlgebra f U
+  letI := sectionsAlgebraK (K := K) f U
+  letI := sections_isScalarTower (K := K) f U
+  letI := ρ.isSemilinear_sections hU
+  rw [← stableAffineQuotientMap_preimage_quotientOpen ρ hU hUa hVU hV]
+  change (stableAffineQuotientMap ρ hU hUa).base ''
+      ((stableAffineQuotientMap ρ hU hUa).base ⁻¹'
+        (quotientOpenOfStableSubopen ρ hU V : Set _)) =
+      (quotientOpenOfStableSubopen ρ hU V : Set _)
+  exact Set.image_preimage_eq _ (ρ.stableAffineQuotientMap_surjective hU hUa)
+
+/-- The image of a stable subopen under its affine invariant-ring quotient map is
+open. -/
+theorem isOpen_image_stableSubopen [FiniteDimensional K L]
+    (hUa : IsAffineOpen U) {V : X.Opens} (hVU : V ≤ U)
+    (hV : ρ.IsStableOpen V) :
+    letI := ρ.sectionsMulSemiringAction hU
+    letI := sectionsAlgebra f U
+    letI := sectionsAlgebraK (K := K) f U
+    letI := sections_isScalarTower (K := K) f U
+    letI := ρ.isSemilinear_sections hU
+    IsOpen ((stableAffineQuotientMap ρ hU hUa).base ''
+      ((U.ι ⁻¹ᵁ V : U.toScheme.Opens) : Set U.toScheme)) := by
+  letI := ρ.sectionsMulSemiringAction hU
+  letI := sectionsAlgebra f U
+  letI := sectionsAlgebraK (K := K) f U
+  letI := sections_isScalarTower (K := K) f U
+  letI := ρ.isSemilinear_sections hU
+  rw [ρ.stableAffineQuotientMap_image_stableSubopen hU hUa hVU hV]
+  exact (quotientOpenOfStableSubopen ρ hU V).2
 
 end SemilinearGalAction
 
