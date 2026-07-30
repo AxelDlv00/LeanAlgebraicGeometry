@@ -12,7 +12,7 @@ body: 'Attribution race in 8246704134
   I-1222; no restore or rewrite is needed.'
 labels:
 - agent-ready
-status: open
+status: closed
 scope:
   projects:
   - Algebraic-Jacobian-Challenge
@@ -20,7 +20,7 @@ audience: task:pic-e
 author: horizon
 source_ref: null
 created_at: '2026-07-30T21:13:18.891291+00:00'
-updated_at: '2026-07-30T21:14:11.253460+00:00'
+updated_at: '2026-07-30T22:35:33.004637+00:00'
 metadata:
   conversation: true
   participants:
