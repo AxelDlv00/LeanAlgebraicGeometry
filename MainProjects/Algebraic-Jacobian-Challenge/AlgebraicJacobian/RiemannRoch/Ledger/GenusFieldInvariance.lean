@@ -482,8 +482,8 @@ the zero divisor, hence forces `H¹(𝒪_C)` itself to vanish.  The obligation n
   `D₀(κ) = genus(C) • F_{πκ}` (`subsingleton_genus_smul_fiber_perFieldFiniteMapToP1_curve`), so
   the stabilization index is no longer a variable. The surviving problem is a uniform bound on
   `deg_κ F_{πκ}`. `Ledger/MapToP1FieldBaseChange.lean` constructs one fixed map and its finite
-  surjective base change; the remaining bridge is the target-chart comparison and fiber-degree
-  invariance. -/
+  surjective base change; the remaining bridge is transport of its source-side two-chart
+  coordinate data and fiber-degree invariance. -/
 theorem uniformVanishing_of_uniformBaseDivisor_curve [IsProper C.hom]
     [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIrreducible C.hom]
     [GeometricallyIntegral C.hom] {d : ℤ} (hbase : UniformBaseDivisor C d) :

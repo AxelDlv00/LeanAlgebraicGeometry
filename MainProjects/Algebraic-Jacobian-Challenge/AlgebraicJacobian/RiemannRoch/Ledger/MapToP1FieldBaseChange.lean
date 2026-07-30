@@ -18,9 +18,9 @@ The target is the literal pullback
 `(P1 k)_κ := P1 k ×_{Spec k} Spec κ`,
 
 not yet Ledger's separately constructed `P1 κ`. The resulting map is finite and surjective,
-hence dominant. Thus the map itself and its degree data are pinned over `k`; the only remaining
-model boundary for extension-uniform fiber-divisor arguments is an isomorphism
-`(P1 k)_κ ≅ P1 κ` compatible with the standard charts.
+hence dominant. Thus the map itself is pinned over `k`. To feed the current fiber-divisor stack,
+one may either prove a `Proj` base-change comparison with `P1 κ`, or more economically factor that
+stack through its source-side two-chart coordinate data and base-change those charts and sections.
 
 ## Main declarations
 

@@ -61,9 +61,10 @@ integer is `deg_κ F_{πκ}`. The current proof constructs a fresh finite domina
 `πκ : C_κ ⟶ ℙ¹_κ` at every extension, so it gives no uniform bound on this degree.
 
 `Ledger/MapToP1FieldBaseChange.lean` now chooses one finite map over `k` and constructs its finite
-surjective base change over every `κ`. The remaining producer must identify its pullback target
-with Ledger's `P1 κ`, compatibly with the standard charts, and prove that the associated fiber
-divisor has the original degree. No rational point or other hypothesis on the curve is involved.
+surjective base change over every `κ`. The remaining producer must transport the two standard
+chart coordinates and prove that the associated source-side fiber divisor has the original
+degree. This can be done without identifying the entire pullback target with Ledger's `P1 κ`.
+No rational point or other hypothesis on the curve is involved.
 
 ## Provenance
 

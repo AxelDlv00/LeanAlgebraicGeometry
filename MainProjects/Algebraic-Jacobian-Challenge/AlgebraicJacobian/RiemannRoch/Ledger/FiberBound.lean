@@ -296,8 +296,9 @@ Object-level per-field vanishing is proved at `Scheme.baseChangeField C κ` in
 The multiplier is independent of `κ` by `genus_baseChangeField_curve`. The current per-field proof
 still chooses a fresh finite map and supplies no uniform bound on `deg_κ F_{πκ}`.
 `Ledger/MapToP1FieldBaseChange.lean` now chooses one map over `k` and constructs its finite
-surjective base change; what remains is to identify the pullback target with Ledger's `P1 κ`
-model and prove invariance of its fiber-divisor degree. -/
+surjective base change. What remains is to factor the fiber construction through its source-side
+two-chart coordinate data, transport that data, and prove invariance of the resulting divisor
+degree; a full comparison with Ledger's separate `P1 κ` model is not required. -/
 
 section ExtensionUniformity
 
