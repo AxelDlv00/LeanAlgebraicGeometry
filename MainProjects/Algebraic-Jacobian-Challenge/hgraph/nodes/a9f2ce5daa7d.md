@@ -8,10 +8,9 @@ docstring: 'Control: the same statement as `mem_fixedAway_iff_exists_invariant_n
 file: scripts/albanese-awayequiv-axioms.lean
 generated: lean
 lean_status: sorry
-stale: true
 title: control_mem_fixedAway_iff
 type: lean
-updated: '2026-07-30T11:48:48'
+updated: '2026-07-30T13:03:22'
 ---
 theorem control_mem_fixedAway_iff [Finite G] (b : A) (hb : ∀ g : G, g • b = b)
     (x : Localization.Away b) :

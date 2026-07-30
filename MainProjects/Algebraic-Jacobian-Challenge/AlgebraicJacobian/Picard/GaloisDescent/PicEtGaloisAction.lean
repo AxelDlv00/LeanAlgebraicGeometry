@@ -193,6 +193,30 @@ theorem twistTestFunctor_mulIso_hom_app_left (γ τ : k' ≃ₐ[k] k')
     ((twistTestFunctor_mulIso (k := k) γ τ).hom.app T).left = 𝟙 T.left := by
   simp [twistTestFunctor_mulIso, Over.mapComp, Over.mapCongr]
 
+/-- Twisting by the identity Galois automorphism is canonically the identity
+functor on tests. -/
+noncomputable def twistTestFunctor_oneIso :
+    twistTestFunctor (k := k) (1 : k' ≃ₐ[k] k') ≅ 𝟭 _ :=
+  Over.mapCongr _ _ (by rw [map_one]; rfl) ≪≫ Over.mapId _
+
+/-- The identity-twist comparison is the identity on underlying schemes. -/
+@[simp]
+theorem twistTestFunctor_oneIso_hom_app_left
+    (T : Over (Spec (CommRingCat.of k'))) :
+    ((twistTestFunctor_oneIso (k := k) (k' := k')).hom.app T).left = 𝟙 T.left := by
+  simp [twistTestFunctor_oneIso, Over.mapCongr, Over.mapId]
+
+/-- The identity-twist comparison agrees with the comparison obtained after
+restriction to the base field. -/
+theorem restrictTest_twistTestFunctor_iso_one_hom_app
+    (T : Over (Spec (CommRingCat.of k'))) :
+    (restrictTest_twistTestFunctor_iso (k := k) (1 : k' ≃ₐ[k] k')).hom.app T =
+      (restrictTest k k').map
+        ((twistTestFunctor_oneIso (k := k) (k' := k')).hom.app T) := by
+  apply Over.OverMorphism.ext
+  simp only [restrictTest_twistTestFunctor_iso_hom_app_left, Over.map_map_left,
+    twistTestFunctor_oneIso_hom_app_left]
+
 /-- The comparison identifying a twisted test after restriction satisfies the
 group-law cocycle. This is an equality in the slice over `Spec k`; all three
 maps have identity underlying scheme map. -/
@@ -245,6 +269,18 @@ theorem galoisActionRestricted_inv_app (γ : k' ≃ₐ[k] k')
       = (picEt C).map ((restrictTest_twistTestFunctor_iso (k := k) γ).hom.app T).op := by
   change _ ≫ 𝟙 _ = _
   rw [Category.comp_id]
+  rfl
+
+/-- The inverse restricted action at the identity is induced by the canonical
+identity-twist comparison. -/
+theorem galoisActionRestricted_one_inv_app
+    (T : Over (Spec (CommRingCat.of k')))
+    (x : ((restrictTest k k').op ⋙ picEt C).obj (Opposite.op T)) :
+    (galoisActionRestricted C (1 : k' ≃ₐ[k] k')).inv.app (Opposite.op T) x =
+      (((restrictTest k k').op ⋙ picEt C).map
+        ((twistTestFunctor_oneIso (k := k) (k' := k')).hom.app T).op) x := by
+  rw [galoisActionRestricted_inv_app,
+    restrictTest_twistTestFunctor_iso_one_hom_app]
   rfl
 
 private theorem picEt_map_op_comp_comp_apply
@@ -326,6 +362,22 @@ theorem galoisActionPicEt_mul_inv_app (γ τ : k' ≃ₐ[k] k')
   exact NatTrans.naturality_apply (picEt_crossBaseIso C k').inv
     ((twistTestFunctor_mulIso (k := k) γ τ).hom.app T).op _
 
+/-- At the identity Galois element, the inverse action is induced by the
+canonical identity-twist comparison. -/
+theorem galoisActionPicEt_one_inv_app
+    (T : Over (Spec (CommRingCat.of k')))
+    (x : (picEt (Scheme.baseChangeField C k')).obj (Opposite.op T)) :
+    (galoisActionPicEt C (1 : k' ≃ₐ[k] k')).inv.app (Opposite.op T) x =
+      (picEt (Scheme.baseChangeField C k')).map
+        ((twistTestFunctor_oneIso (k := k) (k' := k')).hom.app T).op x := by
+  rw [galoisActionPicEt_inv_app_apply, galoisActionRestricted_one_inv_app]
+  rw [NatTrans.naturality_apply]
+  change (picEt (Scheme.baseChangeField C k')).map
+    ((twistTestFunctor_oneIso (k := k) (k' := k')).hom.app T).op
+      ((picEt_crossBaseIso C k').inv.app (Opposite.op T)
+        ((picEt_crossBaseIso C k').hom.app (Opposite.op T) x)) = _
+  rw [Iso.hom_inv_id_app_apply]
+
 /-! ## §3. Transport to a representing object — and the free semilinearity square -/
 
 variable {X' : Over (Spec (CommRingCat.of k'))}
@@ -374,6 +426,39 @@ theorem twistMor_mul (γ τ : k' ≃ₐ[k] k') :
     (twistMor C rep τ).op (rep.homEquiv (𝟙 X'))]
   rw [← rep.homEquiv_eq, homEquiv_twistMor]
   exact galoisActionPicEt_mul_inv_app C γ τ X' (rep.homEquiv (𝟙 X'))
+
+/-- The twist morphism at the identity is the canonical identity-twist
+comparison. -/
+theorem twistMor_one :
+    twistMor C rep (1 : k' ≃ₐ[k] k') =
+      (twistTestFunctor_oneIso (k := k) (k' := k')).hom.app X' := by
+  apply rep.homEquiv.injective
+  rw [homEquiv_twistMor]
+  exact (galoisActionPicEt_one_inv_app C X' (rep.homEquiv (𝟙 X'))).trans
+    (rep.homEquiv_eq
+      ((twistTestFunctor_oneIso (k := k) (k' := k')).hom.app X')).symm
+
+/-- The identity twist acts by the identity on the underlying representing
+scheme. -/
+@[simp]
+theorem twistMor_one_left :
+    (twistMor C rep (1 : k' ≃ₐ[k] k')).left = 𝟙 X'.left := by
+  rw [twistMor_one]
+  exact twistTestFunctor_oneIso_hom_app_left X'
+
+/-- On underlying schemes, the canonical twist morphisms multiply in exactly
+the order used by `Aut`. -/
+theorem twistMor_mul_left (γ τ : k' ≃ₐ[k] k') :
+    (twistMor C rep (γ * τ)).left =
+      (twistMor C rep τ).left ≫ (twistMor C rep γ).left := by
+  have h := congrArg Over.Hom.left (twistMor_mul C rep γ τ)
+  simp only [Over.comp_left, Over.map_map_left] at h
+  change (twistMor C rep (γ * τ)).left =
+    ((((twistTestFunctor_mulIso (k := k) γ τ).hom.app X').left :
+      X'.left ⟶ X'.left) ≫ (twistMor C rep τ).left) ≫
+      (twistMor C rep γ).left at h
+  rw [twistTestFunctor_mulIso_hom_app_left, Category.id_comp] at h
+  exact h
 
 /-- **The underlying map of the twist IS an endomorphism of `X'.left`**, stated as a
 proposition about types rather than left to the reader: `Over.map` does not touch the

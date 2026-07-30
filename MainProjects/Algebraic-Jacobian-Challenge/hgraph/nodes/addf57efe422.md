@@ -9,10 +9,9 @@ docstring: 'The underlying map is an ISO of schemes -- from the slice iso via th
 file: probe_p4_iso.lean
 generated: lean
 lean_status: sorry
-stale: true
 title: Pr.twistIso_hom_left_isIso
 type: lean
-updated: '2026-07-30T11:48:48'
+updated: '2026-07-30T13:03:22'
 ---
 instance twistIso_hom_left_isIso (γ : k' ≃ₐ[k] k') :
     IsIso (twistIso C rep γ).hom.left :=

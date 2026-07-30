@@ -15,7 +15,7 @@ summary: 'OPEN after COVER-THRESHOLD. The remaining antecedent is still the same
   spreading inside the high-parameter restricted chart, or a genus-parameter multi-index
   atlas. The parameter still joins pic-d arbitrary-parameter representability; the
   same-V condition joins chart-restrict.'
-status: pending
+status: active
 kind: proof
 priority: high
 depends_on: []
@@ -37,7 +37,8 @@ metadata:
     task_title: 'Pic rep lane H: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-b
-  updated_at: '2026-07-30T07:29:59.822940+00:00'
+  updated_at: '2026-07-30T07:50:51.697251+00:00'
   pinned_commits:
   - ea59eeb02274fb06635ddf0c4c6e1dbcdf22a660
   - 132a56f9840406006e53c076939fbccee8a2acc5
+  owner: pic-h

@@ -7,10 +7,9 @@ docstring: 'Synthesis site: the producer for `UniformBaseDivisor`.'
 file: scripts/ajcrr-vanishingfielddescent-axioms.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: probeProducer
 type: lean
-updated: '2026-07-30T11:48:48'
+updated: '2026-07-30T13:03:22'
 ---
 theorem probeProducer
     (h : letI : C.left.Over (Spec (CommRingCat.of k)) := .ofHom C.hom

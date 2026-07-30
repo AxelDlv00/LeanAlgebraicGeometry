@@ -6,10 +6,9 @@ decl: Pr.uniqueUpToIso_hom_eq
 file: probe_p4_mul.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: Pr.uniqueUpToIso_hom_eq
 type: lean
-updated: '2026-07-30T11:48:48'
+updated: '2026-07-30T13:03:22'
 ---
 theorem uniqueUpToIso_hom_eq {C : Type u} [Category.{u} C] {F : Cᵒᵖ ⥤ Type u} {Y Z : C}
     (e : F.RepresentableBy Y) (e' : F.RepresentableBy Z) :

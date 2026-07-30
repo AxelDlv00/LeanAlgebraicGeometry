@@ -317,6 +317,101 @@ elementwise-torsion (localization kernels) hypotheses; and the single
 `M`-independent anchor `hS0` = finite generation of the structure-sheaf
 Čech kernel. -/
 
+/-- **Uniform twisted generators on two Laurent charts.** Given finite chart
+modules whose sections extend across the overlap after multiplying by a power
+of the opposite coordinate, there is one positive twist `d` and finite
+generating families `aa`, `bb` on the two charts satisfying
+`σ₀ (aa i) = (ρ₀ x)^d • σ₁ (bb i)` for every index.
+
+This is the algebraic globalization datum used by the Čech dévissage below.
+It also supplies the aligned homogeneous coordinates needed to embed a finite
+cover of the projective line into projective space. -/
+theorem exists_uniform_twisted_generators
+    {A C₀ C₁ C₀₁ M₀ M₁ V : Type*} [CommRing A]
+    [CommRing C₀] [CommRing C₁] [CommRing C₀₁]
+    [Algebra A C₀] [Algebra A C₁] [Algebra A C₀₁]
+    [AddCommGroup M₀] [AddCommGroup M₁] [AddCommGroup V]
+    [Module C₀ M₀] [Module C₁ M₁] [Module C₀₁ V]
+    [Module A M₀] [Module A M₁] [Module A V]
+    [Module.Finite C₀ M₀] [Module.Finite C₁ M₁]
+    (ρ₀ : C₀ →ₐ[A] C₀₁) (ρ₁ : C₁ →ₐ[A] C₀₁) (x : C₀) (y : C₁)
+    (htu : ρ₀ x * ρ₁ y = 1)
+    (σ₀ : M₀ →ₗ[A] V) (σ₁ : M₁ →ₗ[A] V)
+    (hσ₀ : ∀ (c : C₀) (m : M₀), σ₀ (c • m) = ρ₀ c • σ₀ m)
+    (hσ₁ : ∀ (c : C₁) (m : M₁), σ₁ (c • m) = ρ₁ c • σ₁ m)
+    (hext₀ : ∀ v : V, ∃ (n : ℕ) (m : M₀), ρ₀ x ^ n • v = σ₀ m)
+    (hext₁ : ∀ v : V, ∃ (n : ℕ) (m : M₁), ρ₁ y ^ n • v = σ₁ m) :
+    ∃ (n₀ n₁ d : ℕ) (aa : Fin n₀ ⊕ Fin n₁ → M₀)
+      (bb : Fin n₀ ⊕ Fin n₁ → M₁),
+      0 < d ∧
+        (∀ i, σ₀ (aa i) = ρ₀ x ^ d • σ₁ (bb i)) ∧
+        Submodule.span C₀ (Set.range aa) = ⊤ ∧
+        Submodule.span C₁ (Set.range bb) = ⊤ := by
+  classical
+  have hpow : ∀ n : ℕ, ρ₀ x ^ n * ρ₁ y ^ n = 1 := fun n => by
+    rw [← mul_pow, htu, one_pow]
+  obtain ⟨n₀, g, hg⟩ := Module.Finite.exists_fin (R := C₀) (M := M₀)
+  obtain ⟨n₁, g', hg'⟩ := Module.Finite.exists_fin (R := C₁) (M := M₁)
+  choose nb b hb using fun i : Fin n₀ => hext₁ (σ₀ (g i))
+  choose ma a ha using fun j : Fin n₁ => hext₀ (σ₁ (g' j))
+  set d : ℕ := max (max (Finset.univ.sup nb) (Finset.univ.sup ma)) 1
+  have hd : 0 < d := lt_of_lt_of_le Nat.zero_lt_one (le_max_right _ _)
+  have hdb : ∀ i, nb i ≤ d := fun i =>
+    le_trans (Finset.le_sup (Finset.mem_univ i))
+      (le_trans (le_max_left _ _) (le_max_left _ _))
+  have hda : ∀ j, ma j ≤ d := fun j =>
+    le_trans (Finset.le_sup (Finset.mem_univ j))
+      (le_trans (le_max_right _ _) (le_max_left _ _))
+  let aa : Fin n₀ ⊕ Fin n₁ → M₀ :=
+    Sum.elim g (fun j => x ^ (d - ma j) • a j)
+  let bb : Fin n₀ ⊕ Fin n₁ → M₁ :=
+    Sum.elim (fun i => y ^ (d - nb i) • b i) g'
+  have hab : ∀ i, σ₀ (aa i) = ρ₀ x ^ d • σ₁ (bb i) := by
+    rintro (i | j)
+    · have e1 : σ₁ (bb (Sum.inl i)) = ρ₁ y ^ (d - nb i) • σ₁ (b i) := by
+        simp only [bb, Sum.elim_inl]
+        rw [hσ₁, map_pow]
+      have e2 : ρ₀ x ^ d * ρ₁ y ^ (d - nb i) = ρ₀ x ^ nb i := by
+        have hsplit : ρ₀ x ^ d = ρ₀ x ^ nb i * ρ₀ x ^ (d - nb i) := by
+          rw [← pow_add]
+          congr 1
+          have := hdb i
+          omega
+        rw [hsplit, mul_assoc, hpow (d - nb i), mul_one]
+      calc σ₀ (aa (Sum.inl i)) = σ₀ (g i) := by simp only [aa, Sum.elim_inl]
+        _ = (1 : C₀₁) • σ₀ (g i) := (one_smul _ _).symm
+        _ = (ρ₀ x ^ nb i * ρ₁ y ^ nb i) • σ₀ (g i) := by rw [hpow]
+        _ = ρ₀ x ^ nb i • (ρ₁ y ^ nb i • σ₀ (g i)) := by rw [mul_smul]
+        _ = ρ₀ x ^ nb i • σ₁ (b i) := by rw [hb i]
+        _ = (ρ₀ x ^ d * ρ₁ y ^ (d - nb i)) • σ₁ (b i) := by rw [e2]
+        _ = ρ₀ x ^ d • (ρ₁ y ^ (d - nb i) • σ₁ (b i)) := by rw [mul_smul]
+        _ = ρ₀ x ^ d • σ₁ (bb (Sum.inl i)) := by rw [← e1]
+    · have e3 : (d - ma j) + ma j = d := by
+        have := hda j
+        omega
+      calc σ₀ (aa (Sum.inr j)) = σ₀ (x ^ (d - ma j) • a j) := by
+              simp only [aa, Sum.elim_inr]
+        _ = ρ₀ x ^ (d - ma j) • σ₀ (a j) := by rw [hσ₀, map_pow]
+        _ = ρ₀ x ^ (d - ma j) • (ρ₀ x ^ ma j • σ₁ (g' j)) := by rw [ha j]
+        _ = (ρ₀ x ^ (d - ma j) * ρ₀ x ^ ma j) • σ₁ (g' j) := by
+              rw [mul_smul]
+        _ = ρ₀ x ^ d • σ₁ (bb (Sum.inr j)) := by
+              rw [← pow_add, e3]
+              simp only [bb, Sum.elim_inr]
+  have hspanaa : Submodule.span C₀ (Set.range aa) = ⊤ := by
+    refine le_antisymm le_top ?_
+    rw [← hg]
+    refine Submodule.span_mono ?_
+    rintro _ ⟨i, rfl⟩
+    exact ⟨Sum.inl i, by simp only [aa, Sum.elim_inl]⟩
+  have hspanbb : Submodule.span C₁ (Set.range bb) = ⊤ := by
+    refine le_antisymm le_top ?_
+    rw [← hg']
+    refine Submodule.span_mono ?_
+    rintro _ ⟨j, rfl⟩
+    exact ⟨Sum.inr j, by simp only [bb, Sum.elim_inr]⟩
+  exact ⟨n₀, n₁, d, aa, bb, hd, hab, hspanaa, hspanbb⟩
+
 set_option maxHeartbeats 1600000 in
 -- Heartbeat headroom: a single long dévissage (uniform twisted family → kernel
 -- datum → two-lattice core → snake) in one instance-heavy `letI`-free context.
@@ -363,61 +458,8 @@ theorem fg_ker_cechDiff_of_laurent {A C₀ C₁ C₀₁ M₀ M₁ V : Type*} [Co
     rw [← mul_pow, htu, one_pow]
   haveI hNC₀ : IsNoetherianRing C₀ := isNoetherianRing_of_top_le_span_pow hspan₀
   -- ### Step 1: the uniform twisted generating family
-  obtain ⟨n₀, g, hg⟩ := Module.Finite.exists_fin (R := C₀) (M := M₀)
-  obtain ⟨n₁, g', hg'⟩ := Module.Finite.exists_fin (R := C₁) (M := M₁)
-  choose nb b hb using fun i : Fin n₀ => hext₁ (σ₀ (g i))
-  choose ma a ha using fun j : Fin n₁ => hext₀ (σ₁ (g' j))
-  set d : ℕ := max (Finset.univ.sup nb) (Finset.univ.sup ma) with hd
-  have hdb : ∀ i, nb i ≤ d := fun i =>
-    le_trans (Finset.le_sup (Finset.mem_univ i)) (le_max_left _ _)
-  have hda : ∀ j, ma j ≤ d := fun j =>
-    le_trans (Finset.le_sup (Finset.mem_univ j)) (le_max_right _ _)
-  set aa : Fin n₀ ⊕ Fin n₁ → M₀ :=
-    Sum.elim g (fun j => x ^ (d - ma j) • a j) with haa
-  set bb : Fin n₀ ⊕ Fin n₁ → M₁ :=
-    Sum.elim (fun i => y ^ (d - nb i) • b i) g' with hbb
-  have hab : ∀ i, σ₀ (aa i) = ρ₀ x ^ d • σ₁ (bb i) := by
-    rintro (i | j)
-    · have e1 : σ₁ (bb (Sum.inl i)) = ρ₁ y ^ (d - nb i) • σ₁ (b i) := by
-        simp only [hbb, Sum.elim_inl]
-        rw [hσ₁, map_pow]
-      have e2 : ρ₀ x ^ d * ρ₁ y ^ (d - nb i) = ρ₀ x ^ nb i := by
-        have hsplit : ρ₀ x ^ d = ρ₀ x ^ nb i * ρ₀ x ^ (d - nb i) := by
-          rw [← pow_add]
-          congr 1
-          have := hdb i
-          omega
-        rw [hsplit, mul_assoc, hpow (d - nb i), mul_one]
-      calc σ₀ (aa (Sum.inl i)) = σ₀ (g i) := by simp only [haa, Sum.elim_inl]
-        _ = (1 : C₀₁) • σ₀ (g i) := (one_smul _ _).symm
-        _ = (ρ₀ x ^ nb i * ρ₁ y ^ nb i) • σ₀ (g i) := by rw [hpow]
-        _ = ρ₀ x ^ nb i • (ρ₁ y ^ nb i • σ₀ (g i)) := by rw [mul_smul]
-        _ = ρ₀ x ^ nb i • σ₁ (b i) := by rw [hb i]
-        _ = (ρ₀ x ^ d * ρ₁ y ^ (d - nb i)) • σ₁ (b i) := by rw [e2]
-        _ = ρ₀ x ^ d • (ρ₁ y ^ (d - nb i) • σ₁ (b i)) := by rw [mul_smul]
-        _ = ρ₀ x ^ d • σ₁ (bb (Sum.inl i)) := by rw [← e1]
-    · have e3 : (d - ma j) + ma j = d := by
-        have := hda j
-        omega
-      calc σ₀ (aa (Sum.inr j)) = σ₀ (x ^ (d - ma j) • a j) := by simp only [haa, Sum.elim_inr]
-        _ = ρ₀ x ^ (d - ma j) • σ₀ (a j) := by rw [hσ₀, map_pow]
-        _ = ρ₀ x ^ (d - ma j) • (ρ₀ x ^ ma j • σ₁ (g' j)) := by rw [ha j]
-        _ = (ρ₀ x ^ (d - ma j) * ρ₀ x ^ ma j) • σ₁ (g' j) := by rw [mul_smul]
-        _ = ρ₀ x ^ d • σ₁ (bb (Sum.inr j)) := by
-              rw [← pow_add, e3]
-              simp only [hbb, Sum.elim_inr]
-  have hspanaa : Submodule.span C₀ (Set.range aa) = ⊤ := by
-    refine le_antisymm le_top ?_
-    rw [← hg]
-    refine Submodule.span_mono ?_
-    rintro _ ⟨i, rfl⟩
-    exact ⟨Sum.inl i, by simp only [haa, Sum.elim_inl]⟩
-  have hspanbb : Submodule.span C₁ (Set.range bb) = ⊤ := by
-    refine le_antisymm le_top ?_
-    rw [← hg']
-    refine Submodule.span_mono ?_
-    rintro _ ⟨j, rfl⟩
-    exact ⟨Sum.inr j, by simp only [hbb, Sum.elim_inr]⟩
+  obtain ⟨n₀, n₁, d, aa, bb, -, hab, hspanaa, hspanbb⟩ :=
+    exists_uniform_twisted_generators ρ₀ ρ₁ x y htu σ₀ σ₁ hσ₀ hσ₁ hext₀ hext₁
   -- ### Step 2: the twisted free datum `E` and its chart surjections
   set φ₀ : (Fin n₀ ⊕ Fin n₁ → C₀) →ₗ[C₀] M₀ := Fintype.linearCombination C₀ aa with hφ₀
   set φ₁ : (Fin n₀ ⊕ Fin n₁ → C₁) →ₗ[C₁] M₁ := Fintype.linearCombination C₁ bb with hφ₁

@@ -27,7 +27,7 @@ zero module and whose ideal is all of `O_{X_T}`.
 The divisor condition of `DivFamily` is that the kernel ideal `I = ker q` be
 *invertible* (`LineBundle.IsLocallyTrivial`). For `q : O_{X_T} ⟶ 0` the kernel is
 `O_{X_T}` itself (`Limits.kernelZeroIsoSource`), and the structure sheaf is
-trivially locally trivial (`RelPicFunctor.isLocallyTrivial_unit`, restated here as
+trivially locally trivial (`Scheme.PicSharp.isLocallyTrivial_unit`, restated here as
 `isLocallyTrivial_unit'` because that one is `private`). So the invertible-ideal
 condition — the field that makes `DivFamily` a divisor rather than an arbitrary
 quotient — holds *for the reason it should*: `O_{X_T}/O_{X_T} = 0` cuts out the
@@ -49,10 +49,13 @@ each rather than assuming it:
 * `properSupport` — the schematic support of the zero module is the subscheme cut
   out by the annihilator, which is `⊤`, so the support is **empty**
   (`Scheme.IdealSheafData.instIsEmptyCarrierCarrierCommRingCatSubschemeTop`) and any
-  morphism out of it is proper via `IsProper.instOfIsFinite`. Note this is where the
-  empty divisor is *cheaper than a general one*: properness of the support is a real
-  hypothesis for a nonempty divisor and free here, with no properness assumption on
-  `π` at all.
+  morphism out of it is proper via `IsProper.instOfIsFinite`. It is free here for that
+  reason, and in particular with **no properness assumption on `π`**. (An earlier
+  revision added "and it is a real hypothesis for a nonempty divisor". That half was
+  never measured — nothing here or elsewhere in the project exhibits a divisor where
+  `properSupport` fails or is expensive, and `DivFunctorDef.lean` says it is *automatic*
+  when `π` is proper. Dropped rather than repaired: the free-here half is what this
+  file establishes.)
 
 ## What this does and does not buy
 
@@ -80,9 +83,27 @@ object, and this file proves only the `Nonempty` half. The missing half is
 *only* relative divisor of degree `0`. That is the expected statement (a degree-`0`
 effective divisor on a fibre of a relative curve is empty), but it is a fact about
 `fiberDeg`, not a formality: `fiberDeg` is a `finrank` with a junk value at
-infinite dimension, so the implication `fiberDeg = 0 → F` is zero needs finiteness of
-the fibre sections. Neither direction is proved here, and no lane holds it. The row
-`AJC.picrep.divzero` records it as the open question this file leaves.
+infinite dimension. Neither direction is proved here.
+
+**Corrected, and the correction is the useful part** (fresh-context audit of this file,
+2026-07-30). An earlier revision of this paragraph said "no lane holds it". That is
+FALSE: the analogous `Subsingleton` *is* landed, hours earlier, on the **sibling**
+project's carrier — `instSubsingletonDivFamZarZero`
+(`AJCR Picard/DivisorFamilyDegreeZeroUnique.lean`) and, over an arbitrary test ring,
+`instSubsingletonDivFamZarZeroGeneral` plus a full `RepresentableBy` producer
+(`AJCR Picard/DivisorFamilyDegreeZeroRep.lean`).
+
+What survives, for a **sharper** reason than the carrier mismatch: their proof is not
+portable because it never passes through a `finrank` at all. It runs on `IsCertified`
+and `rankAtStalk_eq_zero_iff_subsingleton` over `Away` localisations of section rings,
+machinery that exists only on the Zariski-certified carrier `DivFamZar : Type u`. AJC's
+`fiberDeg` is a `Module.finrank` of fibre sections. So the honest statement is: nobody
+holds it *for `Scheme.DivFamily`*, and the sibling's landed route does not transport.
+Their success is also evidence *against* this paragraph's own framing — it shows
+degree-zero uniqueness can be reached without any finiteness-of-sections argument on a
+suitable carrier, so "needs finiteness of the fibre sections" is a claim about AJC's
+chosen `fiberDeg`, not about the mathematics. The row `AJC.picrep.divzero` records it as
+the open question this file leaves.
 
 ## Main declarations
 
@@ -96,7 +117,7 @@ the fibre sections. Neither direction is proved here, and no lane holds it. The 
   `Scheme.DivFunctor.map_zeroClass` making the first a global section.
 * `Scheme.Modules.isFinitePresentation_of_isZero` — reusable: a zero sheaf of
   modules on any scheme is finitely presented. Absent from Mathlib.
-* `Module.Flat.of_subsingleton'`, `Scheme.Modules.coversTop_singleton_top`,
+* `Scheme.Modules.coversTop_singleton_top`,
   `Scheme.Modules.preservesZeroMorphisms_overFunctor`,
   `Scheme.Modules.isZero_free_pempty` — the other reusable bricks §1 needed.
 
@@ -155,7 +176,7 @@ rather than synthesized because instance search for
 `(overFunctor Y.ringCatSheaf U).PreservesZeroMorphisms` exhausts its heartbeat budget
 (measured: `deterministic timeout at typeclass, 20000 heartbeats`) — the
 sheafification/slice-site instances it unfolds are the same blow-up
-`QuotScheme.presentationPullbackιOfQuasicoherentData` documents. -/
+`Scheme.Modules.presentationPullbackιOfQuasicoherentData` documents. -/
 theorem preservesZeroMorphisms_overFunctor (U : TopologicalSpace.Opens (Y : TopCat)) :
     (SheafOfModules.overFunctor Y.ringCatSheaf U).PreservesZeroMorphisms := by
   constructor
@@ -287,26 +308,6 @@ theorem isFinitePresentation_of_isZero {M : Y.Modules} (hM : IsZero M) :
 
 /-! ## §2. Flatness and proper support of a zero sheaf of modules -/
 
-end Scheme.Modules
-
-/-- **A subsingleton module is flat**, over any commutative ring.
-
-Absent from Mathlib as a usable lemma: `exact?` offers `Module.Flat.of_shrink`, whose
-universe parameters cannot be inferred here (it leaves a metavariable). The direct
-route is that a subsingleton module is linearly equivalent to `PUnit`, which is flat
-by synthesis. -/
-theorem Module.Flat.of_subsingleton' {R : Type u} [CommRing R] {M : Type u}
-    [AddCommGroup M] [Module R M] [Subsingleton M] : Module.Flat R M :=
-  Module.Flat.of_linearEquiv
-    (({ toFun := fun _ => PUnit.unit, invFun := fun _ => 0,
-        left_inv := fun _ => Subsingleton.elim _ _, right_inv := fun _ => rfl,
-        map_add' := fun _ _ => rfl,
-        map_smul' := fun _ _ => rfl } : M ≃ₗ[R] PUnit.{u+1}))
-
-namespace Scheme.Modules
-
-variable {Y : Scheme.{u}}
-
 /-- **The sections of a zero sheaf of modules over any open form a subsingleton.**
 
 `Scheme.Modules.toPresheaf` is additive, so it carries `M` to a zero presheaf of
@@ -328,7 +329,7 @@ theorem coherentSheafFlat_of_isZero {S' : Scheme.{u}} (g : Y ⟶ S') {M : Y.Modu
   intro U _ V _ e
   letI : Module Γ(S', U) Γ(M, V) := Module.compHom _ (g.appLE U V e).hom
   haveI := subsingleton_sections_of_isZero hM V
-  exact Module.Flat.of_subsingleton'
+  exact inferInstance
 
 /-- **The annihilator ideal sheaf of a zero sheaf of modules is `⊤`.**
 
@@ -372,7 +373,7 @@ variable {S X : Scheme.{u}} (π : X ⟶ S) (T : Over S)
 
 /-- **The structure sheaf is locally trivial of rank one.**
 
-`RelPicFunctor.isLocallyTrivial_unit` is `private`, so it is restated here rather
+`Scheme.PicSharp.isLocallyTrivial_unit` is `private`, so it is restated here rather
 than reused: on any affine open the identity is the required trivialisation. -/
 theorem isLocallyTrivial_unit' {Y : Scheme.{u}} :
     LineBundle.IsLocallyTrivial (SheafOfModules.unit Y.ringCatSheaf) := by

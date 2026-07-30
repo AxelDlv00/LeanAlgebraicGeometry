@@ -1,0 +1,12 @@
+import AlgebraicJacobian.Picard.DivFamilyZero
+import AlgebraicJacobian.Picard.FGAPicRepresentability
+#print axioms AlgebraicGeometry.Scheme.fgaPicardRepresentability
+#print axioms AlgebraicGeometry.Scheme.DivFamily.pullbackAlong_zero
+#print axioms AlgebraicGeometry.Scheme.DivFamily.isZero_fiberModule_zero
+#print axioms AlgebraicGeometry.Scheme.DivFamily.fiberDeg_zero
+#print axioms AlgebraicGeometry.Scheme.DivFamily.hasFiberDeg_zero
+#print axioms AlgebraicGeometry.Scheme.DivFunctor.zeroClass
+#print axioms AlgebraicGeometry.Scheme.DivFunctor.map_zeroClass
+#print axioms AlgebraicGeometry.Scheme.DivFunctor.classHasFiberDeg_zeroClass
+#print axioms AlgebraicGeometry.Scheme.DivFunctorDeg.zeroClass
+#print axioms AlgebraicGeometry.Scheme.DivFunctorDeg.instNonemptyObjZero

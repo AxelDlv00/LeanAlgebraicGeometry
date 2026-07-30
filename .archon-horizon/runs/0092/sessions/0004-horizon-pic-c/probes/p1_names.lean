@@ -1,0 +1,36 @@
+import AlgebraicJacobian.Picard.Pic0ChartSubsingletonCollapse
+import AlgebraicJacobian.Picard.DivisorFamilyDegreeZeroUnique
+import AlgebraicJacobian.Picard.DivisorFamilyDegreeZeroRep
+
+open CategoryTheory AlgebraicGeometry
+
+-- Main declarations list, checked from outside the file
+#check @CategoryTheory.Functor.RepresentableBy.eq_of_comp_hom_eq_of_subsingleton
+#check @CategoryTheory.Functor.RepresentableBy.injective_toSigmaExtension_app
+#check @AlgebraicGeometry.DivFunctorObjSubsingleton
+#check @AlgebraicGeometry.divFunctorObjSubsingleton_of_forall_ring
+#check @AlgebraicGeometry.injective_abelSigmaChart_of_subsingleton
+#check @AlgebraicGeometry.not_pointwiseCoverage_of_subsingleton_of_ne_top
+#check @AlgebraicGeometry.isChartLocusFibre_iff_restrictedChartFibre_top_of_subsingleton
+#check @AlgebraicGeometry.pic0RepresentableBy_of_isChartLocusFibre_of_coverage
+#check @AlgebraicGeometry.isChartUniv_top_of_isChartLocusFibre
+#check @AlgebraicGeometry.not_mem_chartLocus_of_two_le_genus_zero_param
+
+-- names cited in header/docstring prose
+#check @AlgebraicGeometry.not_restrictedChartFibre_top_of_not_injective
+#check @AlgebraicGeometry.not_pointwiseCoverage_of_injective_of_ne_top
+#check @AlgebraicGeometry.not_coverageContainment_bot
+#check @AlgebraicGeometry.restrictedChartFibre_top_iff
+#check @AlgebraicGeometry.range_subset_range_top_ι
+#check @AlgebraicGeometry.isChartUniv_of_restrictedChartFibre
+#check @AlgebraicGeometry.exists_splitting_h0_formula_of_mem_chartLocus
+#check @AlgebraicGeometry.exists_splitting_two_le_h0_of_mem_chartLocus
+#check @AlgebraicGeometry.instSubsingletonDivFamZarZero
+#check @AlgebraicGeometry.sigmaExtensionNat_app_fst
+
+-- axioms
+#print axioms AlgebraicGeometry.injective_abelSigmaChart_of_subsingleton
+#print axioms AlgebraicGeometry.not_pointwiseCoverage_of_subsingleton_of_ne_top
+#print axioms AlgebraicGeometry.pic0RepresentableBy_of_isChartLocusFibre_of_coverage
+#print axioms AlgebraicGeometry.not_mem_chartLocus_of_two_le_genus_zero_param
+#print axioms AlgebraicGeometry.divFunctorObjSubsingleton_of_forall_ring
