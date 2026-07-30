@@ -31,7 +31,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.subsingleton_pic0Subgroup_of_surjective_app
 type: lean
-updated: '2026-07-31T00:08:48'
+updated: '2026-07-31T00:30:37'
 ---
 theorem subsingleton_pic0Subgroup_of_surjective_app
     (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
@@ -53,3 +53,13 @@ theorem subsingleton_pic0Subgroup_of_surjective_app
   have : (⟨S.hom, x⟩ : (pic0SigmaSheaf C).1.obj (op S.left)) = ⟨S.hom, y⟩ := by
     rw [← hvx, ← hvy, hx, hy]
   exact eq_of_heq (Sigma.mk.inj this).2
+
+/-! ## THE INHABITANT, AND THE DECISION
+
+The two sections above meet here.  Injectivity is free, surjectivity is the vanishing, and
+`isIso_iff_bijective` at every test turns the pair into `IsIso` — from which both seam
+antecedents follow, antecedent 1 because `MorphismProperty.relative` contains the isomorphisms
+and antecedent 2 because an iso is locally surjective. -/
+
+omit [GeometricallyReduced C.hom] in
+variable (C pi) in

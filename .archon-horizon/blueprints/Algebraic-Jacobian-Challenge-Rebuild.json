@@ -13276,7 +13276,7 @@
     "macros": {},
     "states": {
       "blocked": 20,
-      "closed": 9671,
+      "closed": 9678,
       "formalized_open": 169,
       "informal": 18,
       "ready": 113
@@ -15071,7 +15071,7 @@
       "id": "thm:HModule_surjective_map_f",
       "lean_file": "AlgebraicJacobian/RiemannRoch/ChiSlice.lean",
       "lean_name": "CategoryTheory.Sheaf.HModule.surjective_map_f",
-      "lean_source": "theorem surjective_map_f (hS : S.ShortExact) (n : \u2115) [Subsingleton (HModule S.X\u2083 n)] :\n    Function.Surjective (map S.f n) := fun y =>\n  (exact_map_f_map_g hS n y).mp (Subsingleton.elim _ 0)\n\nsection FinitenessTransfer\n\nvariable {C : Type u} [SmallCategory C] {J : GrothendieckTopology C}\n  {R : Type u} [Field R] [HasSheafify J (ModuleCat.{u} R)]\n  {S : ShortComplex (Sheaf J (ModuleCat.{u} R))}",
+      "lean_source": "theorem surjective_map_f (hS : S.ShortExact) (n : \u2115) [Subsingleton (HModule S.X\u2083 n)] :\n    Function.Surjective (map S.f n) := fun y =>\n  (exact_map_f_map_g hS n y).mp (Subsingleton.elim _ 0)",
       "lean_status": "lean_ok",
       "level": "medium",
       "mathlib_ok": false,
