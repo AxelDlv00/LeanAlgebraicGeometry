@@ -146,6 +146,15 @@ noncomputable def intrinsicThetaQuotEquivRange (A : AffAdaptation D d) (a : ℕ)
   (Submodule.quotEquivOfEq _ _ (A.ker_intrinsicThetaEvalRel (π := π) a).symm).trans
     (A.intrinsicThetaEvalRel (π := π) a).quotKerEquivRange
 
+@[simp]
+theorem intrinsicThetaQuotEquivRange_mk (A : AffAdaptation D d) (a : ℕ)
+    (x : relThetaSections C R π a) :
+    ((A.intrinsicThetaQuotEquivRange (π := π) a (Submodule.Quotient.mk x) :
+      ↥(LinearMap.range (A.intrinsicThetaEvalRel (π := π) a))) :
+        A.IntrinsicThetaGlued (π := π) a) =
+      A.intrinsicThetaEvalRel (π := π) a x := by
+  rfl
+
 /-! ## The intrinsic high-window carve -/
 
 noncomputable local instance instOverCleftAffThetaKernelWindow :
