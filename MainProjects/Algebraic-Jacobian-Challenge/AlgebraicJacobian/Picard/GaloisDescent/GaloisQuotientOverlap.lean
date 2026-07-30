@@ -227,6 +227,58 @@ noncomputable def tripleWitness [FiniteDimensional K L] [IsGalois K L]
     ρ i.stable i.affine (le_trans inf_le_left inf_le_left)
       (triple_stable ρ i j k)
 
+/-- The triple quotient open in chart `i` lies in its pairwise overlap with
+chart `j`. -/
+theorem quotientTriple_le_overlapLeft [FiniteDimensional K L]
+    (i j k : StableAffineOpen ρ) :
+    letI := ρ.sectionsMulSemiringAction i.stable
+    letI := SemilinearGalAction.sectionsAlgebra f i.U
+    letI := SemilinearGalAction.sectionsAlgebraK (K := K) f i.U
+    letI := SemilinearGalAction.sections_isScalarTower (K := K) f i.U
+    letI := ρ.isSemilinear_sections i.stable
+    SemilinearGalAction.quotientOpenOfStableSubopen ρ i.stable
+        ((i.U ⊓ j.U) ⊓ (i.U ⊓ k.U)) ≤
+      SemilinearGalAction.quotientOpenOfStableSubopen ρ i.stable
+        (i.U ⊓ j.U) := by
+  letI := ρ.sectionsMulSemiringAction i.stable
+  letI := SemilinearGalAction.sectionsAlgebra f i.U
+  letI := SemilinearGalAction.sectionsAlgebraK (K := K) f i.U
+  letI := SemilinearGalAction.sections_isScalarTower (K := K) f i.U
+  letI := ρ.isSemilinear_sections i.stable
+  exact SemilinearGalAction.quotientOpenOfStableSubopen_mono
+    ρ i.stable i.affine
+    (le_trans inf_le_left inf_le_left) inf_le_left inf_le_left
+    (triple_stable ρ i j k) (inf_stable ρ i j)
+
+/-- The canonical restriction from a triple quotient open to its left
+pairwise overlap. -/
+noncomputable def tripleToOverlapLeft [FiniteDimensional K L]
+    (i j k : StableAffineOpen ρ) :
+    quotientTriple ρ i j k ⟶ quotientOverlap ρ i j := by
+  letI := ρ.sectionsMulSemiringAction i.stable
+  letI := SemilinearGalAction.sectionsAlgebra f i.U
+  letI := SemilinearGalAction.sectionsAlgebraK (K := K) f i.U
+  letI := SemilinearGalAction.sections_isScalarTower (K := K) f i.U
+  letI := ρ.isSemilinear_sections i.stable
+  unfold quotientTriple quotientOverlap
+  exact Scheme.homOfLE _ (quotientTriple_le_overlapLeft ρ i j k)
+
+/-- Restricting a triple quotient open and then including the pairwise overlap
+is its original inclusion into the quotient chart. -/
+@[reassoc]
+theorem tripleToOverlapLeft_fac [FiniteDimensional K L]
+    (i j k : StableAffineOpen ρ) :
+    tripleToOverlapLeft ρ i j k ≫ quotientOverlapι ρ i j =
+      quotientTripleι ρ i j k := by
+  letI := ρ.sectionsMulSemiringAction i.stable
+  letI := SemilinearGalAction.sectionsAlgebra f i.U
+  letI := SemilinearGalAction.sectionsAlgebraK (K := K) f i.U
+  letI := SemilinearGalAction.sections_isScalarTower (K := K) f i.U
+  letI := ρ.isSemilinear_sections i.stable
+  unfold tripleToOverlapLeft quotientOverlapι quotientTripleι
+    quotientOverlap quotientTriple
+  exact Scheme.homOfLE_ι _ (quotientTriple_le_overlapLeft ρ i j k)
+
 /-- The pullback of two quotient overlaps in a chart is the quotient of their
 triple source intersection. -/
 noncomputable def pullbackOverlapIsoTriple [FiniteDimensional K L]
