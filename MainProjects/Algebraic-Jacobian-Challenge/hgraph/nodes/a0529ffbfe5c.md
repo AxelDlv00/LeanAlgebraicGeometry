@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.Scheme.PicScheme.gen_descentClass_natural
 file: zzaudit_r2.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.PicScheme.gen_descentClass_natural
 type: lean
-updated: '2026-07-30T20:01:19'
+updated: '2026-07-30T20:31:07'
 ---
 theorem gen_descentClass_natural {T T' : Over (Spec (CommRingCat.of k))}
     (f : T ⟶ T') (g : T' ⟶ Y) :

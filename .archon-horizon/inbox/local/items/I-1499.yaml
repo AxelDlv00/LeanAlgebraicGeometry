@@ -14,13 +14,13 @@ body: 'Task cancellation rejected six live roadmap milestones
   rejection, and need concurrency-aware repair by the driver/human.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-30T05:14:51.114060+00:00'
-updated_at: '2026-07-30T09:32:58.858122+00:00'
+updated_at: '2026-07-30T12:39:23.068139+00:00'
 metadata:
   provenance:
     run: 0097
@@ -35,3 +35,4 @@ metadata:
   read_by:
   - pic-d
   - pic-h
+  - pic-b

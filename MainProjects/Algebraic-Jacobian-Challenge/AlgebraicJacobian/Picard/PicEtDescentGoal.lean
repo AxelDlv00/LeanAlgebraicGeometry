@@ -12,14 +12,18 @@ import AlgebraicJacobian.Picard.PicEtSeparated
 
 `AJC.picrep.etale-rep.descent-assembly`.
 
-## The defect this file addresses, quoted rather than paraphrased
+## The defect this file addresses
 
-`Picard/FGAPicRepresentability.lean` says, of the four inputs of the étale-descent
-repair:
+`Picard/FGAPicRepresentability.lean` said, of the four inputs of the étale-descent
+repair, that every entry is an *antecedent* and that there was **no declaration
+anywhere in this project stating the theorem they are antecedents of**.
 
-> **And a list of inputs is not a route.** Every entry below is an *antecedent*.
-> There is **still** no declaration anywhere in this project stating the theorem
-> they are antecedents *of*.
+**That sentence is no longer in the source, because this file made it false and the
+paragraph is now past-tense there.** An earlier revision of this docstring
+block-quoted its present-tense form and said "quoted rather than paraphrased" —
+which stopped being accurate the moment the seam file was corrected, i.e. within an
+hour (fresh-context audit, finding 4). Paraphrased on purpose now: a verbatim quote
+of a file this one is actively changing rots faster than a paraphrase.
 
 `I-1312` refuted the one file that had claimed to supply such a statement
 (`Picard/PicEtDescentAssembly.lean`'s `representableByRestrict_of_baseChange`
@@ -35,20 +39,29 @@ clause (1). Neither the conclusion nor `HasPicSchemeEt C` occurs in any hypothes
 
 ## What composes, and where each piece comes from
 
-Four files hold the pieces; nothing joined them.
+**Read the dependency list below as a list of PRECEDENTS, not of dependencies.** An
+earlier revision of this section said "four files hold the pieces; nothing joined
+them", which reads as a claim about this file's proof terms and is false of two of
+the four (fresh-context audit, finding 4). Measured: only item 4 occurs in any proof
+term here. Items 2 and 3 occur **only in docstrings** — this file re-derives item 2
+(as `quotientHomEquivOfIso`, for the reason in §2b) and inlines item 3 (as
+`Equiv.subtypeEquiv rep.homEquiv`). A reader budgeting against "four files hold the
+pieces" would be reading the wrong graph.
 
 1. `GaloisDescent/PicEtGaloisAction.lean` — `semilinearGalActionOfRepresentableBy`
-   makes the semilinear Galois action **free from `rep`**, so the quotient
-   hypothesis is about an action the representation already determines.
+   makes the semilinear Galois action **free from `rep`**. *Used*, in §6's
+   `_canonical` form.
 2. `PicEtQuotientHom.lean` — `quotientHomEquiv_uniform` turns clause 3 of
-   `IsGaloisQuotient` into `Hom_k(T, Y) ≃ {equivariant T_{k'} ⟶ X'}`, uniformly in
-   `T` (the per-test `Nonempty` cannot carry a naturality square; the uniform one
-   can).
-3. `rep` itself — the second leg `{equivariant T_{k'} ⟶ X'} → picEt(C_{k'})(T_{k'})`
-   with `range_equivariantToClass` characterising its image.
+   `IsGaloisQuotient` into `Hom_k(T, Y) ≃ {equivariant T_{k'} ⟶ X'}`. **Not used**:
+   its `Nonempty` cannot carry a naturality square, so §2b re-derives the same
+   bijection with its forward map pinned. Precedent for the script, not a dependency.
+3. `rep` itself — the second leg `{equivariant T_{k'} ⟶ X'} → picEt(C_{k'})(T_{k'})`.
+   `range_equivariantToClass` characterises its image; **not used** here, the leg is
+   inlined as a subtype equivalence.
 4. `PicEtDescentRepresentability.lean` — `representableBy_of_galInvariantEquiv`
    takes a natural family of `Equiv`s onto the `Γ`-**invariant** classes on `T_{k'}`
-   and concludes `(picEt C).RepresentableBy Y`.
+   and concludes `(picEt C).RepresentableBy Y`. **The one genuine dependency**, and
+   the only place `[Algebra.IsSeparable k k']` and `[Module.Finite k k']` are spent.
 
 So the composite needs the two ends to meet, and what stands between them is
 exactly the predicate match `G1` owes: leg 3's image is
@@ -96,7 +109,24 @@ two predicates agree — two predicates on one object, which is all that campaig
 
 It is carried as an explicit hypothesis of everything below and is **not proved
 here**. Stated as a definition so that a lane closing `G1` has a name to discharge
-and so that the composite's obligations are countable rather than inlined. -/
+and so that the composite's obligations are countable rather than inlined.
+
+**SATISFIABLE BUT NOT MEASURED NON-VACUOUS, and the only exhibited witness site
+trivialises the theorem it feeds** (fresh-context audit; `isInvariantMatch_of_subsingleton`
+and `representableBy_picEt_of_degenerate` below are that measurement, landed as Lean
+rather than left as prose). At `Subsingleton (k' ≃ₐ[k] k')` this predicate is
+**free** — and `k' = k` is such a site, where `Mono (specMapAlgebra k k)` also holds,
+so `hcov` is free there too by
+`etaleTopology_generate_coverSelfSection_of_mono`. There the theorem's four "inputs"
+are two.
+
+This is verbatim the trap `Picard/PicEtDescentRepresentability.lean` records for
+`hcov` itself — *a satisfiable antecedent whose only witness also trivialises the
+conclusion establishes satisfiability and **not** content* — now reproduced for this
+file's own new hypothesis. Exhibiting a model at an extension with a **nontrivial**
+automorphism (`ℂ/ℝ`, `𝔽_{p²}/𝔽_p`) is **open**, and is what would make `G1`'s cost
+here a real number. Do not read the theorems of §5–§6 as instantiable at a
+nondegenerate site on the strength of this definition being inhabited. -/
 def IsInvariantMatch (C : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
     {X' : Over (Spec (CommRingCat.of k'))}
@@ -107,6 +137,34 @@ def IsInvariantMatch (C : Over (Spec (CommRingCat.of k)))
     (pullbackSemilinearGalAction k k' T.hom).IsEquivariant ρ (rep.homEquiv.symm c).left
       ↔ IsGalInvariant (k' := k') C T
           ((picEt_crossBaseIso C k').hom.app (op (baseTest (k' := k') T)) c)
+
+/-- **`IsInvariantMatch` is FREE at a trivial Galois group** — the satisfiability
+half, and half of why satisfiability is not content here.
+
+Both sides of the iff quantify over `γ`; with only `γ = 1` present, the left side is
+the action's unit law and the right is `twistTest_one` plus `Functor.map_id`. No
+input about `rep`, the curve, or the classes is used. -/
+theorem isInvariantMatch_of_subsingleton [Subsingleton (k' ≃ₐ[k] k')]
+    (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    {X' : Over (Spec (CommRingCat.of k'))}
+    (rep : (picEt (Scheme.baseChangeField C k')).RepresentableBy X')
+    (ρ : SemilinearGalAction k k' X'.left X'.hom)
+    (T : Over (Spec (CommRingCat.of k))) :
+    IsInvariantMatch C rep ρ T := by
+  intro c
+  constructor
+  · intro _ γ
+    obtain rfl : γ = 1 := Subsingleton.elim _ _
+    rw [twistTest_one, op_id]
+    simp
+  · intro _ γ
+    obtain rfl : γ = 1 := Subsingleton.elim _ _
+    change ((pullbackSemilinearGalAction k k' T.hom).act 1).hom ≫ _
+      = _ ≫ (ρ.act 1).hom
+    rw [map_one, map_one]
+    change (Iso.refl _).hom ≫ _ = _ ≫ (Iso.refl _).hom
+    rw [Iso.refl_hom, Category.id_comp, Iso.refl_hom, Category.comp_id]
 
 /-! ## §2. The descent class of a `k`-morphism, and its naturality
 
@@ -483,17 +541,31 @@ theorem seamClauseOne_of_galoisQuotient
 /-! ## §6. The form a consumer actually holds: `IsGaloisQuotient` as a class
 
 The two theorems of §5 take the quotient's four *components*. A consumer holds the
-bundled `Prop`-valued `IsGaloisQuotient` instead, and — measured, not assumed —
-destructuring it directly into the `Type`-valued conclusion of
-`representableBy_picEt_of_galoisQuotient` **fails**: `Exists.casesOn` can only
-eliminate into `Prop`. So the component form is not usable as it stands, and this
-section fixes that rather than leaving the gap for a consumer to hit.
+bundled `Prop`-valued `IsGaloisQuotient` instead, so the convenience forms below
+exist to spare every consumer the unpacking.
 
-The repair is the one `Picard/PicEtQuotientHom.lean` records for the same trap
-(`I-1405`): `Classical.choice` eliminates a `Prop`-valued `Exists` into `Type`, so
-the `Nonempty` form is a `noncomputable def`. Note the asymmetry: the
-`RepresentableBy` version must go through `Nonempty` (it is data), while the
-`∃`-shaped clause (1) needs no choice at all. -/
+**THE STRONGER CLAIM THIS SECTION MADE IS WITHDRAWN, and it is the same overclaim
+`Picard/PicEtQuotientHom.lean` already withdrew one file over** (`I-1405`: "the
+data-valued `Equiv` is unprovable, so the gate needs strengthening"). This docstring
+said destructuring `IsGaloisQuotient` into the `Type`-valued conclusion **fails**,
+that "the component form is not usable as it stands", and that the `RepresentableBy`
+version **must** go through `Nonempty`. Refuted by a fresh-context audit, which
+elaborated
+
+  `representableBy_picEt_of_galoisQuotient rep ρ hq.choose hq.choose_spec.1`
+  `  hq.choose_spec.2.1 hq.choose_spec.2.2 hcov hmatch`
+
+with **no error and no `Nonempty` wrapper**. What is true is narrower: the *tactic*
+`obtain`/`Exists.casesOn` cannot eliminate an `∃` into `Type` — but `Exists.choose`,
+which *is* `Classical.choice`, can, and the same paragraph was already invoking that
+axiom. So the component form was usable all along by a caller willing to write
+`.choose`; these forms are a convenience, not a repair.
+
+What survives, and is the genuinely useful half: the **asymmetry in what choice is
+spent on**. The `RepresentableBy` form needs `Classical.choice` (however spelled);
+the `∃`-shaped clause (1) needs none, because eliminating an `∃` into a `Prop` is
+free. That is why `seamClauseOne_of_isGaloisQuotient` is a `theorem` and not a
+`noncomputable def`. -/
 
 section Bundled
 
@@ -565,6 +637,40 @@ theorem seamClauseOne_of_isGaloisQuotient_canonical
       Nonempty ((picEt C).RepresentableBy Z) ∧
         LocallyOfFiniteType Z.hom ∧ IsSeparated Z.hom :=
   seamClauseOne_of_isGaloisQuotient rep _ hq hcov hmatch hlft
+
+/-- **THE DEGENERATE SITE, as a theorem: at a trivial Galois group TWO of the four
+inputs evaporate.**
+
+This is the non-vacuity measurement of §1 carried through to the headline, and it is
+stated in Lean rather than hedged in prose because that is the only form a later
+reader cannot skip. Under `[Mono (specMapAlgebra k k')]` and
+`[Subsingleton (k' ≃ₐ[k] k')]` — and `k' = k` is such a site, by
+`specMapAlgebra_self` and `inferInstance` — the conclusion of
+`representableBy_picEt_of_galoisQuotient` follows from `rep` and the quotient
+**alone**: `hcov` comes from `etaleTopology_generate_coverSelfSection_of_mono` and
+`hmatch` from `isInvariantMatch_of_subsingleton`, neither supplied from outside.
+
+**So satisfiability of the two named antecedents is established and their CONTENT is
+not.** Anyone pricing `G1` or `hcov` against this file's theorems must exhibit a
+model at an extension with a *nontrivial* automorphism; at every model exhibited
+here, the "four inputs" are two. Same trap
+`Picard/PicEtDescentRepresentability.lean` records for `hcov` on its own, now
+measured for the pair. -/
+noncomputable def representableBy_picEt_of_degenerate
+    [Mono (specMapAlgebra k k')] [Subsingleton (k' ≃ₐ[k] k')]
+    (e : Limits.pullback Y.hom (specMapAlgebra k k') ≅ X'.left)
+    (he : e.hom ≫ X'.hom = pullback.snd Y.hom (specMapAlgebra k k'))
+    (heq : (pullbackSemilinearGalAction k k' Y.hom).IsEquivariant ρ e.hom)
+    (huniv : ∀ (T : Scheme.{u}) (t : T ⟶ Spec (CommRingCat.of k))
+      (h : Limits.pullback t (specMapAlgebra k k') ⟶ X'.left),
+      h ≫ X'.hom = pullback.snd t (specMapAlgebra k k') →
+      (pullbackSemilinearGalAction k k' t).IsEquivariant ρ h →
+      ∃! u : {u : T ⟶ Y.left // u ≫ Y.hom = t},
+        pullbackBaseChange k k' Y.hom t u.1 u.2 ≫ e.hom = h) :
+    (picEt C).RepresentableBy Y :=
+  representableBy_picEt_of_galoisQuotient rep ρ e he heq huniv
+    (fun T => etaleTopology_generate_coverSelfSection_of_mono T)
+    (fun T => isInvariantMatch_of_subsingleton C rep ρ T)
 
 end Bundled
 

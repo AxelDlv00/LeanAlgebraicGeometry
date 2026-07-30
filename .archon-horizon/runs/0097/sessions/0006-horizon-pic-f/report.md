@@ -1,0 +1,1 @@
+No durable authored change followed commit `e94886aa07`. The later mutating commands only created private Git indexes under `/tmp`, removed by traps. The final explicit-path check returned `authored_paths_clean`; remaining workspace changes belong to other lanes.
