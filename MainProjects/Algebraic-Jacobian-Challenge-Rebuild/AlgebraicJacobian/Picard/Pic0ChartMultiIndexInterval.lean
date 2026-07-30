@@ -139,7 +139,14 @@ theorem jointlyInjective_iff {ι : Type u} {X : ι → Scheme.{u}}
     (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1) :
     JointlyInjective C f ↔
       IndexSeparated C f ∧ ∀ (i : ι) (S : Scheme.{u}ᵒᵖ), Function.Injective ((f i).app S) := by
-  sorry
+  constructor
+  · intro h
+    refine ⟨fun S i j x y hxy => ?_, fun i S x y hxy => ?_⟩
+    · exact congrArg Sigma.fst (h S i j x y hxy)
+    · exact eq_of_heq (Sigma.mk.injEq .. ▸ h S i i x y hxy).2
+  · rintro ⟨hsep, hinj⟩ S i j x y hxy
+    obtain rfl : i = j := hsep S i j x y hxy
+    exact congrArg (fun z => (⟨i, z⟩ : Σ i, (yoneda.obj (X i)).obj S)) (hinj i S hxy)
 
 /-- Joint injectivity implies per-chart injectivity — the direction a lane will reach for. -/
 theorem injective_of_jointlyInjective {ι : Type u} {X : ι → Scheme.{u}}
@@ -173,7 +180,27 @@ theorem not_jointlyInjective_of_pointwiseCoverage_of_ne_top {ι : Type u} {X : �
     (i₀ : ι) (hV : V i₀ ≠ ⊤)
     (hcov : PointwiseCoverage C (fun i => restrictChart (f i) (V i))) :
     ¬ JointlyInjective C f := by
-  sorry
+  intro h
+  obtain ⟨hsep, hinj⟩ := (jointlyInjective_iff f).mp h
+  -- `V i₀ ≠ ⊤` gives a point of `X i₀` outside `V i₀`
+  obtain ⟨t, htV⟩ : ∃ t : X i₀, t ∉ V i₀ := by
+    by_contra hc
+    exact hV (top_le_iff.mp fun t _ => not_not.mp fun ht => hc ⟨t, ht⟩)
+  obtain ⟨W, htW, i, x, hx⟩ := hcov (X i₀) ((f i₀).app (op (X i₀)) (𝟙 (X i₀))) t
+  -- the coverage witness at index `i` and the identity at index `i₀` agree over `W`
+  have hxv : (f i).app (op (W : Scheme.{u})) (x ≫ (V i).ι)
+      = (f i₀).app (op (W : Scheme.{u})) (W.ι ≫ 𝟙 (X i₀)) := by
+    rw [← chart_map_ι_apply (f i₀) W (𝟙 (X i₀))]
+    exact hx
+  -- index separation collapses the two indices, and then per-chart injectivity the two points
+  obtain rfl : i = i₀ := hsep _ i i₀ _ _ hxv
+  have heq := hinj i _ hxv
+  -- but they disagree at `t`: the witness lands in `V i` and `t` does not
+  have hpt : ((x ≫ (V i).ι).base ⟨t, htW⟩ : X i)
+      = ((W.ι ≫ 𝟙 (X i)).base ⟨t, htW⟩ : X i) := by rw [heq]
+  have hmem : ((x ≫ (V i).ι).base ⟨t, htW⟩ : X i) ∈ V i := (x.base ⟨t, htW⟩).2
+  rw [hpt] at hmem
+  exact htV (by simpa using hmem)
 
 variable (C) in
 /-- **The one-chart conclusion, recovered at arbitrary `ι` with the missing hypothesis
