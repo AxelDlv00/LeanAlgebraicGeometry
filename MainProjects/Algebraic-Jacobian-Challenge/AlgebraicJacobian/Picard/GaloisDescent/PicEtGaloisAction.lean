@@ -59,17 +59,32 @@ square**.
   morphism. This is field `compat` of `SemilinearGalAction`, discharged for every
   `γ`, from `rep` alone.
 
-**NOT proved, and named rather than hidden**: field `act` of
-`SemilinearGalAction` asks for a group homomorphism into `Aut X'.left`, and what is
-built here is a **family of endomorphisms**. Two things are therefore owed and are
-stated as such in `§4`, with no declaration in this file assuming them:
+**Also proved, `sorry`-free — INVERTIBILITY** (`§4`, `§5`). An earlier revision of
+this docstring listed invertibility as owed, alongside multiplicativity, and
+predicted the two would come together out of an `Over.mapComp` argument. That was
+wrong in the cheap direction and the correction is the more useful half of this
+file:
 
-1. `twistMor γ` is invertible;
-2. `γ ↦ twistMor γ` is multiplicative.
+* `twistHomEquiv` — morphisms into `X'_γ` are morphisms out of `T_{γ⁻¹}`,
+  *identically* on underlying maps. Pure slice-category bookkeeping; the twist's
+  reversibility is consumed here as `toSpecAut`'s own cancellation lemmas.
+* `representableByTwist` — **the twisted object represents `picEt (C_{k'})` too**,
+  by composing `twistHomEquiv`, `rep`, and the §2 action at `γ⁻¹`.
+* `twistIso` — hence `X'_γ ≅ X'`, by mathlib's
+  `Functor.RepresentableBy.uniqueUpToIso`. Invertibility therefore costs one
+  mathlib lemma and needs **no** multiplicativity.
+* `twistIso_compat`, `twistIso_hom_left_isIso` — the semilinearity square for the
+  iso (still `Over.w`), and the underlying scheme map as an `IsIso` instance, which
+  is what `SemilinearGalAction.act` needs at each `γ`.
 
-Neither is assumed anywhere below, and this file constructs **no**
-`SemilinearGalAction`. See `§4` for why the two are expected to be one argument
-rather than two, and what the route to them is.
+**NOT proved, and named rather than hidden**: `act` wants a group **homomorphism**
+`(k' ≃ₐ[k] k') →* Aut X'.left`, and what this file supplies is an isomorphism
+**for each `γ` separately**. The one remaining obligation is therefore
+
+  `twistIso (γ * τ) = twistIso γ ∘ twistIso τ` (in the appropriate spelling),
+
+and it is assumed nowhere below. This file constructs **no**
+`SemilinearGalAction`. See `§6`.
 
 ## What this does NOT do
 
@@ -88,7 +103,7 @@ separability hypothesis on `k'/k` is used anywhere: `[Algebra k k']` throughout.
 scoped to a *directory* published an absence that was false of the project. This
 file therefore spells the base action as `toSpecAut` — the landed **group
 homomorphism** — rather than as `specGal`, precisely because the multiplicativity
-that `§4` still owes is a property `toSpecAut` already has at the base and
+`§6` still owes is the one property `toSpecAut` already has at the base and
 `specGal` would have to re-derive. `baseAut_comp` is the one bridge lemma between
 the two spellings.
 
@@ -96,8 +111,8 @@ the two spellings.
 
 `lake env lean` on this file EXIT=0 with fresh oleans, and every declaration below
 was probed in a scratch file first (`I-1057`: a stale-import environment reports
-every probe as succeeding). The two open obligations of `§4` were left as explicit
-`sorry` in that scratch file and are **not** present here in any form.
+every probe as succeeding). The one open obligation of `§6` was left as an explicit
+`sorry` in that scratch file and is **not** present here in any form.
 -/
 
 universe u
@@ -244,7 +259,7 @@ square is its `Over.w`. That the square is free is the finding — three board r
 nine hypothesis sites treat the whole semilinear action as an input, and its
 `compat` half follows from any representation with no geometry at all.
 
-What is **not** free is `act`'s group-homomorphism property; see `§4`. -/
+What is **not** free is `act`'s group-homomorphism property; see `§6`. -/
 theorem twistMor_compat (γ : k' ≃ₐ[k] k') :
     (twistMor C rep γ).left ≫ X'.hom
       = X'.hom ≫ (toSpecAut (k' ≃ₐ[k] k') k' γ).hom :=
@@ -252,45 +267,158 @@ theorem twistMor_compat (γ : k' ≃ₐ[k] k') :
 
 end Action
 
-/-! ## §4. What is still owed, stated rather than assumed
+/-! ## §4. The twist is an ISOMORPHISM -/
 
-This file builds **no** `SemilinearGalAction`, and the reason is precise. That
-structure has two fields:
+/-- **Morphisms into a twisted object are morphisms out of the inversely-twisted
+source**, and *identically so* on underlying scheme maps (`twistHomEquiv_left` is
+`rfl`).
 
-* `compat` — discharged for every `γ`, from `rep` alone, by `twistMor_compat`;
-* `act : (k' ≃ₐ[k] k') →* Aut X'.left` — **not** discharged. What §3 produces is a
-  *family of endomorphisms* `γ ↦ (twistMor γ).left`, and two things separate a family
-  of endomorphisms from a group homomorphism into `Aut`:
+This is the bijection that makes `§5` work, and it is where `toSpecAut`'s
+invertibility is consumed — the two directions are `toSpecAut_hom_inv_hom` and
+`toSpecAut_inv_hom_hom`, the cancellation lemmas the landed `MonoidHom` spelling
+already ships. Note it needs no curve, no `picEt`, and no representation: it is a
+statement about the slice category alone. -/
+noncomputable def twistHomEquiv (γ : k' ≃ₐ[k] k')
+    (T X' : Over (Spec (CommRingCat.of k'))) :
+    (T ⟶ (twistTestFunctor (k := k) γ).obj X')
+      ≃ ((twistTestFunctor (k := k) γ⁻¹).obj T ⟶ X') where
+  toFun u := Over.homMk u.left (by
+    have h : u.left ≫ X'.hom ≫ (toSpecAut (k' ≃ₐ[k] k') k' γ).hom = T.hom := Over.w u
+    change u.left ≫ X'.hom = T.hom ≫ (toSpecAut (k' ≃ₐ[k] k') k' γ⁻¹).hom
+    rw [← h, Category.assoc, Category.assoc, toSpecAut_hom_inv_hom, Category.comp_id])
+  invFun u := Over.homMk u.left (by
+    have h : u.left ≫ X'.hom = T.hom ≫ (toSpecAut (k' ≃ₐ[k] k') k' γ⁻¹).hom := Over.w u
+    change u.left ≫ X'.hom ≫ (toSpecAut (k' ≃ₐ[k] k') k' γ).hom = T.hom
+    rw [← Category.assoc, h]
+    exact (Category.assoc _ _ _).trans
+      ((congrArg (T.hom ≫ ·)
+        (toSpecAut_inv_hom_hom (k' ≃ₐ[k] k') k' γ)).trans (Category.comp_id _)))
+  left_inv u := by ext; rfl
+  right_inv u := by ext; rfl
 
-  1. each `twistMor γ` is invertible;
-  2. `γ ↦ twistMor γ` is multiplicative.
+/-- `twistHomEquiv` is the identity on underlying scheme maps. -/
+@[simp]
+theorem twistHomEquiv_left (γ : k' ≃ₐ[k] k')
+    (T X' : Over (Spec (CommRingCat.of k')))
+    (u : T ⟶ (twistTestFunctor (k := k) γ).obj X') :
+    (twistHomEquiv (k := k) γ T X' u).left = u.left := rfl
 
-**These are expected to be one argument, not two, and the route is worth recording
-because it explains why the twist was spelled with `Over.map` along an iso.**
-`twistTestFunctor γ` is `Over.map` along an isomorphism of the base, hence an
-**equivalence** of test categories, with `twistTestFunctor γ⁻¹` its inverse. So the
-functor action of §2 can be read as an isomorphism between two Yoneda functors, and
-Yoneda's full faithfulness then delivers an *isomorphism* of representing objects
-rather than a bare morphism — multiplicativity coming from `toSpecAut`'s own
-multiplicativity threaded through `Over.mapComp`. That is exactly why §1 spells the
-base action as the landed `MonoidHom` `toSpecAut` rather than as `specGal`
-(`I-1455`): the property that is owed here is one `toSpecAut` already has.
+/-- Compatibility of `twistHomEquiv` with precomposition — the naturality input of
+`§5`. `rfl` after `Over` extensionality, because the bijection does not move the
+underlying map. -/
+theorem twistHomEquiv_comp (γ : k' ≃ₐ[k] k')
+    (T T' X' : Over (Spec (CommRingCat.of k'))) (f : T ⟶ T')
+    (g : T' ⟶ (twistTestFunctor (k := k) γ).obj X') :
+    twistHomEquiv (k := k) γ T X' (f ≫ g)
+      = (twistTestFunctor (k := k) γ⁻¹).map f ≫ twistHomEquiv (k := k) γ T' X' g := by
+  apply Over.OverMorphism.ext
+  rfl
 
-**Not claimed to be free.** The paragraph above is a route, not a measurement: it was
-*not* carried out, and the two obligations were left as explicit `sorry` in the
-scratch file that validated the rest of this module. A lane picking this up should
-expect the `Over.mapComp` bookkeeping between `twistTestFunctor (γ * τ)` and
-`twistTestFunctor γ ⋙ twistTestFunctor τ` to be the real cost, and should not read
-"expected to be one argument" as "expected to be cheap".
+/-! ## §5. The twisted object represents `picEt` too, hence the twist is invertible -/
 
-**What this changes for the other lanes regardless.** The action is *not* an
-independent fifth deliverable of the descent route, which is what the absence of any
-producer at this object left open. Its base-compatibility half is free from the
-representation, and what remains is a statement about the group law of a family that
-is already constructed — no curve geometry, no cohomology, no `picEt` property
-beyond representability itself. A lane budgeting "construct the semilinear action on
-the `k'`-side representing scheme" as a geometric step is over-budgeting; a lane
-reading this file as having *supplied* the action is over-reading. -/
+section Iso
+
+variable (C : Over (Spec (CommRingCat.of k)))
+  [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+  {X' : Over (Spec (CommRingCat.of k'))}
+  (rep : (picEt (Scheme.baseChangeField C k')).RepresentableBy X')
+
+/-- **The twisted object represents `picEt (C_{k'})` as well.**
+
+Composing three bijections, each already available: `twistHomEquiv` (§4), the given
+representation `rep`, and the functor action of §2 at `γ⁻¹`. Naturality is
+`twistHomEquiv_comp` plus `rep`'s own naturality plus naturality of the action —
+no new content.
+
+This is the declaration that makes the twist invertible without proving
+multiplicativity first, which is what the previous revision of this file's closing
+section predicted would be needed. -/
+noncomputable def representableByTwist (γ : k' ≃ₐ[k] k') :
+    (picEt (Scheme.baseChangeField C k')).RepresentableBy
+      ((twistTestFunctor (k := k) γ).obj X') where
+  homEquiv {T} :=
+    ((twistHomEquiv (k := k) γ T X').trans rep.homEquiv).trans
+      ((galoisActionPicEt C γ⁻¹).app (Opposite.op T)).toEquiv
+  homEquiv_comp := by
+    intro T T' f g
+    have hnat := (galoisActionPicEt C (k' := k') γ⁻¹).hom.naturality f.op
+    simp only [Equiv.trans_apply, Iso.app_hom, Iso.toEquiv_fun]
+    rw [twistHomEquiv_comp, rep.homEquiv_comp]
+    exact congrArg (fun (h : _ ⟶ _) => (ConcreteCategory.hom h) (rep.homEquiv
+      ((twistHomEquiv (k := k) γ T' X') g))) hnat
+
+/-- **THE TWIST, AS AN ISOMORPHISM `X'_γ ≅ X'`.**
+
+Two objects representing one functor are isomorphic, and mathlib says so:
+`Functor.RepresentableBy.uniqueUpToIso`. So invertibility of the Galois twist at a
+representing object costs **one mathlib lemma** applied to §5's second
+representation, for an arbitrary field `k`, an arbitrary extension `k'/k` and any
+representation. No `IsRepresentable` instance is needed and none is available. -/
+noncomputable def twistIso (γ : k' ≃ₐ[k] k') :
+    (twistTestFunctor (k := k) γ).obj X' ≅ X' :=
+  (representableByTwist C rep γ).uniqueUpToIso rep
+
+/-- **The semilinearity square for the isomorphism** — still `Over.w`, still free. -/
+theorem twistIso_compat (γ : k' ≃ₐ[k] k') :
+    (twistIso C rep γ).hom.left ≫ X'.hom
+      = X'.hom ≫ (toSpecAut (k' ≃ₐ[k] k') k' γ).hom :=
+  Over.w (twistIso C rep γ).hom
+
+/-- **The underlying scheme map is an isomorphism.**
+
+Read off the slice iso by applying `Over.Hom.left` to both triangle identities — no
+geometric instance, and in particular not via open-immersion reasoning, which would
+be a fact about a different morphism. This is the statement
+`SemilinearGalAction.act` needs at each `γ`. -/
+instance twistIso_hom_left_isIso (γ : k' ≃ₐ[k] k') :
+    IsIso (twistIso C rep γ).hom.left :=
+  ⟨(twistIso C rep γ).inv.left, by
+      rw [← Over.comp_left, (twistIso C rep γ).hom_inv_id]; rfl,
+    by rw [← Over.comp_left, (twistIso C rep γ).inv_hom_id]; rfl⟩
+
+end Iso
+
+/-! ## §6. The ONE thing still owed, stated rather than assumed
+
+`SemilinearGalAction` has two fields, and the score after `§5` is:
+
+* `compat` — **discharged** for every `γ`, from `rep` alone (`twistIso_compat`);
+* `act : (k' ≃ₐ[k] k') →* Aut X'.left` — **not** discharged, but the gap is now one
+  equation rather than two. Each `γ` has its automorphism (`twistIso` plus
+  `twistIso_hom_left_isIso`); what is missing is that `γ ↦ twistIso γ` respects the
+  **group law**.
+
+**What that costs, honestly.** It is naturality of `uniqueUpToIso` in the twist
+parameter: `twistTestFunctor (γ * τ)` and `twistTestFunctor γ ⋙ twistTestFunctor τ`
+agree because `toSpecAut` is a `MonoidHom` and `Over.mapComp` transports that, and
+one then has to see that the two representations `representableByTwist` builds along
+the two routes are the *same* representation. The ingredients are all present;
+the bookkeeping was not carried out and is **not** claimed to be cheap. It was left
+as an explicit `sorry` in the scratch file that validated everything above, and no
+declaration here depends on it.
+
+**A prediction this file already got wrong, recorded because it is the reusable
+part.** The previous revision listed invertibility and multiplicativity as two owed
+obligations and argued they would be *one* argument via Yoneda. Half of that was
+wrong in the expensive direction: invertibility does **not** need multiplicativity,
+does not need Yoneda fullness, and does not need the `Over.mapComp` bookkeeping. It
+needs the observation that the *twisted object also represents the functor*, after
+which `Functor.RepresentableBy.uniqueUpToIso` — already in mathlib — finishes. The
+tell was that the twist bijection `twistHomEquiv` is the identity on underlying
+maps, so nothing had to be transported at all. Pricing a residue by the plan that
+produced it, rather than by asking what the object is, is what cost the extra
+paragraph.
+
+**What this changes for the other lanes.** The semilinear action is *not* an
+independent fifth deliverable of the descent route, which is what the total absence
+of a producer at this object left open. Of the structure `PicEtQuotientHom.lean`
+binds at nine sites and the `G2` gate binds too, everything except one group-law
+equation is now free from the representation alone: no curve geometry, no
+cohomology, no `picEt` property beyond representability. A lane budgeting
+"construct the semilinear action on the `k'`-side representing scheme" as a
+geometric step is over-budgeting. A lane reading this file as having *supplied* a
+`SemilinearGalAction` is over-reading — it has not, and instance search will not
+find one. -/
 
 end PicScheme
 
