@@ -34,13 +34,17 @@ hypothesis, no chart typing, no coverage datum.
 ## What these use sites do NOT show
 
 They do not make the chart part of a working atlas.  `not_mem_chartLocus_of_two_le_genus_zero_param`
-(same import, pic-c's file) proves the chart locus at `n = 0` is empty once `g ≥ 2`, so this
-chart's locus — the thing coverage would have to reach — is *provably empty* in the interesting
-genus range.  The chart exists and is honest; what it cannot do is be covered.
+(same import, pic-c's file) proves the **chart locus** at `n = 0` is empty once `g ≥ 2`, so the
+`chartLocus`-mediated route to coverage is dead here.
 
-That is the joint state to carry forward: the `rep` slot is inhabited at the one parameter where
-coverage is impossible, and coverage is unconditional at the one parameter where `rep` has no
-producer.
+**Not more than that.**  A draft of this paragraph said the chart "cannot be covered", which is
+an overclaim: `PointwiseCoverage` (`Pic0ChartAtlasCoupling.lean:99`) quantifies over an
+*arbitrary* open and never mentions `chartLocus`, and that file's own §52-55 says no declaration
+in the tree relates the two carriers.  An empty locus refutes the intended instantiation, not
+coverage itself.
+
+Joint state to carry forward: `rep` inhabited at the parameter where the known coverage route is
+dead, coverage unconditional at the parameter where `rep` has no producer.
 -/
 
 set_option autoImplicit false

@@ -48,11 +48,17 @@ and it is available over any commutative ring.
 * `AlgebraicGeometry.DivisorAdaptation.divEq_trivEqns_of_isCertified_zero` — hence the system
   is divisor-equal to the trivial one.
 * `AlgebraicGeometry.instSubsingletonDivFamZeroGeneral` — `Subsingleton (DivFam C R π 0)` for
-  **every** `R`, dropping the `Field K` of `instSubsingletonDivFamZero`.
-* `AlgebraicGeometry.instSubsingletonDivFamZarZeroGeneral` — and for the *locally* certified
-  functor carrier `DivFamZar C R π 0`, by Zariski descent of `DivEq` along the localization
-  immersions (`divEq_of_divEq_pullback`) rather than by field surjectivity of `toZar`.
-* `AlgebraicGeometry.DivFamZar.uniqueZero` — the value is `Unique` at every test ring.
+  **every** `R`: the globally certified quotient, since `divFamSetoid` is `DivEq`.
+
+Two declarations an earlier draft of this list advertised **live in
+`Picard/DivisorFamilyDegreeZeroRep.lean`, not here**, and the list said otherwise:
+`instSubsingletonDivFamZarZeroGeneral` (the *locally* certified carrier `DivFamZar`, which
+needs the Zariski descent of `DivEq` along the localization immersions) and
+`DivFamZar.uniqueZero`.  That draft also named `instSubsingletonDivFamZeroGeneral` while **no
+such declaration existed anywhere** — the `cited-names-need-check-not-grep` failure, in the
+list a reader hits first.  It is landed above now rather than struck from the list, because the
+statement was the right one to make: the chain ends on `DivEq`, which is the relation *both*
+quotients use, so the globally certified carrier costs three lines.
 
 ## Relation to the field file
 
@@ -60,6 +66,14 @@ and it is available over any commutative ring.
 instance applies at `R := K`.  The field file is kept because its route through the
 presentation divisor is the one the degree ledger consumes elsewhere, and because its
 statement is the one already cited in the tree.
+
+**And "needs `Field K` twice" understates what is dropped.**  Comparing the two signatures:
+`instSubsingletonDivFamZero` binds `{K} [Field K] [Algebra k K]` *and four `relCurve C K`
+geometry instances* — `IsIntegral`, `SmoothOfRelativeDimension 1`, `QuasiCompact`,
+`LocallyOfFiniteType` — while the instance above binds `[CommRing R] [Algebra k R]` and nothing
+else.  Those four are the part a general-test consumer cannot supply at all, so they, not the
+field, are the real barrier the unit argument removes.  `Field k` (the *base* field) is in both
+signatures and is not dropped by anything here.
 -/
 
 set_option autoImplicit false
@@ -159,6 +173,29 @@ theorem divEq_trivEqns_of_isCertified_zero (hc : A.IsCertified 0) :
   exact hunit.unit_spec.symm
 
 end DivisorAdaptation
+
+/-! ## The globally certified quotient, at every test ring
+
+The chain above lands on `DivEq`, which is the relation *both* quotients are taken by, so the
+globally certified carrier follows in three lines — and it must be stated, because an earlier
+draft of this file's `Main declarations` list advertised it while the file only proved the
+locally certified version. -/
+
+/-- **`DivFam C R π 0` is a subsingleton at EVERY test ring**, dropping the `Field K` *and* the
+four `relCurve C K` geometry instances (`IsIntegral`, `SmoothOfRelativeDimension 1`,
+`QuasiCompact`, `LocallyOfFiniteType`) that `instSubsingletonDivFamZero`
+(`Picard/DivisorFamilyDegreeZeroUnique.lean`) carries.
+
+`divFamSetoid` relates two certified families exactly when their systems are `DivEq`, and
+`divEq_trivEqns_of_isCertified_zero` says every degree-`0` system is `DivEq` to the same
+trivial one. -/
+instance instSubsingletonDivFamZeroGeneral : Subsingleton (DivFam C R pi 0) := by
+  refine ⟨fun x y => ?_⟩
+  induction x using Quotient.ind with | _ F =>
+  induction y using Quotient.ind with | _ G =>
+  exact Quotient.sound
+    ((F.adaptation.divEq_trivEqns_of_isCertified_zero F.certified).trans
+      (G.adaptation.divEq_trivEqns_of_isCertified_zero G.certified).symm)
 
 end
 

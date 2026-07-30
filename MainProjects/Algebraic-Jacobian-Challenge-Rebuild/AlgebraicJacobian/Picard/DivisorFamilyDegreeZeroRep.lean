@@ -59,8 +59,6 @@ set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 /- `lake env lean` drops the lakefile's `[leanOptions]` (I-0161); pin in-file. -/
 set_option maxSynthPendingDepth 3
-/- The `IsLocallyCertified` destructuring below elaborates past the default budget. -/
-set_option maxHeartbeats 1600000
 
 universe u
 
@@ -96,6 +94,9 @@ theorem divEq_pullback_trivEqns {S : Type u} [CommRing S] [Algebra k S]
 
 /-! ## The descent to the locally certified carrier -/
 
+set_option maxHeartbeats 1600000 in
+-- The `IsLocallyCertified` destructuring plus the four descent arguments elaborate past the
+-- default heartbeat budget; scoped to this one declaration rather than to the whole file.
 /-- **A locally certified degree-`0` system is divisor-equal to the trivial one**, over an
 arbitrary test ring.
 
@@ -180,26 +181,45 @@ singleton hom-set into it, so the two are in natural bijection: `homEquiv` is
 `Equiv.equivOfSubsingletonOfSubsingleton` and `homEquiv_comp` holds because the target is a
 subsingleton.
 
-**This is the first inhabitant of the `rep` slot at any parameter.**  Every consumer in the
-tree — `mixedParamChart`, `abelSigmaChart`, `IsChartUniv`, the whole `Pic0Chart*` cluster —
-takes `rep : (divFunctor C π n).RepresentableBy D` as a hypothesis, and until now nothing
-produced one, so every statement quantified over it was true but untested.
+**This is the first inhabitant of the `rep` slot at any parameter.**  `mixedParamChart`,
+`abelSigmaChart`, `IsChartUniv` and the rest of the `Pic0Chart*` cluster all take
+`rep : (divFunctor C π n).RepresentableBy D` as a hypothesis, and until now nothing produced
+one, so every statement quantified over it was true but untested.
 
-**What it does not do, and this is stronger than a caveat — it is a landed theorem in another
-lane's file.**  It does not give the seam an atlas at *this* parameter, and not for want of
-work: `not_mem_chartLocus_of_two_le_genus_zero_param`
-(`Picard/Pic0ChartSubsingletonCollapse.lean`) proves the chart locus at `n = 0` is **empty**
-once `g ≥ 2`.  The reason is the rank formula `h⁰ = n + 1 − g` extracted from chart-locus
-membership in `Picard/Pic0ChartLocusH0Rank.lean`: at `n = 0` it reads `1 − g ≤ −1`, and `h⁰`
-is a cast natural.
-Coverage needs the locus inhabited, so this branch cannot have coverage **at its own
-parameter** — not merely "lacks the high-`n` coverage chart".
+*No count is given here on purpose.*  Two reasonable methods disagree — `grep -c "rep :
+(divFunctor"` over `AlgebraicJacobian/` and a per-declaration census of header binders differ by
+about a third, and the task brief that prompted this work quoted a third figure again.  The
+claim that matters is a zero, not a large number: **the producer side was empty**, verified by
+reading the three existing `…representableBy` declarations
+(`DivRepGlobalData.representableBy`, `divFunctor_representableBy_of_chartClause`,
+`DivRepAffinePullback.representableBy`), each of which takes an unwitnessed structure whose only
+producer is itself gated on U2.
 
-So the honest joint statement, which no single file's summary would show: the campaign now has
-an inhabited `rep` at `n = 0`, where coverage is *provably impossible* for `g ≥ 2`, and
-unconditional coverage at `n = M·δ + g`, where `rep` has no producer.  The two ends of the
-parameter range sit on opposite sides of one rank inequality and **nothing connects them**.
-A reader taking this definition as a step toward representability of `Pic⁰` would be wrong.
+**What it does not do.**  It does not give the seam an atlas at this parameter: a chart at
+`nn i = 0` still needs a legal index `Z i` of degree `m·d₁ − 0`, and the coverage antecedent is
+untouched.
+
+What *is* known against this parameter, at the strength it actually has:
+`not_mem_chartLocus_of_two_le_genus_zero_param`
+(`Picard/Pic0ChartSubsingletonCollapse.lean`) proves the **chart locus** at `n = 0` is empty
+once `g ≥ 2`, from the rank formula `h⁰ = n + 1 − g` of `Picard/Pic0ChartLocusH0Rank.lean`
+(at `0` it reads `1 − g ≤ −1` with `h⁰` a cast natural), under that theorem's own `hlam` and
+`hχ` hypotheses.  So the **`chartLocus`-mediated** route to coverage is dead here.
+
+**An earlier draft of this paragraph — and both of my commit messages — instead said "coverage
+is provably impossible at `n = 0`", and that is not a theorem.**  `PointwiseCoverage`
+(`Pic0ChartAtlasCoupling.lean:99`) quantifies over an *arbitrary* open `W ∋ t` and never
+mentions `chartLocus`; `chartsCoverLocally_of_pointwise` calls `chartLocusOpens` only the
+*intended* instantiation; and `Pic0ChartAtlasCoupling.lean:52-55` states outright that the two
+carriers do not meet and that **no declaration in the tree relates them**.  So "coverage needs
+the locus inhabited" is a missing implication, not a step.  The overclaim ran against my own
+result, which is exactly why it read as audited — and it would have told a later lane not to
+try an `n = 0` coverage route that is not in fact refuted.
+
+The honest joint statement: an inhabited `rep` at `n = 0`, where the known coverage route is
+dead for `g ≥ 2`, and unconditional coverage at `n = M·δ + g`, where `rep` has no producer —
+opposite sides of one rank inequality, with nothing connecting them.  A reader taking this
+definition as a step toward representability of `Pic⁰` would be wrong.
 
 What it *is* usable for immediately is pic-c's `abel-noninj` fork, whose antecedent is exactly
 `Subsingleton ((divFunctor C π n).obj (op T))`: at this parameter the Abel chart is a
