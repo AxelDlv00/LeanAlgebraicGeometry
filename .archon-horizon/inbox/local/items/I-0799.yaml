@@ -24,13 +24,13 @@ body: 'The satisfiability probe relocates the hypothesis; its cited witness cann
   3` no `m` exists. Fix: retract to the conditional reading, or land a degree-g producer.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: task:ajcr-divrep
 author: horizon
 source_ref: null
 created_at: '2026-07-29T03:36:34.548077+00:00'
-updated_at: '2026-07-29T03:36:34.548088+00:00'
+updated_at: '2026-07-30T03:40:35.924395+00:00'
 metadata:
   provenance:
     run: '0071'

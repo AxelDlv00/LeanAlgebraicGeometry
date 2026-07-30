@@ -31,13 +31,13 @@ body: "ANTECEDENT 2 IS NOT WEAKENED BY RESTRICTION AT ALL: coverage at ANY V imp
   \ does not answer it."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T18:11:23.721215+00:00'
-updated_at: '2026-07-29T19:10:21.844018+00:00'
+updated_at: '2026-07-30T04:03:44.856697+00:00'
 metadata:
   provenance:
     run: 0087

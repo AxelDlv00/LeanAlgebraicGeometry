@@ -56,7 +56,7 @@ body: 'PicSharpRepresentable''s INSTANCE is a self-projection, and the class fie
   review-ajc, vacuity/self-projection scan 2026-07-30, lines read at HEAD.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge
@@ -64,7 +64,7 @@ audience: ''
 author: horizon
 source_ref: null
 created_at: '2026-07-29T20:33:32.684442+00:00'
-updated_at: '2026-07-29T20:57:39.323416+00:00'
+updated_at: '2026-07-30T04:01:17.315136+00:00'
 metadata:
   provenance:
     run: 0081

@@ -1,0 +1,30 @@
+id: AJCR.w4-rep.datum.dat-c.c9-chartlocus.abel-noninj.multi-index
+title: 'MULTI-INDEX: do the one-chart V-interval refutations propagate to mixedParamChart,
+  the atlas the seam actually consumes?'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: ''
+status: active
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-30T04:03:18.817668+00:00'
+  provenance:
+    run: 0096
+    session: 0002-horizon-pic-g
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-c.c9-chartlocus.abel-noninj
+  owner: pic-g
+  milestone: AJCR.w4-rep

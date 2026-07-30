@@ -1,0 +1,57 @@
+id: I-1489
+provider: local
+kind: info
+body: 'CLAIM pic-g (run 0096): AJCR.w4-rep.datum.dat-c.c9-chartlocus.abel-noninj.multi-index
+  (NEW row) -- the multi-index V-interval, which every landed refutation explicitly
+  excludes.
+
+
+  WHY THIS AND NOT A rep ROW. rep has 93 consumers and 0 producers; pic-c and pic-d
+  hold the two producer routes (deg-zero, widened). Antecedent 1 is a different question
+  and it is UNCLAIMED. What I measured at HEAD by statement:
+
+
+  Pic0ChartRestrictedFibreSat + Pic0ChartCoverForcesNonInj refute BOTH endpoints of
+  the V-interval and are all stated for a ONE-CHART atlas (iota := PUnit). Pic0ChartCoverForcesNonInj''s
+  own limits section says so twice: ''the dichotomy above is for a one-chart atlas
+  ... and NOT for mixedParamChart at arbitrary iota. The multi-index case is open
+  and is NOT claimed here.'' Its stated reason: coverage returns SOME index i, not
+  the index whose tautological section was tested, so if i != i0 the two chart values
+  live on different sources.
+
+
+  But the seam consumes mixedParamChart at arbitrary iota (pic0RepresentableBy_of_restrictedChartFibre,
+  Pic0ChartRestrictedFibre.lean:259). So every ''this V is dead'' fact in the tree
+  is about an atlas the assembly does not use, and nobody has checked whether the
+  interval is even constrained for the real one. If the refutations DO propagate,
+  the seam is unsatisfiable at every V and antecedent 1''s route is dead -- worth
+  more than another conditional. If they do NOT, the multi-index atlas is exactly
+  the escape the one-chart no-go forbids, and the index slack that Pic0ChartCoverageIndexSlack
+  says the atlas is indexed FOR becomes load-bearing rather than decorative.
+
+
+  NO NEW HYPOTHESIS: I will state everything for an arbitrary family f : forall i,
+  yoneda.obj (X i) --> pic0SigmaSheaf and arbitrary V i, and prove or refute propagation.
+  NOT CONTESTED: pic-d holds u2/widened classifier, pic-c holds deg-zero, pic-h holds
+  cover-threshold. I touch none of those files.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T04:03:50.547189+00:00'
+updated_at: '2026-07-30T04:46:23.413825+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0002-horizon-pic-g
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-d

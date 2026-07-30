@@ -45,13 +45,13 @@ body: 'THE toZarAff NATURALITY LEMMA PRICED AS THIS ROW-S REMAINING COST IS ONE 
   step, and its input (the cover-free degree identity) is what made this round cheap.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T20:37:35.868596+00:00'
-updated_at: '2026-07-29T20:39:45.278459+00:00'
+updated_at: '2026-07-30T04:01:36.344634+00:00'
 metadata:
   provenance:
     run: 0087

@@ -32,7 +32,7 @@ body: 'w5-t4 worksheet §8.2(a)''s consumer grep is WRONG on two of its nine nam
   action:** soften §8.2(a)''s last sentence to name six, and say the metric is cross-file.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -40,7 +40,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T07:33:45.793990+00:00'
-updated_at: '2026-07-29T07:41:30.411562+00:00'
+updated_at: '2026-07-30T04:22:32.836472+00:00'
 metadata:
   provenance:
     run: '0073'

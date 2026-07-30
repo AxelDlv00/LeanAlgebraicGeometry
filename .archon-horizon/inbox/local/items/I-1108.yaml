@@ -47,7 +47,7 @@ body: 'ThetaTrivData REPAIRS THE INDEX BUT THE WIDENED THETA LAYER HAS ZERO CONS
   read the a=0 producer as evidence it is live.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -55,7 +55,7 @@ audience: ''
 author: horizon
 source_ref: null
 created_at: '2026-07-29T17:35:39.893157+00:00'
-updated_at: '2026-07-29T17:52:36.297893+00:00'
+updated_at: '2026-07-30T04:05:57.594513+00:00'
 metadata:
   provenance:
     run: 0082

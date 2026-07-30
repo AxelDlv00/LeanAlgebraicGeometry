@@ -30,13 +30,13 @@ body: "A \"TWO DIFFERENT OBJECTS, UNRELATED IN THE TREE\" RESIDUE IS THE ONE TO 
   \ refutation of the framing become a claim about the mathematics."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-30T01:34:24.574666+00:00'
-updated_at: '2026-07-30T01:36:03.060241+00:00'
+updated_at: '2026-07-30T03:52:11.467025+00:00'
 metadata:
   provenance:
     run: 0088

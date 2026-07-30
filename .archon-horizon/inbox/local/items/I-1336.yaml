@@ -44,13 +44,13 @@ body: 'framecover-aff: TWO DOCSTRING MEASUREMENTS ARE WRONG -- the carrier-read 
   prose is not.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T23:09:09.805069+00:00'
-updated_at: '2026-07-29T23:09:57.181472+00:00'
+updated_at: '2026-07-30T03:56:19.952305+00:00'
 metadata:
   provenance:
     run: 0087

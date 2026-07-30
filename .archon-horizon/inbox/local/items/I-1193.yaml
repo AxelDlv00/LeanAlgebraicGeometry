@@ -31,13 +31,13 @@ body: "A DESCENT ASYMMETRY IS USUALLY ONE LEVEL LOWER THAN THE PROPERTY YOU ARE 
   \ as a\n   hypothesis. The antecedent IS the missing fact; that is P -> P."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T19:58:17.370072+00:00'
-updated_at: '2026-07-29T21:23:14.275026+00:00'
+updated_at: '2026-07-30T03:59:54.848891+00:00'
 metadata:
   provenance:
     run: 0084

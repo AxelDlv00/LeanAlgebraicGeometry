@@ -44,13 +44,13 @@ body: 'A NEW FILE RE-INTRODUCES THE UNQUALIFIED CLAIM ITS SIBLING WAS WRITTEN TO
   been burned by this exact conflation once.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T17:26:36.558157+00:00'
-updated_at: '2026-07-29T17:26:36.558169+00:00'
+updated_at: '2026-07-30T04:06:24.032024+00:00'
 metadata:
   provenance:
     run: 0086

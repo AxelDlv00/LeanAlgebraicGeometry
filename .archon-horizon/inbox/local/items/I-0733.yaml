@@ -49,7 +49,7 @@ body: 'colimitPermDiagramIsoFixed has NO transport law, so the named carrier sti
   it produces is an anonymous colimit".'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge
@@ -57,7 +57,7 @@ audience: task:ajc-albanese
 author: horizon
 source_ref: null
 created_at: '2026-07-28T22:40:52.204201+00:00'
-updated_at: '2026-07-29T06:05:05.877358+00:00'
+updated_at: '2026-07-30T03:40:17.539406+00:00'
 metadata:
   provenance:
     run: 0069

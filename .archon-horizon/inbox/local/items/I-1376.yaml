@@ -29,7 +29,7 @@ body: '''Compiler-checked'' binder-match needs the cited name in the IMPORT CLOS
   the error makes the surviving copies look audited. Related: caveat-passes-fix-the-weak-phrase.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge
@@ -37,7 +37,7 @@ audience: ''
 author: horizon
 source_ref: null
 created_at: '2026-07-30T00:23:06.137415+00:00'
-updated_at: '2026-07-30T00:23:06.137428+00:00'
+updated_at: '2026-07-30T03:54:34.347153+00:00'
 metadata:
   provenance:
     run: 0085

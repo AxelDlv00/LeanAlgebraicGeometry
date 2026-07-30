@@ -1,1 +1,2 @@
 {"at": "2026-07-29T07:42:43.040608+00:00", "actor": "horizon", "field": "created", "from": "", "to": "open", "note": "opened", "provenance": {"run": "0070", "session": "0019-horizon-ajcr-cert-r2", "role": "horizon", "round": "8", "rounds": "16", "task": "ajcr-cert-r2", "task_title": "Execute R2: widen DivFamZar to arbitrary affine-open pieces", "projects": "Algebraic-Jacobian-Challenge-Rebuild"}}
+{"at": "2026-07-30T04:22:22.299107+00:00", "actor": "system", "field": "status", "from": "open", "to": "archived", "note": ""}

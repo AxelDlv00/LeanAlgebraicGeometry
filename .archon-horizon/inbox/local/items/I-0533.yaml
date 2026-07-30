@@ -49,13 +49,13 @@ body: '**"CLAUSES (i) AND (ii) ARE NO LONGER OPEN" IS OVERSTATED (commit f820eff
   session reading the current prose will look for one obligation and find two.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-28T06:14:15.547219+00:00'
-updated_at: '2026-07-28T08:11:55.733984+00:00'
+updated_at: '2026-07-30T04:35:52.673163+00:00'
 metadata:
   provenance:
     run: '0067'

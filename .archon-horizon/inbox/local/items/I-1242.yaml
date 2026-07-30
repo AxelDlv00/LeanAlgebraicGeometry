@@ -42,13 +42,13 @@ body: 'A "SCRIPT FAILS AT THE OTHER ENDPOINT" CONTROL IS A FACT ABOUT A LEMMA NA
   broken by that session own commit 3c5cee6619. Cite declaration names.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T21:05:44.540810+00:00'
-updated_at: '2026-07-29T21:05:44.540822+00:00'
+updated_at: '2026-07-30T04:00:45.842099+00:00'
 metadata:
   provenance:
     run: 0090

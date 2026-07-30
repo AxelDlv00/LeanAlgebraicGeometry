@@ -48,13 +48,13 @@ body: 'A CITED INSTANCE CAN BE TRUE, IN SCOPE, AND ABOUT AN OBJECT ONE WRAPPER A
   When you fix a scope error, re-ask the scope question about the fix.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-30T01:49:44.588887+00:00'
-updated_at: '2026-07-30T01:49:44.588900+00:00'
+updated_at: '2026-07-30T03:51:35.313234+00:00'
 metadata:
   provenance:
     run: 0089

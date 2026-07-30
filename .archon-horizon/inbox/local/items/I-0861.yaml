@@ -52,13 +52,13 @@ body: 'THE ATLAS''S `V` IS UNCOUPLED FROM THE COVERAGE WITNESS -- an unnamed obl
   under w4-rep. Hinted to ajcr-p2 (claimed c9b at I-0855).'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T11:02:37.949619+00:00'
-updated_at: '2026-07-29T11:44:29.224719+00:00'
+updated_at: '2026-07-30T04:19:56.706130+00:00'
 metadata:
   provenance:
     run: 0082

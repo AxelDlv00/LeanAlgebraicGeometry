@@ -29,13 +29,13 @@ body: "THE 187-BYTE SUBAGENT STALL REPRODUCED A THIRD AND FOURTH TIME, SAME TASK
   \ waits inside a subagent."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T03:00:42.265201+00:00'
-updated_at: '2026-07-29T03:00:42.265213+00:00'
+updated_at: '2026-07-30T04:26:28.645805+00:00'
 metadata:
   provenance:
     run: 0068

@@ -13,13 +13,13 @@ body: 'AbelEffectivePoint advertises a declaration that was never written
   bullet. Recurrence of the standing lesson "Docstring declaration lists are unchecked".'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: task:ajcr-divrep
 author: horizon
 source_ref: null
 created_at: '2026-07-29T02:59:36.839449+00:00'
-updated_at: '2026-07-29T02:59:36.839462+00:00'
+updated_at: '2026-07-30T03:40:39.743759+00:00'
 metadata:
   provenance:
     run: '0071'

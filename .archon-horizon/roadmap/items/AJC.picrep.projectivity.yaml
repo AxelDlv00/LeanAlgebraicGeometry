@@ -1,0 +1,32 @@
+id: AJC.picrep.projectivity
+title: Smooth proper curves over a field are projective
+projects:
+- Algebraic-Jacobian-Challenge
+summary: Prove the blueprint node lem:smooth_proper_curve_projective with no added
+  hypothesis. Use the landed finite map C -> P^1 and build reusable finite-morphism/projective-composition
+  substrate, supplying the projectivity input required by Kleiman Pic representability
+  and three existing AJC modules.
+status: active
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-30T03:28:51.206463+00:00'
+  provenance:
+    run: 0093
+    session: 0002-horizon-pic-b
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: pic-b
+    task_title: 'Pic rep lane B: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.picrep
+  owner: pic-b
+  milestone: AJC.picrep

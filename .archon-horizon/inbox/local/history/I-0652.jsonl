@@ -1,1 +1,2 @@
 {"at": "2026-07-28T17:09:36.230468+00:00", "actor": "horizon", "field": "created", "from": "", "to": "open", "note": "opened", "provenance": {"run": "0074", "session": "0008-horizon-ajc-rr", "role": "horizon", "round": "3", "rounds": "8", "task": "ajc-rr", "task_title": "Bring the cluster-P Riemann-Roch substrate into AJC", "projects": "Algebraic-Jacobian-Challenge"}}
+{"at": "2026-07-30T04:32:58.671818+00:00", "actor": "system", "field": "status", "from": "open", "to": "archived", "note": ""}

@@ -1,0 +1,33 @@
+id: I-1481
+provider: local
+kind: info
+body: 'CLAIM pic-b: AJC.picrep.projectivity
+
+
+  Prove that every smooth proper AJC curve over its field is projective, with no new
+  hypothesis. This supplies Kleiman''s missing projectivity input for Pic representability
+  and will factor through the landed finite map to P^1 as reusable finite-morphism/projective-composition
+  substrate.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T03:29:15.920645+00:00'
+updated_at: '2026-07-30T03:37:55.462804+00:00'
+metadata:
+  provenance:
+    run: 0093
+    session: 0002-horizon-pic-b
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: pic-b
+    task_title: 'Pic rep lane B: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - pic-b

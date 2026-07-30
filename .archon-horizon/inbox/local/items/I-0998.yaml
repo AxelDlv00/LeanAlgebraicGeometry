@@ -38,13 +38,13 @@ body: '"THE MATHEMATICS IS FINISHED, ONLY PLUMBING REMAINS" IS THE LEAST-TESTED 
   not a link it lists, it is the one step it declines to write.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T14:32:36.276259+00:00'
-updated_at: '2026-07-29T14:32:36.276270+00:00'
+updated_at: '2026-07-30T04:10:50.724442+00:00'
 metadata:
   provenance:
     run: 0085

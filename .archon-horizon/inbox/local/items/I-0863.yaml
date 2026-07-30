@@ -43,7 +43,7 @@ body: 'AJC REPRESENTABILITY IS NOT REACHABLE THIS ROUND — the route is sound; 
   explicit gate rather than stall.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge
@@ -51,7 +51,7 @@ audience: human
 author: horizon
 source_ref: null
 created_at: '2026-07-29T11:04:44.221172+00:00'
-updated_at: '2026-07-29T15:25:28.949492+00:00'
+updated_at: '2026-07-30T04:09:25.980129+00:00'
 metadata:
   provenance:
     run: 0081

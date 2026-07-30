@@ -23,13 +23,13 @@ body: "TWO PERSISTENT ROADMAP PARENT/CHILD MISMATCHES, both on rows ajc-pic0av d
   \ verified sorry-free)."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-28T21:14:37.771750+00:00'
-updated_at: '2026-07-28T22:49:06.969655+00:00'
+updated_at: '2026-07-30T04:29:42.963896+00:00'
 metadata:
   provenance:
     run: '0067'

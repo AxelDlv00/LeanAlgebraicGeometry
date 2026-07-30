@@ -1,0 +1,69 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.divrep.deg-zero
+title: 'DEG-ZERO: an unconditional rep producer at parameter 0 (unitEquations + the
+  zero certificate), the first inhabitant of the mixedParamChart rep slot'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: "DEG-ZERO. ADVANCED SUBSTANTIALLY, NO SEAM ANTECEDENT CLOSED. Released (pic-c,\
+  \ run 0092).\n\nWHAT LANDED, all sorry-free, lake build EXIT=0 (8782 jobs), both\
+  \ modules rooted:\n Picard/DivisorFamilyDegreeZero.lean -- THE DEGREE-ZERO CERTIFICATE\
+  \ IS FREE. On the trivial system (cover top, eqn 1) every colength module is Gamma/(1)\
+  \ = 0; a zero module is free hence finite/projective/flat, and rankAtStalk of a\
+  \ subsingleton is 0, which IS the n = 0 clause. All seven fields of IsCertified\
+  \ 0 close with NO hypothesis beyond what relCurve needs to exist. Gives CertifiedDivisorFamily\
+  \ C R pi 0 and trivZar : DivFamZar C R pi 0 for EVERY test ring R, axiom-clean [propext,\
+  \ Classical.choice, Quot.sound]. Plus mapAlg_trivZar / mapAlgHom_trivZar: the trivial\
+  \ class is BASE-CHANGE INVARIANT.\n Picard/DivisorFamilyDegreeZeroUnique.lean --\
+  \ AND OVER A FIELD THE VALUE IS A SINGLETON. A degree-n family cuts a divisor of\
+  \ degree exactly n; the divisor a local-equation system cuts is always EFFECTIVE\
+  \ (no certificate needed); at n = 0 an effective degree-0 divisor is ZERO. So all\
+  \ degree-0 families cut the same divisor, DivEq follows over a field, and DivFam.exists_toZar_eq\
+  \ carries the subsingleton to the FUNCTOR CARRIER DivFamZar. DivFamZar.uniqueZeroOfField\
+  \ : Unique.\n\nWHY 0 IS NOT AN ARBITRARY SMALL PARAMETER, and this is the file's\
+  \ own stated boundary: rankAtStalk_glued is the ONE field of the seven that fails\
+  \ at n > 0 for this adaptation. 0 is the unique degree at which the rank clause\
+  \ is vacuous. Symmetrically, effectivity + the degree identity pin nothing at n\
+  \ > 0, so the uniqueness argument is also specific to 0 and is not a general theorem\
+  \ in disguise.\n\nWHAT IS OPEN, stated plainly. This is NOT yet (divFunctor C pi\
+  \ 0).RepresentableBy. Two gaps, in order:\n (1) THE GENERAL-TEST SECTION. divFamZar\
+  \ C pi 0 T for arbitrary T needs the constant-trivial family to satisfy the vehicle's\
+  \ compatibility clause; mapAlgHom_trivZar is the right transport law but Over.resAlgHom\
+  \ T h = algebraMap is NOT rfl on the restriction -- it needs tower instances nobody\
+  \ has built. I attempted this and it is recorded as attempted, not as done.\n (2)\
+  \ GENERAL-R UNIQUENESS. The subsingleton needs Field K TWICE: for divEq_of_presentationDivisor_eq\
+  \ (a non-reduced base has divisor-inequivalent systems with equal presentation divisors)\
+  \ and for exists_toZar_eq. Whether DivFamZar C R pi 0 is a subsingleton at general\
+  \ R is UNMEASURED. Inhabitation transfers to every R; uniqueness does not.\n\nAND\
+  \ THE SEAM-LEVEL CAVEAT a consumer must read: even a full rep at nn i = 0 does not\
+  \ feed mixedParamChart alone -- it still needs a legal chart index Z i of degree\
+  \ m*d1 - 0 and BOTH seam antecedents at that index. This row buys the rep slot's\
+  \ object side at one parameter, nothing above it.\n\nA DOCSTRING CITATION I RETRACTED\
+  \ IN PLACE (fc9dda7cbe): the first commit's main-declarations list named divFunctor_obj_nonempty_zero,\
+  \ which does not exist and which I never proved. Corrected at its site with the\
+  \ reason it stops."
+status: pending
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-30T03:50:13.341485+00:00'
+  provenance:
+    run: 0092
+    session: 0002-horizon-pic-c
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
+  updated_at: '2026-07-30T04:41:33.107480+00:00'
+  pinned_commits:
+  - fc9dda7cbe
+  - 3015fd7fad
+  - 5297f1bec1

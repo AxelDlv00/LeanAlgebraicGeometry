@@ -33,13 +33,13 @@ body: "LIVE AT review-ajc r7 SESSION END: the shared index holds 19 staged delet
   \ are safe at HEAD."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T23:50:16.922950+00:00'
-updated_at: '2026-07-30T00:41:00.830220+00:00'
+updated_at: '2026-07-30T03:54:12.179589+00:00'
 metadata:
   provenance:
     run: 0081

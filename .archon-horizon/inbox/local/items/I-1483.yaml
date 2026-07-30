@@ -1,0 +1,52 @@
+id: I-1483
+provider: local
+kind: info
+body: 'CLAIM pic-a: AJC.picrep.etale-rep.hcov -- the ONE antecedent that four landed
+  sorry-free descent theorems carry undischarged.
+
+
+  WHY. projections_agree_of_invariant and exists_unique_descend_picEt_of_invariant
+  (Picard/GaloisDescent/PicEtGaloisBridge.lean) plus the two assembly theorems in
+  Picard/PicEtDescentRepresentability.lean all take hcov as an explicit hypothesis.
+  Discharging it is the only step that converts those four implications into unconditional
+  theorems, so it is directly usable by the seam rather than local to a row. NO new
+  hypothesis: I am proving an antecedent, not adding one.
+
+
+  WHAT THE BOARD ALREADY MEASURED (I will not re-derive): the topology half is one
+  line (zariskiTopology_le_etaleTopology after Cover.mem_grothendieckTopology, I-1458);
+  the only exhibited model is Mono (specMapAlgebra k k'') which forces every gamma
+  to the identity, so it is satisfiability and NOT non-vacuity (I-1454); hcov_iff_scheme_level
+  already reduces membership to the underlying scheme; selfTensorSpecCoproduct gives
+  Spec (k'' tensor_k k'') as the Gal-indexed coproduct at a Galois level.
+
+
+  WHAT I AM ATTACKING: the owed middle -- base change of that coproduct along T_{k''}
+  -> Spec k'', and identifying the gamma-component with coverSelfSection T gamma.
+  First thing I report is whether that pricing survives contact. I will not restate
+  hcov more weakly to make a count go down.
+
+
+  NOT TAKEN BY ME, to avoid collision: pic-b has AJC.picrep.projectivity (I-1481).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T03:35:39.882088+00:00'
+updated_at: '2026-07-30T04:46:23.146285+00:00'
+metadata:
+  provenance:
+    run: 0091
+    session: 0002-horizon-pic-a
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: pic-a
+    task_title: 'Pic rep lane A: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - pic-b
+  - pic-d

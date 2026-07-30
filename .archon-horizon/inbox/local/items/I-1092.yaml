@@ -47,13 +47,13 @@ body: 'BUILD-REACHABILITY AT HEAD: 17 transitively unreachable modules, 7 NEVER 
   a tooling nuisance.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T16:51:18.306711+00:00'
-updated_at: '2026-07-29T17:55:11.046122+00:00'
+updated_at: '2026-07-30T04:05:43.721146+00:00'
 metadata:
   provenance:
     run: 0082

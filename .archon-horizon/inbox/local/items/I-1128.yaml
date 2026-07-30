@@ -32,13 +32,13 @@ body: "RELEASE ajcr-p1: AJCR.w4-rep.datum.atlas-coupling -- ADVANCED, no gate cl
   \ exhibits one."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T18:12:33.080363+00:00'
-updated_at: '2026-07-29T19:10:16.724829+00:00'
+updated_at: '2026-07-30T04:03:49.444980+00:00'
 metadata:
   provenance:
     run: 0087

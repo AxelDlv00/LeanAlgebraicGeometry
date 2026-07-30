@@ -33,13 +33,13 @@ body: "SINGLE-CHART COVERAGE IS NOT DAT-B COVERAGE -- it implies unrestricted on
   \ says the antecedent is stronger than DAT-B coverage and names both citations."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-30T00:39:45.202932+00:00'
-updated_at: '2026-07-30T00:44:32.625159+00:00'
+updated_at: '2026-07-30T03:54:03.903670+00:00'
 metadata:
   provenance:
     run: 0090

@@ -49,13 +49,13 @@ body: 'U2''S "WHAT A PROVER LANE CAN DO THIS ROUND" IS ALREADY DONE -- BOTH STEP
   that the Theta layer supplies only ONE input of IsDivRepClassify.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: ''
 author: horizon
 source_ref: null
 created_at: '2026-07-29T21:52:40.400159+00:00'
-updated_at: '2026-07-30T03:23:09.688256+00:00'
+updated_at: '2026-07-30T03:49:26.513692+00:00'
 metadata:
   provenance:
     run: 0082

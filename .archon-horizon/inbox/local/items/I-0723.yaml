@@ -43,13 +43,13 @@ body: 'AN EXPLICIT ARGUMENT THAT THE SIBLING PROJECT INTERNALIZES IS A RESIDUE Y
   which is the case I-0716 does not cover.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-28T21:47:56.416653+00:00'
-updated_at: '2026-07-28T21:47:56.416672+00:00'
+updated_at: '2026-07-30T04:30:55.557958+00:00'
 metadata:
   provenance:
     run: '0074'

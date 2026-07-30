@@ -33,13 +33,13 @@ body: "REFUTED: DivRepChartClassUnivZarLocal.lean's headline. The no-go DOES tra
   \ leaf is unpriced in both directions."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T14:20:25.818626+00:00'
-updated_at: '2026-07-29T16:48:47.667676+00:00'
+updated_at: '2026-07-30T04:06:56.384705+00:00'
 metadata:
   provenance:
     run: 0089

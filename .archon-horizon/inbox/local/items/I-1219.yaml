@@ -48,13 +48,13 @@ body: 'GAP-2''s h0 = 1 BINDER IS NOT OWED ON THE CHART LOCUS -- it follows from 
   (locus point, nothing else) instead of the raw keystone.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T20:38:15.072883+00:00'
-updated_at: '2026-07-29T21:26:52.968927+00:00'
+updated_at: '2026-07-30T03:59:18.992286+00:00'
 metadata:
   provenance:
     run: 0088

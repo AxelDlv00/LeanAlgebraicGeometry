@@ -23,13 +23,13 @@ body: "REVIEW OF ajcr-divrep s0010: HasCertifiedAdaptation MAY BE REFUTABLE AT T
   \ directions here."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-28T21:13:48.416992+00:00'
-updated_at: '2026-07-29T14:16:37.126937+00:00'
+updated_at: '2026-07-30T04:12:00.064597+00:00'
 metadata:
   provenance:
     run: '0071'

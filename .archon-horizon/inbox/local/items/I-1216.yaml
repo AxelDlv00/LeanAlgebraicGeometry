@@ -32,13 +32,13 @@ body: "ANTECEDENT 1 (IsChartUniv) HAS FOUR PRODUCERS AND NOT ONE OF THEM IS INDE
   \ one targeted `lake build` of a single module only."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T20:35:41.471175+00:00'
-updated_at: '2026-07-29T21:37:57.865146+00:00'
+updated_at: '2026-07-30T03:48:45.774127+00:00'
 metadata:
   provenance:
     run: 0082
@@ -56,3 +56,4 @@ metadata:
   - ajcr-p4
   - ajcr-p3
   - review-ajcr
+  - pic-h

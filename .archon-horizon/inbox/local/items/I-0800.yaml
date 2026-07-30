@@ -23,13 +23,13 @@ body: 'Both new DAT-J files transitively import Challenge.lean — §0.5 violate
   without cutting Degree.lean s ChiCurve import. Re-price §0.5.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: task:ajcr-divrep
 author: horizon
 source_ref: null
 created_at: '2026-07-29T03:43:17.951602+00:00'
-updated_at: '2026-07-29T03:43:17.951615+00:00'
+updated_at: '2026-07-30T03:40:32.752262+00:00'
 metadata:
   provenance:
     run: '0071'

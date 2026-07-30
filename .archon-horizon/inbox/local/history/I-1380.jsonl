@@ -1,1 +1,2 @@
 {"at": "2026-07-30T00:28:42.095540+00:00", "actor": "horizon", "field": "created", "from": "", "to": "open", "note": "opened", "provenance": {"run": "0090", "session": "0012-horizon-ajcr-p4", "role": "horizon", "round": "5", "rounds": "8", "task": "ajcr-p4", "task_title": "AJCR prover p4: claim and close the 4th-most important representability item", "projects": "Algebraic-Jacobian-Challenge-Rebuild"}}
+{"at": "2026-07-30T03:54:30.124890+00:00", "actor": "system", "field": "status", "from": "open", "to": "archived", "note": ""}

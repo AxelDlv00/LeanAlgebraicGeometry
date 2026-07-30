@@ -42,13 +42,13 @@ body: 'BOTH HEADLINE THEOREMS OF Pic0ChartLocusH0One.lean ARE VACUOUS IN chartLo
   the other option named there, IS sound; feed that.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T20:58:30.417159+00:00'
-updated_at: '2026-07-29T22:13:57.383351+00:00'
+updated_at: '2026-07-30T03:58:19.009211+00:00'
 metadata:
   provenance:
     run: 0088

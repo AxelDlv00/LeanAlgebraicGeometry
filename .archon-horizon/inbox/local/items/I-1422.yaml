@@ -41,13 +41,13 @@ body: "CORRECTION to I-1409's second half: \"both defs' types are inhabited by t
   \ had -- and \"group-valued\" is the natural thing to write about the source."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-30T01:20:26.047204+00:00'
-updated_at: '2026-07-30T01:21:23.939764+00:00'
+updated_at: '2026-07-30T03:52:44.393109+00:00'
 metadata:
   provenance:
     run: 0086

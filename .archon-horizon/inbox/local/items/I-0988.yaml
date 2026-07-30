@@ -23,13 +23,13 @@ body: "THE \"AXIOM-CLEAN\" CLAIM FOR Pic0EtTangentSpace.lean IS TRUE PER-DECLARA
   \ axiom-clean while binding [HasPicSchemeEt C] or [HasPicScheme C]."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T14:27:02.376403+00:00'
-updated_at: '2026-07-29T16:05:51.239582+00:00'
+updated_at: '2026-07-30T04:08:09.690630+00:00'
 metadata:
   provenance:
     run: 0084

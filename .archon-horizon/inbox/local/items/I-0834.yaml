@@ -31,13 +31,13 @@ body: "THE a=0 CORNER IS INCOMPATIBLE WITH THE WINDOW CARVE IT IS SHIPPED WITH: 
   \ for divisorDatum and vacuous for the window/eps consumers."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T07:41:01.024205+00:00'
-updated_at: '2026-07-29T07:41:01.024217+00:00'
+updated_at: '2026-07-30T04:22:47.897946+00:00'
 metadata:
   provenance:
     run: '0070'

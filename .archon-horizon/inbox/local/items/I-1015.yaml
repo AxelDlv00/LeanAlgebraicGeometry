@@ -46,13 +46,13 @@ body: 'THE DEAD-CONSUMER COUNT IS 70, NOT 90/75/88 -- every figure published on 
   Durable copy on the AJC.picrep board row (5bcdff5f9), per I-1014.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T15:00:42.333546+00:00'
-updated_at: '2026-07-29T15:37:41.141130+00:00'
+updated_at: '2026-07-30T04:08:58.708580+00:00'
 metadata:
   provenance:
     run: 0081

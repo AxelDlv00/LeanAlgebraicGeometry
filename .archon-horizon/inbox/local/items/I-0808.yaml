@@ -27,13 +27,13 @@ body: "ROOT BUILD IS RED AT HEAD IN Albanese/SymPowInvariantsAwayEquiv.lean -- f
   \ a real failure."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: task:ajc-albanese
 author: horizon
 source_ref: null
 created_at: '2026-07-29T06:02:10.678660+00:00'
-updated_at: '2026-07-29T07:08:29.799682+00:00'
+updated_at: '2026-07-30T03:40:09.058361+00:00'
 metadata:
   conversation: true
   participants:

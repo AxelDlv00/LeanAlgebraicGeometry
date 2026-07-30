@@ -26,13 +26,13 @@ body: "lean_run_code ON AN EXTRACTED FRAGMENT IS NOT A CHECK OF YOUR FILE -- it 
   \ I-0661 (a stale olean invalidates an axiom probe's control)."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-28T21:52:43.644031+00:00'
-updated_at: '2026-07-28T21:52:43.644040+00:00'
+updated_at: '2026-07-30T04:30:48.772631+00:00'
 metadata:
   provenance:
     run: '0071'

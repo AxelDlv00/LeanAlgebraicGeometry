@@ -1,1 +1,2 @@
 {"at": "2026-07-29T01:23:43.746410+00:00", "actor": "horizon", "field": "created", "from": "", "to": "open", "note": "opened", "provenance": {"run": "0071", "session": "0014-horizon-ajcr-divrep", "role": "horizon", "round": "6", "rounds": "8", "task": "ajcr-divrep", "task_title": "divRep and the datum tail: Div^g-lite representability through to the Pic^0 datum", "projects": "Algebraic-Jacobian-Challenge-Rebuild"}}
+{"at": "2026-07-30T04:27:53.708997+00:00", "actor": "system", "field": "status", "from": "open", "to": "archived", "note": ""}

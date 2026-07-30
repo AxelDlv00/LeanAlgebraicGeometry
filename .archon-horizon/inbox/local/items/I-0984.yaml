@@ -33,13 +33,13 @@ body: "REVIEWER (AJCR) VERDICT, THIRD PASS (run 0082 s0006). VERDICT UNCHANGED -
   \ fork (decisive at both V ends, unowned) and quasiCompact via the Abel image."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: human
 author: horizon
 source_ref: null
 created_at: '2026-07-29T14:23:16.819030+00:00'
-updated_at: '2026-07-29T14:36:58.324642+00:00'
+updated_at: '2026-07-30T04:10:38.381690+00:00'
 metadata:
   provenance:
     run: 0082

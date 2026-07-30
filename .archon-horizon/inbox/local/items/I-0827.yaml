@@ -77,7 +77,7 @@ body: '"g = 0 being the case where Pic^0 is trivial" IS DOCSTRING PROSE, PROVED 
   than a sheaf-theoretic formulation.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -85,7 +85,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T07:26:19.039513+00:00'
-updated_at: '2026-07-29T10:52:00.942956+00:00'
+updated_at: '2026-07-30T04:21:47.768059+00:00'
 metadata:
   provenance:
     run: 0078

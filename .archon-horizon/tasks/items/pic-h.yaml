@@ -1,19 +1,22 @@
 id: pic-h
 project: Algebraic-Jacobian-Challenge-Rebuild
-objective: 'Pic representability should close, and closing it is your objective — pick a roadmap item
-  and make major progress on it, USING NO ADDITIONAL HYPOTHESIS (`rep` has 93 consumers and 0 producers;
-  last round added 71 more consumers and the headline did not move). Your work must be directly usable
-  by Pic representability and the other items, not local to your row. Be ambitious: don''t scope down
-  because something is large or missing from mathlib — building substrate and huge refactoring are licensed.
-  Delete unfaithful roadmap items and create truer ones, but never a row another lane owns at HEAD. Collaborate
-  with the other lanes; announce what you take before you start.
+objective: 'Pic representability should close, and closing it is your objective —
+  pick a roadmap item and make major progress on it, USING NO ADDITIONAL HYPOTHESIS
+  (`rep` has 93 consumers and 0 producers; last round added 71 more consumers and
+  the headline did not move). Your work must be directly usable by Pic representability
+  and the other items, not local to your row. Be ambitious: don''t scope down because
+  something is large or missing from mathlib — building substrate and huge refactoring
+  are licensed. Delete unfaithful roadmap items and create truer ones, but never a
+  row another lane owns at HEAD. Collaborate with the other lanes; announce what you
+  take before you start.
 
 
-  YOUR PEERS this round are pic-a, pic-b, pic-c, pic-d, pic-e, pic-f, pic-g, pic-h — eight provers, no
-  reviewer. Four work Algebraic-Jacobian-Challenge (pic-a, pic-b, pic-e, pic-f) and four work Algebraic-Jacobian-Challenge-Rebuild
-  (pic-c, pic-d, pic-g, pic-h). With eight lanes on one ledger, announcing what you take BEFORE you start
-  is what stops two lanes proving the same lemma — read the inbox for what the others announced, and say
-  so if you are taking something already held.
+  YOUR PEERS this round are pic-a, pic-b, pic-c, pic-d, pic-e, pic-f, pic-g, pic-h
+  — eight provers, no reviewer. Four work Algebraic-Jacobian-Challenge (pic-a, pic-b,
+  pic-e, pic-f) and four work Algebraic-Jacobian-Challenge-Rebuild (pic-c, pic-d,
+  pic-g, pic-h). With eight lanes on one ledger, announcing what you take BEFORE you
+  start is what stops two lanes proving the same lemma — read the inbox for what the
+  others announced, and say so if you are taking something already held.
 
   '
 title: 'Pic rep lane H: close Pic representability, no new hypotheses'
@@ -39,6 +42,6 @@ inbox_refs:
 - I-0838
 artifact_refs: []
 created_at: '2026-07-30T03:21:23.195346+00:00'
-updated_at: '2026-07-30T03:21:23.195346+00:00'
+updated_at: '2026-07-30T04:49:06.334266+00:00'
 metadata:
   author: human

@@ -48,13 +48,13 @@ body: 'RELEASE ajc-p2 (run 0084 r6): AJC.picrep.etale-rep.descent-assembly -- CL
   representability itself.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-30T02:58:10.761273+00:00'
-updated_at: '2026-07-30T03:19:40.650057+00:00'
+updated_at: '2026-07-30T03:49:57.616990+00:00'
 metadata:
   provenance:
     run: 0084

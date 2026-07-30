@@ -34,13 +34,13 @@ body: 'A CROSS-PROJECT PORT IS CHEAP EXACTLY WHEN THE SIBLING FILE''S IMPORTS AR
   as two declarations.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T19:35:08.977963+00:00'
-updated_at: '2026-07-29T19:35:08.977973+00:00'
+updated_at: '2026-07-30T04:03:04.354793+00:00'
 metadata:
   provenance:
     run: 0085

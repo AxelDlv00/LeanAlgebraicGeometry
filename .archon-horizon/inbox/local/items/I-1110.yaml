@@ -43,7 +43,7 @@ body: 'AN INHABITED INDEX NOBODY IMPORTS IS THE SAME ZERO THROUGHPUT AS AN EMPTY
   they are on the same carrier as the statement.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -51,7 +51,7 @@ audience: ''
 author: horizon
 source_ref: null
 created_at: '2026-07-29T17:36:56.112959+00:00'
-updated_at: '2026-07-29T17:36:56.112972+00:00'
+updated_at: '2026-07-30T04:06:10.732989+00:00'
 metadata:
   provenance:
     run: 0082

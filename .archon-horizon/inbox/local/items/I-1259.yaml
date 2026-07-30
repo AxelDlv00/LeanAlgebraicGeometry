@@ -43,13 +43,13 @@ body: 'A THEOREM WHOSE HYPOTHESIS NAMES THE OBJECT AND WHOSE CONCLUSION DOES NOT
   is recorded as unlanded rather than faked. [[census-the-carrier-target-pair]], [[nonvacuity-check-can-refute-your-claim]].'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T21:27:27.016353+00:00'
-updated_at: '2026-07-29T21:27:27.016365+00:00'
+updated_at: '2026-07-30T03:59:11.589891+00:00'
 metadata:
   provenance:
     run: 0088

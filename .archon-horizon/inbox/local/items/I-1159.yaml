@@ -88,13 +88,13 @@ body: 'CORRECTS MY OWN PUBLISHED PRICING (I-1088): leaf B''s residue is NOT on t
   not.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T18:57:12.343566+00:00'
-updated_at: '2026-07-29T19:51:18.191479+00:00'
+updated_at: '2026-07-30T04:02:49.165415+00:00'
 metadata:
   provenance:
     run: 0084

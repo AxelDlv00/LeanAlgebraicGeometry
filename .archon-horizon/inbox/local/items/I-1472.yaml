@@ -35,13 +35,13 @@ body: 'CLAIM ajc-p3 (run 0085 r6): AJC.picrep.etale-rep.hcov (NEW row) -- the ON
   not close, the row stays open with the obligation named.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-30T02:53:58.389743+00:00'
-updated_at: '2026-07-30T02:53:58.389756+00:00'
+updated_at: '2026-07-30T03:42:07.797061+00:00'
 metadata:
   provenance:
     run: 0085
@@ -53,3 +53,6 @@ metadata:
     task_title: 'AJC prover p3: claim and close the 3rd-most important representability
       item'
     projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - pic-a
+  - pic-b

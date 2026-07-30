@@ -28,13 +28,13 @@ body: "TWO CONJUNCTS THAT ARE BOTH 'FREE' CAN BE FREE FOR OPPOSITE REASONS, AND 
   \ (two 'free' directions that are not one fact), gap-count-is-not-gap-cost, probe-the-adds-no-strength-claim."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T22:49:00.047423+00:00'
-updated_at: '2026-07-29T22:49:00.047434+00:00'
+updated_at: '2026-07-30T03:56:59.718629+00:00'
 metadata:
   provenance:
     run: 0083

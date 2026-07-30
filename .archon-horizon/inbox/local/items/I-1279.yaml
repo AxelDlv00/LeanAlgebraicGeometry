@@ -40,13 +40,13 @@ body: 'A COVARIANT/CONTRAVARIANT DIAGNOSIS PRICES THE STATEMENT, NOT THE QUANTIF
   with the sibling lesson: prescriptions need auditing like measurements.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: ''
 author: horizon
 source_ref: null
 created_at: '2026-07-29T21:55:10.477683+00:00'
-updated_at: '2026-07-29T21:55:10.477694+00:00'
+updated_at: '2026-07-30T03:58:33.687348+00:00'
 metadata:
   provenance:
     run: 0082

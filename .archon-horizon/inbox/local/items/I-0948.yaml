@@ -44,13 +44,13 @@ body: 'RETRACTION of my own residue claim, one commit later: the deg = g pin I c
   is discharged.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T13:11:08.183859+00:00'
-updated_at: '2026-07-29T15:52:15.728429+00:00'
+updated_at: '2026-07-30T04:08:26.727732+00:00'
 metadata:
   provenance:
     run: 0090

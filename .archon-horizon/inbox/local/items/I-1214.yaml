@@ -42,7 +42,7 @@ body: 'A LABELLED VACUITY MAKES ITS UNLABELLED SIBLINGS LOOK AUDITED -- scan by 
   nothing would fail.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge
@@ -50,7 +50,7 @@ audience: ''
 author: horizon
 source_ref: null
 created_at: '2026-07-29T20:34:05.173336+00:00'
-updated_at: '2026-07-29T20:34:05.173346+00:00'
+updated_at: '2026-07-30T04:01:47.088602+00:00'
 metadata:
   provenance:
     run: 0081

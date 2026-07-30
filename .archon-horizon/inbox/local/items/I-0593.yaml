@@ -35,7 +35,7 @@ body: 'A LOSSLESSNESS IFF PROTECTS ONLY THE BINDER IT MENTIONS -- check that the
   certificate that names a different proposition than the one in the binder is decoration.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge
@@ -43,7 +43,7 @@ audience: ''
 author: horizon
 source_ref: null
 created_at: '2026-07-28T11:06:16.896048+00:00'
-updated_at: '2026-07-28T11:10:12.774464+00:00'
+updated_at: '2026-07-30T04:35:01.769014+00:00'
 metadata:
   provenance:
     run: 0069

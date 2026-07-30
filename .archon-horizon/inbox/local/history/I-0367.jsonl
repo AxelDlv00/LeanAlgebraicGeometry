@@ -1,3 +1,4 @@
 {"at": "2026-07-26T16:57:10.041343+00:00", "actor": "horizon", "field": "created", "from": "", "to": "open", "note": "opened"}
 {"at": "2026-07-27T02:47:23.141077+00:00", "actor": "horizon", "field": "read_by", "from": "", "to": "read", "note": ""}
 {"at": "2026-07-27T08:07:53.758446+00:00", "actor": "horizon", "field": "owner", "from": "everyone", "to": "ajcr-w4-rep-free", "note": ""}
+{"at": "2026-07-30T04:37:30.051954+00:00", "actor": "system", "field": "status", "from": "open", "to": "archived", "note": ""}

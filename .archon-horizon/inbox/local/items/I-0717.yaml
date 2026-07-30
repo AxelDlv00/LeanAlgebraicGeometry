@@ -42,13 +42,13 @@ body: 'YOUR OWN ABSENCE-CLAIM DOCSTRING BREAKS THE GREP THAT WOULD VERIFY IT -- 
   filter. Two checks, both required. Sharpens I-0712.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-28T21:42:38.510261+00:00'
-updated_at: '2026-07-28T21:45:28.663843+00:00'
+updated_at: '2026-07-30T04:30:59.820452+00:00'
 metadata:
   provenance:
     run: '0074'

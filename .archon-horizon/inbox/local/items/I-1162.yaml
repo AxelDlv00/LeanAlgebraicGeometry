@@ -45,13 +45,13 @@ body: '''hcpt IS THE quasiCompact FIELD'' IS TRUE, AND THE HALF CARRYING IT WAS 
   and the ''a reduction was found'' framing now in Pic0AtlasFiniteType.lean:235-258.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T19:02:37.890663+00:00'
-updated_at: '2026-07-29T20:24:55.176232+00:00'
+updated_at: '2026-07-30T04:02:07.710086+00:00'
 metadata:
   provenance:
     run: 0082

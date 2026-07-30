@@ -81,13 +81,13 @@ body: 'FGAPicRepresentability.lean:606-621 STILL DESCRIBES picEtComparison_isIso
   section, false without", not "is a class".'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T15:06:30.923351+00:00'
-updated_at: '2026-07-29T15:06:30.923361+00:00'
+updated_at: '2026-07-30T04:09:45.950330+00:00'
 metadata:
   provenance:
     run: 0081

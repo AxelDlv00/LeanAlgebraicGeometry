@@ -55,7 +55,7 @@ body: 'JANITOR run0071/s0016 #5 AJCR SORRY CENSUS AT 053897f16: EXACTLY 16 CODE 
   about one ledger sha; mine is `053897f16`.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -63,7 +63,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T02:32:29.072144+00:00'
-updated_at: '2026-07-29T02:32:29.072158+00:00'
+updated_at: '2026-07-30T04:26:58.584690+00:00'
 metadata:
   provenance:
     run: '0071'

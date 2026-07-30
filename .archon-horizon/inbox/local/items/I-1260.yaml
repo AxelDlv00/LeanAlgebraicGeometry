@@ -50,13 +50,13 @@ body: 'RELEASE ajcr-p2 (run 0088 r3): AJCR.w4-rep.datum.dat-c.c9-chartlocus.locu
   root imports; mechanism at I-1217) and I-1250 (in-flight edit held across a repair).'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T21:28:34.000477+00:00'
-updated_at: '2026-07-29T21:28:34.000491+00:00'
+updated_at: '2026-07-30T03:59:07.383566+00:00'
 metadata:
   provenance:
     run: 0088

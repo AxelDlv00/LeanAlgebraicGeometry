@@ -47,13 +47,13 @@ body: 'FIVE DOCSTRING-CITED NAMES IN JacobianDataQcFromRep.lean ARE OUTSIDE ITS 
   IsAbelClassifyCompatible sentences to "out of closure, not compared".'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T16:32:11.904062+00:00'
-updated_at: '2026-07-29T16:32:11.904077+00:00'
+updated_at: '2026-07-30T04:07:21.073039+00:00'
 metadata:
   provenance:
     run: 0090

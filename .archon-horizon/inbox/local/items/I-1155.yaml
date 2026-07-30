@@ -34,7 +34,7 @@ body: '39 scratch_w7/ FILES ARE TRACKED IN THE LEDGER from a dead lane, and FIVE
   `/scratch_*/` would stop the next sweep.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -42,7 +42,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T18:53:29.766080+00:00'
-updated_at: '2026-07-29T18:53:29.766093+00:00'
+updated_at: '2026-07-30T04:04:31.596193+00:00'
 metadata:
   provenance:
     run: 0087

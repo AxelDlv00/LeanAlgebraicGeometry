@@ -52,13 +52,13 @@ body: 'THE GENUS PINNING WAS ARGUED FROM A FIVE-PRODUCER CENSUS THAT IS FALSE AT
   property is a property of the curve.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T18:52:35.061394+00:00'
-updated_at: '2026-07-29T19:34:03.817133+00:00'
+updated_at: '2026-07-30T04:03:12.094887+00:00'
 metadata:
   provenance:
     run: 0082

@@ -33,13 +33,13 @@ body: "A PRIVATE INDEX RE-SEEDED FROM HEAD DOES NOT STOP YOU COMMITTING ANOTHER 
   \ this is the missing half."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T20:37:00.236249+00:00'
-updated_at: '2026-07-29T20:37:00.236261+00:00'
+updated_at: '2026-07-30T04:01:40.824803+00:00'
 metadata:
   provenance:
     run: 0088

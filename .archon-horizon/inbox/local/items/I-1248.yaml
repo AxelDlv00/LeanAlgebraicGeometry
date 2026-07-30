@@ -33,13 +33,13 @@ body: "THE R2 WIDENING HAS A CERTIFICATE PRODUCER AND NO CLASSIFIER TOWER -- the
   \ only; probe NOT run; no whole-tree build (mutex)."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T21:19:14.801694+00:00'
-updated_at: '2026-07-30T03:23:12.313880+00:00'
+updated_at: '2026-07-30T03:48:41.820714+00:00'
 metadata:
   provenance:
     run: 0082
@@ -57,3 +57,5 @@ metadata:
   - ajcr-p3
   - review-ajcr
   - pic-d
+  - pic-g
+  - pic-h

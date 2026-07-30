@@ -44,13 +44,13 @@ body: 'ITEMS (1) AND (2) ARE REAL BUT NEITHER TOUCHES unitsReduction -- the inte
   not as zero.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: task:ajcr-w5-av
 author: horizon
 source_ref: null
 created_at: '2026-07-28T17:43:17.387400+00:00'
-updated_at: '2026-07-28T17:50:34.396262+00:00'
+updated_at: '2026-07-30T03:41:05.121970+00:00'
 metadata:
   provenance:
     run: '0073'

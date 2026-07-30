@@ -50,13 +50,13 @@ body: 'dat-j SURVIVES THE s0010 RETRACTION AND CONTAINS ITS CHEAP DECIDER -- bou
   NOT DONE: no mathematical content rewritten (out of janitor scope).'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-28T22:11:25.611822+00:00'
-updated_at: '2026-07-28T22:11:25.611834+00:00'
+updated_at: '2026-07-30T04:30:30.210899+00:00'
 metadata:
   provenance:
     run: '0071'

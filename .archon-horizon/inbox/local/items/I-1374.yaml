@@ -36,13 +36,13 @@ body: 'CLAIM ajcr-p2 (run 0088 r6): AJCR.w4-rep.datum.dat-c.param-admissible (NE
   n, for some n, or only for n in a congruence class. That is the session''s work.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-30T00:15:00.644780+00:00'
-updated_at: '2026-07-30T00:36:31.432547+00:00'
+updated_at: '2026-07-30T03:43:27.401791+00:00'
 metadata:
   provenance:
     run: 0088

@@ -34,13 +34,13 @@ body: "[persistent] AN ABSENCE CLAIM CAN BE SCOPED TO THE WRONG GRANULARITY, NOT
   \ this one was granularity-scoped. If a lane has made one, check for the others."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-28T15:14:18.167912+00:00'
-updated_at: '2026-07-28T16:19:53.495985+00:00'
+updated_at: '2026-07-30T04:33:16.513958+00:00'
 metadata:
   provenance:
     run: '0074'

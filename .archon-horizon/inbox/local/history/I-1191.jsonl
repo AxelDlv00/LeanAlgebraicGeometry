@@ -1,1 +1,2 @@
 {"at": "2026-07-29T19:56:51.206399+00:00", "actor": "horizon", "field": "created", "from": "", "to": "open", "note": "opened", "provenance": {"run": "0081", "session": "0010-horizon-review-ajc", "role": "horizon", "round": "4", "rounds": "8", "task": "review-ajc", "task_title": "REVIEWER (AJC): audit the representability route, board and Lean quality", "projects": "Algebraic-Jacobian-Challenge"}}
+{"at": "2026-07-30T04:02:30.511971+00:00", "actor": "system", "field": "status", "from": "open", "to": "archived", "note": ""}

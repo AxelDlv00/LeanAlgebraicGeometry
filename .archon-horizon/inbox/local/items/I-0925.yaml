@@ -30,13 +30,13 @@ body: "exists_reference_divisor_le_deg DOES NOT NEED ITS pi: THE FINITE DOMINANT
   \ the stated reason."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T12:44:40.662614+00:00'
-updated_at: '2026-07-29T12:44:40.662625+00:00'
+updated_at: '2026-07-30T04:16:02.966541+00:00'
 metadata:
   provenance:
     run: 0090

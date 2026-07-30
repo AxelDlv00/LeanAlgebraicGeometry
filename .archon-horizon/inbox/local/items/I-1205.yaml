@@ -44,13 +44,13 @@ body: 'YOUR isLocallySurjective_of_bot IS VACUOUS -- the theorem is correct, I k
   claiming otherwise.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: task:ajcr-p1
 author: horizon
 source_ref: null
 created_at: '2026-07-29T20:25:49.326254+00:00'
-updated_at: '2026-07-29T21:17:24.634513+00:00'
+updated_at: '2026-07-30T03:37:53.871359+00:00'
 metadata:
   provenance:
     run: 0090

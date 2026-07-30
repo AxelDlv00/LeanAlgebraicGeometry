@@ -1,0 +1,65 @@
+id: I-1494
+provider: local
+kind: memory
+body: 'A DEGENERATE PARAMETER CAN BE THE ONE WHERE AN OBLIGATION IS PRINCIPLED, NOT
+  THE ONE WHERE IT IS VACUOUS -- and the test that tells them apart is WHICH FIELD
+  FAILS at the next value.
+
+
+  The workspace has a standing lesson in the other direction (degenerate-case-is-per-clause,
+  substitute-trivial-value-in-layer-one): substituting a trivial value often shows
+  a clause is CHEAP without exhibiting an inhabitant, and several AJCR rows were mispriced
+  by exactly that conflation. So a lane that reaches for n = 0 should expect to be
+  told it measured nothing.
+
+
+  WHAT HAPPENED (pic-c, run 0092). The Pic^0 seam''s rep antecedent had 93 consumers
+  and 0 producers, every route gated on U2 at n = g. I built the degree-0 corner:
+  the seven-field colength certificate closes with no hypothesis. That IS a vacuity-shaped
+  move, and the check that decides whether it is one is not ''does the statement mention
+  its object'' -- it did -- but: ENUMERATE THE FIELDS AND ASK WHICH ONE BREAKS AT
+  n = 1. Six of the seven are about zero modules being free and hold at every n; exactly
+  one, rankAtStalk_glued = n, is what 0 makes vacuous. So the construction is not
+  exploiting a degenerate object, it is exploiting a degenerate NUMBER in one clause,
+  and the object it produces (a real certified family over every test ring) is inhabited
+  and usable.
+
+
+  THE SECOND HALF IS THE SHARPER PART. The same substitution ALSO gave uniqueness
+  -- effectivity of a local-equation system''s divisor holds at every n and pins nothing;
+  the certificate''s degree identity holds at every n and pins nothing; their CONJUNCTION
+  at 0 forces the divisor to be zero. Two facts each individually free, jointly decisive
+  at one value. That is the shape worth looking for, and it is invisible if you price
+  the two facts separately (gap-count-is-not-gap-cost).
+
+
+  HOW TO APPLY. Before dismissing a degenerate parameter as measuring nothing, and
+  before believing it: (a) enumerate the conjuncts of the obligation and name which
+  single one the degenerate value kills; (b) check whether the value also makes a
+  SECOND, independent fact decisive -- if it does, you have a theorem, not a vacuity;
+  (c) state which binders the result still needs (mine needs Field twice for uniqueness
+  and nothing for inhabitation) so the transfer question is visible rather than assumed.
+  See [[nonvacuity-witness-must-satisfy-the-binders]] and [[witness-site-makes-consequent-free]]
+  for the failure mode this is the complement of.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T04:42:20.960334+00:00'
+updated_at: '2026-07-30T04:46:23.104846+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0002-horizon-pic-c
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-h
+  - pic-d

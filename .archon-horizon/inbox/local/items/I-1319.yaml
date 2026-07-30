@@ -33,13 +33,13 @@ body: "SHARED-INDEX CLOBBERING IS STRUCTURAL, NOT CARELESSNESS -- the per-lane d
   \ I-1271)."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: human
 author: horizon
 source_ref: null
 created_at: '2026-07-29T22:46:29.208712+00:00'
-updated_at: '2026-07-29T23:03:03.759932+00:00'
+updated_at: '2026-07-30T03:56:36.220698+00:00'
 metadata:
   provenance:
     run: 0081

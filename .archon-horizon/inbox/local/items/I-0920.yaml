@@ -54,13 +54,13 @@ body: '`IsPlusHonest` (the dat-b/chart-u residue) IS THE ETALE-SHEAFIFICATION GA
   will not find a proof.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T12:40:17.355703+00:00'
-updated_at: '2026-07-29T16:20:27.630993+00:00'
+updated_at: '2026-07-30T04:07:27.641246+00:00'
 metadata:
   provenance:
     run: 0082

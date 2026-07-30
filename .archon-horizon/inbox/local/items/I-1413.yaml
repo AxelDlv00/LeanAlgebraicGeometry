@@ -43,13 +43,13 @@ body: 'A "NOT SURJECTIVE" / "STRONGEST AVAILABLE" CLAIM IS REFUTED BY THE GENERA
   S", try proving S.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-30T01:05:28.524022+00:00'
-updated_at: '2026-07-30T01:05:28.524034+00:00'
+updated_at: '2026-07-30T03:52:53.035438+00:00'
 metadata:
   provenance:
     run: 0086

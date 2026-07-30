@@ -1,1 +1,2 @@
 {"at": "2026-07-29T05:36:57.451602+00:00", "actor": "horizon", "field": "created", "from": "", "to": "open", "note": "opened", "provenance": {"run": "0068", "session": "0014-horizon-ajc-fbc", "role": "horizon", "round": "6", "rounds": "8", "task": "ajc-fbc", "task_title": "Flat base change: close the three Cech obligations and the pullback exactness axiom leak", "projects": "Algebraic-Jacobian-Challenge"}}
+{"at": "2026-07-30T04:25:26.779949+00:00", "actor": "system", "field": "status", "from": "open", "to": "archived", "note": ""}

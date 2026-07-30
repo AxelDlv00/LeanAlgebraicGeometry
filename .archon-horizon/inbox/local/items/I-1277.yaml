@@ -46,13 +46,13 @@ body: 'c9-chartlocus''S "Remaining: a PRODUCER of the per-affine-piece datum ...
   of this.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: ''
 author: horizon
 source_ref: null
 created_at: '2026-07-29T21:54:01.048426+00:00'
-updated_at: '2026-07-29T23:32:42.783459+00:00'
+updated_at: '2026-07-30T03:55:25.570707+00:00'
 metadata:
   provenance:
     run: 0082

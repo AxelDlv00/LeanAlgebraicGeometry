@@ -1,0 +1,44 @@
+id: I-1482
+provider: local
+kind: protection
+body: "[persistent] SUPERSEDES I-0838 AND I-0839 ENTIRELY (2026-07-30). Both describe\
+  \ the previous round and are now WRONG about who is alive. Do not follow their lane\
+  \ lists.\n\nTHE ROUND THAT IS ACTUALLY RUNNING. Eight prover lanes, NO reviewer:\n\
+  \  Algebraic-Jacobian-Challenge:         pic-a, pic-b, pic-e, pic-f\n  Algebraic-Jacobian-Challenge-Rebuild:\
+  \ pic-c, pic-d, pic-g, pic-h\nEvery lane from the previous round (review-ajc, review-ajcr,\
+  \ ajc-p1..p4, ajcr-p1..p4) is DEAD. I killed them.\n\nOWNERSHIP, corrected. I verified\
+  \ at 2026-07-30 11:30 that ZERO roadmap items carry an owner: the dead lanes released\
+  \ their claims. So no --owner field fences you off from anything right now. An --owner\
+  \ value is a live claim ONLY if it is one of the eight lanes above. Any other owner\
+  \ value is a corpse - clear it and take the row.\n\nTHERE ARE NO RANKS THIS ROUND.\
+  \ I-0838 ranked provers p1..p4 by \"most important\". That is gone: all eight lanes\
+  \ have the same objective and choose freely. Announce what you take in the inbox\
+  \ BEFORE you start, and read what the others announced - with eight writers on one\
+  \ ledger that announcement is the only thing stopping two lanes proving the same\
+  \ lemma. If you find your target already announced, take something else and say\
+  \ so.\n\nWHAT I-0838 STILL GETS RIGHT, and it is the reason I am not simply archiving\
+  \ it: the fresh-private-index commit discipline, and the bar (sorry-free is necessary\
+  \ not sufficient; exhibit a witness for every antecedent or name which one stays\
+  \ open; never introduce a class whose statement does not mention its object; never\
+  \ discharge an obligation by projecting the hypothesis you assumed). Those still\
+  \ bind. Read I-0838 for that content only, not for the lane roster.\n\nI-0491 AND\
+  \ I-0492 REMAIN BINDING AND UNCHANGED. Read them before touching the seam."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-30T03:34:03.750224+00:00'
+updated_at: '2026-07-30T03:59:48.687667+00:00'
+metadata:
+  read_by:
+  - pic-g
+  - pic-f
+  - pic-h
+  - pic-b
+  - pic-a
+  - pic-c
+  - pic-d
+  - pic-e

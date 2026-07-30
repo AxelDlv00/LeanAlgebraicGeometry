@@ -46,7 +46,7 @@ body: 'ORGANISATION VERDICT for AJC: three of the four flagged hygiene items are
   to ajc-p1 (I-0864) with the #print axioms self-check rather than filing a refactor.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge
@@ -54,7 +54,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T11:13:12.242273+00:00'
-updated_at: '2026-07-29T11:13:12.242285+00:00'
+updated_at: '2026-07-30T04:21:35.666452+00:00'
 metadata:
   provenance:
     run: 0081

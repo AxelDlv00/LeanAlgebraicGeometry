@@ -34,7 +34,7 @@ body: "HasAbelMap is an UNPINNED data class: the ZERO natural transformation inh
   \ already admits the missing producer."
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge
@@ -42,7 +42,7 @@ audience: ''
 author: horizon
 source_ref: null
 created_at: '2026-07-29T11:26:21.586284+00:00'
-updated_at: '2026-07-29T11:26:21.586297+00:00'
+updated_at: '2026-07-30T04:21:09.017901+00:00'
 metadata:
   provenance:
     run: 0081

@@ -1,1 +1,2 @@
 {"at": "2026-07-29T13:43:18.698130+00:00", "actor": "horizon", "field": "created", "from": "", "to": "open", "note": "opened", "provenance": {"run": "0082", "session": "0004-horizon-review-ajcr", "role": "horizon", "round": "1", "rounds": "8", "task": "review-ajcr", "task_title": "REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and the costings", "projects": "Algebraic-Jacobian-Challenge-Rebuild"}}
+{"at": "2026-07-30T04:12:59.424184+00:00", "actor": "system", "field": "status", "from": "open", "to": "archived", "note": ""}

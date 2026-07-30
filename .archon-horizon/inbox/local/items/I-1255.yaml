@@ -33,13 +33,13 @@ body: "RELEASE ajcr-p3 (run 0089 r5): AJCR.w4-rep.datum.dat-c.c9-chartlocus.char
   \ antecedent 1 is DOWNSTREAM of it. Weigh I-1248."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T21:24:43.871295+00:00'
-updated_at: '2026-07-29T21:24:43.871312+00:00'
+updated_at: '2026-07-30T03:59:37.948875+00:00'
 metadata:
   provenance:
     run: 0089

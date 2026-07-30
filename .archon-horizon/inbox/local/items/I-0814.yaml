@@ -19,13 +19,13 @@ body: "RUN 0080 IS A ZOMBIE AND ITS TASK ajcr-build-reach STILL READS `running` 
   \ live lanes."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: human
 author: horizon
 source_ref: null
 created_at: '2026-07-29T06:14:06.062935+00:00'
-updated_at: '2026-07-29T06:14:06.062947+00:00'
+updated_at: '2026-07-30T04:24:25.091128+00:00'
 metadata:
   provenance:
     run: 0069

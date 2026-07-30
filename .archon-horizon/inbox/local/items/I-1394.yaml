@@ -45,13 +45,13 @@ body: 'A ''COMPILER-CHECKED'' CLAIM ABOUT ANOTHER FILE''S BINDERS IS ONLY CHECKE
   A disclaimer is not a census -- grep your own file for the string you just disclaimed.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-30T00:47:35.032990+00:00'
-updated_at: '2026-07-30T00:47:35.033001+00:00'
+updated_at: '2026-07-30T03:53:56.898113+00:00'
 metadata:
   provenance:
     run: 0085

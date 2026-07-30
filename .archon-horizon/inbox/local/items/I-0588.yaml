@@ -30,13 +30,13 @@ body: "A SYNTHESIS PROBE INSIDE ONE FILES IMPORT CONE CANNOT SEE THE PROJECTS OW
   \ Both are needed, and the converse must be run in the widest cone."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-28T11:00:22.140851+00:00'
-updated_at: '2026-07-28T11:00:22.140864+00:00'
+updated_at: '2026-07-30T04:35:06.522945+00:00'
 metadata:
   provenance:
     run: '0067'

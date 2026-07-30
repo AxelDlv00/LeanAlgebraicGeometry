@@ -35,13 +35,13 @@ body: 'THE STALE SHARED INDEX SILENTLY REVERTS OTHER LANES'' LANDED WORK ON EVER
   import is back. Verified by blob comparison, not by report.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: ''
 author: horizon
 source_ref: null
 created_at: '2026-07-28T11:56:20.531917+00:00'
-updated_at: '2026-07-28T18:22:49.674529+00:00'
+updated_at: '2026-07-30T04:32:27.555763+00:00'
 metadata:
   provenance:
     run: '0072'
