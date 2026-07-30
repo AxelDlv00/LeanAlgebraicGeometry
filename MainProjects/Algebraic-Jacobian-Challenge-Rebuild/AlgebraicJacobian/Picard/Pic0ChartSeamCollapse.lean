@@ -96,11 +96,12 @@ set_option maxSynthPendingDepth 3
 
 universe u
 
-open CategoryTheory Limits Opposite
+open CategoryTheory Limits Opposite MonoidalCategory CartesianMonoidalCategory
 
 namespace AlgebraicGeometry
 
 variable {k : Type u} [Field k] {C : Over (Spec (.of k))}
+variable {π : C.left ⟶ P1 k} [IsAffineHom π] {n : ℕ}
 variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
 variable [GeometricallyIrreducible C.hom] [GeometricallyReduced C.hom]
 
@@ -338,6 +339,56 @@ theorem eq_top_of_seam_of_isDominant {X : Scheme.{u}} [IsReduced X] [X.IsSeparat
     V = ⊤ := by
   obtain ⟨r, hr⟩ := exists_retraction_of_seam C f V hf hcov
   exact eq_top_of_retraction_of_isDominant V r hr
+
+/-! ## The applicability check
+
+A sorry-free axiom-clean theorem can have **no site where it can be applied**, and satisfying
+its binders in the abstract is a *different* measurement from applying it at the object the
+route uses (the lesson of inbox `I-1463`, established the same day on a sibling artifact).
+Every check this workspace routinely runs — build, sorry census, axiom probe, binder deletion —
+passes on a theorem with no site.
+
+So the two statements below apply the collapse and the retraction **at the Abel chart**, the
+family `Pic0AtlasFromDivRep` builds and the one `IsChartUniv` is stated for, with `IsChartUniv`
+in the hypothesis position rather than a bare `IsOpenImmersion.presheaf`.  They take no
+hypothesis the seam does not already carry.  That is the evidence that this file's results have
+a site; it is deliberately *not* evidence that the site is inhabited. -/
+
+variable (C π n) in
+/-- **The collapse at the Abel chart**, so `IsChartUniv` — the seam's own antecedent 1, not a
+paraphrase — feeds it directly.
+
+`IsChartUniv C π n rep m Z hdeg V` is by definition
+`IsOpenImmersion.presheaf (restrictChart (abelSigmaChart …) V)`, so this is `chartIso_of_seam`
+with no bridging lemma.  Recorded because "applies at the route's own object" is a claim that
+has to be typechecked rather than asserted. -/
+theorem chartIso_of_isChartUniv {D : Over (Spec (.of k))}
+    (rep : (divFunctor C π n).RepresentableBy D)
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - (n : ℤ))
+    (V : D.left.Opens) (huniv : IsChartUniv C π n rep m Z hdeg V)
+    (hcov : Presheaf.IsLocallySurjective Scheme.zariskiTopology
+      (restrictChart (abelSigmaChart C π n rep m Z hdeg) V)) :
+    IsIso (chartSheafHom C (restrictChart (abelSigmaChart C π n rep m Z hdeg) V)) :=
+  chartIso_of_seam C _ huniv hcov
+
+variable (C π n) in
+/-- **The retraction at the Abel chart**: the seam's two antecedents at `V` make `V` a retract
+of the *divisor scheme* `D.left`.
+
+This is the form in which the constraint should be read against the `divrep` lane: whatever
+representing object `rep` supplies, a working `V` is a retract of it. -/
+theorem exists_retraction_of_isChartUniv {D : Over (Spec (.of k))}
+    (rep : (divFunctor C π n).RepresentableBy D)
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - (n : ℤ))
+    (V : D.left.Opens) (huniv : IsChartUniv C π n rep m Z hdeg V)
+    (hcov : Presheaf.IsLocallySurjective Scheme.zariskiTopology
+      (restrictChart (abelSigmaChart C π n rep m Z hdeg) V)) :
+    ∃ r : D.left ⟶ (V : Scheme.{u}), V.ι ≫ r = 𝟙 _ :=
+  exists_retraction_of_seam C _ V huniv hcov
 
 end
 
