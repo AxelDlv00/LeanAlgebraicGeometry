@@ -128,6 +128,7 @@ import AlgebraicJacobian.Albanese.AVRigidityArbitraryField
 import AlgebraicJacobian.Albanese.AlbaneseArbitraryField
 import AlgebraicJacobian.Picard.DivDegree
 import AlgebraicJacobian.Picard.DivFamilyZero
+import AlgebraicJacobian.Picard.DivFamilyZeroAbel
 import AlgebraicJacobian.Picard.FinitePresentationFunctor
 import AlgebraicJacobian.Picard.FiniteGaloisQuotient
 import AlgebraicJacobian.Picard.FiniteGaloisQuotientAffine
