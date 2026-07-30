@@ -64,10 +64,11 @@ the project's own gate. `Classical.choice` eliminates a `Prop`-valued `Exists` i
 `Type`, and this file already depends on it: `(quotientHomEquiv ρ hq T t).some` *is*
 the `Equiv`, as a `noncomputable def`. What is true is only that the `Nonempty`
 form is what a `Prop`-valued hypothesis gives *without* choice. The gate needs no
-strengthening for this step. A separate true observation from the same audit, not
-acted on here: the per-`T` `Nonempty` cannot carry a naturality square, and the
-uniform `Nonempty (∀ T t, … ≃ …)` follows from the same proof script — a consumer
-building a `RepresentableBy` will want the uniform form.
+strengthening for this step. The same audit made a second, correct point: the
+per-`T` `Nonempty` cannot carry a naturality square, so it cannot feed a
+`RepresentableBy`. That is now **fixed rather than noted** —
+`quotientHomEquiv_uniform` is the uniform form, and it follows from the same proof
+script with no extra hypothesis.
 
 **WITHDRAWN 2 — "no `omit` is needed because the linter flags both instances as
 unused".** There is no `omit` in this file and there never was: the section binds
@@ -184,6 +185,42 @@ noncomputable def overHomEquivSubtype {k : Type u} [Field k]
   invFun u := Over.homMk u.1 u.2
   left_inv φ := by ext; rfl
   right_inv u := by ext; rfl
+
+/-- **The uniform form — one `Nonempty` covering every test at once.**
+
+This is the version a consumer building a `RepresentableBy` needs, and
+`quotientHomEquiv` is *not* it: `Nonempty (E T)` separately for each `T` yields no
+function `T ↦ E T`, so the per-test form cannot carry a naturality square. The
+uniform form does.
+
+It follows from the **same proof script** with no extra hypothesis — the
+quantifier simply moves inside the `Nonempty`. Recorded because the per-test form
+was landed first and a lane could reasonably have assumed the uniform one cost
+more (`I-1405`). Still no field theory: the section binds only
+`[Field K] [Field L] [Algebra K L]`. -/
+theorem quotientHomEquiv_uniform {X : Scheme.{u}} {f : X ⟶ Spec (CommRingCat.of L)}
+    (ρ : SemilinearGalAction K L X f) {Y : Scheme.{u}}
+    {g : Y ⟶ Spec (CommRingCat.of K)} (hq : IsGaloisQuotient ρ g) :
+    Nonempty (∀ (T : Scheme.{u}) (t : T ⟶ Spec (CommRingCat.of K)),
+      {u : T ⟶ Y // u ≫ g = t} ≃
+      {h : pullback t (Spec.map (CommRingCat.ofHom (algebraMap K L))) ⟶ X //
+        h ≫ f = pullback.snd t (Spec.map (CommRingCat.ofHom (algebraMap K L))) ∧
+          (pullbackSemilinearGalAction K L t).IsEquivariant ρ h}) := by
+  obtain ⟨e, he, heq, huniv⟩ := hq
+  refine ⟨fun T t => Equiv.ofBijective
+    (fun u => ⟨pullbackBaseChange K L g t u.1 u.2 ≫ e.hom, ?_, ?_⟩) ⟨?_, ?_⟩⟩
+  · rw [Category.assoc, he, pullbackBaseChange_snd]
+  · exact SemilinearGalAction.isEquivariant_pullbackBaseChange_comp (g := g) (t := t) ρ
+      (he := heq) u.1 u.2
+  · intro a b hab
+    obtain ⟨w, hw, hwu⟩ := huniv T t (pullbackBaseChange K L g t b.1 b.2 ≫ e.hom)
+      (by rw [Category.assoc, he, pullbackBaseChange_snd])
+      (SemilinearGalAction.isEquivariant_pullbackBaseChange_comp (g := g) (t := t) ρ
+        (he := heq) b.1 b.2)
+    exact (hwu _ (congrArg Subtype.val hab)).trans (hwu _ rfl).symm
+  · rintro ⟨h, hhf, hheq⟩
+    obtain ⟨w, hw, -⟩ := huniv T t h hhf hheq
+    exact ⟨w, Subtype.ext hw⟩
 
 end QuotientHom
 
