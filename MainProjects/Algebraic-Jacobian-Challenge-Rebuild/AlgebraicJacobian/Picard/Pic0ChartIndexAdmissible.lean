@@ -69,6 +69,8 @@ tells three other rows which parameter moves are free.
 * `AlgebraicGeometry.chartIndex_iff_isDegree` — the equivalence.
 * `AlgebraicGeometry.isDegree_mul_thetaDeg` — every multiple of `d₁` is admissible.
 * `AlgebraicGeometry.isDegree_add_mul_iff` — shift-invariance by multiples of `d₁`.
+* `AlgebraicGeometry.isDegree_mul_thetaDeg_add_iff` — the same, with the multiple written first,
+  which is the shape the ledger consumer's target `M·δ + g` has.
 * `AlgebraicGeometry.isDegree_sub` — subgroup closure.
 -/
 
@@ -207,5 +209,29 @@ variable (C) in
 /-- `0` is admissible, by the zero divisor — the subgroup's unit. -/
 theorem isDegree_zero : IsDivisorDegree C 0 :=
   ⟨0, by simp⟩
+
+variable (C) in
+/-- **A target of the shape `a·d₁ + c` is admissible exactly when `c` is** — the form the
+ledger consumer meets, with the summands in the order the ledger writes them.
+
+`isDegree_add_mul_iff` with the sum commuted.  Recorded separately because the coverage
+consumer's target is `M·δ + g`, i.e. the multiple **first**, and a consumer should not have to
+insert a `ring` step to use the shift.  This is the fact that turns the residue of
+`Pic0ChartIndexLedgerFeed`'s ledger theorem into a question about the **genus** rather than
+about the ledger constants — *provided* `M·δ` is a multiple of `d₁`, which is a separate
+hypothesis about `π` versus `thetaP1 C` and is **not** proved anywhere.
+
+What *is* free, measured by `rfl` and recorded so nobody prices it: `windowδ (thetaP1 C)` and
+`classDeg k (thetaCechClass C)` are the same term, both unfolding to
+`classDeg k (fiberTwist (thetaP1 C) 1)`.  So the open gap is `π` versus `thetaP1 C` — two maps
+to `ℙ¹` on two different curves — and not any plumbing between `windowδ` and `classDeg`. -/
+theorem isDegree_mul_thetaDeg_add_iff (a : ℕ) (c : ℤ) :
+    IsDivisorDegree C ((a : ℤ) * classDeg k (thetaCechClass C) + c)
+      ↔ IsDivisorDegree C c := by
+  have hcomm : c + (a : ℤ) * classDeg k (thetaCechClass C)
+      = (a : ℤ) * classDeg k (thetaCechClass C) + c := by ring
+  refine ⟨fun h => (isDegree_add_mul_iff C c a).mpr (by rwa [hcomm]), fun h => ?_⟩
+  have := (isDegree_add_mul_iff C c a).mp h
+  rwa [hcomm] at this
 
 end AlgebraicGeometry

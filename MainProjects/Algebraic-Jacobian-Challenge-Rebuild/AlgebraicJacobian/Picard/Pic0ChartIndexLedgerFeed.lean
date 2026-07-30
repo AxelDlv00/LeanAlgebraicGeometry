@@ -35,10 +35,19 @@ is discharged here.**
 `IsDivisorDegree C (M·δ + g)` is **not** known to hold.  Over an arbitrary base field `deg_k` is
 weighted by residue degrees, so its image is a proper subgroup of `ℤ` in general; the multiples
 of `d₁` are admissible unconditionally (`isDegree_mul_thetaDeg`) and `M·δ + g` is not visibly
-one of them.  By `isDegree_add_mul_iff` the question is invariant under shifting the target by a
-multiple of `d₁`, so what has to be decided is the residue of `M·δ + g` modulo the image — and
-that is a question about the curve's arithmetic, not about charts.  This file names it and does
-not pretend to answer it.
+one of them.
+
+But the residue is **smaller than that paragraph suggests**, and `isDegree_mul_thetaDeg_add_iff`
+is why: if `M·δ` is a multiple of `d₁`, then `IsDivisorDegree C (M·δ + g)` is *equivalent* to
+`IsDivisorDegree C g` — the ledger constants drop out entirely and what remains is whether the
+**genus** is a divisor degree.  So the open question is one hypothesis about `π` versus
+`thetaP1 C` (are their fibre degrees commensurable?) plus one about the curve at `g`.
+
+The plumbing half of that is already free, `rfl`-checked: `windowδ (thetaP1 C)` and
+`classDeg k (thetaCechClass C)` are literally the same term.  The gap is that the ledger's `π`
+lives on `C.left` while `thetaP1 C` lives on the base-changed `(C ⊗ overSpec k k).left`, so
+their fibre degrees are unrelated by anything in the tree.  Naming that precisely is the point
+of this paragraph; neither this file nor `Pic0ChartIndexAdmissible` closes it.
 
 ## The chart index this route produces is UNIFORM in the point — read against `I-1389`
 
