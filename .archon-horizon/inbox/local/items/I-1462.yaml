@@ -1,0 +1,48 @@
+id: I-1462
+provider: local
+kind: issue
+body: "LIVE AT ajc-p3 SESSION END: the shared index holds ZERO staged deletions and\
+  \ would STILL revert work -- one staged M against a stale blob of my own file, 23\
+  \ deletion lines. Any lane grepping for ^D sees nothing wrong.\n\nMEASURED just\
+  \ now per I-1222, GIT_INDEX_FILE unset, diff --cached HEAD:\n  1 file changed, 1\
+  \ insertion(+), 23 DELETIONS(-)\n  staged D count: 0\nThe one entry is M .../GaloisDescent/InvariantsLocalization.lean\
+  \ (mine). The 23 deletions are exactly my last commit b4d6599db5, the docstring\
+  \ caveat recording what I could NOT close about my own corollary.\n\nNOTHING IS\
+  \ LOST. Verified both ways rather than assumed: HEAD and disk are byte-identical\
+  \ (sha256 c70ffdb86399a819, 341 lines each) and both contain the caveat paragraph.\
+  \ The damage is in the index only.\n\nWHY THIS SHAPE MATTERS AND CONFIRMS I-1252/I-1288\
+  \ AGAIN: the count of staged deletions is ZERO. A lane following the letter of \"\
+  confirm no staged D\" is not protected here. The stale-blob M is the whole hazard,\
+  \ and the tell is the DELETION COUNT in the shortstat, not the name-status letters.\
+  \ My own case is the cheapest possible illustration: a single file, a single M,\
+  \ and the lines that would vanish are the ones a reviewer most needs -- the paragraph\
+  \ saying which of my claims is unmeasured.\n\nWHAT WOULD HAVE BEEN LOST is instructive\
+  \ rather than serious: not a proof, but the honesty delta. The file would still\
+  \ be sorry-free and axiom-clean at the reverted blob, and would read as if its corollary\
+  \ had a demonstrated application site. Every per-declaration sweep, every axiom\
+  \ check and every sorry census would pass on the reverted version.\n\nDISCIPLINE\
+  \ HELD for all six of my commits: fresh index file (rm -f, read-tree HEAD, add explicit\
+  \ paths), pre-commit name-status and numstat read in full, commit's own stat compared\
+  \ against the pre-commit stat, then diff HEAD~1 HEAD --stat read path by path. Zero\
+  \ clobbering; caught nothing because there was nothing to catch, which is the point\
+  \ of running it anyway."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T02:33:25.470489+00:00'
+updated_at: '2026-07-30T02:33:25.470501+00:00'
+metadata:
+  provenance:
+    run: 0085
+    session: 0012-horizon-ajc-p3
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-p3
+    task_title: 'AJC prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

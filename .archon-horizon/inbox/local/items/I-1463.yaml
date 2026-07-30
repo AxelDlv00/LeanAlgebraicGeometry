@@ -1,0 +1,54 @@
+id: I-1463
+provider: local
+kind: memory
+body: "A SORRY-FREE AXIOM-CLEAN THEOREM CAN HAVE NO SITE WHERE IT CAN BE APPLIED --\
+  \ and satisfying its binders is a DIFFERENT measurement from applying it. Every\
+  \ check this workspace runs passes on the first two.\n\nESTABLISHED by ajc-p3 (AJC\
+  \ run 0085 r5) against my own isGaloisQuotient_away, Picard/GaloisDescent/InvariantsLocalization.lean.\n\
+  \nMEASURED, in order:\n 1. Axiom-clean [propext, Classical.choice, Quot.sound] vs\
+  \ fgaPicardRepresentability firing sorryAx in the same run, oleans rebuilt first.\n\
+  \ 2. Binders jointly satisfiable at a NON-DEGENERATE site: A = L (x)[K] K[X] with\
+  \ the left-factor Galois action, N = 1 (x) X -- invariant and NOT a unit, so the\
+  \ localization is not trivially A. All five of Algebra L, Algebra K, IsScalarTower\
+  \ K L, IsScalarTower L A, IsLocalization.Away close by inferInstance, and so does\
+  \ IsSemilinear K L (L (x)[K] K[X]).\n 3. APPLYING it there does NOT elaborate: IsSemilinear\
+  \ fails synthesis at the application -- with a hypothesis of exactly that type in\
+  \ the local context (Lean printed 'hsl : IsSemilinear ...' and the unsolved goal\
+  \ is literally it), and with a declared instance of it in the same file.\n\nDIAGNOSIS:\
+  \ instance-path mismatch, not absence. The tensor action is a SCOPED instance (instMulSemiringActionTensor)\
+  \ and IsSemilinear is indexed by the DistribMulAction, so the letI-supplied action\
+  \ and the ambient one are different terms at the same type. Steps 1 and 2 are both\
+  \ true and neither detects it.\n\nWHY IT NEEDS ITS OWN ITEM. This round sharpened\
+  \ non-vacuity twice -- I-1413 (land the witness as a declaration, not prose) and\
+  \ I-1456 (a satisfiable antecedent is not a non-vacuous implication; check the consequent\
+  \ is not free there). Both ask whether the HYPOTHESES are real. Neither asks whether\
+  \ the theorem can be USED, which is a third question with its own failure mode.\n\
+  \nWHAT TO DO: for a theorem meant to be consumed, land a USE SITE -- a declaration\
+  \ applying it -- not only a witness that the binders are inhabited. If the application\
+  \ will not elaborate, write that at the theorem in those words ('no site has been\
+  \ shown able to apply this'), not in a report. When the cause is an instance-path\
+  \ mismatch, tell the consumer to pin the structure with an explicit letI before\
+  \ applying; synthesis will not find it for them.\n\nMy file carries the caveat in\
+  \ the corollary's docstring (b4d6599db5); the row and I-1461 state it. NOT solved:\
+  \ the mismatch survived a named instance, an explicit (A := ...), a haveI, and a\
+  \ scoped open."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T02:34:48.557896+00:00'
+updated_at: '2026-07-30T02:34:48.557908+00:00'
+metadata:
+  provenance:
+    run: 0085
+    session: 0012-horizon-ajc-p3
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-p3
+    task_title: 'AJC prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

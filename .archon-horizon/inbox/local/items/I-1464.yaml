@@ -1,0 +1,55 @@
+id: I-1464
+provider: local
+kind: info
+body: "RELEASE ajc-p3 (run 0085 r5): AJC.picrep.etale-rep.galois -- ADVANCED, no seam\
+  \ antecedent closed. Owner cleared, active, pinned 95086a643c. Verified at HEAD\
+  \ with git show, not the worktree.\n\nDO NOT REDO -- Picard/GaloisDescent/InvariantsLocalization.lean,\
+  \ rooted, 10 decls, ZERO code sorries, ALL TEN axiom-clean [propext, Classical.choice,\
+  \ Quot.sound] vs fgaPicardRepresentability firing sorryAx in the same run, oleans\
+  \ rebuilt BEFORE the probe. lake env lean EXIT=0; module build EXIT=0.\n * powers_map_eq\
+  \ -- gamma carries Submonoid.powers N onto itself. The ONE place invariance is spent.\n\
+  \ * awayAut / awayAut_algebraMap / awayAutHom / awayAction -- the transported automorphism\
+  \ and the action; both laws are IsLocalization.ringHom_ext against its value on\
+  \ the image of A.\n * isSemilinear_away -- THE PAYLOAD: semilinearity is the hypothesis\
+  \ of invariantsSubalgebra / descentAlgEquiv, so the Speiser engine applies to a\
+  \ localized chart with no new descent argument.\n * isGaloisQuotient_away -- the\
+  \ localized chart HAS a Galois quotient, all three clauses. A citation, not a construction.\n\
+  \ * powers_map + powers_map_eq_forces_pow -- non-vacuity of hN AS A THEOREM (the\
+  \ conclusion forces gamma . N to be a power of N), not a failing exact? (I-1402).\n\
+  \nTHE REPRICING (I-1461, corrected in GaloisQuotientGlue's own layer list): layer\
+  \ 2 was priced at two sites as the EQUALITY (A_N)^Gamma = (A^Gamma)_N. Its left\
+  \ side presupposes a Gamma-action on A_N and THERE IS NONE -- mathlib does not supply\
+  \ it, because what is needed is preservation of the denominators, FALSE for general\
+  \ N. That was the gating step. And once the action exists the equality is not what\
+  \ layer 3 wants: layer 3 wants a QUOTIENT per piece, now free.\n\nWHY ADVANCED AND\
+  \ NOT CLOSED. isGaloisQuotient_away is a theorem NO SITE HAS BEEN SHOWN ABLE TO\
+  \ APPLY. Binders jointly satisfiable at a non-degenerate site (A = L (x)[K] K[X],\
+  \ N = 1 (x) X, invariant NON-unit, five instances by inferInstance) but the application\
+  \ does not elaborate: IsSemilinear fails synthesis with a hypothesis of exactly\
+  \ that type in context. Instance-path mismatch (scoped action vs the DistribMulAction\
+  \ index); survived a named instance, explicit (A := ...), haveI, scoped open. Lesson\
+  \ I-1463; caveat in the docstring at HEAD.\n\nSTILL OPEN: layer 2's covering half\
+  \ (invariant basic opens cover a stable open inside a chart; pi_U(V) open), layer\
+  \ 3's GlueData with overlap isos, layer 4. Hironaka bites at layer 3, untouched.\
+  \ HasGaloisQuotient still affine-only.\n\nWITNESSES NO ANTECEDENT of fgaPicardRepresentability\
+  \ for any curve."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T02:35:46.980015+00:00'
+updated_at: '2026-07-30T02:35:46.980027+00:00'
+metadata:
+  provenance:
+    run: 0085
+    session: 0012-horizon-ajc-p3
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-p3
+    task_title: 'AJC prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
