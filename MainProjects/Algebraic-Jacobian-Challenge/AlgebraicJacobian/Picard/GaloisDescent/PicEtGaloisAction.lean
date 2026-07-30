@@ -237,6 +237,49 @@ theorem galoisActionRestricted_hom_app (γ : k' ≃ₐ[k] k')
   rw [Category.id_comp]
   rfl
 
+/-- The inverse action component is `picEt C` applied to the forward comparison
+between the restricted tests. This is the orientation used by `twistMor`. -/
+theorem galoisActionRestricted_inv_app (γ : k' ≃ₐ[k] k')
+    (T : Over (Spec (CommRingCat.of k'))) :
+    (galoisActionRestricted C γ).inv.app (Opposite.op T)
+      = (picEt C).map ((restrictTest_twistTestFunctor_iso (k := k) γ).hom.app T).op := by
+  change _ ≫ 𝟙 _ = _
+  rw [Category.comp_id]
+  rfl
+
+private theorem picEt_map_op_comp_comp_apply
+    {W X Y Z : Over (Spec (CommRingCat.of k))}
+    (f : W ⟶ X) (g : X ⟶ Y) (h : Y ⟶ Z)
+    (x : (picEt C).obj (Opposite.op Z)) :
+    (picEt C).map (f ≫ g ≫ h).op x =
+      (picEt C).map f.op ((picEt C).map g.op ((picEt C).map h.op x)) := by
+  rw [op_comp, op_comp, Functor.map_comp, Functor.map_comp]
+  rfl
+
+/-- The inverse restricted action satisfies the Galois cocycle. The final map
+only identifies the product twist with the corresponding iterated twist. -/
+theorem galoisActionRestricted_mul_inv_app (γ τ : k' ≃ₐ[k] k')
+    (T : Over (Spec (CommRingCat.of k')))
+    (x : ((restrictTest k k').op ⋙ picEt C).obj (Opposite.op T)) :
+    (galoisActionRestricted C (γ * τ)).inv.app (Opposite.op T) x =
+      (((restrictTest k k').op ⋙ picEt C).map
+        ((twistTestFunctor_mulIso (k := k) γ τ).hom.app T).op)
+        ((galoisActionRestricted C γ).inv.app
+          (Opposite.op ((twistTestFunctor (k := k) τ).obj T))
+          ((galoisActionRestricted C τ).inv.app (Opposite.op T) x)) := by
+  rw [galoisActionRestricted_inv_app, galoisActionRestricted_inv_app,
+    galoisActionRestricted_inv_app]
+  have h := congrArg (fun f => f.op)
+    (restrictTest_twistTestFunctor_iso_mul_hom_app (k := k) γ τ T)
+  rw [h]
+  change _ = (picEt C).map (((restrictTest k k').map
+    ((twistTestFunctor_mulIso (k := k) γ τ).hom.app T)).op) _
+  exact picEt_map_op_comp_comp_apply C
+    ((restrictTest k k').map ((twistTestFunctor_mulIso (k := k) γ τ).hom.app T))
+    ((restrictTest_twistTestFunctor_iso (k := k) γ).hom.app
+      ((twistTestFunctor (k := k) τ).obj T))
+    ((restrictTest_twistTestFunctor_iso (k := k) τ).hom.app T) x
+
 /-- **THE GALOIS ACTION ON `picEt` OF THE BASE-CHANGED CURVE.**
 
 For a smooth proper curve `C` over an **arbitrary** field `k` and an **arbitrary**
@@ -253,6 +296,18 @@ noncomputable def galoisActionPicEt (γ : k' ≃ₐ[k] k') :
       ≅ picEt (Scheme.baseChangeField C k') :=
   Functor.isoWhiskerLeft _ (picEt_crossBaseIso C k') ≪≫
     galoisActionRestricted C γ ≪≫ (picEt_crossBaseIso C k').symm
+
+/-- The inverse action on the base-changed Picard functor is the restricted
+action conjugated by the cross-base identification. -/
+theorem galoisActionPicEt_inv_app_apply (γ : k' ≃ₐ[k] k')
+    (T : Over (Spec (CommRingCat.of k')))
+    (x : (picEt (Scheme.baseChangeField C k')).obj (Opposite.op T)) :
+    (galoisActionPicEt C γ).inv.app (Opposite.op T) x =
+      (picEt_crossBaseIso C k').inv.app
+        (Opposite.op ((twistTestFunctor (k := k) γ).obj T))
+        ((galoisActionRestricted C γ).inv.app (Opposite.op T)
+          ((picEt_crossBaseIso C k').hom.app (Opposite.op T) x)) := by
+  rfl
 
 /-! ## §3. Transport to a representing object — and the free semilinearity square -/
 
