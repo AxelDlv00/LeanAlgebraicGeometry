@@ -21,13 +21,20 @@ docstring: '**A representable `picSharp` is a Zariski sheaf.**
 
   (`Picard/FGAPicRepresentability.lean`, "Why sheafifying is what makes an
 
-  unconditional statement possible") argues *in prose* that an unconditional
+  unconditional statement possible") argued *in prose* that an unconditional
 
   `RepresentableBy` against `picSharp` is FALSE rather than unproved, because
 
   some curve has a `picSharp` that is not a Zariski sheaf, while a representable
 
-  functor is a sheaf for any subcanonical topology.
+  functor is a sheaf for any subcanonical topology. That seam docstring **no longer
+
+  says "FALSE"**: it now reads "unproved with a refutation route mapped out", so the
+
+  sentence being ruled out here is a historical one, retained because the *shape*
+  of
+
+  the mistake is what this paragraph is about.
 
 
   **That prose argument does not close, and this theorem is only its first half**
@@ -55,9 +62,13 @@ docstring: '**A representable `picSharp` is a Zariski sheaf.**
 
   The campaign milestones G3 and G4 conclude exactly that (G3: `J_r := J''_r/Γ`
 
-  represents `picSharpDeg C r` over `k`; G4 assembles `picSharpDeg`), so they are
+  represents `picSharpDeg C r` over `k`; G4 assembles `picSharpDeg`), so as written
 
-  targeting a false statement as written and need restating against `picEt`. That
+  they target a statement that is unproved with a refutation route mapped out — and
+
+  they need restating against `picEt` either way, because a milestone whose
+
+  conclusion this project expects to be refutable is not one to spend rounds on. That
 
   restatement is the content of the board row `AJC.picrep.etale-rep`, and it is
 
@@ -70,9 +81,30 @@ docstring: '**A representable `picSharp` is a Zariski sheaf.**
 
   geometrically integral — this file''s exact binders — and it has no `ℝ`-point,
 
-  which is what makes the two functors differ. So the antecedent of this theorem
+  which is what makes the two functors differ. So the refutation route is not
 
-  is genuinely uninhabitable in general, not merely unproved.
+  blocked on a binder mismatch, which is all the binder check can settle.
+
+
+  **It does NOT show the antecedent is uninhabitable.** An earlier revision of this
+
+  sentence said "genuinely uninhabitable in general, not merely unproved", and that
+
+  was the strongest and least supported of this file''s four overclaims (`I-1354`):
+
+  whether `¬ IsIso (picEtComparison C)` holds *is* the unformalised residue, quoted
+
+  from Kleiman and not constructed in Lean. Worse, it is self-defeating — if the
+
+  antecedent were uninhabitable then
+
+  `not_representableBy_picSharp_of_not_isIso_picEtComparison` would be *vacuous*
+
+  rather than a refutation route, contradicting the value ascribed to it two
+
+  paragraphs above. A binder census answers "could this witness satisfy the
+
+  hypotheses"; it cannot answer "does the hypothesis hold".
 
 
   What remains unformalised is the *counterexample itself* (that `Pic_{X/ℝ}` of
@@ -87,7 +119,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicScheme.picSharp_isSheaf_zariski_of_representableBy
 type: lean
-updated: '2026-07-29T22:29:09'
+updated: '2026-07-30T08:42:03'
 ---
 theorem picSharp_isSheaf_zariski_of_representableBy {k : Type u} [Field k]
     (C : Over (Spec (CommRingCat.of k)))

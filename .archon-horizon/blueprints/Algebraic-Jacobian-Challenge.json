@@ -18160,10 +18160,10 @@
     "macros": {},
     "states": {
       "blocked": 249,
-      "closed": 7602,
+      "closed": 7650,
       "formalized_open": 301,
       "informal": 175,
-      "ready": 191
+      "ready": 192
     },
     "warnings": [
       "AlgebraicGeometry.iInf_fin_succ: Lean declaration appears more than once (AlgebraicJacobian/Cohomology/CechAcyclic.lean, AlgebraicJacobian/Cohomology/CechCoboundarySplitting.lean)",
@@ -18193,6 +18193,15 @@
       "AlgebraicGeometry.secRes_naturality: Lean declaration appears more than once (AlgebraicJacobian/RiemannRoch/Ledger/AffineVanishing.lean, AlgebraicJacobian/RiemannRoch/Ledger/QcohSections.lean)",
       "AlgebraicGeometry.secRes_moduleKSheaf: Lean declaration appears more than once (AlgebraicJacobian/RiemannRoch/Ledger/AffineVanishing.lean, AlgebraicJacobian/RiemannRoch/Ledger/QcohSections.lean)",
       "AlgebraicGeometry.Scheme.one_le_coheight_of_ne_genericPoint: Lean declaration appears more than once (AlgebraicJacobian/Albanese/Milne33TransportLocal.lean, AlgebraicJacobian/RiemannRoch/WeilDivisor.lean)",
+      "Probe.isSheafFor_singleton: Lean declaration appears more than once (Scratch2/Exist3.lean, Scratch2/Join.lean)",
+      "Probe.splitHom: Lean declaration appears more than once (Scratch2/Split1.lean, Scratch2/Split2.lean)",
+      "Probe.splitHom: Lean declaration appears more than once (Scratch2/Split1.lean, Scratch2/Split3.lean)",
+      "Probe.splitHom_tmul: Lean declaration appears more than once (Scratch2/Split2.lean, Scratch2/Split3.lean)",
+      "Probe.splitHom: Lean declaration appears more than once (Scratch2/Split1.lean, Scratch2/Split4.lean)",
+      "Probe.splitHom_tmul: Lean declaration appears more than once (Scratch2/Split2.lean, Scratch2/Split4.lean)",
+      "Probe.splitLin: Lean declaration appears more than once (Scratch2/Split3.lean, Scratch2/Split4.lean)",
+      "Probe.splitLin_apply: Lean declaration appears more than once (Scratch2/Split3.lean, Scratch2/Split4.lean)",
+      "Probe.splitHom_surjective: Lean declaration appears more than once (Scratch2/Split3.lean, Scratch2/Split4.lean)",
       "AlgebraicGeometry.exists_bound_section_drop_curve: Lean declaration appears more than once (AlgebraicJacobian/RiemannRoch/Ledger/UniformRiemannRoch.lean, rr_probe_curvegen.lean)",
       "AlgebraicGeometry.exists_bound_generated_curve: Lean declaration appears more than once (AlgebraicJacobian/RiemannRoch/Ledger/UniformRiemannRoch.lean, rr_probe_curvegen.lean)",
       "AlgebraicGeometry.Adelic.sup_eq_top_of_laurent_pair_span_one: Lean declaration appears more than once (AlgebraicJacobian/RiemannRoch/Ledger/P1Vanishing.lean, rr_probe_p1h1.lean)",
@@ -18206,16 +18215,7 @@
       "lem:pushforwardPullbackBaseChange_restrict_naturality: \\lean{AlgebraicGeometry.pushforwardPullbackBaseChange_restrict_naturality} not found in Lean sources",
       "lem:pushforwardPullbackBaseChange_abHom: \\lean{AlgebraicGeometry.pushforwardPullbackBaseChangeAbHom} not found in Lean sources",
       "lem:pushforwardPullbackBaseChange_linHom: \\lean{AlgebraicGeometry.pushforwardPullbackBaseChangeHom} not found in Lean sources",
-      "lem:pushforwardPullbackBaseChange_natIso: \\lean{AlgebraicGeometry.pushforwardPullbackBaseChangeNatIso} not found in Lean sources",
-      "lem:toSheaf_preservesFiniteColimits: \\lean{AlgebraicGeometry.toSheaf_preservesFiniteColimits} not found in Lean sources",
-      "lem:to_sheaf_preserves_epi: \\lean{AlgebraicGeometry.toSheaf_preservesEpimorphisms} not found in Lean sources",
-      "lem:tilde_restrict_basicOpen: \\lean{AlgebraicGeometry.tilde_restrict_basicOpen} not found in Lean sources",
-      "lem:presentation_restrict_basicOpen: \\lean{AlgebraicGeometry.presentation_restrict_basicOpen} not found in Lean sources",
-      "lem:isQuasicoherent_restrict_basicOpen: \\lean{AlgebraicGeometry.isQuasicoherent_restrict_basicOpen} not found in Lean sources",
-      "lem:qcoh_localized_sections: \\lean{AlgebraicGeometry.qcoh_localized_sections} not found in Lean sources",
-      "lem:qcoh_global_generation: \\lean{AlgebraicGeometry.qcoh_global_generation} not found in Lean sources",
-      "lem:qcoh_kernel_qcoh: \\lean{AlgebraicGeometry.qcoh_kernel_qcoh} not found in Lean sources",
-      "thm:rel_pic_sharp_presheaf: \\leanok present but no \\lean{...} target is attached"
+      "lem:pushforwardPullbackBaseChange_natIso: \\lean{AlgebraicGeometry.pushforwardPullbackBaseChangeNatIso} not found in Lean sources"
     ]
   },
   "nodes": [
@@ -26189,7 +26189,7 @@
       "review_count": 0,
       "sources": [],
       "state": "formalized_open",
-      "statement": "The predicate \\(\\mathrm{HasPicScheme}(C)\\) asserts that there exists a \\(k\\)-scheme\n  \\(X\\), \\emph{locally of finite type over \\(k\\)}, carrying a\n  representability witness for the relative Picard functor\n  \\(\\Pic^\\sharp_{C/k}\\) of \\cref{def:pic_sharp_carrier}; in other words,\n  that the Picard scheme \\(\\Pic_{C/k}\\) exists and is locally of finite\n  type. It is the existence assertion from which \\cref{def:pic_scheme}\n  extracts the representing object. The local-finiteness clause belongs to\n  the same existence package as representability: Kleiman \\S 4,\n  Thm.~th:main exhibits \\(\\Pic_{C/k}\\) as a disjoint union of open\n  quasi-projective \\(k\\)-subschemes.\n\n  This predicate concerns the \\emph{unsheafified} functor, so its only witness\n  \\cref{def:inst_has_pic_scheme} is conditional on the \\(k\\)-rational point of\n  \\cref{def:has_rational_point} --- necessarily so, since without a section\n  \\(\\Pic^\\sharp_{C/k}\\) is not a sheaf and the predicate is false in general.\n  The unconditional statement, for the \\'etale sheafification, is\n  \\cref{thm:fga_pic_representability_etale}.",
+      "statement": "The predicate \\(\\mathrm{HasPicScheme}(C)\\) asserts that there exists a \\(k\\)-scheme\n  \\(X\\), \\emph{locally of finite type over \\(k\\)}, carrying a\n  representability witness for the relative Picard functor\n  \\(\\Pic^\\sharp_{C/k}\\) of \\cref{def:pic_sharp_carrier}; in other words,\n  that the Picard scheme \\(\\Pic_{C/k}\\) exists and is locally of finite\n  type. It is the existence assertion from which \\cref{def:pic_scheme}\n  extracts the representing object. The local-finiteness clause belongs to\n  the same existence package as representability: Kleiman \\S 4,\n  Thm.~th:main exhibits \\(\\Pic_{C/k}\\) as a disjoint union of open\n  quasi-projective \\(k\\)-subschemes.\n\n  This predicate concerns the \\emph{unsheafified} functor, so its only witness\n  \\cref{def:inst_has_pic_scheme} is conditional on the \\(k\\)-rational point of\n  \\cref{def:has_rational_point}. Without a section the predicate is not available\n  in general: Kleiman's pointless real conic (see the chapter introduction) is a\n  curve satisfying these very hypotheses for which \\(\\Pic_{X/\\bb R}\\) is not\n  representable. The unconditional statement, for the \\'etale sheafification, is\n  \\cref{thm:fga_pic_representability_etale}.",
       "title": "Existence of the Picard scheme",
       "type": "definition",
       "unlocks": 58,
@@ -26251,7 +26251,7 @@
     },
     {
       "chapter": "FGA representability of the Picard scheme",
-      "comment_count": 0,
+      "comment_count": 1,
       "dep_count": 6,
       "descendant_count": 60,
       "group": "c1060",

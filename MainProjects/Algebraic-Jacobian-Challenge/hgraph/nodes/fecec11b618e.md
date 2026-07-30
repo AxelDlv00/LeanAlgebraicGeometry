@@ -61,10 +61,16 @@ docstring: 'The Albanese witness for a smooth proper geometrically irreducible c
   `Picard/FGAPicRepresentability.lean`). Sheafifying is what removes the rational
   point:
 
-  the unsheafified functor is not a sheaf, so representability of it over an arbitrary
-  field
+  over an arbitrary field, representability of the unsheafified functor is not available
+  —
 
-  would be a *false* statement rather than an unproved one.
+  see the file header for the precise statement, which is *unproved with a refutation
+  route
+
+  mapped out* rather than "false", and which does **not** rest on a Zariski-sheaf
+  claim
+
+  (`review-ajc`, 2026-07-30; this sentence carried both of the withdrawn versions).
 
 
   Four of the six witness fields come from theorems that are proved **unconditionally**
@@ -122,7 +128,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.picardJacobianWitness
 type: lean
-updated: '2026-07-30T00:50:56'
+updated: '2026-07-30T08:42:03'
 ---
 noncomputable def picardJacobianWitness (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] :

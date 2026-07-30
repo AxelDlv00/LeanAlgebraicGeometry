@@ -31,29 +31,63 @@ docstring: "**THE PROJECT'S CENTRAL OPEN OBLIGATION — expected to stay open.**
   **Expected to stay open, and that is the honest state rather than a defect.**\n\
   The project reaches this statement rather than proving it, and it is the single\n\
   named `sorry` that the whole Jacobian headline rests on. Do not replace it with\n\
-  a weaker conditional statement to make a count go down.\n\n**Which route discharges\
-  \ it — corrected 2026-07-29 (`review-ajc`), because the\nprevious text named the\
-  \ inputs of a route this project does not take.** That\ntext said the inputs are\
-  \ `Div` representability \"which needs the Quot scheme\"\n(Kleiman §3 Thm `th:repDiv`)\
-  \ together with the Altman–Kleiman quotient lemma\n`smoothProperQuotient`. Both\
-  \ belong to the **Grothendieck/Kleiman quotient\nroute**, which is `rejected` on\
-  \ the board (`AJC.picrep.quot`,\n`AJC.picrep.serre`) — so a reader who trusted this\
-  \ docstring concluded, wrongly,\nthat the seam's own inputs had been abandoned.\n\
-  \nThe committed route is **Milne–Kollár** (`informal/pic-representability-campaign.md`,\n\
-  alternative D3), and it needs neither:\n\n* `Div^d` representability comes through\
-  \ the **Grassmannian**, not Quot:\n  degree slices of `Scheme.DivFunctor` (`Picard/DivDegree.lean`,\
-  \ landed), an\n  embedding into `Scheme.Grassmannian` of the section module, locally\
-  \ closed\n  carving, and `Grassmannian.representable`\n  (`Picard/GrassmannianRepresentability.lean`,\
-  \ proved) — campaign milestones\n  D1′–D4′. D4′ also delivers the locally closed\
-  \ immersion into `Gr` that serves\n  as the quasi-projectivity certificate.\n* the\
-  \ quotient is the **finite Galois** quotient of a semilinear action whose\n  finite\
-  \ orbits lie in affine opens — campaign G2, in\n  `Picard/FiniteGaloisQuotient.lean`\
-  \ (`sorry`-free) with Speiser descent under\n  `Picard/GaloisDescent/`. It is *not*\
-  \ `smoothProperQuotient`, which is false as\n  stated in Lean (see the §4 note below)\
-  \ and must not be built against.\n  **`sorry`-free is not gate-free here**: the\
-  \ affine case is proved\n  (`isGaloisQuotientSpec`, `Picard/FiniteGaloisQuotientAffine.lean`)\
-  \ and the\n  gluing substrate exists, but the general existence statement is still\
-  \ the\n  instance-free class `AlgebraicJacobian.GaloisDescent.HasGaloisQuotient`\n\
+  a weaker conditional statement to make a count go down.\n\n**Which route THIS PROJECT\
+  \ takes — and the 2026-07-29 version of this paragraph\noverstated, corrected 2026-07-30\
+  \ (`review-ajc`, by reading Kleiman rather than\nthe board).** That version said\
+  \ the previous text \"named the inputs of a route\nthis project does not take\"\
+  , listing `Div` representability (Kleiman §3 Thm\n`th:repDiv`) and the Altman–Kleiman\
+  \ quotient lemma `smoothProperQuotient`, and\nconcluded the prescription was *simply\
+  \ wrong* because both belong to the\nGrothendieck/Kleiman quotient route, `rejected`\
+  \ on the board\n(`AJC.picrep.quot`, `AJC.picrep.serre`).\n\n**Right about which\
+  \ route AJC CHOSE; wrong as a statement about what discharging\nthis `sorry` NEEDS.**\
+  \ Read from the source\n(`references/kleiman-picard-src/kleiman-picard.tex`): `th:main`\
+  \ L2155–L2166 is\nclause (1)'s **conclusion** verbatim — \"Assume `f : X → S` is\
+  \ projective Zariski\nlocally over `S`, and is flat with integral geometric fibers.\
+  \ (1) Then\n`Pic_{X/S}` exists, is separated and locally of finite type over `S`,\
+  \ and\nrepresents `Pic_{(X/S)ét}`\" — with no rational-point hypothesis. And Kleiman's\n\
+  proof reduces (1) to (2) and then runs exactly the two named inputs: the Abel map\n\
+  `Div_{X/S} → P` with `Div_{X/S}` an open subscheme of the **Hilbert** scheme by\n\
+  `th:repDiv`, descended by `lm:qt`. So the original text was naming the inputs of\n\
+  the published proof of this file's own conclusion.\n\n**With one gap, which must\
+  \ be stated because it is the difference between \"a\ntheorem in the literature\"\
+  \ and \"our theorem\"** (`review-ajc`, from a\nfresh-context audit of the paragraph\
+  \ above, which had said the former flatly).\n`th:main`'s hypothesis is `f` **projective**\
+  \ Zariski-locally and flat with\nintegral geometric fibres. This file's binders\
+  \ are\n`[SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]\n[GeometricallyIntegral\
+  \ C.hom]` over a field. The implication *smooth proper curve\nover a field ⟹ projective*\
+  \ is classical, and it is **not formalised anywhere in\nthis project**: no declaration\
+  \ combines projectivity with\n`SmoothOfRelativeDimension 1`, and the three sites\
+  \ that assert it\n(`Picard/FlatteningStratification.lean`, `Picard/Pic0AbelianVariety.lean`,\n\
+  `Picard/Pic0Et.lean`) assert it as unproved prose. So clause (1) is a theorem in\n\
+  the literature *for projective curves*, and reaching this file's statement from\n\
+  `th:main` needs that bridge as a genuine, currently-absent input. Do not cite\n\
+  this paragraph as \"clause (1) is known\"; cite it as \"clause (1) is known\nprojectively,\
+  \ and the projectivity bridge is unformalised here\".\n\nTwo things follow, and\
+  \ both matter for planning. `th:repDiv` is **Hilb, not\nQuot** (its statement: \"\
+  `Div_{X/S}` is representable by an open subscheme of the\nHilbert scheme `Hilb_{X/S}`\"\
+  ), so rejecting `AJC.picrep.quot` never rejected it.\nAnd the campaign below is\
+  \ **one** route to clause (1); Kleiman's is a second,\nwhose `lm:qt` interface this\
+  \ project already pins as `smoothProperQuotient`\n(§4 below — currently `P → P`,\
+  \ zero instances) while building its `Div` side\nthrough the Grassmannian instead\
+  \ of Hilb. Nobody has priced Hilb-vs-Grassmannian,\nbecause the board filed this\
+  \ docstring as stale rather than as an alternative.\nThat is a comparison worth\
+  \ making before more work commits to D′; it is *not* a\nrecommendation to switch,\
+  \ since Hilb's availability in Mathlib is unmeasured.\nFull detail: `I-1360`.\n\n\
+  The committed route is **Milne–Kollár** (`informal/pic-representability-campaign.md`,\n\
+  alternative D3), and it needs neither of Kleiman's two:\n\n* `Div^d` representability\
+  \ comes through the **Grassmannian**, not Quot:\n  degree slices of `Scheme.DivFunctor`\
+  \ (`Picard/DivDegree.lean`, landed), an\n  embedding into `Scheme.Grassmannian`\
+  \ of the section module, locally closed\n  carving, and `Grassmannian.representable`\n\
+  \  (`Picard/GrassmannianRepresentability.lean`, proved) — campaign milestones\n\
+  \  D1′–D4′. D4′ also delivers the locally closed immersion into `Gr` that serves\n\
+  \  as the quasi-projectivity certificate.\n* the quotient is the **finite Galois**\
+  \ quotient of a semilinear action whose\n  finite orbits lie in affine opens — campaign\
+  \ G2, in\n  `Picard/FiniteGaloisQuotient.lean` (`sorry`-free) with Speiser descent\
+  \ under\n  `Picard/GaloisDescent/`. It is *not* `smoothProperQuotient`, which is\
+  \ false as\n  stated in Lean (see the §4 note below) and must not be built against.\n\
+  \  **`sorry`-free is not gate-free here**: the affine case is proved\n  (`isGaloisQuotientSpec`,\
+  \ `Picard/FiniteGaloisQuotientAffine.lean`) and the\n  gluing substrate exists,\
+  \ but the general existence statement is still the\n  instance-free class `AlgebraicJacobian.GaloisDescent.HasGaloisQuotient`\n\
   \  (`FiniteGaloisQuotient.lean`, not imported here), whose\n  only producer is a\
   \ single-field non-vacuity witness\n  (`Picard/GaloisQuotientNonVacuity.lean`).\
   \ So G2 is *substantially* built, not\n  discharged.\n\nWhat remains is those campaign\
@@ -266,7 +300,12 @@ docstring: "**THE PROJECT'S CENTRAL OPEN OBLIGATION — expected to stay open.**
   \ carried\n     out, so the contrast is compiler-checked rather than asserted. **The\
   \ two side\n     conjuncts are free for opposite reasons**, which is the part a\
   \ costing gets\n     wrong: one is a descent argument and the other is free precisely\
-  \ because\n     descent is unavailable for it.\n   Both `sorry`-free and axiom-clean\
+  \ because\n     descent is unavailable for it. Field 2 descends at an **arbitrary**\
+  \ field\n     extension: its theorem formerly carried `[Algebra.IsSeparable k k']`\
+  \ and\n     `[Module.Finite k k']` and consumed neither, and both are now deleted\n\
+  \     (`I-1356`). Finite separability is **input 1's** price —\n     `picEt_ext_of_pullback_agrees`\
+  \ genuinely needs it — so this is the *same*\n     double-count the input-2 note\
+  \ below corrects, and it was live in two files.\n   Both `sorry`-free and axiom-clean\
   \ against this theorem as a control; gate-free\n   (no `HasPicSchemeEt` binder on\
   \ any of them, checked by full signature per\n   `I-1292`, not by header). Non-vacuity\
   \ measured: dropping `rep` leaves\n   `IsSeparated X.hom` for an arbitrary `X` and\
@@ -353,7 +392,7 @@ generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.Scheme.fgaPicardRepresentability
 type: lean
-updated: '2026-07-30T07:02:15'
+updated: '2026-07-30T08:42:03'
 ---
 theorem fgaPicardRepresentability {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
