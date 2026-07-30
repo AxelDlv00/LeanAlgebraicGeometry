@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.thetaOverlapSectionsModule
 type: lean
-updated: '2026-07-30T17:24:12'
+updated: '2026-07-30T20:44:26'
 ---
 noncomputable def thetaOverlapSectionsModule (A : AffAdaptation D d) (a : ℕ)
     (i j : D.index) :
@@ -20,3 +20,6 @@ noncomputable def thetaOverlapSectionsModule (A : AffAdaptation D d) (a : ℕ)
     (le_refl (D.pieces i ⊓ D.pieces j))
 
 attribute [local instance] thetaPieceSectionsModule thetaOverlapSectionsModule
+
+/-- The equation-generated submodule of theta sections on one piece. -/
+@[reducible]
