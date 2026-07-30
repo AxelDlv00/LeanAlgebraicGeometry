@@ -471,5 +471,145 @@ theorem range_subset_targetOpen_sup :
     change x ∈ G.toProjectiveSpace ⁻¹ᵁ G.targetOpen1
     rwa [G.preimage_targetOpen1]
 
+/-- Replacing a canonical morphism restriction by a restriction to an equal
+source open gives an isomorphic arrow. -/
+def restrictionIsoResLE {X Z : Scheme.{u}} (f : X ⟶ Z)
+    (U : Z.Opens) (V : X.Opens) (h : f ⁻¹ᵁ U = V) :
+    Arrow.mk (f ∣_ U) ≅ Arrow.mk (f.resLE U V h.ge) :=
+  Arrow.isoMk (X.isoOfEq h) (Iso.refl _) (by
+    change (X.isoOfEq h).hom ≫ (X.homOfLE _ ≫ f ∣_ U) =
+      (f ∣_ U) ≫ 𝟙 _
+    rw [Category.comp_id, ← Category.assoc]
+    rw [show X.homOfLE _ = (X.isoOfEq h).inv by
+      rw [← cancel_mono (f ⁻¹ᵁ U).ι, Scheme.homOfLE_ι,
+        Scheme.isoOfEq_inv_ι], Iso.hom_inv_id, Category.id_comp])
+
+/-- Transport a canonical restriction through an isomorphism of its target
+open and a chosen factor on the equal source open. -/
+def restrictionIsoChart {X Z A : Scheme.{u}} (f : X ⟶ Z)
+    (U : Z.Opens) (V : X.Opens) (hpre : f ⁻¹ᵁ U = V)
+    (e : U.toScheme ≅ A) (g : V.toScheme ⟶ A)
+    (hfactor : f.resLE U V hpre.ge ≫ e.hom = g) :
+    Arrow.mk (f ∣_ U) ≅ Arrow.mk g :=
+  restrictionIsoResLE f U V hpre ≪≫
+    Arrow.isoMk (Iso.refl V.toScheme) e (by
+      change 𝟙 V.toScheme ≫ g = f.resLE U V _ ≫ e.hom
+      rw [Category.id_comp]
+      convert hfactor.symm)
+
+/-- On the first target chart, the restricted global map is the first closed
+chart factor. -/
+theorem resLE_targetOpen0_iso_eq_chartFactor0 :
+    G.toProjectiveSpace.resLE G.targetOpen0
+          (pi.left ⁻¹ᵁ D.V₀) G.preimage_targetOpen0.ge ≫
+        G.targetOpen0IsoAffineChartAt.hom =
+      G.chartFactor0 := by
+  rw [← cancel_mono
+    (ProjectiveSpace.affineChartAt.incl
+      G.ProjectiveIndex G.firstIndex (Spec (.of k)))]
+  simp only [Category.assoc]
+  rw [G.targetOpen0IsoAffineChartAt_hom_incl]
+  rw [Scheme.Hom.resLE_comp_ι]
+  rw [G.chartFactor0_incl]
+
+/-- On the second target chart, the restricted global map is the second closed
+chart factor. -/
+theorem resLE_targetOpen1_iso_eq_chartFactor1 :
+    G.toProjectiveSpace.resLE G.targetOpen1
+          (pi.left ⁻¹ᵁ D.V₁) G.preimage_targetOpen1.ge ≫
+        G.targetOpen1IsoAffineChartAt.hom =
+      G.chartFactor1 := by
+  rw [← cancel_mono
+    (ProjectiveSpace.affineChartAt.incl
+      G.ProjectiveIndex G.secondIndex (Spec (.of k)))]
+  simp only [Category.assoc]
+  rw [G.targetOpen1IsoAffineChartAt_hom_incl]
+  rw [Scheme.Hom.resLE_comp_ι]
+  rw [G.chartFactor1_incl]
+
+/-- The restriction to the first distinguished target chart is a closed
+immersion. -/
+theorem isClosedImmersion_restrict_targetOpen0 [IsFinite pi.left] :
+    IsClosedImmersion (G.toProjectiveSpace ∣_ G.targetOpen0) := by
+  rw [MorphismProperty.arrow_mk_iso_iff (P := @IsClosedImmersion)
+    (restrictionIsoChart G.toProjectiveSpace G.targetOpen0
+      (pi.left ⁻¹ᵁ D.V₀) G.preimage_targetOpen0
+        G.targetOpen0IsoAffineChartAt G.chartFactor0
+          G.resLE_targetOpen0_iso_eq_chartFactor0)]
+  exact G.isClosedImmersion_chartFactor0
+
+/-- The restriction to the second distinguished target chart is a closed
+immersion. -/
+theorem isClosedImmersion_restrict_targetOpen1 [IsFinite pi.left] :
+    IsClosedImmersion (G.toProjectiveSpace ∣_ G.targetOpen1) := by
+  rw [MorphismProperty.arrow_mk_iso_iff (P := @IsClosedImmersion)
+    (restrictionIsoChart G.toProjectiveSpace G.targetOpen1
+      (pi.left ⁻¹ᵁ D.V₁) G.preimage_targetOpen1
+        G.targetOpen1IsoAffineChartAt G.chartFactor1
+          G.resLE_targetOpen1_iso_eq_chartFactor1)]
+  exact G.isClosedImmersion_chartFactor1
+
+/-- The global relative projective-coordinate morphism is an immersion. -/
+theorem isImmersion_toProjectiveSpace [IsFinite pi.left] :
+    IsImmersion G.toProjectiveSpace := by
+  letI : MorphismProperty.RespectsRight
+      (@IsImmersion) (@IsOpenImmersion) := ⟨fun i hi f hf => by
+    letI : IsOpenImmersion i := hi
+    letI : IsImmersion f := hf
+    infer_instance⟩
+  apply IsZariskiLocalAtTarget.of_range_subset_iSup
+    (P := @IsImmersion)
+      (fun b : Bool => bif b then G.targetOpen0 else G.targetOpen1)
+  · intro y hy
+    have hy' := G.range_subset_targetOpen_sup hy
+    change y ∈ G.targetOpen0 ⊔ G.targetOpen1 at hy'
+    rw [TopologicalSpace.Opens.mem_sup] at hy'
+    change y ∈
+      (⨆ b : Bool, bif b then G.targetOpen0 else G.targetOpen1)
+    rw [TopologicalSpace.Opens.mem_iSup]
+    rcases hy' with hy' | hy'
+    · exact ⟨true, by simpa⟩
+    · exact ⟨false, by simpa⟩
+  · intro b
+    cases b
+    · haveI : IsClosedImmersion
+          (G.toProjectiveSpace ∣_ G.targetOpen1) :=
+        G.isClosedImmersion_restrict_targetOpen1
+      simpa using (inferInstance : IsImmersion
+        (G.toProjectiveSpace ∣_ G.targetOpen1))
+    · haveI : IsClosedImmersion
+          (G.toProjectiveSpace ∣_ G.targetOpen0) :=
+        G.isClosedImmersion_restrict_targetOpen0
+      simpa using (inferInstance : IsImmersion
+        (G.toProjectiveSpace ∣_ G.targetOpen0))
+
+include G
+
+-- The target-local immersion proof elaborates through two nested pullback
+-- presentations, so it needs a larger bounded heartbeat budget.
+set_option maxHeartbeats 800000 in
+/-- A proper source carrying a finite two-chart map is projective over the
+base field. -/
+theorem isProjective [IsFinite pi.left] [IsProper C.hom] :
+    C.hom.IsProjective := by
+  exact Scheme.Hom.IsProjective.of_isProper_of_immersion
+    (pi := C.hom) (by infer_instance) G.toProjectiveSpace
+      G.isImmersion_toProjectiveSpace G.toProjectiveSpace_over
+
 end LaurentChartData.FiniteMapGenerators
+
+namespace LaurentChartData
+
+variable {k : Type u} [Field k]
+variable {Y C : Over (Spec (CommRingCat.of k))}
+
+/-- A proper scheme with a finite morphism to any Laurent two-chart target is
+projective over the base field. -/
+theorem isProjective_of_finiteMap
+    (D : LaurentChartData Y) (pi : C ⟶ Y)
+    [IsFinite pi.left] [IsProper C.hom] : C.hom.IsProjective := by
+  obtain ⟨G⟩ := D.nonempty_finiteMapGenerators pi
+  exact G.isProjective
+
+end LaurentChartData
 end AlgebraicGeometry.Adelic
