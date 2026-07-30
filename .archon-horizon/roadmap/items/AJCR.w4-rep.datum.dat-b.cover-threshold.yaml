@@ -1,41 +1,15 @@
 id: AJCR.w4-rep.datum.dat-b.cover-threshold
-title: 'COVER-THRESHOLD: DAT-0a at the splitting field is UNIFORM in the field and
-  pi-free -- so the b = n calibration the coverage layer calls its residue is satisfiable
-  at a computable chart parameter'
+title: 'COVER-THRESHOLD: unconditional admissible parameter and uniform chart locus'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "ADVANCED, NO ANTECEDENT CLOSED (ajcr-p2, run 0088 r5). Picard/Pic0ChartCoverageThreshold.lean,\
-  \ rooted, 6 declarations, 0 sorries. Commits a14a32a601 / 2e26acd32a / 042e9e1154\
-  \ / 5f7144765f.\n\nWHAT LANDED. The coverage layer's B-5 step 3 residue is priced\
-  \ (Pic0ChartCoverageIndexSlack item 3, Pic0ChartCoverageNoDrop's retraction, and\
-  \ this row's parent summary) as 'reconcile the chart parameter with the threshold',\
-  \ where the threshold is DAT-0a's bound AT THE SPLITTING FIELD and is treated as\
-  \ per-fibre and unobtainable. Measured: half right, half wrong.\n * RIGHT: exists_bound_subsingleton_hModule_one_of_isFinite_toP1\
-  \ is NOT instantiable at L -- it binds pi : Y -> P1 with [IsFinite] [IsDominant],\
-  \ and no relCurve C L -> P1 L exists in this tree.\n * WRONG: that this makes the\
-  \ threshold unavailable. subsingleton_hModule_one_of_witness (WindowFieldTransport.lean:87)\
-  \ is the PI-FREE peeling; windowN C L hpi g is a witness at every L; and windowM_choice\
-  \ / windowdelta are BASE-field constants, so the bound M*delta + g does NOT mention\
-  \ L. One threshold for all fibres.\n\nDECLARATIONS: subsingleton_h1_of_ledger_bound\
-  \ (the uniform threshold); exists_uniform_bound_forall_baseChange (the exists-b\
-  \ with the quantifier OUTSIDE the field); mem_chartLocus_of_ledger_bound and mem_chartLocus_of_ledgerIndex\
-  \ (coverage locus membership with BOTH numeric hypotheses of mem_chartLocus_of_vanishing_bound\
-  \ discharged -- hb by the threshold, hdeg by classDeg_presenting_twist from the\
-  \ index constraint); exists_chartIndex_mem_chartLocus_of_ledgerIndex; genus_eq_zero_of_ledgerParam_eq_genus.\n\
-  \nTHE LIMIT, PROVED NOT HEDGED. genus_eq_zero_of_ledgerParam_eq_genus: M*delta +\
-  \ g = g forces g = 0. So at positive genus the parameter coverage reaches and the\
-  \ parameter the divRep endpoint supplies rep at are DIFFERENT, and the halves do\
-  \ not co-instantiate. The residue that replaces the numeric one is PARAMETER MATCHING\
-  \ -- better-posed (two named numbers) but not nothing. Stated on an abstract curve\
-  \ Y over K, since C does not occur in its proof.\n\nSTILL OPEN: antecedent 2 owes\
-  \ the chart POINT over a neighbourhood (the spreading-out Pic0ChartCoverageSlice\
-  \ records absent for this carrier). hb_forces_h0_eq_one untouched; M*delta + g exceeds\
-  \ g so this is no route to b = g.\n\nVERIFICATION: lake build of the module EXIT=0\
-  \ (8898 jobs); all declarations axiom-clean [propext, Classical.choice, Quot.sound]\
-  \ against TWO controls firing sorryAx (a fresh in-probe sorry and AlgebraicGeometry.Jacobian).\
-  \ hchi measured LOAD-BEARING: my own script with it omitted fails at linarith. Filed\
-  \ I-1329. Fresh-context audit dispatched."
-status: pending
+summary: DONE (pic-h, run 0098). Let B = M*delta + g and choose n = B*d1, with d1
+  the positive theta degree. Then n >= B and n is a divisor degree, so one legal chart
+  index has chartLocus = univ for every pic^0 class; the finite-separable splitting
+  is produced internally. This removes the false IsDivisorDegree C g residue without
+  hypotheses. DAT-B still owes the neighborhood chart morphism, and representability
+  at n joins pic-d's arbitrary-parameter producer. Full lake build passed (9332 jobs);
+  endpoint uses only propext, Classical.choice, Quot.sound.
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -58,6 +32,9 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-b
-  updated_at: '2026-07-29T23:15:46.421073+00:00'
+  updated_at: '2026-07-30T04:28:33.793462+00:00'
   pinned_commits:
+  - 5c0d68620a
+  - dff9be0deb
   - 65d8e29aea
+  owner: pic-h
