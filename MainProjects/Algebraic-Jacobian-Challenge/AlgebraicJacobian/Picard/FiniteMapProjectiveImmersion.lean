@@ -102,11 +102,9 @@ theorem adjoin_projectiveCoordinates0_ne :
   rintro z ⟨j, rfl⟩
   by_cases hj : j = G.firstIndex
   · subst j
-    simpa [projectiveCoordinates0, firstIndex] using
-      (Subalgebra.one_mem
-        (Algebra.adjoin k (Set.range fun j :
-          {j : G.ProjectiveIndex // j ≠ G.firstIndex} ↦
-            G.projectiveCoordinates0 j.1)))
+    change G.projectiveCoordinates0 G.firstIndex ∈ _
+    rw [G.projectiveCoordinates0_zero]
+    exact Subalgebra.one_mem _
   · exact Algebra.subset_adjoin ⟨⟨j, hj⟩, rfl⟩
 
 /-- Removing the normalized coordinate does not change algebra generation on
@@ -122,11 +120,9 @@ theorem adjoin_projectiveCoordinates1_ne :
   rintro z ⟨j, rfl⟩
   by_cases hj : j = G.secondIndex
   · subst j
-    simpa [projectiveCoordinates1, secondIndex] using
-      (Subalgebra.one_mem
-        (Algebra.adjoin k (Set.range fun j :
-          {j : G.ProjectiveIndex // j ≠ G.secondIndex} ↦
-            G.projectiveCoordinates1 j.1)))
+    change G.projectiveCoordinates1 G.secondIndex ∈ _
+    rw [G.projectiveCoordinates1_last]
+    exact Subalgebra.one_mem _
   · exact Algebra.subset_adjoin ⟨⟨j, hj⟩, rfl⟩
 
 /-- The section ring of an open and the global sections of its open subscheme
@@ -201,6 +197,114 @@ theorem toSpecΓ_specToBase (U : C.left.Opens) :
   simp only [CommRingCat.comp_apply, Iso.inv_hom_id_apply]
   change openSectionsEquiv U (algebraMap k Γ(C.left, U) c) = _
   exact openSectionsEquiv_algebraMap U c
+
+/-- The factor of the global coordinate morphism through the first relative
+affine chart. -/
+def chartFactor0 :
+    (pi.left ⁻¹ᵁ D.V₀).toScheme ⟶
+      ProjectiveSpace.affineChartAt
+        G.ProjectiveIndex G.firstIndex (Spec (.of k)) :=
+  (pi.left ⁻¹ᵁ D.V₀).toSpecΓ ≫
+    ProjectiveSpace.Coordinates.toAffineChartAt G.firstIndex
+      G.projectiveCoordinates0 G.projectiveCoordinates0_zero
+
+/-- The factor of the global coordinate morphism through the second relative
+affine chart. -/
+def chartFactor1 :
+    (pi.left ⁻¹ᵁ D.V₁).toScheme ⟶
+      ProjectiveSpace.affineChartAt
+        G.ProjectiveIndex G.secondIndex (Spec (.of k)) :=
+  (pi.left ⁻¹ᵁ D.V₁).toSpecΓ ≫
+    ProjectiveSpace.Coordinates.toAffineChartAt G.secondIndex
+      G.projectiveCoordinates1 G.projectiveCoordinates1_last
+
+@[reassoc]
+theorem chartFactor0_incl :
+    G.chartFactor0 ≫
+        ProjectiveSpace.affineChartAt.incl
+          G.ProjectiveIndex G.firstIndex (Spec (.of k)) =
+      (pi.left ⁻¹ᵁ D.V₀).ι ≫ G.toProjectiveSpace := by
+  rw [chartFactor0, Category.assoc,
+    ProjectiveSpace.Coordinates.toAffineChartAt_incl]
+  apply pullback.hom_ext
+  · change ((pi.left ⁻¹ᵁ D.V₀).toSpecΓ ≫
+        ProjectiveSpace.Coordinates.relativeFromSpec G.firstIndex
+          G.projectiveCoordinates0 G.projectiveCoordinates0_zero) ≫
+        (ℙ(G.ProjectiveIndex; Spec (.of k)) ↘ Spec (.of k)) =
+      ((pi.left ⁻¹ᵁ D.V₀).ι ≫ G.toProjectiveSpace) ≫
+        (ℙ(G.ProjectiveIndex; Spec (.of k)) ↘ Spec (.of k))
+    rw [Category.assoc, ProjectiveSpace.Coordinates.relativeFromSpec_over,
+      toSpecΓ_specToBase (k := k) (C := C), Category.assoc,
+      G.toProjectiveSpace_over]
+  · change ((pi.left ⁻¹ᵁ D.V₀).toSpecΓ ≫
+        ProjectiveSpace.Coordinates.relativeFromSpec G.firstIndex
+          G.projectiveCoordinates0 G.projectiveCoordinates0_zero) ≫
+        ProjectiveSpace.toProjInt G.ProjectiveIndex (Spec (.of k)) =
+      ((pi.left ⁻¹ᵁ D.V₀).ι ≫ G.toProjectiveSpace) ≫
+        ProjectiveSpace.toProjInt G.ProjectiveIndex (Spec (.of k))
+    rw [Category.assoc,
+      ProjectiveSpace.Coordinates.relativeFromSpec_toProjInt,
+      Category.assoc, G.toProjectiveSpace_toProjInt, G.open0_toProjInt]
+    rfl
+
+@[reassoc]
+theorem chartFactor1_incl :
+    G.chartFactor1 ≫
+        ProjectiveSpace.affineChartAt.incl
+          G.ProjectiveIndex G.secondIndex (Spec (.of k)) =
+      (pi.left ⁻¹ᵁ D.V₁).ι ≫ G.toProjectiveSpace := by
+  rw [chartFactor1, Category.assoc,
+    ProjectiveSpace.Coordinates.toAffineChartAt_incl]
+  apply pullback.hom_ext
+  · change ((pi.left ⁻¹ᵁ D.V₁).toSpecΓ ≫
+        ProjectiveSpace.Coordinates.relativeFromSpec G.secondIndex
+          G.projectiveCoordinates1 G.projectiveCoordinates1_last) ≫
+        (ℙ(G.ProjectiveIndex; Spec (.of k)) ↘ Spec (.of k)) =
+      ((pi.left ⁻¹ᵁ D.V₁).ι ≫ G.toProjectiveSpace) ≫
+        (ℙ(G.ProjectiveIndex; Spec (.of k)) ↘ Spec (.of k))
+    rw [Category.assoc, ProjectiveSpace.Coordinates.relativeFromSpec_over,
+      toSpecΓ_specToBase (k := k) (C := C), Category.assoc,
+      G.toProjectiveSpace_over]
+  · change ((pi.left ⁻¹ᵁ D.V₁).toSpecΓ ≫
+        ProjectiveSpace.Coordinates.relativeFromSpec G.secondIndex
+          G.projectiveCoordinates1 G.projectiveCoordinates1_last) ≫
+        ProjectiveSpace.toProjInt G.ProjectiveIndex (Spec (.of k)) =
+      ((pi.left ⁻¹ᵁ D.V₁).ι ≫ G.toProjectiveSpace) ≫
+        ProjectiveSpace.toProjInt G.ProjectiveIndex (Spec (.of k))
+    rw [Category.assoc,
+      ProjectiveSpace.Coordinates.relativeFromSpec_toProjInt,
+      Category.assoc, G.toProjectiveSpace_toProjInt, G.open1_toProjInt]
+    rfl
+
+/-- The first local chart factor is a closed immersion whenever the original
+two-chart morphism is finite. -/
+theorem isClosedImmersion_chartFactor0 [IsFinite pi.left] :
+    IsClosedImmersion G.chartFactor0 := by
+  letI : IsAffine (pi.left ⁻¹ᵁ D.V₀).toScheme :=
+    D.isAffineOpen_V₀.preimage pi.left
+  letI : IsIso (pi.left ⁻¹ᵁ D.V₀).toSpecΓ := by
+    dsimp [Scheme.Opens.toSpecΓ]
+    infer_instance
+  apply MorphismProperty.comp_mem @IsClosedImmersion
+  · infer_instance
+  · exact ProjectiveSpace.Coordinates.isClosedImmersion_toAffineChartAt
+      G.firstIndex G.projectiveCoordinates0
+        G.projectiveCoordinates0_zero G.adjoin_projectiveCoordinates0_ne
+
+/-- The second local chart factor is a closed immersion whenever the original
+two-chart morphism is finite. -/
+theorem isClosedImmersion_chartFactor1 [IsFinite pi.left] :
+    IsClosedImmersion G.chartFactor1 := by
+  letI : IsAffine (pi.left ⁻¹ᵁ D.V₁).toScheme :=
+    D.isAffineOpen_V₁.preimage pi.left
+  letI : IsIso (pi.left ⁻¹ᵁ D.V₁).toSpecΓ := by
+    dsimp [Scheme.Opens.toSpecΓ]
+    infer_instance
+  apply MorphismProperty.comp_mem @IsClosedImmersion
+  · infer_instance
+  · exact ProjectiveSpace.Coordinates.isClosedImmersion_toAffineChartAt
+      G.secondIndex G.projectiveCoordinates1
+        G.projectiveCoordinates1_last G.adjoin_projectiveCoordinates1_ne
 
 end LaurentChartData.FiniteMapGenerators
 end AlgebraicGeometry.Adelic
