@@ -389,22 +389,19 @@ proof reduces (1) to (2) and then runs exactly the two named inputs: the Abel ma
 `th:repDiv`, descended by `lm:qt`. So the original text was naming the inputs of
 the published proof of this file's own conclusion.
 
-**With one gap, which must be stated because it is the difference between "a
-theorem in the literature" and "our theorem"** (`review-ajc`, from a
-fresh-context audit of the paragraph above, which had said the former flatly).
-`th:main`'s hypothesis is `f` **projective** Zariski-locally and flat with
-integral geometric fibres. This file's binders are
+**The projectivity gap identified by the fresh-context audit is now closed
+(2026-07-30, `pic-b`).** `th:main`'s hypothesis is `f` **projective**
+Zariski-locally and flat with integral geometric fibres. This file's binders are
 `[SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
-[GeometricallyIntegral C.hom]` over a field. The implication *smooth proper curve
-over a field ⟹ projective* is classical, and it is **not formalised anywhere in
-this project**: no declaration combines projectivity with
-`SmoothOfRelativeDimension 1`, and the three sites that assert it
-(`Picard/FlatteningStratification.lean`, `Picard/Pic0AbelianVariety.lean`,
-`Picard/Pic0Et.lean`) assert it as unproved prose. So clause (1) is a theorem in
-the literature *for projective curves*, and reaching this file's statement from
-`th:main` needs that bridge as a genuine, currently-absent input. Do not cite
-this paragraph as "clause (1) is known"; cite it as "clause (1) is known
-projectively, and the projectivity bridge is unformalised here".
+[GeometricallyIntegral C.hom]` over a field. The rooted theorem
+`Adelic.isProjective_of_smoothProperGeometricallyIntegral`
+(`Picard/CurveProjectivity.lean`) proves exactly the previously missing
+implication, by constructing a finite map to `ℙ¹`, embedding the two pulled-back
+Laurent charts into relative projective space, and applying properness to the
+resulting immersion. It adds no rational-point or projectivity hypothesis.
+Thus projectivity is no longer an open antecedent in the comparison with
+Kleiman's clause (1); the representability construction itself remains the
+obligation described below.
 
 Two things follow, and both matter for planning. `th:repDiv` is **Hilb, not
 Quot** (its statement: "`Div_{X/S}` is representable by an open subscheme of the
