@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.RiemannRoch.Ledger.SectionsFieldBaseChange
 import AlgebraicJacobian.RiemannRoch.Ledger.ExtensionUniformity
+import AlgebraicJacobian.RiemannRoch.Ledger.BaseDivisorEveryField
 import AlgebraicJacobian.RiemannRoch.Adelic.FinitenessP1
 
 /-!
@@ -413,6 +414,32 @@ theorem genus_baseChangeField_curve [IsProper C.hom] [SmoothOfRelativeDimension 
   obtain ⟨S⟩ := nonempty_affineCoverMVSquare_of_curve C
   exact Scheme.genus_baseChangeField κ S
 
+/-- **The per-field fiber vanishing with the base-field genus exposed.** For the named finite
+dominant map chosen on `C_κ`, the divisor `genus(C) • F_πκ` has vanishing `H¹`. This combines
+the explicit quantitative fiber theorem with genus invariance and leaves only the degree of
+`F_πκ` as the uniformity variable. -/
+theorem subsingleton_genus_smul_fiber_perFieldFiniteMapToP1_curve
+    [IsProper C.hom] [SmoothOfRelativeDimension 1 C.hom]
+    [GeometricallyIrreducible C.hom]
+    (κ : Type u) [Field κ] [Algebra k κ] :
+    letI : (Scheme.baseChangeField C κ).left.Over (Spec (CommRingCat.of κ)) :=
+      .ofHom (Scheme.baseChangeField C κ).hom
+    haveI : SmoothOfRelativeDimension 1
+        ((Scheme.baseChangeField C κ).left ↘ Spec (CommRingCat.of κ)) :=
+      inferInstanceAs (SmoothOfRelativeDimension 1 (Scheme.baseChangeField C κ).hom)
+    Subsingleton (Sheaf.HModule ((Scheme.baseChangeField C κ).left.divisorSheaf κ
+      (genus C • fiberWeilDivisor (perFieldFiniteMapToP1 C κ))) 1) := by
+  letI : (Scheme.baseChangeField C κ).left.Over (Spec (CommRingCat.of κ)) :=
+    .ofHom (Scheme.baseChangeField C κ).hom
+  haveI : SmoothOfRelativeDimension 1
+      ((Scheme.baseChangeField C κ).left ↘ Spec (CommRingCat.of κ)) :=
+    inferInstanceAs (SmoothOfRelativeDimension 1 (Scheme.baseChangeField C κ).hom)
+  haveI : GeometricallyIntegral C.hom :=
+    GeometricallyIntegral.of_geometricallyReduced_of_geometricallyIrreducible C.hom
+  have h := subsingleton_baseChangeFieldGenus_smul_fiber_perFieldFiniteMapToP1 C κ
+  rw [genus_baseChangeField_curve C κ] at h
+  exact h
+
 /-- **The reduction with the cover discharged too** (★★): extension-uniform bounded vanishing
 follows from `UniformBaseDivisor C d` alone, on the three curve binders.
 
@@ -450,11 +477,13 @@ of this project on the curve, none of them genus-restricted.
 So the genus-0 ceiling belongs to `VanishingFieldDescent`'s *route*, not to the obligation:
 transporting the vanishing of the **unit** sheaf by faithful flatness forces the witness to be
 the zero divisor, hence forces `H¹(𝒪_C)` itself to vanish.  The obligation never needed the unit
-sheaf.  What `UniformBaseDivisor` still lacks is only its **degree clause** — a uniform bound on
-`deg_κ D₀ = n₀(κ) · deg_κ F_κ`, `n₀(κ)` being the Noetherian fibre-lattice stabilisation index
-(`Ledger/FiberVanishing.lean`) re-run at each base field.  Read
-`Ledger/BaseDivisorEveryField.lean` for the split and for why the in-tree vanishing theorems
-cannot supply that bound without circularity. -/
+  sheaf. What `UniformBaseDivisor` still lacks is only its **degree clause**. The quantitative
+  fiber theorem now makes the named witness
+  `D₀(κ) = genus(C) • F_{πκ}` (`subsingleton_genus_smul_fiber_perFieldFiniteMapToP1_curve`), so
+  the stabilization index is no longer a variable. The surviving problem is a uniform bound on
+  `deg_κ F_{πκ}`. `Ledger/MapToP1FieldBaseChange.lean` constructs one fixed map and its finite
+  surjective base change; the remaining bridge is the target-chart comparison and fiber-degree
+  invariance. -/
 theorem uniformVanishing_of_uniformBaseDivisor_curve [IsProper C.hom]
     [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIrreducible C.hom]
     [GeometricallyIntegral C.hom] {d : ℤ} (hbase : UniformBaseDivisor C d) :

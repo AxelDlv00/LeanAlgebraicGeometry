@@ -131,6 +131,38 @@ theorem exists_base_subsingleton_curve :
   refine ⟨genus C • fiberWeilDivisor π, ?_⟩
   exact subsingleton_hModule_divisorSheaf_one_genus_smul_fiber_curve C π hcomp
 
+/-- The finite dominant map to Ledger's `P1 κ` chosen independently on the base-changed curve.
+This is deliberately distinguished from `fixedFiniteMapToP1BaseChange`, which is the base change
+of one map over `k` but presently lands in the pullback model `(P1 k)_κ`. -/
+noncomputable abbrev perFieldFiniteMapToP1 (κ : Type u) [Field κ] [Algebra k κ] :
+    (Scheme.baseChangeField C κ).left ⟶ P1 κ :=
+  fixedFiniteMapToP1 (Scheme.baseChangeField C κ)
+
+/-- **The per-field vanishing divisor with its multiplier exposed.** Over every extension `κ/k`,
+the named fresh map `perFieldFiniteMapToP1 C κ` satisfies
+
+`H¹(𝒪(genus(C_κ) • F_πκ)) = 0`.
+
+The next layer, `GenusFieldInvariance.lean`, rewrites the coefficient to `genus(C)`. -/
+theorem subsingleton_baseChangeFieldGenus_smul_fiber_perFieldFiniteMapToP1
+    (κ : Type u) [Field κ] [Algebra k κ] :
+    letI : (Scheme.baseChangeField C κ).left.Over (Spec (CommRingCat.of κ)) :=
+      .ofHom (Scheme.baseChangeField C κ).hom
+    haveI : SmoothOfRelativeDimension 1
+        ((Scheme.baseChangeField C κ).left ↘ Spec (CommRingCat.of κ)) :=
+      inferInstanceAs (SmoothOfRelativeDimension 1 (Scheme.baseChangeField C κ).hom)
+    Subsingleton (Sheaf.HModule ((Scheme.baseChangeField C κ).left.divisorSheaf κ
+      (genus (Scheme.baseChangeField C κ) •
+        fiberWeilDivisor (perFieldFiniteMapToP1 C κ))) 1) := by
+  letI : (Scheme.baseChangeField C κ).left.Over (Spec (CommRingCat.of κ)) :=
+    .ofHom (Scheme.baseChangeField C κ).hom
+  haveI : SmoothOfRelativeDimension 1
+      ((Scheme.baseChangeField C κ).left ↘ Spec (CommRingCat.of κ)) :=
+    inferInstanceAs (SmoothOfRelativeDimension 1 (Scheme.baseChangeField C κ).hom)
+  exact subsingleton_hModule_divisorSheaf_one_genus_smul_fiber_curve
+    (Scheme.baseChangeField C κ) (perFieldFiniteMapToP1 C κ)
+      (fixedFiniteMapToP1_comp_structureMap (Scheme.baseChangeField C κ))
+
 /-- **The existence clause of `UniformBaseDivisor`, over every field extension** (★★): for every
 `κ/k`, finite or infinite, separable or not, there is a divisor on `C_κ` whose `H¹` vanishes.
 
@@ -152,8 +184,15 @@ theorem exists_base_subsingleton_baseChangeField (κ : Type u) [Field κ] [Algeb
       inferInstanceAs (SmoothOfRelativeDimension 1 (Scheme.baseChangeField C κ).hom)
     ∃ D₀ : (Scheme.baseChangeField C κ).left.CurveDivisor,
       Subsingleton
-        (Sheaf.HModule ((Scheme.baseChangeField C κ).left.divisorSheaf κ D₀) 1) :=
-  exists_base_subsingleton_curve (Scheme.baseChangeField C κ)
+        (Sheaf.HModule ((Scheme.baseChangeField C κ).left.divisorSheaf κ D₀) 1) := by
+  letI : (Scheme.baseChangeField C κ).left.Over (Spec (CommRingCat.of κ)) :=
+    .ofHom (Scheme.baseChangeField C κ).hom
+  haveI : SmoothOfRelativeDimension 1
+      ((Scheme.baseChangeField C κ).left ↘ Spec (CommRingCat.of κ)) :=
+    inferInstanceAs (SmoothOfRelativeDimension 1 (Scheme.baseChangeField C κ).hom)
+  exact ⟨genus (Scheme.baseChangeField C κ) •
+      fiberWeilDivisor (perFieldFiniteMapToP1 C κ),
+    subsingleton_baseChangeFieldGenus_smul_fiber_perFieldFiniteMapToP1 C κ⟩
 
 omit [IsProper C.hom] in
 /-- **The residue isolated**: `UniformBaseDivisor C d` from a *degree-bounded* per-field vanishing
