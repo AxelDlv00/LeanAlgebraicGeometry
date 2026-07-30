@@ -100,8 +100,8 @@ at layer 1 ("layer 3 may quote a per-chart quotient instead of constructing one"
 this paragraph carries it to layer 2, which the layer list did not.
 
 So layer 2 splits as: **(a)** the action and its semilinearity — *landed*, and it
-was the gating step; **(b)** the invariant-basic-open covering and openness of
-`π_U(V)` — *open*, and genuinely a covering fact rather than an algebra one;
+was the gating step; **(b)** the invariant-basic-open covering — *landed below* as
+`exists_invariant_basicOpen_le` — while openness of `π_U(V)` remains open;
 **(c)** the invariants equality — possibly not needed at all, since the per-piece
 quotient comes from Speiser at the localized ring directly.  **(c) is a reading,
 not a measurement**: a lane building the `GlueData` should check whether the
@@ -129,12 +129,13 @@ trap still bites at layer 3.
   every stable open.
 * `SemilinearGalAction.smul_norm_of_finite` — the norm `∏_γ γ • s` of any section
   over a stable open is `Γ`-invariant (the section-level face of the
-  `StableAffineCover` norm trick; feeds the invariant-basic-open covering of
-  layer 2).
+  `StableAffineCover` norm trick).
 * `SemilinearGalAction.actApp_map` — the restriction map between stable opens is
   `Γ`-equivariant; `isStableOpen_basicOpen`(`_prod_actApp`) — the basic open of an
-  invariant section (in particular of any norm) over a stable open is stable: the
-  invariant-basic-open covering machine of layer 2.
+  invariant section (in particular of any norm) over a stable open is stable.
+* `SemilinearGalAction.exists_invariant_basicOpen_le` — **the invariant-basic-open
+  covering of layer 2**: every point of a stable open inside a stable affine chart
+  has a stable basic-open neighbourhood cut out by an invariant section.
 * `SemilinearGalAction.restrict ρ hU : SemilinearGalAction K L U.toScheme (U.ι ≫ f)`
   — the scheme-level restriction of the action to a stable open.
 * `SemilinearGalAction.actRes_isoSpec_hom` / `actRes_isoSpec_hom_toSpecAut` —
@@ -254,6 +255,21 @@ lemma actApp_map {V : X.Opens} (hV : ρ.IsStableOpen V) (hVU : V ≤ U)
       = X.presheaf.map (homOfLE hVU).op ≫ ρ.actApp hV γ := by
   rw [actApp, actApp, Scheme.Hom.appLE_map, Scheme.Hom.map_appLE]
 
+/-- Pulling back a basic open by the action is the basic open of the transported
+section.  This is the pointwise bridge between orbit containment and the norm
+construction in `exists_invariant_basicOpen_le`. -/
+lemma preimage_basicOpen_actApp (γ : L ≃ₐ[K] L) (s : Γ(X, U)) :
+    (ρ.act γ).hom ⁻¹ᵁ X.basicOpen s = X.basicOpen (ρ.actApp hU γ s) := by
+  have h1 : ρ.actApp hU γ s
+      = X.presheaf.map (homOfLE (hU γ).ge).op ((ρ.act γ).hom.app U s) := rfl
+  have hle : X.basicOpen ((ρ.act γ).hom.app U s) ≤ U :=
+    (X.basicOpen_le _).trans_eq (hU γ)
+  calc
+    (ρ.act γ).hom ⁻¹ᵁ X.basicOpen s
+        = X.basicOpen ((ρ.act γ).hom.app U s) := Scheme.preimage_basicOpen _ _
+    _ = U ⊓ X.basicOpen ((ρ.act γ).hom.app U s) := (inf_eq_right.mpr hle).symm
+    _ = X.basicOpen (ρ.actApp hU γ s) := by rw [h1, Scheme.basicOpen_res]
+
 /-- **The basic open of an invariant section over a stable open is stable.**  The
 invariance hypothesis is pinned inverse-free through the transport `actApp` (for the
 section action it reads `γ • N = N` for all `γ`).  Together with
@@ -273,6 +289,19 @@ lemma isStableOpen_basicOpen {N : Γ(X, U)}
     _ = X.basicOpen (ρ.actApp hU γ N) := by rw [h1, Scheme.basicOpen_res]
     _ = X.basicOpen N := by rw [hN γ]
 
+/-- The basic open of a section invariant for `sectionsMulSemiringAction` is stable.
+This is the action-shaped form consumed by localization at the invariant section. -/
+lemma isStableOpen_basicOpen_of_smul_eq (N : Γ(X, U)) :
+    letI := ρ.sectionsMulSemiringAction hU
+    (∀ γ : L ≃ₐ[K] L, γ • N = N) → ρ.IsStableOpen (X.basicOpen N) := by
+  letI := ρ.sectionsMulSemiringAction hU
+  intro hN
+  apply ρ.isStableOpen_basicOpen hU
+  intro γ
+  have h := hN γ⁻¹
+  change ρ.actApp hU γ N = N
+  simpa [sectionsMulSemiringAction_smul_def] using h
+
 /-- The basic open of the **norm** `∏_γ (act γ)^♯ s` of *any* section over a stable
 open is stable — the section-level norm trick, transport form. -/
 lemma isStableOpen_basicOpen_prod_actApp [FiniteDimensional K L] (s : Γ(X, U)) :
@@ -288,6 +317,54 @@ lemma isStableOpen_basicOpen_prod_actApp [FiniteDimensional K L] (s : Γ(X, U)) 
     rfl
   rw [h, Finset.prod_congr rfl fun γ _ => h2 γ]
   exact Fintype.prod_equiv (Equiv.mulRight τ) _ _ fun γ => rfl
+
+/-- **Invariant-basic-open covering inside one stable affine chart** (quotient-glue
+layer 2): if `V ≤ U` is stable and `U` is affine and stable, then every point of
+`V` lies in a basic open `D(N) ≤ V` cut out by an invariant section of `U`.
+
+The section `N` is the norm of a prime-avoidance section containing the orbit of
+the point.  Thus the theorem uses only the stable affine chart already supplied by
+`HasStableAffineCover`; it adds no separatedness or quasi-projectivity assumption.
+The returned stability proof lets the localized affine quotient be applied directly
+on `D(N)`. -/
+theorem exists_invariant_basicOpen_le [FiniteDimensional K L]
+    (hUa : IsAffineOpen U) {V : X.Opens} (hVU : V ≤ U)
+    (hV : ρ.IsStableOpen V) {x : X} (hx : x ∈ V) :
+    letI := ρ.sectionsMulSemiringAction hU
+    ∃ N : Γ(X, U), (∀ γ : L ≃ₐ[K] L, γ • N = N) ∧
+      x ∈ X.basicOpen N ∧ X.basicOpen N ≤ V ∧ ρ.IsStableOpen (X.basicOpen N) := by
+  classical
+  letI := ρ.sectionsMulSemiringAction hU
+  obtain ⟨s, hs_mem, hs_le⟩ := exists_basicOpen_le_of_finite hUa
+    (fun γ : L ≃ₐ[K] L => (ρ.act γ).hom.base x)
+    (fun γ => by
+      apply hVU
+      change x ∈ (ρ.act γ).hom ⁻¹ᵁ V
+      rw [hV γ]
+      exact hx)
+    (fun γ => by
+      change x ∈ (ρ.act γ).hom ⁻¹ᵁ V
+      rw [hV γ]
+      exact hx)
+  let N : Γ(X, U) := ∏ γ : L ≃ₐ[K] L, γ • s
+  have hN : ∀ τ : L ≃ₐ[K] L, τ • N = N :=
+    fun τ => ρ.smul_norm_of_finite hU s τ
+  have hbo : X.basicOpen N =
+      Finset.univ.inf fun γ : L ≃ₐ[K] L => X.basicOpen (γ • s) := by
+    exact basicOpen_finset_prod ⟨1, Finset.mem_univ 1⟩ _
+  refine ⟨N, hN, ?_, ?_, ρ.isStableOpen_basicOpen_of_smul_eq hU N hN⟩
+  · rw [hbo, mem_finset_inf]
+    intro γ _
+    rw [sectionsMulSemiringAction_smul_def, ← ρ.preimage_basicOpen_actApp hU]
+    exact hs_mem γ⁻¹
+  · rw [hbo]
+    have hle := Finset.inf_le
+      (s := Finset.univ)
+      (f := fun γ : L ≃ₐ[K] L => X.basicOpen (γ • s))
+      (Finset.mem_univ (1 : L ≃ₐ[K] L))
+    have hs_le' : X.basicOpen ((1 : L ≃ₐ[K] L) • s) ≤ V := by
+      simpa using hs_le
+    exact hle.trans hs_le'
 
 end ActApp
 
