@@ -438,6 +438,59 @@ noncomputable def pullbackOverlapIsoTriple [FiniteDimensional K L]
     Q.isoOfEq himage ≪≫
     Q.isoOfEq hinf.symm
 
+/-- The pullback-to-triple isomorphism identifies the first pullback
+projection with restriction to the left pairwise overlap. -/
+@[reassoc]
+theorem pullbackOverlapIsoTriple_hom_fst [FiniteDimensional K L]
+    (i j k : StableAffineOpen ρ) :
+    (pullbackOverlapIsoTriple ρ i j k).hom ≫
+        tripleToOverlapLeft ρ i j k =
+      pullback.fst (quotientOverlapι ρ i j) (quotientOverlapι ρ i k) := by
+  rw [← cancel_mono (quotientOverlapι ρ i j)]
+  rw [Category.assoc, tripleToOverlapLeft_fac]
+  unfold pullbackOverlapIsoTriple quotientTripleι quotientOverlapι
+    quotientTriple quotientOverlap quotientChart
+  simp
+
+/-- The pullback-to-triple isomorphism identifies the second pullback
+projection with restriction to the right pairwise overlap. -/
+@[reassoc]
+theorem pullbackOverlapIsoTriple_hom_snd [FiniteDimensional K L]
+    (i j k : StableAffineOpen ρ) :
+    (pullbackOverlapIsoTriple ρ i j k).hom ≫
+        tripleToOverlapRight ρ i j k =
+      pullback.snd (quotientOverlapι ρ i j) (quotientOverlapι ρ i k) := by
+  rw [← cancel_mono (quotientOverlapι ρ i k)]
+  rw [Category.assoc, tripleToOverlapRight_fac]
+  unfold pullbackOverlapIsoTriple quotientTripleι quotientOverlapι
+    quotientTriple quotientOverlap quotientChart
+  simpa using (pullback.condition :
+    pullback.fst
+        (SemilinearGalAction.quotientOpenOfStableSubopen
+          ρ i.stable (i.U ⊓ j.U)).ι
+        (SemilinearGalAction.quotientOpenOfStableSubopen
+          ρ i.stable (i.U ⊓ k.U)).ι ≫
+      (SemilinearGalAction.quotientOpenOfStableSubopen
+        ρ i.stable (i.U ⊓ j.U)).ι =
+    pullback.snd
+        (SemilinearGalAction.quotientOpenOfStableSubopen
+          ρ i.stable (i.U ⊓ j.U)).ι
+        (SemilinearGalAction.quotientOpenOfStableSubopen
+          ρ i.stable (i.U ⊓ k.U)).ι ≫
+      (SemilinearGalAction.quotientOpenOfStableSubopen
+        ρ i.stable (i.U ⊓ k.U)).ι)
+
+/-- The inverse pullback-to-triple isomorphism followed by the second
+pullback projection is restriction to the right pairwise overlap. -/
+@[reassoc]
+theorem pullbackOverlapIsoTriple_inv_snd [FiniteDimensional K L]
+    (i j k : StableAffineOpen ρ) :
+    (pullbackOverlapIsoTriple ρ i j k).inv ≫
+        pullback.snd (quotientOverlapι ρ i j) (quotientOverlapι ρ i k) =
+      tripleToOverlapRight ρ i j k := by
+  rw [← pullbackOverlapIsoTriple_hom_snd]
+  simp
+
 /-- The next cyclic chart's triple quotient is a quotient of the same restricted
 action, transported along associativity and commutativity of intersection. -/
 theorem isGaloisQuotient_triple_rot [FiniteDimensional K L] [IsGalois K L]
@@ -638,6 +691,20 @@ theorem tripleToOverlapLeft_overlapIso [FiniteDimensional K L] [IsGalois K L]
     _ = tripleQuotientMap ρ i j k ≫
           ((tripleIso ρ i j k).hom ≫ tripleToOverlapRight ρ j k i) :=
       Category.assoc _ _ _
+
+/-- The triple-overlap transition has the factorization required by
+`CategoryTheory.GlueData.t_fac`. -/
+@[reassoc]
+theorem overlapTransition'_fac [FiniteDimensional K L] [IsGalois K L]
+    (i j k : StableAffineOpen ρ) :
+    overlapTransition' ρ i j k ≫
+        pullback.snd (quotientOverlapι ρ j k) (quotientOverlapι ρ j i) =
+      pullback.fst (quotientOverlapι ρ i j) (quotientOverlapι ρ i k) ≫
+        (overlapIso ρ i j).hom := by
+  simp only [overlapTransition', Category.assoc]
+  rw [pullbackOverlapIsoTriple_inv_snd]
+  rw [← tripleToOverlapLeft_overlapIso]
+  rw [← Category.assoc, pullbackOverlapIsoTriple_hom_fst]
 
 /-- The overlap transition lies over `Spec K`. -/
 @[reassoc]
