@@ -267,6 +267,21 @@ theorem quotientMap_comp_base
   rw [← w.over]
   simp
 
+/-- The inverse of the pinned base-change isomorphism has the source structure
+map as its second projection. -/
+@[reassoc]
+theorem inverse_comp_snd
+    {K L : Type u} [Field K] [Field L] [Algebra K L]
+    {X : Scheme.{u}} {f : X ⟶ Spec (CommRingCat.of L)}
+    {rho : SemilinearGalAction K L X f}
+    {Y : Scheme.{u}} {g : Y ⟶ Spec (CommRingCat.of K)}
+    {q : X ⟶ Y}
+    (w : GaloisQuotientWitnessWithProjection rho Y g q) :
+    w.e.inv ≫ pullback.snd g
+        (Spec.map (CommRingCat.ofHom (algebraMap K L))) = f := by
+  rw [← w.over]
+  simp
+
 /-- The quotient projection specified by a Galois quotient witness is an
 epimorphism.  It is an isomorphism followed by the flat surjective base change
 of `Spec L ⟶ Spec K`. -/
