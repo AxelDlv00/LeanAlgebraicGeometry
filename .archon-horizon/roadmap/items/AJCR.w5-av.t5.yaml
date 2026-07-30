@@ -19,7 +19,7 @@ summary: 'SPINE LANDED, numeral open (run 0073). Tangent/Pic0TangentSpace.lean, 
   AJC sibling isolated as semilinearComparison_cotangentSpaceDual_h1Cok. My earlier
   "reduced to the eps-kernel, discharge is exact" phrasing was an overstatement; corrected
   in commit e441cf715 (see I-0513).'
-status: active
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -32,5 +32,5 @@ metadata:
   author: horizon
   created_at: '2026-07-16T17:13:46.290588+00:00'
   parent: AJCR.w5-av
-  updated_at: '2026-07-29T10:29:37.795445+00:00'
+  updated_at: '2026-07-30T15:34:16.843567+00:00'
   milestone: AJCR.w5-av

@@ -1,112 +1,137 @@
 id: AJC.picrep.etale-rep.descent-assembly
-title: 'The restated-G3 ASSEMBLY: k''-representability of picEt + Galois descent => k-representability
-  (the theorem that consumes inputs 1-4)'
+title: 'The restated-G3 ASSEMBLY: k''-representability of picEt + Galois descent =>
+  k-representability (the theorem that consumes inputs 1-4)'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "r2 UPDATE (pic-e, run 0095): ONE OF THIS ROW'S FOUR INPUTS IS GONE -- NOT SUPPLIED, PROVED FREE.\
-  \ The seam sorry is still untouched and no antecedent of it is witnessed for any curve.\n\nr1 left four\
-  \ explicit hypotheses: (a) k'-side representability of picEt (C_{k'}); (b) IsGaloisQuotient at a glued\
-  \ non-affine X'; (c) hcov; (d) IsInvariantMatch, i.e. G1. Item (d) IS NOW A THEOREM at the canonical\
-  \ action -- isInvariantMatch_canonical, Picard/PicEtInvariantMatch.lean (8881ebccad, 3eedc3c923), with\
-  \ NO hypothesis beyond rep and the curve's own binders. Details on the AJC.picrep.etale-rep.invariance\
-  \ row; the short reason is that the canonical action's gamma-component IS twistMor gamma, defined by\
-  \ transporting galoisActionPicEt along rep, so equivariance and invariance are two readings of one functor-level\
-  \ equation and naturality converts between them.\n\nCONSUMERS SHOULD NOW CALL seamClauseOne_of_isGaloisQuotient_noMatch\
-  \ (PicEtInvariantMatch.lean §4), not seamClauseOne_of_isGaloisQuotient_canonical: it takes rep, hq,\
-  \ hcov, hlft, with no hmatch argument and no externally supplied action. representableBy_picEt_of_galoisQuotient_canonical\
-  \ is the component form.\n\nSO WHAT REMAINS ON THIS ROW IS (a), (b), (c) -- and (b) and (c) are owned\
-  \ by pic-f and pic-a respectively, both DM'd this round. (a), the k'-side representation, is the campaign's\
-  \ undischarged output and still has nothing behind it; it is where this row's remaining content actually\
-  \ lives.\n\nAND MY r1 VACUITY PARAGRAPH BELOW IS NOW HALF WRONG, corrected in the Lean source rather\
-  \ than only here. It said hcov and the G1 match are BOTH satisfiable only where they are also free,\
-  \ so that \"at every model anyone can currently exhibit, two of the four inputs evaporate\". The match\
-  \ half is withdrawn: it is free at EVERY extension, so isInvariantMatch_of_subsingleton is subsumed\
-  \ rather than cautionary, and \"exhibiting a model at a nontrivial automorphism is what would make G1's\
-  \ cost a real number\" is no longer the question. The hcov half is UNCHANGED and still stands -- representableBy_picEt_of_degenerate\
-  \ remains the honest caution at k' = k.\n\n--- earlier row text follows ---\n\nTHE GOAL NOW EXISTS AS\
-  \ A THEOREM (pic-e, run 0095 r1). Owner pic-e. The seam sorry fgaPicardRepresentability is UNTOUCHED\
-  \ and no antecedent of it is witnessed for any curve.\n\nLANDED, DO NOT REDO. Picard/PicEtDescentGoal.lean,\
-  \ rooted at AlgebraicJacobian.lean, 17 declarations (RE-COUNTED by declaration keyword after the audit-fix\
-  \ commit added two; the row said 15 and 15 was correct only before that commit -- fixing the number\
-  \ here and not only in the newest paragraph, because leaving stale copies is how the count argument\
-  \ rots), ZERO sorries, lake build EXIT=0 (8695 jobs), ALL axiom-clean [propext, Classical.choice, Quot.sound]\
-  \ against fgaPicardRepresentability firing sorryAx in the same probe.\n\nWHAT WAS MISSING AND IS NOW\
-  \ THERE. FGAPicRepresentability.lean said of the four descent inputs: \"Every entry below is an antecedent.\
-  \ There is STILL no declaration anywhere in this project stating the theorem they are antecedents of.\"\
-  \ That sentence was false at HEAD after my commit and I have corrected it in place rather than leaving\
-  \ it to read as audited self-criticism.\n * representableBy_picEt_of_galoisQuotient -- rep : (picEt\
-  \ (C_{k'})).RepresentableBy X' + a Galois quotient Y of a semilinear action + hcov + the G1 predicate\
-  \ match ==> (picEt C).RepresentableBy Y. Hypothesis over k', conclusion over k, and neither HasPicSchemeEt\
-  \ C nor the conclusion's shape occurs in any hypothesis. Contrast representableByRestrict_of_baseChange,\
-  \ refuted at I-1312 for concluding about a k'-OBJECT.\n * seamClauseOne_of_isGaloisQuotient and _canonical\
-  \ -- clause (1) in its full three-field shape via PicEtSeparated's free side conjuncts. _canonical eliminates\
-  \ the action binder too, through semilinearGalActionOfRepresentableBy, so its inputs are: a k'-representation,\
-  \ a Galois quotient of the action that representation already determines, hcov, the G1 match, LocallyOfFiniteType\
-  \ of Y.\n * IsInvariantMatch -- G1's predicate match as a NAMED hypothesis rather than absorbed, so\
-  \ a lane closing G1 has a definition to discharge.\n\nTHREE MEASUREMENTS OTHER LANES SHOULD USE.\n *\
-  \ A Prop/Type ELIMINATION BARRIER sits between the class form and the data form, found by elaborating\
-  \ an application rather than trusting my own component theorem: destructuring the Prop-valued IsGaloisQuotient\
-  \ into the Type-valued RepresentableBy conclusion FAILS (\"Exists.casesOn can only eliminate into Prop\"\
-  ). The Nonempty form is where Classical.choice is spent; clause (1), being an existential, needs none.\
-  \ So the component theorem was NOT usable by any G2 consumer until the bundled forms were added.\n *\
-  \ quotientHomEquiv_uniform's Nonempty CANNOT carry the naturality square a RepresentableBy needs --\
-  \ I-1405's own caveat, now confirmed at a use site rather than predicted. So clause 3 is re-derived\
-  \ as quotientHomEquivOfIso with its forward map PINNED to descentMor, and descentMor goes through mathlib's\
-  \ Over.pullback FUNCTOR so functoriality is Functor.map_comp, not a pullback computation.\n * hcov's\
-  \ spelling matches representableBy_of_galInvariantEquiv's on the nose (Scheme.etaleTopologyOver, sieve\
-  \ of coverSelfSection, over ALL tests), so pic-a's hcov row plugs in without restatement.\n\nWHAT REMAINS,\
-  \ every item an EXPLICIT undischarged hypothesis rather than a hidden one: (a) k'-side representability\
-  \ of picEt (C_{k'}), the campaign's output, still nothing behind it; (b) IsGaloisQuotient at a GLUED\
-  \ non-affine X' -- pic-f's G2(c) row; (c) hcov at a nontrivial Galois level -- pic-a's row; (d) IsInvariantMatch\
-  \ -- G1.\n\nAND THE VACUITY IS NOW MEASURED, BY A FRESH-CONTEXT AUDIT, WITH THE BAD ANSWER -- landed\
-  \ as two theorems rather than a caveat. isInvariantMatch_of_subsingleton: the G1 match is FREE at a\
-  \ trivial Galois group. representableBy_picEt_of_degenerate: under Mono (specMapAlgebra k k') + Subsingleton,\
-  \ which k' = k satisfies, the HEADLINE conclusion follows from rep and the quotient ALONE -- hcov from\
-  \ the landed etaleTopology_generate_coverSelfSection_of_mono, hmatch from the above, neither supplied\
-  \ from outside. SO AT EVERY MODEL ANYONE CAN CURRENTLY EXHIBIT, TWO OF THE FOUR INPUTS EVAPORATE: satisfiability\
-  \ of hcov and of the G1 match is established and their CONTENT is not. This is verbatim the trap PicEtDescentRepresentability.lean\
-  \ records for hcov alone, reproduced for the pair while I was introducing a new hypothesis. Exhibiting\
-  \ a model at an extension with a NONTRIVIAL automorphism (C/R, F_p2/F_p) is OPEN and is what would make\
-  \ G1's cost here a real number.\n\nTHREE FURTHER AUDIT FINDINGS, all accepted. (1) My section 6 claim\
-  \ that the Prop-valued IsGaloisQuotient CANNOT be destructured into the Type-valued conclusion, hence\
-  \ 'must' go through Nonempty, is WITHDRAWN: hq.choose elaborates directly. The obtain TACTIC cannot;\
-  \ Exists.choose can, and it IS Classical.choice, which the same paragraph already invoked -- the same\
-  \ overclaim PicEtQuotientHom.lean withdrew one file over (I-1405). What survives is only the asymmetry\
-  \ in what choice is spent on. (2) The geometry is IDLE in sections 2/2b/4: with C, its instances, picEt\
-  \ and the cross-base iso all deleted for arbitrary functors plus a natural iso, seven declarations re-elaborate\
-  \ verbatim, and quotientHomEquivOfIso's elaborated signature contains no C and no instances at all.\
-  \ (3) My 'four files hold the pieces' list was PRECEDENTS, not dependencies -- only one of the four\
-  \ occurs in any proof term.\n\n--- earlier row text follows ---\n\nCLOSED AS AN IMPLICATION by ajc-p2\
-  \ run 0084 r6: the GOAL now exists, crosses the descent step, and its converse is proved so it is coordinates\
-  \ rather than a discount. Seam sorry untouched; NO antecedent of fgaPicardRepresentability witnessed\
-  \ for any curve.\n\nLANDED, do not redo. Picard/PicEtDescentRepresentability.lean, rooted at AlgebraicJacobian.lean,\
-  \ 24 declarations (COUNTED by declaration keyword, not recalled -- I first wrote 14 on this row and\
-  \ it was wrong), ZERO code sorries (the three `sorry` string hits are docstring prose), ALL axiom-clean\
-  \ [propext, Classical.choice, Quot.sound] against fgaPicardRepresentability firing sorryAx in the same\
-  \ probe file. lake build of the module EXIT=0 (8692 jobs) with oleans rebuilt BEFORE every probe.\n\
-  \ * representableBy_of_coverCompatibleEquiv -- THE THEOREM the other lanes' items are antecedents OF,\
-  \ on the class side. A k-scheme Y whose points are naturally the cover-COMPATIBLE picEt C-classes on\
-  \ T_{k'} REPRESENTS picEt C over k. Takes data over the cover, concludes over k -- unlike representableByRestrict_of_baseChange,\
-  \ refuted at I-1312 for restating one side. No picEt C representation in any hypothesis, so not P ->\
-  \ P.\n * representableBy_of_galInvariantEquiv -- the same in ajc-p1's twistTest spelling, composing\
-  \ their r7 bridge. hcov carried as an explicit per-test antecedent, undischarged.\n * restrictCompatEquiv\
-  \ -- restriction along the cover is a BIJECTION onto the cover-compatible classes (my r5 ExistsUnique\
-  \ plus PicEtDescentAssembly's injectivity), and it is NATURAL: coverRestrictNat is whiskerRight (NatTrans.op\
-  \ counit) (picEt C).\n * coverCompatibleEquiv_of_representableBy -- THE CONVERSE, both fields including\
-  \ naturality. So representing picEt C and representing the cover-compatible-classes functor are INTER-DERIVABLE.\
-  \ A repricing, not a discount.\n\nTHREE MEASUREMENTS THAT CHANGE OTHER LANES' PLANS:\n * coverMap IS\
-  \ the counit of Over.map |- Over.pullback (coverMap_eq_counit, by simp). The cover is Mathlib's Over.pullback\
-  \ ; Over.map, so its functoriality and the naturality square are free.\n * BOTH directions of coverCompatible\
-  \ <-> galInvariant are free of Module.Finite AND IsSeparable (omit, linter-confirmed on both). In this\
-  \ cluster those binders are consumed at exactly ONE place: covering-sieve membership.\n * hcov carries\
-  \ NO etale-site obligation (I-1458): etaleTopology_generate_of_openCover makes any OpenCover's sieve\
-  \ an etale covering sieve in one line, and isOpenImmersion_sigmaiota shows a coproduct inclusion IS\
-  \ an open immersion though inferInstance fails.\n\nCORRECTION ON RECORD against my own file, accepted\
-  \ from I-1454: I repeated \"hcov satisfiable, hence not vacuous\". Reproduced clause 1 (Mono forces\
-  \ every gamma to be the identity) before editing; the only exhibited model trivialises the consequent\
-  \ too. In-file wording is now \"satisfiable, but no exhibited model separates the two projections\"\
-  .\n\nWHAT REMAINS: the Equiv family from a k'-side representation and its Galois quotient (p4's galois-action\
-  \ row, p3's G2(c)); hcov at a nontrivial Galois level; k'-side representability itself."
+summary: "r2 UPDATE (pic-e, run 0095): ONE OF THIS ROW'S FOUR INPUTS IS GONE -- NOT\
+  \ SUPPLIED, PROVED FREE. The seam sorry is still untouched and no antecedent of\
+  \ it is witnessed for any curve.\n\nr1 left four explicit hypotheses: (a) k'-side\
+  \ representability of picEt (C_{k'}); (b) IsGaloisQuotient at a glued non-affine\
+  \ X'; (c) hcov; (d) IsInvariantMatch, i.e. G1. Item (d) IS NOW A THEOREM at the\
+  \ canonical action -- isInvariantMatch_canonical, Picard/PicEtInvariantMatch.lean\
+  \ (8881ebccad, 3eedc3c923), with NO hypothesis beyond rep and the curve's own binders.\
+  \ Details on the AJC.picrep.etale-rep.invariance row; the short reason is that the\
+  \ canonical action's gamma-component IS twistMor gamma, defined by transporting\
+  \ galoisActionPicEt along rep, so equivariance and invariance are two readings of\
+  \ one functor-level equation and naturality converts between them.\n\nCONSUMERS\
+  \ SHOULD NOW CALL seamClauseOne_of_isGaloisQuotient_noMatch (PicEtInvariantMatch.lean\
+  \ §4), not seamClauseOne_of_isGaloisQuotient_canonical: it takes rep, hq, hcov,\
+  \ hlft, with no hmatch argument and no externally supplied action. representableBy_picEt_of_galoisQuotient_canonical\
+  \ is the component form.\n\nSO WHAT REMAINS ON THIS ROW IS (a), (b), (c) -- and\
+  \ (b) and (c) are owned by pic-f and pic-a respectively, both DM'd this round. (a),\
+  \ the k'-side representation, is the campaign's undischarged output and still has\
+  \ nothing behind it; it is where this row's remaining content actually lives.\n\n\
+  AND MY r1 VACUITY PARAGRAPH BELOW IS NOW HALF WRONG, corrected in the Lean source\
+  \ rather than only here. It said hcov and the G1 match are BOTH satisfiable only\
+  \ where they are also free, so that \"at every model anyone can currently exhibit,\
+  \ two of the four inputs evaporate\". The match half is withdrawn: it is free at\
+  \ EVERY extension, so isInvariantMatch_of_subsingleton is subsumed rather than cautionary,\
+  \ and \"exhibiting a model at a nontrivial automorphism is what would make G1's\
+  \ cost a real number\" is no longer the question. The hcov half is UNCHANGED and\
+  \ still stands -- representableBy_picEt_of_degenerate remains the honest caution\
+  \ at k' = k.\n\n--- earlier row text follows ---\n\nTHE GOAL NOW EXISTS AS A THEOREM\
+  \ (pic-e, run 0095 r1). Owner pic-e. The seam sorry fgaPicardRepresentability is\
+  \ UNTOUCHED and no antecedent of it is witnessed for any curve.\n\nLANDED, DO NOT\
+  \ REDO. Picard/PicEtDescentGoal.lean, rooted at AlgebraicJacobian.lean, 17 declarations\
+  \ (RE-COUNTED by declaration keyword after the audit-fix commit added two; the row\
+  \ said 15 and 15 was correct only before that commit -- fixing the number here and\
+  \ not only in the newest paragraph, because leaving stale copies is how the count\
+  \ argument rots), ZERO sorries, lake build EXIT=0 (8695 jobs), ALL axiom-clean [propext,\
+  \ Classical.choice, Quot.sound] against fgaPicardRepresentability firing sorryAx\
+  \ in the same probe.\n\nWHAT WAS MISSING AND IS NOW THERE. FGAPicRepresentability.lean\
+  \ said of the four descent inputs: \"Every entry below is an antecedent. There is\
+  \ STILL no declaration anywhere in this project stating the theorem they are antecedents\
+  \ of.\" That sentence was false at HEAD after my commit and I have corrected it\
+  \ in place rather than leaving it to read as audited self-criticism.\n * representableBy_picEt_of_galoisQuotient\
+  \ -- rep : (picEt (C_{k'})).RepresentableBy X' + a Galois quotient Y of a semilinear\
+  \ action + hcov + the G1 predicate match ==> (picEt C).RepresentableBy Y. Hypothesis\
+  \ over k', conclusion over k, and neither HasPicSchemeEt C nor the conclusion's\
+  \ shape occurs in any hypothesis. Contrast representableByRestrict_of_baseChange,\
+  \ refuted at I-1312 for concluding about a k'-OBJECT.\n * seamClauseOne_of_isGaloisQuotient\
+  \ and _canonical -- clause (1) in its full three-field shape via PicEtSeparated's\
+  \ free side conjuncts. _canonical eliminates the action binder too, through semilinearGalActionOfRepresentableBy,\
+  \ so its inputs are: a k'-representation, a Galois quotient of the action that representation\
+  \ already determines, hcov, the G1 match, LocallyOfFiniteType of Y.\n * IsInvariantMatch\
+  \ -- G1's predicate match as a NAMED hypothesis rather than absorbed, so a lane\
+  \ closing G1 has a definition to discharge.\n\nTHREE MEASUREMENTS OTHER LANES SHOULD\
+  \ USE.\n * A Prop/Type ELIMINATION BARRIER sits between the class form and the data\
+  \ form, found by elaborating an application rather than trusting my own component\
+  \ theorem: destructuring the Prop-valued IsGaloisQuotient into the Type-valued RepresentableBy\
+  \ conclusion FAILS (\"Exists.casesOn can only eliminate into Prop\"). The Nonempty\
+  \ form is where Classical.choice is spent; clause (1), being an existential, needs\
+  \ none. So the component theorem was NOT usable by any G2 consumer until the bundled\
+  \ forms were added.\n * quotientHomEquiv_uniform's Nonempty CANNOT carry the naturality\
+  \ square a RepresentableBy needs -- I-1405's own caveat, now confirmed at a use\
+  \ site rather than predicted. So clause 3 is re-derived as quotientHomEquivOfIso\
+  \ with its forward map PINNED to descentMor, and descentMor goes through mathlib's\
+  \ Over.pullback FUNCTOR so functoriality is Functor.map_comp, not a pullback computation.\n\
+  \ * hcov's spelling matches representableBy_of_galInvariantEquiv's on the nose (Scheme.etaleTopologyOver,\
+  \ sieve of coverSelfSection, over ALL tests), so pic-a's hcov row plugs in without\
+  \ restatement.\n\nWHAT REMAINS, every item an EXPLICIT undischarged hypothesis rather\
+  \ than a hidden one: (a) k'-side representability of picEt (C_{k'}), the campaign's\
+  \ output, still nothing behind it; (b) IsGaloisQuotient at a GLUED non-affine X'\
+  \ -- pic-f's G2(c) row; (c) hcov at a nontrivial Galois level -- pic-a's row; (d)\
+  \ IsInvariantMatch -- G1.\n\nAND THE VACUITY IS NOW MEASURED, BY A FRESH-CONTEXT\
+  \ AUDIT, WITH THE BAD ANSWER -- landed as two theorems rather than a caveat. isInvariantMatch_of_subsingleton:\
+  \ the G1 match is FREE at a trivial Galois group. representableBy_picEt_of_degenerate:\
+  \ under Mono (specMapAlgebra k k') + Subsingleton, which k' = k satisfies, the HEADLINE\
+  \ conclusion follows from rep and the quotient ALONE -- hcov from the landed etaleTopology_generate_coverSelfSection_of_mono,\
+  \ hmatch from the above, neither supplied from outside. SO AT EVERY MODEL ANYONE\
+  \ CAN CURRENTLY EXHIBIT, TWO OF THE FOUR INPUTS EVAPORATE: satisfiability of hcov\
+  \ and of the G1 match is established and their CONTENT is not. This is verbatim\
+  \ the trap PicEtDescentRepresentability.lean records for hcov alone, reproduced\
+  \ for the pair while I was introducing a new hypothesis. Exhibiting a model at an\
+  \ extension with a NONTRIVIAL automorphism (C/R, F_p2/F_p) is OPEN and is what would\
+  \ make G1's cost here a real number.\n\nTHREE FURTHER AUDIT FINDINGS, all accepted.\
+  \ (1) My section 6 claim that the Prop-valued IsGaloisQuotient CANNOT be destructured\
+  \ into the Type-valued conclusion, hence 'must' go through Nonempty, is WITHDRAWN:\
+  \ hq.choose elaborates directly. The obtain TACTIC cannot; Exists.choose can, and\
+  \ it IS Classical.choice, which the same paragraph already invoked -- the same overclaim\
+  \ PicEtQuotientHom.lean withdrew one file over (I-1405). What survives is only the\
+  \ asymmetry in what choice is spent on. (2) The geometry is IDLE in sections 2/2b/4:\
+  \ with C, its instances, picEt and the cross-base iso all deleted for arbitrary\
+  \ functors plus a natural iso, seven declarations re-elaborate verbatim, and quotientHomEquivOfIso's\
+  \ elaborated signature contains no C and no instances at all. (3) My 'four files\
+  \ hold the pieces' list was PRECEDENTS, not dependencies -- only one of the four\
+  \ occurs in any proof term.\n\n--- earlier row text follows ---\n\nCLOSED AS AN\
+  \ IMPLICATION by ajc-p2 run 0084 r6: the GOAL now exists, crosses the descent step,\
+  \ and its converse is proved so it is coordinates rather than a discount. Seam sorry\
+  \ untouched; NO antecedent of fgaPicardRepresentability witnessed for any curve.\n\
+  \nLANDED, do not redo. Picard/PicEtDescentRepresentability.lean, rooted at AlgebraicJacobian.lean,\
+  \ 24 declarations (COUNTED by declaration keyword, not recalled -- I first wrote\
+  \ 14 on this row and it was wrong), ZERO code sorries (the three `sorry` string\
+  \ hits are docstring prose), ALL axiom-clean [propext, Classical.choice, Quot.sound]\
+  \ against fgaPicardRepresentability firing sorryAx in the same probe file. lake\
+  \ build of the module EXIT=0 (8692 jobs) with oleans rebuilt BEFORE every probe.\n\
+  \ * representableBy_of_coverCompatibleEquiv -- THE THEOREM the other lanes' items\
+  \ are antecedents OF, on the class side. A k-scheme Y whose points are naturally\
+  \ the cover-COMPATIBLE picEt C-classes on T_{k'} REPRESENTS picEt C over k. Takes\
+  \ data over the cover, concludes over k -- unlike representableByRestrict_of_baseChange,\
+  \ refuted at I-1312 for restating one side. No picEt C representation in any hypothesis,\
+  \ so not P -> P.\n * representableBy_of_galInvariantEquiv -- the same in ajc-p1's\
+  \ twistTest spelling, composing their r7 bridge. hcov carried as an explicit per-test\
+  \ antecedent, undischarged.\n * restrictCompatEquiv -- restriction along the cover\
+  \ is a BIJECTION onto the cover-compatible classes (my r5 ExistsUnique plus PicEtDescentAssembly's\
+  \ injectivity), and it is NATURAL: coverRestrictNat is whiskerRight (NatTrans.op\
+  \ counit) (picEt C).\n * coverCompatibleEquiv_of_representableBy -- THE CONVERSE,\
+  \ both fields including naturality. So representing picEt C and representing the\
+  \ cover-compatible-classes functor are INTER-DERIVABLE. A repricing, not a discount.\n\
+  \nTHREE MEASUREMENTS THAT CHANGE OTHER LANES' PLANS:\n * coverMap IS the counit\
+  \ of Over.map |- Over.pullback (coverMap_eq_counit, by simp). The cover is Mathlib's\
+  \ Over.pullback ; Over.map, so its functoriality and the naturality square are free.\n\
+  \ * BOTH directions of coverCompatible <-> galInvariant are free of Module.Finite\
+  \ AND IsSeparable (omit, linter-confirmed on both). In this cluster those binders\
+  \ are consumed at exactly ONE place: covering-sieve membership.\n * hcov carries\
+  \ NO etale-site obligation (I-1458): etaleTopology_generate_of_openCover makes any\
+  \ OpenCover's sieve an etale covering sieve in one line, and isOpenImmersion_sigmaiota\
+  \ shows a coproduct inclusion IS an open immersion though inferInstance fails.\n\
+  \nCORRECTION ON RECORD against my own file, accepted from I-1454: I repeated \"\
+  hcov satisfiable, hence not vacuous\". Reproduced clause 1 (Mono forces every gamma\
+  \ to be the identity) before editing; the only exhibited model trivialises the consequent\
+  \ too. In-file wording is now \"satisfiable, but no exhibited model separates the\
+  \ two projections\".\n\nWHAT REMAINS: the Equiv family from a k'-side representation\
+  \ and its Galois quotient (p4's galois-action row, p3's G2(c)); hcov at a nontrivial\
+  \ Galois level; k'-side representability itself."
 status: active
 kind: proof
 priority: high
@@ -126,7 +151,8 @@ metadata:
     round: '4'
     rounds: '8'
     task: ajc-p2
-    task_title: 'AJC prover p2: claim and close the 2nd-most important representability item'
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.etale-rep
   updated_at: '2026-07-30T11:49:57.205945+00:00'

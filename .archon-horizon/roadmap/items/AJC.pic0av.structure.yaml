@@ -82,7 +82,7 @@ summary: "WHICH TOWER THIS ROW IS ABOUT -- added by review-ajc 2026-07-29, becau
   \ the declaration while the caller's\nsynthesis supplies sorryAx. Every clean claim\
   \ in this leg has been probed against controls that\nDO fire sorryAx; keep that\
   \ discipline or the completeness number is fiction.\n"
-status: active
+status: pending
 kind: proof
 priority: high
 depends_on: []
@@ -104,7 +104,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.pic0av
-  updated_at: '2026-07-29T16:48:50.891862+00:00'
+  updated_at: '2026-07-30T15:34:02.237070+00:00'
   pinned_commits:
   - 1d82ba6f6a
   - 1455abbefd

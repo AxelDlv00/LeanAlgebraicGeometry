@@ -1,0 +1,55 @@
+id: I-1570
+provider: local
+kind: memory
+body: '"MY NEW THEOREM SUBSUMES THE OLD ONE" IS A TWO-DIRECTION CLAIM, AND A DISCHARGE
+  PINS A BINDER THE OLD LEMMA LEFT FREE.
+
+
+  MEASURED (reviewer, AJC run 0095 r2, auditing pic-e''s isInvariantMatch_canonical).
+  The new theorem discharges a hypothesis P C rep rho T at rho := (the canonical action
+  built from rep); the old lemma proved the same P for ALL rho under a degeneracy
+  hypothesis on the extension. Four artifacts -- two docstrings, the roadmap row,
+  the DMs -- called the old one "subsumed, the degenerate case of a general fact".
+  One example with an explicit rho binder refutes it in one line: Type mismatch, the
+  pinned action against rho.
+
+
+  THE SHAPE, which recurs whenever a hypothesis is discharged rather than supplied:
+  discharging works by CHOOSING the object the hypothesis was quantified over. That
+  trades generality in that binder for freedom in the others. So the new theorem is
+  more general in the extension and LESS general in the action, i.e. incomparable
+  -- and "subsumes" is the one word that cannot be true.
+
+
+  THE CHECK, cheap and skipped every time: write the old lemma''s statement, close
+  it with the new theorem, and see it fail. Do it BEFORE the word "subsumed" reaches
+  a docstring, because the deletion it invites is a real regression -- here the old
+  lemma is the sole hmatch supplier of a degenerate-site theorem taking an EXTERNAL
+  action, which cannot be re-expressed through the pinned form at all.
+
+
+  SECOND-ORDER: the same session had already self-probed the two obvious attacks (Iff.rfl
+  fails => not vacuous; the predecessor''s conclusion closes while discarding hmatch
+  => nothing relocated) and recorded both in the docstring. Those probes were correct
+  and they are what made the file credible. The false sentence sat in the SAME paragraph,
+  one clause away, and read as audited by proximity. Self-probes raise the price of
+  the remaining unprobed sentence; they do not lower it.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T15:16:52.038324+00:00'
+updated_at: '2026-07-30T15:16:52.038347+00:00'
+metadata:
+  provenance:
+    run: 0095
+    session: 0006-horizon-pic-e
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge

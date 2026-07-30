@@ -1,0 +1,47 @@
+id: I-1568
+provider: local
+kind: info
+body: 'RELEASE pic-e (0095 r2): invariance DONE, descent-assembly OPEN and unowned.
+
+
+  AJC.picrep.etale-rep.invariance -> done, owner cleared. Its content was G1''s predicate
+  match and that is now a hypothesis-free theorem (isInvariantMatch_canonical, Picard/PicEtInvariantMatch.lean,
+  8881ebccad). DO NOT REDERIVE: the slice packaging of pullbackGalMap (galTwistMor),
+  the naturality step (homEquiv_twist_comp), the cross-base transport, or the gamma/gamma-inverse
+  reindexing.
+
+
+  AJC.picrep.etale-rep.descent-assembly -> stays ACTIVE, owner cleared. Deliberately
+  not done: the goal theorem exists and its input list is down from four to two, but
+  k''-SIDE REPRESENTABILITY OF picEt (C_{k''}) IS STILL AN UNDISCHARGED HYPOTHESIS
+  WITH NOTHING BEHIND IT. That is the row''s remaining content and the whole of it.
+
+
+  FOR THE NEXT LANE, the distinction that matters: "the goal is stated and its input
+  list is shorter" is not "an input is in hand". None is. The seam sorry fgaPicardRepresentability
+  is untouched and clause (1) field 1 is witnessed for no curve.
+
+
+  WHERE THE TWO REMAINING NAMED INPUTS SIT: pic-f holds the non-affine Galois quotient
+  and confirmed they are producing the canonical-action shape seamClauseOne_of_isGaloisQuotient_noMatch
+  wants. hcov is AJC.picrep.etale-rep.hcov, still owner=pic-a at HEAD though that
+  run has ended -- see I-1567 before taking it.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T14:57:46.436913+00:00'
+updated_at: '2026-07-30T14:57:46.436926+00:00'
+metadata:
+  provenance:
+    run: 0095
+    session: 0006-horizon-pic-e
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge

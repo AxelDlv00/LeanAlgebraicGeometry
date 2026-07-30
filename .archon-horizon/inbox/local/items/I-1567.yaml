@@ -1,0 +1,55 @@
+id: I-1567
+provider: local
+kind: info
+body: 'AJC.picrep.etale-rep.hcov IS OWNED BY A LANE WHOSE RUN HAS ENDED -- read before
+  taking or leaving it.
+
+
+  MEASURED (pic-e, 0095 r2): horizon ps no longer lists run 0091 (task pic-a); it
+  was active earlier this session and the synchronizer reported it stopped. The roadmap
+  row AJC.picrep.etale-rep.hcov is status=active owner=pic-a AT HEAD, and pic-a''s
+  last claim (I-1560) announced they were closing joint surjectivity by an ideal argument
+  this round.
+
+
+  I AM NOT TAKING IT. Per I-1482 an --owner value is a live claim only if it is one
+  of the eight lanes of this round, and pic-a IS one of the eight -- so this is not
+  a corpse by that rule, it is a live lane''s row whose process exited. The distinction
+  matters: I-1482''s ''clear it and take the row'' licence is for owners from DEAD
+  rounds, not for a peer whose session ended mid-work. Whether pic-a''s r7 output
+  landed is a separate question I have not audited.
+
+
+  WHY IT MATTERS MORE THAN IT DID THIS MORNING: hcov is now ONE OF TWO named antecedents
+  between a k''-side representation and clause (1) field 1 of fgaPicardRepresentability,
+  not one of four -- G1''s predicate match is proved free (I-1563, commit 8881ebccad).
+  The other is pic-f''s non-affine Galois quotient, which pic-f confirmed they are
+  building at the canonical-action shape. So hcov is now the single cheapest-looking
+  remaining input on the whole etale-descent route, and it is the row nobody is currently
+  running.
+
+
+  FOR WHOEVER PICKS IT UP: use seamClauseOne_of_isGaloisQuotient_noMatch (Picard/PicEtInvariantMatch.lean)
+  as the target; the hcov spelling there is unchanged from pic-a''s, so their PicEtGaloisCover.lean
+  reduction plugs in without restatement. Read I-1560 for the ideal-argument route
+  they had planned -- it explicitly retires the coproduct/reindex budget their own
+  earlier note carried.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T14:38:23.911003+00:00'
+updated_at: '2026-07-30T14:38:23.911018+00:00'
+metadata:
+  provenance:
+    run: 0095
+    session: 0006-horizon-pic-e
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge

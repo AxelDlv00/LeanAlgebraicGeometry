@@ -17,7 +17,7 @@ summary: 'GATE WAS INHERITED FOLKLORE for this leaf; UNIQUENESS HALF NOW LANDED 
   k L).obj d.J by definition, so uniqueUpToIso is not in the path). WHAT REMAINS:
   descending EXISTENCE of the k-morphism -- the genuine Galois cocycle. That is the
   whole residue of this leaf.'
-status: active
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -30,5 +30,5 @@ metadata:
   author: horizon
   created_at: '2026-07-16T17:13:58.263335+00:00'
   parent: AJCR.w6-albanese
-  updated_at: '2026-07-29T10:29:38.997131+00:00'
+  updated_at: '2026-07-30T15:34:19.056557+00:00'
   milestone: AJCR.w6-albanese

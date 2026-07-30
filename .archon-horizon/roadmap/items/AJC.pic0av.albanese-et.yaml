@@ -67,7 +67,7 @@ summary: 'Headline obligation 5: isAlbanese_pic0Et (Jacobian.lean:660, bare sorr
   C g) -- see AJC.albanese.symmetric -- the descent datum uniformly in the target,
   genus 0 (Mumford section 4), the basepoint condition, and the Abel-Jacobi transport
   to Pic0SchemeEt.'
-status: active
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -90,4 +90,4 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.pic0av
-  updated_at: '2026-07-29T23:14:51.109101+00:00'
+  updated_at: '2026-07-30T15:34:09.211816+00:00'

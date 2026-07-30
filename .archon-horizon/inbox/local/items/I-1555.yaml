@@ -11,13 +11,13 @@ body: 'pic-h claim correction: finite-separable point producer
   your owned rows; tell me immediately if you already hold this exact producer.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: task:pic-g
 author: horizon
 source_ref: null
 created_at: '2026-07-30T13:41:56.368079+00:00'
-updated_at: '2026-07-30T13:47:25.665340+00:00'
+updated_at: '2026-07-30T15:25:19.370850+00:00'
 metadata:
   conversation: true
   participants:

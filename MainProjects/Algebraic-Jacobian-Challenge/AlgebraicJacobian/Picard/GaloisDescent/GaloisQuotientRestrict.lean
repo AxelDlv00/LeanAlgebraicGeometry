@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.GaloisDescent.InvariantQuotientOpen
+import AlgebraicJacobian.Picard.GaloisDescent.GaloisQuotientUniqueness
 import Mathlib.AlgebraicGeometry.PullbackCarrier
 
 /-!
@@ -175,11 +176,10 @@ theorem universalRestrict
 
 variable {U : X.Opens} (hU : ρ.IsStableOpen U)
 
-/-- **The invariant-ring quotient of a stable affine chart restricts to every
-stable subopen.**  The quotient-side open is the one constructed from invariant
-basic opens, and the conclusion contains the full universal `T`-points clause.
--/
-theorem isGaloisQuotient_quotientOpenOfStableSubopen
+/-- The pinned quotient witness obtained by restricting an affine invariant-ring
+quotient to a stable subopen.  Keeping this data in `Type` preserves the chosen
+base-change isomorphism needed for coherent overlap gluing. -/
+noncomputable def galoisQuotientWitness_quotientOpenOfStableSubopen
     [FiniteDimensional K L] [IsGalois K L]
     (hUa : IsAffineOpen U) {V : X.Opens} (hVU : V ≤ U)
     (hV : ρ.IsStableOpen V) :
@@ -189,7 +189,7 @@ theorem isGaloisQuotient_quotientOpenOfStableSubopen
     letI := sections_isScalarTower (K := K) f U
     letI := ρ.isSemilinear_sections hU
     let W := quotientOpenOfStableSubopen ρ hU V
-    IsGaloisQuotient (ρ.restrict hV)
+    GaloisQuotientWitness (ρ.restrict hV) W.toScheme
       (W.ι ≫ Spec.map (CommRingCat.ofHom
         (algebraMap K
           (SemilinearAction.invariantsSubalgebra K L Γ(X, U))))) := by
@@ -393,6 +393,33 @@ theorem isGaloisQuotient_quotientOpenOfStableSubopen
       _ = (eV.hom ≫ ((ρ.restrict hV).act γ).hom) ≫ j :=
         (Category.assoc _ _ _).symm
   · exact ρ.universalRestrict g hU hV hVU eU hunivU q hproj W hpre eV heVj
+
+/-- **The invariant-ring quotient of a stable affine chart restricts to every
+stable subopen.**  The quotient-side open is the one constructed from invariant
+basic opens, and the conclusion contains the full universal `T`-points clause.
+-/
+theorem isGaloisQuotient_quotientOpenOfStableSubopen
+    [FiniteDimensional K L] [IsGalois K L]
+    (hUa : IsAffineOpen U) {V : X.Opens} (hVU : V ≤ U)
+    (hV : ρ.IsStableOpen V) :
+    letI := ρ.sectionsMulSemiringAction hU
+    letI := sectionsAlgebra f U
+    letI := sectionsAlgebraK (K := K) f U
+    letI := sections_isScalarTower (K := K) f U
+    letI := ρ.isSemilinear_sections hU
+    let W := quotientOpenOfStableSubopen ρ hU V
+    IsGaloisQuotient (ρ.restrict hV)
+      (W.ι ≫ Spec.map (CommRingCat.ofHom
+        (algebraMap K
+          (SemilinearAction.invariantsSubalgebra K L Γ(X, U))))) := by
+  letI := ρ.sectionsMulSemiringAction hU
+  letI := sectionsAlgebra f U
+  letI := sectionsAlgebraK (K := K) f U
+  letI := sections_isScalarTower (K := K) f U
+  letI := ρ.isSemilinear_sections hU
+  let w := galoisQuotientWitness_quotientOpenOfStableSubopen
+    ρ hU hUa hVU hV
+  exact ⟨w.e, w.over, w.equivariant, w.universal⟩
 
 end SemilinearGalAction
 

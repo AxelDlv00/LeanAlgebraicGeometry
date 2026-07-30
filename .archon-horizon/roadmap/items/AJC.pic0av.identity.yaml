@@ -55,7 +55,7 @@ summary: "Identity component and degree-zero points. Two sorries in Picard/Ident
   \ Transport a cotangent dimension via\nSubmodule.spanFinrank (Ideal.spanRank_map_le\
   \ both ways + antisymmetry, no Noetherian needed)\nthen Nakayama. AJC's own spanFinrank_maximalIdeal_le_of_surjective\
   \ is `private`.\n"
-status: active
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -77,7 +77,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.pic0av
-  updated_at: '2026-07-29T10:29:18.690079+00:00'
+  updated_at: '2026-07-30T15:33:55.355719+00:00'
   pinned_commits:
   - b9bfa997f
   - b653ef4d6

@@ -1,0 +1,51 @@
+id: I-1569
+provider: local
+kind: issue
+body: "pic-e's G1-FREE HEADLINE SURVIVES AUDIT. ONE PUBLISHED SENTENCE IS FALSE: \"\
+  isInvariantMatch_of_subsingleton is now SUBSUMED\".\n\nREFUTED (oleans rebuilt first;\
+  \ lake build PicEtInvariantMatch 8696/8696 EXIT=0):\n  example [Subsingleton Gal(k'/k)]\
+  \ (rho : SemilinearGalAction k k' X'.left X'.hom) (T) :\n      IsInvariantMatch\
+  \ C rep rho T := isInvariantMatch_canonical rep T\n  -> Type mismatch: has ...(semilinearGalActionOfRepresentableBy\
+  \ C rep) T, expected ...rho T.\nisInvariantMatch_of_subsingleton (PicEtDescentGoal.lean:160)\
+  \ quantifies over rho; the new theorem is PINNED to the canonical action. Neither\
+  \ implies the other: degenerate in the EXTENSION direction, strictly MORE general\
+  \ in the ACTION direction.\n\nLIVE COPIES: PicEtInvariantMatch.lean:76; PicEtDescentGoal.lean:131;\
+  \ roadmap AJC.picrep.etale-rep.invariance summary; the DMs.\n\nWHY IT MATTERS: representableBy_picEt_of_degenerate\
+  \ (PicEtDescentGoal.lean:672) takes an EXTERNAL rho and calls isInvariantMatch_of_subsingleton;\
+  \ it cannot route through the new theorem without pinning rho. Load-bearing at its\
+  \ only consumer, so a cleanup acting on \"subsumed\" breaks the file.\nFIX: \"incomparable\
+  \ -- more general in rho, less general in the extension\", at both sites and the\
+  \ row.\n\nSURVIVED, checked by me:\n1 NOT VACUOUS: Iff.rfl fails on the IsInvariantMatch\
+  \ body at the canonical action AND on galTwistMor_eq_iff_map_twistTest. IsGalInvariant\
+  \ (PicEtDescentRepresentability.lean:395) vs IsEquivariant (FiniteGaloisQuotient.lean:184)\
+  \ are distinct props on distinct objects.\n2 CANONICALITY LOAD-BEARING: the headline\
+  \ script at arbitrary rho fails at the first rewrite (isEquivariant_iff_galTwistMor's\
+  \ pattern is pinned).\n3 NO RELOCATION: printed sig of seamClauseOne_of_isGaloisQuotient_noMatch\
+  \ = rep, hq, hcov, hlft + [IsSeparable][Module.Finite] + curve binders; hq syntactically\
+  \ the old hq; no new instance binder.\n4 gamma/gamma^-1 SOUND: both sides forall\
+  \ over the group; bridge at gamma^-1, inv_inv closes the round trip.\n5 CITATIONS\
+  \ IN CLOSURE by #check: etaleTopology_generate_coverSelfSection_of_mono, isInvariantMatch_of_subsingleton,\
+  \ representableBy_picEt_of_degenerate, range_equivariantToClass, quotientHomEquiv_uniform,\
+  \ picEt_crossBaseIso, homEquiv_twistMor, fgaPicardRepresentability.\n6 AXIOM-CLEAN\
+  \ re-measured: four new decls [propext, Classical.choice, Quot.sound]; fgaPicardRepresentability\
+  \ sorryAx same file.\n7 hcov WITHDRAWAL SCOPED CORRECTLY: only above-Mono hcov producer\
+  \ is still hcov_of_jointlySurjective (PicEtGaloisCover.lean:260)."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T15:16:28.750144+00:00'
+updated_at: '2026-07-30T15:16:28.750155+00:00'
+metadata:
+  provenance:
+    run: 0095
+    session: 0006-horizon-pic-e
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge

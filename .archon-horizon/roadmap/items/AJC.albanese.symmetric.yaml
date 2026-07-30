@@ -54,7 +54,7 @@ summary: "Abel-Jacobi and symmetric-power factorisation. Milne's argument over t
   \ are UNCHANGED and albanese_universal_property still reports\nsorryAx. All six\
   \ are stated against the sorry-BODIED SymmetricPower, so they remain\nundischargeable\
   \ as stated rather than merely unproved.\n"
-status: active
+status: pending
 kind: proof
 priority: high
 depends_on: []
@@ -76,7 +76,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.albanese
-  updated_at: '2026-07-29T10:29:06.713453+00:00'
+  updated_at: '2026-07-30T15:33:48.434871+00:00'
   pinned_commits:
   - 1fedb22e4
   - f7391b281

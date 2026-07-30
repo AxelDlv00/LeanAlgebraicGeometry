@@ -53,7 +53,7 @@ summary: 'Headline obligation 3: Pic0Et.universallyClosed (Pic0Et.lean:228, bare
   RESIDUE, unchanged and now sharper by exclusion: bounding the BASE-CHANGED maps
   Pic^0 x_k T -> T. Neither this file nor Pic0EtStructure.lean touches that. The sorry
   is untouched and no antecedent is witnessed at any curve.'
-status: active
+status: pending
 kind: proof
 priority: high
 depends_on: []
@@ -76,6 +76,6 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.pic0av
-  updated_at: '2026-07-29T20:33:29.206003+00:00'
+  updated_at: '2026-07-30T15:34:06.915017+00:00'
   pinned_commits:
   - 09f2106ffd

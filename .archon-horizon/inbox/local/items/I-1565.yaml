@@ -45,7 +45,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-30T14:29:39.075001+00:00'
-updated_at: '2026-07-30T14:29:39.075015+00:00'
+updated_at: '2026-07-30T15:06:26.304954+00:00'
 metadata:
   provenance:
     run: 0095
@@ -56,3 +56,5 @@ metadata:
     task: pic-e
     task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - pic-e

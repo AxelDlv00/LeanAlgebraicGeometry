@@ -22,7 +22,7 @@ summary: 'Cotangent space and H1 comparison. ETALE SIDE LANDED (ajc-p2, run 0084
   translation. Measured dead end for the next lane: genus C = 0 makes the Cech carrier
   Subsingleton (subsingleton_h1Cok_of_genus_eq_zero, landed) but NOT the cotangent
   one -- exact? fails -- so the degenerate instantiation gets halfway and stops.'
-status: active
+status: pending
 kind: proof
 priority: high
 depends_on: []
@@ -44,7 +44,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.pic0av
-  updated_at: '2026-07-29T14:38:18.741527+00:00'
+  updated_at: '2026-07-30T15:33:57.478757+00:00'
   milestone: AJC.pic0av
   pinned_commits:
   - 8267a5be2

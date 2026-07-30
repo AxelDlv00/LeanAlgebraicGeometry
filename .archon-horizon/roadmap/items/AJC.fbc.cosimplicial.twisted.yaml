@@ -33,7 +33,7 @@ summary: "Twisted Cech nerve compatibility. BOTH MATES ARE ELIMINABLE (proved, l
   \ two asIso-wrapped IsIso instances): inbox I-0798.\n\nNEXT: restructure that proof,\
   \ do not just raise heartbeats.\n\nCAVEAT: r5 and r6 have had NO independent review\
   \ -- 4/4 review subagent dispatches stalled (I-0797).\n"
-status: active
+status: pending
 kind: proof
 priority: high
 depends_on: []
@@ -55,5 +55,5 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.fbc.cosimplicial
-  updated_at: '2026-07-29T10:29:11.436126+00:00'
+  updated_at: '2026-07-30T15:33:53.040101+00:00'
   milestone: AJC.cohomology

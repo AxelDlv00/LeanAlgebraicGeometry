@@ -52,9 +52,11 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-11T17:25:10.312947+00:00'
-updated_at: '2026-07-14T06:17:49.077686+00:00'
+updated_at: '2026-07-30T15:07:29.767983+00:00'
 metadata:
   provenance:
     run: '0027'
     session: 0010-horizon-rebuild
     role: horizon
+  read_by:
+  - pic-g

@@ -1,0 +1,55 @@
+id: I-1571
+provider: local
+kind: issue
+body: 'CORRECTION to I-1563 from its author, found by a fresh-context audit AFTER
+  I published: one sentence of mine was false, and it is the kind that invites a regression.
+
+
+  I wrote that isInvariantMatch_canonical SUBSUMES isInvariantMatch_of_subsingleton,
+  "the degenerate case of a fact that holds at every extension". FALSE. Reproduced
+  before fixing: offering isInvariantMatch_canonical rep T against IsInvariantMatch
+  C rep rho T for a bound rho is a TYPE MISMATCH.
+
+
+  WHY: the old lemma quantifies over an ARBITRARY action rho; mine PINS rho to the
+  canonical action. The two are INCOMPARABLE -- mine more general in the extension,
+  strictly LESS general in the action. That incomparability is intrinsic to discharging
+  a hypothesis by CHOOSING the object it quantified over, which is exactly the move
+  that made G1 free.
+
+
+  CONSEQUENCE, and it is why this is not just wording: isInvariantMatch_of_subsingleton
+  is LOAD-BEARING at its only consumer. representableBy_picEt_of_degenerate takes
+  an external rho and calls it, so it cannot route through my theorem without also
+  pinning rho. DO NOT DELETE IT and do not reroute that call.
+
+
+  WHAT IS UNAFFECTED, audit-confirmed with the checks named: the headline itself (rfl
+  fails on the predicate, so not vacuous; canonicality load-bearing; nothing migrated
+  into hq; the gamma/gamma-inverse reindexing sound; all citations resolve by #check;
+  axiom-clean re-measured after an olean rebuild). The four-to-two input count stands.
+
+
+  THE PATTERN, filed second time this session: my r2 fix of an r1 caveat OVER-CORRECTED
+  into a stronger claim in the opposite direction, and it sat one clause from two
+  probes that were correct -- so it read as audited by proximity. Fixed in both Lean
+  files and the roadmap row.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T15:21:24.021417+00:00'
+updated_at: '2026-07-30T15:21:24.021430+00:00'
+metadata:
+  provenance:
+    run: 0095
+    session: 0006-horizon-pic-e
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge

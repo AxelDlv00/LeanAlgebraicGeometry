@@ -56,7 +56,7 @@ summary: 'Leaf B (headline obligation 4). ADVANCED, NOT REDUCED, by ajc-p2 run 0
   per-declaration but sorryAx-REACHABLE at any use site, because [HasPicSchemeEt C]
   has the unconditional instHasPicSchemeEt projecting the seam sorry. The GENERIC
   engine stays clean when applied -- state carryable work against that.'
-status: active
+status: pending
 kind: proof
 priority: high
 depends_on: []
@@ -79,4 +79,4 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.pic0av
-  updated_at: '2026-07-29T19:56:21.404482+00:00'
+  updated_at: '2026-07-30T15:34:04.517525+00:00'

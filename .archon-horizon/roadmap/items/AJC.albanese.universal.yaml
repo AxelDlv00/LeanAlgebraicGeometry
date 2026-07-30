@@ -53,7 +53,7 @@ summary: "Albanese universal property. THE ARGUMENT IS PROVED (run 0069); what r
   \ against a sorry-BODIED SymmetricPower and are undischargeable as stated, which\
   \ the AlbaneseUP.lean header now records along with a pointer to where the mathematics\
   \ lives.\n"
-status: active
+status: pending
 kind: proof
 priority: high
 depends_on: []
@@ -75,7 +75,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.albanese
-  updated_at: '2026-07-29T10:29:07.928523+00:00'
+  updated_at: '2026-07-30T15:33:50.608985+00:00'
   pinned_commits:
   - af3d7b6a2
   - 7b71f602f
