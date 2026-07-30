@@ -67,8 +67,10 @@ content.  Three things follow that are not available without it:
    implication as "the single mathematical debt of S11".  Nobody wrote the direction that
    *produces* the datum from the vanishing, which is the direction with no antecedents.  It
    is landed downstream, in `Albanese/Genus0VanishingDatum.lean` — not here, because
-   `Genus0Terminal` imports the Abel material and this file sits below it.  Its consequence
-   is that the whole S11 leaf, uniqueness clause included, no longer waits on DAT-D at all.
+   `Genus0Terminal` imports the Abel material and this file sits below it.  Its consequence,
+   stated at the size that is actually proved (`I-1575`): the S11 chain runs from the vanishing
+   alone **at that carrier**, needing no datum from elsewhere.  It is *not* the claim that the
+   leaf was gated behind `divRep` — the row already says it was not.
 3. **A `picEt`-level sufficient condition, statable over RINGS.**  `picEt C T` is by
    construction a subgroup of a *product* over `T.left.affineOpens` valued in
    `PicEtAff C Γ(T.left, U)`, so a subsingleton at every test *algebra* gives one at every test

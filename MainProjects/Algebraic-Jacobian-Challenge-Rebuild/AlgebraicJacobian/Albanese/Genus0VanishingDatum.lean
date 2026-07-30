@@ -55,10 +55,10 @@ Milne I 3.9.  It appears as the explicit `hex` hypothesis, exactly as upstream.
 
 * `AlgebraicGeometry.jacobianData_of_vanishing` — the datum from `pic0Subgroup C T = ⊥`, i.e.
   in the spelling `Genus0Terminal` uses.
-* `AlgebraicGeometry.isTerminal_jacobianData_of_vanishing` — its representing object is
-  terminal, with no datum binder.
-* `AlgebraicGeometry.existsUnique_ofCurve_comp_of_vanishing` — **S11's uniqueness clause with
-  the `JacobianData` binder gone.**
+* `AlgebraicGeometry.isTerminal_jacobianData_of_vanishing` — that datum's representing object is
+  terminal.
+* `AlgebraicGeometry.existsUnique_ofCurve_comp_of_vanishing` — **S11's uniqueness clause running
+  from the vanishing alone**, at this carrier.
 -/
 
 set_option autoImplicit false
@@ -89,16 +89,15 @@ def jacobianData_of_vanishing
   jacobianData_of_subsingleton C fun T => subsingleton_of_pic0Subgroup_eq_bot (h T)
 
 variable (C) in
-/-- **Terminality with no datum binder.**
+/-- **Terminality of the datum built from the vanishing.**
 
 `JacobianData.isTerminal_of_pic0Subgroup_eq_bot` concludes `IsTerminal d.J` from a datum `d`
-plus the vanishing.  Here the datum is *built* from the vanishing, so the conclusion depends
-on the curve alone.
+plus the vanishing.  Here the datum comes from the vanishing, so no `d` is assumed.
 
-Note that the representing object is `Over.mk (𝟙 (Spec k))` by construction, so terminality
-is also available as `Over.mkIdTerminal` — but the composite is the statement worth having,
-because it is the upstream theorem with its binder discharged rather than a fact about this
-particular carrier. -/
+Cheap, and honestly so: the representing object is `Over.mk (𝟙 (Spec k))` by construction, so
+`Over.mkIdTerminal` proves the same goal directly.  The composite is kept because it is the
+upstream theorem *applied*, which is the check that the producer's output is admissible input
+there — a statement can be sorry-free and have no site (`I-1463`). -/
 def isTerminal_jacobianData_of_vanishing
     (h : ∀ T : Over (Spec (.of k)), pic0Subgroup C T = ⊥) :
     IsTerminal (jacobianData_of_vanishing C h).J :=
