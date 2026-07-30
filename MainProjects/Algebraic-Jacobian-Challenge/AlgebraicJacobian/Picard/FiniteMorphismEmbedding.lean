@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.ProjectiveMorphismBasic
-import AlgebraicJacobian.Picard.ProjectiveSpaceAffineChartRing
+import AlgebraicJacobian.Picard.ProjectiveSpaceAffineChartIso
 import Mathlib.AlgebraicGeometry.AffineSpace
 import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
 
@@ -88,6 +88,24 @@ theorem exists_closedImmersion_affineSpace {X Y : Scheme.{u}} (f : X ⟶ Y)
     exact congrArg (fun e : Γ(Y, ⊤) ⟶ Γ(X, ⊤) => e.hom r) h
   · intro j
     simp [i]
+
+/-- A finite morphism to an affine target is projective. The affine embedding
+lands in the standard open chart of projective space, and properness turns the
+resulting immersion into a closed immersion. -/
+theorem isProjective_of_isAffine {X Y : Scheme.{u}} (f : X ⟶ Y)
+    [IsFinite f] [IsAffine Y] : f.IsProjective := by
+  obtain ⟨n, hn, i, hi, hif⟩ := exists_closedImmersion_affineSpace f
+  letI : Finite n := hn
+  letI : IsClosedImmersion i := hi
+  let j : X ⟶ ℙ(Option n; Y) :=
+    i ≫ ProjectiveSpace.standardOpenImmersion n Y
+  have hj : IsImmersion j := by
+    dsimp [j]
+    infer_instance
+  apply Scheme.Hom.IsProjective.of_isProper_of_immersion
+    (pi := f) (by infer_instance) j hj
+  dsimp [j]
+  rw [Category.assoc, ProjectiveSpace.standardOpenImmersion_over, hif]
 
 end IsFinite
 
