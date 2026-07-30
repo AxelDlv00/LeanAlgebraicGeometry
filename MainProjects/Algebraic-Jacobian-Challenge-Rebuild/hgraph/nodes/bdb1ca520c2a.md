@@ -16,10 +16,9 @@ docstring: '**Pullback of sections to the relative curve commutes with restricti
 file: AlgebraicJacobian/Cohomology/RelThetaTransportCore.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.relPullbackSection_resHom'
 type: lean
-updated: '2026-07-30T15:28:03'
+updated: '2026-07-30T15:46:00'
 ---
 lemma relPullbackSection_resHom' {W V : C.left.Opens} (hWV : W ≤ V) (s : Γ(C.left, V)) :
     relPullbackSection C k W (C.left.resHom hWV s) =

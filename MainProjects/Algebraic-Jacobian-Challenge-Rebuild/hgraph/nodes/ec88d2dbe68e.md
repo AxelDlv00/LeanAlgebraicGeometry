@@ -6,10 +6,9 @@ decl: Module.tensorSqBaseChange_tmul
 file: AlgebraicJacobian/Descent/UnitDescentBaseChange.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: Module.tensorSqBaseChange_tmul
 type: lean
-updated: '2026-07-30T15:28:05'
+updated: '2026-07-30T15:46:01'
 ---
 lemma tensorSqBaseChange_tmul (x y : B) :
     tensorSqBaseChange A A' B (x ⊗ₜ y)

@@ -6,10 +6,9 @@ decl: Submodule.directLimitQuotientEquivISup_apply_of_mk
 file: AlgebraicJacobian/Algebra/DirectLimitQuotient.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: Submodule.directLimitQuotientEquivISup_apply_of_mk
 type: lean
-updated: '2026-07-30T15:28:04'
+updated: '2026-07-30T15:45:59'
 ---
 theorem directLimitQuotientEquivISup_apply_of_mk
     (N : ι → Submodule R M) (hN : Monotone N) (i : ι) (x : M) :

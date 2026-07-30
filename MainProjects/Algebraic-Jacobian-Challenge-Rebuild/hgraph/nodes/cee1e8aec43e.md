@@ -25,10 +25,9 @@ docstring: '**Base-field invariance of the plus-class degree** (`w4-datb` §1.2 
 file: AlgebraicJacobian/Picard/DegreeZeroBaseField.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.PicEtAff.degAff_map
 type: lean
-updated: '2026-07-30T15:28:04'
+updated: '2026-07-30T15:46:01'
 ---
 theorem PicEtAff.degAff_map {K : Type u} [Field K] [Algebra k K]
     (L : Type u) [Field L] [Algebra k L] [Algebra K L] [IsScalarTower k K L]

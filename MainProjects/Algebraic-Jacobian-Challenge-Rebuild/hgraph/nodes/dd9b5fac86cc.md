@@ -11,10 +11,9 @@ file: AlgebraicJacobian/Picard/DivSchemeFibreH1.lean
 generated: lean
 lean_status: lean_ok
 private: true
-stale: true
 title: AlgebraicGeometry.DivisorAdaptation.theta_chart_inl_inr
 type: lean
-updated: '2026-07-30T15:28:04'
+updated: '2026-07-30T15:46:02'
 ---
 private lemma theta_chart_inl_inr (a : ℕ) (i : Fin A.m₀) (j : Fin A.m₁)
     {O : (relCurve C R).Opens}

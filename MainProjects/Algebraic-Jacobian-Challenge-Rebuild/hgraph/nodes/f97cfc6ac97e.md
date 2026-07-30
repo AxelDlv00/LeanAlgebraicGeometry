@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.divUniversalFibreHighWindowInAmbientEquiv_symm_coe
 file: AlgebraicJacobian/Picard/DivSchemeHighWindowFibreModelInduction.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.divUniversalFibreHighWindowInAmbientEquiv_symm_coe
 type: lean
-updated: '2026-07-30T15:28:06'
+updated: '2026-07-30T15:46:02'
 ---
 theorem divUniversalFibreHighWindowInAmbientEquiv_symm_coe (n : Nat)
     (x : ↥HF[n]) :

@@ -12,10 +12,9 @@ docstring: '**The value of a twisted section** over a nonempty open: the germ at
 file: AlgebraicJacobian/RiemannRoch/ThetaSections.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.thetaVal
 type: lean
-updated: '2026-07-30T15:28:01'
+updated: '2026-07-30T15:46:08'
 ---
 noncomputable def thetaVal {W : Y.Opens} (hηW : genericPoint Y ∈ W)
     (p : ↥(twistSubmodule K (fiberChart₀ π) (fiberChart₁ π) (thetaUnit π ^ n) W)) :

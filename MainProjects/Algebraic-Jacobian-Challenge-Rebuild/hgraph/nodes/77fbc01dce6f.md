@@ -18,10 +18,9 @@ docstring: '**The gate''s hypothesis set is jointly inhabited**, at the zero div
 file: AlgebraicJacobian/Picard/DivisorFamilyAffSeedGate.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.ThetaGeneratorSeed.isLocallyCertifiedAff_of_supportLocus_empty
 type: lean
-updated: '2026-07-30T15:28:00'
+updated: '2026-07-30T15:46:03'
 ---
 theorem isLocallyCertifiedAff_of_supportLocus_empty [IsProper C.hom] [IsNoetherianRing R]
     (hD : D.IsGenerator)

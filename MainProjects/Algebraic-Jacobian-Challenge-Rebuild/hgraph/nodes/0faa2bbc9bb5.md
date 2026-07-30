@@ -12,10 +12,9 @@ docstring: 'Functoriality of `HModule'' _ U n` in the coefficient sheaf, as an `
 file: AlgebraicJacobian/Cohomology/RelativeTwoCover.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: CategoryTheory.Sheaf.HModule'.mapCoeff
 type: lean
-updated: '2026-07-30T15:27:57'
+updated: '2026-07-30T15:46:00'
 ---
 noncomputable def HModule'.mapCoeff (f : F ⟶ G) (n : ℕ) :
     HModule' F U n →ₗ[R] HModule' G U n :=

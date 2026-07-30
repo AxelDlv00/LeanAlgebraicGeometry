@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.Scheme.RationalMap.precomp_hom_toRationalMap
 file: AlgebraicJacobian/Albanese/RationalMapPrecomp.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.RationalMap.precomp_hom_toRationalMap
 type: lean
-updated: '2026-07-30T15:27:58'
+updated: '2026-07-30T15:45:59'
 ---
 lemma RationalMap.precomp_hom_toRationalMap (g : X ⟶ Y) (p : W ⟶ X)
     (hp : IsOpenMap p.base) :

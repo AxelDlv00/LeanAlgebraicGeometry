@@ -17,10 +17,9 @@ docstring: "**`RestrictedChartFibre` at `V = ⊥` is inhabited, with no hypothes
 file: AlgebraicJacobian/Picard/Pic0ChartRestrictedFibreSat.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.restrictedChartFibre_bot
 type: lean
-updated: '2026-07-30T15:28:03'
+updated: '2026-07-30T15:46:05'
 ---
 theorem restrictedChartFibre_bot {D : Over (Spec (.of k))}
     (rep : (divFunctor C π n).RepresentableBy D)

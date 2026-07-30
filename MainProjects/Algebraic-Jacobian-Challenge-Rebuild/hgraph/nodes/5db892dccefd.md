@@ -12,10 +12,9 @@ docstring: '**The graph chart**: the basic open `D(1 − eliftF)` of the product
 file: AlgebraicJacobian/RiemannRoch/GraphChart.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.graphChart
 type: lean
-updated: '2026-07-30T15:27:59'
+updated: '2026-07-30T15:46:07'
 ---
 noncomputable abbrev graphChart : (C ⊗ overSpec k K).left.Opens :=
   (C ⊗ overSpec k K).left.basicOpen

@@ -10,10 +10,9 @@ docstring: 'The generator property of a trivialization: every element is the `t`
 file: AlgebraicJacobian/Algebra/GeneratorUnit.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: Module.trivialization_smul_symm_one
 type: lean
-updated: '2026-07-30T15:28:03'
+updated: '2026-07-30T15:45:59'
 ---
 lemma trivialization_smul_symm_one {M₀ : Type u} [AddCommGroup M₀] [Module R M₀]
     (t : M₀ ≃ₗ[R] R) (x : M₀) :

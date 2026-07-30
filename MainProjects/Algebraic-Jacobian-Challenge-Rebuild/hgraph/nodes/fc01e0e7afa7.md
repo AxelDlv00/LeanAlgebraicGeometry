@@ -12,10 +12,9 @@ docstring: '**The residue leg of the dictionary**: the residue of the chart at t
 file: AlgebraicJacobian/RiemannRoch/ChartColength.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.finrank_quotient_primeIdealOf
 type: lean
-updated: '2026-07-30T15:28:06'
+updated: '2026-07-30T15:46:07'
 ---
 theorem finrank_quotient_primeIdealOf {x : X} (hx : x ∈ V) (hxg : x ≠ genericPoint X) :
     finrank K (Γ(X, V) ⧸ (hV.primeIdealOf ⟨x, hx⟩).asIdeal) = X.residueDeg K x := by

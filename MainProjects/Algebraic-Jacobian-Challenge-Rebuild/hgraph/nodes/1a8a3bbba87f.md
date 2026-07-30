@@ -7,10 +7,9 @@ docstring: The base change kills the point generator.
 file: AlgebraicJacobian/Algebra/PointFiberIdeal.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicJacobian.Diagonal.pointBaseChange_pointGen
 type: lean
-updated: '2026-07-30T15:27:57'
+updated: '2026-07-30T15:45:59'
 ---
 lemma pointBaseChange_pointGen : pointBaseChange B F (pointGen k B F) = 0 := by
   rw [pointGen, map_sub, pointBaseChange_tmul, pointBaseChange_tmul, coord_tmul_one_point,

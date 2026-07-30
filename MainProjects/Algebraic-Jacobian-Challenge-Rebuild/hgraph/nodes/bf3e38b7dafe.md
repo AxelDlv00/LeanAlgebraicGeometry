@@ -14,10 +14,9 @@ file: AlgebraicJacobian/RiemannRoch/ResidueDegree.lean
 generated: lean
 lean_status: lean_ok
 private: true
-stale: true
 title: AlgebraicGeometry.primeIdealOf_ne_bot
 type: lean
-updated: '2026-07-30T15:28:03'
+updated: '2026-07-30T15:46:08'
 ---
 private theorem primeIdealOf_ne_bot {X : Scheme.{u}} [IsIntegral X] {V : X.Opens}
     (hV : IsAffineOpen V) [IsDomain Γ(X, V)] {x : X} (hx : x ∈ V) (hxg : x ≠ genericPoint X) :

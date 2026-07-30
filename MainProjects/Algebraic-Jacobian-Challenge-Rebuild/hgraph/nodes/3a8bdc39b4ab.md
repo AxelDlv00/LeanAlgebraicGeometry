@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.AffAdaptation.ovlStalkColEval_toOvlLeft
 file: AlgebraicJacobian/Picard/DivisorFamilyAffStalkEval.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.AffAdaptation.ovlStalkColEval_toOvlLeft
 type: lean
-updated: '2026-07-30T15:27:58'
+updated: '2026-07-30T15:46:03'
 ---
 lemma ovlStalkColEval_toOvlLeft (i j : D.index) {z : relCurve C K}
     (hz : z ∈ D.pieces i ⊓ D.pieces j) (x : A.colength i) :

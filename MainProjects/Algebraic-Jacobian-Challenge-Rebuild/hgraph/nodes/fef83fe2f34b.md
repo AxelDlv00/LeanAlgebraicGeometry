@@ -14,10 +14,9 @@ docstring: '**Naturality of the curve transport in the test object**: curve tran
 file: AlgebraicJacobian/Picard/PicEtCurveMap.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.picEtMap_picEtPullback
 type: lean
-updated: '2026-07-30T15:28:06'
+updated: '2026-07-30T15:46:06'
 ---
 theorem picEtMap_picEtPullback (g : D ⟶ E) {T T' : Over (Spec (.of k))} (f : T' ⟶ T)
     (s : picEt E T) :

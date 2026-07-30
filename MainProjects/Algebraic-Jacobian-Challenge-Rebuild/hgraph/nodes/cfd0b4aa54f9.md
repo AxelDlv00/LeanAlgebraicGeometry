@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.Scheme.RationalMap.prod_fromFunctionField
 file: AlgebraicJacobian/Albanese/RationalMapProd.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.RationalMap.prod_fromFunctionField
 type: lean
-updated: '2026-07-30T15:28:04'
+updated: '2026-07-30T15:45:59'
 ---
 lemma prod_fromFunctionField (sX : X ⟶ S) (sY : Y ⟶ S) (sZ : Z ⟶ S)
     [IsIntegral X] [LocallyOfFiniteType sY] [LocallyOfFiniteType sZ]

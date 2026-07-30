@@ -16,10 +16,9 @@ docstring: '**Base change of the widened cover datum** along `R → R''`: take p
 file: AlgebraicJacobian/Picard/DivisorFamilyAffBaseChange.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.AffCoverData.baseChange
 type: lean
-updated: '2026-07-30T15:28:02'
+updated: '2026-07-30T15:46:03'
 ---
 noncomputable def baseChange : AffCoverData C R' where
   m := D.m

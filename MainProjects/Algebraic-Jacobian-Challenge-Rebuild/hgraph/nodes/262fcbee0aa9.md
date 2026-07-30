@@ -7,10 +7,9 @@ docstring: Multiplicativity of the restricted `ΓSpecIso`-avatar.
 file: AlgebraicJacobian/Picard/DescentSectionEval.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.resInv_mul
 type: lean
-updated: '2026-07-30T15:27:57'
+updated: '2026-07-30T15:46:01'
 ---
 lemma resInv_mul (U : (SB).Opens) (b b' : B) :
     ((SB).presheaf.map (homOfLE (le_top : U ≤ ⊤)).op).hom

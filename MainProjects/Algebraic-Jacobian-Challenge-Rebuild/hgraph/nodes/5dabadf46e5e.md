@@ -10,10 +10,9 @@ docstring: '**Each piece is `Aᵢ`-free of rank one**: the piece trivialization 
 file: AlgebraicJacobian/Cohomology/GluedSheafModule.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.gluedPieceEquiv
 type: lean
-updated: '2026-07-30T15:27:59'
+updated: '2026-07-30T15:46:00'
 ---
 noncomputable def gluedPieceEquiv (hc : Scheme.IsGluingCocycle U g)
     (hP : ∀ i : ι, X.basicOpen (h i) ≤ U (σ i)) (i : ι) :

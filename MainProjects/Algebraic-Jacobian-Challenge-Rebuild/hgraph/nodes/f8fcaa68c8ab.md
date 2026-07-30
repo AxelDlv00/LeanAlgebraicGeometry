@@ -10,10 +10,9 @@ docstring: 'The overlap variant: `Γ(pieces i ⊓ pieces j)/(f_i, f_j) →ₐ[K]
 file: AlgebraicJacobian/Picard/DivisorFamilyAffStalkEval.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.AffAdaptation.ovlStalkColEval
 type: lean
-updated: '2026-07-30T15:28:06'
+updated: '2026-07-30T15:46:03'
 ---
 noncomputable def ovlStalkColEval (i j : D.index) {z : relCurve C K}
     (hz : z ∈ D.pieces i ⊓ D.pieces j) :

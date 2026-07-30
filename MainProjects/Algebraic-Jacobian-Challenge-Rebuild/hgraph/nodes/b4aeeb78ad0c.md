@@ -7,10 +7,9 @@ docstring: The action map of `B ⊗[A] X` retracts the base change of `x ↦ 1 �
 file: AlgebraicJacobian/Descent/ModuleDescent.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: Module.actionMap_baseChange_mk
 type: lean
-updated: '2026-07-30T15:28:03'
+updated: '2026-07-30T15:46:01'
 ---
 theorem actionMap_baseChange_mk (x : B ⊗[A] X) :
     actionMap A B (B ⊗[A] X) ((TensorProduct.mk A B X 1).baseChange B x) = x := by

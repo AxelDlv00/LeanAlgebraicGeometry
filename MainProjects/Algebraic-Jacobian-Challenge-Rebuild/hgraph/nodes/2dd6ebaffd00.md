@@ -11,10 +11,9 @@ file: AlgebraicJacobian/RiemannRoch/GluedDivisorSheaf.lean
 generated: lean
 lean_status: lean_ok
 private: true
-stale: true
 title: AlgebraicGeometry.Scheme.germ_resHom
 type: lean
-updated: '2026-07-30T15:27:58'
+updated: '2026-07-30T15:46:07'
 ---
 private lemma germ_resHom {V W : X.Opens} (h : W ≤ V) (x : X) (hx : x ∈ W)
     (t : Γ(X, V)) :

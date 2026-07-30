@@ -7,10 +7,9 @@ docstring: '`W(d)^{Θ⁻ᵃ}` (the inverse-twisted glued module) as an `A_D`-sub
 file: AlgebraicJacobian/Picard/DivisorFamilyThetaRank.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DivisorAdaptation.thetaInvSpan
 type: lean
-updated: '2026-07-30T15:27:58'
+updated: '2026-07-30T15:46:04'
 ---
 noncomputable def thetaInvSpan : Submodule ↥A.gluedSubalgebra A.chartProd :=
   A.unitGluedOver (A.thetaOvlUnit a)⁻¹

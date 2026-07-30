@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.PicEtAff.baseFieldShuffle_mk
 file: AlgebraicJacobian/Picard/PicEtAffBaseFieldShuffle.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.PicEtAff.baseFieldShuffle_mk
 type: lean
-updated: '2026-07-30T15:28:02'
+updated: '2026-07-30T15:46:06'
 ---
 theorem baseFieldShuffle_mk (U : Algebra.EtaleCover A) (x : descentClasses C U) :
     baseFieldShuffle k L C A (mk C U x)

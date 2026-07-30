@@ -31,10 +31,9 @@ docstring: "**The residue of C9b, named**: for every test point of the Σ-sheaf,
 file: AlgebraicJacobian/Picard/Pic0ChartUnivReduce.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.IsChartLocusFibre
 type: lean
-updated: '2026-07-30T15:28:02'
+updated: '2026-07-30T15:46:05'
 ---
 def IsChartLocusFibre {D : Over (Spec (.of k))} (rep : (divFunctor C π n).RepresentableBy D)
     (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)

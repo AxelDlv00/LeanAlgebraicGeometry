@@ -9,10 +9,9 @@ docstring: '**The basic-open multiplication comparison**
 file: AlgebraicJacobian/Picard/DivSchemeSeedFibre.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.relBasicFibreMul
 type: lean
-updated: '2026-07-30T15:27:58'
+updated: '2026-07-30T15:46:03'
 ---
 noncomputable def relBasicFibreMul
     (g : Γ(relCurve C R, (fst C (overSpec k R)).left ⁻¹ᵁ V)) :

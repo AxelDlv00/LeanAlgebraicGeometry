@@ -10,10 +10,9 @@ docstring: '**Base change of smooth-of-relative-dimension-one.** The second proj
 file: AlgebraicJacobian/Curve/BaseChangeInstances.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.instSmoothOfRelativeDimensionSndLeft
 type: lean
-updated: '2026-07-30T15:28:04'
+updated: '2026-07-30T15:46:00'
 ---
 instance instSmoothOfRelativeDimensionSndLeft :
     SmoothOfRelativeDimension 1 (snd C (overSpec k K)).left :=

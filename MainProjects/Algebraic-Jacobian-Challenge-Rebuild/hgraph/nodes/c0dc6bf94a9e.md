@@ -11,10 +11,9 @@ docstring: '**`Spec k` has a proper open** — the binder the `⊥` witness coul
 file: AlgebraicJacobian/Picard/Pic0ChartCoverForcesNonInj.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.bot_ne_top_specObj
 type: lean
-updated: '2026-07-30T15:28:03'
+updated: '2026-07-30T15:46:05'
 ---
 theorem bot_ne_top_specObj : (⊥ : (Spec (CommRingCat.of k)).Opens) ≠ ⊤ := by
   intro h

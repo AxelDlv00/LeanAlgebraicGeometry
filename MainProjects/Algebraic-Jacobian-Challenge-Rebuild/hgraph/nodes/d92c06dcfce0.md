@@ -14,10 +14,9 @@ file: AlgebraicJacobian/Picard/DivRepGlobalClassify.lean
 generated: lean
 lean_status: lean_ok
 private: true
-stale: true
 title: AlgebraicGeometry.DivRepAffinePullback.homOfLE_classifyPiece
 type: lean
-updated: '2026-07-30T15:28:04'
+updated: '2026-07-30T15:46:01'
 ---
 private theorem homOfLE_classifyPiece
     (D : DivRepAffinePullback hpi g hO hchi r1 r2 b1 b2)

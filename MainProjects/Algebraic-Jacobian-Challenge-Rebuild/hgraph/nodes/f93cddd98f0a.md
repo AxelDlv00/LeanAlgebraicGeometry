@@ -10,10 +10,9 @@ docstring: 'The base change of a cover along `A → A''`: the cover of `Spec A''
 file: AlgebraicJacobian/Algebra/EtaleCover.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: Algebra.EtaleCover.baseChange
 type: lean
-updated: '2026-07-30T15:28:06'
+updated: '2026-07-30T15:45:59'
 ---
 noncomputable def baseChange (E : EtaleCover A) : EtaleCover A' :=
   .of (A' ⊗[A] E.Carrier) PrimeSpectrum.comap_surjective_of_faithfullyFlat

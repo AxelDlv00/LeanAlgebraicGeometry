@@ -6,10 +6,9 @@ decl: AlgebraicJacobian.Diagonal.pointSectionMap_tmul
 file: AlgebraicJacobian/Algebra/PointFiberIdeal.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicJacobian.Diagonal.pointSectionMap_tmul
 type: lean
-updated: '2026-07-30T15:28:02'
+updated: '2026-07-30T15:45:59'
 ---
 lemma pointSectionMap_tmul (x : B) (y : F) :
     pointSectionMap B F (x ⊗ₜ[Polynomial k] y)

@@ -6,10 +6,9 @@ decl: TwoLatticePair.modelHom_hom₀_apply
 file: AlgebraicJacobian/Cohomology/RigidEngineLatticeModelHom.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: TwoLatticePair.modelHom_hom₀_apply
 type: lean
-updated: '2026-07-30T15:27:57'
+updated: '2026-07-30T15:46:00'
 ---
 lemma modelHom_hom₀_apply (m : ι → ℤ) (a : ι → M₀) (b : ι → M₁)
     (hab : ∀ i, P.laurentToEnd (T (m i)) (P.ι₀ (a i)) = P.ι₁ (b i)) (p : ι → R[X]) :

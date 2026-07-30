@@ -27,10 +27,9 @@ docstring: '**`seedUniv''_h_fibre_cuts` — the DIRECT `hdvd` from the ann-based
 file: AlgebraicJacobian/Picard/DivSchemeRedesignFibreCut.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.ThetaGeneratorSeed.hdvd_of_forall_smul_relThetaResSide_mem_span
 type: lean
-updated: '2026-07-30T15:28:04'
+updated: '2026-07-30T15:46:02'
 ---
 theorem hdvd_of_forall_smul_relThetaResSide_mem_span
     (D : ThetaGeneratorSeed C R π a K)

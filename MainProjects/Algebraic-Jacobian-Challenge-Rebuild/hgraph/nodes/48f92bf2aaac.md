@@ -7,10 +7,9 @@ docstring: Chart-1 mirror of `span_resFst_windowBaseChange_le`.
 file: AlgebraicJacobian/Picard/DivSchemeMonoBridgeRelWindow.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.span_resSnd_windowBaseChange_le
 type: lean
-updated: '2026-07-30T15:27:59'
+updated: '2026-07-30T15:46:02'
 ---
 lemma span_resSnd_windowBaseChange_le (D : FinCoverData C R π) (ℓ : Fin D.m₁)
     (N : Submodule R (R ⊗[k] ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤))) :

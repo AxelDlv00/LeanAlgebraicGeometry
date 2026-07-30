@@ -10,10 +10,9 @@ docstring: 'The round trip: mapping a submodule along `baseChange e` then `baseC
 file: ScratchP1/probe_roundtrip.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: ProbeP1RoundTrip.map_baseChange_symm_map_baseChange
 type: lean
-updated: '2026-07-30T15:28:04'
+updated: '2026-07-30T15:46:08'
 ---
 theorem map_baseChange_symm_map_baseChange (e : H ≃ₗ[k] H')
     (N : Submodule T (TensorProduct k T H)) :

@@ -10,10 +10,9 @@ docstring: '**The qc field from the extension-tolerant hypothesis** — the form
 file: AlgebraicJacobian/Picard/JacobianDataQcFromRep.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.quasiCompact_of_extensionTolerant_lift
 type: lean
-updated: '2026-07-30T15:28:06'
+updated: '2026-07-30T15:46:05'
 ---
 theorem quasiCompact_of_extensionTolerant_lift {J : Over (Spec (.of k))}
     (rep : (pic0TypeFunctor C).RepresentableBy J)

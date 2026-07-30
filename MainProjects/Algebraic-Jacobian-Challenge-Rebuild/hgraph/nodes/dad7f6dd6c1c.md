@@ -15,10 +15,9 @@ docstring: '**The two-cover overlap is the basic open of `t₀`.** Public re-der
 file: AlgebraicJacobian/RiemannRoch/FiberTwist.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.preimage_inf_eq_basicOpen_fiberCoord
 type: lean
-updated: '2026-07-30T15:28:04'
+updated: '2026-07-30T15:46:07'
 ---
 theorem preimage_inf_eq_basicOpen_fiberCoord :
     fiberChart₀ π ⊓ fiberChart₁ π = Y.basicOpen (fiberCoord π) := by

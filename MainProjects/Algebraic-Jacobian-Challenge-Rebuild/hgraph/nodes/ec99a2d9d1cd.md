@@ -7,10 +7,9 @@ docstring: An overlap of two widened pieces sits below both assigned pinned char
 file: AlgebraicJacobian/Picard/DivisorFamilyAffTheta.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.AffAdaptation.pieces_inf_le_relPinnedChart_inf
 type: lean
-updated: '2026-07-30T15:28:05'
+updated: '2026-07-30T15:46:03'
 ---
 lemma pieces_inf_le_relPinnedChart_inf (i j : D.index) :
     D.pieces i ⊓ D.pieces j

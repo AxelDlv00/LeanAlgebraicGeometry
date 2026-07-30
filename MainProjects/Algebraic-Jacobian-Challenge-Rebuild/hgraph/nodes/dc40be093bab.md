@@ -68,10 +68,9 @@ docstring: '**`IsChartDatumPlusFibreAt` at `L := κ(t)` IS `IsChartDatumPlusFibr
 file: AlgebraicJacobian/Picard/Pic0ChartPresentationConverse.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.isChartDatumPlusFibreAt_self
 type: lean
-updated: '2026-07-30T15:28:04'
+updated: '2026-07-30T15:46:05'
 ---
 theorem isChartDatumPlusFibreAt_self {A : Type u} [CommRing A] [Algebra k A]
     (μ : picEt C (overSpec k A)) (D : BasicOpenCocycleDatum C A π)

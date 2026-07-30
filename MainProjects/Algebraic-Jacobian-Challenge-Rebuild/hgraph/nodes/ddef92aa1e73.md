@@ -9,10 +9,9 @@ docstring: 'The row morphism `x ↦ (x, u)` through a rational point `u` (given 
 file: AlgebraicJacobian/Albanese/Milne33Rows.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.rowSnd
 type: lean
-updated: '2026-07-30T15:28:04'
+updated: '2026-07-30T15:45:59'
 ---
 noncomputable def rowSnd (pt : Spec (.of kbar) ⟶ X.left) (hpt : pt ≫ X.hom = 𝟙 _) :
     X.left ⟶ pullback X.hom X.hom :=

@@ -8,10 +8,9 @@ docstring: '**The unit Čech 1-cocycle of an overlap unit** on the two-chart poi
 file: AlgebraicJacobian/Tangent/TwoChartCechPic.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.twoChartCocycle
 type: lean
-updated: '2026-07-30T15:28:02'
+updated: '2026-07-30T15:46:08'
 ---
 noncomputable def twoChartCocycle (u : Γ(X, V false ⊓ V true)ˣ) (sel : X → Bool)
     (hmem : ∀ x, x ∈ V (sel x)) : X.unitsCocycle (twoChartCover V sel hmem) :=

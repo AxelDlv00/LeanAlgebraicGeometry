@@ -15,10 +15,9 @@ docstring: '**The extraction keystone** (stage 1f; worksheet §2.3.1): every Če
 file: AlgebraicJacobian/Cohomology/GluedSheafExtraction.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.BasicOpenCocycleDatum.exists_cechPicClass_eq
 type: lean
-updated: '2026-07-30T15:27:57'
+updated: '2026-07-30T15:46:00'
 ---
 theorem exists_cechPicClass_eq (c : (relCurve C B).CechPic) :
     ∃ D : BasicOpenCocycleDatum C B π, D.cechPicClass = c := by

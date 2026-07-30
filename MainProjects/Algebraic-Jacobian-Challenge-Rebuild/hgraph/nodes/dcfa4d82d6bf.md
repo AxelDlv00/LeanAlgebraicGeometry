@@ -7,10 +7,9 @@ docstring: The value of the restricted widened family at an affine open of the s
 file: AlgebraicJacobian/Picard/DivisorFamilyAffMap.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.divFamZarAff.mapVal
 type: lean
-updated: '2026-07-30T15:28:04'
+updated: '2026-07-30T15:46:03'
 ---
 noncomputable def mapVal (f : T' ⟶ T) (s : divFamZarAff C n T)
     (W : T'.left.affineOpens) : DivFamZarAff C Γ(T'.left, W.1) n :=

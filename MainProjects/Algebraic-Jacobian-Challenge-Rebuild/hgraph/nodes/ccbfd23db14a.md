@@ -11,10 +11,9 @@ docstring: '**The tower transport of the window point, carrier-free** — the an
 file: ScratchWR/probe_r7_nogo_noeth.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.map_divisorWindowGrOfQuot
 type: lean
-updated: '2026-07-30T15:28:04'
+updated: '2026-07-30T15:46:21'
 ---
 theorem map_divisorWindowGrOfQuot (d : (relCurve C R).LocalEquations)
     [Module.Finite R ((R ⊗[k]

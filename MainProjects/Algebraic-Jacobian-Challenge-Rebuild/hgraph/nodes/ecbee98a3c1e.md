@@ -18,10 +18,9 @@ docstring: '**Constancy of morphisms into affines.** A morphism `q : V ⟶ W` of
 file: AlgebraicJacobian/AbelianVariety/Rigidity.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.exists_eq_comp_of_isIso_appTop_of_range_subset
 type: lean
-updated: '2026-07-30T15:28:05'
+updated: '2026-07-30T15:45:59'
 ---
 theorem exists_eq_comp_of_isIso_appTop_of_range_subset {V W : Scheme.{u}} {R : CommRingCat.{u}}
     (sV : V ⟶ Spec R) [IsIso sV.appTop] (q : V ⟶ W) {U : W.Opens} (hU : IsAffineOpen U)

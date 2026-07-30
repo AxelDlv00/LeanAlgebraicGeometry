@@ -13,10 +13,9 @@ docstring: '**No-leak at every chart-0 piece forces the chart-0 trace closed.** 
 file: AlgebraicJacobian/Picard/DivSchemeCertZarChartTrace.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DivisorAdaptation.isClosed_supportLocus_inter_chart₀_of_forall_supportLeak_eq_empty
 type: lean
-updated: '2026-07-30T15:28:04'
+updated: '2026-07-30T15:46:02'
 ---
 theorem isClosed_supportLocus_inter_chart₀_of_forall_supportLeak_eq_empty
     (h : ∀ j : Fin A.m₀, d.supportLeak (A.pieces (Sum.inl j)) = ∅) :

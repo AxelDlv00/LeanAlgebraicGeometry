@@ -8,10 +8,9 @@ docstring: Residue-field form of the preceding bridge; only the pure tensor with
 file: AlgebraicJacobian/Picard/DivSchemeRedesignRangeFlatBridge.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.FlatRangeBridge.subsingleton_imageInQuotient_tmul_residueField_of_flat_quotient
 type: lean
-updated: '2026-07-30T15:28:05'
+updated: '2026-07-30T15:46:02'
 ---
 lemma subsingleton_imageInQuotient_tmul_residueField_of_flat_quotient
     {L P : Submodule R M} (hLP : L ≤ P) [Module.Flat R (M ⧸ P)]

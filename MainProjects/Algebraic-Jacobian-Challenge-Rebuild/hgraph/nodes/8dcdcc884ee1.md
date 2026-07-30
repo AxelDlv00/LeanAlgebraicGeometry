@@ -7,10 +7,9 @@ docstring: The overlap comparison restricted from the right piece.
 file: AlgebraicJacobian/Picard/DivisorFamilyPullbackOverlap.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.FinCoverData.ovlMap_resHom_right
 type: lean
-updated: '2026-07-30T15:28:01'
+updated: '2026-07-30T15:46:04'
 ---
 lemma ovlMap_resHom_right (i j : D.index) (s : Γ(relCurve C R, D.pieces j)) :
     D.ovlMap R' i j ((relCurve C R).resHom inf_le_right s) =

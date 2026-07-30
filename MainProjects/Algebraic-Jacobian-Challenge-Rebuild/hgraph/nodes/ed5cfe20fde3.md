@@ -10,10 +10,9 @@ docstring: 'Inclusion of the away-localisation at `y` into the away-localisation
 file: AlgebraicJacobian/Picard/GrassmannianCocycle.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Grassmannian.awayInclRight
 type: lean
-updated: '2026-07-30T15:28:05'
+updated: '2026-07-30T15:46:05'
 ---
 noncomputable def awayInclRight (k : Type u) [Field k] {A : Type u} [CommRing A]
     [Algebra k A] (x y : A) : Localization.Away y →ₐ[k] Localization.Away (x * y) :=

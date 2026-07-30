@@ -7,10 +7,9 @@ docstring: The whole-chart theta transition units are trivial at exponent `0`.
 file: AlgebraicJacobian/Picard/DivisorDatumInverse.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.thetaChartUnit_zero
 type: lean
-updated: '2026-07-30T15:28:01'
+updated: '2026-07-30T15:46:03'
 ---
 theorem thetaChartUnit_zero (i j : (thetaChartCover C B π).index) :
     thetaChartUnit C B π 0 i j = 1 := by

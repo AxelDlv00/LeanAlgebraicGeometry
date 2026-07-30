@@ -15,10 +15,9 @@ docstring: '**The `DivFamZar` class of the universal point**, from the same cert
 file: AlgebraicJacobian/Picard/DivRepChartClassUniv.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.PointwiseAchiever.divFamZarUniv
 type: lean
-updated: '2026-07-30T15:28:05'
+updated: '2026-07-30T15:46:01'
 ---
 noncomputable def divFamZarUniv (hb : 0 < windowBound pi hpi)
     (hc : ((univSeed C hpi g r1 r2 b1 b2 i j hO hchi hb).divisorAdaptation

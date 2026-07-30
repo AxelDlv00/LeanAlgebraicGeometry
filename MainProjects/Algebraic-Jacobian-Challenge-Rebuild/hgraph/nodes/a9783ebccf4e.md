@@ -10,10 +10,9 @@ docstring: 'The quasi-coherence packaging on the overlap of the pinned charts, f
 file: AlgebraicJacobian/Cohomology/GluedSheafDatum.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.BasicOpenCocycleDatum.instQcohOnInf
 type: lean
-updated: '2026-07-30T15:28:02'
+updated: '2026-07-30T15:45:59'
 ---
 noncomputable instance instQcohOnInf :
     Scheme.QcohOn D.sheaf

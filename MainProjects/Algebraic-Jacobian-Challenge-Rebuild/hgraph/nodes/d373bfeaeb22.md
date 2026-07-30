@@ -14,10 +14,9 @@ docstring: '**The keystone of F4** (w4-ddr9 §2.1, `divRepAff.symm`''s content):
 file: AlgebraicJacobian/Picard/DivRepClassifyZar.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.divRepClassifyZar
 type: lean
-updated: '2026-07-30T15:28:04'
+updated: '2026-07-30T15:46:01'
 ---
 noncomputable def divRepClassifyZar (F₀ : DivFamZar C S π g) :
     overSpec k S ⟶

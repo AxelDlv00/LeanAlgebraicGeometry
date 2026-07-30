@@ -5,7 +5,7 @@
   "role": "subagent",
   "usage": {
     "cost_usd": null,
-    "tokens_in": 1102421,
-    "tokens_out": 32
+    "tokens_in": 2339945,
+    "tokens_out": 66
   }
 }

@@ -41,10 +41,9 @@ docstring: '**The threshold in DAT-0a''s own `∃ b` shape, with the `∃` OUTSI
 file: AlgebraicJacobian/Picard/Pic0ChartCoverageThreshold.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.exists_uniform_bound_forall_baseChange
 type: lean
-updated: '2026-07-30T15:28:05'
+updated: '2026-07-30T15:46:05'
 ---
 theorem exists_uniform_bound_forall_baseChange {π : C.left ⟶ P1 k} [IsFinite π] [IsDominant π]
     (hπ : π ≫ P1.structureMap k = C.left ↘ Spec (CommRingCat.of k)) (g : ℕ)

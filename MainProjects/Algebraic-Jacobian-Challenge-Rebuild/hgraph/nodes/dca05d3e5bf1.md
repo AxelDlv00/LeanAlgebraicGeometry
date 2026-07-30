@@ -30,10 +30,9 @@ docstring: '**The window form of the ε-projection identity** (`informal/spec-dd
 file: AlgebraicJacobian/Picard/DivSchemeEps.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.divisorWindow_eq_of_le
 type: lean
-updated: '2026-07-30T15:28:04'
+updated: '2026-07-30T15:46:02'
 ---
 theorem divisorWindow_eq_of_le (A : DivisorAdaptation C R π d)
     (hH1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1)

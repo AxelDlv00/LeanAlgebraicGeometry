@@ -13,10 +13,9 @@ docstring: '**The restriction square of the section-ring shuffle**: shuffling co
 file: AlgebraicJacobian/Picard/PicEtCrossBase.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.mapAlg_sectionShuffle
 type: lean
-updated: '2026-07-30T15:28:05'
+updated: '2026-07-30T15:46:06'
 ---
 theorem mapAlg_sectionShuffle {V W : T.left.Opens} (h : W ≤ V)
     (x : PicEtAff C

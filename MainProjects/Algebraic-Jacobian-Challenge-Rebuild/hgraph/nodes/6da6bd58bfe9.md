@@ -13,10 +13,9 @@ docstring: 'The degree-`n` cohomology of a sheaf of `R`-modules on a small site,
 file: AlgebraicJacobian/Cohomology/ModuleKSheaf.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: CategoryTheory.Sheaf.HModule
 type: lean
-updated: '2026-07-30T15:28:00'
+updated: '2026-07-30T15:46:00'
 ---
 noncomputable abbrev HModule (F : Sheaf J (ModuleCat.{u} R)) (n : ℕ) : Type u :=
   Abelian.Ext (constModuleSheaf J R) F n

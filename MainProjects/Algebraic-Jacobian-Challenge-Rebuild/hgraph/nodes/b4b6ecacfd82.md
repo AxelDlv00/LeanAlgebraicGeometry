@@ -15,10 +15,9 @@ docstring: 'A **descent 1-cocycle** relative to `A → B`: a unit of `B ⊗[A] B
 file: AlgebraicJacobian/Descent/UnitDescent.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: Module.IsDescentCocycle
 type: lean
-updated: '2026-07-30T15:28:03'
+updated: '2026-07-30T15:46:01'
 ---
 structure IsDescentCocycle (u : (B ⊗[A] B)ˣ) : Prop where
   /-- Normalization: the multiplication `B ⊗[A] B → B` sends the cocycle to `1`. -/

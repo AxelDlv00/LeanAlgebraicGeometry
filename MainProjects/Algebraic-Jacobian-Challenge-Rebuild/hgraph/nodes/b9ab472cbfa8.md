@@ -11,10 +11,9 @@ file: AlgebraicJacobian/RiemannRoch/DegreePullback.lean
 generated: lean
 lean_status: lean_ok
 private: true
-stale: true
 title: AlgebraicGeometry.classDeg_cechPicMap_picClass_single
 type: lean
-updated: '2026-07-30T15:28:03'
+updated: '2026-07-30T15:46:21'
 ---
 private theorem classDeg_cechPicMap_picClass_single (f : X ⟶ Y) [IsFinite f]
     (hcomp : f ≫ (Y ↘ Spec (CommRingCat.of K)) = X ↘ Spec (CommRingCat.of K))

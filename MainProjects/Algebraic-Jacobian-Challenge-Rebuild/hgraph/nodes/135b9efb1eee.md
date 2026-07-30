@@ -9,10 +9,9 @@ docstring: 'The span-rank of the maximal ideal can only drop along a surjection 
 file: AlgebraicJacobian/Albanese/Milne33KernelGen.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: RingTheory.CohenMacaulay.spanFinrank_maximalIdeal_le_of_surjective
 type: lean
-updated: '2026-07-30T15:27:57'
+updated: '2026-07-30T15:45:59'
 ---
 lemma spanFinrank_maximalIdeal_le_of_surjective [IsLocalRing B]
     [IsNoetherianRing B] [IsLocalRing A] (φ : B →+* A)

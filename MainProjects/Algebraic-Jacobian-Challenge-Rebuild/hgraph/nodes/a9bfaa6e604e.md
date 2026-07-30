@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.quasiCompact_carveLocusToGrPair
 file: AlgebraicJacobian/Picard/DivCarveLocus.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.quasiCompact_carveLocusToGrPair
 type: lean
-updated: '2026-07-30T15:28:02'
+updated: '2026-07-30T15:46:01'
 ---
 instance quasiCompact_carveLocusToGrPair
     (i : (glueData k g r₁).J) (j : (glueData k g r₂).J) :

@@ -8,10 +8,9 @@ docstring: Pointwise RD-N follows from germ-level local generation by the pointw
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwise.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.PointwiseAchiever.pointwiseSeedRDN_of_forall_germ_mem_span
 type: lean
-updated: '2026-07-30T15:27:56'
+updated: '2026-07-30T15:46:03'
 ---
 theorem pointwiseSeedRDN_of_forall_germ_mem_span
     (hgerm : ∀ (z : relCurve C RZ)

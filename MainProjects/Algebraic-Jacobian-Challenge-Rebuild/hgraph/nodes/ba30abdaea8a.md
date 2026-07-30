@@ -12,10 +12,9 @@ docstring: 'The overlap comparison is the generic piece-sections comparison at t
 file: AlgebraicJacobian/Picard/DivisorFamilyPullbackOverlap.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.FinCoverData.ovlMap_eq_conj
 type: lean
-updated: '2026-07-30T15:28:03'
+updated: '2026-07-30T15:46:04'
 ---
 lemma ovlMap_eq_conj (i j : D.index) (s : Γ(relCurve C R, D.pieces i ⊓ D.pieces j)) :
     D.ovlMap R' i j s =

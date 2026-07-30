@@ -27,10 +27,9 @@ docstring: '**The trivial local-equation system on the relative curve**: the con
 file: AlgebraicJacobian/Picard/DivisorFamilyDegreeZero.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DivFamZar.trivEqns
 type: lean
-updated: '2026-07-30T15:28:00'
+updated: '2026-07-30T15:46:04'
 ---
 noncomputable def trivEqns : (relCurve C R).LocalEquations where
   cover := ⊤

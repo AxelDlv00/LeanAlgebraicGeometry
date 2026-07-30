@@ -9,10 +9,9 @@ docstring: 'The `I`-minor of the image matrix `M = (X^I_J)⁻¹ X^I` is the Cram
 file: AlgebraicJacobian/Picard/GrassmannianChart.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Grassmannian.imageMatrix_submatrix_I
 type: lean
-updated: '2026-07-30T15:28:03'
+updated: '2026-07-30T15:46:05'
 ---
 theorem imageMatrix_submatrix_I (k : Type u) [Field k] (d r : ℕ) (I J : Finset (Fin r))
     (hI : I.card = d) (hJ : J.card = d) :

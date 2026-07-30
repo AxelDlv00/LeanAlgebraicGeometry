@@ -16,10 +16,9 @@ docstring: '**`A[ε] ⧸ (ε) ≃+* A`** — the first isomorphism theorem appli
 file: AlgebraicJacobian/Tangent/DualNumberFstKernel.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: TruncExpCech.quotientSpanEpsRingEquiv
 type: lean
-updated: '2026-07-30T15:28:04'
+updated: '2026-07-30T15:46:08'
 ---
 noncomputable def quotientSpanEpsRingEquiv :
     (DualNumber A ⧸ Ideal.span {(ε : DualNumber A)}) ≃+* A :=

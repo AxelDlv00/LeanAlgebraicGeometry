@@ -27,10 +27,9 @@ docstring: '**Matrix-collapse on Ext.** For an R-linear map `A : R^m →ₗ R^n`
 file: AlgebraicJacobian/Algebra/ABSyzygy.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: RingTheory.Module.ext_comp_mk₀_ofHom_eq_zero_of_entries_mem_annihilator
 type: lean
-updated: '2026-07-30T15:28:04'
+updated: '2026-07-30T15:45:59'
 ---
 lemma ext_comp_mk₀_ofHom_eq_zero_of_entries_mem_annihilator
     {R : Type u} [CommRing R]

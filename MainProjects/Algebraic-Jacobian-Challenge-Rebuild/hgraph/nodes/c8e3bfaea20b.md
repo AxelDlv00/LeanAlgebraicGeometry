@@ -13,10 +13,9 @@ docstring: '**The compared-side triangle** (the G-2 crux, side-uniform): the fib
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivRead.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.relPinnedSectionsMap_relThetaResSide_windowEquiv
 type: lean
-updated: '2026-07-30T15:28:04'
+updated: '2026-07-30T15:46:03'
 ---
 theorem relPinnedSectionsMap_relThetaResSide_windowEquiv (b : Bool)
     (x : R ⊗[k] ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤)) :

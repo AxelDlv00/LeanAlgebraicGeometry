@@ -10,10 +10,9 @@ docstring: 'Freeness of the twisted section modules — the overlap (the pair''s
 file: AlgebraicJacobian/Cohomology/RigidEngine4Engine.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.free_relTwistSectionsOverlap
 type: lean
-updated: '2026-07-30T15:28:03'
+updated: '2026-07-30T15:46:00'
 ---
 theorem free_relTwistSectionsOverlap :
     Module.Free R ((relTwistSheaf C R (fiberTwoCover π) g).obj.obj

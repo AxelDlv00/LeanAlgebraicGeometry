@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.Scheme.LocalEquations.divEq_refl
 file: AlgebraicJacobian/Picard/DivisorFamily.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.LocalEquations.divEq_refl
 type: lean
-updated: '2026-07-30T15:27:58'
+updated: '2026-07-30T15:46:03'
 ---
 lemma divEq_refl (d : X.LocalEquations) : DivEq d d :=
   ⟨d.cover, le_rfl, le_rfl, fun _ => ⟨1, by rw [Units.val_one, one_mul]⟩⟩

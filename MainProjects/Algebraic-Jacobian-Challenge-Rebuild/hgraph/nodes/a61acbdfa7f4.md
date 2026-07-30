@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.Over.amitsurPairOpen_le_face₁₂
 file: AlgebraicJacobian/Picard/AmitsurProductCover.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.amitsurPairOpen_le_face₁₂
 type: lean
-updated: '2026-07-30T15:28:02'
+updated: '2026-07-30T15:46:01'
 ---
 lemma amitsurPairOpen_le_face₁₂ (𝒲 : (Xq).PointedCover) (z z' : Xcb) :
     amitsurPairOpen C 𝒲 z z'

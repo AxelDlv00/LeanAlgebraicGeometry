@@ -10,10 +10,9 @@ docstring: 'Every point of a residue fibre is the canonical residue lift of its 
 file: AlgebraicJacobian/Picard/DivSchemeFibrePoint.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.relCurveResiduePoint_map_cast
 type: lean
-updated: '2026-07-30T15:28:02'
+updated: '2026-07-30T15:46:02'
 ---
 theorem relCurveResiduePoint_map_cast (p : PrimeSpectrum R)
     (z : relCurve C p.asIdeal.ResidueField) :

@@ -37,10 +37,9 @@ docstring: '**`divClassify` — the G-5 keystone** (`informal/w4-g5-worksheet.md
 file: AlgebraicJacobian/Picard/DivSchemeClassifyGlobal.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.divClassify
 type: lean
-updated: '2026-07-30T15:28:03'
+updated: '2026-07-30T15:46:02'
 ---
 theorem divClassify (F : DivFam C S π g)
     (hcarve : ∀ a : ↥(divisorSections k

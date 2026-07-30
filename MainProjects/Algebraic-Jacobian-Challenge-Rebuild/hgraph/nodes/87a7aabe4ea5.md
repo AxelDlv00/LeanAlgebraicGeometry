@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.BasicOpenCocycleDatum.baseChange_unit_coe
 file: AlgebraicJacobian/Cohomology/GluedSheafDatumBaseChange.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.BasicOpenCocycleDatum.baseChange_unit_coe
 type: lean
-updated: '2026-07-30T15:28:01'
+updated: '2026-07-30T15:45:59'
 ---
 lemma baseChange_unit_coe (i j : D.index) :
     (((D.baseChange B').unit i j :

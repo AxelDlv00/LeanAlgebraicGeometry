@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.P1.overlapRingEquiv_awayToOverlapLeft
 file: AlgebraicJacobian/Curve/P1Charts.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.P1.overlapRingEquiv_awayToOverlapLeft
 type: lean
-updated: '2026-07-30T15:28:06'
+updated: '2026-07-30T15:46:00'
 ---
 theorem overlapRingEquiv_awayToOverlapLeft (z : Away 𝒜 (X 0)) :
     overlapRingEquiv k (awayToOverlapLeft k z) =

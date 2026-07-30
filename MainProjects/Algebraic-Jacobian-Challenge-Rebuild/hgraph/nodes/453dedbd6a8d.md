@@ -7,10 +7,9 @@ docstring: '**The rank anchor at a witness of the pinned degree.**'
 file: AlgebraicJacobian/Picard/Pic0ChartLocusH0One.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.h0_eq_one_of_subsingleton_of_deg
 type: lean
-updated: '2026-07-30T15:27:59'
+updated: '2026-07-30T15:46:05'
 ---
 theorem h0_eq_one_of_subsingleton_of_deg
     {L : Type u} [Field L] [Algebra k L]

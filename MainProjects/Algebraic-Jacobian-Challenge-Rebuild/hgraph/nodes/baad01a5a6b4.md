@@ -7,10 +7,9 @@ docstring: Pointwise RD-N produces an unconditional theta generator.
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwiseGenerator.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.PointwiseAchiever.isGenerator_pointwiseGeneratorSeed
 type: lean
-updated: '2026-07-30T15:28:03'
+updated: '2026-07-30T15:46:03'
 ---
 theorem isGenerator_pointwiseGeneratorSeed
     (hrdn : PointwiseSeedRDN C hpi g r1 r2 b1 b2 i j hO hchi) :

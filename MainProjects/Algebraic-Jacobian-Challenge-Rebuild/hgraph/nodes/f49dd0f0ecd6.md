@@ -13,10 +13,9 @@ docstring: '**The side-uniform chart-ring base change**: the whole-chart (`le_rf
 file: AlgebraicJacobian/Picard/DivSchemeRedesignHinjChart.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.ThetaGeneratorSeed.relPinnedTermBaseChangeAlg
 type: lean
-updated: '2026-07-30T15:28:06'
+updated: '2026-07-30T15:46:02'
 ---
 noncomputable def relPinnedTermBaseChangeAlg (b : Bool) :
     R' ⊗[R] Γ(relCurve C R, relPinnedChart C R π b) ≃ₐ[R']

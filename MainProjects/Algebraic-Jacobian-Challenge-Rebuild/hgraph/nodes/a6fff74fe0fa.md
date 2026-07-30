@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.DivRepAffinePullback.equiv_apply
 file: AlgebraicJacobian/Picard/DivRepAffKit.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DivRepAffinePullback.equiv_apply
 type: lean
-updated: '2026-07-30T15:28:02'
+updated: '2026-07-30T15:46:01'
 ---
 theorem equiv_apply
     (D : DivRepAffinePullback hpi g hO hchi r1 r2 b1 b2)

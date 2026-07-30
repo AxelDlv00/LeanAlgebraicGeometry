@@ -13,10 +13,9 @@ docstring: '**Diagonal triviality, morphism level.** Any factorisation `dj` of t
 file: AlgebraicJacobian/Albanese/Milne33Diagonal.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.RationalMap.selfDiag_comp_toPartialMap_hom
 type: lean
-updated: '2026-07-30T15:28:06'
+updated: '2026-07-30T15:45:59'
 ---
 theorem selfDiag_comp_toPartialMap_hom
     (dj : (↑f.toPartialMap.domain : Scheme.{u}) ⟶

@@ -10,10 +10,9 @@ docstring: '**Compatibility with `divisorClass`**: the deg-D1 divisor class map 
 file: AlgebraicJacobian/RiemannRoch/Degree.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.classDeg_divisorClass
 type: lean
-updated: '2026-07-30T15:27:59'
+updated: '2026-07-30T15:46:07'
 ---
 theorem classDeg_divisorClass (D : X.CurveDivisor) :
     classDeg K (divisorClass K D) = CurveDivisor.deg K D := by

@@ -20,10 +20,9 @@ docstring: '**Leg (i) of the zigzag (WD)**: a descent class on an étale cover o
 file: AlgebraicJacobian/Picard/DegreeZero.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.relPicDeg_relPicAlgMap_congr
 type: lean
-updated: '2026-07-30T15:27:57'
+updated: '2026-07-30T15:46:01'
 ---
 theorem relPicDeg_relPicAlgMap_congr {E : Algebra.EtaleCover K}
     {x : relPic C (overSpec k E.Carrier)} (hx : x ∈ descentClasses C E)

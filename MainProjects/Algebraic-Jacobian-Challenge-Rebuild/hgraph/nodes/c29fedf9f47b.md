@@ -15,10 +15,9 @@ docstring: 'The **corrected witness value** at a point `y`, on `𝒞.opens y ⊓
 file: AlgebraicJacobian/Picard/WitnessCorrection.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.unitsCorrCochain
 type: lean
-updated: '2026-07-30T15:28:03'
+updated: '2026-07-30T15:46:07'
 ---
 noncomputable def unitsCorrCochain (y : Y) : Γ(Y, 𝒞.opens y ⊓ D)ˣ :=
   r₁.unitsAppLE (𝒩.opens a ⊓ 𝒩.opens (r₁.base y)) (𝒞.opens y ⊓ D)

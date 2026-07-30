@@ -10,10 +10,9 @@ docstring: 'The descent-class transport commutes with refinement transport — w
 file: AlgebraicJacobian/Picard/PicEtAffTransport.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.RelPicTransportFamily.descentHom_descentMap
 type: lean
-updated: '2026-07-30T15:28:05'
+updated: '2026-07-30T15:46:06'
 ---
 theorem descentHom_descentMap {U V : Algebra.EtaleCover A} (h : U.Carrier →ₐ[A] V.Carrier)
     (x : descentClasses E U) :

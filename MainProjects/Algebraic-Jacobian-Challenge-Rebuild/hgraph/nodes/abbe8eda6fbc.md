@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.gluedTriv_symm_coe
 file: AlgebraicJacobian/Cohomology/GluedSheaf.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.gluedTriv_symm_coe
 type: lean
-updated: '2026-07-30T15:28:02'
+updated: '2026-07-30T15:45:59'
 ---
 lemma gluedTriv_symm_coe (j : J) {W : X.Opens} (hW : W ≤ U j) (t : Γ(X, W)) (i : J) :
     ((gluedTriv k hc j hW).symm t).val i =

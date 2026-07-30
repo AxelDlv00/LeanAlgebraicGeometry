@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.Scheme.pointEqn_of_ne
 file: AlgebraicJacobian/Picard/PointPresentation.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.pointEqn_of_ne
 type: lean
-updated: '2026-07-30T15:28:02'
+updated: '2026-07-30T15:46:06'
 ---
 lemma pointEqn_of_ne (d : PointUniformizerData K hx) {z : X} (hz : z ≠ x) :
     pointEqn K hx d z = 1 :=

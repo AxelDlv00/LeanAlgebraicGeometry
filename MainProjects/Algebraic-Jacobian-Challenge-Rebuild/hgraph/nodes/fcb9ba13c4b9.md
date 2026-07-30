@@ -7,10 +7,9 @@ docstring: The inverse of a unit `I`-minor again has unit determinant.
 file: AlgebraicJacobian/Picard/GrassmannianChartFrame.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Grassmannian.isUnit_det_frameMinor_inv
 type: lean
-updated: '2026-07-30T15:28:06'
+updated: '2026-07-30T15:46:05'
 ---
 lemma isUnit_det_frameMinor_inv (X : Matrix (Fin d) (Fin r) S) (I : Finset (Fin r))
     (hI : I.card = d) (hu : IsUnit (frameMinor k d r S X I hI).det) :

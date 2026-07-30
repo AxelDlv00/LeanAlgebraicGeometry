@@ -17,10 +17,9 @@ docstring: '**A piece that misses the support contributes rank zero.**  Its cole
 file: AlgebraicJacobian/Picard/DivisorFamilyAffRank.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.AffAdaptation.rankAtStalk_colength_eq_zero_of_disjoint
 type: lean
-updated: '2026-07-30T15:28:01'
+updated: '2026-07-30T15:46:03'
 ---
 lemma rankAtStalk_colength_eq_zero_of_disjoint (j : D.index)
     (hdisj : Disjoint d.supportLocus (D.pieces j : Set (relCurve C R)))

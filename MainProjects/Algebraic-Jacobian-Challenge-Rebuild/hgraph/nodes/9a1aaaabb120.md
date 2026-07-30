@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.relThetaSectionSnd_val_snd
 file: AlgebraicJacobian/Picard/DivisorFamilyThetaSections.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.relThetaSectionSnd_val_snd
 type: lean
-updated: '2026-07-30T15:28:02'
+updated: '2026-07-30T15:46:04'
 ---
 lemma relThetaSectionSnd_val_snd :
     (relThetaSectionSnd C R π a).val.2 =

@@ -16,10 +16,9 @@ docstring: '**The trivializing relation of a chart cochain**, as a standalone pr
 file: AlgebraicJacobian/Tangent/TwoChartRepresentable.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.IsTrimmedTrivializing
 type: lean
-updated: '2026-07-30T15:27:57'
+updated: '2026-07-30T15:46:08'
 ---
 def IsTrimmedTrivializing {𝒩 : X.PointedCover} (γ : X.unitsCocycle 𝒩) (W : X.Opens)
     (t : ∀ b : X, Γ(X, 𝒩.opens b ⊓ W)ˣ) : Prop :=

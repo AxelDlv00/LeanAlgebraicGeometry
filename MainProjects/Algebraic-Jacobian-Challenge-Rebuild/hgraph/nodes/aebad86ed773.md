@@ -18,10 +18,9 @@ file: AlgebraicJacobian/Picard/PicEtAffTransport.lean
 generated: lean
 lean_status: lean_ok
 private: true
-stale: true
 title: AlgebraicGeometry.RelPicTransportFamily.mapSig_rel
 type: lean
-updated: '2026-07-30T15:28:02'
+updated: '2026-07-30T15:46:06'
 ---
 private lemma mapSig_rel {U V : Algebra.EtaleCover A} {x : descentClasses E U}
     {y : descentClasses E V} (F : Algebra.EtaleCover A) (f : U.Carrier →ₐ[A] F.Carrier)

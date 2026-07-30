@@ -8,10 +8,9 @@ docstring: '`AlgHom`-level composition form: `θ_{I,J} ∘ (R^J →ₐ[k] R^J[1/
 file: AlgebraicJacobian/Picard/GrassmannianChart.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Grassmannian.transitionMap_comp_algHom
 type: lean
-updated: '2026-07-30T15:28:02'
+updated: '2026-07-30T15:46:05'
 ---
 theorem transitionMap_comp_algHom (k : Type u) [Field k] (d r : ℕ)
     (I J : Finset (Fin r)) (hI : I.card = d) (hJ : J.card = d) :

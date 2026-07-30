@@ -7,10 +7,9 @@ docstring: The finite product map corestricted to a specified multiplication spa
 file: AlgebraicJacobian/Picard/DivSchemeMulSpanMap.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.finiteMulMapTo
 type: lean
-updated: '2026-07-30T15:28:03'
+updated: '2026-07-30T15:46:02'
 ---
 noncomputable def Scheme.finiteMulMapTo
     (U T W : Submodule K X.functionField) (b : Module.Basis ι K U)

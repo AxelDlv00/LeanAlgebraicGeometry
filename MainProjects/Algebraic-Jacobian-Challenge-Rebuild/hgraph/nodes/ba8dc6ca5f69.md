@@ -15,10 +15,9 @@ docstring: '**The landed chart-typed statement is a corollary** — recorded as 
 file: AlgebraicJacobian/Picard/DivRepChartClassUnivQuot.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.divisorWindow_eq_of_le_of_isCertified_of_quotientData
 type: lean
-updated: '2026-07-30T15:28:03'
+updated: '2026-07-30T15:46:01'
 ---
 theorem divisorWindow_eq_of_le_of_isCertified_of_quotientData
     (A : DivisorAdaptation C R π d) (hc : A.IsCertified g)

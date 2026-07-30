@@ -17,10 +17,9 @@ docstring: '**The window identification** (the DD-4 base-field seam, consumed): 
 file: AlgebraicJacobian/Picard/DivisorFamilyWindow.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.relThetaWindowEquiv
 type: lean
-updated: '2026-07-30T15:28:04'
+updated: '2026-07-30T15:46:04'
 ---
 noncomputable def relThetaWindowEquiv
     (hH1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1) :

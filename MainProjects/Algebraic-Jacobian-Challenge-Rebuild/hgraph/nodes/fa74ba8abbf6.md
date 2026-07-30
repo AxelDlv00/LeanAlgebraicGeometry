@@ -7,10 +7,9 @@ docstring: The chart-1 pieces cover the pinned chart `V₁ᴿ`.
 file: AlgebraicJacobian/Picard/DivisorFamily.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.FinCoverData.cover₁
 type: lean
-updated: '2026-07-30T15:28:06'
+updated: '2026-07-30T15:46:03'
 ---
 lemma cover₁ : (relCover C R (fiberTwoCover π)).V₁ ≤
     ⨆ j : Fin D.m₁, (relCurve C R).basicOpen (D.h₁ j) :=

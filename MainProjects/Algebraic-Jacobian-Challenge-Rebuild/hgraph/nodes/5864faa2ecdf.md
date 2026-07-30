@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.AffAdaptation.mem_gluedSubalgebra_iff
 file: AlgebraicJacobian/Picard/DivisorFamilyAffTheta.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.AffAdaptation.mem_gluedSubalgebra_iff
 type: lean
-updated: '2026-07-30T15:27:59'
+updated: '2026-07-30T15:46:03'
 ---
 lemma mem_gluedSubalgebra_iff {x : A.chartProd} :
     x ∈ gluedSubalgebra A ↔ x ∈ A.gluedSubmodule :=

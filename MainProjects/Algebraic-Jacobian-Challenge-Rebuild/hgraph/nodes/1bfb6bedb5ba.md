@@ -14,10 +14,9 @@ docstring: '**`hNnorm`**: the transported normalization windows — for every `K
 file: AlgebraicJacobian/RiemannRoch/WindowFieldTransport.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.subsingleton_h1_windowN_sub
 type: lean
-updated: '2026-07-30T15:27:57'
+updated: '2026-07-30T15:46:08'
 ---
 theorem subsingleton_h1_windowN_sub (g : ℕ)
     (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)

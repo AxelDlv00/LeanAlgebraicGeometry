@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.ThetaGeneratorSeed.piece_le
 file: AlgebraicJacobian/Picard/DivSchemeFamily.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.ThetaGeneratorSeed.piece_le
 type: lean
-updated: '2026-07-30T15:28:04'
+updated: '2026-07-30T15:46:02'
 ---
 lemma piece_le (z : relCurve C R) : D.piece z ≤ relPinnedChart C R π (D.side z) :=
   (relCurve C R).basicOpen_le (D.h z)

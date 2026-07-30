@@ -7,10 +7,9 @@ docstring: The carrier of `ofSurjective` is the presented algebra.
 file: AlgebraicJacobian/Algebra/EtaleCover.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: Algebra.EtaleCover.ofSurjectiveEquiv
 type: lean
-updated: '2026-07-30T15:27:59'
+updated: '2026-07-30T15:45:59'
 ---
 noncomputable def ofSurjectiveEquiv
     (hB : Function.Surjective (PrimeSpectrum.comap (algebraMap A B)))

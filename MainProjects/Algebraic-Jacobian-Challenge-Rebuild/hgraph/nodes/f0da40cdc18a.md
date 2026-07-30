@@ -13,10 +13,9 @@ docstring: '**The diagonal pointed cover** (worksheet D4): a point on the diagon
 file: AlgebraicJacobian/Curve/DiagonalEquations.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.diagonalCover
 type: lean
-updated: '2026-07-30T15:28:05'
+updated: '2026-07-30T15:46:00'
 ---
 noncomputable def diagonalCover {C : Over (Spec (.of k))} (data : DiagonalChartData C)
     [IsSeparated C.hom] : (C ⊗ C).left.PointedCover where

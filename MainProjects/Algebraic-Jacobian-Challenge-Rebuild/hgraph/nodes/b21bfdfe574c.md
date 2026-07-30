@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.picEtMap_val
 file: AlgebraicJacobian/Picard/PicEtMap.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.picEtMap_val
 type: lean
-updated: '2026-07-30T15:28:02'
+updated: '2026-07-30T15:46:06'
 ---
 lemma picEtMap_val (f : T' ⟶ T) (s : picEt C T) (W : T'.left.affineOpens) :
     (picEtMap C f s).1 W = picEtMapVal C f s W :=

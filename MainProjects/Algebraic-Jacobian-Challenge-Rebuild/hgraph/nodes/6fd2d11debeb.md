@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.DivFamZar.congr_apply
 file: AlgebraicJacobian/Picard/DivisorFamilyZarVehicle.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DivFamZar.congr_apply
 type: lean
-updated: '2026-07-30T15:28:00'
+updated: '2026-07-30T15:46:04'
 ---
 lemma congr_apply (e : A ≃ₐ[k] A') (F : DivFamZar C A π n) :
     congr e F = mapAlgHom e.toAlgHom F :=

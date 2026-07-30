@@ -14,10 +14,9 @@ docstring: '**The unit normalization of the plus-class degree** (needed by G-D8'
 file: AlgebraicJacobian/Picard/DegreeZero.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.PicEtAff.degAff_unit
 type: lean
-updated: '2026-07-30T15:28:03'
+updated: '2026-07-30T15:46:01'
 ---
 theorem PicEtAff.degAff_unit (z : relPic C (overSpec k K)) :
     PicEtAff.degAff K (PicEtAff.unit C K z) = relPicDeg K z := by

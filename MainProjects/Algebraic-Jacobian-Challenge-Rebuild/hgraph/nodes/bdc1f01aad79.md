@@ -22,10 +22,9 @@ docstring: '**The RE-0 bridge fired on a piece** (DAT-1 (1c)): on an affine char
 file: AlgebraicJacobian/Cohomology/GluedSheafModule.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.isLocalizedModule_secResₗ_glued
 type: lean
-updated: '2026-07-30T15:28:03'
+updated: '2026-07-30T15:46:00'
 ---
 theorem isLocalizedModule_secResₗ_glued (hV : IsAffineOpen V)
     (hc : Scheme.IsGluingCocycle U g)

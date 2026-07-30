@@ -10,10 +10,9 @@ docstring: 'Pullback of sections along `cg` is injective over **arbitrary** open
 file: AlgebraicJacobian/Picard/SectionsDescent.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.appLE_whiskerLeft_injective
 type: lean
-updated: '2026-07-30T15:28:05'
+updated: '2026-07-30T15:46:06'
 ---
 theorem appLE_whiskerLeft_injective (W : (XA).Opens) :
     Function.Injective ((cg).appLE W ((cg) ⁻¹ᵁ W) le_rfl).hom := by

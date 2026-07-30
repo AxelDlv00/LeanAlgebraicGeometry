@@ -6,10 +6,9 @@ decl: TwoLatticePair.tN_val_inv_apply
 file: AlgebraicJacobian/Cohomology/RigidEngineLattice.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: TwoLatticePair.tN_val_inv_apply
 type: lean
-updated: '2026-07-30T15:28:03'
+updated: '2026-07-30T15:46:00'
 ---
 lemma tN_val_inv_apply (n : N) : P.tN.val (P.tN.inv n) = n := by
   have h := congrArg (fun e : Module.End R N => e n) P.tN.val_inv

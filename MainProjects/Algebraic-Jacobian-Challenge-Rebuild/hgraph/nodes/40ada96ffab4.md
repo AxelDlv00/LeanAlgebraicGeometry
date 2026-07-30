@@ -14,10 +14,9 @@ docstring: '**Quasi-compactness descends from a finite family of quasi-compact c
 file: AlgebraicJacobian/Picard/JacobianDataCharts.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.quasiCompact_gluedHom
 type: lean
-updated: '2026-07-30T15:27:58'
+updated: '2026-07-30T15:46:05'
 ---
 theorem quasiCompact_gluedHom [Finite ι] (hcpt : ∀ i, CompactSpace (X i)) :
     QuasiCompact (gluedHom C f hf) := by

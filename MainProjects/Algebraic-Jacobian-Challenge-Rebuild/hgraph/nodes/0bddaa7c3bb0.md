@@ -21,10 +21,9 @@ docstring: '**The vanishing submodule of a local-equation system** inside the gl
 file: AlgebraicJacobian/Picard/DivisorStalkIdeal.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.LocalEquations.vanishingSubmodule
 type: lean
-updated: '2026-07-30T15:27:56'
+updated: '2026-07-30T15:46:04'
 ---
 noncomputable def Scheme.LocalEquations.vanishingSubmodule (d : X.LocalEquations) :
     Submodule k ↥(twistSubmodule k V₀ V₁ g ⊤) where

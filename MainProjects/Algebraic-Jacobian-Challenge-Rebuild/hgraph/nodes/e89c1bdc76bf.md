@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.Grassmannian.span_range_gen
 file: AlgebraicJacobian/Picard/EntriesIdeal.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Grassmannian.span_range_gen
 type: lean
-updated: '2026-07-30T15:28:05'
+updated: '2026-07-30T15:46:04'
 ---
 lemma span_range_gen : Submodule.span R (Set.range (gen R M)) = ⊤ :=
   (Module.Finite.exists_fin (R := R) (M := M)).choose_spec.choose_spec

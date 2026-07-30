@@ -10,10 +10,9 @@ docstring: 'The forward identity base-change iso on the frozen `Challenge` spell
 file: AlgebraicJacobian/Picard/Pic0ThetaCocycle.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.baseChange_idIso_hom_app_left
 type: lean
-updated: '2026-07-30T15:28:05'
+updated: '2026-07-30T15:46:06'
 ---
 theorem baseChange_idIso_hom_app_left (k : Type u) [Field k] (C : Over (Spec (.of k))) :
     ((baseChange.idIso k).hom.app C).left

@@ -10,10 +10,9 @@ docstring: 'A linear substitution is the identity in degree zero: it is an `R`-a
 file: AlgebraicJacobian/Curve/P1Aut.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: MvPolynomial.substAlgHom_of_mem_zero
 type: lean
-updated: '2026-07-30T15:28:04'
+updated: '2026-07-30T15:46:00'
 ---
 theorem substAlgHom_of_mem_zero (M : Matrix σ σ R) {p : MvPolynomial σ R}
     (hp : p ∈ homogeneousSubmodule σ R 0) : substAlgHom M p = p := by

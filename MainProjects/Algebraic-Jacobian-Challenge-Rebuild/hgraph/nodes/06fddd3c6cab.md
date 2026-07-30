@@ -7,10 +7,9 @@ docstring: The forward junction, as an `R`-linear map.
 file: AlgebraicJacobian/Picard/DivSchemeCertificateEngine.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DivisorAdaptation.gluedToVanishingₗ
 type: lean
-updated: '2026-07-30T15:27:56'
+updated: '2026-07-30T15:46:02'
 ---
 noncomputable def gluedToVanishingₗ :
     A.ThetaIdealSections a ⊤ →ₗ[R]

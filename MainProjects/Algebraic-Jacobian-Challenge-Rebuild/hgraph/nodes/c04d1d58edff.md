@@ -7,10 +7,9 @@ docstring: The degree of an inverse plus class is the negation of the degree.
 file: AlgebraicJacobian/Picard/DegreeZero.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.PicEtAff.degAff_inv
 type: lean
-updated: '2026-07-30T15:28:03'
+updated: '2026-07-30T15:46:01'
 ---
 theorem PicEtAff.degAff_inv (a : PicEtAff C K) :
     PicEtAff.degAff K a⁻¹ = -PicEtAff.degAff K a := by

@@ -13,10 +13,9 @@ docstring: '**Base change in stages**: if `A''` is the base change of `A` along 
 file: AlgebraicJacobian/Cohomology/GluedBaseChangeAlgebra.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: IsBaseChange.tensorProduct_mk_one
 type: lean
-updated: '2026-07-30T15:28:05'
+updated: '2026-07-30T15:45:59'
 ---
 theorem IsBaseChange.tensorProduct_mk_one
     (hA : IsBaseChange R' ((IsScalarTower.toAlgHom R A A').toLinearMap)) :

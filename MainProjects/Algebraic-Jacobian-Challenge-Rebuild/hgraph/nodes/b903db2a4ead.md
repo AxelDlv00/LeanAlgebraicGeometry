@@ -16,10 +16,9 @@ docstring: '**Transport of an overlap unit along the chart indices, by `subst` r
 file: AlgebraicJacobian/Tangent/TwoChartCechPic.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.mixedValue
 type: lean
-updated: '2026-07-30T15:28:03'
+updated: '2026-07-30T15:46:08'
 ---
 noncomputable def mixedValue {s t : Bool} (hs : s = false) (ht : t = true)
     (w : Γ(X, V s ⊓ V t)ˣ) : Γ(X, V false ⊓ V true)ˣ := by

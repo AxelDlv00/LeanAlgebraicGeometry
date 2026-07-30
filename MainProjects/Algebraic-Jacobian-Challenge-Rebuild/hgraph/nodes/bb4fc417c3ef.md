@@ -13,10 +13,9 @@ docstring: '**Germ naturality of the function-field map**: pulling back the germ
 file: AlgebraicJacobian/Curve/BaseFieldTransition.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.Hom.functionFieldMap_germ
 type: lean
-updated: '2026-07-30T15:28:03'
+updated: '2026-07-30T15:46:00'
 ---
 theorem Scheme.Hom.functionFieldMap_germ (f : X ⟶ Y)
     (h : f.base (genericPoint X) = genericPoint Y) (U : Y.Opens)

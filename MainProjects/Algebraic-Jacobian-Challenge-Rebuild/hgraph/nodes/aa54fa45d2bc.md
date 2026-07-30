@@ -9,10 +9,9 @@ docstring: 'Scaling a connecting class: the `k`-action on `H¹` hits `delta` as 
 file: AlgebraicJacobian/Tangent/TruncExpCechH1.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.TwoCover.smul_delta
 type: lean
-updated: '2026-07-30T15:28:02'
+updated: '2026-07-30T15:46:08'
 ---
 theorem smul_delta (a : k) (s : Γ(X, U₀ ⊓ U₁)) :
     a • delta k X U₀ U₁ hcov s

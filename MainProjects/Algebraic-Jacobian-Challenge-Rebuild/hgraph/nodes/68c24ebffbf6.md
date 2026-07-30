@@ -12,10 +12,9 @@ docstring: 'The canonical `B₁ ⊗[A] B₂`-algebra equivalence from `Si ⊗[A]
 file: AlgebraicJacobian/Algebra/TensorAway.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: IsLocalization.Away.tensorAwayEquiv
 type: lean
-updated: '2026-07-30T15:28:00'
+updated: '2026-07-30T15:45:59'
 ---
 noncomputable def tensorAwayEquiv
     [IsLocalization.Away r Si] [IsLocalization.Away s Sj]

@@ -10,10 +10,9 @@ docstring: '**Faithfully flat descent of unit sections along the base change of 
 file: AlgebraicJacobian/Picard/SectionsDescent.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.exists_unitsAppLE_eq
 type: lean
-updated: '2026-07-30T15:28:06'
+updated: '2026-07-30T15:46:06'
 ---
 theorem exists_unitsAppLE_eq {U : (XA).Opens} (hU : IsAffineOpen U)
     (t : Γ(XB, (cg) ⁻¹ᵁ U)ˣ)

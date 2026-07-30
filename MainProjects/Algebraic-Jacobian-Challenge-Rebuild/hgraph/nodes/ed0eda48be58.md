@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.relPicFunctor_map
 file: AlgebraicJacobian/Picard/RelPic.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.relPicFunctor_map
 type: lean
-updated: '2026-07-30T15:28:05'
+updated: '2026-07-30T15:46:06'
 ---
 lemma relPicFunctor_map {T T' : (Over (Spec (.of k)))ᵒᵖ} (g : T ⟶ T')
     (x : relPic C T.unop) :

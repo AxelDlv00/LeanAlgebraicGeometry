@@ -17,10 +17,9 @@ docstring: '**THE MEASUREMENT**: the chart-index binder carries exactly "`c` is 
 file: AlgebraicJacobian/Picard/Pic0ChartIndexAdmissible.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.chartIndex_iff_isDegree
 type: lean
-updated: '2026-07-30T15:28:00'
+updated: '2026-07-30T15:46:05'
 ---
 theorem chartIndex_iff_isDegree (c : ℤ) :
     (∃ (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor),

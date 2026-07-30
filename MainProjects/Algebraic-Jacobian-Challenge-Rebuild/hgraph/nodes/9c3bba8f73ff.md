@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.DivFamZarAff.picClass_toAff
 file: AlgebraicJacobian/Picard/DivisorFamilyAffCompare.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DivFamZarAff.picClass_toAff
 type: lean
-updated: '2026-07-30T15:28:02'
+updated: '2026-07-30T15:46:03'
 ---
 lemma DivFamZarAff.picClass_toAff {n : ℕ} (F : DivFamZar C R π n) :
     F.toAff.picClass = F.picClass := by

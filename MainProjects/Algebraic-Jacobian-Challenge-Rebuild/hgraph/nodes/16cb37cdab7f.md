@@ -12,10 +12,9 @@ docstring: '**An invertible residue-field extension is a `k`-algebra equivalence
 file: AlgebraicJacobian/Picard/Pic0ChartLocusIsoInvariance.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.testPointFieldAlgEquiv
 type: lean
-updated: '2026-07-30T15:27:57'
+updated: '2026-07-30T15:46:05'
 ---
 def testPointFieldAlgEquiv {T T' : Over (Spec (.of k))} (f : T' ⟶ T) (t : T'.left)
     [IsIso (testPointFieldMap f t)] :

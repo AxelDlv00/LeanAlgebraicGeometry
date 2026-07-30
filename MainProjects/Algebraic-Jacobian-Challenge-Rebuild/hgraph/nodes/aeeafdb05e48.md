@@ -10,9 +10,8 @@ docstring: '**The glued object of a chart family**, as a scheme over the base fi
 file: AlgebraicJacobian/Picard/JacobianDataCharts.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.gluedOfCharts
 type: lean
-updated: '2026-07-30T15:28:02'
+updated: '2026-07-30T15:46:05'
 ---
 noncomputable abbrev gluedOfCharts : Over (Spec (.of k)) := Over.mk (gluedHom C f hf)

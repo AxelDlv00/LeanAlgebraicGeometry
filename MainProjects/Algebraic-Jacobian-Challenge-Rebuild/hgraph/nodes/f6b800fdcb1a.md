@@ -16,10 +16,9 @@ docstring: 'The base-index construction: any unit cocycle `γ` on a pointed cove
 file: AlgebraicJacobian/Picard/MeromorphicPresentation.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.MeromorphicPresentation.ofCocycle
 type: lean
-updated: '2026-07-30T15:28:06'
+updated: '2026-07-30T15:46:05'
 ---
 noncomputable def ofCocycle (𝒰 : X.PointedCover) (γ : X.unitsCocycle 𝒰) :
     X.MeromorphicPresentation where

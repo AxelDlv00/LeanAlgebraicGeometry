@@ -12,10 +12,9 @@ docstring: '**The second tautological window** over the pair chart: the pullback
 file: AlgebraicJacobian/Picard/DivCarveLocus.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.pairTautSnd
 type: lean
-updated: '2026-07-30T15:28:03'
+updated: '2026-07-30T15:46:01'
 ---
 noncomputable def pairTautSnd (i : (glueData k g r₁).J) (j : (glueData k g r₂).J) :
     grFunctorAff k (Fin r₂ → k) g (PairChartRing k g r₁ g r₂ i j) :=

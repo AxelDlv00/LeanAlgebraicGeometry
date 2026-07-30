@@ -9,10 +9,9 @@ docstring: 'The pairwise overlap is bounded by the second-insertion preimage of 
 file: AlgebraicJacobian/Picard/AmitsurProductCover.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.amitsurPairOpen_le_insertion₂
 type: lean
-updated: '2026-07-30T15:27:59'
+updated: '2026-07-30T15:46:01'
 ---
 lemma amitsurPairOpen_le_insertion₂ (𝒩 : (XB).PointedCover) (𝒲 : (Xq).PointedCover)
     (hW₁ : ∀ x, 𝒲.opens x ≤ (u₁) ⁻¹ᵁ 𝒩.opens ((u₁).base x)) (z z' : Xcb) :

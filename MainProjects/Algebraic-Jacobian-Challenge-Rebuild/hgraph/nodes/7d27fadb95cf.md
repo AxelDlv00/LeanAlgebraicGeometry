@@ -6,10 +6,9 @@ decl: Module.IsDescentCocycle.mem_descended
 file: AlgebraicJacobian/Descent/UnitDescent.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: Module.IsDescentCocycle.mem_descended
 type: lean
-updated: '2026-07-30T15:28:00'
+updated: '2026-07-30T15:46:01'
 ---
 lemma IsDescentCocycle.mem_descended {u : (B ⊗[A] B)ˣ} (hu : IsDescentCocycle u) {m : B} :
     m ∈ hu.descended ↔ u.val * m ⊗ₜ 1 = 1 ⊗ₜ m :=

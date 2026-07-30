@@ -11,10 +11,9 @@ docstring: 'Naturality of `homEquiv` against the degree-zero restriction maps `p
 file: AlgebraicJacobian/Picard/PicRepDatum.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.PicRepDatum.homEquiv_comp
 type: lean
-updated: '2026-07-30T15:28:05'
+updated: '2026-07-30T15:46:06'
 ---
 theorem homEquiv_comp (d : PicRepDatum k k' C') {T T' : Over (Spec (.of k'))}
     (f : T' ⟶ T) (g : T ⟶ d.J) :

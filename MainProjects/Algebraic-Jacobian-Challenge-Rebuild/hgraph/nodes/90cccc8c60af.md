@@ -7,10 +7,9 @@ docstring: The carve-pair arrow vanishes iff the multiplier maps `Km` into `K'`.
 file: AlgebraicJacobian/Picard/DivCarveKit.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Grassmannian.carvePairArrow_eq_zero_iff
 type: lean
-updated: '2026-07-30T15:28:01'
+updated: '2026-07-30T15:46:01'
 ---
 theorem carvePairArrow_eq_zero_iff (μ : H₁ →ₗ[k] H₂) (Km : Submodule R (TensorProduct k R H₁))
     (K' : Submodule R (TensorProduct k R H₂)) :

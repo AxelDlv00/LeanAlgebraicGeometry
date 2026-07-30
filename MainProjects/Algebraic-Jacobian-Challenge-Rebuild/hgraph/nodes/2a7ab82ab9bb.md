@@ -49,10 +49,9 @@ docstring: '**The `⊥` instance binder implies unrestricted coverage — and th
 file: AlgebraicJacobian/Picard/Pic0ChartVMonotone.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.isLocallySurjective_of_bot
 type: lean
-updated: '2026-07-30T15:27:58'
+updated: '2026-07-30T15:46:05'
 ---
 theorem isLocallySurjective_of_bot {ι : Type u} {X : ι → Scheme.{u}}
     (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1)

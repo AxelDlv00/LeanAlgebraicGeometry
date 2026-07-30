@@ -10,10 +10,9 @@ docstring: 'The overlap identification: the section ring `(k[X₀,X₁]_(X₀X�
 file: AlgebraicJacobian/Curve/P1Charts.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.P1.overlapAlgEquiv
 type: lean
-updated: '2026-07-30T15:28:04'
+updated: '2026-07-30T15:46:00'
 ---
 noncomputable def overlapAlgEquiv :
     Away 𝒜 (X 0 * X 1) ≃ₐ[k] LaurentPolynomial k :=

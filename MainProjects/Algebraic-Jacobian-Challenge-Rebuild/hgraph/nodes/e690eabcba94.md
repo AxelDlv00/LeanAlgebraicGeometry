@@ -9,10 +9,9 @@ docstring: 'Two arbitrary nonzero rational sections span a divisor window when t
 file: AlgebraicJacobian/Picard/DivSchemeHighWindowPencilDivisor.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.exists_divisorSections_pair_decomposition
 type: lean
-updated: '2026-07-30T15:28:05'
+updated: '2026-07-30T15:46:02'
 ---
 theorem exists_divisorSections_pair_decomposition
     (A B : X.CurveDivisor) (v0 v1 : X.functionFieldˣ)

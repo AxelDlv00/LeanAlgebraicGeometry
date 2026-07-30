@@ -7,10 +7,9 @@ file: AlgebraicJacobian/Picard/DescentClassRepBuild.lean
 generated: lean
 lean_status: lean_ok
 private: true
-stale: true
 title: AlgebraicGeometry.Over.basicOpen_mul_le_right
 type: lean
-updated: '2026-07-30T15:27:57'
+updated: '2026-07-30T15:46:01'
 ---
 private lemma basicOpen_mul_le_right
     (f g : Γ(SA, ⊤)) :

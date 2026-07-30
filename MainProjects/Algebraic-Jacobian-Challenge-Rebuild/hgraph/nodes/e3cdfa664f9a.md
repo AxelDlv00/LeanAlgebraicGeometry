@@ -16,10 +16,9 @@ docstring: '**(b) The `H¹` carrier of the datum''s glued sheaf**: degree-one co
 file: AlgebraicJacobian/Cohomology/GluedSheafFibre.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.datumH1Equiv
 type: lean
-updated: '2026-07-30T15:28:05'
+updated: '2026-07-30T15:46:00'
 ---
 noncomputable def datumH1Equiv :
     Sheaf.HModule D.sheaf 1 ≃ₗ[B] (datumPair D).H1 :=

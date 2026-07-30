@@ -19,10 +19,9 @@ docstring: '**Pointwise good elements span the unit ideal, finitely.** If a pred
 file: AlgebraicJacobian/Picard/DivSchemeCertZarPointwise.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.exists_fin_span_eq_top_of_forall_prime
 type: lean
-updated: '2026-07-30T15:27:57'
+updated: '2026-07-30T15:46:02'
 ---
 theorem exists_fin_span_eq_top_of_forall_prime (P : R → Prop)
     (h : ∀ p : PrimeSpectrum R, ∃ r, r ∉ p.asIdeal ∧ P r) :

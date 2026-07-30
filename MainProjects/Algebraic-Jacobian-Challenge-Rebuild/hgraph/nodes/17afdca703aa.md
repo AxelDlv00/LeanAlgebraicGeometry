@@ -26,10 +26,9 @@ docstring: '**The ambient colength finiteness `hcolFin` from an empty leak** (th
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivColFin.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.ThetaGeneratorSeed.hcolFin_of_forall_closure_subset
 type: lean
-updated: '2026-07-30T15:27:57'
+updated: '2026-07-30T15:46:03'
 ---
 theorem hcolFin_of_forall_closure_subset
     (hnoleak : ∀ z : relCurve C R,

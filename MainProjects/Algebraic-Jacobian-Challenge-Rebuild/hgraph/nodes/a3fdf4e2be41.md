@@ -13,10 +13,9 @@ docstring: '**Mirror of deliverable (b).** Given the diagonal-package kernel pre
 file: AlgebraicJacobian/Algebra/PointFiberIdeal.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicJacobian.Diagonal.ker_pointEvTwo
 type: lean
-updated: '2026-07-30T15:28:02'
+updated: '2026-07-30T15:45:59'
 ---
 theorem ker_pointEvTwo :
     RingHom.ker (pointEvTwo c) = Ideal.span {mapRightTwo c e} := by

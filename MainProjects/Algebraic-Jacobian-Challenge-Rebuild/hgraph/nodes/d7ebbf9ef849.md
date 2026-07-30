@@ -10,10 +10,9 @@ docstring: 'Restriction of `H1` classes along an indexwise refinement, as a grou
 file: AlgebraicJacobian/Picard/CechH1.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: CategoryTheory.PresheafOfGroups.H1.resHom
 type: lean
-updated: '2026-07-30T15:28:04'
+updated: '2026-07-30T15:46:01'
 ---
 def H1.resHom (f : ∀ i, V i ⟶ U i) :
     H1 (G ⋙ forget₂ CommGrpCat GrpCat) U →* H1 (G ⋙ forget₂ CommGrpCat GrpCat) V where

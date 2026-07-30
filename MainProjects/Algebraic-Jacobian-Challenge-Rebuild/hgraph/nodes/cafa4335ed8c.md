@@ -7,10 +7,9 @@ file: AlgebraicJacobian/Picard/PicEtAffMap.lean
 generated: lean
 lean_status: lean_ok
 private: true
-stale: true
 title: AlgebraicGeometry.PicEtAff.mapFun_mul
 type: lean
-updated: '2026-07-30T15:28:04'
+updated: '2026-07-30T15:46:06'
 ---
 private lemma mapFun_mul (a b : PicEtAff C A) :
     mapFun C A' (a * b) = mapFun C A' a * mapFun C A' b := by

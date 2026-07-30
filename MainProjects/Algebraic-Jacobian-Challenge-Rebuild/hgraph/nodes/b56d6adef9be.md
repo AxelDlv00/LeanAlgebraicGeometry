@@ -9,10 +9,9 @@ docstring: '**Forward: the upstream kernel lands in the `CechPic` kernel.** The 
 file: AlgebraicJacobian/Tangent/TwoChartKernelComparison.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.map_eq_one_of_pullbackOverlapQuot_eq_one
 type: lean
-updated: '2026-07-30T15:28:03'
+updated: '2026-07-30T15:46:08'
 ---
 theorem map_eq_one_of_pullbackOverlapQuot_eq_one (f : X ⟶ Y)
     (hsel' : Function.Surjective (fun x ↦ sel (f.base x))) (q : overlapQuot Y V)

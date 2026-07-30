@@ -17,10 +17,9 @@ docstring: '**The splitting theorem in the `picEt` spelling** — the form every
 file: AlgebraicJacobian/Picard/Pic0ChartSplit.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.exists_splitting_of_picEt
 type: lean
-updated: '2026-07-30T15:28:04'
+updated: '2026-07-30T15:46:05'
 ---
 theorem exists_splitting_of_picEt {K : Type u} [Field K] [Algebra k K]
     (μ : picEt C (overSpec k K)) :

@@ -15,10 +15,9 @@ docstring: '**Effectivity of the presentation divisor.** Each anchor equation of
 file: AlgebraicJacobian/Picard/DivisorFamilyField.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.zero_le_coeffAt_presentationDivisor
 type: lean
-updated: '2026-07-30T15:28:05'
+updated: '2026-07-30T15:46:04'
 ---
 theorem zero_le_coeffAt_presentationDivisor (E : X.LocalEquations) {x : X}
     (hx : x ≠ genericPoint X) :

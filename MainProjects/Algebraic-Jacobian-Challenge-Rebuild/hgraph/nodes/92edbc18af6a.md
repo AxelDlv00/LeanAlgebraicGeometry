@@ -41,10 +41,9 @@ docstring: '**THE ENDPOINT: coverage at the ledger parameter from the GENUS alon
 file: AlgebraicJacobian/Picard/Pic0ChartIndexLedgerFeed.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.mem_chartLocus_of_ledgerIndex_of_isDegree_genus
 type: lean
-updated: '2026-07-30T15:28:01'
+updated: '2026-07-30T15:46:05'
 ---
 theorem mem_chartLocus_of_ledgerIndex_of_isDegree_genus
     {π : C.left ⟶ P1 k} [IsFinite π] [IsDominant π]

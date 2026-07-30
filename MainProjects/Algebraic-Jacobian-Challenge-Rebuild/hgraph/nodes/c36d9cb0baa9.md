@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.AffAdaptation.IsCertified.exists_fibre_witness_probe
 file: ScratchP1/probe_affine_fibre.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.AffAdaptation.IsCertified.exists_fibre_witness_probe
 type: lean
-updated: '2026-07-30T15:28:03'
+updated: '2026-07-30T15:46:08'
 ---
 theorem AffAdaptation.IsCertified.exists_fibre_witness_probe
     (hπ : π ≫ P1.structureMap k = C.hom)

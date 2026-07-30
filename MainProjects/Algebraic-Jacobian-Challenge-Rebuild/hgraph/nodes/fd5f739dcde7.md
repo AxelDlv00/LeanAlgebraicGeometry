@@ -7,10 +7,9 @@ docstring: The first projection of the graph point is the image point of `t`.
 file: AlgebraicJacobian/Curve/GraphFibre.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.fst_graphPoint
 type: lean
-updated: '2026-07-30T15:28:06'
+updated: '2026-07-30T15:46:00'
 ---
 lemma fst_graphPoint (t : overSpec k K ⟶ C) :
     (fst C (overSpec k K)).left.base (graphPoint C t) = t.left.base default := by

@@ -14,10 +14,9 @@ file: AlgebraicJacobian/Picard/CechPicClopenGlue.lean
 generated: lean
 lean_status: lean_ok
 private: true
-stale: true
 title: AlgebraicGeometry.Scheme.CechPic.extPairs_cocycle
 type: lean
-updated: '2026-07-30T15:27:58'
+updated: '2026-07-30T15:46:01'
 ---
 private lemma extPairs_cocycle (hdisj : w.opensRange ⊓ Ω' = ⊥) (y y' y'' : Y) :
     Y.unitsRestrict (inf_le_left :

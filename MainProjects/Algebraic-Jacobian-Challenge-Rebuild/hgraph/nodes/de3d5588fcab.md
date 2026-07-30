@@ -10,10 +10,9 @@ docstring: 'Products of `Θᵃ`- and `Θ⁻ᵃ`-sections are untwisted: the pair
 file: AlgebraicJacobian/Picard/DivisorFamilyThetaRank.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DivisorAdaptation.thetaSpan_mul_thetaInvSpan_le_one
 type: lean
-updated: '2026-07-30T15:28:04'
+updated: '2026-07-30T15:46:04'
 ---
 theorem thetaSpan_mul_thetaInvSpan_le_one :
     A.thetaSpan a * A.thetaInvSpan a ≤ 1 := by

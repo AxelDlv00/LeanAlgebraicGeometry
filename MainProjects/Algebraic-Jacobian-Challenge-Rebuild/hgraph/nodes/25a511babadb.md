@@ -7,10 +7,9 @@ docstring: Two Weil divisors with the same coefficient at every closed point are
 file: AlgebraicJacobian/Picard/PresentationDivisor.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.CurveDivisor.ext_coeffAt
 type: lean
-updated: '2026-07-30T15:27:57'
+updated: '2026-07-30T15:46:06'
 ---
 lemma ext_coeffAt {D D' : X.CurveDivisor}
     (h : ∀ (x : X) (hx : x ≠ genericPoint X), coeffAt hx D = coeffAt hx D') : D = D' :=

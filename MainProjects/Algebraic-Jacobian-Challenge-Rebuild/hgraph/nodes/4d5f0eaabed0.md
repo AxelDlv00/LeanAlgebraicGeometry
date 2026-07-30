@@ -10,10 +10,9 @@ docstring: 'The degree-zero cohomology of the divisor sheaf is its module of glo
 file: AlgebraicJacobian/RiemannRoch/SectionSpaces.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.divisorSectionsEquivH0
 type: lean
-updated: '2026-07-30T15:27:59'
+updated: '2026-07-30T15:46:08'
 ---
 noncomputable def divisorSectionsEquivH0 (A : X.CurveDivisor) :
     Sheaf.HModule (X.divisorSheaf K A) 0 ≃ₗ[K] ↥(divisorSections K A ⊤) :=

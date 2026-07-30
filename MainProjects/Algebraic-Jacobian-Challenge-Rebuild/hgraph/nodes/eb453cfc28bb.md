@@ -7,10 +7,9 @@ file: AlgebraicJacobian/Cohomology/RigidEngineLatticeModelHom.lean
 generated: lean
 lean_status: lean_ok
 private: true
-stale: true
 title: TwoLatticePair.modelHomOverlap_apply
 type: lean
-updated: '2026-07-30T15:28:05'
+updated: '2026-07-30T15:46:00'
 ---
 private lemma modelHomOverlap_apply (c : ι → N) (n : ι → R[T;T⁻¹]) :
     modelHomOverlap P ι c n = ∑ i : ι, P.laurentToEnd (n i) (c i) := by

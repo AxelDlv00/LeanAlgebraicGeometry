@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.sectOfBijective_algebraMap
 file: AlgebraicJacobian/Tangent/TangentDualNumbers.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.sectOfBijective_algebraMap
 type: lean
-updated: '2026-07-30T15:27:59'
+updated: '2026-07-30T15:46:08'
 ---
 lemma sectOfBijective_algebraMap (c : k) :
     sectOfBijective hres (algebraMap k R c) = algebraMap k R c := by

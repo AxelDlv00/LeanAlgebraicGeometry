@@ -10,10 +10,9 @@ docstring: 'The pullback of the canonical pointed cover is subordinated to the p
 file: AlgebraicJacobian/Cohomology/GluedSheafClass.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.BasicOpenCocycleDatum.pullback_pointedCover_le
 type: lean
-updated: '2026-07-30T15:28:01'
+updated: '2026-07-30T15:45:59'
 ---
 lemma pullback_pointedCover_le (x : relCurve C B') :
     (D.pointedCover.pullback (relCurveMap C B B')).opens x ≤

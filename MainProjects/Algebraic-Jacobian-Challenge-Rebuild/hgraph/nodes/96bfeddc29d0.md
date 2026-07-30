@@ -10,10 +10,9 @@ docstring: 'A section on either pinned affine chart is the chosen-side reading o
 file: AlgebraicJacobian/Picard/DivSchemeHighWindowChartExhaustion.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.exists_forall_ge_exists_relThetaResSide_eq
 type: lean
-updated: '2026-07-30T15:28:01'
+updated: '2026-07-30T15:46:02'
 ---
 theorem exists_forall_ge_exists_relThetaResSide_eq (side : Bool)
     (x : Γ(relCurve C R, relPinnedChart C R pi side)) :

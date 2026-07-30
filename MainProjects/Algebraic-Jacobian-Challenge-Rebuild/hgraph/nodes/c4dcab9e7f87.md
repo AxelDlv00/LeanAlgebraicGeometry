@@ -14,10 +14,9 @@ docstring: '**The germ set of a set of twisted pairs at a point**: the germs at 
 file: AlgebraicJacobian/Picard/DivSchemeMonoBridge.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.twistGermSet
 type: lean
-updated: '2026-07-30T15:28:03'
+updated: '2026-07-30T15:46:02'
 ---
 def Scheme.twistGermSet (T : Set ↥(twistSubmodule A V₀ V₁ gc ⊤)) (z : X) :
     Set (X.presheaf.stalk z) :=

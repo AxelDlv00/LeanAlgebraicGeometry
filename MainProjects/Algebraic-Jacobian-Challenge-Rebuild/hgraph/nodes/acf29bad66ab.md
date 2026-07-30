@@ -20,10 +20,9 @@ docstring: "**The DDR9-U ε-identity at the universal point, from the certificat
 file: AlgebraicJacobian/Picard/DivRepChartClassUniv.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.PointwiseAchiever.divFamEps_highWindow_eq_universal_pair
 type: lean
-updated: '2026-07-30T15:28:02'
+updated: '2026-07-30T15:46:01'
 ---
 theorem divFamEps_highWindow_eq_universal_pair (hb : 0 < windowBound pi hpi)
     (hc : ((univSeed C hpi g r1 r2 b1 b2 i j hO hchi hb).divisorAdaptation

@@ -22,10 +22,9 @@ docstring: '**A Zariski covering sieve of a scheme with at most one point contai
 file: AlgebraicJacobian/Picard/Pic0ChartFieldTestSurjective.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.exists_isIso_of_mem_zariskiTopology
 type: lean
-updated: '2026-07-30T15:28:03'
+updated: '2026-07-30T15:46:05'
 ---
 theorem exists_isIso_of_mem_zariskiTopology {X : Scheme.{u}} [Subsingleton (X : Type u)]
     (x : X) (S : Sieve X) (hS : S ∈ Scheme.zariskiTopology X) :

@@ -13,10 +13,9 @@ docstring: 'A unit in a closed-point stalk remains a unit in the function field,
 file: AlgebraicJacobian/Picard/DivisorFamilyFieldDegree.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.ordZ_unitsMap_stalk_eq_one
 type: lean
-updated: '2026-07-30T15:28:05'
+updated: '2026-07-30T15:46:04'
 ---
 theorem ordZ_unitsMap_stalk_eq_one {z : X} (hz : z ≠ genericPoint X)
     (v : (X.presheaf.stalk z)ˣ) :

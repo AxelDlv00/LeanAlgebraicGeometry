@@ -7,10 +7,9 @@ docstring: The algebra structure of the overlap ring over the left chart ring is
 file: AlgebraicJacobian/Curve/P1Points.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.P1.algebraMap_awayToOverlapLeft
 type: lean
-updated: '2026-07-30T15:28:03'
+updated: '2026-07-30T15:46:01'
 ---
 theorem algebraMap_awayToOverlapLeft :
     algebraMap (Away 𝒜 (X (0 : Fin 2)))

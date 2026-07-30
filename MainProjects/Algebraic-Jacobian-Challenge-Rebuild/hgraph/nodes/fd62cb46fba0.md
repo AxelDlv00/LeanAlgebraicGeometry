@@ -7,10 +7,9 @@ docstring: '**Twisted affine vanishing on the second chart.**'
 file: AlgebraicJacobian/Cohomology/TwistedSheaf.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.subsingleton_hModule'_twistSheaf_one₁
 type: lean
-updated: '2026-07-30T15:28:06'
+updated: '2026-07-30T15:46:00'
 ---
 theorem subsingleton_hModule'_twistSheaf_one₁ (h₁ : IsAffineOpen V₁) :
     Subsingleton (Sheaf.HModule' (twistSheaf k V₀ V₁ g) V₁ 1) :=

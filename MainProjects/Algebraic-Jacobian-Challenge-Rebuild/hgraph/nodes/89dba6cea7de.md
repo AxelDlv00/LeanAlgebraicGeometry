@@ -17,10 +17,9 @@ file: AlgebraicJacobian/Picard/DivRepGlobalClassify.lean
 generated: lean
 lean_status: lean_ok
 private: true
-stale: true
 title: AlgebraicGeometry.hom_ext_fromSpecAffine
 type: lean
-updated: '2026-07-30T15:28:01'
+updated: '2026-07-30T15:46:01'
 ---
 private theorem hom_ext_fromSpecAffine {T Y : Over (Spec (CommRingCat.of k))} (a b : T ⟶ Y)
     (h : ∀ U : T.left.affineOpens,

@@ -15,10 +15,9 @@ docstring: '**Finiteness dévissage.** If `B ⧸ I` is a finite `K`-module for a
 file: AlgebraicJacobian/Algebra/LocalizedColength.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.moduleFinite_quotient_pow_of_isPrincipal
 type: lean
-updated: '2026-07-30T15:28:06'
+updated: '2026-07-30T15:45:59'
 ---
 theorem moduleFinite_quotient_pow_of_isPrincipal {I : Ideal B} (h : I.IsPrincipal)
     (h' : I ≠ ⊥) [Module.Finite K (B ⧸ I)] (n : ℕ) : Module.Finite K (B ⧸ I ^ n) := by

@@ -26,10 +26,9 @@ docstring: '**Antecedent 2 of `pic0RepresentableByOfCharts`, from slice data ove
 file: AlgebraicJacobian/Picard/Pic0ChartCoverageSlice.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.isLocallySurjective_of_slice
 type: lean
-updated: '2026-07-30T15:27:57'
+updated: '2026-07-30T15:46:05'
 ---
 theorem isLocallySurjective_of_slice {ι : Type u} [Nonempty ι] {D : Over (Spec (.of k))}
     (rep : (divFunctor C π n).RepresentableBy D)

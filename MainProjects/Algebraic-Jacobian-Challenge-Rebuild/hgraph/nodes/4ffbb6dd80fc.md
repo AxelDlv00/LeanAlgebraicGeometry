@@ -10,10 +10,9 @@ docstring: 'Translation of the Jacobian datum''s representing object, as an isom
 file: AlgebraicJacobian/AbelianVariety/Translation.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.JacobianData.pointTranslationIso
 type: lean
-updated: '2026-07-30T15:27:59'
+updated: '2026-07-30T15:45:59'
 ---
 noncomputable def pointTranslationIso (d : JacobianData C)
     (x y : 𝟙_ (Over (Spec (.of k))) ⟶ d.J) : d.J.left ≅ d.J.left :=

@@ -9,10 +9,9 @@ docstring: 'The second universal window in the transported `H_{M+s}` ambient is
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivSndRes.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.divUniversalSndWindow_toSubmodule_eq_span
 type: lean
-updated: '2026-07-30T15:28:04'
+updated: '2026-07-30T15:46:03'
 ---
 theorem divUniversalSndWindow_toSubmodule_eq_span :
     (divUniversalSndWindow C π hπ g r₁ r₂ b₁ b₂ i j).toSubmodule

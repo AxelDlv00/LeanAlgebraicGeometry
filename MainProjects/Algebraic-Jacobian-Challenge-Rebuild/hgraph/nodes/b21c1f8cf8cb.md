@@ -8,10 +8,9 @@ docstring: '**The shifted normalization window**: `H¹(𝒪((M+s)·F − D)) = 0
 file: AlgebraicJacobian/RiemannRoch/WindowLedger.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.window_normalization_shift
 type: lean
-updated: '2026-07-30T15:28:02'
+updated: '2026-07-30T15:46:08'
 ---
 theorem window_normalization_shift (g : ℕ) (D : Y.CurveDivisor)
     (hD : CurveDivisor.deg K D ≤ 2 * (g : ℤ)) :

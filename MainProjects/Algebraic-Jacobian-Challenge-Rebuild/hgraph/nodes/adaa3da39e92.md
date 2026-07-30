@@ -19,10 +19,9 @@ docstring: '**The flat companion.** A retract of a flat module is flat, so an id
 file: AlgebraicJacobian/Picard/DivSchemeCertZarLeak.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: Module.Flat.quotient_span_singleton_one_sub_of_isIdempotentElem
 type: lean
-updated: '2026-07-30T15:28:02'
+updated: '2026-07-30T15:46:02'
 ---
 theorem Module.Flat.quotient_span_singleton_one_sub_of_isIdempotentElem
     [Module.Flat R B] (e : B) (he : IsIdempotentElem e) :

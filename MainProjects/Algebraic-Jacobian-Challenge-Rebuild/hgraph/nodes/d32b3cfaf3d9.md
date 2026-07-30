@@ -10,10 +10,9 @@ docstring: 'Each factor of a finite product is the localization of the product a
 file: AlgebraicJacobian/Picard/RelPicPi.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.isLocalization_away_piFactor
 type: lean
-updated: '2026-07-30T15:28:04'
+updated: '2026-07-30T15:46:06'
 ---
 lemma isLocalization_away_piFactor (i : ι) :
     letI := piFactorAlgebra B i

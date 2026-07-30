@@ -13,10 +13,9 @@ docstring: '**Proper and smooth over `k`**, given an Abel source (P1) and geomet
 file: AlgebraicJacobian/AbelianVariety/JacobianAbelianVariety.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.JacobianData.isProper_and_smooth_of_abelSource
 type: lean
-updated: '2026-07-30T15:28:02'
+updated: '2026-07-30T15:45:59'
 ---
 theorem isProper_and_smooth_of_abelSource (a : AbelSourceData d)
     [GeometricallyReduced d.J.hom] :

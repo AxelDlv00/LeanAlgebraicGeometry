@@ -16,10 +16,9 @@ docstring: '**The divisor of a meromorphic presentation** (the W2 deliverable): 
 file: AlgebraicJacobian/Picard/PresentationDivisor.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.presentationDivisor
 type: lean
-updated: '2026-07-30T15:28:02'
+updated: '2026-07-30T15:46:06'
 ---
 noncomputable def presentationDivisor [QuasiCompact (X ↘ Spec (CommRingCat.of K))]
     (P : X.MeromorphicPresentation) : X.CurveDivisor :=

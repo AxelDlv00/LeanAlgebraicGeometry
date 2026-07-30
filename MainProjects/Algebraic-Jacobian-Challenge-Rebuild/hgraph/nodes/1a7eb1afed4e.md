@@ -12,10 +12,9 @@ docstring: 'The section `ψ : B ⊗[Polynomial k] B → (B ⊗[k] B) ⧸ (u⊗1 
 file: AlgebraicJacobian/Algebra/DiagonalIdeal.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicJacobian.Diagonal.sectionMap
 type: lean
-updated: '2026-07-30T15:27:57'
+updated: '2026-07-30T15:45:59'
 ---
 noncomputable def sectionMap :
     B ⊗[Polynomial k] B →ₐ[Polynomial k] (B ⊗[k] B) ⧸ Ideal.span {diagGen (k := k) (B := B)} :=

@@ -19,10 +19,9 @@ docstring: '**Injectivity of the chart extension** (EV-2 leg 2): for a morphism 
 file: AlgebraicJacobian/RiemannRoch/DegreePullbackDictionary.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.Hom.faithfulSMul_pullbackSections
 type: lean
-updated: '2026-07-30T15:28:05'
+updated: '2026-07-30T15:46:07'
 ---
 theorem Scheme.Hom.faithfulSMul_pullbackSections [IsIntegral X] [IsIntegral Y]
     (hf : f.base (genericPoint X) = genericPoint Y) {V : Y.Opens}

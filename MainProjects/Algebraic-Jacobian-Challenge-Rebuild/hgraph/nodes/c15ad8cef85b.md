@@ -8,10 +8,9 @@ docstring: Restriction into an open equal to the source cancels the open-equalit
 file: AlgebraicJacobian/Cohomology/RelThetaTransportCore.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.presheafCongr_resHom
 type: lean
-updated: '2026-07-30T15:28:03'
+updated: '2026-07-30T15:46:00'
 ---
 lemma presheafCongr_resHom {X : Scheme.{u}} [X.Over (Spec (.of k))] {U U' V : X.Opens}
     (h : U = U') (h₁ : U ≤ V) (h₂ : U' ≤ V) (s : Γ(X, V)) :

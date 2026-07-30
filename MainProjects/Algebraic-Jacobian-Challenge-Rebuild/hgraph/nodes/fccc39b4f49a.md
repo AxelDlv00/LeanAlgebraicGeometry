@@ -10,10 +10,9 @@ docstring: 'The subgroup of Picard classes on `C ⊗ T` pulled back from the tes
 file: AlgebraicJacobian/Picard/RelPic.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.picFromBase
 type: lean
-updated: '2026-07-30T15:28:06'
+updated: '2026-07-30T15:46:06'
 ---
 def picFromBase (T : Over (Spec (.of k))) : Subgroup ((C ⊗ T).left.CechPic) :=
   (CechPic.map (snd C T).left).range

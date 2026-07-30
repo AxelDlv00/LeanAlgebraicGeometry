@@ -8,10 +8,9 @@ docstring: The double piece is bounded by the second-coprojection preimage of th
 file: AlgebraicJacobian/Picard/EffectivityComparisonUnit.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.cgqPreimage_le_inr
 type: lean
-updated: '2026-07-30T15:27:57'
+updated: '2026-07-30T15:46:04'
 ---
 lemma cgqPreimage_le_inr (V : (XA).Opens) :
     (cgq) ⁻¹ᵁ V ≤ (u₂) ⁻¹ᵁ ((cg) ⁻¹ᵁ V) :=

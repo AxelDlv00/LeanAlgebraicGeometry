@@ -12,10 +12,9 @@ docstring: '**`DivScheme g = Z(♦)`** (`informal/spec-dd-r.md` §3 item 1): the
 file: AlgebraicJacobian/Picard/DivScheme.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DivScheme
 type: lean
-updated: '2026-07-30T15:28:01'
+updated: '2026-07-30T15:46:01'
 ---
 noncomputable def DivScheme : Scheme :=
   carveScheme k g r₁ r₂ (divCarveMul k A B r₁ r₂ b₁ b₂)

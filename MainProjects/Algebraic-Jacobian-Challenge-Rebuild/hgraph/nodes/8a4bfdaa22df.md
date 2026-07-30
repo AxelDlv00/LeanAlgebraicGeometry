@@ -25,10 +25,9 @@ docstring: "**Lane COE Step B.d — Stacks `00TT` at a rational closed point, al
 file: AlgebraicJacobian/Albanese/CodimOneSmoothReduced.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.isRegularLocalRing_localization_of_isStandardSmooth_of_bijective_residue
 type: lean
-updated: '2026-07-30T15:28:01'
+updated: '2026-07-30T15:45:59'
 ---
 theorem isRegularLocalRing_localization_of_isStandardSmooth_of_bijective_residue
     {k : Type u} [Field k]

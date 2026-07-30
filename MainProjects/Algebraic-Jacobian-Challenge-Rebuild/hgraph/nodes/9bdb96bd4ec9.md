@@ -32,10 +32,9 @@ docstring: '**COV-3, density of base-changed rational points** (★ B-2 keystone
 file: AlgebraicJacobian/Curve/SepPointsDense.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.dense_baseChange_rationalPoints
 type: lean
-updated: '2026-07-30T15:28:02'
+updated: '2026-07-30T15:46:01'
 ---
 theorem Over.dense_baseChange_rationalPoints [IsSepClosed k]
     [SmoothOfRelativeDimension 1 C.hom] [IsIntegral C.left]

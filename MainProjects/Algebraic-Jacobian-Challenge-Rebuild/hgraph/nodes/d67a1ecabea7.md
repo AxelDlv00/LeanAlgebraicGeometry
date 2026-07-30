@@ -15,10 +15,9 @@ docstring: "**The cross-base pasted square** (general form): for `X : Over S` an
 file: AlgebraicJacobian/Curve/CrossBaseSquare.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.isPullback_crossBase
 type: lean
-updated: '2026-07-30T15:28:04'
+updated: '2026-07-30T15:46:00'
 ---
 theorem Over.isPullback_crossBase (X : Over S) (T : Over S') :
     IsPullback ((fst ((Over.pullback f).obj X) T).left ≫ pullback.fst X.hom f)

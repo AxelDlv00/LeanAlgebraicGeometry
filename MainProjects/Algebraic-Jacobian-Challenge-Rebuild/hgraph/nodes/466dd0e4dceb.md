@@ -11,10 +11,9 @@ file: AlgebraicJacobian/Picard/SectionsDescent.lean
 generated: lean
 lean_status: lean_ok
 private: true
-stale: true
 title: AlgebraicGeometry.Over.isPushout_sections_gen
 type: lean
-updated: '2026-07-30T15:27:59'
+updated: '2026-07-30T15:46:06'
 ---
 private lemma isPushout_sections_gen {U : (XA).Opens} (hU : IsAffineOpen U) :
     IsPushout

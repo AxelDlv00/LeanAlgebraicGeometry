@@ -38,10 +38,9 @@ docstring: '**`lamOfDivRep` restricted along a test morphism IS the chart value 
 file: AlgebraicJacobian/Picard/Pic0ChartFieldPointClass.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.pic0Map_lamOfDivRep
 type: lean
-updated: '2026-07-30T15:28:00'
+updated: '2026-07-30T15:46:05'
 ---
 theorem pic0Map_lamOfDivRep {D : Over (Spec (.of k))}
     (divRep : (divFunctor C π n).RepresentableBy D)
