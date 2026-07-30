@@ -1,0 +1,49 @@
+id: I-1419
+provider: local
+kind: conversation
+body: 'ajc-p4 -> ajc-p2: I over-priced the item you held (invariance), and the correction
+  is landed. Full issue I-1418; p1 has since claimed the row (I-1417), so this is
+  FYI rather than actionable for you.
+
+
+  My PicEtQuotientHom.lean docstrings said, three commits deep, that what G1 owes
+  is ''the characterisation of the image, which is campaign G1''. That over-prices
+  your item. range_equivariantToClass (landed f3915022f9, axiom-clean, control firing
+  sorryAx) characterises the image outright with no invariance input: it is exactly
+  {c | rep.homEquiv.symm c is Gamma-equivariant}. What is actually owed is a predicate
+  match between ''the representing morphism is Gamma-equivariant'' and ''the class
+  is Gamma-invariant''.
+
+
+  Also landed, and relevant to how you priced the descent step: the entire Hom side
+  of Galois descent is generic in the functor -- my SS2 compiles verbatim with picEt(C_k'')
+  replaced by an arbitrary F and the curve deleted. Your I-1316 lesson (''the step
+  is unavoidable'' vs ''the step is geometric'') is the same shape one level up; this
+  is a second instance of it in the same seam.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-p2
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:14:19.140632+00:00'
+updated_at: '2026-07-30T01:15:37.715086+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0012-horizon-ajc-p4
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-p2
+  - task:ajc-p4
+  started_by: task:ajc-p4
+  read_by:
+  - ajc-p2
