@@ -219,4 +219,90 @@ theorem crossBaseAffineIso_inv_eq_whiskerRight (k : Type u) [Field k]
   · exact (crossBaseAffineIso_inv_whiskerRight_fst k C B).symm
   · exact (crossBaseAffineIso_inv_whiskerRight_snd k C B).symm
 
+/-! ## Composite base change
+
+The tower cocycle needs the projection formula for mathlib's adjunction-defined
+`Over.pullbackComp`.  We derive it from the counit characterization of conjugate
+natural transformations, then transport it across the proof-bearing equality used by
+the frozen `baseChange.compIso` spelling. -/
+
+open Limits in
+private theorem pullbackComp_hom_app_left_fst_fst.{w} {D : Type w}
+    [Category.{u} D] [HasPullbacks D] {X Y Z : D}
+    (f : X ⟶ Y) (g : Y ⟶ Z) (A : Over Z) :
+    ((Over.pullbackComp f g).hom.app A).left ≫
+        pullback.fst (pullback.snd A.hom g) f ≫ pullback.fst A.hom g =
+      pullback.fst A.hom (f ≫ g) := by
+  have h := conjugateEquiv_counit (Over.mapPullbackAdj (f ≫ g))
+    ((Over.mapPullbackAdj f).comp (Over.mapPullbackAdj g)) (Over.mapComp f g).inv A
+  have hl := congrArg Over.Hom.left h
+  simp only [Functor.comp_map, Over.map_map_left, Adjunction.comp_counit_app,
+    Over.comp_left, Over.mapPullbackAdj_counit_app, Over.homMk_left,
+    Over.mapComp_inv_app_left] at hl
+  change (((conjugateEquiv (Over.mapPullbackAdj (f ≫ g))
+    ((Over.mapPullbackAdj f).comp (Over.mapPullbackAdj g)))
+      (Over.mapComp f g).inv).app A).left ≫
+      pullback.fst (pullback.snd A.hom g) f ≫ pullback.fst A.hom g = _
+  exact hl.trans (Category.id_comp _)
+
+open Limits in
+private theorem pullbackComp_transport_hom_app_left_fst_fst.{w} {D : Type w}
+    [Category.{u} D] [HasPullbacks D] {X Y Z : D}
+    (f : X ⟶ Y) (g : Y ⟶ Z) (fg : X ⟶ Z) (hfg : fg = f ≫ g)
+    (h : Over.pullback fg = Over.pullback (f ≫ g)) (A : Over Z) :
+    ((eqToIso h ≪≫ Over.pullbackComp f g).hom.app A).left ≫
+        pullback.fst (pullback.snd A.hom g) f ≫ pullback.fst A.hom g =
+      pullback.fst A.hom fg := by
+  subst fg
+  have hh : h = rfl := Subsingleton.elim _ _
+  cases hh
+  simpa only [Iso.trans_hom, NatTrans.comp_app, eqToIso.hom, eqToHom_refl,
+    Over.comp_left, Category.id_comp] using pullbackComp_hom_app_left_fst_fst f g A
+
+open Limits in
+/-- The forward frozen tower comparison preserves the composite first projection. -/
+theorem baseChange_compIso_hom_app_left_fst_fst (k L M : Type u)
+    [Field k] [Field L] [Field M] [Algebra k L] [Algebra L M] [Algebra k M]
+    [IsScalarTower k L M] (C : Over (Spec (.of k))) :
+    ((baseChange.compIso k L M).app C).hom.left ≫
+        pullback.fst ((baseChange k L).obj C).hom
+          (Spec.map (CommRingCat.ofHom (algebraMap L M))) ≫
+        pullback.fst C.hom (Spec.map (CommRingCat.ofHom (algebraMap k L))) =
+      pullback.fst C.hom (Spec.map (CommRingCat.ofHom (algebraMap k M))) := by
+  unfold baseChange.compIso
+  exact pullbackComp_transport_hom_app_left_fst_fst
+    (Spec.map (CommRingCat.ofHom (algebraMap L M)))
+    (Spec.map (CommRingCat.ofHom (algebraMap k L)))
+    (Spec.map (CommRingCat.ofHom (algebraMap k M)))
+    (by rw [← Spec.map_comp, ← CommRingCat.ofHom_comp,
+      ← IsScalarTower.algebraMap_eq]) _ C
+
+open Limits in
+/-- The inverse frozen tower comparison reads the iterated first projection. -/
+theorem baseChange_compIso_inv_app_left_fst_fst (k L M : Type u)
+    [Field k] [Field L] [Field M] [Algebra k L] [Algebra L M] [Algebra k M]
+    [IsScalarTower k L M] (C : Over (Spec (.of k))) :
+    ((baseChange.compIso k L M).app C).inv.left ≫
+        pullback.fst C.hom (Spec.map (CommRingCat.ofHom (algebraMap k M))) =
+      pullback.fst ((baseChange k L).obj C).hom
+          (Spec.map (CommRingCat.ofHom (algebraMap L M))) ≫
+        pullback.fst C.hom (Spec.map (CommRingCat.ofHom (algebraMap k L))) := by
+  calc
+    ((baseChange.compIso k L M).app C).inv.left ≫
+        pullback.fst C.hom (Spec.map (CommRingCat.ofHom (algebraMap k M))) =
+      ((baseChange.compIso k L M).app C).inv.left ≫
+        (((baseChange.compIso k L M).app C).hom.left ≫
+          pullback.fst ((baseChange k L).obj C).hom
+            (Spec.map (CommRingCat.ofHom (algebraMap L M))) ≫
+          pullback.fst C.hom
+            (Spec.map (CommRingCat.ofHom (algebraMap k L)))) :=
+      congrArg (fun q => ((baseChange.compIso k L M).app C).inv.left ≫ q)
+        (baseChange_compIso_hom_app_left_fst_fst k L M C).symm
+    _ = pullback.fst ((baseChange k L).obj C).hom
+          (Spec.map (CommRingCat.ofHom (algebraMap L M))) ≫
+        pullback.fst C.hom
+          (Spec.map (CommRingCat.ofHom (algebraMap k L))) := by
+      rw [← Category.assoc, Over.inv_left_hom_left, Category.id_comp]
+      rfl
+
 end AlgebraicGeometry

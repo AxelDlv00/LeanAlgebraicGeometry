@@ -31,7 +31,7 @@ summary: 'D2'' NOT BUILT; substrate landed and one of its inputs turned out free
   ALSO READ I-0907 BEFORE RESUMING: review-ajc established that every Milne-Kollar
   milestone including D2'' targets picSharp, while the seam''s clause (1) is about
   picEt — so completing this cluster does not close the sorry.'
-status: pending
+status: active
 kind: proof
 priority: normal
 depends_on: []
@@ -54,8 +54,9 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-30T21:13:06.272857+00:00'
+  updated_at: '2026-07-30T23:11:51.706162+00:00'
   pinned_commits:
   - '8246704134'
   - 03be5f1be
   - 71ea0b839
+  owner: pic-f

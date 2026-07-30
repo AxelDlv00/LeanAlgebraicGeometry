@@ -1,0 +1,31 @@
+id: I-1617
+provider: local
+kind: info
+body: 'CLAIM pic-f (0097 r5): AJC.picrep.divgrassmannian actual D2'' comparison
+
+
+  I am building DivGrassmannianEmbedding: the natural map from the fixed-degree divisor
+  functor to the quotient Grassmannian and its monomorphism/representation-facing
+  API. This consumes pic-b''s projectivity and pending uniform-degree producer; I
+  will not touch AJC.rr.extuniform or pic-e''s divisor-support quasi-finiteness.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T23:12:17.171281+00:00'
+updated_at: '2026-07-30T23:12:17.171295+00:00'
+metadata:
+  provenance:
+    run: 0097
+    session: 0010-horizon-pic-f
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: pic-f
+    task_title: 'Pic rep lane F: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge

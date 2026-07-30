@@ -190,6 +190,35 @@ noncomputable def IsCertified.thetaIdealCokernelToIntrinsic
   (Submodule.subtype (LinearMap.range (A.intrinsicThetaEvalRel (π := π) a))).comp
     (hc.thetaIdealCokernelEquivIntrinsicRange C R π hπ hO hχ ha1 hMa).toLinearMap
 
+/-- The cokernel embedding carries the quotient projection of a theta section to its
+intrinsic evaluation. -/
+theorem IsCertified.thetaIdealCokernelToIntrinsic_apply_cokernelπ
+    {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
+    {A : AffAdaptation D d} {g : ℕ} (hc : A.IsCertified g)
+    (hπ : π ≫ P1.structureMap k = C.hom)
+    (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
+    {a : ℕ} (ha1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1)
+    (hMa : windowM_choice π hπ g ≤ a) (x : relThetaSections C R π a) :
+    let B := Classical.choose
+      (hc.exists_chartAdaptation_subsingleton_thetaIdealH1 C R π hπ hO hχ ha1 hMa)
+    hc.thetaIdealCokernelToIntrinsic C R π hπ hO hχ ha1 hMa
+        (((cokernel.π (DivisorAdaptation.thetaIdealIncl (A := B) (a := a))).hom.app
+          (op (⊤ : (relCurve C R).Opens))).hom x) =
+      A.intrinsicThetaEvalRel (π := π) a x := by
+  let B := Classical.choose
+    (hc.exists_chartAdaptation_subsingleton_thetaIdealH1 C R π hπ hO hχ ha1 hMa)
+  change ((hc.thetaIdealCokernelEquivIntrinsicRange C R π hπ hO hχ ha1 hMa)
+    (((cokernel.π (DivisorAdaptation.thetaIdealIncl (A := B) (a := a))).hom.app
+      (op (⊤ : (relCurve C R).Opens))).hom x) :
+        A.IntrinsicThetaGlued (π := π) a) = _
+  apply Subtype.ext
+  simp only [IsCertified.thetaIdealCokernelEquivIntrinsicRange,
+    Sheaf.cokernelAppEquivQuotientRange,
+    LinearEquiv.trans_apply, LinearMap.quotKerEquivOfSurjective_symm_apply,
+    Submodule.quotEquivOfEq_mk]
+  exact A.intrinsicThetaQuotEquivRange_mk (π := π) a x
+
 /-- The global theta-quotient embedding has precisely the image of intrinsic theta
 evaluation as its range. -/
 theorem IsCertified.range_thetaIdealCokernelToIntrinsic

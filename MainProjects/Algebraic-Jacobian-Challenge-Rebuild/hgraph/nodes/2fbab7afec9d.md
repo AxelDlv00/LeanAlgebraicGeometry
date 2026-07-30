@@ -10,12 +10,12 @@ docstring: 'The quotient of the packaged window point is the base change of the 
   it was
 
   already a statement about the submodule alone.'
-file: ScratchWR/probe_r7_nogo_noeth.lean
+file: AlgebraicJacobian/Picard/DivisorFamilyAffFrameCover.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divisorWindowGrOfQuotEquiv
 type: lean
-updated: '2026-07-31T04:43:15'
+updated: '2026-07-31T05:40:42'
 ---
 noncomputable def divisorWindowGrOfQuotEquiv (d : (relCurve C R).LocalEquations)
     (R' : Type u) [CommRing R'] [Algebra k R'] [Algebra R R'] [IsScalarTower k R R']
