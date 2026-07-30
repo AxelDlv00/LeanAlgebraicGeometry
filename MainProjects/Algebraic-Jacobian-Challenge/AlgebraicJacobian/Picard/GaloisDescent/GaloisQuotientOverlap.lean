@@ -570,6 +570,35 @@ theorem tripleIso_hom_quotientMap [FiniteDimensional K L] [IsGalois K L]
     GaloisQuotientWitness.comparison_quotientMap
       (tripleWitness ρ i j k) (tripleWitnessRot ρ i j k)
 
+/-- Three cyclic reorderings of a source triple intersection compose to the
+identity. -/
+theorem tripleSourceRotation_cocycle (i j k : StableAffineOpen ρ) :
+    (X.isoOfEq (show ((i.U ⊓ j.U) ⊓ (i.U ⊓ k.U)) =
+      ((j.U ⊓ k.U) ⊓ (j.U ⊓ i.U)) by ac_rfl)).hom ≫
+    (X.isoOfEq (show ((j.U ⊓ k.U) ⊓ (j.U ⊓ i.U)) =
+      ((k.U ⊓ i.U) ⊓ (k.U ⊓ j.U)) by ac_rfl)).hom ≫
+    (X.isoOfEq (show ((k.U ⊓ i.U) ⊓ (k.U ⊓ j.U)) =
+      ((i.U ⊓ j.U) ⊓ (i.U ⊓ k.U)) by ac_rfl)).hom = 𝟙 _ := by
+  rw [← cancel_mono (((i.U ⊓ j.U) ⊓ (i.U ⊓ k.U)).ι)]
+  simp
+
+/-- The canonical cyclic comparisons of the three presentations of a triple
+quotient satisfy the cocycle. -/
+theorem tripleIso_cocycle [FiniteDimensional K L] [IsGalois K L]
+    (i j k : StableAffineOpen ρ) :
+    (tripleIso ρ i j k).hom ≫ (tripleIso ρ j k i).hom ≫
+      (tripleIso ρ k i j).hom = 𝟙 _ := by
+  have h₁ := tripleIso_hom_quotientMap ρ i j k
+  have h₂ := tripleIso_hom_quotientMap ρ j k i
+  have h₃ := tripleIso_hom_quotientMap ρ k i j
+  have hrot := tripleSourceRotation_cocycle (ρ := ρ) i j k
+  letI : Epi (tripleQuotientMap ρ i j k) :=
+    GaloisQuotientWitnessWithProjection.epi_quotientMap
+      (tripleWitness ρ i j k)
+  rw [← cancel_epi (tripleQuotientMap ρ i j k)]
+  simp only [Category.comp_id]
+  rw [reassoc_of% h₁, reassoc_of% h₂, h₃, reassoc_of% hrot]
+
 /-- The triple-overlap transition in the shape required by
 `CategoryTheory.GlueData.t'`. -/
 noncomputable def overlapTransition' [FiniteDimensional K L] [IsGalois K L]
@@ -705,6 +734,15 @@ theorem overlapTransition'_fac [FiniteDimensional K L] [IsGalois K L]
   rw [pullbackOverlapIsoTriple_inv_snd]
   rw [← tripleToOverlapLeft_overlapIso]
   rw [← Category.assoc, pullbackOverlapIsoTriple_hom_fst]
+
+/-- The three cyclic triple-overlap transitions compose to the identity. -/
+theorem overlapTransition'_cocycle [FiniteDimensional K L] [IsGalois K L]
+    (i j k : StableAffineOpen ρ) :
+    overlapTransition' ρ i j k ≫ overlapTransition' ρ j k i ≫
+      overlapTransition' ρ k i j = 𝟙 _ := by
+  simp only [overlapTransition', Category.assoc, Iso.inv_hom_id_assoc]
+  rw [reassoc_of% tripleIso_cocycle ρ i j k]
+  simp
 
 /-- The overlap transition lies over `Spec K`. -/
 @[reassoc]
