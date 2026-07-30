@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.Pic0ChartCoverageDegree
+import AlgebraicJacobian.Picard.Pic0ChartIndexAdmissible
 import AlgebraicJacobian.RiemannRoch.GraphDegree
 
 /-!
@@ -59,6 +60,10 @@ free.  Nothing per-field, no ledger constant crossing (the I-0204 discipline).
   the chart layer uses.
 * `AlgebraicGeometry.classDeg_graphPicClass_base` — its degree is one at every field, by
   E-iv-alg composed with the landed degree-one certificate.
+* `AlgebraicGeometry.isDivisorDegree_nat_of_point` — a rational point makes every natural
+  parameter a divisor degree.
+* `AlgebraicGeometry.exists_chartIndex_of_point` — the resulting legal chart index at any
+  natural parameter, in particular at the genus after a point-producing base change.
 -/
 
 set_option autoImplicit false
@@ -125,6 +130,39 @@ theorem classDeg_graphPicClass_base (L : Type u) [Field L] [Algebra k L]
         (Over.graphPicClass C p)) = 1 := by
   rw [classDeg_cechPicMap_base_of_field C L]
   exact classDeg_graphPicClass C p
+
+/-! ## Legal chart indices after acquiring a rational point -/
+
+variable (C) in
+/-- A rational point produces a divisor of degree one.  The graph class has class degree one,
+and surjectivity of the divisor-class map re-presents it by an actual Weil divisor. -/
+theorem isDivisorDegree_one_of_point (p : overSpec k k ⟶ C) :
+    IsDivisorDegree C 1 := by
+  obtain ⟨D, hD⟩ :=
+    Scheme.CurveDivisor.exists_picClass_eq k (Over.graphPicClass C p)
+  refine ⟨D, ?_⟩
+  rw [← classDeg_picClass, hD]
+  exact classDeg_graphPicClass C p
+
+variable (C) in
+/-- Once the curve has a rational point, every natural number is a divisor degree: take the
+corresponding multiple of a degree-one divisor. -/
+theorem isDivisorDegree_nat_of_point (p : overSpec k k ⟶ C) (n : ℕ) :
+    IsDivisorDegree C (n : ℤ) := by
+  obtain ⟨D, hD⟩ := isDivisorDegree_one_of_point C p
+  refine ⟨n • D, ?_⟩
+  rw [Scheme.CurveDivisor.deg_nsmul' k, hD]
+  simp
+
+variable (C) in
+/-- A rational point supplies a legal chart index at every natural parameter.  Applied to a
+finite-separable base change on which the curve acquires a point, this produces the genus chart
+without assuming that the genus is a divisor degree over the original field. -/
+theorem exists_chartIndex_of_point (p : overSpec k k ⟶ C) (n : ℕ) :
+    ∃ (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor),
+      Scheme.CurveDivisor.deg k Z
+        = (m : ℤ) * classDeg k (thetaCechClass C) - (n : ℤ) :=
+  chartIndex_of_isDegree C (isDivisorDegree_nat_of_point C p n)
 
 end
 
