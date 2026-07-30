@@ -85,6 +85,17 @@ load-bearing rather than decorative.
 * `AlgebraicGeometry.not_indexSeparated_duplicated` and
   `AlgebraicGeometry.injective_duplicated` — the negative answer: an all-injective family that
   is not index separated, so the added hypothesis is not free and the no-go does not propagate.
+* `AlgebraicGeometry.exists_crossing_or_not_injective_of_pointwiseCoverage_of_ne_top` — the
+  dichotomy in the form a coverage lane consumes: the witness crossed to another chart, or the
+  tested chart is non-injective on the produced open.
+* `AlgebraicGeometry.exists_crossing_or_not_injective_mixedParamChart` and
+  `AlgebraicGeometry.not_pointwiseCoverage_mixedParamChart_of_jointlyInjective` — both
+  instantiated at `mixedParamChart`, i.e. at the atlas
+  `pic0RepresentableBy_of_restrictedChartFibre` actually takes, so the measurement is about the
+  real assembly and not about a one-chart stand-in.
+* `AlgebraicGeometry.jointlyInjective_singleSpecFamily` — the non-vacuity check: joint
+  injectivity is inhabited, so the refutation above is about the *index* and not about the
+  Σ-sheaf admitting no injective family at all.
 -/
 
 set_option autoImplicit false
@@ -222,6 +233,50 @@ theorem not_injective_of_pointwiseCoverage_of_indexSeparated_of_ne_top
   exact not_jointlyInjective_of_pointwiseCoverage_of_ne_top C f V i₀ hV hcov
     ((jointlyInjective_iff f).mpr ⟨hsep, fun i S => hall i S⟩)
 
+variable (C) in
+/-- **THE DICHOTOMY, WITH ITS WITNESS EXHIBITED** — the form a coverage lane consumes.
+
+Coverage at a proper `V i₀` produces an open `W` of `X i₀` and an index `i` such that a
+`W`-point of `X i` and the inclusion `W.ι` carry the same class, and then **either** `i ≠ i₀`
+(the coverage witness crossed to another chart) **or** `f i₀` is non-injective on `W`.
+
+This is the actionable content of the multi-index measurement.  The one-chart theorem is the
+case where the first alternative is unavailable, so it reads off the second; at a general `ι`
+a lane supplying coverage must say which alternative its witness realises, and
+`not_indexSeparated_duplicated` shows nothing in the shape of an overlapping atlas forces the
+second.  Both alternatives are about the *family*, so neither can be dismissed by a fact about
+one chart. -/
+theorem exists_crossing_or_not_injective_of_pointwiseCoverage_of_ne_top
+    {ι : Type u} {X : ι → Scheme.{u}}
+    (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1) (V : ∀ i, (X i).Opens)
+    (i₀ : ι) (hV : V i₀ ≠ ⊤)
+    (hcov : PointwiseCoverage C (fun i => restrictChart (f i) (V i))) :
+    ∃ (W : (X i₀).Opens) (i : ι) (x : (W : Scheme.{u}) ⟶ X i),
+      (f i).app (op (W : Scheme.{u})) x
+          = (f i₀).app (op (W : Scheme.{u})) (W.ι) ∧
+        (i ≠ i₀ ∨ ¬ Function.Injective ((f i₀).app (op (W : Scheme.{u})))) := by
+  classical
+  obtain ⟨t, htV⟩ : ∃ t : X i₀, t ∉ V i₀ := by
+    by_contra hc
+    exact hV (top_le_iff.mp fun t _ => not_not.mp fun ht => hc ⟨t, ht⟩)
+  obtain ⟨W, htW, i, x, hx⟩ := hcov (X i₀) ((f i₀).app (op (X i₀)) (𝟙 (X i₀))) t
+  have hxv : (f i).app (op (W : Scheme.{u})) (x ≫ (V i).ι)
+      = (f i₀).app (op (W : Scheme.{u})) (W.ι) := by
+    rw [show (W.ι : (W : Scheme.{u}) ⟶ X i₀) = W.ι ≫ 𝟙 (X i₀) from (Category.comp_id _).symm,
+      ← chart_map_ι_apply (f i₀) W (𝟙 (X i₀))]
+    exact hx
+  refine ⟨W, i, x ≫ (V i).ι, hxv, ?_⟩
+  by_cases hi : i = i₀
+  · subst hi
+    -- same index: the two points differ at `t`, so the chart is not injective there
+    refine Or.inr fun hinj => ?_
+    have heq := hinj hxv
+    have hmem : ((x ≫ (V i).ι).base ⟨t, htW⟩ : X i) ∈ V i := (x.base ⟨t, htW⟩).2
+    rw [show ((x ≫ (V i).ι).base ⟨t, htW⟩ : X i) = (W.ι.base ⟨t, htW⟩ : X i) from by rw [heq]]
+      at hmem
+    exact htV (by simpa using hmem)
+  · exact Or.inl hi
+
 /-- **The contrapositive, in the form the fork's positive branch reads**: an index-separated
 family all of whose charts are injective admits coverage at no proper `V`. -/
 theorem not_pointwiseCoverage_of_jointlyInjective_of_ne_top {ι : Type u} {X : ι → Scheme.{u}}
@@ -229,6 +284,66 @@ theorem not_pointwiseCoverage_of_jointlyInjective_of_ne_top {ι : Type u} {X : �
     (i₀ : ι) (hV : V i₀ ≠ ⊤) (hinj : JointlyInjective C f) :
     ¬ PointwiseCoverage C (fun i => restrictChart (f i) (V i)) :=
   fun hcov => not_jointlyInjective_of_pointwiseCoverage_of_ne_top C f V i₀ hV hcov hinj
+
+/-! ## The composition at the atlas the seam actually consumes
+
+Everything above is about an arbitrary family.  This section instantiates it at
+`mixedParamChart`, which is the family `pic0RepresentableBy_of_restrictedChartFibre`
+(`Pic0ChartRestrictedFibre.lean:259`) takes — so the statements are about the atlas the
+assembly uses rather than about a one-chart stand-in. -/
+
+variable {π : C.left ⟶ P1 k} [IsAffineHom π]
+
+variable (C π) in
+/-- **The dichotomy at `mixedParamChart`**, i.e. at the real atlas.
+
+`mixedParamChart` is `restrictChart` of `abelSigmaChart` applied pointwise, so the coverage
+hypothesis here is literally the `PointwiseCoverage` of the family the seam consumes.  The
+conclusion is the dichotomy of
+`exists_crossing_or_not_injective_of_pointwiseCoverage_of_ne_top`, read at the Abel charts.
+
+This is what makes the multi-index measurement bear on the campaign rather than on an
+abstraction: the tree's `V`-interval refutations are all at `ι := PUnit`, and this says what
+survives at the `ι` the assembly quantifies over — a disjunction, with the crossing alternative
+live by `not_indexSeparated_duplicated`. -/
+theorem exists_crossing_or_not_injective_mixedParamChart {ι : Type u} (nn : ι → ℕ)
+    (D : ι → Over (Spec (.of k)))
+    (rep : ∀ i, (divFunctor C π (nn i)).RepresentableBy (D i))
+    (m : ι → ℕ) (Z : ι → (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : ∀ i, Scheme.CurveDivisor.deg k (Z i)
+      = (m i : ℤ) * classDeg k (thetaCechClass C) - (nn i : ℤ))
+    (V : ∀ i, (D i).left.Opens) (i₀ : ι) (hV : V i₀ ≠ ⊤)
+    (hcov : PointwiseCoverage C (mixedParamChart C π nn D rep m Z hdeg V)) :
+    ∃ (W : (D i₀).left.Opens) (i : ι) (x : (W : Scheme.{u}) ⟶ (D i).left),
+      (abelSigmaChart C π (nn i) (rep i) (m i) (Z i) (hdeg i)).app
+            (op (W : Scheme.{u})) x
+          = (abelSigmaChart C π (nn i₀) (rep i₀) (m i₀) (Z i₀) (hdeg i₀)).app
+            (op (W : Scheme.{u})) (W.ι) ∧
+        (i ≠ i₀ ∨ ¬ Function.Injective
+          ((abelSigmaChart C π (nn i₀) (rep i₀) (m i₀) (Z i₀) (hdeg i₀)).app
+            (op (W : Scheme.{u})))) :=
+  exists_crossing_or_not_injective_of_pointwiseCoverage_of_ne_top C
+    (fun i => abelSigmaChart C π (nn i) (rep i) (m i) (Z i) (hdeg i)) V i₀ hV hcov
+
+variable (C π) in
+/-- **The positive branch at the real atlas**: an index-separated Abel atlas all of whose charts
+are injective supports coverage at no proper `V i₀`.
+
+At `ι := PUnit` this is `not_pointwiseCoverage_of_injective_of_ne_top`
+(`Pic0ChartCoverForcesNonInj.lean`), whose index-separation premise is free there.  At the real
+`ι` the premise is an extra obligation on the atlas, and the point of this file is that no
+landed fact supplies it. -/
+theorem not_pointwiseCoverage_mixedParamChart_of_jointlyInjective {ι : Type u} (nn : ι → ℕ)
+    (D : ι → Over (Spec (.of k)))
+    (rep : ∀ i, (divFunctor C π (nn i)).RepresentableBy (D i))
+    (m : ι → ℕ) (Z : ι → (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : ∀ i, Scheme.CurveDivisor.deg k (Z i)
+      = (m i : ℤ) * classDeg k (thetaCechClass C) - (nn i : ℤ))
+    (V : ∀ i, (D i).left.Opens) (i₀ : ι) (hV : V i₀ ≠ ⊤)
+    (hinj : JointlyInjective C
+      (fun i => abelSigmaChart C π (nn i) (rep i) (m i) (Z i) (hdeg i))) :
+    ¬ PointwiseCoverage C (mixedParamChart C π nn D rep m Z hdeg V) :=
+  not_pointwiseCoverage_of_jointlyInjective_of_ne_top V i₀ hV hinj
 
 /-! ## The negative answer: index separation is not free, so the no-go does not propagate -/
 
