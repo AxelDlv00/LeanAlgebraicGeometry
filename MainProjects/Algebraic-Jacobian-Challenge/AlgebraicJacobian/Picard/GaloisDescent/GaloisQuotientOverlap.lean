@@ -1477,6 +1477,21 @@ instance gluedQuotientBaseChangeLift_isIso
   rw [← (quotientChartBaseChange_isPullback ρ i).flip.isoPullback_hom_snd]
   infer_instance
 
+/-- The inverse global base-change isomorphism intertwines the given action
+with the canonical action on the base change. -/
+theorem gluedQuotientBaseChangeLift_isEquivariant
+    [FiniteDimensional K L] [IsGalois K L] [HasStableAffineCover K L ρ] :
+    ρ.IsEquivariant (pullbackSemilinearGalAction K L (gluedQuotientMap ρ))
+      (gluedQuotientBaseChangeLift ρ) := by
+  intro gamma
+  apply pullback.hom_ext
+  · simp only [Category.assoc, gluedQuotientBaseChangeLift_fst,
+      pullbackSemilinearGalAction_act_hom, pullbackGalMap_fst]
+    exact act_hom_gluedQuotientProjection ρ gamma
+  · simp only [Category.assoc, gluedQuotientBaseChangeLift_snd,
+      pullbackSemilinearGalAction_act_hom, pullbackGalMap_snd]
+    exact ρ.compat gamma
+
 /-- The global base-change isomorphism, oriented from the base-changed glued
 quotient to the original acted scheme. -/
 noncomputable def gluedQuotientBaseChangeIso
@@ -1490,6 +1505,29 @@ theorem gluedQuotientBaseChangeIso_inv
     [FiniteDimensional K L] [IsGalois K L] [HasStableAffineCover K L ρ] :
     (gluedQuotientBaseChangeIso ρ).inv =
       gluedQuotientBaseChangeLift ρ := rfl
+
+/-- The global base-change isomorphism lies over `Spec L`. -/
+@[reassoc]
+theorem gluedQuotientBaseChangeIso_hom_f
+    [FiniteDimensional K L] [IsGalois K L] [HasStableAffineCover K L ρ] :
+    (gluedQuotientBaseChangeIso ρ).hom ≫ f =
+      pullback.snd (gluedQuotientMap ρ)
+        (Spec.map (CommRingCat.ofHom (algebraMap K L))) := by
+  rw [← cancel_epi (gluedQuotientBaseChangeIso ρ).inv]
+  simp only [Category.assoc, Iso.inv_hom_id_assoc,
+    gluedQuotientBaseChangeIso_inv, gluedQuotientBaseChangeLift_snd]
+
+/-- The global base-change isomorphism is Galois-equivariant. -/
+theorem gluedQuotientBaseChangeIso_isEquivariant
+    [FiniteDimensional K L] [IsGalois K L] [HasStableAffineCover K L ρ] :
+    (pullbackSemilinearGalAction K L (gluedQuotientMap ρ)).IsEquivariant ρ
+      (gluedQuotientBaseChangeIso ρ).hom := by
+  intro gamma
+  rw [← cancel_epi (gluedQuotientBaseChangeIso ρ).inv]
+  simp only [Category.assoc, Iso.inv_hom_id, Category.id_comp,
+    gluedQuotientBaseChangeIso_inv]
+  rw [← Category.assoc, ← gluedQuotientBaseChangeLift_isEquivariant]
+  simp
 
 /-- The glued quotient as an object over `Spec K`, in the exact category used
 by Picard representability. -/
