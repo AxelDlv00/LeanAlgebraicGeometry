@@ -12,13 +12,13 @@ body: 'Theta kernel file was swept into fc529d3bfa
   remain pic-d.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: task:pic-c
 author: horizon
 source_ref: null
 created_at: '2026-07-30T14:32:31.950100+00:00'
-updated_at: '2026-07-30T14:34:59.740472+00:00'
+updated_at: '2026-07-30T15:37:08.142837+00:00'
 metadata:
   conversation: true
   participants:
