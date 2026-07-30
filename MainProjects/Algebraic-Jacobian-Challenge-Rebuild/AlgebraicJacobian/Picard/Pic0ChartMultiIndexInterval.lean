@@ -96,6 +96,11 @@ load-bearing rather than decorative.
 * `AlgebraicGeometry.jointlyInjective_singleSpecFamily` — the non-vacuity check: joint
   injectivity is inhabited, so the refutation above is about the *index* and not about the
   Σ-sheaf admitting no injective family at all.
+* `AlgebraicGeometry.UniformCoverage` and
+  `AlgebraicGeometry.not_injective_of_uniformCoverage_of_ne_top` — **the useful half**: the
+  no-go *does* propagate when coverage returns one prescribed index, which is the shape a
+  chart with full locus supplies.  So the multi-index escape is available exactly to atlases
+  whose coverage genuinely uses several charts.
 -/
 
 set_option autoImplicit false
@@ -344,6 +349,80 @@ theorem not_pointwiseCoverage_mixedParamChart_of_jointlyInjective {ι : Type u} 
       (fun i => abelSigmaChart C π (nn i) (rep i) (m i) (Z i) (hdeg i))) :
     ¬ PointwiseCoverage C (mixedParamChart C π nn D rep m Z hdeg V) :=
   not_pointwiseCoverage_of_jointlyInjective_of_ne_top V i₀ hV hinj
+
+/-! ## The second way to close the crossing alternative: a uniform index
+
+Index separation is one way to rule out the crossing alternative, and
+`not_indexSeparated_duplicated` shows an overlapping atlas does not supply it.  There is a
+second, and it is the one a coverage lane can actually produce: coverage that always returns
+*the same* index.  That is what a chart whose locus is the whole test gives, so this section is
+the joint with the coverage side rather than with the injectivity side. -/
+
+variable (C) in
+/-- **Coverage at a fixed index**: the pointwise coverage datum, strengthened to return one
+prescribed index `i₀` at every test and point.
+
+This is the shape a *uniform* chart supplies — a single index whose chart locus is everything —
+as opposed to the plain `PointwiseCoverage`, which is free to choose an index per point. -/
+def UniformCoverage {ι : Type u} {X : ι → Scheme.{u}}
+    (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1) (i₀ : ι) : Prop :=
+  ∀ (T : Scheme.{u}) (s : (pic0SigmaSheaf C).1.obj (op T)) (t : ↥T),
+    ∃ (W : T.Opens) (_ : t ∈ W) (x : (W : Scheme.{u}) ⟶ X i₀),
+      (f i₀).app (op (W : Scheme.{u})) x = (pic0SigmaSheaf C).1.map (W.ι).op s
+
+/-- A uniform coverage datum is in particular a pointwise one. -/
+theorem pointwiseCoverage_of_uniformCoverage {ι : Type u} {X : ι → Scheme.{u}}
+    {f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1} {i₀ : ι}
+    (h : UniformCoverage C f i₀) : PointwiseCoverage C f := by
+  intro T s t
+  obtain ⟨W, htW, x, hx⟩ := h T s t
+  exact ⟨W, htW, i₀, x, hx⟩
+
+variable (C) in
+/-- **THE CROSSING ALTERNATIVE IS CLOSED BY A UNIFORM INDEX**, so the one-chart no-go *does*
+propagate to a multi-index atlas whose coverage is uniform: at a proper `V i₀`, uniform coverage
+for the restricted family refutes injectivity of `f i₀` on some test.
+
+The proof is the one-chart argument with the index supplied by hypothesis rather than by
+`Subsingleton ι`, which is the honest replacement for the premise
+`not_indexSeparated_duplicated` rules out.
+
+**This is the useful half of the multi-index measurement.**  It says which coverage results
+reinstate the no-go: not the ones that merely cover, but the ones that cover *at one named
+chart* — a chart whose locus is the whole test.  A coverage lane producing such a chart is
+therefore also producing the `⊤`-end refutation for the real atlas, and cannot treat the two as
+independent wins. -/
+theorem not_injective_of_uniformCoverage_of_ne_top {ι : Type u} {X : ι → Scheme.{u}}
+    (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1) (V : ∀ i, (X i).Opens)
+    (i₀ : ι) (hV : V i₀ ≠ ⊤)
+    (hcov : UniformCoverage C (fun i => restrictChart (f i) (V i)) i₀) :
+    ∃ S : Scheme.{u}ᵒᵖ, ¬ Function.Injective ((f i₀).app S) := by
+  obtain ⟨t, htV⟩ : ∃ t : X i₀, t ∉ V i₀ := by
+    by_contra hc
+    exact hV (top_le_iff.mp fun t _ => not_not.mp fun ht => hc ⟨t, ht⟩)
+  obtain ⟨W, htW, x, hx⟩ := hcov (X i₀) ((f i₀).app (op (X i₀)) (𝟙 (X i₀))) t
+  refine ⟨op (W : Scheme.{u}), fun hinj => ?_⟩
+  have hxv : (f i₀).app (op (W : Scheme.{u})) (x ≫ (V i₀).ι)
+      = (f i₀).app (op (W : Scheme.{u})) (W.ι ≫ 𝟙 (X i₀)) := by
+    rw [← chart_map_ι_apply (f i₀) W (𝟙 (X i₀))]
+    exact hx
+  have heq := hinj hxv
+  have hmem : ((x ≫ (V i₀).ι).base ⟨t, htW⟩ : X i₀) ∈ V i₀ := (x.base ⟨t, htW⟩).2
+  rw [show ((x ≫ (V i₀).ι).base ⟨t, htW⟩ : X i₀)
+      = ((W.ι ≫ 𝟙 (X i₀)).base ⟨t, htW⟩ : X i₀) from by rw [heq]] at hmem
+  exact htV (by simpa using hmem)
+
+variable (C) in
+/-- **The contrapositive at a uniform index**: an injective chart admits uniform coverage at no
+proper `V`, whatever the ambient index type. -/
+theorem not_uniformCoverage_of_injective_of_ne_top {ι : Type u} {X : ι → Scheme.{u}}
+    (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1) (V : ∀ i, (X i).Opens)
+    (i₀ : ι) (hV : V i₀ ≠ ⊤)
+    (hinj : ∀ S : Scheme.{u}ᵒᵖ, Function.Injective ((f i₀).app S)) :
+    ¬ UniformCoverage C (fun i => restrictChart (f i) (V i)) i₀ := by
+  intro hcov
+  obtain ⟨S, hS⟩ := not_injective_of_uniformCoverage_of_ne_top C f V i₀ hV hcov
+  exact hS (hinj S)
 
 /-! ## The negative answer: index separation is not free, so the no-go does not propagate -/
 
