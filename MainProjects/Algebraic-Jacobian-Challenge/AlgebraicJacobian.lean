@@ -119,6 +119,7 @@ import AlgebraicJacobian.Picard.FiberRankSemicontinuity
 import AlgebraicJacobian.Picard.TwoTermKernelSemicontinuity
 import AlgebraicJacobian.Picard.FiberH0Comparison
 import AlgebraicJacobian.Picard.FiberH0CechKernel
+import AlgebraicJacobian.Picard.H0SemicontinuityInstance
 -- Milne §I.1 Cor 1.2 and 1.4 over an ARBITRARY base field: the two geometric inputs the
 -- (already field-agnostic) Albanese engine consumes, with the `IsAlgClosed` binder removed.
 import AlgebraicJacobian.Albanese.AVRigidityArbitraryField
@@ -236,6 +237,7 @@ import AlgebraicJacobian.Picard.InvertibleGrBridge
 import AlgebraicJacobian.Picard.GradedPiecesFinite
 import AlgebraicJacobian.Picard.ChartSectionsFinite
 import AlgebraicJacobian.Picard.ProjectiveMorphism
+import AlgebraicJacobian.Picard.FiniteMorphismEmbedding
 import AlgebraicJacobian.Picard.SerreFiniteness
 import AlgebraicJacobian.Picard.ZariskiDescentRepresentability
 import AlgebraicJacobian.Picard.GrassmannianZariskiSheaf
@@ -364,6 +366,7 @@ import AlgebraicJacobian.Picard.GaloisDescent.GaloisSelfTensor
 -- converse is an implication whose one named antecedent is that the `Gal`-indexed
 -- sections generate a covering sieve.
 import AlgebraicJacobian.Picard.GaloisDescent.PicEtGaloisBridge
+import AlgebraicJacobian.Picard.GaloisDescent.PicEtGaloisCover
 import AlgebraicJacobian.Picard.GaloisDescent.PicEtGaloisAction
 import AlgebraicJacobian.Albanese.AlbaneseUP
 import AlgebraicJacobian.Albanese.AuslanderBuchsbaum
