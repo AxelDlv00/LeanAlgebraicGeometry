@@ -138,6 +138,7 @@ import AlgebraicJacobian.Picard.GaloisQuotientGlue
 import AlgebraicJacobian.Picard.GaloisDescent.InvariantQuotientOpen
 import AlgebraicJacobian.Picard.GaloisDescent.GaloisQuotientUniqueness
 import AlgebraicJacobian.Picard.GaloisDescent.GaloisQuotientRestrict
+import AlgebraicJacobian.Picard.GaloisDescent.GaloisQuotientOverlap
 import AlgebraicJacobian.Picard.GaloisQuotientAffineGeneral
 import AlgebraicJacobian.Picard.LineBundlePullback
 import AlgebraicJacobian.Picard.TensorObjSubstrate
