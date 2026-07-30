@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.FiniteMapProjectiveImmersion
+import AlgebraicJacobian.Picard.ProjectiveMorphism
 import AlgebraicJacobian.RiemannRoch.Adelic.P1ChartData
 import AlgebraicJacobian.RiemannRoch.Adelic.NonconstantToP1
 import AlgebraicJacobian.Curve.GeometricallyReduced
@@ -47,6 +48,16 @@ theorem isProjective_of_smoothProperGeometricallyIntegral
   haveI : HasFiniteMapToP1 C := inferInstance
   exact isProjective_of_hasFiniteMapToP1 C
 
+/-- At the scheme universe supported by `IsProjectiveWith`, a smooth proper
+geometrically integral relative curve carries a relatively very ample line
+bundle, with no hypothesis beyond the curve's own. -/
+theorem exists_isProjectiveWith_of_smoothProperGeometricallyIntegral
+    {k₀ : Type} [Field k₀] (C : Over (Spec (CommRingCat.of k₀)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] :
+    ∃ L : C.left.Modules, C.hom.IsProjectiveWith L :=
+  (isProjective_of_smoothProperGeometricallyIntegral C).exists_isProjectiveWith
+
 /-- Projectivity under exactly the smooth, proper, geometrically irreducible
 curve hypotheses used by the algebraic Jacobian challenge. -/
 theorem isProjective_of_smoothProperGeometricallyIrreducible
@@ -56,5 +67,15 @@ theorem isProjective_of_smoothProperGeometricallyIrreducible
   letI : GeometricallyIntegral C.hom :=
     SmoothOfRelativeDimension.geometricallyIntegral 1 C.hom
   exact isProjective_of_smoothProperGeometricallyIntegral C
+
+/-- At the scheme universe supported by `IsProjectiveWith`, the carried
+relatively very ample line bundle under exactly the smooth, proper,
+geometrically irreducible hypotheses used by the Jacobian challenge. -/
+theorem exists_isProjectiveWith_of_smoothProperGeometricallyIrreducible
+    {k₀ : Type} [Field k₀] (C : Over (Spec (CommRingCat.of k₀)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIrreducible C.hom] :
+    ∃ L : C.left.Modules, C.hom.IsProjectiveWith L :=
+  (isProjective_of_smoothProperGeometricallyIrreducible C).exists_isProjectiveWith
 
 end AlgebraicGeometry.Adelic

@@ -1,0 +1,54 @@
+id: I-1605
+provider: local
+kind: info
+body: 'CLAIM pic-c (0092 r5): AJCR.w4-rep.datum.pic0-affine-reduction -- I am reducing
+  the forall-T binder of the pic0 vanishing to affine tests, DIRECTLY for pic0 (not
+  via picEt).
+
+
+  WHY THIS AND NOT A CHART ROW. Both live routes to a rep producer meet at ONE hypothesis
+  with zero producers: hvan = ''forall S, Subsingleton (pic0Subgroup C S)''. My r4
+  isLocallySurjective_abelSigmaChartZero_iff makes the seam''s COVERAGE antecedent
+  equivalent to it at parameter 0; Pic0VanishingRoute.jacobianData_of_subsingleton
+  consumes it with no atlas, chart or coverage. I-1603 prices its forall-T binder
+  as ''the whole difficulty'' and says a base-field-only computation does not discharge
+  it. So the binder itself is the target.
+
+
+  WHAT EXISTS AND WHY IT IS NOT THIS. subsingleton_picEt_of_affine (Pic0VanishingRoute.lean:250)
+  reduces the picEt quantifier to test rings and HAS its converse (:268). But subsingleton_pic0_of_affine
+  (:283) runs ONE WAY only, and its own docstring says the picEt hypothesis is strictly
+  stronger and false wherever a degree-one class exists -- i.e. at every curve of
+  interest, including P1. So the landed reduction cannot be used on the hypothesis
+  anyone actually needs.
+
+
+  NO OVERLAP: pic-d holds divrep.u2, pic-g holds p1-witness, pic-h holds overlap-cocycle.
+  chart-restrict is active/unowned and I am NOT taking it. I am not touching the coverage
+  spreading-out residue (Pic0ChartCoverageSlice.lean:221-228) which is the atlas route''s
+  real gap.
+
+
+  I will report whether the reduction is an EQUIVALENCE or only sufficient, and will
+  not call it closed if the affine-test form is itself unproduced.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T20:54:05.182820+00:00'
+updated_at: '2026-07-30T20:56:39.554468+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0012-horizon-pic-c
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-h

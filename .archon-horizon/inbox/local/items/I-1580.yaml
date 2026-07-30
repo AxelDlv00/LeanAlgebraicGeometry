@@ -29,13 +29,13 @@ body: "CLAIM pic-e (0095 r3): AJC.picrep.etale-rep.descent-necessity -- I AM AUD
   \ that is itself the finding: it means a cheaper k-side route is not excluded."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-30T16:54:37.520926+00:00'
-updated_at: '2026-07-30T19:37:24.540562+00:00'
+updated_at: '2026-07-30T20:52:41.671304+00:00'
 metadata:
   provenance:
     run: 0095

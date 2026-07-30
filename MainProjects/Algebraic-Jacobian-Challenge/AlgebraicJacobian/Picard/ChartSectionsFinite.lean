@@ -220,21 +220,23 @@ theorem quasiSeparatedSpace (h : π.IsProjectiveWith L) [QuasiSeparatedSpace S] 
   exact quasiSeparatedSpace_of_quasiSeparated π
 
 /-- **D1 on the projective charts** (Stacks 01PC).  For a projective `π` carrying
-`L`, realised by a closed immersion `i : X ⟶ ℙ(Fin (d+1); S)`, and a finitely
+`L`, realised by a closed immersion `i : X ⟶ ℙ(n; S)` for a finite coordinate
+type `n`, and a finitely
 presented `F`, the section module of `F` over the preimage `i ⁻¹ᵁ V` of any affine
 open `V` of the ambient projective space is a finite `Γ(X, i ⁻¹ᵁ V)`-module.  In
 particular this applies to the standard coordinate charts `Uᵢ = i ⁻¹ᵁ D₊(xᵢ)`,
 which are affine because a closed immersion is an affine morphism.  Existential in
-the embedding data (`i`, `d`) recorded by `IsProjectiveWith`. -/
+the embedding data (`i`, `n`) recorded by `IsProjectiveWith`. -/
 theorem finite_sections_chart (h : π.IsProjectiveWith L) (F : X.Modules)
     [F.IsFinitePresentation] :
-    ∃ (d : ℕ) (i : X ⟶ ℙ(Fin (d + 1); S)), IsClosedImmersion i ∧
-      i ≫ (ℙ(Fin (d + 1); S) ↘ S) = π ∧
-      ∀ V : (ℙ(Fin (d + 1); S)).Opens, IsAffineOpen V →
+    ∃ (n : Type) (_ : Finite n) (i : X ⟶ ℙ(n; S)), IsClosedImmersion i ∧
+      i ≫ (ℙ(n; S) ↘ S) = π ∧
+      ∀ V : (ℙ(n; S)).Opens, IsAffineOpen V →
         Module.Finite Γ(X, i ⁻¹ᵁ V) Γ(F, i ⁻¹ᵁ V) := by
-  obtain ⟨d, i, hi, hcomp, he⟩ := h
+  obtain ⟨n, hn, i, hi, hcomp, he⟩ := h
+  letI : Finite n := hn
   haveI := hi
-  exact ⟨d, i, hi, hcomp, fun V hV =>
+  exact ⟨n, inferInstance, i, hi, hcomp, fun V hV =>
     Scheme.Modules.finite_sections_preimage_of_isAffineHom i F hV⟩
 
 /-! ## The section-localisation engine on a projective total space -/

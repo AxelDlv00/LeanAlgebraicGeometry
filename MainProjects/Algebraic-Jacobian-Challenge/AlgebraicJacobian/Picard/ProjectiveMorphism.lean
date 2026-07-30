@@ -21,8 +21,8 @@ vocabulary.  Following the encoding settled in inbox `I-0118` (comment
 * `ProjectiveSpace.twistingSheafBaseChange` — `O(m)` commutes with base
   change of the ambient projective space;
 * `Scheme.Hom.IsProjectiveWith π L` — the **projective-with-`L`** predicate:
-  `π : X ⟶ S` factors through a closed immersion `i : X ↪ ℙ(Fin (d+1); S)`
-  over `S` with `L ≅ i^* O(1)`;
+  `π : X ⟶ S` factors through a closed immersion `i : X ↪ ℙ(n; S)` for a
+  finite coordinate type `n`, over `S` with `L ≅ i^* O(1)`;
 
 with the stability facts the Quot-scheme endgame consumes:
 
@@ -69,16 +69,32 @@ def twistingSheafBaseChange (g : S' ⟶ S) (m : ℕ) :
 end ProjectiveSpace
 
 /-- `π : X ⟶ S` is a **projective morphism carrying the line bundle `L`**
-([Nitsure] §5, [EGA II] 5.5): there are a closed immersion
-`i : X ↪ ℙ(Fin (d+1); S)` over `S` and an isomorphism of `L` with the
+([Nitsure] §5, [EGA II] 5.5): there are a finite coordinate type `n`, a closed
+immersion `i : X ↪ ℙ(n; S)` over `S`, and an isomorphism of `L` with the
 pullback of the Serre twist `O(1)`.  This is the faithful encoding of
 "projective with relatively very ample `L`" settled in inbox `I-0118`. -/
 def Scheme.Hom.IsProjectiveWith {X S : Scheme.{0}} (π : X ⟶ S) (L : X.Modules) :
     Prop :=
-  ∃ (d : ℕ) (i : X ⟶ ℙ(Fin (d + 1); S)),
-    IsClosedImmersion i ∧ i ≫ (ℙ(Fin (d + 1); S) ↘ S) = π ∧
+  ∃ (n : Type) (_ : Finite n) (i : X ⟶ ℙ(n; S)),
+    IsClosedImmersion i ∧ i ≫ (ℙ(n; S) ↘ S) = π ∧
       Nonempty (L ≅ (Scheme.Modules.pullback i).obj
-        (ProjectiveSpace.twistingSheaf (Fin (d + 1)) S 1))
+        (ProjectiveSpace.twistingSheaf n S 1))
+
+namespace Scheme.Hom.IsProjective
+
+variable {X S : Scheme.{0}} {π : X ⟶ S}
+
+/-- Every projective morphism carries a relatively very ample line bundle: choose the
+pullback of `O(1)` along the closed immersion in the `IsProjective` witness. -/
+theorem exists_isProjectiveWith (h : π.IsProjective) :
+    ∃ L : X.Modules, π.IsProjectiveWith L := by
+  obtain ⟨n, hn, i, hi, hcomp⟩ := h
+  letI : Finite n := hn
+  let L := (Scheme.Modules.pullback i).obj
+    (ProjectiveSpace.twistingSheaf n S 1)
+  exact ⟨L, n, inferInstance, i, hi, hcomp, ⟨Iso.refl _⟩⟩
+
+end Scheme.Hom.IsProjective
 
 namespace Scheme.Hom.IsProjectiveWith
 
@@ -86,8 +102,8 @@ variable {X S : Scheme.{0}} {π : X ⟶ S} {L : X.Modules}
 
 /-- Forget the chosen very ample line bundle from a projective morphism. -/
 theorem isProjective (h : π.IsProjectiveWith L) : π.IsProjective := by
-  obtain ⟨d, i, hi, hcomp, -⟩ := h
-  exact ⟨Fin (d + 1), inferInstance, i, hi, hcomp⟩
+  obtain ⟨n, hn, i, hi, hcomp, -⟩ := h
+  exact ⟨n, hn, i, hi, hcomp⟩
 
 /-- **Projective morphisms are proper**: a closed immersion is proper, the
 structural morphism of projective space is proper, and properness is stable
@@ -118,8 +134,8 @@ is projective carrying `L'`.  Useful for consumers that only have the bundle up
 to isomorphism. -/
 theorem of_iso (h : π.IsProjectiveWith L) {L' : X.Modules} (e : L ≅ L') :
     π.IsProjectiveWith L' := by
-  obtain ⟨d, i, hi, hcomp, ⟨eL⟩⟩ := h
-  exact ⟨d, i, hi, hcomp, ⟨e.symm ≪≫ eL⟩⟩
+  obtain ⟨n, hn, i, hi, hcomp, ⟨eL⟩⟩ := h
+  exact ⟨n, hn, i, hi, hcomp, ⟨e.symm ≪≫ eL⟩⟩
 
 /-- **Composition with a closed immersion**: if `π` is projective carrying
 `L` and `j` is a closed immersion into `X`, then `j ≫ π` is projective
@@ -127,19 +143,20 @@ carrying `j^* L`. -/
 theorem comp_isClosedImmersion (h : π.IsProjectiveWith L) {Y : Scheme.{0}}
     (j : Y ⟶ X) [IsClosedImmersion j] :
     (j ≫ π).IsProjectiveWith ((Scheme.Modules.pullback j).obj L) := by
-  obtain ⟨d, i, hi, hcomp, ⟨e⟩⟩ := h
+  obtain ⟨n, hn, i, hi, hcomp, ⟨e⟩⟩ := h
+  letI : Finite n := hn
   haveI := hi
-  refine ⟨d, j ≫ i, inferInstance, by rw [Category.assoc, hcomp], ?_⟩
+  refine ⟨n, inferInstance, j ≫ i, inferInstance, by rw [Category.assoc, hcomp], ?_⟩
   exact ⟨(Scheme.Modules.pullback j).mapIso e ≪≫
     Scheme.pullbackTriangleIso (rfl : j ≫ i = j ≫ i)
-      (ProjectiveSpace.twistingSheaf (Fin (d + 1)) S 1)⟩
+      (ProjectiveSpace.twistingSheaf n S 1)⟩
 
 /-- The comparison morphism from the base-changed total space into the
 base-changed projective space. -/
-private def baseChangeLift {S' : Scheme.{0}} (g : S' ⟶ S) {d : ℕ}
-    (i : X ⟶ ℙ(Fin (d + 1); S)) (hcomp : i ≫ (ℙ(Fin (d + 1); S) ↘ S) = π) :
-    pullback π g ⟶ ℙ(Fin (d + 1); S') :=
-  (ProjectiveSpace.isPullback_map (Fin (d + 1)) g).lift
+private def baseChangeLift {S' : Scheme.{0}} (g : S' ⟶ S) {n : Type} [Finite n]
+    (i : X ⟶ ℙ(n; S)) (hcomp : i ≫ (ℙ(n; S) ↘ S) = π) :
+    pullback π g ⟶ ℙ(n; S') :=
+  (ProjectiveSpace.isPullback_map n g).lift
     (pullback.fst π g ≫ i) (pullback.snd π g)
     (by rw [Category.assoc, hcomp, pullback.condition])
 
@@ -149,36 +166,37 @@ carrying the pullback of `L`. -/
 theorem baseChange (h : π.IsProjectiveWith L) {S' : Scheme.{0}} (g : S' ⟶ S) :
     (pullback.snd π g).IsProjectiveWith
       ((Scheme.Modules.pullback (pullback.fst π g)).obj L) := by
-  obtain ⟨d, i, hi, hcomp, ⟨e⟩⟩ := h
+  obtain ⟨n, hn, i, hi, hcomp, ⟨e⟩⟩ := h
+  letI : Finite n := hn
   haveI := hi
-  refine ⟨d, baseChangeLift g i hcomp, ?_, ?_, ?_⟩
+  refine ⟨n, inferInstance, baseChangeLift g i hcomp, ?_, ?_, ?_⟩
   · -- the comparison square exhibits the lift as the base change of `i`
-    have h1 : baseChangeLift g i hcomp ≫ (ℙ(Fin (d + 1); S') ↘ S')
+    have h1 : baseChangeLift g i hcomp ≫ (ℙ(n; S') ↘ S')
         = pullback.snd π g := IsPullback.lift_snd _ _ _ _
     have hsq : IsPullback (baseChangeLift g i hcomp) (pullback.fst π g)
-        (ProjectiveSpace.map (Fin (d + 1)) g) i := by
+        (ProjectiveSpace.map n g) i := by
       have hbig : IsPullback
-          (baseChangeLift g i hcomp ≫ (ℙ(Fin (d + 1); S') ↘ S'))
-          (pullback.fst π g) g (i ≫ (ℙ(Fin (d + 1); S) ↘ S)) := by
+          (baseChangeLift g i hcomp ≫ (ℙ(n; S') ↘ S'))
+          (pullback.fst π g) g (i ≫ (ℙ(n; S) ↘ S)) := by
         rw [h1, hcomp]
         exact (IsPullback.of_hasPullback π g).flip
       exact IsPullback.of_right hbig
         (IsPullback.lift_fst _ _ _ _)
-        (ProjectiveSpace.isPullback_map (Fin (d + 1)) g).flip
+        (ProjectiveSpace.isPullback_map n g).flip
     exact MorphismProperty.of_isPullback hsq.flip hi
   · exact IsPullback.lift_snd _ _ _ _
   · refine ⟨(Scheme.Modules.pullback (pullback.fst π g)).mapIso e ≪≫
       Scheme.pullbackTriangleIso (IsPullback.lift_fst _ _ _ _ :
-        baseChangeLift g i hcomp ≫ ProjectiveSpace.map (Fin (d + 1)) g
+        baseChangeLift g i hcomp ≫ ProjectiveSpace.map n g
           = pullback.fst π g ≫ i).symm
-        (ProjectiveSpace.twistingSheaf (Fin (d + 1)) S 1) ≪≫ ?_⟩
+        (ProjectiveSpace.twistingSheaf n S 1) ≪≫ ?_⟩
     -- collapse `(lift ≫ map)^* O(1)` to `lift^* (map^* O(1))`, then use the
     -- base-change isomorphism of the twist
     exact (Scheme.pullbackTriangleIso
-        (rfl : baseChangeLift g i hcomp ≫ ProjectiveSpace.map (Fin (d + 1)) g
-          = _) (ProjectiveSpace.twistingSheaf (Fin (d + 1)) S 1)).symm ≪≫
+        (rfl : baseChangeLift g i hcomp ≫ ProjectiveSpace.map n g
+          = _) (ProjectiveSpace.twistingSheaf n S 1)).symm ≪≫
       (Scheme.Modules.pullback (baseChangeLift g i hcomp)).mapIso
-        (ProjectiveSpace.twistingSheafBaseChange (Fin (d + 1)) g 1)
+        (ProjectiveSpace.twistingSheafBaseChange n g 1)
 
 end Scheme.Hom.IsProjectiveWith
 
@@ -191,7 +209,7 @@ projective**, carrying the Serre twist `O(1)`: the canonical inhabitant of
 predicate is non-vacuous. -/
 theorem isProjectiveWith_over (d : ℕ) (S : Scheme.{0}) :
     (ℙ(Fin (d + 1); S) ↘ S).IsProjectiveWith (twistingSheaf (Fin (d + 1)) S 1) :=
-  ⟨d, 𝟙 _, inferInstance, Category.id_comp _,
+  ⟨Fin (d + 1), inferInstance, 𝟙 _, inferInstance, Category.id_comp _,
     ⟨((Scheme.Modules.pullbackId _).app _).symm⟩⟩
 
 end ProjectiveSpace

@@ -1,0 +1,37 @@
+id: AJCR.w4-rep.datum.pic0-affine-reduction
+title: 'PIC0-AFFINE-REDUCTION: reduce the forall-T binder of the pic0 vanishing to
+  test RINGS'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'CLAIMED pic-c (0092 r5). The hypothesis ''forall T, Subsingleton (pic0Subgroup
+  C T)'' is where BOTH live routes to a rep producer meet: Pic0ChartSeamPairDecided.isLocallySurjective_abelSigmaChartZero_iff
+  makes the seam''s coverage antecedent EQUIVALENT to it at parameter 0, and Pic0VanishingRoute.jacobianData_of_subsingleton
+  consumes it with no atlas. It has ZERO producers. I-1603 prices its forall-T binder
+  as ''the whole difficulty''. Landed reduction exists only for picEt (subsingleton_picEt_of_affine),
+  whose hypothesis is strictly stronger and false at any curve with a degree-one class;
+  for pic0 only the one-way subsingleton_pic0_of_affine exists. I am building the
+  pic0-direct reduction so the forall-T statement becomes EQUIVALENT to a statement
+  over affine tests. Adds no hypothesis to any existing statement.'
+status: active
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-30T20:53:45.750231+00:00'
+  provenance:
+    run: 0092
+    session: 0012-horizon-pic-c
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum
+  owner: pic-c
