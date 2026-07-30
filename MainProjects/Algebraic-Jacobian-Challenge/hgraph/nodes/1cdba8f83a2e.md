@@ -6,9 +6,10 @@ decl: Probe.twistLeft_snd
 file: probe_p3_hcov4.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: Probe.twistLeft_snd
 type: lean
-updated: '2026-07-30T22:32:51'
+updated: '2026-07-31T02:29:52'
 ---
 theorem twistLeft_snd (T : Over (Spec (CommRingCat.of k))) (γ : k' ≃ₐ[k] k') :
     twistLeft T γ ≫ pullback.snd T.hom (specMapAlgebra k k')

@@ -6,9 +6,10 @@ decl: Pr.act
 file: probe_p4_idcomp.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: Pr.act
 type: lean
-updated: '2026-07-30T13:03:22'
+updated: '2026-07-31T02:29:52'
 ---
 noncomputable def act (γ : k' ≃ₐ[k] k') :
     (Tw (k := k) γ).op ⋙ ((restrictTest k k').op ⋙ picEt C)

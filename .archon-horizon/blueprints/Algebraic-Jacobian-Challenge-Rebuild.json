@@ -13276,10 +13276,10 @@
     "macros": {},
     "states": {
       "blocked": 20,
-      "closed": 9678,
+      "closed": 9773,
       "formalized_open": 169,
       "informal": 18,
-      "ready": 113
+      "ready": 112
     },
     "warnings": [
       "AlgebraicGeometry.{k: Lean declaration appears more than once (AlgebraicJacobian/Challenge.lean, AlgebraicJacobian/Challenge.lean)",
@@ -13297,7 +13297,6 @@
       "AlgebraicGeometry.secRes_moduleKSheaf: Lean declaration appears more than once (AlgebraicJacobian/Cohomology/AffineVanishing.lean, AlgebraicJacobian/Cohomology/QcohSections.lean)",
       "AlgebraicGeometry.appLE_congr_hom: Lean declaration appears more than once (AlgebraicJacobian/Cohomology/GluedSheafDatumBaseChange.lean, AlgebraicJacobian/Cohomology/RelativeSectionsLinear.lean)",
       "AlgebraicGeometry.Over.appLE_congr_hom: Lean declaration appears more than once (AlgebraicJacobian/Curve/DiagonalChart.lean, AlgebraicJacobian/Curve/ProductCharts.lean)",
-      "AlgebraicGeometry.DivisorAdaptation.resHom_smul: Lean declaration appears more than once (AlgebraicJacobian/Picard/DivSchemeCertificate.lean, AlgebraicJacobian/Picard/DivSchemeCertificateEngine.lean)",
       "AlgebraicGeometry.relFiberCoordPow_eq_pow: Lean declaration appears more than once (AlgebraicJacobian/Picard/DivSchemeHighWindowChartExhaustion.lean, AlgebraicJacobian/Picard/DivSchemeThetaKernelKill.lean)",
       "AlgebraicGeometry.relFiberCoordOnePow_eq_pow: Lean declaration appears more than once (AlgebraicJacobian/Picard/DivSchemeHighWindowChartExhaustion.lean, AlgebraicJacobian/Picard/DivSchemeThetaKernelKill.lean)",
       "AlgebraicGeometry.chi_relCurve: Lean declaration appears more than once (AlgebraicJacobian/Picard/DivSchemeMonoBridgeRel.lean, AlgebraicJacobian/Picard/DivisorDatumRankOne.lean)",
@@ -13317,6 +13316,7 @@
       "AlgebraicGeometry.Scheme.LocalEquations.res_res: Lean declaration appears more than once (AlgebraicJacobian/Picard/DivisorFamily.lean, AlgebraicJacobian/Picard/DivisorFamilyZariskiSep.lean)",
       "AlgebraicGeometry.res_res: Lean declaration appears more than once (AlgebraicJacobian/Picard/DivisorFamilyAffGlueZarKit.lean, AlgebraicJacobian/Picard/DivisorStalkIdeal.lean)",
       "AlgebraicGeometry.DivisorAdaptation.val_unitsRestrict: Lean declaration appears more than once (AlgebraicJacobian/Picard/DivisorFamilyTheta.lean, AlgebraicJacobian/Picard/DivisorThetaBridge.lean)",
+      "AlgebraicGeometry.DivisorAdaptation.resHom_smul: Lean declaration appears more than once (AlgebraicJacobian/Picard/DivSchemeCertificate.lean, AlgebraicJacobian/Picard/DivisorThetaGlue.lean)",
       "AlgebraicGeometry.DivisorAdaptation.val_unitsRestrict': Lean declaration appears more than once (AlgebraicJacobian/Picard/DivisorFamilyThetaSections.lean, AlgebraicJacobian/Picard/DivisorThetaPairing.lean)",
       "AlgebraicGeometry.DivisorAdaptation.val_unitsRestrict_inv: Lean declaration appears more than once (AlgebraicJacobian/Picard/DivisorFamilyThetaSections.lean, AlgebraicJacobian/Picard/DivisorThetaPairing.lean)",
       "AlgebraicGeometry.injective_abelSigmaChartZero: Lean declaration appears more than once (AlgebraicJacobian/Picard/Pic0ChartMonoUnconditional.lean, AlgebraicJacobian/Picard/Pic0ChartSeamPairDecided.lean)",

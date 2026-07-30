@@ -7,9 +7,10 @@ docstring: Semilinearity square for the ISO -- still Over.w, so still free.
 file: probe_p4_iso.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: Pr.twistIso_w
 type: lean
-updated: '2026-07-30T13:03:22'
+updated: '2026-07-31T02:29:53'
 ---
 theorem twistIso_w (γ : k' ≃ₐ[k] k') :
     (twistIso C rep γ).hom.left ≫ X'.hom
