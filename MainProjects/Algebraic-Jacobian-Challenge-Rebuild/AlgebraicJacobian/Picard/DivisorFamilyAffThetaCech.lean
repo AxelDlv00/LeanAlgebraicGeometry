@@ -67,6 +67,16 @@ noncomputable def thetaOverlapQuotientGluedModule (A : AffAdaptation D d) (a : �
 attribute [local instance] thetaPieceQuotientGluedModule
   thetaOverlapQuotientGluedModule
 
+/-- The intrinsic theta equalizer carries its canonical module structure over the widened
+colength algebra outside this construction file as well. -/
+@[reducible]
+noncomputable instance intrinsicThetaGluedOverModule (A : AffAdaptation D d) (a : ℕ) :
+    Module ↥(gluedSubalgebra A) (A.IntrinsicThetaGluedOver (π := π) a) :=
+  letI : ∀ j, Module ↥(gluedSubalgebra A)
+      (A.ThetaPieceQuotient (π := π) a j) :=
+    fun j => A.thetaPieceQuotientGluedModule (π := π) a j
+  Submodule.module (A.intrinsicThetaGluedOver (π := π) a)
+
 /-- The left piece-to-overlap restriction as an `A_D`-linear map. -/
 noncomputable def thetaToOverlapLeftGlued (A : AffAdaptation D d) (a : ℕ)
     (i j : D.index) :
