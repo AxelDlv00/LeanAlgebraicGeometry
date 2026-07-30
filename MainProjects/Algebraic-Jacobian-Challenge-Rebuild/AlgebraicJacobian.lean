@@ -700,3 +700,4 @@ Aggregator for the Jacobian-challenge rebuild. The single statement file
 added here builds the infrastructure that discharges them. Keep this import list in
 dependency order and keep each imported file under 500 lines.
 -/
+import AlgebraicJacobian.Cohomology.GluedSheafAffineProjective
