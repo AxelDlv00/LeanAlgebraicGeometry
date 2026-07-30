@@ -550,19 +550,25 @@ the Galois quotient at a glued non-affine `X'`, and `hcov`. Consumers should cal
 the `k'`-side representation is the campaign's undischarged output, and clause (1)
 field 1 is witnessed for no curve.
 
-**AND THE THIRD ANTECEDENT WAS NEVER ONE** (`pic-e`, 2026-07-30,
-`Picard/PicEtDescentNecessity.lean`). The paragraph above counts the *named* inputs
-correctly and still under-reports what a consumer must supply, because
-`seamClauseOne_of_isGaloisQuotient_noMatch` also takes
-`hlft : LocallyOfFiniteType Y.hom`. That one is a **consequence**, not an input: the
-quotient's own comparison isomorphism `e` identifies `Y_{k'}` with `X'`, so
-`locallyOfFiniteType_of_baseChange` descends the property from the `k'`-side condition,
-and that condition is itself free by base change from the `k`-side one. Consumers
-should call `seamClauseOne_of_isGaloisQuotient_lftFree`, which is the **three**-input
-form: `rep`, `hq`, `hcov`. Two of the Galois binders a first draft of that lemma
-carried are also deleted — neither `SemilinearGalAction` nor `IsGaloisQuotient` binds
-`[IsGalois]` or `[FiniteDimensional]`, checked at the `variable` line, so the word
-"Galois" in both names is about the intended application and not about a hypothesis.
+**ONE CORRECTION TO THE COUNT, AND IT IS SMALLER THAN THIS PARAGRAPH FIRST SAID**
+(`pic-e`, 2026-07-30, `Picard/PicEtDescentNecessity.lean`; the first revision of this
+box claimed a *third* antecedent "was never one", and that claim is **withdrawn** —
+`I-1591`, reproduced by its author). The genuine point is only that the paragraph above
+counts the *named* inputs and `seamClauseOne_of_isGaloisQuotient_noMatch` also takes
+`hlft : LocallyOfFiniteType Y.hom`, so a consumer supplies four things, not two.
+
+`hlft` can be *restated* at the `k'` side — but that is a **relocation, not a
+subtraction**, and the reason is structural: `IsGaloisQuotient`'s first field is an
+isomorphism `Y_{k'} ≅ X'`, so any property transported along it goes both ways, and the
+four-input form is recoverable from the relocated one in three lines. Do not budget
+`hlft` as free. The transferable rule: when a hypothesis swap runs through a structure
+that already contains an iso between the two objects, prove the converse before
+publishing a reduction.
+
+What *is* clean: the Galois binders a first draft of that lemma carried are deletable —
+neither `SemilinearGalAction` nor `IsGaloisQuotient` binds `[IsGalois]` or
+`[FiniteDimensional]`, checked at the `variable` line, so the word "Galois" in both
+names is about the intended application and not about a hypothesis.
 
 **AND `rep` IS NECESSARY, WHICH CHANGES WHAT ITS "0 PRODUCERS" MEANS.**
 `PicScheme.representableBy_picEt_baseChangeField_of_representableBy` derives a
@@ -571,17 +577,28 @@ representing scheme, for an **arbitrary** field extension, and hence
 (`representableBy_picEt_separableClosure_of_representableBy`) at `k^s`, where campaign
 cluster `J` lives. So this route is not one sufficient strategy that a cheaper `k`-side
 argument might bypass: every solution of clause (1) field 1 contains a solution of
-`rep`, and the campaign's separably-closed endpoint is a *consequence* of the seam
-rather than something stronger than it. The step is generic — an arbitrary adjunction,
-no scheme, no field, no curve
+`rep`. The step is generic — an arbitrary adjunction, no scheme, no field, no curve
 (`CategoryTheory.Functor.representableByCompLeftAdjoint`) — plus `picEt_crossBaseIso`;
 do not budget a descent argument for it.
 
+**It does NOT say the campaign's endpoint is a consequence of the seam, and the first
+revision of this box did say that** (withdrawn, `I-1592`). What follows at `k^s` is
+representability of `picEt (C_{k^s})`. Cluster `J`'s stated target is
+`picSharpDeg C' r`, a graded `picSharp` which **has no carrier in this project** —
+`#check picSharpDeg` returns `unknownIdentifier` — which is the same fact the
+"eleventh item" paragraph above records from the other side. Identifying the two over
+`k^s` routes through this theorem's own second conjunct, so it is not available as an
+argument.
+
 **What that does NOT license, since it is the natural over-reading.** It discharges
 nothing: its hypothesis is this very `sorry`. And it is **not** a converse of the
-descent theorem — at the object it produces, clauses 1 and 2 of `IsGaloisQuotient` are
-free but clause 3 is not (`isGaloisQuotient_pullbackAction_of_uniqueDescent` isolates
-it), so `hq` remains owed and "the inputs are equivalent to the conclusion" is false.
+descent theorem: `hq` at the action these theorems consume
+(`semilinearGalActionOfRepresentableBy C rep`) is untouched by it, including a per-γ
+equality no lemma in the tree closes. So "the inputs are equivalent to the conclusion"
+is false. (`isGaloisQuotient_pullbackAction_of_uniqueDescent` was first published here
+as the measurement establishing that; it is stated at the *pullback* action instead, not
+interchangeable with the consumed one — `I-1590`, withdrawn as the guardrail while
+remaining true of what it does state.)
 
 **Every name in the two paragraphs above lives DOWNSTREAM of this file** — in
 `Picard/PicEtDescentNecessity.lean`, which imports the seam through

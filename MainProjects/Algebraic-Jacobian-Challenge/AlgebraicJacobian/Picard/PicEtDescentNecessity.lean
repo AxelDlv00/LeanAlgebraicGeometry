@@ -28,14 +28,32 @@ Two answers, and they go in opposite directions.
 undischarged output is not one sufficient route among several: any solution of the
 seam contains one. Nobody can close field 1 over `k` and leave `rep` unwitnessed.
 
-**2. `hlft` is NOT an independent input.** `LocallyOfFiniteType Y.hom` follows from
-the `k'`-side finite type through the quotient's *own* isomorphism `e`
-(`locallyOfFiniteType_of_isGaloisQuotient`), and the `k'`-side condition is itself
-free by base change from the `k`-side one
-(`locallyOfFiniteType_pullback_of_locallyOfFiniteType`). So a lane holding a
-`k'`-side representation whose object is locally of finite type — which is what
-Kleiman's `th:main` delivers, and what campaign `J5` is built to produce — owes
-three inputs, not four.
+**2. `hlft` may be TRADED for the `k'`-side condition — and that is a relabelling,
+not a subtraction. THIS IS A CORRECTION OF WHAT THIS FILE FIRST PUBLISHED.** The first
+revision said `hlft` "is NOT an independent input" and that the resulting form "owes
+three inputs, not four". **Both sentences are false**, refuted by a fresh-context audit
+(`I-1591`) and reproduced here before accepting: the converse of §3 closes in three
+lines from the *same* destructuring of `hq`,
+
+    obtain ⟨e, he, -, -⟩ := hq
+    have h : X'.hom = e.inv ≫ pullback.snd Y.hom (specMapAlgebra k k') := by
+      rw [← he, Iso.inv_hom_id_assoc]
+
+so `LocallyOfFiniteType Y.hom` and `LocallyOfFiniteType X'.hom` are **interderivable
+under `hq`**, and the four-input theorem is recoverable from §5's "three-input" one.
+
+**Why the error was structural and not a slip.** `IsGaloisQuotient`'s *first field is
+an isomorphism* `Y_{k'} ≅ X'`. Any property transported along it goes both ways by
+construction, so a forward proof measures nothing except that the iso is there — which
+the hypothesis already gave. The general rule, worth more than this file's result: when
+a hypothesis swap runs through a structure that already contains an iso between the two
+objects, prove the converse *before* publishing a reduction.
+
+What survives is genuinely narrower: §5 is a **restatement at a different coordinate**,
+useful only where a lane holds the `k'`-side condition and not the `k`-side one.
+`locallyOfFiniteType_pullback_of_locallyOfFiniteType` (§3b) does not rescue the
+stronger claim either — §5's `X'` is an arbitrary `k'`-object, not the base change of
+anything, so §3b does not apply to it (type mismatch, measured).
 
 ## The direction that matters for a costing, stated precisely
 
@@ -46,21 +64,28 @@ better-aimed; it discharges nothing. In particular it is **not** a producer of
 `rep`: its hypothesis is field 1 over `k`, which is exactly what the seam `sorry`
 `Scheme.fgaPicardRepresentability` still owes and what no curve witnesses.
 
-Fact 2 is a genuine subtraction from the antecedent list of a landed theorem, and it
-is the reusable half.
+Fact 2 is **not** a subtraction — see the correction above. It is a change of
+coordinate on one hypothesis, and the reusable part of it is the *lesson*, not the
+lemma.
 
 ## What the two facts do together, and where the slack is
 
-§5 states clause (1) from **three** inputs: `rep`, the Galois quotient `hq`, and
-`hcov`. §7 shows the seam *implies* `rep` even at the separable closure, which is where
-campaign cluster `J` lives. So the route is pinned in both directions modulo `hq` and
-`hcov`, and those two are the only slack: no cheaper `k`-side argument can bypass the
+§7 shows the seam *implies* `rep`, at an arbitrary extension and so at `k^s`. That is
+the durable half. **What it does NOT give is a two-way pinning of the route**, and the
+first revision of this paragraph claimed one: §5's hypothesis list is the same length as
+the landed theorem's (see §5), and the loop does not even typecheck at one field — §5
+binds `[Module.Finite k k']`, which fails at `SeparableClosure k`, while §7 only runs
+there. So the honest statement is one-directional: no `k`-side argument can bypass the
 base change, because the base-changed representation is a consequence of the goal.
 
-§4 is the boundary of that pinning, and it is deliberately a negative result: at the
-object §2 produces, `IsGaloisQuotient`'s clauses 1 and 2 are free and clause 3 is not.
-Necessity hands over the object; the quotient's universal property is still owed. So
-"the inputs are equivalent to the conclusion" is **false**.
+§4 was written as the boundary of that claim, and it is **weaker than first published**
+(`I-1590`): it measures the pullback action, not the
+`semilinearGalActionOfRepresentableBy` action every landed descent theorem consumes, and
+the two are not interchangeable (type mismatch, measured). So §4 does not by itself
+forbid the over-reading. What does forbid it is plainer: §2's conclusion is the `rep`
+*input*, and `hq` at the consumed action is untouched by it — including a per-γ equality
+that no lemma in the tree closes. "The inputs are equivalent to the conclusion" remains
+**false**, but for that reason rather than §4's.
 
 ## What is NOT claimed
 
@@ -105,11 +130,19 @@ namespace CategoryTheory
 
 /-- **Representability transports along a left adjoint.**
 
-Fully generic. Mathlib has the `uliftFunctor` and partial-adjoint transports
-(`Functor.representableByUliftFunctorEquiv`,
-`Adjunction.Basic`'s `(F.op ⋙ yoneda.obj Y).RepresentableBy (G.obj Y)`) but not this
-one: those transport along the *functor being represented*, or represent a
-`yoneda.obj`, whereas this precomposes an arbitrary presheaf with a left adjoint.
+Fully generic. **The reason this is not simply a mathlib citation is the VALUE
+UNIVERSE, and the first revision of this docstring gave a wrong reason** (`I-1593`,
+fresh-context audit; reproduced). It said mathlib's transports "transport along the
+functor being represented, or represent a `yoneda.obj`", implying no mathlib route
+exists. There is one, in a single line, for a `Type v`-valued presheaf:
+
+    (adj.representableBy X).ofIso (Functor.isoWhiskerLeft L.op rep.toIso)
+
+which elaborates (`EXIT=0`). What it cannot do is reach the site this file needs:
+`Adjunction.representableBy` pins the presheaf's value universe to the hom universe,
+while `picEt` is `Type (u+1)`-valued over `Scheme.{u}`, so both the
+universe-independent form and the Picard instance fail there with universe mismatches.
+The declaration is worth keeping for exactly that reason and for no other.
 
 Declared in `CategoryTheory`, not `AlgebraicGeometry`: it mentions no scheme, and a
 reader who finds it under the geometric namespace would reasonably assume it does. -/
@@ -165,8 +198,9 @@ argument might bypass: *any* solution of clause (1) field 1 carries a solution o
 is badly chosen — the object it asks for is a consequence of the goal.
 
 **What it does NOT buy.** Its hypothesis is the seam's own open obligation, so it
-witnesses nothing. It also does not give `hq`: see §4, where clauses 1 and 2 of
-`IsGaloisQuotient` are free at this object and clause 3 is not.
+witnesses nothing. It also does not give `hq` at the action the route consumes: §4
+measures the *pullback* action instead, and per `I-1590` the two are not interchangeable,
+so `hq` is untouched here.
 
 Two hypotheses it does *not* carry, both of which a reader would expect: no
 finiteness and no separability of `k'/k`. Those are input 1's price
@@ -202,10 +236,12 @@ isomorphism, hence that projection is locally of finite type; and
 `DescendsAlong @LocallyOfFiniteType (@Surjective ⊓ @Flat ⊓ @QuasiCompact)`) descends
 it to `Y.hom`.
 
-**So `hlft` is not a fourth obligation.** A lane closing the descent step should call
-`seamClauseOne_of_isGaloisQuotient_lftFree` below, which asks for the `k'`-side
-condition instead — and §3b shows *that* condition is itself free from the `k`-side
-one, so nothing here has been relocated into a new hypothesis.
+**This does NOT make `hlft` a non-obligation, and the first revision of this docstring
+said it did.** The converse closes from the same `⟨e, he, -, -⟩` (see the module header's
+correction, `I-1591`), so the two conditions are interderivable under `hq` and §5 is a
+coordinate change. Dropping `hX'` entirely and closing by `infer_instance` **fails**, so
+it is still a real hypothesis. Call `seamClauseOne_of_isGaloisQuotient_lftFree` only when
+what you hold is the `k'`-side condition.
 
 **Note the binder set, because the first draft of this lemma got it wrong in the
 expensive direction.** It carried `[FiniteDimensional k k']` and `[IsGalois k k']`, on
@@ -236,10 +272,12 @@ theorem locallyOfFiniteType_of_isGaloisQuotient
 
 /-! ### §3b. And the `k'`-side condition is free from the `k`-side one
 
-Otherwise §3 would be a relocation rather than a subtraction: it would trade a
-hypothesis about `Y` for one about `X'` with no net gain. It is a subtraction because
-the object §2 produces satisfies the `k'`-side condition whenever `X` satisfies the
-`k`-side one, by plain base-change stability — no descent, no field hypothesis. -/
+§3 **is** a relocation (header, `I-1591`), and this section does not rescue it: these
+two lemmas apply to the object §2 *produces*, i.e. to a base change, whereas §5's `X'`
+is arbitrary. So what they buy is narrower than the first revision claimed — they say
+the `k'`-side conditions hold at the §2 object, which is what a lane checking that §2
+lands inside the campaign's `k'`-side endpoint needs, and nothing about §5's hypothesis
+being free. -/
 
 /-- **Local finiteness base-changes to the `k'`-side object of §2**, and so does
 separatedness. Both by `MorphismProperty.pullback_snd`; neither needs a hypothesis on
@@ -261,14 +299,28 @@ theorem isSeparated_pullback_of_isSeparated
 /-! ## §4. How much of `hq` is free — and which clause is the residue
 
 §2 could be over-read as "the four inputs are equivalent to the conclusion". They are
-not, and this section is the measurement that forbids it. At the base-changed object
-`Y_{k'}` with its own pullback action, `IsGaloisQuotient` has four clauses; the
-comparison isomorphism is `Iso.refl` and its two compatibility clauses close by
-`simp`, so clauses 1 and 2 are free. Clause 3 — unique descent of an equivariant
-`T_{k'}`-morphism to a `T`-morphism — is **not** free, and it is the whole residue.
+not, and this section was written to forbid it. At a `k`-scheme `Y` with the **pullback**
+action, `IsGaloisQuotient`'s comparison isomorphism is `Iso.refl`, its two compatibility
+clauses close by `simp`, and clause 3 — unique descent of an equivariant
+`T_{k'}`-morphism — is the residue.
 
-That is the honest shape of the situation: `hq` at the object necessity produces is
-one universal property, not four conditions. -/
+**AND THE ACTION HERE IS NOT THE ONE THE LANDED DESCENT THEOREMS CONSUME. CORRECTION
+OF WHAT THIS SECTION FIRST CLAIMED** (`I-1590`, fresh-context audit; reproduced before
+accepting). The first revision said "clauses 1 and 2 are free **at the object §2
+produces**, clause 3 is the whole residue". Every landed `hq` is at
+`semilinearGalActionOfRepresentableBy C rep`; this section concludes at
+`pullbackSemilinearGalAction k k' Y.hom`. Those are **not** the same action — offering
+one where the other is expected is a type mismatch, not a coercion (measured) — and they
+are not defeq at the §2 object. So this section's output cannot be fed to §5, and at the
+*consumed* action clause 2 is itself an open per-γ equality
+(`pullbackGalMap … γ = ((semilinearGalActionOfRepresentableBy C rep).act γ).hom`), closed
+by no lemma in the tree.
+
+**Note this correction cuts against this file's own interests**, which is why it is
+stated at the sentence that made the claim: the guardrail §2 was published with is
+weaker than advertised, so §2 is *less* fenced against over-reading, not more. What
+survives is a true statement about `Y` and its pullback action, and it locates the
+residue **there** — not at the action the route uses. -/
 
 /-- **Clauses 1 and 2 of `IsGaloisQuotient` are free at a base-changed object; clause
 3 is the residue, isolated here as the single hypothesis.**
@@ -278,11 +330,13 @@ the canonical pullback action) as soon as equivariant morphisms into `Y_{k'}` de
 uniquely. No Picard vocabulary, no curve, no representability: this is a statement
 about `Y` alone, which is why it locates the residue rather than restating it.
 
-**Read this as a NEGATIVE result about §2.** It is exactly what stops §2 from being a
-converse to the descent theorem: necessity hands over the object, and the universal
-property of the quotient still has to be proved for it. The hypothesis below is that
-universal property, stated at the identity comparison so that no reader mistakes the
-free clauses for the content.
+**Read this as a NEGATIVE result about §2 — but a weaker one than first published.** It
+was offered as "exactly what stops §2 from being a converse". It is not *exactly* that,
+because it is stated at the pullback action while the descent theorems consume
+`semilinearGalActionOfRepresentableBy` (`I-1590`, above). What it genuinely says: for a
+`k`-scheme `Y` and its own pullback action, the quotient property reduces to unique
+descent of equivariant morphisms, stated below at the identity comparison so that no
+reader mistakes the free clauses for the content.
 
 Like §3, this carries **no** `[FiniteDimensional k k']` and **no** `[IsGalois k k']`,
 and for the same reason given there: neither `SemilinearGalAction` nor
@@ -311,17 +365,21 @@ theorem isGaloisQuotient_pullbackAction_of_uniqueDescent
 `hcov`, `hlft`. Below it is again with `hlft` replaced by the `k'`-side condition,
 which §3b shows is not a new obligation.
 
-**This is a three-input theorem**, and the three are: the `k'`-side representation
-(the campaign's undischarged output, and by §2 a *consequence* of the goal), the
-Galois quotient at a glued non-affine `X'` (`G2(c)`), and `hcov`
-(`AJC.picrep.etale-rep.hcov`). Nothing else. -/
+**It is NOT a three-input theorem, and calling it one was this file's main error**
+(`I-1591`, reproduced). It has the same four hypotheses as
+`seamClauseOne_of_isGaloisQuotient_noMatch` with the fourth stated at `X'` instead of
+`Y`, and each is derivable from the other under `hq`. Use it when you hold the `k'`-side
+condition; do not quote it as a shorter antecedent list. -/
 
-/-- **Clause (1) of the seam from THREE inputs**, with local finiteness of the
-quotient removed in favour of the `k'`-side condition that §3b proves free.
+/-- **Clause (1) of the seam with local finiteness stated on the `k'` side.**
 
-`Scheme.fgaPicardRepresentability` is still untouched: `rep` is the campaign's
-undischarged output and clause (1) field 1 is witnessed for no curve. What changed is
-the length of the antecedent list a lane must fill. -/
+Same four hypotheses as `seamClauseOne_of_isGaloisQuotient_noMatch`, with the last one
+moved from `Y` to `X'`. **Not a shorter antecedent list** — the two are interderivable
+under `hq`, whose first field is an iso `Y_{k'} ≅ X'` (module header, `I-1591`). Use
+this form when the condition you hold is the `k'`-side one.
+
+`Scheme.fgaPicardRepresentability` is untouched: `rep` is the campaign's undischarged
+output and clause (1) field 1 is witnessed for no curve. -/
 theorem seamClauseOne_of_isGaloisQuotient_lftFree
     [Algebra.IsSeparable k k'] [Module.Finite k k']
     {C : Over (Spec (CommRingCat.of k))}
@@ -417,18 +475,35 @@ theorem not_seamClauseOne_of_not_representableBy_baseChangeField
   exact not_representableBy_picEt_of_not_representableBy_baseChangeField
     (k' := k') C h Z hZ
 
-/-! ## §7. At the separable closure: the seam IMPLIES the campaign's own endpoint
+/-! ## §7. At the separable closure — and NOT the campaign's endpoint (see the correction)
 
 §2 holds at an arbitrary extension, so it holds at `k^s`. That instance is worth its
 own name because of *where* the Milne–Kollár campaign lives: cluster `J` is stated over
 a separably closed field, which is exactly where a section is available
 (`Curve/SeparablyClosedRationalPoint.lean`) and where `picSharp` and `picEt` agree.
 
-So the campaign's target is not merely *sufficient* for the seam — it is **implied by**
-it. Together with the descent theorems this pins the relationship in both directions:
-the campaign endpoint plus `hq` plus `hcov` gives the seam (`§5`), and the seam gives
-the campaign endpoint (`§7`, unconditionally). The route is therefore correctly aimed,
-and the two remaining named antecedents are the only slack in it.
+**WHAT THIS SECTION MAY AND MAY NOT SAY — CORRECTION** (`I-1592`, fresh-context audit;
+both points reproduced here). The first revision said the seam "implies the campaign's
+own endpoint", pinning the relationship "in both directions". Two things are wrong with
+that.
+
+*First, the object.* Campaign cluster `J`'s stated target is
+`Nonempty ((picSharpDeg C' r).RepresentableBy J'_r)` — a **graded `picSharp`**, and
+`picSharpDeg` **has no carrier in this project at all** (`#check` returns
+`unknownIdentifier`, measured). So §7 does not conclude the campaign's endpoint; it
+concludes representability of `picEt (C_{k^s})`. The seam file itself says the milestone
+bodies never mention `picEt`, which is the same fact from the other side. Whether the
+two agree over `k^s` routes through the seam's *own* second conjunct, and closing it that
+way reports `sorryAx` — so it is not available as an argument here.
+
+*Second, the loop does not close at one field.* §5 binds `[Module.Finite k k']`, which
+fails at `SeparableClosure k` (`infer_instance` fails, measured), while §7 only runs
+there. So there is no field at which both directions are instantiable.
+
+What survives is one-directional and still worth having: the seam implies
+representability of the base-changed `picEt` at every extension, `k^s` included. A lane
+must not read that as "the campaign is proving the right thing at `k^s`" — that
+identification is unproved.
 
 **This is not a discharge and the direction is the whole point.** §7's hypothesis is
 clause (1) field 1 over `k`, i.e. what the seam owes. It says nothing about how to
@@ -442,9 +517,11 @@ The `k^s` instance of §2. `SeparableClosure k` is a `Type u` field with a `k`-a
 structure, so no universe bridge and no extra hypothesis is involved: this is §2 with
 `k' := SeparableClosure k` and nothing else.
 
-Named because campaign cluster `J` targets exactly this object, and because a lane
-should be able to cite "the campaign's endpoint is a consequence of the seam" without
-re-deriving the base change. -/
+Named because `k^s` is the field campaign cluster `J` works over, so a lane can cite
+this instance without re-deriving the base change. **Not** because it is cluster `J`'s
+target: that target is a graded `picSharp` with no carrier in this project, and the
+section header above records why the identification is unproved. Do not cite this as
+"the campaign's endpoint follows from the seam". -/
 noncomputable def representableBy_picEt_separableClosure_of_representableBy
     (C : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
