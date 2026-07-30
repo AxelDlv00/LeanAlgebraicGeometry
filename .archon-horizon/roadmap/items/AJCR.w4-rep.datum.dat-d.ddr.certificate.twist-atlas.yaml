@@ -76,7 +76,7 @@ summary: 'REJECTED 2026-07-29 (run 0082, review-ajcr) — SUPERSEDED BY PROTECTI
   leaf.'
 status: rejected
 kind: refactor
-priority: high
+priority: low
 depends_on: []
 inbox_refs: []
 task_refs: []
@@ -97,4 +97,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
   milestone: AJCR.w4-rep
-  updated_at: '2026-07-29T11:04:12.662507+00:00'
+  updated_at: '2026-07-30T04:28:09.671076+00:00'
