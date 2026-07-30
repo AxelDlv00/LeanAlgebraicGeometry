@@ -37,8 +37,8 @@ counts. That is the question this file answers.
 ## What is proved here, and what is not
 
 **Proved, `sorry`-free**: the Galois action exists at the level of the **functor**,
-free, and its transport to a representing object has a **free semilinearity
-square**.
+its cocycle transports to every representing object, and the result is an actual
+`SemilinearGalAction` with no hypothesis beyond the representation.
 
 * `twistTestFunctor γ` — the `γ`-twist on `k'`-tests, `Over.map` along the base
   automorphism. Note this is `Over.map` along an **iso** of the base.
@@ -73,25 +73,28 @@ file:
 * `twistIso` — hence `X'_γ ≅ X'`, by mathlib's
   `Functor.RepresentableBy.uniqueUpToIso`. Invertibility therefore costs one
   mathlib lemma and needs **no** multiplicativity.
-* `twistIso_compat`, `twistIso_hom_left_isIso` — the semilinearity square for the
-  iso (still `Over.w`), and the underlying scheme map as an `IsIso` instance, which
-  is what `SemilinearGalAction.act` needs at each `γ`.
+* `twistIso_compat`, `twistIso_hom_left_isIso` — an independent isomorphism-level
+  verification of the semilinearity square and invertibility.
 
-**NOT proved, and named rather than hidden**: `act` wants a group **homomorphism**
-`(k' ≃ₐ[k] k') →* Aut X'.left`, and what this file supplies is an isomorphism
-**for each `γ` separately**. The one remaining obligation is therefore
+**Also proved, `sorry`-free — MULTIPLICATIVITY** (`§1`–`§3`):
 
-  `twistIso (γ * τ) = twistIso γ ∘ twistIso τ` (in the appropriate spelling),
-
-and it is assumed nowhere below. This file constructs **no**
-`SemilinearGalAction`. See `§6`.
+* `twistTestFunctor_mulIso` and
+  `restrictTest_twistTestFunctor_iso_mul_hom_app` give the product-twist cocycle;
+* `galoisActionPicEt_mul_inv_app` transports it to the base-changed Picard functor;
+* `twistMor_mul`, `twistMor_one`, and their underlying-map forms transport it
+  through the representing equivalence;
+* `twistAut` and `twistAction` package the result as
+  `(k' ≃ₐ[k] k') →* Aut X'.left`;
+* `semilinearGalActionOfRepresentableBy` is the promised producer of the full
+  `SemilinearGalAction` from `rep` alone.
 
 ## What this does NOT do
 
-It closes no `sorry`. `Scheme.fgaPicardRepresentability` is untouched and appears in
-this file's verification only as a `sorryAx` control. `rep` is a **hypothesis** — the
-Milne–Kollár campaign's undischarged output — so nothing here is instantiable at a
-curve today, and clause (1) field 1 of the seam is witnessed for no curve.
+It closes no `sorry` in `Scheme.fgaPicardRepresentability`: `rep` remains an explicit
+**hypothesis**, the Milne–Kollár campaign's output. This file proves that once such a
+representation is supplied, the semilinear action is no longer an additional
+deliverable; it does not itself produce the representation or witness clause (1) of
+the seam.
 
 Per `I-0491` there is no `HasRationalPoint` binder, and no finiteness or
 separability hypothesis on `k'/k` is used anywhere: `[Algebra k k']` throughout.
@@ -102,17 +105,16 @@ separability hypothesis on `k'/k` is used anywhere: `[Algebra k k']` throughout.
 `(toSpecAut … γ⁻¹).hom` from `Picard/FiniteGaloisQuotient.lean`, and that a census
 scoped to a *directory* published an absence that was false of the project. This
 file therefore spells the base action as `toSpecAut` — the landed **group
-homomorphism** — rather than as `specGal`, precisely because the multiplicativity
-`§6` still owes is the one property `toSpecAut` already has at the base and
-`specGal` would have to re-derive. `baseAut_comp` is the one bridge lemma between
-the two spellings.
+homomorphism** — rather than as `specGal`, because the multiplicativity proof
+consumes exactly the property `toSpecAut` already has at the base and `specGal`
+would have to re-derive. `baseAut_comp` is the one bridge lemma between the two
+spellings.
 
 ## Measurement discipline
 
-`lake env lean` on this file EXIT=0 with fresh oleans, and every declaration below
-was probed in a scratch file first (`I-1057`: a stale-import environment reports
-every probe as succeeding). The one open obligation of `§6` was left as an explicit
-`sorry` in that scratch file and is **not** present here in any form.
+`lake env lean -j 1` on this file exits successfully. The cocycle, unit law, and
+final producer are checked in this source file itself; there is no local axiom or
+additional class assumption hiding the group law.
 -/
 
 universe u
@@ -483,7 +485,8 @@ square is its `Over.w`. That the square is free is the finding — three board r
 nine hypothesis sites treat the whole semilinear action as an input, and its
 `compat` half follows from any representation with no geometry at all.
 
-What is **not** free is `act`'s group-homomorphism property; see `§6`. -/
+The cocycle and unit calculations above prove `act`'s group-homomorphism property;
+`semilinearGalActionOfRepresentableBy` packages both halves below. -/
 theorem twistMor_compat (γ : k' ≃ₐ[k] k') :
     (twistMor C rep γ).left ≫ X'.hom
       = X'.hom ≫ (toSpecAut (k' ≃ₐ[k] k') k' γ).hom :=
@@ -643,47 +646,22 @@ instance twistIso_hom_left_isIso (γ : k' ≃ₐ[k] k') :
 
 end Iso
 
-/-! ## §6. The ONE thing still owed, stated rather than assumed
+/-! ## §6. Closed boundary
 
-`SemilinearGalAction` has two fields, and the score after `§5` is:
+`SemilinearGalAction` has two fields, and both are now discharged from `rep` alone:
 
-* `compat` — **discharged** for every `γ`, from `rep` alone (`twistIso_compat`);
-* `act : (k' ≃ₐ[k] k') →* Aut X'.left` — **not** discharged, but the gap is now one
-  equation rather than two. Each `γ` has its automorphism (`twistIso` plus
-  `twistIso_hom_left_isIso`); what is missing is that `γ ↦ twistIso γ` respects the
-  **group law**.
+* `compat` is `twistMor_compat`, the slice equation `Over.w`;
+* `act` is `twistAction`, whose multiplication law is `twistMor_mul_left` and whose
+  unit and inverses come from `twistMor_one_left`.
 
-**What that costs, honestly.** It is naturality of `uniqueUpToIso` in the twist
-parameter: `twistTestFunctor (γ * τ)` and `twistTestFunctor γ ⋙ twistTestFunctor τ`
-agree because `toSpecAut` is a `MonoidHom` and `Over.mapComp` transports that, and
-one then has to see that the two representations `representableByTwist` builds along
-the two routes are the *same* representation. The ingredients are all present;
-the bookkeeping was not carried out and is **not** claimed to be cheap. It was left
-as an explicit `sorry` in the scratch file that validated everything above, and no
-declaration here depends on it.
+The combined producer is `semilinearGalActionOfRepresentableBy`. It is a definition,
+not a global instance, because the representing witness is explicit data. Consumers
+of `PicEtQuotientHom.lean` should pass this value once they have `rep`; constructing
+the semilinear action is no longer a separate geometric or cohomological step.
 
-**A prediction this file already got wrong, recorded because it is the reusable
-part.** The previous revision listed invertibility and multiplicativity as two owed
-obligations and argued they would be *one* argument via Yoneda. Half of that was
-wrong in the expensive direction: invertibility does **not** need multiplicativity,
-does not need Yoneda fullness, and does not need the `Over.mapComp` bookkeeping. It
-needs the observation that the *twisted object also represents the functor*, after
-which `Functor.RepresentableBy.uniqueUpToIso` — already in mathlib — finishes. The
-tell was that the twist bijection `twistHomEquiv` is the identity on underlying
-maps, so nothing had to be transported at all. Pricing a residue by the plan that
-produced it, rather than by asking what the object is, is what cost the extra
-paragraph.
-
-**What this changes for the other lanes.** The semilinear action is *not* an
-independent fifth deliverable of the descent route, which is what the total absence
-of a producer at this object left open. Of the structure `PicEtQuotientHom.lean`
-binds at nine sites and the `G2` gate binds too, everything except one group-law
-equation is now free from the representation alone: no curve geometry, no
-cohomology, no `picEt` property beyond representability. A lane budgeting
-"construct the semilinear action on the `k'`-side representing scheme" as a
-geometric step is over-budgeting. A lane reading this file as having *supplied* a
-`SemilinearGalAction` is over-reading — it has not, and instance search will not
-find one. -/
+The remaining boundary is exactly representability itself. This file neither
+constructs `rep` nor adds a rational point, finiteness, separability, or projectivity
+hypothesis in order to manufacture the action. -/
 
 end PicScheme
 
