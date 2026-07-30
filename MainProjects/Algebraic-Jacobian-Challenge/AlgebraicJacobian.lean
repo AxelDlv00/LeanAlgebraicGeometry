@@ -362,6 +362,7 @@ import AlgebraicJacobian.RiemannRoch.Ledger.FiberBound
 -- stable under arbitrary field base change.
 import AlgebraicJacobian.RiemannRoch.Ledger.FiberCoordinateData
 import AlgebraicJacobian.RiemannRoch.Ledger.FiberCoordinateDivisor
+import AlgebraicJacobian.RiemannRoch.Ledger.FiberCoordinateLattice
 -- `Ledger.BaseDivisorEveryField` splits `UniformBaseDivisor` into its existence clause (FREE at
 -- every genus, over every field extension) and its degree clause (the whole residue of
 -- extension-uniformity).  Named separately from `FiberBound` because it is what re-prices the
