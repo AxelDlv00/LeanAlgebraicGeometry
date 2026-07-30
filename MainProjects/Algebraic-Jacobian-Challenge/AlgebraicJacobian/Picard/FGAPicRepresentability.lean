@@ -674,7 +674,12 @@ Present state of the four:
      out, so the contrast is compiler-checked rather than asserted. **The two side
      conjuncts are free for opposite reasons**, which is the part a costing gets
      wrong: one is a descent argument and the other is free precisely because
-     descent is unavailable for it.
+     descent is unavailable for it. Field 2 descends at an **arbitrary** field
+     extension: its theorem formerly carried `[Algebra.IsSeparable k k']` and
+     `[Module.Finite k k']` and consumed neither, and both are now deleted
+     (`I-1356`). Finite separability is **input 1's** price —
+     `picEt_ext_of_pullback_agrees` genuinely needs it — so this is the *same*
+     double-count the input-2 note below corrects, and it was live in two files.
    Both `sorry`-free and axiom-clean against this theorem as a control; gate-free
    (no `HasPicSchemeEt` binder on any of them, checked by full signature per
    `I-1292`, not by header). Non-vacuity measured: dropping `rep` leaves

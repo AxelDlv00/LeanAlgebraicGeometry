@@ -49,10 +49,15 @@ nothing to carry it with. The route here bypasses the descent step entirely:
 representing it is a group object over `Spec k` by Yoneda transport, and a group
 scheme over a field is separated. No cover, no descent, no field extension.
 
-Contrast field 2: `LocallyOfFiniteType` *does* descend freely at the real cover
-— `Spec.map (algebraMap k k')` is `Surjective`, `Flat` and `QuasiCompact` by
-synthesis for `k'/k` finite separable, and the `DescendsAlong` instance for
-`LocallyOfFiniteType` exists. §4 carries that out
+Contrast field 2: `LocallyOfFiniteType` *does* descend freely, and at an
+**arbitrary** field extension `k'/k` rather than only at the route's finite
+separable cover — `Spec.map (algebraMap k k')` is `Surjective`, `Flat` and
+`QuasiCompact` for any `k'/k` (one-point spectra, `k` a field, affine source), and
+the `DescendsAlong` instance for `LocallyOfFiniteType` exists. An earlier revision
+of this sentence said "for `k'/k` finite separable", matching two instance binders
+on §4's theorem that its proof never consumed; both are deleted and the reason is
+recorded there (`I-1356`), because finite separability is **input 1's** price and
+pricing it here charges it twice. §4 carries that out
 (`locallyOfFiniteType_of_baseChange`), so the contrast is compiler-checked rather
 than asserted: **the two side conjuncts are free for opposite reasons**, and only
 one of them is a descent argument. A costing that treats them as one item gets
@@ -259,7 +264,7 @@ theorem picEtClauseOne_of_picSharp_representableBy_locallyOfFiniteType
 
 /-- **Field 2 descends along the field-extension cover.** If the base change of
 `X` to `k'` is locally of finite type over `Spec k'`, then `X` is locally of
-finite type over `Spec k`, for `k'/k` finite separable.
+finite type over `Spec k`, for an **arbitrary** field extension `k'/k`.
 
 Recorded here, beside field 3, because the *contrast* is the planning fact: field
 2 is free by a **descent** argument (Mathlib has
@@ -270,11 +275,30 @@ free *only* because descent is unavailable for it and the group structure
 substitutes. A lane that priced the two conjuncts together would get one of them
 right for the wrong reason.
 
+**AN EARLIER REVISION CARRIED `[Algebra.IsSeparable k k']` AND `[Module.Finite k k']`
+HERE AND CONSUMED NEITHER, and both are now deleted** (`I-1356`, `I-1362`;
+reproduced before accepting: the body verbatim elaborates with the binders removed,
+`lake env lean` `EXIT=0`, and the control still discriminates — with `h` dropped,
+`LocallyOfFiniteType X.hom` by `infer_instance` **fails**). None of the three
+ingredients needs them: surjectivity holds for any field extension because both
+spectra are one-point, flatness because `k` is a field, quasi-compactness because
+the source is affine.
+
+That matters for a costing and not only for tidiness. Finite separability is
+**input 1's** price — `Scheme.picEt_ext_of_pullback_agrees`
+(`Picard/EtaleFieldCover.lean`) genuinely needs both binders, measured: deleting
+them there gives `synthInstanceFailed`. Field 2 does not pay it, so a lane reading
+this file as it stood budgeted separability **twice**. The seam docstring had
+already corrected exactly this double-count once, at input 2; this was a second
+instance of it one file over. The binders are removed rather than the sentence
+requalified, because a binder no proof consumes keeps the trap for the next reader
+however carefully the prose around it is written.
+
 Nothing about `picEt` occurs: this is a statement about an arbitrary `k`-scheme,
 and it is stated at that generality on purpose so that no reader takes it for a
 fact about the Picard functor. -/
 theorem locallyOfFiniteType_of_baseChange {k : Type u} [Field k] (k' : Type u)
-    [Field k'] [Algebra k k'] [Algebra.IsSeparable k k'] [Module.Finite k k']
+    [Field k'] [Algebra k k']
     {X : Over (Spec (.of k))}
     (h : LocallyOfFiniteType
       (Limits.pullback.fst (Spec.map (CommRingCat.ofHom (algebraMap k k'))) X.hom)) :
