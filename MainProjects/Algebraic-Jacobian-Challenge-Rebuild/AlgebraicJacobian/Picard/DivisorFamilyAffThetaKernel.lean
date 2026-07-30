@@ -27,7 +27,7 @@ attribute [local instance] Scheme.overModule Scheme.overSectionsAlgebra
 
 variable {k : Type u} [Field k] {C : Over (Spec (.of k))}
 variable {R : Type u} [CommRing R] [Algebra k R]
-variable {π : C.left ⟶ P1 k} [IsFinite π] [IsProper C.hom]
+variable {π : C.left ⟶ P1 k} [IsFinite π]
 variable {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
 
 namespace AffAdaptation
@@ -57,15 +57,23 @@ theorem existsUnique_eqn_mul_eq (A : AffAdaptation D d) (j : D.index)
         ((relCurve C R).resHom hW (A.eqn j)) ∈
           nonZeroDivisors ((relCurve C R).presheaf.stalk z) := by
     intro z hz
-    rw [TopCat.Presheaf.germ_res_apply]
+    have hswap : ((relCurve C R).presheaf.germ W z hz).hom
+        ((relCurve C R).resHom hW (A.eqn j)) =
+          ((relCurve C R).presheaf.germ (D.pieces j) z (hW hz)).hom (A.eqn j) :=
+      TopCat.Presheaf.germ_res_apply _ _ _ _ _
+    rw [hswap]
     exact A.eqn_regular j z (hW hz)
   have hmem : s ∈ Ideal.span {(relCurve C R).resHom hW (A.eqn j)} := by
     refine Scheme.mem_span_singleton_of_forall_germ hb (fun z hz => ?_)
-    rw [TopCat.Presheaf.germ_res_apply,
-      A.germ_eqn_span_eq_stalkIdeal j (hW hz)]
+    have hswap : ((relCurve C R).presheaf.germ W z hz).hom
+        ((relCurve C R).resHom hW (A.eqn j)) =
+          ((relCurve C R).presheaf.germ (D.pieces j) z (hW hz)).hom (A.eqn j) :=
+      TopCat.Presheaf.germ_res_apply _ _ _ _ _
+    rw [hswap, A.germ_eqn_span_eq_stalkIdeal j (hW hz)]
     exact hs z hz
-  obtain ⟨c, hc⟩ := Ideal.mem_span_singleton.mp hmem
-  exact ⟨c, hc.symm, fun y hy => A.eqn_res_cancel j hW (hy.trans hc)⟩
+  obtain ⟨c, hc⟩ := Ideal.mem_span_singleton'.mp hmem
+  rw [mul_comm] at hc
+  exact ⟨c, hc, fun y hy => A.eqn_res_cancel j hW (hy.trans hc.symm)⟩
 
 /-- The cofactor of a section vanishing along `d` over a widened piece equation. -/
 noncomputable def eqnDiv (A : AffAdaptation D d) (j : D.index)
@@ -114,7 +122,14 @@ theorem mem_thetaPieceVanishing_iff_forall_germ (A : AffAdaptation D d) (a : ℕ
     rw [Mj.qsmul_eq, gluedQsmul_coe] at hq
     have hgerm := congrArg ((relCurve C R).presheaf.germ
       (D.pieces j ⊓ (thetaChartDatum C R π a).pieces q) z hz).hom hq
-    rw [map_mul, TopCat.Presheaf.germ_res_apply] at hgerm
+    rw [map_mul] at hgerm
+    have hswap :
+        ((relCurve C R).presheaf.germ
+          (D.pieces j ⊓ (thetaChartDatum C R π a).pieces q) z hz).hom
+            ((relCurve C R).resHom inf_le_left (A.eqn j)) =
+          ((relCurve C R).presheaf.germ (D.pieces j) z hz.1).hom (A.eqn j) :=
+      TopCat.Presheaf.germ_res_apply _ _ _ _ _
+    rw [hswap] at hgerm
     rw [← A.germ_eqn_span_eq_stalkIdeal j hz.1, ← hgerm]
     exact Ideal.mul_mem_right _ _ (Ideal.subset_span rfl)
   · intro hs
@@ -126,7 +141,8 @@ theorem mem_thetaPieceVanishing_iff_forall_germ (A : AffAdaptation D d) (a : ℕ
             (inf_le_left : D.pieces j ⊓ (thetaChartDatum C R π a).pieces q ≤ D.pieces j)
             (A.eqn j) * c q = s.val q := by
       simpa only [c] using A.eqn_mul_eqnDiv j inf_le_left (s.val q) (hs q)
-    have hc_mem : c ∈ gluedSubmodule R (thetaChartDatum C R π a).pieces
+    have hc_mem : c ∈ AlgebraicGeometry.gluedSubmodule R
+        (thetaChartDatum C R π a).pieces
         (thetaChartDatum C R π a).unit (D.pieces j) := by
       intro q r
       refine A.eqn_res_cancel j (inf_le_left.trans inf_le_left) ?_
