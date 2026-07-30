@@ -86,11 +86,12 @@ is the route that does not need it.
   form is retained as `IndexSeparatedAll` with `indexSeparatedAll_iff_subsingleton` as its
   epitaph.  Any further predicate on this Σ-sheaf should be probed at the empty test before its
   refutation is called a finding.
-* **Satisfiability of `IndexSeparated` at `|ι| ≥ 2` is open.**  `jointlyInjective_singleSpecFamily`
-  inhabits `JointlyInjective` only at `PUnit`, so the theorems whose hypothesis is index
-  separation at a genuinely multi-index atlas have no witness here.  They are not known vacuous
-  either — the nonempty-test restriction is exactly what leaves room — but a lane must not read
-  them as measurements of the Abel atlas.
+* **`IndexSeparated` IS satisfiable at two distinct indices** (`indexSeparated_satFam`,
+  `not_subsingleton_ulift_bool`), so the repair is not a slower vacuity.  But the witness uses an
+  **empty** chart source, which no producer would build, so satisfiability *at the Abel atlas*
+  remains open and the theorems conditioned on index separation are implications rather than
+  measurements of the seam.  `jointlyInjective_singleSpecFamily` inhabits `JointlyInjective` only
+  at `PUnit`.
 
 ## Main declarations
 
@@ -123,6 +124,9 @@ is the route that does not need it.
   `AlgebraicGeometry.indexSeparatedAll_iff_subsingleton` — the naive index-separation condition
   and **its vacuity**: over all tests it *is* `Subsingleton ι`, for every family.  Landed so the
   trap is a theorem instead of a warning.
+* `AlgebraicGeometry.indexSeparated_satFam` with `AlgebraicGeometry.not_subsingleton_ulift_bool` —
+  the nonempty-test form **is** satisfiable at two distinct indices, so the repair above is not a
+  slower vacuity.  Its witness uses an empty chart source, which bounds what it establishes.
 * `AlgebraicGeometry.UniformCoverage` and
   `AlgebraicGeometry.not_injective_of_uniformCoverage_of_ne_top` — the half needing no unmeasured
   premise: the no-go propagates when the coverage witness index does not depend on the point.
@@ -563,6 +567,63 @@ theorem not_indexSeparated_duplicated :
   exact hne (hsep (Spec (CommRingCat.of k))
     (inferInstanceAs (Nonempty (PrimeSpectrum k))) ⟨false⟩ ⟨true⟩
     (𝟙 (Spec (CommRingCat.of k))) (𝟙 (Spec (CommRingCat.of k))) rfl)
+
+/-! ### `IndexSeparated` is satisfiable at two indices — the repair is not a second vacuity
+
+Restricting to nonempty tests removes the `Subsingleton ι` collapse; it would be an empty
+victory if the restricted condition were *unsatisfiable* whenever `ι` has two elements.  It is
+not, and this section proves it, so `IndexSeparated` is a genuine hypothesis with a genuine
+witness at `|ι| = 2` rather than a condition that merely fails more slowly. -/
+
+/-- A two-element source family whose second member is the **empty** open of the first.  The
+sources are what carries the witness; the maps are the tautological one and its restriction. -/
+def satSrc (k : Type u) [Field k] : ULift.{u} Bool → Scheme.{u}
+  | ⟨true⟩ => Spec (CommRingCat.of k)
+  | ⟨false⟩ => ((⊥ : (Spec (CommRingCat.of k)).Opens) : Scheme.{u})
+
+variable (C) in
+/-- The two-index family on `satSrc`: the tautological section at `true`, its `⊥`-restriction at
+`false`. -/
+def satFam : ∀ i, yoneda.obj (satSrc k i) ⟶ (pic0SigmaSheaf C).1
+  | ⟨true⟩ => yonedaEquiv.symm (specSigmaSectionTaut C)
+  | ⟨false⟩ => restrictChart (yonedaEquiv.symm (specSigmaSectionTaut C))
+                 (⊥ : (Spec (CommRingCat.of k)).Opens)
+
+variable (C) in
+/-- **`IndexSeparated` IS SATISFIABLE WITH TWO DISTINCT INDICES.**
+
+So the nonempty-test restriction is a real repair and not a slower vacuity: unlike
+`IndexSeparatedAll`, which forces `Subsingleton ι` outright
+(`indexSeparatedAll_iff_subsingleton`), the restricted condition holds here at
+`ι = ULift Bool`.
+
+The witness is deliberately cheap and its cheapness is the point.  Index `false` has an *empty*
+source, so a test admitting a map to it is empty and the `Nonempty` binder is contradicted —
+every cross-index pair is vacuous, and the diagonal pairs are `rfl`.  It shows the shape of a
+satisfying family: index separation is a condition on where the chart sources have points, which
+is exactly the sort of thing an atlas can arrange and `IndexSeparatedAll` could never express.
+
+What it does **not** show, and this bound is why it is stated separately from the theorems that
+consume the hypothesis: nothing here says the *Abel* atlas can be arranged this way.  A witness
+using an empty chart source is not a chart family a producer would build. -/
+theorem indexSeparated_satFam : IndexSeparated C (satFam C) := by
+  rintro S hS ⟨i⟩ ⟨j⟩ x y _
+  have hemp : ∀ (_ : (yoneda.obj (satSrc k (⟨false⟩ : ULift.{u} Bool))).obj (op S)),
+      False := by
+    intro z
+    have : IsEmpty S := (show S ⟶ ((⊥ : (Spec (CommRingCat.of k)).Opens) : Scheme.{u})
+      from z).base.hom.1.isEmpty
+    exact this.elim hS.some
+  cases i <;> cases j
+  · rfl
+  · exact (hemp x).elim
+  · exact (hemp y).elim
+  · rfl
+
+/-- The index type of the witness genuinely has two elements, so
+`indexSeparated_satFam` is not `indexSeparated_of_subsingleton` in disguise. -/
+theorem not_subsingleton_ulift_bool : ¬ Subsingleton (ULift.{u} Bool) := fun h =>
+  absurd (h.elim (⟨false⟩ : ULift.{u} Bool) ⟨true⟩) (by simp)
 
 variable (C) in
 /-- The same fact at the level the coverage step consumes: the duplicated family is not jointly
