@@ -5682,6 +5682,17 @@ stability properties.
 \end{proof}
 
 \begin{definition}
+[Projective morphism]
+  \label{def:projective_morphism}
+  \leanok
+  \lean{AlgebraicGeometry.Scheme.Hom.IsProjective}
+  \uses{def:projective_space}
+  A morphism of schemes \(\pi : X \to S\) is \emph{projective} if there are a
+  finite set \(I\) and a closed immersion
+  \(i : X \hookrightarrow \mathbb{P}(I;S)\) over \(S\).
+\end{definition}
+
+\begin{definition}
 [Projective morphism carrying a very ample line bundle]
   \label{def:projective_with}
   \leanok
@@ -5694,6 +5705,22 @@ stability properties.
   \(L \cong i^* \mathcal{O}(1)\).  In this situation \(L\) is relatively
   very ample and \(\pi\) is projective in the sense of [Nitsure] \S 5.
 \end{definition}
+
+\begin{lemma}
+[Forgetting the chosen very ample line bundle]
+  \label{lem:projective_with_forget}
+  \leanok
+  \lean{AlgebraicGeometry.Scheme.Hom.IsProjectiveWith.isProjective}
+  \uses{def:projective_morphism, def:projective_with}
+  A morphism that is projective carrying a very ample line bundle is
+  projective.
+\end{lemma}
+
+\begin{proof}
+  \leanok
+  Forget the isomorphism between the chosen line bundle and the pullback of
+  \(\mathcal{O}(1)\); the same closed immersion witnesses projectivity.
+\end{proof}
 
 \begin{lemma}
 [Projective morphisms are proper]
