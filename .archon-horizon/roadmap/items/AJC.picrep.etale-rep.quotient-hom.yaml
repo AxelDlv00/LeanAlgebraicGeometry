@@ -27,5 +27,6 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.etale-rep
-  updated_at: '2026-07-30T00:05:09.271752+00:00'
-  owner: ajc-p4
+  updated_at: '2026-07-30T01:23:09.921632+00:00'
+  pinned_commits:
+  - 3683eb65bf
