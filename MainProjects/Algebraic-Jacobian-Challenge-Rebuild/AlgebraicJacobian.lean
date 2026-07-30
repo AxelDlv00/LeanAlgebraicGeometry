@@ -688,6 +688,7 @@ import AlgebraicJacobian.Picard.JacobianDataFromPicRepDatum
 import AlgebraicJacobian.Picard.JacobianDataQcFromRep
 import AlgebraicJacobian.Picard.JacobianDataQcFiniteFamily
 import AlgebraicJacobian.Picard.Pic0ChartFieldPointClass
+import AlgebraicJacobian.Picard.DivisorFamilyDegreeZeroUnique
 
 /-!
 # AlgebraicJacobian — library root
