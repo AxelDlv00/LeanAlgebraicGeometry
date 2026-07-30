@@ -150,6 +150,35 @@ theorem restrictCompatEquiv_naturality (C : Over (Spec (CommRingCat.of k)))
     ← coverRestrictNat_app (k' := k') C T, ← coverRestrictNat_app (k' := k') C T']
   exact NatTrans.naturality_apply (coverRestrictNat (k' := k') C) f.op y
 
+/-! ## The assembly: from cover-compatible classes to a `k`-representation -/
+
+/-- **THE ASSEMBLY.** A `k`-scheme `Y` whose points are naturally the
+cover-compatible `picEt C`-classes on `T_{k'}` REPRESENTS `picEt C`.
+
+This is the theorem the descent step's four inputs are antecedents *of*, on the
+class side: it takes data over the cover and concludes over `k`. -/
+noncomputable def representableBy_of_coverCompatibleEquiv
+    (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    {Y : Over (Spec (CommRingCat.of k))}
+    (e : ∀ T : Over (Spec (CommRingCat.of k)), (T ⟶ Y) ≃ CoverCompatible (k' := k') C T)
+    (he : ∀ {T T' : Over (Spec (CommRingCat.of k))} (f : T ⟶ T') (g : T' ⟶ Y),
+      (e T (f ≫ g)).1 = ((coverFunctor (k := k) (k' := k')).op ⋙ picEt C).map f.op (e T' g).1) :
+    (picEt C).RepresentableBy Y where
+  homEquiv {T} := (e T).trans (restrictCompatEquiv (k' := k') C T).symm
+  homEquiv_comp {T T'} f g := by
+    apply (restrictCompatEquiv (k' := k') C T).injective
+    change (restrictCompatEquiv (k' := k') C T)
+        ((restrictCompatEquiv (k' := k') C T).symm (e T (f ≫ g))) = _
+    rw [Equiv.apply_symm_apply]
+    refine Subtype.ext ?_
+    rw [restrictCompatEquiv_naturality (k' := k') C f]
+    change (e T (f ≫ g)).1 = ((coverFunctor (k := k) (k' := k')).op ⋙ picEt C).map f.op
+      ((restrictCompatEquiv (k' := k') C T')
+        ((restrictCompatEquiv (k' := k') C T').symm (e T' g))).1
+    rw [Equiv.apply_symm_apply]
+    exact he f g
+
 end Descend
 
 end PicScheme
