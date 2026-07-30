@@ -56,6 +56,40 @@ universe u
 
 open CategoryTheory Limits Opposite TopologicalSpace
 
+namespace CategoryTheory.Sheaf
+
+variable {C : Type u} [SmallCategory C] {J : GrothendieckTopology C}
+variable {R : Type u} [CommRing R] [HasSheafify J (ModuleCat.{u} R)]
+
+/-- At every object of the site, the kernel of the cokernel projection of a monomorphism
+of sheaves of modules is the pointwise range of that monomorphism. -/
+theorem ker_cokernelπ_app_eq_range {F G : Sheaf J (ModuleCat.{u} R)}
+    (ι : F ⟶ G) [Mono ι] (U : Cᵒᵖ) :
+    LinearMap.ker ((cokernel.π ι).hom.app U).hom =
+      LinearMap.range (ι.hom.app U).hom := by
+  ext c
+  rw [LinearMap.mem_ker, LinearMap.mem_range]
+  constructor
+  · intro hc
+    exact exists_app_eq_of_cokernelπ_app_eq_zero ι U c hc
+  · rintro ⟨a, rfl⟩
+    have hnat := congrArg (fun f : F ⟶ cokernel ι ↦ f.hom.app U)
+      (cokernel.condition ι)
+    have hlin := congrArg ModuleCat.Hom.hom hnat
+    exact LinearMap.congr_fun hlin a
+
+/-- If the cokernel projection is surjective at one object, its value there is linearly
+equivalent to the quotient by the pointwise range of the original monomorphism. -/
+noncomputable def cokernelAppEquivQuotientRange
+    {F G : Sheaf J (ModuleCat.{u} R)} (ι : F ⟶ G) [Mono ι] (U : Cᵒᵖ)
+    (hsurj : Function.Surjective ((cokernel.π ι).hom.app U).hom) :
+    (cokernel ι).obj.obj U ≃ₗ[R]
+      G.obj.obj U ⧸ LinearMap.range (ι.hom.app U).hom :=
+  (((cokernel.π ι).hom.app U).hom.quotKerEquivOfSurjective hsurj).symm.trans
+    (Submodule.quotEquivOfEq _ _ (ker_cokernelπ_app_eq_range ι U))
+
+end CategoryTheory.Sheaf
+
 namespace AlgebraicGeometry
 
 namespace IsAffineOpen
@@ -308,6 +342,16 @@ theorem cokernel_app_surjective_of_qcoh (hU : IsAffineOpen U)
     congrArg (fun m : F ⟶ cokernel ι ↦
       (m.hom.app (op (X.basicOpen (f i)))).hom (b i)) (cokernel.condition ι)
   rw [map_sub, hs i, hπι, sub_zero]
+
+/-- On an affine open, quasi-coherence of the source sheaf identifies sections of a
+sheaf cokernel with the quotient of target sections by the pointwise image. -/
+noncomputable def cokernelAppEquivQuotientRangeOfQcoh (hU : IsAffineOpen U)
+    {G : Sheaf (Opens.grothendieckTopology (X : TopCat)) (ModuleCat.{u} k)}
+    [Scheme.QcohOn F U] (ι : F ⟶ G) [Mono ι] :
+    (cokernel ι).obj.obj (op U) ≃ₗ[k]
+      G.obj.obj (op U) ⧸ LinearMap.range (ι.hom.app (op U)).hom :=
+  CategoryTheory.Sheaf.cokernelAppEquivQuotientRange ι (op U)
+    (fun q ↦ hU.cokernel_app_surjective_of_qcoh ι q)
 
 /-- **Twisted affine Serre vanishing in degree one** (G-CBC-3(ii)): for a scheme `X`, an
 affine open `U`, and a sheaf `F` of `k`-modules on the small Zariski site of `X` carrying
