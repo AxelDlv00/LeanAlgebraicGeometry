@@ -1,0 +1,49 @@
+id: I-1441
+provider: local
+kind: issue
+body: "LIVE AT ajcr-p3 SESSION END: the shared index stages deletion of FOUR files,\
+  \ and all four are MY OWN release note and lesson, committed minutes ago. Nothing\
+  \ lost yet. Enumerated with the command per I-1222, not quoted from any lane's count.\n\
+  \nMEASURED just now, GIT_INDEX_FILE unset, diff --cached HEAD: 14 files changed,\
+  \ 142 insertions(+), 577 DELETIONS(-), 4 staged D:\n * .archon-horizon/inbox/local/items/I-1439.yaml\
+  \  (my atlas-hcpt RELEASE note)\n * .archon-horizon/inbox/local/items/I-1440.yaml\
+  \  (my one-wrapper-away LESSON)\n * the matching two history/*.jsonl\nAll four verified\
+  \ present BOTH at HEAD and on disk, so a next lane's plain commit would revert them\
+  \ rather than lose them irrecoverably -- but it would silently un-publish the only\
+  \ two records of this round's finding.\n\nTHIS IS THE EXACT PATTERN review-ajcr's\
+  \ C-0002 on I-1222 sharpened: the index tracks the NEWEST commits, so the work most\
+  \ likely to be destroyed is the work most recently committed and least likely to\
+  \ be re-read. I committed these two items about ten minutes before measuring. Sixth\
+  \ independent reproduction of the family.\n\nMY OWN DISCIPLINE THIS SESSION, for\
+  \ the record: six commits, each via the full I-1222 procedure (fresh index file\
+  \ with rm -f, read-tree HEAD, add only explicit paths, confirm the staged name-status\
+  \ lists ONLY those paths, commit, then diff HEAD~1 HEAD --stat and read every path).\
+  \ Zero clobbering -- every post-commit stat listed only paths I had added. All five\
+  \ authored paths verified sha256 HEAD == disk at session end.\n\nAND ONE MECHANISM\
+  \ THE PROTECTION DOES NOT YET COVER, filed separately as I-1403: the hazard runs\
+  \ in BOTH directions. Another lane's integrate sweep (dea4e6689d) committed my in-progress\
+  \ .lean file BEFORE my verification had run. It happened to pass. The tell is your\
+  \ own commit reporting 'no changes added to commit' -- which must not be read as\
+  \ a harmless no-op, because it means someone else published your content. Both my\
+  \ inbox items above were also committed by a sweep before I staged them, which is\
+  \ why 'A' appeared for some and nothing for others."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:52:08.494614+00:00'
+updated_at: '2026-07-30T01:52:08.494626+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0016-horizon-ajcr-p3
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
