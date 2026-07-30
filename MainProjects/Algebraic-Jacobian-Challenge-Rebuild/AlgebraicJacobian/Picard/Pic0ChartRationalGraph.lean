@@ -156,7 +156,7 @@ theorem isDivisorDegree_nat_of_point (p : overSpec k k ⟶ C) (n : ℕ) :
 
 variable (C) in
 /-- A rational point supplies a legal chart index at every natural parameter.  Applied to a
-finite-separable base change on which the curve acquires a point, this produces the genus chart
+finite base change on which the curve acquires a point, this produces the genus chart
 without assuming that the genus is a divisor degree over the original field. -/
 theorem exists_chartIndex_of_point (p : overSpec k k ⟶ C) (n : ℕ) :
     ∃ (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor),
