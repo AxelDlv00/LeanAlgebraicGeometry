@@ -262,6 +262,22 @@ theorem affineQuotientPullbackIso_inv_snd :
   ext a
   exact (descentAlgEquiv K L A).commutes a
 
+/-- The quotient projection underlying the named base-change isomorphism is the
+canonical map induced by the inclusion of the invariant subalgebra.  This is the
+projection identity used to restrict the quotient to stable open subsets. -/
+@[reassoc]
+theorem affineQuotientPullbackIso_inv_fst :
+    (affineQuotientPullbackIso K L A).inv ≫ pullback.fst _ _ =
+      Spec.map (CommRingCat.ofHom
+        (SemilinearAction.invariantsSubalgebra K L A).val) := by
+  simp only [affineQuotientPullbackIso, Iso.trans_inv, specRingEquivIso_inv]
+  rw [Category.assoc, pullbackSpecLIso_inv_fst, ← Spec.map_comp,
+    ← CommRingCat.ofHom_comp]
+  congr 2
+  ext w
+  change SemilinearAction.descentAlgEquiv K L A (1 ⊗ₜ[K] w) = (w : A)
+  rw [SemilinearAction.descentAlgEquiv_tmul, one_smul]
+
 /-- The descent isomorphism is a morphism over `Spec L` (clause 1 of
 `IsGaloisQuotient`). -/
 @[reassoc (attr := simp)]
