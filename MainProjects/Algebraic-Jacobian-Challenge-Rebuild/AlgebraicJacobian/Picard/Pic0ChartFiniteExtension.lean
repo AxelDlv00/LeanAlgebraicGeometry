@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.Pic0ChartRationalGraph
+import Mathlib.AlgebraicGeometry.Sites.Fpqc
 
 /-!
 # Legal chart indices after finite base change
@@ -21,6 +22,10 @@ does not require the extension to be separable.
   finite extension, obtained from a closed point and its residue field.
 * `AlgebraicGeometry.baseChangePoint` — the fibre-product lift of an extension-valued point to
   a rational point of the base-changed curve.
+* `AlgebraicGeometry.overSpecFieldExtension_mem_fpqcTopology` — a field extension is an fpqc
+  singleton cover of the base field.
+* `AlgebraicGeometry.exists_fpqc_chartIndex` — the finite cover and a legal chart index are
+  produced together.
 * `AlgebraicGeometry.exists_finite_chartIndex` — every natural parameter has a legal
   chart index after one finite base change.
 -/
@@ -106,6 +111,27 @@ noncomputable def baseChangePoint {L : Type u} [Field L] [Algebra k L]
         (overSpecLeftChangeBase (k := k) L) (by rw [Category.assoc, p.w]))
       ((pullback.lift_snd _ _ _).trans (overSpecLeftChangeBase_eq (k := k) L))
 
+omit [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+  [GeometricallyIrreducible C.hom] in
+variable (L : Type u) [Field L] [Algebra k L] in
+/-- The spectrum map of a field extension is surjective. -/
+instance instSurjectiveOverSpecFieldExtension : Surjective (overSpec k L).hom := by
+  rw [overSpec_hom]
+  apply ((flat_and_surjective_SpecMap_iff
+    (CommRingCat.ofHom (algebraMap k L))).mpr ?_).2
+  rw [CommRingCat.hom_ofHom, RingHom.faithfullyFlat_algebraMap_iff]
+  infer_instance
+
+omit [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+  [GeometricallyIrreducible C.hom] in
+variable (L : Type u) [Field L] [Algebra k L] in
+/-- A field extension gives a singleton fpqc cover of the base field. -/
+theorem overSpecFieldExtension_mem_fpqcTopology :
+    Sieve.generate (Presieve.singleton (overSpec k L).hom) ∈
+      Scheme.fpqcTopology (Spec (.of k)) :=
+  Precoverage.generate_mem_toGrothendieck
+    (overSpec k L).hom.singleton_mem_fpqcPrecoverage
+
 /-! The raw second-projection instances, re-keyed on the bundled base-change spelling. -/
 
 variable (C) (L : Type u) [Field L] [Algebra k L] in
@@ -126,6 +152,28 @@ instance instGeometricallyIrreducibleBaseChangeBundle :
   instGeometricallyIrreducibleSndLeft C L
 
 variable (C) in
+/-- Every natural chart parameter becomes legal on a finite fpqc cover.
+
+The cover and the chart index are returned in one package.  This is the producer-facing form
+for descent: the caller does not need to recover fpqc coverhood from the finite field extension. -/
+theorem exists_fpqc_chartIndex (n : ℕ) :
+    ∃ (L : Type u) (_ : Field L) (_ : Algebra k L)
+      (_ : Module.Finite k L),
+      Sieve.generate (Presieve.singleton (overSpec k L).hom) ∈
+          Scheme.fpqcTopology (Spec (.of k)) ∧
+        ∃ (m : ℕ)
+          (Z : ((baseChangeBundle C L) ⊗ overSpec L L).left.CurveDivisor),
+          Scheme.CurveDivisor.deg L Z =
+            (m : ℤ) * classDeg L (thetaCechClass (baseChangeBundle C L)) - (n : ℤ) := by
+  obtain ⟨L, hLfield, hkL, hfinite, ⟨p⟩⟩ := exists_finite_point C
+  letI : Field L := hLfield
+  letI : Algebra k L := hkL
+  letI : Module.Finite k L := hfinite
+  exact ⟨L, inferInstance, inferInstance, inferInstance,
+    overSpecFieldExtension_mem_fpqcTopology (k := k) L,
+    exists_chartIndex_of_point (baseChangeBundle C L) (baseChangePoint C p) n⟩
+
+variable (C) in
 /-- Every natural chart parameter becomes legal after one finite base change.
 
 The extension is produced by `exists_finite_point`; no divisor-degree or rational-point
@@ -138,12 +186,8 @@ theorem exists_finite_chartIndex (n : ℕ) :
         (Z : ((baseChangeBundle C L) ⊗ overSpec L L).left.CurveDivisor),
         Scheme.CurveDivisor.deg L Z =
           (m : ℤ) * classDeg L (thetaCechClass (baseChangeBundle C L)) - (n : ℤ) := by
-  obtain ⟨L, hLfield, hkL, hfinite, ⟨p⟩⟩ := exists_finite_point C
-  letI : Field L := hLfield
-  letI : Algebra k L := hkL
-  letI : Module.Finite k L := hfinite
-  exact ⟨L, inferInstance, inferInstance, inferInstance,
-    exists_chartIndex_of_point (baseChangeBundle C L) (baseChangePoint C p) n⟩
+  obtain ⟨L, hLfield, hkL, hfinite, _, hindex⟩ := exists_fpqc_chartIndex C n
+  exact ⟨L, hLfield, hkL, hfinite, hindex⟩
 
 end
 
