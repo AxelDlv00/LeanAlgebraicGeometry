@@ -218,6 +218,23 @@ theorem fromSpec_preimage_basicOpen (i j : J) (c : J → B) (hi : c i = 1) :
       (Away.isLocalizationElem (X_mem_deg_one i) (X_mem_deg_one j)) = c j
   rw [isLocalizationElem_eq_chartCoord, chartHom_chartCoord]
 
+/-- A normalized coordinate family on an open subscheme defines a morphism
+from that open to the integral model of projective space. -/
+def fromOpen {Z : Scheme.{u}} (U : Z.Opens) (i : J)
+    (c : J → Γ(Z, U)) (hi : c i = 1) :
+    U.toScheme ⟶ Proj (homogeneousSubmodule J (ULift.{u} ℤ)) :=
+  U.toSpecΓ ≫ fromSpec i c hi
+
+/-- On an open source, the inverse image of `D_+(X_j)` is the restriction of
+the principal open where the section `c_j` is nonzero. -/
+theorem fromOpen_preimage_basicOpen {Z : Scheme.{u}} (U : Z.Opens)
+    (i j : J) (c : J → Γ(Z, U)) (hi : c i = 1) :
+    fromOpen U i c hi ⁻¹ᵁ
+        Proj.basicOpen (homogeneousSubmodule J (ULift.{u} ℤ)) (X j) =
+      U.ι ⁻¹ᵁ Z.basicOpen (c j) := by
+  rw [fromOpen, Scheme.Hom.comp_preimage, fromSpec_preimage_basicOpen,
+    Scheme.Opens.toSpecΓ_preimage_basicOpen]
+
 /-- `fromSpec` is natural in the affine coordinate ring. -/
 theorem SpecMap_fromSpec (r : B →+* B') (i : J) (c : J → B)
     (hi : c i = 1) :
@@ -227,6 +244,18 @@ theorem SpecMap_fromSpec (r : B →+* B') (i : J) (c : J → B)
   congr 2
   ext w
   exact DFunLike.congr_fun (comp_chartHom r i c hi) w
+
+/-- Coordinate morphisms from open subschemes commute with restriction. -/
+theorem homOfLE_fromOpen {Z : Scheme.{u}} {U V : Z.Opens} (h : V ≤ U)
+    (i : J) (c : J → Γ(Z, U)) (hi : c i = 1) :
+    Z.homOfLE h ≫ fromOpen U i c hi =
+      fromOpen V i
+        (fun j ↦ (Z.presheaf.map (homOfLE h).op).hom (c j))
+        (by rw [hi, map_one]) := by
+  rw [fromOpen, fromOpen,
+    ← Scheme.Opens.toSpecΓ_SpecMap_presheaf_map_assoc V U h]
+  congr 1
+  exact SpecMap_fromSpec (Z.presheaf.map (homOfLE h).op).hom i c hi
 
 /-- The product of two degree-one coordinates has degree two. -/
 theorem X_mul_X_mem_deg_two (i j : J) :
