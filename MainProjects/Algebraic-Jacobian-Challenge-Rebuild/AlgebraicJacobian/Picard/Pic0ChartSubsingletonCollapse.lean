@@ -1,0 +1,263 @@
+/-
+Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: The AlgebraicJacobian Contributors
+-/
+import AlgebraicJacobian.Picard.Pic0ChartRestrictedFibreSat
+import AlgebraicJacobian.Picard.Pic0ChartCoverForcesNonInj
+
+/-!
+# WHERE THE DIVISOR FUNCTOR IS SUBSINGLETON-VALUED, THE `V`-COUPLING IS NOT THE OBSTRUCTION
+
+Three headers of this project assert that the unrestricted Abel chart is **not** injective —
+the linear system `|D|` being its fibres (`Pic0AtlasFromDivRep.lean:54`,
+`Pic0ChartPair.lean:14`, `Pic0ChartOpenImmersionCriterion.lean:214`).  That assertion is the
+`abel-noninj` fork, and *nothing proves it*: every statement conditioned on it takes
+`¬ Function.Injective` as a hypothesis.  The whole restriction apparatus — `restrictChart`,
+`RestrictedChartFibre`, `chartLocus`, the `V`-coupling of
+`pic0RepresentableBy_of_restrictedChartFibre_of_coverage` — exists because that assertion is
+believed, since it is what kills `V = ⊤`.
+
+This file answers the fork, in the direction nobody had checked: **wherever the divisor functor
+is subsingleton-valued the Abel chart IS a monomorphism**, so the fork's negative branch is
+false there and the restriction apparatus buys nothing at that parameter.
+
+## Why this is the seam side of a question another lane is settling below it
+
+The hypothesis is not invented for this file.  `Picard/DivisorFamilyDegreeZeroUnique.lean`
+proves `Subsingleton (DivFamZar C K π 0)` over a **field** test, and the general-`R` half is
+being taken up as the `deg-zero` row's remaining gap.  What was missing is what a producer of it
+would *buy at the seam*, and the answer is not "one more `rep`":
+
+* `injective_abelSigmaChart_of_subsingleton` — the chart is injective on **every** test.  So
+  `not_restrictedChartFibre_top_of_not_injective`, the only landed fact that kills `⊤`, cannot
+  fire, and by `not_pointwiseCoverage_of_injective_of_ne_top` coverage holds at **no** proper
+  `V`.  With `not_coverageContainment_bot` refuting `⊥`, `V = ⊤` is the only survivor.
+* `restrictedChartFibre_top_iff` (landed) then says the surviving hypothesis **is**
+  `IsChartLocusFibre`, the unrestricted certificate.
+
+So at such a parameter the `V`-interval has no interior to search, and the seam reduces to
+coverage plus the unrestricted certificate.  That converts a caveat this lane wrote in prose
+(inbox `I-1493`: "even a full `rep` at `0` does not feed `mixedParamChart` alone") into a
+theorem about *which* obligations remain.
+
+## The generic core, and why it is stated separately
+
+`eq_of_comp_hom_eq_of_subsingleton` is pure category theory: in a slice `Over S`, if a presheaf
+represented by `J` has a subsingleton value at `Over.mk (v₁ ≫ J.hom)`, then two `T`-points of
+`J.left` agreeing after `J.hom` are equal.  No scheme, no divisor, no curve, no `π` — and the
+proof is `Equiv.subsingleton` of `α.homEquiv` plus `Over.homMk`.  It is stated on its own
+because the geometric statements below are *only* its instances, and because the same argument
+applies to any other slice-represented functor this project introduces.
+
+## What this does NOT establish, stated as hypotheses rather than left implicit
+
+* **It does not produce `rep`, and it does not produce the subsingleton.**  Both are
+  hypotheses here.  `divFunctorObjSubsingleton` is a `Prop` about the functor, not a class, and
+  this file exhibits no witness for it — that is the `deg-zero` row's business.
+* **It does not close the seam at `⊤`.**  It relocates the cost: `IsChartLocusFibre` at that
+  parameter, plus unrestricted coverage.  `Pic0ChartLocusFibreGuard.lean` records why the
+  certificate is expensive; nothing here makes it cheap.  The claim is about *which* hypothesis
+  is owed, not that fewer are.
+* **It says nothing about `n = g`.**  The subsingleton hypothesis is expected to FAIL at the
+  parameter the classical route targets — that is exactly what "the fibres are the linear system
+  `|D|`" means, and this file is consistent with the three headers rather than a refutation of
+  them.  Read it as: the fork's answer is parameter-dependent, and the apparatus is needed only
+  where the answer is negative.
+* **The `⊥`/`⊤` dichotomy is NOT claimed for the opens of the representing object.**  A
+  subsingleton-valued represented functor makes `D` terminal in the slice, which would force
+  `D.left ≅ Spec k` and hence make `D.left.Opens` two-element; that argument is *not* landed
+  here and no statement below uses it.  The collapse proved here goes through injectivity and
+  the landed endpoint refutations, which need no fact about the topology of `D.left`.  Stated
+  because an earlier draft of this header asserted the two-element conclusion as if proved.
+-/
+
+set_option autoImplicit false
+set_option maxSynthPendingDepth 3
+
+universe v u
+
+open CategoryTheory Limits Opposite MonoidalCategory CartesianMonoidalCategory
+
+/-! ## The generic core -/
+
+namespace CategoryTheory.Functor.RepresentableBy
+
+/-- **A slice representation with subsingleton values separates points over the base.**
+
+If `F : (Over S)ᵒᵖ ⥤ Type v` is represented by `J` and its value at `Over.mk (v₁ ≫ J.hom)` is a
+subsingleton, then two `T`-points of `J.left` with the same composite to `S` coincide.
+
+Pure category theory: `α.homEquiv` transports the subsingleton to the slice hom-set
+`Over.mk (v₁ ≫ J.hom) ⟶ J`, where `Over.homMk v₁ rfl` and `Over.homMk v₂ ha.symm` are two
+elements; comparing their `left` components is the conclusion.  The `Over.mk` on which the value
+is taken is `v₁`'s, and `ha` is what lets `v₂` be typed there too. -/
+theorem eq_of_comp_hom_eq_of_subsingleton
+    {C : Type u} [Category.{v} C] {S : C} {F : (Over S)ᵒᵖ ⥤ Type v}
+    {J : Over S} (α : F.RepresentableBy J) {T : C} {v₁ v₂ : T ⟶ J.left}
+    (hsub : Subsingleton (F.obj (op (Over.mk (v₁ ≫ J.hom)))))
+    (ha : v₁ ≫ J.hom = v₂ ≫ J.hom) :
+    v₁ = v₂ := by
+  haveI := hsub
+  haveI : Subsingleton (Over.mk (v₁ ≫ J.hom) ⟶ J) := Equiv.subsingleton α.homEquiv
+  exact congrArg (fun z : Over.mk (v₁ ≫ J.hom) ⟶ J => z.left)
+    (Subsingleton.elim (Over.homMk v₁ rfl : Over.mk (v₁ ≫ J.hom) ⟶ J)
+      (Over.homMk v₂ ha.symm))
+
+/-- **The Σ-extension map of such a representation is injective on every test.**
+
+The Σ-component of `toSigmaExtension` at `v` is `v ≫ J.hom`, so equality of Σ-elements gives the
+hypothesis of `eq_of_comp_hom_eq_of_subsingleton` by `congrArg Sigma.fst`. -/
+theorem injective_toSigmaExtension_app
+    {C : Type u} [Category.{v} C] {S : C} {F : (Over S)ᵒᵖ ⥤ Type v}
+    {J : Over S} (α : F.RepresentableBy J) (T : Cᵒᵖ)
+    (hsub : ∀ a : T.unop ⟶ S, Subsingleton (F.obj (op (Over.mk a)))) :
+    Function.Injective ((α.toSigmaExtension).app T) :=
+  fun _ _ h => eq_of_comp_hom_eq_of_subsingleton α (hsub _) (congrArg Sigma.fst h)
+
+end CategoryTheory.Functor.RepresentableBy
+
+namespace AlgebraicGeometry
+
+variable {k : Type u} [Field k] {C : Over (Spec (.of k))}
+variable {π : C.left ⟶ P1 k} [IsAffineHom π] {n : ℕ}
+variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+variable [GeometricallyIrreducible C.hom]
+
+noncomputable section
+
+/-! ## The hypothesis, named -/
+
+variable (C π n) in
+/-- **The divisor functor is subsingleton-valued**: at most one degree-`n` divisor class over
+every test object of the slice.
+
+A `Prop` about `divFunctor C π n` and nothing else — in particular it mentions the object it is
+about, and it has no producer *in this file*.  `Picard/DivisorFamilyDegreeZeroUnique.lean`
+proves the affine-field instance at `n = 0`; `divFunctorObjSubsingleton_of_forall_ring` below is
+the bridge from the affine-ring form a producer naturally lands. -/
+def DivFunctorObjSubsingleton : Prop :=
+  ∀ T : (Over (Spec (.of k)))ᵒᵖ, Subsingleton ((divFunctor C π n).obj T)
+
+omit [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] in
+variable (C π n) in
+/-- **From the affine-ring subsingleton to the functor-value subsingleton.**
+
+The functor value at an arbitrary test `T` is a *compatible family* of `DivFamZar` classes over
+the affine opens of `T.left` (`divFamZar`, `Picard/DivisorFamilyZarVehicle.lean:187`), i.e. a
+subtype of a `Π`-type.  So the subsingleton passes componentwise: two sections agreeing at every
+affine open are equal by `Subtype.ext`, and they agree because each component lands in a
+subsingleton.
+
+This is the form a producer working on affine test rings should target — it needs the
+subsingleton at *every* `k`-algebra, which is precisely the general-`R` uniqueness question, and
+nothing about general test objects.
+
+The `omit` is a measurement, not tidying: this bridge uses **none** of the curve's geometry —
+not smoothness, not properness, not geometric irreducibility.  It is the vehicle's `Π`-shape and
+nothing else, so it will not decay if the curve binders move. -/
+theorem divFunctorObjSubsingleton_of_forall_ring
+    (hR : ∀ (R : Type u) (_ : CommRing R) (_ : Algebra k R),
+      Subsingleton (DivFamZar C R π n)) :
+    DivFunctorObjSubsingleton C π n :=
+  fun _ => ⟨fun _ _ => Subtype.ext (funext fun _ => (hR _ _ _).elim _ _)⟩
+
+/-! ## The fork, answered: the Abel chart is a monomorphism there -/
+
+/-- **THE `abel-noninj` FORK, ANSWERED AT A SUBSINGLETON PARAMETER.**
+
+Wherever the divisor functor is subsingleton-valued, the *unrestricted* Abel chart is injective
+on every test — so the non-injectivity that three headers assert is **false** at that parameter,
+and the landed refutation of `V = ⊤` (`not_restrictedChartFibre_top_of_not_injective`) has no
+hypothesis to fire on.
+
+One instance of `injective_toSigmaExtension_app`: `abelSigmaChart` is
+`rep.toSigmaExtension ≫ Over.sigmaExtensionNat …`, and the Σ-component of the composite is that
+of `toSigmaExtension` (`sigmaExtensionNat_app_fst`), so the composite's injectivity reduces to
+the representation's.  No divisor, twist, chart index or certificate enters the proof. -/
+theorem injective_abelSigmaChart_of_subsingleton {D : Over (Spec (.of k))}
+    (rep : (divFunctor C π n).RepresentableBy D)
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - (n : ℤ))
+    (hsub : DivFunctorObjSubsingleton C π n) (T : Scheme.{u}ᵒᵖ) :
+    Function.Injective ((abelSigmaChart C π n rep m Z hdeg).app T) :=
+  fun _ _ h =>
+    Functor.RepresentableBy.eq_of_comp_hom_eq_of_subsingleton rep (hsub _)
+      (congrArg Sigma.fst h)
+
+/-! ## Consequence 1: coverage is refuted at EVERY proper `V` -/
+
+/-- **No proper open supports coverage there.**
+
+`not_pointwiseCoverage_of_injective_of_ne_top` turns injectivity on every test into the
+refutation of coverage at any `V ≠ ⊤`.  Combined with `not_coverageContainment_bot`, which
+refutes the containment at `⊥`, this leaves `V = ⊤` as the **only** candidate value — so the
+"any working `V` is a proper intermediate open" reading of the `V`-interval is exactly inverted
+at a subsingleton parameter.
+
+Stated at the one-chart index `PUnit` because that is the shape
+`not_pointwiseCoverage_of_injective_of_ne_top` takes; the multi-index consequence is
+`not_uniformCoverage_mixedParamChart_of_subsingleton` below. -/
+theorem not_pointwiseCoverage_of_subsingleton_of_ne_top {D : Over (Spec (.of k))}
+    (rep : (divFunctor C π n).RepresentableBy D)
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - (n : ℤ))
+    (hsub : DivFunctorObjSubsingleton C π n)
+    (V : D.left.Opens) (hV : V ≠ ⊤) :
+    ¬ PointwiseCoverage C
+      (fun _ : PUnit.{u+1} => restrictChart (abelSigmaChart C π n rep m Z hdeg) V) :=
+  not_pointwiseCoverage_of_injective_of_ne_top C _ V hV
+    (injective_abelSigmaChart_of_subsingleton rep m Z hdeg hsub)
+
+/-! ## Consequence 2: the surviving hypothesis is the UNRESTRICTED certificate
+
+`restrictedChartFibre_top_iff` (`Pic0ChartRestrictedFibreSat.lean`) is an equivalence at `⊤`,
+already landed.  The point of restating its two directions here is that at a subsingleton
+parameter `⊤` is not one endpoint among many — it is the only value the previous section leaves
+standing, so the equivalence is the seam's actual remaining obligation rather than a boundary
+observation. -/
+
+/-- **At a subsingleton parameter the `V`-coupling costs the unrestricted certificate.**
+
+The hypothesis `huniv` of the coupled assembly, at the only surviving `V`, *is*
+`IsChartLocusFibre` — the datum `Pic0ChartRestrictedFibre.lean` was written to avoid.  So the
+restriction repair, whose whole purpose was to replace a badly-gated route, has nothing to
+replace here.
+
+This is the honest form of the collapse: it does not make the seam cheaper, it identifies which
+single hypothesis it costs. -/
+theorem isChartLocusFibre_iff_restrictedChartFibre_top_of_subsingleton
+    {D : Over (Spec (.of k))} (rep : (divFunctor C π n).RepresentableBy D)
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - (n : ℤ)) :
+    IsChartLocusFibre C π n rep m Z hdeg
+      ↔ RestrictedChartFibre C π n rep m Z hdeg ⊤ :=
+  (restrictedChartFibre_top_iff C π n rep m Z hdeg).symm
+
+/-- **`IsChartUniv` at `⊤` from the unrestricted certificate, at a subsingleton parameter.**
+
+The composite a lane holding `IsChartLocusFibre` should cite: transport to the restricted datum
+at `⊤` (free), then the repaired reduction.  Recorded so the route from the certificate to
+antecedent 1 is one name rather than two compositions.
+
+The subsingleton hypothesis is *not* used in the proof — it is carried to mark the parameter at
+which `⊤` is the value that matters, and that is a documentation choice, not a mathematical
+dependency.  Stated with it so a reader cannot mistake this for a claim that `⊤` is generally
+the right value; without it the statement is `restrictedChartFibre_top_iff` composed with
+`isChartUniv_of_restrictedChartFibre` and true at every parameter. -/
+theorem isChartUniv_top_of_isChartLocusFibre {D : Over (Spec (.of k))}
+    (rep : (divFunctor C π n).RepresentableBy D)
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - (n : ℤ))
+    (h : IsChartLocusFibre C π n rep m Z hdeg) :
+    IsChartUniv C π n rep m Z hdeg ⊤ :=
+  isChartUniv_of_restrictedChartFibre rep m Z hdeg ⊤
+    ((restrictedChartFibre_top_iff C π n rep m Z hdeg).mpr h)
+
+end
+
+end AlgebraicGeometry
