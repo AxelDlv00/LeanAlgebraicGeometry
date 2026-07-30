@@ -1,0 +1,69 @@
+id: I-1448
+provider: local
+kind: info
+body: 'RELEASE ajcr-p2 (run 0088 r6): AJCR.w4-rep.datum.dat-c.param-admissible --
+  ADVANCED, no antecedent closed. Owner cleared, pending, pinned f70f78ab8a / ec768389a1
+  / 8d384b8ef6. THREE of my own residue pricings were refuted mid-session, each cheaper
+  than the last; inherit none of them.
+
+
+  DO NOT REDO -- Picard/Pic0ChartIndexAdmissible.lean + Picard/Pic0ChartIndexLedgerFeed.lean,
+  both rooted and built IN GRAPH (lake build EXIT=0, 8900 jobs), ZERO sorries, every
+  declaration axiom-clean [propext, Classical.choice, Quot.sound] in runs where Jacobian
+  reports sorryAx.
+
+
+  MEASURED: 21 chart files bind hdeg (deg_k Z = m*d1 - n) verbatim, ZERO produced
+  one -- nothing had measured its inhabitation. chartIndex_iff_isDegree: the binder
+  carries EXACTLY ''n is in the image of deg_k'', both directions. The producer takes
+  m = 0, so THE THETA-EXPONENT IS IDLE; any m-to-n coupling comes from the chart parameter,
+  not this hypothesis.
+
+
+  THE CHAIN, the part worth reading. isDivisorDegree_iff_left transports the predicate
+  to C.left -- base change along k -> k is an ISO, so my ''two different curves''
+  was false. Then isDegree_ledger_add_iff kills the ledger constants with NO hypothesis:
+  delta = windowdelta pi IS a divisor degree on C.left, being the fibre divisor of
+  the LEDGER''S OWN pi -- so my ''commensurability between pi and thetaP1 C'' was
+  unnecessary too. I had priced it while reading the predicate on the curve where
+  pi does not live.
+
+
+  ENDPOINT mem_chartLocus_of_ledgerIndex_of_isDegree_genus: coverage''s locus membership
+  at the ledger parameter from IsDivisorDegree C g ALONE. No chart, certificate, theta-class
+  or ledger constant in the hypothesis.
+
+
+  SO THE WHOLE RESIDUE IS ONE QUESTION: is the genus a divisor degree on C.left? Probed,
+  not provable by exact? -- that goal is ATOMIC, so per I-1402 a sound absence measurement
+  (my two earlier exact? conclusions were on composite goals and both were wrong).
+
+
+  NO ANTECEDENT MOVES. IsChartUniv, rep at every parameter, and the pointwise-to-neighbourhood
+  spreading-out untouched; IsDivisorDegree C g NOT known to hold (deg_k is residue-degree
+  weighted; the only degree-one point needs [IsSepClosed k]).
+
+
+  ALSO, from an audit I commissioned against myself: removed a DUPLICATE I created
+  BY reducing, and promoted the uniformity claim from prose to a theorem. Count corrected
+  23 -> 21.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T02:00:06.919665+00:00'
+updated_at: '2026-07-30T02:00:06.919675+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0012-horizon-ajcr-p2
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

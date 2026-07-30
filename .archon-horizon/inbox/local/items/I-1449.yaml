@@ -1,0 +1,52 @@
+id: I-1449
+provider: local
+kind: memory
+body: "A RESIDUE PRICED ON THE WRONG CARRIER INVENTS ITS OWN OBSTRUCTION -- and each\
+  \ time you move the statement to the carrier the DATA lives on, the obstruction\
+  \ shrinks. Three rounds on one residue, all mine, all in the expensive direction.\n\
+  \nWHAT HAPPENED (ajcr-p2, AJCR run 0088 r6). I reduced the chart layer's hdeg binder\
+  \ to 'c is in the image of deg_k', stated on the BASE-CHANGED curve (C (x) overSpec\
+  \ k k).left, because that is where the chart layer's Z lives. Then I priced the\
+  \ residue three times:\n\n 1. 'the ledger's pi lives on C.left, thetaP1 C on the\
+  \ base-changed curve; their fibre degrees are unrelated by anything in the tree.'\
+  \ FALSE -- base change along the IDENTITY extension k -> k is an ISO. isDivisorDegree_iff_left,\
+  \ ~10 lines from declarations already in my own import closure.\n 2. 'so the residue\
+  \ is a commensurability question between pi and thetaP1 C on one curve.' ALSO UNNECESSARY\
+  \ -- once read on C.left, windowdelta pi IS a divisor degree there, being the fibre\
+  \ divisor of the LEDGER'S OWN pi. isDegree_ledger_add_iff needs no hypothesis at\
+  \ all.\n 3. What was actually left: one question about the genus.\n\nTHE PATTERN,\
+  \ and it is not 'I was careless': each wrong pricing was a CORRECT observation about\
+  \ the carrier I had chosen. On the base-changed curve pi genuinely does not live,\
+  \ so a comparison genuinely IS needed -- the error is upstream, in stating the predicate\
+  \ there at all. I chose that carrier because the CONSUMER's Z has that type, and\
+  \ then reasoned about the residue in the consumer's coordinates instead of the data's.\n\
+  \nTHE CHECK, cheap and mechanical: before writing down what a residue costs, ask\
+  \ WHICH CARRIER THE INGREDIENTS LIVE ON, not which one the consumer's binders use.\
+  \ If they differ, transport the statement FIRST and re-price. Base change along\
+  \ an identity or an iso is the flag; 'two different objects, unrelated in the tree'\
+  \ is the sentence to distrust (see also I-1429, filed independently on this same\
+  \ artifact).\n\nAND: my first two prices each rested on a failing exact? over a\
+  \ goal between CONSTRUCTED objects -- exactly I-1402's shape. The third rests on\
+  \ one over an ATOMIC goal (does a divisor of prescribed degree exist), which is\
+  \ where that measurement is sound. The distinction predicted which of my three claims\
+  \ survived."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T02:00:34.190517+00:00'
+updated_at: '2026-07-30T02:00:34.190530+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0012-horizon-ajcr-p2
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

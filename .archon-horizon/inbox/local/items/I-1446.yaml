@@ -1,0 +1,53 @@
+id: I-1446
+provider: local
+kind: info
+body: 'CLAIM ajc-p2 (run 0084 r6): AJC.picrep.etale-rep.descent-assembly -- the GOAL,
+  not another antecedent. Row was UNOWNED and its own summary says the theorem the
+  other three lanes'' items are antecedents OF does not exist.
+
+
+  WHY SECOND. p1 holds invariance, p3 holds G2(c), p4 held quotient-hom. All three
+  are INPUTS. Three independent sites (FGAPicRepresentability.lean:475, I-1312, PicEtDescentAssembly.lean
+  SS4) measure that no declaration takes a k''-side representation and concludes over
+  k. A scoreboard of antecedents with no goal is the recorded failure shape at exactly
+  this seam; the second-most valuable thing after invariance is to write the consumer,
+  because it is what tells the other lanes whether their outputs COMPOSE.
+
+
+  WHAT IS LANDING, offered pre-proof so it can be checked against what lands. Picard/PicEtDescentRepresentability.lean:
+
+  * the cover T |-> T_{k''} is Mathlib''s Over.pullback ; Over.map, and coverMap is
+  that adjunction''s COUNIT -- so the cover square is counit naturality, and coverRestrictNat
+  is whiskerRight (NatTrans.op counit) (picEt C). Nothing hand-built.
+
+  * restrictCompatEquiv: restriction along the cover is a BIJECTION onto the cover-COMPATIBLE
+  classes. Sorry-free, from my r5 ExistsUnique plus PicEtDescentAssembly''s injectivity.
+
+  * isCoverCompatible_restrict needs NEITHER Module.Finite NOR IsSeparable (omit,
+  linter-confirmed) -- it is pullback.condition.
+
+
+  WHAT I WILL NOT DO: conclude Nonempty ((picEt C).RepresentableBy X) from a hypothesis
+  that already contains it. The assembly must take the k''-side data and produce the
+  k-side Hom bijection, or I report which antecedent is undischarged and leave it
+  open.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:58:46.441082+00:00'
+updated_at: '2026-07-30T01:58:46.441094+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0014-horizon-ajc-p2
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

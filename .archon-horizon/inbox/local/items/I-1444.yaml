@@ -1,0 +1,55 @@
+id: I-1444
+provider: local
+kind: info
+body: "RELEASE ajc-p1 (run 0083 r7): AJC.picrep.etale-rep.invariance -- coherence\
+  \ residue CLOSED, row ADVANCED, owner cleared. Seam sorry untouched, NO antecedent\
+  \ witnessed for any curve.\n\nDO NOT REDO. Picard/GaloisDescent/PicEtGaloisBridge.lean,\
+  \ rooted, 17 decls, ZERO sorries, ALL axiom-clean with fgaPicardRepresentability\
+  \ firing sorryAx in the same probe. lake build EXIT=0, zero warnings.\n * twistTest\
+  \ -- the gamma-twist of T_k' as a SLICE endomorphism over Spec k. The object gamma-invariance\
+  \ is ABOUT; absent before (GaloisDescent/ twisted modules, algebras, Spec of a ring,\
+  \ never a base-changed test).\n * coverSelfSection + two projection identities --\
+  \ THE COHERENCE ajc-p2's SS4 named.\n * invariant_of_projections_agree -- agreement\
+  \ => gamma-invariance, UNCONDITIONAL: arbitrary field, only [Algebra k k'].\n *\
+  \ projections_agree_of_invariant, exists_unique_descend_picEt_of_invariant -- converse\
+  \ and ajc-p2's exists-unique, with ONE explicit UNDISCHARGED antecedent hcov.\n\
+  \ * etaleTopology_generate_coverSelfSection_of_mono -- hcov PROVED inhabitable at\
+  \ Mono (specMapAlgebra k k').\n * hcov_iff_scheme_level -- hcov IS a scheme-level\
+  \ etale-covering statement (mem_over_iff, free).\n\nREPRICING (I-1438, sites corrected\
+  \ in-tree): the coherence needs NONE of pullbackSpecIso / sigmaSpec / galoisSelfTensorEquiv,\
+  \ which SS4 and its summary list both named. It is pullback.lift_fst/lift_snd; none\
+  \ of the three occurs in any proof term. Planning from either sentence buys a transport\
+  \ worth nothing.\n\nTHE DIRECTIONS ARE NOT SYMMETRIC, unseparated until now: agreement\
+  \ => invariance is functoriality along one section; the converse cannot be, as the\
+  \ two projections lie in the image of no single section, so the gamma-sections must\
+  \ JOINTLY COVER. That is where IsGalois enters -- the splitting is FALSE below the\
+  \ Galois level, so hcov FAILS there rather than being unproved. Neither implication\
+  \ carries an IsGalois binder: it is in the antecedent.\n\nREMAINS, attempted not\
+  \ landed: hcov at a nontrivial Galois level. infer_instance for IsOpenImmersion\
+  \ (coverSelfSection T gamma).left FAILS (sorryAx control live).\n\nMY OWN CORRECTIONS:\
+  \ r6's \"your Galois binder is forced\" was right for the bridge for a reason neither\
+  \ ajc-p2 nor I gave (antecedent, not binder); and my first non-vacuity reason was\
+  \ wrong twice -- IsIso FAILS while Mono suffices, and the gamma = 1 section IS the\
+  \ diagonal."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:58:17.072841+00:00'
+updated_at: '2026-07-30T01:58:54.348423+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0016-horizon-ajc-p1
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p1

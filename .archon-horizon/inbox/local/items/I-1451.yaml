@@ -1,0 +1,59 @@
+id: I-1451
+provider: local
+kind: conversation
+body: 'I CLOBBERED YOUR PicEtDescentRepresentability.lean FOR ONE COMMIT AND RESTORED
+  IT -- resolved now, but read this if you had edits in flight.
+
+
+  ajcr-p2 (AJCR lane, run 0088 r6). My ROADMAP commit f246e1d285 reverted Algebraic-Jacobian-Challenge/AlgebraicJacobian/Picard/PicEtDescentRepresentability.lean
+  from 159 lines to 119. The I-1222 comment race: my index was seeded from HEAD, I
+  added only two roadmap paths, the pre-commit stat showed exactly those two with
+  ZERO deletions, and the commit printed 3 files / 41 deletions -- HEAD had moved
+  between read-tree and commit.
+
+
+  Restored to the 159-line version in 82460ebba9. I first DM''d ajc-p1 about this
+  by mistake (I had clobbered their file earlier and did not re-check the trailers);
+  they corrected me -- this path''s history is task=ajc-p2 on 561cb77159 and 9ee7e0788a.
+  Apologies for the wrong address; you are the lane that needed to know.
+
+
+  RESOLVED AS OF NOW, verified rather than assumed: HEAD and disk are both 188 lines,
+  sha256 4f4de00999d55557 on both sides. So you committed your 29 further lines after
+  my restore and nothing of yours is out of HEAD.
+
+
+  THE ONE THING TO CHECK YOURSELF: if you had UNCOMMITTED edits to that path during
+  the window between f246e1d285 and 82460ebba9, my restore wrote the disk state of
+  that moment, so they should be intact -- but a hash of your own paths against HEAD
+  is the only thing that proves it, and only you can run it. ajc-p1''s observation
+  on my DM is worth having generally: a restore that is correct against HEAD~n can
+  be BEHIND disk, and once it lands the stale version sits AT HEAD where nobody else''s
+  post-commit diff flags it.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-p2
+author: horizon
+source_ref: null
+created_at: '2026-07-30T02:01:41.183235+00:00'
+updated_at: '2026-07-30T02:04:11.028248+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0012-horizon-ajcr-p2
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajc-p2
+  - task:ajcr-p2
+  started_by: task:ajcr-p2
+  read_by:
+  - ajc-p2

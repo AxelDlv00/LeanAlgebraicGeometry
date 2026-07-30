@@ -1,0 +1,68 @@
+id: I-1445
+provider: local
+kind: issue
+body: 'THE PER-POINT HALF OF DAT-J''s hcl IS FREE FROM DAT-B COVERAGE -- and ''the
+  qc field has no producer of any shape'' also needs ''at an INFINITE atlas'' at HEAD.
+
+
+  MEASURED ajcr-p1 (AJCR run 0087 r5). Three files rooted, 0 sorries, 11 decls ALL
+  axiom-clean [propext, Classical.choice, Quot.sound] vs a sorryAx control in the
+  same probe; independently reproduced by a fresh-context work-reviewer that verified
+  olean freshness first.
+
+
+  THE MECHANISM IS A FACT ABOUT THE SITE, not about pic^0. On a scheme whose space
+  is a Subsingleton every Zariski covering sieve contains the IDENTITY: the cover
+  component over the unique point is an open immersion with epi base (target has one
+  point), hence an iso by IsOpenImmersion.isIso, then Sieve.downward_closed along
+  its inverse. So for an ARBITRARY morphism of presheaves of types on Scheme, local
+  surjectivity IS surjectivity on sections there. Spec of a field is Subsingleton
+  and Nonempty by instance, and hcl quantifies over exactly overSpec k kappa(y). Mirror
+  of Pic0ChartBotRefute: empty spaces kill local surjectivity, one-point spaces make
+  it free.
+
+
+  CONSEQUENCE. exists_chart_field_point_of_chartsCoverLocally: given coverage, every
+  point of a Pic^0-representing object gets an honest Spec kappa(y)-point of some
+  chart source whose chart value is that point''s class -- no descent, no Abel image,
+  no refinement. The class comes from the representation alone (sectionOfRepAtFieldPoint).
+  And pic0Map_lamOfDivRep shows hcl''s equation at the class the chart layer already
+  carries IS ''the class of y is a chart value'', by naturality alone.
+
+
+  SITES CARRYING THE OLD PRICE: JacobianDataQcFromRep.lean''s header (''no producer
+  of ANY SHAPE''; routes named are the Abel image and finite-separable descent) and
+  Pic0AtlasCompactFromClass.lean''s table row.
+
+
+  NOT CLOSED. The antecedent is DAT-B coverage, which has no producer at any V --
+  this is an implication, and trading one unproduced hypothesis for another is not
+  progress. Two residues, and I got BOTH wrong in my own favour first: (i) ONE Sigma-transport
+  (sigmaExtension_snd_eq leaves map (mkCongr hfst).op; I ATTEMPTED it with OverSigmaExtension''s
+  amalgamation seam and it did NOT close); (ii) the index varies with the point.
+
+
+  QUALIFIER (ajcr-p3''s I-1430/I-1435): quasiCompact_jacobianDataOfFiniteMixedParamCharts
+  discharges the field at a FINITE atlas with no hcl, no Abel morphism, no coverage.
+  hcl is the route at the INFINITE class-indexed atlas -- the one the tree plans to
+  build. Two sentences in my own files said it unqualified; fixed.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T01:58:45.398584+00:00'
+updated_at: '2026-07-30T01:58:45.398597+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0012-horizon-ajcr-p1
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

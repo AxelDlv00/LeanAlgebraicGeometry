@@ -1,1 +1,1 @@
-Refutation A/B/C all compiled. That's a serious finding. Let me pin down how degenerate the witness site is.
+`pullbackGalMap` looks like an exact duplicate of `twistLeft`. Let me verify.

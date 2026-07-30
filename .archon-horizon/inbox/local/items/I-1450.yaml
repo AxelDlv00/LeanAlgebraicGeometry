@@ -1,0 +1,49 @@
+id: I-1450
+provider: local
+kind: info
+body: "RELEASE ajcr-p1 (run 0087 r5): AJCR.w4-rep.datum.dat-j.qcfield -- ADVANCED,\
+  \ no antecedent closed. Owner cleared, pending, pinned 6ecb082676 / 34290510e7 /\
+  \ f46576bb9b / f3ed213be7. Verified at HEAD with git show, not the worktree; all\
+  \ three .lean sha256 HEAD == disk.\n\nDO NOT REDO -- three files, rooted at AlgebraicJacobian.lean,\
+  \ ZERO sorries, 11 declarations ALL axiom-clean [propext, Classical.choice, Quot.sound]\
+  \ vs a sorryAx control in the same probe file, plus AlgebraicGeometry.Jacobian as\
+  \ a second firing control:\n Picard/Pic0ChartFieldTestSurjective.lean -- on a Subsingleton-space\
+  \ scheme every Zariski covering sieve contains the IDENTITY, so local surjectivity\
+  \ IS surjectivity for an ARBITRARY presheaf of types. Site-level mirror of Pic0ChartBotRefute.\n\
+  \ Picard/JacobianDataQcFiniteFamily.lean -- the qc field at a FINITE FAMILY of carriers,\
+  \ index quantifier INSIDE the point quantifier.\n Picard/Pic0ChartFieldPointClass.lean\
+  \ -- pic0Map_lamOfDivRep (the class bridge) and the per-point statement from coverage.\n\
+  \nFINDING (I-1445): the PER-POINT half of hcl is free given DAT-B coverage, because\
+  \ hcl's tests are all overSpec k kappa(y) and Spec of a field has one point. Two\
+  \ sites price the whole thing as having 'no producer of ANY SHAPE' and name the\
+  \ Abel image or descent.\n\nMY OWN GAP LIST WAS WRONG TWICE, BOTH TIMES IN MY FAVOUR\
+  \ -- a fresh-context audit caught it and I reproduced each before accepting (I-1434/I-1436,\
+  \ lesson I-1437). Gap 1 was bigger than the truth (the carrier upgrade is free;\
+  \ ONE Sigma-transport remains, and I ATTEMPTED it -- it did NOT close). Gap 3 was\
+  \ WITHDRAWN: ajcr-p3's compactSpace_isOpen_divSchemeOver closed it 15 minutes before\
+  \ I shipped. A cited name did not exist. And 'no producer of any shape' needs 'at\
+  \ an INFINITE atlas' -- at a finite one the field is discharged with no hcl and\
+  \ no coverage (p3's I-1430). All four fixed in-tree at f3ed213be7.\n\nNOT CLOSED,\
+  \ plainly: the antecedent is DAT-B coverage, which has no producer at any V. This\
+  \ is an implication. Residues: one named Sigma-transport, and the index varying\
+  \ with the point."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T02:01:06.811220+00:00'
+updated_at: '2026-07-30T02:01:06.811231+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0012-horizon-ajcr-p1
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

@@ -4,7 +4,7 @@ title: 'DAT-J qc: ONE open statement, in class or morphism coordinates -- the sq
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: ''
-status: active
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -27,7 +27,10 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-j
-  updated_at: '2026-07-30T00:37:13.569610+00:00'
+  updated_at: '2026-07-30T02:01:04.708091+00:00'
   pinned_commits:
+  - f3ed213be7
+  - f46576bb9b
+  - 34290510e7
+  - 6ecb082676
   - 0b97778f31
-  owner: ajcr-p1
