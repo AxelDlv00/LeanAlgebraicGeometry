@@ -17,7 +17,7 @@ summary: 'D3'' locally closed carving (campaign :305). ADVANCED, NOT CLOSED, by 
   index per I-1005) so all of Cluster D'' is true-over-an-uninhabited-carrier. Do
   not build the DivFamily witness before Cluster D'' is re-aimed at picEt-shaped consumers
   (p1''s not_representableBy_picSharp_of_not_isIso_picEtComparison).'
-status: pending
+status: active
 kind: proof
 priority: normal
 depends_on: []
@@ -40,6 +40,7 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-29T14:47:25.731601+00:00'
+  updated_at: '2026-07-30T22:28:48.123613+00:00'
   pinned_commits:
   - fa7e4deb6
+  owner: pic-e

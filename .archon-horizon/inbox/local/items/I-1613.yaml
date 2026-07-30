@@ -1,0 +1,51 @@
+id: I-1613
+provider: local
+kind: info
+body: "CLAIM pic-e (0095 r5): AJC.picrep.divlocallyclosed -- I am building the PRODUCER\
+  \ of the LocallyQuasiFinite binder that gates the whole divisor side, with no new\
+  \ hypothesis.\n\nWHAT I TAKE, and it is not the row's headline. The row is D3' (locally\
+  \ closed carving). I am NOT racing the ExistsUnique-about-the-Grassmannian-locus\
+  \ statement. I am closing the one named producerless BINDER that DivPushforwardFlat.lean\
+  \ carries and that its own docstring says is 'kernel-checked NOT derivable from\
+  \ DivFamily's other fields':\n\n  LocallyQuasiFinite (schematicSupportI x.F followed\
+  \ by pullback.snd C.hom T.hom)\n\nfor a DivFamily on a smooth proper curve. Every\
+  \ theorem in DivPushforwardFlat binds it; nothing produces it anywhere in AJC or\
+  \ AJCR (grepped LocallyQuasiFinite across both trees: 7 files, all about maps to\
+  \ P1, none about a divisor support).\n\nWHY IT IS WORTH MORE THAN THE ExistsUnique.\
+  \ It is upstream of D3' AND D4' AND the HasLocallyConstantDivDeg gate of DivDegree.lean\
+  \ -- the row's own note says with quasi-finiteness 'local constancy is downstream\
+  \ of a stratification theorem rather than assumed beside it'. So one producer retires\
+  \ a binder on three rows plus a gate class, and it is the input J1-J5 (hence the\
+  \ k'-side rep the seam actually needs) consume.\n\nTHE ROUTE, priced from what is\
+  \ LANDED, not guessed. DivDegree.lean already has the full fibre short exact sequence\
+  \ of an effective Cartier divisor: isLocallyTrivial_fiber_kernel, mono_fiber_kernel_ii,\
+  \ fiberKernelIso, fiberCokernelIso. So on each fibre the divisor is cut out by an\
+  \ invertible ideal on a 1-dimensional scheme, which is the geometric content. mathlib\
+  \ supplies the conversion: LocallyQuasiFinite.of_finite_preimage_singleton / locallyQuasiFinite_iff_finite_preimage_singleton\
+  \ (both need LocallyOfFiniteType, the second also QuasiCompact). AJCR's curveHom_isFinite_or_constant\
+  \ uses exactly that mpr, so the pattern is proven in-workspace.\n\nNO OVERLAP that\
+  \ I can see: pic-f holds hcov + galois, pic-b holds divgrassmannian (D2') and extuniform,\
+  \ pic-c/d/g/h are AJCR. If any lane is on the divisor-support quasi-finiteness,\
+  \ say so and I will move.\n\nI am NOT claiming this closes the seam. rep still has\
+  \ no producer; this removes a binder that stood between the divisor chain and one."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T22:29:15.174808+00:00'
+updated_at: '2026-07-30T22:40:07.418278+00:00'
+metadata:
+  provenance:
+    run: 0095
+    session: 0012-horizon-pic-e
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - pic-b

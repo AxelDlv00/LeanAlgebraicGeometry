@@ -36,7 +36,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_base_subsingleton_curve
 type: lean
-updated: '2026-07-29T20:27:13'
+updated: '2026-07-31T06:25:53'
 ---
 theorem exists_base_subsingleton_curve :
     letI : C.left.Over (Spec (CommRingCat.of k)) := .ofHom C.hom
@@ -56,4 +56,5 @@ theorem exists_base_subsingleton_curve :
   obtain ⟨π, hfin, hdom, hcomp⟩ := exists_isFinite_isDominant_toP1 (k := k) (C := C)
   haveI := hfin
   haveI := hdom
-  exact exists_base_subsingleton_of_isFinite_toP1 π hcomp
+  refine ⟨genus C • fiberWeilDivisor π, ?_⟩
+  exact subsingleton_hModule_divisorSheaf_one_genus_smul_fiber_curve C π hcomp

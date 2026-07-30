@@ -12,11 +12,11 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Scheme.Hom.IsProjectiveWith.baseChangeLift
 type: lean
-updated: '2026-07-28T13:22:16'
+updated: '2026-07-31T04:59:30'
 ---
-private def baseChangeLift {S' : Scheme.{0}} (g : S' ⟶ S) {d : ℕ}
-    (i : X ⟶ ℙ(Fin (d + 1); S)) (hcomp : i ≫ (ℙ(Fin (d + 1); S) ↘ S) = π) :
-    pullback π g ⟶ ℙ(Fin (d + 1); S') :=
-  (ProjectiveSpace.isPullback_map (Fin (d + 1)) g).lift
+private def baseChangeLift {S' : Scheme.{0}} (g : S' ⟶ S) {n : Type} [Finite n]
+    (i : X ⟶ ℙ(n; S)) (hcomp : i ≫ (ℙ(n; S) ↘ S) = π) :
+    pullback π g ⟶ ℙ(n; S') :=
+  (ProjectiveSpace.isPullback_map n g).lift
     (pullback.fst π g ≫ i) (pullback.snd π g)
     (by rw [Category.assoc, hcomp, pullback.condition])

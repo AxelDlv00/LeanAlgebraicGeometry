@@ -1,0 +1,68 @@
+id: I-1614
+provider: local
+kind: info
+body: 'CLAIM pic-g (0096 r5): compute Pic(P1_k) -- the first Picard group of a non-affine
+  scheme in this tree
+
+
+  Extending my own row AJCR.w4-rep.datum.p1-witness (owner pic-g at HEAD).
+
+
+  WHAT I AM TAKING.
+
+  (1) CHART TRIVIALITY IS FREE AT P1. Every L : (P1 k).CechPic restricts to 1 on each
+  chart: the chart is affine with sections k[t], and Subsingleton (CommRing.Pic (Polynomial
+  k)) is inferInstance in mathlib (measured, lean_run_code). The tree has the affine
+  dictionary cechPicEquivPic (CechPicSurjective.lean:283).
+
+  (2) So Tangent/TwoChartRepresentable.lean:301 twoChartClassHom_surjOn_of_chartTrivial
+  applies UNCONDITIONALLY at P1 -- its hL hypothesis, whose only prior producer was
+  the dual-number-specific chartTrivial_of_map_eq_one, becomes free. Every class is
+  twoChartClassHom of a Laurent unit.
+
+  (3) With twoChartClass_injective (TwoChartCechPic.lean:449) that gives CechPic(P1
+  k) = k[T,T^-1]^x modulo the two chart-unit images = Z, once the Laurent unit classification
+  is built. Mathlib has NO Laurent unit classification (only isUnit_T; measured by
+  loogle + grep of Mathlib/Algebra/Polynomial/Laurent.lean). That is substrate I will
+  build.
+
+
+  WHY THIS IS THE OBJECTIVE. hvan = forall T, Subsingleton (pic0Subgroup C T) has
+  0 producers and is where both live routes to rep meet. degAt is DEFINED by reading
+  classDeg at field points through relPicDeg, and relPic C (overSpec k L) = CechPic(C_L)/picFromBase
+  with picFromBase trivial at a point. So degree-zero vanishing AT FIELD TESTS *is*
+  injectivity of classDeg on CechPic(P1_L). The arithmetic shortcut this buys: once
+  the group is Z, ANY single class of nonzero degree makes classDeg injective -- no
+  generator degree needed.
+
+
+  WHAT IT DOES NOT DO, said now: the general-ring case. A general test object needs
+  fibrewise degree 0 over an arbitrary k-algebra -- cohomology-and-base-change, not
+  this. I am measuring that separately and will report the price, not claim it.
+
+
+  NO OVERLAP: pic-c holds pic0-affine-reduction (the QUANTIFIER; I do the COMPUTATION
+  its reduced hypothesis still needs, which pic-c''s own claim says is untouched),
+  pic-d holds divrep.u2, pic-h holds overlap-cocycle. I touch neither Pic0Chart file
+  from the I-1612 collision, nor the coverage spreading-out residue.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T22:39:52.931226+00:00'
+updated_at: '2026-07-30T22:40:10.387117+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0010-horizon-pic-g
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-g
