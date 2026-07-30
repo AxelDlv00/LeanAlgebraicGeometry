@@ -50,6 +50,10 @@ a semilinear action), so a consumer composes that with this file.
 ## Contents
 
 * `powers_map_eq` — the denominators are preserved; the one use of invariance;
+* `powers_map`, `powers_map_eq_forces_pow` — the invariance-free general fact, and
+  the **non-vacuity of `hN` as a theorem**: the conclusion of `powers_map_eq`
+  forces `γ • N` to be a power of `N`, so at any `N` where it is not, that
+  conclusion is false;
 * `awayAut`, `awayAut_algebraMap` — the transported automorphism and its value on
   the image of `A`;
 * `awayAutHom` — the transport is multiplicative, i.e. a `Γ`-action by ring
@@ -119,6 +123,40 @@ theorem powers_map_eq (N : A) (hN : ∀ γ : L ≃ₐ[K] L, γ • N = N) (γ : 
     exact ⟨n, by simp [MulSemiringAction.toRingAut, hN γ]⟩
   · rintro ⟨n, rfl⟩
     exact ⟨N ^ n, ⟨n, rfl⟩, by simp [MulSemiringAction.toRingAut, hN γ]⟩
+
+/-- **The general fact, with invariance dropped**: the image is the powers of the
+*moved* element.
+
+Stated because it is what makes `powers_map_eq` a theorem about invariant elements
+rather than a lemma that happens to carry a spare hypothesis — see
+`powers_map_eq_forces_pow` immediately below. -/
+theorem powers_map (N : A) (γ : L ≃ₐ[K] L) :
+    Submonoid.map (MulSemiringAction.toRingAut (L ≃ₐ[K] L) A γ).toMonoidHom
+      (Submonoid.powers N) = Submonoid.powers (γ • N) := by
+  ext x
+  simp only [Submonoid.mem_map, Submonoid.mem_powers_iff]
+  constructor
+  · rintro ⟨y, ⟨n, rfl⟩, rfl⟩
+    exact ⟨n, by simp [MulSemiringAction.toRingAut]⟩
+  · rintro ⟨n, rfl⟩
+    exact ⟨N ^ n, ⟨n, rfl⟩, by simp [MulSemiringAction.toRingAut]⟩
+
+/-- **`powers_map_eq`'s hypothesis is not decoration, and this is the measurement.**
+
+A failing `exact?` on the invariance-free version of `powers_map_eq` would prove
+only that no *one-lemma* proof exists — a much weaker fact on a composite goal.
+So the non-vacuity is recorded as a theorem instead: the conclusion of
+`powers_map_eq` **forces** `γ • N` to be a power of `N`. Hence for any `N` whose
+`γ`-image is not a power of it, `powers_map_eq`'s conclusion is *false*, and every
+construction below genuinely needs `hN` rather than merely mentioning it. -/
+theorem powers_map_eq_forces_pow (N : A) (γ : L ≃ₐ[K] L)
+    (h : Submonoid.map (MulSemiringAction.toRingAut (L ≃ₐ[K] L) A γ).toMonoidHom
+      (Submonoid.powers N) = Submonoid.powers N) :
+    ∃ n : ℕ, N ^ n = γ • N := by
+  rw [powers_map] at h
+  have hmem : (γ • N) ∈ Submonoid.powers N := by
+    rw [← h]; exact Submonoid.mem_powers _
+  simpa [Submonoid.mem_powers_iff] using hmem
 
 variable (N : A) (hN : ∀ γ : L ≃ₐ[K] L, γ • N = N)
 variable (S : Type v) [CommRing S] [Algebra A S] [IsLocalization.Away N S]
