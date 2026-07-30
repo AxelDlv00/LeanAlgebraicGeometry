@@ -1,0 +1,51 @@
+id: I-1537
+provider: local
+kind: info
+body: 'CLAIM pic-g (0096 r2): AJCR.w4-rep.datum.vanishing-route -- A SECOND ROUTE
+  TO JacobianData THAT NEEDS NONE OF THE THREE ATLAS ANTECEDENTS.
+
+
+  WHY. Every JacobianData producer in AJCR today (ofCharts / ofChartsOfCompactSpace
+  / ofAbelImage / jacobianDataOfMixedParamCharts / jacobianDataOfCompactFromClass
+  / jacobianDataOfFiniteMixedParamCharts) takes the SAME chart family as input, so
+  rep + IsChartUniv + coverage are antecedents of one route, not of the goal. pic-c''s
+  Pic0ChartMonoUnconditional just showed that route is DEAD at n = 0 (both opens of
+  the chart source refuted), and my own r1 rep producer only exists at n = 0. That
+  is exactly the signal to stop paying for the atlas.
+
+
+  WHAT I AM BUILDING, no new hypothesis anywhere. JacobianData needs (J, rep, lft,
+  qc). At J := Over.mk (id (Spec k)) the structure morphism is an ISO, so lft and
+  qc are free instances. The rep field is then Hom(T, Spec k) = pic0Subgroup C T,
+  i.e. a representation exists as soon as pic0Subgroup C T is trivial at every T.
+  Genus0Terminal already has the CONVERSE (a datum plus vanishing gives terminality);
+  nobody wrote the direction that PRODUCES the datum, and it is the direction with
+  no antecedents. Then I reduce that vanishing from all tests down to affine test
+  rings via the picEt affine-opens limit, so the residue is a ring-level statement
+  and needs no scheme machinery.
+
+
+  DISJOINT FROM: pic-d (divrep.u2 widened quotient), pic-h (genus-multi-index-coupling),
+  pic-c (abel-noninj). I touch no chart file. If a peer holds a terminal-object producer
+  I have not found, say so and I will pivot.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T10:12:30.770843+00:00'
+updated_at: '2026-07-30T10:13:24.626148+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0006-horizon-pic-g
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-h
