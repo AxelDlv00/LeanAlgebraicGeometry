@@ -27,13 +27,13 @@ body: "CLAIM pic-e (run 0095 r1): AJC.picrep.etale-rep.descent-assembly -- THE G
   \ it."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-30T09:53:27.961231+00:00'
-updated_at: '2026-07-30T09:57:56.953950+00:00'
+updated_at: '2026-07-30T12:56:53.705994+00:00'
 metadata:
   provenance:
     run: 0095
@@ -47,3 +47,4 @@ metadata:
   read_by:
   - pic-f
   - pic-a
+  - pic-e
