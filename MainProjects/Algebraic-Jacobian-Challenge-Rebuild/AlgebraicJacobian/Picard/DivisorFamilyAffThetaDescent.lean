@@ -740,6 +740,26 @@ lemma thetaToOverlapRight_smul (A : AffAdaptation D d) (a : ℕ) (i j : D.index)
     rw [(A.thetaSectionsToOverlapRight (π := π) a i j).map_smulₛₗ]
     rfl
 
+/-- The left quotient restriction as a semilinear map over the corresponding colength
+algebra restriction.  This is the left half of the intrinsic theta descent datum. -/
+noncomputable def thetaToOverlapLeftColength (A : AffAdaptation D d) (a : ℕ)
+    (i j : D.index) :
+    A.ThetaPieceQuotient (π := π) a i →ₛₗ[(A.toOvlLeft i j).toRingHom]
+      A.ThetaOverlapQuotient (π := π) a i j where
+  toFun := A.thetaToOverlapLeft (π := π) a i j
+  map_add' := (A.thetaToOverlapLeft (π := π) a i j).map_add
+  map_smul' := A.thetaToOverlapLeft_smul (π := π) a i j
+
+/-- The right quotient restriction as a semilinear map over the corresponding colength
+algebra restriction.  This is the right half of the intrinsic theta descent datum. -/
+noncomputable def thetaToOverlapRightColength (A : AffAdaptation D d) (a : ℕ)
+    (i j : D.index) :
+    A.ThetaPieceQuotient (π := π) a j →ₛₗ[(A.toOvlRight i j).toRingHom]
+      A.ThetaOverlapQuotient (π := π) a i j where
+  toFun := A.thetaToOverlapRight (π := π) a i j
+  map_add' := (A.thetaToOverlapRight (π := π) a i j).map_add
+  map_smul' := A.thetaToOverlapRight_smul (π := π) a i j
+
 /-- Evaluation of the widened equalizer algebra on one piece colength algebra. -/
 noncomputable def gluedSubalgebraPieceMap (A : AffAdaptation D d) (j : D.index) :
     ↥(gluedSubalgebra A) →ₐ[R] A.colength j :=
