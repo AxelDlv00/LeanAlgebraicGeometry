@@ -92,6 +92,16 @@ hypothesis is needed**, because the identification follows from the *definition*
 `twistMor` — not that there was nothing to prove. Had that `rfl` succeeded, the honest
 headline would have been "the `G1` match was never an obligation", and this file would be
 bookkeeping; it is recorded because the polarity of that probe is the whole difference.
+
+**And the removal is not a relocation either** — the other half of what a "four inputs
+became three" claim owes, since the natural failure is that the deleted hypothesis
+reappears inside a surviving one. Probed: state §4's *predecessor*'s full hypothesis list
+(`rep`, `hq`, `hcov`, `hmatch`, `hlft`) and close its conclusion by calling
+`seamClauseOne_of_isGaloisQuotient_noMatch rep hq hcov hlft`, discarding `hmatch`. It
+elaborates, and the `unusedVariables` linter confirms `hmatch` is never referenced. So the
+new hypothesis set is *strictly* smaller — same `hq` at the same pinned action, nothing
+migrated into it, nothing hidden in an instance binder. Neither probe was implied by the
+green build; both were cheap.
 * Per `I-0491` there is no `HasRationalPoint` binder anywhere in this file.
 -/
 
