@@ -861,6 +861,175 @@ theorem stableAffineQuotientMap_quotientChartMap
     _ = (i.U.ι ≫ f) ≫
         Spec.map (CommRingCat.ofHom (algebraMap K L)) := hw
 
+/-- The quotient-side open attached to the whole source chart. -/
+noncomputable def quotientChartTopOpen (i : StableAffineOpen ρ) :
+    (quotientChart ρ i).Opens := by
+  letI := ρ.sectionsMulSemiringAction i.stable
+  letI := SemilinearGalAction.sectionsAlgebra f i.U
+  letI := SemilinearGalAction.sectionsAlgebraK (K := K) f i.U
+  letI := SemilinearGalAction.sections_isScalarTower (K := K) f i.U
+  letI := ρ.isSemilinear_sections i.stable
+  exact SemilinearGalAction.quotientOpenOfStableSubopen ρ i.stable i.U
+
+/-- The quotient-side open attached to the whole source chart is the whole
+quotient chart. -/
+theorem quotientChartTopOpen_eq_top [FiniteDimensional K L]
+    (i : StableAffineOpen ρ) : quotientChartTopOpen ρ i = ⊤ := by
+  letI := ρ.sectionsMulSemiringAction i.stable
+  letI := SemilinearGalAction.sectionsAlgebra f i.U
+  letI := SemilinearGalAction.sectionsAlgebraK (K := K) f i.U
+  letI := SemilinearGalAction.sections_isScalarTower (K := K) f i.U
+  letI := ρ.isSemilinear_sections i.stable
+  exact SemilinearGalAction.quotientOpenOfStableSubopen_self
+    ρ i.stable i.affine
+
+instance quotientChartTopOpen_ι_isIso [FiniteDimensional K L]
+    (i : StableAffineOpen ρ) : IsIso (quotientChartTopOpen ρ i).ι := by
+  apply isIso_of_isOpenImmersion_of_opensRange_eq_top
+  rw [Scheme.Opens.opensRange_ι, quotientChartTopOpen_eq_top]
+
+/-- The projection-carrying quotient witness obtained by restricting a stable
+affine chart to the whole chart. -/
+noncomputable def quotientChartTopWitness
+    [FiniteDimensional K L] [IsGalois K L] (i : StableAffineOpen ρ) :
+    GaloisQuotientWitnessWithProjection (ρ.restrict i.stable)
+      (quotientChartTopOpen ρ i).toScheme
+      ((quotientChartTopOpen ρ i).ι ≫ quotientChartMap ρ i)
+      (SemilinearGalAction.stableAffineQuotientMapRestrict
+        ρ i.stable i.affine le_rfl i.stable) := by
+  letI := ρ.sectionsMulSemiringAction i.stable
+  letI := SemilinearGalAction.sectionsAlgebra f i.U
+  letI := SemilinearGalAction.sectionsAlgebraK (K := K) f i.U
+  letI := SemilinearGalAction.sections_isScalarTower (K := K) f i.U
+  letI := ρ.isSemilinear_sections i.stable
+  exact SemilinearGalAction.galoisQuotientWitness_quotientOpenOfStableSubopen
+    ρ i.stable i.affine le_rfl i.stable
+
+/-- Base change of the whole-chart quotient-open inclusion to `Spec L`. -/
+noncomputable def quotientChartTopPullbackMap
+    [FiniteDimensional K L] [IsGalois K L] (i : StableAffineOpen ρ) :
+    pullback ((quotientChartTopOpen ρ i).ι ≫ quotientChartMap ρ i)
+        (Spec.map (CommRingCat.ofHom (algebraMap K L))) ⟶
+      pullback (quotientChartMap ρ i)
+        (Spec.map (CommRingCat.ofHom (algebraMap K L))) :=
+  pullbackBaseChange K L (quotientChartMap ρ i)
+    ((quotientChartTopOpen ρ i).ι ≫ quotientChartMap ρ i)
+    (quotientChartTopOpen ρ i).ι rfl
+
+instance quotientChartTopPullbackMap_isIso
+    [FiniteDimensional K L] [IsGalois K L] (i : StableAffineOpen ρ) :
+    IsIso (quotientChartTopPullbackMap ρ i) := by
+  unfold quotientChartTopPullbackMap pullbackBaseChange
+  infer_instance
+
+/-- The base change of an affine quotient chart to `Spec L` is canonically its
+source stable affine chart. -/
+noncomputable def quotientChartBaseChangeIso
+    [FiniteDimensional K L] [IsGalois K L] (i : StableAffineOpen ρ) :
+    pullback (quotientChartMap ρ i)
+        (Spec.map (CommRingCat.ofHom (algebraMap K L))) ≅ i.U.toScheme :=
+  (asIso (quotientChartTopPullbackMap ρ i)).symm ≪≫
+    (quotientChartTopWitness ρ i).e
+
+/-- The first leg of the inverse affine-chart base-change isomorphism is the
+pinned local quotient projection. -/
+@[reassoc]
+theorem quotientChartBaseChangeIso_inv_fst
+    [FiniteDimensional K L] [IsGalois K L] (i : StableAffineOpen ρ) :
+    (quotientChartBaseChangeIso ρ i).inv ≫
+        pullback.fst (quotientChartMap ρ i)
+          (Spec.map (CommRingCat.ofHom (algebraMap K L))) =
+      SemilinearGalAction.stableAffineQuotientMap ρ i.stable i.affine := by
+  have hfst :
+      (asIso (quotientChartTopPullbackMap ρ i)).hom ≫
+          pullback.fst (quotientChartMap ρ i)
+            (Spec.map (CommRingCat.ofHom (algebraMap K L))) =
+        pullback.fst
+            ((quotientChartTopOpen ρ i).ι ≫ quotientChartMap ρ i)
+            (Spec.map (CommRingCat.ofHom (algebraMap K L))) ≫
+          (quotientChartTopOpen ρ i).ι := by
+    change quotientChartTopPullbackMap ρ i ≫
+        pullback.fst (quotientChartMap ρ i)
+          (Spec.map (CommRingCat.ofHom (algebraMap K L))) = _
+    exact pullbackBaseChange_fst K L (quotientChartMap ρ i)
+      ((quotientChartTopOpen ρ i).ι ≫ quotientChartMap ρ i)
+      (quotientChartTopOpen ρ i).ι rfl
+  have hproj := (quotientChartTopWitness ρ i).projection
+  have hfac := SemilinearGalAction.stableAffineQuotientMapRestrict_fac
+    ρ i.stable i.affine le_rfl i.stable
+  simp only [quotientChartBaseChangeIso, Iso.trans_inv, Iso.symm_inv]
+  calc
+    ((quotientChartTopWitness ρ i).e.inv ≫
+          (asIso (quotientChartTopPullbackMap ρ i)).hom) ≫
+          pullback.fst (quotientChartMap ρ i)
+            (Spec.map (CommRingCat.ofHom (algebraMap K L))) =
+        (quotientChartTopWitness ρ i).e.inv ≫
+          ((asIso (quotientChartTopPullbackMap ρ i)).hom ≫
+            pullback.fst (quotientChartMap ρ i)
+              (Spec.map (CommRingCat.ofHom (algebraMap K L)))) :=
+      Category.assoc _ _ _
+    _ = (quotientChartTopWitness ρ i).e.inv ≫
+          (pullback.fst
+              ((quotientChartTopOpen ρ i).ι ≫ quotientChartMap ρ i)
+              (Spec.map (CommRingCat.ofHom (algebraMap K L))) ≫
+            (quotientChartTopOpen ρ i).ι) :=
+      congrArg (fun z ↦ (quotientChartTopWitness ρ i).e.inv ≫ z) hfst
+    _ = ((quotientChartTopWitness ρ i).e.inv ≫
+          pullback.fst
+            ((quotientChartTopOpen ρ i).ι ≫ quotientChartMap ρ i)
+            (Spec.map (CommRingCat.ofHom (algebraMap K L)))) ≫
+          (quotientChartTopOpen ρ i).ι := (Category.assoc _ _ _).symm
+    _ = SemilinearGalAction.stableAffineQuotientMapRestrict
+          ρ i.stable i.affine le_rfl i.stable ≫
+          (quotientChartTopOpen ρ i).ι :=
+      congrArg (fun z ↦ z ≫ (quotientChartTopOpen ρ i).ι) hproj
+    _ = X.homOfLE le_rfl ≫
+          SemilinearGalAction.stableAffineQuotientMap ρ i.stable i.affine := hfac
+    _ = SemilinearGalAction.stableAffineQuotientMap ρ i.stable i.affine := by
+      rw [Scheme.homOfLE_rfl, Category.id_comp]
+
+/-- The second leg of the inverse affine-chart base-change isomorphism is the
+source chart's structure map to `Spec L`. -/
+@[reassoc]
+theorem quotientChartBaseChangeIso_inv_snd
+    [FiniteDimensional K L] [IsGalois K L] (i : StableAffineOpen ρ) :
+    (quotientChartBaseChangeIso ρ i).inv ≫
+        pullback.snd (quotientChartMap ρ i)
+          (Spec.map (CommRingCat.ofHom (algebraMap K L))) =
+      i.U.ι ≫ f := by
+  have hsnd :
+      (asIso (quotientChartTopPullbackMap ρ i)).hom ≫
+          pullback.snd (quotientChartMap ρ i)
+            (Spec.map (CommRingCat.ofHom (algebraMap K L))) =
+        pullback.snd
+          ((quotientChartTopOpen ρ i).ι ≫ quotientChartMap ρ i)
+          (Spec.map (CommRingCat.ofHom (algebraMap K L))) := by
+    change quotientChartTopPullbackMap ρ i ≫
+        pullback.snd (quotientChartMap ρ i)
+          (Spec.map (CommRingCat.ofHom (algebraMap K L))) = _
+    exact pullbackBaseChange_snd K L (quotientChartMap ρ i)
+      ((quotientChartTopOpen ρ i).ι ≫ quotientChartMap ρ i)
+      (quotientChartTopOpen ρ i).ι rfl
+  have hinv := GaloisQuotientWitnessWithProjection.inverse_comp_snd
+    (quotientChartTopWitness ρ i)
+  simp only [quotientChartBaseChangeIso, Iso.trans_inv, Iso.symm_inv]
+  calc
+    ((quotientChartTopWitness ρ i).e.inv ≫
+          (asIso (quotientChartTopPullbackMap ρ i)).hom) ≫
+          pullback.snd (quotientChartMap ρ i)
+            (Spec.map (CommRingCat.ofHom (algebraMap K L))) =
+        (quotientChartTopWitness ρ i).e.inv ≫
+          ((asIso (quotientChartTopPullbackMap ρ i)).hom ≫
+            pullback.snd (quotientChartMap ρ i)
+              (Spec.map (CommRingCat.ofHom (algebraMap K L)))) :=
+      Category.assoc _ _ _
+    _ = (quotientChartTopWitness ρ i).e.inv ≫
+          pullback.snd
+            ((quotientChartTopOpen ρ i).ι ≫ quotientChartMap ρ i)
+            (Spec.map (CommRingCat.ofHom (algebraMap K L))) :=
+      congrArg (fun z ↦ (quotientChartTopWitness ρ i).e.inv ≫ z) hsnd
+    _ = i.U.ι ≫ f := hinv
+
 /-- The local quotient projections agree on the intersection of two stable
 affine charts. -/
 theorem quotientChartProjection_inf [FiniteDimensional K L] [IsGalois K L]
