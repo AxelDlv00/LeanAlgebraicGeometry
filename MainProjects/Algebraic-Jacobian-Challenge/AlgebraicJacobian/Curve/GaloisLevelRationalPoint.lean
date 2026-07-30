@@ -116,17 +116,27 @@ is `IsGalois.normalClosure` (available because `SeparableClosure k` is normal ov
 `k' ≤ k''` is `IntermediateField.le_normalClosure`; the point is transported along
 `IntermediateField.inclusion` and the two base triangles agree by `Spec.map_comp`.
 
+**The curve binder is stronger than this proof needs, measured.** `[SmoothOfRelativeDimension 1]`
+is carried here only so that §3 and the sibling file's `level_factorization_of_curve` line up on
+one spelling. The argument itself runs at `[LocallyOfFiniteType C.hom]`: substituting it and going
+through `exists_finiteSeparable_level_factorization` directly closes the same goal (`lake env lean`
+EXIT=0), while dropping every finiteness binder makes the first step fail to synthesise (control,
+both ways in one probe). So this is a statement about locally-finite-type `k`-schemes wearing a
+curve's clothes, and a consumer that only has finite type may use
+`Scheme.exists_finiteGalois_level_hasRationalPoint_of_locallyOfFiniteType` below instead.
+
 Note the conclusion does **not** carry `Algebra.IsSeparable k k''`: it is true (a Galois extension
 is separable) but no consumer of a `Gal`-action needs it stated, and `IsGalois` already implies it
 by `IsGalois.to_isSeparable`. -/
-theorem exists_finiteGalois_level_hasRationalPoint {k : Type u} [Field k]
-    (C : Over (Spec (CommRingCat.of k))) [SmoothOfRelativeDimension 1 C.hom]
+theorem exists_finiteGalois_level_hasRationalPoint_of_locallyOfFiniteType {k : Type u} [Field k]
+    (C : Over (Spec (CommRingCat.of k))) [LocallyOfFiniteType C.hom]
     (p : Spec (CommRingCat.of (SeparableClosure k)) ⟶ C.left)
     (hp : p ≫ C.hom = Spec.map (CommRingCat.ofHom (algebraMap k (SeparableClosure k)))) :
     ∃ (k'' : IntermediateField k (SeparableClosure k)) (_ : FiniteDimensional k k'')
       (_ : IsGalois k k''),
       Scheme.HasRationalPoint (Scheme.baseChangeField C k'') := by
-  obtain ⟨k', hfd, hsep, q, hq⟩ := Scheme.level_factorization_of_curve C p hp
+  obtain ⟨k', hfd, hsep, q, hq⟩ :=
+    Scheme.exists_finiteSeparable_level_factorization C.hom p hp
   have hqf : q ≫ C.hom = Spec.map (CommRingCat.ofHom (algebraMap k k')) :=
     Scheme.comp_eq_specMap_algebraMap_of_factorization C.hom p hp k' q hq
   have hle : k' ≤ IntermediateField.normalClosure k k' (SeparableClosure k) :=
@@ -136,6 +146,18 @@ theorem exists_finiteGalois_level_hasRationalPoint {k : Type u} [Field k]
       (Spec.map (CommRingCat.ofHom ((IntermediateField.inclusion hle).toRingHom)) ≫ q) ?_⟩
   rw [Category.assoc, hqf, ← Spec.map_comp]
   congr 1
+
+/-- The curve-shaped form, at the spelling §3 and the sibling file use. `LocallyOfFiniteType`
+follows from `[SmoothOfRelativeDimension 1 C.hom]` by synthesis, so this is the general theorem
+above with no work — recorded because every consumer in this project carries the smooth binder. -/
+theorem exists_finiteGalois_level_hasRationalPoint {k : Type u} [Field k]
+    (C : Over (Spec (CommRingCat.of k))) [SmoothOfRelativeDimension 1 C.hom]
+    (p : Spec (CommRingCat.of (SeparableClosure k)) ⟶ C.left)
+    (hp : p ≫ C.hom = Spec.map (CommRingCat.ofHom (algebraMap k (SeparableClosure k)))) :
+    ∃ (k'' : IntermediateField k (SeparableClosure k)) (_ : FiniteDimensional k k'')
+      (_ : IsGalois k k''),
+      Scheme.HasRationalPoint (Scheme.baseChangeField C k'') :=
+  exists_finiteGalois_level_hasRationalPoint_of_locallyOfFiniteType C p hp
 
 /-! ## §3. The antecedent is discharged: the unconditional form
 
