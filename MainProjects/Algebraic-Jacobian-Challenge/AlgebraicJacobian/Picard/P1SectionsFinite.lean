@@ -81,6 +81,8 @@ base ring, for a finitely presented module `M` on `ℙ¹_A` (`A` noetherian).
 
 ## Main results
 
+* `TwoChart.exists_uniform_twisted_generators` -- aligned finite generator
+  families on the two Laurent charts after one positive common twist.
 * `TwoChart.fg_ker_cechDiff_of_laurent` — the abstract H⁰-finiteness
   theorem (route A′, steps 1–4).
 * `Adelic.p1Cech_h0_fg_of_structure_h0_fg` — the ℙ¹_A leaf, **verbatim** in
