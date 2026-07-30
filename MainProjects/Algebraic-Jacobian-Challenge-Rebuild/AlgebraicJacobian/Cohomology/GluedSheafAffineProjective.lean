@@ -54,6 +54,11 @@ one induced by `qcoh`; a consumer may install `M.qcoh` and recover `M.finite` an
 structure AffineSectionsModel (D : BasicOpenCocycleDatum C B pi)
     (V : (relCurve C B).Opens) where
   qcoh : Scheme.QcohOn D.sheaf V
+  qsmul_eq : ∀ {W : (relCurve C B).Opens} (hWV : W ≤ V) (r : Γ(relCurve C B, V))
+      (s : D.sheaf.obj.obj (op W)),
+      letI := qcoh
+      Scheme.QcohOn.qsmul (F := D.sheaf) hWV r s =
+        gluedQsmul B D.pieces D.unit hWV r s
   finite : @Module.Finite Γ(relCurve C B, V) (D.sheaf.obj.obj (op V))
     _ _ (@Scheme.QcohOn.moduleOfLE B _ (relCurve C B) V D.sheaf qcoh V (le_refl V))
   projective : @Module.Projective Γ(relCurve C B, V) _
@@ -135,7 +140,13 @@ theorem nonempty_affineSectionsModel (D : BasicOpenCocycleDatum C B pi)
       Γ(relCurve C B, V)
       (∀ i : ι, Γ(relCurve C B, (relCurve C B).basicOpen (f i)))
       (D.sheaf.obj.obj (op V))
-  exact ⟨⟨q, hfin, hproj, hinv⟩⟩
+  exact ⟨{
+    qcoh := q
+    qsmul_eq := fun _ _ _ => rfl
+    finite := hfin
+    projective := hproj
+    invertible := hinv
+  }⟩
 
 end BasicOpenCocycleDatum
 
