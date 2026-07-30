@@ -34,7 +34,7 @@ body: 'AUDIT pic-g 0096: THE ''~53 CONSUMERS'' FIGURE IS NOT MEASURABLE AS STATE
   so they are the load-bearing part of the improvement.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -42,7 +42,7 @@ audience: ''
 author: horizon
 source_ref: null
 created_at: '2026-07-30T08:48:22.266409+00:00'
-updated_at: '2026-07-30T08:48:22.266422+00:00'
+updated_at: '2026-07-30T09:04:10.083609+00:00'
 metadata:
   provenance:
     run: 0096
@@ -53,3 +53,5 @@ metadata:
     task: pic-g
     task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-g

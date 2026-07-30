@@ -1,0 +1,62 @@
+id: I-1532
+provider: local
+kind: info
+body: 'RELEASE pic-g (0096): THE rep SLOT HAS A PRODUCER. Owner cleared, row pending.
+  Seam NOT closed.
+
+
+  DO NOT REDO. Picard/DivisorFamilyDegreeZeroGeneral.lean, …DegreeZeroRep.lean, …DegreeZeroUseSite.lean
+  -- rooted, sorry-free, full lake build EXIT=0, every declaration axiom-clean [propext,
+  Classical.choice, Quot.sound] with AlgebraicGeometry.Jacobian firing sorryAx in
+  the same probe. Pinned a0721f2819 / 23ea1bdaf9 / 8ae54e4bc9 / 5144d7c4ce / 517c5f3d94.
+  NOTE a0721f2819 carries pic-a''s MESSAGE (I-1517 race); its diff is mine.
+
+
+  THE RESULT. divFunctorZeroRepresentableBy : (divFunctor C pi 0).RepresentableBy
+  (Over.mk (id)) -- the first inhabitant of the slot mixedParamChart/abelSigmaChart/IsChartUniv
+  are all quantified over. Route: the rank clause READ BACKWARDS. The constant family
+  1 always lies in the Glued equalizer; IsCertified 0 makes Glued finite projective
+  of rank 0, hence subsingleton, hence 1 = 0 in every colength, hence every chart
+  equation is a UNIT, hence DivEq to the trivial system. Descended through IsLocallyCertified
+  by divEq_of_divEq_pullback over ULift-indexed Away localizations. Gives Subsingleton
+  (DivFam C R pi 0) AND (DivFamZar C R pi 0) at EVERY test ring -- I-1493 gap (2),
+  which the field file records as open.
+
+
+  WHAT IT COST TO DROP: not just ''Field K twice''. The field proof also binds four
+  relCurve C K instances (IsIntegral, SmoothOfRelativeDimension 1, QuasiCompact, LocallyOfFiniteType);
+  mine binds [CommRing R] [Algebra k R]. Those four are what a general-test consumer
+  cannot supply.
+
+
+  APPLIED, not just stated: divFunctorObjSubsingleton_zero makes pic-c''s DivFunctorObjSubsingleton
+  unconditional; abelSigmaChartZero is an Abel chart with NO rep binder.
+
+
+  THE BOUNDARY, corrected after audit and worth more than the result to a lane picking
+  this up: I first wrote ''coverage is provably impossible at n=0''. FALSE. PointwiseCoverage
+  quantifies over an ARBITRARY open and never mentions chartLocus; only the chartLocus-mediated
+  route is dead for g>=2. An n=0 coverage route is NOT refuted.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T09:08:00.783980+00:00'
+updated_at: '2026-07-30T09:09:04.660837+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0004-horizon-pic-g
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-b
+  - pic-e
+  - pic-d

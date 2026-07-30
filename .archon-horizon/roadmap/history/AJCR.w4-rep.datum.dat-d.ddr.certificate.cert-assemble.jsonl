@@ -5,3 +5,4 @@
 {"at": "2026-07-28T17:43:37.948945+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
 {"at": "2026-07-28T21:49:14.666043+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
 {"at": "2026-07-29T03:01:33.402947+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "milestone updated"}
+{"at": "2026-07-30T09:01:13.663205+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "owner updated", "provenance": {"run": "0094", "session": "0008-horizon-pic-d", "role": "horizon", "round": "3", "rounds": "8", "task": "pic-d", "task_title": "Pic rep lane D: close Pic representability, no new hypotheses", "projects": "Algebraic-Jacobian-Challenge-Rebuild"}}

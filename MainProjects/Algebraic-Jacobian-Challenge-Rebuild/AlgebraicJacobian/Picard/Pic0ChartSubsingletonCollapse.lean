@@ -134,12 +134,14 @@ applies to any other slice-represented functor this project introduces.
   stronger than what is proved here**.  The error ran in the direction that made this limit look
   harsher and better-audited than it was, which is the same failure mode as an over-generous gap
   list with the sign flipped.
-* **The `⊥`/`⊤` dichotomy is NOT claimed for the opens of the representing object.**  A
-  subsingleton-valued represented functor makes `D` terminal in the slice, which would force
-  `D.left ≅ Spec k` and hence make `D.left.Opens` two-element; that argument is *not* landed
-  here and no statement below uses it.  The collapse proved here goes through injectivity and
-  the landed endpoint refutations, which need no fact about the topology of `D.left`.  Stated
-  because an earlier draft of this header asserted the two-element conclusion as if proved.
+* **The `⊥`/`⊤` dichotomy is not needed for the collapse, and is now landed anyway at the one
+  carrier where it is meaningful.**  The collapse below goes through injectivity and the landed
+  endpoint refutations, which need no fact about the topology of `D.left`; an earlier draft of
+  this header asserted a two-element `Opens` as if proved, and I retracted it as unmeasured.
+  The retraction was right about my own file and too pessimistic about the mathematics:
+  `opens_eq_bot_or_top_of_terminalRep` below proves it in one line at the *terminal* representing
+  object — which is exactly the carrier the landed `n = 0` producer returns.  It is stated
+  separately from the collapse because the collapse does not use it.
 -/
 
 set_option autoImplicit false
@@ -389,6 +391,25 @@ def pic0RepresentableBy_of_isChartLocusFibre_of_coverage {ι : Type u} (nn : ι 
     (fun T s t => by
       obtain ⟨W, htW, i, x, hx⟩ := hcov T s t
       exact ⟨W, htW, i, x, hx, range_subset_range_top_ι x⟩)
+
+/-- **The `V`-interval really does degenerate to `{⊥, ⊤}` at the terminal representing object.**
+
+`Spec k` for a field `k` has a one-point space, so every open is `⊥` or `⊤`
+(`TopologicalSpace.Opens.eq_bot_or_top`).  At the representing object `Over.mk (𝟙 (Spec k))` —
+which is what the landed degree-`0` producer returns — there is therefore **no proper intermediate
+open at all**, and the search the `V`-interval literature describes has an empty domain.
+
+Stated as its own lemma, with `D.left` instantiated rather than hypothesised, because the general
+claim is what I got wrong earlier: I asserted a two-element `Opens` for any subsingleton parameter,
+retracted it as unmeasured, and the retraction was correct about the *general* statement (a
+subsingleton-valued functor pins `D` only up to iso in the slice, and this file proves no such
+transport).  What is true and cheap is the statement at the terminal carrier, which is the only
+one where a producer exists. -/
+theorem opens_eq_bot_or_top_of_terminalRep
+    (V : (Over.mk (𝟙 (Spec (CommRingCat.of k)))).left.Opens) :
+    V = ⊥ ∨ V = ⊤ :=
+  TopologicalSpace.Opens.eq_bot_or_top
+    (α := (Spec (CommRingCat.of k)).carrier) V
 
 /-! ### A declaration this file used to carry, and why it is gone
 

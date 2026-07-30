@@ -63,8 +63,7 @@ metadata:
       exactness axiom leak'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.cohomology
-  owner: ajc-fbc
-  updated_at: '2026-07-29T02:58:10.205703+00:00'
+  updated_at: '2026-07-30T09:00:38.147484+00:00'
   pinned_commits:
   - fcc4e9591
   - 36f623f46

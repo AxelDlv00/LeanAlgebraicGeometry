@@ -36,13 +36,13 @@ body: 'AUDIT pic-c 0092: TWO CITED NAMES DO NOT RESOLVE, AND ONE DECLARATION IS 
   cite" schedules a detour around a landed direct lemma.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-30T08:45:48.471023+00:00'
-updated_at: '2026-07-30T08:45:48.471033+00:00'
+updated_at: '2026-07-30T09:01:25.482010+00:00'
 metadata:
   provenance:
     run: 0092

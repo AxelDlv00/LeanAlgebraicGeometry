@@ -40,7 +40,7 @@ summary: "DEG-ZERO. ADVANCED SUBSTANTIALLY, NO SEAM ANTECEDENT CLOSED. Released 
   \ IN PLACE (fc9dda7cbe): the first commit's main-declarations list named divFunctor_obj_nonempty_zero,\
   \ which does not exist and which I never proved. Corrected at its site with the\
   \ reason it stops."
-status: active
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -62,9 +62,8 @@ metadata:
     task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
-  updated_at: '2026-07-30T07:26:02.537164+00:00'
+  updated_at: '2026-07-30T09:05:35.820503+00:00'
   pinned_commits:
   - fc9dda7cbe
   - 3015fd7fad
   - 5297f1bec1
-  owner: pic-g

@@ -33,8 +33,7 @@ metadata:
     task_title: Close the HasRigidPushforward representability gate
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.rigidpushforward
-  updated_at: '2026-07-29T02:59:38.184221+00:00'
-  owner: ajc-gate
+  updated_at: '2026-07-30T09:00:53.001917+00:00'
   pinned_commits:
   - e4a026eb7
   milestone: AJC.picrep

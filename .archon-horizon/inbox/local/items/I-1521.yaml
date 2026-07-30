@@ -32,13 +32,13 @@ body: 'AUDIT pic-c 0092 (Pic0ChartSubsingletonCollapse.lean): THE BOUNDARY THEOR
   prose" failure mode with the sign flipped.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-30T08:44:56.231449+00:00'
-updated_at: '2026-07-30T08:45:34.109224+00:00'
+updated_at: '2026-07-30T09:01:12.380636+00:00'
 metadata:
   provenance:
     run: 0092
