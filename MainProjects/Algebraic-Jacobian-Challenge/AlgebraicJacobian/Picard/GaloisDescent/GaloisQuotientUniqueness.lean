@@ -248,6 +248,31 @@ noncomputable def uniqueIso
 
 end GaloisQuotientWitness
 
+namespace GaloisQuotientWitnessWithProjection
+
+/-- Transport a projection-carrying quotient witness along an equivariant
+isomorphism of acted source schemes. -/
+noncomputable def transport
+    {K L : Type u} [Field K] [Field L] [Algebra K L]
+    {X X' : Scheme.{u}}
+    {f : X ⟶ Spec (CommRingCat.of L)}
+    {f' : X' ⟶ Spec (CommRingCat.of L)}
+    (rho : SemilinearGalAction K L X f)
+    (rho' : SemilinearGalAction K L X' f')
+    (e : X ≅ X') (hef : e.hom ≫ f' = f)
+    (he : rho.IsEquivariant rho' e.hom)
+    {Y : Scheme.{u}} {g : Y ⟶ Spec (CommRingCat.of K)}
+    {q : X' ⟶ Y}
+    (w : GaloisQuotientWitnessWithProjection rho' Y g q) :
+    GaloisQuotientWitnessWithProjection rho Y g (e.hom ≫ q) := by
+  refine ⟨GaloisQuotientWitness.transport rho rho' e hef he
+    w.toGaloisQuotientWitness, ?_⟩
+  dsimp [GaloisQuotientWitness.transport]
+  simp only [Iso.trans_inv, Iso.symm_inv, Category.assoc]
+  rw [w.projection]
+
+end GaloisQuotientWitnessWithProjection
+
 /-- Extract the full quotient witness from the proposition-valued predicate.
 This is the sole use of choice in the comparison construction. -/
 noncomputable def IsGaloisQuotient.witness
