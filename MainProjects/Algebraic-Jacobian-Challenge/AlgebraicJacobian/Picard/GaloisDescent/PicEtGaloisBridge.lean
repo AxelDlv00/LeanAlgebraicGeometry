@@ -69,6 +69,21 @@ never the obstruction. The obstruction is a *covering* statement about the
 for it exactly as `ajc-p1`'s `galoisSelfTensorHom_bijective_iff_isGalois` predicts:
 below the Galois level the family does not cover, because the splitting is false.
 
+**Two of §4's three ingredients ARE needed — one level up.** The first version of
+this paragraph, and `I-1438`, said the ingredient list (`pullbackSpecIso`,
+`IsIso (sigmaSpec …)`, `galoisSelfTensorEquiv`) is needed for *none* of it. That is
+true of the coherence and **false as a statement about the route**: §6's
+`selfTensorSpecCoproduct` consumes `IsIso (sigmaSpec …)` and
+`galoisSelfTensorEquiv`, and only `pullbackSpecIso` has no use here. A lane reading
+the stronger form would delete `sigmaSpec` from its budget for the whole route and
+then need it, so the overclaim ran in the expensive direction.
+
+This does **not** rehabilitate §4's prescription, and its author declined that
+reading when it was offered: those ingredients were prescribed *for the coherence*,
+which is the obligation `pullback.lift` closes, and a prescription aimed at the
+wrong obligation is wrong even when its ingredient list later matches a different
+one. What is corrected here is only my own absolute, not their error.
+
 ## What this does NOT do
 
 It closes no `sorry` in `Picard/FGAPicRepresentability.lean` and witnesses **no**
