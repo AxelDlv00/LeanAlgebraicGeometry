@@ -41,6 +41,26 @@ coverage plus the unrestricted certificate.  That converts a caveat this lane wr
 (inbox `I-1493`: "even a full `rep` at `0` does not feed `mixedParamChart` alone") into a
 theorem about *which* obligations remain.
 
+## Main declarations
+
+Every name below is in this file; the list was re-checked against the elaborated module rather
+than transcribed from a draft.
+
+* `CategoryTheory.Functor.RepresentableBy.eq_of_comp_hom_eq_of_subsingleton` — the generic core.
+* `CategoryTheory.Functor.RepresentableBy.injective_toSigmaExtension_app` — its Σ-extension form.
+* `AlgebraicGeometry.DivFunctorObjSubsingleton` — the hypothesis, named; no producer here.
+* `AlgebraicGeometry.divFunctorObjSubsingleton_of_forall_ring` — the bridge from the
+  affine-ring form, using none of the curve's geometry.
+* `AlgebraicGeometry.injective_abelSigmaChart_of_subsingleton` — **the fork, answered**.
+* `AlgebraicGeometry.not_pointwiseCoverage_of_subsingleton_of_ne_top` — coverage dies at every
+  proper `V`.
+* `AlgebraicGeometry.isChartLocusFibre_iff_restrictedChartFibre_top_of_subsingleton` — the
+  surviving hypothesis IS the unrestricted certificate.
+* `AlgebraicGeometry.pic0RepresentableBy_of_isChartLocusFibre_of_coverage` — the seam stated
+  with no `V` and no containment.
+* `AlgebraicGeometry.isChartUniv_top_of_isChartLocusFibre` — certificate to antecedent 1 in one
+  name.
+
 ## The generic core, and why it is stated separately
 
 `eq_of_comp_hom_eq_of_subsingleton` is pure category theory: in a slice `Over S`, if a presheaf
@@ -236,6 +256,46 @@ theorem isChartLocusFibre_iff_restrictedChartFibre_top_of_subsingleton
     IsChartLocusFibre C π n rep m Z hdeg
       ↔ RestrictedChartFibre C π n rep m Z hdeg ⊤ :=
   (restrictedChartFibre_top_iff C π n rep m Z hdeg).symm
+
+/-- **THE SEAM WITH THE `V`-COUPLING ELIMINATED** — the form the collapse makes available.
+
+`pic0RepresentableBy_of_restrictedChartFibre_of_coverage` couples its two geometric hypotheses
+through a shared `V`, and that coupling is its whole reason for existing: neither lane may
+retreat to a convenient open.  At `V = ⊤` the coupling is *vacuous* in the good direction —
+the containment conjunct is free (`range_subset_range_top_ι`), so `hcov` degenerates to plain
+`PointwiseCoverage` at the **unrestricted** Abel charts, and `huniv` degenerates to
+`IsChartLocusFibre` (`restrictedChartFibre_top_iff`).
+
+So this is the same representation with **no `V` and no containment anywhere in its hypothesis
+list**: the two inputs are the unrestricted certificate and unrestricted coverage.  By the
+previous section that is not a *choice* of `V` at a subsingleton parameter — it is the only
+value left standing, `⊥` being refuted by `not_coverageContainment_bot` and every proper `V` by
+`not_pointwiseCoverage_of_subsingleton_of_ne_top`.
+
+**The hypotheses are not weaker, and this is the point rather than a caveat.**  Unrestricted
+coverage is what `Pic0ChartCoveragePointwise.lean` expects to fail, and the unrestricted
+certificate is what `Pic0ChartLocusFibreGuard.lean` calls badly gated.  What the statement
+records is that at a subsingleton parameter those two are *exactly* the debt — the restriction
+apparatus is not a route around them, because there is no interior for it to work in.  Stated at
+arbitrary `ι` so it meets `mixedParamChart` where the assembly consumes it, not at a one-chart
+stand-in. -/
+def pic0RepresentableBy_of_isChartLocusFibre_of_coverage {ι : Type u} (nn : ι → ℕ)
+    (D : ι → Over (Spec (.of k)))
+    (rep : ∀ i, (divFunctor C π (nn i)).RepresentableBy (D i))
+    (m : ι → ℕ) (Z : ι → (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : ∀ i, Scheme.CurveDivisor.deg k (Z i)
+      = (m i : ℤ) * classDeg k (thetaCechClass C) - (nn i : ℤ))
+    (hcert : ∀ i, IsChartLocusFibre C π (nn i) (rep i) (m i) (Z i) (hdeg i))
+    (hcov : PointwiseCoverage C
+      (fun i => abelSigmaChart C π (nn i) (rep i) (m i) (Z i) (hdeg i))) :
+    Σ J : Over (Spec (.of k)), (pic0TypeFunctor C).RepresentableBy J :=
+  pic0RepresentableBy_of_restrictedChartFibre_of_coverage C π nn D rep m Z hdeg
+    (fun _ => ⊤)
+    (fun i => (restrictedChartFibre_top_iff C π (nn i) (rep i) (m i) (Z i)
+      (hdeg i)).mpr (hcert i))
+    (fun T s t => by
+      obtain ⟨W, htW, i, x, hx⟩ := hcov T s t
+      exact ⟨W, htW, i, x, hx, range_subset_range_top_ι x⟩)
 
 /-- **`IsChartUniv` at `⊤` from the unrestricted certificate, at a subsingleton parameter.**
 
