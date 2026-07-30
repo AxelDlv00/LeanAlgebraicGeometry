@@ -282,6 +282,138 @@ noncomputable def thetaToOverlapRight (A : AffAdaptation D d) (a : ℕ)
     (A.thetaSectionsToOverlapRight (π := π) a i j)
     (A.thetaSectionsToOverlapRight_vanishing_le (π := π) a i j)
 
+/-! ## The intrinsic widened equalizer -/
+
+/-- The canonical action of the piece colength algebra on intrinsic theta sections modulo
+the piece equation. -/
+@[reducible]
+noncomputable def thetaPieceQuotientModule (A : AffAdaptation D d) (a : ℕ)
+    (j : D.index) :
+    Module (A.colength j) (A.ThetaPieceQuotient (π := π) a j) := by
+  letI := A.thetaPieceSectionsModule (π := π) a j
+  change Module
+    (Γ(relCurve C R, D.pieces j) ⧸ Ideal.span {A.eqn j})
+    (A.ThetaPieceSections (π := π) a j ⧸
+      Ideal.span {A.eqn j} • (⊤ : Submodule Γ(relCurve C R, D.pieces j)
+        (A.ThetaPieceSections (π := π) a j)))
+  infer_instance
+
+/-- The canonical action of the overlap colength algebra on intrinsic theta sections modulo
+the symmetric overlap ideal. -/
+@[reducible]
+noncomputable def thetaOverlapQuotientModule (A : AffAdaptation D d) (a : ℕ)
+    (i j : D.index) :
+    Module (A.ovlColength i j) (A.ThetaOverlapQuotient (π := π) a i j) := by
+  letI := A.thetaOverlapSectionsModule (π := π) a i j
+  change Module
+    (Γ(relCurve C R, D.pieces i ⊓ D.pieces j) ⧸ A.ovlIdeal i j)
+    (A.ThetaOverlapSections (π := π) a i j ⧸
+      A.ovlIdeal i j •
+        (⊤ : Submodule Γ(relCurve C R, D.pieces i ⊓ D.pieces j)
+          (A.ThetaOverlapSections (π := π) a i j)))
+  infer_instance
+
+/-- The base-ring action on a piece quotient, obtained by restricting its section-ring
+action along `R -> Gamma(U_j, O)`. -/
+@[reducible]
+noncomputable def thetaPieceQuotientBaseModule (A : AffAdaptation D d) (a : ℕ)
+    (j : D.index) : Module R (A.ThetaPieceQuotient (π := π) a j) :=
+  letI : Module Γ(relCurve C R, D.pieces j) (A.ThetaPieceQuotient (π := π) a j) :=
+    inferInstance
+  Module.compHom (A.ThetaPieceQuotient (π := π) a j)
+    (algebraMap R Γ(relCurve C R, D.pieces j))
+
+/-- The base-ring action on an overlap quotient, obtained by restricting its overlap-ring
+action along `R -> Gamma(U_i inter U_j, O)`. -/
+@[reducible]
+noncomputable def thetaOverlapQuotientBaseModule (A : AffAdaptation D d) (a : ℕ)
+    (i j : D.index) : Module R (A.ThetaOverlapQuotient (π := π) a i j) :=
+  letI : Module Γ(relCurve C R, D.pieces i ⊓ D.pieces j)
+      (A.ThetaOverlapQuotient (π := π) a i j) := inferInstance
+  Module.compHom (A.ThetaOverlapQuotient (π := π) a i j)
+    (algebraMap R Γ(relCurve C R, D.pieces i ⊓ D.pieces j))
+
+attribute [local instance] thetaPieceQuotientModule thetaOverlapQuotientModule
+  thetaPieceQuotientBaseModule thetaOverlapQuotientBaseModule
+
+/-- The left quotient restriction, viewed over the common test algebra `R`. -/
+noncomputable def thetaToOverlapLeftLinear (A : AffAdaptation D d) (a : ℕ)
+    (i j : D.index) :
+    A.ThetaPieceQuotient (π := π) a i →ₗ[R]
+      A.ThetaOverlapQuotient (π := π) a i j := by
+  let f := A.thetaToOverlapLeft (π := π) a i j
+  refine
+    { toFun := f
+      map_add' := f.map_add
+      map_smul' := fun r x => ?_ }
+  change f ((algebraMap R Γ(relCurve C R, D.pieces i) r) • x) =
+    (algebraMap R Γ(relCurve C R, D.pieces i ⊓ D.pieces j) r) • f x
+  rw [f.map_smulₛₗ]
+  congr 1
+  exact (relResAlgHom C R
+    (inf_le_left : D.pieces i ⊓ D.pieces j ≤ D.pieces i)).commutes r
+
+/-- The right quotient restriction, viewed over the common test algebra `R`. -/
+noncomputable def thetaToOverlapRightLinear (A : AffAdaptation D d) (a : ℕ)
+    (i j : D.index) :
+    A.ThetaPieceQuotient (π := π) a j →ₗ[R]
+      A.ThetaOverlapQuotient (π := π) a i j := by
+  let f := A.thetaToOverlapRight (π := π) a i j
+  refine
+    { toFun := f
+      map_add' := f.map_add
+      map_smul' := fun r x => ?_ }
+  change f ((algebraMap R Γ(relCurve C R, D.pieces j) r) • x) =
+    (algebraMap R Γ(relCurve C R, D.pieces i ⊓ D.pieces j) r) • f x
+  rw [f.map_smulₛₗ]
+  congr 1
+  exact (relResAlgHom C R
+    (inf_le_right : D.pieces i ⊓ D.pieces j ≤ D.pieces j)).commutes r
+
+/-- Product of the intrinsic divisor-restricted theta modules on the widened pieces. -/
+noncomputable abbrev ThetaPieceProd (A : AffAdaptation D d) (a : ℕ) : Type u :=
+  ∀ j : D.index, A.ThetaPieceQuotient (π := π) a j
+
+/-- Product of the intrinsic divisor-restricted theta modules on pairwise overlaps. -/
+noncomputable abbrev ThetaOverlapProd (A : AffAdaptation D d) (a : ℕ) : Type u :=
+  ∀ p : D.index × D.index, A.ThetaOverlapQuotient (π := π) a p.1 p.2
+
+/-- The left arrow in the intrinsic theta descent equalizer. -/
+noncomputable def thetaIntrinsicDeltaLeft (A : AffAdaptation D d) (a : ℕ) :
+    A.ThetaPieceProd (π := π) a →ₗ[R] A.ThetaOverlapProd (π := π) a :=
+  LinearMap.pi (fun p : D.index × D.index =>
+    A.thetaToOverlapLeftLinear (π := π) a p.1 p.2 ∘ₗ LinearMap.proj p.1)
+
+/-- The right arrow in the intrinsic theta descent equalizer. -/
+noncomputable def thetaIntrinsicDeltaRight (A : AffAdaptation D d) (a : ℕ) :
+    A.ThetaPieceProd (π := π) a →ₗ[R] A.ThetaOverlapProd (π := π) a :=
+  LinearMap.pi (fun p : D.index × D.index =>
+    A.thetaToOverlapRightLinear (π := π) a p.1 p.2 ∘ₗ LinearMap.proj p.2)
+
+/-- Intrinsic restriction of `O(a Theta)` to the divisor, obtained by descent on the
+arbitrary widened affine cover. -/
+noncomputable def intrinsicThetaGluedSubmodule (A : AffAdaptation D d) (a : ℕ) :
+    Submodule R (A.ThetaPieceProd (π := π) a) :=
+  LinearMap.ker (A.thetaIntrinsicDeltaLeft (π := π) a -
+    A.thetaIntrinsicDeltaRight (π := π) a)
+
+/-- Membership in the intrinsic theta descent module is pairwise agreement on overlaps. -/
+lemma mem_intrinsicThetaGluedSubmodule_iff (A : AffAdaptation D d) (a : ℕ)
+    (s : A.ThetaPieceProd (π := π) a) :
+    s ∈ A.intrinsicThetaGluedSubmodule (π := π) a ↔
+      ∀ p : D.index × D.index,
+        A.thetaToOverlapLeft (π := π) a p.1 p.2 (s p.1) =
+          A.thetaToOverlapRight (π := π) a p.1 p.2 (s p.2) := by
+  simp only [intrinsicThetaGluedSubmodule, LinearMap.mem_ker, LinearMap.sub_apply,
+    sub_eq_zero, funext_iff, thetaIntrinsicDeltaLeft, thetaIntrinsicDeltaRight,
+    LinearMap.pi_apply, LinearMap.coe_comp, Function.comp_apply, LinearMap.proj_apply,
+    thetaToOverlapLeftLinear, thetaToOverlapRightLinear]
+  rfl
+
+/-- The intrinsic globally descended theta restriction, as an `R`-module type. -/
+noncomputable abbrev IntrinsicThetaGlued (A : AffAdaptation D d) (a : ℕ) : Type u :=
+  ↥(A.intrinsicThetaGluedSubmodule (π := π) a)
+
 end AffAdaptation
 
 end AlgebraicGeometry
