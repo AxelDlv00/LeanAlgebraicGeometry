@@ -135,6 +135,7 @@ import AlgebraicJacobian.Picard.FiniteGaloisQuotientAffine
 import AlgebraicJacobian.Picard.StableAffineCover
 import AlgebraicJacobian.Picard.GaloisQuotientNonVacuity
 import AlgebraicJacobian.Picard.GaloisQuotientGlue
+import AlgebraicJacobian.Picard.GaloisDescent.InvariantQuotientOpen
 import AlgebraicJacobian.Picard.GaloisQuotientAffineGeneral
 import AlgebraicJacobian.Picard.LineBundlePullback
 import AlgebraicJacobian.Picard.TensorObjSubstrate
