@@ -306,5 +306,170 @@ theorem isClosedImmersion_chartFactor1 [IsFinite pi.left] :
       G.secondIndex G.projectiveCoordinates1
         G.projectiveCoordinates1_last G.adjoin_projectiveCoordinates1_ne
 
+/-- The inverse image of the first distinguished target chart is exactly the
+first pulled-back Laurent chart. -/
+theorem preimage_targetOpen0 :
+    G.toProjectiveSpace ⁻¹ᵁ G.targetOpen0 = pi.left ⁻¹ᵁ D.V₀ := by
+  rw [targetOpen0, ← Scheme.Hom.comp_preimage,
+    G.toProjectiveSpace_toProjInt]
+  ext x
+  constructor
+  · intro hx
+    have hcover : x ∈ (pi.left ⁻¹ᵁ D.V₀) ⊔ (pi.left ⁻¹ᵁ D.V₁) := by
+      rw [show (pi.left ⁻¹ᵁ D.V₀) ⊔ (pi.left ⁻¹ᵁ D.V₁) = ⊤ by
+        change pi.left ⁻¹ᵁ (D.V₀ ⊔ D.V₁) = ⊤
+        rw [D.cover]
+        rfl]
+      trivial
+    rw [TopologicalSpace.Opens.mem_sup] at hcover
+    rcases hcover with hx0 | hx1
+    · exact hx0
+    · let x1 : (pi.left ⁻¹ᵁ D.V₁).toScheme := ⟨x, hx1⟩
+      have hmap : G.toProjInt x = G.localProjectiveMap1 x1 := by
+        change G.toProjInt ((pi.left ⁻¹ᵁ D.V₁).ι x1) =
+          G.localProjectiveMap1 x1
+        rw [← Scheme.Hom.comp_apply, G.open1_toProjInt]
+      have hlocal : G.localProjectiveMap1 x1 ∈
+          Proj.basicOpen
+            (homogeneousSubmodule G.ProjectiveIndex (ULift.{u} ℤ))
+              (X G.firstIndex) := by
+        rwa [← hmap]
+      change x1 ∈ G.localProjectiveMap1 ⁻¹ᵁ
+        Proj.basicOpen
+          (homogeneousSubmodule G.ProjectiveIndex (ULift.{u} ℤ))
+            (X G.firstIndex) at hlocal
+      have hbasic : x ∈ C.left.basicOpen ((D.pullbackY pi) ^ G.d) := by
+        rw [show G.localProjectiveMap1 ⁻¹ᵁ
+            Proj.basicOpen
+              (homogeneousSubmodule G.ProjectiveIndex (ULift.{u} ℤ))
+                (X G.firstIndex) =
+            (pi.left ⁻¹ᵁ D.V₁).ι ⁻¹ᵁ
+              C.left.basicOpen (G.projectiveCoordinates1 G.firstIndex) by
+          exact ProjectiveSpace.Coordinates.fromOpen_preimage_basicOpen
+            (pi.left ⁻¹ᵁ D.V₁) G.secondIndex G.firstIndex
+              G.projectiveCoordinates1 G.projectiveCoordinates1_last] at hlocal
+        change x ∈ C.left.basicOpen
+          (G.projectiveCoordinates1 G.firstIndex) at hlocal
+        simpa [projectiveCoordinates1, firstIndex,
+          AlgebraicJacobian.TwoChart.TwistedCoordinates.chart1] using hlocal
+      rw [C.left.basicOpen_pow (D.pullbackY pi) G.pos] at hbasic
+      have hWy : pi.left ⁻¹ᵁ (D.V₀ ⊓ D.V₁) =
+          C.left.basicOpen (D.pullbackY pi) := by
+        rw [D.inf_eq_basicOpen_y, Scheme.preimage_basicOpen]
+        rfl
+      rw [← hWy] at hbasic
+      exact hbasic.1
+  · intro hx0
+    let x0 : (pi.left ⁻¹ᵁ D.V₀).toScheme := ⟨x, hx0⟩
+    have hmap : G.toProjInt x = G.localProjectiveMap0 x0 := by
+      change G.toProjInt ((pi.left ⁻¹ᵁ D.V₀).ι x0) =
+        G.localProjectiveMap0 x0
+      rw [← Scheme.Hom.comp_apply, G.open0_toProjInt]
+    change G.toProjInt x ∈
+      Proj.basicOpen
+        (homogeneousSubmodule G.ProjectiveIndex (ULift.{u} ℤ))
+          (X G.firstIndex)
+    rw [hmap]
+    change x0 ∈ G.localProjectiveMap0 ⁻¹ᵁ
+      Proj.basicOpen
+        (homogeneousSubmodule G.ProjectiveIndex (ULift.{u} ℤ))
+          (X G.firstIndex)
+    simp [localProjectiveMap0,
+      ProjectiveSpace.Coordinates.fromOpen_preimage_basicOpen]
+
+/-- The inverse image of the second distinguished target chart is exactly the
+second pulled-back Laurent chart. -/
+theorem preimage_targetOpen1 :
+    G.toProjectiveSpace ⁻¹ᵁ G.targetOpen1 = pi.left ⁻¹ᵁ D.V₁ := by
+  rw [targetOpen1, ← Scheme.Hom.comp_preimage,
+    G.toProjectiveSpace_toProjInt]
+  ext x
+  constructor
+  · intro hx
+    have hcover : x ∈ (pi.left ⁻¹ᵁ D.V₀) ⊔ (pi.left ⁻¹ᵁ D.V₁) := by
+      rw [show (pi.left ⁻¹ᵁ D.V₀) ⊔ (pi.left ⁻¹ᵁ D.V₁) = ⊤ by
+        change pi.left ⁻¹ᵁ (D.V₀ ⊔ D.V₁) = ⊤
+        rw [D.cover]
+        rfl]
+      trivial
+    rw [TopologicalSpace.Opens.mem_sup] at hcover
+    rcases hcover with hx0 | hx1
+    · let x0 : (pi.left ⁻¹ᵁ D.V₀).toScheme := ⟨x, hx0⟩
+      have hmap : G.toProjInt x = G.localProjectiveMap0 x0 := by
+        change G.toProjInt ((pi.left ⁻¹ᵁ D.V₀).ι x0) =
+          G.localProjectiveMap0 x0
+        rw [← Scheme.Hom.comp_apply, G.open0_toProjInt]
+      have hlocal : G.localProjectiveMap0 x0 ∈
+          Proj.basicOpen
+            (homogeneousSubmodule G.ProjectiveIndex (ULift.{u} ℤ))
+              (X G.secondIndex) := by
+        rwa [← hmap]
+      change x0 ∈ G.localProjectiveMap0 ⁻¹ᵁ
+        Proj.basicOpen
+          (homogeneousSubmodule G.ProjectiveIndex (ULift.{u} ℤ))
+            (X G.secondIndex) at hlocal
+      have hbasic : x ∈ C.left.basicOpen ((D.pullbackX pi) ^ G.d) := by
+        rw [show G.localProjectiveMap0 ⁻¹ᵁ
+            Proj.basicOpen
+              (homogeneousSubmodule G.ProjectiveIndex (ULift.{u} ℤ))
+                (X G.secondIndex) =
+            (pi.left ⁻¹ᵁ D.V₀).ι ⁻¹ᵁ
+              C.left.basicOpen (G.projectiveCoordinates0 G.secondIndex) by
+          exact ProjectiveSpace.Coordinates.fromOpen_preimage_basicOpen
+            (pi.left ⁻¹ᵁ D.V₀) G.firstIndex G.secondIndex
+              G.projectiveCoordinates0 G.projectiveCoordinates0_zero] at hlocal
+        change x ∈ C.left.basicOpen
+          (G.projectiveCoordinates0 G.secondIndex) at hlocal
+        simpa [projectiveCoordinates0, secondIndex,
+          AlgebraicJacobian.TwoChart.TwistedCoordinates.chart0] using hlocal
+      rw [C.left.basicOpen_pow (D.pullbackX pi) G.pos] at hbasic
+      have hWx : pi.left ⁻¹ᵁ (D.V₀ ⊓ D.V₁) =
+          C.left.basicOpen (D.pullbackX pi) := by
+        rw [D.inf_eq_basicOpen_x, Scheme.preimage_basicOpen]
+        rfl
+      rw [← hWx] at hbasic
+      exact hbasic.2
+    · exact hx1
+  · intro hx1
+    let x1 : (pi.left ⁻¹ᵁ D.V₁).toScheme := ⟨x, hx1⟩
+    have hmap : G.toProjInt x = G.localProjectiveMap1 x1 := by
+      change G.toProjInt ((pi.left ⁻¹ᵁ D.V₁).ι x1) =
+        G.localProjectiveMap1 x1
+      rw [← Scheme.Hom.comp_apply, G.open1_toProjInt]
+    change G.toProjInt x ∈
+      Proj.basicOpen
+        (homogeneousSubmodule G.ProjectiveIndex (ULift.{u} ℤ))
+          (X G.secondIndex)
+    rw [hmap]
+    change x1 ∈ G.localProjectiveMap1 ⁻¹ᵁ
+      Proj.basicOpen
+        (homogeneousSubmodule G.ProjectiveIndex (ULift.{u} ℤ))
+          (X G.secondIndex)
+    simp [localProjectiveMap1,
+      ProjectiveSpace.Coordinates.fromOpen_preimage_basicOpen]
+
+/-- The two distinguished target charts cover the image of the global
+relative projective-coordinate morphism. -/
+theorem range_subset_targetOpen_sup :
+    Set.range G.toProjectiveSpace ⊆
+      (G.targetOpen0 ⊔ G.targetOpen1 : _) := by
+  rintro _ ⟨x, rfl⟩
+  have hx : x ∈ (pi.left ⁻¹ᵁ D.V₀) ⊔ (pi.left ⁻¹ᵁ D.V₁) := by
+    rw [show (pi.left ⁻¹ᵁ D.V₀) ⊔ (pi.left ⁻¹ᵁ D.V₁) = ⊤ by
+      change pi.left ⁻¹ᵁ (D.V₀ ⊔ D.V₁) = ⊤
+      rw [D.cover]
+      rfl]
+    trivial
+  rw [TopologicalSpace.Opens.mem_sup] at hx
+  change G.toProjectiveSpace x ∈ G.targetOpen0 ⊔ G.targetOpen1
+  rw [TopologicalSpace.Opens.mem_sup]
+  rcases hx with hx | hx
+  · left
+    change x ∈ G.toProjectiveSpace ⁻¹ᵁ G.targetOpen0
+    rwa [G.preimage_targetOpen0]
+  · right
+    change x ∈ G.toProjectiveSpace ⁻¹ᵁ G.targetOpen1
+    rwa [G.preimage_targetOpen1]
+
 end LaurentChartData.FiniteMapGenerators
 end AlgebraicGeometry.Adelic
