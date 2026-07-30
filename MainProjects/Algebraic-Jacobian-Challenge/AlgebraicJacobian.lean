@@ -347,6 +347,10 @@ import AlgebraicJacobian.Picard.HomogeneityOrbitCollapse
 import AlgebraicJacobian.Picard.InvertibleSectionLocalization
 import AlgebraicJacobian.Picard.GaloisDescent.SemilinearModules
 import AlgebraicJacobian.Picard.GaloisDescent.SemilinearAlgebras
+-- The Galois splitting `L ⊗[K] L ≃ₐ[L] Gal(L/K) → L`: the algebra input of the
+-- invariance half of étale Galois descent, and the one brick `AJC.picrep.etale-rep.invariance`
+-- measured absent from Mathlib and from both projects.
+import AlgebraicJacobian.Picard.GaloisDescent.GaloisSelfTensor
 import AlgebraicJacobian.Albanese.AlbaneseUP
 import AlgebraicJacobian.Albanese.AuslanderBuchsbaum
 import AlgebraicJacobian.Albanese.CodimOneExtension
