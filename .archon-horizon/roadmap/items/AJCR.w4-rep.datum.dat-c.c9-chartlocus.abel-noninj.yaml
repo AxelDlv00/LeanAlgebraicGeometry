@@ -208,8 +208,9 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c.c9-chartlocus
   milestone: AJCR.w4-rep
-  updated_at: '2026-07-30T09:20:31.338135+00:00'
+  updated_at: '2026-07-30T10:28:23.776716+00:00'
   pinned_commits:
   - 89b483b3c2
   - a9895276bf
   - d098e5bbf9
+  owner: pic-c
