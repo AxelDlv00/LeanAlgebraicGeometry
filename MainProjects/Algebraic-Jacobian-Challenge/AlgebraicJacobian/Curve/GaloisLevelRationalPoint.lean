@@ -6,6 +6,7 @@ Authors: The AlgebraicJacobian Contributors
 import Mathlib
 import AlgebraicJacobian.Curve.FiniteLevelRationalPoint
 import AlgebraicJacobian.Picard.RigidPushforwardP1Witness
+import AlgebraicJacobian.Jacobian
 
 /-!
 # A rational point at a finite *Galois* level, with no hypothesis on `C(k)`
@@ -32,7 +33,8 @@ recorded it as open and **unpriced**.
 * `Scheme.exists_finiteGalois_level_hasRationalPoint` — from a `k^s`-point of `C` over `k`, a
   finite **Galois** `k''/k` with `Scheme.HasRationalPoint (Scheme.baseChangeField C k'')`.
 * `Scheme.exists_finiteGalois_level_hasRationalPoint_of_geometricallyIrreducible` — the same
-  conclusion with **no antecedent at all** beyond the curve binders `Challenge.lean` already
+  conclusion with **no antecedent at all** beyond the curve binders the headline
+  `AlgebraicGeometry.picardJacobianWitness` (`AlgebraicJacobian/Jacobian.lean:840`) already
   carries. This is the form a consumer binds.
 
 ## The price the row quoted, and what it actually cost
@@ -171,7 +173,7 @@ theorem exists_finiteGalois_level_hasRationalPoint {k : Type u} [Field k]
 /-! ## §3. The antecedent is discharged: the unconditional form
 
 §2 still takes a `k^s`-point as a hypothesis. It need not: `Curve/SeparablyClosedRationalPoint.lean`
-**produces** one for every curve satisfying the binders `Challenge.lean` carries, and §1 converts
+**produces** one for every curve satisfying the headline's binders, and §1 converts
 its section into exactly the `hp` §2 wants. So the conclusion holds with no antecedent beyond the
 curve hypotheses — which is what makes it a theorem about curves rather than an implication. -/
 
@@ -185,9 +187,13 @@ Every antecedent of §2 is witnessed here rather than assumed:
 alone, and §1 turns it into the over-`Spec k` equation. `GeometricallyIrreducible` is the binder
 the headline `picardJacobianWitness` (`AlgebraicJacobian/Jacobian.lean:840`) actually carries, so
 a consumer needs no bridging instance — and this file needs one binder *fewer* than the headline,
-which also carries `[IsProper C.hom]`. (The sibling file's docstring attributes this binder to
-`AlgebraicJacobian/Challenge.lean`; **there is no such file in this project**, so that pointer is
-dead and is not repeated here.)
+which also carries `[IsProper C.hom]`. (Four sibling files, including the seam
+`Picard/FGAPicRepresentability.lean:345`, attribute this binder to
+`AlgebraicJacobian/Challenge.lean`. **There is no such file in this project** — `find` returns
+nothing and `RiemannRoch/Ledger/ChiCurve.lean:11` already says so — and the correct site is
+`Jacobian.lean:840`. Filed as `I-1373`. An earlier revision of this file said the dead pointer
+"is not repeated here" and then repeated it three times below; the audit that caught that is
+`I-1375`.)
 
 There is **no** `[HasRationalPoint C]`, and there must not be (`I-0491`): the point exists only
 after the separable base extension. -/
@@ -205,8 +211,8 @@ theorem exists_finiteGalois_level_hasRationalPoint_of_geometricallyIrreducible {
 
 /-- The same, at the `GeometricallyIntegral` spelling. Both spellings have callers in this
 project (`GeometricallyIntegral` is what `FGAPicRepresentability.lean`'s classes bind,
-`GeometricallyIrreducible` what `Challenge.lean` does), so both are recorded rather than one
-being left to a bridging instance the caller has to find. -/
+`GeometricallyIrreducible` what the headline `picardJacobianWitness` does), so both are recorded
+rather than one being left to a bridging instance the caller has to find. -/
 theorem exists_finiteGalois_level_hasRationalPoint_of_geometricallyIntegral {k : Type u}
     [Field k] (C : Over (Spec (CommRingCat.of k))) [SmoothOfRelativeDimension 1 C.hom]
     [GeometricallyIntegral C.hom] :
@@ -228,6 +234,18 @@ a docstring sentence.
 * The binder set could have been empty. It is not: it is satisfied **at the headline's own
   hypotheses with nothing added** — indeed with one binder *fewer*, since the headline also carries
   `[IsProper C.hom]` and §3 does not use it (`galoisLevel_at_headline_binders`).
+
+  **This one is a real guard, and an earlier revision's was not.** A fresh-context audit
+  (`I-1375`) found that the first version of this section merely *retyped* the headline's binder
+  list: `picardJacobianWitness` was an unknown identifier in this file's import closure, so nothing
+  linked the two and a drift in the headline's binders would have broken no build, under a section
+  heading promising "compiler-checked rather than asserted". Fixed by importing
+  `AlgebraicJacobian.Jacobian` and taking a hypothesis whose *type* is
+  `Nonempty (AlgebraicGeometry.JacobianWitness C)` — that type is only well-formed under the
+  headline's own binders (control: dropping `[IsProper C.hom]` makes it fail to synthesise), so
+  the link is now checked. The hypothesis is **not** used in the proof and must not be: the
+  headline `picardJacobianWitness` is `sorryAx`-reachable (measured), so putting its *term* in a
+  proof here would contaminate this file. A binder mentioning its type does not.
 * The binder set could have been inhabited only by variables. It is not: `ℙ¹` over `ℚ` is a
   concrete object of the domain and the conclusion holds for it
   (`galoisLevel_p1Over_rat`). `ℚ` is chosen because it is *not* separably closed, so this is not
@@ -242,12 +260,19 @@ namespace AlgebraicJacobian.NonVacuity
 open AlgebraicGeometry.Adelic
 
 /-- **Non-vacuity 1: the headline's binders suffice, with one to spare.** The conclusion of §3
-holds for every curve satisfying the hypotheses of `picardJacobianWitness`
+holds for every curve satisfying the hypotheses of `AlgebraicGeometry.picardJacobianWitness`
 (`AlgebraicJacobian/Jacobian.lean:840`), with no hypothesis added — and `[IsProper C.hom]`, which
-the headline carries, is present here only to make the match visible; the proof does not use it. -/
+the headline carries, is present here only to make the match visible; the proof does not use it.
+
+The `_hw` binder is what makes this a **checked** match rather than a retyped one: the type
+`AlgebraicGeometry.JacobianWitness C` is well-formed only under the headline's own binder set, so
+if that set drifts this declaration stops elaborating. It is deliberately unused in the proof —
+`picardJacobianWitness` is `sorryAx`-reachable, so its term must not enter a proof here, and
+`Nonempty` of its type is a `Prop` that costs nothing. -/
 theorem galoisLevel_at_headline_binders {k : Type u} [Field k]
     (C : Over (Spec (CommRingCat.of k))) [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
-    [GeometricallyIrreducible C.hom] :
+    [GeometricallyIrreducible C.hom]
+    (_hw : Nonempty (AlgebraicGeometry.JacobianWitness C)) :
     ∃ (k'' : IntermediateField k (SeparableClosure k)) (_ : FiniteDimensional k k'')
       (_ : IsGalois k k''),
       Scheme.HasRationalPoint (Scheme.baseChangeField C k'') :=
