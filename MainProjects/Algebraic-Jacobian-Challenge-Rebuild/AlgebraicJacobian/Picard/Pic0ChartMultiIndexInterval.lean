@@ -42,39 +42,62 @@ value.  That is `¬ JointlyInjective f`, and it is all the argument gives: joint
 the conjunction of index separation and per-chart injectivity
 (`jointlyInjective_iff`), and only the second half is what the one-chart theorem concluded.
 
-## Why that is a negative answer, proved rather than asserted
+## The premise that would restore the no-go, and the trap in stating it
 
-`IndexSeparated` — distinct indices never share a value — is **free when `ι` is a subsingleton**
-(`indexSeparated_of_subsingleton`), which is exactly why the one-chart theorem needed no such
-hypothesis, and it is **refuted by any atlas with two charts sharing a value**
-(`not_indexSeparated_duplicated`, at a family whose every member is injective).  A glueing
-atlas has overlapping charts by construction, so index separation is the wrong thing to hope
-for and the one-chart refutation has no multi-index analogue.
+Recovering the one-chart conclusion needs a premise ruling out the crossing case.  The obvious
+one is "distinct indices never share a value", and **stating it over all tests makes it
+vacuous**: `IndexSeparatedAll` is equivalent to `Subsingleton ι` for *every* family
+(`indexSeparatedAll_iff_subsingleton`), because the Σ-sheaf is a subsingleton at an empty test
+(`pic0Sigma_obj_subsingleton_of_isEmpty`) and each `X i` supplies one via its `⊥` open.  A
+refutation of that condition is a fact about `ι`, not about the charts — which is why it is
+landed here as a theorem, so nobody re-states it.
 
-The sharp positive form is `not_injective_of_pointwiseCoverage_of_indexSeparated_of_ne_top`:
-coverage at a proper `V i₀` *plus index separation* refutes injectivity of that chart.  So the
-escape from the one-chart no-go is precisely index crossing — the "index slack" that
-`Pic0ChartCoverageIndexSlack.lean` says the atlas is indexed *for*.  That slack is now
-load-bearing rather than decorative.
+`IndexSeparated` is the repair: the same condition **at tests that have a point**.  That is the
+form the coverage argument consumes anyway (the test it produces contains the point it started
+from), and it is a genuine hypothesis about `f`: `not_indexSeparated_duplicated` refutes it at a
+two-chart family whose every member *is* injective (`injective_duplicated`), on the test
+`Spec k`, which has a point.  So per-chart injectivity — all the one-chart no-go concludes —
+does not deliver it, and a glueing atlas, whose charts overlap by construction, is the shape
+that evades the no-go.
+
+The positive form is `not_injective_of_pointwiseCoverage_of_indexSeparated_of_ne_top`: coverage
+at a proper `V i₀` *plus* index separation refutes injectivity of that chart.  Whether that
+premise holds for the Abel atlas at `|ι| ≥ 2` is **not measured here**, so the theorems
+conditioned on it are implications and not results about the seam; the second half of this file
+is the route that does not need it.
 
 ## The honest limits
 
 * **Nothing here discharges an antecedent.**  `PointwiseCoverage` at a proper `V` has no
   producer, and neither does its negation; every theorem below is an implication between open
   propositions, or a statement about a concrete witness family.  What changes is that the
-  `V`-interval no-go is now known **not** to close the multi-index route, so a lane may
-  legitimately aim antecedent 1 at `mixedParamChart` with `ι` genuinely large.
+  `V`-interval no-go is now known **not** to transmit to `mixedParamChart` through any premise
+  stated here except a point-independent witness index, so a lane may aim antecedent 1 at a
+  genuinely large `ι` without the landed refutations standing in its way.
 * **This is not a claim that the multi-index seam is satisfiable.**  Refuting a refutation is
   not an inhabitation.  `(huniv V, hcov V)` remains unmeasured at every `V`, at every `ι`.
 * **Everything is stated for an arbitrary family of big-site presheaf maps.**  No divisor
   scheme, chart index, twist, `rep` or `pic⁰` fact enters any statement or proof, exactly as in
   the one-chart file — so nothing here depends on which atlas a producer eventually builds.
+* **`IndexSeparated` and `JointlyInjective` are restricted to NONEMPTY tests, and that is
+  load-bearing rather than cosmetic.**  An earlier version of this file quantified them over all
+  tests; a fresh-context audit found that version equivalent to `Subsingleton ι`, so its
+  refutation was a fact about the index type and the headline read backwards.  The unrestricted
+  form is retained as `IndexSeparatedAll` with `indexSeparatedAll_iff_subsingleton` as its
+  epitaph.  Any further predicate on this Σ-sheaf should be probed at the empty test before its
+  refutation is called a finding.
+* **Satisfiability of `IndexSeparated` at `|ι| ≥ 2` is open.**  `jointlyInjective_singleSpecFamily`
+  inhabits `JointlyInjective` only at `PUnit`, so the theorems whose hypothesis is index
+  separation at a genuinely multi-index atlas have no witness here.  They are not known vacuous
+  either — the nonempty-test restriction is exactly what leaves room — but a lane must not read
+  them as measurements of the Abel atlas.
 
 ## Main declarations
 
-* `AlgebraicGeometry.JointlyInjective` — the multi-index strengthening of per-test injectivity:
-  the chart sources inject *jointly* into the Σ-sheaf.
-* `AlgebraicGeometry.IndexSeparated` — distinct indices never share a value.
+* `AlgebraicGeometry.JointlyInjective` — the multi-index strengthening of per-test injectivity
+  at nonempty tests: the chart sources inject *jointly* into the Σ-sheaf.
+* `AlgebraicGeometry.IndexSeparated` — distinct indices never share a value on a test with a
+  point.
 * `AlgebraicGeometry.jointlyInjective_iff` — joint injectivity **is** index separation plus
   per-chart injectivity.  This is the decomposition that shows what the one-chart conclusion was.
 * `AlgebraicGeometry.not_jointlyInjective_of_pointwiseCoverage_of_ne_top` — **the multi-index
@@ -96,11 +119,16 @@ load-bearing rather than decorative.
 * `AlgebraicGeometry.jointlyInjective_singleSpecFamily` — the non-vacuity check: joint
   injectivity is inhabited, so the refutation above is about the *index* and not about the
   Σ-sheaf admitting no injective family at all.
+* `AlgebraicGeometry.IndexSeparatedAll` and
+  `AlgebraicGeometry.indexSeparatedAll_iff_subsingleton` — the naive index-separation condition
+  and **its vacuity**: over all tests it *is* `Subsingleton ι`, for every family.  Landed so the
+  trap is a theorem instead of a warning.
 * `AlgebraicGeometry.UniformCoverage` and
-  `AlgebraicGeometry.not_injective_of_uniformCoverage_of_ne_top` — **the useful half**: the
-  no-go *does* propagate when coverage returns one prescribed index, which is the shape a
-  chart with full locus supplies.  So the multi-index escape is available exactly to atlases
-  whose coverage genuinely uses several charts.
+  `AlgebraicGeometry.not_injective_of_uniformCoverage_of_ne_top` — the half needing no unmeasured
+  premise: the no-go propagates when the coverage witness index does not depend on the point.
+  This is the landed one-chart theorem with `Subsingleton ι` replaced by a hypothesis naming the
+  index; the multi-index escape is available exactly to atlases whose coverage genuinely varies
+  its chart with the point.
 -/
 
 set_option autoImplicit false
@@ -121,29 +149,82 @@ noncomputable section
 /-! ## The two multi-index injectivity notions -/
 
 variable (C) in
-/-- **Joint injectivity of a chart family**: over every test, the disjoint union of the chart
-sources injects into the Σ-sheaf.
+/-- **The naive index-separation condition, kept only to be refuted**: distinct indices never
+share a value, quantified over *every* test including the empty one.
 
-For a one-element family this is per-test injectivity of the single chart map; for a general
-family it is strictly stronger (`jointlyInjective_iff`, `not_indexSeparated_duplicated`), and it
-is exactly the statement the multi-index coverage argument refutes. -/
-def JointlyInjective {ι : Type u} {X : ι → Scheme.{u}}
-    (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1) : Prop :=
-  ∀ (S : Scheme.{u}ᵒᵖ) (i j : ι) (x : (yoneda.obj (X i)).obj S)
-    (y : (yoneda.obj (X j)).obj S),
-    (f i).app S x = (f j).app S y →
-      (⟨i, x⟩ : Σ i, (yoneda.obj (X i)).obj S) = ⟨j, y⟩
+This is the shape a lane reaches for first, and it is **vacuous**:
+`indexSeparatedAll_iff_subsingleton` proves it equivalent to `Subsingleton ι` for every family
+whatsoever.  It mentions `f` and does not constrain it — the empty test alone decides it, because
+the Σ-sheaf is a subsingleton there (`pic0Sigma_obj_subsingleton_of_isEmpty`) and each `X i`
+supplies an empty test via its `⊥` open.
 
-variable (C) in
-/-- **Index separation**: two charts with different indices never take the same value on a
-common test.
-
-This is the half of joint injectivity that has no one-chart counterpart, and the whole content
-of the gap between the one-chart no-go and the multi-index case. -/
-def IndexSeparated {ι : Type u} {X : ι → Scheme.{u}}
+It is defined here rather than avoided so the refutation is a theorem in Lean and not a warning
+in prose. -/
+def IndexSeparatedAll {ι : Type u} {X : ι → Scheme.{u}}
     (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1) : Prop :=
   ∀ (S : Scheme.{u}ᵒᵖ) (i j : ι) (x : (yoneda.obj (X i)).obj S)
     (y : (yoneda.obj (X j)).obj S), (f i).app S x = (f j).app S y → i = j
+
+variable (C) in
+/-- **THE NAIVE CONDITION IS VACUOUS**: `IndexSeparatedAll f` is `Subsingleton ι`, for an
+arbitrary family of maps into the Σ-sheaf.
+
+Forward: instantiate at the empty test `↥(⊥ : (X i).Opens)`, where the unique maps out of the
+initial object have equal value because the Σ-sheaf's value there is a subsingleton
+(`pic0Sigma_obj_subsingleton_of_isEmpty`, `Pic0ChartRestrictedFibreSat.lean:160`).  Backward is
+`Subsingleton.elim`.
+
+So a "distinct indices never share a value" hypothesis quantified over all tests says nothing
+about the chart maps at all, and refuting it at some family is not a fact about that family.
+`IndexSeparated` below is the repair: the same condition at tests that have a point. -/
+theorem indexSeparatedAll_iff_subsingleton {ι : Type u} {X : ι → Scheme.{u}}
+    (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1) :
+    IndexSeparatedAll C f ↔ Subsingleton ι := by
+  constructor
+  · intro h
+    refine ⟨fun i j => ?_⟩
+    refine h (op ((⊥ : (X i).Opens) : Scheme.{u})) i j
+      (isInitialOfIsEmpty.to _) (isInitialOfIsEmpty.to _) ?_
+    exact (pic0Sigma_obj_subsingleton_of_isEmpty (C := C)
+      ((⊥ : (X i).Opens) : Scheme.{u})).elim _ _
+  · intro _ _ i j _ _ _
+    exact Subsingleton.elim i j
+
+variable (C) in
+/-- **Index separation, at tests that have a point**: two charts with different indices never
+take the same value on a *nonempty* test.
+
+The nonemptiness restriction is what makes this a hypothesis about `f` rather than about `ι`:
+without it the condition collapses to `Subsingleton ι`
+(`indexSeparatedAll_iff_subsingleton`), and with it an overlapping family genuinely refutes it
+(`not_indexSeparated_duplicated`).  It is also exactly the form the coverage argument consumes,
+since the test the argument produces contains the point it started from.
+
+This is the half of joint injectivity that has no one-chart counterpart, and the content of the
+gap between the one-chart no-go and the multi-index case. -/
+def IndexSeparated {ι : Type u} {X : ι → Scheme.{u}}
+    (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1) : Prop :=
+  ∀ (S : Scheme.{u}) (_ : Nonempty S) (i j : ι) (x : (yoneda.obj (X i)).obj (op S))
+    (y : (yoneda.obj (X j)).obj (op S)),
+    (f i).app (op S) x = (f j).app (op S) y → i = j
+
+variable (C) in
+/-- **Joint injectivity of a chart family**: over every nonempty test, the disjoint union of the
+chart sources injects into the Σ-sheaf.
+
+For a one-element family this is per-test injectivity of the single chart map; for a general
+family it is strictly stronger (`jointlyInjective_iff`, `not_indexSeparated_duplicated`), and it
+is exactly the statement the multi-index coverage argument refutes.
+
+Restricted to nonempty tests for the same reason as `IndexSeparated`: at an empty test the
+Σ-sheaf is a subsingleton, so the unrestricted version would carry `Subsingleton ι` as a free
+consequence and say nothing about `f`. -/
+def JointlyInjective {ι : Type u} {X : ι → Scheme.{u}}
+    (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1) : Prop :=
+  ∀ (S : Scheme.{u}) (_ : Nonempty S) (i j : ι) (x : (yoneda.obj (X i)).obj (op S))
+    (y : (yoneda.obj (X j)).obj (op S)),
+    (f i).app (op S) x = (f j).app (op S) y →
+      (⟨i, x⟩ : Σ i, (yoneda.obj (X i)).obj (op S)) = ⟨j, y⟩
 
 /-- **Joint injectivity decomposes**: it is index separation together with per-chart
 injectivity on every test.
@@ -154,29 +235,35 @@ of what would be needed to run the refutation at a general `ι`. -/
 theorem jointlyInjective_iff {ι : Type u} {X : ι → Scheme.{u}}
     (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1) :
     JointlyInjective C f ↔
-      IndexSeparated C f ∧ ∀ (i : ι) (S : Scheme.{u}ᵒᵖ), Function.Injective ((f i).app S) := by
+      IndexSeparated C f ∧ ∀ (i : ι) (S : Scheme.{u}) (_ : Nonempty S),
+        Function.Injective ((f i).app (op S)) := by
   constructor
   · intro h
-    refine ⟨fun S i j x y hxy => ?_, fun i S x y hxy => ?_⟩
-    · exact congrArg Sigma.fst (h S i j x y hxy)
-    · exact eq_of_heq (Sigma.mk.injEq .. ▸ h S i i x y hxy).2
-  · rintro ⟨hsep, hinj⟩ S i j x y hxy
-    obtain rfl : i = j := hsep S i j x y hxy
-    exact congrArg (fun z => (⟨i, z⟩ : Σ i, (yoneda.obj (X i)).obj S)) (hinj i S hxy)
+    refine ⟨fun S hS i j x y hxy => ?_, fun i S hS x y hxy => ?_⟩
+    · exact congrArg Sigma.fst (h S hS i j x y hxy)
+    · exact eq_of_heq (Sigma.mk.injEq .. ▸ h S hS i i x y hxy).2
+  · rintro ⟨hsep, hinj⟩ S hS i j x y hxy
+    obtain rfl : i = j := hsep S hS i j x y hxy
+    exact congrArg (fun z => (⟨i, z⟩ : Σ i, (yoneda.obj (X i)).obj (op S))) (hinj i S hS hxy)
 
-/-- Joint injectivity implies per-chart injectivity — the direction a lane will reach for. -/
+/-- Joint injectivity implies per-chart injectivity at nonempty tests — the direction a lane
+will reach for. -/
 theorem injective_of_jointlyInjective {ι : Type u} {X : ι → Scheme.{u}}
     {f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1} (h : JointlyInjective C f)
-    (i : ι) (S : Scheme.{u}ᵒᵖ) : Function.Injective ((f i).app S) :=
-  ((jointlyInjective_iff f).mp h).2 i S
+    (i : ι) (S : Scheme.{u}) (hS : Nonempty S) : Function.Injective ((f i).app (op S)) :=
+  ((jointlyInjective_iff f).mp h).2 i S hS
 
 /-- **Index separation is free for a one-chart atlas** — the reason
 `not_injective_of_pointwiseCoverage_of_ne_top` needed no such hypothesis, and the reason its
-proof cannot be read as covering the general case. -/
+proof cannot be read as covering the general case.
+
+Note this is the *only* route to `IndexSeparated` that costs nothing: unlike the naive
+`IndexSeparatedAll`, which is `Subsingleton ι` outright, the nonempty-test form is not implied
+by a subsingleton-free hypothesis anywhere in this file. -/
 theorem indexSeparated_of_subsingleton {ι : Type u} [Subsingleton ι] {X : ι → Scheme.{u}}
     (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1) :
     IndexSeparated C f :=
-  fun _ _ _ _ _ _ => Subsingleton.elim _ _
+  fun _ _ _ _ _ _ _ => Subsingleton.elim _ _
 
 /-! ## The multi-index step -/
 
@@ -208,9 +295,11 @@ theorem not_jointlyInjective_of_pointwiseCoverage_of_ne_top {ι : Type u} {X : �
       = (f i₀).app (op (W : Scheme.{u})) (W.ι ≫ 𝟙 (X i₀)) := by
     rw [← chart_map_ι_apply (f i₀) W (𝟙 (X i₀))]
     exact hx
+  -- the produced test contains `t`, so it is nonempty: the hypotheses apply at it
+  have hWne : Nonempty (W : Scheme.{u}) := ⟨⟨t, htW⟩⟩
   -- index separation collapses the two indices, and then per-chart injectivity the two points
-  obtain rfl : i = i₀ := hsep _ i i₀ _ _ hxv
-  have heq := hinj i _ hxv
+  obtain rfl : i = i₀ := hsep _ hWne i i₀ _ _ hxv
+  have heq := hinj i _ hWne hxv
   -- but they disagree at `t`: the witness lands in `V i` and `t` does not
   have hpt : ((x ≫ (V i).ι).base ⟨t, htW⟩ : X i)
       = ((W.ι ≫ 𝟙 (X i)).base ⟨t, htW⟩ : X i) := by rw [heq]
@@ -232,11 +321,12 @@ theorem not_injective_of_pointwiseCoverage_of_indexSeparated_of_ne_top
     (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1) (V : ∀ i, (X i).Opens)
     (i₀ : ι) (hV : V i₀ ≠ ⊤) (hsep : IndexSeparated C f)
     (hcov : PointwiseCoverage C (fun i => restrictChart (f i) (V i))) :
-    ∃ (i : ι) (S : Scheme.{u}ᵒᵖ), ¬ Function.Injective ((f i).app S) := by
+    ∃ (i : ι) (S : Scheme.{u}) (_ : Nonempty S),
+      ¬ Function.Injective ((f i).app (op S)) := by
   by_contra hall
   simp only [not_exists, not_not] at hall
   exact not_jointlyInjective_of_pointwiseCoverage_of_ne_top C f V i₀ hV hcov
-    ((jointlyInjective_iff f).mpr ⟨hsep, fun i S => hall i S⟩)
+    ((jointlyInjective_iff f).mpr ⟨hsep, fun i S hS => hall i S hS⟩)
 
 variable (C) in
 /-- **THE DICHOTOMY, WITH ITS WITNESS EXHIBITED** — the form a coverage lane consumes.
@@ -387,11 +477,19 @@ The proof is the one-chart argument with the index supplied by hypothesis rather
 `Subsingleton ι`, which is the honest replacement for the premise
 `not_indexSeparated_duplicated` rules out.
 
-**This is the useful half of the multi-index measurement.**  It says which coverage results
-reinstate the no-go: not the ones that merely cover, but the ones that cover *at one named
-chart* — a chart whose locus is the whole test.  A coverage lane producing such a chart is
-therefore also producing the `⊤`-end refutation for the real atlas, and cannot treat the two as
-independent wins. -/
+**This is the half of the file that needs no unmeasured premise.**  It says which coverage
+results reinstate the no-go: not the ones that merely cover, but the ones that cover *at one
+named chart*, i.e. whose witness index does not depend on the point.
+
+**Two things this does NOT say**, both of which an earlier draft of this docstring got wrong.
+First, `hV : V i₀ ≠ ⊤` is a hypothesis about the open of the chart **source** at which the
+`hf` certificate is taken, and a chart "whose locus is the whole test" is a statement about a
+subset of a **test** — different carriers, bridged only by `chartLocusOpens` at the cost of
+`haff` (`Pic0ChartAtlasCoupling.lean:50-55` is explicit that they are not interchangeable).  So
+this theorem does not compose with a full-locus coverage result without that bridge.  Second,
+`UniformCoverage C f i₀` is definitionally the one-chart `PointwiseCoverage` of the single map
+`f i₀` — the other charts are not mentioned — so this is the landed one-chart theorem with its
+`Subsingleton ι` premise replaced by a hypothesis that names the index, not new mathematics. -/
 theorem not_injective_of_uniformCoverage_of_ne_top {ι : Type u} {X : ι → Scheme.{u}}
     (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1) (V : ∀ i, (X i).Opens)
     (i₀ : ι) (hV : V i₀ ≠ ⊤)
@@ -460,7 +558,10 @@ theorem not_indexSeparated_duplicated :
     ¬ IndexSeparated C (duplicatedSpecFamily C) := by
   intro hsep
   have hne : (⟨false⟩ : ULift.{u} Bool) ≠ ⟨true⟩ := by simp
-  exact hne (hsep (op (Spec (CommRingCat.of k))) ⟨false⟩ ⟨true⟩
+  -- the test is `Spec k`, which HAS a point: this is the nonempty-test form, so the refutation
+  -- is a fact about the family and not the `Subsingleton ι` collapse of `IndexSeparatedAll`
+  exact hne (hsep (Spec (CommRingCat.of k))
+    (inferInstanceAs (Nonempty (PrimeSpectrum k))) ⟨false⟩ ⟨true⟩
     (𝟙 (Spec (CommRingCat.of k))) (𝟙 (Spec (CommRingCat.of k))) rfl)
 
 variable (C) in
@@ -480,7 +581,7 @@ separation is free by `indexSeparated_of_subsingleton` and per-chart injectivity
 theorem jointlyInjective_singleSpecFamily :
     JointlyInjective C (fun _ : PUnit.{u+1} => yonedaEquiv.symm (specSigmaSectionTaut C)) :=
   (jointlyInjective_iff _).mpr
-    ⟨indexSeparated_of_subsingleton _, fun _ S => specSecMap_injective C S⟩
+    ⟨indexSeparated_of_subsingleton _, fun _ S _ => specSecMap_injective C (op S)⟩
 
 end
 
