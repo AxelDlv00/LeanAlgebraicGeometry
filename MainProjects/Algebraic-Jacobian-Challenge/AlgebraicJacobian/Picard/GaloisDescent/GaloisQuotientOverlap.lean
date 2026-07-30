@@ -1181,6 +1181,102 @@ theorem gluedQuotientProjection_gluedQuotientMap
   rw [quotientChartProjection_gluedQuotientMap]
   simp only [Category.assoc]
 
+/-- The morphism from the acted scheme to the base change of its glued quotient,
+induced by the global quotient projection and the source structure map. -/
+noncomputable def gluedQuotientBaseChangeLift
+    [FiniteDimensional K L] [IsGalois K L] [HasStableAffineCover K L ρ] :
+    X ⟶ pullback (gluedQuotientMap ρ)
+      (Spec.map (CommRingCat.ofHom (algebraMap K L))) :=
+  pullback.lift (gluedQuotientProjection ρ) f
+    (gluedQuotientProjection_gluedQuotientMap ρ)
+
+@[simp, reassoc]
+theorem gluedQuotientBaseChangeLift_fst
+    [FiniteDimensional K L] [IsGalois K L] [HasStableAffineCover K L ρ] :
+    gluedQuotientBaseChangeLift ρ ≫ pullback.fst _ _ =
+      gluedQuotientProjection ρ := by
+  unfold gluedQuotientBaseChangeLift
+  exact pullback.lift_fst _ _ _
+
+@[simp, reassoc]
+theorem gluedQuotientBaseChangeLift_snd
+    [FiniteDimensional K L] [IsGalois K L] [HasStableAffineCover K L ρ] :
+    gluedQuotientBaseChangeLift ρ ≫ pullback.snd _ _ = f := by
+  unfold gluedQuotientBaseChangeLift
+  exact pullback.lift_snd _ _ _
+
+/-- The base-changed inclusion of a quotient chart into the base change of the
+glued quotient. -/
+noncomputable def quotientChartBaseChangeToGlued
+    [FiniteDimensional K L] [IsGalois K L] (i : StableAffineOpen ρ) :
+    pullback (quotientChartMap ρ i)
+        (Spec.map (CommRingCat.ofHom (algebraMap K L))) ⟶
+      pullback (gluedQuotientMap ρ)
+        (Spec.map (CommRingCat.ofHom (algebraMap K L))) :=
+  pullbackBaseChange K L (gluedQuotientMap ρ) (quotientChartMap ρ i)
+    ((quotientGlueData ρ).ι i) (quotientGlueData_ι_gluedQuotientMap ρ i)
+
+instance quotientChartBaseChangeToGlued_isOpenImmersion
+    [FiniteDimensional K L] [IsGalois K L] (i : StableAffineOpen ρ) :
+    IsOpenImmersion (quotientChartBaseChangeToGlued ρ i) := by
+  letI : IsOpenImmersion
+      (show quotientChart ρ i ⟶ gluedQuotient ρ from
+        (quotientGlueData ρ).ι i) :=
+    (quotientGlueData ρ).ι_isOpenImmersion i
+  unfold quotientChartBaseChangeToGlued pullbackBaseChange
+  infer_instance
+
+@[simp, reassoc]
+theorem quotientChartBaseChangeToGlued_fst
+    [FiniteDimensional K L] [IsGalois K L] (i : StableAffineOpen ρ) :
+    quotientChartBaseChangeToGlued ρ i ≫
+        pullback.fst (gluedQuotientMap ρ)
+          (Spec.map (CommRingCat.ofHom (algebraMap K L))) =
+      pullback.fst (quotientChartMap ρ i)
+          (Spec.map (CommRingCat.ofHom (algebraMap K L))) ≫
+        (quotientGlueData ρ).ι i := by
+  exact pullbackBaseChange_fst K L (gluedQuotientMap ρ)
+    (quotientChartMap ρ i) ((quotientGlueData ρ).ι i)
+    (quotientGlueData_ι_gluedQuotientMap ρ i)
+
+@[simp, reassoc]
+theorem quotientChartBaseChangeToGlued_snd
+    [FiniteDimensional K L] [IsGalois K L] (i : StableAffineOpen ρ) :
+    quotientChartBaseChangeToGlued ρ i ≫
+        pullback.snd (gluedQuotientMap ρ)
+          (Spec.map (CommRingCat.ofHom (algebraMap K L))) =
+      pullback.snd (quotientChartMap ρ i)
+        (Spec.map (CommRingCat.ofHom (algebraMap K L))) := by
+  exact pullbackBaseChange_snd K L (gluedQuotientMap ρ)
+    (quotientChartMap ρ i) ((quotientGlueData ρ).ι i)
+    (quotientGlueData_ι_gluedQuotientMap ρ i)
+
+/-- On every stable affine chart, the global base-change morphism is the inverse
+affine base-change isomorphism followed by the base-changed chart inclusion. -/
+@[reassoc]
+theorem sourceOpenCover_f_gluedQuotientBaseChangeLift
+    [FiniteDimensional K L] [IsGalois K L] [HasStableAffineCover K L ρ]
+    (i : StableAffineOpen ρ) :
+    i.U.ι ≫ gluedQuotientBaseChangeLift ρ =
+      (quotientChartBaseChangeIso ρ i).inv ≫
+        quotientChartBaseChangeToGlued ρ i := by
+  apply pullback.hom_ext
+  · simp only [Category.assoc, gluedQuotientBaseChangeLift_fst,
+      sourceOpenCover_f_gluedQuotientProjection, quotientChartProjection,
+      quotientChartBaseChangeToGlued_fst]
+    change SemilinearGalAction.stableAffineQuotientMap ρ i.stable i.affine ≫
+        (quotientGlueData ρ).ι i =
+      ((quotientChartBaseChangeIso ρ i).inv ≫
+        pullback.fst (quotientChartMap ρ i)
+          (Spec.map (CommRingCat.ofHom (algebraMap K L)))) ≫
+        (quotientGlueData ρ).ι i
+    exact
+      congrArg (fun z ↦ z ≫ (quotientGlueData ρ).ι i)
+        (quotientChartBaseChangeIso_inv_fst ρ i).symm
+  · simp only [Category.assoc, gluedQuotientBaseChangeLift_snd,
+      quotientChartBaseChangeToGlued_snd]
+    exact (quotientChartBaseChangeIso_inv_snd ρ i).symm
+
 /-- The glued quotient as an object over `Spec K`, in the exact category used
 by Picard representability. -/
 noncomputable def gluedQuotientOver [FiniteDimensional K L] [IsGalois K L] :
