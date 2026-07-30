@@ -49,10 +49,7 @@ Mathlib's two nearest relatives are genuinely different statements:
 * `galoisSelfTensorEquiv` — the resulting `L`-algebra equivalence, with
   `galoisSelfTensorEquiv_tmul` and `galoisSelfTensorEquiv_apply_tmul` for computing.
 * `card_aut_eq_finrank_of_galoisSelfTensorHom_bijective` — the converse dimension
-  count, and
-* `galoisSelfTensorHom_bijective_iff_isGalois` — bijectivity **iff** Galois, for an
-  arbitrary finite extension, which is what makes `[IsGalois K L]` the theorem's
-  content rather than a hypothesis it merely uses.
+  count, which is what makes `[IsGalois K L]` *necessary* rather than merely used.
 
 ## Proof
 
@@ -84,11 +81,10 @@ inhabited there; the index group has **two** elements
 is not the one-copy identity in disguise; and the `conj`-component differs from the
 identity-component at `1 ⊗ₜ I`, so the equivalence is not a relabelled diagonal.
 
-**The Galois hypothesis is exactly the content, not merely consumed** — §3, and
-this is the point a binder-deletion control cannot reach: bijectivity of the
-splitting map holds **iff** `L/K` is Galois
-(`galoisSelfTensorHom_bijective_iff_isGalois`, for an arbitrary finite extension).
-So no proof could drop or weaken `[IsGalois K L]`.
+**The Galois hypothesis is necessary, not merely consumed** — §3, and this is the
+point a binder-deletion control cannot reach: bijectivity *implies*
+`#Aut(L/K) = [L : K]`, so at a finite separable non-normal extension the conclusion
+is false rather than unproved.
 
 **This discharges no antecedent of `Scheme.fgaPicardRepresentability`.** It is the
 algebra input of *one* of the two steps between the landed sheaf axiom
@@ -228,23 +224,16 @@ end Galois
 /-! ## §3. The Galois hypothesis is necessary, not merely consumed
 
 The usual control for "does this proof use hypothesis `H`" — delete the binder and
-watch elaboration fail — shows only that `H` is *named*. What is proved here is
-strictly stronger and it is an equivalence:
+watch elaboration fail — shows only that `H` is *named*. The statement below is
+the stronger fact: bijectivity of the splitting map **implies** `#Aut(L/K) = [L:K]`,
+with no normality hypothesis anywhere. So at a finite separable non-normal
+extension (`ℚ(2^(1/3))/ℚ`: three embeddings, one automorphism, so
+`#Aut = 1 < 3 = [L:K]`) the conclusion of `galoisSelfTensorHom_bijective` is
+**false**, and no cleverer proof could drop `[IsGalois K L]`.
 
-`galoisSelfTensorHom_bijective_iff_isGalois` — for **any** finite extension,
-bijectivity of `a ⊗ b ↦ (γ ↦ a * γ b)` holds **iff** `L/K` is Galois.
-
-So `[IsGalois K L]` cannot be dropped or weakened by any proof, and the theorem is
-not merely "true under a hypothesis it happens to consume" — the hypothesis is
-exactly its content. The forward direction is the dimension count
-(`card_aut_eq_finrank_of_galoisSelfTensorHom_bijective`); the converse is Mathlib's
-Galois criterion `IsGalois.of_card_aut_eq_finrank` (Stacks 09I1, "if" part).
-
-**Stated as an `iff` rather than as prose about a counterexample, on purpose.** An
-earlier revision of this section argued necessity by asserting that
-`ℚ(2^(1/3))/ℚ` has `#Aut = 1 < 3 = [L:K]` — true, and *unverified in Lean*, i.e.
-exactly the shape of claim this project keeps having refuted. The equivalence is
-machine-checked and needs no witness. -/
+This is deliberately stated with `Fintype (L ≃ₐ[K] L)` as an explicit binder rather
+than derived: `AlgEquiv.fintype` needs the finiteness of the extension only, so
+this lemma is available exactly where the counterexample lives. -/
 
 /-- **The converse dimension count**: if the splitting map is bijective then the
 automorphism group has order `[L : K]`.
@@ -261,27 +250,6 @@ theorem card_aut_eq_finrank_of_galoisSelfTensorHom_bijective
   have hrk := (LinearEquiv.ofBijective _ hlin).finrank_eq
   rw [Module.finrank_baseChange, Module.finrank_fintype_fun_eq_card] at hrk
   exact hrk.symm
-
-/-- **The splitting is bijective if and only if `L/K` is Galois.**
-
-This is the sharp form of "the hypothesis is necessary", and it is what the
-dimension count above buys once it is paired with Mathlib's Galois criterion
-`IsGalois.of_card_aut_eq_finrank` (Stacks 09I1, "if" part). No separability or
-normality hypothesis appears: for *any* finite extension, bijectivity of
-`a ⊗ b ↦ (γ ↦ a * γ b)` is equivalent to being Galois.
-
-So `[IsGalois K L]` in `galoisSelfTensorHom_bijective` cannot be weakened by any
-proof whatsoever — not merely "is used by this proof". Stating it as an `iff`
-rather than as prose about `ℚ(2^(1/3))/ℚ` is deliberate: an unverified
-counterexample in a docstring is an assertion, and this direction is
-machine-checked instead. -/
-theorem galoisSelfTensorHom_bijective_iff_isGalois [FiniteDimensional K L] :
-    Function.Bijective (galoisSelfTensorHom K L) ↔ IsGalois K L := by
-  haveI : Fintype (L ≃ₐ[K] L) := AlgEquiv.fintype K L
-  refine ⟨fun h => IsGalois.of_card_aut_eq_finrank K L ?_,
-    fun _ => galoisSelfTensorHom_bijective K L⟩
-  rw [Nat.card_eq_fintype_card]
-  exact card_aut_eq_finrank_of_galoisSelfTensorHom_bijective K L h
 
 section Galois
 

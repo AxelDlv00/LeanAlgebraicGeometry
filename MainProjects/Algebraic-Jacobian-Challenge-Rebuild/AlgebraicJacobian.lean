@@ -579,6 +579,7 @@ import AlgebraicJacobian.Picard.Pic0ChartCoverForcesNonInj
 import AlgebraicJacobian.Picard.Pic0ChartCoverageAbel
 import AlgebraicJacobian.Picard.Pic0ChartLocusH0One
 import AlgebraicJacobian.Picard.Pic0ChartCoverageThreshold
+import AlgebraicJacobian.Picard.Pic0ChartIndexAdmissible
 import AlgebraicJacobian.Picard.Pic0ChartPlusFibreProducer
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivGen
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivClose
