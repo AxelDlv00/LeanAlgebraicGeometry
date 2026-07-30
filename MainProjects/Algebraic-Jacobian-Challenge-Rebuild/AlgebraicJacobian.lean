@@ -4,6 +4,7 @@ import AlgebraicJacobian.Curve.Basic
 import AlgebraicJacobian.Curve.Sections
 import AlgebraicJacobian.Curve.P1
 import AlgebraicJacobian.Curve.P1Curve
+import AlgebraicJacobian.Curve.P1H1Vanishing
 import AlgebraicJacobian.Curve.P1Charts
 import AlgebraicJacobian.Curve.P1Aut
 import AlgebraicJacobian.Curve.DedekindSections
