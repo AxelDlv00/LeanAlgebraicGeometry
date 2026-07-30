@@ -807,6 +807,32 @@ charts. -/
 noncomputable def gluedQuotient [FiniteDimensional K L] [IsGalois K L] :
     Scheme := (quotientGlueData ρ).glued
 
+/-- The structure maps of the invariant-ring quotient charts glue to a map to
+`Spec K`. -/
+noncomputable def gluedQuotientMap [FiniteDimensional K L] [IsGalois K L] :
+    gluedQuotient ρ ⟶ Spec (CommRingCat.of K) := by
+  fapply Multicoequalizer.desc
+  · exact quotientChartMap ρ
+  · rintro ⟨i, j⟩
+    change quotientOverlapι ρ i j ≫ quotientChartMap ρ i =
+      ((overlapIso ρ i j).hom ≫ quotientOverlapι ρ j i) ≫
+        quotientChartMap ρ j
+    simpa only [Category.assoc] using
+      (overlapIso_hom_base ρ i j).symm
+
+/-- Each quotient chart inclusion lies over the chart's invariant-ring
+structure map. -/
+@[reassoc]
+theorem quotientGlueData_ι_gluedQuotientMap
+    [FiniteDimensional K L] [IsGalois K L] (i : StableAffineOpen ρ) :
+    (quotientGlueData ρ).ι i ≫ gluedQuotientMap ρ = quotientChartMap ρ i :=
+  Multicoequalizer.π_desc _ _ _ _ _
+
+/-- The glued quotient as an object over `Spec K`, in the exact category used
+by Picard representability. -/
+noncomputable def gluedQuotientOver [FiniteDimensional K L] [IsGalois K L] :
+    Over (Spec (CommRingCat.of K)) := Over.mk (gluedQuotientMap ρ)
+
 end StableAffineOpen
 
 end AlgebraicJacobian.GaloisDescent
