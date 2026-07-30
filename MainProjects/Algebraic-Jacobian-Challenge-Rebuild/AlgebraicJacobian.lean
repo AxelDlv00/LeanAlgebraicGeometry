@@ -708,6 +708,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyDegreeZeroUnique
 import AlgebraicJacobian.Picard.DivisorFamilyDegreeZeroGeneral
 import AlgebraicJacobian.Picard.DivisorFamilyDegreeZeroRep
 import AlgebraicJacobian.Picard.DivisorFamilyDegreeZeroUseSite
+import AlgebraicJacobian.Picard.Pic0VanishingAffineReduction
 import AlgebraicJacobian.Picard.Pic0VanishingRoute
 import AlgebraicJacobian.Albanese.Genus0VanishingDatum
 import AlgebraicJacobian.RiemannRoch.EffectiveNonUniqueness
