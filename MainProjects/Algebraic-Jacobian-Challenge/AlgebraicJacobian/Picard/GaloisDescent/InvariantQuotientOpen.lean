@@ -182,6 +182,43 @@ theorem stableAffineQuotientMap_surjective [FiniteDimensional K L]
   exact (SemilinearAction.affineQuotientMap_surjective K L Γ(X, U)).comp
     (CategoryTheory.ConcreteCategory.bijective_of_isIso hUa.isoSpec.hom.base).2
 
+/-- Quotient opens of stable subopens preserve binary intersections.  This is
+the common-target identity used for triple overlaps in the quotient gluing
+datum. -/
+theorem quotientOpenOfStableSubopen_inf [FiniteDimensional K L]
+    (hUa : IsAffineOpen U) {V W : X.Opens} (hVU : V ≤ U) (hWU : W ≤ U)
+    (hV : ρ.IsStableOpen V) (hW : ρ.IsStableOpen W) :
+    letI := ρ.sectionsMulSemiringAction hU
+    letI := sectionsAlgebra f U
+    letI := sectionsAlgebraK (K := K) f U
+    letI := sections_isScalarTower (K := K) f U
+    letI := ρ.isSemilinear_sections hU
+    quotientOpenOfStableSubopen ρ hU (V ⊓ W) =
+      quotientOpenOfStableSubopen ρ hU V ⊓
+        quotientOpenOfStableSubopen ρ hU W := by
+  letI := ρ.sectionsMulSemiringAction hU
+  letI := sectionsAlgebra f U
+  letI := sectionsAlgebraK (K := K) f U
+  letI := sections_isScalarTower (K := K) f U
+  letI := ρ.isSemilinear_sections hU
+  have hVW : ρ.IsStableOpen (V ⊓ W) := by
+    intro γ
+    rw [Scheme.Hom.preimage_inf, hV γ, hW γ]
+  apply Opens.ext
+  apply Set.preimage_injective.mpr
+    (stableAffineQuotientMap_surjective ρ hU hUa)
+  change (↑((stableAffineQuotientMap ρ hU hUa) ⁻¹ᵁ
+      quotientOpenOfStableSubopen ρ hU (V ⊓ W)) : Set U.toScheme) =
+    (↑((stableAffineQuotientMap ρ hU hUa) ⁻¹ᵁ
+      (quotientOpenOfStableSubopen ρ hU V ⊓
+        quotientOpenOfStableSubopen ρ hU W)) : Set U.toScheme)
+  rw [Scheme.Hom.preimage_inf,
+    stableAffineQuotientMap_preimage_quotientOpen ρ hU hUa
+      (le_trans inf_le_left hVU) hVW,
+    stableAffineQuotientMap_preimage_quotientOpen ρ hU hUa hVU hV,
+    stableAffineQuotientMap_preimage_quotientOpen ρ hU hUa hWU hW,
+    Scheme.Hom.preimage_inf]
+
 /-- **The quotient-side open is exactly the image of the stable subopen.**
 
 Surjectivity upgrades `stableAffineQuotientMap_preimage_quotientOpen` from a
