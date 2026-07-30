@@ -78,6 +78,10 @@ the challenge curve — it is a witness that the three atlas antecedents are not
 * `AlgebraicGeometry.subsingleton_picEtAff_of_forall` — its converse.
 * `AlgebraicGeometry.jacobianData_of_affine_subsingleton` — the producer with the
   ring-level hypothesis.
+* `AlgebraicGeometry.pic0Subgroup_eq_bot_of_subsingleton` /
+  `subsingleton_of_pic0Subgroup_eq_bot` — the two spellings of the hypothesis are
+  interderivable, so `Genus0Terminal`'s `= ⊥` form and this file's `Subsingleton` form are
+  not a fork.
 -/
 
 set_option autoImplicit false
@@ -171,6 +175,108 @@ lemma jacobianData_of_subsingleton_J
     (h : ∀ T : Over (Spec (.of k)), Subsingleton (pic0Subgroup C T)) :
     (jacobianData_of_subsingleton C h).J = Over.mk (𝟙 (Spec (CommRingCat.of k))) :=
   rfl
+
+/-! ## The hypothesis, reduced to test RINGS
+
+The producer above needs a statement at every test *object* of `Over (Spec k)` — a
+scheme-level quantifier.  This section removes it: the same hypothesis at every test
+*algebra* suffices, and the reduction is componentwise rather than by descent.
+
+The reason is the vehicle chosen for `picEt` (inbox `I-0140`): `picEt C T` is *defined*
+as a subgroup of `Π U : T.left.affineOpens, PicEtAff C Γ(T.left, U)`.  A product of
+subsingletons is a subsingleton, and a subgroup of one is one.  So there is no cover to
+choose, no compatibility to check, and no naturality to transport — `picEt.ext` is the
+whole proof.
+
+This is worth isolating because it is the step a lane would expect to be expensive.  The
+Zariski-sheaf machinery for `pic⁰` exists (`Pic0ZariskiSheaf.lean`,
+`PicEtCoverBridge.lean`) and a reduction to affines through *it* would need a cover, the
+S-lemma and the gluing seam.  None of that is needed for a *subsingleton* hypothesis,
+because subsingleton-ness is inherited by subobjects rather than glued.
+
+The two `picEt`-level statements carry an `omit`, and it is a measurement rather than
+tidying: they use **none** of the curve's geometry — not smoothness, not properness, not
+geometric irreducibility.  A reduction that needed the curve would be a statement about
+this particular Picard functor; these are statements about the vehicle. -/
+
+omit [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+  [GeometricallyIrreducible C.hom] in
+variable (C) in
+/-- **The scheme-level quantifier reduces to test algebras, componentwise.**
+
+If `PicEtAff C A` is a subsingleton for every test algebra `A`, then `picEt C T` is a
+subsingleton for every test object `T`.
+
+One line, because `picEt C T` is a subgroup of the product of the `PicEtAff C Γ(T.left, U)`
+and `picEt.ext` says two sections agree as soon as they agree at each affine open. -/
+theorem subsingleton_picEt_of_affine
+    (h : ∀ (A : Type u) [CommRing A] [Algebra k A], Subsingleton (PicEtAff C A))
+    (T : Over (Spec (.of k))) : Subsingleton (picEt C T) :=
+  ⟨fun _ _ => picEt.ext fun U => @Subsingleton.elim _ (h Γ(T.left, U.1)) _ _⟩
+
+omit [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+  [GeometricallyIrreducible C.hom] in
+variable (C) in
+/-- **THE CONVERSE**, so the previous lemma is an equivalence and not a weakening.
+
+If `picEt C T` is a subsingleton at every test object then in particular at the affine test
+`overSpec k A`, and the affine comparison `picEtAffineEquiv` is a bijection onto
+`PicEtAff C A`.
+
+Recorded because a reduction whose hypothesis is strictly stronger than its conclusion
+hides the gap instead of naming it.  Here the two are interderivable, so "vanishing at
+every test ring" and "vanishing at every test object" are the *same* hypothesis, and a lane
+may attack whichever is convenient. -/
+theorem subsingleton_picEtAff_of_forall
+    (h : ∀ T : Over (Spec (.of k)), Subsingleton (picEt C T))
+    (A : Type u) [CommRing A] [Algebra k A] : Subsingleton (PicEtAff C A) :=
+  haveI := h (overSpec k A)
+  (picEtAffineEquiv C A).toEquiv.symm.subsingleton
+
+variable (C) in
+/-- **The degree-zero form**: `pic0Subgroup C T` is a subgroup of `picEt C T`, so it
+inherits the subsingleton.
+
+Note the direction of the inheritance, since it is what makes the ring-level hypothesis
+*sufficient but not necessary*: vanishing of the whole `picEt` gives vanishing of `pic⁰`,
+never the reverse.  `picEt` does not vanish for a curve with a degree-one class even when
+`pic⁰` does, so a lane attacking the genus-0 debt should attack `pic0Subgroup` directly and
+use this lemma only as the cheap sufficient condition it is. -/
+theorem subsingleton_pic0_of_affine
+    (h : ∀ (A : Type u) [CommRing A] [Algebra k A], Subsingleton (PicEtAff C A))
+    (T : Over (Spec (.of k))) : Subsingleton (pic0Subgroup C T) :=
+  haveI := subsingleton_picEt_of_affine C h T
+  ⟨fun _ _ => Subtype.ext (Subsingleton.elim _ _)⟩
+
+variable (C) in
+/-- **The producer with the ring-level hypothesis**: `JacobianData C` from vanishing at
+every test *algebra*.
+
+Composite of `subsingleton_pic0_of_affine` with `jacobianData_of_subsingleton`.  This is
+the form to quote when pricing the route, because its hypothesis mentions no scheme, no
+open, and no test object — only the plus construction at a commutative `k`-algebra. -/
+def jacobianData_of_affine_subsingleton
+    (h : ∀ (A : Type u) [CommRing A] [Algebra k A], Subsingleton (PicEtAff C A)) :
+    JacobianData C :=
+  jacobianData_of_subsingleton C (subsingleton_pic0_of_affine C h)
+
+/-! ## `Subsingleton` and `= ⊥` are the same hypothesis
+
+`Genus0Terminal.lean` states its input as `pic0Subgroup C T = ⊥`; this file states it as
+`Subsingleton (pic0Subgroup C T)`.  Both directions are two lines, and having them means
+neither spelling is a fork. -/
+
+/-- A subsingleton subgroup is trivial. -/
+theorem pic0Subgroup_eq_bot_of_subsingleton {T : Over (Spec (.of k))}
+    (h : Subsingleton (pic0Subgroup C T)) : pic0Subgroup C T = ⊥ :=
+  haveI := h
+  (Subgroup.eq_bot_iff_forall _).mpr fun x hx =>
+    congrArg Subtype.val (Subsingleton.elim (⟨x, hx⟩ : pic0Subgroup C T) 1)
+
+/-- A trivial subgroup is a subsingleton. -/
+theorem subsingleton_of_pic0Subgroup_eq_bot {T : Over (Spec (.of k))}
+    (h : pic0Subgroup C T = ⊥) : Subsingleton (pic0Subgroup C T) := by
+  rw [h]; infer_instance
 
 end
 
