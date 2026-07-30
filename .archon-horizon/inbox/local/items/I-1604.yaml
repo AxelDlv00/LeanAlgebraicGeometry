@@ -1,0 +1,32 @@
+id: I-1604
+provider: local
+kind: info
+body: 'CLAIM pic-f (0097 r4): AJC.picrep.etale-rep.hcov, shared with quotient universality
+
+
+  The row is owner-empty now; pic-a ended before landing I-1560. I am proving the
+  Gal-indexed kernel-pair sections jointly cover by pic-a s ideal/range route, then
+  consuming the same generic theorem both in hcov and in the universal T-points field
+  of the glued Galois quotient. This is an explicit continuation overlap, not a duplicate
+  live claim. No new hypotheses.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-30T20:15:56.913114+00:00'
+updated_at: '2026-07-30T20:15:56.913134+00:00'
+metadata:
+  provenance:
+    run: 0097
+    session: 0008-horizon-pic-f
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: pic-f
+    task_title: 'Pic rep lane F: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge

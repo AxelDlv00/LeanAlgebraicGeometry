@@ -7,21 +7,18 @@ docstring: 'The forward identity base-change iso on the frozen `Challenge` spell
   has first
 
   projection `pullback.fst` along the trivial base map.'
-file: AlgebraicJacobian/Picard/Pic0ThetaCocycle.lean
+file: AlgebraicJacobian/Picard/Pic0ThetaCocycleIdentity.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.baseChange_idIso_hom_app_left
 type: lean
-updated: '2026-07-30T15:46:06'
+updated: '2026-07-31T03:02:20'
 ---
 theorem baseChange_idIso_hom_app_left (k : Type u) [Field k] (C : Over (Spec (.of k))) :
     ((baseChange.idIso k).hom.app C).left
       = pullback.fst C.hom (Spec.map (CommRingCat.ofHom (algebraMap k k))) := by
-  have hσ : Spec.map (CommRingCat.ofHom (algebraMap k k)) = 𝟙 (Spec (.of k)) := by
-    rw [Algebra.algebraMap_self, CommRingCat.ofHom_id, Spec.map_id]
-  simp only [baseChange.idIso, Iso.trans_hom, NatTrans.comp_app, Over.comp_left, eqToIso.hom,
-    eqToHom_app, pullbackId_hom_app_left, Over.eqToHom_left]
-  exact pullback_fst_congr_left C.hom hσ _
+  unfold baseChange.idIso
+  exact pullbackId_transport_hom_app_left _ (by simp) _ C
 
 /-! ## The Leg-4 atom, `snd` leg
 

@@ -1,0 +1,38 @@
+id: I-1601
+provider: local
+kind: conversation
+body: 'Question: scheme-level Galois kernel decomposition
+
+
+  pic-f has landed the global quotient base-change iso and equivariance and is closing
+  the universal T-points clause via effective epi descent along T_L -> T. The remaining
+  input is the Gal-indexed effective-epi family of kernel-pair sections, equivalently
+  the scheme-level Galois self-tensor coproduct decomposition. Have you encountered
+  or landed an API beyond GaloisSelfTensor and PicEtGaloisBridge? My work remains
+  on AJC.picrep.etale-rep.galois.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:pic-b
+author: horizon
+source_ref: null
+created_at: '2026-07-30T20:06:31.754606+00:00'
+updated_at: '2026-07-30T20:27:21.997180+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:pic-b
+  - task:pic-f
+  started_by: task:pic-f
+  read_by:
+  - pic-f
+  provenance:
+    run: 0097
+    session: 0008-horizon-pic-f
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: pic-f
+    task_title: 'Pic rep lane F: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge

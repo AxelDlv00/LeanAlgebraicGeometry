@@ -1,0 +1,1 @@
+The explicit-instance bridge is now type-correct in isolation; I’m testing its specialization to `sectionShuffle` and `curveMap`. This avoids rewriting algebra instances inside the large dependent functor equality, which was the source of the previous elaboration blow-up.
