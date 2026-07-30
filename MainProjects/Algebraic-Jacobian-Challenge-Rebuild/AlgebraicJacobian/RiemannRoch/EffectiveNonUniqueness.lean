@@ -65,12 +65,20 @@ non-effective case by first normalizing.
   trivial principal divisor is a constant.
 * `Scheme.CurveDivisor.exists_two_effective_picClass_eq_of_two_le_h0` — **the payoff**: from
   `0 ≤ A` and `2 ≤ h⁰(𝒪(A))`, two effective divisors of the class of `A` that are distinct.
-* `Scheme.CurveDivisor.not_existsUnique_effective_of_two_le_h0` — the same fact as the
-  refutation of uniqueness, i.e. the exact negation of the shape
-  `Picard/Pic0ChartLocusH0One.lean`'s `existsUnique_effective_of_mem_chartLocus` produces.
-* `Scheme.CurveDivisor.two_le_h0_iff_not_unique_effective` — **the equivalence with the
-  landed keystone**, so this is a converse and not a parallel statement.
--/
+* `Scheme.CurveDivisor.not_forall_eq_of_two_le_h0` — the same fact as the **refutation of
+  uniqueness**: no effective divisor of the class is the unique one.  This is the exact negation
+  of the shape a chart-locus uniqueness statement produces.
+* `Scheme.CurveDivisor.two_le_h0_iff_exists_two_effective` — **the equivalence with the landed
+  keystone**, so this file is a converse and not a parallel statement: the `←` direction is the
+  keystone `eq_of_picClass_eq_of_h0_one` contraposed, through the class-invariance of `h⁰`.
+
+**This list was wrong when the file first landed, and the correction is the reusable part.**  It
+advertised three declarations the file did not contain, including the equivalence — the item the
+whole "this is a converse" claim rests on.  A "Main declarations" census is prose, so no `sorry`
+check, axiom probe or green build says anything about it.  The two names above are now theorems;
+a third phantom (`exists_two_effective_of_two_le_h0_of_picClass`, a non-effective-input variant)
+is deleted rather than proved, because `exists_effective_of_h0_pos` already normalizes an
+arbitrary class to an effective representative and a consumer should call that. -/
 
 set_option autoImplicit false
 
@@ -194,6 +202,66 @@ theorem CurveDivisor.exists_two_effective_picClass_eq_of_two_le_h0
     exact hc.symm
   · -- the class is unchanged by a principal divisor
     rw [CurveDivisor.picClass_add, CurveDivisor.picClass_divOf, mul_one]
+
+/-! ## The two forms the "Main declarations" list advertises -/
+
+/-- **THE REFUTATION OF UNIQUENESS.**  At `2 ≤ h⁰` no effective divisor of the class is *the*
+unique effective representative — the exact negation of the shape a chart-locus uniqueness
+statement produces.
+
+Stated with the uniqueness clause quantified over the same class rather than over a fixed
+divisor, because that is the form the consumers use. -/
+theorem CurveDivisor.not_forall_eq_of_two_le_h0
+    (hO : Sheaf.h0 (X.moduleKSheaf K) = 1) {A : X.CurveDivisor} (hA : 0 ≤ A)
+    (hh0 : 2 ≤ Sheaf.h0 (X.divisorSheaf K A)) :
+    ¬ ∃ E : X.CurveDivisor, 0 ≤ E ∧
+        CurveDivisor.picClass K E = CurveDivisor.picClass K A ∧
+        ∀ E' : X.CurveDivisor, 0 ≤ E' →
+          CurveDivisor.picClass K E' = CurveDivisor.picClass K A → E' = E := by
+  rintro ⟨E, -, -, hEu⟩
+  obtain ⟨D, D', hD, hD', hne, hcl, hcl'⟩ :=
+    CurveDivisor.exists_two_effective_picClass_eq_of_two_le_h0 K hO hA hh0
+  exact hne ((hEu D hD hcl).trans (hEu D' hD' hcl').symm)
+
+/-- **THE EQUIVALENCE WITH THE LANDED KEYSTONE**, so this file is a converse and not a parallel
+statement.
+
+`→` is the payoff above.  `←` is the keystone `eq_of_picClass_eq_of_h0_one` contraposed: given
+two distinct effective divisors of one class, `h⁰` of that class cannot be `1`; it is positive
+because an effective divisor has the section `1`; so it is at least `2`.  The passage between
+"`h⁰` of `A`" and "`h⁰` of a class member" is `h0_divisorSheaf_eq_of_picClass_eq`. -/
+theorem CurveDivisor.two_le_h0_iff_exists_two_effective
+    [Module.Finite K (Sheaf.HModule (X.moduleKSheaf K) 0)]
+    [Module.Finite K (Sheaf.HModule (X.moduleKSheaf K) 1)]
+    (hO : Sheaf.h0 (X.moduleKSheaf K) = 1) {A : X.CurveDivisor} (hA : 0 ≤ A) :
+    2 ≤ Sheaf.h0 (X.divisorSheaf K A) ↔
+      ∃ D D' : X.CurveDivisor, 0 ≤ D ∧ 0 ≤ D' ∧ D ≠ D' ∧
+        CurveDivisor.picClass K D = CurveDivisor.picClass K A ∧
+        CurveDivisor.picClass K D' = CurveDivisor.picClass K A := by
+  refine ⟨fun hh0 =>
+    CurveDivisor.exists_two_effective_picClass_eq_of_two_le_h0 K hO hA hh0, ?_⟩
+  rintro ⟨D, D', hD, hD', hne, hcl, hcl'⟩
+  -- otherwise `h⁰(𝒪(D)) ≤ 1`; the keystone then needs it to be exactly `1`, and `h⁰ = 0` is
+  -- refuted because `1` is a section of the effective `D`
+  rcases Nat.lt_or_ge (Sheaf.h0 (X.divisorSheaf K A)) 2 with hlt | hge
+  · exfalso
+    have hD0 : Sheaf.h0 (X.divisorSheaf K D) = Sheaf.h0 (X.divisorSheaf K A) :=
+      h0_divisorSheaf_eq_of_picClass_eq (K := K) hcl
+    -- `h⁰(𝒪(D)) ≠ 0`: `1 ∈ H⁰(𝒪(D))` is a nonzero element, so the section space is nontrivial
+    -- and a `finrank` of `0` over a field would make it a subsingleton
+    have hne0 : Sheaf.h0 (X.divisorSheaf K D) ≠ 0 := by
+      intro h0
+      have hzero : Module.finrank K ↥(divisorSections K D ⊤) = 0 := by
+        rw [finrank_divisorSections_top]; exact h0
+      haveI hntriv : Nontrivial ↥(divisorSections K D ⊤) :=
+        ⟨⟨⟨1, one_mem_divisorSections_top K hD⟩, 0, fun h =>
+          one_ne_zero (congrArg Subtype.val h)⟩⟩
+      exact ((Module.finrank_pos_iff_of_free (R := K)
+        (M := ↥(divisorSections K D ⊤))).mpr hntriv).ne' hzero
+    have hone : Sheaf.h0 (X.divisorSheaf K D) = 1 := by omega
+    exact hne (CurveDivisor.eq_of_picClass_eq_of_h0_one K hD hD'
+      (hcl.trans hcl'.symm) hone).symm
+  · exact hge
 
 end Scheme
 

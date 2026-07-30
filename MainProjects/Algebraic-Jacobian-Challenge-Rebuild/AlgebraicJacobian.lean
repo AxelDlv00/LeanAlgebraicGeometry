@@ -703,6 +703,8 @@ import AlgebraicJacobian.Picard.DivisorFamilyDegreeZeroRep
 import AlgebraicJacobian.Picard.DivisorFamilyDegreeZeroUseSite
 import AlgebraicJacobian.Picard.Pic0VanishingRoute
 import AlgebraicJacobian.Albanese.Genus0VanishingDatum
+import AlgebraicJacobian.RiemannRoch.EffectiveNonUniqueness
+import AlgebraicJacobian.Picard.Pic0ChartForkNegativeBranch
 
 /-!
 # AlgebraicJacobian — library root
