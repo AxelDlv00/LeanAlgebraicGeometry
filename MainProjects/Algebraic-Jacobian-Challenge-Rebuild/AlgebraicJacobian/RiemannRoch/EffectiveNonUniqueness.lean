@@ -181,7 +181,7 @@ theorem CurveDivisor.exists_two_effective_picClass_eq_of_two_le_h0
   have hfne : f ≠ 0 := by
     intro h0
     refine hw ⟨0, Subtype.ext ?_⟩
-    show (0 : K) • (1 : X.functionField) = f
+    change (0 : K) • (1 : X.functionField) = f
     rw [functionFieldOverModule_smul_def, map_zero, zero_mul]
     exact h0.symm
   set u : X.functionFieldˣ := Units.mk0 f hfne with hu
@@ -197,7 +197,7 @@ theorem CurveDivisor.exists_two_effective_picClass_eq_of_two_le_h0
       rwa [add_eq_left] at this
     obtain ⟨c, hc⟩ := eq_functionFieldOverAlgebraMap_of_divOf_eq_zero K hO hdiv0
     refine hw ⟨c, Subtype.ext ?_⟩
-    show c • (1 : X.functionField) = f
+    change c • (1 : X.functionField) = f
     rw [functionFieldOverModule_smul_def, mul_one]
     exact hc.symm
   · -- the class is unchanged by a principal divisor
