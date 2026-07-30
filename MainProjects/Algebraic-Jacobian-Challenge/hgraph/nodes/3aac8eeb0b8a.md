@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.GaloisDescent.StableAffineOpen.gluedQuotientBaseChangeLift_isEquivariant
 type: lean
-updated: '2026-07-31T03:50:44'
+updated: '2026-07-31T06:25:52'
 ---
 theorem gluedQuotientBaseChangeLift_isEquivariant
     [FiniteDimensional K L] [IsGalois K L] [HasStableAffineCover K L ρ] :
@@ -24,4 +24,5 @@ theorem gluedQuotientBaseChangeLift_isEquivariant
     exact act_hom_gluedQuotientProjection ρ gamma
   · simp only [Category.assoc, gluedQuotientBaseChangeLift_snd,
       pullbackSemilinearGalAction_act_hom, pullbackGalMap_snd]
+    rw [← Category.assoc, gluedQuotientBaseChangeLift_snd]
     exact ρ.compat gamma
