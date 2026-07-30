@@ -116,6 +116,19 @@ this file's import closure.  Note the distinction, since the two are easy to con
 compactness is free at the divisor scheme (below), while the *glued* form is not implied by it for
 an infinite atlas.
 
+**CORRECTED 2026-07-30 (`Picard/Pic0AtlasCompactNoetherian.lean`): "per-chart compactness is free
+at the divisor scheme" is about the wrong object.**  The charts of the atlas are not the
+representing objects — `mixedParamChart` is `restrictChart … (V i)`, whose source is
+`yoneda.obj ((V i : Scheme))`, an **open subscheme** of `(D i).left`.  Compactness does not pass
+to open subspaces, and `CompactSpace (V : Scheme)` for `V` an open of `divSchemeOver` is **not**
+an instance (measured: `infer_instance` fails).  The `Discharged` example below is true of
+`divSchemeOver` and is not the hypothesis `Scheme.OpenCover.compactSpace` consumes.  What makes
+the per-chart half genuinely free is *noetherianity* of the divisor scheme — locally of finite
+type over the noetherian base `Spec k`, plus `compactSpace_divScheme`, so every subset is compact
+(`compactSpace_isOpen_divSchemeOver`).  The conclusion of that paragraph survives; its reason did
+not.  Since `hf` is false at `V = ⊤` (`Pic0ChartPair.lean`), the gap is not a corner case: every
+usable atlas has proper chart opens.
+
 What is removed is a fourth undischarged antecedent — proved nowhere, though the `dat-glue` row
 did name it — so that discharging the three tracked antecedents now genuinely reaches the datum
 the north star's planned route consumes.
@@ -369,8 +382,17 @@ carrier — `DivScheme` is a closed subscheme of the compact Grassmannian pair.
 
 This does **not** discharge `hcpt` of the assembly below, and the distinction matters: `hcpt` is
 `CompactSpace` of the **glued** object, which for a class-indexed atlas is not the compactness of
-any one chart.  What is free is the *per-chart* compactness, i.e. exactly the hypothesis of the
-finite-index route `JacobianData.ofCharts`. -/
+any one chart.
+
+**AND IT IS ALSO NOT "exactly the hypothesis of the finite-index route", which is what an earlier
+version of this docstring said.**  `JacobianData.ofCharts` / `Scheme.OpenCover.compactSpace` want
+`CompactSpace (X i)` for the *chart* objects, and the charts of `mixedParamChart` are
+`(V i : Scheme)` — **opens** of the representing object, not the object.  Compactness is not
+inherited by open subspaces, and `infer_instance` fails on `CompactSpace (V : Scheme)` for `V` an
+open of `divSchemeOver` (measured).  So this example is a true statement about the wrong object.
+The per-chart half *is* free, by noetherianity rather than by this instance:
+`compactSpace_isOpen_divSchemeOver` (`Picard/Pic0AtlasCompactNoetherian.lean`), which is outside
+this file's import closure because that module imports this one. -/
 example {X : Scheme.{u}} [X.Over (Spec (CommRingCat.of k))]
     [SmoothOfRelativeDimension 1 (X ↘ Spec (CommRingCat.of k))] [IsIntegral X]
     (A B : X.CurveDivisor) (n r₁ r₂ : ℕ)

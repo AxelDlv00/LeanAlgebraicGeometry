@@ -339,10 +339,18 @@ variable (C) in
 through the glue data's own open cover.
 
 Recorded next to `compactSpace_glued_of_pic0_class` so the contrast is on the page: this route
-needs `Finite ι` and per-chart compactness (both free at the divisor-representability carrier,
-where `CompactSpace (divSchemeOver …).left` is an instance), while the class route needs neither
-and takes `hcl` instead.  The classical atlas is class-indexed, so only the second is available
-to it — but the first is why `hcpt` cannot be called unconditionally hard either. -/
+needs `Finite ι` and per-chart compactness, while the class route needs neither and takes `hcl`
+instead.  The classical atlas is class-indexed, so only the second is available to it — but the
+first is why `hcpt` cannot be called unconditionally hard either.
+
+**CORRECTED 2026-07-30.**  This parenthesis used to read "both free at the
+divisor-representability carrier, where `CompactSpace (divSchemeOver …).left` is an instance".
+That instance is about the wrong object: the `X i` of this lemma are the *chart* objects, and for
+`mixedParamChart` those are `(V i : Scheme)`, **opens** of the representing object.  Compactness
+does not pass to open subspaces, and `infer_instance` fails there (measured).  Per-chart
+compactness is free by *noetherianity* of the divisor scheme instead —
+`compactSpace_isOpen_divSchemeOver` (`Picard/Pic0AtlasCompactNoetherian.lean`, which imports this
+module, hence is not citable as a dependency here). -/
 theorem compactSpace_of_finite_atlas {ι : Type u} [Finite ι] {X : ι → Scheme.{u}}
     (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1)
     (hf : ∀ i, IsOpenImmersion.presheaf (f i))
