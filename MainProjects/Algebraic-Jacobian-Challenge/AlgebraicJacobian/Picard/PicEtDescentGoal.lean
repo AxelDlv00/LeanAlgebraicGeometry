@@ -473,6 +473,94 @@ theorem seamClauseOne_of_galoisQuotient
     ⟨Y, ⟨representableBy_picEt_of_galoisQuotient rep ρ e he heq huniv hcov hmatch⟩,
       hlft⟩
 
+/-! ## §6. The form a consumer actually holds: `IsGaloisQuotient` as a class
+
+The two theorems of §5 take the quotient's four *components*. A consumer holds the
+bundled `Prop`-valued `IsGaloisQuotient` instead, and — measured, not assumed —
+destructuring it directly into the `Type`-valued conclusion of
+`representableBy_picEt_of_galoisQuotient` **fails**: `Exists.casesOn` can only
+eliminate into `Prop`. So the component form is not usable as it stands, and this
+section fixes that rather than leaving the gap for a consumer to hit.
+
+The repair is the one `Picard/PicEtQuotientHom.lean` records for the same trap
+(`I-1405`): `Classical.choice` eliminates a `Prop`-valued `Exists` into `Type`, so
+the `Nonempty` form is a `noncomputable def`. Note the asymmetry: the
+`RepresentableBy` version must go through `Nonempty` (it is data), while the
+`∃`-shaped clause (1) needs no choice at all. -/
+
+section Bundled
+
+variable [Algebra.IsSeparable k k'] [Module.Finite k k']
+  {C : Over (Spec (CommRingCat.of k))}
+  [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+  {X' : Over (Spec (CommRingCat.of k'))}
+  (rep : (picEt (Scheme.baseChangeField C k')).RepresentableBy X')
+  (ρ : SemilinearGalAction k k' X'.left X'.hom)
+  {Y : Over (Spec (CommRingCat.of k))}
+
+/-- **THE DESCENT GOAL, from the bundled `IsGaloisQuotient`** — the form every
+consumer of the `G2` cluster holds.
+
+`Nonempty` because `IsGaloisQuotient` is `Prop`-valued: see the section docstring.
+This is the statement a lane closing `G2(c)`, `hcov` or `G1` should aim at. -/
+theorem nonempty_representableBy_picEt_of_isGaloisQuotient
+    (hq : IsGaloisQuotient ρ Y.hom)
+    (hcov : ∀ T : Over (Spec (CommRingCat.of k)), Sieve.generate (Presieve.ofArrows
+        (fun _ : k' ≃ₐ[k] k' => (restrictTest k k').obj (baseTest (k' := k') T))
+        (fun γ => coverSelfSection T γ)) ∈
+      Scheme.etaleTopologyOver k (Limits.pullback (coverMap (k := k) (k' := k') T)
+        (coverMap (k := k) (k' := k') T)))
+    (hmatch : ∀ T, IsInvariantMatch C rep ρ T) :
+    Nonempty ((picEt C).RepresentableBy Y) := by
+  obtain ⟨e, he, heq, huniv⟩ := hq
+  exact ⟨representableBy_picEt_of_galoisQuotient rep ρ e he heq huniv hcov hmatch⟩
+
+/-- **Clause (1) of the seam, in full, from the bundled quotient.**
+
+No `Nonempty` wrapper is needed here and none is used: clause (1) is itself an
+existential, so this eliminates the quotient's `∃` into a `Prop` and stays
+choice-free in that step. **This is the statement the `sorry` of
+`Scheme.fgaPicardRepresentability` consumes**, reduced to: a `k'`-side
+representation, a Galois quotient of its canonical action, `hcov`, the `G1` match,
+and local finiteness of the quotient. -/
+theorem seamClauseOne_of_isGaloisQuotient
+    (hq : IsGaloisQuotient ρ Y.hom)
+    (hcov : ∀ T : Over (Spec (CommRingCat.of k)), Sieve.generate (Presieve.ofArrows
+        (fun _ : k' ≃ₐ[k] k' => (restrictTest k k').obj (baseTest (k' := k') T))
+        (fun γ => coverSelfSection T γ)) ∈
+      Scheme.etaleTopologyOver k (Limits.pullback (coverMap (k := k) (k' := k') T)
+        (coverMap (k := k) (k' := k') T)))
+    (hmatch : ∀ T, IsInvariantMatch C rep ρ T)
+    (hlft : LocallyOfFiniteType Y.hom) :
+    ∃ Z : Over (Spec (CommRingCat.of k)),
+      Nonempty ((picEt C).RepresentableBy Z) ∧
+        LocallyOfFiniteType Z.hom ∧ IsSeparated Z.hom :=
+  seamClauseOne_of_representableBy_locallyOfFiniteType C
+    ⟨Y, nonempty_representableBy_picEt_of_isGaloisQuotient rep ρ hq hcov hmatch, hlft⟩
+
+/-- **The action need not be supplied either.**
+
+`semilinearGalActionOfRepresentableBy` (`GaloisDescent/PicEtGaloisAction.lean`)
+makes the semilinear action free from `rep`, so the quotient hypothesis can be
+stated at *that* action and the `ρ` binder disappears. This is the minimal-input
+form: a `k'`-representation, a Galois quotient of the action it determines, `hcov`,
+the `G1` match, local finiteness. -/
+theorem seamClauseOne_of_isGaloisQuotient_canonical
+    (hq : IsGaloisQuotient (semilinearGalActionOfRepresentableBy C rep) Y.hom)
+    (hcov : ∀ T : Over (Spec (CommRingCat.of k)), Sieve.generate (Presieve.ofArrows
+        (fun _ : k' ≃ₐ[k] k' => (restrictTest k k').obj (baseTest (k' := k') T))
+        (fun γ => coverSelfSection T γ)) ∈
+      Scheme.etaleTopologyOver k (Limits.pullback (coverMap (k := k) (k' := k') T)
+        (coverMap (k := k) (k' := k') T)))
+    (hmatch : ∀ T, IsInvariantMatch C rep (semilinearGalActionOfRepresentableBy C rep) T)
+    (hlft : LocallyOfFiniteType Y.hom) :
+    ∃ Z : Over (Spec (CommRingCat.of k)),
+      Nonempty ((picEt C).RepresentableBy Z) ∧
+        LocallyOfFiniteType Z.hom ∧ IsSeparated Z.hom :=
+  seamClauseOne_of_isGaloisQuotient rep _ hq hcov hmatch hlft
+
+end Bundled
+
 end PicScheme
 
 end Scheme
