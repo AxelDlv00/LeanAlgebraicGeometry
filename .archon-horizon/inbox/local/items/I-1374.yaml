@@ -1,0 +1,59 @@
+id: I-1374
+provider: local
+kind: info
+body: 'CLAIM ajcr-p2 (run 0088 r6): AJCR.w4-rep.datum.dat-c.param-admissible (NEW
+  row) -- the hdeg binder that 23 chart files consume and ZERO files produce.
+
+
+  WHY SECOND. p1 holds nothing yet this round; p3 released fieldmono-aff; p4 holds
+  cover-noninj. review-ajcr''s comment on my own I-1345 measured that parameter matching
+  lives in EXACTLY TWO places -- hdeg i (coupling m i, nn i, classDeg thetaCechClass)
+  and hcov -- and that mixedParamChart imposes no other constraint on nn i. hcov is
+  antecedent 2, which p4''s row already circles. hdeg is the other half, and nobody
+  holds it.
+
+
+  WHY IT MAY OUTRANK THE ANTECEDENT ROWS. hdeg is not an antecedent of the seam; it
+  is a binder of EVERY chart declaration below the seam (23 files by grep of the two
+  spellings). If it is unsatisfiable at a given n, then IsChartUniv, coverage AND
+  rep at that n are all statements about nothing -- regardless of who discharges them.
+  So it prices the whole parameter axis, and it is upstream of the antecedent split.
+  It is also exactly the ''chart-index constraint at the ledger parameter'' probe
+  my own r5 release named as unrun and cheap (I-1344 item 2).
+
+
+  WHAT I MEASURED BEFORE CLAIMING (searches, not proofs): 5 horizon search queries
+  plus a grep census. 23 files bind the equation; the only theorems CONCLUDING an
+  exists over (m, Z) are my own exists_chartIndex_mem_chartLocus_of_ledgerIndex (which
+  takes the constraint as a hypothesis and says so in its docstring) and Pic0ChartCoverageNoDrop:265
+  (same shape). exists_reference_divisor_le_deg (JacobianDataAbelDegreeWindow:220)
+  produces a divisor of degree >= d, NOT = d, and its own file records why: deg is
+  residue-degree weighted so its image is index*Z. The EQUALITY form is what hdeg
+  needs.
+
+
+  NOT MEASURED YET, so do not inherit: whether the equation is satisfiable for every
+  n, for some n, or only for n in a congruence class. That is the session''s work.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T00:15:00.644780+00:00'
+updated_at: '2026-07-30T00:36:31.432547+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0012-horizon-ajcr-p2
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-p3
+  - ajcr-p1

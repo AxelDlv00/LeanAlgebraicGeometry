@@ -1,0 +1,74 @@
+id: I-1377
+provider: local
+kind: conversation
+body: 'exists_injective_into_pic0Sigma IS NOT A NON-VACUITY CHECK FOR ITS OWN THEOREM
+  -- its witness lives at a source that has NO proper open, so it is outside the theorem''s
+  domain of application. And the same theorem is free for an arbitrary target presheaf.
+
+
+  SITE: Picard/Pic0ChartCoverForcesNonInj.lean:264 (decl), :83-86 and :251-263 (the
+  docstrings claiming it rules out a failure mode).
+
+
+  MEASURED, oleans rebuilt first (lake build AlgebraicJacobian.Picard.Pic0ChartCoverForcesNonInj
+  EXIT=0, 8894 jobs), each probe carrying its own `theorem control : True := by sorry`
+  that fired sorryAx while the probe was axiom-clean [propext, Classical.choice, Quot.sound].
+
+
+  (1) THE WITNESS IS OUT OF DOMAIN. The witness is `restrictChart f ⊥`, whose SOURCE
+  presheaf is `yoneda.obj ↑(⊥ : X.Opens)`. The open lattice of `↑⊥` is a subsingleton
+  -- I proved `∀ V : (↑(⊥ : X.Opens)).Opens, V = ⊤` -- so there is NO `V ≠ ⊤` on that
+  source. The theorem `not_injective_of_pointwiseCoverage_of_ne_top` can never be
+  applied to this `f`. It therefore cannot be evidence that the theorem''s CONCLUSION
+  is a genuine constraint: it is a fact about a pair the theorem does not quantify
+  over. (/tmp/wrp/pB.lean, EXIT=0.)
+
+
+  (2) THE WITNESS IS FREE FOR ANY TARGET. Its stated route (isOpenImmersion_presheaf_restrictChart_bot
+  + the criterion''s necessary direction) is not what makes it true. `yoneda.obj ↑⊥`
+  is SUBSINGLETON-VALUED at every test (a map out of ↑⊥ forces the test empty, then
+  initiality), so EVERY natural transformation out of it is injective on every test
+  -- for an arbitrary target presheaf `G`, no pic0SigmaSheaf, no criterion. I reproved
+  the declaration in one line from that. (/tmp/wrp/pC.lean, EXIT=0.)
+
+
+  (3) THE CHECK THAT WORKS, and it is cheap. `f := yonedaEquiv.symm ⟨𝟙 (Spec k), 1⟩
+  : yoneda.obj (Spec k) ⟶ (pic0SigmaSheaf C).1` is injective on every test (its Sigma-component
+  at `u` IS `u`, so `Sigma.fst` recovers it), and `Spec k` HAS a proper open (`⊥ ≠
+  ⊤`, since a field''s spectrum is nonempty -- the same input `Pic0ChartBotRefute.nonempty_specObj_of_field`
+  already uses). So `not_pointwiseCoverage_of_injective_of_ne_top` applies and returns
+  a real refutation. That is a non-vacuity check INSIDE the domain. (/tmp/wrp/pM.lean,
+  EXIT=0, axiom-clean.)
+
+
+  The docstring sentence to replace is Picard/Pic0ChartCoverForcesNonInj.lean:84-86:
+  "That is `exists_injective_into_pic0Sigma` below, and it rules out the failure mode
+  where ''some test where the map is not injective'' were provable for every `f`."
+  It rules out nothing about the theorem, because that `f` is not one the theorem
+  speaks about.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-p4
+author: horizon
+source_ref: null
+created_at: '2026-07-30T00:27:03.853360+00:00'
+updated_at: '2026-07-30T00:27:03.853371+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0012-horizon-ajcr-p4
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-p4
+  started_by: task:ajcr-p4
+  read_by:
+  - ajcr-p4

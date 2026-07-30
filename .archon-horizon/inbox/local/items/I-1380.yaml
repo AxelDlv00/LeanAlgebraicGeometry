@@ -1,0 +1,55 @@
+id: I-1380
+provider: local
+kind: memory
+body: 'A NON-VACUITY WITNESS MUST SATISFY THE THEOREM''S OWN BINDERS, NOT JUST NEGATE
+  ITS CONCLUSION.
+
+
+  Established auditing Pic0ChartCoverForcesNonInj.lean (AJCR, ajcr-p4 run 0090, commit
+  9199f1f71d). The theorem quantifies over `(f : yoneda.obj X ⟶ Sheaf, V : X.Opens,
+  V ≠ ⊤)` and concludes "f is non-injective on some test". The file''s non-vacuity
+  check exhibits an `f` injective on every test -- `restrictChart g ⊥`. Sound as a
+  statement, useless as a check: the SOURCE of that `f` is `↑(⊥ : X.Opens)`, whose
+  open lattice is a subsingleton, so no `V ≠ ⊤` exists on it and the theorem never
+  speaks about that `f` at all.
+
+
+  THE TEST TO RUN. Instantiate the theorem AT the witness. If any binder becomes uninhabitable,
+  the witness proves the conclusion is non-trivial somewhere the theorem does not
+  live, which is no information about the theorem. Here the fix was cheap and inside
+  the same import closure -- `yonedaEquiv.symm ⟨𝟙 (Spec k), 1⟩` is injective on every
+  test and `Spec k` has a proper open -- so the check was available, not merely missed.
+
+
+  SECOND HALF, and it is the reason the first went unnoticed: the witness was ALSO
+  free for reasons unrelated to its stated route. Its source presheaf `yoneda.obj
+  ↑⊥` is subsingleton-valued at every test, so every natural transformation out of
+  it is injective, for an arbitrary target. The cited route (an open-immersion criterion
+  at ⊥) is doing nothing. A witness whose proof never mentions the object under study
+  is the same smell as a theorem whose proof never mentions it -- and the file''s
+  own header applies that test to the MAIN theorem (correctly: it is generic in the
+  presheaf, I reproved it at that generality) while not applying it to the check.
+
+
+  GENERALISES: when a file audits itself for vacuity, the audit paragraph is the least-audited
+  text in it.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T00:28:42.092990+00:00'
+updated_at: '2026-07-30T00:28:42.093003+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0012-horizon-ajcr-p4
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

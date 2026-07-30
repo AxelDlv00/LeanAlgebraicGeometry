@@ -1,0 +1,23 @@
+You are auditing ONE new Lean module in the project at /home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild (workspace root /home/axel/LeanAlgebraicGeometry-Horizon; CLI at $HORIZON_BIN, ledger git at $HORIZON_GIT).
+
+TARGET: AlgebraicJacobian/Picard/Pic0ChartCoverForcesNonInj.lean, landed by lane ajcr-p4 in commit 9199f1f71d, plus its two docstring corrections in cd3c0ba351 (Pic0ChartRestrictedFibreSat.lean, Pic0ChartAbelNonInjective.lean).
+
+CONTEXT you need: the file claims that for an ARBITRARY map of big-site presheaves f : yoneda.obj X ⟶ (pic0SigmaSheaf C).1 and an open V ≠ ⊤, the hypothesis `PointwiseCoverage C (fun _ : PUnit => restrictChart f V)` implies f fails to be injective on some test. It then composes this at abelSigmaChart to kill the V = ⊤ end of the seam's V-interval, and claims this makes the `abel-noninj` fork EQUIVALENT to the "any working V is a proper intermediate open" conclusion of the chart-restrict row.
+
+The project's own bar (protection I-0838) is: 99 of 101 sampled representability claims were refuted in a 2026-07-29 audit — 67 sorry-reachable, 17 VACUOUS, 12 proving something adjacent to the claim. A green build is not evidence of non-vacuity. `lean_multi_attempt` reports success on stale imports, so rebuild oleans before believing any probe.
+
+ADVERSARIAL TARGETS, in priority order. Report on each explicitly, and say which you actually measured versus reasoned about:
+
+1. VACUITY OF THE HYPOTHESIS. Is `PointwiseCoverage C (fun _ : PUnit => restrictChart f V)` at a proper V actually refutable/inhabitable, or is it a hypothesis nothing can ever satisfy — in which case the theorem is vacuous in the sense the audit means. Note the author states this is an open proposition with no producer. Is there a landed theorem in this tree that already REFUTES it outright at every proper V (not just at ⊥)? If so the theorem is much weaker than presented.
+
+2. IS THE CONCLUSION FREE? The author added `exists_injective_into_pic0Sigma` as a non-vacuity check. Check whether that check is the right one: does it actually rule out "f is non-injective on some test" being provable for every f of interest? In particular, is `abelSigmaChart` non-injective for a reason already landed elsewhere, making the whole theorem redundant?
+
+3. IS IT A RESTATEMENT? Compare with `not_coverageContainment_bot` (Pic0ChartRestrictedFibreSat.lean:~257) and with `Pic0ChartBotRefute.lean`'s `not_isLocallySurjective_restrictChart_bot'` / `isLocallySurjective_of_bot`. The author says his theorem is "the same mechanism pushed from ⊥ to an arbitrary proper open". Is it instead LITERALLY derivable from one of them, or from a mathlib lemma, in a couple of lines? Also check Pic0ChartVMonotone.lean's monotonicity results — could `isLocallySurjective_sigmaDesc_mono` or `isChartUniv_antitone` give this for free?
+
+4. THE EQUIVALENCE CLAIM. The docstrings now say "any working V is proper" IS the fork's negative branch. Verify that the two directions actually hold as stated, including that the PUnit single-index restriction does not silently break the composition with the multi-index assembly `pic0RepresentableBy_of_restrictedChartFibre_of_coverage`. The author flags the one-chart limit; check whether the docstring's dichotomy nonetheless overstates it.
+
+5. HYPOTHESIS USE. Run a minimal-hypotheses style check: is `V ≠ ⊤` load-bearing (the author probed that the ⊤ case does not go through — verify independently), and is every instance binder on the file's variable line actually used?
+
+METHOD REQUIREMENTS: rebuild oleans first (`lake build AlgebraicJacobian.Picard.Pic0ChartCoverForcesNonInj` from the project dir; be aware nine other lanes contend the build lock, so prefer `lake env lean <file>` on scratch probes in /tmp). Every probe file must carry its own `theorem control : True := by sorry` and you must confirm that control fires while the probe itself is clean, so you know imports are live. Use `#print axioms` against a control (AlgebraicGeometry.Jacobian fires sorryAx) rather than trusting a green build.
+
+Do NOT edit any file in the project. Report findings only: for each target, CONFIRMED / REFUTED / NOT MEASURED, with the probe you ran. Be specific about file:line. If you find the theorem is sound but the DOCSTRING overstates, say exactly which sentence.

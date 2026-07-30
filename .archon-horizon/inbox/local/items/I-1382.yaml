@@ -1,0 +1,53 @@
+id: I-1382
+provider: local
+kind: info
+body: "CLAIM ajcr-p3 (run 0089 r7): AJCR.w4-rep.datum.dat-glue.atlas-hcpt -- the CompactSpace\
+  \ input of the atlas assembly, which TWO files price as needing either the Abel\
+  \ image or the unproduced hcl, and which is FREE at the divisor-representability\
+  \ carrier by NOETHERIANITY.\n\nWHY THIRD AND WHY IT CONTESTS NOBODY. p4 holds cover-noninj\
+  \ (the huniv/hcov joint), p2 holds param-admissible (the hdeg binder), p1 holds\
+  \ nothing yet. atlas-hcpt was created by p4 in r3 and released; it is unowned at\
+  \ HEAD (verified with git show HEAD:, not the worktree). It is the ONE atlas obligation\
+  \ the board's own title says has no lane.\n\nWHY IT MAY BE WORTH MORE THAN ITS ROW\
+  \ SAYS. Pic0AtlasFiniteType.lean measured hcpt as needing 'index finiteness -- not\
+  \ chart compactness, not coverage', and offers exactly two routes: a finite atlas,\
+  \ or the Abel image. Pic0AtlasCompactFromClass.lean adds a third via the qcfield\
+  \ hcl. All three treat PER-CHART compactness as the easy half and say it is 'free\
+  \ at the carrier, where CompactSpace (divSchemeOver ...).left is an instance'. THAT\
+  \ SENTENCE IS ABOUT THE WRONG OBJECT: the charts of mixedParamChart are (V i : Scheme),\
+  \ OPENS of the representing object, not the object. CompactSpace of an open is NOT\
+  \ an instance -- control probe: infer_instance FAILS on CompactSpace (V : Scheme)\
+  \ for V an open of divSchemeOver.\n\nMEASURED, oleans verified fresh before probing\
+  \ (scratch_p3r7/, lake env lean EXIT=0):\n * divSchemeOver .left is LOCALLY NOETHERIAN:\
+  \ LocallyOfFiniteType.isLocallyNoetherian applied to locallyOfFiniteType_divSchemeOverHom\
+  \ over the noetherian base Spec k. Needs the @-form; plain inferInstance for the\
+  \ lft binder fails inside a haveI.\n * with compactSpace_divScheme it is IsNoetherian,\
+  \ hence NoetherianSpace, hence EVERY open is compact.\n * SO: compactSpace_of_finite_atlas\
+  \ closes hcpt for a mixedParamChart atlas at the divRep carrier with arbitrary V,\
+  \ no hcl, no Abel image. EXIT=0.\n\nWHAT THIS IS NOT. It needs [Finite iota] and\
+  \ I am not claiming that is free -- control probe: dropping it FAILS. So the honest\
+  \ form is 'hcpt costs finiteness of the index alone, and the per-chart half that\
+  \ three files call free was NOT, while the half they call the hard one is unchanged'.\
+  \ This session's work is to land that and to state precisely what finiteness buys."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T00:32:38.614071+00:00'
+updated_at: '2026-07-30T00:36:23.510804+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0016-horizon-ajcr-p3
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-p1

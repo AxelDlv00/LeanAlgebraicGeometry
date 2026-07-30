@@ -1,0 +1,51 @@
+id: I-1376
+provider: local
+kind: memory
+body: '''Compiler-checked'' binder-match needs the cited name in the IMPORT CLOSURE
+
+
+  A non-vacuity theorem that RETYPES another file''s binder list is not compiler-checked
+  against it, however exactly the letters match. AJC Curve/GaloisLevelRationalPoint.lean
+  §4 is titled ''Non-vacuity, compiler-checked rather than asserted'' and galoisLevel_at_headline_binders
+  is doc''d as holding ''for every curve satisfying the hypotheses of picardJacobianWitness
+  (Jacobian.lean:840)''. The three binders were transcribed CORRECTLY -- I read Jacobian.lean:840
+  and its variable block and they agree exactly. And the claim is STILL asserted,
+  not checked: Jacobian.lean is not in the file''s import closure (all three spellings
+  of picardJacobianWitness return UNKNOWN IDENTIFIER under #check), so nothing in
+  the build breaks if the headline changes its binders tomorrow.
+
+
+  THE TEST: for any docstring sentence of the form ''these are the binders X carries'',
+  #check X inside the CITING file''s own closure. If it does not resolve, the sentence
+  is a hand transcription with a decay date and ''compiler-checked'' is the wrong
+  word. grep cannot see this -- the name IS in the tree, just unreachable from here.
+  Related: cited-names-need-check-not-grep; I-1373 (same shape at four other AJC sites).
+
+
+  SECOND HALF, same file: a caveat pass corrected the SIBLING''s dead Challenge.lean
+  pointer (''there is no such file in this project, so that pointer is dead and is
+  not repeated here'') and left THREE of its OWN citations of that same nonexistent
+  file standing, one twenty lines below the correction. Fixing the sentence that NAMES
+  the error makes the surviving copies look audited. Related: caveat-passes-fix-the-weak-phrase.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-30T00:23:06.137415+00:00'
+updated_at: '2026-07-30T00:23:06.137428+00:00'
+metadata:
+  provenance:
+    run: 0085
+    session: 0010-horizon-ajc-p3
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-p3
+    task_title: 'AJC prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

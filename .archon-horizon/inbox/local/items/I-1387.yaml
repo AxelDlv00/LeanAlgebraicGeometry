@@ -1,0 +1,55 @@
+id: I-1387
+provider: local
+kind: issue
+body: "LIVE AT ajc-p1 SESSION END: the shared index holds 7 staged deletions and FIVE\
+  \ ARE .lean PROOF FILES -- this round's actual output across BOTH projects, including\
+  \ files committed minutes ago. Nothing lost yet. 1702 deletion lines.\n\nENUMERATED\
+  \ with the command per I-1222, not quoted from any lane's count. GIT_INDEX_FILE\
+  \ unset, diff --cached --shortstat HEAD: 14 files changed, 36 insertions(+), 1702\
+  \ DELETIONS(-); name-status | grep '^D' gives 7. ALL SEVEN verified present BOTH\
+  \ at HEAD and on disk (cat-file -e HEAD:path, and -f on disk), so this is a warning\
+  \ about the next plain commit, not a damage report:\n\n D AJC Picard/GaloisDescent/GaloisSelfTensor.lean\
+  \   -- MINE, committed c6bcc83500/7b135daed5 within the hour\n D AJC Picard/PicEtDescentExistence.lean\
+  \            -- ajc-p2 this round\n D AJC Picard/PicEtQuotientHom.lean         \
+  \        -- ajc-p4 this round\n D AJCR Picard/Pic0AtlasCompactNoetherian.lean  \
+  \    -- ajcr-p3 this round\n D AJCR Picard/Pic0ChartIndexAdmissible.lean       \
+  \ -- ajcr-p2 this round\n D roadmap AJC.picrep.etale-rep.galois-splitting.yaml \
+  \ -- my row, committed 5fbb864e29\n D roadmap AJC.picrep.etale-rep.quotient-hom.yaml\
+  \      -- ajc-p4's row\n\nTHE PATTERN I-1222's COMMENT PREDICTED IS EXACT: the index\
+  \ stages the MOST RECENT work of whichever lanes committed last. Every one of these\
+  \ five .lean files is a file its author has not yet had a second lane read.\n\n\
+  AND THE PART A LANE MIGHT MISREAD: my own file appears here as a staged D even though\
+  \ I committed it with a FRESH PRIVATE index and verified diff HEAD~1 HEAD afterwards.\
+  \ Both halves of the I-1222 procedure held for me and the shared index still lists\
+  \ my file for deletion -- because the hazard is not in my commit path at all, it\
+  \ is in the shared index that some other lane will commit from. Doing the procedure\
+  \ correctly protects OTHERS from you; it does nothing to protect your file from\
+  \ the next lane. That is why the session-end HEAD-vs-disk hash over your own paths\
+  \ (I-1331) is not redundant with the post-commit stat: ajcr-p2's 7e90a01d09 reverted\
+  \ my file for one commit today (I-1383, restored byte-identical in 85e042e6f0),\
+  \ and only the hash caught it.\n\nDO NOT set ARCHON_HORIZON_ALLOW_DELETIONS=1, and\
+  \ do not read-tree HEAD into the shared index (I-0999 -- that reverts other lanes'\
+  \ unstaged work). Fresh index file, read-tree HEAD into THAT, add explicit paths,\
+  \ confirm the stat lists only them, commit, then diff HEAD~1 HEAD and read every\
+  \ path. Re-seed if HEAD moved (a 'cannot lock ref HEAD' failure means your commit\
+  \ DID NOT LAND)."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T00:37:23.201404+00:00'
+updated_at: '2026-07-30T00:37:23.201419+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0014-horizon-ajc-p1
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

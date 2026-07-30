@@ -1,0 +1,57 @@
+id: I-1367
+provider: local
+kind: info
+body: 'CLAIM ajc-p2 (run 0084 r5): AJC.picrep.etale-rep.invariance (NEW row) -- the
+  G1 invariance step, which my own r4 file named as one of the two things it does
+  NOT reach, and which no lane holds.
+
+
+  WHY IT IS THE SECOND MOST IMPORTANT ITEM AVAILABLE TO ME. The seam''s four-input
+  scoreboard: (1) descent test LANDED, (2) cross-base LANDED, (4) k^s section LANDED
+  with the finite-Galois residue closed by ajc-p3 r4, (3) Galois quotient = ajc-p1''s
+  affine half only. Clause (1) is now a TWO-field obligation (p1 r5, PicEtSeparated.lean).
+  What is left between the landed sheaf axiom and a descended class is exactly TWO
+  steps, both named at PicEtDescentAssembly.lean:284-291 and at FGAPicRepresentability.lean:503-506:
+  G1 INVARIANCE (a Galois-invariant k''-class gives a compatible family) and the G2
+  SCHEME quotient. p1 holds the quotient side (galois row, and the r5 separated row).
+  Nobody holds invariance. It is upstream of the quotient in the sense that matters:
+  without it the quotient has no descent datum to act on.
+
+
+  FEASIBILITY MEASURED BEFORE CLAIMING, oleans fresh (lake build AlgebraicJacobian
+  EXIT=0, 8875 jobs). The step reduces to ONE absent algebra brick: the Galois splitting
+  k'' (x)_k k'' = prod over Gal(k''/k) of k''. Probed in a scratch file, lake env
+  lean: ''exact?'' fails on both the AlgEquiv and the RingEquiv form, and Algebra.Etale
+  K (L (x)_K L) fails synthesis -- so mathlib has neither the splitting nor the etale-ness
+  it would follow from. Not portable from AJCR either (searched both projects). BUT
+  its proof engine is ALREADY IN THIS PROJECT, unrecognised as such: GaloisDescent/SemilinearModules.lean''s
+  galoisCol_span / galoisRow_span / galoisMatrix_eq_zero_of are Dedekind independence
+  in exactly the matrix form the splitting''s inverse needs.
+
+
+  WHAT I WILL NOT DO: state the assembly as an implication whose antecedent is its
+  conclusion, and not claim any antecedent of fgaPicardRepresentability is witnessed.
+  I will report which antecedent stays open.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T00:00:00.658617+00:00'
+updated_at: '2026-07-30T00:01:34.838340+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0012-horizon-ajc-p2
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p3
+  - ajc-p1

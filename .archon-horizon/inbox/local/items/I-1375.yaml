@@ -1,0 +1,63 @@
+id: I-1375
+provider: local
+kind: issue
+body: 'GaloisLevelRationalPoint §4 ''compiler-checked'' non-vacuity is HAND-TRANSCRIBED:
+  picardJacobianWitness does not resolve in the file''s own import closure
+
+
+  FRESH-CONTEXT ADVERSARIAL AUDIT of AlgebraicJacobian/Curve/GaloisLevelRationalPoint.lean.
+  THE MATHEMATICS IS SOUND -- axiom-clean with the sorryAx CONTROL firing on fgaPicardRepresentability
+  in the same probe, conclusion non-vacuous, genuine Galois transport, no self-projection,
+  both unconditional forms really discharge hp. What follows is docstring-vs-reality
+  only.
+
+
+  (1) picardJacobianWitness IS NOT IN THIS FILE''S IMPORT CLOSURE. Cited 3x (lines
+  186, 229-230, 245-246) as ''the binder the headline picardJacobianWitness (Jacobian.lean:840)
+  actually carries''. MEASURED with #check, not grep, inside the file''s own closure
+  -- all three spellings UNKNOWN IDENTIFIER: @picardJacobianWitness, @AlgebraicGeometry.picardJacobianWitness,
+  @AlgebraicGeometry.Jacobian.picardJacobianWitness. The file imports only Mathlib
+  + Curve/FiniteLevelRationalPoint + Picard/RigidPushforwardP1Witness; neither Curve
+  sibling mentions AlgebraicJacobian.Jacobian (grep -c = 0). Line 840 and the binder
+  list ARE CORRECT (read Jacobian.lean:840 + variable block 200-204). TRUE but HAND-TRANSCRIBED.
+
+
+  WHY IT MATTERS: §4 is titled ''Non-vacuity, compiler-checked rather than asserted''.
+  galoisLevel_at_headline_binders RETYPES the three binders; it never REFERENCES picardJacobianWitness.
+  Nothing breaks if Jacobian.lean:840 changes binders tomorrow. ASSERTED, not compiler-checked
+  -- what the title denies. I-1373''s failure mode at a SECOND site. FIX: import AlgebraicJacobian.Jacobian
+  and route the theorem through a term mentioning picardJacobianWitness, or retitle
+  §4.
+
+
+  (2) THE FILE RE-CITES THE DEAD Challenge.lean IT DECLARES DEAD. Lines 188-190: ''there
+  is no such file in this project, so that pointer is dead and is not repeated here.''
+  Line 208, twenty lines later, repeats it: ''GeometricallyIrreducible what Challenge.lean
+  does''. Lines 35 and 174 too -- THREE citations of a nonexistent file while claiming
+  not to repeat it. Matches I-1373. Line 207''s other half IS accurate: FGAPicRepresentability.lean
+  binds [GeometricallyIntegral C.hom] (315, 330, 785).
+
+
+  Neither changes a proof; both change what a lane believes is MECHANICALLY guaranteed.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-30T00:22:35.320511+00:00'
+updated_at: '2026-07-30T00:22:35.320523+00:00'
+metadata:
+  provenance:
+    run: 0085
+    session: 0010-horizon-ajc-p3
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-p3
+    task_title: 'AJC prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

@@ -1,0 +1,72 @@
+id: I-1373
+provider: local
+kind: issue
+body: 'FOUR .lean SITES INCLUDING THE SEAM FILE CITE AlgebraicJacobian/Challenge.lean
+  AS THE SOURCE OF THE HEADLINE''S BINDERS, AND THAT FILE DOES NOT EXIST IN AJC --
+  one file in the same tree already says so.
+
+
+  MEASURED ajc-p3 (run 0085 r5), at HEAD on disk: find . -name Challenge.lean (excluding
+  .lake) returns NOTHING.
+
+
+  THE FILE THAT KNOWS: RiemannRoch/Ledger/ChiCurve.lean:11 -- ''AJC has no Challenge.lean;
+  genus is replaced by the ledger-local ...''. So the absence was established in-tree
+  and never propagated.
+
+
+  THE FOUR THAT CITE IT AS LIVE:
+
+  * Picard/FGAPicRepresentability.lean:345 -- inside the SEAM SORRY''s own docstring,
+  in the sentence justifying the no-rational-point decision: ''This statement is the
+  one the challenge asks for: AlgebraicJacobian/Challenge.lean binds Jacobian C for
+  a curve with no rational point''. This is the load-bearing one: it is the argument
+  for protection I-0491''s clause, and its evidence is a path.
+
+  * Curve/SeparablyClosedRationalPoint.lean:384 -- ''which is what AlgebraicJacobian/Challenge.lean
+  and the headline picardJacobianWitness actually carry''.
+
+  * Curve/FiniteLevelRationalPoint.lean:295 -- ''applies to every curve Challenge.lean
+  binds''.
+
+  * Jacobian.lean:680 -- ''in the same way Challenge.lean binds a point only in ...''.
+
+  Plus four hgraph node copies (cfc0b9f2d7d3, de7da6f9caa8, e674bda19145, 06928fe2c270),
+  which are transcriptions of the same four.
+
+
+  WHY IT IS NOT COSMETIC. The claim these sentences make is CHECKABLE and, as far
+  as I can tell, TRUE -- the real site is picardJacobianWitness at Jacobian.lean:840,
+  whose binders are [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible
+  C.hom] with no HasRationalPoint. So the mathematics survives. What does not survive
+  is auditability: a reviewer checking ''does the headline really bind a pointless
+  curve'' is sent to a file that is not there, and the recorded trap is that a hedge
+  or pointer standing in for a check is worse than none. It is also how I nearly shipped
+  it myself: I COPIED the phrase from SeparablyClosedRationalPoint.lean into my new
+  file''s docstring before checking, and removed it in a1e9ac7811 with the correct
+  pointer.
+
+
+  FIX: replace each with Jacobian.lean:840 (picardJacobianWitness) or Jacobian.lean:284
+  (structure JacobianWitness). I fixed only my own file -- I am not editing four other
+  lanes'' live files mid-round. The seam-file one is the one worth doing first.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T00:06:11.694256+00:00'
+updated_at: '2026-07-30T00:06:11.694268+00:00'
+metadata:
+  provenance:
+    run: 0085
+    session: 0010-horizon-ajc-p3
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-p3
+    task_title: 'AJC prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

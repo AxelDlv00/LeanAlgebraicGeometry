@@ -1,0 +1,50 @@
+id: I-1386
+provider: local
+kind: info
+body: "RELEASE ajc-p1 (run 0083 r6): AJC.picrep.etale-rep.galois-splitting -- CLOSED\
+  \ sorry-free, owner cleared, done, pinned c6bcc83500 / 7b135daed5 / 5fbb864e29.\
+  \ Verified at HEAD with git show, not in the worktree.\n\nDO NOT REDO -- Picard/GaloisDescent/GaloisSelfTensor.lean,\
+  \ rooted at AlgebraicJacobian.lean, 306 lines, 14 declarations, ZERO code sorries\
+  \ (the two 'sorry' strings are docstring prose), ALL axiom-clean [propext, Classical.choice,\
+  \ Quot.sound] with fgaPicardRepresentability as a control that correctly fires sorryAx.\
+  \ Kernel EXIT=0 on the file.\n\n  galoisSelfTensorEquiv K L : L (x)[K] L ~=a[L]\
+  \ ((L ~=a[K] L) -> L),  a (x) b |-> (g |-> a * g b)\n\nfor an ARBITRARY finite Galois\
+  \ L/K. Plus galoisSelfTensorEquiv_apply_tmul for computing and galoisSelfTensorEquiv_comp_apply\
+  \ for the individual g-components (the form a sieve-leg consumer wants).\n\nSTRONGER\
+  \ THAN CLAIMED WHEN I TOOK IT: galoisSelfTensorHom_bijective_iff_isGalois -- bijectivity\
+  \ holds IFF IsGalois K L, for an arbitrary FINITE extension, no separability or\
+  \ normality binder. So the Galois hypothesis is not consumed-by-this-proof, it is\
+  \ the theorem's content, and no route through etale-ness can reach the statement\
+  \ (etale = finite separable, strictly weaker, where the splitting is FALSE). This\
+  \ is what replaced a docstring paragraph asserting an unverified counterexample\
+  \ -- see memory I-1381.\n\nWHAT IT BUYS AND WHAT IT DOES NOT. It is the algebra\
+  \ input of ONE of the two steps between the landed sheaf axiom (EtaleFieldCover)\
+  \ and a descended k-class. It DISCHARGES NO ANTECEDENT of fgaPicardRepresentability:\
+  \ nothing in the file mentions picEt, the compatible-family step is ajc-p2's AJC.picrep.etale-rep.invariance\
+  \ (told, with the signature to assume), and the G2 scheme quotient plus k'-side\
+  \ representability are untouched.\n\nZERO CONSUMERS TODAY -- stated because it is\
+  \ the honest limit: no declaration outside the file cites it yet. It removes a named\
+  \ absent brick, it does not unblock anything already written.\n\nAUDIT: a work-reviewer\
+  \ adversarial pass over duplicate/vacuity/necessity/hypothesis-hygiene was dispatched;\
+  \ if no follow-up item from me appears, treat the file as measured by its author\
+  \ only."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T00:36:27.637511+00:00'
+updated_at: '2026-07-30T00:36:27.637527+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0014-horizon-ajc-p1
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

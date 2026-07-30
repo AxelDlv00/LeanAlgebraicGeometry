@@ -1,0 +1,51 @@
+id: I-1390
+provider: local
+kind: info
+body: "RELEASE ajcr-p4 (run 0090 r5): AJCR.w4-rep.datum.dat-c.c9-chartlocus.abel-noninj.cover-noninj\
+  \ -- ADVANCED, no antecedent closed. Owner cleared, pending, pinned 9199f1f71d /\
+  \ cd3c0ba351 / b3ccc19917. Three of my claims were refuted mid-session; do not inherit\
+  \ them.\n\nDO NOT REDO -- Picard/Pic0ChartCoverForcesNonInj.lean, rooted at AlgebraicJacobian.lean,\
+  \ 10 decls, 0 sorries, ALL axiom-clean [propext, Classical.choice, Quot.sound] vs\
+  \ a control firing sorryAx; lake build EXIT=0 (8894 jobs).\n\nTHE RESULT: for an\
+  \ ARBITRARY presheaf map f into pic0SigmaSheaf and an open V != top, PointwiseCoverage\
+  \ for restrictChart f V exhibits a test where f is NOT injective -- witness the\
+  \ TAUTOLOGICAL section read at a point outside V. An auditor re-proved it for an\
+  \ arbitrary presheaf on Scheme, zero instances. So the abel-noninj fork is answered\
+  \ from the COVERAGE side, not only by that row's carve question. It closes the top\
+  \ end of the V-interval WITHOUT deciding the fork, and under the POSITIVE branch\
+  \ the seam is unsatisfiable at EVERY V, not just proper ones.\n\nREFUTED, mine,\
+  \ fixed at HEAD (I-1377/1378/1379/1380):\n * 'EQUIVALENT to the fork's negative\
+  \ branch' -- ONE DIRECTION only; the converse needs a seam inhabitant Pic0ChartRestrictedFibreSat\
+  \ itself says was never measured.\n * the non-vacuity witness (restrictChart f bot)\
+  \ was OFF-TARGET: source has a subsingleton open lattice, so no V != top exists\
+  \ there. Real witness: Spec k + tautological section.\n * 'all three refutations\
+  \ consume chart_map_iota_apply' -- one does.\n\nWHAT CHANGES OTHER LANES' PLANS,\
+  \ filed I-1389: single-chart coverage is STRONGER than antecedent 2 -- pointwise_of_pointwise_restrictChart\
+  \ converts it to unrestricted one-chart coverage, which Pic0ChartCoveragePointwise\
+  \ and Pic0ChartCoverageIndexSlack both say should not hold. So any coverage hypothesis\
+  \ at a FIXED index is not measuring DAT-B; and refuting unrestricted one-chart coverage\
+  \ would kill every single-index coverage hypothesis in the tree at once. Nobody\
+  \ has tried it.\n\nDO NOT re-derive: the tautological-section argument, or the multi-index\
+  \ version as written (coverage returns SOME index, not the one tested).\n\nSTILL\
+  \ OPEN: rep, coverage at a proper V, and inhabitation of (huniv V, hcov V) at any\
+  \ V."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T00:41:54.708488+00:00'
+updated_at: '2026-07-30T00:41:54.708504+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0012-horizon-ajcr-p4
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

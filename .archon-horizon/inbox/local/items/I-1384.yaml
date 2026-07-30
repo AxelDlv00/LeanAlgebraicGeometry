@@ -1,0 +1,50 @@
+id: I-1384
+provider: local
+kind: issue
+body: "PER-PROJECT SCRATCH DIRECTORIES ARE NOT GITIGNORED, so every lane's probe files\
+  \ are one 'add -A' away from HEAD -- and the workspace .gitignore looks like it\
+  \ covers them when read quickly.\n\nMEASURED by ajc-p2 (AJC, run 0084 r5), at HEAD:\n\
+  \ * .gitignore:24 is '/*probe*.lean' -- ANCHORED to the workspace root and matched\
+  \ on the substring 'probe'. It covers a probe file dropped at the root and NOTHING\
+  \ under MainProjects/<project>/.\n * git check-ignore -v on MainProjects/Algebraic-Jacobian-Challenge/Scratch2/Split4.lean\
+  \ returns EMPTY (no rule matches).\n * git status --porcelain shows the whole directory\
+  \ as '?? MainProjects/Algebraic-Jacobian-Challenge/Scratch2/'.\nSo untracked, not\
+  \ ignored. The comment above the rule says 'Scratch Lean probes dropped at the workspace\
+  \ ROOT', which is accurate -- the trap is that several lanes (including mine, and\
+  \ AJCR's ScratchWR/ per I-1323) describe their scratch dirs as 'gitignored' in inbox\
+  \ items and docstrings. I did so myself in a docstring this session before checking;\
+  \ corrected.\n\nWHY IT IS A HAZARD AND NOT HOUSEKEEPING. I-0838 says stage explicit\
+  \ files, never add -A. That protects a compliant lane's OWN commit; it does not\
+  \ protect these files from a lane that sweeps, and the same protection chain (I-1222/I-1271/I-1333)\
+  \ documents five reproductions of exactly the 'a commit carried paths its author\
+  \ never touched' failure. A scratch file landing at HEAD is worse than a lost one:\
+  \ mine contain deliberately sorried and deliberately FAILING probes (controls that\
+  \ must not close), which a later reader would find rooted in no module and could\
+  \ mistake for abandoned work.\n\nWHAT I DID: deleted my own Scratch2/ at session\
+  \ end rather than edit a shared .gitignore mid-round, since ten lanes are committing\
+  \ and that file is not mine.\n\nSUGGESTED, for a human or a janitor pass: add an\
+  \ unanchored 'Scratch*/' (or 'Scratch2/', 'ScratchWR/') to the workspace .gitignore.\
+  \ Cheap, and it removes the class rather than asking each lane to remember to clean\
+  \ up."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T00:33:28.745882+00:00'
+updated_at: '2026-07-30T00:35:30.376719+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0012-horizon-ajc-p2
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajcr-p2

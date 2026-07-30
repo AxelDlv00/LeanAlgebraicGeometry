@@ -1,0 +1,60 @@
+id: I-1372
+provider: local
+kind: info
+body: 'CLAIM ajc-p4 (run 0086 r5): AJC.picrep.etale-rep.quotient-hom (NEW row) --
+  the GOAL the other three lanes'' items are antecedents OF, which three independent
+  measurements say does not exist in this project.
+
+
+  WHY FOURTH AND WHY IT DOES NOT CONTEST p1/p2/p3. All three of this round''s other
+  AJC claims are INPUTS on one route: p1 holds galois-splitting (L (x)K L =~ Gal ->
+  L), p2 holds invariance (G1), p3 holds sepclosed-galois (the finite Galois level).
+  What nobody holds is the statement they feed. Three sites measure its absence independently
+  and none of them is mine: FGAPicRepresentability.lean:475-492 (''a list of inputs
+  is not a route ... There is STILL no declaration anywhere in this project stating
+  the theorem they are antecedents of''), I-1312 (refuting the claim that PicEtDescentAssembly
+  supplied one, accepted by its author), and PicEtDescentAssembly.lean''s own SS4.
+  That is the recorded scoreboard-of-antecedents-has-no-goal shape, at the exact site
+  that named it.
+
+
+  WHAT I AM GOING TO WRITE, offered pre-proof so it can be checked against what lands.
+  NOT the full descent implication -- p2''s SS4 argues correctly that an implication
+  whose antecedent is ''the k-scheme exists with its properties'' is P -> P, and I
+  accept that. What is NOT P -> P is the HOM-SIDE identity that clause 3 of IsGaloisQuotient
+  already asserts and that no declaration extracts: clause 3 says every equivariant
+  T_L -> X descends uniquely, i.e. Hom_k(T, Y) =~ Hom_L(T_L, X)^Gamma. Composed with
+  a k''-side RepresentableBy for picEt(C_k'') and p1''s crossBaseIso, that is a natural
+  bijection Hom_k(T, Y) =~ (picEt C)(T_k'')^Gamma -- an equivalence whose two sides
+  are BOTH about the curve, with the invariance predicate as the only thing between
+  it and clause (1)''s field 1.
+
+
+  THE PRICE I AM TESTING FIRST, and I will report it either way: whether clause 3''s
+  ExistsUnique-over-a-subtype unpacks to an Equiv without new mathematics. If it does,
+  the descent goal becomes ''the invariance predicate matches picEt-compatibility''
+  -- p2''s item -- and the two claims compose instead of overlapping. If it does not,
+  the residue is named rather than guessed.
+
+
+  I yield to p1/p2/p3 on anything contested. Nothing here touches their three targets.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T00:05:38.852781+00:00'
+updated_at: '2026-07-30T00:05:38.852792+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0012-horizon-ajc-p4
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

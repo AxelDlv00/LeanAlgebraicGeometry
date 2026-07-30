@@ -7,6 +7,7 @@ import Mathlib
 import AlgebraicJacobian.Curve.FiniteLevelRationalPoint
 import AlgebraicJacobian.Picard.RigidPushforwardP1Witness
 import AlgebraicJacobian.Jacobian
+import AlgebraicJacobian.Picard.GaloisQuotientAffineGeneral
 
 /-!
 # A rational point at a finite *Galois* level, with no hypothesis on `C(k)`
@@ -287,3 +288,55 @@ theorem galoisLevel_p1Over_rat :
   Scheme.exists_finiteGalois_level_hasRationalPoint_of_geometricallyIntegral (p1Over ℚ)
 
 end AlgebraicJacobian.NonVacuity
+
+/-! ## §5. Why the Galois hypothesis is the point: composing with the `G2` quotient engine
+
+§3's whole advance over `Curve/FiniteLevelRationalPoint.lean` is `[IsGalois k k'']` rather than
+`Algebra.IsSeparable k k'`. That is worth a *declaration* rather than a docstring claim, because
+"the stronger hypothesis is the one the consumer wants" is exactly the sentence a costing gets
+wrong. `G2`'s quotient engine takes a `SemilinearGalAction K L X f`, whose group is `L ≃ₐ[K] L`,
+and its discharge `hasGaloisQuotient_of_isAffine` binds `[FiniteDimensional K L] [IsGalois K L]` —
+both of which §3 now supplies at a level a curve over an arbitrary field actually reaches.
+
+**Read the scope of §5 precisely.** It composes §3 with the **affine** half of `G2`, which is the
+half that is proved (`GaloisQuotientAffineGeneral.lean`). The campaign's actual consumer `J'_r` is
+a *glued* scheme, hence non-affine, and the gate there is open — `G2(c)`, the `Scheme.GlueData`
+assembly, with the Hironaka trap. So §5 is evidence that the Galois strengthening reaches a real
+engine, **not** evidence that `G2` is closed. And it is still the existential level of §3: the
+quotient clause is universally quantified over affine `X` *at that* `k''`.
+-/
+
+namespace AlgebraicJacobian.GaloisLevel
+
+open AlgebraicJacobian.GaloisDescent
+
+/-- **The Galois level reaches `G2`'s quotient engine.** For a smooth geometrically irreducible
+curve over an arbitrary field `k` there is a finite Galois level `k''/k` which simultaneously
+carries a rational point for `C_{k''}` and admits a Galois quotient for *every* semilinear
+`Gal(k''/k)`-action on an **affine** `k''`-scheme.
+
+The second conjunct is `exists_isGaloisQuotient_of_isAffine`, whose `[FiniteDimensional k k'']` and
+`[IsGalois k k'']` binders are precisely what §3 delivers and what the finite *separable* level of
+the sibling file does not: over a non-Galois `k'`, `k' ≃ₐ[k] k'` is the wrong group and the action
+type is not the campaign's.
+
+Axiom-clean, and note what that means here: the affine half of `G2` is genuinely proved, so this
+composite does not pass through the seam. The **non-affine** case is untouched and is `G2(c)`. -/
+theorem exists_level_with_point_and_affineQuotients {k : Type u} [Field k]
+    (C : Over (Spec (CommRingCat.of k))) [SmoothOfRelativeDimension 1 C.hom]
+    [GeometricallyIrreducible C.hom] :
+    ∃ (k'' : IntermediateField k (SeparableClosure k)) (_ : FiniteDimensional k k'')
+      (_ : IsGalois k k''),
+      Scheme.HasRationalPoint (Scheme.baseChangeField C k'') ∧
+      ∀ (X : Scheme.{u}) [IsAffine X] (f : X ⟶ Spec (CommRingCat.of (k'' : Type u)))
+        (ρ : SemilinearGalAction k (k'' : Type u) X f),
+        ∃ (Y : Scheme.{u}) (g : Y ⟶ Spec (CommRingCat.of k)), IsGaloisQuotient ρ g := by
+  obtain ⟨k'', hfd, hgal, hpt⟩ :=
+    Scheme.exists_finiteGalois_level_hasRationalPoint_of_geometricallyIrreducible C
+  letI := hfd
+  letI := hgal
+  refine ⟨k'', hfd, hgal, hpt, ?_⟩
+  intro X _ f ρ
+  exact exists_isGaloisQuotient_of_isAffine ρ
+
+end AlgebraicJacobian.GaloisLevel
