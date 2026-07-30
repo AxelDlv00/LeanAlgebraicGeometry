@@ -147,6 +147,117 @@ theorem generate_singleton_coverMap_eq (T : Over (Spec (CommRingCat.of k))) :
     change a ≫ pullback.fst T.hom (specMapAlgebra k k') = Over.Hom.left g
     exact hfac
 
+/-! ## §2. The sheaf axiom at the cover morphism, and the `∃!` descent -/
+
+section Cover
+
+variable [Algebra.IsSeparable k k'] [Module.Finite k k']
+
+/-- **The sheaf axiom of `picEt` at the slice-level singleton presieve on
+`coverMap`.**
+
+This is `Scheme.isSheafFor_picEt_pullback_presieve` (`Picard/EtaleFieldCover.lean`)
+carried across `generate_singleton_coverMap_eq`. It is the form a *consumer*
+needs, and the reason it needed a lemma at all is §1: the landed statement is
+about a sieve described on underlying schemes, while a descent datum is indexed by
+one slice morphism.
+
+Finiteness and separability of `k'/k` re-enter here — not for the identification,
+but because they are what makes the family *covering* in the étale topology. -/
+theorem isSheafFor_picEt_singleton_coverMap (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    (T : Over (Spec (CommRingCat.of k))) :
+    Presieve.IsSheafFor (picEt C)
+      (Presieve.singleton (coverMap (k := k) (k' := k') T)) := by
+  rw [Presieve.isSheafFor_iff_generate, generate_singleton_coverMap_eq]
+  exact AlgebraicGeometry.Scheme.isSheafFor_picEt_pullback_presieve k' C T
+
+/-- **The existence-and-uniqueness form of the descent step at one morphism.**
+
+For a smooth proper curve `C` over an arbitrary field `k`, a finite separable
+`k'/k` and an arbitrary `k`-test `T`: a class `x ∈ Pic_{(C/k)ét}(T_{k'})` whose two
+pullbacks along any pair of morphisms agreeing over `T` coincide descends to a
+**unique** class on `T`.
+
+This is the statement `PicEtDescentAssembly.lean`'s §4 recorded as missing on the
+existence side, in the shape a consumer holds its datum in. Its uniqueness half
+overlaps `picEt_injective_restrict_baseTest`, deliberately: that lemma takes *two
+classes* and this one takes *one class with a compatibility hypothesis*, and a
+consumer of the descent step has the latter.
+
+**Non-vacuity measured, not asserted**, with both obvious refutations probed
+(`lake env lean`, fresh oleans, both `exact?` reporting failure):
+
+* dropping the compatibility hypothesis `hx` leaves the `∃!` conclusion **open**,
+  so the hypothesis is not decoration;
+* the same conclusion at an *arbitrary* morphism `f : W ⟶ T` in place of `coverMap`
+  is **open**, so the covering-sieve witness of `Picard/EtaleFieldCover.lean` is
+  load-bearing rather than incidental.
+
+**No hypothesis on `C(k)`** (`I-0491`), and none on `T`. -/
+theorem exists_unique_descend_picEt (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    (T : Over (Spec (CommRingCat.of k)))
+    (x : (picEt C).obj (Opposite.op ((restrictTest k k').obj (baseTest (k' := k') T))))
+    (hx : ∀ {W : Over (Spec (CommRingCat.of k))}
+      (p₁ p₂ : W ⟶ (restrictTest k k').obj (baseTest (k' := k') T)),
+      p₁ ≫ coverMap (k' := k') T = p₂ ≫ coverMap (k' := k') T →
+      (picEt C).map p₁.op x = (picEt C).map p₂.op x) :
+    ∃! y : (picEt C).obj (Opposite.op T),
+      (picEt C).map (coverMap (k' := k') T).op y = x := by
+  have h := isSheafFor_picEt_singleton_coverMap (k' := k') C T
+  rw [Presieve.isSheafFor_singleton] at h
+  exact h x hx
+
+end Cover
+
+/-! ## §3. The level this runs at is the level a curve reaches — the join
+
+`§2` is generic in `k'`: `generate_singleton_coverMap_eq` binds only
+`[Algebra k k']`, and `§2` adds exactly the two binders that make the family
+covering. That matters because `ajc-p3`'s producer
+(`Curve/GaloisLevelRationalPoint.lean`,
+`Scheme.exists_finiteGalois_level_hasRationalPoint_of_geometricallyIntegral`)
+does **not** hand over a section at a level of the consumer's choosing: its
+conclusion is an *existential* over `k''`, and that `k''` is manufactured from the
+point as a normal closure. So "the section is available" and "the section is
+available **at my cover's level**" are different statements, and the second is
+what a descent step needs (`ajc-p3`, caveat on `I-1371`).
+
+**Elaborated rather than argued** (`lake env lean` EXIT=0, fresh oleans; scratch
+file, not kept): at the `k''` that producer manufactures, `coverMap` exists and
+`isSheafFor_picEt_singleton_coverMap` applies, both instances arriving by
+`letI` from the `obtain`. So the answer to that caveat is the cheap one — no
+join or enlargement step is owed, because this file's statements are generic in
+the level. Recorded here because the composition is the kind of thing that is
+invisible from either side: the producer's file has no `picEt` in it and this one
+has no rational point.
+
+## §4. What is still owed, named rather than restated more cheaply
+
+The hypothesis of `exists_unique_descend_picEt` is **agreement of two pullbacks**.
+Campaign `G1` produces something else: a class fixed by the semilinear
+`Gal(k'/k)`-action. The bridge is the Galois splitting
+`k' ⊗_k k' ≅ ∏_{Gal(k'/k)} k'` — under it the two projections of the cover become
+the identity and the `γ`-twist, so pullback-agreement becomes `γ`-invariance for
+every `γ`. That splitting is **absent from Mathlib** (measured: `exact?` fails on
+both the `AlgEquiv` and the `RingEquiv` form; `Algebra.Etale K (L ⊗[K] L)` fails
+synthesis — though note `ajc-p3` observes that this project's own
+`etale_of_finite_isSeparable` supplies the étale half, so the residue is the
+`Gal`-**indexing** rather than étaleness) and is `ajc-p1`'s row
+`AJC.picrep.etale-rep.galois-splitting`. This file does not assume it and does not
+weaken the invariance step to something the splitting would make free.
+
+Beyond that bridge, the scheme-level `G2` quotient is unchanged and untouched: it
+is what turns descended *classes* into a representing *scheme*, and it is gated on
+`AlgebraicJacobian.GaloisDescent.HasGaloisQuotient`, which has an instance only on
+the affine locus while the object this route descends is glued.
+
+So: sheaf-theoretic side of the existence half **closed** at one morphism;
+Galois-to-pullback translation **open**; `k'`-side representability and the `G2`
+quotient **open** and not made cheaper by anything here.
+-/
+
 end PicScheme
 
 end Scheme

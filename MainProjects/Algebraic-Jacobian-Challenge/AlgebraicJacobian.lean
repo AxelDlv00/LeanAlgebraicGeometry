@@ -158,6 +158,7 @@ import AlgebraicJacobian.Picard.PicEtSubcanonical
 import AlgebraicJacobian.Picard.EtaleFieldCover
 import AlgebraicJacobian.Picard.PicEtCrossBase
 import AlgebraicJacobian.Picard.PicEtDescentAssembly
+import AlgebraicJacobian.Picard.PicEtDescentExistence
 import AlgebraicJacobian.Picard.PicEtSeparated
 import AlgebraicJacobian.Picard.RigidifiedPic
 import AlgebraicJacobian.Picard.IdentityComponent
