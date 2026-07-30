@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.Pic0ChartCoverageIndexSlack
+import AlgebraicJacobian.Picard.Pic0ChartIndexAdmissible
 import AlgebraicJacobian.Picard.DivisorDatumRankOne
 import AlgebraicJacobian.RiemannRoch.WindowFieldTransport
 
@@ -226,6 +227,159 @@ theorem exists_uniform_bound_forall_baseChange {π : C.left ⟶ P1 k} [IsFinite 
         Subsingleton (Sheaf.HModule ((relCurve C L).divisorSheaf L D) 1) :=
   ⟨(windowM_choice π hπ g : ℤ) * windowδ π + (g : ℤ),
     fun L _ _ _ _ _ _ _ D hD => subsingleton_h1_of_ledger_bound hπ g hχ L D hD⟩
+
+/-! ## An unconditional admissible parameter above the bound
+
+The ledger value `B = M·δ + g` is a sufficient vanishing bound, not a parameter to which the
+chart degree must be equal.  Requiring equality created the false residue
+`IsDivisorDegree C g`: over an arbitrary field the genus need not be a divisor degree.
+
+The repair is to choose a larger parameter which is visibly a divisor degree.  The pinned
+theta degree `d₁` is positive, so `B·d₁ ≥ B`; it is also a divisor degree by construction.
+This section packages that choice and composes it with the existing finite-separable splitting
+producer.  No field, divisor, splitting, or arithmetic hypothesis is added.
+-/
+
+/-- A chart parameter which is both above the uniform vanishing bound and visibly admissible.
+
+It is the nonnegative ledger bound multiplied by the positive degree of the pinned theta class.
+The `toNat`s only turn those already nonnegative integers into a chart parameter. -/
+def admissibleCoverageParameter {π : C.left ⟶ P1 k} [IsFinite π] [IsDominant π]
+    (hπ : π ≫ P1.structureMap k = C.left ↘ Spec (CommRingCat.of k)) (g : ℕ) : ℕ :=
+  (((windowM_choice π hπ g : ℤ) * windowδ π + (g : ℤ)).toNat) *
+    (classDeg k (thetaCechClass C)).toNat
+
+/-- The integer value of `admissibleCoverageParameter` is `B·d₁`. -/
+theorem admissibleCoverageParameter_cast
+    {π : C.left ⟶ P1 k} [IsFinite π] [IsDominant π]
+    (hπ : π ≫ P1.structureMap k = C.left ↘ Spec (CommRingCat.of k)) (g : ℕ) :
+    (admissibleCoverageParameter (C := C) hπ g : ℤ)
+      = ((windowM_choice π hπ g : ℤ) * windowδ π + (g : ℤ)) *
+          classDeg k (thetaCechClass C) := by
+  have hB : 0 ≤ (windowM_choice π hπ g : ℤ) * windowδ π + (g : ℤ) :=
+    add_nonneg (mul_nonneg (Int.natCast_nonneg _) (windowδ_nonneg π))
+      (Int.natCast_nonneg _)
+  rw [admissibleCoverageParameter, Nat.cast_mul, Int.toNat_of_nonneg hB,
+    Int.toNat_of_nonneg (le_trans (by omega) (one_le_classDeg_thetaCechClass (C := C)))]
+
+/-- The admissible parameter is at least the uniform ledger bound. -/
+theorem ledgerBound_le_admissibleCoverageParameter
+    {π : C.left ⟶ P1 k} [IsFinite π] [IsDominant π]
+    (hπ : π ≫ P1.structureMap k = C.left ↘ Spec (CommRingCat.of k)) (g : ℕ) :
+    (windowM_choice π hπ g : ℤ) * windowδ π + (g : ℤ)
+      ≤ (admissibleCoverageParameter (C := C) hπ g : ℤ) := by
+  have hB : 0 ≤ (windowM_choice π hπ g : ℤ) * windowδ π + (g : ℤ) :=
+    add_nonneg (mul_nonneg (Int.natCast_nonneg _) (windowδ_nonneg π))
+      (Int.natCast_nonneg _)
+  rw [admissibleCoverageParameter_cast hπ g]
+  exact le_mul_of_one_le_right hB (one_le_classDeg_thetaCechClass (C := C))
+
+/-- The admissible parameter is the degree of a divisor on the base-changed curve. -/
+theorem isDegree_admissibleCoverageParameter
+    {π : C.left ⟶ P1 k} [IsFinite π] [IsDominant π]
+    (hπ : π ≫ P1.structureMap k = C.left ↘ Spec (CommRingCat.of k)) (g : ℕ) :
+    IsDivisorDegree C (admissibleCoverageParameter (C := C) hπ g : ℤ) := by
+  have hB : 0 ≤ (windowM_choice π hπ g : ℤ) * windowδ π + (g : ℤ) :=
+    add_nonneg (mul_nonneg (Int.natCast_nonneg _) (windowδ_nonneg π))
+      (Int.natCast_nonneg _)
+  rw [admissibleCoverageParameter_cast hπ g]
+  simpa [Int.toNat_of_nonneg hB] using
+    isDegree_mul_thetaDeg C
+      (((windowM_choice π hπ g : ℤ) * windowδ π + (g : ℤ)).toNat)
+
+/-- A legal chart index at the unconditional admissible coverage parameter. -/
+theorem exists_admissibleCoverageChartIndex
+    {π : C.left ⟶ P1 k} [IsFinite π] [IsDominant π]
+    (hπ : π ≫ P1.structureMap k = C.left ↘ Spec (CommRingCat.of k)) (g : ℕ) :
+    ∃ (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor),
+      Scheme.CurveDivisor.deg k Z
+        = (m : ℤ) * classDeg k (thetaCechClass C)
+          - (admissibleCoverageParameter (C := C) hπ g : ℤ) :=
+  chartIndex_of_isDegree C (isDegree_admissibleCoverageParameter hπ g)
+
+/-- A legal index at the admissible parameter contains every degree-zero fibre point in its
+chart locus.
+
+The finite separable splitting and presenting class are produced internally by
+`exists_splitting_of_picEt`.  The only caller input about the class is the degree-zero equation
+already carried by `pic0Subgroup`. -/
+theorem mem_chartLocus_of_admissibleCoverageIndex
+    {π : C.left ⟶ P1 k} [IsFinite π] [IsDominant π]
+    (hπ : π ≫ P1.structureMap k = C.left ↘ Spec (CommRingCat.of k)) (g : ℕ)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hZ : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C)
+        - (admissibleCoverageParameter (C := C) hπ g : ℤ))
+    {T : Over (Spec (.of k))} (lam : picEt C T) (t : T.left)
+    (hlam : degAt lam (Over.testPoint t) = 0) :
+    t ∈ chartLocus C m Z lam := by
+  obtain ⟨L, hLfield, hkL, hKL, htow, hfin, hsep, M₀, hM₀⟩ :=
+    exists_splitting_of_picEt C (picEtMap C (Over.testPoint t) lam)
+  letI := hLfield
+  letI := hkL
+  letI := hKL
+  letI := htow
+  letI := hfin
+  letI := hsep
+  haveI : IsIntegral (relCurve C L) := instIsIntegralBaseChange C L
+  haveI : SmoothOfRelativeDimension 1 (relCurve C L ↘ Spec (CommRingCat.of L)) :=
+    instSmoothOfRelativeDimensionBaseChange C L
+  haveI : QuasiCompact (relCurve C L ↘ Spec (CommRingCat.of L)) :=
+    instQuasiCompactBaseChange C L
+  haveI : Module.Finite L (Sheaf.HModule ((relCurve C L).moduleKSheaf L) 0) :=
+    instModuleFiniteHModuleZeroBaseChange C L
+  haveI : Module.Finite L (Sheaf.HModule ((relCurve C L).moduleKSheaf L) 1) :=
+    instModuleFiniteHModuleOneBaseChange C L
+  refine mem_chartLocus_of_vanishing_bound C lam t m Z M₀ hM₀
+    (admissibleCoverageParameter (C := C) hπ g : ℤ) ?_ ?_
+  · intro D hD
+    exact subsingleton_h1_of_ledger_bound hπ g hχ L D
+      ((ledgerBound_le_admissibleCoverageParameter hπ g).trans hD)
+  · rw [relCurveMap_eq_overSpecMap_ofId]
+    refine (classDeg_presenting_twist C lam (Over.testPoint t) hlam L M₀ hM₀ m Z).trans ?_
+    rw [hZ]
+    ring
+
+/-- One chart index, chosen independently of the test and class, contains every degree-zero
+fibre point in its chart locus. -/
+theorem exists_uniform_admissibleCoverageChart
+    {π : C.left ⟶ P1 k} [IsFinite π] [IsDominant π]
+    (hπ : π ≫ P1.structureMap k = C.left ↘ Spec (CommRingCat.of k)) (g : ℕ)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ)) :
+    ∃ (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor),
+      Scheme.CurveDivisor.deg k Z
+          = (m : ℤ) * classDeg k (thetaCechClass C)
+            - (admissibleCoverageParameter (C := C) hπ g : ℤ) ∧
+        ∀ {T : Over (Spec (.of k))} (lam : picEt C T) (t : T.left),
+          degAt lam (Over.testPoint t) = 0 → t ∈ chartLocus C m Z lam := by
+  obtain ⟨m, Z, hZ⟩ := exists_admissibleCoverageChartIndex hπ g
+  exact ⟨m, Z, hZ, fun lam t hlam =>
+    mem_chartLocus_of_admissibleCoverageIndex hπ g hχ m Z hZ lam t hlam⟩
+
+/-- **The producer-facing endpoint:** one legal chart locus is all of the test space for every
+`pic⁰` class, uniformly in the test.
+
+This closes the numeric and splitting part of pointwise coverage.  It does not produce the
+neighbourhood morphism into the chart; that separate spreading-out obligation remains in
+`Pic0ChartCoverageSlice`. -/
+theorem exists_uniform_admissibleCoverageChart_eq_univ
+    {π : C.left ⟶ P1 k} [IsFinite π] [IsDominant π]
+    (hπ : π ≫ P1.structureMap k = C.left ↘ Spec (CommRingCat.of k)) (g : ℕ)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ)) :
+    ∃ (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor),
+      Scheme.CurveDivisor.deg k Z
+          = (m : ℤ) * classDeg k (thetaCechClass C)
+            - (admissibleCoverageParameter (C := C) hπ g : ℤ) ∧
+        ∀ {T : Over (Spec (.of k))} (lam : pic0Subgroup C T),
+          chartLocus C m Z lam.1 = Set.univ := by
+  obtain ⟨m, Z, hZ, hmem⟩ := exists_uniform_admissibleCoverageChart hπ g hχ
+  refine ⟨m, Z, hZ, ?_⟩
+  intro T lam
+  apply Set.eq_univ_of_forall
+  intro t
+  exact hmem lam.1 t
+    (mem_pic0Subgroup_iff.mp lam.2 (Over.testPointField t) (Over.testPoint t))
 
 /-! ## Coverage with the threshold discharged
 
