@@ -172,6 +172,66 @@ noncomputable def IsCertified.thetaIdealCokernelEquivIntrinsicRange
     ((Submodule.quotEquivOfEq _ _ hrange).trans
       (A.intrinsicThetaQuotEquivRange (π := π) a))
 
+/-- The global theta quotient maps injectively into the widened intrinsic descent module.
+The remaining representability seam is exactly the assertion that this map is surjective. -/
+noncomputable def IsCertified.thetaIdealCokernelToIntrinsic
+    {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
+    {A : AffAdaptation D d} {g : ℕ} (hc : A.IsCertified g)
+    (hπ : π ≫ P1.structureMap k = C.hom)
+    (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
+    {a : ℕ} (ha1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1)
+    (hMa : windowM_choice π hπ g ≤ a) :
+    let B := Classical.choose
+      (hc.exists_chartAdaptation_subsingleton_thetaIdealH1 C R π hπ hO hχ ha1 hMa)
+    (cokernel (DivisorAdaptation.thetaIdealIncl (A := B) (a := a))).obj.obj
+        (op (⊤ : (relCurve C R).Opens)) →ₗ[R]
+      A.IntrinsicThetaGlued (π := π) a :=
+  (Submodule.subtype (LinearMap.range (A.intrinsicThetaEvalRel (π := π) a))).comp
+    (hc.thetaIdealCokernelEquivIntrinsicRange C R π hπ hO hχ ha1 hMa).toLinearMap
+
+/-- The global theta-quotient embedding has precisely the image of intrinsic theta
+evaluation as its range. -/
+theorem IsCertified.range_thetaIdealCokernelToIntrinsic
+    {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
+    {A : AffAdaptation D d} {g : ℕ} (hc : A.IsCertified g)
+    (hπ : π ≫ P1.structureMap k = C.hom)
+    (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
+    {a : ℕ} (ha1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1)
+    (hMa : windowM_choice π hπ g ≤ a) :
+    let B := Classical.choose
+      (hc.exists_chartAdaptation_subsingleton_thetaIdealH1 C R π hπ hO hχ ha1 hMa)
+    LinearMap.range
+        (hc.thetaIdealCokernelToIntrinsic C R π hπ hO hχ ha1 hMa) =
+      LinearMap.range (A.intrinsicThetaEvalRel (π := π) a) := by
+  let e := hc.thetaIdealCokernelEquivIntrinsicRange C R π hπ hO hχ ha1 hMa
+  change LinearMap.range ((Submodule.subtype _).comp e.toLinearMap) = _
+  ext y
+  constructor
+  · rintro ⟨q, rfl⟩
+    exact (e q).property
+  · intro hy
+    refine ⟨e.symm ⟨y, hy⟩, ?_⟩
+    exact congrArg Subtype.val (e.apply_symm_apply ⟨y, hy⟩)
+
+/-- The global theta-quotient map is an embedding. -/
+theorem IsCertified.thetaIdealCokernelToIntrinsic_injective
+    {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
+    {A : AffAdaptation D d} {g : ℕ} (hc : A.IsCertified g)
+    (hπ : π ≫ P1.structureMap k = C.hom)
+    (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
+    {a : ℕ} (ha1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1)
+    (hMa : windowM_choice π hπ g ≤ a) :
+    let B := Classical.choose
+      (hc.exists_chartAdaptation_subsingleton_thetaIdealH1 C R π hπ hO hχ ha1 hMa)
+    Function.Injective
+      (hc.thetaIdealCokernelToIntrinsic C R π hπ hO hχ ha1 hMa) := by
+  let e := hc.thetaIdealCokernelEquivIntrinsicRange C R π hπ hO hχ ha1 hMa
+  change Function.Injective ((Submodule.subtype _).comp e.toLinearMap)
+  exact (Submodule.subtype _).injective.comp e.injective
+
 end AffAdaptation
 
 end CokernelGlobal

@@ -214,7 +214,8 @@ theorem thetaIdealIncl_app (W : (relCurve C R).Opens) :
   rw [thetaIdealIncl_hom (A := A) (a := a)]
   rfl
 
-private theorem thetaIdealInclApp_injective (W : (relCurve C R).Opens) :
+/-- The theta-ideal inclusion is injective on sections over every open. -/
+theorem thetaIdealInclApp_injective (W : (relCurve C R).Opens) :
     Function.Injective (A.thetaIdealInclApp (a := a) W) := by
   intro s t hst
   have h0 : A.thetaIdealInclFst a W s = A.thetaIdealInclFst a W t :=

@@ -1,0 +1,53 @@
+id: I-1606
+provider: local
+kind: issue
+body: '69 dead-lane scratch files are TRACKED at HEAD in AJCR, and gitignore cannot
+  untrack them -- the AJCR .gitignore is also missing the two unanchored `*Scratch*`
+  rules the sibling already has.
+
+
+  MEASURED at HEAD c7b5cf0fdb (janitor pass, run 0096). `git ls-tree -r HEAD` under
+  the rebuild returns 69 tracked scratch paths from lanes that are dead: `scratch_p4r6/`
+  (9), `scratch_p4r6_audit/` (23), `scratch_w7/` (36, half of them `.log` build dumps),
+  plus `AlgebraicJacobian/Picard/ScratchChartLocal.lean` -- which is in `Picard/`
+  and so IS a candidate for a bare `lake build` sweep, and is one of the 18 root-unreachable
+  modules. Entry commits: `scratch_w7` came in via ajcr-cert-r2''s integrate sweep
+  e7ed9494cf, the two `scratch_p4r6*` dirs via a `system: baseline` commit c46f68692c,
+  ScratchChartLocal via baseline 9064835bd0.
+
+
+  WHY IGNORING DOES NOT FIX IT: `git check-ignore` exits 1 on every one of the 69
+  -- AJCR''s .gitignore has only the five root-anchored/probe-named rules, while the
+  SIBLING project added `*Scratch*.lean` and `*scratch*.lean` (unanchored) after its
+  third recurrence. Porting those two lines would cover future files but not these,
+  since gitignore never untracks. Removal needs `git rm --cached` by someone willing
+  to own a 69-path commit, and the sibling''s own note says do NOT `add -f` around
+  the refusal.
+
+
+  NOT urgent and not a correctness bug: all 69 are outside the lib target and none
+  contains `sorry` at HEAD. It is a navigation and blast-radius cost -- every integrate
+  sweep re-touches them, which is exactly the phantom-deletion churn I-1222 tracks.
+  I did not do the removal: five lanes are live and a 69-path commit against a shared
+  index is the wrong thing to land unattended.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T21:11:10.057809+00:00'
+updated_at: '2026-07-30T21:12:42.376200+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0008-horizon-pic-g
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

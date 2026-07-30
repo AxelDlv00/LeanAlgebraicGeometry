@@ -1,0 +1,46 @@
+id: I-1607
+provider: local
+kind: issue
+body: 'The roadmap''s "24 active items (max 8)" warning is 14 CONE rows, not 14 competing
+  fronts -- decide whether cones should be active at all, because nobody can act on
+  the warning as phrased.
+
+
+  MEASURED (janitor pass, run 0096). Of the 24 `active` rows, 14 have children and
+  10 are leaves. Every cone is unowned and is active because its subtree is in progress:
+  AJC.jacobian (8 children), AJC.picrep (19), AJCR.w4-rep.datum (21), AJCR.w4-rep.datum.dat-d.ddr.certificate
+  (21), and ten more. The genuine parallel fronts are the 10 leaves, and 8 of those
+  carry a live lane owner (pic-b, pic-c, pic-d, pic-e, pic-f x2, pic-h) with only
+  `AJC.picrep.etale-rep.quotient-hom` and `AJCR.w4-rep.datum.chart-restrict` active-and-unowned.
+
+
+  WHY THIS NEEDS A DECISION RATHER THAN A CLEANUP. Setting a cone to `pending` while
+  its children are being worked is a lie about the board; leaving it `active` re-fires
+  the warning every command for every lane. Neither is a janitor call. Two candidate
+  resolutions: (a) treat `active` on a parent as meaning "this subtree is the focus"
+  and raise/ignore the advisory cap, or (b) reserve `active` for leaves and let cone
+  status be derived from the `n/m done` progress the renderer already shows. I did
+  not change any status.
+
+
+  The 8 lane-owned leaves are consistent with the eight-lane round protection I-1482
+  describes, so the leaf count is not the problem.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T21:12:00.820224+00:00'
+updated_at: '2026-07-30T21:12:47.002147+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0008-horizon-pic-g
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

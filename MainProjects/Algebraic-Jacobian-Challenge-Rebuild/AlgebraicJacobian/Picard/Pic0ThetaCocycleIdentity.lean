@@ -73,6 +73,92 @@ theorem sectionsAlgebra_mapSelf_eq (T : Over (Spec (.of k))) (U : T.left.Opens) 
       ((Over.map (Spec.map (CommRingCat.ofHom (algebraMap k k)))).obj T) U)
     (Over.isScalarTower_sections_map k k T U)
 
+set_option linter.overlappingInstances false in
+-- The transport core intentionally records the domain, codomain, and tower algebra slots.
+private theorem identity_transport_hom_eq :
+    ∀ (B : Type u) [CommRing B]
+      [iD : Algebra k B] [iE : Algebra k B] [iT : Algebra k B]
+      [twD : @IsScalarTower k k B (Algebra.id k).toSMul iT.toSMul iD.toSMul]
+      [twE : @IsScalarTower k k B (Algebra.id k).toSMul iT.toSMul iE.toSMul],
+      @RelPicTransportFamily.hom k k _ _ k _ (Algebra.id k) (Algebra.id k)
+          C ((baseChange k k).obj C) (crossBaseTransportFamilyInv k k C)
+          B _ iD iE iT twD twE =
+        @RelPicTransportFamily.hom k k _ _ k _ (Algebra.id k) (Algebra.id k)
+          C ((baseChange k k).obj C)
+          (curveTransportFamily ((baseChange.idIso k).app C).inv)
+          B _ iD iE iT twD twE := by
+  intro B _ iD iE iT twD twE
+  obtain rfl : iE = iD :=
+    (algebra_eq_of_self_tower k iT iE twE).trans
+      (algebra_eq_of_self_tower k iT iD twD).symm
+  obtain rfl : iE = iT := algebra_eq_of_self_tower k iT iE twE
+  rw [crossBaseTransportFamilyInv_hom, curveTransportFamily_hom,
+    crossBaseAffineIso_inv_eq_whiskerRight]
+  rfl
+
+private theorem curve_transport_eq_mapAlg {D E : Over (Spec (.of k))} (g : D ⟶ E)
+    {A : Type u} [CommRing A] (iD iE : Algebra k A) (hDE : iD = iE)
+    (twD : @IsScalarTower k k A (Algebra.id k).toSMul iE.toSMul iD.toSMul)
+    (twE : @IsScalarTower k k A (Algebra.id k).toSMul iE.toSMul iE.toSMul)
+    (φ : @AlgHom k A A _ _ _ iE iD) (hφ : ∀ a, φ a = a)
+    (a : @PicEtAff k _ E A _ iE) :
+    @RelPicTransportFamily.picEtAffHom k k _ _ k _
+        (Algebra.id k) (Algebra.id k) D E (curveTransportFamily g)
+        A _ iD iE iE twD twE a =
+      @PicEtAff.mapAlg k _ D A _ iE A _ iD φ
+        (@PicEtAff.curveMap k _ D E A _ iE g a) := by
+  cases hDE
+  have hφ' : φ = AlgHom.id k A := AlgHom.ext fun x => hφ x
+  subst φ
+  rw [PicEtAff.mapAlg_id]
+  rfl
+
+set_option maxHeartbeats 1000000 in
+-- The explicit equality of section-algebra instances requires a wider local budget.
+private theorem sectionShuffle_symm_identity (T : Over (Spec (.of k)))
+    (W : T.left.affineOpens)
+    (hW : W.1 ≤ ((mIdσ k).hom.app T).left ⁻¹ᵁ W.1)
+    (a : PicEtAff ((baseChange k k).obj C) Γ(T.left, W.1)) :
+    (sectionShuffle k k C T W.1).symm a =
+      PicEtAff.mapAlg C
+        (Over.appLEAlgHom ((mIdσ k).hom.app T) W.1 W.1 hW)
+        (PicEtAff.curveMap Γ(T.left, W.1) ((baseChange.idIso k).app C).inv a) := by
+  let iD := Over.sectionsAlgebra
+    ((Over.map (Spec.map (CommRingCat.ofHom (algebraMap k k)))).obj T) W.1
+  let iE := Over.sectionsAlgebra T W.1
+  let twD : @IsScalarTower k k Γ(T.left, W.1) (Algebra.id k).toSMul
+      iE.toSMul iD.toSMul := Over.isScalarTower_sections_map k k T W.1
+  let twE : @IsScalarTower k k Γ(T.left, W.1) (Algebra.id k).toSMul
+      iE.toSMul iE.toSMul := .of_algebraMap_eq fun _ => rfl
+  change @RelPicTransportFamily.picEtAffHom k k _ _ k _
+      (Algebra.id k) (Algebra.id k) C ((baseChange k k).obj C)
+      (crossBaseTransportFamilyInv k k C) Γ(T.left, W.1) _ iD iE iE twD twE a =
+    @PicEtAff.mapAlg k _ C Γ(T.left, W.1) _ iE Γ(T.left, W.1) _ iD
+      (Over.appLEAlgHom ((mIdσ k).hom.app T) W.1 W.1 hW)
+      (@PicEtAff.curveMap k _ C ((baseChange k k).obj C) Γ(T.left, W.1) _ iE
+        ((baseChange.idIso k).app C).inv a)
+  calc
+    _ = @RelPicTransportFamily.picEtAffHom k k _ _ k _
+        (Algebra.id k) (Algebra.id k) C ((baseChange k k).obj C)
+        (curveTransportFamily ((baseChange.idIso k).app C).inv)
+        Γ(T.left, W.1) _ iD iE iE twD twE a := by
+      exact @RelPicTransportFamily.picEtAffHom_congr k k k _ _ _
+        (Algebra.id k) (Algebra.id k) C ((baseChange k k).obj C)
+        (crossBaseTransportFamilyInv k k C)
+        (curveTransportFamily ((baseChange.idIso k).app C).inv)
+        (identity_transport_hom_eq k C) Γ(T.left, W.1) _ iD iE iE twD twE a
+    _ = _ := by
+      refine curve_transport_eq_mapAlg k ((baseChange.idIso k).app C).inv iD iE
+        (sectionsAlgebra_mapSelf_eq k T W.1) twD twE _ ?_ a
+      intro s
+      change ((mIdσ k).hom.app T).left.appLE W.1 W.1 hW s = s
+      rw [Scheme.Hom.appLE_congr_hom (mIdσ_hom_app_left k T) W.1 W.1 hW le_rfl]
+      change Over.resAlgHom
+        ((Over.map (Spec.map (CommRingCat.ofHom (algebraMap k k)))).obj T)
+          (show W.1 ≤ W.1 from le_rfl) s = s
+      rw [Over.resAlgHom_rfl]
+      rfl
+
 /-- The collapse of the pushed-test functor at the identity field extension. -/
 noncomputable def σkkCollapse :
     (Over.map (Spec.map (CommRingCat.ofHom (algebraMap k k)))).op ⋙ pic0Functor C
@@ -86,48 +172,37 @@ noncomputable def cocycleIdRHS :
       ≅ (Over.map (Spec.map (CommRingCat.ofHom (algebraMap k k)))).op ⋙ pic0Functor C :=
   eCurveId k C ≪≫ (σkkCollapse k C).symm
 
-set_option maxHeartbeats 1000000 in
--- Eliminating the dependent section-algebra instance equality exceeds the default budget.
-/-- The theta comparison over `k -> k` is the canonical identity comparison. -/
-theorem pic0Theta_id : pic0Theta k k C = cocycleIdRHS k C := by
-  apply Iso.ext
-  ext T lam
-  refine Subtype.ext ?_
-  change picEtCrossBaseInv k k C (Opposite.unop T) lam.1
-    = picEtMap C ((mIdσ k).hom.app (Opposite.unop T))
-        (picEtPullback ((baseChange.idIso k).app C).inv (Opposite.unop T) lam.1)
+set_option maxHeartbeats 2000000 in
+-- Rewriting the affine-open limit evaluations requires a wider local budget.
+private theorem picEtCrossBaseInv_identity (T : (Over (Spec (.of k)))ᵒᵖ)
+    (lam : (pic0Functor ((baseChange k k).obj C)).obj T) :
+    picEtCrossBaseInv k k C (Opposite.unop T) lam.1 =
+      picEtMap C ((mIdσ k).hom.app (Opposite.unop T))
+        (picEtPullback ((baseChange.idIso k).app C).inv (Opposite.unop T) lam.1) := by
   refine picEt.ext fun W => ?_
   rw [picEtCrossBaseInv_val, picEtMap_val]
   have hW : W.1 ≤ ((mIdσ k).hom.app (Opposite.unop T)).left ⁻¹ᵁ W.1 := by
     rw [mIdσ_hom_app_left]
     exact le_rfl
-  calc
-    (sectionShuffle k k C (Opposite.unop T) W.1).symm
-        (lam.1.1 ⟨W.1, W.2⟩) =
-      PicEtAff.mapAlg C
-        (Over.appLEAlgHom ((mIdσ k).hom.app (Opposite.unop T)) W.1 W.1 hW)
-        ((picEtPullback ((baseChange.idIso k).app C).inv
-          (Opposite.unop T) lam.1).1 W) := by
-      have hA := sectionsAlgebra_mapSelf_eq k (Opposite.unop T) W.1
-      cases hA
-      have happ :
-          Over.appLEAlgHom ((mIdσ k).hom.app (Opposite.unop T)) W.1 W.1 hW =
-            AlgHom.id k Γ((Opposite.unop T).left, W.1) := by
-        apply AlgHom.ext
-        intro s
-        change ((mIdσ k).hom.app (Opposite.unop T)).left.appLE W.1 W.1 hW s = s
-        rw [Scheme.Hom.appLE_congr_hom
-          (mIdσ_hom_app_left k (Opposite.unop T)) W.1 W.1 hW le_rfl]
-        simp [Scheme.Hom.appLE]
-      rw [picEtPullback_val, happ, PicEtAff.mapAlg_id]
-      change (crossBaseTransportFamilyInv k k C).picEtAffHom _ _ =
-        (curveTransportFamily ((baseChange.idIso k).app C).inv).picEtAffHom _ _
-      exact RelPicTransportFamily.picEtAffHom_congr _ _ (fun B _ _ _ _ _ _ => by
-        rw [crossBaseTransportFamilyInv_hom, curveTransportFamily_hom,
-          crossBaseAffineIso_inv_eq_whiskerRight]) _ _
-    _ = picEtMapVal C ((mIdσ k).hom.app (Opposite.unop T))
-        (picEtPullback ((baseChange.idIso k).app C).inv (Opposite.unop T) lam.1) W :=
-      (picEtMapVal_eq_mapAlg C _ _ (V := W) hW).symm
+  rw [picEtMapVal_eq_mapAlg C _ _ (V := W) hW, picEtPullback_val]
+  exact sectionShuffle_symm_identity k C (Opposite.unop T) W hW _
+
+set_option maxHeartbeats 1000000 in
+-- Unfolding both natural isomorphisms at one test object requires a wider local budget.
+private theorem pic0Theta_id_app (T : (Over (Spec (.of k)))ᵒᵖ)
+    (lam : (pic0Functor ((baseChange k k).obj C)).obj T) :
+    (pic0Theta k k C).hom.app T lam = (cocycleIdRHS k C).hom.app T lam := by
+  refine Subtype.ext ?_
+  change picEtCrossBaseInv k k C (Opposite.unop T) lam.1 =
+    picEtMap C ((mIdσ k).hom.app (Opposite.unop T))
+      (picEtPullback ((baseChange.idIso k).app C).inv (Opposite.unop T) lam.1)
+  exact picEtCrossBaseInv_identity k C T lam
+
+/-- The theta comparison over `k -> k` is the canonical identity comparison. -/
+theorem pic0Theta_id : pic0Theta k k C = cocycleIdRHS k C := by
+  apply Iso.ext
+  ext T lam
+  exact pic0Theta_id_app k C T lam
 
 end Identity
 

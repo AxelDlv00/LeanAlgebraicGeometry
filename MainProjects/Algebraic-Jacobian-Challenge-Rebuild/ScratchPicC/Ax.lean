@@ -1,0 +1,8 @@
+import AlgebraicJacobian.Picard.Pic0VanishingAffineReduction
+#print axioms AlgebraicGeometry.subsingleton_pic0Subgroup_of_overSpec
+#print axioms AlgebraicGeometry.subsingleton_pic0Subgroup_forall_iff_overSpec
+#print axioms AlgebraicGeometry.exists_algHom_eq_of_overSpec_hom
+#print axioms AlgebraicGeometry.subsingleton_pic0Subgroup_of_picEtAff_sep
+#print axioms AlgebraicGeometry.jacobianData_of_overSpec_subsingleton
+#print axioms AlgebraicGeometry.exists_affineOpen_test_mem
+#print axioms AlgebraicGeometry.Jacobian

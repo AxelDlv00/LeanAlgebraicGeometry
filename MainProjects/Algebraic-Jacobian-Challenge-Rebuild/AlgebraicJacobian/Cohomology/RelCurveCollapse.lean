@@ -325,6 +325,33 @@ lemma gluedToTwistApp_res {W' W : (relCurve C B).Opens} (h : W' ≤ W)
     ((Scheme.resHom_resHom _ _ _).trans (Scheme.resHom_resHom _ _ _).symm)
     ((Scheme.resHom_resHom _ _ _).trans (Scheme.resHom_resHom _ _ _).symm))
 
+/-- The inverse section equivalence commutes with restriction. -/
+lemma gluedTwistEquiv_symm_res {W' W : (relCurve C B).Opens} (h : W' ≤ W)
+    (p : ↥(twistSubmodule B (relCover C B (fiberTwoCover π)).V₀
+      (relCover C B (fiberTwoCover π)).V₁ (relThetaCocycle C B π a) W)) :
+    gluedRes B (thetaChartDatum C B π a).pieces (thetaChartDatum C B π a).unit h
+        ((gluedTwistEquiv C B π a W).symm p)
+      = (gluedTwistEquiv C B π a W').symm
+          (twistRes B (relCover C B (fiberTwoCover π)).V₀
+            (relCover C B (fiberTwoCover π)).V₁ (relThetaCocycle C B π a) h p) := by
+  apply (gluedTwistEquiv C B π a W').injective
+  change gluedToTwistApp C B π a W'
+      (gluedRes B (thetaChartDatum C B π a).pieces
+        (thetaChartDatum C B π a).unit h ((gluedTwistEquiv C B π a W).symm p)) =
+    gluedToTwistApp C B π a W'
+      ((gluedTwistEquiv C B π a W').symm
+        (twistRes B (relCover C B (fiberTwoCover π)).V₀
+          (relCover C B (fiberTwoCover π)).V₁ (relThetaCocycle C B π a) h p))
+  rw [gluedToTwistApp_res]
+  change twistRes B (relCover C B (fiberTwoCover π)).V₀
+      (relCover C B (fiberTwoCover π)).V₁ (relThetaCocycle C B π a) h
+        ((gluedTwistEquiv C B π a W) ((gluedTwistEquiv C B π a W).symm p)) =
+    (gluedTwistEquiv C B π a W')
+      ((gluedTwistEquiv C B π a W').symm
+        (twistRes B (relCover C B (fiberTwoCover π)).V₀
+          (relCover C B (fiberTwoCover π)).V₁ (relThetaCocycle C B π a) h p))
+  simp
+
 /-- **The collapse of the sheaves**: the glued sheaf of the whole-chart theta datum is
 the relative theta twist sheaf, as sheaves of `B`-modules on `relCurve C B`. -/
 noncomputable def thetaChartDatumSheafIso :
