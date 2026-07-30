@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import Mathlib
+import AlgebraicJacobian.Picard.ProjectiveMorphismBasic
 import AlgebraicJacobian.Picard.SerreTwist
 import AlgebraicJacobian.Picard.QuotFunctorDef
 
@@ -83,14 +84,16 @@ namespace Scheme.Hom.IsProjectiveWith
 
 variable {X S : Scheme.{0}} {π : X ⟶ S} {L : X.Modules}
 
+/-- Forget the chosen very ample line bundle from a projective morphism. -/
+theorem isProjective (h : π.IsProjectiveWith L) : π.IsProjective := by
+  obtain ⟨d, i, hi, hcomp, -⟩ := h
+  exact ⟨Fin (d + 1), inferInstance, i, hi, hcomp⟩
+
 /-- **Projective morphisms are proper**: a closed immersion is proper, the
 structural morphism of projective space is proper, and properness is stable
 under composition. -/
 theorem isProper (h : π.IsProjectiveWith L) : IsProper π := by
-  obtain ⟨d, i, hi, hcomp, -⟩ := h
-  haveI := hi
-  rw [← hcomp]
-  infer_instance
+  exact h.isProjective.isProper
 
 /-- **Projective morphisms are locally of finite type**: immediate from
 `isProper`, since properness extends `LocallyOfFiniteType`.  This lets the
