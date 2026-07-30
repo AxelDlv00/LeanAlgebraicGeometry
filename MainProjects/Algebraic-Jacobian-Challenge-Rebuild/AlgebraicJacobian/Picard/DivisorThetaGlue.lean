@@ -238,6 +238,54 @@ lemma germ_gluedToIdeal₁_mem {W : (relCurve C R).Opens}
 
 /-! ## Algebra of the assemblies -/
 
+/-- Restriction of scheme sections commutes with the `R`-action. -/
+private lemma resHom_smul {V W : (relCurve C R).Opens} (h : V ≤ W) (r : R)
+    (s : Γ(relCurve C R, W)) :
+    (relCurve C R).resHom h (r • s) = r • (relCurve C R).resHom h s := by
+  rw [Scheme.overModule_smul_def, map_mul, Scheme.overModule_smul_def]
+  congr 1
+  exact (relCurve C R).overAlgebraMap_apply_res R (homOfLE h).op r
+
+/-- Additivity of the chart-zero assembly. -/
+lemma gluedToIdeal₀_add {W : (relCurve C R).Opens}
+    (hW : W ≤ (relCover C R (fiberTwoCover π)).V₀) (s t : A.ThetaIdealSections a W) :
+    gluedToIdeal₀ A a hW (s + t) =
+      gluedToIdeal₀ A a hW s + gluedToIdeal₀ A a hW t := by
+  refine (gluedToIdeal₀_unique hW (s + t) (fun i => ?_)).symm
+  rw [map_add, res_gluedToIdeal₀ hW s i, res_gluedToIdeal₀ hW t i, ← mul_add]
+  rfl
+
+/-- Additivity of the chart-one assembly. -/
+lemma gluedToIdeal₁_add {W : (relCurve C R).Opens}
+    (hW : W ≤ (relCover C R (fiberTwoCover π)).V₁) (s t : A.ThetaIdealSections a W) :
+    gluedToIdeal₁ A a hW (s + t) =
+      gluedToIdeal₁ A a hW s + gluedToIdeal₁ A a hW t := by
+  refine (gluedToIdeal₁_unique hW (s + t) (fun j => ?_)).symm
+  rw [map_add, res_gluedToIdeal₁ hW s j, res_gluedToIdeal₁ hW t j, ← mul_add]
+  rfl
+
+/-- The chart-zero assembly commutes with the `R`-action. -/
+lemma gluedToIdeal₀_smul {W : (relCurve C R).Opens}
+    (hW : W ≤ (relCover C R (fiberTwoCover π)).V₀) (r : R)
+    (s : A.ThetaIdealSections a W) :
+    gluedToIdeal₀ A a hW (r • s) = r • gluedToIdeal₀ A a hW s := by
+  refine (gluedToIdeal₀_unique hW (r • s) (fun i => ?_)).symm
+  rw [resHom_smul, res_gluedToIdeal₀ hW s i,
+    show A.gluedComp₀ (r • s) i = r • A.gluedComp₀ s i from rfl]
+  simp only [Scheme.overModule_smul_def]
+  ring
+
+/-- The chart-one assembly commutes with the `R`-action. -/
+lemma gluedToIdeal₁_smul {W : (relCurve C R).Opens}
+    (hW : W ≤ (relCover C R (fiberTwoCover π)).V₁) (r : R)
+    (s : A.ThetaIdealSections a W) :
+    gluedToIdeal₁ A a hW (r • s) = r • gluedToIdeal₁ A a hW s := by
+  refine (gluedToIdeal₁_unique hW (r • s) (fun j => ?_)).symm
+  rw [resHom_smul, res_gluedToIdeal₁ hW s j,
+    show A.gluedComp₁ (r • s) j = r • A.gluedComp₁ s j from rfl]
+  simp only [Scheme.overModule_smul_def]
+  ring
+
 /-- The assembly is additive in the glued section (differences). -/
 lemma gluedToIdeal₀_sub {W : (relCurve C R).Opens}
     (hW : W ≤ (relCover C R (fiberTwoCover π)).V₀) (s t : A.ThetaIdealSections a W) :
