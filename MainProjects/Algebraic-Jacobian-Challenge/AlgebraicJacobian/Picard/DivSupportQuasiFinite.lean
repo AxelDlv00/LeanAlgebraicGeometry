@@ -267,6 +267,29 @@ theorem finite_fiber_schematicSupportι_comp_of_finite
   rw [hpre]
   exact hfin.preimage (schematicSupportι F).isEmbedding.injective.injOn
 
+/-- **The binder is FIBREWISE, and this form needs no proper support at all.**
+
+`LocallyQuasiFinite.of_fiberToSpecResidueField` reduces the binder to
+quasi-finiteness of each scheme-theoretic fibre of the divisor over the residue
+field of the base point — and, unlike the criteria of the two `iff`s above, it
+wants **neither** `LocallyOfFiniteType` **nor** `QuasiCompact`. So this reduction
+is strictly weaker in hypotheses than
+`locallyQuasiFinite_schematicSupportι_comp_of_finite_fibers`: it applies to a
+module with no properness assumption whatever.
+
+**Which of the three reductions a producer should aim at.** This one, if it can
+work fibre by fibre — which is exactly the situation on a relative curve, where
+the geometry (`D_t` is the zero scheme of a regular section of an invertible ideal
+on the `1`-dimensional `C_t`) is fibrewise by nature. The point-set forms above
+are the right target only for an argument that has global information about `D`.
+Recorded together so a lane picks by what its argument produces rather than by
+which lemma it found first. -/
+theorem locallyQuasiFinite_schematicSupportι_comp_of_fibers
+    (h : ∀ t : T, LocallyQuasiFinite
+      ((schematicSupportι F ≫ f).fiberToSpecResidueField t)) :
+    LocallyQuasiFinite (schematicSupportι F ≫ f) :=
+  LocallyQuasiFinite.of_fiberToSpecResidueField _ h
+
 /-- **The binder holds outright when the support is empty**, with no proper-support
 hypothesis at all — a morphism out of an empty scheme is finite, hence locally
 quasi-finite, by synthesis.
@@ -354,6 +377,20 @@ field. -/
 theorem quasiCompact_support (x : DivFamily π T) :
     QuasiCompact (Modules.schematicSupportι x.F ≫ pullback.snd π T.hom) :=
   Modules.quasiCompact_schematicSupportι_comp _ _ x.properSupport
+
+/-- **The fibrewise reduction at a family**, which is the form the relative-curve
+argument should consume: `properSupport` is not even mentioned, because
+`Modules.locallyQuasiFinite_schematicSupportι_comp_of_fibers` does not need it.
+
+This is the recommended target for whoever closes the row's geometry: one
+statement per fibre, over a field, about the zero scheme of a regular section of
+an invertible ideal on a curve. -/
+theorem locallyQuasiFinite_of_fibers (x : DivFamily π T)
+    (h : ∀ t : (T.left : Scheme.{u}), LocallyQuasiFinite
+      ((Modules.schematicSupportι x.F ≫
+        pullback.snd π T.hom).fiberToSpecResidueField t)) :
+    LocallyQuasiFinite (Modules.schematicSupportι x.F ≫ pullback.snd π T.hom) :=
+  Modules.locallyQuasiFinite_schematicSupportι_comp_of_fibers _ _ h
 
 /-- **THE BINDER HAS A PRODUCER: it holds at the empty divisor, for an arbitrary
 `π` and an arbitrary test object.**
