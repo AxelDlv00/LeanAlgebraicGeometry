@@ -8,7 +8,7 @@ import AlgebraicJacobian.Picard.Pic0ChartCoverForcesNonInj
 import AlgebraicJacobian.Picard.Pic0ChartLocusH0Rank
 
 /-!
-# WHERE THE DIVISOR FUNCTOR IS SUBSINGLETON-VALUED, THE `V`-COUPLING IS NOT THE OBSTRUCTION
+# THE `abel-noninj` FORK IS `Mono D.hom`, AND WHERE THAT HOLDS THE `V`-COUPLING IS IDLE
 
 Three headers of this project assert that the unrestricted Abel chart is **not** injective —
 the linear system `|D|` being its fibres (`Pic0AtlasFromDivRep.lean:54`,
@@ -19,28 +19,42 @@ the linear system `|D|` being its fibres (`Pic0AtlasFromDivRep.lean:54`,
 `pic0RepresentableBy_of_restrictedChartFibre_of_coverage` — exists because that assertion is
 believed, since it is what kills `V = ⊤`.
 
-This file answers the fork, in the direction nobody had checked: **wherever the divisor functor
-is subsingleton-valued the Abel chart IS a monomorphism**, so the fork's negative branch is
-false there and the restriction apparatus buys nothing at that parameter.
+This file answers the fork, and the answer is cheaper than the question looked: **the Abel chart
+is injective on every test as soon as `D.hom` is a monomorphism** — two lines, at arbitrary `n`,
+with no divisor, certificate or functor value in the proof.  The Σ-component of the chart at a
+point `u` is `u ≫ D.hom`, so `cancel_mono` is the whole argument.  A subsingleton-valued divisor
+functor is one sufficient condition (`mono_hom_of_divFunctorObjSubsingleton`), and an earlier
+version of this file stated *only* that form and priced it as the content — wrong in this lane's
+own favour, corrected below with the reason the self-check missed it.
 
-## Why this is the seam side of a question another lane is settling below it
+## What a `Mono` parameter buys at the seam
 
-The hypothesis is not invented for this file.  `Picard/DivisorFamilyDegreeZeroUnique.lean`
-proves `Subsingleton (DivFamZar C K π 0)` over a **field** test, and the general-`R` half is
-being taken up as the `deg-zero` row's remaining gap.  What was missing is what a producer of it
-would *buy at the seam*, and the answer is not "one more `rep`":
+The hypothesis is not invented here.  `Picard/DivisorFamilyDegreeZeroUnique.lean` proves
+`Subsingleton (DivFamZar C K π 0)` over a **field** test and the general-`R` half has since
+landed downstream, so the sufficient condition has producers.  What was missing is what they
+*buy at the seam*, and the answer is not "one more `rep`":
 
-* `injective_abelSigmaChart_of_subsingleton` — the chart is injective on **every** test.  So
-  `not_restrictedChartFibre_top_of_not_injective`, the only landed fact that kills `⊤`, cannot
-  fire, and by `not_pointwiseCoverage_of_injective_of_ne_top` coverage holds at **no** proper
-  `V`.  With `not_coverageContainment_bot` refuting `⊥`, `V = ⊤` is the only survivor.
-* `restrictedChartFibre_top_iff` (landed) then says the surviving hypothesis **is**
+* `injective_abelSigmaChart_of_mono` — the chart is injective on **every** test.  So
+  `not_restrictedChartFibre_top_of_not_injective`, the landed fact that kills `⊤`, cannot fire
+  (it *consumes* non-injectivity), and by `not_pointwiseCoverage_of_injective_of_ne_top` coverage
+  holds at **no** proper `V`; `not_coverageContainment_bot` refutes `⊥`.
+* `restrictedChartFibre_top_iff` (landed) then says the hypothesis at `⊤` **is**
   `IsChartLocusFibre`, the unrestricted certificate.
 
-So at such a parameter the `V`-interval has no interior to search, and the seam reduces to
-coverage plus the unrestricted certificate.  That converts a caveat this lane wrote in prose
-(inbox `I-1493`: "even a full `rep` at `0` does not feed `mixedParamChart` alone") into a
-theorem about *which* obligations remain.
+**What that does and does not say about `⊤`, stated carefully because an earlier version of this
+header got it wrong in this lane's own favour.**  It does *not* say `⊤` is where the seam closes,
+and "the only survivor" — the phrasing used here previously — reads as if it did.
+`Pic0ChartCoverForcesNonInj.lean`, which this file imports, already retracted exactly that
+sentence (audit `I-1378`): under injectivity the seam is unsatisfiable at every *proper* `V` and
+at `⊥`, and nothing exhibits an inhabitant of the pair at `⊤` either.  Two refutations are not an
+inhabitation (`Pic0ChartRestrictedFibreSat.lean:96-104` files this as the standing error for this
+seam).  The defensible statement is about *elimination*, not survival: at a `Mono`-parameter the
+landed endpoint refutations no longer rule `⊤` out, and the obligation there is the pair
+(`IsChartLocusFibre`, unrestricted `PointwiseCoverage`).
+
+So the `V`-interval has no interior to search there, and what the seam owes is named rather than
+reduced.  That converts a caveat this lane wrote in prose (inbox `I-1493`: "even a full `rep` at
+`0` does not feed `mixedParamChart` alone") into a theorem about *which* obligations remain.
 
 ## Main declarations
 
@@ -49,21 +63,29 @@ than transcribed from a draft.
 
 * `CategoryTheory.Functor.RepresentableBy.eq_of_comp_hom_eq_of_subsingleton` — the generic core.
 * `CategoryTheory.Functor.RepresentableBy.injective_toSigmaExtension_app` — its Σ-extension form.
-* `AlgebraicGeometry.DivFunctorObjSubsingleton` — the hypothesis, named; no producer here.
+* `AlgebraicGeometry.DivFunctorObjSubsingleton` — the sufficient condition, named; no producer
+  here.
 * `AlgebraicGeometry.divFunctorObjSubsingleton_of_forall_ring` — the bridge from the
   affine-ring form, using none of the curve's geometry.
-* `AlgebraicGeometry.injective_abelSigmaChart_of_subsingleton` — **the fork, answered**.
+* `AlgebraicGeometry.injective_abelSigmaChart_of_mono` — **the fork, answered**, from
+  `Mono D.hom` alone at arbitrary `n`.
+* `AlgebraicGeometry.mono_hom_of_divFunctorObjSubsingleton` — the subsingleton implies it, so it
+  sits strictly below `Mono D.hom` in strength.
+* `AlgebraicGeometry.injective_abelSigmaChart_of_subsingleton` — the corollary a producer lands.
 * `AlgebraicGeometry.not_pointwiseCoverage_of_subsingleton_of_ne_top` — coverage dies at every
   proper `V`.
 * `AlgebraicGeometry.isChartLocusFibre_iff_restrictedChartFibre_top_of_subsingleton` — the
   surviving hypothesis IS the unrestricted certificate.
 * `AlgebraicGeometry.pic0RepresentableBy_of_isChartLocusFibre_of_coverage` — the seam stated
   with no `V` and no containment.
-* `AlgebraicGeometry.isChartUniv_top_of_isChartLocusFibre` — certificate to antecedent 1 in one
-  name.
 * `AlgebraicGeometry.not_mem_chartLocus_of_two_le_genus_zero_param` — **the boundary**: at
-  parameter `0` and genus `≥ 2` the chart locus is empty, so the collapse's coverage input
-  cannot be met at the parameter where its other input is known.
+  parameter `0` and genus `≥ 2` the chart **locus** is empty, so the *locus-mediated* route to
+  the coverage half is dead at the parameter where the subsingleton is landed.  (Not a refutation
+  of `hcov`, which never mentions the locus — see the bullet above.)
+
+For the record, `isChartUniv_top_of_isChartLocusFibre` was in an earlier version of this list and
+has been **deleted**, not renamed: `isChartUniv_of_isChartLocusFibre` already does it at arbitrary
+`V`.  See the note before the boundary section.
 
 ## The generic core, and why it is stated separately
 
@@ -83,20 +105,35 @@ applies to any other slice-represented functor this project introduces.
   parameter, plus unrestricted coverage.  `Pic0ChartLocusFibreGuard.lean` records why the
   certificate is expensive; nothing here makes it cheap.  The claim is about *which* hypothesis
   is owed, not that fewer are.
-* **It says nothing about `n = g`.**  The subsingleton hypothesis is expected to FAIL at the
-  parameter the classical route targets — that is exactly what "the fibres are the linear system
-  `|D|`" means, and this file is consistent with the three headers rather than a refutation of
-  them.  Read it as: the fork's answer is parameter-dependent, and the apparatus is needed only
-  where the answer is negative.
-* **AND THE COLLAPSE DOES NOT DELIVER A REPRESENTATION AT `n = 0`, FOR A REASON THAT HAS
-  NOTHING TO DO WITH THE SUBSINGLETON.**  This is the sharp limit and it is proved below rather
-  than hedged: `not_mem_chartLocus_of_two_le_genus_zero_param` shows that at parameter `0` on a
-  curve of genus `≥ 2` the chart locus is **empty** — `Pic0ChartLocusH0Rank`'s rank formula
-  gives `h⁰ = n + 1 - g`, which at `n = 0` is negative, and `h⁰` is a natural number.  So the
-  coverage input of `pic0RepresentableBy_of_isChartLocusFibre_of_coverage` is *unavailable* at
-  the one parameter where the subsingleton is known: the two hypotheses of that assembly are
-  cheap at disjoint parameters.  The collapse is a statement about which obligation the seam
-  owes, and emphatically not a route to closing it at `0`.
+* **It does not settle `n = g`, and an earlier version of this bullet was backwards about what
+  the tree already knows there.**  That version said the subsingleton "is expected to FAIL at the
+  parameter the classical route targets — that is exactly what 'the fibres are the linear system
+  `|D|`' means".  But `Pic0ChartAbelNonInjective.lean:67-73` — the `abel-noninj` row's own file —
+  already measured that the headers' *reason* is unavailable at `n = g`: over a field an effective
+  divisor of degree `g` with vanishing `H¹` has `h⁰ = g + (1 - g) = 1` exactly, so the fibrewise
+  `|D|` is a single point there, not positive-dimensional.  What that file then records is the
+  limit of its own observation: the anchor is **fibrewise over one field**, while the obligation
+  is general-test, and the bridge is relative GAP-2.  So the state is not "the headers are right
+  at `n = g` and this file covers the complement" — it is that the headers' reason is refuted
+  fibrewise at `n = g` and unsettled relatively, and `Mono D.hom` is a *general-test* hypothesis
+  of exactly the kind that bridge would supply.  Read this file as: the fork reduces to whether
+  `D.hom` is a monomorphism, at whatever parameter.
+* **AND THE COLLAPSE DOES NOT DELIVER A REPRESENTATION AT `n = 0`.**  The sharp limit is proved
+  below rather than hedged: `not_mem_chartLocus_of_two_le_genus_zero_param` shows that at
+  parameter `0` on a curve of genus `≥ 2` the chart **locus** is empty —
+  `Pic0ChartLocusH0Rank`'s rank formula gives `h⁰ = n + 1 - g`, negative at `n = 0`, while `h⁰`
+  is a natural number.
+
+  **What that refutes is the chartLocus-mediated ROUTE to coverage, not `hcov` itself, and an
+  earlier version of this header claimed the stronger thing.**  `PointwiseCoverage`
+  (`Pic0ChartAtlasCoupling.lean:99`) quantifies over an *arbitrary* open `W ∋ t` and never
+  mentions `chartLocus`; `chartsCoverLocally_of_pointwise` calls `chartLocusOpens` only the
+  *intended* instantiation of `W`, and `Pic0ChartAtlasCoupling.lean:50-53` records that the two
+  carriers do not even meet without the `haff` bridge (dat-b B-4).  So "coverage needs the locus
+  inhabited" was false as stated.  Whether `hcov` itself fails at `n = 0` is **open and strictly
+  stronger than what is proved here**.  The error ran in the direction that made this limit look
+  harsher and better-audited than it was, which is the same failure mode as an over-generous gap
+  list with the sign flipped.
 * **The `⊥`/`⊤` dichotomy is NOT claimed for the opens of the representing object.**  A
   subsingleton-valued represented functor makes `D` terminal in the slice, which would force
   `D.left ≅ Spec k` and hence make `D.left.Opens` two-element; that argument is *not* landed
@@ -197,17 +234,54 @@ theorem divFunctorObjSubsingleton_of_forall_ring
 
 /-! ## The fork, answered: the Abel chart is a monomorphism there -/
 
-/-- **THE `abel-noninj` FORK, ANSWERED AT A SUBSINGLETON PARAMETER.**
+/-- **THE `abel-noninj` FORK, ANSWERED — and the honest hypothesis is `Mono D.hom`, not the
+subsingleton.**
 
-Wherever the divisor functor is subsingleton-valued, the *unrestricted* Abel chart is injective
-on every test — so the non-injectivity that three headers assert is **false** at that parameter,
-and the landed refutation of `V = ⊤` (`not_restrictedChartFibre_top_of_not_injective`) has no
-hypothesis to fire on.
+The Σ-component of `abelSigmaChart` at a point `u` is `u ≫ D.hom`
+(`CategoryTheory.Over.sigmaExtensionNat_app_fst` composed with
+`CategoryTheory.Functor.RepresentableBy.toSigmaExtension_app_fst` — both fully qualified, because
+neither lives in the `AlgebraicGeometry` namespace this section is inside), so equal chart values
+give
+`u ≫ D.hom = v ≫ D.hom`, and `cancel_mono` finishes.  **No subsingleton, no divisor, no
+certificate, at arbitrary `n`.**
 
-One instance of `injective_toSigmaExtension_app`: `abelSigmaChart` is
-`rep.toSigmaExtension ≫ Over.sigmaExtensionNat …`, and the Σ-component of the composite is that
-of `toSigmaExtension` (`sigmaExtensionNat_app_fst`), so the composite's injectivity reduces to
-the representation's.  No divisor, twist, chart index or certificate enters the proof. -/
+An earlier version of this file stated only the subsingleton form and priced it as the content.
+That was wrong in this lane's own favour: a fresh-context audit exhibited this two-line proof from
+`Mono D.hom` alone, at arbitrary `n`, and the self-check that was supposed to catch it — "`exact?`
+cannot close the goal with the subsingleton hypothesis DELETED" — cannot discriminate, because
+deleting a hypothesis tests *needed vs not needed* and never *needed vs far stronger than
+needed*.  The subsingleton form below is now a corollary, which is what it always was. -/
+theorem injective_abelSigmaChart_of_mono {D : Over (Spec (.of k))}
+    (rep : (divFunctor C π n).RepresentableBy D)
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - (n : ℤ))
+    [Mono D.hom] (T : Scheme.{u}ᵒᵖ) :
+    Function.Injective ((abelSigmaChart C π n rep m Z hdeg).app T) :=
+  fun _ _ h => (cancel_mono D.hom).mp (congrArg Sigma.fst h)
+
+omit [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] in
+/-- **A subsingleton-valued divisor functor forces `Mono D.hom`** — so the subsingleton is a
+*sufficient condition* for the fork's positive branch, and the previous theorem is the general
+statement.
+
+Worth landing as an implication rather than leaving the two hypotheses side by side: it locates
+the subsingleton strictly below `Mono D.hom` in strength, which is the fact the earlier draft of
+this file got backwards.
+
+Like the affine-ring bridge this uses **none** of the curve's geometry — it is the generic core at
+`J := D`, so the same statement holds for any slice-represented functor. -/
+theorem mono_hom_of_divFunctorObjSubsingleton {D : Over (Spec (.of k))}
+    (rep : (divFunctor C π n).RepresentableBy D)
+    (hsub : DivFunctorObjSubsingleton C π n) :
+    Mono D.hom :=
+  ⟨fun _ _ huv =>
+    Functor.RepresentableBy.eq_of_comp_hom_eq_of_subsingleton rep (hsub _) huv⟩
+
+/-- **The subsingleton corollary**, kept because it is the form a `deg-zero`-style producer lands.
+
+Now visibly a composite: the subsingleton gives `Mono D.hom`, and `Mono D.hom` gives injectivity
+at arbitrary `n`. -/
 theorem injective_abelSigmaChart_of_subsingleton {D : Over (Spec (.of k))}
     (rep : (divFunctor C π n).RepresentableBy D)
     (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
@@ -215,9 +289,8 @@ theorem injective_abelSigmaChart_of_subsingleton {D : Over (Spec (.of k))}
       = (m : ℤ) * classDeg k (thetaCechClass C) - (n : ℤ))
     (hsub : DivFunctorObjSubsingleton C π n) (T : Scheme.{u}ᵒᵖ) :
     Function.Injective ((abelSigmaChart C π n rep m Z hdeg).app T) :=
-  fun _ _ h =>
-    Functor.RepresentableBy.eq_of_comp_hom_eq_of_subsingleton rep (hsub _)
-      (congrArg Sigma.fst h)
+  haveI := mono_hom_of_divFunctorObjSubsingleton rep hsub
+  injective_abelSigmaChart_of_mono rep m Z hdeg T
 
 /-! ## Consequence 1: coverage is refuted at EVERY proper `V` -/
 
@@ -230,8 +303,14 @@ refutes the containment at `⊥`, this leaves `V = ⊤` as the **only** candidat
 at a subsingleton parameter.
 
 Stated at the one-chart index `PUnit` because that is the shape
-`not_pointwiseCoverage_of_injective_of_ne_top` takes; the multi-index consequence is
-`not_uniformCoverage_mixedParamChart_of_subsingleton` below. -/
+`not_pointwiseCoverage_of_injective_of_ne_top` takes.  **No multi-index consequence is proved
+here**; an earlier version of this docstring cited one "below" under a name that exists in
+neither project — the `cited-names-need-check-not-grep` failure, in a docstring body rather than
+in the Main-declarations list, which is where that lesson says the misses survive.  For the
+multi-index reading see `Picard/Pic0ChartMultiIndexInterval.lean`, whose point-independent-index
+results are *not* instances of this theorem.  (That module is **outside this file's import
+closure**, so its names cannot be `#check`ed from here — the reference is deliberately to the file
+rather than to a declaration, since a name I cannot check is a name I should not cite.) -/
 theorem not_pointwiseCoverage_of_subsingleton_of_ne_top {D : Over (Spec (.of k))}
     (rep : (divFunctor C π n).RepresentableBy D)
     (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
@@ -247,20 +326,19 @@ theorem not_pointwiseCoverage_of_subsingleton_of_ne_top {D : Over (Spec (.of k))
 /-! ## Consequence 2: the surviving hypothesis is the UNRESTRICTED certificate
 
 `restrictedChartFibre_top_iff` (`Pic0ChartRestrictedFibreSat.lean`) is an equivalence at `⊤`,
-already landed.  The point of restating its two directions here is that at a subsingleton
-parameter `⊤` is not one endpoint among many — it is the only value the previous section leaves
-standing, so the equivalence is the seam's actual remaining obligation rather than a boundary
-observation. -/
+already landed.  It is restated in the orientation the assembly below consumes; at a `Mono`
+parameter `⊤` is the value the previous section stops eliminating, so this equivalence names the
+seam's remaining obligation. -/
 
-/-- **At a subsingleton parameter the `V`-coupling costs the unrestricted certificate.**
+/-- **At a `Mono` parameter the `V`-coupling costs the unrestricted certificate.**
 
-The hypothesis `huniv` of the coupled assembly, at the only surviving `V`, *is*
-`IsChartLocusFibre` — the datum `Pic0ChartRestrictedFibre.lean` was written to avoid.  So the
-restriction repair, whose whole purpose was to replace a badly-gated route, has nothing to
-replace here.
+The hypothesis `huniv` of the coupled assembly, at `⊤`, *is* `IsChartLocusFibre` — the datum
+`Pic0ChartRestrictedFibre.lean` was written to avoid.  So the restriction repair, whose whole
+purpose was to replace a badly-gated route, has nothing to replace there.
 
 This is the honest form of the collapse: it does not make the seam cheaper, it identifies which
-single hypothesis it costs. -/
+single hypothesis it costs.  (Orientation only — the mathematical content is entirely
+`restrictedChartFibre_top_iff`'s.) -/
 theorem isChartLocusFibre_iff_restrictedChartFibre_top_of_subsingleton
     {D : Over (Spec (.of k))} (rep : (divFunctor C π n).RepresentableBy D)
     (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
@@ -280,10 +358,12 @@ the containment conjunct is free (`range_subset_range_top_ι`), so `hcov` degene
 `IsChartLocusFibre` (`restrictedChartFibre_top_iff`).
 
 So this is the same representation with **no `V` and no containment anywhere in its hypothesis
-list**: the two inputs are the unrestricted certificate and unrestricted coverage.  By the
-previous section that is not a *choice* of `V` at a subsingleton parameter — it is the only
-value left standing, `⊥` being refuted by `not_coverageContainment_bot` and every proper `V` by
-`not_pointwiseCoverage_of_subsingleton_of_ne_top`.
+list**: the two inputs are the unrestricted certificate and unrestricted coverage.  At a `Mono`
+parameter that is not an arbitrary *choice* of `V` — `⊥` is refuted by
+`not_coverageContainment_bot` and every proper `V` by
+`not_pointwiseCoverage_of_subsingleton_of_ne_top`, so `⊤` is the value the landed refutations stop
+eliminating.  It is **not** claimed that the pair is satisfiable at `⊤`; nothing exhibits an
+inhabitant at any `V`.
 
 **The hypotheses are not weaker, and this is the point rather than a caveat.**  Unrestricted
 coverage is what `Pic0ChartCoveragePointwise.lean` expects to fail, and the unrestricted
@@ -310,26 +390,15 @@ def pic0RepresentableBy_of_isChartLocusFibre_of_coverage {ι : Type u} (nn : ι 
       obtain ⟨W, htW, i, x, hx⟩ := hcov T s t
       exact ⟨W, htW, i, x, hx, range_subset_range_top_ι x⟩)
 
-/-- **`IsChartUniv` at `⊤` from the unrestricted certificate, at a subsingleton parameter.**
+/-! ### A declaration this file used to carry, and why it is gone
 
-The composite a lane holding `IsChartLocusFibre` should cite: transport to the restricted datum
-at `⊤` (free), then the repaired reduction.  Recorded so the route from the certificate to
-antecedent 1 is one name rather than two compositions.
-
-The subsingleton hypothesis is *not* used in the proof — it is carried to mark the parameter at
-which `⊤` is the value that matters, and that is a documentation choice, not a mathematical
-dependency.  Stated with it so a reader cannot mistake this for a claim that `⊤` is generally
-the right value; without it the statement is `restrictedChartFibre_top_iff` composed with
-`isChartUniv_of_restrictedChartFibre` and true at every parameter. -/
-theorem isChartUniv_top_of_isChartLocusFibre {D : Over (Spec (.of k))}
-    (rep : (divFunctor C π n).RepresentableBy D)
-    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
-    (hdeg : Scheme.CurveDivisor.deg k Z
-      = (m : ℤ) * classDeg k (thetaCechClass C) - (n : ℤ))
-    (h : IsChartLocusFibre C π n rep m Z hdeg) :
-    IsChartUniv C π n rep m Z hdeg ⊤ :=
-  isChartUniv_of_restrictedChartFibre rep m Z hdeg ⊤
-    ((restrictedChartFibre_top_iff C π n rep m Z hdeg).mpr h)
+An earlier version had `isChartUniv_top_of_isChartLocusFibre`, advertised as "the route from the
+certificate to antecedent 1 in one name rather than two compositions".  **The one name already
+existed**: `isChartUniv_of_isChartLocusFibre` (`Pic0ChartUnivReduce.lean:184`), in this file's
+import closure, concluding `IsChartUniv` at *arbitrary* `V` and needing no composition.  Mine was
+a longer proof of a strictly weaker statement, and telling a lane to cite it would have scheduled
+a detour.  Deleted rather than renamed, and recorded here so the deletion is not re-added: a lane
+holding `IsChartLocusFibre` should cite the landed name directly. -/
 
 /-! ## THE BOUNDARY: the collapse's coverage input is unavailable at the parameter where its
 other input is known
@@ -351,11 +420,16 @@ to representability at `0`. -/
 witness with `h⁰ = n + 1 - g`.  At `n = 0` that is `1 - g ≤ -1`, while `h⁰` is a cast natural
 number, hence nonnegative — contradiction.
 
-**Consequence for this file, and it is the honest limit of the collapse.**  The two inputs of
-`pic0RepresentableBy_of_isChartLocusFibre_of_coverage` are cheap at *disjoint* parameters: the
-subsingleton (hence the whole `V`-collapse) is known only at `0`, and coverage needs the locus to
-be inhabited, which fails at `0` as soon as `g ≥ 2`.  So the collapse tells the seam **which**
-obligation it owes at a subsingleton parameter; it does not put the seam within reach there.
+**Consequence, stated at the strength actually proved.**  What dies at `n = 0` is the
+*chartLocus-mediated route* to coverage — the intended instantiation of `PointwiseCoverage`'s open
+`W` by `chartLocusOpens`.  It is **not** a refutation of `hcov`, which quantifies over an
+arbitrary `W ∋ t` and never mentions `chartLocus`; that stronger statement is open.  An earlier
+version of this docstring asserted it, and the assertion made the limit look harsher and more
+audited than it was.
+
+So: the collapse names *which* obligation the seam owes at a `Mono` parameter, and the
+locus-mediated way of paying the coverage half is unavailable at the one parameter where the
+subsingleton is landed.  Whether some other `W` pays it there is not settled.
 
 The complement is the high-parameter branch: above the genus the same formula gives `h⁰ ≥ 2`
 (`exists_splitting_two_le_h0_of_mem_chartLocus`), which is where coverage is available and where
