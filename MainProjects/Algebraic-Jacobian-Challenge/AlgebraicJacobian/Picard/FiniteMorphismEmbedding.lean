@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.ProjectiveMorphismBasic
+import AlgebraicJacobian.Picard.ProjectiveCoordinateChart
 import AlgebraicJacobian.Picard.ProjectiveSpaceAffineChartIso
 import Mathlib.AlgebraicGeometry.AffineSpace
 import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
@@ -49,6 +50,19 @@ theorem of_isProper_of_immersion (hpi : IsProper pi) {n : Type u} [Finite n]
 end Scheme.Hom.IsProjective
 
 namespace IsFinite
+
+/-- A specified finite module-spanning family in the affine source ring
+defines a closed immersion into affine space over the base. This is the
+chosen-generator form of `exists_closedImmersion_affineSpace`, used when the
+generators on two base charts have already been aligned. -/
+theorem isClosedImmersion_homOfVector_of_span_eq_top
+    {X Y : Scheme.{u}} (f : X ⟶ Y) [IsAffine X] [IsAffine Y]
+    {n : Type u} [Finite n] (a : n → Γ(X, ⊤))
+    (hspan :
+      letI : Algebra Γ(Y, ⊤) Γ(X, ⊤) := RingHom.toAlgebra f.appTop.hom
+      Submodule.span Γ(Y, ⊤) (Set.range a) = ⊤) :
+    IsClosedImmersion (AffineSpace.homOfVector f a) := by
+  sorry
 
 /-- A finite morphism over an affine target is a closed subscheme of a
 finite-dimensional affine space over that target. -/
