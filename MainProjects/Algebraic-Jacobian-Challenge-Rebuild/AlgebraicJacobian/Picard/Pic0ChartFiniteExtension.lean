@@ -24,6 +24,10 @@ does not require the extension to be separable.
   a rational point of the base-changed curve.
 * `AlgebraicGeometry.overSpecFieldExtension_mem_fpqcTopology` — a field extension is an fpqc
   singleton cover of the base field.
+* `AlgebraicGeometry.exists_fpqc_pointCover` — one finite fpqc cover carrying a point of the
+  curve.
+* `AlgebraicGeometry.exists_fpqc_chartIndices` — that same cover supports a legal chart index
+  at every natural parameter.
 * `AlgebraicGeometry.exists_fpqc_chartIndex` — the finite cover and a legal chart index are
   produced together.
 * `AlgebraicGeometry.exists_finite_chartIndex` — every natural parameter has a legal
@@ -132,6 +136,21 @@ theorem overSpecFieldExtension_mem_fpqcTopology :
   Precoverage.generate_mem_toGrothendieck
     (overSpec k L).hom.singleton_mem_fpqcPrecoverage
 
+variable (C) in
+/-- Every challenge curve has a point on one finite fpqc cover of the base field. -/
+theorem exists_fpqc_pointCover :
+    ∃ (L : Type u) (_ : Field L) (_ : Algebra k L)
+      (_ : Module.Finite k L),
+      Sieve.generate (Presieve.singleton (overSpec k L).hom) ∈
+          Scheme.fpqcTopology (Spec (.of k)) ∧
+        Nonempty (overSpec k L ⟶ C) := by
+  obtain ⟨L, hLfield, hkL, hfinite, hp⟩ := exists_finite_point C
+  letI : Field L := hLfield
+  letI : Algebra k L := hkL
+  letI : Module.Finite k L := hfinite
+  exact ⟨L, inferInstance, inferInstance, inferInstance,
+    overSpecFieldExtension_mem_fpqcTopology (k := k) L, hp⟩
+
 /-! The raw second-projection instances, re-keyed on the bundled base-change spelling. -/
 
 variable (C) (L : Type u) [Field L] [Algebra k L] in
@@ -152,6 +171,27 @@ instance instGeometricallyIrreducibleBaseChangeBundle :
   instGeometricallyIrreducibleSndLeft C L
 
 variable (C) in
+/-- One finite fpqc cover supports legal chart indices at every natural parameter.
+
+Unlike `exists_fpqc_chartIndex`, the extension is chosen outside the parameter quantifier.  A
+mixed-parameter atlas can therefore use one cover for its entire chart family. -/
+theorem exists_fpqc_chartIndices :
+    ∃ (L : Type u) (_ : Field L) (_ : Algebra k L)
+      (_ : Module.Finite k L),
+      Sieve.generate (Presieve.singleton (overSpec k L).hom) ∈
+          Scheme.fpqcTopology (Spec (.of k)) ∧
+        ∀ n : ℕ, ∃ (m : ℕ)
+          (Z : ((baseChangeBundle C L) ⊗ overSpec L L).left.CurveDivisor),
+          Scheme.CurveDivisor.deg L Z =
+            (m : ℤ) * classDeg L (thetaCechClass (baseChangeBundle C L)) - (n : ℤ) := by
+  obtain ⟨L, hLfield, hkL, hfinite, hcover, ⟨p⟩⟩ := exists_fpqc_pointCover C
+  letI : Field L := hLfield
+  letI : Algebra k L := hkL
+  letI : Module.Finite k L := hfinite
+  exact ⟨L, inferInstance, inferInstance, inferInstance, hcover,
+    fun n => exists_chartIndex_of_point (baseChangeBundle C L) (baseChangePoint C p) n⟩
+
+variable (C) in
 /-- Every natural chart parameter becomes legal on a finite fpqc cover.
 
 The cover and the chart index are returned in one package.  This is the producer-facing form
@@ -165,13 +205,8 @@ theorem exists_fpqc_chartIndex (n : ℕ) :
           (Z : ((baseChangeBundle C L) ⊗ overSpec L L).left.CurveDivisor),
           Scheme.CurveDivisor.deg L Z =
             (m : ℤ) * classDeg L (thetaCechClass (baseChangeBundle C L)) - (n : ℤ) := by
-  obtain ⟨L, hLfield, hkL, hfinite, ⟨p⟩⟩ := exists_finite_point C
-  letI : Field L := hLfield
-  letI : Algebra k L := hkL
-  letI : Module.Finite k L := hfinite
-  exact ⟨L, inferInstance, inferInstance, inferInstance,
-    overSpecFieldExtension_mem_fpqcTopology (k := k) L,
-    exists_chartIndex_of_point (baseChangeBundle C L) (baseChangePoint C p) n⟩
+  obtain ⟨L, hLfield, hkL, hfinite, hcover, hindices⟩ := exists_fpqc_chartIndices C
+  exact ⟨L, hLfield, hkL, hfinite, hcover, hindices n⟩
 
 variable (C) in
 /-- Every natural chart parameter becomes legal after one finite base change.
