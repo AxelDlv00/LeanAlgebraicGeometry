@@ -30,7 +30,7 @@ Four steps, of which three were already landed and nobody had composed them:
 1. **`2 ≤ h⁰` gives two distinct effective divisors of one class.**  This was the missing
    link, and it is now `Scheme.CurveDivisor.exists_two_effective_picClass_eq_of_two_le_h0`
    (`RiemannRoch/EffectiveNonUniqueness.lean`) — the converse of GAP-2's keystone.  It could
-   not be got from `Scheme.exists_effective_of_h0_pos`, which chooses its section inside the
+   not be got from `exists_effective_of_h0_pos`, which chooses its section inside the
    proof term and so cannot be applied twice to obtain two.
 2. **Two distinct effective divisors of degree `n` are realized by divisor families.**
    `exists_divFam_divFamDivisor_eq` (`Picard/DivisorFamilyFieldSurj.lean`) — the surjectivity
@@ -52,7 +52,21 @@ degree-zero producer in `Picard/DivisorFamilyDegreeZeroRep.lean`, and the thresh
 this file must not spell as if it could.  Everything the *proofs* use is in closure:
 `exists_divFam_divFamDivisor_eq`, `DivFam.toZar_injective`, `picClass_divFamDivisor`,
 `deg_eq_deg_of_picClass_eq`, `h0_divisorSheaf_eq_of_picClass_eq`,
-`Scheme.exists_effective_of_h0_pos`, `RelPicSeparatesDivFamZar` and the new brick.
+`exists_effective_of_h0_pos`, `relPicSeparates_of_injective_chartValue`,
+`RelPicSeparatesDivFamZar` and the new brick.
+
+**AND THIS PARAGRAPH ITSELF SHIPPED A PHANTOM, which is the part worth keeping.**  The list
+above read `Scheme.exists_effective_of_h0_pos`; the constant has no `Scheme.` prefix.  So the
+very sentence declaring that a name which cannot be `#check`ed must not be spelled bare
+contained an unresolvable name — and the file failed to compile, because the *proof* used the
+same wrong spelling.  A citation-discipline paragraph reads as the audited part of a header,
+which is exactly why a phantom survives there: the rule has to be run against its own list.
+
+Three further binder-level defects a fresh-context review found in the first version, all fixed:
+`DivFam.toZar_injective`'s ring binder is `S`, not `R`; `picClass_divFamDivisor` needs
+`[IsFinite π]`; and the two `Module.Finite` instances on the base-changed curve are not
+synthesizable from this file's imports (their producers are out of closure), so they are
+explicit binders below.
 
 ## What is refuted, and at which degrees
 
@@ -153,10 +167,12 @@ surjectivity of `divFamDivisor` is consumed here and `divFamDivisor_injective` i
 earlier version of this paragraph credited the equiv and its injectivity, which is a nearby
 true statement about a lemma the proof never calls. -/
 theorem exists_two_divFamZar_picClass_eq_of_two_le_h0
-    {K : Type u} [Field K] [Algebra k K]
+    [IsFinite π] {K : Type u} [Field K] [Algebra k K]
     [IsIntegral (relCurve C K)]
     [SmoothOfRelativeDimension 1 (relCurve C K ↘ Spec (CommRingCat.of K))]
     [QuasiCompact (relCurve C K ↘ Spec (CommRingCat.of K))]
+    [Module.Finite K (Sheaf.HModule ((relCurve C K).moduleKSheaf K) 0)]
+    [Module.Finite K (Sheaf.HModule ((relCurve C K).moduleKSheaf K) 1)]
     (hO : Sheaf.h0 ((relCurve C K).moduleKSheaf K) = 1)
     (A : (relCurve C K).CurveDivisor) (hA : 0 ≤ A)
     (hdegA : Scheme.CurveDivisor.deg K A = (n : ℤ))
@@ -177,7 +193,7 @@ theorem exists_two_divFamZar_picClass_eq_of_two_le_h0
   refine ⟨G₁.toZar, G₂.toZar, ?_, ?_⟩
   · intro h
     exact hne (hG₁.symm.trans ((congrArg divFamDivisor
-      (DivFam.toZar_injective (C := C) (R := K) (π := π) (n := n) h)).trans hG₂))
+      (DivFam.toZar_injective (C := C) (S := K) (π := π) (n := n) h)).trans hG₂))
   · -- the classes agree, read through `picClass_divFamDivisor`
     rw [DivFamZar.picClass_toZar, DivFamZar.picClass_toZar,
       ← picClass_divFamDivisor (L := K) G₁, ← picClass_divFamDivisor (L := K) G₂, hG₁, hG₂,
@@ -198,10 +214,12 @@ The bridge a chart-locus consumer needs, so that the missing `0 ≤ W` clause of
 costs nothing: replace `W` by an effective divisor of the same class, whose `h⁰` and degree are
 the same numbers by `h0_divisorSheaf_eq_of_picClass_eq` and `deg_eq_deg_of_picClass_eq`. -/
 theorem exists_effective_deg_two_le_h0_of_two_le_h0
-    {K : Type u} [Field K] [Algebra k K]
+    [IsFinite π] {K : Type u} [Field K] [Algebra k K]
     [IsIntegral (relCurve C K)]
     [SmoothOfRelativeDimension 1 (relCurve C K ↘ Spec (CommRingCat.of K))]
     [QuasiCompact (relCurve C K ↘ Spec (CommRingCat.of K))]
+    [Module.Finite K (Sheaf.HModule ((relCurve C K).moduleKSheaf K) 0)]
+    [Module.Finite K (Sheaf.HModule ((relCurve C K).moduleKSheaf K) 1)]
     (W : (relCurve C K).CurveDivisor)
     (hdegW : Scheme.CurveDivisor.deg K W = (n : ℤ))
     (hh0 : 2 ≤ Sheaf.h0 ((relCurve C K).divisorSheaf K W)) :
@@ -209,7 +227,7 @@ theorem exists_effective_deg_two_le_h0_of_two_le_h0
       Scheme.CurveDivisor.deg K A = (n : ℤ) ∧
       2 ≤ Sheaf.h0 ((relCurve C K).divisorSheaf K A) ∧
       Scheme.CurveDivisor.picClass K A = Scheme.CurveDivisor.picClass K W := by
-  obtain ⟨A, hAe, hAcl⟩ := Scheme.exists_effective_of_h0_pos K W (by omega)
+  obtain ⟨A, hAe, hAcl⟩ := exists_effective_of_h0_pos K W (by omega)
   refine ⟨A, hAe, ?_, ?_, hAcl⟩
   · exact (deg_eq_deg_of_picClass_eq (K := K) hAcl).trans hdegW
   · rw [h0_divisorSheaf_eq_of_picClass_eq (K := K) hAcl]; exact hh0
@@ -231,10 +249,12 @@ preserves equality, and only equality is required.  So this refutation would sur
 where `picFromBase` is nontrivial, which the earlier draft of this docstring implied it would
 not. -/
 theorem not_relPicSeparatesDivFamZar_of_two_le_h0
-    {K : Type u} [Field K] [Algebra k K]
+    [IsFinite π] {K : Type u} [Field K] [Algebra k K]
     [IsIntegral (relCurve C K)]
     [SmoothOfRelativeDimension 1 (relCurve C K ↘ Spec (CommRingCat.of K))]
     [QuasiCompact (relCurve C K ↘ Spec (CommRingCat.of K))]
+    [Module.Finite K (Sheaf.HModule ((relCurve C K).moduleKSheaf K) 0)]
+    [Module.Finite K (Sheaf.HModule ((relCurve C K).moduleKSheaf K) 1)]
     (hO : Sheaf.h0 ((relCurve C K).moduleKSheaf K) = 1)
     (A : (relCurve C K).CurveDivisor) (hA : 0 ≤ A)
     (hdegA : Scheme.CurveDivisor.deg K A = (n : ℤ))
@@ -244,6 +264,32 @@ theorem not_relPicSeparatesDivFamZar_of_two_le_h0
   obtain ⟨F₁, F₂, hne, hcl⟩ :=
     exists_two_divFamZar_picClass_eq_of_two_le_h0 (π := π) (n := n) hO A hA hdegA hh0
   exact hne (hsep (congrArg (relPicMk C (overSpec k K)) hcl))
+
+/-- **THE FORK'S OWN STATEMENT: `chartValue` is NOT injective at that field test.**
+
+`Pic0ChartAbelForkReduce.lean`'s `relPicSeparates_of_injective_chartValue` says injectivity of
+`chartValue` at the affine test `Spec K` *gives* the residue at `K`.  The previous theorem
+refutes the residue, so it refutes the injectivity — and non-injectivity of `chartValue` is
+literally the hypothesis the fork's negative branch consumes
+(`not_isChartLocusFibre_of_divFamZar` takes two distinct sections with equal `chartValue`).
+
+Needs `[GeometricallyReduced C.hom]`, which is where the plus-unit step of that reduction lives;
+the standing package of this file does not carry it, so it is an explicit binder here. -/
+theorem not_injective_chartValue_of_two_le_h0 [GeometricallyReduced C.hom]
+    [IsFinite π] {K : Type u} [Field K] [Algebra k K]
+    [IsIntegral (relCurve C K)]
+    [SmoothOfRelativeDimension 1 (relCurve C K ↘ Spec (CommRingCat.of K))]
+    [QuasiCompact (relCurve C K ↘ Spec (CommRingCat.of K))]
+    [Module.Finite K (Sheaf.HModule ((relCurve C K).moduleKSheaf K) 0)]
+    [Module.Finite K (Sheaf.HModule ((relCurve C K).moduleKSheaf K) 1)]
+    (hO : Sheaf.h0 ((relCurve C K).moduleKSheaf K) = 1)
+    (A : (relCurve C K).CurveDivisor) (hA : 0 ≤ A)
+    (hdegA : Scheme.CurveDivisor.deg K A = (n : ℤ))
+    (hh0 : 2 ≤ Sheaf.h0 ((relCurve C K).divisorSheaf K A))
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor) :
+    ¬ Function.Injective (chartValue C π n m Z (overSpec k K)) := fun hinj =>
+  not_relPicSeparatesDivFamZar_of_two_le_h0 (π := π) (n := n) hO A hA hdegA hh0
+    (relPicSeparates_of_injective_chartValue C π n m Z K hinj)
 
 end
 
