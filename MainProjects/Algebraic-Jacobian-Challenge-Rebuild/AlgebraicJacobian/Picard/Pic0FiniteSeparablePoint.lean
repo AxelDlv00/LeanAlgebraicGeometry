@@ -6,6 +6,7 @@ Authors: The AlgebraicJacobian Contributors
 import AlgebraicJacobian.Picard.PicRepColimitMountain
 import AlgebraicJacobian.Curve.SeparablyClosedPoints
 import Mathlib.AlgebraicGeometry.AffineTransitionLimit
+import Mathlib.FieldTheory.Galois.Basic
 
 /-!
 # Finite-separable points of a smooth curve
@@ -21,8 +22,12 @@ can have inseparable residue field, but a separable closed point can still be ch
 
 * `AlgebraicGeometry.exists_finiteSubextension_point_of_point` spreads a point over an algebraic
   extension to a finite subextension.
+* `AlgebraicGeometry.exists_separableClosure_finSubext_point` keeps the resulting finite stage
+  inside a fixed separable closure.
 * `AlgebraicGeometry.exists_finite_separable_point` produces a finite separable extension over
   which any challenge curve has a rational point.
+* `AlgebraicGeometry.exists_finite_galois_point` enlarges that stage to its finite Galois normal
+  closure while preserving the point.
 -/
 
 set_option autoImplicit false
@@ -105,19 +110,18 @@ theorem exists_finiteSubextension_point_of_point {k Omega : Type u} [Field k] [F
     Scheme.exists_π_app_comp_eq_of_locallyOfFinitePresentation D t X.hom c hc a hct
   exact ⟨unop i, ⟨Over.homMk g hg⟩⟩
 
-/-- Every challenge curve acquires a rational point over a finite separable extension.
+/-- Every challenge curve has a point over a finite subextension of its separable closure.
 
 First take a point of the base-changed curve over a separable closure, using smooth relative
 dimension one and geometric irreducibility for nonemptiness.  Its projection to `C` spreads to a
 finite stage by `exists_finiteSubextension_point_of_point`; every such stage inside the separable
-closure is separable. -/
-theorem exists_finite_separable_point {k : Type u} [Field k]
+closure is separable.  Keeping the stage bundled is what permits the normal-closure enlargement
+in `exists_finite_galois_point`. -/
+theorem exists_separableClosure_finSubext_point {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
     [GeometricallyIrreducible C.hom] :
-    ∃ (L : Type u) (_ : Field L) (_ : Algebra k L)
-      (_ : Module.Finite k L) (_ : Algebra.IsSeparable k L),
-      Nonempty (overSpec k L ⟶ C) := by
+    ∃ L : FinSubext k (SeparableClosure k), Nonempty (overSpec k L.1 ⟶ C) := by
   let Omega := SeparableClosure k
   letI : Algebra.IsAlgebraic k Omega :=
     separableClosure.isAlgebraic k (AlgebraicClosure k)
@@ -144,9 +148,46 @@ theorem exists_finite_separable_point {k : Type u} [Field k]
       Spec.map (CommRingCat.ofHom (algebraMap k Omega)) :=
     haOver.trans (overSpec_hom k Omega)
   obtain ⟨L, hp⟩ := exists_finiteSubextension_point_of_point a ha
+  exact ⟨L, hp⟩
+
+/-- Every challenge curve acquires a rational point over a finite separable extension. -/
+theorem exists_finite_separable_point {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIrreducible C.hom] :
+    ∃ (L : Type u) (_ : Field L) (_ : Algebra k L)
+      (_ : Module.Finite k L) (_ : Algebra.IsSeparable k L),
+      Nonempty (overSpec k L ⟶ C) := by
+  obtain ⟨L, hp⟩ := exists_separableClosure_finSubext_point C
   letI : Module.Finite k L.1 := L.2
   letI : Algebra.IsSeparable k L.1 := isSeparable_finSubext L
   exact ⟨L.1, inferInstance, inferInstance, inferInstance, inferInstance, hp⟩
+
+/-- Every challenge curve acquires a rational point over a finite Galois extension.
+
+Take the finite stage inside `SeparableClosure k` produced above and replace it by its normal
+closure in the same ambient field.  Mathlib supplies finite dimensionality and the Galois
+instance for this normal closure.  The original point pushes forward along the inclusion of
+finite stages via `DatG0.deltaSchemeMap`.
+
+No rational-point, divisor-degree, separability, or Galois hypothesis is added to the curve. -/
+theorem exists_finite_galois_point {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIrreducible C.hom] :
+    ∃ (L : Type u) (_ : Field L) (_ : Algebra k L)
+      (_ : Module.Finite k L) (_ : IsGalois k L),
+      Nonempty (overSpec k L ⟶ C) := by
+  obtain ⟨L, ⟨p⟩⟩ := exists_separableClosure_finSubext_point C
+  let K : FinSubext k (SeparableClosure k) :=
+    ⟨IntermediateField.normalClosure k L.1 (SeparableClosure k), inferInstance⟩
+  have hle : L.1 ≤ K.1 := IntermediateField.le_normalClosure L.1
+  letI : Module.Finite k K.1 := K.2
+  letI : IsGalois k K.1 := by
+    dsimp only [K]
+    infer_instance
+  exact ⟨K.1, inferInstance, inferInstance, inferInstance, inferInstance,
+    ⟨deltaSchemeMap hle ≫ p⟩⟩
 
 end
 

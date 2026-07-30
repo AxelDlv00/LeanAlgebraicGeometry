@@ -27,6 +27,8 @@ chosen.
   extension of a finitely presented scheme spreads to one finite subextension.
 * `AlgebraicGeometry.exists_finite_separable_point` — every challenge curve acquires a point
   over a finite separable extension, with no point or divisor-degree hypothesis.
+* `AlgebraicGeometry.exists_finite_galois_point` — normal closure upgrades this to a finite
+  Galois extension, still without a new curve hypothesis.
 * `AlgebraicGeometry.baseChangePoint` — the fibre-product lift of an extension-valued point to
   a rational point of the base-changed curve.
 * `AlgebraicGeometry.overSpecFieldExtension_mem_fpqcTopology` — a field extension is an fpqc
@@ -35,6 +37,8 @@ chosen.
   curve.
 * `AlgebraicGeometry.exists_fpqc_chartIndices` — that same cover supports a legal chart index
   at every natural parameter.
+* `AlgebraicGeometry.exists_galois_chartIndices` — the common cover can be chosen finite
+  Galois, in the form consumed by Galois descent.
 * `AlgebraicGeometry.exists_fpqc_chartIndex` — the finite cover and a legal chart index are
   produced together.
 * `AlgebraicGeometry.exists_finite_chartIndex` — every natural parameter has a legal
@@ -177,6 +181,30 @@ theorem exists_fpqc_chartIndices :
   letI : Algebra k L := hkL
   letI : Module.Finite k L := hfinite
   exact ⟨L, inferInstance, inferInstance, inferInstance, hcover,
+    fun n => exists_chartIndex_of_point (baseChangeBundle C L) (baseChangePoint C p) n⟩
+
+variable (C) in
+/-- One finite Galois cover supports legal chart indices at every natural parameter.
+
+The normal-closure producer supplies the extension and its curve point.  Field-extension
+coverhood is fpqc independently of Galoisness, while the `IsGalois` instance makes this package
+directly usable by quotient/descent constructions indexed by `Gal(L/k)`. -/
+theorem exists_galois_chartIndices :
+    ∃ (L : Type u) (_ : Field L) (_ : Algebra k L)
+      (_ : Module.Finite k L) (_ : IsGalois k L),
+      Sieve.generate (Presieve.singleton (overSpec k L).hom) ∈
+          Scheme.fpqcTopology (Spec (.of k)) ∧
+        ∀ n : ℕ, ∃ (m : ℕ)
+          (Z : ((baseChangeBundle C L) ⊗ overSpec L L).left.CurveDivisor),
+          Scheme.CurveDivisor.deg L Z =
+            (m : ℤ) * classDeg L (thetaCechClass (baseChangeBundle C L)) - (n : ℤ) := by
+  obtain ⟨L, hLfield, hkL, hfinite, hgalois, ⟨p⟩⟩ := exists_finite_galois_point C
+  letI : Field L := hLfield
+  letI : Algebra k L := hkL
+  letI : Module.Finite k L := hfinite
+  letI : IsGalois k L := hgalois
+  exact ⟨L, inferInstance, inferInstance, inferInstance, inferInstance,
+    overSpecFieldExtension_mem_fpqcTopology (k := k) L,
     fun n => exists_chartIndex_of_point (baseChangeBundle C L) (baseChangePoint C p) n⟩
 
 variable (C) in
