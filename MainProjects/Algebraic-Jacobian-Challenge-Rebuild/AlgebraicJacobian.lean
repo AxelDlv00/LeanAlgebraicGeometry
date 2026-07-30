@@ -683,6 +683,7 @@ import AlgebraicJacobian.Picard.JacobianDataAbelSquareVacuity
 import AlgebraicJacobian.Picard.JacobianDataAbelSurj
 import AlgebraicJacobian.Picard.JacobianDataFromPicRepDatum
 import AlgebraicJacobian.Picard.JacobianDataQcFromRep
+import AlgebraicJacobian.Picard.JacobianDataQcFiniteFamily
 
 /-!
 # AlgebraicJacobian — library root
