@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.FiniteGaloisQuotientAffine
+import Mathlib.AlgebraicGeometry.Morphisms.Flat
 
 /-!
 # Uniqueness of finite Galois quotients
@@ -249,6 +250,25 @@ noncomputable def uniqueIso
 end GaloisQuotientWitness
 
 namespace GaloisQuotientWitnessWithProjection
+
+/-- The quotient projection specified by a Galois quotient witness is an
+epimorphism.  It is an isomorphism followed by the flat surjective base change
+of `Spec L ⟶ Spec K`. -/
+theorem epi_quotientMap
+    {K L : Type u} [Field K] [Field L] [Algebra K L]
+    {X : Scheme.{u}} {f : X ⟶ Spec (CommRingCat.of L)}
+    {rho : SemilinearGalAction K L X f}
+    {Y : Scheme.{u}} {g : Y ⟶ Spec (CommRingCat.of K)}
+    {q : X ⟶ Y}
+    (w : GaloisQuotientWitnessWithProjection rho Y g q) : Epi q := by
+  let base : Spec (CommRingCat.of L) ⟶ Spec (CommRingCat.of K) :=
+    Spec.map (CommRingCat.ofHom (algebraMap K L))
+  letI : Surjective base :=
+    ⟨fun _ => ⟨default, Subsingleton.elim _ _⟩⟩
+  haveI : Epi (pullback.fst g base) :=
+    Flat.epi_of_flat_of_surjective _
+  rw [← w.projection]
+  infer_instance
 
 /-- Transport a projection-carrying quotient witness along an equivariant
 isomorphism of acted source schemes. -/
