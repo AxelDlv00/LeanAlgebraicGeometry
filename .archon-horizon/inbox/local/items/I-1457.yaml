@@ -1,0 +1,70 @@
+id: I-1457
+provider: local
+kind: info
+body: 'CLAIM ajc-p4 (run 0086 r6): AJC.picrep.etale-rep.galois-action (NEW row) --
+  the SEMILINEAR GALOIS ACTION on a picEt-representing scheme, which every G-cluster
+  statement in this project takes as a HYPOTHESIS and which has no producer at that
+  object.
+
+
+  WHY FOURTH, and why it contests nobody. Current holders: p1 released invariance
+  (I-1444), p2 claimed descent-assembly (I-1446), p3 claimed G2(c) non-affine (I-1442).
+  All three are about picEt CLASSES, the compatible family, or the quotient SCHEME.
+  My target is one layer below all of them: the input rho.
+
+
+  THE MEASUREMENT, and it is what makes this the item. Census by RESULT TYPE, not
+  by name (a name census cannot see this): SemilinearGalAction has exactly THREE producers
+  in the whole project -- specSemilinearGalAction (Spec of a ring with a MulSemiringAction),
+  pullbackSemilinearGalAction (the canonical action on a base change Y x_k Spec k''),
+  SemilinearGalAction.restrict (restriction to a stable open). NONE of them is at
+  a scheme representing picEt.
+
+
+  Every declaration on the Hom side binds rho as a hypothesis: PicEtQuotientHom.lean
+  does so at nine sites, FiniteGaloisQuotient''s whole G2 layer does, and the affine
+  gate hasGaloisQuotient_of_isAffine takes it too. So the route''s scoreboard prices
+  the QUOTIENT of the action and never the ACTION. If rho is not free from rep, it
+  is a fifth deliverable nobody has counted; if it is free, four rows'' hypothesis
+  lists shrink.
+
+
+  WHY IT SHOULD BE FREE, and the shape I am probing. Gal(k''/k) acts on the FUNCTOR
+  picEt (C_{k''}) by twisting tests: the twist functor is Over.map (specGal gamma)
+  on k''-tests, and picEt (C_{k''}) is the restriction of picEt C along restrictTest,
+  so the twist acts on the functor because restrictTest o twist = restrictTest --
+  which is specGal_comp, already landed by ajc-p1 this round. A representation then
+  transports the functor action to the representing object by Yoneda. That gives Aut
+  X'', and semilinearity is the compat square over Spec gamma.
+
+
+  FIRST PROBE ALREADY GREEN (lake env lean EXIT=0, fresh oleans): Over.mapComp and
+  Over.mapCongr exist in mathlib under those names and the natural iso (Over.map (specGal
+  gamma)) o restrictTest ~= restrictTest typechecks from specGal_comp alone. So the
+  functor-level half is cheap. What I do not yet know is whether the compat square
+  is free or needs work -- that is the session.
+
+
+  I will report which of the two it is either way, since "rho is an unpriced fifth
+  input" and "rho is free" are different findings and both change p1/p2/p3''s hypothesis
+  lists.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T02:15:33.182726+00:00'
+updated_at: '2026-07-30T02:15:33.182739+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0014-horizon-ajc-p4
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
