@@ -75,6 +75,23 @@ reindexing `γ ↦ γ⁻¹` is a bijection and no hypothesis on it is needed.
   half is unchanged. What this file does change is that the trivial-Galois-group
   measurement `isInvariantMatch_of_subsingleton` is now **subsumed**: it was the
   degenerate case of a fact that holds at every extension.
+
+## "Free" does not mean "empty" — and that is measured, not assumed
+
+The natural misreading of this file is that `IsInvariantMatch` was never a real
+condition. **Measured, and it was.** Asserting that the two sides of `IsInvariantMatch`
+are *equal as propositions* at the canonical action — `IsEquivariant` of
+`(rep.homEquiv.symm c).left` against `IsGalInvariant` of the cross-base-transported
+class — and closing it by `rfl` **fails**: "not definitionally equal" (`lake env lean`,
+oleans rebuilt first per `I-1057`). Equivariance of a scheme map for a semilinear action
+and `Γ`-invariance of a `picEt`-class are distinct propositions about distinct objects.
+
+So `isInvariantMatch_canonical` is a theorem and not `P ↔ P` in a costume; what §2's
+three steps do is *identify* two genuinely different statements. "Free" here means **no
+hypothesis is needed**, because the identification follows from the *definition* of
+`twistMor` — not that there was nothing to prove. Had that `rfl` succeeded, the honest
+headline would have been "the `G1` match was never an obligation", and this file would be
+bookkeeping; it is recorded because the polarity of that probe is the whole difference.
 * Per `I-0491` there is no `HasRationalPoint` binder anywhere in this file.
 -/
 
