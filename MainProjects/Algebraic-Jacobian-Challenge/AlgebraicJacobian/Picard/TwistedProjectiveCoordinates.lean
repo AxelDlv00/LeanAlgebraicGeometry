@@ -90,9 +90,8 @@ coordinate `y` itself. -/
 @[simp]
 theorem chart1_one (d : ℕ) (hd : 0 < d) (y : R1) (bb : I → R1) :
     chart1 d y bb (Sum.inl ⟨d - 1, by omega⟩) = y := by
-  simp [chart1]
-  congr
-  omega
+  change y ^ (d - (d - 1)) = y
+  rw [show d - (d - 1) = 1 by omega, pow_one]
 
 /-- The complete chart families differ by the common factor rho0 x ^ d on
 the overlap. The base-monomial case is the identity
@@ -205,14 +204,16 @@ theorem fromOpen_compat [Finite I] {X : Scheme.{u}} (U0 U1 : X.Opens)
         ProjectiveSpace.Coordinates.fromOpen U1
           (Sum.inl ⟨d, Nat.lt_succ_self d⟩) (chart1 d y bb)
           (chart1_last d y bb) := by
-  simp only [ProjectiveSpace.Coordinates.fromOpen, Category.assoc]
+  simp only [ProjectiveSpace.Coordinates.fromOpen]
   rw [← Scheme.Opens.toSpecΓ_SpecMap_presheaf_map_assoc,
     ← Scheme.Opens.toSpecΓ_SpecMap_presheaf_map_assoc]
-  rw [fromSpec_compat
-    (X.presheaf.map
-      (homOfLE (inf_le_left : U0 ⊓ U1 ≤ U0)).op).hom
-    (X.presheaf.map
-      (homOfLE (inf_le_right : U0 ⊓ U1 ≤ U1)).op).hom
-    x y htu d aa bb hab]
+  simpa only [Category.assoc, CommRingCat.ofHom_hom] using congrArg
+    (fun f => (U0 ⊓ U1).toSpecΓ ≫ f)
+    (fromSpec_compat
+      (X.presheaf.map
+        (homOfLE (inf_le_left : U0 ⊓ U1 ≤ U0)).op).hom
+      (X.presheaf.map
+        (homOfLE (inf_le_right : U0 ⊓ U1 ≤ U1)).op).hom
+      x y htu d aa bb hab)
 
 end AlgebraicJacobian.TwoChart.TwistedCoordinates
