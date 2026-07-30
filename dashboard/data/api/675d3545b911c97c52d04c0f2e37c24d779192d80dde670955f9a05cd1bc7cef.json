@@ -1,0 +1,1 @@
+{"path": "scratch_p4r6/axcheck4.lean", "size": 198, "content": "import AlgebraicJacobian.Picard.Pic0ChartSeamCollapse\nopen AlgebraicGeometry\n#print axioms AlgebraicGeometry.injective_abelSigmaChart_of_seam_of_irreducible\n#print axioms AlgebraicGeometry.Jacobian\n"}

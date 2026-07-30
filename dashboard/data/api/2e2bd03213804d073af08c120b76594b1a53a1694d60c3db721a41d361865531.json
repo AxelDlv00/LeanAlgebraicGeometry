@@ -1,0 +1,1 @@
+{"path": "scratch_w7/probe0.lean", "size": 279, "content": "import AlgebraicJacobian.Curve.CrossBaseSquare\nopen CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory\nnamespace AlgebraicGeometry\n#check @Over.crossBaseIso\n#check @Over.crossBaseIso_hom_fst\n#check @baseChange.idIso\n#check @baseChange.compIso\nend AlgebraicGeometry\n"}

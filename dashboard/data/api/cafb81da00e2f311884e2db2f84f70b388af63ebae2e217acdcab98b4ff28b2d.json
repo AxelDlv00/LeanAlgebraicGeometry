@@ -1,0 +1,1 @@
+{"path": "scratch_w7/ax3.lean", "size": 190, "content": "import AlgebraicJacobian.Picard.JacobianDataBaseChangeAbelCore\n#print axioms AlgebraicGeometry.baseChange_ofCurve_data_of_cech\n#print axioms AlgebraicGeometry.abelCrossBaseCechCore_of_graph\n"}

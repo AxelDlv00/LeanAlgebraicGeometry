@@ -1,0 +1,1 @@
+{"path": "scratch_w7/syn.lean", "size": 71, "content": "example : (1 : Nat) = 1 := by\n  skip\n  -- a comment\n  by\n    exact rfl\n"}

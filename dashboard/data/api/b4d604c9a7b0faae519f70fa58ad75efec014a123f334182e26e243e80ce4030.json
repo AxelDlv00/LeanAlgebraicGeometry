@@ -1,0 +1,1 @@
+{"path": "scratch_p4r6/axcheck2.lean", "size": 246, "content": "import AlgebraicJacobian.Picard.Pic0ChartSeamCollapse\nopen AlgebraicGeometry\n#print axioms AlgebraicGeometry.eq_top_of_retraction_of_isDominant\n#print axioms AlgebraicGeometry.eq_top_of_seam_of_isDominant\n#print axioms AlgebraicGeometry.Jacobian\n"}

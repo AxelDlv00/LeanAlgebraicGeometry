@@ -1,0 +1,1 @@
+{"path": "GroundProbe6.lean", "size": 316, "content": "import AlgebraicJacobian.Albanese.AlbaneseFromData\n#print axioms AlgebraicGeometry.exists_unique_descent_of_birational\n#print axioms AlgebraicGeometry.comp_hom_of_descent_eq\n#print axioms AlgebraicGeometry.exists_unique_descent_over\n#print axioms AlgebraicGeometry.exists_unique_albanese_factorisation_of_birational\n"}

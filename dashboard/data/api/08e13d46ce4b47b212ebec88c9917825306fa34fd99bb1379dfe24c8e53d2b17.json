@@ -1,0 +1,1 @@
+{"events": [{"kind": "session_start", "at": "2026-07-30T01:36:37.278578+00:00", "text": "", "tool": "", "data": {"role": "subagent", "name": "general-purpose", "native_subagent_id": "toolu_bdrk_01SGD4yxPfxNWJs99vWguW7z", "parent_session": "0002-horizon-ajc-p3"}, "usage": null, "_cursor": 0}], "before": 0, "has_more": false}

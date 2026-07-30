@@ -1,0 +1,1 @@
+{"path": "scratch_p4r6_audit/p00_control.lean", "size": 252, "content": "import AlgebraicJacobian.Picard.Pic0ChartSeamCollapse\n\ntheorem controlSorry : True := by sorry\n#print axioms AlgebraicGeometry.Jacobian\n#print axioms AlgebraicGeometry.chartIso_of_seam\n#print axioms AlgebraicGeometry.eq_top_of_retraction_of_isDominant\n"}

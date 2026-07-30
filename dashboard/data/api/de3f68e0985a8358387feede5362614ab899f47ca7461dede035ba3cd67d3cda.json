@@ -1,0 +1,1 @@
+{"markdown": "The finite-extension module now builds successfully, including the direct `exists_finite_chartIndex` producer. Before checkpointing it, I\u2019m reading the new clobber incident in full and then will commit only the two source paths using the corrected private-index procedure plus whole-tree post-audit.", "recommendation": ""}

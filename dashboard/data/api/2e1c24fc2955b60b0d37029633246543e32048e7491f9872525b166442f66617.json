@@ -1,0 +1,1 @@
+{"markdown": "Both cruxes pass. `seedWindowShiftEquiv = windowShiftEquiv` by `rfl`, so the U2 chain's `divUniversalSndWindow` sits over the same chart ring the consumer uses. Now the main joint.", "recommendation": ""}

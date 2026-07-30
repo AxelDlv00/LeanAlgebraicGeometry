@@ -1,0 +1,1 @@
+{"markdown": "The correct guard: read OLD *before* read-tree, `read-tree \"$OLD\"`, CAS with that same OLD. I'll use that form. Let me check my file's elaboration.", "recommendation": ""}

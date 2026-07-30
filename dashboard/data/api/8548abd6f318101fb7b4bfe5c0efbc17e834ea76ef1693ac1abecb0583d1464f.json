@@ -1,0 +1,1 @@
+{"path": "scratch_p4r6/axcheck3.lean", "size": 252, "content": "import AlgebraicJacobian.Picard.Pic0ChartSeamCollapse\nopen AlgebraicGeometry\n#print axioms AlgebraicGeometry.isDominant_opens_\u03b9_of_irreducibleSpace\n#print axioms AlgebraicGeometry.eq_top_of_seam_of_irreducible\n#print axioms AlgebraicGeometry.Jacobian\n"}
