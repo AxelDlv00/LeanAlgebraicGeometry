@@ -49,9 +49,11 @@ with the first map a bijection and the second the representation's `homEquiv`.
   undischarged output.
 * **It is not the invariance step.** The right-hand side above is
   *`Γ`-equivariant morphisms*, not *`Γ`-invariant `picEt`-classes*. Matching those
-  two predicates is `G1`, roadmap `AJC.picrep.etale-rep.invariance` (`ajc-p2`),
-  and is deliberately left as the named residue rather than assumed. §3 states
-  precisely what remains.
+  two predicates is `G1`, roadmap `AJC.picrep.etale-rep.invariance` (held by
+  `ajc-p1` as of `I-1417`; `ajc-p2` released it), and is deliberately left as the
+  named residue rather than assumed. That match is *all* `G1` is owed here — see
+  `range_equivariantToClass` and the withdrawal below.
+
 ## Two claims this file published and then withdrew
 
 Both were refuted by a fresh-context audit (`I-1405`, `I-1406`, `I-1409`,
@@ -398,16 +400,25 @@ seam's four-input paragraph (`Picard/FGAPicRepresentability.lean:475`) lists
 antecedents *of*, on its Hom side, and it is the shape the descent step must
 upgrade.
 
-**Exactly which half is owed, measured rather than hedged.** The first leg is a
-bijection (`homEquiv_equivariant_of_galoisQuotient`, from `IsGaloisQuotient`
-clause 3) and the second leg is **injective**
-(`equivariantToClass_injective`), so the whole composite is injective
-(`homClassMap_of_galoisQuotient_injective`). What is missing is **surjectivity onto
-the `Γ`-invariant classes** — the characterisation of the image, which is campaign
-`G1`, roadmap `AJC.picrep.etale-rep.invariance` (`ajc-p2`). Do **not** read this
-as a representation of `picEt C`: it is an injection into the classes of the
-base-changed curve, and even a bijection onto the invariants would still need the
-amalgamation of `Picard/EtaleFieldCover.lean` to descend to `picEt C (T)`.
+**Exactly which half is owed.** The first leg is a bijection
+(`homEquiv_equivariant_of_galoisQuotient`, from `IsGaloisQuotient` clause 3) and the
+second leg is **injective** (`equivariantToClass_injective`), so the whole composite
+is injective (`homClassMap_of_galoisQuotient_injective`).
+
+What is owed is **not** "the characterisation of the image". That sentence stood here
+and is **withdrawn** (`I-1418`, `I-1421`): `range_equivariantToClass` characterises
+the image outright, with no invariance input, and
+`surjective_equivariantToClass_of_subsingleton` shows the leg can even *be*
+surjective. What is owed is the narrower **predicate match** — that
+"`rep.homEquiv.symm c` is `Γ`-equivariant as a morphism" agrees with "`c` is a
+`Γ`-invariant `picEt`-class" — which is `G1`, roadmap
+`AJC.picrep.etale-rep.invariance` (held by `ajc-p1` as of `I-1417`; `ajc-p2`
+released it).
+
+Do **not** read this as a representation of `picEt C`: it is an injection into the
+classes of the base-**changed** curve, and even a bijection onto the invariants would
+still need the amalgamation of `Picard/EtaleFieldCover.lean` to descend to
+`picEt C (T)`.
 
 **Three things this does not do.**
 * It does not close or weaken `Scheme.fgaPicardRepresentability`, which is used in
@@ -433,11 +444,16 @@ noncomputable def homClassMap_of_galoisQuotient
 /-- **The composite is injective**: distinct `k`-morphisms `T ⟶ Y` give distinct
 `picEt (C_{k'})`-classes on `T_{k'}`.
 
-Both legs are injective, so this is their composition. It is the strongest
-statement available without `G1`: a Galois quotient of a `k'`-representation
-**embeds** its `k`-points into the classes of the base-changed curve, for every
-test, over an arbitrary field. What remains for field 1 of the seam's clause (1) is
-the image characterisation, not the injection. -/
+Both legs are injective, so this is their composition: a Galois quotient of a
+`k'`-representation **embeds** its `k`-points into the classes of the base-changed
+curve, for every test, over an arbitrary field.
+
+**Two claims that stood here are withdrawn** (`I-1418`, `I-1421`), and this file now
+contradicts both itself. "It is the strongest statement available without `G1`" is
+false — `surjective_equivariantToClass_of_subsingleton` gives *bijectivity* with no
+`G1` input. "What remains is the image characterisation, not the injection" is false —
+`range_equivariantToClass` is that characterisation, and it is free. What remains is
+the predicate match described at `homClassMap_of_galoisQuotient`. -/
 theorem homClassMap_of_galoisQuotient_injective
     (C : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
