@@ -49,7 +49,7 @@ summary: "CHART-RESTRICT: the restricted-chart fibre criterion, its V-coupling, 
   \ part 2 offers a landed transport template if V should be the h1-vanishing locus,\
   \ and that question is live again; (c) p3's abel-noninj decides whether the top\
   \ end is dead or merely ungated."
-status: pending
+status: active
 kind: proof
 priority: normal
 depends_on: []
@@ -72,7 +72,7 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-29T15:06:24.008061+00:00'
+  updated_at: '2026-07-30T02:05:18.897332+00:00'
   pinned_commits:
   - a676d06a1
   - e10665a70
@@ -80,3 +80,4 @@ metadata:
   - 2327a0757
   - 5439077ad
   - fe937438c
+  owner: ajcr-p4

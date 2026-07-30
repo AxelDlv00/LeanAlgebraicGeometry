@@ -3,40 +3,44 @@ title: 'The restated-G3 ASSEMBLY: k''-representability of picEt + Galois descent
   k-representability (the theorem that consumes inputs 1-4)'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "ADVANCED by ajc-p2 run 0084 r4. The GOAL now exists; its class-level half\
-  \ is CLOSED; the seam sorry is untouched.\n\nWHY THE ROW WAS CREATED. The repair's\
-  \ four inputs each had a lane or were landed, and NOTHING STATED THE THEOREM THEY\
-  \ FEED. Measured at HEAD, re-measured independently by review-ajc (I-1256): the\
-  \ seam's conclusion shape Nonempty ((PicScheme.picEt C).RepresentableBy X) occurs\
-  \ at exactly three sites -- the HasPicSchemeEt class field, the sorry itself, and\
-  \ hasPicSchemeEt_of_picSharp_representability -- and all three are SAME-FIELD. None\
-  \ takes a k'-side representation.\n\nLANDED, do not redo. Picard/PicEtDescentAssembly.lean,\
-  \ rooted, 6 declarations, 0 sorries, all axiom-clean [propext, Classical.choice,\
-  \ Quot.sound] vs fgaPicardRepresentability as a control that correctly fires sorryAx.\
-  \ lake build EXIT=0 (8869 jobs) with oleans rebuilt BEFORE every probe (I-1057).\n\
-  \ * picEt_injective_restrict_baseTest -- restriction along the SINGLE morphism T\
-  \ x_k Spec k' -> T is injective on picEt-classes, arbitrary field, arbitrary finite\
-  \ separable k'/k, arbitrary test. The genuinely new step: the reduction from picEt_ext_of_pullback_agrees's\
-  \ sieve-indexed hypothesis to one morphism, via a factorisation lifted to the slice\
-  \ over Spec k.\n * existsUnique_amalgamation_picEt_fieldCover -- a COMPATIBLE FAMILY\
-  \ has a UNIQUE amalgamation, so the class-level descent is COMPLETE, both halves\
-  \ free from sheafification.\n * representableByRestrict_of_baseChange -- the k'-side\
-  \ input transported, free from picEt_crossBaseIso.\n\nTWO CORRECTIONS ON RECORD,\
-  \ both to claims made this session:\n * MINE (I-1280): I first called surjectivity-of-restriction\
-  \ 'the sharp remaining class-level statement'. Too pessimistic -- amalgamation fires\
-  \ at EVERY covering sieve, top included. Corrected in-file.\n * review-ajc's steer,\
-  \ withdrawn (I-1256): it proposed aiming the assembly at the picSharp endpoint over\
-  \ k. not_exists_representing_picSharp_of_not_isIso refutes exactly that -- the endpoint\
-  \ is admissible as an INPUT over a field where picSharp is representable, never\
-  \ as an OUTPUT over arbitrary k.\n\nWHAT REMAINS, neither sheaf-theoretic: (1) producing\
-  \ the compatible family from a Galois-INVARIANT k'-class -- the invariance content\
-  \ of G1; (2) the SCHEME-level G2 quotient, gated on HasGaloisQuotient, affine half\
-  \ only (ajc-p1 r4) while the descended object is glued. NEXT LANE: budget those\
-  \ two and nothing for existence or uniqueness of the descended class.\n\nNO sorry\
-  \ closed, NO antecedent of fgaPicardRepresentability witnessed for any curve. Deliberately\
-  \ contains no P -> P implication and no class-valued conclusion (instHasPicSchemeEt\
-  \ is unconditional, so such a conclusion is discharged by instance search projecting\
-  \ the seam sorry -- I-1251)."
+summary: "CLOSED AS AN IMPLICATION by ajc-p2 run 0084 r6: the GOAL now exists, crosses\
+  \ the descent step, and its converse is proved so it is coordinates rather than\
+  \ a discount. Seam sorry untouched; NO antecedent of fgaPicardRepresentability witnessed\
+  \ for any curve.\n\nLANDED, do not redo. Picard/PicEtDescentRepresentability.lean,\
+  \ rooted at AlgebraicJacobian.lean, 24 declarations (COUNTED by declaration keyword,\
+  \ not recalled -- I first wrote 14 on this row and it was wrong), ZERO code sorries\
+  \ (the three `sorry` string hits are docstring prose), ALL axiom-clean [propext,\
+  \ Classical.choice, Quot.sound] against fgaPicardRepresentability firing sorryAx\
+  \ in the same probe file. lake build of the module EXIT=0 (8692 jobs) with oleans\
+  \ rebuilt BEFORE every probe.\n * representableBy_of_coverCompatibleEquiv -- THE\
+  \ THEOREM the other lanes' items are antecedents OF, on the class side. A k-scheme\
+  \ Y whose points are naturally the cover-COMPATIBLE picEt C-classes on T_{k'} REPRESENTS\
+  \ picEt C over k. Takes data over the cover, concludes over k -- unlike representableByRestrict_of_baseChange,\
+  \ refuted at I-1312 for restating one side. No picEt C representation in any hypothesis,\
+  \ so not P -> P.\n * representableBy_of_galInvariantEquiv -- the same in ajc-p1's\
+  \ twistTest spelling, composing their r7 bridge. hcov carried as an explicit per-test\
+  \ antecedent, undischarged.\n * restrictCompatEquiv -- restriction along the cover\
+  \ is a BIJECTION onto the cover-compatible classes (my r5 ExistsUnique plus PicEtDescentAssembly's\
+  \ injectivity), and it is NATURAL: coverRestrictNat is whiskerRight (NatTrans.op\
+  \ counit) (picEt C).\n * coverCompatibleEquiv_of_representableBy -- THE CONVERSE,\
+  \ both fields including naturality. So representing picEt C and representing the\
+  \ cover-compatible-classes functor are INTER-DERIVABLE. A repricing, not a discount.\n\
+  \nTHREE MEASUREMENTS THAT CHANGE OTHER LANES' PLANS:\n * coverMap IS the counit\
+  \ of Over.map |- Over.pullback (coverMap_eq_counit, by simp). The cover is Mathlib's\
+  \ Over.pullback ; Over.map, so its functoriality and the naturality square are free.\n\
+  \ * BOTH directions of coverCompatible <-> galInvariant are free of Module.Finite\
+  \ AND IsSeparable (omit, linter-confirmed on both). In this cluster those binders\
+  \ are consumed at exactly ONE place: covering-sieve membership.\n * hcov carries\
+  \ NO etale-site obligation (I-1458): etaleTopology_generate_of_openCover makes any\
+  \ OpenCover's sieve an etale covering sieve in one line, and isOpenImmersion_sigmaiota\
+  \ shows a coproduct inclusion IS an open immersion though inferInstance fails.\n\
+  \nCORRECTION ON RECORD against my own file, accepted from I-1454: I repeated \"\
+  hcov satisfiable, hence not vacuous\". Reproduced clause 1 (Mono forces every gamma\
+  \ to be the identity) before editing; the only exhibited model trivialises the consequent\
+  \ too. In-file wording is now \"satisfiable, but no exhibited model separates the\
+  \ two projections\".\n\nWHAT REMAINS: the Equiv family from a k'-side representation\
+  \ and its Galois quotient (p4's galois-action row, p3's G2(c)); hcov at a nontrivial\
+  \ Galois level; k'-side representability itself."
 status: active
 kind: proof
 priority: high
@@ -60,7 +64,6 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.etale-rep
-  updated_at: '2026-07-30T01:39:46.308652+00:00'
+  updated_at: '2026-07-30T02:18:26.031239+00:00'
   pinned_commits:
   - f64de9d18d
-  owner: ajc-p2

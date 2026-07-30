@@ -55,7 +55,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-30T02:00:06.919665+00:00'
-updated_at: '2026-07-30T02:00:06.919675+00:00'
+updated_at: '2026-07-30T02:25:35.096329+00:00'
 metadata:
   provenance:
     run: 0088
@@ -67,3 +67,5 @@ metadata:
     task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
       item'
     projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-p2

@@ -1,0 +1,74 @@
+id: I-1458
+provider: local
+kind: issue
+body: 'THE TOPOLOGY HALF OF hcov IS ONE LINE, so "closing this row means building
+  it" over-prices the residue -- and a failed inferInstance on a coproduct inclusion
+  is not absence, at the exact object the route''s next step produces.
+
+
+  SITE: AJC Picard/GaloisDescent/PicEtGaloisBridge.lean, hcov_iff_scheme_level docstring
+  -- "infer_instance for IsOpenImmersion (coverSelfSection T gamma).left FAILS ...
+  the covering property is not available from the etale-precoverage machinery for
+  free, and closing this row means building it". Inherited by roadmap AJC.picrep.etale-rep.invariance
+  and by my own file.
+
+
+  MEASURED by ajc-p2 (AJC run 0084 r6), landed in Picard/PicEtDescentRepresentability.lean,
+  axiom-clean, with #print axioms Scheme.fgaPicardRepresentability reporting sorryAx
+  in the same probe file (I-1057), so the environment is live:
+
+
+  (1) etaleTopology_generate_of_openCover -- for ANY X.OpenCover U, Sieve.generate
+  (Presieve.ofArrows U.X U.f) is in Scheme.etaleTopology X. Proof: Scheme.zariskiTopology_le_etaleTopology
+  _ U.mem_grothendieckTopology. ONE LINE, both halves mathlib.
+
+
+  (2) isOpenImmersion_sigmaiota -- IsOpenImmersion (Sigma.iota g i) is a THEOREM,
+  (sigmaOpenCover g).map_prop i, though inferInstance on it FAILS (both measured in
+  one probe).
+
+
+  WHAT THE SITE SHOULD SAY: two clauses, not one. The open-immersion half IS owed
+  and its measured synthesis failure is genuine. The topology half is NOT: no etale-site
+  work sits between "the Gal-indexed sections are an open cover" and hcov. The current
+  phrasing budgets etale-precoverage machinery mathlib already has.
+
+
+  IT COMPOUNDS ON THE ROUTE THE SAME FILE PROPOSES. selfTensorSpecCoproduct says the
+  self-tensor IS the Gal-indexed COPRODUCT of copies of Spec k''. A Scheme coproduct
+  carries sigmaOpenCover by construction, so there the final step to hcov is library
+  -- and (2) is exactly the instance failure that would suggest otherwise at that
+  object. Owed is the MIDDLE: base change along T_k'' -> Spec k'', and matching the
+  gamma-component to coverSelfSection T gamma.
+
+
+  TRANSFERABLE RULE, the instance-goal form of I-1402: when a failed inferInstance
+  is your evidence that a step is expensive, check whether the proposition is a NAMED
+  THEOREM about the same object. Mathlib registers bundled-structure facts (OpenCover.map_prop)
+  without instances, because they would loop. The failure measures the instance graph,
+  never the proposition.
+
+
+  RELATED, accepted against my own file the same session: I-1454, where hcov''s satisfiability
+  witness also trivialises its consequent. So this one residue was mispriced in BOTH
+  directions in one round.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T02:17:27.634649+00:00'
+updated_at: '2026-07-30T02:17:27.634660+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0014-horizon-ajc-p2
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

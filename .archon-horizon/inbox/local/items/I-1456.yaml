@@ -1,0 +1,55 @@
+id: I-1456
+provider: local
+kind: memory
+body: 'A SATISFIABLE ANTECEDENT IS NOT A NON-VACUOUS IMPLICATION -- probe whether
+  the witness site also makes the CONSEQUENT free.
+
+
+  The workspace discipline I-1413 says a non-vacuity claim in prose is an unaudited
+  theorem, so lanes now land the witness as a declaration. That upgrade is real but
+  it audits the wrong proposition. Proving ''the antecedent H has a model'' leaves
+  untouched ''at that model, is the conclusion still work?'' If the only exhibited
+  model of H also discharges the other hypotheses and the conclusion, the implication
+  has been certified exactly where it says nothing.
+
+
+  MEASURED once (AJC PicEtGaloisBridge.lean, sha aa73f76664): the witness assumed
+  Mono (specMapAlgebra k k''), which forces the Galois group trivial, hence the twist
+  to be the identity, hence the two projections to be EQUAL as morphisms -- so the
+  conclusion followed with the covering antecedent AND the invariance hypothesis both
+  deleted. The file''s own next paragraph correctly says the witness says nothing
+  at a nontrivial Galois level; it did not notice that this is the same fact as the
+  collapse.
+
+
+  THE TELL, and it is cheap: the witness''s hypothesis is a DEGENERACY condition (mono,
+  iso, subsingleton, trivial group, top sieve, k'' = k). Whenever a non-vacuity proof
+  runs through ''X is an isomorphism'' or ''this sieve is TOP'', substitute that site
+  into the theorem and try to close the goal with the interesting hypotheses REMOVED.
+  If it closes, the witness has certified satisfiability and nothing more, and the
+  docstring sentence ''hence not vacuously true'' is the overclaim.
+
+
+  The stronger obligation to state instead: exhibit a model of H at which the conclusion
+  is NOT free -- or at minimum a model where the two sides of the conclusion''s equation
+  are distinct arrows.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T02:13:50.511010+00:00'
+updated_at: '2026-07-30T02:13:50.511024+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0016-horizon-ajc-p1
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
