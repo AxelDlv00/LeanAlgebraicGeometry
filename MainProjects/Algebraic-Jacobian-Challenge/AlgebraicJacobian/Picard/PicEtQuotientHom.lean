@@ -122,7 +122,124 @@ theorem quotientHomEquiv {X : Scheme.{u}} {f : X ⟶ Spec (CommRingCat.of L)}
     obtain ⟨w, hw, -⟩ := huniv T t h hhf hheq
     exact ⟨w, Subtype.ext hw⟩
 
+/-- **`Over`-homs are the subtype of scheme morphisms commuting with the structure
+maps.** Pure bookkeeping (`Over.w` one way, `Over.homMk` the other), recorded
+because it is the bridge between `quotientHomEquiv`, which is stated on bare
+schemes because `IsGaloisQuotient` is, and the `Over (Spec k)`-tests that `picEt`
+is a functor on. -/
+noncomputable def overHomEquivSubtype {k : Type u} [Field k]
+    (T Y : Over (Spec (CommRingCat.of k))) :
+    (T ⟶ Y) ≃ {u : T.left ⟶ Y.left // u ≫ Y.hom = T.hom} where
+  toFun φ := ⟨φ.left, Over.w φ⟩
+  invFun u := Over.homMk u.1 u.2
+  left_inv φ := by ext; rfl
+  right_inv u := by ext; rfl
+
 end QuotientHom
+
+/-! ## §2. Composing with the `k'`-side representation: down to classes of the curve -/
+
+section CurveClasses
+
+variable {k : Type u} [Field k] {k' : Type u} [Field k'] [Algebra k k']
+
+/-- **`quotientHomEquiv` in the slice**: for a semilinear action on `X'.left` with
+Galois quotient `Y`, morphisms `T ⟶ Y` *in `Over (Spec k)`* correspond to
+`Γ`-equivariant `T_{k'} ⟶ X'.left` over `Spec k'`.
+
+`quotientHomEquiv` composed with `overHomEquivSubtype`. This is the form the
+descent goal needs, because `picEt` is a functor on `Over (Spec k)` while
+`IsGaloisQuotient` is stated on bare schemes.
+
+**No curve occurs here, and that is deliberate.** An earlier draft of this
+declaration bound `C` with its two curve instances; `C` did not appear in the
+conclusion, which is exactly the `HasDivFunctor` failure mode protection `I-0838`
+names. The binder is removed rather than justified: this statement is about the
+action and the quotient, nothing else. The curve enters at
+`equivariantToClass` and at `homClassMap_of_galoisQuotient` below, where it
+occurs in the conclusion. -/
+theorem homEquiv_equivariant_of_galoisQuotient
+    {X' : Over (Spec (CommRingCat.of k'))}
+    (ρ : AlgebraicJacobian.GaloisDescent.SemilinearGalAction k k' X'.left X'.hom)
+    {Y : Over (Spec (CommRingCat.of k))}
+    (hq : AlgebraicJacobian.GaloisDescent.IsGaloisQuotient ρ Y.hom)
+    (T : Over (Spec (CommRingCat.of k))) :
+    Nonempty ((T ⟶ Y) ≃
+      {h : pullback T.hom (specMapAlgebra k k') ⟶ X'.left //
+        h ≫ X'.hom = pullback.snd T.hom (specMapAlgebra k k') ∧
+          (AlgebraicJacobian.GaloisDescent.pullbackSemilinearGalAction k k'
+            T.hom).IsEquivariant ρ h}) := by
+  obtain ⟨φ⟩ := quotientHomEquiv ρ hq T.left T.hom
+  exact ⟨(overHomEquivSubtype T Y).trans φ⟩
+
+/-- **The second leg**: an equivariant `T_{k'} ⟶ X'.left` over `Spec k'` gives a
+`picEt (C_{k'})`-class on the base-changed test, by the representation's own
+`homEquiv`.
+
+The equivariance is *discarded* here on purpose — that is precisely the
+information `G1` must recover, and stating the leg without it is what makes the
+residue visible instead of hidden inside a bundled claim. -/
+noncomputable def equivariantToClass
+    (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    {X' : Over (Spec (CommRingCat.of k'))}
+    (rep : (PicScheme.picEt (Scheme.baseChangeField C k')).RepresentableBy X')
+    (ρ : AlgebraicJacobian.GaloisDescent.SemilinearGalAction k k' X'.left X'.hom)
+    (T : Over (Spec (CommRingCat.of k)))
+    (h : {h : pullback T.hom (specMapAlgebra k k') ⟶ X'.left //
+        h ≫ X'.hom = pullback.snd T.hom (specMapAlgebra k k') ∧
+          (AlgebraicJacobian.GaloisDescent.pullbackSemilinearGalAction k k'
+            T.hom).IsEquivariant ρ h}) :
+    (PicScheme.picEt (Scheme.baseChangeField C k')).obj
+      (Opposite.op (PicScheme.baseTest (k' := k') T)) :=
+  rep.homEquiv (Over.homMk h.1 h.2.1)
+
+/-- **The Hom-side of the descent goal, with the curve in the conclusion.**
+
+For a smooth proper curve `C` over an **arbitrary** field `k`, a field extension
+`k'/k`, a `k'`-scheme `X'` **representing** `picEt (C_{k'})`, a semilinear
+`Gal`-action on `X'.left`, and a `k`-scheme `Y` that is its Galois quotient: there
+is a map
+
+```
+Hom_{Over (Spec k)}(T, Y)  ⟶  picEt (C_{k'}) (T_{k'})
+```
+
+for every `k`-test `T`, factoring as a **bijection** onto `Γ`-equivariant
+morphisms followed by the representation's `homEquiv`. This is the statement the
+seam's four-input paragraph (`Picard/FGAPicRepresentability.lean:475`) lists
+antecedents *of*, on its Hom side, and it is the shape the descent step must
+upgrade.
+
+**What is a bijection and what is not, precisely.** The first leg is a bijection
+(`homEquiv_equivariant_of_galoisQuotient`, from `IsGaloisQuotient` clause 3). The
+second leg is only a map: it forgets equivariance. So this composite is a map, not
+an equivalence, and the gap between them is exactly `Γ`-invariance — campaign
+`G1`, roadmap `AJC.picrep.etale-rep.invariance` (`ajc-p2`). Do **not** read this
+as a representation of `picEt C`.
+
+**Three things this does not do.**
+* It does not close or weaken `Scheme.fgaPicardRepresentability`, which is used in
+  this file's verification only as a `sorryAx` control.
+* `rep` is a **hypothesis**, the campaign's undischarged output; field 1 of clause
+  (1) is witnessed for no curve, so nothing here is instantiable at a curve today.
+* It carries no `HasRationalPoint` binder (`I-0491`), and no separability or
+  finiteness hypothesis on `k'/k` — none is used. -/
+noncomputable def homClassMap_of_galoisQuotient
+    (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    {X' : Over (Spec (CommRingCat.of k'))}
+    (rep : (PicScheme.picEt (Scheme.baseChangeField C k')).RepresentableBy X')
+    (ρ : AlgebraicJacobian.GaloisDescent.SemilinearGalAction k k' X'.left X'.hom)
+    {Y : Over (Spec (CommRingCat.of k))}
+    (hq : AlgebraicJacobian.GaloisDescent.IsGaloisQuotient ρ Y.hom)
+    (T : Over (Spec (CommRingCat.of k))) :
+    (T ⟶ Y) → (PicScheme.picEt (Scheme.baseChangeField C k')).obj
+      (Opposite.op (PicScheme.baseTest (k' := k') T)) :=
+  fun φ => equivariantToClass C rep ρ T
+    ((homEquiv_equivariant_of_galoisQuotient ρ hq T).some φ)
+
+end CurveClasses
 
 end PicScheme
 
