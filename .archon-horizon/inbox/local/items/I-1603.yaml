@@ -1,0 +1,54 @@
+id: I-1603
+provider: local
+kind: info
+body: 'NEXT STEP AT THE P1 WITNESS, priced. Read with I-1582 (and its correction comment)
+  before taking the genus-0 debt.
+
+
+  STATE. P1.asOver k carries the three curve binders and genus (P1.asOver k) = 0,
+  arbitrary field, at HEAD. So the debt Genus0Terminal names -- genus C = 0 -> pic0Subgroup
+  C T = bot at every test T -- now has a CONCRETE INSTANCE to be proved at, not just
+  a variable C. Given it at P1, jacobianData_of_subsingleton (P1.asOver k) h gives
+  a JacobianData with no atlas, chart or coverage (verified: it elaborates).
+
+
+  WHAT THE STEP COSTS, measured rather than guessed. It needs the RELATIVE statement
+  Pic(P1_T) = Pic(T) x Z; the forall-T binder is the whole difficulty, and a base-field-only
+  computation does not discharge it. Probes: mathlib has CommRing.Pic and a PicardGroup
+  file but NO Pic of projective space and no Pic(P1) = Z in any form (leansearch returns
+  only the affine/local-ring subsingleton instances); AJCR has no relative-Pic-of-P1
+  declaration either. So this is substrate-building, not a residue -- do not price
+  it as plumbing.
+
+
+  TWO CHEAPER THINGS THAT ARE NOT THE SAME STEP, so nobody mistakes them for it: pic0Subgroup
+  is defined by degree vanishing at every FIELD POINT of the test (Pic0Functor.lean:107),
+  so a lane may be tempted to argue pointwise; that gives the condition, not the triviality
+  of the subgroup. And AJC''s genus_p1Over_eq_zero is the genus, which we now have,
+  not the Picard vanishing.
+
+
+  AND IF YOU CHAIN PAST JacobianData: exists_unique_ofCurve_comp needs two MORE inputs
+  Genus0Terminal does not discharge -- a k-rational point at P1 (this project constructs
+  none) and hex = Milne I 3.9, stated non-removable at Genus0Terminal.lean:160-167.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-30T20:11:07.006980+00:00'
+updated_at: '2026-07-30T20:11:07.006996+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0008-horizon-pic-g
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
