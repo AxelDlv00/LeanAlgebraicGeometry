@@ -53,6 +53,20 @@ end Scheme.Hom.IsProjective
 
 namespace IsFinite
 
+/-- An algebra-generating family makes the corresponding morphism from an
+affine spectrum to polynomial affine space a closed immersion. This is the
+ring-level form of the chosen-generator embedding criterion. -/
+theorem isClosedImmersion_SpecMap_aeval_of_adjoin_eq_top
+    {R A : Type u} [CommRing R] [CommRing A] [Algebra R A]
+    {n : Type u} (a : n → A)
+    (hgen : Algebra.adjoin R (Set.range a) = ⊤) :
+    IsClosedImmersion (Spec.map
+      (CommRingCat.ofHom (MvPolynomial.aeval (R := R) a).toRingHom)) := by
+  apply IsClosedImmersion.spec_of_surjective
+  change Function.Surjective (MvPolynomial.aeval (R := R) a)
+  rw [← AlgHom.range_eq_top, ← Algebra.adjoin_range_eq_range_aeval]
+  exact hgen
+
 /-- A specified finite module-spanning family in the affine source ring
 defines a closed immersion into affine space over the base. This is the
 chosen-generator form of `exists_closedImmersion_affineSpace`, used when the
