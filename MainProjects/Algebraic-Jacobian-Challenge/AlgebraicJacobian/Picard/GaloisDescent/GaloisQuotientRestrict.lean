@@ -176,6 +176,58 @@ theorem universalRestrict
 
 variable {U : X.Opens} (hU : ρ.IsStableOpen U)
 
+/-- The quotient projection on a stable subopen, obtained by lifting the ambient
+affine quotient map through the corresponding quotient-side open. -/
+noncomputable def stableAffineQuotientMapRestrict [FiniteDimensional K L]
+    (hUa : IsAffineOpen U) {V : X.Opens} (hVU : V ≤ U)
+    (hV : ρ.IsStableOpen V) :
+    letI := ρ.sectionsMulSemiringAction hU
+    letI := sectionsAlgebra f U
+    letI := sectionsAlgebraK (K := K) f U
+    letI := sections_isScalarTower (K := K) f U
+    letI := ρ.isSemilinear_sections hU
+    let W := quotientOpenOfStableSubopen ρ hU V
+    V.toScheme ⟶ W.toScheme := by
+  letI := ρ.sectionsMulSemiringAction hU
+  letI := sectionsAlgebra f U
+  letI := sectionsAlgebraK (K := K) f U
+  letI := sections_isScalarTower (K := K) f U
+  letI := ρ.isSemilinear_sections hU
+  let q := stableAffineQuotientMap ρ hU hUa
+  let W := quotientOpenOfStableSubopen ρ hU V
+  let j := X.homOfLE hVU
+  have hpre : q ⁻¹ᵁ W = U.ι ⁻¹ᵁ V :=
+    stableAffineQuotientMap_preimage_quotientOpen ρ hU hUa hVU hV
+  have hland : Set.range (j ≫ q) ⊆ Set.range W.ι := by
+    rintro _ ⟨x, rfl⟩
+    have hx : j x ∈ q ⁻¹ᵁ W := by
+      rw [hpre]
+      change U.ι (j x) ∈ V
+      rw [← Scheme.Hom.comp_apply, Scheme.homOfLE_ι]
+      exact x.2
+    change q (j x) ∈ W at hx
+    exact ⟨⟨q (j x), hx⟩, rfl⟩
+  exact IsOpenImmersion.lift W.ι (j ≫ q) hland
+
+@[reassoc]
+theorem stableAffineQuotientMapRestrict_fac [FiniteDimensional K L]
+    (hUa : IsAffineOpen U) {V : X.Opens} (hVU : V ≤ U)
+    (hV : ρ.IsStableOpen V) :
+    letI := ρ.sectionsMulSemiringAction hU
+    letI := sectionsAlgebra f U
+    letI := sectionsAlgebraK (K := K) f U
+    letI := sections_isScalarTower (K := K) f U
+    letI := ρ.isSemilinear_sections hU
+    let W := quotientOpenOfStableSubopen ρ hU V
+    stableAffineQuotientMapRestrict ρ hU hUa hVU hV ≫ W.ι =
+      X.homOfLE hVU ≫ stableAffineQuotientMap ρ hU hUa := by
+  letI := ρ.sectionsMulSemiringAction hU
+  letI := sectionsAlgebra f U
+  letI := sectionsAlgebraK (K := K) f U
+  letI := sections_isScalarTower (K := K) f U
+  letI := ρ.isSemilinear_sections hU
+  exact IsOpenImmersion.lift_fac _ _ _
+
 /-- The pinned quotient witness obtained by restricting an affine invariant-ring
 quotient to a stable subopen.  Keeping this data in `Type` preserves the chosen
 base-change isomorphism needed for coherent overlap gluing. -/
@@ -189,10 +241,11 @@ noncomputable def galoisQuotientWitness_quotientOpenOfStableSubopen
     letI := sections_isScalarTower (K := K) f U
     letI := ρ.isSemilinear_sections hU
     let W := quotientOpenOfStableSubopen ρ hU V
-    GaloisQuotientWitness (ρ.restrict hV) W.toScheme
+    GaloisQuotientWitnessWithProjection (ρ.restrict hV) W.toScheme
       (W.ι ≫ Spec.map (CommRingCat.ofHom
         (algebraMap K
-          (SemilinearAction.invariantsSubalgebra K L Γ(X, U))))) := by
+          (SemilinearAction.invariantsSubalgebra K L Γ(X, U)))))
+      (stableAffineQuotientMapRestrict ρ hU hUa hVU hV) := by
   letI := ρ.sectionsMulSemiringAction hU
   letI := sectionsAlgebra f U
   letI := sectionsAlgebraK (K := K) f U
@@ -356,6 +409,10 @@ noncomputable def galoisQuotientWitness_quotientOpenOfStableSubopen
     rw [← cancel_mono U.ι]
     rw [Category.assoc, Scheme.homOfLE_ι, heV]
     rfl
+  have hbridge : eV.inv ≫ bc ≫ eU.hom = j := by
+    calc
+      eV.inv ≫ bc ≫ eU.hom = eV.inv ≫ (eV.hom ≫ j) := by rw [heVj]
+      _ = j := by simp
   have hjEquiv : (ρ.restrict hV).IsEquivariant (ρ.restrict hU) j := by
     intro γ
     rw [← cancel_mono U.ι]
@@ -365,7 +422,7 @@ noncomputable def galoisQuotientWitness_quotientOpenOfStableSubopen
         (ρ.restrict hU) (bc ≫ eU.hom) :=
     SemilinearGalAction.isEquivariant_pullbackBaseChange_comp g (W.ι ≫ g)
       (ρ.restrict hU) hequivU W.ι rfl
-  refine ⟨eV, ?_, ?_, ?_⟩
+  refine ⟨⟨eV, ?_, ?_, ?_⟩, ?_⟩
   · calc
       eV.hom ≫ (V.ι ≫ f) = eV.hom ≫ ((j ≫ U.ι) ≫ f) :=
         congrArg (fun z => eV.hom ≫ (z ≫ f))
@@ -393,6 +450,19 @@ noncomputable def galoisQuotientWitness_quotientOpenOfStableSubopen
       _ = (eV.hom ≫ ((ρ.restrict hV).act γ).hom) ≫ j :=
         (Category.assoc _ _ _).symm
   · exact ρ.universalRestrict g hU hV hVU eU hunivU q hproj W hpre eV heVj
+  · rw [← cancel_mono W.ι]
+    calc
+      (eV.inv ≫ pullback.fst (W.ι ≫ g) (fieldBaseMap K L)) ≫ W.ι =
+          eV.inv ≫ (bc ≫ pullback.fst g (fieldBaseMap K L)) := by
+        rw [pullbackBaseChange_fst]
+        simp only [Category.assoc]
+      _ = eV.inv ≫ (bc ≫ (eU.hom ≫ q)) :=
+        congrArg (fun z => eV.inv ≫ (bc ≫ z)) hcomp.symm
+      _ = (eV.inv ≫ bc ≫ eU.hom) ≫ q := by
+        simp only [Category.assoc]
+      _ = j ≫ q := congrArg (fun z => z ≫ q) hbridge
+      _ = stableAffineQuotientMapRestrict ρ hU hUa hVU hV ≫ W.ι :=
+        (stableAffineQuotientMapRestrict_fac ρ hU hUa hVU hV).symm
 
 /-- **The invariant-ring quotient of a stable affine chart restricts to every
 stable subopen.**  The quotient-side open is the one constructed from invariant
