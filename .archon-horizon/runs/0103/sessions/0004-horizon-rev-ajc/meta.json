@@ -3,15 +3,23 @@
   "round": 1,
   "project": "Algebraic-Jacobian-Challenge",
   "task_id": "rev-ajc",
-  "status": "running",
-  "started_at": "2026-07-31T08:08:22.145329+00:00",
   "projects": [
     "Algebraic-Jacobian-Challenge"
   ],
+  "status": "done",
+  "started_at": "2026-07-31T08:08:22.145329+00:00",
+  "ended_at": "2026-07-31T11:36:53.962185+00:00",
   "harness_name": "codex",
   "harness_kind": "codex",
   "model": "gpt-5.6-sol",
   "effort": "ultra",
+  "config_dir": null,
   "auth": "subscription",
-  "workspace_sha": "e5e7b1ef5f21a50c9cf9ac827f54e1bad95210de"
+  "usage": {
+    "tokens_in": 94125956,
+    "tokens_out": 182177,
+    "cost_usd": null
+  },
+  "engine_session_id": "019fb737-9b67-79e2-b9a5-705e90f189de",
+  "workspace_sha": "f99c82f3da4275d078e167af4ec4ceddf9f62134"
 }

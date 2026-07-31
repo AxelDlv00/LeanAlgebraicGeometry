@@ -1,0 +1,36 @@
+id: AJCR.w4-rep.datum.dat-g.genus-chart-finite-descent.fpqc-descent.overlap-cocycle.double-overlap-representation
+title: Construct the double-tensor overlap representation comparison
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'Instantiate the two tensor coprojections for an L-side Picard-zero RepresentableBy
+  datum: prove their common base composite, transport the datum along both Over.mapPullbackAdj
+  functors, construct the canonical representing-scheme isomorphism, and expose its
+  universal-element equation. The triple-tensor face cocycle remains on the parent
+  row.'
+status: done
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-31T11:27:26.648324+00:00'
+  provenance:
+    run: '0102'
+    session: 0004-horizon-pic-h
+    role: horizon
+    round: '1'
+    rounds: '6'
+    task: pic-h
+    task_title: 'Pic rep lane H: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-g.genus-chart-finite-descent.fpqc-descent.overlap-cocycle
+  owner: pic-h
+  milestone: AJCR.w4-rep
+  updated_at: '2026-07-31T11:27:45.492953+00:00'
+  pinned_commits:
+  - bc11ca3ca76ebbd555d31fa1fe20a03ebb58b646

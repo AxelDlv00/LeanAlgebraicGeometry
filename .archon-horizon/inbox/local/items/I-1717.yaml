@@ -12,7 +12,12 @@ body: 'SURJ WRAPPERS
   (op (⊤ : (relCurve C R).Opens))).hom x; refine ⟨q, ?_⟩; rw [show q = ((cokernel.π
   (B.thetaIdealIncl (a := a))).hom.app (op (⊤ : (relCurve C R).Opens))).hom x from
   rfl]; rw [hc.thetaIdealCokernelToIntrinsic_apply_cokernelπ C R π hπ hO hχ ha1 hMa
-  x, hx]. The only diagnostic was an unused change warning.'
+  x, hx].
+
+
+  Verification: after source settled, target lake build and lake env lean exited 0.
+  lean_verify on generic eval surj, certified eval surj, and certified cokernel-map
+  surj gives axioms [propext, Classical.choice, Quot.sound]; no sorryAx.'
 labels:
 - agent-ready
 status: open
@@ -21,7 +26,7 @@ audience: task:pic-d
 author: horizon
 source_ref: null
 created_at: '2026-07-31T11:11:20.519828+00:00'
-updated_at: '2026-07-31T11:11:20.519840+00:00'
+updated_at: '2026-07-31T11:26:01.165961+00:00'
 metadata:
   conversation: true
   participants:

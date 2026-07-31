@@ -7,6 +7,7 @@ import AlgebraicJacobian.Picard.DivPushforwardFlat
 import AlgebraicJacobian.Picard.CurveProjectivity
 import AlgebraicJacobian.Picard.GrassmannianRepresentability
 import AlgebraicJacobian.Picard.RigidPushforwardP1Sheaf
+import AlgebraicJacobian.Picard.RigidPushforwardRank
 
 /-!
 # The divisor-to-Grassmannian comparison
@@ -295,6 +296,7 @@ isomorphism.  The support descent presentation turns the statement into the
 affine base-change theorem twice: once for the finite support map and once for
 its closed immersion into the ambient scheme.  No flatness of the base change
 is used. -/
+set_option maxHeartbeats 1600000 in
 noncomputable def pullbackPushforwardIso_of_isFinite_schematicSupport
     {X X' S S' : Scheme.{u}}
     {f : X ⟶ S} {g : S' ⟶ S} {g' : X' ⟶ X} {f' : X' ⟶ S'}
@@ -319,8 +321,8 @@ noncomputable def pullbackPushforwardIso_of_isFinite_schematicSupport
     MorphismProperty.of_isPullback sqZ inferInstance
   haveI : N.IsQuasicoherent := pullback_isQuasicoherent_hom i F inferInstance
   let hdesc : F ≅ (pushforward i).obj N := schematicSupportDescentIso F
-  let eSupport := pushforwardPullbackBaseChangeIso sqZ N
-  let eImmersion := pushforwardPullbackBaseChangeIso sq₁ N
+  let eSupport := Adelic.pushforwardPullbackBaseChangeIso sqZ N
+  let eImmersion := Adelic.pushforwardPullbackBaseChangeIso sq₁ N
   exact (pullback g).mapIso
       ((pushforward f).mapIso hdesc ≪≫
         ((pushforwardComp i f).app N).symm) ≪≫
@@ -334,7 +336,8 @@ set_option backward.isDefEq.respectTransparency false in
 commutes with the residue-field base change. -/
 theorem fiberRank_gammaTop_eq_fiberH0_of_iso
     {R : CommRingCat.{u}} {X : Scheme.{u}} (f : X ⟶ Spec R)
-    (F : X.Modules) [F.IsQuasicoherent] (t : PrimeSpectrum R)
+    (F : X.Modules) [F.IsQuasicoherent] [QuasiCompact f] [QuasiSeparated f]
+    (t : PrimeSpectrum R)
     (e : (Scheme.Modules.pullback
           ((Spec R).fromSpecResidueField (t : Spec R))).obj
           ((pushforward f).obj F) ≅
@@ -369,6 +372,7 @@ theorem fiberRank_gammaTop_eq_fiberH0_of_iso
   let eΓ := ((toPresheafOfModules (Spec ((Spec R).residueField t)) ⋙
     PresheafOfModules.evaluation (Spec ((Spec R).residueField t)).ringCatSheaf.obj
       (Opposite.op ⊤)).mapIso e).toLinearEquiv
+  letI := f.fiberSectionsModule t (f.fiberModule t F)
   have step₂ : Module.finrank Γ(Spec ((Spec R).residueField t), ⊤)
         (TensorProduct Γ(Spec R, ⊤)
           Γ(Spec ((Spec R).residueField t), ⊤) Γ(M, ⊤)) =
@@ -402,7 +406,7 @@ theorem fiberRank_gammaTop_eq_fiberH0_of_iso
 
 theorem fiberRank_gammaTop_eq_fiberH0_of_isFinite_schematicSupport
     {R : CommRingCat.{u}} {X : Scheme.{u}} (f : X ⟶ Spec R)
-    (F : X.Modules) [F.IsQuasicoherent]
+    (F : X.Modules) [F.IsQuasicoherent] [QuasiCompact f] [QuasiSeparated f]
     (hfin : IsFinite (schematicSupportι F ≫ f)) (t : PrimeSpectrum R) :
     Module.finrank t.asIdeal.ResidueField
         (t.asIdeal.Fiber
@@ -426,26 +430,49 @@ theorem pushforward_isLocallyFreeOfRank
     [IsProper π] (f : Spec R ⟶ S) [IsNoetherianRing R]
     (x : DivFamily π (Over.mk f))
     [LocallyQuasiFinite
-      (Modules.schematicSupportι x.F ≫ pullback.snd π f)]
+      (Modules.schematicSupportι x.F ≫ pullback.snd π (Over.mk f).hom)]
     {d : ℕ} (hx : x.HasFiberDeg d) :
     SheafOfModules.IsLocallyFreeOfRank
       ((Modules.pushforward (pullback.snd π f)).obj x.F) d := by
-  let q := pullback.snd π f
+  letI : IsLocallyNoetherian (Over.mk f).left := by
+    change IsLocallyNoetherian (Spec R)
+    infer_instance
+  letI : x.F.IsQuasicoherent := by
+    exact inferInstance
+  let q := pullback.snd π (Over.mk f).hom
   let M := (Modules.pushforward q).obj x.F
+  haveI : QuasiCompact q := by
+    dsimp [q]
+    infer_instance
+  haveI : QuasiSeparated q := by
+    dsimp [q]
+    infer_instance
   haveI : M.IsFinitePresentation := x.isFinitePresentation_pushforward
   haveI : M.IsQuasicoherent := inferInstance
-  have hfin : Module.Finite R Γ(M, (⊤ : (Spec R).Opens)) :=
+  have hfinΓ : Module.Finite Γ(Spec R, (⊤ : (Spec R).Opens))
+      Γ(M, (⊤ : (Spec R).Opens)) :=
     Modules.module_finite_sections_of_isFinitePresentation M
       ⟨⊤, isAffineOpen_top (Spec R)⟩
-  have hflat : Module.Flat R Γ(M, (⊤ : (Spec R).Opens)) :=
+  have hfin : Module.Finite R Γ(M, (⊤ : (Spec R).Opens)) :=
+    module_finite_top_of_gammaSpecTop M hfinΓ
+  letI : Module.Finite Γ(Spec R, (⊤ : (Spec R).Opens))
+      Γ(M, (⊤ : (Spec R).Opens)) := hfinΓ
+  have hflatΓ : Module.Flat Γ(Spec R, (⊤ : (Spec R).Opens))
+      Γ(M, (⊤ : (Spec R).Opens)) :=
     Modules.flat_sections_of_coherentSheafFlat_id
       x.coherentSheafFlat_id_pushforward (isAffineOpen_top (Spec R))
-  letI : Module.Finite R Γ(M, (⊤ : (Spec R).Opens)) := hfin
-  letI : Module.Flat R Γ(M, (⊤ : (Spec R).Opens)) := hflat
-  letI : Module.FinitePresentation R Γ(M, (⊤ : (Spec R).Opens)) :=
-    Module.finitePresentation_of_finite R _
-  letI : Module.Projective R Γ(M, (⊤ : (Spec R).Opens)) :=
+  letI : Module.Flat Γ(Spec R, (⊤ : (Spec R).Opens))
+      Γ(M, (⊤ : (Spec R).Opens)) := hflatΓ
+  letI : Module.FinitePresentation Γ(Spec R, (⊤ : (Spec R).Opens))
+      Γ(M, (⊤ : (Spec R).Opens)) :=
+    Module.finitePresentation_of_finite Γ(Spec R, (⊤ : (Spec R).Opens)) _
+  have hprojΓ : Module.Projective Γ(Spec R, (⊤ : (Spec R).Opens))
+      Γ(M, (⊤ : (Spec R).Opens)) :=
     Module.Flat.projective_of_finitePresentation
+  have hproj : Module.Projective R Γ(M, (⊤ : (Spec R).Opens)) :=
+    module_projective_top_of_gammaSpecTop M hprojΓ
+  letI : Module.Projective R Γ(M, (⊤ : (Spec R).Opens)) := hproj
+  letI : Module.Flat R Γ(M, (⊤ : (Spec R).Opens)) := Module.Flat.of_projective
   apply Modules.isLocallyFreeOfRank_of_finite_projective_sections M hfin inferInstance
   intro t
   change Module.rankAtStalk Γ(M, (⊤ : (Spec R).Opens)) t = d
