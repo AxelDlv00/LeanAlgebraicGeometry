@@ -9,6 +9,8 @@ import AlgebraicJacobian.Picard.GrassmannianRepresentability
 import AlgebraicJacobian.Picard.RigidPushforwardP1Sheaf
 import AlgebraicJacobian.Picard.RigidPushforwardRank
 import AlgebraicJacobian.Picard.SerreTwistSections
+import AlgebraicJacobian.RiemannRoch.Ledger.FixedFiberDegree
+import AlgebraicJacobian.RiemannRoch.Ledger.UniformRiemannRoch
 
 /-!
 # The divisor-to-Grassmannian comparison
@@ -580,6 +582,27 @@ theorem pushforward_isLocallyFreeOfRank
 end DivFamily
 
 end Scheme
+
+namespace FiberCoordinateData
+
+/-- Extension-uniform global generation for every campaign curve.
+
+The fixed coordinate construction supplies the `UniformBaseDivisor` witness
+that the generation theorem needs, so this endpoint has only the standard
+smooth, proper, geometrically integral curve assumptions.  It is the
+fieldwise generation input for the D2' evaluation map; passing from all
+geometric fibres to an epi over an arbitrary test base is a separate descent
+step. -/
+theorem uniformGeneration_fixedCoordinate
+    {k : Type u} [Field k]
+    (C : Over (Spec (CommRingCat.of k)))
+    [IsProper C.hom] [SmoothOfRelativeDimension 1 C.hom]
+    [GeometricallyIntegral C.hom] :
+    UniformGeneration C :=
+  uniformGeneration_of_uniformBaseDivisor C
+    (uniformBaseDivisor_fixedCoordinate C)
+
+end FiberCoordinateData
 
 namespace Adelic
 
