@@ -319,6 +319,118 @@ theorem uniqueUpToIsoOfIso_trans
       rw [← Category.id_comp (uniqueUpToIsoOfIso e₁ e₂ η₁₂).hom,
         homEquiv_uniqueUpToIsoOfIso_hom e₁ e₂ η₁₂]
 
+/-- Assemble a direct presheaf comparison from a common outer pullback and an inner
+presheaf comparison. -/
+noncomputable def Over.mapCompPresheafFace
+    {D : Type u} [Category.{v, u} D]
+    {X Y Z : D} (r₀ r₁ : X ⟶ Z) (q : X ⟶ Y)
+    (p₀ p₁ : Y ⟶ Z) (h₀ : r₀ = q ≫ p₀) (h₁ : r₁ = q ≫ p₁)
+    {F : (Over Z)ᵒᵖ ⥤ Type v}
+    (θ : (Over.map p₀).op ⋙ F ≅ (Over.map p₁).op ⋙ F) :
+    (Over.map r₀).op ⋙ F ≅ (Over.map r₁).op ⋙ F :=
+  Over.mapCompPresheafOfEq r₀ q p₀ h₀ F ≪≫
+    Functor.isoWhiskerLeft (Over.map q).op θ ≪≫
+    (Over.mapCompPresheafOfEq r₁ q p₁ h₁ F).symm
+
+/-- Assemble the corresponding scheme comparison from an inner scheme isomorphism. -/
+noncomputable def Over.pullbackFaceIsoOfEq
+    {D : Type u} [Category.{v, u} D] [HasPullbacks D]
+    {X Y Z : D} (r₀ r₁ : X ⟶ Z) (q : X ⟶ Y)
+    (p₀ p₁ : Y ⟶ Z) (h₀ : r₀ = q ≫ p₀) (h₁ : r₁ = q ≫ p₁)
+    {J : Over Z} (i : (Over.pullback p₀).obj J ≅ (Over.pullback p₁).obj J) :
+    (Over.pullback r₀).obj J ≅ (Over.pullback r₁).obj J :=
+  Over.pullbackCompOfEq r₀ q p₀ h₀ J ≪≫
+    Functor.mapIso (Over.pullback q) i ≪≫
+    (Over.pullbackCompOfEq r₁ q p₁ h₁ J).symm
+
+/-- The Yoneda comparison for a direct face is exactly the raw pullback comparison
+through the common outer map. -/
+theorem uniqueUpToIsoOfIso_pullbackFace
+    {D : Type u} [Category.{v, u} D] [HasPullbacks D]
+    {X Y Z : D} (r₀ r₁ : X ⟶ Z) (q : X ⟶ Y)
+    (p₀ p₁ : Y ⟶ Z) (h₀ : r₀ = q ≫ p₀) (h₁ : r₁ = q ≫ p₁)
+    {F : (Over Z)ᵒᵖ ⥤ Type v} {J : Over Z} (e : F.RepresentableBy J)
+    (θ : (Over.map p₀).op ⋙ F ≅ (Over.map p₁).op ⋙ F) :
+    uniqueUpToIsoOfIso
+      (ofLeftAdjoint (Over.mapPullbackAdj r₀) e)
+      (ofLeftAdjoint (Over.mapPullbackAdj r₁) e)
+      (Over.mapCompPresheafFace r₀ r₁ q p₀ p₁ h₀ h₁ θ) =
+      Over.pullbackFaceIsoOfEq r₀ r₁ q p₀ p₁ h₀ h₁
+        (uniqueUpToIsoOfIso
+          (ofLeftAdjoint (Over.mapPullbackAdj p₀) e)
+          (ofLeftAdjoint (Over.mapPullbackAdj p₁) e) θ) := by
+  let e₀ := ofLeftAdjoint (Over.mapPullbackAdj p₀) e
+  let e₁ := ofLeftAdjoint (Over.mapPullbackAdj p₁) e
+  let d₀ := ofLeftAdjoint (Over.mapPullbackAdj r₀) e
+  let d₁ := ofLeftAdjoint (Over.mapPullbackAdj r₁) e
+  let i₀ := ofLeftAdjoint (Over.mapPullbackAdj q) e₀
+  let i₁ := ofLeftAdjoint (Over.mapPullbackAdj q) e₁
+  have h₀' :
+      uniqueUpToIsoOfIso d₀ i₀
+          (Over.mapCompPresheafOfEq r₀ q p₀ h₀ F) =
+        Over.pullbackCompOfEq r₀ q p₀ h₀ J := by
+    simpa [d₀, i₀] using
+      (uniqueUpToIsoOfIso_pullbackComp_of_eq r₀ q p₀ h₀ e)
+  have h₁' :
+      uniqueUpToIsoOfIso i₁ d₁
+          (Over.mapCompPresheafOfEq r₁ q p₁ h₁ F).symm =
+        (Over.pullbackCompOfEq r₁ q p₁ h₁ J).symm := by
+    have hh := uniqueUpToIsoOfIso_pullbackComp_of_eq r₁ q p₁ h₁ e
+    calc
+      uniqueUpToIsoOfIso i₁ d₁
+          (Over.mapCompPresheafOfEq r₁ q p₁ h₁ F).symm =
+          (uniqueUpToIsoOfIso d₁ i₁
+            (Over.mapCompPresheafOfEq r₁ q p₁ h₁ F)).symm := by
+        exact (uniqueUpToIsoOfIso_symm d₁ i₁
+          (Over.mapCompPresheafOfEq r₁ q p₁ h₁ F)).symm
+      _ = (Over.pullbackCompOfEq r₁ q p₁ h₁ J).symm :=
+        congrArg Iso.symm hh
+  have hm :
+      uniqueUpToIsoOfIso i₀ i₁ (Functor.isoWhiskerLeft (Over.map q).op θ) =
+        Functor.mapIso (Over.pullback q)
+          (uniqueUpToIsoOfIso e₀ e₁ θ) := by
+    simpa [i₀, i₁] using
+      (uniqueUpToIsoOfIso_ofLeftAdjoint_mapIso
+        (Over.mapPullbackAdj q) e₀ e₁ θ)
+  have hleft :
+      uniqueUpToIsoOfIso d₀ i₁
+          (Over.mapCompPresheafOfEq r₀ q p₀ h₀ F ≪≫
+            Functor.isoWhiskerLeft (Over.map q).op θ) =
+        Over.pullbackCompOfEq r₀ q p₀ h₀ J ≪≫
+          Functor.mapIso (Over.pullback q)
+            (uniqueUpToIsoOfIso e₀ e₁ θ) := by
+    calc
+      uniqueUpToIsoOfIso d₀ i₁
+          (Over.mapCompPresheafOfEq r₀ q p₀ h₀ F ≪≫
+            Functor.isoWhiskerLeft (Over.map q).op θ) =
+          uniqueUpToIsoOfIso d₀ i₀
+            (Over.mapCompPresheafOfEq r₀ q p₀ h₀ F) ≪≫
+          uniqueUpToIsoOfIso i₀ i₁
+            (Functor.isoWhiskerLeft (Over.map q).op θ) :=
+        uniqueUpToIsoOfIso_trans d₀ i₀ i₁
+          (Over.mapCompPresheafOfEq r₀ q p₀ h₀ F)
+          (Functor.isoWhiskerLeft (Over.map q).op θ)
+          (Over.mapCompPresheafOfEq r₀ q p₀ h₀ F ≪≫
+            Functor.isoWhiskerLeft (Over.map q).op θ) rfl
+      _ = _ := by rw [h₀', hm]
+  calc
+    uniqueUpToIsoOfIso d₀ d₁
+        (Over.mapCompPresheafFace r₀ r₁ q p₀ p₁ h₀ h₁ θ) =
+        uniqueUpToIsoOfIso d₀ i₁
+          (Over.mapCompPresheafOfEq r₀ q p₀ h₀ F ≪≫
+            Functor.isoWhiskerLeft (Over.map q).op θ) ≪≫
+        uniqueUpToIsoOfIso i₁ d₁
+          (Over.mapCompPresheafOfEq r₁ q p₁ h₁ F).symm :=
+      uniqueUpToIsoOfIso_trans d₀ i₁ d₁
+        (Over.mapCompPresheafOfEq r₀ q p₀ h₀ F ≪≫
+          Functor.isoWhiskerLeft (Over.map q).op θ)
+        (Over.mapCompPresheafOfEq r₁ q p₁ h₁ F).symm
+        (Over.mapCompPresheafFace r₀ r₁ q p₀ p₁ h₀ h₁ θ) rfl
+    _ = Over.pullbackFaceIsoOfEq r₀ r₁ q p₀ p₁ h₀ h₁
+        (uniqueUpToIsoOfIso e₀ e₁ θ) := by
+      rw [hleft, h₁']
+      simp only [Over.pullbackFaceIsoOfEq, Iso.trans_assoc]
+
 /-- Composition with the canonical representing-object isomorphism transports the universal
 element unchanged. -/
 theorem homEquiv_uniqueUpToIso_hom {C : Type u} [Category.{v, u} C]
