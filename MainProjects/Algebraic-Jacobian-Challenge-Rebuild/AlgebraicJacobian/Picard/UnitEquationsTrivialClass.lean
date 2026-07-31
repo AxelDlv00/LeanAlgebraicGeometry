@@ -29,14 +29,18 @@ invertible.  `Scheme.unitsH1_eq_one_of_family` (`Picard/FamilyCoboundary.lean:10
 coboundary datum on a refining family into triviality of the `H¹` class, and here the refining
 family is the cover itself — index type `X`, opens `d.cover.opens`, refinement `le_rfl`.
 
-Two mechanical points, recorded because they cost time and will cost it again:
+Two mechanical points:
 
 * the family lemma restricts the cocycle along `inf_le_inf le_rfl le_rfl`, so the proof needs
   "restriction along `U ≤ U` is the identity".  That is `Scheme.resHom_refl` on sections, but a
   `rw` with a `unitsRestrict`-level version **fails to match** — the `le`-witness sits inside a
   proof argument and the rewrite motive is not type-correct at `instances` transparency.  The
-  fix that works is to `have` the identity with the inequality *universally quantified*
-  (`hself` below), so unification picks the witness rather than matching it;
+  fix is to `have` the identity with the inequality *universally quantified* (`hself` below), so
+  unification picks the witness rather than matching it.  **This obstacle is specific to the
+  `unitsH1_eq_one_of_family` route chosen here** — an audit (`I-1652`) found the landed
+  `picClass_rescale` (`Picard/DivisorClass.lean:450`) reaches the same conclusion in about
+  fourteen lines with no motive problem at all, so do not read the note above as an intrinsic
+  cost of the statement;
 * `Scheme.CechPic.mk_one` supplies the `1` in the class group on the same cover, so the two
   sides are `mk` of the same cover and `congr 1` reduces to the `unitsH1` statement.
 

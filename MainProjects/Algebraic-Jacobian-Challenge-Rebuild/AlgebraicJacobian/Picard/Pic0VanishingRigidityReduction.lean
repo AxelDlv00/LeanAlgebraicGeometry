@@ -7,40 +7,43 @@ import AlgebraicJacobian.Picard.Pic0VanishingFieldTest
 import AlgebraicJacobian.Picard.Pic0VanishingAffineReduction
 
 /-!
-# AT GENUS `0` THE `pic⁰` VANISHING IS PURE RIGIDITY: NO DEGREE, NO RIEMANN--ROCH
+# AT GENUS `0` THE `pic⁰` MEMBERSHIP CONDITION IS FIBREWISE TRIVIALITY
 
 `hvan : ∀ T, Subsingleton (pic0Subgroup C T)` is the hypothesis both live routes to a producer
 of `(pic0TypeFunctor C).RepresentableBy` pass through, and it had no instance.  Its field
 instances were closed at genus `0`, and the surviving ring instances were priced as
 "cohomology and base change".
 
-**This file changes what is owed, not how much of it is done.**  At `genus C = 0` the whole
-hypothesis — at *every* test object, not merely affine ones — is *equivalent* to
+At `genus C = 0` the hypothesis — at *every* test object, not merely affine ones — is
+*equivalent* to
 
   **`hrig`: a `picEt` class that restricts to `1` at every field point of `T` is `1`.**
 
-The reduction is `pic0Vanishing_iff_rigidity` below, proved in both directions.
+The equivalence is `pic0Vanishing_iff_rigidity` below, proved in both directions.
 
-## Why this is a repricing and not a restatement
+## WHAT THIS IS, STATED HONESTLY — the original framing was wrong
 
-`pic0Subgroup C T` is cut out by a *degree* condition: `degAt lam t = 0` at every field point
-(`Picard/Pic0Functor.lean:107`).  Every attack so far has therefore carried the degree
-apparatus — `classDeg`, `relPicDeg`, the χ-ledger, Riemann--Roch, the effective-divisor window
-— into the ring case, and with it the five fibre instances `classDeg` needs and the whole
-cohomological normalization.
+**An earlier version of this header called the equivalence a *repricing* and said "the degree
+condition is provably idle at genus `0`".  A fresh-context audit (`I-1650`, `I-1653`) refuted
+that, and the refutation is worth more than the claim was.**
 
-The forward direction here **spends the degree condition completely and once**: at a field
-point `t`, `pic0Map C t` lands the restriction *in* `pic0Subgroup C (overSpec k K)`, where the
-landed field-test theorem is a `Subsingleton`, so the restriction is `1` by
-`Subsingleton.elim`.  What is left after that step mentions no degree, no χ, no divisor and no
-chart.  It is the statement that the presheaf `picEt C ·` is **separated with respect to field
-points** — a rigidity statement about the curve, of the same kind as
-`relPicAlgMap_injective_of_etaleCover` (`Picard/RelPicCoverInjective.lean:81`) rather than of
-the kind Riemann--Roch proves.
+At genus `0`, for every `T` and every `lam`, the antecedent of `hrig` and membership in
+`pic0Subgroup C T` are *equivalent* — forward by `degAt_one` after rewriting the restriction to
+`1`, backward by `fibre_eq_one_of_mem_pic0Subgroup` below.  So `hrig` is `hvan` **with the same
+predicate written differently**: `= 1` in place of `deg = 0`.  The degree left the notation, not
+the mathematics.  The tell was visible in this file all along — `rigidity_of_pic0Vanishing`
+needs *no genus hypothesis*, and a genuinely weaker target does not round-trip for free.
 
-`fibre_eq_one_of_mem_pic0Subgroup` is that step in isolation, and it is the reusable half: it
-says a degree-zero class at genus `0` is fibrewise trivial at every field point of **any** test
-object, with no affineness.
+**What the new spelling does buy, and it is not nothing.**  `classDeg` carries five instance
+binders on the fibre curve (`IsIntegral`, `SmoothOfRelativeDimension 1`, `QuasiCompact`, and
+both `Module.Finite` Betti-number clauses) which do not synthesize through the `relCurve` `def`
+barrier — all five measured as genuinely required.  The triviality spelling needs none of them,
+so hypotheses that could not be *stated* at a general prime become statable.  That is a
+**statability** gain, not a reduction of the obligation.
+
+`fibre_eq_one_of_mem_pic0Subgroup` is the direction that is reusable on its own: a degree-zero
+class at genus `0` is fibrewise trivial at every field point of **any** test object, with no
+affineness.  It is what pic-g's ring-level engine work consumes.
 
 ## The converse, and why it is worth stating
 
@@ -52,9 +55,9 @@ attacking `hrig` instead — the bundled equivalence is `pic0Vanishing_iff_rigid
 
 ## What this does NOT do
 
-* **It does not prove `hrig`, at any curve.**  Nothing here discharges the vanishing; the
-  content is that the remaining obligation is a *different and smaller* statement than the one
-  five files price.  In particular `ℙ¹` gains no instance from this file.
+* **It does not prove `hrig`, at any curve**, and — per the correction above — `hrig` is not a
+  *smaller* obligation than `hvan`, only a differently spelled one.  `ℙ¹` gains no instance
+  from this file.
 * **It does not make `hrig` cheap.**  Field-point separation of `picEt` has no producer in the
   tree either — `PicEtAff.unit_injective` and `relPicAlgMap_injective_of_etaleCover` are
   separation along *étale covers*, which is a different family of test maps, and a field point
@@ -69,8 +72,8 @@ attacking `hrig` instead — the bundled equivalence is `pic0Vanishing_iff_rigid
 * `AlgebraicGeometry.subsingleton_pic0Subgroup_of_rigidity` — **the reduction**: field-point
   rigidity of `picEt` gives the vanishing at every test.
 * `AlgebraicGeometry.rigidity_of_pic0Vanishing` — the converse.
-* `AlgebraicGeometry.pic0Vanishing_iff_rigidity` — the equivalence, so the degree condition is
-  provably idle at genus `0`.
+* `AlgebraicGeometry.pic0Vanishing_iff_rigidity` — the equivalence: the two spellings of the
+  hypothesis are one hypothesis.
 * `AlgebraicGeometry.P1.subsingleton_pic0Subgroup_of_rigidity` — the reduction at `ℙ¹`, with the
   genus hypothesis discharged, so the statement has a witness curve.
 -/
@@ -116,13 +119,10 @@ theorem fibre_eq_one_of_mem_pic0Subgroup (hg : genus C = 0) {T : Over (Spec (.of
 /-- **THE REDUCTION**: at genus `0`, field-point rigidity of `picEt` gives the `pic⁰` vanishing
 at **every** test object.
 
-`hrig` carries no degree, no χ, no divisor and no chart — it is separation of the presheaf
-`picEt C ·` against field points.  The proof is `fibre_eq_one_of_mem_pic0Subgroup` fed to
-`hrig`, twice.
-
-Compare what this replaces: the same conclusion via
-`subsingleton_pic0Subgroup_forall_iff_overSpec` needs the vanishing at every test *ring*, whose
-only known route runs through cohomology and base change. -/
+`hrig`'s statement carries no degree, no χ, no divisor and no chart — it is separation of the
+presheaf `picEt C ·` against field points.  The proof is `fibre_eq_one_of_mem_pic0Subgroup` fed
+to `hrig`, twice.  (Per `I-1650`: the *hypothesis* is nonetheless the same one, so this is a
+change of spelling with a statability payoff, not a discount.) -/
 theorem subsingleton_pic0Subgroup_of_rigidity (hg : genus C = 0)
     (hrig : ∀ (T : Over (Spec (.of k))) (lam : picEt C T),
       (∀ (K : Type u) [Field K] [Algebra k K] (t : overSpec k K ⟶ T),
@@ -150,11 +150,13 @@ theorem rigidity_of_pic0Vanishing
   have : (⟨lam, hmem⟩ : pic0Subgroup C T) = 1 := Subsingleton.elim _ _
   exact congrArg (fun z : pic0Subgroup C T => (z : picEt C T)) this
 
-/-- **THE EQUIVALENCE**: at genus `0` the degree condition cutting out `pic0Subgroup` is
-provably idle — the vanishing at every test is exactly field-point rigidity of `picEt`.
+/-- **THE EQUIVALENCE**: at genus `0` the vanishing at every test is exactly field-point
+rigidity of `picEt`.
 
-So a lane attacking the remaining obligation may take the rigidity form without weakening
-anything, and should: it is the same hypothesis with the degree apparatus removed. -/
+Read it as what it is: the *same* hypothesis in two spellings, not a smaller one.  A lane may
+take the rigidity form without weakening anything — and the reason to do so is mechanical, that
+`classDeg`'s five fibre instances drop out of the statement, not that the obligation shrinks
+(`I-1650`). -/
 theorem pic0Vanishing_iff_rigidity (hg : genus C = 0) :
     (∀ T : Over (Spec (.of k)), Subsingleton (pic0Subgroup C T))
       ↔ ∀ (T : Over (Spec (.of k))) (lam : picEt C T),

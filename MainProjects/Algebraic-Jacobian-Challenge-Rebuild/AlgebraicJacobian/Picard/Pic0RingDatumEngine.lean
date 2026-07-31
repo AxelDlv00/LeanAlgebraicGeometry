@@ -59,9 +59,18 @@ them.
 
 * **It does not discharge the `pic⁰` vanishing at a test ring.**  It supplies the two
   cohomological outputs — `H¹ = 0` and `H⁰` invertible — that the classical proof consumes
-  next through the evaluation map `π^*π_*L → L`.  That map does not exist in this tree, in the
-  sibling project, or in mathlib (measured this session), so the remaining distance is a
-  *different* argument and is not shortened by anything proved here.
+  next through the evaluation map `π^*π_*L → L`.
+
+  **CORRECTED after a fresh-context audit (`I-1651`).**  An earlier version of this bullet said
+  that map "does not exist in this tree, in the sibling project, or in mathlib (measured this
+  session)".  **The mathlib half was false and unmeasured**: the map is the counit of
+  `AlgebraicGeometry.Scheme.Modules.pullbackPushforwardAdjunction`
+  (`Mathlib/AlgebraicGeometry/Modules/Sheaf.lean`), and the sibling project applies
+  `.counit.app` to it in two files.  What is genuinely absent is any theorem saying that counit
+  is an **isomorphism** at a sheaf of this kind — that is the real residue, and it is a
+  narrower and more defensible claim than the one this bullet used to make.  AJCR's own
+  carriers are `Sheaf (Opens.grothendieckTopology X) (ModuleCat R)`, not `Scheme.Modules`, so
+  reaching the counit here is itself a port.
 * **It says nothing at positive genus**, where the fibre `H¹` is genuinely nonzero and the
   witness above fails at the first step.
 * It introduces **no hypothesis on the curve** beyond the three standing binders and
