@@ -29,6 +29,7 @@ set_option backward.isDefEq.respectTransparency false
 universe u
 
 open CategoryTheory Limits Opposite TopologicalSpace
+open scoped TensorProduct
 
 namespace AlgebraicGeometry
 
@@ -685,6 +686,38 @@ theorem IsCertified.intrinsicThetaEvalRel_surjective
     C R π hπ hO hχ ha1 hMa
   exact intrinsicThetaEvalRel_surjective_of_thetaIdealCokernel_app_top_surjective
     C R π B a hB
+
+/-- The certified intrinsic high-window carve is surjective. -/
+theorem IsCertified.intrinsicWindowCarve_surjective
+    {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
+    {A : AffAdaptation D d} {g : ℕ} (hc : A.IsCertified g)
+    (hπ : π ≫ P1.structureMap k = C.hom)
+    (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
+    {a : ℕ} (ha1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1)
+    (hMa : windowM_choice π hπ g ≤ a) :
+    Function.Surjective (A.intrinsicWindowCarve (π := π) a ha1) := by
+  rw [intrinsicWindowCarve, LinearMap.coe_comp]
+  exact (hc.intrinsicThetaEvalRel_surjective C R π hπ hO hχ ha1 hMa).comp
+    (relThetaWindowEquiv C R π a ha1).surjective
+
+/-- The certified intrinsic window quotient is linearly equivalent to the descended
+theta restriction, with the established divisor-window kernel and no extra hypothesis. -/
+noncomputable def IsCertified.intrinsicWindowQuotEquiv
+    {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
+    {A : AffAdaptation D d} {g : ℕ} (hc : A.IsCertified g)
+    (hπ : π ≫ P1.structureMap k = C.hom)
+    (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
+    {a : ℕ} (ha1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1)
+    (hMa : windowM_choice π hπ g ≤ a) :
+    ((R ⊗[k] ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤)) ⧸
+        divisorWindow d ha1) ≃ₗ[R]
+      A.IntrinsicThetaGlued (π := π) a :=
+  (Submodule.quotEquivOfEq _ _
+      (A.ker_intrinsicWindowCarve (π := π) a ha1).symm).trans
+    ((A.intrinsicWindowCarve (π := π) a ha1).quotKerEquivOfSurjective
+      (hc.intrinsicWindowCarve_surjective C R π hπ hO hχ ha1 hMa))
 
 /-- Once the widened certificate supplies the auxiliary theta-ideal `H¹` vanishing,
 global sections of the quotient sheaf for the chosen auxiliary chart are linearly equivalent
