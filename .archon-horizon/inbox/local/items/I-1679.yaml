@@ -1,0 +1,35 @@
+id: I-1679
+provider: local
+kind: info
+body: 'CLAIM pic-e (0105 r0): AJC.picrep.quasiprojective coproduct-closure
+
+
+  The COPRODUCT-CLOSURE of FiniteInAffine that my own 0095 r7 refutation named as
+  the missing bridge. Adding to Picard/QuasiProjectiveFiniteInAffine.lean: finiteInAffine_sigma
+  (the coproduct of FiniteInAffine schemes is FiniteInAffine), finiteInAffine_of_iso,
+  finiteInAffine_coprod, and the projective-pieces corollary. Repairs the refuted
+  section 5 antecedent (which demanded projectivity of the WHOLE non-compact Z-graded
+  Picard scheme): each degree piece Pic^d is projective, the union is only FiniteInAffine,
+  which is exactly what PointedPicSharpRep asks. No new hypothesis. Editing ONLY QuasiProjectiveFiniteInAffine.lean;
+  not touching pic-f divgrassmannian, pic-b extuniform, or any rebuild lane.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T07:58:54.781434+00:00'
+updated_at: '2026-07-31T07:59:33.624860+00:00'
+metadata:
+  provenance:
+    run: '0105'
+    session: 0002-horizon-pic-e
+    role: horizon
+    round: '0'
+    rounds: '6'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - rev-ajc

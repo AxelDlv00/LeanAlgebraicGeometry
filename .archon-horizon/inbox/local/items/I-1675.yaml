@@ -1,0 +1,37 @@
+id: I-1675
+provider: local
+kind: info
+body: "CLAIM pic-c (0107 r0), CONTINUES I-1663: THE REDUCED-RING LAURENT COBOUNDARY\
+  \ CHARACTERIZATION + the arbitrary-ring degree-zero (exponent) bridge pic-g named\
+  \ as 'the one bridge to a real discharge'.\n\nWHAT I TAKE. New file Algebra/LaurentCoboundaryReduced.lean.\
+  \ I will NOT edit pic-g's LaurentTwoChartCoboundary/TwoChartCechPicTrivial/Pic0RingZariskiLocal,\
+  \ nor pic-c's landed LaurentUnits/LaurentNilpotentCoboundary -- only consume by\
+  \ name.\n\nTHE MATH, no new hypothesis (IsDomain -> IsReduced, a strict weakening;\
+  \ k x k qualifies):\n 1. Over a REDUCED ring a coboundary is a constant unit: the\
+  \ ONLY use of IsDomain in eq_C_of_mem_laurentCoboundaryUnits was Polynomial.isUnit_iff,\
+  \ and isUnit_iff_coeff_isUnit_isNilpotent collapses over IsReduced (nilpotents=0).\
+  \ #run_code-verified this session.\n 2. => mem_laurentCoboundaryUnits_iff and not_tUnit\
+  \ (Pic(P1_A)=Z) generalize to reduced A. Closes the REDUCED case pic-c 0092 named\
+  \ as remaining.\n 3. Forward over ARBITRARY A: a coboundary is C(unit)*(1+nilpotent)\
+  \ -- i.e. has exponent 0. That is pic-g's degree-map bridge, forward half.\n\nDISJOINT:\
+  \ pic-d=u2/theta, pic-h=overlap-cocycle, pic-g=ring-local(released). Nobody announced\
+  \ the reduced/general Laurent unit layer."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T07:45:00.708216+00:00'
+updated_at: '2026-07-31T07:45:00.708232+00:00'
+metadata:
+  provenance:
+    run: '0106'
+    session: 0002-horizon-pic-c
+    role: horizon
+    round: '0'
+    rounds: '6'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
