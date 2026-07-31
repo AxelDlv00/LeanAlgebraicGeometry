@@ -300,7 +300,82 @@ theorem subsingleton_pic0Subgroup_overSpec_of_forall_prime
     @Equiv.subsingleton _ _ (picEtAffineEquiv C A).toEquiv hplus
   exact ⟨fun s t => Subtype.ext (Subsingleton.elim _ _)⟩
 
+/-- **THE POINTWISE REDUCTION, rigidity spelling**: the `hrigAff` clause at a basic open around
+each prime gives it at `A`.
+
+Same three steps as `PicEtAff.subsingleton_of_forall_prime` (choose, span, cut to finite), fed
+to `PicEtAff.rigidity_of_away`.  Stated separately because `jacobianData_of_rigidityAff`
+consumes the rigidity clause and not a `Subsingleton`, and because the rigidity form is the one
+that carries no degree apparatus. -/
+theorem PicEtAff.rigidity_of_forall_prime
+    (h : ∀ p : PrimeSpectrum A, ∃ f : A, f ∉ p.asIdeal ∧
+      ∀ q : PicEtAff C (Localization.Away f),
+        (∀ (K : Type u) [Field K] [Algebra k K] (φ : Localization.Away f →ₐ[k] K),
+          PicEtAff.mapAlg C φ q = 1) → q = 1)
+    (q : PicEtAff C A)
+    (hq : ∀ (K : Type u) [Field K] [Algebra k K] (φ : A →ₐ[k] K),
+      PicEtAff.mapAlg C φ q = 1) :
+    q = 1 := by
+  classical
+  choose f hf hrig using h
+  have hspan : Ideal.span (Set.range f) = ⊤ :=
+    span_eq_top_of_forall_prime _ fun p => ⟨f p, ⟨p, rfl⟩, hf p⟩
+  obtain ⟨t, hts, ht⟩ := (Ideal.span_eq_top_iff_finite (Set.range f)).mp hspan
+  refine PicEtAff.rigidity_of_away C (ι := {x // x ∈ t}) (fun i => i.1)
+    (fun i => Localization.Away i.1) ?_ ?_ q hq
+  · rwa [show (Set.range fun i : {x // x ∈ t} => i.1) = (↑t : Set A) from by
+      ext x; exact ⟨fun ⟨i, hi⟩ => hi ▸ i.2, fun hx => ⟨⟨x, hx⟩, rfl⟩⟩]
+  · intro i
+    obtain ⟨p, hp⟩ := hts i.2
+    exact hp ▸ hrig p
+
 end Pointwise
+
+/-! ## The composition to the goal object
+
+The reductions above are worth nothing if they do not reach `JacobianData`.  These two
+declarations are that check, and they are what makes this file usable by the representability
+headline rather than local to its own row: the *pointwise-local* hypothesis, quantified over
+every test algebra, produces the datum through the landed producers with no atlas, no chart
+certificate, no coverage clause, no divisor representability and no rational point.
+
+Both carry the genus-`0` hypothesis of the producer they compose with, and neither adds anything
+else. -/
+
+section Datum
+
+variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom]
+
+/-- **`JacobianData` from the pointwise-local vanishing.**
+
+`subsingleton_pic0Subgroup_overSpec_of_forall_prime` at every test algebra, fed to
+`jacobianData_of_overSpec_subsingleton` (`Pic0VanishingAffineReduction.lean:269`).  The
+hypothesis mentions no test object, no open and no morphism of schemes: only `k`-algebras, their
+primes, and the plus construction at the canonical localizations. -/
+def jacobianData_of_forall_prime_subsingleton
+    (h : ∀ (A : Type u) [CommRing A] [Algebra k A],
+      ∀ p : PrimeSpectrum A, ∃ f : A, f ∉ p.asIdeal ∧
+        Subsingleton (PicEtAff C (Localization.Away f))) :
+    JacobianData C :=
+  jacobianData_of_overSpec_subsingleton C fun A _ _ =>
+    subsingleton_pic0Subgroup_overSpec_of_forall_prime C (h A)
+
+/-- **`JacobianData` from the pointwise-local rigidity**, at genus `0`.
+
+The rigidity analogue, through `jacobianData_of_rigidityAff`
+(`Pic0RigidityAffineReduction.lean:190`).  This is the shortest statement of the whole vanishing
+route's remaining debt: a local computation of the plus construction at each prime of each test
+algebra, and nothing else. -/
+def jacobianData_of_forall_prime_rigidity (hg : genus C = 0)
+    (h : ∀ (A : Type u) [CommRing A] [Algebra k A],
+      ∀ p : PrimeSpectrum A, ∃ f : A, f ∉ p.asIdeal ∧
+        ∀ q : PicEtAff C (Localization.Away f),
+          (∀ (K : Type u) [Field K] [Algebra k K] (φ : Localization.Away f →ₐ[k] K),
+            PicEtAff.mapAlg C φ q = 1) → q = 1) :
+    JacobianData C :=
+  jacobianData_of_rigidityAff C hg fun A _ _ => PicEtAff.rigidity_of_forall_prime C (h A)
+
+end Datum
 
 end
 
