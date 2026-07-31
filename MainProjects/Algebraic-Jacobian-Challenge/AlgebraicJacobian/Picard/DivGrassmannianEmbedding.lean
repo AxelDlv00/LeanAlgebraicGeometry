@@ -69,6 +69,21 @@ noncomputable def grassmannianEval (L : X.Modules) (x : DivFamily π T) :
       (pullback.fst π T.hom) pullback.condition L ≫
     (Modules.pushforward (pullback.snd π T.hom)).map (x.twistQuotientMap L)
 
+/-- The evaluation map is epi as soon as its two displayed factors are epi.
+This keeps the base-change and divisor-quotient obligations separate, so a
+later uniform-generation proof can discharge only the factor it actually
+proves. -/
+theorem grassmannianEval_epi (L : X.Modules) (x : DivFamily π T)
+    (hbase : Epi (pushforwardBaseChangeMap π T.hom
+      (pullback.snd π T.hom) (pullback.fst π T.hom) pullback.condition L))
+    (hquot : Epi ((Modules.pushforward (pullback.snd π T.hom)).map
+      (x.twistQuotientMap L))) :
+    Epi (x.grassmannianEval L) := by
+  letI := hbase
+  letI := hquot
+  dsimp [grassmannianEval]
+  infer_instance
+
 /-- **The conditional D2' quotient datum.**  Once the evaluation map is an
 epimorphism and its target has constant locally-free rank `d`, it is exactly a
 rank-`d` locally free quotient of the pulled-back pushforward of `L`.
@@ -100,6 +115,19 @@ noncomputable def grassmannianClass (L : X.Modules) (x : DivFamily π T)
       ((Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L)) d) :
     (Grassmannian ((Modules.pushforward π).obj L) d).obj (Opposite.op T) :=
   Quotient.mk _ (grassmannianQuotient L x hEpi hLocFree)
+
+/-- The componentwise form of `grassmannianClass`: once the base-change and
+divisor-quotient factors are epi, only the target's rank condition remains. -/
+noncomputable def grassmannianClassOfComponents (L : X.Modules) (x : DivFamily π T)
+    [IsLocallyNoetherian S] {d : ℕ}
+    (hbase : Epi (pushforwardBaseChangeMap π T.hom
+      (pullback.snd π T.hom) (pullback.fst π T.hom) pullback.condition L))
+    (hquot : Epi ((Modules.pushforward (pullback.snd π T.hom)).map
+      (x.twistQuotientMap L)))
+    (hLocFree : SheafOfModules.IsLocallyFreeOfRank
+      ((Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L)) d) :
+    (Grassmannian ((Modules.pushforward π).obj L) d).obj (Opposite.op T) :=
+  grassmannianClass L x (grassmannianEval_epi L x hbase hquot) hLocFree
 
 end DivFamily
 
