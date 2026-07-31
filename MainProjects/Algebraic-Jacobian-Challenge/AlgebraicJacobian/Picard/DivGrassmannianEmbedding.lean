@@ -356,6 +356,46 @@ theorem epi_of_baseChange_surjective_of_finite
   exact hfib
 
 set_option backward.isDefEq.respectTransparency false in
+/-- Top-section-ring form of `epi_of_baseChange_surjective`.
+
+This spelling uses the native `Gamma(Spec R, top)`-linear map carried by a
+sheaf morphism.  It interfaces directly with residue-field evaluation on the
+test scheme and with the existing affine pullback section formula, avoiding
+an extra transport through `GammaSpecIso` in geometric fibre arguments. -/
+theorem epi_of_appTop_baseChange_surjective
+    {R : CommRingCat.{u}} {M N : (Spec R).Modules}
+    [M.IsQuasicoherent] [N.IsQuasicoherent]
+    (q : M ⟶ N)
+    [Module.Finite Γ(Spec R, (⊤ : (Spec R).Opens))
+      (Γ(N, (⊤ : (Spec R).Opens)) ⧸
+        LinearMap.range (q.val.app (.op (⊤ : (Spec R).Opens))).hom)]
+    (hfib : ∀ (m : Ideal Γ(Spec R, (⊤ : (Spec R).Opens))), m.IsMaximal →
+      Function.Surjective
+        ((q.val.app (.op (⊤ : (Spec R).Opens))).hom.baseChange
+          (Γ(Spec R, (⊤ : (Spec R).Opens)) ⧸ m))) :
+    Epi q := by
+  apply epi_of_globalSections_surjective q
+  change Function.Surjective (q.val.app (.op (⊤ : (Spec R).Opens))).hom
+  exact AlgebraicJacobian.TwoTerm.surjective_of_baseChange_quotient_surjective hfib
+
+set_option backward.isDefEq.respectTransparency false in
+/-- Finite target sections discharge the cokernel condition in the native
+top-section-ring fibrewise-surjectivity criterion. -/
+theorem epi_of_appTop_baseChange_surjective_of_finite
+    {R : CommRingCat.{u}} {M N : (Spec R).Modules}
+    [M.IsQuasicoherent] [N.IsQuasicoherent]
+    (q : M ⟶ N)
+    [Module.Finite Γ(Spec R, (⊤ : (Spec R).Opens))
+      Γ(N, (⊤ : (Spec R).Opens))]
+    (hfib : ∀ (m : Ideal Γ(Spec R, (⊤ : (Spec R).Opens))), m.IsMaximal →
+      Function.Surjective
+        ((q.val.app (.op (⊤ : (Spec R).Opens))).hom.baseChange
+          (Γ(Spec R, (⊤ : (Spec R).Opens)) ⧸ m))) :
+    Epi q := by
+  apply epi_of_appTop_baseChange_surjective q
+  exact hfib
+
+set_option backward.isDefEq.respectTransparency false in
 /-- A finite global presentation of a module sheaf on `Spec R` induces a
 finite presentation of its module of global sections.
 
