@@ -501,6 +501,7 @@ import AlgebraicJacobian.Picard.PicEtUnitFieldComparison
 import AlgebraicJacobian.Picard.LaurentTwoChartCoboundary
 import AlgebraicJacobian.Algebra.LaurentNilpotentCoboundary
 import AlgebraicJacobian.Algebra.LaurentReducedReduction
+import AlgebraicJacobian.Algebra.LaurentBaseChange
 import AlgebraicJacobian.Tangent.EpsZeroSurjective
 import AlgebraicJacobian.Tangent.ChartClassNaturality
 import AlgebraicJacobian.Tangent.PicEpsKernelTrivial
