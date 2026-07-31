@@ -260,6 +260,60 @@ theorem isLocalizedModule_localizedTensorProductMap
   exact IsLocalizedModule.of_linearEquiv S (TensorProduct.map f g)
     ((IsLocalization.moduleTensorEquiv S A M' N').symm.restrictScalars R)
 
+/-- **The tensor presheaf is localizing on affine basic opens.**  If `A` and `B`
+are quasi-coherent, then restriction of their presheaf tensor from an affine open
+`U` to `D(f)` exhibits the target as the localization of the source at `powers f`.
+
+The two factor restrictions are localizations by
+`isLocalizedModule_basicOpen`.  On pure tensors the restriction map of
+`tensorPresheaf A B` is definitionally their tensor product, hence it agrees with
+`localizedTensorProductMap`; the algebraic theorem above supplies the resulting
+localization. -/
+theorem isLocalizedModule_tensorPresheaf_basicOpen (A B : X.Modules)
+    [A.IsQuasicoherent] [B.IsQuasicoherent] {U : X.Opens} (hU : IsAffineOpen U)
+    (f : Γ(X, U)) :
+    IsLocalizedModule (Submonoid.powers f)
+      (ModuleCat.Hom.hom
+        ((tensorPresheaf A B).map (homOfLE (X.basicOpen_le f)).op)) := by
+  letI : Module Γ(X, U) Γ(A, X.basicOpen f) :=
+    Module.compHom _ (algebraMap Γ(X, U) Γ(X, X.basicOpen f))
+  letI : IsScalarTower Γ(X, U) Γ(X, X.basicOpen f) Γ(A, X.basicOpen f) :=
+    IsScalarTower.of_algebraMap_smul (fun _ _ => rfl)
+  letI : Module Γ(X, U) Γ(B, X.basicOpen f) :=
+    Module.compHom _ (algebraMap Γ(X, U) Γ(X, X.basicOpen f))
+  letI : IsScalarTower Γ(X, U) Γ(X, X.basicOpen f) Γ(B, X.basicOpen f) :=
+    IsScalarTower.of_algebraMap_smul (fun _ _ => rfl)
+  haveI := hU.isLocalization_basicOpen f
+  haveI hA : IsLocalizedModule (Submonoid.powers f) (restrictBasicOpenₗ A f) :=
+    isLocalizedModule_basicOpen A hU f
+  haveI hB : IsLocalizedModule (Submonoid.powers f) (restrictBasicOpenₗ B f) :=
+    isLocalizedModule_basicOpen B hU f
+  let g := localizedTensorProductMap (Submonoid.powers f) Γ(X, X.basicOpen f)
+    (restrictBasicOpenₗ A f) (restrictBasicOpenₗ B f)
+  have hg : ∀ x, ModuleCat.Hom.hom
+      ((tensorPresheaf A B).map (homOfLE (X.basicOpen_le f)).op) x = g x := by
+    intro x
+    induction x using TensorProduct.induction_on with
+    | zero =>
+        exact (ModuleCat.Hom.hom
+          ((tensorPresheaf A B).map (homOfLE (X.basicOpen_le f)).op)).map_zero.trans
+            g.map_zero.symm
+    | tmul a b => rfl
+    | add x y hx hy =>
+        exact (ModuleCat.Hom.hom
+          ((tensorPresheaf A B).map (homOfLE (X.basicOpen_le f)).op)).map_add x y |>.trans
+            ((congrArg₂ (· + ·) hx hy).trans (g.map_add x y).symm)
+  let hgLoc : IsLocalizedModule (Submonoid.powers f) g :=
+    isLocalizedModule_localizedTensorProductMap
+      (Submonoid.powers f) Γ(X, X.basicOpen f)
+      (restrictBasicOpenₗ A f) (restrictBasicOpenₗ B f)
+  refine ⟨hgLoc.map_units, ?_, ?_⟩
+  · intro y
+    obtain ⟨x, hx⟩ := hgLoc.surj y
+    exact ⟨x, hx.trans (hg x.1).symm⟩
+  · intro x₁ x₂ hx
+    exact hgLoc.exists_of_eq ((hg x₁).symm.trans (hx.trans (hg x₂)))
+
 /-! ## Quasi-coherence from basic-open section localization
 
 The affine tensor-section formula (see the module docstring) would give, for
