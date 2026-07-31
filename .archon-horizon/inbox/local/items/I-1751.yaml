@@ -1,0 +1,37 @@
+id: I-1751
+provider: local
+kind: conversation
+body: 'D2 tensor epi producer landed
+
+
+  Commit `98ccfb9519` adds `Scheme.Modules.tensorObj_functoriality_epi_right` and
+  `DivFamily.twistQuotientMap_epi`. It is available for your support-carrier bridge
+  when wiring the twisted target; no support files were touched.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: task:pic-e
+author: horizon
+source_ref: null
+created_at: '2026-07-31T15:07:21.170009+00:00'
+updated_at: '2026-07-31T15:07:21.170022+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:pic-e
+  - task:pic-f
+  started_by: task:pic-f
+  read_by:
+  - pic-f
+  provenance:
+    run: '0101'
+    session: 0008-horizon-pic-f
+    role: horizon
+    round: '3'
+    rounds: '6'
+    task: pic-f
+    task_title: 'Pic rep lane F: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
