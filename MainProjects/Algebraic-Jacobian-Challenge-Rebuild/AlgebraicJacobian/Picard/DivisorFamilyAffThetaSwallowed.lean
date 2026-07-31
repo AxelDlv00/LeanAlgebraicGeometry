@@ -27,6 +27,7 @@ set_option backward.isDefEq.respectTransparency false
 universe u
 
 open CategoryTheory Opposite TopologicalSpace
+open scoped TensorProduct
 
 namespace AlgebraicGeometry
 
@@ -201,6 +202,32 @@ noncomputable def chartProdEquivSwallowingPiece
     refine ⟨Pi.single j0 x, ?_⟩
     simp [ev]
 
+/-- On a swallowed cover, evaluation identifies the equalizer algebra with the swallowing
+piece colength algebra. -/
+noncomputable def gluedSubalgebraEquivSwallowingPiece
+    (A : AffAdaptation D d) {j0 : D.index}
+    (hsub : d.supportLocus ⊆ (D.pieces j0 : Set (relCurve C R)))
+    (hmiss : ∀ j : D.index, j ≠ j0 →
+      Disjoint d.supportLocus (D.pieces j : Set (relCurve C R))) :
+    ↥(gluedSubalgebra A) ≃ₐ[R] A.colength j0 := by
+  apply AlgEquiv.ofBijective (A.gluedSubalgebraPieceMap j0)
+  constructor
+  · intro x y hxy
+    apply Subtype.ext
+    funext j
+    by_cases hj : j = j0
+    · subst j
+      exact hxy
+    · haveI : Subsingleton (A.colength j) :=
+        A.subsingleton_colength_of_ne_swallowing hmiss j hj
+      exact Subsingleton.elim _ _
+  · intro x
+    refine ⟨⟨Pi.single j0 x, ?_⟩, ?_⟩
+    · change Pi.single j0 x ∈ A.gluedSubmodule
+      rw [A.gluedSubmodule_eq_top_of_swallowedBy ⟨j0, hsub, hmiss⟩]
+      trivial
+    · simp [gluedSubalgebraPieceMap]
+
 /-- Finite `R`-module transport for the `A_D`-linear intrinsic carrier on a swallowed cover. -/
 theorem IsCertified.finite_intrinsicThetaGluedOver_of_swallowedBy
     (A : AffAdaptation D d) (hc : A.IsCertified g) (a : Nat) (h : D.SwallowedBy d) :
@@ -372,6 +399,90 @@ theorem IsCertified.projective_intrinsicThetaGlued_of_swallowedBy
         (fun j => A.ThetaPieceQuotient (π := pi) a j))
   exact Module.Projective.of_equiv
     (A.intrinsicThetaGluedEquivPieceProdOfSwallowedBy (pi := pi) a h).symm
+
+/-- Invertibility is stable under transport along a ring equivalence.  The target module
+action is the pulled-back action, so this is a direct base-change fact rather than a new
+geometric hypothesis. -/
+theorem _root_.Module.Invertible.of_ringEquiv
+    {S T M : Type u} [CommRing S] [CommRing T] [AddCommGroup M]
+    [Module S M] (e : S ≃+* T) [Module.Invertible S M] :
+    letI : Algebra S T := e.toRingHom.toAlgebra
+    letI : Module T M := Module.compHom M e.symm.toRingHom
+    Module.Invertible T M := by
+  letI : Algebra S T := e.toRingHom.toAlgebra
+  letI : Module T M := Module.compHom M e.symm.toRingHom
+  letI : IsScalarTower S T M :=
+    ⟨fun s t m => by
+      change e.symm (e s * t) • m = s • (e.symm t • m)
+      rw [map_mul, e.symm_apply_apply, mul_smul]⟩
+  letI : Algebra.IsEpi S T :=
+    Algebra.isEpi_of_surjective_algebraMap S T (by
+      intro t
+      refine ⟨e.symm t, ?_⟩
+      change e (e.symm t) = t
+      exact e.apply_symm_apply t)
+  haveI : Module.Invertible T (TensorProduct S T M) := inferInstance
+  exact Module.Invertible.congr (TensorProduct.lid' S T M)
+
+/-- Evaluation at the swallowing piece, with the canonical `A_D`-module action. -/
+noncomputable def thetaPieceProdEquivSwallowingPieceOver
+    (A : AffAdaptation D d) (a : Nat) {j0 : D.index}
+    (hmiss : ∀ j : D.index, j ≠ j0 →
+      Disjoint d.supportLocus (D.pieces j : Set (relCurve C R))) :
+    A.ThetaPieceProd (π := pi) a ≃ₗ[↥(gluedSubalgebra A)]
+      A.ThetaPieceQuotient (π := pi) a j0 := by
+  letI : Module ↥(gluedSubalgebra A)
+      (A.ThetaPieceQuotient (π := pi) a j0) :=
+    A.thetaPieceQuotientGluedModule (π := pi) a j0
+  let ev : A.ThetaPieceProd (π := pi) a →ₗ[↥(gluedSubalgebra A)]
+      A.ThetaPieceQuotient (π := pi) a j0 := LinearMap.proj j0
+  apply LinearEquiv.ofBijective ev
+  constructor
+  · intro x y hxy
+    funext j
+    by_cases hj : j = j0
+    · subst j
+      exact hxy
+    · haveI : Subsingleton (A.colength j) :=
+        A.subsingleton_colength_of_ne_swallowing hmiss j hj
+      haveI : Subsingleton (A.ThetaPieceQuotient (π := pi) a j) :=
+        Module.subsingleton (A.colength j)
+          (A.ThetaPieceQuotient (π := pi) a j)
+      exact Subsingleton.elim _ _
+  · intro x
+    refine ⟨Pi.single j0 x, ?_⟩
+    simp [ev]
+
+set_option synthInstance.maxHeartbeats 300000 in
+-- The final transport crosses the equalizer algebra and its distinguished piece algebra.
+/-- The intrinsic theta carrier is invertible over the swallowed equalizer algebra. -/
+theorem Module.Invertible.intrinsicThetaGluedOver_of_swallowedBy
+    (A : AffAdaptation D d) (a : Nat) (h : D.SwallowedBy d) :
+    Module.Invertible (↥(gluedSubalgebra A))
+      (A.IntrinsicThetaGluedOver (π := pi) a) := by
+  obtain ⟨j0, hsub, hmiss⟩ := h
+  let AD := ↥(gluedSubalgebra A)
+  let N := A.ThetaPieceQuotient (π := pi) a j0
+  let φ := A.gluedSubalgebraEquivSwallowingPiece hsub hmiss
+  letI : Module (A.colength j0) N :=
+    A.thetaPieceQuotientModule (π := pi) a j0
+  letI : Module AD N := Module.compHom N φ.toRingHom
+  haveI : Module.Invertible (A.colength j0) N :=
+    A.invertible_thetaPieceQuotient (π := pi) a j0
+  haveI : Module.Invertible AD N :=
+    Module.Invertible.of_ringEquiv φ.symm.toRingEquiv
+  let e : A.IntrinsicThetaGluedOver (π := pi) a ≃ₗ[AD] N :=
+    (A.intrinsicThetaGluedOverEquivPieceProdOfSwallowedBy
+      (pi := pi) a ⟨j0, hsub, hmiss⟩).trans
+        (A.thetaPieceProdEquivSwallowingPieceOver (pi := pi) a hmiss)
+  exact Module.Invertible.congr e.symm
+
+/-- Field-style entry point for the swallowed intrinsic invertibility producer. -/
+theorem invertible_intrinsicThetaGluedOver_of_swallowedBy
+    (A : AffAdaptation D d) (a : Nat) (h : D.SwallowedBy d) :
+    Module.Invertible (↥(gluedSubalgebra A))
+      (A.IntrinsicThetaGluedOver (π := pi) a) :=
+  Module.Invertible.intrinsicThetaGluedOver_of_swallowedBy A a h
 
 end AffAdaptation
 
