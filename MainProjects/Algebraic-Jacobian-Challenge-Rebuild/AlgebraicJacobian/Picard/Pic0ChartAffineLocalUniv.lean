@@ -81,8 +81,12 @@ test `T`, with no presentation, plus-fibre, or arithmetic hypothesis: the chart 
 restricted class is `Set.univ` and `univ` is open.
 
 This retires the `haff` argument of `chartLocusOpens`/CHART-U(b) at the parameter coverage
-actually uses.  The chart index is the one `_eq_univ` produces; the same `(m, Z)` witnesses the
-degree calibration `hdeg` (`hmZ.1`) that a chart datum also wants. -/
+actually uses.  The chart index `(m, Z)` is exactly the one `_eq_univ` produces (its `.choose`
+/`choose_spec.choose`); its own degree constraint is `_eq_univ`'s first conjunct
+`deg_k Z = m·d₁ − admissibleCoverageParameter` (note this subtracts `admissibleCoverageParameter
+= (M·δ+g)·d₁`, which carries the `d₁ = classDeg (thetaCechClass C)` factor — it is *not* the
+`(M·δ+g)`-without-`d₁` calibration some fixed-parameter chart data use, and neither theorem here
+depends on identifying the two). -/
 theorem chartLocusAffineLocal_admissible
     {π : C.left ⟶ P1 k} [IsFinite π] [IsDominant π]
     (hπ : π ≫ P1.structureMap k = C.left ↘ Spec (CommRingCat.of k)) (g : ℕ)
