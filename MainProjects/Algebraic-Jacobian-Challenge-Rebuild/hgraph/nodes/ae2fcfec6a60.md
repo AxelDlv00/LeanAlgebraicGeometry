@@ -9,27 +9,22 @@ docstring: '**THE REDUCTION**: at genus `0`, field-point rigidity of `picEt` giv
   at **every** test object.
 
 
-  `hrig` carries no degree, no χ, no divisor and no chart — it is separation of the
-  presheaf
+  `hrig`''s statement carries no degree, no χ, no divisor and no chart — it is separation
+  of the
 
-  `picEt C ·` against field points.  The proof is `fibre_eq_one_of_mem_pic0Subgroup`
-  fed to
+  presheaf `picEt C ·` against field points.  The proof is `fibre_eq_one_of_mem_pic0Subgroup`
+  fed
 
-  `hrig`, twice.
+  to `hrig`, twice.  (Per `I-1650`: the *hypothesis* is nonetheless the same one,
+  so this is a
 
-
-  Compare what this replaces: the same conclusion via
-
-  `subsingleton_pic0Subgroup_forall_iff_overSpec` needs the vanishing at every test
-  *ring*, whose
-
-  only known route runs through cohomology and base change.'
+  change of spelling with a statability payoff, not a discount.)'
 file: AlgebraicJacobian/Picard/Pic0VanishingRigidityReduction.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.subsingleton_pic0Subgroup_of_rigidity
 type: lean
-updated: '2026-07-31T11:59:12'
+updated: '2026-07-31T13:39:13'
 ---
 theorem subsingleton_pic0Subgroup_of_rigidity (hg : genus C = 0)
     (hrig : ∀ (T : Over (Spec (.of k))) (lam : picEt C T),
