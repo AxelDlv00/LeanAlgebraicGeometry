@@ -1,3 +1,0 @@
-import AlgebraicJacobian.RiemannRoch.GenusZeroDegreeTrivial
-#print axioms AlgebraicGeometry.eq_one_of_classDeg_eq_zero_of_chi_one
-#print axioms AlgebraicGeometry.classDeg_eq_zero_iff_eq_one_of_chi_one

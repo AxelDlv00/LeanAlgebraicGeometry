@@ -1,7 +1,0 @@
-import AlgebraicJacobian.Picard.Pic0VanishingRoute
-import AlgebraicJacobian.Picard.PicEtUnit
-open CategoryTheory
-#check @AlgebraicGeometry.Over.fromSpecAffine
-#check @AlgebraicGeometry.pic0Subgroup_ext_of_cover
-#check @AlgebraicGeometry.pic0Subgroup_existsUnique_of_cover
-#check @AlgebraicGeometry.subsingleton_pic0_of_affine

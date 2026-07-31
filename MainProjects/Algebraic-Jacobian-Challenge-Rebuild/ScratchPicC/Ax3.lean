@@ -1,4 +1,0 @@
-import AlgebraicJacobian.Picard.Pic0VanishingFieldGenusZero
-#print axioms AlgebraicGeometry.chi_moduleKSheaf_baseChange_eq_one_of_genus_zero
-#print axioms AlgebraicGeometry.relPic_eq_one_of_relPicDeg_eq_zero_of_genus_zero
-#print axioms AlgebraicGeometry.relPicDeg_eq_zero_iff_of_genus_zero

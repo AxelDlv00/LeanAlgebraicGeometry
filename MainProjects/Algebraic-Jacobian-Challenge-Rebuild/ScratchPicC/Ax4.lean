@@ -1,4 +1,0 @@
-import AlgebraicJacobian.Picard.Pic0VanishingFieldTest
-#print axioms AlgebraicGeometry.eq_one_of_degAff_eq_zero_of_genus_zero
-#print axioms AlgebraicGeometry.subsingleton_pic0Subgroup_overSpec_field_of_genus_zero
-#print axioms AlgebraicGeometry.Jacobian
