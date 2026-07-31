@@ -23,6 +23,55 @@ namespace AlgebraicGeometry.Scheme.Modules
 variable {X : Scheme.{u}}
 
 set_option backward.isDefEq.respectTransparency false in
+/-- The canonical spectrum chart identifies the restriction of an affine-open
+coordinate function to its image with the corresponding spectrum section. -/
+lemma fromSpec_restrict_ring_section_top
+    {U : X.Opens} (hU : IsAffineOpen U)
+    (eT : hU.fromSpec ''ᵁ (⊤ : (Spec Γ(X, U)).Opens) = U) (r : Γ(X, U)) :
+    (X.presheaf.map (eqToHom eT).op).hom r =
+      (hU.fromSpec.appIso (⊤ : (Spec Γ(X, U)).Opens)).inv.hom
+        ((Scheme.ΓSpecIso Γ(X, U)).inv.hom r) := by
+  have hfwd := fromSpec_image_top_section_coherence hU eT
+  haveI : IsIso (X.presheaf.map (eqToHom eT.symm).op) := inferInstance
+  apply (ConcreteCategory.bijective_of_isIso
+    (X.presheaf.map (eqToHom eT.symm).op)).1
+  rw [← ConcreteCategory.comp_apply, ← X.presheaf.map_comp, ← op_comp,
+    eqToHom_trans, eqToHom_refl, op_id, X.presheaf.map_id]
+  change r =
+    (X.presheaf.map (eqToHom eT.symm).op).hom
+      ((hU.fromSpec.appIso (⊤ : (Spec Γ(X, U)).Opens)).inv.hom
+        ((Scheme.ΓSpecIso Γ(X, U)).inv.hom r))
+  rw [hfwd, CommRingCat.comp_apply, Iso.inv_hom_id_apply, Iso.inv_hom_id_apply]
+
+set_option backward.isDefEq.respectTransparency false in
+/-- The section-ring comparison for the canonical spectrum chart commutes with
+restriction from the affine open to every open of its spectrum model. -/
+lemma fromSpec_restrict_ring_section
+    {U : X.Opens} (hU : IsAffineOpen U)
+    (V : (Spec Γ(X, U)).Opens) (r : Γ(X, U)) :
+    let j := hU.fromSpec
+    let eT : j ''ᵁ (⊤ : (Spec Γ(X, U)).Opens) = U :=
+      (Scheme.Hom.image_top_eq_opensRange j).trans hU.opensRange_fromSpec
+    let hVU : j ''ᵁ V ≤ U := (j.image_mono le_top).trans_eq eT
+    (j.appIso V).inv.hom
+        (((Spec Γ(X, U)).presheaf.map (homOfLE (le_top : V ≤ ⊤)).op).hom
+          ((Scheme.ΓSpecIso Γ(X, U)).inv.hom r)) =
+      (X.presheaf.map (homOfLE hVU).op).hom r := by
+  let j := hU.fromSpec
+  let eT : j ''ᵁ (⊤ : (Spec Γ(X, U)).Opens) = U :=
+    (Scheme.Hom.image_top_eq_opensRange j).trans hU.opensRange_fromSpec
+  let hVU : j ''ᵁ V ≤ U := (j.image_mono le_top).trans_eq eT
+  have hnat := j.appIso_inv_naturality
+    (homOfLE (le_top : V ≤ (⊤ : (Spec Γ(X, U)).Opens))).op
+  have happ := ConcreteCategory.congr_hom hnat
+    ((Scheme.ΓSpecIso Γ(X, U)).inv.hom r)
+  simp only [CategoryTheory.comp_apply] at happ
+  rw [← fromSpec_restrict_ring_section_top hU eT r] at happ
+  refine happ.trans ?_
+  rw [← ConcreteCategory.comp_apply, ← X.presheaf.map_comp]
+  congr 1
+
+set_option backward.isDefEq.respectTransparency false in
 /-- Sections over an affine open, mapped to top sections after restricting the
 module to the canonical spectrum chart. -/
 noncomputable def fromSpecRestrictTopHom
@@ -41,19 +90,8 @@ noncomputable def fromSpecRestrictTopHom
   have hqRing : ∀ r : R,
       (X.presheaf.map (eqToHom eT).op).hom r =
         (j.appIso (⊤ : (Spec R).Opens)).inv.hom
-          ((Scheme.ΓSpecIso R).inv.hom r) := by
-    intro r
-    have hfwd := fromSpec_image_top_section_coherence hU eT
-    haveI : IsIso (X.presheaf.map (eqToHom eT.symm).op) := inferInstance
-    apply (ConcreteCategory.bijective_of_isIso
-      (X.presheaf.map (eqToHom eT.symm).op)).1
-    rw [← ConcreteCategory.comp_apply, ← X.presheaf.map_comp, ← op_comp,
-      eqToHom_trans, eqToHom_refl, op_id, X.presheaf.map_id]
-    change r =
-      (X.presheaf.map (eqToHom eT.symm).op).hom
-        ((j.appIso (⊤ : (Spec R).Opens)).inv.hom
-          ((Scheme.ΓSpecIso R).inv.hom r))
-    rw [hfwd, CommRingCat.comp_apply, Iso.inv_hom_id_apply, Iso.inv_hom_id_apply]
+          ((Scheme.ΓSpecIso R).inv.hom r) :=
+    fromSpec_restrict_ring_section_top hU eT
   exact ConcreteCategory.ofHom (C := ModuleCat R)
     { toFun := q.hom
       map_add' := q.hom.map_add
@@ -82,5 +120,21 @@ theorem fromSpecRestrictTopHom_isIso
     (ConcreteCategory.hom (M.presheaf.map (eqToHom eT).op))
   haveI : IsIso (M.presheaf.map (eqToHom eT).op) := inferInstance
   exact ConcreteCategory.bijective_of_isIso _
+
+/-- A stalk over the canonical spectrum chart, regarded as a module over the
+coordinate ring of the affine open through the ambient germ map. -/
+noncomputable abbrev affineOpenStalkModule
+    (M : X.Modules) {U : X.Opens} (hU : IsAffineOpen U)
+    (p : PrimeSpectrum.Top Γ(X, U)) :
+    Module Γ(X, U)
+      (↑(TopCat.Presheaf.stalk M.val.presheaf (hU.fromSpec p)) : Type u) := by
+  letI : Module (X.presheaf.stalk (hU.fromSpec p))
+      (↑(TopCat.Presheaf.stalk M.val.presheaf (hU.fromSpec p)) : Type u) :=
+    presheafStalkModule M.val (hU.fromSpec p)
+  have hpU : (hU.fromSpec p : X) ∈ U := by
+    change hU.fromSpec p ∈ (U : Set X)
+    rw [← hU.range_fromSpec]
+    exact Set.mem_range_self p
+  exact Module.compHom _ (X.presheaf.germ U (hU.fromSpec p) hpU).hom
 
 end AlgebraicGeometry.Scheme.Modules
