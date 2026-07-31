@@ -16,11 +16,18 @@ discharges every **field** instance of that: at `genus C = 0`,
 
   `Subsingleton (pic0Subgroup C (overSpec k K))` for every field extension `K/k`.
 
-`hvan` — the hypothesis with 93 consumers and no producer, which
-`Pic0VanishingRoute.jacobianData_of_subsingleton` turns into a `JacobianData` and which
-`Pic0ChartSeamPairDecided.isLocallySurjective_abelSigmaChartZero_iff` shows *is* the seam's
-coverage antecedent at parameter `0` — therefore now has all of its field instances closed on
-a genus-`0` curve, and only its **ring** instances open.
+`hvan` is the hypothesis that `Pic0VanishingRoute.jacobianData_of_subsingleton` turns into a
+`JacobianData` and that `Pic0ChartSeamPairDecided.isLocallySurjective_abelSigmaChartZero_iff`
+shows *is* the seam's coverage antecedent at parameter `0`.  It therefore now has all of its
+field instances closed on a genus-`0` curve, and only its **ring** instances open.
+
+**A COUNT CORRECTED.**  An earlier version of this paragraph called `hvan` "the hypothesis with
+93 consumers and no producer".  That figure is from the task brief and is about
+`JacobianData.rep`, a *different* object; restating it here made it look like a measurement of
+`hvan`.  Measured at HEAD: the `hvan`-shaped binder occurs in **3** files, `pic0Subgroup` is
+mentioned in 50, and `RepresentableBy` occurs 392 times.  What matters about `hvan` is not a
+count but that both live routes to a `rep` producer pass through it and neither had an
+instance; do not quote a number from this header — run the grep.
 
 ## The two steps, and what each costs
 
@@ -85,7 +92,6 @@ variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
 variable [IsProper C.hom] [SmoothOfRelativeDimension 1 C.hom]
 variable [GeometricallyIrreducible C.hom] [GeometricallyReduced C.hom]
 
-set_option maxHeartbeats 1600000 in
 -- Carries the base-change instance stack of the field layer through the plus quotient's
 -- cover-refinement calculus; within the DAT-2/PicEtMap precedent.
 omit [GeometricallyReduced C.hom] in
@@ -131,7 +137,6 @@ theorem eq_one_of_degAff_eq_zero_of_genus_zero
     rw [hcomp, relPicAlgMap_comp, htriv, map_one]
     rfl
 
-set_option maxHeartbeats 1600000 in
 -- Same instance stack, plus the affine comparison.
 omit [GeometricallyReduced C.hom] in
 /-- **THE FIELD-TEST VANISHING**: at `genus C = 0`, the degree-zero Picard group of the curve

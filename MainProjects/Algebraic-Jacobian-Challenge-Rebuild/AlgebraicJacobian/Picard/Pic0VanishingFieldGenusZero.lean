@@ -30,12 +30,18 @@ That transport is landed and needs no new cohomology: `finrank_h0_baseField` and
 Betti numbers of the base-changed curve, and `h0_moduleKSheaf` gives `h⁰ = 1` over `k`.  Then
 `χ = h⁰ - h¹ = 1 - genus C = 1`.
 
-Note which spelling is used and why: the two `finrank` identities are stated at
-`(C ⊗ overSpec k L).left.moduleKSheaf L` under `instOverBaseChange`
-(`Curve/BaseChangeInstances.lean:74`), which is the key `relPicDeg`'s degree stack consumes.
-Going through `chi_moduleKSheaf` at the bundled `baseChangeBundle C L` instead produces the
-*same object* under a different `Over` instance, and the resulting `chi` terms do not unify —
-measured, so the identities are used directly rather than the bundled χ lemma.
+Why *these* lemmas: they are stated at `(C ⊗ overSpec k L).left.moduleKSheaf L` under
+`instOverBaseChange` (`Curve/BaseChangeInstances.lean:74`), which is the key `relPicDeg`'s
+degree stack consumes, so no transport is needed.
+
+**RETRACTED CLAIM, and it was published as a prohibition.**  An earlier version of this
+paragraph said that going through `chi_moduleKSheaf` at the bundled `baseChangeBundle C L`
+gives the same object under a different `Over` instance and that "the resulting `chi` terms do
+not unify — measured".  **That is false.**  The bundled route closes at default heartbeats once
+a `change` to the bundled spelling precedes the `simpa`; what was actually measured was one
+`simpa` failing *without* that step, i.e. a fact about a tactic call, restated as a fact about
+two objects.  `Curve/P1DegreeZeroTrivial.lean` (pic-g) does it the bundled way at `ℙ¹`.  Both
+routes work; this one is not the only one and nothing here forecloses the other.
 
 ## What this does NOT do
 
@@ -71,7 +77,6 @@ variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
 variable [IsProper C.hom] [SmoothOfRelativeDimension 1 C.hom]
 variable [GeometricallyIrreducible C.hom] [GeometricallyReduced C.hom]
 
-set_option maxHeartbeats 1600000 in
 -- The base-change instance stack of `Curve.BaseChangeInstances` is resolved twice here (both
 -- Betti numbers), which exceeds the default budget; within the DAT-2/PicEtMap precedent.
 omit [GeometricallyReduced C.hom] in
@@ -93,7 +98,6 @@ theorem chi_moduleKSheaf_baseChange_eq_one_of_genus_zero
   rw [Sheaf.chi, hh0, hbase, hh1, hg]
   norm_num
 
-set_option maxHeartbeats 1600000 in
 -- Same base-change instance stack as the χ lemma above, plus the `relPic.ind` elimination.
 omit [GeometricallyReduced C.hom] in
 /-- **THE FIELD-TEST LAYER**: at genus `0`, a relative Picard class of relative degree `0`
@@ -113,7 +117,6 @@ theorem relPic_eq_one_of_relPicDeg_eq_zero_of_genus_zero
     have hL1 : L = 1 := eq_one_of_classDeg_eq_zero_of_chi_one K hchi L hcl
     rw [hL1, map_one]
 
-set_option maxHeartbeats 1600000 in
 -- Carries the same base-change instance stack through both directions.
 omit [GeometricallyReduced C.hom] in
 /-- The iff form: at genus `0` the relative degree over a field extension vanishes exactly on

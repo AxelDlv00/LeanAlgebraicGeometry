@@ -7,6 +7,7 @@ import AlgebraicJacobian.RiemannRoch.SectionBound
 import AlgebraicJacobian.RiemannRoch.ChiLedger
 import AlgebraicJacobian.RiemannRoch.SectionSpaces
 import AlgebraicJacobian.Picard.DivisorClassMeromorphic
+import AlgebraicJacobian.Picard.JacobianDataAbelDegreeWindow
 
 /-!
 # AT GENUS `0`, A DEGREE-ZERO PICARD CLASS IS TRIVIAL
@@ -14,30 +15,39 @@ import AlgebraicJacobian.Picard.DivisorClassMeromorphic
 The degree homomorphism `classDeg` (`RiemannRoch/Degree.lean`) has a large landed API in one
 direction — `classDeg_one`, `classDeg_mul`, `classDeg_inv`, `classDeg_picClass`,
 `classDeg_eq_zero_of_mem_picFromBase` — every one of which computes a degree *from* a class.
-**The converse is absent**: nothing in the tree concludes that a class is trivial from its
-degree, at any genus.  A name census cannot see that gap, because the missing statement has
-no name; what shows it is that the degree-zero *subgroup* has 93 consumers and no producer.
+This file supplies the other direction at `χ(𝒪) = 1`, i.e. at genus `0`, in the **equality of
+classes** spelling that `relPicDeg` consumers need.
 
-This file supplies the converse at `χ(𝒪) = 1`, i.e. at genus `0`.
+**CORRECTED, and the correction matters more than the file.**  An earlier version of this
+header said "the converse is absent: nothing in the tree concludes that a class is trivial
+from its degree, at any genus", and cited a consumer/producer count as the evidence.  **Both
+halves were wrong**, found by a fresh-context review:
+
+* the conclusion follows in four lines from the landed
+  `exists_effective_deg_eq_of_le_classDeg` (`Picard/JacobianDataAbelDegreeWindow.lean:132`,
+  landed two days earlier) at `g := 0, d := 0` — verified to elaborate.  What is genuinely new
+  here is only the *spelling*: that lemma concludes an existential (an effective divisor of the
+  right class and degree), and every consumer downstream of this file wants `L = 1`.  A name
+  census could not see the overlap precisely because the two conclusions have different shapes,
+  and the two files are in disjoint import closures;
+* the count was a figure from the task brief, restated as a per-file measurement of a
+  different carrier.  Measured at HEAD: `hvan`-shaped binders occur in 3 files, not 93 —
+  the "93 consumers" figure is about `JacobianData.rep`, a different object.  Do not quote a
+  consumer count from this header; run the grep.
+
+The proof below is therefore written through the landed lemma rather than re-deriving its
+three steps.
 
 ## The argument
 
-Three landed steps, no new mathematics:
+`exists_effective_deg_eq_of_le_classDeg` at target degree `0` (entry condition `1 ≤ deg + χ`,
+which at `χ = 1` and `deg = 0` is `1 ≤ 1`) produces an **effective** divisor of the class with
+degree `0`; and an effective divisor of degree `≤ 0` is `0`
+(`Scheme.CurveDivisor.eq_zero_of_deg_le_zero`, coefficients nonnegative weighted by positive
+residue degrees).  So the class is the class of `0`, which is `1`.
 
-1. every Čech class is the class of a Weil divisor
-   (`Scheme.CurveDivisor.exists_picClass_eq`), and the degrees agree (`classDeg_picClass`);
-2. the χ-ledger `χ(𝒪(D)) = χ(𝒪) + deg D` (`chi_divisorSheaf`) at `deg D = 0` and `χ(𝒪) = 1`
-   gives `χ(𝒪(D)) = 1`, hence `h⁰ > 0` since `χ = h⁰ - h¹` and `h¹ ≥ 0`.  **This is where
-   genus `0` enters, and it is the only place**;
-3. `exists_effective_of_h0_pos` turns the section into an *effective* representative of the
-   same class, whose degree is therefore still `0`; and an effective divisor of degree `≤ 0`
-   is `0` (`Scheme.CurveDivisor.eq_zero_of_deg_le_zero`, coefficients nonnegative weighted by
-   positive residue degrees).  So the class is the class of `0`, which is `1`.
-
-**No `H¹`-vanishing hypothesis is needed.**  χ alone forces the section: `h⁰ = χ + h¹ ≥ χ`.
-That is worth stating explicitly because every other section-producing consumer in the tree
-carries a `Subsingleton (Sheaf.HModule … 1)` binder for the divisor sheaf, and here it would
-be dead weight — the binder is about `𝒪(D)`, whose `h¹` the argument never needs to know.
+**No `H¹`-vanishing hypothesis is needed** — χ alone forces the section, `h⁰ = χ + h¹ ≥ χ`.
+That is inherited from the landed lemma, not a property of this file.
 
 ## What this is for
 
@@ -49,8 +59,9 @@ ring-level one, and it is not supplied here.
 
 ## Main declarations
 
-* `AlgebraicGeometry.eq_one_of_classDeg_eq_zero_of_chi_one` — **the converse of the degree
-  API**: at `χ(𝒪) = 1`, a Čech Picard class of degree `0` is trivial.
+* `AlgebraicGeometry.eq_one_of_classDeg_eq_zero_of_chi_one` — at `χ(𝒪) = 1`, a Čech Picard
+  class of degree `0` is trivial.  The equality-of-classes face of
+  `exists_effective_deg_eq_of_le_classDeg`.
 * `AlgebraicGeometry.classDeg_eq_zero_iff_eq_one_of_chi_one` — bundled as an iff with the
   landed `classDeg_one`, so both directions sit under one name.
 -/
@@ -70,33 +81,19 @@ variable (K : Type u) [Field K] {X : Scheme.{u}} [X.Over (Spec (CommRingCat.of K
   [Module.Finite K (Sheaf.HModule (X.moduleKSheaf K) 0)]
   [Module.Finite K (Sheaf.HModule (X.moduleKSheaf K) 1)]
 
-/-- **At genus `0`, a degree-zero Picard class is trivial.**
+/-- **At `χ(𝒪) = 1`, a degree-zero Picard class is trivial** — the equality-of-classes face of
+the landed `exists_effective_deg_eq_of_le_classDeg`.
 
-The direction the tree's degree API was missing.  Genus `0` enters exactly once: through the
-χ-ledger, which at `deg D = 0` and `χ(𝒪) = 1` gives `χ(𝒪(D)) = 1` and hence a global section.
-The section is converted to an effective representative of the same class, which then has
-degree `0` and is therefore the zero divisor.
-
-Needs no `H¹`-vanishing hypothesis on `𝒪(D)`: `h⁰ = χ + h¹ ≥ χ`. -/
+That lemma at `g := 0, d := 0` already produces an effective divisor of `L`'s class of degree
+`0`; all that is added here is `eq_zero_of_deg_le_zero` to collapse it to the zero divisor and
+`picClass_zero` to read off `L = 1`.  The earlier version of this proof re-derived the landed
+lemma's three internal steps; it is written through the lemma instead. -/
 theorem eq_one_of_classDeg_eq_zero_of_chi_one
     (hchi : Sheaf.chi (X.moduleKSheaf K) = 1)
     (L : X.CechPic) (hL : classDeg K L = 0) : L = 1 := by
-  obtain ⟨D, hD⟩ := Scheme.CurveDivisor.exists_picClass_eq K L
-  have hdegD : Scheme.CurveDivisor.deg K D = 0 := by
-    rw [← classDeg_picClass K D, hD, hL]
-  have hchiD : Sheaf.chi (X.divisorSheaf K D) = 1 := by
-    rw [chi_divisorSheaf, hchi, hdegD, add_zero]
-  -- `χ = h⁰ - h¹` with `h¹ ≥ 0`, so `χ = 1` forces a section
-  have hh0 : 0 < Sheaf.h0 (X.divisorSheaf K D) := by
-    have h := hchiD
-    rw [Sheaf.chi] at h
-    omega
-  obtain ⟨E, hEeff, hEcl⟩ := exists_effective_of_h0_pos K D hh0
-  have hdegE : Scheme.CurveDivisor.deg K E = 0 := by
-    rw [deg_eq_deg_of_picClass_eq K hEcl, hdegD]
-  have hE0 : E = 0 :=
-    Scheme.CurveDivisor.eq_zero_of_deg_le_zero K hEeff (le_of_eq hdegE)
-  rw [← hD, ← hEcl, hE0]
+  obtain ⟨E, hEeff, hEcl, hEdeg⟩ :=
+    exists_effective_deg_eq_of_le_classDeg K 0 0 (by simpa using hchi) le_rfl L hL
+  rw [← hEcl, Scheme.CurveDivisor.eq_zero_of_deg_le_zero K hEeff (le_of_eq hEdeg)]
   exact Scheme.CurveDivisor.picClass_zero K
 
 /-- The two directions under one name: at `χ(𝒪) = 1` the degree of a Čech Picard class
