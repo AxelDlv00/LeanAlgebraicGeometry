@@ -178,10 +178,12 @@ def toSubsingletonAlgHom (A : Type u) [CommRing A] (R S : Type u)
 
 /-- **THE PLUS CONSTRUCTION IS TRIVIAL OVER A SUBSINGLETON TEST RING**, unconditionally.
 
-This settles the open question of `I-1655`: the subsingleton ring is the site at which
-`hrigAff`'s antecedent is vacuous, and therefore its cheapest potential refutation site.  The
-answer is that the conclusion holds there anyway, so the affine spelling is **satisfied**
-rather than refuted at that site.
+This is a **non-counterexample only** (audit `I-1655`/`I-1676`): the subsingleton ring is the
+site at which `hrigAff`'s antecedent is vacuous, and therefore its cheapest potential
+refutation site.  The conclusion holds there anyway, so the affine spelling is **not refuted**
+at that site — but this does NOT settle `hrigAff`'s inhabitability, which remains open on
+nonempty spectra (see the module header).  It rules out one degenerate refutation, nothing
+more.
 
 No genus hypothesis, no curve input beyond the standing section variable. -/
 theorem PicEtAff.subsingleton_of_subsingleton {A : Type u} [CommRing A] [Algebra k A]
