@@ -5,13 +5,15 @@ projects:
 - Algebraic-Jacobian-Challenge
 summary: 'ADVANCED, NOT CLOSED. Commits 0d465e95d9, aa38db9d26, 10d411758b, 38e102eef6,
   and 692b3fe104 add a rooted, axiom-clean terminal bridge, the IsZero-from-sections
-  converse, and three conditional Div^0 RepresentableBy constructors. The sharp remaining
+  converse, and three conditional Div0 RepresentableBy constructors. The sharp remaining
   antecedent is hss: for every test T and degree-zero x, every open V has Subsingleton
   Gamma(x.F,V), which implies IsZero x.F and terminal representability. HasFiberDeg
-  0 alone does not prove hss: it is a finrank of fibre sections, while hss needs support-finiteness
-  and finite-dimensionality. The universal-pi hss claim is not generally true (O(-1)
-  on P1 is a counterexample), so an instantiated producer must specialize to the smooth
-  proper relative-curve binders. PicEt and fgaPicardRepresentability remain untouched.'
+  0 alone does not syntactically provide hss: it is a finrank of fibre sections, while
+  hss needs a support/finiteness and finite-dimensionality bridge. Do not use a generic
+  sheaf example such as O(-1) on P1 as a DivFamily counterexample without checking
+  the carrier epimorphism q. Whether the required bridge holds for the DivFamily carrier
+  remains unproved, so no instantiated producer is claimed. PicEt and fgaPicardRepresentability
+  remain untouched.'
 status: active
 kind: proof
 priority: normal
@@ -34,7 +36,7 @@ metadata:
     task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-31T10:07:45.766758+00:00'
+  updated_at: '2026-07-31T10:13:19.380865+00:00'
   pinned_commits:
   - 692b3fe104
   - 38e102eef6
