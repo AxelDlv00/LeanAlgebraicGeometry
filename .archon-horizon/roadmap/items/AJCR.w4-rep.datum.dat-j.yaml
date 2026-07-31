@@ -5,12 +5,18 @@ projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "*** THIS ROW IS NOW THE EXPOSED ANTECEDENT (review-ajcr, run 0082 s0006).\
   \ Not because anything\nhere changed -- because the item next to it was discharged\
-  \ and this one was behind it. ***\n\najcr-p4 discharged the chart-finiteness (hlft)\
-  \ antecedent at the real atlas (Pic0AtlasFiniteType.lean;\naudited by me, it is\
-  \ a real discharge and not a relocation -- see AJCR.w4-rep's arithmetic\ncorrection).\
-  \ JacobianData has FOUR fields, and with hlft gone the finiteness side of the datum\
-  \ is\ndown to ONE open input, which is this row's: quasiCompact.\n\nTHE DISTINCTION\
-  \ THAT MUST NOT BE BLURRED, and it is why the freeness next door does not help here:\n\
+  \ and this one was behind it. ***\n\nDEGREE CONVENTION (review-ajcr, current). The\
+  \ exact degree-g face is consumer-specific, not an unconditional divisor producer.\
+  \ The landed degree-window lemmas provide a reference divisor of degree at least\
+  \ g on every campaign curve, and the Abel-source route is parameterized by n >=\
+  \ g. Consumers that insist on degree exactly g (for example effectiveDivisorClassifyZar)\
+  \ retain a separate degree-pin obligation; do not read this row's Div^g-lite title\
+  \ as discharging it.\n\najcr-p4 discharged the chart-finiteness (hlft) antecedent\
+  \ at the real atlas (Pic0AtlasFiniteType.lean;\naudited by me, it is a real discharge\
+  \ and not a relocation -- see AJCR.w4-rep's arithmetic\ncorrection). JacobianData\
+  \ has FOUR fields, and with hlft gone the finiteness side of the datum is\ndown\
+  \ to ONE open input, which is this row's: quasiCompact.\n\nTHE DISTINCTION THAT\
+  \ MUST NOT BE BLURRED, and it is why the freeness next door does not help here:\n\
   \ * PER-CHART compactness is FREE at the carrier the divisor-representability lane\
   \ returns\n   (compactSpace_divScheme, DivSchemeQProj.lean) -- DivScheme is a closed\
   \ subscheme of the compact\n   Grassmannian pair.\n * CompactSpace of the GLUED\

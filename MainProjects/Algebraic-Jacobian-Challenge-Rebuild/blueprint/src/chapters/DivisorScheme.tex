@@ -513,14 +513,42 @@ separate from this window engine.
   because both are computed from \(d\).
 \end{proof}
 
+\begin{definition}[The widened arbitrary-affine divisor functor]
+  \label{def:divFamZarAff}
+  \lean{AlgebraicGeometry.CertifiedDivisorFamilyAff,
+    AlgebraicGeometry.IsLocallyCertifiedAff, AlgebraicGeometry.DivFamZarAff,
+    AlgebraicGeometry.DivFamZarAff.mk, AlgebraicGeometry.DivFamZarAff.mk_eq_mk_iff,
+    AlgebraicGeometry.DivFamZarAff.picClass, AlgebraicGeometry.divFunctorAff,
+    AlgebraicGeometry.divFunctorAff_obj, AlgebraicGeometry.divFunctorAff_map}
+  \uses{def:relCurve, def:localEquations, lem:localEquations_divEq}
+  \leanok
+  For an affine test algebra \(R\), the R2 carrier is the quotient
+  \[
+    \Div^{\,n}_{\mathrm{Aff}}(R) \;:=\;
+      \bigl\{\,d\text{ on }C_R\text{ with an arbitrary affine-open cover carrying a
+      degree-}n\text{ certificate}\,\bigr\}\big/\!\sim,
+  \]
+  where the equivalence relation is equality of local divisors. The cover is part of the
+  presentation and may vary with the divisor; no pair of pinned \(\PP^1\)-charts is required.
+  Base change makes these values into the presheaf
+  \(\operatorname{divFunctorAff}(C,n)\). Its representability target is therefore
+  \[
+    \operatorname{divFunctorAff}(C,n)\text{ is represented by }D,
+  \]
+  not a representation of the auxiliary \(\Div^{\,n}_{\mathrm{Zar}}\) carrier above. The
+  construction supplies the carrier and its Abel chart map; it does not supply this
+  representation witness.
+\end{definition}
+
 \section{The window embedding and the divisor scheme}
 \label{sec:divscheme}
 
 Grothendieck's route from a Quot-type functor to a scheme is: twist high enough that the
 relevant \(H^1\) vanishes, push forward, and read the result as a point of a Grassmannian;
 then cut out the image by the condition that the submodule be closed under multiplication
-by sections of a further twist. We carry that out for \(\Div^{\,n}_{\mathrm{Zar}}\) with
-the fibre divisor \(F\) as the twisting class.
+by sections of a further twist. The window engine in this section is deliberately the
+auxiliary pinned-chart calculation for \(\Div^{\,n}_{\mathrm{Zar}}\); it is not an identification
+with the widened carrier of Definition~\ref{def:divFamZarAff}.
 
 Fix two exponents \(a\) with \(H^1(C_R, \OO(aF)) = 0\) universally --- concretely the two
 \emph{pinned window exponents} \(M\) and \(M+s\) attached to \(\pi\) and the genus \(g\),
@@ -948,7 +976,7 @@ records that it has not been constructed.
   Naturality of the bijection in \(S\) is the naturality assumed of \(\rho\).
 \end{proof}
 
-\begin{theorem}[The universal certified family --- unproved]
+\begin{theorem}[The auxiliary fixed-window universal family --- unproved]
   \label{thm:divRepUniversalFamily}
   \uses{def:divRepAffinePullback, def:divScheme, def:certifiedDivisorFamily,
     thm:divisorWindow_eq_of_le, thm:isCertified_chart_obstruction}
@@ -974,22 +1002,25 @@ records that it has not been constructed.
   one, an upgrade that fails over nonreduced base rings if attempted fibrewise.
 
   Everything in Sections~\ref{sec:divfam}--\ref{sec:divclassify} is independent of this
-  statement.
+  statement. This is a conditional result for the pinned-window auxiliary carrier, not the
+  current R2 representability target \(\operatorname{divFunctorAff}(C,n)\).
 \end{theorem}
 
-\begin{corollary}[From the divisor scheme to the Jacobian]
+\begin{corollary}[From the widened divisor carrier to the Jacobian]
   \label{cor:divRepToJacobian}
-  \uses{thm:divRepAffinePullback_equiv, thm:divRepUniversalFamily,
-    def:pic0RepresentableByOfCharts, def:jacobian_data, def:divFamZar,
-    def:localEquations_picClass}
+  \uses{def:divFamZarAff, def:pic0RepresentableByOfCharts, def:jacobian_data}
   \notready
-  Granting \ref{thm:divRepUniversalFamily}, and separately supplying a chart family of
-  relatively representable open immersions together with the required locally-surjective
-  \(\Sigma\)-map, the Abel map \(D \mapsto \OO(D)\) (\ref{def:divFamZar}) can be used as
-  the conditional input to \ref{def:pic0RepresentableByOfCharts} after twisting by a fixed
-  divisor of degree \(g\).  Only after those antecedents are inhabited does the
-  degree-zero Picard functor become representable and yield a Jacobian datum
-  (\ref{def:jacobian_data}) --- hence, through the frozen definition
+  Granting a representation
+  \(\operatorname{divFunctorAff}(C,n)\text{ is represented by }D\), and separately supplying a
+  chart family of relatively representable open immersions together with the required
+  locally-surjective \(\Sigma\)-map, the widened Abel chart
+  \(\operatorname{abelSigmaChartAff}\) (the Abel class of the arbitrary-affine carrier) is the conditional
+  input to \ref{def:pic0RepresentableByOfCharts}. The degree \(n\) is a window parameter; the
+  formal degree-window lemmas show that a reference divisor of degree at least \(g\) is
+  available, while any consumer that insists on degree exactly \(g\) has an additional
+  arithmetic/degree-pinning obligation. Only after the representation and the two seam
+  antecedents are inhabited does the degree-zero Picard functor become representable and yield
+  a Jacobian datum (\ref{def:jacobian_data}) --- hence, through the frozen definition
   (\ref{def:jacobian}), the Jacobian of \(C\).
 
   The universal family, the open-immersion chart certificates, and local surjectivity are
