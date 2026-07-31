@@ -1,0 +1,28 @@
+id: AJCR.w4-rep.datum.p1-comparison
+title: P1 étale↔Zariski comparison unconditional (section-fed)
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: ''
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-31T11:46:22.110050+00:00'
+  provenance:
+    run: '0107'
+    session: 0008-horizon-pic-g
+    role: horizon
+    round: '3'
+    rounds: '6'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum
+  owner: pic-g
