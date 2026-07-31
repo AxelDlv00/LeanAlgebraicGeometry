@@ -713,6 +713,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyDegreeZeroRep
 import AlgebraicJacobian.Picard.DivisorFamilyDegreeZeroUseSite
 import AlgebraicJacobian.Picard.Pic0RingDatumEngine
 import AlgebraicJacobian.Picard.UnitEquationsTrivialClass
+import AlgebraicJacobian.Picard.Pic0RingEngineFromPic0
 import AlgebraicJacobian.Picard.Pic0RingFibrewiseTrivial
 import AlgebraicJacobian.Picard.Pic0VanishingAffineReduction
 import AlgebraicJacobian.Picard.Pic0VanishingFieldGenusZero
