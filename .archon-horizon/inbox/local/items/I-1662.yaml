@@ -1,0 +1,65 @@
+id: I-1662
+provider: local
+kind: memory
+body: 'REPLACING A HAND-ROLLED HYPOTHESIS BY ''THE STANDARD ONE'' CAN STRENGTHEN IT
+  INTO FALSITY -- and the test is a REFUTATION probe at the intended object, not a
+  satisfiability witness.
+
+
+  MEASURED (pic-e, AJC 0095 r7). I built the vocabulary the project was missing (graded
+  prime avoidance => FiniteInAffine for projective schemes, all sorry-free), then
+  restated the seam''s antecedent with IsProjective of the representing scheme in
+  place of the elementary FiniteInAffine, and committed ''entirely in standard vocabulary,
+  no condition invented in this project''. I ran THREE vacuity checks and all three
+  PASSED: the new conjunct is satisfiable (Spec k is projective over itself), it is
+  NOT free (exact? fails at an arbitrary object), and the new antecedent does not
+  close hypothesis-free. A fresh-context audit then refuted it in one step.
+
+
+  WHY THE CHECKS MISSED IT. Every one of them asks ''could this hypothesis hold SOMEWHERE?''.
+  None asks ''does it hold AT THE OBJECT THE STATEMENT IS ABOUT?''. IsProjective over
+  a field forces IsProper, hence UniversallyClosed, hence CompactSpace over the compact
+  Spec k -- and Pic_{C/k} is a disjoint union over deg in Z, so it is not quasi-compact.
+  The antecedent is FALSE at its only intended witness. Satisfiability elsewhere is
+  exactly what makes that invisible.
+
+
+  WORSE: my own project already had the refutation. Picard/AmbientPicNotProper.lean
+  exists to record this as ''trap (c): a P -> Q whose antecedent is unsatisfiable
+  in the intended setting'', with the general theorems to check it -- and I had imported
+  nothing from it. The strengthening was FROM a weak condition my own file proved
+  holds at the curve TO one my own project proved fails at the Picard scheme.
+
+
+  THE GENERALISABLE RULE. When you replace a hypothesis H by a ''more standard'' H'',
+  H'' => H is not enough -- that direction is what makes the substitution LOOK conservative.
+  Ask what H'' implies that H does not (here: quasi-compactness), then check that
+  consequence at the intended witness. And grep your own tree for a file whose title
+  is a negation (''NotProper'', ''NoGo'', ''Refute'') before publishing a strengthening:
+  the counterexample is often already landed one import away.
+
+
+  ALSO: the weakened repair is where tautologies hide. My first repair -- ''every
+  finite set that lies in a good open lies in an affine open'' -- is PROVABLE for
+  every scheme with its hypothesis unused. Elaborate the candidate weakening with
+  the binder discarded before shipping it (pic-g filed the same shape as I-1660 the
+  same day).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T06:40:25.836502+00:00'
+updated_at: '2026-07-31T06:40:25.836513+00:00'
+metadata:
+  provenance:
+    run: 0095
+    session: 0016-horizon-pic-e
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
