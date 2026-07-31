@@ -140,6 +140,50 @@ theorem uniqueUpToIsoOfIso_ofLeftAdjoint_conjugate
       rw [ofLeftAdjoint_homEquiv, h]
       rfl
 
+/-- Applying one adjunction to two representations carries their canonical comparison
+to the image of the original comparison under the right adjoint. -/
+theorem uniqueUpToIsoOfIso_ofLeftAdjoint_mapIso
+    {C : Type u} {D : Type u'} [Category.{v, u} C] [Category.{v, u'} D]
+    {L : C ⥤ D} {R : D ⥤ C} (adj : L ⊣ R)
+    {F F' : Dᵒᵖ ⥤ Type v} {Y Y' : D}
+    (e : F.RepresentableBy Y) (e' : F'.RepresentableBy Y') (η : F ≅ F') :
+    uniqueUpToIsoOfIso
+      (ofLeftAdjoint adj e)
+      (ofLeftAdjoint adj e')
+      (Functor.isoWhiskerLeft L.op η) =
+      R.mapIso (uniqueUpToIsoOfIso e e' η) := by
+  apply Iso.ext
+  apply (ofLeftAdjoint adj e').homEquiv.injective
+  calc
+    (ofLeftAdjoint adj e').homEquiv
+        ((uniqueUpToIsoOfIso
+          (ofLeftAdjoint adj e)
+          (ofLeftAdjoint adj e')
+          (Functor.isoWhiskerLeft L.op η)).hom) =
+      (Functor.isoWhiskerLeft L.op η).hom.app
+        (Opposite.op (R.obj Y))
+        ((ofLeftAdjoint adj e).homEquiv (𝟙 _)) := by
+      simpa using homEquiv_uniqueUpToIsoOfIso_hom
+        (ofLeftAdjoint adj e)
+        (ofLeftAdjoint adj e')
+        (Functor.isoWhiskerLeft L.op η) (𝟙 _)
+    _ = (ofLeftAdjoint adj e').homEquiv
+        (R.mapIso (uniqueUpToIsoOfIso e e' η)).hom := by
+      change (ConcreteCategory.hom
+          (η.hom.app (L.op.obj (Opposite.op (R.obj Y)))))
+          (e.homEquiv ((adj.homEquiv (R.obj Y) Y).symm (𝟙 _))) =
+        e'.homEquiv ((adj.homEquiv (R.obj Y) Y').symm
+          (R.map (uniqueUpToIsoOfIso e e' η).hom))
+      rw [show (adj.homEquiv (R.obj Y) Y').symm
+          (R.map (uniqueUpToIsoOfIso e e' η).hom) =
+        (adj.homEquiv (R.obj Y) Y).symm (𝟙 _) ≫
+          (uniqueUpToIsoOfIso e e' η).hom by
+        simpa using adj.homEquiv_naturality_right_symm
+          (𝟙 (R.obj Y)) (uniqueUpToIsoOfIso e e' η).hom]
+      symm
+      exact homEquiv_uniqueUpToIsoOfIso_hom e e' η
+        ((adj.homEquiv (R.obj Y) Y).symm (𝟙 _))
+
 /-- Transport through a composite adjunction is the same representation as transport
 through the two adjunctions successively. -/
 theorem ofLeftAdjoint_comp
