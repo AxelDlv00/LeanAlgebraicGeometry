@@ -71,6 +71,113 @@ theorem homEquiv_uniqueUpToIsoOfIso_hom
   rw [h, comp_homEquiv_symm, Equiv.apply_symm_apply]
   rw [← (e.ofIso η).homEquiv_comp f (𝟙 Y), Category.comp_id]
 
+/-- Transporting a representation across conjugate adjunctions produces the conjugate
+right-adjoint isomorphism on the representing object. -/
+theorem uniqueUpToIsoOfIso_ofLeftAdjoint_conjugate
+    {C : Type u} {D : Type u'} [Category.{v, u} C] [Category.{v, u'} D]
+    {L₁ L₂ : C ⥤ D} {R₁ R₂ : D ⥤ C}
+    (adj₁ : L₁ ⊣ R₁) (adj₂ : L₂ ⊣ R₂) (α : L₂ ≅ L₁)
+    {F : Dᵒᵖ ⥤ Type v} {Y : D} (e : F.RepresentableBy Y) :
+    uniqueUpToIsoOfIso
+      (ofLeftAdjoint adj₁ e)
+      (ofLeftAdjoint adj₂ e)
+      (Functor.isoWhiskerRight (NatIso.op α) F) =
+      (conjugateIsoEquiv adj₁ adj₂ α).app Y := by
+  let e₁ := ofLeftAdjoint adj₁ e
+  let e₂ := ofLeftAdjoint adj₂ e
+  apply Iso.ext
+  apply e₂.homEquiv.injective
+  have h : (adj₂.homEquiv (R₁.obj Y) Y).symm
+      ((conjugateIsoEquiv adj₁ adj₂ α).app Y).hom =
+      α.hom.app (R₁.obj Y) ≫ adj₁.counit.app Y := by
+    apply (adj₂.homEquiv (R₁.obj Y) Y).injective
+    rw [Equiv.apply_symm_apply]
+    have hc := conjugateEquiv_counit adj₁ adj₂ α.hom Y
+    have hn := adj₂.homEquiv_naturality_left
+      (X' := R₁.obj Y) (X := R₂.obj Y) (Y := Y)
+      ((conjugateEquiv adj₁ adj₂ α.hom).app Y) (adj₂.counit.app Y)
+    have hunit : (adj₂.homEquiv (R₂.obj Y) Y) (adj₂.counit.app Y) =
+        𝟙 (R₂.obj Y) := by
+      have hh := adj₂.homEquiv_counit (R₂.obj Y) Y (𝟙 (R₂.obj Y))
+      have hh' := congrArg (adj₂.homEquiv (R₂.obj Y) Y) hh
+      simpa using hh'.symm
+    change (conjugateEquiv adj₁ adj₂ α.hom).app Y = _
+    calc
+      (conjugateEquiv adj₁ adj₂ α.hom).app Y =
+          (conjugateEquiv adj₁ adj₂ α.hom).app Y ≫ 𝟙 _ := by simp
+      _ = (conjugateEquiv adj₁ adj₂ α.hom).app Y ≫
+          (adj₂.homEquiv (R₂.obj Y) Y) (adj₂.counit.app Y) := by
+        rw [hunit, Category.comp_id]
+      _ = (adj₂.homEquiv (R₁.obj Y) Y)
+          (L₂.map ((conjugateEquiv adj₁ adj₂ α.hom).app Y) ≫ adj₂.counit.app Y) :=
+        hn.symm
+      _ = (adj₂.homEquiv (R₁.obj Y) Y)
+          (α.hom.app (R₁.obj Y) ≫ adj₁.counit.app Y) := by
+        exact congrArg (adj₂.homEquiv (R₁.obj Y) Y) hc
+  calc
+    e₂.homEquiv
+        (uniqueUpToIsoOfIso e₁ e₂
+          (Functor.isoWhiskerRight (NatIso.op α) F)).hom =
+      (Functor.isoWhiskerRight (NatIso.op α) F).hom.app
+          (Opposite.op (R₁.obj Y)) (e₁.homEquiv (𝟙 _)) := by
+      simpa using homEquiv_uniqueUpToIsoOfIso_hom
+        e₁ e₂ (Functor.isoWhiskerRight (NatIso.op α) F) (𝟙 _)
+    _ = e.homEquiv (α.hom.app (R₁.obj Y) ≫ adj₁.counit.app Y) := by
+      simp only [Functor.isoWhiskerRight_hom, Functor.whiskerRight_app]
+      dsimp [e₁]
+      rw [ofLeftAdjoint_homEquiv]
+      have hunit : (adj₁.homEquiv (R₁.obj Y) Y).symm (𝟙 (R₁.obj Y)) =
+          adj₁.counit.app Y := by
+        have hh := adj₁.homEquiv_counit (R₁.obj Y) Y (𝟙 (R₁.obj Y))
+        simpa using hh
+      rw [hunit]
+      change (ConcreteCategory.hom (F.map (α.hom.app (R₁.obj Y)).op))
+          (e.homEquiv (adj₁.counit.app Y)) =
+        e.homEquiv (α.hom.app (R₁.obj Y) ≫ adj₁.counit.app Y)
+      exact (e.homEquiv_comp
+        (α.hom.app (R₁.obj Y)) (adj₁.counit.app Y)).symm
+    _ = e₂.homEquiv ((conjugateIsoEquiv adj₁ adj₂ α).app Y).hom := by
+      rw [ofLeftAdjoint_homEquiv, h]
+      rfl
+
+/-- Transport through a composite adjunction is the same representation as transport
+through the two adjunctions successively. -/
+theorem ofLeftAdjoint_comp
+    {C : Type u} {D E : Type u'} [Category.{v, u} C]
+    [Category.{v, u'} D] [Category.{v, u'} E]
+    {L₁ : C ⥤ D} {R₁ : D ⥤ C} {L₂ : D ⥤ E} {R₂ : E ⥤ D}
+    (adj₁ : L₁ ⊣ R₁) (adj₂ : L₂ ⊣ R₂)
+    {F : Eᵒᵖ ⥤ Type v} {Y : E} (e : F.RepresentableBy Y) :
+    ofLeftAdjoint (adj₁.comp adj₂) e =
+      ofLeftAdjoint adj₁ (ofLeftAdjoint adj₂ e) := by
+  apply RepresentableBy.ext
+  change e.homEquiv
+      (((adj₁.comp adj₂).homEquiv ((R₂ ⋙ R₁).obj Y) Y).symm (𝟙 _)) =
+    e.homEquiv ((adj₂.homEquiv (L₁.obj ((R₂ ⋙ R₁).obj Y)) Y).symm
+      ((adj₁.homEquiv ((R₂ ⋙ R₁).obj Y) (R₂.obj Y)).symm (𝟙 _)))
+  rw [Adjunction.comp_homEquiv]
+  rfl
+
+open Limits
+/-- For over-categories, the canonical comparison between direct and iterated
+adjunction transport is mathlib's `Over.pullbackComp`. -/
+theorem uniqueUpToIsoOfIso_pullbackComp
+    {D : Type u} [Category.{v, u} D] [HasPullbacks D]
+    {X Y Z : D} (f : X ⟶ Y) (g : Y ⟶ Z)
+    {F : (Over Z)ᵒᵖ ⥤ Type v} {J : Over Z} (e : F.RepresentableBy J) :
+    uniqueUpToIsoOfIso
+      (ofLeftAdjoint (Over.mapPullbackAdj (f ≫ g)) e)
+      (ofLeftAdjoint (Over.mapPullbackAdj f)
+        (ofLeftAdjoint (Over.mapPullbackAdj g) e))
+      (Functor.isoWhiskerRight
+        (NatIso.op (Over.mapComp f g).symm) F) =
+      (Over.pullbackComp f g).app J := by
+  rw [← ofLeftAdjoint_comp]
+  exact uniqueUpToIsoOfIso_ofLeftAdjoint_conjugate
+    (Over.mapPullbackAdj (f ≫ g))
+    ((Over.mapPullbackAdj f).comp (Over.mapPullbackAdj g))
+    (Over.mapComp f g).symm e
+
 /-- Three canonical comparisons satisfy the cocycle law when the presheaf isomorphisms do. -/
 theorem uniqueUpToIsoOfIso_trans
     {C : Type u} [Category.{v, u} C]
