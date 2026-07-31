@@ -351,6 +351,7 @@ widened piece.  This is the local converse needed when a glued cokernel lift is 
 back with chosen intrinsic representatives.
 -/
 
+omit [IsProper C.hom] in
 theorem thetaPieceVanishing_iff_gluedTwist_cokernel_eq_zero
     {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
     {A : AffAdaptation D d} (B : DivisorAdaptation C R π d) (a : ℕ)
@@ -465,6 +466,7 @@ theorem thetaPieceVanishing_iff_gluedTwist_cokernel_eq_zero
       exact hgerm.2 z
         ⟨hz.1, thetaChartCover_pieces_le_inr C R π PUnit.unit hz.2⟩
 
+omit [IsProper C.hom] in
 /-- If the restriction of a global auxiliary cokernel class agrees with the class of a
 chosen theta representative on one widened piece, then the restricted global theta
 section and that representative define the same intrinsic piece quotient class. -/
