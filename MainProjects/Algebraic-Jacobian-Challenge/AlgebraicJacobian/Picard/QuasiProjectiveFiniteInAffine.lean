@@ -680,4 +680,89 @@ theorem exists_affineOpen_of_subset_isProjective_opens {X : Scheme.{u}} (U : X.O
   exists_affineOpen_of_subset_finiteInAffine_opens U
     (finiteInAffine_of_isProjective hproj) hs hsub
 
+/-! ## §7. `FiniteInAffine` is closed under coproducts — the repair of §5's refutation
+
+`§5.5` shows the antecedent `PointedPicSharpRepProjective` — projectivity of the scheme
+representing the *whole* of `picSharp` — is FALSE at its intended object, because
+`Pic_{C/k} = ∐_{d ∈ ℤ} Pic^d` is a countable disjoint union and projectivity of it would
+force `CompactSpace` (`compactSpace_of_isProjective`), which `Pic_{C/k}` is not
+(`not_isProjective_of_infinite_disjoint_open_cover`).  The mathematically correct
+statement is that the *pieces* `Pic^d` are projective and the Picard scheme is their
+coproduct.
+
+`FiniteInAffine`, unlike `IsProjective` or `CompactSpace`, **is** closed under such
+coproducts: a finite set meets only finitely many components, each hit in an affine open,
+and finitely many disjoint affine opens have an affine `iSup`
+(`IsAffineOpen.biSup_of_disjoint`).  So this section turns the refuted globally-projective
+antecedent into the true degree-graded one — `FiniteInAffine` of the ambient Picard
+scheme follows from projectivity of each degree piece, which is exactly the conjunct
+`Scheme.PointedPicSharpRep` asks and the shape the Milne–Kollár degree assembly (`G4`)
+produces.
+
+Everything here is about coproducts of arbitrary schemes and carries **no** hypothesis
+about the curve; nothing closes the seam.  It is the substrate the earlier sections said
+was missing ("degree-invariance of the semilinear action, together with the degree-graded
+decomposition of `PicSchemeEt`" — the second half). -/
+
+section Coproduct
+
+/-- **`FiniteInAffine` is closed under arbitrary set-indexed coproducts.**  If every
+component scheme `g i` satisfies `FiniteInAffine`, so does `∐ g`.
+
+A finite `s ⊆ ∐ g` meets only the finitely many components indexed by `idx '' s`; within
+each, `s` pulls back along the open immersion `Sigma.ι g i` to a finite set covered by an
+affine open `U i`; the images `Sigma.ι g i ''ᵁ U i` are pairwise disjoint
+(`disjoint_opensRange_sigmaι`) affine opens (image of an affine open under an open
+immersion), so their finite `iSup` is affine (`IsAffineOpen.biSup_of_disjoint`) and
+contains `s`.
+
+This is the property `§5.5`'s refutation identified as the one the degree-graded Picard
+scheme has and global projectivity does not. -/
+theorem finiteInAffine_sigma {σ : Type v} [Small.{u, v} σ] (g : σ → Scheme.{u})
+    (h : ∀ i, FiniteInAffine (g i)) : FiniteInAffine (∐ g) := by
+  classical
+  letI : ∀ i, IsOpenImmersion (Sigma.ι g i) := fun i =>
+    Scheme.IsLocallyDirected.instIsOpenImmersionι (Discrete.functor g) { as := i }
+  intro s hs
+  have hcomp : ∀ x : (∐ g : Scheme.{u}), ∃ i, x ∈ Set.range (Sigma.ι g i).base := by
+    intro x
+    obtain ⟨i, y, hy⟩ := (sigmaOpenCover g).exists_eq x
+    exact ⟨i, y, hy⟩
+  choose idx hidx using hcomp
+  have hpre : ∀ i : σ, ((Sigma.ι g i).base ⁻¹' s).Finite := fun i =>
+    hs.preimage ((Sigma.ι g i).isOpenEmbedding.injective).injOn
+  choose U hU using fun i => h i _ (hpre i)
+  set J : Set σ := idx '' s with hJ
+  have hJfin : J.Finite := hs.image idx
+  refine ⟨⟨⨆ i ∈ J, (Sigma.ι g i) ''ᵁ (U i).1, ?_⟩, ?_⟩
+  · apply IsAffineOpen.biSup_of_disjoint hJfin
+    · intro i _
+      exact (U i).2.image_of_isOpenImmersion _
+    · intro i _ j _ hij
+      exact Disjoint.mono (Scheme.Hom.image_le_opensRange _ _)
+        (Scheme.Hom.image_le_opensRange _ _) (disjoint_opensRange_sigmaι g i j hij)
+  · intro x hx
+    obtain ⟨y, hy⟩ := hidx x
+    have hyU : y ∈ (U (idx x)).1 := by
+      apply hU (idx x)
+      simp only [Set.mem_preimage, hy]
+      exact hx
+    have hmem : x ∈ (Sigma.ι g (idx x)) ''ᵁ (U (idx x)).1 := ⟨y, hyU, hy⟩
+    exact (le_iSup₂ (f := fun i _ => (Sigma.ι g i) ''ᵁ (U i).1) (idx x)
+      ⟨x, hx, rfl⟩) hmem
+
+/-- **`FiniteInAffine` is closed under binary coproducts.**  The two-piece case of
+`finiteInAffine_sigma`, via `coprodIsoSigma` and the landed
+`Scheme.finiteInAffine_of_iso` (`Picard/PicEtPointedReduction.lean`). -/
+theorem finiteInAffine_coprod {X Y : Scheme.{u}} (hX : FiniteInAffine X)
+    (hY : FiniteInAffine Y) : FiniteInAffine (X ⨿ Y) := by
+  refine finiteInAffine_of_iso (coprodIsoSigma X Y).symm ?_
+  apply finiteInAffine_sigma
+  rintro ⟨i⟩
+  cases i
+  · simpa using hX
+  · simpa using hY
+
+end Coproduct
+
 end AlgebraicGeometry.Scheme
