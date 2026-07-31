@@ -364,6 +364,40 @@ theorem hasProperSupport_of_isZero {S' : Scheme.{u}} (g : Y ⟶ S') {M : Y.Modul
   haveI := isEmpty_schematicSupport_of_isZero hM
   exact IsProper.instOfIsFinite _
 
+/-- **A sheaf of modules whose sections vanish over every open is zero** — the exact
+converse of `subsingleton_sections_of_isZero`, upgrading that forward implication to a
+characterisation of the zero sheaf by its sections.
+
+`Scheme.Modules.toPresheaf` is a faithful functor to `TopCat.Presheaf Ab`; if every
+section group `Γ(M, V)` is a subsingleton then each value of the underlying presheaf is
+a zero object of `Ab` (`AddCommGrpCat.isZero_of_subsingleton`), so the presheaf is a
+zero functor (`CategoryTheory.Functor.isZero`), and a faithful additive functor reflects
+`𝟙 M = 0`, i.e. `IsZero M`.
+
+Mathlib carries no `IsZero`-from-sections converse for sheaves of modules on a scheme;
+this is the reusable vanishing criterion the divisor side needs, and the honest target
+for "a family cuts out the empty divisor" — a divisor is empty exactly when its structure
+sheaf has no sections anywhere. -/
+theorem isZero_of_forall_subsingleton_sections {M : Y.Modules}
+    (h : ∀ V : Y.Opens, Subsingleton Γ(M, V)) : IsZero M := by
+  have hp : IsZero ((Scheme.Modules.toPresheaf Y).obj M) :=
+    CategoryTheory.Functor.isZero _ fun V => by
+      have := h V.unop
+      exact AddCommGrpCat.isZero_of_subsingleton (M.presheaf.obj V)
+  rw [IsZero.iff_id_eq_zero]
+  apply (Scheme.Modules.toPresheaf Y).map_injective
+  rw [(Scheme.Modules.toPresheaf Y).map_id, (Scheme.Modules.toPresheaf Y).map_zero,
+    ← IsZero.iff_id_eq_zero]
+  exact hp
+
+/-- **A sheaf of modules is zero iff its sections vanish over every open.** Packages
+`subsingleton_sections_of_isZero` (forward) and `isZero_of_forall_subsingleton_sections`
+(converse) into the section-level characterisation of the zero sheaf. -/
+theorem isZero_iff_forall_subsingleton_sections {M : Y.Modules} :
+    IsZero M ↔ ∀ V : Y.Opens, Subsingleton Γ(M, V) :=
+  ⟨fun hM V => subsingleton_sections_of_isZero hM V,
+    isZero_of_forall_subsingleton_sections⟩
+
 end Scheme.Modules
 
 /-! ## §3. The empty divisor -/
