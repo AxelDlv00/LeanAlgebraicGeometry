@@ -207,7 +207,7 @@ import AlgebraicJacobian.Picard.Pic0EtStructure
 -- I-1058 / I-1060). Rooting it makes the axiom probe's cone honest for these five
 -- declarations, per the same I-0600 / I-0659 reason as `Pic0Dimension` above.
 import AlgebraicJacobian.Picard.DivPushforwardFlat
--- D3': the matrix-defined rank stratum is locally free of its indexed rank;
+-- D3' substrate: the matrix-defined rank stratum is locally free of its indexed rank;
 -- in rank one it is an immersed universal locus carrying an invertible sheaf.
 import AlgebraicJacobian.Picard.DivLocallyClosed
 -- The quasi-finiteness binder that every `DivPushforwardFlat` theorem carries, reduced
