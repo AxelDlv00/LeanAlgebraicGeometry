@@ -50,6 +50,8 @@ section-graded `sheafTensorObj` are the same object
   algebraic localization heart, first over `R` and then over `Localization S`.
 * `localizedTensorProductBaseChangeEquiv_mkLinearMap_tmul` — the named pure-tensor
   formula for the exact base-change equivalence.
+* `localizedTensorProductMap` / `isLocalizedModule_localizedTensorProductMap` — the
+  same result for arbitrary localization maps into an arbitrary localization algebra.
 
 ## Remaining obligations (the quasi-coherent case of `pullbackTensorMap_isIso`)
 
@@ -63,9 +65,10 @@ of `Picard/QuotScheme.lean`.  Concretely, it remains to:
    `Γ(A, D(f)) = Γ(A, V)_f` and `Γ(B, D(f)) = Γ(B, V)_f` via
    `isLocalizedModule_basicOpen_of_isQuasicoherent` (QuotScheme.lean), so
    `P(D(f)) = Γ(A, V)_f ⊗_{Γ(X, V)_f} Γ(B, V)_f`.
-2. Feed `localizedTensorProductBaseChangeEquiv` below to identify this with
-   `(Γ(A, V) ⊗_{Γ(X, V)} Γ(B, V))_f`, i.e. `P` is a localizing presheaf on the
-   basic-open basis; hence `tensorObj A B|_V` is the tilde of
+2. Feed `isLocalizedModule_localizedTensorProductMap` below to the two section
+   restriction maps.  Its codomain is already the tensor product over `Γ(X, D(f))`,
+   so this identifies it with `(Γ(A, V) ⊗_{Γ(X, V)} Γ(B, V))_f`, i.e. `P` is a
+   localizing presheaf on the basic-open basis; hence `tensorObj A B|_V` is the tilde of
    `Γ(A, V) ⊗ Γ(B, V)` and `tensorSectionHom A B V` is a `LinearEquiv`.
 3. Transport through `Modules.pullback_app_isoTensor` (QuotScheme.lean, the
    pullback side) and globalize by `isIso_of_isIso_restrict` over the affine cover,
@@ -82,7 +85,7 @@ case.  Its sole consumer (`pullback_moduleTensorPow_iso`) already carries
 would avoid the general ringed-space stalk machinery.
 -/
 
-universe u v w
+universe u v w uA vM vN
 
 open CategoryTheory AlgebraicGeometry Opposite
 open scoped TensorProduct
@@ -208,6 +211,54 @@ lemma localizedTensorProductBaseChangeEquiv_mkLinearMap_tmul
   rw [localizedTensorProductBaseChangeEquiv, LinearEquiv.trans_apply,
     localizedTensorProductEquiv_mkLinearMap_tmul]
   rfl
+
+/-- The tensor product of two localization maps, with the codomain tensor product
+taken over an arbitrary localization algebra `A`.  This is the exact algebraic map
+underlying restriction from an affine open to a basic open: unlike
+`localizedTensorProductBaseChangeEquiv`, it does not require replacing the target
+modules by the canonical `LocalizedModule` model. -/
+noncomputable def localizedTensorProductMap
+    {R : Type u} [CommSemiring R] (S : Submonoid R)
+    (A : Type uA) [CommSemiring A] [Algebra R A] [IsLocalization S A]
+    {M : Type v} {M' : Type vM} {N : Type w} {N' : Type vN}
+    [AddCommMonoid M] [Module R M] [AddCommMonoid N] [Module R N]
+    [AddCommMonoid M'] [Module R M'] [Module A M'] [IsScalarTower R A M']
+    [AddCommMonoid N'] [Module R N'] [Module A N'] [IsScalarTower R A N']
+    (f : M →ₗ[R] M') (g : N →ₗ[R] N') :
+    TensorProduct R M N →ₗ[R] TensorProduct A M' N' :=
+  ((IsLocalization.moduleTensorEquiv S A M' N').symm.restrictScalars R :
+      TensorProduct R M' N' ≃ₗ[R] TensorProduct A M' N').toLinearMap.comp
+    (TensorProduct.map f g)
+
+/-- `localizedTensorProductMap` sends a pure tensor to the tensor of the two
+localized sections. -/
+@[simp]
+lemma localizedTensorProductMap_tmul
+    {R : Type u} [CommSemiring R] (S : Submonoid R)
+    (A : Type uA) [CommSemiring A] [Algebra R A] [IsLocalization S A]
+    {M : Type v} {M' : Type vM} {N : Type w} {N' : Type vN}
+    [AddCommMonoid M] [Module R M] [AddCommMonoid N] [Module R N]
+    [AddCommMonoid M'] [Module R M'] [Module A M'] [IsScalarTower R A M']
+    [AddCommMonoid N'] [Module R N'] [Module A N'] [IsScalarTower R A N']
+    (f : M →ₗ[R] M') (g : N →ₗ[R] N') (m : M) (n : N) :
+    localizedTensorProductMap S A f g (m ⊗ₜ[R] n) = f m ⊗ₜ[A] g n := by
+  rfl
+
+/-- Tensoring two module-localization maps and changing the tensor base to the
+localization algebra is again a module localization.  This is the producer needed
+to combine the two quasi-coherent basic-open restriction theorems. -/
+theorem isLocalizedModule_localizedTensorProductMap
+    {R : Type u} [CommSemiring R] (S : Submonoid R)
+    (A : Type uA) [CommSemiring A] [Algebra R A] [IsLocalization S A]
+    {M : Type v} {M' : Type vM} {N : Type w} {N' : Type vN}
+    [AddCommMonoid M] [Module R M] [AddCommMonoid N] [Module R N]
+    [AddCommMonoid M'] [Module R M'] [Module A M'] [IsScalarTower R A M']
+    [AddCommMonoid N'] [Module R N'] [Module A N'] [IsScalarTower R A N']
+    (f : M →ₗ[R] M') (g : N →ₗ[R] N')
+    [IsLocalizedModule S f] [IsLocalizedModule S g] :
+    IsLocalizedModule S (localizedTensorProductMap S A f g) := by
+  exact IsLocalizedModule.of_linearEquiv S (TensorProduct.map f g)
+    ((IsLocalization.moduleTensorEquiv S A M' N').symm.restrictScalars R)
 
 /-! ## Quasi-coherence from basic-open section localization
 
