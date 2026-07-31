@@ -174,6 +174,7 @@ import AlgebraicJacobian.Picard.PicEtInvariantMatch
 import AlgebraicJacobian.Picard.PicEtPointedReduction
 import AlgebraicJacobian.Picard.PicEtQuotientHom
 import AlgebraicJacobian.Picard.QuasiProjectiveFiniteInAffine
+import AlgebraicJacobian.Picard.RepresentableByTerminal
 import AlgebraicJacobian.Picard.PicEtSeparated
 import AlgebraicJacobian.Picard.RigidifiedPic
 import AlgebraicJacobian.Picard.IdentityComponent
