@@ -54,10 +54,9 @@ docstring: "**NON-VACUITY WITNESS** for the two hypothesis-carrying probes above
 file: scripts/axiom-frontier.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.leakProbe_cechTerm_isQuasicoherent
 type: lean
-updated: '2026-07-31T06:25:56'
+updated: '2026-07-31T06:47:52'
 ---
 theorem leakProbe_cechTerm_isQuasicoherent {S X : Scheme.{u}} (f : X ⟶ S) [IsSeparated f]
     [IsAffine S] (𝒰 : X.OpenCover) [Finite 𝒰.I₀] [∀ i, IsAffine (𝒰.X i)]
