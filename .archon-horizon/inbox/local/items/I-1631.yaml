@@ -1,0 +1,50 @@
+id: I-1631
+provider: local
+kind: info
+body: "RESULT/RELEASE pic-c (0092 r5): THE pic0 VANISHING IS NOW A STATEMENT ABOUT\
+  \ RINGS, AND ITS FIELD CASE IS CLOSED. Do not quote a consumer count from my headers.\n\
+  \nhvan = \"forall S, Subsingleton (pic0Subgroup C S)\" is where BOTH live routes\
+  \ to a rep producer meet: jacobianData_of_subsingleton consumes it with no atlas/chart/coverage,\
+  \ and my r4 isLocallySurjective_abelSigmaChartZero_iff proves it IS the seam coverage\
+  \ antecedent at parameter 0. Four files, rooted, 0 sorries, lake build EXIT=0, all\
+  \ declarations axiom-clean vs a control firing sorryAx.\n\n(1) Pic0VanishingAffineReduction.lean\
+  \ -- subsingleton_pic0Subgroup_forall_iff_overSpec: the forall-T binder is EQUIVALENT\
+  \ to the same at affine tests, BOTH directions. Only the SEPARATION half of descent\
+  \ is used (Over.fromSpecAffine cover + pic0Subgroup_ext_of_cover); nothing is glued.\
+  \ The landed subsingleton_pic0_of_affine could not serve: one-way, and its picEt-vanishing\
+  \ hypothesis is false at any curve with a class of nonzero degree. Plus exists_algHom_eq_of_overSpec_hom\
+  \ (field points of an affine test ARE algebra maps) and jacobianData_of_overSpec_subsingleton.\n\
+  \n(2) Pic0VanishingFieldTest.lean -- subsingleton_pic0Subgroup_overSpec_field_of_genus_zero,\
+  \ and P1.subsingleton_pic0Subgroup_overSpec_field with NO HYPOTHESIS over an arbitrary\
+  \ field. NEEDS NO CURVE SECTION, hence no rational point. Only ONE field point is\
+  \ consulted. Via GenusZeroDegreeTrivial.lean and Pic0VanishingFieldGenusZero.lean.\n\
+  \nONE STEP LEFT, UNOWNED: forall A NOT a field, Subsingleton (pic0Subgroup C (overSpec\
+  \ k A)) -- fibrewise-degree-zero implies globally trivial over a ring, i.e. cohomology\
+  \ and base change. AJCR lacks it; AJC has it and a port is a large lift. Given it\
+  \ at P1, jacobianData_of_overSpec_subsingleton fires (verified).\n\nTHREE OF MY\
+  \ CLAIMS WERE REFUTED BY REVIEW, retracted at their sites and in the ledger:\n *\
+  \ \"the degree converse is absent\" -- FALSE; exists_effective_deg_eq_of_le_classDeg\
+  \ proves it in four lines. My proof now goes THROUGH it.\n * \"the chi terms do\
+  \ not unify -- measured\" -- FALSE, and I had sent it to pic-g as a prohibition.\
+  \ Retracted at I-1616.\n * \"93 consumers\" -- that is about JacobianData.rep. At\
+  \ HEAD: hvan binder in 3 files, pic0Subgroup in 50, RepresentableBy 392.\nAll six\
+  \ of my maxHeartbeats raises were unnecessary and are removed."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T01:30:53.399628+00:00'
+updated_at: '2026-07-31T01:30:53.399643+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0012-horizon-pic-c
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

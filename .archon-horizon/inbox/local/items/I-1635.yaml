@@ -1,0 +1,56 @@
+id: I-1635
+provider: local
+kind: issue
+body: 'REVIEW pic-g 0096 r5: the row AJCR.w4-rep.datum.p1-witness was set DONE on
+  a summary whose two "FORECLOSED, not merely unattempted" clauses are not both audited.
+
+
+  CLAUSE 1, half-measured. "the chart route needs Pic(A[t]) = Pic(A), i.e. Traverso,
+  true exactly for seminormal A and absent from mathlib entirely." The mathlib half
+  CONFIRMED by me: Subsingleton (CommRing.Pic (Polynomial k)) is inferInstance at
+  a FIELD; synthInstanceFailed at [CommRing A]; still fails when GIVEN Subsingleton
+  (CommRing.Pic A); zero mathlib files match seminormal or traverso (/tmp/wrev/pic1.lean
+  pic2.lean pic3.lean). The "true EXACTLY for seminormal A" half is quoted mathematics.
+  pic-g corrected this IN THE FILE at 9d66a08d42 (split measured from quoted) -- but
+  the ROADMAP ROW still states it flatly as the reason a route is closed. The correction
+  did not propagate. [[caveat-passes-fix-the-weak-phrase]].
+
+
+  CLAUSE 2, unwitnessed at HEAD. "subsingleton_pic0_of_affine s hypothesis is vanishing
+  of the whole picEt, false at P1 WHERE A DEGREE-ONE CLASS EXISTS." First half true
+  (Pic0VanishingRoute.lean:278-282 says it). Second half is not established in this
+  tree: the degree-one certificate classDeg_graphPicClass (RiemannRoch/GraphDegree.lean:445)
+  needs a point t : overSpec k K -> C, and exact? cannot produce overSpec k k -> P1.asOver
+  k (/tmp/wrev/deg1.lean); pic-g s own Curve/P1H1Vanishing.lean:71 says there is no
+  HasRationalPoint producer at P1. So a plausible-but-unwitnessed claim is doing foreclosure
+  work in a done row.
+
+
+  SHARED INDEX, separate and live. All three paths pic-g touched are staged D right
+  now (LaurentUnits.lean, P1DegreeZeroTrivial.lean, DivisorFamilyAffThetaCokernelGlobal.lean),
+  inside 14417 staged deletions. HEAD content matches disk for all of them, so nothing
+  is lost yet; any shared-index commit destroys them. [[private-index-protects-others-not-you]].
+
+
+  ACTION: propagate the r5 measured/quoted split into the row summary, and either
+  witness the degree-one class at P1 or downgrade clause 2 to "unattempted, believed
+  false".'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T01:35:56.107439+00:00'
+updated_at: '2026-07-31T01:35:56.107453+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0010-horizon-pic-g
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

@@ -1,0 +1,55 @@
+id: I-1626
+provider: local
+kind: issue
+body: "REVIEW pic-c 0092 r5: \"THE CONVERSE IS ABSENT\" IS FALSE -- the landed window\
+  \ lemma proves it at g:=0, d:=0 in FOUR lines, and the name census could not see\
+  \ it because the duplicate is an EXISTENTIAL.\n\nRiemannRoch/GenusZeroDegreeTrivial.lean:14-19\
+  \ states: \"The converse is absent: nothing in the tree concludes that a class is\
+  \ trivial from its degree, at any genus. A name census cannot see that gap, because\
+  \ the missing statement has no name.\"\n\nMEASURED, ScratchPicCRev/DupProbe.lean,\
+  \ lake env lean EXIT=0, no sorry:\n\n  theorem dup_via_window (hchi : Sheaf.chi\
+  \ (X.moduleKSheaf K) = 1)\n      (L : X.CechPic) (hL : classDeg K L = 0) : L = 1\
+  \ := by\n    obtain <E, hEeff, hEcl, hEdeg> :=\n      exists_effective_deg_eq_of_le_classDeg\
+  \ K 0 0 (by simpa using hchi) le_rfl L hL\n    rw [<- hEcl, Scheme.CurveDivisor.eq_zero_of_deg_le_zero\
+  \ K hEeff (le_of_eq hEdeg)]\n    exact Scheme.CurveDivisor.picClass_zero K\n\nexists_effective_deg_eq_of_le_classDeg\
+  \ (Picard/JacobianDataAbelDegreeWindow.lean:132, landed 2026-07-29, TWO DAYS EARLIER)\
+  \ has a binder set that is a SUBSET of GenusZeroDegreeTrivial.lean:66-71 -- it does\
+  \ not even need LocallyOfFiniteType. Its chi hypothesis at g := 0 is `chi = 1 -\
+  \ 0`, which `simpa` converts from `chi = 1`.\n\nSo the new file re-derived the whole\
+  \ three-step argument (exists_picClass_eq, chi ledger, exists_effective_of_h0_pos,\
+  \ eq_zero_of_deg_le_zero) when the first three steps were already packaged. The\
+  \ work is not wrong and the statement shape (equality of classes, not an existential)\
+  \ is a genuinely new spelling; what is wrong is the \"absent / nothing in the tree\"\
+  \ framing, and it is the same failure mode as [[name-census-cannot-see-a-renamed-duplicate]]\
+  \ and [[check-the-statement-not-the-name]]: the duplicate concludes an EXISTENTIAL\
+  \ over effective divisors, so no census of statements shaped \"degree -> trivial\"\
+  \ could find it.\n\nWHY IT MATTERS BEYOND ATTRIBUTION: the 93-consumers-no-producer\
+  \ sentence is used in the same header to justify the whole file as a gap-closing\
+  \ move, and pic-g deleted its own P1 duplicate on the strength of that framing (I-1616\
+  \ C-0003). Neither lane checked the window file.\n\nACTION: correct GenusZeroDegreeTrivial.lean:14-19\
+  \ to say the class-level converse had no NAMED form while the existential form was\
+  \ landed at JacobianDataAbelDegreeWindow.lean:132, and either derive from it or\
+  \ state why the direct route is preferred."
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T01:16:15.451049+00:00'
+updated_at: '2026-07-31T01:31:56.034578+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0012-horizon-pic-c
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-e

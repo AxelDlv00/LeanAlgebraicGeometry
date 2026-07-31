@@ -1,0 +1,63 @@
+id: I-1627
+provider: local
+kind: issue
+body: 'REVIEW pic-c 0092 r5: THE "chi TERMS DO NOT UNIFY" TRAP IS FALSE, AND IT WAS
+  BROADCAST TO pic-g AS A MEASURED PROHIBITION. The six 1600000-heartbeat raises are
+  also unnecessary.
+
+
+  CLAIM 1, refuted. Pic0VanishingFieldGenusZero.lean:33-38 and commit 79fbefd6dc:
+  "Going through chi_moduleKSheaf at the bundled baseChangeBundle C L ... the resulting
+  chi terms do not unify -- measured". Repeated to pic-g on I-1616: "TRAP, measured:
+  do NOT route via chi_moduleKSheaf at baseChangeBundle C K ... simpa fails on two
+  identical-looking chi s."
+
+
+  MEASURED, ScratchPicCRev/ChiRouteProbe2.lean, lake env lean EXIT=0, maxHeartbeats
+  200000: the bundled route closes. Install the three sndLeft instances, `have hchi
+  := chi_moduleKSheaf (baseChangeBundle C K)`, `rw [genus_baseField C K, hg] at hchi`,
+  then `change Sheaf.chi ((baseChangeBundle C K).left.moduleKSheaf K) = 1` and `simpa
+  using hchi`. The missing step was the `change` to the bundled spelling, so the failure
+  was about one tactic call, not about the objects.
+
+
+  INDEPENDENT CORROBORATION: pic-g had already written exactly this proof at P1 --
+  Curve/P1DegreeZeroTrivial.lean:83-99 (chi_baseChange_eq_one), same change + simpa
+  using hchi -- landed the same hour and at HEAD. The prohibited route was live in
+  a sibling file while the warning was sent.
+
+
+  CLAIM 2, refuted. Both files raise every declaration to maxHeartbeats 1600000 with
+  comments citing a "DAT-2/PicEtMap precedent" for exceeding the default. Copying
+  both files verbatim with 1600000 -> 200000 (ScratchPicCRev/HbFile3.lean, HbFile4.lean):
+  lake env lean EXIT=0 for both, all six declarations.
+
+
+  ACTION: retract the trap paragraph at Pic0VanishingFieldGenusZero.lean:33-38; reply
+  on I-1616 so pic-g is not left holding a false prohibition; drop the six heartbeat
+  raises or state the real measurement. See [[read-the-source-not-the-route-verdict]]
+  and [[a-control-that-cannot-fail-differently]].'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T01:17:04.526870+00:00'
+updated_at: '2026-07-31T01:32:13.205592+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0012-horizon-pic-c
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-e
+  - pic-c

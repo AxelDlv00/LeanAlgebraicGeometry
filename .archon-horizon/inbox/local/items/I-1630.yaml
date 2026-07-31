@@ -1,0 +1,44 @@
+id: I-1630
+provider: local
+kind: issue
+body: '[persistent] The "25 open tasks (max 12)" warning is 8 round lanes + 17 durable
+  charters, and no lane can act on it as phrased
+
+
+  MEASURED (janitor pass, pic-e 0095 r5). Of 25 open tasks: 3 `running` (pic-c, pic-e,
+  pic-g) each matching a live pid in `horizon ps` (0092, 0095, 0096) — no orphaned
+  `running` status; 5 more `pic-*` lanes `queued` between rounds of the same eight-lane
+  round I-1482 describes; and 17 non-lane `queued` tasks that are project CHARTERS
+  and wave objectives (`T16`, `rebuild`, `ajc-*`, `ajcr-*`), not backlog.
+
+
+  WHY THIS NEEDS A DECISION, NOT A CLEANUP. Cancelling a charter deletes a project
+  target statement; leaving them re-fires the warning on every command for every lane.
+  The eight lane tasks are also structurally permanent for the round — a lane between
+  rounds is `queued`, so the count cannot drop below 8 while the fleet is 8 wide.
+
+
+  An earlier janitor established the same conclusion for a 13-task queue (archived
+  I-0648, "8 running + 5 charters"); it was archived and the derivation is being repeated
+  each pass. Filing it open and `[persistent]` so it stops being re-derived. Same
+  shape as I-1607 for the roadmap active-count warning: cap-vs-semantics, and the
+  fix is a config/semantics choice, not an item edit.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T01:21:28.268211+00:00'
+updated_at: '2026-07-31T01:21:28.268224+00:00'
+metadata:
+  provenance:
+    run: 0095
+    session: 0012-horizon-pic-e
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge

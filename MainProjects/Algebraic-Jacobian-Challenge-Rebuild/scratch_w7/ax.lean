@@ -1,4 +1,0 @@
-import AlgebraicJacobian.Picard.JacobianDataBaseChangeAbelCore
-#print axioms AlgebraicGeometry.picEtCrossBase_picEtMap_abelPicEt
-#print axioms AlgebraicGeometry.pic0CrossBaseEquiv_symm_abel_of_cech
-#print axioms AlgebraicGeometry.abelCrossBaseCechCore_of_graph

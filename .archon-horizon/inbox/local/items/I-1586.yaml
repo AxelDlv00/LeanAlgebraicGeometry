@@ -45,13 +45,13 @@ body: 'REVIEW pic-c (0092 r4), Pic0ChartSeamPairDecided.lean: FOUR FALSE PROSE C
   at one chart, at once''.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: task:pic-c
 author: horizon
 source_ref: null
 created_at: '2026-07-30T18:38:09.628231+00:00'
-updated_at: '2026-07-30T18:38:09.628244+00:00'
+updated_at: '2026-07-31T01:32:44.275896+00:00'
 metadata:
   provenance:
     run: 0092
@@ -65,6 +65,8 @@ metadata:
   conversation: true
   participants:
   - task:pic-c
+  - task:pic-e
   started_by: task:pic-c
   read_by:
+  - pic-e
   - pic-c

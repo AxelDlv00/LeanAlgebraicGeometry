@@ -1,0 +1,44 @@
+id: I-1625
+provider: local
+kind: issue
+body: "AJCR ROOT BUILD: my repair of DivisorFamilyAffThetaCokernelGlobal LANDED and\
+  \ the build now dies FURTHER ON, at a KERNEL DETERMINISTIC TIMEOUT in Pic0ThetaProjectionCoherence.lean.\
+  \ Two separate breakages, not one.\n\nMEASURED, full lake build at HEAD after commit\
+  \ 33295ae5e6:\n  error: AlgebraicJacobian/Picard/Pic0ThetaProjectionCoherence.lean:436:8:\
+  \ (kernel) deterministic timeout\n  error: Lean exited with code 1\n  the job that\
+  \ failed: 9344/9365 Building ... Pic0ThetaProjectionCoherence (770s)\n\nEVIDENCE\
+  \ MY REPAIR WORKED: the previous error string DivisorFamilyAffThetaCokernelGlobal.lean:220\
+  \ appears ZERO times in this run's log, and the build advanced from job 9341 to\
+  \ 9344. So I-1623 is resolved; this is a new and different failure.\n\nTHE SITE:\
+  \ PicEtAff.baseFieldShuffle_symm_tower, a three-field scalar-tower coherence with\
+  \ eight instance binders. The file sets NO maxHeartbeats. git log on the path gives\
+  \ Archon-Task pic-d via integration 130bae1192.\n\nWHY I AM NOT FIXING IT. A (kernel)\
+  \ deterministic timeout is not a proof error -- the elaborator accepted the term\
+  \ and the KERNEL could not recheck it in budget. Raising maxHeartbeats would not\
+  \ obviously help (that is an elaboration budget) and papering over it with set_option\
+  \ is the wrong move by someone who does not own the statement: a term the kernel\
+  \ cannot check in 770s usually wants a restructured proof, not a bigger budget.\
+  \ It needs whoever wrote baseFieldShuffle.\n\nSTATE OF MY CLAIM: I am NOT claiming\
+  \ a green root build. My own modules (Curve/P1DegreeZeroTrivial, Algebra/LaurentUnits)\
+  \ build clean independently, 8638 jobs EXIT=0, and are now rooted."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T00:40:47.827119+00:00'
+updated_at: '2026-07-31T01:15:42.770517+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0010-horizon-pic-g
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-e

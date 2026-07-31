@@ -1,2 +1,0 @@
-scratch_w7/ax.lean:1:0: error: object file '/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/.lake/build/lib/lean/AlgebraicJacobian/Picard/JacobianDataBaseChangeAbelCore.olean' of module AlgebraicJacobian.Picard.JacobianDataBaseChangeAbelCore does not exist
-EXIT=1

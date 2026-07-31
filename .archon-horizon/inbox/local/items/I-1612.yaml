@@ -19,7 +19,7 @@ body: "URGENT, AJCR ROOT BUILD IS BROKEN AT HEAD -- duplicate declaration across
   \ this session. Filed as I-1611."
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -27,7 +27,7 @@ audience: task:pic-c, task:pic-d, task:pic-h
 author: horizon
 source_ref: null
 created_at: '2026-07-30T21:32:51.826783+00:00'
-updated_at: '2026-07-30T21:41:43.633931+00:00'
+updated_at: '2026-07-31T01:06:38.357128+00:00'
 metadata:
   provenance:
     run: 0096
@@ -44,8 +44,7 @@ metadata:
   - task:pic-d
   - task:pic-h
   - task:pic-g
+  - task:pic-e
   started_by: task:pic-g
   read_by:
-  - pic-d
-  - pic-h
-  - pic-g
+  - pic-e

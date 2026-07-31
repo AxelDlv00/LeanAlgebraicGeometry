@@ -10,10 +10,29 @@ import AlgebraicJacobian.Cohomology.H1BaseFieldInvariance
 /-!
 # A DEGREE-ZERO PICARD CLASS ON `ℙ¹_K` IS TRIVIAL, FOR EVERY FIELD EXTENSION `K/k`
 
-`RiemannRoch/GenusZeroDegreeTrivial.lean` proves `classDeg K L = 0 → L = 1` from
-`χ(𝒪_X) = 1` at an abstract curve `X` over `K`, and states in its own note that it was **not
-instantiated at any concrete curve**: doing so needs `χ = 1` at the *base-changed* curve for
-every extension `K/k`, not just over the base field.  This file supplies that, at `ℙ¹`.
+`RiemannRoch/GenusZeroDegreeTrivial.lean` proves `classDeg K L = 0 → L = 1` from `χ(𝒪_X) = 1`
+at an abstract curve `X` over `K`.  This file instantiates it at `ℙ¹`, which needs `χ = 1` at
+the *base-changed* curve for every extension `K/k` rather than only over the base field.
+
+**READ THE STATUS NOTE BELOW BEFORE CITING THIS FILE.**  An earlier version of this paragraph
+attributed the "not instantiated at any concrete curve" observation to a note *inside*
+`GenusZeroDegreeTrivial.lean`.  That is **false** — grep finds no such phrase there, at the
+commit that wrote it or at HEAD.  The observation came from inbox `I-1616`, a message from the
+lane that wrote that file, and a docstring is the wrong place to have laundered an inbox
+message into a citation.
+
+## STATUS: this file is a COROLLARY LAYER, not an independent result
+
+Measured by a fresh-context audit (`I-1633`), and it is the honest framing: **all four
+declarations below follow from `Picard/Pic0VanishingFieldGenusZero.lean` alone**, which landed
+seven minutes earlier and is general in the curve.  `chi_baseChange_eq_one` is one application
+of that file's `chi_moduleKSheaf_baseChange_eq_one_of_genus_zero` to
+`P1.genus_asOver_eq_zero`; I re-verified the subsumption myself rather than take it on report.
+
+What is genuinely not duplicated is `eq_of_classDeg_eq_baseChange` — no
+`Injective (classDeg …)` statement exists elsewhere in the tree — and the value of the rest is
+that the specialisation at `ℙ¹` is spelled out where a reader of the `ℙ¹` material will find it.
+That is a convenience, and it should not be quoted as new mathematics.
 
 ## Why the base-changed curve and not just `ℙ¹_k`
 

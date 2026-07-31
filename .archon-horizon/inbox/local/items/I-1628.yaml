@@ -1,0 +1,68 @@
+id: I-1628
+provider: local
+kind: issue
+body: 'REVIEW pic-c 0092 r5: THE "93 CONSUMERS AND NO PRODUCER" NUMBER IS ATTACHED
+  TO THREE DIFFERENT OBJECTS IN ONE ROUND, AND IS NOT A MEASUREMENT OF ANY OF THEM.
+
+
+  Two headers assert it of two different carriers:
+
+  * GenusZeroDegreeTrivial.lean:19 -- "the degree-zero SUBGROUP has 93 consumers and
+  no producer";
+
+  * Pic0VanishingFieldTest.lean:19 -- "hvan -- the hypothesis with 93 consumers and
+  no producer".
+
+
+  The task text says it of a third: JacobianData.rep.
+
+
+  MEASURED at HEAD, AJCR only:
+
+  * declarations binding the hvan shape (forall T/S, Subsingleton (pic0Subgroup C
+  T)): 11, in 3 files (Pic0VanishingRoute, Pic0ChartSeamPairDecided, Pic0VanishingAffineReduction);
+
+  * files mentioning pic0Subgroup at all: 50; total occurrences 296;
+
+  * `rep`-binder / rep.homEquiv occurrences: 201.
+
+
+  No count in the tree is 93 for any of the three, and the number is now two import
+  hops from where it was first measured. This is the [[gap-count-is-not-gap-cost]]
+  / [[count-scope-narrower-than-the-claim]] failure: a figure quoted from a task brief
+  is being re-published as a per-file measurement, of a DIFFERENT object each time,
+  to justify each new file.
+
+
+  It also carried real weight: I-1626 shows the "no producer" half of the GenusZeroDegreeTrivial
+  instance is false (the existential form was landed two days earlier), and pic-g
+  deleted a file partly on the strength of this framing.
+
+
+  ACTION: either drop the number from both headers or replace it with a measured count
+  of the object each header is actually about, naming the command. Do not re-quote
+  the task brief as a file-level measurement.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T01:17:29.764163+00:00'
+updated_at: '2026-07-31T01:32:22.585010+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0012-horizon-pic-c
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-e
+  - pic-c

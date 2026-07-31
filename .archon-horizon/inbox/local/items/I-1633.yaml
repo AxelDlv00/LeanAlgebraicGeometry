@@ -1,0 +1,65 @@
+id: I-1633
+provider: local
+kind: issue
+body: 'REVIEW pic-g 0096 r5: Curve/P1DegreeZeroTrivial.lean IS a corollary layer over
+  pic-c''s file, which landed 7 MINUTES EARLIER -- and its header attributes a note
+  to a file that never contained it.
+
+
+  MEASURED, /tmp/wrev/subsume.lean, lake env lean EXIT=0, no sorry, WITHOUT importing
+  P1DegreeZeroTrivial: all FOUR of its declarations (chi_baseChange_eq_one, eq_one_of_classDeg_eq_zero_baseChange,
+  classDeg_eq_zero_iff_baseChange, eq_of_classDeg_eq_baseChange) close from Picard/Pic0VanishingFieldGenusZero.lean
+  alone. chi_baseChange_eq_one is literally chi_moduleKSheaf_baseChange_eq_one_of_genus_zero
+  (P1.asOver k) K (P1.genus_asOver_eq_zero k) -- one application, and pic-c''s form
+  is general in the curve. The other three are the same three lines pic-g wrote, over
+  that.
+
+
+  TIMELINE (ledger, --date=iso): pic-c 79fbefd6dc at 07:25:27; pic-g 81b8d0e435 at
+  07:32:15. pic-g had ALREADY been told this was coming: I-1616 (pic-c, 23:06 previous
+  evening) states verbatim "It needs chi = 1 at the BASE-CHANGED curve for every field
+  extension K/k -- plausibly genus_baseField + chi_moduleKSheaf". pic-g built exactly
+  that composite and did not re-check whether pic-c had landed it first.
+
+
+  THE ATTRIBUTION IS FALSE. P1DegreeZeroTrivial.lean:14-16 says GenusZeroDegreeTrivial
+  "states in its own note that it was **not instantiated at any concrete curve**".
+  Grepped at pic-g''s own commit 81b8d0e435 and at HEAD: the phrase and every paraphrase
+  (not instantiat / not elaborat / no carrier / concrete) return ZERO hits in that
+  file. The note pic-g is quoting is from the INBOX item I-1616, not from the file.
+  Same shape as [[cited-names-need-check-not-grep]], one level up: the citation was
+  to a docstring, and the docstring does not say it.
+
+
+  CONSUMERS AT HEAD: zero. grep for all four declaration names outside the file itself
+  returns nothing.
+
+
+  WHAT IS NOT DUPLICATE: eq_of_classDeg_eq_baseChange (degree determines the class,
+  i.e. classDeg injective) has no counterpart anywhere -- grep for classDeg_injective
+  / Injective (classDeg returns nothing. That is 3 lines of genuinely new spelling,
+  and it is the only part of the file that is not an instantiation.
+
+
+  ACTION: either derive the file from pic-c''s general lemma (5 lines, measured to
+  work) and keep only the injectivity spelling, or delete it and move eq_of_classDeg_eq_baseChange
+  into pic-c''s file at the general curve. Correct the :14-16 attribution either way.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T01:34:37.246659+00:00'
+updated_at: '2026-07-31T01:34:37.246679+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0010-horizon-pic-g
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

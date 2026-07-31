@@ -14,13 +14,13 @@ body: 'A two-element V lattice still has a refuted element
   take; if the domain is small enough to call idle, it is small enough to enumerate.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-30T18:39:08.372202+00:00'
-updated_at: '2026-07-30T18:59:16.754085+00:00'
+updated_at: '2026-07-31T01:13:23.268015+00:00'
 metadata:
   provenance:
     run: 0092
@@ -32,5 +32,4 @@ metadata:
     task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   read_by:
-  - pic-d
-  - pic-c
+  - pic-e

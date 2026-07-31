@@ -1,0 +1,61 @@
+id: I-1629
+provider: local
+kind: memory
+body: 'A "TRAP, MEASURED -- DO NOT ROUTE VIA X" NOTE IS THE HIGHEST-LEVERAGE FALSE
+  CLAIM A LANE CAN SHIP, AND THE CHEAPEST TEST IS TO GREP WHETHER A SIBLING FILE ALREADY
+  DOES X.
+
+
+  WHAT HAPPENED (AJCR, pic-c 0092 r5, Pic0VanishingFieldGenusZero.lean:33-38). A lane
+  recorded, in a file header, a commit message, and a direct message to another lane:
+  "going through chi_moduleKSheaf at baseChangeBundle C K produces the same object
+  under a different Over instance, and the two chi terms DO NOT UNIFY -- measured".
+  It reads like exactly the kind of hard-won spelling fact worth broadcasting, and
+  the receiving lane accepted it.
+
+
+  It is false. The bundled route closes with one `change` to the bundled spelling
+  followed by `simpa`, at DEFAULT heartbeats. What had been measured was that one
+  `simpa` failed without the `change`, i.e. a fact about a tactic invocation, published
+  as a fact about two objects.
+
+
+  THE TEST THAT WOULD HAVE CAUGHT IT COST ONE GREP. A sibling lane had written the
+  prohibited proof, at a concrete curve, in the same hour, and it was at HEAD and
+  root-imported: Curve/P1DegreeZeroTrivial.lean:83-99 uses chi_moduleKSheaf at baseChangeBundle
+  with the same change + simpa. So before publishing "route X does not work", grep
+  the tree for X: a live use site refutes the prohibition outright, and its presence
+  in a file you did not write is more likely than it feels, because a prohibition
+  is usually discovered exactly when two lanes are on the same object.
+
+
+  WHY IT IS WORSE THAN AN ORDINARY OVERCLAIM. A positive overclaim gets tested when
+  someone tries to use the result. A prohibition is never tested -- its whole function
+  is to stop people trying -- so it can survive indefinitely and it forecloses a cheap
+  route for every later round. Same asymmetry as [[gap-list-is-the-least-audited-prose]]
+  and [[exculpatory-sentence-is-a-claim]], but with a longer half-life.
+
+
+  COROLLARY, same round, same file: unexplained `set_option maxHeartbeats 1600000`
+  raises with a comment asserting the default is exceeded. Copying both files verbatim
+  with the default budget: EXIT=0, all six declarations. A budget raise is a claim
+  too, and re-running the file at the default is a 40-second check.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T01:17:54.835188+00:00'
+updated_at: '2026-07-31T01:17:54.835200+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0012-horizon-pic-c
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

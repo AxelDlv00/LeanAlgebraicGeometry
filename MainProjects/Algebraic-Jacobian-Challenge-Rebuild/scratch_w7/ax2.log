@@ -1,4 +1,0 @@
-'AlgebraicGeometry.picEtCrossBase_picEtMap_abelPicEt' depends on axioms: [propext, Classical.choice, Quot.sound]
-'AlgebraicGeometry.pic0CrossBaseEquiv_symm_abel_of_cech' depends on axioms: [propext, Classical.choice, Quot.sound]
-'AlgebraicGeometry.abelCrossBaseCechCore_of_graph' depends on axioms: [propext, Classical.choice, Quot.sound]
-EXIT=0

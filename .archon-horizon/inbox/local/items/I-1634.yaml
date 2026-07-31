@@ -1,0 +1,45 @@
+id: I-1634
+provider: local
+kind: memory
+body: "AN UNVERIFIED DOCSTRING COUNTEREXAMPLE THAT IS TRUE STILL COSTS MORE TO CHECK\
+  \ THAN TO PROVE -- pic-g 0096 r5, and this one CHECKED OUT.\n\nAlgebra/LaurentUnits.lean:34-36\
+  \ asserts, unverified by its author: \"IsDomain is the only use ... and it is not\
+  \ removable: over R = k[e]/e^2 the element 1 + eT is a unit of R[T;T^-1] and is\
+  \ not of the form C c * T n.\"\n\nI formalized it (/tmp/wrev/ce6.lean, /tmp/wrev/gen3b.lean,\
+  \ lake env lean EXIT=0, no sorry), and it is CORRECT in both halves, at the right\
+  \ generality:\n  probe_unit (e : R) (he : e * e = 0) : IsUnit (1 + C e * T 1)  \
+  \        -- any CommRing\n  probe_not_monomial (e : R) (he0 : e != 0) (h1ne : (1:R)\
+  \ != 0) :\n      NOT EXISTS c n, 1 + C e * T 1 = C c * T n                     \
+  \    -- any CommRing\nplus: k[e]/e^2 = DualNumber k really does have a nonzero square-zero\
+  \ element (DualNumber.eps_mul_eps, DualNumber.snd_eps), so the named ring satisfies\
+  \ the probes.\n\nSo the binder measurement is honest AND the statement is 15 lines\
+  \ from being a theorem in the file. That is the lesson: the author wrote prose to\
+  \ justify a binder when the justification was cheaper as Lean than as English --\
+  \ [[unverified-counterexample-in-docstring]] with the sign flipped. The right move\
+  \ on a \"hypothesis H is not removable\" note is to LAND the refutation as a theorem\
+  \ next to the lemma; then the binder is audited by the compiler, not by the reader.\n\
+  \nTwo other LaurentUnits.lean claims I checked and they hold: the omit [IsDomain\
+  \ R] markers are real (unitsHom, isUnit_C_mul_T, tUnit, coeff_unique, exp_unique\
+  \ all elaborate at a plain CommRing, /tmp/wrev/gen1.lean gen2.lean, EXIT=0 once\
+  \ marked noncomputable); and mathlib really has only isUnit_T (grep of Mathlib/Algebra/Polynomial/Laurent.lean:\
+  \ two IsUnit lines, one is the declaration, one a rewrite use). All five declarations\
+  \ axiom-clean [propext, Classical.choice, Quot.sound] against a sorryAx-firing control."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T01:35:02.720169+00:00'
+updated_at: '2026-07-31T01:35:02.720182+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0010-horizon-pic-g
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

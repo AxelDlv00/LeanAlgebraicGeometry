@@ -3,16 +3,58 @@ title: 'PIC0-AFFINE-REDUCTION: reduce the forall-T binder of the pic0 vanishing 
   test RINGS'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'CLAIMED pic-c (0092 r5). The hypothesis ''forall T, Subsingleton (pic0Subgroup
-  C T)'' is where BOTH live routes to a rep producer meet: Pic0ChartSeamPairDecided.isLocallySurjective_abelSigmaChartZero_iff
-  makes the seam''s coverage antecedent EQUIVALENT to it at parameter 0, and Pic0VanishingRoute.jacobianData_of_subsingleton
-  consumes it with no atlas. It has ZERO producers. I-1603 prices its forall-T binder
-  as ''the whole difficulty''. Landed reduction exists only for picEt (subsingleton_picEt_of_affine),
-  whose hypothesis is strictly stronger and false at any curve with a degree-one class;
-  for pic0 only the one-way subsingleton_pic0_of_affine exists. I am building the
-  pic0-direct reduction so the forall-T statement becomes EQUIVALENT to a statement
-  over affine tests. Adds no hypothesis to any existing statement.'
-status: active
+summary: 'PIC0-AFFINE-REDUCTION + THE FIELD CASE: LANDED (pic-c, 0092 r5). Released;
+  the RING case is the only thing left and is unowned.
+
+
+  WHAT LANDED, four files, all rooted, 0 sorries, lake build EXIT=0, every declaration
+  axiom-clean [propext, Classical.choice, Quot.sound] against a control (AlgebraicGeometry.Jacobian)
+  firing sorryAx in the same probe.
+
+
+  (1) THE QUANTIFIER IS AN EQUIVALENCE. Picard/Pic0VanishingAffineReduction.lean.
+  subsingleton_pic0Subgroup_forall_iff_overSpec: ''forall T : Over (Spec k), Subsingleton
+  (pic0Subgroup C T)'' IFF the same at affine tests overSpec k A. BOTH directions.
+  Only the SEPARATION half of Zariski descent is used -- affine opens give a morphism-form
+  cover by Over.fromSpecAffine, pic0Subgroup_ext_of_cover closes it, nothing is glued.
+  The landed subsingleton_pic0_of_affine could NOT be used: it runs one way and its
+  hypothesis (vanishing of the whole picEt) is strictly stronger and false at any
+  curve with a class of nonzero degree, P1 included. Plus exists_algHom_eq_of_overSpec_hom
+  (field points of an affine test ARE algebra maps, so the hypothesis is entirely
+  ring-level) and jacobianData_of_overSpec_subsingleton (JacobianData from the ring
+  hypothesis: no atlas, chart, coverage, divRep, index finiteness or rational point).
+
+
+  (2) THE FIELD CASE IS CLOSED AT GENUS 0, AND UNCONDITIONALLY AT P1. Picard/Pic0VanishingFieldTest.lean:
+  subsingleton_pic0Subgroup_overSpec_field_of_genus_zero, and P1.subsingleton_pic0Subgroup_overSpec_field
+  with NO hypothesis over an arbitrary field. Needs NO CURVE SECTION and hence no
+  rational point -- the landed plus-unit surjectivity wants one, and this argument
+  works on the representative''s own cover carrier. Only ONE field point of the test
+  is consulted (the identity). Via Picard/Pic0VanishingFieldGenusZero.lean (relPicDeg
+  level, every field extension) and RiemannRoch/GenusZeroDegreeTrivial.lean (classDeg
+  level).
+
+
+  WHY IT MATTERS: hvan is where BOTH live routes to a rep producer meet -- jacobianData_of_subsingleton
+  consumes it with no atlas, and isLocallySurjective_abelSigmaChartZero_iff proves
+  it IS the seam''s coverage antecedent at parameter 0. Its field instances are now
+  closed.
+
+
+  THE ONE REMAINING STEP, unowned: forall A NOT a field, Subsingleton (pic0Subgroup
+  C (overSpec k A)). Fibrewise degree zero implies globally trivial over a base ring
+  = cohomology and base change, which AJCR does not have (the sibling AJC does; a
+  port is a large cross-project lift). Given it at P1, jacobianData_of_overSpec_subsingleton
+  fires immediately (verified it elaborates there).
+
+
+  THREE OF MY OWN CLAIMS WERE REFUTED BY REVIEW AND ARE RETRACTED AT THEIR SITES:
+  ''the degree converse is absent'' (exists_effective_deg_eq_of_le_classDeg proves
+  it in four lines; my proof now goes through it), ''the chi terms do not unify''
+  (false, and I had broadcast it to pic-g as a prohibition -- retracted at I-1616),
+  and a ''93 consumers'' count that belongs to JacobianData.rep, not hvan. Do not
+  quote a count from any of my headers.'
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -34,4 +76,4 @@ metadata:
     task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum
-  owner: pic-c
+  updated_at: '2026-07-31T01:29:30.369895+00:00'
