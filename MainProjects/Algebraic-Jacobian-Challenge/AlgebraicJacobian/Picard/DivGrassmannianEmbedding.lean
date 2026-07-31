@@ -73,13 +73,13 @@ end DivFamily
 
 namespace Modules
 
+set_option backward.isDefEq.respectTransparency false in
 /-- A finite global presentation of a module sheaf on `Spec R` induces a
 finite presentation of its module of global sections.
 
 The proof reconstructs the finite module cokernel underlying the sheaf
 presentation.  Full faithfulness of `tilde` identifies that cokernel with the
 global-section module, without any noetherian hypothesis on `R`. -/
-set_option backward.isDefEq.respectTransparency false in
 theorem module_finitePresentation_top_of_presentation
     {R : CommRingCat.{u}} (M : (Spec R).Modules) (P : M.Presentation)
     [P.IsFinite] :
