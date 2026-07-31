@@ -204,6 +204,132 @@ theorem thetaIdealInclApp_idealToGlued₁
   rw [Scheme.resHom_self]
   exact gluedToIdeal₁_idealToGlued₁ (A := A) (a := a) hW β hβ
 
+/-- The sectionwise theta-ideal inclusion commutes with restriction. -/
+theorem thetaIdealInclApp_res {W' W : (relCurve C R).Opens} (h : W' ≤ W)
+    (s : A.ThetaIdealSections a W) :
+    A.thetaIdealInclApp (a := a) W'
+        (secRes ((A.thetaIdealDatum a).sheaf) h s) =
+      twistRes R (relCover C R (fiberTwoCover π)).V₀
+        (relCover C R (fiberTwoCover π)).V₁ (relThetaCocycle C R π a) h
+        (A.thetaIdealInclApp (a := a) W s) := by
+  apply Subtype.ext
+  apply Prod.ext
+  · change gluedToIdeal₀ A a inf_le_right
+        (secRes ((A.thetaIdealDatum a).sheaf) inf_le_left
+          (secRes ((A.thetaIdealDatum a).sheaf) h s)) =
+      (relCurve C R).resHom (inf_le_inf_right _ h)
+        (gluedToIdeal₀ A a inf_le_right
+          (secRes ((A.thetaIdealDatum a).sheaf) inf_le_left s))
+    simpa only [secRes_secRes] using
+      (gluedToIdeal₀_secRes (A := A) (a := a) (inf_le_inf_right _ h)
+        inf_le_right (secRes ((A.thetaIdealDatum a).sheaf) inf_le_left s))
+  · change gluedToIdeal₁ A a inf_le_right
+        (secRes ((A.thetaIdealDatum a).sheaf) inf_le_left
+          (secRes ((A.thetaIdealDatum a).sheaf) h s)) =
+      (relCurve C R).resHom (inf_le_inf_right _ h)
+        (gluedToIdeal₁ A a inf_le_right
+          (secRes ((A.thetaIdealDatum a).sheaf) inf_le_left s))
+    simpa only [secRes_secRes] using
+      (gluedToIdeal₁_secRes (A := A) (a := a) (inf_le_inf_right _ h)
+        inf_le_right (secRes ((A.thetaIdealDatum a).sheaf) inf_le_left s))
+
+
+/-! ## The sheaf morphism and monicity -/
+
+/-- The natural transformation underlying the theta-ideal inclusion. -/
+noncomputable def thetaIdealInclPresheaf :
+    (A.thetaIdealDatum a).sheaf.obj ⟶ (relThetaTwistSheaf C R π a).obj where
+  app W := ModuleCat.ofHom (A.thetaIdealInclApp (a := a) W.unop)
+  naturality := by
+    intro U V i
+    apply ModuleCat.hom_ext
+    apply LinearMap.ext
+    intro s
+    exact A.thetaIdealInclApp_res (a := a) i.unop.le s
+
+/-- The canonical inclusion `O(a Theta - d) -> O(a Theta)`. -/
+noncomputable def thetaIdealIncl :
+    (A.thetaIdealDatum a).sheaf ⟶ relThetaTwistSheaf C R π a :=
+  (fullyFaithfulSheafToPresheaf _ _).preimage
+    (thetaIdealInclPresheaf (A := A) (a := a))
+
+theorem thetaIdealIncl_hom :
+    (thetaIdealIncl (A := A) (a := a)).hom =
+      thetaIdealInclPresheaf (A := A) (a := a) :=
+  (fullyFaithfulSheafToPresheaf _ _).map_preimage
+    (X := (A.thetaIdealDatum a).sheaf) (Y := relThetaTwistSheaf C R π a)
+      (thetaIdealInclPresheaf (A := A) (a := a))
+
+@[simp]
+theorem thetaIdealIncl_app (W : (relCurve C R).Opens) :
+    (thetaIdealIncl (A := A) (a := a)).hom.app (op W) =
+      ModuleCat.ofHom (A.thetaIdealInclApp (a := a) W) := by
+  rw [thetaIdealIncl_hom (A := A) (a := a)]
+  rfl
+
+/-- The theta-ideal inclusion is injective on sections over every open. -/
+theorem thetaIdealInclApp_injective (W : (relCurve C R).Opens) :
+    Function.Injective (A.thetaIdealInclApp (a := a) W) := by
+  intro s t hst
+  have h0 : A.thetaIdealInclFst a W s = A.thetaIdealInclFst a W t :=
+    congrArg (fun q => q.val.1) hst
+  have h1 : A.thetaIdealInclSnd a W s = A.thetaIdealInclSnd a W t :=
+    congrArg (fun q => q.val.2) hst
+  let V₀ := (relCover C R (fiberTwoCover π)).V₀
+  let V₁ := (relCover C R (fiberTwoCover π)).V₁
+  let s0 := secRes ((A.thetaIdealDatum a).sheaf) (inf_le_left : W ⊓ V₀ ≤ W) s
+  let t0 := secRes ((A.thetaIdealDatum a).sheaf) (inf_le_left : W ⊓ V₀ ≤ W) t
+  let s1 := secRes ((A.thetaIdealDatum a).sheaf) (inf_le_left : W ⊓ V₁ ≤ W) s
+  let t1 := secRes ((A.thetaIdealDatum a).sheaf) (inf_le_left : W ⊓ V₁ ≤ W) t
+  change gluedToIdeal₀ A a inf_le_right s0 = gluedToIdeal₀ A a inf_le_right t0 at h0
+  change gluedToIdeal₁ A a inf_le_right s1 = gluedToIdeal₁ A a inf_le_right t1 at h1
+  have hs0 : s0 = t0 := by
+    apply gluedSections_ext₀ (A := A) (a := a) (inf_le_right : W ⊓ V₀ ≤ V₀)
+    intro i
+    apply A.eqn_res_cancel (Sum.inl i) inf_le_right
+    change (relCurve C R).resHom inf_le_right (A.eqn (Sum.inl i)) *
+        A.gluedComp₀ s0 i =
+      (relCurve C R).resHom inf_le_right (A.eqn (Sum.inl i)) * A.gluedComp₀ t0 i
+    calc
+      _ = (relCurve C R).resHom inf_le_left (gluedToIdeal₀ A a inf_le_right s0) :=
+        (res_gluedToIdeal₀ (inf_le_right : W ⊓ V₀ ≤ V₀) s0 i).symm
+      _ = (relCurve C R).resHom inf_le_left (gluedToIdeal₀ A a inf_le_right t0) :=
+        congrArg ((relCurve C R).resHom inf_le_left) h0
+      _ = _ := res_gluedToIdeal₀ (inf_le_right : W ⊓ V₀ ≤ V₀) t0 i
+  have hs1 : s1 = t1 := by
+    apply gluedSections_ext₁ (A := A) (a := a) (inf_le_right : W ⊓ V₁ ≤ V₁)
+    intro j
+    apply A.eqn_res_cancel (Sum.inr j) inf_le_right
+    change (relCurve C R).resHom inf_le_right (A.eqn (Sum.inr j)) *
+        A.gluedComp₁ s1 j =
+      (relCurve C R).resHom inf_le_right (A.eqn (Sum.inr j)) * A.gluedComp₁ t1 j
+    calc
+      _ = (relCurve C R).resHom inf_le_left (gluedToIdeal₁ A a inf_le_right s1) :=
+        (res_gluedToIdeal₁ (inf_le_right : W ⊓ V₁ ≤ V₁) s1 j).symm
+      _ = (relCurve C R).resHom inf_le_left (gluedToIdeal₁ A a inf_le_right t1) :=
+        congrArg ((relCurve C R).resHom inf_le_left) h1
+      _ = _ := res_gluedToIdeal₁ (inf_le_right : W ⊓ V₁ ≤ V₁) t1 j
+  apply TopCat.Sheaf.eq_of_locally_eq₂ ((A.thetaIdealDatum a).sheaf)
+    (homOfLE (inf_le_left : W ⊓ V₀ ≤ W))
+    (homOfLE (inf_le_left : W ⊓ V₁ ≤ W))
+  · rw [← inf_sup_left, relCover_sup, inf_top_eq]
+  · exact hs0
+  · exact hs1
+
+/-- The theta-ideal inclusion is a monomorphism of sheaves. -/
+instance thetaIdealIncl_mono : Mono (thetaIdealIncl (A := A) (a := a)) := by
+  haveI happ : ∀ W, Mono ((thetaIdealInclPresheaf (A := A) (a := a)).app W) := fun W => by
+    rw [ModuleCat.mono_iff_injective]
+    exact thetaIdealInclApp_injective (A := A) (a := a) W.unop
+  haveI hpre : Mono (thetaIdealInclPresheaf (A := A) (a := a)) :=
+    NatTrans.mono_of_mono_app _
+  have hmap : (sheafToPresheaf _ _).map (thetaIdealIncl (A := A) (a := a)) =
+      thetaIdealInclPresheaf (A := A) (a := a) :=
+    thetaIdealIncl_hom (A := A) (a := a)
+  apply (sheafToPresheaf _ _).mono_of_mono_map
+  rw [hmap]
+  exact hpre
+
 /-! ## Arbitrary-open range
 
 The two chartwise lifts glue on every open.  This is the cover-independent range
@@ -327,132 +453,6 @@ theorem exists_thetaIdealInclApp_of_germ_mem
       twistRes R V₀ V₁ (relThetaCocycle C R π a) (hUW true) x
     rw [show secRes ((A.thetaIdealDatum a).sheaf) (hUW true) σ = s true from hσ true]
     exact hlocal true
-
-/-- The sectionwise theta-ideal inclusion commutes with restriction. -/
-theorem thetaIdealInclApp_res {W' W : (relCurve C R).Opens} (h : W' ≤ W)
-    (s : A.ThetaIdealSections a W) :
-    A.thetaIdealInclApp (a := a) W'
-        (secRes ((A.thetaIdealDatum a).sheaf) h s) =
-      twistRes R (relCover C R (fiberTwoCover π)).V₀
-        (relCover C R (fiberTwoCover π)).V₁ (relThetaCocycle C R π a) h
-        (A.thetaIdealInclApp (a := a) W s) := by
-  apply Subtype.ext
-  apply Prod.ext
-  · change gluedToIdeal₀ A a inf_le_right
-        (secRes ((A.thetaIdealDatum a).sheaf) inf_le_left
-          (secRes ((A.thetaIdealDatum a).sheaf) h s)) =
-      (relCurve C R).resHom (inf_le_inf_right _ h)
-        (gluedToIdeal₀ A a inf_le_right
-          (secRes ((A.thetaIdealDatum a).sheaf) inf_le_left s))
-    simpa only [secRes_secRes] using
-      (gluedToIdeal₀_secRes (A := A) (a := a) (inf_le_inf_right _ h)
-        inf_le_right (secRes ((A.thetaIdealDatum a).sheaf) inf_le_left s))
-  · change gluedToIdeal₁ A a inf_le_right
-        (secRes ((A.thetaIdealDatum a).sheaf) inf_le_left
-          (secRes ((A.thetaIdealDatum a).sheaf) h s)) =
-      (relCurve C R).resHom (inf_le_inf_right _ h)
-        (gluedToIdeal₁ A a inf_le_right
-          (secRes ((A.thetaIdealDatum a).sheaf) inf_le_left s))
-    simpa only [secRes_secRes] using
-      (gluedToIdeal₁_secRes (A := A) (a := a) (inf_le_inf_right _ h)
-        inf_le_right (secRes ((A.thetaIdealDatum a).sheaf) inf_le_left s))
-
-/-! ## The sheaf morphism and monicity -/
-
-/-- The natural transformation underlying the theta-ideal inclusion. -/
-noncomputable def thetaIdealInclPresheaf :
-    (A.thetaIdealDatum a).sheaf.obj ⟶ (relThetaTwistSheaf C R π a).obj where
-  app W := ModuleCat.ofHom (A.thetaIdealInclApp (a := a) W.unop)
-  naturality := by
-    intro U V i
-    apply ModuleCat.hom_ext
-    apply LinearMap.ext
-    intro s
-    exact A.thetaIdealInclApp_res (a := a) i.unop.le s
-
-/-- The canonical inclusion `O(a Theta - d) -> O(a Theta)`. -/
-noncomputable def thetaIdealIncl :
-    (A.thetaIdealDatum a).sheaf ⟶ relThetaTwistSheaf C R π a :=
-  (fullyFaithfulSheafToPresheaf _ _).preimage
-    (thetaIdealInclPresheaf (A := A) (a := a))
-
-theorem thetaIdealIncl_hom :
-    (thetaIdealIncl (A := A) (a := a)).hom =
-      thetaIdealInclPresheaf (A := A) (a := a) :=
-  (fullyFaithfulSheafToPresheaf _ _).map_preimage
-    (X := (A.thetaIdealDatum a).sheaf) (Y := relThetaTwistSheaf C R π a)
-      (thetaIdealInclPresheaf (A := A) (a := a))
-
-@[simp]
-theorem thetaIdealIncl_app (W : (relCurve C R).Opens) :
-    (thetaIdealIncl (A := A) (a := a)).hom.app (op W) =
-      ModuleCat.ofHom (A.thetaIdealInclApp (a := a) W) := by
-  rw [thetaIdealIncl_hom (A := A) (a := a)]
-  rfl
-
-/-- The theta-ideal inclusion is injective on sections over every open. -/
-theorem thetaIdealInclApp_injective (W : (relCurve C R).Opens) :
-    Function.Injective (A.thetaIdealInclApp (a := a) W) := by
-  intro s t hst
-  have h0 : A.thetaIdealInclFst a W s = A.thetaIdealInclFst a W t :=
-    congrArg (fun q => q.val.1) hst
-  have h1 : A.thetaIdealInclSnd a W s = A.thetaIdealInclSnd a W t :=
-    congrArg (fun q => q.val.2) hst
-  let V₀ := (relCover C R (fiberTwoCover π)).V₀
-  let V₁ := (relCover C R (fiberTwoCover π)).V₁
-  let s0 := secRes ((A.thetaIdealDatum a).sheaf) (inf_le_left : W ⊓ V₀ ≤ W) s
-  let t0 := secRes ((A.thetaIdealDatum a).sheaf) (inf_le_left : W ⊓ V₀ ≤ W) t
-  let s1 := secRes ((A.thetaIdealDatum a).sheaf) (inf_le_left : W ⊓ V₁ ≤ W) s
-  let t1 := secRes ((A.thetaIdealDatum a).sheaf) (inf_le_left : W ⊓ V₁ ≤ W) t
-  change gluedToIdeal₀ A a inf_le_right s0 = gluedToIdeal₀ A a inf_le_right t0 at h0
-  change gluedToIdeal₁ A a inf_le_right s1 = gluedToIdeal₁ A a inf_le_right t1 at h1
-  have hs0 : s0 = t0 := by
-    apply gluedSections_ext₀ (A := A) (a := a) (inf_le_right : W ⊓ V₀ ≤ V₀)
-    intro i
-    apply A.eqn_res_cancel (Sum.inl i) inf_le_right
-    change (relCurve C R).resHom inf_le_right (A.eqn (Sum.inl i)) *
-        A.gluedComp₀ s0 i =
-      (relCurve C R).resHom inf_le_right (A.eqn (Sum.inl i)) * A.gluedComp₀ t0 i
-    calc
-      _ = (relCurve C R).resHom inf_le_left (gluedToIdeal₀ A a inf_le_right s0) :=
-        (res_gluedToIdeal₀ (inf_le_right : W ⊓ V₀ ≤ V₀) s0 i).symm
-      _ = (relCurve C R).resHom inf_le_left (gluedToIdeal₀ A a inf_le_right t0) :=
-        congrArg ((relCurve C R).resHom inf_le_left) h0
-      _ = _ := res_gluedToIdeal₀ (inf_le_right : W ⊓ V₀ ≤ V₀) t0 i
-  have hs1 : s1 = t1 := by
-    apply gluedSections_ext₁ (A := A) (a := a) (inf_le_right : W ⊓ V₁ ≤ V₁)
-    intro j
-    apply A.eqn_res_cancel (Sum.inr j) inf_le_right
-    change (relCurve C R).resHom inf_le_right (A.eqn (Sum.inr j)) *
-        A.gluedComp₁ s1 j =
-      (relCurve C R).resHom inf_le_right (A.eqn (Sum.inr j)) * A.gluedComp₁ t1 j
-    calc
-      _ = (relCurve C R).resHom inf_le_left (gluedToIdeal₁ A a inf_le_right s1) :=
-        (res_gluedToIdeal₁ (inf_le_right : W ⊓ V₁ ≤ V₁) s1 j).symm
-      _ = (relCurve C R).resHom inf_le_left (gluedToIdeal₁ A a inf_le_right t1) :=
-        congrArg ((relCurve C R).resHom inf_le_left) h1
-      _ = _ := res_gluedToIdeal₁ (inf_le_right : W ⊓ V₁ ≤ V₁) t1 j
-  apply TopCat.Sheaf.eq_of_locally_eq₂ ((A.thetaIdealDatum a).sheaf)
-    (homOfLE (inf_le_left : W ⊓ V₀ ≤ W))
-    (homOfLE (inf_le_left : W ⊓ V₁ ≤ W))
-  · rw [← inf_sup_left, relCover_sup, inf_top_eq]
-  · exact hs0
-  · exact hs1
-
-/-- The theta-ideal inclusion is a monomorphism of sheaves. -/
-instance thetaIdealIncl_mono : Mono (thetaIdealIncl (A := A) (a := a)) := by
-  haveI happ : ∀ W, Mono ((thetaIdealInclPresheaf (A := A) (a := a)).app W) := fun W => by
-    rw [ModuleCat.mono_iff_injective]
-    exact thetaIdealInclApp_injective (A := A) (a := a) W.unop
-  haveI hpre : Mono (thetaIdealInclPresheaf (A := A) (a := a)) :=
-    NatTrans.mono_of_mono_app _
-  have hmap : (sheafToPresheaf _ _).map (thetaIdealIncl (A := A) (a := a)) =
-      thetaIdealInclPresheaf (A := A) (a := a) :=
-    thetaIdealIncl_hom (A := A) (a := a)
-  apply (sheafToPresheaf _ _).mono_of_mono_map
-  rw [hmap]
-  exact hpre
-
 /-! ## Global right exactness -/
 
 /-- Vanishing of `H^1(O(a Theta - d))` makes the theta quotient sheaf globally generated
