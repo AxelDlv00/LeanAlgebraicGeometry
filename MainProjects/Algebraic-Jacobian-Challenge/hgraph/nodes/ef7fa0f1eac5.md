@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.isFinitePresentation_tensorObj_left_of_isLocallyTrivial
 type: lean
-updated: '2026-08-01T05:52:45'
+updated: '2026-08-01T07:20:39'
 ---
 theorem isFinitePresentation_tensorObj_left_of_isLocallyTrivial
     {X : Scheme.{u}} (L F : X.Modules)
@@ -63,8 +63,11 @@ theorem isFinitePresentation_tensorObj_left_of_isLocallyTrivial
     dsimp only [P]
     letI : (q.presentation ij.1).IsFinite := hq.isFinite_presentation _
     infer_instance
-  have hsh : qT.shrink.IsFinitePresentation := by
+  have hqT : qT.IsFinitePresentation := by
     apply SheafOfModules.QuasicoherentData.IsFinitePresentation.mk
     intro ij
-    exact hP (Exists.choose ij.property)
+    exact hP ij
+  have hsh : qT.shrink.IsFinitePresentation :=
+    { isFinite_presentation := fun ij =>
+        hqT.isFinite_presentation (Exists.choose ij.property) }
   exact { exists_quasicoherentData := ⟨qT.shrink, hsh⟩ }

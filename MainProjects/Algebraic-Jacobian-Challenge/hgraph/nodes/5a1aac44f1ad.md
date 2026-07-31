@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.Scheme.Modules.scratch_isFinitePresentation_tensorObj_le
 file: ScratchPicF.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.Modules.scratch_isFinitePresentation_tensorObj_left_of_isLocallyTrivial
 type: lean
-updated: '2026-08-01T05:52:46'
+updated: '2026-08-01T07:20:42'
 ---
 theorem scratch_isFinitePresentation_tensorObj_left_of_isLocallyTrivial
     {X : Scheme.{u}} (L F : X.Modules)
