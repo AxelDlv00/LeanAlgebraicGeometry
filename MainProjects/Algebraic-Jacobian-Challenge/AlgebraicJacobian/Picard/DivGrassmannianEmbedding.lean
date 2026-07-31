@@ -371,12 +371,18 @@ theorem epi_of_appTop_baseChange_surjective
         LinearMap.range (q.val.app (.op (⊤ : (Spec R).Opens))).hom)]
     (hfib : ∀ (m : Ideal Γ(Spec R, (⊤ : (Spec R).Opens))), m.IsMaximal →
       Function.Surjective
-        ((q.val.app (.op (⊤ : (Spec R).Opens))).hom.baseChange
-          (Γ(Spec R, (⊤ : (Spec R).Opens)) ⧸ m))) :
+        ((show Γ(M, (⊤ : (Spec R).Opens)) →ₗ[Γ(Spec R, (⊤ : (Spec R).Opens))]
+            Γ(N, (⊤ : (Spec R).Opens)) from
+          (q.val.app (.op (⊤ : (Spec R).Opens))).hom).baseChange
+            (Γ(Spec R, (⊤ : (Spec R).Opens)) ⧸ m))) :
     Epi q := by
   apply epi_of_globalSections_surjective q
   change Function.Surjective (q.val.app (.op (⊤ : (Spec R).Opens))).hom
-  exact AlgebraicJacobian.TwoTerm.surjective_of_baseChange_quotient_surjective hfib
+  exact AlgebraicJacobian.TwoTerm.surjective_of_baseChange_quotient_surjective
+    (A := Γ(Spec R, (⊤ : (Spec R).Opens)))
+    (d := (show Γ(M, (⊤ : (Spec R).Opens)) →ₗ[Γ(Spec R, (⊤ : (Spec R).Opens))]
+      Γ(N, (⊤ : (Spec R).Opens)) from
+        (q.val.app (.op (⊤ : (Spec R).Opens))).hom)) hfib
 
 set_option backward.isDefEq.respectTransparency false in
 /-- Finite target sections discharge the cokernel condition in the native
@@ -389,8 +395,10 @@ theorem epi_of_appTop_baseChange_surjective_of_finite
       Γ(N, (⊤ : (Spec R).Opens))]
     (hfib : ∀ (m : Ideal Γ(Spec R, (⊤ : (Spec R).Opens))), m.IsMaximal →
       Function.Surjective
-        ((q.val.app (.op (⊤ : (Spec R).Opens))).hom.baseChange
-          (Γ(Spec R, (⊤ : (Spec R).Opens)) ⧸ m))) :
+        ((show Γ(M, (⊤ : (Spec R).Opens)) →ₗ[Γ(Spec R, (⊤ : (Spec R).Opens))]
+            Γ(N, (⊤ : (Spec R).Opens)) from
+          (q.val.app (.op (⊤ : (Spec R).Opens))).hom).baseChange
+            (Γ(Spec R, (⊤ : (Spec R).Opens)) ⧸ m))) :
     Epi q := by
   apply epi_of_appTop_baseChange_surjective q
   exact hfib
