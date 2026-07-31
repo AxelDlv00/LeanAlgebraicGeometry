@@ -494,6 +494,7 @@ import AlgebraicJacobian.Tangent.DualNumberChartPic
 import AlgebraicJacobian.Tangent.TwoChartHonestGenus
 import AlgebraicJacobian.Tangent.EpsChartSquare
 import AlgebraicJacobian.Tangent.TwoChartHonest
+import AlgebraicJacobian.Picard.TwoChartCechPicTrivial
 import AlgebraicJacobian.Tangent.EpsZeroSurjective
 import AlgebraicJacobian.Tangent.ChartClassNaturality
 import AlgebraicJacobian.Tangent.PicEpsKernelTrivial
