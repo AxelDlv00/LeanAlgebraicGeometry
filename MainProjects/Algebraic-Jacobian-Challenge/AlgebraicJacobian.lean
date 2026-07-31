@@ -366,11 +366,13 @@ import AlgebraicJacobian.RiemannRoch.Ledger.FiberBound
 import AlgebraicJacobian.RiemannRoch.Ledger.FiberCoordinateData
 import AlgebraicJacobian.RiemannRoch.Ledger.FiberCoordinateDivisor
 import AlgebraicJacobian.RiemannRoch.Ledger.FiberCoordinateLattice
--- `Ledger.BaseDivisorEveryField` splits `UniformBaseDivisor` into its existence clause (FREE at
--- every genus, over every field extension) and its degree clause (the whole residue of
--- extension-uniformity).  Named separately from `FiberBound` because it is what re-prices the
--- gap: the "missing production from geometry" it was indexed as already exists.
+-- `Ledger.BaseDivisorEveryField` splits `UniformBaseDivisor` into its existence and degree
+-- clauses. `Ledger.FixedFiberDegree` closes the latter: one fixed source coordinate divisor
+-- base-changes to every field, its H0 kernel and H1 vanishing commute with that base change,
+-- and Riemann--Roch makes its degree independent of the extension. Thus it produces both
+-- `UniformBaseDivisor` and `UniformVanishing` without an additional hypothesis.
 import AlgebraicJacobian.RiemannRoch.Ledger.BaseDivisorEveryField
+import AlgebraicJacobian.RiemannRoch.Ledger.FixedFiberDegree
 import AlgebraicJacobian.RiemannRoch.LedgerPortability
 -- Not Riemann-Roch: the orbit condition of the A.3 dimension leg is strong enough to force
 -- `dim = 0`, so it is a refutation of its own predecessor's reading rather than a step.

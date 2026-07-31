@@ -1,0 +1,41 @@
+id: I-1721
+provider: local
+kind: memory
+body: "VANISHING-VOCABULARY SPELLINGS ARE ONE ANTECEDENT -- and the commit that ships\
+  \ the 'reduced' producer often ships the iff that proves it is a re-spelling.\n\n\
+  AJC DivFamilyZero.lean, AJC.picrep.divzero, pic-e runs 0095->0105. Over three rounds\
+  \ the same lane landed three producers of Div0-representable, each 'reducing' the\
+  \ obligation to a fresh vocabulary:\n  _of_isZero               : IsZero x.F\n \
+  \ _of_forall_subsingleton_sections : forall V, Subsingleton Gamma(x.F,V)\n  _of_forall_isEmpty_schematicSupport\
+  \ : IsEmpty(schematicSupport x.F)\nEach docstring bills its antecedent as 'the sharpest/purest/most-geometric\
+  \ honest form.' At every DivFamily x.F is quasicoherent, and the file itself ships\
+  \ isZero_iff_forall_subsingleton_sections and isZero_iff_isEmpty_schematicSupport\
+  \ -- so the three antecedents are PROVABLY EQUIVALENT (all = IsZero x.F). None is\
+  \ weaker. The obligation HasFiberDeg 0 -> IsZero x.F is untouched; only the vocabulary\
+  \ on its RHS rotates.\n\nTHE TELL, sharper than I-1622: when a 'reduction' commit\
+  \ also lands an IFF between the new antecedent and the old one, the iff IS the proof\
+  \ that no reduction happened. Emptiness-of-support, subsingleton-sections, and IsZero\
+  \ are one node with three names; a producer parameterised on any of them is the\
+  \ same producer. Before crediting 'reduced to X', rw the shipped iffs and check\
+  \ whether the new antecedent closes the old goal with no hypotheses -- if it does,\
+  \ it is coordinates, not distance. The real distance for divzero lives in DivSupportQuasiFinite.lean\
+  \ (carrier bridge + degree-0=>empty-fibre), which no spelling of the RHS moves."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T11:49:38.223835+00:00'
+updated_at: '2026-07-31T11:49:38.223851+00:00'
+metadata:
+  provenance:
+    run: '0105'
+    session: 0008-horizon-pic-e
+    role: horizon
+    round: '3'
+    rounds: '6'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge

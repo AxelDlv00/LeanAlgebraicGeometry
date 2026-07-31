@@ -3,17 +3,19 @@ title: 'Div-zero: the first DivFamily producer, and Div^0 representable by the t
   object'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Div0 producer reduced to EMPTY SUPPORT (pic-e 0105 r3, commits 64348cf522,
-  4f6a122ab9, DivFamilyZero.lean, axiom-clean, lake env lean EXIT=0). New reusable
-  bricks: isZero_of_isEmpty (module on empty scheme is zero) and isZero_of_isEmpty_schematicSupport
-  (quasi-coherent sheaf with empty schematic support is zero, via descent iso M=i_*i^*M)
-  -- converses of the landed isEmpty_schematicSupport_of_isZero. Producer divFunctorDegZero_representableByTerminal_of_forall_isEmpty_schematicSupport:
-  Div0 represented once every degree-0 divisor has empty support. REMAINING (open):
-  HasFiberDeg 0 -> IsEmpty(schematicSupport x.F). Two sub-obligations, both documented
-  in DivSupportQuasiFinite.lean: (a) the fibre-of-support vs support-of-fibre carrier
-  bridge (reverse annihilator inclusion, absent in tree), (b) degree-0 fibre => empty
-  fibre under quasi-finiteness. general-pi hz is UNPROVABLE due to finrank junk value;
-  producer must gate on fibre finiteness. No new hypothesis added.'
+summary: 'Div0 vanishing SUBSTRATE landed (pic-e 0105 r3, commits 64348cf522/4f6a122ab9/52ba623e36
+  + docstring fix, DivFamilyZero.lean, all axiom-clean [propext,Classical.choice,Quot.sound],
+  lake env lean EXIT=0). New mathlib-absent reusable converses of isEmpty_schematicSupport_of_isZero:
+  isZero_of_isEmpty (module on empty scheme is zero), isZero_of_isEmpty_schematicSupport
+  (quasi-coherent + empty support => zero, via descent iso M=i_*i^*M), and the packaging
+  iff isZero_iff_isEmpty_schematicSupport. The §5 producer ..._of_forall_isEmpty_schematicSupport
+  is a RE-SPELLING not a reduction (work-reviewer I-1722): since x.F is quasicoherent,
+  IsZero x.F / all-opens-subsingleton / empty-support are interderivable at every
+  site. REMAINING (genuine, unchanged): HasFiberDeg 0 -> IsEmpty(schematicSupport
+  x.F), needing the fibre-of-support vs support-of-fibre carrier bridge (reverse annihilator
+  inclusion, absent) + degree-0-fibre => empty-fibre, both documented at DivSupportQuasiFinite.isFinite_support_of_fibers.
+  Naive general-pi hz fails on the finrank junk value; a producer must gate on fibre
+  finiteness. No new hypothesis.'
 status: active
 kind: proof
 priority: normal
@@ -36,7 +38,7 @@ metadata:
     task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-31T11:20:02.862961+00:00'
+  updated_at: '2026-07-31T11:51:38.283503+00:00'
   pinned_commits:
   - 692b3fe104
   - 38e102eef6

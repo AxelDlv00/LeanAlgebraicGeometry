@@ -290,13 +290,16 @@ theorem isLocallyFreeOfRank_of_finite_projective_sections
     exact TopologicalSpace.Opens.mem_iSup.mpr ⟨t, htU t⟩
   · exact (hrank t) ▸ hfree t
 
+set_option maxHeartbeats 1600000 in
+-- Support descent expands two affine base-change transports; the default budget
+-- times out before the affine-instance reduction finishes.
+set_option synthInstance.maxHeartbeats 400000 in
 /-- **Finite-support base change.**  A quasi-coherent module whose schematic
 support is finite over the base has the expected arbitrary base-change
 isomorphism.  The support descent presentation turns the statement into the
 affine base-change theorem twice: once for the finite support map and once for
 its closed immersion into the ambient scheme.  No flatness of the base change
 is used. -/
-set_option maxHeartbeats 1600000 in
 noncomputable def pullbackPushforwardIso_of_isFinite_schematicSupport
     {X X' S S' : Scheme.{u}}
     {f : X ⟶ S} {g : S' ⟶ S} {g' : X' ⟶ X} {f' : X' ⟶ S'}
@@ -321,8 +324,8 @@ noncomputable def pullbackPushforwardIso_of_isFinite_schematicSupport
     MorphismProperty.of_isPullback sqZ inferInstance
   haveI : N.IsQuasicoherent := pullback_isQuasicoherent_hom i F inferInstance
   let hdesc : F ≅ (pushforward i).obj N := schematicSupportDescentIso F
-  let eSupport := Adelic.pushforwardPullbackBaseChangeIso sqZ N
-  let eImmersion := Adelic.pushforwardPullbackBaseChangeIso sq₁ N
+  let eSupport := AlgebraicGeometry.pushforwardPullbackBaseChangeIso sqZ N
+  let eImmersion := AlgebraicGeometry.pushforwardPullbackBaseChangeIso sq₁ N
   exact (pullback g).mapIso
       ((pushforward f).mapIso hdesc ≪≫
         ((pushforwardComp i f).app N).symm) ≪≫
@@ -366,13 +369,26 @@ theorem fiberRank_gammaTop_eq_fiberH0_of_iso
       exact h.symm
     · intro r n
       rw [smul_gammaSpecTop M r n]
+      rfl
   obtain ⟨⟨ePull, -⟩⟩ := pullback_app_isoTensor_baseMap_sectionLinearEquiv
     ((Spec R).fromSpecResidueField (t : Spec R)) M (isAffineOpen_top _)
       (isAffineOpen_top _) le_top
-  let eΓ := ((toPresheafOfModules (Spec ((Spec R).residueField t)) ⋙
-    PresheafOfModules.evaluation (Spec ((Spec R).residueField t)).ringCatSheaf.obj
-      (Opposite.op ⊤)).mapIso e).toLinearEquiv
-  letI := f.fiberSectionsModule t (f.fiberModule t F)
+  letI fiberBase := (f.fiberToSpecResidueField t).baseSectionsModule
+    (f.fiberModule t F) (⊤ : (f.fiber t).Opens)
+  let eSheaf : Γ(((Scheme.Modules.pullback
+      ((Spec R).fromSpecResidueField t)).obj M), ⊤) ≃ₗ[
+        Γ(Spec ((Spec R).residueField t), ⊤)]
+      Γ(((Scheme.Modules.pushforward (f.fiberToSpecResidueField t)).obj
+        (f.fiberModule t F)), ⊤) := by
+    let eAdd := ((toPresheafOfModules (Spec ((Spec R).residueField t)) ⋙
+      PresheafOfModules.evaluation (Spec ((Spec R).residueField t)).ringCatSheaf.obj
+        (Opposite.op ⊤)).mapIso e).toLinearEquiv.toAddEquiv
+    refine eAdd.toLinearEquiv ?_
+    intro r x
+    exact Scheme.Modules.Hom.app_smul e.hom r x
+  let ePush := Scheme.Modules.pushforwardTopEquivBaseSections
+    (f.fiberToSpecResidueField t) (f.fiberModule t F)
+  let eΓ := eSheaf.trans ePush
   have step₂ : Module.finrank Γ(Spec ((Spec R).residueField t), ⊤)
         (TensorProduct Γ(Spec R, ⊤)
           Γ(Spec ((Spec R).residueField t), ⊤) Γ(M, ⊤)) =
@@ -437,10 +453,11 @@ theorem pushforward_isLocallyFreeOfRank
   letI : IsLocallyNoetherian (Over.mk f).left := by
     change IsLocallyNoetherian (Spec R)
     infer_instance
+  letI : x.F.IsFinitePresentation := x.isFinitePresentation
   letI : x.F.IsQuasicoherent := by
     exact inferInstance
-  let q := pullback.snd π (Over.mk f).hom
-  let M := (Modules.pushforward q).obj x.F
+  let q := pullback.snd π f
+  let M : (Spec R).Modules := (Modules.pushforward q).obj x.F
   haveI : QuasiCompact q := by
     dsimp [q]
     infer_instance
@@ -448,7 +465,12 @@ theorem pushforward_isLocallyFreeOfRank
     dsimp [q]
     infer_instance
   haveI : M.IsFinitePresentation := x.isFinitePresentation_pushforward
-  haveI : M.IsQuasicoherent := inferInstance
+  haveI : M.IsQuasicoherent := Modules.pushforward_isQuasicoherent q x.F
+  letI baseM := ((𝟙 (Spec R)) : Spec R ⟶ Spec R).baseSectionsModule M
+    (⊤ : (Spec R).Opens)
+  haveI : IsNoetherianRing Γ(Spec R, (⊤ : (Spec R).Opens)) :=
+    isNoetherianRing_of_ringEquiv R
+      (Scheme.ΓSpecIso R).commRingCatIsoToRingEquiv.symm
   have hfinΓ : Module.Finite Γ(Spec R, (⊤ : (Spec R).Opens))
       Γ(M, (⊤ : (Spec R).Opens)) :=
     Modules.module_finite_sections_of_isFinitePresentation M

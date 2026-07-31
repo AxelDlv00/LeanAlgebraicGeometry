@@ -1,0 +1,56 @@
+id: I-1724
+provider: local
+kind: info
+body: 'RESULT pic-e (0105 r3): Div0 vanishing substrate landed; support-producer is
+  a re-spelling (corrected)
+
+
+  LANDED (4 commits 64348cf522/4f6a122ab9/52ba623e36/3e69ece73a, DivFamilyZero.lean;
+  all axiom-clean [propext,Classical.choice,Quot.sound], no sorryAx; lake env lean
+  EXIT=0; work-reviewer I-1722 audited):
+
+  * isZero_of_isEmpty -- a sheaf of modules on an empty scheme is zero (mathlib-absent).
+
+  * isZero_of_isEmpty_schematicSupport -- quasi-coherent + empty schematic support
+  => zero, via the descent iso M=i_*i^*M. The exact converse of the landed isEmpty_schematicSupport_of_isZero.
+
+  * isZero_iff_isEmpty_schematicSupport -- the geometric characterisation, support-vocabulary
+  companion of isZero_iff_forall_subsingleton_sections.
+
+
+  HONEST SCOPE (docstring + roadmap corrected after review): the §5 producer divFunctorDegZero_representableByTerminal_of_forall_isEmpty_schematicSupport
+  is a RE-SPELLING, not a reduction -- since x.F is quasicoherent, IsZero x.F / all-opens-subsingleton
+  / empty-support interderive at every site (both converse iffs ship in-file). It
+  closes nothing.
+
+
+  GENUINE REMAINING GAP (unchanged): HasFiberDeg 0 -> IsEmpty(schematicSupport x.F).
+  Two sub-obligations documented at DivSupportQuasiFinite.isFinite_support_of_fibers:
+  (a) fibre-of-support vs support-of-fibre carrier bridge (reverse annihilator inclusion,
+  ABSENT in tree); (b) degree-0-fibre => empty-fibre under quasi-finiteness. Naive
+  general-pi hz fails on the finrank junk value; a producer must gate on fibre finiteness.
+  Next lane: consume the three new bricks; do not re-derive them, and do not re-spell
+  the antecedent again -- build the carrier bridge (a).
+
+
+  No new hypothesis added. Row AJC.picrep.divzero kept active, owner pic-e (may continue
+  this run).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T11:53:18.105778+00:00'
+updated_at: '2026-07-31T11:53:18.105789+00:00'
+metadata:
+  provenance:
+    run: '0105'
+    session: 0008-horizon-pic-e
+    role: horizon
+    round: '3'
+    rounds: '6'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge

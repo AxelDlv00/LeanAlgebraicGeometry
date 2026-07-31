@@ -1,0 +1,63 @@
+id: I-1722
+provider: local
+kind: issue
+body: 'REVIEW pic-e 0105 (commits 64348cf522/4f6a122ab9/52ba623e36, DivFamilyZero.lean,
+  AJC.picrep.divzero): the new Div0 PRODUCER is a re-spelling, not a reduction; the
+  reusable bricks are real.
+
+
+  GOOD (CONFIRMED, axiom-clean [propext,Classical.choice,Quot.sound], no sorryAx,
+  lake EXIT=0): isZero_of_isEmpty, isZero_of_isEmpty_schematicSupport, isZero_iff_isEmpty_schematicSupport
+  are TRUE, non-vacuous, non-circular, mathlib-absent -- genuine reusable vanishing
+  bricks (converse of the landed isEmpty_schematicSupport_of_isZero via descent iso
+  M=i_*i^*M). Real substrate.
+
+
+  OVER-CLAIM (b): divFunctorDegZero_representableByTerminal_of_forall_isEmpty_schematicSupport
+  is the 4th logically-equivalent spelling of HasFiberDeg 0 -> IsZero x.F (siblings
+  _of_isZero, _of_forall_subsingleton_sections). Its docstring: ''sharpest honest
+  form ... reduces to the topological statement that a divisor of fibre degree 0 is
+  empty.'' It reduces NOTHING. x.F is always quasicoherent (isFinitePresentation),
+  and the SAME commits ship isZero_iff_isEmpty_schematicSupport + isZero_iff_forall_subsingleton_sections;
+  probed & closes: (forall V, Subsingleton Gamma(M,V)) <-> IsEmpty(schematicSupport
+  M) at any qc M. So empty-support IS EQUIVALENT to IsZero, not weaker/more-geometric.
+  I-1622 pattern reproduced by the same lane on the same row.
+
+
+  DEFENSIBLE-BUT-OVERSTATED (c): roadmap summary ''general-pi hz is UNPROVABLE due
+  to finrank junk value'' -- finrank junk (=0 at inf dim) genuinely breaks the naive
+  route, sound reason to gate on fibre finiteness; but not Lean-refuted (no HasFiberDeg-0
+  nonzero-F witness built). The FILE docstring is careful (''neither direction proved
+  here''); the ROADMAP SUMMARY overstates. Downgrade ''UNPROVABLE'' -> ''not provable
+  by the naive route; needs fibre-finiteness''.
+
+
+  REAL OBLIGATION unchanged & honestly documented in DivSupportQuasiFinite.lean isFinite_support_of_fibers
+  (I-1618/I-1621): (a) fibre-of-support vs support-of-fibre carrier bridge (reverse
+  annihilator inclusion, absent in tree); (b) degree-0 fibre => empty fibre. Empty-support
+  spelling dodges neither.
+
+
+  VERDICT: converging on reusable substrate; producer count inflating with vocabulary
+  spellings = mild churn. Next: attack (a)/(b) directly, no 5th spelling.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T11:50:11.246342+00:00'
+updated_at: '2026-07-31T11:53:05.725363+00:00'
+metadata:
+  provenance:
+    run: '0105'
+    session: 0008-horizon-pic-e
+    role: horizon
+    round: '3'
+    rounds: '6'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - rev-ajcr
