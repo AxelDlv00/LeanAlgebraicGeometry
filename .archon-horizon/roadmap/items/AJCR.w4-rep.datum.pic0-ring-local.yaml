@@ -1,60 +1,29 @@
 id: AJCR.w4-rep.datum.pic0-ring-local
-title: 'PIC0-RING-LOCAL: reduce the ring case of the pic0 vanishing to LOCAL test
-  rings (Zariski-local on Spec A), so the remaining obligation is at a local ring'
+title: 'PIC0-RING-LOCAL: pointwise prime/Away reduction of the ring-case vanishing
+  (no local-ring theorem yet)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'ADVANCED, NO GATE CLOSED (pic-g, 0096 r7). Released. Three files, rooted,
-  0 sorries, every declaration axiom-clean [propext, Classical.choice, Quot.sound]
-  vs a control (AlgebraicGeometry.Jacobian) firing sorryAx. lake build EXIT=0.
+summary: 'ADVANCED, NO GATE CLOSED (pic-g, 0096 r7). Released; all declarations are
+  sorry-free and axiom-clean.
 
 
-  (1) THE QUANTIFIER IS ZARISKI-LOCAL. Picard/Pic0RingZariskiLocal.lean. Both spellings
-  of the surviving ring-case obligation reduce to a finite covering family of localizations,
-  using only the SEPARATION half of the landed Zariski sheaf property (PicEtAff.eq_of_away_eq);
-  nothing is glued. Then PicEtAff.subsingleton_of_forall_prime / rigidity_of_forall_prime
-  remove the cover from the STATEMENT: a basic-open neighbourhood at each prime suffices,
-  via Ideal.span_eq_top_iff_finite (compactness of Spec A). jacobianData_of_forall_prime_subsingleton
-  and _rigidity compose that to the goal object, so the whole vanishing route now
-  has a shortest form: a LOCAL computation of the plus construction at each prime
-  of each test algebra, nothing else.
+  The landed results are a statement-level equivalence between the global ring-case
+  predicate and a finite family of Localization.Away predicates, together with the
+  converse forall-prime form. They do NOT reduce the obligation to local rings: Localization.Away
+  is a basic-open localization, not a local ring, and the outer forall-A equivalence
+  makes the producer form a restatement rather than new representability progress.
+  The missing AtPrime-to-Away spreading-out bridge is unowned (I-1665).
 
 
-  (2) THE DEGENERATE SITE IS SETTLED, and it went the opposite way to the fear. hrigAff
-  antecedent is vacuous at a subsingleton test ring, which made it the cheapest potential
-  refutation site (I-1655, recorded as unchecked). PicEtAff.subsingleton_of_subsingleton
-  proves the CONCLUSION holds there anyway, unconditionally: Spec of a subsingleton
-  ring is empty, so the product is, so CechPic and relPic are trivial, and every etale
-  cover of a subsingleton ring is again subsingleton. So the affine spelling is SATISFIED
-  at that site, not refuted.
+  The subsingleton test ring is only a vacuous non-counterexample: the conclusion
+  holds there, but inhabitability of hrigAff on nonempty spectra remains open. The
+  two-chart Cech and Laurent files are supporting computations; they do not discharge
+  the general ring case.
 
 
-  (3) COMPUTING Pic ON A TWO-CHART COVER IS COMPUTING UNIT GROUPS. Picard/TwoChartCechPicTrivial.lean.
-  The Wave-5 tangent lane built both halves of the two-chart comparison and never
-  composed them; the composite turns a fact about the unit groups of THREE RINGS into
-  triviality of a Picard class, general in the scheme.
-
-
-  (4) Pic(P1_A) = Z OVER A DOMAIN, both directions. Picard/LaurentTwoChartCoboundary.lean,
-  mem_laurentCoboundaryUnits_iff. AND the finding that runs against my own (3): not_tUnit_mem_laurentCoboundaryUnits
-  shows the UNIVERSAL hypothesis of (3) is FALSE at P1 -- t is not a coboundary. Repaired
-  in place by cechPic_eq_one_of_forall_presenting_coboundary, which constrains only
-  the PRESENTING units and is a proved weakening. The obvious repair (the iff form)
-  is VACUOUS and I shipped it first: the unused-variable linter flagged the chart-triviality
-  hypothesis as doing no work.
-
-
-  THE RESIDUE, exactly, and it is NOT the quantifier any more: NO DEGREE MAP EXISTS
-  on the two-chart Cech Picard group. Searched, absent. So "the class has degree zero"
-  cannot yet be converted into "its presenting unit is C of a unit", which is the
-  one bridge between the P1 computation and a real discharge of the ring case. That
-  bridge is the next brick and it is pure bookkeeping compared with Traverso-Swan.
-
-
-  MEASURED, so nobody re-runs it: local does NOT imply seminormal. Subsingleton (CommRing.Pic
-  A) IS available for local A (mathlib CommRing.Pic.instSubsingletonOfFiniteMaximalSpectrum)
-  but Subsingleton (Pic (Polynomial A)) does NOT follow from IsLocalRing A -- exact?
-  fails. Seminormality is absent from mathlib. So (1) moves the obligation to local
-  rings and does not discharge it there.'
+  Remaining target: a genuine producer for the affine rigidity/vanishing hypothesis
+  over non-field test algebras, or an explicit spreading-out theorem that supplies
+  the Away witnesses. No local-ring shortcut is claimed.'
 status: pending
 kind: proof
 priority: normal
@@ -77,4 +46,4 @@ metadata:
     task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-31T06:20:25.075416+00:00'
+  updated_at: '2026-07-31T08:18:10.877019+00:00'

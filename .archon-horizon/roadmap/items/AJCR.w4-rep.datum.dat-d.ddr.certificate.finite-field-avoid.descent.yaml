@@ -1,43 +1,22 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.certificate.finite-field-avoid.descent
-title: Base-change twists and descend the finite-field atlas
+title: 'Finite-field avoidance endpoint: support containment and tube assembly (no
+  twist atlas)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: '*** PROTECTION CONFLICT, flagged review-ajcr r7 (2026-07-30). THE SECOND
-  HALF OF THIS ROW PRESCRIBES A ROUTE HUMAN DECISION I-0492 FORBIDS. Read this before
-  claiming; the row is pending, hence claimable, and its text points a prover at work
-  no lane may do. ***
+summary: 'PENDING, LOW, unowned. The legitimate residue is the finite-field avoidance
+  endpoint: transport the residue support into P1(k), combine image-cardinality injectivity
+  with the ncard <= g bound and the finite-cardinality P1 theorem, then spread the
+  fibre containment to a support tube.
 
 
-  WHAT IS FORBIDDEN. The sentence ''transport P1 automorphisms and fixed-twist divisor
-  charts across scalar extension, equip the outer atlas with semilinear Galois descent
-  data, and descend it ... depends on the twist-atlas architecture'' names exactly
-  the two things I-0492 clause 1 rules out: the GL_2(k)/Aut(P1) action on P1 (twistedP1Map
-  = pi >> P1.autOfMatrix, TwistedFiberTwoCover.lean:29 / P1Aut.lean:227), and descent
-  work whose only purpose is to rescue R1. The leaf it depends on, twist-atlas, is
-  REJECTED on precisely that ground. So a rejected leaf''s architecture is still being
-  prescribed by a claimable row.
+  Do not build GL2(k)/Aut(P1) actions, twisted fixed-chart atlases, or semilinear/Galois
+  descent whose purpose is to rescue the rejected twist route. The widened arbitrary-affine
+  carrier removes that twist quantifier; any later base-change or descent statement
+  must be formulated for the widened carrier and justified separately.
 
 
-  WHY IT SURVIVED: this row''s priority was lowered high -> low, but the SUMMARY was
-  never edited. A lane reads the text, not the priority field.
-
-
-  WHAT REMAINS LEGITIMATE, and it is the first sentence only: assemble the finite-field
-  avoidance endpoint -- transport the residue support into P1(k), combine image-ncard
-  injectivity with the ncard <= g bound and the finite-cardinality P1 theorem (finite-field-avoid.cardinality,
-  DONE), and spread the resulting fibre containment to a support tube. That half needs
-  no twist and no descent. Its two sibling inputs are done.
-
-
-  THE LIVE ROUTE INSTEAD OF THE OUTER ATLAS is R2/widened: IsLocallyCertifiedAff,
-  DivFamZarAff and divFunctorAff take (C, R, n) and NO pi (DivisorFamilyAffZar.lean:103,
-  :165; DivisorFamilyAffMap.lean:290), so the twist quantifier DISAPPEARS rather than
-  needing an atlas to absorb it. Live work over that carrier is the classifier (framecover-aff,
-  fieldmono-aff).
-
-
-  STATUS left pending and priority left low deliberately: the legitimate first half
-  is real work, and nothing here is claimed.'
+  This row records only the allowed endpoint assembly. Its sibling cardinality and
+  support-degree inputs are landed; no RepresentableBy producer is claimed here.'
 status: pending
 kind: proof
 priority: low
@@ -61,4 +40,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate.finite-field-avoid
   milestone: AJCR.w4-rep
-  updated_at: '2026-07-29T23:45:58.769222+00:00'
+  updated_at: '2026-07-31T08:21:03.767937+00:00'

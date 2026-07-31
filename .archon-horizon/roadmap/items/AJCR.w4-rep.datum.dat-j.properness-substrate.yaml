@@ -1,0 +1,41 @@
+id: AJCR.w4-rep.datum.dat-j.properness-substrate
+title: 'DAT-J properness substrate: universal closedness/projectivity of the divisor
+  source'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'HIGH-PRIORITY INFRASTRUCTURE GAP. DivSchemeQProj currently supplies only
+  quasi-compactness, locally-finite-type, and separatedness; its own boundary notes
+  that Grassmannian/Plucker projectivity and universal closedness are absent. DAT-J
+  needs a proper Abel source (or an equivalent universal-closedness certificate) to
+  construct AbelSourceData.isProper and feed the JacobianData properness route.
+
+
+  Deliver a genuine producer for IsProper of the widened divisor source, either by
+  formalizing the required projective/ample/Proj substrate or by proving universal
+  closedness through an equivalent valuative or closed-image argument. Keep this separate
+  from DAT-J finite-index, effectivity, and descent obligations. The current mathlib
+  pin has no general projective-morphism/ample/Proj API, so ownership and scope must
+  be explicit before proof work starts.'
+status: pending
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-31T08:21:48.215776+00:00'
+  provenance:
+    run: '0104'
+    session: 0002-horizon-rev-ajcr
+    role: horizon
+    round: '0'
+    rounds: '6'
+    task: rev-ajcr
+    task_title: 'Review and macro lane on Algebraic-Jacobian-Challenge-Rebuild: verify
+      real progress and source faithfulness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-j

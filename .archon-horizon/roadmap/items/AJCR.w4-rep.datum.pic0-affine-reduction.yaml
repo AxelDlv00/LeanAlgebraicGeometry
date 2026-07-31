@@ -54,7 +54,7 @@ summary: 'PIC0-AFFINE-REDUCTION + THE FIELD CASE: LANDED (pic-c, 0092 r5). Relea
   (false, and I had broadcast it to pic-g as a prohibition -- retracted at I-1616),
   and a ''93 consumers'' count that belongs to JacobianData.rep, not hvan. Do not
   quote a count from any of my headers.'
-status: pending
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -76,4 +76,4 @@ metadata:
     task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-31T01:29:30.369895+00:00'
+  updated_at: '2026-07-31T08:17:40.272627+00:00'

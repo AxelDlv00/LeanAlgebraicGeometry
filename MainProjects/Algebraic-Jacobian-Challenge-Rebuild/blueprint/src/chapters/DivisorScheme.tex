@@ -30,9 +30,16 @@ Chapter~\ref{chap:Challenge}, in the form in which the representability seam
 \end{enumerate}
 
 The forward half --- a universal divisor family on \(\mathbf{Div}\) --- is not built here.
-Section~\ref{sec:divrep} states exactly what it must be, derives the affine equivalence and
-the chart family of \ref{def:pic0RepresentableByOfCharts} from it, and isolates the
-unproved statement (\ref{thm:divRepUniversalFamily}).
+Section~\ref{sec:divrep} states a conditional package for it and isolates the unproved
+statement (\ref{thm:divRepUniversalFamily}).  It does not by itself produce the
+open-immersion certificates or the local-surjectivity instance consumed by
+\ref{def:pic0RepresentableByOfCharts}; those are separate hypotheses at the representability
+seam.
+
+The finite two-chart presentation in this chapter is an auxiliary window engine.  The divisor
+functor used in the representability argument instead permits certificates on arbitrary
+affine-open covers of the relative curve.  Thus the fixed chart cover data below is not the
+definition of that widened functor.
 
 Throughout, \(k\) is a field, \(C\) is a smooth proper geometrically irreducible curve over
 \(k\) of genus \(g\), \(\pi \colon C \to \PP^1_k\) is a finite dominant morphism, and
@@ -40,7 +47,11 @@ Throughout, \(k\) is a field, \(C\) is a smooth proper geometrically irreducible
 write \(C_R\) for the relative curve (\ref{def:relCurve}) and \(V_0^R, V_1^R\) for the two
 pinned charts of \(C_R\) obtained by pulling back the two standard charts of \(\PP^1\)
 along \(\pi\) (\ref{def:relCover}, \ref{def:fiberTwoCover}). We abbreviate
-\(H_a := H^0(C, \OO(aF))\) (\ref{def:divisorSections}).
+\(H_a := H^0(C, \OO(aF))\) (\ref{def:divisorSections}).  These pinned charts occur only
+in the auxiliary window calculations.  Kleiman's Main theorem, which is cited below, asks
+that the morphism be projective (Zariski locally on the base), flat, and have integral
+geometric fibres (\ref{thm:divRepUniversalFamily}); those hypotheses are not synonyms for
+smooth, proper, and geometrically irreducible, and require an explicit bridge.
 
 \section{Divisor equality of local-equation systems}
 \label{sec:diveq}
@@ -121,14 +132,16 @@ below identifies exactly those, in one move.
 Fix a \(k\)-algebra \(R\). A relative effective divisor on \(C_R/R\) is, locally on
 \(C_R\), cut out by one equation which is regular on the fibres; a local-equation system on
 \(C_R\) records exactly that, but on an \emph{arbitrary} pointed cover, and with regularity
-asked in the stalks of \(C_R\) rather than on the fibres. Two further data turn a
-local-equation system into a value of a functor with a finite presentation: a refinement of
-its cover by finitely many basic opens of the two pinned charts, and a certificate
-asserting that the resulting colength modules are finite projective over \(R\) of constant
-rank \(n\). The certificate is what plays the role of \(R\)-flatness with fibres of degree
-\(n\) in Kleiman's Definition of \(\Div^{\,n}_{X/S}\).
+asked in the stalks of \(C_R\) rather than on the fibres.  For the auxiliary pinned-window
+presentation, a refinement by finitely many basic opens of the two pinned charts is paired
+with a certificate asserting that the resulting colength modules are finite projective over
+\(R\) of constant rank \(n\).  The widened \(\Div^{\,n}_{\mathrm{Zar}}\) carrier instead
+records an arbitrary affine-open cover of the relative curve and its local certificates.
+In either presentation the certificate is the proposed formal
+analogue of \(R\)-flatness with fibres of degree \(n\) in Kleiman's Definition of
+\(\Div^{\,n}_{X/S}\).
 
-\begin{definition}[Finite chart cover data]
+\begin{definition}[Auxiliary finite chart cover data]
   \label{def:finCoverData}
   \lean{AlgebraicGeometry.FinCoverData, AlgebraicGeometry.FinCoverData.pieces,
     AlgebraicGeometry.FinCoverData.cover₀, AlgebraicGeometry.FinCoverData.cover₁,
@@ -136,7 +149,7 @@ rank \(n\). The certificate is what plays the role of \(R\)-flatness with fibres
     AlgebraicGeometry.le_iSup_basicOpen_of_sum_eq_one}
   \uses{def:relCurve, def:relCover, def:fiberTwoCover}
   \leanok
-  \emph{Finite chart cover data} on \(C_R\) consists of finitely many sections
+  This auxiliary pinned-window datum on \(C_R\) consists of finitely many sections
   \(h^0_1,\dots,h^0_{m_0} \in \struct{}(V_0^R)\) and \(h^1_1,\dots,h^1_{m_1} \in
   \struct{}(V_1^R)\), together with coefficients \(a^\iota_j\) in the same rings satisfying
   the two partition identities
@@ -169,8 +182,8 @@ rank \(n\). The certificate is what plays the role of \(R\)-flatness with fibres
   \leanok
   \source{kleiman-picard}
   Let \(d\) be a local-equation system on \(C_R\), adapted to a pointed cover
-  \(\mathcal U\). A \emph{finite chart adaptation} \(A\) of \(d\) consists of finite chart
-  cover data (\ref{def:finCoverData}) with pieces \(P_j\), together with sections
+  \(\mathcal U\). A \emph{finite chart adaptation} \(A\) of \(d\) consists of the auxiliary
+  finite chart cover data (\ref{def:finCoverData}) with pieces \(P_j\), together with sections
   \(f_j \in \struct{}(P_j)\) subject to the \emph{refinement clause}: for every piece index
   \(j\) and every point \(y \in C_R\) there is a unit
   \(u \in \struct{}(P_j \cap \mathcal U(y))^{\times}\) with
@@ -292,9 +305,11 @@ rank \(n\). The certificate is what plays the role of \(R\)-flatness with fibres
     \Div^{\,n}(R) \;:=\; \bigl\{\,\text{certified divisor families of degree }n\text{ over }
       R\,\bigr\} \big/ \sim
   \]
-  is the value of the degree-\(n\) divisor functor at \(R\). The Picard class descends to
-  it: \(\mathcal{O}(D) \in \Pic(C_R)\) is well defined on \(\Div^{\,n}(R)\). This map is
-  the Abel map of Kleiman's Definition, at the affine test \(R\).
+  is the value of this certified subfunctor at \(R\). The Picard class descends to it:
+  \(\mathcal{O}(D) \in \Pic(C_R)\) is well defined on \(\Div^{\,n}(R)\).  On a certified
+  triple this is the Abel-class map; it agrees with Kleiman's Abel construction only after
+  the triple is shown to represent a flat effective divisor of degree \(n\).  No theorem here
+  says that every effective flat Cartier divisor admits this pinned certificate.
 \end{definition}
 \begin{proof}
   \leanok
@@ -310,9 +325,10 @@ rank \(n\). The certificate is what plays the role of \(R\)-flatness with fibres
 
 The certificate of \ref{def:isCertified} is a condition on \emph{global} modules over
 \(R\), and it is genuinely restrictive: it forces the divisor to sit, chart-trace by
-chart-trace, in a closed way inside the two pinned charts. The next theorem is that
-obstruction, and it is the reason the functor of Section~\ref{sec:divfam} is not the one
-the representability argument uses.
+chart-trace, in a closed way inside the two pinned charts.  The following is the obstruction
+for this auxiliary pinned certificate.  It is not a no-go theorem for the widened functor,
+whose pieces may be arbitrary affine opens, and it is the reason that carrier is kept
+separate from this window engine.
 
 \begin{theorem}[The chart obstruction to a global certificate]
   \label{thm:isCertified_chart_obstruction}
@@ -963,17 +979,16 @@ records that it has not been constructed.
     def:pic0RepresentableByOfCharts, def:jacobian_data, def:divFamZar,
     def:localEquations_picClass}
   \notready
-  Granting \ref{thm:divRepUniversalFamily}, the Abel map \(D \mapsto \OO(D)\)
-  (\ref{def:divFamZar}) becomes a morphism of functors from the representable functor
-  \(\Div^{\,g}_{\mathrm{Zar}}\) to the degree-zero Picard functor after twisting by a fixed
-  divisor of degree \(g\), and the loci over which it is representable by open immersions
-  supply the chart family required by \ref{def:pic0RepresentableByOfCharts}. That
-  hypothesis being met, the degree-zero Picard functor of \(C\) is representable, and the
-  representing object with its universal element is a Jacobian datum
+  Granting \ref{thm:divRepUniversalFamily}, and separately supplying a chart family of
+  relatively representable open immersions together with the required locally-surjective
+  \(\Sigma\)-map, the Abel map \(D \mapsto \OO(D)\) (\ref{def:divFamZar}) can be used as
+  the conditional input to \ref{def:pic0RepresentableByOfCharts} after twisting by a fixed
+  divisor of degree \(g\).  Only after those antecedents are inhabited does the
+  degree-zero Picard functor become representable and yield a Jacobian datum
   (\ref{def:jacobian_data}) --- hence, through the frozen definition
   (\ref{def:jacobian}), the Jacobian of \(C\).
 
-  Neither the chart family nor the local surjectivity of the resulting maps is proved; both
-  rest on \ref{thm:divRepUniversalFamily}. The passage from a representation over a
-  separably closed base to one over \(k\) is a further descent step, not addressed here.
+  The universal family, the open-immersion chart certificates, and local surjectivity are
+  distinct unproved inputs here.  The passage from a representation over a separably closed
+  base to one over \(k\) is a further descent step, not addressed here.
 \end{corollary}

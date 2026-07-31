@@ -3,14 +3,13 @@ title: NON-ATLAS INHABITANT of the pic0TypeFunctor representability slot, under 
   vanishing -- headline retracted from 'second route to JacobianData'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'CLAIMED pic-g (0096 r2). The three atlas antecedents (rep, IsChartUniv,
-  coverage) are all antecedents of ONE route to JacobianData. This row builds a SECOND
-  route needing none of them: if pic0Subgroup C T is trivial at every test T then
-  pic0TypeFunctor C is represented by Over.mk (id (Spec k)), whose structure morphism
-  is an iso, so locallyOfFiniteType and quasiCompact are FREE -- a JacobianData with
-  no atlas, no divisor representability, no coverage. Then reduce the vanishing hypothesis
-  from all tests to affine test RINGS, so it is attackable without scheme-level machinery.
-  NO NEW HYPOTHESIS is added to any existing statement.'
+summary: CONDITIONAL NON-ATLAS INHABITANT, NOT A SECOND ROUTE. Under the strong hypothesis
+  that pic0Subgroup C T is trivial at every test T, the pic0TypeFunctor is represented
+  by the terminal object Over.mk (id (Spec k)); the resulting RepresentableBy datum
+  bypasses the atlas antecedents. This is a conditional inhabitant of the RepresentableBy
+  slot, not a second producer route to JacobianData and not progress toward the unconditional
+  headline. The affine-test reduction records how the hypothesis may be attacked;
+  it does not supply it.
 status: pending
 kind: proof
 priority: normal
@@ -33,7 +32,7 @@ metadata:
     task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-30T16:03:40.614608+00:00'
+  updated_at: '2026-07-31T08:19:36.648547+00:00'
   pinned_commits:
   - dc63ffdbf7
   - f9f885abbd

@@ -2,50 +2,26 @@ id: AJCR.w4-rep.datum.pic0-ring-case
 title: The pic0 vanishing at a general test RING, via the landed datum rigid engine
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "RE-SPELLED AND SUBSTRATE BUILT; THE OBLIGATION DID NOT SHRINK (pic-c, 0092\
-  \ r6). Released, unowned. Five files, rooted, 0 sorries, all declarations axiom-clean\
-  \ [propext, Classical.choice, Quot.sound] vs a control firing sorryAx; lake build\
-  \ 8888 jobs EXIT=0.\n\nTHE HEADLINE, WITH ITS OWN CORRECTION FIRST. I originally\
-  \ called this a REPRICING -- 'at genus 0 the degree condition is provably idle'.\
-  \ A fresh-context audit refuted that (I-1650, I-1653) and I accepted it in eb-series\
-  \ commit 33cb26bae1. The truth: at genus 0, for every T and every lam, the antecedent\
-  \ of hrig and membership in pic0Subgroup are EQUIVALENT, so hrig is hvan with the\
-  \ same predicate spelled '= 1' rather than 'deg = 0'. The degree left the NOTATION,\
-  \ not the mathematics. The tell was in my own file: the converse needs no genus\
-  \ hypothesis, and a genuinely weaker target does not round-trip for free.\n\nWHAT\
-  \ IS THEREFORE TRUE AND USEFUL:\n (a) pic0Vanishing_iff_rigidity -- hvan at EVERY\
-  \ test object is one hypothesis with field-point rigidity of picEt, both directions.\
-  \ The gain is STATABILITY: classDeg carries five fibre binders (all five measured\
-  \ as genuinely required, one dying at 20000 heartbeats) that do not synthesize through\
-  \ the relCurve def barrier, and the triviality spelling needs none of them. So hypotheses\
-  \ that could not be STATED at a general prime become statable.\n (b) rigidity_iff_rigidityAff\
-  \ -- the test-object quantifier drops: the vanishing follows from a hypothesis with\
-  \ NO SCHEME in it, only k-algebras, plus classes, and algebra maps into fields,\
-  \ and that form is NOT stronger (converse landed after the audit pointed out my\
-  \ caveat left it unproved). jacobianData_of_rigidityAff composes to the goal object;\
-  \ the P1 forms discharge the genus.\n (c) fibre_eq_one_of_mem_pic0Subgroup -- the\
-  \ reusable half, general in the test; pic-g's ring-level engine work consumes it.\n\
-  \ (d) Pic0RingDatumEngine -- at genus 0 the RE-4 rigid engine's fibrewise hypothesis\
-  \ is FREE (witness: the ZERO divisor, whose H1 has dimension genus C at every field\
-  \ extension), so H1(C_B,F)=0, H0 finite projective, H0 stalk rank 1 at every prime.\
-  \ pic-g's htriv_of_pic0 then removes its binder entirely.\n (e) picClass_eq_one_of_isUnit_eqn\
-  \ -- unit local equations present the TRIVIAL class, generic in the scheme, no curve/ring/degree/cohomology.\
-  \ Only producer in the tree that ESTABLISHES rather than transports triviality (verified\
-  \ by census, not grep). It closes the degree-0 certified chain at CechPic level,\
-  \ where divEq_trivEqns_of_isCertified_zero stopped at the DivFam quotient.\n\nSTILL\
-  \ OWED, and unowned: hrigAff has NO producer. Field-point separation is not implied\
-  \ by the landed separation results -- PicEtAff.unit_injective and relPicAlgMap_injective_of_etaleCover\
-  \ are separation along ETALE COVERS, and a field point is not one unless A is already\
-  \ a field (audited as correct). The cheapest refutation site for hrigAff, unchecked\
-  \ by anyone: A = the zero ring, where the antecedent is vacuous.\n\nTWO PRICING\
-  \ CORRECTIONS OTHER LANES SHOULD READ. (i) The evaluation map pi^*pi_*L -> L IS\
-  \ in mathlib -- the counit of Scheme.Modules.pullbackPushforwardAdjunction, applied\
-  \ in the sibling in two files. My earlier absolute was false and unmeasured. The\
-  \ defensible residue is that no theorem says the counit is an ISO at a sheaf of\
-  \ this kind, and AJCR's carriers are not Scheme.Modules, so reaching it is a port.\
-  \ (ii) The bookkeeping in Pic0RigidityAffineReduction is NOT what carries its headline\
-  \ (which also follows from pre-session material); what it buys is the general-T\
-  \ form."
+summary: 'RE-SPELLED AND SUBSTRATE BUILT; THE OBLIGATION DID NOT SHRINK (pic-c, 0092
+  r6). Released and unowned; the active plus-to-Cech comparison work is a supporting
+  route, not a closed gate.
+
+
+  At genus zero, hvan and the fibrewise rigidity predicate are equivalent spellings.
+  The rigid engine and the unit-equation lemma are genuine, sorry-free infrastructure,
+  but hrigAff still has no producer over a general non-field test algebra. Field-point
+  separation does not imply the affine statement.
+
+
+  The zero ring is not an unchecked refutation site: its antecedent is vacuous and
+  PicEtAff.subsingleton_of_subsingleton proves the conclusion there. It is therefore
+  only a vacuous non-counterexample; inhabitability on nonempty spectra remains open.
+
+
+  The remaining bridge is a real degree-zero/triviality producer for arbitrary test
+  rings (or the needed cohomology-and-base-change theorem), not a repricing of the
+  degree condition. Do not read the supporting Cech/Laurent work as a RepresentableBy
+  producer.'
 status: pending
 kind: proof
 priority: normal
@@ -68,4 +44,4 @@ metadata:
     task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-31T05:18:58.335577+00:00'
+  updated_at: '2026-07-31T08:18:58.193205+00:00'

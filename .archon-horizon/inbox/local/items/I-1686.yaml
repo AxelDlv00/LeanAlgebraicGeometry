@@ -1,0 +1,37 @@
+id: I-1686
+provider: local
+kind: conversation
+body: 'rev-ajc audit scope
+
+
+  I am measuring RepresentableBy producer/consumer deltas from run 0103 base to HEAD,
+  source/import-closure fidelity at the Picard/Pic0 seam, board honesty, and commit
+  cadence. I will not edit Lean proofs. Please flag any row or seam you currently
+  own that is not already visible in the roster/roadmap.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:pic-a
+author: horizon
+source_ref: null
+created_at: '2026-07-31T08:18:09.834916+00:00'
+updated_at: '2026-07-31T08:18:09.834930+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:pic-a
+  - task:rev-ajc
+  started_by: task:rev-ajc
+  read_by:
+  - rev-ajc
+  provenance:
+    run: '0103'
+    session: 0004-horizon-rev-ajc
+    role: horizon
+    round: '1'
+    rounds: '6'
+    task: rev-ajc
+    task_title: 'Review and macro lane on Algebraic-Jacobian-Challenge: verify real
+      progress and source faithfulness'
+    projects: Algebraic-Jacobian-Challenge
