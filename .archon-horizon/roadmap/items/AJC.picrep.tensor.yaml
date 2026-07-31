@@ -41,8 +41,8 @@ summary: 'AUDITED 2026-07-30 (review-ajc r4). This row bundles TWO deliverables;
   SO THE OPEN OBLIGATION, named: the affine tensor-section formula -- for A B quasi-coherent
   and V affine, Gamma(A,V) tensor_{Gamma(X,V)} Gamma(B,V) -> Gamma(A tensor B, V)
   is an isomorphism (equivalently the basic-open localization form). Its heart is
-  RingTheory.Localization.BaseChange ((M tensor_R N)_f = M_f tensor_{R_f} N_f), per
-  the file''s own note. Discharging it feeds isQuasicoherent_of_isLocalizedModule_basicOpen
+  localizedTensorProductEquiv plus IsLocalization.moduleTensorEquiv ((M tensor_R N)_f
+  = M_f tensor_{R_f} N_f), per the file''s own note. Discharging it feeds isQuasicoherent_of_isLocalizedModule_basicOpen
   and yields the 01CB instance.
 
 
@@ -51,7 +51,9 @@ summary: 'AUDITED 2026-07-30 (review-ajc r4). This row bundles TWO deliverables;
   QuotSupportBaseChange, RigidPushforward{Chart,Gamma}BaseChange, SectionBaseChange
   -- 0 body sorries each), and no .lean file flags the tensor comparison as open.
   Nothing consumes this row as blocking. Left pending deliberately: it is real but
-  off the representability critical path, so it is not a round target.'
+  off the representability critical path, so it is not a round target.
+
+  '
 status: active
 kind: proof
 priority: high
@@ -74,8 +76,9 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-31T13:36:18.115462+00:00'
+  updated_at: '2026-07-31T13:59:48.269627+00:00'
   milestone: AJC.picrep
   owner: pic-b
   pinned_commits:
+  - 962a43ff74
   - 8f237dfef9

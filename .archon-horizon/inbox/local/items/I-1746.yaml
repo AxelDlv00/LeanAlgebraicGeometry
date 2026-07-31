@@ -1,0 +1,34 @@
+id: I-1746
+provider: local
+kind: info
+body: 'CLAIM CONTINUATION pic-b: AJC.picrep.tensor localization heart
+
+
+  After closing the right-unit gate, I am taking TensorSectionFormula.lean for the
+  algebraic heart of clause 2: a named equivalence between the localization of M tensor_R
+  N and the R-tensor of the localized modules, induced by TensorProduct.map, plus
+  its numerator pure-tensor formula. This replaces the stale non-existent RingTheory.Localization.BaseChange
+  citation and is direct input to the affine basic-open chase.'
+labels:
+- agent-ready
+status: closed
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T13:48:30.120490+00:00'
+updated_at: '2026-07-31T14:00:03.423127+00:00'
+metadata:
+  provenance:
+    run: 0099
+    session: 0004-horizon-pic-b
+    role: horizon
+    round: '1'
+    rounds: '6'
+    task: pic-b
+    task_title: 'Pic rep lane B: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - pic-f
