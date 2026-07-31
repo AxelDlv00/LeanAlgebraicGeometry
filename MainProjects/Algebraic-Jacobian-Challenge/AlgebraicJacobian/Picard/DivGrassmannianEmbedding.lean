@@ -69,6 +69,38 @@ noncomputable def grassmannianEval (L : X.Modules) (x : DivFamily π T) :
       (pullback.fst π T.hom) pullback.condition L ≫
     (Modules.pushforward (pullback.snd π T.hom)).map (x.twistQuotientMap L)
 
+/-- **The conditional D2' quotient datum.**  Once the evaluation map is an
+epimorphism and its target has constant locally-free rank `d`, it is exactly a
+rank-`d` locally free quotient of the pulled-back pushforward of `L`.
+
+The two arguments are deliberately explicit: the evaluation map is the
+uniform-generation obligation, while the locally-free target is the
+finite/projective/rank obligation.  This constructor packages those genuine
+outputs without introducing a class or an instance that could hide either one.
+-/
+noncomputable def grassmannianQuotient (L : X.Modules) (x : DivFamily π T)
+    [IsLocallyNoetherian S] {d : ℕ} (hEpi : Epi (x.grassmannianEval L))
+    (hLocFree : SheafOfModules.IsLocallyFreeOfRank
+      ((Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L)) d) :
+    LocallyFreeQuotient ((Modules.pushforward π).obj L) d T := by
+  letI := hEpi
+  exact {
+    F := (Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L)
+    q := x.grassmannianEval L
+    epi := inferInstance
+    locFree := hLocFree }
+
+/-- The quotient-class value of the D2' comparison in the relative
+Grassmannian functor.  This is the representation-facing object consumed by
+the Grassmannian representability theorem; well-definedness under
+`DivFamily.Rel` is a separate comparison lemma. -/
+noncomputable def grassmannianClass (L : X.Modules) (x : DivFamily π T)
+    [IsLocallyNoetherian S] {d : ℕ} (hEpi : Epi (x.grassmannianEval L))
+    (hLocFree : SheafOfModules.IsLocallyFreeOfRank
+      ((Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L)) d) :
+    (Grassmannian ((Modules.pushforward π).obj L) d).obj (Opposite.op T) :=
+  Quotient.mk _ (grassmannianQuotient L x hEpi hLocFree)
+
 end DivFamily
 
 namespace Modules
