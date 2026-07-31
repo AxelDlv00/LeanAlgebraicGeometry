@@ -5,13 +5,12 @@ body: 'AJCR PROJECTIVITY BRIDGE HAS NO LIVE OWNER
 
 
   Measured at f476f6f50d: direct import of AlgebraicJacobian.Picard.CurveProjectivity
-  in the sibling AJC exposes AlgebraicGeometry.Adelic.isProjective_of_smoothProperGeometricallyIntegral
+  in sibling AJC exposes AlgebraicGeometry.Adelic.isProjective_of_smoothProperGeometricallyIntegral
   with axioms [propext, Classical.choice, Quot.sound], while the same AJCR import
-  fails because the module is absent and the AJCR root closure does not expose the
-  declaration. Kleiman Main requires projective Zariski locally, flat, and integral
-  geometric fibres. The existing high-priority row AJCR.w4-rep.datum.dat-j.properness-substrate
-  is pending and unowned. Assign a live lane to port/build the exact bridge; smooth,
-  proper, and geometrically irreducible are not a substitute without it.'
+  fails because the module is absent. Kleiman Main requires projective Zariski locally,
+  flat, and integral geometric fibres. The exact pending high-priority row is AJCR.w4-rep.curve-projectivity;
+  assign a live lane to port/build that bridge. Keep AJCR.w4-rep.datum.dat-j.properness-substrate
+  separate: it concerns universal closedness/projectivity of the divisor source.'
 labels:
 - agent-ready
 status: open
@@ -22,7 +21,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-31T10:45:50.895547+00:00'
-updated_at: '2026-07-31T11:24:16.243328+00:00'
+updated_at: '2026-07-31T13:14:31.135780+00:00'
 metadata:
   provenance:
     run: '0104'

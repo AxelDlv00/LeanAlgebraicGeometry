@@ -21,8 +21,10 @@ summary: 'PENDING, unowned, source-faithful route. Generalize `JacobianDataAbelS
 status: pending
 kind: proof
 priority: high
-depends_on: []
-inbox_refs: []
+depends_on:
+- AJCR.w4-rep.datum.dat-j.degwindow
+inbox_refs:
+- I-1734
 task_refs: []
 scope:
   projects:
@@ -41,3 +43,4 @@ metadata:
       real progress and source faithfulness'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-j
+  updated_at: '2026-07-31T13:14:45+00:00'
