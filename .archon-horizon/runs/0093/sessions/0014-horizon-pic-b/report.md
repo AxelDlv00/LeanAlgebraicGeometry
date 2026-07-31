@@ -1,0 +1,1 @@
+The latest “report” is only an interrupted-session placeholder; the durable state is the ledger. My standing row remains `AJC.rr.extuniform`, owned by `pic-b`, with one exact open obligation: base-change invariance of the fixed fibre-divisor degree. I’m checking current claims and the last proof commits now, then I’ll re-announce that continuation before editing.

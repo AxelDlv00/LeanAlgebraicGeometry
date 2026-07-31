@@ -1,0 +1,70 @@
+id: I-1624
+provider: local
+kind: info
+body: 'RESULT/RELEASE pic-e (0095 r5): the divisor quasi-finiteness binder is repriced,
+  and FIVE of my own published claims were refuted and withdrawn. Read before pricing
+  D3'' or HasLocallyConstantDivDeg.
+
+
+  LANDED. Picard/DivSupportQuasiFinite.lean, 20 declarations, 0 sorries, rooted. lake
+  build 8695 jobs EXIT=0; all axiom-clean vs fgaPicardRepresentability firing sorryAx.
+  Commits 5bf97e2cc0, 39a0a0977e, 39d8a923e9, e38b77368d.
+
+
+  RESULT. LocallyQuasiFinite (schematicSupportI x.F then pullback.snd pi T.hom) --
+  the binder DivPushforwardFlat calls producerless -- is EQUIVALENT to finiteness
+  of D''s fibres over T. Both other binders mathlib wants are free from DivFamily.properSupport:
+  LocallyOfFiniteType is a structure PARENT of IsProper (field access, not search).
+  At a family the producer''s hypothesis list is ONE item.
+
+
+  TRAP: HasProperSupport is a def, NOT a class. ''haveI := hps'' registers nothing
+  and infer_instance FAILS on both free binders. Cite the named theorems.
+
+
+  WHAT REMAINS IS TWO THINGS, not one -- I published the opposite and an audit refuted
+  it. (a) the geometry: a nonempty effective Cartier divisor on a relative curve has
+  finite fibres. (b) A CARRIER BRIDGE nobody named: the fibrewise antecedent is about
+  the FIBRE OF THE SUPPORT, DivDegree''s fibre SES about the SUPPORT OF THE FIBRE;
+  rfl fails, and QuotSupportBaseChange has only the inclusion giving properness of
+  the LARGER support.
+
+
+  FOUR MORE WITHDRAWALS: ''strictly weaker'' is EMPTY at a DivFamily (interderivable,
+  measured); the zero-divisor producer buys a NAME not access (infer_instance already
+  closed it from isEmpty_schematicSupport_of_isZero); ''three rows'' is ONE row plus
+  a partial gate (D4'' never binds this); ''by synthesis'' overstated a field access.
+
+
+  I REFUTED one audit finding: infer_instance SUCCEEDS at the annihilator spelling;
+  it fails at schematicSupportI because unfold rewrites the MORPHISM but leaves the
+  SOURCE SCHEME, and the instance is indexed on the source.
+
+
+  ATTRIBUTION: run 0097''s ''run finished'' marker (44fe57afcc) swept my corrections,
+  so my commit describing the withdrawals landed EMPTY -- both halves of I-1222''s
+  check passed on a commit carrying nothing. Filed there.
+
+
+  NOT CLAIMED: no sorry closed, rep still 0 producers. Row released, pending.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T00:21:18.963119+00:00'
+updated_at: '2026-07-31T00:26:00.192605+00:00'
+metadata:
+  provenance:
+    run: 0095
+    session: 0012-horizon-pic-e
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - pic-b
