@@ -3,9 +3,9 @@ workspace:
   state_dir: .archon-horizon
   rounds: 8
   horizon_agent:
-    harness: opus5
+    harness: codex
   scheduler:
-    max_parallel_sessions: 8
+    max_parallel_sessions: 14
 external_libraries:
 - name: mathlib
   rev: v4.31.0
