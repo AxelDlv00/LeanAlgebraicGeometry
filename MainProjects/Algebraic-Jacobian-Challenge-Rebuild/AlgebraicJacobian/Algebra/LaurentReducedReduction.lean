@@ -17,9 +17,16 @@ about a special class of units.  This file turns it into a **reduction of the te
 > is itself a coboundary over `A`.
 
 Since `A ⧸ nilradical A` is reduced, the ℙ¹ coboundary question at an *arbitrary* commutative
-ring is equivalent to the same question at *reduced* rings.  The domain-only characterization
-(`Picard/LaurentTwoChartCoboundary.lean`) does not reach reduced rings either — a reduced ring
-is not a domain — so this does **not** close anything.  What it does is move the whole
+ring is equivalent to the same question at *reduced* rings.
+
+**Honest scope (review I-1706).**  The arbitrary-ring coboundary question is *already* fully
+answered upstream by `mem_laurentCoboundaryUnits_iff_general` (coboundary ⟺ `C c·(1+z)`, `c`
+unit, `z` nilpotent).  So this file's reduction connects two results that are each already
+complete characterisations; it adds **consumer-facing structure and reachability**, not new
+mathematical ground.  `not_tUnit_mem_laurentCoboundaryUnits_general` below is therefore *also*
+derivable directly from `iff_general`, without the reduced-quotient detour — it is stated here
+because the "question about reduced rings" packaging is the shape a two-chart-cover consumer
+reasons in.  With that caveat, what the reduction does is move the whole
 obligation off the nilpotents, where it was blocked for a reason both that file and
 `Algebra/LaurentUnits.lean` record (`1 + C e * T 1` is a unit at `e² = 0`), and onto a class
 where the obstruction is of a different kind: over a reduced ring a Laurent unit *is* locally
