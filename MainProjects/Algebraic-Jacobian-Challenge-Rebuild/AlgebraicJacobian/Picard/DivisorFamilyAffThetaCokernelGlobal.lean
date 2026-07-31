@@ -163,6 +163,81 @@ end AffAdaptation
 
 namespace AffAdaptation
 
+/-! ## Overlap vanishing in the theta cokernel
+
+The intrinsic overlap ideal is detected germwise by the widened kernel theorem.  After
+the glued--twist conversion, its two pinned components therefore lie in the kernel of
+the auxiliary theta-ideal cokernel on the overlap.
+-/
+
+theorem thetaOverlapVanishing_gluedTwist_cokernel_eq_zero
+    {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
+    {A : AffAdaptation D d} (B : DivisorAdaptation C R π d) (a : ℕ)
+    (i j : D.index)
+    (v : A.ThetaOverlapSections (π := π) a i j)
+    (hv : v ∈ A.thetaOverlapVanishing (π := π) a i j) :
+    ((cokernel.π (B.thetaIdealIncl (a := a))).hom.app
+      (op (D.pieces i ⊓ D.pieces j))).hom
+      (gluedTwistEquiv C R π a (D.pieces i ⊓ D.pieces j) v) = 0 := by
+  let W := D.pieces i ⊓ D.pieces j
+  have h := (A.mem_thetaOverlapVanishing_iff_forall_germ (π := π) a i j v).mp hv
+  have hx :
+      (∀ (z : relCurve C R) (hz : z ∈ W ⊓
+        (relCover C R (fiberTwoCover π)).V₀),
+        ((relCurve C R).presheaf.germ (W ⊓
+          (relCover C R (fiberTwoCover π)).V₀) z hz).hom
+            (gluedTwistEquiv C R π a W v).val.1 ∈ d.stalkIdeal z) ∧
+      (∀ (z : relCurve C R) (hz : z ∈ W ⊓
+        (relCover C R (fiberTwoCover π)).V₁),
+        ((relCurve C R).presheaf.germ (W ⊓
+          (relCover C R (fiberTwoCover π)).V₁) z hz).hom
+            (gluedTwistEquiv C R π a W v).val.2 ∈ d.stalkIdeal z) := by
+    constructor
+    · intro z hz
+      have hswap :
+          ((relCurve C R).presheaf.germ
+            (W ⊓ (relCover C R (fiberTwoCover π)).V₀) z hz).hom
+              ((relCurve C R).resHom
+                (inf_le_inf_left W
+                  (thetaChartCover_pieces_inl C R π PUnit.unit).ge)
+                (v.val (Sum.inl PUnit.unit))) =
+            ((relCurve C R).presheaf.germ
+              (W ⊓ (thetaChartDatum C R π a).pieces (Sum.inl PUnit.unit)) z
+              ⟨hz.1, (thetaChartCover_pieces_inl C R π PUnit.unit).ge hz.2⟩).hom
+                (v.val (Sum.inl PUnit.unit)) :=
+        TopCat.Presheaf.germ_res_apply _ _ _ _ _
+      change ((relCurve C R).presheaf.germ
+        (W ⊓ (relCover C R (fiberTwoCover π)).V₀) z hz).hom
+          ((relCurve C R).resHom
+            (inf_le_inf_left W (thetaChartCover_pieces_inl C R π PUnit.unit).ge)
+            (v.val (Sum.inl PUnit.unit))) ∈ d.stalkIdeal z
+      rw [hswap]
+      exact h (Sum.inl PUnit.unit) z
+        ⟨hz.1, (thetaChartCover_pieces_inl C R π PUnit.unit).ge hz.2⟩
+    · intro z hz
+      have hswap :
+          ((relCurve C R).presheaf.germ
+            (W ⊓ (relCover C R (fiberTwoCover π)).V₁) z hz).hom
+              ((relCurve C R).resHom
+                (inf_le_inf_left W
+                  (thetaChartCover_pieces_inr C R π PUnit.unit).ge)
+                (v.val (Sum.inr PUnit.unit))) =
+            ((relCurve C R).presheaf.germ
+              (W ⊓ (thetaChartDatum C R π a).pieces (Sum.inr PUnit.unit)) z
+              ⟨hz.1, (thetaChartCover_pieces_inr C R π PUnit.unit).ge hz.2⟩).hom
+                (v.val (Sum.inr PUnit.unit)) :=
+        TopCat.Presheaf.germ_res_apply _ _ _ _ _
+      change ((relCurve C R).presheaf.germ
+        (W ⊓ (relCover C R (fiberTwoCover π)).V₁) z hz).hom
+          ((relCurve C R).resHom
+            (inf_le_inf_left W (thetaChartCover_pieces_inr C R π PUnit.unit).ge)
+            (v.val (Sum.inr PUnit.unit))) ∈ d.stalkIdeal z
+      rw [hswap]
+      exact h (Sum.inr PUnit.unit) z
+        ⟨hz.1, (thetaChartCover_pieces_inr C R π PUnit.unit).ge hz.2⟩
+  exact DivisorAdaptation.cokernelπ_app_eq_zero_of_germ_mem C R π B
+    (gluedTwistEquiv C R π a W v) hx.1 hx.2
+
 /-- Once the widened certificate supplies the auxiliary theta-ideal `H¹` vanishing,
 global sections of the quotient sheaf for the chosen auxiliary chart are linearly equivalent
 to the actual range of the intrinsic widened theta evaluation. -/
