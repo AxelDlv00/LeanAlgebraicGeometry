@@ -205,6 +205,44 @@ theorem faithfullyFlat_gluedSubalgebra_val [IsProper C.hom]
     rw [RingEquiv.apply_symm_apply]] at hcomp
   exact hcomp
 
+/-! ## Certified pieces are clopen -/
+
+/-- A certified divisor piece is finite over the whole intrinsic divisor.  Indeed, both
+the piece and the divisor are finite over the test base, and the latter structure morphism
+is separated. -/
+theorem IsCertified.isFinite_divisorPieceMap [IsProper C.hom]
+    (A : AffAdaptation D d) {n : ℕ} (hc : A.IsCertified n)
+    (i : D.index) : IsFinite (A.divisorPieceMap i) := by
+  haveI : IsFinite A.divisorSubschemeOver.hom :=
+    A.isFinite_divisorSubschemeOver hc
+  haveI : IsFinite
+      (A.divisorPieceMap i ≫ A.divisorSubschemeOver.hom) := by
+    rw [A.divisorPieceMap_over i]
+    apply (IsFinite.SpecMap_iff _).mpr
+    exact RingHom.finite_algebraMap.mpr (hc.finite_colength i)
+  exact IsFinite.of_comp (A.divisorPieceMap i)
+    A.divisorSubschemeOver.hom
+
+/-- Each certified divisor piece is also a closed subscheme of the intrinsic divisor:
+its map is finite and, as an open immersion, a monomorphism. -/
+theorem IsCertified.isClosedImmersion_divisorPieceMap [IsProper C.hom]
+    (A : AffAdaptation D d) {n : ℕ} (hc : A.IsCertified n)
+    (i : D.index) : IsClosedImmersion (A.divisorPieceMap i) := by
+  apply (IsClosedImmersion.iff_isFinite_and_mono _).mpr
+  exact ⟨hc.isFinite_divisorPieceMap A i, inferInstance⟩
+
+/-- The inverse image of a certified adapted piece is clopen in the intrinsic divisor. -/
+theorem IsCertified.isClopen_divisorPiece [IsProper C.hom]
+    (A : AffAdaptation D d) {n : ℕ} (hc : A.IsCertified n)
+    (i : D.index) :
+    IsClopen (A.divisorSubschemeι ⁻¹ᵁ D.pieces i :
+      Set A.divisorSubscheme) := by
+  rw [← A.opensRange_divisorPieceMap i]
+  haveI : IsClosedImmersion (A.divisorPieceMap i) :=
+    hc.isClosedImmersion_divisorPieceMap A i
+  exact ⟨(A.divisorPieceMap i).isClosedEmbedding.isClosed_range,
+    (A.divisorPieceMap i).isOpenEmbedding.isOpen_range⟩
+
 end AffAdaptation
 
 end AlgebraicGeometry
