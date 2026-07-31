@@ -7,9 +7,10 @@ docstring: Transport through a `prodLift` collapses on the right factor.
 file: AlgebraicJacobian/Picard/PicEtAff.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.PicEtAff.descentMap_prodLift_inr
 type: lean
-updated: '2026-07-30T15:46:06'
+updated: '2026-07-31T20:14:49'
 ---
 lemma descentMap_prodLift_inr {E F H : Algebra.EtaleCover A}
     (f : E.Carrier →ₐ[A] H.Carrier) (g : F.Carrier →ₐ[A] H.Carrier)

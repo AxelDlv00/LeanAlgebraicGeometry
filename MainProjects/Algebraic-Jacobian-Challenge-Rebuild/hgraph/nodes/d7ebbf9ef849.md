@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.PresheafOfGroups.H1.resHom
 type: lean
-updated: '2026-07-30T15:46:01'
+updated: '2026-07-31T20:15:19'
 ---
 def H1.resHom (f : ∀ i, V i ⟶ U i) :
     H1 (G ⋙ forget₂ CommGrpCat GrpCat) U →* H1 (G ⋙ forget₂ CommGrpCat GrpCat) V where

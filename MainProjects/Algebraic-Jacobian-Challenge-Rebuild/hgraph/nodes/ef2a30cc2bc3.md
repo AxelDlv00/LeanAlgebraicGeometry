@@ -10,9 +10,10 @@ docstring: '**The abstract fibre window divisor `N`** of DDR-2''s pinch: the tra
 file: AlgebraicJacobian/RiemannRoch/WindowFieldTransport.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.windowN
 type: lean
-updated: '2026-07-30T15:46:08'
+updated: '2026-07-31T20:14:52'
 ---
 noncomputable def windowN (g : ℕ) : (relCurve C K).CurveDivisor :=
   windowTransportDivisor C K π (windowM_choice π hπ g)

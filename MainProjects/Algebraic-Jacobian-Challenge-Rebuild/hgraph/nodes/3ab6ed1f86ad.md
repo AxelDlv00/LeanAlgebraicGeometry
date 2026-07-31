@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.PicEtAff.mk_mul_mk
 file: AlgebraicJacobian/Picard/PicEtAff.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.PicEtAff.mk_mul_mk
 type: lean
-updated: '2026-07-30T15:46:06'
+updated: '2026-07-31T20:14:42'
 ---
 lemma mk_mul_mk (E F : Algebra.EtaleCover A) (x : descentClasses C E)
     (y : descentClasses C F) :

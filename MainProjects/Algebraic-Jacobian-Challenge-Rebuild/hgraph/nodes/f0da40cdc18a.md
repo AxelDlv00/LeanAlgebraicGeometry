@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.diagonalCover
 type: lean
-updated: '2026-07-30T15:46:00'
+updated: '2026-07-31T20:15:19'
 ---
 noncomputable def diagonalCover {C : Over (Spec (.of k))} (data : DiagonalChartData C)
     [IsSeparated C.hom] : (C ⊗ C).left.PointedCover where

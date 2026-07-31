@@ -9,9 +9,10 @@ docstring: 'The Cramer inverse is a two-sided inverse: since `det(X^I_J)` is a u
 file: AlgebraicJacobian/Picard/GrassmannianChart.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Grassmannian.universalMinorInv_mul_cancel
 type: lean
-updated: '2026-07-30T15:46:05'
+updated: '2026-07-31T20:14:50'
 ---
 theorem universalMinorInv_mul_cancel (k : Type u) [Field k] (d r : ℕ)
     (I J : Finset (Fin r)) (hI : I.card = d) (hJ : J.card = d) :

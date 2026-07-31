@@ -28,9 +28,10 @@ docstring: '**The chart map restricted to an open of its source.**
 file: AlgebraicJacobian/Picard/Pic0ChartPair.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.restrictChart
 type: lean
-updated: '2026-07-30T15:46:05'
+updated: '2026-07-31T20:14:49'
 ---
 def restrictChart {X : Scheme.{u}} (f : yoneda.obj X ⟶ (pic0SigmaSheaf C).1)
     (V : X.Opens) : yoneda.obj (V : Scheme.{u}) ⟶ (pic0SigmaSheaf C).1 :=

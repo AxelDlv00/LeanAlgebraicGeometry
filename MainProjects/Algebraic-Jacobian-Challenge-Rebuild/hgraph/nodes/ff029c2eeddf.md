@@ -29,7 +29,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ThetaGeneratorSeed.finrank_baseChange_divUniversalSeedK_add
 type: lean
-updated: '2026-07-30T15:46:02'
+updated: '2026-07-31T20:15:22'
 ---
 theorem finrank_baseChange_divUniversalSeedK_add
     (p : PrimeSpectrum (seedChartRing' C hπ g r₁ r₂ b₁ b₂ i j)) :

@@ -7,8 +7,9 @@ docstring: The overlap of the family **is** the overlap of the cover, syntactica
 file: AlgebraicJacobian/Tangent/TwoChartSelector.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.AffineTwoCover.boolFamily_inf
 type: lean
-updated: '2026-07-30T15:46:08'
+updated: '2026-07-31T20:14:42'
 ---
 @[simp] theorem boolFamily_inf : D.boolFamily false ⊓ D.boolFamily true = D.V₀ ⊓ D.V₁ := rfl

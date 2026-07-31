@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: Module.actionMap_baseChange
 type: lean
-updated: '2026-07-30T15:46:01'
+updated: '2026-07-31T20:15:19'
 ---
 theorem actionMap_baseChange [Module B X] [IsScalarTower A B X]
     [AddCommGroup Y] [Module A Y] [Module B Y] [IsScalarTower A B Y]

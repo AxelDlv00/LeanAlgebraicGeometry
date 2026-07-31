@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.map_divUniversalHighWindowBaseMultiplierTransition_relation_succ_le
 type: lean
-updated: '2026-07-30T15:46:02'
+updated: '2026-07-31T20:15:22'
 ---
 theorem map_divUniversalHighWindowBaseMultiplierTransition_relation_succ_le
     (n : Nat) (a : HS) :

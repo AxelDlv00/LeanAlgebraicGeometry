@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.BasicOpenCocycleDatum.baseChange_unit_coe
 type: lean
-updated: '2026-07-30T15:45:59'
+updated: '2026-07-31T20:15:17'
 ---
 lemma baseChange_unit_coe (i j : D.index) :
     (((D.baseChange B').unit i j :

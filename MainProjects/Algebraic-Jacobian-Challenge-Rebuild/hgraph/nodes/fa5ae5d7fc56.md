@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.amitsurProductCover_le_w₂₃
 type: lean
-updated: '2026-07-30T15:46:01'
+updated: '2026-07-31T20:15:19'
 ---
 lemma amitsurProductCover_le_w₂₃ (𝒲 : (Xq).PointedCover) (z : Xcb) :
     (amitsurProductCover C 𝒲).opens z ≤ (w₂₃) ⁻¹ᵁ 𝒲.opens ((w₂₃).base z) :=

@@ -23,7 +23,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.geometricallyIrreducible_of_abelSource
 type: lean
-updated: '2026-07-30T15:45:59'
+updated: '2026-07-31T20:15:14'
 ---
 theorem geometricallyIrreducible_of_abelSource (a : AbelSourceData d) :
     GeometricallyIrreducible d.J.hom := by

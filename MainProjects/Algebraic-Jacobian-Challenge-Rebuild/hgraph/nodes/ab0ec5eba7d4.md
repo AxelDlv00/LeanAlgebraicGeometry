@@ -16,9 +16,10 @@ docstring: '**DivEq-invariance of the presentation divisor.** Two divisor-equal 
 file: AlgebraicJacobian/Picard/DivisorFamilyField.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.presentationDivisor_eq_of_divEq
 type: lean
-updated: '2026-07-30T15:46:04'
+updated: '2026-07-31T20:14:49'
 ---
 theorem presentationDivisor_eq_of_divEq {d₁ d₂ : X.LocalEquations}
     (h : LocalEquations.DivEq d₁ d₂) :

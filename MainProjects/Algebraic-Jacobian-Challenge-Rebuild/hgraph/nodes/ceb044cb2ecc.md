@@ -21,9 +21,10 @@ docstring: '**The relative curve over a proper `C` has a compact space.**  `Spec
 file: AlgebraicJacobian/Picard/DivisorFamilyAffExtraction.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.instCompactSpaceRelCurve
 type: lean
-updated: '2026-07-30T15:46:03'
+updated: '2026-07-31T20:14:50'
 ---
 instance instCompactSpaceRelCurve [IsProper C.hom] : CompactSpace (relCurve C R) :=
   QuasiCompact.compactSpace_of_compactSpace (relCurve C R ↘ Spec (.of R))

@@ -10,9 +10,10 @@ docstring: 'The section over `B ⊗[A] (B ⊗[A] B)` intertwines the `1,3`-cofac
 file: AlgebraicJacobian/Picard/NormalizedComparison.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.sectionCb_comp_face₁₃
 type: lean
-updated: '2026-07-30T15:46:05'
+updated: '2026-07-31T20:14:51'
 ---
 lemma sectionCb_comp_face₁₃ : scb ≫ w₁₃ = f₁₃ ≫ sq :=
   sectionOfPoint_left_comp_whiskerLeft C (Module.descentFace₁₃ A B) σ

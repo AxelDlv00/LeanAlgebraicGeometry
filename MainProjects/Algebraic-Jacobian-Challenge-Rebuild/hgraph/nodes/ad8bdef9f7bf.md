@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.whiskerLeft_lmul'_inl
 type: lean
-updated: '2026-07-30T15:46:01'
+updated: '2026-07-31T20:15:20'
 ---
 lemma whiskerLeft_lmul'_inl : Δx ≫ (u₁) = 𝟙 (XB) := by
   rw [← Over.comp_left, ← MonoidalCategory.whiskerLeft_comp, ← Over.overSpecMap_comp,

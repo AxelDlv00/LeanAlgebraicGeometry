@@ -19,9 +19,10 @@ docstring: '**Bridging lemma.** The order valuation of `g` at a closed point `x`
 file: AlgebraicJacobian/RiemannRoch/MulEquiv.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.ord_val_eq
 type: lean
-updated: '2026-07-30T15:46:08'
+updated: '2026-07-31T20:14:50'
 ---
 theorem ord_val_eq {x : X} (hx : x ≠ genericPoint X) :
     Scheme.ord (X ↘ Spec (CommRingCat.of K)) hx (g : X.functionField)

@@ -22,9 +22,10 @@ docstring: '**Naturality of the piece-level term identification**: on `1 ⊗ s` 
 file: AlgebraicJacobian/Picard/DivisorFamilyPullback.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.pieceTermBaseChangeAlg_one_tmul
 type: lean
-updated: '2026-07-30T15:46:04'
+updated: '2026-07-31T20:14:51'
 ---
 theorem pieceTermBaseChangeAlg_one_tmul
     (s : Γ(relCurve C R, (relCurve C R).basicOpen h)) :

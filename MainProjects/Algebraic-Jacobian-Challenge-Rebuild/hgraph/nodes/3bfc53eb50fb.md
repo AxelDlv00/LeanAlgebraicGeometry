@@ -20,9 +20,10 @@ file: AlgebraicJacobian/Picard/DivSchemeRedesignFreeFlat.lean
 generated: lean
 lean_status: lean_ok
 private: true
+stale: true
 title: exists_comp_eq_id_of_lTensor_residueField_injective
 type: lean
-updated: '2026-07-30T15:46:02'
+updated: '2026-07-31T20:14:42'
 ---
 private lemma exists_comp_eq_id_of_lTensor_residueField_injective
     [Module.Finite R M] [Module.Free R N] (ψ : M →ₗ[R] N)

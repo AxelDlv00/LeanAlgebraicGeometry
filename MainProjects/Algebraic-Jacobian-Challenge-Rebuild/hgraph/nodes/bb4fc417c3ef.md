@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Hom.functionFieldMap_germ
 type: lean
-updated: '2026-07-30T15:46:00'
+updated: '2026-07-31T20:15:18'
 ---
 theorem Scheme.Hom.functionFieldMap_germ (f : X ⟶ Y)
     (h : f.base (genericPoint X) = genericPoint Y) (U : Y.Opens)

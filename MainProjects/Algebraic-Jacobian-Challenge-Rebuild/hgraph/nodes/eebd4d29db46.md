@@ -11,9 +11,10 @@ file: AlgebraicJacobian/RiemannRoch/FLVQcoh.lean
 generated: lean
 lean_status: lean_ok
 private: true
+stale: true
 title: AlgebraicGeometry.mem_boundedSections_unit_iff
 type: lean
-updated: '2026-07-31T19:57:49'
+updated: '2026-07-31T20:14:52'
 ---
 private lemma mem_boundedSections_unit_iff (s : X.functionFieldˣ) (A : X.CurveDivisor)
     (U : X.Opens) :

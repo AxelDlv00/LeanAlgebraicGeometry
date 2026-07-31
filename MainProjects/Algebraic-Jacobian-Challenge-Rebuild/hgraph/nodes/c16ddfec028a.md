@@ -10,9 +10,10 @@ docstring: 'At the identity extension, the section algebra of a pushed test is t
 file: AlgebraicJacobian/Picard/Pic0ThetaCocycleIdentity.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.sectionsAlgebra_mapSelf_eq
 type: lean
-updated: '2026-07-31T05:40:42'
+updated: '2026-07-31T20:14:50'
 ---
 theorem sectionsAlgebra_mapSelf_eq (T : Over (Spec (.of k))) (U : T.left.Opens) :
     Over.sectionsAlgebra

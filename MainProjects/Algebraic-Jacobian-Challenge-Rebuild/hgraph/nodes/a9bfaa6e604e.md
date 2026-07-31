@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.quasiCompact_carveLocusToGrPair
 type: lean
-updated: '2026-07-30T15:46:01'
+updated: '2026-07-31T20:15:20'
 ---
 instance quasiCompact_carveLocusToGrPair
     (i : (glueData k g r₁).J) (j : (glueData k g r₂).J) :

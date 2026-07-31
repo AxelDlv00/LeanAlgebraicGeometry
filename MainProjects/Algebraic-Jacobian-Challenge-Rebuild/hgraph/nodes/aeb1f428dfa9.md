@@ -13,9 +13,10 @@ docstring: '**Order table, chart 0.** The fiber unit `u` is regular on `V₀ = �
 file: AlgebraicJacobian/RiemannRoch/FLVFiberToolkit.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.fiberCoordUnit_coeffAt_divOf_nonneg_of_mem_chart₀
 type: lean
-updated: '2026-07-30T15:46:07'
+updated: '2026-07-31T20:14:49'
 ---
 theorem fiberCoordUnit_coeffAt_divOf_nonneg_of_mem_chart₀ {x : Y} (hx : x ≠ genericPoint Y)
     (hxV₀ : x ∈ fiberChart₀ π) :

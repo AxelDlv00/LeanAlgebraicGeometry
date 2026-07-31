@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.P1.algebraMap_awayToOverlapLeft
 type: lean
-updated: '2026-07-30T15:46:01'
+updated: '2026-07-31T20:15:19'
 ---
 theorem algebraMap_awayToOverlapLeft :
     algebraMap (Away 𝒜 (X (0 : Fin 2)))

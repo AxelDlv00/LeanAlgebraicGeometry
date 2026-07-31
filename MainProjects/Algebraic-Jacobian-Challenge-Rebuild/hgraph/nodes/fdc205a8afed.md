@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.P1.overlapRingEquiv_awayToOverlapLeft
 type: lean
-updated: '2026-07-30T15:46:00'
+updated: '2026-07-31T20:15:19'
 ---
 theorem overlapRingEquiv_awayToOverlapLeft (z : Away 𝒜 (X 0)) :
     overlapRingEquiv k (awayToOverlapLeft k z) =

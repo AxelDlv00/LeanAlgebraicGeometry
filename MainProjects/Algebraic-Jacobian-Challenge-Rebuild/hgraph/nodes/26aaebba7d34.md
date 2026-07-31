@@ -15,9 +15,10 @@ docstring: '**THE JUNCTION EQUIVALENCE** (`informal/spec-dd-r.md` §3 item 4, th
 file: AlgebraicJacobian/Picard/DivSchemeCertificateEngine.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.DivisorAdaptation.gluedEquivVanishing
 type: lean
-updated: '2026-07-30T15:46:02'
+updated: '2026-07-31T20:14:41'
 ---
 noncomputable def gluedEquivVanishing :
     A.ThetaIdealSections a ⊤ ≃ₗ[R]

@@ -12,9 +12,10 @@ docstring: '**`divQProj`** (worksheet §4.1): the quasi-projectivity bundle of `
 file: AlgebraicJacobian/Picard/DivSchemeQProj.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.divQProj
 type: lean
-updated: '2026-07-30T15:46:02'
+updated: '2026-07-31T20:14:46'
 ---
 theorem divQProj : DivQProjBundle k A B g r₁ r₂ b₁ b₂ where
   isClosedImmersion_ι := isClosedImmersion_divSchemeι k A B g r₁ r₂ b₁ b₂

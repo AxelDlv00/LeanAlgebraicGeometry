@@ -10,9 +10,10 @@ docstring: '**The lattice ladder is increasing.** `Aₙ ≤ Aₙ₊₁`: over `V
 file: AlgebraicJacobian/RiemannRoch/FLVLattice.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.fiberLattice_mono
 type: lean
-updated: '2026-07-30T15:46:07'
+updated: '2026-07-31T20:14:42'
 ---
 theorem fiberLattice_mono (D : Y.CurveDivisor) (n : ℕ) :
     fiberLattice π D n ≤ fiberLattice π D (n + 1) := by

@@ -10,9 +10,10 @@ docstring: 'Refine-compare along the second projection: the merge pointed by `Q`
 file: AlgebraicJacobian/Picard/PicAffine.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.PointedCover.BasicRefinement.pic_inter
 type: lean
-updated: '2026-07-30T15:46:06'
+updated: '2026-07-31T20:14:50'
 ---
 theorem pic_inter (P : 𝒰.BasicRefinement) (Q : 𝒱.BasicRefinement)
     (γ : X.unitsCocycle 𝒱) : (P.inter Q).pic γ = Q.pic γ := by

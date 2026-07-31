@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.Diagonal.pointBaseChange_pointGen
 type: lean
-updated: '2026-07-30T15:45:59'
+updated: '2026-07-31T20:15:16'
 ---
 lemma pointBaseChange_pointGen : pointBaseChange B F (pointGen k B F) = 0 := by
   rw [pointGen, map_sub, pointBaseChange_tmul, pointBaseChange_tmul, coord_tmul_one_point,

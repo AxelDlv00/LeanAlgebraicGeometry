@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.Diagonal.sectionMap
 type: lean
-updated: '2026-07-30T15:45:59'
+updated: '2026-07-31T20:15:16'
 ---
 noncomputable def sectionMap :
     B ⊗[Polynomial k] B →ₐ[Polynomial k] (B ⊗[k] B) ⧸ Ideal.span {diagGen (k := k) (B := B)} :=

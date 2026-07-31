@@ -13,9 +13,10 @@ docstring: 'The functorial dual-number map `k[ε] → A[ε]` over the algebra ma
 file: AlgebraicJacobian/Tangent/DualNumberBaseChange.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: TruncExpCech.mapAlgHom
 type: lean
-updated: '2026-07-30T15:46:08'
+updated: '2026-07-31T20:14:51'
 ---
 def mapAlgHom : DualNumber k →ₐ[k] DualNumber A :=
   { mapRingHom (algebraMap k A) with

@@ -19,9 +19,10 @@ docstring: '**The `0`-cochain exhibiting a coboundary unit as a coboundary.** Fo
 file: AlgebraicJacobian/Tangent/TwoChartCechPic.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.twoChartCob
 type: lean
-updated: '2026-07-30T15:46:08'
+updated: '2026-07-31T20:14:39'
 ---
 noncomputable def twoChartCob (v₁ : Γ(X, V false)ˣ) (v₂ : Γ(X, V true)ˣ) :
     ∀ s : Bool, Γ(X, V s)ˣ

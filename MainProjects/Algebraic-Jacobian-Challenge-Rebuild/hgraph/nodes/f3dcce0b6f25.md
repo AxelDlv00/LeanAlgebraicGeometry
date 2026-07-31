@@ -18,9 +18,10 @@ docstring: 'The pullback of two principal-open inclusions
 file: AlgebraicJacobian/Picard/GrassmannianGlue.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Grassmannian.awayPullbackIso
 type: lean
-updated: '2026-07-30T15:46:05'
+updated: '2026-07-31T20:14:52'
 ---
 noncomputable def awayPullbackIso {A : Type*} [CommRing A] (x y : A) :
     Limits.pullback

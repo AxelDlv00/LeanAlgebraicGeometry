@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.CechPic.extOpens_overlap_le_bot
 type: lean
-updated: '2026-07-30T15:46:01'
+updated: '2026-07-31T20:15:20'
 ---
 lemma extOpens_overlap_le_bot (hdisj : w.opensRange ⊓ Ω' = ⊥) {y y' : Y}
     (hy : y ∈ w.opensRange) (hy' : y' ∉ w.opensRange) :

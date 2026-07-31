@@ -17,9 +17,10 @@ docstring: 'The units presheaf `𝒪_X^*` of a scheme `X`, on its small Zariski 
 file: AlgebraicJacobian/Picard/UnitsPresheaf.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.unitsPresheaf
 type: lean
-updated: '2026-07-30T15:46:07'
+updated: '2026-07-31T20:14:40'
 ---
 abbrev unitsPresheaf (X : Scheme.{u}) : (X.Opens)ᵒᵖ ⥤ CommGrpCat.{u} :=
   X.presheaf ⋙ forget₂ CommRingCat CommMonCat ⋙ CommMonCat.units

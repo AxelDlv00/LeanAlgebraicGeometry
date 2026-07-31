@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.finrank_h0_baseField
 type: lean
-updated: '2026-07-30T15:46:00'
+updated: '2026-07-31T20:15:17'
 ---
 theorem finrank_h0_baseField :
     letI : C.left.Over (Spec (.of k)) := .ofHom C.hom

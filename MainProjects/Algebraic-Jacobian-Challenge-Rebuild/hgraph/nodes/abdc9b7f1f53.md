@@ -10,9 +10,10 @@ docstring: '**The elementwise forward seam**: the `Φ`-read fibre comparison of 
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivRes.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.divFamPhi_windowCompare_mem_divUniversalFibreKM
 type: lean
-updated: '2026-07-30T15:46:03'
+updated: '2026-07-31T20:14:49'
 ---
 theorem divFamPhi_windowCompare_mem_divUniversalFibreKM
     {x : TensorProduct k

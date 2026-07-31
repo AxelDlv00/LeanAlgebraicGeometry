@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.DivisorAdaptation.mem_unitGluedOver_iff
 file: AlgebraicJacobian/Picard/DivisorFamilyThetaRank.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.DivisorAdaptation.mem_unitGluedOver_iff
 type: lean
-updated: '2026-07-30T15:46:04'
+updated: '2026-07-31T20:14:45'
 ---
 lemma mem_unitGluedOver_iff {x : A.chartProd} :
     x ∈ A.unitGluedOver u ↔ x ∈ A.unitGluedSubmodule u :=

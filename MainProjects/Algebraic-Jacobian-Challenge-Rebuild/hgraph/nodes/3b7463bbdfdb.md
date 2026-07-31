@@ -6,9 +6,10 @@ decl: Submodule.directLimitQuotientToIdeal_of_mk
 file: AlgebraicJacobian/Picard/DivSchemeHighWindowDirectLimit.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: Submodule.directLimitQuotientToIdeal_of_mk
 type: lean
-updated: '2026-07-30T15:46:02'
+updated: '2026-07-31T20:14:42'
 ---
 theorem directLimitQuotientToIdeal_of_mk (i : ι) (x : G i) :
     directLimitQuotientToIdeal f K hK read J hreadK hread

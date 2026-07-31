@@ -10,9 +10,10 @@ docstring: '`Submodule.baseChange` exchanges with `Submodule.map`: the base chan
 file: AlgebraicJacobian/Picard/DivSchemeFrameKit.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Grassmannian.baseChange_map_submodule
 type: lean
-updated: '2026-07-30T15:46:02'
+updated: '2026-07-31T20:14:41'
 ---
 theorem baseChange_map_submodule {R : Type u} [CommRing R] {M M' : Type u}
     [AddCommGroup M] [Module R M] [AddCommGroup M'] [Module R M']

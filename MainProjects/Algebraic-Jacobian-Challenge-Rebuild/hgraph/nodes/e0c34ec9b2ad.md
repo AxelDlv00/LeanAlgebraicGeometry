@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divUniversalHighWindowAmbientCancelEquiv
 type: lean
-updated: '2026-07-30T15:46:02'
+updated: '2026-07-31T20:15:21'
 ---
 noncomputable def divUniversalHighWindowAmbientCancelEquiv (n : Nat) :
     K ⊗[RZ] (RZ ⊗[k] HW[n]) ≃ₗ[K] K ⊗[k] HW[n] :=

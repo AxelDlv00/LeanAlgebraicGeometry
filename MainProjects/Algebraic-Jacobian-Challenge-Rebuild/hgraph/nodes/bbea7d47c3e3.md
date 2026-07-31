@@ -24,9 +24,10 @@ docstring: '**The `ε ↦ 0` reduction on a pure tensor**: the relative sections
 file: AlgebraicJacobian/Tangent/DualNumberCarrierReduction.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.relSectionsMap_sectionsBaseChange_tmul
 type: lean
-updated: '2026-07-30T15:46:08'
+updated: '2026-07-31T20:14:49'
 ---
 theorem Over.relSectionsMap_sectionsBaseChange_tmul {W : C.left.Opens}
     (hW : IsCompact (W : Set C.left)) (hW' : IsQuasiSeparated (W : Set C.left))

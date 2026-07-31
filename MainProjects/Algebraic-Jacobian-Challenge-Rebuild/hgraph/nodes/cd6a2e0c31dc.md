@@ -13,9 +13,10 @@ docstring: '**The rigid engine at genus `0` on a fibrewise-trivial class**: `H¹
 file: AlgebraicJacobian/Picard/Pic0RingDatumEngine.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.BasicOpenCocycleDatum.rigidEngine_of_genus_zero
 type: lean
-updated: '2026-07-31T11:59:12'
+updated: '2026-07-31T20:14:50'
 ---
 theorem rigidEngine_of_genus_zero (D : BasicOpenCocycleDatum C B π) [IsNoetherianRing B]
     (hπ : π ≫ P1.structureMap k = C.hom) (hg : genus C = 0)

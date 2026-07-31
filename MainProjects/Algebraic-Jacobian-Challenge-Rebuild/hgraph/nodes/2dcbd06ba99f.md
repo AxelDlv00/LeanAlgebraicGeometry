@@ -20,7 +20,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.exists_comparison_unit
 type: lean
-updated: '2026-07-30T15:46:01'
+updated: '2026-07-31T20:15:20'
 ---
 theorem exists_comparison_unit
     [IsProper C.hom] [GeometricallyIrreducible C.hom] [GeometricallyReduced C.hom]

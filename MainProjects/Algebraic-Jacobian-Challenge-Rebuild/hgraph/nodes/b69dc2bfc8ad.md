@@ -7,9 +7,10 @@ docstring: The inverse transport commutes with restriction on the base.
 file: AlgebraicJacobian/Picard/OpenImmersionUnits.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.Hom.unitsRestrict_unitsPreimageEquiv_symm
 type: lean
-updated: '2026-07-30T15:46:05'
+updated: '2026-07-31T20:14:49'
 ---
 lemma unitsRestrict_unitsPreimageEquiv_symm {V V' : Y.Opens} (hV : V ≤ w.opensRange)
     (h : V' ≤ V) (v : Γ(Z, w ⁻¹ᵁ V)ˣ) :

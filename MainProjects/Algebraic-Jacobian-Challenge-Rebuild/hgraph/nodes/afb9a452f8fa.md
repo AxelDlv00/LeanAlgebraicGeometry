@@ -11,8 +11,9 @@ docstring: 'The underlying finitely supported function of a Weil divisor (`Curve
 file: AlgebraicJacobian/RiemannRoch/Devissage.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.toFinsupp
 type: lean
-updated: '2026-07-30T15:46:07'
+updated: '2026-07-31T20:14:49'
 ---
 def toFinsupp (D : X.CurveDivisor) : {p : X // p ≠ genericPoint X} →₀ ℤ := D

@@ -13,7 +13,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.degAffField
 type: lean
-updated: '2026-07-30T15:46:01'
+updated: '2026-07-31T20:15:20'
 ---
 private def degAffField (E : Algebra.EtaleCover K) : Type u :=
   E.exists_finiteSeparableField_algHom.choose

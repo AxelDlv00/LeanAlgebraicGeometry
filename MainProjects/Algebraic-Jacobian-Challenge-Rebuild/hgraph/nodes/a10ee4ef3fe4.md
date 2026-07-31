@@ -23,7 +23,7 @@ generated: lean
 lean_status: lean_ok
 title: TwoLatticePair
 type: lean
-updated: '2026-07-30T15:46:00'
+updated: '2026-07-31T20:15:18'
 ---
 structure TwoLatticePair where
   /-- The chart-0 coordinate action on the chart-0 lattice. -/

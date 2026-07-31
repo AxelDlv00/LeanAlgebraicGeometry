@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.fst_graphPoint
 type: lean
-updated: '2026-07-30T15:46:00'
+updated: '2026-07-31T20:15:19'
 ---
 lemma fst_graphPoint (t : overSpec k K ⟶ C) :
     (fst C (overSpec k K)).left.base (graphPoint C t) = t.left.base default := by

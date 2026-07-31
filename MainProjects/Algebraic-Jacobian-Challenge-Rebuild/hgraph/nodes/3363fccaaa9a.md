@@ -7,9 +7,10 @@ docstring: The components of the canonical section are the (piece-restricted) eq
 file: AlgebraicJacobian/Picard/DivisorDatumInverse.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.DivisorAdaptation.component_canonSection
 type: lean
-updated: '2026-07-30T15:46:03'
+updated: '2026-07-31T20:14:42'
 ---
 lemma component_canonSection (j : (A.thetaIdealDatum 0).index) :
     A.divisorDatum.component A.canonSection j

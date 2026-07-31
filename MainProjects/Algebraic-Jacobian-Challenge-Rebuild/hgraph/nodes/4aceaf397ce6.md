@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.pic0Pullback_coe
 file: AlgebraicJacobian/Picard/Pic0Pullback.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.pic0Pullback_coe
 type: lean
-updated: '2026-07-30T15:46:05'
+updated: '2026-07-31T20:14:43'
 ---
 theorem pic0Pullback_coe (g : D ⟶ E) (T : Over (Spec (.of k)))
     (lam : pic0Subgroup E T) :

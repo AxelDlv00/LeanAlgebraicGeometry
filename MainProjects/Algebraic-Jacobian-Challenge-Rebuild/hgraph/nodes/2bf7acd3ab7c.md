@@ -19,9 +19,10 @@ docstring: '**Coboundaries push forward along an isomorphism of two-chart data.*
 file: AlgebraicJacobian/Tangent/TruncExpCechTransport.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: TruncExpCech.cechCoboundaryUnits_map_le
 type: lean
-updated: '2026-07-31T19:20:47'
+updated: '2026-07-31T20:14:41'
 ---
 theorem cechCoboundaryUnits_map_le
     (ρ₁ : A₁ →+* B) (ρ₂ : A₂ →+* B) (ρ₁' : A₁' →+* B') (ρ₂' : A₂' →+* B')

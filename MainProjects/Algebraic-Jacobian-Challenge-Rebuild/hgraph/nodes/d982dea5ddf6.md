@@ -21,9 +21,10 @@ docstring: '**The two-chart representative of a chart-trivial class.** `(iii-c2-
 file: AlgebraicJacobian/Tangent/TwoChartKernelComparison.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.chartSection
 type: lean
-updated: '2026-07-30T15:46:08'
+updated: '2026-07-31T20:14:51'
 ---
 noncomputable def chartSection (L : Y.CechPic)
     (h : ∀ s : Bool, CechPic.map (V s).ι L = 1) : overlapQuot Y V :=

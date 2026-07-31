@@ -14,9 +14,10 @@ docstring: '**The descent budget** `b + 2g ≤ (M − s)·δ`, spelled `b + 2g +
 file: AlgebraicJacobian/RiemannRoch/WindowLedgerF3.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.windowBound_add_two_mul_genus_le_M_sub_S_mul
 type: lean
-updated: '2026-07-30T15:46:08'
+updated: '2026-07-31T20:14:49'
 ---
 theorem windowBound_add_two_mul_genus_le_M_sub_S_mul (g : ℕ) :
     windowBound π hπ + 2 * (g : ℤ) + (windowS_choice π hπ g : ℤ) * windowδ π

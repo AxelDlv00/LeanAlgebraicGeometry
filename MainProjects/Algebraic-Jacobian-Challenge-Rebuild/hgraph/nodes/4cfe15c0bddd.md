@@ -38,9 +38,10 @@ docstring: '**THE REPRICING AT ARBITRARY PARAMETER**, which is what a coverage l
 file: AlgebraicJacobian/Picard/Pic0ChartSeamPairDecided.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.isOpenImmersion_presheaf_abelSigmaChart_of_mono_of_cov
 type: lean
-updated: '2026-07-31T03:02:20'
+updated: '2026-07-31T20:14:43'
 ---
 theorem isOpenImmersion_presheaf_abelSigmaChart_of_mono_of_cov {n : ℕ}
     {D : Over (Spec (.of k))} (rep : (divFunctor C pi n).RepresentableBy D) [Mono D.hom]

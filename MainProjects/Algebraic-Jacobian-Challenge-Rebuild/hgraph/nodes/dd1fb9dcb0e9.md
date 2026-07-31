@@ -7,9 +7,10 @@ file: AlgebraicJacobian/Picard/DivSchemeHighWindowTransitionSaturation.lean
 generated: lean
 lean_status: lean_ok
 private: true
+stale: true
 title: AlgebraicGeometry.relationReadMultipleWitness_add
 type: lean
-updated: '2026-07-30T15:46:02'
+updated: '2026-07-31T20:14:51'
 ---
 private theorem relationReadMultipleWitness_add (n : Nat) (x : G(n + 1))
     {c d : B}

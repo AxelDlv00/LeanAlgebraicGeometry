@@ -33,9 +33,10 @@ docstring: '**THE KERNEL BRIDGE, CHART-FREE**: the kernel of the chart-free Θ-t
 file: AlgebraicJacobian/Picard/DivisorFamilyAffThetaTyping.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.AffAdaptation.ker_trivGluedEval
 type: lean
-updated: '2026-07-30T15:46:04'
+updated: '2026-07-31T20:14:51'
 ---
 theorem ker_trivGluedEval :
     LinearMap.ker (trivGluedEval A T)

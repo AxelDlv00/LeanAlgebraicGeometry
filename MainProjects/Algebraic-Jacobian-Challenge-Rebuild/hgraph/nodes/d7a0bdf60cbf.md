@@ -13,9 +13,10 @@ docstring: '**The relative curve is flat over its test base.** `(snd C (overSpec
 file: AlgebraicJacobian/Picard/DivisorFamilyAffCover.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.instFlatRelCurveHom
 type: lean
-updated: '2026-07-30T15:46:03'
+updated: '2026-07-31T20:14:51'
 ---
 instance instFlatRelCurveHom : AlgebraicGeometry.Flat (relCurve C R ↘ Spec (.of R)) :=
   AlgebraicGeometry.Flat.isStableUnderBaseChange.of_isPullback

@@ -12,9 +12,10 @@ docstring: 'Representing objects are unique up to isomorphism (mathlib
 file: AlgebraicJacobian/Picard/JacobianData.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.JacobianData.uniqueUpToIso
 type: lean
-updated: '2026-07-30T15:46:05'
+updated: '2026-07-31T20:14:51'
 ---
 noncomputable def uniqueUpToIso (d d' : JacobianData C) : d.J ≅ d'.J :=
   d.rep.uniqueUpToIso d'.rep

@@ -21,7 +21,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.specMap_awayPiece_eq_of_clause
 type: lean
-updated: '2026-07-30T15:46:01'
+updated: '2026-07-31T20:15:20'
 ---
 private theorem specMap_awayPiece_eq_of_clause
     {S₀ : Type u} [CommRing S₀] [Algebra k S₀]

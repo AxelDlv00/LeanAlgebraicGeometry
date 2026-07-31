@@ -19,9 +19,10 @@ docstring: "**The field dictionary, assembled from the two remaining named gaps*
 file: AlgebraicJacobian/Picard/DivisorFamilyFieldEquiv.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.divFamFieldEquivOfDegOfSurj
 type: lean
-updated: '2026-07-30T15:46:04'
+updated: '2026-07-31T20:14:50'
 ---
 noncomputable def divFamFieldEquivOfDegOfSurj
     (hdeg : ∀ F : DivFam C K π n,

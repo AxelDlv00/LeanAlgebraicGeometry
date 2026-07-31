@@ -7,9 +7,10 @@ docstring: The underlying scheme of `overSpec k A` is affine (it is `Spec A`).
 file: AlgebraicJacobian/Picard/PicRepColimitMountain.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.DatG0.isAffine_overSpec_left
 type: lean
-updated: '2026-07-30T15:46:06'
+updated: '2026-07-31T20:14:50'
 ---
 instance isAffine_overSpec_left (A : Type u) [CommRing A] [Algebra k A] :
     IsAffine (overSpec k A).left :=

@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.Sheaf.HModule
 type: lean
-updated: '2026-07-30T15:46:00'
+updated: '2026-07-31T20:15:17'
 ---
 noncomputable abbrev HModule (F : Sheaf J (ModuleCat.{u} R)) (n : ℕ) : Type u :=
   Abelian.Ext (constModuleSheaf J R) F n

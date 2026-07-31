@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divCarveArrow
 type: lean
-updated: '2026-07-30T15:46:01'
+updated: '2026-07-31T20:15:20'
 ---
 noncomputable def divCarveArrow (i : (glueData k g r₁).J) (j : (glueData k g r₂).J)
     (a : ↥(divisorSections k A ⊤)) :

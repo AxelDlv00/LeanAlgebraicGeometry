@@ -7,9 +7,10 @@ docstring: The sum of all multiplier-basis translates of the first universal win
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivMulSpan.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.universalMulMap
 type: lean
-updated: '2026-07-30T15:46:03'
+updated: '2026-07-31T20:14:50'
 ---
 noncomputable def universalMulMap :
     universalMulSource (hπ := hπ) g r₁ r₂ b₁ b₂ i j →ₗ[RZ]

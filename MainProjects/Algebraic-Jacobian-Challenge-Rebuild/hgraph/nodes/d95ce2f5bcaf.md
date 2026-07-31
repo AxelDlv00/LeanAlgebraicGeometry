@@ -10,9 +10,10 @@ docstring: '**Purity of the kernel from a flat image**: if `M ⧸ ker δ` is `R`
 file: AlgebraicJacobian/Picard/FlatCokernel.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: LinearMap.lTensor_ker_subtype_injective_of_flat_coker
 type: lean
-updated: '2026-07-30T15:46:04'
+updated: '2026-07-31T20:14:51'
 ---
 theorem lTensor_ker_subtype_injective_of_flat_coker
     [Module.Flat R (M ⧸ LinearMap.ker δ)]

@@ -10,9 +10,10 @@ docstring: '**The defining property of the per-piece comparison unit**: on each 
 file: AlgebraicJacobian/Picard/EffectivityComparisonUnit.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.pieceComparisonUnit_spec
 type: lean
-updated: '2026-07-30T15:46:04'
+updated: '2026-07-31T20:14:39'
 ---
 lemma pieceComparisonUnit_spec {𝒩 : (XB).PointedCover} {γ : (XB).unitsCocycle 𝒩}
     (W : NormalizedCechComparison k A B C σ 𝒩 γ) {V : (XA).Opens}

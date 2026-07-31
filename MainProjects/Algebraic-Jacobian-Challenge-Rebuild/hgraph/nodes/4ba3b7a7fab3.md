@@ -23,9 +23,10 @@ docstring: 'Every challenge curve has a point over a finite subextension of its 
 file: AlgebraicJacobian/Picard/Pic0FiniteSeparablePoint.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.exists_separableClosure_finSubext_point
 type: lean
-updated: '2026-07-31T00:01:01'
+updated: '2026-07-31T20:14:43'
 ---
 theorem exists_separableClosure_finSubext_point {k : Type u} [Field k]
     (C : Over (Spec (.of k)))

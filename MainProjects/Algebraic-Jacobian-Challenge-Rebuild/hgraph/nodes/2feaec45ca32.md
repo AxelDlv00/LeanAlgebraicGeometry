@@ -10,9 +10,10 @@ docstring: 'The germ at `η` of a pair value of a restricted presentation cocycl
 file: AlgebraicJacobian/Picard/PresentationClassLaw.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.MeromorphicPresentation.germGenericUnits_unitsEvInf_res
 type: lean
-updated: '2026-07-30T15:46:06'
+updated: '2026-07-31T20:14:41'
 ---
 lemma germGenericUnits_unitsEvInf_res (P : X.MeromorphicPresentation)
     {𝒲 : X.PointedCover} (h : 𝒲 ≤ P.cover) (x y : X)

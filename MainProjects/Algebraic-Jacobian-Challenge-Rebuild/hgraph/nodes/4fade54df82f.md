@@ -7,9 +7,10 @@ docstring: The pieces are affine opens (basic opens of the affine pinned charts)
 file: AlgebraicJacobian/Picard/DivisorFamilyPullbackMap.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.FinCoverData.isAffineOpen_pieces
 type: lean
-updated: '2026-07-30T15:46:04'
+updated: '2026-07-31T20:14:43'
 ---
 lemma isAffineOpen_pieces (j : D.index) : IsAffineOpen (D.pieces j) := by
   cases j

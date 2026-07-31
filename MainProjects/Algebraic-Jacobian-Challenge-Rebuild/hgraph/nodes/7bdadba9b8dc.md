@@ -7,9 +7,10 @@ docstring: The chart-1 mirror.
 file: AlgebraicJacobian/Picard/DivisorThetaGlue.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.DivisorAdaptation.gluedToIdeal₁_idealToGlued₁
 type: lean
-updated: '2026-07-30T15:46:04'
+updated: '2026-07-31T20:14:46'
 ---
 lemma gluedToIdeal₁_idealToGlued₁ {W : (relCurve C R).Opens}
     (hW : W ≤ (relCover C R (fiberTwoCover π)).V₁) (β : Γ(relCurve C R, W))

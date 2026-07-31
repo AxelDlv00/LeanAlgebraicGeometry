@@ -8,9 +8,10 @@ docstring: The piece projections from the intrinsic theta equalizer agree on eve
 file: AlgebraicJacobian/Picard/DivisorFamilyAffThetaCech.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.AffAdaptation.intrinsicThetaGluedToPiece_overlap
 type: lean
-updated: '2026-07-30T21:44:01'
+updated: '2026-07-31T20:14:51'
 ---
 theorem intrinsicThetaGluedToPiece_overlap (A : AffAdaptation D d) (a : ℕ)
     (i j : D.index) :

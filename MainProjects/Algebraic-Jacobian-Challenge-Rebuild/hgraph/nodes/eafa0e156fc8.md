@@ -13,9 +13,10 @@ docstring: '**Overlap affineness of a widened cover** — the one datum the cert
 file: AlgebraicJacobian/Picard/DivisorFamilyAffMapAlg.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.AffCoverData.HasAffineOverlaps
 type: lean
-updated: '2026-07-30T15:46:03'
+updated: '2026-07-31T20:14:52'
 ---
 def AffCoverData.HasAffineOverlaps (D : AffCoverData C R) : Prop :=
   ∀ i j : D.index, IsAffineOpen (D.pieces i ⊓ D.pieces j)

@@ -22,9 +22,10 @@ docstring: '**THE REDUCTION**: at genus `0`, field-point rigidity of `picEt` giv
 file: AlgebraicJacobian/Picard/Pic0VanishingRigidityReduction.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.subsingleton_pic0Subgroup_of_rigidity
 type: lean
-updated: '2026-07-31T13:39:13'
+updated: '2026-07-31T20:14:49'
 ---
 theorem subsingleton_pic0Subgroup_of_rigidity (hg : genus C = 0)
     (hrig : ∀ (T : Over (Spec (.of k))) (lam : picEt C T),

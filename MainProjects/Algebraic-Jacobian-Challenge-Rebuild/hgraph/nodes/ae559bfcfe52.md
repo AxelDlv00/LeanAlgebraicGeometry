@@ -6,9 +6,10 @@ decl: TruncExpCech.snd_scaleRingHom
 file: AlgebraicJacobian/Tangent/TruncExpUnits.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: TruncExpCech.snd_scaleRingHom
 type: lean
-updated: '2026-07-30T15:46:08'
+updated: '2026-07-31T20:14:49'
 ---
 theorem snd_scaleRingHom (a : R) (x : R[ε]) : (scaleRingHom a x).snd = a * x.snd := by
   simp [scaleRingHom]

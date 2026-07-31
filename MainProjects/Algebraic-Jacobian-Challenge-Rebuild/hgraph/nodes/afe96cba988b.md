@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.DivisorAdaptation.thetaInvSectionFst_inr
 file: AlgebraicJacobian/Picard/DivisorThetaPairing.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.DivisorAdaptation.thetaInvSectionFst_inr
 type: lean
-updated: '2026-07-30T15:46:04'
+updated: '2026-07-31T20:14:49'
 ---
 lemma thetaInvSectionFst_inr (j₁ : Fin A.m₁) :
     A.thetaInvSectionFst a H (Sum.inr j₁) = 1 := rfl

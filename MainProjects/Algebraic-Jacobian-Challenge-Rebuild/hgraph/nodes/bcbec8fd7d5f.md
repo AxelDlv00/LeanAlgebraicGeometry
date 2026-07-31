@@ -10,9 +10,10 @@ docstring: 'The principal-open chart overlap `U^I_J = Spec R^I[1/P^I_J]`: the `V
 file: AlgebraicJacobian/Picard/GrassmannianGlue.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Grassmannian.chartOverlap
 type: lean
-updated: '2026-07-30T15:46:05'
+updated: '2026-07-31T20:14:49'
 ---
 noncomputable def chartOverlap (k : Type u) [Field k] (d r : ℕ) (I J : Finset (Fin r))
     (hI : I.card = d) (hJ : J.card = d) : Scheme :=

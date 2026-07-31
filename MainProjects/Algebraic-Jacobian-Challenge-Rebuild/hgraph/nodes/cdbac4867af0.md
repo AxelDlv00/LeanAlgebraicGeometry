@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.FlatRangeBridge.exact_imageInQuotient_subtype_quotientMa
 file: AlgebraicJacobian/Picard/DivSchemeRedesignRangeFlatBridge.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.FlatRangeBridge.exact_imageInQuotient_subtype_quotientMapOfLE
 type: lean
-updated: '2026-07-30T15:46:02'
+updated: '2026-07-31T20:14:50'
 ---
 lemma exact_imageInQuotient_subtype_quotientMapOfLE {L P : Submodule R M}
     (hLP : L ≤ P) :

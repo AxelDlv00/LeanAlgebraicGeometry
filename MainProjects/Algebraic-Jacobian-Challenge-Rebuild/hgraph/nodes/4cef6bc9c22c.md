@@ -10,9 +10,10 @@ docstring: '**`descentFace₂₃` compatibility**: the triple identification int
 file: AlgebraicJacobian/Picard/EffectivityDescentDatum.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: Algebra.TensorProduct.pieceDescentTripleEquiv_descentFace₂₃
 type: lean
-updated: '2026-07-30T15:46:04'
+updated: '2026-07-31T20:14:43'
 ---
 lemma pieceDescentTripleEquiv_descentFace₂₃ (y : (S ⊗[A] B) ⊗[S] (S ⊗[A] B)) :
     pieceDescentTripleEquiv A S B (Module.descentFace₂₃ S (S ⊗[A] B) y)

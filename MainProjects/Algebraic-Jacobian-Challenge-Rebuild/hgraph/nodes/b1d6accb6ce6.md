@@ -9,9 +9,10 @@ file: AlgebraicJacobian/Picard/WitnessAway.lean
 generated: lean
 lean_status: lean_ok
 private: true
+stale: true
 title: AlgebraicGeometry.Over.triple_elt_eq
 type: lean
-updated: '2026-07-30T15:46:07'
+updated: '2026-07-31T20:14:49'
 ---
 private lemma triple_elt_eq (x y z : B) :
     (x ⊗ₜ[A] ((1 : B) ⊗ₜ[A] (1 : B)))

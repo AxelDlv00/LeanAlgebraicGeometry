@@ -19,9 +19,10 @@ docstring: '**`ψ_z ⟹ Flat(colength ⧸ N z)` at every point** — the `hflat`
 file: AlgebraicJacobian/Picard/DivSchemeUnivFibreKerInj.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.ThetaGeneratorSeed.forall_flat_colength_quotient
 type: lean
-updated: '2026-07-30T15:46:03'
+updated: '2026-07-31T20:14:51'
 ---
 theorem forall_flat_colength_quotient [IsNoetherianRing R] [Module.Finite R ↥K]
     (hcolFin : ∀ z : relCurve C R,

@@ -57,9 +57,10 @@ docstring: '**THE THRESHOLD AT AN ARBITRARY SPLITTING FIELD, PI-FREE AND UNIFORM
 file: AlgebraicJacobian/Picard/Pic0ChartCoverageThreshold.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.subsingleton_h1_of_ledger_bound
 type: lean
-updated: '2026-07-30T15:46:05'
+updated: '2026-07-31T20:14:51'
 ---
 theorem subsingleton_h1_of_ledger_bound {π : C.left ⟶ P1 k} [IsFinite π] [IsDominant π]
     (hπ : π ≫ P1.structureMap k = C.left ↘ Spec (CommRingCat.of k)) (g : ℕ)

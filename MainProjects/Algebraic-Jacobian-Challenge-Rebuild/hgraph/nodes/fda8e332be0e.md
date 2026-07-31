@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.RationalMap.selfDiag_comp_toPartialMap_hom
 type: lean
-updated: '2026-07-30T15:45:59'
+updated: '2026-07-31T20:15:15'
 ---
 theorem selfDiag_comp_toPartialMap_hom
     (dj : (↑f.toPartialMap.domain : Scheme.{u}) ⟶

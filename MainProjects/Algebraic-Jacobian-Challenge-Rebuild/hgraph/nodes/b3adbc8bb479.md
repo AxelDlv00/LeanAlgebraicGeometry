@@ -11,7 +11,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicJacobian.RigidEngine.pow_apply_of_smul
 type: lean
-updated: '2026-07-30T15:45:59'
+updated: '2026-07-31T20:15:17'
 ---
 private lemma pow_apply_of_smul (a₀ : A) (e : Module.End R M)
     (he : ∀ m : M, e m = a₀ • m) (n : ℕ) (m : M) : (e ^ n) m = a₀ ^ n • m := by

@@ -9,9 +9,10 @@ docstring: '**Right exactness on degree-zero cohomology**: `H⁰(X₂) → H⁰(
 file: AlgebraicJacobian/RiemannRoch/ChiSlice.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: CategoryTheory.Sheaf.HModule.surjective_map_g_zero
 type: lean
-updated: '2026-07-31T00:30:37'
+updated: '2026-07-31T20:14:50'
 ---
 theorem surjective_map_g_zero (hS : S.ShortExact) [Subsingleton (HModule S.X₁ 1)] :
     Function.Surjective (map S.g 0) := fun y =>

@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.degAt_abelPicEt
 type: lean
-updated: '2026-07-30T15:46:01'
+updated: '2026-07-31T20:15:19'
 ---
 theorem degAt_abelPicEt (P : 𝟙_ (Over (Spec (.of k))) ⟶ C) {K : Type u} [Field K]
     [Algebra k K] (t : overSpec k K ⟶ C) :

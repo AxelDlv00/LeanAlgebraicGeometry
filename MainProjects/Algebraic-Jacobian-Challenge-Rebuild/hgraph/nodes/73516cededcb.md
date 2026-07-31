@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: IsLocalization.Away.tensorAwayAlgebra
 type: lean
-updated: '2026-07-30T15:45:59'
+updated: '2026-07-31T20:15:16'
 ---
 @[reducible] noncomputable def tensorAwayAlgebra : Algebra (B₁ ⊗[A] B₂) (Si ⊗[A] Sj) :=
   (tensorMap A B₁ B₂ Si Sj).toRingHom.toAlgebra

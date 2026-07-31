@@ -21,7 +21,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.DivRepAffinePullback.overSpecMap_comp_divRepClassifyZar
 type: lean
-updated: '2026-07-30T15:46:01'
+updated: '2026-07-31T20:15:20'
 ---
 private theorem overSpecMap_comp_divRepClassifyZar
     (D : DivRepAffinePullback hpi g hO hchi r1 r2 b1 b2)

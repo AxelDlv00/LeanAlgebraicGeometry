@@ -23,9 +23,10 @@ docstring: '**The functor-level unit is a group isomorphism over a section-admit
 file: AlgebraicJacobian/Picard/PicEtUnitFieldComparison.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.relPicToPicEtEquiv_of_section
 type: lean
-updated: '2026-07-31T16:07:32'
+updated: '2026-07-31T20:14:52'
 ---
 noncomputable def relPicToPicEtEquiv_of_section (σ : overSpec k K ⟶ C) :
     relPic C (overSpec k K) ≃* picEt C (overSpec k K) :=

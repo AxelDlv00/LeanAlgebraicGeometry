@@ -9,9 +9,10 @@ docstring: '**The chart-level multiplication comparison**
 file: AlgebraicJacobian/Picard/DivSchemeSeedFibre.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.relChartFibreMul
 type: lean
-updated: '2026-07-30T15:46:03'
+updated: '2026-07-31T20:14:48'
 ---
 noncomputable def relChartFibreMul :
     Γ(relCurve C R, (fst C (overSpec k R)).left ⁻¹ᵁ V) ⊗[R] R' →+*

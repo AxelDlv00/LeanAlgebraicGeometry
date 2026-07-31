@@ -19,9 +19,10 @@ docstring: '**Joint injectivity decomposes**: it is index separation together wi
 file: AlgebraicJacobian/Picard/Pic0ChartMultiIndexInterval.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.jointlyInjective_iff
 type: lean
-updated: '2026-07-30T15:46:05'
+updated: '2026-07-31T20:14:45'
 ---
 theorem jointlyInjective_iff {ι : Type u} {X : ι → Scheme.{u}}
     (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1) :

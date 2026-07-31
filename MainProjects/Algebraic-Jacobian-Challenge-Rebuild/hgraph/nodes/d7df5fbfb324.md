@@ -9,7 +9,7 @@ generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.Jacobian.baseChangeIso_comp
 type: lean
-updated: '2026-07-30T15:45:59'
+updated: '2026-07-31T20:15:17'
 ---
 theorem baseChangeIso_comp (k L M : Type u) [Field k] [Field L] [Field M]
     [Algebra k L] [Algebra L M] [Algebra k M] [IsScalarTower k L M]

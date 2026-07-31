@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.AffAdaptation.intrinsicThetaGluedOverLift_apply
 file: AlgebraicJacobian/Picard/DivisorFamilyAffThetaCech.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.AffAdaptation.intrinsicThetaGluedOverLift_apply
 type: lean
-updated: '2026-07-30T21:44:01'
+updated: '2026-07-31T20:14:49'
 ---
 lemma intrinsicThetaGluedOverLift_apply (a : ℕ)
     (f : ∀ j : D.index, M →ₗ[↥(gluedSubalgebra A)]

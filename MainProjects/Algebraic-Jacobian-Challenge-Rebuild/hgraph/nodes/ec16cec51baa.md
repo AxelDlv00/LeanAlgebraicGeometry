@@ -15,9 +15,10 @@ docstring: '**The full-window image dictionary**: `Φ` carries the whole free wi
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivFibre.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.map_divFamPhi_top
 type: lean
-updated: '2026-07-30T15:46:03'
+updated: '2026-07-31T20:14:52'
 ---
 theorem map_divFamPhi_top
     (hH1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1) :

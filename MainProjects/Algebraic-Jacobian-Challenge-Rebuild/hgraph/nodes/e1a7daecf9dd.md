@@ -16,9 +16,10 @@ docstring: '**The pair condition**: descent-class representatives of two plus cl
 file: AlgebraicJacobian/Picard/PicEtAffZariskiGlue.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.PicEtAff.relPicAlgMap_tensor_eq_of_compat
 type: lean
-updated: '2026-07-30T15:46:06'
+updated: '2026-07-31T20:14:51'
 ---
 theorem relPicAlgMap_tensor_eq_of_compat (g₁ g₂ : A)
     [IsLocalization.Away g₁ S₁] [IsLocalization.Away g₂ S₂]

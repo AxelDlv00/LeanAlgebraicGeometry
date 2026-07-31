@@ -10,7 +10,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.relSectionsBaseChange_mul_fiberCoord₁
 type: lean
-updated: '2026-07-30T15:46:00'
+updated: '2026-07-31T20:15:18'
 ---
 private lemma relSectionsBaseChange_mul_fiberCoord₁ [IsAffineHom π] (a : R)
     (s : Γ(C.left, fiberChart₁ π)) :

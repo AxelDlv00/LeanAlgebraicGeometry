@@ -7,9 +7,10 @@ docstring: '`Spec` level, whiskered: `u₁ ≫ cg = cg₂`.'
 file: AlgebraicJacobian/Picard/SectionsDescent.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.whiskerLeft_inl_comp_ofId
 type: lean
-updated: '2026-07-30T15:46:06'
+updated: '2026-07-31T20:14:41'
 ---
 lemma whiskerLeft_inl_comp_ofId :
     (u₁) ≫ (cg) = (cg₂) := by

@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.P1.fromSpecChart_units
 type: lean
-updated: '2026-07-30T15:46:01'
+updated: '2026-07-31T20:15:19'
 ---
 theorem fromSpecChart_units (u : Aˣ) :
     fromSpecChart k ρ 0 (u : A) = fromSpecChart k ρ 1 ((u⁻¹ : Aˣ) : A) := by

@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.abelDivPlus
 type: lean
-updated: '2026-07-30T15:46:01'
+updated: '2026-07-31T20:15:20'
 ---
 def abelDivPlus (A : Type u) [CommRing A] [Algebra k A] (F₀ : DivFamZar C A π n) :
     PicEtAff C A :=

@@ -11,9 +11,10 @@ docstring: '`jumpProj` depends only on the underlying rational function: two sec
 file: AlgebraicJacobian/RiemannRoch/Devissage.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.jumpProj_eq_of_coe_eq
 type: lean
-updated: '2026-07-30T15:46:07'
+updated: '2026-07-31T20:14:43'
 ---
 lemma jumpProj_eq_of_coe_eq {U V : X.Opens} (hxU : x ∈ U) (hxV : x ∈ V)
     (s : divisorSections K D U) (t : divisorSections K D V)

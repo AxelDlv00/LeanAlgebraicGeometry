@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.isAffineOpen_relPinnedChart
 type: lean
-updated: '2026-07-30T15:46:02'
+updated: '2026-07-31T20:15:21'
 ---
 lemma isAffineOpen_relPinnedChart (b : Bool) : IsAffineOpen (relPinnedChart C R π b) := by
   cases b

@@ -7,9 +7,10 @@ docstring: Restrict-then-quotient, from the `i` component.
 file: AlgebraicJacobian/Picard/DivisorFamilyAffAdaptation.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.AffAdaptation.toOvlLeft
 type: lean
-updated: '2026-07-30T15:46:03'
+updated: '2026-07-31T20:14:40'
 ---
 noncomputable def toOvlLeft (i j : D.index) : A.colength i →ₐ[R] A.ovlColength i j :=
   Ideal.Quotient.liftₐ (Ideal.span {A.eqn i})

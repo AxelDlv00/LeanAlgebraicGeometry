@@ -16,7 +16,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Scheme.CechPic.extPairs_cocycle
 type: lean
-updated: '2026-07-30T15:46:01'
+updated: '2026-07-31T20:15:20'
 ---
 private lemma extPairs_cocycle (hdisj : w.opensRange ⊓ Ω' = ⊥) (y y' y'' : Y) :
     Y.unitsRestrict (inf_le_left :

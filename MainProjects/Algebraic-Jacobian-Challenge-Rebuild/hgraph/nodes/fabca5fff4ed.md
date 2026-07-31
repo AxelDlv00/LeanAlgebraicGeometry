@@ -11,9 +11,10 @@ file: AlgebraicJacobian/RiemannRoch/ChiFiniteness.lean
 generated: lean
 lean_status: lean_ok
 private: true
+stale: true
 title: AlgebraicGeometry.finsupp_induction_bump
 type: lean
-updated: '2026-07-30T15:46:07'
+updated: '2026-07-31T20:14:52'
 ---
 private theorem finsupp_induction_bump {α : Type u} {P : (α →₀ ℤ) → Prop} (zero : P 0)
     (bump : ∀ (a : α) (f : α →₀ ℤ), P (f + Finsupp.single a 1) ↔ P f) (f : α →₀ ℤ) :

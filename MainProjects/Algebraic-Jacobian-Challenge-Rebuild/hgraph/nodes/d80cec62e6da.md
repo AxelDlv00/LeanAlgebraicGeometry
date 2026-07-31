@@ -9,9 +9,10 @@ docstring: '`mapAlgHom` along a composite is the composite of the base changes
 file: AlgebraicJacobian/Picard/DivisorFamilyVehicle.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.DivFam.mapAlgHom_comp
 type: lean
-updated: '2026-07-30T15:46:04'
+updated: '2026-07-31T20:14:51'
 ---
 theorem mapAlgHom_comp (φ : A →ₐ[k] A') (ψ : A' →ₐ[k] A'') (F : DivFam C A π n) :
     mapAlgHom (ψ.comp φ) F = mapAlgHom ψ (mapAlgHom φ F) :=

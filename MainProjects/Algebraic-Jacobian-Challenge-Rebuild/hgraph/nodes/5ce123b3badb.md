@@ -19,9 +19,10 @@ docstring: '**The scheme-level quantifier reduces to test algebras, componentwis
 file: AlgebraicJacobian/Picard/Pic0VanishingRoute.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.subsingleton_picEt_of_affine
 type: lean
-updated: '2026-07-30T20:44:27'
+updated: '2026-07-31T20:14:44'
 ---
 theorem subsingleton_picEt_of_affine
     (h : ∀ (A : Type u) [CommRing A] [Algebra k A], Subsingleton (PicEtAff C A))

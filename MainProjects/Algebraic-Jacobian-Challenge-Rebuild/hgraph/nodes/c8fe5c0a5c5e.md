@@ -20,9 +20,10 @@ docstring: '**The face-change bridge**: `mapAlgHom` along an algebra map that ag
 file: AlgebraicJacobian/Picard/DivisorFamilyAffFace.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.DivFamZarAff.mapAlgHom_eq_mapAlg
 type: lean
-updated: '2026-07-30T15:46:03'
+updated: '2026-07-31T20:14:50'
 ---
 theorem mapAlgHom_eq_mapAlg [Algebra A A'] [IsScalarTower k A A'] (φ : A →ₐ[k] A')
     (hφ : ∀ a, φ a = algebraMap A A' a) (F : DivFamZarAff C A n) :

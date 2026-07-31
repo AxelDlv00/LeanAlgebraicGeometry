@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.whiskerLeft_inl_ofId
 type: lean
-updated: '2026-07-30T15:46:01'
+updated: '2026-07-31T20:15:20'
 ---
 lemma whiskerLeft_inl_ofId :
     (C ◁ Over.overSpecMap (tensorInl (A := A) (B := B))).left

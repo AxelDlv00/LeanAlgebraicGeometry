@@ -37,9 +37,10 @@ docstring: '**Obligation I-0492 4(i), DISCHARGED at arbitrary affine-open pieces
 file: AlgebraicJacobian/Picard/DivisorFamilyAffFibre.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.ThetaGeneratorSeed.affAdaptation_fibre_regular
 type: lean
-updated: '2026-07-30T15:46:03'
+updated: '2026-07-31T20:14:49'
 ---
 theorem affAdaptation_fibre_regular (hD : D.IsGenerator) (Dc : AffCoverData C R)
     (A : AffAdaptation Dc (D.localEquations hD)) (j : Dc.index) (p : PrimeSpectrum R) :

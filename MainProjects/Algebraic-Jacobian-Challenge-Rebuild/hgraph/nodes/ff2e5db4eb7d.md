@@ -11,9 +11,10 @@ file: AlgebraicJacobian/Picard/EffectivitySplice.lean
 generated: lean
 lean_status: lean_ok
 private: true
+stale: true
 title: AlgebraicGeometry.Over.telescope_core
 type: lean
-updated: '2026-07-30T15:46:04'
+updated: '2026-07-31T20:14:53'
 ---
 private lemma telescope_core {G : Type u} [CommGroup G] {a b d c₁ c₂ c₃ : G}
     (h₁ : a = b * c₁) (h₂ : b = d * c₂) (h₃ : a = d * c₃) : c₁ * c₂ = c₃ := by

@@ -10,9 +10,10 @@ docstring: 'Degree of a difference: `deg (A − B) = deg A − deg B` (public fo
 file: AlgebraicJacobian/RiemannRoch/SectionSpaces.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.CurveDivisor.deg_sub'
 type: lean
-updated: '2026-07-30T15:46:08'
+updated: '2026-07-31T20:14:49'
 ---
 lemma Scheme.CurveDivisor.deg_sub' (A B : X.CurveDivisor) :
     CurveDivisor.deg K (A - B) = CurveDivisor.deg K A - CurveDivisor.deg K B := by

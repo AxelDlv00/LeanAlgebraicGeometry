@@ -9,9 +9,10 @@ docstring: 'The rational reading of the canonical section `(t₀ᵃ,1)`, bundled
 file: AlgebraicJacobian/Picard/DivSchemeHighWindowPencilTheta.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.thetaFieldPencilFstUnit
 type: lean
-updated: '2026-07-30T15:46:02'
+updated: '2026-07-31T20:14:49'
 ---
 noncomputable def thetaFieldPencilFstUnit : (relCurve C K).functionFieldˣ :=
   Units.mk0 (thetaFieldRead C K π a (relThetaSectionFst C K π a))

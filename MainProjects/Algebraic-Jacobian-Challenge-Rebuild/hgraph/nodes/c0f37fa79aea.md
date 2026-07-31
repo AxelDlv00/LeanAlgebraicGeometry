@@ -10,9 +10,10 @@ docstring: 'The trimmed Amitsur member is bounded by the first-insertion preimag
 file: AlgebraicJacobian/Picard/EffectivityPieceClass.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.pieceAmitsurOpen_le_insertion₁
 type: lean
-updated: '2026-07-30T15:46:04'
+updated: '2026-07-31T20:14:50'
 ---
 lemma pieceAmitsurOpen_le_insertion₁ {𝒩 : (XB).PointedCover}
     {γ : (XB).unitsCocycle 𝒩} (W : NormalizedCechComparison k A B C σ 𝒩 γ)

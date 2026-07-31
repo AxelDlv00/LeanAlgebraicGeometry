@@ -28,7 +28,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_away_supportLocus_subset_of_fibre_subset
 type: lean
-updated: '2026-07-30T15:46:02'
+updated: '2026-07-31T20:15:21'
 ---
 theorem exists_away_supportLocus_subset_of_fibre_subset
     (d : (relCurve C R).LocalEquations) (U : (relCurve C R).Opens) {p : PrimeSpectrum R}

@@ -25,9 +25,10 @@ docstring: '**THE REDUCTION, rigidity spelling**: the `hrigAff` clause at every 
 file: AlgebraicJacobian/Picard/Pic0RingZariskiLocal.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.PicEtAff.rigidity_of_away
 type: lean
-updated: '2026-07-31T13:39:13'
+updated: '2026-07-31T20:14:51'
 ---
 theorem PicEtAff.rigidity_of_away (hg : Ideal.span (Set.range g) = ⊤)
     (hloc : ∀ i, ∀ q : PicEtAff C (S i),

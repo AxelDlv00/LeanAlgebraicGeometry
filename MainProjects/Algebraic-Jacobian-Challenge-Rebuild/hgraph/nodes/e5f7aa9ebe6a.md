@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.relThetaResSide_relThetaSideUnit_false_true
 file: AlgebraicJacobian/Picard/DivSchemeThetaKernelKill.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.relThetaResSide_relThetaSideUnit_false_true
 type: lean
-updated: '2026-07-30T15:46:03'
+updated: '2026-07-31T20:14:51'
 ---
 theorem relThetaResSide_relThetaSideUnit_false_true (a : Nat) :
     relThetaResSide a true le_rfl

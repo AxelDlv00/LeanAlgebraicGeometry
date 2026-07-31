@@ -7,9 +7,10 @@ docstring: 'B: THE CONVERSE -- an iso of presheaves is an open immersion of pres
 file: scratch_p4r6/probe4.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.ProbeP4R6.probeConv
 type: lean
-updated: '2026-07-31T00:01:01'
+updated: '2026-07-31T20:14:48'
 ---
 theorem probeConv {X : Scheme.{u}} (f : yoneda.obj X ⟶ (pic0SigmaSheaf C).1) [IsIso f] :
     IsOpenImmersion.presheaf f :=

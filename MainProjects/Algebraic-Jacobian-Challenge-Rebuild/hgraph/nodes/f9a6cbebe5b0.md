@@ -22,7 +22,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.liftQ_baseChange_injective_of_boundary
 type: lean
-updated: '2026-07-30T15:46:02'
+updated: '2026-07-31T20:15:22'
 ---
 theorem liftQ_baseChange_injective_of_boundary
     (f : M →ₗ[R] N) (d : P →ₗ[R] M) (hfd : f.comp d = 0)

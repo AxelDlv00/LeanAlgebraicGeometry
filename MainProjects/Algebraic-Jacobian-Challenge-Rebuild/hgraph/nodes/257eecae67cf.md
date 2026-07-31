@@ -35,9 +35,10 @@ docstring: '**THE ABEL VALUE IS HONEST AT EVERY TEST** — the witness that carr
 file: AlgebraicJacobian/Picard/Pic0ChartPlusFibreProducer.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.abelDiv_isPlusHonest
 type: lean
-updated: '2026-07-30T15:46:05'
+updated: '2026-07-31T20:14:41'
 ---
 theorem abelDiv_isPlusHonest {n : ℕ} (T : Over (Spec (.of k)))
     (s : divFamZar C π n T) :

@@ -9,9 +9,10 @@ docstring: '**THE TRIANGLE, chart 1** (mirror of
 file: AlgebraicJacobian/Picard/DivisorFamilyWindowTriangle.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.resHom_relThetaWindowEquiv_cancelBaseChange_snd
 type: lean
-updated: '2026-07-30T15:46:04'
+updated: '2026-07-31T20:14:50'
 ---
 theorem resHom_relThetaWindowEquiv_cancelBaseChange_snd
     (x : R ⊗[k] ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤)) :

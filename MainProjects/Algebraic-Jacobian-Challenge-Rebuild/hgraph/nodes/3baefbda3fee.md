@@ -28,9 +28,10 @@ docstring: '**A chart map read at an opens inclusion.**
 file: AlgebraicJacobian/Picard/Pic0ChartCoverForcesNonInj.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.chart_map_ι_apply
 type: lean
-updated: '2026-07-30T15:46:05'
+updated: '2026-07-31T20:14:42'
 ---
 theorem chart_map_ι_apply {X : Scheme.{u}}
     (f : yoneda.obj X ⟶ (pic0SigmaSheaf C).1) (W : X.Opens) (u : X ⟶ X) :

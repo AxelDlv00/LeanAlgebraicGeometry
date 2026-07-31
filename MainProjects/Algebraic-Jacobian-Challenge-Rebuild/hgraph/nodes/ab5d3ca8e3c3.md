@@ -15,7 +15,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.twistRes_relThetaFieldSection
 type: lean
-updated: '2026-07-30T15:46:02'
+updated: '2026-07-31T20:15:21'
 ---
 private lemma twistRes_relThetaFieldSection
     (h : ↥(divisorSections k (n • fiberWeilDivisor π) ⊤)) :

@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.thetaFiberPullback
 type: lean
-updated: '2026-07-30T15:46:00'
+updated: '2026-07-31T20:15:17'
 ---
 noncomputable def thetaFiberPullback : (relCurve C k).LocalEquations :=
   haveI : IsIntegral (C ⊗ overSpec k k).left := ‹IsIntegral (relCurve C k)›

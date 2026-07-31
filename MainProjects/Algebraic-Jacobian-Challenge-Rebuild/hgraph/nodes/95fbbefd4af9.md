@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: LaurentPolynomial.C_mul_T_apply
 type: lean
-updated: '2026-07-31T09:40:08'
+updated: '2026-07-31T20:15:16'
 ---
 theorem C_mul_T_apply (c : R) (n m : ℤ) :
     (LaurentPolynomial.C c * T n : LaurentPolynomial R) m = if n = m then c else 0 := by

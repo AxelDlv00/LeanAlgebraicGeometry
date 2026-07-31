@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: Module.descentCoboundary
 type: lean
-updated: '2026-07-30T15:46:01'
+updated: '2026-07-31T20:15:19'
 ---
 noncomputable def descentCoboundary (β : Bˣ) : (B ⊗[A] B)ˣ :=
   Units.map (descentIncl₂ A B).toRingHom.toMonoidHom β

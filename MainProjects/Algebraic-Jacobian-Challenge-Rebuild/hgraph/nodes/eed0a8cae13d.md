@@ -7,9 +7,10 @@ file: AlgebraicJacobian/Picard/DivSchemeSeedFibre.lean
 generated: lean
 lean_status: lean_ok
 private: true
+stale: true
 title: AlgebraicGeometry.fibreMulAux_tmul
 type: lean
-updated: '2026-07-30T15:46:03'
+updated: '2026-07-31T20:14:52'
 ---
 private lemma fibreMulAux_tmul {A B : Type u} [CommRing A] [CommRing B]
     [Algebra R A] (ψ : A →+* B) (ρ : R' →+* B)

@@ -11,9 +11,10 @@ file: AlgebraicJacobian/Picard/DivisorFamilyWindowTriangle.lean
 generated: lean
 lean_status: lean_ok
 private: true
+stale: true
 title: AlgebraicGeometry.resHom_relThetaWindowEquiv_one_tmul_fst
 type: lean
-updated: '2026-07-31T19:57:48'
+updated: '2026-07-31T20:14:39'
 ---
 private lemma resHom_relThetaWindowEquiv_one_tmul_fst (S : Type u) [CommRing S]
     [Algebra k S] (h : ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤)) :

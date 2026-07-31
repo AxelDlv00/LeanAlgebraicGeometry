@@ -22,7 +22,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Scheme.prodRefinement
 type: lean
-updated: '2026-07-30T15:46:01'
+updated: '2026-07-31T20:15:20'
 ---
 private def prodRefinement (g : X ⟶ Y) {𝒰 : Y.PointedCover} (P : 𝒰.BasicRefinement)
     (Q : (𝒰.pullback g).BasicRefinement) : (𝒰.pullback g).BasicRefinement where

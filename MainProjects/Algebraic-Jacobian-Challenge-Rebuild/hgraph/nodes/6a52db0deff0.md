@@ -9,9 +9,10 @@ docstring: 'The **localised `J`-minor** `X^I_J` over `R^I_J`: the `J`-minor of `
 file: AlgebraicJacobian/Picard/GrassmannianChart.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Grassmannian.universalMinor
 type: lean
-updated: '2026-07-30T15:46:05'
+updated: '2026-07-31T20:14:45'
 ---
 noncomputable def universalMinor (k : Type u) [Field k] (d r : ℕ) (I J : Finset (Fin r))
     (hI : I.card = d) (hJ : J.card = d) :

@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: Module.actionMap_baseChange_mk
 type: lean
-updated: '2026-07-30T15:46:01'
+updated: '2026-07-31T20:15:19'
 ---
 theorem actionMap_baseChange_mk (x : B ⊗[A] X) :
     actionMap A B (B ⊗[A] X) ((TensorProduct.mk A B X 1).baseChange B x) = x := by

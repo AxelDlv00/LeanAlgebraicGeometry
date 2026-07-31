@@ -28,9 +28,10 @@ docstring: '**The coverage hypothesis of DAT-B, stated per chart rather than on 
 file: AlgebraicJacobian/Picard/Pic0ChartLocalSurjectivity.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.ChartsCoverLocally
 type: lean
-updated: '2026-07-30T15:46:05'
+updated: '2026-07-31T20:14:42'
 ---
 def ChartsCoverLocally {ι : Type u} {X : ι → Scheme.{u}}
     (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1) : Prop :=

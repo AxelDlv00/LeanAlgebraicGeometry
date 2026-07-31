@@ -10,9 +10,10 @@ docstring: 'The two-base localization identification of `S i ⊗[A] S j` with th
 file: AlgebraicJacobian/Picard/WitnessAway.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.pairAwayEquiv
 type: lean
-updated: '2026-07-30T15:46:07'
+updated: '2026-07-31T20:14:52'
 ---
 noncomputable def pairAwayEquiv (i j : P.ι) :
     letI := IsLocalization.Away.tensorAwayAlgebra A B B Γ(XB, (XB).basicOpen (P.r i))

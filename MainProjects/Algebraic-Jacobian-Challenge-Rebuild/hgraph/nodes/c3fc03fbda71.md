@@ -27,9 +27,10 @@ docstring: '**Antecedent 2, de-coproducted at one chart**: local surjectivity of
 file: AlgebraicJacobian/Picard/Pic0ChartSeamCollapse.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.isLocallySurjective_oneChart
 type: lean
-updated: '2026-07-30T15:46:05'
+updated: '2026-07-31T20:14:50'
 ---
 theorem isLocallySurjective_oneChart {X : Scheme.{u}}
     (f : yoneda.obj X ⟶ (pic0SigmaSheaf C).1)

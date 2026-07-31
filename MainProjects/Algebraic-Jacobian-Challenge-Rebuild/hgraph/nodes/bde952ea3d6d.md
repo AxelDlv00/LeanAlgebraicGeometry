@@ -16,9 +16,10 @@ docstring: '**§7.8''s section equation, units form** — the shape the Čech `�
 file: AlgebraicJacobian/Tangent/EpsReductionSquare.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.unitsAppLE_dualNumberSectionsUnits
 type: lean
-updated: '2026-07-30T15:46:08'
+updated: '2026-07-31T20:14:49'
 ---
 theorem unitsAppLE_dualNumberSectionsUnits {W : C.left.Opens}
     (hW : IsCompact (W : Set C.left)) (hW' : IsQuasiSeparated (W : Set C.left))

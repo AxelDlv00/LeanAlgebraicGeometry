@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.Scheme.divisorSheafLE_mono
 file: AlgebraicJacobian/RiemannRoch/DivisorSheaf.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.divisorSheafLE_mono
 type: lean
-updated: '2026-07-30T15:46:07'
+updated: '2026-07-31T20:14:49'
 ---
 instance divisorSheafLE_mono {D D' : X.CurveDivisor} (h : D ≤ D') :
     Mono (divisorSheafLE K h) := by

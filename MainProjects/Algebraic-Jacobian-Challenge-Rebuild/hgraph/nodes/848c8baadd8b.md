@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: LaurentPolynomial.unitsHom
 type: lean
-updated: '2026-07-31T09:39:43'
+updated: '2026-07-31T20:15:16'
 ---
 noncomputable def unitsHom :
     Rˣ × Multiplicative ℤ →* (LaurentPolynomial R)ˣ where

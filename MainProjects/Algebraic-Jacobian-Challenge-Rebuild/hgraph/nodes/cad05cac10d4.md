@@ -20,7 +20,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ThetaGeneratorSeed.divisorAdaptation_isCertified_of_noLeak_liftQ_degree
 type: lean
-updated: '2026-07-30T15:46:02'
+updated: '2026-07-31T20:15:21'
 ---
 theorem divisorAdaptation_isCertified_of_noLeak_liftQ_degree {n : ℕ}
     (hnoLeak : ∀ (j : (A).index) (s : Spec (.of R)),

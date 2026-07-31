@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.rightChart_monomial
 type: lean
-updated: '2026-07-31T17:09:33'
+updated: '2026-07-31T20:15:16'
 ---
 theorem rightChart_monomial (c : A) (n : ℕ) :
     rightChart A (Polynomial.monomial n c)

@@ -28,9 +28,10 @@ docstring: '**The comparison, in the orientation that needs no projectivity.**  
 file: AlgebraicJacobian/Picard/DivisorFamilyAffFibre.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.AffAdaptation.exists_germ_pulledEqn_eq_unit_mul_pullbackEqn
 type: lean
-updated: '2026-07-30T15:46:03'
+updated: '2026-07-31T20:14:49'
 ---
 theorem exists_germ_pulledEqn_eq_unit_mul_pullbackEqn (j : D.index) (z : relCurve C R')
     (hzj : z ∈ (D.baseChange R').pieces j) :

@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.relThetaResFst_apply
 file: AlgebraicJacobian/Picard/DivisorFamilyTheta.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.relThetaResFst_apply
 type: lean
-updated: '2026-07-30T15:46:04'
+updated: '2026-07-31T20:14:40'
 ---
 lemma relThetaResFst_apply {W : (relCurve C R).Opens}
     (hW : W ≤ ⊤ ⊓ (relCover C R (fiberTwoCover π)).V₀) (x : relThetaSections C R π a) :

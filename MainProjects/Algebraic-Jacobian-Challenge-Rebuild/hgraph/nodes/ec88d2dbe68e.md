@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: Module.tensorSqBaseChange_tmul
 type: lean
-updated: '2026-07-30T15:46:01'
+updated: '2026-07-31T20:15:19'
 ---
 lemma tensorSqBaseChange_tmul (x y : B) :
     tensorSqBaseChange A A' B (x ⊗ₜ y)

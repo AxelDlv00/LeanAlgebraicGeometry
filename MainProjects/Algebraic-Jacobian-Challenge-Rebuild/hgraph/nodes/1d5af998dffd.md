@@ -11,9 +11,10 @@ docstring: 'The canonical isomorphisms between three representations satisfy the
 file: AlgebraicJacobian/Picard/RepresentableByCocycle.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: CategoryTheory.Functor.RepresentableBy.uniqueUpToIso_trans
 type: lean
-updated: '2026-07-31T18:11:09'
+updated: '2026-07-31T20:14:41'
 ---
 theorem uniqueUpToIso_trans {C : Type u} [Category.{v, u} C]
     {F : Cᵒᵖ ⥤ Type v} {Y₁ Y₂ Y₃ : C}

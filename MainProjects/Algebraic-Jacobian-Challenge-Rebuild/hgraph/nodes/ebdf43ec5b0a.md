@@ -10,9 +10,10 @@ docstring: 'The universal element of the glued representation restricts along th
 file: AlgebraicJacobian/Picard/JacobianDataCharts.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.representableBy_homEquiv_toGlued
 type: lean
-updated: '2026-07-30T15:46:05'
+updated: '2026-07-31T20:14:52'
 ---
 lemma representableBy_homEquiv_toGlued (i : ι) :
     (Scheme.LocalRepresentability.representableBy hf).homEquiv

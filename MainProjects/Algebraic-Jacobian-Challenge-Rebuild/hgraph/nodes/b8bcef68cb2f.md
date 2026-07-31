@@ -50,9 +50,10 @@ docstring: '**THE INHABITANT OF THE SEAM PAIR.**
 file: AlgebraicJacobian/Picard/Pic0ChartSeamPairDecided.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.seamPair_abelSigmaChartZero_of_subsingleton
 type: lean
-updated: '2026-07-31T03:02:20'
+updated: '2026-07-31T20:14:49'
 ---
 theorem seamPair_abelSigmaChartZero_of_subsingleton
     (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)

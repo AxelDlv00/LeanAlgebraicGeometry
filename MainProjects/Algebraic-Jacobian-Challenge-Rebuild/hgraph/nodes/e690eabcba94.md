@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_divisorSections_pair_decomposition
 type: lean
-updated: '2026-07-30T15:46:02'
+updated: '2026-07-31T20:15:21'
 ---
 theorem exists_divisorSections_pair_decomposition
     (A B : X.CurveDivisor) (v0 v1 : X.functionFieldˣ)

@@ -7,9 +7,10 @@ docstring: Mirror of `divUniversalFstWindowEquiv` for the second window point.
 file: AlgebraicJacobian/Picard/DivSchemeSeedUniv.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.divUniversalSndWindowEquiv
 type: lean
-updated: '2026-07-30T15:46:03'
+updated: '2026-07-31T20:14:51'
 ---
 noncomputable def divUniversalSndWindowEquiv :
     ↥(divUniversalSnd k (windowS_choice π hπ g • fiberWeilDivisor π)

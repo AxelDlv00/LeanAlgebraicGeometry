@@ -12,7 +12,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.stepG_R₁₃
 type: lean
-updated: '2026-07-30T15:46:01'
+updated: '2026-07-31T20:15:20'
 ---
 private lemma stepG_R₁₃ (𝒲 : (Sq).PointedCover) (θ₀ : ∀ x : Sq, Γ(Sq, 𝒲.opens x)ˣ)
     (𝒜 : (XB).PointedCover) (α : ∀ v : XB, Γ(XB, 𝒜.opens v)ˣ)

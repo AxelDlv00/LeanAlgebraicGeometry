@@ -13,9 +13,10 @@ docstring: 'If a local-equation system pulls back to a regular system on the res
 file: AlgebraicJacobian/Picard/DivSchemeCertZarFibreAvoid.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.LocalEquations.fibre_supportLocus_finite_of_pullback_support_eq
 type: lean
-updated: '2026-07-30T15:46:02'
+updated: '2026-07-31T20:14:43'
 ---
 theorem fibre_supportLocus_finite_of_pullback_support_eq
     (d : (relCurve C R).LocalEquations) (p : PrimeSpectrum R)

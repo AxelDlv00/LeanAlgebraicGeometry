@@ -18210,10 +18210,6 @@
       "AlgebraicGeometry.secRes_naturality: Lean declaration appears more than once (AlgebraicJacobian/RiemannRoch/Ledger/AffineVanishing.lean, AlgebraicJacobian/RiemannRoch/Ledger/QcohSections.lean)",
       "AlgebraicGeometry.secRes_moduleKSheaf: Lean declaration appears more than once (AlgebraicJacobian/RiemannRoch/Ledger/AffineVanishing.lean, AlgebraicJacobian/RiemannRoch/Ledger/QcohSections.lean)",
       "AlgebraicGeometry.Scheme.one_le_coheight_of_ne_genericPoint: Lean declaration appears more than once (AlgebraicJacobian/Albanese/Milne33TransportLocal.lean, AlgebraicJacobian/RiemannRoch/WeilDivisor.lean)",
-      "AlgebraicGeometry.Scheme.Modules.pullbackPushforwardIso_of_isFinite_schematicSupport: Lean declaration appears more than once (AlgebraicJacobian/Picard/DivGrassmannianEmbedding.lean, ScratchPicF.lean)",
-      "AlgebraicGeometry.Scheme.Modules.fiberRank_gammaTop_eq_fiberH0_of_iso: Lean declaration appears more than once (AlgebraicJacobian/Picard/DivGrassmannianEmbedding.lean, ScratchPicF.lean)",
-      "AlgebraicGeometry.Scheme.Modules.fiberRank_gammaTop_eq_fiberH0_of_isFinite_schematicSupport: Lean declaration appears more than once (AlgebraicJacobian/Picard/DivGrassmannianEmbedding.lean, ScratchPicF.lean)",
-      "AlgebraicGeometry.Scheme.DivFamily.pushforward_isLocallyFreeOfRank: Lean declaration appears more than once (AlgebraicJacobian/Picard/DivGrassmannianEmbedding.lean, ScratchPicF.lean)",
       "Probe.twistLeft_fst: Lean declaration appears more than once (probe_p3_hcov2.lean, probe_p3_hcov4.lean)",
       "Probe.twistLeft_snd: Lean declaration appears more than once (probe_p3_hcov2.lean, probe_p3_hcov4.lean)",
       "Probe.twistLeft_comp: Lean declaration appears more than once (probe_p3_hcov2.lean, probe_p3_hcov4.lean)",
@@ -18231,7 +18227,11 @@
       "AlgebraicGeometry.BcSquareCoherence: Lean declaration appears more than once (AlgebraicJacobian/Cohomology/CechTwistedCoherenceReduction.lean, scratch_FbcDef.lean)",
       "lem:pushforwardPullbackBaseChange_restrict_naturality: \\lean{AlgebraicGeometry.pushforwardPullbackBaseChange_restrict_naturality} not found in Lean sources",
       "lem:pushforwardPullbackBaseChange_abHom: \\lean{AlgebraicGeometry.pushforwardPullbackBaseChangeAbHom} not found in Lean sources",
-      "lem:pushforwardPullbackBaseChange_linHom: \\lean{AlgebraicGeometry.pushforwardPullbackBaseChangeHom} not found in Lean sources"
+      "lem:pushforwardPullbackBaseChange_linHom: \\lean{AlgebraicGeometry.pushforwardPullbackBaseChangeHom} not found in Lean sources",
+      "lem:pushforwardPullbackBaseChange_natIso: \\lean{AlgebraicGeometry.pushforwardPullbackBaseChangeNatIso} not found in Lean sources",
+      "lem:toSheaf_preservesFiniteColimits: \\lean{AlgebraicGeometry.toSheaf_preservesFiniteColimits} not found in Lean sources",
+      "lem:to_sheaf_preserves_epi: \\lean{AlgebraicGeometry.toSheaf_preservesEpimorphisms} not found in Lean sources",
+      "lem:tilde_restrict_basicOpen: \\lean{AlgebraicGeometry.tilde_restrict_basicOpen} not found in Lean sources"
     ]
   },
   "nodes": [

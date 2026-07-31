@@ -41,9 +41,10 @@ docstring: '**The composition half of the `hf` certificate**: a restriction of a
 file: AlgebraicJacobian/Picard/Pic0ChartPair.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.isOpenImmersion_presheaf_restrictChart
 type: lean
-updated: '2026-07-30T15:46:05'
+updated: '2026-07-31T20:14:41'
 ---
 theorem isOpenImmersion_presheaf_restrictChart {X : Scheme.{u}}
     {f : yoneda.obj X ⟶ (pic0SigmaSheaf C).1} (V : X.Opens)

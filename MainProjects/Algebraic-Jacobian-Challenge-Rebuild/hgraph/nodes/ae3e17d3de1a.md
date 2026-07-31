@@ -10,9 +10,10 @@ docstring: 'If `H¹(F)` vanishes, the cokernel projection of a monomorphism `F �
 file: AlgebraicJacobian/RiemannRoch/ChiSlice.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: CategoryTheory.Sheaf.HModule.cokernelπ_app_surjective_of_subsingleton_h1
 type: lean
-updated: '2026-07-31T00:30:37'
+updated: '2026-07-31T20:14:49'
 ---
 theorem cokernelπ_app_surjective_of_subsingleton_h1
     {F G : Sheaf J (ModuleCat.{u} R)} (ι : F ⟶ G) [Mono ι]

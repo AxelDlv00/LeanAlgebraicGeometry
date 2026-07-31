@@ -11,9 +11,10 @@ file: AlgebraicJacobian/Picard/SupportTube.lean
 generated: lean
 lean_status: lean_ok
 private: true
+stale: true
 title: AlgebraicGeometry.supportTube_smoke
 type: lean
-updated: '2026-07-30T15:46:06'
+updated: '2026-07-31T20:14:47'
 ---
 private theorem supportTube_smoke (d : (relCurve C R).LocalEquations)
     {U : Set (relCurve C R)} (hU : IsOpen U) {s : Spec (CommRingCat.of R)}

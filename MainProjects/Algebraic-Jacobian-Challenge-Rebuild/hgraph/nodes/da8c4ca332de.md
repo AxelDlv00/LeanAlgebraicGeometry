@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: RingTheory.CohenMacaulay.ringKrullDim_quotient_eq_of_isAssociatedPrime
 type: lean
-updated: '2026-07-30T15:45:59'
+updated: '2026-07-31T20:15:15'
 ---
 theorem ringKrullDim_quotient_eq_of_isAssociatedPrime [CohenMacaulay R]
     {p : Ideal R} (hp : IsAssociatedPrime p R) :

@@ -7,9 +7,10 @@ docstring: The degree of `S` is the `k`-ledger multiplier degree `s·δ`.
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivFibre.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.deg_windowS
 type: lean
-updated: '2026-07-30T15:46:03'
+updated: '2026-07-31T20:14:51'
 ---
 theorem deg_windowS (g : ℕ) :
     CurveDivisor.deg K (windowS C K hπ g)

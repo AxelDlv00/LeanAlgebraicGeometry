@@ -16,9 +16,10 @@ docstring: 'The one-point Weil divisor `n · x` at a closed point `x`, as a `Cur
 file: AlgebraicJacobian/RiemannRoch/ChiFiniteness.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.CurveDivisor.single
 type: lean
-updated: '2026-07-30T15:46:07'
+updated: '2026-07-31T20:14:50'
 ---
 noncomputable def Scheme.CurveDivisor.single {x : X} (hx : x ≠ genericPoint X) (n : ℤ) :
     X.CurveDivisor :=

@@ -13,9 +13,10 @@ docstring: '**The `DivFamZarAff` class of a system certified pointwise on the ba
 file: AlgebraicJacobian/Picard/DivisorFamilyAffAssemble.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.divFamZarAff_of_forall_prime_certified_adaptation
 type: lean
-updated: '2026-07-30T15:46:03'
+updated: '2026-07-31T20:14:47'
 ---
 noncomputable def divFamZarAff_of_forall_prime_certified_adaptation
     {d : (relCurve C R).LocalEquations}

@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.Over.unitsSndEquiv_apply
 file: AlgebraicJacobian/Picard/ProjectionUnits.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.unitsSndEquiv_apply
 type: lean
-updated: '2026-07-30T15:46:06'
+updated: '2026-07-31T20:14:48'
 ---
 lemma unitsSndEquiv_apply {V : T.left.Opens} (hV : IsAffineOpen V) (v : Γ(T.left, V)ˣ) :
     unitsSndEquiv C T hV v

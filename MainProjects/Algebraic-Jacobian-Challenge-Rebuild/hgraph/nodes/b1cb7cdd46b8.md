@@ -7,9 +7,10 @@ docstring: Uniqueness, in the form the linearity proofs consume.
 file: AlgebraicJacobian/Picard/DivisorFamilyAffThetaTyping.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.glueThetaZero_eq_of_forall
 type: lean
-updated: '2026-07-30T15:46:04'
+updated: '2026-07-31T20:14:49'
 ---
 lemma glueThetaZero_eq_of_forall {x : relThetaSections C R π 0} {s : Γ(relCurve C R, ⊤)}
     (h : ∀ b : Bool, (relCurve C R).resHom

@@ -15,9 +15,10 @@ docstring: '**The codimension bound** (★, probe 3a): if `Λ` kills every produ
 file: AlgebraicJacobian/RiemannRoch/AnnihilatorKernel.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.finrank_le_finrank_annKernel_add
 type: lean
-updated: '2026-07-30T15:46:07'
+updated: '2026-07-31T20:14:49'
 ---
 theorem finrank_le_finrank_annKernel_add {U V T : Submodule K X.functionField}
     [Module.Finite K ↥U] [Module.Finite K ↥V]

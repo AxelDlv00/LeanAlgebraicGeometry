@@ -19,9 +19,10 @@ docstring: '**The certified-degree pinch, abstract window form** (spec-dd-r §1(
 file: AlgebraicJacobian/RiemannRoch/CarveDegreePinch.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.deg_eq_genus_of_window_corank
 type: lean
-updated: '2026-07-30T15:46:07'
+updated: '2026-07-31T20:14:46'
 ---
 theorem deg_eq_genus_of_window_corank (g : ℕ)
     (hO : Sheaf.h0 (Y.moduleKSheaf K) = 1)

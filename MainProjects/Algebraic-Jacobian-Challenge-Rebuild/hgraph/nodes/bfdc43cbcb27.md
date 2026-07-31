@@ -7,9 +7,10 @@ docstring: '`W(d)^{Θᵃ}` as an `A_D`-submodule of the chart product.'
 file: AlgebraicJacobian/Picard/DivisorFamilyThetaRank.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.DivisorAdaptation.thetaSpan
 type: lean
-updated: '2026-07-30T15:46:04'
+updated: '2026-07-31T20:14:50'
 ---
 noncomputable def thetaSpan : Submodule ↥A.gluedSubalgebra A.chartProd :=
   A.unitGluedOver (A.thetaOvlUnit a)

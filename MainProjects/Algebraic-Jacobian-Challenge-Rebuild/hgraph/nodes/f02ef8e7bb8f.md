@@ -10,9 +10,10 @@ docstring: 'The pointwise achiever generates every universal-window reading in t
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwiseFibreLocal.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.PointwiseAchiever.fibre_germ_mem_span_pointwiseSectionVector_local
 type: lean
-updated: '2026-07-30T15:46:03'
+updated: '2026-07-31T20:14:52'
 ---
 theorem fibre_germ_mem_span_pointwiseSectionVector_local
     (z : relCurve C RZ)

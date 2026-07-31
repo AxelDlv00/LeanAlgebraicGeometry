@@ -31,9 +31,10 @@ docstring: '**The equivalence intertwines restriction along `g` with pullback of
 file: AlgebraicJacobian/Tangent/RelPicPointTest.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.relPicMulEquivCechPic_relPicMap
 type: lean
-updated: '2026-07-30T15:46:08'
+updated: '2026-07-31T20:14:45'
 ---
 theorem relPicMulEquivCechPic_relPicMap (T T' : Over (Spec (.of k)))
     [Subsingleton T.left] [Subsingleton T'.left] (g : T' ⟶ T) (x : relPic C T) :

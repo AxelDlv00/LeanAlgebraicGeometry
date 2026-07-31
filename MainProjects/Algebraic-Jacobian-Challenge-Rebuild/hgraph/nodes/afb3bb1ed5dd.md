@@ -14,9 +14,10 @@ docstring: '**The Θ-twisted right overlap arrow** over a widened cover: restric
 file: AlgebraicJacobian/Picard/DivisorFamilyAffTheta.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.AffAdaptation.thetaDeltaRight
 type: lean
-updated: '2026-07-30T15:46:03'
+updated: '2026-07-31T20:14:49'
 ---
 noncomputable def thetaDeltaRight : A.chartProd →ₗ[R] A.ovlProd :=
   LinearMap.pi (fun p : D.index × D.index =>

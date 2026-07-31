@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.thetaSectionPair_thetaWindowMul
 file: AlgebraicJacobian/Picard/DivSchemeThetaCoordinateRecurrence.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.thetaSectionPair_thetaWindowMul
 type: lean
-updated: '2026-07-30T15:46:03'
+updated: '2026-07-31T20:14:49'
 ---
 theorem thetaSectionPair_thetaWindowMul (p q : Nat)
     (a : ↥(divisorSections k (p • F) ⊤))
