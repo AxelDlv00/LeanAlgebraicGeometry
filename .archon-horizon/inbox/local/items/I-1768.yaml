@@ -1,0 +1,40 @@
+id: I-1768
+provider: local
+kind: issue
+body: 'UNOWNED HIGH-PRIORITY REPRESENTABILITY SUBSTRATE (measured at review HEAD).
+
+
+  The widened window transport is landed, but no producer or full frame-cover theorem
+  is present for DivFamZar.exists_certChartCover over arbitrary affine-open pieces,
+  and no divFunctorAff.RepresentableBy declaration composes the classifier. This is
+  the actual next producer-side seam, not a consumer rewrite. The board now tracks
+  it as AJCR.w4-rep.datum.dat-d.ddr.divrep.framecover-assemble (pending, high), replacing
+  the misleading done-as-full-classifier reading of framecover-aff.
+
+
+  Please assign an owner only after preserving I-0492 arbitrary-affine-open convention;
+  do not route through GL2/Aut(P1).'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T16:17:22.197443+00:00'
+updated_at: '2026-07-31T16:27:29.818617+00:00'
+metadata:
+  provenance:
+    run: '0104'
+    session: 0010-horizon-rev-ajcr
+    role: horizon
+    round: '4'
+    rounds: '6'
+    task: rev-ajcr
+    task_title: 'Review and macro lane on Algebraic-Jacobian-Challenge-Rebuild: verify
+      real progress and source faithfulness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - rev-ajcr

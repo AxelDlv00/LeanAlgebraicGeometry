@@ -1,13 +1,17 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.certificate.cert-assemble
-title: 'Cert-assemble: compose into isLocallyCertified/DivFamZar + the four missing
-  Away-transport bricks'
+title: Widened certified-family packaging (frame-cover derivation separate)
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "COMPOSE the new chain into the consumer predicate. Target, already landed\
-  \ and waiting:\n\n  isLocallyCertified_of_forall_prime_exists_certified_adaptation\n\
-  \  (Picard/DivSchemeCertZarPointwise.lean:162), and its DivFamZar packaging\n  divFamZar_of_forall_prime_away_certified\
-  \ (:181).\n\nINPUTS: chart-avoid + swallow-adapt give the adaptation and hnoLeak;\
-  \ cert-collapse gives\n(c2)/(c3)/(c4); hdeg is ALREADY PROVED\n(deg_presentationDivisor_pulledEquations_pointwiseGeneratorSeed,\n\
+summary: "REVIEW CORRECTION (2026-07-31, rev-ajcr): DONE ONLY AS SCOPED. This row\
+  \ packages certified-family/Away representation inputs; it does not derive epsilon/pair\
+  \ framing, a widened frame cover, or divFunctorAff.RepresentableBy. The remaining\
+  \ producer composition is tracked by AJCR.w4-rep.datum.dat-d.ddr.divrep.framecover-assemble.\
+  \ The historical summary below is retained verbatim for context.\n\nCOMPOSE the\
+  \ new chain into the consumer predicate. Target, already landed and waiting:\n\n\
+  \  isLocallyCertified_of_forall_prime_exists_certified_adaptation\n  (Picard/DivSchemeCertZarPointwise.lean:162),\
+  \ and its DivFamZar packaging\n  divFamZar_of_forall_prime_away_certified (:181).\n\
+  \nINPUTS: chart-avoid + swallow-adapt give the adaptation and hnoLeak; cert-collapse\
+  \ gives\n(c2)/(c3)/(c4); hdeg is ALREADY PROVED\n(deg_presentationDivisor_pulledEquations_pointwiseGeneratorSeed,\n\
   Picard/DivSchemeSeedUnivPulledDegree.lean:354) and hregular for the swallowing piece\
   \ comes from\ndivisorAdaptation_fibre_regular's generic core.\n\nFOUR TRANSPORT\
   \ BRICKS the away route still owes, all currently missing and all cheap (recon 0048):\n\
@@ -87,7 +91,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
-  updated_at: '2026-07-30T09:01:13.663421+00:00'
+  updated_at: '2026-07-31T16:29:53.056228+00:00'
   milestone: AJCR.w4-rep
   pinned_commits:
   - db94ce21a94102ebb3074271ef5422a115777321

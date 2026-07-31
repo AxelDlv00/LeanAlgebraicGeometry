@@ -1,0 +1,33 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.divrep.framecover-assemble
+title: Widened certified frame-cover assembly and RepresentableBy composition
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: OPEN INFRASTRUCTURE. Prove the widened analogue of `DivFamZar.exists_certChartCover`
+  over arbitrary affine-open pieces, including the epsilon/pair-framing achievement
+  and its chart-typing or replacement index. Then compose the classifier output into
+  the `divFunctorAff` RepresentableBy consumer. Existing window transport is only
+  the carrier-free input layer; no producer or full cover is currently landed.
+status: pending
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-31T16:08:45.139687+00:00'
+  provenance:
+    run: '0104'
+    session: 0010-horizon-rev-ajcr
+    role: horizon
+    round: '4'
+    rounds: '6'
+    task: rev-ajcr
+    task_title: 'Review and macro lane on Algebraic-Jacobian-Challenge-Rebuild: verify
+      real progress and source faithfulness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
+  milestone: w4-gate

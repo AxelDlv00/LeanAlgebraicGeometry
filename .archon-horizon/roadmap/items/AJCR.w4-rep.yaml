@@ -14,47 +14,48 @@ summary: "======================================================================
   \ scheme. All three antecedents are undischarged\nand no sorry-free witness exists\
   \ for any of them.\n\nTHE THREE ANTECEDENTS, ranked by measured cost, cheapest last:\n\
   \ 1. IsChartUniv (the per-index chart certificate, `hf`) -- CERT-Sigma-gated.\n\
-  \    Refuted at V = top and free-but-useless at V = bot; whether the PAIR holds\
-  \ at\n    any V strictly between is UNMEASURED at every V. Inhabitation at one concrete\n\
-  \    V is the open question. Rows: chart-u, chart-restrict, atlas-coupling.\n 2.\
-  \ Zariski-local surjectivity of Sigma.desc f (DAT-B coverage) -- the most\n    expensive,\
-  \ and multi-round (told to the human as I-1090). Cannot be discounted\n    by restricting\
-  \ the atlas: ajcr-p1's isLocallySurjective_sigmaDesc_mono carries\n    any V up\
-  \ to top, where the inclusion is an iso. Restricted coverage is no\n    cheaper\
-  \ than unrestricted -- and note only ONE direction is proved, so it is\n    as measured\
-  \ STRICTLY STRONGER. Row: dat-b.\n 3. rep i (a representation of the widened divFunctorAff\
-  \ at each parameter) -- the R2 divisor-\n    representability target. Rows: ddr.divrep\
-  \ (+ u2, abel-widened); the old chart-typed divFunctor route is not the current\
-  \ carrier.\n\nRIDERS THAT ARE NOT SEPARATE OBLIGATIONS, both established by retraction\
-  \ below:\n * hD (LocallyOfFiniteType) is a rider on antecedent 3, proved via\n \
-  \  rep.uniqueUpToIso -- unconditional, not contingent on the carrier divRep\n  \
-  \ returns.\n * hcpt IS the JacobianData.quasiCompact field, so dat-glue and dat-j\
-  \ name ONE\n   obligation. Qualification (r4, I-1162): the half carrying that --\
-  \ the mpr\n   direction -- has been the producer's own implementation since 07-27\n\
-  \   (JacobianDataCharts.lean:216); the new content is the mp direction, which\n\
-  \   shows the identification cannot be undone. hcl still has no producer, so\n \
-  \  nothing there is discharged.\n\nr4 REPRICING -- WITHDRAWN BY ITS AUTHOR, same\
-  \ session. I wrote here that the chart\nparameter n is pinned to the genus by chi_moduleKSheaf\
-  \ UNCONDITIONALLY, so\nabel-noninj owed no \"we are at n = g\" argument and its\
-  \ n > g branch was\nunreachable. FALSE, refuted by a fresh-context audit (I-1176)\
-  \ and reproduced:\nchi_moduleKSheaf CONVERTS chi = 1 - n into n = genus C, it does\
-  \ not SUPPLY\nchi = 1 - n. With n free and no chi hypothesis the goal FAILS, and\
-  \ it still fails\nwith a representation at n in scope. My probe had hchi as a binder,\
-  \ so it measured\nthe conversion (I-1177).\n   THE STANDING PRICE is ajcr-p2's:\
-  \ n > g is unreachable for a chart built on a\nproducer IN THIS TREE, because each\
-  \ such producer carries an hchi at its own\nindex. That is a claim about producers\
-  \ and a lane must keep them in view.\nWhether an inhabitant exists at n != genus\
-  \ C is an OPEN inhabitation question\nabout DivRepAffinePullback -- mixedParamChart\
-  \ typechecks at arbitrary nn.\nabel-noninj's live target is unchanged: the carve\
-  \ question, does DivScheme g\ncontain points where H^1 fails to vanish.\n\nSORRY\
-  \ COUNT IS NOT DEBT HERE: 17 sorries, all in Challenge.lean (15, the\nstatement-only\
-  \ north star) and Pic0ThetaCocycle.lean (2). A naive count reads\nAJCR as nearly\
-  \ done. It is not -- the gap is the three antecedents above, none of\nwhich is a\
-  \ sorry.\n\nANSWER TO THE COSTING QUESTION, unchanged this round: none of the three\
-  \ closes\nthis week (human-facing accounting at I-0984). The items where a single\
-  \ round can\nstill produce a DECISIVE result rather than partial progress are antecedent\
-  \ 1's\ninhabitation at one concrete V, and the abel-noninj carve question now that\
-  \ its\ndegree is pinned.\n\n================================================================================\n\
+  \    At V = top only the conditional theorem\n    not_restrictedChartFibre_top_of_not_injective\
+  \ is proved; its noninjectivity premise\n    has no producer. At V = bot only some\
+  \ clauses are free, with no full datum\n    inhabitant. Whether the PAIR holds at\
+  \ any concrete V remains open. Rows: chart-u, chart-restrict, atlas-coupling.\n\
+  \ 2. Zariski-local surjectivity of Sigma.desc f (DAT-B coverage) -- the most\n \
+  \   expensive, and multi-round (told to the human as I-1090). Cannot be discounted\n\
+  \    by restricting the atlas: ajcr-p1's isLocallySurjective_sigmaDesc_mono carries\n\
+  \    any V up to top, where the inclusion is an iso. Restricted coverage is no\n\
+  \    cheaper than unrestricted -- and note only ONE direction is proved, so it is\n\
+  \    as measured STRICTLY STRONGER. Row: dat-b.\n 3. rep i (a representation of\
+  \ the widened divFunctorAff at each parameter) -- the R2 divisor-\n    representability\
+  \ target. Rows: ddr.divrep (+ u2, abel-widened); the old chart-typed divFunctor\
+  \ route is not the current carrier.\n\nRIDERS THAT ARE NOT SEPARATE OBLIGATIONS,\
+  \ both established by retraction below:\n * hD (LocallyOfFiniteType) is a rider\
+  \ on antecedent 3, proved via\n   rep.uniqueUpToIso -- unconditional, not contingent\
+  \ on the carrier divRep\n   returns.\n * hcpt IS the JacobianData.quasiCompact field,\
+  \ so dat-glue and dat-j name ONE\n   obligation. Qualification (r4, I-1162): the\
+  \ half carrying that -- the mpr\n   direction -- has been the producer's own implementation\
+  \ since 07-27\n   (JacobianDataCharts.lean:216); the new content is the mp direction,\
+  \ which\n   shows the identification cannot be undone. hcl still has no producer,\
+  \ so\n   nothing there is discharged.\n\nr4 REPRICING -- WITHDRAWN BY ITS AUTHOR,\
+  \ same session. I wrote here that the chart\nparameter n is pinned to the genus\
+  \ by chi_moduleKSheaf UNCONDITIONALLY, so\nabel-noninj owed no \"we are at n = g\"\
+  \ argument and its n > g branch was\nunreachable. FALSE, refuted by a fresh-context\
+  \ audit (I-1176) and reproduced:\nchi_moduleKSheaf CONVERTS chi = 1 - n into n =\
+  \ genus C, it does not SUPPLY\nchi = 1 - n. With n free and no chi hypothesis the\
+  \ goal FAILS, and it still fails\nwith a representation at n in scope. My probe\
+  \ had hchi as a binder, so it measured\nthe conversion (I-1177).\n   THE STANDING\
+  \ PRICE is ajcr-p2's: n > g is unreachable for a chart built on a\nproducer IN THIS\
+  \ TREE, because each such producer carries an hchi at its own\nindex. That is a\
+  \ claim about producers and a lane must keep them in view.\nWhether an inhabitant\
+  \ exists at n != genus C is an OPEN inhabitation question\nabout DivRepAffinePullback\
+  \ -- mixedParamChart typechecks at arbitrary nn.\nabel-noninj's live target is unchanged:\
+  \ the carve question, does DivScheme g\ncontain points where H^1 fails to vanish.\n\
+  \nSORRY COUNT IS NOT DEBT HERE: exactly 15 code sorries, all in Challenge.lean,\n\
+  the statement-only north star. Pic0ThetaCocycle.lean is rooted and sorry-free. A\n\
+  naive count reads AJCR as nearly done. It is not -- the gap is the three antecedents\
+  \ above, none of\nwhich is a sorry.\n\nANSWER TO THE COSTING QUESTION, unchanged\
+  \ this round: none of the three closes\nthis week (human-facing accounting at I-0984).\
+  \ The items where a single round can\nstill produce a DECISIVE result rather than\
+  \ partial progress are antecedent 1's\ninhabitation at one concrete V, and the abel-noninj\
+  \ carve question now that its\ndegree is pinned.\n\n================================================================================\n\
   HISTORY FOLLOWS -- corrections in reverse chronological layers.\n================================================================================\n\
   \n*** hcpt CLAUSE RETRACTED 2026-07-29 (review-ajcr, run 0082 s0006), refuted by\
   \ ajcr-p4 (I-1007)\nwithin minutes of my writing it. THE DEGENERACY OBSERVATION\
@@ -424,5 +425,5 @@ metadata:
   author: horizon
   created_at: '2026-07-14T01:20:10.654781+00:00'
   parent: AJCR.jacobian
-  updated_at: '2026-07-30T05:19:21.444049+00:00'
+  updated_at: '2026-07-31T16:06:27.645092+00:00'
   milestone: AJCR.w4-rep

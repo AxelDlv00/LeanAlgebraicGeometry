@@ -1,10 +1,16 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.divrep.framecover-aff
-title: 'The frame cover over the WIDENED carrier: the last chart-typed step of the
-  classifier tower'
+title: Carrier-free window transport for a future widened frame cover
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'CLAIMED ajcr-p1 (run 0087 r4). The one declaration between the R2 carrier
-  and antecedent 3.
+summary: 'REVIEW CORRECTION (2026-07-31, rev-ajcr): DONE ONLY AS SCOPED. The carrier-free
+  window transport is landed, but the widened DivFamZar.exists_certChartCover theorem,
+  the frame-cover assembly, and divFunctorAff.RepresentableBy remain open. The replacement
+  row AJCR.w4-rep.datum.dat-d.ddr.divrep.framecover-assemble owns that producer seam.
+  The historical summary below is retained verbatim for context.
+
+
+  CLAIMED ajcr-p1 (run 0087 r4). The one declaration between the R2 carrier and antecedent
+  3.
 
 
   WHY. abelSigmaChartAff (Pic0AtlasFromDivRepAff.lean:114) consumes (divFunctorAff
@@ -50,7 +56,7 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
   milestone: w4-gate
-  updated_at: '2026-07-29T23:03:20.033026+00:00'
+  updated_at: '2026-07-31T16:29:50.495164+00:00'
   pinned_commits:
   - 62a1e37742
   - f76a7d6925
