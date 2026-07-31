@@ -6,7 +6,7 @@ summary: Given an actual overlap cocycle for the L-side representing scheme, con
   its descended k-scheme and transport the universal property, open-immersion clauses,
   and coverage. Mathlib has fpqc topology and morphism-property descent but no ready
   pseudofunctor or fpqc effectivity theorem for Scheme objects.
-status: pending
+status: active
 kind: proof
 priority: high
 depends_on: []
@@ -29,4 +29,5 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-g.genus-chart-finite-descent.fpqc-descent
   milestone: AJCR.w4-rep
-  updated_at: '2026-07-30T15:53:25.920708+00:00'
+  updated_at: '2026-07-31T21:22:22.191428+00:00'
+  owner: pic-h

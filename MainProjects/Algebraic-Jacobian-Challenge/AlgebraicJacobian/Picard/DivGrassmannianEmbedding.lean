@@ -480,7 +480,6 @@ set_option synthInstance.maxHeartbeats 1000000 in
 -- Slice-site presentation transport traverses two cover refinements and the
 -- open-restriction equivalence.
 set_option maxHeartbeats 2000000 in
-set_option maxRecDepth 10000 in
 /-- Tensoring a finitely presented module sheaf on the left by a locally
 trivial line bundle preserves finite presentation.  The proof refines a
 finite-presentation cover for `F` by a trivializing cover for `L`; on every
@@ -504,23 +503,22 @@ theorem isFinitePresentation_tensorObj_left_of_isLocallyTrivial
     exact ⟨V ⊓ W (i, j), homOfLE inf_le_left,
       ⟨(i, j), ⟨homOfLE inf_le_right⟩⟩, ⟨hx, ⟨hxq, hxj⟩⟩⟩
   let P : ∀ ij, ((tensorObj L F).over (W ij)).Presentation := fun ij => by
-    let PF : (F.restrict (W ij).ι).Presentation :=
-      presentationRestrictOfOver (W ij) F (q.X ij.1)
+    let PF : (F.over (W ij)).Presentation :=
+      presentationOverOpens (W ij) F (q.X ij.1)
         (q.presentation ij.1) inf_le_left
     let eL : L.restrict (W ij).ι ≅
         SheafOfModules.unit (W ij : Scheme).ringCatSheaf :=
       restrictIsoUnitOfLE inf_le_right (hUiso ij.2).some
-    let e : (tensorObj L F).restrict (W ij).ι ≅ F.restrict (W ij).ι :=
+    let eRes : (tensorObj L F).restrict (W ij).ι ≅ F.restrict (W ij).ι :=
       tensorObj_restrict_iso (W ij).ι L F ≪≫
         tensorObjIsoOfIso eL (Iso.refl _) ≪≫
         tensorObj_left_unitor _
-    let PT : ((tensorObj L F).restrict (W ij).ι).Presentation :=
-      SheafOfModules.Presentation.ofIsIso.{u, u, u} e.inv PF
-    let PT' : ((overEquivalence (W ij)).functor.obj
-        ((tensorObj L F).restrict (W ij).ι)).Presentation :=
-      PT.map (overEquivalence (W ij)).functor (unitOverIso (W ij)).symm
+    let eOver : (tensorObj L F).over (W ij) ≅ F.over (W ij) :=
+      (restrictOverIso (W ij) (tensorObj L F)).symm ≪≫
+        (overEquivalence (W ij)).functor.mapIso eRes ≪≫
+        restrictOverIso (W ij) F
     exact SheafOfModules.Presentation.ofIsIso.{u, u, u}
-      (restrictOverIso (W ij) (tensorObj L F)).hom PT'
+      eOver.inv PF
   let qT : (tensorObj L F).QuasicoherentData :=
     { I := q.I × I
       X := W
