@@ -331,4 +331,119 @@ theorem _root_.AlgebraicGeometry.Scheme.finiteInAffine_proj :
 
 end GradedAvoidance
 
+/-! ## §2. Descent along an affine morphism
+
+Everything from here down is transport; §1 holds all the content.
+-/
+
+/-- **`FiniteInAffine` descends along any affine morphism.**
+
+The preimage of an affine open under an affine morphism is an affine open
+(`IsAffineOpen.preimage`), and a finite set upstairs has a finite image downstairs.
+So the property propagates in the direction that is useful for embeddings: from the
+ambient space to a subscheme.
+
+This generalises the already-landed `Scheme.finiteInAffine_left_of_isAffineHom`
+(`Picard/PicEtPointedReduction.lean`), which is the special case `Y = Spec k`: there
+the conclusion came from `X` being outright affine, whereas here `Y` need only satisfy
+`FiniteInAffine`, and `ℙ(n; S)` does without being affine. That is the whole reason
+this direction is worth having as a separate lemma. -/
+theorem finiteInAffine_of_isAffineHom {X Y : Scheme.{u}} (f : X ⟶ Y) [IsAffineHom f]
+    (h : FiniteInAffine Y) : FiniteInAffine X := by
+  intro s hs
+  obtain ⟨U, hU⟩ := h (f.base '' s) (hs.image _)
+  exact ⟨⟨f ⁻¹ᵁ U.1, U.2.preimage f⟩, fun x hx => hU ⟨x, hx, rfl⟩⟩
+
+/-- **Relative projective space over an affine base satisfies `FiniteInAffine`** —
+and this is the non-vacuity witness that matters.
+
+`ℙ(n; S)` is by definition the base change of `Proj ℤ[Xᵢ]` along `S ⟶ ⊤_ Scheme`, so
+`toProjInt` is a pullback of `terminal.from S`, which is affine exactly when `S` is;
+`IsAffineHom` is stable under base change, and §2 then transports
+`finiteInAffine_proj`.
+
+Contrast the cheap witness `Scheme.finiteInAffine_of_isAffine`
+(`Picard/PicEtPointedReduction.lean`, `⊤` as the affine open). That one is degenerate
+— it says nothing about a projective object — and its own docstring says so. This one
+holds at a scheme that is **not** affine for `n` with at least two elements, so the
+results below are not statements about a class of schemes that happens to be affine. -/
+theorem finiteInAffine_projectiveSpace (n : Type u) (S : Scheme.{u}) [IsAffine S] :
+    FiniteInAffine (ProjectiveSpace n S) := by
+  haveI : IsAffineHom (ProjectiveSpace.toProjInt n S) := by
+    rw [ProjectiveSpace.toProjInt_eq_snd]
+    exact MorphismProperty.pullback_snd _ _ inferInstance
+  exact finiteInAffine_of_isAffineHom (ProjectiveSpace.toProjInt n S)
+    (finiteInAffine_proj (MvPolynomial.homogeneousSubmodule n (ULift.{u} ℤ)))
+
+/-! ## §3. The theorem the project was carrying by hand -/
+
+/-- **A scheme projective over an affine base satisfies `FiniteInAffine`.**
+
+This is the statement three files in this project asserted in prose and none proved.
+`Scheme.Hom.IsProjective` (`Picard/ProjectiveMorphismBasic.lean`) unfolds to a closed
+immersion into `ℙ(n; S)`; a closed immersion is affine (mathlib instance), so §2 pulls
+`finiteInAffine_projectiveSpace` back along it.
+
+`FiniteInAffine` is a property of the *underlying scheme*, so the base being affine is
+the only hypothesis beyond projectivity — and for the seam the base is `Spec k`, which
+is affine. -/
+theorem finiteInAffine_of_isProjective {X S : Scheme.{u}} [IsAffine S] {π : X ⟶ S}
+    (h : π.IsProjective) : FiniteInAffine X := by
+  obtain ⟨n, -, i, hi, -⟩ := h
+  haveI := hi
+  exact finiteInAffine_of_isAffineHom i (finiteInAffine_projectiveSpace n S)
+
+/-! ## §4. What it discharges
+
+Two consumers, and the difference between them is the honest measure of this file.
+§4.1 closes a gate outright; §4.2 does not, and says which conjunct survives.
+-/
+
+/-- **§4.1 — The orbit hypothesis of the Galois-descent engine, at every projective
+scheme.** No affineness, no hand-supplied hypothesis.
+
+`SemilinearGalAction.OrbitsInAffineOpen` (`Picard/FiniteGaloisQuotient.lean`) is the
+EGA II 4.5.4 input the whole finite-Galois-quotient machine binds. Its producers in
+this project were `instOrbitsInAffineOpen_of_isAffine` (affine total space, where the
+hypothesis has no room to be false) and a base-change transport
+(`Picard/GaloisQuotientNonVacuity.lean`). This adds the case the docstrings kept
+pointing at.
+
+Composes with the landed `Scheme.orbitsInAffineOpen_of_finiteInAffine`
+(`Picard/PicEtPointedReduction.lean`), which does the orbit-is-finite step. -/
+theorem orbitsInAffineOpen_of_isProjective
+    {K L : Type u} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L]
+    {X : Scheme.{u}} {f : X ⟶ Spec (CommRingCat.of L)}
+    (ρ : AlgebraicJacobian.GaloisDescent.SemilinearGalAction K L X f)
+    {S : Scheme.{u}} [IsAffine S] {π : X ⟶ S} (h : π.IsProjective) :
+    ρ.OrbitsInAffineOpen :=
+  orbitsInAffineOpen_of_finiteInAffine ρ (finiteInAffine_of_isProjective h)
+
+/-- **§4.2 — The curve itself satisfies `FiniteInAffine`, unconditionally.**
+
+Smooth proper geometrically integral curves are projective in this project
+(`AlgebraicGeometry.Adelic.isProjective_of_smoothProperGeometricallyIntegral`,
+`Picard/CurveProjectivity.lean`), and `Spec k` is affine, so §3 fires with no
+hypothesis beyond the curve's own binders.
+
+**What this does NOT do, since it is the natural over-reading.** It does not discharge
+the `FiniteInAffine` conjunct of `Scheme.PointedPicSharpRep`
+(`Picard/PicEtPointedReduction.lean`), and it does not touch
+`Scheme.fgaPicardRepresentability`. That conjunct is about the scheme representing
+`picSharp` — the **Picard** scheme — not about `C`, and nothing in this project
+produces projectivity of a Picard scheme: that is Kleiman §5 `th:qpp&p`, still open.
+
+What has changed is the *kind* of thing that remains. Before, the last non-projection
+conjunct of the antecedent was an elementary condition invented here, with no
+mathematical statement behind it and no route to one at this mathlib pin. Now it is
+implied by projectivity of the representing scheme, which is a standard theorem with a
+standard proof, and §3 is the implication. A lane proving `IsProjective` of the Picard
+scheme gets the conjunct by `exact`. -/
+theorem finiteInAffine_curve {k : Type u} [Field k] (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIntegral C.hom] :
+    FiniteInAffine C.left :=
+  finiteInAffine_of_isProjective
+    (AlgebraicGeometry.Adelic.isProjective_of_smoothProperGeometricallyIntegral C)
+
 end AlgebraicGeometry.Scheme
