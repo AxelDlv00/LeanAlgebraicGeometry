@@ -672,6 +672,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyAffFibreData
 import AlgebraicJacobian.Picard.DivisorFamilyAffFibreRank
 import AlgebraicJacobian.Picard.DivisorFamilyAffThetaRestriction
 import AlgebraicJacobian.Picard.DivisorFamilyAffThetaDescent
+import AlgebraicJacobian.Picard.DivisorFamilyAffThetaBaseChange
 import AlgebraicJacobian.Picard.DivisorIdealSheaf
 import AlgebraicJacobian.Picard.DivisorSubscheme
 import AlgebraicJacobian.Picard.DivisorSubschemeFinite
