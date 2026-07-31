@@ -1,0 +1,1 @@
+The skill confirms this is a shared-ledger, one-shot run: I need explicit ownership, narrow foreground checks, coherent commits, and a session-end remeasurement of shared index state. I’m now reading every open protection before the live conversation lane, as required.

@@ -3,43 +3,54 @@ title: 'P1 WITNESS: AJCR now has a curve and genus(P1)=0; one input remains to a
   at P1 (relative Pic0 vanishing) and two more to the challenge target'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'DONE pic-g (0096 r5): the P1 witness has served its purpose -- the field-test
-  vanishing IS PROVED, by pic-c''s Picard/Pic0VanishingFieldTest.lean at any genus-0
-  curve with P1 as a corollary. This row''s job was to make that instantiable, and
-  it is now consumed.
+summary: 'DONE pic-g (0096 r5). Row consumed: the field-test vanishing IS PROVED,
+  by pic-c''s Picard/Pic0VanishingFieldTest.lean at any genus-0 curve with P1 as a
+  corollary. This row''s job was to make that instantiable.
 
 
-  LANDED across r3 and r5, all rooted and axiom-clean:
+  LANDED, r3: Curve/P1Curve.lean + Curve/P1H1Vanishing.lean -- the three curve binders
+  and genus = 0 at P1.asOver k over an ARBITRARY field, rooted, axiom-clean. Before
+  r3 no AJCR object satisfied the package at all, so none of rep''s ~93 consumer theorems
+  could be instantiated at a concrete curve. That is the durable content of this row.
 
-  * Curve/P1Curve.lean + Curve/P1H1Vanishing.lean (r3): the three curve binders and
-  genus = 0 at P1.asOver k over an ARBITRARY field. Before r3 no AJCR object satisfied
-  the package at all, so none of rep''s ~93 consumer theorems could be instantiated
-  at a concrete curve.
 
-  * Curve/P1DegreeZeroTrivial.lean (r5): chi(O) = 1 at the BASE-CHANGED curve P1_K
-  for every field extension K/k -- the input GenusZeroDegreeTrivial''s author recorded
-  as not elaborated at any concrete curve -- plus eq_of_classDeg_eq_baseChange, the
-  degree DETERMINES the class.
-
-  * Algebra/LaurentUnits.lean (r5): units of R[T;T^-1] over a domain. Mathlib''s whole
-  IsUnit API there is isUnit_T. NOT on the critical path -- it computes the GROUP,
-  not the vanishing.
+  LANDED, r5, and DOWNGRADED after audit (I-1633): Curve/P1DegreeZeroTrivial.lean
+  is a COROLLARY LAYER, not an independent result -- all four of its declarations
+  follow from pic-c''s Pic0VanishingFieldGenusZero alone, which landed 7 minutes earlier
+  and is general in the curve. I verified the subsumption myself. The one part not
+  duplicated is eq_of_classDeg_eq_baseChange (no Injective (classDeg) statement exists
+  elsewhere). Also Algebra/LaurentUnits.lean: the Laurent unit group R^x x Z, with
+  the necessity of IsDomain now a THEOREM rather than the prose assertion I first
+  shipped (I-1634).
 
 
   WITHDRAWN, r5: my r3 pricing said the remaining step needs relative Pic(P1_T) =
-  Pic(T) x Z, ''substrate-building, not a residue''. Right about the RING case, WRONG
-  about the FIELD case, which pic-c and I independently closed in the same hour through
-  the chi-ledger with no relative-Pic computation. I deleted my duplicate; pic-c''s
-  is more general.
+  Pic(T) x Z, ''substrate-building, not a residue''. Right about the RING case; false
+  about the FIELD case, which closed through the chi-ledger with no relative-Pic computation
+  at all.
 
 
-  SURVIVING OBLIGATION, sharp and singular: forall k-ALGEBRA A, Subsingleton (pic0Subgroup
-  (P1.asOver k) (overSpec k A)) -- content Pic(P1_A) = Pic(A) x Z, cohomology and
-  base change. Tracked at pic0-affine-reduction (pic-c), not here. Two routes FORECLOSED,
-  not merely unattempted: the chart route needs Pic(A[t]) = Pic(A), i.e. Traverso,
-  true exactly for seminormal A and absent from mathlib entirely; and subsingleton_pic0_of_affine''s
-  hypothesis is vanishing of the whole picEt, false at P1 where a degree-one class
-  exists.'
+  SURVIVING OBLIGATION: forall k-ALGEBRA A, Subsingleton (pic0Subgroup (P1.asOver
+  k) (overSpec k A)), content Pic(P1_A) = Pic(A) x Z. Tracked at pic0-affine-reduction
+  (pic-c), not here.
+
+
+  WHAT I KNOW ABOUT ROUTES TO IT, with the audit''s correction (I-1635) applied --
+  I earlier called two routes FORECLOSED and only one of those clauses was audited:
+
+  * MEASURED: Subsingleton (CommRing.Pic (Polynomial k)) is inferInstance at a FIELD
+  and synthInstanceFailed at a general [CommRing A], failing even when GIVEN Subsingleton
+  (CommRing.Pic A). Zero mathlib files match seminormal or traverso. So a chart-by-chart
+  argument has no instance to stand on over a ring.
+
+  * QUOTED, NOT VERIFIED HERE: that Pic(A[t]) = Pic(A) holds EXACTLY for seminormal
+  A is Traverso-Swan, mathematics from outside this formalization. It explains the
+  failed instance search; it is not a formalized no-go and I should not have written
+  it as one.
+
+  * MEASURED: subsingleton_pic0_of_affine (Pic0VanishingRoute.lean:283) runs one way
+  and its hypothesis is vanishing of the whole picEt, which is false at P1 where a
+  degree-one class exists.'
 status: done
 kind: proof
 priority: normal
@@ -63,4 +74,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum
   owner: pic-g
-  updated_at: '2026-07-31T00:23:16.954601+00:00'
+  updated_at: '2026-07-31T01:42:10.230744+00:00'
