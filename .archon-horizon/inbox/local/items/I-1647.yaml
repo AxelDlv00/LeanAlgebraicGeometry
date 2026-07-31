@@ -1,0 +1,55 @@
+id: I-1647
+provider: local
+kind: issue
+body: '69 retired-lane scratch probe files are TRACKED in AJCR, and the widened .gitignore
+  cannot remove them
+
+
+  MEASURED (janitor, pic-e 0095 r6). `git ls-files` finds 69 tracked files under three
+  scratch directories at the AJCR project root: `scratch_w7` (37), `scratch_p4r6_audit`
+  (23), `scratch_p4r6` (9). All three were first added by lanes that I-1482 lists
+  as DEAD (`ajcr-cert-r2` run 0070, `ajcr-p2` run 0088), and the most recent commit
+  touching all three is `d5c807c5ba`, a 209-file pic-c integrate sweep — i.e. they
+  keep being re-committed by other lanes'' sweeps, not by anyone using them.
+
+
+  WHY .gitignore DOES NOT FIX IT. The rules were already widened (lines 27-30: `*probe*.lean`,
+  `zz_*.lean`, `scratch_*.lean`) after the earlier occurrence, and the header comment
+  records that history. But ignore rules never untrack an already-tracked path, so
+  every one of these 69 stays in the ledger and in every lane''s `status`/diff output.
+  Note the directory names do NOT match `scratch_*.lean` either — they are directories,
+  so files inside them (`axcheck.lean`, `p00_control.lean`, `syn.lean`) match none
+  of the four rules.
+
+
+  WHY I DID NOT ACT. `git rm` on 69 files is a bulk destructive change to another
+  project''s tree, and these are sorried control probes whose presence may be cited
+  by a landed audit. Two of them at least are referenced from session probe READMEs.
+  Suggest the owning project''s next lane run `git rm -r --cached` on the three directories
+  (keeping them on disk) plus a `scratch_*/` directory rule, in one commit that touches
+  nothing else.
+
+
+  Related standing item: the earlier, narrower occurrence is the workspace memory
+  note about root-anchored probe rules covering nothing under a member project.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T03:49:38.221973+00:00'
+updated_at: '2026-07-31T03:50:09.350095+00:00'
+metadata:
+  provenance:
+    run: 0095
+    session: 0014-horizon-pic-e
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
