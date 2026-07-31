@@ -31,17 +31,29 @@ chart unit groups, and `Rˣ × ℤ` modulo `Rˣ` on each side is where the `ℤ`
 
 Clear denominators (`LaurentPolynomial.exists_T_pow`): `f * T^a` and `f⁻¹ * T^b` are honest
 polynomials whose product is `X ^ (a+b)`.  So the numerator divides a power of `X`, and
-`X` is prime in `R[X]` **because `R` is a domain** — this is the only use of `IsDomain`, and it
-is not removable: over `R = k[ε]/ε²` the element `1 + εT` is a unit of `R[T;T⁻¹]` and is not of
-the form `C c * T n`.
+`X` is prime in `R[X]` **because `R` is a domain** — this is the only use of `IsDomain`.
+
+**It is not removable, and that is a THEOREM here rather than a remark.**  An earlier version
+of this header asserted the counterexample in prose, unverified (`I-1634`).  It is now
+`isUnit_one_add_C_mul_T_of_sq_eq_zero` together with
+`not_exists_eq_C_mul_T_one_add_C_mul_T`: whenever `e² = 0`, the element `1 + C e * T 1` is a
+unit of `R[T;T⁻¹]` over **any** commutative ring, and whenever `e ≠ 0` it is not `C c * T n` for
+any `c, n`.  Both hold with no domain hypothesis, and `k[ε]/ε²` supplies such an `e`, so the
+classification genuinely fails there.  It cost fifteen lines; prose cost a reviewer more than
+that to check.
 
 ## Main declarations
 
 * `LaurentPolynomial.isUnit_iff_C_mul_T` — **the classification**, as an iff.
 * `LaurentPolynomial.exists_eq_C_mul_T_of_isUnit` — its forward half, in the form consumers use.
 * `LaurentPolynomial.isUnit_C_mul_T` — the converse half, over any commutative ring.
-* `LaurentPolynomial.exp_unique` — the exponent is determined by the element (needs only that
-  the coefficient is nonzero, no domain hypothesis).
+* `LaurentPolynomial.exp_unique` / `coeff_unique` — the exponent and coefficient are determined
+  by the element (no domain hypothesis; the `omit` markers are the measurement).
+* `LaurentPolynomial.unitsEquiv` — the unit group as `Rˣ × ℤ`, which is the form the Picard
+  computation consumes.
+* `LaurentPolynomial.isUnit_one_add_C_mul_T_of_sq_eq_zero` /
+  `not_exists_eq_C_mul_T_one_add_C_mul_T` — **the domain hypothesis is necessary**, formalized
+  rather than asserted.
 -/
 
 set_option autoImplicit false
@@ -81,6 +93,61 @@ theorem exp_unique {c d : R} (hc : c ≠ 0) {n m : ℤ}
       Finsupp.single_eq_same] at h1
   rw [Finsupp.single_apply, if_neg (fun hh : m = n => absurd hh.symm hne)] at h1
   exact hc h1
+
+/-! ## The domain hypothesis is necessary
+
+Not a remark: the two halves below are the counterexample, formalized.  Over a ring with a
+nonzero square-zero element the classification fails, so `IsDomain` in the next section cannot
+be dropped.  Neither statement needs a domain, which is the point. -/
+
+/-- Over **any** commutative ring, `1 + C e * T 1` is a unit as soon as `e² = 0`: its inverse is
+`1 - C e * T 1`, because the cross term carries `e²`. -/
+theorem isUnit_one_add_C_mul_T_of_sq_eq_zero {e : R} (he : e * e = 0) :
+    IsUnit (1 + LaurentPolynomial.C e * T 1 : LaurentPolynomial R) := by
+  have hsq : (LaurentPolynomial.C e * T 1) * (LaurentPolynomial.C e * T (1 : ℤ))
+      = LaurentPolynomial.C (e * e) * T (2 : ℤ) := by
+    rw [map_mul, show (LaurentPolynomial.C e * T 1) * (LaurentPolynomial.C e * T (1 : ℤ))
+      = (LaurentPolynomial.C e * LaurentPolynomial.C e) * (T 1 * T (1 : ℤ)) from by ring,
+      ← T_add]
+    norm_num
+  refine ⟨⟨1 + LaurentPolynomial.C e * T 1, 1 - LaurentPolynomial.C e * T 1, ?_, ?_⟩, rfl⟩
+  · rw [show (1 + LaurentPolynomial.C e * T 1) * (1 - LaurentPolynomial.C e * T (1 : ℤ))
+      = 1 - (LaurentPolynomial.C e * T 1) * (LaurentPolynomial.C e * T (1 : ℤ)) from by ring,
+      hsq, he, map_zero, zero_mul, sub_zero]
+  · rw [show (1 - LaurentPolynomial.C e * T 1) * (1 + LaurentPolynomial.C e * T (1 : ℤ))
+      = 1 - (LaurentPolynomial.C e * T 1) * (LaurentPolynomial.C e * T (1 : ℤ)) from by ring,
+      hsq, he, map_zero, zero_mul, sub_zero]
+
+/-- The coefficient of a Laurent monomial at an arbitrary index. -/
+theorem C_mul_T_apply (c : R) (n m : ℤ) :
+    (LaurentPolynomial.C c * T n : LaurentPolynomial R) m = if n = m then c else 0 := by
+  rw [← LaurentPolynomial.single_eq_C_mul_T,
+    show (AddMonoidAlgebra.single n c : LaurentPolynomial R) = Finsupp.single n c from rfl,
+    Finsupp.single_apply]
+
+/-- **The other half of the counterexample**: with `e ≠ 0`, the unit `1 + C e * T 1` is not a
+monomial `C c * T n`.  It has nonzero coefficients at both `0` and `1`, and a monomial has at
+most one. -/
+theorem not_exists_eq_C_mul_T_one_add_C_mul_T [Nontrivial R] {e : R} (he : e ≠ 0) :
+    ¬ ∃ (c : R) (n : ℤ),
+      (1 + LaurentPolynomial.C e * T 1 : LaurentPolynomial R) = LaurentPolynomial.C c * T n := by
+  rintro ⟨c, n, h⟩
+  have key : ∀ m : ℤ, (1 : LaurentPolynomial R) m + (if (1 : ℤ) = m then e else 0)
+      = (if n = m then c else 0) := fun m => by
+    simpa [C_mul_T_apply] using congrArg (fun f : LaurentPolynomial R => f m) h
+  have hone : ∀ m : ℤ, (1 : LaurentPolynomial R) m = if (0 : ℤ) = m then (1 : R) else 0 :=
+    fun m => by
+      rw [show (1 : LaurentPolynomial R) = LaurentPolynomial.C (1 : R) * T (0 : ℤ) from by simp]
+      exact C_mul_T_apply 1 0 m
+  have h0 := key 0
+  have h1 := key 1
+  rw [hone] at h0 h1
+  norm_num at h0 h1
+  by_cases hn : n = 0
+  · rw [if_pos hn] at h0
+    rw [if_neg (by omega : ¬ n = 1)] at h1
+    exact he h1
+  · exact one_ne_zero ((if_neg hn) ▸ h0)
 
 /-! ## The classification -/
 
