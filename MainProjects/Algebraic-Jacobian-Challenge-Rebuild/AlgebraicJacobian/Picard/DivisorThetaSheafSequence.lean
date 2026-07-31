@@ -152,6 +152,58 @@ theorem thetaIdealInclApp_snd (W : (relCurve C R).Opens)
     (s : A.ThetaIdealSections a W) :
     (A.thetaIdealInclApp (a := a) W s).val.2 = A.thetaIdealInclSnd a W s := rfl
 
+/-! ## Chartwise inverse sections
+
+On either pinned theta chart, a section whose germs lie in the local divisor ideal
+has the canonical lift supplied by `idealToGlued₀/₁`.  These identities are the
+local ingredients for the arbitrary-open range characterization below; importantly,
+they quantify over the actual open and do not introduce a chart-typed cover.
+-/
+
+theorem thetaIdealInclApp_idealToGlued₀
+    {W : (relCurve C R).Opens}
+    (hW : W ≤ (relCover C R (fiberTwoCover π)).V₀)
+    (β : Γ(relCurve C R, W))
+    (hβ : ∀ (z : relCurve C R) (hz : z ∈ W),
+      ((relCurve C R).presheaf.germ W z hz).hom β ∈ d.stalkIdeal z) :
+    A.thetaIdealInclApp (a := a) W (idealToGlued₀ A a hW β hβ) =
+      (twistTriv₀ R (relCover C R (fiberTwoCover π)).V₀
+        (relCover C R (fiberTwoCover π)).V₁ (relThetaCocycle C R π a) hW).symm β := by
+  apply (twistTriv₀ R (relCover C R (fiberTwoCover π)).V₀
+    (relCover C R (fiberTwoCover π)).V₁ (relThetaCocycle C R π a) hW).injective
+  rw [LinearEquiv.apply_symm_apply]
+  change (relCurve C R).resHom (le_inf le_rfl hW)
+      (gluedToIdeal₀ A a inf_le_right
+        (secRes ((A.thetaIdealDatum a).sheaf) inf_le_left
+          (idealToGlued₀ A a hW β hβ))) = β
+  rw [gluedToIdeal₀_secRes (A := A) (a := a) inf_le_left hW
+    (idealToGlued₀ A a hW β hβ)]
+  simp only [Scheme.resHom_resHom]
+  rw [Scheme.resHom_self]
+  exact gluedToIdeal₀_idealToGlued₀ (A := A) (a := a) hW β hβ
+
+theorem thetaIdealInclApp_idealToGlued₁
+    {W : (relCurve C R).Opens}
+    (hW : W ≤ (relCover C R (fiberTwoCover π)).V₁)
+    (β : Γ(relCurve C R, W))
+    (hβ : ∀ (z : relCurve C R) (hz : z ∈ W),
+      ((relCurve C R).presheaf.germ W z hz).hom β ∈ d.stalkIdeal z) :
+    A.thetaIdealInclApp (a := a) W (idealToGlued₁ A a hW β hβ) =
+      (twistTriv₁ R (relCover C R (fiberTwoCover π)).V₀
+        (relCover C R (fiberTwoCover π)).V₁ (relThetaCocycle C R π a) hW).symm β := by
+  apply (twistTriv₁ R (relCover C R (fiberTwoCover π)).V₀
+    (relCover C R (fiberTwoCover π)).V₁ (relThetaCocycle C R π a) hW).injective
+  rw [LinearEquiv.apply_symm_apply]
+  change (relCurve C R).resHom (le_inf le_rfl hW)
+      (gluedToIdeal₁ A a inf_le_right
+        (secRes ((A.thetaIdealDatum a).sheaf) inf_le_left
+          (idealToGlued₁ A a hW β hβ))) = β
+  rw [gluedToIdeal₁_secRes (A := A) (a := a) inf_le_left hW
+    (idealToGlued₁ A a hW β hβ)]
+  simp only [Scheme.resHom_resHom]
+  rw [Scheme.resHom_self]
+  exact gluedToIdeal₁_idealToGlued₁ (A := A) (a := a) hW β hβ
+
 /-- The sectionwise theta-ideal inclusion commutes with restriction. -/
 theorem thetaIdealInclApp_res {W' W : (relCurve C R).Opens} (h : W' ≤ W)
     (s : A.ThetaIdealSections a W) :
