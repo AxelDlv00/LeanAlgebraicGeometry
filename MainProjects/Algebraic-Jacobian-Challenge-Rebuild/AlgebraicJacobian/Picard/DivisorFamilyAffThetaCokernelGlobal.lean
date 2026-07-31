@@ -103,6 +103,36 @@ theorem cokernelπ_app_eq_zero_of_germ_mem (B : DivisorAdaptation C R π d)
 
 end DivisorAdaptation
 
+/-! ## Restriction through the glued--twist equivalence -/
+
+/-- Restricting a global twisted theta section after converting it to the glued
+presentation is the same as restricting it directly in the twisted sheaf. -/
+theorem gluedTwistEquiv_res_top_symm (a : ℕ)
+    (W : (relCurve C R).Opens) (x : relThetaSections C R π a) :
+    gluedTwistEquiv C R π a W
+        (secRes (thetaChartDatum C R π a).sheaf
+          (le_top : W ≤ (⊤ : (relCurve C R).Opens))
+          ((gluedTwistEquiv C R π a (⊤ : (relCurve C R).Opens)).symm x)) =
+      secRes (relThetaTwistSheaf C R π a)
+        (le_top : W ≤ (⊤ : (relCurve C R).Opens)) x := by
+  change gluedToTwistApp C R π a W
+      (gluedRes R (thetaChartDatum C R π a).pieces
+        (thetaChartDatum C R π a).unit le_top
+        ((gluedTwistEquiv C R π a (⊤ : (relCurve C R).Opens)).symm x)) =
+    twistRes R (relCover C R (fiberTwoCover π)).V₀
+      (relCover C R (fiberTwoCover π)).V₁
+      (relThetaCocycle C R π a) le_top x
+  rw [gluedToTwistApp_res]
+  change twistRes R (relCover C R (fiberTwoCover π)).V₀
+      (relCover C R (fiberTwoCover π)).V₁
+      (relThetaCocycle C R π a) le_top
+      ((gluedTwistEquiv C R π a (⊤ : (relCurve C R).Opens))
+        ((gluedTwistEquiv C R π a (⊤ : (relCurve C R).Opens)).symm x)) =
+    twistRes R (relCover C R (fiberTwoCover π)).V₀
+      (relCover C R (fiberTwoCover π)).V₁
+      (relThetaCocycle C R π a) le_top x
+  rw [LinearEquiv.apply_symm_apply]
+
 section CokernelGlobal
 
 variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
@@ -427,6 +457,45 @@ theorem thetaPieceVanishing_iff_gluedTwist_cokernel_eq_zero
       rw [← hswap]
       exact hgerm.2 z
         ⟨hz.1, thetaChartCover_pieces_le_inr C R π PUnit.unit hz.2⟩
+
+/-- If the restriction of a global auxiliary cokernel class agrees with the class of a
+chosen theta representative on one widened piece, then the restricted global theta
+section and that representative define the same intrinsic piece quotient class. -/
+theorem thetaPieceQuotient_eq_of_global_cokernel_restriction
+    {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
+    {A : AffAdaptation D d} (B : DivisorAdaptation C R π d) (a : ℕ)
+    (j : D.index) (x : relThetaSections C R π a)
+    (rj : A.ThetaPieceSections (π := π) a j)
+    (hlocal :
+      secRes (cokernel (B.thetaIdealIncl (a := a)))
+        (le_top : D.pieces j ≤ (⊤ : (relCurve C R).Opens))
+        (((cokernel.π (B.thetaIdealIncl (a := a))).hom.app
+          (op (⊤ : (relCurve C R).Opens))).hom x) =
+        ((cokernel.π (B.thetaIdealIncl (a := a))).hom.app
+          (op (D.pieces j))).hom
+          (gluedTwistEquiv C R π a (D.pieces j) rj)) :
+    (Submodule.Quotient.mk
+      (secRes (thetaChartDatum C R π a).sheaf
+        (le_top : D.pieces j ≤ (⊤ : (relCurve C R).Opens))
+        ((gluedTwistEquiv C R π a (⊤ : (relCurve C R).Opens)).symm x)) :
+      A.ThetaPieceQuotient (π := π) a j) =
+      Submodule.Quotient.mk rj := by
+  let sx := secRes (thetaChartDatum C R π a).sheaf
+    (le_top : D.pieces j ≤ (⊤ : (relCurve C R).Opens))
+    ((gluedTwistEquiv C R π a (⊤ : (relCurve C R).Opens)).symm x)
+  apply (Submodule.Quotient.eq (A.thetaPieceVanishing (π := π) a j)).mpr
+  apply (A.thetaPieceVanishing_iff_gluedTwist_cokernel_eq_zero
+    C R π B a j (sx - rj)).mpr
+  have htw :
+      gluedTwistEquiv C R π a (D.pieces j) (sx - rj) =
+        gluedTwistEquiv C R π a (D.pieces j) sx -
+          gluedTwistEquiv C R π a (D.pieces j) rj :=
+    (gluedTwistEquiv C R π a (D.pieces j)).map_sub sx rj
+  rw [htw, map_sub]
+  apply sub_eq_zero.mpr
+  rw [gluedTwistEquiv_res_top_symm C R π]
+  exact (secRes_naturality (cokernel.π (B.thetaIdealIncl (a := a)))
+    (le_top : D.pieces j ≤ (⊤ : (relCurve C R).Opens)) x).trans hlocal
 
 /-! ## Compatibility of local cokernel representatives
 
