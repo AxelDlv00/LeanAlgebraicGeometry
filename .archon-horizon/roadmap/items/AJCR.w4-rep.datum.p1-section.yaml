@@ -3,7 +3,7 @@ title: Canonical ℙ¹ section functor over an arbitrary test ring
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: ''
-status: active
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -26,3 +26,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum
   owner: pic-g
+  updated_at: '2026-07-31T10:39:23.507581+00:00'
