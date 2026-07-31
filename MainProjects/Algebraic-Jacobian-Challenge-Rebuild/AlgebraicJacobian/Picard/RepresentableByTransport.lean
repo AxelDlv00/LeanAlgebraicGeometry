@@ -131,14 +131,15 @@ theorem mapCompPresheafCommon_comp
     Iso.trans_hom, Iso.symm_hom, NatTrans.comp_app,
     Functor.isoWhiskerLeft_hom, Functor.isoWhiskerRight_hom,
     Functor.whiskerLeft_app, Functor.whiskerRight_app,
-    eqToIso.hom, eqToIso.inv, eqToHom_app,
+    eqToIso.hom, eqToHom_app,
     Functor.associator_inv_app, types_comp_apply]
   simp only [types_comp_apply] at htheta
   simp only [types_id_apply, eqToHom_refl]
   erw [htheta]
-  simp [NatIso.op, eqToIso, eqToHom_op, eqToHom_unop,
-    eqToHom_map, eqToHom_trans, eqToHom_refl, types_id_apply,
-    Category.assoc]
+  simp only [NatIso.op_hom, eqToIso.hom, NatTrans.op_app, eqToHom_app,
+    eqToHom_op, Iso.trans_inv, Functor.isoWhiskerRight_inv,
+    Iso.symm_inv, eqToIso.inv, NatTrans.comp_app,
+    Functor.whiskerRight_app, comp_apply, NatIso.op_inv, comp_map, op_map]
   apply eq_of_heq
   apply HEq.trans (map_eqToHom_apply_heq FK _ _)
   apply HEq.trans (id_apply_heq _ _)
@@ -198,7 +199,8 @@ theorem mapCompPresheafFace_common
       Functor.isoWhiskerRight_hom, Functor.isoWhiskerRight_inv,
       Functor.whiskerLeft_app, Functor.whiskerRight_app, eqToIso.hom,
       eqToIso.inv, eqToHom_app, types_comp_apply]
-    simp [NatIso.op, eqToIso, eqToHom_op]
+    simp only [NatIso.op_inv, eqToIso.inv, NatTrans.op_app, eqToHom_app,
+      eqToHom_op, Iso.symm_inv, NatIso.op_hom, eqToIso.hom]
     apply eq_of_heq
     apply HEq.trans (eqToHom_apply_heq _ x)
     symm
