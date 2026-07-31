@@ -271,19 +271,30 @@ theorem finite_fiber_schematicSupportι_comp_of_finite
 
 `LocallyQuasiFinite.of_fiberToSpecResidueField` reduces the binder to
 quasi-finiteness of each scheme-theoretic fibre of the divisor over the residue
-field of the base point — and, unlike the criteria of the two `iff`s above, it
-wants **neither** `LocallyOfFiniteType` **nor** `QuasiCompact`. So this reduction
-is strictly weaker in hypotheses than
-`locallyQuasiFinite_schematicSupportι_comp_of_finite_fibers`: it applies to a
-module with no properness assumption whatever.
+field of the base point, and it wants **neither** `LocallyOfFiniteType` **nor**
+`QuasiCompact`. So for an arbitrary module — no properness assumption whatever —
+this reduction has a shorter hypothesis list than
+`locallyQuasiFinite_schematicSupportι_comp_of_finite_fibers`.
 
-**Which of the three reductions a producer should aim at.** This one, if it can
-work fibre by fibre — which is exactly the situation on a relative curve, where
-the geometry (`D_t` is the zero scheme of a regular section of an invertible ideal
-on the `1`-dimensional `C_t`) is fibrewise by nature. The point-set forms above
-are the right target only for an argument that has global information about `D`.
-Recorded together so a lane picks by what its argument produces rather than by
-which lemma it found first. -/
+**THAT ADVANTAGE IS EMPTY AT A `DivFamily`, AND THE CLAIM THAT IT IS "STRICTLY
+WEAKER" THERE IS WITHDRAWN** (fresh-context audit, `I-1619`, reproduced by its
+author). At a family `properSupport` is a *field*, so the two forms are
+**interderivable**: fibrewise gives point-set by composing with
+`locallyQuasiFinite_schematicSupportι_comp_iff_finite_fibers`, and point-set gives
+fibrewise via `LocallyQuasiFinite.of_finite_preimage_singleton` and then
+`inferInstance` per fibre — both directions measured, both close. Since a producer
+will stand at a family, the ordering buys a *spelling* exactly where it was
+advertised as buying strength. The hypothesis-count fact above is true only for a
+module with no proper support, which is not the consuming site.
+
+**Which form to aim at, then, is about proof shape and not about strength.** The
+relative-curve geometry is fibrewise by nature (`D_t` is the zero scheme of a
+regular section of an invertible ideal on the `1`-dimensional `C_t`), so an
+argument of that shape lands here without a detour; an argument holding global
+information about `D` lands on the point-set forms. Both are named so a lane picks
+by what its argument produces — but neither is a weaker hypothesis than the other
+at the site that matters, and `isFinite_support_of_fibers` records a second
+obligation this form's antecedent carries. -/
 theorem locallyQuasiFinite_schematicSupportι_comp_of_fibers
     (h : ∀ t : T, LocallyQuasiFinite
       ((schematicSupportι F ≫ f).fiberToSpecResidueField t)) :
@@ -444,13 +455,34 @@ theorem locallyQuasiFinite_zero :
 /-- **The whole chain in one step: fibrewise quasi-finiteness gives a FINITE
 divisor over the base.**
 
-The composite of `locallyQuasiFinite_of_fibers` with `isFinite_support`, stated
-because it is the single implication a lane closing the row's geometry wants to
-apply: hypothesis a statement per fibre over a field, conclusion the finiteness
-that `Picard/DivPushforwardFlat.lean`'s `Module.Finite` tower consumes.
+The composite of `locallyQuasiFinite_of_fibers` with `isFinite_support`: hypothesis
+a statement per fibre over a field, conclusion the finiteness that
+`Picard/DivPushforwardFlat.lean`'s `Module.Finite` tower consumes.
 
-So the divisor side's remaining distance is exactly the antecedent here, and
-nothing between it and finiteness is unbuilt. -/
+**THE SENTENCE THAT STOOD HERE — "the divisor side's remaining distance is exactly
+the antecedent here, and nothing between it and finiteness is unbuilt" — IS FALSE
+AND IS WITHDRAWN** (fresh-context audit, `I-1618`, reproduced by its author before
+accepting). There is a **second, unnamed** obligation between this antecedent and
+the `DivDegree.lean` fibre sequence a producer would reach for, and it is a carrier
+mismatch:
+
+* this antecedent quantifies over `Hom.fiber (schematicSupportι x.F ≫ pullback.snd
+  π T.hom) t` — the **fibre of the support**;
+* `DivDegree.lean`'s fibre short exact sequence (`fiberCokernelIso`,
+  `Scheme.DivFamily.isLocallyTrivial_fiber_kernel`, `mono_fiber_kernel_ι`,
+  `fiberKernelIso`) is about `Hom.fiberModule (pullback.snd π T.hom) t x.F`, whose
+  support is `schematicSupport (fiberModule …)` — the **support of the fibre**.
+
+Measured: `rfl` **fails** between the two carriers. And the bridge is not in the
+tree — `Picard/QuotSupportBaseChange.lean` proves only
+`annihilator F ≤ (annihilator (g'^* F)).map g'`, the inclusion that yields
+properness of the *larger* support; the reverse inclusion, which is what
+identifying the two carriers needs, is nowhere in the project.
+
+So a lane aiming at this antecedent owes **two** things, not one: the geometric
+fibre statement, and that support-versus-fibre comparison. Recorded at the
+declaration rather than in a footnote, because the withdrawn sentence was
+specifically an instruction about where to aim. -/
 theorem isFinite_support_of_fibers (x : DivFamily π T)
     (h : ∀ t : (T.left : Scheme.{u}), LocallyQuasiFinite
       ((Modules.schematicSupportι x.F ≫
