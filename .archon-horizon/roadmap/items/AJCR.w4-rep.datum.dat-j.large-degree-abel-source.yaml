@@ -1,0 +1,43 @@
+id: AJCR.w4-rep.datum.dat-j.large-degree-abel-source
+title: 'DAT-J large-degree Abel source: separate curve genus g from divisor degree
+  n'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'PENDING, unowned, source-faithful route. Generalize `JacobianDataAbelSquare`,
+  `DivisorFamilyFieldSurj`, and `JacobianDataAbelEffectivePoint` so the curve genus
+  g controls chi(O) = 1 - g while the divisor/classifier degree is n. Milne III §4
+  (Abelian Varieties, document p.99 / PDF p.105) first allows a finite separable extension
+  making a k-rational point available, then fixes n > 2g and uses Div_C^n -> Pic_C^n
+  ≅ Pic_C^0 together with C^(n) -> J for representability/completeness; degree g appears
+  only in §5 birationality.
+
+
+  Consume the landed `exists_effective_deg_eq_of_le_classDeg` from `JacobianDataAbelDegreeWindow`
+  (which requires g <= n), add that import to the square/effectivity pipeline, and
+  instantiate the source-faithful route with 2*g < n while retaining g <= n where
+  Riemann--Roch alone suffices. Feed the existing arbitrary-n qc plumbing; DAT-G must
+  handle descent back to the unpointed curve. Exact degree g remains a separate h0
+  = 1/chart/Albanese obligation.'
+status: pending
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-31T12:48:32.761225+00:00'
+  provenance:
+    run: '0104'
+    session: 0006-horizon-rev-ajcr
+    role: horizon
+    round: '2'
+    rounds: '6'
+    task: rev-ajcr
+    task_title: 'Review and macro lane on Algebraic-Jacobian-Challenge-Rebuild: verify
+      real progress and source faithfulness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-j
