@@ -61,7 +61,7 @@ summary: "Albanese and abelian-variety leg. Three of five children done (.ab, .c
   \ of\n     naming the INPUT (the object the action acts on) when the caveat is about\
   \ the QUOTIENT.\n     Input vs output. Repaired, then the quotient actually proved,\
   \ then the caveat deleted."
-status: active
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -73,7 +73,7 @@ scope:
 metadata:
   author: human
   created_at: '2026-07-01T10:06:47.569594+00:00'
-  updated_at: '2026-07-29T10:29:05.526332+00:00'
+  updated_at: '2026-07-31T03:41:46.709355+00:00'
   parent: AJC.jacobian
   pinned_commits:
   - 21eefaf60

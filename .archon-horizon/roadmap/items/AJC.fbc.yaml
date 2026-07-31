@@ -90,7 +90,7 @@ summary: 'Flat base change for higher direct images along a flat g. ONE open obl
   sorryAx.
 
   '
-status: active
+status: pending
 kind: proof
 priority: high
 depends_on: []
@@ -102,7 +102,7 @@ scope:
 metadata:
   author: human
   created_at: '2026-07-01T10:06:43.293058+00:00'
-  updated_at: '2026-07-29T10:29:09.142452+00:00'
+  updated_at: '2026-07-31T03:41:50.201763+00:00'
   parent: AJC.cohomology
   pinned_commits:
   - 875b1172e

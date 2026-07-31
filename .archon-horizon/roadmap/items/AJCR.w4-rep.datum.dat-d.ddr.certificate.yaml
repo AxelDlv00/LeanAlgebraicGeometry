@@ -83,7 +83,7 @@ summary: "=== VACUITY SWEEP OF THE WIDENED ROUTE: CLEAN, AND THE COVERAGE GAP IS
   \ / cover (iSup = top); NO pi, NO partitions, NO Sum index, NO chart typing.\ndivFamZarAff\
   \ C n T + map/map_id/map_comp; divFunctorAff; divFunctorToAff : divFunctor ==> Aff.\n\
   DivFamZar.toAff receives every chart-typed value; picClass preserved."
-status: active
+status: pending
 kind: proof
 priority: high
 depends_on: []
@@ -105,7 +105,7 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-29T11:05:00.672564+00:00'
+  updated_at: '2026-07-31T03:41:54.265790+00:00'
   pinned_commits:
   - 46d751465
   - 81c17f256

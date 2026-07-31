@@ -10,7 +10,7 @@ summary: "Cosimplicial base-change comparison (Stacks 02KG). 1/2 done, and the o
   \ is PROVED from one per-sigma equation (run 0068 r4); that\n   equation then splits,\
   \ with the slice half free and mate-naturality-in-the-square the residue.\n\nStatus\
   \ active rather than pending because .twisted is being worked, not deferred.\n"
-status: active
+status: pending
 kind: proof
 priority: high
 depends_on: []
@@ -32,5 +32,5 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.fbc
-  updated_at: '2026-07-29T10:29:10.325403+00:00'
+  updated_at: '2026-07-31T03:41:48.441731+00:00'
   milestone: AJC.cohomology
