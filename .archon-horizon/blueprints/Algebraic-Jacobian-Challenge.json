@@ -18176,7 +18176,7 @@
     "macros": {},
     "states": {
       "blocked": 249,
-      "closed": 8352,
+      "closed": 8424,
       "formalized_open": 301,
       "informal": 175,
       "ready": 198
@@ -18193,6 +18193,7 @@
       "AlgebraicGeometry.Scheme.Modules.res_self: Lean declaration appears more than once (AlgebraicJacobian/Picard/InvertibleSectionLocalization.lean, AlgebraicJacobian/Picard/QuotSupportBaseChange.lean)",
       "AlgebraicGeometry.Scheme.Modules.resRing_self: Lean declaration appears more than once (AlgebraicJacobian/Picard/InvertibleSectionLocalization.lean, AlgebraicJacobian/Picard/QuotSupportBaseChange.lean)",
       "AlgebraicGeometry.Scheme.Modules.isIso_of_isIso_comp4_mid: Lean declaration appears more than once (AlgebraicJacobian/Picard/TensorObjSubstrate/PullbackTensorIso.lean, AlgebraicJacobian/Picard/TensorObjSubstrate.lean)",
+      "AlgebraicGeometry.FiberCoordinateData.coeffAt_divOf_inv: Lean declaration appears more than once (AlgebraicJacobian/RiemannRoch/Ledger/FiberCoordinateDivisor.lean, AlgebraicJacobian/RiemannRoch/Ledger/FiberCoordinateLattice.lean)",
       "AlgebraicGeometry.divisorBound_le_iff: Lean declaration appears more than once (AlgebraicJacobian/RiemannRoch/Ledger/DivisorSheafQcoh.lean, AlgebraicJacobian/RiemannRoch/Ledger/FiberDivisor.lean)",
       "AlgebraicGeometry.zero_le_coeffAt_divOf_iff_ord_le_one: Lean declaration appears more than once (AlgebraicJacobian/RiemannRoch/Ledger/DivisorSheafQcoh.lean, AlgebraicJacobian/RiemannRoch/Ledger/FiberDivisor.lean)",
       "AlgebraicGeometry.coeffAt_divOf_inv: Lean declaration appears more than once (AlgebraicJacobian/RiemannRoch/Ledger/DivisorSheafQcoh.lean, AlgebraicJacobian/RiemannRoch/Ledger/FiberDivisor.lean)",
@@ -18230,8 +18231,7 @@
       "lem:pushforwardPullbackBaseChange_natIso: \\lean{AlgebraicGeometry.pushforwardPullbackBaseChangeNatIso} not found in Lean sources",
       "lem:toSheaf_preservesFiniteColimits: \\lean{AlgebraicGeometry.toSheaf_preservesFiniteColimits} not found in Lean sources",
       "lem:to_sheaf_preserves_epi: \\lean{AlgebraicGeometry.toSheaf_preservesEpimorphisms} not found in Lean sources",
-      "lem:tilde_restrict_basicOpen: \\lean{AlgebraicGeometry.tilde_restrict_basicOpen} not found in Lean sources",
-      "lem:presentation_restrict_basicOpen: \\lean{AlgebraicGeometry.presentation_restrict_basicOpen} not found in Lean sources"
+      "lem:tilde_restrict_basicOpen: \\lean{AlgebraicGeometry.tilde_restrict_basicOpen} not found in Lean sources"
     ]
   },
   "nodes": [
