@@ -2,59 +2,29 @@ id: AJC.picrep.tensor
 title: Pullback-tensor and fibre base change
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'RE-MEASURED 2026-07-31 (pic-b, run 0099). This row has two clauses. The
-  pullback comparison clause is closed; the affine tensor-section clause now has its
-  algebraic localization layer but still lacks the geometric sheafification/basic-open
-  identification.
+summary: 'RE-MEASURED 2026-08-01 (pic-b, run 0099). Clause 1 remains closed: pullback-tensor
+  comparison for locally trivial factors is sorry-free and has no extra gate (8f237dfef9
+  and earlier pinned units).
 
 
-  CLAUSE 1 -- DONE, SORRY-FREE, NO EXTRA GATE. `Scheme.Modules.pullbackTensorIsoOfLocallyTrivial`
-  proves the two-sided locally-trivial comparison. The one-sided API is now unconditional:
-  `pullbackTensorMap_isIso_of_right_unit` produces the right-unit comparison for arbitrary
-  first factor, `pullbackTensorMap_isIso_of_right_locallyTrivial` transports along
-  a displayed `Q ≅ O`, and `pullbackTensorIsoOfRightLocallyTrivial` packages the result.
-  The stale `PullbackTensorRightUnit` class was deleted. These declarations are consumed
-  throughout `Picard/RelPicFunctor.lean` and by `QuotFunctorDef.lean`. Landed in `8f237dfef9`;
-  the attribution record is I-1741.
+  Clause 2 has advanced through both the algebraic basic-open and pointwise geometric
+  layers, with no added hypotheses. TensorSectionFormula now proves isLocalizedModule_tensorPresheaf_basicOpen:
+  for quasi-coherent A and B, the actual restriction tensorPresheaf(A,B)(U) -> tensorPresheaf(A,B)(D(f))
+  is localization at powers f (53b7dede8b). TensorStalkLocalization proves the generic
+  isLocalizedModule_presheafGermLinearMap and specializes it as isLocalizedModule_tensorPresheafGermLinearMap:
+  on every affine U and x in U, tensor-presheaf affine sections -> its stalk is localization
+  at the prime complement of x (d0b6224e7f). The same module records sheafificationUnit_stalk_isIso,
+  so the tensor presheaf and tensorObj have canonically isomorphic stalks. All new
+  declarations are axiom-clean modulo propext, Classical.choice, and Quot.sound.
 
 
-  CLAUSE 2 -- ALGEBRAIC LAYER DONE. `TensorSectionFormula.lean` now provides:
-
-
-  * `localizedTensorProductEquiv`: `S⁻¹(M ⊗_R N) ≃ M_S ⊗_R N_S`;
-
-  * `localizedTensorProductBaseChangeEquiv`: the exact target `M_S ⊗_{Localization
-  S} N_S`;
-
-  * named pure-tensor formulas for both equivalences;
-
-  * `localizedTensorProductMap`: for any localization algebra `A` and arbitrary localized
-  maps `f : M → M''`, `g : N → N''`, the canonical map `M ⊗_R N → M'' ⊗_A N''`;
-
-  * `isLocalizedModule_localizedTensorProductMap`: that map is itself an `S`-localization
-  whenever `f` and `g` are, with no additional hypothesis.
-
-
-  The algebraic units are `962a43ff74`, `12e4f87420`, `6d082cdbe8`, and `995899019e`.
-  All exposed declarations are axiom-clean modulo `propext`, `Classical.choice`, and
-  `Quot.sound`.
-
-
-  CLAUSE 2 -- GEOMETRIC LAYER OPEN. For quasi-coherent `A B : X.Modules`, identify
-  the restriction map of `tensorPresheaf A B` from an affine `V` to `D(f)` with `localizedTensorProductMap`
-  applied to the two section restrictions. Then use the basic-open tilde/sheafification
-  engine to prove `tensorSectionHom A B V` is an isomorphism and obtain the `IsQuasicoherent
-  (tensorObj A B)` instance through `isQuasicoherent_of_isLocalizedModule_basicOpen`.
-  The algebraic target now exactly matches `Γ(X,V) → Γ(X,D(f))`; the remaining work
-  is restriction coherence and sheafification, not localization algebra.
-
-
-  This row supplies pullback/tensor infrastructure used by Picard and Hilbert/base-change
-  consumers. It is not the missing producer for the FGA `rep` antecedent: `fgaPicardRepresentability`
-  remains open elsewhere, so keep this row active and do not report Pic representability
-  closed from these commits alone.
-
-  '
+  The remaining honest geometric step is global rather than pointwise: use localization
+  uniqueness to compare the tensor-presheaf stalk localization with the tilde model,
+  then patch/reflect the stalkwise comparison to prove IsIso (tensorSectionHom A B
+  U) for affine U. That yields tensorObj quasi-coherence through isQuasicoherent_of_isLocalizedModule_basicOpen
+  and feeds Pic-F residue-field/D2 evaluation identifications. Keep this row active:
+  these are real producers used by Picard/D2, but they do not by themselves discharge
+  the separate FGA rep antecedent.'
 status: active
 kind: proof
 priority: high
@@ -77,10 +47,12 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-31T15:07:45.359732+00:00'
+  updated_at: '2026-07-31T17:57:29.694755+00:00'
   milestone: AJC.picrep
   owner: pic-b
   pinned_commits:
+  - d0b6224e7f
+  - 53b7dede8b
   - 995899019e
   - 6d082cdbe8
   - 12e4f87420
