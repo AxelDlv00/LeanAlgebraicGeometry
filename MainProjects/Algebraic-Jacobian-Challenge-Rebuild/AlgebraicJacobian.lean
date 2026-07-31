@@ -12,6 +12,7 @@ import AlgebraicJacobian.Curve.DedekindSections
 import AlgebraicJacobian.Curve.StalksDVR
 import AlgebraicJacobian.Curve.P1Points
 import AlgebraicJacobian.Curve.P1Section
+import AlgebraicJacobian.Curve.P1PicComparison
 import AlgebraicJacobian.Curve.RationalToP1
 import AlgebraicJacobian.Curve.MapToP1
 import AlgebraicJacobian.Curve.SeparablyClosedFibre
