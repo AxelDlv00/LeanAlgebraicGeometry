@@ -2,30 +2,20 @@ id: AJC.picrep.tensor
 title: Pullback-tensor and fibre base change
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'RE-MEASURED 2026-08-01 (pic-b, run 0099). Clause 1 remains closed: pullback-tensor
-  comparison for locally trivial factors is sorry-free and has no extra gate (8f237dfef9
-  and earlier pinned units).
-
-
-  Clause 2 has advanced through both the algebraic basic-open and pointwise geometric
-  layers, with no added hypotheses. TensorSectionFormula now proves isLocalizedModule_tensorPresheaf_basicOpen:
-  for quasi-coherent A and B, the actual restriction tensorPresheaf(A,B)(U) -> tensorPresheaf(A,B)(D(f))
-  is localization at powers f (53b7dede8b). TensorStalkLocalization proves the generic
-  isLocalizedModule_presheafGermLinearMap and specializes it as isLocalizedModule_tensorPresheafGermLinearMap:
-  on every affine U and x in U, tensor-presheaf affine sections -> its stalk is localization
-  at the prime complement of x (d0b6224e7f). The same module records sheafificationUnit_stalk_isIso,
-  so the tensor presheaf and tensorObj have canonically isomorphic stalks. All new
-  declarations are axiom-clean modulo propext, Classical.choice, and Quot.sound.
-
-
-  The remaining honest geometric step is global rather than pointwise: use localization
-  uniqueness to compare the tensor-presheaf stalk localization with the tilde model,
-  then patch/reflect the stalkwise comparison to prove IsIso (tensorSectionHom A B
-  U) for affine U. That yields tensorObj quasi-coherence through isQuasicoherent_of_isLocalizedModule_basicOpen
-  and feeds Pic-F residue-field/D2 evaluation identifications. Keep this row active:
-  these are real producers used by Picard/D2, but they do not by themselves discharge
-  the separate FGA rep antecedent.'
-status: active
+summary: 'CLOSED 2026-08-01 by pic-b, with no hypotheses beyond quasi-coherence of
+  the two factors. AffineStalkLocalization reconstructs a map into arbitrary sheaf
+  sections on Spec R from prime-complement stalk localizations. AffineOpenStalkLocalization
+  transports sections and stalks along IsAffineOpen.fromSpec, then proves tensorSectionHom_isIso:
+  for every affine U, the canonical objectwise tensor-of-sections map to Γ(tensorObj
+  A B,U) is an isomorphism. tensorObj_isQuasicoherent conjugates the already-proved
+  tensor-presheaf basic-open localization through those section isomorphisms and applies
+  the local quasi-coherence criterion. The module is rooted in AlgebraicJacobian.
+  Full root build passed at 8925 jobs; both headline declarations use only propext,
+  Classical.choice, and Quot.sound. Independent work-reviewer found no hidden gates,
+  circularity, or scalar-instance mismatch. This closes the quasi-coherent tensor
+  row. The separate arbitrary-sheaf pullbackTensorMap_isIso sorry and the FGA representability
+  antecedent are not claimed here.'
+status: done
 kind: proof
 priority: high
 depends_on: []
@@ -47,10 +37,17 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-31T17:57:29.694755+00:00'
+  updated_at: '2026-07-31T20:48:19.587290+00:00'
   milestone: AJC.picrep
-  owner: pic-b
   pinned_commits:
+  - d4133dcd24
+  - 5bcfb51edb
+  - 687a13ee88
+  - f158230461
+  - cc8040119f
+  - 87861b98cc
+  - be91de7850
+  - 4570aad68f
   - d0b6224e7f
   - 53b7dede8b
   - 995899019e
