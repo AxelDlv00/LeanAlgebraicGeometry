@@ -95,11 +95,15 @@ noncomputable def tensorOverlapTheta :
         pic0TypeFunctor ((baseChange k L).obj C) ≅
       (Over.map (tensorOverlapInr (k := k) (L := L))).op ⋙
         pic0TypeFunctor ((baseChange k L).obj C) :=
-  tensorOverlapCommon (C := C) (tensorOverlapInl (k := k) (L := L)) ≪≫
+  Functor.RepresentableBy.Over.mapCompPresheafCommon
+      (tensorOverlapBase (k := k) (L := L)) (pic0ThetaType k L C)
+      (tensorOverlapInl (k := k) (L := L)) ≪≫
     eqToIso (congrArg
       (fun g => (Over.map g).op ⋙ pic0TypeFunctor C)
       (tensorOverlapInl_comp_base (k := k) (L := L))) ≪≫
-    (tensorOverlapCommon (C := C) (tensorOverlapInr (k := k) (L := L))).symm
+    (Functor.RepresentableBy.Over.mapCompPresheafCommon
+      (tensorOverlapBase (k := k) (L := L)) (pic0ThetaType k L C)
+      (tensorOverlapInr (k := k) (L := L))).symm
 
 /-! ## Pullback representations and the canonical scheme isomorphism -/
 
@@ -262,7 +266,12 @@ noncomputable def tensorTripleTheta
       tensorTripleBase (k := k) (L := L)) :
     (Over.map f).op ⋙ pic0TypeFunctor ((baseChange k L).obj C) ≅
       (Over.map g).op ⋙ pic0TypeFunctor ((baseChange k L).obj C) :=
-  tensorTripleCommon (C := C) f hf ≪≫ (tensorTripleCommon (C := C) g hg).symm
+  (Functor.RepresentableBy.Over.mapCompPresheafCommon
+      (tensorOverlapBase (k := k) (L := L)) (pic0ThetaType k L C) f ≪≫
+    eqToIso (congrArg (fun m => (Over.map m).op ⋙ pic0TypeFunctor C) hf)) ≪≫
+  (Functor.RepresentableBy.Over.mapCompPresheafCommon
+      (tensorOverlapBase (k := k) (L := L)) (pic0ThetaType k L C) g ≪≫
+    eqToIso (congrArg (fun m => (Over.map m).op ⋙ pic0TypeFunctor C) hg)).symm
 
 noncomputable def tensorTripleTheta12 :
     (Over.map (tensorTripleCoord1 (k := k) (L := L))).op ⋙
@@ -349,9 +358,7 @@ noncomputable def tensorTripleTheta13_face :
 lemma tensorTripleTheta12_face_eq :
     tensorTripleTheta12_face (k := k) (L := L) (C := C) =
       tensorTripleTheta12 (k := k) (L := L) (C := C) := by
-  simpa [tensorTripleTheta12_face, tensorTripleTheta12, tensorTripleTheta,
-    tensorTripleCommon, tensorOverlapTheta, tensorOverlapCommon, pic0BaseCommon] using
-    (Functor.RepresentableBy.Over.mapCompPresheafFace_common
+  exact Functor.RepresentableBy.Over.mapCompPresheafFace_common_of_eq
       (t := tensorTripleBase (k := k) (L := L))
       (r₀ := tensorTripleCoord1 (k := k) (L := L))
       (r₁ := tensorTripleCoord2 (k := k) (L := L))
@@ -359,18 +366,19 @@ lemma tensorTripleTheta12_face_eq :
       (p₀ := tensorOverlapInl (k := k) (L := L))
       (p₁ := tensorOverlapInr (k := k) (L := L))
       (b := tensorOverlapBase (k := k) (L := L))
-      (theta := tensorOverlapTheta (C := C))
+      (theta := pic0ThetaType k L C)
       (hp := tensorOverlapInl_comp_base (k := k) (L := L))
       (hr₀ := rfl) (hr₁ := rfl)
       (h₀ := tensorTripleCoord1_comp_base (k := k) (L := L))
-      (h₁ := tensorTripleCoord2_comp_base (k := k) (L := L)))
+      (h₁ := tensorTripleCoord2_comp_base (k := k) (L := L))
+      (thetaOverlap := tensorOverlapTheta (C := C))
+      (thetaFace := tensorTripleTheta12_face (C := C))
+      (thetaDirect := tensorTripleTheta12 (C := C)) rfl rfl rfl
 
 lemma tensorTripleTheta23_face_eq :
     tensorTripleTheta23_face (k := k) (L := L) (C := C) =
       tensorTripleTheta23 (k := k) (L := L) (C := C) := by
-  simpa [tensorTripleTheta23_face, tensorTripleTheta23, tensorTripleTheta,
-    tensorTripleCommon, tensorOverlapTheta, tensorOverlapCommon, pic0BaseCommon] using
-    (Functor.RepresentableBy.Over.mapCompPresheafFace_common
+  exact Functor.RepresentableBy.Over.mapCompPresheafFace_common_of_eq
       (t := tensorTripleBase (k := k) (L := L))
       (r₀ := tensorTripleCoord2 (k := k) (L := L))
       (r₁ := tensorTripleCoord3 (k := k) (L := L))
@@ -378,19 +386,20 @@ lemma tensorTripleTheta23_face_eq :
       (p₀ := tensorOverlapInl (k := k) (L := L))
       (p₁ := tensorOverlapInr (k := k) (L := L))
       (b := tensorOverlapBase (k := k) (L := L))
-      (theta := tensorOverlapTheta (C := C))
+      (theta := pic0ThetaType k L C)
       (hp := tensorOverlapInl_comp_base (k := k) (L := L))
       (hr₀ := tensorTripleCoord2_eq_face23_inl (k := k) (L := L))
       (hr₁ := tensorTripleCoord3_eq_face23_inr (k := k) (L := L))
       (h₀ := tensorTripleCoord2_comp_base (k := k) (L := L))
-      (h₁ := tensorTripleCoord3_comp_base (k := k) (L := L)))
+      (h₁ := tensorTripleCoord3_comp_base (k := k) (L := L))
+      (thetaOverlap := tensorOverlapTheta (C := C))
+      (thetaFace := tensorTripleTheta23_face (C := C))
+      (thetaDirect := tensorTripleTheta23 (C := C)) rfl rfl rfl
 
 lemma tensorTripleTheta13_face_eq :
     tensorTripleTheta13_face (k := k) (L := L) (C := C) =
       tensorTripleTheta13 (k := k) (L := L) (C := C) := by
-  simpa [tensorTripleTheta13_face, tensorTripleTheta13, tensorTripleTheta,
-    tensorTripleCommon, tensorOverlapTheta, tensorOverlapCommon, pic0BaseCommon] using
-    (Functor.RepresentableBy.Over.mapCompPresheafFace_common
+  exact Functor.RepresentableBy.Over.mapCompPresheafFace_common_of_eq
       (t := tensorTripleBase (k := k) (L := L))
       (r₀ := tensorTripleCoord1 (k := k) (L := L))
       (r₁ := tensorTripleCoord3 (k := k) (L := L))
@@ -398,21 +407,23 @@ lemma tensorTripleTheta13_face_eq :
       (p₀ := tensorOverlapInl (k := k) (L := L))
       (p₁ := tensorOverlapInr (k := k) (L := L))
       (b := tensorOverlapBase (k := k) (L := L))
-      (theta := tensorOverlapTheta (C := C))
+      (theta := pic0ThetaType k L C)
       (hp := tensorOverlapInl_comp_base (k := k) (L := L))
       (hr₀ := (tensorTripleFace13_inl (k := k) (L := L)).symm)
       (hr₁ := (tensorTripleFace13_inr (k := k) (L := L)).symm)
       (h₀ := tensorTripleCoord1_comp_base (k := k) (L := L))
-      (h₁ := tensorTripleCoord3_comp_base (k := k) (L := L)))
+      (h₁ := tensorTripleCoord3_comp_base (k := k) (L := L))
+      (thetaOverlap := tensorOverlapTheta (C := C))
+      (thetaFace := tensorTripleTheta13_face (C := C))
+      (thetaDirect := tensorTripleTheta13 (C := C)) rfl rfl rfl
 
 /-- The three independently defined Picard comparisons satisfy the Amitsur cocycle. -/
 theorem tensorTripleTheta_cocycle :
     tensorTripleTheta13 (k := k) (L := L) (C := C) =
       tensorTripleTheta12 (k := k) (L := L) (C := C) ≪≫
         tensorTripleTheta23 (k := k) (L := L) (C := C) := by
-  apply Iso.ext
   simp [tensorTripleTheta13, tensorTripleTheta12, tensorTripleTheta23,
-    tensorTripleTheta]
+    tensorTripleTheta, Iso.trans_assoc]
 
 /-! ## The representing-scheme cocycle -/
 

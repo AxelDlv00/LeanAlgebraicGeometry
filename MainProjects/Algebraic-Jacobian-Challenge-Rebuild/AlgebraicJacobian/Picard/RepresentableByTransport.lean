@@ -212,4 +212,42 @@ theorem mapCompPresheafFace_common
   rw [htransport]
   simp [Functor.isoWhiskerLeft_symm]
 
+/-- A named face comparison agrees with a named direct comparison when their
+definitions are respectively the pullback and common-base constructions.  This
+keeps clients from unfolding all three dependent isomorphisms simultaneously. -/
+theorem mapCompPresheafFace_common_of_eq
+    {V W X Y : D} (t : V ⟶ Y) (r₀ r₁ : V ⟶ X) (q : V ⟶ W)
+    (p₀ p₁ : W ⟶ X) (b : X ⟶ Y)
+    {FL : (CategoryTheory.Over X)ᵒᵖ ⥤ Type v}
+    {FK : (CategoryTheory.Over Y)ᵒᵖ ⥤ Type v}
+    (theta : FL ≅ (CategoryTheory.Over.map b).op ⋙ FK)
+    (hp : p₀ ≫ b = p₁ ≫ b)
+    (hr₀ : r₀ = q ≫ p₀) (hr₁ : r₁ = q ≫ p₁)
+    (h₀ : r₀ ≫ b = t) (h₁ : r₁ ≫ b = t)
+    (thetaOverlap :
+      (CategoryTheory.Over.map p₀).op ⋙ FL ≅
+        (CategoryTheory.Over.map p₁).op ⋙ FL)
+    (thetaFace thetaDirect :
+      (CategoryTheory.Over.map r₀).op ⋙ FL ≅
+        (CategoryTheory.Over.map r₁).op ⋙ FL)
+    (hoverlap : thetaOverlap =
+      mapCompPresheafCommon b theta p₀ ≪≫
+        eqToIso (congrArg
+          (fun g => (CategoryTheory.Over.map g).op ⋙ FK) hp) ≪≫
+        (mapCompPresheafCommon b theta p₁).symm)
+    (hface : thetaFace =
+      CategoryTheory.Functor.RepresentableBy.Over.mapCompPresheafFace
+        r₀ r₁ q p₀ p₁ hr₀ hr₁ thetaOverlap)
+    (hdirect : thetaDirect =
+      (mapCompPresheafCommon b theta r₀ ≪≫
+          eqToIso (congrArg
+            (fun g => (CategoryTheory.Over.map g).op ⋙ FK) h₀)) ≪≫
+        (mapCompPresheafCommon b theta r₁ ≪≫
+          eqToIso (congrArg
+            (fun g => (CategoryTheory.Over.map g).op ⋙ FK) h₁)).symm) :
+    thetaFace = thetaDirect := by
+  rw [hface, hoverlap, hdirect]
+  exact mapCompPresheafFace_common t r₀ r₁ q p₀ p₁ b theta hp
+    hr₀ hr₁ h₀ h₁
+
 end CategoryTheory.Functor.RepresentableBy.Over
