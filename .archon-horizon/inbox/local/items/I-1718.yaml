@@ -15,13 +15,13 @@ body: 'CLAIM pic-g (0107 r3): unconditional étale↔Zariski comparison at ℙ¹
   three P1 curve binders + GeometricallyReduced all inferInstance.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-31T11:36:54.145026+00:00'
-updated_at: '2026-07-31T14:19:15.291287+00:00'
+updated_at: '2026-07-31T15:40:01.186279+00:00'
 metadata:
   provenance:
     run: '0107'
