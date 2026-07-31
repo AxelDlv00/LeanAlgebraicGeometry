@@ -616,6 +616,27 @@ noncomputable def divFunctorDegZero_representableByTerminal_of_isZero
   divFunctorDegZero_representableByTerminal π
     (fun T x hx => DivFamily.rel_zero_of_isZero π T (hz T x hx))
 
+/-- **The Div⁰ producer, modulo section vanishing** — the purest section-level form of
+`divFunctorDegZero_representableByTerminal_of_isZero`, with the coherent-sheaf-vanishing
+antecedent `IsZero x.F` unfolded through `Scheme.Modules.isZero_of_forall_subsingleton_sections`
+to *"a degree-`0` relative effective divisor has no structure-sheaf sections over any open
+of `X_T`."*
+
+This is the honest obligation in the vocabulary of sections alone — no `IsZero`, no
+`finrank`, no representability. It exposes precisely the gap that `HasFiberDeg 0` (a
+`finrank` of the *fibre* sections at each point) does **not** close on its own: the
+finrank-`0` datum lives over each residue field, while zeroing `x.F` needs subsingleton
+sections over *every* open, which is the fibrewise-finiteness geometry of the divisor
+support (`Picard/DivSupportQuasiFinite.lean`), not a formality. Landing that geometric
+step in the `hss`-shape below discharges this producer and, with it,
+`AJC.picrep.divzero`. -/
+noncomputable def divFunctorDegZero_representableByTerminal_of_forall_subsingleton_sections
+    (hss : ∀ (T : Over S) (x : DivFamily π T), x.HasFiberDeg 0 →
+      ∀ V : (Limits.pullback π T.hom).Opens, Subsingleton Γ(x.F, V)) :
+    (DivFunctorDeg π 0).RepresentableBy (Over.mk (𝟙 S)) :=
+  divFunctorDegZero_representableByTerminal_of_isZero π
+    (fun T x hx => Scheme.Modules.isZero_of_forall_subsingleton_sections (hss T x hx))
+
 end Scheme
 
 end AlgebraicGeometry
