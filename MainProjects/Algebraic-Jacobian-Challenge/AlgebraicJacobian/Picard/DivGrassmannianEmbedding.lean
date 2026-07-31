@@ -476,6 +476,67 @@ theorem baseChange_surjective_iff_pullback_appTop
     refine ⟨w, eN.injective ?_⟩
     rw [← hcomm w, hy]
 
+set_option synthInstance.maxHeartbeats 1000000 in
+-- Slice-site presentation transport traverses two cover refinements and the
+-- open-restriction equivalence.
+set_option maxHeartbeats 2000000 in
+set_option maxRecDepth 10000 in
+/-- Tensoring a finitely presented module sheaf on the left by a locally
+trivial line bundle preserves finite presentation.  The proof refines a
+finite-presentation cover for `F` by a trivializing cover for `L`; on every
+intersection the tensor product is isomorphic to `F`, so its finite
+presentation transports across that isomorphism. -/
+theorem isFinitePresentation_tensorObj_left_of_isLocallyTrivial
+    {X : Scheme.{u}} (L F : X.Modules)
+    (hL : LineBundle.IsLocallyTrivial L) (hF : F.IsFinitePresentation) :
+    (tensorObj L F).IsFinitePresentation := by
+  obtain ⟨q, hq⟩ := hF.exists_quasicoherentData
+  obtain ⟨I, U, _hUaff, hUtop, hUiso⟩ := hL.exists_trivializing_cover
+  let W : q.I × I → X.Opens := fun ij => q.X ij.1 ⊓ U ij.2
+  have hWcover : (Opens.grothendieckTopology X).CoversTop W := by
+    intro V x hx
+    obtain ⟨V', fV, hf, hxV'⟩ := q.coversTop ⊤ x (by trivial)
+    obtain ⟨i, ⟨gi⟩⟩ := hf
+    have hxq : x ∈ q.X i := (leOfHom gi) hxV'
+    have hxU : x ∈ iSup U := by rw [hUtop]; trivial
+    rw [TopologicalSpace.Opens.mem_iSup] at hxU
+    obtain ⟨j, hxj⟩ := hxU
+    exact ⟨V ⊓ W (i, j), homOfLE inf_le_left,
+      ⟨(i, j), ⟨homOfLE inf_le_right⟩⟩, ⟨hx, ⟨hxq, hxj⟩⟩⟩
+  let P : ∀ ij, ((tensorObj L F).over (W ij)).Presentation := fun ij => by
+    let PF : (F.restrict (W ij).ι).Presentation :=
+      presentationRestrictOfOver (W ij) F (q.X ij.1)
+        (q.presentation ij.1) inf_le_left
+    let eL : L.restrict (W ij).ι ≅
+        SheafOfModules.unit (W ij : Scheme).ringCatSheaf :=
+      restrictIsoUnitOfLE inf_le_right (hUiso ij.2).some
+    let e : (tensorObj L F).restrict (W ij).ι ≅ F.restrict (W ij).ι :=
+      tensorObj_restrict_iso (W ij).ι L F ≪≫
+        tensorObjIsoOfIso eL (Iso.refl _) ≪≫
+        tensorObj_left_unitor _
+    let PT : ((tensorObj L F).restrict (W ij).ι).Presentation :=
+      SheafOfModules.Presentation.ofIsIso.{u, u, u} e.inv PF
+    let PT' : ((overEquivalence (W ij)).functor.obj
+        ((tensorObj L F).restrict (W ij).ι)).Presentation :=
+      PT.map (overEquivalence (W ij)).functor (unitOverIso (W ij)).symm
+    exact SheafOfModules.Presentation.ofIsIso.{u, u, u}
+      (restrictOverIso (W ij) (tensorObj L F)).hom PT'
+  let qT : (tensorObj L F).QuasicoherentData :=
+    { I := q.I × I
+      X := W
+      coversTop := hWcover
+      presentation := P }
+  have hP : ∀ ij, (P ij).IsFinite := by
+    intro ij
+    dsimp only [P]
+    letI : (q.presentation ij.1).IsFinite := hq.isFinite_presentation _
+    infer_instance
+  have hsh : qT.shrink.IsFinitePresentation := by
+    apply SheafOfModules.QuasicoherentData.IsFinitePresentation.mk
+    intro ij
+    exact hP (Exists.choose ij.property)
+  exact { exists_quasicoherentData := ⟨qT.shrink, hsh⟩ }
+
 /-- Isomorphic module sheaves have the same annihilator ideal sheaf.  This is
 the scheme-level transport needed to make schematic support, hence proper
 support, invariant under isomorphism. -/
