@@ -45,6 +45,58 @@ theorem ofLeftAdjoint_homEquiv
     (ofLeftAdjoint adj e).homEquiv g = e.homEquiv ((adj.homEquiv X Y).symm g) := by
   rfl
 
+/-- Compare representations of two isomorphic presheaves.
+
+The source representation is first transported along `η`; the comparison is then the ordinary
+Yoneda comparison.  This is the canonical overlap isomorphism once the two pullback Picard
+presheaves have been identified. -/
+noncomputable def uniqueUpToIsoOfIso
+    {C : Type u} [Category.{v, u} C]
+    {F F' : Cᵒᵖ ⥤ Type v} {Y Y' : C}
+    (e : F.RepresentableBy Y) (e' : F'.RepresentableBy Y') (η : F ≅ F') : Y ≅ Y' :=
+  (e.ofIso η).uniqueUpToIso e'
+
+/-- The comparison in `uniqueUpToIsoOfIso` intertwines the two universal elements. -/
+theorem homEquiv_uniqueUpToIsoOfIso_hom
+    {C : Type u} [Category.{v, u} C]
+    {F F' : Cᵒᵖ ⥤ Type v} {Y Y' : C}
+    (e : F.RepresentableBy Y) (e' : F'.RepresentableBy Y') (η : F ≅ F')
+    {X : C} (f : X ⟶ Y) :
+    e'.homEquiv (f ≫ (uniqueUpToIsoOfIso e e' η).hom) =
+      η.hom.app (Opposite.op X) (e.homEquiv f) := by
+  change e'.homEquiv (f ≫ ((e.ofIso η).uniqueUpToIso e').hom) =
+    (e.ofIso η).homEquiv f
+  have h : ((e.ofIso η).uniqueUpToIso e').hom =
+      e'.homEquiv.symm ((e.ofIso η).homEquiv (𝟙 Y)) := rfl
+  rw [h, comp_homEquiv_symm, Equiv.apply_symm_apply]
+  rw [← (e.ofIso η).homEquiv_comp f (𝟙 Y), Category.comp_id]
+
+/-- Three canonical comparisons satisfy the cocycle law when the presheaf isomorphisms do. -/
+theorem uniqueUpToIsoOfIso_trans
+    {C : Type u} [Category.{v, u} C]
+    {F₁ F₂ F₃ : Cᵒᵖ ⥤ Type v} {Y₁ Y₂ Y₃ : C}
+    (e₁ : F₁.RepresentableBy Y₁) (e₂ : F₂.RepresentableBy Y₂)
+    (e₃ : F₃.RepresentableBy Y₃)
+    (η₁₂ : F₁ ≅ F₂) (η₂₃ : F₂ ≅ F₃) (η₁₃ : F₁ ≅ F₃)
+    (hη : η₁₃ = η₁₂ ≪≫ η₂₃) :
+    uniqueUpToIsoOfIso e₁ e₃ η₁₃ =
+      uniqueUpToIsoOfIso e₁ e₂ η₁₂ ≪≫ uniqueUpToIsoOfIso e₂ e₃ η₂₃ := by
+  apply Iso.ext
+  apply e₃.homEquiv.injective
+  calc
+    e₃.homEquiv (uniqueUpToIsoOfIso e₁ e₃ η₁₃).hom =
+        η₁₃.hom.app (Opposite.op Y₁) (e₁.homEquiv (𝟙 Y₁)) := by
+      simpa using homEquiv_uniqueUpToIsoOfIso_hom e₁ e₃ η₁₃ (𝟙 Y₁)
+    _ = η₂₃.hom.app (Opposite.op Y₁)
+        (η₁₂.hom.app (Opposite.op Y₁) (e₁.homEquiv (𝟙 Y₁))) := by
+      rw [hη]
+      rfl
+    _ = e₃.homEquiv ((uniqueUpToIsoOfIso e₁ e₂ η₁₂).hom ≫
+        (uniqueUpToIsoOfIso e₂ e₃ η₂₃).hom) := by
+      rw [homEquiv_uniqueUpToIsoOfIso_hom e₂ e₃ η₂₃]
+      rw [← Category.id_comp (uniqueUpToIsoOfIso e₁ e₂ η₁₂).hom,
+        homEquiv_uniqueUpToIsoOfIso_hom e₁ e₂ η₁₂]
+
 /-- Composition with the canonical representing-object isomorphism transports the universal
 element unchanged. -/
 theorem homEquiv_uniqueUpToIso_hom {C : Type u} [Category.{v, u} C]
