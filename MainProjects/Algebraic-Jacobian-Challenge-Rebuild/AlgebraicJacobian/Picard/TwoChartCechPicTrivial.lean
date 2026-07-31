@@ -122,6 +122,53 @@ theorem cechPic_eq_one_of_chartTrivial_of_overlapUnits_coboundary_of_not_isAffin
   cechPic_eq_one_of_chartTrivial_of_overlapUnits_coboundary D.selector D.selector_mem
     (D.surjective_selector_of_not_isAffine hY) hcob L hL
 
+/-! ## The form with a payable hypothesis
+
+The universal hypothesis `hcob` above is **false** at the case the representability route cares
+about: for `ℙ¹` over a domain, `t` is an overlap unit and is not a coboundary
+(`not_tUnit_mem_laurentCoboundaryUnits`, `Picard/LaurentTwoChartCoboundary.lean`) — which is just
+`Pic(ℙ¹_A) = ℤ`.  So a consumer given only the criterion above would set out to prove something
+untrue.
+
+The repair is to constrain only the units that *present the class in question*, which is what
+surjectivity hands over anyway.  Two things are worth saying about it explicitly, because the
+obvious repair is a trap:
+
+* the `↔` version — "`L = 1` iff some presenting unit is a coboundary" — is **vacuous**: its
+  forward direction takes the presenting unit to be `1`, and the chart-triviality hypothesis is
+  never consulted (measured: the unused-variable linter flags it).  So the useful form is the
+  implication with a `∀` over presenting units, below, where both hypotheses are consumed;
+* that form is *strictly weaker* than `hcob`, and demonstrably so: `hcob` implies it by ignoring
+  the presentation equation (`forall_presenting_of_forall_coboundary`). -/
+
+/-- **THE CRITERION WITH A PAYABLE HYPOTHESIS**: a chart-trivial class is trivial as soon as
+*every unit presenting it* is a coboundary.
+
+Both hypotheses are consumed — `hL` produces the presenting unit through surjectivity, and
+`hpres` is applied to exactly that unit.  Unlike the universal form this is not refuted by
+`ℙ¹`: there the presenting units of a *degree-zero* class are the exponent-zero Laurent units,
+which are precisely the coboundaries (`mem_laurentCoboundaryUnits_iff`). -/
+theorem cechPic_eq_one_of_forall_presenting_coboundary
+    (sel : X → Bool) (hmem : ∀ x, x ∈ V (sel x)) (hsel : Function.Surjective sel)
+    (L : X.CechPic) (hL : ∀ s : Bool, Scheme.CechPic.map (V s).ι L = 1)
+    (hpres : ∀ u : Γ(X, V false ⊓ V true)ˣ,
+      twoChartClassHom V sel hmem u = L → u ∈ twoChartCoboundaryUnits V) :
+    L = 1 := by
+  obtain ⟨u, hu⟩ := twoChartClassHom_surjOn_of_chartTrivial sel hmem L hL
+  rw [← hu]
+  exact (twoChartClassHom_eq_one_iff V sel hmem hsel u).mpr (hpres u hu)
+
+/-- The universal hypothesis implies the presenting-unit one, by ignoring the presentation
+equation.  Recorded so that "strictly weaker" is a proved relation rather than a reading of the
+two statements — the weakening is what makes the hypothesis payable at `ℙ¹`. -/
+theorem forall_presenting_of_forall_coboundary
+    (sel : X → Bool) (hmem : ∀ x, x ∈ V (sel x))
+    (hcob : ∀ u : Γ(X, V false ⊓ V true)ˣ, u ∈ twoChartCoboundaryUnits V)
+    (L : X.CechPic) :
+    ∀ u : Γ(X, V false ⊓ V true)ˣ,
+      twoChartClassHom V sel hmem u = L → u ∈ twoChartCoboundaryUnits V :=
+  fun u _ => hcob u
+
 end Scheme
 
 end AlgebraicGeometry
