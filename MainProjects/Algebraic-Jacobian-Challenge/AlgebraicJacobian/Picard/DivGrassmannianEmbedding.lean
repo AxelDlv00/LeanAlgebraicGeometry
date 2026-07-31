@@ -240,6 +240,49 @@ end DivFamily
 
 namespace Modules
 
+/-- **Tensoring on the right preserves epimorphisms in `Scheme.Modules`.**
+
+An epimorphism of module sheaves is locally surjective after forgetting to
+abelian-group sheaves.  The presheaf tensor preserves local surjectivity in
+either variable by right-exactness of tensor products, and sheafification
+turns that local surjectivity back into an epimorphism.  This avoids the false
+intermediate claim that a sheaf epimorphism is pointwise epi as a presheaf. -/
+theorem tensorObj_functoriality_epi_right
+    {X : Scheme.{u}} {M N N' : X.Modules} (g : N ⟶ N') [hg : Epi g] :
+    Epi (tensorObj_functoriality (𝟙 M) g) := by
+  let J := Opens.grothendieckTopology X
+  letI : (SheafOfModules.toSheaf X.ringCatSheaf).PreservesEpimorphisms :=
+    AlgebraicGeometry.toSheaf_preservesEpimorphisms X.ringCatSheaf
+  have hgSheaf : Epi ((SheafOfModules.toSheaf X.ringCatSheaf).map g) :=
+    @Functor.map_epi _ _ _ _ (SheafOfModules.toSheaf X.ringCatSheaf) _ _ _ g hg
+  have hgLoc : PresheafOfModules.IsLocallySurjective J g.val := by
+    exact (Sheaf.isLocallySurjective_iff_epi'
+      AddCommGrpCat ((SheafOfModules.toSheaf X.ringCatSheaf).map g)).mpr hgSheaf
+  let M' : _root_.PresheafOfModules
+      (X.presheaf ⋙ forget₂ CommRingCat RingCat) := M.val
+  let g' : MonoidalCategory.tensorObj M' N.val ⟶
+      MonoidalCategory.tensorObj M' N'.val := M' ◁ g.val
+  have htLoc : PresheafOfModules.IsLocallySurjective J g' :=
+    PresheafOfModules.isLocallySurjective_whiskerLeft M' g.val hgLoc
+  have htSheafLoc : Sheaf.IsLocallySurjective
+      ((presheafToSheaf J AddCommGrpCat).map
+        ((PresheafOfModules.toPresheaf
+          (X.presheaf ⋙ forget₂ CommRingCat RingCat)).map g')) := by
+    rw [Presheaf.isLocallySurjective_presheafToSheaf_map_iff]
+    exact htLoc
+  have htSheafEpi : Epi
+      ((presheafToSheaf J AddCommGrpCat).map
+        ((PresheafOfModules.toPresheaf
+          (X.presheaf ⋙ forget₂ CommRingCat RingCat)).map g')) :=
+    (Sheaf.isLocallySurjective_iff_epi' AddCommGrpCat.{u} _).mp htSheafLoc
+  have hmap : Epi ((SheafOfModules.toSheaf X.ringCatSheaf).map
+      (tensorObj_functoriality (𝟙 M) g)) := by
+    change Epi ((presheafToSheaf J AddCommGrpCat).map
+      ((PresheafOfModules.toPresheaf
+        (X.presheaf ⋙ forget₂ CommRingCat RingCat)).map g'))
+    exact htSheafEpi
+  exact (SheafOfModules.toSheaf X.ringCatSheaf).epi_of_epi_map hmap
+
 set_option backward.isDefEq.respectTransparency false in
 /-- A finite global presentation of a module sheaf on `Spec R` induces a
 finite presentation of its module of global sections.
@@ -437,6 +480,29 @@ theorem fiberRank_gammaTop_eq_fiberH0_of_isFinite_schematicSupport
 end Modules
 
 namespace DivFamily
+
+variable {S X : Scheme.{u}} {π : X ⟶ S} {T : Over S}
+
+/-- The divisor quotient remains epi after tensoring with any module.
+
+This is the pre-pushforward epimorphism in the D2' evaluation map.  It uses
+only the `DivFamily` quotient's existing epimorphism; global generation after
+pushforward remains the separate curve-theoretic obligation. -/
+theorem twistQuotientMap_epi (L : X.Modules) (x : DivFamily π T) :
+    Epi (x.twistQuotientMap L) := by
+  letI := x.epi
+  haveI : Epi (Modules.tensorObj_functoriality
+      (𝟙 ((Modules.pullback (pullback.fst π T.hom)).obj L))
+      ((Modules.pullbackUnitIso (pullback.fst π T.hom)).inv ≫ x.q)) :=
+    Modules.tensorObj_functoriality_epi_right _
+  change Epi ((Modules.tensorObj_right_unitor
+    ((Modules.pullback (pullback.fst π T.hom)).obj L)).inv ≫
+      Modules.tensorObj_functoriality
+        (𝟙 ((Modules.pullback (pullback.fst π T.hom)).obj L))
+        ((Modules.pullbackUnitIso (pullback.fst π T.hom)).inv ≫ x.q))
+  letI : Epi (Modules.tensorObj_right_unitor
+      ((Modules.pullback (pullback.fst π T.hom)).obj L)).inv := inferInstance
+  infer_instance
 
 set_option backward.isDefEq.respectTransparency false in
 /-- On an affine test base, a finite-flat divisor pushforward is locally free
