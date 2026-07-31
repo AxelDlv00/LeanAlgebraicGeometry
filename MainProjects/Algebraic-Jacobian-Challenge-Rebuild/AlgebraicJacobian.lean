@@ -143,6 +143,7 @@ import AlgebraicJacobian.Picard.EffectivityTwist
 import AlgebraicJacobian.Picard.EffectivityOverlap
 import AlgebraicJacobian.Picard.EffectivitySplice
 import AlgebraicJacobian.Picard.EffectivityClose
+import AlgebraicJacobian.Picard.EffectivityRingClose
 import AlgebraicJacobian.Algebra.DedekindColength
 import AlgebraicJacobian.RiemannRoch.Skyscraper
 import AlgebraicJacobian.RiemannRoch.ClosedPoint
