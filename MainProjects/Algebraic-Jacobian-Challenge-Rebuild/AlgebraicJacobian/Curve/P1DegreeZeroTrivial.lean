@@ -46,10 +46,23 @@ Concluding the class itself is trivial is the descent step — for `T = overSpec
 `Pic(ℙ¹_A) ≅ Pic(A) × ℤ`, cohomology and base change — and it is untouched here.
 
 Recorded because the distance is easy to misread: the field case being closed makes the ring
-case look like bookkeeping, and it is not.  In particular the chart route **cannot** be
-extended: chart triviality over a general `k`-algebra `A` would need `Pic(A[t]) = Pic(A)`,
-which is Traverso's theorem and holds exactly for seminormal `A` — false in general, and
-mathlib has no seminormality at all.
+case look like bookkeeping, and it is not.  In particular a chart-by-chart argument does not
+extend from fields to rings, and the reason is worth separating into what is measured here and
+what is quoted from outside:
+
+* **measured.** `Subsingleton (CommRing.Pic (Polynomial k))` is `inferInstance` for a *field*
+  `k` (through `NormalizedGCDMonoid`), which is what makes the charts of `ℙ¹_k` have trivial
+  Picard group.  The same query for a general `[CommRing A]` **fails**, and it fails even
+  given `Subsingleton (CommRing.Pic A)` as a hypothesis.  So the instance that carries the
+  field argument is simply absent over a ring.
+* **measured.** `grep -rli` over all of mathlib returns **zero** files matching `seminormal`
+  and zero matching `traverso`; the `suslin` hit is Suslin's theorem in descriptive set
+  theory, and every `quillen` hit is the model-structure Quillen.  So no route through that
+  literature is available in the library as it stands.
+* **quoted, not verified here.** That `Pic(A[t]) = Pic(A)` holds *exactly* for seminormal `A`
+  is Traverso–Swan, mathematics from outside this formalization.  Nothing in this tree proves
+  it or its failure, and the sentence is here to explain why the instance search above is not
+  merely missing a lemma — not as a formalized no-go.
 
 ## Main declarations
 
