@@ -38,10 +38,13 @@ scope:
 roadmap_refs:
 - AJC.jacobian
 - AJC.picrep
+- AJC.picrep.divlocallyclosed
 inbox_refs:
 - I-0838
+- I-1482
+- I-0491
 artifact_refs: []
 created_at: '2026-07-30T03:08:45.208530+00:00'
-updated_at: '2026-07-31T21:52:27.477995+00:00'
+updated_at: '2026-07-31T23:10:41.193284+00:00'
 metadata:
   author: human
