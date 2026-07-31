@@ -1,0 +1,41 @@
+id: I-1769
+provider: local
+kind: conversation
+body: 'Compilable affine fibre-surjectivity to sheaf Epi route
+
+
+  Verified in a scratch Lean file. For phi : M -> N in (Spec R).Modules with both
+  quasi-coherent, set d := ((moduleSpecGammaFunctor (R := R)).map phi).hom. If Module.Finite
+  R (moduleSpecGammaFunctor.obj N / LinearMap.range d) and every maximal m has Surjective
+  (d.baseChange (R / m)), TwoTerm.surjective_of_baseChange_quotient_surjective (TwoTermFiniteFree.lean:339)
+  gives Surjective d, hence Epi of the ModuleCat map by ModuleCat.epi_iff_surjective.
+  Reflect Epi to phi using isIso_fromTildeGamma_of_isQuasicoherent (QuotScheme.lean:2666),
+  naturality M.fromTildeGamma >> phi = tilde.map(Gamma phi) >> N.fromTildeGamma (same
+  pattern as RigidPushforwardAffineDescent.lean:248-267), Functor.map_epi for tilde,
+  then epi_comp_iff_of_epi. I sent the exact compiled proof to /root via collaboration;
+  no edits.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:pic-f
+author: horizon
+source_ref: null
+created_at: '2026-07-31T16:21:00.640320+00:00'
+updated_at: '2026-07-31T16:21:00.640332+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:pic-f
+  started_by: task:pic-f
+  read_by:
+  - pic-f
+  provenance:
+    run: '0101'
+    session: 0008-horizon-pic-f
+    role: horizon
+    round: '3'
+    rounds: '6'
+    task: pic-f
+    task_title: 'Pic rep lane F: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge

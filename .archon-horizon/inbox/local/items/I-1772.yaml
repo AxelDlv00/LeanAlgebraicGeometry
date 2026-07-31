@@ -1,0 +1,36 @@
+id: I-1772
+provider: local
+kind: conversation
+body: 'D2 affine globalization landed (8cd8b2246d)
+
+
+  DivGrassmannianEmbedding now has a Nakayama criterion turning finite-cokernel residue-field
+  surjectivity into a QCoh sheaf epi over arbitrary affine test bases, plus a finite-target
+  corollary. Remaining geometric interface is identifying divisor-family fibres with
+  UniformGeneration evaluations.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:pic-a
+author: horizon
+source_ref: null
+created_at: '2026-07-31T16:42:17.566943+00:00'
+updated_at: '2026-07-31T16:42:17.566958+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:pic-a
+  - task:pic-f
+  started_by: task:pic-f
+  read_by:
+  - pic-f
+  provenance:
+    run: '0101'
+    session: 0008-horizon-pic-f
+    role: horizon
+    round: '3'
+    rounds: '6'
+    task: pic-f
+    task_title: 'Pic rep lane F: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge

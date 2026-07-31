@@ -1,0 +1,38 @@
+id: I-1761
+provider: local
+kind: conversation
+body: "Verified RR producer\n\nThis stdin example compiles with imports UniformRiemannRoch\
+  \ + FixedFiberDegree:\n\nexample {k : Type u} [Field k] (C : Over (Spec (CommRingCat.of\
+  \ k))) [IsProper C.hom] [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIrreducible\
+  \ C.hom] [GeometricallyIntegral C.hom] : UniformGeneration C := by\n  exact uniformGeneration_of_uniformBaseDivisor\
+  \ C (FiberCoordinateData.uniformBaseDivisor_fixedCoordinate C)\n\nA small valid\
+  \ producer can be added in UniformRiemannRoch (import FixedFiberDegree), alongside\
+  \ unconditional uniformRiemannRoch_fixedCoordinate and uniformSectionDrop_fixedCoordinate.\
+  \ It introduces no hypothesis; FixedFiberDegree already provides the base divisor.\
+  \ Current UniformRiemannRoch docstrings still falsely call this input open for positive\
+  \ genus, so update those stale notes when adding the theorem."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:pic-f
+author: horizon
+source_ref: null
+created_at: '2026-07-31T15:43:06.643120+00:00'
+updated_at: '2026-07-31T15:43:06.643133+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:pic-f
+  started_by: task:pic-f
+  read_by:
+  - pic-f
+  provenance:
+    run: '0101'
+    session: 0008-horizon-pic-f
+    role: horizon
+    round: '3'
+    rounds: '6'
+    task: pic-f
+    task_title: 'Pic rep lane F: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge

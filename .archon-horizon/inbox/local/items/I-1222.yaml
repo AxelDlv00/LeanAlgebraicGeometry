@@ -91,7 +91,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T20:42:12.736269+00:00'
-updated_at: '2026-07-31T14:05:15.865679+00:00'
+updated_at: '2026-07-31T16:14:12.642302+00:00'
 metadata:
   provenance:
     run: 0082
@@ -109,3 +109,5 @@ metadata:
   - rev-ajcr
   - pic-e
   - pic-f
+  - pic-b
+  - pic-h

@@ -303,6 +303,85 @@ noncomputable def tensorTripleTheta13 :
     (tensorTripleCoord1_comp_base (k := k) (L := L))
     (tensorTripleCoord3_comp_base (k := k) (L := L))
 
+/-! The following three comparisons are the literal pullbacks of the double-overlap
+theta.  The explicit equality arguments retain the proof-bearing scheme-map casts for
+the `2,3` and `1,3` faces. -/
+
+noncomputable def tensorTripleTheta12_face :
+    (Over.map (tensorTripleCoord1 (k := k) (L := L))).op ⋙
+        pic0TypeFunctor ((baseChange k L).obj C) ≅
+      (Over.map (tensorTripleCoord2 (k := k) (L := L))).op ⋙
+        pic0TypeFunctor ((baseChange k L).obj C) :=
+  Functor.RepresentableBy.Over.mapCompPresheafFace
+    (tensorTripleCoord1 (k := k) (L := L))
+    (tensorTripleCoord2 (k := k) (L := L))
+    (tensorTripleFace12 (k := k) (L := L))
+    (tensorOverlapInl (k := k) (L := L))
+    (tensorOverlapInr (k := k) (L := L))
+    rfl rfl (tensorOverlapTheta (C := C))
+
+noncomputable def tensorTripleTheta23_face :
+    (Over.map (tensorTripleCoord2 (k := k) (L := L))).op ⋙
+        pic0TypeFunctor ((baseChange k L).obj C) ≅
+      (Over.map (tensorTripleCoord3 (k := k) (L := L))).op ⋙
+        pic0TypeFunctor ((baseChange k L).obj C) :=
+  Functor.RepresentableBy.Over.mapCompPresheafFace
+    (tensorTripleCoord2 (k := k) (L := L))
+    (tensorTripleCoord3 (k := k) (L := L))
+    (tensorTripleFace23 (k := k) (L := L))
+    (tensorOverlapInl (k := k) (L := L))
+    (tensorOverlapInr (k := k) (L := L))
+    (tensorTripleCoord2_eq_face23_inl (k := k) (L := L))
+    (tensorTripleCoord3_eq_face23_inr (k := k) (L := L))
+    (tensorOverlapTheta (C := C))
+
+noncomputable def tensorTripleTheta13_face :
+    (Over.map (tensorTripleCoord1 (k := k) (L := L))).op ⋙
+        pic0TypeFunctor ((baseChange k L).obj C) ≅
+      (Over.map (tensorTripleCoord3 (k := k) (L := L))).op ⋙
+        pic0TypeFunctor ((baseChange k L).obj C) :=
+  Functor.RepresentableBy.Over.mapCompPresheafFace
+    (tensorTripleCoord1 (k := k) (L := L))
+    (tensorTripleCoord3 (k := k) (L := L))
+    (tensorTripleFace13 (k := k) (L := L))
+    (tensorOverlapInl (k := k) (L := L))
+    (tensorOverlapInr (k := k) (L := L))
+    (tensorTripleFace13_inl (k := k) (L := L)).symm
+    (tensorTripleFace13_inr (k := k) (L := L)).symm
+    (tensorOverlapTheta (C := C))
+
+-- Expanding the proof-bearing Over-map reassociations and theta common-base
+-- comparisons exceeds Lean's default heartbeat budget on these three faces.
+set_option maxHeartbeats 800000 in
+lemma tensorTripleTheta12_face_eq :
+    tensorTripleTheta12_face (k := k) (L := L) (C := C) =
+      tensorTripleTheta12 (k := k) (L := L) (C := C) := by
+  apply Iso.ext
+  simp [tensorTripleTheta12_face, tensorTripleTheta12, tensorTripleTheta,
+    tensorTripleCommon, pic0BaseCommon, tensorOverlapTheta, tensorOverlapCommon,
+    Functor.RepresentableBy.Over.mapCompPresheafFace,
+    Functor.RepresentableBy.Over.mapCompPresheafOfEq, Over.mapComp]
+
+set_option maxHeartbeats 800000 in
+lemma tensorTripleTheta23_face_eq :
+    tensorTripleTheta23_face (k := k) (L := L) (C := C) =
+      tensorTripleTheta23 (k := k) (L := L) (C := C) := by
+  apply Iso.ext
+  simp [tensorTripleTheta23_face, tensorTripleTheta23, tensorTripleTheta,
+    tensorTripleCommon, pic0BaseCommon, tensorOverlapTheta, tensorOverlapCommon,
+    Functor.RepresentableBy.Over.mapCompPresheafFace,
+    Functor.RepresentableBy.Over.mapCompPresheafOfEq, Over.mapComp]
+
+set_option maxHeartbeats 800000 in
+lemma tensorTripleTheta13_face_eq :
+    tensorTripleTheta13_face (k := k) (L := L) (C := C) =
+      tensorTripleTheta13 (k := k) (L := L) (C := C) := by
+  apply Iso.ext
+  simp [tensorTripleTheta13_face, tensorTripleTheta13, tensorTripleTheta,
+    tensorTripleCommon, pic0BaseCommon, tensorOverlapTheta, tensorOverlapCommon,
+    Functor.RepresentableBy.Over.mapCompPresheafFace,
+    Functor.RepresentableBy.Over.mapCompPresheafOfEq, Over.mapComp]
+
 /-- The three independently defined Picard comparisons satisfy the Amitsur cocycle. -/
 theorem tensorTripleTheta_cocycle :
     tensorTripleTheta13 (k := k) (L := L) (C := C) =
@@ -355,6 +434,92 @@ noncomputable def tensorTripleIso13
       (Over.pullback (tensorTripleCoord3 (k := k) (L := L))).obj J :=
   Functor.RepresentableBy.uniqueUpToIsoOfIso
     (tensorTripleRep1 rep) (tensorTripleRep3 rep) (tensorTripleTheta13 (C := C))
+
+noncomputable def tensorTripleIso12_face
+    (rep : (pic0TypeFunctor ((baseChange k L).obj C)).RepresentableBy J) :
+    (Over.pullback (tensorTripleCoord1 (k := k) (L := L))).obj J ≅
+      (Over.pullback (tensorTripleCoord2 (k := k) (L := L))).obj J :=
+  Functor.RepresentableBy.Over.pullbackFaceIsoOfEq
+    (tensorTripleCoord1 (k := k) (L := L))
+    (tensorTripleCoord2 (k := k) (L := L))
+    (tensorTripleFace12 (k := k) (L := L))
+    (tensorOverlapInl (k := k) (L := L))
+    (tensorOverlapInr (k := k) (L := L))
+    rfl rfl (tensorOverlapIso (C := C) rep)
+
+noncomputable def tensorTripleIso23_face
+    (rep : (pic0TypeFunctor ((baseChange k L).obj C)).RepresentableBy J) :
+    (Over.pullback (tensorTripleCoord2 (k := k) (L := L))).obj J ≅
+      (Over.pullback (tensorTripleCoord3 (k := k) (L := L))).obj J :=
+  Functor.RepresentableBy.Over.pullbackFaceIsoOfEq
+    (tensorTripleCoord2 (k := k) (L := L))
+    (tensorTripleCoord3 (k := k) (L := L))
+    (tensorTripleFace23 (k := k) (L := L))
+    (tensorOverlapInl (k := k) (L := L))
+    (tensorOverlapInr (k := k) (L := L))
+    (tensorTripleCoord2_eq_face23_inl (k := k) (L := L))
+    (tensorTripleCoord3_eq_face23_inr (k := k) (L := L))
+    (tensorOverlapIso (C := C) rep)
+
+noncomputable def tensorTripleIso13_face
+    (rep : (pic0TypeFunctor ((baseChange k L).obj C)).RepresentableBy J) :
+    (Over.pullback (tensorTripleCoord1 (k := k) (L := L))).obj J ≅
+      (Over.pullback (tensorTripleCoord3 (k := k) (L := L))).obj J :=
+  Functor.RepresentableBy.Over.pullbackFaceIsoOfEq
+    (tensorTripleCoord1 (k := k) (L := L))
+    (tensorTripleCoord3 (k := k) (L := L))
+    (tensorTripleFace13 (k := k) (L := L))
+    (tensorOverlapInl (k := k) (L := L))
+    (tensorOverlapInr (k := k) (L := L))
+    (tensorTripleFace13_inl (k := k) (L := L)).symm
+    (tensorTripleFace13_inr (k := k) (L := L)).symm
+    (tensorOverlapIso (C := C) rep)
+
+lemma tensorTripleIso12_face_eq
+    (rep : (pic0TypeFunctor ((baseChange k L).obj C)).RepresentableBy J) :
+    tensorTripleIso12 (C := C) rep = tensorTripleIso12_face (C := C) rep := by
+  have h := Functor.RepresentableBy.uniqueUpToIsoOfIso_pullbackFace
+    (tensorTripleCoord1 (k := k) (L := L))
+    (tensorTripleCoord2 (k := k) (L := L))
+    (tensorTripleFace12 (k := k) (L := L))
+    (tensorOverlapInl (k := k) (L := L))
+    (tensorOverlapInr (k := k) (L := L)) rfl rfl rep
+    (tensorOverlapTheta (C := C))
+  rw [tensorTripleIso12]
+  rw [← tensorTripleTheta12_face_eq (k := k) (L := L) (C := C)]
+  exact h
+
+lemma tensorTripleIso23_face_eq
+    (rep : (pic0TypeFunctor ((baseChange k L).obj C)).RepresentableBy J) :
+    tensorTripleIso23 (C := C) rep = tensorTripleIso23_face (C := C) rep := by
+  have h := Functor.RepresentableBy.uniqueUpToIsoOfIso_pullbackFace
+    (tensorTripleCoord2 (k := k) (L := L))
+    (tensorTripleCoord3 (k := k) (L := L))
+    (tensorTripleFace23 (k := k) (L := L))
+    (tensorOverlapInl (k := k) (L := L))
+    (tensorOverlapInr (k := k) (L := L))
+    (tensorTripleCoord2_eq_face23_inl (k := k) (L := L))
+    (tensorTripleCoord3_eq_face23_inr (k := k) (L := L)) rep
+    (tensorOverlapTheta (C := C))
+  rw [tensorTripleIso23]
+  rw [← tensorTripleTheta23_face_eq (k := k) (L := L) (C := C)]
+  exact h
+
+lemma tensorTripleIso13_face_eq
+    (rep : (pic0TypeFunctor ((baseChange k L).obj C)).RepresentableBy J) :
+    tensorTripleIso13 (C := C) rep = tensorTripleIso13_face (C := C) rep := by
+  have h := Functor.RepresentableBy.uniqueUpToIsoOfIso_pullbackFace
+    (tensorTripleCoord1 (k := k) (L := L))
+    (tensorTripleCoord3 (k := k) (L := L))
+    (tensorTripleFace13 (k := k) (L := L))
+    (tensorOverlapInl (k := k) (L := L))
+    (tensorOverlapInr (k := k) (L := L))
+    (tensorTripleFace13_inl (k := k) (L := L)).symm
+    (tensorTripleFace13_inr (k := k) (L := L)).symm rep
+    (tensorOverlapTheta (C := C))
+  rw [tensorTripleIso13]
+  rw [← tensorTripleTheta13_face_eq (k := k) (L := L) (C := C)]
+  exact h
 
 /-- The three canonical representing-scheme comparisons satisfy the triple-face cocycle. -/
 theorem tensorTripleIso_cocycle

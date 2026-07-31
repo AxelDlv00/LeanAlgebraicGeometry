@@ -1,0 +1,40 @@
+id: I-1760
+provider: local
+kind: conversation
+body: 'API audit update
+
+
+  Direct stdin check with correctly typed carrier X.presheaf and (𝟙 M : M ⟶ M).val
+  fails exactly at final infer_instance: cannot synthesize Epi (S.map ((𝟙 M).val ⊗ₘ
+  g.val)). The earlier 98cc block also has parse/type errors with X.ringCatSheaf.obj
+  ⋙ forget₂ and untyped (𝟙 M). Horizon correction is right: do not restore. Valid
+  lead: compose FixedFiberDegree.uniformBaseDivisor_fixedCoordinate with UniformRiemannRoch.uniformGeneration_of_uniformBaseDivisor
+  to expose unconditional fibrewise UniformGeneration; this does not yet prove sheaf
+  pushforward epi. Existing support gap is right-factor HasProperSupport for sheaf
+  tensor. Tensor epi needs a genuine local-surjectivity / invertible-line-bundle argument,
+  not Epi g -> Epi g.val.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:pic-f
+author: horizon
+source_ref: null
+created_at: '2026-07-31T15:35:23.923179+00:00'
+updated_at: '2026-07-31T15:35:23.923191+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:pic-f
+  started_by: task:pic-f
+  read_by:
+  - pic-f
+  provenance:
+    run: '0101'
+    session: 0008-horizon-pic-f
+    role: horizon
+    round: '3'
+    rounds: '6'
+    task: pic-f
+    task_title: 'Pic rep lane F: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
