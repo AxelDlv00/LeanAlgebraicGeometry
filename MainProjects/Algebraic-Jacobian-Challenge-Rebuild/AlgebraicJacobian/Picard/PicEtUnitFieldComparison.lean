@@ -68,6 +68,7 @@ section injective
 
 variable [IsProper C.hom] [GeometricallyIrreducible C.hom] [GeometricallyReduced C.hom]
 
+omit [IsProper C.hom] [GeometricallyIrreducible C.hom] [GeometricallyReduced C.hom] in
 /-- **`relPicToPicEt` factors through `PicEtAff.unit` by the affine comparison**: on an
 affine test its value is the affine comparison's inverse applied to the plus-construction
 unit.  The transported form of `picEtAffineEquiv_relPicToPicEt`. -/
@@ -112,7 +113,7 @@ noncomputable def relPicToPicEtEquiv_of_section (σ : overSpec k K ⟶ C) :
 theorem relPicToPicEtEquiv_of_section_apply (σ : overSpec k K ⟶ C)
     (z : relPic C (overSpec k K)) :
     relPicToPicEtEquiv_of_section C K σ z = relPicToPicEt C (overSpec k K) z := by
-  show (picEtAffineEquiv C K).symm (PicEtAff.unit C K z) = relPicToPicEt C (overSpec k K) z
+  change (picEtAffineEquiv C K).symm (PicEtAff.unit C K z) = relPicToPicEt C (overSpec k K) z
   rw [← picEtAffineEquiv_relPicToPicEt C K z, MulEquiv.symm_apply_apply]
 
 /-- **(C1)+(C2) bijectivity, functor level**: over a section-admitting field test the unit
