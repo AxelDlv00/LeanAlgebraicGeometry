@@ -7,7 +7,7 @@ summary: OPEN INFRASTRUCTURE. Prove the widened analogue of `DivFamZar.exists_ce
   and its chart-typing or replacement index. Then compose the classifier output into
   the `divFunctorAff` RepresentableBy consumer. Existing window transport is only
   the carrier-free input layer; no producer or full cover is currently landed.
-status: pending
+status: active
 kind: proof
 priority: high
 depends_on: []
@@ -31,3 +31,5 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
   milestone: w4-gate
+  updated_at: '2026-07-31T17:00:46.769417+00:00'
+  owner: pic-d

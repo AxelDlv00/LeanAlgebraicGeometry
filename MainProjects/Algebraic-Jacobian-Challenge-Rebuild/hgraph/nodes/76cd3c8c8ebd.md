@@ -7,9 +7,8 @@ generated: blueprint
 label: thm:group_scheme_separated
 lean_status: lean_ok
 order: 1269
-ref: kleiman-picard
 title: Group schemes over a field are separated
 type: tex
-updated: '2026-07-31T19:57:34'
+updated: '2026-08-01T00:55:16'
 ---
 Every group scheme \(G\) over a field \(K\) is separated over \(K\).

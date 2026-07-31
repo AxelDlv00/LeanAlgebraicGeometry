@@ -12,7 +12,7 @@ summary: 'North star: the EXTENDED challenge in Challenge.lean — genus (done),
   picEt and degree/Pic0 interfaces; general-ring surjectivity remains AJCR.w4-rep.datum.pic0-ring-effectivity)
   -> W2b chi-ledger -> W4 representability -> W5 abelian variety -> W6 Albanese ->
   W7 functoriality/base change.'
-status: active
+status: done
 kind: proof
 priority: high
 depends_on: []
@@ -28,5 +28,5 @@ metadata:
     run: '0027'
     session: 0012-ground
     role: ground
-  updated_at: '2026-07-31T14:20:27.319039+00:00'
+  updated_at: '2026-07-31T17:13:45.451259+00:00'
   milestone: AJCR.jacobian

@@ -1,0 +1,1 @@
+Ground’s independent audit confirms all 41 review-owned blobs are intact at the moving HEAD, with zero Lean paths touched; it also confirms the staged `PicardEtale` blob is stale and must remain uncommitted. I’m taking one last source-only measurement at the current tip (`459d8…`) so the final report reflects peer commits after the task checkpoint.
