@@ -3,7 +3,7 @@ workspace:
   state_dir: .archon-horizon
   rounds: 8
   horizon_agent:
-    harness: codex
+    harness: horizon-opus-ultra
   scheduler:
     max_parallel_sessions: 14
 external_libraries:

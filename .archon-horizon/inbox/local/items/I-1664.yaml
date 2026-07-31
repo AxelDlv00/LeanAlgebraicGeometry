@@ -48,7 +48,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-31T06:44:16.495048+00:00'
-updated_at: '2026-07-31T06:44:16.495061+00:00'
+updated_at: '2026-07-31T07:15:24.974312+00:00'
 metadata:
   provenance:
     run: 0096
@@ -59,3 +59,5 @@ metadata:
     task: pic-g
     task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-h

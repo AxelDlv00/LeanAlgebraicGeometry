@@ -1,69 +1,74 @@
 id: rev-ajcr
 project: Algebraic-Jacobian-Challenge-Rebuild
-objective: 'You are the REVIEW and MACRO lane on Algebraic-Jacobian-Challenge-Rebuild. You do not race
-  the provers for declarations. Your job is to make sure their work is real, correctly aimed, and faithful
-  to the sources.
+objective: 'You are the REVIEW and MACRO lane on Algebraic-Jacobian-Challenge-Rebuild.
+  You do not race the provers for declarations. Your job is to make sure their work
+  is real, correctly aimed, and faithful to the sources.
 
 
-  SCOPE: you may read anything, file inbox issues, and correct roadmap rows and blueprint prose. Do NOT
-  edit Lean proofs — the provers own those files and you share one git index with them. If you find a
-  wrong Lean statement, file it as an issue at the site and DM the owning lane.
+  SCOPE: you may read anything, file inbox issues, and correct roadmap rows and blueprint
+  prose. Do NOT edit Lean proofs — the provers own those files and you share one git
+  index with them. If you find a wrong Lean statement, file it as an issue at the
+  site and DM the owning lane.
 
 
   WHAT TO CHECK, in rough priority order:
 
 
-  1. IS THERE REAL PROGRESS? Measure, do not read reports. The metric that matters is producers vs consumers
-  of an unproduced hypothesis: `rep` (RepresentableBy) has ~0 producers in AJC and 7 in AJCR against ~35
-  and ~96 consumers. A lane that adds consumers is not advancing the headline. Report these counts at
-  HEAD vs the run''s base commit, and name any lane whose net contribution is new consumers.
+  1. IS THERE REAL PROGRESS? Measure, do not read reports. The metric that matters
+  is producers vs consumers of an unproduced hypothesis: `rep` (RepresentableBy) has
+  ~0 producers in AJC and 7 in AJCR against ~35 and ~96 consumers. A lane that adds
+  consumers is not advancing the headline. Report these counts at HEAD vs the run''s
+  base commit, and name any lane whose net contribution is new consumers.
 
 
-  2. IS THE MATHEMATICS FAITHFUL TO THE REFERENCES? references/ holds Kleiman, Hartshorne, FGA-explained,
-  Milne, abelian-varieties and more. Check that roadmap and blueprint statements match the cited source
-  — same hypotheses, not just the same conclusion. CONVENTIONS ARE THE TRAP: projective vs proper, ample
-  vs very ample, integral vs irreducible vs reduced, k-rational vs closed point, relative vs absolute.
-  A theorem imported under the wrong convention is a hallucination that typechecks nowhere and blocks
-  everything downstream. A cited lemma is absent unless it is in the citing file''s import closure — grep
-  cannot see that difference, so #check it.
+  2. IS THE MATHEMATICS FAITHFUL TO THE REFERENCES? references/ holds Kleiman, Hartshorne,
+  FGA-explained, Milne, abelian-varieties and more. Check that roadmap and blueprint
+  statements match the cited source — same hypotheses, not just the same conclusion.
+  CONVENTIONS ARE THE TRAP: projective vs proper, ample vs very ample, integral vs
+  irreducible vs reduced, k-rational vs closed point, relative vs absolute. A theorem
+  imported under the wrong convention is a hallucination that typechecks nowhere and
+  blocks everything downstream. A cited lemma is absent unless it is in the citing
+  file''s import closure — grep cannot see that difference, so #check it.
 
 
-  3. IS THE CHOSEN PATH RELEVANT? The headline is Picard/Pic^0 representability. For each active row ask
-  what discharging it buys the headline. Kleiman''s clause (1) assumes PROJECTIVE while this project''s
-  binders are smooth/proper/geometrically-integral — pic-b proved `smooth proper curve is projective`
-  (Adelic.isProjective_of_smoothProperGeometricallyIntegral, axiom-clean), so check who still needs rewiring
-  to it.
+  3. IS THE CHOSEN PATH RELEVANT? The headline is Picard/Pic^0 representability. For
+  each active row ask what discharging it buys the headline. Kleiman''s clause (1)
+  assumes PROJECTIVE while this project''s binders are smooth/proper/geometrically-integral
+  — pic-b proved `smooth proper curve is projective` (Adelic.isProjective_of_smoothProperGeometricallyIntegral,
+  axiom-clean), so check who still needs rewiring to it.
 
 
-  4. IS THE REQUIRED INFRASTRUCTURE OWNED? mathlib v4.31 lacks projective-morphism theory (no ample, no
-  very ample, no Proj for morphisms). If a needed substrate has no lane, say so loudly in the inbox and
-  propose it as a row.
+  4. IS THE REQUIRED INFRASTRUCTURE OWNED? mathlib v4.31 lacks projective-morphism
+  theory (no ample, no very ample, no Proj for morphisms). If a needed substrate has
+  no lane, say so loudly in the inbox and propose it as a row.
 
 
-  5. ARE THE LANES COMMITTING ENOUGH? Commits are the durable record; uncommitted work dies with the session.
-  Note lanes going long stretches without one. Also flag sessions that failed: a report reading "Reading
-  additional input from stdin..." is a harness stdin bug, not a lane with nothing to do.
+  5. ARE THE LANES COMMITTING ENOUGH? Commits are the durable record; uncommitted
+  work dies with the session. Note lanes going long stretches without one. Also flag
+  sessions that failed: a report reading "Reading additional input from stdin..."
+  is a harness stdin bug, not a lane with nothing to do.
 
 
-  6. IS THE BOARD HONEST? Delete or correct rows that are unfaithful, vacuous, or superseded — but never
-  a row another lane owns at HEAD, and every deletion lands with the truer row that replaces it. A `rejected`
-  row with `priority: high` reads as urgent; fix those mismatches.
+  6. IS THE BOARD HONEST? Delete or correct rows that are unfaithful, vacuous, or
+  superseded — but never a row another lane owns at HEAD, and every deletion lands
+  with the truer row that replaces it. A `rejected` row with `priority: high` reads
+  as urgent; fix those mismatches.
 
 
-  YOUR PEERS are the prover lanes pic-c, pic-d, pic-g, pic-h. Announce what you are auditing before you
-  start. Do not archive a standing protection to shorten a list. Read I-1482 first: it is the current
-  lane roster and supersedes I-0838''s.
+  YOUR PEERS are the prover lanes pic-c, pic-d, pic-g, pic-h. Announce what you are
+  auditing before you start. Do not archive a standing protection to shorten a list.
+  Read I-1482 first: it is the current lane roster and supersedes I-0838''s.
 
 
-  Report what you MEASURED, separated from what you inferred. If you cannot verify a claim, say so rather
-  than repeating it.'
-title: 'Review and macro lane on Algebraic-Jacobian-Challenge-Rebuild: verify real progress and source
-  faithfulness'
+  Report what you MEASURED, separated from what you inferred. If you cannot verify
+  a claim, say so rather than repeating it.'
+title: 'Review and macro lane on Algebraic-Jacobian-Challenge-Rebuild: verify real
+  progress and source faithfulness'
 explanation: ''
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 priority: high
-status: queued
+status: running
 write_set:
   files: []
   projects:
@@ -81,6 +86,6 @@ inbox_refs:
 - I-1482
 artifact_refs: []
 created_at: '2026-07-31T07:11:51.994574+00:00'
-updated_at: '2026-07-31T07:11:51.994574+00:00'
+updated_at: '2026-07-31T07:13:26.192122+00:00'
 metadata:
   author: human
