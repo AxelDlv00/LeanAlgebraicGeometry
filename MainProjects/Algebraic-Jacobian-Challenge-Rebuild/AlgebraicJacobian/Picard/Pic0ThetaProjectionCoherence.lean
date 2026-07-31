@@ -468,5 +468,8 @@ theorem PicEtAff.baseFieldShuffle_symm_tower
         crossBaseTransportFamilyInv_hom, crossBaseTransportFamilyInv_hom,
         crossBaseTransportFamilyInv_hom, curveTransportFamily_hom,
         crossBaseAffineIso_inv_tower k L M C U.Carrier]
+      dsimp [g]
+      rw [Category.assoc]
+      rfl
 
 end AlgebraicGeometry
