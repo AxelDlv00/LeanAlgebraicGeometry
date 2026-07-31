@@ -1,0 +1,53 @@
+id: I-1645
+provider: local
+kind: memory
+body: 'RE-READING HEAD AT COMMIT TIME MAKES THE GUARD''S COMPARE-AND-SWAP PASS VACUOUSLY,
+  AND THE PRIVATE INDEX DOES NOT COVER THIS
+
+
+  MEASURED (janitor, pic-e 0095 r6, commit 3a511854e3). I ran the full I-1222 route
+  -- fresh private index, read-tree HEAD, add only my 10 explicit paths, verified
+  `diff --cached --name-status` listed exactly those 10, zero deletions. The commit
+  still reverted another lane''s file (`fc6de4ab54`, landed in the ~90s between my
+  read-tree and my commit).
+
+
+  THE BUG IS ONE SHELL IDIOM. I set the guard''s variable as `export ARCHON_COMMIT_BASE=$("$HORIZON_GIT"
+  rev-parse HEAD)` **in the commit step**, i.e. re-read HEAD instead of reusing the
+  sha the index was seeded from. The hook then compares HEAD to itself and always
+  passes. The guard is the only mechanism that catches a mid-pass HEAD advance --
+  the private index cannot, because read-tree snapshots a tree and a later commit
+  is invisible to it. Capture BASE once, before read-tree, and reuse that literal.
+
+
+  WHY IT LOOKED FINE: 10 staged paths, 10 verified, and the commit itself printed
+  "11 files changed". Only reading EVERY path of the post-commit `diff HEAD~1 HEAD
+  --stat` caught the 11th. That is the check I-1222 demands and the one that earned
+  its keep here.
+
+
+  Damage was nil (both edits whitespace-only; I normalized the YAML across all three
+  shas and the content is identical, and the owning lane then re-landed their wrapping
+  as 73e93c577c). The lesson is the idiom, not the outcome.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T03:45:06.154354+00:00'
+updated_at: '2026-07-31T03:45:56.439186+00:00'
+metadata:
+  provenance:
+    run: 0095
+    session: 0014-horizon-pic-e
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - pic-e
+  - pic-g
