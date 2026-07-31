@@ -8,12 +8,14 @@ summary: 'ADVANCED 2026-07-31 by pic-e (0095 r6): THE ARBITRARY-FIELD DIFFICULTY
   has no producer.
 
 
-  LANDED, DO NOT REDO. Picard/PicEtPointedReduction.lean, rooted, 11 declarations
-  (RE-COUNTED after the section-8 commit; the row said 9 and 9 was right only before
-  it), ZERO sorries, all ELEVEN axiom-clean [propext, Classical.choice, Quot.sound]
-  against fgaPicardRepresentability firing sorryAx in the same probe. lake build AlgebraicJacobian
-  EXIT=0 (8917 jobs). Commits 67770d2fcd, 16fd69abc8, d553888e9a, 86cfeb9b5c, plus
-  1b08c87915 correcting the seam docstring in place.
+  LANDED, DO NOT REDO. Picard/PicEtPointedReduction.lean, rooted, 14 declarations
+  = 11 theorems + 3 defs (COUNTED BY KEYWORD; the row said 9 then 11 and BOTH were
+  the length of my axiom-audit list, which enumerates proofs and so drops every def
+  -- do not quote a number here, run the grep), ZERO sorries, all 11 theorems axiom-clean
+  [propext, Classical.choice, Quot.sound] against fgaPicardRepresentability firing
+  sorryAx in the same probe. lake build AlgebraicJacobian EXIT=0 (8917 jobs). Commits
+  67770d2fcd, 16fd69abc8, d553888e9a, 86cfeb9b5c, plus 1b08c87915 correcting the seam
+  docstring in place.
 
 
   WHAT IT PROVES. fgaPicardRepresentability_of_pointedPicSharpRep: the seam statement,
@@ -98,4 +100,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
   milestone: AJC.picrep
-  updated_at: '2026-07-31T03:15:24.996593+00:00'
+  updated_at: '2026-07-31T03:47:40.254668+00:00'
