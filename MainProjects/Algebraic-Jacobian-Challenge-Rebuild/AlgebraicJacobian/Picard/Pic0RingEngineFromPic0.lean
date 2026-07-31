@@ -282,7 +282,14 @@ relative Picard class over an arbitrary Noetherian test ring, at genus `0`.
 
 This is the form the earlier statements should have had: the only hypotheses left are the
 membership itself, that the class comes from `relPic` (`hz`), the covering datum and the
-engine's `IsNoetherianRing`.  The datum is existentially produced rather than supplied. -/
+engine's `IsNoetherianRing`.  The datum is existentially produced rather than supplied.
+
+**Non-vacuity of `hz`, stated at the level it is actually known.**  `hz` holds at the trivial
+class (`map_one`, verified), so the statement is not empty.  Whether it holds at a *non-trivial*
+degree-zero class is precisely the open surjectivity of `relPicToPicEt` discussed above — the
+classes satisfying it form the intersection of `pic0Subgroup` with a subgroup, and this file
+does not measure that intersection.  So: non-vacuous, and non-vacuous at a degenerate value
+until that surjectivity lands. -/
 theorem exists_rankAtStalk_hModule_zero_eq_one_of_relPicToPicEt (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom]
     (B : Type u) [CommRing B] [Algebra k B] [IsNoetherianRing B]
