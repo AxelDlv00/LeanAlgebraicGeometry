@@ -115,6 +115,9 @@ noncomputable def coordinateDiff (n : ℕ) :
       (homOfLE (inf_le_right : Q.V₀ ⊓ Q.V₁ ≤ Q.V₁)).op).hom.comp
         (LinearMap.snd K _ _)
 
+omit [IsIntegral Y] [SmoothOfRelativeDimension 1 (Y ↘ Spec (CommRingCat.of K))]
+  [LocallyOfFiniteType (Y ↘ Spec (CommRingCat.of K))]
+  [QuasiCompact (Y ↘ Spec (CommRingCat.of K))] in
 lemma coordinateDiff_apply (n : ℕ) (a : Γ(Y, Q.V₀)) (b : Γ(Y, Q.V₁)) :
     Q.coordinateDiff (K := K) n (a, b) =
       Q.overlapInversePower n *
@@ -273,15 +276,15 @@ lemma overlapInverseCoordinate_baseChangeField :
       (f.naturality (homOfLE (inf_le_right : D.V₀ ⊓ D.V₁ ≤ D.V₁)).op)
     exact hnat.symm
   simpa only [overlapInverseCoordinate, baseChangeField_y, baseChangeField_V₀,
-    baseChangeField_V₁, toAffineCoverMVSquare] using h
+    baseChangeField_V₁, toAffineCoverMVSquare, Scheme.Hom.appLE_eq_app] using h
 
 /-- The normalized differential after extension is the scalar extension of the base
 differential, through the two term comparisons. -/
 theorem coordinateDiff_baseChangeField (n : ℕ) :
-    ((D.baseChangeField κ).coordinateDiff n).comp
+    ((D.baseChangeField κ).coordinateDiff (K := κ) n).comp
         (coordinateDiffDomBaseChangeField κ D).toLinearMap =
       (coordinateDiffCodBaseChangeField κ D).toLinearMap.comp
-        ((D.coordinateDiff n).baseChange κ) := by
+        ((D.coordinateDiff (K := k) n).baseChange κ) := by
   ext x
   simp only [LinearMap.comp_apply, LinearEquiv.coe_coe]
   induction x with
@@ -295,13 +298,29 @@ theorem coordinateDiff_baseChangeField (n : ℕ) :
             D.isAffineOpen_V₀.isQuasiSeparated (a ⊗ₜ s₀),
           sectionsBaseChangeFieldₗ κ D.isAffineOpen_V₁.isCompact
             D.isAffineOpen_V₁.isQuasiSeparated (a ⊗ₜ s₁)) := rfl
-    rw [hdom, coordinateDiff_apply, overlapInversePower,
+    rw [hdom, coordinateDiff_apply (K := κ) (D.baseChangeField κ), overlapInversePower,
       overlapInverseCoordinate_baseChangeField]
     change _ = sectionsBaseChangeField κ
       D.toAffineCoverMVSquare.isAffineOpen_inf.isCompact
       D.toAffineCoverMVSquare.isAffineOpen_inf.isQuasiSeparated
-      ((D.coordinateDiff n (s₀, s₁)) ⊗ₜ a)
-    rw [coordinateDiff_apply, sub_tmul, map_sub]
+      ((D.coordinateDiff (K := k) n (s₀, s₁)) ⊗ₜ a)
+    rw [coordinateDiff_apply (K := k) D, sub_tmul, map_sub]
+    have hlin₀ : sectionsBaseChangeFieldₗ κ D.isAffineOpen_V₀.isCompact
+        D.isAffineOpen_V₀.isQuasiSeparated (a ⊗ₜ s₀) =
+        sectionsBaseChangeField κ D.isAffineOpen_V₀.isCompact
+          D.isAffineOpen_V₀.isQuasiSeparated (s₀ ⊗ₜ a) := by
+      change sectionsBaseChangeField κ D.isAffineOpen_V₀.isCompact
+        D.isAffineOpen_V₀.isQuasiSeparated
+          (TensorProduct.comm k κ Γ(C.left, D.V₀) (a ⊗ₜ s₀)) = _
+      rw [TensorProduct.comm_tmul]
+    have hlin₁ : sectionsBaseChangeFieldₗ κ D.isAffineOpen_V₁.isCompact
+        D.isAffineOpen_V₁.isQuasiSeparated (a ⊗ₜ s₁) =
+        sectionsBaseChangeField κ D.isAffineOpen_V₁.isCompact
+          D.isAffineOpen_V₁.isQuasiSeparated (s₁ ⊗ₜ a) := by
+      change sectionsBaseChangeField κ D.isAffineOpen_V₁.isCompact
+        D.isAffineOpen_V₁.isQuasiSeparated
+          (TensorProduct.comm k κ Γ(C.left, D.V₁) (a ⊗ₜ s₁)) = _
+      rw [TensorProduct.comm_tmul]
     have h₀ := sectionsBaseChangeField_res κ D.isAffineOpen_V₀.isCompact
       D.isAffineOpen_V₀.isQuasiSeparated
       D.toAffineCoverMVSquare.isAffineOpen_inf.isCompact
@@ -310,13 +329,65 @@ theorem coordinateDiff_baseChangeField (n : ℕ) :
       D.isAffineOpen_V₁.isQuasiSeparated
       D.toAffineCoverMVSquare.isAffineOpen_inf.isCompact
       D.toAffineCoverMVSquare.isAffineOpen_inf.isQuasiSeparated inf_le_right s₁ a
-    rw [h₀, h₁, mul_tmul, map_mul, map_pow]
+    have hres₀ :
+        ((Scheme.baseChangeField C κ).left.presheaf.map
+          (homOfLE (inf_le_left :
+            (D.baseChangeField κ).V₀ ⊓ (D.baseChangeField κ).V₁ ≤
+              (D.baseChangeField κ).V₀)).op).hom
+            (sectionsBaseChangeField κ D.isAffineOpen_V₀.isCompact
+              D.isAffineOpen_V₀.isQuasiSeparated (s₀ ⊗ₜ a)) =
+          sectionsBaseChangeField κ
+            D.toAffineCoverMVSquare.isAffineOpen_inf.isCompact
+            D.toAffineCoverMVSquare.isAffineOpen_inf.isQuasiSeparated
+              ((C.left.presheaf.map (homOfLE inf_le_left).op).hom s₀ ⊗ₜ a) := by
+      convert h₀ using 1
+      <;> simp only [baseChangeField_V₀, baseChangeField_V₁,
+        toAffineCoverMVSquare, Scheme.Hom.preimage_inf]
+    have hres₁ :
+        ((Scheme.baseChangeField C κ).left.presheaf.map
+          (homOfLE (inf_le_right :
+            (D.baseChangeField κ).V₀ ⊓ (D.baseChangeField κ).V₁ ≤
+              (D.baseChangeField κ).V₁)).op).hom
+            (sectionsBaseChangeField κ D.isAffineOpen_V₁.isCompact
+              D.isAffineOpen_V₁.isQuasiSeparated (s₁ ⊗ₜ a)) =
+          sectionsBaseChangeField κ
+            D.toAffineCoverMVSquare.isAffineOpen_inf.isCompact
+            D.toAffineCoverMVSquare.isAffineOpen_inf.isQuasiSeparated
+              ((C.left.presheaf.map (homOfLE inf_le_right).op).hom s₁ ⊗ₜ a) := by
+      convert h₁ using 1
+      <;> simp only [baseChangeField_V₀, baseChangeField_V₁,
+        toAffineCoverMVSquare, Scheme.Hom.preimage_inf]
+    have hoverlap : sectionsBaseChangeFieldₗ κ
+        D.toAffineCoverMVSquare.isAffineOpen_inf.isCompact
+        D.toAffineCoverMVSquare.isAffineOpen_inf.isQuasiSeparated
+          (1 ⊗ₜ D.overlapInverseCoordinate) =
+        sectionsBaseChangeField κ
+          D.toAffineCoverMVSquare.isAffineOpen_inf.isCompact
+          D.toAffineCoverMVSquare.isAffineOpen_inf.isQuasiSeparated
+            (D.overlapInverseCoordinate ⊗ₜ 1) := by
+      change sectionsBaseChangeField κ
+        D.toAffineCoverMVSquare.isAffineOpen_inf.isCompact
+        D.toAffineCoverMVSquare.isAffineOpen_inf.isQuasiSeparated
+          (TensorProduct.comm k κ Γ(C.left, D.V₀ ⊓ D.V₁)
+            (1 ⊗ₜ D.overlapInverseCoordinate)) = _
+      rw [TensorProduct.comm_tmul]
+    rw [hoverlap, hlin₀, hlin₁, hres₀, hres₁]
+    congr 1
+    rw [overlapInversePower,
+      ← map_pow (sectionsBaseChangeField κ
+        D.toAffineCoverMVSquare.isAffineOpen_inf.isCompact
+        D.toAffineCoverMVSquare.isAffineOpen_inf.isQuasiSeparated),
+      ← map_mul (sectionsBaseChangeField κ
+        D.toAffineCoverMVSquare.isAffineOpen_inf.isCompact
+        D.toAffineCoverMVSquare.isAffineOpen_inf.isQuasiSeparated),
+      Algebra.TensorProduct.tmul_pow,
+      Algebra.TensorProduct.tmul_mul_tmul, one_pow, one_mul]
     rfl
 
 /-- Surjectivity of the normalized differential is preserved by every field extension. -/
 theorem coordinateDiff_baseChangeField_surjective (n : ℕ)
-    (hd : Function.Surjective (D.coordinateDiff n)) :
-    Function.Surjective ((D.baseChangeField κ).coordinateDiff n) := by
+    (hd : Function.Surjective (D.coordinateDiff (K := k) n)) :
+    Function.Surjective ((D.baseChangeField κ).coordinateDiff (K := κ) n) := by
   intro y
   obtain ⟨z, hz⟩ := LinearMap.baseChange_surjective κ hd
     ((coordinateDiffCodBaseChangeField κ D).symm y)
@@ -339,8 +410,11 @@ noncomputable def kerEquivOfComm
     (LinearMap.codRestrict (LinearMap.ker g)
       (e₀.toLinearMap.comp (LinearMap.ker f).subtype) (fun x => by
         rw [LinearMap.mem_ker]
-        have hx := LinearMap.congr_fun h x
-        simpa only [LinearMap.comp_apply, LinearEquiv.coe_coe, x.2, map_zero] using hx))
+        have hx := LinearMap.congr_fun h x.1
+        have hx' : g (e₀ x.1) = e₁ (f x.1) := by
+          simpa only [LinearMap.comp_apply, LinearEquiv.coe_coe] using hx
+        change g (e₀ x.1) = 0
+        rw [hx', x.2, map_zero]))
     (by
       constructor
       · intro x y hxy
@@ -348,25 +422,28 @@ noncomputable def kerEquivOfComm
         apply e₀.injective
         exact congrArg Subtype.val hxy
       · intro y
-        have hy : f (e₀.symm y) = 0 := by
+        have hy : f (e₀.symm y.1) = 0 := by
           apply e₁.injective
-          have he := LinearMap.congr_fun h (e₀.symm y)
-          simpa only [LinearMap.comp_apply, LinearEquiv.coe_coe,
-            LinearEquiv.apply_symm_apply, y.2, map_zero] using he.symm
-        refine ⟨⟨e₀.symm y, hy⟩, ?_⟩
+          rw [map_zero]
+          have he := LinearMap.congr_fun h (e₀.symm y.1)
+          have he' : g y.1 = e₁ (f (e₀.symm y.1)) := by
+            simpa only [LinearMap.comp_apply, LinearEquiv.coe_coe,
+              LinearEquiv.apply_symm_apply] using he
+          exact he'.symm.trans y.2
+        refine ⟨⟨e₀.symm y.1, hy⟩, ?_⟩
         apply Subtype.ext
-        exact e₀.apply_symm_apply y)
+        exact e₀.apply_symm_apply y.1)
 
 /-- Once the base normalized differential is surjective, its kernel commutes with every field
 extension. -/
 noncomputable def coordinateDiffKerBaseChangeEquiv (n : ℕ)
-    (hd : Function.Surjective (D.coordinateDiff n)) :
-    κ ⊗[k] LinearMap.ker (D.coordinateDiff n) ≃ₗ[κ]
-      LinearMap.ker ((D.baseChangeField κ).coordinateDiff n) :=
+    (hd : Function.Surjective (D.coordinateDiff (K := k) n)) :
+    κ ⊗[k] LinearMap.ker (D.coordinateDiff (K := k) n) ≃ₗ[κ]
+      LinearMap.ker ((D.baseChangeField κ).coordinateDiff (K := κ) n) :=
   (LinearEquiv.ofBijective
-    (AlgebraicJacobian.TwoTerm.kerBaseChange (D.coordinateDiff n) κ)
+    (AlgebraicJacobian.TwoTerm.kerBaseChange (D.coordinateDiff (K := k) n) κ)
     (AlgebraicJacobian.TwoTerm.bijective_kerBaseChange_of_surjective hd κ)).trans
-  (kerEquivOfComm (coordinateDiffDomBaseChangeField κ D)
+  (kerEquivOfComm κ (coordinateDiffDomBaseChangeField κ D)
     (coordinateDiffCodBaseChangeField κ D)
     (coordinateDiff_baseChangeField κ D n))
 

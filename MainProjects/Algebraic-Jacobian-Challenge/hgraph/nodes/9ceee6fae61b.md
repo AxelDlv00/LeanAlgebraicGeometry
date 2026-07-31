@@ -6,9 +6,10 @@ decl: CategoryTheory.GrothendieckTopology.MayerVietorisSquare.subsingleton_hModu
 file: _scratch_KernelBridge.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: CategoryTheory.GrothendieckTopology.MayerVietorisSquare.subsingleton_hModule'_of_moduleDiff_surjective
 type: lean
-updated: '2026-07-31T16:14:01'
+updated: '2026-07-31T17:10:14'
 ---
 theorem subsingleton_hModule'_of_moduleDiff_surjective
     [Subsingleton (Sheaf.HModule' F S.X₂ 1)]

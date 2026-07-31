@@ -3,14 +3,15 @@ title: 'Div-zero: the first DivFamily producer, and Div^0 representable by the t
   object'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'ADVANCED, NOT CLOSED. Commits 0d465e95d9, aa38db9d26, and 10d411758b add
-  a rooted, axiom-clean terminal-representability bridge and two conditional Div^0
-  RepresentableBy constructors. The reduction is honest: DivFunctorDeg pi 0 is represented
-  by the terminal object once every degree-zero divisor family has zero structure
-  sheaf, equivalently once x.HasFiberDeg 0 implies IsZero x.F. That coherent-sheaf
-  vanishing premise is still unproduced, so this is a producer modulo one non-circular
-  hypothesis, not an instantiated producer. The PicEt seam and fgaPicardRepresentability
-  remain untouched.'
+summary: 'ADVANCED, NOT CLOSED. Commits 0d465e95d9, aa38db9d26, 10d411758b, 38e102eef6,
+  and 692b3fe104 add a rooted, axiom-clean terminal bridge, the IsZero-from-sections
+  converse, and three conditional Div^0 RepresentableBy constructors. The sharp remaining
+  antecedent is hss: for every test T and degree-zero x, every open V has Subsingleton
+  Gamma(x.F,V), which implies IsZero x.F and terminal representability. HasFiberDeg
+  0 alone does not prove hss: it is a finrank of fibre sections, while hss needs support-finiteness
+  and finite-dimensionality. The universal-pi hss claim is not generally true (O(-1)
+  on P1 is a counterexample), so an instantiated producer must specialize to the smooth
+  proper relative-curve binders. PicEt and fgaPicardRepresentability remain untouched.'
 status: active
 kind: proof
 priority: normal
@@ -33,9 +34,11 @@ metadata:
     task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-31T09:18:40.855892+00:00'
+  updated_at: '2026-07-31T10:07:45.766758+00:00'
   pinned_commits:
+  - 692b3fe104
+  - 38e102eef6
+  - ea7ce18857a072111e86393d37329482b0e2d85f
   - 10d411758b
   - aa38db9d26
   - 0d465e95d9
-  owner: pic-e
