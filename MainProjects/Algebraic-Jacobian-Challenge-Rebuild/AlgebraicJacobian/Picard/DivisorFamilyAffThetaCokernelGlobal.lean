@@ -781,8 +781,9 @@ noncomputable def IsCertified.thetaIdealCokernelEquivIntrinsicRange
     ((Submodule.quotEquivOfEq _ _ hrange).trans
       (A.intrinsicThetaQuotEquivRange (π := π) a))
 
-/-- The global theta quotient maps injectively into the widened intrinsic descent module.
-The remaining representability seam is exactly the assertion that this map is surjective. -/
+/-- The global theta quotient maps into the widened intrinsic descent module.
+The certified surjectivity theorem below upgrades this embedding to the intrinsic quotient
+equivalence; the remaining representability seam is projectivity and the classifier endpoint. -/
 noncomputable def IsCertified.thetaIdealCokernelToIntrinsic
     {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
     {A : AffAdaptation D d} {g : ℕ} (hc : A.IsCertified g)
