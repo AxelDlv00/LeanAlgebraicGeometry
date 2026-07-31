@@ -63,9 +63,24 @@ its spectrum maps *onto* the empty spectrum.
   field points is needed.
 * `AlgebraicGeometry.subsingleton_pic0Subgroup_overSpec_of_away` — the same reduction
   transported to the `pic0Subgroup` carrier the producers consume.
+* `AlgebraicGeometry.PicEtAff.subsingleton_of_forall_prime` — **the pointwise form, and the
+  one a consumer wants**: no covering family in the statement, only a basic-open neighbourhood
+  at each prime.  With `subsingleton_pic0Subgroup_overSpec_of_forall_prime` on the `pic⁰`
+  carrier, and `span_eq_top_of_forall_prime` as the elementary `Spec`-level step.
 * `AlgebraicGeometry.PicEtAff.subsingleton_of_subsingleton` /
   `subsingleton_relPic_of_subsingleton` / `Algebra.EtaleCover.subsingleton_carrier` — the
   degenerate-test-ring chain, unconditional.
+
+## What was measured and did NOT work, so nobody re-runs it
+
+The obvious hope is that "local" is enough on its own.  It is not, and the reason is worth
+recording: `Subsingleton (CommRing.Pic A)` **is** available for a local `A` (mathlib's
+`CommRing.Pic.instSubsingletonOfFiniteMaximalSpectrum`), but the obligation involves the
+polynomial ring, and `Subsingleton (CommRing.Pic (Polynomial A))` does **not** follow from
+`IsLocalRing A` — measured, `exact?` fails.  Traverso–Swan is the reason (that identity holds
+exactly for seminormal rings) and a local ring need not be seminormal.  So these lemmas move the
+obligation to local rings; they do not discharge it there, and the remaining content is
+seminormality-flavoured rather than quantifier-flavoured.
 -/
 
 set_option autoImplicit false
@@ -217,6 +232,75 @@ theorem subsingleton_pic0Subgroup_overSpec_of_away
   exact ⟨fun s t => Subtype.ext (Subsingleton.elim _ _)⟩
 
 end Local
+
+/-! ## The pointwise form: a hypothesis at each prime, no cover supplied
+
+The reductions above take the covering family as an argument, which is the wrong interface for
+a consumer: a lane computing `Pic` locally knows something *at each prime*, not a finite cover.
+This section removes the cover from the statement.  Two elementary steps do it, and both are
+about `Spec` rather than about the curve:
+
+* if a set of elements meets the complement of every prime, it generates the unit ideal
+  (otherwise it sits inside a maximal ideal);
+* the unit ideal is spanned by a **finite** subset (`Ideal.span_eq_top_iff_finite`), which is
+  the compactness of `Spec A` in the form the sheaf property wants.
+
+The localizations are then the canonical `Localization.Away f`, so no family of test algebras
+has to be threaded through the statement either. -/
+
+section Pointwise
+
+/-- A set of ring elements whose basic opens cover `Spec A` generates the unit ideal.
+
+Elementary and stated at this generality because the covering hypothesis below produces exactly
+this shape; a set contained in no prime is contained in no maximal ideal, hence is not proper. -/
+theorem span_eq_top_of_forall_prime {A : Type u} [CommRing A] (s : Set A)
+    (h : ∀ p : PrimeSpectrum A, ∃ f ∈ s, f ∉ p.asIdeal) :
+    Ideal.span s = ⊤ := by
+  by_contra hne
+  obtain ⟨m, hm, hle⟩ := Ideal.exists_le_maximal _ hne
+  obtain ⟨f, hfs, hf⟩ := h ⟨m, hm.isPrime⟩
+  exact hf (hle (Ideal.subset_span hfs))
+
+variable {A : Type u} [CommRing A] [Algebra k A]
+
+/-- **THE POINTWISE REDUCTION**: if every prime of `A` has *some* basic open neighbourhood on
+which the plus construction is trivial, it is trivial at `A`.
+
+No covering family in the statement: the witnesses are chosen at the primes, shown to span,
+cut down to a finite subfamily by `Ideal.span_eq_top_iff_finite`, and fed to
+`PicEtAff.subsingleton_of_away`.  This is the interface a lane computing `Pic` over local rings
+should target. -/
+theorem PicEtAff.subsingleton_of_forall_prime
+    (h : ∀ p : PrimeSpectrum A, ∃ f : A, f ∉ p.asIdeal ∧
+      Subsingleton (PicEtAff C (Localization.Away f))) :
+    Subsingleton (PicEtAff C A) := by
+  classical
+  choose f hf hsub using h
+  have hspan : Ideal.span (Set.range f) = ⊤ :=
+    span_eq_top_of_forall_prime _ fun p => ⟨f p, ⟨p, rfl⟩, hf p⟩
+  obtain ⟨t, hts, ht⟩ := (Ideal.span_eq_top_iff_finite (Set.range f)).mp hspan
+  refine PicEtAff.subsingleton_of_away C (ι := {x // x ∈ t}) (fun i => i.1)
+    (fun i => Localization.Away i.1) ?_ ?_
+  · rwa [show (Set.range fun i : {x // x ∈ t} => i.1) = (↑t : Set A) from by
+      ext x; exact ⟨fun ⟨i, hi⟩ => hi ▸ i.2, fun hx => ⟨⟨x, hx⟩, rfl⟩⟩]
+  · intro i
+    obtain ⟨p, hp⟩ := hts i.2
+    exact hp ▸ hsub p
+
+/-- The pointwise reduction on the `pic⁰` carrier the producers consume. -/
+theorem subsingleton_pic0Subgroup_overSpec_of_forall_prime
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom]
+    (h : ∀ p : PrimeSpectrum A, ∃ f : A, f ∉ p.asIdeal ∧
+      Subsingleton (PicEtAff C (Localization.Away f))) :
+    Subsingleton (pic0Subgroup C (overSpec k A)) := by
+  haveI hplus : Subsingleton (PicEtAff C A) :=
+    PicEtAff.subsingleton_of_forall_prime C h
+  haveI : Subsingleton (picEt C (overSpec k A)) :=
+    @Equiv.subsingleton _ _ (picEtAffineEquiv C A).toEquiv hplus
+  exact ⟨fun s t => Subtype.ext (Subsingleton.elim _ _)⟩
+
+end Pointwise
 
 end
 
