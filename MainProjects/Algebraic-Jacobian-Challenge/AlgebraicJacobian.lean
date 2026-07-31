@@ -213,6 +213,12 @@ import AlgebraicJacobian.Picard.DivPushforwardFlat
 -- statement about the fibres of `D -> T`, not an affine-local `RingHom.QuasiFinite`
 -- condition. Rooted so the axiom probe sees the whole cone.
 import AlgebraicJacobian.Picard.DivSupportQuasiFinite
+-- Carrier bridge (a) for `divzero` (pic-e 0105 r4): support commutes with base change for
+-- a finite module, `Supp_B (B ⊗ M) = comap⁻¹ (Supp_A M)`. Supplies the REVERSE support
+-- inclusion that `QuotSupportBaseChange`'s forward annihilator inclusion lacks, identifying
+-- the support-of-fibre and fibre-of-support carriers of `isFinite_support_of_fibers`.
+-- Rooted so the axiom probe sees it in the cone.
+import AlgebraicJacobian.Picard.SupportBaseChange
 -- Headline leaf B in the etale formulation (run 0084 r2, ajc-p2): leaf B implies the
 -- reducedness obligation, so the headline's five are not independent; plus what leaf
 -- B's own residue is (an affine-chart Omega-rank count, not a tangent space).
