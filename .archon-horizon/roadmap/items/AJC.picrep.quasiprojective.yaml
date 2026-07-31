@@ -1,0 +1,77 @@
+id: AJC.picrep.quasiprojective
+title: 'Quasi-projectivity vocabulary: graded prime avoidance => FiniteInAffine, and
+  the seam antecedent in standard terms'
+projects:
+- Algebraic-Jacobian-Challenge
+summary: "LANDED sorry-free by pic-e (0095 r7). The seam sorry fgaPicardRepresentability\
+  \ is UNTOUCHED and rep still has no producer.\n\nPicard/QuasiProjectiveFiniteInAffine.lean,\
+  \ rooted at AlgebraicJacobian.lean, 14 declarations (COUNTED BY KEYWORD -- 13 theorems\
+  \ + 1 def; the one grep hit for 'sorry' is docstring prose), ZERO code sorries,\
+  \ ALL 13 theorems axiom-clean [propext, Classical.choice, Quot.sound] against fgaPicardRepresentability\
+  \ firing sorryAx in the SAME probe. lake build AlgebraicJacobian EXIT=0, 8918 jobs,\
+  \ zero warnings from this file. Commits 7a29218a49, fb36b34c67, e445e72358, 128dfd81ef,\
+  \ 49b712d5ca.\n\nWHAT WAS MISSING AND IS NOW BUILT. Three files said the same sentence\
+  \ -- 'holds for quasi-projective X, but mathlib v4.31 has no quasi-projectivity\
+  \ vocabulary at this pin, so it must be supplied by hand' (PicEtPointedReduction.lean,\
+  \ Albanese/StableAffineCoverGroup.lean, FiniteGaloisQuotient.lean). Nobody built\
+  \ it. Of the whole chain exactly ONE step has content and it IS absent from mathlib:\
+  \ GRADED prime avoidance. The ungraded Ideal.subset_union_prime_finite gives an\
+  \ element with no degree control, and Proj.isAffineOpen_basicOpen demands f in A_m\
+  \ with 0 < m.\n\n * exists_homogeneous_pos_mem_notMem -- one relevant homogeneous\
+  \ prime. The grading is consumed TWICE and the second use is the one an ungraded\
+  \ reading drops: homogeneity of I gives a homogeneous element outside p with NO\
+  \ degree control; RELEVANCE of p supplies the positive degree, because a witness\
+  \ in the irrelevant ideal has zero degree-0 component. FALSE at a p containing the\
+  \ irrelevant ideal -- exactly the primes Proj discards -- so relevance is load-bearing.\n\
+  \ * exists_homogeneous_pos_mem_forall_notMem_of_antichain / _forall_notMem -- the\
+  \ finite family, by the product/sum trick with degrees equalised via M := prod of\
+  \ degrees and F q := f q ^ (M / m q). The general form reduces to the MAXIMAL members:\
+  \ avoiding a maximal prime avoids everything below, so the ungraded reflex of reducing\
+  \ to MINIMAL primes would prove nothing here.\n * finiteInAffine_proj -- the geometric\
+  \ half, and the hypotheses line up for free: a point of Proj IS a relevant homogeneous\
+  \ prime, and its structure field not_irrelevant_le does DOUBLE duty as the relevance\
+  \ input and (with I := the irrelevant ideal) as the 'I not below p' input. Mathlib\
+  \ runs this one point at a time inside Proj's own local_affine field; this is its\
+  \ finite generalisation.\n * finiteInAffine_of_isAffineHom / _projectiveSpace /\
+  \ _of_isProjective -- transport. Generalises the landed finiteInAffine_left_of_isAffineHom,\
+  \ whose Y = Spec k case concludes from the source being AFFINE; here Y need only\
+  \ satisfy FiniteInAffine, and P(n;S) does without being affine.\n\nWHAT IS ACTUALLY\
+  \ DISCHARGED: orbitsInAffineOpen_of_isProjective closes the Galois-descent engine's\
+  \ orbit gate at EVERY projective scheme, no affineness, nothing supplied by hand.\
+  \ Prior producers were the affine total space (no room to be false) and a base-change\
+  \ transport. finiteInAffine_curve gives the curve unconditionally via isProjective_of_smoothProperGeometricallyIntegral.\n\
+  \nWHAT IS NOT, and it is in the source not only here: the FiniteInAffine conjunct\
+  \ of PointedPicSharpRep is about the PICARD scheme, and nothing in-tree produces\
+  \ projectivity of a Picard scheme (Kleiman th:qpp&p, open). §5 restates the antecedent\
+  \ AS projectivity (PointedPicSharpRepProjective) and carries it to the seam (fgaPicardRepresentability_of_projective),\
+  \ so a lane proving that closes the sorry by exact. THE OBLIGATION DID NOT SHRINK\
+  \ -- same mathematics, hypothesis named the way the source names it. What it removes\
+  \ is 'is FiniteInAffine the right hypothesis or a formalisation artefact?': it is\
+  \ a CONSEQUENCE of the right one.\n\nBOTH VACUITY HALVES MEASURED: isProjective_id_spec\
+  \ lands Spec k projective over itself (satisfiable); exact? FAILS on X.hom.IsProjective\
+  \ for arbitrary X with [LocallyOfFiniteType] (not free); and the new antecedent\
+  \ does NOT close hypothesis-free. CONVERSE NOT CLAIMED: FiniteInAffine does not\
+  \ obviously recover a closed immersion, so 'strictly stronger' is unmeasured."
+status: active
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-31T06:16:54.796629+00:00'
+  provenance:
+    run: 0095
+    session: 0016-horizon-pic-e
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.picrep
+  owner: pic-e
