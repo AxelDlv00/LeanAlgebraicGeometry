@@ -64,17 +64,26 @@ from this tree, the sibling project and mathlib.
   but relating *that* datum's class to the plus-class presentation of a `picEt` element is the
   `picEtAffineEquiv`/`unit` seam, and it is assumed here rather than proved.
 
-  **What the binder is, exactly, after measurement.**  The *datum* half of it is free:
-  `exists_datum_pic0_presentation` below produces a presenting datum for any class whose affine
-  collapse is `PicEtAff.unit` of *some* relative class (`relPicMk` is surjective and
-  `exists_cechPicClass_eq` is total over every `k`-algebra).  So what actually remains is the
-  `picEtAffineEquiv`/`unit` seam on `lam` alone — that the plus class comes from `relPic` at
-  all.  Its only general producer in the tree is `PicEtAff.unit_surjective_of_section`
-  (`Picard/EffectivityClose.lean:141`), which is stated over a **field** test and needs a curve
-  section there; every other consumer of the same seam (`Pic0ChartCoverageNoDrop`,
-  `Pic0ChartIndexLedgerFeed`, `DegreeSeam`'s base-change forms) is likewise phrased at a field.
-  A **ring-level** surjectivity of `PicEtAff.unit` is absent, and it — not the datum — is the
-  honest next brick.
+  **What the binder is, exactly, after measurement — and a first answer CORRECTED.**  The
+  *datum* half is free: `exists_datum_pic0_presentation` below produces a presenting datum for
+  any class whose affine collapse is `PicEtAff.unit` of *some* relative class (`relPicMk` is
+  surjective and `exists_cechPicClass_eq` is total over every `k`-algebra).
+
+  An earlier version of this paragraph then named ring-level surjectivity of `PicEtAff.unit` as
+  the remaining brick, on the ground that `PicEtAff.unit_surjective_of_section`
+  (`Picard/EffectivityClose.lean:141`) is field-only and section-dependent.  **That was wrong**,
+  and a fresh-context audit caught it: `picEtAffineEquiv_relPicToPicEt`
+  (`Picard/PicEtUnit.lean:161`) supplies the seam at an **arbitrary test ring**, with no field,
+  no section and no curve hypothesis, for every class in the range of `relPicToPicEt`.  So the
+  seam is not the obstruction it was priced as; `presentation_of_relPicToPicEt` below is that
+  observation made usable, and `rigidEngine_of_relPicToPicEt` fires the engine with the
+  presentation binder **eliminated** for such classes.
+
+  What is genuinely missing is therefore **surjectivity of `relPicToPicEt` onto `picEt`** — that
+  every étale-plus class over a ring comes from a relative Picard class — which is a different
+  statement about a different map, and is what a lane wanting these conclusions at an
+  *arbitrary* degree-zero class should target.  `Pic0ChartPlusFibreProducer.lean:199` calls
+  membership in that range "honesty" and treats it as a real condition, which is consistent.
 * **Genus `0` only.**  At positive genus the fibre classes are not trivial.
 
 ## Main declarations
@@ -236,6 +245,44 @@ theorem rankAtStalk_hModule_zero_eq_one_of_pic0 (D : BasicOpenCocycleDatum C B �
   D.rankAtStalk_hModule_zero_eq_one_of_genus_zero hπ hg (D.htriv_of_pic0 hg lam h) p
 
 end BasicOpenCocycleDatum
+
+/-! ## The presentation binder is FREE for classes from `relPic`
+
+The correction recorded in the module docstring, made usable.  `picEtAffineEquiv_relPicToPicEt`
+(`Picard/PicEtUnit.lean:161`) holds at an arbitrary test **ring**, so for a `pic⁰` class whose
+underlying `picEt` class comes from `relPicToPicEt` the presentation is not a hypothesis at
+all — it is produced, and with it the datum. -/
+
+/-- **The presentation, produced at a test ring**, for a class in the range of `relPicToPicEt`.
+
+No field, no curve section, no `IsProper`-flavoured input beyond the standing binders: the
+ring-level affine-consistency lemma gives the `unit` form directly, and
+`exists_datum_pic0_presentation` upgrades it to the datum form. -/
+theorem presentation_of_relPicToPicEt (C : Over (Spec (.of k)))
+    (B : Type u) [CommRing B] [Algebra k B] (π : C.left ⟶ P1 k) [IsFinite π]
+    (z : relPic C (overSpec k B)) :
+    ∃ D : BasicOpenCocycleDatum C B π,
+      picEtAffineEquiv C B (relPicToPicEt C (overSpec k B) z)
+        = PicEtAff.unit C B (relPicMk C (overSpec k B) D.cechPicClass) :=
+  exists_datum_pic0_presentation C B π _ ⟨z, picEtAffineEquiv_relPicToPicEt C B z⟩
+
+/-- **`π_*L` IS INVERTIBLE WITH NO PRESENTATION BINDER**, for a degree-zero class coming from a
+relative Picard class over an arbitrary Noetherian test ring, at genus `0`.
+
+This is the form the earlier statements should have had: the only hypotheses left are the
+membership itself, that the class comes from `relPic` (`hz`), the covering datum and the
+engine's `IsNoetherianRing`.  The datum is existentially produced rather than supplied. -/
+theorem exists_rankAtStalk_hModule_zero_eq_one_of_relPicToPicEt (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom]
+    (B : Type u) [CommRing B] [Algebra k B] [IsNoetherianRing B]
+    (π : C.left ⟶ P1 k) [IsFinite π] (hπ : π ≫ P1.structureMap k = C.hom)
+    (hg : genus C = 0) (lam : pic0Subgroup C (overSpec k B))
+    (z : relPic C (overSpec k B))
+    (hz : (lam : picEt C (overSpec k B)) = relPicToPicEt C (overSpec k B) z) :
+    ∃ D : BasicOpenCocycleDatum C B π,
+      ∀ p : PrimeSpectrum B, Module.rankAtStalk (Sheaf.HModule D.sheaf 0) p = 1 := by
+  obtain ⟨D, hD⟩ := presentation_of_relPicToPicEt C B π z
+  exact ⟨D, fun p => D.rankAtStalk_hModule_zero_eq_one_of_pic0 hπ hg lam (by rw [hz]; exact hD) p⟩
 
 /-! ## Non-vacuity at `ℙ¹` -/
 

@@ -3,7 +3,7 @@ Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
-import AlgebraicJacobian.Picard.Pic0VanishingFieldTest
+import AlgebraicJacobian.Picard.Pic0VanishingRigidityReduction
 import AlgebraicJacobian.Picard.DegreeSeam
 
 /-!
@@ -26,6 +26,31 @@ over an arbitrary test ring `A`, at genus `0`:
 * its fibre Čech class at every prime `p` of `A` has `classDeg κ(p) = 0`
   (`classDeg_fibre_eq_zero_of_cocyclePresented`, via the DAT-4 seam).
 
+## SUPERSEDED IN PART — read this before citing the first two theorems
+
+A fresh-context audit of this file (accepted in full) established two things about its own
+content, and both are recorded here rather than in a commit message nobody reads:
+
+1. **`Picard/Pic0VanishingRigidityReduction.lean:104` has the same statement at an ARBITRARY
+   test object.**  `fibre_eq_one_of_mem_pic0Subgroup` is `pic0_fibre_eq_one_of_genus_zero`
+   without the affineness of the test, by the same `Subsingleton.elim`, and it landed twenty
+   minutes after this file.  So the first two theorems below are *affine specializations of a
+   landed more general lemma* and should not be cited as independent results; cite that one.
+   The residue-field corollary is a one-line instantiation of it too.
+2. **The lead theorem's proof does not use its own subject.**  `pic0_fibre_eq_one_of_genus_zero`
+   is `Subsingleton.elim` on the target group, so `lam`, `t` and `pic0Map` appear in the
+   statement and contribute nothing to the proof — the probe replacing the subject by an
+   arbitrary element of the target closes identically.  The "mechanism" the docstring below
+   describes (`pic0Map` landing in `pic0Subgroup` through `degAt_picEtMap`) is work done by the
+   *type ascription*, not by the proof term.  That is not a defect in the statement, which is
+   true and is the shape consumers want; it does mean the theorem is cheap, and it was first
+   presented here as though the mechanism were the content.
+
+**What survives as this file's own contribution** is the third theorem,
+`classDeg_fibre_eq_zero_of_cocyclePresented`: the DAT-4 seam application that turns the
+membership into a *degree* equation at each prime, which is the spelling
+`Picard/Pic0RingDatumEngine.lean` consumes.  It is two tactic lines and it is not duplicated.
+
 ## What consumes this, and in which spelling
 
 `Picard/Pic0RingDatumEngine.lean` fires the RE-4 rigid engine on a
@@ -46,11 +71,18 @@ consumer to fire — recorded because the two spellings look interchangeable and
 
 ## Why the degree condition is *entirely* consumed here
 
-Membership in `pic0Subgroup C (overSpec k A)` is degree vanishing at every field point.  Each
-statement below spends that binder and returns something with **no** degree in it.  So the
-distance from here to the ring case carries no Riemann–Roch, no `χ`, no chart and no divisor:
-it is the pure rigidity implication "trivial at every fibre ⟹ trivial".  That is a repricing of
-the ring case, and it is the whole point of the file — not a discharge of it.
+Membership in `pic0Subgroup C (overSpec k A)` is degree vanishing at every field point.  The
+*triviality* statements spend that binder and return a conclusion with no degree in it, so the
+distance from them to the ring case carries no Riemann–Roch, no `χ`, no chart and no divisor: it
+is the pure rigidity implication "trivial at every fibre ⟹ trivial".  That is a repricing of the
+ring case, not a discharge of it.
+
+**Corrected after audit:** this claim is *false about the third theorem*, and an earlier version
+of this paragraph asserted it of every statement in the file.
+`classDeg_fibre_eq_zero_of_cocyclePresented` has a degree equation **in its conclusion** — that
+is its purpose, since the engine's converse consumes a degree — and it takes no `genus C = 0`
+binder at all, so the sentence "both statements consume `genus C = 0`" was wrong about it as
+well.  Three of the four theorems consume the genus; the degree one does not.
 
 ## What this does NOT do
 
@@ -117,9 +149,8 @@ theorem pic0_fibre_eq_one_of_genus_zero (hg : genus C = 0)
 theorem picEtMap_pic0_fibre_eq_one_of_genus_zero (hg : genus C = 0)
     {A : Type u} [CommRing A] [Algebra k A] (lam : pic0Subgroup C (overSpec k A))
     (K : Type u) [Field K] [Algebra k K] (t : overSpec k K ⟶ overSpec k A) :
-    picEtMap C t (lam : picEt C (overSpec k A)) = 1 := by
-  have h := pic0_fibre_eq_one_of_genus_zero C hg lam K t
-  exact (congrArg (fun z : pic0Subgroup C (overSpec k K) => (z : picEt C (overSpec k K))) h)
+    picEtMap C t (lam : picEt C (overSpec k A)) = 1 :=
+  fibre_eq_one_of_mem_pic0Subgroup C hg lam K t
 
 /-! ## The residue-field spelling: what the ring-datum engine quantifies over -/
 
