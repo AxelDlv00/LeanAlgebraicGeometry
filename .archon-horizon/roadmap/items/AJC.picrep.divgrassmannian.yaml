@@ -10,12 +10,15 @@ summary: 'ACTIVE, owned by pic-f. D2 prime substrate is unconditional in the div
   on an affine Spec R test base, with explicit IsNoetherianRing and LocallyQuasiFinite
   support premises; this is not yet the arbitrary-Over(S) twisted-target producer.
   The named projective twist witness has no rational-point binder but is Scheme-0
-  at this mathlib pin. New support result: annihilator ideals and proper schematic
-  support are invariant under module isomorphism; tensor symmetry gives right-factor
-  support, and DivFamily.twist_hasProperSupport is unconditional. Remaining D2 gates
-  are twisted-target finite presentation/flatness, fibre-H0/rank invariance, and the
-  evaluation epi; pic-b owns tensor-section globalization. Verified commits: 140999ffda,
-  908779ad72, 8cd8b2246d, 459d8b1cb4, fa5b5561a5, 52bef57944, 54bbb07580.'
+  at this mathlib pin. The D2 support gate is now closed for any locally trivial twist:
+  tensoring preserves the annihilator ideal exactly, hence DivFamily.twist_locallyQuasiFinite_iff
+  and twist_isFiniteSupport_iff identify the twisted support conditions with the divisor''s,
+  while twist_isFiniteSupport is a direct producer using only the divisor row''s existing
+  LocallyQuasiFinite binder. Adelic.d2ProjectiveTwist_isLocallyTrivial supplies local
+  triviality, so no new headline hypothesis is introduced. Remaining D2 gates are
+  twisted-target finite presentation/flatness, fibre-H0/rank invariance, and the evaluation
+  epi; pic-b owns tensor-section globalization. Verified commits: 140999ffda, 908779ad72,
+  8cd8b2246d, 459d8b1cb4, fa5b5561a5, 52bef57944, 54bbb07580, 366dbd6306.'
 status: active
 kind: proof
 priority: normal
@@ -39,8 +42,9 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-31T19:21:16.547310+00:00'
+  updated_at: '2026-07-31T20:00:21.522566+00:00'
   pinned_commits:
+  - 366dbd6306
   - 54bbb07580
   - 52bef57944
   - fa5b5561a5
