@@ -46464,7 +46464,7 @@
         "kleiman-picard, abelian-varieties:page-0107"
       ],
       "state": "formalized_open",
-      "statement": "Let \\(P \\colon \\mathbf{1} \\to C\\) be a rational point of the curve (a morphism from the\n  unit test). The \\emph{Abel \\v Cech class} on the test \\(T = C\\) is\n  \\[\n    \\mathcal A_P \\;:=\\; \\struct{C \\otimes C}(\\Delta) \\cdot \\struct{C \\otimes C}(P \\times C)^{-1}\n      \\;\\in\\; \\Pic(C \\otimes C),\n  \\]\n  the graph class of the identity \\(\\id_C\\) (the diagonal) times the inverse graph class of\n  the constant point \\(C \\to \\mathbf 1 \\xrightarrow{P} C\\) \u2014 both factors through the graph\n  divisor of Definition~\\ref{def:graphLocalEquations}, so one degree certificate serves\n  both. The \\emph{Abel class} \\(\\alpha_P \\in \\mathrm{picEt}(C, C)\\) is the unit image of its\n  relative class.",
+      "statement": "Let \\(P \\colon \\mathbf{1} \\to C\\) be a rational point of the curve (a morphism from the\n  unit test). The \\emph{Abel \\v Cech class} on the test \\(T = C\\) is\n  \\[\n    \\mathcal A_P \\;:=\\; \\struct{C \\otimes C}(\\Delta) \\cdot \\struct{C \\otimes C}(P \\times C)^{-1}\n      \\;\\in\\; \\Pic(C \\otimes C),\n  \\]\n  the graph class of the identity \\(\\id_C\\) (the diagonal) times the inverse graph class of\n  the constant point \\(C \\to \\mathbf 1 \\xrightarrow{P} C\\) \u2014 both factors through the graph\n  divisor of Definition~\\ref{def:graphLocalEquations}, so one degree certificate serves\n  both. The \\emph{Abel class} \\(\\alpha_P \\in \\mathrm{picEt}(C, C)\\) is the unit image of its\n  relative class. Milne's cited section assumes \\(g(C)>0\\); this graph-class construction\n  uses only the rational point \\(P\\) and therefore also applies in genus zero.",
       "title": "The Abel \\v Cech class",
       "type": "definition",
       "unlocks": 5,
@@ -46547,7 +46547,7 @@
         "kleiman-picard, abelian-varieties:page-0107"
       ],
       "state": "formalized_open",
-      "statement": "The \\emph{Abel element} is the Abel class as an element of the degree-zero subgroup,\n  \\[\n    \\alpha_P \\in \\mathrm{pic}^0(C, C),\n  \\]\n  membership being the certificate of Theorem~\\ref{thm:degAt_abelPicEt}. On points it is the\n  family \\(t \\mapsto [\\,\\Gamma_t - \\Gamma_P\\,]\\), the divisor-class form \\(t \\mapsto [t - P]\\)\n  of the Abel map with base point \\(P\\).",
+      "statement": "The \\emph{Abel element} is the Abel class as an element of the degree-zero subgroup,\n  \\[\n    \\alpha_P \\in \\mathrm{pic}^0(C, C),\n  \\]\n  membership being the certificate of Theorem~\\ref{thm:degAt_abelPicEt}. On points it is the\n  family \\(t \\mapsto [\\,\\Gamma_t - \\Gamma_P\\,]\\), the divisor-class form \\(t \\mapsto [t - P]\\)\n  of the Abel map with base point \\(P\\). As above, Milne states this formula under the\n  standing hypothesis \\(g(C)>0\\), whereas the formal element is defined in genus zero as\n  well.",
       "title": "The Abel element",
       "type": "definition",
       "unlocks": 2,
