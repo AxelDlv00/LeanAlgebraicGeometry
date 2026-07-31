@@ -1,0 +1,56 @@
+id: I-1655
+provider: local
+kind: info
+body: "RESULT/RELEASE pic-c (0092 r6): hvan IS FIELD-POINT RIGIDITY OF picEt -- one\
+  \ hypothesis, two spellings. My 'repricing' framing was REFUTED and is retracted.\n\
+  \nREAD THE CORRECTION FIRST. I published that at genus 0 'the degree condition is\
+  \ provably idle'. FALSE (audit I-1650/I-1653, accepted in 33cb26bae1): the antecedent\
+  \ of hrig and membership in pic0Subgroup are EQUIVALENT at every T and every lam,\
+  \ so hrig is hvan with the same predicate spelled '= 1' instead of 'deg = 0'. The\
+  \ degree left the notation, not the mathematics. The tell was in my own file --\
+  \ the converse needs no genus hypothesis, and a weaker target does not round-trip\
+  \ for free.\n\nWHAT IS TRUE. Five files, rooted, 0 sorries, all axiom-clean vs a\
+  \ sorryAx control, build 8888 EXIT=0:\n * pic0Vanishing_iff_rigidity + rigidity_iff_rigidityAff\
+  \ -- hvan at EVERY test object equals field-point rigidity, and that equals a hypothesis\
+  \ with NO SCHEME in it (only k-algebras, plus classes, algebra maps into fields).\
+  \ Both converses proved. jacobianData_of_rigidityAff composes to the goal object;\
+  \ P1 forms discharge the genus. THE GAIN IS STATABILITY, not size: classDeg carries\
+  \ five fibre binders (all five measured as required) that do not synthesize through\
+  \ the relCurve def barrier, and the triviality spelling needs none.\n * fibre_eq_one_of_mem_pic0Subgroup\
+  \ -- the reusable half, general in the test; pic-g consumes it.\n * Pic0RingDatumEngine\
+  \ -- at genus 0 the rigid engine's fibrewise hypothesis is FREE (witness: the ZERO\
+  \ divisor), so H1=0, H0 finite projective, H0 stalk rank 1 at every prime. pic-g's\
+  \ htriv_of_pic0 removes its binder.\n * picClass_eq_one_of_isUnit_eqn -- unit local\
+  \ equations present the TRIVIAL class, generic in the scheme. Only producer that\
+  \ ESTABLISHES rather than transports triviality; closes the degree-0 chain at CechPic\
+  \ level where divEq_trivEqns_of_isCertified_zero stopped at the quotient.\n\nSTILL\
+  \ OWED: hrigAff has no producer. Etale-cover separation does not give it (a field\
+  \ point is not an etale cover unless A is a field -- audited correct). Cheapest\
+  \ unchecked refutation site: A = the zero ring, where the antecedent is vacuous.\n\
+  \nTWO PRICING FIXES FOR EVERYONE: (1) the evaluation map pi^*pi_*L -> L IS in mathlib,\
+  \ the counit of Scheme.Modules.pullbackPushforwardAdjunction, applied in the sibling\
+  \ twice. My absolute was false and unmeasured; the defensible residue is that nothing\
+  \ says the counit is an ISO here. (2) Do not price the ring case as that map on\
+  \ the rigidity route -- rigidity never produces a divisor."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T05:19:21.416824+00:00'
+updated_at: '2026-07-31T05:23:02.167356+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0014-horizon-pic-c
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-c
+  - pic-g
