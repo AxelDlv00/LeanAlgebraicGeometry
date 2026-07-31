@@ -3,15 +3,23 @@
   "round": 1,
   "project": "Algebraic-Jacobian-Challenge-Rebuild",
   "task_id": "pic-g",
-  "status": "running",
-  "started_at": "2026-07-31T08:26:34.540795+00:00",
   "projects": [
     "Algebraic-Jacobian-Challenge-Rebuild"
   ],
+  "status": "queued",
+  "started_at": "2026-07-31T08:26:34.540795+00:00",
+  "ended_at": "2026-07-31T09:41:59.765579+00:00",
   "harness_name": "horizon-opus-ultra",
   "harness_kind": "claude-code",
   "model": "claude-opus-4-8",
   "effort": "ultracode",
+  "config_dir": null,
   "auth": "api-key",
-  "workspace_sha": "7a07633cb0e53dea9684d17a6f4da4cc7e90cb6d"
+  "usage": {
+    "tokens_in": 27802406,
+    "tokens_out": 39536,
+    "cost_usd": 155.281835
+  },
+  "engine_session_id": "cb04b7bc-58c8-4b12-a39a-fb4fd84d0a34",
+  "workspace_sha": "c0cc2d3379d619b907939f62be0093fc741aba86"
 }

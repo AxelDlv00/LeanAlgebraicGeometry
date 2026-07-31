@@ -22,7 +22,7 @@ summary: 'RE-SPELLED AND SUBSTRATE BUILT; THE OBLIGATION DID NOT SHRINK (pic-c, 
   rings (or the needed cohomology-and-base-change theorem), not a repricing of the
   degree condition. Do not read the supporting Cech/Laurent work as a RepresentableBy
   producer.'
-status: pending
+status: active
 kind: proof
 priority: normal
 depends_on: []
@@ -44,4 +44,5 @@ metadata:
     task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-31T08:18:58.193205+00:00'
+  updated_at: '2026-07-31T09:38:14.018680+00:00'
+  owner: pic-c
