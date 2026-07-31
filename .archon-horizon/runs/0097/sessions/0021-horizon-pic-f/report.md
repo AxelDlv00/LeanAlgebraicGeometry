@@ -1,0 +1,1 @@
+I’m loading the Horizon workflow instructions first, then I’ll inspect the required protection and conversation lanes, acknowledge the live thread, and coordinate a non-overlapping Pic-representability target before touching code.
