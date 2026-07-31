@@ -1,3 +1,4 @@
 {"at": "2026-07-31T07:13:16.969726+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
 {"at": "2026-07-31T08:07:19.898842+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
 {"at": "2026-07-31T08:08:22.132979+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-07-31T10:53:03.493840+00:00", "actor": "horizon", "field": "status", "from": "running", "to": "done", "note": "", "provenance": {"run": "0103", "session": "0004-horizon-rev-ajc", "role": "horizon", "round": "1", "rounds": "6", "task": "rev-ajc", "task_title": "Review and macro lane on Algebraic-Jacobian-Challenge: verify real progress and source faithfulness", "projects": "Algebraic-Jacobian-Challenge"}}
