@@ -398,6 +398,41 @@ theorem isZero_iff_forall_subsingleton_sections {M : Y.Modules} :
   ⟨fun hM V => subsingleton_sections_of_isZero hM V,
     isZero_of_forall_subsingleton_sections⟩
 
+/-- **Every sheaf of modules on an empty scheme is zero.**
+
+On an empty scheme the structure sheaf has a subsingleton (trivial) ring of sections over
+*every* open — every open embeds into the empty space — so each section module `Γ(M, V)`, a
+module over that trivial ring, is a subsingleton (`Module.subsingleton`). The all-opens
+section vanishing then feeds `isZero_of_forall_subsingleton_sections`.
+
+This is the reusable "empty carrier ⟹ zero sheaf" direction, the converse companion of
+`isEmpty_schematicSupport_of_isZero`, and the geometric core that turns *emptiness of the
+support* into *vanishing of the sheaf* one lemma below (`isZero_of_isEmpty_schematicSupport`). -/
+theorem isZero_of_isEmpty {M : Y.Modules} (hY : IsEmpty (Y : Type u)) : IsZero M :=
+  isZero_of_forall_subsingleton_sections fun V => by
+    haveI := hY
+    exact Module.subsingleton Γ(Y, V) Γ(M, V)
+
+/-- **A quasi-coherent sheaf with empty schematic support is zero** — the exact converse of
+`isEmpty_schematicSupport_of_isZero`.
+
+`M` is recovered from its restriction to the schematic support by the descent isomorphism
+`M ≅ i_*(i^* M)` (`schematicSupportDescentIso`, `i = schematicSupportι M`, valid for a
+quasi-coherent `M`). When that support is empty, `i^* M` is a sheaf of modules on an empty
+scheme, hence zero (`isZero_of_isEmpty`); its pushforward is therefore zero, and the iso
+transports that back to `M`.
+
+This is the geometric half of the section-vanishing characterisation: it reduces "the
+structure sheaf of a divisor vanishes" to the topological statement "the divisor is empty",
+with no all-opens section computation. -/
+theorem isZero_of_isEmpty_schematicSupport {M : Y.Modules} [M.IsQuasicoherent]
+    (hM : IsEmpty (Scheme.Modules.schematicSupport M : Type u)) : IsZero M := by
+  have hN : IsZero ((Scheme.Modules.pullback (Scheme.Modules.schematicSupportι M)).obj M) :=
+    isZero_of_isEmpty hM
+  exact IsZero.of_iso
+    ((Scheme.Modules.pushforward (Scheme.Modules.schematicSupportι M)).map_isZero hN)
+    (Scheme.Modules.schematicSupportDescentIso M)
+
 end Scheme.Modules
 
 /-! ## §3. The empty divisor -/
