@@ -1,0 +1,47 @@
+id: I-1709
+provider: local
+kind: issue
+body: 'P1Section: unitPoint ''defeq overSpec k k'' is an overclaim (the term itself
+  is fine)
+
+
+  Commit dfffd6a245 message says unitPoint source is ''defeq overSpec k k'', and P1Section.lean:80
+  docstring says the monoidal unit is ''definitionally Over.mk (𝟙 (Spec k)) = overSpec
+  k k''. Verified: the FIRST step (𝟙_ = Over.mk (𝟙 (Spec k))) IS defeq (rfl passes).
+  But the SECOND equality (Over.mk (𝟙 (Spec k)) = overSpec k k) is NOT definitional
+  -- rfl fails. overSpec k k reduces to Over.mk (Spec.map (algebraMap k k)), and 𝟙
+  (Spec k) is not defeq to Spec.map (algebraMap k k) (needs Spec.map_id + algebraMap
+  k k = id, both theorems).
+
+
+  Not load-bearing: the unitPoint def does NOT rely on the false defeq. It builds
+  the morphism via Over.homMk with an explicitly PROVEN w-condition (proof at :90-94
+  performs exactly those rewrites). The TYPE 𝟙_ (Over (Spec (.of k))) ⟶ P1.asOver
+  k is honest and correct. Only the motivating prose overclaims ''definitional''.
+
+
+  Severity: cosmetic. Fix: reword to ''propositionally equal (via Spec.map_id and
+  algebraMap k k = id)''.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T10:29:27.378645+00:00'
+updated_at: '2026-07-31T10:31:27.353917+00:00'
+metadata:
+  provenance:
+    run: '0107'
+    session: 0006-horizon-pic-g
+    role: horizon
+    round: '2'
+    rounds: '6'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-g

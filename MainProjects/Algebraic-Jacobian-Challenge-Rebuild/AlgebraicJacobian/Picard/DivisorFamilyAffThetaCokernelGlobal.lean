@@ -164,6 +164,7 @@ end AffAdaptation
 namespace AffAdaptation
 
 attribute [local instance] thetaPieceSectionsModule thetaOverlapSectionsModule
+  thetaPieceQuotientModule thetaOverlapQuotientModule
 
 /-! ## Overlap vanishing in the theta cokernel
 
@@ -426,6 +427,87 @@ theorem thetaPieceVanishing_iff_gluedTwist_cokernel_eq_zero
       rw [← hswap]
       exact hgerm.2 z
         ⟨hz.1, thetaChartCover_pieces_le_inr C R π PUnit.unit hz.2⟩
+
+/-! ## Compatibility of local cokernel representatives
+
+The quotient equalizer relation on two widened pieces is exactly the compatibility
+condition for their images in the auxiliary theta cokernel sheaf.  This is the
+local datum consumed by the sheaf gluing theorem below.
+-/
+
+theorem thetaPieceCokernel_family_isCompatible
+    {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
+    {A : AffAdaptation D d} (B : DivisorAdaptation C R π d) (a : ℕ)
+    (r : ∀ j : D.index, A.ThetaPieceSections (π := π) a j)
+    (hr : ∀ i j : D.index,
+      A.thetaToOverlapLeft (π := π) a i j (Submodule.Quotient.mk (r i)) =
+        A.thetaToOverlapRight (π := π) a i j (Submodule.Quotient.mk (r j))) :
+    TopCat.Presheaf.IsCompatible
+      (cokernel (B.thetaIdealIncl (a := a))).obj D.pieces
+      (fun j => ((cokernel.π (B.thetaIdealIncl (a := a))).hom.app
+        (op (D.pieces j))).hom
+        (gluedTwistEquiv C R π a (D.pieces j) (r j))) := by
+  intro i j
+  let W := D.pieces i ⊓ D.pieces j
+  have hL := secRes_naturality (cokernel.π (B.thetaIdealIncl (a := a)))
+    (inf_le_left : W ≤ D.pieces i)
+    (gluedTwistEquiv C R π a (D.pieces i) (r i))
+  have hR := secRes_naturality (cokernel.π (B.thetaIdealIncl (a := a)))
+    (inf_le_right : W ≤ D.pieces j)
+    (gluedTwistEquiv C R π a (D.pieces j) (r j))
+  rw [← hL, ← hR]
+  have hresL :
+      secRes (relThetaTwistSheaf C R π a)
+          (inf_le_left : W ≤ D.pieces i)
+          (gluedTwistEquiv C R π a (D.pieces i) (r i)) =
+        gluedTwistEquiv C R π a W
+          (A.thetaSectionsToOverlapLeft (π := π) a i j (r i)) := by
+    change twistRes R (relCover C R (fiberTwoCover π)).V₀
+        (relCover C R (fiberTwoCover π)).V₁ (relThetaCocycle C R π a)
+          inf_le_left (gluedToTwistApp C R π a (D.pieces i) (r i)) =
+      gluedToTwistApp C R π a W
+        (gluedRes R (thetaChartDatum C R π a).pieces
+          (thetaChartDatum C R π a).unit inf_le_left (r i))
+    exact (gluedToTwistApp_res C R π a inf_le_left (r i)).symm
+  have hresR :
+      secRes (relThetaTwistSheaf C R π a)
+          (inf_le_right : W ≤ D.pieces j)
+          (gluedTwistEquiv C R π a (D.pieces j) (r j)) =
+        gluedTwistEquiv C R π a W
+          (A.thetaSectionsToOverlapRight (π := π) a i j (r j)) := by
+    change twistRes R (relCover C R (fiberTwoCover π)).V₀
+        (relCover C R (fiberTwoCover π)).V₁ (relThetaCocycle C R π a)
+          inf_le_right (gluedToTwistApp C R π a (D.pieces j) (r j)) =
+      gluedToTwistApp C R π a W
+        (gluedRes R (thetaChartDatum C R π a).pieces
+          (thetaChartDatum C R π a).unit inf_le_right (r j))
+    exact (gluedToTwistApp_res C R π a inf_le_right (r j)).symm
+  rw [hresL, hresR]
+  have hv :
+      A.thetaSectionsToOverlapLeft (π := π) a i j (r i) -
+        A.thetaSectionsToOverlapRight (π := π) a i j (r j) ∈
+          A.thetaOverlapVanishing (π := π) a i j := by
+    change secRes (thetaChartDatum C R π a).sheaf inf_le_left (r i) -
+        secRes (thetaChartDatum C R π a).sheaf inf_le_right (r j) ∈
+      A.thetaOverlapVanishing (π := π) a i j
+    apply (Submodule.Quotient.eq
+      (A.thetaOverlapVanishing (π := π) a i j)).mp
+    simpa only [A.thetaToOverlapLeft_mk, A.thetaToOverlapRight_mk] using hr i j
+  have hzero := thetaOverlapVanishing_gluedTwist_cokernel_eq_zero
+    C R π B a i j
+    (A.thetaSectionsToOverlapLeft (π := π) a i j (r i) -
+      A.thetaSectionsToOverlapRight (π := π) a i j (r j)) hv
+  have hmap :
+      gluedTwistEquiv C R π a W
+          (A.thetaSectionsToOverlapLeft (π := π) a i j (r i) -
+            A.thetaSectionsToOverlapRight (π := π) a i j (r j)) =
+        gluedTwistEquiv C R π a W
+          (A.thetaSectionsToOverlapLeft (π := π) a i j (r i)) -
+          gluedTwistEquiv C R π a W
+            (A.thetaSectionsToOverlapRight (π := π) a i j (r j)) := by
+    exact (gluedTwistEquiv C R π a W).map_sub _ _
+  rw [hmap, map_sub] at hzero
+  exact sub_eq_zero.mp hzero
 
 /-- Once the widened certificate supplies the auxiliary theta-ideal `H¹` vanishing,
 global sections of the quotient sheaf for the chosen auxiliary chart are linearly equivalent
