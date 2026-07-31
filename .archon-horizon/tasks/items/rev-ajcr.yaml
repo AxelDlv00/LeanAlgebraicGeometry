@@ -68,7 +68,7 @@ explanation: ''
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 priority: high
-status: running
+status: queued
 write_set:
   files: []
   projects:
@@ -86,6 +86,6 @@ inbox_refs:
 - I-1482
 artifact_refs: []
 created_at: '2026-07-31T07:11:51.994574+00:00'
-updated_at: '2026-07-31T07:13:26.192122+00:00'
+updated_at: '2026-07-31T09:31:34.390473+00:00'
 metadata:
   author: human

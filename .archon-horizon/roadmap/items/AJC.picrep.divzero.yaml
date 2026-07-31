@@ -11,7 +11,7 @@ summary: 'ADVANCED, NOT CLOSED. Commits 0d465e95d9, aa38db9d26, and 10d411758b a
   vanishing premise is still unproduced, so this is a producer modulo one non-circular
   hypothesis, not an instantiated producer. The PicEt seam and fgaPicardRepresentability
   remain untouched.'
-status: pending
+status: active
 kind: proof
 priority: normal
 depends_on: []
@@ -33,8 +33,9 @@ metadata:
     task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-31T09:04:36.761287+00:00'
+  updated_at: '2026-07-31T09:18:40.855892+00:00'
   pinned_commits:
   - 10d411758b
   - aa38db9d26
   - 0d465e95d9
+  owner: pic-e

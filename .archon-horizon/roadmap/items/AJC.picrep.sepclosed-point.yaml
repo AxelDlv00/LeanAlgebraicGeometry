@@ -16,7 +16,7 @@ summary: 'SUPERSEDED, not work: this row duplicated AJC.picrep.sepclosed-section
   1 f], not bare [Smooth], because the chart lemma needs the numeral to get etale-over-A^1.'
 status: rejected
 kind: proof
-priority: high
+priority: low
 depends_on: []
 inbox_refs: []
 task_refs: []
@@ -37,4 +37,4 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-29T18:41:27.332805+00:00'
+  updated_at: '2026-07-31T09:29:32.187021+00:00'

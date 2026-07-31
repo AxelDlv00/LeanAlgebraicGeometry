@@ -74,6 +74,33 @@ theorem range_thetaIdealInclApp_top (B : DivisorAdaptation C R π d) (a : ℕ) :
     rw [thetaIdealInclApp_top_eq_gluedToVanishing C R π B]
     exact congrArg Subtype.val ((B.gluedEquivVanishing a).apply_symm_apply y)
 
+/-! ## The local cokernel kernel
+
+The arbitrary-open range producer immediately gives the corresponding kernel fact for
+the sheaf cokernel.  Keeping this at an arbitrary open is useful when the intrinsic
+descent proof compares restrictions before specializing to `⊤`.
+-/
+
+theorem cokernelπ_app_eq_zero_of_germ_mem (B : DivisorAdaptation C R π d)
+    {a : ℕ} {W : (relCurve C R).Opens}
+    (x : (relThetaTwistSheaf C R π a).obj.obj (op W))
+    (hx0 : ∀ (z : relCurve C R) (hz : z ∈ W ⊓
+      (relCover C R (fiberTwoCover π)).V₀),
+      ((relCurve C R).presheaf.germ (W ⊓
+        (relCover C R (fiberTwoCover π)).V₀) z hz).hom x.val.1 ∈ d.stalkIdeal z)
+    (hx1 : ∀ (z : relCurve C R) (hz : z ∈ W ⊓
+      (relCover C R (fiberTwoCover π)).V₁),
+      ((relCurve C R).presheaf.germ (W ⊓
+        (relCover C R (fiberTwoCover π)).V₁) z hz).hom x.val.2 ∈ d.stalkIdeal z) :
+    ((cokernel.π (B.thetaIdealIncl (a := a))).hom.app (op W)).hom x = 0 := by
+  obtain ⟨s, hs⟩ := B.exists_thetaIdealInclApp_of_germ_mem (a := a) x hx0 hx1
+  rw [← hs]
+  have hnat := congrArg
+    (fun f : (B.thetaIdealDatum a).sheaf ⟶ cokernel (B.thetaIdealIncl (a := a)) =>
+      f.hom.app (op W)) (cokernel.condition (B.thetaIdealIncl (a := a)))
+  have hlin := congrArg ModuleCat.Hom.hom hnat
+  exact LinearMap.congr_fun hlin s
+
 end DivisorAdaptation
 
 section CokernelGlobal
