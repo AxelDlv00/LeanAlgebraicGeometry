@@ -16,10 +16,9 @@ docstring: '**The point ↔ evaluation dictionary**: on an affine open `W` conta
 file: AlgebraicJacobian/RiemannRoch/GraphSectionEval.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.ker_graphSectionEval_eq_primeIdealOf
 type: lean
-updated: '2026-07-31T20:14:46'
+updated: '2026-07-31T20:15:29'
 ---
 theorem ker_graphSectionEval_eq_primeIdealOf (t : overSpec k K ⟶ C)
     {W : (C ⊗ overSpec k K).left.Opens} (hW : IsAffineOpen W)

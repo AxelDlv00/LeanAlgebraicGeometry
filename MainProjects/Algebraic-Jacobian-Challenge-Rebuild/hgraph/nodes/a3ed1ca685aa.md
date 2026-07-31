@@ -7,10 +7,9 @@ docstring: (c2) transport, projectivity.
 file: AlgebraicJacobian/Picard/DivisorFamilyAffCert.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.AffAdaptation.projective_glued_pullback
 type: lean
-updated: '2026-07-31T20:14:48'
+updated: '2026-07-31T20:15:23'
 ---
 theorem projective_glued_pullback
     [Module.Flat R (A.chartProd ⧸ A.gluedSubmodule)]

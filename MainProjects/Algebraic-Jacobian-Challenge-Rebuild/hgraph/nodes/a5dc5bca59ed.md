@@ -13,10 +13,9 @@ docstring: '**The twist is the `n`-th power of the unit twist: `Θₙ = Θ₁ⁿ
 file: AlgebraicJacobian/RiemannRoch/FiberTwist.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.fiberTwist_pow
 type: lean
-updated: '2026-07-31T20:14:48'
+updated: '2026-07-31T20:15:29'
 ---
 theorem fiberTwist_pow (n : ℕ) : fiberTwist π n = fiberTwist π 1 ^ n := by
   induction n with

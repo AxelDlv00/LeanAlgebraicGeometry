@@ -31,10 +31,9 @@ docstring: '**Base change of a quotient of section rings at an arbitrary affine 
 file: AlgebraicJacobian/Picard/DivisorFamilyAffSections.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.relQuotBaseChangeAff
 type: lean
-updated: '2026-07-31T20:14:50'
+updated: '2026-07-31T20:15:24'
 ---
 noncomputable def relQuotBaseChangeAff {V : (relCurve C R).Opens} (hV : IsAffineOpen V)
     (E : Set Γ(relCurve C R, V)) :

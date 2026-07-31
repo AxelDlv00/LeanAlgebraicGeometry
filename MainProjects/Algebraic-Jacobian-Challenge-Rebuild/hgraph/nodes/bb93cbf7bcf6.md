@@ -10,10 +10,9 @@ docstring: 'Multiplication by any base-field multiplier preserves the relation t
 file: AlgebraicJacobian/Picard/DivSchemeHighWindowTransitionRelationZero.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.map_divUniversalHighWindowBaseMultiplierTransition_relation_zero_le
 type: lean
-updated: '2026-07-31T20:14:49'
+updated: '2026-07-31T20:15:22'
 ---
 theorem map_divUniversalHighWindowBaseMultiplierTransition_relation_zero_le
     (a : HS) :

@@ -9,10 +9,9 @@ docstring: 'The chart-local colength module `Γ(D(h_j)) ⧸ (f_j)`, an `R`-algeb
 file: AlgebraicJacobian/Picard/DivisorFamily.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DivisorAdaptation.colength
 type: lean
-updated: '2026-07-31T20:14:42'
+updated: '2026-07-31T20:15:23'
 ---
 noncomputable abbrev colength (j : A.index) : Type u :=
   Γ(relCurve C R, A.pieces j) ⧸ Ideal.span {A.eqn j}

@@ -7,10 +7,9 @@ docstring: The same seam as a group isomorphism of Čech Picard groups.
 file: AlgebraicJacobian/Tangent/CechPicIsoTransport.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.cechPicTransportLeftEquiv
 type: lean
-updated: '2026-07-31T20:14:52'
+updated: '2026-07-31T20:15:29'
 ---
 noncomputable def cechPicTransportLeftEquiv :
     (relCurve C k).CechPic ≃* (C ⊗ Over.mk (𝟙 (Spec (CommRingCat.of k)))).left.CechPic :=

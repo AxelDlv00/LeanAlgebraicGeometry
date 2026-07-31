@@ -10,10 +10,9 @@ docstring: '**The transported theta datum**: the whole-chart theta datum of the 
 file: AlgebraicJacobian/RiemannRoch/WindowFieldTransport.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.windowTransportDatum
 type: lean
-updated: '2026-07-31T20:14:52'
+updated: '2026-07-31T20:15:29'
 ---
 noncomputable def windowTransportDatum : BasicOpenCocycleDatum C K π :=
   (thetaChartDatum C k π a).baseChange K

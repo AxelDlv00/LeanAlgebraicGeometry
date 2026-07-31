@@ -10,10 +10,9 @@ docstring: 'The left overlap-restriction square: the colength transport intertwi
 file: AlgebraicJacobian/Picard/DivisorFamilyPullbackCert.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DivisorAdaptation.pulledToOvlLeft_colengthBaseChange
 type: lean
-updated: '2026-07-31T20:14:48'
+updated: '2026-07-31T20:15:24'
 ---
 lemma pulledToOvlLeft_colengthBaseChange (i j : A.index) (x : R' ⊗[R] A.colength i) :
     A.pulledToOvlLeft R' i j (A.colengthBaseChange R' i x) =

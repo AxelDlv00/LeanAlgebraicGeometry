@@ -25,10 +25,9 @@ docstring: '**The `hreg` side-condition of `Scheme.LocalEquations.pullback`**, n
 file: AlgebraicJacobian/Picard/DivisorFamilyAffGlueZarKit.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.LocalEquations.PullRegular
 type: lean
-updated: '2026-07-31T20:14:50'
+updated: '2026-07-31T20:15:23'
 ---
 def PullRegular {X Y : Scheme.{u}} (f : Y ⟶ X) (d : X.LocalEquations) : Prop :=
   ∀ (y z : Y) (hz : z ∈ (d.cover.pullback f).opens y),

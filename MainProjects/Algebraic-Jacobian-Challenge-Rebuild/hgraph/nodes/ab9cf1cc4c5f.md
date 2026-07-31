@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.divFamZar.ext
 file: AlgebraicJacobian/Picard/DivisorFamilyZarVehicle.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.divFamZar.ext
 type: lean
-updated: '2026-07-31T20:14:49'
+updated: '2026-07-31T20:15:25'
 ---
 lemma ext {s t : divFamZar C π n T} (h : ∀ U : T.left.affineOpens, s.1 U = t.1 U) :
     s = t :=

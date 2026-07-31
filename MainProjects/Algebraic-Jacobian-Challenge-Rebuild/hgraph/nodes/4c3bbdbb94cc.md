@@ -7,10 +7,9 @@ docstring: The left arrow of the intrinsic theta descent fork in `A_D`-modules.
 file: AlgebraicJacobian/Picard/DivisorFamilyAffThetaCech.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.AffAdaptation.thetaIntrinsicDeltaLeftGlued
 type: lean
-updated: '2026-07-31T20:14:43'
+updated: '2026-07-31T20:15:24'
 ---
 noncomputable def thetaIntrinsicDeltaLeftGlued (A : AffAdaptation D d) (a : ℕ) :
     A.ThetaPieceProd (π := π) a →ₗ[↥(gluedSubalgebra A)]

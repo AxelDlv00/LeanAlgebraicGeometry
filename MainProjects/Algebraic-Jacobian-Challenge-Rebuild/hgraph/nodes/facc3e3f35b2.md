@@ -7,10 +7,9 @@ docstring: 'The degree of a single-point divisor `n · x` is `n · [κ(x) : K]`.
 file: AlgebraicJacobian/RiemannRoch/Divisor.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.CurveDivisor.deg_single
 type: lean
-updated: '2026-07-31T20:14:52'
+updated: '2026-07-31T20:15:29'
 ---
 theorem deg_single (x : {x : X // x ≠ genericPoint X}) (n : ℤ) :
     deg K (Finsupp.single x n : X.CurveDivisor) = n * (X.residueDeg K x.1 : ℤ) := by

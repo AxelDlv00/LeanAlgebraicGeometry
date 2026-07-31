@@ -22,10 +22,9 @@ docstring: '**The composite**: coverage plus the containment gives the local-sur
 file: AlgebraicJacobian/Picard/Pic0ChartAtlasCoupling.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.isLocallySurjective_restrictChart_of_pointwise
 type: lean
-updated: '2026-07-31T20:14:52'
+updated: '2026-07-31T20:15:26'
 ---
 theorem isLocallySurjective_restrictChart_of_pointwise {ι : Type u} {X : ι → Scheme.{u}}
     (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1) (V : ∀ i, (X i).Opens)

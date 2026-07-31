@@ -8,10 +8,9 @@ docstring: '**The presheaf morphism `𝒪_X → 𝒪(0)`** of `K`-modules, secti
 file: AlgebraicJacobian/RiemannRoch/DivisorSheafZero.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.moduleToDivisorZeroPresheaf
 type: lean
-updated: '2026-07-31T20:14:52'
+updated: '2026-07-31T20:15:29'
 ---
 noncomputable def moduleToDivisorZeroPresheaf :
     X.moduleKPresheaf K ⟶ divisorPresheaf K 0 where

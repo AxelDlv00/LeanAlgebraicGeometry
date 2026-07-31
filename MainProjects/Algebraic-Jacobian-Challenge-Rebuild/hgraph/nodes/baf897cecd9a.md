@@ -10,10 +10,9 @@ docstring: 'The canonical global relative theta section `(t₀ᵃ, 1)`.  Its fir
 file: AlgebraicJacobian/Picard/DivisorFamilyThetaSections.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.relThetaSectionFst
 type: lean
-updated: '2026-07-31T20:14:49'
+updated: '2026-07-31T20:15:25'
 ---
 noncomputable def relThetaSectionFst : relThetaSections C R π a := by
   refine ⟨((relCurve C R).resHom inf_le_right (relFiberCoordPow C R π a), 1), ?_⟩

@@ -12,10 +12,9 @@ docstring: '**The divisor of the coherence unit is the transported-window discre
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivAssemble.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.divOf_msCoherenceUnit
 type: lean
-updated: '2026-07-31T20:14:47'
+updated: '2026-07-31T20:15:22'
 ---
 theorem divOf_msCoherenceUnit :
     windowTransportDivisor C K π (windowM_choice π hπ g + windowS_choice π hπ g)

@@ -15,10 +15,9 @@ docstring: '**The degree of the θ-family at every field point (DAT-5.2)**: `deg
 file: AlgebraicJacobian/Picard/ThetaShift.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.degAt_thetaFamily
 type: lean
-updated: '2026-07-31T20:14:43'
+updated: '2026-07-31T20:15:28'
 ---
 theorem degAt_thetaFamily (L₀ : (C ⊗ overSpec k k).left.CechPic)
     {T : Over (Spec (.of k))} {K : Type u} [Field K] [Algebra k K]

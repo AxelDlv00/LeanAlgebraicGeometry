@@ -30,10 +30,9 @@ docstring: '**CHART-U(c), pinned**: the chart map is an open immersion of preshe
 file: AlgebraicJacobian/Picard/Pic0ChartPair.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.IsChartUniv
 type: lean
-updated: '2026-07-31T20:14:45'
+updated: '2026-07-31T20:15:27'
 ---
 def IsChartUniv {D : Over (Spec (.of k))} (rep : (divFunctor C π n).RepresentableBy D)
     (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)

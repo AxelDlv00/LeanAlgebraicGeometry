@@ -28,10 +28,9 @@ docstring: '**Joint injectivity of a chart family**: over every nonempty test, t
 file: AlgebraicJacobian/Picard/Pic0ChartMultiIndexInterval.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.JointlyInjective
 type: lean
-updated: '2026-07-31T20:14:39'
+updated: '2026-07-31T20:15:27'
 ---
 def JointlyInjective {ι : Type u} {X : ι → Scheme.{u}}
     (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1) : Prop :=

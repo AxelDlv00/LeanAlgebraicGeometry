@@ -10,10 +10,9 @@ docstring: '(Implementation) Restriction commutes with the `Scheme.overModule` a
 file: AlgebraicJacobian/Picard/DivisorFamilyWindowBaseChange.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.resHom_smul_rel'
 type: lean
-updated: '2026-07-31T20:14:49'
+updated: '2026-07-31T20:15:25'
 ---
 lemma resHom_smul_rel' (S : Type u) [CommRing S] [Algebra k S]
     {W V : (relCurve C S).Opens} (h : W ≤ V) (s : S) (y : Γ(relCurve C S, V)) :

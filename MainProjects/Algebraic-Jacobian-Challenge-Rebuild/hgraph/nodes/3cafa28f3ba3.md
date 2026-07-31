@@ -8,10 +8,9 @@ docstring: The presheaf `U ↦ 𝒪(D)(U)` of `K`-modules on the small Zariski s
 file: AlgebraicJacobian/RiemannRoch/DivisorSheaf.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.divisorPresheaf
 type: lean
-updated: '2026-07-31T20:14:42'
+updated: '2026-07-31T20:15:29'
 ---
 noncomputable def divisorPresheaf (D : X.CurveDivisor) : (X.Opens)ᵒᵖ ⥤ ModuleCat.{u} K where
   obj U := ModuleCat.of K (divisorSections K D U.unop)

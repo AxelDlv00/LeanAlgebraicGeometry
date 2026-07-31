@@ -7,10 +7,9 @@ docstring: The cofactor of a section vanishing along `d` over a widened piece eq
 file: AlgebraicJacobian/Picard/DivisorFamilyAffThetaKernel.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.AffAdaptation.eqnDiv
 type: lean
-updated: '2026-07-31T20:14:39'
+updated: '2026-07-31T20:15:24'
 ---
 noncomputable def eqnDiv (A : AffAdaptation D d) (j : D.index)
     {W : (relCurve C R).Opens} (hW : W ≤ D.pieces j) (s : Γ(relCurve C R, W))

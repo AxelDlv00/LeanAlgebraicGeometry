@@ -3,15 +3,23 @@
   "round": 1,
   "project": "Algebraic-Jacobian-Challenge-Rebuild",
   "task_id": "pic-d",
-  "status": "running",
-  "started_at": "2026-07-31T08:08:03.639972+00:00",
   "projects": [
     "Algebraic-Jacobian-Challenge-Rebuild"
   ],
+  "status": "queued",
+  "started_at": "2026-07-31T08:08:03.639972+00:00",
+  "ended_at": "2026-07-31T12:37:52.640513+00:00",
   "harness_name": "codex",
   "harness_kind": "codex",
   "model": "gpt-5.6-sol",
   "effort": "ultra",
+  "config_dir": null,
   "auth": "subscription",
-  "workspace_sha": "e5e7b1ef5f21a50c9cf9ac827f54e1bad95210de"
+  "usage": {
+    "tokens_in": 115979367,
+    "tokens_out": 225346,
+    "cost_usd": null
+  },
+  "engine_session_id": "019fb737-5359-74e3-992e-012a713ed9a2",
+  "workspace_sha": "a166dd4ef69675d807d344883f4b6e3d36e873e9"
 }

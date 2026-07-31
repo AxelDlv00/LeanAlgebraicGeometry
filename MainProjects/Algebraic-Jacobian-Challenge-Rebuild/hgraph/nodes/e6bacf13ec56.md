@@ -7,10 +7,9 @@ file: AlgebraicJacobian/Picard/DivisorThetaSheafSequence.lean
 generated: lean
 lean_status: lean_ok
 private: true
-stale: true
 title: AlgebraicGeometry.DivisorAdaptation.thetaIdealInclFst_smul
 type: lean
-updated: '2026-07-31T20:14:51'
+updated: '2026-07-31T20:15:25'
 ---
 private lemma thetaIdealInclFst_smul (W : (relCurve C R).Opens) (r : R)
     (s : A.ThetaIdealSections a W) :

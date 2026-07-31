@@ -16,10 +16,9 @@ docstring: '**The transition units of the twisted ideal sheaf `𝒪(Θᵃ − d)
 file: AlgebraicJacobian/Picard/DivisorThetaDatum.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DivisorAdaptation.thetaIdealUnit
 type: lean
-updated: '2026-07-31T20:14:49'
+updated: '2026-07-31T20:15:25'
 ---
 noncomputable def thetaIdealUnit (i j : A.index) :
     Γ(relCurve C R, A.pieces i ⊓ A.pieces j)ˣ :=

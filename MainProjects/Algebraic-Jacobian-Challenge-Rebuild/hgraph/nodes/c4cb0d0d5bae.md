@@ -8,10 +8,9 @@ docstring: '**Coverage is refuted at every proper `V`, unconditionally at parame
 file: AlgebraicJacobian/Picard/Pic0ChartMonoUnconditional.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.not_pointwiseCoverage_abelSigmaChartZero_of_ne_top
 type: lean
-updated: '2026-07-31T20:14:50'
+updated: '2026-07-31T20:15:27'
 ---
 theorem not_pointwiseCoverage_abelSigmaChartZero_of_ne_top
     (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)

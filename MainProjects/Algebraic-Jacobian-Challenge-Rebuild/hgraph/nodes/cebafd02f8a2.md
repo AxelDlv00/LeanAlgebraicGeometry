@@ -7,10 +7,9 @@ docstring: A field extension gives a singleton fpqc cover of the base field.
 file: AlgebraicJacobian/Picard/Pic0ChartFiniteExtension.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.overSpecFieldExtension_mem_fpqcTopology
 type: lean
-updated: '2026-07-31T20:14:50'
+updated: '2026-07-31T20:15:26'
 ---
 theorem overSpecFieldExtension_mem_fpqcTopology :
     Sieve.generate (Presieve.singleton (overSpec k L).hom) ∈

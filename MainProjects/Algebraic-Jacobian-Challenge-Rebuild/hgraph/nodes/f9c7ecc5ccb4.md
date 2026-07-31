@@ -15,10 +15,9 @@ docstring: 'A canonical choice of the finite projective invertible sections mode
 file: AlgebraicJacobian/Picard/DivisorFamilyAffThetaRestriction.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.AffAdaptation.thetaPieceSectionsModel
 type: lean
-updated: '2026-07-31T20:14:52'
+updated: '2026-07-31T20:15:24'
 ---
 noncomputable def thetaPieceSectionsModel (_A : AffAdaptation D d) (a : ℕ) (j : D.index) :
     (thetaChartDatum C R π a).AffineSectionsModel (D.pieces j) :=

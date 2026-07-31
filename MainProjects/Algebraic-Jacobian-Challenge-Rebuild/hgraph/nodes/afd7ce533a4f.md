@@ -8,10 +8,9 @@ docstring: Where the divisor coefficient vanishes, the piece equation is a stalk
 file: AlgebraicJacobian/Picard/DivisorFamilyAffStalkEval.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.AffAdaptation.isUnit_germ_eqn_of_coeffAt_eq_zero
 type: lean
-updated: '2026-07-31T20:14:49'
+updated: '2026-07-31T20:15:24'
 ---
 lemma isUnit_germ_eqn_of_coeffAt_eq_zero (j : D.index) {z : relCurve C K}
     (hz : z ∈ D.pieces j) (hzg : z ≠ genericPoint (relCurve C K))

@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.Scheme.Hom.pullbackUnitsCocycle_ev
 file: AlgebraicJacobian/Picard/UnitsCocycle.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.Hom.pullbackUnitsCocycle_ev
 type: lean
-updated: '2026-07-31T20:14:51'
+updated: '2026-07-31T20:15:28'
 ---
 lemma pullbackUnitsCocycle_ev (γ : Y.unitsCocycle 𝒰) (x y : X) {T : X.Opens}
     (a : T ⟶ (𝒰.pullback f).opens x) (b : T ⟶ (𝒰.pullback f).opens y) :

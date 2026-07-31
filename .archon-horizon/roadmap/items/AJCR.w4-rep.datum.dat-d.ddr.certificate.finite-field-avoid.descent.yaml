@@ -1,22 +1,17 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.certificate.finite-field-avoid.descent
-title: 'Finite-field avoidance endpoint: support containment and tube assembly (no
-  twist atlas)'
+title: Optional finite-field P1 containment/tube endpoint (no R2 consumer)
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'PENDING, LOW, unowned. The legitimate residue is the finite-field avoidance
-  endpoint: transport the residue support into P1(k), combine image-cardinality injectivity
-  with the ncard <= g bound and the finite-cardinality P1 theorem, then spread the
-  fibre containment to a support tube.
+summary: 'PENDING, LOW, unowned, and not required by R2. Combining the landed support-cardinality
+  bound with the finite-cardinality P1 theorem could yield a containment/tube statement
+  under its explicit field-size hypothesis, but no widened-carrier consumer currently
+  uses it.
 
 
-  Do not build GL2(k)/Aut(P1) actions, twisted fixed-chart atlases, or semilinear/Galois
-  descent whose purpose is to rescue the rejected twist route. The widened arbitrary-affine
-  carrier removes that twist quantifier; any later base-change or descent statement
-  must be formulated for the widened carrier and justified separately.
-
-
-  This row records only the allowed endpoint assembly. Its sibling cardinality and
-  support-degree inputs are landed; no RepresentableBy producer is claimed here.'
+  Do not build GL_2(k)/Aut(P1) actions, twisted fixed-chart atlases, or descent whose
+  purpose is to rescue R1. The chosen R2 route instead uses the subordinate Stacks
+  0B8B affine open containing the finite support. Resume this row only after identifying
+  a concrete consumer independent of the forbidden fixed-chart route.'
 status: pending
 kind: proof
 priority: low
@@ -40,4 +35,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate.finite-field-avoid
   milestone: AJCR.w4-rep
-  updated_at: '2026-07-31T08:21:03.767937+00:00'
+  updated_at: '2026-07-31T12:36:17.030916+00:00'

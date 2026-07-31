@@ -19,10 +19,9 @@ docstring: '**The widened hook extends the chart-typed one along `DivFamZar.toAf
 file: AlgebraicJacobian/Picard/DivisorFamilyAffAbel.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.abelDivAffPlus_toAff
 type: lean
-updated: '2026-07-31T20:14:39'
+updated: '2026-07-31T20:15:23'
 ---
 theorem abelDivAffPlus_toAff {A : Type u} [CommRing A] [Algebra k A]
     {π : C.left ⟶ P1 k} [IsAffineHom π] (F₀ : DivFamZar C A π n) :

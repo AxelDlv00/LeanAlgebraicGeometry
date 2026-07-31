@@ -14,10 +14,9 @@ docstring: '**The Θ-twisted glued colength module `W(d)^{Θᵃ}`** (worksheet �
 file: AlgebraicJacobian/Picard/DivisorFamilyTheta.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DivisorAdaptation.thetaGluedSubmodule
 type: lean
-updated: '2026-07-31T20:14:44'
+updated: '2026-07-31T20:15:25'
 ---
 noncomputable def thetaGluedSubmodule : Submodule R A.chartProd :=
   LinearMap.ker (A.deltaLeft - A.thetaDeltaRight a)

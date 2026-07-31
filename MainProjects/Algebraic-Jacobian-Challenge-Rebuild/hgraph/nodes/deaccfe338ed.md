@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.derivationToDualNumberHom_fst_of_mem
 file: AlgebraicJacobian/Tangent/TangentDualNumbers.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.derivationToDualNumberHom_fst_of_mem
 type: lean
-updated: '2026-07-31T20:14:51'
+updated: '2026-07-31T20:15:29'
 ---
 lemma derivationToDualNumberHom_fst_of_mem (D : Derivation k R (ResidueField R))
     {x : R} (hx : x ∈ maximalIdeal R) :

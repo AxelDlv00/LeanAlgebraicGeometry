@@ -36,10 +36,9 @@ docstring: '**§7.8''s section equation, ring form**: restricting the `ε ↦ 0`
 file: AlgebraicJacobian/Tangent/EpsReductionSquare.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.appLE_dualNumberSections
 type: lean
-updated: '2026-07-31T20:14:44'
+updated: '2026-07-31T20:15:29'
 ---
 theorem appLE_dualNumberSections {W : C.left.Opens}
     (hW : IsCompact (W : Set C.left)) (hW' : IsQuasiSeparated (W : Set C.left))

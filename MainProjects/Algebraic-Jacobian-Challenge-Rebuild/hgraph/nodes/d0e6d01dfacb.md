@@ -16,10 +16,9 @@ docstring: '**And so does the functor carrier `DivFamZar C K π 0`.**  Over a fi
 file: AlgebraicJacobian/Picard/DivisorFamilyDegreeZeroUnique.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.instSubsingletonDivFamZarZero
 type: lean
-updated: '2026-07-31T20:14:50'
+updated: '2026-07-31T20:15:24'
 ---
 instance instSubsingletonDivFamZarZero : Subsingleton (DivFamZar C K pi 0) := by
   refine ⟨fun x y => ?_⟩

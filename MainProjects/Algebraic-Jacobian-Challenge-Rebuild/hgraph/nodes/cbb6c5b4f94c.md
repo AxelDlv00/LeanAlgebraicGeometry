@@ -10,10 +10,9 @@ docstring: 'The seed section, viewed in `K`, is in the kernel of `f_z = kColengt
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivClose.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.ThetaGeneratorSeed.sec_mem_ker_kColengthMap_comp_subtype
 type: lean
-updated: '2026-07-31T20:14:50'
+updated: '2026-07-31T20:15:22'
 ---
 theorem sec_mem_ker_kColengthMap_comp_subtype (z : relCurve C R) :
     (⟨D.sec z, D.sec_mem z⟩ : ↥K) ∈

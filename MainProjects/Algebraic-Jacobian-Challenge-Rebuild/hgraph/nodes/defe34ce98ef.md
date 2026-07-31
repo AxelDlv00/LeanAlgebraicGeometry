@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.DivisorAdaptation.pulledToOvlRight_mk
 file: AlgebraicJacobian/Picard/DivisorFamilyPullbackCert.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DivisorAdaptation.pulledToOvlRight_mk
 type: lean
-updated: '2026-07-31T20:14:51'
+updated: '2026-07-31T20:15:24'
 ---
 lemma pulledToOvlRight_mk (i j : A.index)
     (x : Γ(relCurve C R', (A.toFinCoverData.baseChange R').pieces j)) :

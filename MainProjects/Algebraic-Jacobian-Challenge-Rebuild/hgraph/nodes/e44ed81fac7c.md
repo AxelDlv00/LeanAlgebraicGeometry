@@ -29,10 +29,9 @@ docstring: '**THE CONVERSE: surjectivity FORCES the vanishing.**
 file: AlgebraicJacobian/Picard/Pic0ChartSeamPairDecided.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.subsingleton_pic0Subgroup_of_surjective_app
 type: lean
-updated: '2026-07-31T20:14:51'
+updated: '2026-07-31T20:15:27'
 ---
 theorem subsingleton_pic0Subgroup_of_surjective_app
     (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)

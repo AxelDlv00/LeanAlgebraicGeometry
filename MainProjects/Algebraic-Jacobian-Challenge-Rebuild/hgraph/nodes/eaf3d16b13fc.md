@@ -10,10 +10,9 @@ docstring: 'An `A`-algebra map composed with the structure map of `R` is the str
 file: AlgebraicJacobian/Picard/EffectivityPieceBridge.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.restrictScalars_comp_ofId
 type: lean
-updated: '2026-07-31T20:14:52'
+updated: '2026-07-31T20:15:25'
 ---
 lemma restrictScalars_comp_ofId (j : R →ₐ[A] R') :
     (j.restrictScalars k).comp ((Algebra.ofId A R).restrictScalars k)

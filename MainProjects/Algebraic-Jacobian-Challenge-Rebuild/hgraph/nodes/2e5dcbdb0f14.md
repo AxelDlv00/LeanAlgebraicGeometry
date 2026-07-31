@@ -55,10 +55,9 @@ docstring: '**B-5''s fibre step** (`w4-datb` §1.2 steps 4–5, run at the split
 file: AlgebraicJacobian/Picard/Pic0ChartCoverageFibre.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.exists_isSplitWitness_of_drop
 type: lean
-updated: '2026-07-31T20:14:41'
+updated: '2026-07-31T20:15:26'
 ---
 theorem exists_isSplitWitness_of_drop {K : Type u} [Field K] [Algebra k K]
     (μ : picEt C (overSpec k K)) (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)

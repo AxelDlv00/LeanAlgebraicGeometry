@@ -12,10 +12,9 @@ docstring: 'The image of the genuine chart-reading ideal in the colength ring
 file: AlgebraicJacobian/Picard/DivSchemeRedesignChartReadIdeal.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.ThetaGeneratorSeed.chartIdealColengthModule
 type: lean
-updated: '2026-07-31T20:14:50'
+updated: '2026-07-31T20:15:22'
 ---
 noncomputable def chartIdealColengthModule
     (K : Submodule R (relThetaSections C R π a)) (b : Bool)

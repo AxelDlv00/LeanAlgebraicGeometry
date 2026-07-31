@@ -9,10 +9,9 @@ docstring: 'Glued values are unique — from the Zariski separation over a basic
 file: AlgebraicJacobian/Picard/DivisorFamilyZarSheaf.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.divFamZar.glueValue_unique
 type: lean
-updated: '2026-07-31T20:14:50'
+updated: '2026-07-31T20:15:25'
 ---
 theorem glueValue_unique (hcov : ∀ p : T.left, ∃ i, p ∈ O i)
     {W : T.left.affineOpens} {z z' : DivFamZar C Γ(T.left, W.1) π n}

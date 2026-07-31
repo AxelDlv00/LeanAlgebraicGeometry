@@ -11,10 +11,9 @@ file: AlgebraicJacobian/Picard/EffectivityPieceClass.lean
 generated: lean
 lean_status: lean_ok
 private: true
-stale: true
 title: AlgebraicGeometry.Over.pieceCoherent_exp₁₃
 type: lean
-updated: '2026-07-31T20:14:52'
+updated: '2026-07-31T20:15:25'
 ---
 private theorem pieceCoherent_exp₁₃
     {𝒩 : (XB).PointedCover} {γ : (XB).unitsCocycle 𝒩}

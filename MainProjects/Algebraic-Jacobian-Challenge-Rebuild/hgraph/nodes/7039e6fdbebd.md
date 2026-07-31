@@ -20,10 +20,9 @@ docstring: '**A twisting datum for a widened cover**, carrying what the Θ-layer
 file: AlgebraicJacobian/Picard/DivisorFamilyAffThetaTyping.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.ThetaTrivData
 type: lean
-updated: '2026-07-31T20:14:45'
+updated: '2026-07-31T20:15:24'
 ---
 structure ThetaTrivData (D : AffCoverData C R) (a : ℕ) where
   /-- The local reading of a global theta section on the piece: a trivialization of `𝒪(Θᵃ)`

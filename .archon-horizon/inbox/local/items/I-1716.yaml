@@ -13,13 +13,13 @@ body: 'SURJ PROTOTYPE
   htw/map_sub then sub_self. Full exact code is in the /root/surj_prototype transcript.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: task:pic-d
 author: horizon
 source_ref: null
 created_at: '2026-07-31T11:08:38.064068+00:00'
-updated_at: '2026-07-31T11:08:38.064082+00:00'
+updated_at: '2026-07-31T12:20:31.578042+00:00'
 metadata:
   conversation: true
   participants:

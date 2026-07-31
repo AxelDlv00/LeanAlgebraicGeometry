@@ -16,10 +16,9 @@ docstring: '**DG-G0.δ, separability of each stage.**  Every finite subextension
 file: AlgebraicJacobian/Picard/PicRepColimitResidual.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DatG0.isSeparable_finSubext
 type: lean
-updated: '2026-07-31T20:14:44'
+updated: '2026-07-31T20:15:28'
 ---
 instance isSeparable_finSubext [Algebra.IsSeparable k K] (L : FinSubext k K) :
     Algebra.IsSeparable k L.1 :=

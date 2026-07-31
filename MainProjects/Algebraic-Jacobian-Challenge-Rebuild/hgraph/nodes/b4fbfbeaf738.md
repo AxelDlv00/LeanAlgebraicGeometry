@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.AffAdaptation.relFiberCoordSidePow_false
 file: AlgebraicJacobian/Picard/DivisorFamilyAffTheta.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.AffAdaptation.relFiberCoordSidePow_false
 type: lean
-updated: '2026-07-31T20:14:49'
+updated: '2026-07-31T20:15:24'
 ---
 lemma relFiberCoordSidePow_false (n : ℕ) :
     relFiberCoordSidePow (C := C) (R := R) (π := π) n false

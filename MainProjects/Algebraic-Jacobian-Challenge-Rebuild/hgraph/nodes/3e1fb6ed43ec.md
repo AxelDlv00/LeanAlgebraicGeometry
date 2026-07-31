@@ -15,10 +15,9 @@ docstring: '**The germ of a widened equation spans the stalk ideal of the family
 file: AlgebraicJacobian/Picard/DivisorFamilyAffTheta.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.AffAdaptation.germ_eqn_span_eq_stalkIdeal
 type: lean
-updated: '2026-07-31T20:14:42'
+updated: '2026-07-31T20:15:24'
 ---
 theorem germ_eqn_span_eq_stalkIdeal (j : D.index) {z : relCurve C R}
     (hz : z ∈ D.pieces j) :

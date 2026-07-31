@@ -36,10 +36,9 @@ docstring: '**And every open is `⊥` or `⊤`, so there is nothing else to try.
 file: AlgebraicJacobian/Picard/Pic0ChartMonoUnconditional.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.no_proper_open_abelSigmaChartZero
 type: lean
-updated: '2026-07-31T20:14:50'
+updated: '2026-07-31T20:15:27'
 ---
 theorem no_proper_open_abelSigmaChartZero
     (V : (Over.mk (𝟙 (Spec (CommRingCat.of k)))).left.Opens) :

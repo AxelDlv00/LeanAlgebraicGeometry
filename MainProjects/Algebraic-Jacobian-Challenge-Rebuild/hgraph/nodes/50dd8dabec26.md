@@ -30,10 +30,9 @@ docstring: '**Index separation, at tests that have a point**: two charts with di
 file: AlgebraicJacobian/Picard/Pic0ChartMultiIndexInterval.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.IndexSeparated
 type: lean
-updated: '2026-07-31T20:14:43'
+updated: '2026-07-31T20:15:27'
 ---
 def IndexSeparated {ι : Type u} {X : ι → Scheme.{u}}
     (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1) : Prop :=

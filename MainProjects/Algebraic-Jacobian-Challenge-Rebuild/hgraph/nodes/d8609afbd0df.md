@@ -12,10 +12,9 @@ docstring: '**(C1) étale separatedness, functor level**: the unit component `re
 file: AlgebraicJacobian/Picard/PicEtUnitFieldComparison.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.relPicToPicEt_injective
 type: lean
-updated: '2026-07-31T20:14:51'
+updated: '2026-07-31T20:15:28'
 ---
 theorem relPicToPicEt_injective (A : Type u) [CommRing A] [Algebra k A] :
     Function.Injective (relPicToPicEt C (overSpec k A)) := fun x y h => by

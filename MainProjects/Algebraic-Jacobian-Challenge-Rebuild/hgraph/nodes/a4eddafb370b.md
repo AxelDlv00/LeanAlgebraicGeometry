@@ -10,10 +10,9 @@ docstring: '**The trivializing unit of the pulled point system**: the pullback `
 file: AlgebraicJacobian/RiemannRoch/DegreeBaseFieldInvariance.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.pointTransitionUnit
 type: lean
-updated: '2026-07-31T20:14:48'
+updated: '2026-07-31T20:15:28'
 ---
 noncomputable def pointTransitionUnit (φ : K₁ →ₐ[k] K₂) {x' : (C ⊗ overSpec k K₁).left}
     (hx' : x' ≠ genericPoint (C ⊗ overSpec k K₁).left) :

@@ -37,10 +37,9 @@ docstring: '**Over a field, every widened locally certified system is divisor-eq
 file: AlgebraicJacobian/Picard/DivisorFamilyAffClassDegree.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.exists_certifiedAff_divEq
 type: lean
-updated: '2026-07-31T20:14:42'
+updated: '2026-07-31T20:15:23'
 ---
 theorem exists_certifiedAff_divEq (d : (relCurve C K).LocalEquations)
     (hd : IsLocallyCertifiedAff n d) :

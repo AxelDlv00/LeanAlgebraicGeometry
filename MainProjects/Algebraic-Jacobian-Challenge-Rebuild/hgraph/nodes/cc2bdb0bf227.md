@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.AffAdaptation.map_ker_lTensor_delta
 file: AlgebraicJacobian/Picard/DivisorFamilyAffCert.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.AffAdaptation.map_ker_lTensor_delta
 type: lean
-updated: '2026-07-31T20:14:50'
+updated: '2026-07-31T20:15:23'
 ---
 lemma map_ker_lTensor_delta :
     (LinearMap.ker (AlgebraTensorModule.lTensor R' R' (A.deltaLeft - A.deltaRight))).map

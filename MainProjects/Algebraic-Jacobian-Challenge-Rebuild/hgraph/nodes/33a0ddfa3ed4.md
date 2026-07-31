@@ -12,10 +12,9 @@ docstring: '**The classified morphism, packaged over `Spec k`**: the clause-sati
 file: AlgebraicJacobian/Picard/DivRepClassifyZar.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.exists_overHom_isDivRepClassify
 type: lean
-updated: '2026-07-31T20:14:42'
+updated: '2026-07-31T20:15:20'
 ---
 theorem exists_overHom_isDivRepClassify (F₀ : DivFamZar C S π g) :
     ∃ u : overSpec k S ⟶

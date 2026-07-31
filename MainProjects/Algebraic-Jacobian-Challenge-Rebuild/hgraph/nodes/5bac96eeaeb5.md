@@ -48,10 +48,9 @@ docstring: '**A dense working `V` in a reduced separated ambient scheme is `⊤`
 file: AlgebraicJacobian/Picard/Pic0ChartSeamCollapse.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.eq_top_of_retraction_of_isDominant
 type: lean
-updated: '2026-07-31T20:14:44'
+updated: '2026-07-31T20:15:27'
 ---
 theorem eq_top_of_retraction_of_isDominant {X : Scheme.{u}} [IsReduced X] [X.IsSeparated]
     (V : X.Opens) [IsDominant (V.ι)]

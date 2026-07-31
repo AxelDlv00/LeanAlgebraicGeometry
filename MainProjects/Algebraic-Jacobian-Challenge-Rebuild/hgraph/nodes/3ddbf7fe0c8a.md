@@ -19,10 +19,9 @@ docstring: '**THE REFUTATION OF UNIQUENESS.**  At `2 ≤ h⁰` no effective divi
 file: AlgebraicJacobian/RiemannRoch/EffectiveNonUniqueness.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.CurveDivisor.not_forall_eq_of_two_le_h0
 type: lean
-updated: '2026-07-31T20:14:42'
+updated: '2026-07-31T20:15:29'
 ---
 theorem CurveDivisor.not_forall_eq_of_two_le_h0
     (hO : Sheaf.h0 (X.moduleKSheaf K) = 1) {A : X.CurveDivisor} (hA : 0 ≤ A)

@@ -43,10 +43,9 @@ docstring: '**The effectivity leg with NO arithmetic hypothesis left**: on a cur
 file: AlgebraicJacobian/Picard/JacobianDataAbelDegreeWindow.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.exists_effective_of_classDeg_eq_zero_of_toP1
 type: lean
-updated: '2026-07-31T20:14:49'
+updated: '2026-07-31T20:15:26'
 ---
 theorem exists_effective_of_classDeg_eq_zero_of_toP1 (g : ℕ)
     (hχ : Sheaf.chi (Y.moduleKSheaf K) = 1 - (g : ℤ))

@@ -7,10 +7,9 @@ docstring: The widened inverse-twisted glued module as an `A_D`-submodule.
 file: AlgebraicJacobian/Picard/DivisorFamilyAffTheta.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.AffAdaptation.thetaInvSpan
 type: lean
-updated: '2026-07-31T20:14:52'
+updated: '2026-07-31T20:15:24'
 ---
 noncomputable def thetaInvSpan : Submodule ↥(gluedSubalgebra A) A.chartProd :=
   unitGluedOver A (thetaOvlUnit τ a)⁻¹

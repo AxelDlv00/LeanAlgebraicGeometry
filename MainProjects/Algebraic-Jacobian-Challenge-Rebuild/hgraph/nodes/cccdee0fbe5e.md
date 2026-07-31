@@ -23,10 +23,9 @@ docstring: '**(T3-5): the two-chart Čech `Ȟ¹`-of-units groups of `C.left` and
 file: AlgebraicJacobian/Tangent/CollapseCechH1.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.collapseCechH1Equiv
 type: lean
-updated: '2026-07-31T20:14:50'
+updated: '2026-07-31T20:15:29'
 ---
 noncomputable def collapseCechH1Equiv
     (hc : ∀ s, IsCompact ((V s : Set C.left))) (hq : ∀ s, IsQuasiSeparated ((V s : Set C.left)))

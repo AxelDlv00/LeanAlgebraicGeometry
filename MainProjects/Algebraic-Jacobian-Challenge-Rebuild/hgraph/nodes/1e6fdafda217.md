@@ -13,10 +13,9 @@ docstring: '**The unit locus only depends on the divisor.**  Two `DivEq` systems
 file: AlgebraicJacobian/Picard/DivSchemeCertZarConfine.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.LocalEquations.DivEq.unitLocus_eq
 type: lean
-updated: '2026-07-31T20:14:41'
+updated: '2026-07-31T20:15:21'
 ---
 theorem DivEq.unitLocus_eq {d₁ d₂ : X.LocalEquations} (h : DivEq d₁ d₂) :
     (d₁.unitLocus : Set X) = (d₂.unitLocus : Set X) := by

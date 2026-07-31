@@ -10,10 +10,9 @@ docstring: 'A base coordinate of the pointwise vector cuts a basic open containi
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwiseGenerator.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.PointwiseAchiever.exists_pointwiseBaseCutter
 type: lean
-updated: '2026-07-31T20:14:51'
+updated: '2026-07-31T20:15:23'
 ---
 theorem exists_pointwiseBaseCutter (z : relCurve C RZ) :
     ∃ f : RZ,

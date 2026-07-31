@@ -13,10 +13,9 @@ file: AlgebraicJacobian/Picard/FlatCokernel.lean
 generated: lean
 lean_status: lean_ok
 private: true
-stale: true
 title: LinearMap.lTensor_barMap_injective_of_flat_coker
 type: lean
-updated: '2026-07-31T20:14:52'
+updated: '2026-07-31T20:15:25'
 ---
 private theorem lTensor_barMap_injective_of_flat_coker
     [Module.Flat R (N ⧸ LinearMap.range δ)]

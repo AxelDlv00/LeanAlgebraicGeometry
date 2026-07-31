@@ -35,10 +35,9 @@ docstring: '**The truncated-exponential Čech kernel computation of `H¹`** (Kle
 file: AlgebraicJacobian/Tangent/TruncExpCechH1.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.TwoCover.h1AddEquivTruncExpCechKernel
 type: lean
-updated: '2026-07-31T20:14:51'
+updated: '2026-07-31T20:15:29'
 ---
 noncomputable def h1AddEquivTruncExpCechKernel (hcov : U₀ ⊔ U₁ = ⊤)
     (hU₀ : IsAffineOpen U₀) (hU₁ : IsAffineOpen U₁) :

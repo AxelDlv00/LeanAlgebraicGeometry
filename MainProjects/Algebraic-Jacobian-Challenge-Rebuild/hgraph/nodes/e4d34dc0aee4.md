@@ -7,10 +7,9 @@ docstring: '`Θ_{I,K}` restricted along the structure map of `S_K` is `ι^R ∘ 
 file: AlgebraicJacobian/Picard/GrassmannianCocycle.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Grassmannian.cocycleΘIK_comp_algebraMap
 type: lean
-updated: '2026-07-31T20:14:51'
+updated: '2026-07-31T20:15:25'
 ---
 theorem cocycleΘIK_comp_algebraMap (k : Type u) [Field k] (d r : ℕ)
     (I J K : Finset (Fin r)) (hI : I.card = d) (hJ : J.card = d) (hK : K.card = d) :

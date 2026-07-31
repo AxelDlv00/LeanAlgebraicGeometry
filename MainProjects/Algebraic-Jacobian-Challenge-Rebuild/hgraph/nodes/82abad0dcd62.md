@@ -47,10 +47,9 @@ docstring: '**THE PRODUCER, with the datum supplied**: if `μ` is the unit image
 file: AlgebraicJacobian/Picard/Pic0ChartPlusFibreProducer.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.isChartDatumPlusFibre_of_relPicToPicEt
 type: lean
-updated: '2026-07-31T20:14:47'
+updated: '2026-07-31T20:15:27'
 ---
 theorem isChartDatumPlusFibre_of_relPicToPicEt {A : Type u} [CommRing A] [Algebra k A]
     (L₀ : (C ⊗ overSpec k A).left.CechPic) (D : BasicOpenCocycleDatum C A π)

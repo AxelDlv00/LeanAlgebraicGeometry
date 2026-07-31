@@ -7,10 +7,9 @@ docstring: '**Degree is monotone** on the divisor lattice.'
 file: AlgebraicJacobian/RiemannRoch/SectionSpaces.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.CurveDivisor.deg_mono
 type: lean
-updated: '2026-07-31T20:14:51'
+updated: '2026-07-31T20:15:29'
 ---
 lemma Scheme.CurveDivisor.deg_mono {D D' : X.CurveDivisor} (h : D ≤ D') :
     CurveDivisor.deg K D ≤ CurveDivisor.deg K D' := by

@@ -7,10 +7,9 @@ docstring: 'Every δ stage is a one-point (hence compact) space: `Spec` of a fie
 file: AlgebraicJacobian/Picard/PicRepColimitMountain.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DatG0.deltaSchemeDiagram_compactSpace
 type: lean
-updated: '2026-07-31T20:14:44'
+updated: '2026-07-31T20:15:28'
 ---
 instance deltaSchemeDiagram_compactSpace (L : (FinSubext k K)ᵒᵖ) :
     CompactSpace ((deltaSchemeDiagram.obj L).left) :=

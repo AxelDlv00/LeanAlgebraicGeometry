@@ -27,10 +27,9 @@ docstring: '**The converse of DivEq-invariance** (`informal/spec-dd-1.md` §3 (f
 file: AlgebraicJacobian/Picard/DivisorFamilyFieldEquiv.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.divEq_of_presentationDivisor_eq
 type: lean
-updated: '2026-07-31T20:14:50'
+updated: '2026-07-31T20:15:24'
 ---
 theorem divEq_of_presentationDivisor_eq {d₁ d₂ : X.LocalEquations}
     (h : presentationDivisor K d₁.presentation = presentationDivisor K d₂.presentation) :

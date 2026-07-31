@@ -14,10 +14,9 @@ docstring: 'Flatness of the target cokernel forces the fibre kernel to be genera
 file: AlgebraicJacobian/Picard/DivSchemeHighWindowSyzygy.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.ker_rTensor_le_range_subtype_of_flat_range_quotient
 type: lean
-updated: '2026-07-31T20:14:48'
+updated: '2026-07-31T20:15:22'
 ---
 theorem ker_rTensor_le_range_subtype_of_flat_range_quotient
     (δ : M →ₗ[R] N)

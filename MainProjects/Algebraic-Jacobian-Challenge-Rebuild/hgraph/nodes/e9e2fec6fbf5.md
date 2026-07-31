@@ -16,10 +16,9 @@ docstring: '**Hence the Abel chart is injective on the points of every test**, u
 file: AlgebraicJacobian/Picard/Pic0ChartLocusFibreGuard.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.injective_abelSigmaChart_of_isChartLocusFibre
 type: lean
-updated: '2026-07-31T20:14:52'
+updated: '2026-07-31T20:15:27'
 ---
 theorem injective_abelSigmaChart_of_isChartLocusFibre
     (h : IsChartLocusFibre C π n rep m Z hdeg) (T : Scheme.{u}ᵒᵖ) :

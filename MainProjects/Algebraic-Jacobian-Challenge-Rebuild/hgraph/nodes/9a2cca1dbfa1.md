@@ -8,10 +8,9 @@ docstring: The theta divisor lies in the class of the `K`-level whole-chart thet
 file: AlgebraicJacobian/Picard/DivisorFamilyFieldDictionaryCore.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.picClass_thetaFieldDivisor
 type: lean
-updated: '2026-07-31T20:14:48'
+updated: '2026-07-31T20:15:24'
 ---
 theorem picClass_thetaFieldDivisor :
     Scheme.CurveDivisor.picClass K (thetaFieldDivisor C K π a)

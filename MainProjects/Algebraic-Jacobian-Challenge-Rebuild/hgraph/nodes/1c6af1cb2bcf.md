@@ -11,10 +11,9 @@ docstring: 'Step 3 of `overDualNumberAtEquivAlgHom`: ring homomorphisms out of t
 file: AlgebraicJacobian/Tangent/TangentStalkAlgebra.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.stalkHomCompatEquivAlgHom
 type: lean
-updated: '2026-07-31T20:14:40'
+updated: '2026-07-31T20:15:29'
 ---
 noncomputable def stalkHomCompatEquivAlgHom
     (X : Over (Spec (CommRingCat.of k))) (x : X.left) :

@@ -12,10 +12,9 @@ docstring: 'A chart section all of whose germs lie in the stalk ideals of `d` re
 file: AlgebraicJacobian/Picard/DivisorFamilyThetaSurj.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DivisorAdaptation.res_mem_span_eqn_inl_of_forall_germ
 type: lean
-updated: '2026-07-31T20:14:53'
+updated: '2026-07-31T20:15:25'
 ---
 lemma res_mem_span_eqn_inl_of_forall_germ
     {α : Γ(relCurve C R, (relCover C R (fiberTwoCover π)).V₀)}

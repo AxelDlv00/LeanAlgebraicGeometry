@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.skyComponent_of_not_mem
 file: AlgebraicJacobian/RiemannRoch/Devissage.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.skyComponent_of_not_mem
 type: lean
-updated: '2026-07-31T20:14:40'
+updated: '2026-07-31T20:15:28'
 ---
 lemma skyComponent_of_not_mem (W : (X.Opens)ᵒᵖ) (hxW : x ∉ unop W) :
     skyComponent K hx D W = 0 := by

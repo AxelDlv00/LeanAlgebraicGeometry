@@ -7,10 +7,9 @@ docstring: The graph point lies in the product chart `𝔚(U, ⊤)`.
 file: AlgebraicJacobian/RiemannRoch/GraphChart.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.graphPoint_mem_productChart
 type: lean
-updated: '2026-07-31T20:14:40'
+updated: '2026-07-31T20:15:29'
 ---
 lemma graphPoint_mem_productChart :
     Over.graphPoint C t

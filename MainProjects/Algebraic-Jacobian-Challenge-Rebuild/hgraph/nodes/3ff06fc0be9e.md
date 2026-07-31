@@ -24,10 +24,9 @@ docstring: '**Leak-freeness over a base open gives the assembler''s fibrewise cl
 file: AlgebraicJacobian/Picard/DivSchemeCertZarLeak.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.LocalEquations.forall_fibre_closure_subset_of_supportLeak_inter_eq_empty
 type: lean
-updated: '2026-07-31T20:14:42'
+updated: '2026-07-31T20:15:21'
 ---
 theorem forall_fibre_closure_subset_of_supportLeak_inter_eq_empty
     (f : X ⟶ Spec (CommRingCat.of R)) (U : X.Opens) {V : Set (Spec (CommRingCat.of R))}

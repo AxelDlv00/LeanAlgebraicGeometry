@@ -10,10 +10,9 @@ docstring: 'Vanishing of a truncated-exponential kernel class: `[1 + b ε] = 0` 
 file: AlgebraicJacobian/Tangent/TruncExpCechH1.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.TwoCover.truncExpClass_eq_zero_iff
 type: lean
-updated: '2026-07-31T20:14:43'
+updated: '2026-07-31T20:15:29'
 ---
 theorem truncExpClass_eq_zero_iff (b : Γ(X, U₀ ⊓ U₁)) :
     truncExpClass X U₀ U₁ b = 0

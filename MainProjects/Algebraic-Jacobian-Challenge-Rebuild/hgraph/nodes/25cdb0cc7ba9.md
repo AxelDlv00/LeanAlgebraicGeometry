@@ -33,10 +33,9 @@ docstring: '**On an irreducible scheme every nonempty open is dominant.**
 file: AlgebraicJacobian/Picard/Pic0ChartSeamCollapse.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.isDominant_opens_ι_of_irreducibleSpace
 type: lean
-updated: '2026-07-31T20:14:41'
+updated: '2026-07-31T20:15:27'
 ---
 theorem isDominant_opens_ι_of_irreducibleSpace {X : Scheme.{u}} [IrreducibleSpace X]
     (V : X.Opens) (hne : (V : Set X).Nonempty) :

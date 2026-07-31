@@ -10,10 +10,9 @@ docstring: '**(E-i) Normalization** (the definitional anchor): the degree of the
 file: AlgebraicJacobian/RiemannRoch/Degree.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.classDeg_picClass
 type: lean
-updated: '2026-07-31T20:14:47'
+updated: '2026-07-31T20:15:28'
 ---
 theorem classDeg_picClass (D : X.CurveDivisor) :
     classDeg K (CurveDivisor.picClass K D) = CurveDivisor.deg K D :=

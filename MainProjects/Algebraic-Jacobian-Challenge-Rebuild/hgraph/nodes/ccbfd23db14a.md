@@ -11,10 +11,9 @@ docstring: '**The tower transport of the window point, carrier-free** — the an
 file: AlgebraicJacobian/Picard/DivisorFamilyAffFrameCover.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.map_divisorWindowGrOfQuot
 type: lean
-updated: '2026-07-31T20:14:50'
+updated: '2026-07-31T20:15:23'
 ---
 theorem map_divisorWindowGrOfQuot (d : (relCurve C R).LocalEquations)
     [Module.Finite R ((R ⊗[k]

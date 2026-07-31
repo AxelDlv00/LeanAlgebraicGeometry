@@ -7,10 +7,9 @@ docstring: The finite field-level universal multiplication map is surjective.
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivSecondWindowMap.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.divUniversalFibreMulMap_surjective
 type: lean
-updated: '2026-07-31T20:14:51'
+updated: '2026-07-31T20:15:23'
 ---
 theorem divUniversalFibreMulMap_surjective
     (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)

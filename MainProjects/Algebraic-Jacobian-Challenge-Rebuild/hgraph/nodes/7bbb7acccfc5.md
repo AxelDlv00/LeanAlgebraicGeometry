@@ -16,10 +16,9 @@ docstring: '**The closed-trace from an empty leak**: the trace `V \ D(g)` of the
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivColFin.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.isClosed_sdiff_basicOpen_of_closure_subset
 type: lean
-updated: '2026-07-31T20:14:46'
+updated: '2026-07-31T20:15:22'
 ---
 theorem isClosed_sdiff_basicOpen_of_closure_subset {X : Scheme.{u}} {V : X.Opens}
     (g : Γ(X, V))

@@ -8,10 +8,9 @@ docstring: Multiplying the cofactor by the restricted widened equation returns t
 file: AlgebraicJacobian/Picard/DivisorFamilyAffThetaKernel.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.AffAdaptation.eqn_mul_eqnDiv
 type: lean
-updated: '2026-07-31T20:14:52'
+updated: '2026-07-31T20:15:24'
 ---
 lemma eqn_mul_eqnDiv (A : AffAdaptation D d) (j : D.index)
     {W : (relCurve C R).Opens} (hW : W ≤ D.pieces j) (s : Γ(relCurve C R, W))

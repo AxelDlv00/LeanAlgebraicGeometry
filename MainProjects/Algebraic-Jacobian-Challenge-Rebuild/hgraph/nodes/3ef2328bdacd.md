@@ -7,10 +7,9 @@ docstring: The chart-1 assembly of a global datum section, on `⊤ ⊓ V₁`.
 file: AlgebraicJacobian/Picard/DivSchemeCertificate.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DivisorAdaptation.gluedVanishingSnd
 type: lean
-updated: '2026-07-31T20:14:42'
+updated: '2026-07-31T20:15:21'
 ---
 noncomputable def gluedVanishingSnd (s : A.ThetaIdealSections a ⊤) :
     Γ(relCurve C R, ⊤ ⊓ (relCover C R (fiberTwoCover π)).V₁) :=

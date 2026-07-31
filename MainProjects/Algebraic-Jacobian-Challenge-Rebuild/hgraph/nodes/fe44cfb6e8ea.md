@@ -15,10 +15,9 @@ docstring: '**The kernel form of the quotient-level square**: a two-chart Čech 
 file: AlgebraicJacobian/Tangent/TwoChartQuotientNaturality.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.map_twoChartClass_eq_one_iff
 type: lean
-updated: '2026-07-31T20:14:53'
+updated: '2026-07-31T20:15:29'
 ---
 theorem map_twoChartClass_eq_one_iff (f : X ⟶ Y) (sel : Y → Bool) (hmem : ∀ y, y ∈ V (sel y))
     (hsel : Function.Surjective sel)

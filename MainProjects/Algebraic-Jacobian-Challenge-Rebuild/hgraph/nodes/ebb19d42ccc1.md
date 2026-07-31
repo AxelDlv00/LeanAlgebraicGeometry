@@ -10,10 +10,9 @@ docstring: 'Under the existing widened certificate, every intrinsic theta restri
 file: AlgebraicJacobian/Picard/DivisorFamilyAffThetaRestriction.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.AffAdaptation.IsCertified.projective_thetaPieceRestriction
 type: lean
-updated: '2026-07-31T20:14:52'
+updated: '2026-07-31T20:15:24'
 ---
 theorem IsCertified.projective_thetaPieceRestriction (A : AffAdaptation D d) {n : ℕ}
     (hc : A.IsCertified n) (a : ℕ) (j : D.index) :

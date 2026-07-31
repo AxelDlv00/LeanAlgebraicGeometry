@@ -19,10 +19,9 @@ docstring: '**W3 conjugated onto the scheme-level double overlap**: the two char
 file: AlgebraicJacobian/Picard/DivSchemeClassifyGlobal.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.pullback_chartMap_compat
 type: lean
-updated: '2026-07-31T20:14:42'
+updated: '2026-07-31T20:15:21'
 ---
 theorem pullback_chartMap_compat (F : DivFam C S π g) (fa fb : S)
     {i i' : (glueData k g r₁).J} {j j' : (glueData k g r₂).J}

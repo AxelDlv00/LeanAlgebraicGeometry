@@ -12,10 +12,9 @@ docstring: '**Base change of the glued colength module** (the (c2) keystone): un
 file: AlgebraicJacobian/Picard/DivisorFamilyPullbackGlued.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DivisorAdaptation.gluedBaseChange
 type: lean
-updated: '2026-07-31T20:14:50'
+updated: '2026-07-31T20:15:24'
 ---
 noncomputable def gluedBaseChange
     [Module.Flat R (A.chartProd ⧸ A.gluedSubmodule)]

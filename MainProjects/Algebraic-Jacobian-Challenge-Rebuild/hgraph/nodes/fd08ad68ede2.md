@@ -28,10 +28,9 @@ docstring: '**The datum presents `μ` at every residue field, as plus classes** 
 file: AlgebraicJacobian/Picard/Pic0ChartPresentationHalf.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.IsChartDatumPlusFibre
 type: lean
-updated: '2026-07-31T20:14:52'
+updated: '2026-07-31T20:15:27'
 ---
 def IsChartDatumPlusFibre {A : Type u} [CommRing A] [Algebra k A]
     (μ : picEt C (overSpec k A)) (D : BasicOpenCocycleDatum C A π) : Prop :=

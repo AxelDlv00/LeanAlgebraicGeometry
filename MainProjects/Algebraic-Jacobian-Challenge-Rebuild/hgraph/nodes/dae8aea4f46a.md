@@ -8,10 +8,9 @@ docstring: Arbitrary-exponent multiplication for base-field relative theta secti
 file: AlgebraicJacobian/Picard/DivSchemeWindowMulGeneral.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.resHom_relThetaFieldSection_thetaWindowMul_fst
 type: lean
-updated: '2026-07-31T20:14:51'
+updated: '2026-07-31T20:15:23'
 ---
 theorem resHom_relThetaFieldSection_thetaWindowMul_fst (p q : Nat)
     (a : ↥(divisorSections k (p • fiberWeilDivisor pi) ⊤))

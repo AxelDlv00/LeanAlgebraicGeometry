@@ -7,10 +7,9 @@ docstring: Properness, keyed on the bundled base-changed curve.
 file: AlgebraicJacobian/Picard/Pic0FiniteSeparablePoint.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.instIsProperBaseChangeBundle
 type: lean
-updated: '2026-07-31T20:14:41'
+updated: '2026-07-31T20:15:27'
 ---
 instance instIsProperBaseChangeBundle : IsProper (baseChangeBundle C L).hom :=
   instIsProperSndLeft C L

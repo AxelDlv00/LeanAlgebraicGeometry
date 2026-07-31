@@ -15,10 +15,9 @@ docstring: '**The naturality square of the bridge, in the slice.**  `Pic0ChartTe
 file: AlgebraicJacobian/Picard/Pic0ChartLocusIsoInvariance.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.testPoint_comp
 type: lean
-updated: '2026-07-31T20:14:47'
+updated: '2026-07-31T20:15:27'
 ---
 theorem testPoint_comp {T T' : Over (Spec (.of k))} (f : T' ⟶ T) (t : T'.left) :
     testPoint t ≫ f

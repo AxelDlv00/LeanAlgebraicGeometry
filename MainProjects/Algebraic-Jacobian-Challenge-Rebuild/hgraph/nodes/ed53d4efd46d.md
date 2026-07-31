@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.FinCoverData.toAffCoverData_pieces
 file: AlgebraicJacobian/Picard/DivisorFamilyAffCover.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.FinCoverData.toAffCoverData_pieces
 type: lean
-updated: '2026-07-31T20:14:52'
+updated: '2026-07-31T20:15:23'
 ---
 lemma toAffCoverData_pieces (j : Fin (D.m₀ + D.m₁)) :
     D.toAffCoverData.pieces j = D.pieces (finSumFinEquiv.symm j) := rfl

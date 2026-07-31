@@ -13,10 +13,9 @@ docstring: 'Step 1 read at an explicit system and pin, for a caller who has just
 file: AlgebraicJacobian/Picard/DivisorFamilyAffAwayRep.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DivFamZarAff.exists_certified_away_rep_of_mk
 type: lean
-updated: '2026-07-31T20:14:45'
+updated: '2026-07-31T20:15:23'
 ---
 theorem DivFamZarAff.exists_certified_away_rep_of_mk
     {d : (relCurve C S).LocalEquations} (hd : IsLocallyCertifiedAff n d) :

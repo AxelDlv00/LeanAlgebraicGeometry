@@ -10,10 +10,9 @@ docstring: 'The stalk evaluation of a piece over the supported points it sees, a
 file: AlgebraicJacobian/Picard/DivisorFamilyAffStalkEval.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.AffAdaptation.pieceStalkEval
 type: lean
-updated: '2026-07-31T20:14:51'
+updated: '2026-07-31T20:15:24'
 ---
 noncomputable def pieceStalkEval (j : D.index) :
     A.colength j →ₗ[K]

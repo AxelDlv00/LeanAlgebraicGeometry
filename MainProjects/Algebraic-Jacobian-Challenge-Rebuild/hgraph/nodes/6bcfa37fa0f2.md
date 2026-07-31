@@ -10,10 +10,9 @@ docstring: '**Twists multiply**: the componentwise product of a `u`-twisted and 
 file: AlgebraicJacobian/Picard/DivisorFamilyAffTheta.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.AffAdaptation.mul_mem_unitGluedSubmodule
 type: lean
-updated: '2026-07-31T20:14:45'
+updated: '2026-07-31T20:15:24'
 ---
 theorem mul_mem_unitGluedSubmodule {s t : A.chartProd}
     (hs : s ∈ unitGluedSubmodule A u) (ht : t ∈ unitGluedSubmodule A v) :

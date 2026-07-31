@@ -7,9 +7,8 @@ docstring: 'A chosen uniformizer at `x`: `ord_x (uniformizer) = ofAdd (−1)`.'
 file: AlgebraicJacobian/RiemannRoch/JumpDimension.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.uniformizer
 type: lean
-updated: '2026-07-31T20:14:48'
+updated: '2026-07-31T20:15:29'
 ---
 noncomputable def uniformizer : X.functionField := (exists_ord_eq_neg_one K hx).choose

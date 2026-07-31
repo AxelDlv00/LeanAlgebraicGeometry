@@ -38,10 +38,9 @@ docstring: '**THE CONVERSE, AND IT REFUTES THIS FILE''S OWN "STRICTLY WEAKER" FR
 file: AlgebraicJacobian/Picard/Pic0ChartAbelForkReduce.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.relPicSeparates_of_injective_chartValue
 type: lean
-updated: '2026-07-31T20:14:45'
+updated: '2026-07-31T20:15:26'
 ---
 theorem relPicSeparates_of_injective_chartValue [GeometricallyReduced C.hom] (m : ℕ)
     (Z : (C ⊗ overSpec k k).left.CurveDivisor) (A : Type u) [CommRing A] [Algebra k A]

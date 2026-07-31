@@ -19,10 +19,9 @@ docstring: '**The Abel transformation of a widened locally certified class at an
 file: AlgebraicJacobian/Picard/DivisorFamilyAffAbel.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.abelDivAffPlus
 type: lean
-updated: '2026-07-31T20:14:49'
+updated: '2026-07-31T20:15:23'
 ---
 def abelDivAffPlus (A : Type u) [CommRing A] [Algebra k A] (F₀ : DivFamZarAff C A n) :
     PicEtAff C A :=

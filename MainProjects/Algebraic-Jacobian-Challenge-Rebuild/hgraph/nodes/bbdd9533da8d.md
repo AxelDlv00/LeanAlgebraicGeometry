@@ -17,10 +17,9 @@ docstring: '**Pulled-equation germ regularity is Zariski-local on the source**
 file: AlgebraicJacobian/Picard/DivisorFamilyZarKit.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.LocalEquations.germ_pullbackEqn_mem_nonZeroDivisors_of_immersion_cover
 type: lean
-updated: '2026-07-31T20:14:49'
+updated: '2026-07-31T20:15:25'
 ---
 theorem germ_pullbackEqn_mem_nonZeroDivisors_of_immersion_cover
     {ι : Type*} {Z : ι → Scheme.{u}} (w : ∀ i, Z i ⟶ Y) [∀ i, IsOpenImmersion (w i)]

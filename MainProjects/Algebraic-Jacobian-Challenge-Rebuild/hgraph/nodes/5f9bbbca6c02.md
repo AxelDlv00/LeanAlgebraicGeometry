@@ -13,10 +13,9 @@ docstring: 'A point of `C` over an extension field `L` is canonically an `L`-rat
 file: AlgebraicJacobian/Picard/Pic0ChartFiniteExtension.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.baseChangePoint
 type: lean
-updated: '2026-07-31T20:14:45'
+updated: '2026-07-31T20:15:26'
 ---
 noncomputable def baseChangePoint {L : Type u} [Field L] [Algebra k L]
     (p : overSpec k L ⟶ C) : overSpec L L ⟶ baseChangeBundle C L :=

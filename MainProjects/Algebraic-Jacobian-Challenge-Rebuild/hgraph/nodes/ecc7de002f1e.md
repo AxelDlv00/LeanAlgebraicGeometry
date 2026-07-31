@@ -10,10 +10,9 @@ docstring: 'A theta section on a widened piece overlap lies in the symmetric equ
 file: AlgebraicJacobian/Picard/DivisorFamilyAffThetaKernel.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.AffAdaptation.mem_thetaOverlapVanishing_iff_forall_germ
 type: lean
-updated: '2026-07-31T20:14:52'
+updated: '2026-07-31T20:15:24'
 ---
 theorem mem_thetaOverlapVanishing_iff_forall_germ [IsProper C.hom]
     (A : AffAdaptation D d) (a : ℕ)

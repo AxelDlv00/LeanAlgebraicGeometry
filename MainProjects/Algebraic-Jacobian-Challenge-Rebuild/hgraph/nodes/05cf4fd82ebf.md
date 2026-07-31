@@ -15,10 +15,9 @@ docstring: '**The degree of a base class is base-field invariant** — E-iv-alg
 file: AlgebraicJacobian/Picard/Pic0ChartCoverageDegree.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.classDeg_cechPicMap_base_of_field
 type: lean
-updated: '2026-07-31T20:14:39'
+updated: '2026-07-31T20:15:26'
 ---
 theorem classDeg_cechPicMap_base_of_field (L : Type u) [Field L] [Algebra k L]
     (Λ : (C ⊗ overSpec k k).left.CechPic) :

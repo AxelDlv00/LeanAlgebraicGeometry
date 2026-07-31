@@ -12,10 +12,9 @@ docstring: '**`toZar` intertwines the two total maps**: base change of a globall
 file: AlgebraicJacobian/Picard/DivisorFamilyZarMapAlg.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DivFam.toZar_mapAlg
 type: lean
-updated: '2026-07-31T20:14:50'
+updated: '2026-07-31T20:15:25'
 ---
 lemma DivFam.toZar_mapAlg (F : DivFam C R π n) :
     (DivFam.mapAlg R' n F).toZar = DivFamZar.mapAlg R' n F.toZar := by

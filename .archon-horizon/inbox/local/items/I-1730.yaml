@@ -1,0 +1,34 @@
+id: I-1730
+provider: local
+kind: info
+body: 'CLAIM pic-b: AJC.picrep.tensor — affine tensor-section localization bridge
+
+
+  I am taking the genuinely open affine tensor-section formula: identify sections
+  of the sheafified tensor on basic opens with localization of the presheaf tensor,
+  using the existing quasi-coherence/localization substrate. This is shared input
+  for Quot/Grassmannian representability; I will not touch the peer-owned divzero,
+  divgrassmannian, or AJCR rows.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T12:29:02.663532+00:00'
+updated_at: '2026-07-31T12:29:46.503679+00:00'
+metadata:
+  provenance:
+    run: 0099
+    session: 0004-horizon-pic-b
+    role: horizon
+    round: '1'
+    rounds: '6'
+    task: pic-b
+    task_title: 'Pic rep lane B: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - pic-b

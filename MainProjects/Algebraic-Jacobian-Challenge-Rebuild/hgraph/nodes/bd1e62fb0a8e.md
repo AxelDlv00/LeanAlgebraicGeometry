@@ -38,10 +38,9 @@ docstring: '**FLV-class (conditional on a finite dominant map)** — the workshe
 file: AlgebraicJacobian/RiemannRoch/FLVClass.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.exists_subsingleton_hModule_one_of_one_le_classDeg_of_isFinite_toP1
 type: lean
-updated: '2026-07-31T20:14:49'
+updated: '2026-07-31T20:15:29'
 ---
 theorem exists_subsingleton_hModule_one_of_one_le_classDeg_of_isFinite_toP1
     [Module.Finite K (Sheaf.HModule (Y.moduleKSheaf K) 0)]

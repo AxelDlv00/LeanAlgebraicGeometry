@@ -15,10 +15,9 @@ docstring: '**(N2) — the canonical section cuts back `d` by pure refinement**:
 file: AlgebraicJacobian/Picard/DivisorDatumInverse.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DivisorAdaptation.divEq_sectionLocalEquations_canonSection
 type: lean
-updated: '2026-07-31T20:14:49'
+updated: '2026-07-31T20:15:23'
 ---
 theorem divEq_sectionLocalEquations_canonSection
     (𝒲 : (relCurve C R).PointedCover) (σ : relCurve C R → (A.thetaIdealDatum 0).index)

@@ -1,45 +1,21 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.certificate.finite-field-avoid
-title: 'Finite-field avoidance: bound fibre support by g and avoid it after a large
-  finite extension'
+title: Auxiliary finite-field P1 avoidance (off the R2 critical path)
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: '*** PROTECTION CONFLICT in this row''s REMAINING clause, flagged review-ajcr
-  r7 (2026-07-30). This row is pending at HIGH priority, so it reads as the next thing
-  to do -- and the work it names is forbidden. ***
+summary: 'OFF THE R2 CRITICAL PATH (protection I-0492). The cardinality theorem and
+  support-degree bound are valid landed results, but the remaining P1(k)-containment/tube
+  endpoint has no consumer on the widened arbitrary-affine carrier. It also carries
+  a field-cardinality hypothesis; it is not a field-uniform replacement for the chosen
+  route.
 
 
-  STATE: 2 of 3 children DONE. finite-field-avoid.cardinality (e602378af) proves the
-  exact finite-cardinality P1 avoidance theorem under S.ncard + 2 <= card(k). finite-field-avoid.support-degree
-  (d6c67f41d) builds the pointwise seed residue equations with no certificate and
-  no hproj, and bounds their support by g points.
-
-
-  THE REMAINING CLAUSE AS WRITTEN IS FORBIDDEN. It said the third child ''must choose
-  a large finite Galois extension, transport P1 twists and fixed-twist divisor charts
-  through scalar extension, and descend the semilinear outer atlas'', depending on
-  the twist-atlas architecture. Human decision I-0492 clause 1 forbids both halves
-  -- the GL_2(k)/Aut(P1) action on P1 (twistedP1Map = pi >> P1.autOfMatrix) and descent
-  work whose only purpose is to rescue R1 -- and twist-atlas is REJECTED on exactly
-  that ground. See the descent leaf for the full flag.
-
-
-  WHAT IS ACTUALLY LEFT, and it is smaller than the clause implies: the descent leaf''s
-  FIRST sentence only -- transport the residue support into P1(k), combine image-ncard
-  injectivity with the ncard <= g bound and the (done) finite-cardinality theorem,
-  and spread the fibre containment to a support tube. No twist, no Galois descent,
-  and both its inputs are done.
-
-
-  WHY THE PRICE MOVED IN THE GOOD DIRECTION: the twist quantifier this row was trying
-  to absorb with an outer atlas simply does not occur on the widened carrier -- IsLocallyCertifiedAff,
-  DivFamZarAff and divFunctorAff take (C, R, n) and no pi. So finite-field avoidance
-  does not owe an atlas; it owes the endpoint assembly.
-
-
-  Priority left high on the assembly, which is legitimate and unclaimed.'
+  R2 obtains one affine open containing the finite support from the subordinate Stacks
+  0B8B input and does not require moving support into a fixed P1 chart overlap. Keep
+  this row pending and low only as optional auxiliary mathematics; do not assign it
+  without naming a concrete non-R1 consumer.'
 status: pending
 kind: proof
-priority: high
+priority: low
 depends_on: []
 inbox_refs: []
 task_refs: []
@@ -60,7 +36,7 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
   milestone: AJCR.w4-rep
-  updated_at: '2026-07-29T23:46:15.684431+00:00'
+  updated_at: '2026-07-31T12:36:08.999920+00:00'
   pinned_commits:
   - d6c67f41d
   - e602378af

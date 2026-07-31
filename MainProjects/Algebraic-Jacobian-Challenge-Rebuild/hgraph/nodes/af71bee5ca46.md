@@ -18,10 +18,9 @@ docstring: '**P-fib** (★★★, worksheet §3.2 — the persistence heart of t
 file: AlgebraicJacobian/RiemannRoch/PFib.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.existsUnique_effective_divisor_of_carve
 type: lean
-updated: '2026-07-31T20:14:49'
+updated: '2026-07-31T20:15:29'
 ---
 theorem existsUnique_effective_divisor_of_carve
     (g : ℕ) (hO : Sheaf.h0 (Y.moduleKSheaf K) = 1)

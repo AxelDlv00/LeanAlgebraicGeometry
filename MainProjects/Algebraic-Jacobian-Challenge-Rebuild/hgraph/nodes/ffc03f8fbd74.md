@@ -7,10 +7,9 @@ docstring: Intrinsic theta sections restricted to the divisor on one widened pie
 file: AlgebraicJacobian/Picard/DivisorFamilyAffThetaDescent.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.AffAdaptation.ThetaPieceQuotient
 type: lean
-updated: '2026-07-31T20:14:53'
+updated: '2026-07-31T20:15:24'
 ---
 noncomputable abbrev ThetaPieceQuotient (A : AffAdaptation D d) (a : ℕ)
     (j : D.index) : Type u :=

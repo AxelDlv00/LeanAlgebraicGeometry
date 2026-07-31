@@ -16,10 +16,9 @@ docstring: '**The retraction at the Abel chart**: the seam''s two antecedents at
 file: AlgebraicJacobian/Picard/Pic0ChartSeamCollapse.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.exists_retraction_of_isChartUniv
 type: lean
-updated: '2026-07-31T20:14:48'
+updated: '2026-07-31T20:15:27'
 ---
 theorem exists_retraction_of_isChartUniv {D : Over (Spec (.of k))}
     (rep : (divFunctor C π n).RepresentableBy D)

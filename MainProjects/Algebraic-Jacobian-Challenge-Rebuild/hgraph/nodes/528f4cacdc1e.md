@@ -12,10 +12,9 @@ docstring: '**The ε⁺ transport of a `RepresentableBy` datum (DAT-J consumer)*
 file: AlgebraicJacobian/Picard/ThetaShift.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.representableByOfShift
 type: lean
-updated: '2026-07-31T20:14:44'
+updated: '2026-07-31T20:15:28'
 ---
 def representableByOfShift {J : Over (Spec (.of k))}
     (L₀ : (C ⊗ overSpec k k).left.CechPic) (m : ℕ)

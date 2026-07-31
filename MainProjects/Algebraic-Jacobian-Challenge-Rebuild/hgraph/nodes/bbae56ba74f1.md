@@ -10,10 +10,9 @@ docstring: 'Fibre-germ generation supplies an affine fibre-chart cofactor, alrea
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwiseFibreLocal.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.PointwiseAchiever.exists_fibre_chart_cofactor_pointwiseSectionVector
 type: lean
-updated: '2026-07-31T20:14:49'
+updated: '2026-07-31T20:15:23'
 ---
 theorem exists_fibre_chart_cofactor_pointwiseSectionVector
     (z : relCurve C RZ)

@@ -10,10 +10,9 @@ docstring: 'The pieces of the base-changed whole-chart theta datum are the whole
 file: AlgebraicJacobian/Picard/ThetaChartClassNaturality.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.baseChange_thetaChartDatum_pieces
 type: lean
-updated: '2026-07-31T20:14:41'
+updated: '2026-07-31T20:15:28'
 ---
 lemma baseChange_thetaChartDatum_pieces (j : ((thetaChartDatum C k π a).baseChange R).index) :
     ((thetaChartDatum C k π a).baseChange R).pieces j

@@ -18,10 +18,9 @@ docstring: '**K2 — matrix presentation from a free quotient** (quotient frame 
 file: AlgebraicJacobian/Picard/DivSchemeFrameKit.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Grassmannian.exists_matrixPoint_eq_of_free
 type: lean
-updated: '2026-07-31T20:14:49'
+updated: '2026-07-31T20:15:21'
 ---
 theorem exists_matrixPoint_eq_of_free {T : Type u} [CommRing T] [Algebra k T]
     [Nontrivial T] {g r : ℕ} (x : grFunctorAff k (Fin r → k) g T)

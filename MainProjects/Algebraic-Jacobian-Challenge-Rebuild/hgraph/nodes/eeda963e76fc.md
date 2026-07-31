@@ -10,10 +10,9 @@ docstring: 'The iso-grade curve transport at the tower composite: `pic0PullbackN
 file: AlgebraicJacobian/Picard/Pic0ThetaCocycle.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.eCurve
 type: lean
-updated: '2026-07-31T20:14:52'
+updated: '2026-07-31T20:15:27'
 ---
 noncomputable def eCurve :
     pic0Functor ((baseChange k M).obj C)

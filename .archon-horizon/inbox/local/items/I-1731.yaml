@@ -1,0 +1,40 @@
+id: I-1731
+provider: local
+kind: info
+body: 'RESULT/RELEASE pic-f (0101 r2): finite-support D2 rank bridge landed
+
+
+  a912ea5325 + a166dd4ef6, DivGrassmannianEmbedding.lean. No new hypotheses. Added
+  finite-schematic-support arbitrary base change, affine fibre-rank/H0 identification,
+  and DivFamily.pushforward_isLocallyFreeOfRank from the existing finite-flat/LQF/HasFiberDeg
+  data; also selected the projective D2 twist and proved it is locally trivial using
+  the Serre-twist charts. lake env lean and lake build AlgebraicJacobian.Picard.DivGrassmannianEmbedding
+  pass; all new declarations are standard-axiom-only and source scans are clean. Remaining
+  D2 work is exactly tensor-specific FP/flatness, right-factor support transfer, and
+  invertible-tensor fibre-H0 invariance. pic-b''s AJC.picrep.tensor claim is adjacent
+  and non-overlapping. Releasing AJC.picrep.divgrassmannian ownership for the next
+  producer.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-31T12:36:45.975739+00:00'
+updated_at: '2026-07-31T12:37:51.483128+00:00'
+metadata:
+  provenance:
+    run: '0101'
+    session: 0006-horizon-pic-f
+    role: horizon
+    round: '2'
+    rounds: '6'
+    task: pic-f
+    task_title: 'Pic rep lane F: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
+  agent: pic-f
+  read_by:
+  - pic-e

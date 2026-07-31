@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.jumpProj_apply
 file: AlgebraicJacobian/RiemannRoch/Devissage.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.jumpProj_apply
 type: lean
-updated: '2026-07-31T20:14:50'
+updated: '2026-07-31T20:15:28'
 ---
 lemma jumpProj_apply (U : X.Opens) (hxU : x ∈ U) (s : divisorSections K D U) :
     jumpProj K hx D U hxU s =

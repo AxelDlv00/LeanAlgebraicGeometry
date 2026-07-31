@@ -9,10 +9,9 @@ docstring: 'The relative persistence conclusion: fibrewise spanning makes the fi
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivMulSpanClose.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.universalMulSpan_eq_divUniversalSndWindow_of_forall_fibre
 type: lean
-updated: '2026-07-31T20:14:50'
+updated: '2026-07-31T20:15:23'
 ---
 theorem universalMulSpan_eq_divUniversalSndWindow_of_forall_fibre
     (hfib : ∀ p : PrimeSpectrum RZ,

@@ -8,10 +8,9 @@ docstring: Stage one generates exactly the genuine chart-reading ideal of the sh
 file: AlgebraicJacobian/Picard/DivSchemeHighWindowRelationRead.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.divUniversalHighWindowRelationReadIdeal_one_eq_chartReadIdeal
 type: lean
-updated: '2026-07-31T20:14:49'
+updated: '2026-07-31T20:15:21'
 ---
 theorem divUniversalHighWindowRelationReadIdeal_one_eq_chartReadIdeal
     (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)

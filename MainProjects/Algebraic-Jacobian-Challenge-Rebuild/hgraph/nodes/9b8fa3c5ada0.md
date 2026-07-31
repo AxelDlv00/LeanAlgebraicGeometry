@@ -9,10 +9,9 @@ file: AlgebraicJacobian/Picard/DivisorClass.lean
 generated: lean
 lean_status: lean_ok
 private: true
-stale: true
 title: AlgebraicGeometry.Scheme.sectionRestrict_comp
 type: lean
-updated: '2026-07-31T20:14:48'
+updated: '2026-07-31T20:15:23'
 ---
 private lemma sectionRestrict_comp {W V U : X.Opens} (h₁ : W ≤ V) (h₂ : V ≤ U)
     (s : Γ(X, U)) :

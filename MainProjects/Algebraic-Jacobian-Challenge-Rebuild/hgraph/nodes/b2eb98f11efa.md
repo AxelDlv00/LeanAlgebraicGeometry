@@ -10,10 +10,9 @@ file: AlgebraicJacobian/Picard/DivSchemeSeedFibre.lean
 generated: lean
 lean_status: lean_ok
 private: true
-stale: true
 title: AlgebraicGeometry.fibreMulAux
 type: lean
-updated: '2026-07-31T20:14:49'
+updated: '2026-07-31T20:15:22'
 ---
 private noncomputable def fibreMulAux {A B : Type u} [CommRing A] [CommRing B]
     [Algebra R A] (ψ : A →+* B) (ρ : R' →+* B)

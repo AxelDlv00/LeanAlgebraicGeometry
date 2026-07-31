@@ -11,10 +11,9 @@ docstring: 'The inverse construction: an `R`-linear functional on the cotangent 
 file: AlgebraicJacobian/Tangent/TangentDualNumbers.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.cotangentDualToDerivation
 type: lean
-updated: '2026-07-31T20:14:50'
+updated: '2026-07-31T20:15:29'
 ---
 noncomputable def cotangentDualToDerivation
     (φ : CotangentSpace R →ₗ[R] ResidueField R) :

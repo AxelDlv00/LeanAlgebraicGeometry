@@ -22,10 +22,9 @@ docstring: '**The converse of the abstract (c1) engine.** If the chart-local quo
 file: AlgebraicJacobian/Picard/DivSchemeCertZarC1.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.IsAffineOpen.isClosed_zeroLocus_inter_of_finite_quotient
 type: lean
-updated: '2026-07-31T20:14:45'
+updated: '2026-07-31T20:15:20'
 ---
 theorem isClosed_zeroLocus_inter_of_finite_quotient
     [IsSeparated (X ↘ Spec (CommRingCat.of R))]

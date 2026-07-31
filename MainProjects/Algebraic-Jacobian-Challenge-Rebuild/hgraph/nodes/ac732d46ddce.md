@@ -19,10 +19,9 @@ docstring: '**The producer-facing endpoint:** one legal chart locus is all of th
 file: AlgebraicJacobian/Picard/Pic0ChartCoverageThreshold.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.exists_uniform_admissibleCoverageChart_eq_univ
 type: lean
-updated: '2026-07-31T20:14:49'
+updated: '2026-07-31T20:15:26'
 ---
 theorem exists_uniform_admissibleCoverageChart_eq_univ
     {π : C.left ⟶ P1 k} [IsFinite π] [IsDominant π]

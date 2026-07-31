@@ -7,10 +7,9 @@ docstring: The relative chart-1 coordinate power `t₁ᵃ` on the pinned chart `
 file: AlgebraicJacobian/Picard/DivisorFamilyThetaSections.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.relFiberCoordOnePow
 type: lean
-updated: '2026-07-31T20:14:42'
+updated: '2026-07-31T20:15:25'
 ---
 noncomputable def relFiberCoordOnePow :
     Γ(relCurve C R, (relCover C R (fiberTwoCover π)).V₁) :=

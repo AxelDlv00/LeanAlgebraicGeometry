@@ -23,10 +23,9 @@ docstring: '**The descent step, with the `A`-tower in `hplus`''s binder** — ot
 file: AlgebraicJacobian/Picard/Pic0ChartPlusFibreTower.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.hasWitnessH1Vanishing_of_isSplitWitness_tower
 type: lean
-updated: '2026-07-31T20:14:49'
+updated: '2026-07-31T20:15:27'
 ---
 theorem hasWitnessH1Vanishing_of_isSplitWitness_tower {A : Type u} [CommRing A] [Algebra k A]
     (μ : picEt C (overSpec k A)) (D : BasicOpenCocycleDatum C A π)

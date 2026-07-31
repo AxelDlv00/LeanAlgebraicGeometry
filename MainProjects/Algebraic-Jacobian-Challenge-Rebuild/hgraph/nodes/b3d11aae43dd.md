@@ -6,10 +6,9 @@ decl: Module.MatrixPresentation.relMatrix_mem_entryIdeal
 file: AlgebraicJacobian/Picard/EntryIdeal.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: Module.MatrixPresentation.relMatrix_mem_entryIdeal
 type: lean
-updated: '2026-07-31T20:14:49'
+updated: '2026-07-31T20:15:25'
 ---
 lemma relMatrix_mem_entryIdeal (P : MatrixPresentation R M e m)
     (i : Fin e) (j : Fin m) : P.relMatrix i j ∈ P.entryIdeal :=

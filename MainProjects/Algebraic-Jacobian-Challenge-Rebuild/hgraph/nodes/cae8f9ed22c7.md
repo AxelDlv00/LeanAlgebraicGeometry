@@ -20,10 +20,9 @@ docstring: '**The glued submodule transports.**  A section of the relabelled pro
 file: AlgebraicJacobian/Picard/DivisorFamilyAffReindex.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.AffAdaptation.mem_gluedSubmodule_reindex_iff
 type: lean
-updated: '2026-07-31T20:14:50'
+updated: '2026-07-31T20:15:24'
 ---
 lemma mem_gluedSubmodule_reindex_iff (A : AffAdaptation D d) {m' : ℕ} (e : Fin m' ≃ D.index)
     (s : (A.reindex e).chartProd) :

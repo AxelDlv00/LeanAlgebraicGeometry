@@ -39,10 +39,9 @@ docstring: '**(T3-2): THE §6.24 LINK.** The geometric pullback of a thickened t
 file: AlgebraicJacobian/Tangent/EpsArrowIdentification.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.pullbackOverlapQuot_dualNumberCechH1Equiv_mk
 type: lean
-updated: '2026-07-31T20:14:45'
+updated: '2026-07-31T20:15:29'
 ---
 theorem pullbackOverlapQuot_dualNumberCechH1Equiv_mk
     (hc : ∀ s, IsCompact ((U s : Set C.left))) (hq : ∀ s, IsQuasiSeparated ((U s : Set C.left)))

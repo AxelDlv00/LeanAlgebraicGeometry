@@ -9,6 +9,6 @@ lean_status: sorry
 stale: true
 title: AlgebraicGeometry.DropTest.controlSorry
 type: lean
-updated: '2026-07-31T20:14:48'
+updated: '2026-07-31T20:31:22'
 ---
 theorem controlSorry : True := by sorry

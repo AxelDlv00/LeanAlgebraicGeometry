@@ -8,10 +8,9 @@ file: AlgebraicJacobian/Picard/WitnessAway.lean
 generated: lean
 lean_status: lean_ok
 private: true
-stale: true
 title: AlgebraicGeometry.Over.hom_f₁₃_q₂_appTop
 type: lean
-updated: '2026-07-31T20:14:50'
+updated: '2026-07-31T20:15:28'
 ---
 private lemma hom_f₁₃_q₂_appTop (x : Γ(XB, ⊤)) :
     (Scheme.ΓSpecIso (CommRingCat.of (B ⊗[A] (B ⊗[A] B)))).hom.hom

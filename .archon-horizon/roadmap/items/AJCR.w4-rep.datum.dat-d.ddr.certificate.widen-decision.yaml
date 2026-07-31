@@ -3,18 +3,16 @@ title: 'DECIDE the widening of DivFamZar: R1 (Aut(P^1) twist) vs R2 (piece type)
   R3 (drop IsLocallyCertified for relative effective Cartier)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'DECIDED 2026-07-27: choose R1, coordinate twists, as the architecture-preserving
-  widening. Declaration-level audits reject R2 as a much wider FinCoverData/support-principalization
-  refactor and R3 as a replacement of the established divisor representation layer.
-  p1-aut and the infinite-field fibre-avoidance branch are landed. CORRECTION AFTER
-  GROUND REVIEW: a finite Galois extension of a finite field is still finite, so it
-  cannot instantiate the landed Infinite-field theorem. The arbitrary-field completion
-  is now tracked by finite-field-avoid: prove a finite-cardinality avoidance lemma,
-  bound the fibre-support image by degree g, choose a sufficiently large finite Galois
-  extension, and then use the existing Galois-descent substrate. The proposed in-place
-  cert-relocalize refactor is rejected because every DivRepGlobalData classifier is
-  fixed in pi; its replacement is the outer twist-atlas row, which retains each fixed-twist
-  classifier and glues those charts on common divisor loci.'
+summary: 'DECIDED BY HUMAN PROTECTION I-0492: choose R2, widening DivFamZar to arbitrary
+  affine-open pieces. R1 (the GL_2/Aut(P1) twist route) is not to be built, and no
+  consumer may depend on a fixed pair of P1 charts.
+
+
+  The widened carrier is AffCoverData / DivFamZarAff / divFunctorAff. Its geometric
+  input is the subordinate Stacks 0B8B statement supplying an affine open containing
+  the finite support; the remaining work is the widened consumer migration and the
+  explicitly tracked certificate/divRep seams. The landed P1 avoidance lemmas are
+  auxiliary results, not the chosen architecture.'
 status: done
 kind: proof
 priority: normal
@@ -38,4 +36,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
   milestone: AJCR.w4-rep
-  updated_at: '2026-07-29T03:02:07.994451+00:00'
+  updated_at: '2026-07-31T12:36:04.250055+00:00'

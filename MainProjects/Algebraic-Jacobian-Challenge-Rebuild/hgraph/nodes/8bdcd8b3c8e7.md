@@ -10,10 +10,9 @@ docstring: 'Scalar extension of a submodule with projective quotient, identified
 file: AlgebraicJacobian/Picard/DivSchemeProjectiveBaseChange.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Grassmannian.projectiveQuotientBaseChangeEquiv
 type: lean
-updated: '2026-07-31T20:14:47'
+updated: '2026-07-31T20:15:22'
 ---
 noncomputable def projectiveQuotientBaseChangeEquiv (N : Submodule R M)
     [Module.Projective R (M ⧸ N)] :

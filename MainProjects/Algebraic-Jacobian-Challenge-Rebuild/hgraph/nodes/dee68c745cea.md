@@ -13,10 +13,9 @@ docstring: '**Fibrewise injective ⟹ flat cokernel**: for `ψ : P → N` with `
 file: AlgebraicJacobian/Picard/SlicingFlatKernel.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: Module.Flat.quotient_range_of_forall_rTensor_residueField_injective
 type: lean
-updated: '2026-07-31T20:14:51'
+updated: '2026-07-31T20:15:28'
 ---
 theorem Module.Flat.quotient_range_of_forall_rTensor_residueField_injective
     [Module.Finite R P] [Module.Finite R N] [Module.Flat R N] (ψ : P →ₗ[R] N)

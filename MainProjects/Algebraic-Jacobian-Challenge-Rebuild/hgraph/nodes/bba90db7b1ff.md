@@ -17,10 +17,9 @@ docstring: '**The trimmed trivializing cochain of a class trivial on an open sub
 file: AlgebraicJacobian/Picard/EffectivityTrivialization.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.exists_trimmed_trivializing_of_cechPicMap_ι_eq_one
 type: lean
-updated: '2026-07-31T20:14:49'
+updated: '2026-07-31T20:15:25'
 ---
 theorem exists_trimmed_trivializing_of_cechPicMap_ι_eq_one
     (h1 : Scheme.CechPic.map D.ι (Scheme.CechPic.mk 𝒩 γ.class) = 1) :

@@ -11,10 +11,9 @@ file: AlgebraicJacobian/RiemannRoch/FLVQcoh.lean
 generated: lean
 lean_status: lean_ok
 private: true
-stale: true
 title: AlgebraicGeometry.divisorVal_secRes
 type: lean
-updated: '2026-07-31T20:14:51'
+updated: '2026-07-31T20:15:29'
 ---
 private lemma divisorVal_secRes {D : X.CurveDivisor} {V W : X.Opens} (hVW : V ≤ W)
     (hV : (V : Set X).Nonempty) (s : (X.divisorSheaf K D).obj.obj (op W)) :

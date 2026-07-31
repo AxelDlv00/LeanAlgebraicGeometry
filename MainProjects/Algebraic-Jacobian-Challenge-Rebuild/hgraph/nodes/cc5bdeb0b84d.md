@@ -9,10 +9,9 @@ docstring: '**The first manufactured theta section** `σ = (t₀ᵃ; 1)`: the ch
 file: AlgebraicJacobian/Picard/DivisorFamilyThetaSections.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DivisorAdaptation.thetaSectionFst
 type: lean
-updated: '2026-07-31T20:14:50'
+updated: '2026-07-31T20:15:25'
 ---
 noncomputable def thetaSectionFst : A.chartProd := fun j =>
   match j with

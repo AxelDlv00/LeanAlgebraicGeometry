@@ -12,10 +12,9 @@ docstring: '**If the first chart is everything, the scheme is affine.** `IsAffin
 file: AlgebraicJacobian/Tangent/TwoChartHonest.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.AffineTwoCover.isAffine_of_V₀_eq_top
 type: lean
-updated: '2026-07-31T20:14:51'
+updated: '2026-07-31T20:15:29'
 ---
 theorem isAffine_of_V₀_eq_top (h : D.V₀ = ⊤) : IsAffine Y := by
   have h2 := D.isAffineOpen₀

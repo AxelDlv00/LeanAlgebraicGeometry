@@ -10,10 +10,9 @@ docstring: '**The three window-quotient hypotheses from a chart-typed certificat
 file: AlgebraicJacobian/Picard/DivisorFamilyAffFrameCover.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.finite_divisorWindow_quot_of_isCertified
 type: lean
-updated: '2026-07-31T20:14:44'
+updated: '2026-07-31T20:15:23'
 ---
 theorem finite_divisorWindow_quot_of_isCertified {d : (relCurve C R).LocalEquations}
     (A : DivisorAdaptation C R π d) (hc : A.IsCertified g) :

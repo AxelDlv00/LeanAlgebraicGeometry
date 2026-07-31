@@ -9,10 +9,9 @@ docstring: 'The `f₂₃`-pullback of the two-base identification is the index-w
 file: AlgebraicJacobian/Picard/WitnessTransport.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.tripleAwayEquiv_faceA₂₃
 type: lean
-updated: '2026-07-31T20:14:49'
+updated: '2026-07-31T20:15:28'
 ---
 lemma tripleAwayEquiv_faceA₂₃ (i j l : P.ι)
     (t : Γ(XB, (XB).basicOpen (P.r j)) ⊗[A] Γ(XB, (XB).basicOpen (P.r l))) :

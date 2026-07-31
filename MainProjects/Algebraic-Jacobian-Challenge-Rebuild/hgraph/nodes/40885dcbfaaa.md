@@ -12,10 +12,9 @@ docstring: 'The section of `picEt` over an affine test determined by a plus clas
 file: AlgebraicJacobian/Picard/PicEt.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.picEtOfAff
 type: lean
-updated: '2026-07-31T20:14:42'
+updated: '2026-07-31T20:15:27'
 ---
 def picEtOfAff : PicEtAff C A →* picEt C (overSpec k A) where
   toFun x :=
