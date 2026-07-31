@@ -121,4 +121,85 @@ theorem isUnit_iff_C_mul_T {f : LaurentPolynomial R} :
   rintro ⟨c, n, hc, rfl⟩
   exact isUnit_C_mul_T hc n
 
+/-! ## The unit group as a product
+
+The classification packaged as a group isomorphism `Rˣ × ℤ ≃* (R[T;T⁻¹])ˣ`.  This is the form
+the Picard computation wants: the two chart unit groups of `ℙ¹` both land in the constants
+(units of `k[t]` are constants by `Polynomial.isUnit_iff`), so the two-cover Čech `Ȟ¹` of units
+is this group modulo `Rˣ` — the `ℤ` factor, and nothing else. -/
+
+/-- `T n` as a unit. -/
+noncomputable def tUnit (n : ℤ) : (LaurentPolynomial R)ˣ := (isUnit_T n).unit
+
+omit [IsDomain R] in
+@[simp]
+theorem tUnit_coe (n : ℤ) : ((tUnit (R := R) n : (LaurentPolynomial R)ˣ)
+    : LaurentPolynomial R) = T n := rfl
+
+/-- The homomorphism `Rˣ × ℤ →* (R[T;T⁻¹])ˣ` sending `(c, n)` to `C c * T n`.  Over any
+commutative ring; the domain hypothesis is only needed for surjectivity. -/
+noncomputable def unitsHom :
+    Rˣ × Multiplicative ℤ →* (LaurentPolynomial R)ˣ where
+  toFun p := (Units.map (LaurentPolynomial.C : R →+* LaurentPolynomial R).toMonoidHom p.1)
+      * tUnit (Multiplicative.toAdd p.2)
+  map_one' := Units.ext (by
+    change (LaurentPolynomial.C (1 : R)) * T (0 : ℤ) = 1
+    rw [map_one, T_zero, one_mul])
+  map_mul' a b := Units.ext (by
+    change LaurentPolynomial.C ((a.1 * b.1 : Rˣ) : R) * T (Multiplicative.toAdd (a.2 * b.2))
+      = (LaurentPolynomial.C (a.1 : R) * T (Multiplicative.toAdd a.2))
+        * (LaurentPolynomial.C (b.1 : R) * T (Multiplicative.toAdd b.2))
+    push_cast
+    have hT : (T (Multiplicative.toAdd (a.2 * b.2)) : LaurentPolynomial R)
+        = T (Multiplicative.toAdd a.2) * T (Multiplicative.toAdd b.2) := by
+      rw [← T_add]; rfl
+    rw [map_mul, hT]
+    ring)
+
+omit [IsDomain R] in
+@[simp]
+theorem unitsHom_coe (p : Rˣ × Multiplicative ℤ) :
+    ((unitsHom p : (LaurentPolynomial R)ˣ) : LaurentPolynomial R)
+      = LaurentPolynomial.C (p.1 : R) * T (Multiplicative.toAdd p.2) :=
+  rfl
+
+omit [IsDomain R] in
+/-- The coefficient of a Laurent monomial is determined once the exponent is.  Companion to
+`exp_unique`, and like it needs no domain hypothesis (the `omit` is the measurement). -/
+theorem coeff_unique {c d : R} {n : ℤ}
+    (h : (LaurentPolynomial.C c * T n : LaurentPolynomial R)
+      = LaurentPolynomial.C d * T n) : c = d := by
+  have h1 := congrArg (fun f : LaurentPolynomial R => f n) h
+  simp only [← LaurentPolynomial.single_eq_C_mul_T] at h1
+  rw [show (AddMonoidAlgebra.single n c : LaurentPolynomial R) = Finsupp.single n c from rfl,
+      show (AddMonoidAlgebra.single n d : LaurentPolynomial R) = Finsupp.single n d from rfl,
+      Finsupp.single_eq_same, Finsupp.single_eq_same] at h1
+  exact h1
+
+theorem unitsHom_surjective : Function.Surjective (unitsHom (R := R)) := by
+  intro u
+  obtain ⟨c, n, hc, hu⟩ := exists_eq_C_mul_T_of_isUnit u.isUnit
+  refine ⟨(hc.unit, Multiplicative.ofAdd n), Units.ext ?_⟩
+  rw [unitsHom_coe, hu]
+  simp
+
+theorem unitsHom_injective : Function.Injective (unitsHom (R := R)) := by
+  intro p q hpq
+  have h : LaurentPolynomial.C (p.1 : R) * T (Multiplicative.toAdd p.2)
+      = LaurentPolynomial.C (q.1 : R) * T (Multiplicative.toAdd q.2) :=
+    congrArg (fun v : (LaurentPolynomial R)ˣ => (v : LaurentPolynomial R)) hpq
+  have hne : (p.1 : R) ≠ 0 := p.1.ne_zero
+  have hexp : Multiplicative.toAdd p.2 = Multiplicative.toAdd q.2 := exp_unique hne h
+  have hsnd : p.2 = q.2 := Multiplicative.toAdd.injective hexp
+  have hsame : LaurentPolynomial.C (p.1 : R) * T (Multiplicative.toAdd p.2)
+      = LaurentPolynomial.C (q.1 : R) * T (Multiplicative.toAdd p.2) := by
+    rw [h, hexp]
+  exact Prod.ext (Units.ext (coeff_unique hsame)) hsnd
+
+/-- **`(R[T;T⁻¹])ˣ ≅ Rˣ × ℤ`** over a domain.  The `ℤ` is the exponent and the `Rˣ` is the
+coefficient; `exp_unique` and `coeff_unique` are the two halves of injectivity, and the
+classification is surjectivity. -/
+noncomputable def unitsEquiv : Rˣ × Multiplicative ℤ ≃* (LaurentPolynomial R)ˣ :=
+  MulEquiv.ofBijective unitsHom ⟨unitsHom_injective, unitsHom_surjective⟩
+
 end LaurentPolynomial
