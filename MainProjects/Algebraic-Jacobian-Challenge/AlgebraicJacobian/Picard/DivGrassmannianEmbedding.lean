@@ -8,6 +8,7 @@ import AlgebraicJacobian.Picard.CurveProjectivity
 import AlgebraicJacobian.Picard.GrassmannianRepresentability
 import AlgebraicJacobian.Picard.RigidPushforwardP1Sheaf
 import AlgebraicJacobian.Picard.RigidPushforwardRank
+import AlgebraicJacobian.Picard.SerreTwistSections
 
 /-!
 # The divisor-to-Grassmannian comparison
@@ -530,6 +531,19 @@ theorem d2ProjectiveTwist_isProjectiveWith
     [GeometricallyIntegral C.hom] :
     C.hom.IsProjectiveWith (d2ProjectiveTwist C) :=
   Classical.choose_spec (exists_isProjectiveWith_of_smoothProperGeometricallyIntegral C)
+
+theorem d2ProjectiveTwist_isLocallyTrivial
+    {k : Type} [Field k]
+    (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] :
+    Scheme.LineBundle.IsLocallyTrivial (d2ProjectiveTwist C) := by
+  obtain ⟨n, hn, i, hi, hcomp, ⟨e⟩⟩ :=
+    d2ProjectiveTwist_isProjectiveWith C
+  letI : Finite n := hn
+  exact Scheme.LineBundle.IsLocallyTrivial.of_iso e.symm
+    ((ProjTwist.twistingSheaf_isLocallyTrivial n
+      (Spec (CommRingCat.of k)) 1).pullback i)
 
 end Adelic
 
