@@ -22,27 +22,62 @@ on `Spec A`.  The input is the *separation* half of the landed Zariski sheaf pro
 plus construction, `PicEtAff.eq_of_away_eq` (`PicEtAffZariskiSep.lean:137`) — nothing is glued,
 so the gluing half (`PicEtAffZariskiGlue.lean`) is not used.
 
-## What this is and is not
+## What this is and is not — READ THIS BEFORE PRICING ANYTHING BELOW
 
-It is a reduction of the *test algebra*, not of the geometry.  It does **not** prove the ring
-case: it says the ring case at `A` follows from the ring case at the members of any finite
-covering family of localizations of `A`.  A lane that computes `Pic` over local rings — where
-seminormality, and hence the Traverso–Swan obstruction measured at
-`AJCR.w4-rep.datum.p1-witness`, is a far weaker demand than over a general `A` — gets the
-general case from these lemmas.
+It is a reduction of the *test algebra*, not of the geometry, and it does **not** prove the ring
+case.  Two things are load-bearing and were wrong in an earlier version of this header; both were
+found by a fresh-context audit (`I-1657`, `I-1660`) and independently reproduced here.
 
-No new hypothesis is added to any existing statement: every theorem below either takes the
-covering data as an explicit argument or is an unconditional statement about a degenerate ring.
+**1. AT A FIXED `A` the reduction is real: the ring case at `A` follows from the ring case at the
+members of any finite covering family of localizations of `A`, and there is no route back.**  That
+is what `PicEtAff.subsingleton_of_away` and `rigidity_of_away` say, and it is the usable content
+of the file.
 
-## The degenerate test ring, and why it is here rather than in a probe
+**2. UNDER THE OUTER `∀ A` IT IS NOT A WEAKENING AT ALL.**  The two `JacobianData` producers at
+the bottom quantify their pointwise hypothesis over *every* test algebra — and
+`Localization.Away f` **is** a test algebra, so the outer `∀ A` already covers it.  The converse
+is one line with the trivial witness `f = 1`: `Ideal.eq_top_of_isUnit_mem` says `1 ∉ p`, and the
+hypothesis at `Localization.Away 1` is an instance of the global statement.  So
+
+> `jacobianData_of_forall_prime_subsingleton`'s hypothesis is **logically equivalent** to
+> `jacobianData_of_affine_subsingleton`'s (`Pic0VanishingRoute.lean:296`), and
+> `jacobianData_of_forall_prime_rigidity`'s to `jacobianData_of_rigidityAff`'s
+> (`Pic0RigidityAffineReduction.lean:190`).
+
+Those two producers are therefore **restatements, not repricings**.  They are kept because the
+pointwise *shape* is what a local computation delivers, but a lane must not read them as having
+reduced the obligation.  The general lesson, which cost this session a false claim: before
+pricing a localisation-or-pointwise reduction as progress, try the converse with the trivial
+witness — if it closes, the reduction only helps at a **fixed** base object, and the consumer's
+quantifier decides whether that is any help.
+
+**3. The interface is NOT a local-ring interface**, contrary to what this header first said.  The
+hypothesis is about `Localization.Away f`, and `IsLocalRing (Localization.Away f)` does not hold
+(verified: instance synthesis fails; a basic open of `Spec A` is not a point).  A lane with a
+genuinely local computation holds `Localization.AtPrime p`, and **nothing here bridges `AtPrime`
+to `Away`** — that bridge is spreading-out, it is unbuilt, and it is the real remaining work on
+this side.
+
+Seminormality is the other half of the story and it does not go away: see the measurement at the
+end of this docstring.
+
+## The degenerate test ring: the site is not a counterexample, and that is ALL it is
 
 `hrigAff`'s antecedent is **vacuous** at a subsingleton `A` (there is no `k`-algebra map from
 the zero ring to a field), so the hypothesis demands `q = 1` for free there.  That made the
 subsingleton ring the cheapest potential *refutation* site for the affine spelling, and it was
-recorded as genuinely unchecked (inbox `I-1655`, author addendum).  It is now checked, and it
-goes the other way: `subsingleton_picEtAff_of_subsingleton` proves the plus construction **is**
-trivial there, unconditionally and with no genus or curve input.  So the affine spelling is not
-refuted at its cheapest site; it is *satisfied* there.
+recorded as genuinely unchecked (inbox `I-1655`, author addendum).  It is now checked:
+`PicEtAff.subsingleton_of_subsingleton` proves the plus construction **is** trivial there,
+unconditionally and with no genus or curve input.  So the site is **not a counterexample**.
+
+**CORRECTED after a fresh-context audit (`I-1658`), and the correction is the honest reading.**
+An earlier version of this paragraph said this "settles the open question of `I-1655`".  It does
+not.  At a subsingleton `A` the antecedent, the conclusion, *and* this file's own pointwise-local
+hypothesis are all vacuous together — the section is the vacuous-hypothesis instance of
+`PicEtAff.subsingleton_of_forall_prime` below, since `Spec A` is empty.  So it tells a reader
+nothing about whether `hrigAff` is inhabitable at any `A` with a **nonempty** spectrum, which is
+what the `I-1655` addendum was actually asking.  Inhabitability stays open.  What the section
+does buy is that a specific attack is closed, and the four steps below are reusable.
 
 The chain is four steps, each of which is about the vehicle rather than the curve: `Spec` of a
 subsingleton ring has empty carrier (`PrimeSpectrum.isEmpty_iff_subsingleton`), hence so does
@@ -66,7 +101,8 @@ its spectrum maps *onto* the empty spectrum.
 * `AlgebraicGeometry.PicEtAff.subsingleton_of_forall_prime` — **the pointwise form, and the
   one a consumer wants**: no covering family in the statement, only a basic-open neighbourhood
   at each prime.  With `subsingleton_pic0Subgroup_overSpec_of_forall_prime` on the `pic⁰`
-  carrier, and `span_eq_top_of_forall_prime` as the elementary `Spec`-level step.
+  carrier, and `span_eq_top_of_forall_prime` as the `Spec`-level step (a mathlib lemma
+  re-spelled, not new).
 * `AlgebraicGeometry.PicEtAff.subsingleton_of_subsingleton` /
   `subsingleton_relPic_of_subsingleton` / `Algebra.EtaleCover.subsingleton_carrier` — the
   degenerate-test-ring chain, unconditional.
@@ -78,9 +114,9 @@ recording: `Subsingleton (CommRing.Pic A)` **is** available for a local `A` (mat
 `CommRing.Pic.instSubsingletonOfFiniteMaximalSpectrum`), but the obligation involves the
 polynomial ring, and `Subsingleton (CommRing.Pic (Polynomial A))` does **not** follow from
 `IsLocalRing A` — measured, `exact?` fails.  Traverso–Swan is the reason (that identity holds
-exactly for seminormal rings) and a local ring need not be seminormal.  So these lemmas move the
-obligation to local rings; they do not discharge it there, and the remaining content is
-seminormality-flavoured rather than quantifier-flavoured.
+exactly for seminormal rings) and a local ring need not be seminormal.  So at a FIXED `A` these
+lemmas move the obligation to basic opens of `Spec A`; they do not discharge it there, and the
+remaining content is seminormality-flavoured rather than quantifier-flavoured.
 -/
 
 set_option autoImplicit false
@@ -250,17 +286,22 @@ has to be threaded through the statement either. -/
 
 section Pointwise
 
-/-- A set of ring elements whose basic opens cover `Spec A` generates the unit ideal.
+/-- An indexed family of ring elements whose basic opens cover `Spec A` generates the unit ideal.
 
-Elementary and stated at this generality because the covering hypothesis below produces exactly
-this shape; a set contained in no prime is contained in no maximal ideal, hence is not proper. -/
-theorem span_eq_top_of_forall_prime {A : Type u} [CommRing A] (s : Set A)
-    (h : ∀ p : PrimeSpectrum A, ∃ f ∈ s, f ∉ p.asIdeal) :
-    Ideal.span s = ⊤ := by
-  by_contra hne
-  obtain ⟨m, hm, hle⟩ := Ideal.exists_le_maximal _ hne
-  obtain ⟨f, hfs, hf⟩ := h ⟨m, hm.isPrime⟩
-  exact hf (hle (Ideal.subset_span hfs))
+**This is mathlib's `PrimeSpectrum.iSup_basicOpen_eq_top_iff` in another spelling**, and it is
+written through it rather than re-proved — the audit finding `I-1659`.  An earlier version proved
+it directly (a set in no prime is in no maximal ideal) because plain `exact?` fails on this goal;
+`exact?` failing is not absence, and the mathlib lemma is stated as an `iSup` of basic opens over
+an *indexed family*, which is exactly the shape the use site below has.
+
+Kept as a named lemma only because the `Set.range`/`iSup` translation is two tactic lines that
+would otherwise be inlined twice. -/
+theorem span_eq_top_of_forall_prime {A : Type u} [CommRing A] {ι : Type*} (f : ι → A)
+    (h : ∀ p : PrimeSpectrum A, ∃ i, f i ∉ p.asIdeal) :
+    Ideal.span (Set.range f) = ⊤ := by
+  rw [← PrimeSpectrum.iSup_basicOpen_eq_top_iff]
+  ext p
+  simpa using h p
 
 variable {A : Type u} [CommRing A] [Algebra k A]
 
@@ -269,8 +310,11 @@ which the plus construction is trivial, it is trivial at `A`.
 
 No covering family in the statement: the witnesses are chosen at the primes, shown to span,
 cut down to a finite subfamily by `Ideal.span_eq_top_iff_finite`, and fed to
-`PicEtAff.subsingleton_of_away`.  This is the interface a lane computing `Pic` over local rings
-should target. -/
+`PicEtAff.subsingleton_of_away`.  The hypothesis is about `Localization.Away f`, a BASIC OPEN and
+NOT a local ring (`IsLocalRing (Localization.Away f)` does not hold); a lane holding a genuinely
+local computation has `Localization.AtPrime p`, and the `AtPrime`-to-`Away` bridge is spreading
+out and is unbuilt.  So this is the interface for a computation over basic opens, which is a
+weaker thing than the header of this file originally claimed. -/
 theorem PicEtAff.subsingleton_of_forall_prime
     (h : ∀ p : PrimeSpectrum A, ∃ f : A, f ∉ p.asIdeal ∧
       Subsingleton (PicEtAff C (Localization.Away f))) :
@@ -278,7 +322,7 @@ theorem PicEtAff.subsingleton_of_forall_prime
   classical
   choose f hf hsub using h
   have hspan : Ideal.span (Set.range f) = ⊤ :=
-    span_eq_top_of_forall_prime _ fun p => ⟨f p, ⟨p, rfl⟩, hf p⟩
+    span_eq_top_of_forall_prime f fun p => ⟨p, hf p⟩
   obtain ⟨t, hts, ht⟩ := (Ideal.span_eq_top_iff_finite (Set.range f)).mp hspan
   refine PicEtAff.subsingleton_of_away C (ι := {x // x ∈ t}) (fun i => i.1)
     (fun i => Localization.Away i.1) ?_ ?_
@@ -319,7 +363,7 @@ theorem PicEtAff.rigidity_of_forall_prime
   classical
   choose f hf hrig using h
   have hspan : Ideal.span (Set.range f) = ⊤ :=
-    span_eq_top_of_forall_prime _ fun p => ⟨f p, ⟨p, rfl⟩, hf p⟩
+    span_eq_top_of_forall_prime f fun p => ⟨p, hf p⟩
   obtain ⟨t, hts, ht⟩ := (Ideal.span_eq_top_iff_finite (Set.range f)).mp hspan
   refine PicEtAff.rigidity_of_away C (ι := {x // x ∈ t}) (fun i => i.1)
     (fun i => Localization.Away i.1) ?_ ?_ q hq
@@ -364,8 +408,8 @@ def jacobianData_of_forall_prime_subsingleton
 
 The rigidity analogue, through `jacobianData_of_rigidityAff`
 (`Pic0RigidityAffineReduction.lean:190`).  This is the shortest statement of the whole vanishing
-route's remaining debt: a local computation of the plus construction at each prime of each test
-algebra, and nothing else. -/
+route's remaining debt IN SHAPE, though — per point 2 of the module docstring — not in
+strength: this hypothesis is logically equivalent to `jacobianData_of_rigidityAff`'s own. -/
 def jacobianData_of_forall_prime_rigidity (hg : genus C = 0)
     (h : ∀ (A : Type u) [CommRing A] [Algebra k A],
       ∀ p : PrimeSpectrum A, ∃ f : A, f ∉ p.asIdeal ∧
@@ -374,6 +418,30 @@ def jacobianData_of_forall_prime_rigidity (hg : genus C = 0)
             PicEtAff.mapAlg C φ q = 1) → q = 1) :
     JacobianData C :=
   jacobianData_of_rigidityAff C hg fun A _ _ => PicEtAff.rigidity_of_forall_prime C (h A)
+
+/-! ### The equivalence, proved rather than asserted
+
+Point 2 of the module docstring says the two producers above are restatements.  A docstring
+saying so is a claim nobody checks, so here it is as a theorem: the converse direction, with the
+trivial witness `f = 1`.  Together with `PicEtAff.subsingleton_of_forall_prime` (which is the
+forward direction) the two hypotheses are interderivable, and the same argument works verbatim for
+the rigidity spelling.
+
+This is the check that should be run on *any* localisation-or-pointwise reduction before it is
+priced as progress. -/
+
+omit [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] in
+/-- **The converse, with the trivial witness**: the global hypothesis implies the pointwise-local
+one, because `Localization.Away 1` is itself a test algebra and `1` lies outside every prime.
+
+So under the outer `∀ A` the pointwise form is *not* weaker — the content of the audit finding
+`I-1660`, kept in the file so the equivalence cannot be lost again. -/
+theorem forall_prime_subsingleton_of_forall
+    (h : ∀ (A : Type u) [CommRing A] [Algebra k A], Subsingleton (PicEtAff C A))
+    (A : Type u) [CommRing A] [Algebra k A] (p : PrimeSpectrum A) :
+    ∃ f : A, f ∉ p.asIdeal ∧ Subsingleton (PicEtAff C (Localization.Away f)) :=
+  ⟨1, fun hc => p.isPrime.ne_top (Ideal.eq_top_of_isUnit_mem _ hc isUnit_one),
+    h (Localization.Away (1 : A))⟩
 
 end Datum
 
