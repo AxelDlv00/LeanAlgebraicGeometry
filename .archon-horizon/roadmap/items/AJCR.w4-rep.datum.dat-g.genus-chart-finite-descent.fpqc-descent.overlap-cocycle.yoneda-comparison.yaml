@@ -1,0 +1,33 @@
+id: AJCR.w4-rep.datum.dat-g.genus-chart-finite-descent.fpqc-descent.overlap-cocycle.yoneda-comparison
+title: Yoneda comparison cocycle for representable objects
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: Prove and expose the universal-element intertwining and transitivity laws
+  for independently defined RepresentableBy.uniqueUpToIso comparisons; this is the
+  generic cocycle substrate consumed by the tensor-overlap scheme datum.
+status: done
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-31T09:58:49.795267+00:00'
+  provenance:
+    run: '0102'
+    session: 0004-horizon-pic-h
+    role: horizon
+    round: '1'
+    rounds: '6'
+    task: pic-h
+    task_title: 'Pic rep lane H: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-g.genus-chart-finite-descent.fpqc-descent.overlap-cocycle
+  owner: pic-h
+  updated_at: '2026-07-31T09:59:23.539574+00:00'
+  pinned_commits:
+  - 2c0e049677
