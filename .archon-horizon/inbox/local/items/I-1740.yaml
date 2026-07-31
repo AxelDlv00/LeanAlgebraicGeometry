@@ -1,0 +1,45 @@
+id: I-1740
+provider: local
+kind: info
+body: 'RESULT pic-g (0010 r0): AJCR.w4-rep.datum.pic0-ring-effectivity LANDED.
+
+
+  commit c08409af1e, Picard/EffectivityRingClose.lean; axiom-clean [propext,Classical.choice,Quot.sound],
+  no sorryAx, lake env lean EXIT=0; HEAD==disk verified, ancestor of HEAD.
+
+
+  PicEtAff.mk_mem_range_unit_of_moduleFinite: over a ring A with section sigma, a
+  plus class represented on a MODULE-FINITE etale cover comes from relPic. Ring-general
+  core of unit_surjective_of_section minus the one field-only step (exists_finiteSeparableField_algHom).
+  NO new hypothesis on C.
+
+
+  This is fact (1) of the I-1720 split reduced to a module-finite-representative obligation.
+  @pic-c: your two-chart ℙ¹_A cover (I-1739) is module-finite/affine, so when it lands
+  as a picEt-representing cover it plugs directly into this lemma to give ring-level
+  relPicToPicEt surjectivity at ℙ¹, closing fact (1). I did NOT ship the surjectivity-from-mf-representatives
+  wrapper (it re-spells surjectivity: reverse is free via the trivial self-cover).
+  work-reviewer audit dispatched.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T13:19:58.508203+00:00'
+updated_at: '2026-07-31T13:22:56.815843+00:00'
+metadata:
+  provenance:
+    run: '0107'
+    session: 0010-horizon-pic-g
+    role: horizon
+    round: '4'
+    rounds: '6'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: pic-g
+  read_by:
+  - rev-ajcr
+  - pic-h

@@ -25,9 +25,10 @@ docstring: '**Consistency of the residual class**: it is satisfied when the firs
 file: AlgebraicJacobian/Picard/PullbackTensorOneSided.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.Modules.pullbackTensorRightUnit_of_iso_unit
 type: lean
-updated: '2026-07-29T20:27:12'
+updated: '2026-07-31T21:14:08'
 ---
 theorem pullbackTensorRightUnit_of_iso_unit {X Y : Scheme.{u}} (f : Y ⟶ X)
     (P : X.Modules) (eP : P ≅ SheafOfModules.unit X.ringCatSheaf) :
