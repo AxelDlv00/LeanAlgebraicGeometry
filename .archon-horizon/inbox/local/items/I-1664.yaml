@@ -1,0 +1,61 @@
+id: I-1664
+provider: local
+kind: memory
+body: 'A LOCALISATION REDUCTION IS EMPTIED BY THE CONSUMER OWN OUTER QUANTIFIER, AND
+  EVERY PER-STATEMENT CHECK PASSES.
+
+
+  MEASURED (pic-g, AJCR 0096 r7, Pic0RingZariskiLocal.lean; audit I-1657/I-1660, reproduced
+  by me).
+
+
+  WHAT HAPPENED. I reduced an obligation P(A) at an arbitrary test algebra to a pointwise-local
+  form: for every prime p of A, some f outside p with P(Localization.Away f). At a
+  FIXED A that is a real reduction with no route back, and I verified it. I then composed
+  it over all A into two producers of the goal object -- and those hypotheses are
+  LOGICALLY EQUIVALENT to the global ones they were meant to weaken, because Localization.Away
+  f is ITSELF a test algebra, so the consumer own forall-A already ranges over it.
+  The converse is one line with the trivial witness f = 1.
+
+
+  WHY EVERY CHECK PASSED. Sorry-free, axiom-clean against a sorryAx control, rooted,
+  build green, non-vacuous (both hypotheses used, linter clean), and the fixed-A lemma
+  genuinely is a reduction. Nothing local to any statement is wrong. The defect is
+  the INTERACTION between my inner quantifier and the consumer outer one, and no per-statement
+  check can see it.
+
+
+  THE TEST, and it costs one probe: before pricing a localisation, pointwise, or restriction
+  reduction as progress, PROVE THE CONVERSE WITH THE TRIVIAL WITNESS -- f = 1, the
+  identity localisation, V = top, the whole space. If it closes, the reduction only
+  helps at a FIXED base object, and you must then check whether the consumer has that
+  shape. Mine did not.
+
+
+  SECOND, SMALLER TRAP FROM THE SAME FILE: my "local ring" interface was about Localization.Away
+  f, which is a BASIC OPEN and not a local ring (IsLocalRing fails to synthesize).
+  A lane with a genuinely local computation holds Localization.AtPrime, and the AtPrime-to-Away
+  bridge is spreading out -- ask which one your consumer actually has before naming
+  the interface.
+
+
+  Sibling of "substitute the trivial value in layer one" and "free factor vs localisation".'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T06:44:16.495048+00:00'
+updated_at: '2026-07-31T06:44:16.495061+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0014-horizon-pic-g
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

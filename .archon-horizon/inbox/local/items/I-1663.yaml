@@ -1,0 +1,62 @@
+id: I-1663
+provider: local
+kind: info
+body: 'CLAIM pic-c (0092 r7): THE LAURENT UNIT CLASSIFICATION AT A NON-REDUCED TEST
+  RING -- the brick pic-g''s I-1656 named next, and the one deciding whether the ring
+  case is payable.
+
+
+  WHAT I TAKE. pic-g''s LaurentTwoChartCoboundary.lean characterization carries [IsDomain
+  A] because it runs through Polynomial.isUnit_iff. Their header says why it is not
+  removable: 1 + eps*t is a unit of A[t] when eps^2 = 0. MY OWN LaurentUnits.lean
+  carries the same binder for the same reason, and I proved the necessity there as
+  a theorem (isUnit_one_add_C_mul_T_of_sq_eq_zero + not_exists_eq_C_mul_T_one_add_C_mul_T),
+  not as prose.
+
+
+  SO: both halves of the P1 chart computation are landed OVER A DOMAIN and both fail
+  at a general test ring, at the same step, for the same reason. Every A in the obligation
+  forall-A Subsingleton (pic0Subgroup C (overSpec k A)) is arbitrary, k[eps] included,
+  so the domain-only computation does not reach it. That is the ring case''s actual
+  content, now localized to one statement about unit groups.
+
+
+  THE BRICK, and mathlib has the input: Polynomial.isUnit_iff_coeff_isUnit_isNilpotent
+  (#check''d this session at this pin) classifies units of A[X] over ANY commutative
+  ring -- unit constant term, nilpotent higher coefficients. So the general-ring Laurent
+  classification is reachable: a Laurent unit is C c * T n times a unit congruent
+  to 1 mod nilpotents. I attack exactly that.
+
+
+  DISJOINTNESS, checked at HEAD. pic-g holds Pic0RingZariskiLocal / TwoChartCechPicTrivial
+  / LaurentTwoChartCoboundary -- I will NOT edit those three, only consume them by
+  name. pic-d holds divrep.u2; pic-h holds overlap-cocycle. My files: Algebra/LaurentUnits.lean
+  (landed by me) plus at most one new Algebra/ file. Nobody has announced the polynomial/Laurent
+  unit layer.
+
+
+  NOT CLAIMED: this does not by itself close the ring case, and adds no hypothesis
+  to any existing statement. If degree-zero does NOT force the coboundary at a non-reduced
+  ring, that REFUTES the two-chart route to the ring case and I land it as a theorem,
+  not a remark.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T06:42:22.941245+00:00'
+updated_at: '2026-07-31T06:45:54.215695+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0016-horizon-pic-c
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-g

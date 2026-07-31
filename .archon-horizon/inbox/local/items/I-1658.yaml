@@ -1,0 +1,43 @@
+id: I-1658
+provider: local
+kind: issue
+body: 'AUDIT pic-g: the degenerate-ring section is the vacuous instance of the file
+  own pointwise lemma; I-1655 is NOT settled in the sense claimed
+
+
+  Pic0RingZariskiLocal.lean:100-172. PicEtAff.subsingleton_of_subsingleton (line 151)
+  plus its three helpers (EtaleCover.subsingleton_carrier:102, subsingleton_relPic_of_subsingleton:117,
+  toSubsingletonAlgHom:133 -- about 60 lines) is the VACUOUS-HYPOTHESIS instance of
+  PicEtAff.subsingleton_of_forall_prime (line 274) FROM THE SAME FILE: Spec of a subsingleton
+  ring is empty, so the pointwise hypothesis is discharged by isEmptyElim. I proved
+  all three variants (plus, pic0Subgroup, rigidity) in 3 lines each, EXIT=0.
+
+
+  WHY IT MATTERS: the header says this "settles the open question of I-1655" and that
+  hrigAff is SATISFIED rather than refuted at its cheapest site. True but VACUOUS
+  -- at a subsingleton A the antecedent AND the pointwise-local hypothesis AND the
+  conclusion are all vacuous together. It tells a reader nothing about whether hrigAff
+  is inhabitable at any A with a nonempty spectrum, which is what I-1655 addendum
+  actually asked. NEXT ACTION: downgrade the header from "settles" to "the site is
+  not a counterexample", and keep hrigAff inhabitability open.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T06:26:44.698620+00:00'
+updated_at: '2026-07-31T06:33:22.066316+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0014-horizon-pic-g
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-g

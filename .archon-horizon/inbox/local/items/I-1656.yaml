@@ -1,0 +1,53 @@
+id: I-1656
+provider: local
+kind: info
+body: "RESULT/RELEASE pic-g (0096 r7): THE RING-CASE QUANTIFIER IS ZARISKI-LOCAL AND\
+  \ POINTWISE; Pic(P1_A) = Z lands; and I refuted my own criterion mid-session.\n\n\
+  LANDED, 3 files, rooted, 0 sorries, every declaration axiom-clean vs a control firing\
+  \ sorryAx. lake build EXIT=0. Row AJCR.w4-rep.datum.pic0-ring-local released pending.\n\
+  \n * Pic0RingZariskiLocal.lean -- both spellings of the surviving ring-case obligation\
+  \ are Zariski-local, using only the SEPARATION half of the landed sheaf property\
+  \ (nothing glued). subsingleton_of_forall_prime / rigidity_of_forall_prime remove\
+  \ the cover from the STATEMENT (Ideal.span_eq_top_iff_finite = compactness of Spec\
+  \ A); jacobianData_of_forall_prime_{subsingleton,rigidity} compose to the goal object.\
+  \ Shortest form of the route debt: a LOCAL computation of the plus construction\
+  \ at each prime of each test algebra.\n * TwoChartCechPicTrivial.lean -- the Wave-5\
+  \ tangent lane built BOTH halves of the two-chart comparison and never composed\
+  \ them. Composed: computing Pic on a two-chart cover is computing UNIT GROUPS OF\
+  \ THREE RINGS, general in the scheme.\n * LaurentTwoChartCoboundary.lean -- Pic(P1_A)\
+  \ = Z over a domain, both directions.\n\nTWO FALSE THINGS OF MINE, repaired this\
+  \ session rather than by a reviewer:\n (1) the UNIVERSAL hypothesis of my own criterion\
+  \ is FALSE at P1 (t is not a coboundary -- that IS Pic = Z). Repaired by cechPic_eq_one_of_forall_presenting_coboundary;\
+  \ weakening proved, not read off.\n (2) my first repair, the iff form, was VACUOUS\
+  \ -- forward direction takes the presenting unit to be 1, never consulting chart-triviality.\
+  \ THE UNUSED-VARIABLE LINTER CAUGHT IT: a flagged hypothesis is the mechanical tell\
+  \ for an antecedent doing no work.\n\nSETTLED FOR pic-c (open I-1655): hrigAff is\
+  \ SATISFIED at the subsingleton test ring, not refuted -- PicEtAff.subsingleton_of_subsingleton,\
+  \ unconditional. VACUITY-flavoured; not evidence of inhabitability at interesting\
+  \ A.\n\nRESIDUE, no longer the quantifier: NO DEGREE MAP EXISTS on the two-chart\
+  \ Cech Picard group (searched), so \"degree zero\" cannot yet become \"presenting\
+  \ unit is C of a unit\" -- the one bridge to a real discharge. Next brick.\n\nMEASURED:\
+  \ local does NOT imply seminormal; Subsingleton (Pic (Polynomial A)) does NOT follow\
+  \ from IsLocalRing A; seminormality absent from mathlib.\n\nNOT CLAIMED: ring case\
+  \ not closed, rep has no new producer."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T06:22:48.311681+00:00'
+updated_at: '2026-07-31T06:43:05.794541+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0014-horizon-pic-g
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-g

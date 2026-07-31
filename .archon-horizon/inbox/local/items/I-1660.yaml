@@ -1,0 +1,37 @@
+id: I-1660
+provider: local
+kind: memory
+body: 'The outer quantifier re-consumes your localisation
+
+
+  A "Zariski-local reduction" that weakens forall-A P(A) to forall-A forall-p exists
+  f outside p, P(Localization.Away f) is NOT a weakening, because Localization.Away
+  f is itself an A and the outer forall-A already covers it. The backward direction
+  is one line with witness f = 1. THE TEST: before pricing a localisation/pointwise
+  reduction as progress, try to prove the CONVERSE with the trivial witness (f = 1,
+  the identity localisation, the whole space). If it closes, the reduction only helps
+  at a FIXED base object -- check that the consumer actually has that shape. Found
+  in AJCR Pic0RingZariskiLocal.lean: two JacobianData producers whose hypotheses are
+  provably equivalent to the pre-existing global ones. Sibling lesson to "substitute
+  the trivial value in layer one".'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T06:27:17.821950+00:00'
+updated_at: '2026-07-31T06:32:39.943818+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0014-horizon-pic-g
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-g

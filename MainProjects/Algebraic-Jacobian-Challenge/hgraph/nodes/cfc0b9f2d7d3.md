@@ -259,8 +259,35 @@ docstring: "**THE PROJECT'S CENTRAL OPEN OBLIGATION — expected to stay open.**
   \ predicate match `G1` owed\nis free at the canonical action (`PicScheme.isInvariantMatch_canonical`,\n\
   `Picard/PicEtInvariantMatch.lean`), for an arbitrary extension, so the group action\n\
   does not enter as an obligation here at all. The clause is removed rather than\n\
-  struck because it was a list of what remains, and it no longer does.\n\nPresent\
-  \ state of the four:\n\n1. **the descent test — LANDED.** `Picard/EtaleFieldCover.lean`\
+  struck because it was a list of what remains, and it no longer does.\n\n**AND THE\
+  \ SENTENCE THREE PARAGRAPHS UP IS NOW STALE TOO, in the same cheap\ndirection**\
+  \ (`pic-e`, 2026-07-31). It says what remains is \"the **scheme-level**\nquotient\
+  \ (`G2`, item 3), the covering statement `hcov`, and `k'`-side\nrepresentability\
+  \ itself\". Of those three, `hcov` is **closed**\n(`coverSelfSection_generate_mem_etaleTopology`,\
+  \ `pic-f`), and the scheme-level\nquotient is discharged from the orbit hypothesis\
+  \ alone — see the withdrawal in\nitem 3 below. So at the spelling\n`PicScheme.seamClauseOne_of_hasGaloisQuotient_lftFree`\n\
+  (`Picard/PicEtGaloisQuotient.lean`) the descent step's remaining *instance* binder\n\
+  is **one**: `OrbitsInAffineOpen`. The list is left standing rather than rewritten\n\
+  because each entry is corrected at its own item; what a costing should read\ninstead\
+  \ is the reduction below.\n\n**THE WHOLE OF THIS SEAM NOW HAS A NAMED SUFFICIENT\
+  \ CONDITION, and it is the\nclassical pointed theorem** (`pic-e`, 2026-07-31,\n\
+  `Picard/PicEtPointedReduction.lean`, 11 declarations, `sorry`-free, all\naxiom-clean\
+  \ against this theorem as a control).\n`fgaPicardRepresentability_of_pointedPicSharpRep`\
+  \ derives **both** conjuncts\nbelow, verbatim, over an **arbitrary** `k`, from `Scheme.PointedPicSharpRep`:\n\
+  `picSharp`-representability for curves that *have* a rational point, uniform in\n\
+  the base field, plus `FiniteInAffine` of the representing scheme. So the\narbitrary-field\
+  \ difficulty that `I-0491` deliberately put on this statement — the\nthing that\
+  \ makes it harder than FGA/Kleiman as classically proved — is\n**discharged**, and\
+  \ a lane proving that antecedent closes this `sorry` by `exact`.\nThe rational point\
+  \ is *produced*, not assumed\n(`exists_finiteGalois_level_hasRationalPoint_of_geometricallyIntegral`\
+  \ is\nunconditional at these very binders), so nothing here carries `[HasRationalPoint\
+  \ C]`\nand `I-0491` is respected. Price against the weaker\n`seamClauseOne_of_hasGoodGaloisLevel`:\
+  \ it needs **one** finite Galois level, has no\nrational point in its statement,\
+  \ and does not bind `[GeometricallyIntegral]`.\n**Two cautions from that file, both\
+  \ measured there**: `PointedPicSharpRep` is\nderivable *from this very `sorry`*\
+  \ up to `FiniteInAffine`, so axiom-check any\nclaimed proof rather than trusting\
+  \ a green build; and no curve is exhibited\nsatisfying `FiniteInAffine` at its Picard\
+  \ scheme.\n\nPresent state of the four:\n\n1. **the descent test — LANDED.** `Picard/EtaleFieldCover.lean`\
   \ proves\n   `Spec k' ⟶ Spec k` is an étale cover for `k'/k` finite separable and\
   \ that\n   `picEt` satisfies the sheaf axiom at that cover.\n2. **the cross-base\
   \ identification — CLOSED** (`Picard/PicEtCrossBase.lean`,\n   `PicScheme.picEt_crossBaseIso`,\
@@ -284,14 +311,29 @@ docstring: "**THE PROJECT'S CENTRAL OPEN OBLIGATION — expected to stay open.**
   \ which is\n   what `isGaloisQuotient_spec` had covered. The step was\n   `isGaloisQuotient_congr`,\
   \ transport of `IsGaloisQuotient` along an equivariant\n   isomorphism over `Spec\
   \ L`, applied to `X.isoSpec`; it subsumes the former\n   single-object witness `hasGaloisQuotient_specF4`\
-  \ by `inferInstance`.\n   **What this does not do, and it is the part that matters\
-  \ for this seam**: the\n   campaign consumer `J'_r` is a *glued* scheme, hence non-affine,\
-  \ and\n   `inferInstance` for the gate at an abstract action carrying the orbit\n\
-  \   hypothesis but not affineness **fails** (measured, control both ways). So the\n\
-  \   remaining `G2(c)` work is exactly the `Scheme.GlueData` assembly of the\n  \
-  \ per-chart quotients, and the Hironaka trap still bites there and is\n   untouched.\
-  \ Do not read \"the gate has an instance\" as \"input 3 is closed\".\n   `AlgebraicJacobian.GaloisDescent.HasStableAffineCover`\
-  \ is **not** a second\n   gate, but the reason stated here until now was false (`review-ajc`,\n\
+  \ by `inferInstance`.\n   **THE PARAGRAPH THAT STOOD HERE IS WITHDRAWN — IT WAS\
+  \ FALSE, AND FALSE IN THE\n   EXPENSIVE DIRECTION** (`pic-e`, 2026-07-31, measured\
+  \ with controls both ways;\n   reproduced from a fresh-context audit before editing).\
+  \ It said: \"the campaign\n   consumer `J'_r` is a *glued* scheme, hence non-affine,\
+  \ and `inferInstance` for\n   the gate at an abstract action carrying the orbit\
+  \ hypothesis but not affineness\n   **fails** (measured, control both ways). So\
+  \ the remaining `G2(c)` work is\n   exactly the `Scheme.GlueData` assembly of the\
+  \ per-chart quotients.\"\n   `inferInstance` **SUCCEEDS** at exactly that shape\
+  \ — an abstract `ρ` with\n   `[FiniteDimensional K L] [IsGalois K L] [ρ.OrbitsInAffineOpen]`\
+  \ and no\n   affineness — and fails only without the orbit binder. The producer\
+  \ is\n   `hasGaloisQuotient_of_orbitsInAffineOpen`\n   (`Picard/GaloisDescent/GaloisQuotientOverlap.lean`),\
+  \ a **global** instance\n   built from `isGaloisQuotient_glued`, i.e. the `Scheme.GlueData`\
+  \ assembly that\n   this paragraph called the remaining work **is already done**.\
+  \ Both stale\n   sentences told a lane to budget work that exists, which is worse\
+  \ than an\n   optimistic error because nobody re-tests a prohibition.\n   **What\
+  \ survives**: the gate's price is the *orbit* hypothesis, and that is a\n   real\
+  \ one — `[ρ.OrbitsInAffineOpen]` at the Picard scheme is unproved here, and\n  \
+  \ it is where quasi-projectivity and the Hironaka trap actually enter.\n   `Picard/PicEtPointedReduction.lean`\
+  \ carries it as the scheme-level\n   `FiniteInAffine` (`orbitsInAffineOpen_of_finiteInAffine`)\
+  \ and shows it is\n   neither free nor vacuous. So still do not read \"the gate\
+  \ has an instance\" as\n   \"input 3 is closed\" — but the reason is the orbit hypothesis,\
+  \ not gluing.\n   `AlgebraicJacobian.GaloisDescent.HasStableAffineCover` is **not**\
+  \ a second\n   gate, but the reason stated here until now was false (`review-ajc`,\n\
   \   2026-07-29 → corrected 2026-07-30 with controls both ways). It said the cover\n\
   \   class \"has had a global instance since G2(a) landed\"; that instance,\n   `hasStableAffineCover_of_orbitsInAffineOpen`,\
   \ requires\n   `[ρ.OrbitsInAffineOpen]`, and `inferInstance` for `HasStableAffineCover`\
@@ -477,7 +519,7 @@ generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.Scheme.fgaPicardRepresentability
 type: lean
-updated: '2026-07-31T03:47:19'
+updated: '2026-07-31T11:58:56'
 ---
 theorem fgaPicardRepresentability {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
