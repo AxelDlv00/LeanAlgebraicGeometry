@@ -2,46 +2,17 @@ id: AJC.picrep.divgrassmannian
 title: 'D2'': Grassmannian comparison for the degree-d divisor functor'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'D2'' NOT BUILT; substrate landed and one of its inputs turned out free.
-  RELEASED for the next lane.
-
-
-  LANDED (Picard/PullbackTensorOneSided.lean + one de-privatisation in TensorObjInverse.lean;
-  commits 71ea0b839, 03be5f1be, ad650c4da; all declarations axiom-clean, kernel EXIT=0,
-  lake build of the touched module EXIT=0/8570 jobs): pullbackTensorIsoOfTwist gives
-  f^*(P (x) L) iso f^*P (x) f^*L for ARBITRARY P and L iso O_X, UNCONDITIONALLY —
-  the exact twist comparison D2'' needs, with P a non-trivialisable divisor-family
-  quotient. The sorried Modules.pullbackTensorMap_isIso is NOT consumed.
-
-
-  SELF-CORRECTION on record (I-0912): my first two commits gated this behind a class
-  and claimed the enabling coherence lemma did not exist. It existed as ''private''
-  at TensorObjInverse.lean:2377. Do not re-derive it.
-
-
-  STILL BLOCKING D2'' ITSELF, and it is TWO gates not one (I-0876 as amended): (1)
-  P5 uniform H1 vanishing — ajc-p2 confirms the cross-extension part is open; (2)
-  a very ample O(1) on C. IsProjectiveWith IS inhabited and rooted (ProjectiveSpace.isProjectiveWith_over:189)
-  but nothing reaches the CURVE: every transfer needs a closed immersion C into P^n.
-  That is the frontier''s empty 53-unlock node ''Smooth proper curve over k is projective'',
-  and it is the real blocker under D2''/D4''. The landed unconditional HasFiniteMapToP1
-  does NOT supply it.
-
-
-  ALSO READ I-0907 BEFORE RESUMING: review-ajc established that every Milne-Kollar
-  milestone including D2'' targets picSharp, while the seam''s clause (1) is about
-  picEt — so completing this cluster does not close the sorry.
-
-
-  CURRENT CORRECTION (run 0101 r1): Adelic.isProjective_of_smoothProperGeometricallyIntegral
-  is now a rooted, axiom-clean theorem in Picard/CurveProjectivity.lean. It is not
-  yet in DivGrassmannianEmbedding.lean''s downstream import closure, so import wiring
-  remains infrastructure rather than an absent mathematical theorem. The actual D2''
-  gates are P5 uniform H1 vanishing, an epi evaluation with a locally-free target
-  of the required rank, and well-definedness/descent from DivFamily.Rel. The representation-facing
-  quotient/class API and componentwise epi bridge landed in DivGrassmannianEmbedding.lean
-  (commits 711980f0fd and 82ce977819). The picSharp-versus-picEt route caveat remains
-  unchanged.'
+summary: 'ACTIVE. D2'' substrate landed without a rational-point or representability
+  binder: unconditional twist/evaluation/quotient/class APIs with DivFamily.Rel descent;
+  arbitrary base change and fibre-rank/H0 for finite schematic support; and DivFamily.pushforward_isLocallyFreeOfRank,
+  deriving rank d from HasFiberDeg d on an affine Spec R test base. The rank bridge
+  is explicitly conditional on [IsNoetherianRing R] and LocallyQuasiFinite support,
+  so it is not the arbitrary-Over(S) twisted-target producer. The named projective
+  twist/local-triviality witness has no rational-point binder but is Scheme-0 only
+  at this mathlib pin. Remaining D2 gates are twisted-target finite-presentation/flatness,
+  right-factor support, fibre-H0 invariance, and the evaluation epi; pic-b owns the
+  tensor-section substrate. Row released/unowned; commits a912ea5325 and a166dd4ef6
+  are pinned.'
 status: active
 kind: proof
 priority: normal
@@ -65,7 +36,7 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-31T12:46:15.860037+00:00'
+  updated_at: '2026-07-31T13:20:30.715961+00:00'
   pinned_commits:
   - a166dd4ef69675d807d344883f4b6e3d36e873e9
   - a912ea5325656ba6358a08a6a19c14f266bea80b
