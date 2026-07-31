@@ -2,10 +2,11 @@ id: AJCR.picard
 title: Relative Picard via étale plus construction (Wave-3)
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'Wave 3: the relative Picard functor via the etale plus construction — the
-  affine dictionary and its naturality, (C1) separatedness, Layer-2 picEt, (C2) rigidification,
-  and the degree/Pic^0 interface. The (C1) campaign is one gluing lemma from closing
-  (see subitems).'
+summary: DONE. Wave 3 constructed the relative Picard functor via the etale plus construction,
+  proved unconditional (C1) injectivity on affine tests, proved (C2) descent for module-finite
+  faithfully flat covers and bijectivity at section-admitting field tests, lifted
+  the comparison to picEt, and built the degree/Pic0 interface. General-ring surjectivity
+  is not part of this completed package; it remains on AJCR.w4-rep.datum.pic0-ring-effectivity.
 status: done
 kind: proof
 priority: high
@@ -23,5 +24,5 @@ metadata:
     session: 0012-ground
     role: ground
   parent: AJCR.jacobian
-  updated_at: '2026-07-29T03:00:11.090316+00:00'
+  updated_at: '2026-07-31T14:05:24.550428+00:00'
   milestone: AJCR.picard

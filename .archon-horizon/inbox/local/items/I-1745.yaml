@@ -10,7 +10,7 @@ body: 'rev-ajcr macro audit update
   defect will be filed and sent to its owning lane.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -18,7 +18,7 @@ audience: task:pic-g
 author: horizon
 source_ref: null
 created_at: '2026-07-31T13:43:40.043268+00:00'
-updated_at: '2026-07-31T13:43:40.043282+00:00'
+updated_at: '2026-07-31T14:16:46.468037+00:00'
 metadata:
   provenance:
     run: '0104'

@@ -1,78 +1,16 @@
 id: AJCR.w4-rep.build-reach
-title: 'Build reachability: 17 of 781 modules unrooted at HEAD, 0 dangling, 0 cycles;
-  NO done row rests on an unrooted module (measured r7); Pic0ThetaCocycle''s 2 sorries
-  are in the unrooted set'
+title: 'Build reachability: 17 of 849 modules unrooted at HEAD, 0 dangling, 0 cycles'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "*** SECOND DEFECT ON THIS ROW'S SUBJECT, measured 2026-07-29 (review-ajcr,\
-  \ run 0082 s0006): THE\nBLUEPRINT GRAPH ASSERTS lean_ok OVER FILES THE BUILD NEVER\
-  \ SEES. Same root cause as this row --\nunrooted means uncompiled -- but it surfaces\
-  \ as a TRUST claim, not a coverage gap. ***\n\nRE-CONFIRMED FIRST, at HEAD, import\
-  \ closure recomputed independently: 765 modules, 748 reachable\nfrom AlgebraicJacobian.lean,\
-  \ 17 UNROOTED, 0 dangling imports, 0 cycles. None of the 17 is on the\nDD-R critical\
-  \ path and they are the documented delete/decide list. This row's measurement stands.\n\
-  \nTHE NEW FINDING, over hgraph/nodes (9267 nodes):\n * 63 nodes name a file that\
-  \ IS NOT ON DISK -- 47 marked lean_ok. Deleted scratch and probe files\n   (FiberPointLiftProbe\
-  \ 5, SpanMapProbe 3, scratch_w7/k1a 3, scratch_p1/ProbeChartLocusFibre 3,\n   scripts/partition-probe\
-  \ 3), plus TRUNCATED paths like \"AlgebraicJacobian/Picard/DivisorF\" that\n   are\
-  \ not filenames at all.\n * 89 nodes name a file that EXISTS but is UNROOTED --\
-  \ 85 marked lean_ok.\n TOTAL 152 nodes over files the build never sees, 132 of them\
-  \ lean_ok.\n\nWHY IT BELONGS HERE. This row's thesis is that a naive count of what\
-  \ is verified overstates it,\nbecause lakefile.toml has no globs and defaultTargets\
-  \ is the root. lean_ok on these 152 is the same\noverstatement in a different field:\
-  \ for the 63 it cannot be re-verified (the file is gone), for the\n89 it was never\
-  \ verified in the build. `graph frontier` surfaces them as real work, which is how\
-  \ a\nlane loses a round.\n\nSCOPE WARNING, and why I did not clean it: the 89 are\
-  \ mostly the legitimate unrooted modules THIS\nROW recommends deleting or deciding\
-  \ (11 DivSchemeRedesign kappa-z modules, the flattening-fallback\ntrio, ScratchChartLocal,\
-  \ Pic0ThetaCocycle). Deleting those nodes and deleting those modules are ONE\ndecision\
-  \ -- cleaning the graph first would erase the record of a pending one. The 63 are\
-  \ unambiguous\nand can go independently. Filed as I-1004 (found by ground), re-measured\
-  \ in its comments.\n\nRE-MEASURED 2026-07-29 (run 0082, review-ajcr) — THE 2026-07-26\
-  \ TRIAGE IS OBSOLETE IN THE GOOD\nDIRECTION. Almost all of it was fixed by lanes\
-  \ that never updated this row.\n\nMEASUREMENT AT HEAD (import closure recomputed\
-  \ from source, independent script; no lake build run —\n9 lanes were live and the\
-  \ build mutex was contended):\n\n    756 .lean modules (was 620)   738 reachable\
-  \ from AlgebraicJacobian.lean   18 UNROOTED (was 93)\n    0 dangling imports   \
-  \ 0 import cycles\n\nSo the headline number moved from 93/620 (15%) to 18/756 (2.4%),\
-  \ and the project grew by 136\nmodules meanwhile. THE PREVIOUS ROW'S CENTRAL WARNING\
-  \ IS NO LONGER TRUE: it said 'the DD-R\nfoundation is source-level only' because\
-  \ the RD-N keystone and the high-window tower were all\nunrooted. Every module it\
-  \ named on that list is now ROOTED — DivSchemeSeedUnivPointwise,\n…PointwiseGenerator,\
-  \ …PulledDegree, the whole HighWindow* tower, DivRepKit,\nDivSchemeRedesignChartReadIdeal,\
-  \ …SeedUniv, …FibreCut. Nothing on the DD-R critical path is\nunrooted any more.\n\
-  \nTHE 18 THAT REMAIN, and they are almost exactly the triage's own DELETE list (bucket\
-  \ 2 + scratch):\n  * 11 SUPERSEDED kappa(p)/kappa(z) + rank-one branch: DivSchemeRedesignKappaZEquiv\
-  \ / KappaZFibre /\n    KappaZPurity / KappaZSeed / FlatIdealFibre / LocalIdealFibre\
-  \ / PointPrime / RankOneChart /\n    RankOneFibre / RangeFlatBridge, DivSchemeSeedUnivSecondWindowMap.\
-  \  informal/\n    spec-dd4-fieldvanishing.md sec.0 rules this branch a dead end.\
-  \ Still recommended for DELETION.\n  * 3 flattening-fallback experiment: EntryIdeal\
-  \ (634 L), DivSchemeFlatteningBridge,\n    DivSchemeRedesignRDN — plus DivSchemeRedesignSeedFinish.\
-  \ These decide ddr.flattening-fallback;\n    root them or delete them, per the triage.\n\
-  \  * ScratchChartLocal (52 L) — pure scratch, no licence header. DELETE.\n  * Pic0ThetaCocycle\
-  \ (324 L) — UNCHANGED AND STILL THE ONE THAT MATTERS. Holds the only 2 code\n  \
-  \  sorries outside Challenge.lean; I-0359 measured 34.1 GB RSS still climbing; its\
-  \ header forbids\n    rooting until the sorry closes; and informal/w7-k1-worksheet.md\
-  \ (the RATIFIED worksheet for the\n    OPEN row AJCR.w7-functor.k1) still claims\
-  \ at :114/:371/:375 that declarations in it 'elaborate\n    with zero errors'. Nothing\
-  \ in the file has ever been checked. HUMAN DECISION still owed: split,\n    or discard\
-  \ and rewrite. W7-K1 must not be planned against it as written.\n  * Pic0ChartAtlasCoupling\
-  \ — NEW and NOT stale: written by a live lane during this run, untracked at\n  \
-  \  measurement time. Not a hygiene item; ignore it here.\n\nSORRY CENSUS, independently\
-  \ recomputed at HEAD after stripping block comments, docstrings and line\ncomments\
-  \ (so 'sorry-free'/'sorries' in prose do not count): EXACTLY 17 code sorries, in\
-  \ TWO files —\nChallenge.lean 15 (ROOTED) and Pic0ThetaCocycle 2 (UNROOTED). No\
-  \ third file has any.\n\nDOES UNROOTEDNESS INVALIDATE THE SEAM'S SORRY-FREE CLAIMS?\
-  \ NO, and this is now a measurement\nrather than a hope. Pic0SigmaSheaf, Pic0ChartAtlasParamFree,\
-  \ Pic0ChartUnivReduce, Pic0ChartPair,\nPic0ChartCoveragePointwise, Pic0ChartPlusFibreProducer,\
-  \ DivRepKit, DivRepAffPullClause and\nDivisorFamilyAffSeedGate are ALL rooted, so\
-  \ the configured build does elaborate them and an axiom\nprobe does see them. The\
-  \ 18 unrooted modules are disjoint from the representability seam.\n\nSTILL OWED,\
-  \ unchanged and now the only real item besides the Pic0ThetaCocycle decision: an\
-  \ hgraph\nresync policy. The triage found 627 hgraph nodes over unrooted files,\
-  \ 626 marked lean_ok. That\ncount must have fallen with the rooting, but auto-synced\
-  \ lean_ok over an unrooted file remains a\nfalse statement about the project's state\
-  \ and nothing prevents it recurring."
+summary: 'CURRENT MEASUREMENT against archived HEAD 134d941fc22a: 849 Lean modules
+  total, 832 rooted from AlgebraicJacobian.lean, 17 unrooted, 0 dangling imports,
+  and 0 cycles. The unrooted set is DivSchemeFlatteningBridge; DivSchemeRedesignFlatIdealFibre,
+  KappaZEquiv, KappaZFibre, KappaZPurity, KappaZSeed, LocalIdealFibre, PointPrime,
+  RDN, RangeFlatBridge, RankOneChart, RankOneFibre, SeedFinish; DivSchemeSeedUnivSecondWindowMap;
+  EntryIdeal; LaurentSchemeCoboundaryBridge; and Tangent.TruncExpCechTransport. Pic0ThetaCocycle
+  is rooted by AlgebraicJacobian.lean:536 and has no code sorry, so it is not an unrooted
+  module. Re-run scripts/reach.py on an archived HEAD after integrations; worktree-only
+  files can inflate the count. This row tracks reachability, not proof completion.'
 status: pending
 kind: workspace
 priority: high
@@ -95,7 +33,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep
-  updated_at: '2026-07-29T22:56:16.077104+00:00'
+  updated_at: '2026-07-31T14:20:40.868652+00:00'
   pinned_commits:
   - 0b3ab49b8
   - b72270288

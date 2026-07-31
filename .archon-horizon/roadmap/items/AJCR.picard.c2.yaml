@@ -1,10 +1,12 @@
 id: AJCR.picard.c2
-title: '(C2) Rigidified classes: the plus-construction is a sheaf'
+title: (C2) Rigidified effectivity on module-finite covers and pointed field tests
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'The rigidification/effectivity statement completing the Kleiman comparison:
-  sections of picEt over a test scheme are honest line-bundle classes after rigidification
-  along the marked point.'
+summary: DONE at the stated scope. Rigidified Cech classes descend along module-finite
+  faithfully flat covers, and field cofinality yields PicEtAff.unit_surjective_of_section
+  and unitEquiv_of_section over section-admitting field tests. This does not assert
+  general-ring unit surjectivity; EffectivityRingClose explicitly isolates that remaining
+  frontier.
 status: done
 kind: proof
 priority: normal
@@ -18,5 +20,5 @@ metadata:
   author: horizon
   created_at: '2026-07-14T01:19:43.277671+00:00'
   parent: AJCR.picard
-  updated_at: '2026-07-29T03:00:14.642071+00:00'
+  updated_at: '2026-07-31T14:05:26.445821+00:00'
   milestone: AJCR.picard

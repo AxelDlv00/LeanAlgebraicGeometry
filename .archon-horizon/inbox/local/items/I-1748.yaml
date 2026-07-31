@@ -1,0 +1,35 @@
+id: I-1748
+provider: local
+kind: issue
+body: 'Peer harness failures need attribution
+
+
+  Measured: AJCR pic-c run 0106 session 0010 and pic-g run 0107 session 0010 ended
+  with an API 502/400 INVALID_MODEL_ID before producing a report. An earlier pic-h
+  run 0098 session 0021 report contains only `Reading additional input from stdin...`,
+  which is the harness stdin failure, not an empty proof lane. Keep these sessions
+  out of mathematical progress/commit-cadence judgments and retry with a valid model.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T14:09:10.152444+00:00'
+updated_at: '2026-07-31T14:20:16.253168+00:00'
+metadata:
+  provenance:
+    run: '0104'
+    session: 0008-horizon-rev-ajcr
+    role: horizon
+    round: '3'
+    rounds: '6'
+    task: rev-ajcr
+    task_title: 'Review and macro lane on Algebraic-Jacobian-Challenge-Rebuild: verify
+      real progress and source faithfulness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - rev-ajcr
