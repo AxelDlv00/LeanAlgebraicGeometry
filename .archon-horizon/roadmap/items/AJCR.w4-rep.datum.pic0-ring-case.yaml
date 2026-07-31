@@ -2,29 +2,13 @@ id: AJCR.w4-rep.datum.pic0-ring-case
 title: The pic0 vanishing at a general test RING, via the landed datum rigid engine
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'RE-SPELLED AND SUBSTRATE BUILT; THE OBLIGATION DID NOT SHRINK (pic-c). Owner:
-  pic-c (live, run 0106 r2); the active plus-to-Cech/Laurent comparison work is a
-  supporting route, not a closed gate.
-
-
-  At genus zero, hvan and the fibrewise rigidity predicate are equivalent spellings.
-  The rigid engine and the unit-equation lemma are genuine, sorry-free infrastructure,
-  but hrigAff still has no producer over a general non-field test algebra. Field-point
-  separation does not imply the affine statement.
-
-
-  The zero ring is not an unchecked refutation site: its antecedent is vacuous and
-  PicEtAff.subsingleton_of_subsingleton proves the conclusion there. It is therefore
-  only a vacuous non-counterexample; inhabitability on nonempty spectra remains open.
-
-
-  The remaining bridge is a real degree-zero/triviality producer for arbitrary test
-  rings (or the needed cohomology-and-base-change theorem), not a repricing of the
-  degree condition. Do not read the supporting Cech/Laurent work as a RepresentableBy
+summary: The ring-level pic0 vanishing obligation remains open. The rigid engine and
+  Cech/Laurent lemmas are genuine sorry-free supporting infrastructure, but no producer
+  establishes hrigAff over a general non-field test algebra. The remaining target
+  is a degree-zero/triviality producer or a cohomology-and-base-change theorem; this
+  row is released for a future owner and does not itself provide a RepresentableBy
   producer.
-
-  '
-status: active
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -46,5 +30,4 @@ metadata:
     task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-31T13:05:35.135469+00:00'
-  owner: pic-c
+  updated_at: '2026-07-31T13:55:20.052271+00:00'

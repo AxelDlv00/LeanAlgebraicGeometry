@@ -3,21 +3,16 @@ title: 'DAT-J large-degree Abel source: separate curve genus g from divisor degr
   n'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'PENDING, unowned, source-faithful route. Generalize `JacobianDataAbelSquare`,
-  `DivisorFamilyFieldSurj`, and `JacobianDataAbelEffectivePoint` so the curve genus
-  g controls chi(O) = 1 - g while the divisor/classifier degree is n. Milne III §4
-  (Abelian Varieties, document p.99 / PDF p.105) first allows a finite separable extension
-  making a k-rational point available, then fixes n > 2g and uses Div_C^n -> Pic_C^n
-  ≅ Pic_C^0 together with C^(n) -> J for representability/completeness; degree g appears
-  only in §5 birationality.
-
-
-  Consume the landed `exists_effective_deg_eq_of_le_classDeg` from `JacobianDataAbelDegreeWindow`
-  (which requires g <= n), add that import to the square/effectivity pipeline, and
-  instantiate the source-faithful route with 2*g < n while retaining g <= n where
-  Riemann--Roch alone suffices. Feed the existing arbitrary-n qc plumbing; DAT-G must
-  handle descent back to the unpointed curve. Exact degree g remains a separate h0
-  = 1/chart/Albanese obligation.'
+summary: PENDING, unowned, source-faithful for the positive-genus branch. Milne III
+  §4 (Abelian Varieties, document p.99 / PDF p.105) assumes g > 0, first allows a
+  finite separable extension making a rational point available, then fixes n > 2g
+  and uses Div_C^n -> Pic_C^n ≅ Pic_C^0 for representability/completeness; degree
+  g appears only in §5 birationality. Generalize JacobianDataAbelSquare, DivisorFamilyFieldSurj,
+  and JacobianDataAbelEffectivePoint so chi(O) = 1 - g while the divisor/classifier
+  degree is n. Consume exists_effective_deg_eq_of_le_classDeg from JacobianDataAbelDegreeWindow
+  (g <= n), feed the arbitrary-n qc plumbing, and keep exact degree g as a separate
+  h0 = 1/chart/Albanese obligation. Genus zero is not discharged by this Milne branch;
+  route it through the separate AJCR.w6-albanese.genus0 path.
 status: pending
 kind: proof
 priority: high
@@ -43,4 +38,4 @@ metadata:
       real progress and source faithfulness'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-j
-  updated_at: '2026-07-31T13:14:45+00:00'
+  updated_at: '2026-07-31T13:58:34.527599+00:00'

@@ -1,0 +1,39 @@
+id: I-1745
+provider: local
+kind: conversation
+body: 'rev-ajcr macro audit update
+
+
+  I am measuring the exact RepresentableBy producer/consumer census from run base
+  c56d433 to the current HEAD, checking source hypotheses/import closure and projectivity
+  rewiring, and auditing board/commit hygiene. I will not edit Lean proofs; any statement
+  defect will be filed and sent to its owning lane.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: task:pic-g
+author: horizon
+source_ref: null
+created_at: '2026-07-31T13:43:40.043268+00:00'
+updated_at: '2026-07-31T13:43:40.043282+00:00'
+metadata:
+  provenance:
+    run: '0104'
+    session: 0008-horizon-rev-ajcr
+    role: horizon
+    round: '3'
+    rounds: '6'
+    task: rev-ajcr
+    task_title: 'Review and macro lane on Algebraic-Jacobian-Challenge-Rebuild: verify
+      real progress and source faithfulness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:pic-g
+  - task:rev-ajcr
+  started_by: task:rev-ajcr
+  read_by:
+  - rev-ajcr
