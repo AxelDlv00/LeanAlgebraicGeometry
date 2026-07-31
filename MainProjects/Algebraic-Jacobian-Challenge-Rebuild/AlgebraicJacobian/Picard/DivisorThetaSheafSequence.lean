@@ -453,6 +453,33 @@ theorem exists_thetaIdealInclApp_of_germ_mem
       twistRes R V₀ V₁ (relThetaCocycle C R π a) (hUW true) x
     rw [show secRes ((A.thetaIdealDatum a).sheaf) (hUW true) σ = s true from hσ true]
     exact hlocal true
+
+/-- The pointwise range of the theta-ideal inclusion on an arbitrary open is exactly
+the theta sections whose two pinned components vanish along the divisor germwise. -/
+theorem mem_range_thetaIdealInclApp_iff_germ_mem
+    {W : (relCurve C R).Opens}
+    (x : (relThetaTwistSheaf C R π a).obj.obj (op W)) :
+    x ∈ LinearMap.range (A.thetaIdealInclApp (a := a) W) ↔
+      (∀ (z : relCurve C R) (hz : z ∈ W ⊓
+        (relCover C R (fiberTwoCover π)).V₀),
+        ((relCurve C R).presheaf.germ (W ⊓
+          (relCover C R (fiberTwoCover π)).V₀) z hz).hom x.val.1 ∈ d.stalkIdeal z) ∧
+      (∀ (z : relCurve C R) (hz : z ∈ W ⊓
+        (relCover C R (fiberTwoCover π)).V₁),
+        ((relCurve C R).presheaf.germ (W ⊓
+          (relCover C R (fiberTwoCover π)).V₁) z hz).hom x.val.2 ∈ d.stalkIdeal z) := by
+  constructor
+  · rintro ⟨s, rfl⟩
+    constructor
+    · intro z hz
+      exact germ_gluedToIdeal₀_mem (A := A) (a := a) inf_le_right
+        (secRes ((A.thetaIdealDatum a).sheaf) inf_le_left s) z hz
+    · intro z hz
+      exact germ_gluedToIdeal₁_mem (A := A) (a := a) inf_le_right
+        (secRes ((A.thetaIdealDatum a).sheaf) inf_le_left s) z hz
+  · rintro ⟨hx0, hx1⟩
+    obtain ⟨s, hs⟩ := A.exists_thetaIdealInclApp_of_germ_mem (a := a) x hx0 hx1
+    exact ⟨s, hs⟩
 /-! ## Global right exactness -/
 
 /-- Vanishing of `H^1(O(a Theta - d))` makes the theta quotient sheaf globally generated
