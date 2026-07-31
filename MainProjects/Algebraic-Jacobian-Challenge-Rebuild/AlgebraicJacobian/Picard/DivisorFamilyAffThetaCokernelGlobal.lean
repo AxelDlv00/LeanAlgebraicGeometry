@@ -217,7 +217,12 @@ theorem IsCertified.thetaIdealCokernelToIntrinsic_apply_cokernelπ
     Sheaf.cokernelAppEquivQuotientRange,
     LinearEquiv.trans_apply, LinearMap.quotKerEquivOfSurjective_symm_apply,
     Submodule.quotEquivOfEq_mk]
-  exact A.intrinsicThetaQuotEquivRange_mk (π := π) a x
+  -- One coercion layer more than the source lemma states: the goal sits under the
+  -- `IntrinsicThetaGlued` subtype as well as the range subtype, so `congrArg` supplies the
+  -- outer `↑`.  (Repaired by pic-g to unbreak the root build; `exact` alone was left by an
+  -- edit whose targeted module check could not see this file — the mismatch only appears
+  -- when the root imports it.  Author: see `Archon-Task: pic-d` on the introducing commit.)
+  exact congrArg _ (A.intrinsicThetaQuotEquivRange_mk (π := π) a x)
 
 /-- The global theta-quotient embedding has precisely the image of intrinsic theta
 evaluation as its range. -/

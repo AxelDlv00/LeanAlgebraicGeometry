@@ -5,6 +5,7 @@ import AlgebraicJacobian.Curve.Sections
 import AlgebraicJacobian.Curve.P1
 import AlgebraicJacobian.Curve.P1Curve
 import AlgebraicJacobian.Curve.P1H1Vanishing
+import AlgebraicJacobian.Curve.P1DegreeZeroTrivial
 import AlgebraicJacobian.Curve.P1Charts
 import AlgebraicJacobian.Curve.P1Aut
 import AlgebraicJacobian.Curve.DedekindSections
@@ -54,6 +55,7 @@ import AlgebraicJacobian.Picard.PointPresentation
 import AlgebraicJacobian.Picard.DivisorClassMeromorphic
 import AlgebraicJacobian.Picard.DivisorClassCompat
 import AlgebraicJacobian.Algebra.EtaleCover
+import AlgebraicJacobian.Algebra.LaurentUnits
 import AlgebraicJacobian.Picard.PicEtAff
 import AlgebraicJacobian.Picard.PicEtAffMap
 import AlgebraicJacobian.Picard.PicEtAffFieldCollapse
