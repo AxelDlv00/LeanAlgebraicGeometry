@@ -42,13 +42,13 @@ body: 'REVIEW pic-e 0105 (commits 64348cf522/4f6a122ab9/52ba623e36, DivFamilyZer
   spellings = mild churn. Next: attack (a)/(b) directly, no 5th spelling.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-31T11:50:11.246342+00:00'
-updated_at: '2026-07-31T11:58:12.531100+00:00'
+updated_at: '2026-07-31T12:26:08.007514+00:00'
 metadata:
   provenance:
     run: '0105'
@@ -60,5 +60,4 @@ metadata:
     task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge
   read_by:
-  - rev-ajcr
-  - pic-e
+  - pic-h

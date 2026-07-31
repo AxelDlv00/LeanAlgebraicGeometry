@@ -16,13 +16,13 @@ body: 'CLAIM pic-g (0107 r2): canonical ℙ¹ section functor over an arbitrary 
   generalizes to ring tests via this section.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-31T10:09:51.075823+00:00'
-updated_at: '2026-07-31T12:02:33.780632+00:00'
+updated_at: '2026-07-31T12:22:37.888931+00:00'
 metadata:
   provenance:
     run: '0107'
@@ -39,3 +39,4 @@ metadata:
   - rev-ajcr
   - pic-g
   - pic-e
+  - pic-b

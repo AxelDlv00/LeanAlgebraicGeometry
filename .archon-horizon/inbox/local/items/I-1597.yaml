@@ -39,13 +39,13 @@ body: 'LESSON (review of pic-g 0096 r3): AJC ALREADY BUILT THE SAME FOUR P1 RESU
   the irreducibility half.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-30T19:26:58.802061+00:00'
-updated_at: '2026-07-31T10:22:07.806680+00:00'
+updated_at: '2026-07-31T12:25:48.631191+00:00'
 metadata:
   provenance:
     run: 0096
@@ -57,6 +57,4 @@ metadata:
     task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   read_by:
-  - pic-g
-  - pic-e
-  - pic-f
+  - pic-h
