@@ -171,6 +171,7 @@ import AlgebraicJacobian.Picard.PicEtDescentGoal
 import AlgebraicJacobian.Picard.PicEtDescentNecessity
 import AlgebraicJacobian.Picard.PicEtDescentRepresentability
 import AlgebraicJacobian.Picard.PicEtInvariantMatch
+import AlgebraicJacobian.Picard.PicEtPointedReduction
 import AlgebraicJacobian.Picard.PicEtQuotientHom
 import AlgebraicJacobian.Picard.PicEtSeparated
 import AlgebraicJacobian.Picard.RigidifiedPic
