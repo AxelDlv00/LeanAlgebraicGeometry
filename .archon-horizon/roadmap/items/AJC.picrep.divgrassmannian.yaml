@@ -2,23 +2,16 @@ id: AJC.picrep.divgrassmannian
 title: 'D2'': Grassmannian comparison for the degree-d divisor functor'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'ACTIVE, owned by pic-f. D2 prime substrate is unconditional in the divisor
-  representative: twist/evaluation/quotient/class APIs respect DivFamily.Rel, affine
-  Nakayama globalizes residue-field surjectivity, and affine pullback conjugacy identifies
-  native base-change maps with pulled-back evaluation maps. The finite-support fibre-rank
-  bridge and DivFamily.pushforward_isLocallyFreeOfRank derive rank d from HasFiberDeg
-  on an affine Spec R test base, with explicit IsNoetherianRing and LocallyQuasiFinite
-  support premises; this is not yet the arbitrary-Over(S) twisted-target producer.
-  The named projective twist witness has no rational-point binder but is Scheme-0
-  at this mathlib pin. The D2 support gate is now closed for any locally trivial twist:
-  tensoring preserves the annihilator ideal exactly, hence DivFamily.twist_locallyQuasiFinite_iff
-  and twist_isFiniteSupport_iff identify the twisted support conditions with the divisor''s,
-  while twist_isFiniteSupport is a direct producer using only the divisor row''s existing
-  LocallyQuasiFinite binder. Adelic.d2ProjectiveTwist_isLocallyTrivial supplies local
-  triviality, so no new headline hypothesis is introduced. Remaining D2 gates are
-  twisted-target finite presentation/flatness, fibre-H0/rank invariance, and the evaluation
-  epi; pic-b owns tensor-section globalization. Verified commits: 140999ffda, 908779ad72,
-  8cd8b2246d, 459d8b1cb4, fa5b5561a5, 52bef57944, 54bbb07580, 366dbd6306.'
+summary: ACTIVE, currently unowned after pic-f final-round release. D2 quotient/class,
+  support transport, affine pullback conjugacy, and affine epi substrate are landed.
+  The twisted target now has unconditional finite presentation, quasi-coherence, and
+  flatness transport for any locally trivial line bundle, using existing DivFamily
+  finite presentation and flatness; commits 0d2006d9a4, 940f526ce5, cf34a634fc, and
+  538c651bae. No rational-point or representability hypothesis is introduced. Remaining
+  D2 work is (i) a producer for locally-quasi-finite support, (ii) fibre-H0 and point-rank
+  transport, (iii) arbitrary-test-base finite locally free rank, (iv) the evaluation
+  epi, and (v) the pullback-natural DivFunctorDeg to Grassmannian package; pic-b tensor
+  globalization is closed and consumed.
 status: active
 kind: proof
 priority: normal
@@ -42,8 +35,12 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-31T20:00:21.522566+00:00'
+  updated_at: '2026-07-31T23:09:29.627581+00:00'
   pinned_commits:
+  - 538c651bae
+  - cf34a634fc
+  - 940f526ce5
+  - 0d2006d9a4
   - 366dbd6306
   - 54bbb07580
   - 52bef57944
@@ -60,4 +57,3 @@ metadata:
   - '8246704134'
   - 03be5f1be
   - 71ea0b839
-  owner: pic-f

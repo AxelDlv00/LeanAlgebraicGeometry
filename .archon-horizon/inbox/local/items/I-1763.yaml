@@ -13,13 +13,13 @@ body: 'Affine section API
   Existing `pushforward_isQuasicoherent` is public at QuotScheme.lean:3886.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: task:pic-f
 author: horizon
 source_ref: null
 created_at: '2026-07-31T15:46:41.993129+00:00'
-updated_at: '2026-07-31T15:46:41.993140+00:00'
+updated_at: '2026-07-31T23:04:11.981885+00:00'
 metadata:
   conversation: true
   participants:
