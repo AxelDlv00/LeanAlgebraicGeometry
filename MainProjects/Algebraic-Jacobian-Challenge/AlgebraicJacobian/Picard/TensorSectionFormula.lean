@@ -48,6 +48,8 @@ section-graded `sheafTensorObj` are the same object
   localization on a basis of affine opens.
 * `localizedTensorProductEquiv` / `localizedTensorProductBaseChangeEquiv` — the
   algebraic localization heart, first over `R` and then over `Localization S`.
+* `localizedTensorProductBaseChangeEquiv_mkLinearMap_tmul` — the named pure-tensor
+  formula for the exact base-change equivalence.
 
 ## Remaining obligations (the quasi-coherent case of `pullbackTensorMap_isIso`)
 
@@ -190,6 +192,22 @@ noncomputable def localizedTensorProductBaseChangeEquiv
   localizedTensorProductEquiv S M N ≪≫ₗ
     (IsLocalization.moduleTensorEquiv S (Localization S)
       (LocalizedModule S M) (LocalizedModule S N)).symm.restrictScalars R
+
+/-- The exact base-change equivalence sends a numerator pure tensor to the tensor of
+the two numerator classes.  Keeping this formula named avoids making affine section
+proofs unfold `TensorProduct.equivOfCompatibleSMul`. -/
+@[simp]
+lemma localizedTensorProductBaseChangeEquiv_mkLinearMap_tmul
+    {R : Type u} [CommSemiring R] (S : Submonoid R)
+    (M : Type v) (N : Type w) [AddCommMonoid M] [Module R M]
+    [AddCommMonoid N] [Module R N] (m : M) (n : N) :
+    localizedTensorProductBaseChangeEquiv S M N
+        (LocalizedModule.mkLinearMap S (TensorProduct R M N) (m ⊗ₜ[R] n)) =
+      LocalizedModule.mkLinearMap S M m ⊗ₜ[Localization S]
+        LocalizedModule.mkLinearMap S N n := by
+  rw [localizedTensorProductBaseChangeEquiv, LinearEquiv.trans_apply,
+    localizedTensorProductEquiv_mkLinearMap_tmul]
+  rfl
 
 /-! ## Quasi-coherence from basic-open section localization
 
