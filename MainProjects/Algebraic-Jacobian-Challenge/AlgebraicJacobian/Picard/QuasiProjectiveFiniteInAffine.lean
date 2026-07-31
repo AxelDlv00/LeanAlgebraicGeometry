@@ -621,4 +621,63 @@ theorem not_isProjective_of_infinite_disjoint_open_cover {k : Type u} [Field k]
   not_compactSpace_of_infinite_disjoint_open_cover U hopen hne hdisj hcov
     (compactSpace_of_isProjective X h)
 
+/-! ## §6. The repair §5 needs: localise to one open piece
+
+§5.5 refutes the *global* projectivity hypothesis. The mathematics it was reaching for is
+Kleiman's, and Kleiman's hypothesis is about the **degree pieces**: each `Pic^d_{C/k}` is
+quasi-projective, and the ambient scheme is their disjoint union. So the repair is not a
+different global condition — it is to consume projectivity **one piece at a time**.
+
+This section supplies the transport that makes that possible, and stops there. What it
+deliberately does **not** do is define a "locally `FiniteInAffine`" predicate of the form
+"every finite set that happens to lie in a good open lies in an affine open": that
+proposition is **provable outright** from §6.1, with no hypothesis at all, so it would be a
+tautology dressed as a weakened hypothesis. Measured before writing this paragraph — the
+would-be predicate closed by `exact restrict …` with its own hypothesis unused. It is the
+failure mode another lane filed the same day (`I-1660`): an outer quantifier that
+re-consumes its own localisation.
+
+The honest remaining gap is therefore stated, not hidden: descent needs to know a Galois
+orbit lands in **one** piece, which is degree-invariance of the action, and the
+degree-graded decomposition of `PicSchemeEt` is not available in this file. That is real
+work, not plumbing.
+-/
+
+/-- **`FiniteInAffine` of an open subscheme suffices for finite sets inside it.**
+
+If `U` is an open subscheme satisfying `FiniteInAffine` and the finite set `s` lies in `U`,
+then `s` lies in an affine open **of `X`** — push the affine open forward along the open
+immersion `U.ι`, which preserves affineness of opens
+(`IsAffineOpen.image_of_isOpenImmersion`).
+
+This is what lets projectivity be consumed piecewise: one quasi-projective piece containing
+the whole set is enough, and the ambient scheme need not be projective — which §5.5 shows
+it is not. -/
+theorem exists_affineOpen_of_subset_finiteInAffine_opens {X : Scheme.{u}} (U : X.Opens)
+    (hU : FiniteInAffine U.toScheme) {s : Set X} (hs : s.Finite) (hsub : s ⊆ U.1) :
+    ∃ V : X.affineOpens, s ⊆ V.1 := by
+  obtain ⟨W, hW⟩ := hU (U.ι.base ⁻¹' s) (hs.preimage U.ι.isOpenEmbedding.injective.injOn)
+  refine ⟨⟨U.ι ''ᵁ W.1, W.2.image_of_isOpenImmersion U.ι⟩, ?_⟩
+  intro x hx
+  exact ⟨⟨x, hsub hx⟩, hW (by simpa using hx), rfl⟩
+
+/-- **The piecewise form of §3**: a finite set contained in an open subscheme that is
+projective over an affine base lies in an affine open of the ambient scheme.
+
+Composing §6.1 with §3. This is the statement a degree-graded Picard scheme satisfies and
+the globally-projective hypothesis of §5 does not: the ambient scheme may be an infinite
+disjoint union (and by §5.5 must be, if it is `Pic_{C/k}`), while each piece is
+quasi-projective.
+
+What is still missing to run the descent from here, stated so it is not mistaken for
+plumbing: that a Galois orbit lies in a **single** piece, i.e. degree-invariance of the
+semilinear action, together with the degree-graded decomposition of `PicSchemeEt`. Neither
+is available in this file. -/
+theorem exists_affineOpen_of_subset_isProjective_opens {X : Scheme.{u}} (U : X.Opens)
+    {S : Scheme.{u}} [IsAffine S] {π : U.toScheme ⟶ S} (hproj : π.IsProjective)
+    {s : Set X} (hs : s.Finite) (hsub : s ⊆ U.1) :
+    ∃ V : X.affineOpens, s ⊆ V.1 :=
+  exists_affineOpen_of_subset_finiteInAffine_opens U
+    (finiteInAffine_of_isProjective hproj) hs hsub
+
 end AlgebraicGeometry.Scheme
