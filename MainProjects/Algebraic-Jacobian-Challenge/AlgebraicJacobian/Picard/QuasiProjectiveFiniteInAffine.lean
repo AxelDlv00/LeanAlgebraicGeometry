@@ -1,6 +1,7 @@
 /-
 Copyright (c) 2026 Archon Horizon contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Archon Horizon
 -/
 import AlgebraicJacobian.Picard.PicEtPointedReduction
 import AlgebraicJacobian.Picard.ProjectiveMorphismBasic
@@ -240,6 +241,93 @@ theorem exists_homogeneous_pos_mem_forall_notMem_of_antichain
     Ideal.sum_mem _ fun q' hq' => hFin q' (Finset.mem_of_mem_erase hq') q
       (Finset.mem_erase.mpr ⟨(Finset.ne_of_mem_erase hq').symm, hq⟩)
   exact hFout q hq ((Ideal.add_mem_iff_left _ hrest).mp hmem)
+
+/-- **Graded prime avoidance, general form** — the incomparability hypothesis of
+`exists_homogeneous_pos_mem_forall_notMem_of_antichain` removed.
+
+Any finite family of ideals is dominated by its **maximal** members, and avoiding
+those avoids all of them: if `f ∉ q` and `q' ≤ q` then `f ∉ q'`, since `f ∈ q'` would
+put `f` in `q`. The maximal members form an antichain by construction, so the
+previous theorem applies to them.
+
+Note the direction. It is the *maximal* primes that must be avoided, not the minimal
+ones — the inclusion runs the useful way only for a superset. Reducing to minimal
+primes, which is the reflex from the ungraded theory, would prove nothing here. -/
+theorem exists_homogeneous_pos_mem_forall_notMem
+    {ι : Type*} (s : Finset ι) (p : ι → Ideal A)
+    (hp : ∀ i ∈ s, (p i).IsPrime) (hph : ∀ i ∈ s, (p i).IsHomogeneous 𝒜)
+    (hrel : ∀ i ∈ s, ¬ (HomogeneousIdeal.irrelevant 𝒜).toIdeal ≤ p i)
+    {I : Ideal A} (hI : I.IsHomogeneous 𝒜) (hIp : ∀ i ∈ s, ¬ I ≤ p i)
+    (hM : ∃ (m : ℕ) (f : A), 0 < m ∧ f ∈ 𝒜 m ∧ f ∈ I) :
+    ∃ (M : ℕ) (f : A), 0 < M ∧ f ∈ 𝒜 M ∧ f ∈ I ∧ ∀ i ∈ s, f ∉ p i := by
+  classical
+  set S : Finset (Ideal A) := s.image p with hS
+  set T : Finset (Ideal A) := S.filter (fun q => Maximal (fun x => x ∈ S) q) with hT
+  -- every member of `T` is one of the `p i`
+  have hTmem : ∀ q ∈ T, ∃ i ∈ s, q = p i := by
+    intro q hq
+    obtain ⟨i, hi, rfl⟩ := Finset.mem_image.mp (Finset.mem_filter.mp hq).1
+    exact ⟨i, hi, rfl⟩
+  -- every `p i` sits below some member of `T`
+  have hTdom : ∀ i ∈ s, ∃ q ∈ T, p i ≤ q := by
+    intro i hi
+    obtain ⟨q, hle, hmax⟩ := S.exists_le_maximal (Finset.mem_image_of_mem p hi)
+    exact ⟨q, Finset.mem_filter.mpr ⟨hmax.1, hmax⟩, hle⟩
+  obtain ⟨M, f, hMpos, hfdeg, hfI, hfout⟩ :=
+    exists_homogeneous_pos_mem_forall_notMem_of_antichain 𝒜 T
+      (fun q hq => by obtain ⟨i, hi, rfl⟩ := hTmem q hq; exact hp i hi)
+      (fun q hq => by obtain ⟨i, hi, rfl⟩ := hTmem q hq; exact hph i hi)
+      (fun q hq => by obtain ⟨i, hi, rfl⟩ := hTmem q hq; exact hrel i hi)
+      (fun q hq q' hq' hne hle =>
+        hne ((Finset.mem_filter.mp hq).2.eq_of_ge (Finset.mem_filter.mp hq').1 hle).symm)
+      hI (fun q hq => by obtain ⟨i, hi, rfl⟩ := hTmem q hq; exact hIp i hi) hM
+  refine ⟨M, f, hMpos, hfdeg, hfI, fun i hi hmem => ?_⟩
+  obtain ⟨q, hq, hle⟩ := hTdom i hi
+  exact hfout q hq (hle hmem)
+
+/-- **`Proj 𝒜` satisfies `FiniteInAffine`.** The geometric half of §1, and the first
+statement in the chain that is about a scheme.
+
+A point of `Proj 𝒜` *is* a relevant homogeneous prime, and "relevant" is literally the
+hypothesis `exists_homogeneous_pos_mem_forall_notMem` needs — the structure field
+`ProjectiveSpectrum.not_irrelevant_le` serves simultaneously as the relevance input
+and as `¬ I ≤ p x` for `I := 𝒜₊`. So with the irrelevant ideal as `I`, avoidance
+returns a homogeneous `f` of positive degree lying outside every one of the finitely
+many given points, i.e. `D₊(f)` contains them all; and `D₊(f)` is affine by
+`Proj.isAffineOpen_basicOpen`, whose `f ∈ 𝒜 m` and `0 < m` hypotheses are exactly what
+§1 was built to deliver.
+
+The degenerate case is handled by the same field: the non-degeneracy input (some
+positive-degree homogeneous element exists) is derived from *any* point of `Proj 𝒜`,
+and when there is no point the finite set is empty and any affine open serves. This is
+the finite generalisation of the argument mathlib runs one point at a time inside
+`Proj`'s own `local_affine` field. -/
+theorem _root_.AlgebraicGeometry.Scheme.finiteInAffine_proj :
+    Scheme.FiniteInAffine (Proj 𝒜) := by
+  classical
+  intro s hs
+  lift s to Finset (Proj 𝒜) using hs with t ht
+  rcases isEmpty_or_nonempty (Proj 𝒜) with hem | ⟨⟨x₀⟩⟩
+  · exact ⟨⟨⊤, isAffineOpen_top _⟩, fun x _ => (hem.false x).elim⟩
+  obtain ⟨M, f, hMpos, hfdeg, -, hfout⟩ :=
+    exists_homogeneous_pos_mem_forall_notMem 𝒜 t
+      (fun x => (x.asHomogeneousIdeal).toIdeal)
+      (fun x _ => x.isPrime)
+      (fun x _ => x.asHomogeneousIdeal.isHomogeneous)
+      (fun x _ => x.not_irrelevant_le)
+      (I := (HomogeneousIdeal.irrelevant 𝒜).toIdeal)
+      (HomogeneousIdeal.irrelevant 𝒜).isHomogeneous
+      (fun x _ => x.not_irrelevant_le)
+      (by
+        obtain ⟨m, g, hm, hgdeg, -, -⟩ :=
+          exists_homogeneous_pos_mem_notMem 𝒜
+            (I := (HomogeneousIdeal.irrelevant 𝒜).toIdeal)
+            (p := (x₀.asHomogeneousIdeal).toIdeal)
+            (HomogeneousIdeal.irrelevant 𝒜).isHomogeneous
+            x₀.not_irrelevant_le x₀.not_irrelevant_le
+        exact ⟨m, g, hm, hgdeg, HomogeneousIdeal.mem_irrelevant_of_mem 𝒜 hm hgdeg⟩)
+  exact ⟨⟨Proj.basicOpen 𝒜 f, Proj.isAffineOpen_basicOpen 𝒜 f hfdeg hMpos⟩,
+    fun x hx => hfout x (by exact_mod_cast hx)⟩
 
 end GradedAvoidance
 
