@@ -2,30 +2,18 @@ id: AJCR.w4-rep.datum.dat-d.ddr.divrep.u2
 title: 'Widened window quotient: intrinsic theta restriction and projectivity'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'LIVE TARGET (R2, no new hypotheses): prove that the cover-independent widened
-  window quotient is finite projective of constant stalk rank g, then feed the widened
-  frame/classifier route to (divFunctorAff C g).RepresentableBy. The old chart-typed
-  universal-epsilon description is obsolete and must not be rebuilt.
-
-
-  VERIFIED PRODUCERS: 29f746e25b gives widened fibre degree and the N(a)-d_p Picard/H1
-  witness; b8c18b13a4 gives surjective theta evaluation and a cover-independent window-quotient
-  equivalence without certifying its auxiliary chart presentation; f9da5c6ad6 computes
-  dimension g for every pulled-equations field quotient; 80ce9e83b2 proves intrinsic
-  theta sections invertible on every arbitrary affine piece; 80363e8b32 base-changes
-  those sections to every certified colength algebra, proving invertibility over that
-  algebra and finiteness/projectivity over R. No producer assumes ChartTyping, Noetherianity,
-  or a rational point.
-
-
-  NEXT PRODUCER: glue the landed ThetaPieceRestriction modules across overlap colength
-  algebras into an invertible module over the widened equalizer algebra, and identify
-  it with the window quotient. InvertibleModuleTransfer then supplies global finite/projective/stalk-rank
-  data from the existing certificate. After that, prove widened window base change,
-  the frame cover, epsilon carve/classifier separation, and the RepresentableBy endpoint.
-  ThetaTrivData at positive exponent and the obsolete fixed-pair chart route are not
-  substitutes for this seam.'
-status: active
+summary: DONE (pic-d, run 0100 r2). The widened-window theta seam is closed on the
+  existing SwallowedBy producer path with no additional hypothesis. Diagonal theta
+  restrictions agree and off-diagonal overlap theta quotients are subsingleton, so
+  intrinsic Cech descent collapses to the swallowing piece. This yields invertibility
+  over the widened equalizer algebra and finite/projective/rank g structure over R.
+  Commit f7e07698ac then transports those facts through the cover-independent intrinsicWindowQuotEquiv
+  to the exact divisorWindow quotient consumed by the frame-cover layer, exporting
+  finite_intrinsicWindowQuotient_of_swallowedBy, projective_intrinsicWindowQuotient_of_swallowedBy,
+  and rankAtStalk_intrinsicWindowQuotient_of_swallowedBy. No ChartTyping, GL2, Noetherianity,
+  rational point, Milne degree, or new certificate field is used. The remaining frame/classifier
+  and RepresentableBy composition is downstream work in other rows.
+status: done
 kind: proof
 priority: high
 depends_on: []
@@ -47,8 +35,13 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
-  updated_at: '2026-07-31T12:13:48.868914+00:00'
+  updated_at: '2026-07-31T16:07:07.857920+00:00'
   pinned_commits:
+  - 5e65181a33
+  - f7e07698ac
+  - 34ca4557be
+  - 8bc302302c
+  - 0e1c194e3c
   - 1e1eb5da85
   - 4b14fc2034
   - ed5e9970be
@@ -89,4 +82,3 @@ metadata:
   - 909ad18ad
   - 0b3ab49b8
   milestone: w4-gate
-  owner: pic-d
