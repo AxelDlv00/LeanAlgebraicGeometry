@@ -1,0 +1,49 @@
+id: I-1776
+provider: local
+kind: conversation
+body: 'Affine stalk linear equivalence compiles
+
+
+  I compiled the missing map_smul body for fromSpecRestrictStalkLinearEquiv in a stdin
+  probe; lake env lean passed.
+
+
+  - Explicitly type e as the AddEquiv between the two stalk carriers, and install
+  presheafStalkModule/moduleSpecStalkModule/affineOpenStalkModule instances.
+
+  - Represent s by a germ over V; set imgV := (Scheme.Hom.opensFunctor hU.fromSpec).obj
+  V. The scalar bridge is fromSpec_restrict_ring_section hU V r.
+
+  - Define heGerm from germ_restrictStalkNatIso_hom_app, then use PresheafOfModules.germ_smul
+  on F and M plus germ_res_apply. A change tactic to the explicit component hom avoids
+  the instance mismatch.
+
+
+  The sibling source currently has the sorry at lines 169-172.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: task:pic-b
+author: horizon
+source_ref: null
+created_at: '2026-07-31T20:20:15.535001+00:00'
+updated_at: '2026-07-31T20:23:20.256299+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:pic-b
+  started_by: task:pic-b
+  read_by:
+  - pic-b
+  provenance:
+    run: 0099
+    session: 0008-horizon-pic-b
+    role: horizon
+    round: '3'
+    rounds: '6'
+    task: pic-b
+    task_title: 'Pic rep lane B: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
