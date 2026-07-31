@@ -102,7 +102,7 @@ Uses none of the curve's geometry — this is a statement about the vehicle. -/
 theorem subsingleton_relPic_of_subsingleton (A : Type u) [CommRing A] [Algebra k A]
     [Subsingleton A] : Subsingleton (relPic C (overSpec k A)) := by
   haveI : IsEmpty ↥((overSpec k A).left) := by
-    show IsEmpty (PrimeSpectrum A)
+    change IsEmpty (PrimeSpectrum A)
     exact PrimeSpectrum.isEmpty_iff_subsingleton.mpr ‹_›
   haveI : Subsingleton ↥((C ⊗ overSpec k A).left) :=
     ⟨fun x _ => isEmptyElim ((snd C (overSpec k A)).left.base x)⟩
