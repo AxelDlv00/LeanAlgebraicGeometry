@@ -32,7 +32,7 @@ set_option autoImplicit false
 
 universe u
 
-open CategoryTheory Limits
+open CategoryTheory Limits MonoidalCategory
 
 namespace AlgebraicGeometry
 
@@ -41,6 +41,13 @@ namespace Scheme
 namespace DivFamily
 
 variable {S X : Scheme.{u}} {π : X ⟶ S} {T : Over S}
+
+private lemma map_tensorHom_comp2 {C D : Type*} [Category C] [MonoidalCategory C]
+    [Category D] (F : C ⥤ D) {a₀ a₁ a₂ b₀ b₁ b₂ : C}
+    (a : a₀ ⟶ a₁) (b : a₁ ⟶ a₂) (d : b₀ ⟶ b₁) (e : b₁ ⟶ b₂) :
+    F.map (MonoidalCategory.tensorHom a d) ≫ F.map (MonoidalCategory.tensorHom b e) =
+      F.map (MonoidalCategory.tensorHom (a ≫ b) (d ≫ e)) := by
+  rw [← F.map_comp, MonoidalCategory.tensorHom_comp_tensorHom]
 
 /-- The twist of the divisor structure sheaf by a module on the original
 family.  For the D2' embedding, `L` is the chosen sufficiently positive
@@ -56,6 +63,34 @@ noncomputable def twistQuotientMap (L : X.Modules) (x : DivFamily π T) :
     Modules.tensorObj_functoriality (𝟙 _)
       ((Modules.pullbackUnitIso (pullback.fst π T.hom)).inv ≫ x.q)
 
+/-- Equivalent divisor families have isomorphic twists, compatibly with the
+twisted quotient maps.  This is the representative-level descent input for
+the D2' Grassmannian comparison. -/
+lemma twistQuotientMap_rel (L : X.Modules) {x y : DivFamily π T} (h : x.Rel y) :
+    ∃ f : x.twist L ≅ y.twist L,
+      x.twistQuotientMap L ≫ f.hom = y.twistQuotientMap L := by
+  obtain ⟨f, hf⟩ := h
+  refine ⟨Modules.tensorObjIsoOfIso (Iso.refl _) f, ?_⟩
+  change ((Modules.tensorObj_right_unitor _).inv ≫
+      Modules.tensorObj_functoriality (𝟙 _)
+        ((Modules.pullbackUnitIso (pullback.fst π T.hom)).inv ≫ x.q)) ≫
+      Modules.tensorObj_functoriality (𝟙 _) f.hom =
+    (Modules.tensorObj_right_unitor _).inv ≫
+      Modules.tensorObj_functoriality (𝟙 _)
+        ((Modules.pullbackUnitIso (pullback.fst π T.hom)).inv ≫ y.q)
+  rw [Category.assoc]
+  rw [show Modules.tensorObj_functoriality (𝟙 _) _ ≫
+        Modules.tensorObj_functoriality (𝟙 _) f.hom =
+      Modules.tensorObj_functoriality ((𝟙 _) ≫ (𝟙 _))
+        (((Modules.pullbackUnitIso (pullback.fst π T.hom)).inv ≫ x.q) ≫ f.hom) by
+    simp only [Modules.tensorObj_functoriality]
+    exact map_tensorHom_comp2
+      (C := _root_.PresheafOfModules
+        ((pullback π T.hom).presheaf ⋙ forget₂ CommRingCat RingCat))
+      _ _ _ _ _]
+  simp only [Category.id_comp]
+  rw [Category.assoc, hf]
+
 /-- The canonical D2' evaluation morphism.
 
 It first base-changes `π_* L` from `S` to `T`, then pushes forward the twisted
@@ -68,6 +103,46 @@ noncomputable def grassmannianEval (L : X.Modules) (x : DivFamily π T) :
   pushforwardBaseChangeMap π T.hom (pullback.snd π T.hom)
       (pullback.fst π T.hom) pullback.condition L ≫
     (Modules.pushforward (pullback.snd π T.hom)).map (x.twistQuotientMap L)
+
+/-- Equivalent divisor families have isomorphic evaluation targets, and the
+isomorphism commutes with the D2' evaluation maps. -/
+lemma grassmannianEval_rel (L : X.Modules) {x y : DivFamily π T} (h : x.Rel y) :
+    ∃ f : (Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L) ≅
+        (Modules.pushforward (pullback.snd π T.hom)).obj (y.twist L),
+      x.grassmannianEval L ≫ f.hom = y.grassmannianEval L := by
+  obtain ⟨f, hf⟩ := twistQuotientMap_rel L h
+  refine ⟨(Modules.pushforward (pullback.snd π T.hom)).mapIso f, ?_⟩
+  change (pushforwardBaseChangeMap π T.hom (pullback.snd π T.hom)
+      (pullback.fst π T.hom) pullback.condition L ≫
+        (Modules.pushforward (pullback.snd π T.hom)).map (x.twistQuotientMap L)) ≫
+      (Modules.pushforward (pullback.snd π T.hom)).map f.hom =
+    pushforwardBaseChangeMap π T.hom (pullback.snd π T.hom)
+      (pullback.fst π T.hom) pullback.condition L ≫
+        (Modules.pushforward (pullback.snd π T.hom)).map (y.twistQuotientMap L)
+  rw [Category.assoc, ← Functor.map_comp, hf]
+
+/-- Epimorphy of the D2' evaluation map is invariant under
+`DivFamily.Rel`. -/
+lemma grassmannianEval_epi_of_rel (L : X.Modules) {x y : DivFamily π T}
+    (h : x.Rel y) (hx : Epi (x.grassmannianEval L)) :
+    Epi (y.grassmannianEval L) := by
+  obtain ⟨f, hf⟩ := grassmannianEval_rel L h
+  letI := hx
+  rw [← hf]
+  infer_instance
+
+/-- The rank-local-freeness obligation on the D2' evaluation target is
+invariant under `DivFamily.Rel`. -/
+lemma grassmannianTarget_isLocallyFreeOfRank_of_rel
+    (L : X.Modules) {x y : DivFamily π T} (hxy : x.Rel y) {d : ℕ}
+    (hx : SheafOfModules.IsLocallyFreeOfRank
+      ((Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L)) d) :
+    SheafOfModules.IsLocallyFreeOfRank
+      ((Modules.pushforward (pullback.snd π T.hom)).obj (y.twist L)) d := by
+  obtain ⟨f, _⟩ := grassmannianEval_rel L hxy
+  obtain ⟨ι, U, hU, hloc⟩ := hx
+  exact ⟨ι, U, hU, fun i =>
+    ⟨(Modules.pullback (U i).ι).mapIso f.symm ≪≫ (hloc i).some⟩⟩
 
 /-- The evaluation map is epi as soon as its two displayed factors are epi.
 This keeps the base-change and divisor-quotient obligations separate, so a
@@ -105,6 +180,21 @@ noncomputable def grassmannianQuotient (L : X.Modules) (x : DivFamily π T)
     epi := inferInstance
     locFree := hLocFree }
 
+/-- The conditional D2' quotient datum respects the divisor-family
+equivalence relation.  The epi and rank witnesses on the second representative
+are transported from the first, rather than assumed again. -/
+lemma grassmannianQuotient_rel
+    (L : X.Modules) {x y : DivFamily π T} [IsLocallyNoetherian S] {d : ℕ}
+    (hxy : x.Rel y) (hxEpi : Epi (x.grassmannianEval L))
+    (hxLocFree : SheafOfModules.IsLocallyFreeOfRank
+      ((Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L)) d) :
+    (grassmannianQuotient L x hxEpi hxLocFree).Rel
+      (grassmannianQuotient L y
+        (grassmannianEval_epi_of_rel L hxy hxEpi)
+        (grassmannianTarget_isLocallyFreeOfRank_of_rel L hxy hxLocFree)) := by
+  obtain ⟨f, hf⟩ := grassmannianEval_rel L hxy
+  exact ⟨f, hf⟩
+
 /-- The quotient-class value of the D2' comparison in the relative
 Grassmannian functor.  This is the representation-facing object consumed by
 the Grassmannian representability theorem; well-definedness under
@@ -115,6 +205,20 @@ noncomputable def grassmannianClass (L : X.Modules) (x : DivFamily π T)
       ((Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L)) d) :
     (Grassmannian ((Modules.pushforward π).obj L) d).obj (Opposite.op T) :=
   Quotient.mk _ (grassmannianQuotient L x hEpi hLocFree)
+
+/-- The D2' Grassmannian class is well-defined on `DivFamily.Rel`.  Both
+analytic obligations are transported along the relation witness, so this
+descent theorem introduces no additional hypotheses. -/
+theorem grassmannianClass_eq_of_rel
+    (L : X.Modules) {x y : DivFamily π T} [IsLocallyNoetherian S] {d : ℕ}
+    (hxy : x.Rel y) (hxEpi : Epi (x.grassmannianEval L))
+    (hxLocFree : SheafOfModules.IsLocallyFreeOfRank
+      ((Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L)) d) :
+    grassmannianClass L x hxEpi hxLocFree =
+      grassmannianClass L y
+        (grassmannianEval_epi_of_rel L hxy hxEpi)
+        (grassmannianTarget_isLocallyFreeOfRank_of_rel L hxy hxLocFree) :=
+  Quotient.sound (grassmannianQuotient_rel L hxy hxEpi hxLocFree)
 
 /-- The componentwise form of `grassmannianClass`: once the base-change and
 divisor-quotient factors are epi, only the target's rank condition remains. -/
