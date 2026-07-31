@@ -163,6 +163,8 @@ end AffAdaptation
 
 namespace AffAdaptation
 
+attribute [local instance] thetaPieceSectionsModule thetaOverlapSectionsModule
+
 /-! ## Overlap vanishing in the theta cokernel
 
 The intrinsic overlap ideal is detected germwise by the widened kernel theorem.  After
@@ -237,6 +239,72 @@ theorem thetaOverlapVanishing_gluedTwist_cokernel_eq_zero
         ⟨hz.1, (thetaChartCover_pieces_inr C R π PUnit.unit).ge hz.2⟩
   exact DivisorAdaptation.cokernelπ_app_eq_zero_of_germ_mem C R π B
     (gluedTwistEquiv C R π a W v) hx.1 hx.2
+
+/-! ## Cokernel compatibility of intrinsic representatives
+
+The equalizer relation on two piece representatives is a quotient equality on the
+overlap.  The preceding overlap-kernel producer turns that quotient equality into
+equality after passage to the auxiliary theta cokernel.
+-/
+
+theorem thetaPieceCokernel_eq_of_overlap_eq
+    {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
+    {A : AffAdaptation D d} (B : DivisorAdaptation C R π d) (a : ℕ)
+    (i j : D.index)
+    (si : A.ThetaPieceSections (π := π) a i)
+    (sj : A.ThetaPieceSections (π := π) a j)
+    (hij : A.thetaToOverlapLeft (π := π) a i j
+        (Submodule.Quotient.mk si : A.ThetaPieceQuotient (π := π) a i) =
+      A.thetaToOverlapRight (π := π) a i j
+        (Submodule.Quotient.mk sj : A.ThetaPieceQuotient (π := π) a j)) :
+    ((cokernel.π (B.thetaIdealIncl (a := a))).hom.app
+      (op (D.pieces i ⊓ D.pieces j))).hom
+      (gluedTwistEquiv C R π a (D.pieces i ⊓ D.pieces j)
+        (secRes (thetaChartDatum C R π a).sheaf inf_le_left si)) =
+    ((cokernel.π (B.thetaIdealIncl (a := a))).hom.app
+      (op (D.pieces i ⊓ D.pieces j))).hom
+      (gluedTwistEquiv C R π a (D.pieces i ⊓ D.pieces j)
+        (secRes (thetaChartDatum C R π a).sheaf inf_le_right sj)) := by
+  let sleft := secRes (thetaChartDatum C R π a).sheaf
+    (inf_le_left : D.pieces i ⊓ D.pieces j ≤ D.pieces i) si
+  let sright := secRes (thetaChartDatum C R π a).sheaf
+    (inf_le_right : D.pieces i ⊓ D.pieces j ≤ D.pieces j) sj
+  have hq :
+      (Submodule.Quotient.mk sleft : A.ThetaOverlapQuotient (π := π) a i j) =
+        (Submodule.Quotient.mk sright : A.ThetaOverlapQuotient (π := π) a i j) := by
+    simpa only [sleft, sright, A.thetaToOverlapLeft_mk, A.thetaToOverlapRight_mk] using hij
+  have hv : sleft - sright ∈ A.thetaOverlapVanishing (π := π) a i j :=
+    (Submodule.Quotient.eq (A.thetaOverlapVanishing (π := π) a i j)).mp hq
+  have hz := A.thetaOverlapVanishing_gluedTwist_cokernel_eq_zero C R π B a i j
+    (sleft - sright) hv
+  have htw :
+      gluedTwistEquiv C R π a (D.pieces i ⊓ D.pieces j) (sleft - sright) =
+        gluedTwistEquiv C R π a (D.pieces i ⊓ D.pieces j) sleft -
+          gluedTwistEquiv C R π a (D.pieces i ⊓ D.pieces j) sright :=
+    (gluedTwistEquiv C R π a (D.pieces i ⊓ D.pieces j)).map_sub sleft sright
+  rw [htw] at hz
+  have hmap :
+      ((cokernel.π (B.thetaIdealIncl (a := a))).hom.app
+          (op (D.pieces i ⊓ D.pieces j))).hom
+          (gluedTwistEquiv C R π a (D.pieces i ⊓ D.pieces j) sleft -
+            gluedTwistEquiv C R π a (D.pieces i ⊓ D.pieces j) sright) =
+        ((cokernel.π (B.thetaIdealIncl (a := a))).hom.app
+          (op (D.pieces i ⊓ D.pieces j))).hom
+          (gluedTwistEquiv C R π a (D.pieces i ⊓ D.pieces j) sleft) -
+          ((cokernel.π (B.thetaIdealIncl (a := a))).hom.app
+            (op (D.pieces i ⊓ D.pieces j))).hom
+            (gluedTwistEquiv C R π a (D.pieces i ⊓ D.pieces j) sright) := by
+    exact map_sub _ _ _
+  have hzero :
+      ((cokernel.π (B.thetaIdealIncl (a := a))).hom.app
+          (op (D.pieces i ⊓ D.pieces j))).hom
+          (gluedTwistEquiv C R π a (D.pieces i ⊓ D.pieces j) sleft) -
+          ((cokernel.π (B.thetaIdealIncl (a := a))).hom.app
+            (op (D.pieces i ⊓ D.pieces j))).hom
+            (gluedTwistEquiv C R π a (D.pieces i ⊓ D.pieces j) sright) = 0 := by
+    rw [← hmap]
+    exact hz
+  exact sub_eq_zero.mp hzero
 
 /-- Once the widened certificate supplies the auxiliary theta-ideal `H¹` vanishing,
 global sections of the quotient sheaf for the chosen auxiliary chart are linearly equivalent
