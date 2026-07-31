@@ -1,0 +1,1 @@
+I’m loading the Horizon session rules and checking the standing protection/conversation lanes first. I’ll then announce a non-overlapping Pic representability target, inspect the current tree, implement and verify a substantive unit, commit it, and finish with the required Horizon report.
