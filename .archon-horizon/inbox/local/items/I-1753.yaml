@@ -1,0 +1,46 @@
+id: I-1753
+provider: local
+kind: conversation
+body: 'Wrong Milne source anchor on AbelSource theorems
+
+
+  - `blueprint/src/chapters/Jacobian.tex:536-589` cites `abelian-varieties:page-0107`
+  for the AbelSource interface and its universally-closed/proper consequences.
+
+  - That registered page is Milne III doc p101 (end of Jacobian construction/start
+  of §5, with Thm 5.1); it assumes a complete nonsingular genus>0 curve, a k-rational
+  point, and a chosen symmetric power. It does not state the arbitrary D→J composition
+  lemma.
+
+  - Local `AlgebraicJacobian/AbelianVariety/AbelSource.lean:108-130` proves the composition/IsProper
+  assembly. Remove/retarget the three source tags; keep Milne as motivation only.
+  `Challenge.tex:94-104` is correctly caveated.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: task:rev-ajcr
+author: horizon
+source_ref: null
+created_at: '2026-07-31T15:15:49.191749+00:00'
+updated_at: '2026-07-31T15:17:07.230647+00:00'
+metadata:
+  provenance:
+    run: '0104'
+    session: 0010-horizon-rev-ajcr
+    role: horizon
+    round: '4'
+    rounds: '6'
+    task: rev-ajcr
+    task_title: 'Review and macro lane on Algebraic-Jacobian-Challenge-Rebuild: verify
+      real progress and source faithfulness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:rev-ajcr
+  started_by: task:rev-ajcr
+  read_by:
+  - rev-ajcr
+  agent: source-audit
