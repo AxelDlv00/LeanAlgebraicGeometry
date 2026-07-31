@@ -672,6 +672,27 @@ noncomputable def divFunctorDegZero_representableByTerminal_of_forall_subsinglet
   divFunctorDegZero_representableByTerminal_of_isZero π
     (fun T x hx => Scheme.Modules.isZero_of_forall_subsingleton_sections (hss T x hx))
 
+/-- **The Div⁰ producer, modulo empty support** — the geometric form of
+`divFunctorDegZero_representableByTerminal_of_isZero`, with the coherent-sheaf-vanishing
+antecedent `IsZero x.F` reduced through `Scheme.Modules.isZero_of_isEmpty_schematicSupport`
+to *"a degree-`0` relative effective divisor has empty schematic support."*
+
+This is the sharpest honest form of the remaining obligation: no `IsZero`, no `finrank`, no
+all-opens section computation — just the topological statement that a divisor of fibre
+degree `0` is empty. The quasi-coherence of `x.F` needed by the converse is free from its
+`isFinitePresentation` field, so the antecedent carries only divisor data. It is the honest
+target for the fibrewise-finiteness geometry of `Picard/DivSupportQuasiFinite.lean`:
+`HasFiberDeg 0` forces each fibre of the (finite, once quasi-finite) support to have length
+`0`, i.e. to be empty, and a support with empty fibres over every point is empty. -/
+noncomputable def divFunctorDegZero_representableByTerminal_of_forall_isEmpty_schematicSupport
+    (hemp : ∀ (T : Over S) (x : DivFamily π T), x.HasFiberDeg 0 →
+      IsEmpty (Scheme.Modules.schematicSupport x.F : Type u)) :
+    (DivFunctorDeg π 0).RepresentableBy (Over.mk (𝟙 S)) :=
+  divFunctorDegZero_representableByTerminal_of_isZero π
+    (fun T x hx =>
+      letI := x.isFinitePresentation
+      Scheme.Modules.isZero_of_isEmpty_schematicSupport (hemp T x hx))
+
 end Scheme
 
 end AlgebraicGeometry
