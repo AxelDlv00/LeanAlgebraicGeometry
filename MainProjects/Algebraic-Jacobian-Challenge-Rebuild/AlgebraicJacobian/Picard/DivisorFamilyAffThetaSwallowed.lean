@@ -402,7 +402,7 @@ theorem IsCertified.projective_intrinsicThetaGlued_of_swallowedBy
 
 set_option synthInstance.maxHeartbeats 300000 in
 -- The rank calculation transports through the swallowed product and piece equivalences.
-/- The underlying intrinsic theta carrier has the certified constant stalk rank. -/
+/-- The underlying intrinsic theta carrier has the certified constant stalk rank. -/
 theorem IsCertified.rankAtStalk_intrinsicThetaGlued_of_swallowedBy
     (hc : A.IsCertified g) (a : Nat) (h : D.SwallowedBy d)
     (p : PrimeSpectrum R) :
@@ -450,7 +450,7 @@ variable [SmoothOfRelativeDimension 1 (C.left ↘ Spec (.of k))]
   [Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 0)]
   [Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 1)]
 
-/- The swallowed descent supplies the projective window-quotient input used by the
+/-- The swallowed descent supplies the projective window-quotient input used by the
 frame-cover layer. The quotient is identified with the intrinsic theta carrier by the
 cover-independent equivalence, so no chart typing is reintroduced here. -/
 theorem IsCertified.projective_intrinsicWindowQuotient_of_swallowedBy
@@ -470,7 +470,7 @@ theorem IsCertified.projective_intrinsicWindowQuotient_of_swallowedBy
     (AlgebraicGeometry.AffAdaptation.IsCertified.intrinsicWindowQuotEquiv
       C R pi hc hpi hO hchi ha1 hMa).symm
 
-/- Finite companion for the same direct window-quotient route. -/
+/-- Finite companion for the same direct window-quotient route. -/
 theorem IsCertified.finite_intrinsicWindowQuotient_of_swallowedBy
     (A : AffAdaptation D d) (hc : A.IsCertified g) (a : Nat)
     (hpi : pi ≫ P1.structureMap k = C.hom)
@@ -488,7 +488,7 @@ theorem IsCertified.finite_intrinsicWindowQuotient_of_swallowedBy
     (AlgebraicGeometry.AffAdaptation.IsCertified.intrinsicWindowQuotEquiv
       C R pi hc hpi hO hchi ha1 hMa).symm
 
-/- Constant-rank companion for the frame-cover input. -/
+/-- Constant-rank companion for the frame-cover input. -/
 theorem IsCertified.rankAtStalk_intrinsicWindowQuotient_of_swallowedBy
     (A : AffAdaptation D d) (hc : A.IsCertified g) (a : Nat)
     (hpi : pi ≫ P1.structureMap k = C.hom)
