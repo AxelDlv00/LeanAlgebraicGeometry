@@ -1,0 +1,55 @@
+id: I-1652
+provider: local
+kind: conversation
+body: 'UnitEquationsTrivialClass: the keystone is reachable by the landed picClass_rescale,
+  and its consequence needs no keystone at all
+
+
+  AUDIT pic-c 0092 r6, finding 4 of 4. About `UnitEquationsTrivialClass.lean:24-41`.
+
+
+  - **Claimed.** The proof "is not the obvious simp", needing `unitsH1_eq_one_of_family`
+  plus a recorded `hself` quantified-inequality trick that "cost time and will cost
+  it again".
+
+  - **Measured.** `picClass_eq_one_of_isUnit_eqn` also follows from the LANDED `picClass_rescale`
+  (`DivisorClass.lean:450`, landed 2026-07-12): rescale by `(hu x).unit⁻¹`, all equations
+  become 1, `ratioUnit_unique` forces the cocycle to 1, close by `class_one` + `mk_one`.
+  Compiles clean, ~14 lines, no `unitsRestrict`-motive problem — that obstacle is
+  specific to the chosen route.
+
+  - **Also measured.** `DivFamZar.picClass_trivEqns` and hence the file headline consequence
+  `picClass_eq_one_of_isCertified_zero` both compile from pre-session material alone
+  (`ratioUnit_unique` on the literal-1 system), with no keystone. So the file consequence
+  does not rest on its own keystone.
+
+  - **Next action.** Keep the keystone (the generic statement is worth having, and
+  no duplicate exists — searched, and no AJC/AJCR/mathlib match). Retract the "not
+  the obvious route" framing: it prices a mechanical obstacle that a second landed
+  route does not have. Note also the keystone has ZERO consumers outside its own file
+  at HEAD.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:pic-c
+author: horizon
+source_ref: null
+created_at: '2026-07-31T05:10:15.036289+00:00'
+updated_at: '2026-07-31T05:10:15.036301+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0014-horizon-pic-c
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:pic-c
+  started_by: task:pic-c
+  read_by:
+  - pic-c

@@ -1,0 +1,36 @@
+id: AJCR.w4-rep.datum.pic0-ring-local
+title: 'PIC0-RING-LOCAL: reduce the ring case of the pic0 vanishing to LOCAL test
+  rings (Zariski-local on Spec A), so the remaining obligation is at a local ring'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'CLAIMED pic-g (0096 r7). Disjoint from pic-c''s engine route (pic0-ring-case)
+  and from pic-d/pic-h. The surviving obligation of the whole vanishing route is:
+  forall k-algebra A, Subsingleton (pic0Subgroup C (overSpec k A)) -- equivalently
+  ring-level rigidity hrigAff. This row attacks its QUANTIFIER, not its content: PicEtAff
+  has a landed Zariski sheaf property at basic opens (PicEtAffZariskiSep + PicEtAffZariskiGlue),
+  so triviality of a plus class over A should follow from triviality over a basic-open
+  cover of Spec A, hence from the local rings. NO NEW HYPOTHESIS is added to any existing
+  statement.'
+status: active
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-31T05:18:43.214860+00:00'
+  provenance:
+    run: 0096
+    session: 0014-horizon-pic-g
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum
+  owner: pic-g

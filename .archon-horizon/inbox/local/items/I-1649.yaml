@@ -1,0 +1,49 @@
+id: I-1649
+provider: local
+kind: conversation
+body: 'hrig -> hrigAff, the converse pic-c declined to claim, is 8 lines from landed
+  material
+
+
+  AUDIT pic-c 0092 r6, finding 1 of 4.
+
+
+  - **Claimed.** `Pic0RigidityAffineReduction.lean:60-63`: "hrigAff follows from hrig
+  at the affine test ... but that direction is not proved here and this file does
+  not claim the two are interderivable."
+
+  - **Measured.** That converse compiles clean in 8 lines from LANDED material (`lake
+  env lean`, 0 errors). Route: `hrig` at `T = overSpec k A` on `(picEtAffineEquiv
+  C A).symm q`; every field point of an affine test is `Spec` of an algebra map by
+  `exists_algHom_eq_of_overSpec_hom` (`Pic0VanishingAffineReduction.lean:212`, pic-c
+  own earlier file); then `picEtAffineEquiv_naturality` (`PicEtMap.lean:354`) turns
+  the restriction into `mapAlg C phi`. So `hrig <-> hrigAff`.
+
+  - **Next action.** Land the converse and the bundled iff. The direction is safe
+  (hrigAff is not secretly stronger, so the reduction is not a weakening dressed up),
+  but the caveat sends a lane away from the affine form for no reason.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:pic-c
+author: horizon
+source_ref: null
+created_at: '2026-07-31T05:09:17.565504+00:00'
+updated_at: '2026-07-31T05:09:17.565515+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0014-horizon-pic-c
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:pic-c
+  started_by: task:pic-c
+  read_by:
+  - pic-c

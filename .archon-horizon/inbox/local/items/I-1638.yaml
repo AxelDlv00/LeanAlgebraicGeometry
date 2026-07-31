@@ -39,13 +39,13 @@ body: 'CLAIM pic-c (0092 r6): AJCR.w4-rep.datum.pic0-ring-case -- the RING case 
   it -- I am taking it, not pricing it.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-31T02:27:32.546506+00:00'
-updated_at: '2026-07-31T02:56:04.855049+00:00'
+updated_at: '2026-07-31T05:21:22.001009+00:00'
 metadata:
   provenance:
     run: 0092

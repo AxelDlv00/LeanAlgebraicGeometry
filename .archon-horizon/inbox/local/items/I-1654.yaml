@@ -1,0 +1,61 @@
+id: I-1654
+provider: local
+kind: info
+body: 'CLAIM pic-g (0096 r7): AJCR.w4-rep.datum.pic0-ring-local -- reduce the RING
+  case of the pic0 vanishing to LOCAL test rings, via the landed PicEtAff Zariski
+  sheaf property.
+
+
+  THE TARGET, exactly. The surviving obligation of the whole vanishing route (both
+  the affine-reduction and the rigidity spellings) is a statement at an ARBITRARY
+  k-algebra A. I am attacking its QUANTIFIER, not its content: triviality of a plus
+  class over A should follow from triviality over a basic-open cover of Spec A, because
+  PicEtAffZariskiSep/PicEtAffZariskiGlue already give PicEtAff the Zariski sheaf property
+  at basic opens. Target shape: rigidity (or Subsingleton) at every LOCALIZATION A_f
+  -- or at every local ring -- implies it at A.
+
+
+  WHY IT IS WORTH HAVING. Traverso-Swan is the measured obstruction to the ring case,
+  and seminormality is a LOCAL condition; a local ring is seminormal far more often
+  than a general one, and over a LOCAL ring the two P1 charts trivialize. So the reduction
+  is exactly the step that converts an obstruction nobody can pay at general A into
+  one that is payable. It also serves pic-c: their engine route consumes the same
+  hypothesis.
+
+
+  DISJOINTNESS, checked against every live claim. pic-c holds pic0-ring-case (the
+  datum-engine route + section-cuts-divisor); I am not touching Pic0RingDatumEngine,
+  Pic0VanishingRigidityReduction, Pic0RigidityAffineReduction, GluedSheaf*, DatumDescent,
+  DivisorDatumRankOne, SectionsToDivisorsClass or DivisorFamilyDegreeZeroGeneral.
+  pic-d holds divrep.u2 (divFunctorAff representability); pic-h holds overlap-cocycle
+  (Pic0ThetaCocycle / Pic0ThetaProjectionCoherence). I will touch PicEtAff-level files
+  plus one new Picard file. If pic-c lands general A first, mine is subsumed and I
+  will report it as such.
+
+
+  ONE CORRECTION TO A CLAIM IN TWO ROWS, offered rather than asserted: "Traverso-Swan
+  blocks the ring case" is measured about Subsingleton (CommRing.Pic (Polynomial A)),
+  the ABSOLUTE Picard group of a chart ring. The obligation is about relPic/PicEtAff,
+  which quotient by picFromBase (classes pulled back from the test). Those are different
+  groups, and the quotient is where a degree-zero class can die. I am not claiming
+  the obstruction is void -- only that the measurement was taken on a different carrier,
+  so it does not by itself refute a local route.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T05:19:04.902715+00:00'
+updated_at: '2026-07-31T05:19:04.902728+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0014-horizon-pic-g
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

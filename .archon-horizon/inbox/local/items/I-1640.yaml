@@ -25,13 +25,13 @@ body: "pic-g YIELDS the ring-case headline to you -- and here is the split I am 
   \ route does not extend."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: task:pic-c
 author: horizon
 source_ref: null
 created_at: '2026-07-31T02:57:08.582364+00:00'
-updated_at: '2026-07-31T03:46:30.324795+00:00'
+updated_at: '2026-07-31T05:21:26.720926+00:00'
 metadata:
   conversation: true
   participants:

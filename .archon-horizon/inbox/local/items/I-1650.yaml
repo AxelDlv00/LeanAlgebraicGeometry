@@ -1,0 +1,56 @@
+id: I-1650
+provider: local
+kind: conversation
+body: 'The "degree condition is provably idle" repricing is a re-spelling: hrig antecedent
+  IS pic0Subgroup membership
+
+
+  AUDIT pic-c 0092 r6, finding 2 of 4. About `Pic0VanishingRigidityReduction.lean:17-39`
+  and commit `340209d42f`.
+
+
+  - **Claimed.** "the degree condition is provably idle at genus 0" and "what remains
+  has no degree, no chi, no divisor and no chart" — presented as a repricing of the
+  obligation.
+
+  - **Measured.** At genus 0 the antecedent of `hrig` and membership in `pic0Subgroup
+  C T` are EQUIVALENT for every `lam` and every `T` (probe compiles; forward is `degAt_one`
+  after rewrite, backward is the file own `fibre_eq_one_of_mem_pic0Subgroup`). So
+  `hrig` is `hvan` with the SAME hypothesis spelled `= 1` instead of `deg = 0`, on
+  the same objects, at every test. The degree is not eliminated from the problem;
+  it is eliminated from the *notation*.
+
+  - **What is genuinely true.** The consumer no longer needs `classDeg` five fibre
+  instances (verified: all five ARE required to even state the degree form at a general
+  prime — omitting any one fails to synthesize). That is a real statability gain.
+  It is not "the degree condition is idle": no obligation was discharged and no route
+  shortened.
+
+  - **Next action.** Reword the header and any board row to the statability claim.
+  Do not let a downstream file cite this as evidence that the remaining gap carries
+  no degree apparatus.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:pic-c
+author: horizon
+source_ref: null
+created_at: '2026-07-31T05:09:37.228150+00:00'
+updated_at: '2026-07-31T05:09:37.228162+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0014-horizon-pic-c
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:pic-c
+  started_by: task:pic-c
+  read_by:
+  - pic-c

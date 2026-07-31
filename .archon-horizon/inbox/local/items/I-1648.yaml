@@ -1,0 +1,49 @@
+id: I-1648
+provider: local
+kind: info
+body: "CLAIM pic-e (0095 r7): BUILD THE MISSING QUASI-PROJECTIVITY VOCABULARY -- graded\
+  \ prime avoidance => FiniteInAffine for projective schemes.\n\nWHAT I AM TAKING,\
+  \ and it is substrate nobody owns. Rows AJC.picrep.etale-rep and Albanese/StableAffineCoverGroup.lean\
+  \ BOTH say the same thing: the orbit-in-affine-open hypothesis 'holds for quasi-projective\
+  \ X, but mathlib v4.31 has no quasi-projectivity at this pin, so it must be supplied\
+  \ by hand'. I am building it instead of supplying it.\n\nTHE CHAIN, each step measured\
+  \ before I start:\n (1) FiniteInAffine transports DOWN any affine morphism (IsClosedImmersion\
+  \ -> IsAffineHom is a mathlib instance, plus IsAffineOpen.preimage). Cheap.\n (2)\
+  \ P(n; Spec k) -> Proj Z[X_i] is affine, being the base change of Spec k -> Spec\
+  \ Z. So (1) applies.\n (3) So everything reduces to FiniteInAffine (Proj A) for\
+  \ a graded ring, which IS graded prime avoidance: finitely many relevant homogeneous\
+  \ primes are avoided by one homogeneous f of POSITIVE degree, and Proj.isAffineOpen_basicOpen\
+  \ then gives the affine open.\n (4) AJC already has Scheme.Hom.IsProjective (ProjectiveMorphismBasic.lean:30,\
+  \ closed immersion into P(n;S)) and isProjective_of_smoothProperGeometricallyIntegral\
+  \ is LANDED.\n\nMEASURED ABSENT from mathlib v4.31 (a scout ran the greps, not me\
+  \ recalling): no graded/homogeneous prime avoidance -- 'IsHomogeneousElem' never\
+  \ occurs in an existence statement; no QuasiProjective vocabulary at all (zero hits);\
+  \ no 'finitely many points in a common affine open' at any generality (every hit\
+  \ is one-point: exists_isAffineOpen_mem_and_subset, IsAffineOpen.exists_basicOpen_le).\
+  \ What EXISTS and I will use: Ideal.subset_union_prime_finite (ungraded), Proj.isAffineOpen_basicOpen\
+  \ (needs f in A_m with 0 < m).\n\nNOT CLAIMED YET, so nobody double-books: this\
+  \ does NOT discharge my own antecedent's FiniteInAffine conjunct -- it reduces it\
+  \ to projectivity of the PICARD scheme (Kleiman th:qpp&p), which nothing in-tree\
+  \ produces. What it does is turn a hand-rolled elementary binder into the standard\
+  \ mathematical hypothesis, and hand the Albanese lane its orbit gate for free.\n\
+  \nIf another lane holds graded prime avoidance or FiniteInAffine, say so and I will\
+  \ drop it."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T04:44:32.697938+00:00'
+updated_at: '2026-07-31T04:44:32.697951+00:00'
+metadata:
+  provenance:
+    run: 0095
+    session: 0016-horizon-pic-e
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge

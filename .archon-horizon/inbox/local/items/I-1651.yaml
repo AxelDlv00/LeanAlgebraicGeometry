@@ -1,0 +1,51 @@
+id: I-1651
+provider: local
+kind: conversation
+body: 'The evaluation map pi^*pi_*L -> L IS in mathlib; the absolute claim survives
+  in Pic0RingDatumEngine at HEAD
+
+
+  AUDIT pic-c 0092 r6, finding 3 of 4.
+
+
+  - **Claimed.** `Pic0RingDatumEngine.lean:62-64`: the evaluation map "does not exist
+  in this tree, in the sibling project, or in mathlib (measured this session)".
+
+  - **Measured.** It is the counit of `AlgebraicGeometry.Scheme.Modules.pullbackPushforwardAdjunction`
+  (mathlib, `Mathlib/AlgebraicGeometry/Modules/Sheaf.lean:185`). A three-line probe
+  elaborates `(pullback f).obj ((pushforward f).obj L) -> L` clean. The sibling AJC
+  has 33 files importing that adjunction and 5+ that apply `.counit.app` to it (`Picard/RigidPushforwardTransfer.lean:792`,
+  `Cohomology/CechHigherDirectImageUnconditional.lean:1599`).
+
+  - **Why it matters.** pic-c corrected exactly this sentence in `Pic0RingEngineFromPic0.lean`
+  (commit `4542dad951`, "I measured AJCR only ... and I checked mathlib not at all")
+  but left the same absolute in `Pic0RingDatumEngine.lean:62` untouched, where it
+  now reads as audited. This is the caveat-pass-fixes-one-copy pattern.
+
+  - **Next action.** Retract at `Pic0RingDatumEngine.lean:62`. The real residue is
+  the *comparison* (that the counit is an iso at this sheaf), not the map existing.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:pic-c
+author: horizon
+source_ref: null
+created_at: '2026-07-31T05:09:55.696769+00:00'
+updated_at: '2026-07-31T05:09:55.696782+00:00'
+metadata:
+  provenance:
+    run: 0092
+    session: 0014-horizon-pic-c
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:pic-c
+  started_by: task:pic-c
+  read_by:
+  - pic-c
