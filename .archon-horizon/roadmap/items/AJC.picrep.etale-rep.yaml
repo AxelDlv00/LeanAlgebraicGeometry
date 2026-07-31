@@ -1,72 +1,79 @@
 id: AJC.picrep.etale-rep
-title: 'UNOWNED: representability of picEt itself — the obligation no campaign milestone covers'
+title: 'UNOWNED: representability of picEt itself — the obligation no campaign milestone
+  covers'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'ADVANCED 2026-07-31 by pic-e (0095 r6): THE ARBITRARY-FIELD DIFFICULTY IS DISCHARGED.
-  The seam sorry fgaPicardRepresentability is UNTOUCHED and rep still has no producer.
+summary: 'ADVANCED 2026-07-31 by pic-e (0095 r6): THE ARBITRARY-FIELD DIFFICULTY IS
+  DISCHARGED. The seam sorry fgaPicardRepresentability is UNTOUCHED and rep still
+  has no producer.
 
 
-  LANDED, DO NOT REDO. Picard/PicEtPointedReduction.lean, rooted, 11 declarations (RE-COUNTED
-  after the section-8 commit; the row said 9 and 9 was right only before it), ZERO sorries,
-  all ELEVEN axiom-clean [propext, Classical.choice, Quot.sound] against fgaPicardRepresentability
-  firing sorryAx in the same probe. lake build AlgebraicJacobian EXIT=0 (8917 jobs). Commits
-  67770d2fcd, 16fd69abc8, d553888e9a, 86cfeb9b5c, plus 1b08c87915 correcting the seam docstring
-  in place.
+  LANDED, DO NOT REDO. Picard/PicEtPointedReduction.lean, rooted, 11 declarations
+  (RE-COUNTED after the section-8 commit; the row said 9 and 9 was right only before
+  it), ZERO sorries, all ELEVEN axiom-clean [propext, Classical.choice, Quot.sound]
+  against fgaPicardRepresentability firing sorryAx in the same probe. lake build AlgebraicJacobian
+  EXIT=0 (8917 jobs). Commits 67770d2fcd, 16fd69abc8, d553888e9a, 86cfeb9b5c, plus
+  1b08c87915 correcting the seam docstring in place.
 
 
-  WHAT IT PROVES. fgaPicardRepresentability_of_pointedPicSharpRep: the seam statement, CHARACTER
-  FOR CHARACTER, as the conclusion of an implication whose antecedent is PointedPicSharpRep
-  -- pointed picSharp-representability, uniform in the base field, bundled with FiniteInAffine
-  of the representing scheme. So a lane proving that antecedent closes the project''s central
-  sorry by exact. This row said the work is ''a ROUTE REPAIR, not a missing representability
-  theorem''; that is now a theorem rather than an assessment.
+  WHAT IT PROVES. fgaPicardRepresentability_of_pointedPicSharpRep: the seam statement,
+  CHARACTER FOR CHARACTER, as the conclusion of an implication whose antecedent is
+  PointedPicSharpRep -- pointed picSharp-representability, uniform in the base field,
+  bundled with FiniteInAffine of the representing scheme. So a lane proving that antecedent
+  closes the project''s central sorry by exact. This row said the work is ''a ROUTE
+  REPAIR, not a missing representability theorem''; that is now a theorem rather than
+  an assessment.
 
 
-  WHY IT COMPOSES AND NOBODY HAD COMPOSED IT: three landed sorry-free facts from three lanes,
-  no row mentioning the other two. exists_finiteGalois_level_hasRationalPoint_of_geometricallyIntegral
-  produces a finite GALOIS level with a point UNCONDITIONALLY from the seam''s own binders;
-  picSharp_representableBy_picEt_transport crosses to picEt with no section; seamClauseOne_of_hasGaloisQuotient_lftFree
-  descends to k with hq and hcov discharged INTERNALLY.
+  WHY IT COMPOSES AND NOBODY HAD COMPOSED IT: three landed sorry-free facts from three
+  lanes, no row mentioning the other two. exists_finiteGalois_level_hasRationalPoint_of_geometricallyIntegral
+  produces a finite GALOIS level with a point UNCONDITIONALLY from the seam''s own
+  binders; picSharp_representableBy_picEt_transport crosses to picEt with no section;
+  seamClauseOne_of_hasGaloisQuotient_lftFree descends to k with hq and hcov discharged
+  INTERNALLY.
 
 
-  THE REPRICING OTHER LANES SHOULD USE. At the lftFree spelling, three of the four inputs
-  the descent-assembly row lists are GONE: hcov (pic-f), the quotient via the GLOBAL instance
-  hasGaloisQuotient_of_orbitsInAffineOpen with NO affineness, the G1 match (isInvariantMatch_canonical).
-  The one remaining instance binder is OrbitsInAffineOpen, and orbitsInAffineOpen_of_finiteInAffine
-  reduces THAT to a scheme-level property, so the antecedent need not name the Galois level.
-  Price against seamClauseOne_of_hasGoodGaloisLevel: it needs ONE Galois level, NO rational
-  point in its statement, and NOT [GeometricallyIntegral].
+  THE REPRICING OTHER LANES SHOULD USE. At the lftFree spelling, three of the four
+  inputs the descent-assembly row lists are GONE: hcov (pic-f), the quotient via the
+  GLOBAL instance hasGaloisQuotient_of_orbitsInAffineOpen with NO affineness, the
+  G1 match (isInvariantMatch_canonical). The one remaining instance binder is OrbitsInAffineOpen,
+  and orbitsInAffineOpen_of_finiteInAffine reduces THAT to a scheme-level property,
+  so the antecedent need not name the Galois level. Price against seamClauseOne_of_hasGoodGaloisLevel:
+  it needs ONE Galois level, NO rational point in its statement, and NOT [GeometricallyIntegral].
 
 
-  CORRECTION TO THE SEAM DOCSTRING''S ITEM 3, measured: ''the gate bites only off the affine
-  locus'' and ''inferInstance at an abstract action carrying the orbit hypothesis but not
-  affineness FAILS'' are STALE -- inferInstance SUCCEEDS there (control: fails without the
-  orbit binder). Its conclusion that G2(c) ''is exactly the Scheme.GlueData assembly'' is
-  stale the same cheap way; isGaloisQuotient_glued discharges the instance. Not edited in
-  that file.
+  CORRECTION TO THE SEAM DOCSTRING''S ITEM 3, measured: ''the gate bites only off
+  the affine locus'' and ''inferInstance at an abstract action carrying the orbit
+  hypothesis but not affineness FAILS'' are STALE -- inferInstance SUCCEEDS there
+  (control: fails without the orbit binder). Its conclusion that G2(c) ''is exactly
+  the Scheme.GlueData assembly'' is stale the same cheap way; isGaloisQuotient_glued
+  discharges the instance. Not edited in that file.
 
 
   WHAT REMAINS, both explicit antecedents rather than hidden ones: (a) PointedPicSharpRep
-  is unproved in-tree -- it IS the Milne-Kollar campaign''s output; (b) no curve is exhibited
-  with FiniteInAffine at its Picard scheme, and that needs real quasi-projectivity, which
-  mathlib v4.31 lacks at this pin (exact? fails at an arbitrary scheme AND at a LocallyOfFiniteType
-  separated one).
+  is unproved in-tree -- it IS the Milne-Kollar campaign''s output; (b) no curve is
+  exhibited with FiniteInAffine at its Picard scheme, and that needs real quasi-projectivity,
+  which mathlib v4.31 lacks at this pin (exact? fails at an arbitrary scheme AND at
+  a LocallyOfFiniteType separated one).
 
 
-  AND READ THIS BEFORE PRICING (a): PointedPicSharpRep is DERIVABLE FROM THE SEAM up to FiniteInAffine
-  -- picSchemeOfHasRationalPoint gives three of four conjuncts, measured, reports sorryAx.
-  So AXIOM-CHECK any claimed proof; on this seam provability is not a discriminating control.
+  AND READ THIS BEFORE PRICING (a): PointedPicSharpRep is DERIVABLE FROM THE SEAM
+  up to FiniteInAffine -- picSchemeOfHasRationalPoint gives three of four conjuncts,
+  measured, reports sorryAx. So AXIOM-CHECK any claimed proof; on this seam provability
+  is not a discriminating control.
 
 
-  FOUR OF MY OWN CLAIMS WITHDRAWN by a fresh-context audit, each reproduced before accepting
-  and corrected in-source: (1) ''the converse fails, the transport runs picSharp -> picEt
-  only because it is the sheafification unit'' -- FALSE reason and inadequate probe; the converse
-  is a three-line term already inside picSchemeOfHasRationalPoint, now landed as nonempty_representableBy_picSharp_of_isIso,
-  and clause (2) supplies its hypothesis, so the two notions are INTERDERIVABLE at every POINTED
-  curve and the gap is only at pointless ones. (2) IsSeparated was a conjunct of my antecedent
-  and is PROVABLY FREE (isSeparated_of_representableBy_picEt) -- deleted. (3) my hedge relocating
-  item 3''s stale sentence to a shape it does not describe. (4) ''FiniteInAffine cannot be
-  stated outside the antecedent'' -- refuted by two declarations in the same file.'
+  FOUR OF MY OWN CLAIMS WITHDRAWN by a fresh-context audit, each reproduced before
+  accepting and corrected in-source: (1) ''the converse fails, the transport runs
+  picSharp -> picEt only because it is the sheafification unit'' -- FALSE reason and
+  inadequate probe; the converse is a three-line term already inside picSchemeOfHasRationalPoint,
+  now landed as nonempty_representableBy_picSharp_of_isIso, and clause (2) supplies
+  its hypothesis, so the two notions are INTERDERIVABLE at every POINTED curve and
+  the gap is only at pointless ones. (2) IsSeparated was a conjunct of my antecedent
+  and is PROVABLY FREE (isSeparated_of_representableBy_picEt) -- deleted. (3) my hedge
+  relocating item 3''s stale sentence to a shape it does not describe. (4) ''FiniteInAffine
+  cannot be stated outside the antecedent'' -- refuted by two declarations in the
+  same file.'
 status: pending
 kind: proof
 priority: high
@@ -86,7 +93,8 @@ metadata:
     round: '0'
     rounds: '8'
     task: review-ajc
-    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean quality'
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
   milestone: AJC.picrep
