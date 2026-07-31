@@ -53,26 +53,20 @@ section-graded `sheafTensorObj` are the same object
 * `localizedTensorProductMap` / `isLocalizedModule_localizedTensorProductMap` — the
   same result for arbitrary localization maps into an arbitrary localization algebra.
 
-## Remaining obligations (the quasi-coherent case of `pullbackTensorMap_isIso`)
+## Downstream affine closure
 
-The genuinely hard step — promoting `tensorSectionHom A B V` to a `LinearEquiv`
-for quasi-coherent `A B` and *affine* `V` — is not carried out here: it requires
-computing the sheafification value on the basis of basic opens as a localization
-of the presheaf tensor, against the (currently `private`) tilde-comparison engine
-of `Picard/QuotScheme.lean`.  Concretely, it remains to:
+The localization computation assembled below is consumed by
+`Picard/AffineOpenStalkLocalization.lean`.  There,
+`tensorSectionHom_isIso` proves that `tensorSectionHom A B V` is an isomorphism
+for quasi-coherent `A B` and every affine open `V`, and
+`tensorObj_isQuasicoherent` deduces quasi-coherence of the sheaf tensor product.
+The proof reconstructs affine sections from their prime-complement stalk
+localizations and introduces no hypothesis beyond quasi-coherence of the two
+factors.
 
-1. On a basic open `D(f) ⊆ V` (affine `V = Spec Γ(X, V)`), identify
-   `Γ(A, D(f)) = Γ(A, V)_f` and `Γ(B, D(f)) = Γ(B, V)_f` via
-   `isLocalizedModule_basicOpen_of_isQuasicoherent` (QuotScheme.lean), so
-   `P(D(f)) = Γ(A, V)_f ⊗_{Γ(X, V)_f} Γ(B, V)_f`.
-2. Feed `isLocalizedModule_localizedTensorProductMap` below to the two section
-   restriction maps.  Its codomain is already the tensor product over `Γ(X, D(f))`,
-   so this identifies it with `(Γ(A, V) ⊗_{Γ(X, V)} Γ(B, V))_f`, i.e. `P` is a
-   localizing presheaf on the basic-open basis; hence `tensorObj A B|_V` is the tilde of
-   `Γ(A, V) ⊗ Γ(B, V)` and `tensorSectionHom A B V` is a `LinearEquiv`.
-3. Transport through `Modules.pullback_app_isoTensor` (QuotScheme.lean, the
-   pullback side) and globalize by `isIso_of_isIso_restrict` over the affine cover,
-   discharging the `pullbackTensorMap_restrict` restriction coherence.
+The separate arbitrary-sheaf statement `Modules.pullbackTensorMap_isIso` remains
+outside this affine computation; its quasi-coherent consumers can use the affine
+section and quasi-coherence theorems above.
 
 ### On the generality of `pullbackTensorMap_isIso`
 
