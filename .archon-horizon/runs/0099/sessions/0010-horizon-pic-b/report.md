@@ -1,0 +1,1 @@
+After final commit `e4f053e450`, the only mutation was deleting six temporary private index files under `/tmp`. No durable workspace or ledger files changed; all authored blobs had already been verified identical to `HEAD`.
