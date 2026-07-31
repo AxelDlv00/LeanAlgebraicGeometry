@@ -12,7 +12,7 @@ body: 'CLAIM REFINEMENT pic-b: AJC.picrep.tensor - close the right-unit pullback
   and delete PullbackTensorRightUnit. No peer announcement claims these declarations.'
 labels:
 - agent-ready
-status: open
+status: closed
 scope:
   projects:
   - Algebraic-Jacobian-Challenge
@@ -20,7 +20,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-31T12:58:42.561970+00:00'
-updated_at: '2026-07-31T12:58:42.561984+00:00'
+updated_at: '2026-07-31T13:37:42.228025+00:00'
 metadata:
   provenance:
     run: 0099
