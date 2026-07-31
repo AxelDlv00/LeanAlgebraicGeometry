@@ -529,10 +529,13 @@ theorem isFinitePresentation_tensorObj_left_of_isLocallyTrivial
     dsimp only [P]
     letI : (q.presentation ij.1).IsFinite := hq.isFinite_presentation _
     infer_instance
-  have hsh : qT.shrink.IsFinitePresentation := by
+  have hqT : qT.IsFinitePresentation := by
     apply SheafOfModules.QuasicoherentData.IsFinitePresentation.mk
     intro ij
-    exact hP (Exists.choose ij.property)
+    exact hP ij
+  have hsh : qT.shrink.IsFinitePresentation :=
+    { isFinite_presentation := fun ij =>
+        hqT.isFinite_presentation (Exists.choose ij.property) }
   exact { exists_quasicoherentData := ⟨qT.shrink, hsh⟩ }
 
 /-- Isomorphic module sheaves have the same annihilator ideal sheaf.  This is
@@ -873,6 +876,26 @@ theorem twistQuotientMap_epi (L : X.Modules) (x : DivFamily π T) :
         ((Modules.pullbackUnitIso (pullback.fst π T.hom)).inv ≫ x.q))
   letI : Epi (Modules.tensorObj_right_unitor
       ((Modules.pullback (pullback.fst π T.hom)).obj L)).inv := inferInstance
+  infer_instance
+
+/-- The D2 twist is finitely presented whenever the fixed twist is a line
+bundle.  Both antecedents are already produced by the construction: local
+triviality survives pullback, and a divisor family carries finite
+presentation of its structure module. -/
+theorem twist_isFinitePresentation
+    (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)
+    (x : DivFamily π T) :
+    (x.twist L).IsFinitePresentation := by
+  dsimp [twist]
+  exact Modules.isFinitePresentation_tensorObj_left_of_isLocallyTrivial _ _
+    (hL.pullback (pullback.fst π T.hom)) x.isFinitePresentation
+
+/-- Quasi-coherence of the D2 twist, obtained from its finite presentation. -/
+theorem twist_isQuasicoherent
+    (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)
+    (x : DivFamily π T) :
+    (x.twist L).IsQuasicoherent := by
+  letI : (x.twist L).IsFinitePresentation := x.twist_isFinitePresentation L hL
   infer_instance
 
 /-- The D2 twist has proper support whenever the divisor structure sheaf does.
