@@ -40,7 +40,9 @@ set_option autoImplicit false
 
 universe u
 
-open CategoryTheory
+open CategoryTheory MonoidalCategory
+
+open scoped CartesianMonoidalCategory
 
 namespace AlgebraicGeometry
 
@@ -72,6 +74,27 @@ noncomputable def overSection : overSpec k A ⟶ (P1.asOver k) :=
 
 @[simp]
 theorem overSection_left : (overSection k A).left = specPoint k A := rfl
+
+/-! ## The global `k`-rational point
+
+The monoidal unit `𝟙_ (Over (Spec k))` is definitionally `Over.mk (𝟙 (Spec k)) = overSpec k k`
+(the base changed along `𝟙 : k → k`), so the section at the test ring `A = k` is a **global
+`k`-rational point** `𝟙_ ⟶ (P1.asOver k)`.  This is the `P : 𝟙_ ⟶ P1.asOver k` that
+`Curve/P1H1Vanishing.lean` and the challenge target `exists_unique_ofCurve_comp` record as
+constructed nowhere in the project. -/
+
+/-- **The global `k`-rational point of `ℙ¹`**: the origin `[1 : 0]`, as a morphism from the
+monoidal unit of `Over (Spec k)`.  This is the point hypothesis `P` of the challenge's
+`JacobianData.exists_unique_ofCurve_comp` at `ℙ¹`. -/
+noncomputable def unitPoint : 𝟙_ (Over (Spec (.of k))) ⟶ (P1.asOver k) :=
+  Over.homMk (specPoint k k) (by
+    change specPoint k k ≫ structureMap k = 𝟙 (Spec (CommRingCat.of k))
+    rw [specPoint_structureMap,
+      show (CommRingCat.ofHom (algebraMap k k)) = 𝟙 (CommRingCat.of k) from by ext x; simp,
+      Spec.map_id])
+
+@[simp]
+theorem unitPoint_left : (unitPoint k).left = specPoint k k := rfl
 
 /-! ## Naturality
 
