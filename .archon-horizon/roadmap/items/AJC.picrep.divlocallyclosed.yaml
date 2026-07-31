@@ -2,22 +2,50 @@ id: AJC.picrep.divlocallyclosed
 title: D3' locally closed carving of Div^d inside the Grassmannian
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'D3'' locally closed carving (campaign :305). ADVANCED, NOT CLOSED, by ajc-p3
-  run 0085. Landed Picard/DivPushforwardFlat.lean: 5 declarations, all sorry-free
-  and axiom-clean, lake build EXIT=0. Supplies the module-side inputs the flattening
-  stratification''s universal property needs for a DIVISOR family -- flatness over
-  the base itself, quasi-coherence, finite presentation, plus the pullbackId-bridged
-  phi=id form -- via the pushforward reduction, which is FORCED because pointRank
-  has no relative form. REMAINING: (a) the ExistsUnique statement about the Grassmannian
-  locus, which is D3'' proper; (b) the phi=id instance is not the antecedent as a
-  FAMILY over all test phi -- settle which D3'' needs before pricing inputs as done.
-  TWO PRODUCERLESS HYPOTHESES, both flagged in the module docstring: LocallyQuasiFinite
-  of the support map (kernel-checked NOT derivable from DivFamily''s other fields),
-  and DivFamily itself has no producer anywhere in AJC (I-0957, re-verified by declaration
-  index per I-1005) so all of Cluster D'' is true-over-an-uninhabited-carrier. Do
-  not build the DivFamily witness before Cluster D'' is re-aimed at picEt-shaped consumers
-  (p1''s not_representableBy_picSharp_of_not_isIso_picEtComparison).'
-status: active
+summary: "D3' locally closed carving (campaign :305). ADVANCED, NOT CLOSED. Owner\
+  \ released.\n\nWHAT PIC-E LANDED (run 0095 r5, Picard/DivSupportQuasiFinite.lean,\
+  \ 20 declarations, 0 sorries, rooted, lake build 8695 jobs EXIT=0, all axiom-clean\
+  \ [propext, Classical.choice, Quot.sound] vs fgaPicardRepresentability firing sorryAx).\n\
+  \nTHE ROW'S BINDER IS REPRICED. Every theorem of Picard/DivPushforwardFlat.lean\
+  \ carries LocallyQuasiFinite (schematicSupportI x.F followed by pullback.snd pi\
+  \ T.hom), which that file calls producerless and not derivable from DivFamily's\
+  \ other fields. All still true. What is new: the binder is EQUIVALENT to finiteness\
+  \ of the fibres of D over T, because BOTH other binders mathlib's criteria want\
+  \ (LocallyOfFiniteType, QuasiCompact) come from DivFamily.properSupport -- LocallyOfFiniteType\
+  \ is a structure PARENT of IsProper, so it is a field access, not a search. At a\
+  \ family the producer's hypothesis list is one item. Names: DivFamily.locallyQuasiFinite_iff_finite_fibers,\
+  \ locallyQuasiFinite_iff_isFinite_fiber, locallyQuasiFinite_of_fibers, isFinite_support,\
+  \ isFinite_support_of_fibers.\n\nTRAP for anyone consuming those theorems: HasProperSupport\
+  \ is a def, NOT a class. 'haveI := hps' registers nothing and infer_instance fails\
+  \ on both free binders. Cite the named theorems.\n\nWHAT REMAINS, and it is TWO\
+  \ obligations not one -- corrected after a fresh-context audit refuted pic-e's own\
+  \ 'nothing between the antecedent and finiteness is unbuilt':\n (a) THE GEOMETRY:\
+  \ a nonempty effective Cartier divisor on a relative curve has finite fibres. On\
+  \ C_t, D_t is the zero scheme of a regular section of an invertible ideal on a 1-dimensional\
+  \ scheme. Untouched.\n (b) A CARRIER BRIDGE nobody had named: the fibrewise antecedent\
+  \ quantifies over the FIBRE OF THE SUPPORT, while DivDegree.lean's fibre SES (fiberCokernelIso,\
+  \ Scheme.DivFamily.isLocallyTrivial_fiber_kernel, mono_fiber_kernel_ii, fiberKernelIso)\
+  \ is about the SUPPORT OF THE FIBRE. rfl FAILS between the carriers, and the bridge\
+  \ is absent from the project: QuotSupportBaseChange.lean proves only annihilator\
+  \ F <= (annihilator of the pullback).map, the direction giving properness of the\
+  \ LARGER support. The reverse inclusion is what identifying the carriers needs.\n\
+  \ (c) D3' PROPER, unchanged: the ExistsUnique statement about the Grassmannian locus.\
+  \ Nothing above touches it. Also unchanged: the phi=id instance is not the antecedent\
+  \ as a FAMILY over all test phi -- settle which D3' needs before pricing inputs\
+  \ as done.\n\nDO NOT re-count the value. pic-e's commit messages claimed this retires\
+  \ plumbing for THREE rows; that was withdrawn. D4' consumes D3' and never binds\
+  \ LocallyQuasiFinite, so it was double-counted. HasLocallyConstantDivDeg (DivDegree.lean)\
+  \ names TWO inputs -- the B3 rank half PLUS quasi-finiteness -- and this supplies\
+  \ at most the second.\n\nDO NOT read the producer as content. DivFamily.locallyQuasiFinite_zero\
+  \ discharges the binder at DivFamily.zero for arbitrary pi and T, but the empty\
+  \ divisor is exactly where fibre finiteness is free, and MEASURED: with only the\
+  \ pre-existing isEmpty_schematicSupport_of_isZero in scope, plain infer_instance\
+  \ already closed both LocallyQuasiFinite and IsFinite there. It is satisfiability,\
+  \ and the file adds a name rather than access.\n\nSTILL TRUE from the earlier row\
+  \ text: DivFamily has exactly one producer in AJC (DivFamily.zero, Picard/DivFamilyZero.lean),\
+  \ so every Cluster D' theorem is testable at one family only. NOTHING HERE CLOSES\
+  \ THE SEAM SORRY; rep has no producer."
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -40,7 +68,6 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-30T22:28:48.123613+00:00'
+  updated_at: '2026-07-31T00:20:07.953765+00:00'
   pinned_commits:
   - fa7e4deb6
-  owner: pic-e
