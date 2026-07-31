@@ -998,6 +998,7 @@ theorem twist_isCoherentSheafFlat
     (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)
     (x : DivFamily π T) :
     CoherentSheafFlat (pullback.snd π T.hom) (x.twist L) := by
+  dsimp [twist]
   exact Modules.coherentSheafFlat_tensorObj_left_of_isLocallyTrivial
     (pullback.snd π T.hom)
     ((Modules.pullback (pullback.fst π T.hom)).obj L) x.F
