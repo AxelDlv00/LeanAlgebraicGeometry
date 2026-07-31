@@ -449,6 +449,16 @@ theorem thetaPieceCokernel_family_isCompatible
         (gluedTwistEquiv C R π a (D.pieces j) (r j))) := by
   intro i j
   let W := D.pieces i ⊓ D.pieces j
+  change secRes (cokernel (B.thetaIdealIncl (a := a)))
+      (inf_le_left : W ≤ D.pieces i)
+      (((cokernel.π (B.thetaIdealIncl (a := a))).hom.app
+        (op (D.pieces i))).hom
+        (gluedTwistEquiv C R π a (D.pieces i) (r i))) =
+    secRes (cokernel (B.thetaIdealIncl (a := a)))
+      (inf_le_right : W ≤ D.pieces j)
+      (((cokernel.π (B.thetaIdealIncl (a := a))).hom.app
+        (op (D.pieces j))).hom
+        (gluedTwistEquiv C R π a (D.pieces j) (r j)))
   have hL := secRes_naturality (cokernel.π (B.thetaIdealIncl (a := a)))
     (inf_le_left : W ≤ D.pieces i)
     (gluedTwistEquiv C R π a (D.pieces i) (r i))
