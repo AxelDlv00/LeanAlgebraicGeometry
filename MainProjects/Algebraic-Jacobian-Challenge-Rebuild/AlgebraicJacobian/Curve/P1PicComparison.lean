@@ -143,6 +143,38 @@ theorem picEt_eq_one_of_relPicDeg_symm_eq_zero (w : picEt (P1.asOver k) (overSpe
   have h2 := congrArg (relPicToPicEtEquiv k K) h1
   rwa [MulEquiv.apply_symm_apply, map_one] at h2
 
+/-! ## The field-test `pic⁰` vanishing at `ℙ¹`, through the honest comparison
+
+This is the shape the ring-case route must mirror: the degree-zero étale Picard group at `ℙ¹`
+over a field is trivial, proved **through** the honest relative Picard group rather than around
+it.  A `pic⁰` class pulls back to a `relPic` class along the surjection `relPicToPicEt`; that
+preimage has relative degree zero (membership at the tautological point,
+`relPicDeg_eq_zero_of_mem_pic0Subgroup`); and a degree-zero `relPic` class on `ℙ¹_K` is trivial.
+So the whole vanishing rides on the two facts a ring-level computation of `Pic(ℙ¹_A)` would
+supply — surjectivity of the unit and triviality of degree-zero `relPic` — with no separate
+étale argument. -/
+
+/-- **A degree-zero étale Picard class on `ℙ¹_K` is trivial**, via the honest comparison: it is
+`relPicToPicEt` of a relative class whose relative degree vanishes, and degree-zero `relPic
+(ℙ¹_K)` is trivial. -/
+theorem pic0Subgroup_coe_eq_one (lam : pic0Subgroup (P1.asOver k) (overSpec k K)) :
+    (lam : picEt (P1.asOver k) (overSpec k K)) = 1 := by
+  obtain ⟨z, hz⟩ := relPicToPicEt_surjective k K (lam : picEt (P1.asOver k) (overSpec k K))
+  have hzmem : relPicToPicEt (P1.asOver k) (overSpec k K) z
+      ∈ pic0Subgroup (P1.asOver k) (overSpec k K) := hz ▸ lam.2
+  have hdeg : relPicDeg K z = 0 :=
+    relPicDeg_eq_zero_of_mem_pic0Subgroup (P1.asOver k) K hzmem
+  rw [← hz, eq_one_of_relPicDeg_eq_zero k K z hdeg, map_one]
+
+/-- **The degree-zero étale-sheafified Picard group of `ℙ¹` over a field is a subsingleton.**
+The field-test instance of the `∀ T` binder both representability routes pass through, proved
+through the honest relative Picard group (surjectivity of the comparison unit + triviality of
+degree-zero `relPic`), the template the ring case is to reproduce. -/
+theorem subsingleton_pic0Subgroup :
+    Subsingleton (pic0Subgroup (P1.asOver k) (overSpec k K)) :=
+  ⟨fun s t => Subtype.ext ((pic0Subgroup_coe_eq_one k K s).trans
+    (pic0Subgroup_coe_eq_one k K t).symm)⟩
+
 end P1
 
 end AlgebraicGeometry
