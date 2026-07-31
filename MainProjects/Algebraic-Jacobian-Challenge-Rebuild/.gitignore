@@ -22,8 +22,27 @@
 # 2026-07-28 after a case-sensitive version let `probe_*.lean` through. If a probe
 # earns a place in the library, move it under `AlgebraicJacobian/` and import it
 # from `AlgebraicJacobian.lean` — do not rename it to dodge this pattern.
+#
+# SCRATCH DIRECTORIES, added 2026-07-31 (janitor pass, run 0095 r5; inbox `I-1606`).
+# The `.lean` patterns above are per-FILE, and every scratch file swept into HEAD so
+# far arrived inside a DIRECTORY whose own name carries the marker while the files
+# inside it do not: `ScratchPicC/Ax.lean`, `scratch_w7/k1c.lean`,
+# `scratch_p4r6_audit/p19_instances2.lean`. Verified in a throwaway repo that the
+# sibling's unanchored `*Scratch*.lean` / `*scratch*.lean` pair still does NOT ignore
+# those three, and that the two directory patterns below do — including the `.log`
+# build dumps that the `.lean` patterns can never reach. Verified also that a normal
+# library path such as `AlgebraicJacobian/Curve/P1Curve.lean` stays unignored.
+#
+# NOTE what ignoring does NOT do: a path already tracked at HEAD stays tracked. The
+# 83 scratch paths currently in HEAD must be removed with `git rm --cached` by a lane
+# that owns them, and per workspace memory do NOT `add -f` a scratch file to work
+# around a refusal — that re-arms it permanently.
 *Probe*.lean
 *probe*.lean
+*Scratch*.lean
+*scratch*.lean
+*Scratch*/
+*scratch*/
 /probe_*.lean
 /scratch_*.lean
 /Scratch_*.lean
