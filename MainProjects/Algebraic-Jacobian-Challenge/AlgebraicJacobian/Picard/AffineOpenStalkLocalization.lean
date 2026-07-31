@@ -137,4 +137,109 @@ noncomputable abbrev affineOpenStalkModule
     exact Set.mem_range_self p
   exact Module.compHom _ (X.presheaf.germ U (hU.fromSpec p) hpU).hom
 
+set_option backward.isDefEq.respectTransparency false in
+/-- Restriction along the canonical spectrum chart identifies its stalk at a
+prime with the ambient stalk, linearly over the affine-open coordinate ring. -/
+noncomputable def fromSpecRestrictStalkLinearEquiv
+    (M : X.Modules) {U : X.Opens} (hU : IsAffineOpen U)
+    (p : PrimeSpectrum.Top Γ(X, U)) :
+    let F := (restrictFunctor hU.fromSpec).obj M
+    letI : Module Γ(X, U)
+        (↑(TopCat.Presheaf.stalk F.val.presheaf p) : Type u) :=
+      moduleSpecStalkModule F p
+    letI : Module Γ(X, U)
+        (↑(TopCat.Presheaf.stalk M.val.presheaf (hU.fromSpec p)) : Type u) :=
+      affineOpenStalkModule M hU p
+    (↑(TopCat.Presheaf.stalk F.val.presheaf p) : Type u) ≃ₗ[Γ(X, U)]
+      (↑(TopCat.Presheaf.stalk M.val.presheaf (hU.fromSpec p)) : Type u) := by
+  let R := Γ(X, U)
+  let j := hU.fromSpec
+  let F := (restrictFunctor hU.fromSpec).obj M
+  have hpU : j p ∈ U := by
+    have : j p ∈ Set.range j := Set.mem_range_self p
+    rwa [hU.range_fromSpec] at this
+  let StF := (↑(TopCat.Presheaf.stalk F.val.presheaf p) : Type u)
+  let StM := (↑(TopCat.Presheaf.stalk M.val.presheaf (j p)) : Type u)
+  letI : Module R StF := moduleSpecStalkModule F p
+  letI : Module (X.presheaf.stalk (j p)) StM :=
+    presheafStalkModule M.val (j p)
+  letI : Module R StM :=
+    Module.compHom _ (X.presheaf.germ U (j p) hpU).hom
+  let e : StF ≃+ StM :=
+    ((restrictStalkNatIso j p).app M).addCommGroupIsoToAddEquiv
+  exact e.toLinearEquiv (fun r z => by
+    obtain ⟨V, hpV, s, hs⟩ :=
+      TopCat.Presheaf.exists_germ_eq F.val.presheaf z
+    rw [← hs]
+    letI : Module Γ(Spec R, V) (F.val.obj (op V) : Type u) :=
+      (F.val.obj (op V)).isModule
+    change (F.val.obj (op V) : Type u) at s
+    let aTop : Γ(Spec R, ⊤) := (Scheme.ΓSpecIso R).inv.hom r
+    let aV : Γ(Spec R, V) :=
+      ((Spec R).presheaf.map (homOfLE le_top).op).hom aTop
+    have ha : ((Spec R).presheaf.germ V p hpV).hom aV =
+        (((Scheme.ΓSpecIso R).inv ≫
+          (Spec R).presheaf.germ ⊤ p trivial).hom r) := by
+      change ((Spec R).presheaf.germ V p hpV).hom
+          (((Spec R).presheaf.map (homOfLE le_top).op).hom
+            ((Scheme.ΓSpecIso R).inv.hom r)) =
+        ((Spec R).presheaf.germ ⊤ p trivial).hom
+          ((Scheme.ΓSpecIso R).inv.hom r)
+      exact TopCat.Presheaf.germ_res_apply
+        (Spec R).presheaf (homOfLE le_top) p hpV
+          ((Scheme.ΓSpecIso R).inv.hom r)
+    change e
+        ((((Scheme.ΓSpecIso R).inv ≫
+          (Spec R).presheaf.germ ⊤ p trivial).hom r) •
+          (TopCat.Presheaf.germ F.val.presheaf V p hpV).hom s) =
+      r • e ((TopCat.Presheaf.germ F.val.presheaf V p hpV).hom s)
+    rw [← ha]
+    erw [← PresheafOfModules.germ_smul F.val p V hpV aV s]
+    have hcompat1 := congrArg (fun q => q.hom (aV • s))
+      (germ_restrictStalkNatIso_hom_app j p M hpV)
+    have hcompat2 := congrArg (fun q => q.hom s)
+      (germ_restrictStalkNatIso_hom_app j p M hpV)
+    change e ((TopCat.Presheaf.germ F.val.presheaf V p hpV).hom (aV • s)) =
+      (M.presheaf.germ (j ''ᵁ V) (j p) (by simpa using hpV)).hom (aV • s)
+      at hcompat1
+    change e ((TopCat.Presheaf.germ F.val.presheaf V p hpV).hom s) =
+      (M.presheaf.germ (j ''ᵁ V) (j p) (by simpa using hpV)).hom s
+      at hcompat2
+    rw [hcompat1]
+    have hsm := smul_restrictAppIso_hom_apply j M V aV s
+    change
+      (M.presheaf.germ (j ''ᵁ V) (j p) (by simpa using hpV)).hom
+          ((restrictAppIso j M V).hom.hom (aV • s)) =
+        r • e ((TopCat.Presheaf.germ F.val.presheaf V p hpV).hom s)
+    rw [hsm]
+    erw [PresheafOfModules.germ_smul M.val (j p) (j ''ᵁ V)
+      (by simpa using hpV) ((j.appIso V).inv.hom aV)
+      ((restrictAppIso j M V).hom.hom s)]
+    rw [hcompat2]
+    let c : (X.presheaf.stalk (j p) : Type u) :=
+      (X.presheaf.germ U (j p) hpU).hom r
+    let ms : StM :=
+      (M.presheaf.germ (j ''ᵁ V) (j p) (by simpa using hpV)).hom s
+    change _ = c • ms
+    have eT : j ''ᵁ (⊤ : (Spec R).Opens) = U :=
+      (Scheme.Hom.image_top_eq_opensRange j).trans hU.opensRange_fromSpec
+    let hVU : j ''ᵁ V ≤ U :=
+      (Scheme.Hom.image_mono j le_top).trans eT.le
+    let cV : (X.presheaf.stalk (j p) : Type u) :=
+      (X.presheaf.germ (j ''ᵁ V) (j p) (by simpa using hpV)).hom
+        ((j.appIso V).inv.hom aV)
+    have hc : cV = c := by
+      change
+        (X.presheaf.germ (j ''ᵁ V) (j p) (by simpa using hpV)).hom
+            ((j.appIso V).inv.hom
+              (((Spec R).presheaf.map (homOfLE le_top).op).hom
+                ((Scheme.ΓSpecIso R).inv.hom r))) =
+          (X.presheaf.germ U (j p) hpU).hom r
+      rw [fromSpec_restrict_ring_section hU V r]
+      exact TopCat.Presheaf.germ_res_apply X.presheaf (homOfLE hVU)
+        (j p) (by simpa using hpV) r
+    change cV • _ = c • ms
+    rw [hc]
+    rfl)
+
 end AlgebraicGeometry.Scheme.Modules

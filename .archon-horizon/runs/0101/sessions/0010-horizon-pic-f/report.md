@@ -1,0 +1,3 @@
+Verified: no durable authored changes remain after `befcf08797`. All 17 authored paths match current HEAD, and that commit remains an ancestor.
+
+The observed mutations are untracked session runtime files (`transcript.jsonl`, hook state, notification cache). They should not be committed.
