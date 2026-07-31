@@ -254,6 +254,7 @@ theorem IsCertified.projective_intrinsicThetaGluedOver_of_swallowedBy
   exact Module.Projective.of_equiv e.symm
 
 set_option synthInstance.maxHeartbeats 300000 in
+-- The dependent `A_D`/piece module instances need a larger search budget here.
 /-- Rank transport from the intrinsic `A_D`-carrier to the swallowing theta piece. -/
 theorem rankAtStalk_intrinsicThetaGluedOver_eq_swallowingPiece
     (A : AffAdaptation D d) (a : Nat) {j0 : D.index}
@@ -276,6 +277,7 @@ theorem rankAtStalk_intrinsicThetaGluedOver_eq_swallowingPiece
   exact congrFun (Module.rankAtStalk_eq_of_equiv e) p
 
 set_option synthInstance.maxHeartbeats 300000 in
+-- The rank calculation transports through two dependent module equivalences.
 /-- The certified rank survives the swallowed theta descent, with no added certificate clause. -/
 theorem IsCertified.rankAtStalk_intrinsicThetaGluedOver_of_swallowedBy
     (A : AffAdaptation D d) (hc : A.IsCertified g) (a : Nat)
