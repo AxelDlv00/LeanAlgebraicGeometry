@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.DivDegree
+import AlgebraicJacobian.Picard.RepresentableByTerminal
 
 /-!
 # The empty divisor: the first inhabitant of `Scheme.DivFamily`
@@ -489,6 +490,67 @@ noncomputable def DivFunctorDeg.zeroClass : (DivFunctorDeg π 0).obj (Opposite.o
 instance DivFunctorDeg.instNonemptyObjZero :
     Nonempty ((DivFunctorDeg π 0).obj (Opposite.op T)) :=
   ⟨DivFunctorDeg.zeroClass π T⟩
+
+/-! ## §5. Toward a Div⁰ producer: the terminal representation, modulo `Subsingleton`
+
+The empty divisor makes `Div⁰_{X/S}` *inhabited* at every test object (§4). Being the
+**only** degree-`0` relative effective divisor is a separate fact — the
+`Subsingleton` half — and it is genuine content, not a formality (see the module
+docstring: a fact about `fiberDeg`, a `finrank` with a junk value at infinite
+dimension). This section does not prove it. What it does is package the two halves
+against the categorical bridge `CategoryTheory.Functor.representableByTerminal`
+(`Picard/RepresentableByTerminal.lean`), so that a lane which supplies the
+`Subsingleton` gets the project's **first genuine `RepresentableBy` producer on the
+divisor side** by a single application, with no `Equiv` plumbing.
+
+The remaining obligation is exhibited as an explicit hypothesis rather than hidden:
+`divFunctorDegZero_representableByTerminal` is a true implication whose antecedent
+`hss` is the `Subsingleton` and whose conclusion is the terminal representation. The
+antecedent is **not** circular — it does not mention `RepresentableBy` — and it is
+reduced one step further by `subsingleton_divFunctorDegZero_obj_of_forall_rel_zero`
+to the concrete statement "every degree-`0` divisor family cuts out the empty divisor".
+-/
+
+/-- **`Subsingleton` of the degree-`0` slice from divisor-level uniqueness.** If every
+degree-`0` divisor family over `T` is equivalent (`DivFamily.Rel`, i.e. cuts out the
+same closed subscheme) to the empty divisor, then the degree-`0` slice at `T` is a
+subsingleton.
+
+This peels the categorical `Subtype`/`Quotient` layer off the open obligation, leaving
+the honest geometric statement: *a relative effective divisor of fibre degree `0` is
+empty*. The converse direction (`zero` has degree `0`) is `hasFiberDeg_zero`. -/
+theorem subsingleton_divFunctorDegZero_obj_of_forall_rel_zero
+    (hrel : ∀ x : DivFamily π T, x.HasFiberDeg 0 → x.Rel (DivFamily.zero π T)) :
+    Subsingleton ((DivFunctorDeg π 0).obj (Opposite.op T)) := by
+  refine ⟨fun a b => Subtype.ext ?_⟩
+  obtain ⟨za, ha⟩ := a
+  obtain ⟨zb, hb⟩ := b
+  induction za using Quotient.ind with
+  | _ x =>
+    induction zb using Quotient.ind with
+    | _ y =>
+      have hx : x.Rel (DivFamily.zero π T) := hrel x ha
+      have hy : y.Rel (DivFamily.zero π T) := hrel y hb
+      exact Quotient.sound (Setoid.trans hx (Setoid.symm hy))
+
+/-- **The Div⁰ producer, modulo divisor-level uniqueness.** Given that every degree-`0`
+relative effective divisor over every test object is the empty divisor, `Div⁰_{X/S}` is
+represented by the terminal object `Over.mk (𝟙 S)` of `Over S`.
+
+The `Nonempty` half is `DivFunctorDeg.instNonemptyObjZero` (the empty divisor); the
+`Subsingleton` half is `subsingleton_divFunctorDegZero_obj_of_forall_rel_zero` applied
+to the hypothesis; the terminal object is `CategoryTheory.Over.mkIdTerminal`; and the
+bridge is `CategoryTheory.Functor.representableByTerminal`. No hypothesis on `π`
+(not proper, not smooth); the antecedent `hrel` is the whole of what remains, and it
+mentions no representability. -/
+noncomputable def divFunctorDegZero_representableByTerminal
+    (hrel : ∀ (T : Over S) (x : DivFamily π T), x.HasFiberDeg 0 →
+      x.Rel (DivFamily.zero π T)) :
+    (DivFunctorDeg π 0).RepresentableBy (Over.mk (𝟙 S)) :=
+  CategoryTheory.Functor.representableByTerminal (DivFunctorDeg π 0)
+    CategoryTheory.Over.mkIdTerminal
+    (fun T => ⟨DivFunctorDeg.zeroClass π T.unop⟩)
+    (fun T => subsingleton_divFunctorDegZero_obj_of_forall_rel_zero π T.unop (hrel T.unop))
 
 end Scheme
 

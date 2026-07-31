@@ -54,7 +54,7 @@ Everything here is about an arbitrary category and carries no algebraic-geometry
 hypothesis; nothing closes any `sorry`.
 -/
 
-universe v u
+universe w v u
 
 namespace CategoryTheory.Functor
 
@@ -70,7 +70,7 @@ are forced by the two `Subsingleton`s.
 
 This is the presheaf-side companion of `Limits.hasTerminal_of_unique`, which is
 absent from mathlib `v4.31`. -/
-noncomputable def representableByTerminal (F : Cᵒᵖ ⥤ Type v) {Y : C}
+noncomputable def representableByTerminal (F : Cᵒᵖ ⥤ Type w) {Y : C}
     (hY : Limits.IsTerminal Y)
     (hne : ∀ T : Cᵒᵖ, Nonempty (F.obj T)) (hss : ∀ T : Cᵒᵖ, Subsingleton (F.obj T)) :
     F.RepresentableBy Y where
@@ -89,14 +89,14 @@ noncomputable def representableByTerminal (F : Cᵒᵖ ⥤ Type v) {Y : C}
 /-- **The `Unique`-packaged form of `representableByTerminal`.** When the values
 of `F` are literally `Unique` (a single default plus subsingleton), the same
 terminal object represents it. -/
-noncomputable def representableByTerminal_of_unique (F : Cᵒᵖ ⥤ Type v) {Y : C}
+noncomputable def representableByTerminal_of_unique (F : Cᵒᵖ ⥤ Type w) {Y : C}
     (hY : Limits.IsTerminal Y) (h : ∀ T : Cᵒᵖ, Unique (F.obj T)) :
     F.RepresentableBy Y :=
   representableByTerminal F hY (fun T => ⟨(h T).default⟩) (fun T => (h T).instSubsingleton)
 
 /-- **Existence corollary**: a pointwise nonempty-and-subsingleton presheaf is
 representable (forgets the chosen terminal object). -/
-theorem isRepresentable_of_terminal (F : Cᵒᵖ ⥤ Type v) {Y : C}
+theorem isRepresentable_of_terminal (F : Cᵒᵖ ⥤ Type w) {Y : C}
     (hY : Limits.IsTerminal Y)
     (hne : ∀ T : Cᵒᵖ, Nonempty (F.obj T)) (hss : ∀ T : Cᵒᵖ, Subsingleton (F.obj T)) :
     F.IsRepresentable :=
