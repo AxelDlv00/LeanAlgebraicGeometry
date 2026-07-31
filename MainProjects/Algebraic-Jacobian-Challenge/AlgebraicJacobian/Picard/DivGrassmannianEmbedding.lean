@@ -477,8 +477,11 @@ theorem baseChange_surjective_iff_pullback_appTop
     rw [← hcomm w, hy]
 
 set_option synthInstance.maxHeartbeats 1000000 in
--- Slice-site presentation transport traverses two cover refinements and the
--- open-restriction equivalence.
+-- Normalizing the shrunken presentation data traverses nested subtype and
+-- slice-site equivalences.
+set_option maxRecDepth 10000 in
+-- Slice-site presentation transport also traverses two cover refinements and
+-- the open-restriction equivalence.
 set_option maxHeartbeats 2000000 in
 /-- Tensoring a finitely presented module sheaf on the left by a locally
 trivial line bundle preserves finite presentation.  The proof refines a
@@ -583,6 +586,8 @@ noncomputable def sectionLinearEquivOfRestrictIso
   exact W.ι_image_top ▸ f
 
 set_option maxHeartbeats 2500000 in
+-- The affine-locality engine refines both source and base covers through
+-- basic opens before transporting the local section equivalence.
 /-- Tensoring a quasi-coherent flat sheaf on the left by a locally trivial line
 bundle preserves flatness over an arbitrary base morphism.  The affine-cover
 criterion is fed by affine trivialising charts of the line bundle; on each
