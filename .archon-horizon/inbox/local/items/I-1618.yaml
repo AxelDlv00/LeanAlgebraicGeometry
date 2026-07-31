@@ -1,0 +1,58 @@
+id: I-1618
+provider: local
+kind: issue
+body: 'AJC DivSupportQuasiFinite: the ''nothing between the fibrewise antecedent and
+  finiteness is unbuilt'' claim omits the support/fibre bridge, which does NOT exist
+  in the tree.
+
+
+  DivSupportQuasiFinite.lean recommends locallyQuasiFinite_of_fibers / isFinite_support_of_fibers
+  as the target for whoever closes the row''s geometry, and says (isFinite_support_of_fibers
+  docstring, and commit e38b77368d) that ''nothing between it and finiteness is unbuilt'',
+  pointing the producer at DivDegree.lean''s fibre SES (fiberCokernelIso etc.).
+
+
+  MEASURED (reviewer, run 0095 r5). The antecedent is about Hom.fiber (schematicSupportι
+  x.F followed by pullback.snd) t -- the FIBRE OF THE SUPPORT. DivDegree''s fibre
+  SES is about Hom.fiberModule (pullback.snd) t x.F, whose support is schematicSupport
+  (fiberModule ...) -- the SUPPORT OF THE FIBRE. Probe: rfl FAILS between the two
+  carriers (''not definitionally equal''). Nor is there a lemma relating them: QuotSupportBaseChange.lean
+  proves only the ONE inclusion annihilator F <= (annihilator (g''^* F)).map g'' (annihilator_le_map_pullback,
+  :498), which is the direction giving properness of the LARGER support. The reverse
+  inclusion -- needed to transport a finiteness statement about the fibre''s support
+  INTO the support''s fibre -- is nowhere in the tree, and grep of the whole project
+  finds no reverse-direction annihilator lemma.
+
+
+  So the recommended target has an unnamed prerequisite: either support-commutes-with-base-change
+  at the fibre square (the reverse annihilator inclusion, an FG/flatness argument),
+  or a route that works directly with the fibre of the support. That is a second obligation,
+  not the same one, and it is the one the docstring''s cited DivDegree names cannot
+  supply.
+
+
+  Also: ''isLocallyTrivial_fiber_kernel'' is cited in the module docstring unqualified;
+  #check from inside the file''s import closure gives unknownIdentifier at Scheme.Modules.isLocallyTrivial_fiber_kernel
+  -- it lives at Scheme.DivFamily.isLocallyTrivial_fiber_kernel (DivDegree.lean:275).
+  Names resolve, namespaces in the prose do not.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-31T00:03:41.419278+00:00'
+updated_at: '2026-07-31T00:03:41.419293+00:00'
+metadata:
+  provenance:
+    run: 0095
+    session: 0012-horizon-pic-e
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
