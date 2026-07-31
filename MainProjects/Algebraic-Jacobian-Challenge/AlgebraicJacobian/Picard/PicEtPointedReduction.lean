@@ -30,6 +30,12 @@ schemes.
   antecedent **alone**: no Galois level, no quotient, no orbit hypothesis.
 * `fgaPicardRepresentability_of_pointedPicSharpRep` — the seam statement itself,
   verbatim, as the conclusion of an implication.
+* `seamClauseOne_of_hasGoodGaloisLevel` (§5) — clause (1) from the **weakest**
+  antecedent the proof actually consumes: a *single* finite Galois extension over
+  which `picSharp` is representable by a quasi-projective scheme. No rational
+  point occurs in that statement, no uniformity in the field, and
+  `[GeometricallyIntegral C.hom]` is not a binder. Price the remaining work
+  against this one, not against `PointedPicSharpRep`.
 
 ## Why this is not a new hypothesis on the headline
 
@@ -94,6 +100,11 @@ below, not hidden ones. What changes is the *shape* of what remains: the
 arbitrary-field difficulty that `I-0491` deliberately put on the headline is now
 **discharged**, and what is left is the classical pointed theorem plus
 quasi-projectivity of the representing scheme.
+
+Nor is it an equivalence. The reduction is one-directional and the gap is
+measured, not assumed: see §5, where the converse is shown to fail at the trivial
+extension. So "the seam reduces to the pointed theorem" is a genuine implication,
+not a change of coordinates.
 
 `FiniteInAffine` is not free: `exact?` fails on it at an arbitrary scheme
 (measured, control in the same probe as the results). It is also not vacuous — §3
@@ -281,5 +292,87 @@ theorem fgaPicardRepresentability_of_pointedPicSharpRep {k : Type u} [Field k]
           LocallyOfFiniteType X.hom ∧ IsSeparated X.hom)
       ∧ (Scheme.HasRationalPoint C → IsIso (PicScheme.picEtComparison C)) :=
   ⟨seamClauseOne_of_pointedPicSharpRep C H, seamClauseTwo_of_pointedPicSharpRep C H⟩
+
+/-! ## §5. The weakest antecedent clause (1) actually needs
+
+§4 states the reduction against `PointedPicSharpRep`, which is the shape a
+*campaign* delivers: uniform in the field, stated with a rational-point
+hypothesis. That is the right form for a hand-off, and it is deliberately
+stronger than the proof consumes. This section writes down what clause (1) really
+needs, because a reduction priced against an over-strong antecedent misreports
+what is left.
+
+Three things fall away, and each is a fact about the proof rather than a
+restatement.
+
+* **The uniformity in the field.** Only ONE extension is used. Not "all
+  fields", not even "all finite Galois levels of `k`" — a single good level
+  suffices, so the antecedent is an existential.
+* **The rational point.** It does not occur in `HasGoodGaloisLevel` at all. In §4
+  it is the *route* by which the level is produced (via
+  `exists_finiteGalois_level_hasRationalPoint_of_geometricallyIntegral`), but the
+  descent step never looks at it. A lane that can represent `picSharp` over some
+  finite Galois extension by any other means owes no section.
+* **`[GeometricallyIntegral C.hom]` and `IsSeparated`.** The former is used in §4
+  *only* to produce the level, so with the level assumed it is not a binder here
+  — this theorem holds for a smooth proper `C` with no integrality hypothesis at
+  all. The latter is not an input in either form: it comes from the group
+  structure of the represented object (`PicEtSeparated`, consumed inside
+  `seamClauseOne_of_hasGaloisQuotient_lftFree`).
+
+**This is sufficient, not equivalent, and I measured the gap rather than
+assuming it.** The converse would need a `picEt`-representation over `k` to yield
+a `picSharp`-representation, and that fails even at the trivial extension
+`k' = k`: `exact?` cannot close
+`Nonempty ((picSharp C).RepresentableBy Z)` from
+`(picEt C).RepresentableBy Z`. The transport of §3 of `PicEtSubcanonical.lean`
+runs `picSharp → picEt` only, because it is the sheafification unit. So this is
+a reduction with a genuine gap in the other direction, not a repricing in
+coordinates — unlike `coverCompatibleEquiv_of_representableBy`
+(`Picard/PicEtDescentRepresentability.lean`), which does have its converse. -/
+def HasGoodGaloisLevel {k : Type u} [Field k] (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] : Prop :=
+  ∃ (k' : Type u) (_ : Field k') (_ : Algebra k k'),
+    ∃ (_ : FiniteDimensional k k') (_ : IsGalois k k')
+      (X : Over (Spec (CommRingCat.of k'))),
+      Nonempty ((PicScheme.picSharp (Scheme.baseChangeField C k')).RepresentableBy X) ∧
+        LocallyOfFiniteType X.hom ∧ FiniteInAffine X.left
+
+/-- **Clause (1) from a single good Galois level** — the weakest form, with no
+rational point, no integrality binder and no uniformity in the field.
+
+Compare `seamClauseOne_of_pointedPicSharpRep`: same conclusion, and the binder
+list has lost `[GeometricallyIntegral C.hom]`. -/
+theorem seamClauseOne_of_hasGoodGaloisLevel {k : Type u} [Field k]
+    (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    (H : HasGoodGaloisLevel C) :
+    ∃ Z : Over (Spec (CommRingCat.of k)),
+      Nonempty ((PicScheme.picEt C).RepresentableBy Z) ∧
+        LocallyOfFiniteType Z.hom ∧ IsSeparated Z.hom := by
+  obtain ⟨k', _, _, hfd, hgal, X', ⟨rep0⟩, hft, hfa⟩ := H
+  letI rep := picSharp_representableBy_picEt_transport (Scheme.baseChangeField C k') rep0
+  letI := orbitsInAffineOpen_of_finiteInAffine
+    (PicScheme.semilinearGalActionOfRepresentableBy C rep) hfa
+  exact PicScheme.seamClauseOne_of_hasGaloisQuotient_lftFree rep hft
+
+/-- **The strong antecedent implies the weak one**, so §4 factors through §5 and
+the two are not independent routes.
+
+This is the declaration that makes the "deliberately stronger" claim above
+checkable instead of asserted: it exhibits the good level, and the exhibition is
+exactly the step §4's proof performs. `[GeometricallyIntegral C.hom]` reappears
+here because producing the level is what needs it. -/
+theorem hasGoodGaloisLevel_of_pointedPicSharpRep {k : Type u} [Field k]
+    (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIntegral C.hom]
+    (H : PointedPicSharpRep.{u}) :
+    HasGoodGaloisLevel C := by
+  obtain ⟨k'', hfd, hgal, hpt⟩ :=
+    Scheme.exists_finiteGalois_level_hasRationalPoint_of_geometricallyIntegral C
+  letI := hfd
+  letI := hgal
+  obtain ⟨X', hrep, hft, -, hfa⟩ := H (Scheme.baseChangeField C (k'' : Type u)) hpt
+  exact ⟨(k'' : Type u), inferInstance, inferInstance, hfd, hgal, X', hrep, hft, hfa⟩
 
 end AlgebraicGeometry.Scheme
