@@ -45,9 +45,16 @@ images is `C (c₀c₁) · (1 + z)` with `z` a nilpotent Laurent element (sum an
 nilpotent transported parts).  A coboundary therefore has *no `T`-exponent*: its class in the
 `ℤ` of the domain computation is `0`, and the deviation from a constant is a nilpotent — exactly
 the direction a "degree map to `ℤ`" would record, without needing the map (which does not exist
-over a general ring).  Together with `nilpotent_isUnit_mem_laurentCoboundaryUnits`
-(`LaurentNilpotentCoboundary.lean`, the converse: such a unit *is* a coboundary) this pins the
-coboundary subgroup at an arbitrary ring as *exactly* `{C c · (1 + z) : c ∈ Aˣ, z nilpotent}`.
+over a general ring).  The matching converse — that *every* such `C c · (1 + z)` with `z` an
+**arbitrary** nilpotent Laurent element is a coboundary — is
+`C_mul_one_add_nilpotent_mem_laurentCoboundaryUnits` (`LaurentCoboundaryGeneral.lean`), resting on
+the multi-generator `nilpotent_one_add_mem_laurentCoboundaryUnits`
+(`LaurentGeneralNilpotentCoboundary.lean`); the single-generator
+`nilpotent_isUnit_mem_laurentCoboundaryUnits` (`LaurentNilpotentCoboundary.lean`) covers only the
+scalar case `1 + C e · f` and does **not** by itself pin the subgroup.  Together the forward
+direction here and that general converse give the arbitrary-ring characterisation
+`mem_laurentCoboundaryUnits_iff_general`: the coboundary subgroup is *exactly*
+`{C c · (1 + z) : c ∈ Aˣ, z nilpotent}`.
 
 ## Main declarations
 
