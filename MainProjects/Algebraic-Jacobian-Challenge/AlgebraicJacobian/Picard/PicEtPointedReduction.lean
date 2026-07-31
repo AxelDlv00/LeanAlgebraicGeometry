@@ -36,6 +36,11 @@ schemes.
   point occurs in that statement, no uniformity in the field, and
   `[GeometricallyIntegral C.hom]` is not a binder. Price the remaining work
   against this one, not against `PointedPicSharpRep`.
+* `nonempty_representableBy_picSharp_of_isIso` and
+  `nonempty_representableBy_picSharp_of_hasRationalPoint` (§6) — the **converse**
+  direction, which an earlier revision of §5 wrongly claimed did not exist. At a
+  pointed curve the two representability notions are interderivable; §5 says
+  precisely where the residual gap is.
 
 ## Why this is not a new hypothesis on the headline
 
@@ -88,8 +93,23 @@ gate as a whole: `hasGaloisQuotient_of_orbitsInAffineOpen`
 affineness, and `seamClauseOne_of_hasGaloisQuotient_lftFree` consumes it
 successfully at the *glued* quotient (`gluedQuotientMap`). What survives of item 3
 is the *orbit* hypothesis, which is the honest residue and is the one this file
-carries. I have not edited that file: the sentence there is about `HasGaloisQuotient`
-at an action with **no** orbit binder, where it is still true.
+carries.
+
+**And my first attempt to hedge that correction was itself wrong, which is worth
+more than the correction** (fresh-context audit, reproduced before accepting). It
+said: "the sentence there is about `HasGaloisQuotient` at an action with **no**
+orbit binder, where it is still true." The sentence in that file explicitly says
+*with* the orbit hypothesis — "at an abstract action carrying the orbit hypothesis
+but not affineness **fails** (measured, control both ways)" — and at HEAD that is
+false: `infer_instance` **succeeds** at exactly that shape, and fails without the
+orbit binder (control, both ways in one probe). So item 3 is stale as written, not
+mis-scoped, and its downstream conclusion ("the remaining `G2(c)` work is exactly
+the `Scheme.GlueData` assembly") is stale in the same cheap direction, since
+`isGaloisQuotient_glued` is what discharges the instance. I have not edited that
+file; the true nearby claim it may be confused with is item 3's *other*
+measurement, about `HasStableAffineCover` at an action with no orbit binder.
+Relocating a stale sentence to a shape it does not describe is worse than leaving
+it, because it makes the staleness invisible.
 
 ## What this does NOT do
 
@@ -101,10 +121,14 @@ arbitrary-field difficulty that `I-0491` deliberately put on the headline is now
 **discharged**, and what is left is the classical pointed theorem plus
 quasi-projectivity of the representing scheme.
 
-Nor is it an equivalence. The reduction is one-directional and the gap is
-measured, not assumed: see §5, where the converse is shown to fail at the trivial
-extension. So "the seam reduces to the pointed theorem" is a genuine implication,
-not a change of coordinates.
+And it is an equivalence **at pointed curves** — §6 proves the converse there, so
+away from the pointless case this is a change of coordinates and not a discount.
+§5 locates the residual gap: curves with no rational point, where
+`¬ IsIso (picEtComparison C)` is quoted from Kleiman and unproved here.
+
+Finally, per §7, `PointedPicSharpRep` is *derivable from the seam itself* up to
+`FiniteInAffine`. So a claimed proof of it must be **axiom-checked**: on this seam
+provability is not a discriminating control and the axiom list is.
 
 `FiniteInAffine` is not free: `exact?` fails on it at an arbitrary scheme
 (measured, control in the same probe as the results). It is also not vacuous — §3
@@ -144,7 +168,7 @@ Picard functor, for curves that *have* a rational point, uniformly in the base
 field, together with quasi-projectivity of the representing scheme.
 
 This is the campaign's target, written as a closed proposition. Three things about
-its shape are deliberate.
+its shape are deliberate, and a fourth is deliberately **absent**.
 
 * It quantifies over **all** base fields `K`, not just over `k`. That is
   essential and it is not a strengthening in any useful sense: §4 applies it at a
@@ -156,15 +180,31 @@ its shape are deliberate.
   statement is needed on top of it; §3 of `Picard/PicEtSubcanonical.lean` supplies
   the transport for free.
 * `FiniteInAffine X.left` is bundled rather than carried separately so that the
-  results below have **one** antecedent. It is a property of the scheme the
-  antecedent itself produces, so it cannot be stated outside it. -/
+  results below have **one** antecedent. The *property* is perfectly stateable
+  outside it — `HasGoodGaloisLevel` in §5 does exactly that, and §2 takes it as a
+  free-standing hypothesis. What cannot be stated outside is the **witness**: no
+  separate binder can name the scheme the antecedent itself produces. (An earlier
+  revision of this bullet said the property "cannot be stated outside it", which
+  two declarations in this same file refute.)
+* **`IsSeparated X.hom` is NOT a conjunct**, and carrying it would have
+  misreported the price of the reduction. It is *free* from the resulting `picEt`
+  representation by `isSeparated_of_representableBy_picEt`
+  (`Picard/PicEtSeparated.lean`) — Yoneda transports the `CommGrpCat`-valued
+  functor's group structure onto any representing scheme, and a group scheme over
+  a field is separated. That file's
+  `picEtClauseOne_of_picSharp_representableBy_locallyOfFiniteType` already says
+  in its own docstring that the form to hand the campaign asks "nothing about
+  separatedness". A first revision of this file bundled it anyway; a
+  fresh-context audit reproved every result with the conjunct deleted, so it is
+  deleted. The seam's clause (1) still *concludes* separatedness — it is
+  discharged, not dropped. -/
 def PointedPicSharpRep : Prop :=
   ∀ {K : Type u} [Field K] (E : Over (Spec (CommRingCat.of K))),
     ∀ [SmoothOfRelativeDimension 1 E.hom] [IsProper E.hom] [GeometricallyIntegral E.hom],
       Scheme.HasRationalPoint E →
       ∃ X : Over (Spec (CommRingCat.of K)),
         Nonempty ((PicScheme.picSharp E).RepresentableBy X) ∧
-          LocallyOfFiniteType X.hom ∧ IsSeparated X.hom ∧ FiniteInAffine X.left
+          LocallyOfFiniteType X.hom ∧ FiniteInAffine X.left
 
 /-! ## §2. The scheme-level hypothesis implies the action-level one -/
 
@@ -229,7 +269,7 @@ theorem seamClauseTwo_of_pointedPicSharpRep {k : Type u} [Field k]
     (H : PointedPicSharpRep.{u}) :
     Scheme.HasRationalPoint C → IsIso (PicScheme.picEtComparison C) := by
   intro hpt
-  obtain ⟨X, ⟨rep⟩, -, -, -⟩ := H C hpt
+  obtain ⟨X, ⟨rep⟩, -, -⟩ := H C hpt
   exact isIso_picEtComparison_of_picSharp_representability C rep
 
 /-- **Clause (1) of the seam, over an ARBITRARY field, from the pointed
@@ -268,7 +308,7 @@ theorem seamClauseOne_of_pointedPicSharpRep {k : Type u} [Field k]
     Scheme.exists_finiteGalois_level_hasRationalPoint_of_geometricallyIntegral C
   letI := hfd
   letI := hgal
-  obtain ⟨X', ⟨rep0⟩, hft, -, hfa⟩ := H (Scheme.baseChangeField C (k'' : Type u)) hpt
+  obtain ⟨X', ⟨rep0⟩, hft, hfa⟩ := H (Scheme.baseChangeField C (k'' : Type u)) hpt
   letI rep :=
     picSharp_representableBy_picEt_transport (Scheme.baseChangeField C (k'' : Type u)) rep0
   letI := orbitsInAffineOpen_of_finiteInAffine
@@ -320,16 +360,35 @@ restatement.
   structure of the represented object (`PicEtSeparated`, consumed inside
   `seamClauseOne_of_hasGaloisQuotient_lftFree`).
 
-**This is sufficient, not equivalent, and I measured the gap rather than
-assuming it.** The converse would need a `picEt`-representation over `k` to yield
-a `picSharp`-representation, and that fails even at the trivial extension
-`k' = k`: `exact?` cannot close
-`Nonempty ((picSharp C).RepresentableBy Z)` from
-`(picEt C).RepresentableBy Z`. The transport of §3 of `PicEtSubcanonical.lean`
-runs `picSharp → picEt` only, because it is the sheafification unit. So this is
-a reduction with a genuine gap in the other direction, not a repricing in
-coordinates — unlike `coverCompatibleEquiv_of_representableBy`
-(`Picard/PicEtDescentRepresentability.lean`), which does have its converse. -/
+**On the converse — and this paragraph is a CORRECTION of what stood here.** The
+first revision said the converse "fails even at the trivial extension `k' = k`",
+evidenced by `exact?` failing on
+`Nonempty ((picSharp C).RepresentableBy Z)` from `(picEt C).RepresentableBy Z`,
+and gave as the reason that the `PicEtSubcanonical.lean` transport "runs
+`picSharp → picEt` only, because it is the sheafification unit". **The reason was
+false and the probe was inadequate** (fresh-context audit, reproduced here before
+accepting). The comparison is a *morphism*; once it is an iso,
+`RepresentableBy.ofIso` runs both ways, and
+
+  `converseOfIsIso : IsIso (picEtComparison C) → (picEt C).RepresentableBy Z →`
+  `  Nonempty ((picSharp C).RepresentableBy Z)`
+
+is the three-line term below — the same term already landed inside
+`picSchemeOfHasRationalPoint` (`Picard/FGAPicRepresentability.lean`), i.e. in this
+file's own import closure, which the withdrawn paragraph did not mention. And the
+hypothesis it needs is supplied by **clause (2) of this file's own antecedent**:
+under `PointedPicSharpRep`, `seamClauseTwo_of_pointedPicSharpRep` gives
+`IsIso (picEtComparison C)` at every curve *with a section*.
+
+So the honest statement is narrower than "not equivalent" and sharper than
+"equivalent": the two representability notions are **interderivable at every
+pointed curve**, and the gap is confined exactly to curves with **no** rational
+point — where `¬ IsIso (picEtComparison C)` is Kleiman's pointless real conic,
+quoted in `Picard/PicEtSubcanonical.lean` and *not proved* in this project. That
+is still a genuine gap and this is still not a change of coordinates, but the
+reason is the pointless case, not the direction of the unit. Contrast
+`coverCompatibleEquiv_of_representableBy`
+(`Picard/PicEtDescentRepresentability.lean`), whose converse is unconditional. -/
 def HasGoodGaloisLevel {k : Type u} [Field k] (C : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] : Prop :=
   ∃ (k' : Type u) (_ : Field k') (_ : Algebra k k'),
@@ -372,7 +431,76 @@ theorem hasGoodGaloisLevel_of_pointedPicSharpRep {k : Type u} [Field k]
     Scheme.exists_finiteGalois_level_hasRationalPoint_of_geometricallyIntegral C
   letI := hfd
   letI := hgal
-  obtain ⟨X', hrep, hft, -, hfa⟩ := H (Scheme.baseChangeField C (k'' : Type u)) hpt
+  obtain ⟨X', hrep, hft, hfa⟩ := H (Scheme.baseChangeField C (k'' : Type u)) hpt
   exact ⟨(k'' : Type u), inferInstance, inferInstance, hfd, hgal, X', hrep, hft, hfa⟩
+
+/-! ## §6. The converse, as a theorem rather than a docstring sentence
+
+§5's paragraph on the converse is a correction of a claim that was wrong twice
+over — false reason, inadequate probe. The lesson is not to state the repaired
+version in prose either, so both halves are declarations here. -/
+
+/-- **The converse direction, given invertibility of the comparison.** A scheme
+representing `picEt C` also represents `picSharp C` as soon as
+`picEtComparison C` is an isomorphism.
+
+This is the term the withdrawn §5 paragraph asserted did not exist. It is not new
+mathematics — the same one-liner is inside `picSchemeOfHasRationalPoint`
+(`Picard/FGAPicRepresentability.lean`) — but it was not available under a name,
+which is exactly how the false prohibition survived. -/
+theorem nonempty_representableBy_picSharp_of_isIso {k : Type u} [Field k]
+    (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    (hiso : IsIso (PicScheme.picEtComparison C))
+    {Z : Over (Spec (CommRingCat.of k))}
+    (rep : (PicScheme.picEt C).RepresentableBy Z) :
+    Nonempty ((PicScheme.picSharp C).RepresentableBy Z) :=
+  ⟨rep.ofIso (asIso (PicScheme.picEtComparison C)).symm⟩
+
+/-- **At a pointed curve the two representability notions are interderivable**,
+under the antecedent of §4.
+
+So the reduction of §4/§5 is a change of coordinates *at pointed curves* and a
+genuine implication only away from them. Stating this costs nothing and it is the
+claim a reviewer would otherwise have to reconstruct from two docstrings; leaving
+it unstated is what let the withdrawn version of §5 read as measured. -/
+theorem nonempty_representableBy_picSharp_of_hasRationalPoint {k : Type u} [Field k]
+    (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIntegral C.hom]
+    (H : PointedPicSharpRep.{u}) (hpt : Scheme.HasRationalPoint C)
+    {Z : Over (Spec (CommRingCat.of k))}
+    (rep : (PicScheme.picEt C).RepresentableBy Z) :
+    Nonempty ((PicScheme.picSharp C).RepresentableBy Z) :=
+  nonempty_representableBy_picSharp_of_isIso C
+    (seamClauseTwo_of_pointedPicSharpRep C H hpt) rep
+
+/-! ## §7. The gate-reachability control, and what it says about the price
+
+`HasPicSchemeEt`'s instance `instHasPicSchemeEt` is a projection of the seam
+`sorry` and is **unconditional**, so every statement in its domain is provable and
+provability is not a discriminating control on this seam — the seam docstring says
+so itself. That warning applies to this file's own antecedent and the first
+revision ran no such control. It does now.
+
+**MEASURED** (fresh-context audit, reproduced): three of the four conjuncts of
+`PointedPicSharpRep` — the `picSharp` representation, local finiteness, and (in
+the withdrawn revision) separatedness — are *already derivable from the seam* at a
+pointed curve, via `picSchemeOfHasRationalPoint`. A scratch theorem
+
+  `(∀ X : Scheme.{u}, FiniteInAffine X) → PointedPicSharpRep.{u}`
+
+typechecks and reports `[propext, sorryAx, Classical.choice, Quot.sound]`.
+
+**So the honest decomposition of the price is**: relative to the seam taken as
+assumed, the only conjunct of `PointedPicSharpRep` that is not a projection of it
+is `FiniteInAffine`. That does **not** make the reduction empty — the seam is
+`sorry`, so "derivable from the seam" is not a proof of anything — but it does
+mean a lane must **axiom-check** any claimed proof of `PointedPicSharpRep` rather
+than accept a green build. A proof that routes through `instHasPicSchemeEt`
+discharges nothing and will fire `sorryAx`.
+
+The control is recorded here rather than landed as a declaration on purpose: a
+`sorryAx`-firing theorem in a rooted module would make this file's own axiom
+audit read dirty, which is the opposite of what the measurement is for. -/
 
 end AlgebraicGeometry.Scheme
