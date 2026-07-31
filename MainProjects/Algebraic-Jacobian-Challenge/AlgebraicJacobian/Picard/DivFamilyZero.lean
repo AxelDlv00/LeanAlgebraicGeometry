@@ -433,6 +433,15 @@ theorem isZero_of_isEmpty_schematicSupport {M : Y.Modules} [M.IsQuasicoherent]
     ((Scheme.Modules.pushforward (Scheme.Modules.schematicSupportι M)).map_isZero hN)
     (Scheme.Modules.schematicSupportDescentIso M)
 
+/-- **A quasi-coherent sheaf is zero iff its schematic support is empty.** Packages the
+landed forward `isEmpty_schematicSupport_of_isZero` with the converse
+`isZero_of_isEmpty_schematicSupport` into the geometric characterisation of the zero sheaf:
+vanishing of the sheaf is exactly emptiness of the closed subscheme it is supported on. The
+companion of `isZero_iff_forall_subsingleton_sections`, in support vocabulary. -/
+theorem isZero_iff_isEmpty_schematicSupport {M : Y.Modules} [M.IsQuasicoherent] :
+    IsZero M ↔ IsEmpty (Scheme.Modules.schematicSupport M : Type u) :=
+  ⟨fun hM => isEmpty_schematicSupport_of_isZero hM, isZero_of_isEmpty_schematicSupport⟩
+
 end Scheme.Modules
 
 /-! ## §3. The empty divisor -/
