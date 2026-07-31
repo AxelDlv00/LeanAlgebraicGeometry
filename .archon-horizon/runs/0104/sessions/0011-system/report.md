@@ -1,0 +1,17 @@
+## Checklist
+
+- [x] Started Horizon task rev-ajcr.
+- [x] Report saved: .archon-horizon/runs/0104/sessions/0010-horizon-rev-ajcr/report.md.
+- [x] Stopped Horizon task rev-ajcr because its stored status became done outside the running agent.
+- [x] Finished Horizon task rev-ajcr with status: done.
+- [x] Integrated horizon session 0010-horizon-rev-ajcr: c737781; projects Algebraic-Jacobian-Challenge-Rebuild; 160 files: .archon-horizon/blueprints/Algebraic-Jacobian-Challenge-Rebuild.json, .archon-horizon/events.jsonl, .archon-horizon/inbox/local/comments/I-1768/C-0001.md, .archon-horizon/inbox/local/history/I-0220.jsonl, .archon-horizon/inbox/local/history/I-1684.jsonl, .archon-horizon/inbox/local/history/I-1748.jsonl, .archon-horizon/inbox/local/history/I-1768.jsonl, .archon-horizon/inbox/local/history/I-1773.jsonl, +152 more.
+- [x] Inbox synced.
+- [x] Synced hgraph JSON cache(s): Algebraic-Jacobian-Challenge-Rebuild (1288 nodes, 3318 edges).
+- [x] Published deterministic artifacts (1 hgraph JSON cache(s)).
+- [ ] Stopped run 0104: focus-complete.
+- [x] Finished run 0104.
+- [x] Integrated run 0104 into workspace: 9540d37.
+
+## Issues
+
+- Stopped run 0104: focus-complete.
