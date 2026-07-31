@@ -242,4 +242,139 @@ noncomputable def fromSpecRestrictStalkLinearEquiv
     rw [hc]
     rfl)
 
+/-- The point of an affine open corresponding to a prime has that same prime
+under `IsAffineOpen.primeIdealOf`. -/
+lemma primeIdealOf_fromSpec_apply
+    {U : X.Opens} (hU : IsAffineOpen U)
+    (p : PrimeSpectrum.Top Γ(X, U)) (hpU : (hU.fromSpec p : X) ∈ U) :
+    hU.primeIdealOf ⟨hU.fromSpec p, hpU⟩ = p := by
+  apply hU.fromSpec.isOpenEmbedding.injective
+  rw [hU.fromSpec_primeIdealOf]
+
+set_option backward.isDefEq.respectTransparency false in
+/-- The affine-chart stalk equivalence carries the germ of a transported top
+section back to the original germ on the affine open. -/
+theorem fromSpecRestrictStalkLinearEquiv_moduleSpecGerm
+    (M : X.Modules) {U : X.Opens} (hU : IsAffineOpen U)
+    (p : PrimeSpectrum.Top Γ(X, U)) (m : Γ(M, U)) :
+    let R := Γ(X, U)
+    let j := hU.fromSpec
+    let F := (restrictFunctor j).obj M
+    let hpU : j p ∈ U := by
+      have : j p ∈ Set.range j := Set.mem_range_self p
+      rwa [hU.range_fromSpec] at this
+    let xU : U := ⟨j p, hpU⟩
+    letI : Module R
+        (↑(TopCat.Presheaf.stalk F.val.presheaf p) : Type u) :=
+      moduleSpecStalkModule F p
+    letI : Module R
+        (↑(TopCat.Presheaf.stalk M.val.presheaf (j p)) : Type u) :=
+      affineOpenStalkModule M hU p
+    fromSpecRestrictStalkLinearEquiv M hU p
+        (moduleSpecGermLinearMap F p ((fromSpecRestrictTopHom M hU).hom m)) =
+      presheafGermLinearMap M.val xU m := by
+  let R := Γ(X, U)
+  let j := hU.fromSpec
+  let F := (restrictFunctor j).obj M
+  have hpU : j p ∈ U := by
+    have : j p ∈ Set.range j := Set.mem_range_self p
+    rwa [hU.range_fromSpec] at this
+  let xU : U := ⟨j p, hpU⟩
+  letI : Module R
+      (↑(TopCat.Presheaf.stalk F.val.presheaf p) : Type u) :=
+    moduleSpecStalkModule F p
+  letI : Module (X.presheaf.stalk (j p))
+      (↑(TopCat.Presheaf.stalk M.val.presheaf (j p)) : Type u) :=
+    presheafStalkModule M.val (j p)
+  letI : Module R
+      (↑(TopCat.Presheaf.stalk M.val.presheaf (j p)) : Type u) :=
+    affineOpenStalkModule M hU p
+  have eT : j ''ᵁ (⊤ : (Spec R).Opens) = U :=
+    (Scheme.Hom.image_top_eq_opensRange j).trans hU.opensRange_fromSpec
+  have hcompat := congrArg
+    (fun q => q.hom ((M.presheaf.map (eqToHom eT).op).hom m))
+    (germ_restrictStalkNatIso_hom_app j p M (by trivial))
+  change fromSpecRestrictStalkLinearEquiv M hU p
+      ((TopCat.Presheaf.germ F.val.presheaf ⊤ p trivial).hom
+        ((M.presheaf.map (eqToHom eT).op).hom m)) =
+    (M.presheaf.germ U (j p) hpU).hom m
+  change fromSpecRestrictStalkLinearEquiv M hU p
+      ((TopCat.Presheaf.germ F.val.presheaf ⊤ p trivial).hom
+        ((M.presheaf.map (eqToHom eT).op).hom m)) =
+    (M.presheaf.germ (j ''ᵁ ⊤) (j p) (by simp)).hom
+      ((M.presheaf.map (eqToHom eT).op).hom m) at hcompat
+  rw [hcompat]
+  exact TopCat.Presheaf.germ_res_apply M.presheaf (eqToHom eT)
+    (j p) (by simp) m
+
+/-- On every affine open, the canonical map from the objectwise tensor of
+sections to the sections of the sheaf tensor product is an isomorphism. -/
+theorem tensorSectionHom_isIso
+    (A B : X.Modules) [A.IsQuasicoherent] [B.IsQuasicoherent]
+    {U : X.Opens} (hU : IsAffineOpen U) :
+    IsIso (tensorSectionHom A B U) := by
+  let R := Γ(X, U)
+  let j := hU.fromSpec
+  let M := tensorObj A B
+  let F := (restrictFunctor j).obj M
+  let N := (tensorPresheaf A B).obj (op U)
+  let f : N ⟶ moduleSpecΓFunctor.obj F :=
+    tensorSectionHom A B U ≫ fromSpecRestrictTopHom M hU
+  have hf : IsIso f := by
+    apply isIso_moduleSpec_hom_of_isLocalizedModule_stalk F N f
+    intro p
+    letI : Module R
+        (↑(TopCat.Presheaf.stalk F.val.presheaf p) : Type u) :=
+      moduleSpecStalkModule F p
+    have hpU : j p ∈ U := by
+      have : j p ∈ Set.range j := Set.mem_range_self p
+      rwa [hU.range_fromSpec] at this
+    let xU : U := ⟨j p, hpU⟩
+    letI : Module (X.presheaf.stalk (j p))
+        (↑(TopCat.Presheaf.stalk M.val.presheaf (j p)) : Type u) :=
+      presheafStalkModule M.val (j p)
+    letI : Module R
+        (↑(TopCat.Presheaf.stalk M.val.presheaf (j p)) : Type u) :=
+      affineOpenStalkModule M hU p
+    let e := fromSpecRestrictStalkLinearEquiv M hU p
+    let g := (moduleSpecGermLinearMap F p).comp f.hom
+    let gX := (presheafGermLinearMap M.val xU).comp
+      (tensorSectionHom A B U).hom
+    have hloc : IsLocalizedModule
+        (hU.primeIdealOf xU).asIdeal.primeCompl gX :=
+      isLocalizedModule_tensorSectionHom_stalk A B hU xU
+    have hp : hU.primeIdealOf xU = p :=
+      primeIdealOf_fromSpec_apply hU p hpU
+    rw [hp] at hloc
+    have heq : e.toLinearMap.comp g = gX := by
+      apply LinearMap.ext
+      intro m
+      change fromSpecRestrictStalkLinearEquiv M hU p
+          (moduleSpecGermLinearMap F p
+            ((fromSpecRestrictTopHom M hU).hom
+              ((tensorSectionHom A B U).hom m))) =
+        presheafGermLinearMap M.val xU
+          ((tensorSectionHom A B U).hom m)
+      exact fromSpecRestrictStalkLinearEquiv_moduleSpecGerm M hU p _
+    letI : IsLocalizedModule p.asIdeal.primeCompl gX := hloc
+    have htransport : IsLocalizedModule p.asIdeal.primeCompl
+        (e.symm.toLinearMap.comp gX) :=
+      IsLocalizedModule.of_linearEquiv p.asIdeal.primeCompl gX e.symm
+    have hcancel : e.symm.toLinearMap.comp gX =
+        (moduleSpecGermLinearMap F p).comp f.hom := by
+      change e.symm.toLinearMap.comp gX = g
+      rw [← heq]
+      apply LinearMap.ext
+      intro m
+      simp
+    exact hcancel ▸ htransport
+  haveI : IsIso (fromSpecRestrictTopHom M hU) :=
+    fromSpecRestrictTopHom_isIso M hU
+  haveI : IsIso
+      (tensorSectionHom A B U ≫ fromSpecRestrictTopHom M hU) := by
+    change IsIso f
+    exact hf
+  exact IsIso.of_isIso_comp_right
+    (tensorSectionHom A B U) (fromSpecRestrictTopHom M hU)
+
 end AlgebraicGeometry.Scheme.Modules
