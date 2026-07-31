@@ -243,6 +243,75 @@ theorem IsCertified.isClopen_divisorPiece [IsProper C.hom]
   exact ⟨(A.divisorPieceMap i).isClosedEmbedding.isClosed_range,
     (A.divisorPieceMap i).isOpenEmbedding.isOpen_range⟩
 
+/-- The open immersion of a certified divisor piece is itself a closed immersion. -/
+theorem IsCertified.isClosedImmersion_divisorPieceOpen [IsProper C.hom]
+    (A : AffAdaptation D d) {n : ℕ} (hc : A.IsCertified n)
+    (i : D.index) :
+    IsClosedImmersion
+      (A.divisorSubschemeι ⁻¹ᵁ D.pieces i).ι := by
+  let U : A.divisorSubscheme.Opens :=
+    A.divisorSubschemeι ⁻¹ᵁ D.pieces i
+  have hrange : Set.range (A.divisorPieceMap i) = Set.range U.ι := by
+    rw [Scheme.Opens.range_ι]
+    exact congrArg Opens.carrier (A.opensRange_divisorPieceMap i)
+  let e := IsOpenImmersion.isoOfRangeEq (A.divisorPieceMap i) U.ι hrange
+  rw [← MorphismProperty.cancel_left_of_respectsIso
+    (P := @IsClosedImmersion) e.hom]
+  rw [IsOpenImmersion.isoOfRangeEq_hom_fac]
+  exact hc.isClosedImmersion_divisorPieceMap A i
+
+/-- Restriction of global functions to a certified divisor piece is surjective. -/
+theorem IsCertified.surjective_divisorGlobalRestriction [IsProper C.hom]
+    (A : AffAdaptation D d) {n : ℕ} (hc : A.IsCertified n)
+    (i : D.index) :
+    Function.Surjective
+      (A.divisorSubscheme.presheaf.map
+        (homOfLE (le_top :
+          A.divisorSubschemeι ⁻¹ᵁ D.pieces i ≤
+            (⊤ : A.divisorSubscheme.Opens))).op).hom := by
+  letI : IsAffine A.divisorSubscheme :=
+    A.isAffine_divisorSubscheme hc
+  let U : A.divisorSubscheme.Opens :=
+    A.divisorSubschemeι ⁻¹ᵁ D.pieces i
+  haveI : IsClosedImmersion U.ι :=
+    hc.isClosedImmersion_divisorPieceOpen A i
+  have happ : Function.Surjective U.ι.appTop.hom :=
+    U.ι.app_surjective ⊤ (isAffineOpen_top A.divisorSubscheme)
+  have hiso : Function.Surjective U.topIso.hom.hom :=
+    (ConcreteCategory.bijective_of_isIso U.topIso.hom).surjective
+  rw [← show U.ι.appTop ≫ U.topIso.hom =
+      A.divisorSubscheme.presheaf.map
+        (homOfLE (le_top :
+          A.divisorSubschemeι ⁻¹ᵁ D.pieces i ≤
+            (⊤ : A.divisorSubscheme.Opens))).op by
+    simp only [Scheme.Opens.ι_appTop, Scheme.Opens.topIso_hom,
+      ← Functor.map_comp]
+    congr 1]
+  exact hiso.comp happ
+
+/-- Every certified divisor-piece component of the global restriction map is
+surjective. -/
+theorem IsCertified.surjective_divisorGlobalToPiece [IsProper C.hom]
+    (A : AffAdaptation D d) {n : ℕ} (hc : A.IsCertified n)
+    (i : D.index) :
+    Function.Surjective (fun s : Γ(A.divisorSubscheme, ⊤) =>
+      A.divisorGlobalToPiecesRingHom s i) := by
+  intro x
+  obtain ⟨t, rfl⟩ :=
+    (A.divisorSubschemePieceRingEquiv i).surjective x
+  obtain ⟨s, hs⟩ := hc.surjective_divisorGlobalRestriction A i t
+  exact ⟨s, congrArg (A.divisorSubschemePieceRingEquiv i) hs⟩
+
+/-- Evaluation from the widened equalizer algebra onto every certified colength piece
+is surjective. -/
+theorem IsCertified.surjective_gluedSubalgebraPieceMap [IsProper C.hom]
+    (A : AffAdaptation D d) {n : ℕ} (hc : A.IsCertified n)
+    (i : D.index) :
+    Function.Surjective (A.gluedSubalgebraPieceMap i) := by
+  intro x
+  obtain ⟨s, hs⟩ := hc.surjective_divisorGlobalToPiece A i x
+  exact ⟨A.divisorGlobalSectionsEquivGlued s, hs⟩
+
 end AffAdaptation
 
 end AlgebraicGeometry
