@@ -681,18 +681,25 @@ noncomputable def divFunctorDegZero_representableByTerminal_of_forall_subsinglet
   divFunctorDegZero_representableByTerminal_of_isZero π
     (fun T x hx => Scheme.Modules.isZero_of_forall_subsingleton_sections (hss T x hx))
 
-/-- **The Div⁰ producer, modulo empty support** — the geometric form of
-`divFunctorDegZero_representableByTerminal_of_isZero`, with the coherent-sheaf-vanishing
-antecedent `IsZero x.F` reduced through `Scheme.Modules.isZero_of_isEmpty_schematicSupport`
-to *"a degree-`0` relative effective divisor has empty schematic support."*
+/-- **The Div⁰ producer, in support vocabulary** — the same open obligation as
+`divFunctorDegZero_representableByTerminal_of_isZero` and
+`..._of_forall_subsingleton_sections`, restated with the coherent-sheaf-vanishing antecedent
+`IsZero x.F` rephrased through `Scheme.Modules.isZero_of_isEmpty_schematicSupport` as
+*"a degree-`0` relative effective divisor has empty schematic support."* The quasi-coherence
+of `x.F` needed by that converse is free from its `isFinitePresentation` field, so the
+antecedent carries only divisor data.
 
-This is the sharpest honest form of the remaining obligation: no `IsZero`, no `finrank`, no
-all-opens section computation — just the topological statement that a divisor of fibre
-degree `0` is empty. The quasi-coherence of `x.F` needed by the converse is free from its
-`isFinitePresentation` field, so the antecedent carries only divisor data. It is the honest
-target for the fibrewise-finiteness geometry of `Picard/DivSupportQuasiFinite.lean`:
-`HasFiberDeg 0` forces each fibre of the (finite, once quasi-finite) support to have length
-`0`, i.e. to be empty, and a support with empty fibres over every point is empty. -/
+**This is a re-spelling, NOT a reduction.** Because `x.F` is quasi-coherent, the three
+antecedents `IsZero x.F`, `∀ V, Subsingleton Γ(x.F, V)` (the sibling above), and
+`IsEmpty (schematicSupport x.F)` are interderivable at every site — the converses
+`isZero_iff_forall_subsingleton_sections` and `isZero_iff_isEmpty_schematicSupport` are both
+in this file. This variant only offers a downstream lane the antecedent in the vocabulary
+its own argument produces; it moves none of the difficulty. The genuine remaining distance is
+documented at `Picard/DivSupportQuasiFinite.lean`'s `isFinite_support_of_fibers`: the
+fibre-of-support vs support-of-fibre carrier bridge (the reverse annihilator inclusion, absent
+in the tree) and the degree-`0`-fibre ⟹ empty-fibre step. `HasFiberDeg 0` is a `finrank` with a
+junk value at infinite dimension, so it does not force vanishing by the naive route; a producer
+of this antecedent must gate on fibre finiteness (the quasi-finite / relative-curve regime). -/
 noncomputable def divFunctorDegZero_representableByTerminal_of_forall_isEmpty_schematicSupport
     (hemp : ∀ (T : Over S) (x : DivFamily π T), x.HasFiberDeg 0 →
       IsEmpty (Scheme.Modules.schematicSupport x.F : Type u)) :
