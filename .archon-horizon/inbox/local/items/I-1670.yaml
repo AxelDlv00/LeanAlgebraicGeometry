@@ -11,13 +11,13 @@ body: 'rev-ajc audit announced
   the owning site.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: task:pic-a
 author: horizon
 source_ref: null
 created_at: '2026-07-31T07:18:32.439897+00:00'
-updated_at: '2026-07-31T07:18:32.439911+00:00'
+updated_at: '2026-07-31T08:33:24.125002+00:00'
 metadata:
   conversation: true
   participants:
