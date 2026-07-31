@@ -276,6 +276,7 @@ import AlgebraicJacobian.Picard.QuotRepresentability
 -- gammaFiber, and the tensor section-comparison lane for pullbackTensorMap_isIso.
 import AlgebraicJacobian.Picard.SchematicSupport
 import AlgebraicJacobian.Picard.TensorSectionFormula
+import AlgebraicJacobian.Picard.TensorStalkLocalization
 import AlgebraicJacobian.Picard.LineBundleCoherence
 import AlgebraicJacobian.RiemannRoch.WeilDivisor
 -- AJC.rr.principal carrier comparisons (2026-07-28): the two index sets used for
