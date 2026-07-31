@@ -59,6 +59,10 @@ the kernel is legible.
   after killing the nilradical is a coboundary.
 * `AlgebraicGeometry.mem_laurentCoboundaryUnits_iff_map_reduced` — bundled with the free
   converse, so the direction that carries content is visible.
+* `AlgebraicGeometry.laurentCoboundaryUnits_map` — the free converse: a coboundary pushes forward
+  along any coefficient base change.
+* `AlgebraicGeometry.not_tUnit_mem_laurentCoboundaryUnits_general` — `t` is not a coboundary over
+  *any* nontrivial ring, the arbitrary-ring generator of `Pic(ℙ¹_A) = ℤ`.
 -/
 
 set_option autoImplicit false
@@ -169,6 +173,21 @@ theorem laurentMap_C (φ : A →+* B) (c : A) :
       = LaurentPolynomial.C (φ c) * LaurentPolynomial.T 0 := laurentMap_C_mul_T φ c 0
   simpa using h
 
+/-- Base change fixes the monomial `T n`; the `c = 1` specialisation of `laurentMap_C_mul_T`. -/
+theorem laurentMap_T (φ : A →+* B) (n : ℤ) :
+    laurentMap φ (LaurentPolynomial.T n) = LaurentPolynomial.T n := by
+  have h := laurentMap_C_mul_T φ (1 : A) n
+  simpa using h
+
+/-- Base change fixes the unit `tUnit n`. -/
+theorem laurentMap_tUnit (φ : A →+* B) (n : ℤ) :
+    Units.map (laurentMap φ).toMonoidHom (LaurentPolynomial.tUnit n)
+      = LaurentPolynomial.tUnit n := by
+  apply Units.ext
+  rw [Units.coe_map, LaurentPolynomial.tUnit_coe]
+  change laurentMap φ (LaurentPolynomial.T n) = _
+  rw [laurentMap_T, LaurentPolynomial.tUnit_coe]
+
 end BaseChange
 
 /-! ## The reduction of the test ring
@@ -262,5 +281,27 @@ theorem mem_laurentCoboundaryUnits_iff_map_reduced {A : Type u} [CommRing A]
       ↔ Units.map (laurentMap (Ideal.Quotient.mk (nilradical A))).toMonoidHom u
           ∈ laurentCoboundaryUnits (A ⧸ nilradical A) :=
   ⟨laurentCoboundaryUnits_map _ u, mem_laurentCoboundaryUnits_of_map_reduced⟩
+
+/-- **`t` IS NOT A COBOUNDARY over an ARBITRARY nontrivial ring** — the generator of
+`Pic(ℙ¹_A) = ℤ`, now with no domain *or* reducedness hypothesis.  If it were a coboundary its
+image in `(A ⧸ nilradical A)[T;T⁻¹]` would be one (`laurentCoboundaryUnits_map`), and its image
+is `t` again (`laurentMap_tUnit`), contradicting `not_tUnit_mem_laurentCoboundaryUnits_reduced`
+over the reduced nontrivial quotient.  This is the refutation of the *universal* form of the
+two-chart criterion at every commutative test ring the representability route meets, not merely
+the domains and reduced rings the earlier files covered. -/
+theorem not_tUnit_mem_laurentCoboundaryUnits_general {A : Type u} [CommRing A] [Nontrivial A] :
+    LaurentPolynomial.tUnit (R := A) 1 ∉ laurentCoboundaryUnits A := by
+  intro hmem
+  haveI : _root_.IsReduced (A ⧸ nilradical A) :=
+    (Ideal.isRadical_iff_quotient_reduced _).mp (Ideal.radical_isRadical 0)
+  haveI : Nontrivial (A ⧸ nilradical A) := by
+    refine Ideal.Quotient.nontrivial_iff.mpr ?_
+    rw [Ideal.ne_top_iff_one, mem_nilradical]
+    rintro ⟨n, hn⟩
+    rw [one_pow] at hn
+    exact one_ne_zero (α := A) hn
+  have himg := (mem_laurentCoboundaryUnits_iff_map_reduced).mp hmem
+  rw [laurentMap_tUnit] at himg
+  exact not_tUnit_mem_laurentCoboundaryUnits_reduced himg
 
 end AlgebraicGeometry
