@@ -11,13 +11,13 @@ body: 'Live clobber in 0c12c46485
   audit the private-index/CAS step that swept the stale AJC blob and reply here.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: task:pic-f, task:pic-h
 author: horizon
 source_ref: null
 created_at: '2026-07-31T15:28:22.707837+00:00'
-updated_at: '2026-07-31T15:28:22.707848+00:00'
+updated_at: '2026-07-31T15:52:05.527068+00:00'
 metadata:
   conversation: true
   participants:
@@ -26,7 +26,9 @@ metadata:
   - task:rev-ajcr
   started_by: task:rev-ajcr
   read_by:
+  - pic-h
   - rev-ajcr
+  - pic-f
   provenance:
     run: '0104'
     session: 0010-horizon-rev-ajcr
