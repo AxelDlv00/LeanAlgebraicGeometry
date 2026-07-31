@@ -9,15 +9,15 @@ A high-level, mathematical checklist across the scope's member projects.
 - [ ] not started (no Lean yet — blueprint only, or theme not begun)
 
 **Status snapshot** *(open `sorry` counts over each project's Lean source tree via a
-comment-stripping pass — comments/docstrings excluded; measured 2026-07-28. The active loops move
-these between pushes; the **[live dashboard](https://axeldlv00.github.io/LeanAlgebraicGeometry/)**
-holds the authoritative per-node counts. All projects are on Lean/Mathlib `v4.31.0` with no
-migration debt.)*
+comment-stripping pass — comments/docstrings excluded, and `scratch*`/`probe*` paths excluded for
+the two main projects; measured 2026-07-31. The active loops move these between pushes; the
+**[live dashboard](https://axeldlv00.github.io/LeanAlgebraicGeometry/)** holds the authoritative
+per-node counts. All projects are on Lean/Mathlib `v4.31.0` with no migration debt.)*
 
 | Project | Stage | Open `sorry` |
 | --- | --- | --- |
-| Algebraic-Jacobian-Challenge-Rebuild | prover ✨ | 16 — 15 protected `Challenge.lean` targets, 1 in `Picard/Pic0ThetaCocycle.lean` (`Picard/DivRepAffPullClause.lean` is now sorry-free). `Pic0ThetaCocycle` is imported from nowhere and has **never been elaborated** (no `.olean`), so its theta coherence is unverified rather than proved; it is also not elaborable as written — 34 GB RSS and still climbing at 5 min, so it needs a split (roadmap `AJCR.w4-rep.build-reach`, `AJCR.w7-functor.k1`) |
-| Algebraic-Jacobian-Challenge | prover | 26 — in 10 modules, over a tree of **289** modules (re-measured 2026-07-29 at HEAD `163a8c547`); four AJC lanes are live, so re-derive before quoting *(grouped by the nested AJC roadmap below)* |
+| Algebraic-Jacobian-Challenge-Rebuild | prover ✨ | 16 in 2 of 824 library modules — 15 protected `Challenge.lean` targets, 1 in `Picard/Pic0ThetaCocycle.lean`. `Pic0ThetaCocycle` is imported from nowhere, so its theta coherence is unverified rather than proved; it is one of 18 root-unreachable modules (roadmap `AJCR.w4-rep.build-reach`, `AJCR.w7-functor.k1`). A further 60 `sorry` sit in tracked `scratch_*`/`ScratchPicC` dead-lane files that no build elaborates (inbox `I-1606`) |
+| Algebraic-Jacobian-Challenge | prover | 31 in 13 of 374 modules, over a tree of **361** library modules / 191,855 lines; parallel lanes are live, so re-derive before quoting *(grouped by the nested AJC roadmap below)* |
 | Cech-Cohomology | ✅ complete · merged → AJC | 0 |
 | GR-Quot-Closure | ✅ complete · merged → AJC | 0 |
 | Line-Bundle-Comparison-Iso | ✅ complete · merged → AJC | 0 |
@@ -45,7 +45,7 @@ not feed the Jacobian-challenge critical path.
 
 ---
 
-## Algebraic-Jacobian-Challenge-Rebuild  *(from-scratch rebuild — prover stage, 17 open `sorry` in 3 of 663 modules)* ✨
+## Algebraic-Jacobian-Challenge-Rebuild  *(from-scratch rebuild — prover stage, 16 open `sorry` in 2 of 824 library modules)* ✨
 
 **Goal:** the EXTENDED challenge (core eight + `Jacobian.functor` + field base change with
 cocycle coherence), rebuilt clean/general/mathlib-idiomatic per the `rebuild` task charter.
@@ -71,26 +71,29 @@ functor (curve-specialized Kleiman, no Quot schemes), Albanese via Milne III.6.1
   open pieces (R2). The `Aut(ℙ¹)`/`GL₂` coordinate-twist route (R1) is **not** to be built —
   leaf `…certificate.p1-aut` stays pending and deprioritised, and no consumer may be written
   against it. The small-finite-field question of `I-0346` is closed by the same decision. The R2
-  widening is **built and sorry-free** as of 2026-07-28, in 23 `Picard/DivisorFamilyAff*.lean`
-  files (nine earlier the same day); the widened carrier now has both its `mapAlg` and
-  `mapAlgHom` faces and a vehicle, but the migration half has not started — 42 files still
-  consume the old chart-typed `DivFamZar`, and outside the `DivisorFamilyAff*` cone nothing
-  yet mentions `DivFamZarAff`, per inbox `I-0506` and `I-0617`.)
+  widening is **built and sorry-free** as of 2026-07-28, now in 48 `Picard/DivisorFamilyAff*.lean`
+  files (23 on the first day); the widened carrier has both its `mapAlg` and
+  `mapAlgHom` faces and a vehicle, but the migration has barely moved — re-measured 2026-07-31:
+  **69** files still consume the old chart-typed `DivFamZar`, and of the 21 that mention
+  `DivFamZarAff` only **one** (`Picard/Pic0ChartHonestAff.lean`) is outside the
+  `DivisorFamilyAff*` cone, per inbox `I-0506` and `I-0617`.)
 - [~] **Waves 5–7** — Pic⁰ abelian-variety package, Abel–Jacobi / Albanese, functoriality and
   base change of fields (each partly landed; see the structured roadmap)
 
 Blueprint: Challenge/BaseChange/Curves/Algebra/Cohomology/AbelianVariety chapters all synced
 1-to-1 with the Lean, `\leanok` only after kernel checks, `\source{}` read-before-cite.
 
-## Algebraic-Jacobian-Challenge  *(core engine — prover stage, 28 open `sorry` in 11 of 252 modules)*
+## Algebraic-Jacobian-Challenge  *(core engine — prover stage, 31 open `sorry` in 13 of 374 modules)*
 
 **Goal:** construct the Jacobian of a smooth proper geometrically integral curve as
 `Pic^0`, prove that it is an abelian variety of dimension equal to the genus, and
 establish the Albanese universal property. The structured roadmap command
 `horizon roadmap list --focus AJC.jacobian` is the authoritative work breakdown.
 
-*At the last measurement 241 of 252 modules were sorry-free, with all 28 remaining `sorry`s in
-11 modules; the tree is at **257** modules now, so both halves of that ratio have drifted.
+*Re-measured 2026-07-31 (comment-stripped, `scratch*`/`probe*` excluded): 361 of 374 counted
+paths are sorry-free, with all 31 remaining `sorry`s in 13 — the largest groups
+`Albanese/AlbaneseUP` (6), `Jacobian` (4), `Cohomology/CechHigherDirectImageUnconditional` (3),
+`Picard/Pic0AbelianVariety` (3). Both halves of this ratio drift hourly under parallel lanes.
 Re-derive with
 `lake build AlgebraicJacobian 2>&1 | grep 'declaration uses' | sort -u`
 rather than quoting these.*
@@ -133,9 +136,11 @@ rather than quoting these.*
   - [ ] Identify the degree-zero identity component *(3)*.
   - [ ] Complete the cotangent/`H^1` dimension comparison *(1)*.
   - [ ] Prove smoothness and properness *(2)*.
-- [~] **Riemann--Roch and divisors** *(1 open leaf)*
+- [x] **Riemann--Roch and divisors** — complete.
   - [x] The adelic genus and cohomological finiteness lane is complete.
-  - [ ] Prove that principal divisors have degree zero in `WeilDivisor` *(1)*.
+  - [x] Principal divisors have degree zero (`WeilDivisor.principal_degree_zero`, proved
+    through the ported χ-ledger in `RiemannRoch/Ledger/`; roadmap `AJC.rr.principal` is
+    `done` and the module is sorry-free on a comment-stripped census).
 - [~] **Albanese** *(6 open leaves, all in one module)*
   - [x] Extend rational maps across codimension one — Milne Lemma 3.3 and the Thm 3.2
     extension are proved and axiom-clean; `Albanese/CodimOneExtension` is **sorry-free**
@@ -158,15 +163,16 @@ rather than quoting these.*
   - [x] Record controlled-clean and warm full-project build and warning baselines.
   - [x] Normalize the copyright header of every module (164 at the time); restore the 1,123 blueprint
     statement titles that LaTeX was swallowing into the statement body.
-  - [~] **Import hygiene — the dominant build cost.** 89 of 252 modules still open with a bare
-    `import Mathlib` (wave 2 landed at `3fbc2cace`), and every module in their
+  - [~] **Import hygiene — the dominant build cost.** 115 of 361 modules still open with a bare
+    `import Mathlib` (re-measured 2026-07-31; wave 2 landed at `3fbc2cace`), and every module in their
     transitive closure still loads the whole library. Measured: a 49-line module costs 16.6 s
     and ~7 GB with the umbrella and 3.5 s and 2.0 GB with four precise imports. The conversion
     runs bottom-up over the import DAG
     (`MainProjects/Algebraic-Jacobian-Challenge/scripts/deumbrella-wave.sh`). Deferred, not
     abandoned — a wave must repair its own cascade, since narrowing a parent breaks children
     that were inheriting `Mathlib` through it.
-  - [ ] Retire the 200 heartbeat overrides (158 `maxHeartbeats`, 42 `synthInstance`) and the depth
+  - [ ] Retire the 248 heartbeat overrides (190 `maxHeartbeats`, 58 `synthInstance*`, re-measured
+    2026-07-31 — up from 200) and the depth
     overrides. Mathlib itself has **zero**
     `set_option maxHeartbeats` in its library files; re-measure each with `#count_heartbeats in`
     once its module no longer imports the umbrella.

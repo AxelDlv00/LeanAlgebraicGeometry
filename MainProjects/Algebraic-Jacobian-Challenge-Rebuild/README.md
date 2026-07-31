@@ -33,8 +33,8 @@ which carries the full charter (target, constraints, working model, and phases).
 - `AlgebraicJacobian.lean` — the library root import list, and the index of what is actually
   checked: `lake build`'s default target is this module, so a new file is **not** elaborated by a
   bare `lake build` until it is imported here. Add the import, or check the file explicitly by
-  module name. Of 818 `.lean` files under `AlgebraicJacobian/`, **18 are unreachable** from the root
-  and so never kernel-checked by a bare `lake build` — all 18 under `Picard/`: eleven
+  module name. Of 824 `.lean` files under `AlgebraicJacobian/`, **18 are unreachable** from the root
+  and so never kernel-checked by a bare `lake build` — all 18 under `Picard/`: twelve
   `DivSchemeRedesign*` plus `DivSchemeFlatteningBridge`, `DivSchemeSeedUnivSecondWindowMap`,
   `EntryIdeal`, `Pic0ThetaCocycle`, `Pic0ThetaCocycleIdentity`, `ScratchChartLocal`. Measure
   reachability **transitively**, not by the root's import lines, and re-measure rather than quoting:

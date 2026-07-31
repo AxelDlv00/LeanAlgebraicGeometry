@@ -35,13 +35,12 @@ same theorem by a separate curve-specialized strategy.
 
 ## State (measured 2026-07-30)
 
-- **312 modules, 173,191 lines** (re-measured 2026-07-30 by the recipe below, up from
-  288/165,477 the previous day — the tree grew 24 modules in one day of ten-lane work, so
-  any figure quoted here is stale within hours); a warm `lake build AlgebraicJacobian` was **green** at
-  8,746 jobs when last measured, which was before the 2026-07-28 lanes landed.  The `sorry`
-  count is deliberately not restated here: it was 26 over 10 modules at the last census and
-  four AJC lanes
-  have landed work since.  These counts move whenever a module lands, so re-measure rather
+- **361 modules, 191,855 lines** (re-measured 2026-07-31 by the recipe below, up from
+  312/173,191 the previous day — the tree grew 49 modules in one day of parallel-lane work,
+  so any figure quoted here is stale within hours).  The `sorry`
+  count is deliberately not restated here: parallel lanes land work continuously, and a
+  comment-stripped census is the only honest way to take it.  These counts move whenever a
+  module lands, so re-measure rather
   than quoting them:
 
   ```bash
@@ -58,16 +57,18 @@ same theorem by a separate curve-specialized strategy.
   routinely non-empty for a short while: a module not yet committed to the workspace
   ledger must **not** be rooted, since a clean checkout would then fail to build.  That
   grace period ends at the commit — once a module is in the ledger, leaving it unrooted
-  means the build does not check it.  **Currently violated in 20 modules** (re-measured
-  2026-07-29 by walking `import AlgebraicJacobian` from the root module: 269 of 289
-  in the root cone, 20 outside it).  All 20 are committed to the ledger, so none is inside
-  the grace period, and every one is `RiemannRoch/Ledger/*` plus
-  `RiemannRoch/LedgerPortability` — the χ-ledger port and the fibrewise large-twist
-  vanishing layer, landed unrooted because the root roll-up is outside the porting lane's
-  write scope.  Tracked as inbox issue `I-0600`, which carries the current list.
+  means the build does not check it.  **Currently violated in 4 modules** (re-measured
+  2026-07-31 by walking `import AlgebraicJacobian` transitively from the root module: 357
+  of 361 in the root cone, 4 outside it): `Cohomology/CechTwistedCoherenceReductionProof`,
+  `Picard/DivGrassmannianEmbedding`, `RiemannRoch/Ledger/FiberCoordinateComplex`,
+  `RiemannRoch/Ledger/UniformRiemannRoch`.  All 4 are at ledger `HEAD`, so none is inside
+  the grace period.  The 40-file `RiemannRoch/Ledger` cone that earlier measurements
+  flagged has since been rooted (its issue `I-0600` is closed), so this is no longer one
+  lane's port: the remainder is scattered across three areas.
 
-  The count has moved 6 → 14 → 18 → 19 → 20 over five measurements, so the cone is growing
-  faster than it is being rooted; re-measure rather than quoting.  Declarations in these
+  The count has moved 6 → 14 → 18 → 19 → 20 → 4 over six measurements, in both directions;
+  re-measure rather than quoting, and walk imports transitively rather than reading the
+  root's import lines.  Declarations in these
   modules are not elaborated by `lake build AlgebraicJacobian`, and no `#print axioms`
   line through the root can reach them.  Use the reachability snippet in
   [`scripts/axiom-frontier.lean`](scripts/axiom-frontier.lean)'s header, seeded at
@@ -83,9 +84,9 @@ same theorem by a separate curve-specialized strategy.
   discharged by the caller; the leak appears at any call site that must
   synthesise the instance.  Run
   [`scripts/axiom-frontier.lean`](scripts/axiom-frontier.lean) (`lake env lean
-  scripts/axiom-frontier.lean`, 147 declarations: 95 clean and 52 carrying `sorryAx`,
-  measured 2026-07-28 with `lake build AlgebraicJacobian.Jacobian` green at 8,657
-  jobs) before believing any
+  scripts/axiom-frontier.lean`; the probe carries **215** `#print axioms` lines as of
+  2026-07-31, up from 147 on 2026-07-28, so run it rather than quoting a clean/dirty
+  split) before believing any
   completeness claim — it measures the frontier rather than inferring it.  Count by
   output *entry*, not by output line:
   Lean wraps a long axiom list across several lines, so a per-line filter
@@ -107,7 +108,7 @@ same theorem by a separate curve-specialized strategy.
   ```bash
   lake build AlgebraicJacobian 2>&1 | grep 'declaration uses' | sort -u
   ```
-- 109 modules still open with a bare `import Mathlib` (re-measured 2026-07-30, up from 101);
+- 115 modules still open with a bare `import Mathlib` (re-measured 2026-07-31, up from 109);
   the count rises with the module count, so the ratio is not improving;
   this is the dominant build cost and is being converted bottom-up with the helpers
   in `scripts/`.
