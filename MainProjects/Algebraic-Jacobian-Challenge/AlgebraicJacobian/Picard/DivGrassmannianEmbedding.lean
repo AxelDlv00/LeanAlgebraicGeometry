@@ -442,7 +442,11 @@ set_option backward.isDefEq.respectTransparency false in
 /-- On an affine test base, a finite-flat divisor pushforward is locally free
 of the divisor's fibre degree.  The proof supplies finite presentation and
 projectivity from the existing pushforward producers; the rank is computed by
-the finite-support base-change bridge above, not assumed separately. -/
+the finite-support base-change bridge above, not assumed separately.
+
+This is the available affine/noetherian bridge: it still requires the explicit
+`LocallyQuasiFinite` support instance and `[IsNoetherianRing R]`.  It is not yet
+the arbitrary-`Over S` producer for the twisted D2' target. -/
 theorem pushforward_isLocallyFreeOfRank
     {R : CommRingCat.{u}} {S X : Scheme.{u}} {π : X ⟶ S}
     [IsProper π] (f : Spec R ⟶ S) [IsNoetherianRing R]
@@ -516,7 +520,11 @@ namespace Adelic
 /-- A concrete D2' twist witness, selected from the projectivity theorem for a
 smooth proper geometrically integral curve.  Keeping the choice named makes
 the projective input consumable by later Grassmannian constructions without
-adding a rational-point binder or another representability class. -/
+adding a rational-point binder or another representability class.
+
+At this mathlib pin `IsProjectiveWith` is Scheme-`0`-valued, so this named
+witness is the small-universe (`k : Type`) route rather than a universe-polymorphic
+seam witness. -/
 noncomputable def d2ProjectiveTwist
     {k : Type} [Field k]
     (C : Over (Spec (CommRingCat.of k)))
