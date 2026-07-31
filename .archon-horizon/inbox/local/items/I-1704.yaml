@@ -1,0 +1,37 @@
+id: I-1704
+provider: local
+kind: info
+body: 'CLAIM pic-g (0107 r2): canonical ℙ¹ section functor over an arbitrary test
+  ring
+
+
+  New file Curve/P1Section.lean. A k-morphism section overSpec k A ⟶ (P1.asOver k)
+  for every k-algebra A, natural in A, built from P1Points.fromSpecChart (point [1:0],
+  chart 0, a=0) + fromSpecChart_structureMap. This is exactly the input I-1603 names
+  as ''a k-rational point at P1 (this project constructs none)'', and is the σ hypothesis
+  of my r0 relPicToPicEt/PicEtAff.unitEquiv_of_section (étale↔Zariski comparison)
+  that routes pic-c''s ring-level relPic(ℙ¹_A) Laurent computation into the étale
+  picEt/pic0 the headline consumes. NOT editing pic-c Laurent, pic-d divrep/u2/theta,
+  pic-h overlap-cocycle, pic-e Div0/terminal. Probing whether the field-only unitEquiv_of_section
+  generalizes to ring tests via this section.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T10:09:51.075823+00:00'
+updated_at: '2026-07-31T10:14:07.037765+00:00'
+metadata:
+  provenance:
+    run: '0107'
+    session: 0006-horizon-pic-g
+    role: horizon
+    round: '2'
+    rounds: '6'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-f

@@ -17,11 +17,33 @@ three-face cocycle without defining the `1,3` face as a composite.
 
 set_option autoImplicit false
 
-universe v u
+universe v u u'
 
 open CategoryTheory
 
 namespace CategoryTheory.Functor.RepresentableBy
+
+/-- Transport a representation through the right adjoint of an adjunction.
+
+This is the categorical pullback step used for overlap bases: if `L ⊣ R`, then a
+representation of `F` by `Y` induces one of `L.op ⋙ F` by `R.obj Y`.  The statement
+requires only the adjunction; for schemes, `Over.mapPullbackAdj` supplies it whenever
+the relevant pullbacks exist, including tensor-product (non-field) bases. -/
+noncomputable def ofLeftAdjoint
+    {C : Type u} {D : Type u'} [Category.{v, u} C] [Category.{v, u'} D]
+    {L : C ⥤ D} {R : D ⥤ C} (adj : L ⊣ R)
+    {F : Dᵒᵖ ⥤ Type v} {Y : D} (e : F.RepresentableBy Y) :
+    (L.op ⋙ F).RepresentableBy (R.obj Y) :=
+  (adj.representableBy Y).ofIso (Functor.isoWhiskerLeft L.op e.toIso)
+
+/-- The universal element of `ofLeftAdjoint` is obtained by applying the adjunction inverse. -/
+theorem ofLeftAdjoint_homEquiv
+    {C : Type u} {D : Type u'} [Category.{v, u} C] [Category.{v, u'} D]
+    {L : C ⥤ D} {R : D ⥤ C} (adj : L ⊣ R)
+    {F : Dᵒᵖ ⥤ Type v} {Y : D} (e : F.RepresentableBy Y)
+    {X : C} (g : X ⟶ R.obj Y) :
+    (ofLeftAdjoint adj e).homEquiv g = e.homEquiv ((adj.homEquiv X Y).symm g) := by
+  rfl
 
 /-- Composition with the canonical representing-object isomorphism transports the universal
 element unchanged. -/

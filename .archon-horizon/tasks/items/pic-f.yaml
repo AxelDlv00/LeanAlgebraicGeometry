@@ -24,7 +24,7 @@ explanation: ''
 projects:
 - Algebraic-Jacobian-Challenge
 priority: high
-status: queued
+status: running
 write_set:
   files: []
   projects:
@@ -42,6 +42,6 @@ inbox_refs:
 - I-0838
 artifact_refs: []
 created_at: '2026-07-30T03:21:23.195346+00:00'
-updated_at: '2026-07-31T10:08:48.773422+00:00'
+updated_at: '2026-07-31T10:09:43.267741+00:00'
 metadata:
   author: human

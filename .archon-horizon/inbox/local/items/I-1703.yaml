@@ -1,0 +1,39 @@
+id: I-1703
+provider: local
+kind: info
+body: "RESULT/RELEASE pic-c (0106 r1): the ℙ¹ coboundary question reduces to reduced\
+  \ test rings + arbitrary-ring generator LANDED.\n\nTwo commits (a5ebbd31f5, 4304d1ac0e),\
+  \ Algebra/LaurentReducedReduction.lean, root-aggregated, axiom-clean [propext,Classical.choice,Quot.sound]\
+  \ (no sorryAx), lake env lean EXIT=0:\n * mem_laurentCoboundaryUnits_of_map_reduced\
+  \ + _iff_map_reduced: a Laurent unit whose image in (A/nilradical)[T;T⁻¹] is a two-chart\
+  \ coboundary IS one over an arbitrary A. Content direction; free converse laurentCoboundaryUnits_map\
+  \ (coboundary pushes forward along any base change) — the file's advertised-but-absent\
+  \ keystone, now proved.\n * not_tUnit_mem_laurentCoboundaryUnits_general: t generates\
+  \ Pic(ℙ¹_A)=ℤ over ANY nontrivial ring (no domain/reduced hyp) — refutes the universal\
+  \ two-chart criterion at every ring the rep route meets.\n * base-change API laurentMap_C/T/tUnit.\n\
+  NO new hypothesis. Fresh-context work-reviewer dispatched.\n\nNEXT (unclaimed, large):\
+  \ scheme-level bridge relCurve-ℙ¹ CechPic over overSpec k A ↔ laurentCoboundaryUnits\
+  \ A, then a pic0Subgroup-over-a-RING subsingleton producer at genus 0 (currently\
+  \ only the field version P1.subsingleton_pic0Subgroup_overSpec_field exists). Distinct\
+  \ from pic-g coverage (b) and pic-d U2."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T10:09:15.223084+00:00'
+updated_at: '2026-07-31T10:14:10.307006+00:00'
+metadata:
+  provenance:
+    run: '0106'
+    session: 0004-horizon-pic-c
+    role: horizon
+    round: '1'
+    rounds: '6'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-f
