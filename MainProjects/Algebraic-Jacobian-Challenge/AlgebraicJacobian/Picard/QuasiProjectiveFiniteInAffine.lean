@@ -6,6 +6,7 @@ Authors: Archon Horizon
 import AlgebraicJacobian.Picard.PicEtPointedReduction
 import AlgebraicJacobian.Picard.ProjectiveMorphismBasic
 import AlgebraicJacobian.Picard.CurveProjectivity
+import AlgebraicJacobian.Picard.AmbientPicNotProper
 
 /-!
 # Quasi-projectivity, as the vocabulary `FiniteInAffine` was standing in for
@@ -53,32 +54,66 @@ nothing in this project produces projectivity of a Picard scheme — that is
 Kleiman §5 `th:qpp&p`, an open obligation.  What changes is the *kind* of thing
 that is open: the antecedent's last non-projection conjunct is now reducible to a
 standard geometric hypothesis with a standard proof, rather than an elementary
-condition invented here.  Stated as
-`Scheme.finiteInAffine_of_isProjective_over_field`, and consumed for the seam in
-§4.
+condition invented here.  Stated as `Scheme.finiteInAffine_of_isProjective` in §3.
 
 It **does** discharge, unconditionally and for free, the orbit hypothesis of the
 Galois-descent engine at every projective scheme
-(`Scheme.SemilinearGalAction.orbitsInAffineOpen_of_isProjective`), which is what
+(`Scheme.orbitsInAffineOpen_of_isProjective`), which is what
 `Picard/GaloisQuotientNonVacuity.lean` had only for *affine* `X` and what the
 Albanese lane's `OrbitsInAffineOpen` had for no `X` at all.  Smooth proper
 geometrically integral curves **are** projective in this project
-(`Scheme.isProjective_of_smoothProperGeometricallyIntegral`,
+(`AlgebraicGeometry.Adelic.isProjective_of_smoothProperGeometricallyIntegral`,
 `Picard/CurveProjectivity.lean`), so §3 fires at the curve itself with no
 hypothesis beyond its own binders.
+
+## What §5 is NOT: read this before consuming `PointedPicSharpRepProjective`
+
+§5 restates the seam's antecedent with `IsProjective` of the representing scheme in
+place of `FiniteInAffine`.  **That antecedent is refuted at the object it is about**,
+and the refutation is landed here as a theorem, not left as prose:
+`Scheme.not_isProjective_of_infinite_disjoint_open_cover`.  Projectivity over a field
+forces `IsProper`, hence `UniversallyClosed`, hence — over the compact `Spec k` —
+`CompactSpace` (`Scheme.compactSpace_of_isProjective`); and the full Picard scheme is a
+**disjoint union over `deg ∈ ℤ`** (Kleiman §4 `th:main`(1)), which is not quasi-compact.
+So `PointedPicSharpRepProjective` is not the standard hypothesis restated — it is
+strictly stronger and false at `Pic_{C/k}`.
+
+This is verbatim the trap `Picard/AmbientPicNotProper.lean` exists to record, "trap (c):
+a `P → Q` whose antecedent is unsatisfiable in the intended setting", and it is caught by
+that file's own theorems.  Kleiman's `th:qpp&p` gives quasi-projectivity of the **degree
+pieces**, not projectivity of the ambient scheme.  §5 therefore survives only as a
+*conditional* reduction with an explicitly refuted antecedent; §3 and §4, which do not
+mention the ambient Picard scheme, are unaffected.
+
+An earlier revision of this section said §5 states the seam "with no condition invented
+in this project anywhere in it".  Both halves were wrong: `Scheme.Hom.IsProjective` is
+project-local (`Picard/ProjectiveMorphismBasic.lean`, mathlib `v4.31` has no
+morphism-level projectivity at all), as are `PicScheme.picSharp` and
+`Scheme.HasRationalPoint`; and the antecedent is not merely non-standard but refutable.
+The defensible statement is the narrow one: the *mathematical notion* is standard even
+though the Lean definition is ours.
 
 ## Non-vacuity
 
 `FiniteInAffine` is satisfiable at an affine scheme with `⊤`
 (`Scheme.finiteInAffine_of_isAffine`, already landed) and that witness is
-*degenerate*: it says nothing about the projective case.  §2 is therefore checked
-against a genuinely non-affine object: `ℙ(n; S)` for `n` with at least two
-elements is not affine, and §2 applies to it.  The `Nonempty`-style caution is
-recorded as `Scheme.finiteInAffine_projectiveSpace`, so the results below are not
-about an empty class of schemes.
+*degenerate*: it says nothing about the projective case.  So the honest
+non-degeneracy evidence for §2 is what a fresh-context audit could **verify**, and it
+is at `Proj`: `Proj (homogeneousSubmodule (Fin 2) ℚ)` is nonempty (the point
+`V(X₀)`), and the hypotheses of `Scheme.exists_homogeneous_pos_mem_notMem` are jointly
+satisfiable there, both checked by elaborating them at that named object.
+
+**What is NOT verified, stated because an earlier revision of this paragraph asserted
+it as the ground of non-degeneracy:** that `ℙ(n; S)` fails to be affine for `n` with at
+least two elements.  It is true, but it is proved nowhere in mathlib at this pin
+(no `¬ IsAffine` results at all) nor in this project, so
+`Scheme.finiteInAffine_projectiveSpace` being a *non-affine* witness rests on prose.
+That earlier revision also claimed the caution "is recorded as
+`Scheme.finiteInAffine_projectiveSpace`"; that theorem records no such thing — it has no
+`Nonempty` hypothesis and no non-affineness content.
 -/
 
-universe u
+universe u v
 
 open CategoryTheory Limits AlgebraicGeometry
 
@@ -512,13 +547,21 @@ theorem isProjective_id_spec {k : Type u} [Field k] :
 Composing §5.2 with `Scheme.fgaPicardRepresentability_of_pointedPicSharpRep`
 (`Picard/PicEtPointedReduction.lean`). So the project's central `sorry` now follows by
 `exact` from *projectivity* of the pointed Picard scheme, uniformly in the base field —
-an antecedent stated entirely in standard vocabulary, with no condition invented in this
-project anywhere in it.
+an antecedent whose *mathematical* notion is standard, though every Lean definition in it
+(`Scheme.Hom.IsProjective`, `PicScheme.picSharp`, `Scheme.HasRationalPoint`) is
+project-local.
 
-The obligation is not smaller, and this is not progress toward closing it: it is the same
-mathematics with the hypothesis named the way Kleiman names it. What it removes is the
-reviewer's question "is `FiniteInAffine` even the right hypothesis, or an artefact?" —
-answered, it is a consequence of the right one. `rep` still has no producer. -/
+**AND ITS ANTECEDENT IS REFUTED AT THE INTENDED OBJECT — read §5.5 before consuming
+this.** `PointedPicSharpRepProjective` demands projectivity of the scheme representing
+the *whole* of `picSharp`, and §5.5 shows that forces `CompactSpace`, which the
+degree-graded Picard scheme is not. So this theorem is a true implication with a false
+antecedent: it does not bring the seam closer and must not be reported as doing so. The
+usable output of this file is §3 and §4, which never mention the ambient Picard scheme.
+
+An earlier revision of this docstring said the antecedent contains "no condition invented
+in this project anywhere in it" and framed §5 as merely renaming the hypothesis. Both
+were wrong, and the second was the expensive one: the restatement is not conservative, it
+is a strengthening into falsity. Corrected here rather than only in a report. -/
 theorem fgaPicardRepresentability_of_projective {k : Type u} [Field k]
     (C : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIntegral C.hom]
@@ -528,5 +571,54 @@ theorem fgaPicardRepresentability_of_projective {k : Type u} [Field k]
           LocallyOfFiniteType X.hom ∧ IsSeparated X.hom)
       ∧ (Scheme.HasRationalPoint C → IsIso (PicScheme.picEtComparison C)) :=
   fgaPicardRepresentability_of_pointedPicSharpRep C (pointedPicSharpRep_of_projective H)
+
+/-! ## §5.5. §5's antecedent is REFUTED at the object it is about
+
+Landed as theorems rather than left as a caveat, because a caveat is what let the
+overclaim through in the first place. A fresh-context audit of §5 found this; both
+statements below were reproduced before the correction was accepted.
+-/
+
+/-- **Projectivity over a field forces a compact space.**
+
+`IsProjective → IsProper` is `Scheme.Hom.IsProjective.isProper`; mathlib derives
+`QuasiCompact` from `UniversallyClosed` at `priority := 900`, and `Spec k` is compact, so
+`Scheme.compactSpace_of_universallyClosed` (`Picard/AmbientPicNotProper.lean`) finishes.
+
+That file is where this chain was worked out, for `UniversallyClosed`. The point of
+restating it for `IsProjective` is that §5's antecedent asks for the *projectivity*, so the
+obstruction has to be visible from the hypothesis §5 actually carries. -/
+theorem compactSpace_of_isProjective {k : Type u} [Field k]
+    (X : Over (Spec (CommRingCat.of k))) (h : X.hom.IsProjective) :
+    CompactSpace X.left :=
+  haveI := h.isProper
+  compactSpace_of_universallyClosed X.hom
+
+/-- **A scheme with an infinite disjoint open cover is not projective over a field** —
+the refutation of §5's antecedent, at scheme generality and with no Picard vocabulary.
+
+Composes `compactSpace_of_isProjective` with the pure-topology
+`not_compactSpace_of_infinite_disjoint_open_cover` (`Picard/AmbientPicNotProper.lean`).
+
+**Why this refutes §5 and not §3 or §4.** The full relative Picard scheme is a disjoint
+union of open pieces indexed by `deg ∈ ℤ` — that is the second clause of Kleiman §4
+`th:main`(1), and it is what `HasPicScheme` bundles. An infinite family of pairwise
+disjoint nonempty opens covering a space has no finite subcover, so `Pic_{C/k}` is not
+quasi-compact and hence not projective over `k`. `PointedPicSharpRepProjective` asks for
+exactly that projectivity, so it is false at its intended witness.
+
+Kleiman's `th:qpp&p` gives quasi-projectivity of each **degree piece**. A repaired §5
+would ask for that, piecewise, and would need degree-graded vocabulary this file does not
+have; it is not attempted here, and pretending the gap is smaller than that is what the
+retracted §5 docstring did. §3 and §4 are untouched: neither mentions the ambient Picard
+scheme, and `finiteInAffine_curve` is about the curve, which *is* projective. -/
+theorem not_isProjective_of_infinite_disjoint_open_cover {k : Type u} [Field k]
+    (X : Over (Spec (CommRingCat.of k))) {ι : Type v} [Infinite ι]
+    (U : ι → Set X.left) (hopen : ∀ i, IsOpen (U i)) (hne : ∀ i, (U i).Nonempty)
+    (hdisj : _root_.Pairwise (Function.onFun Disjoint U))
+    (hcov : (Set.univ : Set X.left) ⊆ ⋃ i, U i) :
+    ¬ X.hom.IsProjective := fun h =>
+  not_compactSpace_of_infinite_disjoint_open_cover U hopen hne hdisj hcov
+    (compactSpace_of_isProjective X h)
 
 end AlgebraicGeometry.Scheme
