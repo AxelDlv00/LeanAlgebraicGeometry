@@ -1,0 +1,48 @@
+id: I-1683
+provider: local
+kind: issue
+body: 'AJCR missing projectivity/properness substrate
+
+
+  Measured in the AJCR import closure: importing AlgebraicJacobian.Picard.ThetaShift,
+  #check AlgebraicGeometry.Adelic.isProjective_of_smoothProperGeometricallyIntegral
+  and #check AlgebraicGeometry.Scheme.Hom.IsProjective both fail (unknown identifier/constant).
+  The sibling AJC CurveProjectivity import resolves the first theorem with hypotheses
+  [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIntegral C.hom].
+
+
+  Source check: Kleiman Main (references/kleiman-picard-src/kleiman-picard.tex:2155-2165)
+  assumes projective (Zariski-locally), flat, integral geometric fibres. AJCR Challenge
+  binders are smooth/proper/geometrically irreducible, so this is not an implicit
+  convention change.
+
+
+  DivSchemeQProj.lean:44-51 and :219-220 explicitly stop at qc/lft/separated and say
+  Plucker projectivity/universal closedness is absent. AbelSourceData (AbelianVariety/AbelSource.lean:90-126)
+  consumes an IsProper source, but AJCR has no producer for AbelSourceData or proper
+  DivScheme. Add/own a high-priority substrate row: prove universal closedness/projectivity
+  of the Grassmannian/Plucker divisor source (or an equivalent properness certificate),
+  then wire it to AbelSourceData.isProper. This is distinct from DAT-J finite-index/descent
+  work.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T08:10:02.093518+00:00'
+updated_at: '2026-07-31T08:10:02.093534+00:00'
+metadata:
+  provenance:
+    run: '0104'
+    session: 0002-horizon-rev-ajcr
+    role: horizon
+    round: '0'
+    rounds: '6'
+    task: rev-ajcr
+    task_title: 'Review and macro lane on Algebraic-Jacobian-Challenge-Rebuild: verify
+      real progress and source faithfulness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

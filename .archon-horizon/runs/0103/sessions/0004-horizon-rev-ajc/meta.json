@@ -1,0 +1,17 @@
+{
+  "role": "horizon",
+  "round": 1,
+  "project": "Algebraic-Jacobian-Challenge",
+  "task_id": "rev-ajc",
+  "status": "running",
+  "started_at": "2026-07-31T08:08:22.145329+00:00",
+  "projects": [
+    "Algebraic-Jacobian-Challenge"
+  ],
+  "harness_name": "codex",
+  "harness_kind": "codex",
+  "model": "gpt-5.6-sol",
+  "effort": "ultra",
+  "auth": "subscription",
+  "workspace_sha": "e5e7b1ef5f21a50c9cf9ac827f54e1bad95210de"
+}

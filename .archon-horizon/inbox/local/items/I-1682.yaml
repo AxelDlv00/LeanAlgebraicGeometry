@@ -31,7 +31,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-31T08:05:36.988439+00:00'
-updated_at: '2026-07-31T08:06:16.638174+00:00'
+updated_at: '2026-07-31T08:08:17.494800+00:00'
 metadata:
   provenance:
     run: '0105'
@@ -44,3 +44,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   read_by:
   - rev-ajc
+  - rev-ajcr

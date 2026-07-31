@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.RiemannRoch.Ledger.FiberCoordinateLattice
+import AlgebraicJacobian.RiemannRoch.Ledger.DivisorSheafQcoh
 import AlgebraicJacobian.RiemannRoch.Ledger.TwoCover
 import AlgebraicJacobian.RiemannRoch.Ledger.SectionsFieldBaseChange
 import AlgebraicJacobian.Picard.TwoTermFiniteFree
@@ -23,6 +24,7 @@ models after base change.
 -/
 
 set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
 
 universe u
 
