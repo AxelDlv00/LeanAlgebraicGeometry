@@ -247,4 +247,95 @@ theorem isLocalizedModule_tensorPresheafGermLinearMap
   intro f
   exact isLocalizedModule_tensorPresheaf_basicOpen A B hU f
 
+/-! ## The localized tensor-section model of the sheaf tensor stalk -/
+
+/-- Sheafification identifies the stalk of the tensor presheaf with the stalk of
+the sheaf tensor product.  This is the `O_{X,x}`-linear form of
+`sheafificationUnit_stalk_isIso`. -/
+noncomputable def tensorSheafificationStalkLinearEquiv
+    (A B : X.Modules) (x : X) :
+    letI : Module (X.presheaf.stalk x)
+        (↑(TopCat.Presheaf.stalk (tensorPresheaf A B).presheaf x) : Type u) :=
+      presheafStalkModule (tensorPresheaf A B) x
+    letI : Module (X.presheaf.stalk x)
+        (↑(TopCat.Presheaf.stalk (tensorObj A B).val.presheaf x) : Type u) :=
+      presheafStalkModule (tensorObj A B).val x
+    (↑(TopCat.Presheaf.stalk (tensorPresheaf A B).presheaf x) : Type u) ≃ₗ[X.presheaf.stalk x]
+      (↑(TopCat.Presheaf.stalk (tensorObj A B).val.presheaf x) : Type u) := by
+  let eta := (PresheafOfModules.sheafificationAdjunction
+    (𝟙 X.ringCatSheaf.obj)).unit.app (tensorPresheaf A B)
+  exact PresheafOfModules.stalkLinearEquivOfIsIso eta x
+    (sheafificationUnit_stalk_isIso (tensorPresheaf A B) x)
+
+/-- On an affine open `U`, the stalk of the sheaf tensor product at `x in U` is
+the localization of the tensor-presheaf sections on `U` at the complement of
+the prime corresponding to `x`.  The construction first uses localization
+uniqueness for the tensor-presheaf germ map, then the sheafification equivalence
+on stalks. -/
+noncomputable def localizedTensorSectionsStalkLinearEquiv
+    (A B : X.Modules) [A.IsQuasicoherent] [B.IsQuasicoherent]
+    {U : X.Opens} (hU : IsAffineOpen U) (x : U) :
+    let S := (hU.primeIdealOf x).asIdeal.primeCompl
+    let P := tensorPresheaf A B
+    letI : Module (X.presheaf.stalk x)
+        (↑(TopCat.Presheaf.stalk P.presheaf x) : Type u) :=
+      presheafStalkModule P x
+    letI : Module Γ(X, U)
+        (↑(TopCat.Presheaf.stalk P.presheaf x) : Type u) :=
+      Module.compHom _ (X.presheaf.germ U x x.2).hom
+    letI : Module (X.presheaf.stalk x)
+        (↑(TopCat.Presheaf.stalk (tensorObj A B).val.presheaf x) : Type u) :=
+      presheafStalkModule (tensorObj A B).val x
+    letI : Module Γ(X, U)
+        (↑(TopCat.Presheaf.stalk (tensorObj A B).val.presheaf x) : Type u) :=
+      Module.compHom _ (X.presheaf.germ U x x.2).hom
+    LocalizedModule S (P.obj (op U)) ≃ₗ[Γ(X, U)]
+      (↑(TopCat.Presheaf.stalk (tensorObj A B).val.presheaf x) : Type u) := by
+  let S := (hU.primeIdealOf x).asIdeal.primeCompl
+  let P := tensorPresheaf A B
+  letI : Module (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk P.presheaf x) : Type u) :=
+    presheafStalkModule P x
+  letI : Module Γ(X, U)
+      (↑(TopCat.Presheaf.stalk P.presheaf x) : Type u) :=
+    Module.compHom _ (X.presheaf.germ U x x.2).hom
+  letI : Module (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk (tensorObj A B).val.presheaf x) : Type u) :=
+    presheafStalkModule (tensorObj A B).val x
+  letI : Module Γ(X, U)
+      (↑(TopCat.Presheaf.stalk (tensorObj A B).val.presheaf x) : Type u) :=
+    Module.compHom _ (X.presheaf.germ U x x.2).hom
+  haveI hloc : IsLocalizedModule S (presheafGermLinearMap P x) :=
+    isLocalizedModule_tensorPresheafGermLinearMap A B hU x
+  let e := tensorSheafificationStalkLinearEquiv A B x
+  let eGamma : (↑(TopCat.Presheaf.stalk P.presheaf x) : Type u) ≃ₗ[Γ(X, U)]
+      (↑(TopCat.Presheaf.stalk (tensorObj A B).val.presheaf x) : Type u) :=
+    { e.toEquiv with
+      map_add' := e.map_add
+      map_smul' := fun r m => e.map_smul
+        (ConcreteCategory.hom (X.presheaf.germ U x x.2) r) m }
+  exact IsLocalizedModule.linearEquiv S
+      (LocalizedModule.mkLinearMap S (P.obj (op U)))
+      (presheafGermLinearMap P x) ≪≫ₗ eGamma
+
+/-- The localized tensor-section equivalence sends a numerator section to the
+germ of its image under `tensorSectionHom`.  This is the pointwise rewrite used
+by fibre comparisons. -/
+@[simp]
+theorem localizedTensorSectionsStalkLinearEquiv_mkLinearMap
+    (A B : X.Modules) [A.IsQuasicoherent] [B.IsQuasicoherent]
+    {U : X.Opens} (hU : IsAffineOpen U) (x : U)
+    (m : (tensorPresheaf A B).obj (op U)) :
+    localizedTensorSectionsStalkLinearEquiv A B hU x
+        (LocalizedModule.mkLinearMap
+          (hU.primeIdealOf x).asIdeal.primeCompl ((tensorPresheaf A B).obj (op U)) m) =
+      (ConcreteCategory.hom
+        (TopCat.Presheaf.germ (tensorObj A B).val.presheaf U x x.2))
+          (tensorSectionHom A B U m) := by
+  rw [localizedTensorSectionsStalkLinearEquiv,
+    LinearEquiv.trans_apply, IsLocalizedModule.linearEquiv_apply]
+  exact PresheafOfModules.stalkLinearMap_germ
+    ((PresheafOfModules.sheafificationAdjunction
+      (𝟙 X.ringCatSheaf.obj)).unit.app (tensorPresheaf A B)) x U x.2 m
+
 end AlgebraicGeometry.Scheme.Modules
