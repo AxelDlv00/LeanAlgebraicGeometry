@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.ProbeP4R6.probeSheaf
 file: scratch_p4r6/probe4.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.ProbeP4R6.probeSheaf
 type: lean
-updated: '2026-07-31T20:31:21'
+updated: '2026-07-31T20:38:45'
 ---
 theorem probeSheaf (X : Scheme.{u}) :
     Presheaf.IsSheaf Scheme.zariskiTopology (yoneda.obj X) :=

@@ -1,0 +1,17 @@
+{
+  "role": "horizon",
+  "round": 2,
+  "project": "Algebraic-Jacobian-Challenge-Rebuild",
+  "task_id": "pic-d",
+  "status": "running",
+  "started_at": "2026-07-31T12:38:56.075467+00:00",
+  "projects": [
+    "Algebraic-Jacobian-Challenge-Rebuild"
+  ],
+  "harness_name": "codex",
+  "harness_kind": "codex",
+  "model": "gpt-5.6-sol",
+  "effort": "ultra",
+  "auth": "subscription",
+  "workspace_sha": "07a4b230eedd5748788834c4c94ee98a60d38878"
+}
