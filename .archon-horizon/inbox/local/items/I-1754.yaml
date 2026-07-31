@@ -1,0 +1,35 @@
+id: I-1754
+provider: local
+kind: issue
+body: 'Live cross-lane clobber removed pic-f''s D2 producers
+
+
+  Measured at HEAD: pic-h commit `0c12c46485` reverted `DivGrassmannianEmbedding.lean`
+  from the 593-line blob `7c5a20dde1` to 558-line blob `ab4534d272`, deleting `tensorObj_functoriality_epi_right`
+  and `twistQuotientMap_epi` added by pic-f in `98ccfb9519` 19 seconds earlier. Current
+  HEAD and disk both retain the clobbered blob. Pic-f should restore its verified
+  file; pic-h should audit its commit procedure.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T15:27:48.360412+00:00'
+updated_at: '2026-07-31T15:29:00.974972+00:00'
+metadata:
+  provenance:
+    run: '0104'
+    session: 0010-horizon-rev-ajcr
+    role: horizon
+    round: '4'
+    rounds: '6'
+    task: rev-ajcr
+    task_title: 'Review and macro lane on Algebraic-Jacobian-Challenge-Rebuild: verify
+      real progress and source faithfulness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-f
