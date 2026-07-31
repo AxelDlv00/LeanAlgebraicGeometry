@@ -138,15 +138,19 @@ lemma coordinateSectionsEquivV0_coe (n : ℕ) (s : Γ(Y, Q.V₀)) :
         Y.functionField) =
       ((Q.coordinateUnit⁻¹ ^ n : Y.functionFieldˣ) : Y.functionField) *
         (Y.presheaf.germ Q.V₀ (genericPoint Y) (Q.genericPoint_mem_inf).1).hom s := by
-  rw [coordinateSectionsEquivV0, LinearEquiv.trans_apply, LinearEquiv.trans_apply]
-  rfl
+  change ((Q.coordinateUnit⁻¹ ^ n : Y.functionFieldˣ) : Y.functionField) *
+      (((divisorZeroSectionsEquiv (K := K) Q.V₀) s : divisorSections K 0 Q.V₀) :
+        Y.functionField) = _
+  rw [divisorZeroSectionsEquiv_coe_of_nonempty (K := K)
+    ⟨genericPoint Y, (Q.genericPoint_mem_inf).1⟩]
 
 lemma coordinateSectionsEquivV1_coe (n : ℕ) (s : Γ(Y, Q.V₁)) :
     (((Q.coordinateSectionsEquivV1 (K := K) n) s :
         divisorSections K (n • Q.coordinateWeilDivisor (K := K)) Q.V₁) :
         Y.functionField) =
       (Y.presheaf.germ Q.V₁ (genericPoint Y) (Q.genericPoint_mem_inf).2).hom s := by
-  rw [coordinateSectionsEquivV1, LinearEquiv.trans_apply]
+  change (((divisorZeroSectionsEquiv (K := K) Q.V₁) s : divisorSections K 0 Q.V₁) :
+      Y.functionField) = _
   exact divisorZeroSectionsEquiv_coe_of_nonempty
     (K := K) ⟨genericPoint Y, (Q.genericPoint_mem_inf).2⟩ s
 
@@ -155,14 +159,15 @@ lemma coordinateSectionsEquivOverlap_coe (n : ℕ) (s : Γ(Y, Q.V₀ ⊓ Q.V₁)
         divisorSections K (n • Q.coordinateWeilDivisor (K := K)) (Q.V₀ ⊓ Q.V₁)) :
         Y.functionField) =
       (Y.presheaf.germ (Q.V₀ ⊓ Q.V₁) (genericPoint Y) Q.genericPoint_mem_inf).hom s := by
-  rw [coordinateSectionsEquivOverlap, LinearEquiv.trans_apply]
+  change (((divisorZeroSectionsEquiv (K := K) (Q.V₀ ⊓ Q.V₁)) s :
+      divisorSections K 0 (Q.V₀ ⊓ Q.V₁)) : Y.functionField) = _
   exact divisorZeroSectionsEquiv_coe_of_nonempty (K := K) Q.inf_nonempty s
 
 lemma coordinateUnit_inv_pow_eq_germ_overlap (n : ℕ) :
     ((Q.coordinateUnit⁻¹ ^ n : Y.functionFieldˣ) : Y.functionField) =
       (Y.presheaf.germ (Q.V₀ ⊓ Q.V₁) (genericPoint Y) Q.genericPoint_mem_inf).hom
         (Q.overlapInversePower n) := by
-  rw [map_pow, overlapInversePower, map_pow, ← Q.coordinateUnit_inv_val]
+  rw [Units.val_pow_eq_pow_val, overlapInversePower, map_pow, Q.coordinateUnit_inv_val]
   exact congrArg (fun z : Y.functionField => z ^ n)
     (Y.presheaf.germ_res_apply
       (homOfLE (inf_le_right : Q.V₀ ⊓ Q.V₁ ≤ Q.V₁))
@@ -196,26 +201,25 @@ theorem coordinateDiff_intertwine (n : ℕ) :
         (Q.coordinateSectionsEquivDom (K := K) n).toLinearMap =
       (Q.coordinateSectionsEquivOverlap (K := K) n).toLinearMap.comp
         (Q.coordinateDiff (K := K) n) := by
-  ext p
+  apply LinearMap.ext
+  rintro ⟨a, b⟩
   apply divisorSection_ext K
+  simp only [LinearMap.comp_apply]
   rw [divisorVal_coordinateModuleDiff Q]
-  simp only [coordinateSectionsEquivDom, LinearEquiv.prodCongr_apply,
-    LinearMap.comp_apply, LinearEquiv.coe_coe]
+  change divisorVal K (Q.coordinateSectionsEquivV0 (K := K) n a) -
+      divisorVal K (Q.coordinateSectionsEquivV1 (K := K) n b) =
+    divisorVal K
+      (Q.coordinateSectionsEquivOverlap (K := K) n (Q.coordinateDiff (K := K) n (a, b)))
+  simp only [divisorVal_coe]
   rw [coordinateSectionsEquivV0_coe, coordinateSectionsEquivV1_coe,
-    coordinateSectionsEquivOverlap_coe, coordinateDiff_apply, map_sub, map_mul, map_pow]
-  have hy := Y.presheaf.germ_res_apply
-    (homOfLE (inf_le_right : Q.V₀ ⊓ Q.V₁ ≤ Q.V₁)) (genericPoint Y)
-      Q.genericPoint_mem_inf Q.y
+    coordinateSectionsEquivOverlap_coe, coordinateDiff_apply, map_sub, map_mul]
   have ha := Y.presheaf.germ_res_apply
     (homOfLE (inf_le_left : Q.V₀ ⊓ Q.V₁ ≤ Q.V₀)) (genericPoint Y)
-      Q.genericPoint_mem_inf p.1
+      Q.genericPoint_mem_inf a
   have hb := Y.presheaf.germ_res_apply
     (homOfLE (inf_le_right : Q.V₀ ⊓ Q.V₁ ≤ Q.V₁)) (genericPoint Y)
-      Q.genericPoint_mem_inf p.2
-  rw [hy, ha, hb]
-  rw [show (((Q.coordinateUnit⁻¹ ^ n : Y.functionFieldˣ) : Y.functionField)) =
-      ((Y.presheaf.germ Q.V₁ (genericPoint Y) Q.genericPoint_mem_inf.2).hom Q.y) ^ n by
-        rw [Units.val_pow, Q.coordinateUnit_inv_val]]
+      Q.genericPoint_mem_inf b
+  rw [ha, hb, coordinateUnit_inv_pow_eq_germ_overlap]
 
 /-! ## Arbitrary field extension -/
 
@@ -228,8 +232,8 @@ variable (D : FiberCoordinateData C.left)
 /-- The product comparison on the degree-zero term of the normalized complex. -/
 noncomputable def coordinateDiffDomBaseChangeField :
     κ ⊗[k] (Γ(C.left, D.V₀) × Γ(C.left, D.V₁)) ≃ₗ[κ]
-      Γ((baseChangeField C κ).left, (D.baseChangeField κ).V₀) ×
-        Γ((baseChangeField C κ).left, (D.baseChangeField κ).V₁) :=
+      Γ((Scheme.baseChangeField C κ).left, (D.baseChangeField κ).V₀) ×
+        Γ((Scheme.baseChangeField C κ).left, (D.baseChangeField κ).V₁) :=
   (TensorProduct.prodRight k κ κ _ _).trans
     ((sectionsBaseChangeFieldₗ κ D.isAffineOpen_V₀.isCompact
         D.isAffineOpen_V₀.isQuasiSeparated).prodCongr
@@ -239,7 +243,7 @@ noncomputable def coordinateDiffDomBaseChangeField :
 /-- The overlap comparison on the degree-one term of the normalized complex. -/
 noncomputable def coordinateDiffCodBaseChangeField :
     κ ⊗[k] Γ(C.left, D.V₀ ⊓ D.V₁) ≃ₗ[κ]
-      Γ((baseChangeField C κ).left,
+      Γ((Scheme.baseChangeField C κ).left,
         (D.baseChangeField κ).V₀ ⊓ (D.baseChangeField κ).V₁) :=
   sectionsBaseChangeFieldₗ κ
     D.toAffineCoverMVSquare.isAffineOpen_inf.isCompact
@@ -255,11 +259,21 @@ lemma overlapInverseCoordinate_baseChangeField :
         (1 ⊗ₜ D.overlapInverseCoordinate) := by
   rw [sectionsBaseChangeFieldₗ_one_tmul]
   let f := baseChangeFieldFst C κ
-  have h := congrArg
-    (fun g : Γ(C.left, D.V₁) ⟶
-        Γ((baseChangeField C κ).left, f ⁻¹ᵁ (D.V₀ ⊓ D.V₁)) => g.hom D.y)
-    (f.naturality (homOfLE (inf_le_right : D.V₀ ⊓ D.V₁ ≤ D.V₁)).op)
-  exact h.symm
+  have h :
+      ((Scheme.baseChangeField C κ).left.presheaf.map
+        (homOfLE (inf_le_right :
+          (f ⁻¹ᵁ D.V₀) ⊓ (f ⁻¹ᵁ D.V₁) ≤ f ⁻¹ᵁ D.V₁)).op).hom
+          ((f.app D.V₁).hom D.y) =
+        (f.app (D.V₀ ⊓ D.V₁)).hom
+          ((C.left.presheaf.map
+            (homOfLE (inf_le_right : D.V₀ ⊓ D.V₁ ≤ D.V₁)).op).hom D.y) := by
+    have hnat := congrArg
+      (fun g : Γ(C.left, D.V₁) ⟶
+        Γ((Scheme.baseChangeField C κ).left, f ⁻¹ᵁ (D.V₀ ⊓ D.V₁)) => g.hom D.y)
+      (f.naturality (homOfLE (inf_le_right : D.V₀ ⊓ D.V₁ ≤ D.V₁)).op)
+    exact hnat.symm
+  simpa only [overlapInverseCoordinate, baseChangeField_y, baseChangeField_V₀,
+    baseChangeField_V₁, toAffineCoverMVSquare] using h
 
 /-- The normalized differential after extension is the scalar extension of the base
 differential, through the two term comparisons. -/
