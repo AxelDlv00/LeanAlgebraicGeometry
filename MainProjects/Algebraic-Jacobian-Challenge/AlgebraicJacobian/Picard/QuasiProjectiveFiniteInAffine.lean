@@ -446,4 +446,87 @@ theorem finiteInAffine_curve {k : Type u} [Field k] (C : Over (Spec (CommRingCat
   finiteInAffine_of_isProjective
     (AlgebraicGeometry.Adelic.isProjective_of_smoothProperGeometricallyIntegral C)
 
+/-! ## §5. The seam's antecedent, restated in standard vocabulary
+
+`Scheme.PointedPicSharpRep` carries `FiniteInAffine X.left` — the elementary condition
+this file exists to explain. With §3 in hand the antecedent can be stated with
+**projectivity** of the representing scheme instead, which is what the mathematics
+(Kleiman §5 `th:qpp&p`: the Picard scheme of a smooth proper curve is projective) actually
+provides. This section does that and carries the restatement all the way to the seam.
+-/
+
+/-- **The pointed Picard theorem, with projectivity in place of `FiniteInAffine`.**
+
+Identical to `Scheme.PointedPicSharpRep` except in the last conjunct: it asks that the
+representing scheme be **projective over the base**, which is the FGA/Kleiman conclusion,
+rather than that finite subsets of it lie in affine opens, which is a consequence.
+
+Every remark in `PointedPicSharpRep`'s docstring about the *shape* still applies — the
+uniformity in `K` is what lets §4 of `Picard/PicEtPointedReduction.lean` apply it at a
+Galois level, and `IsSeparated` is still absent because it is free. What changes is only
+that a lane discharging this owes a theorem someone has written down. -/
+def PointedPicSharpRepProjective : Prop :=
+  ∀ {K : Type u} [Field K] (E : Over (Spec (CommRingCat.of K))),
+    ∀ [SmoothOfRelativeDimension 1 E.hom] [IsProper E.hom] [GeometricallyIntegral E.hom],
+      Scheme.HasRationalPoint E →
+      ∃ X : Over (Spec (CommRingCat.of K)),
+        Nonempty ((PicScheme.picSharp E).RepresentableBy X) ∧
+          LocallyOfFiniteType X.hom ∧ X.hom.IsProjective
+
+/-- **The projective antecedent implies the elementary one.** Directly by §3, since the
+base of the representing object is `Spec K`, which is affine.
+
+So §5's antecedent is at least as strong as §4's; whether it is *strictly* stronger is
+not claimed here, and the converse is not proved — `FiniteInAffine` does not obviously
+recover a closed immersion into projective space, and mathlib has no quasi-projectivity
+vocabulary at this pin to state the intermediate notion in. The useful direction is this
+one: it is the one that consumes the FGA conclusion. -/
+theorem pointedPicSharpRep_of_projective (H : PointedPicSharpRepProjective.{u}) :
+    PointedPicSharpRep.{u} := by
+  intro K _ E _ _ _ hpt
+  obtain ⟨X, hrep, hlft, hproj⟩ := H E hpt
+  exact ⟨X, hrep, hlft, finiteInAffine_of_isProjective hproj⟩
+
+/-- **The new conjunct is satisfiable** — `Spec k` is projective over itself, via the
+finite-to-affine producer (`AlgebraicGeometry.IsFinite.isProjective_of_isAffine`).
+
+Recorded as a declaration rather than asserted, per `I-0838`: replacing a conjunct with
+an unsatisfiable one would make §5 vacuously true, and that is the failure mode the
+2026-07-29 audit found seventeen times.
+
+**And it is not free**, which is the other half and the one that is easy to skip:
+`exact?` fails on `X.hom.IsProjective` for an arbitrary `X : Over (Spec k)` carrying
+`[LocallyOfFiniteType X.hom]`, so §5's antecedent is not `PointedPicSharpRep` with an
+extra conjunct that instance search discharges. Both measurements were run; neither is
+recalled. -/
+theorem isProjective_id_spec {k : Type u} [Field k] :
+    (Over.mk (𝟙 (Spec (CommRingCat.of k)))).hom.IsProjective := by
+  haveI : IsFinite (Over.mk (𝟙 (Spec (CommRingCat.of k)))).hom := by
+    change IsFinite (𝟙 (Spec (CommRingCat.of k)))
+    infer_instance
+  exact AlgebraicGeometry.IsFinite.isProjective_of_isAffine _
+
+/-- **The seam, verbatim, from the projective antecedent** — the statement of
+`Scheme.fgaPicardRepresentability` character for character.
+
+Composing §5.2 with `Scheme.fgaPicardRepresentability_of_pointedPicSharpRep`
+(`Picard/PicEtPointedReduction.lean`). So the project's central `sorry` now follows by
+`exact` from *projectivity* of the pointed Picard scheme, uniformly in the base field —
+an antecedent stated entirely in standard vocabulary, with no condition invented in this
+project anywhere in it.
+
+The obligation is not smaller, and this is not progress toward closing it: it is the same
+mathematics with the hypothesis named the way Kleiman names it. What it removes is the
+reviewer's question "is `FiniteInAffine` even the right hypothesis, or an artefact?" —
+answered, it is a consequence of the right one. `rep` still has no producer. -/
+theorem fgaPicardRepresentability_of_projective {k : Type u} [Field k]
+    (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIntegral C.hom]
+    (H : PointedPicSharpRepProjective.{u}) :
+    (∃ X : Over (Spec (CommRingCat.of k)),
+        Nonempty ((PicScheme.picEt C).RepresentableBy X) ∧
+          LocallyOfFiniteType X.hom ∧ IsSeparated X.hom)
+      ∧ (Scheme.HasRationalPoint C → IsIso (PicScheme.picEtComparison C)) :=
+  fgaPicardRepresentability_of_pointedPicSharpRep C (pointedPicSharpRep_of_projective H)
+
 end AlgebraicGeometry.Scheme
