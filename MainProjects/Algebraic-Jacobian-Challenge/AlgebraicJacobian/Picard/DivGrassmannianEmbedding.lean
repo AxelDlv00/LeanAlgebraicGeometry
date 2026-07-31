@@ -476,6 +476,62 @@ theorem baseChange_surjective_iff_pullback_appTop
     refine ⟨w, eN.injective ?_⟩
     rw [← hcomm w, hy]
 
+/-- Isomorphic module sheaves have the same annihilator ideal sheaf.  This is
+the scheme-level transport needed to make schematic support, hence proper
+support, invariant under isomorphism. -/
+theorem annihilator_eq_of_iso
+    {X : Scheme.{u}} {F G : X.Modules} (e : F ≅ G) :
+    annihilator F = annihilator G := by
+  unfold annihilator
+  congr 1
+  funext U
+  let eU : Γ(F, U.1) ≃ₗ[Γ(X, U.1)] Γ(G, U.1) :=
+    ((toPresheafOfModules X ⋙
+      PresheafOfModules.evaluation X.ringCatSheaf.obj
+        (Opposite.op U.1)).mapIso e).toLinearEquiv
+  ext r
+  constructor
+  · intro hr
+    rw [Module.mem_annihilator] at hr ⊢
+    intro x
+    obtain ⟨y, rfl⟩ := eU.surjective x
+    rw [← eU.map_smul, hr, map_zero]
+  · intro hr
+    rw [Module.mem_annihilator] at hr ⊢
+    intro x
+    apply eU.injective
+    rw [eU.map_zero, eU.map_smul, hr]
+
+/-- Proper schematic support is invariant under an isomorphism of module
+sheaves. -/
+theorem HasProperSupport.of_iso {X S : Scheme.{u}} (f : X ⟶ S)
+    {A C : X.Modules} (e : A ≅ C) (hA : HasProperSupport f A) :
+    HasProperSupport f C := by
+  change IsProper ((annihilator C).subschemeι ≫ f)
+  rw [← annihilator_eq_of_iso e]
+  exact hA
+
+/-- Proper support transfers through the right factor of the canonical tensor.
+The existing annihilator argument is left-sided; tensor symmetry supplies the
+right-sided form without any flatness or finiteness hypothesis. -/
+theorem hasProperSupport_tensorObj_right
+    {X S : Scheme.{u}} (f : X ⟶ S) (A : X.Modules) {B : X.Modules}
+    (hB : HasProperSupport f B) :
+    HasProperSupport f (tensorObj A B) := by
+  have hBAsh : HasProperSupport f (sheafTensorObj B A) :=
+    hasProperSupport_sheafTensorObj f A hB
+  have hBAt : HasProperSupport f (tensorObj B A) :=
+    HasProperSupport.of_iso f (tensorObjIsoSheafTensorObj B A).symm hBAsh
+  exact HasProperSupport.of_iso f (tensorObj_braiding B A) hBAt
+
+/-- The same right-factor support transfer for the sheaf-tensor spelling. -/
+theorem hasProperSupport_sheafTensorObj_right
+    {X S : Scheme.{u}} (f : X ⟶ S) (A : X.Modules) {B : X.Modules}
+    (hB : HasProperSupport f B) :
+    HasProperSupport f (sheafTensorObj A B) :=
+  HasProperSupport.of_iso f (tensorObjIsoSheafTensorObj A B)
+    (hasProperSupport_tensorObj_right f A hB)
+
 set_option backward.isDefEq.respectTransparency false in
 /-- A finite global presentation of a module sheaf on `Spec R` induces a
 finite presentation of its module of global sections.
@@ -696,6 +752,17 @@ theorem twistQuotientMap_epi (L : X.Modules) (x : DivFamily π T) :
   letI : Epi (Modules.tensorObj_right_unitor
       ((Modules.pullback (pullback.fst π T.hom)).obj L)).inv := inferInstance
   infer_instance
+
+/-- The D2 twist has proper support whenever the divisor structure sheaf does.
+This is unconditional in the twist module: it is the right-factor support
+transport, so no rational point, representability, or flatness hypothesis is
+introduced here. -/
+theorem twist_hasProperSupport (L : X.Modules) (x : DivFamily π T) :
+    Modules.HasProperSupport (pullback.snd π T.hom) (x.twist L) := by
+  dsimp [twist]
+  exact Modules.hasProperSupport_tensorObj_right
+    (pullback.snd π T.hom)
+    ((Modules.pullback (pullback.fst π T.hom)).obj L) x.properSupport
 
 set_option backward.isDefEq.respectTransparency false in
 /-- On an affine test base, a finite-flat divisor pushforward is locally free
