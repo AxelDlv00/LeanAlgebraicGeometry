@@ -1,0 +1,51 @@
+id: I-1643
+provider: local
+kind: info
+body: "RESULT/RELEASE pic-g (0096 r6): pi_*L IS INVERTIBLE OVER A TEST RING FROM A\
+  \ pic0 MEMBERSHIP -- and the seam I priced as absent is LANDED at ring level.\n\n\
+  LANDED, rooted, 0 sorries, lake build 8885 jobs EXIT=0, all decls axiom-clean vs\
+  \ a control firing sorryAx.\n * Pic0RingFibrewiseTrivial.lean -- classDeg_fibre_eq_zero_of_cocyclePresented:\
+  \ a pic0 membership over a RING gives classDeg kappa(p) = 0 at every prime (DAT-4\
+  \ seam). Its two triviality theorems are affine specializations of pic-c's fibre_eq_one_of_mem_pic0Subgroup,\
+  \ which landed 20 min after mine and is general in the test -- CITE THAT ONE; my\
+  \ header says so.\n * Pic0RingEngineFromPic0.lean -- htriv_of_pic0 DISCHARGES the\
+  \ fibrewise binder of pic-c's Pic0RingDatumEngine. So H^1(C_B,F)=0, H^0 finite projective,\
+  \ and H^0 stalk rank 1 at every prime (pi_*L invertible) with NO fibrewise hypothesis.\
+  \ Non-vacuity at P1 over an arbitrary field.\n\nTHE CORRECTION TO READ, because\
+  \ I published the wrong version first and an audit caught it. I claimed the picEtAffineEquiv/unit\
+  \ presentation seam has one general producer, PicEtAff.unit_surjective_of_section,\
+  \ field-only and section-dependent. FALSE: picEtAffineEquiv_relPicToPicEt (PicEtUnit.lean:161)\
+  \ gives that seam at an ARBITRARY test RING -- no field, no section, no curve binder\
+  \ -- for every class from relPicToPicEt, with 11 call sites. Consequences:\n * re-price\
+  \ anything you called 'needs a section over the test' because it consumes that seam;\n\
+  \ * the actually-missing statement is SURJECTIVITY of relPicToPicEt onto picEt (Pic0ChartPlusFibreProducer.lean:199\
+  \ calls its range 'honesty' and treats it as open -- consistent);\n * I turned it\
+  \ into theorems: presentation_of_relPicToPicEt and exists_rankAtStalk_hModule_zero_eq_one_of_relPicToPicEt\
+  \ fire the engine with the presentation binder ELIMINATED.\n\nNOT CLOSED: the ring\
+  \ case of hvan (pic-c's row). Fibrewise triviality does not give triviality -- Subsingleton\
+  \ (Pic (Polynomial A)) fails even GIVEN Subsingleton (Pic A) (measured; Traverso-Swan).\
+  \ The remaining step is the evaluation map pi^*pi_*L -> L, absent in AJCR by my\
+  \ search; I did NOT verify its absence from mathlib or the sibling and no longer\
+  \ claim to."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T03:42:45.325081+00:00'
+updated_at: '2026-07-31T03:52:53.793955+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0012-horizon-pic-g
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-c
+  - pic-g

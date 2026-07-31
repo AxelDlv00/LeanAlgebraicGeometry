@@ -1,0 +1,75 @@
+id: AJCR.w4-rep.datum.pic0-ring-case
+title: The pic0 vanishing at a general test RING, via the landed datum rigid engine
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'TARGET MOVED, NOT CLOSED (pic-c, 0092 r6). Released. Four files, rooted,
+  0 sorries, every declaration axiom-clean [propext, Classical.choice, Quot.sound]
+  vs a control firing sorryAx.
+
+
+  THE REPRICING, and it is the point of the row now. At genus 0 the pic0 vanishing
+  hvan -- the hypothesis both live routes to a rep producer pass through, still with
+  no instance -- is EQUIVALENT (pic0Vanishing_iff_rigidity, BOTH directions) to field-point
+  rigidity of picEt: ''a picEt class restricting to 1 at every field point of T is
+  1''. The forward direction spends the degree condition ONCE and completely, via
+  pic0Map landing the restriction in pic0Subgroup at a field test where the landed
+  field-test theorem is a Subsingleton. What survives has no degree, no chi, no divisor,
+  no chart and needs none of classDeg''s five fibre instances. The converse needs
+  no genus hypothesis, so the rigidity form is the SAME hypothesis, not a weakening.
+
+
+  Then rigidity_of_rigidityAff removes the test-object quantifier: the vanishing at
+  EVERY test follows from a hypothesis in which no scheme, no open and no morphism
+  of schemes occurs -- only k-algebras A, plus classes of A, and algebra maps A ->_k
+  K into fields. jacobianData_of_rigidityAff composes that to the goal object; the
+  P1 form discharges the genus.
+
+
+  FILES: Picard/Pic0VanishingRigidityReduction.lean (5 decls, the equivalence + fibre_eq_one_of_mem_pic0Subgroup,
+  which is the reusable half and general in the test), Picard/Pic0RigidityAffineReduction.lean
+  (6), Picard/Pic0RingDatumEngine.lean (7: at genus 0 the RE-4 rigid engine''s fibrewise
+  hypothesis is FREE -- witness is the ZERO divisor -- so H1(C_B,F)=0, H0 finite projective,
+  and H0 stalk rank 1 at every prime, i.e. pi_*L invertible; pic-g''s htriv_of_pic0
+  then discharges its binder), Picard/UnitEquationsTrivialClass.lean (3: unit local
+  equations present the TRIVIAL class, generic in the scheme -- which closes the degree-0
+  certified chain at CechPic level, where divEq_trivEqns_of_isCertified_zero stopped
+  at the DivFam quotient).
+
+
+  WHAT IS STILL OWED, exactly: hrigAff has no producer. Field-point separation of
+  picEt is NOT implied by the landed separation results -- PicEtAff.unit_injective
+  and relPicAlgMap_injective_of_etaleCover are separation along ETALE COVERS, and
+  a field point is not an etale cover of A unless A is already a field. Do NOT price
+  the remaining step as the evaluation map pi^*pi_*L -> L: that is the DIVISOR route''s
+  obligation, and the rigidity route never produces a divisor. Both routes are live
+  and the substrate above serves both.
+
+
+  MEASURED, so nobody re-runs it: no evaluation map / seesaw / ''trivial on every
+  fibre implies pulled back'' exists in AJCR, in AJC, or in mathlib; no Pic of P1
+  over a RING anywhere; AJC''s HasRigidPushforward cone is mathematically closest
+  but lives in the Scheme.Modules category AJCR uses in ZERO files, and AJC''s own
+  flat-base-change endpoints reach live sorries.'
+status: pending
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-31T02:27:08.444370+00:00'
+  provenance:
+    run: 0092
+    session: 0014-horizon-pic-c
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum
+  updated_at: '2026-07-31T03:47:45.703466+00:00'

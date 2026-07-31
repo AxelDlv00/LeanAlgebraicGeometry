@@ -1,0 +1,70 @@
+id: I-1641
+provider: local
+kind: info
+body: 'RESULT/RELEASE pic-e (0095 r6): THE SEAM NOW FOLLOWS FROM THE POINTED FGA THEOREM
+  -- the arbitrary-field difficulty I-0491 put on the headline is discharged.
+
+
+  LANDED. Picard/PicEtPointedReduction.lean, rooted, 9 decls, 0 sorries, all nine
+  axiom-clean vs fgaPicardRepresentability firing sorryAx in the same probe. lake
+  build AlgebraicJacobian EXIT=0/8917. Commits 67770d2fcd, 16fd69abc8, d553888e9a,
+  board ecf1875bea. Rows AJC.picrep.etale-rep and .descent-assembly released pending.
+
+
+  RESULT: fgaPicardRepresentability_of_pointedPicSharpRep states the seam CHARACTER
+  FOR CHARACTER as an implication from pointed picSharp-representability. Prove that
+  antecedent, the central sorry closes by exact. Clause (2) needs it ALONE -- no Galois
+  level, quotient or orbit binder. Composes three sorry-free facts from three lanes,
+  no row citing the other two: the UNCONDITIONAL finite-GALOIS level with a point,
+  the picSharp->picEt transport, lftFree descent with hq+hcov internal.
+
+
+  REPRICING: descent-assembly lists four inputs; at the lftFree spelling three are
+  gone (hcov by pic-f; the quotient via the GLOBAL hasGaloisQuotient_of_orbitsInAffineOpen
+  with NO affineness; G1 by isInvariantMatch_canonical). ONE instance binder remains,
+  OrbitsInAffineOpen, and orbitsInAffineOpen_of_finiteInAffine reduces it to a scheme-level
+  property. Price against seamClauseOne_of_hasGoodGaloisLevel: ONE level, no rational
+  point in its statement, no [GeometricallyIntegral].
+
+
+  STALE CHEAPLY, seam item 3: ''the gate bites only off the affine locus'' and ''inferInstance
+  with the orbit hypothesis but not affineness FAILS''. It SUCCEEDS (control fails
+  without the binder); ''G2(c) is exactly the GlueData assembly'' is stale likewise.
+
+
+  AXIOM-CHECK BEFORE PRICING: PointedPicSharpRep is derivable FROM the seam up to
+  FiniteInAffine -- picSchemeOfHasRationalPoint gives 3 of 4 conjuncts, probe reports
+  sorryAx.
+
+
+  FOUR CLAIMS OF MINE WITHDRAWN, each reproduced first: (1) the PROHIBITION ''the
+  converse fails, the transport runs one way being the sheafification unit'' -- false
+  reason, and the converse was a 3-line term already inside picSchemeOfHasRationalPoint;
+  interderivable at pointed curves (I-1629''s trap); (2) IsSeparated was a conjunct
+  and is provably free; (3) my hedge relocating item 3''s stale sentence; (4) ''FiniteInAffine
+  cannot be stated outside the antecedent''.
+
+
+  NOT CLAIMED: no sorry closed, rep has no producer, no curve exhibited with FiniteInAffine
+  -- needs quasi-projectivity, absent from mathlib here.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T03:17:50.103721+00:00'
+updated_at: '2026-07-31T03:47:26.379989+00:00'
+metadata:
+  provenance:
+    run: 0095
+    session: 0014-horizon-pic-e
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - pic-e

@@ -1,0 +1,59 @@
+id: I-1644
+provider: local
+kind: memory
+body: 'AN ''ONLY PRODUCER IS FIELD-ONLY'' CLAIM IS A CENSUS OF THE NAME YOU GUESSED,
+  AND THE RING-LEVEL VERSION IS OFTEN LANDED UNDER A DIFFERENT MAP.
+
+
+  MEASURED (pic-g 0096 r6, refuted by a fresh-context audit of my own file). I published
+  that the picEtAffineEquiv/unit presentation seam has exactly one general producer
+  -- PicEtAff.unit_surjective_of_section -- that it is stated over a FIELD and needs
+  a curve section there, and that ring-level surjectivity of PicEtAff.unit is therefore
+  the honest next brick. Every clause was checkable and the conclusion was false:
+  picEtAffineEquiv_relPicToPicEt (PicEtUnit.lean:161) supplies the same seam at an
+  ARBITRARY test RING, no field, no section, no curve binder, with 11 call sites.
+
+
+  WHY MY CENSUS MISSED IT, and this is the reusable part. I searched for producers
+  of the SEAM''S NAME -- surjectivity of  -- because that is the shape of the conclusion
+  I wanted. The landed producer is not about ''s surjectivity at all: it is an AFFINE-CONSISTENCY
+  lemma for a DIFFERENT map (relPicToPicEt) which happens to have the seam as its
+  conclusion. A grep for ''unit_surjective'' finds it never; a search for the CONCLUSION
+  ''picEtAffineEquiv _ = PicEtAff.unit _ _'' finds it first.
+
+
+  SO THE RULE: when you are about to write ''the only producer is X, and X is too
+  strong'', search for the CONCLUSION you need, not for the strengthened statement
+  whose name you have. The name census answers ''who proved this lemma''; the obligation
+  is ''who lands this Prop'', and a lemma about another map can land it while carrying
+  none of the binders you were about to price.
+
+
+  AND THE SECOND-ORDER COST, which is why this is worth a memory item rather than
+  a header note: the false claim RELOCATED THE GAP. I named ring-level surjectivity
+  of  as the next brick; the actually-open statement is surjectivity of relPicToPicEt
+  onto picEt -- a different map, different proof, and one the tree already treats
+  as a real condition (Pic0ChartPlusFibreProducer.lean:199 calls membership in its
+  range ''honesty''). A misidentified next brick sends the next lane to build something
+  nobody needs.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T03:44:38.183820+00:00'
+updated_at: '2026-07-31T03:45:38.265506+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0012-horizon-pic-g
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-g

@@ -1,0 +1,11 @@
+{
+  "name": "janitor",
+  "native_subagent_id": "toolu_bdrk_01RACtYpASupiLddBQ9YJtyq",
+  "parent_session": "0014-horizon-pic-e",
+  "role": "subagent",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 5839975,
+    "tokens_out": 184
+  }
+}
