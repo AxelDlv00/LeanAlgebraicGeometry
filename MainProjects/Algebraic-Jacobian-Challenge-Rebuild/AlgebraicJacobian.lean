@@ -532,6 +532,7 @@ import AlgebraicJacobian.Picard.Pic0ThetaAssembly
 import AlgebraicJacobian.Picard.Pic0ThetaProjectionCoherence
 import AlgebraicJacobian.Picard.Pic0ThetaCocycle
 import AlgebraicJacobian.Picard.RepresentableByCocycle
+import AlgebraicJacobian.Picard.Pic0RepresentabilityOverlap
 import AlgebraicJacobian.Picard.JacobianDataAbel
 import AlgebraicJacobian.Picard.JacobianDataBaseChange
 import AlgebraicJacobian.Picard.JacobianDataBaseChangeAbel
