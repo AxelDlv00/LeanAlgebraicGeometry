@@ -437,20 +437,23 @@ private theorem crossBase_relPicHom_tower
     (C : Over (Spec (.of k))) (B : Type u) [CommRing B]
     [Algebra k B] [Algebra L B] [Algebra M B]
     [IsScalarTower k L B] [IsScalarTower L M B] [IsScalarTower k M B]
+    (g : (baseChange L M).obj ((baseChange k L).obj C) ⟶ (baseChange k M).obj C)
+    (hg : g = ((baseChange.compIso k L M).app C).inv)
     (x : relPic ((baseChange k M).obj C) (overSpec M B)) :
     (crossBaseTransportFamilyInv k M C).relPicHom B x =
       (crossBaseTransportFamilyInv k L C).relPicHom B
         ((crossBaseTransportFamilyInv L M ((baseChange k L).obj C)).relPicHom B
-          ((curveTransportFamily ((baseChange.compIso k L M).app C).inv).relPicHom B x)) := by
+          ((curveTransportFamily g).relPicHom B x)) := by
   induction x using relPic.ind with
   | mk Λ =>
       rw [RelPicTransportFamily.relPicHom_mk, RelPicTransportFamily.relPicHom_mk,
-        RelPicTransportFamily.relPicHom_mk]
+        RelPicTransportFamily.relPicHom_mk, RelPicTransportFamily.relPicHom_mk]
       refine congrArg (relPicMk C (overSpec k B)) ?_
       rw [← MonoidHom.comp_apply, ← MonoidHom.comp_apply,
         ← Scheme.CechPic.map_comp, ← Scheme.CechPic.map_comp,
         crossBaseTransportFamilyInv_hom, crossBaseTransportFamilyInv_hom,
         crossBaseTransportFamilyInv_hom, curveTransportFamily_hom,
+        hg,
         crossBaseAffineIso_inv_tower k L M C B]
       rw [Category.assoc]
       rfl
@@ -461,22 +464,22 @@ private theorem crossBase_picEtAffHom_tower_mk
     (C : Over (Spec (.of k))) (B : Type u) [CommRing B]
     [Algebra k B] [Algebra L B] [Algebra M B]
     [IsScalarTower k L B] [IsScalarTower L M B] [IsScalarTower k M B]
+    (g : (baseChange L M).obj ((baseChange k L).obj C) ⟶ (baseChange k M).obj C)
+    (hg : g = ((baseChange.compIso k L M).app C).inv)
     (U : Algebra.EtaleCover B)
     (x : descentClasses ((baseChange k M).obj C) U) :
     (crossBaseTransportFamilyInv k M C).picEtAffHom B (PicEtAff.mk _ U x) =
       (crossBaseTransportFamilyInv k L C).picEtAffHom B
         ((crossBaseTransportFamilyInv L M ((baseChange k L).obj C)).picEtAffHom B
-          ((curveTransportFamily ((baseChange.compIso k L M).app C).inv).picEtAffHom B
-            (PicEtAff.mk _ U x))) := by
+          ((curveTransportFamily g).picEtAffHom B (PicEtAff.mk _ U x))) := by
   rw [RelPicTransportFamily.picEtAffHom_mk, RelPicTransportFamily.picEtAffHom_mk,
-    RelPicTransportFamily.picEtAffHom_mk]
+    RelPicTransportFamily.picEtAffHom_mk, RelPicTransportFamily.picEtAffHom_mk]
   refine congrArg (PicEtAff.mk C U) (Subtype.ext ?_)
   rw [RelPicTransportFamily.descentHom_coe, RelPicTransportFamily.descentHom_coe,
-    RelPicTransportFamily.descentHom_coe]
-  exact crossBase_relPicHom_tower k L M C B (x : relPic ((baseChange k M).obj C)
-    (overSpec M U.Carrier))
+    RelPicTransportFamily.descentHom_coe, RelPicTransportFamily.descentHom_coe]
+  exact crossBase_relPicHom_tower k L M C U.Carrier g hg
+    (x : relPic ((baseChange k M).obj C) (overSpec M U.Carrier))
 
-set_option maxHeartbeats 1000000 in
 /-- The inverse affine base-field shuffle over a scalar tower is the composite of the two
 successive inverse shuffles and transport along the frozen curve comparison. -/
 theorem PicEtAff.baseFieldShuffle_symm_tower
@@ -498,6 +501,6 @@ theorem PicEtAff.baseFieldShuffle_symm_tower
         ((curveTransportFamily g).picEtAffHom B a))
   induction a using PicEtAff.ind with
   | mk U x =>
-    exact crossBase_picEtAffHom_tower_mk k L M C B U x
+    exact crossBase_picEtAffHom_tower_mk k L M C B g (by rfl) U x
 
 end AlgebraicGeometry
