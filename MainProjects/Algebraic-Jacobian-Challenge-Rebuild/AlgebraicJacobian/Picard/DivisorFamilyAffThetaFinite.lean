@@ -49,6 +49,8 @@ namespace AffAdaptation
 variable {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
 variable {A : AffAdaptation D d}
 
+attribute [local instance] thetaPieceQuotientBaseModule
+
 section CertifiedWindow
 
 variable {g a : ℕ} (hc : A.IsCertified g)
@@ -101,6 +103,7 @@ theorem IsCertified.finite_intrinsicThetaGluedOver
     Module.Finite.equiv e.symm
   exact Module.Finite.of_restrictScalars_finite R AD M
 
+include π in
 /-- Each intrinsic theta quotient on a widened piece is finite over the test ring. -/
 theorem IsCertified.finite_thetaPieceQuotient
     (hc : A.IsCertified g) (a : ℕ) (j : D.index) :
@@ -117,6 +120,7 @@ theorem IsCertified.finite_thetaPieceQuotient
     A.invertible_thetaPieceQuotient (π := π) a j
   exact Module.Invertible.finite_trans (A := A.colength j)
 
+include π in
 /-- Each intrinsic theta quotient on a widened piece is projective over the test ring. -/
 theorem IsCertified.projective_thetaPieceQuotient
     (hc : A.IsCertified g) (a : ℕ) (j : D.index) :
@@ -133,6 +137,7 @@ theorem IsCertified.projective_thetaPieceQuotient
     A.invertible_thetaPieceQuotient (π := π) a j
   exact Module.Invertible.projective_trans (A := A.colength j)
 
+include π in
 /-- The product of the piece theta quotients is finite over `R`. -/
 theorem IsCertified.finite_thetaPieceProd
     (hc : A.IsCertified g) (a : ℕ) :
@@ -145,6 +150,7 @@ theorem IsCertified.finite_thetaPieceProd
       (A := A) hc a j
   exact Module.Finite.pi
 
+include π in
 /-- The product of the piece theta quotients is projective over `R`. -/
 theorem IsCertified.projective_thetaPieceProd
     (hc : A.IsCertified g) (a : ℕ) :
