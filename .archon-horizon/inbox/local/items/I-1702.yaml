@@ -29,13 +29,13 @@ body: 'RESULT/RELEASE pic-e (0105 r2): Div0 producer reduced to pure section van
   bridge. No new hypothesis added this round.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-31T10:05:28.661975+00:00'
-updated_at: '2026-07-31T10:16:44.180278+00:00'
+updated_at: '2026-07-31T10:33:40.904557+00:00'
 metadata:
   provenance:
     run: '0105'
