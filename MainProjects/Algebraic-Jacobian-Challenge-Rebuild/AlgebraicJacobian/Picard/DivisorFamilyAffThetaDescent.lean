@@ -6,6 +6,7 @@ Authors: The AlgebraicJacobian Contributors
 import AlgebraicJacobian.Picard.DivisorFamilyAffMapAlg
 import AlgebraicJacobian.Picard.DivisorFamilyAffTheta
 import AlgebraicJacobian.Picard.DivisorFamilyAffThetaRestriction
+import AlgebraicJacobian.Algebra.PiInvertible
 import Mathlib.LinearAlgebra.TensorProduct.Quotient
 
 /-!
@@ -618,6 +619,18 @@ noncomputable abbrev ThetaPieceProd (A : AffAdaptation D d) (a : ℕ) : Type u :
 /-- Product of the intrinsic divisor-restricted theta modules on pairwise overlaps. -/
 noncomputable abbrev ThetaOverlapProd (A : AffAdaptation D d) (a : ℕ) : Type u :=
   ∀ p : D.index × D.index, A.ThetaOverlapQuotient (π := π) a p.1 p.2
+
+omit [IsProper C.hom] in
+/-- The product of the intrinsic theta quotient modules is invertible over the product of
+the piece colength algebras. -/
+theorem invertible_thetaPieceProd (A : AffAdaptation D d) (a : ℕ) :
+    Module.Invertible A.chartProd (A.ThetaPieceProd (π := π) a) := by
+  letI : forall j, Module.Invertible (A.colength j)
+      (A.ThetaPieceQuotient (π := π) a j) :=
+    fun j => A.invertible_thetaPieceQuotient (π := π) a j
+  exact Module.Invertible.pi
+    (R := fun j => A.colength j)
+    (M := fun j => A.ThetaPieceQuotient (π := π) a j)
 
 /-- Piecewise evaluation of a global theta section on the widened divisor cover. -/
 noncomputable def intrinsicThetaEvalRaw (A : AffAdaptation D d) (a : ℕ) :
