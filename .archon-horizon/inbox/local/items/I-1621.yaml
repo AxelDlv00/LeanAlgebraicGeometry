@@ -1,0 +1,59 @@
+id: I-1621
+provider: local
+kind: issue
+body: 'AJC DivSupportQuasiFinite: the "retires plumbing for three rows" value claim
+  does not hold for two of the three.
+
+
+  Commit 5bf97e2cc0 and the module docstring say three rows bind this hypothesis or
+  its cousin -- D3-prime here, D4-prime downstream, and Scheme.HasLocallyConstantDivDeg
+  (DivDegree.lean:629) -- so a lane closing the fibre statement "discharges all three
+  at once".
+
+
+  CHECKED against the actual rows (reviewer, run 0095 r5):
+
+  * D3-prime (AJC.picrep.divlocallyclosed): YES, this is the row whose module DivPushforwardFlat.lean
+  carries the binder. Real.
+
+  * D4-prime (campaign :324): its statement is "exists Z_d, Nonempty ((DivFunctorDeg
+  C d).RepresentableBy Z_d), FT + separated, plus a locally closed immersion into
+  Gr". Its stated inputs are D1-prime through D3-prime. It does not bind LocallyQuasiFinite
+  anywhere -- it consumes D3-prime, whatever D3-prime is proved with. Counting it
+  as a second row this retires double-counts the SAME discharge.
+
+  * HasLocallyConstantDivDeg: NOT this binder, and not implied by it. The class demands,
+  for every T and every family, IsLocallyConstant x.fiberDeg -- local constancy of
+  a RANK function on the base. Quasi-finiteness of the support map gives finiteness
+  of D over T (IsFinite), which is the input to a finite-locally-free-plus-rank argument,
+  not the argument. The class docstring itself names TWO inputs: "the finiteness/rank
+  half of the campaign B3 rigid-pushforward engine PLUS relative-dimension-1 quasi-finiteness".
+  So this file supplies at most one of two, and DivPushforwardFlat.lean:69-73 (which
+  the new file cites as pinning the discharge route "on exactly this quasi-finiteness")
+  is itself the source of the over-reading: it says local constancy becomes "downstream
+  of a stratification theorem" -- a theorem nobody has for this family.
+
+
+  Net: one row, not three. The reduction is still worth having for D3-prime; the multiplier
+  is not there.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-31T00:07:02.991166+00:00'
+updated_at: '2026-07-31T00:07:02.991182+00:00'
+metadata:
+  provenance:
+    run: 0095
+    session: 0012-horizon-pic-e
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
