@@ -35,14 +35,14 @@ discharges the `σ` binder, so at `ℙ¹` the comparison holds **with no hypothe
 (`eq_one_of_classDeg_eq_zero_baseChange`, from `χ(𝒪) = 1`).  `RelPicDegree.lean`'s `relPicDeg K`
 descends `classDeg K` to `relPic`, so the same fact reads on the relative Picard group:
 
-* `P1.relPicDeg_eq_zero_iff` — a class of `relPic (ℙ¹_K)` has `relPicDeg K = 0` iff it is `1`;
-* `P1.eq_of_relPicDeg_eq` — the relative degree determines the class.
+* `P1.eq_one_of_relPicDeg_eq_zero` — a class of `relPic (ℙ¹_K)` with `relPicDeg K = 0` is `1`;
+* `P1.eq_of_relPicDeg_eq` — the relative degree determines the class;
+* `P1.relPicDeg_eq_zero_subsingleton` — two classes with `relPicDeg K = 0` are equal.
 
 Transporting through the comparison isomorphism gives the same on the étale side:
 
 * `P1.picEt_eq_one_of_relPicDeg_symm_eq_zero` — an étale class whose `relPic`-preimage has
-  relative degree `0` is `1`;
-* `P1.subsingleton_relPicDegZero` — the degree-zero subgroup of `relPic (ℙ¹_K)` is a subsingleton.
+  relative degree `0` is `1`.
 
 ## What this is for, and what it is NOT
 
@@ -169,7 +169,14 @@ theorem pic0Subgroup_coe_eq_one (lam : pic0Subgroup (P1.asOver k) (overSpec k K)
 /-- **The degree-zero étale-sheafified Picard group of `ℙ¹` over a field is a subsingleton.**
 The field-test instance of the `∀ T` binder both representability routes pass through, proved
 through the honest relative Picard group (surjectivity of the comparison unit + triviality of
-degree-zero `relPic`), the template the ring case is to reproduce. -/
+degree-zero `relPic`), the template the ring case is to reproduce.
+
+**This conclusion already exists at HEAD** as `subsingleton_pic0Subgroup_overSpec_field`
+(`Picard/Pic0VanishingFieldTest.lean`), proved through the `degAff` route; the two are
+interderivable and this is **not new field-case mathematics**.  It is landed here as the
+*route* the ring case must follow — surjectivity of `relPicToPicEt` and triviality of
+degree-zero `relPic`, the two facts a ring-level `Pic(ℙ¹_A)` computation supplies — so that the
+ring version transcribes this proof rather than the `degAff` one. -/
 theorem subsingleton_pic0Subgroup :
     Subsingleton (pic0Subgroup (P1.asOver k) (overSpec k K)) :=
   ⟨fun s t => Subtype.ext ((pic0Subgroup_coe_eq_one k K s).trans
