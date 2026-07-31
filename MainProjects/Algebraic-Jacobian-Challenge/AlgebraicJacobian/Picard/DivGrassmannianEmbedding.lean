@@ -240,6 +240,24 @@ end DivFamily
 
 namespace Modules
 
+/**
+  Tensoring on the right preserves epimorphisms in `Scheme.Modules`.
+
+  The scheme-level tensor substrate is the sheafification of the pointwise
+  presheaf tensor.  The latter is a colimit-preserving functor in either
+  variable, and sheafification is a left adjoint, so the resulting morphism
+  is epi without any flatness or local-triviality assumption on the left
+  factor.
+-/
+theorem tensorObj_functoriality_epi_right
+    {X : Scheme.{u}} {M N N' : X.Modules} (g : N ⟶ N') [Epi g] :
+    Epi (tensorObj_functoriality (𝟙 M) g) := by
+  let S := PresheafOfModules.sheafification (R := X.ringCatSheaf)
+    (𝟙 X.ringCatSheaf.obj)
+  change Epi (S.map (MonoidalCategory.tensorHom (C := _root_.PresheafOfModules
+    (X.ringCatSheaf.obj ⋙ forget₂ CommRingCat RingCat)) (𝟙 M).val g.val))
+  infer_instance
+
 set_option backward.isDefEq.respectTransparency false in
 /-- A finite global presentation of a module sheaf on `Spec R` induces a
 finite presentation of its module of global sections.
@@ -437,6 +455,23 @@ theorem fiberRank_gammaTop_eq_fiberH0_of_isFinite_schematicSupport
 end Modules
 
 namespace DivFamily
+
+/-- **The twisted divisor quotient is epi before pushforward.**
+
+The quotient field of a `DivFamily` remains an epimorphism after tensoring
+with any module on the curve.  This is the exact local algebra input needed
+when the D2' evaluation factor is checked on affine support charts; it does
+not assert that pushforward preserves epimorphisms (that is the separate
+global-generation obligation).
+-/
+theorem twistQuotientMap_epi (L : X.Modules) (x : DivFamily π T) :
+    Epi (x.twistQuotientMap L) := by
+  letI := x.epi
+  haveI : Epi (Modules.tensorObj_functoriality (𝟙 _)
+      ((Modules.pullbackUnitIso (pullback.fst π T.hom)).inv ≫ x.q)) :=
+    Modules.tensorObj_functoriality_epi_right _
+  dsimp [twistQuotientMap]
+  infer_instance
 
 set_option backward.isDefEq.respectTransparency false in
 /-- On an affine test base, a finite-flat divisor pushforward is locally free
