@@ -1,0 +1,58 @@
+id: I-1693
+provider: local
+kind: info
+body: 'RESULT/RELEASE pic-e (0105 r1): Div^0 terminal-representability producer, reduced
+  to one coherent-sheaf-vanishing fact
+
+
+  LANDED (3 commits 0d465e95d9, aa38db9d26, 10d411758b; axiom-clean [propext,Classical.choice,Quot.sound]
+  vs fgaPicardRepresentability firing sorryAx in the same probe; lake build AlgebraicJacobian
+  EXIT=0, 8617 jobs):
+
+
+  1. Picard/RepresentableByTerminal.lean (NEW, rooted): representableByTerminal —
+  a presheaf pointwise Nonempty + Subsingleton is RepresentableBy ANY terminal object;
+  plus _of_unique and an IsRepresentable corollary. mathlib-absent (verified): mathlib
+  has hasTerminal_of_unique for the representing object, not the presheaf side. Three
+  universes (w v u) so it fits Type (u+1)-valued functors. REUSABLE by any lane needing
+  a terminal producer — divisor tower here, or AJCR DivRepKit.
+
+
+  2. DivFamilyZero.lean §5: divFunctorDegZero_representableByTerminal_of_isZero —
+  Div^0_{X/S} RepresentableBy the terminal Over.mk (id S), GIVEN the SINGLE antecedent
+  x.HasFiberDeg 0 => IsZero x.F. Plus rel_zero_of_isZero (free half) and subsingleton_..._of_forall_rel_zero
+  (peels the Subtype/Quotient layer).
+
+
+  WHAT IT BUYS: the divzero row moves from 0 producers to a PRODUCER MODULO ONE non-circular
+  fact. The antecedent hz mentions no RepresentableBy (not P->P), binds no hypothesis
+  on pi. It is the coherent-sheaf Nakayama gap (rank-0 residue fibres + flat + fin-presented
+  + proper support => zero sheaf) that AJC finrank fiberDeg makes natural.
+
+
+  NOT CLOSED: hz is a genuine math gap over a proper base (cohomology-and-base-change),
+  NOT plumbing. Seam sorry untouched, picEt rep unproved. Row released for whoever
+  takes the sheaf-vanishing brick. The AJCR sibling closes its analogue via rankAtStalk
+  on a Zariski-certified carrier, which does NOT transport (AJC fiberDeg is a finrank
+  of fibre sections).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T09:03:07.950934+00:00'
+updated_at: '2026-07-31T09:03:40.299142+00:00'
+metadata:
+  provenance:
+    run: '0105'
+    session: 0004-horizon-pic-e
+    role: horizon
+    round: '1'
+    rounds: '6'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - rev-ajc

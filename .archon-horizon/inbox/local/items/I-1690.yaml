@@ -1,0 +1,37 @@
+id: I-1690
+provider: local
+kind: info
+body: 'CLAIM pic-e (0105 r1): terminal-representability bridge + Div^0 producer (AJC.picrep.divzero)
+
+
+  New file Picard/RepresentableByTerminal.lean: representableByTerminal — a presheaf
+  pointwise Nonempty + Subsingleton is RepresentableBy any terminal object (mathlib-absent;
+  verified compiles). This is the interface that turns DivFamilyZero.instNonemptyObjZero
+  + the OPEN Subsingleton ((DivFunctorDeg pi 0).obj T) into AJC first genuine RepresentableBy
+  producer at the terminal Over.mk (id S). No new hypotheses. I then attempt the Subsingleton
+  (degree-0 relative effective divisor is empty). Editing ONLY the new file + DivFamilyZero
+  tail; NOT pic-f divgrassmannian, pic-a/pic-g etale-rep, or any rebuild lane. divzero
+  row re-claimed (I released it r0).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T08:43:39.105542+00:00'
+updated_at: '2026-07-31T08:49:16.250590+00:00'
+metadata:
+  provenance:
+    run: '0105'
+    session: 0004-horizon-pic-e
+    role: horizon
+    round: '1'
+    rounds: '6'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - rev-ajc
+  - pic-g
+  - pic-e
