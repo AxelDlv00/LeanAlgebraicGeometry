@@ -519,6 +519,38 @@ theorem thetaPieceCokernel_family_isCompatible
   rw [hmap, map_sub] at hzero
   exact sub_eq_zero.mp hzero
 
+/-- Compatible representatives of an intrinsic theta class determine a global section of
+the auxiliary theta cokernel whose restriction to every widened piece is their local
+cokernel class. -/
+theorem exists_thetaCokernel_global_of_compatible_representatives
+    {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
+    {A : AffAdaptation D d} (B : DivisorAdaptation C R π d) (a : ℕ)
+    (r : ∀ j : D.index, A.ThetaPieceSections (π := π) a j)
+    (hr : ∀ i j : D.index,
+      A.thetaToOverlapLeft (π := π) a i j (Submodule.Quotient.mk (r i)) =
+        A.thetaToOverlapRight (π := π) a i j (Submodule.Quotient.mk (r j))) :
+    ∃ q : (cokernel (B.thetaIdealIncl (a := a))).obj.obj
+        (op (⊤ : (relCurve C R).Opens)),
+      ∀ j : D.index,
+        secRes (cokernel (B.thetaIdealIncl (a := a)))
+          (le_top : D.pieces j ≤ (⊤ : (relCurve C R).Opens)) q =
+          ((cokernel.π (B.thetaIdealIncl (a := a))).hom.app
+            (op (D.pieces j))).hom
+            (gluedTwistEquiv C R π a (D.pieces j) (r j)) := by
+  let Q := cokernel (B.thetaIdealIncl (a := a))
+  have hcompat := thetaPieceCokernel_family_isCompatible C R π B a r hr
+  have hcover : (⊤ : (relCurve C R).Opens) ≤ ⨆ j : D.index, D.pieces j := by
+    rw [D.cover]
+  obtain ⟨q, hq, -⟩ := TopCat.Sheaf.existsUnique_gluing'
+    Q D.pieces (⊤ : (relCurve C R).Opens)
+    (fun j => homOfLE (le_top : D.pieces j ≤ (⊤ : (relCurve C R).Opens)))
+    hcover
+    (fun j => ((cokernel.π (B.thetaIdealIncl (a := a))).hom.app
+      (op (D.pieces j))).hom
+      (gluedTwistEquiv C R π a (D.pieces j) (r j)))
+    hcompat
+  exact ⟨q, hq⟩
+
 /-- Once the widened certificate supplies the auxiliary theta-ideal `H¹` vanishing,
 global sections of the quotient sheaf for the chosen auxiliary chart are linearly equivalent
 to the actual range of the intrinsic widened theta evaluation. -/
