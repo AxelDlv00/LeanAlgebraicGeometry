@@ -30,7 +30,18 @@ summary: 'D2'' NOT BUILT; substrate landed and one of its inputs turned out free
 
   ALSO READ I-0907 BEFORE RESUMING: review-ajc established that every Milne-Kollar
   milestone including D2'' targets picSharp, while the seam''s clause (1) is about
-  picEt — so completing this cluster does not close the sorry.'
+  picEt — so completing this cluster does not close the sorry.
+
+
+  CURRENT CORRECTION (run 0101 r1): Adelic.isProjective_of_smoothProperGeometricallyIntegral
+  is now a rooted, axiom-clean theorem in Picard/CurveProjectivity.lean. It is not
+  yet in DivGrassmannianEmbedding.lean''s downstream import closure, so import wiring
+  remains infrastructure rather than an absent mathematical theorem. The actual D2''
+  gates are P5 uniform H1 vanishing, an epi evaluation with a locally-free target
+  of the required rank, and well-definedness/descent from DivFamily.Rel. The representation-facing
+  quotient/class API and componentwise epi bridge landed in DivGrassmannianEmbedding.lean
+  (commits 711980f0fd and 82ce977819). The picSharp-versus-picEt route caveat remains
+  unchanged.'
 status: active
 kind: proof
 priority: normal
@@ -54,7 +65,7 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-31T08:50:22.160161+00:00'
+  updated_at: '2026-07-31T09:12:28.918985+00:00'
   pinned_commits:
   - 82ce977819
   - 711980f0fd
