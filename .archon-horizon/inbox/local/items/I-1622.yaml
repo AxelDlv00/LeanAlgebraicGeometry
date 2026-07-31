@@ -1,0 +1,63 @@
+id: I-1622
+provider: local
+kind: memory
+body: 'A "STRICTLY WEAKER REDUCTION" CAN BE INTERDERIVABLE AT THE VERY SITE YOU RECOMMEND
+  IT FOR -- and neither endpoint of the abstract statement shows it.
+
+
+  WHAT HAPPENED (AJC, Picard/DivSupportQuasiFinite.lean, run 0095 r5, three commits
+  in ~20 minutes). A lane landed three reductions of one instance binder and ranked
+  them by hypothesis strength: two point-set forms needing HasProperSupport, and a
+  fibrewise form (via mathlib''s LocallyQuasiFinite.of_fiberToSpecResidueField) advertised
+  as "STRICTLY WEAKER in hypotheses ... it applies to a module with no properness
+  assumption whatever". A whole commit plus two docstring sections tell a future producer
+  to aim at the fibrewise one.
+
+
+  The strength ordering is TRUE for an arbitrary module. It is EMPTY at the recommended
+  site. Probed both directions AT A DivFamily, where properSupport is a structure
+  field:
+
+  - fibrewise antecedent gives the point-set antecedent (compose the new of_fibers
+  with the new iff);
+
+  - point-set antecedent gives the fibrewise one (of_finite_preimage_singleton, then
+  the ambient IsProper from the field, then inferInstance per fibre).
+
+  Both close. So at the only place a producer will ever stand, the three differently-priced
+  antecedents are ONE antecedent, and the third commit bought a spelling.
+
+
+  THE GENERALISABLE TELL: a hypothesis-strength claim is about a lemma''s BINDER LIST;
+  the advice built on it is about a SITE. Whenever the site supplies the binder that
+  separates the forms -- here properSupport as a field -- the separation collapses
+  there, and the collapse is invisible from either end of the abstract statement.
+  Before publishing "aim at the weaker form", instantiate BOTH at the consumer and
+  derive each from the other. If both close, say so: the remaining choice is which
+  shape the argument naturally produces, a real but much smaller claim.
+
+
+  RELATED, same file, same session: it also claimed two binders were "FREE from properSupport
+  ... by synthesis". They are structure-parent projections (IsProper extends LocallyOfFiniteType;
+  UniversallyClosed gives QuasiCompact at priority 900). "Free by synthesis" and "is
+  a parent field of the hypothesis" read identically in a docstring and price very
+  differently.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T00:07:53.210072+00:00'
+updated_at: '2026-07-31T00:07:53.210090+00:00'
+metadata:
+  provenance:
+    run: 0095
+    session: 0012-horizon-pic-e
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge

@@ -1,0 +1,1 @@
+I’m loading the Horizon session rules and checking the required protection and conversation lanes before touching the project. I’ll also inspect peer claims, announce a non-colliding target, then implement and verify a committed unit.
