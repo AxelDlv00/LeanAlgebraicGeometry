@@ -9,7 +9,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Scheme.Modules.isIso_of_isIso_comp4_mid
 type: lean
-updated: '2026-08-01T07:20:52'
+updated: '2026-08-01T07:23:52'
 ---
 private lemma isIso_of_isIso_comp4_mid {C : Type*} [Category C] {W₀ X₀ Y₀ Z₀ T₀ : C}
     {a : W₀ ⟶ X₀} {b : X₀ ⟶ Y₀} {c : Y₀ ⟶ Z₀} {d : Z₀ ⟶ T₀}
