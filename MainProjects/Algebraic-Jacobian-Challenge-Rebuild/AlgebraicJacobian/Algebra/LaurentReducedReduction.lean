@@ -104,4 +104,62 @@ theorem isNilpotent_of_map_nilradical_eq_zero {A : Type u} [CommRing A] {p : Pol
     simpa using this
   exact (Ideal.Quotient.eq_zero_iff_mem).mp hi
 
+/-! ## The base-change map on Laurent rings, and that it commutes with both ℙ¹ charts -/
+
+section BaseChange
+
+variable {A B : Type u} [CommRing A] [CommRing B]
+
+/-- The Laurent ring is functorial in the coefficient ring: base change along `φ`.  Mathlib
+spells this `AddMonoidAlgebra.mapRingHom` at `M := ℤ`; there is no `LaurentPolynomial.map`. -/
+noncomputable abbrev laurentMap (φ : A →+* B) :
+    LaurentPolynomial A →+* LaurentPolynomial B :=
+  AddMonoidAlgebra.mapRingHom ℤ φ
+
+/-- Base change on a Laurent monomial: `AddMonoidAlgebra.map_single` once the `C · T` spelling is
+turned into `Finsupp.single` by `single_eq_C_mul_T`. -/
+theorem laurentMap_C_mul_T (φ : A →+* B) (a : A) (n : ℤ) :
+    laurentMap φ (LaurentPolynomial.C a * LaurentPolynomial.T n)
+      = LaurentPolynomial.C (φ a) * LaurentPolynomial.T n := by
+  rw [← LaurentPolynomial.single_eq_C_mul_T, ← LaurentPolynomial.single_eq_C_mul_T]
+  exact AddMonoidAlgebra.map_single (φ : A →+ B) a n
+
+/-- `T (-1) ^ n = T (-n)`, in the orientation the right chart produces.  `T_pow` is stated with
+the exponent on the *left* of the product, so the arithmetic is done by hand. -/
+private lemma T_neg_one_pow {R : Type u} [CommRing R] (n : ℕ) :
+    (LaurentPolynomial.T (-1 : ℤ) : LaurentPolynomial R) ^ n
+      = LaurentPolynomial.T (-(n : ℤ)) := by
+  have h := LaurentPolynomial.T_pow (R := R) (-1 : ℤ) n
+  rw [show ((n : ℤ) * (-1)) = -(n : ℤ) from by ring] at h
+  exact h
+
+/-- **Base change commutes with the left ℙ¹ chart** `Polynomial.toLaurent`. -/
+theorem laurentMap_toLaurent (φ : A →+* B) (p : Polynomial A) :
+    laurentMap φ (Polynomial.toLaurent p)
+      = Polynomial.toLaurent (Polynomial.mapRingHom φ p) := by
+  induction p using Polynomial.induction_on' with
+  | add p q hp hq => simp [hp, hq]
+  | monomial n a =>
+      rw [← Polynomial.C_mul_X_pow_eq_monomial, Polynomial.toLaurent_C_mul_X_pow,
+        laurentMap_C_mul_T]
+      simp
+
+/-- **Base change commutes with the right ℙ¹ chart** `rightChart`. -/
+theorem laurentMap_rightChart (φ : A →+* B) (p : Polynomial A) :
+    laurentMap φ (rightChart A p) = rightChart B (Polynomial.mapRingHom φ p) := by
+  induction p using Polynomial.induction_on' with
+  | add p q hp hq => simp [hp, hq]
+  | monomial n a =>
+      rw [← Polynomial.C_mul_X_pow_eq_monomial]
+      have hl : rightChart A (Polynomial.C a * Polynomial.X ^ n)
+          = LaurentPolynomial.C a * LaurentPolynomial.T (-(n : ℤ)) := by
+        rw [map_mul, rightChart_C, map_pow, rightChart_X, T_neg_one_pow]
+      have hr : rightChart B (Polynomial.C (φ a) * Polynomial.X ^ n)
+          = LaurentPolynomial.C (φ a) * LaurentPolynomial.T (-(n : ℤ)) := by
+        rw [map_mul, rightChart_C, map_pow, rightChart_X, T_neg_one_pow]
+      rw [hl, laurentMap_C_mul_T]
+      simp [hr]
+
+end BaseChange
+
 end AlgebraicGeometry
