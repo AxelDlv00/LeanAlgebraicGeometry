@@ -1,0 +1,34 @@
+id: AJCR.w4-rep.curve-projectivity
+title: 'Curve projectivity bridge: smooth proper geometrically integral implies IsProjective'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: UNOWNED INFRASTRUCTURE GAP. Kleiman Main consumes projective (Zariski locally),
+  flat, and integral geometric fibres. AJCR binds smooth, proper, and geometrically
+  irreducible curves, but its import closure has no projectivity bridge. The sibling
+  AJC theorem AlgebraicGeometry.Adelic.isProjective_of_smoothProperGeometricallyIntegral
+  in Picard/CurveProjectivity.lean is axiom-clean; port that theorem or an equivalent
+  projectivity certificate into AJCR. Keep this separate from DAT-J properness of
+  the divisor source, and do not infer projective from proper.
+status: pending
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-31T11:33:20.025310+00:00'
+  provenance:
+    run: '0104'
+    session: 0004-horizon-rev-ajcr
+    role: horizon
+    round: '1'
+    rounds: '6'
+    task: rev-ajcr
+    task_title: 'Review and macro lane on Algebraic-Jacobian-Challenge-Rebuild: verify
+      real progress and source faithfulness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep
