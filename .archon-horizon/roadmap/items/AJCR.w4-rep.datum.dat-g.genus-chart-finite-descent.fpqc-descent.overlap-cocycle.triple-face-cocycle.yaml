@@ -7,7 +7,7 @@ summary: Define the three actual tensor-face pullbacks over L tensor_k L tensor_
   by whiskered theta and Over.mapComp coherence. Do not define the 1,3 face as a composite
   or assert a definitional equality; this is the remaining effectivity/coherence residue
   and must add no new hypotheses.
-status: pending
+status: done
 kind: proof
 priority: high
 depends_on: []
@@ -30,3 +30,8 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-g.genus-chart-finite-descent.fpqc-descent.overlap-cocycle
   milestone: AJCR.w4-rep
+  updated_at: '2026-07-31T20:56:39.940668+00:00'
+  pinned_commits:
+  - 5be8ed3e40bdfe9ff2c6bd614c7e0f6e34173d24
+  - 41e2035c58b21aef4af4357e5c3c18a6f5477445
+  - bd795aa5ac6754c3f538457cda7ab5b56540faba
