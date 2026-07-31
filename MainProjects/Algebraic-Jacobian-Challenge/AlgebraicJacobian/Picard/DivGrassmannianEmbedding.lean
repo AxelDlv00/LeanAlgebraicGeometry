@@ -437,6 +437,7 @@ end Modules
 
 namespace DivFamily
 
+set_option backward.isDefEq.respectTransparency false in
 /-- On an affine test base, a finite-flat divisor pushforward is locally free
 of the divisor's fibre degree.  The proof supplies finite presentation and
 projectivity from the existing pushforward producers; the rank is computed by
@@ -456,7 +457,7 @@ theorem pushforward_isLocallyFreeOfRank
   letI : x.F.IsFinitePresentation := x.isFinitePresentation
   letI : x.F.IsQuasicoherent := by
     exact inferInstance
-  let q := pullback.snd π f
+  let q := pullback.snd π (Over.mk f).hom
   let M : (Spec R).Modules := (Modules.pushforward q).obj x.F
   haveI : QuasiCompact q := by
     dsimp [q]
@@ -465,7 +466,7 @@ theorem pushforward_isLocallyFreeOfRank
     dsimp [q]
     infer_instance
   haveI : M.IsFinitePresentation := x.isFinitePresentation_pushforward
-  haveI : M.IsQuasicoherent := Modules.pushforward_isQuasicoherent q x.F
+  haveI : M.IsQuasicoherent := x.isQuasicoherent_pushforward
   letI baseM := ((𝟙 (Spec R)) : Spec R ⟶ Spec R).baseSectionsModule M
     (⊤ : (Spec R).Opens)
   haveI : IsNoetherianRing Γ(Spec R, (⊤ : (Spec R).Opens)) :=

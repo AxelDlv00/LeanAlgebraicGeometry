@@ -3,12 +3,12 @@ author: sync
 content_type: theorem
 created: '2026-07-31T16:14:01'
 decl: CategoryTheory.GrothendieckTopology.MayerVietorisSquare.subsingleton_hModule'_of_moduleDiff_surjective
-file: _scratch_FixedCoordinateUniform.lean
+file: AlgebraicJacobian/RiemannRoch/Ledger/FixedFiberDegree.lean
 generated: lean
 lean_status: lean_ok
 title: CategoryTheory.GrothendieckTopology.MayerVietorisSquare.subsingleton_hModule'_of_moduleDiff_surjective
 type: lean
-updated: '2026-07-31T19:37:13'
+updated: '2026-07-31T19:55:23'
 ---
 theorem subsingleton_hModule'_of_moduleDiff_surjective
     [Subsingleton (Sheaf.HModule' F S.X₂ 1)]
