@@ -711,6 +711,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyDegreeZeroUnique
 import AlgebraicJacobian.Picard.DivisorFamilyDegreeZeroGeneral
 import AlgebraicJacobian.Picard.DivisorFamilyDegreeZeroRep
 import AlgebraicJacobian.Picard.DivisorFamilyDegreeZeroUseSite
+import AlgebraicJacobian.Picard.Pic0RingDatumEngine
 import AlgebraicJacobian.Picard.Pic0VanishingAffineReduction
 import AlgebraicJacobian.Picard.Pic0VanishingFieldGenusZero
 import AlgebraicJacobian.Picard.Pic0VanishingFieldTest
