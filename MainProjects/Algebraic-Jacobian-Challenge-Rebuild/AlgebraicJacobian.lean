@@ -496,6 +496,7 @@ import AlgebraicJacobian.Tangent.EpsChartSquare
 import AlgebraicJacobian.Tangent.TwoChartHonest
 import AlgebraicJacobian.Picard.TwoChartCechPicTrivial
 import AlgebraicJacobian.Picard.LaurentTwoChartCoboundary
+import AlgebraicJacobian.Algebra.LaurentNilpotentCoboundary
 import AlgebraicJacobian.Tangent.EpsZeroSurjective
 import AlgebraicJacobian.Tangent.ChartClassNaturality
 import AlgebraicJacobian.Tangent.PicEpsKernelTrivial
