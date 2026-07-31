@@ -32,11 +32,13 @@ guessed.
 \section{The Jacobian as an abelian variety}
 
 \begin{definition}[Jacobian]
-  \label{def:jacobian}
-  \lean{AlgebraicGeometry.Jacobian}
+ \label{def:jacobian}
+ \lean{AlgebraicGeometry.Jacobian}
+ \uses{def:pic0Functor}
+ \source{kleiman-picard}
   The \emph{Jacobian} \(\Jac(C)\) of a smooth proper curve \(C\) over \(k\) is the identity
   component \(\Pic^0_{C/k}\) of the relative Picard scheme of \(C\) over \(k\): the \(k\)-scheme
-  representing (the fppf-sheafification of) the functor of degree-zero line bundles on \(C\).
+  representing the degree-zero subfunctor of the \'etale-sheafified relative Picard functor.
 \end{definition}
 
 \begin{proposition}[Group scheme structure]

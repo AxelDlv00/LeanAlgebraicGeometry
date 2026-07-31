@@ -3,15 +3,14 @@ title: 'DD-R: the relative endgame — Z(♦), local generators via lm:ctn/Nakay
   inherited from the ambient summand, inverse laws, divRep'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'High-window relations, fibre models, nonreduced quotient flatness, chart
-  quotient transfer, pointwise RD-N, the unconditional generator, adapted fibre regularity,
-  overlap finite/flat reductions, universal second-window containment, fibre-rank
-  reduction, and the pulled degree-g identity are complete. The certificate gate was
-  RELAXED on 2026-07-25 from a global IsCertified over the chart ring to the Zariski-local
-  IsLocallyCertified the consumers actually take, and is now pointwise on the base
-  with a free adaptation (subitem zar-gate, landed). Remaining under certificate:
-  tube-fibre, away-kerspan, away-assemble. Then the epsilon inverse laws, divRep,
-  and datum assembly.'
+summary: 'R2 widened the carrier: each certificate uses arbitrary affine-open pieces
+  of the relative curve, not a fixed pair of pinned P1 charts. High-window relations,
+  fibre models, nonreduced quotient flatness, quotient transfer, pointwise RD-N, the
+  unconditional generator, adapted fibre regularity, overlap finite/flat reductions,
+  second-window containment, fibre-rank reduction, and the pulled degree-g identity
+  are complete. The remaining DD-R work is the widened certificate/divRep endpoint,
+  epsilon inverse laws, and datum assembly; the old tube-fibre and chart-typed away-assembly
+  route is superseded or already discharged. Do not build the GL2 action on P1.'
 status: active
 kind: proof
 priority: normal
