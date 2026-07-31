@@ -53,6 +53,8 @@ section CertifiedWindow
 
 variable {g a : ℕ} (hc : A.IsCertified g)
 
+set_option maxHeartbeats 800000 in
+-- The equalizer-module instance transport unfolds two dependent subtype module actions.
 set_option synthInstance.maxHeartbeats 300000 in
 /-- The intrinsic equalizer module is finite over the equalizer algebra itself.  The
 surjective global evaluation first gives `R`-finiteness; the carrier identification between
@@ -128,7 +130,7 @@ theorem IsCertified.finite_intrinsicWindowQuotient
     Module.Finite R ((R ⊗[k] ↥(Scheme.divisorSections k
       (a • fiberWeilDivisor π) ⊤)) ⧸ divisorWindow d ha1) := by
   letI := AlgebraicGeometry.AffAdaptation.IsCertified.finite_intrinsicThetaGlued
-    C R π hc hπ hO hχ ha1 hMa
+    (C := C) (R := R) (π := π) hc hπ hO hχ ha1 hMa
   exact Module.Finite.equiv
     (AlgebraicGeometry.AffAdaptation.IsCertified.intrinsicWindowQuotEquiv
       C R π hc hπ hO hχ ha1 hMa).symm
