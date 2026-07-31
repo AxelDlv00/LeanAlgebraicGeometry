@@ -503,4 +503,38 @@ The control is recorded here rather than landed as a declaration on purpose: a
 `sorryAx`-firing theorem in a rooted module would make this file's own axiom
 audit read dirty, which is the opposite of what the measurement is for. -/
 
+/-! ## §8. Producers for `FiniteInAffine`
+
+§7 identifies `FiniteInAffine` as the one conjunct of the antecedent that is not a
+projection of the seam — so it is the part a lane must actually build, and the
+lemmas it will need to move it around belong here rather than in that lane. -/
+
+/-- **`FiniteInAffine` transports along an isomorphism of schemes.**
+
+This is not a convenience lemma: `RepresentableBy` determines the representing
+object only **up to isomorphism**, so the scheme a lane produces and the scheme
+the antecedent names need not be the same one, and without this the hypothesis
+could be discharged at the wrong object. -/
+theorem finiteInAffine_of_iso {X Y : Scheme.{u}} (e : X ≅ Y) (h : FiniteInAffine X) :
+    FiniteInAffine Y := by
+  intro s hs
+  obtain ⟨U, hU⟩ := h (e.hom.base ⁻¹' s) (hs.preimage
+    (TopCat.homeoOfIso ((Scheme.forgetToTop).mapIso e)).injective.injOn)
+  refine ⟨⟨e.hom ''ᵁ U.1, U.2.image_of_isOpenImmersion e.hom⟩, ?_⟩
+  intro y hy
+  exact ⟨e.inv.base y, hU (by simpa using hy), by simp⟩
+
+/-- **The relative producer**: an object of `Over (Spec k)` whose structure
+morphism is affine satisfies `FiniteInAffine`.
+
+Weaker than it looks useful for — the Picard scheme is *not* affine over `k` — but
+it is the form a chart-by-chart argument would consume, and it makes the
+hypothesis satisfiable at named objects in the slice category the antecedent
+actually lives in, not merely at bare affine schemes. -/
+theorem finiteInAffine_left_of_isAffineHom {k : Type u} [Field k]
+    (X : Over (Spec (CommRingCat.of k))) [IsAffineHom X.hom] :
+    FiniteInAffine X.left :=
+  haveI := isAffine_of_isAffineHom X.hom
+  finiteInAffine_of_isAffine _
+
 end AlgebraicGeometry.Scheme
