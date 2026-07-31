@@ -1,0 +1,1 @@
+I’ve finished the required Horizon orientation and coordination. The current seam is the arbitrary-affine image from the glued theta-ideal cokernel into the intrinsic theta-vanishing quotient; I’m checking the exact local API now, then I’ll land the smallest reusable producer that compiles and verify it in isolation.
