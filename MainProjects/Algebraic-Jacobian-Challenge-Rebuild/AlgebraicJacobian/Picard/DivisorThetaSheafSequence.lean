@@ -204,6 +204,130 @@ theorem thetaIdealInclApp_idealToGlued₁
   rw [Scheme.resHom_self]
   exact gluedToIdeal₁_idealToGlued₁ (A := A) (a := a) hW β hβ
 
+/-! ## Arbitrary-open range
+
+The two chartwise lifts glue on every open.  This is the cover-independent range
+statement needed by the global theta cokernel: membership is tested only by the
+germs of the two components, while the open itself remains arbitrary.
+-/
+
+theorem exists_thetaIdealInclApp_of_germ_mem
+    {W : (relCurve C R).Opens}
+    (x : (relThetaTwistSheaf C R π a).obj.obj (op W))
+    (hx0 : ∀ (z : relCurve C R) (hz : z ∈ W ⊓
+      (relCover C R (fiberTwoCover π)).V₀),
+      ((relCurve C R).presheaf.germ (W ⊓
+        (relCover C R (fiberTwoCover π)).V₀) z hz).hom x.val.1 ∈ d.stalkIdeal z)
+    (hx1 : ∀ (z : relCurve C R) (hz : z ∈ W ⊓
+      (relCover C R (fiberTwoCover π)).V₁),
+      ((relCurve C R).presheaf.germ (W ⊓
+        (relCover C R (fiberTwoCover π)).V₁) z hz).hom x.val.2 ∈ d.stalkIdeal z) :
+    ∃ s : A.ThetaIdealSections a W, A.thetaIdealInclApp (a := a) W s = x := by
+  let V₀ := (relCover C R (fiberTwoCover π)).V₀
+  let V₁ := (relCover C R (fiberTwoCover π)).V₁
+  let U : Bool → (relCurve C R).Opens := fun b =>
+    match b with
+    | false => W ⊓ V₀
+    | true => W ⊓ V₁
+  have hUW : ∀ b : Bool, U b ≤ W := by
+    intro b
+    cases b <;> exact inf_le_left
+  let s : ∀ b : Bool, A.ThetaIdealSections a (U b) := fun b => match b with
+    | false => idealToGlued₀ A a (show U false ≤ V₀ from inf_le_right) x.val.1 hx0
+    | true => idealToGlued₁ A a (show U true ≤ V₁ from inf_le_right) x.val.2 hx1
+  have hlocal : ∀ b : Bool,
+      A.thetaIdealInclApp (a := a) (U b) (s b) =
+        twistRes R V₀ V₁ (relThetaCocycle C R π a) (hUW b) x := by
+    intro b
+    cases b with
+    | false =>
+      let hU : U false ≤ V₀ := show U false ≤ V₀ from inf_le_right
+      have hchart :
+          A.thetaIdealInclApp (a := a) (U false) (s false) =
+            (twistTriv₀ R V₀ V₁ (relThetaCocycle C R π a) hU).symm x.val.1 := by
+        simpa [s] using
+          (thetaIdealInclApp_idealToGlued₀ (A := A) (a := a) hU x.val.1 hx0)
+      apply (twistTriv₀ R V₀ V₁ (relThetaCocycle C R π a) hU).injective
+      rw [hchart, LinearEquiv.apply_symm_apply, twistTriv₀_apply, twistRes_coe_fst]
+      calc
+        x.val.1 = (relCurve C R).resHom (le_refl (U false)) x.val.1 :=
+          (Scheme.resHom_self (le_refl (U false)) x.val.1).symm
+        _ = (relCurve C R).resHom (le_inf le_rfl hU)
+            ((relCurve C R).resHom
+              (inf_le_inf_right V₀ (inf_le_left : U false ≤ W)) x.val.1) := by
+          rw [Scheme.resHom_resHom]
+    | true =>
+      let hU : U true ≤ V₁ := show U true ≤ V₁ from inf_le_right
+      have hchart :
+          A.thetaIdealInclApp (a := a) (U true) (s true) =
+            (twistTriv₁ R V₀ V₁ (relThetaCocycle C R π a) hU).symm x.val.2 := by
+        simpa [s] using
+          (thetaIdealInclApp_idealToGlued₁ (A := A) (a := a) hU x.val.2 hx1)
+      apply (twistTriv₁ R V₀ V₁ (relThetaCocycle C R π a) hU).injective
+      rw [hchart, LinearEquiv.apply_symm_apply, twistTriv₁_apply, twistRes_coe_snd]
+      calc
+        x.val.2 = (relCurve C R).resHom (le_refl (U true)) x.val.2 :=
+          (Scheme.resHom_self (le_refl (U true)) x.val.2).symm
+        _ = (relCurve C R).resHom (le_inf le_rfl hU)
+            ((relCurve C R).resHom
+              (inf_le_inf_right V₁ (inf_le_left : U true ≤ W)) x.val.2) := by
+          rw [Scheme.resHom_resHom]
+  have hcompat : ∀ i j : Bool,
+      secRes ((A.thetaIdealDatum a).sheaf)
+          (inf_le_left : U i ⊓ U j ≤ U i) (s i) =
+        secRes ((A.thetaIdealDatum a).sheaf)
+          (inf_le_right : U i ⊓ U j ≤ U j) (s j) := by
+    intro i j
+    apply A.thetaIdealInclApp_injective (a := a) (U i ⊓ U j)
+    rw [thetaIdealInclApp_res, thetaIdealInclApp_res, hlocal i, hlocal j]
+    apply Subtype.ext
+    apply Prod.ext
+    · change (relCurve C R).resHom _ ((relCurve C R).resHom _ x.val.1) =
+        (relCurve C R).resHom _ ((relCurve C R).resHom _ x.val.1)
+      rw [Scheme.resHom_resHom, Scheme.resHom_resHom]
+    · change (relCurve C R).resHom _ ((relCurve C R).resHom _ x.val.2) =
+        (relCurve C R).resHom _ ((relCurve C R).resHom _ x.val.2)
+      rw [Scheme.resHom_resHom, Scheme.resHom_resHom]
+  have hcompat' : TopCat.Presheaf.IsCompatible ((A.thetaIdealDatum a).sheaf).obj
+      U (fun b => s b) := by
+    intro i j
+    exact hcompat i j
+  have hcover : W ≤ ⨆ b : Bool, U b := by
+    intro z hz
+    have hz' : z ∈ V₀ ⊔ V₁ := by
+      rw [relCover_sup]
+      trivial
+    rcases Opens.mem_sup.mp hz' with h | h
+    · exact Opens.mem_iSup.mpr ⟨false, ⟨hz, h⟩⟩
+    · exact Opens.mem_iSup.mpr ⟨true, ⟨hz, h⟩⟩
+  obtain ⟨σ, hσ, -⟩ := TopCat.Sheaf.existsUnique_gluing'
+    ((A.thetaIdealDatum a).sheaf) (fun b : Bool => U b) W
+    (fun b => homOfLE (hUW b)) hcover (fun b => s b) hcompat'
+  refine ⟨σ, ?_⟩
+  apply TopCat.Sheaf.eq_of_locally_eq₂ (relThetaTwistSheaf C R π a)
+    (homOfLE (hUW false)) (homOfLE (hUW true))
+  · change W ≤ U false ⊔ U true
+    change W ≤ (W ⊓ V₀) ⊔ (W ⊓ V₁)
+    rw [← inf_sup_left, relCover_sup, inf_top_eq]
+  · change twistRes R V₀ V₁ (relThetaCocycle C R π a) (hUW false)
+      (A.thetaIdealInclApp (a := a) W σ) =
+      twistRes R V₀ V₁ (relThetaCocycle C R π a) (hUW false) x
+    rw [← thetaIdealInclApp_res]
+    change A.thetaIdealInclApp (a := a) (U false)
+        (secRes ((A.thetaIdealDatum a).sheaf) (hUW false) σ) =
+      twistRes R V₀ V₁ (relThetaCocycle C R π a) (hUW false) x
+    rw [show secRes ((A.thetaIdealDatum a).sheaf) (hUW false) σ = s false from hσ false]
+    exact hlocal false
+  · change twistRes R V₀ V₁ (relThetaCocycle C R π a) (hUW true)
+      (A.thetaIdealInclApp (a := a) W σ) =
+      twistRes R V₀ V₁ (relThetaCocycle C R π a) (hUW true) x
+    rw [← thetaIdealInclApp_res]
+    change A.thetaIdealInclApp (a := a) (U true)
+        (secRes ((A.thetaIdealDatum a).sheaf) (hUW true) σ) =
+      twistRes R V₀ V₁ (relThetaCocycle C R π a) (hUW true) x
+    rw [show secRes ((A.thetaIdealDatum a).sheaf) (hUW true) σ = s true from hσ true]
+    exact hlocal true
+
 /-- The sectionwise theta-ideal inclusion commutes with restriction. -/
 theorem thetaIdealInclApp_res {W' W : (relCurve C R).Opens} (h : W' ≤ W)
     (s : A.ThetaIdealSections a W) :

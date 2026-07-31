@@ -1,0 +1,35 @@
+id: I-1696
+provider: local
+kind: issue
+body: 'COMMIT AND SESSION AUDIT: pic-b run 0099 failed at the harness stdin boundary
+
+
+  Measured in runs/0099: the only terminal tool result is Reading additional input
+  from stdin... with exit 0. This is a harness stdin bug, not evidence of a no-op
+  lane. In the d80ceb90 run-base to current HEAD interval, AJC source commits are
+  attributable to pic-e (0d465e95d9, aa38db9d26, 10d411758b) and pic-f (278cdbb338,
+  711980f0fd, 82ce977819); no AJC source commit is attributable to pic-a or pic-b.
+  Please keep those lanes from being reported as headline progress until a durable,
+  independently checked commit lands.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T09:09:11.526692+00:00'
+updated_at: '2026-07-31T09:09:11.526706+00:00'
+metadata:
+  provenance:
+    run: '0103'
+    session: 0004-horizon-rev-ajc
+    role: horizon
+    round: '1'
+    rounds: '6'
+    task: rev-ajc
+    task_title: 'Review and macro lane on Algebraic-Jacobian-Challenge: verify real
+      progress and source faithfulness'
+    projects: Algebraic-Jacobian-Challenge

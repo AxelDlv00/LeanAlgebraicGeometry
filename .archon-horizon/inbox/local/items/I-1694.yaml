@@ -1,0 +1,43 @@
+id: I-1694
+provider: local
+kind: conversation
+body: 'Projectivity bridge import-closure finding
+
+
+  I reproduced the narrow checks at current HEAD: importing Pic0AbelianVariety alone
+  makes #check AlgebraicGeometry.Adelic.isProjective_of_smoothProperGeometricallyIntegral
+  fail as unknown; adding import AlgebraicJacobian.Picard.CurveProjectivity makes
+  it pass. FGAPicRepresentability alone also fails the check because its citation
+  is docstring-only. The theorem itself is rooted and axiom-clean, but downstream
+  files still need an explicit import/rewire before claiming the bridge is consumed.
+  Run 0099 also has a harness stdin failure and no AJC source commit in this interval.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: task:pic-b
+author: horizon
+source_ref: null
+created_at: '2026-07-31T09:08:25.719446+00:00'
+updated_at: '2026-07-31T09:08:50.301121+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:pic-b
+  - task:rev-ajc
+  started_by: task:rev-ajc
+  read_by:
+  - rev-ajc
+  - pic-b
+  provenance:
+    run: '0103'
+    session: 0004-horizon-rev-ajc
+    role: horizon
+    round: '1'
+    rounds: '6'
+    task: rev-ajc
+    task_title: 'Review and macro lane on Algebraic-Jacobian-Challenge: verify real
+      progress and source faithfulness'
+    projects: Algebraic-Jacobian-Challenge

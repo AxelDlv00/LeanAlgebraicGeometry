@@ -13276,7 +13276,7 @@
     "macros": {},
     "states": {
       "blocked": 20,
-      "closed": 9957,
+      "closed": 9959,
       "formalized_open": 169,
       "informal": 18,
       "ready": 117
@@ -35272,9 +35272,11 @@
       "proved": false,
       "rdep_count": 0,
       "review_count": 0,
-      "sources": [],
+      "sources": [
+        "abelian-varieties:page-0110"
+      ],
       "state": "blocked",
-      "statement": "\\(\\Jac(C)\\) is the Albanese variety of \\(C\\): for every abelian variety \\(A\\) over \\(k\\) and every\n  morphism \\(f : C \\to A\\) with \\(f \\circ P = 0\\), there is a unique homomorphism of group schemes\n  \\(g : \\Jac(C) \\to A\\) such that \\(f = g \\circ \\varphi_P\\).",
+      "statement": "\\(\\Jac(C)\\) is the Albanese variety of \\(C\\): for every abelian variety \\(A\\) over \\(k\\) and every\n  morphism \\(f : C \\to A\\) with \\(f \\circ P = 0\\), there is a unique homomorphism of group schemes\n  \\(g : \\Jac(C) \\to A\\) such that \\(f = g \\circ \\varphi_P\\).  Milne's Proposition~6.1\n  proves this under the standing hypothesis \\(g(C)>0\\), with \\(P\\) a \\(k\\)-rational point.\n  The statement here includes genus zero; that case requires a separate argument and is not\n  supplied by the cited proposition alone.",
       "title": "Universal property of the Jacobian",
       "type": "theorem",
       "unlocks": 0,
@@ -46690,8 +46692,8 @@
       "review_count": 0,
       "sources": [],
       "state": "closed",
-      "statement": "\\emph{Finite chart cover data} on \\(C_R\\) consists of finitely many sections\n  \\(h^0_1,\\dots,h^0_{m_0} \\in \\struct{}(V_0^R)\\) and \\(h^1_1,\\dots,h^1_{m_1} \\in\n  \\struct{}(V_1^R)\\), together with coefficients \\(a^\\iota_j\\) in the same rings satisfying\n  the two partition identities\n  \\[\n    \\sum_{j} a^0_j h^0_j = 1 \\ \\text{ in } \\struct{}(V_0^R), \\qquad\n    \\sum_{j} a^1_j h^1_j = 1 \\ \\text{ in } \\struct{}(V_1^R).\n  \\]\n  Its \\emph{pieces} are the basic opens \\(P_j := D(h^\\iota_j) \\subseteq V_\\iota^R\\), indexed\n  by the disjoint union of the two index sets. Each piece is affine, and the pieces of each\n  chart cover that chart:\n  \\(V_0^R = \\bigcup_j D(h^0_j)\\) and \\(V_1^R = \\bigcup_j D(h^1_j)\\).",
-      "title": "Finite chart cover data",
+      "statement": "This auxiliary pinned-window datum on \\(C_R\\) consists of finitely many sections\n  \\(h^0_1,\\dots,h^0_{m_0} \\in \\struct{}(V_0^R)\\) and \\(h^1_1,\\dots,h^1_{m_1} \\in\n  \\struct{}(V_1^R)\\), together with coefficients \\(a^\\iota_j\\) in the same rings satisfying\n  the two partition identities\n  \\[\n    \\sum_{j} a^0_j h^0_j = 1 \\ \\text{ in } \\struct{}(V_0^R), \\qquad\n    \\sum_{j} a^1_j h^1_j = 1 \\ \\text{ in } \\struct{}(V_1^R).\n  \\]\n  Its \\emph{pieces} are the basic opens \\(P_j := D(h^\\iota_j) \\subseteq V_\\iota^R\\), indexed\n  by the disjoint union of the two index sets. Each piece is affine, and the pieces of each\n  chart cover that chart:\n  \\(V_0^R = \\bigcup_j D(h^0_j)\\) and \\(V_1^R = \\bigcup_j D(h^1_j)\\).",
+      "title": "Auxiliary finite chart cover data",
       "type": "definition",
       "unlocks": 2,
       "uses": []
@@ -46719,7 +46721,7 @@
         "kleiman-picard"
       ],
       "state": "closed",
-      "statement": "Let \\(d\\) be a local-equation system on \\(C_R\\), adapted to a pointed cover\n  \\(\\mathcal U\\). A \\emph{finite chart adaptation} \\(A\\) of \\(d\\) consists of finite chart\n  cover data (\\ref{def:finCoverData}) with pieces \\(P_j\\), together with sections\n  \\(f_j \\in \\struct{}(P_j)\\) subject to the \\emph{refinement clause}: for every piece index\n  \\(j\\) and every point \\(y \\in C_R\\) there is a unit\n  \\(u \\in \\struct{}(P_j \\cap \\mathcal U(y))^{\\times}\\) with\n  \\[\n    f_j\\big|_{P_j \\cap \\mathcal U(y)} \\;=\\; u \\cdot d_y\\big|_{P_j \\cap \\mathcal U(y)} .\n  \\]\n  (The quantifier ranges over \\emph{all} \\(y\\); over an empty overlap the section ring is\n  the zero ring and the clause is vacuous.)\n\n  In particular, anchored data suffice to build an adaptation: if for each \\(j\\) one is\n  given a point \\(p_j\\) with \\(P_j \\subseteq \\mathcal U(p_j)\\) and a unit \\(w_j\\) on\n  \\(P_j\\) with \\(f_j = w_j \\cdot d_{p_j}|_{P_j}\\), then the refinement clause holds for\n  every \\(y\\), with unit the product of \\(w_j|\\) and the restriction of the transition unit\n  \\(g_{p_j y}\\) of \\(d\\) (\\ref{lem:localEquations_ratioUnit}).",
+      "statement": "Let \\(d\\) be a local-equation system on \\(C_R\\), adapted to a pointed cover\n  \\(\\mathcal U\\). A \\emph{finite chart adaptation} \\(A\\) of \\(d\\) consists of the auxiliary\n  finite chart cover data (\\ref{def:finCoverData}) with pieces \\(P_j\\), together with sections\n  \\(f_j \\in \\struct{}(P_j)\\) subject to the \\emph{refinement clause}: for every piece index\n  \\(j\\) and every point \\(y \\in C_R\\) there is a unit\n  \\(u \\in \\struct{}(P_j \\cap \\mathcal U(y))^{\\times}\\) with\n  \\[\n    f_j\\big|_{P_j \\cap \\mathcal U(y)} \\;=\\; u \\cdot d_y\\big|_{P_j \\cap \\mathcal U(y)} .\n  \\]\n  (The quantifier ranges over \\emph{all} \\(y\\); over an empty overlap the section ring is\n  the zero ring and the clause is vacuous.)\n\n  In particular, anchored data suffice to build an adaptation: if for each \\(j\\) one is\n  given a point \\(p_j\\) with \\(P_j \\subseteq \\mathcal U(p_j)\\) and a unit \\(w_j\\) on\n  \\(P_j\\) with \\(f_j = w_j \\cdot d_{p_j}|_{P_j}\\), then the refinement clause holds for\n  every \\(y\\), with unit the product of \\(w_j|\\) and the restriction of the transition unit\n  \\(g_{p_j y}\\) of \\(d\\) (\\ref{lem:localEquations_ratioUnit}).",
       "title": "Finite chart adaptation of a local-equation system",
       "type": "definition",
       "unlocks": 2,
@@ -46831,7 +46833,7 @@
         "kleiman-picard"
       ],
       "state": "closed",
-      "statement": "A \\emph{certified divisor family of degree \\(n\\)} over \\(R\\) is a triple \\((d, A, c)\\):\n  a local-equation system \\(d\\) on \\(C_R\\), a finite chart adaptation \\(A\\) of \\(d\\), and a\n  certificate \\(c\\) of degree \\(n\\) for \\(A\\). Divisor equality of the underlying systems\n  (\\ref{lem:localEquations_divEq}) is an equivalence relation on such triples --- the\n  adaptation and the certificate are presentation data and do not enter the relation ---\n  and\n  \\[\n    \\Div^{\\,n}(R) \\;:=\\; \\bigl\\{\\,\\text{certified divisor families of degree }n\\text{ over }\n      R\\,\\bigr\\} \\big/ \\sim\n  \\]\n  is the value of the degree-\\(n\\) divisor functor at \\(R\\). The Picard class descends to\n  it: \\(\\mathcal{O}(D) \\in \\Pic(C_R)\\) is well defined on \\(\\Div^{\\,n}(R)\\). This map is\n  the Abel map of Kleiman's Definition, at the affine test \\(R\\).",
+      "statement": "A \\emph{certified divisor family of degree \\(n\\)} over \\(R\\) is a triple \\((d, A, c)\\):\n  a local-equation system \\(d\\) on \\(C_R\\), a finite chart adaptation \\(A\\) of \\(d\\), and a\n  certificate \\(c\\) of degree \\(n\\) for \\(A\\). Divisor equality of the underlying systems\n  (\\ref{lem:localEquations_divEq}) is an equivalence relation on such triples --- the\n  adaptation and the certificate are presentation data and do not enter the relation ---\n  and\n  \\[\n    \\Div^{\\,n}(R) \\;:=\\; \\bigl\\{\\,\\text{certified divisor families of degree }n\\text{ over }\n      R\\,\\bigr\\} \\big/ \\sim\n  \\]\n  is the value of this certified subfunctor at \\(R\\). The Picard class descends to it:\n  \\(\\mathcal{O}(D) \\in \\Pic(C_R)\\) is well defined on \\(\\Div^{\\,n}(R)\\).  On a certified\n  triple this is the Abel-class map; it agrees with Kleiman's Abel construction only after\n  the triple is shown to represent a flat effective divisor of degree \\(n\\).  No theorem here\n  says that every effective flat Cartier divisor admits this pinned certificate.",
       "title": "Certified divisor families and the divisor functor value",
       "type": "definition",
       "unlocks": 2,
@@ -47296,7 +47298,7 @@
       "review_count": 0,
       "sources": [],
       "state": "blocked",
-      "statement": "Granting \\ref{thm:divRepUniversalFamily}, the Abel map \\(D \\mapsto \\OO(D)\\)\n  (\\ref{def:divFamZar}) becomes a morphism of functors from the representable functor\n  \\(\\Div^{\\,g}_{\\mathrm{Zar}}\\) to the degree-zero Picard functor after twisting by a fixed\n  divisor of degree \\(g\\), and the loci over which it is representable by open immersions\n  supply the chart family required by \\ref{def:pic0RepresentableByOfCharts}. That\n  hypothesis being met, the degree-zero Picard functor of \\(C\\) is representable, and the\n  representing object with its universal element is a Jacobian datum\n  (\\ref{def:jacobian_data}) --- hence, through the frozen definition\n  (\\ref{def:jacobian}), the Jacobian of \\(C\\).\n\n  Neither the chart family nor the local surjectivity of the resulting maps is proved; both\n  rest on \\ref{thm:divRepUniversalFamily}. The passage from a representation over a\n  separably closed base to one over \\(k\\) is a further descent step, not addressed here.",
+      "statement": "Granting \\ref{thm:divRepUniversalFamily}, and separately supplying a chart family of\n  relatively representable open immersions together with the required locally-surjective\n  \\(\\Sigma\\)-map, the Abel map \\(D \\mapsto \\OO(D)\\) (\\ref{def:divFamZar}) can be used as\n  the conditional input to \\ref{def:pic0RepresentableByOfCharts} after twisting by a fixed\n  divisor of degree \\(g\\).  Only after those antecedents are inhabited does the\n  degree-zero Picard functor become representable and yield a Jacobian datum\n  (\\ref{def:jacobian_data}) --- hence, through the frozen definition\n  (\\ref{def:jacobian}), the Jacobian of \\(C\\).\n\n  The universal family, the open-immersion chart certificates, and local surjectivity are\n  distinct unproved inputs here.  The passage from a representation over a separably closed\n  base to one over \\(k\\) is a further descent step, not addressed here.",
       "title": "From the divisor scheme to the Jacobian",
       "type": "corollary",
       "unlocks": 0,
