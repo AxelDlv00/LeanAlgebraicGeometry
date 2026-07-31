@@ -205,6 +205,22 @@ theorem faithfullyFlat_gluedSubalgebra_val [IsProper C.hom]
     rw [RingEquiv.apply_symm_apply]] at hcomp
   exact hcomp
 
+/-- The certified affine-piece product is finite over the widened equalizer algebra. -/
+theorem IsCertified.finite_gluedSubalgebra_val
+    (A : AffAdaptation D d) {n : ℕ} (hc : A.IsCertified n) :
+    (gluedSubalgebra A).val.toRingHom.Finite := by
+  letI : ∀ i : D.index, Module.Finite R (A.colength i) :=
+    fun i => hc.finite_colength i
+  letI : Module.Finite R A.chartProd := Module.Finite.pi
+  apply RingHom.Finite.of_comp_finite
+    (f := algebraMap R ↥(gluedSubalgebra A))
+  rw [show (gluedSubalgebra A).val.toRingHom.comp
+      (algebraMap R ↥(gluedSubalgebra A)) =
+      algebraMap R A.chartProd by
+    ext r i
+    rfl]
+  exact RingHom.finite_algebraMap.mpr inferInstance
+
 /-! ## Certified pieces are clopen -/
 
 /-- A certified divisor piece is finite over the whole intrinsic divisor.  Indeed, both
