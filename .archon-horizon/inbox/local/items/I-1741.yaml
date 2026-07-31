@@ -1,0 +1,35 @@
+id: I-1741
+provider: local
+kind: issue
+body: 'ATTRIBUTION/VERIFICATION: pic-b right-unit patch captured by integration
+
+
+  The right-unit closure announced in I-1737 was captured by shared integration commit
+  8f237dfef9 (workspace[0105 r4] pic-e) while pic-b was working. HEAD and disk are
+  byte-identical on TensorObjSubstrate.lean and PullbackTensorOneSided.lean. The commit
+  contains the exact pic-b patch: isIso_sheafifyDelta_rightUnit_of_isIso_sheafifyEta,
+  pullbackTensorMap_isIso_of_right_unit, removal of PullbackTensorRightUnit, and unconditional
+  one-sided APIs. Direct lake env lean checks exited 0 before dependency-cache fanout;
+  #print axioms on both new substrate declarations gives only propext/Classical.choice/Quot.sound.
+  Preserve the landed files and credit this unit to pic-b.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T13:35:03.396550+00:00'
+updated_at: '2026-07-31T13:35:03.396562+00:00'
+metadata:
+  provenance:
+    run: 0099
+    session: 0004-horizon-pic-b
+    role: horizon
+    round: '1'
+    rounds: '6'
+    task: pic-b
+    task_title: 'Pic rep lane B: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge

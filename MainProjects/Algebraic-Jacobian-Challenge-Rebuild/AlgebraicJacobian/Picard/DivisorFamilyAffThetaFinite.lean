@@ -101,6 +101,64 @@ theorem IsCertified.finite_intrinsicThetaGluedOver
     Module.Finite.equiv e.symm
   exact Module.Finite.of_restrictScalars_finite R AD M
 
+/-- Each intrinsic theta quotient on a widened piece is finite over the test ring. -/
+theorem IsCertified.finite_thetaPieceQuotient
+    (hc : A.IsCertified g) (a : ℕ) (j : D.index) :
+    Module.Finite R (A.ThetaPieceQuotient (π := π) a j) := by
+  letI : Module R (A.ThetaPieceQuotient (π := π) a j) :=
+    A.thetaPieceQuotientBaseModule (π := π) a j
+  letI : IsScalarTower R (A.colength j)
+      (A.ThetaPieceQuotient (π := π) a j) :=
+    IsScalarTower.of_algebraMap_smul fun _ _ => rfl
+  letI : Module.Finite R (A.colength j) :=
+    AlgebraicGeometry.AffAdaptation.IsCertified.finite_colength hc j
+  letI : Module.Invertible (A.colength j)
+      (A.ThetaPieceQuotient (π := π) a j) :=
+    A.invertible_thetaPieceQuotient (π := π) a j
+  exact Module.Invertible.finite_trans (A := A.colength j)
+
+/-- Each intrinsic theta quotient on a widened piece is projective over the test ring. -/
+theorem IsCertified.projective_thetaPieceQuotient
+    (hc : A.IsCertified g) (a : ℕ) (j : D.index) :
+    Module.Projective R (A.ThetaPieceQuotient (π := π) a j) := by
+  letI : Module R (A.ThetaPieceQuotient (π := π) a j) :=
+    A.thetaPieceQuotientBaseModule (π := π) a j
+  letI : IsScalarTower R (A.colength j)
+      (A.ThetaPieceQuotient (π := π) a j) :=
+    IsScalarTower.of_algebraMap_smul fun _ _ => rfl
+  letI : Module.Projective R (A.colength j) :=
+    AlgebraicGeometry.AffAdaptation.IsCertified.projective_colength hc j
+  letI : Module.Invertible (A.colength j)
+      (A.ThetaPieceQuotient (π := π) a j) :=
+    A.invertible_thetaPieceQuotient (π := π) a j
+  exact Module.Invertible.projective_trans (A := A.colength j)
+
+/-- The product of the piece theta quotients is finite over `R`. -/
+theorem IsCertified.finite_thetaPieceProd
+    (hc : A.IsCertified g) (a : ℕ) :
+    Module.Finite R (A.ThetaPieceProd (π := π) a) := by
+  letI : ∀ j : D.index, Module R (A.ThetaPieceQuotient (π := π) a j) :=
+    fun j => A.thetaPieceQuotientBaseModule (π := π) a j
+  letI : ∀ j : D.index,
+      Module.Finite R (A.ThetaPieceQuotient (π := π) a j) :=
+    fun j => AlgebraicGeometry.AffAdaptation.IsCertified.finite_thetaPieceQuotient
+      (A := A) hc a j
+  exact Module.Finite.pi
+
+/-- The product of the piece theta quotients is projective over `R`. -/
+theorem IsCertified.projective_thetaPieceProd
+    (hc : A.IsCertified g) (a : ℕ) :
+    Module.Projective R (A.ThetaPieceProd (π := π) a) := by
+  letI : ∀ j : D.index, Module R (A.ThetaPieceQuotient (π := π) a j) :=
+    fun j => A.thetaPieceQuotientBaseModule (π := π) a j
+  letI : ∀ j : D.index,
+      Module.Projective R (A.ThetaPieceQuotient (π := π) a j) :=
+    fun j => AlgebraicGeometry.AffAdaptation.IsCertified.projective_thetaPieceQuotient
+      (A := A) hc a j
+  exact Module.Projective.of_equiv
+    (DirectSum.linearEquivFunOnFintype R D.index
+      (fun j => A.ThetaPieceQuotient (π := π) a j))
+
 /-- The certified intrinsic high-window carve has finite target.  The source is the finite
 base-changed theta window, and the target is its surjective image. -/
 theorem IsCertified.finite_intrinsicThetaGlued
