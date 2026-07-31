@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.P1.AlgebraicGeometry.P1.relpic_one
 file: ScratchPicG/Probe.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.P1.AlgebraicGeometry.P1.relpic_one
 type: lean
-updated: '2026-07-31T07:58:12'
+updated: '2026-07-31T09:39:51'
 ---
 theorem relpic_one (x : relPic (P1.asOver k) (overSpec k K)) (hx : relPicDeg K x = 0) : x = 1 := by
   induction x using relPic.ind with
