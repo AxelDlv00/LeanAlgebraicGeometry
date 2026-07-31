@@ -9,6 +9,8 @@ import AlgebraicJacobian.Picard.GrassmannianRepresentability
 import AlgebraicJacobian.Picard.RigidPushforwardP1Sheaf
 import AlgebraicJacobian.Picard.RigidPushforwardRank
 import AlgebraicJacobian.Picard.SerreTwistSections
+import AlgebraicJacobian.Picard.TwoTermFiniteFree
+import AlgebraicJacobian.Cohomology.QcohTildeSections
 import AlgebraicJacobian.RiemannRoch.Ledger.FixedFiberDegree
 import AlgebraicJacobian.RiemannRoch.Ledger.UniformRiemannRoch
 
@@ -284,6 +286,74 @@ theorem tensorObj_functoriality_epi_right
         (X.presheaf ⋙ forget₂ CommRingCat RingCat)).map g'))
     exact htSheafEpi
   exact (SheafOfModules.toSheaf X.ringCatSheaf).epi_of_epi_map hmap
+
+/-- On an affine scheme, surjectivity on global sections reflects to an
+epimorphism between quasi-coherent module sheaves.
+
+The affine tilde--Gamma counits identify the sheaves with the tildes of their
+global-section modules.  Naturality of the counit then transports the module
+epimorphism back to the original sheaf morphism. -/
+theorem epi_of_globalSections_surjective
+    {R : CommRingCat.{u}} {M N : (Spec R).Modules}
+    [M.IsQuasicoherent] [N.IsQuasicoherent]
+    (q : M ⟶ N)
+    (hq : Function.Surjective
+      ((moduleSpecΓFunctor (R := R)).map q).hom) :
+    Epi q := by
+  have hM : IsIso M.fromTildeΓ := isIso_fromTildeΓ_of_quasicoherent M
+  have hN : IsIso N.fromTildeΓ := isIso_fromTildeΓ_of_quasicoherent N
+  haveI hqΓ : Epi ((moduleSpecΓFunctor (R := R)).map q) := by
+    rw [ModuleCat.epi_iff_surjective]
+    exact hq
+  haveI hqtilde : Epi
+      ((tilde.functor R).map ((moduleSpecΓFunctor (R := R)).map q)) := by
+    infer_instance
+  haveI : IsIso M.fromTildeΓ := hM
+  haveI : IsIso N.fromTildeΓ := hN
+  have key : M.fromTildeΓ ≫ q =
+      (tilde.functor R).map ((moduleSpecΓFunctor (R := R)).map q) ≫
+        N.fromTildeΓ :=
+    ((fromTildeΓNatTrans (R := R)).naturality q).symm
+  rw [← epi_comp_iff_of_epi M.fromTildeΓ]
+  rw [key]
+  exact epi_comp' hqtilde
+    (@IsIso.epi_of_iso _ _ _ _ N.fromTildeΓ hN)
+
+/-- **Affine fibrewise-surjectivity criterion.**  A morphism of quasi-coherent
+modules on `Spec R` is epi when its global-section cokernel is finite and the
+global-section map becomes surjective after base change to every maximal
+residue field.
+
+This is the Nakayama globalization needed by the D2 evaluation map: it turns
+fieldwise generation into an epimorphism over an arbitrary affine test base,
+without a noetherian, representability, or rational-point hypothesis. -/
+theorem epi_of_baseChange_surjective
+    {R : CommRingCat.{u}} {M N : (Spec R).Modules}
+    [M.IsQuasicoherent] [N.IsQuasicoherent]
+    (q : M ⟶ N)
+    [Module.Finite R
+      ((moduleSpecΓFunctor (R := R)).obj N ⧸
+        LinearMap.range ((moduleSpecΓFunctor (R := R)).map q).hom)]
+    (hfib : ∀ (m : Ideal R), m.IsMaximal →
+      Function.Surjective
+        (((moduleSpecΓFunctor (R := R)).map q).hom.baseChange (R ⧸ m))) :
+    Epi q := by
+  apply epi_of_globalSections_surjective q
+  exact AlgebraicJacobian.TwoTerm.surjective_of_baseChange_quotient_surjective hfib
+
+/-- Finite global sections of the target automatically supply the finite
+cokernel in `epi_of_baseChange_surjective`. -/
+theorem epi_of_baseChange_surjective_of_finite
+    {R : CommRingCat.{u}} {M N : (Spec R).Modules}
+    [M.IsQuasicoherent] [N.IsQuasicoherent]
+    (q : M ⟶ N)
+    [Module.Finite R ((moduleSpecΓFunctor (R := R)).obj N)]
+    (hfib : ∀ (m : Ideal R), m.IsMaximal →
+      Function.Surjective
+        (((moduleSpecΓFunctor (R := R)).map q).hom.baseChange (R ⧸ m))) :
+    Epi q := by
+  apply epi_of_baseChange_surjective q
+  exact hfib
 
 set_option backward.isDefEq.respectTransparency false in
 /-- A finite global presentation of a module sheaf on `Spec R` induces a
