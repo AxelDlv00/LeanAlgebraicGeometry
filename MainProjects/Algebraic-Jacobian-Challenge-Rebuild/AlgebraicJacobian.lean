@@ -676,6 +676,7 @@ import AlgebraicJacobian.Picard.DivisorSubscheme
 import AlgebraicJacobian.Picard.DivisorSubschemeFinite
 import AlgebraicJacobian.Picard.DivisorSubschemeOverlap
 import AlgebraicJacobian.Picard.DivisorSubschemeGlobal
+import AlgebraicJacobian.Picard.DivisorSubschemeFaithfullyFlat
 import AlgebraicJacobian.Picard.DivisorFamilyAffThetaKernel
 import AlgebraicJacobian.Picard.DivisorFamilyAffThetaKernelGlobal
 import AlgebraicJacobian.Picard.DivisorFamilyAffThetaCokernelGlobal
