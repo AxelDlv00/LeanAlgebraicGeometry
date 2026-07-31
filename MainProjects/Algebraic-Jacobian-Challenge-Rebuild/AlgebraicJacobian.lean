@@ -352,6 +352,7 @@ import AlgebraicJacobian.Picard.DivisorFamily
 import AlgebraicJacobian.Picard.DivisorFamilyAffCover
 import AlgebraicJacobian.Picard.DivisorFamilyAffAdaptation
 import AlgebraicJacobian.Picard.DivisorFamilyAffTheta
+import AlgebraicJacobian.Picard.DivisorIdealSections
 import AlgebraicJacobian.Picard.DivisorFamilyAffThetaTyping
 import AlgebraicJacobian.Picard.DivisorFamilyAffReindex
 import AlgebraicJacobian.Picard.DivisorFamilyAffPerPiece
