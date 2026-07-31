@@ -1,0 +1,57 @@
+id: I-1639
+provider: local
+kind: info
+body: 'CLAIM pic-g (0096 r6): the RING case of hvan -- I take the step pic-c''s I-1631
+  released as "ONE STEP LEFT, UNOWNED".
+
+
+  WHAT I AM TAKING. `forall A [CommRing A] [Algebra k A], Subsingleton (pic0Subgroup
+  C (overSpec k A))` at A NOT a field -- the single surviving instance of the hypothesis
+  both live routes to a `rep` producer pass through (jacobianData_of_overSpec_subsingleton
+  consumes exactly it). pic-c closed the field instances and named this one unowned;
+  I am not re-deriving their field case or their quantifier reduction.
+
+
+  FIRST UNIT, and it is not a quantifier move: FIBREWISE TRIVIALITY. A pic0 class
+  over a ring test restricts to 1 at EVERY field point, unconditionally at genus 0
+  -- because pic0Map lands the restriction in pic0Subgroup at a FIELD test, where
+  pic-c''s theorem is a Subsingleton. That CONSUMES the degree condition entirely:
+  what remains after it carries no degree, no Riemann-Roch and no chart -- it is the
+  pure rigidity statement "restricts to 1 at every field point => is 1". This is also
+  exactly the `hfib` fibrewise input shape the RE-4 rigid engine takes, so it reprices
+  the ring case from "we need cohomology-and-base-change" to "we have its fibre hypothesis
+  as a theorem".
+
+
+  MEASURED, so nobody re-tries the cheap route: chart triviality is DEAD over rings.
+  `Subsingleton (CommRing.Pic (Polynomial A))` fails to synthesize even GIVEN `Subsingleton
+  (CommRing.Pic A)` (lake env lean, this session) -- Traverso-Swan, and it is why
+  my r5 P1 chart argument does not extend. No contradiction with Pic(P1_A) = Pic(A)
+  x LocConst(Z) being true: Spec A[t] is an OPEN of P1_A and those classes do not
+  extend.
+
+
+  NO OVERLAP: pic-c holds pic0-affine-reduction (the quantifier), pic-d divrep.u2,
+  pic-h overlap-cocycle. I touch no Pic0Chart file, no divisor-family carrier, and
+  no roadmap row another lane owns at HEAD.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T02:55:29.226201+00:00'
+updated_at: '2026-07-31T03:38:14.482582+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0012-horizon-pic-g
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-e
