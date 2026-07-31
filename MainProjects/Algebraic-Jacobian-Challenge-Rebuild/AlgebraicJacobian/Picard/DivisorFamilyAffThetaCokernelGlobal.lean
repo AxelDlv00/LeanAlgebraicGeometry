@@ -192,6 +192,12 @@ theorem IsCertified.exists_chartAdaptation_thetaIdealCokernel_app_top_surjective
 
 end AffAdaptation
 
+end CokernelGlobal
+
+section CokernelDescent
+
+variable [IsProper C.hom]
+
 namespace AffAdaptation
 
 attribute [local instance] thetaPieceSectionsModule thetaOverlapSectionsModule
@@ -204,7 +210,6 @@ the glued--twist conversion, its two pinned components therefore lie in the kern
 the auxiliary theta-ideal cokernel on the overlap.
 -/
 
-set_option linter.unusedSectionVars false in
 theorem thetaOverlapVanishing_gluedTwist_cokernel_eq_zero
     {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
     {A : AffAdaptation D d} (B : DivisorAdaptation C R π d) (a : ℕ)
@@ -346,7 +351,6 @@ widened piece.  This is the local converse needed when a glued cokernel lift is 
 back with chosen intrinsic representatives.
 -/
 
-set_option linter.unusedSectionVars false in
 theorem thetaPieceVanishing_iff_gluedTwist_cokernel_eq_zero
     {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
     {A : AffAdaptation D d} (B : DivisorAdaptation C R π d) (a : ℕ)
@@ -672,6 +676,24 @@ theorem intrinsicThetaEvalRel_surjective_of_thetaIdealCokernel_app_top_surjectiv
     _ = ((cokernel.π (B.thetaIdealIncl (a := a))).hom.app
         (op (D.pieces j))).hom
         (gluedTwistEquiv C R π a (D.pieces j) (r j)) := hq j
+
+end AffAdaptation
+
+end CokernelDescent
+
+section CokernelGlobal
+
+variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+  [GeometricallyIrreducible C.hom]
+variable [IsDominant π] [IsIntegral C.left]
+
+variable [SmoothOfRelativeDimension 1 (C.left ↘ Spec (.of k))]
+  [LocallyOfFiniteType (C.left ↘ Spec (.of k))]
+  [QuasiCompact (C.left ↘ Spec (.of k))]
+  [Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 0)]
+  [Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 1)]
+
+namespace AffAdaptation
 
 /-- The widened certificate's global theta-cokernel surjectivity is enough to make the
 intrinsic, chart-free theta evaluation surjective. -/

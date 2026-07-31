@@ -23,7 +23,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivisorAdaptation.cokernelπ_app_eq_zero_of_germ_mem
 type: lean
-updated: '2026-07-31T17:31:52'
+updated: '2026-07-31T19:20:46'
 ---
 theorem cokernelπ_app_eq_zero_of_germ_mem (B : DivisorAdaptation C R π d)
     {a : ℕ} {W : (relCurve C R).Opens}
@@ -47,14 +47,4 @@ theorem cokernelπ_app_eq_zero_of_germ_mem (B : DivisorAdaptation C R π d)
 
 end DivisorAdaptation
 
-section CokernelGlobal
-
-variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
-  [GeometricallyIrreducible C.hom]
-variable [IsDominant π] [IsIntegral C.left]
-
-variable [SmoothOfRelativeDimension 1 (C.left ↘ Spec (.of k))]
-  [LocallyOfFiniteType (C.left ↘ Spec (.of k))]
-  [QuasiCompact (C.left ↘ Spec (.of k))]
-  [Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 0)]
-  [Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 1)]
+/-! ## Restriction through the glued--twist equivalence -/

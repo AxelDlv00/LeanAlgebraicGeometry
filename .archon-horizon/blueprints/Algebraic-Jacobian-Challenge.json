@@ -18176,7 +18176,7 @@
     "macros": {},
     "states": {
       "blocked": 249,
-      "closed": 8496,
+      "closed": 8501,
       "formalized_open": 301,
       "informal": 175,
       "ready": 199
@@ -18214,7 +18214,6 @@
       "AlgebraicGeometry.Scheme.Modules.fiberRank_gammaTop_eq_fiberH0_of_iso: Lean declaration appears more than once (AlgebraicJacobian/Picard/DivGrassmannianEmbedding.lean, ScratchPicF.lean)",
       "AlgebraicGeometry.Scheme.Modules.fiberRank_gammaTop_eq_fiberH0_of_isFinite_schematicSupport: Lean declaration appears more than once (AlgebraicJacobian/Picard/DivGrassmannianEmbedding.lean, ScratchPicF.lean)",
       "AlgebraicGeometry.Scheme.DivFamily.pushforward_isLocallyFreeOfRank: Lean declaration appears more than once (AlgebraicJacobian/Picard/DivGrassmannianEmbedding.lean, ScratchPicF.lean)",
-      "AlgebraicGeometry.FiberCoordinateData.coordinateH0KerEquiv: Lean declaration appears more than once (_scratch_FixedCoordinateUniform.lean, _scratch_FixedCoordinateUniform.lean)",
       "Probe.twistLeft_fst: Lean declaration appears more than once (probe_p3_hcov2.lean, probe_p3_hcov4.lean)",
       "Probe.twistLeft_snd: Lean declaration appears more than once (probe_p3_hcov2.lean, probe_p3_hcov4.lean)",
       "Probe.twistLeft_comp: Lean declaration appears more than once (probe_p3_hcov2.lean, probe_p3_hcov4.lean)",
@@ -18231,7 +18230,8 @@
       "AlgebraicGeometry.Adelic.genus_p1Over_eq_zero: Lean declaration appears more than once (AlgebraicJacobian/RiemannRoch/Ledger/P1Vanishing.lean, rr_probe_p1h1.lean)",
       "AlgebraicGeometry.BcSquareCoherence: Lean declaration appears more than once (AlgebraicJacobian/Cohomology/CechTwistedCoherenceReduction.lean, scratch_FbcDef.lean)",
       "lem:pushforwardPullbackBaseChange_restrict_naturality: \\lean{AlgebraicGeometry.pushforwardPullbackBaseChange_restrict_naturality} not found in Lean sources",
-      "lem:pushforwardPullbackBaseChange_abHom: \\lean{AlgebraicGeometry.pushforwardPullbackBaseChangeAbHom} not found in Lean sources"
+      "lem:pushforwardPullbackBaseChange_abHom: \\lean{AlgebraicGeometry.pushforwardPullbackBaseChangeAbHom} not found in Lean sources",
+      "lem:pushforwardPullbackBaseChange_linHom: \\lean{AlgebraicGeometry.pushforwardPullbackBaseChangeHom} not found in Lean sources"
     ]
   },
   "nodes": [
