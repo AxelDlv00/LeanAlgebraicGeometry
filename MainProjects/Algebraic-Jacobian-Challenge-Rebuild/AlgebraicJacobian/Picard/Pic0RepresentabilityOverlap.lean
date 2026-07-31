@@ -6,6 +6,7 @@ Authors: The AlgebraicJacobian Contributors
 import AlgebraicJacobian.Picard.EtaleSeparatedness
 import AlgebraicJacobian.Picard.Pic0ThetaCocycle
 import AlgebraicJacobian.Picard.RepresentableByCocycle
+import AlgebraicJacobian.Picard.RepresentableByTransport
 
 /-!
 # The tensor-overlap comparison for Picard representability
@@ -75,13 +76,8 @@ noncomputable def pic0BaseCommon {S : Scheme.{u}} (f : S ⟶ Spec (.of L)) :
     (Over.map f).op ⋙ pic0TypeFunctor ((baseChange k L).obj C) ≅
       (Over.map (f ≫ tensorOverlapBase (k := k) (L := L))).op ⋙
         pic0TypeFunctor C :=
-  Functor.isoWhiskerLeft (Over.map f).op (pic0ThetaType k L C) ≪≫
-    (Functor.associator (Over.map f).op
-      (Over.map (tensorOverlapBase (k := k) (L := L))).op
-      (pic0TypeFunctor C)).symm ≪≫
-    (Functor.isoWhiskerRight
-      (NatIso.op (Over.mapComp f (tensorOverlapBase (k := k) (L := L))))
-      (pic0TypeFunctor C)).symm
+  Functor.RepresentableBy.Over.mapCompPresheafCommon
+    (tensorOverlapBase (k := k) (L := L)) (pic0ThetaType k L C) f
 
 /-- Rebase an L-side Picard functor along one tensor coprojection, then identify it
 with the fixed k-side functor through theta and the common composite to `Spec k`. -/
@@ -350,37 +346,64 @@ noncomputable def tensorTripleTheta13_face :
     (tensorTripleFace13_inr (k := k) (L := L)).symm
     (tensorOverlapTheta (C := C))
 
--- Expanding the proof-bearing Over-map reassociations and theta common-base
--- comparisons exceeds Lean's default heartbeat budget on these three faces.
-set_option maxHeartbeats 800000 in
 lemma tensorTripleTheta12_face_eq :
     tensorTripleTheta12_face (k := k) (L := L) (C := C) =
       tensorTripleTheta12 (k := k) (L := L) (C := C) := by
-  apply Iso.ext
-  simp [tensorTripleTheta12_face, tensorTripleTheta12, tensorTripleTheta,
-    tensorTripleCommon, pic0BaseCommon, tensorOverlapTheta, tensorOverlapCommon,
-    Functor.RepresentableBy.Over.mapCompPresheafFace,
-    Functor.RepresentableBy.Over.mapCompPresheafOfEq, Over.mapComp]
+  simpa [tensorTripleTheta12_face, tensorTripleTheta12, tensorTripleTheta,
+    tensorTripleCommon, tensorOverlapTheta, tensorOverlapCommon, pic0BaseCommon] using
+    (Functor.RepresentableBy.Over.mapCompPresheafFace_common
+      (t := tensorTripleBase (k := k) (L := L))
+      (r₀ := tensorTripleCoord1 (k := k) (L := L))
+      (r₁ := tensorTripleCoord2 (k := k) (L := L))
+      (q := tensorTripleFace12 (k := k) (L := L))
+      (p₀ := tensorOverlapInl (k := k) (L := L))
+      (p₁ := tensorOverlapInr (k := k) (L := L))
+      (b := tensorOverlapBase (k := k) (L := L))
+      (theta := tensorOverlapTheta (C := C))
+      (hp := tensorOverlapInl_comp_base (k := k) (L := L))
+      (hr₀ := rfl) (hr₁ := rfl)
+      (h₀ := tensorTripleCoord1_comp_base (k := k) (L := L))
+      (h₁ := tensorTripleCoord2_comp_base (k := k) (L := L)))
 
-set_option maxHeartbeats 800000 in
 lemma tensorTripleTheta23_face_eq :
     tensorTripleTheta23_face (k := k) (L := L) (C := C) =
       tensorTripleTheta23 (k := k) (L := L) (C := C) := by
-  apply Iso.ext
-  simp [tensorTripleTheta23_face, tensorTripleTheta23, tensorTripleTheta,
-    tensorTripleCommon, pic0BaseCommon, tensorOverlapTheta, tensorOverlapCommon,
-    Functor.RepresentableBy.Over.mapCompPresheafFace,
-    Functor.RepresentableBy.Over.mapCompPresheafOfEq, Over.mapComp]
+  simpa [tensorTripleTheta23_face, tensorTripleTheta23, tensorTripleTheta,
+    tensorTripleCommon, tensorOverlapTheta, tensorOverlapCommon, pic0BaseCommon] using
+    (Functor.RepresentableBy.Over.mapCompPresheafFace_common
+      (t := tensorTripleBase (k := k) (L := L))
+      (r₀ := tensorTripleCoord2 (k := k) (L := L))
+      (r₁ := tensorTripleCoord3 (k := k) (L := L))
+      (q := tensorTripleFace23 (k := k) (L := L))
+      (p₀ := tensorOverlapInl (k := k) (L := L))
+      (p₁ := tensorOverlapInr (k := k) (L := L))
+      (b := tensorOverlapBase (k := k) (L := L))
+      (theta := tensorOverlapTheta (C := C))
+      (hp := tensorOverlapInl_comp_base (k := k) (L := L))
+      (hr₀ := tensorTripleCoord2_eq_face23_inl (k := k) (L := L))
+      (hr₁ := tensorTripleCoord3_eq_face23_inr (k := k) (L := L))
+      (h₀ := tensorTripleCoord2_comp_base (k := k) (L := L))
+      (h₁ := tensorTripleCoord3_comp_base (k := k) (L := L)))
 
-set_option maxHeartbeats 800000 in
 lemma tensorTripleTheta13_face_eq :
     tensorTripleTheta13_face (k := k) (L := L) (C := C) =
       tensorTripleTheta13 (k := k) (L := L) (C := C) := by
-  apply Iso.ext
-  simp [tensorTripleTheta13_face, tensorTripleTheta13, tensorTripleTheta,
-    tensorTripleCommon, pic0BaseCommon, tensorOverlapTheta, tensorOverlapCommon,
-    Functor.RepresentableBy.Over.mapCompPresheafFace,
-    Functor.RepresentableBy.Over.mapCompPresheafOfEq, Over.mapComp]
+  simpa [tensorTripleTheta13_face, tensorTripleTheta13, tensorTripleTheta,
+    tensorTripleCommon, tensorOverlapTheta, tensorOverlapCommon, pic0BaseCommon] using
+    (Functor.RepresentableBy.Over.mapCompPresheafFace_common
+      (t := tensorTripleBase (k := k) (L := L))
+      (r₀ := tensorTripleCoord1 (k := k) (L := L))
+      (r₁ := tensorTripleCoord3 (k := k) (L := L))
+      (q := tensorTripleFace13 (k := k) (L := L))
+      (p₀ := tensorOverlapInl (k := k) (L := L))
+      (p₁ := tensorOverlapInr (k := k) (L := L))
+      (b := tensorOverlapBase (k := k) (L := L))
+      (theta := tensorOverlapTheta (C := C))
+      (hp := tensorOverlapInl_comp_base (k := k) (L := L))
+      (hr₀ := (tensorTripleFace13_inl (k := k) (L := L)).symm)
+      (hr₁ := (tensorTripleFace13_inr (k := k) (L := L)).symm)
+      (h₀ := tensorTripleCoord1_comp_base (k := k) (L := L))
+      (h₁ := tensorTripleCoord3_comp_base (k := k) (L := L)))
 
 /-- The three independently defined Picard comparisons satisfy the Amitsur cocycle. -/
 theorem tensorTripleTheta_cocycle :
@@ -529,5 +552,16 @@ theorem tensorTripleIso_cocycle
     (tensorTripleRep1 rep) (tensorTripleRep2 rep) (tensorTripleRep3 rep)
     (tensorTripleTheta12 (C := C)) (tensorTripleTheta23 (C := C))
     (tensorTripleTheta13 (C := C)) (tensorTripleTheta_cocycle (C := C))
+
+/-- The literal face comparisons inherit the triple-face cocycle. -/
+theorem tensorTripleIso_face_cocycle
+    (rep : (pic0TypeFunctor ((baseChange k L).obj C)).RepresentableBy J) :
+    tensorTripleIso13_face (C := C) rep =
+      tensorTripleIso12_face (C := C) rep ≪≫
+        tensorTripleIso23_face (C := C) rep := by
+  rw [← tensorTripleIso13_face_eq (C := C) rep,
+    ← tensorTripleIso12_face_eq (C := C) rep,
+    ← tensorTripleIso23_face_eq (C := C) rep]
+  exact tensorTripleIso_cocycle (C := C) rep
 
 end AlgebraicGeometry
