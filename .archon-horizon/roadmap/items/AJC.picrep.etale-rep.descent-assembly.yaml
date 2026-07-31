@@ -132,7 +132,7 @@ summary: "r2 UPDATE (pic-e, run 0095): ONE OF THIS ROW'S FOUR INPUTS IS GONE -- 
   \ two projections\".\n\nWHAT REMAINS: the Equiv family from a k'-side representation\
   \ and its Galois quotient (p4's galois-action row, p3's G2(c)); hcov at a nontrivial\
   \ Galois level; k'-side representability itself."
-status: active
+status: pending
 kind: proof
 priority: high
 depends_on: []
@@ -155,7 +155,7 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.etale-rep
-  updated_at: '2026-07-30T16:36:35.941940+00:00'
+  updated_at: '2026-07-31T03:15:38.673848+00:00'
   pinned_commits:
   - 5e98db31b2
   - 561cb77159
@@ -163,4 +163,3 @@ metadata:
   - f64de9d18d
   - 8881ebccad
   - 3eedc3c923
-  owner: pic-e

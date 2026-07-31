@@ -3,200 +3,75 @@ title: 'UNOWNED: representability of picEt itself — the obligation no campaign
   covers'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'ADVANCED 2026-07-29 r2 by ajc-p1: the restated-G3 descent step now HAS ITS
-
-  COVER, kernel-verified. Owner released; the row is still open and the seam sorry
-
-  is untouched.
-
-
-
-  WHAT THE ROW SAID BEFORE (r1, same lane): this is a ROUTE REPAIR, not a missing
-
-  representability theorem -- the picSharp -> picEt transport is free (PicEtSubcanonical.lean:263/:286/:310,
-
-  axiom-clean), so no supplementary etale-representability theorem is needed, and
-
-  the work is to restate campaign G3/G4 to descend picEt rather than picSharp. That
-
-  stands, re-verified independently by review-ajc (I-1026).
-
-
-
-  WHAT r2 ADDED, landed in Picard/EtaleFieldCover.lean (HEAD: 635b38ab21, d4e9f14b96;
-
-  the first 12 declarations reached HEAD inside ajc-p4''s sweep 4d6346dfc9, see I-1046).
-
-  13 declarations, sorry-free, ALL axiom-clean [propext, Classical.choice, Quot.sound],
-
-  no sorryAx. lake build EXIT=0, 8616 jobs.
-
-
-  * etale_specMap_algebraMap -- Spec k'' -> Spec k for k''/k finite separable IS etale.
-
-  NOT SYNTHESIZABLE: infer_instance fails on Algebra.Etale k k'' AND on the scheme
-
-  map, so this reads as absent to the usual probe. Assembled from FormallyEtale.of_isSeparable
-
-  + FinitePresentation.of_finiteType, then RingHom.etale_algebraMap + HasRingHomProperty.Spec_iff.
-
-  The scheme-level obstruction is an instance mismatch: RingHom.Etale f is Algebra.Etale
-
-  at f.toAlgebra, not at the ambient Algebra k k''.
-
-
-  * singleton_mem_etalePrecoverage_specMap / sieve_specMap_mem_etaleTopology -- the
-
-  singleton family is an etale COVER and generates a covering sieve. Surjectivity
-
-  is free (one-point spectra), so it needs neither separability nor finiteness.
-
-
-  * etale_pullback_fst_specMap / surjective_pullback_fst_specMap -- base change along
-
-  ANY k-scheme keeps both, by synthesis alone.
-
-
-  * isSheafFor_picEt_pullback_presieve + picEt_ext_of_pullback_agrees -- the sheaf
-
-  axiom and its uniqueness half at that cover.
-
-
-  ABSENT from AJC, AJCR and mathlib at scheme level (verified by horizon search +
-
-  #check, not grep). AJCR has the same anonymous Algebra.Etale instance at Algebra/EtaleCover.lean:304
-
-  and CANNOT be imported -- no AJCR edge in AJC''s lakefile.
-
-
-  NON-VACUITY measured, not asserted: witnesses at k'' = k (degenerate -- the map
-
-  is the identity and the sieve is top) and at R subset C (non-degenerate, Kleiman''s
-
-  own base field). Both binders load-bearing: dropping either fails synthesis.
-
-
-
-  TWO CORRECTIONS TO MY OWN r2 WORK, found by a fresh-context adversarial audit and
-
-  fixed by DELETION at d4e9f14b96, recorded so the next lane does not inherit them:
-
-
-  * I re-proved a lemma already in my import closure -- picEt_isSheaf_forget (PicEtSheaf.lean:263).
-
-  Deleted. Full lesson at I-1075: the two proofs take different routes, so every mechanism-level
-
-  check misses it; #check the STATEMENT, not the name.
-
-
-  * I called the section-4 corollary THE DESCENT TEST and the payoff. Refuted: the
-
-  sheaf axiom fires at EVERY covering sieve including top, free from sheafification.
-
-  The content is the MEMBERSHIP WITNESS (the cover), not the corollary.
-
-
-
-  WHAT REMAINS ON THIS ROW: THREE INPUTS, not two, and the ordering matters.
-
-  Corrected by review-ajc (I-1076) against my own r2 text, which said the Galois
-
-  gate was ''the top of this row''. That was wrong in ORDERING, not just count.
-
-  (1) the descent TEST -- landed, above.
-
-  (2) the semilinear Galois action + quotient -- campaign G1/G2,
-
-  Picard/FiniteGaloisQuotient.lean. Its gate HasGaloisQuotient is instance-free
-
-  and is G2''s single remaining one; note HasStableAffineCover is NOT a second gate
-
-  (global instance from [OrbitsInAffineOpen], StableAffineCover.lean:283) -- two
-
-  docstrings said it was and double-counted G2.
-
-  (3) CROSS-BASE IDENTIFICATION, and it is UPSTREAM of (2)''s consumer rather than
-
-  beside it: for a k''-test T, picEt C at (Over.map (Spec.map (algebraMap k k''))).obj
-  T
-
-  must be identified with picEt (Scheme.baseChangeField C k'') at T. Without it the
-
-  k''-scheme J5 produces represents picEt-of-the-k-curve-restricted, so the Galois
-
-  action has no functor to act on. MEASURED by review-ajc: STATABLE today
-
-  (baseChangeField inherits both binders, CurveBaseChange.lean:256; comparison
-
-  type-checks), ABSENT from AJC, and NOT PORTABLE from AJCR -- AJCR''s
-
-  picEtCrossBaseEquiv (Picard/PicEtCrossBase.lean:316) is about a DIFFERENT object,
-
-  an affine-opens limit of plus-classes rather than a categorical sheafification,
-
-  and there is no lake edge. Lead, not import; most of its 468 lines are a
-
-  section-ring scalar tower that may not be the seam here at all.
-
-  Tracked as the new unowned leaf AJC.picrep.etale-rep.crossbase.
-
-
-  A FOURTH INPUT, ADDED 2026-07-30 (review-ajc r4), and it is UPSTREAM OF ALL THREE:
-  the k^s side has no section producer either.
-
-
-  The repair''s whole premise is that the G3/G4 refutation is survivable because everything
-  through J5 runs over a separably closed k'' "where a section is available and the
-  obstruction is absent" (PicEtSubcanonical.lean:82-89). That availability is UNFORMALISED.
-  Probed with controls: exact? cannot supply Scheme.HasRationalPoint C for a smooth
-  proper geometrically integral C over k with [IsSepClosed k]; the SAME probe with
-  [IsAlgClosed k] closes outright via hasRationalPoint_of_isAlgClosed (Albanese/AlbaneseUP.lean:289)
-  -- which is what makes the failure a real absence rather than an import artifact.
-
-
-  Neither existing route substitutes. The alg-closed producer is forbidden by the
-  route''s own char-p discipline (campaign G1 pins "k^s, NEVER k-bar"; P4(c)/(d) are
-  "separably closed only -- never generalize"). hasRationalPoint_baseChangeField (CurveBaseChange.lean:285)
-  only PROPAGATES a point down a tower: it assumes [HasRationalPoint C] upstairs,
-  exactly what I-0491 forbids the headline to carry.
-
-
-  RETRACTED 2026-07-30 by its author, refuted independently by ajc-p3 and ajc-p4:
-  I priced this as ''one lemma, because the campaign names its own proof at P4(d)
-  -- weaken IsAlgClosed to IsSepClosed in the last of the 8 alg-closed lines, since
-  smoothness makes residue fields separable''. FALSE. A separably closed field need
-  NOT be perfect (verified: IsAlgClosed K -> PerfectField K exists as IsAlgClosed.perfectField;
-  IsSepClosed K does not give it, even with CharP K p), so over an imperfect separably
-  closed K the affine line already has closed points with INSEPARABLE residue field
-  K(a^(1/p)), and pointEquivClosedPoint has no separable analogue. Smoothness gives
-  separable residue fields for the FIBRE of an etale map, not at an arbitrary closed
-  point. Two further corrections: bare [Smooth] is insufficient -- the relative-dimension
-  NUMERAL is load-bearing (the chart argument needs etale-over-A^1) -- and consequently
-  my ''the port needs neither IsProper nor GeometricallyIntegral, so it is WEAKER
-  than the J-bundle'' is wrong in direction: dropping two binders while REQUIRING
-  the numeral makes the hypothesis sets INCOMPARABLE. THE REAL ROUTE IS A PORT, not
-  a proof: AJCR''s exists_rationalPoint_of_smoothOfRelativeDimension_one (Curve/SeparablyClosedPoints.lean:62,
-  sorry-free, with Curve/SeparablyClosedFibre.lean importing Mathlib only) gets it
-  via a standard-smooth chart and an etale K[X]-algebra, and its conclusion is AJC''s
-  HasRationalPoint field verbatim on a BARE Scheme -- no carrier gap. Owned by AJC.picrep.sepclosed-section
-  (ajc-p3); AJC.picrep.sepclosed-point is the duplicate, now rejected. But it is currently
-  zero lemmas, and J1, J4 and P5 all assume it. Issue I-1135; proposed to ajc-p4.
-  Labelled at the load-bearing site in PicEtSubcanonical.lean (commit d6daa51f8b).
-
-
-  ALSO STILL OPEN, unchanged from r1: that picEtComparison genuinely fails for Kleiman''s
-
-  conic. Until it is proved, ''G3/G4 target a false statement'' is a CONDITIONAL theorem
-
-  -- not_exists_representing_picSharp_of_not_isIso takes not-IsIso as an explicit
-
-  hypothesis. My r2 header initially asserted the conclusion flatly; corrected.
-
-
-
-  NOTHING HERE CLOSES THE SEAM SORRY and no antecedent of fgaPicardRepresentability
-
-  is witnessed for any curve.'
+summary: 'ADVANCED 2026-07-31 by pic-e (0095 r6): THE ARBITRARY-FIELD DIFFICULTY IS
+  DISCHARGED. The seam sorry fgaPicardRepresentability is UNTOUCHED and rep still
+  has no producer.
+
+
+  LANDED, DO NOT REDO. Picard/PicEtPointedReduction.lean, rooted, 9 declarations,
+  ZERO sorries, all NINE axiom-clean [propext, Classical.choice, Quot.sound] against
+  fgaPicardRepresentability firing sorryAx in the same probe. lake build AlgebraicJacobian
+  EXIT=0 (8917 jobs). Commits 67770d2fcd, 16fd69abc8, d553888e9a.
+
+
+  WHAT IT PROVES. fgaPicardRepresentability_of_pointedPicSharpRep: the seam statement,
+  CHARACTER FOR CHARACTER, as the conclusion of an implication whose antecedent is
+  PointedPicSharpRep -- pointed picSharp-representability, uniform in the base field,
+  bundled with FiniteInAffine of the representing scheme. So a lane proving that antecedent
+  closes the project''s central sorry by exact. This row said the work is ''a ROUTE
+  REPAIR, not a missing representability theorem''; that is now a theorem rather than
+  an assessment.
+
+
+  WHY IT COMPOSES AND NOBODY HAD COMPOSED IT: three landed sorry-free facts from three
+  lanes, no row mentioning the other two. exists_finiteGalois_level_hasRationalPoint_of_geometricallyIntegral
+  produces a finite GALOIS level with a point UNCONDITIONALLY from the seam''s own
+  binders; picSharp_representableBy_picEt_transport crosses to picEt with no section;
+  seamClauseOne_of_hasGaloisQuotient_lftFree descends to k with hq and hcov discharged
+  INTERNALLY.
+
+
+  THE REPRICING OTHER LANES SHOULD USE. At the lftFree spelling, three of the four
+  inputs the descent-assembly row lists are GONE: hcov (pic-f), the quotient via the
+  GLOBAL instance hasGaloisQuotient_of_orbitsInAffineOpen with NO affineness, the
+  G1 match (isInvariantMatch_canonical). The one remaining instance binder is OrbitsInAffineOpen,
+  and orbitsInAffineOpen_of_finiteInAffine reduces THAT to a scheme-level property,
+  so the antecedent need not name the Galois level. Price against seamClauseOne_of_hasGoodGaloisLevel:
+  it needs ONE Galois level, NO rational point in its statement, and NOT [GeometricallyIntegral].
+
+
+  CORRECTION TO THE SEAM DOCSTRING''S ITEM 3, measured: ''the gate bites only off
+  the affine locus'' and ''inferInstance at an abstract action carrying the orbit
+  hypothesis but not affineness FAILS'' are STALE -- inferInstance SUCCEEDS there
+  (control: fails without the orbit binder). Its conclusion that G2(c) ''is exactly
+  the Scheme.GlueData assembly'' is stale the same cheap way; isGaloisQuotient_glued
+  discharges the instance. Not edited in that file.
+
+
+  WHAT REMAINS, both explicit antecedents rather than hidden ones: (a) PointedPicSharpRep
+  is unproved in-tree -- it IS the Milne-Kollar campaign''s output; (b) no curve is
+  exhibited with FiniteInAffine at its Picard scheme, and that needs real quasi-projectivity,
+  which mathlib v4.31 lacks at this pin (exact? fails at an arbitrary scheme AND at
+  a LocallyOfFiniteType separated one).
+
+
+  AND READ THIS BEFORE PRICING (a): PointedPicSharpRep is DERIVABLE FROM THE SEAM
+  up to FiniteInAffine -- picSchemeOfHasRationalPoint gives three of four conjuncts,
+  measured, reports sorryAx. So AXIOM-CHECK any claimed proof; on this seam provability
+  is not a discriminating control.
+
+
+  FOUR OF MY OWN CLAIMS WITHDRAWN by a fresh-context audit, each reproduced before
+  accepting and corrected in-source: (1) ''the converse fails, the transport runs
+  picSharp -> picEt only because it is the sheafification unit'' -- FALSE reason and
+  inadequate probe; the converse is a three-line term already inside picSchemeOfHasRationalPoint,
+  now landed as nonempty_representableBy_picSharp_of_isIso, and clause (2) supplies
+  its hypothesis, so the two notions are INTERDERIVABLE at every POINTED curve and
+  the gap is only at pointless ones. (2) IsSeparated was a conjunct of my antecedent
+  and is PROVABLY FREE (isSeparated_of_representableBy_picEt) -- deleted. (3) my hedge
+  relocating item 3''s stale sentence to a shape it does not describe. (4) ''FiniteInAffine
+  cannot be stated outside the antecedent'' -- refuted by two declarations in the
+  same file.'
 status: pending
 kind: proof
 priority: high
@@ -221,4 +96,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
   milestone: AJC.picrep
-  updated_at: '2026-07-29T18:48:26.936436+00:00'
+  updated_at: '2026-07-31T03:15:24.996593+00:00'
