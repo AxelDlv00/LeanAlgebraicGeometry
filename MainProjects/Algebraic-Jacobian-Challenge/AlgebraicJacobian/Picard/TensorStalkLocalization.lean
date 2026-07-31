@@ -338,4 +338,39 @@ theorem localizedTensorSectionsStalkLinearEquiv_mkLinearMap
     ((PresheafOfModules.sheafificationAdjunction
       (𝟙 X.ringCatSheaf.obj)).unit.app (tensorPresheaf A B)) x U x.2 m
 
+/-- The composite of `tensorSectionHom` with the germ map of the sheaf tensor
+product is a localization map.  Thus the actual sheaf-tensor stalk, together
+with the map from affine tensor-presheaf sections, satisfies the universal
+property of localization at the point's prime complement. -/
+theorem isLocalizedModule_tensorSectionHom_stalk
+    (A B : X.Modules) [A.IsQuasicoherent] [B.IsQuasicoherent]
+    {U : X.Opens} (hU : IsAffineOpen U) (x : U) :
+    letI : Module (X.presheaf.stalk x)
+        (↑(TopCat.Presheaf.stalk (tensorObj A B).val.presheaf x) : Type u) :=
+      presheafStalkModule (tensorObj A B).val x
+    letI : Module Γ(X, U)
+        (↑(TopCat.Presheaf.stalk (tensorObj A B).val.presheaf x) : Type u) :=
+      Module.compHom _ (X.presheaf.germ U x x.2).hom
+    IsLocalizedModule (hU.primeIdealOf x).asIdeal.primeCompl
+      ((presheafGermLinearMap (tensorObj A B).val x).comp
+        (ModuleCat.Hom.hom (tensorSectionHom A B U))) := by
+  letI : Module (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk (tensorObj A B).val.presheaf x) : Type u) :=
+    presheafStalkModule (tensorObj A B).val x
+  letI : Module Γ(X, U)
+      (↑(TopCat.Presheaf.stalk (tensorObj A B).val.presheaf x) : Type u) :=
+    Module.compHom _ (X.presheaf.germ U x x.2).hom
+  let S := (hU.primeIdealOf x).asIdeal.primeCompl
+  let f := LocalizedModule.mkLinearMap S ((tensorPresheaf A B).obj (op U))
+  let e := localizedTensorSectionsStalkLinearEquiv A B hU x
+  have heq :
+      (presheafGermLinearMap (tensorObj A B).val x).comp
+          (ModuleCat.Hom.hom (tensorSectionHom A B U)) =
+        e.toLinearMap.comp f := by
+    apply LinearMap.ext
+    intro m
+    exact (localizedTensorSectionsStalkLinearEquiv_mkLinearMap A B hU x m).symm
+  rw [heq]
+  exact IsLocalizedModule.of_linearEquiv S f e
+
 end AlgebraicGeometry.Scheme.Modules
