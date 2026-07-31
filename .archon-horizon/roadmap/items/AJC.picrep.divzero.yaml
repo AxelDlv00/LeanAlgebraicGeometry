@@ -3,17 +3,17 @@ title: 'Div-zero: the first DivFamily producer, and Div^0 representable by the t
   object'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'ADVANCED, NOT CLOSED. Commits 0d465e95d9, aa38db9d26, 10d411758b, 38e102eef6,
-  and 692b3fe104 add a rooted, axiom-clean terminal bridge, the IsZero-from-sections
-  converse, and three conditional Div0 RepresentableBy constructors. The sharp remaining
-  antecedent is hss: for every test T and degree-zero x, every open V has Subsingleton
-  Gamma(x.F,V), which implies IsZero x.F and terminal representability. HasFiberDeg
-  0 alone does not syntactically provide hss: it is a finrank of fibre sections, while
-  hss needs a support/finiteness and finite-dimensionality bridge. Do not use a generic
-  sheaf example such as O(-1) on P1 as a DivFamily counterexample without checking
-  the carrier epimorphism q. Whether the required bridge holds for the DivFamily carrier
-  remains unproved, so no instantiated producer is claimed. PicEt and fgaPicardRepresentability
-  remain untouched.'
+summary: 'Div0 producer reduced to EMPTY SUPPORT (pic-e 0105 r3, commits 64348cf522,
+  4f6a122ab9, DivFamilyZero.lean, axiom-clean, lake env lean EXIT=0). New reusable
+  bricks: isZero_of_isEmpty (module on empty scheme is zero) and isZero_of_isEmpty_schematicSupport
+  (quasi-coherent sheaf with empty schematic support is zero, via descent iso M=i_*i^*M)
+  -- converses of the landed isEmpty_schematicSupport_of_isZero. Producer divFunctorDegZero_representableByTerminal_of_forall_isEmpty_schematicSupport:
+  Div0 represented once every degree-0 divisor has empty support. REMAINING (open):
+  HasFiberDeg 0 -> IsEmpty(schematicSupport x.F). Two sub-obligations, both documented
+  in DivSupportQuasiFinite.lean: (a) the fibre-of-support vs support-of-fibre carrier
+  bridge (reverse annihilator inclusion, absent in tree), (b) degree-0 fibre => empty
+  fibre under quasi-finiteness. general-pi hz is UNPROVABLE due to finrank junk value;
+  producer must gate on fibre finiteness. No new hypothesis added.'
 status: active
 kind: proof
 priority: normal
@@ -36,7 +36,7 @@ metadata:
     task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-31T10:27:15.220354+00:00'
+  updated_at: '2026-07-31T11:20:02.862961+00:00'
   pinned_commits:
   - 692b3fe104
   - 38e102eef6

@@ -1,0 +1,38 @@
+id: I-1716
+provider: local
+kind: conversation
+body: 'SURJ PROTOTYPE
+
+
+  Generic theorem compiles (lean_run_code success=true). Body: choose r/hr via Submodule.Quotient.mk_surjective;
+  hrcompat from mem_intrinsicThetaGluedSubmodule_iff; obtain q via exists_thetaCokernel_global_of_compatible_representatives;
+  obtain x via hB q; prove subtype ext piecewise with localx := secRes thetaChart
+  sheaf le_top ((gluedTwistEquiv top).symm x), use Submodule.Quotient.eq and thetaPieceVanishing_iff...,
+  hsymm := gluedTwistEquiv_symm_res, hres by congrArg piece glued equivalence + apply_symm_apply,
+  hnat := secRes_naturality cokerπ hW x, hpiece by rw [hres, hnat, hx, hq j], explicit
+  htw/map_sub then sub_self. Full exact code is in the /root/surj_prototype transcript.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:pic-d
+author: horizon
+source_ref: null
+created_at: '2026-07-31T11:08:38.064068+00:00'
+updated_at: '2026-07-31T11:08:38.064082+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:pic-d
+  started_by: task:pic-d
+  read_by:
+  - pic-d
+  provenance:
+    run: '0100'
+    session: 0004-horizon-pic-d
+    role: horizon
+    round: '1'
+    rounds: '6'
+    task: pic-d
+    task_title: 'Pic rep lane D: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

@@ -1,0 +1,58 @@
+id: I-1715
+provider: local
+kind: issue
+body: 'STRUCTURAL: the arbitrary-ring pic0 target may be FALSE without seminormality
+  (pic-c 0106 r2, fresh-context traced, not yet Lean-refuted)
+
+
+  TARGET: ∀ A, Subsingleton (pic0Subgroup C (overSpec k A)) — consumed by jacobianData_of_overSpec_subsingleton.
+  Traced the full chain CechPic→relPic→PicEtAff→picEt→pic0Subgroup:
+
+  - picEt C (overSpec k A) ≃* PicEtAff C A (picEtAffineEquiv, affine test);
+
+  - PicEtAff.unit : relPic C (overSpec k A) ↪ PicEtAff is INJECTIVE (CechKernelLemma.lean:361,
+  sorry-free) — étale plus does NOT collapse relPic classes;
+
+  - relPic = CechPic(ℙ¹_A)/π*Pic(A). By projective-bundle, degree-0 part carries the
+  Traverso–Swan classes Pic(A[t])/Pic(A), NONZERO for non-seminormal A, fibrewise-trivial,
+  degree 0.
+
+  So such a class is a would-be NONZERO member of pic0Subgroup ⇒ the Subsingleton
+  target is likely FALSE for non-seminormal A. This is the SAME wall all four bridge
+  files (Pic0RingFibrewiseTrivial/ZariskiLocal/DatumEngine/EngineFromPic0) hit: fibrewise-trivial
+  ⇏ trivial (Traverso–Swan). Confirmed by direct LSP probe: Subsingleton (CommRing.Pic
+  (Polynomial A)) fails to synthesize even given Subsingleton (CommRing.Pic A).
+
+
+  IMPLICATION for the rep headline: the ring-case vanishing must either (a) restrict
+  the test ring to REDUCED/seminormal A, or (b) the JacobianData route supplies the
+  section/honesty (surjectivity relPicToPicEt onto picEt) that forces classes to come
+  from relPic — NOT close the arbitrary-A Subsingleton as stated. Caveat: I have not
+  yet Lean-constructed the counterexample witness (whether the TS class is provably
+  nonzero in picEt); the injective unit strongly suggests it is.
+
+
+  LANDED substrate: Tangent/TruncExpCechTransport.lean (3e205675c5) — iso-transport
+  of cechCoboundaryUnits, reusable for any chart→scheme coboundary bridge.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T10:58:24.129026+00:00'
+updated_at: '2026-07-31T11:06:23.909340+00:00'
+metadata:
+  provenance:
+    run: '0106'
+    session: 0006-horizon-pic-c
+    role: horizon
+    round: '2'
+    rounds: '6'
+    task: pic-c
+    task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-c
+  - pic-g

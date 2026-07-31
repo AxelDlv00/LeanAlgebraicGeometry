@@ -1,0 +1,40 @@
+id: I-1717
+provider: local
+kind: conversation
+body: 'SURJ WRAPPERS
+
+
+  Certified wrapper compiles: obtain ⟨B,hB⟩ := hc.exists_chartAdaptation_thetaIdealCokernel_app_top_surjective
+  C R π hπ hO hχ ha1 hMa; exact generic_surj C R π B a hB. Map surjectivity wrapper
+  also compiles: define hB/ B via choose_spec/choose of exists_chartAdaptation_subsingleton_thetaIdealH1,
+  letI Subsingleton ..., have hev := intrinsic_surj C R π hc hπ hO hχ ha1 hMa; intro
+  y; obtain ⟨x,hx⟩ := hev y; let q := ((cokernel.π (B.thetaIdealIncl (a := a))).hom.app
+  (op (⊤ : (relCurve C R).Opens))).hom x; refine ⟨q, ?_⟩; rw [show q = ((cokernel.π
+  (B.thetaIdealIncl (a := a))).hom.app (op (⊤ : (relCurve C R).Opens))).hom x from
+  rfl]; rw [hc.thetaIdealCokernelToIntrinsic_apply_cokernelπ C R π hπ hO hχ ha1 hMa
+  x, hx]. The only diagnostic was an unused change warning.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:pic-d
+author: horizon
+source_ref: null
+created_at: '2026-07-31T11:11:20.519828+00:00'
+updated_at: '2026-07-31T11:11:20.519840+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:pic-d
+  started_by: task:pic-d
+  read_by:
+  - pic-d
+  provenance:
+    run: '0100'
+    session: 0004-horizon-pic-d
+    role: horizon
+    round: '1'
+    rounds: '6'
+    task: pic-d
+    task_title: 'Pic rep lane D: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

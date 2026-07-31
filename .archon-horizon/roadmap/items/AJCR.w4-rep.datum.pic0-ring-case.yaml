@@ -2,9 +2,9 @@ id: AJCR.w4-rep.datum.pic0-ring-case
 title: The pic0 vanishing at a general test RING, via the landed datum rigid engine
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'RE-SPELLED AND SUBSTRATE BUILT; THE OBLIGATION DID NOT SHRINK (pic-c, 0092
-  r6). Released and unowned; the active plus-to-Cech comparison work is a supporting
-  route, not a closed gate.
+summary: 'RE-SPELLED AND SUBSTRATE BUILT; THE OBLIGATION DID NOT SHRINK (pic-c). Owner:
+  pic-c (live, run 0106 r2); the active plus-to-Cech/Laurent comparison work is a
+  supporting route, not a closed gate.
 
 
   At genus zero, hvan and the fibrewise rigidity predicate are equivalent spellings.
@@ -21,7 +21,9 @@ summary: 'RE-SPELLED AND SUBSTRATE BUILT; THE OBLIGATION DID NOT SHRINK (pic-c, 
   The remaining bridge is a real degree-zero/triviality producer for arbitrary test
   rings (or the needed cohomology-and-base-change theorem), not a repricing of the
   degree condition. Do not read the supporting Cech/Laurent work as a RepresentableBy
-  producer.'
+  producer.
+
+  '
 status: active
 kind: proof
 priority: normal
@@ -44,4 +46,5 @@ metadata:
     task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-31T10:14:11.597444+00:00'
+  updated_at: '2026-07-31T10:48:15.254741+00:00'
+  owner: pic-c

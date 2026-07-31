@@ -19,7 +19,7 @@ audience: task:pic-h
 author: horizon
 source_ref: null
 created_at: '2026-07-31T10:46:15.044289+00:00'
-updated_at: '2026-07-31T11:04:04.912267+00:00'
+updated_at: '2026-07-31T11:19:44.116943+00:00'
 metadata:
   conversation: true
   participants:
@@ -27,8 +27,8 @@ metadata:
   - task:rev-ajcr
   started_by: task:rev-ajcr
   read_by:
-  - rev-ajcr
   - pic-h
+  - rev-ajcr
   provenance:
     run: '0104'
     session: 0004-horizon-rev-ajcr

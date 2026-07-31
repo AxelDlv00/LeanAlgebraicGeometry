@@ -620,6 +620,72 @@ theorem exists_thetaCokernel_global_of_compatible_representatives
     hcompat
   exact ⟨q, hq⟩
 
+/-- Surjectivity of the auxiliary theta-cokernel projection on global sections forces
+surjectivity of intrinsic theta evaluation on the arbitrary widened affine cover.  The
+proof chooses local quotient representatives, glues their cokernel classes, and uses
+piecewise exactness to compare the resulting global lift back to those representatives. -/
+theorem intrinsicThetaEvalRel_surjective_of_thetaIdealCokernel_app_top_surjective
+    {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
+    {A : AffAdaptation D d} (B : DivisorAdaptation C R π d) (a : ℕ)
+    (hsurj : Function.Surjective
+      ((cokernel.π (B.thetaIdealIncl (a := a))).hom.app
+        (op (⊤ : (relCurve C R).Opens))).hom) :
+    Function.Surjective (A.intrinsicThetaEvalRel (π := π) a) := by
+  intro y
+  choose r hr using fun j : D.index =>
+    Submodule.Quotient.mk_surjective (A.thetaPieceVanishing (π := π) a j) (y.val j)
+  have hcompat : ∀ i j : D.index,
+      A.thetaToOverlapLeft (π := π) a i j (Submodule.Quotient.mk (r i)) =
+        A.thetaToOverlapRight (π := π) a i j (Submodule.Quotient.mk (r j)) := by
+    intro i j
+    have hy := (A.mem_intrinsicThetaGluedSubmodule_iff (π := π) a y.val).mp
+      y.property ⟨i, j⟩
+    rw [hr i, hr j]
+    exact hy
+  obtain ⟨q, hq⟩ := exists_thetaCokernel_global_of_compatible_representatives
+    C R π B a r hcompat
+  obtain ⟨x, hx⟩ := hsurj q
+  refine ⟨x, ?_⟩
+  apply Subtype.ext
+  funext j
+  letI : Module Γ(relCurve C R, D.pieces j)
+      (A.ThetaPieceSections (π := π) a j) :=
+    A.thetaPieceSectionsModule (π := π) a j
+  change Submodule.Quotient.mk
+      (secRes (thetaChartDatum C R π a).sheaf
+        (le_top : D.pieces j ≤ (⊤ : (relCurve C R).Opens))
+        ((gluedTwistEquiv C R π a (⊤ : (relCurve C R).Opens)).symm x)) =
+      y.val j
+  rw [← hr j]
+  apply thetaPieceQuotient_eq_of_global_cokernel_restriction C R π B a j x (r j)
+  calc
+    secRes (cokernel (B.thetaIdealIncl (a := a)))
+        (le_top : D.pieces j ≤ (⊤ : (relCurve C R).Opens))
+        (((cokernel.π (B.thetaIdealIncl (a := a))).hom.app
+          (op (⊤ : (relCurve C R).Opens))).hom x) =
+      secRes (cokernel (B.thetaIdealIncl (a := a)))
+        (le_top : D.pieces j ≤ (⊤ : (relCurve C R).Opens)) q := by
+          rw [hx]
+    _ = ((cokernel.π (B.thetaIdealIncl (a := a))).hom.app
+        (op (D.pieces j))).hom
+        (gluedTwistEquiv C R π a (D.pieces j) (r j)) := hq j
+
+/-- The widened certificate's global theta-cokernel surjectivity is enough to make the
+intrinsic, chart-free theta evaluation surjective. -/
+theorem IsCertified.intrinsicThetaEvalRel_surjective
+    {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
+    {A : AffAdaptation D d} {g : ℕ} (hc : A.IsCertified g)
+    (hπ : π ≫ P1.structureMap k = C.hom)
+    (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
+    {a : ℕ} (ha1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1)
+    (hMa : windowM_choice π hπ g ≤ a) :
+    Function.Surjective (A.intrinsicThetaEvalRel (π := π) a) := by
+  obtain ⟨B, hB⟩ := hc.exists_chartAdaptation_thetaIdealCokernel_app_top_surjective
+    C R π hπ hO hχ ha1 hMa
+  exact intrinsicThetaEvalRel_surjective_of_thetaIdealCokernel_app_top_surjective
+    C R π B a hB
+
 /-- Once the widened certificate supplies the auxiliary theta-ideal `H¹` vanishing,
 global sections of the quotient sheaf for the chosen auxiliary chart are linearly equivalent
 to the actual range of the intrinsic widened theta evaluation. -/
@@ -707,6 +773,33 @@ theorem IsCertified.thetaIdealCokernelToIntrinsic_apply_cokernelπ
   -- edit whose targeted module check could not see this file — the mismatch only appears
   -- when the root imports it.  Author: see `Archon-Task: pic-d` on the introducing commit.)
   exact congrArg _ (A.intrinsicThetaQuotEquivRange_mk (π := π) a x)
+
+/-- The global theta-cokernel embedding is surjective once the intrinsic evaluation has
+been descended through the same certified auxiliary chart. -/
+theorem IsCertified.thetaIdealCokernelToIntrinsic_surjective
+    {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
+    {A : AffAdaptation D d} {g : ℕ} (hc : A.IsCertified g)
+    (hπ : π ≫ P1.structureMap k = C.hom)
+    (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
+    {a : ℕ} (ha1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1)
+    (hMa : windowM_choice π hπ g ≤ a) :
+    Function.Surjective
+      (hc.thetaIdealCokernelToIntrinsic C R π hπ hO hχ ha1 hMa) := by
+  let hB := Classical.choose_spec
+    (hc.exists_chartAdaptation_subsingleton_thetaIdealH1 C R π hπ hO hχ ha1 hMa)
+  let B := Classical.choose
+    (hc.exists_chartAdaptation_subsingleton_thetaIdealH1 C R π hπ hO hχ ha1 hMa)
+  letI : Subsingleton (Sheaf.HModule (B.thetaIdealDatum a).sheaf 1) := hB
+  have hev := hc.intrinsicThetaEvalRel_surjective C R π hπ hO hχ ha1 hMa
+  intro y
+  obtain ⟨x, hx⟩ := hev y
+  let q := ((cokernel.π (B.thetaIdealIncl (a := a))).hom.app
+    (op (⊤ : (relCurve C R).Opens))).hom x
+  refine ⟨q, ?_⟩
+  rw [show q = ((cokernel.π (B.thetaIdealIncl (a := a))).hom.app
+    (op (⊤ : (relCurve C R).Opens))).hom x from rfl]
+  rw [hc.thetaIdealCokernelToIntrinsic_apply_cokernelπ C R π hπ hO hχ ha1 hMa x, hx]
 
 /-- The global theta-quotient embedding has precisely the image of intrinsic theta
 evaluation as its range. -/
