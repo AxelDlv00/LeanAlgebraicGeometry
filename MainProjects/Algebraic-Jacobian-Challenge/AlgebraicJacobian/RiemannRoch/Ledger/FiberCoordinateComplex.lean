@@ -128,6 +128,8 @@ lemma coordinateDiff_apply (n : ℕ) (a : Γ(Y, Q.V₀)) (b : Γ(Y, Q.V₁)) :
 
 /-! ## Comparison with the divisor-sheaf differential -/
 
+omit [LocallyOfFiniteType (Y ↘ Spec (CommRingCat.of K))]
+  [QuasiCompact (Y ↘ Spec (CommRingCat.of K))] in
 lemma divisorZeroSectionsEquiv_coe_of_nonempty {U : Y.Opens}
     (hU : (U : Set Y).Nonempty) (s : Γ(Y, U)) :
     (((divisorZeroSectionsEquiv (K := K) U) s : divisorSections K 0 U) :
@@ -147,6 +149,8 @@ lemma coordinateSectionsEquivV0_coe (n : ℕ) (s : Γ(Y, Q.V₀)) :
   rw [divisorZeroSectionsEquiv_coe_of_nonempty (K := K)
     ⟨genericPoint Y, (Q.genericPoint_mem_inf).1⟩]
 
+set_option maxHeartbeats 800000 in
+set_option backward.isDefEq.respectTransparency true in
 lemma coordinateSectionsEquivV1_coe (n : ℕ) (s : Γ(Y, Q.V₁)) :
     (((Q.coordinateSectionsEquivV1 (K := K) n) s :
         divisorSections K (n • Q.coordinateWeilDivisor (K := K)) Q.V₁) :
@@ -157,6 +161,8 @@ lemma coordinateSectionsEquivV1_coe (n : ℕ) (s : Γ(Y, Q.V₁)) :
   exact divisorZeroSectionsEquiv_coe_of_nonempty
     (K := K) ⟨genericPoint Y, (Q.genericPoint_mem_inf).2⟩ s
 
+set_option maxHeartbeats 800000 in
+set_option backward.isDefEq.respectTransparency true in
 lemma coordinateSectionsEquivOverlap_coe (n : ℕ) (s : Γ(Y, Q.V₀ ⊓ Q.V₁)) :
     (((Q.coordinateSectionsEquivOverlap (K := K) n) s :
         divisorSections K (n • Q.coordinateWeilDivisor (K := K)) (Q.V₀ ⊓ Q.V₁)) :
@@ -176,25 +182,25 @@ lemma coordinateUnit_inv_pow_eq_germ_overlap (n : ℕ) :
       (homOfLE (inf_le_right : Q.V₀ ⊓ Q.V₁ ≤ Q.V₁))
       (genericPoint Y) Q.genericPoint_mem_inf Q.y).symm
 
+omit [LocallyOfFiniteType (Y ↘ Spec (CommRingCat.of K))]
+  [QuasiCompact (Y ↘ Spec (CommRingCat.of K))] in
 private lemma divisorVal_sub {E : Y.CurveDivisor} {W : Y.Opens}
     (a b : (Y.divisorSheaf K E).obj.obj (op W)) :
     divisorVal K (a - b) = divisorVal K a - divisorVal K b := rfl
 
+omit [LocallyOfFiniteType (Y ↘ Spec (CommRingCat.of K))]
+  [QuasiCompact (Y ↘ Spec (CommRingCat.of K))] in
+set_option backward.isDefEq.respectTransparency true in
 private lemma divisorVal_coordinateModuleDiff (E : Y.CurveDivisor)
     (t : (divisorSections K E Q.V₀ × divisorSections K E Q.V₁)) :
     divisorVal K ((Y.twoCoverSquare Q.V₀ Q.V₁ Q.cover).moduleDiff
       (Y.divisorSheaf K E) t) = divisorVal K t.1 - divisorVal K t.2 := by
-  have h0 : divisorVal K
-      (((Y.divisorSheaf K E).obj.map
-        (Y.twoCoverSquare Q.V₀ Q.V₁ Q.cover).f₁₂.op).hom t.1) =
-      divisorVal K t.1 :=
-    divisorPresheaf_map_val K _ Q.inf_nonempty t.1
-  have h1 : divisorVal K
-      (((Y.divisorSheaf K E).obj.map
-        (Y.twoCoverSquare Q.V₀ Q.V₁ Q.cover).f₁₃.op).hom t.2) =
-      divisorVal K t.2 :=
-    divisorPresheaf_map_val K _ Q.inf_nonempty t.2
-  rw [GrothendieckTopology.MayerVietorisSquare.moduleDiff_apply, divisorVal_sub, h0, h1]
+  rw [GrothendieckTopology.MayerVietorisSquare.moduleDiff_apply, divisorVal_sub]
+  apply congrArg₂ (fun a b : Y.functionField => a - b)
+  · exact divisorPresheaf_map_val K
+      (homOfLE (inf_le_left : Q.V₀ ⊓ Q.V₁ ≤ Q.V₀)).op Q.inf_nonempty t.1
+  · exact divisorPresheaf_map_val K
+      (homOfLE (inf_le_right : Q.V₀ ⊓ Q.V₁ ≤ Q.V₁)).op Q.inf_nonempty t.2
 
 /-- The normalized differential is conjugate to the divisor-sheaf Mayer--Vietoris
 differential. -/
