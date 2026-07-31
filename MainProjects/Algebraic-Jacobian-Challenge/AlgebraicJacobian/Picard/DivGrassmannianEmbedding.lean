@@ -538,6 +538,100 @@ theorem isFinitePresentation_tensorObj_left_of_isLocallyTrivial
         hqT.isFinite_presentation (Exists.choose ij.property) }
   exact { exists_quasicoherentData := ⟨qT.shrink, hsh⟩ }
 
+/-- Sections over an open transport across an isomorphism after restriction.
+The result is linear over the ambient section ring, so it can also be
+restricted to any base ring acting through the ambient scheme. -/
+noncomputable def sectionLinearEquivOfRestrictIso
+    {X : Scheme.{u}} {M N : X.Modules} (W : X.Opens)
+    (e : M.restrict W.ι ≅ N.restrict W.ι) :
+    Γ(M, W) ≃ₗ[Γ(X, W)] Γ(N, W) := by
+  set αM : Γ(M.restrict W.ι, ⊤) ≅ Γ(M, W.ι ''ᵁ ⊤) :=
+    M.restrictAppIso W.ι ⊤ with hαM
+  set αN : Γ(N.restrict W.ι, ⊤) ≅ Γ(N, W.ι ''ᵁ ⊤) :=
+    N.restrictAppIso W.ι ⊤ with hαN
+  let f : Γ(M, W.ι ''ᵁ ⊤) ≃ₗ[Γ(X, W.ι ''ᵁ ⊤)] Γ(N, W.ι ''ᵁ ⊤) :=
+    { toFun := fun x => αN.hom (e.hom.app ⊤ (αM.inv x))
+      map_add' := fun x y => by simp only [map_add]
+      map_smul' := fun r x => by
+        simp only [hαM, hαN, smul_restrictAppIso_inv_apply,
+          smul_restrictAppIso_hom_apply, Scheme.Opens.ι_appIso,
+          Iso.refl_hom, Hom.app_smul, RingHom.id_apply]
+        rfl
+      invFun := fun y => αM.hom (e.inv.app ⊤ (αN.inv y))
+      left_inv := fun x => by
+        have h1 : e.inv.app ⊤ (e.hom.app ⊤ (αM.inv x)) = αM.inv x := by
+          change (e.hom ≫ e.inv).app ⊤ (αM.inv x) = αM.inv x
+          rw [e.hom_inv_id]
+          rfl
+        change αM.hom (e.inv.app ⊤
+          (αN.inv (αN.hom (e.hom.app ⊤ (αM.inv x))))) = x
+        have hN : αN.inv (αN.hom (e.hom.app ⊤ (αM.inv x))) =
+            e.hom.app ⊤ (αM.inv x) := αN.hom_inv_id_apply _
+        rw [hN, h1]
+        exact αM.inv_hom_id_apply x
+      right_inv := fun y => by
+        have h1 : e.hom.app ⊤ (e.inv.app ⊤ (αN.inv y)) = αN.inv y := by
+          change (e.inv ≫ e.hom).app ⊤ (αN.inv y) = αN.inv y
+          rw [e.inv_hom_id]
+          rfl
+        change αN.hom (e.hom.app ⊤
+          (αM.inv (αM.hom (e.inv.app ⊤ (αN.inv y))))) = y
+        have hM : αM.inv (αM.hom (e.inv.app ⊤ (αN.inv y))) =
+            e.inv.app ⊤ (αN.inv y) := αM.hom_inv_id_apply _
+        rw [hM, h1]
+        exact αN.inv_hom_id_apply y }
+  exact W.ι_image_top ▸ f
+
+set_option maxHeartbeats 2500000 in
+/-- Tensoring a quasi-coherent flat sheaf on the left by a locally trivial line
+bundle preserves flatness over an arbitrary base morphism.  The affine-cover
+criterion is fed by affine trivialising charts of the line bundle; on each
+chart the tensor is identified with the original sheaf. -/
+theorem coherentSheafFlat_tensorObj_left_of_isLocallyTrivial
+    {T X : Scheme.{u}} (q : X ⟶ T) (L F : X.Modules)
+    (hL : LineBundle.IsLocallyTrivial L)
+    (hFp : F.IsFinitePresentation)
+    (hF : CoherentSheafFlat q F) :
+    CoherentSheafFlat q (tensorObj L F) := by
+  letI : F.IsFinitePresentation := hFp
+  letI : (tensorObj L F).IsFinitePresentation :=
+    isFinitePresentation_tensorObj_left_of_isLocallyTrivial L F hL hFp
+  choose U hUaff hxU _hUtop using fun x : X =>
+    exists_isAffineOpen_mem_and_subset (x := q.base x)
+      (U := (⊤ : T.Opens)) (by trivial)
+  choose W hxW hWaff hWle hWiso using fun x : X =>
+    hL.exists_affine_trivializing_le (x := x) (W := q ⁻¹ᵁ U x) (hxU x)
+  intro U0 hU0 W0 hW0 e0
+  refine flat_section_of_affine_cover q (tensorObj L F) W hWaff U hUaff hWle
+    (fun x => ⟨x, hxW x⟩) ?_ hU0 hW0 e0
+  intro x
+  letI : Module Γ(T, U x) Γ((tensorObj L F), W x) :=
+    Module.compHom _ (q.appLE (U x) (W x) (hWle x)).hom
+  letI : Module Γ(T, U x) Γ(F, W x) :=
+    Module.compHom _ (q.appLE (U x) (W x) (hWle x)).hom
+  haveI : Module.Flat Γ(T, U x) Γ(F, W x) := hF (hUaff x) (hWaff x) (hWle x)
+  let eL : L.restrict (W x).ι ≅
+      SheafOfModules.unit (W x : Scheme).ringCatSheaf := (hWiso x).some
+  let eRes : (tensorObj L F).restrict (W x).ι ≅ F.restrict (W x).ι :=
+    tensorObj_restrict_iso (W x).ι L F ≪≫
+      tensorObjIsoOfIso eL (Iso.refl _) ≪≫
+      tensorObj_left_unitor _
+  let eX := sectionLinearEquivOfRestrictIso (W x) eRes
+  letI : Algebra Γ(T, U x) Γ(X, W x) :=
+    (q.appLE (U x) (W x) (hWle x)).hom.toAlgebra
+  letI : IsScalarTower Γ(T, U x) Γ(X, W x) Γ(F, W x) :=
+    IsScalarTower.of_algebraMap_smul (fun _ _ => rfl)
+  letI : IsScalarTower Γ(T, U x) Γ(X, W x)
+      Γ((tensorObj L F), W x) :=
+    IsScalarTower.of_algebraMap_smul (fun _ _ => rfl)
+  letI : LinearMap.CompatibleSMul Γ((tensorObj L F), W x) Γ(F, W x)
+      Γ(T, U x) Γ(X, W x) :=
+    ⟨fun f c z => by
+      rw [← IsScalarTower.algebraMap_smul (Γ(X, W x)) c z,
+        ← IsScalarTower.algebraMap_smul (Γ(X, W x)) c (f z), f.map_smul]⟩
+  exact Module.Flat.of_linearEquiv (M := Γ(F, W x))
+    (eX.restrictScalars (Γ(T, U x)))
+
 /-- Isomorphic module sheaves have the same annihilator ideal sheaf.  This is
 the scheme-level transport needed to make schematic support, hence proper
 support, invariant under isomorphism. -/
@@ -897,6 +991,17 @@ theorem twist_isQuasicoherent
     (x.twist L).IsQuasicoherent := by
   letI : (x.twist L).IsFinitePresentation := x.twist_isFinitePresentation L hL
   infer_instance
+
+/-- Flatness of the D2 twist over the test base.  This is inherited from the
+divisor family's flat structure sheaf through the local line-bundle charts. -/
+theorem twist_isCoherentSheafFlat
+    (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)
+    (x : DivFamily π T) :
+    CoherentSheafFlat (pullback.snd π T.hom) (x.twist L) := by
+  exact Modules.coherentSheafFlat_tensorObj_left_of_isLocallyTrivial
+    (pullback.snd π T.hom)
+    ((Modules.pullback (pullback.fst π T.hom)).obj L) x.F
+    (hL.pullback (pullback.fst π T.hom)) x.isFinitePresentation x.flat
 
 /-- The D2 twist has proper support whenever the divisor structure sheaf does.
 This is unconditional in the twist module: it is the right-factor support
