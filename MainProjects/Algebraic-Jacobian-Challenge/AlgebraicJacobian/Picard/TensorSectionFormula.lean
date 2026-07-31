@@ -46,8 +46,8 @@ section-graded `sheafTensorObj` are the same object
   presheaf comparison unit is an isomorphism (the reflective localization inverts
   the unit), which is why the affine formula reduces to the presheaf-tensor
   localization on a basis of affine opens.
-* `localizedTensorProductEquiv` — the algebraic localization heart: localizing
-  `M ⊗_R N` is equivalent to tensoring the two localized modules over `R`.
+* `localizedTensorProductEquiv` / `localizedTensorProductBaseChangeEquiv` — the
+  algebraic localization heart, first over `R` and then over `Localization S`.
 
 ## Remaining obligations (the quasi-coherent case of `pullbackTensorMap_isIso`)
 
@@ -61,8 +61,7 @@ of `Picard/QuotScheme.lean`.  Concretely, it remains to:
    `Γ(A, D(f)) = Γ(A, V)_f` and `Γ(B, D(f)) = Γ(B, V)_f` via
    `isLocalizedModule_basicOpen_of_isQuasicoherent` (QuotScheme.lean), so
    `P(D(f)) = Γ(A, V)_f ⊗_{Γ(X, V)_f} Γ(B, V)_f`.
-2. Feed `localizedTensorProductEquiv` below, followed by
-   `IsLocalization.moduleTensorEquiv`, to identify this with
+2. Feed `localizedTensorProductBaseChangeEquiv` below to identify this with
    `(Γ(A, V) ⊗_{Γ(X, V)} Γ(B, V))_f`, i.e. `P` is a localizing presheaf on the
    basic-open basis; hence `tensorObj A B|_V` is the tilde of
    `Γ(A, V) ⊗ Γ(B, V)` and `tensorSectionHom A B V` is a `LinearEquiv`.
@@ -178,14 +177,28 @@ lemma localizedTensorProductEquiv_mkLinearMap_tmul
       LocalizedModule.mkLinearMap S M m ⊗ₜ[R] LocalizedModule.mkLinearMap S N n := by
   apply IsLocalizedModule.linearEquiv_apply
 
+/-- **The exact base-change form of tensor localization.** As an `R`-linear
+equivalence, localizing `M ⊗_R N` is the tensor product of `S⁻¹M` and `S⁻¹N`
+over `S⁻¹R = Localization S`. This is the algebraic formula consumed by the
+basic-open section chase. -/
+noncomputable def localizedTensorProductBaseChangeEquiv
+    {R : Type u} [CommSemiring R] (S : Submonoid R)
+    (M : Type v) (N : Type w) [AddCommMonoid M] [Module R M]
+    [AddCommMonoid N] [Module R N] :
+    LocalizedModule S (TensorProduct R M N) ≃ₗ[R]
+      TensorProduct (Localization S) (LocalizedModule S M) (LocalizedModule S N) :=
+  localizedTensorProductEquiv S M N ≪≫ₗ
+    (IsLocalization.moduleTensorEquiv S (Localization S)
+      (LocalizedModule S M) (LocalizedModule S N)).symm.restrictScalars R
+
 /-! ## Quasi-coherence from basic-open section localization
 
 The affine tensor-section formula (see the module docstring) would give, for
 `A B : X.Modules` quasi-coherent and `V` affine, the fact that the section restriction
 `Γ(A ⊗ B, V) → Γ(A ⊗ B, D(f))` is `IsLocalizedModule (powers f)` (the affine tensor-section
 formula composed with the module-localization heart
-`(M ⊗_R N)_f ≅ M_f ⊗_{R_f} N_f`, via `localizedTensorProductEquiv` and
-`IsLocalization.moduleTensorEquiv`).  The lemma below
+`(M ⊗_R N)_f ≅ M_f ⊗_{R_f} N_f`, via `localizedTensorProductBaseChangeEquiv`).
+The lemma below
 packages the *converse* direction of `Scheme.Modules.isLocalizedModule_basicOpen`
 (`QuotScheme.lean`): a sheaf of modules whose section restrictions are localizations on all
 basic opens of all affine opens is quasi-coherent.  It is the general form of the
