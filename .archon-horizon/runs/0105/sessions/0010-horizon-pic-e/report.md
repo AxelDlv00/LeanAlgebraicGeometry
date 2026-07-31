@@ -1,0 +1,3 @@
+The output file is the JSONL transcript (which I must not read). The agent hasn't sent its completion notification yet, so it's still finishing. I'll wait for that notification rather than poll further. The work is committed and verified; my report is ready to finalize once the review confirms.
+
+Let me hold for the completion notification.

@@ -1224,6 +1224,66 @@ lemma isIso_sheafifyDelta_unitPair_of_isIso_sheafifyEta {X Y : Scheme.{u}} (f : 
     rw [← key, Category.assoc, IsIso.hom_inv_id, Category.comp_id]
   rw [heq]; infer_instance
 
+/-- **Right-unit δ-wrapping for an arbitrary first factor.** If the sheafified oplax unit
+comparison of presheaf pullback is an isomorphism, then so is the sheafified cotensorator
+`a_Y.map (δ F M.val 𝟙_)`. The proof is the right-handed oplax unitality identity: the unit
+comparison is left-whiskered by `F.obj M.val`, which preserves the sheafification localizer, and
+the remaining two right-unitor maps are isomorphisms. No flatness or local-freeness assumption on
+`M` is used. -/
+lemma isIso_sheafifyDelta_rightUnit_of_isIso_sheafifyEta {X Y : Scheme.{u}} (f : Y ⟶ X)
+    (M : X.Modules)
+    (h : letI φ' : (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
+          (TopologicalSpace.Opens.map f.base).op ⋙ (Y.presheaf ⋙ forget₂ CommRingCat RingCat) :=
+          (f.toRingCatSheafHom).hom
+        IsIso ((PresheafOfModules.sheafification (R := Y.ringCatSheaf)
+          (𝟙 Y.ringCatSheaf.obj)).map
+          (Functor.OplaxMonoidal.η (PresheafOfModules.pullback φ')))) :
+    letI φ' : (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
+        (TopologicalSpace.Opens.map f.base).op ⋙ (Y.presheaf ⋙ forget₂ CommRingCat RingCat) :=
+        (f.toRingCatSheafHom).hom
+    IsIso ((PresheafOfModules.sheafification (R := Y.ringCatSheaf)
+      (𝟙 Y.ringCatSheaf.obj)).map
+      (Functor.OplaxMonoidal.δ (PresheafOfModules.pullback φ') M.val
+        (SheafOfModules.unit X.ringCatSheaf).val)) := by
+  letI φ' : (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
+      (TopologicalSpace.Opens.map f.base).op ⋙ (Y.presheaf ⋙ forget₂ CommRingCat RingCat) :=
+      (f.toRingCatSheafHom).hom
+  set a_Y := PresheafOfModules.sheafification (R := Y.ringCatSheaf)
+    (𝟙 Y.ringCatSheaf.obj) with ha
+  set F := PresheafOfModules.pullback φ' with hF
+  change IsIso (a_Y.map (Functor.OplaxMonoidal.δ F M.val (𝟙_ _)))
+  let ρX := (PresheafOfModules.monoidalCategoryStruct (R := X.presheaf)).rightUnitor M.val
+  let ρY := (PresheafOfModules.monoidalCategoryStruct
+    (R := Y.presheaf)).rightUnitor (F.obj M.val)
+  have hWη : (Opens.grothendieckTopology (Y : TopCat)).W
+      ((PresheafOfModules.toPresheaf _).map (Functor.OplaxMonoidal.η F)) :=
+    W_of_isIso_sheafification (𝟙 Y.ringCatSheaf.obj) _ h
+  have hWw : (Opens.grothendieckTopology (Y : TopCat)).W
+      ((PresheafOfModules.toPresheaf _).map
+        (F.obj M.val ◁ Functor.OplaxMonoidal.η F)) :=
+    PresheafOfModules.W_whiskerLeft_of_W (R := Y.presheaf)
+      (F.obj M.val) (Functor.OplaxMonoidal.η F) hWη
+  haveI hIsoW : IsIso (a_Y.map (F.obj M.val ◁ Functor.OplaxMonoidal.η F)) :=
+    PresheafOfModules.isIso_sheafification_map_of_W (𝟙 Y.ringCatSheaf.obj) _ hWw
+  haveI hIsoRho : IsIso (a_Y.map ρY.hom) := inferInstance
+  haveI hIsoComp :
+      IsIso (a_Y.map (F.obj M.val ◁ Functor.OplaxMonoidal.η F ≫ ρY.hom)) := by
+    rw [Functor.map_comp]
+    infer_instance
+  haveI hFmap : IsIso (a_Y.map (F.map ρX.hom)) := inferInstance
+  have hru := Functor.OplaxMonoidal.right_unitality_hom F M.val
+  have key : a_Y.map (Functor.OplaxMonoidal.δ F M.val (𝟙_ _)) ≫
+      a_Y.map (F.obj M.val ◁ Functor.OplaxMonoidal.η F ≫ ρY.hom)
+      = a_Y.map (F.map ρX.hom) := by
+    rw [← Functor.map_comp]
+    exact congrArg _ hru
+  have heq : a_Y.map (Functor.OplaxMonoidal.δ F M.val (𝟙_ _))
+      = a_Y.map (F.map ρX.hom) ≫
+        inv (a_Y.map (F.obj M.val ◁ Functor.OplaxMonoidal.η F ≫ ρY.hom)) := by
+    rw [← key, Category.assoc, IsIso.hom_inv_id, Category.comp_id]
+  rw [heq]
+  infer_instance
+
 /-- **D2' assembly — `pullbackTensorMap` on the unit pair is an iso, given the η-bridge.**
 Chains the δ-wrapping `isIso_sheafifyDelta_unitPair_of_isIso_sheafifyEta` into the reduction brick
 `isIso_pullbackTensorMap_of_isIso_sheafifyDelta` (on `M = N = 𝒪`). This is the full statement of
@@ -1655,6 +1715,17 @@ lemma pullbackTensorMap_unit_isIso {X Y : Scheme.{u}} (f : Y ⟶ X) :
     IsIso (pullbackTensorMap f (SheafOfModules.unit X.ringCatSheaf)
       (SheafOfModules.unit X.ringCatSheaf)) :=
   isIso_pullbackTensorMap_unitPair_of_isIso_sheafifyEta f
+    (isIso_sheafifyEta_of_unitSquare f (pullbackEtaUnitSquare f))
+
+/-- **The pullback–tensor comparison with a right unit is unconditional.** For every scheme
+morphism `f` and every module `M`, the specific comparison map
+`f^*(M ⊗ 𝒪_X) ⟶ f^*M ⊗ f^*𝒪_X` is an isomorphism. This is the arbitrary-`M`
+right-unitality consequence of the same sheafified oplax unit square used for the unit pair. -/
+lemma pullbackTensorMap_isIso_of_right_unit {X Y : Scheme.{u}} (f : Y ⟶ X)
+    (M : X.Modules) :
+    IsIso (pullbackTensorMap f M (SheafOfModules.unit X.ringCatSheaf)) := by
+  apply isIso_pullbackTensorMap_of_isIso_sheafifyDelta
+  exact isIso_sheafifyDelta_rightUnit_of_isIso_sheafifyEta f M
     (isIso_sheafifyEta_of_unitSquare f (pullbackEtaUnitSquare f))
 
 /-- **Characterisation of `sheafifyTensorUnitIso.hom` on the `⋙ forget₂` carrier.** Strips the

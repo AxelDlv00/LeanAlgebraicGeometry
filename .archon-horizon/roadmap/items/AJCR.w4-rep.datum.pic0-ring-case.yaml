@@ -46,4 +46,5 @@ metadata:
     task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-31T12:39:46.611567+00:00'
+  updated_at: '2026-07-31T13:05:35.135469+00:00'
+  owner: pic-c

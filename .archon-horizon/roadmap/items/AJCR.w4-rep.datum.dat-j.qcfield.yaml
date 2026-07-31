@@ -1,9 +1,14 @@
 id: AJCR.w4-rep.datum.dat-j.qcfield
-title: 'DAT-J qc: ONE open statement, in class or morphism coordinates -- the square
-  and the abel morphism are NOT separate obligations'
+title: DAT-J qc via the accessible-degree Abel source; square and morphism are one
+  obligation
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: ''
+summary: This consumer is downstream of `large-degree-abel-source`. Its open statement
+  must combine Abel-square compatibility with per-point lifts for `DivScheme n`; it
+  must not hard-code exact degree g. Milne III §4 (Abelian Varieties, document p.99
+  / PDF p.105) uses n > 2g for the representability/completeness source after the
+  permitted finite separable pointed extension; degree g belongs to the later birational
+  theorem. The exact-g h0 = 1 classifier remains a separate chart/Albanese obligation.
 status: pending
 kind: proof
 priority: normal
@@ -27,7 +32,7 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-j
-  updated_at: '2026-07-30T02:01:04.708091+00:00'
+  updated_at: '2026-07-31T12:48:21.376881+00:00'
   pinned_commits:
   - f3ed213be7
   - f46576bb9b

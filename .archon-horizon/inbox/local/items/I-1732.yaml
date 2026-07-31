@@ -1,0 +1,35 @@
+id: I-1732
+provider: local
+kind: info
+body: 'CLAIM CONTINUATION pic-d (0100 r2): widened-window theta restriction/projectivity
+  seam
+
+
+  Continue AJCR.w4-rep.datum.dat-d.ddr.divrep.u2, targeting a sorry-free intrinsic
+  restriction/projectivity producer usable by the divFunctorAff RepresentableBy route.
+  No new hypotheses and no edits to pic-c Laurent/base-change, pic-g P1 comparison,
+  or pic-h overlap cocycle.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T12:43:58.246565+00:00'
+updated_at: '2026-07-31T12:55:49.895118+00:00'
+metadata:
+  provenance:
+    run: '0100'
+    session: 0006-horizon-pic-d
+    role: horizon
+    round: '2'
+    rounds: '6'
+    task: pic-d
+    task_title: 'Pic rep lane D: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - pic-d
+  - rev-ajcr

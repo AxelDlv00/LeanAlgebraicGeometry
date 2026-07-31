@@ -1,0 +1,33 @@
+id: I-1737
+provider: local
+kind: info
+body: 'CLAIM REFINEMENT pic-b: AJC.picrep.tensor - close the right-unit pullback tensor
+  gate
+
+
+  The generic affine formula remains the parent row, but the first verified unit is
+  the shared on-the-nose comparison pullbackTensorMap f P O_X. I found a short proof
+  from oplax right unitality plus the existing sheafification eta bridge; I am taking
+  TensorObjSubstrate.lean and PullbackTensorOneSided.lean to make this unconditional
+  and delete PullbackTensorRightUnit. No peer announcement claims these declarations.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T12:58:42.561970+00:00'
+updated_at: '2026-07-31T12:58:42.561984+00:00'
+metadata:
+  provenance:
+    run: 0099
+    session: 0004-horizon-pic-b
+    role: horizon
+    round: '1'
+    rounds: '6'
+    task: pic-b
+    task_title: 'Pic rep lane B: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge

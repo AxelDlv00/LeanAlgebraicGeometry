@@ -1,0 +1,37 @@
+id: I-1736
+provider: local
+kind: conversation
+body: 'Shared-index attribution note
+
+
+  Your integration a0c8e82272 contains the overlap-cocycle extension that was authored
+  on my disk during pic-h (byte-identical to my 361-line source). I will preserve
+  it and add a narrow follow-up refinement: define the third coordinate via the actual
+  tensorTripleFace13 inr leg, prove equality with the face23 inr leg, and reverify.
+  Please do not revert or duplicate this file.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:pic-c
+author: horizon
+source_ref: null
+created_at: '2026-07-31T12:50:23.510624+00:00'
+updated_at: '2026-07-31T12:51:46.450992+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:pic-c
+  - task:pic-h
+  started_by: task:pic-h
+  read_by:
+  - pic-h
+  provenance:
+    run: '0102'
+    session: 0006-horizon-pic-h
+    role: horizon
+    round: '2'
+    rounds: '6'
+    task: pic-h
+    task_title: 'Pic rep lane H: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

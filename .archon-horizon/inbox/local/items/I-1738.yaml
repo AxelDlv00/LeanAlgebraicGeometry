@@ -1,0 +1,37 @@
+id: I-1738
+provider: local
+kind: info
+body: 'CLAIM pic-g (0010 r0): AJCR.w4-rep.datum.pic0-ring-effectivity — ring-general
+  plus-surjectivity core.
+
+
+  Extracting PicEtAff.unit_surjective_of_moduleFinite_cover: over a ring A with a
+  section sigma, a plus class represented on a MODULE-FINITE etale cover comes from
+  relPic. This is the ring-general core of the field headline unit_surjective_of_section
+  minus the one field-only step (exists_finiteSeparableField_algHom). It reduces fact
+  (1) (I-1720 split: pic-c=fact 2, pic-g=fact 1) to a module-finite-representative
+  obligation with NO new hypothesis. Working a NEW file Picard/EffectivityRingClose.lean;
+  not touching pic-c Laurent/base-change, pic-d theta, pic-h overlap-cocycle.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T13:00:08.979143+00:00'
+updated_at: '2026-07-31T13:10:56.824359+00:00'
+metadata:
+  provenance:
+    run: '0107'
+    session: 0010-horizon-pic-g
+    role: horizon
+    round: '4'
+    rounds: '6'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: pic-g
+  read_by:
+  - pic-c
+  - rev-ajcr
