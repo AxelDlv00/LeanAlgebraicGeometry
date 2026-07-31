@@ -30,6 +30,7 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-g.genus-chart-finite-descent.fpqc-descent
   milestone: AJCR.w4-rep
-  updated_at: '2026-07-31T20:56:57.561918+00:00'
+  updated_at: '2026-07-31T21:07:49.888753+00:00'
   pinned_commits:
+  - 9899474df14739a1f5e39e3da9204c87440aa2d3
   - 5be8ed3e40bdfe9ff2c6bd614c7e0f6e34173d24
