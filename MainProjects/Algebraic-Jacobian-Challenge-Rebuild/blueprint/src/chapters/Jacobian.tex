@@ -229,12 +229,15 @@ Jacobian data \(d_X\), \(d_Y\), \(d_Z\) and representing objects \(J_X\),
 \section{Group schemes are separated}
 \label{sec:group_separated}
 
+The diagonal argument below is categorical and uses no finiteness hypothesis.
+In particular, it proves a stronger form than the standard statement for group
+schemes locally of finite type over a field.
+
 \begin{theorem}[The diagonal of a group object is a pullback of the unit]
   \label{thm:grp_diagonal_pullback}
   \lean{CategoryTheory.GrpObj.isPullback_diagonal}
   \uses{def:grp_diff}
   \leanok
-  \source{kleiman-picard}
   Let \(G\) be a group object in a cartesian monoidal category, with unit
   \(e : 1 \to G\) and difference morphism
   \(\delta = \mathrm{pr}_1 \cdot \mathrm{pr}_2^{-1} : G \otimes G \to G\)
@@ -273,7 +276,6 @@ Jacobian data \(d_X\), \(d_Y\), \(d_Z\) and representing objects \(J_X\),
   \lean{AlgebraicGeometry.isSeparated_of_isClosedImmersion_one}
   \uses{thm:grp_diagonal_pullback}
   \leanok
-  \source{kleiman-picard}
   Let \(S\) be a scheme and \(G\) a group object of \(\Over(S)\). If the unit
   section \(e : S \to G\) is a closed immersion of schemes, then the structure
   morphism \(G \to S\) is separated. No finiteness hypothesis is required.
@@ -295,7 +297,6 @@ Jacobian data \(d_X\), \(d_Y\), \(d_Z\) and representing objects \(J_X\),
   \lean{AlgebraicGeometry.isSeparated_of_grpObj}
   \uses{thm:separated_of_closed_unit}
   \leanok
-  \source{kleiman-picard}
   Every group scheme \(G\) over a field \(K\) is separated over \(K\).
 \end{theorem}
 \begin{proof}
@@ -538,7 +539,6 @@ isomorphism \(\rho_g = \mu \circ \langle \mathrm{id}_G,\ g \circ t_G\rangle\)
   \lean{AlgebraicGeometry.AbelSourceData}
   \uses{def:jacobian_data}
   \leanok
-  \source{abelian-varieties:page-0107}
   Let \(d\) be a Jacobian datum with representing object \(J\). An
   \emph{Abel source} for \(d\) consists of:
   \begin{enumerate}
@@ -549,9 +549,10 @@ isomorphism \(\rho_g = \mu \circ \langle \mathrm{id}_G,\ g \circ t_G\rangle\)
     \item a certificate that \(a\) is surjective on underlying topological
       spaces.
   \end{enumerate}
-  (The intended instance takes \(D\) a proper scheme of effective divisors of
-  large degree on \(C\) and \(a\) the Abel map; the results of this section
-  are conditional on the interface only.)
+  This is a conditional interface: its definition asserts neither the
+  existence of \(D\) nor the existence of \(a\). The intended instance takes
+  \(D\) to be a proper scheme of effective divisors of large degree on \(C\)
+  and \(a\) to be the Abel map.
 \end{definition}
 
 \begin{theorem}[The representing object is universally closed]
@@ -559,7 +560,6 @@ isomorphism \(\rho_g = \mu \circ \langle \mathrm{id}_G,\ g \circ t_G\rangle\)
   \lean{AlgebraicGeometry.universallyClosed_of_abelSource}
   \uses{def:abel_source, def:jacobian_data}
   \leanok
-  \source{abelian-varieties:page-0107}
   Let \(d\) be a Jacobian datum admitting an Abel source. Then the structure
   morphism of the representing object \(J\) is universally closed.
 \end{theorem}
@@ -583,7 +583,6 @@ isomorphism \(\rho_g = \mu \circ \langle \mathrm{id}_G,\ g \circ t_G\rangle\)
   \uses{def:abel_source, cor:jacobianData_separated,
     thm:jacobianData_universallyClosed, def:jacobian_data}
   \leanok
-  \source{abelian-varieties:page-0107}
   Let \(d\) be a Jacobian datum admitting an Abel source. Then the structure
   morphism of the representing object \(J\) is proper.
 \end{theorem}
