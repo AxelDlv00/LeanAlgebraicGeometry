@@ -45,17 +45,28 @@ Three spelling seams, each of which had to be crossed rather than asserted:
 
 The remaining distance from a `pic⁰` class over a test ring to *triviality* of that class is
 now: `H¹(C_B, F) = 0` and `H⁰(C_B, F)` invertible (stalk rank `1` at every prime) **are
-available**, unconditionally on the class beyond its being degree-zero and cocycle-presented.
-So the ring case of the vanishing is reduced to the step that turns an invertible pushforward
-into a trivialization of the class — the evaluation map `π^*π_*L → L`, which is measured absent
-from this tree, the sibling project and mathlib.
+available**, unconditionally on the class beyond its being degree-zero and presented.  On the
+**divisor/pushforward route** the step that turns an invertible pushforward into a
+trivialization of the class is the evaluation map `π^*π_*L → L`, which my search did not find in
+this tree.
+
+**Scope corrected after review.**  An earlier version of this paragraph called that evaluation
+map "the remaining step" for the ring case as such, and asserted its absence from the sibling
+project and mathlib as measured.  Both were too strong.  It is the remaining step on *this*
+route only: `Picard/Pic0VanishingRigidityReduction.lean` reaches the same vanishing through
+field-point rigidity, which never produces a divisor and so never needs the evaluation map at
+all.  And I verified absence only in AJCR — not in `Algebraic-Jacobian-Challenge`, which has
+adjunction/counit material, and not in mathlib.
 
 ## What this does NOT do
 
-* **It does not prove the ring case.**  The evaluation step above is not built here and is not
-  shortened by anything below; a fibrewise-trivial class over a ring need not be trivial
-  (Traverso–Swan: `Subsingleton (CommRing.Pic (Polynomial A))` fails even *given*
-  `Subsingleton (CommRing.Pic A)`, measured).
+* **It does not prove the ring case**, and it is not on the shortest route to it.  The
+  evaluation step above is not built here; a fibrewise-trivial class over a ring need not be
+  trivial (Traverso–Swan: `Subsingleton (CommRing.Pic (Polynomial A))` fails even *given*
+  `Subsingleton (CommRing.Pic A)`, measured).  A lane wanting only the vanishing should read
+  `Pic0VanishingRigidityReduction.lean` first: it reduces the same goal to field-point rigidity
+  with no cohomology, no pushforward and no divisor.  What *this* file is for is the
+  pushforward route, where `π_*L` invertible is the object of interest in its own right.
 * **`IsNoetherianRing B` is inherited**, not introduced: it is the engine's own binder, which
   `Cohomology/DatumDescent.lean:547` is designed to remove.  Nothing here re-proves it and a
   consumer should remove it through that route.
