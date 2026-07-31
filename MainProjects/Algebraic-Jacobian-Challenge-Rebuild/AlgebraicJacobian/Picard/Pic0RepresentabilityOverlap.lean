@@ -179,7 +179,7 @@ noncomputable def tensorTripleCoord2 :=
 
 /-- Projection from the triple overlap to the third copy of `Spec L`. -/
 noncomputable def tensorTripleCoord3 :=
-  tensorTripleFace23 (k := k) (L := L) ≫ tensorOverlapInr (k := k) (L := L)
+  tensorTripleFace13 (k := k) (L := L) ≫ tensorOverlapInr (k := k) (L := L)
 
 /-- The second coordinate is also the left coordinate of the `2,3` face. -/
 lemma tensorTripleCoord2_eq_face23_inl :
@@ -206,6 +206,13 @@ lemma tensorTripleFace13_inr :
     tensorTripleFace13 (k := k) (L := L) ≫
         tensorOverlapInr (k := k) (L := L) =
       tensorTripleCoord3 (k := k) (L := L) := by
+  rfl
+
+/-- The third coordinate is also the right coordinate of the `2,3` face. -/
+lemma tensorTripleCoord3_eq_face23_inr :
+    tensorTripleCoord3 (k := k) (L := L) =
+      tensorTripleFace23 (k := k) (L := L) ≫
+        tensorOverlapInr (k := k) (L := L) := by
   simp only [tensorTripleCoord3, tensorTripleFace13, tensorTripleFace23,
     tensorOverlapInr]
   rw [← Spec.map_comp, ← Spec.map_comp]
@@ -232,7 +239,7 @@ lemma tensorTripleCoord3_comp_base :
     tensorTripleCoord3 (k := k) (L := L) ≫
         tensorOverlapBase (k := k) (L := L) =
       tensorTripleBase (k := k) (L := L) := by
-  rw [tensorTripleCoord3, Category.assoc,
+  rw [tensorTripleCoord3_eq_face23_inr, Category.assoc,
     ← tensorOverlapInl_comp_base (k := k) (L := L)]
   rw [← Category.assoc, ← tensorTripleCoord2_eq_face23_inl]
   exact tensorTripleCoord2_comp_base (k := k) (L := L)
