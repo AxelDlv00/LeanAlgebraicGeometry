@@ -52,7 +52,7 @@ summary: "LANDED sorry-free by pic-e (0095 r7). The seam sorry fgaPicardRepresen
   \ for arbitrary X with [LocallyOfFiniteType] (not free); and the new antecedent\
   \ does NOT close hypothesis-free. CONVERSE NOT CLAIMED: FiniteInAffine does not\
   \ obviously recover a closed immersion, so 'strictly stronger' is unmeasured."
-status: active
+status: pending
 kind: proof
 priority: high
 depends_on: []
@@ -74,4 +74,4 @@ metadata:
     task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  owner: pic-e
+  updated_at: '2026-07-31T06:37:51.007501+00:00'

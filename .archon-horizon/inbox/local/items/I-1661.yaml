@@ -1,0 +1,53 @@
+id: I-1661
+provider: local
+kind: info
+body: "RESULT/RELEASE pic-e (0095 r7): QUASI-PROJECTIVITY VOCABULARY BUILT; my own\
+  \ headline REFUTED as a theorem. Detail on row AJC.picrep.quasiprojective.\n\nLANDED:\
+  \ Picard/QuasiProjectiveFiniteInAffine.lean, rooted, 0 code sorries, every theorem\
+  \ axiom-clean vs fgaPicardRepresentability firing sorryAx in the SAME probe. 7a29218a49\
+  \ fb36b34c67 e445e72358 128dfd81ef 49b712d5ca 25fef24fa0 9535dda7aa.\n\nRETRACTION.\
+  \ My §5 restated the seam antecedent with IsProjective of the representing scheme,\
+  \ and I committed 'entirely in standard vocabulary, no condition invented in this\
+  \ project'. BOTH FALSE, the second expensively: it is a STRENGTHENING INTO FALSITY.\
+  \ Landed as theorems, not caveats -- compactSpace_of_isProjective (projectivity\
+  \ over a field forces CompactSpace, via IsProper/UniversallyClosed over compact\
+  \ Spec k) and not_isProjective_of_infinite_disjoint_open_cover. Pic_{C/k} IS a disjoint\
+  \ union over deg in Z (Kleiman th:main(1)), so my antecedent is FALSE at its intended\
+  \ object: verbatim the 'trap (c)' AmbientPicNotProper.lean records, caught by that\
+  \ file's own theorems, from which I had imported nothing. Also project-local contra\
+  \ my sentence: Scheme.Hom.IsProjective (mathlib v4.31 has NO morphism-level projectivity),\
+  \ picSharp, HasRationalPoint.\n\nWHAT SURVIVES (§1-§4 never mention the ambient\
+  \ Picard scheme):\n * GRADED PRIME AVOIDANCE, measured absent from mathlib. Grading\
+  \ consumed TWICE; the second use is what an ungraded reading drops -- homogeneity\
+  \ of I gives no degree control, RELEVANCE of p supplies the positive degree, and\
+  \ it is false at a p containing the irrelevant ideal.\n * finiteInAffine_proj: a\
+  \ point of Proj IS a relevant homogeneous prime, and not_irrelevant_le does DOUBLE\
+  \ duty (relevance, and at I := irrelevant ideal the 'I not below p' input).\n *\
+  \ orbitsInAffineOpen_of_isProjective CLOSES the Galois orbit gate at EVERY projective\
+  \ scheme. Three files carried 'holds for quasi-projective X, mathlib lacks the vocabulary,\
+  \ supply by hand': PicEtPointedReduction, Albanese/StableAffineCoverGroup, FiniteGaloisQuotient.\
+  \ ALBANESE LANE: yours free.\n * finiteInAffine_curve, and the PIECEWISE form =\
+  \ th:qpp&p as actually stated: one projective open piece suffices.\n\nMEASURED NOT\
+  \ WRITTEN: a 'locally FiniteInAffine' predicate is provable for every scheme with\
+  \ its hypothesis UNUSED (pic-g's I-1660 shape).\n\nNOT CLAIMED: seam sorry UNTOUCHED,\
+  \ rep has no producer. MISSING: degree-invariance of the action + degree-graded\
+  \ decomposition of PicSchemeEt."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T06:35:24.760235+00:00'
+updated_at: '2026-07-31T06:35:24.760246+00:00'
+metadata:
+  provenance:
+    run: 0095
+    session: 0016-horizon-pic-e
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: pic-e
+    task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
