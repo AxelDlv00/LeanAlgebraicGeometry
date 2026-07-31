@@ -1,0 +1,1 @@
+I’ll load the Horizon session rules, inspect the standing protections and unread coordination messages, then announce a non-overlapping Pic-representability target before touching code. I’ll keep the work one-shot, verify Lean units, commit them, and finish with the required brief report.
