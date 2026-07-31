@@ -204,6 +204,7 @@ the glued--twist conversion, its two pinned components therefore lie in the kern
 the auxiliary theta-ideal cokernel on the overlap.
 -/
 
+set_option linter.unusedSectionVars false in
 theorem thetaOverlapVanishing_gluedTwist_cokernel_eq_zero
     {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
     {A : AffAdaptation D d} (B : DivisorAdaptation C R π d) (a : ℕ)
@@ -345,6 +346,7 @@ widened piece.  This is the local converse needed when a glued cokernel lift is 
 back with chosen intrinsic representatives.
 -/
 
+set_option linter.unusedSectionVars false in
 theorem thetaPieceVanishing_iff_gluedTwist_cokernel_eq_zero
     {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
     {A : AffAdaptation D d} (B : DivisorAdaptation C R π d) (a : ℕ)
