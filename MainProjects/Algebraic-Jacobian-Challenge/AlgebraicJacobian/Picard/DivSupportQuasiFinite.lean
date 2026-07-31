@@ -73,7 +73,9 @@ from free: two of the three inputs the mathlib criteria want are supplied by
   the fibre finiteness, and that is where relative dimension one enters: on the
   curve fibre `C_t` the divisor `D_t` is the zero scheme of a regular section of
   an invertible ideal (`Picard/DivDegree.lean` has that fibre short exact
-  sequence in full — `isLocallyTrivial_fiber_kernel`, `mono_fiber_kernel_ι`,
+  sequence in full — `Scheme.DivFamily.isLocallyTrivial_fiber_kernel` (the bare
+  name fails `#check`: it lives in the `Scheme.DivFamily` namespace, not
+  `Scheme.Modules`), `mono_fiber_kernel_ι`,
   `fiberKernelIso`, `fiberCokernelIso`), hence `0`-dimensional, hence finite. That
   step is genuinely absent and is not attempted here.
 
@@ -91,14 +93,24 @@ from free: two of the three inputs the mathlib criteria want are supplied by
 
 ## Why the reduction is worth landing separately
 
-Three rows bind this hypothesis or its cousin — D3′ here, D4′ downstream, and
-`Scheme.HasLocallyConstantDivDeg` (`Picard/DivDegree.lean`), whose discharge route
-the `DivPushforwardFlat` docstring pins on exactly this quasi-finiteness. Naming
-the reduction means a lane closing the fibre statement discharges all three at
-once, rather than re-deriving the mathlib plumbing at each site. And the
-plumbing is not nothing: the two free binders are free only *after* the `def`/class
-mismatch above is worked around, which is a failure that looks like missing
-mathematics.
+The reduction is a repricing of D3′'s hypothesis: the binder is no longer an
+affine-local `RingHom.QuasiFinite` condition to be attacked at each site, but one
+fibre statement, with every scheme-level binder discharged from a field a family
+already carries.
+
+**"THREE ROWS" WAS AN OVERCOUNT AND IS WITHDRAWN — it is ONE row plus a partial
+contribution to a gate** (fresh-context audit, `I-1618`; the earlier text here, and
+this file's commit messages, said the reduction retires plumbing for D3′, D4′ and
+the local-constancy gate at once).
+
+* **D3′** — yes. This is that row's binder.
+* **D4′** — no. D4′ consumes D3′ and never binds `LocallyQuasiFinite` itself, so
+  counting it separately double-counts a single discharge.
+* **`Scheme.HasLocallyConstantDivDeg`** (`Picard/DivDegree.lean`) — partially. Its
+  own docstring names **two** inputs, "the finiteness/rank half of the campaign's
+  B3 rigid-pushforward engine **plus** relative-dimension-1 quasi-finiteness", and
+  its content is local constancy of a rank function. This file supplies at most the
+  second input.
 
 ## References
 
@@ -142,13 +154,29 @@ sheaf, and mathlib registers `IsPreimmersion` for every `subschemeι`
 (`AlgebraicGeometry/IdealSheaf/Subscheme.lean`) together with a low-priority
 `IsPreimmersion ⟹ LocallyQuasiFinite` instance.
 
-**The `inferInstanceAs` is load-bearing and is not cosmetic.** Instance search
-does not see through `schematicSupportι`: writing the goal at the
-`schematicSupportι` spelling and calling `infer_instance` after `unfold`
-**fails** with `synthInstanceFailed` (measured both ways in one probe), because
-unfolding replaces the reducible definition by the `annihilator`-projection form
-that the instance is *not* indexed on. Stated as a theorem so downstream sites
-cite a name rather than rediscover that. -/
+**The `inferInstanceAs` is load-bearing and is not cosmetic**, and the mechanism is
+worth stating exactly, because two wrong versions of it have stood here. Measured,
+three spellings in one probe:
+
+* `LocallyQuasiFinite F.annihilator.subschemeι` — plain `infer_instance`
+  **succeeds**;
+* `LocallyQuasiFinite (schematicSupportι F)` — plain `infer_instance` **fails**;
+* the same after `unfold Scheme.Modules.schematicSupportι` — still **fails**, and
+  `pp.explicit` shows why: the goal becomes
+  `@LocallyQuasiFinite (@schematicSupport X F) X (@IdealSheafData.subschemeι X
+  (@annihilator X F))`. Unfolding rewrote the **morphism** to the annihilator form
+  but left the **source scheme** as `schematicSupport X F`, so the instance —
+  indexed on `IdealSheafData.subscheme` as the source — does not apply.
+
+So the obstruction is the *source-object* index, not reducibility of the morphism,
+and it is not a missing instance: converting the goal wholesale with
+`inferInstanceAs` fixes it. (An earlier revision of this paragraph blamed
+"unfolding replaces the reducible definition by the `annihilator`-projection form
+that the instance is not indexed on", which has the direction backwards; a
+fresh-context audit then reported that the annihilator spelling *also* fails, which
+the first probe above refutes. Both are recorded because the two errors point
+opposite ways and a reader who inherits either will look in the wrong place.)
+Stated as a theorem so downstream sites cite a name rather than rediscover this. -/
 theorem locallyQuasiFinite_schematicSupportι (F : X.Modules) :
     LocallyQuasiFinite (schematicSupportι F) :=
   inferInstanceAs (LocallyQuasiFinite F.annihilator.subschemeι)
@@ -176,10 +204,17 @@ variable {T : Scheme.{u}} (f : X ⟶ T) (F : X.Modules)
 `HasProperSupport` is a plain `def`, not a class, so `haveI := hps` registers
 nothing that instance search can use: `infer_instance` on this very goal
 **fails** with the `def` in scope and **succeeds** after
-`haveI : IsProper _ := hps` (measured both ways). That is a defect-shaped
-failure — it reads as "mathlib lacks `IsProper ⟹ LocallyOfFiniteType`", which is
-false — so the workaround is recorded as a named theorem rather than repeated at
-each consumer. -/
+`haveI : IsProper _ := hps` (measured both ways).
+
+**But the word "synthesis" overstates the step, and the gloss that stood here —
+that the failure "reads as *mathlib lacks `IsProper ⟹ LocallyOfFiniteType`*" — is
+withdrawn** (fresh-context audit, `I-1620`, reproduced by its author).
+`LocallyOfFiniteType` is a **structure parent** of `IsProper`, so this theorem is
+`hps.toLocallyOfFiniteType`: a field access, not an instance search, and no lemma
+is missing anywhere. `quasiCompact_schematicSupportι_comp` is one hop further
+(`hps.toUniversallyClosed`). The `def`-versus-class friction is real and worth a
+name; describing it as a synthesis gap sent the reader hunting a reducibility bug
+that does not exist. -/
 theorem locallyOfFiniteType_schematicSupportι_comp
     (hps : HasProperSupport f F) :
     LocallyOfFiniteType (schematicSupportι F ≫ f) :=
@@ -429,9 +464,23 @@ theorem isFinite_support (x : DivFamily π T)
 `π` and an arbitrary test object.**
 
 So `Picard/DivPushforwardFlat.lean`'s theorems are no longer statements nobody can
-instantiate: composing this with `DivFamily.zero` discharges their binder, and
-their conclusions become facts about an actual family rather than an implication
-with an unwitnessed antecedent.
+instantiate: composing this with `DivFamily.zero` discharges their binder.
+
+**TWO CLAIMS THAT STOOD HERE ARE WITHDRAWN, both refuted by measurement**
+(fresh-context audit, `I-1621`, both reproduced by their author).
+
+*"their conclusions become facts about an actual family rather than an implication
+with an unwitnessed antecedent"* — the conclusions were **already** free at
+`DivFamily.zero`, independently of the binder: `CoherentSheafFlat (𝟙 T.left)` of
+the pushforward closes by `Modules.coherentSheafFlat_of_isZero`, and finite
+presentation by `isFinitePresentation_of_isZero`, both from
+`Picard/DivFamilyZero.lean` and neither needing this file. So discharging the
+binder at zero delivers nothing downstream that was not already one line away.
+
+*That this file is what makes the binder inhabited* — with only the pre-existing
+`isEmpty_schematicSupport_of_isZero` in scope, plain `infer_instance` closes
+**both** `LocallyQuasiFinite` and `IsFinite` of the support map at zero. The
+producer was already reachable; what this file adds at zero is a name, not access.
 
 **Read the strength of this correctly, since the natural over-reading is
 available.** The empty divisor is the case where fibre finiteness is *free*, so

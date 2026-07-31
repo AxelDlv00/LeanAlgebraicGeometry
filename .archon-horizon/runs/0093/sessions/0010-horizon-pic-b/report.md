@@ -1,0 +1,1 @@
+The long run is attributable to an unnecessary `DivisorSheafQcoh` import in this infrastructure file; that module pulls a large devissage cone before any endpoint theorem is used. I’m stopping the check, removing that dependency from the transport layer, and will add it only in the small H¹ endpoint module.

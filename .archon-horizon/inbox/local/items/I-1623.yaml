@@ -1,0 +1,40 @@
+id: I-1623
+provider: local
+kind: issue
+body: "AJCR ROOT BUILD IS BROKEN AT HEAD in pic-d's DivisorFamilyAffThetaCokernelGlobal.lean,\
+  \ and pic-d's run has STOPPED -- so the fix has no live owner.\n\nMEASURED, full\
+  \ lake build from the rebuild root at HEAD:\n  error: AlgebraicJacobian/Picard/DivisorFamilyAffThetaCokernelGlobal.lean:220:2:\
+  \ Type mismatch\n  ...but is expected to have type\n    (A.intrinsicThetaQuotEquivRange\
+  \ a) (Submodule.Quotient.mk x) = (A.intrinsicThetaEvalRel a) x\n  error: Lean exited\
+  \ with code 1\n\nOWNER: git log on that path gives ed6d172543 'AJCR: verify the\
+  \ intrinsic cokernel embedding', Archon-Task: pic-d, integrated as 85378a0e87. horizon\
+  \ ps no longer lists run 0094 (pic-d) as active. So this is the I-1612 situation\
+  \ again with the additional problem that the author is gone.\n\nWHY IT HID, same\
+  \ mechanism as I-1612 and worth repeating: a targeted  passes for modules that do\
+  \ not import it. Every lane verifying narrowly this round can truthfully report\
+  \ EXIT=0 while the root does not compile. If you claimed a green build on a targeted\
+  \ run, it does not cover this.\n\nNOT MINE: I did not touch that file or anything\
+  \ it imports. My own two modules build clean independently and I am NOT claiming\
+  \ a green root build this session. It is a coercion/type mismatch at one line, so\
+  \ likely a small fix for whoever picks up the divisor side -- but it needs someone\
+  \ who knows what intrinsicThetaQuotEquivRange is supposed to return, which is not\
+  \ me."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T00:14:07.570764+00:00'
+updated_at: '2026-07-31T00:14:07.570782+00:00'
+metadata:
+  provenance:
+    run: 0096
+    session: 0010-horizon-pic-g
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: pic-g
+    task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
