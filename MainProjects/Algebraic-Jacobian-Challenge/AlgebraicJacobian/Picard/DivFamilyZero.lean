@@ -511,6 +511,19 @@ reduced one step further by `subsingleton_divFunctorDegZero_obj_of_forall_rel_ze
 to the concrete statement "every degree-`0` divisor family cuts out the empty divisor".
 -/
 
+/-- **A divisor family with zero structure sheaf is the empty divisor.** If `x.F` is a
+zero object then `x` is equivalent (`DivFamily.Rel`) to `DivFamily.zero`: the unique
+isomorphism `x.F ≅ 0 = (zero).F` trivially commutes with the quotient maps, both
+composites being morphisms into a zero object.
+
+This is the *free* half of the degree-`0` uniqueness question. It reduces the open
+obligation of §5 from a statement about `Rel` to the pure coherent-sheaf vanishing
+`x.HasFiberDeg 0 → IsZero x.F` — no divisor or quotient vocabulary, just "a relative
+effective divisor with everywhere-`0` fibre sections has zero structure sheaf". -/
+theorem DivFamily.rel_zero_of_isZero {x : DivFamily π T} (hF : IsZero x.F) :
+    x.Rel (DivFamily.zero π T) :=
+  ⟨hF.iso (isZero_zero _), (isZero_zero _).eq_of_tgt _ _⟩
+
 /-- **`Subsingleton` of the degree-`0` slice from divisor-level uniqueness.** If every
 degree-`0` divisor family over `T` is equivalent (`DivFamily.Rel`, i.e. cuts out the
 same closed subscheme) to the empty divisor, then the degree-`0` slice at `T` is a
@@ -551,6 +564,23 @@ noncomputable def divFunctorDegZero_representableByTerminal
     CategoryTheory.Over.mkIdTerminal
     (fun T => ⟨DivFunctorDeg.zeroClass π T.unop⟩)
     (fun T => subsingleton_divFunctorDegZero_obj_of_forall_rel_zero π T.unop (hrel T.unop))
+
+/-- **The Div⁰ producer, modulo coherent-sheaf vanishing** — the sharpest form of
+`divFunctorDegZero_representableByTerminal`, with the obligation reduced through
+`DivFamily.rel_zero_of_isZero` to `x.HasFiberDeg 0 → IsZero x.F`.
+
+This is the honest remaining gap stated in its purest form: *a relative effective
+divisor whose fibre sections all have `κ(t)`-dimension `0` has zero structure sheaf.*
+It carries no divisor-quotient, representability, or Picard vocabulary — it is a
+statement about a finitely presented, base-flat, properly-supported coherent sheaf,
+the coherent-sheaf Nakayama fact that AJC's `fiberDeg` (a `Module.finrank` of fibre
+sections) makes the natural target. Discharging `hz` closes this producer and, with
+it, `AJC.picrep.divzero`. -/
+noncomputable def divFunctorDegZero_representableByTerminal_of_isZero
+    (hz : ∀ (T : Over S) (x : DivFamily π T), x.HasFiberDeg 0 → IsZero x.F) :
+    (DivFunctorDeg π 0).RepresentableBy (Over.mk (𝟙 S)) :=
+  divFunctorDegZero_representableByTerminal π
+    (fun T x hx => DivFamily.rel_zero_of_isZero π T (hz T x hx))
 
 end Scheme
 
