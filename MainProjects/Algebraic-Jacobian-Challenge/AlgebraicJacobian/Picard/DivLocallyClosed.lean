@@ -155,6 +155,12 @@ noncomputable abbrev lineBundleLocusι {S : Scheme.{u}} (F : S.Modules)
 instance {S : Scheme.{u}} (F : S.Modules) [F.IsQuasicoherent] :
     IsImmersion (lineBundleLocusι F) := inferInstance
 
+/-- The support of the rank-one locus is exactly the point-rank-one set. -/
+theorem mem_range_lineBundleLocusι_iff {S : Scheme.{u}}
+    [IsLocallyNoetherian S] (F : S.Modules) [F.IsFinitePresentation] (s : S) :
+    s ∈ Set.range (lineBundleLocusι F).base ↔ pointRank S F s = 1 :=
+  mem_range_rankStratumι_iff F 1 s
+
 /-- On the rank-one locus the pulled-back module is an invertible sheaf. -/
 theorem lineBundleLocus_isLocallyTrivial {S : Scheme.{u}}
     (F : S.Modules) [F.IsQuasicoherent] :
