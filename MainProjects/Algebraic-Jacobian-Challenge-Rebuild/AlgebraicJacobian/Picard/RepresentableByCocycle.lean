@@ -222,6 +222,43 @@ theorem uniqueUpToIsoOfIso_pullbackComp
     ((Over.mapPullbackAdj f).comp (Over.mapPullbackAdj g))
     (Over.mapComp f g).symm e
 
+/-- The presheaf-level composite comparison with an explicit equality of base maps. -/
+noncomputable def Over.mapCompPresheafOfEq
+    {D : Type u} [Category.{v, u} D]
+    {X Y Z : D} (r : X ⟶ Z) (f : X ⟶ Y) (g : Y ⟶ Z)
+    (h : r = f ≫ g) (F : (Over Z)ᵒᵖ ⥤ Type v) :
+    (Over.map r).op ⋙ F ≅
+      (Over.map f).op ⋙ ((Over.map g).op ⋙ F) :=
+  eqToIso (congrArg (fun m => (Over.map m).op ⋙ F) h) ≪≫
+    Functor.isoWhiskerRight (NatIso.op (Over.mapComp f g)).symm F
+
+/-- The scheme-level composite pullback comparison with an explicit equality of base maps. -/
+noncomputable def Over.pullbackCompOfEq
+    {D : Type u} [Category.{v, u} D] [HasPullbacks D]
+    {X Y Z : D} (r : X ⟶ Z) (f : X ⟶ Y) (g : Y ⟶ Z)
+    (h : r = f ≫ g) (J : Over Z) :
+    (Over.pullback r).obj J ≅
+      (Over.pullback f).obj ((Over.pullback g).obj J) :=
+  eqToIso (congrArg (fun m => (Over.pullback m).obj J) h) ≪≫
+    (Over.pullbackComp f g).app J
+
+/-- The canonical representation comparison remains `pullbackComp` after an explicit
+proof-bearing equality identifies the direct map with a composite. -/
+theorem uniqueUpToIsoOfIso_pullbackComp_of_eq
+    {D : Type u} [Category.{v, u} D] [HasPullbacks D]
+    {X Y Z : D} (r : X ⟶ Z) (f : X ⟶ Y) (g : Y ⟶ Z)
+    (h : r = f ≫ g) {F : (Over Z)ᵒᵖ ⥤ Type v} {J : Over Z}
+    (e : F.RepresentableBy J) :
+    uniqueUpToIsoOfIso
+      (ofLeftAdjoint (Over.mapPullbackAdj r) e)
+      (ofLeftAdjoint (Over.mapPullbackAdj f)
+        (ofLeftAdjoint (Over.mapPullbackAdj g) e))
+      (Over.mapCompPresheafOfEq r f g h F) =
+      Over.pullbackCompOfEq r f g h J := by
+  subst r
+  simpa [Over.mapCompPresheafOfEq, Over.pullbackCompOfEq] using
+    (uniqueUpToIsoOfIso_pullbackComp f g e)
+
 /-- Three canonical comparisons satisfy the cocycle law when the presheaf isomorphisms do. -/
 theorem uniqueUpToIsoOfIso_trans
     {C : Type u} [Category.{v, u} C]
