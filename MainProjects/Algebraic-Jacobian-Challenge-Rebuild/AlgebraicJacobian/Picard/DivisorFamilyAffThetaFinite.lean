@@ -141,22 +141,20 @@ variable {g : ℕ} (hc : A.IsCertified g)
 
 /-- The equalizer algebra and the certified glued module have the same finite `R`-module
 carrier. -/
-theorem IsCertified.finite_gluedSubalgebra :
-    (hc : A.IsCertified g) →
+theorem IsCertified.finite_gluedSubalgebra (hc : A.IsCertified g) :
     Module.Finite R ↥(gluedSubalgebra A) := by
   letI := AlgebraicGeometry.AffAdaptation.IsCertified.finite_glued hc
   exact Module.Finite.equiv A.gluedSubalgebraEquiv.symm
 
 /-- Projectivity of the certified glued module transports to the equalizer algebra. -/
-theorem IsCertified.projective_gluedSubalgebra :
-    (hc : A.IsCertified g) →
+theorem IsCertified.projective_gluedSubalgebra (hc : A.IsCertified g) :
     Module.Projective R ↥(gluedSubalgebra A) := by
   letI := AlgebraicGeometry.AffAdaptation.IsCertified.projective_glued hc
   exact Module.Projective.of_equiv A.gluedSubalgebraEquiv.symm
 
 /-- The equalizer algebra has the same constant fibre rank as the certified glued module. -/
-theorem IsCertified.rankAtStalk_gluedSubalgebra (p : PrimeSpectrum R) :
-    (hc : A.IsCertified g) →
+theorem IsCertified.rankAtStalk_gluedSubalgebra (hc : A.IsCertified g)
+    (p : PrimeSpectrum R) :
     Module.rankAtStalk (↥(gluedSubalgebra A)) p = g := by
   rw [congrFun (Module.rankAtStalk_eq_of_equiv A.gluedSubalgebraEquiv) p]
   exact AlgebraicGeometry.AffAdaptation.IsCertified.rankAtStalk_glued hc p

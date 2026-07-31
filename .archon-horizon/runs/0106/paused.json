@@ -1,0 +1,10 @@
+{
+  "run_id": "0106",
+  "reason": "server_error",
+  "at": "2026-07-31T13:17:53.640518+00:00",
+  "focus_tasks": [
+    "pic-c"
+  ],
+  "focus_projects": [],
+  "resume": "horizon run --resume 0106"
+}
