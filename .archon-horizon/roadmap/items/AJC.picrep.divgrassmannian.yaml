@@ -2,17 +2,20 @@ id: AJC.picrep.divgrassmannian
 title: 'D2'': Grassmannian comparison for the degree-d divisor functor'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'ACTIVE. D2'' substrate landed without a rational-point or representability
-  binder: unconditional twist/evaluation/quotient/class APIs with DivFamily.Rel descent;
-  arbitrary base change and fibre-rank/H0 for finite schematic support; and DivFamily.pushforward_isLocallyFreeOfRank,
-  deriving rank d from HasFiberDeg d on an affine Spec R test base. The rank bridge
-  is explicitly conditional on [IsNoetherianRing R] and LocallyQuasiFinite support,
-  so it is not the arbitrary-Over(S) twisted-target producer. The named projective
-  twist/local-triviality witness has no rational-point binder but is Scheme-0 only
-  at this mathlib pin. Remaining D2 gates are twisted-target finite-presentation/flatness,
-  right-factor support, fibre-H0 invariance, and the evaluation epi; pic-b owns the
-  tensor-section substrate. Row released/unowned; commits a912ea5325 and a166dd4ef6
-  are pinned.'
+summary: 'ACTIVE, owned by pic-f. D2 prime substrate is unconditional in the divisor
+  representative: twist/evaluation/quotient/class APIs respect DivFamily.Rel, affine
+  Nakayama globalizes residue-field surjectivity, and affine pullback conjugacy identifies
+  native base-change maps with pulled-back evaluation maps. The finite-support fibre-rank
+  bridge and DivFamily.pushforward_isLocallyFreeOfRank derive rank d from HasFiberDeg
+  on an affine Spec R test base, with explicit IsNoetherianRing and LocallyQuasiFinite
+  support premises; this is not yet the arbitrary-Over(S) twisted-target producer.
+  The named projective twist witness has no rational-point binder but is Scheme-0
+  at this mathlib pin. New support result: annihilator ideals and proper schematic
+  support are invariant under module isomorphism; tensor symmetry gives right-factor
+  support, and DivFamily.twist_hasProperSupport is unconditional. Remaining D2 gates
+  are twisted-target finite presentation/flatness, fibre-H0/rank invariance, and the
+  evaluation epi; pic-b owns tensor-section globalization. Verified commits: 140999ffda,
+  908779ad72, 8cd8b2246d, 459d8b1cb4, fa5b5561a5, 52bef57944, 54bbb07580.'
 status: active
 kind: proof
 priority: normal
@@ -36,8 +39,15 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-31T14:10:08.878028+00:00'
+  updated_at: '2026-07-31T19:21:16.547310+00:00'
   pinned_commits:
+  - 54bbb07580
+  - 52bef57944
+  - fa5b5561a5
+  - 459d8b1cb4
+  - 8cd8b2246d
+  - 908779ad72
+  - 140999ffda
   - a166dd4ef69675d807d344883f4b6e3d36e873e9
   - a912ea5325656ba6358a08a6a19c14f266bea80b
   - caaf10855a
