@@ -26,13 +26,13 @@ body: "AN UNVERIFIED DOCSTRING COUNTEREXAMPLE THAT IS TRUE STILL COSTS MORE TO C
   \ axiom-clean [propext, Classical.choice, Quot.sound] against a sorryAx-firing control."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-31T01:35:02.720169+00:00'
-updated_at: '2026-07-31T01:35:02.720182+00:00'
+updated_at: '2026-07-31T01:47:08.611581+00:00'
 metadata:
   provenance:
     run: 0096
