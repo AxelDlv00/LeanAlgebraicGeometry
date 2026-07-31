@@ -6,11 +6,11 @@ created: '2026-07-17T08:59:08'
 generated: blueprint
 label: thm:mumfordScaling_equivariance
 lean_status: lean_ok
-order: 1155
+order: 1156
 ref: kleiman-picard
 title: Mumford-scaling equivariance of the keystone
 type: tex
-updated: '2026-07-26T15:04:51'
+updated: '2026-07-31T19:57:34'
 ---
 Through the identification of \ref{thm:h1_truncExp_kernel}, the \(k\)-scalar action
   on \(H^1(X, \struct X)\) corresponds to the Mumford scaling of the thickened

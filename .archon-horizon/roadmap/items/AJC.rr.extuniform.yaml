@@ -2,38 +2,24 @@ id: AJC.rr.extuniform
 title: 'Extension-uniform H1 vanishing: one threshold serving every field extension'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'MAJOR PROGRESS 2026-07-31 (pic-b, run 0093 r4), with no new hypotheses.
-
-
-  CLOSED: the stabilization-index obstruction. FiberLattice.fiberLattice_stable proves
-  that one plateau propagates. Quantitative quotient stabilization therefore reaches
-  the top by the initial quotient dimension, giving H1(O(D + h1(O(D))*F)) = 0. At
-  D=0 this produces the explicit base divisor h1(O)*F, and on every base-changed challenge
-  curve GenusFieldInvariance.subsingleton_genus_smul_fiber_perFieldFiniteMapToP1_curve
-  exposes the witness exactly as genus(C)*F_pi_kappa.
-
-
-  CLOSED: choosing one map before the extension. MapToP1FieldBaseChange.fixedFiniteMapToP1
-  chooses one finite dominant C -> P1(k), and fixedFiniteMapToP1BaseChange constructs
-  its cartesian base change over every kappa. Finiteness and surjectivity, hence dominance,
-  are proved after base change.
-
-
-  OPEN, exact: transport the fixed map source-side two-chart coordinate datum along
-  baseChangeFieldFst and prove invariance of the resulting fiber-divisor degree. The
-  preferred route is local section equivalences plus two-term kernel base change;
-  no full isomorphism between the pullback target and the separate Ledger P1(kappa)
-  model is required. Once deg_kappa(D_kappa) = deg_k(D) for D = genus(C)*F, take d
-  := deg_k(D) to produce UniformBaseDivisor C d and then uniform H1 vanishing.
-
-
-  DO NOT CITE the previous n0(kappa) or strictness gap: both are now closed. Remaining
-  variable: deg_kappa(F) only.
-
-
-  Verification: lake builds through GenusFieldInvariance (8702 jobs); all new declarations
-  have only propext, Classical.choice, Quot.sound and no sorryAx.'
-status: active
+summary: 'CLOSED 2026-07-31 (pic-b, run 0099), with no additional curve hypothesis.\n\nFixedFiberDegree.lean
+  transports one fixed source-side coordinate divisor through every field extension.
+  Mayer-Vietoris exactness identifies H0 with the kernel of the normalized coordinate
+  differential and H1-vanishing with its surjectivity. FiberCoordinateComplex proves
+  that differential commutes with arbitrary scalar extension; kernel base change gives
+  h0_coordinate_baseChange_eq and affine-chart acyclicity gives subsingleton_coordinate_baseChange_of_base.
+  Riemann-Roch plus genus_baseChangeField_curve then proves degree_coordinate_baseChange_eq.\n\nThe
+  fixed map chosen over k therefore supplies fixedCoordinateDegree C and the unconditional
+  producer uniformBaseDivisor_fixedCoordinate : UniformBaseDivisor C (fixedCoordinateDegree
+  C). Composing the existing reduction yields uniformVanishing_fixedCoordinate : UniformVanishing
+  C. Both final declarations require only IsProper, SmoothOfRelativeDimension 1, and
+  GeometricallyIrreducible; geometric integrality is synthesized by the existing smoothness
+  bridge.\n\nVerified through the rooted build: lake build AlgebraicJacobian (8921
+  jobs). LSP diagnostics are empty; the two endpoints use only propext, Classical.choice,
+  and Quot.sound, with no sorry/axiom source occurrences. Source/root blobs are in
+  integration commit c93cfea0ed; the repaired coordinate-complex substrate is commit
+  80f073ffc0.'
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -55,8 +41,10 @@ metadata:
     task_title: Bring the cluster-P Riemann-Roch substrate into AJC
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.rr
-  updated_at: '2026-07-30T22:40:33.739940+00:00'
+  updated_at: '2026-07-31T12:03:59.379754+00:00'
   pinned_commits:
+  - 80f073ffc056ab5554039d7af4e5c51f50fd03e3
+  - c93cfea0ed
   - 534f86710bb4ba06e57dc079c7626b23aabe72a8
   - 8dfdafa7c292b782195728891bd833213957c3dd
   - a4532f2ef08d8e11bc2ce123d2fb8a30bac9f77b

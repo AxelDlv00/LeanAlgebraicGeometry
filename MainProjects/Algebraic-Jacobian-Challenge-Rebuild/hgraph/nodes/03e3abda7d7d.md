@@ -6,11 +6,11 @@ created: '2026-07-17T10:19:50'
 generated: blueprint
 label: thm:cotangent_finrank_rational
 lean_status: lean_ok
-order: 1211
+order: 1212
 ref: stacks-project
 title: Cotangent dimension at a rational point
 type: tex
-updated: '2026-07-26T15:04:52'
+updated: '2026-07-31T19:57:34'
 ---
 Let \(R\) be a ring and \((S, \mathfrak m, \kappa)\) a local \(R\)-algebra,
   formally smooth over \(R\), with \(\Omega_{S/R}\) free of rank
