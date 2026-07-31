@@ -184,6 +184,40 @@ theorem uniqueUpToIsoOfIso_ofLeftAdjoint_mapIso
       exact homEquiv_uniqueUpToIsoOfIso_hom e e' η
         ((adj.homEquiv (R.obj Y) Y).symm (𝟙 _))
 
+/-- The canonical comparison for the inverse presheaf isomorphism is the inverse
+of the original comparison. -/
+theorem uniqueUpToIsoOfIso_symm
+    {C : Type u} [Category.{v, u} C]
+    {F F' : Cᵒᵖ ⥤ Type v} {Y Y' : C}
+    (e : F.RepresentableBy Y) (e' : F'.RepresentableBy Y') (η : F ≅ F') :
+    (uniqueUpToIsoOfIso e e' η).symm =
+      uniqueUpToIsoOfIso e' e η.symm := by
+  let u := uniqueUpToIsoOfIso e e' η
+  let v := uniqueUpToIsoOfIso e' e η.symm
+  apply Iso.ext
+  change u.inv = v.hom
+  apply (cancel_mono u.hom).1
+  have hvu : v.hom ≫ u.hom = 𝟙 _ := by
+    apply e'.homEquiv.injective
+    calc
+      e'.homEquiv (v.hom ≫ u.hom) =
+          η.hom.app (Opposite.op Y')
+            (e.homEquiv v.hom) := by
+        simpa [u, v] using
+          homEquiv_uniqueUpToIsoOfIso_hom e e' η v.hom
+      _ = η.hom.app (Opposite.op Y')
+          (η.inv.app (Opposite.op Y') (e'.homEquiv (𝟙 _))) := by
+        rw [show e.homEquiv v.hom =
+            η.inv.app (Opposite.op Y') (e'.homEquiv (𝟙 _)) by
+          simpa [v] using
+            homEquiv_uniqueUpToIsoOfIso_hom e' e η.symm (𝟙 Y')]
+      _ = e'.homEquiv (𝟙 _) := by
+        have hh := η.inv_hom_id_app (Opposite.op Y')
+        exact congrArg (fun f => f (e'.homEquiv (𝟙 _))) hh
+  calc
+    u.inv ≫ u.hom = 𝟙 _ := u.inv_hom_id
+    _ = v.hom ≫ u.hom := hvu.symm
+
 /-- Transport through a composite adjunction is the same representation as transport
 through the two adjunctions successively. -/
 theorem ofLeftAdjoint_comp

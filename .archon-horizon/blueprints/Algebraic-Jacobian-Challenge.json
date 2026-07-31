@@ -18176,7 +18176,7 @@
     "macros": {},
     "states": {
       "blocked": 249,
-      "closed": 8507,
+      "closed": 8509,
       "formalized_open": 301,
       "informal": 175,
       "ready": 199
@@ -50975,7 +50975,7 @@
       "id": "lem:isIso_sheafification_tensorSectionUnit",
       "lean_file": "AlgebraicJacobian/Picard/TensorSectionFormula.lean",
       "lean_name": "AlgebraicGeometry.Scheme.Modules.isIso_sheafification_tensorSectionUnit",
-      "lean_source": "lemma isIso_sheafification_tensorSectionUnit (A B : X.Modules) :\n    IsIso (sheafification.map\n      ((PresheafOfModules.sheafificationAdjunction\n        (\ud835\udfd9 X.ringCatSheaf.obj)).unit.app (tensorPresheaf A B))) :=\n  isIso_sheafification_map_unit _\n\n/-! ## Quasi-coherence from basic-open section localization\n\nThe affine tensor-section formula (see the module docstring) would give, for\n`A B : X.Modules` quasi-coherent and `V` affine, the fact that the section restriction\n`\u0393(A \u2297 B, V) \u2192 \u0393(A \u2297 B, D(f))` is `IsLocalizedModule (powers f)` (the affine tensor-section\nformula composed with the module-localization heart\n`(M \u2297_R N)_f \u2245 M_f \u2297_{R_f} N_f`, `RingTheory.Localization.BaseChange`).  The lemma below\npackages the *converse* direction of `Scheme.Modules.isLocalizedModule_basicOpen`\n(`QuotScheme.lean`): a sheaf of modules whose section restrictions are localizations on all\nbasic opens of all affine opens is quasi-coherent.  It is the general form of the\npushforward-specialised assembly `pushforward_isQuasicoherent`/\n`pushforward_isQuasicoherent_over_affine`, and is exactly the criterion the 01CB\n(`tensorObj`/`sheafTensorObj`) instance feeds once the affine section-localization is in hand. -/\n\nopen TopologicalSpace in",
+      "lean_source": "lemma isIso_sheafification_tensorSectionUnit (A B : X.Modules) :\n    IsIso (sheafification.map\n      ((PresheafOfModules.sheafificationAdjunction\n        (\ud835\udfd9 X.ringCatSheaf.obj)).unit.app (tensorPresheaf A B))) :=\n  isIso_sheafification_map_unit _\n\n/-! ## The module-localization heart -/",
       "lean_status": "lean_ok",
       "level": "medium",
       "mathlib_ok": false,

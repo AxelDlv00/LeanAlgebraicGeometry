@@ -36,6 +36,8 @@ variable {k : Type u} [Field k] {C : Over (Spec (.of k))}
 variable {R : Type u} [CommRing R] [Algebra k R]
 variable {pi : C.left ⟶ P1 k} [IsFinite pi] [IsProper C.hom]
 variable {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
+variable {A : AffAdaptation D d}
+variable {g : Nat}
 
 namespace AffAdaptation
 
@@ -81,12 +83,48 @@ theorem thetaIntrinsicDeltaSub_eq_zero_of_swallowedBy (A : AffAdaptation D d)
         (A.ThetaOverlapQuotient (π := pi) a p.1 p.2)
     exact Subsingleton.elim _ _
 
+/-- The underlying `R`-linear intrinsic Cech differential also vanishes on a swallowed cover. -/
+theorem thetaIntrinsicDelta_eq_zero_of_swallowedBy (A : AffAdaptation D d)
+    (a : Nat) (h : D.SwallowedBy d) :
+    A.thetaIntrinsicDeltaLeft (π := pi) a -
+        A.thetaIntrinsicDeltaRight (π := pi) a = 0 := by
+  obtain ⟨j0, _, hmiss⟩ := h
+  apply LinearMap.ext
+  intro s
+  funext p
+  by_cases hp : p.1 = p.2
+  · obtain ⟨i, j⟩ := p
+    cases hp
+    simp only [LinearMap.sub_apply, thetaIntrinsicDeltaLeft,
+      thetaIntrinsicDeltaRight, LinearMap.pi_apply, LinearMap.coe_comp,
+      Function.comp_apply, LinearMap.proj_apply, Pi.sub_apply,
+      thetaToOverlapLeftLinear, thetaToOverlapRightLinear]
+    have hdiag := DFunLike.congr_fun (A.thetaToOverlap_diag_eq a i) (s i)
+    exact sub_eq_zero.mpr hdiag
+  · haveI : Subsingleton (A.ovlColength p.1 p.2) := by
+      by_cases h1 : p.1 = j0
+      · exact A.subsingleton_ovlColength_of_swallowedBy hmiss p.1 p.2
+          (Or.inr fun h2 => hp (h1.trans h2.symm))
+      · exact A.subsingleton_ovlColength_of_swallowedBy hmiss p.1 p.2 (Or.inl h1)
+    haveI : Subsingleton (A.ThetaOverlapQuotient (π := pi) a p.1 p.2) :=
+      Module.subsingleton (A.ovlColength p.1 p.2)
+        (A.ThetaOverlapQuotient (π := pi) a p.1 p.2)
+    exact Subsingleton.elim _ _
+
 /-- Hence every family of piece theta quotients satisfies the intrinsic Cech condition. -/
 theorem intrinsicThetaGluedKernelOver_eq_top_of_swallowedBy
     (A : AffAdaptation D d) (a : Nat) (h : D.SwallowedBy d) :
     A.intrinsicThetaGluedKernelOver (π := pi) a = ⊤ := by
   rw [intrinsicThetaGluedKernelOver,
     A.thetaIntrinsicDeltaSub_eq_zero_of_swallowedBy a h]
+  exact LinearMap.ker_zero
+
+/-- The intrinsic equalizer carrier over the test ring is all of the piece product. -/
+theorem intrinsicThetaGluedSubmodule_eq_top_of_swallowedBy
+    (A : AffAdaptation D d) (a : Nat) (h : D.SwallowedBy d) :
+    A.intrinsicThetaGluedSubmodule (π := pi) a = ⊤ := by
+  rw [intrinsicThetaGluedSubmodule,
+    A.thetaIntrinsicDelta_eq_zero_of_swallowedBy a h]
   exact LinearMap.ker_zero
 
 /-- On a swallowed cover, intrinsic theta descent is the whole product of piece quotients. -/
@@ -98,6 +136,240 @@ noncomputable def intrinsicThetaGluedOverEquivPieceProdOfSwallowedBy
     ((LinearEquiv.ofEq _ _
       (A.intrinsicThetaGluedKernelOver_eq_top_of_swallowedBy (pi := pi) a h)).trans
       Submodule.topEquiv)
+
+/-- The `A_D`-linear collapse, restricted along `R → A_D`. -/
+noncomputable def intrinsicThetaGluedOverEquivPieceProdBaseOfSwallowedBy
+    (A : AffAdaptation D d) (a : Nat) (h : D.SwallowedBy d) :
+    letI : Module R (A.IntrinsicThetaGluedOver (π := pi) a) :=
+      Module.compHom _ (algebraMap R ↥(gluedSubalgebra A))
+    A.IntrinsicThetaGluedOver (π := pi) a ≃ₗ[R]
+      A.ThetaPieceProd (π := pi) a := by
+  let AD := ↥(gluedSubalgebra A)
+  let M := A.IntrinsicThetaGluedOver (π := pi) a
+  letI : Module R M := Module.compHom M (algebraMap R AD)
+  let eAD := A.intrinsicThetaGluedOverEquivPieceProdOfSwallowedBy
+    (pi := pi) a h
+  refine { __ := eAD.toEquiv
+           map_add' := eAD.map_add
+           map_smul' := fun r x => ?_ }
+  exact eAD.map_smul (algebraMap R AD r) x
+
+/-- Evaluation at the swallowing piece identifies the theta product with that piece. -/
+noncomputable def thetaPieceProdEquivSwallowingPiece
+    (A : AffAdaptation D d) (a : Nat) {j0 : D.index}
+    (hmiss : ∀ j : D.index, j ≠ j0 →
+      Disjoint d.supportLocus (D.pieces j : Set (relCurve C R))) :
+    A.ThetaPieceProd (π := pi) a ≃ₗ[R]
+      A.ThetaPieceQuotient (π := pi) a j0 := by
+  let ev : A.ThetaPieceProd (π := pi) a →ₗ[R]
+      A.ThetaPieceQuotient (π := pi) a j0 := LinearMap.proj j0
+  apply LinearEquiv.ofBijective ev
+  constructor
+  · intro x y hxy
+    funext j
+    by_cases hj : j = j0
+    · subst j
+      exact hxy
+    · haveI : Subsingleton (A.colength j) :=
+        A.subsingleton_colength_of_ne_swallowing hmiss j hj
+      haveI : Subsingleton (A.ThetaPieceQuotient (π := pi) a j) :=
+        Module.subsingleton (A.colength j)
+          (A.ThetaPieceQuotient (π := pi) a j)
+      exact Subsingleton.elim _ _
+  · intro x
+    refine ⟨Pi.single j0 x, ?_⟩
+    simp [ev]
+
+/-- Evaluation identifies the ordinary colength product with the swallowing colength. -/
+noncomputable def chartProdEquivSwallowingPiece
+    (A : AffAdaptation D d) {j0 : D.index}
+    (hmiss : ∀ j : D.index, j ≠ j0 →
+      Disjoint d.supportLocus (D.pieces j : Set (relCurve C R))) :
+    A.chartProd ≃ₗ[R] A.colength j0 := by
+  let ev : A.chartProd →ₗ[R] A.colength j0 := LinearMap.proj j0
+  apply LinearEquiv.ofBijective ev
+  constructor
+  · intro x y hxy
+    funext j
+    by_cases hj : j = j0
+    · subst j
+      exact hxy
+    · haveI : Subsingleton (A.colength j) :=
+        A.subsingleton_colength_of_ne_swallowing hmiss j hj
+      exact Subsingleton.elim _ _
+  · intro x
+    refine ⟨Pi.single j0 x, ?_⟩
+    simp [ev]
+
+/-- Finite `R`-module transport for the `A_D`-linear intrinsic carrier on a swallowed cover. -/
+theorem IsCertified.finite_intrinsicThetaGluedOver_of_swallowedBy
+    (A : AffAdaptation D d) (hc : A.IsCertified g) (a : Nat) (h : D.SwallowedBy d) :
+    letI : Module R (A.IntrinsicThetaGluedOver (π := pi) a) :=
+      Module.compHom _ (algebraMap R ↥(gluedSubalgebra A))
+    Module.Finite R (A.IntrinsicThetaGluedOver (π := pi) a) := by
+  obtain ⟨j0, hsub, hmiss⟩ := h
+  let AD := ↥(gluedSubalgebra A)
+  let M := A.IntrinsicThetaGluedOver (π := pi) a
+  letI : Module R M := Module.compHom M (algebraMap R AD)
+  let e : M ≃ₗ[R] A.ThetaPieceQuotient (π := pi) a j0 :=
+    (A.intrinsicThetaGluedOverEquivPieceProdBaseOfSwallowedBy
+      (pi := pi) a ⟨j0, hsub, hmiss⟩).trans
+        (A.thetaPieceProdEquivSwallowingPiece (pi := pi) a hmiss)
+  haveI : Module.Finite R (A.colength j0) := hc.finite_colength j0
+  haveI : IsScalarTower R (A.colength j0)
+      (A.ThetaPieceQuotient (π := pi) a j0) :=
+    IsScalarTower.of_algebraMap_smul fun _ _ => rfl
+  haveI : Module.Invertible (A.colength j0)
+      (A.ThetaPieceQuotient (π := pi) a j0) :=
+    A.invertible_thetaPieceQuotient (π := pi) a j0
+  haveI : Module.Finite R
+      (A.ThetaPieceQuotient (π := pi) a j0) :=
+    Module.Invertible.finite_trans (A := A.colength j0)
+  exact Module.Finite.equiv e.symm
+
+/-- Projective `R`-module transport for the `A_D`-linear intrinsic carrier on a swallowed cover. -/
+theorem IsCertified.projective_intrinsicThetaGluedOver_of_swallowedBy
+    (A : AffAdaptation D d) (hc : A.IsCertified g) (a : Nat) (h : D.SwallowedBy d) :
+    letI : Module R (A.IntrinsicThetaGluedOver (π := pi) a) :=
+      Module.compHom _ (algebraMap R ↥(gluedSubalgebra A))
+    Module.Projective R (A.IntrinsicThetaGluedOver (π := pi) a) := by
+  obtain ⟨j0, hsub, hmiss⟩ := h
+  let AD := ↥(gluedSubalgebra A)
+  let M := A.IntrinsicThetaGluedOver (π := pi) a
+  letI : Module R M := Module.compHom M (algebraMap R AD)
+  let e : M ≃ₗ[R] A.ThetaPieceQuotient (π := pi) a j0 :=
+    (A.intrinsicThetaGluedOverEquivPieceProdBaseOfSwallowedBy
+      (pi := pi) a ⟨j0, hsub, hmiss⟩).trans
+        (A.thetaPieceProdEquivSwallowingPiece (pi := pi) a hmiss)
+  haveI : Module.Projective R (A.colength j0) := hc.projective_colength j0
+  haveI : IsScalarTower R (A.colength j0)
+      (A.ThetaPieceQuotient (π := pi) a j0) :=
+    IsScalarTower.of_algebraMap_smul fun _ _ => rfl
+  haveI : Module.Invertible (A.colength j0)
+      (A.ThetaPieceQuotient (π := pi) a j0) :=
+    A.invertible_thetaPieceQuotient (π := pi) a j0
+  haveI : Module.Projective R
+      (A.ThetaPieceQuotient (π := pi) a j0) :=
+    Module.Invertible.projective_trans (A := A.colength j0)
+  exact Module.Projective.of_equiv e.symm
+
+set_option synthInstance.maxHeartbeats 300000 in
+/-- Rank transport from the intrinsic `A_D`-carrier to the swallowing theta piece. -/
+theorem rankAtStalk_intrinsicThetaGluedOver_eq_swallowingPiece
+    (A : AffAdaptation D d) (a : Nat) {j0 : D.index}
+    (hsub : d.supportLocus ⊆ (D.pieces j0 : Set (relCurve C R)))
+    (hmiss : ∀ j : D.index, j ≠ j0 →
+      Disjoint d.supportLocus (D.pieces j : Set (relCurve C R)))
+    (p : PrimeSpectrum R) :
+    letI : Module R (A.IntrinsicThetaGluedOver (π := pi) a) :=
+      Module.compHom _ (algebraMap R ↥(gluedSubalgebra A))
+    Module.rankAtStalk (R := R) (A.IntrinsicThetaGluedOver (π := pi) a) p =
+      Module.rankAtStalk (R := R)
+        (A.ThetaPieceQuotient (π := pi) a j0) p := by
+  let AD := ↥(gluedSubalgebra A)
+  let M := A.IntrinsicThetaGluedOver (π := pi) a
+  letI : Module R M := Module.compHom M (algebraMap R AD)
+  let e :=
+    (A.intrinsicThetaGluedOverEquivPieceProdBaseOfSwallowedBy
+      (pi := pi) a ⟨j0, hsub, hmiss⟩).trans
+      (A.thetaPieceProdEquivSwallowingPiece (pi := pi) a hmiss)
+  exact congrFun (Module.rankAtStalk_eq_of_equiv e) p
+
+set_option synthInstance.maxHeartbeats 300000 in
+/-- The certified rank survives the swallowed theta descent, with no added certificate clause. -/
+theorem IsCertified.rankAtStalk_intrinsicThetaGluedOver_of_swallowedBy
+    (A : AffAdaptation D d) (hc : A.IsCertified g) (a : Nat)
+    (h : D.SwallowedBy d) (p : PrimeSpectrum R) :
+    letI : Module R (A.IntrinsicThetaGluedOver (π := pi) a) :=
+      Module.compHom _ (algebraMap R ↥(gluedSubalgebra A))
+    Module.rankAtStalk (R := R) (A.IntrinsicThetaGluedOver (π := pi) a) p = g := by
+  obtain ⟨j0, hsub, hmiss⟩ := h
+  let AD := ↥(gluedSubalgebra A)
+  let M := A.IntrinsicThetaGluedOver (π := pi) a
+  letI : Module R M := Module.compHom M (algebraMap R AD)
+  let e : M ≃ₗ[R] A.ThetaPieceQuotient (π := pi) a j0 :=
+    (A.intrinsicThetaGluedOverEquivPieceProdBaseOfSwallowedBy
+      (pi := pi) a ⟨j0, hsub, hmiss⟩).trans
+        (A.thetaPieceProdEquivSwallowingPiece (pi := pi) a hmiss)
+  have hpiece : Module.rankAtStalk
+      (A.ThetaPieceQuotient (π := pi) a j0) p =
+      Module.rankAtStalk (A.colength j0) p := by
+    letI : Module.Finite R (A.colength j0) := hc.finite_colength j0
+    letI : Module.Projective R (A.colength j0) := hc.projective_colength j0
+    letI : IsScalarTower R (A.colength j0)
+        (A.ThetaPieceQuotient (π := pi) a j0) :=
+      IsScalarTower.of_algebraMap_smul fun _ _ => rfl
+    letI : Module.Invertible (A.colength j0)
+        (A.ThetaPieceQuotient (π := pi) a j0) :=
+      A.invertible_thetaPieceQuotient (π := pi) a j0
+    exact Module.Invertible.rankAtStalk_eq_of_module_finite p
+  have hcolength : Module.rankAtStalk (A.colength j0) p = g := by
+    let ecol : A.Glued ≃ₗ[R] A.colength j0 :=
+      (A.gluedEquivChartProd_of_swallowedBy ⟨j0, hsub, hmiss⟩).trans
+        (A.chartProdEquivSwallowingPiece hmiss)
+    calc
+      Module.rankAtStalk (A.colength j0) p = Module.rankAtStalk A.Glued p :=
+        (congrFun (Module.rankAtStalk_eq_of_equiv ecol) p).symm
+      _ = g := hc.rankAtStalk_glued p
+  calc
+    Module.rankAtStalk M p =
+        Module.rankAtStalk (A.ThetaPieceQuotient (π := pi) a j0) p :=
+      congrFun (Module.rankAtStalk_eq_of_equiv e) p
+    _ = Module.rankAtStalk (A.colength j0) p := hpiece
+    _ = g := hcolength
+
+/-- The same swallowed descent equivalence, viewed in `R`-modules. -/
+noncomputable def intrinsicThetaGluedEquivPieceProdOfSwallowedBy
+    (A : AffAdaptation D d) (a : Nat) (h : D.SwallowedBy d) :
+    A.IntrinsicThetaGlued (π := pi) a ≃ₗ[R] A.ThetaPieceProd (π := pi) a :=
+  (LinearEquiv.ofEq _ _ (A.intrinsicThetaGluedSubmodule_eq_top_of_swallowedBy (pi := pi) a h)).trans
+    Submodule.topEquiv
+
+/-- Finite intrinsic theta descent on a swallowed cover. -/
+theorem IsCertified.finite_intrinsicThetaGlued_of_swallowedBy
+    (hc : A.IsCertified g) (a : Nat) (h : D.SwallowedBy d) :
+    Module.Finite R (A.IntrinsicThetaGlued (π := pi) a) := by
+  letI : ∀ j : D.index, Module R (A.ThetaPieceQuotient (π := pi) a j) :=
+    fun j => A.thetaPieceQuotientBaseModule (π := pi) a j
+  letI : Module.Finite R (A.ThetaPieceProd (π := pi) a) := by
+    letI : ∀ j : D.index, Module.Finite R
+        (A.ThetaPieceQuotient (π := pi) a j) :=
+      fun j => by
+        letI : Module.Finite R (A.colength j) := hc.finite_colength j
+        letI : IsScalarTower R (A.colength j)
+            (A.ThetaPieceQuotient (π := pi) a j) :=
+          IsScalarTower.of_algebraMap_smul fun _ _ => rfl
+        letI : Module.Invertible (A.colength j)
+            (A.ThetaPieceQuotient (π := pi) a j) :=
+          A.invertible_thetaPieceQuotient (π := pi) a j
+        exact Module.Invertible.finite_trans (A := A.colength j)
+    exact Module.Finite.pi
+  exact Module.Finite.equiv
+    (A.intrinsicThetaGluedEquivPieceProdOfSwallowedBy (pi := pi) a h).symm
+
+/-- Projective intrinsic theta descent on a swallowed cover. -/
+theorem IsCertified.projective_intrinsicThetaGlued_of_swallowedBy
+    (hc : A.IsCertified g) (a : Nat) (h : D.SwallowedBy d) :
+    Module.Projective R (A.IntrinsicThetaGlued (π := pi) a) := by
+  letI : ∀ j : D.index, Module R (A.ThetaPieceQuotient (π := pi) a j) :=
+    fun j => A.thetaPieceQuotientBaseModule (π := pi) a j
+  letI : ∀ j : D.index, Module.Projective R
+      (A.ThetaPieceQuotient (π := pi) a j) :=
+    fun j => by
+      letI : Module.Projective R (A.colength j) := hc.projective_colength j
+      letI : IsScalarTower R (A.colength j)
+          (A.ThetaPieceQuotient (π := pi) a j) :=
+        IsScalarTower.of_algebraMap_smul fun _ _ => rfl
+      letI : Module.Invertible (A.colength j)
+          (A.ThetaPieceQuotient (π := pi) a j) :=
+        A.invertible_thetaPieceQuotient (π := pi) a j
+      exact Module.Invertible.projective_trans (A := A.colength j)
+  letI : Module.Projective R (A.ThetaPieceProd (π := pi) a) := by
+    exact Module.Projective.of_equiv
+      (DirectSum.linearEquivFunOnFintype R D.index
+        (fun j => A.ThetaPieceQuotient (π := pi) a j))
+  exact Module.Projective.of_equiv
+    (A.intrinsicThetaGluedEquivPieceProdOfSwallowedBy (pi := pi) a h).symm
 
 end AffAdaptation
 

@@ -1,0 +1,34 @@
+id: I-1749
+provider: local
+kind: info
+body: 'CLAIM pic-f (0101 r3): AJC.picrep.divgrassmannian arbitrary-base D2'' producers
+
+
+  Continuing the landed representative quotient/class descent. Target: derive the
+  twisted target''s finite-presentation/flatness, fibre-H0 rank, and evaluation epi
+  over arbitrary test bases, then package a pullback-natural Grassmannian map. No
+  rational-point or representability hypothesis; not touching pic-b tensor substrate
+  or pic-e support-base-change carrier.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-31T14:10:51.319038+00:00'
+updated_at: '2026-07-31T14:15:46.879041+00:00'
+metadata:
+  provenance:
+    run: '0101'
+    session: 0008-horizon-pic-f
+    role: horizon
+    round: '3'
+    rounds: '6'
+    task: pic-f
+    task_title: 'Pic rep lane F: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - pic-f
