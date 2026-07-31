@@ -240,7 +240,18 @@ private theorem picEtCrossBaseInv_tower
       (picEtMap_val C f liftedL W).symm
 
 theorem pic0Theta_comp : pic0Theta k M C = cocycleRHS k L M C := by
-  sorry
+  apply Iso.ext
+  ext T lam
+  refine Subtype.ext ?_
+  change picEtCrossBaseInv k M C (Opposite.unop T) lam.1 =
+    picEtMap C (((αOp k L M).hom.app T).unop)
+      (picEtCrossBaseInv k L C
+        ((Over.map (Spec.map (CommRingCat.ofHom (algebraMap L M)))).obj
+          (Opposite.unop T))
+        (picEtCrossBaseInv L M ((baseChange k L).obj C) (Opposite.unop T)
+          (picEtPullback ((baseChange.compIso k L M).app C).inv
+            (Opposite.unop T) lam.1)))
+  exact picEtCrossBaseInv_tower k L M C (Opposite.unop T) lam.1
 
 end Cocycle
 
