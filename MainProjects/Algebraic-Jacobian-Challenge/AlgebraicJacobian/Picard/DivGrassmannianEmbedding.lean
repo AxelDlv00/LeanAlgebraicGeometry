@@ -502,6 +502,45 @@ theorem annihilator_eq_of_iso
     apply eU.injective
     rw [eU.map_zero, eU.map_smul, hr]
 
+/-- The annihilator of the left tensor factor annihilates the canonical tensor
+product.  This transports the existing sheaf-tensor inclusion across the
+comparison isomorphism. -/
+theorem annihilator_le_annihilator_tensorObj_left
+    {X : Scheme.{u}} (A B : X.Modules) :
+    annihilator A ≤ annihilator (tensorObj A B) := by
+  rw [annihilator_eq_of_iso (tensorObjIsoSheafTensorObj A B)]
+  exact annihilator_le_annihilator_sheafTensorObj A B
+
+/-- The annihilator of the right tensor factor also annihilates the canonical
+tensor product, by symmetry. -/
+theorem annihilator_le_annihilator_tensorObj_right
+    {X : Scheme.{u}} (A B : X.Modules) :
+    annihilator B ≤ annihilator (tensorObj A B) := by
+  calc
+    annihilator B ≤ annihilator (tensorObj B A) :=
+      annihilator_le_annihilator_tensorObj_left B A
+    _ = annihilator (tensorObj A B) :=
+      annihilator_eq_of_iso (tensorObj_braiding B A)
+
+/-- Tensoring on the left by a line bundle preserves the annihilator exactly.
+The reverse inclusion tensors once more by a tensor inverse of the line bundle
+and contracts the inverse pair. -/
+theorem annihilator_tensorObj_eq_right_of_isLocallyTrivial
+    {X : Scheme.{u}} (L F : X.Modules)
+    (hL : LineBundle.IsLocallyTrivial L) :
+    annihilator (tensorObj L F) = annihilator F := by
+  obtain ⟨Linv, _hLinv, ⟨e⟩⟩ := exists_tensorObj_inverse hL
+  apply le_antisymm
+  · calc
+      annihilator (tensorObj L F) ≤
+          annihilator (tensorObj Linv (tensorObj L F)) :=
+        annihilator_le_annihilator_tensorObj_right Linv (tensorObj L F)
+      _ = annihilator F := annihilator_eq_of_iso
+        (tensorObj_assoc_iso.symm ≪≫
+          tensorObjIsoOfIso (tensorObj_braiding Linv L ≪≫ e) (Iso.refl F) ≪≫
+          tensorObj_left_unitor F)
+  · exact annihilator_le_annihilator_tensorObj_right L F
+
 /-- Proper schematic support is invariant under an isomorphism of module
 sheaves. -/
 theorem HasProperSupport.of_iso {X S : Scheme.{u}} (f : X ⟶ S)
@@ -531,6 +570,30 @@ theorem hasProperSupport_sheafTensorObj_right
     HasProperSupport f (sheafTensorObj A B) :=
   HasProperSupport.of_iso f (tensorObjIsoSheafTensorObj A B)
     (hasProperSupport_tensorObj_right f A hB)
+
+/-- Locally quasi-finite support is unchanged by tensoring on the left with a
+locally trivial line bundle.  The statement is deliberately phrased for an
+arbitrary morphism so it can feed both the affine rank bridge and arbitrary
+test-base descent. -/
+theorem locallyQuasiFinite_tensorObj_left_iff
+    {X S : Scheme.{u}} (f : X ⟶ S) (L F : X.Modules)
+    (hL : LineBundle.IsLocallyTrivial L) :
+    LocallyQuasiFinite (schematicSupportι (tensorObj L F) ≫ f) ↔
+      LocallyQuasiFinite (schematicSupportι F ≫ f) := by
+  change LocallyQuasiFinite ((annihilator (tensorObj L F)).subschemeι ≫ f) ↔
+    LocallyQuasiFinite ((annihilator F).subschemeι ≫ f)
+  rw [annihilator_tensorObj_eq_right_of_isLocallyTrivial L F hL]
+
+/-- The finite-support morphism property is likewise preserved by a locally
+trivial tensor factor. -/
+theorem isFinite_tensorObj_left_iff
+    {X S : Scheme.{u}} (f : X ⟶ S) (L F : X.Modules)
+    (hL : LineBundle.IsLocallyTrivial L) :
+    IsFinite (schematicSupportι (tensorObj L F) ≫ f) ↔
+      IsFinite (schematicSupportι F ≫ f) := by
+  change IsFinite ((annihilator (tensorObj L F)).subschemeι ≫ f) ↔
+    IsFinite ((annihilator F).subschemeι ≫ f)
+  rw [annihilator_tensorObj_eq_right_of_isLocallyTrivial L F hL]
 
 set_option backward.isDefEq.respectTransparency false in
 /-- A finite global presentation of a module sheaf on `Spec R` induces a
@@ -763,6 +826,67 @@ theorem twist_hasProperSupport (L : X.Modules) (x : DivFamily π T) :
   exact Modules.hasProperSupport_tensorObj_right
     (pullback.snd π T.hom)
     ((Modules.pullback (pullback.fst π T.hom)).obj L) x.properSupport
+
+/-- Tensoring a divisor module by a line bundle preserves its schematic
+support, hence preserves the locally-quasi-finite support condition in both
+directions. -/
+theorem twist_locallyQuasiFinite_iff
+    (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)
+    (x : DivFamily π T) :
+    LocallyQuasiFinite
+        (Modules.schematicSupportι (x.twist L) ≫ pullback.snd π T.hom) ↔
+      LocallyQuasiFinite
+        (Modules.schematicSupportι x.F ≫ pullback.snd π T.hom) := by
+  dsimp [twist]
+  change LocallyQuasiFinite
+      ((Modules.annihilator
+        (Modules.tensorObj
+          ((Modules.pullback (pullback.fst π T.hom)).obj L) x.F)).subschemeι ≫
+        pullback.snd π T.hom) ↔
+    LocallyQuasiFinite
+      ((Modules.annihilator x.F).subschemeι ≫ pullback.snd π T.hom)
+  rw [Modules.annihilator_tensorObj_eq_right_of_isLocallyTrivial
+    ((Modules.pullback (pullback.fst π T.hom)).obj L) x.F
+    (hL.pullback (pullback.fst π T.hom))]
+
+/-- A locally trivial twist has exactly the divisor's annihilator ideal.  Thus
+the D2 target has the same schematic support as the original divisor family,
+not merely a closed subscheme of it. -/
+theorem twist_annihilator_eq_of_isLocallyTrivial
+    (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)
+    (x : DivFamily π T) :
+    Modules.annihilator (x.twist L) = Modules.annihilator x.F := by
+  dsimp [twist]
+  exact Modules.annihilator_tensorObj_eq_right_of_isLocallyTrivial _ _
+    (hL.pullback (pullback.fst π T.hom))
+
+/-- Finiteness of the schematic support is unchanged by the D2 line-bundle
+twist. -/
+theorem twist_isFiniteSupport_iff
+    (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)
+    (x : DivFamily π T) :
+    IsFinite (Modules.schematicSupportι (x.twist L) ≫ pullback.snd π T.hom) ↔
+      IsFinite (Modules.schematicSupportι x.F ≫ pullback.snd π T.hom) := by
+  dsimp [twist]
+  exact Modules.isFinite_tensorObj_left_iff
+    (pullback.snd π T.hom)
+    ((Modules.pullback (pullback.fst π T.hom)).obj L) x.F
+    (hL.pullback (pullback.fst π T.hom))
+
+/-- The finite-support producer for the twisted D2 target.  It spends only the
+same locally-quasi-finite support binder already carried by the divisor row;
+properness comes from `DivFamily.properSupport`, and exact support preservation
+then transports finiteness to the twist. -/
+theorem twist_isFiniteSupport
+    (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)
+    (x : DivFamily π T)
+    [LocallyQuasiFinite
+      (Modules.schematicSupportι x.F ≫ pullback.snd π T.hom)] :
+    IsFinite (Modules.schematicSupportι (x.twist L) ≫ pullback.snd π T.hom) := by
+  rw [twist_isFiniteSupport_iff L hL x]
+  haveI : IsProper
+      (Modules.schematicSupportι x.F ≫ pullback.snd π T.hom) := x.properSupport
+  exact IsFinite.of_isProper_of_locallyQuasiFinite _
 
 set_option backward.isDefEq.respectTransparency false in
 /-- On an affine test base, a finite-flat divisor pushforward is locally free
