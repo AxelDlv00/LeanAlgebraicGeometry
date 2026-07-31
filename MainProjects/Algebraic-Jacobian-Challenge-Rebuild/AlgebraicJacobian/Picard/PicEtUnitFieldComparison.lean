@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.EffectivityClose
 import AlgebraicJacobian.Picard.PicEtUnit
+import AlgebraicJacobian.Picard.AbelElement
 
 /-!
 # The field-point comparison of the unit, LIFTED to the sheafified functor `picEt`
@@ -133,6 +134,43 @@ theorem relPicToPicEt_surjective_of_section (σ : overSpec k K ⟶ C) :
   (relPicToPicEt_bijective_of_section C K σ).2
 
 end field
+
+/-! ## The degree of the unit image at the tautological field point
+
+`pic0Subgroup C (overSpec k K)` is cut out of `picEt C (overSpec k K)` by the vanishing of
+`degAt` at every field point of `overSpec k K`.  The unit image `relPicToPicEt z` reads its
+degree at the *tautological* field point — the identity `𝟙 (overSpec k K)` — off the
+relative degree `relPicDeg K z` of `z` itself.  This is the identity-point instance of
+`AbelElement.degAt_relPicToPicEt`, isolated because it is the single instantiation the
+field-test arguments (`Pic0VanishingFieldTest`) consult in the vanishing direction. -/
+
+section degree
+
+variable (K : Type u) [Field K] [Algebra k K]
+variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+  [GeometricallyIrreducible C.hom]
+
+/-- **The unit image's degree at the tautological point is the relative degree**: for
+`z : relPic C (overSpec k K)`, the degree of `relPicToPicEt z` at the identity field point
+`𝟙 (overSpec k K)` is `relPicDeg K z`.  The `degAt`-at-identity collapses by `picEtMap_id`
+and `AbelElement.degAt_relPicToPicEt`'s route (`picEtAffineEquiv_relPicToPicEt`,
+`PicEtAff.degAff_unit`). -/
+theorem degAt_relPicToPicEt_id (z : relPic C (overSpec k K)) :
+    degAt (relPicToPicEt C (overSpec k K) z) (𝟙 (overSpec k K)) = relPicDeg K z := by
+  rw [degAt_relPicToPicEt (C := C) z (𝟙 (overSpec k K)), relPicMap_id]
+
+/-- **A unit image lands in `pic0Subgroup` only if the source has relative degree zero**:
+membership of `relPicToPicEt z` in the degree-zero subgroup forces `relPicDeg K z = 0`, by
+testing at the tautological point.  (The converse needs degree vanishing at *every* field
+point, which is genuinely stronger than degree zero over `K` alone — hence stated in this
+one honest direction.) -/
+theorem relPicDeg_eq_zero_of_mem_pic0Subgroup {z : relPic C (overSpec k K)}
+    (hz : relPicToPicEt C (overSpec k K) z ∈ pic0Subgroup C (overSpec k K)) :
+    relPicDeg K z = 0 := by
+  have h := (mem_pic0Subgroup_iff.mp hz) K (𝟙 (overSpec k K))
+  rwa [degAt_relPicToPicEt_id] at h
+
+end degree
 
 end
 
