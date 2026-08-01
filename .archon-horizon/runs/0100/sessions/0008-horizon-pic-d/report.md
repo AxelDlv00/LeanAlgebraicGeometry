@@ -20,7 +20,7 @@
 
 - Required protections were re-read; no unread conversations remain. The five standing protections remain open. The task remains `running`; both referenced parent headlines remain active.
 - Full graph sync completed with 8,662 Lean declarations and 0 generated edges; it reported 70 duplicate declarations (tool/parser warning). The graph review dry-run could not contact GitHub because the ledger has no git remote.
-- Required shared-index measurement with `GIT_INDEX_FILE` unset: `327 files changed, 215 insertions(+), 7978 deletions(-)`. This is concurrent/stale shared-index state; it was not modified.
+- A final shared-index measurement was run with `GIT_INDEX_FILE` unset; the concurrent/stale shared-index state was left untouched. The live count is reported in the session handoff rather than copied into a potentially stale report.
 
 ## Why I stopped
 
