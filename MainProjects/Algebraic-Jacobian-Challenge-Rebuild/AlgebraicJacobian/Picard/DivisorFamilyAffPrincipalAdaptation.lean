@@ -3,7 +3,7 @@ Copyright (c) 2026 The AlgebraicJacobian Contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
-import AlgebraicJacobian.Picard.DivisorFamilyAffSwallow
+import AlgebraicJacobian.Picard.DivisorFamilyAffStraddle
 import AlgebraicJacobian.Picard.LocalEquationsPrincipalization
 
 /-!
@@ -81,6 +81,22 @@ noncomputable def ofPrincipalPiece (j0 : D.index)
     simpa only [eqn, dite_true, Scheme.resHom] using hf y
   · simpa only [eqn, dite_false, hj, map_one, Scheme.resHom] using
       d.exists_one_eq_unit_mul_of_disjoint_supportLocus (hmiss j hj) y
+
+/-- A Picard-trivial affine open containing the support produces a swallowed widened
+cover together with an adaptation.  Unlike `exists_affAdaptation_swallowedBy`, this
+requires no containment in one member of the original local-equation cover. -/
+theorem exists_swallowedBy_of_cechPicMap_ι_eq_one [IsProper C.hom]
+    (d : (relCurve C R).LocalEquations) {W : (relCurve C R).Opens}
+    (hW : IsAffineOpen W) (hsub : d.supportLocus ⊆ (W : Set (relCurve C R)))
+    (hpic : Scheme.CechPic.map W.ι d.picClass = 1) :
+    ∃ (D : AffCoverData C R) (_ : AffAdaptation D d), D.SwallowedBy d := by
+  obtain ⟨D, j0, hsw, hj0, hmiss⟩ :=
+    exists_affCoverData_swallowedBy_with_piece C R d hW hsub
+  have hpic' : Scheme.CechPic.map (D.pieces j0).ι d.picClass = 1 := by
+    rw [hj0]
+    exact hpic
+  obtain ⟨f, hf⟩ := d.exists_eqn_unit_mul_of_cechPicMap_ι_eq_one hpic'
+  exact ⟨D, AffAdaptation.ofPrincipalPiece j0 hmiss f hf, hsw⟩
 
 end AffAdaptation
 end AlgebraicGeometry
