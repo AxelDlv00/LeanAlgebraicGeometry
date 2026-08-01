@@ -172,29 +172,17 @@ noncomputable def thetaOverlapSectionsToTriple (A : AffAdaptation D d) (a : ℕ)
       (gluedRes R (thetaChartDatum C R π a).pieces
         (thetaChartDatum C R π a).unit h s)).symm
 
-/-- Pairwise Cartier-vanishing theta sections restrict to Cartier-vanishing sections on
+/-- Restriction carries the pairwise divisor ideal into the intrinsic divisor ideal on
 the triple intersection. -/
-theorem thetaOverlapSectionsToTriple_vanishing_le
-    (A : AffAdaptation D d) (a : ℕ) (p q i j l : D.index)
-    (h : A.thetaTripleOpen i j l ≤ D.pieces p ⊓ D.pieces q) :
-    A.thetaOverlapVanishing (π := π) a p q ≤
-      Submodule.comap (A.thetaOverlapSectionsToTriple (π := π) a p q i j l h)
-        (A.thetaTripleVanishing (π := π) a i j l) := by
+theorem relRes_mem_thetaTripleIdeal_of_mem_ovlIdeal
+    (A : AffAdaptation D d) (p q i j l : D.index)
+    (h : A.thetaTripleOpen i j l ≤ D.pieces p ⊓ D.pieces q)
+    (r : Γ(relCurve C R, D.pieces p ⊓ D.pieces q)) (hr : r ∈ A.ovlIdeal p q) :
+    relResAlgHom C R h r ∈ A.thetaTripleIdeal i j l := by
   let UP : (relCurve C R).affineOpens :=
     ⟨D.pieces p ⊓ D.pieces q, D.hasAffineOverlaps_of_isProper p q⟩
   let UT := A.thetaTripleAffineOpen i j l
   have hUT : UT ≤ UP := h
-  change A.ovlIdeal p q •
-      (⊤ : Submodule Γ(relCurve C R, D.pieces p ⊓ D.pieces q)
-        (A.ThetaOverlapSections (π := π) a p q)) ≤ _
-  rw [Submodule.smul_le]
-  intro r hr s _
-  change A.thetaOverlapSectionsToTriple (π := π) a p q i j l h (r • s) ∈
-    A.thetaTripleIdeal i j l •
-      (⊤ : Submodule Γ(relCurve C R, A.thetaTripleOpen i j l)
-        (A.ThetaTripleSections (π := π) a i j l))
-  rw [(A.thetaOverlapSectionsToTriple (π := π) a p q i j l h).map_smulₛₗ]
-  apply Submodule.smul_mem_smul ?_ Submodule.mem_top
   have hr' : r ∈ A.cartierIdeal.ideal UP := by
     rw [A.cartierIdeal_ideal_overlap_eq_ovlIdeal p q]
     exact hr
@@ -206,9 +194,28 @@ theorem thetaOverlapSectionsToTriple_vanishing_le
         A.cartierIdeal.ideal UT := by
     rw [← hmap]
     exact Ideal.mem_map_of_mem _ hr'
-  have hm : (relResAlgHom C R h).toRingHom r ∈ A.thetaTripleIdeal i j l := by
-    simpa [relResAlgHom, thetaTripleIdeal, UT] using hmraw
-  exact hm
+  simpa [relResAlgHom, thetaTripleIdeal, UT] using hmraw
+
+/-- Pairwise Cartier-vanishing theta sections restrict to Cartier-vanishing sections on
+the triple intersection. -/
+theorem thetaOverlapSectionsToTriple_vanishing_le
+    (A : AffAdaptation D d) (a : ℕ) (p q i j l : D.index)
+    (h : A.thetaTripleOpen i j l ≤ D.pieces p ⊓ D.pieces q) :
+    A.thetaOverlapVanishing (π := π) a p q ≤
+      Submodule.comap (A.thetaOverlapSectionsToTriple (π := π) a p q i j l h)
+        (A.thetaTripleVanishing (π := π) a i j l) := by
+  change A.ovlIdeal p q •
+      (⊤ : Submodule Γ(relCurve C R, D.pieces p ⊓ D.pieces q)
+        (A.ThetaOverlapSections (π := π) a p q)) ≤ _
+  rw [Submodule.smul_le]
+  intro r hr s _
+  change A.thetaOverlapSectionsToTriple (π := π) a p q i j l h (r • s) ∈
+    A.thetaTripleIdeal i j l •
+      (⊤ : Submodule Γ(relCurve C R, A.thetaTripleOpen i j l)
+        (A.ThetaTripleSections (π := π) a i j l))
+  rw [(A.thetaOverlapSectionsToTriple (π := π) a p q i j l h).map_smulₛₗ]
+  apply Submodule.smul_mem_smul ?_ Submodule.mem_top
+  exact A.relRes_mem_thetaTripleIdeal_of_mem_ovlIdeal p q i j l h r hr
 
 /-- Restriction induced on pairwise theta quotients. -/
 noncomputable def thetaOverlapToTriple (A : AffAdaptation D d) (a : ℕ)
