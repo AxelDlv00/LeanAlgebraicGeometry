@@ -19,7 +19,7 @@ generated: lean
 lean_status: lean_ok
 title: Module.comparisonDescentUnit
 type: lean
-updated: '2026-08-01T09:44:15'
+updated: '2026-08-02T07:12:57'
 ---
 noncomputable def comparisonDescentUnit (v : (S ⊗[A] (B ⊗[A] B))ˣ) :
     ((S ⊗[A] B) ⊗[S] (S ⊗[A] B))ˣ :=

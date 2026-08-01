@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.IsTrimmedTrivializing
 type: lean
-updated: '2026-08-01T09:44:18'
+updated: '2026-08-02T07:13:00'
 ---
 def IsTrimmedTrivializing {𝒩 : X.PointedCover} (γ : X.unitsCocycle 𝒩) (W : X.Opens)
     (t : ∀ b : X, Γ(X, 𝒩.opens b ⊓ W)ˣ) : Prop :=

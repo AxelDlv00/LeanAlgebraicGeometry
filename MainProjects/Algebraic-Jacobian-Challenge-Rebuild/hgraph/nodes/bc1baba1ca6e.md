@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.pic0GaloisRestrictTest
 type: lean
-updated: '2026-08-01T13:18:07'
+updated: '2026-08-02T07:12:58'
 ---
 noncomputable abbrev pic0GaloisRestrictTest :
     Over (Spec (CommRingCat.of L)) ⥤ Over (Spec (CommRingCat.of k)) :=

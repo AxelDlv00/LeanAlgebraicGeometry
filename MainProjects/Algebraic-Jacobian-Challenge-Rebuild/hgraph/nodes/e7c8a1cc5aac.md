@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: RingTheory.Module.depth
 type: lean
-updated: '2026-08-01T09:44:08'
+updated: '2026-08-02T07:12:46'
 ---
 noncomputable def depth {R : Type u} [CommRing R] (_I : Ideal R)
     (_M : Type v) [AddCommGroup _M] [Module R _M] : ℕ∞ :=

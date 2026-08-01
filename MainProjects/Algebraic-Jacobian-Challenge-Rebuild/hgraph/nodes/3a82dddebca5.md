@@ -9,7 +9,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.IdealPurity.productReadMap_mem_span_range
 type: lean
-updated: '2026-08-01T09:44:12'
+updated: '2026-08-02T07:12:50'
 ---
 private theorem productReadMap_mem_span_range
     (m : S →ₗ[R] B) (r : K →ₗ[R] B) (x : S ⊗[R] K) :

@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.subsingleton_hModule_gluedSheaf_subord
 type: lean
-updated: '2026-08-01T09:44:09'
+updated: '2026-08-02T07:12:47'
 ---
 theorem subsingleton_hModule_gluedSheaf_subord (hσ : ∀ i : I, V i ≤ U (σ i))
     (hg' : ∀ i i' : I, (g' i i' : Γ(X, V i ⊓ V i')) =

@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.divisorSheafLE_mono
 type: lean
-updated: '2026-08-01T09:44:17'
+updated: '2026-08-02T07:12:59'
 ---
 instance divisorSheafLE_mono {D D' : X.CurveDivisor} (h : D ≤ D') :
     Mono (divisorSheafLE K h) := by

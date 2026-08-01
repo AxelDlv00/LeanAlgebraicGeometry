@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_retraction_of_isChartUniv
 type: lean
-updated: '2026-08-01T09:44:16'
+updated: '2026-08-02T07:12:58'
 ---
 theorem exists_retraction_of_isChartUniv {D : Over (Spec (.of k))}
     (rep : (divFunctor C π n).RepresentableBy D)

@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.matrixProj
 type: lean
-updated: '2026-08-01T09:44:15'
+updated: '2026-08-02T07:12:57'
 ---
 noncomputable def matrixProj (X : Matrix (Fin d) (Fin r) S) :
     TensorProduct k S (Fin r → k) →ₗ[S] (Fin d → S) :=

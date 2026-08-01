@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: Algebra.TensorProduct.pieceDescentTripleEquiv_descentFace₂₃
 type: lean
-updated: '2026-08-01T09:44:15'
+updated: '2026-08-02T07:12:57'
 ---
 lemma pieceDescentTripleEquiv_descentFace₂₃ (y : (S ⊗[A] B) ⊗[S] (S ⊗[A] B)) :
     pieceDescentTripleEquiv A S B (Module.descentFace₂₃ S (S ⊗[A] B) y)

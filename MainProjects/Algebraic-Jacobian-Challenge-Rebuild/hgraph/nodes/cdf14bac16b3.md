@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.mul_mem_divisorSections_top
 type: lean
-updated: '2026-08-01T09:44:18'
+updated: '2026-08-02T07:13:00'
 ---
 theorem mul_mem_divisorSections_top {A B : X.CurveDivisor} {f h : X.functionField}
     (hfA : f ∈ divisorSections K A ⊤) (hhB : h ∈ divisorSections K B ⊤) :

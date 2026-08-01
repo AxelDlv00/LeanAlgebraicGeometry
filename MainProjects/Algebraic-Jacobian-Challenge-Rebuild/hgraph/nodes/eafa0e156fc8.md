@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffCoverData.HasAffineOverlaps
 type: lean
-updated: '2026-08-01T09:44:13'
+updated: '2026-08-02T07:12:50'
 ---
 def AffCoverData.HasAffineOverlaps (D : AffCoverData C R) : Prop :=
   ∀ i j : D.index, IsAffineOpen (D.pieces i ⊓ D.pieces j)

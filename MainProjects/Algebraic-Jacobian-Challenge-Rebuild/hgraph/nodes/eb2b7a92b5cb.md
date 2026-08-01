@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.baseChange_idIso_hom_app_left
 type: lean
-updated: '2026-08-01T09:44:16'
+updated: '2026-08-02T07:12:58'
 ---
 theorem baseChange_idIso_hom_app_left (k : Type u) [Field k] (C : Over (Spec (.of k))) :
     ((baseChange.idIso k).app C).hom.left

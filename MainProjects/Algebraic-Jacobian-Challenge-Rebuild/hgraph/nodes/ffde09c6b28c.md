@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: Module.tensorPiEquiv
 type: lean
-updated: '2026-08-01T09:44:09'
+updated: '2026-08-02T07:12:46'
 ---
 noncomputable def tensorPiEquiv :
     letI : Module (forall i, R i) (forall i, M i) := Pi.module'

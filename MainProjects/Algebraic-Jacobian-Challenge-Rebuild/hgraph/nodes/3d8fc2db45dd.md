@@ -19,7 +19,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Over.basicOpen_mul_le_left
 type: lean
-updated: '2026-08-01T09:44:11'
+updated: '2026-08-02T07:12:48'
 ---
 private lemma basicOpen_mul_le_left
     (f g : Γ(SA, ⊤)) :

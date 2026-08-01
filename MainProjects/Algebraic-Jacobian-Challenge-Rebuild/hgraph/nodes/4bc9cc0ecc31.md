@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.jumpProj_eq_of_coe_eq
 type: lean
-updated: '2026-08-01T09:44:17'
+updated: '2026-08-02T07:12:59'
 ---
 lemma jumpProj_eq_of_coe_eq {U V : X.Opens} (hxU : x ∈ U) (hxV : x ∈ V)
     (s : divisorSections K D U) (t : divisorSections K D V)

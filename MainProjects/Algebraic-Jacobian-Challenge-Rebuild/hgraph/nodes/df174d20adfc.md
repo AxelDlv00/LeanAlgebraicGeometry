@@ -21,7 +21,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.subsingleton_tensor_residueField_comap_iff
 type: lean
-updated: '2026-08-01T09:44:14'
+updated: '2026-08-02T07:12:54'
 ---
 private theorem subsingleton_tensor_residueField_comap_iff
     {S₀ R' : Type u} [CommRing S₀] [CommRing R'] [Algebra S₀ R'] (M₀ : Submonoid S₀)

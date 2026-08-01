@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.quasiCompact_gluedHom
 type: lean
-updated: '2026-08-01T09:44:15'
+updated: '2026-08-02T07:12:57'
 ---
 theorem quasiCompact_gluedHom [Finite ι] (hcpt : ∀ i, CompactSpace (X i)) :
     QuasiCompact (gluedHom C f hf) := by

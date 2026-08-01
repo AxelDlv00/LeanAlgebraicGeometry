@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.pairCochain
 type: lean
-updated: '2026-08-01T09:44:18'
+updated: '2026-08-02T07:13:00'
 ---
 noncomputable def pairCochain {𝒩 : X.PointedCover}
     (t₀ : ∀ b : X, Γ(X, 𝒩.opens b ⊓ V false)ˣ)

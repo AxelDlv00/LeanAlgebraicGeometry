@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivisorAdaptation.cokerDiffCongr
 type: lean
-updated: '2026-08-01T09:44:13'
+updated: '2026-08-02T07:12:50'
 ---
 noncomputable def cokerDiffCongr :
     (A.ovlProd ⧸ LinearMap.range (A.deltaLeft - A.deltaRight)) ≃ₗ[R]

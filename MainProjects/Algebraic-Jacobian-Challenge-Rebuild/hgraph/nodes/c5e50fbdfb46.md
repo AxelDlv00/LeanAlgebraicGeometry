@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.BasicOpenCocycleDatum.termFamily_cover
 type: lean
-updated: '2026-08-01T09:44:09'
+updated: '2026-08-02T07:12:47'
 ---
 lemma termFamily_cover (hspan : Ideal.span (Set.range h) = ⊤) :
     ((fst C (overSpec k B')).left ⁻¹ᵁ V : (relCurve C B').Opens) ≤

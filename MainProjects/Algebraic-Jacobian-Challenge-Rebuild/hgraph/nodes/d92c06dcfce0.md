@@ -16,7 +16,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.DivRepAffinePullback.homOfLE_classifyPiece
 type: lean
-updated: '2026-08-01T09:44:11'
+updated: '2026-08-02T07:12:49'
 ---
 private theorem homOfLE_classifyPiece
     (D : DivRepAffinePullback hpi g hO hchi r1 r2 b1 b2)

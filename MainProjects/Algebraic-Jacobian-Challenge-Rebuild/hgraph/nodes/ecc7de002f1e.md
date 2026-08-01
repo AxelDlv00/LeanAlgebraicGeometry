@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.mem_thetaOverlapVanishing_iff_forall_germ
 type: lean
-updated: '2026-08-01T09:44:13'
+updated: '2026-08-02T07:12:51'
 ---
 theorem mem_thetaOverlapVanishing_iff_forall_germ [IsProper C.hom]
     (A : AffAdaptation D d) (a : ℕ)

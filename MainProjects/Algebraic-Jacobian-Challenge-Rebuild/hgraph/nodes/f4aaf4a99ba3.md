@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: Algebra.DescentDatum.Hom.comp_assoc
 type: lean
-updated: '2026-08-01T13:18:07'
+updated: '2026-08-02T07:12:48'
 ---
 theorem comp_assoc {U : Type u} [CommRing U]
     [Algebra A U] [Algebra B U] [IsScalarTower A B U]

@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.unitsTrivTwistCochain_def
 type: lean
-updated: '2026-08-01T09:44:15'
+updated: '2026-08-02T07:12:57'
 ---
 lemma unitsTrivTwistCochain_def (r₁ r₂ : Y ⟶ Z)
     (𝒞 : Y.PointedCover) (𝒩 : Z.PointedCover)

@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.skyModuleGammaEquiv
 type: lean
-updated: '2026-08-01T09:44:18'
+updated: '2026-08-02T07:13:00'
 ---
 def skyModuleGammaEquiv (x : X) (M : ModuleCat.{u} K) :
     Sheaf.HModule (skyModule x M) 0 ≃ₗ[K] M :=

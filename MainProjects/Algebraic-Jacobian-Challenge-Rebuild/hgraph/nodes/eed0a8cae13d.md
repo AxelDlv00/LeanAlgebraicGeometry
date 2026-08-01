@@ -9,7 +9,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.fibreMulAux_tmul
 type: lean
-updated: '2026-08-01T09:44:12'
+updated: '2026-08-02T07:12:50'
 ---
 private lemma fibreMulAux_tmul {A B : Type u} [CommRing A] [CommRing B]
     [Algebra R A] (ψ : A →+* B) (ρ : R' →+* B)

@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.twoChartCocycle
 type: lean
-updated: '2026-08-01T09:44:18'
+updated: '2026-08-02T07:13:00'
 ---
 noncomputable def twoChartCocycle (u : Γ(X, V false ⊓ V true)ˣ) (sel : X → Bool)
     (hmem : ∀ x, x ∈ V (sel x)) : X.unitsCocycle (twoChartCover V sel hmem) :=

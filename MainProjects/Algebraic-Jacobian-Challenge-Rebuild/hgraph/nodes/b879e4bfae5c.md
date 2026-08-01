@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.JacobianData.yonedaGrp_map_pullbackHom
 type: lean
-updated: '2026-08-01T09:44:16'
+updated: '2026-08-02T07:12:58'
 ---
 theorem yonedaGrp_map_pullbackHom (dX : JacobianData X) (dY : JacobianData Y)
     (g : X ⟶ Y) :

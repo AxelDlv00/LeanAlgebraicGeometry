@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.Sheaf.HModule.cokernelπ_app_surjective_of_subsingleton_h1
 type: lean
-updated: '2026-08-01T09:44:17'
+updated: '2026-08-02T07:12:59'
 ---
 theorem cokernelπ_app_surjective_of_subsingleton_h1
     {F G : Sheaf J (ModuleCat.{u} R)} (ι : F ⟶ G) [Mono ι]

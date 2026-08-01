@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.isUnit_algebraMap_end_glued
 type: lean
-updated: '2026-08-01T09:44:09'
+updated: '2026-08-02T07:12:47'
 ---
 lemma isUnit_algebraMap_end_glued (hc : Scheme.IsGluingCocycle U g)
     (hq : ∀ {W : X.Opens} (hW : W ≤ V) (r : Γ(X, V)) (s : ↥(gluedSubmodule k U g W)),

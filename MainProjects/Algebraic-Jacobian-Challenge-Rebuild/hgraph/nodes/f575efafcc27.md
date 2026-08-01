@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.colength
 type: lean
-updated: '2026-08-01T09:44:12'
+updated: '2026-08-02T07:12:50'
 ---
 noncomputable abbrev colength (j : D.index) : Type u :=
   Γ(relCurve C R, D.pieces j) ⧸ Ideal.span {A.eqn j}

@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.thetaChartCover
 type: lean
-updated: '2026-08-01T09:44:09'
+updated: '2026-08-02T07:12:47'
 ---
 noncomputable def thetaChartCover : BasicOpenCoverData C B π where
   J₀ := PUnit

@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.thetaTripleIdeal
 type: lean
-updated: '2026-08-01T13:31:19'
+updated: '2026-08-02T07:12:51'
 ---
 noncomputable abbrev thetaTripleIdeal (A : AffAdaptation D d)
     (i j l : D.index) : Ideal Γ(relCurve C R, A.thetaTripleOpen i j l) :=

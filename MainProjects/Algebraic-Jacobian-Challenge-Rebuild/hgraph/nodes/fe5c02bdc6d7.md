@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.grFunctor.eval
 type: lean
-updated: '2026-08-01T09:44:15'
+updated: '2026-08-02T07:12:57'
 ---
 def eval (U : T.left.affineOpens) (s : grFunctor k H d T) :
     grFunctorAff k H d Γ(T.left, U.1) :=

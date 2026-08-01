@@ -39,7 +39,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divClassify
 type: lean
-updated: '2026-08-01T09:44:11'
+updated: '2026-08-02T07:12:49'
 ---
 theorem divClassify (F : DivFam C S π g)
     (hcarve : ∀ a : ↥(divisorSections k

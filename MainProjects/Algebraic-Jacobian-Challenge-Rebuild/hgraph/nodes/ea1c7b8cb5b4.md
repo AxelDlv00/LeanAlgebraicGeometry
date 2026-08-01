@@ -25,7 +25,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.relPicToPicEtEquiv_of_section
 type: lean
-updated: '2026-08-01T09:44:16'
+updated: '2026-08-02T07:12:58'
 ---
 noncomputable def relPicToPicEtEquiv_of_section (σ : overSpec k K ⟶ C) :
     relPic C (overSpec k K) ≃* picEt C (overSpec k K) :=

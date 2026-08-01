@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.thetaPieceSectionsModel
 type: lean
-updated: '2026-08-01T09:44:13'
+updated: '2026-08-02T07:12:51'
 ---
 noncomputable def thetaPieceSectionsModel (_A : AffAdaptation D d) (a : ℕ) (j : D.index) :
     (thetaChartDatum C R π a).AffineSectionsModel (D.pieces j) :=

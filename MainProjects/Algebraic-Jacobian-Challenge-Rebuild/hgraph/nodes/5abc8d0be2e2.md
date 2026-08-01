@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.trimmed_le_inl
 type: lean
-updated: '2026-08-01T09:44:15'
+updated: '2026-08-02T07:12:57'
 ---
 lemma trimmed_le_inl {𝒩 : (XB).PointedCover} {γ : (XB).unitsCocycle 𝒩}
     (W : NormalizedCechComparison k A B C σ 𝒩 γ) (V : (XA).Opens) (x : Xq) :

@@ -28,7 +28,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.isLocallySurjective_of_slice
 type: lean
-updated: '2026-08-01T09:44:15'
+updated: '2026-08-02T07:12:57'
 ---
 theorem isLocallySurjective_of_slice {ι : Type u} [Nonempty ι] {D : Over (Spec (.of k))}
     (rep : (divFunctor C π n).RepresentableBy D)

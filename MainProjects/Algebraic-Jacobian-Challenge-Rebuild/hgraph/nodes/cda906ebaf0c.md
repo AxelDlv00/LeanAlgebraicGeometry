@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.testPointFieldMap
 type: lean
-updated: '2026-08-01T09:44:16'
+updated: '2026-08-02T07:12:58'
 ---
 def testPointFieldMap {T T' : Over (Spec (.of k))} (f : T' ⟶ T) (t : T'.left) :
     CommRingCat.of (testPointField (T := T) (f.left.base t))

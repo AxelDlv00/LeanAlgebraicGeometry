@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.span_divFamEpsWindowGermSet_le
 type: lean
-updated: '2026-08-01T09:44:12'
+updated: '2026-08-02T07:12:49'
 ---
 lemma span_divFamEpsWindowGermSet_le (g : ℕ) (G : CertifiedDivisorFamily C R π g)
     (z : relCurve C R) :

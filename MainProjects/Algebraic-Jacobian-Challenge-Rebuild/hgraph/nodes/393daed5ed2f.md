@@ -26,7 +26,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_datum_cechPicClass_twist
 type: lean
-updated: '2026-08-01T09:44:15'
+updated: '2026-08-02T07:12:57'
 ---
 theorem exists_datum_cechPicClass_twist {B : Type u} [CommRing B] [Algebra k B]
     (c : (relCurve C B).CechPic) (m : ℕ)

@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.pullback_chartMap_compat
 type: lean
-updated: '2026-08-01T09:44:11'
+updated: '2026-08-02T07:12:49'
 ---
 theorem pullback_chartMap_compat (F : DivFam C S π g) (fa fb : S)
     {i i' : (glueData k g r₁).J} {j j' : (glueData k g r₂).J}

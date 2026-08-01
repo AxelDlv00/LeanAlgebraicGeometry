@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.fiberEqn_of_mem
 type: lean
-updated: '2026-08-01T09:44:17'
+updated: '2026-08-02T07:12:59'
 ---
 lemma fiberEqn_of_mem (n : ℕ) {z : Y} (h : z ∈ fiberChart₀ π) :
     fiberEqn π n z

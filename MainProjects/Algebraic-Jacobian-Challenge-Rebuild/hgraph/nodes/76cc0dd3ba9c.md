@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.isBaseChange_thetaOverlapSectionsToTripleLinearRing
 type: lean
-updated: '2026-08-01T13:31:19'
+updated: '2026-08-02T07:12:51'
 ---
 theorem isBaseChange_thetaOverlapSectionsToTripleLinearRing
     (A : AffAdaptation D d) (a : ℕ) (p q i j l : D.index)

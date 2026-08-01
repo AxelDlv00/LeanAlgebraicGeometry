@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.Sheaf.constModuleSheafHomEquiv_naturality
 type: lean
-updated: '2026-08-01T09:44:09'
+updated: '2026-08-02T07:12:47'
 ---
 lemma constModuleSheafHomEquiv_naturality {F G : Sheaf J (ModuleCat.{u} R)}
     (φ : constModuleSheaf J R ⟶ F) (f : F ⟶ G) :

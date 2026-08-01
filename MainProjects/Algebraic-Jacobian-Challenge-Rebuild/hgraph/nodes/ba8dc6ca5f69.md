@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divisorWindow_eq_of_le_of_isCertified_of_quotientData
 type: lean
-updated: '2026-08-01T09:44:11'
+updated: '2026-08-02T07:12:49'
 ---
 theorem divisorWindow_eq_of_le_of_isCertified_of_quotientData
     (A : DivisorAdaptation C R π d) (hc : A.IsCertified g)

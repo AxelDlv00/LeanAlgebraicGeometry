@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.jumpProj_apply
 type: lean
-updated: '2026-08-01T09:44:17'
+updated: '2026-08-02T07:12:59'
 ---
 lemma jumpProj_apply (U : X.Opens) (hxU : x ∈ U) (s : divisorSections K D U) :
     jumpProj K hx D U hxU s =

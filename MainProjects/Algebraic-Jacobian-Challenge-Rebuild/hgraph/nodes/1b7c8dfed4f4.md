@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.LaurentChartPair.diff_surjective
 type: lean
-updated: '2026-08-01T09:44:10'
+updated: '2026-08-02T07:12:48'
 ---
 theorem diff_surjective (D : LaurentChartPair k) :
     Function.Surjective (TwoCover.diff k (P1 k) D.U₀ D.U₁) := by

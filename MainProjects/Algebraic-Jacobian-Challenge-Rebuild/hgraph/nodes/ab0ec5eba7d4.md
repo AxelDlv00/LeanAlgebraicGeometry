@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.presentationDivisor_eq_of_divEq
 type: lean
-updated: '2026-08-01T09:44:13'
+updated: '2026-08-02T07:12:53'
 ---
 theorem presentationDivisor_eq_of_divEq {d₁ d₂ : X.LocalEquations}
     (h : LocalEquations.DivEq d₁ d₂) :

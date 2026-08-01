@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.windowShiftTheta₀_eq
 type: lean
-updated: '2026-08-01T09:44:12'
+updated: '2026-08-02T07:12:50'
 ---
 lemma windowShiftTheta₀_eq
     (hH1S : Subsingleton (relTwistPair C k π

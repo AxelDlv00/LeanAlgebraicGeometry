@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.mapAlg_sectionShuffle
 type: lean
-updated: '2026-08-01T09:44:16'
+updated: '2026-08-02T07:12:58'
 ---
 theorem mapAlg_sectionShuffle {V W : T.left.Opens} (h : W ≤ V)
     (x : PicEtAff C

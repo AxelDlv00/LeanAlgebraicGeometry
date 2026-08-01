@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.thetaPieceVanishing_iff_gluedTwist_cokernel_eq_zero
 type: lean
-updated: '2026-08-01T09:44:13'
+updated: '2026-08-02T07:12:51'
 ---
 theorem thetaPieceVanishing_iff_gluedTwist_cokernel_eq_zero
     {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}

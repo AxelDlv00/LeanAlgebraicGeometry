@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.productChartSections_naturality
 type: lean
-updated: '2026-08-01T09:44:10'
+updated: '2026-08-02T07:12:48'
 ---
 theorem productChartSections_naturality {U U' : X.left.Opens} {V V' : T.left.Opens}
     (hU : IsAffineOpen U) (hV : IsAffineOpen V) (hU' : IsAffineOpen U')

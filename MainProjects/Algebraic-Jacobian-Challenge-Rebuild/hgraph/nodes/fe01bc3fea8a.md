@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.productChartSections_tmul_one
 type: lean
-updated: '2026-08-01T09:44:10'
+updated: '2026-08-02T07:12:48'
 ---
 theorem productChartSections_tmul_one {U : X.left.Opens} {V : T.left.Opens}
     (hU : IsAffineOpen U) (hV : IsAffineOpen V) (s : Γ(X.left, U)) :

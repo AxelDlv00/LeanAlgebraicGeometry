@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.relSectionsBaseChangeAffRingEquiv_tmul_one
 type: lean
-updated: '2026-08-01T09:44:13'
+updated: '2026-08-02T07:12:51'
 ---
 lemma relSectionsBaseChangeAffRingEquiv_tmul_one {V : (relCurve C R).Opens}
     (hV : IsAffineOpen V) (s : Γ(relCurve C R, V)) :

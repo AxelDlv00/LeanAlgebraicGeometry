@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.isNilpotent_of_map_nilradical_eq_zero
 type: lean
-updated: '2026-08-01T09:44:09'
+updated: '2026-08-02T07:12:46'
 ---
 theorem isNilpotent_of_map_nilradical_eq_zero {A : Type u} [CommRing A] {p : Polynomial A}
     (h : Polynomial.mapRingHom (Ideal.Quotient.mk (nilradical A)) p = 0) :

@@ -29,7 +29,7 @@ generated: lean
 lean_status: lean_ok
 title: RingTheory.Module.ext_comp_mk₀_ofHom_eq_zero_of_entries_mem_annihilator
 type: lean
-updated: '2026-08-01T09:44:08'
+updated: '2026-08-02T07:12:46'
 ---
 lemma ext_comp_mk₀_ofHom_eq_zero_of_entries_mem_annihilator
     {R : Type u} [CommRing R]

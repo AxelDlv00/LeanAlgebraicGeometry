@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: Module.transitionUnit_mul_transitionUnit
 type: lean
-updated: '2026-08-01T09:44:08'
+updated: '2026-08-02T07:12:46'
 ---
 lemma transitionUnit_mul_transitionUnit :
     transitionUnit t₂ t₃ * transitionUnit t₁ t₂ = transitionUnit t₁ t₃ :=

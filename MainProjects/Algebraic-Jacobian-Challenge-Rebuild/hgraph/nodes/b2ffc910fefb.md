@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.abelElement_map_point
 type: lean
-updated: '2026-08-01T09:44:10'
+updated: '2026-08-02T07:12:48'
 ---
 theorem abelElement_map_point (P : 𝟙_ (Over (Spec (.of k))) ⟶ C) :
     (pic0Functor C).map P.op (abelElement C P) = 1 := by

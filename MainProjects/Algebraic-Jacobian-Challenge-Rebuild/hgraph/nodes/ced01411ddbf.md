@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.isFinite_divisorSubschemeOver
 type: lean
-updated: '2026-08-01T09:44:14'
+updated: '2026-08-02T07:12:56'
 ---
 theorem isFinite_divisorSubschemeOver [IsProper C.hom]
     (A : AffAdaptation D d) {n : ℕ} (hc : A.IsCertified n) :

@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.glueThetaZero_eq_of_forall
 type: lean
-updated: '2026-08-01T09:44:13'
+updated: '2026-08-02T07:12:52'
 ---
 lemma glueThetaZero_eq_of_forall {x : relThetaSections C R π 0} {s : Γ(relCurve C R, ⊤)}
     (h : ∀ b : Bool, (relCurve C R).resHom

@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.isUnit_det_frameMinor_inv
 type: lean
-updated: '2026-08-01T09:44:15'
+updated: '2026-08-02T07:12:57'
 ---
 lemma isUnit_det_frameMinor_inv (X : Matrix (Fin d) (Fin r) S) (I : Finset (Fin r))
     (hI : I.card = d) (hu : IsUnit (frameMinor k d r S X I hI).det) :

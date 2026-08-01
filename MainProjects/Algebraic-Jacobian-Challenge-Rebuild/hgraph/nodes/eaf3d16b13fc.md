@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.restrictScalars_comp_ofId
 type: lean
-updated: '2026-08-01T09:44:15'
+updated: '2026-08-02T07:12:57'
 ---
 lemma restrictScalars_comp_ofId (j : R →ₐ[A] R') :
     (j.restrictScalars k).comp ((Algebra.ofId A R).restrictScalars k)

@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: TruncExpCech.snd_scaleRingHom
 type: lean
-updated: '2026-08-01T09:44:18'
+updated: '2026-08-02T07:13:00'
 ---
 theorem snd_scaleRingHom (a : R) (x : R[ε]) : (scaleRingHom a x).snd = a * x.snd := by
   simp [scaleRingHom]

@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.FinCoverData.pieces_inl_le
 type: lean
-updated: '2026-08-01T09:44:14'
+updated: '2026-08-02T07:12:56'
 ---
 lemma pieces_inl_le (j : Fin D.m₀) :
     D.pieces (Sum.inl j) ≤ (relCover C R (fiberTwoCover π)).V₀ := by

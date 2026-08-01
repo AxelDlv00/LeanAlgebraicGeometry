@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.gluedSubordCocycle_isCohomologous
 type: lean
-updated: '2026-08-01T09:44:09'
+updated: '2026-08-02T07:12:47'
 ---
 lemma gluedSubordCocycle_isCohomologous (hc : Scheme.IsGluingCocycle U g)
     (𝒲 : X.PointedCover) (σ σ' : X → J) (hσ : ∀ x : X, 𝒲.opens x ≤ U (σ x))

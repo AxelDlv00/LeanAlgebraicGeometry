@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.overlapCoordinateDistrib_tmul_apply
 type: lean
-updated: '2026-08-01T13:31:19'
+updated: '2026-08-02T07:12:52'
 ---
 theorem overlapCoordinateDistrib_tmul_apply
     (p : D.index × D.index) (b : A.chartProd)

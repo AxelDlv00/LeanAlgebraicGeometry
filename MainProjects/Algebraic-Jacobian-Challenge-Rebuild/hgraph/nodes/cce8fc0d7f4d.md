@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: Submodule.directLimitQuotientEquivISup_apply_of_mk
 type: lean
-updated: '2026-08-01T09:44:08'
+updated: '2026-08-02T07:12:46'
 ---
 theorem directLimitQuotientEquivISup_apply_of_mk
     (N : ι → Submodule R M) (hN : Monotone N) (i : ι) (x : M) :

@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.annKernel_le
 type: lean
-updated: '2026-08-01T09:44:17'
+updated: '2026-08-02T07:12:59'
 ---
 lemma Scheme.annKernel_le (U V : Submodule K X.functionField)
     (Λ : Module.Dual K X.functionField) : Scheme.annKernel K U V Λ ≤ U :=

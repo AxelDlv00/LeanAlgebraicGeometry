@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divUniversalFibreKM_le
 type: lean
-updated: '2026-08-01T09:44:12'
+updated: '2026-08-02T07:12:50'
 ---
 theorem divUniversalFibreKM_le :
     divUniversalFibreKM C hπ g r₁ r₂ b₁ i j K

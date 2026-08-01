@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.P1.polyToAway
 type: lean
-updated: '2026-08-01T09:44:10'
+updated: '2026-08-02T07:12:48'
 ---
 noncomputable def polyToAway (i j : Fin 2) : Polynomial k →ₐ[k] Away 𝒜 (X i) :=
   Polynomial.aeval (chartCoord k i j)

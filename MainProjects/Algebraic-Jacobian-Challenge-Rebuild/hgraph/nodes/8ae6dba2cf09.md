@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.picEt.ext
 type: lean
-updated: '2026-08-01T09:44:16'
+updated: '2026-08-02T07:12:58'
 ---
 lemma ext {s t : picEt C T} (h : ∀ U : T.left.affineOpens, s.1 U = t.1 U) : s = t :=
   Subtype.ext (funext h)

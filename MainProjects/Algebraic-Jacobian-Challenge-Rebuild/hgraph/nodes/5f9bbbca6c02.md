@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.baseChangePoint
 type: lean
-updated: '2026-08-01T09:44:15'
+updated: '2026-08-02T07:12:57'
 ---
 noncomputable def baseChangePoint {L : Type u} [Field L] [Algebra k L]
     (p : overSpec k L ⟶ C) : overSpec L L ⟶ baseChangeBundle C L :=

@@ -15,7 +15,7 @@ lean_status: lean_ok
 private: true
 title: LinearMap.lTensor_barMap_injective_of_flat_coker
 type: lean
-updated: '2026-08-01T09:44:15'
+updated: '2026-08-02T07:12:57'
 ---
 private theorem lTensor_barMap_injective_of_flat_coker
     [Module.Flat R (N ⧸ LinearMap.range δ)]

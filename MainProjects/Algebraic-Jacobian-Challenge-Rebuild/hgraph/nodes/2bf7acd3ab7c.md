@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: TruncExpCech.cechCoboundaryUnits_map_le
 type: lean
-updated: '2026-08-01T09:44:18'
+updated: '2026-08-02T07:13:00'
 ---
 theorem cechCoboundaryUnits_map_le
     (ρ₁ : A₁ →+* B) (ρ₂ : A₂ →+* B) (ρ₁' : A₁' →+* B') (ρ₂' : A₂' →+* B')

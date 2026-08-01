@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.coeffAt_add_divOf_nonneg
 type: lean
-updated: '2026-08-01T09:44:17'
+updated: '2026-08-02T07:12:59'
 ---
 lemma Scheme.coeffAt_add_divOf_nonneg {T : Submodule K X.functionField}
     {A : X.CurveDivisor} (hTA : T ≤ divisorSections K A ⊤) {f : X.functionField}

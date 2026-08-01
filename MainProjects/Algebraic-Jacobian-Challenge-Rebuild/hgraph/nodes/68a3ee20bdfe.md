@@ -22,7 +22,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PointUniformizerData
 type: lean
-updated: '2026-08-01T09:44:16'
+updated: '2026-08-02T07:12:58'
 ---
 structure PointUniformizerData : Type u where
   /-- The neighbourhood of `x` carrying the spread-out uniformizer. -/

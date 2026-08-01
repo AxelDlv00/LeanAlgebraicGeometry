@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivisorAdaptation.gluedTopEquiv
 type: lean
-updated: '2026-08-01T09:44:13'
+updated: '2026-08-02T07:12:53'
 ---
 noncomputable def gluedTopEquiv (h : A.gluedSubmodule = ⊤) : A.Glued ≃ₗ[K] A.chartProd :=
   (LinearEquiv.ofEq _ _ h).trans Submodule.topEquiv

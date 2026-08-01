@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: TwoLatticePair.range_diff_eq
 type: lean
-updated: '2026-08-01T09:44:10'
+updated: '2026-08-02T07:12:47'
 ---
 theorem range_diff_eq : LinearMap.range P.diff = P.imageLattice := by
   refine le_antisymm ?_ (sup_le ?_ ?_)

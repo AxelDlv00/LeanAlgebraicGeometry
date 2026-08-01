@@ -19,7 +19,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.unitsPresheaf
 type: lean
-updated: '2026-08-01T09:44:17'
+updated: '2026-08-02T07:12:59'
 ---
 abbrev unitsPresheaf (X : Scheme.{u}) : (X.Opens)ᵒᵖ ⥤ CommGrpCat.{u} :=
   X.presheaf ⋙ forget₂ CommRingCat CommMonCat ⋙ CommMonCat.units

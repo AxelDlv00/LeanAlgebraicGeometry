@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.overSpecSectionsAlgebraA
 type: lean
-updated: '2026-08-01T09:44:11'
+updated: '2026-08-02T07:12:48'
 ---
 @[reducible] noncomputable def overSpecSectionsAlgebraA (U : (SA).Opens) :
     Algebra A Γ(SA, U) :=

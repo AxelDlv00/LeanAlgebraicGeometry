@@ -20,7 +20,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.awayPullbackIso
 type: lean
-updated: '2026-08-01T09:44:15'
+updated: '2026-08-02T07:12:57'
 ---
 noncomputable def awayPullbackIso {A : Type*} [CommRing A] (x y : A) :
     Limits.pullback

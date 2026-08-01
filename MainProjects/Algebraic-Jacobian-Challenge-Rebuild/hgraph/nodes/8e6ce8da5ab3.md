@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.Diagonal.mapRight
 type: lean
-updated: '2026-08-01T09:44:09'
+updated: '2026-08-02T07:12:47'
 ---
 noncomputable def mapRight : B ⊗[k] B →ₐ[k] B ⊗[k] F :=
   Algebra.TensorProduct.map (AlgHom.id k B) (c.restrictScalars k)

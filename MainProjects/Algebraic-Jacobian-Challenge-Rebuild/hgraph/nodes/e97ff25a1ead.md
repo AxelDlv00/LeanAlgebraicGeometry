@@ -32,7 +32,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_crossing_or_not_injective_mixedParamChart
 type: lean
-updated: '2026-08-01T09:44:16'
+updated: '2026-08-02T07:12:58'
 ---
 theorem exists_crossing_or_not_injective_mixedParamChart {ι : Type u} (nn : ι → ℕ)
     (D : ι → Over (Spec (.of k)))

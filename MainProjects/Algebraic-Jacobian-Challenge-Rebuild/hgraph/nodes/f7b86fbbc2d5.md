@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.BasicOpenCocycleDatum.termBaseChangeInf_tmul
 type: lean
-updated: '2026-08-01T09:44:09'
+updated: '2026-08-02T07:12:47'
 ---
 theorem termBaseChangeInf_tmul (b' : B')
     (s : D.sheaf.obj.obj (op ((relCover C B (fiberTwoCover π)).V₀ ⊓

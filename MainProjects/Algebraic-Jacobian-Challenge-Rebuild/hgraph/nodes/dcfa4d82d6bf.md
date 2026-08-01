@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divFamZarAff.mapVal
 type: lean
-updated: '2026-08-01T09:44:13'
+updated: '2026-08-02T07:12:50'
 ---
 noncomputable def mapVal (f : T' ⟶ T) (s : divFamZarAff C n T)
     (W : T'.left.affineOpens) : DivFamZarAff C Γ(T'.left, W.1) n :=

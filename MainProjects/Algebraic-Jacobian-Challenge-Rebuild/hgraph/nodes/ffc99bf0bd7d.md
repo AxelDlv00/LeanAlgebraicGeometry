@@ -24,7 +24,7 @@ generated: lean
 lean_status: lean_ok
 title: Ideal.height_le_one_of_colon_span_singleton
 type: lean
-updated: '2026-08-01T09:44:08'
+updated: '2026-08-02T07:12:46'
 ---
 theorem Ideal.height_le_one_of_colon_span_singleton
     {A : Type u} [CommRing A] [IsDomain A] [IsNoetherianRing A]

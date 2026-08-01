@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivisorAdaptation.res_mem_span_eqn_inl_of_forall_germ
 type: lean
-updated: '2026-08-01T09:44:14'
+updated: '2026-08-02T07:12:56'
 ---
 lemma res_mem_span_eqn_inl_of_forall_germ
     {α : Γ(relCurve C R, (relCover C R (fiberTwoCover π)).V₀)}

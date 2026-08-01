@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.pointTransitionUnit
 type: lean
-updated: '2026-08-01T09:44:17'
+updated: '2026-08-02T07:12:59'
 ---
 noncomputable def pointTransitionUnit (φ : K₁ →ₐ[k] K₂) {x' : (C ⊗ overSpec k K₁).left}
     (hx' : x' ≠ genericPoint (C ⊗ overSpec k K₁).left) :

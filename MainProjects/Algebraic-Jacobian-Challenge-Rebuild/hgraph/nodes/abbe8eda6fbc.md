@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.gluedTriv_symm_coe
 type: lean
-updated: '2026-08-01T09:44:09'
+updated: '2026-08-02T07:12:47'
 ---
 lemma gluedTriv_symm_coe (j : J) {W : X.Opens} (hW : W ≤ U j) (t : Γ(X, W)) (i : J) :
     ((gluedTriv k hc j hW).symm t).val i =

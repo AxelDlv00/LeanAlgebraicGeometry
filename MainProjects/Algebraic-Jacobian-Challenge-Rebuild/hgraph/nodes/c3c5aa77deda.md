@@ -20,7 +20,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.TwoCover.mumfordScaling
 type: lean
-updated: '2026-08-01T09:44:18'
+updated: '2026-08-02T07:13:00'
 ---
 noncomputable def mumfordScaling (a : k) :
     ((Γ(X, U₀ ⊓ U₁)[ε])ˣ ⧸ cechCoboundaryUnits

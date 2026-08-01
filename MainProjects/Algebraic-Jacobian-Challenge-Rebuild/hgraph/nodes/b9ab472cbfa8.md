@@ -13,7 +13,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.classDeg_cechPicMap_picClass_single
 type: lean
-updated: '2026-08-01T14:45:39'
+updated: '2026-08-02T07:13:26'
 ---
 private theorem classDeg_cechPicMap_picClass_single (f : X ⟶ Y) [IsFinite f]
     (hcomp : f ≫ (Y ↘ Spec (CommRingCat.of K)) = X ↘ Spec (CommRingCat.of K))

@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: Algebra.DescentDatum.descentEquiv_tmul
 type: lean
-updated: '2026-08-01T13:18:07'
+updated: '2026-08-02T07:12:48'
 ---
 theorem descentEquiv_tmul (D : DescentDatum A B R) [Module.Flat A B]
     (b : B) (x : D.descended) :

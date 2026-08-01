@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.BasicOpenCoverData.overlapMap
 type: lean
-updated: '2026-08-01T09:44:09'
+updated: '2026-08-02T07:12:47'
 ---
 noncomputable def overlapMap (i j : D.index) :
     Γ(relCurve C B, D.pieces i ⊓ D.pieces j) →+*

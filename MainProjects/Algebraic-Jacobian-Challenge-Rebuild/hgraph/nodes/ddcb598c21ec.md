@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.graphTensorEval_graphElift
 type: lean
-updated: '2026-08-01T09:44:18'
+updated: '2026-08-02T07:13:00'
 ---
 lemma graphTensorEval_graphElift : graphTensorEval C t (graphElift C t) = 0 := by
   rw [graphElift, graphTensorEval_map,

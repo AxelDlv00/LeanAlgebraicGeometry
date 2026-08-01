@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.thetaDescentCoaction
 type: lean
-updated: '2026-08-01T10:43:32'
+updated: '2026-08-02T07:12:51'
 ---
 noncomputable def thetaDescentCoaction {n : ℕ} (hc : A.IsCertified n) :
     A.ThetaPieceProd (π := π) a →ₗ[A.chartProd]

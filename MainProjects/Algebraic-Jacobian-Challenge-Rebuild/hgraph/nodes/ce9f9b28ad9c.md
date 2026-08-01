@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.JacobianData.comp_pullbackHom
 type: lean
-updated: '2026-08-01T09:44:16'
+updated: '2026-08-02T07:12:58'
 ---
 theorem comp_pullbackHom (dX : JacobianData X) (dY : JacobianData Y) (g : X ⟶ Y)
     {T : Over (Spec (.of k))} (f : T ⟶ dY.J) :

@@ -32,7 +32,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divisorWindow_eq_of_le
 type: lean
-updated: '2026-08-01T09:44:11'
+updated: '2026-08-02T07:12:49'
 ---
 theorem divisorWindow_eq_of_le (A : DivisorAdaptation C R π d)
     (hH1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1)

@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.classDeg_cechPicMap_base_of_field
 type: lean
-updated: '2026-08-01T09:44:15'
+updated: '2026-08-02T07:12:57'
 ---
 theorem classDeg_cechPicMap_base_of_field (L : Type u) [Field L] [Algebra k L]
     (Λ : (C ⊗ overSpec k k).left.CechPic) :

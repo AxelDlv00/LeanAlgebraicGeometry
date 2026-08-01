@@ -26,7 +26,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.LocalEquations.forall_fibre_closure_subset_of_supportLeak_inter_eq_empty
 type: lean
-updated: '2026-08-01T09:44:11'
+updated: '2026-08-02T07:12:49'
 ---
 theorem forall_fibre_closure_subset_of_supportLeak_inter_eq_empty
     (f : X ⟶ Spec (CommRingCat.of R)) (U : X.Opens) {V : Set (Spec (CommRingCat.of R))}

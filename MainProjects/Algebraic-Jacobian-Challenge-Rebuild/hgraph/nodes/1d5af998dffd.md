@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.Functor.RepresentableBy.uniqueUpToIso_trans
 type: lean
-updated: '2026-08-01T09:44:17'
+updated: '2026-08-02T07:12:59'
 ---
 theorem uniqueUpToIso_trans {C : Type u} [Category.{v, u} C]
     {F : Cᵒᵖ ⥤ Type v} {Y₁ Y₂ Y₃ : C}

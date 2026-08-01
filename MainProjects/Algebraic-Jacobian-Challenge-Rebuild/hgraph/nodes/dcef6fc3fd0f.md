@@ -8,5 +8,5 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivFamZar.trivAdapt_eqn
 type: lean
-updated: '2026-08-01T09:44:13'
+updated: '2026-08-02T07:12:52'
 ---

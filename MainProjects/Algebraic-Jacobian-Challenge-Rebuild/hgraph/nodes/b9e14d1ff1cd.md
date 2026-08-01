@@ -9,7 +9,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.universalMulMap_piSingle
 type: lean
-updated: '2026-08-01T09:44:12'
+updated: '2026-08-02T07:12:49'
 ---
 private theorem universalMulMap_piSingle
     (t : Fin (Module.finrank k HS))

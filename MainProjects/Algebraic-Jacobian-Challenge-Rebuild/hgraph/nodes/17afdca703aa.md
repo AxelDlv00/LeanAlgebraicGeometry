@@ -28,7 +28,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ThetaGeneratorSeed.hcolFin_of_forall_closure_subset
 type: lean
-updated: '2026-08-01T09:44:12'
+updated: '2026-08-02T07:12:50'
 ---
 theorem hcolFin_of_forall_closure_subset
     (hnoleak : ∀ z : relCurve C R,

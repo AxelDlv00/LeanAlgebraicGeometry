@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.picEt.glueValue_spec
 type: lean
-updated: '2026-08-01T09:44:16'
+updated: '2026-08-02T07:12:58'
 ---
 lemma glueValue_spec (W : T.left.affineOpens) : IsGlueValue O v W (glueValue hcov hv W) :=
   (exists_isGlueValue hcov hv W).choose_spec

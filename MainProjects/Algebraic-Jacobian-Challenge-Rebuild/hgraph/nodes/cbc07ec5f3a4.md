@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.LaurentChartPair.exists_res_add_res_inf
 type: lean
-updated: '2026-08-01T09:44:10'
+updated: '2026-08-02T07:12:48'
 ---
 theorem exists_res_add_res_inf (D : LaurentChartPair k) (z : Γ(P1 k, D.U₀ ⊓ D.U₁)) :
     ∃ (a : Γ(P1 k, D.U₀)) (b : Γ(P1 k, D.U₁)),

@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.thetaOverlapToTriple_smulColength
 type: lean
-updated: '2026-08-01T13:31:19'
+updated: '2026-08-02T07:12:51'
 ---
 theorem thetaOverlapToTriple_smulColength
     (p q i j l : D.index)

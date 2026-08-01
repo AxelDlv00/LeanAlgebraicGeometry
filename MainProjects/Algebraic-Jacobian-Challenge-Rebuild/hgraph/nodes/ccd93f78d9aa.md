@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.universalMulSpan_eq_divUniversalSndWindow_of_forall_fibre
 type: lean
-updated: '2026-08-01T09:44:12'
+updated: '2026-08-02T07:12:50'
 ---
 theorem universalMulSpan_eq_divUniversalSndWindow_of_forall_fibre
     (hfib : ∀ p : PrimeSpectrum RZ,

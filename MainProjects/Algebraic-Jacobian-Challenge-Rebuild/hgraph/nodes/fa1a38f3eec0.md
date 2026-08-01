@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.Pseudofunctor.DescentCocycle'
 type: lean
-updated: '2026-08-01T11:45:14'
+updated: '2026-08-02T07:12:48'
 ---
 structure DescentCocycle' where
   obj : ∀ i, F.obj (.mk (op (X i)))

@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.picEtAffineEquiv_relPicToPicEt
 type: lean
-updated: '2026-08-01T09:44:16'
+updated: '2026-08-02T07:12:58'
 ---
 theorem picEtAffineEquiv_relPicToPicEt (A : Type u) [CommRing A] [Algebra k A]
     (z : relPic C (overSpec k A)) :

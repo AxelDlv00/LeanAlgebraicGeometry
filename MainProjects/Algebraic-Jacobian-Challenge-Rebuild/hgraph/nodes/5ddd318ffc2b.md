@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.GroupScheme.rightMulIso
 type: lean
-updated: '2026-08-01T14:45:38'
+updated: '2026-08-02T07:12:48'
 ---
 noncomputable def rightMulIso (G : Over (Spec (.of K))) [GrpObj G]
     (p : 𝟙_ (Over (Spec (.of K))) ⟶ G) : G ≅ G where

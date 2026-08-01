@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PointedCover.BasicRefinement.pic_inter
 type: lean
-updated: '2026-08-01T09:44:16'
+updated: '2026-08-02T07:12:58'
 ---
 theorem pic_inter (P : 𝒰.BasicRefinement) (Q : 𝒱.BasicRefinement)
     (γ : X.unitsCocycle 𝒱) : (P.inter Q).pic γ = Q.pic γ := by

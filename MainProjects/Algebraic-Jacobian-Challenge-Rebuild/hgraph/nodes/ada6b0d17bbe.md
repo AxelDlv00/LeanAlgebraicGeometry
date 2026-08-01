@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.isAffineOpen_thetaTripleOpen
 type: lean
-updated: '2026-08-01T13:31:19'
+updated: '2026-08-02T07:12:51'
 ---
 theorem isAffineOpen_thetaTripleOpen (A : AffAdaptation D d)
     (i j l : D.index) : IsAffineOpen (A.thetaTripleOpen i j l) :=

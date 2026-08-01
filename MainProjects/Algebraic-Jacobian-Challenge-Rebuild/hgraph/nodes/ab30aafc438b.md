@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.graphTensorEval
 type: lean
-updated: '2026-08-01T09:44:18'
+updated: '2026-08-02T07:13:00'
 ---
 noncomputable def graphTensorEval :
     Γ(C.left, graphBaseChart C t) ⊗[k] Γ((overSpec k K).left, ⊤)

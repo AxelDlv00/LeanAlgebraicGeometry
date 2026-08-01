@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.LocalEquations.pullbackEqn_res
 type: lean
-updated: '2026-08-01T09:44:15'
+updated: '2026-08-02T07:12:57'
 ---
 lemma pullbackEqn_res (f : Y ⟶ X) (E : X.LocalEquations) (y : Y) {W : Y.Opens}
     (h : W ≤ (E.cover.pullback f).opens y) :

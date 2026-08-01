@@ -23,7 +23,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivisorAdaptation.cokernelπ_app_eq_zero_of_germ_mem
 type: lean
-updated: '2026-08-01T09:44:13'
+updated: '2026-08-02T07:12:51'
 ---
 theorem cokernelπ_app_eq_zero_of_germ_mem (B : DivisorAdaptation C R π d)
     {a : ℕ} {W : (relCurve C R).Opens}

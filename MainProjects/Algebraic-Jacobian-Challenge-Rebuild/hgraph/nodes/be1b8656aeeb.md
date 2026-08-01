@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: Algebra.TensorProduct.piRightAlgEquiv
 type: lean
-updated: '2026-08-01T09:44:09'
+updated: '2026-08-02T07:12:46'
 ---
 noncomputable def piRightAlgEquiv : (N ⊗[A] ∀ i, S i) ≃ₐ[A] ∀ i, N ⊗[A] S i :=
   -- `map_mul` is checked by two rounds of `TensorProduct.induction_on` (both sides are

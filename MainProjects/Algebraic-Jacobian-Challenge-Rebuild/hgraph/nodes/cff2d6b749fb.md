@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.finiteInAffine_left_of_isAffineHom
 type: lean
-updated: '2026-08-01T14:45:38'
+updated: '2026-08-02T07:12:48'
 ---
 theorem finiteInAffine_left_of_isAffineHom {k : Type u} [Field k]
     (X : Over (Spec (CommRingCat.of k))) [IsAffineHom X.hom] :

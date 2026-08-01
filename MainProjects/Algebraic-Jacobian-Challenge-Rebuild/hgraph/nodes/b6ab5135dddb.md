@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivisorAdaptation.divEq_sectionLocalEquations_canonSection
 type: lean
-updated: '2026-08-01T09:44:12'
+updated: '2026-08-02T07:12:50'
 ---
 theorem divEq_sectionLocalEquations_canonSection
     (𝒲 : (relCurve C R).PointedCover) (σ : relCurve C R → (A.thetaIdealDatum 0).index)

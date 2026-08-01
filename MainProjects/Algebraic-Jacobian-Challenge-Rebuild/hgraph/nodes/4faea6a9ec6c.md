@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.LocalEquations.fibre_supportLocus_finite_of_pullback_support_eq
 type: lean
-updated: '2026-08-01T09:44:11'
+updated: '2026-08-02T07:12:49'
 ---
 theorem fibre_supportLocus_finite_of_pullback_support_eq
     (d : (relCurve C R).LocalEquations) (p : PrimeSpectrum R)

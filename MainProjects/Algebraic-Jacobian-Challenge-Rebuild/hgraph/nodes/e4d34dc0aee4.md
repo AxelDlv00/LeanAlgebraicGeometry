@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.cocycleΘIK_comp_algebraMap
 type: lean
-updated: '2026-08-01T09:44:15'
+updated: '2026-08-02T07:12:57'
 ---
 theorem cocycleΘIK_comp_algebraMap (k : Type u) [Field k] (d r : ℕ)
     (I J K : Finset (Fin r)) (hI : I.card = d) (hJ : J.card = d) (hK : K.card = d) :

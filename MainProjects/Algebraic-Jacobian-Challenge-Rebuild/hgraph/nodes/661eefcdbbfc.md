@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.RelPicTransportFamily.mapAlg_picEtAffHom
 type: lean
-updated: '2026-08-01T09:44:16'
+updated: '2026-08-02T07:12:58'
 ---
 theorem mapAlg_picEtAffHom (φ : A →ₐ[kT] A') (a : PicEtAff E A) :
     T.picEtAffHom A' (PicEtAff.mapAlg E (φ.restrictScalars kE) a)

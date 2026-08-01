@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.thetaDeltaRight
 type: lean
-updated: '2026-08-01T09:44:13'
+updated: '2026-08-02T07:12:51'
 ---
 noncomputable def thetaDeltaRight : A.chartProd →ₗ[R] A.ovlProd :=
   LinearMap.pi (fun p : D.index × D.index =>

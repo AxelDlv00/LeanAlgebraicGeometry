@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.Functor.RepresentableBy.Over.mapCompPresheafFace
 type: lean
-updated: '2026-08-01T09:44:17'
+updated: '2026-08-02T07:12:59'
 ---
 noncomputable def Over.mapCompPresheafFace
     {D : Type u} [Category.{v, u} D]

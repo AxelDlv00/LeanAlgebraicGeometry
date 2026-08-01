@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.projective_glued_of_swallowedBy
 type: lean
-updated: '2026-08-01T09:44:13'
+updated: '2026-08-02T07:12:50'
 ---
 theorem projective_glued_of_swallowedBy (h : D.SwallowedBy d)
     (hproj : ∀ j, Module.Projective R (A.colength j)) :

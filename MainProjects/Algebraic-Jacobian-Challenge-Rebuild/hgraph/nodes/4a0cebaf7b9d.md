@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.sectOfBijective_algebraMap
 type: lean
-updated: '2026-08-01T09:44:18'
+updated: '2026-08-02T07:13:00'
 ---
 lemma sectOfBijective_algebraMap (c : k) :
     sectOfBijective hres (algebraMap k R c) = algebraMap k R c := by
