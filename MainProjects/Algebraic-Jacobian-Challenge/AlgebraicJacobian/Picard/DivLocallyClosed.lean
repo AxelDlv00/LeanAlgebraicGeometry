@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.DivPushforwardFlat
 import AlgebraicJacobian.Picard.AffineOpenStalkLocalization
+import AlgebraicJacobian.Picard.LineBundleCoherence
 import AlgebraicJacobian.Cohomology.QcohTildeSections
 
 /-!
@@ -173,6 +174,52 @@ theorem lineBundleLocus_isLocallyTrivial {S : Scheme.{u}}
   obtain ⟨i, hxi⟩ := TopologicalSpace.Opens.mem_iSup.mp hx
   exact ⟨U i, hxi, hfree i⟩
 
+/-- A locally trivial line bundle is flat over its base.  This is the
+representation-facing form of the chart-local flatness recorded by
+`LineBundle.IsLocallyTrivial`: on a trivialising affine chart its section
+module is linearly equivalent to the coordinate ring. -/
+theorem coherentSheafFlat_id_of_isLocallyTrivial {S : Scheme.{u}}
+    {F : S.Modules} (hF : LineBundle.IsLocallyTrivial F) :
+    Scheme.CoherentSheafFlat (𝟙 S) F := by
+  haveI : F.IsFinitePresentation := hF.isFinitePresentation
+  obtain ⟨I, U, hUaff, hUtop, hUiso⟩ := hF.exists_trivializing_cover
+  apply coherentSheafFlat_id_of_charts F U hUaff
+  · intro s
+    have hs : s ∈ iSup U := by rw [hUtop]; trivial
+    exact TopologicalSpace.Opens.mem_iSup.mp hs
+  · intro i
+    let eRes : F.restrict (U i).ι ≅
+        (restrictFunctor (U i).ι).obj
+          (SheafOfModules.unit S.ringCatSheaf) :=
+      (hUiso i).some ≪≫
+        ((restrictFunctorIsoPullback (U i).ι).app
+          (SheafOfModules.unit S.ringCatSheaf) ≪≫ pullbackUnitIso (U i).ι).symm
+    let eΓ : Γ(F, U i) ≃ₗ[Γ(S, U i)] Γ(S, U i) :=
+      sectionLinearEquivOfRestrictIso (U i) eRes
+    exact Module.Flat.of_linearEquiv (M := Γ(S, U i)) eΓ
+
+/-- Every fibre of a locally trivial line bundle has dimension one. -/
+theorem pointRank_eq_one_of_isLocallyTrivial {S : Scheme.{u}}
+    {F : S.Modules} [F.IsQuasicoherent]
+    (hF : LineBundle.IsLocallyTrivial F) (s : S) :
+    pointRank S F s = 1 := by
+  obtain ⟨U, hsU, hUaff, ⟨eU⟩⟩ := hF s
+  let V : S.affineOpens := ⟨U, hUaff⟩
+  have hsV : s ∈ V.1 := hsU
+  rw [pointRank_eq_chartFiberRank F (V := V) s hsV]
+  let p : PrimeSpectrum Γ(S, U) := hUaff.primeIdealOf ⟨s, hsU⟩
+  haveI : Nontrivial Γ(S, U) := PrimeSpectrum.nontrivial p
+  change p.asIdeal.fiberRank Γ(F, U) = 1
+  let eRes : F.restrict U.ι ≅
+      (restrictFunctor U.ι).obj (SheafOfModules.unit S.ringCatSheaf) :=
+    eU ≪≫ ((restrictFunctorIsoPullback U.ι).app
+      (SheafOfModules.unit S.ringCatSheaf) ≪≫ pullbackUnitIso U.ι).symm
+  let eΓ : Γ(F, U) ≃ₗ[Γ(S, U)] Γ(S, U) :=
+    sectionLinearEquivOfRestrictIso U eRes
+  rw [Ideal.fiberRank_congr _ eΓ]
+  exact (Ideal.finrank_fiber_eq_rankAtStalk _).trans
+    (congrFun (Module.rankAtStalk_self (R := Γ(S, U))) p)
+
 /-- Universal factorisation through the locally closed rank-one locus.  The
 antecedent is the existing flattening condition: flat pullback with constant
 point rank one. -/
@@ -183,6 +230,23 @@ theorem existsUnique_factor_lineBundleLocus {S : Scheme.{u}}
     (hrank : ∀ t : T, pointRank S F (φ.base t) = 1) :
     ∃! l : T ⟶ lineBundleLocus F, l ≫ lineBundleLocusι F = φ :=
   existsUnique_factor_rankStratum F 1 φ hflat hrank
+
+/-- Universal factorisation through the line-bundle locus, stated only in
+terms of the predicate represented by that locus.  Local triviality of the
+pullback supplies both flatness and constant fibre rank one. -/
+theorem existsUnique_factor_lineBundleLocus_of_isLocallyTrivial
+    {S : Scheme.{u}} [IsLocallyNoetherian S]
+    (F : S.Modules) [F.IsFinitePresentation]
+    {T : Scheme.{u}} (φ : T ⟶ S)
+    (hline : LineBundle.IsLocallyTrivial ((pullback φ).obj F)) :
+    ∃! l : T ⟶ lineBundleLocus F, l ≫ lineBundleLocusι F = φ := by
+  haveI : ((pullback φ).obj F).IsQuasicoherent :=
+    pullback_isQuasicoherent_hom φ F inferInstance
+  apply existsUnique_factor_lineBundleLocus F φ
+    (coherentSheafFlat_id_of_isLocallyTrivial hline)
+  intro t
+  rw [← pointRank_pullback φ F t]
+  exact pointRank_eq_one_of_isLocallyTrivial hline t
 
 end Modules
 
