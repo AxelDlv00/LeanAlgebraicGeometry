@@ -213,6 +213,52 @@ theorem divisorWindowQuot_eq_of_le_of_quotientData {n : ℕ} (F : DivFam C R π 
 
 end WindowQuot
 
+/-! ## Base-changed Grassmannian submodules -/
+
+/-- A mapped Grassmannian submodule fills any projective constant-rank quotient that contains
+the base change of an ambient upper bound.  This is the base-change form of the rank engine:
+the source containment is transported by monotonicity of `windowBaseChange`, and the target
+containment becomes equality because both quotient ranks are `g`.
+
+The conclusion is stated under the algebra structure induced by `alpha`, matching
+`Module.Grassmannian.map` definitionally and avoiding transport between equal algebra instance
+packs. -/
+theorem Grassmannian.eq_map_toSubmodule_of_baseChange_le
+    {H : Type u} [AddCommGroup H] [Module k H]
+    {S T : Type u} [CommRing S] [Algebra k S] [CommRing T] [Algebra k T]
+    {g : ℕ} (alpha : S →ₐ[k] T)
+    (x : Grassmannian.grFunctorAff k H g S)
+    (N : Submodule S (TensorProduct k S H))
+    (K : Submodule T (TensorProduct k T H))
+    (hx : x.toSubmodule ≤ N) :
+    letI : Algebra S T := alpha.toAlgebra
+    letI : IsScalarTower k S T :=
+      .of_algebraMap_eq fun a => (alpha.commutes a).symm
+    windowBaseChange T N ≤ K →
+      Module.Projective T (TensorProduct k T H ⧸ K) →
+      (∀ p : PrimeSpectrum T,
+        Module.rankAtStalk (TensorProduct k T H ⧸ K) p = g) →
+      K = (Module.Grassmannian.map alpha x).toSubmodule := by
+  letI : Algebra S T := alpha.toAlgebra
+  letI : IsScalarTower k S T :=
+    .of_algebraMap_eq fun a => (alpha.commutes a).symm
+  intro hpull hproj hrank
+  letI : Module.Projective S (TensorProduct k S H ⧸ x.toSubmodule) :=
+    x.projective_quotient
+  have hmap : (Module.Grassmannian.map alpha x).toSubmodule =
+      windowBaseChange T x.toSubmodule :=
+    (Module.Grassmannian.map_toSubmodule alpha x).trans
+      (windowBaseChange_eq_ker_baseChangeMkQ T x.toSubmodule).symm
+  have hmono : windowBaseChange T x.toSubmodule ≤ windowBaseChange T N := by
+    unfold windowBaseChange
+    exact Submodule.map_mono (Submodule.baseChange_mono T hx)
+  have hle : (Module.Grassmannian.map alpha x).toSubmodule ≤ K := by
+    rw [hmap]
+    exact hmono.trans hpull
+  letI : Module.Projective T (TensorProduct k T H ⧸ K) := hproj
+  refine (Submodule.eq_of_le_of_rankAtStalk_quotient_eq hle fun p => ?_).symm
+  rw [(Module.Grassmannian.map alpha x).rankAtStalk_eq p, hrank p]
+
 /-! ## The ε-pair, for an arbitrary class -/
 
 section EpsQuot
