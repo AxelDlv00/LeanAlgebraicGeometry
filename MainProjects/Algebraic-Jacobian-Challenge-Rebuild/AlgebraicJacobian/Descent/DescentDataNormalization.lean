@@ -77,4 +77,25 @@ lemma pullHom'_hom_self_of_comp
   rw [hd]
   simp
 
+/-- Package an invertible chosen-pullback cocycle as descent data. The
+diagonal identity is forced by the cocycle and need not be supplied
+separately. -/
+noncomputable def DescentData'.ofComp
+    {obj : ∀ i, F.obj (.mk (op (X i)))}
+    (hom : ∀ i j, (F.map (sq i j).p₁.op.toLoc).toFunctor.obj (obj i) ⟶
+      (F.map (sq i j).p₂.op.toLoc).toFunctor.obj (obj j))
+    (homIso : ∀ i j, IsIso (hom i j))
+    (hom_comp : ∀ i₁ i₂ i₃,
+      DescentData'.pullHom' hom (sq₃ i₁ i₂ i₃).p
+          (sq₃ i₁ i₂ i₃).p₁ (sq₃ i₁ i₂ i₃).p₂ ≫
+        DescentData'.pullHom' hom (sq₃ i₁ i₂ i₃).p
+          (sq₃ i₁ i₂ i₃).p₂ (sq₃ i₁ i₂ i₃).p₃ =
+        DescentData'.pullHom' hom (sq₃ i₁ i₂ i₃).p
+          (sq₃ i₁ i₂ i₃).p₁ (sq₃ i₁ i₂ i₃).p₃) :
+    F.DescentData' sq sq₃ where
+  obj := obj
+  hom := hom
+  pullHom'_hom_self := pullHom'_hom_self_of_comp F sq sq₃ hom homIso hom_comp
+  pullHom'_hom_comp := hom_comp
+
 end CategoryTheory.Pseudofunctor

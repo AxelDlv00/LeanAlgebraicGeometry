@@ -139,6 +139,8 @@ noncomputable def tensorTripleChosenPullback :
     simpa only [tensorOverlapChosenPullback, tensorTripleCoord2] using
       tensorTripleCoord2_eq_face23_inl (k := k) (L := L)
   isLimit := (tensorTriple_isPullback (k := k) (L := L)).isLimit
+  p := tensorTripleCoord2 (k := k) (L := L)
+  hp₁ := rfl
 
 /-- The chosen threefold pullback whose three pairwise projections are the
 `12`, `23`, and `13` Amitsur faces. -/
@@ -148,21 +150,20 @@ noncomputable def tensorOverlapChosenPullback₃ :
       (tensorOverlapChosenPullback (k := k) (L := L))
       (tensorOverlapChosenPullback (k := k) (L := L)) where
   chosenPullback := tensorTripleChosenPullback (k := k) (L := L)
+  p := tensorTripleBase (k := k) (L := L)
+  p₁ := tensorTripleCoord1 (k := k) (L := L)
+  p₃ := tensorTripleCoord3 (k := k) (L := L)
   l :=
     { f := tensorTripleFace13 (k := k) (L := L)
-      f_p₁ := by
-        simpa only [ChosenPullback₃.p₁, tensorTripleChosenPullback,
-          tensorOverlapChosenPullback, tensorTripleCoord1] using
-          tensorTripleFace13_inl (k := k) (L := L)
-      f_p₂ := by
-        dsimp only [ChosenPullback₃.p₃, tensorTripleChosenPullback,
-          tensorOverlapChosenPullback]
-        rw [tensorTripleFace13_inr (k := k) (L := L),
-          tensorTripleCoord3_eq_face23_inr (k := k) (L := L)]
+      f_p₁ := tensorTripleFace13_inl (k := k) (L := L)
+      f_p₂ := tensorTripleFace13_inr (k := k) (L := L)
       f_p := by
-        dsimp only [ChosenPullback₃.p, tensorTripleChosenPullback,
-          tensorOverlapChosenPullback, ChosenPullback.p]
-        rw [← Category.assoc, tensorTripleFace13_inl (k := k) (L := L)]
-        rfl }
+        dsimp only [tensorOverlapChosenPullback, ChosenPullback.p]
+        exact (congrArg
+          (fun q => q ≫ tensorOverlapBase (k := k) (L := L))
+          (tensorTripleFace13_inl (k := k) (L := L))).trans
+            (tensorTripleCoord1_comp_base (k := k) (L := L)) }
+  hp₁ := rfl
+  hp₃ := (tensorTripleCoord3_eq_face23_inr (k := k) (L := L)).symm
 
 end AlgebraicGeometry
