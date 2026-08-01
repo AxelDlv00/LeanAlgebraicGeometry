@@ -2,10 +2,12 @@ id: AJCR.w4-rep.datum.dat-g.genus-chart-finite-descent.fpqc-descent.effectivity
 title: Effect the scheme-valued descent datum
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: Given an actual overlap cocycle for the L-side representing scheme, construct
-  its descended k-scheme and transport the universal property, open-immersion clauses,
-  and coverage. Mathlib has fpqc topology and morphism-property descent but no ready
-  pseudofunctor or fpqc effectivity theorem for Scheme objects.
+summary: 'The finite-extension overlap datum is now an actual scheme-valued DescentData'':
+  db8d784031 constructs the chosen double/triple tensor pullbacks, all three face
+  pullbacks, the Amitsur cocycle, invertibility, and diagonal normalization without
+  new hypotheses. Remaining work is genuine fpqc effectivity for this datum, followed
+  by transport of the Picard universal property and geometric clauses to the descended
+  k-scheme; mathlib still has no ready Scheme-object effectivity theorem.'
 status: active
 kind: proof
 priority: high
@@ -29,5 +31,6 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-g.genus-chart-finite-descent.fpqc-descent
   milestone: AJCR.w4-rep
-  updated_at: '2026-07-31T21:22:22.191428+00:00'
-  owner: pic-h
+  updated_at: '2026-08-01T03:14:17.919633+00:00'
+  pinned_commits:
+  - db8d784031500306fe1f04d38c0ed49688c112c8
