@@ -532,6 +532,9 @@ import AlgebraicJacobian.Picard.SlicingFlat
 import AlgebraicJacobian.Picard.SlicingFlatKernel
 import AlgebraicJacobian.Picard.SupportTube
 import AlgebraicJacobian.Picard.SupportTubeFinite
+import AlgebraicJacobian.Picard.RelativeCurveFiniteInAffine
+import AlgebraicJacobian.Picard.DivisorFamilyAffFibreSupport
+import AlgebraicJacobian.Picard.DivisorFamilyAffSupportTube
 import AlgebraicJacobian.Picard.PicEtCrossBase
 import AlgebraicJacobian.Picard.PicEtCrossBaseGraph
 import AlgebraicJacobian.Picard.Pic0ThetaAssembly
