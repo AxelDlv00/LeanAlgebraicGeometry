@@ -1,0 +1,1 @@
+{"markdown": "The stop hook detected a post-commit mutation. I\u2019m checking whether it is only Horizon read-state/shared-index churn or a real authored delta; I\u2019ll commit any durable paths attributable to this session with a private index, otherwise I\u2019ll record that no durable change remains.", "recommendation": ""}

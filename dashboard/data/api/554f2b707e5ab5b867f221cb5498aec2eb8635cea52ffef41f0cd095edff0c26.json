@@ -1,0 +1,1 @@
+{"events": [{"kind": "session_start", "at": "2026-07-31T11:22:07.765542+00:00", "text": "", "tool": "", "data": {"role": "subagent", "name": "janitor", "native_subagent_id": "toolu_bdrk_01GmGSfcdmN4T2f5VGE3yDUU", "parent_session": "0014-horizon-pic-g"}, "usage": null, "_cursor": 0}], "before": 0, "has_more": false}

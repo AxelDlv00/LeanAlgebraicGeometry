@@ -1,0 +1,1 @@
+{"path": "ImportProbe.lean", "size": 199, "content": "import AlgebraicJacobian.Picard.Pic0ThetaAssembly\nimport AlgebraicJacobian.Picard.Pic0Pullback\n\n#check AlgebraicGeometry.crossBaseAffineIso\n#check CategoryTheory.Limits.pullback_fst_iso_of_right_iso\n"}

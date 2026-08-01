@@ -1,0 +1,1 @@
+{"markdown": "Verified the checkpoint: all 43 paths authored by the review commits are byte-identical to `HEAD` (`0c22df48d9`). The post-commit mutations were only generated session `inbox-hook-state`, `notify_cache`, and transcript state; no durable roadmap, inbox, blueprint, or Lean changes were produced. No additional commit is required.\n", "recommendation": ""}

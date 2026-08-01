@@ -1,0 +1,1 @@
+{"markdown": "Fresh private-index status against `HEAD=44a6c3c99e` is clean, including every authored roadmap, blueprint, and inbox path. The post-commit tools only created temporary `/tmp` census archives and build cache output; no durable workspace change remains to commit.\n", "recommendation": ""}

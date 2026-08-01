@@ -1,0 +1,1 @@
+{"markdown": "The Lean source lookup is also waiting on the shared dependency cache, so I\u2019m not going to stack more LSP requests behind it. I\u2019ll use the project\u2019s already-landed finite-cover gluing infrastructure and the scout\u2019s declaration-level analysis to choose a checkable low-import unit.\n", "recommendation": ""}

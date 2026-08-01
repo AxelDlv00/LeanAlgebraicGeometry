@@ -1,0 +1,1 @@
+{"markdown": "No durable authored change remains after commit `6a5f23d008`. Subsequent actions were read-only verification plus Horizon-generated session metadata. All audited blueprint, roadmap, and inbox paths were verified hash-identical at HEAD and on disk; the polluted shared index was intentionally left untouched per I-1222.\n", "recommendation": ""}

@@ -1,0 +1,1 @@
+{"markdown": "I\u2019ve finished the required Horizon orientation and coordination. The current seam is the arbitrary-affine image from the glued theta-ideal cokernel into the intrinsic theta-vanishing quotient; I\u2019m checking the exact local API now, then I\u2019ll land the smallest reusable producer that compiles and verify it in isolation.\n", "recommendation": ""}

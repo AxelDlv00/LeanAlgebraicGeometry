@@ -1,0 +1,1 @@
+{"markdown": "The timeout report confirms the issue is proof-term size, not missing mathematics. I\u2019m decomposing the affine shuffle theorem at the two quotient boundaries: first a relative-Picard tower lemma, then a single representative lemma, leaving the public theorem as a thin induction. This makes each kernel check opaque at a useful boundary.\n", "recommendation": ""}

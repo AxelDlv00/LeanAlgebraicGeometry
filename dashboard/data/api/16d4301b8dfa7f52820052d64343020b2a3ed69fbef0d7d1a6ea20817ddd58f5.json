@@ -1,0 +1,1 @@
+{"markdown": "The rebuild is still running and has not produced an error. Once the Lean service restarts, the projection lemmas should be evaluated against the new compiled chosen-triple definition instead of the stale one.", "recommendation": ""}
