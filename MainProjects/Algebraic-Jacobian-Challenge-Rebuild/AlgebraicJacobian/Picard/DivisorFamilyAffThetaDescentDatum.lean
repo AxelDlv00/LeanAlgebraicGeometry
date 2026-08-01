@@ -87,9 +87,13 @@ set_option synthInstance.maxHeartbeats 500000 in
 theta equalizer. -/
 noncomputable def IsCertified.thetaDescendedEquivIntrinsic {n : ℕ}
     (hc : A.IsCertified n) :
-    (hc.thetaDescentDatum A a).descended ≃ₗ[gluedSubalgebra A]
+    (hc.thetaDescentDatum (π := π) (A := A) (a := a)).descended
+        ≃ₗ[gluedSubalgebra A]
       A.IntrinsicThetaGluedOver (π := π) a :=
-  LinearEquiv.ofEq _ _ (hc.thetaDescentDatum_descended_eq A a)
+  LinearEquiv.ofEq
+    (hc.thetaDescentDatum (π := π) (A := A) (a := a)).descended
+    (A.intrinsicThetaGluedOver (π := π) a)
+    (hc.thetaDescentDatum_descended_eq (π := π) A a)
 
 set_option maxHeartbeats 1000000 in
 -- Invertibility is transported through faithful-flat descent and the subtype equality.
@@ -101,16 +105,23 @@ theorem IsCertified.invertible_intrinsicThetaGluedOver {n : ℕ}
     (hc : A.IsCertified n) :
     Module.Invertible (gluedSubalgebra A)
       (A.IntrinsicThetaGluedOver (π := π) a) := by
+  have halgebraMap :
+      algebraMap (gluedSubalgebra A) A.chartProd =
+        (gluedSubalgebra A).val.toRingHom := by
+    ext x i
+    rfl
   letI : Module.FaithfullyFlat (gluedSubalgebra A) A.chartProd :=
     RingHom.faithfullyFlat_algebraMap_iff.mp (by
-      simpa using A.faithfullyFlat_gluedSubalgebra_val hc)
+      rw [halgebraMap]
+      exact A.faithfullyFlat_gluedSubalgebra_val hc)
   letI : Module.Invertible A.chartProd
       (A.ThetaPieceProd (π := π) a) :=
     A.invertible_thetaPieceProd (π := π) a
   letI : Module.Invertible (gluedSubalgebra A)
-      (hc.thetaDescentDatum A a).descended :=
-    (hc.thetaDescentDatum A a).invertible_descended
-  exact Module.Invertible.congr (hc.thetaDescendedEquivIntrinsic A a)
+      (hc.thetaDescentDatum (π := π) (A := A) (a := a)).descended :=
+    (hc.thetaDescentDatum (π := π) (A := A) (a := a)).invertible_descended
+  exact Module.Invertible.congr
+    (hc.thetaDescendedEquivIntrinsic (π := π) A a)
 
 end
 
