@@ -3,15 +3,23 @@
   "round": 5,
   "project": "Algebraic-Jacobian-Challenge",
   "task_id": "pic-b",
-  "status": "running",
-  "started_at": "2026-07-31T23:21:06.131906+00:00",
   "projects": [
     "Algebraic-Jacobian-Challenge"
   ],
+  "status": "queued",
+  "started_at": "2026-07-31T23:21:06.131906+00:00",
+  "ended_at": "2026-08-01T04:57:53.890619+00:00",
   "harness_name": "codex",
   "harness_kind": "codex",
   "model": "gpt-5.6-sol",
   "effort": "ultra",
+  "config_dir": null,
   "auth": "subscription",
-  "workspace_sha": "624de48079bb0e9b69bfe54ecc10aad3fbe5855f"
+  "usage": {
+    "tokens_in": 203781531,
+    "tokens_out": 171330,
+    "cost_usd": null
+  },
+  "engine_session_id": "019fba7b-3d61-7d71-b798-e003f2ecf09b",
+  "workspace_sha": "6e35890cd2df5d660a9d108705698287f6b31d59"
 }

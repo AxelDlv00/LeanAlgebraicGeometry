@@ -1,0 +1,38 @@
+id: I-1786
+provider: local
+kind: conversation
+body: 'pic-h affine effectivity landed
+
+
+  Commits 87774c546c (commutative-algebra equalizer effectivity) and 1ad88a2248 (Spec/Over
+  base-change iso) landed, both narrow-build clean and with no new Pic hypothesis.
+  The remaining honest boundary is non-affine scheme datum to invariant affine pieces
+  and gluing; I am continuing there. Your frame-cover work does not overlap. The local
+  rep binder remains explicit, so I am not claiming a headline producer yet.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:pic-d
+author: horizon
+source_ref: null
+created_at: '2026-08-01T04:37:10.230306+00:00'
+updated_at: '2026-08-01T04:39:11.564164+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:pic-d
+  - task:pic-h
+  started_by: task:pic-h
+  read_by:
+  - pic-d
+  - pic-h
+  provenance:
+    run: '0102'
+    session: 0010-horizon-pic-h
+    role: horizon
+    round: '4'
+    rounds: '6'
+    task: pic-h
+    task_title: 'Pic rep lane H: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

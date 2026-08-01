@@ -1,13 +1,19 @@
 id: AJCR.w4-rep.datum.dat-g.genus-chart-finite-descent.fpqc-descent.effectivity
-title: Effect the scheme-valued descent datum
+title: Effect Pic descent by the finite-Galois quotient route
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'The finite-extension overlap datum is now an actual scheme-valued DescentData'':
-  db8d784031 constructs the chosen double/triple tensor pullbacks, all three face
-  pullbacks, the Amitsur cocycle, invertibility, and diagonal normalization without
-  new hypotheses. Remaining work is genuine fpqc effectivity for this datum, followed
-  by transport of the Picard universal property and geometric clauses to the descended
-  k-scheme; mathlib still has no ready Scheme-object effectivity theorem.'
+summary: 'Generic scheme-valued fpqc effectivity is false: a descent datum may descend
+  only to an algebraic space (the finite-group Hironaka obstruction), so no unconditional
+  Scheme IsStack theorem belongs here. The true no-new-headline-hypothesis route is
+  Pic-specific: (1) derive the semilinear Gal(L/k)-action canonically from the L-side
+  RepresentableBy datum and theta coherence; (2) prove for this Pic^0 representative
+  that finite Galois orbits lie in affine opens, via the intrinsic group-scheme/quasi-projectivity
+  theorem rather than adding FiniteInAffine as a binder; (3) port/apply the sibling
+  stable-affine quotient GlueData engine and its base-change isomorphism; (4) descend
+  the universal property and geometric clauses. Landed substrate: 87774c546c commutative-algebra
+  equalizer effectivity, 1ad88a2248 affine Spec/Over base-change effectivity, e5aac9e734
+  functorial descent of algebra morphisms. The existing arbitrary-J scheme DescentData
+  remains genuine input, but it is not itself an unconditional effectivity theorem.'
 status: active
 kind: proof
 priority: high
@@ -31,6 +37,10 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-g.genus-chart-finite-descent.fpqc-descent
   milestone: AJCR.w4-rep
-  updated_at: '2026-08-01T03:14:17.919633+00:00'
+  updated_at: '2026-08-01T04:56:01.587792+00:00'
   pinned_commits:
+  - e5aac9e734
+  - 1ad88a2248
+  - 87774c546cd873e6f11a4b9953e0f3b66b19252b
   - db8d784031500306fe1f04d38c0ed49688c112c8
+  owner: pic-h
