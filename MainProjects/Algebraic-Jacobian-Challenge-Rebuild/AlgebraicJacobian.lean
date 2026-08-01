@@ -732,9 +732,10 @@ import AlgebraicJacobian.Picard.DivisorFamilyAffWindowGen
 -- covers it (AJCR.w4-rep.build-reach).
 import AlgebraicJacobian.Picard.DivisorFamilyAffClassDegree
 -- The Sigma-chart over the R2 carrier (run 0087 r3, ajcr-p1): with hdegAff discharged the
--- widened chartValueTrans and abelSigmaChart are the chart-typed definitions verbatim, so the
--- carrier I-0492 mandates now reaches the input type of pic0RepresentableByOfCharts. A chart
--- SHAPE, not a chart: rep is still a hypothesis with no producer.
+    -- widened chartValueTrans and abelSigmaChart are the chart-typed definitions verbatim, so the
+    -- carrier I-0492 mandates now reaches the input type of pic0RepresentableByOfCharts. The
+    -- genus-parameter divisor representer is rooted below; Pic0 coverage still requires
+    -- decoupling the divisor degree from the curve genus.
 import AlgebraicJacobian.Picard.Pic0AtlasFromDivRepAff
 -- CHART-U(b) on that carrier: the widened Abel value is plus-honest, so chartLocus of a
 -- widened chart value is OPEN. Closes the openness half of the same carrier-target gap the
@@ -752,6 +753,10 @@ import AlgebraicJacobian.Picard.DivRepChartClassUnivFree
 import AlgebraicJacobian.Picard.DivRepChartClassUnivAny
 import AlgebraicJacobian.Picard.DivRepChartClassUnivQuot
 import AlgebraicJacobian.Picard.DivRepChartClassUnivZarLocal
+-- Genuine widened divisor representability at the genus parameter: universal carve-chart
+-- classes satisfy the classifier clause, hence the affine divisor functor is represented by
+-- the constructed divisor scheme without an assumed `RepresentableBy` witness.
+import AlgebraicJacobian.Picard.DivRepChartClassUnivAffRepresentable
 import AlgebraicJacobian.Picard.Pic0AtlasFiniteType
 import AlgebraicJacobian.Picard.Pic0AtlasCompactFromClass
 import AlgebraicJacobian.Picard.Pic0AtlasCompactNoetherian
