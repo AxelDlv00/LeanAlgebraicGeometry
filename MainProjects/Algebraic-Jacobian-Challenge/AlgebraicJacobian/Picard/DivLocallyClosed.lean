@@ -250,6 +250,50 @@ theorem existsUnique_factor_lineBundleLocus_of_isLocallyTrivial
 
 end Modules
 
+namespace LocallyFreeQuotient
+
+variable {S X : Scheme.{u}} {π : X ⟶ S} {T : Over S}
+
+/-- The evaluation on `X_T` attached to a Grassmannian quotient of `π_* L`.
+
+The base-change map sends `T^*(π_*L)` to `pr_{T*}(pr_X^*L)`.  Precomposing
+with the kernel inclusion of the Grassmannian quotient and transposing along
+`pr_T^* ⊣ pr_{T*}` gives the displayed map.  Its kernel is not itself the
+divisor ideal: the divisor candidate is obtained from its cokernel below. -/
+noncomputable def kernelEvaluation (L : X.Modules) {d : ℕ}
+    (q : LocallyFreeQuotient ((Modules.pushforward π).obj L) d T) :
+    (Modules.pullback (pullback.snd π T.hom)).obj (kernel q.q) ⟶
+      (Modules.pullback (pullback.fst π T.hom)).obj L :=
+  ((Modules.pullbackPushforwardAdjunction
+    (pullback.snd π T.hom)).homEquiv _ _).symm
+    (kernel.ι q.q ≫
+      pushforwardBaseChangeMap π T.hom (pullback.snd π T.hom)
+        (pullback.fst π T.hom) pullback.condition L)
+
+/-- The quotient on `X_T` reconstructed from a Grassmannian quotient: take the
+cokernel of `kernelEvaluation`.  The later D3 locus is where this quotient is
+a divisor quotient and its kernel is invertible. -/
+noncomputable def candidateQuotient (L : X.Modules) {d : ℕ}
+    (q : LocallyFreeQuotient ((Modules.pushforward π).obj L) d T) :
+    (Modules.pullback (pullback.fst π T.hom)).obj L ⟶
+      cokernel (kernelEvaluation L q) :=
+  cokernel.π (kernelEvaluation L q)
+
+/-- The reconstructed Grassmannian quotient is epimorphic by construction. -/
+theorem candidateQuotient_epi (L : X.Modules) {d : ℕ}
+    (q : LocallyFreeQuotient ((Modules.pushforward π).obj L) d T) :
+    Epi (candidateQuotient L q) := by
+  dsimp only [candidateQuotient]
+  infer_instance
+
+/-- The candidate twisted divisor ideal attached to a Grassmannian quotient. -/
+noncomputable def candidateIdeal (L : X.Modules) {d : ℕ}
+    (q : LocallyFreeQuotient ((Modules.pushforward π).obj L) d T) :
+    (pullback π T.hom).Modules :=
+  kernel (candidateQuotient L q)
+
+end LocallyFreeQuotient
+
 end Scheme
 
 end AlgebraicGeometry

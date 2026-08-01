@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.DivPushforwardFlat
+import AlgebraicJacobian.Picard.DivGrassmannianClass
 import AlgebraicJacobian.Picard.CurveProjectivity
 import AlgebraicJacobian.Picard.GrassmannianRepresentability
 import AlgebraicJacobian.Picard.RigidPushforwardP1Sheaf
@@ -22,7 +23,8 @@ module on the curve, and the pullback--pushforward base-change map followed by
 the divisor quotient gives the canonical evaluation morphism used by the
 Grassmannian construction.
 
-The definitions in the first section are unconditional.  In particular,
+The core definitions are unconditional and live in
+`DivGrassmannianClass`.  In particular,
 `DivFamily.grassmannianEval` exists before the Riemann--Roch argument proves it
 epimorphic.  Keeping the map separate from its eventual `Epi` proof prevents
 uniform generation from becoming an assumption in the definition of the
@@ -56,20 +58,6 @@ private lemma map_tensorHom_comp2 {C D : Type*} [Category C] [MonoidalCategory C
       F.map (MonoidalCategory.tensorHom (a ≫ b) (d ≫ e)) := by
   rw [← F.map_comp, MonoidalCategory.tensorHom_comp_tensorHom]
 
-/-- The twist of the divisor structure sheaf by a module on the original
-family.  For the D2' embedding, `L` is the chosen sufficiently positive
-projective twist. -/
-noncomputable def twist (L : X.Modules) (x : DivFamily π T) :
-    (pullback π T.hom).Modules :=
-  Modules.tensorObj ((Modules.pullback (pullback.fst π T.hom)).obj L) x.F
-
-/-- Tensor the divisor quotient `O -> O_D` with the pulled-back twist. -/
-noncomputable def twistQuotientMap (L : X.Modules) (x : DivFamily π T) :
-    (Modules.pullback (pullback.fst π T.hom)).obj L ⟶ x.twist L :=
-  (Modules.tensorObj_right_unitor _).inv ≫
-    Modules.tensorObj_functoriality (𝟙 _)
-      ((Modules.pullbackUnitIso (pullback.fst π T.hom)).inv ≫ x.q)
-
 /-- Equivalent divisor families have isomorphic twists, compatibly with the
 twisted quotient maps.  This is the representative-level descent input for
 the D2' Grassmannian comparison. -/
@@ -97,19 +85,6 @@ lemma twistQuotientMap_rel (L : X.Modules) {x y : DivFamily π T} (h : x.Rel y) 
       _ _ _ _ _]
   simp only [Category.id_comp]
   rw [Category.assoc, hf]
-
-/-- The canonical D2' evaluation morphism.
-
-It first base-changes `π_* L` from `S` to `T`, then pushes forward the twisted
-divisor quotient along `X_T -> T`.  Uniform Riemann--Roch will prove that this
-map is an epimorphism for a sufficiently positive `L`; no such conclusion is
-built into the definition. -/
-noncomputable def grassmannianEval (L : X.Modules) (x : DivFamily π T) :
-    (Modules.pullback T.hom).obj ((Modules.pushforward π).obj L) ⟶
-      (Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L) :=
-  pushforwardBaseChangeMap π T.hom (pullback.snd π T.hom)
-      (pullback.fst π T.hom) pullback.condition L ≫
-    (Modules.pushforward (pullback.snd π T.hom)).map (x.twistQuotientMap L)
 
 /-- Equivalent divisor families have isomorphic evaluation targets, and the
 isomorphism commutes with the D2' evaluation maps. -/
@@ -151,42 +126,6 @@ lemma grassmannianTarget_isLocallyFreeOfRank_of_rel
   exact ⟨ι, U, hU, fun i =>
     ⟨(Modules.pullback (U i).ι).mapIso f.symm ≪≫ (hloc i).some⟩⟩
 
-/-- The evaluation map is epi as soon as its two displayed factors are epi.
-This keeps the base-change and divisor-quotient obligations separate, so a
-later uniform-generation proof can discharge only the factor it actually
-proves. -/
-theorem grassmannianEval_epi (L : X.Modules) (x : DivFamily π T)
-    (hbase : Epi (pushforwardBaseChangeMap π T.hom
-      (pullback.snd π T.hom) (pullback.fst π T.hom) pullback.condition L))
-    (hquot : Epi ((Modules.pushforward (pullback.snd π T.hom)).map
-      (x.twistQuotientMap L))) :
-    Epi (x.grassmannianEval L) := by
-  letI := hbase
-  letI := hquot
-  dsimp [grassmannianEval]
-  infer_instance
-
-/-- **The conditional D2' quotient datum.**  Once the evaluation map is an
-epimorphism and its target has constant locally-free rank `d`, it is exactly a
-rank-`d` locally free quotient of the pulled-back pushforward of `L`.
-
-The two arguments are deliberately explicit: the evaluation map is the
-uniform-generation obligation, while the locally-free target is the
-finite/projective/rank obligation.  This constructor packages those genuine
-outputs without introducing a class or an instance that could hide either one.
--/
-noncomputable def grassmannianQuotient (L : X.Modules) (x : DivFamily π T)
-    [IsLocallyNoetherian S] {d : ℕ} (hEpi : Epi (x.grassmannianEval L))
-    (hLocFree : SheafOfModules.IsLocallyFreeOfRank
-      ((Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L)) d) :
-    LocallyFreeQuotient ((Modules.pushforward π).obj L) d T := by
-  letI := hEpi
-  exact {
-    F := (Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L)
-    q := x.grassmannianEval L
-    epi := inferInstance
-    locFree := hLocFree }
-
 /-- The conditional D2' quotient datum respects the divisor-family
 equivalence relation.  The epi and rank witnesses on the second representative
 are transported from the first, rather than assumed again. -/
@@ -202,17 +141,6 @@ lemma grassmannianQuotient_rel
   obtain ⟨f, hf⟩ := grassmannianEval_rel L hxy
   exact ⟨f, hf⟩
 
-/-- The quotient-class value of the D2' comparison in the relative
-Grassmannian functor.  This is the representation-facing object consumed by
-the Grassmannian representability theorem; well-definedness under
-`DivFamily.Rel` is a separate comparison lemma. -/
-noncomputable def grassmannianClass (L : X.Modules) (x : DivFamily π T)
-    [IsLocallyNoetherian S] {d : ℕ} (hEpi : Epi (x.grassmannianEval L))
-    (hLocFree : SheafOfModules.IsLocallyFreeOfRank
-      ((Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L)) d) :
-    (Grassmannian ((Modules.pushforward π).obj L) d).obj (Opposite.op T) :=
-  Quotient.mk _ (grassmannianQuotient L x hEpi hLocFree)
-
 /-- The D2' Grassmannian class is well-defined on `DivFamily.Rel`.  Both
 analytic obligations are transported along the relation witness, so this
 descent theorem introduces no additional hypotheses. -/
@@ -226,19 +154,6 @@ theorem grassmannianClass_eq_of_rel
         (grassmannianEval_epi_of_rel L hxy hxEpi)
         (grassmannianTarget_isLocallyFreeOfRank_of_rel L hxy hxLocFree) :=
   Quotient.sound (grassmannianQuotient_rel L hxy hxEpi hxLocFree)
-
-/-- The componentwise form of `grassmannianClass`: once the base-change and
-divisor-quotient factors are epi, only the target's rank condition remains. -/
-noncomputable def grassmannianClassOfComponents (L : X.Modules) (x : DivFamily π T)
-    [IsLocallyNoetherian S] {d : ℕ}
-    (hbase : Epi (pushforwardBaseChangeMap π T.hom
-      (pullback.snd π T.hom) (pullback.fst π T.hom) pullback.condition L))
-    (hquot : Epi ((Modules.pushforward (pullback.snd π T.hom)).map
-      (x.twistQuotientMap L)))
-    (hLocFree : SheafOfModules.IsLocallyFreeOfRank
-      ((Modules.pushforward (pullback.snd π T.hom)).obj (x.twist L)) d) :
-    (Grassmannian ((Modules.pushforward π).obj L) d).obj (Opposite.op T) :=
-  grassmannianClass L x (grassmannianEval_epi L x hbase hquot) hLocFree
 
 end DivFamily
 

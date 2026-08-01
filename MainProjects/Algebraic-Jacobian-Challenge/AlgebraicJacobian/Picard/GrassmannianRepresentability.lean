@@ -602,6 +602,74 @@ theorem representable {V : S.Modules} {r : ℕ}
   obtain ⟨e⟩ := hloc i
   exact representable_restrict (U i) e hd hdr
 
+/-! ## §7. The universal quotient on the chosen representing scheme -/
+
+/-- A chosen representing scheme for the relative Grassmannian.  This makes
+the existential output of `representable` available to constructions, such as
+the universal evaluation cokernel used in the divisor locus. -/
+noncomputable def representingScheme {V : S.Modules} {r d : ℕ}
+    (hV : SheafOfModules.IsLocallyFreeOfRank V r)
+    (hd : 1 ≤ d) (hdr : d ≤ r) : Over S :=
+  Classical.choose (representable hV hd hdr)
+
+/-- The chosen representation carried by `representingScheme`. -/
+noncomputable def representation {V : S.Modules} {r d : ℕ}
+    (hV : SheafOfModules.IsLocallyFreeOfRank V r)
+    (hd : 1 ≤ d) (hdr : d ≤ r) :
+    (Scheme.Grassmannian V d).RepresentableBy
+      (representingScheme hV hd hdr) :=
+  Classical.choice (Classical.choose_spec (representable hV hd hdr))
+
+/-- The universal Grassmannian class: the image of the identity of the chosen
+representing scheme under its `RepresentableBy` equivalence. -/
+noncomputable def universalClass {V : S.Modules} {r d : ℕ}
+    (hV : SheafOfModules.IsLocallyFreeOfRank V r)
+    (hd : 1 ≤ d) (hdr : d ≤ r) :
+    (Scheme.Grassmannian V d).obj
+      (Opposite.op (representingScheme hV hd hdr)) :=
+  (representation hV hd hdr).homEquiv (𝟙 _)
+
+/-- A quotient representative of the universal Grassmannian class.  Choosing
+the representative exposes its sheaf and quotient map to the D3 construction;
+all moduli statements remain at the quotient-class level. -/
+noncomputable def universalQuotient {V : S.Modules} {r d : ℕ}
+    (hV : SheafOfModules.IsLocallyFreeOfRank V r)
+    (hd : 1 ≤ d) (hdr : d ≤ r) :
+    LocallyFreeQuotient V d (representingScheme hV hd hdr) :=
+  Quotient.out (universalClass hV hd hdr)
+
+/-- The chosen universal quotient represents the universal class. -/
+theorem mk_universalQuotient {V : S.Modules} {r d : ℕ}
+    (hV : SheafOfModules.IsLocallyFreeOfRank V r)
+    (hd : 1 ≤ d) (hdr : d ≤ r) :
+    Quotient.mk _ (universalQuotient hV hd hdr) =
+      universalClass hV hd hdr :=
+  Quotient.out_eq _
+
+/-- Every point of the chosen representing scheme classifies the pullback of
+the universal quotient.  This is the representation-facing universal-family
+identity needed before forming a sheaf on `X ×_S Gr(V,d)`. -/
+theorem homEquiv_eq_pullback_universalQuotient
+    {V : S.Modules} {r d : ℕ}
+    (hV : SheafOfModules.IsLocallyFreeOfRank V r)
+    (hd : 1 ≤ d) (hdr : d ≤ r)
+    {T : Over S} (f : T ⟶ representingScheme hV hd hdr) :
+    (representation hV hd hdr).homEquiv f =
+      Quotient.mk _ (LocallyFreeQuotient.pullbackAlong f
+        (universalQuotient hV hd hdr)) := by
+  calc
+    (representation hV hd hdr).homEquiv f =
+        (Scheme.Grassmannian V d).map f.op
+          ((representation hV hd hdr).homEquiv (𝟙 _)) := by
+      rw [← (representation hV hd hdr).homEquiv_comp f (𝟙 _),
+        Category.comp_id]
+    _ = (Scheme.Grassmannian V d).map f.op
+          (Quotient.mk _ (universalQuotient hV hd hdr)) := by
+      exact congrArg ((Scheme.Grassmannian V d).map f.op)
+        (mk_universalQuotient hV hd hdr).symm
+    _ = Quotient.mk _ (LocallyFreeQuotient.pullbackAlong f
+          (universalQuotient hV hd hdr)) := rfl
+
 end Grassmannian
 
 end Scheme

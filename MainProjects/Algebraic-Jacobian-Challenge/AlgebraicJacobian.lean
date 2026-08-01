@@ -210,6 +210,7 @@ import AlgebraicJacobian.Picard.DivPushforwardFlat
 -- D3' substrate: the matrix-defined rank stratum is locally free of its indexed rank;
 -- in rank one it is an immersed universal locus carrying an invertible sheaf.
 import AlgebraicJacobian.Picard.DivLocallyClosed
+import AlgebraicJacobian.Picard.DivGrassmannianCandidate
 -- The quasi-finiteness binder that every `DivPushforwardFlat` theorem carries, reduced
 -- to fibre finiteness (run 0095 r5, pic-e): two of the three inputs mathlib's criteria
 -- want are free from `DivFamily.properSupport`, so the binder is one topological
