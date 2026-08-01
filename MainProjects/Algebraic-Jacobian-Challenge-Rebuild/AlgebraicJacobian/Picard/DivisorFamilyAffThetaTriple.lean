@@ -116,17 +116,20 @@ noncomputable def thetaTripleQuotientModule (A : AffAdaptation D d) (a : ℕ)
           (A.ThetaTripleSections (π := π) a i j l)))
   infer_instance
 
+omit [IsProper C.hom] in
 /-- The triple intersection lies in its first pairwise intersection. -/
 theorem thetaTripleOpen_le_pair12 (A : AffAdaptation D d) (i j l : D.index) :
     A.thetaTripleOpen i j l ≤ D.pieces i ⊓ D.pieces j :=
   inf_le_left
 
+omit [IsProper C.hom] in
 /-- The triple intersection lies in the first/third pairwise intersection. -/
 theorem thetaTripleOpen_le_pair13 (A : AffAdaptation D d) (i j l : D.index) :
     A.thetaTripleOpen i j l ≤ D.pieces i ⊓ D.pieces l := by
   intro x hx
   exact ⟨hx.1.1, hx.2⟩
 
+omit [IsProper C.hom] in
 /-- The triple intersection lies in the second/third pairwise intersection. -/
 theorem thetaTripleOpen_le_pair23 (A : AffAdaptation D d) (i j l : D.index) :
     A.thetaTripleOpen i j l ≤ D.pieces j ⊓ D.pieces l := by
@@ -195,10 +198,17 @@ theorem thetaOverlapSectionsToTriple_vanishing_le
   have hr' : r ∈ A.cartierIdeal.ideal UP := by
     rw [A.cartierIdeal_ideal_overlap_eq_ovlIdeal p q]
     exact hr
-  have hm := Ideal.mem_map_of_mem
-    ((relCurve C R).presheaf.map (homOfLE hUT).op).hom hr'
-  rw [A.cartierIdeal.map_ideal hUT] at hm
-  simpa only [relResAlgHom] using hm
+  have hmap := A.cartierIdeal.map_ideal hUT
+  have hh : hUT = h := Subsingleton.elim _ _
+  rw [hh] at hmap
+  have hmraw :
+      ((relCurve C R).presheaf.map (homOfLE h).op).hom r ∈
+        A.cartierIdeal.ideal UT := by
+    rw [← hmap]
+    exact Ideal.mem_map_of_mem _ hr'
+  have hm : (relResAlgHom C R h).toRingHom r ∈ A.thetaTripleIdeal i j l := by
+    simpa [relResAlgHom, thetaTripleIdeal, UT] using hmraw
+  exact hm
 
 /-- Restriction induced on pairwise theta quotients. -/
 noncomputable def thetaOverlapToTriple (A : AffAdaptation D d) (a : ℕ)
