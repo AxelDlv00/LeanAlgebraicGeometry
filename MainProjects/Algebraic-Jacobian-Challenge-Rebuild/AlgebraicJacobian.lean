@@ -718,6 +718,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyAffThetaSwallowedWindow
 -- through `eqns`, so the widened analogue needs no widened mathematics. Rooted so the
 -- carrier-indifference `rfl`s are kernel-checked in-graph rather than asserted.
 import AlgebraicJacobian.Picard.DivisorFamilyAffFieldMono
+import AlgebraicJacobian.Picard.DivisorFamilyAffStalkUpgrade
 -- hdegAff DISCHARGED (run 0087 r3, ajcr-p1): the widened class-degree law, hence the widened
 -- Abel ledger at an arbitrary test, hence chartValueAff_mem_pic0Subgroup with no hypothesis
 -- beyond the chart-index constraint. The last obligation between the R2 carrier (I-0492) and a
