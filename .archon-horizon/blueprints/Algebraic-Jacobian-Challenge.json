@@ -18176,7 +18176,7 @@
     "macros": {},
     "states": {
       "blocked": 249,
-      "closed": 8582,
+      "closed": 8602,
       "formalized_open": 301,
       "informal": 175,
       "ready": 199
@@ -51745,7 +51745,7 @@
       "id": "thm:grassmannian_representable",
       "lean_file": "AlgebraicJacobian/Picard/GrassmannianRepresentability.lean",
       "lean_name": "AlgebraicGeometry.Scheme.Grassmannian.representable",
-      "lean_source": "theorem representable {V : S.Modules} {r : \u2115}\n    (hV : SheafOfModules.IsLocallyFreeOfRank V r) {d : \u2115}\n    (hd : 1 \u2264 d) (hdr : d \u2264 r) :\n    \u2203 (Y : Over S), Nonempty ((Scheme.Grassmannian V d).RepresentableBy Y) := by\n  obtain \u27e8\u03b9, U, hU, hloc\u27e9 := hV\n  refine representable_of_openCover (Scheme.Grassmannian V d)\n    (isZariskiSheaf V d) U hU (fun i => ?_)\n  obtain \u27e8e\u27e9 := hloc i\n  exact representable_restrict (U i) e hd hdr",
+      "lean_source": "theorem representable {V : S.Modules} {r : \u2115}\n    (hV : SheafOfModules.IsLocallyFreeOfRank V r) {d : \u2115}\n    (hd : 1 \u2264 d) (hdr : d \u2264 r) :\n    \u2203 (Y : Over S), Nonempty ((Scheme.Grassmannian V d).RepresentableBy Y) := by\n  obtain \u27e8\u03b9, U, hU, hloc\u27e9 := hV\n  refine representable_of_openCover (Scheme.Grassmannian V d)\n    (isZariskiSheaf V d) U hU (fun i => ?_)\n  obtain \u27e8e\u27e9 := hloc i\n  exact representable_restrict (U i) e hd hdr\n\n/-! ## \u00a77. The universal quotient on the chosen representing scheme -/",
       "lean_status": "lean_ok",
       "level": "medium",
       "mathlib_ok": false,
