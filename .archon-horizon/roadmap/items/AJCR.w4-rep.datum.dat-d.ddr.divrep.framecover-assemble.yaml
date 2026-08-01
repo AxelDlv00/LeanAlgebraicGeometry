@@ -4,13 +4,14 @@ projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'PRODUCER ADVANCED. The intrinsic Cartier divisor is finite affine with clopen
   adapted pieces; global sections are gluedSubalgebra, chartProd is finite faithfully
-  flat, the tensor square is the product of pairwise overlap rings, and the right
-  intrinsic-theta Cech arrow becomes the explicit chartProd-linear overlap equivalence
-  and is bijective after base change. No SwallowedBy, fixed chart, containment, or
-  new hypothesis is used. OPEN exact seam: construct/identify the left theta face
-  over the same tensor square, prove face/cocycle compatibility, then apply module
-  descent to local invertibility/projectivity/rank and assemble the carrier-free frame
-  cover and RepresentableBy composition.'
+  flat, and its tensor square is the product of pairwise overlap rings. The right
+  intrinsic-theta Cech face is an explicit chartProd-linear equivalence. The complementary
+  left face is now chartProd-linear and transported through that equivalence to the
+  explicit candidate coaction thetaDescentCoaction, with diagonal normalization and
+  a pointwise overlap formula. No SwallowedBy, fixed chart, containment, or new hypothesis
+  is used. OPEN exact seam: prove the coaction counit and triple-overlap coassociativity,
+  package Module.DescentDatum, descend local invertibility/projectivity/rank, then
+  assemble the carrier-free frame cover and RepresentableBy composition.'
 status: active
 kind: proof
 priority: high
@@ -35,7 +36,8 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
   milestone: w4-gate
-  updated_at: '2026-08-01T01:38:17.206031+00:00'
+  updated_at: '2026-08-01T02:32:39.502132+00:00'
   pinned_commits:
+  - fc497c2354bffc36f688c4d3b5734df844835380
   - f333dd9bc2b1187c8ef783431272bf0d5e210058
   - 895829a5c5
