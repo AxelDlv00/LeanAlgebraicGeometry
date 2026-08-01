@@ -2,14 +2,15 @@ id: AJCR.w4-rep.datum.dat-d.ddr.divrep.widened-classifier
 title: Widened classifier and RepresentableBy composition
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'ACTIVE exact seam after the completed carrier-free frame cover: factor each
-  widened certified framed representative through DivScheme using eps_carve; port
-  overlap compatibility and Zariski gluing to define the backward classifier on DivFamZarAff;
-  prove separation and construct the forward universal widened family/naturality;
-  package the equivalence as (divFunctorAff C g).RepresentableBy. The old chart-typed
-  pullGlobalAff is only a one-way push into widened families and is not a producer
-  for arbitrary widened classes.'
-status: active
+summary: DONE, NO NEW HYPOTHESES. The universal widened affine chart class now satisfies
+  IsDivRepClassifyAff, the classifier is surjective, and divFunctorAff C g is represented
+  by a chosen scheme whenever chi(O_C) = 1 - g. Genus zero is handled by the terminal
+  representer. DivRepAffChallenge then chooses the finite dominant map to P1, integrality,
+  cohomology finiteness, h0, chi, and finite chart bases internally, yielding divFunctorAff_genus_representableBy
+  for every challenge curve. The whole chain is rooted and lake build AlgebraicJacobian
+  succeeds. This closes the genus-parameter producer only; Pic0 coverage uses admissibleCoverageParameter,
+  so the parent remains active on the new parameter-decouple row.
+status: done
 kind: proof
 priority: high
 depends_on: []
@@ -31,5 +32,15 @@ metadata:
     task_title: 'Pic rep lane D: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
-  owner: pic-d
   milestone: w4-gate
+  updated_at: '2026-08-01T23:18:17.393417+00:00'
+  pinned_commits:
+  - fa631cf89bbfbff5fe0340a20787f670b9e8ef5c
+  - 0c7ac000b6e25074a5e30d2589a2815ff3ec7ef7
+  - 67f782eb2ad6ae2ac4defd432888ecdf7f86a9d6
+  - 7db89ec0e59482447ee335163e0e4a8af6cf222d
+  - 9923f07e14b2c1acaec1bbfb7873ff194080ad57
+  - 3f060c747119090bdd95a91a36201f0e481f03d3
+  - c41e85d29ae2acf01d10f275cff7eed0976c37ba
+  - f9beb900c02bf4467368bfd784c6fba38c8bb4e4
+  - fc0ed373a662e123ddd9f1f2f4a8315d793f96a4
