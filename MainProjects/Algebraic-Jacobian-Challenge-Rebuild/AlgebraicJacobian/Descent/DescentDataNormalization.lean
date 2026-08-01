@@ -102,13 +102,35 @@ variable {F sq sq₃}
 
 /-- Normalize the diagonal of an invertible cocycle and package it as descent
 data. -/
-noncomputable opaque toDescentData (D : F.DescentCocycle' sq sq₃) :
+noncomputable def toDescentData (D : F.DescentCocycle' sq sq₃) :
     F.DescentData' sq sq₃ :=
   { obj := D.obj
     hom := D.hom
     pullHom'_hom_self :=
       pullHom'_hom_self_of_comp F sq sq₃ D.hom D.homIso D.pullHom'_hom_comp
     pullHom'_hom_comp := D.pullHom'_hom_comp }
+
+@[simp]
+lemma toDescentData_obj (D : F.DescentCocycle' sq sq₃) (i : ι) :
+    D.toDescentData.obj i = D.obj i := rfl
+
+lemma toDescentData_hom_heq (D : F.DescentCocycle' sq sq₃) (i j : ι) :
+    HEq (D.toDescentData.hom i j) (D.hom i j) := by
+  rfl
+
+@[simp]
+lemma toDescentData_hom_transport (D : F.DescentCocycle' sq sq₃) (i j : ι) :
+    eqToHom (congrArg
+        (fun M => (F.map (sq i j).p₁.op.toLoc).toFunctor.obj M)
+        (D.toDescentData_obj i)).symm ≫
+      D.toDescentData.hom i j ≫
+      eqToHom (congrArg
+        (fun M => (F.map (sq i j).p₂.op.toLoc).toFunctor.obj M)
+        (D.toDescentData_obj j)) =
+      D.hom i j := by
+  simp [toDescentData]
+
+attribute [irreducible] toDescentData
 
 end DescentCocycle'
 
