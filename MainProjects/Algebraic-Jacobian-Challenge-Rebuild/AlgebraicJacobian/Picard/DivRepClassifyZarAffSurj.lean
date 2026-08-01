@@ -3,30 +3,25 @@ Copyright (c) 2026 The AlgebraicJacobian Contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
-import AlgebraicJacobian.Picard.DivRepAwaySpanGlueAff
-import AlgebraicJacobian.Picard.DivRepGlobalClassifyAff
-import AlgebraicJacobian.Picard.DivSchemeAtlasFactor
+import AlgebraicJacobian.Picard.DivRepChartRangeAff
 
 /-!
-# Surjectivity of the widened divisor classifier from universal chart classes
+# The widened classifier-clause endpoint
 
-A widened class on every `DivScheme` carve chart, classified by that chart's canonical map,
-pulls to every affine point of `DivScheme`.  The chart atlas factors the point over a finite
-away cover; classifier naturality and injectivity give compatibility on the canonical overlap
-localizations; and `DivFamZarAff.exists_glue_of_awaySpan` glues the local classes.
-
-This is the only affine construction needed by `DivRepAffinePullbackAff`: once classifier
-surjectivity is known, `ofClassifierSurjective` derives the pullback clause and naturality,
-and `representableBy` performs the affine-to-general lift.
+`DivRepChartRangeAff` proves widened classifier surjectivity from a class on every carve chart
+whose classifier is the chart map.  A universal certified family naturally supplies the
+stronger characterizing clause `IsDivRepClassifyAff`, rather than that equality directly.
+This file is the small bridge between those interfaces; it does not duplicate the atlas
+factorization or away-span gluing.
 
 ## Main declarations
 
-* `AlgebraicGeometry.DivRepChartFamilyAff.IsChartClause` -- each supplied chart class is
-  classified by the canonical chart map.
-* `AlgebraicGeometry.divRepClassifyZarAff_surjective_of_chartClause` -- affine classifier
-  surjectivity from those chart classes.
-* `AlgebraicGeometry.divFunctorAff_representableBy_of_chartClause` -- the widened divisor
-  representability endpoint.
+* `AlgebraicGeometry.DivRepChartFamilyAff.IsChartClause` -- every universal chart class
+  satisfies the widened classifier clause at the canonical chart map.
+* `AlgebraicGeometry.divRepClassifyZarAff_surjective_of_chartClause` -- the clause implies
+  classifier surjectivity via the chart-range theorem.
+* `AlgebraicGeometry.divFunctorAff_representableBy_of_chartClause` -- the final widened
+  representability producer in the clause spelling.
 -/
 
 set_option autoImplicit false
@@ -97,7 +92,7 @@ def IsChartClause
 end DivRepChartFamilyAff
 
 include hO hchi in
-/-- The canonical classifier of a supplied chart class is the canonical chart map. -/
+/-- The characterizing clause identifies the canonical classifier with the chart map. -/
 theorem divRepClassifyZarAff_left_eq_chartMap
     (U : ∀ (i : (glueData k g r1).J) (j : (glueData k g r2).J),
       DivFamZarAff C (ChartRing i j) g)
@@ -109,140 +104,29 @@ theorem divRepClassifyZarAff_left_eq_chartMap
     (divRepClassifyZarAff_isDivRepClassifyAff hpi g hO hchi r1 r2 b1 b2 (U i j))
     (hU i j)
 
-set_option maxHeartbeats 800000 in
--- The classifier naturality rewrite unfolds both chart-ring algebra structures.
 include hO hchi in
-/-- A pulled chart class classifies to the corresponding restriction of the affine point. -/
-theorem divRepClassifyZarAff_map_chart_eq
-    (U : ∀ (i : (glueData k g r1).J) (j : (glueData k g r2).J),
-      DivFamZarAff C (ChartRing i j) g)
-    (hU : DivRepChartFamilyAff.IsChartClause (hpi := hpi) g r1 r2 b1 b2 U)
-    {S : Type u} [CommRing S] [Algebra k S] (v : overSpec k S ⟶ DivOver)
-    {m : ℕ} (f : Fin m → S)
-    (ci : Fin m → (glueData k g r1).J) (cj : Fin m → (glueData k g r2).J)
-    (cw : ∀ t : Fin m, ChartRing (ci t) (cj t) →ₐ[k] Localization.Away (f t))
-    (hcw : ∀ t : Fin m,
-      Spec.map (CommRingCat.ofHom (cw t).toRingHom) ≫ ChartMap (ci t) (cj t)
-        = Spec.map (CommRingCat.ofHom (algebraMap S (Localization.Away (f t)))) ≫ v.left)
-    (t : Fin m) :
-    divRepClassifyZarAff hpi g hO hchi r1 r2 b1 b2 (Localization.Away (f t))
-        (DivFamZarAff.mapAlgHom (cw t) (U (ci t) (cj t)))
-      = Over.overSpecMap (IsScalarTower.toAlgHom k S (Localization.Away (f t))) ≫ v := by
-  calc
-    _ = Over.overSpecMap (cw t) ≫
-        divRepClassifyZarAff hpi g hO hchi r1 r2 b1 b2
-          (ChartRing (ci t) (cj t)) (U (ci t) (cj t)) :=
-      (overSpecMap_comp_divRepClassifyZarAff hpi g hO hchi r1 r2 b1 b2
-        (cw t) (U (ci t) (cj t))).symm
-    _ = Over.overSpecMap (IsScalarTower.toAlgHom k S (Localization.Away (f t))) ≫ v := by
-      apply Over.OverMorphism.ext
-      rw [Over.comp_left, Over.comp_left, Over.overSpecMap_left, Over.overSpecMap_left,
-        divRepClassifyZarAff_left_eq_chartMap hpi g hO hchi r1 r2 b1 b2 U hU]
-      exact hcw t
-
-set_option maxHeartbeats 1600000 in
-include hO hchi in
-/-- Pulled chart classes agree on every canonical overlap localization. -/
-theorem divRepClassifyZarAff_chart_away_compat
-    (U : ∀ (i : (glueData k g r1).J) (j : (glueData k g r2).J),
-      DivFamZarAff C (ChartRing i j) g)
-    (hU : DivRepChartFamilyAff.IsChartClause (hpi := hpi) g r1 r2 b1 b2 U)
-    {S : Type u} [CommRing S] [Algebra k S] (v : overSpec k S ⟶ DivOver)
-    {m : ℕ} (f : Fin m → S)
-    (ci : Fin m → (glueData k g r1).J) (cj : Fin m → (glueData k g r2).J)
-    (cw : ∀ t : Fin m, ChartRing (ci t) (cj t) →ₐ[k] Localization.Away (f t))
-    (hcw : ∀ t : Fin m,
-      Spec.map (CommRingCat.ofHom (cw t).toRingHom) ≫ ChartMap (ci t) (cj t)
-        = Spec.map (CommRingCat.ofHom (algebraMap S (Localization.Away (f t)))) ≫ v.left)
-    (p q : Fin m) :
-    DivFamZarAff.mapAlgHom (DivFamZar.awayMulLeft (k := k) f p q)
-        (DivFamZarAff.mapAlgHom (cw p) (U (ci p) (cj p)))
-      = DivFamZarAff.mapAlgHom (DivFamZar.awayMulRight (k := k) f p q)
-        (DivFamZarAff.mapAlgHom (cw q) (U (ci q) (cj q))) := by
-  apply divRepClassifyZarAff_injective (C := C) (π := pi)
-    (S := Localization.Away (f p * f q)) hpi g hO hchi r1 r2 b1 b2
-  have hL : (DivFamZar.awayMulLeft (k := k) f p q).comp
-        (IsScalarTower.toAlgHom k S (Localization.Away (f p)))
-      = IsScalarTower.toAlgHom k S (Localization.Away (f p * f q)) := by
-    ext x
-    exact DivFamZar.awayMulOfDvd_toAlgHom (k := k)
-      (f p * f q) (f p) (f q) rfl x
-  have hR : (DivFamZar.awayMulRight (k := k) f p q).comp
-        (IsScalarTower.toAlgHom k S (Localization.Away (f q)))
-      = IsScalarTower.toAlgHom k S (Localization.Away (f p * f q)) := by
-    ext x
-    exact DivFamZar.awayMulOfDvd_toAlgHom (k := k)
-      (f p * f q) (f q) (f p) (mul_comm _ _) x
-  calc
-    _ = Over.overSpecMap (DivFamZar.awayMulLeft (k := k) f p q) ≫
-        divRepClassifyZarAff hpi g hO hchi r1 r2 b1 b2 (Localization.Away (f p))
-          (DivFamZarAff.mapAlgHom (cw p) (U (ci p) (cj p))) :=
-      (overSpecMap_comp_divRepClassifyZarAff hpi g hO hchi r1 r2 b1 b2
-        (DivFamZar.awayMulLeft (k := k) f p q) _).symm
-    _ = Over.overSpecMap (DivFamZar.awayMulLeft (k := k) f p q) ≫
-        (Over.overSpecMap (IsScalarTower.toAlgHom k S (Localization.Away (f p))) ≫ v) :=
-      congrArg (fun z => Over.overSpecMap (DivFamZar.awayMulLeft (k := k) f p q) ≫ z)
-        (divRepClassifyZarAff_map_chart_eq hpi g hO hchi r1 r2 b1 b2
-          U hU v f ci cj cw hcw p)
-    _ = Over.overSpecMap (DivFamZar.awayMulRight (k := k) f p q) ≫
-        (Over.overSpecMap (IsScalarTower.toAlgHom k S (Localization.Away (f q))) ≫ v) := by
-      rw [← Category.assoc, ← Category.assoc, ← Over.overSpecMap_comp,
-        ← Over.overSpecMap_comp, hL, hR]
-    _ = Over.overSpecMap (DivFamZar.awayMulRight (k := k) f p q) ≫
-        divRepClassifyZarAff hpi g hO hchi r1 r2 b1 b2 (Localization.Away (f q))
-          (DivFamZarAff.mapAlgHom (cw q) (U (ci q) (cj q))) :=
-      congrArg (fun z => Over.overSpecMap (DivFamZar.awayMulRight (k := k) f p q) ≫ z)
-        (divRepClassifyZarAff_map_chart_eq hpi g hO hchi r1 r2 b1 b2
-          U hU v f ci cj cw hcw q).symm
-    _ = _ := overSpecMap_comp_divRepClassifyZarAff hpi g hO hchi r1 r2 b1 b2
-      (DivFamZar.awayMulRight (k := k) f p q) _
-
-set_option maxHeartbeats 1600000 in
-include hO hchi in
-/-- The widened affine classifier is surjective once the universal chart classes exist. -/
+/-- The clause form of the universal chart family implies affine classifier surjectivity. -/
 theorem divRepClassifyZarAff_surjective_of_chartClause
     (U : ∀ (i : (glueData k g r1).J) (j : (glueData k g r2).J),
       DivFamZarAff C (ChartRing i j) g)
     (hU : DivRepChartFamilyAff.IsChartClause (hpi := hpi) g r1 r2 b1 b2 U)
     (S : Type u) [CommRing S] [Algebra k S] :
     Function.Surjective
-      (divRepClassifyZarAff (C := C) (pi := pi) hpi g hO hchi r1 r2 b1 b2 S) := by
-  intro v
-  obtain ⟨m, f, hspan, hdata⟩ := divScheme_exists_chartFactor k
-    (windowS_choice pi hpi g • fiberWeilDivisor pi)
-    (windowM_choice pi hpi g • fiberWeilDivisor pi) g r1 r2 b1
-    (b2.map (windowShiftEquiv hpi g).symm) S v
-  choose ci cj cw hcw using hdata
-  let F : ∀ t : Fin m, DivFamZarAff C (Localization.Away (f t)) g := fun t =>
-    DivFamZarAff.mapAlgHom (cw t) (U (ci t) (cj t))
-  obtain ⟨F0, hF0⟩ := DivFamZarAff.exists_glue_of_awaySpan f hspan F
-    (divRepClassifyZarAff_chart_away_compat hpi g hO hchi r1 r2 b1 b2
-      U hU v f ci cj cw hcw)
-  refine ⟨F0, ?_⟩
-  apply Over.OverMorphism.ext
-  refine Scheme.Cover.hom_ext
-    (Scheme.affineOpenCoverOfSpanRangeEqTop
-      (R := CommRingCat.of S) f hspan).openCover _ _ fun t => ?_
-  have ht : Over.overSpecMap (IsScalarTower.toAlgHom k S (Localization.Away (f t))) ≫
-        divRepClassifyZarAff hpi g hO hchi r1 r2 b1 b2 S F0
-      = Over.overSpecMap (IsScalarTower.toAlgHom k S (Localization.Away (f t))) ≫ v := by
-    rw [overSpecMap_comp_divRepClassifyZarAff hpi g hO hchi r1 r2 b1 b2, hF0 t]
-    exact divRepClassifyZarAff_map_chart_eq hpi g hO hchi r1 r2 b1 b2
-      U hU v f ci cj cw hcw t
-  exact congrArg CategoryTheory.Over.Hom.left ht
+      (divRepClassifyZarAff (C := C) (pi := pi) hpi g hO hchi r1 r2 b1 b2 S) :=
+  fun v => exists_divRepClassifyZarAff_eq_of_chartRange
+    hpi g hO hchi r1 r2 b1 b2 U
+      (divRepClassifyZarAff_left_eq_chartMap hpi g hO hchi r1 r2 b1 b2 U hU) S v
 
 include hO hchi in
-/-- Universal widened chart classes satisfying their identity classification represent the
+/-- Universal widened chart classes satisfying the characterizing clause represent the
 widened divisor functor by `DivScheme`. -/
 noncomputable def divFunctorAff_representableBy_of_chartClause
     (U : ∀ (i : (glueData k g r1).J) (j : (glueData k g r2).J),
       DivFamZarAff C (ChartRing i j) g)
     (hU : DivRepChartFamilyAff.IsChartClause (hpi := hpi) g r1 r2 b1 b2 U) :
     (divFunctorAff C g).RepresentableBy DivOver :=
-  DivRepAffinePullbackAff.representableBy hpi g hO hchi r1 r2 b1 b2
-    (DivRepAffinePullbackAff.ofClassifierSurjective hpi g hO hchi r1 r2 b1 b2
-      (fun S _ _ => divRepClassifyZarAff_surjective_of_chartClause
-        hpi g hO hchi r1 r2 b1 b2 U hU S))
+  divFunctorAff_representableBy_of_chartRange hpi g hO hchi r1 r2 b1 b2 U
+    (divRepClassifyZarAff_left_eq_chartMap hpi g hO hchi r1 r2 b1 b2 U hU)
 
 end Curve
 
