@@ -91,11 +91,14 @@ rather than re-derive — there IS a widened cover swallowed by `d`.
 The rest is free, and the reason is that the support locus is CLOSED: cover the complement
 `supportLocusᶜ`, which is open, by affine opens contained in it, so they miss the support by
 construction; quasi-compactness (free for proper `C`) makes the family finite.  No fibre
-analysis, no support tube, no packet idempotent, and no chart. -/
-theorem exists_affCoverData_swallowedBy [IsProper C.hom]
+analysis, no support tube, no packet idempotent, and no chart.  The stronger conclusion
+retains the inserted support piece so downstream principalization can put its global
+equation on that exact member. -/
+theorem exists_affCoverData_swallowedBy_with_piece [IsProper C.hom]
     (d : (relCurve C R).LocalEquations) {W : (relCurve C R).Opens}
     (hW : IsAffineOpen W) (hsub : d.supportLocus ⊆ (W : Set (relCurve C R))) :
-    ∃ D : AffCoverData C R, D.SwallowedBy d := by
+    ∃ (D : AffCoverData C R) (j0 : D.index),
+      D.SwallowedBy d ∧ D.pieces j0 = W := by
   classical
   -- (the cover produced here is swallowed; whether it also carries an ADAPTATION is a
   -- separate question, answered by `exists_affAdaptation_swallowedBy` below)
@@ -129,18 +132,31 @@ theorem exists_affCoverData_swallowedBy [IsProper C.hom]
     (fun z : U => (V z : Set (relCurve C R))) (fun z => (V z).isOpen) hsubU
   set e : Fin (Fintype.card {z // z ∈ t}) ≃ {z // z ∈ t} :=
     (Fintype.equivFin {z // z ∈ t}).symm with he
-  -- assemble and verify the two clauses
-  refine ⟨AffCoverData.ofSwallowingPiece W hW (fun j => V (e j).1)
-    (fun j => hVaff (e j).1) ?_, ?_⟩
-  · refine top_le_iff.mp fun z _ => ?_
+  -- assemble and verify the two clauses, retaining the inserted last piece
+  have hcover : W ⊔ (⨆ j, V (e j).1) = ⊤ := by
+    refine top_le_iff.mp fun z _ => ?_
     by_cases hz : z ∈ (W : Set (relCurve C R))
     · exact (Opens.mem_sup ..).mpr (Or.inl hz)
     · obtain ⟨s, hs, hzs⟩ := Set.mem_iUnion₂.mp (ht hz)
       exact (Opens.mem_sup ..).mpr (Or.inr
         (Opens.mem_iSup.mpr ⟨e.symm ⟨s, hs⟩, by rw [Equiv.apply_symm_apply]; exact hzs⟩))
-  · refine AffCoverData.swallowedBy_ofSwallowingPiece hW _ _ hsub fun j => ?_
+  let D := AffCoverData.ofSwallowingPiece W hW (fun j => V (e j).1)
+    (fun j => hVaff (e j).1) hcover
+  have hsw : D.SwallowedBy d := by
+    refine AffCoverData.swallowedBy_ofSwallowingPiece hW _ _ hsub fun j => ?_
     refine Set.disjoint_left.mpr fun z hzsupp hzV => ?_
     exact (hVle (e j).1 hzV) hzsupp
+  refine ⟨D, Fin.last _, hsw, ?_⟩
+  simp [D, AffCoverData.ofSwallowingPiece]
+
+/-- **`SwallowedBy` from one affine support neighbourhood.** -/
+theorem exists_affCoverData_swallowedBy [IsProper C.hom]
+    (d : (relCurve C R).LocalEquations) {W : (relCurve C R).Opens}
+    (hW : IsAffineOpen W) (hsub : d.supportLocus ⊆ (W : Set (relCurve C R))) :
+    ∃ D : AffCoverData C R, D.SwallowedBy d := by
+  obtain ⟨D, _, hsw, _⟩ :=
+    exists_affCoverData_swallowedBy_with_piece C R d hW hsub
+  exact ⟨D, hsw⟩
 
 /-! ## A swallowed cover that also carries an adaptation
 
