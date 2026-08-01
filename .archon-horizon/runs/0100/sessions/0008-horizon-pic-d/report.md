@@ -11,6 +11,11 @@
 - Axiom audit of all headline declarations: only `propext`, `Classical.choice`, and `Quot.sound`; source has no `sorry`, `admit`, or `axiom`.
 - Disk, `HEAD`, and `f333` source blobs agree (SHA-256 `e65cc7575ec65aa3729b1eba62eae9fa1dfcf2f4782ac8cfe4d3fb46b3a8197a`).
 
+## Issues
+
+- The Lean target emitted only nonblocking warnings for module-wide heartbeat options and an unused section variable; no proof failure occurred. The graph review dry-run was not runnable because the ledger has no git remote, and graph sync reported 70 duplicate declaration names.
+- `f333` is a valid pinned landing but predates Archon commit trailers; its blob and ancestry were checked directly.
+
 ## Ledger
 
 - Required protections were re-read; no unread conversations remain. The five standing protections remain open. The task remains `running`; both referenced parent headlines remain active.
