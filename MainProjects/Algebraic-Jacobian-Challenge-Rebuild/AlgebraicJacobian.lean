@@ -709,6 +709,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyAffThetaFrameCoverComposite
 import AlgebraicJacobian.Picard.DivisorFamilyAffThetaCarve
 import AlgebraicJacobian.Picard.DivRepClassifyZarAffLocal
 import AlgebraicJacobian.Picard.DivRepClassifyZarAffCompat
+import AlgebraicJacobian.Picard.DivRepClassifyZarAff
 import AlgebraicJacobian.Picard.DivisorFamilyAffThetaSwallowed
 import AlgebraicJacobian.Picard.DivisorFamilyAffThetaSwallowedWindow
 -- The field-level window-recovery mono is CARRIER-FREE (run 0089 r6, ajcr-p3): the rung
