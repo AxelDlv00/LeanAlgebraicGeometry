@@ -29,6 +29,54 @@ universe u
 open CategoryTheory Opposite TopologicalSpace
 open scoped TensorProduct
 
+namespace Module
+
+variable {A B M N : Type u}
+variable [CommRing A] [CommRing B] [Algebra A B]
+variable [AddCommGroup M] [Module A M] [Module B M] [IsScalarTower A B M]
+variable [AddCommGroup N] [Module A N] [Module B N] [IsScalarTower A B N]
+
+/-- Transporting a candidate coaction through a right-face comparison reduces
+coassociativity to equality of the base-changed left and right Cech faces. -/
+theorem coassoc_iff_baseChange_faces
+    (e : B ⊗[A] M ≃ₗ[B] N)
+    (left : M →ₗ[B] N) (right : M →ₗ[A] N)
+    (delta : M →ₗ[B] B ⊗[A] M)
+    (hleft : (e.restrictScalars A).toLinearMap.comp (delta.restrictScalars A) =
+      left.restrictScalars A)
+    (hright : (e.restrictScalars A).toLinearMap.comp
+      (TensorProduct.mk A B M 1) = right)
+    (m : M) :
+    (delta.restrictScalars A).baseChange B (delta m) =
+        (TensorProduct.mk A B M 1).baseChange B (delta m) ↔
+      (left.restrictScalars A).baseChange B (delta m) =
+        right.baseChange B (delta m) := by
+  let eA := e.restrictScalars A
+  have hleft_transport :
+      eA.toLinearMap.baseChange B
+          ((delta.restrictScalars A).baseChange B (delta m)) =
+        (left.restrictScalars A).baseChange B (delta m) := by
+    rw [← LinearMap.comp_apply, ← LinearMap.baseChange_comp, hleft]
+  have hright_transport :
+      eA.toLinearMap.baseChange B
+          ((TensorProduct.mk A B M 1).baseChange B (delta m)) =
+        right.baseChange B (delta m) := by
+    rw [← LinearMap.comp_apply, ← LinearMap.baseChange_comp, hright]
+  constructor
+  · intro h
+    rw [← hleft_transport, ← hright_transport, h]
+  · intro h
+    let eAB := eA.baseChange A B _ _
+    apply eAB.injective
+    change
+      eA.toLinearMap.baseChange B
+          ((delta.restrictScalars A).baseChange B (delta m)) =
+        eA.toLinearMap.baseChange B
+          ((TensorProduct.mk A B M 1).baseChange B (delta m))
+    rw [hleft_transport, hright_transport, h]
+
+end Module
+
 namespace AlgebraicGeometry
 
 attribute [local instance] Scheme.overModule Scheme.overSectionsAlgebra
@@ -242,6 +290,48 @@ theorem thetaDescentCoaction_counit {n : ℕ}
     (A.thetaDescentCoaction (π := π) a hc s) i]
   rw [A.thetaPieceProdBaseChangeToOverlapEquiv_coaction_apply]
   exact DFunLike.congr_fun (A.thetaToOverlap_diag_eq (π := π) a i) (s i)
+
+/-- The product right-face comparison restricted to `1 ⊗ₜ m` is the intrinsic right
+Cech arrow. -/
+theorem thetaPieceProdBaseChangeToOverlapEquiv_one_tmul {n : ℕ}
+    (hc : A.IsCertified n) (s : A.ThetaPieceProd (π := π) a) :
+    A.thetaPieceProdBaseChangeToOverlapEquiv (π := π) a hc
+        (1 ⊗ₜ[↥(gluedSubalgebra A)] s) =
+      A.thetaIntrinsicDeltaRightGlued (π := π) a s := by
+  funext p
+  rw [A.thetaPieceProdBaseChangeToOverlapEquiv_tmul]
+  change A.toOvlLeft p.1 p.2 (1 : A.colength p.1) •
+      A.thetaToOverlapRight (π := π) a p.1 p.2 (s p.2) =
+    A.thetaToOverlapRight (π := π) a p.1 p.2 (s p.2)
+  simp
+
+/-- The remaining `Module.DescentDatum.coassoc` law is exactly equality of the
+base-changed intrinsic left and right Cech faces in the already typed module
+`chartProd ⊗[gluedSubalgebra A] ThetaOverlapProd`. -/
+theorem thetaDescentCoaction_coassoc_iff_baseChange_faces {n : ℕ}
+    (hc : A.IsCertified n) (s : A.ThetaPieceProd (π := π) a) :
+    ((A.thetaDescentCoaction (π := π) a hc).restrictScalars
+        (↥(gluedSubalgebra A))).baseChange A.chartProd
+        (A.thetaDescentCoaction (π := π) a hc s) =
+      (TensorProduct.mk (↥(gluedSubalgebra A)) A.chartProd
+        (A.ThetaPieceProd (π := π) a) 1).baseChange A.chartProd
+        (A.thetaDescentCoaction (π := π) a hc s) ↔
+    ((A.thetaIntrinsicDeltaLeftCP (π := π) a).restrictScalars
+        (↥(gluedSubalgebra A))).baseChange A.chartProd
+        (A.thetaDescentCoaction (π := π) a hc s) =
+      (A.thetaIntrinsicDeltaRightGlued (π := π) a).baseChange A.chartProd
+        (A.thetaDescentCoaction (π := π) a hc s) := by
+  apply Module.coassoc_iff_baseChange_faces
+    (e := A.thetaPieceProdBaseChangeToOverlapEquiv (π := π) a hc)
+    (left := A.thetaIntrinsicDeltaLeftCP (π := π) a)
+    (right := A.thetaIntrinsicDeltaRightGlued (π := π) a)
+    (delta := A.thetaDescentCoaction (π := π) a hc)
+  · apply LinearMap.ext
+    intro x
+    exact A.thetaPieceProdBaseChangeToOverlapEquiv_coaction (π := π) a hc x
+  · apply LinearMap.ext
+    intro x
+    exact A.thetaPieceProdBaseChangeToOverlapEquiv_one_tmul (π := π) a hc x
 
 end
 
