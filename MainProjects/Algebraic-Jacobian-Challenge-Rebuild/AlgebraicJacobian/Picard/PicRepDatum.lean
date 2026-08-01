@@ -105,6 +105,15 @@ variable {k k' : Type u} [Field k] [Field k'] [Algebra k k']
   {C' : Over (Spec (.of k'))} [IsProper C'.hom]
   [SmoothOfRelativeDimension 1 C'.hom] [GeometricallyIrreducible C'.hom]
 
+/-- The group-object structure canonically transported from the represented
+degree-zero Picard functor.  This is construction output from `d.rep`, not an
+additional field of `PicRepDatum`; activate it locally with `letI := d.grpObj`.
+-/
+@[implicit_reducible]
+noncomputable def grpObj (d : PicRepDatum k k' C') : GrpObj d.J :=
+  GrpObj.ofRepresentableBy d.J
+    (pic0Functor C' ⋙ forget₂ CommGrpCat GrpCat) d.rep
+
 /-- **The universal property, consumer form**: morphisms into `d.J` are degree-zero
 étale Picard classes.  Owns the `forget₂ ⋙ forget` defeq massage once — the target is
 the honest subgroup carrier `pic0Subgroup C' T` (as `pic0TypeFunctor_obj` is `rfl`). -/
