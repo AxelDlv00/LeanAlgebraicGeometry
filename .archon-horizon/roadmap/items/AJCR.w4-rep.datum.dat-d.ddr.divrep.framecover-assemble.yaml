@@ -2,15 +2,15 @@ id: AJCR.w4-rep.datum.dat-d.ddr.divrep.framecover-assemble
 title: Widened certified frame-cover assembly and RepresentableBy composition
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'PRODUCER ADVANCED. For every certified affine adaptation, the intrinsic
-  Cartier divisor is closed, finite, and affine over the test ring; its arbitrary
-  adapted pieces are clopen, global sections are the gluedSubalgebra equalizer, and
-  chartProd is finite faithfully flat over that algebra with surjective component
-  evaluations. No SwallowedBy, chart split, or new hypothesis is used. OPEN exact
-  seam: assemble chartProd tensor_[gluedSubalgebra] chartProd as the product of pairwise
-  overlap rings with compatibility for the two ring and theta faces. Then existing
-  Module.DescentDatum effectivity descends local theta invertibility to projectivity/rank,
-  enabling the carrier-free frame cover and RepresentableBy composition.'
+summary: 'PRODUCER ADVANCED. The intrinsic Cartier divisor is finite affine with clopen
+  adapted pieces; global sections are gluedSubalgebra, chartProd is finite faithfully
+  flat, the tensor square is the product of pairwise overlap rings, and the right
+  intrinsic-theta Cech arrow becomes the explicit chartProd-linear overlap equivalence
+  and is bijective after base change. No SwallowedBy, fixed chart, containment, or
+  new hypothesis is used. OPEN exact seam: construct/identify the left theta face
+  over the same tensor square, prove face/cocycle compatibility, then apply module
+  descent to local invertibility/projectivity/rank and assemble the carrier-free frame
+  cover and RepresentableBy composition.'
 status: active
 kind: proof
 priority: high
@@ -35,6 +35,7 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
   milestone: w4-gate
-  updated_at: '2026-07-31T21:06:16.332536+00:00'
+  updated_at: '2026-08-01T01:38:17.206031+00:00'
   pinned_commits:
+  - f333dd9bc2b1187c8ef783431272bf0d5e210058
   - 895829a5c5
