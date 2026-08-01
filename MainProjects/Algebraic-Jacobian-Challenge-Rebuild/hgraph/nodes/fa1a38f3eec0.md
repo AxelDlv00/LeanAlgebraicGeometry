@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.Pseudofunctor.DescentCocycle'
 type: lean
-updated: '2026-08-01T10:43:31'
+updated: '2026-08-01T11:45:14'
 ---
 structure DescentCocycle' where
   obj : ∀ i, F.obj (.mk (op (X i)))
@@ -27,13 +27,3 @@ structure DescentCocycle' where
 namespace DescentCocycle'
 
 variable {F sq sq₃}
-
-/-- Normalize the diagonal of an invertible cocycle and package it as descent
-data. -/
-noncomputable opaque toDescentData (D : F.DescentCocycle' sq sq₃) :
-    F.DescentData' sq sq₃ :=
-  { obj := D.obj
-    hom := D.hom
-    pullHom'_hom_self :=
-      pullHom'_hom_self_of_comp F sq sq₃ D.hom D.homIso D.pullHom'_hom_comp
-    pullHom'_hom_comp := D.pullHom'_hom_comp }
