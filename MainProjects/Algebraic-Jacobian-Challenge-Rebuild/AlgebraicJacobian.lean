@@ -720,6 +720,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyAffThetaSwallowedWindow
 import AlgebraicJacobian.Picard.DivisorFamilyAffFieldMono
 import AlgebraicJacobian.Picard.DivisorFamilyAffFieldWindowGen
 import AlgebraicJacobian.Picard.DivisorFamilyAffStalkUpgrade
+import AlgebraicJacobian.Picard.DivisorFamilyAffWindowGen
 -- hdegAff DISCHARGED (run 0087 r3, ajcr-p1): the widened class-degree law, hence the widened
 -- Abel ledger at an arbitrary test, hence chartValueAff_mem_pic0Subgroup with no hypothesis
 -- beyond the chart-index constraint. The last obligation between the R2 carrier (I-0492) and a
