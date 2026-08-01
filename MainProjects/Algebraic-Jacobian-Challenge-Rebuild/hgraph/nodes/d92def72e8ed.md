@@ -7,10 +7,9 @@ docstring: The intrinsic Cartier ideal on a triple intersection.
 file: AlgebraicJacobian/Picard/DivisorFamilyAffThetaTriple.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.AffAdaptation.thetaTripleIdeal
 type: lean
-updated: '2026-08-01T13:18:15'
+updated: '2026-08-01T13:31:19'
 ---
 noncomputable abbrev thetaTripleIdeal (A : AffAdaptation D d)
     (i j l : D.index) : Ideal Γ(relCurve C R, A.thetaTripleOpen i j l) :=

@@ -1,0 +1,35 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.divrep.widened-classifier
+title: Widened classifier and RepresentableBy composition
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'ACTIVE exact seam after the completed carrier-free frame cover: factor each
+  widened certified framed representative through DivScheme using eps_carve; port
+  overlap compatibility and Zariski gluing to define the backward classifier on DivFamZarAff;
+  prove separation and construct the forward universal widened family/naturality;
+  package the equivalence as (divFunctorAff C g).RepresentableBy. The old chart-typed
+  pullGlobalAff is only a one-way push into widened families and is not a producer
+  for arbitrary widened classes.'
+status: active
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-08-01T06:25:38.675081+00:00'
+  provenance:
+    run: '0100'
+    session: 0010-horizon-pic-d
+    role: horizon
+    round: '4'
+    rounds: '6'
+    task: pic-d
+    task_title: 'Pic rep lane D: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
+  owner: pic-d
+  milestone: w4-gate

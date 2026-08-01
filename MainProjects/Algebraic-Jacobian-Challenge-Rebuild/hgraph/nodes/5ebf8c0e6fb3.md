@@ -10,10 +10,9 @@ docstring: 'Restriction of theta sections from any pairwise intersection to a fi
 file: AlgebraicJacobian/Picard/DivisorFamilyAffThetaTriple.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.AffAdaptation.thetaOverlapSectionsToTriple
 type: lean
-updated: '2026-08-01T13:18:10'
+updated: '2026-08-01T13:31:19'
 ---
 noncomputable def thetaOverlapSectionsToTriple (A : AffAdaptation D d) (a : ℕ)
     (p q i j l : D.index)

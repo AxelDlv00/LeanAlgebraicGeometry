@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.AffAdaptation.thetaTripleQuotientModule
 file: AlgebraicJacobian/Picard/DivisorFamilyAffThetaTriple.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.AffAdaptation.thetaTripleQuotientModule
 type: lean
-updated: '2026-08-01T13:18:16'
+updated: '2026-08-01T13:31:19'
 ---
 noncomputable def thetaTripleQuotientModule (A : AffAdaptation D d) (a : ℕ)
     (i j l : D.index) :
@@ -23,3 +22,5 @@ noncomputable def thetaTripleQuotientModule (A : AffAdaptation D d) (a : ℕ)
         (⊤ : Submodule Γ(relCurve C R, A.thetaTripleOpen i j l)
           (A.ThetaTripleSections (π := π) a i j l)))
   infer_instance
+
+omit [IsProper C.hom] in

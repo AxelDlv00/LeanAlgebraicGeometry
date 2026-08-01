@@ -1,18 +1,17 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.divrep.framecover-assemble
-title: Widened certified frame-cover assembly and RepresentableBy composition
+title: Widened certified frame-cover assembly
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'PRODUCER ADVANCED. The intrinsic Cartier divisor is finite affine with clopen
-  adapted pieces; global sections are gluedSubalgebra, chartProd is finite faithfully
-  flat, and its tensor square is the product of pairwise overlap rings. The right
-  intrinsic-theta Cech face is an explicit chartProd-linear equivalence. The complementary
-  left face is chartProd-linear and transported through that equivalence to thetaDescentCoaction;
-  diagonal overlap normalization and the Module.DescentDatum counit are proved. No
-  SwallowedBy, fixed chart, containment, or new hypothesis is used. OPEN exact seam:
-  build the triple-overlap comparison and prove coassociativity, package Module.DescentDatum,
-  descend local invertibility/projectivity/rank, then assemble the carrier-free frame
-  cover and RepresentableBy composition.'
-status: active
+summary: DONE, NO NEW HYPOTHESES. Intrinsic theta Cech descent is coassociative and
+  descends invertibility; the intrinsic window quotient is finite projective of constant
+  rank g; widened mapAlg preserves both windows; every widened certified family has
+  a finite pair-chart frame cover; and the certified-away cover plus frame covers
+  flatten by the numerator-product lemma to DivFamZarAff.exists_certChartCover on
+  canonical Away (a*h) carriers. The widened carve condition is also discharged directly
+  from local equations. No ChartTyping, SwallowedBy, fixed P1 chart, GL2/Aut(P1),
+  or certificate-clause hypothesis occurs. RepresentableBy composition is intentionally
+  split to the new widened-classifier row.
+status: done
 kind: proof
 priority: high
 depends_on: []
@@ -36,8 +35,11 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
   milestone: w4-gate
-  updated_at: '2026-08-01T03:32:42.197694+00:00'
+  updated_at: '2026-08-01T06:25:24.590173+00:00'
   pinned_commits:
+  - bbd763722f
+  - ca8153f894
+  - fe0848ec15
   - 95947a8194da46f219b8bd61e7fb75a150e1fff6
   - ed3e12d2858da8ec41e2b9a137b8796e96421cd7
   - fc497c2354bffc36f688c4d3b5734df844835380

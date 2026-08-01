@@ -7,10 +7,9 @@ docstring: The intrinsic divisor ring on a triple intersection.
 file: AlgebraicJacobian/Picard/DivisorFamilyAffThetaTriple.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.AffAdaptation.tripleColength
 type: lean
-updated: '2026-08-01T13:18:15'
+updated: '2026-08-01T13:31:19'
 ---
 noncomputable abbrev tripleColength (A : AffAdaptation D d)
     (i j l : D.index) : Type u :=
