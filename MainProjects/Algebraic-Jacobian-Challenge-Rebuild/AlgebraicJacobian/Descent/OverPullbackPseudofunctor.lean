@@ -153,4 +153,11 @@ noncomputable def Over.pullbackPseudofunctor :
         using congrArg (fun η => η.app T)
           (Over.pullback_id_comp f.unop))
 
+/-- Regard an object over `X` as an object of the over-category appearing at
+`X` in the pullback pseudofunctor. This bridge avoids repeatedly unfolding the
+pseudofunctor's coherence data to reduce its object projection. -/
+noncomputable def Over.pullbackPseudofunctorObj {X : C} (J : Over X) :
+    (Over.pullbackPseudofunctor (C := C)).obj (.mk (Opposite.op X)) :=
+  J
+
 end CategoryTheory

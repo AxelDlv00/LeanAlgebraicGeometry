@@ -20,6 +20,33 @@ namespace CategoryTheory.Pseudofunctor
 
 open Opposite Limits LocallyDiscreteOpToCat
 
+variable {C₀ : Type u} [Category.{v} C₀]
+  {F₀ : Pseudofunctor (LocallyDiscrete C₀ᵒᵖ) Cat.{v', u'}}
+
+/-- Pulling an isomorphism along a pseudofunctor map produces an isomorphism. -/
+noncomputable instance LocallyDiscreteOpToCat.pullHom_isIso
+    {X₁ X₂ : C₀} {M₁ : F₀.obj (.mk (op X₁))} {M₂ : F₀.obj (.mk (op X₂))}
+    {Y : C₀} {f₁ : Y ⟶ X₁} {f₂ : Y ⟶ X₂}
+    (φ : (F₀.map f₁.op.toLoc).toFunctor.obj M₁ ⟶
+      (F₀.map f₂.op.toLoc).toFunctor.obj M₂)
+    [IsIso φ] {Y' : C₀} (g : Y' ⟶ Y) (gf₁ : Y' ⟶ X₁) (gf₂ : Y' ⟶ X₂)
+    (hgf₁ : g ≫ f₁ = gf₁ := by cat_disch)
+    (hgf₂ : g ≫ f₂ = gf₂ := by cat_disch) :
+    IsIso (pullHom φ g gf₁ gf₂ hgf₁ hgf₂) := by
+  let a := (F₀.mapComp' f₁.op.toLoc g.op.toLoc gf₁.op.toLoc
+    (by rw [← Quiver.Hom.comp_toLoc, ← op_comp, hgf₁])).hom.toNatTrans.app M₁
+  let b := (F₀.map g.op.toLoc).toFunctor.map φ
+  let c := (F₀.mapComp' f₂.op.toLoc g.op.toLoc gf₂.op.toLoc
+    (by rw [← Quiver.Hom.comp_toLoc, ← op_comp, hgf₂])).inv.toNatTrans.app M₂
+  have ha : IsIso a := by dsimp only [a]; infer_instance
+  have hb : IsIso b := by dsimp only [b]; infer_instance
+  have hc : IsIso c := by dsimp only [c]; infer_instance
+  have hbc : IsIso (b ≫ c) := @IsIso.comp_isIso _ _ _ _ _ b c hb hc
+  have habc : IsIso (a ≫ b ≫ c) :=
+    @IsIso.comp_isIso _ _ _ _ _ a (b ≫ c) ha hbc
+  have h : pullHom φ g gf₁ gf₂ hgf₁ hgf₂ = a ≫ b ≫ c := by rfl
+  exact h ▸ habc
+
 variable {C : Type u} [Category.{v} C]
   (F : Pseudofunctor (LocallyDiscrete Cᵒᵖ) Cat.{v', u'})
   {ι : Type t} {S : C} {X : ι → C} {f : ∀ i, X i ⟶ S}
@@ -47,55 +74,42 @@ lemma pullHom'_hom_self_of_comp
     exact comp_pullHom'' hom hom_comp (f i)
       (𝟙 (X i)) (𝟙 (X i)) (𝟙 (X i))
       (by simp) (by simp) (by simp)
-  let g := (sq i i).isPullback.lift (𝟙 (X i)) (𝟙 (X i)) (by simp)
-  let a := (F.mapComp' (sq i i).p₁.op.toLoc g.op.toLoc
-      (𝟙 (X i)).op.toLoc
-      (by rw [← Quiver.Hom.comp_toLoc, ← op_comp, IsPullback.lift_fst])).hom.toNatTrans.app
-        (obj i)
-  let b := (F.map g.op.toLoc).toFunctor.map (hom i i)
-  let c := (F.mapComp' (sq i i).p₂.op.toLoc g.op.toLoc
-      (𝟙 (X i)).op.toLoc
-      (by rw [← Quiver.Hom.comp_toLoc, ← op_comp, IsPullback.lift_snd])).inv.toNatTrans.app
-        (obj i)
   letI := homIso i i
-  have ha : IsIso a := by
-    dsimp only [a]
+  haveI : IsIso d := by
+    dsimp only [d, pullHom']
     infer_instance
-  have hb : IsIso b := by
-    dsimp only [b]
-    infer_instance
-  have hc : IsIso c := by
-    dsimp only [c]
-    infer_instance
-  have hbc : IsIso (b ≫ c) :=
-    @IsIso.comp_isIso _ _ _ _ _ b c hb hc
-  have habc : IsIso (a ≫ b ≫ c) :=
-    @IsIso.comp_isIso _ _ _ _ _ a (b ≫ c) ha hbc
-  have hd_eq : d = a ≫ b ≫ c := by rfl
-  haveI : IsIso d := hd_eq ▸ habc
   apply (cancel_mono d).1
   rw [hd]
   simp
 
-/-- Package an invertible chosen-pullback cocycle as descent data. The
-diagonal identity is forced by the cocycle and need not be supplied
-separately. -/
-noncomputable def DescentData'.ofComp
-    {obj : ∀ i, F.obj (.mk (op (X i)))}
-    (hom : ∀ i j, (F.map (sq i j).p₁.op.toLoc).toFunctor.obj (obj i) ⟶
-      (F.map (sq i j).p₂.op.toLoc).toFunctor.obj (obj j))
-    (homIso : ∀ i j, IsIso (hom i j))
-    (hom_comp : ∀ i₁ i₂ i₃,
+/-- An invertible chosen-pullback cocycle before diagonal normalization. -/
+structure DescentCocycle' where
+  obj : ∀ i, F.obj (.mk (op (X i)))
+  hom : ∀ i j, (F.map (sq i j).p₁.op.toLoc).toFunctor.obj (obj i) ⟶
+    (F.map (sq i j).p₂.op.toLoc).toFunctor.obj (obj j)
+  homIso : ∀ i j, IsIso (hom i j)
+  pullHom'_hom_comp : ∀ i₁ i₂ i₃,
+    DescentData'.pullHom' hom (sq₃ i₁ i₂ i₃).p
+        (sq₃ i₁ i₂ i₃).p₁ (sq₃ i₁ i₂ i₃).p₂ ≫
       DescentData'.pullHom' hom (sq₃ i₁ i₂ i₃).p
-          (sq₃ i₁ i₂ i₃).p₁ (sq₃ i₁ i₂ i₃).p₂ ≫
-        DescentData'.pullHom' hom (sq₃ i₁ i₂ i₃).p
-          (sq₃ i₁ i₂ i₃).p₂ (sq₃ i₁ i₂ i₃).p₃ =
-        DescentData'.pullHom' hom (sq₃ i₁ i₂ i₃).p
-          (sq₃ i₁ i₂ i₃).p₁ (sq₃ i₁ i₂ i₃).p₃) :
-    F.DescentData' sq sq₃ where
-  obj := obj
-  hom := hom
-  pullHom'_hom_self := pullHom'_hom_self_of_comp F sq sq₃ hom homIso hom_comp
-  pullHom'_hom_comp := hom_comp
+        (sq₃ i₁ i₂ i₃).p₂ (sq₃ i₁ i₂ i₃).p₃ =
+      DescentData'.pullHom' hom (sq₃ i₁ i₂ i₃).p
+        (sq₃ i₁ i₂ i₃).p₁ (sq₃ i₁ i₂ i₃).p₃
+
+namespace DescentCocycle'
+
+variable {F sq sq₃}
+
+/-- Normalize the diagonal of an invertible cocycle and package it as descent
+data. -/
+noncomputable opaque toDescentData (D : F.DescentCocycle' sq sq₃) :
+    F.DescentData' sq sq₃ :=
+  { obj := D.obj
+    hom := D.hom
+    pullHom'_hom_self :=
+      pullHom'_hom_self_of_comp F sq sq₃ D.hom D.homIso D.pullHom'_hom_comp
+    pullHom'_hom_comp := D.pullHom'_hom_comp }
+
+end DescentCocycle'
 
 end CategoryTheory.Pseudofunctor

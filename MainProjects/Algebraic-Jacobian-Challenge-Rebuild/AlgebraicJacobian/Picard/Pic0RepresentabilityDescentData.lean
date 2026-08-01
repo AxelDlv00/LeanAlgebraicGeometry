@@ -124,16 +124,25 @@ lemma pic0DescentPullback₃_p (i₁ i₂ i₃ : Unit) :
   rcases i₃ with ⟨⟩
   rfl
 
+/-- The local representative as an object of the pullback pseudofunctor over
+the singleton cover. -/
+noncomputable def pic0DescentObj (J : Over (Spec (.of L))) (i : Unit) :
+    (Over.pullbackPseudofunctor (C := Scheme.{u})).obj
+      (.mk (.op (pic0DescentCoverObj (L := L) i))) :=
+  Over.pullbackPseudofunctorObj J
+
 /-- The overlap morphism supplied by uniqueness of the two local Picard
 representatives. -/
 noncomputable def pic0DescentHom
-    (rep : (pic0TypeFunctor ((baseChange k L).obj C)).RepresentableBy J)
-    (_ _ : Unit) :
+    (rep : (pic0TypeFunctor ((baseChange k L).obj C)).RepresentableBy J) :
+    ∀ i j : Unit,
     ((Over.pullbackPseudofunctor (C := Scheme.{u})).map
-      (tensorOverlapInl (k := k) (L := L)).op.toLoc).toFunctor.obj J ⟶
+      (pic0DescentPullback (k := k) (L := L) i j).p₁.op.toLoc).toFunctor.obj
+        (pic0DescentObj J i) ⟶
       ((Over.pullbackPseudofunctor (C := Scheme.{u})).map
-      (tensorOverlapInr (k := k) (L := L)).op.toLoc).toFunctor.obj J :=
-  (tensorOverlapIso (C := C) rep).hom
+      (pic0DescentPullback (k := k) (L := L) i j).p₂.op.toLoc).toFunctor.obj
+        (pic0DescentObj J j)
+  | (), () => (tensorOverlapIso (C := C) rep).hom
 
 /-- The first concrete triple face is the pullback of the double-overlap map. -/
 lemma pic0Face12_pullHom
@@ -329,6 +338,54 @@ lemma pic0DescentHom_comp
     (tensorTripleIso13_face (C := C) rep).hom
   exact congrArg Iso.hom (tensorTripleIso_face_cocycle (C := C) rep).symm
 
+/-- The tensor-overlap comparison satisfies the chosen-pullback cocycle for
+the whole singleton cover family. -/
+lemma pic0DescentHom_comp_all
+    (rep : (pic0TypeFunctor ((baseChange k L).obj C)).RepresentableBy J) :
+    ∀ i₁ i₂ i₃,
+      Pseudofunctor.DescentData'.pullHom'
+          (F := Over.pullbackPseudofunctor (C := Scheme.{u}))
+          (f := pic0DescentCoverMap (k := k) (L := L))
+          (sq := pic0DescentPullback (k := k) (L := L))
+          (pic0DescentHom (C := C) rep)
+          (pic0DescentPullback₃ (k := k) (L := L) i₁ i₂ i₃).p
+          (pic0DescentPullback₃ (k := k) (L := L) i₁ i₂ i₃).p₁
+          (pic0DescentPullback₃ (k := k) (L := L) i₁ i₂ i₃).p₂
+          (by
+            rw [pic0DescentPullback₃_p]
+            exact tensorTripleCoord1_comp_base) (by
+            rw [pic0DescentPullback₃_p]
+            exact tensorTripleCoord2_comp_base) ≫
+        Pseudofunctor.DescentData'.pullHom'
+          (F := Over.pullbackPseudofunctor (C := Scheme.{u}))
+          (f := pic0DescentCoverMap (k := k) (L := L))
+          (sq := pic0DescentPullback (k := k) (L := L))
+          (pic0DescentHom (C := C) rep)
+          (pic0DescentPullback₃ (k := k) (L := L) i₁ i₂ i₃).p
+          (pic0DescentPullback₃ (k := k) (L := L) i₁ i₂ i₃).p₂
+          (pic0DescentPullback₃ (k := k) (L := L) i₁ i₂ i₃).p₃
+          (by
+            rw [pic0DescentPullback₃_p]
+            exact tensorTripleCoord2_comp_base) (by
+            rw [pic0DescentPullback₃_p]
+            exact tensorTripleCoord3_comp_base) =
+        Pseudofunctor.DescentData'.pullHom'
+          (F := Over.pullbackPseudofunctor (C := Scheme.{u}))
+          (f := pic0DescentCoverMap (k := k) (L := L))
+          (sq := pic0DescentPullback (k := k) (L := L))
+          (pic0DescentHom (C := C) rep)
+          (pic0DescentPullback₃ (k := k) (L := L) i₁ i₂ i₃).p
+          (pic0DescentPullback₃ (k := k) (L := L) i₁ i₂ i₃).p₁
+          (pic0DescentPullback₃ (k := k) (L := L) i₁ i₂ i₃).p₃
+          (by
+            rw [pic0DescentPullback₃_p]
+            exact tensorTripleCoord1_comp_base) (by
+            rw [pic0DescentPullback₃_p]
+            exact tensorTripleCoord3_comp_base) := by
+  rintro ⟨⟩ ⟨⟩ ⟨⟩
+  apply eq_of_heq
+  exact heq_of_eq (pic0DescentHom_comp (C := C) rep)
+
 /-- Every tensor-overlap comparison morphism is invertible. -/
 lemma pic0DescentHom_isIso
     (rep : (pic0TypeFunctor ((baseChange k L).obj C)).RepresentableBy J) :
@@ -337,23 +394,32 @@ lemma pic0DescentHom_isIso
   change IsIso ((tensorOverlapIso (C := C) rep).hom)
   infer_instance
 
+/-- The canonical Picard representative with its invertible tensor-overlap cocycle. -/
+noncomputable def pic0RepresentabilityDescentCocycle
+    (rep : (pic0TypeFunctor ((baseChange k L).obj C)).RepresentableBy J) :
+    (Over.pullbackPseudofunctor (C := Scheme.{u})).DescentCocycle'
+      (pic0DescentPullback (k := k) (L := L))
+      (pic0DescentPullback₃ (k := k) (L := L)) where
+  obj := pic0DescentObj J
+  hom := pic0DescentHom (C := C) rep
+  homIso := pic0DescentHom_isIso (C := C) rep
+  pullHom'_hom_comp := by
+    rintro ⟨⟩ ⟨⟩ ⟨⟩
+    apply eq_of_heq
+    exact heq_of_eq (pic0DescentHom_comp (C := C) rep)
+
 /-- The canonical Picard representative with its tensor-overlap descent data. -/
 noncomputable def pic0RepresentabilityDescentData
-    (rep : (pic0TypeFunctor ((baseChange k L).obj C)).RepresentableBy J) :
-    (Over.pullbackPseudofunctor (C := Scheme.{u})).DescentData'
-      (pic0DescentPullback (k := k) (L := L))
-      (pic0DescentPullback₃ (k := k) (L := L)) :=
-  Pseudofunctor.DescentData'.ofComp
+    (rep : (pic0TypeFunctor ((baseChange k L).obj C)).RepresentableBy J) :=
+  Pseudofunctor.DescentCocycle'.toDescentData
+    (C := Scheme.{u})
     (F := Over.pullbackPseudofunctor (C := Scheme.{u}))
+    (ι := Unit)
+    (S := Spec (.of k))
+    (X := pic0DescentCoverObj (L := L))
+    (f := pic0DescentCoverMap (k := k) (L := L))
     (sq := pic0DescentPullback (k := k) (L := L))
     (sq₃ := pic0DescentPullback₃ (k := k) (L := L))
-    (obj := fun _ ↦ J)
-    (pic0DescentHom (C := C) rep)
-    (pic0DescentHom_isIso (C := C) rep)
-    (fun i₁ i₂ i₃ => by
-      cases i₁
-      cases i₂
-      cases i₃
-      exact pic0DescentHom_comp (C := C) rep)
+    (pic0RepresentabilityDescentCocycle (C := C) rep)
 
 end AlgebraicGeometry
