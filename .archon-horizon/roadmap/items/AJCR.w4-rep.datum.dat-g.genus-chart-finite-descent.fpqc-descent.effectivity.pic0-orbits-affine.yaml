@@ -1,0 +1,33 @@
+id: AJCR.w4-rep.datum.dat-g.genus-chart-finite-descent.fpqc-descent.effectivity.pic0-orbits-affine
+title: Prove finite Pic0 Galois orbits lie in affine opens
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: From the existing L-side RepresentableBy witness and the canonical pic0SemilinearGalActionOfRepresentableBy,
+  prove OrbitsInAffineOpen without adding Scheme.FiniteInAffine, quasi-projectivity,
+  projectivity, or the orbit condition as a hypothesis or PicRepDatum field. Establish
+  the needed AF/quasi-projectivity fact intrinsically for this Pic0 group scheme (or
+  prove the Pic-specific orbit theorem directly). This is the missing producer required
+  by the stable-affine finite-Galois quotient engine.
+status: pending
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-08-01T05:17:25.364415+00:00'
+  provenance:
+    run: '0102'
+    session: 0010-horizon-pic-h
+    role: horizon
+    round: '4'
+    rounds: '6'
+    task: pic-h
+    task_title: 'Pic rep lane H: close Pic representability, no new hypotheses'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-g.genus-chart-finite-descent.fpqc-descent.effectivity
+  milestone: AJCR.w4-rep

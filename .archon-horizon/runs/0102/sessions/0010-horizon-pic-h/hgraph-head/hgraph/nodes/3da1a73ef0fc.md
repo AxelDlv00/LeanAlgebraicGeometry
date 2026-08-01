@@ -1,0 +1,13 @@
+---
+author: sync
+content_type: structure
+created: '2026-07-28T13:42:18'
+decl: AlgebraicGeometry.homomorphism
+file: AlgebraicJacobian/Tangent/TangentIdentitySection.lean
+generated: lean
+lean_status: lean_ok
+stale: true
+title: AlgebraicGeometry.homomorphism
+type: lean
+updated: '2026-07-29T11:07:21'
+---
