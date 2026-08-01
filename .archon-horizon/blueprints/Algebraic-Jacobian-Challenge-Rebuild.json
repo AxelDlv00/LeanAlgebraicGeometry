@@ -13280,7 +13280,7 @@
     "macros": {},
     "states": {
       "blocked": 21,
-      "closed": 10226,
+      "closed": 10388,
       "formalized_open": 169,
       "informal": 18,
       "ready": 115
@@ -13304,6 +13304,7 @@
       "AlgebraicGeometry.relFiberCoordPow_eq_pow: Lean declaration appears more than once (AlgebraicJacobian/Picard/DivSchemeHighWindowChartExhaustion.lean, AlgebraicJacobian/Picard/DivSchemeThetaKernelKill.lean)",
       "AlgebraicGeometry.relFiberCoordOnePow_eq_pow: Lean declaration appears more than once (AlgebraicJacobian/Picard/DivSchemeHighWindowChartExhaustion.lean, AlgebraicJacobian/Picard/DivSchemeThetaKernelKill.lean)",
       "AlgebraicGeometry.chi_relCurve: Lean declaration appears more than once (AlgebraicJacobian/Picard/DivSchemeMonoBridgeRel.lean, AlgebraicJacobian/Picard/DivisorDatumRankOne.lean)",
+      "AlgebraicGeometry.AffAdaptation.thetaToOverlap_diag_eq: Lean declaration appears more than once (AlgebraicJacobian/Picard/DivisorFamilyAffThetaCoaction.lean, AlgebraicJacobian/Picard/DivisorFamilyAffThetaSwallowed.lean)",
       "AlgebraicGeometry.map_mem_nonZeroDivisors: Lean declaration appears more than once (AlgebraicJacobian/Picard/DivSchemeAdaptationFibreRegular.lean, AlgebraicJacobian/Picard/DivisorFamilyPullbackMap.lean)",
       "AlgebraicGeometry.DivisorAdaptation.span_eq_of_unit_mul: Lean declaration appears more than once (AlgebraicJacobian/Picard/DivSchemeMonoBridge.lean, AlgebraicJacobian/Picard/DivisorFamilyStalkEval.lean)",
       "AlgebraicGeometry.DivisorAdaptation.toOvlLeft_mk: Lean declaration appears more than once (AlgebraicJacobian/Picard/DivisorFamilyPullbackCert.lean, AlgebraicJacobian/Picard/DivisorFamilyTheta.lean)",
@@ -13334,8 +13335,7 @@
       "residueFieldLocEquiv: Lean declaration appears more than once (AlgebraicJacobian/Picard/DivSchemeRedesignFreeFlat.lean, AlgebraicJacobian/Picard/SlicingFlatKernel.lean)",
       "residueFieldLocEquiv_map: Lean declaration appears more than once (AlgebraicJacobian/Picard/DivSchemeRedesignFreeFlat.lean, AlgebraicJacobian/Picard/SlicingFlatKernel.lean)",
       "injective_lTensor_residueField_localizedMap: Lean declaration appears more than once (AlgebraicJacobian/Picard/DivSchemeRedesignFreeFlat.lean, AlgebraicJacobian/Picard/SlicingFlatKernel.lean)",
-      "AlgebraicGeometry.gluedSubordUnit_val_of_eq: Lean declaration appears more than once (AlgebraicJacobian/Cohomology/RelCurveCollapse.lean, AlgebraicJacobian/Picard/ThetaChartClassNaturality.lean)",
-      "AlgebraicGeometry.resHom_appLE_apply: Lean declaration appears more than once (AlgebraicJacobian/Cohomology/RelCurveCollapse.lean, AlgebraicJacobian/Picard/ThetaChartClassNaturality.lean)"
+      "AlgebraicGeometry.gluedSubordUnit_val_of_eq: Lean declaration appears more than once (AlgebraicJacobian/Cohomology/RelCurveCollapse.lean, AlgebraicJacobian/Picard/ThetaChartClassNaturality.lean)"
     ]
   },
   "nodes": [

@@ -36,10 +36,11 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
   milestone: w4-gate
-  updated_at: '2026-08-01T03:15:49.539812+00:00'
+  updated_at: '2026-08-01T03:32:42.197694+00:00'
   pinned_commits:
   - 95947a8194da46f219b8bd61e7fb75a150e1fff6
   - ed3e12d2858da8ec41e2b9a137b8796e96421cd7
   - fc497c2354bffc36f688c4d3b5734df844835380
   - f333dd9bc2b1187c8ef783431272bf0d5e210058
   - 895829a5c5
+  owner: pic-d

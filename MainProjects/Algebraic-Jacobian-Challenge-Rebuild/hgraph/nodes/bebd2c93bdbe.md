@@ -10,7 +10,7 @@ private: true
 stale: true
 title: AlgebraicGeometry.probe_pullback_fst_congr_left.{w}
 type: lean
-updated: '2026-08-01T09:42:25'
+updated: '2026-08-01T11:45:17'
 ---
 private theorem probe_pullback_fst_congr_left.{w} {D : Type w} [Category.{u} D]
     {W S T : D} (a : W ⟶ S) {f g : T ⟶ S} (hfg : f = g)
