@@ -98,7 +98,9 @@ theorem exists_affCoverData_swallowedBy_with_piece [IsProper C.hom]
     (d : (relCurve C R).LocalEquations) {W : (relCurve C R).Opens}
     (hW : IsAffineOpen W) (hsub : d.supportLocus ⊆ (W : Set (relCurve C R))) :
     ∃ (D : AffCoverData C R) (j0 : D.index),
-      D.SwallowedBy d ∧ D.pieces j0 = W := by
+      D.SwallowedBy d ∧ D.pieces j0 = W ∧
+        ∀ j : D.index, j ≠ j0 →
+          Disjoint d.supportLocus (D.pieces j : Set (relCurve C R)) := by
   classical
   -- (the cover produced here is swallowed; whether it also carries an ADAPTATION is a
   -- separate question, answered by `exists_affAdaptation_swallowedBy` below)
@@ -142,11 +144,18 @@ theorem exists_affCoverData_swallowedBy_with_piece [IsProper C.hom]
         (Opens.mem_iSup.mpr ⟨e.symm ⟨s, hs⟩, by rw [Equiv.apply_symm_apply]; exact hzs⟩))
   let D := AffCoverData.ofSwallowingPiece W hW (fun j => V (e j).1)
     (fun j => hVaff (e j).1) hcover
-  have hsw : D.SwallowedBy d := by
-    refine AffCoverData.swallowedBy_ofSwallowingPiece hW _ _ hsub fun j => ?_
+  have hmissV : ∀ j, Disjoint d.supportLocus (V (e j).1 : Set (relCurve C R)) := by
+    intro j
     refine Set.disjoint_left.mpr fun z hzsupp hzV => ?_
     exact (hVle (e j).1 hzV) hzsupp
-  refine ⟨D, Fin.last _, hsw, ?_⟩
+  have hsw : D.SwallowedBy d := by
+    exact AffCoverData.swallowedBy_ofSwallowingPiece hW _ _ hsub hmissV
+  have hmissD : ∀ j : D.index, j ≠ Fin.last _ →
+      Disjoint d.supportLocus (D.pieces j : Set (relCurve C R)) := by
+    intro j hj
+    obtain ⟨i, rfl⟩ := Fin.exists_castSucc_eq.mpr hj
+    simpa [D, AffCoverData.ofSwallowingPiece] using hmissV i
+  refine ⟨D, Fin.last _, hsw, ?_, hmissD⟩
   simp [D, AffCoverData.ofSwallowingPiece]
 
 /-- **`SwallowedBy` from one affine support neighbourhood.** -/
@@ -154,7 +163,7 @@ theorem exists_affCoverData_swallowedBy [IsProper C.hom]
     (d : (relCurve C R).LocalEquations) {W : (relCurve C R).Opens}
     (hW : IsAffineOpen W) (hsub : d.supportLocus ⊆ (W : Set (relCurve C R))) :
     ∃ D : AffCoverData C R, D.SwallowedBy d := by
-  obtain ⟨D, _, hsw, _⟩ :=
+  obtain ⟨D, _, hsw, _, _⟩ :=
     exists_affCoverData_swallowedBy_with_piece C R d hW hsub
   exact ⟨D, hsw⟩
 
