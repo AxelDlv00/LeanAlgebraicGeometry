@@ -67,6 +67,7 @@ import AlgebraicJacobian.Picard.ProjectionUnits
 import AlgebraicJacobian.Picard.EtaleSeparatedness
 import AlgebraicJacobian.Descent.ModuleDescent
 import AlgebraicJacobian.Descent.InvertibleModule
+import AlgebraicJacobian.Descent.AffineSchemeDescent
 import AlgebraicJacobian.Descent.OverPullbackPseudofunctor
 import AlgebraicJacobian.Descent.UnitDescent
 import AlgebraicJacobian.Picard.AmitsurCochain
@@ -541,6 +542,7 @@ import AlgebraicJacobian.Picard.Pic0RepresentabilityOverlap
 import AlgebraicJacobian.Descent.DescentDataNormalization
 import AlgebraicJacobian.Picard.Pic0RepresentabilityPullbacks
 import AlgebraicJacobian.Picard.Pic0RepresentabilityDescentData
+import AlgebraicJacobian.Picard.Pic0GaloisAction
 import AlgebraicJacobian.Picard.JacobianDataAbel
 import AlgebraicJacobian.Picard.JacobianDataBaseChange
 import AlgebraicJacobian.Picard.JacobianDataBaseChangeAbel
