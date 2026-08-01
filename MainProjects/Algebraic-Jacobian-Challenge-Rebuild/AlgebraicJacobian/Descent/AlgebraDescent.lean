@@ -21,6 +21,8 @@ descent of schemes.
   commutative algebras.
 * `Algebra.DescentDatum.descentEquiv`: the resulting algebra equivalence
   `B ⊗[A] R₀ ≃ₐ[B] R`.
+* `Algebra.DescentDatum.Hom.descendedMap`: functoriality of the equalizer
+  construction for morphisms compatible with the descent coactions.
 -/
 
 set_option autoImplicit false
@@ -124,6 +126,135 @@ theorem descentEquiv_tmul (D : DescentDatum A B R) [Module.Flat A B]
     (b : B) (x : D.descended) :
     D.descentEquiv (b ⊗ₜ x) = b • (x : R) :=
   D.comparison_tmul b x
+
+variable {S T : Type u} [CommRing S] [CommRing T]
+  [Algebra A S] [Algebra B S] [IsScalarTower A B S]
+  [Algebra A T] [Algebra B T] [IsScalarTower A B T]
+
+/-- A morphism of commutative-algebra descent data: a `B`-algebra map that
+intertwines the two coactions. -/
+structure Hom (D₁ : DescentDatum A B R) (D₂ : DescentDatum A B S) where
+  hom : R →ₐ[B] S
+  coaction_comm (x : R) :
+    D₂.coaction (hom x) =
+      Algebra.TensorProduct.map (AlgHom.id A B) (hom.restrictScalars A)
+        (D₁.coaction x)
+
+namespace Hom
+
+variable {D₁ : DescentDatum A B R} {D₂ : DescentDatum A B S}
+  {D₃ : DescentDatum A B T}
+
+@[ext]
+theorem ext {f g : Hom D₁ D₂} (h : f.hom = g.hom) : f = g := by
+  cases f
+  cases g
+  cases h
+  rfl
+
+/-- The identity morphism of an algebra descent datum. -/
+def id (D : DescentDatum A B R) : Hom D D where
+  hom := AlgHom.id B R
+  coaction_comm x := by
+    have h : (AlgHom.id B R).restrictScalars A = AlgHom.id A R := by
+      ext
+      rfl
+    rw [h, Algebra.TensorProduct.map_id]
+    rfl
+
+/-- Composition of morphisms of algebra descent data. -/
+def comp (f : Hom D₁ D₂) (g : Hom D₂ D₃) : Hom D₁ D₃ where
+  hom := g.hom.comp f.hom
+  coaction_comm x := by
+    change D₃.coaction (g.hom (f.hom x)) =
+      Algebra.TensorProduct.map (AlgHom.id A B)
+        ((g.hom.comp f.hom).restrictScalars A) (D₁.coaction x)
+    rw [g.coaction_comm, f.coaction_comm]
+    have h :
+        (g.hom.comp f.hom).restrictScalars A =
+          (g.hom.restrictScalars A).comp (f.hom.restrictScalars A) := by
+      ext
+      rfl
+    rw [h, Algebra.TensorProduct.map_id_comp]
+    rfl
+
+@[simp]
+theorem id_hom (D : DescentDatum A B R) : (id D).hom = AlgHom.id B R := rfl
+
+@[simp]
+theorem comp_hom (f : Hom D₁ D₂) (g : Hom D₂ D₃) :
+    (comp f g).hom = g.hom.comp f.hom := rfl
+
+@[simp]
+theorem id_comp (f : Hom D₁ D₂) : comp (id D₁) f = f := by
+  ext
+  rfl
+
+@[simp]
+theorem comp_id (f : Hom D₁ D₂) : comp f (id D₂) = f := by
+  ext
+  rfl
+
+@[simp]
+theorem comp_assoc {U : Type u} [CommRing U]
+    [Algebra A U] [Algebra B U] [IsScalarTower A B U]
+    {D₄ : DescentDatum A B U} (f : Hom D₁ D₂) (g : Hom D₂ D₃)
+    (h : Hom D₃ D₄) :
+    comp (comp f g) h = comp f (comp g h) := by
+  ext
+  rfl
+
+/-- A morphism of descent data restricts to an `A`-algebra map between the
+equalizer algebras. -/
+noncomputable def descendedMap (f : Hom D₁ D₂) :
+    D₁.descended →ₐ[A] D₂.descended :=
+  ((f.hom.restrictScalars A).comp D₁.descended.val).codRestrict
+    D₂.descended fun x => by
+      change f.hom (x : R) ∈ D₂.descended
+      rw [D₂.mem_descended, Module.DescentDatum.mem_descended,
+        f.coaction_comm]
+      rw [(Module.DescentDatum.mem_descended D₁.toDescentDatum).mp
+        (D₁.mem_descended.mp x.2)]
+      simp
+
+@[simp]
+theorem descendedMap_apply (f : Hom D₁ D₂) (x : D₁.descended) :
+    (f.descendedMap x : S) = f.hom x := rfl
+
+@[simp]
+theorem descendedMap_id :
+    (id D₁).descendedMap = AlgHom.id A D₁.descended := by
+  ext
+  rfl
+
+@[simp]
+theorem descendedMap_comp (f : Hom D₁ D₂) (g : Hom D₂ D₃) :
+    (comp f g).descendedMap = g.descendedMap.comp f.descendedMap := by
+  ext
+  rfl
+
+/-- Naturality of the algebra comparison map with respect to a morphism of
+descent data. -/
+theorem comparison_naturality (f : Hom D₁ D₂)
+    (x : B ⊗[A] D₁.descended) :
+    D₂.comparison
+        (Algebra.TensorProduct.map (AlgHom.id A B) f.descendedMap x) =
+      f.hom (D₁.comparison x) := by
+  induction x with
+  | zero => simp
+  | tmul b x => simp [Algebra.smul_def]
+  | add x y hx hy => simp [hx, hy]
+
+/-- Naturality of effective descent after promoting the comparison maps to
+algebra equivalences. -/
+theorem descentEquiv_naturality (f : Hom D₁ D₂) [Module.Flat A B]
+    (x : B ⊗[A] D₁.descended) :
+    D₂.descentEquiv
+        (Algebra.TensorProduct.map (AlgHom.id A B) f.descendedMap x) =
+      f.hom (D₁.descentEquiv x) :=
+  f.comparison_naturality x
+
+end Hom
 
 end DescentDatum
 
