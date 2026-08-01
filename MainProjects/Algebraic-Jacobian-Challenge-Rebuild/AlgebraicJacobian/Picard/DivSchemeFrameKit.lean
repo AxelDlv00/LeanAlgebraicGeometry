@@ -141,6 +141,21 @@ theorem map_congrAmbient {T' : Type u} [CommRing T'] [Algebra k T'] (α : T →�
     baseChange_map_submodule, ← Submodule.map_comp, ← Submodule.map_comp,
     cancelBaseChange_comp_baseChange_baseChange T' e.toLinearMap]
 
+/-- Ambient transport composes along linear equivalences. -/
+theorem congrAmbient_trans {H'' : Type u} [AddCommGroup H''] [Module k H'']
+    (e : H ≃ₗ[k] H') (e' : H' ≃ₗ[k] H'') (x : grFunctorAff k H g T) :
+    congrAmbient e' (congrAmbient e x) = congrAmbient (e.trans e') x := by
+  apply Module.Grassmannian.ext
+  rw [congrAmbient_toSubmodule, congrAmbient_toSubmodule,
+    congrAmbient_toSubmodule, ← Submodule.map_comp, ← LinearMap.baseChange_comp]
+  rfl
+
+/-- Transporting an ambient Grassmannian point through an equivalence and back is trivial. -/
+theorem congrAmbient_symm_cancel (e : H ≃ₗ[k] H') (x : grFunctorAff k H' g T) :
+    congrAmbient e (congrAmbient e.symm x) = x := by
+  rw [congrAmbient_trans]
+  exact Module.Grassmannian.ext (by simp)
+
 end CongrAmbient
 
 /-! ## K2: a matrix presentation from a free quotient -/
