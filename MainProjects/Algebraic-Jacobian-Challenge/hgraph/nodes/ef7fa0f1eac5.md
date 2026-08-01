@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.isFinitePresentation_tensorObj_left_of_isLocallyTrivial
 type: lean
-updated: '2026-08-01T07:20:39'
+updated: '2026-08-01T12:39:19'
 ---
 theorem isFinitePresentation_tensorObj_left_of_isLocallyTrivial
     {X : Scheme.{u}} (L F : X.Modules)
@@ -71,3 +71,7 @@ theorem isFinitePresentation_tensorObj_left_of_isLocallyTrivial
     { isFinite_presentation := fun ij =>
         hqT.isFinite_presentation (Exists.choose ij.property) }
   exact { exists_quasicoherentData := ⟨qT.shrink, hsh⟩ }
+
+set_option maxHeartbeats 2500000 in
+-- The affine-locality engine refines both source and base covers through
+-- basic opens before transporting the local section equivalence.

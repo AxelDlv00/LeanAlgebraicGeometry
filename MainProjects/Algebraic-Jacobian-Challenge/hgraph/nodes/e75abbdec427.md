@@ -3,19 +3,13 @@ author: sync
 content_type: theorem
 created: '2026-07-31T17:10:04'
 decl: AlgebraicGeometry.Scheme.DivFamily.grassmannianEval_epi
-docstring: 'The evaluation map is epi as soon as its two displayed factors are epi.
-
-  This keeps the base-change and divisor-quotient obligations separate, so a
-
-  later uniform-generation proof can discharge only the factor it actually
-
-  proves.'
-file: AlgebraicJacobian/Picard/DivGrassmannianEmbedding.lean
+docstring: The evaluation map is epi as soon as its two displayed factors are epi.
+file: AlgebraicJacobian/Picard/DivGrassmannianClass.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.DivFamily.grassmannianEval_epi
 type: lean
-updated: '2026-07-31T17:10:04'
+updated: '2026-08-01T12:39:19'
 ---
 theorem grassmannianEval_epi (L : X.Modules) (x : DivFamily π T)
     (hbase : Epi (pushforwardBaseChangeMap π T.hom
