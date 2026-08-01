@@ -682,6 +682,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyAffThetaCoaction
 import AlgebraicJacobian.Picard.DivisorFamilyAffThetaTriple
 import AlgebraicJacobian.Picard.DivisorFamilyAffThetaTripleBaseChange
 import AlgebraicJacobian.Picard.DivisorSubschemeTriple
+import AlgebraicJacobian.Picard.DivisorSubschemeTensorTriple
 import AlgebraicJacobian.Picard.DivisorIdealSheaf
 import AlgebraicJacobian.Picard.DivisorSubscheme
 import AlgebraicJacobian.Picard.DivisorSubschemeFinite
