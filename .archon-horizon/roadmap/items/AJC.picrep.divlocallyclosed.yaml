@@ -45,7 +45,7 @@ summary: "D3' locally closed carving (campaign :305). ADVANCED, NOT CLOSED. Owne
   \ text: DivFamily has exactly one producer in AJC (DivFamily.zero, Picard/DivFamilyZero.lean),\
   \ so every Cluster D' theorem is testable at one family only. NOTHING HERE CLOSES\
   \ THE SEAM SORRY; rep has no producer."
-status: active
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -68,8 +68,8 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-31T23:25:58.412989+00:00'
+  updated_at: '2026-08-01T04:45:04.502457+00:00'
   pinned_commits:
+  - 14b888d2edd3114009a2d3797a1dac3912f06242
   - 6313a2f6a51fae13f2f5fa0ce458e3bcaefa1e48
   - fa7e4deb6
-  owner: pic-b
