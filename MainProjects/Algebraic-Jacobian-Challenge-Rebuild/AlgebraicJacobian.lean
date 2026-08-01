@@ -702,6 +702,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyAffThetaCech
 import AlgebraicJacobian.Picard.DivisorFamilyAffThetaFinite
 import AlgebraicJacobian.Picard.DivisorFamilyAffThetaEffective
 import AlgebraicJacobian.Picard.DivisorFamilyAffThetaWindowBaseChange
+import AlgebraicJacobian.Picard.DivisorFamilyAffThetaFrameCover
 import AlgebraicJacobian.Picard.DivisorFamilyAffThetaSwallowed
 import AlgebraicJacobian.Picard.DivisorFamilyAffThetaSwallowedWindow
 -- The field-level window-recovery mono is CARRIER-FREE (run 0089 r6, ajcr-p3): the rung
