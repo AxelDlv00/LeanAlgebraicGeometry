@@ -55,10 +55,10 @@ variable [SmoothOfRelativeDimension 1 (C.left ↘ Spec (.of k))] [IsIntegral C.l
 variable (hpi : pi ≫ P1.structureMap k = C.left ↘ Spec (.of k))
 variable (g r1 r2 : Nat)
 variable (b1 : Module.Basis (Fin r1) k
-	  ↥(Scheme.divisorSections k
+  ↥(Scheme.divisorSections k
     (windowM_choice pi hpi g • fiberWeilDivisor pi) ⊤))
 variable (b2 : Module.Basis (Fin r2) k
-	  ↥(Scheme.divisorSections k
+  ↥(Scheme.divisorSections k
     ((windowS_choice pi hpi g • fiberWeilDivisor pi) +
       (windowM_choice pi hpi g • fiberWeilDivisor pi)) ⊤))
 variable (i : (glueData k g r1).J) (j : (glueData k g r2).J)
