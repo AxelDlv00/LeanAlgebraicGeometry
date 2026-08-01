@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivFamZar.awayMulOfDvd_toAlgHom
 type: lean
-updated: '2026-07-31T20:15:20'
+updated: '2026-08-01T09:44:11'
 ---
 theorem awayMulOfDvd_toAlgHom (f a b : S) (h : a * b = f) (x : S) :
     awayMulOfDvd (k := k) f a b h (IsScalarTower.toAlgHom k S (Localization.Away a) x)

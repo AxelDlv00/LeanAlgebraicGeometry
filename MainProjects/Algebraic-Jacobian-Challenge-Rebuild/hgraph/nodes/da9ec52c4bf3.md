@@ -20,7 +20,7 @@ generated: lean
 lean_status: lean_ok
 title: Algebra.EtaleCover
 type: lean
-updated: '2026-07-31T20:15:16'
+updated: '2026-08-01T09:44:08'
 ---
 structure EtaleCover (A : Type u) [CommRing A] : Type u where
   /-- The number of variables of the presentation. -/

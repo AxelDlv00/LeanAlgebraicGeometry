@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.IsCertified.intrinsicThetaEvalRel_surjective
 type: lean
-updated: '2026-07-31T19:20:46'
+updated: '2026-08-01T09:44:13'
 ---
 theorem IsCertified.intrinsicThetaEvalRel_surjective
     {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}

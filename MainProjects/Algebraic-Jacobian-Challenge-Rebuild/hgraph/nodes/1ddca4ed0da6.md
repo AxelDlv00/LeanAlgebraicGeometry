@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.IsAffineOpen.primeIdealOf_ne_bot
 type: lean
-updated: '2026-07-31T20:15:28'
+updated: '2026-08-01T09:44:17'
 ---
 theorem IsAffineOpen.primeIdealOf_ne_bot {x : X} (hx : x ∈ V) (hxg : x ≠ genericPoint X) :
     (hV.primeIdealOf ⟨x, hx⟩).asIdeal ≠ ⊥ := by

@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivisorAdaptation.thetaInvSectionFst_inr
 type: lean
-updated: '2026-07-31T20:15:25'
+updated: '2026-08-01T09:44:14'
 ---
 lemma thetaInvSectionFst_inr (j₁ : Fin A.m₁) :
     A.thetaInvSectionFst a H (Sum.inr j₁) = 1 := rfl

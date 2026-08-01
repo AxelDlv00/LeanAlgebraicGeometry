@@ -26,7 +26,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.testPointField_fromSpecAffine_isIso
 type: lean
-updated: '2026-07-31T20:15:27'
+updated: '2026-08-01T09:44:16'
 ---
 instance testPointField_fromSpecAffine_isIso (T : Over (Spec (.of k)))
     (U : T.left.affineOpens) (t : (overSpec k Γ(T.left, U.1)).left) :

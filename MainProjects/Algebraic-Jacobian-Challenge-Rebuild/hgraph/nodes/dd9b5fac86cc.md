@@ -13,7 +13,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.DivisorAdaptation.theta_chart_inl_inr
 type: lean
-updated: '2026-07-31T20:15:21'
+updated: '2026-08-01T09:44:11'
 ---
 private lemma theta_chart_inl_inr (a : ℕ) (i : Fin A.m₀) (j : Fin A.m₁)
     {O : (relCurve C R).Opens}

@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.PresheafOfGroups.OneCocycle.res_ev
 type: lean
-updated: '2026-07-31T20:15:19'
+updated: '2026-08-01T09:44:10'
 ---
 lemma res_ev (γ : OneCocycle G U) (f : ∀ i, V i ⟶ U i) (i j : I) {T : C}
     (a : T ⟶ V i) (b : T ⟶ V j) :

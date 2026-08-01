@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: IsLocalization.AwayCover.piDoubleEquiv_descentIncl₁
 type: lean
-updated: '2026-07-31T20:15:16'
+updated: '2026-08-01T09:44:09'
 ---
 lemma piDoubleEquiv_descentIncl₁ (s : ∀ i, S i) :
     piDoubleEquiv f S T (Module.descentIncl₁ A (∀ i, S i) s)

@@ -37,7 +37,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.existsUnique_ofCurve_comp_of_vanishing
 type: lean
-updated: '2026-07-31T20:15:15'
+updated: '2026-08-01T09:44:08'
 ---
 theorem existsUnique_ofCurve_comp_of_vanishing
     (h : ∀ T : Over (Spec (.of k)), pic0Subgroup C T = ⊥) (hs : Surjective C.hom)

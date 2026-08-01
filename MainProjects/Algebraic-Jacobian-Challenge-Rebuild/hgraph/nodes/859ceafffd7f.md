@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.whiskerLeft_comp_graphLift
 type: lean
-updated: '2026-07-31T20:15:19'
+updated: '2026-08-01T09:44:10'
 ---
 lemma whiskerLeft_comp_graphLift {T' : Over (Spec (.of k))} (g : T' ⟶ T) (t : T ⟶ C) :
     (C ◁ g) ≫ lift (fst C T) (snd C T ≫ t)

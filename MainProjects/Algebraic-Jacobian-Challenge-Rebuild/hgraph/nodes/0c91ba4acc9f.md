@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: TwoLatticePair.modelHom_hom₀_apply
 type: lean
-updated: '2026-07-31T20:15:18'
+updated: '2026-08-01T09:44:10'
 ---
 lemma modelHom_hom₀_apply (m : ι → ℤ) (a : ι → M₀) (b : ι → M₁)
     (hab : ∀ i, P.laurentToEnd (T (m i)) (P.ι₀ (a i)) = P.ι₁ (b i)) (p : ι → R[X]) :

@@ -32,7 +32,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.IsChartUniv
 type: lean
-updated: '2026-07-31T20:15:27'
+updated: '2026-08-01T09:44:16'
 ---
 def IsChartUniv {D : Over (Spec (.of k))} (rep : (divFunctor C π n).RepresentableBy D)
     (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)

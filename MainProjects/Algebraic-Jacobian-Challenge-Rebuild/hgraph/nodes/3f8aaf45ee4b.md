@@ -20,7 +20,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Hom.unitsAppLE_glued_trivTwist
 type: lean
-updated: '2026-07-31T20:15:25'
+updated: '2026-08-01T09:44:15'
 ---
 theorem Scheme.Hom.unitsAppLE_glued_trivTwist {X' : Scheme.{u}} (r₁ r₂ : Y ⟶ Z)
     (φ : X' ⟶ Y) (m₁ m₂ : X' ⟶ Z) (hm₁ : φ ≫ r₁ = m₁) (hm₂ : φ ≫ r₂ = m₂)

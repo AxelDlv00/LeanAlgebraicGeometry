@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Hom.faithfulSMul_pullbackSections
 type: lean
-updated: '2026-07-31T20:15:28'
+updated: '2026-08-01T09:44:17'
 ---
 theorem Scheme.Hom.faithfulSMul_pullbackSections [IsIntegral X] [IsIntegral Y]
     (hf : f.base (genericPoint X) = genericPoint Y) {V : Y.Opens}

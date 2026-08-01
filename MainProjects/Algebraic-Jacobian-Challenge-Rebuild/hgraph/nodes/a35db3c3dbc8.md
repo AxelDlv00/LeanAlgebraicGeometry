@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: TruncExpCech.ker_fstRingHom_le_nilradical
 type: lean
-updated: '2026-07-31T20:15:29'
+updated: '2026-08-01T09:44:18'
 ---
 theorem ker_fstRingHom_le_nilradical :
     RingHom.ker (fstRingHom (R := A)) ≤ nilradical (DualNumber A) := by

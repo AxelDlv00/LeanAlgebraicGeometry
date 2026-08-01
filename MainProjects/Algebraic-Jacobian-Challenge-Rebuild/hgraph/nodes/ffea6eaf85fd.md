@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: LaurentPolynomial.exists_eq_C_mul_T_of_isUnit
 type: lean
-updated: '2026-07-31T20:15:16'
+updated: '2026-08-01T09:44:09'
 ---
 theorem exists_eq_C_mul_T_of_isUnit {f : LaurentPolynomial R} (hf : IsUnit f) :
     ∃ (c : R) (n : ℤ), IsUnit c ∧ f = LaurentPolynomial.C c * T n := by

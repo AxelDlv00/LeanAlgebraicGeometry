@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.graphPoint_mem_productChart
 type: lean
-updated: '2026-07-31T20:15:29'
+updated: '2026-08-01T09:44:18'
 ---
 lemma graphPoint_mem_productChart :
     Over.graphPoint C t

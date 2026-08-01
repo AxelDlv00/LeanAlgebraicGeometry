@@ -13,7 +13,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.DivisorAdaptation.germ_res_eqn_left
 type: lean
-updated: '2026-07-31T20:15:25'
+updated: '2026-08-01T09:44:14'
 ---
 private lemma germ_res_eqn_left (i j : A.index) :
     ∀ (z : relCurve C R) (hz : z ∈ A.pieces i ⊓ A.pieces j),

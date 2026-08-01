@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divFamZarAff.eval_apply
 type: lean
-updated: '2026-07-31T20:15:24'
+updated: '2026-08-01T09:44:13'
 ---
 lemma eval_apply (U : T.left.affineOpens) (s : divFamZarAff C n T) :
     eval C n T U s = s.1 U :=

@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.Diagonal.ker_pointEvTwo
 type: lean
-updated: '2026-07-31T20:15:16'
+updated: '2026-08-01T09:44:09'
 ---
 theorem ker_pointEvTwo :
     RingHom.ker (pointEvTwo c) = Ideal.span {mapRightTwo c e} := by

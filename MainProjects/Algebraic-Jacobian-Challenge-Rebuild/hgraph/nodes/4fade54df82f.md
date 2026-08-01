@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.FinCoverData.isAffineOpen_pieces
 type: lean
-updated: '2026-07-31T20:15:24'
+updated: '2026-08-01T09:44:14'
 ---
 lemma isAffineOpen_pieces (j : D.index) : IsAffineOpen (D.pieces j) := by
   cases j

@@ -19,7 +19,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivisorAdaptation.stalkIdeal_eq_span_germ_eqn
 type: lean
-updated: '2026-07-31T20:15:22'
+updated: '2026-08-01T09:44:12'
 ---
 lemma stalkIdeal_eq_span_germ_eqn (j : A.index) {z : relCurve C R}
     (hz : z ∈ A.pieces j) :

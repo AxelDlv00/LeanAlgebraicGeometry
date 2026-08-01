@@ -29,7 +29,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.chartTwist_chartValue
 type: lean
-updated: '2026-07-31T20:15:27'
+updated: '2026-08-01T09:44:15'
 ---
 theorem chartTwist_chartValue {n : ℕ} (m : ℕ)
     (Z : (C ⊗ overSpec k k).left.CurveDivisor) (T : Over (Spec (.of k)))

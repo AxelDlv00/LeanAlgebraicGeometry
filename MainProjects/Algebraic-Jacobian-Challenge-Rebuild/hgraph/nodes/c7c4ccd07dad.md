@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.ord_val_eq
 type: lean
-updated: '2026-07-31T20:15:29'
+updated: '2026-08-01T09:44:18'
 ---
 theorem ord_val_eq {x : X} (hx : x ≠ genericPoint X) :
     Scheme.ord (X ↘ Spec (CommRingCat.of K)) hx (g : X.functionField)

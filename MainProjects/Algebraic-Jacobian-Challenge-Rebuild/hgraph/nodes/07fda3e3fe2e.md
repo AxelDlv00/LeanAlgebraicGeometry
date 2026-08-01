@@ -19,7 +19,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.tensorTripleTheta12_face
 type: lean
-updated: '2026-08-01T00:55:15'
+updated: '2026-08-01T09:44:16'
 ---
 noncomputable def tensorTripleTheta12_face :
     (Over.map (tensorTripleCoord1 (k := k) (L := L))).op ⋙

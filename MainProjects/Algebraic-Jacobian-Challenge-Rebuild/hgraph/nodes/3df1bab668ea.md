@@ -11,7 +11,7 @@ lean_status: lean_ok
 private: true
 title: Module.dual_ext
 type: lean
-updated: '2026-07-31T20:15:19'
+updated: '2026-08-01T09:44:10'
 ---
 private theorem dual_ext {X : Type u} [AddCommGroup X] [Module A X]
     {F G : Dual B (B ⊗[A] X)} (h : ∀ x : X, F (1 ⊗ₜ x) = G (1 ⊗ₜ x)) : F = G := by

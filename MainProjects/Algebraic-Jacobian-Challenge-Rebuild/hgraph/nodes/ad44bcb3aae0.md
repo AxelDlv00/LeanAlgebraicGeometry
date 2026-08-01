@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.resHom_smul_rel'
 type: lean
-updated: '2026-07-31T20:15:25'
+updated: '2026-08-01T09:44:14'
 ---
 lemma resHom_smul_rel' (S : Type u) [CommRing S] [Algebra k S]
     {W V : (relCurve C S).Opens} (h : W ≤ V) (s : S) (y : Γ(relCurve C S, V)) :

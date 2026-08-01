@@ -22,7 +22,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivFamZar.isOpen_setOf_isH1VanishingAt
 type: lean
-updated: '2026-07-31T20:15:24'
+updated: '2026-08-01T09:44:14'
 ---
 theorem DivFamZar.isOpen_setOf_isH1VanishingAt
     (hπ : π ≫ P1.structureMap k = C.hom) (F₀ : DivFamZar C S π n) :

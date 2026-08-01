@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: RingTheory.CohenMacaulay.spanFinrank_maximalIdeal_le_of_surjective
 type: lean
-updated: '2026-07-31T20:15:15'
+updated: '2026-08-01T09:44:08'
 ---
 lemma spanFinrank_maximalIdeal_le_of_surjective [IsLocalRing B]
     [IsNoetherianRing B] [IsLocalRing A] (φ : B →+* A)

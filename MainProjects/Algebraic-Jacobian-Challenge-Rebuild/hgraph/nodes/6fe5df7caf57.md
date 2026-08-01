@@ -41,7 +41,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.mem_chartLocus_of_drop
 type: lean
-updated: '2026-07-31T20:15:26'
+updated: '2026-08-01T09:44:15'
 ---
 theorem mem_chartLocus_of_drop {T : Over (Spec (.of k))} (lam : picEt C T) (t : T.left)
     (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)

@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: Module.Flat.of_surjective_exact_of_forall_rTensor_residueField_injective
 type: lean
-updated: '2026-07-31T20:15:28'
+updated: '2026-08-01T09:44:17'
 ---
 theorem Module.Flat.of_surjective_exact_of_forall_rTensor_residueField_injective
     [IsNoetherianRing R] [Module.Flat R M] (φ : M →ₗ[R] M) (π : M →ₗ[R] Q)

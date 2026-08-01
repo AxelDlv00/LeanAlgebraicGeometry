@@ -16,7 +16,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Over.overSpecMap_comp_section
 type: lean
-updated: '2026-07-31T20:15:28'
+updated: '2026-08-01T09:44:17'
 ---
 private lemma overSpecMap_comp_section {E : Algebra.EtaleCover A} {R : Type u}
     [CommRing R] [Algebra k R] [Algebra A R] [IsScalarTower k A R]

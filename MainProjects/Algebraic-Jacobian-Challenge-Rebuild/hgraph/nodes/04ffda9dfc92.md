@@ -31,7 +31,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.specMap_ι_eq_of_map_chartTautologicalPoint_eq
 type: lean
-updated: '2026-07-31T20:15:25'
+updated: '2026-08-01T09:44:15'
 ---
 theorem specMap_ι_eq_of_map_chartTautologicalPoint_eq
     (i i' : (glueData k d r).J) {B : Type u} [CommRing B] [Algebra k B]

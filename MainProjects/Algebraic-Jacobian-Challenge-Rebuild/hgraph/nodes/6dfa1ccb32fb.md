@@ -9,7 +9,9 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.ThetaOverlapProd
 type: lean
-updated: '2026-07-31T20:15:24'
+updated: '2026-08-01T09:44:13'
 ---
 noncomputable abbrev ThetaOverlapProd (A : AffAdaptation D d) (a : ℕ) : Type u :=
   ∀ p : D.index × D.index, A.ThetaOverlapQuotient (π := π) a p.1 p.2
+
+omit [IsProper C.hom] in

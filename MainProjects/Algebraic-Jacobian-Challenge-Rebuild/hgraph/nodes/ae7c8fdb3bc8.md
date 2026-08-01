@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PicEtAff.baseFieldShuffle_mk
 type: lean
-updated: '2026-07-31T20:15:27'
+updated: '2026-08-01T09:44:16'
 ---
 theorem baseFieldShuffle_mk (U : Algebra.EtaleCover A) (x : descentClasses C U) :
     baseFieldShuffle k L C A (mk C U x)

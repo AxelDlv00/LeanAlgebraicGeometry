@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.moduleToDivisorZeroPresheaf
 type: lean
-updated: '2026-07-31T20:15:29'
+updated: '2026-08-01T09:44:17'
 ---
 noncomputable def moduleToDivisorZeroPresheaf :
     X.moduleKPresheaf K ⟶ divisorPresheaf K 0 where

@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.exists_coeffAt_divOf_le_sum
 type: lean
-updated: '2026-07-31T20:15:28'
+updated: '2026-08-01T09:44:17'
 ---
 lemma Scheme.exists_coeffAt_divOf_le_sum {ι : Type*} (s : Finset ι)
     (F : ι → X.functionField) (hsum : ∑ i ∈ s, F i ≠ 0) {x : X}

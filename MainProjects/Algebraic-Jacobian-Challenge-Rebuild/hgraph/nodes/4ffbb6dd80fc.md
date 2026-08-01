@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.JacobianData.pointTranslationIso
 type: lean
-updated: '2026-07-31T20:15:14'
+updated: '2026-08-01T09:44:08'
 ---
 noncomputable def pointTranslationIso (d : JacobianData C)
     (x y : 𝟙_ (Over (Spec (.of k))) ⟶ d.J) : d.J.left ≅ d.J.left :=

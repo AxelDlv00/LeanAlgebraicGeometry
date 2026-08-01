@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.subsingleton_h1_windowN_sub
 type: lean
-updated: '2026-07-31T20:15:29'
+updated: '2026-08-01T09:44:18'
 ---
 theorem subsingleton_h1_windowN_sub (g : ℕ)
     (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)

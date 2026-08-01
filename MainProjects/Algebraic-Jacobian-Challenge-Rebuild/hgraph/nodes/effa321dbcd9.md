@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.BasicOpenCocycleDatum.hasWitnessH1Vanishing_iff_subsingleton
 type: lean
-updated: '2026-07-31T20:15:27'
+updated: '2026-08-01T09:44:15'
 ---
 theorem BasicOpenCocycleDatum.hasWitnessH1Vanishing_iff_subsingleton
     (D : BasicOpenCocycleDatum C B π) (L : Type u) [Field L] [Algebra k L] [Algebra B L]

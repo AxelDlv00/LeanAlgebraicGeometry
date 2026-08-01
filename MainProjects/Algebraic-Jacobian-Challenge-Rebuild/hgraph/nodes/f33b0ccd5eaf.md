@@ -9,7 +9,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.whisker_eval_covers
 type: lean
-updated: '2026-07-31T20:15:28'
+updated: '2026-08-01T09:44:17'
 ---
 private lemma whisker_eval_covers [Finite ι] (x : (C ⊗ overSpec k (Π j, B j)).left) :
     ∃ i, x ∈ Scheme.Hom.opensRange

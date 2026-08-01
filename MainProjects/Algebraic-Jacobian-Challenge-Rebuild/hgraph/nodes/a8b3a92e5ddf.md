@@ -20,7 +20,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.exists_matrixPoint_eq_of_free
 type: lean
-updated: '2026-07-31T20:15:21'
+updated: '2026-08-01T09:44:11'
 ---
 theorem exists_matrixPoint_eq_of_free {T : Type u} [CommRing T] [Algebra k T]
     [Nontrivial T] {g r : ℕ} (x : grFunctorAff k (Fin r → k) g T)

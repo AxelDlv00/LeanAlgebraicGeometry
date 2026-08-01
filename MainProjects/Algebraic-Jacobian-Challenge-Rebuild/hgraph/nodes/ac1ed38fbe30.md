@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.isLocalization_awayElt
 type: lean
-updated: '2026-07-31T20:15:28'
+updated: '2026-08-01T09:44:17'
 ---
 lemma isLocalization_awayElt (i : P.ι) :
     IsLocalization.Away (awayElt P i) Γ(XB, (XB).basicOpen (P.r i)) :=

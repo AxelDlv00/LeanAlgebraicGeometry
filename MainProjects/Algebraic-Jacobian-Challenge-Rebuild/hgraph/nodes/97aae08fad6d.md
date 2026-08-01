@@ -19,7 +19,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.isGluingCocycle_unitsRestrict_evInf
 type: lean
-updated: '2026-07-31T20:15:17'
+updated: '2026-08-01T09:44:09'
 ---
 lemma Scheme.isGluingCocycle_unitsRestrict_evInf {𝒰 : X.PointedCover}
     (γ : X.unitsCocycle 𝒰) {J : Type u} (U : J → X.Opens) (anchor : J → X)

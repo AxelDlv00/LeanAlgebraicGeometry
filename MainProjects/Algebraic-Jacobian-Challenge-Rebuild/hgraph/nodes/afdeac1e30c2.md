@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.isLocalHom_dualNumber_iff
 type: lean
-updated: '2026-07-31T20:15:29'
+updated: '2026-08-01T09:44:18'
 ---
 lemma isLocalHom_dualNumber_iff (f : R →+* DualNumber k) :
     IsLocalHom f ↔ ∀ x ∈ maximalIdeal R, fst (f x) = 0 := by

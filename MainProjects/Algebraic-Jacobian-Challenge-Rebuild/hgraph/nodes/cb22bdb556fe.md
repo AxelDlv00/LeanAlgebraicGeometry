@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.relCurveMap
 type: lean
-updated: '2026-07-31T20:15:18'
+updated: '2026-08-01T09:44:09'
 ---
 noncomputable def relCurveMap : relCurve C R' ⟶ relCurve C R :=
   (C ◁ overSpecMap (k := k) R R').left

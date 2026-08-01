@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.BasicOpenCocycleDatum.rigidEngine_of_genus_zero
 type: lean
-updated: '2026-07-31T20:15:27'
+updated: '2026-08-01T09:44:16'
 ---
 theorem rigidEngine_of_genus_zero (D : BasicOpenCocycleDatum C B π) [IsNoetherianRing B]
     (hπ : π ≫ P1.structureMap k = C.hom) (hg : genus C = 0)

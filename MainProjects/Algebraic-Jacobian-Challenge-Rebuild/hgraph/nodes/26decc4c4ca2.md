@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.one_mem_divisorSections_top
 type: lean
-updated: '2026-07-31T20:15:29'
+updated: '2026-08-01T09:44:17'
 ---
 theorem one_mem_divisorSections_top {D : X.CurveDivisor} (hD : 0 ≤ D) :
     (1 : X.functionField) ∈ divisorSections K D ⊤ := by

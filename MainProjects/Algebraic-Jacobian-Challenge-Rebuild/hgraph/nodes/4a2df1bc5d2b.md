@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.BasicOpenCocycleDatum.component_mem_nonZeroDivisors
 type: lean
-updated: '2026-07-31T20:15:28'
+updated: '2026-08-01T09:44:17'
 ---
 theorem component_mem_nonZeroDivisors [IsNoetherianRing B]
     (s : ↥(gluedSubmodule B D.pieces D.unit ⊤)) (j : D.index)

@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivisorAdaptation.not_exists_unique_support_piece
 type: lean
-updated: '2026-07-31T20:15:21'
+updated: '2026-08-01T09:44:11'
 ---
 theorem not_exists_unique_support_piece
     {z : relCurve C R} (hz : z ∈ d.supportLocus)

@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.windowAddCoherenceDivisorEquiv_apply
 type: lean
-updated: '2026-07-31T20:15:21'
+updated: '2026-08-01T09:44:11'
 ---
 theorem windowAddCoherenceDivisorEquiv_apply (p q : Nat)
     (D : (relCurve C K).CurveDivisor)

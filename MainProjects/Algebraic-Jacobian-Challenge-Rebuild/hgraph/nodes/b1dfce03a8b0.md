@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: Module.Invertible.bijective_toSpanSingleton_of_span_eq_top
 type: lean
-updated: '2026-07-31T20:15:25'
+updated: '2026-08-01T09:44:15'
 ---
 theorem bijective_toSpanSingleton_of_span_eq_top (N : Type u) [AddCommGroup N]
     [Module R N] [Module.Invertible R N] (m₀ : N)

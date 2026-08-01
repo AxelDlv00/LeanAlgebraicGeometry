@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: LinearMap.rTensor_subtype_injective_of_forall_ker_rTensor_residueField_le
 type: lean
-updated: '2026-07-31T20:15:28'
+updated: '2026-08-01T09:44:17'
 ---
 theorem LinearMap.rTensor_subtype_injective_of_forall_ker_rTensor_residueField_le
     [Module.Flat R M] (hle : L ≤ LinearMap.ker f)

@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.mulSpan_le
 type: lean
-updated: '2026-07-31T20:15:28'
+updated: '2026-08-01T09:44:17'
 ---
 lemma Scheme.mulSpan_le {U T W : Submodule K X.functionField}
     (h : ∀ a ∈ U, ∀ f ∈ T, a * f ∈ W) : Scheme.mulSpan K U T ≤ W := by

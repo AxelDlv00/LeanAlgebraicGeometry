@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.devissageSES_mono_f
 type: lean
-updated: '2026-07-31T20:15:28'
+updated: '2026-08-01T09:44:17'
 ---
 instance devissageSES_mono_f : Mono (devissageSES K hx D).f :=
   divisorSheafLE_mono K (devissageDivisor_le hx D)

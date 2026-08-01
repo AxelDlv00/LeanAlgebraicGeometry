@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.CechPic.mk_mul_mk
 type: lean
-updated: '2026-07-31T20:15:26'
+updated: '2026-08-01T09:44:15'
 ---
 lemma mk_mul_mk (𝒰 : X.PointedCover) (a b : X.unitsH1 𝒰) :
     mk 𝒰 a * mk 𝒰 b = mk 𝒰 (a * b) := by

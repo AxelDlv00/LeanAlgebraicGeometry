@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.degAt_thetaFamily
 type: lean
-updated: '2026-07-31T20:15:28'
+updated: '2026-08-01T09:44:17'
 ---
 theorem degAt_thetaFamily (L₀ : (C ⊗ overSpec k k).left.CechPic)
     {T : Over (Spec (.of k))} {K : Type u} [Field K] [Algebra k K]

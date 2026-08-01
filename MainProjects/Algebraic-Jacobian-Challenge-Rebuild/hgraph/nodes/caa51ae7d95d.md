@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: TruncExpCech.scaleRingHom_one
 type: lean
-updated: '2026-07-31T20:15:29'
+updated: '2026-08-01T09:44:18'
 ---
 theorem scaleRingHom_one : scaleRingHom (1 : R) = RingHom.id R[ε] :=
   RingHom.ext fun x => TrivSqZeroExt.ext (by simp) (by simp)

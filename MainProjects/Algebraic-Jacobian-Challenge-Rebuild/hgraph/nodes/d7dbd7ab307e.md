@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.face₁₃_comp_inr
 type: lean
-updated: '2026-07-31T20:15:19'
+updated: '2026-08-01T09:44:10'
 ---
 lemma face₁₃_comp_inr : w₁₃ ≫ (u₂) = v₃ :=
   (Over.whiskerLeft_face₁₃_inr (k := k) (A := A) (B := B) C).trans

@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.relCurveResiduePoint_map_cast
 type: lean
-updated: '2026-07-31T20:15:21'
+updated: '2026-08-01T09:44:11'
 ---
 theorem relCurveResiduePoint_map_cast (p : PrimeSpectrum R)
     (z : relCurve C p.asIdeal.ResidueField) :

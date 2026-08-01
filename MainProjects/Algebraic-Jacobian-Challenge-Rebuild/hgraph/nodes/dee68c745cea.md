@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: Module.Flat.quotient_range_of_forall_rTensor_residueField_injective
 type: lean
-updated: '2026-07-31T20:15:28'
+updated: '2026-08-01T09:44:17'
 ---
 theorem Module.Flat.quotient_range_of_forall_rTensor_residueField_injective
     [Module.Finite R P] [Module.Finite R N] [Module.Flat R N] (ψ : P →ₗ[R] N)

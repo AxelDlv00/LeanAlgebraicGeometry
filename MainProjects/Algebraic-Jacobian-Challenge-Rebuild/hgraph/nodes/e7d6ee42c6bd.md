@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: TruncExpCech.mapAlgHom
 type: lean
-updated: '2026-07-31T20:15:29'
+updated: '2026-08-01T09:44:18'
 ---
 def mapAlgHom : DualNumber k →ₐ[k] DualNumber A :=
   { mapRingHom (algebraMap k A) with

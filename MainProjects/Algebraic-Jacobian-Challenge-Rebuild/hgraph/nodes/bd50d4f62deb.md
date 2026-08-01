@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.P1.isUnit_dehomogenize_X_self
 type: lean
-updated: '2026-07-31T20:15:19'
+updated: '2026-08-01T09:44:10'
 ---
 theorem isUnit_dehomogenize_X_self (i : Fin 2) :
     IsUnit ((dehomogenize k i).toRingHom (X i)) := by

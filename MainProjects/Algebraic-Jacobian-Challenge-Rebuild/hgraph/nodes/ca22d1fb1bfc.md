@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.PresheafOfGroups.H1.subsingleton_of_forall_le
 type: lean
-updated: '2026-07-31T20:15:19'
+updated: '2026-08-01T09:44:10'
 ---
 theorem H1.subsingleton_of_forall_le (G : Pᵒᵖ ⥤ GrpCat.{w}) (U : I → P)
     (h : ∀ i j, U i ≤ U j) : Subsingleton (H1 G U) := by

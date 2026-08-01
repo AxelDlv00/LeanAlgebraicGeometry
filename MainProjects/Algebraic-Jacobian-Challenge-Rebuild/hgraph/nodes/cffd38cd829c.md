@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divFamZar.glueValue_unique
 type: lean
-updated: '2026-07-31T20:15:25'
+updated: '2026-08-01T09:44:14'
 ---
 theorem glueValue_unique (hcov : ∀ p : T.left, ∃ i, p ∈ O i)
     {W : T.left.affineOpens} {z z' : DivFamZar C Γ(T.left, W.1) π n}

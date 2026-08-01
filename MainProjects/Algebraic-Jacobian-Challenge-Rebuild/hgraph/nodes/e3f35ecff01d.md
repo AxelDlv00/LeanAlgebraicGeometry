@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivisorAdaptation.isCertified_of_noLeak_kernel_spanning
 type: lean
-updated: '2026-07-31T20:15:20'
+updated: '2026-08-01T09:44:11'
 ---
 theorem isCertified_of_noLeak_kernel_spanning [IsNoetherianRing R] {n : Nat}
     (hnoLeak : forall (j : A.index) (s : Spec (.of R)),

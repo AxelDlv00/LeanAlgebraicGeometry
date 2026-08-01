@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.relThetaResSide_relThetaSideUnit_false_true
 type: lean
-updated: '2026-07-31T20:15:23'
+updated: '2026-08-01T09:44:12'
 ---
 theorem relThetaResSide_relThetaSideUnit_false_true (a : Nat) :
     relThetaResSide a true le_rfl

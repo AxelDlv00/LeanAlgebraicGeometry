@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.delta_baseChange_comm'
 type: lean
-updated: '2026-07-31T20:15:23'
+updated: '2026-08-01T09:44:13'
 ---
 theorem delta_baseChange_comm' :
     (AlgebraTensorModule.lTensor R' R' (A.deltaLeft - A.deltaRight)) ∘ₗ

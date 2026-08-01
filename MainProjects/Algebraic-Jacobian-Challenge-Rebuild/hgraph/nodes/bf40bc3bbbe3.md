@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.BasicOpenCocycleDatum.termBaseChange_bijective
 type: lean
-updated: '2026-07-31T20:15:17'
+updated: '2026-08-01T09:44:09'
 ---
 theorem termBaseChange_bijective
     (hVaff : IsAffineOpen ((fst C (overSpec k B)).left ⁻¹ᵁ V))

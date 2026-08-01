@@ -33,7 +33,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.relPicMulEquivCechPic_relPicMap
 type: lean
-updated: '2026-07-31T20:15:29'
+updated: '2026-08-01T09:44:18'
 ---
 theorem relPicMulEquivCechPic_relPicMap (T T' : Over (Spec (.of k)))
     [Subsingleton T.left] [Subsingleton T'.left] (g : T' ⟶ T) (x : relPic C T) :

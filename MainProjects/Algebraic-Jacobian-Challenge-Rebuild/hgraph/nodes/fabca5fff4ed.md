@@ -13,7 +13,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.finsupp_induction_bump
 type: lean
-updated: '2026-07-31T20:15:28'
+updated: '2026-08-01T09:44:17'
 ---
 private theorem finsupp_induction_bump {α : Type u} {P : (α →₀ ℤ) → Prop} (zero : P 0)
     (bump : ∀ (a : α) (f : α →₀ ℤ), P (f + Finsupp.single a 1) ↔ P f) (f : α →₀ ℤ) :

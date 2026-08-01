@@ -16,7 +16,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.overlapLaurentHom
 type: lean
-updated: '2026-07-31T20:15:17'
+updated: '2026-08-01T09:44:09'
 ---
 private noncomputable def overlapLaurentHom :
     LaurentPolynomial k →+* Γ(Y, π ⁻¹ᵁ P1.chartOpen k 0 ⊓ π ⁻¹ᵁ P1.chartOpen k 1) :=

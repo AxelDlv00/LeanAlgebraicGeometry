@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.splitSurj_comp_splitSect
 type: lean
-updated: '2026-07-31T20:15:25'
+updated: '2026-08-01T09:44:15'
 ---
 lemma splitSurj_comp_splitSect : splitSurj R N ∘ₗ splitSect R N = LinearMap.id :=
   (Module.Finite.exists_comp_eq_id_of_projective

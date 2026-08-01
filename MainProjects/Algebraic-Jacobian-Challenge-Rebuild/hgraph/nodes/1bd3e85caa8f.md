@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_fin_span_eq_top_of_forall_prime
 type: lean
-updated: '2026-07-31T20:15:21'
+updated: '2026-08-01T09:44:11'
 ---
 theorem exists_fin_span_eq_top_of_forall_prime (P : R → Prop)
     (h : ∀ p : PrimeSpectrum R, ∃ r, r ∉ p.asIdeal ∧ P r) :

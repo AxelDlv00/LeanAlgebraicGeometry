@@ -16,7 +16,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.primeIdealOf_ne_bot
 type: lean
-updated: '2026-07-31T20:15:29'
+updated: '2026-08-01T09:44:18'
 ---
 private theorem primeIdealOf_ne_bot {X : Scheme.{u}} [IsIntegral X] {V : X.Opens}
     (hV : IsAffineOpen V) [IsDomain Γ(X, V)] {x : X} (hx : x ∈ V) (hxg : x ≠ genericPoint X) :

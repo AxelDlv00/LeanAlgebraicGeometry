@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.baseDivisor_window_normalization
 type: lean
-updated: '2026-07-31T20:15:24'
+updated: '2026-08-01T09:44:13'
 ---
 theorem baseDivisor_window_normalization (g : ℕ)
     (hO : Sheaf.h0 (Y.moduleKSheaf K) = 1)

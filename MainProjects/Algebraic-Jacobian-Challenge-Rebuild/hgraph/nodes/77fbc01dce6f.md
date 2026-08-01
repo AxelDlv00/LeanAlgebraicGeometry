@@ -20,7 +20,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ThetaGeneratorSeed.isLocallyCertifiedAff_of_supportLocus_empty
 type: lean
-updated: '2026-07-31T20:15:24'
+updated: '2026-08-01T09:44:13'
 ---
 theorem isLocallyCertifiedAff_of_supportLocus_empty [IsProper C.hom] [IsNoetherianRing R]
     (hD : D.IsGenerator)

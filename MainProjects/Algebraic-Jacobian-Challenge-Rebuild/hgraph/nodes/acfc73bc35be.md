@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.relTwistPair_diff
 type: lean
-updated: '2026-07-31T20:15:18'
+updated: '2026-08-01T09:44:10'
 ---
 lemma relTwistPair_diff :
     (relTwistPair C R π g).diff = relTwistDiff C R (fiberTwoCover π) g := rfl

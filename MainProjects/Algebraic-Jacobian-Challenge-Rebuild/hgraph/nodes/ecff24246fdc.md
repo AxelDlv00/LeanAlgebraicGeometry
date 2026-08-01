@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PointwiseAchiever.divFamZarUniv
 type: lean
-updated: '2026-07-31T20:15:20'
+updated: '2026-08-01T09:44:11'
 ---
 noncomputable def divFamZarUniv (hb : 0 < windowBound pi hpi)
     (hc : ((univSeed C hpi g r1 r2 b1 b2 i j hO hchi hb).divisorAdaptation

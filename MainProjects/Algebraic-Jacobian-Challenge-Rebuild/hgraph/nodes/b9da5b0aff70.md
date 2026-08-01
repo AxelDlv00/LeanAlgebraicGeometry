@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.fromSpecAffine_resAlgHom
 type: lean
-updated: '2026-07-31T20:15:28'
+updated: '2026-08-01T09:44:16'
 ---
 theorem fromSpecAffine_resAlgHom {T : Over (Spec (.of k))} {U V : T.left.affineOpens}
     (h : U.1 ≤ V.1) :

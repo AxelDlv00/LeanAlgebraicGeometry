@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.IsAffineOpen.exists_pow_mul_eq_zero_of_res_eq_zero
 type: lean
-updated: '2026-07-31T20:15:17'
+updated: '2026-08-01T09:44:09'
 ---
 theorem exists_pow_mul_eq_zero_of_res_eq_zero (t : Γ(X, U))
     (ht : X.resHom (inf_le_left : U ⊓ X.basicOpen g ≤ U) t = 0) :

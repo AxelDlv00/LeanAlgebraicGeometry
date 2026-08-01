@@ -13,7 +13,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Over.isPushout_sections_gen
 type: lean
-updated: '2026-07-31T20:15:28'
+updated: '2026-08-01T09:44:17'
 ---
 private lemma isPushout_sections_gen {U : (XA).Opens} (hU : IsAffineOpen U) :
     IsPushout

@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.TwoCover.smul_delta
 type: lean
-updated: '2026-07-31T20:15:29'
+updated: '2026-08-01T09:44:18'
 ---
 theorem smul_delta (a : k) (s : Γ(X, U₀ ⊓ U₁)) :
     a • delta k X U₀ U₁ hcov s

@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.thetaChartCover_pieces_le_inl
 type: lean
-updated: '2026-07-31T20:15:17'
+updated: '2026-08-01T09:44:09'
 ---
 lemma thetaChartCover_pieces_le_inl (j : (thetaChartCover C B π).J₀) :
     (thetaChartCover C B π).pieces (Sum.inl j) ≤ (relCover C B (fiberTwoCover π)).V₀ :=

@@ -19,7 +19,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.thetaUnit
 type: lean
-updated: '2026-07-31T20:15:29'
+updated: '2026-08-01T09:44:18'
 ---
 noncomputable def thetaUnit : Γ(Y, fiberChart₀ π ⊓ fiberChart₁ π)ˣ where
   val := (Y.presheaf.map (homOfLE

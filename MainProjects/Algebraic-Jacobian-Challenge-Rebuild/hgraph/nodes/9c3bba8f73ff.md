@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivFamZarAff.picClass_toAff
 type: lean
-updated: '2026-07-31T20:15:23'
+updated: '2026-08-01T09:44:13'
 ---
 lemma DivFamZarAff.picClass_toAff {n : ℕ} (F : DivFamZar C R π n) :
     F.toAff.picClass = F.picClass := by

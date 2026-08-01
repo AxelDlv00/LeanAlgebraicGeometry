@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.relThetaCocycle_baseChange
 type: lean
-updated: '2026-07-31T20:15:18'
+updated: '2026-08-01T09:44:09'
 ---
 theorem relThetaCocycle_baseChange :
     relCocycleBaseChange C k R (fiberTwoCover π) (relThetaCocycle C k π n)

@@ -42,7 +42,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Scheme.exists_algebra_isStandardSmooth_section_stalk_isLocalization_of_smooth
 type: lean
-updated: '2026-07-31T20:15:15'
+updated: '2026-08-01T09:44:08'
 ---
 private theorem exists_algebra_isStandardSmooth_section_stalk_isLocalization_of_smooth
     {kbar : Type u} [Field kbar] [IsAlgClosed kbar]

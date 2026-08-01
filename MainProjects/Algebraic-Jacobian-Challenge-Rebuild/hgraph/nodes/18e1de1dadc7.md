@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.Sheaf.h0_congr
 type: lean
-updated: '2026-07-31T20:15:28'
+updated: '2026-08-01T09:44:17'
 ---
 theorem h0_congr (e : F ≅ G) : h0 F = h0 G :=
   (HModule.mapEquiv e 0).finrank_eq

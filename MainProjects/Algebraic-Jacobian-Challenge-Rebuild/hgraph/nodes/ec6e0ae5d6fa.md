@@ -24,7 +24,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.exists_isUnit_mul_of_matrixPoint_eq
 type: lean
-updated: '2026-07-31T20:15:25'
+updated: '2026-08-01T09:44:15'
 ---
 theorem exists_isUnit_mul_of_matrixPoint_eq (X Y : Matrix (Fin d) (Fin r) S)
     (hX : Function.Surjective (matrixProj k d r S X))

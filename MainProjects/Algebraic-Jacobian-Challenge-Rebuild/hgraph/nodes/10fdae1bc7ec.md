@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divFamZarAff.compat
 type: lean
-updated: '2026-07-31T20:15:24'
+updated: '2026-08-01T09:44:13'
 ---
 lemma compat (s : divFamZarAff C n T) (U V : T.left.affineOpens) (h : U.1 ≤ V.1) :
     DivFamZarAff.mapAlgHom (Over.resAlgHom T h) (s.1 V) = s.1 U :=

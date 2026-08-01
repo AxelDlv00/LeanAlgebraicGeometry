@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: MvPolynomial.substAlgHom_X
 type: lean
-updated: '2026-07-31T20:15:19'
+updated: '2026-08-01T09:44:10'
 ---
 theorem substAlgHom_X (M : Matrix σ σ R) (i : σ) :
     substAlgHom M (X i) = matrixLinearForm M i :=

@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.picEt.overlapTest
 type: lean
-updated: '2026-07-31T20:15:27'
+updated: '2026-08-01T09:44:16'
 ---
 noncomputable def overlapTest (W : T.left.affineOpens) : Over (Spec (.of k)) :=
   Over.mk (W.1.ι ≫ T.hom)

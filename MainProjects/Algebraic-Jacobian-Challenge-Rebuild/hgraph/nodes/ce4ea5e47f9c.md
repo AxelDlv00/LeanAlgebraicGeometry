@@ -27,7 +27,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.LocalEquations.PullRegular
 type: lean
-updated: '2026-07-31T20:15:23'
+updated: '2026-08-01T09:44:13'
 ---
 def PullRegular {X Y : Scheme.{u}} (f : Y ⟶ X) (d : X.LocalEquations) : Prop :=
   ∀ (y z : Y) (hz : z ∈ (d.cover.pullback f).opens y),

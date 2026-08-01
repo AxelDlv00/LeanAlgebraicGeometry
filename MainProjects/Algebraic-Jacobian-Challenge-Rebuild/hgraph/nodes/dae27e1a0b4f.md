@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ThetaGeneratorSeed.pullbackEqn_res_self_eq_relPinnedPieceSectionsMap
 type: lean
-updated: '2026-07-31T20:15:20'
+updated: '2026-08-01T09:44:11'
 ---
 theorem pullbackEqn_res_self_eq_relPinnedPieceSectionsMap (hD : D.IsGenerator)
     (p : PrimeSpectrum R) (z : relCurve C p.asIdeal.ResidueField) :

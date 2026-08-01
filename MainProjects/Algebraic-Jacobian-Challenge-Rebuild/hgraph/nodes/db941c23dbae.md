@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divUniversalSndWindow_toSubmodule_eq_span
 type: lean
-updated: '2026-07-31T20:15:23'
+updated: '2026-08-01T09:44:12'
 ---
 theorem divUniversalSndWindow_toSubmodule_eq_span :
     (divUniversalSndWindow C π hπ g r₁ r₂ b₁ b₂ i j).toSubmodule

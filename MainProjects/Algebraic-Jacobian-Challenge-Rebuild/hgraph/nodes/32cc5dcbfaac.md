@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.baseChange_thetaChartDatum_pieces
 type: lean
-updated: '2026-07-31T20:15:28'
+updated: '2026-08-01T09:44:17'
 ---
 lemma baseChange_thetaChartDatum_pieces (j : ((thetaChartDatum C k π a).baseChange R).index) :
     ((thetaChartDatum C k π a).baseChange R).pieces j

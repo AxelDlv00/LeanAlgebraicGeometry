@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.quasiCompact_of_extensionTolerant_lift
 type: lean
-updated: '2026-07-31T20:15:26'
+updated: '2026-08-01T09:44:15'
 ---
 theorem quasiCompact_of_extensionTolerant_lift {J : Over (Spec (.of k))}
     (rep : (pic0TypeFunctor C).RepresentableBy J)

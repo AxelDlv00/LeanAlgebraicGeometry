@@ -43,7 +43,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.isOpenImmersion_presheaf_restrictChart
 type: lean
-updated: '2026-07-31T20:15:27'
+updated: '2026-08-01T09:44:16'
 ---
 theorem isOpenImmersion_presheaf_restrictChart {X : Scheme.{u}}
     {f : yoneda.obj X ⟶ (pic0SigmaSheaf C).1} (V : X.Opens)

@@ -9,7 +9,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.descentMul₁₂_comp_descentFace₁₂
 type: lean
-updated: '2026-07-31T20:15:28'
+updated: '2026-08-01T09:44:17'
 ---
 private lemma descentMul₁₂_comp_descentFace₁₂ :
     (descentMul₁₂ (A := A) (B := B)).comp (Module.descentFace₁₂ A B)

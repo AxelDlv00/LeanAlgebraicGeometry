@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.productChartSectionsIso
 type: lean
-updated: '2026-07-31T20:15:19'
+updated: '2026-08-01T09:44:10'
 ---
 noncomputable def productChartSectionsIso {U : X.left.Opens} {V : T.left.Opens}
     (hU : IsAffineOpen U) (hV : IsAffineOpen V) :

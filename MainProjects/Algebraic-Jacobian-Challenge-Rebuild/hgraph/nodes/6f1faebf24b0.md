@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.algebraMap_testPointField
 type: lean
-updated: '2026-07-31T20:15:27'
+updated: '2026-08-01T09:44:16'
 ---
 lemma algebraMap_testPointField {T : Over (Spec (.of k))} (t : T.left) :
     algebraMap k (testPointField t)

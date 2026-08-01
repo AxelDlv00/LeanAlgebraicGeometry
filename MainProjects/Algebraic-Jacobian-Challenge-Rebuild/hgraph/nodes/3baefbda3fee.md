@@ -30,7 +30,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.chart_map_ι_apply
 type: lean
-updated: '2026-07-31T20:15:26'
+updated: '2026-08-01T09:44:15'
 ---
 theorem chart_map_ι_apply {X : Scheme.{u}}
     (f : yoneda.obj X ⟶ (pic0SigmaSheaf C).1) (W : X.Opens) (u : X ⟶ X) :

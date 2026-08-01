@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.span_resSnd_windowBaseChange_le
 type: lean
-updated: '2026-07-31T20:15:22'
+updated: '2026-08-01T09:44:12'
 ---
 lemma span_resSnd_windowBaseChange_le (D : FinCoverData C R π) (ℓ : Fin D.m₁)
     (N : Submodule R (R ⊗[k] ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤))) :

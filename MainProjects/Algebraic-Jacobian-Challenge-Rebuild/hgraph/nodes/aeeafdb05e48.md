@@ -12,6 +12,6 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.gluedOfCharts
 type: lean
-updated: '2026-07-31T20:15:26'
+updated: '2026-08-01T09:44:15'
 ---
 noncomputable abbrev gluedOfCharts : Over (Spec (.of k)) := Over.mk (gluedHom C f hf)

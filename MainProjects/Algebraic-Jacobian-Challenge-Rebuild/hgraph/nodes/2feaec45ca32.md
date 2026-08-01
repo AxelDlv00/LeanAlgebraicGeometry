@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.MeromorphicPresentation.germGenericUnits_unitsEvInf_res
 type: lean
-updated: '2026-07-31T20:15:28'
+updated: '2026-08-01T09:44:16'
 ---
 lemma germGenericUnits_unitsEvInf_res (P : X.MeromorphicPresentation)
     {𝒲 : X.PointedCover} (h : 𝒲 ≤ P.cover) (x y : X)

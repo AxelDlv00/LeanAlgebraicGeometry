@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ThetaGeneratorSeed.res_eqn_mem_nonZeroDivisors
 type: lean
-updated: '2026-07-31T20:15:21'
+updated: '2026-08-01T09:44:11'
 ---
 theorem res_eqn_mem_nonZeroDivisors [IsNoetherianRing R] (hD : D.IsGenerator)
     (z : relCurve C R) (f : Γ(relCurve C R, D.piece z)) :

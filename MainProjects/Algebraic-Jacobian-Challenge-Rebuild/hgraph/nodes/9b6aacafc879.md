@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.descentMul₁₂
 type: lean
-updated: '2026-07-31T20:15:28'
+updated: '2026-08-01T09:44:17'
 ---
 noncomputable def descentMul₁₂ : B ⊗[A] (B ⊗[A] B) →ₐ[A] B ⊗[A] B :=
   Algebra.TensorProduct.lift (Module.descentIncl₁ A B) (AlgHom.id A (B ⊗[A] B))

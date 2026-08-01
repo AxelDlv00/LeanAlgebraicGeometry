@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivisorAdaptation.finrank_ker_delta_baseChange_eq_of_pulled_degree
 type: lean
-updated: '2026-07-31T20:15:20'
+updated: '2026-08-01T09:44:11'
 ---
 theorem finrank_ker_delta_baseChange_eq_of_pulled_degree {n : Nat}
     (hproj : forall j : A.index, Module.Projective R (A.colength j))

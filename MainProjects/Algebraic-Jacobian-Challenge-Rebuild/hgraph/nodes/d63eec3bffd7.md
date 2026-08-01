@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.quotSection
 type: lean
-updated: '2026-07-31T20:15:20'
+updated: '2026-08-01T09:44:11'
 ---
 noncomputable def quotSection : (M ⧸ N) →ₗ[R] M :=
   (Module.projective_lifting_property N.mkQ LinearMap.id N.mkQ_surjective).choose

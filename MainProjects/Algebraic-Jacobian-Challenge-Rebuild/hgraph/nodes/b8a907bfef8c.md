@@ -24,7 +24,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_isIso_of_mem_zariskiTopology
 type: lean
-updated: '2026-07-31T20:15:26'
+updated: '2026-08-01T09:44:15'
 ---
 theorem exists_isIso_of_mem_zariskiTopology {X : Scheme.{u}} [Subsingleton (X : Type u)]
     (x : X) (S : Sieve X) (hS : S ∈ Scheme.zariskiTopology X) :

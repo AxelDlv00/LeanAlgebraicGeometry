@@ -22,7 +22,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.mem_pic0Subgroup_iff_of_degAt_pushFieldPoint_eq
 type: lean
-updated: '2026-07-31T20:15:27'
+updated: '2026-08-01T09:44:16'
 ---
 theorem mem_pic0Subgroup_iff_of_degAt_pushFieldPoint_eq
     {lam : picEt C ((Over.map (Spec.map (CommRingCat.ofHom (algebraMap k L)))).obj T)}

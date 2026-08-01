@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.thetaPieceProdEquivSwallowingPiece
 type: lean
-updated: '2026-07-31T22:54:03'
+updated: '2026-08-01T09:44:13'
 ---
 noncomputable def thetaPieceProdEquivSwallowingPiece
     (A : AffAdaptation D d) (a : Nat) {j0 : D.index}

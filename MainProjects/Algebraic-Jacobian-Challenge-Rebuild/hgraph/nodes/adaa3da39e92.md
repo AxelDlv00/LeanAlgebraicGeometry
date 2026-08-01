@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: Module.Flat.quotient_span_singleton_one_sub_of_isIdempotentElem
 type: lean
-updated: '2026-07-31T20:15:21'
+updated: '2026-08-01T09:44:11'
 ---
 theorem Module.Flat.quotient_span_singleton_one_sub_of_isIdempotentElem
     [Module.Flat R B] (e : B) (he : IsIdempotentElem e) :

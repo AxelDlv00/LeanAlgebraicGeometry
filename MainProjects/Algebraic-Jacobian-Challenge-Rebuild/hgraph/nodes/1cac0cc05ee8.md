@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.TwoCover.h1CokEquiv_symm_mk
 type: lean
-updated: '2026-07-31T20:15:18'
+updated: '2026-08-01T09:44:10'
 ---
 lemma h1CokEquiv_symm_mk (s : Γ(X, U₀ ⊓ U₁)) :
     (h1CokEquiv k X U₀ U₁ hcov hU₀ hU₁).symm (Submodule.Quotient.mk s) =

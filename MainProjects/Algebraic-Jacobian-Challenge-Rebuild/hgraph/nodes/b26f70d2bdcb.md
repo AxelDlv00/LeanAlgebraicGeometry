@@ -10,7 +10,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.BasicOpenCocycleDatum.inv_unitsEvInf
 type: lean
-updated: '2026-07-31T20:15:23'
+updated: '2026-08-01T09:44:12'
 ---
 private lemma inv_unitsEvInf {X : Scheme.{u}} {𝒰 : X.PointedCover}
     (γ : X.unitsCocycle 𝒰) (i j : X) :

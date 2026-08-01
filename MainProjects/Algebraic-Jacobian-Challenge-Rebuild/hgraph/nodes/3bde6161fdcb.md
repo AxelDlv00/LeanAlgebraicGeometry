@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivisorAdaptation.colength
 type: lean
-updated: '2026-07-31T20:15:23'
+updated: '2026-08-01T09:44:12'
 ---
 noncomputable abbrev colength (j : A.index) : Type u :=
   Γ(relCurve C R, A.pieces j) ⧸ Ideal.span {A.eqn j}

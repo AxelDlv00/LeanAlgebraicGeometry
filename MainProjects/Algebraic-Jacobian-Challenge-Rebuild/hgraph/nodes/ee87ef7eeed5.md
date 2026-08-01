@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: TwoLatticePair.moduleFinite_aeval_model_t₀
 type: lean
-updated: '2026-07-31T20:15:18'
+updated: '2026-08-01T09:44:10'
 ---
 instance moduleFinite_aeval_model_t₀ :
     Module.Finite R[X] (Module.AEval' (model R ι m).t₀) :=

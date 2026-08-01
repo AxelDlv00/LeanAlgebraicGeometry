@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.map_ker_lTensor_delta
 type: lean
-updated: '2026-07-31T20:15:23'
+updated: '2026-08-01T09:44:13'
 ---
 lemma map_ker_lTensor_delta :
     (LinearMap.ker (AlgebraTensorModule.lTensor R' R' (A.deltaLeft - A.deltaRight))).map

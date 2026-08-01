@@ -13,7 +13,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.supportTube_smoke
 type: lean
-updated: '2026-07-31T20:15:28'
+updated: '2026-08-01T09:44:17'
 ---
 private theorem supportTube_smoke (d : (relCurve C R).LocalEquations)
     {U : Set (relCurve C R)} (hU : IsOpen U) {s : Spec (CommRingCat.of R)}

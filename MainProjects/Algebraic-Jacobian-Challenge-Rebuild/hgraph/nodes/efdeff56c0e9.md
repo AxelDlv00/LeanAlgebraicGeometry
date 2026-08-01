@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.ordZ_unitsMap_stalk_eq_one
 type: lean
-updated: '2026-07-31T20:15:24'
+updated: '2026-08-01T09:44:13'
 ---
 theorem ordZ_unitsMap_stalk_eq_one {z : X} (hz : z ≠ genericPoint X)
     (v : (X.presheaf.stalk z)ˣ) :

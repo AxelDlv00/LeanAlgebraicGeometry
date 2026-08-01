@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divUniversalHighWindowRelationReadIdeal_one_eq_chartReadIdeal
 type: lean
-updated: '2026-07-31T20:15:21'
+updated: '2026-08-01T09:44:11'
 ---
 theorem divUniversalHighWindowRelationReadIdeal_one_eq_chartReadIdeal
     (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)

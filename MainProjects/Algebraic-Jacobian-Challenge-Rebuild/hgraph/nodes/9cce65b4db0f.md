@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PointedCover.BasicRefinement.span_eq_top
 type: lean
-updated: '2026-07-31T20:15:27'
+updated: '2026-08-01T09:44:16'
 ---
 theorem span_eq_top [IsAffine X] : Ideal.span (Set.range P.r) = ⊤ := by
   rw [← (isAffineOpen_top X).iSup_basicOpen_eq_self_iff]

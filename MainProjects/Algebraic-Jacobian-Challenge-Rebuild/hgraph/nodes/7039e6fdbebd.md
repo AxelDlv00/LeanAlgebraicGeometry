@@ -22,7 +22,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ThetaTrivData
 type: lean
-updated: '2026-07-31T20:15:24'
+updated: '2026-08-01T09:44:13'
 ---
 structure ThetaTrivData (D : AffCoverData C R) (a : ℕ) where
   /-- The local reading of a global theta section on the piece: a trivialization of `𝒪(Θᵃ)`

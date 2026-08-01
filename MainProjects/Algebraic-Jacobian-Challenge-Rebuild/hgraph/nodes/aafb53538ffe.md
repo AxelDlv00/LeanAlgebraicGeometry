@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PicEtAff.mk
 type: lean
-updated: '2026-07-31T20:15:27'
+updated: '2026-08-01T09:44:16'
 ---
 def mk (E : Algebra.EtaleCover A) (x : descentClasses C E) : PicEtAff C A :=
   Quotient.mk _ ⟨E, x⟩

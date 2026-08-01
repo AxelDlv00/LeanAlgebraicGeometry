@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.carvePairArrow_eq_zero_iff
 type: lean
-updated: '2026-07-31T20:15:20'
+updated: '2026-08-01T09:44:11'
 ---
 theorem carvePairArrow_eq_zero_iff (μ : H₁ →ₗ[k] H₂) (Km : Submodule R (TensorProduct k R H₁))
     (K' : Submodule R (TensorProduct k R H₂)) :

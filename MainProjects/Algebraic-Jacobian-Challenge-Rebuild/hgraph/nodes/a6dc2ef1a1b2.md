@@ -12,7 +12,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.coboundary_div_congr
 type: lean
-updated: '2026-07-31T20:15:20'
+updated: '2026-08-01T09:44:11'
 ---
 private lemma coboundary_div_congr {G : Type u} [CommGroup G] {a a' b b' P Q : G}
     (h : a * P = Q * b) (h' : a' * P = Q * b') : a / a' = b / b' := by

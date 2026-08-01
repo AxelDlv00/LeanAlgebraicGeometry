@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.presheafCongr_resHom
 type: lean
-updated: '2026-07-31T20:15:18'
+updated: '2026-08-01T09:44:09'
 ---
 lemma presheafCongr_resHom {X : Scheme.{u}} [X.Over (Spec (.of k))] {U U' V : X.Opens}
     (h : U = U') (h₁ : U ≤ V) (h₂ : U' ≤ V) (s : Γ(X, V)) :

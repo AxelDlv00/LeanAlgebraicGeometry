@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.FinCoverData.pieces_inl
 type: lean
-updated: '2026-07-31T20:15:23'
+updated: '2026-08-01T09:44:12'
 ---
 lemma pieces_inl (j : Fin D.m₀) :
     D.pieces (Sum.inl j) = (relCurve C R).basicOpen (D.h₀ j) := rfl

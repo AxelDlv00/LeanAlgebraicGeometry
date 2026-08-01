@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: TwoLatticePair.Hom.comm_tN_pow
 type: lean
-updated: '2026-07-31T20:15:18'
+updated: '2026-08-01T09:44:10'
 ---
 lemma comm_tN_pow (f : P.Hom P') (m : ℕ) (n : N) :
     f.homN ((P.tN.val ^ m) n) = (P'.tN.val ^ m) (f.homN n) := by

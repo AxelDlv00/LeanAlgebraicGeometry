@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.unitsAppLE_congr_hom
 type: lean
-updated: '2026-07-31T20:15:19'
+updated: '2026-08-01T09:44:10'
 ---
 lemma unitsAppLE_congr_hom {X Y : Scheme.{u}} {f g : X ⟶ Y} (h : f = g)
     (V : Y.Opens) (O : X.Opens) (e : O ≤ f ⁻¹ᵁ V) (u : Γ(Y, V)ˣ) :

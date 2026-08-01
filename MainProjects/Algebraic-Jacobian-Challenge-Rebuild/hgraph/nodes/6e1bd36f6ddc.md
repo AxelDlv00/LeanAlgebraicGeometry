@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.selfDiag_snd
 type: lean
-updated: '2026-07-31T20:15:15'
+updated: '2026-08-01T09:44:08'
 ---
 lemma selfDiag_snd : selfDiag X ≫ pullback.snd X.hom X.hom = 𝟙 X.left :=
   pullback.lift_snd _ _ _

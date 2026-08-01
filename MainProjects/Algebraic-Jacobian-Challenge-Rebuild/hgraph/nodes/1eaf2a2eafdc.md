@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.cechPicMap_pieceι_eq_one
 type: lean
-updated: '2026-07-31T20:15:25'
+updated: '2026-08-01T09:44:15'
 ---
 theorem cechPicMap_pieceι_eq_one {𝒩 : (XB).PointedCover} {γ : (XB).unitsCocycle 𝒩}
     {V : (XA).Opens} (T : PieceTrivialization C 𝒩 γ V) :

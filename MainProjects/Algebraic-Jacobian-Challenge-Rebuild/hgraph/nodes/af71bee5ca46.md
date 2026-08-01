@@ -20,7 +20,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.existsUnique_effective_divisor_of_carve
 type: lean
-updated: '2026-07-31T20:15:29'
+updated: '2026-08-01T09:44:18'
 ---
 theorem existsUnique_effective_divisor_of_carve
     (g : ℕ) (hO : Sheaf.h0 (Y.moduleKSheaf K) = 1)

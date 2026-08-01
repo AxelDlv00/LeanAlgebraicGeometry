@@ -26,7 +26,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.relSectionsMap_sectionsBaseChange_tmul
 type: lean
-updated: '2026-07-31T20:15:29'
+updated: '2026-08-01T09:44:18'
 ---
 theorem Over.relSectionsMap_sectionsBaseChange_tmul {W : C.left.Opens}
     (hW : IsCompact (W : Set C.left)) (hW' : IsQuasiSeparated (W : Set C.left))

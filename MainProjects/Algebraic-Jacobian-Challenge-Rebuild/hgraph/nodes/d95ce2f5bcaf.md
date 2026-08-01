@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: LinearMap.lTensor_ker_subtype_injective_of_flat_coker
 type: lean
-updated: '2026-07-31T20:15:25'
+updated: '2026-08-01T09:44:15'
 ---
 theorem lTensor_ker_subtype_injective_of_flat_coker
     [Module.Flat R (M ⧸ LinearMap.ker δ)]

@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.GrothendieckTopology.MayerVietorisSquare.range_moduleDiff_le_ker_moduleDelta
 type: lean
-updated: '2026-07-31T20:15:17'
+updated: '2026-08-01T09:44:09'
 ---
 theorem range_moduleDiff_le_ker_moduleDelta :
     LinearMap.range (S.moduleDiff F) ≤ LinearMap.ker (S.moduleDelta F) := by

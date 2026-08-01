@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Hom.functionFieldMap_injective
 type: lean
-updated: '2026-07-31T20:15:18'
+updated: '2026-08-01T09:44:10'
 ---
 theorem Scheme.Hom.functionFieldMap_injective [IsIntegral X] [IsIntegral Y] (f : X ⟶ Y)
     (h : f.base (genericPoint X) = genericPoint Y) :

@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: TruncExpCech.truncExpUnit
 type: lean
-updated: '2026-07-31T20:15:29'
+updated: '2026-08-01T09:44:18'
 ---
 def truncExpUnit (b : R) : (R[ε])ˣ :=
   Units.mkOfMulEqOne (1 + inr b) (1 - inr b) <| by

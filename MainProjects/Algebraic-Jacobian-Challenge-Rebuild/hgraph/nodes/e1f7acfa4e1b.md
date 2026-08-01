@@ -43,7 +43,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_uniform_bound_forall_baseChange
 type: lean
-updated: '2026-07-31T20:15:26'
+updated: '2026-08-01T09:44:15'
 ---
 theorem exists_uniform_bound_forall_baseChange {π : C.left ⟶ P1 k} [IsFinite π] [IsDominant π]
     (hπ : π ≫ P1.structureMap k = C.left ↘ Spec (CommRingCat.of k)) (g : ℕ)

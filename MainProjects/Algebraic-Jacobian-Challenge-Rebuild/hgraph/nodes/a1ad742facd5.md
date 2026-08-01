@@ -9,6 +9,6 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.uniformizer
 type: lean
-updated: '2026-07-31T20:15:29'
+updated: '2026-08-01T09:44:18'
 ---
 noncomputable def uniformizer : X.functionField := (exists_ord_eq_neg_one K hx).choose

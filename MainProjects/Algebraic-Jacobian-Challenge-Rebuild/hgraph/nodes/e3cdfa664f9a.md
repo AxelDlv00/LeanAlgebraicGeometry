@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.datumH1Equiv
 type: lean
-updated: '2026-07-31T20:15:17'
+updated: '2026-08-01T09:44:09'
 ---
 noncomputable def datumH1Equiv :
     Sheaf.HModule D.sheaf 1 ≃ₗ[B] (datumPair D).H1 :=

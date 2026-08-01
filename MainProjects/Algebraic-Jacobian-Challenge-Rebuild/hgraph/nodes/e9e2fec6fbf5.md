@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.injective_abelSigmaChart_of_isChartLocusFibre
 type: lean
-updated: '2026-07-31T20:15:27'
+updated: '2026-08-01T09:44:16'
 ---
 theorem injective_abelSigmaChart_of_isChartLocusFibre
     (h : IsChartLocusFibre C π n rep m Z hdeg) (T : Scheme.{u}ᵒᵖ) :

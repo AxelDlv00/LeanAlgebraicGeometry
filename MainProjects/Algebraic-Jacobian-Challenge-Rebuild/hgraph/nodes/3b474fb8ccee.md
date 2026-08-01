@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.LocalEquations.divEq_refl
 type: lean
-updated: '2026-07-31T20:15:23'
+updated: '2026-08-01T09:44:12'
 ---
 lemma divEq_refl (d : X.LocalEquations) : DivEq d d :=
   ⟨d.cover, le_rfl, le_rfl, fun _ => ⟨1, by rw [Units.val_one, one_mul]⟩⟩

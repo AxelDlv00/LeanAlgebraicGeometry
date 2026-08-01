@@ -24,7 +24,7 @@ generated: lean
 lean_status: lean_ok
 title: Module.isDescentCocycle_comparisonDescentUnit
 type: lean
-updated: '2026-07-31T20:15:25'
+updated: '2026-08-01T09:44:15'
 ---
 theorem isDescentCocycle_comparisonDescentUnit {v : (S ⊗[A] (B ⊗[A] B))ˣ}
     (hlmul : Algebra.TensorProduct.map (AlgHom.id S S) (Algebra.TensorProduct.lmul' A) v.val

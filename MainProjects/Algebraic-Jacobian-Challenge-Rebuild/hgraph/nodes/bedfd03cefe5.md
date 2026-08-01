@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divUniversalHighWindowRelation_zero
 type: lean
-updated: '2026-07-31T20:15:21'
+updated: '2026-08-01T09:44:12'
 ---
 theorem divUniversalHighWindowRelation_zero :
     divUniversalHighWindowRelation (C := C) (pi := pi)

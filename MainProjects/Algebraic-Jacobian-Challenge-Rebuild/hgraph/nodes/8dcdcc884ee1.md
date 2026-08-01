@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.FinCoverData.ovlMap_resHom_right
 type: lean
-updated: '2026-07-31T20:15:25'
+updated: '2026-08-01T09:44:14'
 ---
 lemma ovlMap_resHom_right (i j : D.index) (s : Γ(relCurve C R, D.pieces j)) :
     D.ovlMap R' i j ((relCurve C R).resHom inf_le_right s) =

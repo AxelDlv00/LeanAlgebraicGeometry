@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.PresheafOfGroups.OneCocycle.one_res
 type: lean
-updated: '2026-07-31T20:15:19'
+updated: '2026-08-01T09:44:10'
 ---
 lemma one_res (f : ∀ i, V i ⟶ U i) : (1 : OneCocycle G U).res f = 1 :=
   rfl

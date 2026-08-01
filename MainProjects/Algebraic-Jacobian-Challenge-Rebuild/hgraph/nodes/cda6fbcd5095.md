@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DatG0.isAffine_overSpec_left
 type: lean
-updated: '2026-07-31T20:15:28'
+updated: '2026-08-01T09:44:16'
 ---
 instance isAffine_overSpec_left (A : Type u) [CommRing A] [Algebra k A] :
     IsAffine (overSpec k A).left :=

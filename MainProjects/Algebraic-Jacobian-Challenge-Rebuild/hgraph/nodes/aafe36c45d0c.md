@@ -25,7 +25,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.hasWitnessH1Vanishing_of_isSplitWitness_tower
 type: lean
-updated: '2026-07-31T20:15:27'
+updated: '2026-08-01T09:44:16'
 ---
 theorem hasWitnessH1Vanishing_of_isSplitWitness_tower {A : Type u} [CommRing A] [Algebra k A]
     (μ : picEt C (overSpec k A)) (D : BasicOpenCocycleDatum C A π)

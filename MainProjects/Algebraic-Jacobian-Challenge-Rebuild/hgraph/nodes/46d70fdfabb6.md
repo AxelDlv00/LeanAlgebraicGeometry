@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.whiskerLeft_overDualNumberZero_left'
 type: lean
-updated: '2026-07-31T20:15:29'
+updated: '2026-08-01T09:44:18'
 ---
 theorem whiskerLeft_overDualNumberZero_left' :
     (C ◁ overDualNumberZero k).left

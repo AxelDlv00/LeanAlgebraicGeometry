@@ -29,7 +29,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.isLocallySurjective_oneChart
 type: lean
-updated: '2026-07-31T20:15:27'
+updated: '2026-08-01T09:44:16'
 ---
 theorem isLocallySurjective_oneChart {X : Scheme.{u}}
     (f : yoneda.obj X ⟶ (pic0SigmaSheaf C).1)

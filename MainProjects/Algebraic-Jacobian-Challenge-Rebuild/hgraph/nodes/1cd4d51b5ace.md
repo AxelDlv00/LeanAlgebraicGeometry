@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.compactSpace_left_of_quasiCompact
 type: lean
-updated: '2026-07-31T20:15:18'
+updated: '2026-08-01T09:44:10'
 ---
 instance compactSpace_left_of_quasiCompact [QuasiCompact X.hom] : CompactSpace X.left :=
   QuasiCompact.compactSpace_of_compactSpace X.hom

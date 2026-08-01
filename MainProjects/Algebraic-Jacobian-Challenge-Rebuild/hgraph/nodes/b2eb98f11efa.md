@@ -12,7 +12,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.fibreMulAux
 type: lean
-updated: '2026-07-31T20:15:22'
+updated: '2026-08-01T09:44:12'
 ---
 private noncomputable def fibreMulAux {A B : Type u} [CommRing A] [CommRing B]
     [Algebra R A] (ψ : A →+* B) (ρ : R' →+* B)

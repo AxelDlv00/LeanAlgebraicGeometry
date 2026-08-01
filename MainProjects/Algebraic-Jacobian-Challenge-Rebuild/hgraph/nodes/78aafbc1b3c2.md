@@ -11,7 +11,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.divisorSheaf_obj_subsingleton
 type: lean
-updated: '2026-07-31T20:15:29'
+updated: '2026-08-01T09:44:17'
 ---
 private lemma divisorSheaf_obj_subsingleton {D : X.CurveDivisor} {W : X.Opens}
     (hW : ¬ (W : Set X).Nonempty) :

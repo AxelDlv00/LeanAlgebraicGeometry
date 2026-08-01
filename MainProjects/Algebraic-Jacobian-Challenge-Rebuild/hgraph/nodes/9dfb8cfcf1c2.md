@@ -10,7 +10,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.AffAdaptation.toOvlRight_mk'
 type: lean
-updated: '2026-07-31T20:15:23'
+updated: '2026-08-01T09:44:13'
 ---
 private lemma toOvlRight_mk' (i j : D.index) (t : Γ(relCurve C R, D.pieces j)) :
     A.toOvlRight i j (Ideal.Quotient.mk (Ideal.span {A.eqn j}) t) =

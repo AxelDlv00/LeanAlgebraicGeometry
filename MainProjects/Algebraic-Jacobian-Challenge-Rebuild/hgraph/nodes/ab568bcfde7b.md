@@ -9,5 +9,5 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Over.μunit_val
 type: lean
-updated: '2026-07-31T20:15:20'
+updated: '2026-08-01T09:44:11'
 ---

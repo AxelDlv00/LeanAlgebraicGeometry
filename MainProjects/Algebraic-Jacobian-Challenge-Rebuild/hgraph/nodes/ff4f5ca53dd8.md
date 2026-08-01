@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivisorAdaptation.moduleFinite_stalkQuot
 type: lean
-updated: '2026-07-31T20:15:25'
+updated: '2026-08-01T09:44:14'
 ---
 lemma moduleFinite_stalkQuot (j : A.index) {z : relCurve C K} (hz : z ∈ A.pieces j)
     (hzg : z ≠ genericPoint (relCurve C K)) :

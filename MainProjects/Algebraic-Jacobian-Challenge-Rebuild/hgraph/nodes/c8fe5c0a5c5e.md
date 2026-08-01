@@ -22,7 +22,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivFamZarAff.mapAlgHom_eq_mapAlg
 type: lean
-updated: '2026-07-31T20:15:23'
+updated: '2026-08-01T09:44:13'
 ---
 theorem mapAlgHom_eq_mapAlg [Algebra A A'] [IsScalarTower k A A'] (φ : A →ₐ[k] A')
     (hφ : ∀ a, φ a = algebraMap A A' a) (F : DivFamZarAff C A n) :

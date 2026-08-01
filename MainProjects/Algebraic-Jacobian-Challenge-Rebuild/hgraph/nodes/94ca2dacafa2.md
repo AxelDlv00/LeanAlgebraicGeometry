@@ -35,7 +35,7 @@ generated: lean
 lean_status: lean_ok
 title: DualNumber.free_of_free_baseChange_eps
 type: lean
-updated: '2026-07-31T20:15:29'
+updated: '2026-08-01T09:44:18'
 ---
 theorem free_of_free_baseChange_eps
     (M : Type u) [AddCommGroup M] [Module (DualNumber A) M]

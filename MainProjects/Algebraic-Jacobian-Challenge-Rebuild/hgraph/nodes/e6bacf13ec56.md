@@ -9,7 +9,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.DivisorAdaptation.thetaIdealInclFst_smul
 type: lean
-updated: '2026-07-31T20:15:25'
+updated: '2026-08-01T09:44:14'
 ---
 private lemma thetaIdealInclFst_smul (W : (relCurve C R).Opens) (r : R)
     (s : A.ThetaIdealSections a W) :

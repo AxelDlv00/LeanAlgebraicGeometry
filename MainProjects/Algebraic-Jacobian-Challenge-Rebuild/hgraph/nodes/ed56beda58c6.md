@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivFamZar.mapAlgHom_comp
 type: lean
-updated: '2026-07-31T20:15:25'
+updated: '2026-08-01T09:44:14'
 ---
 theorem mapAlgHom_comp (φ : A →ₐ[k] A') (ψ : A' →ₐ[k] A'') (F : DivFamZar C A π n) :
     mapAlgHom (ψ.comp φ) F = mapAlgHom ψ (mapAlgHom φ F) :=

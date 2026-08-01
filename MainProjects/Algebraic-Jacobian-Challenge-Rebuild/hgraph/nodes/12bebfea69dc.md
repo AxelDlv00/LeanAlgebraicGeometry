@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.cgqPreimage_le_inr
 type: lean
-updated: '2026-07-31T20:15:25'
+updated: '2026-08-01T09:44:15'
 ---
 lemma cgqPreimage_le_inr (V : (XA).Opens) :
     (cgq) ⁻¹ᵁ V ≤ (u₂) ⁻¹ᵁ ((cg) ⁻¹ᵁ V) :=

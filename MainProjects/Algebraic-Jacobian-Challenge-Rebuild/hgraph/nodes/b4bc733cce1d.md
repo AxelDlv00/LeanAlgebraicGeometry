@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.BasicOpenCocycleDatum.descent_cechPicClass
 type: lean
-updated: '2026-07-31T20:15:17'
+updated: '2026-08-01T09:44:09'
 ---
 theorem BasicOpenCocycleDatum.descent_cechPicClass [IsAffineHom π]
     {B₀ : Subalgebra k B} {D₀ : BasicOpenCocycleDatum C (↥B₀) π}

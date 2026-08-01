@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ThetaGeneratorSeed.piece_le
 type: lean
-updated: '2026-07-31T20:15:21'
+updated: '2026-08-01T09:44:11'
 ---
 lemma piece_le (z : relCurve C R) : D.piece z ≤ relPinnedChart C R π (D.side z) :=
   (relCurve C R).basicOpen_le (D.h z)

@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivisorAdaptation.thetaIdealUnit
 type: lean
-updated: '2026-07-31T20:15:25'
+updated: '2026-08-01T09:44:14'
 ---
 noncomputable def thetaIdealUnit (i j : A.index) :
     Γ(relCurve C R, A.pieces i ⊓ A.pieces j)ˣ :=

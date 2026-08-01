@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.RationalMap.prod_fromFunctionField
 type: lean
-updated: '2026-07-31T20:15:16'
+updated: '2026-08-01T09:44:08'
 ---
 lemma prod_fromFunctionField (sX : X ⟶ S) (sY : Y ⟶ S) (sZ : Z ⟶ S)
     [IsIntegral X] [LocallyOfFiniteType sY] [LocallyOfFiniteType sZ]

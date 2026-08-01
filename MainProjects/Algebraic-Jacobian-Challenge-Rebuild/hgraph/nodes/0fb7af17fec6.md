@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.Diagonal.aeval_sub_dvd
 type: lean
-updated: '2026-07-31T20:15:16'
+updated: '2026-08-01T09:44:08'
 ---
 lemma aeval_sub_dvd (a b : B ⊗[k] B) (p : Polynomial k) :
     a - b ∣ aeval a p - aeval b p := by

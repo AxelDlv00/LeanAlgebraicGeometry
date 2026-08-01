@@ -35,7 +35,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.isDominant_opens_ι_of_irreducibleSpace
 type: lean
-updated: '2026-07-31T20:15:27'
+updated: '2026-08-01T09:44:16'
 ---
 theorem isDominant_opens_ι_of_irreducibleSpace {X : Scheme.{u}} [IrreducibleSpace X]
     (V : X.Opens) (hne : (V : Set X).Nonempty) :

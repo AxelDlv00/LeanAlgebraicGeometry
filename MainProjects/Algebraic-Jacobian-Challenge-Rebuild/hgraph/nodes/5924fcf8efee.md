@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivisorAdaptation.thetaSectionSnd_mem
 type: lean
-updated: '2026-07-31T20:15:25'
+updated: '2026-08-01T09:44:14'
 ---
 theorem thetaSectionSnd_mem : A.thetaSectionSnd a ∈ A.thetaGluedSubmodule a := by
   rw [mem_thetaGluedSubmodule_iff]

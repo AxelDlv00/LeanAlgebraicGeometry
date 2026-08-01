@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.CurveDivisor.deg_sub'
 type: lean
-updated: '2026-07-31T20:15:29'
+updated: '2026-08-01T09:44:18'
 ---
 lemma Scheme.CurveDivisor.deg_sub' (A B : X.CurveDivisor) :
     CurveDivisor.deg K (A - B) = CurveDivisor.deg K A - CurveDivisor.deg K B := by

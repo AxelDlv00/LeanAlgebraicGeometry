@@ -10,7 +10,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.lbc_single
 type: lean
-updated: '2026-07-31T20:15:16'
+updated: '2026-08-01T09:44:08'
 ---
 private lemma lbc_single (n : ℤ) (c : k) :
     laurentBaseChange k A (AddMonoidAlgebra.single n c ⊗ₜ 1)

@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.span_range_gen
 type: lean
-updated: '2026-07-31T20:15:25'
+updated: '2026-08-01T09:44:15'
 ---
 lemma span_range_gen : Submodule.span R (Set.range (gen R M)) = ⊤ :=
   (Module.Finite.exists_fin (R := R) (M := M)).choose_spec.choose_spec

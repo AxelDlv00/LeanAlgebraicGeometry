@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.pointCover_opens_self
 type: lean
-updated: '2026-07-31T20:15:28'
+updated: '2026-08-01T09:44:16'
 ---
 lemma pointCover_opens_self (d : PointUniformizerData K hx) :
     (pointCover K hx d).opens x = d.opens :=

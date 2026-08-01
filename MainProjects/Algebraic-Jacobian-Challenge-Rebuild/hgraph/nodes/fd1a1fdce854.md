@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.SmoothOfRelativeDimension.exists_isDedekindDomain_section
 type: lean
-updated: '2026-07-31T20:15:19'
+updated: '2026-08-01T09:44:10'
 ---
 theorem SmoothOfRelativeDimension.exists_isDedekindDomain_section
     [SmoothOfRelativeDimension 1 f] [IsIntegral X] (x : X) :

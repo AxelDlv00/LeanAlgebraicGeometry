@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.P1.overlapSectionsEquiv
 type: lean
-updated: '2026-07-31T20:15:19'
+updated: '2026-08-01T09:44:10'
 ---
 noncomputable def overlapSectionsEquiv :
     Γ(P1 k, Proj.basicOpen 𝒜 (X 0 * X 1)) ≃+* LaurentPolynomial k :=

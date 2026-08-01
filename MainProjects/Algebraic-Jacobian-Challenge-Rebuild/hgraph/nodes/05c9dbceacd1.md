@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.eqnsWindowGermSet
 type: lean
-updated: '2026-07-31T20:15:23'
+updated: '2026-08-01T09:44:13'
 ---
 noncomputable def eqnsWindowGermSet (g : ℕ) (d : (relCurve C K).LocalEquations)
     (z : relCurve C K) : Set ((relCurve C K).presheaf.stalk z) :=

@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.ovlStalkColEval
 type: lean
-updated: '2026-07-31T20:15:24'
+updated: '2026-08-01T09:44:13'
 ---
 noncomputable def ovlStalkColEval (i j : D.index) {z : relCurve C K}
     (hz : z ∈ D.pieces i ⊓ D.pieces j) :

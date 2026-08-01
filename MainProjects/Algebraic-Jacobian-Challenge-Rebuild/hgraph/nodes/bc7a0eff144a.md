@@ -7,9 +7,10 @@ docstring: 'A: f is a SPLIT EPI when restrictChart f V is an iso.'
 file: scratch_p4r6/probe8.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.ProbeP4R6d.probeSplitEpi
 type: lean
-updated: '2026-07-31T20:38:24'
+updated: '2026-08-01T09:42:25'
 ---
 theorem probeSplitEpi {X : Scheme.{u}} (f : yoneda.obj X ⟶ (pic0SigmaSheaf C).1)
     (V : X.Opens) [IsIso (restrictChart f V)] :

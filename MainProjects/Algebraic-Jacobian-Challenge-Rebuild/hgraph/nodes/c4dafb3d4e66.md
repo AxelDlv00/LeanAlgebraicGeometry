@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: IsLocalizedModule.bijective_of_comp_eq
 type: lean
-updated: '2026-07-31T20:15:17'
+updated: '2026-08-01T09:44:09'
 ---
 theorem IsLocalizedModule.bijective_of_comp_eq (p : M →ₗ[R] P) (q : M →ₗ[R] Q)
     [IsLocalizedModule S p] [IsLocalizedModule S q] (T : P →ₗ[R] Q)

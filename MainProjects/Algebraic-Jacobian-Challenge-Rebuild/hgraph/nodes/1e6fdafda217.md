@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.LocalEquations.DivEq.unitLocus_eq
 type: lean
-updated: '2026-07-31T20:15:21'
+updated: '2026-08-01T09:44:11'
 ---
 theorem DivEq.unitLocus_eq {d₁ d₂ : X.LocalEquations} (h : DivEq d₁ d₂) :
     (d₁.unitLocus : Set X) = (d₂.unitLocus : Set X) := by

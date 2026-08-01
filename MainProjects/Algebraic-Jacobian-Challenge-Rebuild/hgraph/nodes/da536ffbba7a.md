@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.AffineTwoCover.isAffine_of_V₀_eq_top
 type: lean
-updated: '2026-07-31T20:15:29'
+updated: '2026-08-01T09:44:18'
 ---
 theorem isAffine_of_V₀_eq_top (h : D.V₀ = ⊤) : IsAffine Y := by
   have h2 := D.isAffineOpen₀

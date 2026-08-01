@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.deg_eq_genus_of_window_corank
 type: lean
-updated: '2026-07-31T20:15:28'
+updated: '2026-08-01T09:44:17'
 ---
 theorem deg_eq_genus_of_window_corank (g : ℕ)
     (hO : Sheaf.h0 (Y.moduleKSheaf K) = 1)

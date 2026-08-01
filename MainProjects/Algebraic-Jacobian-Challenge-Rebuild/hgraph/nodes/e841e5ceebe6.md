@@ -30,7 +30,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ThetaGeneratorSeed.forall_flat_colength_quotient_of_hsub
 type: lean
-updated: '2026-07-31T20:15:22'
+updated: '2026-08-01T09:44:12'
 ---
 theorem forall_flat_colength_quotient_of_hsub [Module.Finite R ↥K]
     (hcolFin : ∀ z : relCurve C R,

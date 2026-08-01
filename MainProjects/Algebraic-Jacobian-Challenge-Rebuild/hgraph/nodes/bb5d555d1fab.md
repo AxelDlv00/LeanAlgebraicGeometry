@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.shiftMap
 type: lean
-updated: '2026-07-31T20:15:29'
+updated: '2026-08-01T09:44:18'
 ---
 noncomputable def shiftMap (a : ℤ) :
     ↥(pointLattice K hx a) →ₗ[K] ↥(pointLattice K hx 0) where

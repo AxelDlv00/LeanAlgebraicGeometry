@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.picEtMap_val
 type: lean
-updated: '2026-07-31T20:15:27'
+updated: '2026-08-01T09:44:16'
 ---
 lemma picEtMap_val (f : T' ⟶ T) (s : picEt C T) (W : T'.left.affineOpens) :
     (picEtMap C f s).1 W = picEtMapVal C f s W :=

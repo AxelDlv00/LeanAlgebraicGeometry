@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.CurveDivisor.not_forall_eq_of_two_le_h0
 type: lean
-updated: '2026-07-31T20:15:29'
+updated: '2026-08-01T09:44:17'
 ---
 theorem CurveDivisor.not_forall_eq_of_two_le_h0
     (hO : Sheaf.h0 (X.moduleKSheaf K) = 1) {A : X.CurveDivisor} (hA : 0 ≤ A)

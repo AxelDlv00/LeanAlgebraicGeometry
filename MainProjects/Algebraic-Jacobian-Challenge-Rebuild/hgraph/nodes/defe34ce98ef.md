@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivisorAdaptation.pulledToOvlRight_mk
 type: lean
-updated: '2026-07-31T20:15:24'
+updated: '2026-08-01T09:44:14'
 ---
 lemma pulledToOvlRight_mk (i j : A.index)
     (x : Γ(relCurve C R', (A.toFinCoverData.baseChange R').pieces j)) :

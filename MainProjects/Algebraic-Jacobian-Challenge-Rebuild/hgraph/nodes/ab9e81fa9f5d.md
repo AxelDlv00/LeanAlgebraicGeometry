@@ -39,7 +39,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ThetaGeneratorSeed.affAdaptation_fibre_regular
 type: lean
-updated: '2026-07-31T20:15:23'
+updated: '2026-08-01T09:44:13'
 ---
 theorem affAdaptation_fibre_regular (hD : D.IsGenerator) (Dc : AffCoverData C R)
     (A : AffAdaptation Dc (D.localEquations hD)) (j : Dc.index) (p : PrimeSpectrum R) :

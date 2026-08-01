@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Hom.unitsRestrict_unitsPreimageEquiv_symm
 type: lean
-updated: '2026-07-31T20:15:26'
+updated: '2026-08-01T09:44:15'
 ---
 lemma unitsRestrict_unitsPreimageEquiv_symm {V V' : Y.Opens} (hV : V ≤ w.opensRange)
     (h : V' ≤ V) (v : Γ(Z, w ⁻¹ᵁ V)ˣ) :

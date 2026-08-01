@@ -23,7 +23,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.epi_pullback_fst_algebraMap
 type: lean
-updated: '2026-07-31T20:15:14'
+updated: '2026-08-01T09:44:08'
 ---
 theorem epi_pullback_fst_algebraMap {Z : Scheme.{u}} (g : Z ⟶ Spec (.of k)) :
     Epi (pullback.fst g (Spec.map (CommRingCat.ofHom (algebraMap k L)))) := by

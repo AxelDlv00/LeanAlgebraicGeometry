@@ -10,7 +10,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.FinCoverData.val_unitsRestrict
 type: lean
-updated: '2026-07-31T20:15:25'
+updated: '2026-08-01T09:44:14'
 ---
 private lemma val_unitsRestrict {W U : (relCurve C R).Opens} (h : W ≤ U)
     (u : Γ(relCurve C R, U)ˣ) :
