@@ -540,6 +540,8 @@ import AlgebraicJacobian.Picard.Pic0ThetaCocycle
 import AlgebraicJacobian.Picard.RepresentableByCocycle
 import AlgebraicJacobian.Picard.Pic0RepresentabilityOverlap
 import AlgebraicJacobian.Descent.DescentDataNormalization
+import AlgebraicJacobian.Descent.FiniteInAffine
+import AlgebraicJacobian.Descent.GroupAffineOpen
 import AlgebraicJacobian.Picard.Pic0RepresentabilityPullbacks
 import AlgebraicJacobian.Picard.Pic0RepresentabilityDescentData
 import AlgebraicJacobian.Picard.Pic0GaloisAction
