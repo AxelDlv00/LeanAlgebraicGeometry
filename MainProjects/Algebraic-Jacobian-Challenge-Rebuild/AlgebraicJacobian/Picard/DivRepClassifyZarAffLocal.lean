@@ -61,17 +61,28 @@ section WindowBaseChange
 variable {R : Type u} [CommRing R] [Algebra k R]
 variable {H : Type u} [AddCommGroup H] [Module k H]
 
+/-- Cancelling an identity base change on a canonical generator is the identity. -/
+theorem cancelBaseChange_self_one_tmul (x : R ⊗[k] H) :
+    TensorProduct.AlgebraTensorModule.cancelBaseChange k R R R H (1 ⊗ₜ[R] x) = x := by
+  induction x using TensorProduct.induction_on with
+  | zero => simp
+  | add x y hx hy =>
+      rw [TensorProduct.tmul_add, map_add, hx, hy]
+  | tmul r h =>
+      rw [TensorProduct.AlgebraTensorModule.cancelBaseChange_tmul]
+      simp
+
 /-- Pushing a window submodule along the identity algebra structure changes nothing. -/
 theorem windowBaseChange_self (N : Submodule R (R ⊗[k] H)) :
     windowBaseChange R N = N := by
   apply le_antisymm
   · rw [windowBaseChange_le_iff]
     intro x hx
-    simpa using hx
+    rwa [cancelBaseChange_self_one_tmul]
   · intro x hx
     have hmem := cancelBaseChange_one_tmul_mem_windowBaseChange
       (R' := R) (N := N) hx
-    simpa using hmem
+    rwa [cancelBaseChange_self_one_tmul] at hmem
 
 end WindowBaseChange
 
@@ -107,21 +118,21 @@ theorem IsPairChartFramed.mapAlg
   haveI hfin₁ := F.certified.finite_intrinsicWindowQuotient hpi hO hchi
     (relThetaPairH1_windowM C pi hpi g) le_rfl
   haveI hproj₁ := F.certified.projective_intrinsicWindowQuotient
-    (pi := pi) F.adaptation (windowM_choice pi hpi g) hpi hO hchi
+    (π := pi) F.adaptation (windowM_choice pi hpi g) hpi hO hchi
     (relThetaPairH1_windowM C pi hpi g) le_rfl
   have hrank₁ := fun p : PrimeSpectrum R =>
     F.certified.rankAtStalk_intrinsicWindowQuotient
-      (pi := pi) F.adaptation (windowM_choice pi hpi g) hpi hO hchi
+      (π := pi) F.adaptation (windowM_choice pi hpi g) hpi hO hchi
       (relThetaPairH1_windowM C pi hpi g) le_rfl p
   haveI hfin₂ := F.certified.finite_intrinsicWindowQuotient hpi hO hchi
     (relThetaPairH1_windowMS C pi hpi g) (Nat.le_add_right _ _)
   haveI hproj₂ := F.certified.projective_intrinsicWindowQuotient
-    (pi := pi) F.adaptation
+    (π := pi) F.adaptation
       (windowM_choice pi hpi g + windowS_choice pi hpi g) hpi hO hchi
     (relThetaPairH1_windowMS C pi hpi g) (Nat.le_add_right _ _)
   have hrank₂ := fun p : PrimeSpectrum R =>
     F.certified.rankAtStalk_intrinsicWindowQuotient
-      (pi := pi) F.adaptation
+      (π := pi) F.adaptation
         (windowM_choice pi hpi g + windowS_choice pi hpi g) hpi hO hchi
       (relThetaPairH1_windowMS C pi hpi g) (Nat.le_add_right _ _) p
   change (_ = Submodule.map _
@@ -162,7 +173,7 @@ theorem IsPairChartFramed.mapAlg
 
 set_option maxHeartbeats 800000 in
 -- The generic carve-scheme universal property elaborates both Grassmannian components.
-include hO hchi in
+set_option linter.unusedSectionVars false in
 /-- A framed widened certified divisor family factors uniquely through `DivScheme`. -/
 theorem existsUnique_divClassify
     {R : Type u} [CommRing R] [Algebra k R]
