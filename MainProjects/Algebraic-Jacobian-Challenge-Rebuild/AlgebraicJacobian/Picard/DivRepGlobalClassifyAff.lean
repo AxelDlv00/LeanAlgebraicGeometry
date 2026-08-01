@@ -95,6 +95,64 @@ structure DivRepAffinePullbackAff where
 namespace DivRepAffinePullbackAff
 
 include hO hchi in
+/-- A chosen preimage under the widened affine classifier. -/
+noncomputable def pullOfClassifierSurjective
+    (hsurj : ∀ (S : Type u) [CommRing S] [Algebra k S],
+      Function.Surjective
+        (divRepClassifyZarAff (C := C) (pi := pi) hpi g hO hchi r1 r2 b1 b2 S))
+    (S : Type u) [CommRing S] [Algebra k S] (v : overSpec k S ⟶ DivOver) :
+    DivFamZarAff C S g :=
+  (hsurj S v).choose
+
+include hO hchi in
+/-- The chosen preimage classifies to the original point. -/
+theorem classify_pullOfClassifierSurjective
+    (hsurj : ∀ (S : Type u) [CommRing S] [Algebra k S],
+      Function.Surjective
+        (divRepClassifyZarAff (C := C) (pi := pi) hpi g hO hchi r1 r2 b1 b2 S))
+    (S : Type u) [CommRing S] [Algebra k S] (v : overSpec k S ⟶ DivOver) :
+    divRepClassifyZarAff hpi g hO hchi r1 r2 b1 b2 S
+        (pullOfClassifierSurjective hpi g hO hchi r1 r2 b1 b2 hsurj S v)
+      = v :=
+  (hsurj S v).choose_spec
+
+include hO hchi in
+/-- Build the widened affine package from surjectivity of the canonical classifier.
+
+The chosen preimage is automatically natural: after applying the injective classifier, the
+claim is exactly `overSpecMap_comp_divRepClassifyZarAff`. -/
+noncomputable def ofClassifierSurjective
+    (hsurj : ∀ (S : Type u) [CommRing S] [Algebra k S],
+      Function.Surjective
+        (divRepClassifyZarAff (C := C) (pi := pi) hpi g hO hchi r1 r2 b1 b2 S)) :
+    DivRepAffinePullbackAff hpi g r1 r2 b1 b2 where
+  pull S _ _ v :=
+    pullOfClassifierSurjective hpi g hO hchi r1 r2 b1 b2 hsurj S v
+  isDivRepClassify_pull S _ _ v := by
+    have hv := congrArg CategoryTheory.Over.Hom.left
+      (classify_pullOfClassifierSurjective hpi g hO hchi r1 r2 b1 b2 hsurj S v)
+    rw [← hv]
+    exact divRepClassifyZarAff_isDivRepClassifyAff hpi g hO hchi r1 r2 b1 b2
+      (pullOfClassifierSurjective hpi g hO hchi r1 r2 b1 b2 hsurj S v)
+  pull_naturality {A B} _ _ _ _ phi v := by
+    apply divRepClassifyZarAff_injective (C := C) (π := pi) (S := B)
+      hpi g hO hchi r1 r2 b1 b2
+    calc
+      divRepClassifyZarAff hpi g hO hchi r1 r2 b1 b2 B
+          (pullOfClassifierSurjective hpi g hO hchi r1 r2 b1 b2 hsurj B
+            (Over.overSpecMap phi ≫ v))
+        = Over.overSpecMap phi ≫ v :=
+          classify_pullOfClassifierSurjective hpi g hO hchi r1 r2 b1 b2 hsurj B _
+      _ = Over.overSpecMap phi ≫
+          divRepClassifyZarAff hpi g hO hchi r1 r2 b1 b2 A
+            (pullOfClassifierSurjective hpi g hO hchi r1 r2 b1 b2 hsurj A v) := by
+        rw [classify_pullOfClassifierSurjective hpi g hO hchi r1 r2 b1 b2 hsurj A v]
+      _ = divRepClassifyZarAff hpi g hO hchi r1 r2 b1 b2 B
+          (DivFamZarAff.mapAlgHom phi
+            (pullOfClassifierSurjective hpi g hO hchi r1 r2 b1 b2 hsurj A v)) :=
+        overSpecMap_comp_divRepClassifyZarAff hpi g hO hchi r1 r2 b1 b2 phi _
+
+include hO hchi in
 /-- Pulling the canonical classifier recovers the widened class. -/
 theorem pull_classify
     (D : DivRepAffinePullbackAff hpi g r1 r2 b1 b2)
