@@ -250,6 +250,7 @@ private noncomputable def classifyPiece
     (divRepClassifyZarAff hpi g hO hchi r1 r2 b1 b2 Γ(T.left, U.1) (F.1 U)).left
 
 set_option maxHeartbeats 1600000 in
+-- The restriction map and both affine classifiers expose two section-ring algebra towers.
 private theorem homOfLE_classifyPiece
     {T : Over (Spec (CommRingCat.of k))} (F : divFamZarAff C g T)
     {U V : T.left.affineOpens} (hle : U.1 ≤ V.1) :
