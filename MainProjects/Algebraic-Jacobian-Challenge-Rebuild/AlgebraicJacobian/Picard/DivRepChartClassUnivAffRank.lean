@@ -235,6 +235,25 @@ theorem deg_presentationDivisor_residueFibreLocalEquations_univSeed
       (pointwiseSeedRDN_of_highWindow
         (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hO hchi hb) p
 
+set_option maxHeartbeats 2400000 in
+set_option synthInstance.maxHeartbeats 800000 in
+/-- The residue pullback of the universal seed has degree `g` when the curve Euler
+characteristic is normalized by an independent parameter `gamma ≤ g`. -/
+theorem deg_presentationDivisor_residueFibreLocalEquations_univSeed_at
+    {gamma : Nat} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (p : PrimeSpectrum RZ) :
+    CurveDivisor.deg p.asIdeal.ResidueField
+      (Scheme.presentationDivisor p.asIdeal.ResidueField
+        ((ThetaGeneratorSeed.residueFibreLocalEquations
+          (univSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma)
+          (isGenerator_univSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma)
+          p).presentation)) = (g : ℤ) := by
+  exact deg_presentationDivisor_residueFibreLocalEquations_pointwiseGeneratorSeed_at
+    C hpi g r1 r2 b1 b2 i j hgamma hchiGamma
+      (pointwiseSeedRDN_of_highWindow_at
+        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hgamma hchiGamma) p
+
 set_option maxHeartbeats 8000000 in
 -- The universal chart ring and fibre-regular projectivity proof carry large dependent types.
 set_option synthInstance.maxHeartbeats 800000 in
@@ -281,6 +300,50 @@ theorem rankAtStalk_colength_univSeed_of_swallowedBy (hb : 0 < windowBound pi hp
     rw [hpull]
     exact deg_presentationDivisor_residueFibreLocalEquations_univSeed
       C hpi g r1 r2 b1 b2 i j hO hchi hb p
+  exact A.rankAtStalk_colength_eq_of_swallowedBy_of_pulled_degree
+    j0 hsub hmiss hfin hproj p hdeg
+
+set_option maxHeartbeats 8000000 in
+set_option synthInstance.maxHeartbeats 800000 in
+/-- The exact universal affine rank producer at independent curve parameter `gamma ≤ g`.
+The colength rank remains the certified divisor degree `g`. -/
+theorem rankAtStalk_colength_univSeed_of_swallowedBy_at
+    {gamma : Nat} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (Dc : AffCoverData C RZ)
+    (A : AffAdaptation Dc
+      ((univSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma).localEquations
+        (isGenerator_univSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma)))
+    (j0 : Dc.index)
+    (hsub :
+      ((univSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma).localEquations
+        (isGenerator_univSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma)).supportLocus
+          ⊆ (Dc.pieces j0 : Set (relCurve C RZ)))
+    (hmiss : ∀ l : Dc.index, l ≠ j0 →
+      Disjoint
+        ((univSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma).localEquations
+          (isGenerator_univSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma)).supportLocus
+        (Dc.pieces l : Set (relCurve C RZ)))
+    (p : PrimeSpectrum RZ) :
+    Module.rankAtStalk (R := RZ) (A.colength j0) p = g := by
+  classical
+  let D := univSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma
+  let hD := isGenerator_univSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma
+  let d := D.localEquations hD
+  have hsw : Dc.SwallowedBy d := ⟨j0, hsub, hmiss⟩
+  have hfin : ∀ l, Module.Finite RZ (A.colength l) :=
+    A.forall_finite_colength_of_swallowedBy hsw
+  have hproj : ∀ l, Module.Projective RZ (A.colength l) := fun l => by
+    haveI := hfin l
+    exact A.projective_colength_of_forall_tmul_residueField l
+      (fun q => D.affAdaptation_fibre_regular hD Dc A l q)
+  have hpull := D.aff_pulledEquations_eq_residueFibreLocalEquations hD A hproj p
+  have hdeg : CurveDivisor.deg p.asIdeal.ResidueField
+      (Scheme.presentationDivisor p.asIdeal.ResidueField
+        ((A.pulledEquations p.asIdeal.ResidueField hproj).presentation)) = (g : ℤ) := by
+    rw [hpull]
+    exact deg_presentationDivisor_residueFibreLocalEquations_univSeed_at
+      C hpi g r1 r2 b1 b2 i j hgamma hchiGamma p
   exact A.rankAtStalk_colength_eq_of_swallowedBy_of_pulled_degree
     j0 hsub hmiss hfin hproj p hdeg
 

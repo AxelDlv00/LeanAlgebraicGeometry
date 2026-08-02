@@ -93,6 +93,36 @@ theorem isGenerator_highWindowPointwiseGeneratorSeed (hb : 0 < windowBound pi hp
     (pointwiseSeedRDN_of_highWindow
       (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hO hchi hb)
 
+set_option maxHeartbeats 2400000 in
+-- The wrapper elaborates decoupled high-window RD-N through the dependent seed type.
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxRecDepth 8000 in
+/-- The degree-`g` generator seed obtained from the all-stage high-window theorem
+at independent Euler parameter `gamma ≤ g`. -/
+noncomputable def highWindowPointwiseGeneratorSeed_at {gamma : Nat}
+    (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : Int)) :
+    ThetaGeneratorSeed C RZ pi (windowM_choice pi hpi g)
+      (divUniversalSeedK C pi hpi g r1 r2 b1 b2 i j) :=
+  pointwiseGeneratorSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma
+    (pointwiseSeedRDN_of_highWindow_at
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hgamma hchiGamma)
+
+set_option maxHeartbeats 2400000 in
+-- The final theorem reuses both decoupled RD-N and pointwise generator endpoints.
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxRecDepth 8000 in
+/-- All-stage high-window flatness supplies the degree-`g` pointwise theta
+generator at every independent Euler parameter `gamma ≤ g`. -/
+theorem isGenerator_highWindowPointwiseGeneratorSeed_at {gamma : Nat}
+    (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : Int)) :
+    (highWindowPointwiseGeneratorSeed_at
+      C hpi g r1 r2 b1 b2 i j hgamma hchiGamma).IsGenerator :=
+  isGenerator_pointwiseGeneratorSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma
+    (pointwiseSeedRDN_of_highWindow_at
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hgamma hchiGamma)
+
 end HighWindowPointwiseGenerator
 
 end PointwiseAchiever

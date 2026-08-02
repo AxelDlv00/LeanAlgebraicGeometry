@@ -102,6 +102,36 @@ theorem divUniversalSndWindow_le_divisorWindow_of_generator
   exact windowShiftMul_mem_divisorWindow C pi hpi g RZ
     (D.localEquations hD) ((Module.finBasis k HS) t) (hfst (v t).2)
 
+set_option maxHeartbeats 2400000 in
+-- The proof unfolds the universal seed through both degree-`g` window equivalences.
+set_option synthInstance.maxHeartbeats 800000 in
+/-- At independent Euler parameter `gamma ≤ g`, the universal second window is
+contained in the divisor window extracted from any generator of the universal seed. -/
+theorem divUniversalSndWindow_le_divisorWindow_of_generator_at {gamma : Nat}
+    (hgamma : gamma ≤ g)
+    (D : ThetaGeneratorSeed C RZ pi (windowM_choice pi hpi g)
+      (divUniversalSeedK C pi hpi g r1 r2 b1 b2 i j))
+    (hD : D.IsGenerator)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : Int)) :
+    (divUniversalSndWindow C pi hpi g r1 r2 b1 b2 i j).toSubmodule ≤
+      divisorWindow (D.localEquations hD)
+        (relThetaPairH1_windowMS C pi hpi g) := by
+  have hfst :
+      (divUniversalFstWindow C pi hpi g r1 r2 b1 b2 i j).toSubmodule ≤
+        divisorWindow (D.localEquations hD)
+          (relThetaPairH1_windowM C pi hpi g) := by
+    have hseed := D.le_vanishingSubmodule hD
+    exact Submodule.map_le_iff_le_comap.mp hseed
+  rw [← universalMulSpan_eq_divUniversalSndWindow_at
+    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hgamma hchiGamma]
+  rintro _ ⟨v, rfl⟩
+  rw [universalMulMap]
+  rw [LinearMap.sum_apply]
+  apply Submodule.sum_mem
+  intro t ht
+  exact windowShiftMul_mem_divisorWindow C pi hpi g RZ
+    (D.localEquations hD) ((Module.finBasis k HS) t) (hfst (v t).2)
+
 end ThetaGeneratorSeed
 
 namespace PointwiseAchiever
@@ -127,6 +157,28 @@ theorem divUniversalSndWindow_le_highWindow_divisorWindow
     (highWindowPointwiseGeneratorSeed C hpi g r1 r2 b1 b2 i j hO hchi hb)
     (isGenerator_highWindowPointwiseGeneratorSeed
       C hpi g r1 r2 b1 b2 i j hO hchi hb) hO hchi hb
+
+set_option maxHeartbeats 2400000 in
+-- The specialization elaborates the decoupled pointwise generator and its equations.
+set_option synthInstance.maxHeartbeats 800000 in
+/-- At independent Euler parameter `gamma ≤ g`, the all-stage high-window generator
+satisfies the universal second-window containment required by the certificate. -/
+theorem divUniversalSndWindow_le_highWindow_divisorWindow_at {gamma : Nat}
+    (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : Int)) :
+    (divUniversalSndWindow C pi hpi g r1 r2 b1 b2 i j).toSubmodule ≤
+      divisorWindow
+        ((highWindowPointwiseGeneratorSeed_at
+          C hpi g r1 r2 b1 b2 i j hgamma hchiGamma).localEquations
+            (isGenerator_highWindowPointwiseGeneratorSeed_at
+              C hpi g r1 r2 b1 b2 i j hgamma hchiGamma))
+        (relThetaPairH1_windowMS C pi hpi g) :=
+  ThetaGeneratorSeed.divUniversalSndWindow_le_divisorWindow_of_generator_at
+    C hpi g r1 r2 b1 b2 i j hgamma
+    (highWindowPointwiseGeneratorSeed_at
+      C hpi g r1 r2 b1 b2 i j hgamma hchiGamma)
+    (isGenerator_highWindowPointwiseGeneratorSeed_at
+      C hpi g r1 r2 b1 b2 i j hgamma hchiGamma) hchiGamma
 
 end PointwiseAchiever
 

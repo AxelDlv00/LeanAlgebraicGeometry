@@ -95,6 +95,26 @@ theorem flat_chartReadIdeal_divUniversalSeedK
     (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side hO hchi hb
 
 set_option maxHeartbeats 3200000 in
+-- Installing the decoupled all-stage flatness family unfolds each relation quotient.
+set_option synthInstance.maxHeartbeats 800000 in
+-- The saturation consumer retains the full chart-ring and shifted-colimit instance graph.
+set_option maxRecDepth 20000 in
+/-- At independent Euler parameter `gamma ≤ g`, the genuine degree-`g`
+universal-seed reading quotient on either pinned chart is flat over the carve ring. -/
+theorem flat_chartReadIdeal_divUniversalSeedK_at {gamma : Nat}
+    (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : Int))
+    (side : Bool) :
+    Module.Flat RZ
+      (Γ(relCurve C RZ, relPinnedChart C RZ pi side) ⧸
+        chartReadIdeal (divUniversalSeedK C pi hpi g r1 r2 b1 b2 i j) side) := by
+  letI : ∀ n, Module.Flat RZ ((G(n + 1)) ⧸ Kr(n + 1)) := fun n =>
+    flat_divUniversalHighWindowRelationQuotient_all_at
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hgamma hchiGamma (n + 1)
+  exact flat_chartReadIdeal_divUniversalSeedK_of_all_stage_at
+    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side hgamma hchiGamma
+
+set_option maxHeartbeats 3200000 in
 -- The pointwise support predicate contains the dependent chart-colength module at every point.
 set_option synthInstance.maxHeartbeats 800000 in
 -- Both pinned charts are discharged by the unconditional quotient theorem above.
@@ -110,6 +130,23 @@ theorem pointwiseSeedClosedRDN_of_highWindow
       (fun side => flat_chartReadIdeal_divUniversalSeedK
         (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hO hchi hb side)
 
+set_option maxHeartbeats 3200000 in
+-- The pointwise support predicate contains the dependent chart-colength module at every point.
+set_option synthInstance.maxHeartbeats 800000 in
+-- Both pinned charts are discharged by the decoupled quotient theorem above.
+set_option maxRecDepth 20000 in
+/-- The non-generic residue-fibre branch of pointwise RD-N at independent Euler
+parameter `gamma ≤ g` follows from the high-window quotient bridge. -/
+theorem pointwiseSeedClosedRDN_of_highWindow_at {gamma : Nat}
+    (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : Int)) :
+    PointwiseAchiever.PointwiseSeedClosedRDNAt
+      C hpi g r1 r2 b1 b2 i j hgamma hchiGamma :=
+  PointwiseAchiever.pointwiseSeedClosedRDNAt_of_flat_chartReadIdeal_quotient
+    C hpi g r1 r2 b1 b2 i j hgamma hchiGamma
+      (fun side => flat_chartReadIdeal_divUniversalSeedK_at
+        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hgamma hchiGamma side)
+
 set_option maxHeartbeats 2400000 in
 -- The generic/non-generic branch split re-elaborates the residue-point predicate.
 set_option synthInstance.maxHeartbeats 800000 in
@@ -124,6 +161,23 @@ theorem pointwiseSeedRDN_of_highWindow
     C hpi g r1 r2 b1 b2 i j hO hchi
       (pointwiseSeedClosedRDN_of_highWindow
         (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hO hchi hb)
+
+set_option maxHeartbeats 2400000 in
+-- The generic/non-generic branch split re-elaborates the residue-point predicate.
+set_option synthInstance.maxHeartbeats 800000 in
+-- The closed branch is supplied by the decoupled high-window quotient theorem above.
+set_option maxRecDepth 16000 in
+/-- The degree-`g` universal seed satisfies RD-N at every total-space point when
+the Euler parameter is any `gamma ≤ g`. -/
+theorem pointwiseSeedRDN_of_highWindow_at {gamma : Nat}
+    (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : Int)) :
+    PointwiseAchiever.PointwiseSeedRDNAt
+      C hpi g r1 r2 b1 b2 i j hgamma hchiGamma :=
+  PointwiseAchiever.pointwiseSeedRDNAt_of_closed
+    C hpi g r1 r2 b1 b2 i j hgamma hchiGamma
+      (pointwiseSeedClosedRDN_of_highWindow_at
+        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hgamma hchiGamma)
 
 end HighWindowQuotientBridge
 

@@ -322,6 +322,183 @@ theorem divUniversalHighWindowFibreImage_succ_of_projective
           range_divUniversalFibreHighWindowMulMapToClosedAmbient
             C hpi g r1 r2 b1 b2 i j K hO hchi hker hb (n + 1)
 
+/-! ## Decoupled fibre successor map -/
+
+variable {gamma : Nat} (hgamma : gamma ≤ g)
+  (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+
+local notation "HFγ[" n "]" => divUniversalFibreHighWindow_at
+  C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker n
+local notation "FAγ[" n "]" => divUniversalFibreHighWindowInAmbient_at
+  C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker n
+
+set_option maxHeartbeats 2400000 in
+set_option synthInstance.maxHeartbeats 800000 in
+/-- The finite fibre multiplication map corestricted to the next canonical
+off-diagonal window. -/
+noncomputable def divUniversalFibreHighWindowMulMapToInAmbient_at (n : Nat) :
+    (HI → ↥HFγ[n]) →ₗ[K] ↥FAγ[n + 1] :=
+  (divUniversalFibreHighWindowInAmbientEquiv_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker (n + 1)).symm.toLinearMap.comp
+    (Scheme.finiteMulMapTo
+      (Scheme.divisorSections K (windowS C K hpi g) ⊤) HFγ[n] HFγ[n + 1]
+      (divUniversalMultiplierFibreBasis (pi := pi) C hpi g K)
+      (divUniversalFibreHighWindow_mulSpan_eq_at
+        C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker n))
+
+set_option maxHeartbeats 2400000 in
+set_option synthInstance.maxHeartbeats 800000 in
+/-- The off-diagonal finite fibre multiplication map with codomain the closed
+ambient divisor window. -/
+noncomputable def divUniversalFibreHighWindowMulMapToClosedAmbient_at (n : Nat) :
+    (HI → ↥HFγ[n]) →ₗ[K] ↥CA[n + 1] :=
+  FAγ[n + 1].subtype.comp
+    (divUniversalFibreHighWindowMulMapToInAmbient_at
+      C hpi g r1 r2 b1 b2 i j K hker hgamma hchiGamma n)
+
+set_option maxHeartbeats 2400000 in
+set_option synthInstance.maxHeartbeats 800000 in
+@[simp]
+theorem divUniversalFibreHighWindowInAmbientEquiv_symm_coe_at (n : Nat)
+    (x : ↥HFγ[n]) :
+    (((((divUniversalFibreHighWindowInAmbientEquiv_at
+        C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker n).symm x : ↥FAγ[n]) :
+      ↥CA[n]) : (relCurve C K).functionField)) =
+      (x : (relCurve C K).functionField) := by
+  simpa only [LinearEquiv.apply_symm_apply] using
+    (divUniversalFibreHighWindowInAmbientEquiv_coe_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker n
+        ((divUniversalFibreHighWindowInAmbientEquiv_at
+          C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker n).symm x)).symm
+
+set_option maxHeartbeats 2400000 in
+set_option synthInstance.maxHeartbeats 800000 in
+@[simp]
+theorem divUniversalFibreHighWindowMulMapToClosedAmbient_coe_at
+    (n : Nat) (x : HI → ↥HFγ[n]) :
+    ((divUniversalFibreHighWindowMulMapToClosedAmbient_at
+        C hpi g r1 r2 b1 b2 i j K hker hgamma hchiGamma n x : ↥CA[n + 1]) :
+      (relCurve C K).functionField) =
+      Scheme.finiteMulMap
+        (Scheme.divisorSections K (windowS C K hpi g) ⊤) HFγ[n]
+        (divUniversalMultiplierFibreBasis (pi := pi) C hpi g K) x := by
+  rw [divUniversalFibreHighWindowMulMapToClosedAmbient_at,
+    divUniversalFibreHighWindowMulMapToInAmbient_at, LinearMap.comp_apply,
+    Submodule.subtype_apply]
+  calc
+    _ = ((Scheme.finiteMulMapTo
+        (Scheme.divisorSections K (windowS C K hpi g) ⊤) HFγ[n] HFγ[n + 1]
+        (divUniversalMultiplierFibreBasis (pi := pi) C hpi g K)
+        (divUniversalFibreHighWindow_mulSpan_eq_at
+          C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker n) x : ↥HFγ[n + 1]) :
+          (relCurve C K).functionField) :=
+      divUniversalFibreHighWindowInAmbientEquiv_symm_coe_at
+        C hpi g r1 r2 b1 b2 i j K hker hgamma hchiGamma (n + 1) _
+    _ = _ := LinearMap.codRestrict_apply _ _ _
+
+set_option maxHeartbeats 3200000 in
+set_option synthInstance.maxHeartbeats 800000 in
+/-- The off-diagonal closed-ambient successor map has exactly the next
+canonical window as its range. -/
+theorem range_divUniversalFibreHighWindowMulMapToClosedAmbient_at (n : Nat) :
+    LinearMap.range
+      (divUniversalFibreHighWindowMulMapToClosedAmbient_at
+        C hpi g r1 r2 b1 b2 i j K hker hgamma hchiGamma n) = FAγ[n + 1] := by
+  have hsurj : Function.Surjective
+      (divUniversalFibreHighWindowMulMapToInAmbient_at
+        C hpi g r1 r2 b1 b2 i j K hker hgamma hchiGamma n) :=
+    (divUniversalFibreHighWindowInAmbientEquiv_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker (n + 1)).symm.surjective.comp
+      (Scheme.finiteMulMapTo_surjective
+        (Scheme.divisorSections K (windowS C K hpi g) ⊤) HFγ[n] HFγ[n + 1]
+        (divUniversalMultiplierFibreBasis (pi := pi) C hpi g K)
+        (divUniversalFibreHighWindow_mulSpan_eq_at
+          C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker n))
+  ext y
+  constructor
+  · rintro ⟨x, rfl⟩
+    exact (divUniversalFibreHighWindowMulMapToInAmbient_at
+      C hpi g r1 r2 b1 b2 i j K hker hgamma hchiGamma n x).property
+  · intro hy
+    obtain ⟨x, hx⟩ := hsurj ⟨y, hy⟩
+    refine ⟨x, ?_⟩
+    simpa only [divUniversalFibreHighWindowMulMapToClosedAmbient_at,
+      LinearMap.comp_apply, Submodule.subtype_apply] using congrArg Subtype.val hx
+
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 1000000 in
+set_option maxRecDepth 20000 in
+/-- The relative successor map becomes the off-diagonal closed-ambient
+canonical multiplication map after scalar extension. -/
+theorem divUniversalHighWindowMulMap_fibre_conjugacy_closedAmbient_at
+    (n : Nat) [Module.Projective RZ (Amb[n] ⧸ Kr[n])]
+    (himage : DivUniversalHighWindowFibreImage_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker n)
+    (x : K ⊗[RZ] DivUniversalHighWindowMulSource (C := C) (pi := pi)
+      hpi g r1 r2 b1 b2 i j n Kr[n]) :
+    divUniversalHighWindowClosedAmbientFibreEquiv
+        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K (n + 1)
+        (LinearMap.baseChange K
+          (divUniversalHighWindowMulMap (C := C) (pi := pi)
+            hpi g r1 r2 b1 b2 i j n Kr[n]) x) =
+      divUniversalFibreHighWindowMulMapToClosedAmbient_at
+        C hpi g r1 r2 b1 b2 i j K hker hgamma hchiGamma n
+        (divUniversalHighWindowMulSourceFibreEquiv_at
+          C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker n himage x) := by
+  apply Subtype.ext
+  simpa only [divUniversalHighWindowClosedAmbientFibreRead_apply,
+    divUniversalFibreHighWindowMulMapToClosedAmbient_coe_at] using
+    (divUniversalHighWindowMulMap_fibre_conjugacy_at
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker
+        n himage x)
+
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 1000000 in
+set_option maxRecDepth 20000 in
+/-- A projective off-diagonal stage with canonical fibre image passes that
+image to its successor. -/
+theorem divUniversalHighWindowFibreImage_succ_of_projective_at
+    (n : Nat) [Module.Projective RZ (Amb[n] ⧸ Kr[n])]
+    (himage : DivUniversalHighWindowFibreImage_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker n) :
+    DivUniversalHighWindowFibreImage_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker (n + 1) := by
+  unfold DivUniversalHighWindowFibreImage_at
+  cases n with
+  | zero =>
+      exact divUniversalHighWindowFibreImage_one_at
+        C hpi g r1 r2 b1 b2 i j K hker hgamma hchiGamma
+  | succ n =>
+      rw [divUniversalHighWindowRelation_succ_succ]
+      change
+        Submodule.map
+            (divUniversalHighWindowClosedAmbientFibreEquiv
+              (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K (n + 2)).toLinearMap
+            (Submodule.baseChange K
+              (LinearMap.range
+                (divUniversalHighWindowMulMap (C := C) (pi := pi)
+                  hpi g r1 r2 b1 b2 i j (n + 1) Kr[n + 1]))) =
+          FAγ[n + 2]
+      calc
+        _ = LinearMap.range
+            (divUniversalFibreHighWindowMulMapToClosedAmbient_at
+              C hpi g r1 r2 b1 b2 i j K hker hgamma hchiGamma (n + 1)) :=
+          map_baseChange_range_eq_range_of_conjugate
+            (divUniversalHighWindowMulMap (C := C) (pi := pi)
+              hpi g r1 r2 b1 b2 i j (n + 1) Kr[n + 1])
+            (divUniversalFibreHighWindowMulMapToClosedAmbient_at
+              C hpi g r1 r2 b1 b2 i j K hker hgamma hchiGamma (n + 1))
+            (divUniversalHighWindowMulSourceFibreEquiv_at
+              C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker (n + 1) himage)
+            (divUniversalHighWindowClosedAmbientFibreEquiv
+              (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K (n + 2))
+            (fun x => divUniversalHighWindowMulMap_fibre_conjugacy_closedAmbient_at
+              (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K hker
+                hgamma hchiGamma (n + 1) himage x)
+        _ = FAγ[n + 2] :=
+          range_divUniversalFibreHighWindowMulMapToClosedAmbient_at
+            C hpi g r1 r2 b1 b2 i j K hker hgamma hchiGamma (n + 1)
+
 end HighWindowFibreModelInduction
 
 section HighWindowFibreModelGlobalInduction
@@ -456,6 +633,95 @@ theorem flat_divUniversalHighWindowRelationQuotient_all
     Module.Flat RZ Q[n] := by
   letI := projective_divUniversalHighWindowRelationQuotient_all
     (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hO hchi hb n
+  exact Module.Flat.of_projective
+
+/-! ## Decoupled global induction -/
+
+variable {gamma : Nat} (hgamma : gamma ≤ g)
+  (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+
+set_option maxHeartbeats 4800000 in
+set_option synthInstance.maxHeartbeats 1200000 in
+set_option maxRecDepth 24000 in
+/-- A projective stage carrying the off-diagonal residue-prime model passes
+that model to its successor. -/
+theorem divUniversalHighWindowFibreModel_succ_of_projective_at
+    (n : Nat) [Module.Projective RZ (Amb[n] ⧸ Kr[n])]
+    (hmodel : DivUniversalHighWindowFibreModel_at
+      C hpi g r1 r2 b1 b2 i j hgamma hchiGamma n) :
+    DivUniversalHighWindowFibreModel_at
+      C hpi g r1 r2 b1 b2 i j hgamma hchiGamma (n + 1) := by
+  intro p
+  exact divUniversalHighWindowFibreImage_succ_of_projective_at
+    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j p.asIdeal.ResidueField
+      (divCarveIdeal_le_ker_of_tower k
+        (windowS_choice pi hpi g • fiberWeilDivisor pi)
+        (windowM_choice pi hpi g • fiberWeilDivisor pi)
+        g r1 r2 b1 b2 i j p.asIdeal.ResidueField)
+      hgamma hchiGamma n (hmodel p)
+
+set_option maxHeartbeats 6400000 in
+set_option synthInstance.maxHeartbeats 1600000 in
+set_option maxRecDepth 32000 in
+/-- Every finite relation stage is projective and has the canonical
+off-diagonal divisor-window image over every residue field. -/
+theorem projective_and_divUniversalHighWindowFibreModel_all_at (n : Nat) :
+    Module.Projective RZ Q[n] ∧
+      DivUniversalHighWindowFibreModel_at
+        C hpi g r1 r2 b1 b2 i j hgamma hchiGamma n := by
+  induction n using Nat.strong_induction_on with
+  | h n ih =>
+      cases n with
+      | zero =>
+          exact ⟨projective_divUniversalHighWindowRelationQuotient_zero
+              (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j,
+            divUniversalHighWindowFibreModel_zero_at
+              C hpi g r1 r2 b1 b2 i j hgamma hchiGamma⟩
+      | succ n =>
+          cases n with
+          | zero =>
+              exact ⟨projective_divUniversalHighWindowRelationQuotient_one_at
+                  (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hgamma hchiGamma,
+                divUniversalHighWindowFibreModel_one_at
+                  C hpi g r1 r2 b1 b2 i j hgamma hchiGamma⟩
+          | succ n =>
+              have hn := ih n (by omega)
+              have hnNext := ih (n + 1) (by omega)
+              letI : Module.Projective RZ Q[n] := hn.1
+              letI : Module.Projective RZ Q[n + 1] := hnNext.1
+              exact
+                ⟨projective_divUniversalHighWindowRelationQuotient_succ_succ_of_fibreModels_at
+                    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j
+                      hgamma hchiGamma n hn.2 hnNext.2,
+                  divUniversalHighWindowFibreModel_succ_of_projective_at
+                    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j
+                      hgamma hchiGamma (n + 1) hnNext.2⟩
+
+include hgamma hchiGamma in
+/-- Every finite relation quotient is projective at independent curve
+parameter `gamma ≤ g`. -/
+theorem projective_divUniversalHighWindowRelationQuotient_all_at (n : Nat) :
+    Module.Projective RZ Q[n] :=
+  (projective_and_divUniversalHighWindowFibreModel_all_at
+    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hgamma hchiGamma n).1
+
+/-- Every finite relation stage has the canonical off-diagonal divisor-window
+model on all residue fields. -/
+theorem divUniversalHighWindowFibreModel_all_at (n : Nat) :
+    DivUniversalHighWindowFibreModel_at
+      C hpi g r1 r2 b1 b2 i j hgamma hchiGamma n :=
+  (projective_and_divUniversalHighWindowFibreModel_all_at
+    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hgamma hchiGamma n).2
+
+set_option maxHeartbeats 1600000 in
+set_option synthInstance.maxHeartbeats 400000 in
+include hgamma hchiGamma in
+/-- Every finite relation quotient is flat at independent curve parameter
+`gamma ≤ g`. -/
+theorem flat_divUniversalHighWindowRelationQuotient_all_at (n : Nat) :
+    Module.Flat RZ Q[n] := by
+  letI := projective_divUniversalHighWindowRelationQuotient_all_at
+    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hgamma hchiGamma n
   exact Module.Flat.of_projective
 
 end HighWindowFibreModelGlobalInduction

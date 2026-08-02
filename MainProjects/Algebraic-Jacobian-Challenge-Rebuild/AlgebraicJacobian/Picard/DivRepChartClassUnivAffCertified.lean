@@ -75,6 +75,13 @@ noncomputable abbrev univSystemAff (hb : 0 < windowBound pi hpi) :
   (univSeed C hpi g r1 r2 b1 b2 i j hO hchi hb).localEquations
     (isGenerator_univSeed C hpi g r1 r2 b1 b2 i j hO hchi hb)
 
+/-- The universal local-equation system at independent curve parameter `gamma ≤ g`. -/
+noncomputable abbrev univSystemAff_at {gamma : Nat} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : Int)) :
+    (relCurve C RZ).LocalEquations :=
+  (univSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma).localEquations
+    (isGenerator_univSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma)
+
 set_option maxHeartbeats 8000000 in
 -- The chart ring, away pullback, swallowed witness, and universal rank remain dependent.
 set_option synthInstance.maxHeartbeats 800000 in
@@ -117,6 +124,51 @@ noncomputable def divFamZarAffUniv (hb : 0 < windowBound pi hpi) :
       (isGenerator_univSeed C hpi g r1 r2 b1 b2 i j hO hchi hb)
       (exists_away_isCertified_univSeedAff
         C hpi g r1 r2 b1 b2 i j hO hchi hb)
+
+set_option maxHeartbeats 8000000 in
+set_option synthInstance.maxHeartbeats 800000 in
+/-- Every chart-ring prime has an away-local certified adaptation of the off-diagonal
+universal seed. The certificate degree is `g`; `gamma` only normalizes curve cohomology. -/
+theorem exists_away_isCertified_univSeedAff_at
+    {gamma : Nat} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : Int))
+    (p : PrimeSpectrum RZ) :
+    ∃ r, r ∉ p.asIdeal ∧
+      haveI : IsOpenImmersion (relCurveMap C RZ (Localization.Away r)) :=
+        isOpenImmersion_relCurveMap_away C RZ (Localization.Away r) r
+      ∃ (Dc : AffCoverData C (Localization.Away r))
+        (A : AffAdaptation Dc
+          ((univSystemAff_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma).pullback
+            (relCurveMap C RZ (Localization.Away r))
+            (Scheme.LocalEquations.germ_pullbackEqn_mem_nonZeroDivisors_of_isOpenImmersion
+              (relCurveMap C RZ (Localization.Away r))
+              (univSystemAff_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma)))),
+        A.IsCertified g := by
+  let D := univSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma
+  let hD := isGenerator_univSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma
+  obtain ⟨r, hr, Dc, A, hsw⟩ := D.exists_away_affAdaptation_swallowedBy hD p
+  refine ⟨r, hr, Dc, A, ?_⟩
+  obtain ⟨j0, hsub, hmiss⟩ := hsw
+  have hfin : ∀ l, Module.Finite (Localization.Away r) (A.colength l) :=
+    A.forall_finite_colength_of_swallowedBy ⟨j0, hsub, hmiss⟩
+  have hproj : ∀ l, Module.Projective (Localization.Away r) (A.colength l) :=
+    A.forall_projective_colength_seed_pullback_away hD r Dc ⟨j0, hsub, hmiss⟩
+  exact A.isCertified_of_swallowedBy_of_c1_of_rank_piece hsub hmiss hfin hproj
+    (rankAtStalk_colength_univSeed_pullback_away_of_swallowedBy_at
+      C hpi g r1 r2 b1 b2 i j hgamma hchiGamma r Dc A j0 hsub hmiss)
+
+set_option maxHeartbeats 8000000 in
+set_option synthInstance.maxHeartbeats 800000 in
+/-- The off-diagonal high-window universal seed defines a locally certified affine class. -/
+noncomputable def divFamZarAffUniv_at
+    {gamma : Nat} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : Int)) :
+    DivFamZarAff C RZ g :=
+  (univSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma)
+    |>.divFamZarAff_of_forall_prime_certified_adaptation
+      (isGenerator_univSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma)
+      (exists_away_isCertified_univSeedAff_at
+        C hpi g r1 r2 b1 b2 i j hgamma hchiGamma)
 
 end UniversalAffCertified
 

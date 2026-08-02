@@ -126,6 +126,119 @@ local notation "RZ" => DivCarveChartRing k
   (windowS_choice pi hpi g • fiberWeilDivisor pi)
   (windowM_choice pi hpi g • fiberWeilDivisor pi) g r1 r2 b1 b2 i j
 
+noncomputable local instance instIsIntegralRelCurveUnivAt
+    (K : Type u) [Field K] [Algebra k K] : IsIntegral (relCurve C K) :=
+  instIsIntegralBaseChange C K
+
+noncomputable local instance instSmoothRelCurveUnivAt
+    (K : Type u) [Field K] [Algebra k K] :
+    SmoothOfRelativeDimension 1 (relCurve C K ↘ Spec (CommRingCat.of K)) :=
+  instSmoothOfRelativeDimensionBaseChange C K
+
+noncomputable local instance instQCRelCurveUnivAt
+    (K : Type u) [Field K] [Algebra k K] :
+    QuasiCompact (relCurve C K ↘ Spec (CommRingCat.of K)) :=
+  instQuasiCompactBaseChange C K
+
+noncomputable local instance instLFTRelCurveUnivAt
+    (K : Type u) [Field K] [Algebra k K] :
+    LocallyOfFiniteType (relCurve C K ↘ Spec (CommRingCat.of K)) :=
+  haveI : Smooth (relCurve C K ↘ Spec (CommRingCat.of K)) :=
+    SmoothOfRelativeDimension.smooth 1 _
+  inferInstance
+
+noncomputable local instance instFinH0RelCurveUnivAt
+    (K : Type u) [Field K] [Algebra k K] :
+    Module.Finite K (Sheaf.HModule ((relCurve C K).moduleKSheaf K) 0) :=
+  instModuleFiniteHModuleZeroBaseChange C K
+
+noncomputable local instance instFinH1RelCurveUnivAt
+    (K : Type u) [Field K] [Algebra k K] :
+    Module.Finite K (Sheaf.HModule ((relCurve C K).moduleKSheaf K) 1) :=
+  instModuleFiniteHModuleOneBaseChange C K
+
+private lemma chi_relCurve_univ_at (gamma : Nat)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : Int))
+    (K : Type u) [Field K] [Algebra k K] :
+    Sheaf.chi ((relCurve C K).moduleKSheaf K) = 1 - (gamma : Int) := by
+  haveI : IsProper (baseChangeBundle C K).hom := instIsProperSndLeft C K
+  haveI : SmoothOfRelativeDimension 1 (baseChangeBundle C K).hom :=
+    instSmoothOfRelativeDimensionSndLeft C K
+  haveI : GeometricallyIrreducible (baseChangeBundle C K).hom :=
+    instGeometricallyIrreducibleSndLeft C K
+  have h1 : Sheaf.chi ((relCurve C K).moduleKSheaf K)
+      = 1 - (genus (baseChangeBundle C K) : Int) :=
+    chi_moduleKSheaf (baseChangeBundle C K)
+  have h2 : genus (baseChangeBundle C K) = genus C := genus_baseField C K
+  have h3 : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (genus C : Int) :=
+    chi_moduleKSheaf C
+  have h4 : (genus C : Int) = (gamma : Int) := by
+    rw [h3] at hchiGamma
+    linarith
+  rw [h1, h2, h4]
+
+private theorem thetaGluedEval_surjective_at
+    {R : Type u} [CommRing R] [Algebra k R]
+    {d : (relCurve C R).LocalEquations} {A : DivisorAdaptation C R pi d}
+    {gamma : Nat} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : Int))
+    (hc : A.IsCertified g) {a : Nat} (hMa : windowM_choice pi hpi g ≤ a) :
+    Function.Surjective (A.thetaGluedEval a) := by
+  refine DivisorAdaptation.thetaGluedEval_surjective hpi (fun p => ?_)
+  have hdeg : ∀ q : PrimeSpectrum R,
+      Scheme.CurveDivisor.deg q.asIdeal.ResidueField
+        (Scheme.presentationDivisor q.asIdeal.ResidueField
+          ((A.pulledEquations q.asIdeal.ResidueField
+            hc.projective_colength).presentation)) = (g : Int) :=
+    fun q => hc.deg_presentationDivisor_pulledEquations
+  refine A.thetaIdealDatum_hfib_of_witness a (fun q => ?_) p
+  refine ⟨windowTransportDivisor C q.asIdeal.ResidueField pi a
+    - Scheme.presentationDivisor q.asIdeal.ResidueField
+        ((A.pulledEquations q.asIdeal.ResidueField
+          hc.projective_colength).presentation), ?_, ?_⟩
+  · have e1 : Scheme.CurveDivisor.picClass q.asIdeal.ResidueField
+          (Scheme.presentationDivisor q.asIdeal.ResidueField
+            ((A.pulledEquations q.asIdeal.ResidueField
+              hc.projective_colength).presentation))
+        = Scheme.CechPic.map (relCurveMap C R q.asIdeal.ResidueField) d.picClass := by
+      rw [Scheme.CurveDivisor.picClass_presentationDivisor,
+        Scheme.LocalEquations.presentation_picClass]
+      exact A.picClass_pulledEquations q.asIdeal.ResidueField hc.projective_colength
+    have e2 : Scheme.CurveDivisor.picClass q.asIdeal.ResidueField
+          (windowTransportDivisor C q.asIdeal.ResidueField pi a)
+        = Scheme.CechPic.map (relCurveMap C R q.asIdeal.ResidueField)
+            ((thetaChartDatum C R pi a).cechPicClass) :=
+      (picClass_windowTransportDivisor C q.asIdeal.ResidueField pi a).trans
+        (cechPicClass_map_thetaChartDatum C R pi a q.asIdeal.ResidueField).symm
+    calc Scheme.CurveDivisor.picClass q.asIdeal.ResidueField
+          (windowTransportDivisor C q.asIdeal.ResidueField pi a
+            - Scheme.presentationDivisor q.asIdeal.ResidueField
+                ((A.pulledEquations q.asIdeal.ResidueField
+                  hc.projective_colength).presentation))
+        = Scheme.CurveDivisor.picClass q.asIdeal.ResidueField
+              (windowTransportDivisor C q.asIdeal.ResidueField pi a)
+            * (Scheme.CurveDivisor.picClass q.asIdeal.ResidueField
+                (Scheme.presentationDivisor q.asIdeal.ResidueField
+                  ((A.pulledEquations q.asIdeal.ResidueField
+                    hc.projective_colength).presentation)))⁻¹ := by
+          rw [sub_eq_add_neg, Scheme.CurveDivisor.picClass_add,
+            Scheme.picClass_neg]
+      _ = Scheme.CechPic.map (relCurveMap C R q.asIdeal.ResidueField)
+            ((thetaChartDatum C R pi a).cechPicClass * d.picClass⁻¹) := by
+          rw [e1, e2, map_mul, map_inv]
+      _ = Scheme.CechPic.map (relCurveMap C R q.asIdeal.ResidueField)
+            ((A.thetaIdealDatum a).cechPicClass) := by
+          rw [A.cechPicClass_thetaIdealDatum]
+      _ = ((A.thetaIdealDatum a).baseChange q.asIdeal.ResidueField).cechPicClass :=
+          (BasicOpenCocycleDatum.cechPicClass_baseChange q.asIdeal.ResidueField
+            (A.thetaIdealDatum a)).symm
+  · refine subsingleton_h1_windowTransportDivisor_sub_at
+      C pi hpi q.asIdeal.ResidueField g a hMa hgamma
+        (chi_relCurve_univ_at C gamma hchiGamma q.asIdeal.ResidueField) _ ?_
+    rw [hdeg q]
+    have := Int.natCast_nonneg g
+    linarith
+
 /-- The high-window universal seed, abbreviated: the theta generator seed over the
 `Z(♦)`-chart ring at the universal first-window seed module `K_univ`. -/
 noncomputable abbrev univSeed (hb : 0 < windowBound pi hpi) :
@@ -133,10 +246,26 @@ noncomputable abbrev univSeed (hb : 0 < windowBound pi hpi) :
       (divUniversalSeedK C pi hpi g r1 r2 b1 b2 i j) :=
   highWindowPointwiseGeneratorSeed C hpi g r1 r2 b1 b2 i j hO hchi hb
 
+/-- The degree-`g` high-window universal seed at an independent Euler parameter
+`gamma ≤ g`. -/
+noncomputable abbrev univSeed_at {gamma : Nat} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : Int)) :
+    ThetaGeneratorSeed C RZ pi (windowM_choice pi hpi g)
+      (divUniversalSeedK C pi hpi g r1 r2 b1 b2 i j) :=
+  highWindowPointwiseGeneratorSeed_at
+    C hpi g r1 r2 b1 b2 i j hgamma hchiGamma
+
 /-- The generator clause of `univSeed`, which is free at the universal point. -/
 theorem isGenerator_univSeed (hb : 0 < windowBound pi hpi) :
     (univSeed C hpi g r1 r2 b1 b2 i j hO hchi hb).IsGenerator :=
   isGenerator_highWindowPointwiseGeneratorSeed C hpi g r1 r2 b1 b2 i j hO hchi hb
+
+/-- The generator clause of the off-diagonal universal seed. -/
+theorem isGenerator_univSeed_at {gamma : Nat} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : Int)) :
+    (univSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma).IsGenerator :=
+  isGenerator_highWindowPointwiseGeneratorSeed_at
+    C hpi g r1 r2 b1 b2 i j hgamma hchiGamma
 
 set_option maxHeartbeats 2400000 in
 -- The composite instantiates the ε-projection identity at the universal windows over the
@@ -187,6 +316,31 @@ theorem divFamEps_highWindow_eq_universal_pair (hb : 0 < windowBound pi hpi)
     (divUniversalSndWindow_le_highWindow_divisorWindow
       C hpi g r1 r2 b1 b2 i j hO hchi hb)
 
+set_option maxHeartbeats 2400000 in
+set_option synthInstance.maxHeartbeats 800000 in
+/-- The universal epsilon identity with degree `g` and independent Euler parameter
+`gamma ≤ g`. -/
+theorem divFamEps_highWindow_eq_universal_pair_at {gamma : Nat}
+    (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : Int))
+    (hc : ((univSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma).divisorAdaptation
+      (isGenerator_univSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma)).IsCertified g) :
+    divFamEps hpi g (DivFam.mk
+        ((univSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma).certifiedFamily g
+          (isGenerator_univSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma) hc))
+      = ((divUniversalFstWindow C pi hpi g r1 r2 b1 b2 i j).toSubmodule,
+         (divUniversalSndWindow C pi hpi g r1 r2 b1 b2 i j).toSubmodule) :=
+  ThetaGeneratorSeed.divFamEps_certifiedFamily hpi
+    (divUniversalFstWindow C pi hpi g r1 r2 b1 b2 i j)
+    (divUniversalSndWindow C pi hpi g r1 r2 b1 b2 i j)
+    (univSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma)
+    (isGenerator_univSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma) hc
+    (thetaGluedEval_surjective_at C hpi g hgamma hchiGamma hc le_rfl)
+    (thetaGluedEval_surjective_at C hpi g hgamma hchiGamma hc
+      (Nat.le_add_right _ _))
+    (divUniversalSndWindow_le_highWindow_divisorWindow_at
+      C hpi g r1 r2 b1 b2 i j hgamma hchiGamma)
+
 /-- **The existential form**, which is what a chart-class producer consumes: a certificate
 at the universal point yields a certified divisor family over the `Z(♦)`-chart ring whose
 `ε` pair is the universal tautological pair.
@@ -206,6 +360,19 @@ theorem exists_certifiedFamily_divFamEps_eq_universal_pair (hb : 0 < windowBound
            (divUniversalSndWindow C pi hpi g r1 r2 b1 b2 i j).toSubmodule) :=
   ⟨_, divFamEps_highWindow_eq_universal_pair C hpi g r1 r2 b1 b2 i j hO hchi hb hc⟩
 
+/-- The existential universal family at independent Euler parameter `gamma ≤ g`. -/
+theorem exists_certifiedFamily_divFamEps_eq_universal_pair_at {gamma : Nat}
+    (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : Int))
+    (hc : ((univSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma).divisorAdaptation
+      (isGenerator_univSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma)).IsCertified g) :
+    ∃ G : CertifiedDivisorFamily C RZ pi g,
+      divFamEps hpi g (DivFam.mk G)
+        = ((divUniversalFstWindow C pi hpi g r1 r2 b1 b2 i j).toSubmodule,
+           (divUniversalSndWindow C pi hpi g r1 r2 b1 b2 i j).toSubmodule) :=
+  ⟨_, divFamEps_highWindow_eq_universal_pair_at
+    C hpi g r1 r2 b1 b2 i j hgamma hchiGamma hc⟩
+
 /-- **The `DivFamZar` class of the universal point**, from the same certificate: the
 locally certified class over the `Z(♦)`-chart ring that U2 asks a producer to exhibit.
 A global certificate is a local one through the trivial one-member cover
@@ -219,6 +386,19 @@ noncomputable def divFamZarUniv (hb : 0 < windowBound pi hpi)
       (isGenerator_univSeed C hpi g r1 r2 b1 b2 i j hO hchi hb) hc).eqns
     ((univSeed C hpi g r1 r2 b1 b2 i j hO hchi hb).certifiedFamily g
       (isGenerator_univSeed C hpi g r1 r2 b1 b2 i j hO hchi hb) hc).isLocallyCertified
+
+/-- The locally certified universal class at independent Euler parameter `gamma ≤ g`. -/
+noncomputable def divFamZarUniv_at {gamma : Nat} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : Int))
+    (hc : ((univSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma).divisorAdaptation
+      (isGenerator_univSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma)).IsCertified g) :
+    DivFamZar C RZ pi g :=
+  DivFamZar.mk
+    ((univSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma).certifiedFamily g
+      (isGenerator_univSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma) hc).eqns
+    ((univSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma).certifiedFamily g
+      (isGenerator_univSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchiGamma)
+        hc).isLocallyCertified
 
 end UniversalEpsIdentity
 
