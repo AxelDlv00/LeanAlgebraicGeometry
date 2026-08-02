@@ -4,9 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Archon Horizon
 -/
 import AlgebraicJacobian.Picard.PicEtPointedReduction
-import AlgebraicJacobian.Picard.ProjectiveMorphismBasic
+import AlgebraicJacobian.Picard.ProjectiveMorphism
 import AlgebraicJacobian.Picard.CurveProjectivity
 import AlgebraicJacobian.Picard.AmbientPicNotProper
+import AlgebraicJacobian.Picard.StableAffineCover
 
 /-!
 # Quasi-projectivity, as the vocabulary `FiniteInAffine` was standing in for
@@ -20,16 +21,17 @@ quasi-projectivity vocabulary at this pin, so for the curve it must be supplied 
 hand"* (`Picard/PicEtPointedReduction.lean`,
 `Albanese/StableAffineCoverGroup.lean`, `Picard/FiniteGaloisQuotient.lean`).
 
-This file removes the hand: it derives `FiniteInAffine` **from projectivity**, for
-the project's own `Scheme.Hom.IsProjective`.  The chain is
+This file removes the hand: it derives `FiniteInAffine` from the project's
+finite-projective-space notion `Scheme.Hom.IsHQuasiProjective`; projectivity is
+the closed-immersion special case.  The chain is
 
   graded prime avoidance  ⟹  `FiniteInAffine (Proj 𝒜)`
                           ⟹  `FiniteInAffine ℙ(n; S)`   (affine morphism descent)
-                          ⟹  `FiniteInAffine X` for `X` projective over `S`.
+                          ⟹  `FiniteInAffine X` for `X` H-quasi-projective over `S`.
 
-## What was actually missing, and it is one lemma
+## The two avoidance inputs
 
-Of those three steps only the first has content, and it is **absent from mathlib
+The original deep input is the first step, and it is **absent from mathlib
 `v4.31`**: there is no *graded* prime avoidance.  Mathlib has
 `Ideal.subset_union_prime_finite` — a homogeneous ideal not contained in the union
 of finitely many primes is not contained in any one of them — but the element it
@@ -38,23 +40,29 @@ produces is an arbitrary element of the ideal, while
 Getting a **homogeneous** avoiding element of **positive degree** is §1, and it is
 where the grading is consumed.
 
-The two descent steps are cheap and they are cheap for a reason worth recording:
-`IsClosedImmersion → IsAffineHom` is a mathlib instance, and `IsAffineOpen.preimage`
-turns an affine open of the target into an affine open of the source.  So
-`FiniteInAffine` propagates **down** every affine morphism
-(`Scheme.finiteInAffine_of_isAffineHom`), and a closed immersion into `ℙ(n; S)` is
-one.  This is the same shape as the already-landed
-`Scheme.finiteInAffine_left_of_isAffineHom`, generalised off the relative setting.
+For a closed immersion the final transport is cheap: `IsClosedImmersion →
+IsAffineHom`, and `IsAffineOpen.preimage` pulls affine opens back.  An open
+immersion needs a second prime-avoidance step: after placing the finite image in
+an affine open, `GaloisDescent.exists_basicOpen_le_of_finite` shrinks it to a
+basic open lying inside the immersion range.  The standard closed/open
+factorization then gives transport along every immersion.
+
+Thus graded avoidance is the new algebraic result in this file.  Open-immersion
+transport is the only additional substantive geometric step; its algebra is
+delegated to the already-landed finite prime-avoidance theorem.  The remaining
+H-quasi-projective and coproduct declarations are factorization and packaging.
 
 ## What this does and does not buy
 
 It does **not** discharge the `FiniteInAffine` conjunct of
 `Scheme.PointedPicSharpRep`.  That conjunct is about the **Picard scheme**, and
-nothing in this project produces projectivity of a Picard scheme — that is
-Kleiman §5 `th:qpp&p`, an open obligation.  What changes is the *kind* of thing
+nothing in this project produces an H-quasi-projective witness for the relevant
+Picard component.  Kleiman §5 `th:qpp&p` gives quasi-projectivity of `Pic^0`;
+formalizing and transporting that source theorem remains open.  What changes is the *kind* of thing
 that is open: the antecedent's last non-projection conjunct is now reducible to a
 standard geometric hypothesis with a standard proof, rather than an elementary
-condition invented here.  Stated as `Scheme.finiteInAffine_of_isProjective` in §3.
+condition invented here.  Stated as
+`Scheme.finiteInAffine_of_isHQuasiProjective` in §3.
 
 It **does** discharge, unconditionally and for free, the orbit hypothesis of the
 Galois-descent engine at every projective scheme
@@ -80,8 +88,8 @@ strictly stronger and false at `Pic_{C/k}`.
 
 This is verbatim the trap `Picard/AmbientPicNotProper.lean` exists to record, "trap (c):
 a `P → Q` whose antecedent is unsatisfiable in the intended setting", and it is caught by
-that file's own theorems.  Kleiman's `th:qpp&p` gives quasi-projectivity of the **degree
-pieces**, not projectivity of the ambient scheme.  §5 therefore survives only as a
+that file's own theorems.  Kleiman's `th:qpp&p` gives quasi-projectivity of `Pic^0`,
+not projectivity of the ambient scheme.  §5 therefore survives only as a
 *conditional* reduction with an explicitly refuted antecedent; §3 and §4, which do not
 mention the ambient Picard scheme, are unaffected.
 
@@ -366,9 +374,11 @@ theorem _root_.AlgebraicGeometry.Scheme.finiteInAffine_proj :
 
 end GradedAvoidance
 
-/-! ## §2. Descent along an affine morphism
+/-! ## §2. Descent along affine morphisms and immersions
 
-Everything from here down is transport; §1 holds all the content.
+The affine and closed-immersion cases are transport.  The open-immersion case
+uses the independent finite prime-avoidance result from `StableAffineCover`; all
+later results are factorization or packaging.
 -/
 
 /-- **`FiniteInAffine` descends along any affine morphism.**
@@ -389,6 +399,40 @@ theorem finiteInAffine_of_isAffineHom {X Y : Scheme.{u}} (f : X ⟶ Y) [IsAffine
   obtain ⟨U, hU⟩ := h (f.base '' s) (hs.image _)
   exact ⟨⟨f ⁻¹ᵁ U.1, U.2.preimage f⟩, fun x hx => hU ⟨x, hx, rfl⟩⟩
 
+/-- `FiniteInAffine` descends along open immersions.  The ambient affine open
+containing the finite image need not lie in the immersion range.  Finite prime
+avoidance shrinks it to a basic open that does; its pullback is affine and still
+contains the original finite set. -/
+theorem finiteInAffine_of_isOpenImmersion {X Y : Scheme.{u}} (f : X ⟶ Y)
+    [IsOpenImmersion f] (hY : FiniteInAffine Y) : FiniteInAffine X := by
+  classical
+  intro s hs
+  obtain ⟨U, hU⟩ := hY (f.base '' s) (hs.image f.base)
+  letI : Fintype s := hs.fintype
+  obtain ⟨r, hr, hrle⟩ :=
+    AlgebraicJacobian.GaloisDescent.exists_basicOpen_le_of_finite U.2
+      (fun x : s => f.base x)
+      (fun x => hU ⟨x, x.2, rfl⟩)
+      (fun x => Scheme.Hom.mem_opensRange.mpr ⟨(x : X), rfl⟩)
+  refine ⟨⟨f ⁻¹ᵁ Y.basicOpen r,
+    (U.2.basicOpen r).preimage_of_isOpenImmersion f hrle⟩, ?_⟩
+  intro x hx
+  change f.base x ∈ Y.basicOpen r
+  exact hr ⟨x, hx⟩
+
+/-- `FiniteInAffine` descends along arbitrary immersions.  Mathlib factors an
+immersion as a closed immersion followed by an open immersion; the closed part
+is affine and the open part is handled by finite prime avoidance above. -/
+theorem finiteInAffine_of_isImmersion {X Y : Scheme.{u}} (f : X ⟶ Y)
+    [IsImmersion f] (hY : FiniteInAffine Y) : FiniteInAffine X := by
+  obtain ⟨Z, g₁, g₂, hg₁, hg₂, -⟩ :=
+    (AlgebraicGeometry.IsImmersion.isImmersion_iff_exists (f := f)).mp
+      (inferInstance : IsImmersion f)
+  haveI := hg₁
+  haveI := hg₂
+  exact finiteInAffine_of_isAffineHom g₁
+    (finiteInAffine_of_isOpenImmersion g₂ hY)
+
 /-- **Relative projective space over an affine base satisfies `FiniteInAffine`** —
 and this is the non-vacuity witness that matters.
 
@@ -399,9 +443,10 @@ and this is the non-vacuity witness that matters.
 
 Contrast the cheap witness `Scheme.finiteInAffine_of_isAffine`
 (`Picard/PicEtPointedReduction.lean`, `⊤` as the affine open). That one is degenerate
-— it says nothing about a projective object — and its own docstring says so. This one
-holds at a scheme that is **not** affine for `n` with at least two elements, so the
-results below are not statements about a class of schemes that happens to be affine. -/
+— it says nothing about a projective object — and its own docstring says so. This
+theorem records the projective-space transport itself; no non-affineness theorem for
+`ℙ(n; S)` is available at this mathlib pin, as the module-level non-vacuity note
+states. -/
 theorem finiteInAffine_projectiveSpace (n : Type u) (S : Scheme.{u}) [IsAffine S] :
     FiniteInAffine (ProjectiveSpace n S) := by
   haveI : IsAffineHom (ProjectiveSpace.toProjInt n S) := by
@@ -427,6 +472,27 @@ theorem finiteInAffine_of_isProjective {X S : Scheme.{u}} [IsAffine S] {π : X �
   obtain ⟨n, -, i, hi, -⟩ := h
   haveI := hi
   exact finiteInAffine_of_isAffineHom i (finiteInAffine_projectiveSpace n S)
+
+/-- **An H-quasi-projective scheme over an affine base satisfies
+`FiniteInAffine`.**  Its quasi-compact immersion witness lands in finite relative
+projective space; `FiniteInAffine` descends along the underlying immersion.
+
+The affine-base hypothesis is essential to the projective-space input.  This
+does not assert an equivalence with general relative ampleness over arbitrary
+bases. -/
+theorem finiteInAffine_of_isHQuasiProjective {X S : Scheme.{u}} [IsAffine S]
+    {π : X ⟶ S} (h : π.IsHQuasiProjective) : FiniteInAffine X := by
+  obtain ⟨n, hn, i, hi, _, -⟩ := h
+  letI : Finite n := hn
+  haveI : IsImmersion i := hi
+  exact finiteInAffine_of_isImmersion i (finiteInAffine_projectiveSpace n S)
+
+/-- The carried relatively very ample form of
+`finiteInAffine_of_isHQuasiProjective`. -/
+theorem finiteInAffine_of_isHQuasiProjectiveWith {X S : Scheme.{0}} [IsAffine S]
+    {π : X ⟶ S} {L : X.Modules} (h : π.IsHQuasiProjectiveWith L) :
+    FiniteInAffine X :=
+  finiteInAffine_of_isHQuasiProjective h.isHQuasiProjective
 
 /-! ## §4. What it discharges
 
@@ -467,7 +533,8 @@ the `FiniteInAffine` conjunct of `Scheme.PointedPicSharpRep`
 (`Picard/PicEtPointedReduction.lean`), and it does not touch
 `Scheme.fgaPicardRepresentability`. That conjunct is about the scheme representing
 `picSharp` — the **Picard** scheme — not about `C`, and nothing in this project
-produces projectivity of a Picard scheme: that is Kleiman §5 `th:qpp&p`, still open.
+produces the H-quasi-projective `Pic^0` witness corresponding to Kleiman §5
+`th:qpp&p`; that formalization is still open.
 
 What has changed is the *kind* of thing that remains. Before, the last non-projection
 conjunct of the antecedent was an elementary condition invented here, with no
@@ -485,16 +552,19 @@ theorem finiteInAffine_curve {k : Type u} [Field k] (C : Over (Spec (CommRingCat
 
 `Scheme.PointedPicSharpRep` carries `FiniteInAffine X.left` — the elementary condition
 this file exists to explain. With §3 in hand the antecedent can be stated with
-**projectivity** of the representing scheme instead, which is what the mathematics
-(Kleiman §5 `th:qpp&p`: the Picard scheme of a smooth proper curve is projective) actually
-provides. This section does that and carries the restatement all the way to the seam.
+**projectivity** of the representing scheme instead.  This is an intentionally
+strong conditional restatement, not Kleiman's conclusion: §5 `th:qpp&p` gives
+quasi-projectivity of `Pic^0`, while the whole Picard scheme is not projective.
+This section carries the over-strong restatement only far enough to expose its
+failure below.
 -/
 
 /-- **The pointed Picard theorem, with projectivity in place of `FiniteInAffine`.**
 
 Identical to `Scheme.PointedPicSharpRep` except in the last conjunct: it asks that the
-representing scheme be **projective over the base**, which is the FGA/Kleiman conclusion,
-rather than that finite subsets of it lie in affine opens, which is a consequence.
+representing scheme be **projective over the base**, rather than asking directly
+that finite subsets lie in affine opens.  This is stronger than the FGA/Kleiman
+conclusion and is refuted at the intended ambient Picard scheme in §5.5.
 
 Every remark in `PointedPicSharpRep`'s docstring about the *shape* still applies — the
 uniformity in `K` is what lets §4 of `Picard/PicEtPointedReduction.lean` apply it at a
@@ -513,9 +583,9 @@ base of the representing object is `Spec K`, which is affine.
 
 So §5's antecedent is at least as strong as §4's; whether it is *strictly* stronger is
 not claimed here, and the converse is not proved — `FiniteInAffine` does not obviously
-recover a closed immersion into projective space, and mathlib has no quasi-projectivity
-vocabulary at this pin to state the intermediate notion in. The useful direction is this
-one: it is the one that consumes the FGA conclusion. -/
+recover a closed immersion into projective space.  The H-quasi-projective
+vocabulary now available in this project supplies a useful sufficient condition
+without providing this converse.  The only claim here is the displayed implication. -/
 theorem pointedPicSharpRep_of_projective (H : PointedPicSharpRepProjective.{u}) :
     PointedPicSharpRep.{u} := by
   intro K _ E _ _ _ hpt
@@ -607,11 +677,12 @@ disjoint nonempty opens covering a space has no finite subcover, so `Pic_{C/k}` 
 quasi-compact and hence not projective over `k`. `PointedPicSharpRepProjective` asks for
 exactly that projectivity, so it is false at its intended witness.
 
-Kleiman's `th:qpp&p` gives quasi-projectivity of each **degree piece**. A repaired §5
-would ask for that, piecewise, and would need degree-graded vocabulary this file does not
-have; it is not attempted here, and pretending the gap is smaller than that is what the
-retracted §5 docstring did. §3 and §4 are untouched: neither mentions the ambient Picard
-scheme, and `finiteInAffine_curve` is about the curve, which *is* projective. -/
+Kleiman's `th:qpp&p` gives quasi-projectivity of `Pic^0`.  Extending this to other
+components requires the appropriate translation/torsor inputs and a degree-graded
+carrier, neither of which this file constructs.  A repaired §5 consumes such witnesses
+piecewise through the carrier-agnostic infrastructure below.  §3 and §4 are untouched:
+neither mentions the ambient Picard scheme, and `finiteInAffine_curve` is about the
+curve, which *is* projective. -/
 theorem not_isProjective_of_infinite_disjoint_open_cover {k : Type u} [Field k]
     (X : Over (Spec (CommRingCat.of k))) {ι : Type v} [Infinite ι]
     (U : ι → Set X.left) (hopen : ∀ i, IsOpen (U i)) (hne : ∀ i, (U i).Nonempty)
@@ -623,10 +694,10 @@ theorem not_isProjective_of_infinite_disjoint_open_cover {k : Type u} [Field k]
 
 /-! ## §6. The repair §5 needs: localise to one open piece
 
-§5.5 refutes the *global* projectivity hypothesis. The mathematics it was reaching for is
-Kleiman's, and Kleiman's hypothesis is about the **degree pieces**: each `Pic^d_{C/k}` is
-quasi-projective, and the ambient scheme is their disjoint union. So the repair is not a
-different global condition — it is to consume projectivity **one piece at a time**.
+§5.5 refutes the *global* projectivity hypothesis.  Kleiman's `th:qpp&p` supplies
+quasi-projectivity of `Pic^0`; translation to other components and their degree-graded
+assembly are separate inputs.  The reusable repair is therefore not a different global
+condition, but a way to consume an H-quasi-projective witness **one piece at a time**.
 
 This section supplies the transport that makes that possible, and stops there. What it
 deliberately does **not** do is define a "locally `FiniteInAffine`" predicate of the form
@@ -650,7 +721,7 @@ then `s` lies in an affine open **of `X`** — push the affine open forward alon
 immersion `U.ι`, which preserves affineness of opens
 (`IsAffineOpen.image_of_isOpenImmersion`).
 
-This is what lets projectivity be consumed piecewise: one quasi-projective piece containing
+This is what lets H-quasi-projectivity be consumed piecewise: one such piece containing
 the whole set is enough, and the ambient scheme need not be projective — which §5.5 shows
 it is not. -/
 theorem exists_affineOpen_of_subset_finiteInAffine_opens {X : Scheme.{u}} (U : X.Opens)
@@ -680,24 +751,34 @@ theorem exists_affineOpen_of_subset_isProjective_opens {X : Scheme.{u}} (U : X.O
   exists_affineOpen_of_subset_finiteInAffine_opens U
     (finiteInAffine_of_isProjective hproj) hs hsub
 
+/-- The H-quasi-projective form of the piecewise transport: a finite set lying
+in one H-quasi-projective open piece over an affine base lies in an affine open
+of the ambient scheme. -/
+theorem exists_affineOpen_of_subset_isHQuasiProjective_opens {X : Scheme.{u}}
+    (U : X.Opens) {S : Scheme.{u}} [IsAffine S] {π : U.toScheme ⟶ S}
+    (hqp : π.IsHQuasiProjective) {s : Set X} (hs : s.Finite) (hsub : s ⊆ U.1) :
+    ∃ V : X.affineOpens, s ⊆ V.1 :=
+  exists_affineOpen_of_subset_finiteInAffine_opens U
+    (finiteInAffine_of_isHQuasiProjective hqp) hs hsub
+
 /-! ## §7. `FiniteInAffine` is closed under coproducts — the repair of §5's refutation
 
 `§5.5` shows the antecedent `PointedPicSharpRepProjective` — projectivity of the scheme
 representing the *whole* of `picSharp` — is FALSE at its intended object, because
 `Pic_{C/k} = ∐_{d ∈ ℤ} Pic^d` is a countable disjoint union and projectivity of it would
 force `CompactSpace` (`compactSpace_of_isProjective`), which `Pic_{C/k}` is not
-(`not_isProjective_of_infinite_disjoint_open_cover`).  The mathematically correct
-statement is that the *pieces* `Pic^d` are projective and the Picard scheme is their
-coproduct.
+(`not_isProjective_of_infinite_disjoint_open_cover`).  The usable replacement is a
+coproduct of components that each carry an H-quasi-projective witness.  Constructing
+those component witnesses is a separate producer obligation.
 
 `FiniteInAffine`, unlike `IsProjective` or `CompactSpace`, **is** closed under such
 coproducts: a finite set meets only finitely many components, each hit in an affine open,
 and finitely many disjoint affine opens have an affine `iSup`
 (`IsAffineOpen.biSup_of_disjoint`).  So this section turns the refuted globally-projective
-antecedent into the true degree-graded one — `FiniteInAffine` of the ambient Picard
-scheme follows from projectivity of each degree piece, which is exactly the conjunct
-`Scheme.PointedPicSharpRep` asks and the shape the Milne–Kollár degree assembly (`G4`)
-produces.
+antecedent into a degree-graded substrate — `FiniteInAffine` of the ambient coproduct
+follows from H-quasi-projectivity of each supplied component, which is exactly the
+geometric adapter a future degree assembly can consume.  This file does not construct
+that assembly or any Picard representer.
 
 Everything here is about coproducts of arbitrary schemes and carries **no** hypothesis
 about the curve; nothing closes the seam.  It is the substrate the earlier sections said
@@ -761,6 +842,14 @@ theorem finiteInAffine_sigma_of_isProjective
     FiniteInAffine (∐ fun i => (X i).left) :=
   finiteInAffine_sigma _ fun i => finiteInAffine_of_isProjective (hX i)
 
+/-- A coproduct of H-quasi-projective schemes over one affine base satisfies
+`FiniteInAffine`, even when the coproduct itself is not quasi-compact. -/
+theorem finiteInAffine_sigma_of_isHQuasiProjective
+    {σ : Type v} [Small.{u, v} σ] {S : Scheme.{u}} [IsAffine S]
+    (X : σ → Over S) (hX : ∀ i, (X i).hom.IsHQuasiProjective) :
+    FiniteInAffine (∐ fun i => (X i).left) :=
+  finiteInAffine_sigma _ fun i => finiteInAffine_of_isHQuasiProjective (hX i)
+
 /-- The carried very-ample form of `finiteInAffine_sigma_of_isProjective`.
 At `Scheme.{0}`, `IsProjectiveWith` records a line bundle together with its
 closed immersion into relative projective space; forgetting those certificates
@@ -771,6 +860,16 @@ theorem finiteInAffine_sigma_of_isProjectiveWith
     (hX : ∀ i, (X i).hom.IsProjectiveWith (L i)) :
     FiniteInAffine (∐ fun i => (X i).left) :=
   finiteInAffine_sigma_of_isProjective X fun i => (hX i).isProjective
+
+/-- The carried relatively very ample form of
+`finiteInAffine_sigma_of_isHQuasiProjective`. -/
+theorem finiteInAffine_sigma_of_isHQuasiProjectiveWith
+    {σ : Type v} [Small.{0, v} σ] {S : Scheme.{0}} [IsAffine S]
+    (X : σ → Over S) (L : ∀ i, (X i).left.Modules)
+    (hX : ∀ i, (X i).hom.IsHQuasiProjectiveWith (L i)) :
+    FiniteInAffine (∐ fun i => (X i).left) :=
+  finiteInAffine_sigma_of_isHQuasiProjective X fun i =>
+    (hX i).isHQuasiProjective
 
 /-- A coproduct in `Over S` is locally of finite type when each of its
 components is. The proof compares its structure morphism with the descent
@@ -797,6 +896,16 @@ theorem locallyOfFiniteType_sigma
     (by infer_instance)
     (IsZariskiLocalAtSource.sigmaDesc (P := @LocallyOfFiniteType) hX)
 
+/-- The underlying scheme of the canonical coproduct in `Over S` inherits
+`FiniteInAffine` from its components.  This comparison lemma is independent of
+projectivity and is the reusable coproduct boundary. -/
+theorem finiteInAffine_over_sigma
+    {σ : Type v} [Small.{u, v} σ] {S : Scheme.{u}}
+    (X : σ → Over S) (hX : ∀ i, FiniteInAffine (X i).left) :
+    FiniteInAffine (∐ X).left :=
+  finiteInAffine_of_iso (PreservesCoproduct.iso (Over.forget S) X).symm
+    (finiteInAffine_sigma _ hX)
+
 /-- The canonical coproduct in `Over S` satisfies `FiniteInAffine` when every
 component is projective over the affine base. This is the form used by a
 degree-piece representability assembly; `Over.forget S` identifies its
@@ -806,8 +915,16 @@ theorem finiteInAffine_over_sigma_of_isProjective
     {σ : Type v} [Small.{u, v} σ] {S : Scheme.{u}} [IsAffine S]
     (X : σ → Over S) (hX : ∀ i, (X i).hom.IsProjective) :
     FiniteInAffine (∐ X).left :=
-  finiteInAffine_of_iso (PreservesCoproduct.iso (Over.forget S) X).symm
-    (finiteInAffine_sigma_of_isProjective X hX)
+  finiteInAffine_over_sigma X fun i => finiteInAffine_of_isProjective (hX i)
+
+/-- The canonical coproduct in `Over S` satisfies `FiniteInAffine` when each
+component is H-quasi-projective over the affine base. -/
+theorem finiteInAffine_over_sigma_of_isHQuasiProjective
+    {σ : Type v} [Small.{u, v} σ] {S : Scheme.{u}} [IsAffine S]
+    (X : σ → Over S) (hX : ∀ i, (X i).hom.IsHQuasiProjective) :
+    FiniteInAffine (∐ X).left :=
+  finiteInAffine_over_sigma X fun i =>
+    finiteInAffine_of_isHQuasiProjective (hX i)
 
 /-- Very-ample projective degree pieces supply the two geometric side
 conditions required of their canonical coproduct by `PointedPicSharpRep`:
@@ -820,6 +937,20 @@ theorem locallyOfFiniteType_and_finiteInAffine_sigma_of_isProjectiveWith
     LocallyOfFiniteType (∐ X).hom ∧ FiniteInAffine (∐ X).left :=
   ⟨locallyOfFiniteType_sigma X fun i => (hX i).locallyOfFiniteType,
     finiteInAffine_over_sigma_of_isProjective X fun i => (hX i).isProjective⟩
+
+/-- H-quasi-projective degree pieces carrying specified relatively very ample
+line bundles supply the two geometric side conditions for their canonical
+coproduct: local finite type and `FiniteInAffine`.  The theorem deliberately
+introduces no representability hypothesis; constructing the Picard degree
+pieces remains a separate producer obligation. -/
+theorem locallyOfFiniteType_and_finiteInAffine_sigma_of_isHQuasiProjectiveWith
+    {σ : Type v} [Small.{0, v} σ] {S : Scheme.{0}} [IsAffine S]
+    (X : σ → Over S) (L : ∀ i, (X i).left.Modules)
+    (hX : ∀ i, (X i).hom.IsHQuasiProjectiveWith (L i)) :
+    LocallyOfFiniteType (∐ X).hom ∧ FiniteInAffine (∐ X).left :=
+  ⟨locallyOfFiniteType_sigma X fun i => (hX i).locallyOfFiniteType,
+    finiteInAffine_over_sigma X fun i =>
+      finiteInAffine_of_isHQuasiProjectiveWith (hX i)⟩
 
 /-- **`FiniteInAffine` is closed under binary coproducts.**  The two-piece case of
 `finiteInAffine_sigma`, via `coprodIsoSigma` and the landed
