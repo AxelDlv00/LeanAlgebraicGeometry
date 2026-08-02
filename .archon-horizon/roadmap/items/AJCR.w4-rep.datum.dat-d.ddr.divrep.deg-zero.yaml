@@ -1,13 +1,17 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.divrep.deg-zero
-title: 'DEG-ZERO: an unconditional rep producer at parameter 0 (unitEquations + the
-  zero certificate), the first inhabitant of the mixedParamChart rep slot'
+title: 'DEG-ZERO: a direct affine rep result at parameter 0, conditional on an ambient
+  affine map'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: DONE, NO NEW HYPOTHESES. DivisorFamilyAffDegreeZeroRep proves the widened
-  degree-zero functor is terminal and constructs divFunctorAffZeroRepresentableBy.
-  The unconditional all-genus producer consumes this as its zero branch, and both
-  the dedicated target and the rooted AlgebraicJacobian target build successfully.
-  The historical general-test and uniqueness gaps in this row are therefore closed.
+summary: DONE AS A VALID CONDITIONAL GEOMETRIC CONSTRUCTION. DivisorFamilyAffDegreeZeroRep
+  proves the widened degree-zero functor is terminal and constructs divFunctorAffZeroRepresentableBy.
+  Its conclusion omits pi, but the generated declaration retains externally supplied
+  {pi} and [IsAffineHom pi] and its body uses pi to construct the trivial universal
+  section. It is therefore a raw direct RepresentableBy result, not a strict unconditional
+  or no-new-hypothesis producer. The all-genus representer consumes it only inside
+  a context where a finite dominant pi is already supplied. The dedicated target and
+  rooted AlgebraicJacobian target were reported green historically; the proof remains
+  done, while the former unconditional wording is superseded.
 status: done
 kind: proof
 priority: normal
@@ -30,7 +34,7 @@ metadata:
     task_title: 'Pic rep lane C: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
-  updated_at: '2026-08-01T23:05:20.873326+00:00'
+  updated_at: '2026-08-02T19:08:38.435525+00:00'
   pinned_commits:
   - 7db89ec0e59482447ee335163e0e4a8af6cf222d
   - da4cf595b4eaf212edd764d7c4a1e030459eb796

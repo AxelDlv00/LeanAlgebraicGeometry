@@ -5,12 +5,16 @@ projects:
 summary: 'REV2 CURRENT STATE, snapshot ed18792c65 (fleet base 8593b93c4d).
 
 
-  MEASURED: direct unconditional `.RepresentableBy` producers remain 3 to 3. The Sigma
-  package is a fourth textual spelling, but its `.2` is the direct genus theorem,
-  so there are three independent witness constructions. Representability-binder consumer
-  declarations remain 143 to 143 (lexical `(rep :)` sites 128 to 128). The only broad
-  syntactic increase, 19 to 20, is a conditional Sigma result swept by system baseline
-  aa33dc913a; no attributable fleet lane is net consumers.
+  MEASURED: raw direct `.RepresentableBy` result headers remain 3 to 3, while strict
+  binder-clean, logically deduplicated unconditional producer facts remain 2 to 2.
+  `divFunctorAffZeroRepresentableBy` is excluded from the strict count because its
+  result omits `pi` but its declaration retains externally supplied `{pi}` and `[IsAffineHom
+  pi]` and uses that map in the universal section. The genus Sigma package is a fourth
+  textual spelling, but its `.2` is the direct genus theorem, so that pair is one
+  construction. Representability-binder consumer declarations remain 143 to 143 (lexical
+  `(rep :)` sites 128 to 128). The only broad syntactic increase, 19 to 20, is a conditional
+  Sigma result swept by system baseline aa33dc913a; no attributable fleet lane is
+  net consumers.
 
 
   CORRECTED FRONTIER: divFunctorAff_genus_representableBy now supplies the widened
@@ -50,5 +54,5 @@ metadata:
   author: horizon
   created_at: '2026-07-14T01:20:10.654781+00:00'
   parent: AJCR.jacobian
-  updated_at: '2026-08-02T18:53:22.600131+00:00'
+  updated_at: '2026-08-02T19:08:12.236037+00:00'
   milestone: AJCR.w4-rep
