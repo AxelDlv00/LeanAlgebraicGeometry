@@ -234,6 +234,27 @@ private noncomputable def identityComponentCarrier {k : Type u} [Field k]
     G.left.Opens :=
   ⟨connectedComponent (identitySectionPoint G), isOpen_connectedComponent⟩
 
+/-- The identity component of `G` as an open subset of its underlying scheme.
+
+This is the public open-subscheme interface to the carrier used in
+`GroupScheme.IdentityComponent`.  Its underlying set is the topological
+connected component through the identity section. -/
+noncomputable def identityComponentOpens {k : Type u} [Field k]
+    (G : Over (Spec (.of k)))
+    [GrpObj G] [LocallyOfFiniteType G.hom] :
+    G.left.Opens :=
+  identityComponentCarrier G
+
+@[simp]
+theorem coe_identityComponentOpens {k : Type u} [Field k]
+    (G : Over (Spec (.of k)))
+    [GrpObj G] [LocallyOfFiniteType G.hom] :
+    (identityComponentOpens G : Set G.left) =
+      connectedComponent
+        (((MonObj.one (X := G)).left.base :
+          ↑(Spec (.of k)) → G.left) (default : Spec (.of k))) :=
+  rfl
+
 /-- The **identity component** `G^0` of a `k`-group scheme `G` locally of
 finite type.
 
@@ -257,6 +278,13 @@ noncomputable def IdentityComponent {k : Type u} [Field k]
     [GrpObj G] [LocallyOfFiniteType G.hom] :
     Over (Spec (.of k)) :=
   Over.mk ((identityComponentCarrier G).ι ≫ G.hom)
+
+@[simp]
+theorem identityComponentOpens_toScheme {k : Type u} [Field k]
+    (G : Over (Spec (.of k)))
+    [GrpObj G] [LocallyOfFiniteType G.hom] :
+    (identityComponentOpens G).toScheme = (IdentityComponent G).left :=
+  rfl
 
 /-- **The identity component is an open and closed subgroup scheme.**
 
