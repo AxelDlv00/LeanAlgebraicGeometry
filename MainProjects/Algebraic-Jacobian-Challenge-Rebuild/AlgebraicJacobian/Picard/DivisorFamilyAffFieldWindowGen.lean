@@ -55,7 +55,27 @@ set_option maxRecDepth 8000 in
 set_option synthInstance.maxHeartbeats 800000 in
 -- The two field instance towers and the extracted adaptation exceed the default limit.
 /-- Over a field, the first window of an arbitrary widened certified family generates its
-stalk ideal, without a chart-typing or representative hypothesis. -/
+stalk ideal, without a chart-typing or representative hypothesis.  The curve Euler
+parameter `gamma` is independent of the family degree `g`. -/
+theorem CertifiedDivisorFamilyAff.stalkIdeal_le_span_windowGerm_of_field_at
+    (g : Nat) {gamma : Nat} (hgamma : gamma ≤ g)
+    (F : CertifiedDivisorFamilyAff C K g)
+    (hOk : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
+    (hchiK : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : Int))
+    (hOK : Sheaf.h0 ((relCurve C K).moduleKSheaf K) = 1)
+    (hchiL : Sheaf.chi ((relCurve C K).moduleKSheaf K) = 1 - (gamma : Int)) :
+    ∀ z : relCurve C K,
+      F.eqns.stalkIdeal z ≤ Ideal.span (eqnsWindowGermSet K hpi g F.eqns z) := by
+  obtain ⟨A⟩ := exists_divisorAdaptation C K pi F.eqns
+  let G : CertifiedDivisorFamily C K pi g :=
+    ⟨F.eqns, A, A.isCertified_of_deg (certifiedAff_deg_presentationDivisor g F)⟩
+  exact hgen_of_chart_divEq_at hpi g hgamma F.eqns hOk hchiK hOK hchiL G
+    (Scheme.LocalEquations.divEq_refl F.eqns)
+
+set_option maxRecDepth 8000 in
+set_option synthInstance.maxHeartbeats 800000 in
+/-- The diagonal specialization of
+`CertifiedDivisorFamilyAff.stalkIdeal_le_span_windowGerm_of_field_at`. -/
 theorem CertifiedDivisorFamilyAff.stalkIdeal_le_span_windowGerm_of_field (g : Nat)
     (F : CertifiedDivisorFamilyAff C K g)
     (hOk : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
@@ -63,12 +83,9 @@ theorem CertifiedDivisorFamilyAff.stalkIdeal_le_span_windowGerm_of_field (g : Na
     (hOK : Sheaf.h0 ((relCurve C K).moduleKSheaf K) = 1)
     (hchiL : Sheaf.chi ((relCurve C K).moduleKSheaf K) = 1 - (g : Int)) :
     ∀ z : relCurve C K,
-      F.eqns.stalkIdeal z ≤ Ideal.span (eqnsWindowGermSet K hpi g F.eqns z) := by
-  obtain ⟨A⟩ := exists_divisorAdaptation C K pi F.eqns
-  let G : CertifiedDivisorFamily C K pi g :=
-    ⟨F.eqns, A, A.isCertified_of_deg (certifiedAff_deg_presentationDivisor g F)⟩
-  exact hgen_of_chart_divEq hpi g F.eqns hOk hchiK hOK hchiL G
-    (Scheme.LocalEquations.divEq_refl F.eqns)
+      F.eqns.stalkIdeal z ≤ Ideal.span (eqnsWindowGermSet K hpi g F.eqns z) :=
+  F.stalkIdeal_le_span_windowGerm_of_field_at
+    (gamma := g) hpi g le_rfl hOk hchiK hOK hchiL
 
 set_option maxRecDepth 8000 in
 set_option synthInstance.maxHeartbeats 800000 in

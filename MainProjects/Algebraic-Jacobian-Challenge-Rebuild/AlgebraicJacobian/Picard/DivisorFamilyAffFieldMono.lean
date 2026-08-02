@@ -381,17 +381,18 @@ representative *of the same divisor* discharges it. -/
 
 set_option synthInstance.maxHeartbeats 800000 in
 set_option maxRecDepth 8000 in
-/-- **`hgen` transports along a divisor equality.**  If a bare local-equation system `d` has
+/-- **Decoupled `hgen` transports along a divisor equality.**  If a bare local-equation system `d` has
 a chart-typed certified representative cutting the same divisor, the hard inclusion holds for
 `d` — no re-proof, just `stalkIdeal_eq_of_divEq` and `divisorWindow_eq_of_divEq` against the
 chart-typed `CertifiedDivisorFamily.stalkIdeal_le_span_windowGerm_of_field`.
 
 This is the theorem that makes my earlier "~250 lines" pricing false. -/
-theorem hgen_of_chart_divEq (g : ℕ) (d : (relCurve C K).LocalEquations)
+theorem hgen_of_chart_divEq_at (g : ℕ) {gamma : ℕ} (hgamma : gamma ≤ g)
+    (d : (relCurve C K).LocalEquations)
     (hOk : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
-    (hχk : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
+    (hχk : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
     (hOK : Sheaf.h0 ((relCurve C K).moduleKSheaf K) = 1)
-    (hχK : Sheaf.chi ((relCurve C K).moduleKSheaf K) = 1 - (g : ℤ))
+    (hχK : Sheaf.chi ((relCurve C K).moduleKSheaf K) = 1 - (gamma : ℤ))
     (G : CertifiedDivisorFamily C K π g) (hd : G.eqns.DivEq d) :
     ∀ z : relCurve C K,
       d.stalkIdeal z ≤ Ideal.span (eqnsWindowGermSet K hπ g d z) := by
@@ -400,8 +401,21 @@ theorem hgen_of_chart_divEq (g : ℕ) (d : (relCurve C K).LocalEquations)
     unfold eqnsWindowGermSet
     rw [divisorWindow_eq_of_divEq hd (relThetaPairH1_windowM C π hπ g)]
   rw [← Scheme.LocalEquations.stalkIdeal_eq_of_divEq hd z, ← hset]
-  exact CertifiedDivisorFamily.stalkIdeal_le_span_windowGerm_of_field hπ g G
-    hOk hχk hOK hχK z
+  exact CertifiedDivisorFamily.stalkIdeal_le_span_windowGerm_of_field_at
+    hπ g hgamma G hOk hχk hOK hχK z
+
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxRecDepth 8000 in
+/-- The diagonal specialization of `hgen_of_chart_divEq_at`. -/
+theorem hgen_of_chart_divEq (g : ℕ) (d : (relCurve C K).LocalEquations)
+    (hOk : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
+    (hχk : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
+    (hOK : Sheaf.h0 ((relCurve C K).moduleKSheaf K) = 1)
+    (hχK : Sheaf.chi ((relCurve C K).moduleKSheaf K) = 1 - (g : ℤ))
+    (G : CertifiedDivisorFamily C K π g) (hd : G.eqns.DivEq d) :
+    ∀ z : relCurve C K,
+      d.stalkIdeal z ≤ Ideal.span (eqnsWindowGermSet K hπ g d z) :=
+  hgen_of_chart_divEq_at (gamma := g) hπ g le_rfl d hOk hχk hOK hχK G hd
 
 set_option synthInstance.maxHeartbeats 800000 in
 set_option maxRecDepth 8000 in
