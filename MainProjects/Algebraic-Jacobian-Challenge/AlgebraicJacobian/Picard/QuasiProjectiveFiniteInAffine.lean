@@ -772,6 +772,55 @@ theorem finiteInAffine_sigma_of_isProjectiveWith
     FiniteInAffine (∐ fun i => (X i).left) :=
   finiteInAffine_sigma_of_isProjective X fun i => (hX i).isProjective
 
+/-- A coproduct in `Over S` is locally of finite type when each of its
+components is. The proof compares its structure morphism with the descent
+morphism from the coproduct of the underlying schemes and uses that
+`LocallyOfFiniteType` is Zariski-local at the source. -/
+theorem locallyOfFiniteType_sigma
+    {σ : Type v} [Small.{u, v} σ] {S : Scheme.{u}}
+    (X : σ → Over S) (hX : ∀ i, LocallyOfFiniteType (X i).hom) :
+    LocallyOfFiniteType (∐ X).hom := by
+  have hhom : (∐ X).hom = (PreservesCoproduct.iso (Over.forget S) X).hom ≫
+      Sigma.desc (fun i => (X i).hom) := by
+    haveI : HasColimit (Discrete.functor X ⋙ Over.forget S) :=
+      hasColimit_of_iso (F := Discrete.functor (fun i => (X i).left))
+        (Discrete.natIso (fun i => Iso.refl _))
+    refine (PreservesCoproduct.iso (Over.forget S) X).inv_comp_eq.mp ?_
+    rw [PreservesCoproduct.inv_hom]
+    refine Sigma.hom_ext _ _ fun i => ?_
+    rw [ι_comp_sigmaComparison_assoc, Sigma.ι_desc]
+    exact Over.w (Sigma.ι X i)
+  rw [hhom]
+  exact MorphismProperty.comp_mem @LocallyOfFiniteType
+    (PreservesCoproduct.iso (Over.forget S) X).hom
+    (Sigma.desc fun i => (X i).hom)
+    (by infer_instance)
+    (IsZariskiLocalAtSource.sigmaDesc (P := @LocallyOfFiniteType) hX)
+
+/-- The canonical coproduct in `Over S` satisfies `FiniteInAffine` when every
+component is projective over the affine base. This is the form used by a
+degree-piece representability assembly; `Over.forget S` identifies its
+underlying scheme with the coproduct handled by
+`finiteInAffine_sigma_of_isProjective`. -/
+theorem finiteInAffine_over_sigma_of_isProjective
+    {σ : Type v} [Small.{u, v} σ] {S : Scheme.{u}} [IsAffine S]
+    (X : σ → Over S) (hX : ∀ i, (X i).hom.IsProjective) :
+    FiniteInAffine (∐ X).left :=
+  finiteInAffine_of_iso (PreservesCoproduct.iso (Over.forget S) X).symm
+    (finiteInAffine_sigma_of_isProjective X hX)
+
+/-- Very-ample projective degree pieces supply the two geometric side
+conditions required of their canonical coproduct by `PointedPicSharpRep`:
+local finite type of its structure morphism and `FiniteInAffine` of its
+underlying scheme. No representability hypothesis is introduced here. -/
+theorem locallyOfFiniteType_and_finiteInAffine_sigma_of_isProjectiveWith
+    {σ : Type v} [Small.{0, v} σ] {S : Scheme.{0}} [IsAffine S]
+    (X : σ → Over S) (L : ∀ i, (X i).left.Modules)
+    (hX : ∀ i, (X i).hom.IsProjectiveWith (L i)) :
+    LocallyOfFiniteType (∐ X).hom ∧ FiniteInAffine (∐ X).left :=
+  ⟨locallyOfFiniteType_sigma X fun i => (hX i).locallyOfFiniteType,
+    finiteInAffine_over_sigma_of_isProjective X fun i => (hX i).isProjective⟩
+
 /-- **`FiniteInAffine` is closed under binary coproducts.**  The two-piece case of
 `finiteInAffine_sigma`, via `coprodIsoSigma` and the landed
 `Scheme.finiteInAffine_of_iso` (`Picard/PicEtPointedReduction.lean`). -/
