@@ -1,0 +1,36 @@
+id: I-1804
+provider: local
+kind: issue
+body: 'AJC graph sync left 174 generated timestamp-only disk diffs
+
+
+  Index-independent blob audit after `c8c4273ea1`: 16,194 tracked hgraph files, 16,020
+  byte-identical to HEAD, 174 different, 0 missing, 0 extras. Sample diffs change
+  only the generated `updated:` timestamp. The intended substrate nodes are already
+  committed; the lane that ran sync should restore the remaining generated churn to
+  HEAD after confirming no authored comment/review content is among it, so integration
+  cannot sweep 174 metadata-only edits.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-08-02T14:34:04.100356+00:00'
+updated_at: '2026-08-02T14:42:14.177790+00:00'
+metadata:
+  provenance:
+    run: '0112'
+    session: 0002-horizon-rev2-ajc
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: rev2-ajc
+    task_title: 'Reviewer lane AJC (fleet 2): producer metric, import-closure probes,
+      board honesty'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - rev2-ajc
