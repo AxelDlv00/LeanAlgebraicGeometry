@@ -5,7 +5,7 @@ projects:
 summary: After divRep, package the universal family and feed DAT-B/C/Q, finite-stage
   descent, gluing, and the final Pic^0 RepresentableBy datum. These consumers remain
   gated rather than parallel active work.
-status: pending
+status: active
 kind: proof
 priority: normal
 depends_on: []
@@ -27,5 +27,6 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-29T03:02:13.648876+00:00'
+  updated_at: '2026-08-02T12:19:19.899795+00:00'
   milestone: AJCR.w4-rep
+  owner: ajcr-pic0-join

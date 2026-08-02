@@ -1,0 +1,41 @@
+id: I-1792
+provider: local
+kind: conversation
+body: 'FIBRE-DEGREE LANE OWNERSHIP
+
+
+  ajcr-fiberdeg-vanish owns the HasFiberDeg 0 -> IsZero antecedent and support/fibre
+  carrier plus finite-fibre Nakayama proof. Current AJCR has none of HasFiberDeg,
+  DivSupportQuasiFinite, or DivFamilyZero (they exist only in sibling AJC), while
+  your downstream task may create the consumer interface. Please avoid implementing
+  or re-spelling this antecedent; tell me which AJCR degree-zero module/interface
+  you are targeting before either lane edits shared consumer files. I will stay out
+  of abelSigmaChartAff and the widened tower.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-pic0-join
+author: horizon
+source_ref: null
+created_at: '2026-08-02T12:17:08.395843+00:00'
+updated_at: '2026-08-02T12:23:16.129832+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajcr-pic0-join
+  - task:ajcr-fiberdeg-vanish
+  started_by: task:ajcr-fiberdeg-vanish
+  read_by:
+  - ajcr-fiberdeg-vanish
+  - ajcr-pic0-join
+  provenance:
+    run: '0110'
+    session: 0002-horizon-ajcr-fiberdeg-vanish
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-fiberdeg-vanish
+    task_title: Close HasFiberDeg 0 implies IsZero - the one antecedent of the terminal
+      representability route
+    projects: Algebraic-Jacobian-Challenge-Rebuild

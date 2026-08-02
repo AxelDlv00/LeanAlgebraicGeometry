@@ -12,7 +12,7 @@ summary: REAL REMAINING REPRESENTABILITY JOIN. The rooted producer divFunctorAff
   n, recover the existing API on the diagonal n = gamma, then instantiate n = admissibleCoverageParameter
   hpi gamma and feed abelSigmaChartAff. No rational point, IsDivisorDegree genus,
   new certificate field, or assumed RepresentableBy witness is permitted.
-status: pending
+status: active
 kind: refactor
 priority: urgent
 depends_on: []
@@ -35,3 +35,5 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
   milestone: w4-gate
+  updated_at: '2026-08-02T12:10:23.866712+00:00'
+  owner: ajcr-param-decouple
