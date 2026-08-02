@@ -119,6 +119,54 @@ theorem divUniversalFibreHighWindowInAmbientEquiv_coe (n : Nat)
     (divUniversalFibreHighWindow_le_closedAmbient
       C hpi g r1 r2 b1 b2 i j K hO hchi hker n) x
 
+/-! ## The decoupled in-ambient equivalence -/
+
+set_option maxHeartbeats 1600000 in
+/-- Forgetting the degree-`g` closed-ambient wrapper identifies the decoupled
+in-ambient window with its function-field submodule. -/
+noncomputable def divUniversalFibreHighWindowInAmbientEquiv_at {gamma : Nat}
+    (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hkerGamma : divCarveIdeal k
+        (windowS_choice pi hpi g • fiberWeilDivisor pi)
+        (windowM_choice pi hpi g • fiberWeilDivisor pi)
+        g r1 r2 b1 b2 i j ≤
+          RingHom.ker (algebraMap (PairChartRing k g r1 g r2 i j) K))
+    (n : Nat) :
+    ↥(divUniversalFibreHighWindowInAmbient_at
+        C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hkerGamma n) ≃ₗ[K]
+      ↥(divUniversalFibreHighWindow_at
+        C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hkerGamma n) :=
+  Submodule.comapSubtypeEquivOfLe
+    (divUniversalFibreHighWindow_le_closedAmbient_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hkerGamma n)
+
+/-- The decoupled in-ambient equivalence preserves the underlying
+function-field element. -/
+@[simp]
+theorem divUniversalFibreHighWindowInAmbientEquiv_coe_at {gamma : Nat}
+    (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hkerGamma : divCarveIdeal k
+        (windowS_choice pi hpi g • fiberWeilDivisor pi)
+        (windowM_choice pi hpi g • fiberWeilDivisor pi)
+        g r1 r2 b1 b2 i j ≤
+          RingHom.ker (algebraMap (PairChartRing k g r1 g r2 i j) K))
+    (n : Nat)
+    (x : ↥(divUniversalFibreHighWindowInAmbient_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hkerGamma n)) :
+    ((divUniversalFibreHighWindowInAmbientEquiv_at
+        C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hkerGamma n x :
+      divUniversalFibreHighWindow_at
+        C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hkerGamma n) :
+      (relCurve C K).functionField) =
+      ((x : Scheme.divisorSections K
+       (windowN C K hpi g + n • windowS C K hpi g) ⊤) :
+      (relCurve C K).functionField) := by
+  exact Submodule.comapSubtypeEquivOfLe_apply_coe
+    (divUniversalFibreHighWindow_le_closedAmbient_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hkerGamma n) x
+
 end HighWindowFibreWindowEquiv
 
 end AlgebraicGeometry

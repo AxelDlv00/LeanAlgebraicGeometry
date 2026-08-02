@@ -135,6 +135,54 @@ noncomputable def divUniversalFibreHighWindowInAmbient (n : Nat) :
       (Scheme.divisorSections K
         (windowN C K hpi g + n • windowS C K hpi g) ⊤).subtype
 
+/-! ## The decoupled canonical fibre window -/
+
+set_option maxHeartbeats 1600000 in
+/-- The degree-`g` divisor fibre window at curve parameter `gamma ≤ g` is
+contained in the degree-`g` closed ambient. -/
+theorem divUniversalFibreHighWindow_le_closedAmbient_at {gamma : Nat}
+    (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hkerGamma : divCarveIdeal k
+        (windowS_choice pi hpi g • fiberWeilDivisor pi)
+        (windowM_choice pi hpi g • fiberWeilDivisor pi)
+        g r1 r2 b1 b2 i j ≤
+          RingHom.ker (algebraMap (PairChartRing k g r1 g r2 i j) K))
+    (n : Nat) :
+    divUniversalFibreHighWindow_at
+        C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hkerGamma n ≤
+      Scheme.divisorSections K
+        (windowN C K hpi g + n • windowS C K hpi g) ⊤ := by
+  rw [divUniversalFibreHighWindow_at]
+  refine Scheme.divisorSections_mono K ?_ ⊤
+  refine Scheme.CurveDivisor.le_iff_coeffAt.mpr fun x hx => ?_
+  rw [Scheme.CurveDivisor.coeffAt_sub]
+  have hDx := Scheme.CurveDivisor.le_iff_coeffAt.mp
+    (divUniversalFibreDivisor_spec_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hkerGamma).1 x hx
+  rw [Scheme.CurveDivisor.coeffAt_zero] at hDx
+  omega
+
+set_option maxHeartbeats 1600000 in
+/-- The decoupled canonical divisor fibre window, regarded as a submodule of
+its degree-`g` closed high-window ambient. -/
+noncomputable def divUniversalFibreHighWindowInAmbient_at {gamma : Nat}
+    (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hkerGamma : divCarveIdeal k
+        (windowS_choice pi hpi g • fiberWeilDivisor pi)
+        (windowM_choice pi hpi g • fiberWeilDivisor pi)
+        g r1 r2 b1 b2 i j ≤
+          RingHom.ker (algebraMap (PairChartRing k g r1 g r2 i j) K))
+    (n : Nat) :
+    Submodule K
+      ↥(Scheme.divisorSections K
+        (windowN C K hpi g + n • windowS C K hpi g) ⊤) :=
+  (divUniversalFibreHighWindow_at
+    C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hkerGamma n).comap
+      (Scheme.divisorSections K
+        (windowN C K hpi g + n • windowS C K hpi g) ⊤).subtype
+
 end HighWindowFibreWindow
 
 end AlgebraicGeometry

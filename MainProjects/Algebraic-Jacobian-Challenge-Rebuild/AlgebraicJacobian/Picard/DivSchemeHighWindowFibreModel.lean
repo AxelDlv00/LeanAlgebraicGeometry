@@ -80,6 +80,22 @@ def DivUniversalHighWindowFibreModel (n : Nat) : Prop :=
           (windowM_choice pi hpi g • fiberWeilDivisor pi)
           g r1 r2 b1 b2 i j p.asIdeal.ResidueField) n
 
+set_option maxHeartbeats 2000000 in
+set_option synthInstance.maxHeartbeats 800000 in
+/-- The decoupled fibre-model condition at a relative stage, with divisor
+degree `g` and independent curve parameter `gamma ≤ g`. -/
+def DivUniversalHighWindowFibreModel_at {gamma : Nat}
+    (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (n : Nat) : Prop :=
+  ∀ p : PrimeSpectrum RZ,
+    DivUniversalHighWindowFibreImage_at
+      C hpi g r1 r2 b1 b2 i j p.asIdeal.ResidueField hgamma hchiGamma
+        (divCarveIdeal_le_ker_of_tower k
+          (windowS_choice pi hpi g • fiberWeilDivisor pi)
+          (windowM_choice pi hpi g • fiberWeilDivisor pi)
+          g r1 r2 b1 b2 i j p.asIdeal.ResidueField) n
+
 end HighWindowFibreModel
 
 end AlgebraicGeometry
