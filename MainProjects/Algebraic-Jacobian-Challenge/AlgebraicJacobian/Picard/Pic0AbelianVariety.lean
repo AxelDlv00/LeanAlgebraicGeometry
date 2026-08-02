@@ -314,9 +314,7 @@ additively the kernel of the dual-number Čech-units reduction
 `ker(Pic(C ×_k Spec k[ε]) → Pic(C))`), via the truncated exponential
 `b ↦ [1 + b ε]` (`DualNumber.truncExpCechKernelAddEquiv`). -/
 noncomputable def AffineCoverMVSquare.h1CokAddEquivTruncExpCechKernel {k : Type u}
-    [Field k] {C : Over (Spec (CommRingCat.of k))} (S : C.left.AffineCoverMVSquare) :
-    S.H1Cok (Scheme.toModuleKSheaf C) ≃+
-      Additive (DualNumber.cechUnitsReduction S.resLeft S.resRight).ker :=
+    [Field k] {C : Over (Spec (CommRingCat.of k))} (S : C.left.AffineCoverMVSquare) :=
   (S.h1CokAddEquivCechQuotient).trans
     (DualNumber.truncExpCechKernelAddEquiv S.resLeft S.resRight)
 
