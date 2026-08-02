@@ -39,9 +39,11 @@ The `IsHQuasiProjectiveWith` terminology records the finite-projective-space
 convention.  No equivalence with every relative ample formulation over an
 arbitrary base is asserted here.
 
-Everything is at `Scheme.{0}`: the Serre twist rests on the descent engine
+The ampleness predicates and their carried-bundle stability theorems are at
+`Scheme.{0}`: the Serre twist rests on the descent engine
 `Scheme.Modules.glue`, which is universe-monomorphic at `Scheme.GlueData.{0}`
-(`GlueDescent.lean:934`).
+(`GlueDescent.lean:934`).  The purely scheme-theoretic open-image isomorphism is
+universe-polymorphic.
 
 Blueprint: `def:twisting_sheaf`, `def:projective_with`,
 `lem:projective_with_proper`, `lem:projective_with_closed_immersion`,
