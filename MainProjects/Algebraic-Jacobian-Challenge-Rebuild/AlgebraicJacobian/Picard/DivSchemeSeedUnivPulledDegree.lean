@@ -381,6 +381,292 @@ theorem deg_presentationDivisor_residueFibreLocalEquations_pointwiseGeneratorSee
   exact (divUniversalSeedFibreDivisor_spec C hpi g r1 r2 b1 b2 i j hO hchi p).2.1
 
 set_option maxHeartbeats 8000000 in
+set_option synthInstance.maxHeartbeats 800000 in
+/-- Off the diagonal, the pulled pointwise-generator equation still reads as the compared
+window vector; `gamma` controls the curve Euler characteristic and `g` the divisor degree. -/
+theorem germ_pullbackEqn_pointwiseGeneratorSeed_eq_pointwiseFibreReadGerm_at
+    {gamma : Nat} (hgamma : gamma ≤ g)
+    (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hrdn : PointwiseSeedRDNAt C hpi g r1 r2 b1 b2 i j hgamma hchi)
+    (z : relCurve C RZ) :
+    let p := relCurveBasePoint C RZ z
+    let K := p.asIdeal.ResidueField
+    let zK := relCurveResiduePoint C RZ z
+    let D := pointwiseGeneratorSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchi hrdn
+    let hD := isGenerator_pointwiseGeneratorSeed_at
+      C hpi g r1 r2 b1 b2 i j hgamma hchi hrdn
+    ((relCurve C K).presheaf.germ
+        (((D.localEquations hD).cover.pullback (relCurveMap C RZ K)).opens zK) zK
+        (((D.localEquations hD).cover.pullback
+          (relCurveMap C RZ K)).mem_opens zK)).hom
+        (Scheme.LocalEquations.pullbackEqn
+          (relCurveMap C RZ K) (D.localEquations hD) zK) =
+      pointwiseFibreReadGerm C hpi g r1 r2 b1 b2 i j z
+        (pointwiseSide C hpi g r1 r2 b1 b2 i j z)
+        (pointwiseSide_mem C hpi g r1 r2 b1 b2 i j z)
+        (pointwiseSectionVector_at C hpi g r1 r2 b1 b2 i j hgamma hchi z) := by
+  dsimp only
+  let p := relCurveBasePoint C RZ z
+  let K := p.asIdeal.ResidueField
+  let zK := relCurveResiduePoint C RZ z
+  let D := pointwiseGeneratorSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchi hrdn
+  let hD := isGenerator_pointwiseGeneratorSeed_at
+    C hpi g r1 r2 b1 b2 i j hgamma hchi hrdn
+  have hbase : (relCurveMap C RZ K).base zK = z := by
+    simpa only [K, p, zK] using relCurveMap_relCurveResiduePoint C RZ z
+  have hzPiece : zK ∈ (relCurve C K).basicOpen
+      (relPinnedSectionsMap C RZ K pi (D.side z) (D.h z)) := by
+    rw [relPinnedSectionsMap_basicOpen]
+    change (relCurveMap C RZ K).base zK ∈ (relCurve C RZ).basicOpen (D.h z)
+    rw [hbase]
+    exact D.mem_basicOpen z
+  have hzSide : zK ∈ relPinnedChart C K pi (D.side z) := by
+    change zK ∈ relPinnedChart C K pi
+      (pointwiseSide C hpi g r1 r2 b1 b2 i j z)
+    simpa only [K, p, zK] using relCurveResiduePoint_mem_relPinnedChart C RZ
+      (π := pi) (pointwiseSide C hpi g r1 r2 b1 b2 i j z)
+      (pointwiseSide_mem C hpi g r1 r2 b1 b2 i j z)
+  have hpull := D.germ_self_pullbackEqn_eq_germ_relPinnedSectionsMap_of_map_eq
+    hD p zK z hbase hzPiece hzSide
+  rw [hpull]
+  convert germ_relPinnedSectionsMap_relThetaResSide_windowEquiv_at_relCurveResiduePoint
+    C RZ (π := pi) (windowM_choice pi hpi g)
+    (relThetaPairH1_windowM C pi hpi g)
+    (pointwiseSide C hpi g r1 r2 b1 b2 i j z)
+    (pointwiseSide_mem C hpi g r1 r2 b1 b2 i j z)
+    (pointwiseSectionVector_at C hpi g r1 r2 b1 b2 i j hgamma hchi z) using 1 <;> rfl
+
+set_option maxHeartbeats 8000000 in
+set_option synthInstance.maxHeartbeats 800000 in
+/-- The coefficient comparison underlying the pulled-degree calculation with independent
+curve parameter `gamma` and divisor degree `g`. -/
+theorem coeffAt_presentationDivisor_eq_divUniversalSeedFibreDivisor_of_germ_eq_at
+    {gamma : Nat} (hgamma : gamma ≤ g)
+    (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (z : relCurve C RZ)
+    (hzg : relCurveResiduePoint C RZ z ≠
+      genericPoint (relCurve C (relCurveBasePoint C RZ z).asIdeal.ResidueField))
+    (d : (relCurve C (relCurveBasePoint C RZ z).asIdeal.ResidueField).LocalEquations)
+    (hgerm :
+      ((relCurve C (relCurveBasePoint C RZ z).asIdeal.ResidueField).presheaf.germ
+        (d.cover.opens (relCurveResiduePoint C RZ z)) (relCurveResiduePoint C RZ z)
+        (d.cover.mem_opens (relCurveResiduePoint C RZ z))).hom
+        (d.eqn (relCurveResiduePoint C RZ z)) =
+      pointwiseFibreReadGerm C hpi g r1 r2 b1 b2 i j z
+        (pointwiseSide C hpi g r1 r2 b1 b2 i j z)
+        (pointwiseSide_mem C hpi g r1 r2 b1 b2 i j z)
+        (pointwiseSectionVector_at C hpi g r1 r2 b1 b2 i j hgamma hchi z)) :
+    coeffAt hzg (Scheme.presentationDivisor
+        (relCurveBasePoint C RZ z).asIdeal.ResidueField d.presentation) =
+      coeffAt hzg (divUniversalSeedFibreDivisor_at
+        C hpi g r1 r2 b1 b2 i j hgamma hchi (relCurveBasePoint C RZ z)) := by
+  let K := (relCurveBasePoint C RZ z).asIdeal.ResidueField
+  let zK := relCurveResiduePoint C RZ z
+  let M := windowM_choice pi hpi g
+  let v := pointwiseSectionVector_at C hpi g r1 r2 b1 b2 i j hgamma hchi z
+  let s : relThetaSections C K pi M :=
+    relThetaWindowEquiv C K pi M (relThetaPairH1_windowM C pi hpi g)
+      (windowCompare RZ K v)
+  have hzK : zK ∈ relPinnedChart C K pi
+      (pointwiseSide C hpi g r1 r2 b1 b2 i j z) := by
+    simpa only [K, zK] using relCurveResiduePoint_mem_relPinnedChart C RZ
+      (π := pi) (pointwiseSide C hpi g r1 r2 b1 b2 i j z)
+      (pointwiseSide_mem C hpi g r1 r2 b1 b2 i j z)
+  obtain ⟨hr, hzero⟩ := pointwiseSectionVector_fibreCoefficient_eq_zero_at
+    C hpi g r1 r2 b1 b2 i j hgamma hchi z hzg
+  have hphi : divFamPhi C K pi M (relThetaPairH1_windowM C pi hpi g)
+      (windowCompare RZ K v) =
+        (thetaFieldShiftUnit C K pi M : (relCurve C K).functionField) *
+          thetaFieldRead C K pi M s := by
+    rfl
+  have ht : thetaFieldRead C K pi M s ≠ 0 := by
+    intro ht0
+    apply hr
+    rw [hphi, ht0, mul_zero]
+  let t : (relCurve C K).functionFieldˣ := Units.mk0 _ ht
+  have hphiU : Units.mk0
+      (divFamPhi C K pi M (relThetaPairH1_windowM C pi hpi g)
+        (windowCompare RZ K v)) hr = thetaFieldShiftUnit C K pi M * t := by
+    apply Units.ext
+    exact hphi
+  have hzero' := hzero
+  change coeffAt hzg
+      ((windowN C K hpi g - divUniversalSeedFibreDivisor_at
+          C hpi g r1 r2 b1 b2 i j hgamma hchi (relCurveBasePoint C RZ z)) +
+        Scheme.divOf (relCurve C K ↘ Spec (CommRingCat.of K))
+          (Units.mk0
+            (divFamPhi C K pi M (relThetaPairH1_windowM C pi hpi g)
+              (windowCompare RZ K v)) hr)) = 0 at hzero'
+  rw [hphiU, Scheme.divOf_mul,
+    ← divOf_thetaFieldShiftUnit C K pi M] at hzero'
+  change coeffAt hzg
+      ((windowTransportDivisor C K pi M - divUniversalSeedFibreDivisor_at
+          C hpi g r1 r2 b1 b2 i j hgamma hchi (relCurveBasePoint C RZ z)) +
+        ((thetaFieldDivisor C K pi M - windowTransportDivisor C K pi M) +
+          Scheme.divOf (relCurve C K ↘ Spec (CommRingCat.of K)) t)) = 0 at hzero'
+  simp only [CurveDivisor.coeffAt_add, CurveDivisor.coeffAt_sub] at hzero'
+  have hbalance : coeffAt hzg (thetaFieldDivisor C K pi M) +
+      coeffAt hzg (Scheme.divOf (relCurve C K ↘ Spec (CommRingCat.of K)) t) =
+        coeffAt hzg (divUniversalSeedFibreDivisor_at
+          C hpi g r1 r2 b1 b2 i j hgamma hchi (relCurveBasePoint C RZ z)) := by
+    omega
+  have hgermSide :
+      ((relCurve C K).presheaf.germ (d.cover.opens zK) zK
+        (d.cover.mem_opens zK)).hom (d.eqn zK) =
+      ((relCurve C K).presheaf.germ (relPinnedChart C K pi
+          (pointwiseSide C hpi g r1 r2 b1 b2 i j z)) zK hzK).hom
+        (relThetaResSide M (pointwiseSide C hpi g r1 r2 b1 b2 i j z) le_rfl s) := by
+    simpa only [K, zK, M, v, s, pointwiseFibreReadGerm] using hgerm
+  obtain ⟨w, hw⟩ := exists_unit_germ_relThetaResSide_eq C K pi M
+    (pointwiseSide C hpi g r1 r2 b1 b2 i j z) le_rfl hzK
+  have helem : d.presentation.elem zK =
+      Units.map (algebraMap ((relCurve C K).presheaf.stalk zK)
+        (relCurve C K).functionField).toMonoidHom w *
+        ((thetaFieldPresentation C K pi M).elem zK * t) := by
+    apply Units.ext
+    simp only [Units.val_mul, Units.coe_map]
+    rw [Scheme.LocalEquations.presentation_elem_val,
+      Scheme.germ_generic_eq_algebraMap_germ
+        (d.cover.genericPoint_mem_opens zK) (d.cover.mem_opens zK) (d.eqn zK),
+      hgermSide, hw s, map_mul,
+      algebraMap_germ_thetaFieldGluedEquiv_eq C K pi M s zK]
+    rfl
+  have helem' : d.presentation.elem zK =
+      ((thetaFieldPresentation C K pi M).elem zK * t) *
+        Units.map (algebraMap ((relCurve C K).presheaf.stalk zK)
+          (relCurve C K).functionField).toMonoidHom w := by
+    rw [helem, mul_comm]
+  rw [Scheme.coeffAt_presentationDivisor, helem',
+    Scheme.toAdd_ordZ_mul_unitsMap_stalk K hzg,
+    map_mul, toAdd_mul,
+    ← Scheme.coeffAt_presentationDivisor K (thetaFieldPresentation C K pi M) hzg,
+    ← Scheme.CurveDivisor.coeffAt_divOf
+      (relCurve C K ↘ Spec (CommRingCat.of K)) t hzg]
+  simpa only [thetaFieldDivisor] using hbalance
+
+set_option maxHeartbeats 8000000 in
+set_option synthInstance.maxHeartbeats 800000 in
+/-- The residue-fibre presentation has the off-diagonal universal fibre-divisor coefficient
+at the canonical residue point. -/
+theorem coeffAt_residueFibreLocalEquations_pointwiseGeneratorSeed_eq_divUniversalSeedFibreDivisor_param
+    {gamma : Nat} (hgamma : gamma ≤ g)
+    (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hrdn : PointwiseSeedRDNAt C hpi g r1 r2 b1 b2 i j hgamma hchi)
+    (z : relCurve C RZ)
+    (hzg : relCurveResiduePoint C RZ z ≠
+      genericPoint (relCurve C (relCurveBasePoint C RZ z).asIdeal.ResidueField)) :
+    coeffAt hzg (Scheme.presentationDivisor
+        (relCurveBasePoint C RZ z).asIdeal.ResidueField
+        ((ThetaGeneratorSeed.residueFibreLocalEquations
+          (pointwiseGeneratorSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchi hrdn)
+          (isGenerator_pointwiseGeneratorSeed_at
+            C hpi g r1 r2 b1 b2 i j hgamma hchi hrdn)
+          (relCurveBasePoint C RZ z)).presentation)) =
+      coeffAt hzg (divUniversalSeedFibreDivisor_at
+        C hpi g r1 r2 b1 b2 i j hgamma hchi (relCurveBasePoint C RZ z)) := by
+  apply coeffAt_presentationDivisor_eq_divUniversalSeedFibreDivisor_of_germ_eq_at
+    C hpi g r1 r2 b1 b2 i j hgamma hchi z hzg
+  change
+    ((relCurve C (relCurveBasePoint C RZ z).asIdeal.ResidueField).presheaf.germ
+      ((((pointwiseGeneratorSeed_at
+        C hpi g r1 r2 b1 b2 i j hgamma hchi hrdn).localEquations
+          (isGenerator_pointwiseGeneratorSeed_at
+            C hpi g r1 r2 b1 b2 i j hgamma hchi hrdn)).cover.pullback
+              (relCurveMap C RZ
+                (relCurveBasePoint C RZ z).asIdeal.ResidueField)).opens
+        (relCurveResiduePoint C RZ z)) (relCurveResiduePoint C RZ z)
+      (((((pointwiseGeneratorSeed_at
+        C hpi g r1 r2 b1 b2 i j hgamma hchi hrdn).localEquations
+          (isGenerator_pointwiseGeneratorSeed_at
+            C hpi g r1 r2 b1 b2 i j hgamma hchi hrdn)).cover.pullback
+              (relCurveMap C RZ
+                (relCurveBasePoint C RZ z).asIdeal.ResidueField)).mem_opens
+        (relCurveResiduePoint C RZ z)))).hom
+      (Scheme.LocalEquations.pullbackEqn
+        (relCurveMap C RZ (relCurveBasePoint C RZ z).asIdeal.ResidueField)
+        ((pointwiseGeneratorSeed_at
+          C hpi g r1 r2 b1 b2 i j hgamma hchi hrdn).localEquations
+            (isGenerator_pointwiseGeneratorSeed_at
+              C hpi g r1 r2 b1 b2 i j hgamma hchi hrdn))
+        (relCurveResiduePoint C RZ z)) = _
+  exact germ_pullbackEqn_pointwiseGeneratorSeed_eq_pointwiseFibreReadGerm_at
+    C hpi g r1 r2 b1 b2 i j hgamma hchi hrdn z
+
+set_option maxHeartbeats 8000000 in
+set_option synthInstance.maxHeartbeats 800000 in
+/-- Reindexed off-diagonal coefficient equality at every closed residue-fibre point. -/
+theorem coeffAt_residueFibreLocalEquations_pointwiseGeneratorSeed_eq_divUniversalSeedFibreDivisor_param_at
+    {gamma : Nat} (hgamma : gamma ≤ g)
+    (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hrdn : PointwiseSeedRDNAt C hpi g r1 r2 b1 b2 i j hgamma hchi)
+    (p : PrimeSpectrum RZ) {x : relCurve C p.asIdeal.ResidueField}
+    (hxg : x ≠ genericPoint (relCurve C p.asIdeal.ResidueField)) :
+    coeffAt hxg (Scheme.presentationDivisor p.asIdeal.ResidueField
+        ((ThetaGeneratorSeed.residueFibreLocalEquations
+          (pointwiseGeneratorSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchi hrdn)
+          (isGenerator_pointwiseGeneratorSeed_at
+            C hpi g r1 r2 b1 b2 i j hgamma hchi hrdn) p).presentation)) =
+      coeffAt hxg (divUniversalSeedFibreDivisor_at
+        C hpi g r1 r2 b1 b2 i j hgamma hchi p) := by
+  generalize hz : (relCurveMap C RZ p.asIdeal.ResidueField).base x = z
+  have hp : relCurveBasePoint C RZ z = p :=
+    hz ▸ relCurveBasePoint_relCurveMap_residueField C RZ p x
+  have hxcast : Eq.ndrec
+      (motive := fun q : PrimeSpectrum RZ => relCurve C q.asIdeal.ResidueField)
+      (relCurveResiduePoint C RZ z) hp = x := by
+    subst z
+    exact relCurveResiduePoint_map_cast C RZ p x
+  clear hz
+  subst p
+  have hzg : relCurveResiduePoint C RZ z ≠
+      genericPoint (relCurve C (relCurveBasePoint C RZ z).asIdeal.ResidueField) := by
+    simpa only [hxcast] using hxg
+  subst x
+  exact
+    coeffAt_residueFibreLocalEquations_pointwiseGeneratorSeed_eq_divUniversalSeedFibreDivisor_param
+      C hpi g r1 r2 b1 b2 i j hgamma hchi hrdn z hzg
+
+set_option maxHeartbeats 8000000 in
+set_option synthInstance.maxHeartbeats 800000 in
+/-- The residue presentation divisor equals the universal fibre divisor at independent
+curve and divisor parameters. -/
+theorem presentationDivisor_residueFibreLocalEquations_pointwiseGeneratorSeed_eq_at
+    {gamma : Nat} (hgamma : gamma ≤ g)
+    (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hrdn : PointwiseSeedRDNAt C hpi g r1 r2 b1 b2 i j hgamma hchi)
+    (p : PrimeSpectrum RZ) :
+    Scheme.presentationDivisor p.asIdeal.ResidueField
+        ((ThetaGeneratorSeed.residueFibreLocalEquations
+          (pointwiseGeneratorSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchi hrdn)
+          (isGenerator_pointwiseGeneratorSeed_at
+            C hpi g r1 r2 b1 b2 i j hgamma hchi hrdn) p).presentation) =
+      divUniversalSeedFibreDivisor_at
+        C hpi g r1 r2 b1 b2 i j hgamma hchi p := by
+  refine CurveDivisor.ext_coeffAt (fun x hxg => ?_)
+  exact
+    coeffAt_residueFibreLocalEquations_pointwiseGeneratorSeed_eq_divUniversalSeedFibreDivisor_param_at
+      C hpi g r1 r2 b1 b2 i j hgamma hchi hrdn p hxg
+
+set_option maxHeartbeats 8000000 in
+set_option synthInstance.maxHeartbeats 800000 in
+/-- Every off-diagonal pointwise-seed residue presentation has divisor degree `g`. -/
+theorem deg_presentationDivisor_residueFibreLocalEquations_pointwiseGeneratorSeed_at
+    {gamma : Nat} (hgamma : gamma ≤ g)
+    (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hrdn : PointwiseSeedRDNAt C hpi g r1 r2 b1 b2 i j hgamma hchi)
+    (p : PrimeSpectrum RZ) :
+    CurveDivisor.deg p.asIdeal.ResidueField
+        (Scheme.presentationDivisor p.asIdeal.ResidueField
+          ((ThetaGeneratorSeed.residueFibreLocalEquations
+            (pointwiseGeneratorSeed_at C hpi g r1 r2 b1 b2 i j hgamma hchi hrdn)
+            (isGenerator_pointwiseGeneratorSeed_at
+              C hpi g r1 r2 b1 b2 i j hgamma hchi hrdn) p).presentation)) = (g : ℤ) := by
+  rw [presentationDivisor_residueFibreLocalEquations_pointwiseGeneratorSeed_eq_at
+    C hpi g r1 r2 b1 b2 i j hgamma hchi hrdn p]
+  exact (divUniversalSeedFibreDivisor_spec_at
+    C hpi g r1 r2 b1 b2 i j hgamma hchi p).2.1
+
+set_option maxHeartbeats 8000000 in
 -- The pulled-equation definition and the pointwise germ bridge carry the full dependent
 -- residue-field tower.
 set_option synthInstance.maxHeartbeats 800000 in
