@@ -52,38 +52,38 @@ docstring: "**THE PROJECT'S CENTRAL OPEN OBLIGATION — expected to stay open.**
   \ by the fresh-context audit is now closed\n(2026-07-30, `pic-b`).** `th:main`'s\
   \ hypothesis is `f` **projective**\nZariski-locally and flat with integral geometric\
   \ fibres. This file's binders are\n`[SmoothOfRelativeDimension 1 C.hom] [IsProper\
-  \ C.hom]\n[GeometricallyIntegral C.hom]` over a field. The rooted theorem\n`Adelic.isProjective_of_smoothProperGeometricallyIntegral`\n\
-  (`Picard/CurveProjectivity.lean`) proves exactly the previously missing\nimplication,\
-  \ by constructing a finite map to `ℙ¹`, embedding the two pulled-back\nLaurent charts\
-  \ into relative projective space, and applying properness to the\nresulting immersion.\
-  \ It adds no rational-point or projectivity hypothesis.\nThus projectivity is no\
-  \ longer an open antecedent in the comparison with\nKleiman's clause (1); the representability\
-  \ construction itself remains the\nobligation described below.\n\nTwo things follow,\
-  \ and both matter for planning. `th:repDiv` is **Hilb, not\nQuot** (its statement:\
-  \ \"`Div_{X/S}` is representable by an open subscheme of the\nHilbert scheme `Hilb_{X/S}`\"\
-  ), so rejecting `AJC.picrep.quot` never rejected it.\nAnd the campaign below is\
-  \ **one** route to clause (1); Kleiman's is a second,\nwhose `lm:qt` interface this\
-  \ project already pins as `smoothProperQuotient`\n(§4 below — currently `P → P`,\
-  \ zero instances) while building its `Div` side\nthrough the Grassmannian instead\
-  \ of Hilb. Nobody has priced Hilb-vs-Grassmannian,\nbecause the board filed this\
-  \ docstring as stale rather than as an alternative.\nThat is a comparison worth\
-  \ making before more work commits to D′; it is *not* a\nrecommendation to switch,\
-  \ since Hilb's availability in Mathlib is unmeasured.\nFull detail: `I-1360`.\n\n\
-  The committed route is **Milne–Kollár** (`informal/pic-representability-campaign.md`,\n\
-  alternative D3), and it needs neither of Kleiman's two:\n\n* `Div^d` representability\
-  \ comes through the **Grassmannian**, not Quot:\n  degree slices of `Scheme.DivFunctor`\
-  \ (`Picard/DivDegree.lean`, landed), an\n  embedding into `Scheme.Grassmannian`\
-  \ of the section module, locally closed\n  carving, and `Grassmannian.representable`\n\
-  \  (`Picard/GrassmannianRepresentability.lean`, proved) — campaign milestones\n\
-  \  D1′–D4′. D4′ also delivers the locally closed immersion into `Gr` that serves\n\
-  \  as the quasi-projectivity certificate.\n* the quotient is the **finite Galois**\
-  \ quotient of a semilinear action whose\n  finite orbits lie in affine opens — campaign\
-  \ G2, in\n  `Picard/FiniteGaloisQuotient.lean` (`sorry`-free) with Speiser descent\
-  \ under\n  `Picard/GaloisDescent/`. It is *not* `smoothProperQuotient`, which is\
-  \ false as\n  stated in Lean (see the §4 note below) and must not be built against.\n\
-  \  **`sorry`-free is not gate-free here**: the affine case is proved\n  (`isGaloisQuotientSpec`,\
-  \ `Picard/FiniteGaloisQuotientAffine.lean`) and the\n  gluing substrate exists,\
-  \ but the general existence statement is still the\n  instance-free class `AlgebraicJacobian.GaloisDescent.HasGaloisQuotient`\n\
+  \ C.hom]\n[GeometricallyIntegral C.hom]` over a field. The rooted theorem\n`Scheme.isProjective_for_kleimanClauseOne`\
+  \ proves exactly the previously missing\nimplication, by constructing a finite map\
+  \ to `ℙ¹`, embedding the two pulled-back\nLaurent charts into relative projective\
+  \ space, and applying properness to the\nresulting immersion. It adds no rational-point\
+  \ or projectivity hypothesis.\nThus projectivity is no longer an open antecedent\
+  \ in the comparison with\nKleiman's clause (1); the representability construction\
+  \ itself remains the\nobligation described below.\n\nTwo things follow, and both\
+  \ matter for planning. `th:repDiv` is **Hilb, not\nQuot** (its statement: \"`Div_{X/S}`\
+  \ is representable by an open subscheme of the\nHilbert scheme `Hilb_{X/S}`\"),\
+  \ so rejecting `AJC.picrep.quot` never rejected it.\nAnd the campaign below is **one**\
+  \ route to clause (1); Kleiman's is a second,\nwhose `lm:qt` interface this project\
+  \ already pins as `smoothProperQuotient`\n(§4 below — currently `P → P`, zero instances)\
+  \ while building its `Div` side\nthrough the Grassmannian instead of Hilb. Nobody\
+  \ has priced Hilb-vs-Grassmannian,\nbecause the board filed this docstring as stale\
+  \ rather than as an alternative.\nThat is a comparison worth making before more\
+  \ work commits to D′; it is *not* a\nrecommendation to switch, since Hilb's availability\
+  \ in Mathlib is unmeasured.\nFull detail: `I-1360`.\n\nThe committed route is **Milne–Kollár**\
+  \ (`informal/pic-representability-campaign.md`,\nalternative D3), and it needs neither\
+  \ of Kleiman's two:\n\n* `Div^d` representability comes through the **Grassmannian**,\
+  \ not Quot:\n  degree slices of `Scheme.DivFunctor` (`Picard/DivDegree.lean`, landed),\
+  \ an\n  embedding into `Scheme.Grassmannian` of the section module, locally closed\n\
+  \  carving, and `Grassmannian.representable`\n  (`Picard/GrassmannianRepresentability.lean`,\
+  \ proved) — campaign milestones\n  D1′–D4′. D4′ also delivers the locally closed\
+  \ immersion into `Gr` that serves\n  as the quasi-projectivity certificate.\n* the\
+  \ quotient is the **finite Galois** quotient of a semilinear action whose\n  finite\
+  \ orbits lie in affine opens — campaign G2, in\n  `Picard/FiniteGaloisQuotient.lean`\
+  \ (`sorry`-free) with Speiser descent under\n  `Picard/GaloisDescent/`. It is *not*\
+  \ `smoothProperQuotient`, which is false as\n  stated in Lean (see the §4 note below)\
+  \ and must not be built against.\n  **`sorry`-free is not gate-free here**: the\
+  \ affine case is proved\n  (`isGaloisQuotientSpec`, `Picard/FiniteGaloisQuotientAffine.lean`)\
+  \ and the\n  gluing substrate exists, but the general existence statement is still\
+  \ the\n  instance-free class `AlgebraicJacobian.GaloisDescent.HasGaloisQuotient`\n\
   \  (`FiniteGaloisQuotient.lean`, not imported here), whose\n  only producer is a\
   \ single-field non-vacuity witness\n  (`Picard/GaloisQuotientNonVacuity.lean`).\
   \ So G2 is *substantially* built, not\n  discharged.\n\nWhat remains is those campaign\
@@ -519,7 +519,7 @@ generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.Scheme.fgaPicardRepresentability
 type: lean
-updated: '2026-07-31T11:58:56'
+updated: '2026-08-03T02:07:56'
 ---
 theorem fgaPicardRepresentability {k : Type u} [Field k]
     (C : Over (Spec (.of k)))

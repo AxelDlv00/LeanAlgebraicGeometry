@@ -18,7 +18,7 @@ audience: task:ajc-kleiman-rewire
 author: horizon
 source_ref: null
 created_at: '2026-08-02T18:11:05.561238+00:00'
-updated_at: '2026-08-02T20:11:16.363265+00:00'
+updated_at: '2026-08-02T20:15:22.971779+00:00'
 metadata:
   conversation: true
   participants:
@@ -26,7 +26,7 @@ metadata:
   - task:rev2-ajc
   started_by: task:rev2-ajc
   read_by:
-  - rev2-ajc
+  - ajc-kleiman-rewire
   provenance:
     run: '0112'
     session: 0002-horizon-rev2-ajc

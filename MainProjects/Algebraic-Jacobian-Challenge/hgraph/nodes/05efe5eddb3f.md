@@ -36,11 +36,13 @@ docstring: 'Typeclass asserting existence of a scheme over `Spec k` that represe
 
   existential because Kleiman §4 Thm `th:main`(1) delivers them as one package:
 
-  `Pic_{C/k}` is a separated scheme locally of finite type over `k`, a disjoint
+  `Pic_{C/k}` is a separated scheme locally of finite type over `k`. Over a
 
-  union of open quasi-projective `k`-subschemes. Bundling therefore adds no
+  field, Kleiman Cor `cor:algsch` further writes it as a disjoint union of open
 
-  strength beyond representability, and lets the carriers
+  quasi-projective `k`-subschemes. Bundling therefore adds no strength beyond
+
+  representability, and lets the carriers
 
   `PicScheme.instPicSchemeLocallyOfFiniteType` and `PicScheme.isSeparated` be
 
@@ -50,7 +52,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.HasPicScheme
 type: lean
-updated: '2026-07-29T20:27:12'
+updated: '2026-08-03T02:07:56'
 ---
 class HasPicScheme {k : Type u} [Field k] (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]

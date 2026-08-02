@@ -25,18 +25,19 @@ docstring: '**Relative projective space over an affine base satisfies `FiniteInA
   (`Picard/PicEtPointedReduction.lean`, `⊤` as the affine open). That one is degenerate
 
   — it says nothing about a projective object — and its own docstring says so. This
-  one
 
-  holds at a scheme that is **not** affine for `n` with at least two elements, so
-  the
+  theorem records the projective-space transport itself; no non-affineness theorem
+  for
 
-  results below are not statements about a class of schemes that happens to be affine.'
+  `ℙ(n; S)` is available at this mathlib pin, as the module-level non-vacuity note
+
+  states.'
 file: AlgebraicJacobian/Picard/QuasiProjectiveFiniteInAffine.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.finiteInAffine_projectiveSpace
 type: lean
-updated: '2026-07-31T14:47:56'
+updated: '2026-08-03T02:07:56'
 ---
 theorem finiteInAffine_projectiveSpace (n : Type u) (S : Scheme.{u}) [IsAffine S] :
     FiniteInAffine (ProjectiveSpace n S) := by

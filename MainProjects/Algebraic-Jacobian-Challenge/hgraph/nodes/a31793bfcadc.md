@@ -18,8 +18,7 @@ docstring: '**`FiniteInAffine` of an open subscheme suffices for finite sets ins
   (`IsAffineOpen.image_of_isOpenImmersion`).
 
 
-  This is what lets projectivity be consumed piecewise: one quasi-projective piece
-  containing
+  This is what lets H-quasi-projectivity be consumed piecewise: one such piece containing
 
   the whole set is enough, and the ambient scheme need not be projective — which §5.5
   shows
@@ -30,7 +29,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.exists_affineOpen_of_subset_finiteInAffine_opens
 type: lean
-updated: '2026-07-31T14:47:56'
+updated: '2026-08-03T02:07:57'
 ---
 theorem exists_affineOpen_of_subset_finiteInAffine_opens {X : Scheme.{u}} (U : X.Opens)
     (hU : FiniteInAffine U.toScheme) {s : Set X} (hs : s.Finite) (hsub : s ⊆ U.1) :
