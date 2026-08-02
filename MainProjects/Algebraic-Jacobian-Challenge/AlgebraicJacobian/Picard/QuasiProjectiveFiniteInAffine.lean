@@ -751,6 +751,27 @@ theorem finiteInAffine_sigma {σ : Type v} [Small.{u, v} σ] (g : σ → Scheme.
     exact (le_iSup₂ (f := fun i _ => (Sigma.ι g i) ''ᵁ (U i).1) (idx x)
       ⟨x, hx, rfl⟩) hmem
 
+/-- A coproduct of schemes that are projective over one affine base satisfies
+`FiniteInAffine`. This is the degree-piece bridge: projectivity is checked on
+each component, while `FiniteInAffine` is concluded for their possibly infinite
+coproduct. -/
+theorem finiteInAffine_sigma_of_isProjective
+    {σ : Type v} [Small.{u, v} σ] {S : Scheme.{u}} [IsAffine S]
+    (X : σ → Over S) (hX : ∀ i, (X i).hom.IsProjective) :
+    FiniteInAffine (∐ fun i => (X i).left) :=
+  finiteInAffine_sigma _ fun i => finiteInAffine_of_isProjective (hX i)
+
+/-- The carried very-ample form of `finiteInAffine_sigma_of_isProjective`.
+At `Scheme.{0}`, `IsProjectiveWith` records a line bundle together with its
+closed immersion into relative projective space; forgetting those certificates
+piecewise gives `FiniteInAffine` for the coproduct. -/
+theorem finiteInAffine_sigma_of_isProjectiveWith
+    {σ : Type v} [Small.{0, v} σ] {S : Scheme.{0}} [IsAffine S]
+    (X : σ → Over S) (L : ∀ i, (X i).left.Modules)
+    (hX : ∀ i, (X i).hom.IsProjectiveWith (L i)) :
+    FiniteInAffine (∐ fun i => (X i).left) :=
+  finiteInAffine_sigma_of_isProjective X fun i => (hX i).isProjective
+
 /-- **`FiniteInAffine` is closed under binary coproducts.**  The two-piece case of
 `finiteInAffine_sigma`, via `coprodIsoSigma` and the landed
 `Scheme.finiteInAffine_of_iso` (`Picard/PicEtPointedReduction.lean`). -/
