@@ -19,11 +19,12 @@ finite type and geometrically irreducible over `k`, and its formation
 commutes with extension of the base field (Kleiman, §5, Lem.~`lem:agps`).
 
 This file develops that substrate for an arbitrary `k`-group scheme (§1) and
-then specialises it to `G = Pic_{C/k}`, the Picard scheme of a smooth proper
-geometrically integral curve `C/k` (§2), obtaining `Pic⁰_{C/k}` together with
-the degree map `Pic_{C/k}(k) → ℤ` (§3) whose kernel it cuts out on
-`k`-points (§4). For `C` of positive genus, `Pic⁰_{C/k}` is the Jacobian
-variety of `C`.
+then specialises it to the conditional legacy `PicSharp` representer
+`PicScheme C` (§2). Section §3 contains only candidate integer maps at the
+trivial legacy test object; it does not construct the arbitrary-test degree on
+the étale-sheafified Picard functor. The corresponding degree-zero
+characterisation in §4 remains open and is not faithfully typed by its legacy
+approximation.
 
 ## Main results
 
@@ -41,14 +42,14 @@ variety of `C`.
   — `G⁰` is of finite type and geometrically irreducible over `k`.
 - `AlgebraicGeometry.Scheme.Pic0Scheme` — the identity component
   `Pic⁰_{C/k}` of the Picard scheme.
-- `AlgebraicGeometry.Scheme.PicScheme.degree` — the degree map
-  `Pic_{C/k}(k) → ℤ`, the leading coefficient of the Hilbert polynomial of a
-  representing invertible sheaf relative to a fixed degree-one polarisation
-  `O_C(1)`.
+- `AlgebraicGeometry.Scheme.PicScheme.degree` — a conditional totalisation of
+  an additive candidate at the legacy trivial test object, available only from
+  `[ClassDegreePinned C]` and set arbitrarily to `0` off sections.
 - `AlgebraicGeometry.Scheme.Pic0Scheme.finrank_eq_genus` — the dimension of
   `Pic⁰_{C/k}` is the genus of `C`.
-- `AlgebraicGeometry.Scheme.Pic0Scheme.kPoints_iff_kerDegree` — a `k`-point
-  of `Pic_{C/k}` factors through `Pic⁰_{C/k}` iff its degree vanishes.
+- `AlgebraicGeometry.Scheme.Pic0Scheme.kPoints_iff_kerDegree` — the current
+  conditional, typed-sorry approximation to the degree-zero characterisation;
+  it is not an exact encoding of the classical statement on `k`-points.
 
 The abelian-variety identification of `Pic⁰_{C/k}` (smooth, proper,
 geometrically irreducible `k`-group scheme of dimension `g(C)`) is assembled
@@ -56,19 +57,21 @@ in the sibling file `Picard/Pic0AbelianVariety.lean`.
 
 ## Remaining obligations
 
-The §1 substrate for an abstract `k`-group scheme is unconditional. Three
-statements of §3–§4 are still open; all three depend on the invertible sheaf
-representing a `k`-point of `Pic_{C/k}`, which rests on the representability
-of the relative Picard functor (`Picard/FGAPicRepresentability.lean`):
+The §1 substrate for an abstract `k`-group scheme is unconditional. The open
+residues downstream of arbitrary-field étale Picard representability are
+mathematically distinct:
 
-- `PicScheme.degree`: the value should be the leading coefficient of the
-  Hilbert polynomial `Φ_L(n) = χ(C, L ⊗ O_C(n)) = n · deg L + 1 - g` of a
-  representing sheaf `L`, which is independent of the choice of `L`.
+- a genuine signed family degree: an additive natural transformation whose
+  fibre value is `χ(C_t, L_t) - χ(C_t, O_{C_t})`, locally constant on arbitrary
+  test schemes and invariant under the relative Picard quotient. The existing
+  `ClassDegreePinned` interface does not provide these properties.
 - `Pic0Scheme.finrank_eq_genus`: the equality
   `dim Pic⁰_{C/k} = dim_k H¹(C, O_C) = g(C)`, which follows from
-  Kleiman~§5 Cor.~`cor:sm` once the identity component is known to be smooth.
+  Picard smoothness plus the tangent-space/dimension comparison. It does not
+  depend on extracting a representing line bundle from a `k`-point.
 - `Pic0Scheme.kPoints_iff_kerDegree`: the identification of the `k`-points of
-  `Pic⁰_{C/k}` with the degree-zero classes.
+  the legacy `Pic⁰_{C/k}` approximation with candidate-value-zero classes;
+  its current type is not the arbitrary-field mathematical statement.
 
 ## References
 
@@ -1419,40 +1422,43 @@ noncomputable def Pic0Scheme {k : Type u} [Field k]
     Over (Spec (.of k)) :=
   GroupScheme.IdentityComponent (PicScheme C)
 
-/-! ## §3. The degree map
+/-! ## §3. Legacy base-test candidates and the missing family degree
 
-The disjoint-union structure of `Pic_{C/k}` (a disjoint union of open
-quasi-projective `k`-subschemes, indexed by Hilbert polynomial via
-`PicScheme.smoothProperQuotient`) stratifies its `T`-points by the leading
-coefficient of the Hilbert polynomial of a representing invertible sheaf
-relative to a fixed degree-one polarisation. On `k`-points this gives the
-**degree map** `Pic_{C/k}(k) → ℤ`.
+The mathematical target is an additive, pullback-natural transformation from
+the arbitrary-field étale-sheafified Picard functor to locally constant
+integer-valued functions on every test scheme. Its fibre value should be
+`χ(C_t, L_t) - χ(C_t, O_{C_t})`, invariant under the relative Picard quotient.
+No such transformation is constructed here.
+
+The declarations below instead concern the conditional legacy `PicSharp`
+representer at the single test object `Spec k`. Even a producer of
+`ClassDegreePinned C` would supply only its stored base-test candidate and
+Abel-image compatibility, not the `PicEt` carrier, quotient invariance,
+pullback naturality, or local constancy required by the family degree.
 
 Blueprint reference: `def:divisor_degree_pic` (Milne III.1, p.~88). -/
 
 namespace PicScheme
 
-/-! ### The degree, factored through the relative Picard group
+/-! ### Legacy base-test candidate construction and limitations
 
-The route below replaces the Quot/Hilbert-polynomial construction the section header
-describes. Two facts make it work, and neither needs Quot:
+The route below constructs only the conditional candidate described in the
+section header. It uses two packaging observations, neither of which supplies
+the genuine arbitrary-test degree:
 
 1. **Representability already does the transport.** `PicScheme.representable C` is a
    bijection `(T ⟶ Pic_{C/k}) ≃ Pic(C ×_k T)/π_T^* Pic(T)` natural in `T`; taking
    `T = Spec k` (the trivial over-object `Over.mk (𝟙 (Spec k))`) sends a `k`-rational point
    of `Pic_{C/k}` to a relative Picard class over the base. This is `classOfSection` below,
    and it is sorry-free.
-2. **The degree is a homomorphism on those classes.** ⚠ This was described here as "the one
-   remaining input, isolated as the class `ClassDegree`". That is **false** and is corrected at
-   `ClassDegree` below: the class is inhabited by the zero homomorphism with no hypothesis, so
-   it demands nothing and `degreeOfSection` is not pinned to the degree. What is actually
-   missing is a *characterisation* of the homomorphism. The sibling project builds exactly this
-   homomorphism sorry-free and without Quot — `Algebraic-Jacobian-Challenge-Rebuild`,
-   `RiemannRoch/RelPicDegree.lean`, `relPicDeg : Additive (relPic C (overSpec k K)) →+ ℤ`,
-   descended from `classDeg` along the observation that `Spec K` is a one-point space so its
-   Čech Picard group is trivial and cannot contribute. Its own input is the closed χ-ledger
-   `χ(𝒪(D)) = χ(𝒪_X) + deg D` (`RiemannRoch/ChiLedger.lean`), whose 22-file / 5.5k-line
-   closure I measured to be free of `sorry`.
+2. **Only a candidate homomorphism exists here.** `ClassDegree` below is inhabited by the zero
+   homomorphism and demands nothing. `ClassDegreePinned` adds compatibility on Abel images of
+   available constant-degree divisor families, but it proves neither uniqueness nor agreement
+   with Euler characteristic, and it has no arbitrary-test naturality or local-constancy field.
+   The sibling project's `relPicDeg` is built on a Čech-Picard carrier; this project has no
+   comparison from that carrier to its line-bundle quotient on a non-affine proper curve. The
+   missing object here is therefore the genuine arbitrary-test signed family degree, not another
+   base-test wrapper.
 
 WHY `degree`'s DOMAIN IS AWKWARD — but *not* a reason it cannot be defined. `degree` takes an
 *arbitrary* morphism `Spec k ⟶ (PicScheme C).left`, not a morphism over `Spec k`. Such a
@@ -1493,11 +1499,11 @@ pinned to the degree** — `degreeOfSection ≡ 0` is a permitted reading of eve
 section — and `degreeOfSection_eq_zero_of_class_eq_zero` is correspondingly contentless (it is
 `map_zero`, true of the zero map too). Do not cite them as a constructed degree map.
 
-THE REAL MISSING INPUT is a **characterisation**, not an existence claim: agreement of the
-chosen homomorphism with `Scheme.WeilDivisor.degree` on the class of `𝒪(D)`, or with the
-sibling's `relPicDeg` under the carrier comparison. That is what would make the class
-non-vacuous and the degree unique. The class is retained (rather than deleted) only because
-`degreeOfSection` is pinned against it; whoever adds the pinning field owns updating both.
+THE REAL MISSING INPUT is not another existence wrapper: it is the arbitrary-test signed
+family degree, together with quotient invariance, pullback naturality, local constancy,
+additivity, and an Abel pin. Agreement on some divisor images alone does not establish
+uniqueness on all Picard classes. The sibling's `relPicDeg` uses a different Čech-Picard
+carrier, and the required non-affine carrier comparison is absent here.
 
 Contrast the house pattern: `HasPicScheme` and `HasFiniteMapToP1` are well *stated* because they
 assert existence of an object satisfying a *nontrivial property*, where this one asks for a map
@@ -1511,61 +1517,31 @@ belongs on `HasPicSchemeEt`/`picEt`. -/
 class ClassDegree {k : Type u} [Field k] (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
     [GeometricallyIntegral C.hom] : Prop where
-  /-- An additive degree on the relative Picard classes over the base. -/
+  /-- An integer-valued additive candidate on relative Picard classes over the base. -/
   nonempty_classDegree : Nonempty
     ((PicSharp.relPresheaf C).obj (Opposite.op (Over.mk (𝟙 (Spec (.of k))))) →+ ℤ)
 
-/-- **The pinned degree interface** — `ClassDegree` with the missing characterisation supplied,
-so that the chosen homomorphism *is* a degree rather than an arbitrary map. (Run 0067 r3.)
+/-- **A legacy Abel-compatible additive candidate at the trivial test object.**
 
-`ClassDegree` above asks only for `Nonempty (… →+ ℤ)` and is therefore inhabited by the zero
-map with no hypothesis — machine-verified, see its docstring. This class is the repair, and
-the pin is taken **against the Abel map**, which is the one degree-carrying structure this
-project already owns sorry-free:
+This strengthens the vacuous `ClassDegree` only in two precise ways: `classDegree` is chosen
+data rather than an element of a `Nonempty`, and `classDegree_abel` fixes its values on Abel
+images of divisor families already known to have constant natural-number fibre degree.
 
-* `classDegree` is the homomorphism (now *data*, not a `Nonempty`, so that consumers get the
-  same map rather than a re-chosen one);
-* `classDegree_abel` is the characterisation: on the class of `𝒪(D)` for a relative divisor
-  family of constant fibre degree `d`, the value is `d`. `PicScheme.abelMap` is
-  `abelMapWitness` (`Picard/FGAPicRepresentability.lean`, sorry-free), and
-  `DivFamily.ClassHasFiberDeg` is the constant-fibre-degree predicate of `Picard/DivDegree.lean`.
-
-WHY THIS PIN AND NOT THE `WeilDivisor.degree` ONE. Agreement with `Scheme.WeilDivisor.degree`
-on `𝒪(D)` — the characterisation the previous docstring named — needs a divisor-to-line-bundle
-comparison that this project does not have at the relative level; the Abel map *is* that
-comparison, already built and already carrying the degree ledger
-(`PicScheme.abelDeg_app_mk`, `DivFamily.ClassHasFiberDeg.finrank_fiber_cokernel`). So the pin
-is stated where the existing structure can discharge it.
-
-THE ACCEPTANCE TEST, run before landing this — the lesson of `ClassDegree`'s own collapse and
-of the parallel `SymPowData` defect (inbox I-0493, 2026-07-28) is that a class must be probed
-with the trivial witness, so: **the zero homomorphism no longer inhabits this class**, provided
-one nonzero fibre degree is realized on the trivial test object. Machine-checked as
-`classDegree_ne_zero_of_exists_pos_fiberDeg` below, which derives `False` from
-`classDegree = 0` together with a degree-`d`, `d ≠ 0` family. So the pin *demands* something,
-which is exactly what `ClassDegree` failed to do.
-
-AND THE LIMIT OF THAT TEST, stated because it is the honest state and it is easy to overclaim
-here. The refutation is *conditional on a producer*: it needs a `DivFamily C.hom (Over.mk 𝟙)`
-of nonzero constant fibre degree, and **this project has no producer of one** — grep finds no
-in-tree construction of a `DivFamily` at all, only hypotheses of that type. So what is
-established is that the pin is non-vacuous *as a statement about any curve carrying an
-effective divisor of positive degree*, not that it is non-vacuous unconditionally in this
-development. Exhibiting the producer (the divisor of a `k`-rational point, once one is given)
-is the remaining input, and it is a construction rather than a characterisation — which is a
-strictly better place for the residue than "the class demands nothing".
-
-Not made an instance, and no producer is claimed: this is the shape the degree map needs, with
-its acceptance test recorded beside it. -/
+Despite the historical name, the fields do not identify this map with
+`χ(C, L) - χ(C, O_C)`, prove uniqueness away from those Abel images, produce signed values on
+arbitrary line-bundle classes, or express pullback naturality and local constancy on arbitrary
+test schemes. The conditional theorem below only refutes the zero candidate when a positive
+constant-degree divisor family is supplied; this project has no unconditional producer of such
+a family. No instance or producer of this class is claimed. -/
 class ClassDegreePinned {k : Type u} [Field k] (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
     [GeometricallyIntegral C.hom] where
-  /-- The degree homomorphism on relative Picard classes over the base — *data*, so that all
-  consumers share one map. -/
+  /-- An additive candidate on legacy relative Picard classes over the base, stored as data so
+  that all consumers of the interface share the same map. -/
   classDegree :
     (PicSharp.relPresheaf C).obj (Opposite.op (Over.mk (𝟙 (Spec (.of k))))) →+ ℤ
-  /-- **The pin**: on the Abel image of a relative divisor family of constant fibre degree `d`,
-  the homomorphism takes the value `d`. This is what makes `classDegree` a degree. -/
+  /-- On the Abel image of a relative divisor family of constant fibre degree `d`, the candidate
+  takes the value `d`. This compatibility does not characterize it on all Picard classes. -/
   classDegree_abel : ∀ (d : ℕ)
     (x : DivFamily C.hom (Over.mk (𝟙 (Spec (.of k)))))
     (_hx : DivFamily.ClassHasFiberDeg d
@@ -1586,8 +1562,9 @@ unconditionally. Recorded as a theorem next to the class rather than left in a s
 so that the next reader can see the class demands something rather than take it on trust —
 the discipline the `ClassDegree` and `SymPowData` vacuity defects both taught (inbox I-0493).
 
-Note precisely what it is conditional on: the *existence* of the degree-`d` family is a
-hypothesis here, and this project has no producer of one. See the class docstring. -/
+Note precisely what it is conditional on: the *existence* of a positive-degree family is a
+hypothesis here. The project has a zero family, but no positive-degree producer; the zero
+family only enforces the `d = 0` compatibility. See the class docstring. -/
 theorem classDegree_ne_zero_of_exists_pos_fiberDeg {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
@@ -1601,8 +1578,8 @@ theorem classDegree_ne_zero_of_exists_pos_fiberDeg {k : Type u} [Field k]
   simp only [AddMonoidHom.zero_apply] at h
   exact hd (Nat.cast_injective h.symm)
 
-/-! The pinned degree of a `k`-rational point, `degreeOfSectionPinned`, is defined below
-`classOfSection` (whose transport it consumes) — see the end of this section. -/
+/-! The Abel-compatible candidate value of a legacy `k`-section,
+`degreeOfSectionPinned`, is defined below `classOfSection`. -/
 
 /-- **The relative Picard class of a `k`-rational point of `Pic_{C/k}`** — sorry-free.
 
@@ -1622,12 +1599,11 @@ noncomputable def classOfSection {k : Type u} [Field k]
   (PicScheme.representable C).homEquiv
     (Over.homMk lambda hlambda : Over.mk (𝟙 (Spec (.of k))) ⟶ PicScheme C)
 
-/-- **The degree of a `k`-rational point of `Pic_{C/k}`** — total, no `sorry`, given
-`ClassDegree`.
+/-- **An integer attached to a legacy `k`-section using `ClassDegree`.**
 
-The composite of `classOfSection` (representability, sorry-free) with the degree homomorphism
-of `ClassDegree`. This is the honest form of `degree` above: the domain is sections of
-`(PicScheme C).hom`, which is what "`k`-point of `Pic_{C/k}`" means. -/
+This composes `classOfSection` with an arbitrary homomorphism chosen from the vacuous
+`ClassDegree` interface. Its domain correctly requires a section of `(PicScheme C).hom`, but
+the resulting integer is not proved to be the mathematical degree. -/
 noncomputable def degreeOfSection {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
@@ -1636,11 +1612,8 @@ noncomputable def degreeOfSection {k : Type u} [Field k]
     (hlambda : lambda ≫ (PicScheme C).hom = 𝟙 (Spec (.of k))) : ℤ :=
   (ClassDegree.nonempty_classDegree (C := C)).some (classOfSection C lambda hlambda)
 
-/-- The degree of a `k`-rational point vanishes when its relative Picard class is trivial —
-`map_zero` of the `ClassDegree` homomorphism.
-
-Recorded because it is the direction of `kPoints_iff_kerDegree` that additivity buys: a point
-factoring through the identity has trivial class, hence degree zero. -/
+/-- The `ClassDegree` candidate vanishes when the relative Picard class is trivial, by
+`map_zero`. This does not identify the candidate with geometric degree. -/
 theorem degreeOfSection_eq_zero_of_class_eq_zero {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
@@ -1651,19 +1624,13 @@ theorem degreeOfSection_eq_zero_of_class_eq_zero {k : Type u} [Field k]
     degreeOfSection C lambda hlambda = 0 := by
   rw [degreeOfSection, hclass, map_zero]
 
-/-- **The degree of a `k`-rational point, from the PINNED interface** — total, sorry-free, and
-unlike `degreeOfSection` it is pinned to an actual degree.
+/-- **The Abel-compatible candidate value of a legacy `k`-section.**
 
-Same construction as `degreeOfSection` (representability at the trivial test object, then the
-degree homomorphism), with two differences that matter:
-
-* the homomorphism comes from `ClassDegreePinned`, so it is *the* one satisfying the Abel
-  characterisation rather than an arbitrary choice out of a `Nonempty`;
-* consequently `degreeOfSectionPinned ≡ 0` is **not** a permitted reading — see
-  `classDegree_ne_zero_of_exists_pos_fiberDeg`.
-
-Consumers of `degreeOfSection` should migrate here as soon as the pinned class has a producer.
-Until then both are available and only this one is honestly called a degree. -/
+This composes `classOfSection` with the map stored in `ClassDegreePinned`. Unlike
+`degreeOfSection`, the map is shared data and satisfies the stated compatibility on Abel
+images. The interface does not prove that it is unique or equal to Euler-characteristic
+degree on every class. Even exclusion of the zero map is conditional on supplying a positive
+constant-degree divisor family; see `classDegree_ne_zero_of_exists_pos_fiberDeg`. -/
 noncomputable def degreeOfSectionPinned {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
@@ -1672,8 +1639,8 @@ noncomputable def degreeOfSectionPinned {k : Type u} [Field k]
     (hlambda : lambda ≫ (PicScheme C).hom = 𝟙 (Spec (.of k))) : ℤ :=
   inst.classDegree (classOfSection C lambda hlambda)
 
-/-- The pinned degree of a `k`-rational point vanishes when its relative Picard class is
-trivial — `map_zero`, as for the unpinned version, but now of a map that is a degree. -/
+/-- The Abel-compatible candidate value vanishes when the relative Picard class is trivial,
+by `map_zero`. No geometric degree identification is used. -/
 theorem degreeOfSectionPinned_eq_zero_of_class_eq_zero {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
@@ -1685,54 +1652,19 @@ theorem degreeOfSectionPinned_eq_zero_of_class_eq_zero {k : Type u} [Field k]
   rw [degreeOfSectionPinned, hclass, map_zero]
 
 open Classical in
-/-- The **degree map** `Pic_{C/k}(k) → ℤ`.
+/-- A **conditional totalisation of a legacy Abel-compatible candidate**.
 
-Sends a `k`-point `λ ∈ Pic_{C/k}(k)` --- a morphism
-`Spec k ⟶ (PicScheme C).left` --- to the leading coefficient of the
-Hilbert polynomial of a representing invertible sheaf `L` on `C` (relative
-to a fixed degree-one polarisation `O_C(1)`). By Riemann--Roch,
-`χ(C, L ⊗ O_C(n)) = n · deg L + 1 - g`, so the degree is the leading
-coefficient of `Φ_L(n)`, well-defined on the isomorphism class `[L]` and on
-the `k`-point `λ` (because `PicScheme C` represents the étale-sheafified
-relative Picard functor).
+This declaration requires the legacy `[HasPicScheme C]` and an unproduced
+`[ClassDegreePinned C]`. On sections of `(PicScheme C).hom` it evaluates the candidate stored
+by that interface; on arbitrary underlying morphisms that are not sections it assigns `0`.
+`degree_eq_degreeOfSectionPinned` records exactly the first branch.
 
-The degree map is a group homomorphism from the additive structure on
-`Pic_{C/k}(k)` (tensor product on `L`) to `(ℤ, +)`; only the underlying
-function is stated here, the homomorphism property and the functoriality in
-`k` being left to separate lemmas.
-
-ROUTE CHANGE (run 0067). The construction is not the *Quot* obligation the original
-docstring described, and the difference matters because Quot is retained-not-revived in this
-project. Representability already transports a `k`-rational point to a relative Picard class
-over the base (`classOfSection`, sorry-free), so no Hilbert polynomial and no representing
-sheaf extraction is needed — only a degree homomorphism on those classes, which is
-`ClassDegreePinned`.
-
-**CLOSED (run 0067 r4), and the docstring this replaces was wrong on a point of fact.**
-It read: "A total function of that type therefore cannot be built from the Picard functor at
-all; it would have to invent a value off the sections." The first clause does not follow from
-the second. Inventing a value off the sections is exactly what a total function of this type
-is *permitted* to do, and `fun _ => 0` already witnesses that the type is inhabited — so
-"cannot be built" was never true, and a `sorry` is not the honest encoding of "the domain is
-wrong".
-
-What IS true is the observation the old note was reaching for: a morphism
-`Spec k ⟶ (PicScheme C).left` need not satisfy `lambda ≫ (PicScheme C).hom = 𝟙`, so it need
-not name a `k`-*rational* point, and representability says nothing about it. That is a
-statement about which values are *pinned*, not about totality. So the construction below
-splits on precisely that condition:
-
-* on sections it is `degreeOfSectionPinned`, i.e. *the* degree, pinned against the Abel map;
-* off them it is `0`, an arbitrary choice that no consumer may rely on.
-
-`degree_eq_degreeOfSectionPinned` below records the first half as an equation, so the value
-on the rational points — the only place the classical degree map is defined — is determined
-rather than chosen. Consumers should still prefer `degreeOfSectionPinned`, which carries the
-section hypothesis in its type and therefore cannot be misread; `degree` exists because
-`kPoints_iff_kerDegree` is stated against it, and it now has a body rather than a `sorry`.
-
-The `[ClassDegreePinned C]` binder is new and is what makes the pinned half meaningful; the
-unpinned `ClassDegree` would have permitted the zero homomorphism (see its docstring). -/
+This is not the arbitrary-field degree on the étale-sheafified Picard functor. For that target,
+an étale-local representative `L` on `C ×ₖ U` should have fibre value
+`χ(C_u, L_u) - χ(C_u, O_{C_u})` at every `u`, with pullback naturality, quotient invariance,
+local constancy, and additivity. None of those properties is a field of `ClassDegreePinned`.
+Accordingly, this declaration proves no homomorphism or functoriality property and no
+identification with Euler-characteristic degree. -/
 noncomputable def degree {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
@@ -1743,12 +1675,10 @@ noncomputable def degree {k : Type u} [Field k]
       degreeOfSectionPinned C lambda h
     else 0
 
-/-- **On a `k`-rational point, `degree` is the pinned degree** — the equation that makes
-`degree`'s value on the sections determined rather than chosen.
+/-- On a legacy `k`-section, the totalised function equals the Abel-compatible candidate.
 
-Immediately `dif_pos`. Recorded as a named lemma because it is the whole content of the
-claim that `degree` is a degree: off the sections its value is arbitrary, and this lemma
-says exactly where that arbitrariness does *not* reach. -/
+This is immediately `dif_pos`; it gives no independent characterisation of that candidate as
+geometric degree. -/
 theorem degree_eq_degreeOfSectionPinned {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
@@ -1759,11 +1689,11 @@ theorem degree_eq_degreeOfSectionPinned {k : Type u} [Field k]
   classical
   rw [degree, dif_pos hlambda]
 
-/-- **`degree` vanishes on a rational point whose relative Picard class is trivial.**
+/-- The totalised candidate vanishes on a section whose relative Picard class is trivial.
 
-The composite of `degree_eq_degreeOfSectionPinned` with
-`degreeOfSectionPinned_eq_zero_of_class_eq_zero`. This is the direction of
-`kPoints_iff_kerDegree` that additivity alone buys, now available on `degree`'s own domain. -/
+This composes `degree_eq_degreeOfSectionPinned` with
+`degreeOfSectionPinned_eq_zero_of_class_eq_zero`; it is only `map_zero`, not a geometric
+degree-zero characterisation. -/
 theorem degree_eq_zero_of_class_eq_zero {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
@@ -1803,9 +1733,8 @@ theorems `Pic0.proper` / `Pic0.smooth` / `Pic0.geometricallyIrreducible` /
 `Pic0Scheme C` is by definition `GroupScheme.IdentityComponent (PicScheme C)`,
 and the sibling's `IdentityComponent.isOpenSubgroupScheme` supplies the
 inclusion as an open-and-closed immersion of `k`-group schemes. Extracting the
-underlying morphism of schemes needs no new mathematics, so packaging it here
-keeps the open content of `kPoints_iff_kerDegree` down to the degree
-characterisation alone. -/
+underlying morphism needs no new mathematics. This structural result does not
+validate the separately mismatched `kPoints_iff_kerDegree` approximation. -/
 theorem inclusion {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
@@ -1949,41 +1878,22 @@ theorem finrank_eq_genus {k : Type u} [Field k]
     topologicalKrullDim (Pic0Scheme C).left = (AlgebraicGeometry.genus C : WithBot ℕ∞) :=
   sorry
 
-/-- **`k`-points of `Pic⁰_{C/k}` are the kernel of the degree map.**
+/-- **A conditional typed-sorry approximation to the degree-zero
+characterisation.**
 
-Milne~§III.1, p.~88: `Pic⁰(C)` is the group of isomorphism classes of
-invertible sheaves of degree zero on `C`. For a smooth proper geometrically
-integral curve `C/k`, a `k`-point `λ ∈ Pic_{C/k}(k)` lies in the image of
-the inclusion `Pic⁰_{C/k} ↪ Pic_{C/k}` (the inclusion of
-`def:pic_zero_subscheme`, packaged here via the existence of the
-inclusion morphism) if and only if `degree C λ = 0`.
+The intended classical theorem says that genuine `k`-points of `Pic⁰_{C/k}`
+are exactly the genuine `k`-points of `Pic_{C/k}` having degree zero. The type
+below does not encode that theorem exactly: it assumes the unproduced
+`[ClassDegreePinned C]` and `[PicSchemeLocallyOfFiniteType C]`, existentially
+chooses an arbitrary underlying morphism `inc`, quantifies over underlying
+morphisms `lambda` and `mu` without section equations, and tests the
+off-section-totalised function `PicScheme.degree`.
 
-The statement packages two pieces: existence of the inclusion
-morphism `Pic⁰_{C/k} ⟶ Pic_{C/k}` (extracted from
-`IdentityComponent.isOpenSubgroupScheme` once `PicScheme C` has the
-`GrpObj` + `LocallyOfFiniteType` instances), together with the
-characterisation of `k`-points factoring through it as those with degree
-zero.
-
-Not yet formalised: the proof is `sorry`.
-
-SPLIT (run 0067): the *first* of the two packaged pieces — existence of the
-inclusion morphism `Pic⁰_{C/k} ⟶ Pic_{C/k}` — is not open at all, and is now
-recorded separately as `inclusion` below, proved from
-`GroupScheme.IdentityComponent.isOpenSubgroupScheme`. So the only open content
-of this statement is the degree characterisation, and nothing about the identity
-component.
-
-STATE OF THE DEPENDENCY (updated run 0067 r4). This used to say the statement "depends on the
-still-unconstructed `PicScheme.degree`". `PicScheme.degree` is now **constructed** (see its
-docstring for why the previous impossibility verdict was wrong), so this theorem is no longer
-waiting on a declaration that could not exist. It is waiting on mathematics, and specifically
-on the same thing `degree`'s pinned half is: a producer of `ClassDegreePinned C`, whose
-`[ClassDegreePinned C]` binder this statement therefore now carries. What has to be proved is
-the characterisation itself — that a `k`-point factors through `Pic⁰` exactly when its pinned
-degree vanishes. `degreeOfSectionPinned_eq_zero_of_class_eq_zero` and
-`degree_eq_zero_of_class_eq_zero` supply the easy direction (trivial class ⟹ degree zero); the
-converse is the open content. -/
+The actual inclusion is already constructed as `inclusion` below. A faithful
+degree-zero statement still requires the arbitrary-test locally constant degree
+on the étale-sheafified relative Picard functor, as well as section-aware
+domains. The proof of this conditional approximation remains `sorry`; it is not
+a Lean pin for the classical theorem. -/
 theorem kPoints_iff_kerDegree {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
@@ -2004,10 +1914,9 @@ If `mu` is a section of `(Pic0Scheme C).hom` and `f` is a morphism over `Spec k`
 particular the inclusion of `Pic0Scheme.inclusion`), then `mu ≫ f.left` is a section of
 `(PicScheme C).hom`: associativity plus `Over.w f` plus the section equation.
 
-Why this is worth a name: `PicScheme.degreeOfSection` — unlike the broken
-`PicScheme.degree` — requires its argument to *be* a section, so any statement of the form
-"points of `Pic⁰` are the degree-zero points" must produce that section proof for the
-composite. This is it, and it is free. -/
+Why this is worth a name: `PicScheme.degreeOfSection` requires its argument to
+be a section, so statements about its candidate value on a composite need this
+section proof. This lemma supplies only that domain bookkeeping. -/
 theorem isSection_comp_inclusion {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
@@ -2019,24 +1928,15 @@ theorem isSection_comp_inclusion {k : Type u} [Field k]
     (mu ≫ f.left) ≫ (PicScheme C).hom = 𝟙 (Spec (.of k)) := by
   rw [Category.assoc, Over.w f, hmu]
 
-/-- **The degree-zero characterisation of `Pic⁰`-points, on the correct domain** — the
-restatement of `kPoints_iff_kerDegree` against `degreeOfSection` rather than the broken
-`degree`, with its structural half discharged.
+/-- **Conditional candidate vanishing on a section-aware domain.**
 
-Compared with `kPoints_iff_kerDegree` above, three things are fixed or supplied here:
-
-* the inclusion is `Pic0Scheme.inclusion`-style but taken as a morphism *over* `Spec k`, so
-  that composing with it preserves sections (`isSection_comp_inclusion`);
-* points are sections, matching `degreeOfSection`'s domain;
-* the "⟹" direction is reduced to a statement purely about *classes*: a point coming from
-  `Pic⁰` has trivial relative Picard class. Given that, degree zero is `map_zero`
-  (`PicScheme.degreeOfSection_eq_zero_of_class_eq_zero`).
-
-The remaining hypothesis `hclass` is the honest mathematical content of Milne III.1 p.~88 in
-this direction: the identity component consists of the classes of degree zero, i.e. the
-degree map's kernel is exactly the connected component of the identity. It is *not*
-bookkeeping — it is the statement that the degree separates the components of `Pic_{C/k}` —
-which is why it is a hypothesis rather than a proof step. -/
+The morphism `f` is over `Spec k`, so composing with it preserves sections by
+`isSection_comp_inclusion`. The hypothesis `hclass` then assumes that every
+such composite has *trivial relative Picard class*, which is much stronger than
+having degree zero and is not proved here for the identity component. Under
+that hypothesis the arbitrary `ClassDegree` candidate vanishes by `map_zero`.
+This theorem is domain bookkeeping under an explicit hypothesis, not a
+degree-zero characterisation or producer. -/
 theorem degreeOfSection_eq_zero_of_factors {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]

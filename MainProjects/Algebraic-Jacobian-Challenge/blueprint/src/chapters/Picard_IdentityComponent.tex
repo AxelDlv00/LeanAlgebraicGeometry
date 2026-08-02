@@ -26,32 +26,35 @@
 % \texttt{AlgebraicJacobian/Picard/IdentityComponent.lean} exists; the
 % \S 1 group-scheme substrate (identity-component definition and its four
 % conclusion-specific theorems) is fully proved. Remaining sorries are
-% confined to \S 3--\S 4 (\texttt{degree}, \texttt{finrank\_eq\_genus},
-% \texttt{kPoints\_iff\_kerDegree}), blocked on the FGA representability
-% foundation (\texttt{AJC.picrep}).
+% confined to \S 3--\S 4. The mathematical degree rows have no exact Lean
+% pins; \texttt{finrank\_eq\_genus} and \texttt{kPoints\_iff\_kerDegree}
+% remain typed sorries downstream of the FGA representability foundation
+% (\texttt{AJC.picrep}).
 
 \section{Setup and motivation}
 \label{sec:pic0_setup}
 
 Throughout this chapter, fix a base field \(k\) and a smooth proper
 geometrically integral curve \(C\) over \(k\) of genus \(g = g(C)\)
-(\cref{def:genus}). By
-\cref{thm:fga_pic_representability} and \cref{thm:pic_is_group_scheme}, the
-\'etale-sheafified relative Picard functor of \(C/k\) is represented by
-the \(k\)-group scheme \(\Pic_{C/k}\) (\cref{def:pic_scheme}), which is
-separated, locally of finite type over \(k\), and a disjoint union of
-open quasi-projective \(k\)-subschemes. The disjoint-union structure of
-\(\Pic_{C/k}\) stratifies its \(T\)-points by the Hilbert polynomial of the
-representing invertible sheaf relative to a fixed polarisation, and on
-the geometric points of the curve this stratification reduces to the
-degree of a line bundle.
+(\cref{def:genus}). Write \(\Pic^{\et}_{C/k}\) for a \(k\)-scheme
+representing the \'etale-sheafified relative Picard functor
+\(\Pic_{(C/k)\et}\) of \cref{def:pic_et_sheaf}. Its existence over an
+arbitrary field, with no rational-point hypothesis, is the open theorem
+\cref{thm:fga_pic_representability_etale}. It is separated and locally of
+finite type over \(k\), and its degree pieces form a disjoint union of open
+quasi-projective \(k\)-subschemes.
 
-The identity component \(\Pic^0_{C/k}\) singled out by Kleiman is the open
-and closed subgroup scheme consisting of the connected component of
-\(\Pic_{C/k}\) containing the trivial line bundle. It is the locus of
-degree-zero classes, and on a smooth proper curve it is itself an
-abelian variety of dimension \(g\) --- the Jacobian variety of \(C\). This
-chapter packages those four statements as the A.3 specification.
+The Lean-pinned \(\Pic_{C/k}\) and \(\Pic^0_{C/k}\) below instead use the
+legacy scheme representing the unsheafified \(\Pic^\sharp_{C/k}\), conditional
+on its separate representability hypotheses. They are not identified here
+with \(\Pic^{\et}_{C/k}\); the arbitrary-field degree statements use the
+superscript \(\et\) explicitly.
+
+The arbitrary-field mathematical target is the identity component
+\((\Pic^{\et}_{C/k})^0\), the connected component containing the trivial line
+bundle. It is the degree-zero locus and an abelian variety of dimension \(g\).
+The Lean-pinned legacy specialization and the still-open arbitrary-field degree
+rows are kept distinct below.
 
 \section{The identity component of a group scheme}
 \label{sec:identity_component_abstract}
@@ -823,8 +826,10 @@ the Lean development.
 \section{The identity component of the Picard scheme}
 \label{sec:pic0_definition}
 
-We now specialise the abstract identity-component construction to
-\(G = \Pic_{C/k}\).
+We now specialise the abstract identity-component construction to the
+conditional legacy representer \(G = \Pic_{C/k}\) of
+\(\Pic^\sharp_{C/k}\). This Lean-pinned specialization is distinct from the
+arbitrary-field \(\Pic^{\et}_{C/k}\) used in the degree rows below.
 
 \begin{definition}[The identity component of the Picard scheme]\leanok
   \label{def:pic_zero_subscheme}
@@ -862,7 +867,9 @@ We now specialise the abstract identity-component construction to
   \textit{Source: [Kleiman], ``The Picard scheme'', \S 5, opening +
   Prp.~5.3.}
   Let \(C/k\) be a smooth proper geometrically integral curve over a field
-  \(k\). The \emph{identity component of the Picard scheme}
+  \(k\), and assume the legacy relative Picard functor
+  \(\Pic^\sharp_{C/k}\) is represented by \(\Pic_{C/k}\). The
+  \emph{identity component of the Picard scheme}
   \(\Pic^0_{C/k}\) is the identity component
   \((\Pic_{C/k})^0\) of the \(k\)-group scheme \(\Pic_{C/k}\) of
   \cref{def:pic_scheme}, in the sense of
@@ -876,25 +883,29 @@ We now specialise the abstract identity-component construction to
 \section{The degree map}
 \label{sec:pic_degree}
 
-The disjoint-union structure of \(\Pic_{C/k}\)
-(\cref{thm:fga_pic_representability}: a disjoint union of open
-quasi-projective \(k\)-subschemes) is indexed by the Hilbert polynomial
-\(\Phi \in \mathbb{Q}[\lambda]\) of a representing invertible sheaf
-(\cref{def:hilbert_polynomial}). For a smooth proper geometrically
-integral curve \(C/k\) of genus \(g\) with a fixed degree-one polarisation
-\(\mathcal{O}_C(1)\) on \(C\), the Hilbert polynomial of an invertible
-sheaf \(\mathcal{L}\) on \(C\) is, by Riemann--Roch,
-\(\Phi_{\mathcal{L}}(n) = n \cdot \deg \mathcal{L} + 1 - g\), so it is
-linear in \(n\) with leading coefficient \(\deg \mathcal{L} \in
-\mathbb{Z}\). This identifies the connected components of
-\(\Pic_{C/k}(\overline k)\) with the integers, the index being the
-degree.
+Return now to the arbitrary-field representer \(\Pic^{\et}_{C/k}\) of
+\cref{thm:fga_pic_representability_etale}. Its disjoint open pieces are indexed
+by the Hilbert polynomial \(\Phi\) used in the FGA construction. Given a
+\(T\)-point, choose an \'etale cover \(U\to T\) on which it is represented by
+an invertible sheaf \(\mathcal L\) on \(C\times_kU\). With \(\mathcal H\) the
+chosen very ample sheaf, the construction uses the fibrewise dual convention
+\[
+  \Phi_{\mathcal L,u}(n)
+  =\chi(C_u,\mathcal L_u^{-1}\otimes\mathcal H_u^{\otimes n})
+  =-\deg\mathcal L_u+n\deg\mathcal H_u+1-g
+  \qquad (u\in U).
+\]
+Thus its coefficient of \(n\) is \(\deg\mathcal H_u\), while
+\(\deg\mathcal L_u=-(\Phi_{\mathcal L,u}(0)-
+\chi(C_u,\mathcal O_{C_u}))\). Intrinsically,
+\(\deg\mathcal L_u=\chi(C_u,\mathcal L_u)-
+\chi(C_u,\mathcal O_{C_u})\), equivalently the coefficient of \(n\) in
+\(n\mapsto\chi(C_u,\mathcal L_u^{\otimes n})\).
 
-\begin{definition}[Degree of a Picard class]\leanok
+\begin{definition}[Degree of a Picard family]\notready
   \label{def:divisor_degree_pic}
-  \lean{AlgebraicGeometry.Scheme.PicScheme.degree}
-  \uses{def:pic_scheme, def:hilbert_polynomial, thm:fga_pic_representability,
-    def:has_pic_scheme}
+  \uses{def:pic_et_sheaf, def:hilbert_polynomial,
+    thm:fga_pic_representability_etale}
 
   % SOURCE: [Milne], ``Abelian Varieties'' (course notes, 2008),
   % \S III.1, ``Definitions and main statements'', p.~88 (PDF p.~94)
@@ -914,40 +925,35 @@ degree.
   % of degree zero on \(C\)."
   \textit{Source: [Milne], ``Abelian Varieties'' (course notes, 2008),
   \S III.1, p.~88.}
-  Let \(C/k\) be a smooth proper geometrically integral curve of genus
-  \(g\) admitting a Picard scheme \(\Pic_{C/k}\) as in
-  \cref{def:pic_scheme} (run-0008: the Lean statement carries the
-  \texttt{[HasPicScheme C]} hypothesis, supplied under a \(k\)-rational
-  point via \cref{def:has_rational_point}). The \emph{degree map}
+  Let \(C/k\) be a smooth proper geometrically integral curve, and let
+  \(\Pic^{\et}_{C/k}\) represent the \'etale-sheafified relative Picard
+  functor. For every \(k\)-scheme \(T\), the \emph{family degree} is an
+  additive map
   \[
-    \deg \;\colon\; \Pic_{C/k}(k) \longrightarrow \mathbb{Z}
+    \deg_T:\Pic_{(C/k)\et}(T)
+      \longrightarrow \operatorname{LC}(|T|,\mathbb Z),
   \]
-  is defined as follows: a \(k\)-point \(\lambda \in \Pic_{C/k}(k)\)
-  represents (after \'etale base change) an invertible sheaf
-  \(\mathcal{L}\) on \(C\); its Hilbert polynomial with respect to a fixed
-  degree-one polarisation \(\mathcal{O}_C(1)\) on \(C\) is, by
-  \cref{def:hilbert_polynomial} and Riemann--Roch,
+  natural under pullback in \(T\). Here
+  \(\operatorname{LC}(|T|,\mathbb Z)\) denotes the additive group of locally
+  constant integer-valued functions on the underlying space. If a class is
+  represented after an \'etale cover \(U\to T\) by \(\mathcal L\) on
+  \(C\times_kU\), its pullback has value at \(u\in U\)
   \[
-    \Phi_{\mathcal{L}}(n)
-    \;=\; \chi(C, \mathcal{L} \otimes \mathcal{O}_C(n))
-    \;=\; n \cdot \deg \mathcal{L} + 1 - g,
+    \deg_U(\mathcal L)(u)=\deg(\mathcal L_u)
+    =\chi(C_u,\mathcal L_u)-\chi(C_u,\mathcal O_{C_u}).
   \]
-  a polynomial in \(n\) linear in \(n\). The integer
-  \(\deg(\lambda) := \deg \mathcal{L}\) is the leading coefficient of
-  this polynomial, well-defined on the isomorphism class
-  \([\mathcal{L}]\) and (because \(\Pic_{C/k}\) represents the
-  \'etale-sheafified relative Picard functor) on the \(k\)-point
-  \(\lambda\). The degree map is a group homomorphism: for
-  \(\mathcal{L}, \mathcal{M}\) invertible sheaves on \(C\) one has
-  \(\deg(\mathcal{L} \otimes \mathcal{M}) = \deg \mathcal{L} + \deg \mathcal{M}\),
-  because the Euler characteristic is additive on the additive groups of
-  twists. Equivalently, the degree on \(k\)-points is the index of the
-  connected component of \(\Pic_{C/k}\) containing \(\lambda\) under the
-  Hilbert-polynomial decomposition of
-  \cref{thm:fga_pic_representability}: the disjoint union
-  \(\Pic_{C/k} = \coprod_{d \in \mathbb{Z}} \Pic^d_{C/k}\) is indexed by
-  the degree, with \(\Pic^d_{C/k}\) the component representing classes
-  of degree \(d\).
+  These fibre values are locally constant on \(U\), invariant under the
+  relative Picard quotient and \'etale descent relation, and therefore define
+  \(\deg_T\). For \(f:T'\to T\), one has
+  \(\deg_{T'}(f^*\lambda)=\deg_T(\lambda)\circ|f|\); fibrewise additivity of
+  divisor degree gives additivity.
+
+  Taking \(T=\Spec k\) yields
+  \(\deg:\Pic^{\et}_{C/k}(k)\to\mathbb Z\). The subfunctor on which
+  \(\deg_T\) is constantly \(d\) is represented by an open-and-closed degree
+  piece \((\Pic^{\et}_{C/k})^d\), giving
+  \(\Pic^{\et}_{C/k}=\coprod_{d\in\mathbb Z}(\Pic^{\et}_{C/k})^d\). After
+  base change to \(\overline k\), these are the geometric connected components.
 \end{definition}
 
 \section{The Pic-zero abelian variety}
@@ -962,7 +968,8 @@ automatically.
 
 % The three conclusions of the original ``\(\Pic^0_{C/k}\) is an abelian
 % variety of dimension \(g\)'' theorem are split below into per-conclusion
-% blocks, each with its own \lean{...} pin. The Kleiman ex:jac + rmk:Jac
+% blocks. The completed blocks carry \lean{...} pins; the degree-zero
+% characterisation remains \notready. The Kleiman ex:jac + rmk:Jac
 % verbatim source quote (covering the abelian-variety structure) is
 % reproduced once at \cref{thm:pic_zero_is_abelian_variety}; the Milne
 % III.1.4(e) verbatim quote (covering the dimension formula) is at
@@ -1132,11 +1139,10 @@ automatically.
   dimension of \(J\) is the genus of \(C\)''.
 \end{proof}
 
-\begin{theorem}[\(k\)-points of \(\Pic^0_{C/k}\) are the kernel of the degree map]\leanok
+\begin{theorem}[The identity component of \(\Pic^{\et}_{C/k}\) is the kernel of degree on \(k\)-points]\notready
   \label{thm:pic_zero_k_points_iff_degree_zero}
-  \lean{AlgebraicGeometry.Scheme.Pic0Scheme.kPoints_iff_kerDegree}
-  \uses{thm:pic_zero_is_abelian_variety, thm:identity_component_open_subgroup, def:pic_zero_subscheme, def:divisor_degree_pic,
-    def:has_pic_scheme}
+  \uses{thm:identity_component_open_subgroup, def:divisor_degree_pic,
+    def:pic_et_sheaf, thm:fga_pic_representability_etale}
 
   % SOURCE: [Milne], ``Abelian Varieties'' (course notes, 2008),
   % \S III.1, p.~88; verbatim quote reproduced at
@@ -1146,35 +1152,32 @@ automatically.
   \S III.1, p.~88 (``\(\Pic^0(C)\)\dots\ degree zero''); the verbatim
   source quote is at \cref{def:divisor_degree_pic}.}
   Let \(C/k\) be a smooth proper geometrically integral curve of genus
-  \(g\) over a field \(k\), admitting a Picard scheme (run-0008: the Lean
-  statement carries the \texttt{[HasPicScheme C]} hypothesis, supplied
-  under a \(k\)-rational point via \cref{def:has_rational_point}). A
-  \(k\)-point
-  \(\lambda \in \Pic_{C/k}(k)\) lies in the image of the inclusion of
-  the identity component \(\Pic^0_{C/k} \hookrightarrow \Pic_{C/k}\)
-  (\cref{thm:identity_component_open_subgroup} applied to
-  \(G = \Pic_{C/k}\), specialised in \cref{def:pic_zero_subscheme})
+  \(g\) over a field \(k\), and let \(\Pic^{\et}_{C/k}\) represent
+  \(\Pic_{(C/k)\et}\) as in \cref{thm:fga_pic_representability_etale}. A
+  \(k\)-point \(\lambda \in \Pic^{\et}_{C/k}(k)\) lies in the image of the
+  identity-component inclusion
+  \((\Pic^{\et}_{C/k})^0\hookrightarrow\Pic^{\et}_{C/k}\)
+  of \cref{thm:identity_component_open_subgroup}
   if and only if the degree
   \(\deg(\lambda) \in \mathbb{Z}\) of \cref{def:divisor_degree_pic}
   vanishes. Equivalently,
-  \(\Pic^0_{C/k}(k) = \ker\bigl(\deg : \Pic_{C/k}(k) \to \mathbb{Z}\bigr)\).
+  \((\Pic^{\et}_{C/k})^0(k)
+    =\ker\bigl(\deg:\Pic^{\et}_{C/k}(k)\to\mathbb Z\bigr)\).
 \end{theorem}
 
 \begin{proof}
-  \uses{thm:pic_zero_is_abelian_variety, thm:identity_component_open_subgroup, def:pic_zero_subscheme, def:divisor_degree_pic}
+  \uses{thm:identity_component_open_subgroup, def:divisor_degree_pic}
   A class
-  \(\lambda \in \Pic_{C/k}(k)\) lies in the connected component of
+  \(\lambda \in \Pic^{\et}_{C/k}(k)\) lies in the connected component of
   the identity --- i.e.\ in the image of the open immersion
-  \(\Pic^0_{C/k} \hookrightarrow \Pic_{C/k}\)
-  (\cref{thm:identity_component_open_subgroup}, specialised to
-  \(G = \Pic_{C/k}\) in \cref{def:pic_zero_subscheme}) --- precisely when
-  the Hilbert polynomial of a representing invertible sheaf coincides
-  with that of \(\mathcal{O}_C\), equivalently when its degree (the
-  leading coefficient of the Hilbert polynomial of
-  \cref{def:divisor_degree_pic}) is zero. Since \(\Pic^0_{C/k}\) is the
-  abelian variety of \cref{thm:pic_zero_is_abelian_variety}, this image
-  is exactly the degree-zero locus on \(k\)-points. Hence
-  \(\Pic^0_{C/k}(k) = \ker(\deg : \Pic_{C/k}(k) \to \mathbb{Z})\),
+  \((\Pic^{\et}_{C/k})^0\hookrightarrow\Pic^{\et}_{C/k}\) --- precisely
+  when its Hilbert-polynomial stratum is the degree-zero stratum.
+  On an \'etale cover carrying a representative \(\mathcal L\), this says
+  fibrewise that
+  \(\chi(C_u,\mathcal L_u)-\chi(C_u,\mathcal O_{C_u})=0\).
+  Hence
+  \((\Pic^{\et}_{C/k})^0(k)
+    =\ker(\deg:\Pic^{\et}_{C/k}(k)\to\mathbb Z)\),
   which is the content of Milne~\S III.1, p.~88 (the verbatim quote
   at \cref{def:divisor_degree_pic} explicitly writes ``\(\Pic^0(C)\)
   for the group of isomorphism classes of invertible sheaves of degree
@@ -1230,14 +1233,6 @@ of this chapter correspond to Lean targets as follows.
     \texttt{IdentityComponent} substrate to
     \(G = \Pic_{C/k}\), inheriting the \(k\)-group-scheme structure from
     \cref{thm:pic_is_group_scheme}.
-  \item \texttt{AlgebraicGeometry.Scheme.PicScheme.degree}
-    (\cref{def:divisor_degree_pic}) is the group homomorphism
-    \(\Pic_{C/k}(k) \to \mathbb{Z}\) extracting the leading coefficient
-    of the Hilbert polynomial of a representing invertible sheaf
-    relative to a fixed degree-one polarisation \(\mathcal{O}_C(1)\) on
-    \(C\). On the disjoint-union decomposition of
-    \cref{thm:fga_pic_representability} the degree is the index of the
-    component.
   \item \texttt{AlgebraicGeometry.Scheme.Pic0Scheme.isAbelianVariety}
     (\cref{thm:pic_zero_is_abelian_variety}) is the bundled
     abelian-variety structure on \texttt{Pic0Scheme}: the four-conjunct
@@ -1248,18 +1243,20 @@ of this chapter correspond to Lean targets as follows.
   \item \texttt{AlgebraicGeometry.Scheme.Pic0Scheme.finrank\_eq\_genus}
     (\cref{thm:pic_zero_dimension_equals_genus}) is the dimension
     formula \(\dim_k \Pic^0_{C/k} = g(C)\) (Milne~\S III.1,
-    Rmk.~1.4(e)). In Lean this is the equation
-    \texttt{Module.finrank k (Pic0Scheme C).left = AlgebraicGeometry.genus C}
-    (precise statement via the project's Krull-dimension API on the
-    underlying scheme).
-  \item \texttt{AlgebraicGeometry.Scheme.Pic0Scheme.kPoints\_iff\_kerDegree}
-    (\cref{thm:pic_zero_k_points_iff_degree_zero}) is the
-    \(k\)-point-characterisation
-    \(\Pic^0_{C/k}(k) = \ker(\deg)\) (Milne~\S III.1, p.~88). In Lean,
-    \texttt{∀ λ : Spec (.of k) ⟶ (PicScheme C).left,
-    (∃ μ : Spec (.of k) ⟶ (Pic0Scheme C).left,\,
-    μ ≫ pic0Inclusion = λ) ↔ PicScheme.degree C λ = 0}.
+    Rmk.~1.4(e)). Its exact Lean statement is
+    \texttt{topologicalKrullDim (Pic0Scheme C).left}\(={}\)
+    \texttt{(AlgebraicGeometry.genus C : WithBot}\,
+    \(\mathbb N_\infty\)\texttt{)}.
 \end{itemize}
+
+Neither degree node is Lean-pinned. The existing declarations
+\texttt{PicScheme.ClassDegreePinned}, \texttt{PicScheme.degree}, and
+\texttt{Pic0Scheme.kPoints\_iff\_kerDegree} belong to the conditional legacy
+\(\Pic^\sharp_{C/k}\) specialization. They provide only an additive candidate
+at the trivial test object with an Abel-image compatibility condition, not the
+arbitrary-test locally constant signed degree on \(\Pic_{(C/k)\et}\), and are
+not encodings of \cref{def:divisor_degree_pic} or
+\cref{thm:pic_zero_k_points_iff_degree_zero}.
 
 The abstract identity-component substrate
 (\texttt{GroupScheme.IdentityComponent} and its four
@@ -1276,9 +1273,10 @@ base-change isomorphism --- with no need for EGA IV\(_2\) 4.6.1-type
 input). The downstream
 \texttt{Pic0Scheme.isAbelianVariety},
 \texttt{Pic0Scheme.finrank\_eq\_genus}, and
-\texttt{Pic0Scheme.kPoints\_iff\_kerDegree} consume Kleiman~\S 5
-Cor.~5.13 + Ex.~5.23 and Milne~\S III.1; the latter two remain open,
-blocked on the typed-sorry FGA representability foundation
+\texttt{Pic0Scheme.kPoints\_iff\_kerDegree} are conditional legacy targets.
+The arbitrary-field degree and degree-zero statements above remain open: they
+need the missing arbitrary-test family degree in addition to the typed-sorry
+\'etale FGA representability foundation
 (\cref{chap:Picard_FGAPicRepresentability}, \texttt{AJC.picrep}).
 
 \section{Out of scope}
@@ -1303,12 +1301,6 @@ chapters and are explicitly out of scope here:
     \(\Pic^\tau_{C/k} = \Pic^0_{C/k}\), so the finer torsion-component
     finiteness statements of Kleiman~\S 6 are not load-bearing on
     Route~A.
-  \item \textbf{Construction of the degree map as a morphism of group
-    schemes \(\Pic_{C/k} \to \underline{\mathbb{Z}}_k\).} This chapter
-    defines the degree on \(k\)-points only; the upgrade to a
-    morphism of group schemes (with the constant group scheme
-    \(\underline{\mathbb{Z}}_k\)) is the natural assembly statement but
-    is not required for any downstream consumer in this project.
 \end{itemize}
 
 \section{Internal-consistency check}
@@ -1334,8 +1326,9 @@ the sibling chapters \cref{chap:Picard_FGAPicRepresentability},
     \cref{def:identity_component_group_scheme} and
     \cref{def:pic_scheme} (from
     \cref{chap:Picard_FGAPicRepresentability}).
-  \item \cref{def:divisor_degree_pic} uses \cref{def:pic_scheme}
-    (from \cref{chap:Picard_FGAPicRepresentability}) and
+  \item \cref{def:divisor_degree_pic} uses \cref{def:pic_et_sheaf} and
+    \cref{thm:fga_pic_representability_etale} (from
+    \cref{chap:Picard_FGAPicRepresentability}) and
     \cref{def:hilbert_polynomial} (from \cref{chap:Picard_QuotScheme}).
   \item \cref{thm:pic_zero_is_abelian_variety} uses
     \cref{def:pic_zero_subscheme},
@@ -1349,10 +1342,9 @@ the sibling chapters \cref{chap:Picard_FGAPicRepresentability},
     \cref{thm:pic_zero_is_abelian_variety} and
     \cref{def:genus} (from \cref{chap:Genus}).
   \item \cref{thm:pic_zero_k_points_iff_degree_zero} uses
-    \cref{thm:pic_zero_is_abelian_variety},
     \cref{thm:identity_component_open_subgroup},
-    \cref{def:pic_zero_subscheme}, and
-    \cref{def:divisor_degree_pic}.
+    \cref{def:divisor_degree_pic}, \cref{def:pic_et_sheaf}, and
+    \cref{thm:fga_pic_representability_etale}.
 \end{itemize}
 
 The cross-chapter labels \texttt{def:pic\_scheme},
