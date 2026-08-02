@@ -235,6 +235,37 @@ theorem finrank_divUniversalFibreKM_add
   omega
 
 set_option maxHeartbeats 800000 in
+set_option synthInstance.maxHeartbeats 400000 in
+/-- **The decoupled first-window corank law.**  The tautological Grassmannian has
+corank `g`, while the base and fibre Euler characteristics use `gamma`. -/
+theorem finrank_divUniversalFibreKM_add_at {gamma : ℕ}
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ)) :
+    Module.finrank K ↥(divUniversalFibreKM C hπ g r₁ r₂ b₁ i j K) + g
+      = Sheaf.h0 ((relCurve C K).divisorSheaf K (windowN C K hπ g)) := by
+  have hχK : Sheaf.chi ((relCurve C K).moduleKSheaf K) = 1 - (gamma : ℤ) :=
+    chi_relCurve_baseField C K gamma hχ
+  have h1 : Module.finrank K ↥(divUniversalFibreKM C hπ g r₁ r₂ b₁ i j K)
+      = Module.finrank K
+          ↥(LinearMap.ker (Module.Grassmannian.baseChangeMkQ K
+            (pairTautFst k g r₁ r₂ i j).toSubmodule)) := by
+    rw [divUniversalFibreKM, finrank_map_divFamPhi]
+    exact (LinearEquiv.finrank_map_eq _ _).trans rfl
+  have h2 := Grassmannian.finrank_ker_baseChangeMkQ_add_of_field
+    (pairTautFst k g r₁ r₂ i j) K
+  have h3 : Module.finrank k (Fin r₁ → k) = r₁ := Module.finrank_fin_fun k
+  have h4 : Sheaf.h0 ((relCurve C K).divisorSheaf K (windowN C K hπ g))
+      = Sheaf.h0 (C.left.divisorSheaf k
+          (windowM_choice π hπ g • fiberWeilDivisor π)) :=
+    h0_windowN_at C K hπ g hχ hχK
+  have h5 : Module.finrank k
+      ↥(Scheme.divisorSections k (windowM_choice π hπ g • fiberWeilDivisor π) ⊤)
+      = r₁ := by
+    rw [Module.finrank_eq_card_basis b₁, Fintype.card_fin]
+  have h6 := finrank_divisorSections_top k
+    (windowM_choice π hπ g • fiberWeilDivisor π) (X := C.left)
+  omega
+
+set_option maxHeartbeats 800000 in
 -- base-changed tautological towers over the pair chart ring (the recorded hatch class)
 set_option synthInstance.maxHeartbeats 400000 in
 /-- **The corank-`g` law of the second fibre window** (`hK'rank`): its dimension plus
@@ -300,6 +331,93 @@ theorem finrank_divUniversalFibreK'_add
           ((windowM_choice π hπ g + windowS_choice π hπ g) • fiberWeilDivisor π)) : ℤ)
         = ((windowM_choice π hπ g + windowS_choice π hπ g : ℕ) : ℤ) * windowδ π
           + 1 - (g : ℤ) := by
+      rw [h0_eq_deg_add_chi_of_subsingleton_hModule_one _
+          (window_embedding_shift π hπ g),
+        Scheme.CurveDivisor.deg_nsmul' k, deg_fiberWeilDivisor_windowδ, hχ]
+      ring
+    have hcongr : Sheaf.h0 (C.left.divisorSheaf k
+          ((windowS_choice π hπ g • fiberWeilDivisor π)
+            + (windowM_choice π hπ g • fiberWeilDivisor π)))
+        = Sheaf.h0 (C.left.divisorSheaf k
+            ((windowM_choice π hπ g + windowS_choice π hπ g) • fiberWeilDivisor π)) :=
+      congrArg (fun D => Sheaf.h0 (C.left.divisorSheaf k D)) hAB
+    omega
+  have hcast : (Module.finrank K
+        ↥(divUniversalFibreK' C hπ g r₁ r₂ b₂ i j K) : ℤ) + (g : ℤ)
+      = (Sheaf.h0 ((relCurve C K).divisorSheaf K
+          (windowN C K hπ g + windowS C K hπ g)) : ℤ) := by
+    have h23 : Module.finrank K
+        ↥(LinearMap.ker (Module.Grassmannian.baseChangeMkQ K
+          (pairTautSnd k g r₁ r₂ i j).toSubmodule)) + g = r₂ := by omega
+    have h23' : (Module.finrank K
+        ↥(LinearMap.ker (Module.Grassmannian.baseChangeMkQ K
+          (pairTautSnd k g r₁ r₂ i j).toSubmodule)) : ℤ) + (g : ℤ) = (r₂ : ℤ) := by
+      exact_mod_cast h23
+    rw [h1, h4, h5]
+    linarith [h23', h6]
+  exact_mod_cast hcast
+
+set_option maxHeartbeats 800000 in
+set_option synthInstance.maxHeartbeats 400000 in
+/-- **The decoupled second-window corank law.**  The tautological corank is the
+divisor degree `g`; all Riemann--Roch constants use the independent `gamma`. -/
+theorem finrank_divUniversalFibreK'_add_at {gamma : ℕ}
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ)) :
+    Module.finrank K ↥(divUniversalFibreK' C hπ g r₁ r₂ b₂ i j K) + g
+      = Sheaf.h0 ((relCurve C K).divisorSheaf K
+          (windowN C K hπ g + windowS C K hπ g)) := by
+  have hχK : Sheaf.chi ((relCurve C K).moduleKSheaf K) = 1 - (gamma : ℤ) :=
+    chi_relCurve_baseField C K gamma hχ
+  have hwinj : Function.Injective
+      (Scheme.mulLinear K ((msCoherenceUnit C K hπ g :
+        (relCurve C K).functionFieldˣ) : (relCurve C K).functionField)) :=
+    fun u v huv => mul_left_cancel₀ (Units.ne_zero (msCoherenceUnit C K hπ g)) huv
+  have h1 : Module.finrank K ↥(divUniversalFibreK' C hπ g r₁ r₂ b₂ i j K)
+      = Module.finrank K
+          ↥(LinearMap.ker (Module.Grassmannian.baseChangeMkQ K
+            (pairTautSnd k g r₁ r₂ i j).toSubmodule)) := by
+    rw [divUniversalFibreK',
+      (LinearEquiv.finrank_eq (Submodule.equivMapOfInjective _ hwinj _)).symm,
+      finrank_map_divFamPhi]
+    exact (LinearEquiv.finrank_map_eq _ _).trans rfl
+  have h2 := Grassmannian.finrank_ker_baseChangeMkQ_add_of_field
+    (pairTautSnd k g r₁ r₂ i j) K
+  have h3 : Module.finrank k (Fin r₂ → k) = r₂ := Module.finrank_fin_fun k
+  have h4 : Sheaf.h0 ((relCurve C K).divisorSheaf K
+        (windowN C K hπ g + windowS C K hπ g))
+      = Sheaf.h0 ((relCurve C K).divisorSheaf K (windowTransportDivisor C K π
+          (windowM_choice π hπ g + windowS_choice π hπ g))) := by
+    rw [← finrank_divisorSections_top K, ← finrank_divisorSections_top K,
+      ← map_mulLinear_msCoherenceUnit_top C K hπ g,
+      (LinearEquiv.finrank_eq (Submodule.equivMapOfInjective _ hwinj _)).symm]
+  have h5 : (Sheaf.h0 ((relCurve C K).divisorSheaf K (windowTransportDivisor C K π
+        (windowM_choice π hπ g + windowS_choice π hπ g))) : ℤ)
+      = ((windowM_choice π hπ g + windowS_choice π hπ g : ℕ) : ℤ) * windowδ π
+        + 1 - (gamma : ℤ) := by
+    rw [h0_eq_deg_add_chi_of_subsingleton_hModule_one _
+        (subsingleton_h1_windowTransportDivisor C K π _
+          (relThetaPairH1_windowMS C π hπ g)),
+      deg_windowTransportDivisor, hχK]
+    ring
+  have hAB : (windowS_choice π hπ g • fiberWeilDivisor π)
+        + (windowM_choice π hπ g • fiberWeilDivisor π)
+      = (windowM_choice π hπ g + windowS_choice π hπ g) • fiberWeilDivisor π := by
+    rw [add_nsmul]
+    exact add_comm _ _
+  have h6 : (r₂ : ℤ)
+      = ((windowM_choice π hπ g + windowS_choice π hπ g : ℕ) : ℤ) * windowδ π
+        + 1 - (gamma : ℤ) := by
+    have hb : Module.finrank k
+        ↥(Scheme.divisorSections k ((windowS_choice π hπ g • fiberWeilDivisor π)
+          + (windowM_choice π hπ g • fiberWeilDivisor π)) ⊤) = r₂ := by
+      rw [Module.finrank_eq_card_basis b₂, Fintype.card_fin]
+    have hfr := finrank_divisorSections_top k
+      ((windowS_choice π hπ g • fiberWeilDivisor π)
+        + (windowM_choice π hπ g • fiberWeilDivisor π)) (X := C.left)
+    have hRR : (Sheaf.h0 (C.left.divisorSheaf k
+          ((windowM_choice π hπ g + windowS_choice π hπ g) • fiberWeilDivisor π)) : ℤ)
+        = ((windowM_choice π hπ g + windowS_choice π hπ g : ℕ) : ℤ) * windowδ π
+          + 1 - (gamma : ℤ) := by
       rw [h0_eq_deg_add_chi_of_subsingleton_hModule_one _
           (window_embedding_shift π hπ g),
         Scheme.CurveDivisor.deg_nsmul' k, deg_fiberWeilDivisor_windowδ, hχ]
@@ -406,6 +524,33 @@ theorem divUniversalFibre_carve
       (Submodule.mem_map_of_mem (Submodule.mem_map_of_mem hmem))
 
 set_option maxHeartbeats 800000 in
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxRecDepth 8000 in
+/-- **The decoupled κ-assembly keystone.**  At a carve-killing field point, the
+universal pair of corank-`g` windows cuts a unique effective divisor of degree `g`,
+using the curve normalization `chi(O) = 1 - gamma` and `gamma ≤ g`. -/
+theorem existsUnique_effective_divisor_divUniversalFibre_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hker : divCarveIdeal k (windowS_choice π hπ g • fiberWeilDivisor π)
+        (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j
+      ≤ RingHom.ker (algebraMap (PairChartRing k g r₁ g r₂ i j) K)) :
+    ∃! D : (relCurve C K).CurveDivisor, 0 ≤ D ∧ CurveDivisor.deg K D = (g : ℤ) ∧
+      divUniversalFibreKM C hπ g r₁ r₂ b₁ i j K
+        = Scheme.divisorSections K (windowN C K hπ g - D) ⊤ ∧
+      divUniversalFibreK' C hπ g r₁ r₂ b₂ i j K
+        = Scheme.divisorSections K (windowN C K hπ g + windowS C K hπ g - D) ⊤ :=
+  existsUnique_effective_divisor_of_carve_windowN_at C K hπ g hgamma
+    (h0_relCurve_baseField C K) (chi_relCurve_baseField C K gamma hχ)
+    (divUniversalFibreKM C hπ g r₁ r₂ b₁ i j K)
+    (divUniversalFibreKM_le C hπ g r₁ r₂ b₁ i j K)
+    (finrank_divUniversalFibreKM_add_at C hπ g r₁ r₂ b₁ i j K hχ)
+    (divUniversalFibreK' C hπ g r₁ r₂ b₂ i j K)
+    (divUniversalFibreK'_le C hπ g r₁ r₂ b₂ i j K)
+    (finrank_divUniversalFibreK'_add_at C hπ g r₁ r₂ b₂ i j K hχ)
+    (divUniversalFibre_carve C hπ g r₁ r₂ b₁ b₂ i j K hker)
+
+set_option maxHeartbeats 800000 in
 -- base-changed tautological towers over the pair chart ring (the recorded hatch class)
 set_option synthInstance.maxHeartbeats 400000 in
 include hO hχ hker in
@@ -467,6 +612,56 @@ theorem divUniversalFibreDivisor_unique
   ((existsUnique_effective_divisor_divUniversalFibre
       C hπ g r₁ r₂ b₁ b₂ i j K hO hχ hker).unique ⟨h0D, hdeg, hKM, hK'⟩
     (divUniversalFibreDivisor_spec C hπ g r₁ r₂ b₁ b₂ i j K hO hχ hker))
+
+/-- The universal fibre divisor at independent curve parameter `gamma ≤ g`. -/
+noncomputable def divUniversalFibreDivisor_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hker : divCarveIdeal k (windowS_choice π hπ g • fiberWeilDivisor π)
+        (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j
+      ≤ RingHom.ker (algebraMap (PairChartRing k g r₁ g r₂ i j) K)) :
+    (relCurve C K).CurveDivisor :=
+  (existsUnique_effective_divisor_divUniversalFibre_at
+    C hπ g r₁ r₂ b₁ b₂ i j K hgamma hχ hker).exists.choose
+
+/-- The defining effective-degree and two-window properties of the decoupled universal
+fibre divisor. -/
+theorem divUniversalFibreDivisor_spec_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hker : divCarveIdeal k (windowS_choice π hπ g • fiberWeilDivisor π)
+        (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j
+      ≤ RingHom.ker (algebraMap (PairChartRing k g r₁ g r₂ i j) K)) :
+    0 ≤ divUniversalFibreDivisor_at C hπ g r₁ r₂ b₁ b₂ i j K hgamma hχ hker ∧
+      CurveDivisor.deg K
+          (divUniversalFibreDivisor_at C hπ g r₁ r₂ b₁ b₂ i j K hgamma hχ hker)
+        = (g : ℤ) ∧
+      divUniversalFibreKM C hπ g r₁ r₂ b₁ i j K
+        = Scheme.divisorSections K (windowN C K hπ g
+            - divUniversalFibreDivisor_at C hπ g r₁ r₂ b₁ b₂ i j K hgamma hχ hker) ⊤ ∧
+      divUniversalFibreK' C hπ g r₁ r₂ b₂ i j K
+        = Scheme.divisorSections K (windowN C K hπ g + windowS C K hπ g
+            - divUniversalFibreDivisor_at C hπ g r₁ r₂ b₁ b₂ i j K hgamma hχ hker) ⊤ :=
+  (existsUnique_effective_divisor_divUniversalFibre_at
+    C hπ g r₁ r₂ b₁ b₂ i j K hgamma hχ hker).exists.choose_spec
+
+/-- Uniqueness of the decoupled universal fibre divisor. -/
+theorem divUniversalFibreDivisor_unique_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hker : divCarveIdeal k (windowS_choice π hπ g • fiberWeilDivisor π)
+        (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j
+      ≤ RingHom.ker (algebraMap (PairChartRing k g r₁ g r₂ i j) K))
+    {D : (relCurve C K).CurveDivisor} (h0D : 0 ≤ D)
+    (hdeg : CurveDivisor.deg K D = (g : ℤ))
+    (hKM : divUniversalFibreKM C hπ g r₁ r₂ b₁ i j K
+      = Scheme.divisorSections K (windowN C K hπ g - D) ⊤)
+    (hK' : divUniversalFibreK' C hπ g r₁ r₂ b₂ i j K
+      = Scheme.divisorSections K (windowN C K hπ g + windowS C K hπ g - D) ⊤) :
+    D = divUniversalFibreDivisor_at C hπ g r₁ r₂ b₁ b₂ i j K hgamma hχ hker :=
+  ((existsUnique_effective_divisor_divUniversalFibre_at
+      C hπ g r₁ r₂ b₁ b₂ i j K hgamma hχ hker).unique ⟨h0D, hdeg, hKM, hK'⟩
+    (divUniversalFibreDivisor_spec_at C hπ g r₁ r₂ b₁ b₂ i j K hgamma hχ hker))
 
 set_option synthInstance.maxHeartbeats 800000 in
 -- the canonical residue-field tower `k → R_{I,J} → κ(q)` exceeds the default search
