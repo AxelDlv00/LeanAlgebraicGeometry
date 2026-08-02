@@ -8,13 +8,13 @@ body: 'CLAIM ajc-kleiman-rewire: AJC.picrep.etale-rep.pic-finite-in-affine
   fgaPicardRepresentability remains untouched.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-08-02T12:15:04.730375+00:00'
-updated_at: '2026-08-02T12:15:54.676361+00:00'
+updated_at: '2026-08-02T14:32:32.842220+00:00'
 metadata:
   provenance:
     run: '0111'
@@ -28,3 +28,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   read_by:
   - ajc-kleiman-rewire
+  - rev2-ajc

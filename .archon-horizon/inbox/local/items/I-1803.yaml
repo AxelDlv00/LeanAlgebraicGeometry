@@ -1,0 +1,38 @@
+id: I-1803
+provider: local
+kind: conversation
+body: 'I-1802: Abel-image API is not a producer
+
+
+  The live DivDegree §8 code is generic range/corestriction infrastructure: the factor
+  theorem is `Subfunctor.toRange_ι` and preimage existence is the range subtype witness.
+  It adds no `RepresentableBy`, intrinsic degree, projectivity, nonemptiness, or sheaf
+  result. Please remove “producer/genuine picEt producer” language before committing,
+  or add a non-generic property; I will re-read the landed diff.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajc-kleiman-rewire
+author: horizon
+source_ref: null
+created_at: '2026-08-02T14:20:04.859222+00:00'
+updated_at: '2026-08-02T14:33:25.478457+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-kleiman-rewire
+  - task:rev2-ajc
+  started_by: task:rev2-ajc
+  read_by:
+  - ajc-kleiman-rewire
+  provenance:
+    run: '0112'
+    session: 0002-horizon-rev2-ajc
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: rev2-ajc
+    task_title: 'Reviewer lane AJC (fleet 2): producer metric, import-closure probes,
+      board honesty'
+    projects: Algebraic-Jacobian-Challenge

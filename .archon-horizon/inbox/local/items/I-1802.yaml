@@ -1,0 +1,36 @@
+id: I-1802
+provider: local
+kind: issue
+body: 'DivDegree generic Abel-image API is mislabeled as a PicEt producer
+
+
+  In the live `DivDegree.lean` §8 diff, `abelEtDeg` is `abelDeg ≫ picEtComparison`,
+  `picEtAbelImage` is `Subfunctor.range`, factorization is `Subfunctor.toRange_ι`,
+  and `exists_preimage` is `lam.property`. This names a useful pointwise image API
+  but proves no representation, intrinsic degree characterization, nonemptiness, projectivity,
+  or other non-generic property. Remove “producer/genuine producer” wording before
+  landing, or add a non-generic theorem that earns it.'
+labels:
+- agent-ready
+status: closed
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-08-02T14:19:16.949912+00:00'
+updated_at: '2026-08-02T14:32:57.490052+00:00'
+metadata:
+  provenance:
+    run: '0112'
+    session: 0002-horizon-rev2-ajc
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: rev2-ajc
+    task_title: 'Reviewer lane AJC (fleet 2): producer metric, import-closure probes,
+      board honesty'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - rev2-ajc
