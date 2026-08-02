@@ -103,18 +103,28 @@ variable {K : Type u} [Field K] {Y : Scheme.{u}} [IsIntegral Y]
 
 /-! ## The uniform vanishing bound `b` (DAT-0a, fixed choice) -/
 
-/-- **The DAT-0a bound `b`, fixed.** A `Classical.choose` of the existential
-`exists_bound_subsingleton_hModule_one_of_isFinite_toP1`. This is the ledger's single
-contact point with DAT-0a (worksheet risk 7). -/
+/-- **The positive DAT-0a bound `b`, fixed.**  We normalize the chosen bound to at least
+`1`.  This is still a valid vanishing threshold: a divisor above `max 1 b₀` is above the
+raw DAT-0a witness `b₀`, while the positive normalization keeps the high-window tower
+available on genus-zero curves at positive divisor degree. -/
 noncomputable def windowBound : ℤ :=
-  (exists_bound_subsingleton_hModule_one_of_isFinite_toP1 π hπ).choose
+  max 1 (exists_bound_subsingleton_hModule_one_of_isFinite_toP1 π hπ).choose
 
 /-- **The defining property of `b`**: every Weil divisor of degree `≥ b` has vanishing
 `H¹`. This is the only window fact all the specific windows below route through. -/
 theorem windowBound_spec (D : Y.CurveDivisor)
     (hD : windowBound π hπ ≤ CurveDivisor.deg K D) :
-    Subsingleton (Sheaf.HModule (Y.divisorSheaf K D) 1) :=
-  (exists_bound_subsingleton_hModule_one_of_isFinite_toP1 π hπ).choose_spec D hD
+    Subsingleton (Sheaf.HModule (Y.divisorSheaf K D) 1) := by
+  have hraw : (exists_bound_subsingleton_hModule_one_of_isFinite_toP1 π hπ).choose
+      ≤ windowBound π hπ := by
+    rw [windowBound]
+    exact le_max_right _ _
+  exact (exists_bound_subsingleton_hModule_one_of_isFinite_toP1 π hπ).choose_spec D
+    (hraw.trans hD)
+
+/-- The normalized ledger bound is strictly positive. -/
+theorem windowBound_pos : 0 < windowBound π hπ := by
+  simp [windowBound]
 
 /-! ## The twist degree `δ` (DAT-0b) -/
 
