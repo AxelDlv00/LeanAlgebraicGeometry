@@ -1,0 +1,38 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient
+title: Admissible divisor quotient represents Pic0 (corrected Altman-Kleiman)
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'For n = admissibleCoverageParameter and the unconditional widened representer
+  D of divFunctorAff C n, construct the sheaf quotient of D by equality of the induced
+  degree-zero Picard class; identify its kernel pair with linear equivalence, prove
+  the quotient map is locally surjective, and prove the quotient sheaf is represented
+  by a k-scheme Q, yielding (pic0TypeFunctor C).RepresentableBy Q. The proof must
+  establish the needed quasi-projectivity or a concrete project-local embedding of
+  D. It must not assume P.IsRepresentable, HasSmoothProperQuotient, a RepresentableBy
+  witness, a rational point, or any desired quotient datum. The raw admissible Abel
+  map is not the chart: positive-dimensional linear-system fibres must be removed
+  by the quotient.'
+status: active
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-08-02T15:53:04.964355+00:00'
+  provenance:
+    run: 0109
+    session: 0002-horizon-ajcr-pic0-join
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-pic0-join
+    task_title: 'Pic0 join: turn the widened divisor representer into the Pic0 representability
+      producer'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.datum-tail
+  owner: ajcr-pic0-join
