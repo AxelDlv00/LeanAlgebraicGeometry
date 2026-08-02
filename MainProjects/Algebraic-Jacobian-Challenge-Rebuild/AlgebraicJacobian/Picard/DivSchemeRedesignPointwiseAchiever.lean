@@ -119,6 +119,24 @@ noncomputable def pointwiseFibreWindowNonzero
   rw [hbot, Submodule.mem_bot] at hf
   exact hf
 
+set_option maxHeartbeats 2400000 in
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxRecDepth 8000 in
+/-- The pointwise first fibre window is nonzero at curve parameter `gamma ≤ g`. -/
+noncomputable def pointwiseFibreWindowNonzero_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (z : relCurve C RZ) :
+    divUniversalFibreKM C hπ g r₁ r₂ b₁ i j
+      (relCurveBasePoint C RZ z).asIdeal.ResidueField ≠ ⊥ := by
+  obtain ⟨f, hf, hf0⟩ :=
+    exists_mem_ne_zero_divUniversalFibreKM_seedPrime_at
+      C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ (relCurveBasePoint C RZ z)
+  intro hbot
+  apply hf0
+  rw [hbot, Submodule.mem_bot] at hf
+  exact hf
+
 -- The achiever theorem reconstructs the same residue-field tower and large window types.
 set_option maxHeartbeats 2400000 in
 set_option synthInstance.maxHeartbeats 800000 in
@@ -133,6 +151,20 @@ noncomputable def pointwiseAchiever
   exists_relThetaWindowEquiv_mem_divUniversalSeedK_achieves_seedPrime
     C hπ g r₁ r₂ b₁ b₂ i j hO hχ (relCurveBasePoint C RZ z)
       (pointwiseFibreWindowNonzero C hπ g r₁ r₂ b₁ b₂ i j hO hχ z) hzfib
+
+set_option maxHeartbeats 2400000 in
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxRecDepth 8000 in
+/-- The pointwise achiever at independent curve parameter `gamma ≤ g`. -/
+noncomputable def pointwiseAchiever_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (z : relCurve C RZ)
+    (hzfib : relCurveResiduePoint C RZ z ≠
+      genericPoint (relCurve C (relCurveBasePoint C RZ z).asIdeal.ResidueField)) :=
+  exists_relThetaWindowEquiv_mem_divUniversalSeedK_achieves_seedPrime_at
+    C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ (relCurveBasePoint C RZ z)
+      (pointwiseFibreWindowNonzero_at C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ z) hzfib
 
 end SeedContext
 

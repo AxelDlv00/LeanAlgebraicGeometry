@@ -18176,7 +18176,7 @@
     "macros": {},
     "states": {
       "blocked": 249,
-      "closed": 8602,
+      "closed": 8604,
       "formalized_open": 301,
       "informal": 175,
       "ready": 199
@@ -25977,9 +25977,9 @@
       "has_sorry": false,
       "hgraph_id": "d5d54738512f",
       "id": "def:has_rational_point",
-      "lean_file": "AlgebraicJacobian/Picard/FGAPicRepresentability.lean",
+      "lean_file": "AlgebraicJacobian/Picard/HasRationalPoint.lean",
       "lean_name": "AlgebraicGeometry.Scheme.HasRationalPoint",
-      "lean_source": "class HasRationalPoint {k : Type u} [Field k] (C : Over (Spec (.of k))) : Prop where\n  nonempty_section :\n    Nonempty {\u03c3 : Spec (.of k) \u27f6 C.left // \u03c3 \u226b C.hom = \ud835\udfd9 (Spec (.of k))}\n\nnamespace PicScheme\n\n/-! ## \u00a70. The relative Picard functor and the divisor functor\n\n`picSharp` is the honest relative Picard functor of sibling\n`Picard/RelPicFunctor.lean` (Kleiman \u00a72 Def `df:Pfs`), with the group\nstructure forgotten (representability is a statement about the underlying\nset-valued functor; the group structure is transported back onto the\nrepresenting scheme by `groupSchemeStructure` below).\n\n`divFunctor` (the relative-effective-divisor functor `Div_{C/k}`, Kleiman \u00a73\nDef `df:div`) is the functor `Scheme.DivFunctor C.hom` of sibling\n`Picard/DivFunctorDef.lean`. -/",
+      "lean_source": "class HasRationalPoint {k : Type u} [Field k] (C : Over (Spec (.of k))) : Prop where\n  nonempty_section :\n    Nonempty {sigma : Spec (.of k) \u27f6 C.left // sigma \u226b C.hom = \ud835\udfd9 (Spec (.of k))}",
       "lean_status": "lean_ok",
       "level": "coarse",
       "mathlib_ok": false,

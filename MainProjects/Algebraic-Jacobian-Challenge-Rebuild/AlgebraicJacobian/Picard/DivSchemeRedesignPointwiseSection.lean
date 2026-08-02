@@ -194,6 +194,104 @@ theorem pointwiseSectionVector_achieves
       (pointwiseAchiever C hπ g r₁ r₂ b₁ b₂ i j hO hχ z hzg).choose := by
   simp only [pointwiseSectionVector, dif_pos hzg]
 
+set_option maxHeartbeats 2400000 in
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxRecDepth 8000 in
+/-- The redesigned pointwise vector at curve parameter `gamma ≤ g`. -/
+noncomputable def pointwiseSectionVector_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (z : relCurve C RZ) : RZ ⊗[k] HM := by
+  classical
+  exact if hzg : relCurveResiduePoint C RZ z ≠
+      genericPoint (relCurve C (relCurveBasePoint C RZ z).asIdeal.ResidueField) then
+    (pointwiseAchiever_at C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ z hzg).choose
+  else
+    (exists_sec_windowCompare_ne_zero_seedPrime_at C hπ g r₁ r₂ b₁ b₂ i j
+      hgamma hχ (relCurveBasePoint C RZ z)).choose
+
+set_option maxHeartbeats 2400000 in
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxRecDepth 8000 in
+/-- The decoupled pointwise vector lies in the first universal window. -/
+theorem pointwiseSectionVector_mem_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (z : relCurve C RZ) :
+    pointwiseSectionVector_at C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ z ∈
+      (divUniversalFstWindow C π hπ g r₁ r₂ b₁ b₂ i j).toSubmodule := by
+  classical
+  unfold pointwiseSectionVector_at
+  split
+  · exact (pointwiseAchiever_at
+      C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ z ‹_›).choose_spec.1
+  · exact (exists_sec_windowCompare_ne_zero_seedPrime_at
+      C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ
+        (relCurveBasePoint C RZ z)).choose_spec.1
+
+set_option maxHeartbeats 2400000 in
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxRecDepth 8000 in
+/-- The decoupled pointwise vector remains nonzero over the residue field of its base
+point. -/
+theorem windowCompare_pointwiseSectionVector_ne_zero_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (z : relCurve C RZ) :
+    windowCompare RZ (relCurveBasePoint C RZ z).asIdeal.ResidueField
+      (pointwiseSectionVector_at C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ z) ≠ 0 := by
+  classical
+  unfold pointwiseSectionVector_at
+  split
+  · exact (pointwiseAchiever_at
+      C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ z ‹_›).choose_spec.2.2.1
+  · exact (exists_sec_windowCompare_ne_zero_seedPrime_at
+      C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ
+        (relCurveBasePoint C RZ z)).choose_spec.2.1
+
+/-- The theta section attached to the decoupled pointwise vector. -/
+noncomputable def pointwiseSection_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (z : relCurve C RZ) :
+    relThetaSections C RZ π (windowM_choice π hπ g) :=
+  relThetaWindowEquiv C RZ π (windowM_choice π hπ g)
+    (relThetaPairH1_windowM C π hπ g)
+    (pointwiseSectionVector_at C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ z)
+
+set_option maxHeartbeats 2400000 in
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxRecDepth 8000 in
+/-- The decoupled pointwise section lies in the universal seed submodule. -/
+theorem pointwiseSection_mem_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (z : relCurve C RZ) :
+    pointwiseSection_at C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ z ∈
+      divUniversalSeedK C π hπ g r₁ r₂ b₁ b₂ i j := by
+  classical
+  unfold pointwiseSection_at pointwiseSectionVector_at
+  split
+  · exact (pointwiseAchiever_at
+      C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ z ‹_›).choose_spec.2.1
+  · exact (exists_sec_windowCompare_ne_zero_seedPrime_at
+      C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ
+        (relCurveBasePoint C RZ z)).choose_spec.2.2
+
+set_option maxHeartbeats 2400000 in
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxRecDepth 8000 in
+/-- In the non-generic branch, the decoupled pointwise vector is the chosen achiever. -/
+theorem pointwiseSectionVector_achieves_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (z : relCurve C RZ)
+    (hzg : relCurveResiduePoint C RZ z ≠
+      genericPoint (relCurve C (relCurveBasePoint C RZ z).asIdeal.ResidueField)) :
+    pointwiseSectionVector_at C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ z =
+      (pointwiseAchiever_at C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ z hzg).choose := by
+  simp only [pointwiseSectionVector_at, dif_pos hzg]
+
 end SeedContext
 
 end PointwiseAchiever

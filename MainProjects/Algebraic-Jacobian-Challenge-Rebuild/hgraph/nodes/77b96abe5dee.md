@@ -21,20 +21,20 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.deg_eq_genus_of_window_corank
 type: lean
-updated: '2026-08-02T07:12:59'
+updated: '2026-08-02T21:35:45'
 ---
-theorem deg_eq_genus_of_window_corank (g : ℕ)
+theorem deg_eq_genus_of_window_corank (n : ℕ) {gamma : ℕ}
     (hO : Sheaf.h0 (Y.moduleKSheaf K) = 1)
-    (hχ : Sheaf.chi (Y.moduleKSheaf K) = 1 - (g : ℤ))
+    (hχ : Sheaf.chi (Y.moduleKSheaf K) = 1 - (gamma : ℤ))
     (N : Y.CurveDivisor)
     (hNwin : Subsingleton (Sheaf.HModule (Y.divisorSheaf K N) 1))
-    (hNnorm : ∀ D' : Y.CurveDivisor, CurveDivisor.deg K D' ≤ 2 * (g : ℤ) →
+    (hNnorm : ∀ D' : Y.CurveDivisor, CurveDivisor.deg K D' ≤ 2 * (n : ℤ) →
       Subsingleton (Sheaf.HModule (Y.divisorSheaf K (N - D')) 1))
-    (hNdeg : 2 * (g : ℤ) ≤ CurveDivisor.deg K N)
+    (hNdeg : 2 * (n : ℤ) ≤ CurveDivisor.deg K N)
     (D : Y.CurveDivisor)
-    (hcorank : Module.finrank K ↥(divisorSections K (N - D) ⊤) + g
-      = Sheaf.h0 (Y.divisorSheaf K N)) :
-    CurveDivisor.deg K D = (g : ℤ) := by
+    (hcorank : Module.finrank K ↥(divisorSections K (N - D) ⊤) + n
+      = Sheaf.h0 (Y.divisorSheaf K N)) (hgamma : gamma ≤ n := by omega) :
+    CurveDivisor.deg K D = (n : ℤ) := by
   have hrN : (Sheaf.h0 (Y.divisorSheaf K N) : ℤ)
       = CurveDivisor.deg K N + Sheaf.chi (Y.moduleKSheaf K) :=
     h0_eq_deg_add_chi_of_subsingleton_hModule_one _ hNwin
@@ -48,7 +48,7 @@ theorem deg_eq_genus_of_window_corank (g : ℕ)
   -- F1: the section bound caps `deg D ≤ 2g`
   have hsec := h0_divisorSheaf_le_max_of_h0_one K hO (N - D)
   rw [hdegND] at hsec
-  have hD2g : CurveDivisor.deg K D ≤ 2 * (g : ℤ) := by
+  have hD2n : CurveDivisor.deg K D ≤ 2 * (n : ℤ) := by
     rcases le_max_iff.mp hsec with h0le | hvle
     · omega
     · omega
@@ -56,7 +56,7 @@ theorem deg_eq_genus_of_window_corank (g : ℕ)
   have hnorm : (Sheaf.h0 (Y.divisorSheaf K (N - D)) : ℤ)
       = CurveDivisor.deg K N - CurveDivisor.deg K D
         + Sheaf.chi (Y.moduleKSheaf K) := by
-    rw [h0_eq_deg_add_chi_of_subsingleton_hModule_one _ (hNnorm D hD2g), hdegND]
+    rw [h0_eq_deg_add_chi_of_subsingleton_hModule_one _ (hNnorm D hD2n), hdegND]
   rw [hχ] at hnorm
   omega
 

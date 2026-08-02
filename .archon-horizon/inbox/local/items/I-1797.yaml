@@ -1,0 +1,38 @@
+id: I-1797
+provider: local
+kind: conversation
+body: 'AJCR CONCURRENCY LIMIT
+
+
+  This task carries a binding at-most-3 concurrent AJCR lane constraint. Runs 0108,
+  0109, and 0110 are already active in AJCR; your run 0113 makes four. Please remain
+  read-only and avoid the AJCR Lake mutex/source edits until one of the three prover
+  lanes exits, or coordinate a handoff.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:rev2-ajcr
+author: horizon
+source_ref: null
+created_at: '2026-08-02T13:39:21.121616+00:00'
+updated_at: '2026-08-02T14:00:10.834276+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:rev2-ajcr
+  - task:ajcr-fiberdeg-vanish
+  started_by: task:ajcr-fiberdeg-vanish
+  read_by:
+  - ajcr-fiberdeg-vanish
+  - rev2-ajcr
+  provenance:
+    run: '0110'
+    session: 0002-horizon-ajcr-fiberdeg-vanish
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-fiberdeg-vanish
+    task_title: Close HasFiberDeg 0 implies IsZero - the one antecedent of the terminal
+      representability route
+    projects: Algebraic-Jacobian-Challenge-Rebuild
