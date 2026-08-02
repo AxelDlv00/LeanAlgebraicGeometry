@@ -181,6 +181,22 @@ theorem IsCertified.finite_intrinsicThetaGlued
     (AlgebraicGeometry.AffAdaptation.IsCertified.intrinsicWindowCarve_surjective
       C R π hc hπ hO hχ ha1 hMa)
 
+/-- The intrinsic high-window carve has finite target when the curve parameter
+`gamma` is independent of the certified divisor degree `g`. -/
+theorem IsCertified.finite_intrinsicThetaGlued_at
+    {gamma : ℕ} (hc : A.IsCertified g)
+    (hπ : π ≫ P1.structureMap k = C.hom)
+    (hgamma : gamma ≤ g)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (ha1 : Subsingleton (relTwistPair C k π
+      (relThetaCocycle C k π a)).H1)
+    (hMa : windowM_choice π hπ g ≤ a) :
+    Module.Finite R (A.IntrinsicThetaGlued (π := π) a) := by
+  exact Module.Finite.of_surjective
+    (A.intrinsicWindowCarve (π := π) a ha1)
+    (AlgebraicGeometry.AffAdaptation.IsCertified.intrinsicWindowCarve_surjective_at
+      C R π hc hπ hgamma hχ ha1 hMa)
+
 /-- The high-window quotient by the intrinsic vanishing submodule is finite.  This is the
 quotient presentation used by the Grassmannian/frame consumers. -/
 theorem IsCertified.finite_intrinsicWindowQuotient
@@ -198,6 +214,24 @@ theorem IsCertified.finite_intrinsicWindowQuotient
   exact Module.Finite.equiv
     (AlgebraicGeometry.AffAdaptation.IsCertified.intrinsicWindowQuotEquiv
       C R π hc hπ hO hχ ha1 hMa).symm
+
+/-- The intrinsic high-window quotient is finite with independent curve and divisor
+parameters. -/
+theorem IsCertified.finite_intrinsicWindowQuotient_at
+    {gamma : ℕ} (hc : A.IsCertified g)
+    (hπ : π ≫ P1.structureMap k = C.hom)
+    (hgamma : gamma ≤ g)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (ha1 : Subsingleton (relTwistPair C k π
+      (relThetaCocycle C k π a)).H1)
+    (hMa : windowM_choice π hπ g ≤ a) :
+    Module.Finite R ((R ⊗[k] ↥(Scheme.divisorSections k
+      (a • fiberWeilDivisor π) ⊤)) ⧸ divisorWindow d ha1) := by
+  letI := AlgebraicGeometry.AffAdaptation.IsCertified.finite_intrinsicThetaGlued_at
+    (C := C) (R := R) (π := π) hc hπ hgamma hχ ha1 hMa
+  exact Module.Finite.equiv
+    (AlgebraicGeometry.AffAdaptation.IsCertified.intrinsicWindowQuotEquiv_at
+      C R π hc hπ hgamma hχ ha1 hMa).symm
 
 end CertifiedWindow
 

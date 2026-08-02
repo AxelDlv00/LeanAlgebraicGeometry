@@ -189,6 +189,24 @@ theorem IsCertified.projective_intrinsicWindowQuotient {g : ℕ}
   exact Module.Projective.of_equiv
     (hc.intrinsicWindowQuotEquiv C R π hπ hO hχ ha1 hMa).symm
 
+/-- The intrinsic window quotient is projective when the curve parameter is
+independent of the certified divisor degree. -/
+theorem IsCertified.projective_intrinsicWindowQuotient_at {g gamma : ℕ}
+    (hc : A.IsCertified g)
+    (hπ : π ≫ P1.structureMap k = C.hom)
+    (hgamma : gamma ≤ g)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (ha1 : Subsingleton (relTwistPair C k π
+      (relThetaCocycle C k π a)).H1)
+    (hMa : windowM_choice π hπ g ≤ a) :
+    Module.Projective R ((R ⊗[k]
+      ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤)) ⧸
+        divisorWindow d ha1) := by
+  letI : Module.Projective R (A.IntrinsicThetaGlued (π := π) a) :=
+    hc.projective_intrinsicThetaGlued (π := π) A a
+  exact Module.Projective.of_equiv
+    (hc.intrinsicWindowQuotEquiv_at C R π hπ hgamma hχ ha1 hMa).symm
+
 /-- The intrinsic window quotient has the certified constant stalk rank with no
 cover-containment hypothesis. -/
 theorem IsCertified.rankAtStalk_intrinsicWindowQuotient {g : ℕ}
@@ -205,6 +223,24 @@ theorem IsCertified.rankAtStalk_intrinsicWindowQuotient {g : ℕ}
         divisorWindow d ha1) p = g := by
   rw [congrFun (Module.rankAtStalk_eq_of_equiv
     (hc.intrinsicWindowQuotEquiv C R π hπ hO hχ ha1 hMa)) p]
+  exact hc.rankAtStalk_intrinsicThetaGlued (π := π) A a p
+
+/-- The intrinsic window quotient has constant stalk rank equal to the certified
+divisor degree, independently of the curve parameter. -/
+theorem IsCertified.rankAtStalk_intrinsicWindowQuotient_at {g gamma : ℕ}
+    (hc : A.IsCertified g)
+    (hπ : π ≫ P1.structureMap k = C.hom)
+    (hgamma : gamma ≤ g)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (ha1 : Subsingleton (relTwistPair C k π
+      (relThetaCocycle C k π a)).H1)
+    (hMa : windowM_choice π hπ g ≤ a)
+    (p : PrimeSpectrum R) :
+    Module.rankAtStalk ((R ⊗[k]
+      ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤)) ⧸
+        divisorWindow d ha1) p = g := by
+  rw [congrFun (Module.rankAtStalk_eq_of_equiv
+    (hc.intrinsicWindowQuotEquiv_at C R π hπ hgamma hχ ha1 hMa)) p]
   exact hc.rankAtStalk_intrinsicThetaGlued (π := π) A a p
 
 end WindowQuotient

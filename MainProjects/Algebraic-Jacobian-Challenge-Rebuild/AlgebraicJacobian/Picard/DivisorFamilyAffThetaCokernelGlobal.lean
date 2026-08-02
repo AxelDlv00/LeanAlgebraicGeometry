@@ -172,6 +172,29 @@ theorem IsCertified.exists_chartAdaptation_subsingleton_thetaIdealH1
     B.cechPicClass_thetaIdealDatum]
   exact hWclass
 
+/-- The auxiliary theta-ideal `H¹` vanishing producer with the curve parameter
+`gamma` independent of the certified divisor degree `g`. -/
+theorem IsCertified.exists_chartAdaptation_subsingleton_thetaIdealH1_at
+    {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
+    {A : AffAdaptation D d} {g gamma : ℕ} (hc : A.IsCertified g)
+    (hπ : π ≫ P1.structureMap k = C.hom)
+    (hgamma : gamma ≤ g)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    {a : ℕ} (hMa : windowM_choice π hπ g ≤ a) :
+    ∃ B : DivisorAdaptation C R π d,
+      Subsingleton (Sheaf.HModule (B.thetaIdealDatum a).sheaf 1) := by
+  obtain ⟨B⟩ := exists_divisorAdaptation C R π d
+  refine ⟨B, (subsingleton_datumPair_h1_iff (B.thetaIdealDatum a)).mp
+    (datum_subsingleton_pairH1 (B.thetaIdealDatum a) hπ ?_)⟩
+  apply B.thetaIdealDatum_hfib_of_witness a
+  intro p
+  obtain ⟨W, hWclass, hWH1⟩ :=
+    hc.fibrewise_thetaSub_h1_witness_at C R π hπ hgamma hχ hMa p
+  refine ⟨W, ?_, hWH1⟩
+  rw [BasicOpenCocycleDatum.cechPicClass_baseChange,
+    B.cechPicClass_thetaIdealDatum]
+  exact hWclass
+
 /-- The same producer in the form consumed by the global cokernel projection. -/
 theorem IsCertified.exists_chartAdaptation_thetaIdealCokernel_app_top_surjective
     {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
@@ -187,6 +210,24 @@ theorem IsCertified.exists_chartAdaptation_thetaIdealCokernel_app_top_surjective
           (op (⊤ : (relCurve C R).Opens))).hom := by
   obtain ⟨B, hB⟩ := hc.exists_chartAdaptation_subsingleton_thetaIdealH1
     C R π hπ hO hχ ha1 hMa
+  letI : Subsingleton (Sheaf.HModule (B.thetaIdealDatum a).sheaf 1) := hB
+  exact ⟨B, B.thetaIdealCokernel_app_top_surjective⟩
+
+/-- The global theta-cokernel surjectivity producer with independent curve and divisor
+parameters. -/
+theorem IsCertified.exists_chartAdaptation_thetaIdealCokernel_app_top_surjective_at
+    {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
+    {A : AffAdaptation D d} {g gamma : ℕ} (hc : A.IsCertified g)
+    (hπ : π ≫ P1.structureMap k = C.hom)
+    (hgamma : gamma ≤ g)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    {a : ℕ} (hMa : windowM_choice π hπ g ≤ a) :
+    ∃ B : DivisorAdaptation C R π d,
+      Function.Surjective
+        ((cokernel.π (DivisorAdaptation.thetaIdealIncl (A := B) (a := a))).hom.app
+          (op (⊤ : (relCurve C R).Opens))).hom := by
+  obtain ⟨B, hB⟩ := hc.exists_chartAdaptation_subsingleton_thetaIdealH1_at
+    C R π hπ hgamma hχ hMa
   letI : Subsingleton (Sheaf.HModule (B.thetaIdealDatum a).sheaf 1) := hB
   exact ⟨B, B.thetaIdealCokernel_app_top_surjective⟩
 
@@ -713,6 +754,21 @@ theorem IsCertified.intrinsicThetaEvalRel_surjective
   exact intrinsicThetaEvalRel_surjective_of_thetaIdealCokernel_app_top_surjective
     C R π B a hB
 
+/-- Intrinsic theta evaluation remains surjective when the Euler-characteristic
+normalization uses `gamma ≤ g` independently of the certified divisor degree. -/
+theorem IsCertified.intrinsicThetaEvalRel_surjective_at
+    {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
+    {A : AffAdaptation D d} {g gamma : ℕ} (hc : A.IsCertified g)
+    (hπ : π ≫ P1.structureMap k = C.hom)
+    (hgamma : gamma ≤ g)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    {a : ℕ} (hMa : windowM_choice π hπ g ≤ a) :
+    Function.Surjective (A.intrinsicThetaEvalRel (π := π) a) := by
+  obtain ⟨B, hB⟩ := hc.exists_chartAdaptation_thetaIdealCokernel_app_top_surjective_at
+    C R π hπ hgamma hχ hMa
+  exact intrinsicThetaEvalRel_surjective_of_thetaIdealCokernel_app_top_surjective
+    C R π B a hB
+
 /-- The certified intrinsic high-window carve is surjective. -/
 theorem IsCertified.intrinsicWindowCarve_surjective
     {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
@@ -725,6 +781,21 @@ theorem IsCertified.intrinsicWindowCarve_surjective
     Function.Surjective (A.intrinsicWindowCarve (π := π) a ha1) := by
   rw [intrinsicWindowCarve, LinearMap.coe_comp]
   exact (hc.intrinsicThetaEvalRel_surjective C R π hπ hO hχ ha1 hMa).comp
+    (relThetaWindowEquiv C R π a ha1).surjective
+
+/-- The intrinsic window carve is surjective with independent curve and divisor
+parameters. -/
+theorem IsCertified.intrinsicWindowCarve_surjective_at
+    {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
+    {A : AffAdaptation D d} {g gamma : ℕ} (hc : A.IsCertified g)
+    (hπ : π ≫ P1.structureMap k = C.hom)
+    (hgamma : gamma ≤ g)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    {a : ℕ} (ha1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1)
+    (hMa : windowM_choice π hπ g ≤ a) :
+    Function.Surjective (A.intrinsicWindowCarve (π := π) a ha1) := by
+  rw [intrinsicWindowCarve, LinearMap.coe_comp]
+  exact (hc.intrinsicThetaEvalRel_surjective_at C R π hπ hgamma hχ hMa).comp
     (relThetaWindowEquiv C R π a ha1).surjective
 
 /-- The certified intrinsic window quotient is linearly equivalent to the descended
@@ -744,6 +815,24 @@ noncomputable def IsCertified.intrinsicWindowQuotEquiv
       (A.ker_intrinsicWindowCarve (π := π) a ha1).symm).trans
     ((A.intrinsicWindowCarve (π := π) a ha1).quotKerEquivOfSurjective
       (hc.intrinsicWindowCarve_surjective C R π hπ hO hχ ha1 hMa))
+
+/-- The intrinsic window quotient equivalence with independent curve and divisor
+parameters. -/
+noncomputable def IsCertified.intrinsicWindowQuotEquiv_at
+    {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
+    {A : AffAdaptation D d} {g gamma : ℕ} (hc : A.IsCertified g)
+    (hπ : π ≫ P1.structureMap k = C.hom)
+    (hgamma : gamma ≤ g)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    {a : ℕ} (ha1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1)
+    (hMa : windowM_choice π hπ g ≤ a) :
+    ((R ⊗[k] ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤)) ⧸
+        divisorWindow d ha1) ≃ₗ[R]
+      A.IntrinsicThetaGlued (π := π) a :=
+  (Submodule.quotEquivOfEq _ _
+      (A.ker_intrinsicWindowCarve (π := π) a ha1).symm).trans
+    ((A.intrinsicWindowCarve (π := π) a ha1).quotKerEquivOfSurjective
+      (hc.intrinsicWindowCarve_surjective_at C R π hπ hgamma hχ ha1 hMa))
 
 /-- Once the widened certificate supplies the auxiliary theta-ideal `H¹` vanishing,
 global sections of the quotient sheaf for the chosen auxiliary chart are linearly equivalent
