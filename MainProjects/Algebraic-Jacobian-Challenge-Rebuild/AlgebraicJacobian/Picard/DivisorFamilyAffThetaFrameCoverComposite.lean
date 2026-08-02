@@ -143,6 +143,73 @@ variable (b₂ : Module.Basis (Fin r₂) k
     ((windowM_choice π hπ g + windowS_choice π hπ g) • fiberWeilDivisor π) ⊤))
 variable {S : Type u} [CommRing S] [Algebra k S]
 
+namespace CertifiedDivisorFamilyAff
+
+set_option maxHeartbeats 2000000 in
+-- The two off-diagonal quotient packages and their pullback naturality are instantiated at
+-- both pinned windows.
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxRecDepth 8000 in
+/-- Every certified widened family admits a finite pair-chart frame cover when the curve
+parameter is independent of the certified divisor degree. -/
+theorem exists_frameCover_at
+    (F : CertifiedDivisorFamilyAff C S g)
+    {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hχgamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ)) :
+    ∃ (m : ℕ) (f : Fin m → S), Ideal.span (Set.range f) = ⊤ ∧
+      ∀ t : Fin m,
+        ∃ (i : (glueData k g r₁).J) (j : (glueData k g r₂).J)
+          (w : PairChartRing k g r₁ g r₂ i j →ₐ[k] Localization.Away (f t)),
+          (F.mapAlg (Localization.Away (f t)) g
+            F.cover.hasAffineOverlaps_of_isProper).IsPairChartFramed
+              hπ g b₁ b₂ i j w := by
+  have hfin₁ := F.certified.finite_intrinsicWindowQuotient_at hπ hgamma hχgamma
+    (relThetaPairH1_windowM C π hπ g) le_rfl
+  have hproj₁ := F.certified.projective_intrinsicWindowQuotient_at
+    (π := π) F.adaptation (windowM_choice π hπ g) hπ hgamma hχgamma
+    (relThetaPairH1_windowM C π hπ g) le_rfl
+  have hrank₁ := fun p : PrimeSpectrum S =>
+    F.certified.rankAtStalk_intrinsicWindowQuotient_at
+      (π := π) F.adaptation (windowM_choice π hπ g) hπ hgamma hχgamma
+      (relThetaPairH1_windowM C π hπ g) le_rfl p
+  have hfin₂ := F.certified.finite_intrinsicWindowQuotient_at hπ hgamma hχgamma
+    (relThetaPairH1_windowMS C π hπ g) (Nat.le_add_right _ _)
+  have hproj₂ := F.certified.projective_intrinsicWindowQuotient_at
+    (π := π) F.adaptation
+      (windowM_choice π hπ g + windowS_choice π hπ g) hπ hgamma hχgamma
+    (relThetaPairH1_windowMS C π hπ g) (Nat.le_add_right _ _)
+  have hrank₂ := fun p : PrimeSpectrum S =>
+    F.certified.rankAtStalk_intrinsicWindowQuotient_at
+      (π := π) F.adaptation
+        (windowM_choice π hπ g + windowS_choice π hπ g) hπ hgamma hχgamma
+      (relThetaPairH1_windowMS C π hπ g) (Nat.le_add_right _ _) p
+  obtain ⟨m, f, hspan, hframe⟩ := divisorWindow_exists_frameCover
+    hπ g r₁ r₂ b₁ b₂ F.eqns hfin₁ hproj₁ hrank₁ hfin₂ hproj₂ hrank₂
+  refine ⟨m, f, hspan, fun t => ?_⟩
+  obtain ⟨i, j, w, hw₁, hw₂⟩ := hframe t
+  refine ⟨i, j, w, ?_⟩
+  change (_ = Submodule.map _
+      (divisorWindow
+        (F.adaptation.pulledEquations (Localization.Away (f t))
+          F.certified.projective_colength)
+        (relThetaPairH1_windowM C π hπ g))) ∧
+    (_ = Submodule.map _
+      (divisorWindow
+        (F.adaptation.pulledEquations (Localization.Away (f t))
+          F.certified.projective_colength)
+        (relThetaPairH1_windowMS C π hπ g)))
+  constructor
+  · rw [F.certified.divisorWindow_pulledEquations_eq_at
+      (R' := Localization.Away (f t)) hπ hgamma hχgamma
+      (relThetaPairH1_windowM C π hπ g) le_rfl]
+    exact hw₁
+  · rw [F.certified.divisorWindow_pulledEquations_eq_at
+      (R' := Localization.Away (f t)) hπ hgamma hχgamma
+      (relThetaPairH1_windowMS C π hπ g) (Nat.le_add_right _ _)]
+    exact hw₂
+
+end CertifiedDivisorFamilyAff
+
 set_option maxHeartbeats 2400000 in
 -- Both intrinsic windows are transported across an away-localization equivalence.
 set_option synthInstance.maxHeartbeats 800000 in
@@ -273,6 +340,137 @@ private theorem exists_certChart_piece_aff (F₀ : DivFamZarAff C S g)
           (Module.Grassmannian.map w (pairTautSnd k g r₁ r₂ i j)) hw₂)
 
 set_option maxHeartbeats 2400000 in
+-- Both off-diagonal intrinsic windows are transported across an away-localization equivalence.
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxRecDepth 8000 in
+/-- A framed widened representative transports to the canonical away localization when the
+curve parameter is independent of its certified divisor degree. -/
+private theorem exists_certChart_piece_aff_at
+    {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hχgamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (F₀ : DivFamZarAff C S g)
+    {A : Type u} [CommRing A] [Algebra k A] [Algebra S A] [IsScalarTower k S A]
+    (h₀ : S) [IsLocalization.Away h₀ A]
+    (G₀ : CertifiedDivisorFamilyAff C A g)
+    (hZ : G₀.toZarAff = DivFamZarAff.mapAlg A g F₀)
+    (f₀ : A) (a₀ : S) (hassoc : Associated (algebraMap S A a₀) f₀)
+    {i : (glueData k g r₁).J} {j : (glueData k g r₂).J}
+    (w : PairChartRing k g r₁ g r₂ i j →ₐ[k] Localization.Away f₀)
+    (hw : (G₀.mapAlg (Localization.Away f₀) g
+      G₀.cover.hasAffineOverlaps_of_isProper).IsPairChartFramed hπ g b₁ b₂ i j w) :
+    ∃ (G : CertifiedDivisorFamilyAff C (Localization.Away (a₀ * h₀)) g)
+      (i' : (glueData k g r₁).J) (j' : (glueData k g r₂).J)
+      (w' : PairChartRing k g r₁ g r₂ i' j' →ₐ[k] Localization.Away (a₀ * h₀)),
+      G.toZarAff = DivFamZarAff.mapAlg (Localization.Away (a₀ * h₀)) g F₀ ∧
+      G.IsPairChartFramed hπ g b₁ b₂ i' j' w' := by
+  haveI hAwayNum : IsLocalization.Away (algebraMap S A a₀) (Localization.Away f₀) :=
+    IsLocalization.Away.of_associated hassoc.symm
+  haveI hAwayV : IsLocalization.Away (a₀ * h₀) (Localization.Away f₀) :=
+    IsLocalization.Away.mul A (Localization.Away f₀) h₀ a₀
+  let e : Localization.Away (a₀ * h₀) ≃ₐ[S] Localization.Away f₀ :=
+    IsLocalization.algEquiv (Submonoid.powers (a₀ * h₀)) _ _
+  let β : Localization.Away f₀ →ₐ[k] Localization.Away (a₀ * h₀) :=
+    e.symm.toAlgHom.restrictScalars k
+  letI : Algebra A (Localization.Away (a₀ * h₀)) :=
+    (IsLocalization.Away.lift (S := A) h₀
+      (g := algebraMap S (Localization.Away (a₀ * h₀)))
+      (IsLocalization.Away.isUnit_of_dvd (x := a₀ * h₀) (dvd_mul_left h₀ a₀))).toAlgebra
+  haveI : IsScalarTower S A (Localization.Away (a₀ * h₀)) :=
+    IsScalarTower.of_algebraMap_eq' (by
+      rw [RingHom.algebraMap_toAlgebra, IsLocalization.Away.lift_comp])
+  haveI : IsScalarTower k A (Localization.Away (a₀ * h₀)) :=
+    isScalarTower_left_of_isScalarTower (R₀ := S)
+  have hβ : β.toRingHom.comp (algebraMap A (Localization.Away f₀))
+      = algebraMap A (Localization.Away (a₀ * h₀)) := by
+    refine IsLocalization.ringHom_ext (Submonoid.powers h₀) ?_
+    rw [RingHom.comp_assoc, ← IsScalarTower.algebraMap_eq S A (Localization.Away f₀),
+      RingHom.algebraMap_toAlgebra, IsLocalization.Away.lift_comp]
+    exact AlgHom.comp_algebraMap e.symm.toAlgHom
+  let hinf : G₀.cover.HasAffineOverlaps := G₀.cover.hasAffineOverlaps_of_isProper
+  haveI hfin₁ := G₀.certified.finite_intrinsicWindowQuotient_at
+    hπ hgamma hχgamma (relThetaPairH1_windowM C π hπ g) le_rfl
+  haveI hproj₁ := G₀.certified.projective_intrinsicWindowQuotient_at
+    (π := π) G₀.adaptation (windowM_choice π hπ g) hπ hgamma hχgamma
+    (relThetaPairH1_windowM C π hπ g) le_rfl
+  have hrank₁ := fun p : PrimeSpectrum A =>
+    G₀.certified.rankAtStalk_intrinsicWindowQuotient_at
+      (π := π) G₀.adaptation (windowM_choice π hπ g) hπ hgamma hχgamma
+      (relThetaPairH1_windowM C π hπ g) le_rfl p
+  haveI hfin₂ := G₀.certified.finite_intrinsicWindowQuotient_at
+    hπ hgamma hχgamma (relThetaPairH1_windowMS C π hπ g) (Nat.le_add_right _ _)
+  haveI hproj₂ := G₀.certified.projective_intrinsicWindowQuotient_at
+    (π := π) G₀.adaptation
+      (windowM_choice π hπ g + windowS_choice π hπ g) hπ hgamma hχgamma
+    (relThetaPairH1_windowMS C π hπ g) (Nat.le_add_right _ _)
+  have hrank₂ := fun p : PrimeSpectrum A =>
+    G₀.certified.rankAtStalk_intrinsicWindowQuotient_at
+      (π := π) G₀.adaptation
+        (windowM_choice π hπ g + windowS_choice π hπ g) hπ hgamma hχgamma
+      (relThetaPairH1_windowMS C π hπ g) (Nat.le_add_right _ _) p
+  have hw₁ :
+      (Module.Grassmannian.map w (pairTautFst k g r₁ r₂ i j)).toSubmodule
+        = Submodule.map
+            (LinearMap.baseChange (Localization.Away f₀) b₁.equivFun.toLinearMap)
+            (windowBaseChange (Localization.Away f₀)
+              (divisorWindow G₀.eqns (relThetaPairH1_windowM C π hπ g))) := by
+    rw [← G₀.certified.divisorWindow_pulledEquations_eq_at
+      (R' := Localization.Away f₀) hπ hgamma hχgamma
+      (relThetaPairH1_windowM C π hπ g) le_rfl]
+    exact hw.1
+  have hw₂ :
+      (Module.Grassmannian.map w (pairTautSnd k g r₁ r₂ i j)).toSubmodule
+        = Submodule.map
+            (LinearMap.baseChange (Localization.Away f₀) b₂.equivFun.toLinearMap)
+            (windowBaseChange (Localization.Away f₀)
+              (divisorWindow G₀.eqns (relThetaPairH1_windowMS C π hπ g))) := by
+    rw [← G₀.certified.divisorWindow_pulledEquations_eq_at
+      (R' := Localization.Away f₀) hπ hgamma hχgamma
+      (relThetaPairH1_windowMS C π hπ g) (Nat.le_add_right _ _)]
+    exact hw.2
+  refine ⟨G₀.mapAlg (Localization.Away (a₀ * h₀)) g hinf,
+    i, j, β.comp w, ?_, ?_⟩
+  · rw [CertifiedDivisorFamilyAff.toZarAff_mapAlg, hZ]
+    exact DivFamZarAff.mapAlg_comp A g (Localization.Away (a₀ * h₀)) F₀
+  · change (_ = Submodule.map _
+        (divisorWindow
+          (G₀.adaptation.pulledEquations (Localization.Away (a₀ * h₀))
+            G₀.certified.projective_colength)
+          (relThetaPairH1_windowM C π hπ g))) ∧
+      (_ = Submodule.map _
+        (divisorWindow
+          (G₀.adaptation.pulledEquations (Localization.Away (a₀ * h₀))
+            G₀.certified.projective_colength)
+          (relThetaPairH1_windowMS C π hπ g)))
+    constructor
+    · rw [G₀.certified.divisorWindow_pulledEquations_eq_at
+        (R' := Localization.Away (a₀ * h₀)) hπ hgamma hχgamma
+        (relThetaPairH1_windowM C π hπ g) le_rfl]
+      have emap : Module.Grassmannian.map (β.comp w)
+          (pairTautFst k g r₁ r₂ i j)
+          = Module.Grassmannian.map β
+              (Module.Grassmannian.map w (pairTautFst k g r₁ r₂ i j)) :=
+        Module.Grassmannian.map_comp (f := w) (g := β)
+          (N := pairTautFst k g r₁ r₂ i j)
+      exact (congrArg Module.Grassmannian.toSubmodule emap).trans
+        (map_windowFrameOfQuot_toSubmodule g (windowM_choice π hπ g)
+          (relThetaPairH1_windowM C π hπ g) b₁ G₀.eqns hrank₁ β hβ
+          (Module.Grassmannian.map w (pairTautFst k g r₁ r₂ i j)) hw₁)
+    · rw [G₀.certified.divisorWindow_pulledEquations_eq_at
+        (R' := Localization.Away (a₀ * h₀)) hπ hgamma hχgamma
+        (relThetaPairH1_windowMS C π hπ g) (Nat.le_add_right _ _)]
+      have emap : Module.Grassmannian.map (β.comp w)
+          (pairTautSnd k g r₁ r₂ i j)
+          = Module.Grassmannian.map β
+              (Module.Grassmannian.map w (pairTautSnd k g r₁ r₂ i j)) :=
+        Module.Grassmannian.map_comp (f := w) (g := β)
+          (N := pairTautSnd k g r₁ r₂ i j)
+      exact (congrArg Module.Grassmannian.toSubmodule emap).trans
+        (map_windowFrameOfQuot_toSubmodule g
+          (windowM_choice π hπ g + windowS_choice π hπ g)
+          (relThetaPairH1_windowMS C π hπ g) b₂ G₀.eqns hrank₂ β hβ
+          (Module.Grassmannian.map w (pairTautSnd k g r₁ r₂ i j)) hw₂)
+
+set_option maxHeartbeats 2400000 in
 -- The dependent finite frame covers are flattened through the numerator-product span lemma.
 include hO hχ in
 /-- The widened analogue of `DivFamZar.exists_certChartCover`: a widened locally certified
@@ -329,6 +527,69 @@ theorem DivFamZarAff.exists_certChartCover (F₀ : DivFamZarAff C S g) :
     rw [hrange, hr]
   · intro q
     exact exists_certChart_piece_aff hπ g hO hχ r₁ r₂ b₁ b₂ F₀
+      (h (e q).1.down) (Gl (e q).1.down) (hZl (e q).1.down)
+      (f (e q).1.down (e q).2)
+      ((IsLocalization.Away.sec (h (e q).1.down) (f (e q).1.down (e q).2)).1)
+      (hassoc (e q).1.down (e q).2) (cw (e q).1.down (e q).2)
+      (hcw (e q).1.down (e q).2)
+
+set_option maxHeartbeats 2400000 in
+-- The off-diagonal finite frame covers are flattened through the numerator-product span lemma.
+/-- A widened locally certified class admits a finite certified pair-chart cover when the
+curve parameter is independent of the divisor-family degree. -/
+theorem DivFamZarAff.exists_certChartCover_at
+    (F₀ : DivFamZarAff C S g) {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hχgamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ)) :
+    ∃ (m : ℕ) (r : Fin m → S), Ideal.span (Set.range r) = ⊤ ∧
+      ∀ p : Fin m,
+        ∃ (G : CertifiedDivisorFamilyAff C (Localization.Away (r p)) g)
+          (i : (glueData k g r₁).J) (j : (glueData k g r₂).J)
+          (w : PairChartRing k g r₁ g r₂ i j →ₐ[k] Localization.Away (r p)),
+          G.toZarAff = DivFamZarAff.mapAlg (Localization.Away (r p)) g F₀ ∧
+          G.IsPairChartFramed hπ g b₁ b₂ i j w := by
+  classical
+  obtain ⟨mc, h, hspanH, hGl⟩ := DivFamZarAff.exists_certified_away_rep F₀
+  choose Gl hZl using hGl
+  have hFC := fun l : Fin mc =>
+    (Gl l).exists_frameCover_at hπ g r₁ r₂ b₁ b₂ hgamma hχgamma
+  choose mf f hspanF hframe using hFC
+  choose ci cj cw hcw using hframe
+  have hassoc : ∀ (l : Fin mc) (t : Fin (mf l)),
+      Associated (algebraMap S (Localization.Away (h l))
+        ((IsLocalization.Away.sec (h l) (f l t)).1)) (f l t) :=
+    fun l t => IsLocalization.Away.associated_sec_fst (h l) (f l t)
+  have hspanH' : Ideal.span
+      (Set.range fun l : ULift.{u} (Fin mc) => h l.down) = ⊤ := by
+    have hrange : (Set.range fun l : ULift.{u} (Fin mc) => h l.down)
+        = Set.range h := ULift.down_surjective.range_comp h
+    rw [hrange, hspanH]
+  have hr : Ideal.span (Set.range
+      fun p : Σ l : ULift.{u} (Fin mc), Fin (mf l.down) =>
+        (IsLocalization.Away.sec (h p.1.down) (f p.1.down p.2)).1 * h p.1.down)
+      = ⊤ :=
+    span_range_num_mul_eq_top (fun l : ULift.{u} (Fin mc) => h l.down)
+      (fun l => Localization.Away (h l.down)) hspanH'
+      (fun l => f l.down) (fun l => hspanF l.down)
+      (fun l t => (IsLocalization.Away.sec (h l.down) (f l.down t)).1)
+      (fun l t => hassoc l.down t)
+  let e : Fin (Fintype.card (Σ l : ULift.{u} (Fin mc), Fin (mf l.down)))
+      ≃ Σ l : ULift.{u} (Fin mc), Fin (mf l.down) :=
+    (Fintype.equivFin (Σ l : ULift.{u} (Fin mc), Fin (mf l.down))).symm
+  refine ⟨Fintype.card (Σ l : ULift.{u} (Fin mc), Fin (mf l.down)),
+    fun q => (IsLocalization.Away.sec (h (e q).1.down) (f (e q).1.down (e q).2)).1
+      * h (e q).1.down, ?_, ?_⟩
+  · have hrange : (Set.range fun q =>
+        (IsLocalization.Away.sec (h (e q).1.down) (f (e q).1.down (e q).2)).1
+          * h (e q).1.down)
+        = Set.range (fun p : Σ l : ULift.{u} (Fin mc), Fin (mf l.down) =>
+            (IsLocalization.Away.sec (h p.1.down) (f p.1.down p.2)).1
+              * h p.1.down) :=
+      e.surjective.range_comp
+        (fun p : Σ l : ULift.{u} (Fin mc), Fin (mf l.down) =>
+          (IsLocalization.Away.sec (h p.1.down) (f p.1.down p.2)).1 * h p.1.down)
+    rw [hrange, hr]
+  · intro q
+    exact exists_certChart_piece_aff_at hπ g r₁ r₂ b₁ b₂ hgamma hχgamma F₀
       (h (e q).1.down) (Gl (e q).1.down) (hZl (e q).1.down)
       (f (e q).1.down (e q).2)
       ((IsLocalization.Away.sec (h (e q).1.down) (f (e q).1.down (e q).2)).1)
