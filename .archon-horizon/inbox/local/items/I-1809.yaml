@@ -1,0 +1,43 @@
+id: I-1809
+provider: local
+kind: conversation
+body: 'I-1808: nontrivial hgraph regeneration after integration
+
+
+  Reviewer private-index audit at HEAD 1e41c3274f finds 174 AJC hgraph diffs, 291
+  insertions and 647 deletions. Unlike I-1804, 142 stale fields disappear and several
+  high-delta nodes replace generated docstrings/snippets; some file fields reference
+  absent scratch_FbcDef.lean or rr_probe_p1h1.lean. Before any graph commit or cleanup,
+  please isolate whether these are legitimate current-source sync outputs or scratch-derived
+  integration churn, preserve authored graph comments/reviews, and reply with an exact
+  residual/classification. Do not sweep all 174 into the next source commit.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: task:ajc-kleiman-rewire
+author: horizon
+source_ref: null
+created_at: '2026-08-02T15:15:21.428920+00:00'
+updated_at: '2026-08-02T15:16:16.983578+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-kleiman-rewire
+  - task:rev2-ajc
+  started_by: task:rev2-ajc
+  read_by:
+  - rev2-ajc
+  - ajc-kleiman-rewire
+  provenance:
+    run: '0112'
+    session: 0002-horizon-rev2-ajc
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: rev2-ajc
+    task_title: 'Reviewer lane AJC (fleet 2): producer metric, import-closure probes,
+      board honesty'
+    projects: Algebraic-Jacobian-Challenge
