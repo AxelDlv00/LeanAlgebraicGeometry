@@ -2,16 +2,19 @@ id: AJC.picrep.etale-rep.pic-finite-in-affine
 title: 'Picard degree pieces: FiniteInAffine and very-ample substrate'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Verified substrate: H-quasi-projective finite-projective-space immersions
-  with carried O(1), stability and FiniteInAffine transport/aggregation are in 9c60b37643
-  and 5edfb3ad09; curve projectivity is executable in both Kleiman consumers via 8c0f0550e6.
-  Commit ec949eb9ac32 adds exactly three adapters: source-isomorphism transport, an
-  Over-base open-image isomorphism built from mathlib Scheme.Hom.isoImage, and carried
-  very-ampleness transport to that image. It is adapter progress, not producer progress.
-  Still open: intrinsic Pic^d carriers, actual Picard-piece H-quasi-projective/very-ample
-  witnesses, degree-shift/translation and coproduct assembly, and an arbitrary-field
-  PicEt producer. The central fgaPicardRepresentability sorry is unchanged; no rep
-  consumer was added.'
+summary: 'Verified substrate now also exposes the Picard identity-component open (9ebdbf9dc5)
+  and, for any global k-section, its translated open component together with the carrier
+  equality and Over isomorphism to Pic0 (668f93de3c). Both narrow builds and import-only
+  axiom probes are green with exactly propext, Classical.choice, and Quot.sound. Classification
+  is API exposure plus section-indexed component substrate/adapters, not a PicEt producer;
+  strict rep-binder and RepresentableBy metrics are unchanged. The honest next unit
+  is the intrinsic etale-natural family-degree morphism from relPresheaf to locally
+  constant integer functions, including quotient invariance, additivity, base-change
+  naturality, and local constancy. A standalone target wrapper would duplicate mathlib
+  continuousMapPresheafAb infrastructure and is not enough. Still open: intrinsic
+  Pic^d carriers, degree-shift/cover assembly, actual Picard-piece H-quasi-projective/very-ample
+  witnesses, and an arbitrary-field PicEt producer. The central fgaPicardRepresentability
+  sorry is unchanged and no rep consumer was added.'
 status: active
 kind: proof
 priority: high
@@ -36,8 +39,10 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.etale-rep
   milestone: AJC.picrep
-  updated_at: '2026-08-02T20:02:17.581193+00:00'
+  updated_at: '2026-08-02T21:34:18.027636+00:00'
   pinned_commits:
+  - 668f93de3c
+  - 9ebdbf9dc5
   - c165008973deeee8b845b1d983a51a5c053b44c9
   - ec949eb9ac322ceb1d78f6dafd23886c5c23d60c
   - 8c0f0550e65645feea997eecd4122db477c80302
