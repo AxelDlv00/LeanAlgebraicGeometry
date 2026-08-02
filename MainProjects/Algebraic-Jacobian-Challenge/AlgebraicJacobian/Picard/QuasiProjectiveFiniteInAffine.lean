@@ -82,7 +82,7 @@ and the refutation is landed here as a theorem, not left as prose:
 `Scheme.not_isProjective_of_infinite_disjoint_open_cover`.  Projectivity over a field
 forces `IsProper`, hence `UniversallyClosed`, hence — over the compact `Spec k` —
 `CompactSpace` (`Scheme.compactSpace_of_isProjective`); and the full Picard scheme is a
-**disjoint union over `deg ∈ ℤ`** (Kleiman §4 `th:main`(1)), which is not quasi-compact.
+**disjoint union over `deg ∈ ℤ`** (Kleiman §6 `ex:curves`), which is not quasi-compact.
 So `PointedPicSharpRepProjective` is not the standard hypothesis restated — it is
 strictly stronger and false at `Pic_{C/k}`.
 
@@ -131,7 +131,8 @@ set_option autoImplicit false
 
 /-! ## §1. Graded prime avoidance
 
-The one step with mathematical content.  Everything else in this file is transport.
+The new algebraic input.  The open-immersion theorem in §2 is the other
+substantive geometric step, delegating its algebra to `StableAffineCover`.
 -/
 
 section GradedAvoidance
@@ -391,8 +392,8 @@ ambient space to a subscheme.
 This generalises the already-landed `Scheme.finiteInAffine_left_of_isAffineHom`
 (`Picard/PicEtPointedReduction.lean`), which is the special case `Y = Spec k`: there
 the conclusion came from `X` being outright affine, whereas here `Y` need only satisfy
-`FiniteInAffine`, and `ℙ(n; S)` does without being affine. That is the whole reason
-this direction is worth having as a separate lemma. -/
+`FiniteInAffine`; relative projective space supplies the important application.
+That is the whole reason this direction is worth having as a separate lemma. -/
 theorem finiteInAffine_of_isAffineHom {X Y : Scheme.{u}} (f : X ⟶ Y) [IsAffineHom f]
     (h : FiniteInAffine Y) : FiniteInAffine X := by
   intro s hs
@@ -735,10 +736,9 @@ theorem exists_affineOpen_of_subset_finiteInAffine_opens {X : Scheme.{u}} (U : X
 /-- **The piecewise form of §3**: a finite set contained in an open subscheme that is
 projective over an affine base lies in an affine open of the ambient scheme.
 
-Composing §6.1 with §3. This is the statement a degree-graded Picard scheme satisfies and
-the globally-projective hypothesis of §5 does not: the ambient scheme may be an infinite
-disjoint union (and by §5.5 must be, if it is `Pic_{C/k}`), while each piece is
-quasi-projective.
+Composing §6.1 with the projective special case of §3.  This stronger adapter
+applies when the chosen open piece is projective; the H-quasi-projective form
+below is the one intended for the Picard-piece input.
 
 What is still missing to run the descent from here, stated so it is not mistaken for
 plumbing: that a Galois orbit lies in a **single** piece, i.e. degree-invariance of the
@@ -753,7 +753,8 @@ theorem exists_affineOpen_of_subset_isProjective_opens {X : Scheme.{u}} (U : X.O
 
 /-- The H-quasi-projective form of the piecewise transport: a finite set lying
 in one H-quasi-projective open piece over an affine base lies in an affine open
-of the ambient scheme. -/
+of the ambient scheme.  Unlike the globally projective hypothesis of §5, this
+is compatible with an ambient infinite coproduct of quasi-projective pieces. -/
 theorem exists_affineOpen_of_subset_isHQuasiProjective_opens {X : Scheme.{u}}
     (U : X.Opens) {S : Scheme.{u}} [IsAffine S] {π : U.toScheme ⟶ S}
     (hqp : π.IsHQuasiProjective) {s : Set X} (hs : s.Finite) (hsub : s ⊆ U.1) :

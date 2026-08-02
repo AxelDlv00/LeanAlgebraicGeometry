@@ -1291,6 +1291,17 @@ theorem smooth {k : Type u} [Field k]
     Smooth (Pic0Scheme C).hom :=
   smooth_of_geometricallyReduced C (geometricallyReduced C)
 
+/-- The curve-projectivity premise used by Kleiman §5 `th:qpp&p`, discharged
+from the binders of the Picard-zero lane.
+
+This theorem does not assert the projectivity or properness of `Pic⁰`; it closes
+only the theorem's input about the curve. -/
+theorem isProjective_for_kleimanQppAndP {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] : C.hom.IsProjective :=
+  Adelic.isProjective_of_smoothProperGeometricallyIntegral C
+
 /-- **Properness of `Pic⁰_{C/k}`.**
 
 For a smooth proper geometrically integral curve `C/k`, the identity component
@@ -1339,7 +1350,8 @@ theorem proper_of_universallyClosed {k : Type u} [Field k]
 /-- **The sole remaining input to properness of `Pic⁰_{C/k}`: universal
 closedness.** (Run 0067 — the shrunk residue of the former `proper` sorry.)
 
-The mathematics, Kleiman §5 Thm.~`th:qpp&p`: `Pic⁰_{C/k}` is quasi-projective
+The curve-projectivity input is `isProjective_for_kleimanQppAndP`.  The remaining
+mathematics, Kleiman §5 Thm.~`th:qpp&p`: `Pic⁰_{C/k}` is quasi-projective
 (first conclusion of that theorem), and for `C/k` geometrically normal — which
 a smooth proper curve is — the identity component is *projective*, hence
 universally closed. The upgrade from quasi-projective to projective goes
@@ -1487,9 +1499,10 @@ an affine base. Mathlib derives `QuasiCompact` from it (the `priority := 900` in
 of `Morphisms/UniversallyClosed.lean` — precisely why `IsProper` has three fields and
 no quasi-compactness one), and `Spec k` is compact, so `UniversallyClosed
 (PicScheme C).hom` would give `CompactSpace (PicScheme C).left`. But `Pic_{C/k}` is a
-**disjoint union over `deg ∈ ℤ`** — the second clause of Kleiman §4 Thm.~`th:main`(1),
-which `HasPicScheme` itself bundles — and an infinite disjoint cover by nonempty opens
-has no finite subcover. Kernel-checked at scheme generality in
+**disjoint union over `deg ∈ ℤ`** (Kleiman §6 `ex:curves`), and an infinite disjoint
+cover by nonempty opens has no finite subcover. `HasPicScheme` bundles only
+representation, local finite type, and separatedness; the degree decomposition is not
+formalised here. Kernel-checked at scheme generality in
 `Picard/AmbientPicNotProper.lean`
 (`Scheme.not_universallyClosed_of_infinite_disjoint_open_cover`).
 

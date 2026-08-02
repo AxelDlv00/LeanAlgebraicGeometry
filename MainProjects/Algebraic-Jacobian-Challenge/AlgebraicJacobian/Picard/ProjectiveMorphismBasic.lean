@@ -6,7 +6,7 @@ Authors: The AlgebraicJacobian Contributors
 import AlgebraicJacobian.Picard.ProjectiveSpace
 
 /-!
-# Projective and quasi-projective morphisms
+# Projective and H-quasi-projective morphisms
 
 This file supplies the universe-polymorphic geometric core of projectivity that
 Mathlib v4.31 does not yet provide. A morphism is projective when it factors as

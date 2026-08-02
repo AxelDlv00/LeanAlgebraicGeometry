@@ -133,8 +133,9 @@ The two interfaces, and which one to build against:
   scheme and the natural bijection
   `(T ⟶ Pic_{C/k}) ≃ Pic(C ×_k T)/π_T^* Pic(T)` it induces.
 * `instPicSchemeLocallyOfFiniteType`, `isSeparated` — `Pic_{C/k}` is locally
-  of finite type and separated over `k` (Kleiman §4 Thm `th:main`(1): it is a
-  disjoint union of open quasi-projective `k`-subschemes).
+  of finite type and separated over `k` (Kleiman §4 Thm `th:main`(1)); over a
+  field, Cor `cor:algsch` refines it to a disjoint union of open
+  quasi-projective `k`-subschemes.
 * `groupSchemeStructure` — `Pic_{C/k}` is a commutative `k`-group scheme, by
   Yoneda transport (`CommGrpObj.ofRepresentableBy`) of the abelian-group
   structure of `PicSharp.relPresheaf`.
@@ -292,9 +293,10 @@ restated against `picEt`.
 
 Representability, local finiteness and separatedness are bundled into a single
 existential because Kleiman §4 Thm `th:main`(1) delivers them as one package:
-`Pic_{C/k}` is a separated scheme locally of finite type over `k`, a disjoint
-union of open quasi-projective `k`-subschemes. Bundling therefore adds no
-strength beyond representability, and lets the carriers
+`Pic_{C/k}` is a separated scheme locally of finite type over `k`. Over a
+field, Kleiman Cor `cor:algsch` further writes it as a disjoint union of open
+quasi-projective `k`-subschemes. Bundling therefore adds no strength beyond
+representability, and lets the carriers
 `PicScheme.instPicSchemeLocallyOfFiniteType` and `PicScheme.isSeparated` be
 obtained by extraction. -/
 class HasPicScheme {k : Type u} [Field k] (C : Over (Spec (.of k)))
@@ -317,6 +319,17 @@ noncomputable def PicScheme {k : Type u} [Field k]
     [GeometricallyIntegral C.hom] [HasPicScheme C] :
     Over (Spec (.of k)) :=
   (HasPicScheme.has_pic_scheme (C := C)).choose
+
+/-- The projectivity premise of Kleiman §4 `th:main`(1), discharged from the
+curve hypotheses used by `fgaPicardRepresentability`.
+
+This closes only the geometric premise of the published theorem.  Constructing
+the representing Picard scheme remains the central open obligation below. -/
+theorem isProjective_for_kleimanClauseOne {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] : C.hom.IsProjective :=
+  Adelic.isProjective_of_smoothProperGeometricallyIntegral C
 
 /-- **THE PROJECT'S CENTRAL OPEN OBLIGATION — expected to stay open.**
 
@@ -381,8 +394,7 @@ the published proof of this file's own conclusion.
 Zariski-locally and flat with integral geometric fibres. This file's binders are
 `[SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
 [GeometricallyIntegral C.hom]` over a field. The rooted theorem
-`Adelic.isProjective_of_smoothProperGeometricallyIntegral`
-(`Picard/CurveProjectivity.lean`) proves exactly the previously missing
+`Scheme.isProjective_for_kleimanClauseOne` proves exactly the previously missing
 implication, by constructing a finite map to `ℙ¹`, embedding the two pulled-back
 Laurent charts into relative projective space, and applying properness to the
 resulting immersion. It adds no rational-point or projectivity hypothesis.
@@ -1669,12 +1681,12 @@ identity-component substrate (`Picard/IdentityComponent.lean`,
 `G = PicScheme C`. -/
 
 /-- Typeclass asserting that the structural morphism of the Picard scheme is
-locally of finite type (Kleiman §4 Thm `th:main`(1): `Pic_{C/k}` is a
-disjoint union of open quasi-projective `k`-subschemes, hence locally of
-finite type). The `HasPicScheme` existential carries local finiteness, so the
-property of the `Classical.choose` witness is its second `choose_spec`
-component; the class survives to preserve the blueprint-pinned consumer
-signature.
+  locally of finite type (Kleiman §4 Thm `th:main`(1)). Over a field, Cor
+  `cor:algsch` further writes `Pic_{C/k}` as a disjoint union of open
+  quasi-projective `k`-subschemes. The `HasPicScheme` existential carries local
+  finiteness, so the property of the `Classical.choose` witness is its second
+  `choose_spec` component; the class survives to preserve the blueprint-pinned
+  consumer signature.
 
 **THIS CLASS IS A SELF-PROJECTION AND CARRIES NO MATHEMATICS** (`review-ajc`,
 2026-07-30 — the paragraph above states the mechanism but never draws the
