@@ -405,6 +405,168 @@ theorem universalMulSpan_eq_divUniversalSndWindow
     (fun p => universalMulMapToSnd_rTensor_residueField_surjective
       (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hO hchi hb p)
 
+/-! ## Decoupled Euler-characteristic parameter -/
+
+/-- The field-level multiplication map for degree `g`, with Riemann--Roch
+normalized by an independent `gamma ≤ g`. -/
+noncomputable def divUniversalTransportedFibreMulMap_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hker : divCarveIdeal k (windowS_choice pi hpi g • fiberWeilDivisor pi)
+      (windowM_choice pi hpi g • fiberWeilDivisor pi) g r1 r2 b1 b2 i j
+      ≤ RingHom.ker (algebraMap (PairChartRing k g r1 g r2 i j) K)) :
+    (Fin (Module.finrank k HS0) → ↥KM) →ₗ[K] ↥KMS :=
+  Scheme.finiteMulMapTo HS KM KMS
+    (divUniversalMultiplierFibreBasis (pi := pi) C hpi g K)
+    (divUniversalFibre_mulSpan_eq_of_windowBound_pos_at
+      C hpi g r1 r2 b1 b2 i j K hker hgamma hchi (windowBound_pos pi hpi))
+
+set_option maxHeartbeats 1600000 in
+set_option maxRecDepth 12000 in
+set_option linter.unusedSectionVars false in
+private theorem divUniversalTransportedFibreMulMap_apply_coe_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hker : divCarveIdeal k (windowS_choice pi hpi g • fiberWeilDivisor pi)
+      (windowM_choice pi hpi g • fiberWeilDivisor pi) g r1 r2 b1 b2 i j
+      ≤ RingHom.ker (algebraMap (PairChartRing k g r1 g r2 i j) K))
+    (v : Fin (Module.finrank k HS0) → ↥KM) :
+    (divUniversalTransportedFibreMulMap_at (pi := pi)
+      C hpi g r1 r2 b1 b2 i j K hgamma hchi hker v :
+        (relCurve C K).functionField) =
+      ∑ t, (divUniversalMultiplierFibreBasis (pi := pi) C hpi g K t :
+        (relCurve C K).functionField) * (v t : (relCurve C K).functionField) := by
+  change (Scheme.finiteMulMap HS KM
+      (divUniversalMultiplierFibreBasis (pi := pi) C hpi g K) v :
+        (relCurve C K).functionField) = _
+  rw [Scheme.finiteMulMap_apply]
+
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 600000 in
+set_option maxRecDepth 8000 in
+private theorem fibreComponentSum_conjugacy_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hker : divCarveIdeal k (windowS_choice pi hpi g • fiberWeilDivisor pi)
+      (windowM_choice pi hpi g • fiberWeilDivisor pi) g r1 r2 b1 b2 i j
+      ≤ RingHom.ker (algebraMap (PairChartRing k g r1 g r2 i j) K))
+    (x : Fin (Module.finrank k HS0) → (K ⊗[RZ] N1)) :
+    divUniversalSndFibreReadEquiv (π := pi) C hpi g r1 r2 b1 b2 i j K
+        (∑ t, LinearMap.baseChange K
+          (universalMulComponentToSnd (C := C) (pi := pi)
+            hpi g r1 r2 b1 b2 i j t) (x t)) =
+      divUniversalTransportedFibreMulMap_at (pi := pi)
+        C hpi g r1 r2 b1 b2 i j K hgamma hchi hker
+        (fun t => divUniversalFstFibreReadEquiv
+          (π := pi) C hpi g r1 r2 b1 b2 i j K (x t)) := by
+  apply Subtype.ext
+  rw [divUniversalTransportedFibreMulMap_apply_coe_at
+    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K hgamma hchi hker]
+  rw [map_sum, Submodule.coe_sum]
+  apply Finset.sum_congr rfl
+  intro t _
+  exact universalMulComponentToSnd_fibre_conjugacy
+    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K t (x t)
+
+set_option maxHeartbeats 1600000 in
+set_option synthInstance.maxHeartbeats 600000 in
+set_option maxRecDepth 8000 in
+/-- The scalar extension of the degree-`g` universal multiplication map is
+surjective when the curve Euler characteristic is normalized at `gamma ≤ g`. -/
+theorem universalMulMapToSnd_baseChange_surjective_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hker : divCarveIdeal k (windowS_choice pi hpi g • fiberWeilDivisor pi)
+      (windowM_choice pi hpi g • fiberWeilDivisor pi) g r1 r2 b1 b2 i j
+      ≤ RingHom.ker (algebraMap (PairChartRing k g r1 g r2 i j) K)) :
+    Function.Surjective
+      (LinearMap.baseChange K
+        (universalMulMapToSnd (C := C) (π := pi)
+          hpi g r1 r2 b1 b2 i j)) := by
+  rw [universalMulMapToSnd_eq_finiteComponentSum
+    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j]
+  apply surjective_baseChange_finiteComponentSum
+  intro y
+  have hsurj : Function.Surjective
+      (divUniversalTransportedFibreMulMap_at (pi := pi)
+        C hpi g r1 r2 b1 b2 i j K hgamma hchi hker) :=
+    Scheme.finiteMulMapTo_surjective HS KM KMS
+      (divUniversalMultiplierFibreBasis (pi := pi) C hpi g K)
+      (divUniversalFibre_mulSpan_eq_of_windowBound_pos_at
+        C hpi g r1 r2 b1 b2 i j K hker hgamma hchi (windowBound_pos pi hpi))
+  obtain ⟨z, hz⟩ := hsurj
+    (divUniversalSndFibreReadEquiv (π := pi) C hpi g r1 r2 b1 b2 i j K y)
+  let x : Fin (Module.finrank k HS0) → (K ⊗[RZ] N1) := fun t =>
+    (divUniversalFstFibreReadEquiv
+      (π := pi) C hpi g r1 r2 b1 b2 i j K).symm (z t)
+  refine ⟨x, ?_⟩
+  apply (divUniversalSndFibreReadEquiv
+    (π := pi) C hpi g r1 r2 b1 b2 i j K).injective
+  have hconj := fibreComponentSum_conjugacy_at (C := C) (pi := pi)
+    hpi g r1 r2 b1 b2 i j K hgamma hchi hker x
+  have hz' :
+      divUniversalTransportedFibreMulMap_at (pi := pi)
+          C hpi g r1 r2 b1 b2 i j K hgamma hchi hker
+          (fun t => divUniversalFstFibreReadEquiv
+            (π := pi) C hpi g r1 r2 b1 b2 i j K (x t)) =
+        divUniversalSndFibreReadEquiv
+          (π := pi) C hpi g r1 r2 b1 b2 i j K y := by
+    simpa only [x, LinearEquiv.apply_symm_apply] using hz
+  simpa only [Finset.sum_apply, LinearMap.comp_apply, LinearMap.proj_apply] using
+    hconj.trans hz'
+
+set_option maxHeartbeats 800000 in
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxSynthPendingDepth 8 in
+/-- Residue-field surjectivity at independent Euler parameter `gamma ≤ g`. -/
+theorem universalMulMapToSnd_rTensor_residueField_surjective_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (p : PrimeSpectrum RZ) :
+    Function.Surjective
+      ((universalMulMapToSnd (C := C) (π := pi)
+        hpi g r1 r2 b1 b2 i j).rTensor p.asIdeal.ResidueField) := by
+  rw [universalMulMapToSnd_rTensor_surjective_iff_baseChange
+    (C := C) (π := pi) hpi g r1 r2 b1 b2 i j p.asIdeal.ResidueField]
+  exact universalMulMapToSnd_baseChange_surjective_at
+    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j
+    p.asIdeal.ResidueField hgamma hchi
+    (divCarveIdeal_le_ker_of_tower k
+      (windowS_choice pi hpi g • fiberWeilDivisor pi)
+      (windowM_choice pi hpi g • fiberWeilDivisor pi)
+      g r1 r2 b1 b2 i j p.asIdeal.ResidueField)
+
+set_option maxHeartbeats 800000 in
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxSynthPendingDepth 8 in
+/-- Relative surjectivity of the degree-`g` universal multiplication map at
+independent Euler parameter `gamma ≤ g`. -/
+theorem universalMulMapToSnd_surjective_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ)) :
+    Function.Surjective
+      (universalMulMapToSnd (C := C) (π := pi)
+        hpi g r1 r2 b1 b2 i j) :=
+  universalMulMapToSnd_surjective_of_forall_fibre
+    (C := C) (π := pi) hpi g r1 r2 b1 b2 i j
+    (fun p => universalMulMapToSnd_rTensor_residueField_surjective_at
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hgamma hchi p)
+
+set_option maxHeartbeats 800000 in
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxSynthPendingDepth 8 in
+/-- The universal multiplication span equals the degree-`g` second window at
+independent Euler parameter `gamma ≤ g`. -/
+theorem universalMulSpan_eq_divUniversalSndWindow_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ)) :
+    universalMulSpan (C := C) (π := pi) hpi g r1 r2 b1 b2 i j =
+      (divUniversalSndWindow C pi hpi g r1 r2 b1 b2 i j).toSubmodule :=
+  universalMulSpan_eq_divUniversalSndWindow_of_forall_fibre
+    (C := C) (π := pi) hpi g r1 r2 b1 b2 i j
+    (fun p => universalMulMapToSnd_rTensor_residueField_surjective_at
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hgamma hchi p)
+
 end Campaign
 
 end AlgebraicGeometry

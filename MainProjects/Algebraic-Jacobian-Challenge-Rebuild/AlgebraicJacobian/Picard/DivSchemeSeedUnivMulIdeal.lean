@@ -392,6 +392,127 @@ theorem chartReadIdeal_divUniversalSeedK'_eq_divUniversalSeedK
     (divUniversalMultiplierChartUnitGeneration
       (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j b)
 
+/-! ## Decoupled Euler-characteristic parameter -/
+
+set_option maxHeartbeats 1600000 in
+set_option synthInstance.maxHeartbeats 600000 in
+set_option maxRecDepth 8000 in
+/-- The degree-`g` second-window chart-reading span is contained in the first
+one when Riemann--Roch is normalized by `gamma ≤ g`. -/
+theorem span_range_divUniversalSndWindowChartRead_le_fst_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (b : Bool) :
+    Ideal.span (Set.range
+        (divUniversalSndWindowChartRead C hpi g r1 r2 b1 b2 i j b)) ≤
+      Ideal.span (Set.range
+        (divUniversalFstWindowChartRead C hpi g r1 r2 b1 b2 i j b)) := by
+  classical
+  refine Ideal.span_le.mpr ?_
+  rintro _ ⟨y, rfl⟩
+  obtain ⟨x, rfl⟩ := universalMulMapToSnd_surjective_at
+    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hgamma hchi y
+  rw [divUniversalMulMapToSnd_chartRead
+    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j b]
+  exact Ideal.sum_mem _ fun t _ =>
+    Ideal.mul_mem_left _ _ (Ideal.subset_span ⟨x t, rfl⟩)
+
+set_option maxHeartbeats 1600000 in
+set_option synthInstance.maxHeartbeats 600000 in
+set_option maxRecDepth 8000 in
+/-- The genuine degree-`g` second-window chart-reading ideal is contained in
+the first-window ideal at independent Euler parameter `gamma ≤ g`. -/
+theorem chartReadIdeal_divUniversalSeedK'_le_divUniversalSeedK_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (b : Bool) :
+    ThetaGeneratorSeed.chartReadIdeal
+        (divUniversalSeedK' C pi hpi g r1 r2 b1 b2 i j) b ≤
+      ThetaGeneratorSeed.chartReadIdeal
+        (divUniversalSeedK C pi hpi g r1 r2 b1 b2 i j) b := by
+  rw [ThetaGeneratorSeed.chartReadIdeal, ThetaGeneratorSeed.chartReadIdeal]
+  calc
+    Ideal.span (Set.range (ThetaGeneratorSeed.chartReadMap
+        (divUniversalSeedK' C pi hpi g r1 r2 b1 b2 i j) b)) =
+        Ideal.span (Set.range (divUniversalSndWindowChartRead
+          C hpi g r1 r2 b1 b2 i j b)) := by
+      simpa only [divUniversalSndWindowChartRead] using
+        (span_range_comp_linearEquiv_eq
+          (ThetaGeneratorSeed.chartReadMap
+            (divUniversalSeedK' C pi hpi g r1 r2 b1 b2 i j) b)
+          (divUniversalSeedK'Equiv C pi hpi g r1 r2 b1 b2 i j)).symm
+    _ ≤ Ideal.span (Set.range (divUniversalFstWindowChartRead
+        C hpi g r1 r2 b1 b2 i j b)) :=
+      span_range_divUniversalSndWindowChartRead_le_fst_at
+        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hgamma hchi b
+    _ = Ideal.span (Set.range (ThetaGeneratorSeed.chartReadMap
+        (divUniversalSeedK C pi hpi g r1 r2 b1 b2 i j) b)) := by
+      simpa only [divUniversalFstWindowChartRead] using
+        span_range_comp_linearEquiv_eq
+          (ThetaGeneratorSeed.chartReadMap
+            (divUniversalSeedK C pi hpi g r1 r2 b1 b2 i j) b)
+          (divUniversalSeedKEquiv C pi hpi g r1 r2 b1 b2 i j)
+
+set_option maxHeartbeats 1600000 in
+set_option synthInstance.maxHeartbeats 600000 in
+set_option maxRecDepth 8000 in
+/-- Under explicit multiplier unit generation, the two genuine degree-`g`
+chart-reading ideals agree at independent Euler parameter `gamma ≤ g`. -/
+theorem chartReadIdeal_divUniversalSeedK'_eq_divUniversalSeedK_of_unitGeneration_at
+    {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (b : Bool)
+    (hunit : DivUniversalMultiplierChartUnitGeneration
+      C hpi g r1 r2 b1 b2 i j b) :
+    ThetaGeneratorSeed.chartReadIdeal
+        (divUniversalSeedK' C pi hpi g r1 r2 b1 b2 i j) b =
+      ThetaGeneratorSeed.chartReadIdeal
+        (divUniversalSeedK C pi hpi g r1 r2 b1 b2 i j) b := by
+  apply le_antisymm
+  · exact chartReadIdeal_divUniversalSeedK'_le_divUniversalSeedK_at
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hgamma hchi b
+  · rw [ThetaGeneratorSeed.chartReadIdeal, ThetaGeneratorSeed.chartReadIdeal]
+    calc
+      Ideal.span (Set.range (ThetaGeneratorSeed.chartReadMap
+          (divUniversalSeedK C pi hpi g r1 r2 b1 b2 i j) b)) =
+          Ideal.span (Set.range (divUniversalFstWindowChartRead
+            C hpi g r1 r2 b1 b2 i j b)) := by
+        simpa only [divUniversalFstWindowChartRead] using
+          (span_range_comp_linearEquiv_eq
+            (ThetaGeneratorSeed.chartReadMap
+              (divUniversalSeedK C pi hpi g r1 r2 b1 b2 i j) b)
+            (divUniversalSeedKEquiv C pi hpi g r1 r2 b1 b2 i j)).symm
+      _ ≤ Ideal.span (Set.range (divUniversalSndWindowChartRead
+          C hpi g r1 r2 b1 b2 i j b)) :=
+        span_range_divUniversalFstWindowChartRead_le_snd_of_unitGeneration
+          (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j b hunit
+      _ = Ideal.span (Set.range (ThetaGeneratorSeed.chartReadMap
+          (divUniversalSeedK' C pi hpi g r1 r2 b1 b2 i j) b)) := by
+        simpa only [divUniversalSndWindowChartRead] using
+          span_range_comp_linearEquiv_eq
+            (ThetaGeneratorSeed.chartReadMap
+              (divUniversalSeedK' C pi hpi g r1 r2 b1 b2 i j) b)
+            (divUniversalSeedK'Equiv C pi hpi g r1 r2 b1 b2 i j)
+
+set_option maxHeartbeats 1600000 in
+set_option synthInstance.maxHeartbeats 600000 in
+set_option maxRecDepth 8000 in
+/-- The canonical theta sections identify the two genuine degree-`g`
+chart-reading ideals at independent Euler parameter `gamma ≤ g`. -/
+theorem chartReadIdeal_divUniversalSeedK'_eq_divUniversalSeedK_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (b : Bool) :
+    ThetaGeneratorSeed.chartReadIdeal
+        (divUniversalSeedK' C pi hpi g r1 r2 b1 b2 i j) b =
+      ThetaGeneratorSeed.chartReadIdeal
+        (divUniversalSeedK C pi hpi g r1 r2 b1 b2 i j) b :=
+  chartReadIdeal_divUniversalSeedK'_eq_divUniversalSeedK_of_unitGeneration_at
+    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hgamma hchi b
+    (divUniversalMultiplierChartUnitGeneration
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j b)
+
 end Campaign
 
 end AlgebraicGeometry

@@ -134,6 +134,39 @@ theorem divUniversalFibreMulMap_surjective
     (divUniversalFibre_mulSpan_eq_of_windowBound_pos
       C hπ g r₁ r₂ b₁ b₂ i j K hO hχ hker hb)
 
+set_option maxHeartbeats 1600000 in
+-- The decoupled persistence proof traverses the transported window dictionaries.
+/-- The concrete degree-`g` multiplication map with Euler characteristic
+normalized by an independent parameter `gamma ≤ g`. -/
+noncomputable def divUniversalFibreMulMap_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hχgamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hker : divCarveIdeal k (windowS_choice π hπ g • fiberWeilDivisor π)
+      (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j
+      ≤ RingHom.ker (algebraMap (PairChartRing k g r₁ g r₂ i j) K)) :
+    (Fin (Module.finrank K ↥HS) → ↥KM) →ₗ[K] ↥KMS :=
+  Scheme.finiteMulMapTo (ι := Fin (Module.finrank K ↥HS))
+    HS KM KMS (Module.finBasis K ↥HS)
+    (divUniversalFibre_mulSpan_eq_of_windowBound_pos_at
+      C hπ g r₁ r₂ b₁ b₂ i j K hker hgamma hχgamma (windowBound_pos π hπ))
+
+set_option maxHeartbeats 1600000 in
+-- Surjectivity re-elaborates the same transported window dictionaries.
+/-- The decoupled finite field-level universal multiplication map is surjective. -/
+theorem divUniversalFibreMulMap_surjective_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hχgamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hker : divCarveIdeal k (windowS_choice π hπ g • fiberWeilDivisor π)
+      (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j
+      ≤ RingHom.ker (algebraMap (PairChartRing k g r₁ g r₂ i j) K)) :
+    Function.Surjective
+      (divUniversalFibreMulMap_at C hπ g r₁ r₂ b₁ b₂ i j K
+        hgamma hχgamma hker) :=
+  Scheme.finiteMulMapTo_surjective (ι := Fin (Module.finrank K ↥HS))
+    HS KM KMS (Module.finBasis K ↥HS)
+    (divUniversalFibre_mulSpan_eq_of_windowBound_pos_at
+      C hπ g r₁ r₂ b₁ b₂ i j K hker hgamma hχgamma (windowBound_pos π hπ))
+
 end SecondWindowMap
 
 end AlgebraicGeometry
