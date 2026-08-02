@@ -7,6 +7,8 @@ import Mathlib
 import AlgebraicJacobian.Picard.RelPicFunctor
 import AlgebraicJacobian.Picard.PicEtSheaf
 import AlgebraicJacobian.Picard.DivFunctorDef
+import AlgebraicJacobian.Picard.HasRationalPoint
+import AlgebraicJacobian.Picard.CurveProjectivity
 
 /-!
 # FGA representability of the Picard scheme
@@ -187,21 +189,6 @@ open CategoryTheory Limits
 namespace AlgebraicGeometry
 
 namespace Scheme
-
-/-- **`C` has a `k`-rational point**: the structural morphism `C.hom` admits a
-section `σ : Spec k ⟶ C.left`. For the smooth proper geometrically integral
-curves of this project this is the pointing `P : 𝟙_ (Over (Spec k)) ⟶ C`
-already threaded through the Albanese statements (`AlgebraicJacobian.IsAlbanese`).
-
-This is the hypothesis of Kleiman §2 **Thm 2.5**: together with
-`O_S = f_* O_X` universally (automatic for proper geometrically integral
-fibers), a section forces the comparison maps
-`Pic_{X/S}(T) → Pic_{(X/S)ét}(T) → Pic_{(X/S)fppf}(T)` to be bijective, so
-the *plain* relative Picard functor is already the étale sheaf that FGA
-representability (Kleiman §4) represents. -/
-class HasRationalPoint {k : Type u} [Field k] (C : Over (Spec (.of k))) : Prop where
-  nonempty_section :
-    Nonempty {σ : Spec (.of k) ⟶ C.left // σ ≫ C.hom = 𝟙 (Spec (.of k))}
 
 namespace PicScheme
 

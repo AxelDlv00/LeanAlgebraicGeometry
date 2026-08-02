@@ -11,6 +11,7 @@ import AlgebraicJacobian.Picard.Pic0TangentSpace
 import AlgebraicJacobian.Picard.Pic0DualNumberCocycle
 import AlgebraicJacobian.Picard.OnePointRelPicCollapse
 import AlgebraicJacobian.Picard.GroupSchemeSmoothAlgClosed
+import AlgebraicJacobian.Picard.CurveProjectivity
 import AlgebraicJacobian.Curve.GeometricallyReduced
 import AlgebraicJacobian.RiemannRoch.Adelic.GenusUnconditional
 import AlgebraicJacobian.Genus

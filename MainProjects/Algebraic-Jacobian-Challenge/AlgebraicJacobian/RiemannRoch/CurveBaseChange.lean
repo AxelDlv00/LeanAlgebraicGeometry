@@ -5,8 +5,8 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import Mathlib
 import AlgebraicJacobian.RiemannRoch.Adelic.NonconstantToP1
+import AlgebraicJacobian.Picard.HasRationalPoint
 import AlgebraicJacobian.Picard.RigidPushforward
-import AlgebraicJacobian.Picard.FGAPicRepresentability
 import AlgebraicJacobian.Picard.SectionRingUniversal
 
 /-!
