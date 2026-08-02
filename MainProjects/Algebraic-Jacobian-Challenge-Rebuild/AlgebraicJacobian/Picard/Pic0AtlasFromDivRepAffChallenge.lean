@@ -18,6 +18,13 @@ The resulting chart family has no assumed divisor representation.  Its remaining
 two geometric conditions of the local-representability theorem: every restricted Abel map is a
 representable open immersion, and the restricted maps cover the Picard sheaf pointwise.
 
+This is not an unconditional Picard representability result: the final declaration below retains
+both geometric inputs.  Moreover, at the larger admissible coverage parameter the raw Abel map has
+positive-dimensional linear-system fibres in positive genus, so the larger divisor representer
+cannot simply be substituted as an open chart source.  The remaining datum-tail construction is
+the corrected Altman--Kleiman step: represent the quotient by equality of the induced Picard class,
+thereby removing those fibres before applying the Picard representability seam.
+
 ## Main declarations
 
 * `AlgebraicGeometry.abelSigmaChartAffGenus` is the widened Abel chart formed from the chosen
@@ -25,7 +32,7 @@ representable open immersion, and the restricted maps cover the Picard sheaf poi
 * `AlgebraicGeometry.universalDivFamAffGenus` is its universal widened divisor family.
 * `AlgebraicGeometry.affineGenusChart` restricts a multi-index family of these maps to chosen
   source opens.
-* `AlgebraicGeometry.pic0RepresentableByOfAffineGenusCharts` represents `pic0TypeFunctor C`
+* `AlgebraicGeometry.pic0RepresentableByOfAffineGenusCharts` is the conditional final assembly
   once the restricted charts are open immersions and cover pointwise.
 -/
 
@@ -100,12 +107,17 @@ lemma chartHom_affineGenusChart {ι : Type u}
     (V : ∀ _ : ι, (divRepAffGenusScheme C).left.Opens) (i : ι) :
     chartHom C (affineGenusChart C m Z hdeg V) i
       = (V i).ι ≫ (divRepAffGenusScheme C).hom := by
-  change chartHom C (fun _ : ι => restrictChart
-    (abelSigmaChartAffGenus C (m i) (Z i) (hdeg i)) (V i)) i = _
-  exact (chartHom_restrictChart
-    (abelSigmaChartAffGenus C (m i) (Z i) (hdeg i)) (V i) i).trans
-      (congrArg ((V i).ι ≫ ·)
-        (chartHom_abelSigmaChartAffGenus C (m i) (Z i) (hdeg i) i))
+  calc
+    chartHom C (affineGenusChart C m Z hdeg V) i =
+        chartHom C (fun _ : ι => restrictChart
+          (abelSigmaChartAffGenus C (m i) (Z i) (hdeg i)) (V i)) i := rfl
+    _ = (V i).ι ≫ chartHom C
+          (fun _ : ι => abelSigmaChartAffGenus C (m i) (Z i) (hdeg i)) i :=
+      chartHom_restrictChart
+        (abelSigmaChartAffGenus C (m i) (Z i) (hdeg i)) (V i) i
+    _ = (V i).ι ≫ (divRepAffGenusScheme C).hom :=
+      congrArg ((V i).ι ≫ ·)
+        (chartHom_abelSigmaChartAffGenus C (m i) (Z i) (hdeg i) i)
 
 /-- The degree-zero Picard functor is represented by the glued object of any pointwise-covering
 family of open genus-parameter widened Abel charts.
