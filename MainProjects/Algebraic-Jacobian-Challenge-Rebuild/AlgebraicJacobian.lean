@@ -772,6 +772,8 @@ import AlgebraicJacobian.Picard.JacobianDataFromPicRepDatum
 import AlgebraicJacobian.Picard.JacobianDataQcFromRep
 import AlgebraicJacobian.Picard.JacobianDataQcFiniteFamily
 import AlgebraicJacobian.Picard.Pic0ChartFieldPointClass
+import AlgebraicJacobian.Picard.SupportBaseChange
+import AlgebraicJacobian.Picard.FiberDegreeZeroVanishing
 import AlgebraicJacobian.Picard.DivisorFamilyDegreeZeroUnique
 import AlgebraicJacobian.Picard.DivisorFamilyDegreeZeroGeneral
 import AlgebraicJacobian.Picard.DivisorFamilyDegreeZeroRep
