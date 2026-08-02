@@ -166,6 +166,63 @@ theorem windowBound_add_windowδ_le_S_mul_sub (g : ℕ) :
   have hδ := windowδ_nonneg π
   nlinarith [hspec, hδ]
 
+/-! ## The decoupled budget
+
+The universal divisor family is budgeted by its degree `n`, while the Riemann--Roch
+normalization carries an independent curve parameter `gamma`.  The coverage path uses
+`gamma ≤ n`; keeping this relation explicit here lets the diagonal API above remain
+source-compatible and gives the widened tower the exact arithmetic it needs.
+-/
+
+theorem two_mul_genus_le_S_mul_windowδ_at (gamma n : ℕ) (hgamma : gamma ≤ n)
+    (hO : Sheaf.h0 (Y.moduleKSheaf K) = 1)
+    (hχ : Sheaf.chi (Y.moduleKSheaf K) = 1 - (gamma : ℤ)) :
+    2 * (gamma : ℤ) ≤ (windowS_choice π hπ n : ℤ) * windowδ π := by
+  by_cases hb : windowBound π hπ ≤ 0
+  · have hgamma0 := genus_eq_zero_of_windowBound_nonpos π hπ gamma hb hO hχ
+    subst hgamma0
+    simpa using mul_nonneg (Int.natCast_nonneg (windowS_choice π hπ n)) (windowδ_nonneg π)
+  · have hb1 : 0 < windowBound π hπ := not_le.mp hb
+    have hspec := windowS_spec π hπ n
+    have hδ := one_le_windowδ π
+    have hcast : (gamma : ℤ) ≤ (n : ℤ) := by exact_mod_cast hgamma
+    nlinarith [hspec, hδ, hb1]
+
+theorem two_mul_genus_le_M_mul_windowδ_at (gamma n : ℕ) (hgamma : gamma ≤ n)
+    (hO : Sheaf.h0 (Y.moduleKSheaf K) = 1)
+    (hχ : Sheaf.chi (Y.moduleKSheaf K) = 1 - (gamma : ℤ)) :
+    2 * (gamma : ℤ) ≤ (windowM_choice π hπ n : ℤ) * windowδ π := by
+  by_cases hb : windowBound π hπ ≤ 0
+  · have hgamma0 := genus_eq_zero_of_windowBound_nonpos π hπ gamma hb hO hχ
+    subst hgamma0
+    simpa using mul_nonneg (Int.natCast_nonneg (windowM_choice π hπ n)) (windowδ_nonneg π)
+  · have hb1 : 0 < windowBound π hπ := not_le.mp hb
+    have hnorm := windowBound_le_M_norm π hπ n
+    have hcast : (gamma : ℤ) ≤ (n : ℤ) := by exact_mod_cast hgamma
+    omega
+
+theorem three_mul_genus_le_M_mul_windowδ_at (gamma n : ℕ) (hgamma : gamma ≤ n)
+    (hO : Sheaf.h0 (Y.moduleKSheaf K) = 1)
+    (hχ : Sheaf.chi (Y.moduleKSheaf K) = 1 - (gamma : ℤ)) :
+    3 * (gamma : ℤ) ≤ (windowM_choice π hπ n : ℤ) * windowδ π := by
+  by_cases hb : windowBound π hπ ≤ 0
+  · have hgamma0 := genus_eq_zero_of_windowBound_nonpos π hπ gamma hb hO hχ
+    subst hgamma0
+    simpa using mul_nonneg (Int.natCast_nonneg (windowM_choice π hπ n)) (windowδ_nonneg π)
+  · have hb1 : 0 < windowBound π hπ := not_le.mp hb
+    have hspec := windowM_spec π hπ n
+    have hδ := one_le_windowδ π
+    have hs : (0 : ℤ) ≤ (windowS_choice π hπ n : ℤ) := Int.natCast_nonneg _
+    have hgamma' : (0 : ℤ) ≤ (gamma : ℤ) := Int.natCast_nonneg _
+    have hcast : (gamma : ℤ) ≤ (n : ℤ) := by exact_mod_cast hgamma
+    have hone : (1 : ℤ) ≤ ((windowS_choice π hπ n : ℤ) + 1) * windowδ π := by
+      nlinarith [hs, hδ]
+    have hcube : ((n : ℤ) + 2)
+        ≤ ((n : ℤ) + 2) * (((windowS_choice π hπ n : ℤ) + 1) * windowδ π) :=
+      le_mul_of_one_le_right (by positivity) hone
+    rw [← mul_assoc] at hcube
+    linarith [hspec, hcube, hb1, hgamma']
+
 end LedgerF3
 
 end AlgebraicGeometry
