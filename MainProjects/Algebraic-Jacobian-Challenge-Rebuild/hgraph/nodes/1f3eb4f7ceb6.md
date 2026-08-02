@@ -20,7 +20,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_sec_windowCompare_ne_zero_seedPrime
 type: lean
-updated: '2026-08-02T07:12:50'
+updated: '2026-08-02T22:45:33'
 ---
 theorem exists_sec_windowCompare_ne_zero_seedPrime
     (p : PrimeSpectrum (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
@@ -41,9 +41,6 @@ theorem exists_sec_windowCompare_ne_zero_seedPrime
     C hπ g r₁ r₂ b₁ b₂ i j p hf_mem hf_ne
 
 set_option maxHeartbeats 2400000 in
--- the seed-base residue-field tower drives the `windowCompare`/`relThetaWindowEquiv` and
--- `basePrime` germ defeq past the defaults (the `divUniversal_carve_residueField` hatch)
 set_option synthInstance.maxHeartbeats 800000 in
 set_option maxSynthPendingDepth 8 in
 set_option maxRecDepth 8000 in
-include hO hχ in

@@ -34,7 +34,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.existsUnique_effective_divisor_of_carve_windowN
 type: lean
-updated: '2026-08-02T07:12:50'
+updated: '2026-08-02T22:45:33'
 ---
 theorem existsUnique_effective_divisor_of_carve_windowN (g : ℕ)
     (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
@@ -88,23 +88,3 @@ theorem existsUnique_effective_divisor_of_carve_windowN (g : ℕ)
           have := windowA_add_three_mul_genus_add_S_le_M_mul π hπ hb g
           linarith)
       KM hKM hKMrank K' hK' hK'rank hcarve
-
-end Keystone
-/-! ## The Φ-side interface (G-3 dictionary addenda for the seed bridge) -/
-
-section PhiInterface
-
-variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
-variable (K : Type u) [Field K] [Algebra k K]
-variable (π : C.left ⟶ P1 k) [IsFinite π]
-
-noncomputable local instance instOverCleftSUFP : C.left.Over (Spec (.of k)) := ⟨C.hom⟩
-
-variable [SmoothOfRelativeDimension 1 (C.left ↘ Spec (.of k))] [IsIntegral C.left]
-  [LocallyOfFiniteType (C.left ↘ Spec (.of k))] [QuasiCompact (C.left ↘ Spec (.of k))]
-  [IsDominant π]
-variable (a : ℕ)
-variable [IsIntegral (relCurve C K)]
-  [SmoothOfRelativeDimension 1 (relCurve C K ↘ Spec (CommRingCat.of K))]
-  [QuasiCompact (relCurve C K ↘ Spec (CommRingCat.of K))]
-  [LocallyOfFiniteType (relCurve C K ↘ Spec (CommRingCat.of K))]
