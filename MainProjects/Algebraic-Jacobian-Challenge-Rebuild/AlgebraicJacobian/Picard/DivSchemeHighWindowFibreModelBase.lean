@@ -539,6 +539,124 @@ theorem divUniversalHighWindowFibreModel_one
         (windowM_choice pi hpi g • fiberWeilDivisor pi)
         g r1 r2 b1 b2 i j p.asIdeal.ResidueField) hb
 
+/-! ## Decoupled curve parameter -/
+
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 1000000 in
+/-- The degree-`g` relation has the canonical stage-zero fibre image for an
+independent curve parameter `gamma ≤ g`. -/
+theorem divUniversalHighWindowFibreImage_zero_at {gamma : Nat}
+    (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ)) :
+    DivUniversalHighWindowFibreImage_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker 0 := by
+  rw [DivUniversalHighWindowFibreImage_at,
+    divUniversalHighWindowRelation_zero_eq_firstWindow,
+    Grassmannian.baseChange_map_submodule]
+  change Submodule.map
+      (divUniversalHighWindowClosedAmbientFibreEquiv
+        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K 0).toLinearMap
+      (Submodule.map
+        (LinearMap.baseChange K
+          (LinearMap.baseChange RZ
+            (divUniversalHighWindowZeroEquiv
+              (C := C) (pi := pi) hpi g).toLinearMap))
+        (LinearMap.range (LinearMap.baseChange K
+          ((divUniversalFstWindow C pi hpi g r1 r2 b1 b2 i j).toSubmodule).subtype))) = _
+  rw [← LinearMap.range_comp, ← LinearMap.range_comp]
+  rw [divUniversalFibreHighWindowInAmbient_at,
+    divUniversalFibreHighWindow_zero_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker]
+  exact range_eq_comap_of_equiv_coe K A[0] KM
+    ((divUniversalHighWindowClosedAmbientFibreEquiv
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K 0).toLinearMap.comp
+        ((LinearMap.baseChange K
+          (LinearMap.baseChange RZ
+            (divUniversalHighWindowZeroEquiv
+              (C := C) (pi := pi) hpi g).toLinearMap)).comp
+          (LinearMap.baseChange K
+            ((divUniversalFstWindow C pi hpi g r1 r2 b1 b2 i j).toSubmodule).subtype)))
+    (divUniversalFstFibreReadEquiv
+      (π := pi) C hpi g r1 r2 b1 b2 i j K)
+    (divUniversalHighWindowClosedFstRead_eq
+      C hpi g r1 r2 b1 b2 i j K)
+
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 1000000 in
+/-- The degree-`g` relation has the canonical stage-one fibre image for an
+independent curve parameter `gamma ≤ g`. -/
+theorem divUniversalHighWindowFibreImage_one_at {gamma : Nat}
+    (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ)) :
+    DivUniversalHighWindowFibreImage_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker 1 := by
+  rw [DivUniversalHighWindowFibreImage_at,
+    divUniversalHighWindowRelation_one_eq_secondWindow_at
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hgamma hchiGamma,
+    divUniversalHighWindowStageOne_toSubmodule,
+    Grassmannian.baseChange_map_submodule]
+  change Submodule.map
+      (divUniversalHighWindowClosedAmbientFibreEquiv
+        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K 1).toLinearMap
+      (Submodule.map
+        (LinearMap.baseChange K
+          (LinearMap.baseChange RZ
+            (divUniversalHighWindowOneEquiv
+              (C := C) (pi := pi) hpi g).toLinearMap))
+        (LinearMap.range (LinearMap.baseChange K
+          ((divUniversalSndWindow C pi hpi g r1 r2 b1 b2 i j).toSubmodule).subtype))) = _
+  rw [← LinearMap.range_comp, ← LinearMap.range_comp]
+  rw [divUniversalFibreHighWindowInAmbient_at,
+    divUniversalFibreHighWindow_one_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker]
+  exact range_eq_comap_of_equiv_coe K A[1] KMS
+    ((divUniversalHighWindowClosedAmbientFibreEquiv
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K 1).toLinearMap.comp
+        ((LinearMap.baseChange K
+          (LinearMap.baseChange RZ
+            (divUniversalHighWindowOneEquiv
+              (C := C) (pi := pi) hpi g).toLinearMap)).comp
+          (LinearMap.baseChange K
+            ((divUniversalSndWindow C pi hpi g r1 r2 b1 b2 i j).toSubmodule).subtype)))
+    (divUniversalSndFibreReadEquiv
+      (π := pi) C hpi g r1 r2 b1 b2 i j K)
+    (divUniversalHighWindowClosedSndRead_eq
+      C hpi g r1 r2 b1 b2 i j K)
+
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 1000000 in
+/-- Every residue field sees the off-diagonal canonical stage-zero image. -/
+theorem divUniversalHighWindowFibreModel_zero_at {gamma : Nat}
+    (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ)) :
+    DivUniversalHighWindowFibreModel_at
+      C hpi g r1 r2 b1 b2 i j hgamma hchiGamma 0 := by
+  intro p
+  exact divUniversalHighWindowFibreImage_zero_at
+    C hpi g r1 r2 b1 b2 i j p.asIdeal.ResidueField
+      (divCarveIdeal_le_ker_of_tower k
+        (windowS_choice pi hpi g • fiberWeilDivisor pi)
+        (windowM_choice pi hpi g • fiberWeilDivisor pi)
+        g r1 r2 b1 b2 i j p.asIdeal.ResidueField)
+      hgamma hchiGamma
+
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 1000000 in
+/-- Every residue field sees the off-diagonal canonical stage-one image. -/
+theorem divUniversalHighWindowFibreModel_one_at {gamma : Nat}
+    (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ)) :
+    DivUniversalHighWindowFibreModel_at
+      C hpi g r1 r2 b1 b2 i j hgamma hchiGamma 1 := by
+  intro p
+  exact divUniversalHighWindowFibreImage_one_at
+    C hpi g r1 r2 b1 b2 i j p.asIdeal.ResidueField
+      (divCarveIdeal_le_ker_of_tower k
+        (windowS_choice pi hpi g • fiberWeilDivisor pi)
+        (windowM_choice pi hpi g • fiberWeilDivisor pi)
+        g r1 r2 b1 b2 i j p.asIdeal.ResidueField)
+      hgamma hchiGamma
+
 end HighWindowFibreModelBase
 
 end AlgebraicGeometry

@@ -511,5 +511,30 @@ theorem flat_chartReadIdeal_divUniversalSeedK_of_all_stage
       (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hO hchi hb side] at hcolim
   exact hcolim
 
+set_option maxHeartbeats 2400000 in
+set_option synthInstance.maxHeartbeats 800000 in
+/-- Once every finite degree-`g` high-window quotient is flat, the shifted
+colimit is flat over the first seed ideal at independent curve parameter
+`gamma ≤ g`. -/
+theorem flat_chartReadIdeal_divUniversalSeedK_of_all_stage_at {gamma : Nat}
+    (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    [hflat : ∀ n, Module.Flat RZ ((G(n + 1)) ⧸ K(n + 1))] :
+    Module.Flat RZ
+      (B ⧸ ThetaGeneratorSeed.chartReadIdeal
+        (divUniversalSeedK C pi hpi g r1 r2 b1 b2 i j) side) := by
+  have hcolim := flat_shifted_highWindow_chart_quotient_of_saturation
+    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j
+      (windowBound_pos pi hpi) side
+    (fun n x hx =>
+      exists_divUniversalHighWindowShiftedRelationTransitionOfLE_mem_relation_of_mem_readIdeal
+        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side
+          (windowBound_pos pi hpi) n x hx)
+  rw [divUniversalHighWindowRelationReadIdeal_one_eq_chartReadIdeal_at
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hgamma hchiGamma side,
+    chartReadIdeal_divUniversalSeedK'_eq_divUniversalSeedK_at
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hgamma hchiGamma side] at hcolim
+  exact hcolim
+
 end HighWindowTransitionSaturation
 end AlgebraicGeometry
