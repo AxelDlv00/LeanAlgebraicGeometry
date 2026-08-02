@@ -11,7 +11,7 @@ summary: 'Verified generic substrate now includes quasi-compact finite-projectiv
   witnesses, translation/torsor and degree-coproduct assembly, and an arbitrary-field
   PicEt producer. The central fgaPicardRepresentability sorry is unchanged and no
   new representability consumer landed.'
-status: pending
+status: active
 kind: proof
 priority: high
 depends_on: []
@@ -35,10 +35,11 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.etale-rep
   milestone: AJC.picrep
-  updated_at: '2026-08-02T17:56:35.376983+00:00'
+  updated_at: '2026-08-02T18:34:25.241019+00:00'
   pinned_commits:
   - 8c0f0550e65645feea997eecd4122db477c80302
   - 5edfb3ad09fcc6d74e86f0aa067ed15ae6aba1fe
   - 9c60b3764397a9549e48dddb56e734b2951e96bb
   - bdff30e2aa
   - d42d44fc286218ab24e1a098202bd208e204b523
+  owner: ajc-kleiman-rewire
