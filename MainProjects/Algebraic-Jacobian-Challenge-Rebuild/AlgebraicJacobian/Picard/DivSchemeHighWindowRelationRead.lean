@@ -330,6 +330,42 @@ theorem divUniversalHighWindowRelationReadIdeal_one_eq_sndWindowChartReadIdeal
       rw [divUniversalHighWindowChartRead_one_comp_oneEquiv_eq_sndWindowChartRead]
 
 set_option maxHeartbeats 2400000 in
+-- The stage-one ideal comparison repeats the mapped-submodule range reduction.
+set_option synthInstance.maxHeartbeats 800000 in
+-- The second-window seed equivalence carries the shifted chart-ring subtype.
+/-- At independent Euler parameter `gamma ≤ g`, stage one generates the
+degree-`g` second-window chart-reading span. -/
+theorem divUniversalHighWindowRelationReadIdeal_one_eq_sndWindowChartReadIdeal_at
+    {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (side : Bool) :
+    divUniversalHighWindowRelationReadIdeal (C := C) (pi := pi)
+        hpi g r1 r2 b1 b2 i j 1 side =
+      Ideal.span (Set.range
+        (divUniversalSndWindowChartRead C hpi g r1 r2 b1 b2 i j side)) := by
+  rw [divUniversalHighWindowRelationReadIdeal_eq_submodule,
+    divUniversalHighWindowRelation_one_eq_secondWindow_at
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hgamma hchi,
+    divUniversalHighWindowStageOne_toSubmodule]
+  calc
+    _ = Ideal.span (Set.range
+        (((divUniversalHighWindowChartRead (C := C) (pi := pi)
+          hpi g r1 r2 b1 b2 i j 1 side).comp
+          (LinearMap.baseChange RZ
+            (divUniversalHighWindowOneEquiv (C := C) (pi := pi)
+              hpi g).toLinearMap)).comp
+          (divUniversalSndWindow C pi hpi g r1 r2 b1 b2 i j).toSubmodule.subtype)) :=
+      span_range_read_map_submodule_map
+        (f := divUniversalHighWindowChartRead (C := C) (pi := pi)
+          hpi g r1 r2 b1 b2 i j 1 side)
+        (e := LinearMap.baseChange RZ
+          (divUniversalHighWindowOneEquiv (C := C) (pi := pi) hpi g).toLinearMap)
+        ((divUniversalSndWindow C pi hpi g r1 r2 b1 b2 i j).toSubmodule)
+    _ = _ := by
+      rw [divUniversalHighWindowChartRead_one_comp_oneEquiv_eq_sndWindowChartRead]
+
+set_option maxHeartbeats 2400000 in
 -- The shifted seed equivalence is a surjective reparametrization of second-window readings.
 set_option synthInstance.maxHeartbeats 800000 in
 -- The shifted chart-reading map retains the concrete carve-chart section ring.
@@ -344,6 +380,29 @@ theorem divUniversalHighWindowRelationReadIdeal_one_eq_chartReadIdeal
         (divUniversalSeedK' C pi hpi g r1 r2 b1 b2 i j) side := by
   rw [divUniversalHighWindowRelationReadIdeal_one_eq_sndWindowChartReadIdeal
     (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hO hchi hb side]
+  unfold divUniversalSndWindowChartRead ThetaGeneratorSeed.chartReadIdeal
+  exact span_range_comp_surjective
+    (f := ThetaGeneratorSeed.chartReadMap
+      (divUniversalSeedK' C pi hpi g r1 r2 b1 b2 i j) side)
+    (e := (divUniversalSeedK'Equiv C pi hpi g r1 r2 b1 b2 i j).toLinearMap)
+    (divUniversalSeedK'Equiv C pi hpi g r1 r2 b1 b2 i j).surjective
+
+set_option maxHeartbeats 2400000 in
+-- The shifted seed equivalence is a surjective reparametrization of second-window readings.
+set_option synthInstance.maxHeartbeats 800000 in
+-- The shifted chart-reading map retains the concrete carve-chart section ring.
+/-- At independent Euler parameter `gamma ≤ g`, stage one generates exactly the
+genuine chart-reading ideal of the shifted degree-`g` seed. -/
+theorem divUniversalHighWindowRelationReadIdeal_one_eq_chartReadIdeal_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (side : Bool) :
+    divUniversalHighWindowRelationReadIdeal (C := C) (pi := pi)
+        hpi g r1 r2 b1 b2 i j 1 side =
+      ThetaGeneratorSeed.chartReadIdeal
+        (divUniversalSeedK' C pi hpi g r1 r2 b1 b2 i j) side := by
+  rw [divUniversalHighWindowRelationReadIdeal_one_eq_sndWindowChartReadIdeal_at
+    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hgamma hchi side]
   unfold divUniversalSndWindowChartRead ThetaGeneratorSeed.chartReadIdeal
   exact span_range_comp_surjective
     (f := ThetaGeneratorSeed.chartReadMap
@@ -372,6 +431,33 @@ theorem divUniversalHighWindowRelationReadIdeal_one_eq_zero
         (divUniversalSeedK C pi hpi g r1 r2 b1 b2 i j) side :=
       chartReadIdeal_divUniversalSeedK'_eq_divUniversalSeedK
         (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hO hchi hb side
+    _ = _ :=
+      (divUniversalHighWindowRelationReadIdeal_zero_eq_chartReadIdeal
+        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side).symm
+
+set_option maxHeartbeats 2400000 in
+-- The seed-anchor equality combines the two window ideal transports and persistence.
+set_option synthInstance.maxHeartbeats 800000 in
+-- The final comparison keeps both chart-ring seed ideals at the same dependent type.
+/-- At independent Euler parameter `gamma ≤ g`, the stage-one and stage-zero
+degree-`g` relation-reading ideals agree. -/
+theorem divUniversalHighWindowRelationReadIdeal_one_eq_zero_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (side : Bool) :
+    divUniversalHighWindowRelationReadIdeal (C := C) (pi := pi)
+        hpi g r1 r2 b1 b2 i j 1 side =
+      divUniversalHighWindowRelationReadIdeal (C := C) (pi := pi)
+        hpi g r1 r2 b1 b2 i j 0 side := by
+  calc
+    _ = ThetaGeneratorSeed.chartReadIdeal
+        (divUniversalSeedK' C pi hpi g r1 r2 b1 b2 i j) side := by
+      exact divUniversalHighWindowRelationReadIdeal_one_eq_chartReadIdeal_at
+        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hgamma hchi side
+    _ = ThetaGeneratorSeed.chartReadIdeal
+        (divUniversalSeedK C pi hpi g r1 r2 b1 b2 i j) side :=
+      chartReadIdeal_divUniversalSeedK'_eq_divUniversalSeedK_at
+        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hgamma hchi side
     _ = _ :=
       (divUniversalHighWindowRelationReadIdeal_zero_eq_chartReadIdeal
         (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side).symm

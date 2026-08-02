@@ -280,6 +280,22 @@ theorem divUniversalHighWindowRelation_one_eq_secondWindow
       (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hO hchi hb,
     divUniversalHighWindowStageOne_toSubmodule]
 
+set_option maxHeartbeats 1600000 in
+-- Comparing the two transported second-window ambients is definitionally expensive.
+/-- At independent Euler parameter `gamma ≤ g`, stage one is exactly the transported
+universal second window of divisor degree `g`. -/
+theorem divUniversalHighWindowRelation_one_eq_secondWindow_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ)) :
+    divUniversalHighWindowRelation (C := C) (pi := pi)
+      hpi g r1 r2 b1 b2 i j 1 =
+      (divUniversalHighWindowStageOne (C := C) (pi := pi)
+        hpi g r1 r2 b1 b2 i j).toSubmodule := by
+  rw [divUniversalHighWindowRelation_one_transport,
+    universalMulSpan_eq_divUniversalSndWindow_at
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hgamma hchi,
+    divUniversalHighWindowStageOne_toSubmodule]
+
 end HighWindowRelations
 
 end AlgebraicGeometry

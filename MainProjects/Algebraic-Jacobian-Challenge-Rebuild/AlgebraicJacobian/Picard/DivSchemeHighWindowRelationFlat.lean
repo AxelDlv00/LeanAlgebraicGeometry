@@ -244,6 +244,32 @@ noncomputable def divUniversalHighWindowRelationOneQuotientEquiv
         (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hO hchi hb)
 
 set_option maxHeartbeats 1600000 in
+-- Comparing the two expanded stage-one quotient types exceeds the default budget.
+/-- Quotient transport from relation stage one to the degree-`g` second Grassmannian
+point at independent Euler parameter `gamma ≤ g`. -/
+noncomputable def divUniversalHighWindowRelationOneQuotientEquiv_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ)) :
+    divUniversalHighWindowRelationQuotient (C := C) (pi := pi)
+        hpi g r1 r2 b1 b2 i j 1 ≃ₗ[RZ]
+      divUniversalHighWindowQuotient (C := C) (pi := pi)
+        hpi g r1 r2 b1 b2 i j 1
+        (divUniversalHighWindowStageOne (C := C) (pi := pi)
+          hpi g r1 r2 b1 b2 i j) :=
+  Submodule.Quotient.equiv
+    (divUniversalHighWindowRelation (C := C) (pi := pi)
+      hpi g r1 r2 b1 b2 i j 1)
+    (divUniversalHighWindowStageOne (C := C) (pi := pi)
+      hpi g r1 r2 b1 b2 i j).toSubmodule
+    (LinearEquiv.refl RZ
+      (divUniversalHighWindowAmbient (C := C) (pi := pi)
+        (hpi := hpi) (g := g) (r1 := r1) (r2 := r2)
+        (b1 := b1) (b2 := b2) (i := i) (j := j) 1)) (by
+      rw [LinearEquiv.refl_toLinearMap, Submodule.map_id]
+      exact divUniversalHighWindowRelation_one_eq_secondWindow_at
+        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hgamma hchi)
+
+set_option maxHeartbeats 1600000 in
 -- Elaborating the expanded quotient equivalence exceeds the default budget.
 /-- The relation quotient at stage zero is the first Grassmannian quotient. -/
 theorem projective_divUniversalHighWindowRelationQuotient_zero :
@@ -280,6 +306,20 @@ theorem projective_divUniversalHighWindowRelationQuotient_one
       (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hO hchi hb).symm
 
 set_option maxHeartbeats 1600000 in
+-- Elaborating the expanded stage-one quotient equivalence exceeds the default budget.
+/-- At independent Euler parameter `gamma ≤ g`, the relation quotient at stage one
+is the degree-`g` second Grassmannian quotient. -/
+theorem projective_divUniversalHighWindowRelationQuotient_one_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ)) :
+    Module.Projective RZ
+      (divUniversalHighWindowRelationQuotient (C := C) (pi := pi)
+        hpi g r1 r2 b1 b2 i j 1) := by
+  exact Module.Projective.of_equiv
+    (divUniversalHighWindowRelationOneQuotientEquiv_at
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hgamma hchi).symm
+
+set_option maxHeartbeats 1600000 in
 -- Synthesizing flatness through the expanded stage-one quotient exceeds the default budget.
 /-- The relation quotient at stage one is flat. -/
 theorem flat_divUniversalHighWindowRelationQuotient_one
@@ -291,6 +331,20 @@ theorem flat_divUniversalHighWindowRelationQuotient_one
         hpi g r1 r2 b1 b2 i j 1) := by
   letI := projective_divUniversalHighWindowRelationQuotient_one
     (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hO hchi hb
+  exact Module.Flat.of_projective
+
+set_option maxHeartbeats 1600000 in
+-- Synthesizing flatness through the expanded stage-one quotient exceeds the default budget.
+/-- At independent Euler parameter `gamma ≤ g`, the relation quotient at stage one
+is flat. -/
+theorem flat_divUniversalHighWindowRelationQuotient_one_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ)) :
+    Module.Flat RZ
+      (divUniversalHighWindowRelationQuotient (C := C) (pi := pi)
+        hpi g r1 r2 b1 b2 i j 1) := by
+  letI := projective_divUniversalHighWindowRelationQuotient_one_at
+    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hgamma hchi
   exact Module.Flat.of_projective
 
 end HighWindowRelationFlat
