@@ -154,6 +154,54 @@ theorem pointwiseFibreReadGerm_dvd_of_ne
       (relCurveResiduePoint_mem_relPinnedChart C RZ (π := π) b hz) hzg
       hach
 
+set_option maxHeartbeats 8000000 in
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxSynthPendingDepth 8 in
+set_option maxRecDepth 8000 in
+/-- Nonzero universal-window readings are divisible by the decoupled pointwise achiever in
+the residue-fibre stalk. -/
+theorem pointwiseFibreReadGerm_dvd_of_ne_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (z : relCurve C RZ)
+    (hzg : relCurveResiduePoint C RZ z ≠
+      genericPoint (relCurve C (relCurveBasePoint C RZ z).asIdeal.ResidueField))
+    (b : Bool) (hz : z ∈ relPinnedChart C RZ π b)
+    {xψ : RZ ⊗[k] ↥(Scheme.divisorSections k
+      (windowM_choice π hπ g • fiberWeilDivisor π) ⊤)}
+    (hxψ : xψ ∈ (divUniversalFstWindow C π hπ g r₁ r₂ b₁ b₂ i j).toSubmodule)
+    (hxψzero : windowCompare RZ (relCurveBasePoint C RZ z).asIdeal.ResidueField xψ ≠ 0) :
+    pointwiseFibreReadGerm C hπ g r₁ r₂ b₁ b₂ i j z b hz
+        (pointwiseSectionVector_at C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ z) ∣
+      pointwiseFibreReadGerm C hπ g r₁ r₂ b₁ b₂ i j z b hz xψ := by
+  let K := (relCurveBasePoint C RZ z).asIdeal.ResidueField
+  let A := pointwiseFibrePoleDivisor_at
+    C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ z
+  have hTA : divUniversalFibreKM C hπ g r₁ r₂ b₁ i j K ≤
+      Scheme.divisorSections K A ⊤ := by
+    simpa only [K, A] using divUniversalFibreKM_le_pointwiseFibrePoleDivisor_at
+      C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ z
+  obtain ⟨hsec_ne, hach⟩ :=
+    pointwiseSectionVector_fibreAchieverData_at
+      C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ z hzg
+  have hψ_ne : divFamPhi C K π (windowM_choice π hπ g)
+      (relThetaPairH1_windowM C π hπ g) (windowCompare RZ K xψ) ≠ 0 := by
+    intro hzero
+    apply hxψzero
+    exact (divFamPhi_injective C K π (windowM_choice π hπ g)
+      (relThetaPairH1_windowM C π hπ g)) (by simpa using hzero)
+  have hψmem := divFamPhi_windowCompare_mem_divUniversalFibreKM
+    C hπ g r₁ r₂ b₁ b₂ i j K hxψ
+  unfold pointwiseFibreReadGerm
+  apply germ_relThetaResSide_windowEquiv_dvd_of_achiever
+    K C π (windowM_choice π hπ g) (relThetaPairH1_windowM C π hπ g)
+      hTA
+      (windowCompare RZ K
+        (pointwiseSectionVector_at C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ z))
+      (windowCompare RZ K xψ) hsec_ne hψ_ne hψmem b le_rfl
+      (relCurveResiduePoint_mem_relPinnedChart C RZ (π := π) b hz) hzg
+      hach
+
 end SeedContext
 
 end PointwiseAchiever
