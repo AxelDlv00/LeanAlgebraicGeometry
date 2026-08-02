@@ -2,15 +2,16 @@ id: AJC.picrep.etale-rep.pic-finite-in-affine
 title: 'Picard degree pieces: FiniteInAffine and very-ample substrate'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Verified generic substrate now includes quasi-compact finite-projective-space
-  immersions (IsHQuasiProjective), a carried O(1) witness at Scheme.{0}, composition/base-change
-  transport, FiniteInAffine transfer through open and arbitrary immersions over affine
-  bases, and piecewise/coproduct/Over aggregation (9c60b37643, 5edfb3ad09). Commit
-  8c0f0550e adds executable FGA/Pic0 curve-projectivity wiring and source-faithful
-  citations. Still open: an intrinsic Pic^d carrier, actual Picard-piece H-quasi-projective/very-ample
-  witnesses, translation/torsor and degree-coproduct assembly, and an arbitrary-field
-  PicEt producer. The central fgaPicardRepresentability sorry is unchanged and no
-  new representability consumer landed.'
+summary: 'Verified substrate: H-quasi-projective finite-projective-space immersions
+  with carried O(1), stability and FiniteInAffine transport/aggregation are in 9c60b37643
+  and 5edfb3ad09; curve projectivity is executable in both Kleiman consumers via 8c0f0550e6.
+  Commit ec949eb9ac32 adds exactly three adapters: source-isomorphism transport, an
+  Over-base open-image isomorphism built from mathlib Scheme.Hom.isoImage, and carried
+  very-ampleness transport to that image. It is adapter progress, not producer progress.
+  Still open: intrinsic Pic^d carriers, actual Picard-piece H-quasi-projective/very-ample
+  witnesses, degree-shift/translation and coproduct assembly, and an arbitrary-field
+  PicEt producer. The central fgaPicardRepresentability sorry is unchanged; no rep
+  consumer was added.'
 status: active
 kind: proof
 priority: high
@@ -35,8 +36,10 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.etale-rep
   milestone: AJC.picrep
-  updated_at: '2026-08-02T18:34:25.241019+00:00'
+  updated_at: '2026-08-02T20:02:17.581193+00:00'
   pinned_commits:
+  - c165008973deeee8b845b1d983a51a5c053b44c9
+  - ec949eb9ac322ceb1d78f6dafd23886c5c23d60c
   - 8c0f0550e65645feea997eecd4122db477c80302
   - 5edfb3ad09fcc6d74e86f0aa067ed15ae6aba1fe
   - 9c60b3764397a9549e48dddb56e734b2951e96bb
