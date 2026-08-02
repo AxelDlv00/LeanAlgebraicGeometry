@@ -1,0 +1,45 @@
+id: ajc-kleiman-rewire
+project: Algebraic-Jacobian-Challenge
+objective: 'Two-part AJC lane grounded in reviewer finding I-1697 (read it first).
+  PART 1 (quick, do first): Adelic.isProjective_of_smoothProperGeometricallyIntegral
+  (CurveProjectivity.lean) is source-faithful and axiom-clean but UNCONSUMED - it
+  is absent from the import closure of Pic0AbelianVariety and FGAPicRepresentability,
+  which only cite it in prose. Add the explicit imports and rewire the Kleiman clause
+  (1) consumers to actually use it, so the projective-hypothesis gap is closed in
+  Lean rather than in comments. Verify with an import probe (lake env lean on a file
+  importing only the consumer) that the identifier resolves. PART 2 (the substrate):
+  own the proposed row AJC.picrep.etale-rep.pic-finite-in-affine - the Picard-scheme
+  degree-piece FiniteInAffine and very-ample output required by PointedPicSharpRep.
+  mathlib v4.31 has NO general ample/very-ample/Proj-for-morphisms API, so build what
+  you need as project-local reusable infrastructure (mathlib-conventions naming),
+  not inline hacks. THE METRIC: AJC has 0 arbitrary-field PicEt producers and the
+  central fgaPicardRepresentability sorry is untouched; consumers stayed 37-42 through
+  the whole last fleet. Success is measured by movement on the producer side or on
+  this named substrate, never by new (rep :) consumers. VERIFY: #print axioms on new
+  declarations, per-module lake build. NOTE: the AJC umbrella build costs ~43 minutes
+  - use narrow per-module builds during the session and one root build only at the
+  end if you touched the umbrella.'
+title: 'AJC: consume the projectivity theorem and build the FiniteInAffine/very-ample
+  substrate'
+explanation: ''
+projects:
+- Algebraic-Jacobian-Challenge
+priority: high
+status: queued
+write_set:
+  files: []
+  projects:
+  - Algebraic-Jacobian-Challenge
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+roadmap_refs: []
+inbox_refs: []
+artifact_refs: []
+created_at: '2026-08-02T11:46:03.829188+00:00'
+updated_at: '2026-08-02T11:46:03.829200+00:00'
+metadata:
+  author: human
