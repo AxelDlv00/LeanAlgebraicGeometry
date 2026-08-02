@@ -288,6 +288,16 @@ theorem comp_isImmersion (h : π.IsHQuasiProjectiveWith L) {Y : Scheme.{0}}
     Scheme.pullbackTriangleIso (rfl : j ≫ i = j ≫ i)
       (ProjectiveSpace.twistingSheaf n S 1)⟩
 
+/-- Transport H-quasi-projectivity and its specified relatively very ample line
+bundle along an isomorphism in `Over S`. -/
+theorem of_over_iso {S₀ : Scheme.{0}} {X₀ Y₀ : Over S₀}
+    {L₀ : X₀.left.Modules} (h : X₀.hom.IsHQuasiProjectiveWith L₀)
+    (e : Y₀ ≅ X₀) :
+    Y₀.hom.IsHQuasiProjectiveWith
+      ((Scheme.Modules.pullback e.hom.left).obj L₀) := by
+  rw [← Over.w e.hom]
+  exact h.comp_isImmersion e.hom.left
+
 /-- The comparison morphism from the base-changed total space into the
 base-changed projective space. -/
 private def baseChangeLift {S' : Scheme.{0}} (g : S' ⟶ S) {n : Type} [Finite n]
@@ -333,6 +343,29 @@ theorem baseChange (h : π.IsHQuasiProjectiveWith L) {S' : Scheme.{0}} (g : S' �
       (ProjectiveSpace.twistingSheafBaseChange n g 1)
 
 end Scheme.Hom.IsHQuasiProjectiveWith
+
+/-- An isomorphism over `S` restricts to an isomorphism over `S` from an open
+subscheme to its open image. -/
+noncomputable def Scheme.openImageIsoOver
+    {S : Scheme.{u}} {X Y : Over S} (e : X ≅ Y) (U : X.left.Opens) :
+    Over.mk (U.ι ≫ X.hom) ≅
+      Over.mk ((e.hom.left ''ᵁ U).ι ≫ Y.hom) :=
+  Over.isoMk (e.hom.left.isoImage U) (by
+    change (e.hom.left.isoImage U).hom ≫
+      ((e.hom.left ''ᵁ U).ι ≫ Y.hom) = U.ι ≫ X.hom
+    rw [← Category.assoc, Scheme.Hom.isoImage_hom_ι,
+      Category.assoc, Over.w e.hom])
+
+/-- A specified relatively very ample line bundle on an open subscheme
+transports to its open image under an isomorphism over the base. -/
+theorem Scheme.isHQuasiProjectiveWith_openImage
+    {S : Scheme.{0}} {X Y : Over S} (e : X ≅ Y) (U : X.left.Opens)
+    (L : U.toScheme.Modules)
+    (hU : (U.ι ≫ X.hom).IsHQuasiProjectiveWith L) :
+    (Over.mk ((e.hom.left ''ᵁ U).ι ≫ Y.hom)).hom.IsHQuasiProjectiveWith
+      ((Scheme.Modules.pullback
+        (Scheme.openImageIsoOver e U).inv.left).obj L) :=
+  hU.of_over_iso (Scheme.openImageIsoOver e U).symm
 
 namespace ProjectiveSpace
 
