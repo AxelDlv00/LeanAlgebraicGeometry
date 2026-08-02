@@ -165,6 +165,81 @@ theorem divUniversalFibreHighWindow_ker_finiteMulMap_eq_range_koszul
     ker_finiteMulMap_eq_range_highWindowMulKoszulBoundary_windowN
       C hpi g r1 r2 b1 b2 i j K hO hchi hker hb n b
 
+set_option maxHeartbeats 1600000 in
+/-- The complete multiplication-kernel presentation at divisor degree `g` and
+independent curve parameter `gamma ≤ g`. -/
+theorem ker_finiteMulMap_eq_range_highWindowMulKoszulBoundary_windowN_at
+    {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hχgamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hkerGamma : divCarveIdeal k (windowS_choice pi hpi g • fiberWeilDivisor pi)
+        (windowM_choice pi hpi g • fiberWeilDivisor pi) g r1 r2 b1 b2 i j ≤
+      RingHom.ker (algebraMap (PairChartRing k g r1 g r2 i j) K))
+    (n : ℕ)
+    (b : Module.Basis ι K
+      ↑(Scheme.divisorSections K (windowS C K hpi g) ⊤)) :
+    LinearMap.ker
+        (Scheme.finiteMulMap
+          (Scheme.divisorSections K (windowS C K hpi g) ⊤)
+          (Scheme.divisorSections K
+            (windowN C K hpi g + (n + 1) • windowS C K hpi g -
+              divUniversalFibreDivisor_at
+                C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma) ⊤) b) =
+      LinearMap.range
+        (Scheme.highWindowMulKoszulBoundary
+          (windowN C K hpi g) (windowS C K hpi g)
+          (divUniversalFibreDivisor_at
+            C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma) n b) := by
+  have hspec := divUniversalFibreDivisor_spec_at
+    C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma
+  apply Scheme.ker_finiteMulMap_eq_range_highWindowMulKoszulBoundary_of_pair
+    g (windowN C K hpi g) (windowS C K hpi g)
+      (divUniversalFibreDivisor_at
+        C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma)
+      ((windowA_choice pi hpi : ℤ) * windowδ pi + (gamma : ℤ))
+      (fun W hW => subsingleton_h1_of_windowA_le_deg C K hpi gamma
+        (chi_relCurve_baseField C K gamma hχgamma) W hW)
+      (by
+        rw [deg_windowS]
+        exact two_mul_degree_le_S_mul_windowδ pi hpi g)
+      (by
+        rw [deg_windowS, deg_windowN]
+        have hbudget := windowA_add_three_mul_genus_add_S_le_M_mul
+          pi hpi (windowBound_pos pi hpi) g
+        have hcast : (gamma : ℤ) ≤ (g : ℤ) := by exact_mod_cast hgamma
+        linarith)
+      hspec.2.1 n b v₀ v₁
+  · simpa only [windowS] using windowTransportPencilFst_mem C K pi
+      (windowS_choice pi hpi g)
+  · simpa only [windowS] using windowTransportPencilSnd_mem C K pi
+      (windowS_choice pi hpi g)
+  · simpa only [windowS] using windowTransportPencil_basepointFree C K pi
+      (windowS_choice pi hpi g)
+
+set_option maxHeartbeats 1600000 in
+/-- The off-diagonal exactness theorem in the canonical high-window spelling. -/
+theorem divUniversalFibreHighWindow_ker_finiteMulMap_eq_range_koszul_at
+    {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hχgamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hkerGamma : divCarveIdeal k (windowS_choice pi hpi g • fiberWeilDivisor pi)
+        (windowM_choice pi hpi g • fiberWeilDivisor pi) g r1 r2 b1 b2 i j ≤
+      RingHom.ker (algebraMap (PairChartRing k g r1 g r2 i j) K))
+    (n : ℕ)
+    (b : Module.Basis ι K
+      ↑(Scheme.divisorSections K (windowS C K hpi g) ⊤)) :
+    LinearMap.ker
+        (Scheme.finiteMulMap
+          (Scheme.divisorSections K (windowS C K hpi g) ⊤)
+          (divUniversalFibreHighWindow_at
+            C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma (n + 1)) b) =
+      LinearMap.range
+        (Scheme.highWindowMulKoszulBoundary
+          (windowN C K hpi g) (windowS C K hpi g)
+          (divUniversalFibreDivisor_at
+            C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma) n b) := by
+  simpa only [divUniversalFibreHighWindow_at] using
+    ker_finiteMulMap_eq_range_highWindowMulKoszulBoundary_windowN_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma n b
+
 end UniversalFibre
 
 end AlgebraicGeometry
