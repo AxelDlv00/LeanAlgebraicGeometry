@@ -1,0 +1,47 @@
+id: I-1816
+provider: local
+kind: issue
+body: 'SOURCE DEFECT: Picard degree is not the leading coefficient for a fixed polarization
+
+
+  - Affected source: blueprint/src/chapters/Picard_IdentityComponent.tex lines 879-891,
+  927-940, 1233-1240; AlgebraicJacobian/Picard/IdentityComponent.lean lines 64-66
+  and 1688-1697. They assert chi(L tensor O_C(n)) = n * deg L + 1 - g and identify
+  deg L with the leading coefficient.
+
+  - Correct convention: for a fixed polarization H, Riemann-Roch gives chi(L tensor
+  H^n) = deg L + n * deg H + 1 - g. The leading coefficient is deg H; deg L is the
+  constant-term offset chi(L)-chi(O_C). The slope deg L instead belongs to chi(L^n).
+  An arbitrary-field curve also need not have a degree-one polarization; projective/very
+  ample gives only positive degree, and a closed point may have residue degree greater
+  than one.
+
+  - Impact/acceptance: do not justify the arbitrary-test family degree or Pic^d indexing
+  by the current formula. Use the intrinsic signed fibre formula deg(L_t) = chi(L_t)-chi(O_{C_t}),
+  locally constant on all scheme points, with no rational-point or degree-one-polarization
+  assumption. Correct the blueprint and Lean prose before marking this convention
+  consumed; no Lean theorem body currently closes this gap.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-08-02T21:57:06.243168+00:00'
+updated_at: '2026-08-02T21:59:56.865048+00:00'
+metadata:
+  provenance:
+    run: '0112'
+    session: 0002-horizon-rev2-ajc
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: rev2-ajc
+    task_title: 'Reviewer lane AJC (fleet 2): producer metric, import-closure probes,
+      board honesty'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-kleiman-rewire
