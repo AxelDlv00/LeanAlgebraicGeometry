@@ -223,6 +223,41 @@ theorem three_mul_genus_le_M_mul_windowδ_at (gamma n : ℕ) (hgamma : gamma ≤
     rw [← mul_assoc] at hcube
     linarith [hspec, hcube, hb1, hgamma']
 
+/-! The degree-keyed forms used by the decoupled P-fib spine.  They do not mention an
+Euler-characteristic parameter: after the positive normalization of `windowBound`, the
+ledger itself supplies the full `2*n`/`3*n` slack needed by a degree-`n` family. -/
+
+theorem two_mul_degree_le_S_mul_windowδ (n : ℕ) :
+    2 * (n : ℤ) ≤ (windowS_choice π hπ n : ℤ) * windowδ π := by
+  have hspec := windowS_spec π hπ n
+  have hδ := one_le_windowδ π
+  have hb := windowBound_pos π hπ
+  nlinarith
+
+theorem two_mul_degree_le_M_mul_windowδ (n : ℕ) :
+    2 * (n : ℤ) ≤ (windowM_choice π hπ n : ℤ) * windowδ π := by
+  have hspec := windowM_spec π hπ n
+  have hb := windowBound_pos π hπ
+  have hδ := windowδ_nonneg π
+  have hn : (0 : ℤ) ≤ (n : ℤ) := Int.natCast_nonneg _
+  have hs : (0 : ℤ) ≤ (windowS_choice π hπ n : ℤ) := Int.natCast_nonneg _
+  nlinarith
+
+theorem three_mul_degree_le_M_mul_windowδ (n : ℕ) :
+    3 * (n : ℤ) ≤ (windowM_choice π hπ n : ℤ) * windowδ π := by
+  have hspec := windowM_spec π hπ n
+  have hb := windowBound_pos π hπ
+  have hδ := one_le_windowδ π
+  have hn : (0 : ℤ) ≤ (n : ℤ) := Int.natCast_nonneg _
+  have hs : (0 : ℤ) ≤ (windowS_choice π hπ n : ℤ) := Int.natCast_nonneg _
+  have hone : (1 : ℤ) ≤ ((windowS_choice π hπ n : ℤ) + 1) * windowδ π := by
+    nlinarith
+  have hcube : ((n : ℤ) + 2)
+      ≤ ((n : ℤ) + 2) * (((windowS_choice π hπ n : ℤ) + 1) * windowδ π) :=
+    le_mul_of_one_le_right (by positivity) hone
+  rw [← mul_assoc] at hcube
+  nlinarith
+
 end LedgerF3
 
 end AlgebraicGeometry

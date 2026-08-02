@@ -73,46 +73,46 @@ both normalization windows are exact and the drop is `deg x ≥ 1`; when `deg x 
 raw DD-0 section bound undercuts the window value.  The abstract-`N` transcription of
 P-fib's `h0_normalization_sub_single_lt` (consumed fibrewise by DDR-8, where `N` is the
 base-field transport of the ledger window `M·F`). -/
-lemma h0_window_sub_single_lt (g : ℕ)
+lemma h0_window_sub_single_lt (n : ℕ) {gamma : ℕ}
     (hO : Sheaf.h0 (Y.moduleKSheaf K) = 1)
-    (hχ : Sheaf.chi (Y.moduleKSheaf K) = 1 - (g : ℤ))
+    (hχ : Sheaf.chi (Y.moduleKSheaf K) = 1 - (gamma : ℤ))
     (N : Y.CurveDivisor)
-    (hNnorm : ∀ D' : Y.CurveDivisor, CurveDivisor.deg K D' ≤ 2 * (g : ℤ) →
+    (hNnorm : ∀ D' : Y.CurveDivisor, CurveDivisor.deg K D' ≤ 2 * (n : ℤ) →
       Subsingleton (Sheaf.HModule (Y.divisorSheaf K (N - D')) 1))
-    (hNdeg : 2 * (g : ℤ) ≤ CurveDivisor.deg K N)
-    (D' : Y.CurveDivisor) (hdeg : CurveDivisor.deg K D' = (g : ℤ))
-    {x : Y} (hx : x ≠ genericPoint Y) :
+    (hNdeg : 2 * (n : ℤ) ≤ CurveDivisor.deg K N)
+    (D' : Y.CurveDivisor) (hdeg : CurveDivisor.deg K D' = (n : ℤ))
+    {x : Y} (hx : x ≠ genericPoint Y) (hgamma : gamma ≤ n := by omega) :
     Sheaf.h0 (Y.divisorSheaf K (N - D' - CurveDivisor.single hx 1))
       < Sheaf.h0 (Y.divisorSheaf K (N - D')) := by
   have hdx : 0 < Y.residueDeg K x := Scheme.residueDeg_pos hx
   have hdxz : (1 : ℤ) ≤ (Y.residueDeg K x : ℤ) := by exact_mod_cast hdx
   have hdegsingle : CurveDivisor.deg K (CurveDivisor.single hx 1)
       = 1 * (Y.residueDeg K x : ℤ) := CurveDivisor.deg_single K ⟨x, hx⟩ 1
-  have hgnn : (0 : ℤ) ≤ (g : ℤ) := Int.natCast_nonneg g
-  have hg2 : CurveDivisor.deg K D' ≤ 2 * (g : ℤ) := by omega
+  have hnn : (0 : ℤ) ≤ (n : ℤ) := Int.natCast_nonneg n
+  have hn2 : CurveDivisor.deg K D' ≤ 2 * (n : ℤ) := by omega
   have hbig : (Sheaf.h0 (Y.divisorSheaf K (N - D')) : ℤ)
       = CurveDivisor.deg K N - CurveDivisor.deg K D'
         + Sheaf.chi (Y.moduleKSheaf K) := by
-    rw [h0_eq_deg_add_chi_of_subsingleton_hModule_one _ (hNnorm D' hg2),
+    rw [h0_eq_deg_add_chi_of_subsingleton_hModule_one _ (hNnorm D' hn2),
       Scheme.CurveDivisor.deg_sub' K]
   rw [hχ, hdeg] at hbig
   have hsplit : N - D' - CurveDivisor.single hx 1
       = N - (D' + CurveDivisor.single hx 1) := by
     abel
   have hdegD'x : CurveDivisor.deg K (D' + CurveDivisor.single hx 1)
-      = (g : ℤ) + (Y.residueDeg K x : ℤ) := by
+      = (n : ℤ) + (Y.residueDeg K x : ℤ) := by
     rw [CurveDivisor.deg_add, hdeg, hdegsingle]
     ring
-  by_cases hd : (Y.residueDeg K x : ℤ) ≤ (g : ℤ)
+  by_cases hd : (Y.residueDeg K x : ℤ) ≤ (n : ℤ)
   · -- small residue degree: both windows are exact
-    have hg2' : CurveDivisor.deg K (D' + CurveDivisor.single hx 1) ≤ 2 * (g : ℤ) := by
+    have hn2' : CurveDivisor.deg K (D' + CurveDivisor.single hx 1) ≤ 2 * (n : ℤ) := by
       omega
     have hsmall : (Sheaf.h0 (Y.divisorSheaf K
           (N - (D' + CurveDivisor.single hx 1))) : ℤ)
         = CurveDivisor.deg K N
             - CurveDivisor.deg K (D' + CurveDivisor.single hx 1)
           + Sheaf.chi (Y.moduleKSheaf K) := by
-      rw [h0_eq_deg_add_chi_of_subsingleton_hModule_one _ (hNnorm _ hg2'),
+      rw [h0_eq_deg_add_chi_of_subsingleton_hModule_one _ (hNnorm _ hn2'),
         Scheme.CurveDivisor.deg_sub' K]
     rw [hχ, hdegD'x] at hsmall
     rw [hsplit]
@@ -121,7 +121,7 @@ lemma h0_window_sub_single_lt (g : ℕ)
     have hsec := h0_divisorSheaf_le_max_of_h0_one K hO
       (N - D' - CurveDivisor.single hx 1)
     have hdegsub : CurveDivisor.deg K (N - D' - CurveDivisor.single hx 1)
-        = CurveDivisor.deg K N - (g : ℤ) - (Y.residueDeg K x : ℤ) := by
+        = CurveDivisor.deg K N - (n : ℤ) - (Y.residueDeg K x : ℤ) := by
       rw [Scheme.CurveDivisor.deg_sub' K, Scheme.CurveDivisor.deg_sub' K, hdeg,
         hdegsingle]
       ring
@@ -137,15 +137,16 @@ normalization windows and budget `2g ≤ deg N`, the base multiplicity of
 every section obeys the pole bound, `≤` because the strict drop provides a section not
 vanishing one order deeper.  The abstract-`N` transcription of P-fib's
 `baseDivisorAt_normalization`. -/
-lemma baseDivisorAt_window_normalization (g : ℕ)
+lemma baseDivisorAt_window_normalization (n : ℕ) {gamma : ℕ}
     (hO : Sheaf.h0 (Y.moduleKSheaf K) = 1)
-    (hχ : Sheaf.chi (Y.moduleKSheaf K) = 1 - (g : ℤ))
+    (hχ : Sheaf.chi (Y.moduleKSheaf K) = 1 - (gamma : ℤ))
     (N : Y.CurveDivisor)
-    (hNnorm : ∀ D' : Y.CurveDivisor, CurveDivisor.deg K D' ≤ 2 * (g : ℤ) →
+    (hNnorm : ∀ D' : Y.CurveDivisor, CurveDivisor.deg K D' ≤ 2 * (n : ℤ) →
       Subsingleton (Sheaf.HModule (Y.divisorSheaf K (N - D')) 1))
-    (hNdeg : 2 * (g : ℤ) ≤ CurveDivisor.deg K N)
+    (hNdeg : 2 * (n : ℤ) ≤ CurveDivisor.deg K N)
     (D' : Y.CurveDivisor) (hD'0 : 0 ≤ D')
-    (hdeg : CurveDivisor.deg K D' = (g : ℤ)) {x : Y} (hx : x ≠ genericPoint Y) :
+    (hdeg : CurveDivisor.deg K D' = (n : ℤ)) {x : Y} (hx : x ≠ genericPoint Y)
+    (hgamma : gamma ≤ n := by omega) :
     (Scheme.baseDivisorAt K (divisorSections K (N - D') ⊤) N ⟨x, hx⟩ : ℤ)
       = coeffAt hx D' := by
   set T : Submodule K Y.functionField := divisorSections K (N - D') ⊤ with hT
@@ -157,12 +158,12 @@ lemma baseDivisorAt_window_normalization (g : ℕ)
     rw [CurveDivisor.coeffAt_zero] at h0y
     rw [CurveDivisor.coeffAt_sub]
     omega
-  have hgnn : (0 : ℤ) ≤ (g : ℤ) := Int.natCast_nonneg g
-  have hg2 : CurveDivisor.deg K D' ≤ 2 * (g : ℤ) := by omega
+  have hnn : (0 : ℤ) ≤ (n : ℤ) := Int.natCast_nonneg n
+  have hn2 : CurveDivisor.deg K D' ≤ 2 * (n : ℤ) := by omega
   have hrank : (Sheaf.h0 (Y.divisorSheaf K (N - D')) : ℤ)
       = CurveDivisor.deg K N - CurveDivisor.deg K D'
         + Sheaf.chi (Y.moduleKSheaf K) := by
-    rw [h0_eq_deg_add_chi_of_subsingleton_hModule_one _ (hNnorm D' hg2),
+    rw [h0_eq_deg_add_chi_of_subsingleton_hModule_one _ (hNnorm D' hn2),
       Scheme.CurveDivisor.deg_sub' K]
   rw [hχ, hdeg] at hrank
   have hfr : Module.finrank K ↥T = Sheaf.h0 (Y.divisorSheaf K (N - D')) := by
@@ -177,7 +178,7 @@ lemma baseDivisorAt_window_normalization (g : ℕ)
   · -- `≤`: the strict drop provides an exact section
     have hlt : Sheaf.h0 (Y.divisorSheaf K (N - D' - CurveDivisor.single hx 1))
         < Sheaf.h0 (Y.divisorSheaf K (N - D')) :=
-      h0_window_sub_single_lt g hO hχ N hNnorm hNdeg D' hdeg hx
+      h0_window_sub_single_lt n hO hχ N hNnorm hNdeg D' hdeg hx
     have hle : divisorSections K (N - D' - CurveDivisor.single hx 1) ⊤ ≤ T := by
       rw [hT]
       refine divisorSections_mono K ?_ ⊤
@@ -241,24 +242,25 @@ lemma baseDivisorAt_window_normalization (g : ℕ)
 base-divisor recovery relative to `N` identifies `bd(H⁰(𝒪(N - D)))` with `D`; the
 generic normalization lemma then says that the same section space has no residual
 base point relative to `N - D`. -/
-lemma baseDivisorAt_window_residual_eq_zero (g : ℕ)
+lemma baseDivisorAt_window_residual_eq_zero (n : ℕ) {gamma : ℕ}
     (hO : Sheaf.h0 (Y.moduleKSheaf K) = 1)
-    (hχ : Sheaf.chi (Y.moduleKSheaf K) = 1 - (g : ℤ))
+    (hχ : Sheaf.chi (Y.moduleKSheaf K) = 1 - (gamma : ℤ))
     (N : Y.CurveDivisor)
-    (hNnorm : ∀ D' : Y.CurveDivisor, CurveDivisor.deg K D' ≤ 2 * (g : ℤ) →
+    (hNnorm : ∀ D' : Y.CurveDivisor, CurveDivisor.deg K D' ≤ 2 * (n : ℤ) →
       Subsingleton (Sheaf.HModule (Y.divisorSheaf K (N - D')) 1))
-    (hNdeg : 2 * (g : ℤ) ≤ CurveDivisor.deg K N)
+    (hNdeg : 2 * (n : ℤ) ≤ CurveDivisor.deg K N)
     (D : Y.CurveDivisor) (hD0 : 0 ≤ D)
-    (hdeg : CurveDivisor.deg K D = (g : ℤ)) {x : Y} (hx : x ≠ genericPoint Y) :
+    (hdeg : CurveDivisor.deg K D = (n : ℤ)) {x : Y} (hx : x ≠ genericPoint Y)
+    (hgamma : gamma ≤ n := by omega) :
     (Scheme.baseDivisorAt K (divisorSections K (N - D) ⊤) (N - D) ⟨x, hx⟩ : ℤ) = 0 := by
   let T : Submodule K Y.functionField := divisorSections K (N - D) ⊤
   have hne : ∃ f ∈ T, f ≠ 0 := by
-    have hgnn : (0 : ℤ) ≤ (g : ℤ) := Int.natCast_nonneg g
-    have hg2 : CurveDivisor.deg K D ≤ 2 * (g : ℤ) := by omega
+    have hnn : (0 : ℤ) ≤ (n : ℤ) := Int.natCast_nonneg n
+    have hn2 : CurveDivisor.deg K D ≤ 2 * (n : ℤ) := by omega
     have hrank : (Sheaf.h0 (Y.divisorSheaf K (N - D)) : ℤ)
         = CurveDivisor.deg K N - CurveDivisor.deg K D
           + Sheaf.chi (Y.moduleKSheaf K) := by
-      rw [h0_eq_deg_add_chi_of_subsingleton_hModule_one _ (hNnorm D hg2),
+      rw [h0_eq_deg_add_chi_of_subsingleton_hModule_one _ (hNnorm D hn2),
         Scheme.CurveDivisor.deg_sub' K]
     rw [hχ, hdeg] at hrank
     have hfr : Module.finrank K (T : Type u) = Sheaf.h0 (Y.divisorSheaf K (N - D)) := by
@@ -278,7 +280,7 @@ lemma baseDivisorAt_window_residual_eq_zero (g : ℕ)
   have hbase : Scheme.baseDivisor K T N hne = D := by
     refine CurveDivisor.ext_coeffAt (fun y hy => ?_)
     rw [Scheme.coeffAt_baseDivisor K hne hy]
-    simpa [T] using (baseDivisorAt_window_normalization g hO hχ N hNnorm hNdeg D hD0 hdeg hy)
+    simpa [T] using (baseDivisorAt_window_normalization n hO hχ N hNnorm hNdeg D hD0 hdeg hy)
   have hres := Scheme.baseDivisorAt_sub_baseDivisor_eq_zero K hTA hne hx
   rw [hbase] at hres
   exact_mod_cast hres
@@ -290,18 +292,18 @@ embedding window `H⁰(𝒪(N))` of budget `2g ≤ deg N` has `deg D = g`.  Firs
 section bound caps `deg D ≤ 2g` (`h⁰(𝒪(N − D)) = deg N + 1 − 2g ≥ 1`, F1's move), then
 the exact normalization window reads the degree off the corank.  No carve, no
 Mayer–Vietoris, no adaptation independence. -/
-theorem deg_eq_genus_of_window_corank (g : ℕ)
+theorem deg_eq_genus_of_window_corank (n : ℕ) {gamma : ℕ}
     (hO : Sheaf.h0 (Y.moduleKSheaf K) = 1)
-    (hχ : Sheaf.chi (Y.moduleKSheaf K) = 1 - (g : ℤ))
+    (hχ : Sheaf.chi (Y.moduleKSheaf K) = 1 - (gamma : ℤ))
     (N : Y.CurveDivisor)
     (hNwin : Subsingleton (Sheaf.HModule (Y.divisorSheaf K N) 1))
-    (hNnorm : ∀ D' : Y.CurveDivisor, CurveDivisor.deg K D' ≤ 2 * (g : ℤ) →
+    (hNnorm : ∀ D' : Y.CurveDivisor, CurveDivisor.deg K D' ≤ 2 * (n : ℤ) →
       Subsingleton (Sheaf.HModule (Y.divisorSheaf K (N - D')) 1))
-    (hNdeg : 2 * (g : ℤ) ≤ CurveDivisor.deg K N)
+    (hNdeg : 2 * (n : ℤ) ≤ CurveDivisor.deg K N)
     (D : Y.CurveDivisor)
-    (hcorank : Module.finrank K ↥(divisorSections K (N - D) ⊤) + g
-      = Sheaf.h0 (Y.divisorSheaf K N)) :
-    CurveDivisor.deg K D = (g : ℤ) := by
+    (hcorank : Module.finrank K ↥(divisorSections K (N - D) ⊤) + n
+      = Sheaf.h0 (Y.divisorSheaf K N)) (hgamma : gamma ≤ n := by omega) :
+    CurveDivisor.deg K D = (n : ℤ) := by
   have hrN : (Sheaf.h0 (Y.divisorSheaf K N) : ℤ)
       = CurveDivisor.deg K N + Sheaf.chi (Y.moduleKSheaf K) :=
     h0_eq_deg_add_chi_of_subsingleton_hModule_one _ hNwin
@@ -315,7 +317,7 @@ theorem deg_eq_genus_of_window_corank (g : ℕ)
   -- F1: the section bound caps `deg D ≤ 2g`
   have hsec := h0_divisorSheaf_le_max_of_h0_one K hO (N - D)
   rw [hdegND] at hsec
-  have hD2g : CurveDivisor.deg K D ≤ 2 * (g : ℤ) := by
+  have hD2n : CurveDivisor.deg K D ≤ 2 * (n : ℤ) := by
     rcases le_max_iff.mp hsec with h0le | hvle
     · omega
     · omega
@@ -323,7 +325,7 @@ theorem deg_eq_genus_of_window_corank (g : ℕ)
   have hnorm : (Sheaf.h0 (Y.divisorSheaf K (N - D)) : ℤ)
       = CurveDivisor.deg K N - CurveDivisor.deg K D
         + Sheaf.chi (Y.moduleKSheaf K) := by
-    rw [h0_eq_deg_add_chi_of_subsingleton_hModule_one _ (hNnorm D hD2g), hdegND]
+    rw [h0_eq_deg_add_chi_of_subsingleton_hModule_one _ (hNnorm D hD2n), hdegND]
   rw [hχ] at hnorm
   omega
 

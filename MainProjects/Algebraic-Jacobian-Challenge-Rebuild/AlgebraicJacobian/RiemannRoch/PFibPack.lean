@@ -111,24 +111,26 @@ by the pack: `windowBound_spec ↦ hvan` (threshold `β`),
 `↦ hβN`; the descent/tower engines (`BpfSpanCore.lean`) are window-generic and consumed
 as-is. -/
 theorem mulSpan_eq_divisorSections_of_basepointFree_pack
-    (g : ℕ) (hO : Sheaf.h0 (Y.moduleKSheaf K) = 1)
-    (hχ : Sheaf.chi (Y.moduleKSheaf K) = 1 - (g : ℤ))
+    (n : ℕ) {gamma : ℕ}
+    (hO : Sheaf.h0 (Y.moduleKSheaf K) = 1)
+    (hχ : Sheaf.chi (Y.moduleKSheaf K) = 1 - (gamma : ℤ))
     (N S : Y.CurveDivisor) (β : ℤ)
     (hvan : ∀ W : Y.CurveDivisor, β ≤ CurveDivisor.deg K W →
       Subsingleton (Sheaf.HModule (Y.divisorSheaf K W) 1))
-    (hSdeg : 2 * (g : ℤ) ≤ CurveDivisor.deg K S)
-    (hβS : β + 2 * (g : ℤ) ≤ CurveDivisor.deg K S)
-    (hβN : β + 2 * (g : ℤ) + CurveDivisor.deg K S ≤ CurveDivisor.deg K N)
+    (hSdeg : 2 * (n : ℤ) ≤ CurveDivisor.deg K S)
+    (hβS : β + 2 * (n : ℤ) ≤ CurveDivisor.deg K S)
+    (hβN : β + 2 * (n : ℤ) + CurveDivisor.deg K S ≤ CurveDivisor.deg K N)
     (D : Y.CurveDivisor) (hD0 : 0 ≤ D)
-    (hDg : CurveDivisor.deg K D ≤ (g : ℤ))
+    (hDg : CurveDivisor.deg K D ≤ (n : ℤ))
     (T : Submodule K Y.functionField)
     (hTN : T ≤ divisorSections K (N - D) ⊤)
-    (c : ℕ) (hcg : c ≤ g)
+    (c : ℕ) (hcn : c ≤ n)
     (hc : Module.finrank K ↥T + c = Sheaf.h0 (Y.divisorSheaf K (N - D)))
     (hbpf : ∀ (x : Y) (hx : x ≠ genericPoint Y),
       ∃ (f : Y.functionField) (_ : f ∈ T) (hf : f ≠ 0),
         coeffAt hx ((N - D)
-          + Scheme.divOf (Y ↘ Spec (CommRingCat.of K)) (Units.mk0 f hf)) = 0) :
+          + Scheme.divOf (Y ↘ Spec (CommRingCat.of K)) (Units.mk0 f hf)) = 0)
+    (hgamma : gamma ≤ n := by omega) :
     Scheme.mulSpan K (divisorSections K S ⊤) T
       = divisorSections K (N + S - D) ⊤ := by
   classical
@@ -141,7 +143,7 @@ theorem mulSpan_eq_divisorSections_of_basepointFree_pack
   have hSdeg0 : 0 ≤ CurveDivisor.deg K S := by omega
   -- the multiplier window is exact: `h⁰(𝒪(S)) = deg S + 1 − g`
   have hrs : (Sheaf.h0 (Y.divisorSheaf K S) : ℤ)
-      = CurveDivisor.deg K S + 1 - (g : ℤ) := by
+      = CurveDivisor.deg K S + 1 - (gamma : ℤ) := by
     rw [h0_eq_deg_add_chi_of_subsingleton_hModule_one _ (hvan S (by omega)), hχ]
     ring
   -- the target window is `ND + S`
@@ -187,7 +189,7 @@ theorem mulSpan_eq_divisorSections_of_basepointFree_pack
   -- (3b) the base locus of `N_Λ` and its degree bound
   set E : Y.CurveDivisor := Scheme.baseDivisor K NL S hNLne with hEdef
   have hE0 : 0 ≤ E := Scheme.baseDivisor_nonneg K hNLne
-  have hEdeg : CurveDivisor.deg K E ≤ (g : ℤ) + c := by
+  have hEdeg : CurveDivisor.deg K E ≤ (gamma : ℤ) + c := by
     have hsub : NL ≤ divisorSections K (S - E) ⊤ :=
       Scheme.le_divisorSections_sub_baseDivisor K hNLleS hNLne
     have hmono : Module.finrank K ↥NL
@@ -366,23 +368,25 @@ P-fib (`existsUnique_effective_divisor_of_carve`, `RiemannRoch/PFib.lean`), cons
 fibrewise at `N`/`S` the base-field transports of `M·F`/`s·F` (DDR-8/W4-G4); the
 uniqueness leg is the landed DDR-2 recovery `baseDivisorAt_window_normalization`. -/
 theorem existsUnique_effective_divisor_of_carve_pack
-    (g : ℕ) (hO : Sheaf.h0 (Y.moduleKSheaf K) = 1)
-    (hχ : Sheaf.chi (Y.moduleKSheaf K) = 1 - (g : ℤ))
+    (n : ℕ) {gamma : ℕ}
+    (hO : Sheaf.h0 (Y.moduleKSheaf K) = 1)
+    (hχ : Sheaf.chi (Y.moduleKSheaf K) = 1 - (gamma : ℤ))
     (N S : Y.CurveDivisor) (β : ℤ)
     (hvan : ∀ W : Y.CurveDivisor, β ≤ CurveDivisor.deg K W →
       Subsingleton (Sheaf.HModule (Y.divisorSheaf K W) 1))
-    (hNdeg : 2 * (g : ℤ) ≤ CurveDivisor.deg K N)
-    (hSdeg : 2 * (g : ℤ) ≤ CurveDivisor.deg K S)
-    (hβS : β + 2 * (g : ℤ) ≤ CurveDivisor.deg K S)
-    (hβN : β + 2 * (g : ℤ) + CurveDivisor.deg K S ≤ CurveDivisor.deg K N)
+    (hNdeg : 2 * (n : ℤ) ≤ CurveDivisor.deg K N)
+    (hSdeg : 2 * (n : ℤ) ≤ CurveDivisor.deg K S)
+    (hβS : β + 2 * (n : ℤ) ≤ CurveDivisor.deg K S)
+    (hβN : β + 2 * (n : ℤ) + CurveDivisor.deg K S ≤ CurveDivisor.deg K N)
     (KM : Submodule K Y.functionField)
     (hKM : KM ≤ divisorSections K N ⊤)
-    (hKMrank : Module.finrank K ↥KM + g = Sheaf.h0 (Y.divisorSheaf K N))
+    (hKMrank : Module.finrank K ↥KM + n = Sheaf.h0 (Y.divisorSheaf K N))
     (K' : Submodule K Y.functionField)
     (hK' : K' ≤ divisorSections K (N + S) ⊤)
-    (hK'rank : Module.finrank K ↥K' + g = Sheaf.h0 (Y.divisorSheaf K (N + S)))
-    (hcarve : ∀ h ∈ divisorSections K S ⊤, ∀ f ∈ KM, h * f ∈ K') :
-    ∃! D : Y.CurveDivisor, 0 ≤ D ∧ CurveDivisor.deg K D = (g : ℤ) ∧
+    (hK'rank : Module.finrank K ↥K' + n = Sheaf.h0 (Y.divisorSheaf K (N + S)))
+    (hcarve : ∀ h ∈ divisorSections K S ⊤, ∀ f ∈ KM, h * f ∈ K')
+    (hgamma : gamma ≤ n := by omega) :
+    ∃! D : Y.CurveDivisor, 0 ≤ D ∧ CurveDivisor.deg K D = (n : ℤ) ∧
       KM = divisorSections K (N - D) ⊤ ∧
       K' = divisorSections K (N + S - D) ⊤ := by
   classical
@@ -390,17 +394,17 @@ theorem existsUnique_effective_divisor_of_carve_pack
   have hSdeg0 : 0 ≤ CurveDivisor.deg K S := by omega
   -- ranks of the two embedding windows
   have hrM : (Sheaf.h0 (Y.divisorSheaf K N) : ℤ)
-      = CurveDivisor.deg K N + 1 - (g : ℤ) := by
+      = CurveDivisor.deg K N + 1 - (gamma : ℤ) := by
     rw [h0_eq_deg_add_chi_of_subsingleton_hModule_one _ (hvan N (by omega)), hχ]
     ring
   have hrMs : (Sheaf.h0 (Y.divisorSheaf K (N + S)) : ℤ)
-      = CurveDivisor.deg K N + CurveDivisor.deg K S + 1 - (g : ℤ) := by
+      = CurveDivisor.deg K N + CurveDivisor.deg K S + 1 - (gamma : ℤ) := by
     rw [h0_eq_deg_add_chi_of_subsingleton_hModule_one _
         (hvan (N + S) (by rw [CurveDivisor.deg_add]; omega)),
       CurveDivisor.deg_add, hχ]
     ring
   -- the transported normalization family at `N` (worksheet `hNnorm`, derived)
-  have hNnorm : ∀ D' : Y.CurveDivisor, CurveDivisor.deg K D' ≤ 2 * (g : ℤ) →
+  have hNnorm : ∀ D' : Y.CurveDivisor, CurveDivisor.deg K D' ≤ 2 * (n : ℤ) →
       Subsingleton (Sheaf.HModule (Y.divisorSheaf K (N - D')) 1) := by
     intro D' hD'
     refine hvan _ ?_
@@ -428,18 +432,18 @@ theorem existsUnique_effective_divisor_of_carve_pack
   have hposND : 0 < Sheaf.h0 (Y.divisorSheaf K (N - D)) := by omega
   have hsec := h0_le_deg_add_one_of_pos K hO (N - D) hposND
   rw [hdegND] at hsec
-  have hD2g : CurveDivisor.deg K D ≤ 2 * (g : ℤ) := by omega
+  have hD2n : CurveDivisor.deg K D ≤ 2 * (n : ℤ) := by omega
   have hrND : (Sheaf.h0 (Y.divisorSheaf K (N - D)) : ℤ)
-      = CurveDivisor.deg K N - CurveDivisor.deg K D + 1 - (g : ℤ) := by
-    rw [h0_eq_deg_add_chi_of_subsingleton_hModule_one _ (hNnorm D hD2g), hdegND, hχ]
+      = CurveDivisor.deg K N - CurveDivisor.deg K D + 1 - (gamma : ℤ) := by
+    rw [h0_eq_deg_add_chi_of_subsingleton_hModule_one _ (hNnorm D hD2n), hdegND, hχ]
     ring
-  have hDg : CurveDivisor.deg K D ≤ (g : ℤ) := by omega
+  have hDn : CurveDivisor.deg K D ≤ (n : ℤ) := by omega
   -- the codimension of `K_M` inside its normalization window
   set c : ℕ := Sheaf.h0 (Y.divisorSheaf K (N - D)) - Module.finrank K ↥KM with hcdef
   have hcrank : Module.finrank K ↥KM + c
       = Sheaf.h0 (Y.divisorSheaf K (N - D)) := by
     omega
-  have hcg : c ≤ g := by omega
+  have hcn : c ≤ n := by omega
   -- the bpf achievers
   have hbpf : ∀ (x : Y) (hx : x ≠ genericPoint Y),
       ∃ (f : Y.functionField) (_ : f ∈ KM) (hf : f ≠ 0),
@@ -451,8 +455,8 @@ theorem existsUnique_effective_divisor_of_carve_pack
   -- F3-core: the span is the full shifted window
   have hspan : Scheme.mulSpan K (divisorSections K S ⊤) KM
       = divisorSections K (N + S - D) ⊤ :=
-    mulSpan_eq_divisorSections_of_basepointFree_pack g hO hχ N S β hvan hSdeg hβS hβN
-      D hD0 hDg KM hKMsub c hcg hcrank hbpf
+    mulSpan_eq_divisorSections_of_basepointFree_pack n hO hχ N S β hvan hSdeg hβS hβN
+      D hD0 hDn KM hKMsub c hcn hcrank hbpf
   -- `(♦)` traps the span inside `K'`
   have hspanle : divisorSections K (N + S - D) ⊤ ≤ K' := by
     rw [← hspan]
@@ -463,14 +467,14 @@ theorem existsUnique_effective_divisor_of_carve_pack
     rw [Scheme.CurveDivisor.deg_sub' K, CurveDivisor.deg_add]
   have hrMsD : (Sheaf.h0 (Y.divisorSheaf K (N + S - D)) : ℤ)
       = CurveDivisor.deg K N + CurveDivisor.deg K S - CurveDivisor.deg K D
-        + 1 - (g : ℤ) := by
+        + 1 - (gamma : ℤ) := by
     rw [h0_eq_deg_add_chi_of_subsingleton_hModule_one _
         (hvan (N + S - D) (by rw [hdegMsD]; omega)), hdegMsD, hχ]
     ring
   have hfrK' : Sheaf.h0 (Y.divisorSheaf K (N + S - D)) ≤ Module.finrank K ↥K' := by
     rw [← finrank_divisorSections_top K _]
     exact Submodule.finrank_mono hspanle
-  have hDeqg : CurveDivisor.deg K D = (g : ℤ) := by omega
+  have hDeqn : CurveDivisor.deg K D = (n : ℤ) := by omega
   -- the two equalities
   have hKMeq : KM = divisorSections K (N - D) ⊤ := by
     refine Submodule.eq_of_le_of_finrank_le hKMsub ?_
@@ -480,13 +484,13 @@ theorem existsUnique_effective_divisor_of_carve_pack
     refine (Submodule.eq_of_le_of_finrank_le hspanle ?_).symm
     rw [finrank_divisorSections_top K _]
     omega
-  refine ⟨D, ⟨hD0, hDeqg, hKMeq, hK'eq⟩, ?_⟩
+  refine ⟨D, ⟨hD0, hDeqn, hKMeq, hK'eq⟩, ?_⟩
   -- uniqueness: the divisor is recovered as the base divisor of `K_M` (DDR-2 hook)
   rintro D' ⟨hD'0, hD'deg, hKM', _⟩
   refine CurveDivisor.ext_coeffAt (fun x hx => ?_)
   have hrec : (Scheme.baseDivisorAt K (divisorSections K (N - D') ⊤) N ⟨x, hx⟩ : ℤ)
       = coeffAt hx D' :=
-    baseDivisorAt_window_normalization g hO hχ N hNnorm hNdeg D' hD'0 hD'deg hx
+    baseDivisorAt_window_normalization n hO hχ N hNnorm hNdeg D' hD'0 hD'deg hx
   have hcoeffD : coeffAt hx D
       = (Scheme.baseDivisorAt K KM N ⟨x, hx⟩ : ℤ) := by
     rw [hDdef]
