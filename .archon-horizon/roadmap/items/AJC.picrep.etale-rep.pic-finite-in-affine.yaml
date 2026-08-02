@@ -2,13 +2,15 @@ id: AJC.picrep.etale-rep.pic-finite-in-affine
 title: 'Picard degree pieces: FiniteInAffine and very-ample substrate'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Verified partial substrate. Commits d42d44fc28 and bdff30e2aa add FiniteInAffine
-  assembly for coproducts of projective pieces and the canonical coproduct in Over
-  S; at Scheme.{0}, a family of IsProjectiveWith witnesses now yields exactly LocallyOfFiniteType
-  of the coproduct structure map and FiniteInAffine of its underlying scheme. Narrow
-  builds and axiom checks are green. Still open: an intrinsic Picard degree carrier,
-  representing Pic^d schemes, and projectivity or very ampleness of those actual pieces.
-  No new PicEt producer or representability consumer landed.'
+summary: 'Verified generic substrate now includes quasi-compact finite-projective-space
+  immersions (IsHQuasiProjective), a carried O(1) witness at Scheme.{0}, composition/base-change
+  transport, FiniteInAffine transfer through open and arbitrary immersions over affine
+  bases, and piecewise/coproduct/Over aggregation (9c60b37643, 5edfb3ad09). Commit
+  8c0f0550e adds executable FGA/Pic0 curve-projectivity wiring and source-faithful
+  citations. Still open: an intrinsic Pic^d carrier, actual Picard-piece H-quasi-projective/very-ample
+  witnesses, translation/torsor and degree-coproduct assembly, and an arbitrary-field
+  PicEt producer. The central fgaPicardRepresentability sorry is unchanged and no
+  new representability consumer landed.'
 status: pending
 kind: proof
 priority: high
@@ -33,7 +35,10 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.etale-rep
   milestone: AJC.picrep
-  updated_at: '2026-08-02T14:30:27.539046+00:00'
+  updated_at: '2026-08-02T17:56:35.376983+00:00'
   pinned_commits:
+  - 8c0f0550e65645feea997eecd4122db477c80302
+  - 5edfb3ad09fcc6d74e86f0aa067ed15ae6aba1fe
+  - 9c60b3764397a9549e48dddb56e734b2951e96bb
   - bdff30e2aa
   - d42d44fc286218ab24e1a098202bd208e204b523

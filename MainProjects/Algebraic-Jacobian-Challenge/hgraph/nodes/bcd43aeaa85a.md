@@ -11,10 +11,9 @@ docstring: '**The headline at a synthesis site**: extension-uniform global gener
 file: scripts/ajcrr-uniformriemannroch-axioms.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: synth_uniformGeneration_p1
 type: lean
-updated: '2026-08-02T21:21:05'
+updated: '2026-08-02T22:49:33'
 ---
 theorem synth_uniformGeneration_p1 : UniformGeneration (p1Over (ULift.{u} ℚ)) :=
   uniformGeneration_p1Over (ULift.{u} ℚ)

@@ -9,10 +9,9 @@ docstring: 'Does `Smooth` give back `GeometricallyReduced`? If yes the run-0067
 file: Probe4.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.Pic0.probe_smooth_converse
 type: lean
-updated: '2026-08-02T21:21:05'
+updated: '2026-08-02T22:49:33'
 ---
 theorem probe_smooth_converse {k : Type u} [Field k]
     (C : Over (Spec (.of k)))

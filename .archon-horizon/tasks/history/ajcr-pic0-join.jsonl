@@ -1,2 +1,3 @@
 {"at": "2026-08-02T11:45:33.355057+00:00", "actor": "human", "field": "created", "from": "", "to": "queued", "note": "opened"}
 {"at": "2026-08-02T12:06:07.331643+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-02T15:55:01.619331+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "roadmap_refs, inbox_refs updated", "provenance": {"run": "0109", "session": "0002-horizon-ajcr-pic0-join", "role": "horizon", "round": "0", "rounds": "8", "task": "ajcr-pic0-join", "task_title": "Pic0 join: turn the widened divisor representer into the Pic0 representability producer", "projects": "Algebraic-Jacobian-Challenge-Rebuild"}}
