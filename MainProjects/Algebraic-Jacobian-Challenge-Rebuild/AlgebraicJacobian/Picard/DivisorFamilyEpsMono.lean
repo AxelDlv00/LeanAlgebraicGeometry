@@ -156,6 +156,54 @@ theorem exists_mem_ne_zero_of_window_normalization (g : ℕ)
   rw [hbot, finrank_bot] at hfr
   omega
 
+/-- **Decoupled recovery of the divisor from its window.**  The divisor and
+normalization budget have degree `n`, while the Euler characteristic is normalized by
+an independent curve parameter `gamma ≤ n`. -/
+theorem baseDivisor_window_normalization_at (n : ℕ) {gamma : ℕ}
+    (hgamma : gamma ≤ n)
+    (hO : Sheaf.h0 (Y.moduleKSheaf K) = 1)
+    (hχ : Sheaf.chi (Y.moduleKSheaf K) = 1 - (gamma : ℤ))
+    (N : Y.CurveDivisor)
+    (hNnorm : ∀ D' : Y.CurveDivisor, CurveDivisor.deg K D' ≤ 2 * (n : ℤ) →
+      Subsingleton (Sheaf.HModule (Y.divisorSheaf K (N - D')) 1))
+    (hNdeg : 2 * (n : ℤ) ≤ CurveDivisor.deg K N)
+    (D : Y.CurveDivisor) (hD0 : 0 ≤ D) (hdeg : CurveDivisor.deg K D = (n : ℤ))
+    {T : Submodule K Y.functionField} (hT : T = divisorSections K (N - D) ⊤)
+    (hne : ∃ f ∈ T, f ≠ 0) :
+    Scheme.baseDivisor K T N hne = D := by
+  refine CurveDivisor.ext_coeffAt (fun x hx => ?_)
+  rw [Scheme.coeffAt_baseDivisor K hne hx, hT]
+  exact baseDivisorAt_window_normalization
+    n hO hχ N hNnorm hNdeg D hD0 hdeg hx hgamma
+
+omit [LocallyOfFiniteType (Y ↘ Spec (CommRingCat.of K))] in
+/-- **The decoupled window section space is nonzero.**  Its exact rank is
+`deg N - n + 1 - gamma`, which is positive under `deg N ≥ 2n` and `gamma ≤ n`. -/
+theorem exists_mem_ne_zero_of_window_normalization_at (n : ℕ) {gamma : ℕ}
+    (hgamma : gamma ≤ n)
+    (hχ : Sheaf.chi (Y.moduleKSheaf K) = 1 - (gamma : ℤ))
+    (N : Y.CurveDivisor)
+    (hNnorm : ∀ D' : Y.CurveDivisor, CurveDivisor.deg K D' ≤ 2 * (n : ℤ) →
+      Subsingleton (Sheaf.HModule (Y.divisorSheaf K (N - D')) 1))
+    (hNdeg : 2 * (n : ℤ) ≤ CurveDivisor.deg K N)
+    (D : Y.CurveDivisor) (hdeg : CurveDivisor.deg K D = (n : ℤ))
+    {T : Submodule K Y.functionField} (hT : T = divisorSections K (N - D) ⊤) :
+    ∃ f ∈ T, f ≠ 0 := by
+  have hn2 : CurveDivisor.deg K D ≤ 2 * (n : ℤ) := by omega
+  have hrank : (Sheaf.h0 (Y.divisorSheaf K (N - D)) : ℤ)
+      = CurveDivisor.deg K N - CurveDivisor.deg K D
+        + Sheaf.chi (Y.moduleKSheaf K) := by
+    rw [h0_eq_deg_add_chi_of_subsingleton_hModule_one _ (hNnorm D hn2),
+      Scheme.CurveDivisor.deg_sub' K]
+  rw [hχ, hdeg] at hrank
+  have hfr : Module.finrank K ↥T = Sheaf.h0 (Y.divisorSheaf K (N - D)) := by
+    rw [hT]
+    exact finrank_divisorSections_top K _
+  refine Submodule.exists_mem_ne_zero_of_ne_bot (fun hbot => ?_)
+  rw [hbot, finrank_bot] at hfr
+  have hcast : (gamma : ℤ) ≤ (n : ℤ) := by exact_mod_cast hgamma
+  omega
+
 /-- **Uniqueness of an effective degree-`g` divisor from its window section space** (the
 field-level heart of Task 6, family-free): under the pinch pack, two effective
 degree-`g` divisors with the same window section space `H⁰(𝒪(N − ·))` coincide — both
