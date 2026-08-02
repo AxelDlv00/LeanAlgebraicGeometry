@@ -1,0 +1,1 @@
+{"markdown": "This project has no graph config, so the full sync needs explicit source roots. I\u2019m rerunning it over the entire `AlgebraicJacobian/` directory plus the root aggregator, which will reverse the false stale markings and produce a trustworthy delta.", "recommendation": ""}
