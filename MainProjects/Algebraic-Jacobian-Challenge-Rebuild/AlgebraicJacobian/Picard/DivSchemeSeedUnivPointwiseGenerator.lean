@@ -285,6 +285,137 @@ theorem isGenerator_pointwiseGeneratorSeed
       C hpi g r1 r2 b1 b2 i j hO hchi hrdn z).choose_spec.2 hpsi
   · exact pointwiseBaseSeed_hfib C hpi g r1 r2 b1 b2 i j hO hchi
 
+/-! ## Decoupled pointwise generator -/
+
+set_option maxHeartbeats 2400000 in
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxRecDepth 8000 in
+/-- A base coordinate cutter for the pointwise vector at curve parameter `gamma ≤ g`. -/
+theorem exists_pointwiseBaseCutter_at {gamma : Nat}
+    (hgamma : gamma ≤ g)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (z : relCurve C RZ) :
+    ∃ f : RZ,
+      z ∈ (relCurve C RZ).basicOpen
+        (algebraMap RZ
+          Γ(relCurve C RZ,
+            relPinnedChart C RZ pi (pointwiseSide C hpi g r1 r2 b1 b2 i j z)) f) ∧
+      ∀ q : PrimeSpectrum RZ, f ∉ q.asIdeal →
+        windowCompare RZ q.asIdeal.ResidueField
+          (pointwiseSectionVector_at C hpi g r1 r2 b1 b2 i j hgamma hχ z) ≠ 0 := by
+  obtain ⟨f, hfp, hsurv⟩ := exists_forall_windowCompare_ne_zero
+    C hpi g r1 r2 b1 b2 i j
+    (pointwiseSectionVector_at C hpi g r1 r2 b1 b2 i j hgamma hχ z)
+    (relCurveBasePoint C RZ z)
+    (windowCompare_pointwiseSectionVector_ne_zero_at
+      C hpi g r1 r2 b1 b2 i j hgamma hχ z)
+  refine ⟨f, ?_, hsurv⟩
+  apply mem_basicOpen_algebraMap_of_notMem_basePrime
+    (pointwiseSide_mem C hpi g r1 r2 b1 b2 i j z) f
+  rwa [basePrime_germ_relPinnedChart_eq_relCurveBasePoint C
+    (pointwiseSide C hpi g r1 r2 b1 b2 i j z) z
+    (pointwiseSide_mem C hpi g r1 r2 b1 b2 i j z)]
+
+set_option maxHeartbeats 2400000 in
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxRecDepth 8000 in
+/-- The decoupled pointwise section equipped with its base-locus cutter. -/
+noncomputable def pointwiseBaseSeed_at {gamma : Nat}
+    (hgamma : gamma ≤ g)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ)) :
+    ThetaGeneratorSeed C RZ pi (windowM_choice pi hpi g)
+      (divUniversalSeedK C pi hpi g r1 r2 b1 b2 i j) where
+  side := pointwiseSide C hpi g r1 r2 b1 b2 i j
+  h := fun z => algebraMap RZ
+    Γ(relCurve C RZ,
+      relPinnedChart C RZ pi (pointwiseSide C hpi g r1 r2 b1 b2 i j z))
+    (exists_pointwiseBaseCutter_at
+      C hpi g r1 r2 b1 b2 i j hgamma hχ z).choose
+  mem_basicOpen := fun z =>
+    (exists_pointwiseBaseCutter_at
+      C hpi g r1 r2 b1 b2 i j hgamma hχ z).choose_spec.1
+  sec := pointwiseSection_at C hpi g r1 r2 b1 b2 i j hgamma hχ
+  sec_mem := pointwiseSection_mem_at C hpi g r1 r2 b1 b2 i j hgamma hχ
+
+set_option maxHeartbeats 2400000 in
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxRecDepth 8000 in
+/-- The decoupled base-locus seed is nonzero on every residue fibre meeting its base open. -/
+theorem pointwiseBaseSeed_hfib_at {gamma : Nat}
+    (hgamma : gamma ≤ g)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ)) :
+    ∀ (z : relCurve C RZ) (p : PrimeSpectrum RZ),
+      ((relCurve C p.asIdeal.ResidueField).basicOpen
+          (relPinnedSectionsMap C RZ p.asIdeal.ResidueField pi
+            ((pointwiseBaseSeed_at C hpi g r1 r2 b1 b2 i j hgamma hχ).side z)
+            ((pointwiseBaseSeed_at C hpi g r1 r2 b1 b2 i j hgamma hχ).h z)) :
+        (relCurve C p.asIdeal.ResidueField).Opens) ≠ ⊥ →
+      relPinnedSectionsMap C RZ p.asIdeal.ResidueField pi
+          ((pointwiseBaseSeed_at C hpi g r1 r2 b1 b2 i j hgamma hχ).side z)
+          (relThetaResSide (windowM_choice pi hpi g)
+            ((pointwiseBaseSeed_at C hpi g r1 r2 b1 b2 i j hgamma hχ).side z) le_rfl
+            ((pointwiseBaseSeed_at C hpi g r1 r2 b1 b2 i j hgamma hχ).sec z)) ≠ 0 := by
+  intro z p hne
+  let f := (exists_pointwiseBaseCutter_at
+    C hpi g r1 r2 b1 b2 i j hgamma hχ z).choose
+  have hfp : f ∉ p.asIdeal :=
+    notMem_of_basicOpen_relPinnedSectionsMap_algebraMap_pointwise
+      C hpi g r1 r2 b1 b2 i j
+        (pointwiseSide C hpi g r1 r2 b1 b2 i j z) p f (by
+          simpa only [pointwiseBaseSeed_at, f] using hne)
+  have hsurv := (exists_pointwiseBaseCutter_at
+    C hpi g r1 r2 b1 b2 i j hgamma hχ z).choose_spec.2 p hfp
+  simpa only [pointwiseBaseSeed_at, pointwiseSection_at] using
+    relPinnedSectionsMap_relThetaResSide_windowEquiv_ne_zero
+      C hpi g r1 r2 b1 b2 i j (windowM_choice pi hpi g)
+      (relThetaPairH1_windowM C pi hpi g) p
+      (pointwiseSide C hpi g r1 r2 b1 b2 i j z)
+      (pointwiseSectionVector_at C hpi g r1 r2 b1 b2 i j hgamma hχ z) hsurv
+      (relPinnedSectionsMap C RZ p.asIdeal.ResidueField pi
+        (pointwiseSide C hpi g r1 r2 b1 b2 i j z)
+        (algebraMap RZ
+          Γ(relCurve C RZ,
+            relPinnedChart C RZ pi (pointwiseSide C hpi g r1 r2 b1 b2 i j z)) f))
+      (by simpa only [pointwiseBaseSeed_at, f] using hne)
+
+set_option maxHeartbeats 2400000 in
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxRecDepth 8000 in
+/-- Multiply the decoupled base-locus seed by its RD-N annihilator cutter. -/
+noncomputable def pointwiseGeneratorSeed_at {gamma : Nat}
+    (hgamma : gamma ≤ g)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hrdn : PointwiseSeedRDNAt C hpi g r1 r2 b1 b2 i j hgamma hχ) :
+    ThetaGeneratorSeed C RZ pi (windowM_choice pi hpi g)
+      (divUniversalSeedK C pi hpi g r1 r2 b1 b2 i j) :=
+  ThetaGeneratorSeed.productCutter
+    (pointwiseBaseSeed_at C hpi g r1 r2 b1 b2 i j hgamma hχ)
+    (fun z => (exists_pointwiseAnnCutter_at
+      C hpi g r1 r2 b1 b2 i j hgamma hχ hrdn z).choose)
+    (fun z => (exists_pointwiseAnnCutter_at
+      C hpi g r1 r2 b1 b2 i j hgamma hχ hrdn z).choose_spec.1)
+
+set_option maxHeartbeats 2400000 in
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxRecDepth 8000 in
+/-- Decoupled pointwise RD-N produces a theta generator. -/
+theorem isGenerator_pointwiseGeneratorSeed_at {gamma : Nat}
+    (hgamma : gamma ≤ g)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hrdn : PointwiseSeedRDNAt C hpi g r1 r2 b1 b2 i j hgamma hχ) :
+    (pointwiseGeneratorSeed_at
+      C hpi g r1 r2 b1 b2 i j hgamma hχ hrdn).IsGenerator := by
+  apply ThetaGeneratorSeed.isGenerator_productCutter
+    (pointwiseBaseSeed_at C hpi g r1 r2 b1 b2 i j hgamma hχ)
+    (fun z => (exists_pointwiseAnnCutter_at
+      C hpi g r1 r2 b1 b2 i j hgamma hχ hrdn z).choose)
+    (fun z => (exists_pointwiseAnnCutter_at
+      C hpi g r1 r2 b1 b2 i j hgamma hχ hrdn z).choose_spec.1)
+  · intro z psi hpsi
+    exact (exists_pointwiseAnnCutter_at
+      C hpi g r1 r2 b1 b2 i j hgamma hχ hrdn z).choose_spec.2 hpsi
+  · exact pointwiseBaseSeed_hfib_at C hpi g r1 r2 b1 b2 i j hgamma hχ
+
 end PointwiseGenerator
 
 end PointwiseAchiever
