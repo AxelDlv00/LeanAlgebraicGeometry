@@ -278,6 +278,166 @@ theorem divUniversalHighWindowMulMap_fibre_conjugacy_map (n : Nat)
   exact divUniversalHighWindowMulMap_fibre_conjugacy
     (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K hO hchi hker n himage x
 
+/-! ## Decoupled fibre conjugacy -/
+
+set_option maxHeartbeats 2400000 in
+set_option synthInstance.maxHeartbeats 800000 in
+/-- Scalar extension of the multiplication source, read in the off-diagonal canonical
+divisor fibre window. -/
+noncomputable def divUniversalHighWindowMulSourceFibreEquiv_at
+    {gamma : Nat} (hgamma : gamma ≤ g)
+    (hχgamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hkerGamma : divCarveIdeal k
+      (windowS_choice pi hpi g • fiberWeilDivisor pi)
+      (windowM_choice pi hpi g • fiberWeilDivisor pi)
+      g r1 r2 b1 b2 i j ≤
+        RingHom.ker (algebraMap (PairChartRing k g r1 g r2 i j) K))
+    (n : Nat) [Module.Projective RZ (Amb[n] ⧸ Kr[n])]
+    (himage : DivUniversalHighWindowFibreImage_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma n) :
+    K ⊗[RZ] DivUniversalHighWindowMulSource (C := C) (pi := pi)
+        hpi g r1 r2 b1 b2 i j n Kr[n] ≃ₗ[K]
+      (HI → ↥(divUniversalFibreHighWindow_at
+        C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma n)) :=
+  (TensorProduct.piRight RZ K K (fun _ : HI => ↥Kr[n])).trans
+    (LinearEquiv.piCongrRight fun _ : HI =>
+      divUniversalHighWindowRelationFibreEquiv_at
+        C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma n himage)
+
+set_option maxHeartbeats 2400000 in
+set_option synthInstance.maxHeartbeats 800000 in
+@[simp]
+theorem divUniversalHighWindowMulSourceFibreEquiv_apply_at
+    {gamma : Nat} (hgamma : gamma ≤ g)
+    (hχgamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hkerGamma : divCarveIdeal k
+      (windowS_choice pi hpi g • fiberWeilDivisor pi)
+      (windowM_choice pi hpi g • fiberWeilDivisor pi)
+      g r1 r2 b1 b2 i j ≤
+        RingHom.ker (algebraMap (PairChartRing k g r1 g r2 i j) K))
+    (n : Nat) [Module.Projective RZ (Amb[n] ⧸ Kr[n])]
+    (himage : DivUniversalHighWindowFibreImage_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma n)
+    (x : K ⊗[RZ] DivUniversalHighWindowMulSource (C := C) (pi := pi)
+      hpi g r1 r2 b1 b2 i j n Kr[n]) (t : HI) :
+    divUniversalHighWindowMulSourceFibreEquiv_at
+        C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma n himage x t =
+      divUniversalHighWindowRelationFibreEquiv_at
+        C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma n himage
+        (TensorProduct.piRightHom RZ K K (fun _ : HI => ↥Kr[n]) x t) := by
+  rw [divUniversalHighWindowMulSourceFibreEquiv_at, LinearEquiv.trans_apply,
+    TensorProduct.piRight_apply]
+  rfl
+
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 1000000 in
+set_option maxRecDepth 20000 in
+/-- One relative multiplication row becomes fibre multiplication in the off-diagonal
+canonical divisor window. -/
+theorem divUniversalHighWindowMulRow_fibre_conjugacy_at
+    {gamma : Nat} (hgamma : gamma ≤ g)
+    (hχgamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hkerGamma : divCarveIdeal k
+      (windowS_choice pi hpi g • fiberWeilDivisor pi)
+      (windowM_choice pi hpi g • fiberWeilDivisor pi)
+      g r1 r2 b1 b2 i j ≤
+        RingHom.ker (algebraMap (PairChartRing k g r1 g r2 i j) K))
+    (n : Nat) [Module.Projective RZ (Amb[n] ⧸ Kr[n])]
+    (himage : DivUniversalHighWindowFibreImage_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma n)
+    (t : HI) (x : K ⊗[RZ] ↥Kr[n]) :
+    divUniversalHighWindowClosedAmbientFibreRead
+        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K (n + 1)
+        (LinearMap.baseChange K
+          (divUniversalHighWindowMulRow (C := C) (pi := pi)
+            hpi g r1 r2 b1 b2 i j n Kr[n] t) x) =
+      (divUniversalMultiplierFibreBasis (pi := pi) C hpi g K t :
+          (relCurve C K).functionField) *
+        (divUniversalHighWindowRelationFibreEquiv_at
+          C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma n himage x :
+            (relCurve C K).functionField) := by
+  rw [divUniversalHighWindowClosedAmbientFibreRead_apply,
+    divUniversalHighWindowMulRow, LinearMap.baseChange_comp,
+    LinearMap.comp_apply,
+    divUniversalHighWindowClosedAmbientFibreEquiv_shiftMul,
+    divUniversalHighWindowRelationFibreEquiv_coe_at]
+  simp only [divUniversalMultiplierFibreBasis, Module.Basis.map_apply,
+    Module.Basis.baseChange_apply]
+
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 1000000 in
+set_option maxRecDepth 20000 in
+/-- The whole relative high-window multiplication map is conjugate to finite
+multiplication in the off-diagonal canonical fibre. -/
+theorem divUniversalHighWindowMulMap_fibre_conjugacy_at
+    {gamma : Nat} (hgamma : gamma ≤ g)
+    (hχgamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hkerGamma : divCarveIdeal k
+      (windowS_choice pi hpi g • fiberWeilDivisor pi)
+      (windowM_choice pi hpi g • fiberWeilDivisor pi)
+      g r1 r2 b1 b2 i j ≤
+        RingHom.ker (algebraMap (PairChartRing k g r1 g r2 i j) K))
+    (n : Nat) [Module.Projective RZ (Amb[n] ⧸ Kr[n])]
+    (himage : DivUniversalHighWindowFibreImage_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma n)
+    (x : K ⊗[RZ] DivUniversalHighWindowMulSource (C := C) (pi := pi)
+      hpi g r1 r2 b1 b2 i j n Kr[n]) :
+    divUniversalHighWindowClosedAmbientFibreRead
+        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K (n + 1)
+        (LinearMap.baseChange K
+          (divUniversalHighWindowMulMap (C := C) (pi := pi)
+            hpi g r1 r2 b1 b2 i j n Kr[n]) x) =
+      Scheme.finiteMulMap
+        (Scheme.divisorSections K (windowS C K hpi g) ⊤)
+        (divUniversalFibreHighWindow_at
+          C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma n)
+        (divUniversalMultiplierFibreBasis (pi := pi) C hpi g K)
+        (divUniversalHighWindowMulSourceFibreEquiv_at
+          C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma n himage x) := by
+  rw [divUniversalHighWindowMulMap_eq_finiteComponentSum,
+    baseChange_finiteComponentSum, LinearMap.comp_apply,
+    LinearMap.sum_apply, map_sum, Scheme.finiteMulMap_apply]
+  apply Finset.sum_congr rfl
+  intro t _
+  simp only [LinearMap.comp_apply, LinearMap.proj_apply,
+    divUniversalHighWindowMulSourceFibreEquiv_apply_at]
+  exact divUniversalHighWindowMulRow_fibre_conjugacy_at
+    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K
+      hgamma hχgamma hkerGamma n himage t
+      (TensorProduct.piRightHom RZ K K (fun _ : HI => ↥Kr[n]) x t)
+
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 1000000 in
+set_option maxRecDepth 20000 in
+/-- Linear-map form of the decoupled multiplication conjugacy. -/
+theorem divUniversalHighWindowMulMap_fibre_conjugacy_map_at
+    {gamma : Nat} (hgamma : gamma ≤ g)
+    (hχgamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hkerGamma : divCarveIdeal k
+      (windowS_choice pi hpi g • fiberWeilDivisor pi)
+      (windowM_choice pi hpi g • fiberWeilDivisor pi)
+      g r1 r2 b1 b2 i j ≤
+        RingHom.ker (algebraMap (PairChartRing k g r1 g r2 i j) K))
+    (n : Nat) [Module.Projective RZ (Amb[n] ⧸ Kr[n])]
+    (himage : DivUniversalHighWindowFibreImage_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma n) :
+    (divUniversalHighWindowClosedAmbientFibreRead
+        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K (n + 1)).comp
+      (LinearMap.baseChange K
+        (divUniversalHighWindowMulMap (C := C) (pi := pi)
+          hpi g r1 r2 b1 b2 i j n Kr[n])) =
+    (Scheme.finiteMulMap
+        (Scheme.divisorSections K (windowS C K hpi g) ⊤)
+        (divUniversalFibreHighWindow_at
+          C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma n)
+        (divUniversalMultiplierFibreBasis (pi := pi) C hpi g K)).comp
+      (divUniversalHighWindowMulSourceFibreEquiv_at
+        C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma n himage).toLinearMap := by
+  ext x
+  exact divUniversalHighWindowMulMap_fibre_conjugacy_at
+    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K
+      hgamma hχgamma hkerGamma n himage x
+
 end HighWindowMulConjugacy
 
 end AlgebraicGeometry
