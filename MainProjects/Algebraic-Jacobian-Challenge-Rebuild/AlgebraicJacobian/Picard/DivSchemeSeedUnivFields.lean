@@ -219,6 +219,118 @@ theorem divUniversalSeedFibreDivisor_unique
     C hπ g r₁ r₂ b₁ b₂ i j hO hχ p).unique ⟨h0D, hdeg, hKM, hK'⟩
     (divUniversalSeedFibreDivisor_spec C hπ g r₁ r₂ b₁ b₂ i j hO hχ p)
 
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxSynthPendingDepth 8 in
+/-- The decoupled seed-base κ(p) assembly. -/
+theorem existsUnique_effective_divisor_divUniversalFibre_seedPrime_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (p : PrimeSpectrum (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+      (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)) :
+    ∃! D : (relCurve C p.asIdeal.ResidueField).CurveDivisor,
+      0 ≤ D ∧ CurveDivisor.deg p.asIdeal.ResidueField D = (g : ℤ) ∧
+      divUniversalFibreKM C hπ g r₁ r₂ b₁ i j p.asIdeal.ResidueField
+        = Scheme.divisorSections p.asIdeal.ResidueField
+            (windowN C p.asIdeal.ResidueField hπ g - D) ⊤ ∧
+      divUniversalFibreK' C hπ g r₁ r₂ b₂ i j p.asIdeal.ResidueField
+        = Scheme.divisorSections p.asIdeal.ResidueField
+            (windowN C p.asIdeal.ResidueField hπ g
+              + windowS C p.asIdeal.ResidueField hπ g - D) ⊤ :=
+  existsUnique_effective_divisor_divUniversalFibre_at C hπ g r₁ r₂ b₁ b₂ i j
+    p.asIdeal.ResidueField hgamma hχ
+    (divCarveIdeal_le_ker_of_tower k (windowS_choice π hπ g • fiberWeilDivisor π)
+      (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j
+      p.asIdeal.ResidueField)
+
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxSynthPendingDepth 8 in
+/-- The universal seed fibre divisor at curve parameter `gamma ≤ g`. -/
+noncomputable def divUniversalSeedFibreDivisor_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (p : PrimeSpectrum (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+      (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)) :
+    (relCurve C p.asIdeal.ResidueField).CurveDivisor :=
+  (existsUnique_effective_divisor_divUniversalFibre_seedPrime_at
+    C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ p).exists.choose
+
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxSynthPendingDepth 8 in
+/-- Effective degree and two-window specification of the decoupled seed fibre divisor. -/
+theorem divUniversalSeedFibreDivisor_spec_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (p : PrimeSpectrum (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+      (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)) :
+    0 ≤ divUniversalSeedFibreDivisor_at C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ p ∧
+      CurveDivisor.deg p.asIdeal.ResidueField
+          (divUniversalSeedFibreDivisor_at C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ p)
+        = (g : ℤ) ∧
+      divUniversalFibreKM C hπ g r₁ r₂ b₁ i j p.asIdeal.ResidueField
+        = Scheme.divisorSections p.asIdeal.ResidueField
+            (windowN C p.asIdeal.ResidueField hπ g
+              - divUniversalSeedFibreDivisor_at C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ p) ⊤ ∧
+      divUniversalFibreK' C hπ g r₁ r₂ b₂ i j p.asIdeal.ResidueField
+        = Scheme.divisorSections p.asIdeal.ResidueField
+            (windowN C p.asIdeal.ResidueField hπ g + windowS C p.asIdeal.ResidueField hπ g
+              - divUniversalSeedFibreDivisor_at C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ p) ⊤ :=
+  (existsUnique_effective_divisor_divUniversalFibre_seedPrime_at
+    C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ p).exists.choose_spec
+
+set_option maxHeartbeats 2400000 in
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxSynthPendingDepth 8 in
+set_option maxRecDepth 8000 in
+/-- The decoupled universal fibre window has no residual base multiplicity. -/
+theorem divUniversalSeedFibreDivisor_residual_baseDivisorAt_eq_zero_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (p : PrimeSpectrum (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+      (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j))
+    {z : relCurve C p.asIdeal.ResidueField}
+    (hzg : z ≠ genericPoint (relCurve C p.asIdeal.ResidueField)) :
+    (Scheme.baseDivisorAt p.asIdeal.ResidueField
+      (divUniversalFibreKM C hπ g r₁ r₂ b₁ i j p.asIdeal.ResidueField)
+      (windowN C p.asIdeal.ResidueField hπ g
+        - divUniversalSeedFibreDivisor_at C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ p)
+      ⟨z, hzg⟩ : ℤ) = 0 := by
+  have hχp : Sheaf.chi ((relCurve C p.asIdeal.ResidueField).moduleKSheaf
+      p.asIdeal.ResidueField) = 1 - (gamma : ℤ) :=
+    chi_relCurve_baseField C p.asIdeal.ResidueField gamma hχ
+  have hspec := divUniversalSeedFibreDivisor_spec_at
+    C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ p
+  rw [hspec.2.2.1]
+  exact baseDivisorAt_window_residual_eq_zero (gamma := gamma) g
+    (h0_relCurve_baseField C p.asIdeal.ResidueField) hχp
+    (windowN C p.asIdeal.ResidueField hπ g)
+    (fun D' hD' => subsingleton_h1_windowN_sub_at
+      C p.asIdeal.ResidueField hπ g hχp D' hD' hgamma)
+    (two_mul_degree_le_deg_windowN C p.asIdeal.ResidueField hπ g)
+    (divUniversalSeedFibreDivisor_at C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ p)
+    hspec.1 hspec.2.1 hzg (hgamma := hgamma)
+
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxSynthPendingDepth 8 in
+/-- Uniqueness of the decoupled universal seed fibre divisor. -/
+theorem divUniversalSeedFibreDivisor_unique_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (p : PrimeSpectrum (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+      (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j))
+    {D : (relCurve C p.asIdeal.ResidueField).CurveDivisor} (h0D : 0 ≤ D)
+    (hdeg : CurveDivisor.deg p.asIdeal.ResidueField D = (g : ℤ))
+    (hKM : divUniversalFibreKM C hπ g r₁ r₂ b₁ i j p.asIdeal.ResidueField
+      = Scheme.divisorSections p.asIdeal.ResidueField
+          (windowN C p.asIdeal.ResidueField hπ g - D) ⊤)
+    (hK' : divUniversalFibreK' C hπ g r₁ r₂ b₂ i j p.asIdeal.ResidueField
+      = Scheme.divisorSections p.asIdeal.ResidueField
+          (windowN C p.asIdeal.ResidueField hπ g + windowS C p.asIdeal.ResidueField hπ g
+            - D) ⊤) :
+    D = divUniversalSeedFibreDivisor_at C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ p :=
+  (existsUnique_effective_divisor_divUniversalFibre_seedPrime_at
+    C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ p).unique ⟨h0D, hdeg, hKM, hK'⟩
+    (divUniversalSeedFibreDivisor_spec_at C hπ g r₁ r₂ b₁ b₂ i j hgamma hχ p)
+
 /-! ## The window-level Nakayama neighbourhood (I-0247 step (c)) -/
 
 set_option maxHeartbeats 2400000 in
