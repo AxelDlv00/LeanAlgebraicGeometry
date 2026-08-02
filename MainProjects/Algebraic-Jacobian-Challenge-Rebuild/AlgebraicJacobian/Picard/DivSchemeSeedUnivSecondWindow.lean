@@ -213,7 +213,7 @@ theorem divUniversalFibre_mulSpan_eq_of_windowBound_pos
 set_option maxHeartbeats 1600000 in
 set_option synthInstance.maxHeartbeats 800000 in
 set_option maxRecDepth 8000 in
-include hO hker in
+include hker in
 /-- **Decoupled field-level second-window persistence, abstract pack form.**  The
 Grassmannian corank and recovered divisor have degree `g`, while Riemann--Roch is
 normalized by the independent curve parameter `gamma ≤ g`. -/
@@ -250,6 +250,11 @@ theorem divUniversalFibre_mulSpan_eq_of_pack_at {gamma : ℕ}
     (divUniversalFibreK' C hpi g r1 r2 b2 i j K) hK'le hK'rank hcarve hgamma
   obtain ⟨D, hD0, hDdeg, hKMeq, hK'eq⟩ := hpack.exists
 
+  have hrN : (Sheaf.h0 ((relCurve C K).divisorSheaf K (windowN C K hpi g)) : ℤ)
+      = CurveDivisor.deg K (windowN C K hpi g) + 1 - (gamma : ℤ) := by
+    rw [h0_eq_deg_add_chi_of_subsingleton_hModule_one _ (hvan _ (by omega)), hchiK]
+    ring
+
   have hNnorm : ∀ D' : (relCurve C K).CurveDivisor,
       CurveDivisor.deg K D' ≤ 2 * (g : ℤ) →
         Subsingleton (Sheaf.HModule ((relCurve C K).divisorSheaf K
@@ -262,6 +267,7 @@ theorem divUniversalFibre_mulSpan_eq_of_pack_at {gamma : ℕ}
   have hKMne : ∃ f ∈ divUniversalFibreKM C hpi g r1 r2 b1 i j K, f ≠ 0 := by
     refine Submodule.exists_mem_ne_zero_of_ne_bot (fun hbot => ?_)
     rw [hbot, finrank_bot] at hKMrank
+    have hcast : (gamma : ℤ) ≤ (g : ℤ) := by exact_mod_cast hgamma
     omega
 
   have hDbase : D = Scheme.baseDivisor K
@@ -298,7 +304,7 @@ theorem divUniversalFibre_mulSpan_eq_of_pack_at {gamma : ℕ}
 set_option maxHeartbeats 1600000 in
 set_option synthInstance.maxHeartbeats 800000 in
 set_option maxRecDepth 8000 in
-include hO hker in
+include hker in
 /-- **Decoupled field-level second-window persistence.**  The normalized ledger
 supplies the degree-`g` budgets uniformly, and `gamma ≤ g` pays for the independent
 Euler-characteristic term in the vanishing threshold. -/
@@ -310,7 +316,7 @@ theorem divUniversalFibre_mulSpan_eq_of_windowBound_pos_at {gamma : ℕ}
         (divUniversalFibreKM C hpi g r1 r2 b1 i j K)
       = divUniversalFibreK' C hpi g r1 r2 b2 i j K := by
   refine divUniversalFibre_mulSpan_eq_of_pack_at C hpi g r1 r2 b1 b2 i j K
-    hO hker hgamma hχgamma
+    hker hgamma hχgamma
     ((windowA_choice pi hpi : ℤ) * windowδ pi + (gamma : ℤ)) ?_ ?_ ?_ ?_ ?_
   · intro W hW
     exact subsingleton_h1_of_windowA_le_deg C K hpi gamma
