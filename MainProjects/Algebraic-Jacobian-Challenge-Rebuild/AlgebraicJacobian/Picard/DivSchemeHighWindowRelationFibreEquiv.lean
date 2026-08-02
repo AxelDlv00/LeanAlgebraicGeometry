@@ -169,6 +169,64 @@ theorem divUniversalHighWindowRelationFibreEquiv_coe (n : Nat)
     divUniversalFibreHighWindowInAmbientEquiv_coe,
     Grassmannian.projectiveQuotientFibreModelEquiv_coe]
 
+set_option maxHeartbeats 2000000 in
+set_option synthInstance.maxHeartbeats 800000 in
+/-- The projective relation fibre equivalence at independent curve parameter
+`gamma ≤ g`. -/
+noncomputable def divUniversalHighWindowRelationFibreEquiv_at
+    {gamma : Nat} (hgamma : gamma ≤ g)
+    (hχgamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hkerGamma : divCarveIdeal k
+      (windowS_choice pi hpi g • fiberWeilDivisor pi)
+      (windowM_choice pi hpi g • fiberWeilDivisor pi)
+      g r1 r2 b1 b2 i j ≤
+        RingHom.ker (algebraMap (PairChartRing k g r1 g r2 i j) K))
+    (n : Nat) [Module.Projective RZ (G[n] ⧸ Kr[n])]
+    (himage : DivUniversalHighWindowFibreImage_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma n) :
+    K ⊗[RZ] ↥Kr[n] ≃ₗ[K]
+      ↥(divUniversalFibreHighWindow_at
+        C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma n) :=
+  (Grassmannian.projectiveQuotientFibreModelEquiv Kr[n]
+    (divUniversalHighWindowClosedAmbientFibreEquiv
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K n)
+    (divUniversalFibreHighWindowInAmbient_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma n) himage).trans
+    (divUniversalFibreHighWindowInAmbientEquiv_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma n)
+
+set_option maxHeartbeats 2400000 in
+set_option synthInstance.maxHeartbeats 800000 in
+/-- The decoupled relation fibre equivalence reads through the same normalized closed
+ambient map. -/
+@[simp]
+theorem divUniversalHighWindowRelationFibreEquiv_coe_at
+    {gamma : Nat} (hgamma : gamma ≤ g)
+    (hχgamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hkerGamma : divCarveIdeal k
+      (windowS_choice pi hpi g • fiberWeilDivisor pi)
+      (windowM_choice pi hpi g • fiberWeilDivisor pi)
+      g r1 r2 b1 b2 i j ≤
+        RingHom.ker (algebraMap (PairChartRing k g r1 g r2 i j) K))
+    (n : Nat) [Module.Projective RZ (G[n] ⧸ Kr[n])]
+    (himage : DivUniversalHighWindowFibreImage_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma n)
+    (x : K ⊗[RZ] ↥Kr[n]) :
+    ((divUniversalHighWindowRelationFibreEquiv_at
+        C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma n himage x :
+      divUniversalFibreHighWindow_at
+        C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma n) :
+      (relCurve C K).functionField) =
+    ((divUniversalHighWindowClosedAmbientFibreEquiv
+        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K n
+      (LinearMap.baseChange K Kr[n].subtype x) :
+        Scheme.divisorSections K
+          (windowN C K hpi g + n • windowS C K hpi g) ⊤) :
+      (relCurve C K).functionField) := by
+  rw [divUniversalHighWindowRelationFibreEquiv_at, LinearEquiv.trans_apply,
+    divUniversalFibreHighWindowInAmbientEquiv_coe_at,
+    Grassmannian.projectiveQuotientFibreModelEquiv_coe]
+
 end HighWindowRelationFibreEquiv
 
 end AlgebraicGeometry
