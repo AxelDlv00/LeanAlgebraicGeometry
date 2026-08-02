@@ -114,6 +114,79 @@ theorem mulSpan_divisorSections_highWindow_of_pack
           (finrank_divisorSections_top K (Nn - D))) hbpf
   simpa only [T, Nn, add_nsmul, one_nsmul, add_assoc] using hspan
 
+/-- Multiplication persistence with independent divisor degree `g` and curve parameter
+`gamma ≤ g`.  All pole and corank budgets remain keyed by `g`. -/
+theorem mulSpan_divisorSections_highWindow_of_pack_at
+    (g : ℕ) {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hO : Sheaf.h0 (Y.moduleKSheaf K) = 1)
+    (hχ : Sheaf.chi (Y.moduleKSheaf K) = 1 - (gamma : ℤ))
+    (N S : Y.CurveDivisor) (β : ℤ)
+    (hvan : ∀ W : Y.CurveDivisor, β ≤ CurveDivisor.deg K W →
+      Subsingleton (Sheaf.HModule (Y.divisorSheaf K W) 1))
+    (hNdeg : 2 * (g : ℤ) ≤ CurveDivisor.deg K N)
+    (hSdeg : 2 * (g : ℤ) ≤ CurveDivisor.deg K S)
+    (hβS : β + 2 * (g : ℤ) ≤ CurveDivisor.deg K S)
+    (hβN : β + 2 * (g : ℤ) + CurveDivisor.deg K S ≤ CurveDivisor.deg K N)
+    (D : Y.CurveDivisor) (hD0 : 0 ≤ D)
+    (hDdeg : CurveDivisor.deg K D = (g : ℤ)) (q : ℕ) :
+    Scheme.mulSpan K (divisorSections K S ⊤)
+        (divisorSections K (N + q • S - D) ⊤) =
+      divisorSections K (N + (q + 1) • S - D) ⊤ := by
+  classical
+  let Nq : Y.CurveDivisor := N + q • S
+  have hSdeg0 : 0 ≤ CurveDivisor.deg K S := by omega
+  have hNqdeg : CurveDivisor.deg K Nq =
+      CurveDivisor.deg K N + (q : ℤ) * CurveDivisor.deg K S := by
+    dsimp [Nq]
+    rw [CurveDivisor.deg_add, Scheme.CurveDivisor.deg_nsmul']
+  have hβNq : β + 2 * (g : ℤ) + CurveDivisor.deg K S ≤
+      CurveDivisor.deg K Nq := by
+    rw [hNqdeg]
+    have hq : 0 ≤ (q : ℤ) * CurveDivisor.deg K S :=
+      mul_nonneg (Int.natCast_nonneg q) hSdeg0
+    omega
+  have hNqDeg : 2 * (g : ℤ) ≤ CurveDivisor.deg K Nq := by
+    rw [hNqdeg]
+    have hq : 0 ≤ (q : ℤ) * CurveDivisor.deg K S :=
+      mul_nonneg (Int.natCast_nonneg q) hSdeg0
+    omega
+  have hNqNorm : ∀ D' : Y.CurveDivisor,
+      CurveDivisor.deg K D' ≤ 2 * (g : ℤ) →
+        Subsingleton (Sheaf.HModule (Y.divisorSheaf K (Nq - D')) 1) := by
+    intro D' hD'
+    apply hvan
+    rw [Scheme.CurveDivisor.deg_sub' K, hNqdeg]
+    have hq : 0 ≤ (q : ℤ) * CurveDivisor.deg K S :=
+      mul_nonneg (Int.natCast_nonneg q) hSdeg0
+    omega
+  let T : Submodule K Y.functionField := divisorSections K (Nq - D) ⊤
+  have hTne : ∃ f ∈ T, f ≠ 0 :=
+    exists_mem_ne_zero_of_window_normalization_at
+      g hgamma hχ Nq hNqNorm hNqDeg D hDdeg rfl
+  have hTD : T ≤ divisorSections K Nq ⊤ := by
+    refine Scheme.divisorSections_mono K ?_ ⊤
+    refine Scheme.CurveDivisor.le_iff_coeffAt.mpr fun x hx => ?_
+    rw [Scheme.CurveDivisor.coeffAt_sub]
+    have hDx := Scheme.CurveDivisor.le_iff_coeffAt.mp hD0 x hx
+    rw [Scheme.CurveDivisor.coeffAt_zero] at hDx
+    omega
+  have hbase : Scheme.baseDivisor K T Nq hTne = D :=
+    baseDivisor_window_normalization_at
+      g hgamma hO hχ Nq hNqNorm hNqDeg D hD0 hDdeg rfl hTne
+  have hbpf : ∀ (x : Y) (hx : x ≠ genericPoint Y),
+      ∃ (f : Y.functionField) (_ : f ∈ T) (hf : f ≠ 0),
+        coeffAt hx ((Nq - D)
+          + Scheme.divOf (Y ↘ Spec (CommRingCat.of K)) (Units.mk0 f hf)) = 0 := by
+    intro x hx
+    have h := Scheme.exists_achiever_baseDivisor_sub K hTD hTne hx
+    rwa [hbase] at h
+  have hspan := mulSpan_eq_divisorSections_of_basepointFree_pack
+    g hO hχ Nq S β hvan hSdeg hβS hβNq D hD0 hDdeg.le T
+      (by exact le_rfl) 0 (Nat.zero_le g) (by
+        simpa only [Nat.add_zero, T] using
+          (finrank_divisorSections_top K (Nq - D))) hbpf hgamma
+  simpa only [T, Nq, add_nsmul, one_nsmul, add_assoc] using hspan
+
 end Pack
 
 section UniversalFibre
@@ -233,6 +306,92 @@ theorem divUniversalFibreHighWindow_mulSpan_eq_of_windowBound_pos
     linarith
   · rw [deg_windowS, deg_windowN]
     have hbudget := windowA_add_three_mul_genus_add_S_le_M_mul pi hpi hb g
+    linarith
+
+/-! ## Decoupled high-window fibre -/
+
+/-- The canonical high-window fibre at divisor degree `g` and independent curve
+parameter `gamma ≤ g`. -/
+noncomputable def divUniversalFibreHighWindow_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hχgamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hkerGamma : divCarveIdeal k (windowS_choice pi hpi g • fiberWeilDivisor pi)
+        (windowM_choice pi hpi g • fiberWeilDivisor pi) g r1 r2 b1 b2 i j
+      ≤ RingHom.ker (algebraMap (PairChartRing k g r1 g r2 i j) K))
+    (q : ℕ) : Submodule K (relCurve C K).functionField :=
+  Scheme.divisorSections K
+    (windowN C K hpi g + q • windowS C K hpi g
+      - divUniversalFibreDivisor_at
+        C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma) ⊤
+
+/-- Stage zero of the decoupled high-window fibre is the first universal window. -/
+theorem divUniversalFibreHighWindow_zero_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hχgamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hkerGamma : divCarveIdeal k (windowS_choice pi hpi g • fiberWeilDivisor pi)
+        (windowM_choice pi hpi g • fiberWeilDivisor pi) g r1 r2 b1 b2 i j
+      ≤ RingHom.ker (algebraMap (PairChartRing k g r1 g r2 i j) K)) :
+    divUniversalFibreHighWindow_at
+        C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma 0 =
+      divUniversalFibreKM C hpi g r1 r2 b1 i j K := by
+  rw [divUniversalFibreHighWindow_at, zero_nsmul, add_zero]
+  exact (divUniversalFibreDivisor_spec_at
+    C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma).2.2.1.symm
+
+/-- Stage one of the decoupled high-window fibre is the second universal window. -/
+theorem divUniversalFibreHighWindow_one_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hχgamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hkerGamma : divCarveIdeal k (windowS_choice pi hpi g • fiberWeilDivisor pi)
+        (windowM_choice pi hpi g • fiberWeilDivisor pi) g r1 r2 b1 b2 i j
+      ≤ RingHom.ker (algebraMap (PairChartRing k g r1 g r2 i j) K)) :
+    divUniversalFibreHighWindow_at
+        C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma 1 =
+      divUniversalFibreK' C hpi g r1 r2 b2 i j K := by
+  rw [divUniversalFibreHighWindow_at, one_nsmul]
+  exact (divUniversalFibreDivisor_spec_at
+    C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma).2.2.2.symm
+
+set_option maxHeartbeats 1600000 in
+/-- Every decoupled high fibre window is generated from its predecessor by the full
+multiplier window. -/
+theorem divUniversalFibreHighWindow_mulSpan_eq_at {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hχgamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hkerGamma : divCarveIdeal k (windowS_choice pi hpi g • fiberWeilDivisor pi)
+        (windowM_choice pi hpi g • fiberWeilDivisor pi) g r1 r2 b1 b2 i j
+      ≤ RingHom.ker (algebraMap (PairChartRing k g r1 g r2 i j) K))
+    (q : ℕ) :
+    Scheme.mulSpan K (Scheme.divisorSections K (windowS C K hpi g) ⊤)
+        (divUniversalFibreHighWindow_at
+          C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma q) =
+      divUniversalFibreHighWindow_at
+        C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma (q + 1) := by
+  rw [divUniversalFibreHighWindow_at, divUniversalFibreHighWindow_at]
+  have hspec := divUniversalFibreDivisor_spec_at
+    C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma
+  refine mulSpan_divisorSections_highWindow_of_pack_at
+    g hgamma (h0_relCurve_baseField C K) (chi_relCurve_baseField C K gamma hχgamma)
+      (windowN C K hpi g) (windowS C K hpi g)
+      ((windowA_choice pi hpi : ℤ) * windowδ pi + (gamma : ℤ)) ?_
+      (two_mul_degree_le_deg_windowN C K hpi g) ?_ ?_ ?_
+      (divUniversalFibreDivisor_at
+        C hpi g r1 r2 b1 b2 i j K hgamma hχgamma hkerGamma)
+      hspec.1 hspec.2.1 q
+  · intro W hW
+    exact subsingleton_h1_of_windowA_le_deg C K hpi gamma
+      (chi_relCurve_baseField C K gamma hχgamma) W hW
+  · rw [deg_windowS]
+    exact two_mul_degree_le_S_mul_windowδ pi hpi g
+  · rw [deg_windowS]
+    have hbudget := windowA_add_three_mul_genus_le_S_mul
+      pi hpi (windowBound_pos pi hpi) g
+    have hcast : (gamma : ℤ) ≤ (g : ℤ) := by exact_mod_cast hgamma
+    linarith
+  · rw [deg_windowS, deg_windowN]
+    have hbudget := windowA_add_three_mul_genus_add_S_le_M_mul
+      pi hpi (windowBound_pos pi hpi) g
+    have hcast : (gamma : ℤ) ≤ (g : ℤ) := by exact_mod_cast hgamma
     linarith
 
 end UniversalFibre
