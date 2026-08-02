@@ -392,6 +392,264 @@ theorem projective_divUniversalHighWindowRelationQuotient_succ_succ_of_fibreMode
   exact projective_divUniversalHighWindowMulSpanQuotient_of_syzygies
     (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j (n + 1) Kr[n + 1] L hL
 
+/-! ## Decoupled curve parameter -/
+
+variable {gamma : Nat} (hgamma : gamma ≤ g)
+  (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+
+local notation "HFγ[" n "]" => divUniversalFibreHighWindow_at
+  C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker n
+local notation "Dγ" => divUniversalFibreDivisor_at
+  C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker
+
+set_option maxHeartbeats 2400000 in
+set_option synthInstance.maxHeartbeats 800000 in
+/-- Scalar extension distributes over the pair-indexed Koszul source at
+independent curve parameter `gamma ≤ g`. -/
+noncomputable def divUniversalHighWindowRelationKoszulSourceFibreEquiv_at (n : Nat)
+    [Module.Projective RZ (Amb[n] ⧸ Kr[n])]
+    (himage : DivUniversalHighWindowFibreImage_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker n) :
+    K ⊗[RZ] (HI × HI → ↥Kr[n]) ≃ₗ[K] (HI × HI → ↥HFγ[n]) :=
+  (TensorProduct.piRight RZ K K (fun _ : HI × HI => ↥Kr[n])).trans
+    (LinearEquiv.piCongrRight fun _ : HI × HI =>
+      divUniversalHighWindowRelationFibreEquiv_at
+        C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker n himage)
+
+set_option maxHeartbeats 2400000 in
+set_option synthInstance.maxHeartbeats 800000 in
+@[simp]
+theorem divUniversalHighWindowRelationKoszulSourceFibreEquiv_apply_at (n : Nat)
+    [Module.Projective RZ (Amb[n] ⧸ Kr[n])]
+    (himage : DivUniversalHighWindowFibreImage_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker n)
+    (x : K ⊗[RZ] (HI × HI → ↑Kr[n])) (q : HI × HI) :
+    divUniversalHighWindowRelationKoszulSourceFibreEquiv_at
+        C hpi g r1 r2 b1 b2 i j K hker hgamma hchiGamma n himage x q =
+      divUniversalHighWindowRelationFibreEquiv_at
+        C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker n himage
+        (TensorProduct.piRightHom RZ K K (fun _ : HI × HI => ↑Kr[n]) x q) := by
+  rw [divUniversalHighWindowRelationKoszulSourceFibreEquiv_at,
+    LinearEquiv.trans_apply, TensorProduct.piRight_apply]
+  rfl
+
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 1000000 in
+set_option maxRecDepth 20000 in
+/-- One relative relation-basis step becomes multiplication on the canonical
+off-diagonal fibre windows. -/
+theorem divUniversalHighWindowRelationBasisStep_fibre_conjugacy_at (n : Nat)
+    [Module.Projective RZ (Amb[n] ⧸ Kr[n])]
+    [Module.Projective RZ (Amb[n + 1] ⧸ Kr[n + 1])]
+    (himage : DivUniversalHighWindowFibreImage_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker n)
+    (himageNext : DivUniversalHighWindowFibreImage_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker (n + 1))
+    (t : HI) (x : K ⊗[RZ] ↥Kr[n]) :
+    divUniversalHighWindowRelationFibreEquiv_at
+        C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker (n + 1) himageNext
+        (LinearMap.baseChange K
+          (divUniversalHighWindowRelationBasisStep (C := C) (pi := pi)
+            hpi g r1 r2 b1 b2 i j n t) x) =
+      Scheme.finiteMulStepTo
+        (Scheme.divisorSections K (windowS C K hpi g) ⊤) HFγ[n] HFγ[n + 1]
+        (divUniversalMultiplierFibreBasis (pi := pi) C hpi g K)
+        (fun s z => Scheme.mul_mem_divisorSections_highWindow
+          (windowN C K hpi g) (windowS C K hpi g) Dγ n
+          (divUniversalMultiplierFibreBasis (pi := pi) C hpi g K s) z)
+        t
+        (divUniversalHighWindowRelationFibreEquiv_at
+          C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker n himage x) := by
+  have hsub :
+      Kr[n + 1].subtype.comp
+          (divUniversalHighWindowRelationBasisStep (C := C) (pi := pi)
+            hpi g r1 r2 b1 b2 i j n t) =
+        divUniversalHighWindowMulRow (C := C) (pi := pi)
+          hpi g r1 r2 b1 b2 i j n Kr[n] t := by
+    apply LinearMap.ext
+    intro z
+    rfl
+  have hbcx := LinearMap.congr_fun (congrArg (LinearMap.baseChange K) hsub) x
+  simp only [LinearMap.baseChange_comp, LinearMap.comp_apply] at hbcx
+  apply Subtype.ext
+  rw [divUniversalHighWindowRelationFibreEquiv_coe_at, hbcx]
+  simpa only [divUniversalHighWindowClosedAmbientFibreRead_apply,
+    Scheme.finiteMulStepTo_apply] using
+    (divUniversalHighWindowMulRow_fibre_conjugacy_at
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker
+        n himage t x)
+
+set_option maxHeartbeats 4800000 in
+set_option synthInstance.maxHeartbeats 1200000 in
+set_option maxRecDepth 24000 in
+/-- The scalar extension of the relative relation Koszul boundary is conjugate
+to the canonical off-diagonal high-window boundary. -/
+theorem divUniversalHighWindowRelationKoszulBoundary_fibre_conjugacy_at (n : Nat)
+    [Module.Projective RZ (Amb[n] ⧸ Kr[n])]
+    [Module.Projective RZ (Amb[n + 1] ⧸ Kr[n + 1])]
+    (himage : DivUniversalHighWindowFibreImage_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker n)
+    (himageNext : DivUniversalHighWindowFibreImage_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker (n + 1)) :
+    (divUniversalHighWindowMulSourceFibreEquiv_at
+        C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker
+          (n + 1) himageNext).toLinearMap.comp
+      (LinearMap.baseChange K
+        (divUniversalHighWindowRelationKoszulBoundary (C := C) (pi := pi)
+          hpi g r1 r2 b1 b2 i j n)) =
+    (Scheme.highWindowMulKoszulBoundary
+        (windowN C K hpi g) (windowS C K hpi g) Dγ n
+        (divUniversalMultiplierFibreBasis (pi := pi) C hpi g K)).comp
+      (divUniversalHighWindowRelationKoszulSourceFibreEquiv_at
+        C hpi g r1 r2 b1 b2 i j K hker hgamma hchiGamma n himage).toLinearMap := by
+  let stepR : HI → ↑Kr[n] →ₗ[RZ] ↑Kr[n + 1] := fun t =>
+    divUniversalHighWindowRelationBasisStep (C := C) (pi := pi)
+      hpi g r1 r2 b1 b2 i j n t
+  let stepF : HI → ↑HFγ[n] →ₗ[K] ↑HFγ[n + 1] := fun t =>
+    Scheme.finiteMulStepTo
+      (Scheme.divisorSections K (windowS C K hpi g) ⊤) HFγ[n] HFγ[n + 1]
+      (divUniversalMultiplierFibreBasis (pi := pi) C hpi g K)
+      (fun s z => Scheme.mul_mem_divisorSections_highWindow
+        (windowN C K hpi g) (windowS C K hpi g) Dγ n
+        (divUniversalMultiplierFibreBasis (pi := pi) C hpi g K s) z) t
+  let eNow : (K ⊗[RZ] ↑Kr[n]) ≃ₗ[K] ↑HFγ[n] :=
+    divUniversalHighWindowRelationFibreEquiv_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker n himage
+  let eNext : (K ⊗[RZ] ↑Kr[n + 1]) ≃ₗ[K] ↑HFγ[n + 1] :=
+    divUniversalHighWindowRelationFibreEquiv_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker (n + 1) himageNext
+  have hbase := piRightHom_comp_baseChange_finiteKoszulBoundary
+    (R := RZ) (S := K) stepR
+  have hstep : ∀ (t : HI) (x : K ⊗[RZ] ↑Kr[n]),
+      eNext (LinearMap.baseChange K (stepR t) x) = stepF t (eNow x) := by
+    intro t x
+    simpa only [stepR, stepF, eNow, eNext] using
+      divUniversalHighWindowRelationBasisStep_fibre_conjugacy_at
+        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K hker hgamma hchiGamma
+          n himage himageNext t x
+  have hconj := piCongrRight_comp_finiteKoszulBoundary_of_conjugate
+    (step := fun t => LinearMap.baseChange K (stepR t))
+    (step' := stepF) eNow eNext hstep
+  change
+    ((LinearEquiv.piCongrRight fun _ : HI => eNext).toLinearMap.comp
+        (TensorProduct.piRightHom RZ K K (fun _ : HI => ↑Kr[n + 1]))).comp
+      (LinearMap.baseChange K (finiteKoszulBoundary stepR)) =
+    (finiteKoszulBoundary stepF).comp
+      ((LinearEquiv.piCongrRight fun _ : HI × HI => eNow).toLinearMap.comp
+        (TensorProduct.piRightHom RZ K K (fun _ : HI × HI => ↑Kr[n])))
+  rw [LinearMap.comp_assoc, hbase, ← LinearMap.comp_assoc, hconj,
+    LinearMap.comp_assoc]
+
+set_option maxHeartbeats 4800000 in
+set_option synthInstance.maxHeartbeats 1200000 in
+set_option maxRecDepth 24000 in
+/-- Adjacent off-diagonal fibre models make the injectivized successor map
+remain injective after tensoring with the field. -/
+theorem divUniversalHighWindowRelationMul_liftQ_rTensor_injective_of_fibre_models_at
+    (n : Nat)
+    [Module.Projective RZ (Amb[n] ⧸ Kr[n])]
+    [Module.Projective RZ (Amb[n + 1] ⧸ Kr[n + 1])]
+    (himage : DivUniversalHighWindowFibreImage_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker n)
+    (himageNext : DivUniversalHighWindowFibreImage_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker (n + 1)) :
+    Function.Injective
+      (((LinearMap.ker
+          (divUniversalHighWindowMulMap (C := C) (pi := pi)
+            hpi g r1 r2 b1 b2 i j (n + 1) Kr[n + 1])).liftQ
+        (divUniversalHighWindowMulMap (C := C) (pi := pi)
+          hpi g r1 r2 b1 b2 i j (n + 1) Kr[n + 1]) le_rfl).rTensor K) := by
+  apply liftQ_rTensor_injective_of_conjugate_boundary
+    (f := divUniversalHighWindowMulMap (C := C) (pi := pi)
+      hpi g r1 r2 b1 b2 i j (n + 1) Kr[n + 1])
+    (d := divUniversalHighWindowRelationKoszulBoundary (C := C) (pi := pi)
+      hpi g r1 r2 b1 b2 i j n)
+    (hfd := divUniversalHighWindowMulMap_comp_relationKoszulBoundary_eq_zero
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j n)
+    (f' := Scheme.finiteMulMap
+      (Scheme.divisorSections K (windowS C K hpi g) ⊤) HFγ[n + 1]
+      (divUniversalMultiplierFibreBasis (pi := pi) C hpi g K))
+    (d' := Scheme.highWindowMulKoszulBoundary
+      (windowN C K hpi g) (windowS C K hpi g) Dγ n
+      (divUniversalMultiplierFibreBasis (pi := pi) C hpi g K))
+    (eM := divUniversalHighWindowMulSourceFibreEquiv_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker (n + 1) himageNext)
+    (eN := divUniversalHighWindowClosedAmbientFibreRead
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K (n + 2))
+    (eP := divUniversalHighWindowRelationKoszulSourceFibreEquiv_at
+      C hpi g r1 r2 b1 b2 i j K hker hgamma hchiGamma n himage)
+  · intro x
+    exact divUniversalHighWindowMulMap_fibre_conjugacy_at
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker
+        (n + 1) himageNext x
+  · intro y
+    exact LinearMap.congr_fun
+      (divUniversalHighWindowRelationKoszulBoundary_fibre_conjugacy_at
+        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K hker hgamma hchiGamma
+          n himage himageNext) y
+  · exact (divUniversalFibreHighWindow_ker_finiteMulMap_eq_range_koszul_at
+      C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker n
+        (divUniversalMultiplierFibreBasis (pi := pi) C hpi g K)).le
+
+set_option maxHeartbeats 4800000 in
+set_option synthInstance.maxHeartbeats 1200000 in
+set_option maxRecDepth 24000 in
+/-- Adjacent projective off-diagonal fibre models span every residue-field
+kernel of the successor presentation. -/
+theorem divUniversalHighWindowKernelSyzygySpans_of_adjacent_fibreModels_at
+    (n : Nat)
+    [Module.Projective RZ (Amb[n] ⧸ Kr[n])]
+    [Module.Projective RZ (Amb[n + 1] ⧸ Kr[n + 1])]
+    (hmodel : DivUniversalHighWindowFibreModel_at
+      C hpi g r1 r2 b1 b2 i j hgamma hchiGamma n)
+    (hmodelNext : DivUniversalHighWindowFibreModel_at
+      C hpi g r1 r2 b1 b2 i j hgamma hchiGamma (n + 1)) :
+    DivUniversalHighWindowSyzygySpans (C := C) (pi := pi)
+      hpi g r1 r2 b1 b2 i j (n + 1) Kr[n + 1]
+      (divUniversalHighWindowKernelSyzygy (C := C) (pi := pi)
+        hpi g r1 r2 b1 b2 i j (n + 1) Kr[n + 1]) := by
+  apply (divUniversalHighWindowKernelSyzygySpans_iff
+    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j (n + 1) Kr[n + 1]).2
+  intro p
+  exact
+    divUniversalHighWindowRelationMul_liftQ_rTensor_injective_of_fibre_models_at
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j p.asIdeal.ResidueField
+        (divCarveIdeal_le_ker_of_tower k
+          (windowS_choice pi hpi g • fiberWeilDivisor pi)
+          (windowM_choice pi hpi g • fiberWeilDivisor pi)
+          g r1 r2 b1 b2 i j p.asIdeal.ResidueField)
+        hgamma hchiGamma n (hmodel p) (hmodelNext p)
+
+set_option maxHeartbeats 3200000 in
+set_option synthInstance.maxHeartbeats 800000 in
+/-- Adjacent off-diagonal fibre models force the relation quotient two stages
+later to be finite projective. -/
+theorem projective_divUniversalHighWindowRelationQuotient_succ_succ_of_fibreModels_at
+    (n : Nat)
+    [Module.Projective RZ (Amb[n] ⧸ Kr[n])]
+    [Module.Projective RZ (Amb[n + 1] ⧸ Kr[n + 1])]
+    (hmodel : DivUniversalHighWindowFibreModel_at
+      C hpi g r1 r2 b1 b2 i j hgamma hchiGamma n)
+    (hmodelNext : DivUniversalHighWindowFibreModel_at
+      C hpi g r1 r2 b1 b2 i j hgamma hchiGamma (n + 1)) :
+    Module.Projective RZ
+      (divUniversalHighWindowRelationQuotient (C := C) (pi := pi)
+        hpi g r1 r2 b1 b2 i j (n + 2)) := by
+  let L := divUniversalHighWindowKernelSyzygy (C := C) (pi := pi)
+    hpi g r1 r2 b1 b2 i j (n + 1) Kr[n + 1]
+  have hL : DivUniversalHighWindowSyzygySpans (C := C) (pi := pi)
+      hpi g r1 r2 b1 b2 i j (n + 1) Kr[n + 1] L :=
+    divUniversalHighWindowKernelSyzygySpans_of_adjacent_fibreModels_at
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hgamma hchiGamma
+        n hmodel hmodelNext
+  letI := finite_divUniversalHighWindowRelation
+    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j (n + 1)
+  change Module.Projective RZ
+    (Amb[n + 2] ⧸ divUniversalHighWindowMulSpan (C := C) (pi := pi)
+      hpi g r1 r2 b1 b2 i j (n + 1) Kr[n + 1])
+  exact projective_divUniversalHighWindowMulSpanQuotient_of_syzygies
+    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j (n + 1) Kr[n + 1] L hL
+
 end HighWindowRelationKoszulConjugacy
 
 end AlgebraicGeometry
