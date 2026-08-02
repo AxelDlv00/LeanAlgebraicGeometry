@@ -9,7 +9,7 @@ import AlgebraicJacobian.Picard.SerreTwist
 import AlgebraicJacobian.Picard.QuotFunctorDef
 
 /-!
-# Projective morphisms carrying a very ample line bundle
+# Projective and H-quasi-projective morphisms carrying a very ample line bundle
 
 Mathlib v4.31 has no projective-morphism class and no (very) ampleness
 vocabulary.  Following the encoding settled in inbox `I-0118` (comment
@@ -23,6 +23,9 @@ vocabulary.  Following the encoding settled in inbox `I-0118` (comment
 * `Scheme.Hom.IsProjectiveWith π L` — the **projective-with-`L`** predicate:
   `π : X ⟶ S` factors through a closed immersion `i : X ↪ ℙ(n; S)` for a
   finite coordinate type `n`, over `S` with `L ≅ i^* O(1)`;
+* `Scheme.Hom.IsHQuasiProjectiveWith π L` — the corresponding
+  **H-quasi-projective-with-`L`** predicate, with a quasi-compact immersion into
+  finite projective space and the same `O(1)` comparison.
 
 with the stability facts the Quot-scheme endgame consumes:
 
@@ -31,6 +34,10 @@ with the stability facts the Quot-scheme endgame consumes:
   into a projective scheme is projective (carrying the restricted bundle);
 * `Scheme.Hom.IsProjectiveWith.baseChange` — stability under base change
   (carrying the pulled-back bundle).
+
+The `IsHQuasiProjectiveWith` terminology records the finite-projective-space
+convention.  No equivalence with every relative ample formulation over an
+arbitrary base is asserted here.
 
 Everything is at `Scheme.{0}`: the Serre twist rests on the descent engine
 `Scheme.Modules.glue`, which is universe-monomorphic at `Scheme.GlueData.{0}`
@@ -80,6 +87,17 @@ def Scheme.Hom.IsProjectiveWith {X S : Scheme.{0}} (π : X ⟶ S) (L : X.Modules
       Nonempty (L ≅ (Scheme.Modules.pullback i).obj
         (ProjectiveSpace.twistingSheaf n S 1))
 
+/-- `π : X ⟶ S` is **H-quasi-projective carrying `L`** if it admits a
+quasi-compact immersion into a finite-dimensional relative projective space,
+over `S`, which identifies `L` with the pullback of `O(1)`.  This is the
+project-local encoding of a specified relatively very ample line bundle. -/
+def Scheme.Hom.IsHQuasiProjectiveWith {X S : Scheme.{0}} (π : X ⟶ S)
+    (L : X.Modules) : Prop :=
+  ∃ (n : Type) (_ : Finite n) (i : X ⟶ ℙ(n; S)),
+    IsImmersion i ∧ QuasiCompact i ∧ i ≫ (ℙ(n; S) ↘ S) = π ∧
+      Nonempty (L ≅ (Scheme.Modules.pullback i).obj
+        (ProjectiveSpace.twistingSheaf n S 1))
+
 namespace Scheme.Hom.IsProjective
 
 variable {X S : Scheme.{0}} {π : X ⟶ S}
@@ -104,6 +122,15 @@ variable {X S : Scheme.{0}} {π : X ⟶ S} {L : X.Modules}
 theorem isProjective (h : π.IsProjectiveWith L) : π.IsProjective := by
   obtain ⟨n, hn, i, hi, hcomp, -⟩ := h
   exact ⟨n, hn, i, hi, hcomp⟩
+
+/-- A projective morphism carrying `L` is H-quasi-projective carrying the same
+line bundle. -/
+theorem isHQuasiProjectiveWith (h : π.IsProjectiveWith L) :
+    π.IsHQuasiProjectiveWith L := by
+  obtain ⟨n, hn, i, hi, hcomp, hL⟩ := h
+  letI : Finite n := hn
+  haveI : IsClosedImmersion i := hi
+  exact ⟨n, hn, i, inferInstance, inferInstance, hcomp, hL⟩
 
 /-- **Projective morphisms are proper**: a closed immersion is proper, the
 structural morphism of projective space is proper, and properness is stable
@@ -200,6 +227,113 @@ theorem baseChange (h : π.IsProjectiveWith L) {S' : Scheme.{0}} (g : S' ⟶ S) 
 
 end Scheme.Hom.IsProjectiveWith
 
+namespace Scheme.Hom.IsHQuasiProjective
+
+variable {X S : Scheme.{0}} {π : X ⟶ S}
+
+/-- Every H-quasi-projective morphism carries a specified relatively very ample
+line bundle: pull back `O(1)` along its immersion witness. -/
+theorem exists_isHQuasiProjectiveWith (h : π.IsHQuasiProjective) :
+    ∃ L : X.Modules, π.IsHQuasiProjectiveWith L := by
+  obtain ⟨n, hn, i, hi, hqc, hcomp⟩ := h
+  letI : Finite n := hn
+  let L := (Scheme.Modules.pullback i).obj
+    (ProjectiveSpace.twistingSheaf n S 1)
+  exact ⟨L, n, inferInstance, i, hi, hqc, hcomp, ⟨Iso.refl _⟩⟩
+
+end Scheme.Hom.IsHQuasiProjective
+
+namespace Scheme.Hom.IsHQuasiProjectiveWith
+
+variable {X S : Scheme.{0}} {π : X ⟶ S} {L : X.Modules}
+
+/-- Forget the chosen relatively very ample line bundle. -/
+theorem isHQuasiProjective (h : π.IsHQuasiProjectiveWith L) :
+    π.IsHQuasiProjective := by
+  obtain ⟨n, hn, i, hi, hqc, hcomp, -⟩ := h
+  exact ⟨n, hn, i, hi, hqc, hcomp⟩
+
+/-- H-quasi-projective morphisms carrying a line bundle are locally of finite type. -/
+theorem locallyOfFiniteType (h : π.IsHQuasiProjectiveWith L) :
+    LocallyOfFiniteType π :=
+  h.isHQuasiProjective.locallyOfFiniteType
+
+/-- H-quasi-projective morphisms carrying a line bundle are quasi-compact. -/
+theorem quasiCompact (h : π.IsHQuasiProjectiveWith L) : QuasiCompact π :=
+  h.isHQuasiProjective.quasiCompact
+
+/-- H-quasi-projective morphisms carrying a line bundle are separated. -/
+theorem isSeparated (h : π.IsHQuasiProjectiveWith L) : IsSeparated π :=
+  h.isHQuasiProjective.isSeparated
+
+/-- Transfer the carried H-quasi-projective structure along an isomorphism of
+line bundles. -/
+theorem of_iso (h : π.IsHQuasiProjectiveWith L) {L' : X.Modules} (e : L ≅ L') :
+    π.IsHQuasiProjectiveWith L' := by
+  obtain ⟨n, hn, i, hi, hqc, hcomp, ⟨eL⟩⟩ := h
+  exact ⟨n, hn, i, hi, hqc, hcomp, ⟨e.symm ≪≫ eL⟩⟩
+
+/-- Composition with a quasi-compact immersion preserves the carried
+H-quasi-projective structure. -/
+theorem comp_isImmersion (h : π.IsHQuasiProjectiveWith L) {Y : Scheme.{0}}
+    (j : Y ⟶ X) [IsImmersion j] [QuasiCompact j] :
+    (j ≫ π).IsHQuasiProjectiveWith ((Scheme.Modules.pullback j).obj L) := by
+  obtain ⟨n, hn, i, hi, hqc, hcomp, ⟨e⟩⟩ := h
+  letI : Finite n := hn
+  haveI : IsImmersion i := hi
+  haveI : QuasiCompact i := hqc
+  refine ⟨n, inferInstance, j ≫ i, inferInstance, inferInstance,
+    by rw [Category.assoc, hcomp], ?_⟩
+  exact ⟨(Scheme.Modules.pullback j).mapIso e ≪≫
+    Scheme.pullbackTriangleIso (rfl : j ≫ i = j ≫ i)
+      (ProjectiveSpace.twistingSheaf n S 1)⟩
+
+/-- The comparison morphism from the base-changed total space into the
+base-changed projective space. -/
+private def baseChangeLift {S' : Scheme.{0}} (g : S' ⟶ S) {n : Type} [Finite n]
+    (i : X ⟶ ℙ(n; S)) (hcomp : i ≫ (ℙ(n; S) ↘ S) = π) :
+    pullback π g ⟶ ℙ(n; S') :=
+  (ProjectiveSpace.isPullback_map n g).lift
+    (pullback.fst π g ≫ i) (pullback.snd π g)
+    (by rw [Category.assoc, hcomp, pullback.condition])
+
+/-- H-quasi-projectivity with a specified relatively very ample line bundle is
+stable under arbitrary base change. -/
+theorem baseChange (h : π.IsHQuasiProjectiveWith L) {S' : Scheme.{0}} (g : S' ⟶ S) :
+    (pullback.snd π g).IsHQuasiProjectiveWith
+      ((Scheme.Modules.pullback (pullback.fst π g)).obj L) := by
+  obtain ⟨n, hn, i, hi, hqc, hcomp, ⟨e⟩⟩ := h
+  letI : Finite n := hn
+  haveI : IsImmersion i := hi
+  haveI : QuasiCompact i := hqc
+  have h1 : baseChangeLift g i hcomp ≫ (ℙ(n; S') ↘ S') =
+      pullback.snd π g := IsPullback.lift_snd _ _ _ _
+  have hsq : IsPullback (baseChangeLift g i hcomp) (pullback.fst π g)
+      (ProjectiveSpace.map n g) i := by
+    have hbig : IsPullback
+        (baseChangeLift g i hcomp ≫ (ℙ(n; S') ↘ S'))
+        (pullback.fst π g) g (i ≫ (ℙ(n; S) ↘ S)) := by
+      rw [h1, hcomp]
+      exact (IsPullback.of_hasPullback π g).flip
+    exact IsPullback.of_right hbig
+      (IsPullback.lift_fst _ _ _ _)
+      (ProjectiveSpace.isPullback_map n g).flip
+  refine ⟨n, inferInstance, baseChangeLift g i hcomp,
+    MorphismProperty.of_isPullback hsq.flip hi,
+    MorphismProperty.of_isPullback hsq.flip hqc, h1, ?_⟩
+  refine ⟨(Scheme.Modules.pullback (pullback.fst π g)).mapIso e ≪≫
+    Scheme.pullbackTriangleIso (IsPullback.lift_fst _ _ _ _ :
+      baseChangeLift g i hcomp ≫ ProjectiveSpace.map n g
+        = pullback.fst π g ≫ i).symm
+      (ProjectiveSpace.twistingSheaf n S 1) ≪≫ ?_⟩
+  exact (Scheme.pullbackTriangleIso
+      (rfl : baseChangeLift g i hcomp ≫ ProjectiveSpace.map n g = _)
+      (ProjectiveSpace.twistingSheaf n S 1)).symm ≪≫
+    (Scheme.Modules.pullback (baseChangeLift g i hcomp)).mapIso
+      (ProjectiveSpace.twistingSheafBaseChange n g 1)
+
+end Scheme.Hom.IsHQuasiProjectiveWith
+
 namespace ProjectiveSpace
 
 /-- **The structural morphism of relative projective space is itself
@@ -211,6 +345,12 @@ theorem isProjectiveWith_over (d : ℕ) (S : Scheme.{0}) :
     (ℙ(Fin (d + 1); S) ↘ S).IsProjectiveWith (twistingSheaf (Fin (d + 1)) S 1) :=
   ⟨Fin (d + 1), inferInstance, 𝟙 _, inferInstance, Category.id_comp _,
     ⟨((Scheme.Modules.pullbackId _).app _).symm⟩⟩
+
+/-- Relative projective space is H-quasi-projective carrying `O(1)`. -/
+theorem isHQuasiProjectiveWith_over (d : ℕ) (S : Scheme.{0}) :
+    (ℙ(Fin (d + 1); S) ↘ S).IsHQuasiProjectiveWith
+      (twistingSheaf (Fin (d + 1)) S 1) :=
+  (isProjectiveWith_over d S).isHQuasiProjectiveWith
 
 end ProjectiveSpace
 
