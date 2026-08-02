@@ -1,0 +1,1 @@
+No additional commit is needed. After `61ed8d8bd4`, only read-only checks, `/tmp` private indexes, and Horizon session-cache updates occurred. A fresh private-index audit found zero disk diff across all 43 authored paths and zero AJC hgraph residual; the timestamp restoration returned files exactly to `HEAD`.
