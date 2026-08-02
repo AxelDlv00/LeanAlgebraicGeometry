@@ -236,12 +236,9 @@ theorem two_mul_degree_le_S_mul_windowδ (n : ℕ) :
 
 theorem two_mul_degree_le_M_mul_windowδ (n : ℕ) :
     2 * (n : ℤ) ≤ (windowM_choice π hπ n : ℤ) * windowδ π := by
-  have hspec := windowM_spec π hπ n
+  have hnorm := windowBound_le_M_norm π hπ n
   have hb := windowBound_pos π hπ
-  have hδ := windowδ_nonneg π
-  have hn : (0 : ℤ) ≤ (n : ℤ) := Int.natCast_nonneg _
-  have hs : (0 : ℤ) ≤ (windowS_choice π hπ n : ℤ) := Int.natCast_nonneg _
-  nlinarith
+  omega
 
 theorem three_mul_degree_le_M_mul_windowδ (n : ℕ) :
     3 * (n : ℤ) ≤ (windowM_choice π hπ n : ℤ) * windowδ π := by
