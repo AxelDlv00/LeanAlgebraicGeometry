@@ -330,6 +330,14 @@ theorem two_mul_genus_le_deg_windowN (g : ℕ)
   rw [deg_windowN]
   exact two_mul_genus_le_M_mul_windowδ π hπ g hO hχ
 
+/-- **The degree-keyed embedding budget**: the transported `N`-window has degree at
+least twice the divisor-family degree.  Unlike the diagonal genus spelling above, this
+uses only the positively normalized ledger bound. -/
+theorem two_mul_degree_le_deg_windowN (g : ℕ) :
+    2 * (g : ℤ) ≤ CurveDivisor.deg K (windowN C K hπ g) := by
+  rw [deg_windowN]
+  exact two_mul_degree_le_M_mul_windowδ π hπ g
+
 /-- **`hNrank`**: the window-size transport `h⁰_K(𝒪(N)) = h⁰_k(𝒪(M·F))` — both sides
 are computed by the rank anchor at their own field (`deg + χ`), the degree is the
 transported `M·δ`, and `χ` matches through the genus normalizations. -/
@@ -353,6 +361,28 @@ theorem h0_windowN (g : ℕ)
           (windowM_choice π hπ g • fiberWeilDivisor π)) : ℤ) := by
     rw [hK, hdeg, hχK, hk]
     ring
+  exact_mod_cast hcast
+
+/-- **The decoupled window-size transport**: the window exponent is keyed by the
+divisor degree `g`, while both Euler-characteristic formulas use the independent curve
+parameter `gamma`. -/
+theorem h0_windowN_at (g : ℕ) {gamma : ℕ}
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hχK : Sheaf.chi ((relCurve C K).moduleKSheaf K) = 1 - (gamma : ℤ)) :
+    Sheaf.h0 ((relCurve C K).divisorSheaf K (windowN C K hπ g))
+      = Sheaf.h0 (C.left.divisorSheaf k
+          (windowM_choice π hπ g • fiberWeilDivisor π)) := by
+  have hK : (Sheaf.h0 ((relCurve C K).divisorSheaf K (windowN C K hπ g)) : ℤ)
+      = CurveDivisor.deg K (windowN C K hπ g)
+        + Sheaf.chi ((relCurve C K).moduleKSheaf K) :=
+    h0_eq_deg_add_chi_of_subsingleton_hModule_one _ (subsingleton_h1_windowN C K hπ g)
+  have hk := rank_embedding π hπ g
+  rw [hχ] at hk
+  have hdeg := deg_windowN C K hπ g
+  have hcast : (Sheaf.h0 ((relCurve C K).divisorSheaf K (windowN C K hπ g)) : ℤ)
+      = (Sheaf.h0 (C.left.divisorSheaf k
+          (windowM_choice π hπ g • fiberWeilDivisor π)) : ℤ) := by
+    rw [hK, hdeg, hχK, hk]
   exact_mod_cast hcast
 
 /-- **`hNnorm`**: the transported normalization windows — for every `K`-divisor `D'` of
@@ -394,6 +424,37 @@ theorem subsingleton_h1_windowN_sub (g : ℕ)
       nlinarith [hs, hg, hδ, mul_nonneg (mul_nonneg (by linarith : (0:ℤ) ≤ (g:ℤ) + 1) hs)
         (by linarith : (0:ℤ) ≤ windowδ π)]
     linarith [hM, hkey, hb1, hD']
+
+/-- **The decoupled transported normalization family**: for a degree-`g` divisor
+family, every subtraction of degree at most `2g` from the `N(g)` window has vanishing
+`H¹`.  The curve normalization may use any Euler parameter `gamma`; it cancels from
+the witness comparison. -/
+theorem subsingleton_h1_windowN_sub_at (g : ℕ) {gamma : ℕ}
+    (hχK : Sheaf.chi ((relCurve C K).moduleKSheaf K) = 1 - (gamma : ℤ))
+    (D' : (relCurve C K).CurveDivisor)
+    (hD' : CurveDivisor.deg K D' ≤ 2 * (g : ℤ))
+    (hgamma : gamma ≤ g) :
+    Subsingleton (Sheaf.HModule
+      ((relCurve C K).divisorSheaf K (windowN C K hπ g - D')) 1) := by
+  have hsub : CurveDivisor.deg K (windowN C K hπ g - D')
+      = CurveDivisor.deg K (windowN C K hπ g) - CurveDivisor.deg K D' := by
+    rw [sub_eq_add_neg, CurveDivisor.deg_add, CurveDivisor.deg_neg, sub_eq_add_neg]
+  refine subsingleton_hModule_one_of_witness K
+    (windowTransportDivisor C K π (windowS_choice π hπ g)) _
+    (subsingleton_h1_windowTransportDivisor C K π _ (relThetaPairH1_windowS C hπ g))
+    ?_
+  rw [hsub, hχK, deg_windowN, deg_windowTransportDivisor]
+  have hb := windowBound_pos π hπ
+  have hM := windowM_spec π hπ g
+  have hδ := one_le_windowδ π
+  have hs : (0 : ℤ) ≤ (windowS_choice π hπ g : ℤ) := Int.natCast_nonneg _
+  have hg : (0 : ℤ) ≤ (g : ℤ) := Int.natCast_nonneg _
+  have hgamma' : (gamma : ℤ) ≤ (g : ℤ) := by exact_mod_cast hgamma
+  have hkey : (windowS_choice π hπ g : ℤ) * windowδ π + ((g : ℤ) + 2)
+      ≤ ((g : ℤ) + 2) * ((windowS_choice π hπ g : ℤ) + 1) * windowδ π := by
+    nlinarith [hs, hg, hδ, mul_nonneg (mul_nonneg (by linarith : (0 : ℤ) ≤ (g : ℤ) + 1) hs)
+      (by linarith : (0 : ℤ) ≤ windowδ π)]
+  linarith [hM, hkey, hb, hD', hgamma']
 
 end Pack
 

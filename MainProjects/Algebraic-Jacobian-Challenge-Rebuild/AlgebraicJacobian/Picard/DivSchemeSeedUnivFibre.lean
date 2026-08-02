@@ -245,6 +245,27 @@ theorem h0_windowS (g : ℕ)
     ring
   exact_mod_cast hcast
 
+/-- **The decoupled multiplier-window size transport**: the `S`-window is keyed by
+the divisor degree `g`, while its Euler-characteristic normalization is keyed by the
+independent curve parameter `gamma`. -/
+theorem h0_windowS_at (g : ℕ) {gamma : ℕ}
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hχK : Sheaf.chi ((relCurve C K).moduleKSheaf K) = 1 - (gamma : ℤ)) :
+    Sheaf.h0 ((relCurve C K).divisorSheaf K (windowS C K hπ g))
+      = Sheaf.h0 (C.left.divisorSheaf k
+          (windowS_choice π hπ g • fiberWeilDivisor π)) := by
+  have hK : (Sheaf.h0 ((relCurve C K).divisorSheaf K (windowS C K hπ g)) : ℤ)
+      = CurveDivisor.deg K (windowS C K hπ g)
+        + Sheaf.chi ((relCurve C K).moduleKSheaf K) :=
+    h0_eq_deg_add_chi_of_subsingleton_hModule_one _ (subsingleton_h1_windowS C K hπ g)
+  have hk := rank_embedding_mult π hπ g
+  rw [hχ] at hk
+  have hcast : (Sheaf.h0 ((relCurve C K).divisorSheaf K (windowS C K hπ g)) : ℤ)
+      = (Sheaf.h0 (C.left.divisorSheaf k
+          (windowS_choice π hπ g • fiberWeilDivisor π)) : ℤ) := by
+    rw [hK, deg_windowS, hχK, hk]
+  exact_mod_cast hcast
+
 set_option linter.unusedSectionVars false in
 /-- The transported witness at the exponent `a`: `H¹` of the transported `a`-window
 vanishes. -/
@@ -358,6 +379,45 @@ theorem existsUnique_effective_divisor_of_carve_windowN (g : ℕ)
           have := windowA_add_three_mul_genus_add_S_le_M_mul π hπ hb g
           linarith)
       KM hKM hKMrank K' hK' hK'rank hcarve
+
+/-- **The decoupled fibre P-fib keystone.**  The transported windows and Grassmannian
+coranks are keyed by the divisor-family degree `g`; the structure-sheaf Euler
+characteristic is normalized by an independent `gamma ≤ g`. -/
+theorem existsUnique_effective_divisor_of_carve_windowN_at (g : ℕ) {gamma : ℕ}
+    (hgamma : gamma ≤ g)
+    (hOK : Sheaf.h0 ((relCurve C K).moduleKSheaf K) = 1)
+    (hχK : Sheaf.chi ((relCurve C K).moduleKSheaf K) = 1 - (gamma : ℤ))
+    (KM : Submodule K (relCurve C K).functionField)
+    (hKM : KM ≤ divisorSections K (windowN C K hπ g) ⊤)
+    (hKMrank : Module.finrank K ↥KM + g
+      = Sheaf.h0 ((relCurve C K).divisorSheaf K (windowN C K hπ g)))
+    (K' : Submodule K (relCurve C K).functionField)
+    (hK' : K' ≤ divisorSections K (windowN C K hπ g + windowS C K hπ g) ⊤)
+    (hK'rank : Module.finrank K ↥K' + g
+      = Sheaf.h0 ((relCurve C K).divisorSheaf K
+          (windowN C K hπ g + windowS C K hπ g)))
+    (hcarve : ∀ h ∈ divisorSections K (windowS C K hπ g) ⊤, ∀ f ∈ KM, h * f ∈ K') :
+    ∃! D : (relCurve C K).CurveDivisor, 0 ≤ D ∧ CurveDivisor.deg K D = (g : ℤ) ∧
+      KM = divisorSections K (windowN C K hπ g - D) ⊤ ∧
+      K' = divisorSections K (windowN C K hπ g + windowS C K hπ g - D) ⊤ := by
+  have hb := windowBound_pos π hπ
+  have hgamma' : (gamma : ℤ) ≤ (g : ℤ) := by exact_mod_cast hgamma
+  refine existsUnique_effective_divisor_of_carve_pack (gamma := gamma) g hOK hχK
+    (windowN C K hπ g) (windowS C K hπ g)
+    ((windowA_choice π hπ : ℤ) * windowδ π + (gamma : ℤ))
+    (fun W hW => subsingleton_h1_of_windowA_le_deg C K hπ gamma hχK W hW)
+    (two_mul_degree_le_deg_windowN C K hπ g)
+    (by rw [deg_windowS]
+        exact two_mul_degree_le_S_mul_windowδ π hπ g)
+    (by
+      rw [deg_windowS]
+      have hbudget := windowA_add_three_mul_genus_le_S_mul π hπ hb g
+      linarith)
+    (by
+      rw [deg_windowS, deg_windowN]
+      have hbudget := windowA_add_three_mul_genus_add_S_le_M_mul π hπ hb g
+      linarith)
+    KM hKM hKMrank K' hK' hK'rank hcarve (hgamma := hgamma)
 
 end Keystone
 /-! ## The Φ-side interface (G-3 dictionary addenda for the seed bridge) -/
