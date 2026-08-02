@@ -39,6 +39,7 @@ widened carrier and introduces no new premise.
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option maxSynthPendingDepth 3
+set_option linter.unusedSectionVars false
 
 universe u
 
@@ -180,6 +181,54 @@ theorem IsCertified.fibrewise_thetaSub_h1_witness
           rw [e1, e2, map_mul, map_inv]
   · refine subsingleton_h1_windowTransportDivisor_sub C pi hpi K g a
       ha1 hMa hO hchi (chi_relCurve_of_chi_aff C g hchi K) dp ?_
+    have hdeg := hc.deg_presentationDivisor_pulledEquations
+      (C := C) (R := R) (K := K)
+    dsimp [dp] at hdeg ⊢
+    rw [hdeg]
+    have := Int.natCast_nonneg g
+    linarith
+
+/-- The widened certified family supplies the same fibrewise theta-minus-divisor
+witness when its degree `g` is independent of the curve parameter `gamma ≤ g`. -/
+theorem IsCertified.fibrewise_thetaSub_h1_witness_at
+    {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
+    {A : AffAdaptation D d} {g gamma : Nat} (hc : A.IsCertified g)
+    (hpi : pi ≫ P1.structureMap k = C.hom)
+    (hgamma : gamma ≤ g)
+    (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : Int))
+    {a : Nat} (hMa : windowM_choice pi hpi g ≤ a)
+    (p : PrimeSpectrum R) :
+    ∃ W : (relCurve C p.asIdeal.ResidueField).CurveDivisor,
+      Scheme.CurveDivisor.picClass p.asIdeal.ResidueField W
+          = Scheme.CechPic.map (relCurveMap C R p.asIdeal.ResidueField)
+              ((thetaChartDatum C R pi a).cechPicClass * d.picClass⁻¹)
+        ∧ Subsingleton (Sheaf.HModule
+            ((relCurve C p.asIdeal.ResidueField).divisorSheaf
+              p.asIdeal.ResidueField W) 1) := by
+  let K := p.asIdeal.ResidueField
+  let dp := Scheme.presentationDivisor K
+    ((A.pulledEquations K hc.projective_colength).presentation)
+  refine ⟨windowTransportDivisor C K pi a - dp, ?_, ?_⟩
+  · have e1 : Scheme.CurveDivisor.picClass K dp
+        = Scheme.CechPic.map (relCurveMap C R K) d.picClass := by
+      dsimp [dp]
+      rw [Scheme.CurveDivisor.picClass_presentationDivisor,
+        Scheme.LocalEquations.presentation_picClass]
+      exact A.picClass_pulledEquations K hc.projective_colength
+    have e2 : Scheme.CurveDivisor.picClass K (windowTransportDivisor C K pi a)
+        = Scheme.CechPic.map (relCurveMap C R K)
+            ((thetaChartDatum C R pi a).cechPicClass) :=
+      (picClass_windowTransportDivisor C K pi a).trans
+        (cechPicClass_map_thetaChartDatum C R pi a K).symm
+    calc Scheme.CurveDivisor.picClass K (windowTransportDivisor C K pi a - dp)
+        = Scheme.CurveDivisor.picClass K (windowTransportDivisor C K pi a)
+            * (Scheme.CurveDivisor.picClass K dp)⁻¹ := by
+          rw [sub_eq_add_neg, Scheme.CurveDivisor.picClass_add, picClass_neg_aff]
+      _ = Scheme.CechPic.map (relCurveMap C R K)
+            ((thetaChartDatum C R pi a).cechPicClass * d.picClass⁻¹) := by
+          rw [e1, e2, map_mul, map_inv]
+  · refine subsingleton_h1_windowTransportDivisor_sub_at
+      C pi hpi K g a hMa hgamma (chi_relCurve_of_chi_aff C gamma hchi K) dp ?_
     have hdeg := hc.deg_presentationDivisor_pulledEquations
       (C := C) (R := R) (K := K)
     dsimp [dp] at hdeg ⊢
