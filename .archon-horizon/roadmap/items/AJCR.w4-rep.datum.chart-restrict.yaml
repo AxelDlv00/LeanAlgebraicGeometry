@@ -3,52 +3,10 @@ title: 'CHART-RESTRICT: the restricted-chart fibre criterion + the V-coupling to
   (repairs the only route to antecedent 1)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "CHART-RESTRICT: the restricted-chart fibre criterion, its V-coupling, and\
-  \ BOTH ENDS OF THE V-INTERVAL. ADVANCED, NO GATE CLOSED (ajcr-p1, run 0087 r0+r1).\n\
-  \nWHY THE ROW EXISTS. IsChartUniv (antecedent 1 of pic0RepresentableByOfCharts,\
-  \ Pic0SigmaSheaf.lean:161) had exactly TWO routes and BOTH pass through the UNRESTRICTED\
-  \ certificate three headers call false. r0 landed the repair: RestrictedChartFibre\
-  \ + isChartUniv_of_restrictedChartFibre (Picard/Pic0ChartRestrictedFibre.lean, commits\
-  \ fe937438c/5439077ad/2327a0757).\n\nr1 SETTLED THE INHABITATION QUESTION r0 LEFT\
-  \ OPEN, and r0's pricing of it was FALSE. Picard/Pic0ChartRestrictedFibreSat.lean,\
-  \ 10 declarations, sorry-free, lake build EXIT=0 (8893 jobs), ALL axiom-clean [propext,\
-  \ Classical.choice, Quot.sound] vs a control firing sorryAx.\n * restrictedChartFibre_bot\
-  \ -- the class IS INHABITED at V = bot, unconditionally. r0 called the obstruction\
-  \ 'triviality of picEt over the empty scheme: a genuinely separate lemma, absent\
-  \ from the tree'. It is Sheaf.isTerminalOfBotCover + Scheme.bot_mem_grothendieckTopology,\
-  \ both mathlib, three lines. The error was the REDUCTION (a congr 1 discarding that\
-  \ pic0SigmaSheaf is a SHEAF), not the census. I-0890 retracted at its site.\n *\
-  \ isChartUniv_bot -- so antecedent 1 is FREE at V = bot, with no hypothesis. And\
-  \ isOpenImmersion_presheaf_restrictChart_bot shows the construction never mentions\
-  \ the Abel chart: it holds for an ARBITRARY map into the Sigma-sheaf. A route reaching\
-  \ IsChartUniv without pinning V proves nothing about the chart.\n * not_coverageContainment_bot\
-  \ -- coverage's containment is FALSE at bot whenever a test has a point.\n * At\
-  \ the other end: range_subset_range_top_iota (containment free at top) and isOpenImmersion_presheaf_abelSigmaChart_of_restrictedChartFibre_top\
-  \ (hf at top RETURNS the unrestricted certificate). not_restrictedChartFibre_top_of_not_injective\
-  \ refutes top outright, conditional on p3's abel-noninj fork.\n\n*** TWO THINGS\
-  \ TO CARRY OFF THIS ROW.\n(1) ANY WORKING V IS A PROPER INTERMEDIATE OPEN -- bot:\
-  \ hf free, coverage impossible; top: coverage free, hf maximal. So CHART-U(b)'s\
-  \ openness is load-bearing, not bookkeeping.\n(2) restrictedChartFibre_top_iff:\
-  \ IsChartLocusFibre IS EXACTLY the V = top instance of RestrictedChartFibre, so\
-  \ it is NOT an independent obligation and rows pricing them apart double-count.\
-  \ It also supplies the converse Pic0ChartUnivReduce.lean:55 claims exists under\
-  \ a name defined NOWHERE (I-1016) -- and in the arbitrary-V form that claim is FALSE,\
-  \ since isChartUniv_bot is free. Add r0's I-0950 (hf's exists_factor and coverage's\
-  \ hV are ONE range containment) and the antecedent-1 side carries fewer independent\
-  \ obligations than the board says.\n\nNO GATE CLOSED. rep has no producer; hcov\
-  \ at an intermediate V has no producer; no chart is built at any V but bot.\n\n\
-  CORRECTED FRAMING (I-1012, fresh-context audit; mathematics survived all 7 checks,\
-  \ framing did not): the two endpoints are NOT a non-vacuity check for the coupled\
-  \ assembly. Two BAD values of V are two refutations; non-vacuity needs a V where\
-  \ both clauses hold. INHABITATION OF THE PAIR (huniv, hcov) IS UNMEASURED AT EVERY\
-  \ V and may be empty everywhere. Also: at V = bot the INSTANCE form of the assembly\
-  \ goes through with huniv free, leaving the IsLocallySurjective binder as sole antecedent\
-  \ -- not_coverageContainment_bot constrains the hcov SPELLING, not that binder.\n\
-  \nNEXT, cheapest first: (a) decide whether the pair is satisfiable at ANY V -- the\
-  \ one question that now gates the whole antecedent-1 side; (b) review-ajcr's I-0927\
-  \ part 2 offers a landed transport template if V should be the h1-vanishing locus,\
-  \ and that question is live again; (c) p3's abel-noninj decides whether the top\
-  \ end is dead or merely ungated."
+summary: 'LEGACY CONDITIONAL ATLAS BRANCH. Restricted-chart fibre and same-V coupling
+  remain useful conditional inputs, but project-wide representation is not producer-free:
+  the genus producer is landed and the admissible producer is active under parameter-decouple.
+  The quotient route is the current terminal path.'
 status: pending
 kind: proof
 priority: normal
@@ -72,7 +30,7 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-31T14:08:13.305727+00:00'
+  updated_at: '2026-08-03T01:30:20.383378+00:00'
   pinned_commits:
   - c0cbd4ede7123e9b834816e0fbc00e3033f51363
   - ab6da7d26032ee16e2e5698259f7e1c50ce16ef3

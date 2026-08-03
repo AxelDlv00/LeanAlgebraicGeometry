@@ -3,47 +3,11 @@ title: 'DAT-C: the $\Sigma$-charts — the $h^1$-vanishing open of $\mathrm{Div}
   canonical-section normalization ($h^0 = 1$), mono chart functors, open fibre products'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "DAT-C: the Sigma-charts. C0-C5 are landed. C6-C8 and the canonical-section\
-  \ certificate depend on\nthe DD-R certificate/divRep chain. Its own leaf c9-chartlocus\
-  \ is independent of DD-R and is where\nthis milestone's progress has been coming\
-  \ from.\n\nUPDATE 2026-07-29 (run 0072 r6, lane ajcr-charts). C6-C8 UNTOUCHED AGAIN,\
-  \ but this pass MEASURED\nthe gate instead of inheriting it, and the C6 row's accounting\
-  \ splits in a way the row does not\nsay. Plus the C9 row's r5 amendment is corrected\
-  \ -- see the c9b and chart-u rows.\n\nC6's GATE IS TWO THINGS, ONLY ONE OF WHICH\
-  \ IS divRep-GATED (I-0749):\n * GENUINELY divRep-GATED: univFam, V, VOver. Measured,\
-  \ not inferred -- the tokens `univFam` and\n   `VOver` occur in ZERO files in the\
-  \ entire AlgebraicJacobian tree. They are the universal\n   family over the divRep\
-  \ representing object, so nothing can define them before F7.\n * NOT divRep-GATED:\
-  \ GAP-5 itself, `IsOpenImmersion (divCarveChartToDivScheme i j)`. No such\n   instance\
-  \ exists (grep), and its route is FULLY STOCKED: the defining triangle\n   (divCarveChartToDivScheme_divSchemeι,\
-  \ DivSchemeAtlasFactor.lean:370), KeyChart LANDED as an\n   ideal identity (carveIdealSheaf_ideal_pairChartOpen,\
-  \ DivSchemeKeyChart.lean:321), pairChartMap\n   IS an open immersion (DivCarvePairChart.lean:169),\
-  \ and open immersions are stable under base\n   change. THE MISSING STEP IS EXACTLY\
-  \ ONE: turn the KeyChart IDEAL IDENTITY into a PULLBACK\n   SQUARE. Bounded, project-local,\
-  \ available NOW -- ahead of F7 and ahead of CERT-Sigma.\n\nSo \"C6 is divRep-gated\"\
-  \ is true of C6's conclusion and false of its hardest named input. That is\nthe\
-  \ cheapest live brick on this milestone after the CHART-U(b) residue.\n\nC7 (DivSchemeChartFibre)\
-  \ -- gated on C6, hence on divRep. No file exists. Confirmed absent.\nC8 (DivSchemeChartCert)\
-  \  -- statement YES, heart pattern-gated on G-4 CertUniv. Unchanged.\n\nWHAT THE\
-  \ c9-chartlocus LEAF DID THIS PASS, in brief (full accounts on its own rows):\n\
-  \ * chart-u REOPENED from done. The general-test openness theorem is unconditional\
-  \ in\n   IsSplitWitnessIsoInvariant but STILL TAKES the affine-local haff, which\
-  \ nothing discharges.\n   So \"the W field costs zero\" was false at four sites,\
-  \ all corrected.\n * hconv DISCHARGED -- B-4/CHART-U(b)'s named residue for three\
-  \ sessions. The missing ingredient\n   was PicEtAff.unit_injective (Kleiman 2.5(1),\
-  \ the zeta3 close) plus\n   relPicMk_injective_of_subsingleton, both in the tree\
-  \ for WEEKS and cited by no CHART-U row.\n   Both halves of the pointwise presentation\
-  \ are now witness-free, so CHART-U(b) reduces to a\n   cechPicClass base-change\
-  \ identity -- exactly what the section 3.3 row's own correction 2\n   predicted.\n\
-  \ * The C9 amendment's \"its only geometric input is CHART-U(b), already done\"\
-  \ is CORRECTED in\n   worksheet section 4: CHART-U(b) is not done in the sense that\
-  \ sentence needs.\n\nTHE CANONICAL-SECTION CERTIFICATE reading is unchanged and\
-  \ reconfirmed: it is where the\neffectivity and h0 = 1 that DAT-B's coverage discards\
-  \ are actually needed (GAP-2 uniqueness,\neq_of_picClass_eq_of_h0_one takes 0 <=\
-  \ D). That is DAT-C's business, not coverage's.\n\nVERIFICATION THIS PASS: full\
-  \ root `lake build AlgebraicJacobian` GREEN -- 9279 jobs, EXIT=0, zero\nerrors,\
-  \ zero warnings in any file this lane touched; the only sorry warnings are Challenge.lean's\n\
-  13 declared frontier ones. Mutex hold was 72 seconds.\n"
+summary: LEGACY CONDITIONAL SIGMA-CHART BRANCH. C0-C5 plus the genus universal family
+  and chart packaging are landed in Pic0AtlasFromDivRepAffChallenge. Its final Sigma
+  endpoint still requires explicit open-immersion and pointwise-coverage hypotheses.
+  The active terminal route is the admissible producer followed by the quotient chain;
+  do not describe univFam or divRep as globally absent.
 status: pending
 kind: proof
 priority: normal
@@ -57,5 +21,5 @@ metadata:
   author: ground
   created_at: '2026-07-16T06:42:08.321387+00:00'
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-29T03:01:02.708309+00:00'
+  updated_at: '2026-08-03T01:30:05.567861+00:00'
   milestone: AJCR.w4-rep

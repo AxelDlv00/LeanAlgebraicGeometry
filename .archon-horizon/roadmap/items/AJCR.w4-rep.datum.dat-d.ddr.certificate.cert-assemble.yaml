@@ -2,73 +2,9 @@ id: AJCR.w4-rep.datum.dat-d.ddr.certificate.cert-assemble
 title: Widened certified-family packaging (frame-cover derivation separate)
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "REVIEW CORRECTION (2026-07-31, rev-ajcr): DONE ONLY AS SCOPED. This row\
-  \ packages certified-family/Away representation inputs; it does not derive epsilon/pair\
-  \ framing, a widened frame cover, or divFunctorAff.RepresentableBy. The remaining\
-  \ producer composition is tracked by AJCR.w4-rep.datum.dat-d.ddr.divrep.framecover-assemble.\
-  \ The historical summary below is retained verbatim for context.\n\nCOMPOSE the\
-  \ new chain into the consumer predicate. Target, already landed and waiting:\n\n\
-  \  isLocallyCertified_of_forall_prime_exists_certified_adaptation\n  (Picard/DivSchemeCertZarPointwise.lean:162),\
-  \ and its DivFamZar packaging\n  divFamZar_of_forall_prime_away_certified (:181).\n\
-  \nINPUTS: chart-avoid + swallow-adapt give the adaptation and hnoLeak; cert-collapse\
-  \ gives\n(c2)/(c3)/(c4); hdeg is ALREADY PROVED\n(deg_presentationDivisor_pulledEquations_pointwiseGeneratorSeed,\n\
-  Picard/DivSchemeSeedUnivPulledDegree.lean:354) and hregular for the swallowing piece\
-  \ comes from\ndivisorAdaptation_fibre_regular's generic core.\n\nFOUR TRANSPORT\
-  \ BRICKS the away route still owes, all currently missing and all cheap (recon 0048):\n\
-  \ (1) Scheme.LocalEquations.supportLocus_pullback — the support of a pulled system\
-  \ is the preimage\n     of the support (ingredients landed: mem_unitLocus_iff_isUnit_germ,\
-  \ pullback_cover, pullback_eqn);\n (2) DivisorAdaptation.pullbackOfIsOpenImmersion\
-  \ — the existing pullback (DivisorFamilyMapAlg.lean:175)\n     is gated on a global\
-  \ projectivity clause used ONLY to supply the target system's `regular`\n     field,\
-  \ which an open immersion gives for free;\n (3) hregular / hovlFlat in seed-free\
-  \ form over an Away chart (only same-base versions exist,\n     DivSchemeAdaptationFibreRegular.lean:585,\
-  \ DivSchemeCertOverlapFinite.lean:244) — there is no\n     ThetaGeneratorSeed base\
-  \ change in the project;\n (4) hdeg base-changed to the Away chart.\nNote also:\
-  \ isCertified_of_noLeak_of_forall_liftQ_injective needs\n[IsNoetherianRing (Localization.Away\
-  \ r)] — confirm the instance fires.\n\nDISCHARGE/RELOCATION LINE, added 2026-07-29\
-  \ (run 0070 s0012, per I-0542). Read this node's `done`\nas a REPACKAGING, not as\
-  \ the four bricks. What landed (DivisorFamilyAffAssemble.lean) takes the\ncertified\
-  \ family over the Away chart as a HYPOTHESIS and supplies divEq_refl, so no transport\
-  \ is\nperformed and none of the four listed bricks is needed on that route. Of the\
-  \ four, only\nsupportLocus_pullback exists (DivSchemeCertZarTransport.lean); DivisorAdaptation\n\
-  .pullbackOfIsOpenImmersion does not exist anywhere and is NOT owed by the widened\
-  \ route.\n\nWhat the composition DOES now reach, landed after this node was flipped:\
-  \ the widened value is a\nFUNCTOR on all tests (divFamZarAff.map, divFunctorAff),\
-  \ the comparison out of the chart-typed\nfunctor is a natural transformation (divFunctorToAff),\
-  \ and one DD-R consumer is restated on it\n(DivRepAffinePullback.pullGlobalAff /\
-  \ pullGlobalAff_comp, the pull_comp law). Spec ADDENDUM 9.\n\nSECOND DISCHARGE LINE,\
-  \ added 2026-07-29 (run 0070 s0016). The line above is right that the s0012\npackaging\
-  \ performed no transport — and it left the composition's real gap unnamed, which\
-  \ this row's\n`done` had been hiding since. The gap was on the PRODUCER side, not\
-  \ the transport side: measured at\na41644c36, NOTHING in the project produced IsLocallyCertifiedAff\
-  \ or DivFamZarAff from a\nThetaGeneratorSeed (of 30 widened files exactly two mention\
-  \ the seed; neither produces the carrier;\ncrossed the other way, zero). So the\
-  \ assembler had no geometric input and the composition it\n\"repackaged\" could\
-  \ not be instantiated from the lane's own seeds.\n\nCLOSED s0016, all rooted, sorry-free,\
-  \ and covered by a FULL lake build (8882 jobs, EXIT=0, zero\nwarnings in these files):\n\
-  \ * Picard/DivisorFamilyAffSeedGate.lean — ThetaGeneratorSeed.divFamZarAff_of_swallowing_affineOpen\n\
-  \   and .isLocallyCertifiedAff_of_swallowing_affineOpen: seed + subordinate 0B8B\
-  \ + degree datum at\n   the swallowing piece ⟹ the widened class. Obligation 4(i)\
-  \ does not appear (discharged inside the\n   endpoint). picClass preserved by rfl.\
-  \ Per-prime forms stated, taking the away certificate as an\n   explicit HYPOTHESIS.\
-  \ Non-vacuity witness included, at its true (n = 0) strength.\n * Picard/DivisorFamilyAffSeedSection.lean\
-  \ — .divFunctorAffSection: the same carried to a SECTION of\n   divFunctorAff, with\
-  \ divFamZarAffAffineEquiv_divFunctorAffSection identifying its class as the\n  \
-  \ gate's. That composition was elaborated in the s0010 review (ADDENDUM 8 §8.7)\
-  \ and cited in a\n   binding addendum while NO declaration performed it.\n * Picard/DivisorFamilyAffAwayRep.lean\
-  \ — DivFamZarAff.exists_certified_away_rep: STEP 1 of the\n   CLASSIFIER direction,\
-  \ widened. Note this corrects a scope claim in the lane's own AffFraming.lean,\n\
-  \   which says exists_certChartCover \"does not port\" because its proof runs through\
-  \ the two-chart\n   PairChartRing window: true of that theorem, but it conflates\
-  \ two steps, and step 1 alone has no\n   chart content (Quotient rep → read the\
-  \ pin's existential → recover the DivEq → repackage as a\n   mk-equality; π occurs\
-  \ only in the carrier's TYPE).\n\nSTILL OWED for a widened CLASSIFIER, and genuinely\
-  \ two-chart: the ε-framing half of\nexists_certChartCover. Its inputs exist widened\
-  \ (CertifiedDivisorFamilyAff.eps, .IsPairChartFramed);\nwhat does not exist is the\
-  \ derivation that the framing can be ACHIEVED over each away piece.\nAlso owed,\
-  \ newly NAMED rather than newly owed: a ThetaGeneratorSeed base change along\nR\
-  \ → Localization.Away r, which is what the per-prime forms take as a hypothesis.\
-  \ Spec ADDENDUM 11.\n"
+summary: 'DONE AS SCOPED: widened certified-family packaging is landed. Its former
+  downstream affine classifier and genus RepresentableBy endpoint are now also landed.
+  The independent off-diagonal admissible extension is tracked by parameter-decouple.'
 status: done
 kind: proof
 priority: normal
@@ -91,7 +27,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
-  updated_at: '2026-07-31T16:29:53.056228+00:00'
+  updated_at: '2026-08-03T01:30:54.061120+00:00'
   milestone: AJCR.w4-rep
   pinned_commits:
   - db94ce21a94102ebb3074271ef5422a115777321

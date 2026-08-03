@@ -2,13 +2,11 @@ id: AJCR.w4-rep.datum.dat-b.cover-threshold
 title: 'COVER-THRESHOLD: unconditional admissible parameter and uniform chart locus'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: DONE (pic-h, run 0098). Let B = M*delta + g and choose n = B*d1, with d1
-  the positive theta degree. Then n >= B and n is a divisor degree, so one legal chart
-  index has chartLocus = univ for every pic^0 class; the finite-separable splitting
-  is produced internally. This removes the false IsDivisorDegree C g residue without
-  hypotheses. DAT-B still owes the neighborhood chart morphism, and representability
-  at n joins pic-d's arbitrary-parameter producer. Full lake build passed (9332 jobs);
-  endpoint uses only propext, Classical.choice, Quot.sound.
+summary: DONE (pic-h, run 0098). With B = M*delta + g and n = B*d1, n is both above
+  the coverage bound and an unconditional divisor degree, yielding one legal chart
+  index with chartLocus = univ for every Pic0 class. This removes the false IsDivisorDegree
+  C g residue. DAT-B still owes a neighborhood chart morphism, and RepresentableBy
+  at n awaits parameter-decouple; no arbitrary-parameter producer is currently landed.
 status: done
 kind: proof
 priority: normal
@@ -32,7 +30,7 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-b
-  updated_at: '2026-07-30T05:09:56.573464+00:00'
+  updated_at: '2026-08-03T01:30:36.622984+00:00'
   pinned_commits:
   - 5c0d68620a
   - dff9be0deb

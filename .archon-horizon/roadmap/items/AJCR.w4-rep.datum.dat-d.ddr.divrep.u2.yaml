@@ -2,18 +2,10 @@ id: AJCR.w4-rep.datum.dat-d.ddr.divrep.u2
 title: 'Widened window quotient: intrinsic theta restriction and projectivity'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: DONE (pic-d, run 0100 r2). The widened-window theta seam is closed on the
-  existing SwallowedBy producer path with no additional hypothesis. Diagonal theta
-  restrictions agree and off-diagonal overlap theta quotients are subsingleton, so
-  intrinsic Cech descent collapses to the swallowing piece. This yields invertibility
-  over the widened equalizer algebra and finite/projective/rank g structure over R.
-  The dedicated DivisorFamilyAffThetaSwallowedWindow module transports those facts
-  through the cover-independent intrinsicWindowQuotEquiv to the exact divisorWindow
-  quotient consumed by the frame-cover layer, exporting finite_intrinsicWindowQuotient_of_swallowedBy,
-  projective_intrinsicWindowQuotient_of_swallowedBy, and rankAtStalk_intrinsicWindowQuotient_of_swallowedBy.
-  No ChartTyping, GL2, Noetherianity, rational point, Milne degree, or new certificate
-  field is used. The remaining frame/classifier and RepresentableBy composition is
-  downstream work in other rows.
+summary: 'DONE: the widened window quotient and diagonal genus classifier substrate
+  are closed, and the genus RepresentableBy endpoint is landed. The off-diagonal substrate
+  reaches certified chart classes, but classifier-to-representer propagation remains
+  active under parameter-decouple.'
 status: done
 kind: proof
 priority: high
@@ -36,7 +28,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
-  updated_at: '2026-07-31T16:31:48.592587+00:00'
+  updated_at: '2026-08-03T01:31:27.247877+00:00'
   pinned_commits:
   - f22c22140c
   - 5e65181a33

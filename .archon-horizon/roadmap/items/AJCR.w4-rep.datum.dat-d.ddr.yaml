@@ -3,14 +3,11 @@ title: 'DD-R: the relative endgame — Z(♦), local generators via lm:ctn/Nakay
   inherited from the ambient summand, inverse laws, divRep'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'R2 widened the carrier: each certificate uses arbitrary affine-open pieces
-  of the relative curve, not a fixed pair of pinned P1 charts. High-window relations,
-  fibre models, nonreduced quotient flatness, quotient transfer, pointwise RD-N, the
-  unconditional generator, adapted fibre regularity, overlap finite/flat reductions,
-  second-window containment, fibre-rank reduction, and the pulled degree-g identity
-  are complete. The remaining DD-R work is the widened certificate/divRep endpoint,
-  epsilon inverse laws, and datum assembly; the old tube-fibre and chart-typed away-assembly
-  route is superseded or already discharged. Do not build the GL2 action on P1.'
+summary: R2 carrier widening, certification, and diagonal genus representability are
+  landed. The off-diagonal construction currently reaches divFamZarAffUniv_at, but
+  the classifier, separation, naturality, global packaging, and RepresentableBy layers
+  remain diagonal. Parameter-decouple owns that propagation; the Pic0 quotient is
+  tracked downstream.
 status: active
 kind: proof
 priority: normal
@@ -24,5 +21,5 @@ metadata:
   author: horizon
   created_at: '2026-07-16T08:26:37.867341+00:00'
   parent: AJCR.w4-rep.datum.dat-d
-  updated_at: '2026-07-29T03:01:26.620164+00:00'
+  updated_at: '2026-08-03T01:29:53.082025+00:00'
   milestone: AJCR.w4-rep

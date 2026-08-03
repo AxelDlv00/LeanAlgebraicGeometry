@@ -2,64 +2,9 @@ id: AJCR.w4-rep.datum.dat-d.ddr.divrep.sep
 title: 'Class-side separation: the classifying morphism determines the class'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'DONE 2026-07-26 (run 0048 round 2), commits 6250ed716 + e320509e7 + b72270288.
-
-
-  eq_of_isDivRepClassify (Picard/DivRepClassifyZarSep.lean): two locally certified
-  divisor
-
-  classes over an affine test that are classified by the SAME morphism are EQUAL.  With
-  the
-
-  landed isDivRepClassify_unique (the hom side) the characterizing clause is now a
-  bijective
-
-  correspondence on the nose; divRepClassifyZar_injective is the packaged corollary.
-
-
-  WHY THIS MATTERS: it is the first advance on this mountain that is BOTH certificate-free
-
-  AND free of the DDR9-U epsilon-identity U2, which exists in no Lean declaration
-  at any
-
-  level.  Nothing in its cone mentions a universal family.
-
-
-  Route (each carrier of the product of the two classes'' certificate x frame covers):
-  the
-
-  clause fires at each class''s own away carrier; both chart presentations of v push
-  along the
-
-  structure maps to the common refinement, so they present the SAME morphism Spec
-  B -> grPair;
-
-  the W2 CONVERSE (new: map_pairTautFst/Snd_eq_of_specMap_pairChartMap_eq, the pairTaut
-
-  reading of DivCarvePairChart.lean:286/:312, which nobody had stated) turns that
-  into
-
-  equality of the pulled tautological pairs; map_window_frame_toSubmodule reads each
-  side as
-
-  the coordinate image of the restricted epsilon; the coordinates cancel (new:
-
-  submodule_eq_of_map_baseChange_equivFun_eq); divFam_divEq_of_eps_eq_total (DDR-8,
-
-  seam-free, any test ring, only hO/hchi) concludes; DivFamZar.eq_of_away_eq globalizes.
-
-
-  TRAPS AVOIDED, recorded so nobody re-walks them: do NOT use eq_of_divFamEps_eq
-
-  (DivisorFamilyEpsMono.lean:419) -- field-only and gated on the open DD-4 sections
-  dictionary
-
-  Phi; do NOT use divFam_divEq_of_eps_eq (DivSchemeMono.lean:198) -- its hbridge seam
-  is a
-
-  disguised hypothesis whose sketched route is FALSE (I-0231).
-
-  '
+summary: 'DONE: class-side separation is landed and consumed by the diagonal genus
+  classifier. An off-diagonal separation and naturality API is still required for
+  the admissible-parameter producer.'
 status: done
 kind: proof
 priority: normal
@@ -82,7 +27,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
-  updated_at: '2026-07-30T09:01:30.784834+00:00'
+  updated_at: '2026-08-03T01:31:22.690568+00:00'
   pinned_commits:
   - b72270288
   - 6250ed716
