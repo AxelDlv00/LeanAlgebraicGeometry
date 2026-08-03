@@ -6601,3 +6601,5 @@
 {"type": "blueprint.dags", "id": "f62f18000f644a028aa72c9a906ecdd3", "created_at": "2026-08-03T08:01:12.593531+00:00", "actor": "orchestrator", "data": {"projects": {"Algebraic-Jacobian-Challenge": {"nodes": 1964, "edges": 4540}}}}
 {"type": "publish.completed", "id": "25254154b8704285b96d2fd5b9dbe4a9", "created_at": "2026-08-03T08:01:12.598664+00:00", "actor": "orchestrator", "data": {"run_id": "0111", "reports": [], "blueprints": [".archon-horizon/blueprints/Algebraic-Jacobian-Challenge.json"]}}
 {"type": "run.finished", "id": "a587b20e185f4143b247690430ce9808", "created_at": "2026-08-03T08:01:13.730695+00:00", "actor": "orchestrator", "data": {"run_id": "0111"}}
+{"type": "workspace.run_integrated", "id": "dd7a47036b7d45ebbb278e9437b08994", "created_at": "2026-08-03T08:01:30.696012+00:00", "actor": "orchestrator", "data": {"run_id": "0111", "sha": "7d034c71386f1f2b48ffbfc5faa4c11250d9cc42", "changed": true}}
+{"type": "run.started", "id": "cd3b4d0a53b24020910c8e0e8fb6b5fe", "created_at": "2026-08-03T08:36:27.964464+00:00", "actor": "orchestrator", "data": {"run_id": "0118", "rounds": 8, "dry_run": false, "resume": false, "resume_from": null}}
