@@ -27,6 +27,8 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient
   owner: ajcr-abel-quotient
-  updated_at: '2026-08-03T08:09:45.780312+00:00'
+  updated_at: '2026-08-03T09:49:02.828096+00:00'
   pinned_commits:
+  - d3df15eaf8fa18fdf481167ac434e102b21c9a49
+  - f65c7e6c555c7be560f9e7a2a92a271e0ec67c29
   - 7b0a4ca99fa799c5f27a9905aed32e87b490bad5
