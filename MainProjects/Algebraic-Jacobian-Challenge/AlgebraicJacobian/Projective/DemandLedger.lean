@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.QuasiProjectiveFiniteInAffine
+import AlgebraicJacobian.Projective.EffectiveCartierSupport
 import AlgebraicJacobian.Projective.Grassmannian
 
 /-!
@@ -56,6 +57,18 @@ now supplies the absolute certificate by the Plucker embedding. Properness of
 the absolute Grassmannian is combined there with the proved immersion into
 relative projective space; properness alone would not imply the project-local
 definition of H-quasi-projectivity.
+
+## The finite-fibre part of D3'
+
+`Projective/EffectiveCartierSupport.lean` now proves that the schematic support
+of every `DivFamily` on a proper smooth geometrically integral relative curve
+has finite set-theoretic fibres.  It immediately consumes that theorem through
+the existing `DivFamily.locallyQuasiFinite_of_finite_fibers` reduction and
+registers the resulting instance.  The synthesis theorem below checks the exact
+binder used by `DivPushforwardFlat`; it is not a second quasi-finiteness API.
+
+This closes only the finite-fibre geometric input of D3'.  Constructing the
+whole-fibre `ExistsUnique` Grassmannian locus remains open.
 
 ## No current section-Proj demand
 
@@ -146,6 +159,23 @@ theorem pointedPicSharpQuasiProjectivePieces_demand :
     PointedPicSharpQuasiProjectivePieces.{u} := by
   sorry
 
+end Scheme
+
+namespace Scheme
+namespace DivFamily
+
+/-- The finite-fibre producer is visible at the demand ledger and discharges
+the exact locally-quasi-finite binder carried by the divisor pushforward
+theorems.  The remaining D3' demand is the whole-fibre `ExistsUnique` locus. -/
+theorem d3Support_locallyQuasiFinite_of_curve
+    {S X : Scheme.{u}} {π : X ⟶ S} {T : Over S}
+    [SmoothOfRelativeDimension 1 π] [GeometricallyIntegral π] [IsProper π]
+    (x : DivFamily π T) :
+    LocallyQuasiFinite
+      (Modules.schematicSupportι x.F ≫ pullback.snd π T.hom) := by
+  infer_instance
+
+end DivFamily
 end Scheme
 
 namespace Scheme

@@ -226,6 +226,10 @@ import AlgebraicJacobian.Picard.DivSupportQuasiFinite
 -- the support-of-fibre and fibre-of-support carriers of `isFinite_support_of_fibers`.
 -- Rooted so the axiom probe sees it in the cone.
 import AlgebraicJacobian.Picard.SupportBaseChange
+-- The geometric input left by the reduction above: an effective Cartier divisor on a
+-- proper smooth geometrically integral curve has finite fibres. This module consumes
+-- that fact and registers the exact instance required by `DivPushforwardFlat`.
+import AlgebraicJacobian.Projective.EffectiveCartierSupport
 -- Headline leaf B in the etale formulation (run 0084 r2, ajc-p2): leaf B implies the
 -- reducedness obligation, so the headline's five are not independent; plus what leaf
 -- B's own residue is (an affine-chart Omega-rank count, not a tangent space).
