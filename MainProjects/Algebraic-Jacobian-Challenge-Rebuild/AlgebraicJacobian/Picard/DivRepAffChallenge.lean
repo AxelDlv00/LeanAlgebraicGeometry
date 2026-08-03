@@ -121,6 +121,45 @@ noncomputable def divFunctorAff_genus_representableBy :
     (divFunctorAff C (genus C)).RepresentableBy (divRepAffGenusScheme C) :=
   (divFunctorAffGenusRepresenter C).2
 
+/-- A representer for the widened divisor functor at the unconditional Picard coverage
+parameter. The curve genus controls Euler-characteristic normalization independently of the
+larger divisor degree. -/
+noncomputable def divFunctorAffAdmissibleRepresenter :
+    Σ D : Over (Spec (.of k)),
+      (divFunctorAff C (divRepAffAdmissibleParameter C)).RepresentableBy D := by
+  classical
+  letI : C.left.Over (Spec (.of k)) := .ofHom C.hom
+  haveI : SmoothOfRelativeDimension 1 (C.left ↘ Spec (.of k)) :=
+    inferInstanceAs (SmoothOfRelativeDimension 1 C.hom)
+  haveI : IsIntegral C.left := isIntegral_left_of_geometricallyReduced C
+  haveI : LocallyOfFiniteType (C.left ↘ Spec (.of k)) :=
+    inferInstanceAs (LocallyOfFiniteType C.hom)
+  haveI : QuasiCompact (C.left ↘ Spec (.of k)) :=
+    inferInstanceAs (QuasiCompact C.hom)
+  haveI : Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 0) :=
+    moduleFinite_hModule_zero C
+  haveI : Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 1) :=
+    moduleFinite_hModule_one C
+  have hpi : divRepAffP1Map C ≫ P1.structureMap k = C.left ↘ Spec (.of k) :=
+    divRepAffP1Map_comp C
+  exact divFunctorAffRepresenter_at
+    (C := C) (pi := divRepAffP1Map C) (hpi := hpi)
+    (g := divRepAffAdmissibleParameter C) (hO := h0_moduleKSheaf C)
+    (gamma := genus C) (hgamma := genus_le_divRepAffAdmissibleParameter C)
+    (hchiGamma := chi_moduleKSheaf C)
+
+/-- The chosen scheme representing the widened divisor functor at the unconditional Picard
+coverage parameter. -/
+noncomputable def divRepAffAdmissibleScheme : Over (Spec (.of k)) :=
+  (divFunctorAffAdmissibleRepresenter C).1
+
+/-- The widened divisor functor at the unconditional Picard coverage parameter is representable
+without any additional curve, divisor-degree, or rational-point hypothesis. -/
+noncomputable def divFunctorAff_admissible_representableBy :
+    (divFunctorAff C (divRepAffAdmissibleParameter C)).RepresentableBy
+      (divRepAffAdmissibleScheme C) :=
+  (divFunctorAffAdmissibleRepresenter C).2
+
 end Curve
 
 end AlgebraicGeometry
