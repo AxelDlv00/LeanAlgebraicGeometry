@@ -3,17 +3,14 @@ title: 'DD-R divRep: affine classification, Zariski/global representability, and
   export'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'ACTIVE ON ONE PRECISE JOIN. Widened divisor representability is now a real
-  rooted producer: divFunctorAff_representableBy handles every parameter satisfying
-  the matching Euler-characteristic equation, and divFunctorAff_genus_representableBy
-  discharges all ambient choices and hypotheses for the challenge curve at genus C.
-  The universal affine class, classifier clause, surjectivity, degree-zero branch,
-  and full root build are complete. Pic representability is not yet closed because
-  the unconditional Pic0 atlas covers at admissibleCoverageParameter hpi (genus C),
-  strictly larger than genus in positive genus, while the current divisor-family API
-  conflates curve genus with divisor degree. The sole remaining child parameter-decouple
-  owns the required two-parameter refactor and coverage instantiation.'
-status: active
+summary: DONE. The divisor-representability subtree now covers affine classification,
+  Zariski/global descent, independent genus gamma and divisor degree n, diagonal compatibility,
+  and unconditional representers at both genus C and divRepAffAdmissibleParameter
+  C. The admissible producer is exported through abelSigmaChartAffAdmissible with
+  no added hypothesis or assumed witness; kernel axioms are the standard three and
+  the frozen umbrella build is green at 9468/9468. Pic0 quotient/gluing remains downstream
+  of this completed divRep scope.
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -35,8 +32,11 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-08-01T23:06:03.047991+00:00'
+  updated_at: '2026-08-03T05:01:58.491020+00:00'
   pinned_commits:
+  - dda5b519872d7003b232191c1a9f93949a3ca3ce
+  - 6dd6742828f56c8653335ccf04c2716937324ed0
+  - 89d7019f9dd993350589133ae5466d822b8fe7b0
   - 0c7ac000b6e25074a5e30d2589a2815ff3ec7ef7
   - 4ee4ca6e3
   - 91f702164

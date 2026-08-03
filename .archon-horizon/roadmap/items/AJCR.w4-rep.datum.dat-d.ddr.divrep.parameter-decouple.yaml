@@ -2,17 +2,15 @@ id: AJCR.w4-rep.datum.dat-d.ddr.divrep.parameter-decouple
 title: Decouple curve genus from widened divisor degree
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: REAL REMAINING REPRESENTABILITY JOIN. The rooted producer divFunctorAff_genus_representableBy
-  represents divFunctorAff C (genus C). The unconditional Pic0 coverage theorem is
-  indexed instead by admissibleCoverageParameter hpi (genus C), and genus_lt_admissibleCoverageParameter_of_ne_zero
-  proves these parameters differ in positive genus. The current widened divisor-family
-  and universal-window tower uses one Nat simultaneously for the curve Euler-characteristic
-  normalization chi(O_C) = 1 - g and for the divisor-family degree/rank. Generalize
-  that substrate to separate a curve-genus parameter gamma from a divisor-degree parameter
-  n, recover the existing API on the diagonal n = gamma, then instantiate n = admissibleCoverageParameter
-  hpi gamma and feed abelSigmaChartAff. No rational point, IsDivisorDegree genus,
-  new certificate field, or assumed RepresentableBy witness is permitted.
-status: active
+summary: DONE, NO ADDED HYPOTHESES. The classifier, descent, and universal-window
+  tower now separate curve genus gamma from divisor degree n while preserving every
+  diagonal wrapper. divFunctorAff_admissible_representableBy instantiates gamma =
+  genus C and n = divRepAffAdmissibleParameter C under only the ordinary curve assumptions,
+  and abelSigmaChartAffAdmissible consumes it directly. No rational point, IsDivisorDegree,
+  certificate field, assumed RepresentableBy witness, or rep binder was added. Kernel
+  axioms are propext, Classical.choice, Quot.sound; the frozen umbrella build is green
+  at 9468/9468.
+status: done
 kind: refactor
 priority: urgent
 depends_on: []
@@ -35,5 +33,11 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
   milestone: w4-gate
-  updated_at: '2026-08-02T12:10:23.866712+00:00'
-  owner: ajcr-param-decouple
+  updated_at: '2026-08-03T05:01:38.262617+00:00'
+  pinned_commits:
+  - dda5b519872d7003b232191c1a9f93949a3ca3ce
+  - 6dd6742828f56c8653335ccf04c2716937324ed0
+  - 89d7019f9dd993350589133ae5466d822b8fe7b0
+  - 09e9e2eef0b09832766e199557808395a5f22bd7
+  - 6e2613fa2b5dffdc740a7d736e6ab9ecfbeb730d
+  - 088c5cb0c9213084f64d0f4bf083913c85c18486
