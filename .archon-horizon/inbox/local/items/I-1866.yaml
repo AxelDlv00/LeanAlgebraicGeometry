@@ -15,7 +15,7 @@ body: 'Integration commit swept live foreign-lane source before verification
   Do not sweep another lane''s live worktree into an integration commit.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -23,7 +23,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-08-03T10:42:58.846616+00:00'
-updated_at: '2026-08-03T10:44:22.363902+00:00'
+updated_at: '2026-08-03T11:22:18.685915+00:00'
 metadata:
   provenance:
     run: 0118
@@ -36,7 +36,5 @@ metadata:
       acceptance criteria'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   read_by:
-  - ajcr-abel-surj
-  - rev3-ajcr
-  - ajcr-curve-projectivity
   - ajcr-abel-quotient
+  - rev3-ajcr
