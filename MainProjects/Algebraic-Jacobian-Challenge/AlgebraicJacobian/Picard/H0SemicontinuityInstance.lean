@@ -3,6 +3,7 @@ Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
+import AlgebraicJacobian.Picard.CurveFiniteReplacement
 import AlgebraicJacobian.Picard.FiberH0CechKernel
 import AlgebraicJacobian.Picard.RigidPushforwardInstance
 import AlgebraicJacobian.Picard.RigidPushforwardP1Constants
@@ -45,14 +46,8 @@ instance instHasH0SemicontinuityOfCurve
   constructor
   intro A _ _ _ L hL n
   haveI : Adelic.HasFiniteMapToP1 C := inferInstance
-  haveI : IsNoetherianRing A := Algebra.FiniteType.isNoetherianRing k A
-  haveI : IsNoetherianRing Γ(Spec (CommRingCat.of A), ⊤) :=
-    isNoetherianRing_of_ringEquiv A
-      (Scheme.ΓSpecIso (CommRingCat.of A)).commRingCatIsoToRingEquiv.symm
   haveI := hL.isFinitePresentation
   let M := (Modules.pushforward (Adelic.finiteMapToP1BaseChange A C)).obj L
-  haveI hMfp : M.IsFinitePresentation :=
-    Adelic.pushforward_finiteMapToP1BaseChange_isFinitePresentation A C L hL
   haveI hMqc : M.IsQuasicoherent := by
     haveI : IsFinite (Adelic.finiteMapToP1BaseChange A C) :=
       Adelic.isFinite_finiteMapToP1BaseChange A C
@@ -63,25 +58,8 @@ instance instHasH0SemicontinuityOfCurve
   letI := p.baseSectionsModule M U.U₁
   letI := p.baseSectionsModule M U.U₂
   letI := p.baseSectionsModule M (U.U₁ ⊓ U.U₂)
-  have hflat : CoherentSheafFlat p M :=
-    Adelic.pushforward_finiteMapToP1BaseChange_coherentSheafFlat A C L hL
-  haveI hflat₁ : Module.Flat Γ(Spec (CommRingCat.of A), ⊤) Γ(M, U.U₁) :=
-    flat_baseSections_of_coherentSheafFlat p M hflat U.isAffineOpen_U₁
-  haveI hflat₂ : Module.Flat Γ(Spec (CommRingCat.of A), ⊤) Γ(M, U.U₂) :=
-    flat_baseSections_of_coherentSheafFlat p M hflat U.isAffineOpen_U₂
-  haveI hflat₀ : Module.Flat Γ(Spec (CommRingCat.of A), ⊤)
-      (Γ(M, U.U₁) × Γ(M, U.U₂)) :=
-    AlgebraicJacobian.TwoTerm.flat_prod
-  haveI hflatΓ : Module.Flat Γ(Spec (CommRingCat.of A), ⊤) Γ(M, U.U₁ ⊓ U.U₂) :=
-    flat_baseSections_of_coherentSheafFlat p M hflat U.isAffineOpen_inf
-  haveI : IsIntegral (Adelic.p1Over k).left := inferInstance
-  have hH₀ : (LinearMap.ker (U.moduleSectionDiffBase p M)).FG :=
-    Adelic.p1Cech_h0_fg_of_isIntegral A M
-  haveI hH₁ : Module.Finite Γ(Spec (CommRingCat.of A), ⊤)
-      (Γ(M, U.U₁ ⊓ U.U₂) ⧸ LinearMap.range (U.moduleSectionDiffBase p M)) :=
-    Adelic.module_finite_h1_p1BaseChange A M
-  obtain ⟨R⟩ := AlgebraicJacobian.exists_twoTermFiniteReplacement
-    (U.moduleSectionDiffBase p M) hH₀
+  obtain ⟨R⟩ :=
+    Adelic.exists_twoTermFiniteReplacement_finiteMapToP1BaseChange C A L hL
   letI : Module.FinitePresentation Γ(Spec (CommRingCat.of A), ⊤) R.K0 :=
     Module.finitePresentation_of_projective _ _
   have hOpenR := AlgebraicJacobian.TwoTerm.isOpen_finrank_ker_baseChange_le R.n R.k n

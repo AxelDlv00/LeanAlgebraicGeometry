@@ -103,6 +103,58 @@ theorem exists_twoTermFiniteReplacement_finiteMapToP1BaseChange
   exact AlgebraicJacobian.exists_twoTermFiniteReplacement
     (U.moduleSectionDiffBase p M) hH₀
 
+/-- The campaign finite replacement computes the fibre Euler index of the
+finite pushforward on `P^1_A` by a virtual rank.
+
+This is an interface composition of
+`exists_twoTermFiniteReplacement_finiteMapToP1BaseChange` with the existing
+`Scheme.Hom.fiberEulerIndex_eq_virtualRank`; it removes a caller-supplied
+replacement but adds no new Euler or Riemann--Roch comparison.  Comparing this
+index with the Euler index of `L` on `C_A` is a separate finite-pushforward
+cohomology step, and is not asserted here. -/
+theorem exists_fiberEulerIndex_eq_virtualRank_finiteMapToP1BaseChange
+    (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom]
+    (A : Type u) [CommRing A] [Algebra k A] [Algebra.FiniteType k A]
+    (L : (Limits.pullback C.hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).Modules)
+    (hL : LineBundle.IsLocallyTrivial L) (t : Spec (CommRingCat.of A)) :
+    let M := (Modules.pushforward (finiteMapToP1BaseChange A C)).obj L
+    let p := pullback.snd (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))
+    let U := p1BaseChangeCoverSquare (k := k) A
+    letI := p.baseSectionsModule M U.U₁
+    letI := p.baseSectionsModule M U.U₂
+    letI := p.baseSectionsModule M (U.U₁ ⊓ U.U₂)
+    ∃ F : AlgebraicJacobian.TwoTermFiniteReplacement
+        (U.moduleSectionDiffBase p M),
+      let B := Γ(Spec (CommRingCat.of A), ⊤)
+      let ε : B ≃+* CommRingCat.of A :=
+        (Scheme.ΓSpecIso (CommRingCat.of A)).commRingCatIsoToRingEquiv
+      let H : PrimeSpectrum B ≃ₜ PrimeSpectrum (CommRingCat.of A) :=
+        PrimeSpectrum.homeomorphOfRingEquiv ε
+      let s := H.symm t
+      p.fiberEulerIndex t M =
+        (s.asIdeal.fiberRank F.K0 : ℤ) - (F.n : ℤ) := by
+  haveI : HasFiniteMapToP1 C := inferInstance
+  haveI := hL.isFinitePresentation
+  let M := (Modules.pushforward (finiteMapToP1BaseChange A C)).obj L
+  haveI : IsFinite (finiteMapToP1BaseChange A C) :=
+    isFinite_finiteMapToP1BaseChange A C
+  haveI : M.IsQuasicoherent :=
+    Modules.pushforward_isQuasicoherent (finiteMapToP1BaseChange A C) L
+  let p := pullback.snd (p1Over k).hom
+    (Spec.map (CommRingCat.ofHom (algebraMap k A)))
+  let U := p1BaseChangeCoverSquare (k := k) A
+  letI := p.baseSectionsModule M U.U₁
+  letI := p.baseSectionsModule M U.U₂
+  letI := p.baseSectionsModule M (U.U₁ ⊓ U.U₂)
+  obtain ⟨F⟩ :=
+    exists_twoTermFiniteReplacement_finiteMapToP1BaseChange C A L hL
+  refine ⟨F, ?_⟩
+  exact p.fiberEulerIndex_eq_virtualRank U M t F
+
 end Adelic
 
 end
