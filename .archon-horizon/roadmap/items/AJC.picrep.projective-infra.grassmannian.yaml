@@ -1,0 +1,40 @@
+id: AJC.picrep.projective-infra.grassmannian
+title: 'D4'': field Grassmannian H-quasi-projectivity'
+projects:
+- Algebraic-Jacobian-Challenge
+summary: PENDING/speculative at the D3 boundary, not an active producer frontier.
+  Commit 178f6526af proves the standard-axiom conditional transport from a valid-rank
+  absolute Grassmannian H-quasi-projectivity certificate to Scheme.Grassmannian.representingScheme
+  over a field. The exact remaining projective input is the valid-rank Plucker/projective-space
+  certificate for Grassmannian.toSpecZ, still sorryAx. The generic d4Locus wrapper
+  is only comp_isImmersion typing; D3 has not constructed an actual Grassmannian-base
+  locus, map, or quasi-compact immersion. Producer movement +0, seam movement +0.
+status: pending
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-08-03T04:04:47.362100+00:00'
+  provenance:
+    run: '0114'
+    session: 0004-horizon-ajc-proj-infra
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-proj-infra
+    task_title: 'AJC: own and build the projective-morphism infrastructure (Proj /
+      ample / very-ample), demand-first'
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.picrep.projective-infra
+  owner: ajc-proj-infra
+  milestone: AJC.picrep
+  updated_at: '2026-08-03T04:33:18.714222+00:00'
+  pinned_commits:
+  - 178f6526aff4b5133cfc4d7481579a1a805dcfe9
+  - d5675c08bf742df417e90e17805d8c5e56fe7b8b

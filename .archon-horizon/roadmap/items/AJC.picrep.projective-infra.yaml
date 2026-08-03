@@ -2,15 +2,14 @@ id: AJC.picrep.projective-infra
 title: Demand-led projective-morphism infrastructure
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Phase 0 now records only the genuine terminal seam demand: PointedPicSharpQuasiProjectivePieces
-  packages the representation witness, and its two H-taking adapters are conditional
-  typechecks with producer movement +0, seam movement +0, strict witness-binder movement
-  +0. Fresh API and consumer audits plus boundary I-1827 show that absolute section-Proj,
-  relative Proj, and ampleness have no current consumer. Their predecessors are an
-  intrinsic degree carrier, an actual component representation, and a Picard-piece
-  line bundle. Existing IsHQuasiProjective, carried O(1), FiniteInAffine aggregation,
-  Over-coproduct assembly, and CurveProjectivity remain authoritative; no duplicate
-  vocabulary is authorized.'
+summary: Demand-led ownership with no producer or seam movement yet. PointedPicSharpQuasiProjectivePieces
+  is a deliberately stronger sufficient producer, not the minimal HasGoodGaloisLevel/seamClauseOne
+  price. Commit 178f6526af proves a genuine conditional reduction from absolute Grassmannian
+  H-quasi-projectivity to the chosen field representer, but the absolute Plucker certificate
+  remains sorryAx and the generic D4 immersion wrapper is not an actual D3 map. Relative/section
+  Proj and ampleness remain pending with no consumer. Existing IsHQuasiProjective,
+  carried O(1), FiniteInAffine aggregation, Over-coproduct assembly, and CurveProjectivity
+  remain authoritative; no duplicate vocabulary is authorized.
 status: active
 kind: workspace
 priority: high
@@ -36,7 +35,9 @@ metadata:
   parent: AJC.picrep
   owner: ajc-proj-infra
   milestone: AJC.picrep
-  updated_at: '2026-08-03T03:44:34.483581+00:00'
+  updated_at: '2026-08-03T04:31:51.353180+00:00'
   pinned_commits:
+  - 178f6526aff4b5133cfc4d7481579a1a805dcfe9
+  - d5675c08bf742df417e90e17805d8c5e56fe7b8b
   - c7bcebbed219ee90c1b4794f63016f5643f9e9d2
   - 1b7d1ff7b6ccc4e48622a3ee4191be1b89612e26
