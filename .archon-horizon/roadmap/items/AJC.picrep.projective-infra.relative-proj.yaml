@@ -1,12 +1,14 @@
 id: AJC.picrep.projective-infra.relative-proj
-title: Section-Proj carrier demanded by Picard pieces
+title: Relative Proj only after a concrete Picard component
 projects:
 - Algebraic-Jacobian-Challenge
-summary: PENDING, demand-limited and currently disconnected from H. The exact conditional
-  gaps are sectionGradedRing_gcommRing_demand and sectionGradedRing_gradedRing_demand,
-  needed before mathlib Proj can consume the existing section direct sum. Discharging
-  them alone would not produce a Picard piece or move the seam. Do not build general
-  sheaf-relative-Proj gluing without a concrete consumer.
+summary: PENDING with no current Lean demand. Kernel probing confirms that the two
+  former absolute section-Proj structure assemblies are elementary, but no source
+  imports the ledger, calls Proj.fromOfGlobalSections, provides picSharpDeg, represents
+  a component, or supplies a Picard-piece line bundle. They were removed from the
+  seam ledger rather than counted as infrastructure progress. Activate this row only
+  after intrinsic degree plus a real component representation exposes an exact Proj
+  signature; do not build general sheaf-relative-Proj gluing.
 status: pending
 kind: proof
 priority: normal
@@ -32,4 +34,4 @@ metadata:
   parent: AJC.picrep.projective-infra
   owner: ajc-proj-infra
   milestone: AJC.picrep
-  updated_at: '2026-08-03T03:05:22.465432+00:00'
+  updated_at: '2026-08-03T03:44:59.892973+00:00'

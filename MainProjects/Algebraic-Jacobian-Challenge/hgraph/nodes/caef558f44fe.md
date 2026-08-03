@@ -28,7 +28,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.appLE_fromSpecResidueField_apply
 type: lean
-updated: '2026-07-27T19:08:27'
+updated: '2026-08-03T11:10:51'
 ---
 theorem appLE_fromSpecResidueField_apply (R : CommRingCat.{u}) (t : Spec R)
     (x : Γ(Spec R, ⊤)) :
@@ -55,14 +55,12 @@ theorem appLE_fromSpecResidueField_apply (R : CommRingCat.{u}) (t : Spec R)
   simp only [CommRingCat.hom_comp, RingHom.comp_apply, CommRingCat.hom_ofHom]
   rfl
 
-/-! ## §3 (Brick C). The fibre-chart Čech square, concluded on kernels -/
+/-! ## §3 (Brick C). The fibre-chart Cech complex comparison -/
 
 section BrickC
 
 variable {X Y : Scheme.{u}}
 
 set_option maxHeartbeats 1600000 in
--- Heartbeat headroom: the statement carries six `letI` module structures, so
--- matching the three chart comparisons against the Čech square forces large
--- `isDefEq` checks.  Measured: this is the only declaration in the file that
--- exceeds the default budget (`synthInstance.maxHeartbeats` is never hit).
+-- The six local module structures and three chart comparisons make the final
+-- commuting-square elaboration exceed the default heartbeat budget.

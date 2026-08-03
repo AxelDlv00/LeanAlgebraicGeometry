@@ -2,12 +2,13 @@ id: AJC.picrep.projective-infra.ledger
 title: Elaborated projective-infrastructure demand ledger
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'DONE only as phase-0 bookkeeping. DemandLedger.lean elaborates one open
-  Picard-piece producer statement plus two conditional H-taking adapters. H packages
-  the representation witness, so this is not a sorry-free producer or a seam reduction:
-  producer movement +0, seam movement +0, strict witness-binder movement +0. Three
-  intentional sorryAx declarations remain. Verified build and axioms at c7bcebbed2;
-  reviewer correction I-1826.'
+summary: 'DONE only as corrected phase-0 bookkeeping. DemandLedger.lean elaborates
+  the terminal PointedPicSharpQuasiProjectivePieces producer and its two conditional
+  seam adapters. H packages the representation witness, so producer movement +0, seam
+  movement +0, strict witness-binder movement +0. Consumer/API audit removed two speculative
+  absolute section-Proj placeholders: they were provable but had no call site and
+  were not seam demands. One intentional sorryAx declaration remains, at the genuine
+  terminal producer. Boundary I-1827.'
 status: done
 kind: report
 priority: high
@@ -33,7 +34,8 @@ metadata:
   parent: AJC.picrep.projective-infra
   owner: ajc-proj-infra
   milestone: AJC.picrep
-  updated_at: '2026-08-03T03:05:19.060698+00:00'
+  updated_at: '2026-08-03T03:55:28.406713+00:00'
   pinned_commits:
+  - 5bed069cc6e6f9b03b6061fc55d41c55accbfadd
   - c7bcebbed219ee90c1b4794f63016f5643f9e9d2
   - 1b7d1ff7b6ccc4e48622a3ee4191be1b89612e26

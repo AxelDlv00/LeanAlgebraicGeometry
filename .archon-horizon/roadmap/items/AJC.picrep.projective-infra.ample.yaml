@@ -2,10 +2,12 @@ id: AJC.picrep.projective-infra.ample
 title: Ampleness only at an elaborated Picard consumer
 projects:
 - Algebraic-Jacobian-Challenge
-summary: PENDING behind the demand gate. The current seam asks only for H-quasi-projective
-  pieces and FiniteInAffine; no honest ampleness or nonvanishing-locus consumer elaborates
-  yet. Do not define ample as merely some power being very ample, which would turn
-  the requested characterization into a re-spelling.
+summary: PENDING behind the same concrete-consumer gate. PointedPicSharpRep asks for
+  H-quasi-projective pieces and FiniteInAffine, not an ample predicate. The live degree
+  route has no represented component or Picard-piece line bundle yet. Activate only
+  when such a component exposes a nonvanishing-locus or twist theorem with an exact
+  Lean signature; do not define ample tautologically as existence of a very-ample
+  power or duplicate IsHQuasiProjectiveWith.
 status: pending
 kind: proof
 priority: normal
@@ -31,3 +33,4 @@ metadata:
   parent: AJC.picrep.projective-infra
   owner: ajc-proj-infra
   milestone: AJC.picrep
+  updated_at: '2026-08-03T03:45:35.661710+00:00'
