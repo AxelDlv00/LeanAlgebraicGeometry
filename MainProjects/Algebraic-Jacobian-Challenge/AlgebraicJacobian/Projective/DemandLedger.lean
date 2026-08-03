@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.QuasiProjectiveFiniteInAffine
+import AlgebraicJacobian.Picard.GrassmannianRepresentability
 
 /-!
 # Demand ledger for projective-morphism infrastructure
@@ -11,7 +12,7 @@ import AlgebraicJacobian.Picard.QuasiProjectiveFiniteInAffine
 This file records the projective infrastructure demanded by the Picard
 representability seam.  It is a ledger, not a second projectivity API.
 
-## The seam-facing demand
+## A seam-facing sufficient producer
 
 `Scheme.PointedPicSharpRep` asks for a representing scheme that is locally of
 finite type and satisfies `Scheme.FiniteInAffine`.  It does not ask for a line
@@ -28,13 +29,31 @@ from a coproduct of H-quasi-projective pieces:
   `IsHQuasiProjectiveWith` is already the required very-ample output; defining
   an alias named `IsVeryAmple` would only re-spell it.
 
-The open terminal producer demand is therefore
+A strong sufficient producer is recorded as
 `pointedPicSharpQuasiProjectivePieces_demand`: if proved, it would construct the
-representing coproduct and prove H-quasi-projectivity piecewise.  The two proved
-adapters below are only typing and consumption checks.  They both assume `H`,
-whose closed proposition packages the representation witness; they produce no
-representation and do not reduce the current seam debt.  Their signatures add
-no explicit `RepresentableBy` argument.
+representing coproduct and prove H-quasi-projectivity piecewise.  It is not the
+minimal seam price: `HasGoodGaloisLevel` and `seamClauseOne` expose a weaker
+single-finite-Galois-level route.  The two proved adapters below are only typing
+and consumption checks.  They both assume `H`, whose closed proposition
+packages the representation witness; they produce no representation and do not
+reduce the current seam debt.  Their signatures add no explicit
+`RepresentableBy` argument.
+
+## The D4' Grassmannian demand
+
+The committed divisor route has one narrower projective consumer before the
+Picard-piece producer exists.  D3' must carve a scheme `Z` with a quasi-compact
+immersion into the chosen scheme representing a Grassmannian over a field.  D4'
+then needs `Z` to be H-quasi-projective so that its finite point sets lie in
+affine opens.  The existing `IsHQuasiProjective.comp_isImmersion` performs the
+last step; the missing ambient input is exactly
+`Grassmannian.representingScheme_isHQuasiProjective_of_field_demand` below.
+
+This target is deliberately field-specialised.  It must derive global freeness
+on `Spec K`, transport the chosen representer to the absolute Grassmannian, and
+supply its projective-space certificate.  Properness of the absolute
+Grassmannian is already available, but properness alone does not imply the
+project-local definition of H-quasi-projectivity.
 
 ## No current section-Proj demand
 
@@ -72,7 +91,7 @@ universe u
 namespace AlgebraicGeometry
 namespace Scheme
 
-/-- The exact projective presentation that the pointed Picard reduction can
+/-- A sufficient projective presentation that the pointed Picard reduction can
 consume at every universe: `picSharp` is represented by a coproduct of
 H-quasi-projective schemes over the ground field.
 
@@ -118,12 +137,46 @@ theorem fgaPicardRepresentability_of_quasiProjectivePieces
   fgaPicardRepresentability_of_pointedPicSharpRep C
     (pointedPicSharpRep_of_quasiProjectivePieces H)
 
-/-- **Open terminal demand.** Construct the pointed Picard representer as a
-coproduct of H-quasi-projective pieces.  This is the only sorry in the
-seam-facing part of the demand ledger. -/
+/-- **Open sufficient producer.** Construct the pointed Picard representer as a
+coproduct of H-quasi-projective pieces.  This is deliberately stronger than the
+single-finite-Galois-level price of seam clause one. -/
 theorem pointedPicSharpQuasiProjectivePieces_demand :
     PointedPicSharpQuasiProjectivePieces.{u} := by
   sorry
 
+namespace Grassmannian
+
+/-- **Open D4' ambient demand.** Over a field, the chosen scheme representing a
+Grassmannian of locally free quotients is H-quasi-projective over that field.
+
+This is the projective-space certificate that D4' can consume after D3' supplies
+its locally closed locus in the Grassmannian base. -/
+theorem representingScheme_isHQuasiProjective_of_field_demand
+    {K : Type} [Field K]
+    {V : (Spec (CommRingCat.of K)).Modules} {r d : ℕ}
+    (hV : SheafOfModules.IsLocallyFreeOfRank V r)
+    (hd : 1 ≤ d) (hdr : d ≤ r) :
+    (representingScheme hV hd hdr).hom.IsHQuasiProjective := by
+  sorry
+
+/-- A quasi-compact D3' immersion into an H-quasi-projective Grassmannian gives
+the exact H-quasi-projectivity certificate carried by D4'.
+
+This is a typing check for the demand above, not a construction of the missing
+D3' locus or of the ambient Grassmannian certificate. -/
+theorem d4Locus_isHQuasiProjective_over
+    {S : Scheme.{0}} [IsLocallyNoetherian S]
+    {V : S.Modules} {r d : ℕ}
+    (hV : SheafOfModules.IsLocallyFreeOfRank V r)
+    (hd : 1 ≤ d) (hdr : d ≤ r)
+    (Z : Over S)
+    (j : Z ⟶ representingScheme hV hd hdr)
+    [IsImmersion j.left] [QuasiCompact j.left]
+    (hGr : (representingScheme hV hd hdr).hom.IsHQuasiProjective) :
+    Z.hom.IsHQuasiProjective := by
+  rw [← j.w]
+  exact hGr.comp_isImmersion j.left
+
+end Grassmannian
 end Scheme
 end AlgebraicGeometry
