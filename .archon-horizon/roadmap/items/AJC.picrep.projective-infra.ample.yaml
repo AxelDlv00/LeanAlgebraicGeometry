@@ -31,6 +31,5 @@ metadata:
       ample / very-ample), demand-first'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.projective-infra
-  owner: ajc-proj-infra
   milestone: AJC.picrep
-  updated_at: '2026-08-03T03:45:35.661710+00:00'
+  updated_at: '2026-08-03T15:37:32.143428+00:00'

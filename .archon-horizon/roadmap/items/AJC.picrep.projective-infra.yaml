@@ -11,7 +11,28 @@ summary: 'PENDING at concrete Picard-component gates, with the owned projective 
   still owes the whole-fibre ExistsUnique locus, and D2 still owes rank/evaluation/naturality.
   Relative Proj and ampleness remain intentionally absent until a represented Picard
   component exposes exact signatures. No duplicate Proj, ample, very-ample, or generic
-  quasi-finiteness vocabulary is authorized.'
+  quasi-finiteness vocabulary is authorized.
+
+
+  --- RETAINED PRIOR SUMMARY (verbatim) ---
+
+  The prior summary below is retained verbatim because it records the exact D3/D4
+  activation boundary. Its opening status is superseded only by the finite-fibre D3
+  advance in dd26508b7485 and cb15d595e91d; its demand gates and vocabulary constraints
+  stay live.
+
+
+  PENDING at external Picard producer gates, with the owned projective API frozen
+  and verified. The demanded Grassmannian program is complete: Plucker immersion,
+  projectivity/H-quasi-projectivity over Spec Z, and field-representer transport are
+  proved and consumed by the generic D4 composition adapter. IsHQuasiProjectiveWith
+  remains the sole carried-O(1) very-ample vocabulary. Reactivate only when D3 supplies
+  an actual whole-fibre base locus Z and a quasi-compact immersion Z -> representingScheme,
+  or when a represented Picard component exposes an exact relative-Proj/ample signature.
+  Current D2 evaluation/rank/naturality and D3 locus construction are Picard-side
+  producer work; pointedPicSharpQuasiProjectivePieces_demand still packages that missing
+  representation and is not projective infrastructure. No duplicate Proj, ample, or
+  very-ample declarations are authorized.'
 status: pending
 kind: workspace
 priority: high
@@ -35,9 +56,8 @@ metadata:
       ample / very-ample), demand-first'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  owner: ajc-proj-infra
   milestone: AJC.picrep
-  updated_at: '2026-08-03T15:17:51.846002+00:00'
+  updated_at: '2026-08-03T15:37:28.180544+00:00'
   pinned_commits:
   - f34a2841b0169d4e989263a4f77551778e5ff883
   - cb15d595e91dbc239e94329f56f994228937d04c
