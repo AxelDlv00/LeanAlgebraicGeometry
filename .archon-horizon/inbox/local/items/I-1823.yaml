@@ -35,3 +35,5 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   read_by:
   - rev2-ajc
+  - ajc-kleiman-rewire
+  - ajc-proj-infra
