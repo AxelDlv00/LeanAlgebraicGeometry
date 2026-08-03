@@ -9,7 +9,7 @@ body: 'CLAIM ajcr-abel-quotient: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quo
   from ajcr-abel-surj.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -17,7 +17,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-08-03T07:15:44.407499+00:00'
-updated_at: '2026-08-03T10:41:26.204484+00:00'
+updated_at: '2026-08-03T17:55:55.613221+00:00'
 metadata:
   provenance:
     run: '0115'
