@@ -1,0 +1,31 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.etale-sheaf.degree-zero-descent.etale-lift
+title: Reflect degree zero through etale point lifts
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: For a singleton faithfully flat etale cover, lift each field-valued point
+  after a field extension and use degAt_overSpecMap_eq_zero_iff to reflect degree
+  zero to the original point. This remains pending and depends on the raw picEt cover
+  comparison.
+status: pending
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-08-03T17:45:51.740106+00:00'
+  provenance:
+    run: '0115'
+    session: 0006-horizon-ajcr-abel-quotient
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-abel-quotient
+    task_title: 'Own the Altman-Kleiman quotient: pic0AdmissibleAbelQuotientRepresenter'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.etale-sheaf.degree-zero-descent
+  owner: ajcr-abel-quotient
