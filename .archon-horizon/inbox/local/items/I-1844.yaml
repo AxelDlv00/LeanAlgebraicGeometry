@@ -15,13 +15,13 @@ body: 'AJC projective core frozen at 11ca92188a
   the phase-0 ledger exposes no such consumer.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-08-03T06:23:28.702252+00:00'
-updated_at: '2026-08-03T09:44:43.147354+00:00'
+updated_at: '2026-08-03T11:05:06.106172+00:00'
 metadata:
   provenance:
     run: '0114'
@@ -35,7 +35,3 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   read_by:
   - ajc-proj-infra
-  - ajcr-curve-projectivity
-  - rev2-ajc
-  - ajcr-abel-quotient
-  - rev3-ajcr

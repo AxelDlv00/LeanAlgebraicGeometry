@@ -73,9 +73,9 @@ theorem component_tmul_one_mem_nonZeroDivisors
     rw [LinearMap.mulLeft_apply, LinearMap.mulLeft_apply, mul_zero, mul_comm]
     exact hz
 
+omit [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] in
 /-- A fibrewise-regular component remains a nonzerodivisor after arbitrary coefficient
 extension, read through the section ring of its affine open. -/
-omit [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] in
 theorem component_relAffSectionsMap_mem_nonZeroDivisors
     (hfib : ∀ (j : D.index) (p : PrimeSpectrum B), Function.Injective
       ((Scheme.mulSectionEnd B (D.component s j)).rTensor p.asIdeal.ResidueField))
@@ -118,6 +118,7 @@ theorem pullbackEqn_sectionLocalEquationsOfFibrewiseRegular
     BasicOpenCocycleDatum.sectionLocalEquations,
     relAffSectionsMap, Scheme.resHom]
 
+omit [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] in
 /-- The intrinsic local-equation system cut by a fibrewise-regular section has regular
 own-member equations after every field-valued coefficient extension. -/
 theorem germ_self_pullbackEqn_sectionLocalEquationsOfFibrewiseRegular
@@ -183,6 +184,7 @@ noncomputable local instance instFiniteH1RelCurveEffectivity
   instModuleFiniteHModuleOneBaseChange C L
 
 set_option maxHeartbeats 8000000 in
+-- The certified-adaptation assembly elaborates dependent pulled equations at two field levels.
 set_option synthInstance.maxHeartbeats 800000 in
 /-- A fibrewise-regular local-equation system of constant fibre class degree `n` has an
 away-local widened certificate at every prime of its Noetherian base. -/
@@ -214,6 +216,8 @@ theorem exists_away_certifiedAff_of_fibrewiseRegular_of_classDeg
   obtain ⟨r, hr, Dr, A, hsw⟩ :=
     Scheme.LocalEquations.exists_away_affAdaptation_swallowedBy_of_finite_fibre
       C R pi d p hfinite
+  letI : IsOpenImmersion (relCurveMap C R (Localization.Away r)) :=
+    isOpenImmersion_relCurveMap_away C R (Localization.Away r) r
   refine ⟨r, hr, Dr, A, ?_⟩
   obtain ⟨j0, hsub, hmiss⟩ := hsw
   have hfin : ∀ j, Module.Finite (Localization.Away r) (A.colength j) :=
@@ -237,7 +241,7 @@ theorem exists_away_certifiedAff_of_fibrewiseRegular_of_classDeg
         rw [← classDeg_picClass,
           Scheme.CurveDivisor.picClass_presentationDivisor,
           Scheme.LocalEquations.presentation_picClass,
-          A.picClass_pulledEquations,
+          A.picClass_pulledEquations q.asIdeal.ResidueField hproj,
           Scheme.LocalEquations.picClass_pullback,
           ← MonoidHom.comp_apply, ← Scheme.CechPic.map_comp,
           relCurveMap_comp (R' := Localization.Away r)
@@ -245,6 +249,7 @@ theorem exists_away_certifiedAff_of_fibrewiseRegular_of_classDeg
         exact hdeg q.asIdeal.ResidueField)
 
 set_option maxHeartbeats 8000000 in
+-- The definition elaborates the full dependent certificate family produced above.
 set_option synthInstance.maxHeartbeats 800000 in
 /-- The widened divisor class represented by a fibrewise-regular, constant-degree intrinsic
 local-equation system. -/
@@ -262,7 +267,7 @@ noncomputable def divFamZarAffOfFibrewiseRegularLocalEquations
       classDeg L (Scheme.CechPic.map (relCurveMap C R L) d.picClass) = (n : ℤ)) :
     DivFamZarAff C R n :=
   divFamZarAff_of_forall_prime_certified_adaptation
-    (exists_away_certifiedAff_of_fibrewiseRegular_of_classDeg C pi n d hreg hdeg)
+    (exists_away_certifiedAff_of_fibrewiseRegular_of_classDeg C n d pi hreg hdeg)
 
 @[simp]
 theorem picClass_divFamZarAffOfFibrewiseRegularLocalEquations
@@ -278,7 +283,7 @@ theorem picClass_divFamZarAffOfFibrewiseRegularLocalEquations
       [IsScalarTower k R L],
       classDeg L (Scheme.CechPic.map (relCurveMap C R L) d.picClass) = (n : ℤ)) :
     DivFamZarAff.picClass
-      (divFamZarAffOfFibrewiseRegularLocalEquations C pi n d hreg hdeg) = d.picClass :=
+      (divFamZarAffOfFibrewiseRegularLocalEquations C n d pi hreg hdeg) = d.picClass :=
   rfl
 
 end WidenedEffectivity

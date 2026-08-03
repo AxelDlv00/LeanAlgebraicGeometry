@@ -2,16 +2,18 @@ id: AJC.picrep.projective-infra
 title: Demand-led projective-morphism infrastructure
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'ACTIVE only at the remaining pointed-Picard producer boundary. The demanded
-  Grassmannian program is now complete: commits 0c8cd28814 through 11ca92188a construct
-  the Plucker morphism, local/global immersion, relative projective lift, projectivity,
-  and H-quasi-projectivity over Spec Z; Projective/Grassmannian.lean consumes it for
-  the chosen field representer. The ledger retains one intentional sorryAx producer,
-  PointedPicSharpQuasiProjectivePieces, whose missing representation data is not projective-morphism
-  infrastructure. Relative Proj and ampleness remain consumer-gated; IsHQuasiProjectiveWith
-  remains the authoritative very-ample vocabulary. Geometric projective producer +1;
-  strict PicEt producer and seam movement +0.'
-status: active
+summary: 'PENDING at external Picard producer gates, with the owned projective API
+  frozen and verified. The demanded Grassmannian program is complete: Plucker immersion,
+  projectivity/H-quasi-projectivity over Spec Z, and field-representer transport are
+  proved and consumed by the generic D4 composition adapter. IsHQuasiProjectiveWith
+  remains the sole carried-O(1) very-ample vocabulary. Reactivate only when D3 supplies
+  an actual whole-fibre base locus Z and a quasi-compact immersion Z -> representingScheme,
+  or when a represented Picard component exposes an exact relative-Proj/ample signature.
+  Current D2 evaluation/rank/naturality and D3 locus construction are Picard-side
+  producer work; pointedPicSharpQuasiProjectivePieces_demand still packages that missing
+  representation and is not projective infrastructure. No duplicate Proj, ample, or
+  very-ample declarations are authorized.'
+status: pending
 kind: workspace
 priority: high
 depends_on: []
@@ -36,7 +38,7 @@ metadata:
   parent: AJC.picrep
   owner: ajc-proj-infra
   milestone: AJC.picrep
-  updated_at: '2026-08-03T08:48:47.733595+00:00'
+  updated_at: '2026-08-03T11:03:11.837573+00:00'
   pinned_commits:
   - 0f28a9e8e5
   - 650b9f291c30d87948001a1bab2bdb261f826219

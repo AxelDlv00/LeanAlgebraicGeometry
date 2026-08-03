@@ -3,15 +3,23 @@
   "round": 0,
   "project": "Algebraic-Jacobian-Challenge-Rebuild",
   "task_id": "ajcr-curve-projectivity",
-  "status": "running",
-  "started_at": "2026-08-03T07:08:30.808555+00:00",
   "projects": [
     "Algebraic-Jacobian-Challenge-Rebuild"
   ],
+  "status": "done",
+  "started_at": "2026-08-03T07:08:30.808555+00:00",
+  "ended_at": "2026-08-03T11:05:46.502562+00:00",
   "harness_name": "codex",
   "harness_kind": "codex",
   "model": "gpt-5.6-sol",
   "effort": "ultra",
+  "config_dir": null,
   "auth": "subscription",
-  "workspace_sha": "dd9317a52773abd2cac8e22d63a619c65505fea6"
+  "usage": {
+    "tokens_in": 71920671,
+    "tokens_out": 111777,
+    "cost_usd": null
+  },
+  "engine_session_id": "019fc673-e5a3-7b50-9818-d9e648c85816",
+  "workspace_sha": "8d3f8eb732fcde724ae2a0836978ed83f9e043f3"
 }
