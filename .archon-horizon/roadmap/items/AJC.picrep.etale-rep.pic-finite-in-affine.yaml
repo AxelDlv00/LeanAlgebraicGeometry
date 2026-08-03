@@ -43,7 +43,7 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.etale-rep
   milestone: AJC.picrep
-  updated_at: '2026-08-03T07:39:20.236273+00:00'
+  updated_at: '2026-08-03T07:53:23.785661+00:00'
   pinned_commits:
   - 24b82fecb1da5811c5c616634d2e3567c8b8771c
   - 9ea06d04ffad609a7603226edc8553ac6378e4b6
@@ -70,4 +70,3 @@ metadata:
   - 9c60b3764397a9549e48dddb56e734b2951e96bb
   - bdff30e2aa
   - d42d44fc286218ab24e1a098202bd208e204b523
-  owner: ajc-kleiman-rewire
