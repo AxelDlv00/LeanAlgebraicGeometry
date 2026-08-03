@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.QuasiProjectiveFiniteInAffine
-import AlgebraicJacobian.Picard.GrassmannianRepresentability
+import AlgebraicJacobian.Projective.Grassmannian
 
 /-!
 # Demand ledger for projective-morphism infrastructure
@@ -46,14 +46,15 @@ Picard-piece producer exists.  D3' must carve a scheme `Z` with a quasi-compact
 immersion into the chosen scheme representing a Grassmannian over a field.  D4'
 then needs `Z` to be H-quasi-projective so that its finite point sets lie in
 affine opens.  The existing `IsHQuasiProjective.comp_isImmersion` performs the
-last step; the missing ambient input is exactly
-`Grassmannian.representingScheme_isHQuasiProjective_of_field_demand` below.
+last step.  The field representer now reduces to the exact remaining ambient
+input `AlgebraicGeometry.Grassmannian.isHQuasiProjective_toSpecZ_demand` below.
 
-This target is deliberately field-specialised.  It must derive global freeness
-on `Spec K`, transport the chosen representer to the absolute Grassmannian, and
-supply its projective-space certificate.  Properness of the absolute
-Grassmannian is already available, but properness alone does not imply the
-project-local definition of H-quasi-projectivity.
+`Projective/Grassmannian.lean` proves the field-specialised transport: it derives
+global freeness on `Spec K`, base-changes the absolute Grassmannian, and uses
+uniqueness of representing objects.  What remains is precisely the absolute
+projective-space certificate.  Properness of the absolute Grassmannian is
+already available, but properness alone does not imply the project-local
+definition of H-quasi-projectivity.
 
 ## No current section-Proj demand
 
@@ -144,6 +145,23 @@ theorem pointedPicSharpQuasiProjectivePieces_demand :
     PointedPicSharpQuasiProjectivePieces.{u} := by
   sorry
 
+end Scheme
+
+namespace Grassmannian
+
+/-- **Open D4' core producer.** The absolute Grassmannian is
+H-quasi-projective over `Spec Z`.
+
+This is the exact Plucker/projective-space certificate absent from the current
+Grassmannian construction.  Its existing properness theorem is not enough. -/
+theorem isHQuasiProjective_toSpecZ_demand (d r : ℕ)
+    (_hd : 1 ≤ d) (_hdr : d ≤ r) :
+    (toSpecZ d r).IsHQuasiProjective := by
+  sorry
+
+end Grassmannian
+
+namespace Scheme
 namespace Grassmannian
 
 /-- **Open D4' ambient demand.** Over a field, the chosen scheme representing a
@@ -157,7 +175,8 @@ theorem representingScheme_isHQuasiProjective_of_field_demand
     (hV : SheafOfModules.IsLocallyFreeOfRank V r)
     (hd : 1 ≤ d) (hdr : d ≤ r) :
     (representingScheme hV hd hdr).hom.IsHQuasiProjective := by
-  sorry
+  exact representingScheme_isHQuasiProjective_of_field_of_absolute hV hd hdr
+    (AlgebraicGeometry.Grassmannian.isHQuasiProjective_toSpecZ_demand d r hd hdr)
 
 /-- A quasi-compact D3' immersion into an H-quasi-projective Grassmannian gives
 the exact H-quasi-projectivity certificate carried by D4'.
