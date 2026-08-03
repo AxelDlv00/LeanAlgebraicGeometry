@@ -120,6 +120,9 @@ import AlgebraicJacobian.Picard.TwoTermKernelSemicontinuity
 import AlgebraicJacobian.Picard.FiberH0Comparison
 import AlgebraicJacobian.Picard.FiberH0CechKernel
 import AlgebraicJacobian.Picard.H0SemicontinuityInstance
+-- The degree-at-most-one analogue: identify the intrinsic scheme-fibre Euler index with
+-- the base-changed family Cech complex and consume a finite two-term replacement.
+import AlgebraicJacobian.Picard.SchemeEulerIndex
 -- Milne §I.1 Cor 1.2 and 1.4 over an ARBITRARY base field: the two geometric inputs the
 -- (already field-agnostic) Albanese engine consumes, with the `IsAlgClosed` binder removed.
 import AlgebraicJacobian.Albanese.AVRigidityArbitraryField
