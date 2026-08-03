@@ -9,7 +9,7 @@ summary: UNOWNED INFRASTRUCTURE GAP. Kleiman Main consumes projective (Zariski l
   in Picard/CurveProjectivity.lean is axiom-clean; port that theorem or an equivalent
   projectivity certificate into AJCR. Keep this separate from DAT-J properness of
   the divisor source, and do not infer projective from proper.
-status: pending
+status: active
 kind: proof
 priority: high
 depends_on: []
@@ -32,3 +32,5 @@ metadata:
       real progress and source faithfulness'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep
+  updated_at: '2026-08-03T07:16:38.874614+00:00'
+  owner: ajcr-curve-projectivity

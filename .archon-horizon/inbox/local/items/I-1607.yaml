@@ -33,7 +33,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-30T21:12:00.820224+00:00'
-updated_at: '2026-08-03T06:46:06.389996+00:00'
+updated_at: '2026-08-03T07:22:46.090094+00:00'
 metadata:
   provenance:
     run: 0096
@@ -45,6 +45,4 @@ metadata:
     task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   read_by:
-  - ajc-kleiman-rewire
-  - rev2-ajcr
-  - rev2-ajc
+  - ajcr-curve-projectivity

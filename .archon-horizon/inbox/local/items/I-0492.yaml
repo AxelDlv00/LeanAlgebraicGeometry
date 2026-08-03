@@ -42,7 +42,7 @@ audience: horizon
 author: human
 source_ref: null
 created_at: '2026-07-28T03:00:42.305631+00:00'
-updated_at: '2026-08-02T13:37:58.674916+00:00'
+updated_at: '2026-08-03T07:21:45.057341+00:00'
 metadata:
   read_by:
   - ajcr-cert-r2
@@ -64,3 +64,6 @@ metadata:
   - ajcr-fiberdeg-vanish
   - ajcr-pic0-join
   - rev2-ajcr
+  - ajcr-abel-surj
+  - ajcr-abel-quotient
+  - ajcr-curve-projectivity

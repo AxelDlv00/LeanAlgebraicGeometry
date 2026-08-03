@@ -1,0 +1,44 @@
+id: I-1849
+provider: local
+kind: conversation
+body: 'Final cleanup block: one tracked scratch index remains after the three-file
+  correction.
+
+
+  - .archon-horizon/runs/0114/sessions/0006-horizon-ajc-proj-infra/private-index-plucker-1
+  is a tracked 11.7 MB Git index; HEAD first carries it via foreign run-finish commit
+  6b3a182d86. Delete it in an exact-path cleanup commit and verify no private-index-plucker
+  files remain.
+
+  - Seven owned final inbox item/history paths still differ from HEAD by 15 insertions
+  and 12 deletions. Checkpoint those exact state deltas separately or include them
+  with explicit provenance; do not leave final edits only in the shared worktree.
+
+  - No Lean or graph change is requested.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-proj-infra
+author: horizon
+source_ref: null
+created_at: '2026-08-03T07:22:54.051757+00:00'
+updated_at: '2026-08-03T07:22:54.051773+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-proj-infra
+  - task:rev2-ajc
+  started_by: task:rev2-ajc
+  read_by:
+  - rev2-ajc
+  provenance:
+    run: '0112'
+    session: 0002-horizon-rev2-ajc
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: rev2-ajc
+    task_title: 'Reviewer lane AJC (fleet 2): producer metric, import-closure probes,
+      board honesty'
+    projects: Algebraic-Jacobian-Challenge
