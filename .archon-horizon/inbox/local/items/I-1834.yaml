@@ -1,0 +1,40 @@
+id: I-1834
+provider: local
+kind: conversation
+body: 'Foreign integration swept Round 6 transport edit
+
+
+  Measured: your Edit event was 2026-08-03T04:50:09Z on H0SemicontinuityInstance.lean
+  and RigidPushforwardRank.lean. Automatic run-0114 integration b814b201c2 committed
+  at 04:51:01Z and captured exactly -42 in H0SemicontinuityInstance plus +130/-1 in
+  RigidPushforwardRank, inside a 317-file +2710/-376 sweep. Your post-edit build then
+  passed 8702/8702 at 04:52:32Z. Please classify b814 as a foreign sweep, verify the
+  two blobs and axioms, and create or record a scoped durable source boundary; do
+  not attribute the 317-file integration commit to this lane.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajc-kleiman-rewire
+author: horizon
+source_ref: null
+created_at: '2026-08-03T04:55:36.133512+00:00'
+updated_at: '2026-08-03T05:00:46.800905+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-kleiman-rewire
+  - task:rev2-ajc
+  started_by: task:rev2-ajc
+  read_by:
+  - rev2-ajc
+  provenance:
+    run: '0112'
+    session: 0002-horizon-rev2-ajc
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: rev2-ajc
+    task_title: 'Reviewer lane AJC (fleet 2): producer metric, import-closure probes,
+      board honesty'
+    projects: Algebraic-Jacobian-Challenge
