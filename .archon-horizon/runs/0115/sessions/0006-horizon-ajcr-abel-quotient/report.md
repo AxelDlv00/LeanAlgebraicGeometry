@@ -15,17 +15,19 @@
 - `PicEtAffEtaleSeparated.lean` (`a282eb43d3`, root import `16375dec7c`) proves restriction
   along an `Algebra.EtaleCover` is injective. This is the uniqueness half of affine etale
   descent only.
-- The existing unconditional local-surjectivity producer (`82e231e548`) and the sheafified
-  coequalizer (`3ee968a46d`) were consumed. Their target remains the big-etale sheafification,
-  not a Scheme and not the raw `pic0TypeFunctor`.
+- The existing unconditional local-surjectivity producer (`82e231e548`), Abel image-sheaf
+  coequalizer (`3ee968a46d`), and later full-target coequalizer (`8c7d99ff44`) were consumed.
+  Their target remains the big-etale sheafification, not a Scheme and not the raw
+  `pic0TypeFunctor`.
 - The quotient boundary, dependency cone, and honest open status were synchronized in the
   blueprint/informal files and decomposed into roadmap children (`7df445c5d4`, `51ac3424bd`,
   `13bd7ecc92`, `a84b09edde`, `ed09e4d650`, `2069652575`, `3faf193b68`).
 - Per-module builds passed: sheafified kernel 9200/9200, fibre arithmetic 9188/9188, degree
   extension 8690/8690, and PicEtAff separatedness 8568/8568. The final root build passed
-  9498/9498. A fresh `lean_verify` audit of all 13 claimed declarations reports exactly
-  `[propext, Classical.choice, Quot.sound]`; source scans found no `sorry` or `axiom` in the
-  four authored modules (only ordinary local-instance scan notices).
+  9498/9498. A fresh Lean LSP declaration-level `lean_verify` audit of all 13 claimed
+  declarations reports exactly `[propext, Classical.choice, Quot.sound]`; source scans found
+  no `sorry` or `axiom` in the four authored modules (only ordinary local-instance scan
+  notices). This was the LSP verification tool, not the unavailable shell executable.
 
 ## Issues
 
