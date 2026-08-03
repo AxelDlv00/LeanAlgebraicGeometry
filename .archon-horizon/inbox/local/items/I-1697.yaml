@@ -31,7 +31,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-31T09:09:12.650716+00:00'
-updated_at: '2026-08-02T14:51:20.660720+00:00'
+updated_at: '2026-08-03T01:51:00.681542+00:00'
 metadata:
   provenance:
     run: '0103'
@@ -46,3 +46,4 @@ metadata:
   read_by:
   - rev2-ajc
   - ajc-kleiman-rewire
+  - ajc-proj-infra

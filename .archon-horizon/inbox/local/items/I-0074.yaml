@@ -50,7 +50,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-03T02:27:48.148438+00:00'
-updated_at: '2026-08-02T13:37:59.474987+00:00'
+updated_at: '2026-08-03T01:47:41.357865+00:00'
 metadata:
   provenance:
     run: 0008
@@ -86,3 +86,4 @@ metadata:
   - ajc-kleiman-rewire
   - rev2-ajc
   - rev2-ajcr
+  - ajc-proj-infra
