@@ -7,7 +7,7 @@ summary: Prove the germwise sectionIdeal satisfies the affine-basic-open localiz
   identify it with AffAdaptation.cartierIdeal on every landed adaptation via the adapted
   affine cover. Quotient descent, arbitrary base-change compatibility, and gluing
   over divRepAffAdmissibleScheme remain in the parent.
-status: pending
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -30,4 +30,7 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.kernel-representer.universal-divisor
   owner: ajcr-abel-quotient
-  updated_at: '2026-08-03T23:16:15.011134+00:00'
+  updated_at: '2026-08-03T23:49:08.837026+00:00'
+  pinned_commits:
+  - 3ea0fd09b4c1cecf0f9e375bc7bee85715541276
+  - cf2ed32f7aeb19f6480ea083bb30b827ef417ea5
