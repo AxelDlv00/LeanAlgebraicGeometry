@@ -702,6 +702,7 @@ import AlgebraicJacobian.Picard.DivisorSubschemeTriple
 import AlgebraicJacobian.Picard.DivisorSubschemeTensorTriple
 import AlgebraicJacobian.Picard.DivisorIdealSheaf
 import AlgebraicJacobian.Picard.DivisorIntrinsicIdealSheaf
+import AlgebraicJacobian.Picard.DivisorFamilyIntrinsicIdealSheaf
 import AlgebraicJacobian.Picard.DivisorSubscheme
 import AlgebraicJacobian.Picard.DivisorSubschemeFinite
 import AlgebraicJacobian.Picard.DivisorSubschemeOverlap
