@@ -1,0 +1,33 @@
+id: AJC.picrep.projective-infra.relative-proj
+title: Section-Proj carrier demanded by Picard pieces
+projects:
+- Algebraic-Jacobian-Challenge
+summary: PENDING, demand-limited. First discharge sectionGradedRing_gcommRing_demand
+  and sectionGradedRing_gradedRing_demand, the exact structures needed to instantiate
+  mathlib Proj on the existing section direct sum. Do not build a general sheaf-relative-Proj
+  gluing theory until a concrete Picard-piece consumer requires it.
+status: pending
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-08-03T02:55:04.009146+00:00'
+  provenance:
+    run: '0114'
+    session: 0002-horizon-ajc-proj-infra
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-proj-infra
+    task_title: 'AJC: own and build the projective-morphism infrastructure (Proj /
+      ample / very-ample), demand-first'
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.picrep.projective-infra
+  owner: ajc-proj-infra
+  milestone: AJC.picrep

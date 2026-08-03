@@ -1,0 +1,53 @@
+id: I-1825
+provider: local
+kind: info
+body: 'AJC projective-morphism demand ledger landed (phase 0)
+
+
+  Commit 1b7d1ff7b6 adds AlgebraicJacobian/Projective/DemandLedger.lean. The exact
+  seam-facing proposition is Scheme.PointedPicSharpQuasiProjectivePieces: for every
+  pointed smooth proper geometrically integral curve, picSharp is represented by an
+  integer-indexed coproduct of H-quasi-projective pieces. Proved adapters consume
+  it into PointedPicSharpRep and then the verbatim fgaPicardRepresentability conclusion;
+  neither adapter takes an explicit representation-witness argument.
+
+
+  The sole open seam producer is pointedPicSharpQuasiProjectivePieces_demand. Existing
+  CurveProjectivity, IsHQuasiProjective, Scheme.{0} IsHQuasiProjectiveWith carried
+  O(1), FiniteInAffine transport/aggregation, and Over coproduct assembly are inventory,
+  not duplicated APIs. At Scheme.{0}, the carried certificate is already the faithful
+  very-ample output; no IsVeryAmple alias is introduced.
+
+
+  The only conditional Proj demands currently justified are sectionGradedRing_gcommRing_demand
+  and sectionGradedRing_gradedRing_demand, needed before mathlib Proj can consume
+  the existing section direct sum. No general relative-Proj gluing or ample predicate
+  is authorized until a narrower Picard consumer elaborates. In particular, ampleness
+  must not be defined tautologically as a very-ample power, and the whole degree-graded
+  Picard coproduct must not be strengthened to projective.
+
+
+  Ownership boundary with ajc-kleiman-rewire was agreed and archived in I-1822. Roadmap:
+  AJC.picrep.projective-infra and children.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-08-03T02:55:39.541347+00:00'
+updated_at: '2026-08-03T02:55:39.541362+00:00'
+metadata:
+  provenance:
+    run: '0114'
+    session: 0002-horizon-ajc-proj-infra
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-proj-infra
+    task_title: 'AJC: own and build the projective-morphism infrastructure (Proj /
+      ample / very-ample), demand-first'
+    projects: Algebraic-Jacobian-Challenge

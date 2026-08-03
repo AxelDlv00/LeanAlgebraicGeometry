@@ -1,0 +1,39 @@
+id: AJC.picrep.projective-infra
+title: Demand-led projective-morphism infrastructure
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'Phase 0 is landed at 1b7d1ff7b6: the exact terminal demand is PointedPicSharpQuasiProjectivePieces,
+  with proved adapters into PointedPicSharpRep and then fgaPicardRepresentability.
+  Existing IsHQuasiProjective, carried O(1), FiniteInAffine transport/aggregation,
+  Over-coproduct assembly, and CurveProjectivity stay authoritative. Scope gate: build
+  no general relative-Proj or ample theory beyond an elaborated consumer; the whole
+  degree-graded Picard coproduct must not be strengthened to projective. Boundary
+  agreed in I-1822.'
+status: active
+kind: workspace
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-08-03T02:54:57.504457+00:00'
+  provenance:
+    run: '0114'
+    session: 0002-horizon-ajc-proj-infra
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-proj-infra
+    task_title: 'AJC: own and build the projective-morphism infrastructure (Proj /
+      ample / very-ample), demand-first'
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.picrep
+  owner: ajc-proj-infra
+  milestone: AJC.picrep
+  updated_at: '2026-08-03T02:56:28.103732+00:00'
+  pinned_commits:
+  - 1b7d1ff7b6ccc4e48622a3ee4191be1b89612e26

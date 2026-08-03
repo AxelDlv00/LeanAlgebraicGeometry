@@ -1,0 +1,37 @@
+id: AJC.picrep.projective-infra.ledger
+title: Elaborated projective-infrastructure demand ledger
+projects:
+- Algebraic-Jacobian-Challenge
+summary: DONE at 1b7d1ff7b6 in AlgebraicJacobian/Projective/DemandLedger.lean. The
+  closed proposition has no explicit representation-witness argument; its two seam
+  adapters are proved and axiom-clean. Three intentional sorryAx declarations mark
+  the one terminal Picard-piece producer and two conditional section-Proj structure
+  gaps.
+status: done
+kind: report
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-08-03T02:55:00.778312+00:00'
+  provenance:
+    run: '0114'
+    session: 0002-horizon-ajc-proj-infra
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-proj-infra
+    task_title: 'AJC: own and build the projective-morphism infrastructure (Proj /
+      ample / very-ample), demand-first'
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.picrep.projective-infra
+  owner: ajc-proj-infra
+  milestone: AJC.picrep
+  updated_at: '2026-08-03T02:56:31.284187+00:00'
+  pinned_commits:
+  - 1b7d1ff7b6ccc4e48622a3ee4191be1b89612e26
