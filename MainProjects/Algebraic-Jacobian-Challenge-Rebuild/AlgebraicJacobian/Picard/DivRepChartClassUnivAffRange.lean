@@ -102,6 +102,38 @@ theorem isDivRepClassifyAff_divFamZarAffUniv
     (C := C) (pi := pi) (hpi := hpi) (g := g) (r1 := r1) (r2 := r2)
     (b1 := b1) (b2 := b2) i0 j0 G i j w hw heps1 heps2
 
+set_option maxHeartbeats 8000000 in
+-- Both off-diagonal universal windows elaborate through the pulled seed and framed test.
+set_option synthInstance.maxHeartbeats 800000 in
+/-- The universal widened class satisfies the classifier clause when the curve parameter
+`gamma ≤ g` is independent of the divisor degree. -/
+theorem isDivRepClassifyAff_divFamZarAffUniv_at
+    (i0 : (glueData k g r1).J) (j0 : (glueData k g r2).J)
+    {gamma : Nat} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : Int)) :
+    IsDivRepClassifyAff hpi g r1 r2 b1 b2
+      (divFamZarAffUniv_at
+        C hpi g r1 r2 b1 b2c i0 j0 hgamma hchiGamma)
+      (ChartMap i0 j0) := by
+  intro T _ _ _ _ G hG i j w hw
+  let alpha : ChartRing i0 j0 →ₐ[k] T :=
+    IsScalarTower.toAlgHom k (ChartRing i0 j0) T
+  have heps1 : (G.eps hpi g).1 =
+      (Module.Grassmannian.map alpha
+        (divUniversalFstWindow C pi hpi g r1 r2 b1 b2c i0 j0)).toSubmodule := by
+    exact universalFstEps_eq_map_at
+      (C := C) (pi := pi) (hpi := hpi) (g := g) (r1 := r1) (r2 := r2)
+      (b1 := b1) (b2 := b2) i0 j0 hgamma hchiGamma G hG
+  have heps2 : (G.eps hpi g).2 =
+      (Module.Grassmannian.map alpha
+        (divUniversalSndWindow C pi hpi g r1 r2 b1 b2c i0 j0)).toSubmodule := by
+    exact universalSndEps_eq_map_at
+      (C := C) (pi := pi) (hpi := hpi) (g := g) (r1 := r1) (r2 := r2)
+      (b1 := b1) (b2 := b2) i0 j0 hgamma hchiGamma G hG
+  exact divCarveChart_classifies_of_eps_eq_universal
+    (C := C) (pi := pi) (hpi := hpi) (g := g) (r1 := r1) (r2 := r2)
+    (b1 := b1) (b2 := b2) i0 j0 G i j w hw heps1 heps2
+
 end UniversalAffRange
 
 end PointwiseAchiever
