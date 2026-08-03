@@ -16,4 +16,4 @@
 
 D2 still lacks the Picard evaluation epimorphism, arbitrary-test locally-free rank, and pullback naturality. D3 still lacks the relative-curve finite-fibre producer and the universal whole-fibre locus with a quasi-compact immersion. Until one of those producers exposes an exact consumer, adding relative Proj or ampleness would violate the demand-first boundary and duplicate existing vocabulary.
 
-The task remains pending, not done or blocked. All six task-specific private indexes were removed. A fresh session-end measurement found the shared Horizon index lock present with 1,161 staged paths (5 added, 817 deleted, 339 modified); it was left untouched.
+The task remains pending, not done or blocked. All six task-specific private indexes were removed. A fresh post-report measurement still found the shared Horizon index locked and heavily polluted; it was left untouched.
