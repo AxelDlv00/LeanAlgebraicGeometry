@@ -4,7 +4,6 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.QuasiProjectiveFiniteInAffine
-import AlgebraicJacobian.Picard.SectionGradedRing
 
 /-!
 # Demand ledger for projective-morphism infrastructure
@@ -37,23 +36,22 @@ whose closed proposition packages the representation witness; they produce no
 representation and do not reduce the current seam debt.  Their signatures add
 no explicit `RepresentableBy` argument.
 
-## Conditional section-Proj route
+## No current section-Proj demand
 
 Mathlib's `AlgebraicGeometry.Proj` is the Proj of an `N`-graded commutative
-ring, with `Proj.toSpecZero`, `Proj.map`, and `Proj.fromOfGlobalSections`.  It is
-not a relative Proj of a sheaf of graded algebras.  The project already builds
-the section components `Scheme.Modules.sectionDeg L`, their tensor-power
-multiplication, and a `DirectSum.GCommSemiring`.  The first missing statements
-needed even to instantiate Mathlib's `Proj` on that section ring are the two
-open declarations in the final section: a graded commutative ring structure and
-the canonical internal grading by the direct-sum summands.
+ring, not a relative Proj of a sheaf of graded algebras.  The project has enough
+section-ring data to make that absolute Proj elaborate after two elementary
+structure assemblies, but no Picard declaration consumes it: there is no
+intrinsic `picSharpDeg` carrier, representing scheme for such a component, or
+Picard-piece line bundle from which to form the section ring.  Consequently
+those assemblies are not demands of the seam and are deliberately absent from
+this ledger.
 
-Those declarations are conditional infrastructure: the seam-facing producer
-above does not mention a section ring, relative Proj, or ampleness.  A general
-relative-Proj gluing theory or a general ample predicate must not be built until
-a Picard-piece construction exposes a narrower consumer.  The whole Picard
-scheme must also not be strengthened to `IsProjective`: its degree-graded
-coproduct is not quasi-compact, as recorded by
+The live predecessor is the intrinsic degree and representation construction;
+only that construction can expose a narrower Proj or ampleness signature.  A
+general relative-Proj gluing theory or a general ample predicate must not be
+built before then.  The whole Picard scheme must also not be strengthened to
+`IsProjective`: its degree-graded coproduct is not quasi-compact, as recorded by
 `Picard/AmbientPicNotProper.lean` and `Scheme.PointedPicSharpRepProjective`.
 
 ## Existing inputs
@@ -128,28 +126,4 @@ theorem pointedPicSharpQuasiProjectivePieces_demand :
   sorry
 
 end Scheme
-
-namespace Scheme.Modules
-
-variable {X : Scheme.{u}}
-
-/-- **Conditional section-Proj demand 1.** Upgrade the already-built graded
-commutative semiring on the section components of an invertible sheaf to the
-graded commutative ring required by Mathlib's `Proj`. -/
-theorem sectionGradedRing_gcommRing_demand (L : X.Modules) [IsInvertibleGr L] :
-    Nonempty (DirectSum.GCommRing (sectionDeg L)) := by
-  sorry
-
-/-- **Conditional section-Proj demand 2.** The canonical summands of the
-section-ring direct sum form an internal `N`-grading.  Together with
-`sectionGradedRing_gcommRing_demand`, this is the data needed for the term
-`AlgebraicGeometry.Proj` to elaborate on the section ring. -/
-theorem sectionGradedRing_gradedRing_demand (L : X.Modules) [IsInvertibleGr L]
-    (hR : DirectSum.GCommRing (sectionDeg L)) :
-    letI := hR
-    Nonempty (GradedRing (fun n => AddMonoidHom.range
-      (DirectSum.of (fun m => sectionDeg L m) n))) := by
-  sorry
-
-end Scheme.Modules
 end AlgebraicGeometry
