@@ -29,12 +29,13 @@ from a coproduct of H-quasi-projective pieces:
   `IsHQuasiProjectiveWith` is already the required very-ample output; defining
   an alias named `IsVeryAmple` would only re-spell it.
 
-The one missing terminal producer is therefore
-`pointedPicSharpQuasiProjectivePieces_demand`: it constructs the representing
-coproduct and proves H-quasi-projectivity piecewise.  The two proved adapters
-below show, without a `RepresentableBy` argument in either signature, that this
-producer closes `PointedPicSharpRep` and then the exact statement of
-`Scheme.fgaPicardRepresentability`.
+The open terminal producer demand is therefore
+`pointedPicSharpQuasiProjectivePieces_demand`: if proved, it would construct the
+representing coproduct and prove H-quasi-projectivity piecewise.  The two proved
+adapters below are only typing and consumption checks.  They both assume `H`,
+whose closed proposition packages the representation witness; they produce no
+representation and do not reduce the current seam debt.  Their signatures add
+no explicit `RepresentableBy` argument.
 
 ## Conditional section-Proj route
 
@@ -80,7 +81,8 @@ H-quasi-projective schemes over the ground field.
 The integer index records the intended degree pieces without introducing a
 second, currently nonexistent `picSharpDeg` functor.  This closed proposition
 contains the representation witness in its conclusion; no downstream theorem
-takes an explicit representation-witness argument. -/
+takes an explicit representation-witness argument.  This keeps the strict
+binder count unchanged, but it remains logically a representation assumption. -/
 def PointedPicSharpQuasiProjectivePieces : Prop :=
   ∀ {K : Type u} [Field K] (E : Over (Spec (CommRingCat.of K))),
     ∀ [SmoothOfRelativeDimension 1 E.hom] [IsProper E.hom]
@@ -93,7 +95,7 @@ def PointedPicSharpQuasiProjectivePieces : Prop :=
 /-- A piecewise H-quasi-projective representation supplies exactly the local
 finite type and `FiniteInAffine` conjuncts of `PointedPicSharpRep`.
 
-This is the seam-side consumption check for the ledger. -/
+This is the seam-side typecheck for the ledger, not producer movement. -/
 theorem pointedPicSharpRep_of_quasiProjectivePieces
     (H : PointedPicSharpQuasiProjectivePieces.{u}) :
     PointedPicSharpRep.{u} := by
@@ -103,8 +105,9 @@ theorem pointedPicSharpRep_of_quasiProjectivePieces
   · exact locallyOfFiniteType_sigma X fun d => (hX d).locallyOfFiniteType
   · exact finiteInAffine_over_sigma_of_isHQuasiProjective X hX
 
-/-- The ledger producer implies the central seam verbatim, with no rational
-point binder on the target theorem. -/
+/-- Conditional on the open ledger demand, the central seam follows verbatim,
+with no rational point binder on the target theorem.  This adapter is not a
+sorry-free producer or a discharge of the seam. -/
 theorem fgaPicardRepresentability_of_quasiProjectivePieces
     {k : Type u} [Field k] (C : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
