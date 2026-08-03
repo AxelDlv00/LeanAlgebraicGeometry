@@ -2,16 +2,16 @@ id: AJC.picrep.divgrassmannian
 title: 'D2'': Grassmannian comparison for the degree-d divisor functor'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: ACTIVE, currently unowned after pic-f final-round release. D2 quotient/class,
-  support transport, affine pullback conjugacy, and affine epi substrate are landed.
-  The twisted target now has unconditional finite presentation, quasi-coherence, and
-  flatness transport for any locally trivial line bundle, using existing DivFamily
-  finite presentation and flatness; commits 0d2006d9a4, 940f526ce5, cf34a634fc, and
-  538c651bae. No rational-point or representability hypothesis is introduced. Remaining
-  D2 work is (i) a producer for locally-quasi-finite support, (ii) fibre-H0 and point-rank
-  transport, (iii) arbitrary-test-base finite locally free rank, (iv) the evaluation
-  epi, and (v) the pullback-natural DivFunctorDeg to Grassmannian package; pic-b tensor
-  globalization is closed and consumed.
+summary: 'ACTIVE, currently unowned. The locally-quasi-finite support input is no
+  longer open: Projective/EffectiveCartierSupport.lean supplies the unconditional
+  DivFamily instance on proper smooth geometrically integral relative curves, and
+  DemandLedger verifies consumer synthesis. Remaining D2 work is now exactly: (i)
+  fibre-H0 and point-rank transport, (ii) arbitrary-test-base finite locally free
+  rank, (iii) the evaluation epimorphism, and (iv) the pullback-natural DivFunctorDeg-to-Grassmannian
+  package. Existing quotient/class, support transport, affine pullback conjugacy,
+  affine epi substrate, finite presentation, quasi-coherence, flatness, and tensor
+  globalization remain landed. Consumers must import the new producer module or DemandLedger;
+  importing DivPushforwardFlat alone does not expose it.'
 status: active
 kind: proof
 priority: normal
@@ -35,8 +35,10 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-31T23:09:29.627581+00:00'
+  updated_at: '2026-08-03T15:17:30.558221+00:00'
   pinned_commits:
+  - cb15d595e91dbc239e94329f56f994228937d04c
+  - dd26508b7485d91ac602c6ede8db3229623486f0
   - 538c651bae
   - cf34a634fc
   - 940f526ce5

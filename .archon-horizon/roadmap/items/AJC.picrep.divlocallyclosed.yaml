@@ -2,47 +2,16 @@ id: AJC.picrep.divlocallyclosed
 title: D3' locally closed carving of Div^d inside the Grassmannian
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "D3' locally closed carving (campaign :305). ADVANCED, NOT CLOSED. Owner\
-  \ released.\n\nWHAT PIC-E LANDED (run 0095 r5, Picard/DivSupportQuasiFinite.lean,\
-  \ 20 declarations, 0 sorries, rooted, lake build 8695 jobs EXIT=0, all axiom-clean\
-  \ [propext, Classical.choice, Quot.sound] vs fgaPicardRepresentability firing sorryAx).\n\
-  \nTHE ROW'S BINDER IS REPRICED. Every theorem of Picard/DivPushforwardFlat.lean\
-  \ carries LocallyQuasiFinite (schematicSupportI x.F followed by pullback.snd pi\
-  \ T.hom), which that file calls producerless and not derivable from DivFamily's\
-  \ other fields. All still true. What is new: the binder is EQUIVALENT to finiteness\
-  \ of the fibres of D over T, because BOTH other binders mathlib's criteria want\
-  \ (LocallyOfFiniteType, QuasiCompact) come from DivFamily.properSupport -- LocallyOfFiniteType\
-  \ is a structure PARENT of IsProper, so it is a field access, not a search. At a\
-  \ family the producer's hypothesis list is one item. Names: DivFamily.locallyQuasiFinite_iff_finite_fibers,\
-  \ locallyQuasiFinite_iff_isFinite_fiber, locallyQuasiFinite_of_fibers, isFinite_support,\
-  \ isFinite_support_of_fibers.\n\nTRAP for anyone consuming those theorems: HasProperSupport\
-  \ is a def, NOT a class. 'haveI := hps' registers nothing and infer_instance fails\
-  \ on both free binders. Cite the named theorems.\n\nTHE CARRIER BRIDGE IS LANDED:\
-  \ Modules.annihilator_pullback_support_eq_preimage in Picard/SupportBaseChange.lean\
-  \ proves the support-of-pullback carrier equals the preimage of support. Consumers\
-  \ must import that module explicitly; the theorem is not visible through DivSupportQuasiFinite,\
-  \ DivDegree, DivGrassmannianEmbedding, DivGrassmannianCandidate, or Projective/DemandLedger.\
-  \ This is carrier equality only and earns no finite-fibre producer or seam credit.\n\
-  \nWHAT REMAINS, exactly two open obligations:\n (a) THE GEOMETRY: a nonempty effective\
-  \ Cartier divisor on a relative curve has finite fibres. On C_t, D_t is the zero\
-  \ scheme of a regular section of an invertible ideal on a 1-dimensional scheme.\
-  \ Untouched.\n (b) D3' PROPER, unchanged: the ExistsUnique statement about the Grassmannian\
-  \ locus. Nothing above touches it. Also unchanged: the phi=id instance is not the\
-  \ antecedent as a FAMILY over all test phi -- settle which D3' needs before pricing\
-  \ inputs as done.\n\nDO NOT re-count the value. pic-e's commit messages claimed\
-  \ this retires plumbing for THREE rows; that was withdrawn. D4' consumes D3' and\
-  \ never binds LocallyQuasiFinite, so it was double-counted. HasLocallyConstantDivDeg\
-  \ (DivDegree.lean) names TWO inputs -- the B3 rank half PLUS quasi-finiteness --\
-  \ and this supplies at most the second.\n\nDO NOT read the producer as content.\
-  \ DivFamily.locallyQuasiFinite_zero discharges the binder at DivFamily.zero for\
-  \ arbitrary pi and T, but the empty divisor is exactly where fibre finiteness is\
-  \ free, and MEASURED: with only the pre-existing isEmpty_schematicSupport_of_isZero\
-  \ in scope, plain infer_instance already closed both LocallyQuasiFinite and IsFinite\
-  \ there. It is satisfiability, and the file adds a name rather than access.\n\n\
-  STILL TRUE from the earlier row text: DivFamily has exactly one producer in AJC\
-  \ (DivFamily.zero, Picard/DivFamilyZero.lean), so every Cluster D' theorem is testable\
-  \ at one family only. NOTHING HERE CLOSES THE SEAM SORRY; rep has no producer.\n\
-  \n"
+summary: 'ADVANCED, NOT CLOSED. The finite-fibre geometric input is now discharged
+  unconditionally for every DivFamily on a proper smooth geometrically integral relative
+  curve: Projective/EffectiveCartierSupport.lean proves finite_fiber_support_of_curve,
+  consumes the existing locallyQuasiFinite_of_finite_fibers reduction, and registers
+  the exact LocallyQuasiFinite instance carried by DivPushforwardFlat. DemandLedger
+  imports the producer and d3Support_locallyQuasiFinite_of_curve verifies synthesis
+  in consumer closure; all new axiom cones are exactly propext, Classical.choice,
+  Quot.sound. The only D3'' obligation still open is the whole-fibre ExistsUnique
+  Grassmannian locus (including settling the family-over-all-tests formulation). This
+  is one geometric unit, not separate credit for the theorem and instance.'
 status: pending
 kind: proof
 priority: normal
@@ -66,8 +35,11 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-08-03T12:12:14.983994+00:00'
+  updated_at: '2026-08-03T15:15:59.963927+00:00'
   pinned_commits:
+  - f34a2841b0169d4e989263a4f77551778e5ff883
+  - cb15d595e91dbc239e94329f56f994228937d04c
+  - dd26508b7485d91ac602c6ede8db3229623486f0
   - 14b888d2edd3114009a2d3797a1dac3912f06242
   - 6313a2f6a51fae13f2f5fa0ce458e3bcaefa1e48
   - fa7e4deb6
