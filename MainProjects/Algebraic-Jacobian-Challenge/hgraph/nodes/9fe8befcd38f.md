@@ -3,22 +3,23 @@ author: sync
 content_type: theorem
 created: '2026-08-03T12:35:24'
 decl: AlgebraicGeometry.Grassmannian.isHQuasiProjective_toSpecZ_demand
-docstring: '**Open D4'' core producer.** The absolute Grassmannian is
+docstring: '**Closed D4'' core producer.** The absolute Grassmannian is
 
   H-quasi-projective over `Spec Z`.
 
 
-  This is the exact Plucker/projective-space certificate absent from the current
+  The hypotheses are retained because this is the exact ledger signature exposed
 
-  Grassmannian construction.  Its existing properness theorem is not enough.'
+  to D4''; the stronger producer does not need them.'
 file: AlgebraicJacobian/Projective/DemandLedger.lean
 generated: lean
-lean_status: sorry
+lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Grassmannian.isHQuasiProjective_toSpecZ_demand
 type: lean
-updated: '2026-08-03T12:35:24'
+updated: '2026-08-03T14:50:49'
 ---
 theorem isHQuasiProjective_toSpecZ_demand (d r : ℕ)
     (_hd : 1 ≤ d) (_hdr : d ≤ r) :
-    (toSpecZ d r).IsHQuasiProjective := by
-  sorry
+    (toSpecZ d r).IsHQuasiProjective :=
+  isHQuasiProjective_toSpecZ d r

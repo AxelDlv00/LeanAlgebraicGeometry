@@ -2,14 +2,15 @@ id: AJC.picrep.projective-infra.grassmannian
 title: 'D4'': field Grassmannian H-quasi-projectivity'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: PENDING/speculative at the D3 boundary, not an active producer frontier.
-  Commit 178f6526af proves the standard-axiom conditional transport from a valid-rank
-  absolute Grassmannian H-quasi-projectivity certificate to Scheme.Grassmannian.representingScheme
-  over a field. The exact remaining projective input is the valid-rank Plucker/projective-space
-  certificate for Grassmannian.toSpecZ, still sorryAx. The generic d4Locus wrapper
-  is only comp_isImmersion typing; D3 has not constructed an actual Grassmannian-base
-  locus, map, or quasi-compact immersion. Producer movement +0, seam movement +0.
-status: pending
+summary: DONE. The Plucker chain constructs normalized maximal-minor charts, proves
+  overlap compatibility, glues the absolute morphism, proves local coordinate-ring
+  surjectivity and global IsImmersion, lifts to relative projective space over Spec
+  Z, and combines existing properness with immersion to prove Grassmannian.isProjective_toSpecZ
+  and isHQuasiProjective_toSpecZ. Projective/Grassmannian.lean consumes the latter
+  to prove the chosen field representer H-quasi-projective. No Fin reindex is needed
+  because the current predicates accept any finite coordinate type. D3 still owes
+  its actual locus/map; the generic D4 composition adapter does not claim that construction.
+status: done
 kind: proof
 priority: high
 depends_on: []
@@ -34,7 +35,12 @@ metadata:
   parent: AJC.picrep.projective-infra
   owner: ajc-proj-infra
   milestone: AJC.picrep
-  updated_at: '2026-08-03T04:33:18.714222+00:00'
+  updated_at: '2026-08-03T06:45:50.893629+00:00'
   pinned_commits:
+  - 650b9f291c30d87948001a1bab2bdb261f826219
+  - 11ca92188ad855dc2fd9571be92e8618fcf5345d
+  - 2273350a86d16ebe92532139498cf2e1564948ae
+  - a2a9285bfe36c7b528dbd70bffe8d7c86a58ff0e
+  - 0c8cd28814ad2c30add09d508760bfcacc904eb6
   - 178f6526aff4b5133cfc4d7481579a1a805dcfe9
   - d5675c08bf742df417e90e17805d8c5e56fe7b8b

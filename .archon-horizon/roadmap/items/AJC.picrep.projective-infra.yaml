@@ -2,14 +2,15 @@ id: AJC.picrep.projective-infra
 title: Demand-led projective-morphism infrastructure
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Demand-led ownership with no producer or seam movement yet. PointedPicSharpQuasiProjectivePieces
-  is a deliberately stronger sufficient producer, not the minimal HasGoodGaloisLevel/seamClauseOne
-  price. Commit 178f6526af proves a genuine conditional reduction from absolute Grassmannian
-  H-quasi-projectivity to the chosen field representer, but the absolute Plucker certificate
-  remains sorryAx and the generic D4 immersion wrapper is not an actual D3 map. Relative/section
-  Proj and ampleness remain pending with no consumer. Existing IsHQuasiProjective,
-  carried O(1), FiniteInAffine aggregation, Over-coproduct assembly, and CurveProjectivity
-  remain authoritative; no duplicate vocabulary is authorized.
+summary: 'ACTIVE only at the remaining pointed-Picard producer boundary. The demanded
+  Grassmannian program is now complete: commits 0c8cd28814 through 11ca92188a construct
+  the Plucker morphism, local/global immersion, relative projective lift, projectivity,
+  and H-quasi-projectivity over Spec Z; Projective/Grassmannian.lean consumes it for
+  the chosen field representer. The ledger retains one intentional sorryAx producer,
+  PointedPicSharpQuasiProjectivePieces, whose missing representation data is not projective-morphism
+  infrastructure. Relative Proj and ampleness remain consumer-gated; IsHQuasiProjectiveWith
+  remains the authoritative very-ample vocabulary. Geometric projective producer +1;
+  strict PicEt producer and seam movement +0.'
 status: active
 kind: workspace
 priority: high
@@ -35,8 +36,13 @@ metadata:
   parent: AJC.picrep
   owner: ajc-proj-infra
   milestone: AJC.picrep
-  updated_at: '2026-08-03T04:31:51.353180+00:00'
+  updated_at: '2026-08-03T06:45:48.761088+00:00'
   pinned_commits:
+  - 650b9f291c30d87948001a1bab2bdb261f826219
+  - 11ca92188ad855dc2fd9571be92e8618fcf5345d
+  - 2273350a86d16ebe92532139498cf2e1564948ae
+  - a2a9285bfe36c7b528dbd70bffe8d7c86a58ff0e
+  - 0c8cd28814ad2c30add09d508760bfcacc904eb6
   - 178f6526aff4b5133cfc4d7481579a1a805dcfe9
   - d5675c08bf742df417e90e17805d8c5e56fe7b8b
   - c7bcebbed219ee90c1b4794f63016f5643f9e9d2

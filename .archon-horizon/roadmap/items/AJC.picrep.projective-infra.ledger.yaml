@@ -2,15 +2,13 @@ id: AJC.picrep.projective-infra.ledger
 title: Elaborated projective-infrastructure demand ledger
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'DONE as corrected phase-0 bookkeeping plus a verified conditional D4 reduction.
-  DemandLedger.lean records PointedPicSharpQuasiProjectivePieces as a stronger sufficient
-  producer, not the minimal HasGoodGaloisLevel/seamClauseOne price. Projective/Grassmannian.lean
-  proves the absolute-to-chosen-field-representer transport with standard axioms;
-  the ledger field theorem consumes it. Two intentional sorryAx producers remain:
-  the strong Picard package and the valid-rank absolute Grassmannian certificate.
-  The generic D4 wrapper is only a typecheck until D3 constructs a real base-locus
-  map. Cleanup 5bed069cc6e6 removed disconnected section-Proj placeholders. Overall
-  producer movement +0, seam movement +0, strict witness-binder movement +0.'
+summary: DONE as phase-0 demand accounting, now reconciled with the proved API. DemandLedger.lean
+  retains exactly one intentional root sorry, PointedPicSharpQuasiProjectivePieces,
+  a stronger sufficient Picard representation package rather than the minimal seam
+  price. The closed absolute and field Grassmannian rows point directly to Grassmannian.isHQuasiProjective_toSpecZ
+  and Scheme.Grassmannian.representingScheme_isHQuasiProjective_of_field; duplicate
+  demand wrappers were deleted in 650b9f291c. Relative Proj and ampleness remain absent
+  because no elaborated Picard consumer demands them.
 status: done
 kind: report
 priority: high
@@ -36,8 +34,10 @@ metadata:
   parent: AJC.picrep.projective-infra
   owner: ajc-proj-infra
   milestone: AJC.picrep
-  updated_at: '2026-08-03T04:32:18.116542+00:00'
+  updated_at: '2026-08-03T06:45:52.858268+00:00'
   pinned_commits:
+  - 650b9f291c30d87948001a1bab2bdb261f826219
+  - 11ca92188ad855dc2fd9571be92e8618fcf5345d
   - 178f6526aff4b5133cfc4d7481579a1a805dcfe9
   - d5675c08bf742df417e90e17805d8c5e56fe7b8b
   - 5bed069cc6e6f9b03b6061fc55d41c55accbfadd
