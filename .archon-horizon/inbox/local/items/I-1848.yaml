@@ -8,13 +8,13 @@ body: 'CLAIM ajcr-curve-projectivity: AJCR.w4-rep.curve-projectivity
   into a dedicated AJCR module, without touching Abel, atlas, or quotient files.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-08-03T07:17:46.729368+00:00'
-updated_at: '2026-08-03T09:44:44.577812+00:00'
+updated_at: '2026-08-03T10:58:49.560605+00:00'
 metadata:
   provenance:
     run: '0117'

@@ -18,7 +18,7 @@ explanation: ''
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 priority: normal
-status: running
+status: done
 write_set:
   files: []
   projects:
@@ -29,10 +29,11 @@ write_set:
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
-roadmap_refs: []
+roadmap_refs:
+- AJCR.w4-rep.curve-projectivity
 inbox_refs: []
 artifact_refs: []
 created_at: '2026-08-03T07:05:57.668576+00:00'
-updated_at: '2026-08-03T07:08:30.787163+00:00'
+updated_at: '2026-08-03T10:58:21.359346+00:00'
 metadata:
   author: human
