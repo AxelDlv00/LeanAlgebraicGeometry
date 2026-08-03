@@ -2,16 +2,14 @@ id: AJCR.w4-rep.datum.dat-d.ddr.datum-tail
 title: 'DD-R datum tail: universal family and DAT-D/DAT-G assembly'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'The genus-parameter universal family and conditional hf/hcov chart assembly
-  are landed in `Pic0AtlasFromDivRepAffChallenge`; they produce no unconditional Pic0
-  representer. The remaining datum tail is exactly child `AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient`:
-  after `divFunctorAff_admissible_representableBy` lands, construct the represented
-  relative and etale-local Abel kernel relation on `divRepAffAdmissibleScheme C` including
-  the `picFromBase` quotient, form its effective scheme quotient, prove the Abel map
-  locally surjective as an etale-sheaf map, and identify the quotient Yoneda functor
-  with `pic0TypeFunctor C`, yielding `pic0AdmissibleAbelQuotientRepresenter`. No representability,
-  coverage, local-surjectivity, kernel-representer, or quotient-datum witness binder
-  may discharge this tail.'
+summary: 'The genus-parameter and admissible-parameter universal families and Abel
+  maps are landed in Pic0AtlasFromDivRepAffChallenge, directly consuming divFunctorAff_genus_representableBy
+  and the unconditional divFunctorAff_admissible_representableBy without a rep binder.
+  They produce no unconditional Pic0 representer. The remaining datum tail is exactly
+  child AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient: construct the represented
+  relative and etale-local Abel kernel relation including picFromBase, form its effective
+  scheme quotient, prove etale-sheaf local surjectivity, and identify its Yoneda functor
+  with pic0TypeFunctor C; no witness binder may discharge it.'
 status: active
 kind: proof
 priority: normal
@@ -34,6 +32,9 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-08-03T01:59:11.811588+00:00'
+  updated_at: '2026-08-03T04:59:47.585722+00:00'
   milestone: AJCR.w4-rep
   owner: ajcr-pic0-join
+  pinned_commits:
+  - dda5b519872d7003b232191c1a9f93949a3ca3ce
+  - 6dd6742828f56c8653335ccf04c2716937324ed0
