@@ -2,11 +2,10 @@ id: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.etale-sheaf.picet-affin
 title: Prove affine PicEt etale descent
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'The uniqueness/separatedness half is landed as PicEtAff.map_injective_of_etaleCover
-  and pinned in its child. Still prove effectivity: a class over a singleton faithfully
-  flat etale cover with equal double pullbacks descends to the base. Only after both
-  halves may this row feed raw big-etale sheafhood.'
-status: pending
+summary: 'Singleton-cover affine PicEt descent is complete: map_injective_of_etaleCover
+  gives uniqueness and exists_map_eq_of_double_eq gives effectivity. This closes the
+  raw PicEtAff input only; lifting it to the big-etale Scheme site remains in sigma-comparison.'
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -29,4 +28,6 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.etale-sheaf
   owner: ajcr-abel-quotient
-  updated_at: '2026-08-03T18:09:32.495904+00:00'
+  updated_at: '2026-08-03T19:59:49.396339+00:00'
+  pinned_commits:
+  - 8807d51e2344141587b1db0fbd8a7af2ef6c103f

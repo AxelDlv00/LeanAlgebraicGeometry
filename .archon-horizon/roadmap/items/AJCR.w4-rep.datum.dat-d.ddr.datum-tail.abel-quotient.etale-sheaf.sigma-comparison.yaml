@@ -2,10 +2,10 @@ id: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.etale-sheaf.sigma-compa
 title: Identify raw Pic0 Sigma with its etale sheafification
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: Transfer affine PicEt descent and degree-zero locality to pic0SigmaFunctor,
-  prove the unconditional lifted big-etale IsSheaf theorem, and construct the isoSheafify
-  comparison used by quotient Yoneda. The target is the raw fibrewise-degree-zero
-  functor, not an identity component.
+summary: Affine singleton-cover Pic0 descent is landed as pic0Subgroup_existsUnique_of_etaleCover.
+  Still lift this algebraic result to arbitrary big-etale Scheme covers, prove pic0SigmaFunctor
+  composed with ULift is an etale sheaf, and construct the unconditional comparison
+  with pic0SigmaEtaleSheafification used by quotient Yoneda.
 status: pending
 kind: proof
 priority: normal
@@ -29,4 +29,6 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.etale-sheaf
   owner: ajcr-abel-quotient
-  updated_at: '2026-08-03T17:23:01.816528+00:00'
+  updated_at: '2026-08-03T20:09:05.918638+00:00'
+  pinned_commits:
+  - 23d765428c04b5e9bf761479d1e0f450a66a3896

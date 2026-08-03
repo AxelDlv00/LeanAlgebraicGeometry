@@ -2,11 +2,11 @@ id: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.etale-sheaf.degree-zero
 title: Descend the fibrewise degree-zero condition
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: Field-extension invariance is landed as degAt_overSpecMap and its zero iff,
-  pinned in the child row. Still show that every field-valued point lifts etale-locally
-  through a singleton faithfully flat etale cover and combine that lift with raw picEt
-  descent; the parent remains open.
-status: pending
+summary: 'The fibrewise degree-zero condition now descends through singleton faithfully
+  flat etale covers: field-extension invariance and the etale point-lift reflection
+  theorem are both landed. Combining this with raw PicEtAff descent at the Scheme-site
+  level remains in sigma-comparison.'
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -29,4 +29,6 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.etale-sheaf
   owner: ajcr-abel-quotient
-  updated_at: '2026-08-03T17:44:48.211130+00:00'
+  updated_at: '2026-08-03T19:59:53.307100+00:00'
+  pinned_commits:
+  - 3d4560c9e4e2dcec4975c21981597d292c981022

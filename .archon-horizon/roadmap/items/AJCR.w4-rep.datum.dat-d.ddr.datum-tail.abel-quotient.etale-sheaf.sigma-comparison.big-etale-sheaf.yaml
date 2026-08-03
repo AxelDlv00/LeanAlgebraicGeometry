@@ -1,0 +1,31 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.etale-sheaf.sigma-comparison.big-etale-sheaf
+title: Lift affine Pic0 descent to the big etale site
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: Reduce arbitrary big-etale covers to affine tests and presented singleton
+  covers, then prove Presieve.IsSheaf Scheme.etaleTopology for pic0SigmaFunctor composed
+  with ULift. The affine exists-unique theorem is landed; the Scheme-cover and Sigma-component
+  transport remain.
+status: pending
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-08-03T20:09:48.894143+00:00'
+  provenance:
+    run: '0115'
+    session: 0008-horizon-ajcr-abel-quotient
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-abel-quotient
+    task_title: 'Own the Altman-Kleiman quotient: pic0AdmissibleAbelQuotientRepresenter'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.etale-sheaf.sigma-comparison
+  owner: ajcr-abel-quotient

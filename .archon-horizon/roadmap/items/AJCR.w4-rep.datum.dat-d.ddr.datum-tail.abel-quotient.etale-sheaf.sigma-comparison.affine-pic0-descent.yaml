@@ -1,0 +1,34 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.etale-sheaf.sigma-comparison.affine-pic0-descent
+title: Assemble affine Pic0 etale descent
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'Landed pic0Subgroup_existsUnique_of_etaleCover: compatible degree-zero data
+  over a singleton faithfully flat etale cover descend uniquely to the affine base.
+  The proof directly combines PicEtAff effectivity, etale reflection of degree zero,
+  and PicEtAff separatedness; it does not assert a Scheme-site sheaf wrapper.'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-08-03T20:02:50.394341+00:00'
+  provenance:
+    run: '0115'
+    session: 0008-horizon-ajcr-abel-quotient
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-abel-quotient
+    task_title: 'Own the Altman-Kleiman quotient: pic0AdmissibleAbelQuotientRepresenter'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.etale-sheaf.sigma-comparison
+  owner: ajcr-abel-quotient
+  updated_at: '2026-08-03T20:09:03.205623+00:00'
+  pinned_commits:
+  - 23d765428c04b5e9bf761479d1e0f450a66a3896

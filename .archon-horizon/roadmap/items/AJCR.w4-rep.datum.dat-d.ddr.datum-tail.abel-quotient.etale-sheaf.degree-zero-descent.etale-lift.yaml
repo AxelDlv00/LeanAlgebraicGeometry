@@ -2,11 +2,11 @@ id: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.etale-sheaf.degree-zero
 title: Reflect degree zero through etale point lifts
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: For a singleton faithfully flat etale cover, lift each field-valued point
-  after a field extension and use degAt_overSpecMap_eq_zero_iff to reflect degree
-  zero to the original point. This remains pending and depends on the raw picEt cover
-  comparison.
-status: pending
+summary: 'Landed mem_pic0Subgroup_of_etaleCover: base-change a singleton faithfully
+  flat etale cover to each field-valued point, refine by a finite separable field,
+  and reflect vanishing through degAt_overSpecMap_eq_zero_iff. Kernel axioms: propext,
+  Classical.choice, Quot.sound.'
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -29,3 +29,6 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.etale-sheaf.degree-zero-descent
   owner: ajcr-abel-quotient
+  updated_at: '2026-08-03T19:59:51.358313+00:00'
+  pinned_commits:
+  - 3d4560c9e4e2dcec4975c21981597d292c981022
