@@ -6,10 +6,10 @@ created: '2026-07-17T10:21:00'
 generated: blueprint
 label: thm:jacobianData_proper
 lean_status: lean_ok
-order: 1283
+order: 1294
 title: The representing object is proper
 type: tex
-updated: '2026-08-01T00:55:16'
+updated: '2026-08-03T20:05:12'
 ---
 Let \(d\) be a Jacobian datum admitting an Abel source. Then the structure
   morphism of the representing object \(J\) is proper.

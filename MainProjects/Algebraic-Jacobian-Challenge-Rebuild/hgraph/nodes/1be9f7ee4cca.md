@@ -6,10 +6,10 @@ created: '2026-07-17T10:19:50'
 generated: blueprint
 label: lem:difference_pairing_represents
 lean_status: lean_ok
-order: 1194
+order: 1205
 title: The pairing representative represents the pairing of the pullbacks
 type: tex
-updated: '2026-07-31T19:57:34'
+updated: '2026-08-03T20:05:12'
 ---
 In the situation of \ref{def:difference_pairing}, assume moreover that
   \(X \times_k X\) is integral and \(G\) is locally of finite type over \(k\).
