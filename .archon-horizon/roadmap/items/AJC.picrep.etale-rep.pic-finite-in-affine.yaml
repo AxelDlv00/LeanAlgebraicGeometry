@@ -2,19 +2,23 @@ id: AJC.picrep.etale-rep.pic-finite-in-affine
 title: 'Picard degree pieces: FiniteInAffine and very-ample substrate'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Verified substrate now also exposes the Picard identity-component open (9ebdbf9dc5)
-  and, for any global k-section, its translated open component together with the carrier
-  equality and Over isomorphism to Pic0 (668f93de3c). Both narrow builds and import-only
-  axiom probes are green with exactly propext, Classical.choice, and Quot.sound. Classification
-  is API exposure plus section-indexed component substrate/adapters, not a PicEt producer;
-  strict rep-binder and RepresentableBy metrics are unchanged. The honest next unit
-  is the intrinsic etale-natural family-degree morphism from relPresheaf to locally
-  constant integer functions, including quotient invariance, additivity, base-change
-  naturality, and local constancy. A standalone target wrapper would duplicate mathlib
-  continuousMapPresheafAb infrastructure and is not enough. Still open: intrinsic
-  Pic^d carriers, degree-shift/cover assembly, actual Picard-piece H-quasi-projective/very-ample
-  witnesses, and an arbitrary-field PicEt producer. The central fgaPicardRepresentability
-  sorry is unchanged and no rep consumer was added.'
+summary: 'Part 1 is closed: CurveProjectivity is explicitly imported and term-used
+  at the FGA/Pic0 Kleiman boundaries, with import-only probes. The reusable FiniteInAffine/H-quasi-projective/carried-O(1),
+  open-image, identity-component, and section-translated-open substrate remains landed.
+  Round 4 added the sheaf-module functorial Euler-index layer and finite two-term
+  virtual-rank/local-constancy substrate. Round 5 added the derived-to-two-chart Euler
+  comparison (7482b93e54), generic kernel/cokernel transport across two-term equivalences
+  (9c17cf054d), and the substantive residue-field-linear family-to-fibre Cech complex
+  comparison with H0-kernel and H1-quotient consequences (820538b96d). FiberEulerIndex
+  now genuinely consumes the derived comparison on any two-affine fibre cover (38863e8c3d);
+  this is API/import-closure credit only, not assembly of the family comparison. Narrow
+  builds and literal axiom probes are green with only propext, Classical.choice, and
+  Quot.sound. Arbitrary-field PicEt producers +0, strict rep consumers +0, and fgaPicardRepresentability
+  remains untouched. Still open: transport between residue-field and Spec-global-section
+  scalar dialects to join the scheme index to Unit 3, finite replacements/finiteness
+  and Riemann-Roch degree, quotient/etale descent and pullback/local constancy, arbitrary-test
+  Abel pin, intrinsic Pic^d carriers, and actual very-ample/FiniteInAffine Picard-piece
+  assembly.'
 status: active
 kind: proof
 priority: high
@@ -39,8 +43,16 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.etale-rep
   milestone: AJC.picrep
-  updated_at: '2026-08-02T21:34:18.027636+00:00'
+  updated_at: '2026-08-03T02:43:26.618160+00:00'
   pinned_commits:
+  - 38863e8c3d
+  - 820538b96d
+  - 9c17cf054d
+  - 7482b93e54
+  - c451fb927e
+  - f2316ebe80
+  - 265ceb40c
+  - ed9f08339c
   - 668f93de3c
   - 9ebdbf9dc5
   - c165008973deeee8b845b1d983a51a5c053b44c9
