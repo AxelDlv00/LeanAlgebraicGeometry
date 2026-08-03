@@ -1,0 +1,73 @@
+% source: Allen B. Altman and Steven L. Kleiman, "Compactifying the Picard Scheme", Adv. Math. 35 (1980)
+% pdf_page: 0022
+% doc_page: 72
+% retrieved: 2026-06-17
+% transcribed_by: codex/gpt-5.6-sol (vision, rendered at 200dpi via pdftoppm; no OCR)
+
+% requires: amsmath
+
+\DeclareMathOperator{\Hilb}{Hilb}
+
+% running head: ALTMAN AND KLEIMAN / p. 72
+% [continuation of Step IV in the proof of Theorem (2.9)]
+
+$W\times_H W$ by [SGA 1, VIII, Corollary 1.9, p. 200]. For each $S$-scheme
+$T$, there are formulas,
+\[
+(W\times_H\Gamma_g)(T)
+=\{(x_1,g(x_2),x_2,g(x_2))\mid x_1\sim x_2\},
+\]
+\[
+(\Gamma_g\times_H W)(T)
+=\{(x_1,g(x_1),x_2,g(x_1))\mid x_2\sim x_1\},
+\]
+by Step III. Hence, $W\times_H\Gamma_g$ and $\Gamma_g\times_H W$ coincide
+by Step II. Finally, since finite presentation descends down a faithfully
+flat, quasi-compact map [EGA $\mathrm{IV}_2$, 2.7.1], and since $\Gamma_g$
+is isomorphic to $X$, the scheme $Z$ is finitely presented.
+
+\paragraph{Step V.}
+The map $g:X\to H$ factors through $Z$, and $X\times_Z X$ is equal to $R$.
+Moreover, the induced map $g:X\to Z$ is faithfully flat, finitely
+presented, and strongly projective.
+
+\paragraph{Proof.}
+Since $Z$ is the result of descending $\Gamma_g$, there is a diagram with
+Cartesian squares and exact rows,
+\[
+\begin{array}{ccccc}
+\Gamma_g\times_H\Gamma_g&\rightrightarrows&\Gamma_g&\longrightarrow&Z
+\\
+\big\downarrow&&\big\downarrow&&\big\downarrow
+\\
+W\times_H W&\rightrightarrows&W&\xrightarrow{p}&H,
+\end{array}
+\]
+% [Both squares are marked Cartesian in the printed diagram.]
+where the vertical maps are embeddings. Hence $g$ factors through $Z$, and
+$X\times_Z X$ is clearly equal to $R$.
+
+The map $p:W\to H$ is finitely presented and proper by definition of
+$\Hilb_{(X/S)}$. Since $W$ is a subscheme of $X\times_S H/H$ and since
+$X/S$ is strongly projective, $p$ is therefore strongly projective. By
+Step IV, $p$ is faithfully flat. Therefore, $g$ also has these desirable
+properties.
+
+\paragraph{Step VI.}
+The theorem holds, and the induced map $g:X\to Z$ is equal to the quotient
+map $X\to(X/R)$.
+
+\paragraph{Proof.}
+Since $g$ is faithfully flat (Step V) and since it is obviously
+quasi-compact, it is universally an effective epimorphism [SGA I, VIII,
+Corollary 5.3, p. 213]. Therefore, since $X\times_Z X$ is equal to $R$
+(Step V), the map $g:X\to Z$ is a quotient map of $X$ by $R$ by Step V.
+Finally, $f:(X/R)\to S$ is strongly quasi-projective because $Z$ is a
+finitely presented subscheme of the strongly quasi-projective $S$-scheme
+$H$.
+
+\paragraph{(2.10) Corollary.}
+\textit{Let $f:X\to S$ be a locally projective morphism of schemes, and let
+$R$ be a flat, finitely presented, proper equivalence relation on $X$. Then
+$R$ is effective, the quotient map is faithfully flat, finitely presented
+and proper, and the quotient $(X/R)$ is locally quasi-projective over $S$.}

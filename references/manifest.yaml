@@ -65,7 +65,23 @@ references:
     status: ok
     files:
       - { path: MR0555258-compactifying-picard.pdf, format: pdf }
-    read: "See _project-notes/MR0555258-Compactifying-Picard/ for retrieval notes and summary."
+      - { path: MR0555258-compactifying-picard/tex/page-0018.tex, format: tex }
+      - { path: MR0555258-compactifying-picard/tex/page-0019.tex, format: tex }
+      - { path: MR0555258-compactifying-picard/tex/page-0020.tex, format: tex }
+      - { path: MR0555258-compactifying-picard/tex/page-0021.tex, format: tex }
+      - { path: MR0555258-compactifying-picard/tex/page-0022.tex, format: tex }
+    read: >-
+      See _project-notes/MR0555258-Compactifying-Picard/ for retrieval notes
+      and summary. PDF only; page_offset: printed page N -> PDF index N-50.
+      Pages 18-22 (printed pp. 68-72) transcribed 2026-08-04 via vision from
+      rendered pages (pdftoppm 200dpi, no OCR). Theorem (2.9) starts on
+      page-0020, its statement finishes on page-0021, and its proof finishes
+      on page-0022. It proves effectivity and strong quasi-projectivity of the
+      quotient of a strongly quasi-projective scheme by a flat, finitely
+      presented, proper equivalence relation under the stated finite-Hilbert-
+      polynomial hypothesis. Cite as
+      MR0555258-compactifying-picard:page-0018 through
+      MR0555258-compactifying-picard:page-0022.
     topics: [picard-scheme, compactification, related-paper]
 
   - slug: hartshorne-algebraic-geometry

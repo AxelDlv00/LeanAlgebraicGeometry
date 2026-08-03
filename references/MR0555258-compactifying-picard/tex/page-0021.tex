@@ -1,0 +1,80 @@
+% source: Allen B. Altman and Steven L. Kleiman, "Compactifying the Picard Scheme", Adv. Math. 35 (1980)
+% pdf_page: 0021
+% doc_page: 71
+% retrieved: 2026-06-17
+% transcribed_by: codex/gpt-5.6-sol (vision, rendered at 200dpi via pdftoppm; no OCR)
+
+% requires: amsmath, amssymb
+
+\DeclareMathOperator{\Hilb}{Hilb}
+
+% running head: COMPACTIFYING THE PICARD SCHEME / p. 71
+% [continuation of the statement and proof of Theorem (2.9)]
+
+\textit{for an embedding of $X$ into $\mathbb P(E)$, where $E$ is a locally
+free $\mathcal O_S$-Module with a constant rank. Then $R$ is effective, the
+quotient map $q:X\to(X/R)$ is strongly projective and faithfully flat, and
+$h:(X/R)\to S$ is strongly quasi-projective.}
+
+\paragraph{Proof. Step I.}
+Set
+\[
+H=\coprod\Hilb^{\phi}_{(X/S)},
+\]
+where $\phi$ ranges over the finitely many Hilbert polynomials of $p_2$; the
+$S$-scheme $H$ exists and is strongly projective by (2.8). Let $W$ denote
+the universal subscheme of $X\times_S H$. Since $R$ is a flat, finitely
+presented, proper subscheme of $X\times_S X$, there is a unique map
+$g:X\to H$ such that the following equation holds:
+\[
+(1\times g)^{-1}(W)=R. \tag{2.9.1}
+\]
+
+\paragraph{Step II.}
+Let $T$ be an $S$-scheme and let $x_1,x_2$ be two $T$-points of $X$. Write
+$x_1\sim x_2$ whenever $(x_1,x_2)\in R(T)$ holds. Then we have
+\[
+x_1\sim x_2\qquad\text{if and only if}\qquad g(x_1)=g(x_2).
+\]
+
+\paragraph{Proof.}
+Set $R_i=(1\times x_i)^{-1}(R)\subset X\times T$. Then
+$g(x_1)=g(x_2)$ holds if and only if $R_1=R_2$ holds, so if and only if
+$R_1(T')=R_2(T')$ holds for all $T$-schemes $T'$.
+
+Clearly we have the relation,
+\[
+R_i(T')=\{(x,t)\in(X\times T)(T')\mid x\sim x_i(t)\}.
+\]
+Suppose $x_1\sim x_2$ holds. Then for $(x,t)\in R_1(T')$ we have
+$x\sim x_1(t)\sim x_2(t)$. Since $R$ is transitive, we have
+$(x,t)\in R_2(T')$. Thus $R_1\subset R_2$ holds. So, since $R$ is
+symmetric, $R_1=R_2$ holds. Hence $g(x_1)=g(x_2)$ holds.
+
+Suppose $g(x_1)=g(x_2)$ holds. Then $R_1(T)=R_2(T)$ holds. Since $R$ is
+reflexive, we have $(x_1,\mathrm{id})\in R_1(T)$. So we have
+$(x_1,\mathrm{id})\in R_2(T)$. Thus $x_1\sim x_2$ holds.
+
+\paragraph{Step III.}
+For each $S$-scheme $T$ and for $x_1,x_2\in X(T)$, we have
+\[
+x_1\sim x_2\qquad\text{if and only if}\qquad
+(x_1,g(x_2))\in W(T).
+\]
+Furthermore, $\Gamma_g$ is a finitely presented, closed subscheme of $W$.
+
+\paragraph{Proof.}
+The first assertion follows immediately from Equation (2.9.1). Since $H/S$
+is separated, $\Gamma_g$ is a closed subscheme of $X\times_S H$. Then,
+since $R$ is reflexive, the first assertion implies the second.
+
+\paragraph{Step IV.}
+The projection $p:W\to H$ is faithfully flat and quasi-compact, and
+$\Gamma_g$ descends to a finitely presented subscheme $Z$ of $H$.
+
+\paragraph{Proof.}
+The projection $p$ is flat and quasi-compact by definition of
+$\Hilb_{(X/S)}$. Since $R$ is reflexive and so nonempty, $p$ is surjective,
+so faithfully flat. So, to descend $\Gamma_g$, it suffices to show that
+$\Gamma_g\times_H W$ and $W\times_H\Gamma_g$ coincide in
+% [the proof continues on page-0022]

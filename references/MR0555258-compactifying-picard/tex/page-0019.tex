@@ -1,0 +1,82 @@
+% source: Allen B. Altman and Steven L. Kleiman, "Compactifying the Picard Scheme", Adv. Math. 35 (1980)
+% pdf_page: 0019
+% doc_page: 69
+% retrieved: 2026-06-17
+% transcribed_by: codex/gpt-5.6-sol (vision, rendered at 200dpi via pdftoppm; no OCR)
+
+% requires: amsmath, amssymb
+
+\DeclareMathOperator{\Sym}{Sym}
+
+% running head: COMPACTIFYING THE PICARD SCHEME / p. 69
+% [continuation of Step III in the proof of Theorem (2.6)]
+
+\[
+\begin{array}{ccccccccc}
+0&\longrightarrow&g^*K&\xrightarrow{g^*u}&g^*(f_{\mathcal G})_*F(m)
+&\longrightarrow&g^*Q&\longrightarrow&0
+\\
+&&{\scriptstyle\mathrm{dotted}}\big\downarrow
+&&\underset{\sim}{\big\downarrow}
+&&\big\downarrow
+\\
+0&\longrightarrow&(f_T)_*I(m)&\longrightarrow&(f_T)_*(F_T(m))
+&\longrightarrow&(f_T)_*G(m)&\longrightarrow&0,
+\end{array}
+\]
+in which the middle map is the base-change isomorphism. Hence the dotted
+vertical map exists and is surjective. It is an isomorphism because its
+source and target are both locally free with rank $\phi(m)$. Thus $g^*Q$ and
+$(f_T)_*G(m)$ are equivalent $\phi(m)$-quotients.
+
+\paragraph{Step IV.}
+Let $A$ be the finitely presented subscheme of $\mathcal G$ such that a map
+$g:T\to\mathcal G$ factors through $A$ if and only if $H_T$ is $T$-flat
+with Hilbert polynomial $\phi$; it exists by (2.3). Then we have
+$H_A\in\mathbf A(A)$ and the pair $(A,H_A)$ represents $\mathbf A$.
+
+\paragraph{Proof.}
+The first assertion is clear; so, $H_A$ defines a map of functors,
+\[
+a:A(T)\longrightarrow\mathbf A(T).
+\]
+Take any $g\in A(T)$. By Step III with $G=(1\times g)^*H$, the quotients
+$g^*Q$ and $(f_T)_*G(m)$ of $F_T(m)$ are equivalent. So the image
+$a(g)=(1\times g)^*H$ determines the quotient of $g^*Q$, so also $g$. Thus,
+$a$ is injective.
+
+Take any $G\in\mathbf A(T)$. Then, by Step II, the map
+$g=\Phi(G):T\to\mathcal G$ is defined such that $g^*Q$ is equivalent to
+$(f_T)_*G(m)$. By Step III, the element $G$ is equivalent to
+$(1\times g)^*H$. Therefore $(1\times g)^*H$ is flat with Hilbert
+polynomial $\phi$. Hence $g$ factors through $A$, and so $a(g)$ is equal to
+$G$. Thus $a$ is surjective, so bijective.
+
+\paragraph{Step V.}
+We have
+\[
+f_*F(m)=B\otimes\Sym_{\nu+m}(E)
+\]
+by the projection formula [EGA $0_{\mathrm I}$, 5.4.8] and by Serre's
+explicit computation [EGA $\mathrm{III}_1$, 2.1.12]. So the Pl\"ucker
+morphism is closed embedding,
+\[
+\mathcal G\lhook\joinrel\longrightarrow
+\mathbb P\!\left(\bigwedge^{\phi(m)}
+  \bigl(B\otimes\Sym_{\nu+m}(E)\bigr)\right),
+\qquad
+Q\longmapsto\bigwedge^{\phi(m)}Q.
+\]
+Hence $A$ is strongly quasi-projective, and the final assertion holds.
+Finally $A$ is strongly projective because the valuative criterion
+[EGA I, 5.5.8] is satisfied [EGA $\mathrm{IV}_2$, 2.8.1].
+
+\paragraph{Step VI.}
+The quasi-projective case.
+
+\paragraph{Proof.}
+By Step V, the functor
+$\operatorname{Quot}^{\phi}_{(B_{\mathbb P(E)}(\nu)/\mathbb P(E)/S)}$ is
+representable by a strongly projective $S$-scheme, and
+$\operatorname{Quot}^{\phi}_{(F/X/S)}$ is clearly a subfunctor of
+% [the proof continues on page-0020]

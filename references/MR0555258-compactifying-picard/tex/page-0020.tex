@@ -1,0 +1,84 @@
+% source: Allen B. Altman and Steven L. Kleiman, "Compactifying the Picard Scheme", Adv. Math. 35 (1980)
+% pdf_page: 0020
+% doc_page: 70
+% retrieved: 2026-06-17
+% transcribed_by: codex/gpt-5.6-sol (vision, rendered at 200dpi via pdftoppm; no OCR)
+
+% requires: amsmath, amssymb
+
+\DeclareMathOperator{\Hilb}{Hilb}
+\DeclareMathOperator{\Quot}{Quot}
+\DeclareMathOperator{\Supp}{Supp}
+
+% running head: ALTMAN AND KLEIMAN / p. 70
+% [continuation of Step VI in the proof of Theorem (2.6)]
+
+$\Quot^{\phi}_{(B_{\mathbb P(E)}(\nu)/\mathbb P(E)/S)}$. So it suffices to
+show that it is a locally closed subfunctor. This assertion is local on $S$
+and compatible with base-change, so we may assume $S$ is affine and, by
+[EGA $\mathrm{IV}_3$ Sect. 8], Noetherian.
+
+Let $\overline X$ denote the scheme-theoretic closure of $X$ in
+$\mathbb P(E)$ (it exists by [EGA I, 6.10.6]), and let
+$j:X\to\overline X$ be the inclusion. Let $\overline F$ denote the image of
+the canonical map $B_{\overline X}(\nu)\to j_*(F)$. Since $j$ is
+quasi-compact, $j_*(F)$ is quasi-coherent and $j_*(F)|X$ is equal to $F$
+[EGA I, 6.9.2]. Then the image $\overline F$ of the canonical map
+$B_{\overline X}(\nu)\to j_*(F)$ is locally finitely generated, so locally
+finitely presented because $S$ is Noetherian. Clearly $\overline F|X$ is
+equal to $F$.
+
+Clearly $\Quot^{\phi}_{(F/X/S)}$ is a subfunctor of
+$\Quot^{\phi}_{(\overline F/\overline X/S)}$. Moreover
+$\Quot^{\phi}_{(\overline F/\overline X/S)}$ is representable by a closed
+subscheme $\overline Q$ of
+$\Quot^{\phi}_{(B_{\mathbb P(E)}(\nu)/\mathbb P(E)/S)}$ by Step I. Set
+$\overline Q=\Quot^{\phi}_{(\overline F/\overline X/S)}$. Let $G$ denote
+the universal quotient of $\overline F$ on $\overline X\times\overline Q$,
+and let $p:\overline X\times_S\overline Q\to\overline Q$ denote the
+projection. Since $p$ is proper, the subset
+\[
+Q=\overline Q-p\bigl([\,(\overline X-X)\times\overline Q\,]
+  \cap\Supp(G)\bigr).
+\]
+is open in $\overline Q$.
+Clearly a map $g:T\to\overline Q$ factors through $Q$ if and only if the
+relation,
+\[
+(1\times g)^{-1}(\Supp(G))\cap[(\overline X-X)\times T]=\varnothing,
+\]
+holds. Since the support of $(1\times g)^*G$ is equal to
+$(1\times g)^{-1}(\Supp(G))$ by [EGA $0_{\mathrm I}$, 5.2.4.1], the map $g$
+factors through $Q$ if and only if the corresponding element of
+$\Quot^{\phi}_{(\overline F/\overline X/S)}(T)$ lies in
+$\Quot^{\phi}_{(F/X/S)}(T)$. Thus $Q$ represents
+$\Quot^{\phi}_{(F/X/S)}$.
+
+\paragraph{(2.7) Corollary.}
+\textit{Let $f:X\to S$ be a finitely presented, locally projective (resp.
+locally quasi-projective) morphism of schemes, and let $F$ be a locally
+finitely presented $\mathcal O_X$-Module. Then $\Quot_{(F/X/S)}$ is
+representable by a disjoint union of locally finitely presented, locally
+projective (resp. locally quasi-projective) $S$-schemes.}
+
+\paragraph{Proof.}
+This assertion is local on $S$ [EGA $0_{\mathrm I}$, 4.5.5], so we may
+assume $S$ is affine and $f$ is projective. The assertion now follows easily
+from (2.6), from Example (2.2(i)), and from [EGA $0_{\mathrm I}$, 4.5.4].
+
+\paragraph{(2.8) Corollary.}
+\textit{Let $f:X\to S$ be a strongly projective (resp. strongly
+quasi-projective) morphism of schemes. Then for any polynomial
+$\phi\in\mathbb Q[T]$, the functor $\Hilb^{\phi}_{(X/S)}$ is representable
+by a strongly projective (resp. strongly quasi-projective) $S$-scheme.}
+
+\paragraph{Proof.}
+The assertion follows immediately from (2.6) with $F=\mathcal O_X$, with
+$B=\mathcal O_S$, and with $\nu=0$.
+
+\paragraph{(2.9) Theorem.}
+\textit{Let $f:X\to S$ be a strongly quasi-projective morphism of schemes,
+and let $R$ be a flat, finitely presented, proper equivalence relation on
+$X$. Assume the fibers of $p_2:R\to X$ have only a finite number of Hilbert
+polynomials}
+% [the statement continues on page-0021]
