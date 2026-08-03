@@ -18,13 +18,15 @@ docstring: '**The fibre-chart comparison as an isomorphism of two-term complexes
 
   Restriction naturality makes the resulting square commute.  This is the
 
-  reusable geometric input for both kernel and quotient-by-range comparisons.'
-file: AlgebraicJacobian/Picard/RigidPushforwardRank.lean
+  reusable geometric input for surjectivity, kernel, and quotient-by-range
+
+  comparisons.'
+file: AlgebraicJacobian/Picard/RigidPushforwardFiberChart.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_fiberCechLinearEquiv
 type: lean
-updated: '2026-08-03T11:11:12'
+updated: '2026-08-03T11:56:32'
 ---
 theorem exists_fiberCechLinearEquiv
     (𝒰 : X.AffineCoverMVSquare) (f : X ⟶ Y) [IsAffine Y]

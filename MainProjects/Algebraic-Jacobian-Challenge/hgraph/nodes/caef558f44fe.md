@@ -28,7 +28,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.appLE_fromSpecResidueField_apply
 type: lean
-updated: '2026-08-03T11:10:51'
+updated: '2026-08-03T11:56:32'
 ---
 theorem appLE_fromSpecResidueField_apply (R : CommRingCat.{u}) (t : Spec R)
     (x : Γ(Spec R, ⊤)) :
@@ -60,7 +60,3 @@ theorem appLE_fromSpecResidueField_apply (R : CommRingCat.{u}) (t : Spec R)
 section BrickC
 
 variable {X Y : Scheme.{u}}
-
-set_option maxHeartbeats 1600000 in
--- The six local module structures and three chart comparisons make the final
--- commuting-square elaboration exceed the default heartbeat budget.

@@ -76,7 +76,9 @@ Steps 2, 3 and 6 live over different but isomorphic scalar rings — `R` versus
 opens with three transport bricks:
 
 * **Brick A** (`tensorAddHomOfRingEquiv`, `tensorAddHomOfRingEquiv_tmul`,
-  `finrank_tensor_eq_of_ringEquiv`): `Module.finrank S (S ⊗[R] N)` is unchanged
+  `finrank_tensor_eq_of_ringEquiv`, `finrank_ker_baseChange_of_algEquiv`,
+  `finrank_quotient_range_baseChange_of_algEquiv`): base-changed modules and
+  the two cohomology modules of a two-term complex have unchanged finrank
   by a compatible pair of ring isomorphisms `σ : R ≃+* R'`, `τ : S ≃+* S'`
   together with a `σ`-semilinear additive equivalence `e : N ≃+ N'`.  Pure
   commutative algebra; `LinearEquiv.finrank_eq` cannot be used because the
@@ -250,6 +252,133 @@ theorem finrank_tensor_eq_of_ringEquiv
   exact finrank_eq_of_ringEquiv_addEquiv τ
     (AddEquiv.ofBijective f ⟨Function.LeftInverse.injective hgf,
       Function.RightInverse.surjective hfg⟩) hsmul
+
+/-- The dimension of the kernel of a base-changed linear map is unchanged when
+the coefficient-field algebra is replaced by an isomorphic one. -/
+theorem finrank_ker_baseChange_of_algEquiv
+    {R : Type u} [CommRing R]
+    {M₀ M₁ : Type u} [AddCommGroup M₀] [Module R M₀]
+    [AddCommGroup M₁] [Module R M₁]
+    (d : M₀ →ₗ[R] M₁) {S T : Type u} [Field S] [Field T]
+    [Algebra R S] [Algebra R T] (e : S ≃ₐ[R] T) :
+    Module.finrank S (LinearMap.ker (d.baseChange S)) =
+      Module.finrank T (LinearMap.ker (d.baseChange T)) := by
+  let E₀ : (S ⊗[R] M₀) ≃ₗ[R] (T ⊗[R] M₀) :=
+    TensorProduct.congr e.toLinearEquiv (LinearEquiv.refl R M₀)
+  let E₁ : (S ⊗[R] M₁) ≃ₗ[R] (T ⊗[R] M₁) :=
+    TensorProduct.congr e.toLinearEquiv (LinearEquiv.refl R M₁)
+  have hsq : ∀ z : S ⊗[R] M₀,
+      E₁ (d.baseChange S z) = d.baseChange T (E₀ z) := by
+    intro z
+    induction z using TensorProduct.induction_on with
+    | zero => simp
+    | add z₁ z₂ h₁ h₂ => simp only [map_add, h₁, h₂]
+    | tmul s x => simp [E₀, E₁, LinearMap.baseChange_tmul]
+  let j : LinearMap.ker (d.baseChange S) ≃+ LinearMap.ker (d.baseChange T) :=
+    { toFun := fun x => ⟨E₀ x, by
+        rw [LinearMap.mem_ker, ← hsq, x.property, map_zero]⟩
+      invFun := fun y => ⟨E₀.symm y, by
+        rw [LinearMap.mem_ker]
+        apply E₁.injective
+        rw [map_zero, hsq, E₀.apply_symm_apply]
+        exact y.property⟩
+      left_inv := fun x => Subtype.ext (E₀.symm_apply_apply x)
+      right_inv := fun y => Subtype.ext (E₀.apply_symm_apply y)
+      map_add' := fun x y => Subtype.ext
+        (E₀.map_add (x : S ⊗[R] M₀) (y : S ⊗[R] M₀)) }
+  refine finrank_eq_of_ringEquiv_addEquiv e.toRingEquiv j ?_
+  intro s x
+  apply Subtype.ext
+  change E₀ (s • (x : S ⊗[R] M₀)) = e s • E₀ x
+  induction (x : S ⊗[R] M₀) using TensorProduct.induction_on with
+  | zero => simp
+  | add z₁ z₂ h₁ h₂ => simp only [smul_add, map_add, h₁, h₂]
+  | tmul s₀ m => simp [E₀, TensorProduct.smul_tmul', map_mul]
+
+/-- The dimension of the quotient by the range of a base-changed linear map is
+unchanged when the coefficient-field algebra is replaced by an isomorphic
+one.
+
+Unlike the kernel comparison, this uses a semilinear map on the quotient.  The
+map is induced from tensor transport after checking that it carries the range
+of `d.baseChange S` onto the range of `d.baseChange T`. -/
+theorem finrank_quotient_range_baseChange_of_algEquiv
+    {R : Type u} [CommRing R]
+    {M₀ M₁ : Type u} [AddCommGroup M₀] [Module R M₀]
+    [AddCommGroup M₁] [Module R M₁]
+    (d : M₀ →ₗ[R] M₁) {S T : Type u} [Field S] [Field T]
+    [Algebra R S] [Algebra R T] (e : S ≃ₐ[R] T) :
+    Module.finrank S
+        ((S ⊗[R] M₁) ⧸ LinearMap.range (d.baseChange S)) =
+      Module.finrank T
+        ((T ⊗[R] M₁) ⧸ LinearMap.range (d.baseChange T)) := by
+  let re : S ≃+* T := e.toRingEquiv
+  letI pair : RingHomInvPair re.toRingHom re.symm.toRingHom :=
+    RingHomInvPair.of_ringEquiv re
+  letI pairSymm : RingHomInvPair re.symm.toRingHom re.toRingHom :=
+    RingHomInvPair.of_ringEquiv_symm re
+  let E₀ : (S ⊗[R] M₀) ≃ₗ[R] (T ⊗[R] M₀) :=
+    TensorProduct.congr e.toLinearEquiv (LinearEquiv.refl R M₀)
+  let E₁ : (S ⊗[R] M₁) ≃ₗ[R] (T ⊗[R] M₁) :=
+    TensorProduct.congr e.toLinearEquiv (LinearEquiv.refl R M₁)
+  let E₁map : (S ⊗[R] M₁) →ₛₗ[re.toRingHom] (T ⊗[R] M₁) :=
+    { toFun := E₁
+      map_add' := E₁.map_add
+      map_smul' := by
+        intro s x
+        induction x using TensorProduct.induction_on with
+        | zero => simp
+        | add z₁ z₂ h₁ h₂ => simp only [smul_add, map_add, h₁, h₂]
+        | tmul s₀ m => simp [re, E₁, TensorProduct.smul_tmul', map_mul] }
+  let E₁inv : (T ⊗[R] M₁) →ₛₗ[re.symm.toRingHom] (S ⊗[R] M₁) :=
+    { toFun := E₁.symm
+      map_add' := E₁.symm.map_add
+      map_smul' := by
+        intro t x
+        induction x using TensorProduct.induction_on with
+        | zero => simp
+        | add z₁ z₂ h₁ h₂ => simp only [smul_add, map_add, h₁, h₂]
+        | tmul t₀ m => simp [re, E₁, TensorProduct.smul_tmul', map_mul] }
+  have hsq : ∀ z : S ⊗[R] M₀,
+      E₁ (d.baseChange S z) = d.baseChange T (E₀ z) := by
+    intro z
+    induction z using TensorProduct.induction_on with
+    | zero => simp
+    | add z₁ z₂ h₁ h₂ => simp only [map_add, h₁, h₂]
+    | tmul s x => simp [E₀, E₁, LinearMap.baseChange_tmul]
+  have hf : LinearMap.range (d.baseChange S) ≤
+      Submodule.comap E₁map (LinearMap.range (d.baseChange T)) := by
+    rintro _ ⟨x, rfl⟩
+    exact ⟨E₀ x, (hsq x).symm⟩
+  have hg : LinearMap.range (d.baseChange T) ≤
+      Submodule.comap E₁inv (LinearMap.range (d.baseChange S)) := by
+    rintro _ ⟨x, rfl⟩
+    refine ⟨E₀.symm x, ?_⟩
+    change d.baseChange S (E₀.symm x) = E₁.symm (d.baseChange T x)
+    simpa using congrArg E₁.symm (hsq (E₀.symm x))
+  let forward := (LinearMap.range (d.baseChange S)).mapQ
+    (LinearMap.range (d.baseChange T)) E₁map hf
+  let inverse := (LinearMap.range (d.baseChange T)).mapQ
+    (LinearMap.range (d.baseChange S)) E₁inv hg
+  have hleft : Function.LeftInverse inverse forward := by
+    intro x
+    induction x using Submodule.Quotient.induction_on with
+    | _ x =>
+      rw [Submodule.mapQ_apply, Submodule.mapQ_apply]
+      exact congrArg Submodule.Quotient.mk (E₁.symm_apply_apply x)
+  have hright : Function.RightInverse inverse forward := by
+    intro x
+    induction x using Submodule.Quotient.induction_on with
+    | _ x =>
+      rw [Submodule.mapQ_apply, Submodule.mapQ_apply]
+      exact congrArg Submodule.Quotient.mk (E₁.apply_symm_apply x)
+  let j :
+      ((S ⊗[R] M₁) ⧸ LinearMap.range (d.baseChange S)) ≃ₛₗ[re.toRingHom]
+        ((T ⊗[R] M₁) ⧸ LinearMap.range (d.baseChange T)) :=
+    LinearEquiv.ofBijective forward
+      ⟨Function.LeftInverse.injective hleft, Function.RightInverse.surjective hright⟩
+  exact finrank_eq_of_ringEquiv_addEquiv re j.toAddEquiv
+    (fun s x => j.map_smulₛₗ s x)
 
 /-! ## §2 (Brick B). The residue field of `Spec R` versus `Γ(Spec κ(t), ⊤)` -/
 
