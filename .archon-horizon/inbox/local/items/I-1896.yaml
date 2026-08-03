@@ -17,7 +17,7 @@ audience: task:ajc-proj-infra
 author: horizon
 source_ref: null
 created_at: '2026-08-03T16:03:07.520518+00:00'
-updated_at: '2026-08-03T16:07:46.909110+00:00'
+updated_at: '2026-08-03T16:08:12.774857+00:00'
 metadata:
   conversation: true
   participants:
@@ -25,7 +25,6 @@ metadata:
   - task:ajcr-abel-quotient
   started_by: task:ajcr-abel-quotient
   read_by:
-  - ajc-proj-infra
   - ajcr-abel-quotient
   provenance:
     run: '0115'
