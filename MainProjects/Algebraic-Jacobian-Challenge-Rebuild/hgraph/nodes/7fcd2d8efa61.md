@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.A_noDominant
 file: scratch_p4r6_audit/p09_binders.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.A_noDominant
 type: lean
-updated: '2026-08-03T20:05:14'
+updated: '2026-08-03T22:58:50'
 ---
 theorem A_noDominant {X : Scheme.{u}} [IsReduced X] [X.IsSeparated]
     (V : X.Opens)

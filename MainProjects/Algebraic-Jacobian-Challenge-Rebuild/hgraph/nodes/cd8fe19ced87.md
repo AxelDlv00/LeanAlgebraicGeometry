@@ -14,17 +14,17 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.BasicOpenCocycleDatum.exists_away_away_divFamZarAff_of_admissible_fibre
 type: lean
-updated: '2026-08-03T20:05:08'
+updated: '2026-08-03T22:58:50'
 ---
 theorem exists_away_away_divFamZarAff_of_admissible_fibre
     (D : BasicOpenCocycleDatum C B pi) [IsNoetherianRing B]
     (hpi : pi ≫ P1.structureMap k = C.hom) (n g : ℕ)
     (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
     (hgn : g ≤ n)
-    (hdeg : ∀ (L : Type u) [Field L] [Algebra k L] [Algebra B L]
-      [IsScalarTower k B L],
-      classDeg L (Scheme.CechPic.map (relCurveMap C B L) D.cechPicClass) = (n : ℤ))
-    (p : PrimeSpectrum B) (hp : D.HasWitnessH1Vanishing p.asIdeal.ResidueField) :
+    (p : PrimeSpectrum B) (hp : D.HasWitnessH1Vanishing p.asIdeal.ResidueField)
+    (hdegp : classDeg p.asIdeal.ResidueField
+      (Scheme.CechPic.map (relCurveMap C B p.asIdeal.ResidueField)
+        D.cechPicClass) = (n : ℤ)) :
     ∃ h : B, h ∉ p.asIdeal ∧
       ∃ q₁ : PrimeSpectrum (Localization.Away h),
         PrimeSpectrum.comap (algebraMap B (Localization.Away h)) q₁ = p ∧
@@ -58,7 +58,7 @@ theorem exists_away_away_divFamZarAff_of_admissible_fibre
         (relCurveMap C B (Localization.Away h)) D.cechPicClass from
           D.cechPicClass_baseChange (Localization.Away h),
       ← MonoidHom.comp_apply, ← Scheme.CechPic.map_comp, relCurveMap_comp]
-    exact hdeg q₁.asIdeal.ResidueField
+    exact D.classDeg_map_residueField_of_comap p q₁ hq₁ n hdegp
   have hsub₁ : Subsingleton
       (Sheaf.HModule (D₁.baseChange q₁.asIdeal.ResidueField).sheaf 1) :=
     D₁.datum_subsingleton_h1_baseChange q₁.asIdeal.ResidueField hH1₁
@@ -173,6 +173,13 @@ theorem exists_away_away_divFamZarAff_of_admissible_fibre
           D.cechPicClass_baseChange (Localization.Away h),
       ← MonoidHom.comp_apply, ← Scheme.CechPic.map_comp,
       relCurveMap_comp]
+  have hdegq₂ : classDeg q₂.asIdeal.ResidueField
+      (D₂.baseChange q₂.asIdeal.ResidueField).cechPicClass = (n : ℤ) := by
+    rw [D₂.cechPicClass_baseChange q₂.asIdeal.ResidueField, hclassD₂,
+      ← MonoidHom.comp_apply, ← Scheme.CechPic.map_comp, relCurveMap_comp]
+    exact D.classDeg_map_residueField_of_comap p q₂ hq₂ n hdegp
+  letI : Module.Free (Localization.Away f) (Sheaf.HModule D₂.sheaf 0) :=
+    Module.Free.of_equiv e₂
   have hdeg₂ : ∀ (L : Type u) [Field L] [Algebra k L]
       [Algebra (Localization.Away f) L]
       [IsScalarTower k (Localization.Away f) L],
@@ -180,20 +187,11 @@ theorem exists_away_away_divFamZarAff_of_admissible_fibre
         (Scheme.CechPic.map (relCurveMap C (Localization.Away f) L) d.picClass) =
           (n : ℤ) := by
     intro L _ _ _ _
-    letI : Algebra B L :=
-      ((algebraMap (Localization.Away f) L).comp
-        (algebraMap B (Localization.Away f))).toAlgebra
-    haveI : IsScalarTower B (Localization.Away f) L :=
-      IsScalarTower.of_algebraMap_eq' (by rw [RingHom.algebraMap_toAlgebra])
-    haveI : IsScalarTower k B L := IsScalarTower.of_algebraMap_eq' (by
-      rw [RingHom.algebraMap_toAlgebra, RingHom.comp_assoc,
-        ← IsScalarTower.algebraMap_eq k B (Localization.Away f),
-        ← IsScalarTower.algebraMap_eq k (Localization.Away f) L])
     rw [show d.picClass = D₂.cechPicClass from
         D₂.sectionLocalEquationsOfFibrewiseRegular_picClass s₂ hcomponent,
-      hclassD₂, ← MonoidHom.comp_apply, ← Scheme.CechPic.map_comp,
-      relCurveMap_comp]
-    exact hdeg L
+      ← D₂.cechPicClass_baseChange L]
+    exact D₂.classDeg_baseChange_eq_of_freeH0_of_one
+      g n hchi hH1₂ q₂.asIdeal.ResidueField hdegq₂ L
   let F : DivFamZarAff C (Localization.Away f) n :=
     divFamZarAffOfFibrewiseRegularLocalEquations C n d pi hreg hdeg₂
   refine ⟨h, hh, q₁, hq₁, f, hf, q₂, hq₂, F, ?_⟩

@@ -6,9 +6,8 @@ decl: AlgebraicGeometry.instRedXq
 file: scratch_p4r6_audit/p22_FULL_REFUTATION.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.instRedXq
 type: lean
-updated: '2026-08-03T20:05:15'
+updated: '2026-08-03T22:58:50'
 ---
 instance instRedXq : IsReduced Xq := isReduced_of_isOpenImmersion (coprodSpec ℚ ℚ)
