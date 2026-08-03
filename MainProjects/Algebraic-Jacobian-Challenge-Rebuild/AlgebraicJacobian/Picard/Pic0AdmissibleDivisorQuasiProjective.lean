@@ -26,7 +26,6 @@ set_option quotPrecheck false
 set_option backward.isDefEq.respectTransparency false
 set_option maxSynthPendingDepth 8
 set_option maxRecDepth 16000
-set_option maxHeartbeats 1000000
 
 universe u
 
@@ -172,6 +171,8 @@ noncomputable def divRepAffAdmissibleConcreteScheme : Over (Spec (.of k)) := by
       (windowShiftEquiv (divRepAffP1Map_comp_over C)
         (divRepAffAdmissibleParameter C)).symm)
 
+set_option maxHeartbeats 1000000 in
+-- Reducing the internally chosen bases exposes a large dependent `DivScheme` expression.
 /-- The chosen admissible representer is the concrete positive-degree `DivScheme`. -/
 theorem divRepAffAdmissibleScheme_eq_concrete :
     divRepAffAdmissibleScheme C = divRepAffAdmissibleConcreteScheme C := by
@@ -224,22 +225,6 @@ noncomputable def divRepAffAdmissibleEmbedding :
     divRepAffAdmissibleScheme C ⟶ divRepAffAdmissibleGrassmannianPair C :=
   eqToHom (divRepAffAdmissibleScheme_eq_concrete C) ≫
     divRepAffAdmissibleConcreteEmbedding C
-
-/-- The concrete model's map to the Grassmannian pair is a closed immersion. -/
-theorem isClosedImmersion_divRepAffAdmissibleConcreteEmbedding :
-    IsClosedImmersion (divRepAffAdmissibleConcreteEmbedding C).left := by
-  unfold divRepAffAdmissibleConcreteEmbedding
-  dsimp only [Over.homMk_left]
-  infer_instance
-
-/-- The admissible representer's map to the Grassmannian pair is a closed immersion. -/
-theorem isClosedImmersion_divRepAffAdmissibleEmbedding :
-    IsClosedImmersion (divRepAffAdmissibleEmbedding C).left := by
-  haveI : IsClosedImmersion (divRepAffAdmissibleConcreteEmbedding C).left :=
-    isClosedImmersion_divRepAffAdmissibleConcreteEmbedding C
-  unfold divRepAffAdmissibleEmbedding
-  dsimp only [Over.comp_left]
-  infer_instance
 
 /-- The admissible Grassmannian pair has the finite product frame atlas used by the divisor
 construction. -/
