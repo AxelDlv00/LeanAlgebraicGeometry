@@ -190,6 +190,63 @@ noncomputable def divRepAffAdmissibleGrassmannianPair : Over (Spec (.of k)) :=
     (divRepAffAdmissibleParameter C) (divRepAffAdmissibleWindowRankOne C)
     (divRepAffAdmissibleParameter C) (divRepAffAdmissibleWindowRankTwo C)
 
+/-- The underlying Scheme morphism of the concrete admissible divisor embedding. -/
+noncomputable def divRepAffAdmissibleRawEmbedding :
+    (divRepAffAdmissibleConcreteScheme C).left ⟶
+      (divRepAffAdmissibleGrassmannianPair C).left := by
+  letI : C.left.Over (Spec (.of k)) := admissibleDivisorOver C
+  haveI : SmoothOfRelativeDimension 1 (C.left ↘ Spec (.of k)) :=
+    admissibleDivisorSmooth C
+  haveI : IsIntegral C.left := admissibleDivisorIntegral C
+  haveI : LocallyOfFiniteType (C.left ↘ Spec (.of k)) :=
+    admissibleDivisorLocallyOfFiniteType C
+  haveI : QuasiCompact (C.left ↘ Spec (.of k)) := admissibleDivisorQuasiCompact C
+  haveI : Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 0) :=
+    admissibleDivisorHModuleFiniteZero C
+  haveI : Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 1) :=
+    admissibleDivisorHModuleFiniteOne C
+  exact divSchemeι k
+    (windowS_choice (divRepAffP1Map C) (divRepAffP1Map_comp_over C)
+      (divRepAffAdmissibleParameter C) • fiberWeilDivisor (divRepAffP1Map C))
+    (windowM_choice (divRepAffP1Map C) (divRepAffP1Map_comp_over C)
+      (divRepAffAdmissibleParameter C) • fiberWeilDivisor (divRepAffP1Map C))
+    (divRepAffAdmissibleParameter C)
+    (divRepAffAdmissibleWindowRankOne C) (divRepAffAdmissibleWindowRankTwo C)
+    (divRepAffAdmissibleWindowBasisOne C)
+    ((divRepAffAdmissibleWindowBasisTwo C).map
+      (windowShiftEquiv (divRepAffP1Map_comp_over C)
+        (divRepAffAdmissibleParameter C)).symm)
+
+set_option backward.isDefEq.respectTransparency true in
+set_option maxHeartbeats 500000 in
+-- The raw name keeps the dependent chosen bases out of downstream target types.
+/-- The raw admissible divisor embedding is a closed immersion. -/
+theorem isClosedImmersion_divRepAffAdmissibleRawEmbedding :
+    IsClosedImmersion (divRepAffAdmissibleRawEmbedding C) := by
+  letI : C.left.Over (Spec (.of k)) := admissibleDivisorOver C
+  haveI : SmoothOfRelativeDimension 1 (C.left ↘ Spec (.of k)) :=
+    admissibleDivisorSmooth C
+  haveI : IsIntegral C.left := admissibleDivisorIntegral C
+  haveI : LocallyOfFiniteType (C.left ↘ Spec (.of k)) :=
+    admissibleDivisorLocallyOfFiniteType C
+  haveI : QuasiCompact (C.left ↘ Spec (.of k)) := admissibleDivisorQuasiCompact C
+  haveI : Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 0) :=
+    admissibleDivisorHModuleFiniteZero C
+  haveI : Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 1) :=
+    admissibleDivisorHModuleFiniteOne C
+  change IsClosedImmersion (divSchemeι k
+    (windowS_choice (divRepAffP1Map C) (divRepAffP1Map_comp_over C)
+      (divRepAffAdmissibleParameter C) • fiberWeilDivisor (divRepAffP1Map C))
+    (windowM_choice (divRepAffP1Map C) (divRepAffP1Map_comp_over C)
+      (divRepAffAdmissibleParameter C) • fiberWeilDivisor (divRepAffP1Map C))
+    (divRepAffAdmissibleParameter C)
+    (divRepAffAdmissibleWindowRankOne C) (divRepAffAdmissibleWindowRankTwo C)
+    (divRepAffAdmissibleWindowBasisOne C)
+    ((divRepAffAdmissibleWindowBasisTwo C).map
+      (windowShiftEquiv (divRepAffP1Map_comp_over C)
+        (divRepAffAdmissibleParameter C)).symm))
+  exact isClosedImmersion_divSchemeι k _ _ _ _ _ _ _
+
 /-- The concrete closed immersion of the admissible divisor model into its two-window
 Grassmannian pair. -/
 noncomputable def divRepAffAdmissibleConcreteEmbedding :
@@ -206,18 +263,14 @@ noncomputable def divRepAffAdmissibleConcreteEmbedding :
     admissibleDivisorHModuleFiniteZero C
   haveI : Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 1) :=
     admissibleDivisorHModuleFiniteOne C
-  refine Over.homMk (divSchemeι k
-    (windowS_choice (divRepAffP1Map C) (divRepAffP1Map_comp_over C)
-      (divRepAffAdmissibleParameter C) • fiberWeilDivisor (divRepAffP1Map C))
-    (windowM_choice (divRepAffP1Map C) (divRepAffP1Map_comp_over C)
-      (divRepAffAdmissibleParameter C) • fiberWeilDivisor (divRepAffP1Map C))
-    (divRepAffAdmissibleParameter C)
-    (divRepAffAdmissibleWindowRankOne C) (divRepAffAdmissibleWindowRankTwo C)
-    (divRepAffAdmissibleWindowBasisOne C)
-    ((divRepAffAdmissibleWindowBasisTwo C).map
-      (windowShiftEquiv (divRepAffP1Map_comp_over C)
-        (divRepAffAdmissibleParameter C)).symm)) ?_
+  refine Over.homMk (divRepAffAdmissibleRawEmbedding C) ?_
   rfl
+
+/-- The concrete admissible divisor embedding is a closed immersion. -/
+theorem isClosedImmersion_divRepAffAdmissibleConcreteEmbedding :
+    IsClosedImmersion (divRepAffAdmissibleConcreteEmbedding C).left := by
+  change IsClosedImmersion (divRepAffAdmissibleRawEmbedding C)
+  exact isClosedImmersion_divRepAffAdmissibleRawEmbedding C
 
 /-- The actual chosen representer, not merely its concrete spelling, embeds into the
 Grassmannian pair. -/
@@ -225,6 +278,15 @@ noncomputable def divRepAffAdmissibleEmbedding :
     divRepAffAdmissibleScheme C ⟶ divRepAffAdmissibleGrassmannianPair C :=
   eqToHom (divRepAffAdmissibleScheme_eq_concrete C) ≫
     divRepAffAdmissibleConcreteEmbedding C
+
+/-- The embedding of the actual chosen admissible representer is a closed immersion. -/
+theorem isClosedImmersion_divRepAffAdmissibleEmbedding :
+    IsClosedImmersion (divRepAffAdmissibleEmbedding C).left := by
+  letI : IsClosedImmersion (divRepAffAdmissibleConcreteEmbedding C).left :=
+    isClosedImmersion_divRepAffAdmissibleConcreteEmbedding C
+  unfold divRepAffAdmissibleEmbedding
+  rw [Over.comp_left]
+  infer_instance
 
 /-- The admissible Grassmannian pair has the finite product frame atlas used by the divisor
 construction. -/
