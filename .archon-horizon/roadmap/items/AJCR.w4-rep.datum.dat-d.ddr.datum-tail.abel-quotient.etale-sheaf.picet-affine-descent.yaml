@@ -2,10 +2,10 @@ id: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.etale-sheaf.picet-affin
 title: Prove affine PicEt etale descent
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: Prove injectivity and unique gluing for the explicit PicEtAff plus quotient
-  along singleton faithfully flat etale covers, using cover composition/refinement
-  and PicEtAff.unit_injective. This is the genuine raw-sheaf gap; no IsSheaf or representability
-  binder closes it.
+summary: 'The uniqueness/separatedness half is landed as PicEtAff.map_injective_of_etaleCover
+  and pinned in its child. Still prove effectivity: a class over a singleton faithfully
+  flat etale cover with equal double pullbacks descends to the base. Only after both
+  halves may this row feed raw big-etale sheafhood.'
 status: pending
 kind: proof
 priority: normal
@@ -29,4 +29,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.etale-sheaf
   owner: ajcr-abel-quotient
-  updated_at: '2026-08-03T17:22:52.859012+00:00'
+  updated_at: '2026-08-03T18:09:32.495904+00:00'

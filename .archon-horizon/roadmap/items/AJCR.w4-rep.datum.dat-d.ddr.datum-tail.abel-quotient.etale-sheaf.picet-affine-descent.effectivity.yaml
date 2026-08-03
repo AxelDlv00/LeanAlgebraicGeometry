@@ -1,0 +1,31 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.etale-sheaf.picet-affine-descent.effectivity
+title: Descend compatible PicEtAff classes
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: Given a PicEtAff class over an etale cover whose two pullbacks agree over
+  the double overlap, construct a base class restricting to it. This is the remaining
+  existence half of singleton-cover descent and requires converting equality after
+  a further cover into an on-the-nose descentClasses cocycle.
+status: pending
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-08-03T18:09:30.578439+00:00'
+  provenance:
+    run: '0115'
+    session: 0006-horizon-ajcr-abel-quotient
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-abel-quotient
+    task_title: 'Own the Altman-Kleiman quotient: pic0AdmissibleAbelQuotientRepresenter'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.etale-sheaf.picet-affine-descent
+  owner: ajcr-abel-quotient
