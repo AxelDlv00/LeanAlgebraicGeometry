@@ -2,10 +2,15 @@ id: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.etale-sheaf.sigma-compa
 title: Identify raw Pic0 Sigma with etale sheafification
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: From the unconditional big-etale sheaf certificate, construct the natural
-  isomorphism from pic0SigmaFunctor composed with ULift to pic0SigmaEtaleSheafification
-  and expose the component needed to compare quotient Yoneda with pic0TypeFunctor.
-status: pending
+summary: 'Landed Pic0SigmaEtaleSheafificationComparison: the ULifted raw Pic0 Sigma
+  functor has a public big-etale Presieve certificate, a bundled sheaf, and the canonical
+  functor-level iso to pic0SigmaEtaleSheafification whose hom is exactly the sheafification
+  unit. Exact endpoint hypotheses are retained; public declarations use only propext,
+  Classical.choice, and Quot.sound. Scoped build 9212/9212 and root build 9503/9503
+  pass. Source commit 4ed731029dce80484742714fc4cebd4875e9cd7c; root import 07786bb9de7b390601b57cf85c45378247d56474.
+  Those two predecessor commit objects lacked Archon provenance trailers and are recorded
+  by this correctly stamped checkpoint without rewriting shared history.'
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -28,3 +33,6 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.etale-sheaf.sigma-comparison
   owner: ajcr-abel-quotient
+  updated_at: '2026-08-03T22:51:31.727749+00:00'
+  pinned_commits:
+  - 4ed731029dce80484742714fc4cebd4875e9cd7c

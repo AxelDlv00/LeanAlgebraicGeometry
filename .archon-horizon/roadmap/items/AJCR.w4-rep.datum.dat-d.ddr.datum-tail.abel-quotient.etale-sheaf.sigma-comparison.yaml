@@ -2,11 +2,15 @@ id: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.etale-sheaf.sigma-compa
 title: Identify raw Pic0 Sigma with its etale sheafification
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: Affine singleton-cover Pic0 descent is landed as pic0Subgroup_existsUnique_of_etaleCover.
-  Still lift this algebraic result to arbitrary big-etale Scheme covers, prove pic0SigmaFunctor
-  composed with ULift is an etale sheaf, and construct the unconditional comparison
-  with pic0SigmaEtaleSheafification used by quotient Yoneda.
-status: pending
+summary: 'Completed the raw Pic0 Sigma comparison chain: affine singleton etale descent
+  (23d765428c), arbitrary big-etale Scheme sheaf descent (16b072ea9e), and the endpoint-hypothesis
+  ULift/sheafification natural isomorphism with canonical unit equation (4ed731029d;
+  root import 07786bb9de). All claimed public declarations are kernel-verified with
+  only propext, Classical.choice, and Quot.sound, and the 9503-job root build is green.
+  This closes only identification of raw Pic0 Sigma with pic0SigmaEtaleSheafification;
+  effective quotient construction, represented Abel kernel, quotient Yoneda identification,
+  quasi-projectivity, and pic0AdmissibleAbelQuotientRepresenter remain open.'
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -29,6 +33,8 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.etale-sheaf
   owner: ajcr-abel-quotient
-  updated_at: '2026-08-03T20:09:05.918638+00:00'
+  updated_at: '2026-08-03T22:52:20.824156+00:00'
   pinned_commits:
+  - 4ed731029dce80484742714fc4cebd4875e9cd7c
+  - 16b072ea9e7986d462935cc2c257a28c904de76f
   - 23d765428c04b5e9bf761479d1e0f450a66a3896
