@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divRepClassifyZarAff_eq_of_isDivRepClassifyAff
 type: lean
-updated: '2026-08-02T07:12:49'
+updated: '2026-08-03T13:09:52'
 ---
 theorem divRepClassifyZarAff_eq_of_isDivRepClassifyAff (F₀ : DivFamZarAff C S g)
     (u : overSpec k S ⟶
@@ -20,3 +20,6 @@ theorem divRepClassifyZarAff_eq_of_isDivRepClassifyAff (F₀ : DivFamZarAff C S 
     u = divRepClassifyZarAff hpi g hO hchi r₁ r₂ b₁ b₂ S F₀ :=
   Over.OverMorphism.ext (isDivRepClassifyAff_unique hpi g hO hchi r₁ r₂ b₁ b₂
     F₀ hu (divRepClassifyZarAff_isDivRepClassifyAff hpi g hO hchi r₁ r₂ b₁ b₂ F₀))
+
+set_option maxHeartbeats 2400000 in
+-- The off-diagonal cover glue and arbitrary-test pullback share the compatibility branch.

@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.retract2
 type: lean
-updated: '2026-08-03T09:45:17'
+updated: '2026-08-03T13:09:54'
 ---
 theorem retract2 : (V2 R).ι ≫ r2 R = 𝟙 _ := by
   rw [← cancel_epi ((coprod.inl : Spec R ⟶ X2 R).isoOpensRange).hom]

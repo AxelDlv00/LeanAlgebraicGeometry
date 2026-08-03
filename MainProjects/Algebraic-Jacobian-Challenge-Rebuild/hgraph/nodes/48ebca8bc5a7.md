@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.overSpecMap_comp_divRepClassifyZarAff
 type: lean
-updated: '2026-08-02T07:12:49'
+updated: '2026-08-03T13:09:52'
 ---
 theorem overSpecMap_comp_divRepClassifyZarAff
     {A B : Type u} [CommRing A] [Algebra k A] [CommRing B] [Algebra k B]
@@ -20,3 +20,6 @@ theorem overSpecMap_comp_divRepClassifyZarAff
   apply Over.OverMorphism.ext
   rw [Over.comp_left, Over.overSpecMap_left]
   exact specMap_comp_divRepClassifyZarAff hpi g hO hchi r₁ r₂ b₁ b₂ phi F
+
+set_option maxHeartbeats 1600000 in
+-- The proof changes algebra structures twice for the off-diagonal classifier faces.

@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.pullback_chart_divClassifyAff_compat
 type: lean
-updated: '2026-08-02T07:12:49'
+updated: '2026-08-03T13:09:52'
 ---
 theorem pullback_chart_divClassifyAff_compat (F₀ : DivFamZarAff C S g)
     {T : Type u} [CommRing T] [Algebra k T] [Algebra S T] [IsScalarTower k S T]
@@ -73,3 +73,8 @@ theorem pullback_chart_divClassifyAff_compat (F₀ : DivFamZarAff C S g)
           (windowM_choice pi hpi g • fiberWeilDivisor pi) g r₁ r₂ b₁
           (b₂.map (windowShiftEquiv hpi g).symm)) hcompat
     _ = _ := by rw [Category.assoc]
+
+set_option maxHeartbeats 2400000 in
+-- Both off-diagonal framed families transport to the common coefficient ring.
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxRecDepth 8000 in
