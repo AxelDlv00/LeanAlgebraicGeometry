@@ -15,6 +15,7 @@ import AlgebraicJacobian.Curve.P1Section
 import AlgebraicJacobian.Curve.P1PicComparison
 import AlgebraicJacobian.Curve.RationalToP1
 import AlgebraicJacobian.Curve.MapToP1
+import AlgebraicJacobian.Picard.CurveProjectivity
 import AlgebraicJacobian.Curve.SeparablyClosedFibre
 import AlgebraicJacobian.Curve.SeparablyClosedPoints
 import AlgebraicJacobian.AbelianVariety.Rigidity
