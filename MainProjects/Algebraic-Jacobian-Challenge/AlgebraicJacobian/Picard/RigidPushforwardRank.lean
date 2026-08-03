@@ -6,7 +6,6 @@ Authors: The AlgebraicJacobian Contributors
 import AlgebraicJacobian.Picard.RigidPushforwardP1Sheaf
 import AlgebraicJacobian.Picard.RigidPushforwardFiberChart
 import AlgebraicJacobian.Picard.SchematicSupport
-import AlgebraicJacobian.Cohomology.StructureSheafModuleK.EulerCechComparison
 
 /-!
 # The rank identity: the pushforward stalk rank is the fibre `h⁰`

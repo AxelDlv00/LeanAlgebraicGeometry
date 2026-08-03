@@ -3,7 +3,7 @@ Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
-import AlgebraicJacobian.Cohomology.StructureSheafModuleK.ModulesFunctor
+import AlgebraicJacobian.Cohomology.StructureSheafModuleK.EulerCechComparison
 import AlgebraicJacobian.Picard.HilbertPolynomial
 import AlgebraicJacobian.Picard.LineBundlePullback
 
@@ -33,6 +33,8 @@ naturality in the test scheme, or prove local constancy on that test scheme.
 
 * `Scheme.Hom.fiberEulerIndex`: the totalized truncated Euler index of a module
   on a scheme-theoretic fibre.
+* `Scheme.Hom.fiberEulerIndex_eq_cech`: computation of that index by any
+  two-affine cover of a quasicoherent fibre module.
 * `Scheme.LineBundle.OnProduct.fiberEulerIndexDifference`: the signed
   line-bundle index relative to the literal structure sheaf of the fibre.
 -/
@@ -58,6 +60,19 @@ noncomputable def Hom.fiberEulerIndex (f : X ⟶ S) (s : S)
     (toModuleKSheafOfModules
       (Over.mk (f.fiberToSpecResidueField s))
       (f.fiberModule s M))
+
+/-- A two-affine cover of the fibre computes `fiberEulerIndex` for a
+quasicoherent module.  This is an equality with the concrete signed
+kernel/quotient-by-range index; it does not assert finite-dimensionality. -/
+theorem Hom.fiberEulerIndex_eq_cech (f : X ⟶ S) (s : S)
+    (M : X.Modules) [M.IsQuasicoherent]
+    (V : (f.fiber s).AffineCoverMVSquare) :
+    f.fiberEulerIndex s M =
+      V.chi (Over.mk (f.fiberToSpecResidueField s)) (f.fiberModule s M) := by
+  haveI : (f.fiberModule s M).IsQuasicoherent := f.fiberModule_isQuasicoherent s M
+  unfold Hom.fiberEulerIndex
+  exact @AffineCoverMVSquare.chi_toModuleKSheafOfModules_eq _ _
+    (Over.mk (f.fiberToSpecResidueField s)) V (f.fiberModule s M) this
 
 /-- `fiberEulerIndex` is invariant under an isomorphism of modules on the
 total space.  The isomorphism is pulled back to the fibre, restricted to the
