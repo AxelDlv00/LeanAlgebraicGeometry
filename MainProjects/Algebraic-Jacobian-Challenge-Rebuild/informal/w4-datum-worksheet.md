@@ -21,6 +21,18 @@ frozen targets (`AlgebraicJacobian/Challenge.lean`), `informal/w4-cbc-recon.md` 
 never import). Mathlib claims verified by grep against the pinned checkout
 (`.lake-packages/mathlib`, v4.31.0), cited `file:line`. No Lean edited; no build run.*
 
+> **STATUS CORRECTION (2026-08-03; supersedes this worksheet's route choice).**
+> The authoritative Wave-4 route is now the corrected Altman--Kleiman quotient. The
+> unconditional widened divisor representer feeds one internally chosen admissible Abel
+> map; its kernel is relative linear equivalence including `picFromBase`; the source has a
+> concrete project-local Grassmannian embedding; and the remaining chain is étale-local
+> surjectivity, a represented smooth/proper kernel pair, the effective quotient of
+> `lm:qt`, its Yoneda comparison with `pic0TypeFunctor`, and the direct Sigma-valued
+> `pic0AdmissibleAbelQuotientRepresenter`. The raw Abel map is not an open atlas because
+> its linear-system fibres can have positive dimension. All lower claims that `lm:qt` is
+> bypassed or banned, and all Stage-B/C/D instructions that make the old Sigma-open/01JJ
+> chart route the producer, are historical design notes and are no longer binding.
+
 **STATE AT WRITING.** Every engine input of the w4-datum design §4 sequence is LANDED
 and kernel-green: the carrier `pic0Functor C : (Over (Spec (.of k)))ᵒᵖ ⥤ CommGrpCat.{u}`
 (`Pic0Functor.lean:151`; membership `Iff.rfl` `:121`, `pic0Map_coe` rfl `:140`,
@@ -41,16 +53,13 @@ statement for `picEt`/`pic0` beyond the affine basic-open half
 (`PicEtAffZariskiGlue/Sep`), `JacobianData`/`Witness.lean`, `abelElement` (G-D8, degree
 lane's next campaign), and every Stage-B/C/D brick below.
 
-**VERDICT IN ONE LINE.** The datum is `JacobianData C` verbatim from design §5 — now
-literally stateable on the landed `pic0Functor` — produced by the Milne-style
-Σ-chart route run entirely on the landed engine: every chart, stratum, and covering
-open on the route is an **H¹-fibrewise-vanishing locus at χ-normalized degree g**
-(so `rigidEngine_isOpen_vanishing` is the only openness mechanism, Kleiman's Serre
-passage and EGA IV 17.16.3(ii) are both retired), Kleiman's quotient lemma `lm:qt` is
-bypassed by the h⁰ = 1 canonical-section charts, gluing is mathlib's 01JJ
-`RepresentableBy` engine, and the two honest mountains that remain are Div^g-lite
-representability (DAT-D) and the finite-Galois/Speiser descent of the datum (DAT-G) —
-each mandated WORKSHEET-FIRST, everything else S/M/L bricks specced here.
+**CURRENT VERDICT IN ONE LINE.** The datum remains `JacobianData C` verbatim from design
+§5, but its representability field is produced by the concrete admissible Abel quotient:
+`divFunctorAff_admissible_representableBy` -> chosen Abel map -> concrete kernel and
+project-local source -> étale-local surjectivity -> represented smooth/proper kernel pair
+-> Altman--Kleiman effective quotient -> quotient Yoneda comparison ->
+`pic0AdmissibleAbelQuotientRepresenter`. No rational point, open-atlas coverage, or
+quotient-data binder is an accepted substitute for that chain.
 
 ---
 
@@ -147,16 +156,16 @@ specs are stable:
 
 ---
 
-## §2 THE ROUTE (obligations 2, 5) — four stages, one openness mechanism
+## §2 HISTORICAL ROUTE (superseded by the status correction above)
 
-### 2.1 The architecture (DECIDED) and what is bypassed
+### 2.1 The former architecture and what it attempted to bypass
 
-**Milne-style Σ-charts, exactly the route-decision Wave-4 pin** (route-decision.md item
-12; old-draft judged D3 map, D′/J/G clusters — lessons only). Kleiman's own endgame —
-`Z ×_P Z = ℙ(Q)` and the quotient lemma `lm:qt` (tex 2359–2366, 2368–2415: flat proper
-equivalence relations effective via `Hilb`, AK80 2.9) — is **bypassed**: the charts are
-loci where the Abel fibration has a *canonical section* (h⁰ = 1 normalization), so no
-quotient of an equivalence relation is ever formed. Stages:
+The following Milne-style Sigma-chart plan records the former Wave-4 design and is retained
+only for the reusable lemmas it motivated. It is not the representability producer. The
+current route uses Kleiman's endgame: the kernel relation of the admissible Abel map is
+represented and the flat proper relation is quotiented by `lm:qt` (tex 2359--2415,
+AK80 2.9). In particular, the old `h⁰ = 1` chart normalization does not turn the raw
+admissible Abel map into an open atlas. The former stages were:
 
 - **Stage A (relative engine on arbitrary classes — pre-bricks, launchable NOW).**
   The m-chart glued constructor + its engine discharge (DAT-1), the seams (DAT-2..5),
@@ -300,8 +309,8 @@ presentation control. The pinned chain:
 ### 2.5 Routes weighed and rejected (the honest costs)
 
 - **(a) Port `lm:qt`** (flat proper equivalence relations effective, AK80 via `Hilb`).
-  REJECTED: the route-decision explicitly bans it (Quot/Hilb off-route, rule 5); the
-  Σ-section charts deliver the same scheme with no quotient.
+  **CURRENT ROUTE:** the previous rejection is superseded. This is the required effective
+  quotient step after the concrete kernel pair and project-local source are established.
 - **(b) Plan-B (Sym^g / Weil symmetric products)**. Not fired: it is the RED fallback
   of the cbc recon §3 and nothing on this pass moved toward RED; recorded only as the
   escape if DAT-D's carving walls (§5 risk 1).
@@ -583,10 +592,9 @@ through `IsRigidified` representatives only.
 
 ---
 
-*End of worksheet. Deliverable of record for the `AJCR.w4-rep` w4-6 design obligation
-(w4-datum-design §4.1); binding for the DAT-* and RE-5 brick specs — brick specs derive
-from this document; the DAT-D and DAT-G worksheets are mandated before their stages
-prove; §3.1's W6-full spec is to be handed to the cbc lane and §3.2's RE-5 spec to the
-rigid-engine lane; the §1.4 consumption map and the §2.1 retired risks (EGA 17.16.3,
-Serre-openness, `lm:qt`, `deg Θ₁ = deg π`) to be echoed on the roadmap by the
-orchestrator.*
+*End of historical worksheet. Its reusable algebraic and cohomological brick specifications
+remain useful, but its route-selection claims are superseded by the 2026-08-03 status
+correction. In particular `lm:qt` is active, not a retired risk; the current seven-part
+roadmap cone is source project-locality, kernel identification, étale sheaf comparison,
+étale-local surjectivity, kernel-pair representability, effective quotient, and Yoneda
+identification.*

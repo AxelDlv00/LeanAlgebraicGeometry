@@ -149,12 +149,17 @@ its predecessors.
 ### Wave 4 — representability [RG mountain #1]
 11. Rigid pushforward engine (Mumford AV II.5 two-term projective replacement;
     `h¹`-vanishing ⇒ `q_*L` locally free of rank χ commuting with base change).
-12. Uniform `h¹`-vanishing for large degree; `Div^d` for curves; Grassmannian/ℙ-bundle
-    embedding; Σ-opens, equalizer, gluing over `k^s` (Stacks 01JJ); Galois descent to `k`
-    (Speiser semilinear descent — landed cleanly in the old draft, re-derive).
-    The old draft's judged D3 campaign decomposition (~15–20 milestones) is the map;
-    Quot schemes / flattening / Altman–Kleiman are **off-route** (their only Kleiman
-    consumer, `lm:qt`, is bypassed by the curve-specific `Div^d` geometry).
+12. Uniform `h¹`-vanishing for large degree and the widened divisor functor; its
+    unconditional admissible representer; the internally chosen admissible Abel map;
+    identification of its kernel with relative linear equivalence, including the
+    `picFromBase` quotient; étale-local surjectivity; and a concrete project-local
+    Grassmannian embedding of the source. Represent the kernel pair, prove its first
+    projection smooth and proper, form the Altman--Kleiman effective quotient (`lm:qt`),
+    and identify its Yoneda functor with `pic0TypeFunctor`. The final producer is the
+    direct Sigma-valued `pic0AdmissibleAbelQuotientRepresenter`. The raw Abel map is not
+    an open atlas: its positive-dimensional linear-system fibres make the quotient step
+    essential. The earlier 01JJ/Sigma-open and Galois-descent plan is historical, not the
+    current Wave-4 route.
 
 ### Wave 5 — the abelian-variety package for `Pic⁰` [RG mountains #2, #3]
 13. Tangent space `T₀Pic = H¹(C,𝒪)` (dual numbers, truncated exponential) [S];

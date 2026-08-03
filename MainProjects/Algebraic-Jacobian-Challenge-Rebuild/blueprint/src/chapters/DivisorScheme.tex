@@ -535,9 +535,10 @@ separate from this window engine.
   \[
     \operatorname{divFunctorAff}(C,n)\text{ is represented by }D,
   \]
-  not a representation of the auxiliary \(\Div^{\,n}_{\mathrm{Zar}}\) carrier above. The
-  construction supplies the carrier and its Abel chart map; it does not supply this
-  representation witness.
+  not a representation of the auxiliary \(\Div^{\,n}_{\mathrm{Zar}}\) carrier above.
+  The carrier construction alone does not supply a representation witness; the
+  unconditional witness at the admissible parameter is recorded separately in
+  Definition~\ref{def:admissibleDivisorRepresentation}.
 \end{definition}
 
 \section{The window embedding and the divisor scheme}
@@ -1006,24 +1007,166 @@ records that it has not been constructed.
   current R2 representability target \(\operatorname{divFunctorAff}(C,n)\).
 \end{theorem}
 
-\begin{corollary}[From the widened divisor carrier to the Jacobian]
-  \label{cor:divRepToJacobian}
-  \uses{def:divFamZarAff, def:pic0RepresentableByOfCharts, def:jacobian_data}
-  \notready
-  Granting a representation
-  \(\operatorname{divFunctorAff}(C,n)\text{ is represented by }D\), and separately supplying a
-  chart family of relatively representable open immersions together with the required
-  locally-surjective \(\Sigma\)-map, the widened Abel chart
-  \(\operatorname{abelSigmaChartAff}\) (the Abel class of the arbitrary-affine carrier) is the conditional
-  input to \ref{def:pic0RepresentableByOfCharts}. The degree \(n\) is a window parameter; the
-  formal degree-window lemmas show that a reference divisor of degree at least \(g\) is
-  available, while any consumer that insists on degree exactly \(g\) has an additional
-  arithmetic/degree-pinning obligation. Only after the representation and the two seam
-  antecedents are inhabited does the degree-zero Picard functor become representable and yield
-  a Jacobian datum (\ref{def:jacobian_data}) --- hence, through the frozen definition
-  (\ref{def:jacobian}), the Jacobian of \(C\).
+\section{The admissible Abel quotient}
+\label{sec:admissibleAbelQuotient}
 
-  The universal family, the open-immersion chart certificates, and local surjectivity are
-  distinct unproved inputs here.  The passage from a representation over a separably closed
-  base to one over \(k\) is a further descent step, not addressed here.
-\end{corollary}
+The widened divisor representation is now unconditional. The remaining representability
+argument is not an open-atlas argument: the fibres of the raw Abel map are linear systems and
+can have positive dimension. Following Kleiman's proof of Theorem~4.8, the admissible divisor
+scheme must instead be divided by the kernel relation of the Abel map. The following finite
+dependency cone records the construction and distinguishes the landed inputs from the genuine
+Altman--Kleiman quotient gate.
+
+\begin{definition}[The represented admissible divisor source]
+  \label{def:admissibleDivisorRepresentation}
+  \lean{AlgebraicGeometry.divRepAffAdmissibleParameter,
+    AlgebraicGeometry.divRepAffAdmissibleScheme,
+    AlgebraicGeometry.divFunctorAff_admissible_representableBy}
+  \uses{def:divFamZarAff}
+  \leanok
+  There is a parameter \(n_{\mathrm{adm}}\), chosen from the curve data, and a scheme
+  \(D_{\mathrm{adm}}\) over \(\Spec k\) representing
+  \(\operatorname{divFunctorAff}(C,n_{\mathrm{adm}})\), without a rational-point,
+  divisor-degree, or further representability hypothesis.
+\end{definition}
+
+\begin{definition}[The concrete admissible Abel map]
+  \label{def:admissibleAbelMap}
+  \lean{AlgebraicGeometry.admissibleAbelChartIndex,
+    AlgebraicGeometry.admissibleAbelChartDivisor,
+    AlgebraicGeometry.admissibleAbelTrans,
+    AlgebraicGeometry.abelSigmaChartAffAdmissible_eq_sigmaExtension_admissibleAbelTrans}
+  \uses{def:admissibleDivisorRepresentation, def:pic0SigmaFunctor}
+  \leanok
+  Choose the admissible chart index and reference divisor internally. Composing the
+  representing equivalence of Definition~\ref{def:admissibleDivisorRepresentation} with
+  the corresponding chart-value transformation gives a natural transformation from the
+  represented divisor functor to \(\mathrm{pic}^0_{\mathrm{Set}}(C)\). Its Sigma-extension
+  is the concrete map \(\operatorname{abelSigmaChartAffAdmissible}\).
+\end{definition}
+
+\begin{theorem}[The admissible source is project-local]
+  \label{thm:admissibleDivisorSource_projectLocal}
+  \lean{AlgebraicGeometry.divRepAffAdmissibleEmbedding,
+    AlgebraicGeometry.isClosedImmersion_divRepAffAdmissibleEmbedding,
+    AlgebraicGeometry.divRepAffAdmissibleGrassmannianCover,
+    AlgebraicGeometry.quasiCompact_divRepAffAdmissibleScheme,
+    AlgebraicGeometry.locallyOfFiniteType_divRepAffAdmissibleScheme,
+    AlgebraicGeometry.isSeparated_divRepAffAdmissibleScheme}
+  \uses{def:admissibleDivisorRepresentation, def:divScheme}
+  \leanok
+  The source \(D_{\mathrm{adm}}\) admits a closed immersion into a concrete pair of
+  Grassmannians. Pulling back the finite affine Grassmannian cover gives a finite affine
+  cover of the source; in particular the source is quasi-compact, locally of finite type,
+  and separated. This is the concrete project-local input used in the quotient argument.
+  \source{kleiman-picard}
+\end{theorem}
+
+\begin{theorem}[Kernel of the admissible Abel map]
+  \label{thm:admissibleAbel_kernel}
+  \lean{AlgebraicGeometry.admissibleAbelTrans_app_eq_iff_forall_picClass_div_mem_picFromBase}
+  \uses{def:admissibleAbelMap, def:relPic}
+  \leanok
+  Two admissible divisor families have the same Abel value exactly when, on every affine
+  open of the test scheme, the ratio of their Picard classes lies in
+  \(\mathrm{picFromBase}\). Thus the concrete kernel is precisely relative linear
+  equivalence, including the quotient by classes pulled back from the base.
+  \source{kleiman-picard}
+\end{theorem}
+
+\begin{definition}[The admissible Abel map after big-etale sheafification]
+  \label{def:admissibleAbelEtaleSheafMap}
+  \lean{AlgebraicGeometry.Scheme.subcanonical_etaleTopology,
+    AlgebraicGeometry.pic0SigmaEtaleSheafification,
+    AlgebraicGeometry.admissibleAbelEtaleSourceIso,
+    AlgebraicGeometry.admissibleAbelEtaleSheafMap}
+  \uses{def:admissibleDivisorRepresentation, def:admissibleAbelMap}
+  \leanok
+  After raising values to the universe required by the big site and sheafifying, the
+  source is identified by subcanonicity with the actual big-etale Yoneda sheaf of
+  \(D_{\mathrm{adm}}\). The resulting morphism has target the big-etale sheafification of
+  the Sigma Picard presheaf. Identifying that target with the original Picard functor is a
+  separate step.
+\end{definition}
+
+\begin{theorem}[The Sigma Picard functor is a big-etale sheaf]
+  \label{thm:pic0SigmaFunctor_isEtaleSheaf}
+  \uses{def:pic0SigmaFunctor, thm:pic0SigmaFunctor_isSheaf,
+    def:admissibleAbelEtaleSheafMap}
+  \notready
+  The Sigma-extension of \(\mathrm{pic}^0\) satisfies descent for the big-etale topology,
+  and its universe-raised sheaf is canonically isomorphic to the sheafification in
+  Definition~\ref{def:admissibleAbelEtaleSheafMap}.
+\end{theorem}
+
+\begin{theorem}[Etale-local surjectivity of the admissible Abel map]
+  \label{thm:admissibleAbel_etaleLocallySurjective}
+  \uses{def:admissibleAbelMap, def:admissibleAbelEtaleSheafMap}
+  \notready
+  The concrete admissible Abel transformation is locally surjective for the big-etale
+  topology. Equivalently, every degree-zero Picard class lifts to an admissible divisor
+  family after an etale cover of the test scheme.
+  \source{kleiman-picard}
+\end{theorem}
+
+\begin{theorem}[The sheafified Abel map is the coequalizer of its kernel pair]
+  \label{thm:admissibleAbel_etaleCoequalizer}
+  \uses{def:admissibleAbelEtaleSheafMap,
+    thm:admissibleAbel_etaleLocallySurjective}
+  \notready
+  Local surjectivity makes the sheafified Abel map a regular epimorphism in the category of
+  type-valued big-etale sheaves. Hence it is the coequalizer of its pullback kernel pair.
+\end{theorem}
+
+\begin{theorem}[The concrete Abel kernel pair is representable]
+  \label{thm:admissibleAbelKernelPair_representable}
+  \uses{thm:admissibleAbel_kernel, thm:admissibleDivisorSource_projectLocal}
+  \notready
+  Construct a scheme \(R\) representing the concrete kernel relation on
+  \(D_{\mathrm{adm}}\), identify it with the fibre product over the Picard sheaf, and prove
+  that the first projection \(R \to D_{\mathrm{adm}}\) is smooth and proper.
+  \source{kleiman-picard}
+\end{theorem}
+
+\begin{theorem}[The Altman--Kleiman effective quotient]
+  \label{thm:admissibleAbel_effectiveQuotient}
+  \uses{thm:admissibleDivisorSource_projectLocal,
+    thm:admissibleAbelKernelPair_representable}
+  \notready
+  Apply the flat-proper equivalence-relation theorem to construct a scheme
+  \(Q = D_{\mathrm{adm}}/R\) over \(\Spec k\), with quotient map
+  \(D_{\mathrm{adm}} \to Q\), and identify \(R\) with
+  \(D_{\mathrm{adm}} \times_Q D_{\mathrm{adm}}\). This is a construction of the concrete
+  quotient, not a theorem with quotient data as a hypothesis.
+  \source{kleiman-picard}
+\end{theorem}
+
+\begin{theorem}[Yoneda identification of the quotient]
+  \label{thm:admissibleAbel_quotientYoneda}
+  \uses{thm:pic0SigmaFunctor_isEtaleSheaf,
+    thm:admissibleAbel_etaleCoequalizer,
+    thm:admissibleAbel_effectiveQuotient,
+    thm:admissibleAbel_kernel}
+  \notready
+  The Yoneda sheaf of \(Q\) and the degree-zero Picard Sigma functor are coequalizers of
+  the same represented kernel pair. The induced isomorphism is compatible with the
+  structure maps to \(\Spec k\), and therefore descends from the Sigma-extension to
+  \(\mathrm{pic}^0_{\mathrm{Set}}(C)\) on the slice.
+  \source{kleiman-picard}
+\end{theorem}
+
+\begin{definition}[The admissible Abel quotient representer]
+  \label{def:pic0AdmissibleAbelQuotientRepresenter}
+  \uses{thm:admissibleAbel_quotientYoneda, thm:representableBy_overSlice}
+  \notready
+  The direct endpoint is
+  \[
+    \operatorname{pic0AdmissibleAbelQuotientRepresenter}(C)
+      : \sum_{Q : \Over(\Spec k)}
+          \mathrm{RepresentableBy}\bigl(\mathrm{pic0TypeFunctor}(C),Q\bigr).
+  \]
+  Its body chooses the admissible datum internally, directly consumes
+  \(\operatorname{divFunctorAff\_admissible\_representableBy}\), constructs the effective
+  quotient above, and returns its Yoneda comparison. It has no representability,
+  local-surjectivity, kernel-pair, rational-point, or quotient-data binder.
+\end{definition}

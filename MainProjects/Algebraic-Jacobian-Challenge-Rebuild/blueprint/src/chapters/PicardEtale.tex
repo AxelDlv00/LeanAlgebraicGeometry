@@ -10697,8 +10697,8 @@ engine, and a representation of the extension descends to one of the original fu
   scheme; compose with Theorem~\ref{thm:representableBy_overSlice}.
 \end{proof}
 
-This is a conditional statement, and the condition is the whole of the construction of the
-Picard scheme. Spelled out, the hypothesis asks for a family of schemes \(X_i\) together
+This remains a valid conditional local-representability theorem. Spelled out, its hypothesis
+asks for a family of schemes \(X_i\) together
 with maps \(\mathrm{yoneda}(X_i) \to \widetilde{\mathrm{pic}^0}(C)\) such that
 
 \begin{itemize}
@@ -10713,18 +10713,14 @@ with maps \(\mathrm{yoneda}(X_i) \to \widetilde{\mathrm{pic}^0}(C)\) such that
     cover of \(T\), in the image of some \(f_i\).
 \end{itemize}
 
-Neither is available for free. A degree-zero class over a test \(T\) is not represented by
-a divisor over \(T\) itself; producing a divisor requires passing to a cover and choosing an
-effective representative of a twist, which is exactly the content of the second condition.
-The first condition asks that the locus where such a representative exists in a fixed
-family be open in every test --- the openness statement that, in Grothendieck's argument,
-comes from semicontinuity of \(h^0\) along the Abel map from a scheme of divisors.
-
-Producing such a family for \(C\) is the open problem: the divisor half of the construction
-is Chapter~\ref{chap:DivisorScheme}, whose forward direction
-(Theorem~\ref{thm:divRepUniversalFamily}) is unproved, and the chart family is
-Corollary~\ref{cor:divRepToJacobian}, which rests on it. Until then this definition has no
-producer, and the degree-zero Picard functor of \(C\) is not known to be representable.
+These hypotheses are not supplied by the raw admissible Abel map. Its fibres are complete
+linear systems and can have positive dimension, so that map cannot be an open immersion or
+an open atlas. The representability producer pursued here is instead the corrected
+Altman--Kleiman construction of Section~\ref{sec:admissibleAbelQuotient}: represent the
+kernel relation of the unconditional widened divisor source, form its effective quotient,
+and identify the quotient Yoneda sheaf with the degree-zero Picard functor. The auxiliary
+fixed-window Theorem~\ref{thm:divRepUniversalFamily} is not an obstruction to the already
+landed widened representation and is not the endpoint's missing input.
 
 \section{The Abel element}
 \label{sec:abelElement}
