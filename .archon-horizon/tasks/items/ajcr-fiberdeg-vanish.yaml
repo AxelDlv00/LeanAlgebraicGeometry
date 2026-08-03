@@ -1,44 +1,46 @@
 id: ajcr-fiberdeg-vanish
-project: Algebraic-Jacobian-Challenge-Rebuild
-objective: 'Close the single unproven antecedent x.HasFiberDeg 0 -> IsZero x.F that
-  gates divFunctorDegZero_representableByTerminal_of_isZero (DivFamilyZero.lean, landed
-  by pic-e in run 0105) into a second UNCONDITIONAL producer for the degree-zero divisor
-  functor. The honest obligations are documented in DivSupportQuasiFinite.lean (isFinite_support_of_fibers)
-  and reviewer issue I-1722: (a) the fibre-of-support vs support-of-fibre carrier
-  bridge - the reverse annihilator inclusion currently absent from the tree; (b) degree-0
-  fibre implies empty fibre. WARNING from review history: this row has TWICE produced
-  logically-equivalent re-spellings presented as reductions (I-1622, I-1722 - isZero_iff_isEmpty_schematicSupport
-  and friends are already interderivable). A new spelling of the antecedent is NOT
-  progress; only a proof of (a) and (b) is. Reusable bricks that already exist and
-  are verified: isZero_of_isEmpty, isZero_of_isEmpty_schematicSupport, isZero_iff_isEmpty_schematicSupport.
-  The fibre-finiteness gate is real (finrank junk value at infinite dimension breaks
-  the naive route), so go through coherence/Nakayama on the finite fibre, not through
-  finrank. VERIFY before claiming: #print axioms (expect only propext, Classical.choice,
-  Quot.sound), per-module lake build, root build green. Follow the BINDING protocol
-  at MainProjects/Algebraic-Jacobian-Challenge-Rebuild/informal/protocol-concurrent-lanes.md;
-  at most 3 concurrent AJCR lanes.'
-title: Close HasFiberDeg 0 implies IsZero - the one antecedent of the terminal representability
-  route
+project: Algebraic-Jacobian-Challenge
+objective: 'UPDATED SCOPE (2026-08-03, supersedes the AJCR-only wording; see I-1794):
+  the target declarations live in Algebraic-Jacobian-Challenge, so EDIT AJC. Close
+  the single unproven antecedent x.HasFiberDeg 0 -> IsZero x.F that gates divFunctorDegZero_representableByTerminal_of_isZero
+  (AJC DivFamilyZero.lean, landed by pic-e in run 0105) into an UNCONDITIONAL producer
+  for the degree-zero divisor functor in AJC. The honest obligations are documented
+  in AJC DivSupportQuasiFinite.lean (isFinite_support_of_fibers) and reviewer issue
+  I-1722: (a) the fibre-of-support vs support-of-fibre carrier bridge - the reverse
+  annihilator inclusion currently absent from the tree; (b) degree-0 fibre implies
+  empty fibre. WARNING from review history: this row has TWICE produced logically-equivalent
+  re-spellings presented as reductions (I-1622, I-1722). A new spelling of the antecedent
+  is NOT progress; only a proof of (a) and (b) is. The fibre-finiteness gate is real
+  (finrank junk value at infinite dimension breaks the naive route), so go through
+  coherence/Nakayama on the finite fibre, not through finrank. Do NOT port the interface
+  into AJCR and do NOT touch the AJCR widened tower files (owned by ajcr-param-decouple).
+  VERIFY before claiming: #print axioms (expect only propext, Classical.choice, Quot.sound),
+  per-module lake build; note the AJC umbrella build costs ~43 min - use narrow builds
+  during the session.'
+title: Close HasFiberDeg 0 implies IsZero in AJC - unlock the terminal-representability
+  producer
 explanation: ''
 projects:
+- Algebraic-Jacobian-Challenge
 - Algebraic-Jacobian-Challenge-Rebuild
 priority: high
-status: blocked
+status: running
 write_set:
   files: []
   projects:
-  - Algebraic-Jacobian-Challenge-Rebuild
+  - Algebraic-Jacobian-Challenge
   declarations: []
   blueprint_nodes: []
   workspace: false
 scope:
   projects:
+  - Algebraic-Jacobian-Challenge
   - Algebraic-Jacobian-Challenge-Rebuild
 roadmap_refs: []
 inbox_refs:
 - I-1794
 artifact_refs: []
 created_at: '2026-08-02T11:45:41.663719+00:00'
-updated_at: '2026-08-03T00:48:55.908785+00:00'
+updated_at: '2026-08-03T01:04:56.011898+00:00'
 metadata:
   author: human
