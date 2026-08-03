@@ -588,6 +588,7 @@ import AlgebraicJacobian.Picard.Pic0ChartPresentationConverse
 import AlgebraicJacobian.Picard.Pic0ChartPlusFibreTower
 import AlgebraicJacobian.Picard.Pic0ChartLocusPlusFibre
 import AlgebraicJacobian.Picard.DegreeZeroBaseField
+import AlgebraicJacobian.Picard.DegreeAtBaseField
 import AlgebraicJacobian.Picard.Pic0ChartCoverageDegreeStep2
 import AlgebraicJacobian.Picard.Pic0ChartCoverageNoDrop
 import AlgebraicJacobian.Picard.Pic0ChartLocusGeneralTest
