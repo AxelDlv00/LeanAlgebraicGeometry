@@ -758,6 +758,7 @@ import AlgebraicJacobian.Picard.DivRepChartClassUnivZarLocal
 -- the constructed divisor scheme without an assumed `RepresentableBy` witness.
 import AlgebraicJacobian.Picard.DivRepChartClassUnivAffRepresentable
 import AlgebraicJacobian.Picard.DivRepAffChallenge
+import AlgebraicJacobian.Picard.Pic0AtlasFromDivRepAffChallenge
 import AlgebraicJacobian.Picard.Pic0AtlasFiniteType
 import AlgebraicJacobian.Picard.Pic0AtlasCompactFromClass
 import AlgebraicJacobian.Picard.Pic0AtlasCompactNoetherian
