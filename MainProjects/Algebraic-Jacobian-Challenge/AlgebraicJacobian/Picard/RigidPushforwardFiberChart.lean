@@ -58,11 +58,11 @@ This file builds that bridge in the following layers.
 * **§6 (Brick 5).**  `fiberChart_smul_baseMap_res` — the comparisons `Θ_W`
   are natural in `W`, so they form a map of Čech complexes.
 
-* **§7 (Brick 6).**
-  `Scheme.AffineCoverMVSquare.surjective_moduleSectionDiffBase_baseChange_residueField`
-  — the headline geometric statement: for a family over an affine base and a
-  2-affine cover, fibrewise Čech `h¹`-vanishing at `t` implies surjectivity
-  of the `κ(t)`-base change of the Čech difference map.
+* **§7 (Brick 6).**  `exists_fiberCechLinearEquiv` exports the chart
+  comparison as an isomorphism of two-term complexes.  Its first consumer,
+  `Scheme.AffineCoverMVSquare.surjective_moduleSectionDiffBase_baseChange_residueField`,
+  transports fibrewise Čech `h¹`-vanishing to surjectivity of the `κ(t)`-base
+  change of the Čech difference map.
 
 * **§8 (Brick 8).**  `surjective_baseChange_of_algEquiv` — base-changed
   surjectivity only depends on the isomorphism class of the scalar algebra.
@@ -624,10 +624,6 @@ theorem exists_fiberCechLinearEquiv
   ext w
   exact (hsquare w).symm
 
-set_option maxHeartbeats 1600000 in
--- Heartbeat headroom: the Čech square is checked on pure tensors across three
--- separate chart comparisons, each carrying its own algebra dictionary.
-set_option synthInstance.maxHeartbeats 800000 in
 /-- **The base-changed Čech difference map at a fibre is surjective.**
 
 Let `f : X ⟶ Y` be a family over an affine base, `𝒰 = {U₁, U₂}` a bundled
@@ -671,59 +667,23 @@ theorem Scheme.AffineCoverMVSquare.surjective_moduleSectionDiffBase_baseChange_r
   letI mA1 := f.baseSectionsModule M 𝒰.U₁
   letI mA2 := f.baseSectionsModule M 𝒰.U₂
   letI mA0 := f.baseSectionsModule M (𝒰.U₁ ⊓ 𝒰.U₂)
-  obtain ⟨⟨Θ₁, hΘ₁⟩⟩ := exists_fiberChartTensorEquiv f t M 𝒰.isAffineOpen_U₁
-    (𝒰.isAffineOpen_U₁.preimage (f.fiberι t))
-  obtain ⟨⟨Θ₂, hΘ₂⟩⟩ := exists_fiberChartTensorEquiv f t M 𝒰.isAffineOpen_U₂
-    (𝒰.isAffineOpen_U₂.preimage (f.fiberι t))
-  obtain ⟨⟨Θ₀, hΘ₀⟩⟩ := exists_fiberChartTensorEquiv f t M 𝒰.isAffineOpen_inf
-    (𝒰.isAffineOpen_inf.preimage (f.fiberι t))
+  letI nB1 := (f.fiberToSpecResidueField t).baseSectionsModule (f.fiberModule t M)
+    ((𝒰.preimage (f.fiberι t)).U₁)
+  letI nB2 := (f.fiberToSpecResidueField t).baseSectionsModule (f.fiberModule t M)
+    ((𝒰.preimage (f.fiberι t)).U₂)
+  letI nB0 := (f.fiberToSpecResidueField t).baseSectionsModule (f.fiberModule t M)
+    ((𝒰.preimage (f.fiberι t)).U₁ ⊓ (𝒰.preimage (f.fiberι t)).U₂)
   haveI : (f.fiberModule t M).IsQuasicoherent :=
     Scheme.Hom.fiberModule_isQuasicoherent f t M
+  obtain ⟨e0, e1, hcomm⟩ := exists_fiberCechLinearEquiv 𝒰 f M t
   have hdt : Function.Surjective
       ⇑((𝒰.preimage (f.fiberι t)).moduleSectionDiff (f.fiberModule t M)) :=
     h1.surjective_moduleSectionDiff (𝒰.preimage (f.fiberι t))
-  -- the commuting Čech square, checked on pure tensors
-  have hsquare : ∀ w : TensorProduct Γ(Y, ⊤) Γ(Spec (Y.residueField t), ⊤)
-      (Γ(M, 𝒰.U₁) × Γ(M, 𝒰.U₂)),
-      Θ₀ ((𝒰.moduleSectionDiffBase f M).baseChange
-          Γ(Spec (Y.residueField t), ⊤) w) =
-        (𝒰.preimage (f.fiberι t)).moduleSectionDiff (f.fiberModule t M)
-          (Θ₁ (TensorProduct.prodRight Γ(Y, ⊤) Γ(Y, ⊤)
-              Γ(Spec (Y.residueField t), ⊤) Γ(M, 𝒰.U₁) Γ(M, 𝒰.U₂) w).1,
-           Θ₂ (TensorProduct.prodRight Γ(Y, ⊤) Γ(Y, ⊤)
-              Γ(Spec (Y.residueField t), ⊤) Γ(M, 𝒰.U₁) Γ(M, 𝒰.U₂) w).2) := by
-    intro w
-    induction w using TensorProduct.induction_on with
-    | zero =>
-      simp only [map_zero, Prod.fst_zero, Prod.snd_zero]
-      exact (map_zero _).symm
-    | add w₁ w₂ ih₁ ih₂ =>
-      simp only [map_add, Prod.fst_add, Prod.snd_add]
-      rw [ih₁, ih₂]
-      exact (map_add _ _ _).symm
-    | tmul b p =>
-      obtain ⟨x₁, x₂⟩ := p
-      rw [LinearMap.baseChange_tmul, hΘ₀ b _]
-      simp only [TensorProduct.prodRight_tmul, hΘ₁, hΘ₂,
-        Scheme.AffineCoverMVSquare.moduleSectionDiffBase_apply,
-        Scheme.AffineCoverMVSquare.moduleSectionDiff_apply]
-      have e₁ := fiberChart_smul_baseMap_res f t M
-        (inf_le_left : 𝒰.U₁ ⊓ 𝒰.U₂ ≤ 𝒰.U₁) (le_refl (f.fiberι t ⁻¹ᵁ (𝒰.U₁ ⊓ 𝒰.U₂)))
-        ((f.fiberι t).preimage_mono (inf_le_left : 𝒰.U₁ ⊓ 𝒰.U₂ ≤ 𝒰.U₁)) b x₁
-      have e₂ := fiberChart_smul_baseMap_res f t M
-        (inf_le_right : 𝒰.U₁ ⊓ 𝒰.U₂ ≤ 𝒰.U₂) (le_refl (f.fiberι t ⁻¹ᵁ (𝒰.U₁ ⊓ 𝒰.U₂)))
-        ((f.fiberι t).preimage_mono (inf_le_right : 𝒰.U₁ ⊓ 𝒰.U₂ ≤ 𝒰.U₂)) b x₂
-      rw [map_sub, smul_sub]
-      exact congrArg₂ (· - ·) e₁.symm e₂.symm
-  -- conclude by transporting surjectivity across the three bijections
   intro z
-  obtain ⟨u, hu⟩ := hdt (Θ₀ z)
-  refine ⟨(TensorProduct.prodRight Γ(Y, ⊤) Γ(Y, ⊤) Γ(Spec (Y.residueField t), ⊤)
-    Γ(M, 𝒰.U₁) Γ(M, 𝒰.U₂)).symm (Θ₁.symm u.1, Θ₂.symm u.2), ?_⟩
-  refine Θ₀.injective ?_
-  rw [hsquare, LinearEquiv.apply_symm_apply, AddEquiv.apply_symm_apply,
-    AddEquiv.apply_symm_apply]
-  exact hu
+  obtain ⟨u, hu⟩ := hdt (e1 z)
+  refine ⟨e0.symm u, e1.injective ?_⟩
+  have hc := DFunLike.congr_fun hcomm (e0.symm u)
+  exact hc.symm.trans ((congrArg _ (e0.apply_symm_apply u)).trans hu)
 
 end CechFiberSquare
 
