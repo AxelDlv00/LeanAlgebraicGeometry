@@ -13,9 +13,10 @@ independently of the count.*
 
 > **WAVE-4 ROUTE CORRECTION (2026-08-03).** This document remains binding for the Wave-3
 > Picard-functor interfaces. Its former Wave-4 conclusion that Kleiman's `lm:qt` quotient
-> machinery stays off-route is superseded: the current representability producer is the
-> effective quotient of the admissible Abel map by its concrete relative-linear-equivalence
-> kernel. The raw Abel map cannot be used as an open atlas because its linear-system fibres
+> machinery stays off-route is superseded: the required Wave-4 representability producer
+> must be the effective quotient of the admissible Abel map by its concrete
+> relative-linear-equivalence kernel. That quotient and the terminal representer remain
+> open. The raw Abel map cannot be used as an open atlas because its linear-system fibres
 > can have positive dimension.
 
 Lean signatures below are **intended signatures**: binding in shape (carrier types, universes,
