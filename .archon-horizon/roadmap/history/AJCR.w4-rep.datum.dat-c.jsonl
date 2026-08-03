@@ -10,3 +10,4 @@
 {"at": "2026-07-28T21:36:32.917423+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
 {"at": "2026-07-28T23:06:01.185023+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
 {"at": "2026-07-29T03:01:02.707925+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "milestone updated"}
+{"at": "2026-08-03T01:30:05.567623+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated", "provenance": {"run": "0113", "session": "0006-horizon-rev2-ajcr", "role": "horizon", "round": "2", "rounds": "8", "task": "rev2-ajcr", "task_title": "Reviewer lane AJCR (fleet 2): measure producers, refute re-spellings, audit to the END of the fleet", "projects": "Algebraic-Jacobian-Challenge-Rebuild"}}
