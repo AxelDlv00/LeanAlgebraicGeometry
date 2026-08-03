@@ -3,15 +3,23 @@
   "round": 7,
   "project": "Algebraic-Jacobian-Challenge",
   "task_id": "ajc-kleiman-rewire",
-  "status": "running",
-  "started_at": "2026-08-03T06:28:39.713452+00:00",
   "projects": [
     "Algebraic-Jacobian-Challenge"
   ],
+  "status": "queued",
+  "started_at": "2026-08-03T06:28:39.713452+00:00",
+  "ended_at": "2026-08-03T08:00:09.608595+00:00",
   "harness_name": "codex",
   "harness_kind": "codex",
   "model": "gpt-5.6-sol",
   "effort": "ultra",
+  "config_dir": null,
   "auth": "subscription",
-  "workspace_sha": "02d0d3593eb1ecd27a058567f0faee5d1426be2d"
+  "usage": {
+    "tokens_in": 31786932,
+    "tokens_out": 66449,
+    "cost_usd": null
+  },
+  "engine_session_id": "019fc64f-6651-7442-bb45-f215f0b7be21",
+  "workspace_sha": "a7368c13c39f5698b28a370ed8b977cc9e1d19b7"
 }

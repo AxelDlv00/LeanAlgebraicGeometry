@@ -1,0 +1,30 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.kernel
+title: Identify the widened Abel kernel with relative linear equivalence
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: Prove equality of chart values iff the affine-piece Picard-class ratios lie
+  in picFromBase; this is the concrete kernel relation including the base quotient.
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-08-03T07:50:56.940659+00:00'
+  provenance:
+    run: '0115'
+    session: 0002-horizon-ajcr-abel-quotient
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-abel-quotient
+    task_title: 'Own the Altman-Kleiman quotient: pic0AdmissibleAbelQuotientRepresenter'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient
+  owner: ajcr-abel-quotient
+  updated_at: '2026-08-03T07:58:32.812018+00:00'
