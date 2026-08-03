@@ -134,6 +134,59 @@ def h1Map (h : d ∘ₗ a0 = a1 ∘ₗ k) : (K1 ⧸ range k) →ₗ[R] (M1 ⧸ r
     h1Map k d a0 a1 h (Submodule.Quotient.mk x) = Submodule.Quotient.mk (a1 x) :=
   rfl
 
+/-- A commuting square whose vertical maps are linear equivalences induces a
+linear equivalence on degree-zero cohomology, represented as kernels. -/
+noncomputable def h0LinearEquiv
+    (k : K0 →ₗ[R] K1) (d : M0 →ₗ[R] M1)
+    (e0 : K0 ≃ₗ[R] M0) (e1 : K1 ≃ₗ[R] M1)
+    (h : d ∘ₗ e0.toLinearMap = e1.toLinearMap ∘ₗ k) :
+    ker k ≃ₗ[R] ker d := by
+  have hinv : k ∘ₗ e0.symm.toLinearMap = e1.symm.toLinearMap ∘ₗ d := by
+    ext x
+    apply e1.injective
+    have hx := LinearMap.congr_fun h (e0.symm x)
+    simpa using hx.symm
+  exact
+    { h0Map k d e0.toLinearMap e1.toLinearMap h with
+      invFun := h0Map d k e0.symm.toLinearMap e1.symm.toLinearMap hinv
+      left_inv := by
+        intro x
+        apply Subtype.ext
+        exact e0.symm_apply_apply x.1
+      right_inv := by
+        intro x
+        apply Subtype.ext
+        exact e0.apply_symm_apply x.1 }
+
+/-- A commuting square whose vertical maps are linear equivalences induces a
+linear equivalence on degree-one cohomology, represented as quotients by the
+ranges of the differentials. -/
+noncomputable def h1LinearEquiv
+    (k : K0 →ₗ[R] K1) (d : M0 →ₗ[R] M1)
+    (e0 : K0 ≃ₗ[R] M0) (e1 : K1 ≃ₗ[R] M1)
+    (h : d ∘ₗ e0.toLinearMap = e1.toLinearMap ∘ₗ k) :
+    (K1 ⧸ range k) ≃ₗ[R] (M1 ⧸ range d) := by
+  have hinv : k ∘ₗ e0.symm.toLinearMap = e1.symm.toLinearMap ∘ₗ d := by
+    ext x
+    apply e1.injective
+    have hx := LinearMap.congr_fun h (e0.symm x)
+    simpa using hx.symm
+  exact
+    { h1Map k d e0.toLinearMap e1.toLinearMap h with
+      invFun := h1Map d k e0.symm.toLinearMap e1.symm.toLinearMap hinv
+      left_inv := by
+        intro x
+        induction x using Submodule.Quotient.induction_on with
+        | _ x =>
+          change Submodule.Quotient.mk (e1.symm (e1 x)) = Submodule.Quotient.mk x
+          rw [e1.symm_apply_apply]
+      right_inv := by
+        intro x
+        induction x using Submodule.Quotient.induction_on with
+        | _ x =>
+          change Submodule.Quotient.mk (e1 (e1.symm x)) = Submodule.Quotient.mk x
+          rw [e1.apply_symm_apply] }
+
 end InducedMaps
 
 section BaseChangeSquare
