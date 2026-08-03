@@ -381,6 +381,7 @@ theorem deg_presentationDivisor_residueFibreLocalEquations_pointwiseGeneratorSee
   exact (divUniversalSeedFibreDivisor_spec C hpi g r1 r2 b1 b2 i j hO hchi p).2.1
 
 set_option maxHeartbeats 8000000 in
+-- The germ comparison elaborates the dependent residue-point and chart transports.
 set_option synthInstance.maxHeartbeats 800000 in
 /-- Off the diagonal, the pulled pointwise-generator equation still reads as the compared
 window vector; `gamma` controls the curve Euler characteristic and `g` the divisor degree. -/
@@ -437,6 +438,7 @@ theorem germ_pullbackEqn_pointwiseGeneratorSeed_eq_pointwiseFibreReadGerm_at
     (pointwiseSectionVector_at C hpi g r1 r2 b1 b2 i j hgamma hchi z) using 1 <;> rfl
 
 set_option maxHeartbeats 8000000 in
+-- The coefficient comparison normalizes stalk units and residue-point transports.
 set_option synthInstance.maxHeartbeats 800000 in
 /-- The coefficient comparison underlying the pulled-degree calculation with independent
 curve parameter `gamma` and divisor degree `g`. -/
@@ -545,10 +547,12 @@ theorem coeffAt_presentationDivisor_eq_divUniversalSeedFibreDivisor_of_germ_eq_a
   simpa only [thetaFieldDivisor] using hbalance
 
 set_option maxHeartbeats 8000000 in
+-- Expanding the pulled local equations retains the full dependent residue-fibre data.
 set_option synthInstance.maxHeartbeats 800000 in
 /-- The residue-fibre presentation has the off-diagonal universal fibre-divisor coefficient
 at the canonical residue point. -/
-theorem coeffAt_residueFibreLocalEquations_pointwiseGeneratorSeed_eq_divUniversalSeedFibreDivisor_param
+theorem
+  coeffAt_residueFibreLocalEquations_pointwiseGeneratorSeed_eq_divUniversalSeedFibreDivisor_param
     {gamma : Nat} (hgamma : gamma ≤ g)
     (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
     (hrdn : PointwiseSeedRDNAt C hpi g r1 r2 b1 b2 i j hgamma hchi)
@@ -593,9 +597,11 @@ theorem coeffAt_residueFibreLocalEquations_pointwiseGeneratorSeed_eq_divUniversa
     C hpi g r1 r2 b1 b2 i j hgamma hchi hrdn z
 
 set_option maxHeartbeats 8000000 in
+-- Reindexing the residue point across its base-prime equality requires dependent transport.
 set_option synthInstance.maxHeartbeats 800000 in
 /-- Reindexed off-diagonal coefficient equality at every closed residue-fibre point. -/
-theorem coeffAt_residueFibreLocalEquations_pointwiseGeneratorSeed_eq_divUniversalSeedFibreDivisor_param_at
+theorem
+  coeffAt_residueFibreLocalEquations_pointwiseGeneratorSeed_eq_divUniversalSeedFibreDivisor_param_at
     {gamma : Nat} (hgamma : gamma ≤ g)
     (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
     (hrdn : PointwiseSeedRDNAt C hpi g r1 r2 b1 b2 i j hgamma hchi)
@@ -627,6 +633,7 @@ theorem coeffAt_residueFibreLocalEquations_pointwiseGeneratorSeed_eq_divUniversa
       C hpi g r1 r2 b1 b2 i j hgamma hchi hrdn z hzg
 
 set_option maxHeartbeats 8000000 in
+-- Divisor extensionality instantiates the coefficient theorem at every non-generic point.
 set_option synthInstance.maxHeartbeats 800000 in
 /-- The residue presentation divisor equals the universal fibre divisor at independent
 curve and divisor parameters. -/
@@ -643,11 +650,12 @@ theorem presentationDivisor_residueFibreLocalEquations_pointwiseGeneratorSeed_eq
       divUniversalSeedFibreDivisor_at
         C hpi g r1 r2 b1 b2 i j hgamma hchi p := by
   refine CurveDivisor.ext_coeffAt (fun x hxg => ?_)
-  exact
-    coeffAt_residueFibreLocalEquations_pointwiseGeneratorSeed_eq_divUniversalSeedFibreDivisor_param_at
-      C hpi g r1 r2 b1 b2 i j hgamma hchi hrdn p hxg
+  exact (
+  coeffAt_residueFibreLocalEquations_pointwiseGeneratorSeed_eq_divUniversalSeedFibreDivisor_param_at
+    C hpi g r1 r2 b1 b2 i j hgamma hchi hrdn p hxg)
 
 set_option maxHeartbeats 8000000 in
+-- The degree rewrite elaborates the universal fibre-divisor specification at this fibre.
 set_option synthInstance.maxHeartbeats 800000 in
 /-- Every off-diagonal pointwise-seed residue presentation has divisor degree `g`. -/
 theorem deg_presentationDivisor_residueFibreLocalEquations_pointwiseGeneratorSeed_at
@@ -746,6 +754,7 @@ theorem coeffAt_pulledEquations_pointwiseGeneratorSeed_eq_divUniversalSeedFibreD
     C hpi g r1 r2 b1 b2 i j hO hchi hrdn z hzg A hproj
 
 set_option maxHeartbeats 8000000 in
+-- Divisor extensionality expands the adapted pulled equations at each residue point.
 set_option synthInstance.maxHeartbeats 800000 in
 /-- On every residue fibre, the pulled pointwise-seed presentation divisor is the
 universal fibre divisor. -/
@@ -764,6 +773,7 @@ theorem presentationDivisor_pulledEquations_pointwiseGeneratorSeed_eq_divUnivers
     C hpi g r1 r2 b1 b2 i j hO hchi hrdn p A hproj hxg
 
 set_option maxHeartbeats 8000000 in
+-- The degree calculation combines the pulled presentation equality with the fibre specification.
 set_option synthInstance.maxHeartbeats 800000 in
 /-- Every pulled pointwise-seed presentation divisor has the prescribed fibre degree
 `g`; this supplies the degree gate in the divisor-adaptation certificate. -/

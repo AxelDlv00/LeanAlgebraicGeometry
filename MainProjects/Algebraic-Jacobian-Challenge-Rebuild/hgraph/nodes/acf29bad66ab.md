@@ -22,7 +22,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PointwiseAchiever.divFamEps_highWindow_eq_universal_pair
 type: lean
-updated: '2026-08-02T07:12:49'
+updated: '2026-08-03T08:02:46'
 ---
 theorem divFamEps_highWindow_eq_universal_pair (hb : 0 < windowBound pi hpi)
     (hc : ((univSeed C hpi g r1 r2 b1 b2 i j hO hchi hb).divisorAdaptation
@@ -47,3 +47,7 @@ theorem divFamEps_highWindow_eq_universal_pair (hb : 0 < windowBound pi hpi)
       (relThetaPairH1_windowMS C pi hpi g) (Nat.le_add_right _ _))
     (divUniversalSndWindow_le_highWindow_divisorWindow
       C hpi g r1 r2 b1 b2 i j hO hchi hb)
+
+set_option maxHeartbeats 2400000 in
+-- The off-diagonal epsilon composite elaborates the dependent certified seed and windows.
+set_option synthInstance.maxHeartbeats 800000 in

@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divUniversalFibreMulMap_surjective
 type: lean
-updated: '2026-08-02T07:12:50'
+updated: '2026-08-03T08:02:47'
 ---
 theorem divUniversalFibreMulMap_surjective
     (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
@@ -24,3 +24,6 @@ theorem divUniversalFibreMulMap_surjective
     HS KM KMS (Module.finBasis K ↥HS)
     (divUniversalFibre_mulSpan_eq_of_windowBound_pos
       C hπ g r₁ r₂ b₁ b₂ i j K hO hχ hker hb)
+
+set_option maxHeartbeats 1600000 in
+-- The decoupled persistence proof traverses the transported window dictionaries.

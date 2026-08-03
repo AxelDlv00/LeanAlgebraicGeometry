@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PointwiseAchiever.exists_fibre_chart_cofactor_pointwiseSectionVector
 type: lean
-updated: '2026-08-02T07:12:50'
+updated: '2026-08-03T08:02:47'
 ---
 theorem exists_fibre_chart_cofactor_pointwiseSectionVector
     (z : relCurve C RZ)
@@ -67,3 +67,8 @@ theorem exists_fibre_chart_cofactor_pointwiseSectionVector
       _ = d * _ := congrArg (d * ·) hxBC
       _ = _ * c := hc
       _ = _ := congrArg (· * c) hsecBC.symm
+
+set_option maxHeartbeats 2400000 in
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxSynthPendingDepth 8 in
+set_option maxRecDepth 8000 in

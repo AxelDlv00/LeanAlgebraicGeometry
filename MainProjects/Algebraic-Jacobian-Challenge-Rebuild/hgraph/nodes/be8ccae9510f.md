@@ -27,7 +27,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PointwiseAchiever.rankAtStalk_colength_univSeed_of_swallowedBy
 type: lean
-updated: '2026-08-02T07:12:49'
+updated: '2026-08-03T08:02:46'
 ---
 theorem rankAtStalk_colength_univSeed_of_swallowedBy (hb : 0 < windowBound pi hpi)
     (Dc : AffCoverData C RZ)
@@ -66,3 +66,7 @@ theorem rankAtStalk_colength_univSeed_of_swallowedBy (hb : 0 < windowBound pi hp
       C hpi g r1 r2 b1 b2 i j hO hchi hb p
   exact A.rankAtStalk_colength_eq_of_swallowedBy_of_pulled_degree
     j0 hsub hmiss hfin hproj p hdeg
+
+set_option maxHeartbeats 8000000 in
+-- The widened rank producer combines dependent pulled equations and stalk data.
+set_option synthInstance.maxHeartbeats 800000 in

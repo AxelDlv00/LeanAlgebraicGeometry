@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PointwiseAchiever.isGenerator_pointwiseGeneratorSeed
 type: lean
-updated: '2026-08-02T07:12:50'
+updated: '2026-08-03T08:02:47'
 ---
 theorem isGenerator_pointwiseGeneratorSeed
     (hrdn : PointwiseSeedRDN C hpi g r1 r2 b1 b2 i j hO hchi) :
@@ -24,3 +24,9 @@ theorem isGenerator_pointwiseGeneratorSeed
     exact (exists_pointwiseAnnCutter
       C hpi g r1 r2 b1 b2 i j hO hchi hrdn z).choose_spec.2 hpsi
   · exact pointwiseBaseSeed_hfib C hpi g r1 r2 b1 b2 i j hO hchi
+
+/-! ## Decoupled pointwise generator -/
+
+set_option maxHeartbeats 2400000 in
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxRecDepth 8000 in

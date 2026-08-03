@@ -1,0 +1,1 @@
+No uncommitted authored change remains. All 14 authored/restored paths match `HEAD`; commits `6305877268`, `f709fc92bd`, and `e3a2ca2269` are ancestors of `HEAD`. The post-commit mutation only restored `I-1630` byte-for-byte to its committed state.
