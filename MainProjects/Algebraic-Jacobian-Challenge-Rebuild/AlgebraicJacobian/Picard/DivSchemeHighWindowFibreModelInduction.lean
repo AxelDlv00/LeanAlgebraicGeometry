@@ -333,6 +333,7 @@ local notation "FAγ[" n "]" => divUniversalFibreHighWindowInAmbient_at
   C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker n
 
 set_option maxHeartbeats 2400000 in
+-- The source and target retain nested off-diagonal canonical-window subtypes.
 set_option synthInstance.maxHeartbeats 800000 in
 /-- The finite fibre multiplication map corestricted to the next canonical
 off-diagonal window. -/
@@ -347,6 +348,7 @@ noncomputable def divUniversalFibreHighWindowMulMapToInAmbient_at (n : Nat) :
         C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker n))
 
 set_option maxHeartbeats 2400000 in
+-- Corestricting the successor map into the closed ambient subtype is expensive.
 set_option synthInstance.maxHeartbeats 800000 in
 /-- The off-diagonal finite fibre multiplication map with codomain the closed
 ambient divisor window. -/
@@ -357,6 +359,7 @@ noncomputable def divUniversalFibreHighWindowMulMapToClosedAmbient_at (n : Nat) 
       C hpi g r1 r2 b1 b2 i j K hker hgamma hchiGamma n)
 
 set_option maxHeartbeats 2400000 in
+-- Normalizing the inverse nested-submodule equivalence exceeds the default budget.
 set_option synthInstance.maxHeartbeats 800000 in
 @[simp]
 theorem divUniversalFibreHighWindowInAmbientEquiv_symm_coe_at (n : Nat)
@@ -372,6 +375,7 @@ theorem divUniversalFibreHighWindowInAmbientEquiv_symm_coe_at (n : Nat)
           C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker n).symm x)).symm
 
 set_option maxHeartbeats 2400000 in
+-- Reducing the two nested corestrictions retains the full canonical-window expression.
 set_option synthInstance.maxHeartbeats 800000 in
 @[simp]
 theorem divUniversalFibreHighWindowMulMapToClosedAmbient_coe_at
@@ -397,6 +401,7 @@ theorem divUniversalFibreHighWindowMulMapToClosedAmbient_coe_at
     _ = _ := LinearMap.codRestrict_apply _ _ _
 
 set_option maxHeartbeats 3200000 in
+-- Surjectivity is transported through the dependent canonical-window equivalence.
 set_option synthInstance.maxHeartbeats 800000 in
 /-- The off-diagonal closed-ambient successor map has exactly the next
 canonical window as its range. -/
@@ -426,6 +431,7 @@ theorem range_divUniversalFibreHighWindowMulMapToClosedAmbient_at (n : Nat) :
       LinearMap.comp_apply, Submodule.subtype_apply] using congrArg Subtype.val hx
 
 set_option maxHeartbeats 4000000 in
+-- Comparing the relative multiplication map with the closed-ambient map is costly.
 set_option synthInstance.maxHeartbeats 1000000 in
 set_option maxRecDepth 20000 in
 /-- The relative successor map becomes the off-diagonal closed-ambient
@@ -453,6 +459,7 @@ theorem divUniversalHighWindowMulMap_fibre_conjugacy_closedAmbient_at
         n himage x)
 
 set_option maxHeartbeats 4000000 in
+-- Rewriting the recursive range and transporting its scalar extension is reduction-heavy.
 set_option synthInstance.maxHeartbeats 1000000 in
 set_option maxRecDepth 20000 in
 /-- A projective off-diagonal stage with canonical fibre image passes that
@@ -641,6 +648,7 @@ variable {gamma : Nat} (hgamma : gamma ≤ g)
   (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
 
 set_option maxHeartbeats 4800000 in
+-- Every residue field reconstructs the carve-chart tower and successor square.
 set_option synthInstance.maxHeartbeats 1200000 in
 set_option maxRecDepth 24000 in
 /-- A projective stage carrying the off-diagonal residue-prime model passes
@@ -661,6 +669,7 @@ theorem divUniversalHighWindowFibreModel_succ_of_projective_at
       hgamma hchiGamma n (hmodel p)
 
 set_option maxHeartbeats 6400000 in
+-- Strong induction elaborates the projectivity and fibre-model towers together.
 set_option synthInstance.maxHeartbeats 1600000 in
 set_option maxRecDepth 32000 in
 /-- Every finite relation stage is projective and has the canonical
@@ -714,6 +723,7 @@ theorem divUniversalHighWindowFibreModel_all_at (n : Nat) :
     (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hgamma hchiGamma n).2
 
 set_option maxHeartbeats 1600000 in
+-- Synthesizing flatness unfolds the complete dependent relation quotient.
 set_option synthInstance.maxHeartbeats 400000 in
 include hgamma hchiGamma in
 /-- Every finite relation quotient is flat at independent curve parameter

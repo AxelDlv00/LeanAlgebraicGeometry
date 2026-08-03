@@ -126,6 +126,7 @@ noncomputable def divFamZarAffUniv (hb : 0 < windowBound pi hpi) :
         C hpi g r1 r2 b1 b2 i j hO hchi hb)
 
 set_option maxHeartbeats 8000000 in
+-- The local certificate assembles the widened rank and projectivity data.
 set_option synthInstance.maxHeartbeats 800000 in
 /-- Every chart-ring prime has an away-local certified adaptation of the off-diagonal
 universal seed. The certificate degree is `g`; `gamma` only normalizes curve cohomology. -/
@@ -158,6 +159,7 @@ theorem exists_away_isCertified_univSeedAff_at
       C hpi g r1 r2 b1 b2 i j hgamma hchiGamma r Dc A j0 hsub hmiss)
 
 set_option maxHeartbeats 8000000 in
+-- The affine class packages the dependent family of away-local certificates.
 set_option synthInstance.maxHeartbeats 800000 in
 /-- The off-diagonal high-window universal seed defines a locally certified affine class. -/
 noncomputable def divFamZarAffUniv_at

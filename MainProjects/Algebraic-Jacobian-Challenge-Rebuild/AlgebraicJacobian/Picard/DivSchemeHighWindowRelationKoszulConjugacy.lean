@@ -403,6 +403,7 @@ local notation "Dγ" => divUniversalFibreDivisor_at
   C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker
 
 set_option maxHeartbeats 2400000 in
+-- The pair-indexed tensor equivalence retains every relation-fibre scalar tower.
 set_option synthInstance.maxHeartbeats 800000 in
 /-- Scalar extension distributes over the pair-indexed Koszul source at
 independent curve parameter `gamma ≤ g`. -/
@@ -417,6 +418,7 @@ noncomputable def divUniversalHighWindowRelationKoszulSourceFibreEquiv_at (n : N
         C hpi g r1 r2 b1 b2 i j K hgamma hchiGamma hker n himage)
 
 set_option maxHeartbeats 2400000 in
+-- Reducing the pair-indexed tensor equivalence at one component is expensive.
 set_option synthInstance.maxHeartbeats 800000 in
 @[simp]
 theorem divUniversalHighWindowRelationKoszulSourceFibreEquiv_apply_at (n : Nat)
@@ -434,6 +436,7 @@ theorem divUniversalHighWindowRelationKoszulSourceFibreEquiv_apply_at (n : Nat)
   rfl
 
 set_option maxHeartbeats 4000000 in
+-- Comparing the corestricted relation step with fibre multiplication is reduction-heavy.
 set_option synthInstance.maxHeartbeats 1000000 in
 set_option maxRecDepth 20000 in
 /-- One relative relation-basis step becomes multiplication on the canonical
@@ -480,6 +483,7 @@ theorem divUniversalHighWindowRelationBasisStep_fibre_conjugacy_at (n : Nat)
         n himage t x)
 
 set_option maxHeartbeats 4800000 in
+-- The boundary equation combines two dependent finite-product conjugacy squares.
 set_option synthInstance.maxHeartbeats 1200000 in
 set_option maxRecDepth 24000 in
 /-- The scalar extension of the relative relation Koszul boundary is conjugate
@@ -541,6 +545,7 @@ theorem divUniversalHighWindowRelationKoszulBoundary_fibre_conjugacy_at (n : Nat
     LinearMap.comp_assoc]
 
 set_option maxHeartbeats 4800000 in
+-- The injectivity criterion instantiates both adjacent projective fibre equivalences.
 set_option synthInstance.maxHeartbeats 1200000 in
 set_option maxRecDepth 24000 in
 /-- Adjacent off-diagonal fibre models make the injectivized successor map
@@ -592,6 +597,7 @@ theorem divUniversalHighWindowRelationMul_liftQ_rTensor_injective_of_fibre_model
         (divUniversalMultiplierFibreBasis (pi := pi) C hpi g K)).le
 
 set_option maxHeartbeats 4800000 in
+-- Quantifying over residue fields reconstructs the full carve-ring scalar tower.
 set_option synthInstance.maxHeartbeats 1200000 in
 set_option maxRecDepth 24000 in
 /-- Adjacent projective off-diagonal fibre models span every residue-field
@@ -621,6 +627,7 @@ theorem divUniversalHighWindowKernelSyzygySpans_of_adjacent_fibreModels_at
         hgamma hchiGamma n (hmodel p) (hmodelNext p)
 
 set_option maxHeartbeats 3200000 in
+-- The projectivity consumer unfolds the dependent successor relation quotient.
 set_option synthInstance.maxHeartbeats 800000 in
 /-- Adjacent off-diagonal fibre models force the relation quotient two stages
 later to be finite projective. -/

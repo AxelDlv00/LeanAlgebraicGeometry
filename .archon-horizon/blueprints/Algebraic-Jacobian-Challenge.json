@@ -18176,7 +18176,7 @@
     "macros": {},
     "states": {
       "blocked": 249,
-      "closed": 8643,
+      "closed": 8651,
       "formalized_open": 301,
       "informal": 175,
       "ready": 199
@@ -55589,7 +55589,7 @@
       "id": "def:identity_component_group_scheme",
       "lean_file": "AlgebraicJacobian/Picard/IdentityComponent.lean",
       "lean_name": "AlgebraicGeometry.GroupScheme.IdentityComponent",
-      "lean_source": "noncomputable def IdentityComponent {k : Type u} [Field k]\n    (G : Over (Spec (.of k)))\n    [GrpObj G] [LocallyOfFiniteType G.hom] :\n    Over (Spec (.of k)) :=\n  Over.mk ((identityComponentCarrier G).\u03b9 \u226b G.hom)",
+      "lean_source": "noncomputable def IdentityComponent {k : Type u} [Field k]\n    (G : Over (Spec (.of k)))\n    [GrpObj G] [LocallyOfFiniteType G.hom] :\n    Over (Spec (.of k)) :=\n  Over.mk ((identityComponentCarrier G).\u03b9 \u226b G.hom)\n\n@[simp]",
       "lean_status": "lean_ok",
       "level": "coarse",
       "mathlib_ok": false,

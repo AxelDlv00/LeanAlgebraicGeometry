@@ -295,6 +295,7 @@ theorem rankAtStalk_colength_univSeed_pullback_away_of_swallowedBy
     j0 hsub hmiss hfin hproj q hdeg
 
 set_option maxHeartbeats 8000000 in
+-- The away-local rank producer transports the dependent seed through localization.
 set_option synthInstance.maxHeartbeats 800000 in
 /-- Away-local universal rank at independent curve parameter `gamma ≤ g`. -/
 theorem rankAtStalk_colength_univSeed_pullback_away_of_swallowedBy_at

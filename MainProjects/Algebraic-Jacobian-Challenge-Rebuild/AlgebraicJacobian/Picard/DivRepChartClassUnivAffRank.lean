@@ -236,6 +236,7 @@ theorem deg_presentationDivisor_residueFibreLocalEquations_univSeed
         (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hO hchi hb) p
 
 set_option maxHeartbeats 2400000 in
+-- The residue-fibre degree transport unfolds the dependent universal seed.
 set_option synthInstance.maxHeartbeats 800000 in
 /-- The residue pullback of the universal seed has degree `g` when the curve Euler
 characteristic is normalized by an independent parameter `gamma ≤ g`. -/
@@ -304,6 +305,7 @@ theorem rankAtStalk_colength_univSeed_of_swallowedBy (hb : 0 < windowBound pi hp
     j0 hsub hmiss hfin hproj p hdeg
 
 set_option maxHeartbeats 8000000 in
+-- The widened rank producer combines dependent pulled equations and stalk data.
 set_option synthInstance.maxHeartbeats 800000 in
 /-- The exact universal affine rank producer at independent curve parameter `gamma ≤ g`.
 The colength rank remains the certified divisor degree `g`. -/

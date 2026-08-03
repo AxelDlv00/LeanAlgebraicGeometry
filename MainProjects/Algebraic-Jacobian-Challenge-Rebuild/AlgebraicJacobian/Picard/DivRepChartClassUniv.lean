@@ -317,6 +317,7 @@ theorem divFamEps_highWindow_eq_universal_pair (hb : 0 < windowBound pi hpi)
       C hpi g r1 r2 b1 b2 i j hO hchi hb)
 
 set_option maxHeartbeats 2400000 in
+-- The off-diagonal epsilon composite elaborates the dependent certified seed and windows.
 set_option synthInstance.maxHeartbeats 800000 in
 /-- The universal epsilon identity with degree `g` and independent Euler parameter
 `gamma ≤ g`. -/

@@ -542,6 +542,7 @@ theorem divUniversalHighWindowFibreModel_one
 /-! ## Decoupled curve parameter -/
 
 set_option maxHeartbeats 4000000 in
+-- Mapping the doubly base-changed first seed through closed normalization is reduction-heavy.
 set_option synthInstance.maxHeartbeats 1000000 in
 /-- The degree-`g` relation has the canonical stage-zero fibre image for an
 independent curve parameter `gamma ≤ g`. -/
@@ -582,6 +583,7 @@ theorem divUniversalHighWindowFibreImage_zero_at {gamma : Nat}
       C hpi g r1 r2 b1 b2 i j K)
 
 set_option maxHeartbeats 4000000 in
+-- Mapping the doubly base-changed second seed through closed normalization is reduction-heavy.
 set_option synthInstance.maxHeartbeats 1000000 in
 /-- The degree-`g` relation has the canonical stage-one fibre image for an
 independent curve parameter `gamma ≤ g`. -/
@@ -624,6 +626,7 @@ theorem divUniversalHighWindowFibreImage_one_at {gamma : Nat}
       C hpi g r1 r2 b1 b2 i j K)
 
 set_option maxHeartbeats 4000000 in
+-- Residue-field specialization reconstructs the complete carve-chart scalar tower.
 set_option synthInstance.maxHeartbeats 1000000 in
 /-- Every residue field sees the off-diagonal canonical stage-zero image. -/
 theorem divUniversalHighWindowFibreModel_zero_at {gamma : Nat}
@@ -641,6 +644,7 @@ theorem divUniversalHighWindowFibreModel_zero_at {gamma : Nat}
       hgamma hchiGamma
 
 set_option maxHeartbeats 4000000 in
+-- Residue-field specialization reconstructs the complete carve-chart scalar tower.
 set_option synthInstance.maxHeartbeats 1000000 in
 /-- Every residue field sees the off-diagonal canonical stage-one image. -/
 theorem divUniversalHighWindowFibreModel_one_at {gamma : Nat}

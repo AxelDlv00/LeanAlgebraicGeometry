@@ -512,6 +512,7 @@ theorem flat_chartReadIdeal_divUniversalSeedK_of_all_stage
   exact hcolim
 
 set_option maxHeartbeats 2400000 in
+-- Transporting colimit flatness through both off-diagonal seed ideals is elaboration-heavy.
 set_option synthInstance.maxHeartbeats 800000 in
 /-- Once every finite degree-`g` high-window quotient is flat, the shifted
 colimit is flat over the first seed ideal at independent curve parameter
