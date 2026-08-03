@@ -201,8 +201,9 @@ its predecessors.
 4. **One pinned universal element.** `Jacobian`, `functor`, `baseChangeIso` are all
    defined through the same `RepresentableBy` datum; coherences become uniqueness.
 5. **No monoidal sheaf categories; no global adele space; no general `R^i f_*` engine;
-   no Quot schemes.** Each is a measured multi-week detour whose consumers have
-   cheaper curve-specific substitutes.
+   no general Grothendieck Quot-scheme detour.** Each is a measured multi-week detour whose
+   consumers have cheaper curve-specific substitutes. This does not exclude the required
+   Altman--Kleiman effective quotient of the admissible Abel kernel relation.
 6. **Files ≤ 500 lines; mathlib naming; blueprint chapter per Lean directory,
    1-to-1 nodes, `\leanok` only after kernel check; `\source{}` only after reading.**
 7. **Verification bar**: `lake build <Module>` (kernel), then `lean_verify` axiom audit

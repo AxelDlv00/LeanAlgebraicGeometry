@@ -11,6 +11,13 @@ cross-checked against the known anchors (2.5 = `th:cmp`, 4.8 = `th:main`, 4.18.3
 5.1 = `lem:agps`); every citation below also gives the TeX `\label` so it is checkable
 independently of the count.*
 
+> **WAVE-4 ROUTE CORRECTION (2026-08-03).** This document remains binding for the Wave-3
+> Picard-functor interfaces. Its former Wave-4 conclusion that Kleiman's `lm:qt` quotient
+> machinery stays off-route is superseded: the current representability producer is the
+> effective quotient of the admissible Abel map by its concrete relative-linear-equivalence
+> kernel. The raw Abel map cannot be used as an open atlas because its linear-system fibres
+> can have positive dimension.
+
 Lean signatures below are **intended signatures**: binding in shape (carrier types, universes,
 variance, what is data vs Prop), lane-owned in spelling (final names follow mathlib conventions;
 defeq-level plumbing may adjust). Anything marked **OPEN-n** is an undecided sub-point with its
@@ -991,9 +998,9 @@ Deviations, each flagged and justified:
    functor to exist on all of `Over (Spec k)`, hence the two-layer design (§4.3). The étale
    content still lives entirely on affine tests, which is what item 9 intends.
 3. **`prp:lft` not proven** (certificate stored, §5) — justified in the audit table.
-4. Kleiman's Hilbert-polynomial strata (`P^φ`) are replaced by degree strata (recon lesson 6);
-   this is a Wave-4-internal deviation already adopted by the route (§4 item 12 endorses the
-   D3 campaign decomposition; `lm:qt`'s Hilbert-scheme quotient machinery stays off-route).
+4. Kleiman's Hilbert-polynomial strata (`P^φ`) are replaced by degree strata (recon lesson 6).
+   The former conclusion that `lm:qt` therefore stays off-route is superseded: corrected
+   Wave 4 constructs the effective quotient of the concrete admissible Abel kernel relation.
 
 Nothing in this spec contradicts a route §3 semantic pin or a §5 binding rule.
 

@@ -1074,6 +1074,21 @@ Altman--Kleiman quotient gate.
   \source{kleiman-picard}
 \end{theorem}
 
+\begin{theorem}[Fibre dimension at the admissible degree]
+  \label{thm:admissibleAbel_fibreRank}
+  \lean{AlgebraicGeometry.subsingleton_h1_of_divRepAffAdmissibleParameter_le_deg,
+    AlgebraicGeometry.h0_divisorSheaf_eq_divRepAffAdmissibleParameter_add_one_sub_genus,
+    AlgebraicGeometry.h0_sub_one_eq_divRepAffAdmissibleParameter_sub_genus}
+  \uses{def:admissibleDivisorRepresentation}
+  \leanok
+  On every field fibre, divisors of degree at least \(n_{\mathrm{adm}}\) have vanishing
+  \(H^1\). At exact admissible degree their section rank is
+  \(n_{\mathrm{adm}}+1-g\), so the numerical projective dimension of the complete linear
+  system is \(n_{\mathrm{adm}}-g\). This is only the fibre calculation: a universal divisor
+  line bundle, locally free pushforward with base change, and a relative projective bundle
+  remain to be constructed.
+\end{theorem}
+
 \begin{definition}[The admissible Abel map after big-etale sheafification]
   \label{def:admissibleAbelEtaleSheafMap}
   \lean{AlgebraicGeometry.Scheme.subcanonical_etaleTopology,
@@ -1089,6 +1104,19 @@ Altman--Kleiman quotient gate.
   separate step.
 \end{definition}
 
+\begin{theorem}[Kernel after big-etale sheafification]
+  \label{thm:admissibleAbel_etaleKernel}
+  \lean{AlgebraicGeometry.admissibleAbelEtaleSheafMap_app_eq_iff_equalizerSieve_mem,
+    AlgebraicGeometry.admissibleAbelEtaleRawKernelSieve_apply_iff_forall_picClass_div_mem_picFromBase}
+  \uses{thm:admissibleAbel_kernel, def:admissibleAbelEtaleSheafMap}
+  \leanok
+  Equality under the sheafified Abel map is equivalent to the raw equalizer sieve being
+  covering for the big-etale topology. Membership of an arrow in that sieve is equivalent
+  to the pulled-back divisor classes differing by \(\mathrm{picFromBase}\) on every affine
+  open. Thus the sheafified kernel is locally the same concrete relative-linear-equivalence
+  relation, including the quotient by line bundles from the base.
+\end{theorem}
+
 \begin{theorem}[The Sigma Picard functor is a big-etale sheaf]
   \label{thm:pic0SigmaFunctor_isEtaleSheaf}
   \uses{def:pic0SigmaFunctor, thm:pic0SigmaFunctor_isSheaf,
@@ -1101,8 +1129,9 @@ Altman--Kleiman quotient gate.
 
 \begin{theorem}[Etale-local surjectivity of the admissible Abel map]
   \label{thm:admissibleAbel_etaleLocallySurjective}
+  \lean{AlgebraicGeometry.isLocallySurjective_abelSigmaChartAffAdmissible}
   \uses{def:admissibleAbelMap, def:admissibleAbelEtaleSheafMap}
-  \notready
+  \leanok
   The concrete admissible Abel transformation is locally surjective for the big-etale
   topology. Equivalently, every degree-zero Picard class lifts to an admissible divisor
   family after an etale cover of the test scheme.
@@ -1111,16 +1140,19 @@ Altman--Kleiman quotient gate.
 
 \begin{theorem}[The sheafified Abel map is the coequalizer of its kernel pair]
   \label{thm:admissibleAbel_etaleCoequalizer}
+  \lean{AlgebraicGeometry.admissibleAbelEtaleSheafMap_isLocallySurjective,
+    AlgebraicGeometry.admissibleAbelEtaleTargetCoequalizer}
   \uses{def:admissibleAbelEtaleSheafMap,
     thm:admissibleAbel_etaleLocallySurjective}
-  \notready
+  \leanok
   Local surjectivity makes the sheafified Abel map a regular epimorphism in the category of
   type-valued big-etale sheaves. Hence it is the coequalizer of its pullback kernel pair.
 \end{theorem}
 
 \begin{theorem}[The concrete Abel kernel pair is representable]
   \label{thm:admissibleAbelKernelPair_representable}
-  \uses{thm:admissibleAbel_kernel, thm:admissibleDivisorSource_projectLocal}
+  \uses{thm:admissibleAbel_etaleKernel, thm:admissibleAbel_fibreRank,
+    thm:admissibleDivisorSource_projectLocal}
   \notready
   Construct a scheme \(R\) representing the concrete kernel relation on
   \(D_{\mathrm{adm}}\), identify it with the fibre product over the Picard sheaf, and prove
@@ -1146,7 +1178,7 @@ Altman--Kleiman quotient gate.
   \uses{thm:pic0SigmaFunctor_isEtaleSheaf,
     thm:admissibleAbel_etaleCoequalizer,
     thm:admissibleAbel_effectiveQuotient,
-    thm:admissibleAbel_kernel}
+    thm:admissibleAbel_etaleKernel}
   \notready
   The Yoneda sheaf of \(Q\) and the degree-zero Picard Sigma functor are coequalizers of
   the same represented kernel pair. The induced isomorphism is compatible with the
@@ -1157,7 +1189,8 @@ Altman--Kleiman quotient gate.
 
 \begin{definition}[The admissible Abel quotient representer]
   \label{def:pic0AdmissibleAbelQuotientRepresenter}
-  \uses{thm:admissibleAbel_quotientYoneda, thm:representableBy_overSlice}
+  \uses{def:admissibleDivisorRepresentation, thm:admissibleAbel_quotientYoneda,
+    thm:representableBy_overSlice}
   \notready
   The direct endpoint is
   \[
