@@ -36,8 +36,9 @@ metadata:
   parent: AJC.picrep
   owner: ajc-proj-infra
   milestone: AJC.picrep
-  updated_at: '2026-08-03T06:45:48.761088+00:00'
+  updated_at: '2026-08-03T08:48:47.733595+00:00'
   pinned_commits:
+  - 0f28a9e8e5
   - 650b9f291c30d87948001a1bab2bdb261f826219
   - 11ca92188ad855dc2fd9571be92e8618fcf5345d
   - 2273350a86d16ebe92532139498cf2e1564948ae
