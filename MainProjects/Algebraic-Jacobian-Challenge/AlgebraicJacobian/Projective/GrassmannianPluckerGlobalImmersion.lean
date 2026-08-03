@@ -4,7 +4,6 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Projective.GrassmannianPluckerImmersion
-import AlgebraicJacobian.Picard.FiniteMapProjectiveImmersion
 import AlgebraicJacobian.Picard.SerreTwist
 
 /-!
@@ -120,8 +119,10 @@ theorem pluckerToProj_isImmersion (d r : ℕ) :
     (homogeneousSubmodule (PluckerIndex d r) (ULift ℤ)) (X I)
   let V := ((theGlueData d r).ι I).opensRange
   let e : affineChart d r I.1 ≅ V.toScheme := pluckerChartRangeIso d r I
+  let hpre : pluckerToProj d r ⁻¹ᵁ U = V := by
+    simpa only [U, V] using pluckerToProj_preimage_basicOpen d r I
   let g : V.toScheme ⟶ U.toScheme :=
-    (pluckerToProj d r).resLE U V (pluckerToProj_preimage_basicOpen d r I).ge
+    (pluckerToProj d r).resLE U V hpre.ge
   have he : e.hom ≫ V.ι = (theGlueData d r).ι I := by
     exact IsOpenImmersion.isoOfRangeEq_hom_fac _ _ _
   have hgfac : e.hom ≫ (g ≫ U.ι) = pluckerChart d r I := by
@@ -134,9 +135,17 @@ theorem pluckerToProj_isImmersion (d r : ℕ) :
     (MorphismProperty.cancel_left_of_respectsIso
       (@IsImmersion) e.hom (g ≫ U.ι)).mp hcomp
   have hg : IsImmersion g := IsImmersion.of_comp g U.ι
+  let restrictionIso : Arrow.mk ((pluckerToProj d r) ∣_ U) ≅ Arrow.mk g :=
+    Arrow.isoMk ((scheme d r).isoOfEq hpre) (Iso.refl _) (by
+      change ((scheme d r).isoOfEq hpre).hom ≫
+          ((scheme d r).homOfLE _ ≫ (pluckerToProj d r) ∣_ U) =
+        ((pluckerToProj d r) ∣_ U) ≫ 𝟙 _
+      rw [Category.comp_id, ← Category.assoc]
+      rw [show (scheme d r).homOfLE _ = ((scheme d r).isoOfEq hpre).inv by
+        rw [← cancel_mono (pluckerToProj d r ⁻¹ᵁ U).ι, Scheme.homOfLE_ι,
+          Scheme.isoOfEq_inv_ι], Iso.hom_inv_id, Category.id_comp])
   rw [MorphismProperty.arrow_mk_iso_iff (P := @IsImmersion)
-    (AlgebraicGeometry.Adelic.LaurentChartData.FiniteMapGenerators.restrictionIsoResLE
-      (pluckerToProj d r) U V (pluckerToProj_preimage_basicOpen d r I))]
+    restrictionIso]
   exact hg
 
 end Grassmannian
