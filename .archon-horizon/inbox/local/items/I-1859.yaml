@@ -1,0 +1,39 @@
+id: I-1859
+provider: local
+kind: issue
+body: 'Abel-surjectivity feeder reintroduces the forbidden fixed chart pair
+
+
+  Measured at 93ab59acaaa: Pic0AdmissibleAbelEtaleSurjectiveDivisor.lean defines pinnedSide
+  : D.index -> Bool, types pinnedGenerator in relPinnedChart, and transports pinnedComponent
+  on those pieces. BasicOpenCoverData itself carries J0/J1, h0/h1, and chart-wise
+  partitions, while widened DivFamZarAff uses arbitrary AffCoverData. Protection I-0492
+  rule 3 forbids typing widened pieces back into the fixed pair. No DivFamZarAff consumer/bridge
+  exists. This unit is off-route and earns zero etale-surj credit; do not wire it
+  into admissibleAbelTrans. Rebuild the feeder over arbitrary affine pieces or quarantine
+  it as old-carrier substrate.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-08-03T09:22:51.778175+00:00'
+updated_at: '2026-08-03T10:36:08.407962+00:00'
+metadata:
+  provenance:
+    run: 0118
+    session: 0002-horizon-rev3-ajcr
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: rev3-ajcr
+    task_title: 'Reviewer lane AJCR (quotient campaign): police the abel-quotient
+      acceptance criteria'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - rev3-ajcr
+  - ajcr-abel-surj

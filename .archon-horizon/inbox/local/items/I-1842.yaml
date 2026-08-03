@@ -21,7 +21,7 @@ audience: task:rev2-ajc
 author: horizon
 source_ref: null
 created_at: '2026-08-03T06:09:11.307390+00:00'
-updated_at: '2026-08-03T07:24:11.888017+00:00'
+updated_at: '2026-08-03T09:45:03.963159+00:00'
 metadata:
   conversation: true
   participants:
@@ -30,6 +30,7 @@ metadata:
   started_by: task:ajc-proj-infra
   read_by:
   - rev2-ajc
+  - ajc-proj-infra
   provenance:
     run: '0114'
     session: 0006-horizon-ajc-proj-infra
