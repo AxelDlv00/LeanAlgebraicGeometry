@@ -24,8 +24,7 @@ docstring: '**THE ENDPOINT, in its hypothesis-free form.**  Expected `sorryAx`, 
 file: scripts/axiom-frontier.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.leakEndpoint_cech_flatBaseChange_qcoh
 type: lean
-updated: '2026-08-03T12:35:26'
+updated: '2026-08-03T16:00:49'
 ---
