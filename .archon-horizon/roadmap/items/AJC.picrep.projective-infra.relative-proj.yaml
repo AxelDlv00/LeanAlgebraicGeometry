@@ -2,10 +2,11 @@ id: AJC.picrep.projective-infra.relative-proj
 title: Section-Proj carrier demanded by Picard pieces
 projects:
 - Algebraic-Jacobian-Challenge
-summary: PENDING, demand-limited. First discharge sectionGradedRing_gcommRing_demand
-  and sectionGradedRing_gradedRing_demand, the exact structures needed to instantiate
-  mathlib Proj on the existing section direct sum. Do not build a general sheaf-relative-Proj
-  gluing theory until a concrete Picard-piece consumer requires it.
+summary: PENDING, demand-limited and currently disconnected from H. The exact conditional
+  gaps are sectionGradedRing_gcommRing_demand and sectionGradedRing_gradedRing_demand,
+  needed before mathlib Proj can consume the existing section direct sum. Discharging
+  them alone would not produce a Picard piece or move the seam. Do not build general
+  sheaf-relative-Proj gluing without a concrete consumer.
 status: pending
 kind: proof
 priority: normal
@@ -31,3 +32,4 @@ metadata:
   parent: AJC.picrep.projective-infra
   owner: ajc-proj-infra
   milestone: AJC.picrep
+  updated_at: '2026-08-03T03:05:22.465432+00:00'

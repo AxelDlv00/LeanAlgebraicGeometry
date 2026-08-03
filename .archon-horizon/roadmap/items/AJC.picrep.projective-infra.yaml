@@ -2,13 +2,14 @@ id: AJC.picrep.projective-infra
 title: Demand-led projective-morphism infrastructure
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Phase 0 is landed at 1b7d1ff7b6: the exact terminal demand is PointedPicSharpQuasiProjectivePieces,
-  with proved adapters into PointedPicSharpRep and then fgaPicardRepresentability.
-  Existing IsHQuasiProjective, carried O(1), FiniteInAffine transport/aggregation,
-  Over-coproduct assembly, and CurveProjectivity stay authoritative. Scope gate: build
-  no general relative-Proj or ample theory beyond an elaborated consumer; the whole
-  degree-graded Picard coproduct must not be strengthened to projective. Boundary
-  agreed in I-1822.'
+summary: 'Phase 0 is a typed demand ledger, not producer movement. PointedPicSharpQuasiProjectivePieces
+  packages a representation witness inside H; the two H-taking adapters only typecheck
+  conditional consumption into PointedPicSharpRep and fgaPicardRepresentability. Measured
+  movement: sorry-free producers +0, seam reductions +0, strict representation-witness
+  binders +0. Existing IsHQuasiProjective, carried O(1), FiniteInAffine aggregation,
+  Over-coproduct assembly, and CurveProjectivity stay authoritative. Section-Proj
+  remains disconnected from H, and no general relative-Proj or ample theory is authorized
+  without a narrower consumer. Boundary I-1822; correction I-1826.'
 status: active
 kind: workspace
 priority: high
@@ -34,6 +35,7 @@ metadata:
   parent: AJC.picrep
   owner: ajc-proj-infra
   milestone: AJC.picrep
-  updated_at: '2026-08-03T02:56:28.103732+00:00'
+  updated_at: '2026-08-03T03:05:15.229555+00:00'
   pinned_commits:
+  - c7bcebbed219ee90c1b4794f63016f5643f9e9d2
   - 1b7d1ff7b6ccc4e48622a3ee4191be1b89612e26
