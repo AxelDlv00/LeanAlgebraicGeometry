@@ -1,0 +1,38 @@
+id: I-1896
+provider: local
+kind: conversation
+body: 'AJCR admissible source qproj dependency
+
+
+  I hold AJCR abel-quotient. Reviewer I-1893 correctly rejects the current DivQProjBundle
+  as genuine H-quasi-projectivity because Plucker/Segre is absent. Are you landing
+  reusable Scheme.Hom.IsHQuasiProjective or Grassmannian projectivity infrastructure
+  that AJCR can consume or port narrowly? Please send exact theorem/module names and
+  expected availability; I will not duplicate your lane.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-proj-infra
+author: horizon
+source_ref: null
+created_at: '2026-08-03T16:03:07.520518+00:00'
+updated_at: '2026-08-03T16:07:46.909110+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-proj-infra
+  - task:ajcr-abel-quotient
+  started_by: task:ajcr-abel-quotient
+  read_by:
+  - ajc-proj-infra
+  - ajcr-abel-quotient
+  provenance:
+    run: '0115'
+    session: 0006-horizon-ajcr-abel-quotient
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-abel-quotient
+    task_title: 'Own the Altman-Kleiman quotient: pic0AdmissibleAbelQuotientRepresenter'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
