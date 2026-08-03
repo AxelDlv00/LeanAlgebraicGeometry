@@ -3,12 +3,16 @@ author: sync
 content_type: theorem
 created: '2026-08-03T18:38:51'
 decl: AlgebraicGeometry.BasicOpenCocycleDatum.component_relAffSectionsMap_mem_nonZeroDivisors
+docstring: 'A fibrewise-regular component remains a nonzerodivisor after arbitrary
+  coefficient
+
+  extension, read through the section ring of its affine open.'
 file: AlgebraicJacobian/Picard/Pic0AdmissibleAbelEtaleSurjectiveEffectivity.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.BasicOpenCocycleDatum.component_relAffSectionsMap_mem_nonZeroDivisors
 type: lean
-updated: '2026-08-03T18:38:51'
+updated: '2026-08-03T19:06:09'
 ---
 theorem component_relAffSectionsMap_mem_nonZeroDivisors
     (hfib : ∀ (j : D.index) (p : PrimeSpectrum B), Function.Injective

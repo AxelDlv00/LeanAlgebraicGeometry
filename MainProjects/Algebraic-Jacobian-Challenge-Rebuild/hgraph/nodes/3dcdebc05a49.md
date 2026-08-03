@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divFamZarAffOfFibrewiseRegularLocalEquations
 type: lean
-updated: '2026-08-03T18:38:51'
+updated: '2026-08-03T19:06:09'
 ---
 noncomputable def divFamZarAffOfFibrewiseRegularLocalEquations
     (pi : C.left ⟶ P1 k) [IsFinite pi]
@@ -28,6 +28,6 @@ noncomputable def divFamZarAffOfFibrewiseRegularLocalEquations
       classDeg L (Scheme.CechPic.map (relCurveMap C R L) d.picClass) = (n : ℤ)) :
     DivFamZarAff C R n :=
   divFamZarAff_of_forall_prime_certified_adaptation
-    (exists_away_certifiedAff_of_fibrewiseRegular_of_classDeg C pi n d hreg hdeg)
+    (exists_away_certifiedAff_of_fibrewiseRegular_of_classDeg C n d pi hreg hdeg)
 
 @[simp]
