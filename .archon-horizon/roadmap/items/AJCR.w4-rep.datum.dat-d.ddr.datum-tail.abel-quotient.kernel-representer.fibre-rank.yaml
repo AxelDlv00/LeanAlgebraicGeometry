@@ -1,0 +1,35 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.kernel-representer.fibre-rank
+title: Compute admissible complete-linear-system fibre dimension
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: Prove field-fibre H1 vanishing at and above the admissible degree, compute
+  h0 = n_adm + 1 - genus at exact degree, and identify projective dimension n_adm
+  - genus. This is the numerical input for the relative linear-system construction;
+  universal divisor bundles, locally free pushforward/base change, relative Proj,
+  and the represented smooth/proper kernel pair remain in the parent row.
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-08-03T16:57:35.891470+00:00'
+  provenance:
+    run: '0115'
+    session: 0006-horizon-ajcr-abel-quotient
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-abel-quotient
+    task_title: 'Own the Altman-Kleiman quotient: pic0AdmissibleAbelQuotientRepresenter'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.kernel-representer
+  owner: ajcr-abel-quotient
+  updated_at: '2026-08-03T16:57:40.134706+00:00'
+  pinned_commits:
+  - fd59238cb45de0b7cb72d2f8ac2452d2e52d1e7c

@@ -1,0 +1,31 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.etale-sheaf.degree-zero-descent
+title: Descend the fibrewise degree-zero condition
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: Show degree zero at every field-valued point is local for singleton faithfully
+  flat etale covers, including the field-extension invariance convenience lemma for
+  degAt and compatibility with picEtAffineEquiv.
+status: pending
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-08-03T17:22:22.008887+00:00'
+  provenance:
+    run: '0115'
+    session: 0006-horizon-ajcr-abel-quotient
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-abel-quotient
+    task_title: 'Own the Altman-Kleiman quotient: pic0AdmissibleAbelQuotientRepresenter'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.etale-sheaf
+  owner: ajcr-abel-quotient
+  updated_at: '2026-08-03T17:22:57.162808+00:00'

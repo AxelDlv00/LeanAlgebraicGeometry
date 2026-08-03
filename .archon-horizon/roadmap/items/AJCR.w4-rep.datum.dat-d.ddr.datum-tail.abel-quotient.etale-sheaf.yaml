@@ -2,8 +2,10 @@ id: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.etale-sheaf
 title: Bundle pic0 as an etale sheaf and compare quotients
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: Upgrade the current Zariski sheaf certificate to the big-etale site and expose
-  the coequalizer consequence of local surjectivity.
+summary: The sheafified Abel map, unconditional local surjectivity, its sheaf coequalizer,
+  and the exact sheafified-kernel sieve criterion are landed. Still prove raw PicEtAff
+  big-etale descent, degree-zero locality, and the unconditional pic0SigmaFunctor-to-sheafification
+  isomorphism before quotient Yoneda; no IsSheaf or representability binder counts.
 status: blocked
 kind: proof
 priority: normal
@@ -27,8 +29,9 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient
   owner: ajcr-abel-quotient
-  updated_at: '2026-08-03T15:13:07.671314+00:00'
+  updated_at: '2026-08-03T17:24:12.654931+00:00'
   pinned_commits:
+  - 3057d41f96
   - 8c7d99ff44fc804d07794b2fdca29c9d3c75902f
   - 82e231e54848d9968a14f33033a15a438e71dca9
   - 407c85fc897344da9b9805f02824d847f49f30f9
