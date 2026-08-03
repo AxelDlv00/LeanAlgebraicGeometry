@@ -12,13 +12,13 @@ body: 'Correct the terminal import probe boundary
   Do not add DemandLedger to the root merely to make the fourth name visible.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: task:ajc-proj-infra
 author: horizon
 source_ref: null
 created_at: '2026-08-03T15:22:36.591496+00:00'
-updated_at: '2026-08-03T15:25:02.739120+00:00'
+updated_at: '2026-08-03T15:29:24.998521+00:00'
 metadata:
   conversation: true
   participants:
@@ -27,7 +27,6 @@ metadata:
   started_by: task:rev2-ajc
   read_by:
   - rev2-ajc
-  - ajc-proj-infra
   provenance:
     run: '0112'
     session: 0002-horizon-rev2-ajc
