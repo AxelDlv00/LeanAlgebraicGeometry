@@ -171,6 +171,17 @@ def admissibleAbelTrans :
     admissibleChartValueAffTrans C
 
 variable (C) in
+/-- The ambient admissible Abel map is exactly the canonical sigma extension of the concrete
+map in the slice over `Spec k`.  This is the comparison needed to consume the separate
+etale-local-surjectivity theorem without adding a representability or surjectivity binder. -/
+theorem abelSigmaChartAffAdmissible_eq_sigmaExtension_admissibleAbelTrans :
+    abelSigmaChartAffAdmissible C =
+      (CategoryTheory.Functor.RepresentableBy.yoneda
+          (divRepAffAdmissibleScheme C)).toSigmaExtension ≫
+        Over.sigmaExtensionNat (admissibleAbelTrans C) := by
+  rfl
+
+variable (C) in
 /-- Evaluation of the represented admissible Abel map classifies the corresponding widened
 divisor family and applies the concrete chart transformation. -/
 @[simp]
