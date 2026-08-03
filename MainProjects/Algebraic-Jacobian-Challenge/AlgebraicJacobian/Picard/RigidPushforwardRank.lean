@@ -6,6 +6,7 @@ Authors: The AlgebraicJacobian Contributors
 import AlgebraicJacobian.Picard.RigidPushforwardP1Sheaf
 import AlgebraicJacobian.Picard.RigidPushforwardFiberChart
 import AlgebraicJacobian.Picard.SchematicSupport
+import AlgebraicJacobian.Cohomology.StructureSheafModuleK.EulerCechComparison
 
 /-!
 # The rank identity: the pushforward stalk rank is the fibre `h⁰`
@@ -298,34 +299,25 @@ theorem appLE_fromSpecResidueField_apply (R : CommRingCat.{u}) (t : Spec R)
   simp only [CommRingCat.hom_comp, RingHom.comp_apply, CommRingCat.hom_ofHom]
   rfl
 
-/-! ## §3 (Brick C). The fibre-chart Čech square, concluded on kernels -/
+/-! ## §3 (Brick C). The fibre-chart Cech complex comparison -/
 
 section BrickC
 
 variable {X Y : Scheme.{u}}
 
 set_option maxHeartbeats 1600000 in
--- Heartbeat headroom: the statement carries six `letI` module structures, so
--- matching the three chart comparisons against the Čech square forces large
--- `isDefEq` checks.  Measured: this is the only declaration in the file that
--- exceeds the default budget (`synthInstance.maxHeartbeats` is never hit).
-/-- **The fibre-chart Čech square, read on kernels.**  Let `f : X ⟶ Y` be a
-family over an affine base, `𝒰` a bundled two-chart affine cover of `X`, `M` a
-quasi-coherent module on `X`, and `t : Y` a point whose fibre inclusion is
-affine.  Then the `κ(t)`-base change of the base-linear Čech differential of
-`𝒰` and the Čech differential of the induced two-chart cover of the fibre `X_t`
-have kernels of the same `κ(t)`-dimension:
-`finrank κ(t) (ker (d ⊗ κ(t))) = finrank κ(t) (ker d_t)`.
+-- The six local module structures and three chart comparisons make the final
+-- commuting-square elaboration exceed the default heartbeat budget.
+/-- **The fibre-chart comparison as an isomorphism of two-term complexes.**
+For a quasicoherent module on a family over an affine base, residue-field base
+change of the two-chart Cech complex is linearly equivalent to the Cech complex
+of the induced fibre cover.
 
-This is Stacks 02KG at `i = 0` in its two-term Čech guise: the chart comparison
-`exists_fiberChartTensorEquiv` identifies `κ(t) ⊗_{Γ(Y,⊤)} Γ(M, W)` with
-`Γ(M_t, W_t)` on each of the three charts `U₁`, `U₂`, `U₁ ⊓ U₂`, and
-`fiberChart_smul_baseMap_res` says these identifications commute with
-restriction, hence with the difference map.  §7 of
-`Picard/RigidPushforwardFiberChart.lean` proves the same square but keeps it
-internal, exporting only a surjectivity corollary, so it is re-derived here in
-the form the rank computation needs. -/
-theorem finrank_ker_baseChange_residueField
+The degree-zero equivalence combines tensor/base-change on the two charts; the
+degree-one equivalence is the corresponding comparison on their intersection.
+Restriction naturality makes the resulting square commute.  This is the
+reusable geometric input for both kernel and quotient-by-range comparisons. -/
+theorem exists_fiberCechLinearEquiv
     (𝒰 : X.AffineCoverMVSquare) (f : X ⟶ Y) [IsAffine Y]
     (M : X.Modules) [M.IsQuasicoherent] (t : Y) [IsAffineHom (f.fiberι t)] :
     letI : Algebra Γ(Y, ⊤) Γ(Spec (Y.residueField t), ⊤) :=
@@ -339,12 +331,18 @@ theorem finrank_ker_baseChange_residueField
       ((𝒰.preimage (f.fiberι t)).U₂)
     letI := (f.fiberToSpecResidueField t).baseSectionsModule (f.fiberModule t M)
       ((𝒰.preimage (f.fiberι t)).U₁ ⊓ (𝒰.preimage (f.fiberι t)).U₂)
-    Module.finrank Γ(Spec (Y.residueField t), ⊤)
-        (LinearMap.ker ((𝒰.moduleSectionDiffBase f M).baseChange
-          Γ(Spec (Y.residueField t), ⊤)))
-      = Module.finrank Γ(Spec (Y.residueField t), ⊤)
-        (LinearMap.ker ((𝒰.preimage (f.fiberι t)).moduleSectionDiffBase
-          (f.fiberToSpecResidueField t) (f.fiberModule t M))) := by
+    ∃ (e0 : TensorProduct Γ(Y, ⊤) Γ(Spec (Y.residueField t), ⊤)
+          (Γ(M, 𝒰.U₁) × Γ(M, 𝒰.U₂)) ≃ₗ[Γ(Spec (Y.residueField t), ⊤)]
+          (Γ(f.fiberModule t M, (𝒰.preimage (f.fiberι t)).U₁) ×
+            Γ(f.fiberModule t M, (𝒰.preimage (f.fiberι t)).U₂)))
+      (e1 : TensorProduct Γ(Y, ⊤) Γ(Spec (Y.residueField t), ⊤)
+          Γ(M, 𝒰.U₁ ⊓ 𝒰.U₂) ≃ₗ[Γ(Spec (Y.residueField t), ⊤)]
+          Γ(f.fiberModule t M,
+            (𝒰.preimage (f.fiberι t)).U₁ ⊓ (𝒰.preimage (f.fiberι t)).U₂)),
+      ((𝒰.preimage (f.fiberι t)).moduleSectionDiffBase
+          (f.fiberToSpecResidueField t) (f.fiberModule t M)) ∘ₗ e0.toLinearMap =
+        e1.toLinearMap ∘ₗ ((𝒰.moduleSectionDiffBase f M).baseChange
+          Γ(Spec (Y.residueField t), ⊤)) := by
   letI aAB : Algebra Γ(Y, ⊤) Γ(Spec (Y.residueField t), ⊤) :=
     ((Y.fromSpecResidueField t).appLE ⊤ ⊤ le_top).hom.toAlgebra
   letI mA1 := f.baseSectionsModule M 𝒰.U₁
@@ -363,7 +361,6 @@ theorem finrank_ker_baseChange_residueField
   obtain ⟨⟨Θ₀, hΘ₀⟩⟩ := exists_fiberChartTensorEquiv f t M 𝒰.isAffineOpen_inf
     (𝒰.isAffineOpen_inf.preimage (f.fiberι t))
   haveI : (f.fiberModule t M).IsQuasicoherent := Scheme.Hom.fiberModule_isQuasicoherent f t M
-  -- K-linearity of the three chart comparisons
   have hsm1 : ∀ (c : Γ(Spec (Y.residueField t), ⊤))
       (z : TensorProduct Γ(Y, ⊤) Γ(Spec (Y.residueField t), ⊤) Γ(M, 𝒰.U₁)),
       Θ₁ (c • z) =
@@ -386,7 +383,19 @@ theorem finrank_ker_baseChange_residueField
     | tmul b x =>
       rw [TensorProduct.smul_tmul', hΘ₂, hΘ₂, smul_eq_mul, map_mul, mul_smul]
       rfl
-  -- the commuting Čech square (copied from FiberChart §7)
+  have hsm0 : ∀ (c : Γ(Spec (Y.residueField t), ⊤))
+      (z : TensorProduct Γ(Y, ⊤) Γ(Spec (Y.residueField t), ⊤)
+        Γ(M, 𝒰.U₁ ⊓ 𝒰.U₂)),
+      Θ₀ (c • z) =
+        ((f.fiberToSpecResidueField t).appLE ⊤
+          (f.fiberι t ⁻¹ᵁ (𝒰.U₁ ⊓ 𝒰.U₂)) le_top).hom c • Θ₀ z := by
+    intro c z
+    induction z using TensorProduct.induction_on with
+    | zero => simp
+    | add z₁ z₂ h₁ h₂ => rw [smul_add, map_add, map_add, h₁, h₂, smul_add]
+    | tmul b x =>
+      rw [TensorProduct.smul_tmul', hΘ₀, hΘ₀, smul_eq_mul, map_mul, mul_smul]
+      rfl
   have hsquare : ∀ w : TensorProduct Γ(Y, ⊤) Γ(Spec (Y.residueField t), ⊤)
       (Γ(M, 𝒰.U₁) × Γ(M, 𝒰.U₂)),
       Θ₀ ((𝒰.moduleSectionDiffBase f M).baseChange Γ(Spec (Y.residueField t), ⊤) w) =
@@ -418,7 +427,6 @@ theorem finrank_ker_baseChange_residueField
         ((f.fiberι t).preimage_mono (inf_le_right : 𝒰.U₁ ⊓ 𝒰.U₂ ≤ 𝒰.U₂)) b x₂
       rw [map_sub, smul_sub]
       exact congrArg₂ (· - ·) e₁.symm e₂.symm
-  -- the comparison of the two Čech degree-0 terms
   set PR := TensorProduct.prodRight Γ(Y, ⊤) Γ(Spec (Y.residueField t), ⊤)
       Γ(Spec (Y.residueField t), ⊤) Γ(M, 𝒰.U₁) Γ(M, 𝒰.U₂) with hPR
   set Φ : TensorProduct Γ(Y, ⊤) Γ(Spec (Y.residueField t), ⊤)
@@ -426,40 +434,171 @@ theorem finrank_ker_baseChange_residueField
       (Γ(f.fiberModule t M, (𝒰.preimage (f.fiberι t)).U₁) ×
         Γ(f.fiberModule t M, (𝒰.preimage (f.fiberι t)).U₂)) :=
     PR.toAddEquiv.trans (Θ₁.prodCongr Θ₂) with hΦdef
-  have hΦ : ∀ w, Φ w = (Θ₁ (PR w).1, Θ₂ (PR w).2) := fun w => rfl
-  have hmem : ∀ w, (𝒰.moduleSectionDiffBase f M).baseChange
-        Γ(Spec (Y.residueField t), ⊤) w = 0 ↔
-      (𝒰.preimage (f.fiberι t)).moduleSectionDiffBase
-        (f.fiberToSpecResidueField t) (f.fiberModule t M) (Φ w) = 0 := by
-    intro w
-    have hs : (𝒰.preimage (f.fiberι t)).moduleSectionDiffBase
-          (f.fiberToSpecResidueField t) (f.fiberModule t M) (Φ w)
-        = Θ₀ ((𝒰.moduleSectionDiffBase f M).baseChange
-            Γ(Spec (Y.residueField t), ⊤) w) := (hsquare w).symm
-    rw [hs]
-    constructor
-    · intro h; rw [h]; exact map_zero _
-    · intro h; exact Θ₀.injective (h.trans (map_zero _).symm)
-  set j : LinearMap.ker ((𝒰.moduleSectionDiffBase f M).baseChange
-        Γ(Spec (Y.residueField t), ⊤)) ≃+
-      LinearMap.ker ((𝒰.preimage (f.fiberι t)).moduleSectionDiffBase
-        (f.fiberToSpecResidueField t) (f.fiberModule t M)) :=
-    { toFun := fun z => ⟨Φ z.1, (hmem z.1).mp (LinearMap.mem_ker.mp z.2)⟩
-      invFun := fun y => ⟨Φ.symm y.1, by
-        refine LinearMap.mem_ker.mpr ((hmem (Φ.symm y.1)).mpr ?_)
-        rw [Φ.apply_symm_apply]
-        exact LinearMap.mem_ker.mp y.2⟩
-      left_inv := fun z => Subtype.ext (Φ.symm_apply_apply z.1)
-      right_inv := fun y => Subtype.ext (Φ.apply_symm_apply y.1)
-      map_add' := fun z₁ z₂ => Subtype.ext (map_add Φ z₁.1 z₂.1) } with hjdef
-  refine finrank_eq_of_ringEquiv_addEquiv (RingEquiv.refl _) j ?_
-  intro c z
-  refine Subtype.ext ?_
-  change Φ (c • z.1) = _
-  rw [hΦdef]
-  change (Θ₁ (PR (c • z.1)).1, Θ₂ (PR (c • z.1)).2) = _
-  rw [map_smul]
-  exact Prod.ext (hsm1 c (PR z.1).1) (hsm2 c (PR z.1).2)
+  have hΦsmul : ∀ (c : Γ(Spec (Y.residueField t), ⊤)) w, Φ (c • w) = c • Φ w := by
+    intro c w
+    rw [hΦdef]
+    change (Θ₁ (PR (c • w)).1, Θ₂ (PR (c • w)).2) = _
+    rw [map_smul]
+    exact Prod.ext (hsm1 c (PR w).1) (hsm2 c (PR w).2)
+  let e0 : TensorProduct Γ(Y, ⊤) Γ(Spec (Y.residueField t), ⊤)
+        (Γ(M, 𝒰.U₁) × Γ(M, 𝒰.U₂)) ≃ₗ[Γ(Spec (Y.residueField t), ⊤)]
+      (Γ(f.fiberModule t M, (𝒰.preimage (f.fiberι t)).U₁) ×
+        Γ(f.fiberModule t M, (𝒰.preimage (f.fiberι t)).U₂)) :=
+    { Φ with map_smul' := hΦsmul }
+  let e1 : TensorProduct Γ(Y, ⊤) Γ(Spec (Y.residueField t), ⊤)
+        Γ(M, 𝒰.U₁ ⊓ 𝒰.U₂) ≃ₗ[Γ(Spec (Y.residueField t), ⊤)]
+      Γ(f.fiberModule t M,
+        (𝒰.preimage (f.fiberι t)).U₁ ⊓ (𝒰.preimage (f.fiberι t)).U₂) :=
+    { Θ₀ with map_smul' := hsm0 }
+  refine ⟨e0, e1, ?_⟩
+  ext w
+  exact (hsquare w).symm
+
+/-- **The fibre-chart Čech square, read on kernels.**  Let `f : X ⟶ Y` be a
+family over an affine base, `𝒰` a bundled two-chart affine cover of `X`, `M` a
+quasi-coherent module on `X`, and `t : Y` a point whose fibre inclusion is
+affine.  Then the `κ(t)`-base change of the base-linear Čech differential of
+`𝒰` and the Čech differential of the induced two-chart cover of the fibre `X_t`
+have kernels of the same `κ(t)`-dimension:
+`finrank κ(t) (ker (d ⊗ κ(t))) = finrank κ(t) (ker d_t)`.
+
+This is Stacks 02KG at `i = 0` in its two-term Čech guise: the chart comparison
+`exists_fiberChartTensorEquiv` identifies `κ(t) ⊗_{Γ(Y,⊤)} Γ(M, W)` with
+`Γ(M_t, W_t)` on each of the three charts `U₁`, `U₂`, `U₁ ⊓ U₂`, and
+`fiberChart_smul_baseMap_res` says these identifications commute with
+restriction, hence with the difference map.  The preceding
+`exists_fiberCechLinearEquiv` packages that comparison as an isomorphism of
+two-term complexes; this theorem reads its degree-zero consequence. -/
+theorem finrank_ker_baseChange_residueField
+    (𝒰 : X.AffineCoverMVSquare) (f : X ⟶ Y) [IsAffine Y]
+    (M : X.Modules) [M.IsQuasicoherent] (t : Y) [IsAffineHom (f.fiberι t)] :
+    letI : Algebra Γ(Y, ⊤) Γ(Spec (Y.residueField t), ⊤) :=
+      ((Y.fromSpecResidueField t).appLE ⊤ ⊤ le_top).hom.toAlgebra
+    letI := f.baseSectionsModule M 𝒰.U₁
+    letI := f.baseSectionsModule M 𝒰.U₂
+    letI := f.baseSectionsModule M (𝒰.U₁ ⊓ 𝒰.U₂)
+    letI := (f.fiberToSpecResidueField t).baseSectionsModule (f.fiberModule t M)
+      ((𝒰.preimage (f.fiberι t)).U₁)
+    letI := (f.fiberToSpecResidueField t).baseSectionsModule (f.fiberModule t M)
+      ((𝒰.preimage (f.fiberι t)).U₂)
+    letI := (f.fiberToSpecResidueField t).baseSectionsModule (f.fiberModule t M)
+      ((𝒰.preimage (f.fiberι t)).U₁ ⊓ (𝒰.preimage (f.fiberι t)).U₂)
+    Module.finrank Γ(Spec (Y.residueField t), ⊤)
+        (LinearMap.ker ((𝒰.moduleSectionDiffBase f M).baseChange
+          Γ(Spec (Y.residueField t), ⊤)))
+      = Module.finrank Γ(Spec (Y.residueField t), ⊤)
+        (LinearMap.ker ((𝒰.preimage (f.fiberι t)).moduleSectionDiffBase
+          (f.fiberToSpecResidueField t) (f.fiberModule t M))) := by
+  letI aAB : Algebra Γ(Y, ⊤) Γ(Spec (Y.residueField t), ⊤) :=
+    ((Y.fromSpecResidueField t).appLE ⊤ ⊤ le_top).hom.toAlgebra
+  letI mA1 := f.baseSectionsModule M 𝒰.U₁
+  letI mA2 := f.baseSectionsModule M 𝒰.U₂
+  letI mA0 := f.baseSectionsModule M (𝒰.U₁ ⊓ 𝒰.U₂)
+  letI nB1 := (f.fiberToSpecResidueField t).baseSectionsModule (f.fiberModule t M)
+    ((𝒰.preimage (f.fiberι t)).U₁)
+  letI nB2 := (f.fiberToSpecResidueField t).baseSectionsModule (f.fiberModule t M)
+    ((𝒰.preimage (f.fiberι t)).U₂)
+  letI nB0 := (f.fiberToSpecResidueField t).baseSectionsModule (f.fiberModule t M)
+    ((𝒰.preimage (f.fiberι t)).U₁ ⊓ (𝒰.preimage (f.fiberι t)).U₂)
+  obtain ⟨e0, e1, h⟩ := exists_fiberCechLinearEquiv 𝒰 f M t
+  exact LinearEquiv.finrank_eq
+    (AlgebraicJacobian.TwoTerm.h0LinearEquiv
+      ((𝒰.moduleSectionDiffBase f M).baseChange Γ(Spec (Y.residueField t), ⊤))
+      ((𝒰.preimage (f.fiberι t)).moduleSectionDiffBase
+        (f.fiberToSpecResidueField t) (f.fiberModule t M)) e0 e1 h)
+
+/-- The quotient by the range of the residue-field base change of the family
+Cech differential is linearly equivalent to the quotient by the range of the
+induced fibre-cover differential.
+
+This is the degree-one consequence of `exists_fiberCechLinearEquiv`.  It has no
+finiteness or vanishing hypothesis; in particular, it identifies the actual
+quotient modules before any use of `Module.finrank`. -/
+theorem nonempty_quotientRangeEquiv_residueField
+    (𝒰 : X.AffineCoverMVSquare) (f : X ⟶ Y) [IsAffine Y]
+    (M : X.Modules) [M.IsQuasicoherent] (t : Y) [IsAffineHom (f.fiberι t)] :
+    letI : Algebra Γ(Y, ⊤) Γ(Spec (Y.residueField t), ⊤) :=
+      ((Y.fromSpecResidueField t).appLE ⊤ ⊤ le_top).hom.toAlgebra
+    letI := f.baseSectionsModule M 𝒰.U₁
+    letI := f.baseSectionsModule M 𝒰.U₂
+    letI := f.baseSectionsModule M (𝒰.U₁ ⊓ 𝒰.U₂)
+    letI := (f.fiberToSpecResidueField t).baseSectionsModule (f.fiberModule t M)
+      ((𝒰.preimage (f.fiberι t)).U₁)
+    letI := (f.fiberToSpecResidueField t).baseSectionsModule (f.fiberModule t M)
+      ((𝒰.preimage (f.fiberι t)).U₂)
+    letI := (f.fiberToSpecResidueField t).baseSectionsModule (f.fiberModule t M)
+      ((𝒰.preimage (f.fiberι t)).U₁ ⊓ (𝒰.preimage (f.fiberι t)).U₂)
+    Nonempty
+      ((TensorProduct Γ(Y, ⊤) Γ(Spec (Y.residueField t), ⊤)
+          Γ(M, 𝒰.U₁ ⊓ 𝒰.U₂) ⧸
+            LinearMap.range ((𝒰.moduleSectionDiffBase f M).baseChange
+              Γ(Spec (Y.residueField t), ⊤))) ≃ₗ[Γ(Spec (Y.residueField t), ⊤)]
+        Γ(f.fiberModule t M,
+            (𝒰.preimage (f.fiberι t)).U₁ ⊓ (𝒰.preimage (f.fiberι t)).U₂) ⧸
+          LinearMap.range ((𝒰.preimage (f.fiberι t)).moduleSectionDiffBase
+            (f.fiberToSpecResidueField t) (f.fiberModule t M))) := by
+  letI aAB : Algebra Γ(Y, ⊤) Γ(Spec (Y.residueField t), ⊤) :=
+    ((Y.fromSpecResidueField t).appLE ⊤ ⊤ le_top).hom.toAlgebra
+  letI mA1 := f.baseSectionsModule M 𝒰.U₁
+  letI mA2 := f.baseSectionsModule M 𝒰.U₂
+  letI mA0 := f.baseSectionsModule M (𝒰.U₁ ⊓ 𝒰.U₂)
+  letI nB1 := (f.fiberToSpecResidueField t).baseSectionsModule (f.fiberModule t M)
+    ((𝒰.preimage (f.fiberι t)).U₁)
+  letI nB2 := (f.fiberToSpecResidueField t).baseSectionsModule (f.fiberModule t M)
+    ((𝒰.preimage (f.fiberι t)).U₂)
+  letI nB0 := (f.fiberToSpecResidueField t).baseSectionsModule (f.fiberModule t M)
+    ((𝒰.preimage (f.fiberι t)).U₁ ⊓ (𝒰.preimage (f.fiberι t)).U₂)
+  obtain ⟨degreeZero, degreeOne, comm⟩ := exists_fiberCechLinearEquiv 𝒰 f M t
+  exact ⟨AlgebraicJacobian.TwoTerm.h1LinearEquiv
+    ((𝒰.moduleSectionDiffBase f M).baseChange Γ(Spec (Y.residueField t), ⊤))
+    ((𝒰.preimage (f.fiberι t)).moduleSectionDiffBase
+      (f.fiberToSpecResidueField t) (f.fiberModule t M))
+    degreeZero degreeOne comm⟩
+
+/-- The residue-field base change of the family Cech differential and the
+induced fibre-cover differential have quotient-by-range modules of the same
+dimension.
+
+No finite-dimensionality is assumed.  Thus the equality remains valid for
+mathlib's totalized `Module.finrank`; a later geometric consumer must supply
+finiteness before reading these values as cohomological dimensions. -/
+theorem finrank_quotient_range_baseChange_residueField
+    (𝒰 : X.AffineCoverMVSquare) (f : X ⟶ Y) [IsAffine Y]
+    (M : X.Modules) [M.IsQuasicoherent] (t : Y) [IsAffineHom (f.fiberι t)] :
+    letI : Algebra Γ(Y, ⊤) Γ(Spec (Y.residueField t), ⊤) :=
+      ((Y.fromSpecResidueField t).appLE ⊤ ⊤ le_top).hom.toAlgebra
+    letI := f.baseSectionsModule M 𝒰.U₁
+    letI := f.baseSectionsModule M 𝒰.U₂
+    letI := f.baseSectionsModule M (𝒰.U₁ ⊓ 𝒰.U₂)
+    letI := (f.fiberToSpecResidueField t).baseSectionsModule (f.fiberModule t M)
+      ((𝒰.preimage (f.fiberι t)).U₁)
+    letI := (f.fiberToSpecResidueField t).baseSectionsModule (f.fiberModule t M)
+      ((𝒰.preimage (f.fiberι t)).U₂)
+    letI := (f.fiberToSpecResidueField t).baseSectionsModule (f.fiberModule t M)
+      ((𝒰.preimage (f.fiberι t)).U₁ ⊓ (𝒰.preimage (f.fiberι t)).U₂)
+    Module.finrank Γ(Spec (Y.residueField t), ⊤)
+        (TensorProduct Γ(Y, ⊤) Γ(Spec (Y.residueField t), ⊤)
+          Γ(M, 𝒰.U₁ ⊓ 𝒰.U₂) ⧸
+            LinearMap.range ((𝒰.moduleSectionDiffBase f M).baseChange
+              Γ(Spec (Y.residueField t), ⊤))) =
+      Module.finrank Γ(Spec (Y.residueField t), ⊤)
+        (Γ(f.fiberModule t M,
+            (𝒰.preimage (f.fiberι t)).U₁ ⊓ (𝒰.preimage (f.fiberι t)).U₂) ⧸
+          LinearMap.range ((𝒰.preimage (f.fiberι t)).moduleSectionDiffBase
+            (f.fiberToSpecResidueField t) (f.fiberModule t M))) := by
+  letI aAB : Algebra Γ(Y, ⊤) Γ(Spec (Y.residueField t), ⊤) :=
+    ((Y.fromSpecResidueField t).appLE ⊤ ⊤ le_top).hom.toAlgebra
+  letI mA1 := f.baseSectionsModule M 𝒰.U₁
+  letI mA2 := f.baseSectionsModule M 𝒰.U₂
+  letI mA0 := f.baseSectionsModule M (𝒰.U₁ ⊓ 𝒰.U₂)
+  letI nB1 := (f.fiberToSpecResidueField t).baseSectionsModule (f.fiberModule t M)
+    ((𝒰.preimage (f.fiberι t)).U₁)
+  letI nB2 := (f.fiberToSpecResidueField t).baseSectionsModule (f.fiberModule t M)
+    ((𝒰.preimage (f.fiberι t)).U₂)
+  letI nB0 := (f.fiberToSpecResidueField t).baseSectionsModule (f.fiberModule t M)
+    ((𝒰.preimage (f.fiberι t)).U₁ ⊓ (𝒰.preimage (f.fiberι t)).U₂)
+  obtain ⟨e⟩ := nonempty_quotientRangeEquiv_residueField 𝒰 f M t
+  exact e.finrank_eq
 
 end BrickC
 
