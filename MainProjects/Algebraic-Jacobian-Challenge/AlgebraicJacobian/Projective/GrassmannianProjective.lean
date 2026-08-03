@@ -10,7 +10,7 @@ import AlgebraicJacobian.Picard.FiniteMorphismEmbedding
 # Projectivity of the absolute Grassmannian over Spec Z
 
 The absolute Plucker morphism lifts to relative projective space over
-`Spec Z`. Its composite with the projection to the integral projective model
+`Spec Z`. Its composite with the projection to the projective model over `Spec Z`
 is the absolute Plucker morphism, so the lift is an immersion. Properness of
 the Grassmannian structure morphism then upgrades that immersion to a closed
 immersion and proves projectivity, hence H-quasi-projectivity.
@@ -41,7 +41,8 @@ theorem pluckerToProjectiveSpace_over (d r : ℕ) :
       toSpecZ d r := by
   exact pullback.lift_fst _ _ _
 
-/-- Projecting the relative Plucker morphism to the integral model recovers
+/-- Projecting the relative Plucker morphism to the projective model over
+`Spec Z` recovers
 the absolute Plucker morphism. -/
 @[reassoc (attr := simp)]
 theorem pluckerToProjectiveSpace_toProjInt (d r : ℕ) :

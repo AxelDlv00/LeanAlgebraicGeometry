@@ -12,7 +12,7 @@ import AlgebraicJacobian.Picard.SerreTwist
 
 The inverse image of the standard projective open indexed by `I` is exactly
 the range of the `I`-th affine Grassmannian chart. On this open, the global
-Plucker morphism is therefore identified with the closed immersion proved in
+Plucker morphism is therefore identified with the local immersion proved in
 `GrassmannianPluckerImmersion`. Since the standard projective opens cover the
 target, the global Plucker morphism is an immersion.
 -/

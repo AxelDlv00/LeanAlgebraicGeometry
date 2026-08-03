@@ -46,8 +46,8 @@ Picard-piece producer exists.  D3' must carve a scheme `Z` with a quasi-compact
 immersion into the chosen scheme representing a Grassmannian over a field.  D4'
 then needs `Z` to be H-quasi-projective so that its finite point sets lie in
 affine opens.  The existing `IsHQuasiProjective.comp_isImmersion` performs the
-last step.  The field representer reduces to the absolute ambient input
-`AlgebraicGeometry.Grassmannian.isHQuasiProjective_toSpecZ_demand` below.
+last step. The field representer is now supplied directly by
+`Scheme.Grassmannian.representingScheme_isHQuasiProjective_of_field`.
 
 `Projective/Grassmannian.lean` proves the field-specialised transport: it derives
 global freeness on `Spec K`, base-changes the absolute Grassmannian, and uses
@@ -148,35 +148,8 @@ theorem pointedPicSharpQuasiProjectivePieces_demand :
 
 end Scheme
 
-namespace Grassmannian
-
-/-- **Closed D4' core producer.** The absolute Grassmannian is
-H-quasi-projective over `Spec Z`.
-
-The hypotheses are retained because this is the exact ledger signature exposed
-to D4'; the stronger producer does not need them. -/
-theorem isHQuasiProjective_toSpecZ_demand (d r : ℕ)
-    (_hd : 1 ≤ d) (_hdr : d ≤ r) :
-    (toSpecZ d r).IsHQuasiProjective :=
-  isHQuasiProjective_toSpecZ d r
-
-end Grassmannian
-
 namespace Scheme
 namespace Grassmannian
-
-/-- **Closed D4' ambient demand.** Over a field, the chosen scheme representing a
-Grassmannian of locally free quotients is H-quasi-projective over that field.
-
-This is the projective-space certificate that D4' can consume after D3' supplies
-its locally closed locus in the Grassmannian base. -/
-theorem representingScheme_isHQuasiProjective_of_field_demand
-    {K : Type} [Field K]
-    {V : (Spec (CommRingCat.of K)).Modules} {r d : ℕ}
-    (hV : SheafOfModules.IsLocallyFreeOfRank V r)
-    (hd : 1 ≤ d) (hdr : d ≤ r) :
-    (representingScheme hV hd hdr).hom.IsHQuasiProjective :=
-  representingScheme_isHQuasiProjective_of_field hV hd hdr
 
 /-- A quasi-compact D3' immersion into an H-quasi-projective Grassmannian gives
 the exact H-quasi-projectivity certificate carried by D4'.
