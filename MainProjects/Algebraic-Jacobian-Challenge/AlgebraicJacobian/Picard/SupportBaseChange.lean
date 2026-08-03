@@ -3,7 +3,7 @@ Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
-import Mathlib
+import AlgebraicJacobian.Picard.QuotSupportBaseChange
 
 /-!
 # The support of a finite module commutes with base change
@@ -67,7 +67,7 @@ residue-field criterion applies).
 
 set_option autoImplicit false
 
-open TensorProduct
+open CategoryTheory TensorProduct
 
 namespace AlgebraicGeometry
 
@@ -139,5 +139,76 @@ theorem support_baseChange_finite_eq_empty_of_isEmpty (M : Type u) [AddCommGroup
     [Module A M] [Module.Finite A M] (h : Module.support A M = ∅) :
     Module.support B (B ⊗[A] M) = ∅ := by
   rw [support_baseChange_finite_eq, h, Set.preimage_empty]
+
+private lemma mem_zeroLocus_iff_primeIdealOf_mem
+    {X : Scheme.{u}} {U : X.Opens} (hU : IsAffineOpen U)
+    {x : X} (hx : x ∈ U) (I : Ideal Γ(X, U)) :
+    x ∈ X.zeroLocus (U := U) I ↔
+      hU.primeIdealOf ⟨x, hx⟩ ∈ PrimeSpectrum.zeroLocus I := by
+  rw [← hU.fromSpec_preimage_zeroLocus]
+  change x ∈ X.zeroLocus (U := U) I ↔
+    hU.fromSpec (hU.primeIdealOf ⟨x, hx⟩) ∈ X.zeroLocus (U := U) I
+  rw [hU.fromSpec_primeIdealOf]
+
+namespace Scheme.Modules
+
+/-- The support of a finitely presented sheaf commutes with pullback, expressed
+as equality with the support of the comapped annihilator ideal sheaf. This is
+the reverse carrier inclusion missing from the one-sided annihilator map. -/
+theorem annihilator_pullback_support_eq_comap
+    {X Y : Scheme.{u}} (g : Y ⟶ X) (F : X.Modules) [F.IsFinitePresentation] :
+    (annihilator ((Scheme.Modules.pullback g).obj F)).support =
+      ((annihilator F).comap g).support := by
+  haveI hGfp : ((Scheme.Modules.pullback g).obj F).IsFinitePresentation :=
+    pullback_isFinitePresentation g F ‹_›
+  haveI hFqc : F.IsQuasicoherent := inferInstance
+  haveI hGqc : ((Scheme.Modules.pullback g).obj F).IsQuasicoherent := inferInstance
+  rw [IdealSheafData.support_comap]
+  ext y
+  change y ∈ (annihilator ((Scheme.Modules.pullback g).obj F)).support ↔
+    g.base y ∈ (annihilator F).support
+  obtain ⟨V, hV, hgyV, -⟩ :=
+    exists_isAffineOpen_mem_and_subset (x := g.base y) (U := ⊤) trivial
+  have hyV : y ∈ g ⁻¹ᵁ V := hgyV
+  obtain ⟨U, hU, hyU, hUle⟩ :=
+    exists_isAffineOpen_mem_and_subset (x := y) (U := g ⁻¹ᵁ V) hyV
+  letI : Algebra Γ(X, V) Γ(Y, U) := (g.appLE V U hUle).hom.toAlgebra
+  letI : Module Γ(X, V) Γ((Scheme.Modules.pullback g).obj F, U) :=
+    Module.compHom _ (g.appLE V U hUle).hom
+  letI hfinF : Module.Finite Γ(X, V) Γ(F, V) :=
+    module_finite_sections_of_isFinitePresentation F ⟨V, hV⟩
+  letI hfinG : Module.Finite Γ(Y, U) Γ((Scheme.Modules.pullback g).obj F, U) :=
+    module_finite_sections_of_isFinitePresentation
+      ((Scheme.Modules.pullback g).obj F) ⟨U, hU⟩
+  obtain ⟨⟨e, -⟩⟩ :=
+    pullback_app_isoTensor_baseMap_sectionLinearEquiv g F hU hV hUle
+  rw [IdealSheafData.mem_support_iff_of_mem
+        (I := annihilator ((Scheme.Modules.pullback g).obj F))
+        (U := ⟨U, hU⟩) hyU,
+    IdealSheafData.mem_support_iff_of_mem
+      (I := annihilator F) (U := ⟨V, hV⟩) hgyV,
+    annihilator_ideal ((Scheme.Modules.pullback g).obj F)
+      (fun W => module_finite_sections_of_isFinitePresentation _ W) ⟨U, hU⟩,
+    annihilator_ideal F
+      (fun W => module_finite_sections_of_isFinitePresentation _ W) ⟨V, hV⟩,
+    mem_zeroLocus_iff_primeIdealOf_mem hU hyU,
+    mem_zeroLocus_iff_primeIdealOf_mem hV hgyV,
+    ← Module.support_eq_zeroLocus, ← Module.support_eq_zeroLocus,
+    ← e.support_eq, support_baseChange_finite Γ(F, V)]
+  have hcom := IsAffineOpen.comap_primeIdealOf_appLE (f := g)
+    V hV U hU hUle hyU
+  rw [show algebraMap Γ(X, V) Γ(Y, U) = (g.appLE V U hUle).hom from rfl,
+    hcom]
+
+/-- Set-theoretic form of `annihilator_pullback_support_eq_comap`: the
+schematic-support carrier of a pullback is the inverse image of the original
+schematic-support carrier. -/
+theorem annihilator_pullback_support_eq_preimage
+    {X Y : Scheme.{u}} (g : Y ⟶ X) (F : X.Modules) [F.IsFinitePresentation] :
+    (annihilator ((Scheme.Modules.pullback g).obj F)).support =
+      (annihilator F).support.preimage g.continuous := by
+  rw [annihilator_pullback_support_eq_comap, IdealSheafData.support_comap]
+
+end Scheme.Modules
 
 end AlgebraicGeometry

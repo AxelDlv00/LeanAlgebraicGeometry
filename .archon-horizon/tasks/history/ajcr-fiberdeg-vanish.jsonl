@@ -7,3 +7,4 @@
 {"at": "2026-08-03T00:56:14.741811+00:00", "actor": "system", "field": "status", "from": "blocked", "to": "queued", "note": "re-queued for the next round of a focused run"}
 {"at": "2026-08-03T00:56:27.447772+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
 {"at": "2026-08-03T01:04:56.011924+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "objective, title updated"}
+{"at": "2026-08-03T01:44:41.485593+00:00", "actor": "human", "field": "status", "from": "running", "to": "queued", "note": ""}

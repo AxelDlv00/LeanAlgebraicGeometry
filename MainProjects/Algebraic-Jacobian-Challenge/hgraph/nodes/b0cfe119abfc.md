@@ -9,12 +9,14 @@ lean_status: sorry
 order: 1613
 title: The identity component of the Picard scheme
 type: tex
-updated: '2026-07-30T11:51:47'
+updated: '2026-08-03T08:55:18'
 ---
 \textit{Source: [Kleiman], ``The Picard scheme'', \S 5, opening +
   Prp.~5.3.}
   Let \(C/k\) be a smooth proper geometrically integral curve over a field
-  \(k\). The \emph{identity component of the Picard scheme}
+  \(k\), and assume the legacy relative Picard functor
+  \(\Pic^\sharp_{C/k}\) is represented by \(\Pic_{C/k}\). The
+  \emph{identity component of the Picard scheme}
   \(\Pic^0_{C/k}\) is the identity component
   \((\Pic_{C/k})^0\) of the \(k\)-group scheme \(\Pic_{C/k}\) of
   \cref{def:pic_scheme}, in the sense of
