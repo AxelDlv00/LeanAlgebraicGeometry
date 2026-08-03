@@ -31,7 +31,7 @@ explanation: ''
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 priority: urgent
-status: running
+status: queued
 write_set:
   files: []
   projects:
@@ -51,6 +51,6 @@ inbox_refs:
 - I-1850
 artifact_refs: []
 created_at: '2026-08-03T07:05:30.237970+00:00'
-updated_at: '2026-08-03T15:32:58.973891+00:00'
+updated_at: '2026-08-03T19:07:48.676543+00:00'
 metadata:
   author: human

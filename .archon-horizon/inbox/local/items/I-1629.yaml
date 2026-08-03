@@ -48,7 +48,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-31T01:17:54.835188+00:00'
-updated_at: '2026-08-03T14:44:04.304518+00:00'
+updated_at: '2026-08-03T18:26:08.087165+00:00'
 metadata:
   provenance:
     run: 0092
@@ -69,3 +69,4 @@ metadata:
   - rev2-ajcr
   - ajc-proj-infra
   - rev3-ajcr
+  - ajcr-abel-quotient
