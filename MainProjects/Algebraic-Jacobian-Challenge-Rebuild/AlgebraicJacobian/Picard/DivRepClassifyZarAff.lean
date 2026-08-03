@@ -227,6 +227,181 @@ theorem divRepClassifyZarAff_eq_of_isDivRepClassifyAff (F₀ : DivFamZarAff C S 
   Over.OverMorphism.ext (isDivRepClassifyAff_unique hpi g hO hchi r₁ r₂ b₁ b₂
     F₀ hu (divRepClassifyZarAff_isDivRepClassifyAff hpi g hO hchi r₁ r₂ b₁ b₂ F₀))
 
+set_option maxHeartbeats 2400000 in
+-- The off-diagonal cover glue and arbitrary-test pullback share the compatibility branch.
+/-- Every widened affine divisor class admits a clause-satisfying morphism when the curve
+parameter is independent of the divisor-family degree. -/
+theorem exists_isDivRepClassifyAff_at
+    {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (F₀ : DivFamZarAff C S g) :
+    ∃ v : Spec (CommRingCat.of S) ⟶
+        DivScheme k (windowS_choice pi hpi g • fiberWeilDivisor pi)
+          (windowM_choice pi hpi g • fiberWeilDivisor pi) g r₁ r₂ b₁
+          (b₂.map (windowShiftEquiv hpi g).symm),
+      IsDivRepClassifyAff hpi g r₁ r₂ b₁ b₂ F₀ v := by
+  classical
+  obtain ⟨m, r, hspan, hdata⟩ :=
+    DivFamZarAff.exists_certChartCover_at hpi g r₁ r₂ b₁ b₂ F₀ hgamma hchiGamma
+  choose G ci cj cw hZ hframe using hdata
+  have hv : ∀ p : Fin m,
+      ∃ vp : Spec (CommRingCat.of (Localization.Away (r p))) ⟶
+        DivScheme k (windowS_choice pi hpi g • fiberWeilDivisor pi)
+          (windowM_choice pi hpi g • fiberWeilDivisor pi) g r₁ r₂ b₁
+          (b₂.map (windowShiftEquiv hpi g).symm),
+      vp ≫ divSchemeι k (windowS_choice pi hpi g • fiberWeilDivisor pi)
+          (windowM_choice pi hpi g • fiberWeilDivisor pi) g r₁ r₂ b₁
+          (b₂.map (windowShiftEquiv hpi g).symm)
+        = Spec.map (CommRingCat.ofHom (cw p).toRingHom)
+            ≫ pairChartMap k g r₁ g r₂ (ci p) (cj p) := fun p =>
+    ((G p).existsUnique_divClassify hpi g r₁ r₂ b₁ b₂
+      (cw p) (hframe p)).exists
+  choose v hvc using hv
+  have hglue : ∀ p q : Fin m,
+      pullback.fst ((Scheme.affineOpenCoverOfSpanRangeEqTop
+          (R := CommRingCat.of S) r hspan).openCover.f p)
+        ((Scheme.affineOpenCoverOfSpanRangeEqTop
+          (R := CommRingCat.of S) r hspan).openCover.f q) ≫ v p
+      = pullback.snd _ _ ≫ v q := fun p q =>
+    pullback_divClassifyAff_compat_at (gamma := gamma) hpi g r₁ r₂ b₁ b₂
+      hgamma hchiGamma F₀ (G p) (G q) (hZ p) (hZ q) (cw p) (cw q)
+      (hframe p) (hframe q) (hvc p) (hvc q)
+  refine ⟨(Scheme.affineOpenCoverOfSpanRangeEqTop
+    (R := CommRingCat.of S) r hspan).openCover.glueMorphisms v hglue, ?_⟩
+  intro T _ _ _ _ GT hGT i j w hw
+  refine Scheme.Cover.hom_ext
+    ((Scheme.affineOpenCoverOfSpanRangeEqTop
+      (R := CommRingCat.of S) r hspan).openCover.pullback₁
+      (Spec.map (CommRingCat.ofHom (algebraMap S T))))
+    _ _ fun p => ?_
+  change pullback.fst _ _ ≫ _ = pullback.fst _ _ ≫ _
+  rw [← Category.assoc, pullback.condition, Category.assoc,
+    Scheme.Cover.ι_glueMorphisms_assoc]
+  exact (pullback_chart_divClassifyAff_compat_at (gamma := gamma)
+    hpi g r₁ r₂ b₁ b₂ hgamma hchiGamma F₀ GT hGT w hw
+    (G p) (hZ p) (cw p) (hframe p) (hvc p)).symm
+
+set_option maxHeartbeats 800000 in
+-- Uniqueness uses the off-diagonal certificate-frame cover on every glued piece.
+/-- The widened characterizing clause determines its morphism uniquely at an independent
+curve parameter. -/
+theorem isDivRepClassifyAff_unique_at
+    {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (F₀ : DivFamZarAff C S g)
+    {v v' : Spec (CommRingCat.of S) ⟶
+      DivScheme k (windowS_choice pi hpi g • fiberWeilDivisor pi)
+        (windowM_choice pi hpi g • fiberWeilDivisor pi) g r₁ r₂ b₁
+        (b₂.map (windowShiftEquiv hpi g).symm)}
+    (hv : IsDivRepClassifyAff hpi g r₁ r₂ b₁ b₂ F₀ v)
+    (hv' : IsDivRepClassifyAff hpi g r₁ r₂ b₁ b₂ F₀ v') : v = v' := by
+  obtain ⟨m, r, hspan, hdata⟩ :=
+    DivFamZarAff.exists_certChartCover_at hpi g r₁ r₂ b₁ b₂ F₀ hgamma hchiGamma
+  choose G ci cj cw hZ hframe using hdata
+  refine Scheme.Cover.hom_ext
+    (Scheme.affineOpenCoverOfSpanRangeEqTop
+      (R := CommRingCat.of S) r hspan).openCover _ _ fun p => ?_
+  refine divScheme_hom_ext k _ _ g r₁ r₂ b₁
+    (b₂.map (windowShiftEquiv hpi g).symm) _ _ ?_
+  have h₁ : (Scheme.affineOpenCoverOfSpanRangeEqTop
+        (R := CommRingCat.of S) r hspan).openCover.f p ≫ v ≫
+        divSchemeι k (windowS_choice pi hpi g • fiberWeilDivisor pi)
+          (windowM_choice pi hpi g • fiberWeilDivisor pi) g r₁ r₂ b₁
+          (b₂.map (windowShiftEquiv hpi g).symm)
+      = Spec.map (CommRingCat.ofHom (cw p).toRingHom)
+          ≫ pairChartMap k g r₁ g r₂ (ci p) (cj p) :=
+    hv (Localization.Away (r p)) (G p) (hZ p) (ci p) (cj p) (cw p) (hframe p)
+  have h₂ : (Scheme.affineOpenCoverOfSpanRangeEqTop
+        (R := CommRingCat.of S) r hspan).openCover.f p ≫ v' ≫
+        divSchemeι k (windowS_choice pi hpi g • fiberWeilDivisor pi)
+          (windowM_choice pi hpi g • fiberWeilDivisor pi) g r₁ r₂ b₁
+          (b₂.map (windowShiftEquiv hpi g).symm)
+      = Spec.map (CommRingCat.ofHom (cw p).toRingHom)
+          ≫ pairChartMap k g r₁ g r₂ (ci p) (cj p) :=
+    hv' (Localization.Away (r p)) (G p) (hZ p) (ci p) (cj p) (cw p) (hframe p)
+  rw [Category.assoc, Category.assoc]
+  exact h₁.trans h₂.symm
+
+/-- A widened affine divisor class classifies to a unique morphism at an independent curve
+parameter. -/
+theorem divClassifyZarAff_at
+    {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (F₀ : DivFamZarAff C S g) :
+    ∃! v : Spec (CommRingCat.of S) ⟶
+        DivScheme k (windowS_choice pi hpi g • fiberWeilDivisor pi)
+          (windowM_choice pi hpi g • fiberWeilDivisor pi) g r₁ r₂ b₁
+          (b₂.map (windowShiftEquiv hpi g).symm),
+      IsDivRepClassifyAff hpi g r₁ r₂ b₁ b₂ F₀ v := by
+  obtain ⟨v, hv⟩ := exists_isDivRepClassifyAff_at
+    (gamma := gamma) hpi g r₁ r₂ b₁ b₂ hgamma hchiGamma F₀
+  exact ⟨v, hv, fun v' hv' =>
+    isDivRepClassifyAff_unique_at (gamma := gamma)
+      hpi g r₁ r₂ b₁ b₂ hgamma hchiGamma F₀ hv' hv⟩
+
+/-- The widened classified morphism over `Spec k` at an independent curve parameter. -/
+theorem exists_overHom_isDivRepClassifyAff_at
+    {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (F₀ : DivFamZarAff C S g) :
+    ∃ u : overSpec k S ⟶
+        divSchemeOver k (windowS_choice pi hpi g • fiberWeilDivisor pi)
+          (windowM_choice pi hpi g • fiberWeilDivisor pi) g r₁ r₂ b₁
+          (b₂.map (windowShiftEquiv hpi g).symm),
+      IsDivRepClassifyAff hpi g r₁ r₂ b₁ b₂ F₀ u.left := by
+  obtain ⟨v, hv⟩ := exists_isDivRepClassifyAff_at
+    (gamma := gamma) hpi g r₁ r₂ b₁ b₂ hgamma hchiGamma F₀
+  obtain ⟨m, r, hspan, hdata⟩ :=
+    DivFamZarAff.exists_certChartCover_at hpi g r₁ r₂ b₁ b₂ F₀ hgamma hchiGamma
+  choose G ci cj cw hZ hframe using hdata
+  exact ⟨divSchemeOverHomMk k (windowS_choice pi hpi g • fiberWeilDivisor pi)
+    (windowM_choice pi hpi g • fiberWeilDivisor pi) g r₁ r₂ b₁
+    (b₂.map (windowShiftEquiv hpi g).symm) v r hspan
+    (fun p => ⟨ci p, cj p, cw p,
+      hv (Localization.Away (r p)) (G p) (hZ p) (ci p) (cj p) (cw p) (hframe p)⟩), hv⟩
+
+variable (S) in
+/-- The widened backward classifier at an independent curve parameter. -/
+noncomputable def divRepClassifyZarAff_at
+    {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (F₀ : DivFamZarAff C S g) :
+    overSpec k S ⟶
+      divSchemeOver k (windowS_choice pi hpi g • fiberWeilDivisor pi)
+        (windowM_choice pi hpi g • fiberWeilDivisor pi) g r₁ r₂ b₁
+        (b₂.map (windowShiftEquiv hpi g).symm) :=
+  (exists_overHom_isDivRepClassifyAff_at
+    (gamma := gamma) hpi g r₁ r₂ b₁ b₂ hgamma hchiGamma F₀).choose
+
+/-- The off-diagonal widened classifier satisfies its refinement-stable clause. -/
+theorem divRepClassifyZarAff_isDivRepClassifyAff_at
+    {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (F₀ : DivFamZarAff C S g) :
+    IsDivRepClassifyAff hpi g r₁ r₂ b₁ b₂ F₀
+      (divRepClassifyZarAff_at (S := S) hpi g r₁ r₂ b₁ b₂
+        (gamma := gamma) hgamma hchiGamma F₀).left :=
+  (exists_overHom_isDivRepClassifyAff_at
+    (gamma := gamma) hpi g r₁ r₂ b₁ b₂ hgamma hchiGamma F₀).choose_spec
+
+/-- Any over-morphism satisfying the widened clause is the off-diagonal classified morphism. -/
+theorem divRepClassifyZarAff_eq_of_isDivRepClassifyAff_at
+    {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (F₀ : DivFamZarAff C S g)
+    (u : overSpec k S ⟶
+      divSchemeOver k (windowS_choice pi hpi g • fiberWeilDivisor pi)
+        (windowM_choice pi hpi g • fiberWeilDivisor pi) g r₁ r₂ b₁
+        (b₂.map (windowShiftEquiv hpi g).symm))
+    (hu : IsDivRepClassifyAff hpi g r₁ r₂ b₁ b₂ F₀ u.left) :
+    u = divRepClassifyZarAff_at (S := S) hpi g r₁ r₂ b₁ b₂
+      (gamma := gamma) hgamma hchiGamma F₀ :=
+  Over.OverMorphism.ext
+    (isDivRepClassifyAff_unique_at (gamma := gamma)
+      hpi g r₁ r₂ b₁ b₂ hgamma hchiGamma F₀ hu
+      (divRepClassifyZarAff_isDivRepClassifyAff_at (gamma := gamma)
+        hpi g r₁ r₂ b₁ b₂ hgamma hchiGamma F₀))
+
 end Curve
 
 end AlgebraicGeometry
