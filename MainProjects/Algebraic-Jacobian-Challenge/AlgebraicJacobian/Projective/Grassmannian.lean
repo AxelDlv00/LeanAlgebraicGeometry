@@ -6,6 +6,7 @@ Authors: The AlgebraicJacobian Contributors
 import AlgebraicJacobian.Picard.GrassmannianRepresentability
 import AlgebraicJacobian.Picard.ProjectiveMorphismBasic
 import AlgebraicJacobian.Picard.OnePointRelPicCollapse
+import AlgebraicJacobian.Projective.GrassmannianProjective
 import Mathlib.CategoryTheory.Limits.Constructions.BinaryProducts
 
 /-!
@@ -18,9 +19,10 @@ locally free module is globally free, so uniqueness of representing objects
 then transports the certificate to the chosen `Scheme.Grassmannian`
 representer.
 
-The absolute certificate itself is deliberately not assumed or constructed
-here. It is the remaining Plucker/projective-space input recorded in
-`Projective/DemandLedger.lean`.
+The absolute certificate is constructed by the Plucker embedding in
+`Projective/GrassmannianProjective.lean`. The conditional transport theorem is
+retained to isolate the base-change argument, and the unconditional theorem at
+the end consumes the absolute certificate.
 -/
 
 open CategoryTheory Limits
@@ -123,6 +125,17 @@ theorem representingScheme_isHQuasiProjective_of_field_of_absolute
   rw [← E.hom.w]
   exact (productHQuasiProjectiveOfAbsolute d r habs S).comp_isImmersion
     E.hom.left
+
+/-- Over a field, the chosen scheme representing locally free rank-`d`
+quotients of `V` is H-quasi-projective. -/
+theorem representingScheme_isHQuasiProjective_of_field
+    {K : Type} [Field K]
+    {V : (Spec (CommRingCat.of K)).Modules} {r d : ℕ}
+    (hV : SheafOfModules.IsLocallyFreeOfRank V r)
+    (hd : 1 ≤ d) (hdr : d ≤ r) :
+    (representingScheme hV hd hdr).hom.IsHQuasiProjective := by
+  exact representingScheme_isHQuasiProjective_of_field_of_absolute hV hd hdr
+    (AlgebraicGeometry.Grassmannian.isHQuasiProjective_toSpecZ d r)
 
 end Grassmannian
 end Scheme
