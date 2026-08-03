@@ -62,6 +62,7 @@ import AlgebraicJacobian.Algebra.LaurentUnits
 import AlgebraicJacobian.Picard.PicEtAff
 import AlgebraicJacobian.Picard.PicEtAffMap
 import AlgebraicJacobian.Picard.PicEtAffEtaleSeparated
+import AlgebraicJacobian.Picard.PicEtAffEtaleEffectivity
 import AlgebraicJacobian.Picard.PicEtAffFieldCollapse
 import AlgebraicJacobian.Picard.PicEtAffTransport
 import AlgebraicJacobian.Picard.PicEtAffCurveMap
@@ -589,6 +590,7 @@ import AlgebraicJacobian.Picard.Pic0ChartPresentationConverse
 import AlgebraicJacobian.Picard.Pic0ChartPlusFibreTower
 import AlgebraicJacobian.Picard.Pic0ChartLocusPlusFibre
 import AlgebraicJacobian.Picard.DegreeZeroBaseField
+import AlgebraicJacobian.Picard.Pic0EtaleDegreeZero
 import AlgebraicJacobian.Picard.DegreeAtBaseField
 import AlgebraicJacobian.Picard.Pic0ChartCoverageDegreeStep2
 import AlgebraicJacobian.Picard.Pic0ChartCoverageNoDrop
