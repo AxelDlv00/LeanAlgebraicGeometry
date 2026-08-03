@@ -1,2 +1,3 @@
 {"at": "2026-08-02T11:46:31.666913+00:00", "actor": "human", "field": "created", "from": "", "to": "queued", "note": "opened"}
 {"at": "2026-08-02T13:35:59.202573+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-03T16:30:04.447420+00:00", "actor": "horizon", "field": "status", "from": "running", "to": "done", "note": "", "provenance": {"run": "0112", "session": "0002-horizon-rev2-ajc", "role": "horizon", "round": "0", "rounds": "8", "task": "rev2-ajc", "task_title": "Reviewer lane AJC (fleet 2): producer metric, import-closure probes, board honesty", "projects": "Algebraic-Jacobian-Challenge"}}
