@@ -219,6 +219,60 @@ theorem admissibleAbelTrans_app_eq_iff_forall_picClass_div_mem_picFromBase
           ((divFunctorAff_admissible_representableBy C).homEquiv q₁)
           ((divFunctorAff_admissible_representableBy C).homEquiv q₂)).mpr h
 
+variable (C) in
+/-- Evaluation of the ambient admissible Sigma chart on the left leg of a slice point is the
+same slice Abel value, transported to the point's actual structure morphism. -/
+theorem abelSigmaChartAffAdmissible_app_left
+    {T : Over (Spec (.of k))}
+    (q : T ⟶ divRepAffAdmissibleScheme C) :
+    (abelSigmaChartAffAdmissible C).app (op T.left) q.left =
+      (⟨T.hom, (admissibleAbelTrans C).app (op T) q⟩ :
+        (pic0SigmaSheaf C).1.obj (op T.left)) := by
+  rw [abelSigmaChartAffAdmissible_eq_sigmaExtension_admissibleAbelTrans]
+  change (⟨q.left ≫ (divRepAffAdmissibleScheme C).hom, _⟩ :
+      (pic0SigmaSheaf C).1.obj (op T.left)) =
+    ⟨T.hom, (admissibleAbelTrans C).app (op T) q⟩
+  refine Over.sigmaExtension_ext (pic0TypeFunctor C) q.w ?_
+  let e : Over.mk (q.left ≫ (divRepAffAdmissibleScheme C).hom) ⟶ T :=
+    Over.mkCongr q.w
+  let q' : Over.mk (q.left ≫ (divRepAffAdmissibleScheme C).hom) ⟶
+      divRepAffAdmissibleScheme C :=
+    Over.homMk q.left rfl
+  have hq : e ≫ q = q' := by
+    apply Over.OverMorphism.ext
+    exact Category.id_comp _
+  change (pic0TypeFunctor C).map e.op
+      ((admissibleAbelTrans C).app (op T) q) =
+    (admissibleAbelTrans C).app
+      (op (Over.mk (q.left ≫ (divRepAffAdmissibleScheme C).hom))) q'
+  have hnat := ConcreteCategory.congr_hom
+    ((admissibleAbelTrans C).naturality e.op) q
+  have hmap : (yoneda.obj (divRepAffAdmissibleScheme C)).map e.op q = q' := by
+    exact hq
+  simpa only [ConcreteCategory.comp_apply, hmap] using hnat.symm
+
+variable (C) in
+/-- The kernel of the actual ambient admissible Abel chart on points over a fixed test scheme is
+exactly relative linear equivalence, including the quotient by classes pulled back from the
+base. -/
+theorem abelSigmaChartAffAdmissible_app_left_eq_iff_forall_picClass_div_mem_picFromBase
+    {T : Over (Spec (.of k))}
+    (q₁ q₂ : T ⟶ divRepAffAdmissibleScheme C) :
+    (abelSigmaChartAffAdmissible C).app (op T.left) q₁.left =
+        (abelSigmaChartAffAdmissible C).app (op T.left) q₂.left
+      ↔ ∀ U : T.left.affineOpens,
+          (((divFunctorAff_admissible_representableBy C).homEquiv q₁).1 U).picClass /
+              (((divFunctorAff_admissible_representableBy C).homEquiv q₂).1 U).picClass
+            ∈ picFromBase C (overSpec k Γ(T.left, U.1)) := by
+  rw [abelSigmaChartAffAdmissible_app_left C q₁,
+    abelSigmaChartAffAdmissible_app_left C q₂]
+  change (⟨T.hom, (admissibleAbelTrans C).app (op T) q₁⟩ :
+      (pic0SigmaSheaf C).1.obj (op T.left)) =
+        ⟨T.hom, (admissibleAbelTrans C).app (op T) q₂⟩ ↔ _
+  rw [Sigma.mk.inj_iff]
+  simp only [heq_eq_eq, true_and]
+  exact admissibleAbelTrans_app_eq_iff_forall_picClass_div_mem_picFromBase C q₁ q₂
+
 end
 
 end AlgebraicGeometry
