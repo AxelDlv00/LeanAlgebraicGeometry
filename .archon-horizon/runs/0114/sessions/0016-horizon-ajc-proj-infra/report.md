@@ -17,6 +17,11 @@
 - In-memory `#print axioms` checks covered all 13 new declarations, including private helpers; every cone is exactly `propext`, `Classical.choice`, and `Quot.sound`. Split import probes confirmed the three producer exports at the root and the D3 consumer only through `Projective.DemandLedger`.
 - Independent ground review found no circular LQF premise and synthesized the real `DivPushforwardFlat` consumer via `x.coherentSheafFlat_id_pushforward`.
 
+## Issues
+
+- Commit provenance is incomplete on five lane commits. `dd26508b7485`, `cb15d595e91d`, and `f34a2841b016` carry only `Archon-Commit`; `162de4aad094` and `27c2214563a0` carry no Archon run/session/task/project trailers.
+- Attribution remains recoverable from the live transcript and Horizon state for run `0114`, session `0016-horizon-ajc-proj-infra`, task `ajc-proj-infra`, project `Algebraic-Jacobian-Challenge`. Shared history was not rewritten; this report records the defect forward.
+
 ## Why I stopped
 
 D3 still lacks the universal whole-fibre `ExistsUnique` Grassmannian locus and its quasi-compact immersion. D2 still lacks the evaluation epimorphism, arbitrary-test locally-free rank, and pullback naturality. These are Picard-side producers; building relative Proj or ampleness before their exact signatures appear would violate the demand ledger.
