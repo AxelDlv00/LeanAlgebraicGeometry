@@ -2,16 +2,18 @@ id: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient
 title: Admissible divisor quotient represents Pic0 (corrected Altman-Kleiman)
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'For n = admissibleCoverageParameter and the unconditional widened representer
-  D of divFunctorAff C n, construct the sheaf quotient of D by equality of the induced
-  degree-zero Picard class; identify its kernel pair with linear equivalence, prove
-  the quotient map is locally surjective, and prove the quotient sheaf is represented
-  by a k-scheme Q, yielding (pic0TypeFunctor C).RepresentableBy Q. The proof must
-  establish the needed quasi-projectivity or a concrete project-local embedding of
-  D. It must not assume P.IsRepresentable, HasSmoothProperQuotient, a RepresentableBy
-  witness, a rational point, or any desired quotient datum. The raw admissible Abel
-  map is not the chart: positive-dimensional linear-system fibres must be removed
-  by the quotient.'
+summary: 'Prove the single endpoint `noncomputable def pic0AdmissibleAbelQuotientRepresenter
+  {k : Type u} [Field k] (C : Over (Spec (.of k))) [SmoothOfRelativeDimension 1 C.hom]
+  [IsProper C.hom] [GeometricallyIrreducible C.hom] : Sigma fun Q : Over (Spec (.of
+  k)) => (pic0TypeFunctor C).RepresentableBy Q`. Its proof must internally consume
+  the unconditional admissible-parameter divisor representer, choose the Abel datum,
+  construct the sheaf quotient by equality of induced degree-zero Picard class, identify
+  the kernel pair with linear equivalence, prove local surjectivity, and prove the
+  quotient is represented by Q. Establish the needed quasi-projectivity or a concrete
+  project-local embedding of the divisor representer. No RepresentableBy, IsRepresentable,
+  HasSmoothProperQuotient, chart-coverage, rational-point, or quotient-datum binders
+  are permitted. The raw admissible Abel map only feeds this quotient: its positive-dimensional
+  linear-system fibres prevent it from being the open Pic0 atlas.'
 status: active
 kind: proof
 priority: high
@@ -36,3 +38,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.datum-tail
   owner: ajcr-pic0-join
+  updated_at: '2026-08-03T00:03:32.303194+00:00'
