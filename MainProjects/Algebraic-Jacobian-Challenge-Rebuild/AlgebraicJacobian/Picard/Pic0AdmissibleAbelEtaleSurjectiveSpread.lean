@@ -165,6 +165,53 @@ noncomputable local instance instFiniteH1RelCurveSpread
     Module.Finite L (Sheaf.HModule ((relCurve C L).moduleKSheaf L) 1) :=
   instModuleFiniteHModuleOneBaseChange C L
 
+/-- A pulled datum class has unchanged degree at a prime lying over the base prime. -/
+theorem classDeg_map_residueField_of_comap
+    (D : BasicOpenCocycleDatum C B pi)
+    {S : Type u} [CommRing S] [Algebra k S] [Algebra B S]
+    [IsScalarTower k B S] (p : PrimeSpectrum B) (q : PrimeSpectrum S)
+    (hq : PrimeSpectrum.comap (algebraMap B S) q = p) (n : ℕ)
+    (hdegp : classDeg p.asIdeal.ResidueField
+      (Scheme.CechPic.map (relCurveMap C B p.asIdeal.ResidueField)
+        D.cechPicClass) = (n : ℤ)) :
+    classDeg q.asIdeal.ResidueField
+      (Scheme.CechPic.map (relCurveMap C B q.asIdeal.ResidueField)
+        D.cechPicClass) = (n : ℤ) := by
+  have hcom : p.asIdeal = q.asIdeal.comap (algebraMap B S) := by
+    simpa using congrArg PrimeSpectrum.asIdeal hq.symm
+  let rho : p.asIdeal.ResidueField →ₐ[k] q.asIdeal.ResidueField :=
+    Ideal.ResidueField.mapₐ p.asIdeal q.asIdeal
+      (IsScalarTower.toAlgHom k B S) hcom
+  letI : Algebra p.asIdeal.ResidueField q.asIdeal.ResidueField :=
+    rho.toRingHom.toAlgebra
+  haveI : IsScalarTower k p.asIdeal.ResidueField q.asIdeal.ResidueField :=
+    IsScalarTower.of_algebraMap_eq fun x => (rho.commutes x).symm
+  haveI : IsScalarTower B p.asIdeal.ResidueField q.asIdeal.ResidueField :=
+    IsScalarTower.of_algebraMap_eq fun x => by
+      change algebraMap B q.asIdeal.ResidueField x =
+        rho (algebraMap B p.asIdeal.ResidueField x)
+      rw [Ideal.ResidueField.mapₐ_apply, Ideal.ResidueField.map_algebraMap]
+      exact IsScalarTower.algebraMap_apply B S q.asIdeal.ResidueField x
+  have hcurve : (C ◁ Over.overSpecMap rho).left =
+      relCurveMap C p.asIdeal.ResidueField q.asIdeal.ResidueField := by
+    refine congrArg
+      (fun t : overSpec k q.asIdeal.ResidueField ⟶
+        overSpec k p.asIdeal.ResidueField => (C ◁ t).left) ?_
+    exact Over.OverMorphism.ext rfl
+  have hinv := classDeg_cechPicMap_baseFieldTransition C rho
+    (Scheme.CechPic.map (relCurveMap C B p.asIdeal.ResidueField)
+      D.cechPicClass)
+  rw [hcurve] at hinv
+  have hpic : Scheme.CechPic.map
+      (relCurveMap C p.asIdeal.ResidueField q.asIdeal.ResidueField)
+      (Scheme.CechPic.map (relCurveMap C B p.asIdeal.ResidueField)
+        D.cechPicClass) =
+      Scheme.CechPic.map (relCurveMap C B q.asIdeal.ResidueField)
+        D.cechPicClass := by
+    rw [← MonoidHom.comp_apply, ← Scheme.CechPic.map_comp, relCurveMap_comp]
+  exact (congrArg (classDeg q.asIdeal.ResidueField) hpic.symm).trans
+    (hinv.trans hdegp)
+
 /-- At degree at least the genus, H1 vanishing makes datum H0 nontrivial. -/
 theorem nontrivial_hModule_zero_of_degree_of_h1
     (D : BasicOpenCocycleDatum C B pi)
@@ -201,8 +248,72 @@ theorem nontrivial_hModule_zero_of_degree_of_h1
     exact_mod_cast hposZ
   exact Module.nontrivial_of_finrank_pos hpos
 
+/-- With H1 zero, Riemann--Roch recovers degree from the H0 dimension. -/
+theorem classDeg_baseChange_eq_h0_sub_chi
+    (D : BasicOpenCocycleDatum C B pi)
+    (L : Type u) [Field L] [Algebra k L] [Algebra B L]
+    [IsScalarTower k B L] (g : ℕ)
+    (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
+    (hsub : Subsingleton (Sheaf.HModule (D.baseChange L).sheaf 1)) :
+    classDeg L (D.baseChange L).cechPicClass =
+      (Sheaf.h0 (D.baseChange L).sheaf : ℤ) - (1 - (g : ℤ)) := by
+  set P : (relCurve C L).MeromorphicPresentation :=
+    Scheme.MeromorphicPresentation.ofCocycle (D.baseChange L).pointedCover
+      (gluedSubordCocycle (D.baseChange L).isGluingCocycle
+        (D.baseChange L).pointedCover (D.baseChange L).pieceIndex
+        fun _ => le_rfl) with hP
+  have hsubP : Subsingleton (Sheaf.HModule (P.gluedSheaf L) 1) :=
+    (Sheaf.HModule.mapEquiv
+      (BasicOpenCocycleDatum.presentationSheafIso (D.baseChange L))
+      1).toEquiv.subsingleton_congr.mp hsub
+  have h0eq : Sheaf.h0 (D.baseChange L).sheaf = Sheaf.h0 (P.gluedSheaf L) :=
+    Sheaf.h0_congr
+      (BasicOpenCocycleDatum.presentationSheafIso (D.baseChange L))
+  have hformula := h0_gluedSheaf_eq_classDeg_add_chi L P hsubP
+  have hPclass : P.picClass = (D.baseChange L).cechPicClass := rfl
+  rw [h0eq, hformula, hPclass, chi_relCurve_baseField C L g hchi]
+  ring
+
+/-- Free H0 and vanishing H1 make one field-fibre degree valid on every fibre. -/
+theorem classDeg_baseChange_eq_of_freeH0_of_one
+    (D : BasicOpenCocycleDatum C B pi)
+    [Module.Free B (Sheaf.HModule D.sheaf 0)] (g n : ℕ)
+    (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
+    (hH1 : Subsingleton (datumPair D).H1)
+    (K : Type u) [Field K] [Algebra k K] [Algebra B K]
+    [IsScalarTower k B K]
+    (hdegK : classDeg K (D.baseChange K).cechPicClass = (n : ℤ)) :
+    ∀ (L : Type u) [Field L] [Algebra k L] [Algebra B L]
+      [IsScalarTower k B L],
+      classDeg L (D.baseChange L).cechPicClass = (n : ℤ) := by
+  letI : Nontrivial B := RingHom.domain_nontrivial (algebraMap B K)
+  intro L _ _ _ _
+  have hsubL : Subsingleton (Sheaf.HModule (D.baseChange L).sheaf 1) :=
+    D.datum_subsingleton_h1_baseChange L hH1
+  have hsubK : Subsingleton (Sheaf.HModule (D.baseChange K).sheaf 1) :=
+    D.datum_subsingleton_h1_baseChange K hH1
+  have h0eq : Sheaf.h0 (D.baseChange L).sheaf =
+      Sheaf.h0 (D.baseChange K).sheaf := by
+    change Module.finrank L (Sheaf.HModule (D.baseChange L).sheaf 0) =
+      Module.finrank K (Sheaf.HModule (D.baseChange K).sheaf 0)
+    calc
+      _ = Module.finrank L (L ⊗[B] Sheaf.HModule D.sheaf 0) :=
+        (D.datumH0BaseChange L hH1).finrank_eq.symm
+      _ = Module.finrank B (Sheaf.HModule D.sheaf 0) := Module.finrank_baseChange
+      _ = Module.finrank K (K ⊗[B] Sheaf.HModule D.sheaf 0) :=
+        Module.finrank_baseChange.symm
+      _ = _ := (D.datumH0BaseChange K hH1).finrank_eq
+  calc
+    _ = (Sheaf.h0 (D.baseChange L).sheaf : ℤ) - (1 - (g : ℤ)) :=
+      D.classDeg_baseChange_eq_h0_sub_chi L g hchi hsubL
+    _ = (Sheaf.h0 (D.baseChange K).sheaf : ℤ) - (1 - (g : ℤ)) := by
+      rw [h0eq]
+    _ = classDeg K (D.baseChange K).cechPicClass :=
+      (D.classDeg_baseChange_eq_h0_sub_chi K g hchi hsubK).symm
+    _ = (n : ℤ) := hdegK
 set_option maxHeartbeats 8000000 in
 set_option synthInstance.maxHeartbeats 800000 in
+-- The two localization stages synthesize large sheaf and scalar-tower terms.
 /-- An admissible H1-vanishing fibre spreads across two away localizations to a
 widened divisor family whose class is the pullback of the original datum class.
 The returned prime of the final base lies over the chosen input prime. -/
@@ -211,10 +322,10 @@ theorem exists_away_away_divFamZarAff_of_admissible_fibre
     (hpi : pi ≫ P1.structureMap k = C.hom) (n g : ℕ)
     (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
     (hgn : g ≤ n)
-    (hdeg : ∀ (L : Type u) [Field L] [Algebra k L] [Algebra B L]
-      [IsScalarTower k B L],
-      classDeg L (Scheme.CechPic.map (relCurveMap C B L) D.cechPicClass) = (n : ℤ))
-    (p : PrimeSpectrum B) (hp : D.HasWitnessH1Vanishing p.asIdeal.ResidueField) :
+    (p : PrimeSpectrum B) (hp : D.HasWitnessH1Vanishing p.asIdeal.ResidueField)
+    (hdegp : classDeg p.asIdeal.ResidueField
+      (Scheme.CechPic.map (relCurveMap C B p.asIdeal.ResidueField)
+        D.cechPicClass) = (n : ℤ)) :
     ∃ h : B, h ∉ p.asIdeal ∧
       ∃ q₁ : PrimeSpectrum (Localization.Away h),
         PrimeSpectrum.comap (algebraMap B (Localization.Away h)) q₁ = p ∧
@@ -248,7 +359,7 @@ theorem exists_away_away_divFamZarAff_of_admissible_fibre
         (relCurveMap C B (Localization.Away h)) D.cechPicClass from
           D.cechPicClass_baseChange (Localization.Away h),
       ← MonoidHom.comp_apply, ← Scheme.CechPic.map_comp, relCurveMap_comp]
-    exact hdeg q₁.asIdeal.ResidueField
+    exact D.classDeg_map_residueField_of_comap p q₁ hq₁ n hdegp
   have hsub₁ : Subsingleton
       (Sheaf.HModule (D₁.baseChange q₁.asIdeal.ResidueField).sheaf 1) :=
     D₁.datum_subsingleton_h1_baseChange q₁.asIdeal.ResidueField hH1₁
@@ -363,6 +474,13 @@ theorem exists_away_away_divFamZarAff_of_admissible_fibre
           D.cechPicClass_baseChange (Localization.Away h),
       ← MonoidHom.comp_apply, ← Scheme.CechPic.map_comp,
       relCurveMap_comp]
+  have hdegq₂ : classDeg q₂.asIdeal.ResidueField
+      (D₂.baseChange q₂.asIdeal.ResidueField).cechPicClass = (n : ℤ) := by
+    rw [D₂.cechPicClass_baseChange q₂.asIdeal.ResidueField, hclassD₂,
+      ← MonoidHom.comp_apply, ← Scheme.CechPic.map_comp, relCurveMap_comp]
+    exact D.classDeg_map_residueField_of_comap p q₂ hq₂ n hdegp
+  letI : Module.Free (Localization.Away f) (Sheaf.HModule D₂.sheaf 0) :=
+    Module.Free.of_equiv e₂
   have hdeg₂ : ∀ (L : Type u) [Field L] [Algebra k L]
       [Algebra (Localization.Away f) L]
       [IsScalarTower k (Localization.Away f) L],
@@ -370,20 +488,11 @@ theorem exists_away_away_divFamZarAff_of_admissible_fibre
         (Scheme.CechPic.map (relCurveMap C (Localization.Away f) L) d.picClass) =
           (n : ℤ) := by
     intro L _ _ _ _
-    letI : Algebra B L :=
-      ((algebraMap (Localization.Away f) L).comp
-        (algebraMap B (Localization.Away f))).toAlgebra
-    haveI : IsScalarTower B (Localization.Away f) L :=
-      IsScalarTower.of_algebraMap_eq' (by rw [RingHom.algebraMap_toAlgebra])
-    haveI : IsScalarTower k B L := IsScalarTower.of_algebraMap_eq' (by
-      rw [RingHom.algebraMap_toAlgebra, RingHom.comp_assoc,
-        ← IsScalarTower.algebraMap_eq k B (Localization.Away f),
-        ← IsScalarTower.algebraMap_eq k (Localization.Away f) L])
     rw [show d.picClass = D₂.cechPicClass from
         D₂.sectionLocalEquationsOfFibrewiseRegular_picClass s₂ hcomponent,
-      hclassD₂, ← MonoidHom.comp_apply, ← Scheme.CechPic.map_comp,
-      relCurveMap_comp]
-    exact hdeg L
+      ← D₂.cechPicClass_baseChange L]
+    exact D₂.classDeg_baseChange_eq_of_freeH0_of_one
+      g n hchi hH1₂ q₂.asIdeal.ResidueField hdegq₂ L
   let F : DivFamZarAff C (Localization.Away f) n :=
     divFamZarAffOfFibrewiseRegularLocalEquations C n d pi hreg hdeg₂
   refine ⟨h, hh, q₁, hq₁, f, hf, q₂, hq₂, F, ?_⟩
