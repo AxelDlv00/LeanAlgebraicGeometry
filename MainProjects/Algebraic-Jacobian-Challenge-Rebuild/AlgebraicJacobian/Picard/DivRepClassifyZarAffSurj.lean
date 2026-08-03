@@ -128,6 +128,60 @@ noncomputable def divFunctorAff_representableBy_of_chartClause
   divFunctorAff_representableBy_of_chartRange hpi g hO hchi r1 r2 b1 b2 U
     (divRepClassifyZarAff_left_eq_chartMap hpi g hO hchi r1 r2 b1 b2 U hU)
 
+/-- The characterizing clause identifies the off-diagonal classifier with the chart map. -/
+theorem divRepClassifyZarAff_left_eq_chartMap_at
+    {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (U : ∀ (i : (glueData k g r1).J) (j : (glueData k g r2).J),
+      DivFamZarAff C (ChartRing i j) g)
+    (hU : DivRepChartFamilyAff.IsChartClause (hpi := hpi) g r1 r2 b1 b2 U)
+    (i : (glueData k g r1).J) (j : (glueData k g r2).J) :
+    (divRepClassifyZarAff_at (S := ChartRing i j) (gamma := gamma)
+      hpi g r1 r2 b1 b2 hgamma hchiGamma (U i j)).left = ChartMap i j :=
+  isDivRepClassifyAff_unique_at (gamma := gamma)
+    hpi g r1 r2 b1 b2 hgamma hchiGamma (U i j)
+    (divRepClassifyZarAff_isDivRepClassifyAff_at (gamma := gamma)
+      hpi g r1 r2 b1 b2 hgamma hchiGamma (U i j))
+    (hU i j)
+
+/-- The clause form implies surjectivity of the classifier at an independent curve parameter. -/
+theorem divRepClassifyZarAff_surjective_of_chartClause_at
+    (hOAt : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
+    {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (U : ∀ (i : (glueData k g r1).J) (j : (glueData k g r2).J),
+      DivFamZarAff C (ChartRing i j) g)
+    (hU : DivRepChartFamilyAff.IsChartClause (hpi := hpi) g r1 r2 b1 b2 U)
+    (S : Type u) [CommRing S] [Algebra k S] :
+    Function.Surjective
+      (divRepClassifyZarAff_at (C := C) (pi := pi) (S := S) (gamma := gamma)
+        hpi g r1 r2 b1 b2 hgamma hchiGamma) :=
+  fun v => exists_divRepClassifyZarAff_eq_of_chartRange_at
+    (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+    (hOAt := hOAt) (gamma := gamma) (hgamma := hgamma)
+    (hchiGamma := hchiGamma) U
+    (divRepClassifyZarAff_left_eq_chartMap_at
+      (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+      (gamma := gamma) (hgamma := hgamma) (hchiGamma := hchiGamma) U hU) S v
+
+/-- Universal chart classes satisfying the clause represent the degree-`g` divisor functor
+when the curve parameter is any `gamma ≤ g`. -/
+noncomputable def divFunctorAff_representableBy_of_chartClause_at
+    (hOAt : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
+    {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (U : ∀ (i : (glueData k g r1).J) (j : (glueData k g r2).J),
+      DivFamZarAff C (ChartRing i j) g)
+    (hU : DivRepChartFamilyAff.IsChartClause (hpi := hpi) g r1 r2 b1 b2 U) :
+    (divFunctorAff C g).RepresentableBy DivOver :=
+  divFunctorAff_representableBy_of_chartRange_at
+    (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+    (hOAt := hOAt) (gamma := gamma) (hgamma := hgamma)
+    (hchiGamma := hchiGamma) U
+    (divRepClassifyZarAff_left_eq_chartMap_at
+      (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+      (gamma := gamma) (hgamma := hgamma) (hchiGamma := hchiGamma) U hU)
+
 end Curve
 
 end AlgebraicGeometry

@@ -371,6 +371,336 @@ noncomputable def representableBy
             (b1 := b1) (b2 := b2) D v)
     exact pullGlobal_comp hpi g r1 r2 b1 b2 D f v
 
+/-! ## Off-diagonal classifier packaging -/
+
+/-- A chosen preimage under the classifier at an independent curve parameter. -/
+noncomputable def pullOfClassifierSurjective_at
+    {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hsurj : ∀ (S : Type u) [CommRing S] [Algebra k S],
+      Function.Surjective
+        (divRepClassifyZarAff_at (C := C) (pi := pi) (S := S)
+          (gamma := gamma) hpi g r1 r2 b1 b2 hgamma hchiGamma))
+    (S : Type u) [CommRing S] [Algebra k S] (v : overSpec k S ⟶ DivOver) :
+    DivFamZarAff C S g :=
+  (hsurj S v).choose
+
+/-- The off-diagonal chosen preimage classifies to the original point. -/
+theorem classify_pullOfClassifierSurjective_at
+    {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hsurj : ∀ (S : Type u) [CommRing S] [Algebra k S],
+      Function.Surjective
+        (divRepClassifyZarAff_at (C := C) (pi := pi) (S := S)
+          (gamma := gamma) hpi g r1 r2 b1 b2 hgamma hchiGamma))
+    (S : Type u) [CommRing S] [Algebra k S] (v : overSpec k S ⟶ DivOver) :
+    divRepClassifyZarAff_at (S := S) (gamma := gamma)
+        hpi g r1 r2 b1 b2 hgamma hchiGamma
+        (pullOfClassifierSurjective_at
+          (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+          (gamma := gamma) (hgamma := hgamma) (hchiGamma := hchiGamma) hsurj S v) = v :=
+  (hsurj S v).choose_spec
+
+/-- Build the affine pullback package from off-diagonal classifier surjectivity. -/
+noncomputable def ofClassifierSurjective_at
+    (hOAt : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
+    {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (hsurj : ∀ (S : Type u) [CommRing S] [Algebra k S],
+      Function.Surjective
+        (divRepClassifyZarAff_at (C := C) (pi := pi) (S := S)
+          (gamma := gamma) hpi g r1 r2 b1 b2 hgamma hchiGamma)) :
+    DivRepAffinePullbackAff hpi g r1 r2 b1 b2 where
+  pull S _ _ v :=
+    pullOfClassifierSurjective_at
+      (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+      (gamma := gamma) (hgamma := hgamma) (hchiGamma := hchiGamma) hsurj S v
+  isDivRepClassify_pull S _ _ v := by
+    have hv := congrArg CategoryTheory.Over.Hom.left
+      (classify_pullOfClassifierSurjective_at
+        (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+        (gamma := gamma) (hgamma := hgamma) (hchiGamma := hchiGamma) hsurj S v)
+    rw [← hv]
+    exact divRepClassifyZarAff_isDivRepClassifyAff_at (gamma := gamma)
+      hpi g r1 r2 b1 b2 hgamma hchiGamma
+      (pullOfClassifierSurjective_at
+        (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+        (gamma := gamma) (hgamma := hgamma) (hchiGamma := hchiGamma) hsurj S v)
+  pull_naturality {A B} _ _ _ _ phi v := by
+    apply divRepClassifyZarAff_injective_at
+      (C := C) (π := pi) (S := B) (hπ := hpi) (g := g)
+      (r₁ := r1) (r₂ := r2) (b₁ := b1) (b₂ := b2)
+      (hOAt := hOAt) (gamma := gamma) (hgamma := hgamma) (hχgamma := hchiGamma)
+    calc
+      divRepClassifyZarAff_at (S := B) (gamma := gamma)
+          hpi g r1 r2 b1 b2 hgamma hchiGamma
+          (pullOfClassifierSurjective_at
+            (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+            (gamma := gamma) (hgamma := hgamma) (hchiGamma := hchiGamma)
+            hsurj B (Over.overSpecMap phi ≫ v))
+        = Over.overSpecMap phi ≫ v :=
+          classify_pullOfClassifierSurjective_at
+            (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+            (gamma := gamma) (hgamma := hgamma) (hchiGamma := hchiGamma) hsurj B _
+      _ = Over.overSpecMap phi ≫
+          divRepClassifyZarAff_at (S := A) (gamma := gamma)
+            hpi g r1 r2 b1 b2 hgamma hchiGamma
+            (pullOfClassifierSurjective_at
+              (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+              (gamma := gamma) (hgamma := hgamma) (hchiGamma := hchiGamma)
+              hsurj A v) := by
+        rw [classify_pullOfClassifierSurjective_at
+          (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+          (gamma := gamma) (hgamma := hgamma) (hchiGamma := hchiGamma) hsurj A v]
+      _ = divRepClassifyZarAff_at (S := B) (gamma := gamma)
+          hpi g r1 r2 b1 b2 hgamma hchiGamma
+          (DivFamZarAff.mapAlgHom phi
+            (pullOfClassifierSurjective_at
+              (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+              (gamma := gamma) (hgamma := hgamma) (hchiGamma := hchiGamma)
+              hsurj A v)) :=
+        overSpecMap_comp_divRepClassifyZarAff_at (gamma := gamma)
+          hpi g r1 r2 b1 b2 hgamma hchiGamma phi _
+
+/-- Pulling the off-diagonal canonical classifier recovers the widened class. -/
+theorem pull_classify_at
+    (hOAt : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
+    {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (D : DivRepAffinePullbackAff hpi g r1 r2 b1 b2)
+    (S : Type u) [CommRing S] [Algebra k S] (F : DivFamZarAff C S g) :
+    D.pull S (divRepClassifyZarAff_at (S := S) (gamma := gamma)
+      hpi g r1 r2 b1 b2 hgamma hchiGamma F) = F := by
+  exact eq_of_isDivRepClassifyAff_at
+    (hπ := hpi) (g := g) (r₁ := r1) (r₂ := r2) (b₁ := b1) (b₂ := b2)
+    (hOAt := hOAt) (gamma := gamma) (hgamma := hgamma) (hχgamma := hchiGamma)
+    _ _ (D.isDivRepClassify_pull S _)
+    (divRepClassifyZarAff_isDivRepClassifyAff_at (gamma := gamma)
+      hpi g r1 r2 b1 b2 hgamma hchiGamma F)
+
+/-- Classifying a pulled point with the off-diagonal classifier recovers that point. -/
+theorem classify_pull_at
+    {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (D : DivRepAffinePullbackAff hpi g r1 r2 b1 b2)
+    (S : Type u) [CommRing S] [Algebra k S] (v : overSpec k S ⟶ DivOver) :
+    divRepClassifyZarAff_at (S := S) (gamma := gamma)
+      hpi g r1 r2 b1 b2 hgamma hchiGamma (D.pull S v) = v := by
+  exact (divRepClassifyZarAff_eq_of_isDivRepClassifyAff_at (gamma := gamma)
+    hpi g r1 r2 b1 b2 hgamma hchiGamma
+    (D.pull S v) v (D.isDivRepClassify_pull S v)).symm
+
+private noncomputable def classifyPiece_at
+    {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    {T : Over (Spec (CommRingCat.of k))} (F : divFamZarAff C g T)
+    (U : T.left.affineOpens) : U.1.toScheme ⟶ (DivOver).left :=
+  U.2.isoSpec.hom ≫
+    (divRepClassifyZarAff_at (S := Γ(T.left, U.1)) (gamma := gamma)
+      hpi g r1 r2 b1 b2 hgamma hchiGamma (F.1 U)).left
+
+set_option maxHeartbeats 1600000 in
+-- Restriction exposes the two off-diagonal affine classifiers and their algebra towers.
+private theorem homOfLE_classifyPiece_at
+    {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    {T : Over (Spec (CommRingCat.of k))} (F : divFamZarAff C g T)
+    {U V : T.left.affineOpens} (hle : U.1 ≤ V.1) :
+    T.left.homOfLE hle ≫
+        classifyPiece_at (hpi := hpi) (g := g) (r1 := r1) (r2 := r2)
+          (b1 := b1) (b2 := b2) (gamma := gamma)
+          (hgamma := hgamma) (hchiGamma := hchiGamma) F V
+      = classifyPiece_at (hpi := hpi) (g := g) (r1 := r1) (r2 := r2)
+          (b1 := b1) (b2 := b2) (gamma := gamma)
+          (hgamma := hgamma) (hchiGamma := hchiGamma) F U := by
+  have hres : (Over.overSpecMap (Over.resAlgHom T hle)).left ≫ V.2.fromSpec
+      = U.2.fromSpec :=
+    congrArg CategoryTheory.Over.Hom.left (Over.fromSpecAffine_resAlgHom (T := T) hle)
+  have hkey : U.2.isoSpec.hom ≫ (Over.overSpecMap (Over.resAlgHom T hle)).left
+      = T.left.homOfLE hle ≫ V.2.isoSpec.hom := by
+    rw [← cancel_mono V.2.fromSpec, Category.assoc, Category.assoc, hres,
+      isoSpec_hom_fromSpec, isoSpec_hom_fromSpec, Scheme.homOfLE_ι]
+  have hcl : (Over.overSpecMap (Over.resAlgHom T hle)).left ≫
+        (divRepClassifyZarAff_at (S := Γ(T.left, V.1)) (gamma := gamma)
+          hpi g r1 r2 b1 b2 hgamma hchiGamma (F.1 V)).left =
+      (divRepClassifyZarAff_at (S := Γ(T.left, U.1)) (gamma := gamma)
+        hpi g r1 r2 b1 b2 hgamma hchiGamma (F.1 U)).left := by
+    rw [← CategoryTheory.Over.comp_left,
+      overSpecMap_comp_divRepClassifyZarAff_at (gamma := gamma)
+        hpi g r1 r2 b1 b2 hgamma hchiGamma,
+      F.compat U V hle]
+  rw [classifyPiece_at, classifyPiece_at, ← Category.assoc, ← hkey, Category.assoc, hcl]
+
+private theorem classifyPiece_over_at
+    {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    {T : Over (Spec (CommRingCat.of k))} (F : divFamZarAff C g T)
+    (U : T.left.affineOpens) :
+    classifyPiece_at (hpi := hpi) (g := g) (r1 := r1) (r2 := r2)
+        (b1 := b1) (b2 := b2) (gamma := gamma)
+        (hgamma := hgamma) (hchiGamma := hchiGamma) F U ≫ (DivOver).hom =
+      U.1.ι ≫ T.hom := by
+  rw [classifyPiece_at, Category.assoc, CategoryTheory.Over.w,
+    ← CategoryTheory.Over.w (Over.fromSpecAffine T U), ← Category.assoc]
+  exact congrArg (· ≫ T.hom) (isoSpec_hom_fromSpec U.2)
+
+private theorem classifyPiece_trans_at
+    {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    {T : Over (Spec (CommRingCat.of k))} (F : divFamZarAff C g T)
+    {U V : T.left.directedAffineCover.I₀} (hUV : U ⟶ V) :
+    Scheme.Cover.trans T.left.directedAffineCover hUV ≫
+        classifyPiece_at (hpi := hpi) (g := g) (r1 := r1) (r2 := r2)
+          (b1 := b1) (b2 := b2) (gamma := gamma)
+          (hgamma := hgamma) (hchiGamma := hchiGamma) F V
+      = classifyPiece_at (hpi := hpi) (g := g) (r1 := r1) (r2 := r2)
+          (b1 := b1) (b2 := b2) (gamma := gamma)
+          (hgamma := hgamma) (hchiGamma := hchiGamma) F U := by
+  rw [Subsingleton.elim hUV (homOfLE (leOfHom hUV)),
+    Scheme.directedAffineCover_trans (leOfHom hUV)]
+  exact homOfLE_classifyPiece_at
+    (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+    (gamma := gamma) (hgamma := hgamma) (hchiGamma := hchiGamma) F (leOfHom hUV)
+
+/-- The global classifier obtained from the off-diagonal affine classifiers. -/
+noncomputable def classifyGlobal_at
+    {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    {T : Over (Spec (CommRingCat.of k))} (F : divFamZarAff C g T) : T ⟶ DivOver :=
+  Scheme.OpenCover.glueMorphismsOverOfLocallyDirected (X := T) (Y := DivOver)
+    T.left.directedAffineCover
+    (classifyPiece_at (hpi := hpi) (g := g) (r1 := r1) (r2 := r2)
+      (b1 := b1) (b2 := b2) (gamma := gamma)
+      (hgamma := hgamma) (hchiGamma := hchiGamma) F)
+    (fun {_U _V} hUV =>
+      classifyPiece_trans_at
+        (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+        (gamma := gamma) (hgamma := hgamma) (hchiGamma := hchiGamma) F hUV)
+    (classifyPiece_over_at
+      (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+      (gamma := gamma) (hgamma := hgamma) (hchiGamma := hchiGamma) F)
+
+private theorem iota_classifyGlobal_at
+    {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    {T : Over (Spec (CommRingCat.of k))} (F : divFamZarAff C g T)
+    (W : T.left.affineOpens) :
+    W.1.ι ≫ (classifyGlobal_at
+        (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+        (gamma := gamma) (hgamma := hgamma) (hchiGamma := hchiGamma) F).left =
+      classifyPiece_at (hpi := hpi) (g := g) (r1 := r1) (r2 := r2)
+        (b1 := b1) (b2 := b2) (gamma := gamma)
+        (hgamma := hgamma) (hchiGamma := hchiGamma) F W :=
+  Scheme.OpenCover.map_glueMorphismsOverOfLocallyDirected_left
+    (X := T) (Y := DivOver) T.left.directedAffineCover
+    (classifyPiece_at (hpi := hpi) (g := g) (r1 := r1) (r2 := r2)
+      (b1 := b1) (b2 := b2) (gamma := gamma)
+      (hgamma := hgamma) (hchiGamma := hchiGamma) F)
+    (fun {_U _V} hUV =>
+      classifyPiece_trans_at
+        (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+        (gamma := gamma) (hgamma := hgamma) (hchiGamma := hchiGamma) F hUV)
+    (classifyPiece_over_at
+      (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+      (gamma := gamma) (hgamma := hgamma) (hchiGamma := hchiGamma) F) W
+
+/-- The off-diagonal global classifier restricts to its affine classifier. -/
+theorem fromSpecAffine_classifyGlobal_at
+    {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    {T : Over (Spec (CommRingCat.of k))} (F : divFamZarAff C g T)
+    (W : T.left.affineOpens) :
+    Over.fromSpecAffine T W ≫
+        classifyGlobal_at
+          (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+          (gamma := gamma) (hgamma := hgamma) (hchiGamma := hchiGamma) F =
+      divRepClassifyZarAff_at (S := Γ(T.left, W.1)) (gamma := gamma)
+        hpi g r1 r2 b1 b2 hgamma hchiGamma (F.1 W) := by
+  refine Over.OverMorphism.ext ?_
+  change W.2.fromSpec ≫ _ = _
+  rw [← IsAffineOpen.isoSpec_inv_ι, Category.assoc,
+    iota_classifyGlobal_at
+      (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+      (gamma := gamma) (hgamma := hgamma) (hchiGamma := hchiGamma) F W,
+    classifyPiece_at, Iso.inv_hom_id_assoc]
+
+/-- The global pull and off-diagonal classifier are inverse on widened sections. -/
+theorem pullGlobal_classifyGlobal_at
+    (hOAt : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
+    {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (D : DivRepAffinePullbackAff hpi g r1 r2 b1 b2)
+    {T : Over (Spec (CommRingCat.of k))} (F : divFamZarAff C g T) :
+    pullGlobal (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2) D
+        (classifyGlobal_at
+          (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+          (gamma := gamma) (hgamma := hgamma) (hchiGamma := hchiGamma) F) = F := by
+  refine divFamZarAff.ext fun W => ?_
+  rw [pullGlobal_val, fromSpecAffine_classifyGlobal_at,
+    pull_classify_at
+      (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+      (hOAt := hOAt) (gamma := gamma) (hgamma := hgamma)
+      (hchiGamma := hchiGamma)]
+
+/-- The off-diagonal global classifier and pull are inverse on `DivScheme` points. -/
+theorem classifyGlobal_pullGlobal_at
+    {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (D : DivRepAffinePullbackAff hpi g r1 r2 b1 b2)
+    {T : Over (Spec (CommRingCat.of k))} (v : T ⟶ DivOver) :
+    classifyGlobal_at
+        (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+        (gamma := gamma) (hgamma := hgamma) (hchiGamma := hchiGamma)
+        (pullGlobal (hpi := hpi) (g := g) (r1 := r1) (r2 := r2)
+          (b1 := b1) (b2 := b2) D v) = v := by
+  refine hom_ext_fromSpecAffine _ _ fun W => ?_
+  rw [fromSpecAffine_classifyGlobal_at, pullGlobal_val,
+    classify_pull_at
+      (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+      (gamma := gamma) (hgamma := hgamma) (hchiGamma := hchiGamma)]
+
+/-- The off-diagonal equivalence on an arbitrary test object. -/
+noncomputable def toGlobalEquiv_at
+    (hOAt : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
+    {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (D : DivRepAffinePullbackAff hpi g r1 r2 b1 b2)
+    (T : Over (Spec (CommRingCat.of k))) :
+    (T ⟶ DivOver) ≃ divFamZarAff C g T where
+  toFun := pullGlobal (hpi := hpi) (g := g) (r1 := r1) (r2 := r2)
+    (b1 := b1) (b2 := b2) D
+  invFun := classifyGlobal_at
+    (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+    (gamma := gamma) (hgamma := hgamma) (hchiGamma := hchiGamma)
+  left_inv := classifyGlobal_pullGlobal_at
+    (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+    (gamma := gamma) (hgamma := hgamma) (hchiGamma := hchiGamma) D
+  right_inv := pullGlobal_classifyGlobal_at
+    (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+    (hOAt := hOAt) (gamma := gamma) (hgamma := hgamma)
+    (hchiGamma := hchiGamma) D
+
+/-- An affine pullback package represents the degree-`g` divisor functor when the curve
+parameter is any `gamma ≤ g`. -/
+noncomputable def representableBy_at
+    (hOAt : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
+    {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    (D : DivRepAffinePullbackAff hpi g r1 r2 b1 b2) :
+    (divFunctorAff C g).RepresentableBy DivOver where
+  homEquiv {T} :=
+    toGlobalEquiv_at
+      (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+      (hOAt := hOAt) (gamma := gamma) (hgamma := hgamma)
+      (hchiGamma := hchiGamma) D T
+  homEquiv_comp {T T'} f v := by
+    change pullGlobal (hpi := hpi) (g := g) (r1 := r1) (r2 := r2)
+        (b1 := b1) (b2 := b2) D (f ≫ v) =
+      divFamZarAff.map C g f
+        (pullGlobal (hpi := hpi) (g := g) (r1 := r1) (r2 := r2)
+          (b1 := b1) (b2 := b2) D v)
+    exact pullGlobal_comp hpi g r1 r2 b1 b2 D f v
+
 end DivRepAffinePullbackAff
 
 end Curve
