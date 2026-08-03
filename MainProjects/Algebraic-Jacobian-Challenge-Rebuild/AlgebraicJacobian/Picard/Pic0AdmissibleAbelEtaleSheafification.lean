@@ -24,9 +24,30 @@ No Scheme representability conclusion is asserted in this module.
 
 set_option autoImplicit false
 
-universe u
+universe u v w w'
 
 open CategoryTheory Limits Opposite
+
+namespace CategoryTheory.Presheaf
+
+variable {X : Type u} [Category.{v} X] (J : GrothendieckTopology X)
+
+/-- Local surjectivity of a type-valued presheaf map survives a universe lift. -/
+theorem isLocallySurjective_whiskerRight_ulift
+    {F G : Xᵒᵖ ⥤ Type w} (f : F ⟶ G)
+    [IsLocallySurjective J f] :
+    IsLocallySurjective J
+      (Functor.whiskerRight f uliftFunctor.{w', w}) := by
+  constructor
+  intro U s
+  apply J.superset_covering _ (imageSieve_mem J f s.down)
+  intro V i hi
+  obtain ⟨t, ht⟩ := hi
+  refine ⟨ULift.up t, ?_⟩
+  apply ULift.ext
+  exact ht
+
+end CategoryTheory.Presheaf
 
 namespace AlgebraicGeometry
 
