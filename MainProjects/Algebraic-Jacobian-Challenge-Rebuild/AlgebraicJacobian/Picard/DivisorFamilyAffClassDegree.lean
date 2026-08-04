@@ -9,6 +9,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyAffFace
 import AlgebraicJacobian.Picard.DivisorFamilyAffAbel
 import AlgebraicJacobian.Picard.DivisorFamilyAffCompare
 import AlgebraicJacobian.Picard.DivisorFamilyFieldSurj
+import AlgebraicJacobian.Curve.RelativeCurveBridge
 
 /-!
 # `hdegAff` DISCHARGED: the widened class-degree law and the widened Abel ledger
@@ -105,6 +106,8 @@ universe u
 open CategoryTheory MonoidalCategory CartesianMonoidalCategory Opposite
 
 namespace AlgebraicGeometry
+
+open scoped RelativeCurve
 
 attribute [local instance] Over.sectionsAlgebra Scheme.overModule Scheme.overSectionsAlgebra
 
@@ -364,15 +367,6 @@ docstring names them as the open case. -/
 theorem degAt_abelDivAff' {T : Over (Spec (.of k))} (s : divFamZarAff C n T)
     {K : Type u} [Field K] [Algebra k K] (t : overSpec k K ⟶ T) :
     degAt (abelDivAff' C n T s) t = (n : ℤ) := by
-  haveI : IsIntegral (relCurve C K) := instIsIntegralBaseChange C K
-  haveI : SmoothOfRelativeDimension 1 (relCurve C K ↘ Spec (CommRingCat.of K)) :=
-    instSmoothOfRelativeDimensionBaseChange C K
-  haveI : QuasiCompact (relCurve C K ↘ Spec (CommRingCat.of K)) :=
-    instQuasiCompactBaseChange C K
-  haveI : Module.Finite K (Sheaf.HModule ((relCurve C K).moduleKSheaf K) 0) :=
-    instModuleFiniteHModuleZeroBaseChange C K
-  haveI : Module.Finite K (Sheaf.HModule ((relCurve C K).moduleKSheaf K) 1) :=
-    instModuleFiniteHModuleOneBaseChange C K
   change PicEtAff.degAff K (picEtAffineEquiv C K
       (picEtMap C t (abelDivAff' C n T s))) = (n : ℤ)
   rw [picEtMap_abelDivAff', picEtAffineEquiv_abelDivAff', abelDivAffPlus,
