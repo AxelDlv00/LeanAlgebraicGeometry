@@ -5,7 +5,7 @@ projects:
 summary: For a CommRingCat pushout with one surjective leg, identify the kernel of
   the opposite coprojection with extension of the original kernel. Prove it from tensor-product
   pushout transport and Algebra.TensorProduct.lTensor_ker.
-status: active
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -28,3 +28,7 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.kernel-representer.universal-divisor.affine-comap
   owner: ajcr-abel-quotient
+  updated_at: '2026-08-04T00:17:32.382110+00:00'
+  pinned_commits:
+  - d7e147cfe9ecd19da9ba1c5831579d95b9c55fdc
+  - 9fad121b821d9c7dfd63f331212c2dcb1b0a57fb

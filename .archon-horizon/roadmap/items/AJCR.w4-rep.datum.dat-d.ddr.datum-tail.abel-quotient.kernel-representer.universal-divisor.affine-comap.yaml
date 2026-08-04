@@ -5,10 +5,11 @@ projects:
 summary: Prove IdealSheafData.comap on the preimage of an affine open is extension
   of the source ideal along the affine scheme-map section hom. This requires the pushout-kernel
   identity below and is the generic Scheme input to Cartier-ideal base change.
-status: active
+status: done
 kind: proof
 priority: normal
-depends_on: []
+depends_on:
+- AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.kernel-representer.universal-divisor.affine-comap.pushout-kernel
 inbox_refs: []
 task_refs: []
 scope:
@@ -28,4 +29,7 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.kernel-representer.universal-divisor
   owner: ajcr-abel-quotient
-  updated_at: '2026-08-03T23:53:45.864444+00:00'
+  updated_at: '2026-08-04T00:17:37.037126+00:00'
+  pinned_commits:
+  - c88ea8bd3870bcd593fa428337a6649a4383ffd5
+  - d7e147cfe9ecd19da9ba1c5831579d95b9c55fdc
