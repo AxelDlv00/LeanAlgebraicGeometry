@@ -113,6 +113,7 @@ family-level Picard loci or canonical inverse required by the plan.
 | Review root | `lake build AlgebraicJacobian.Picard.Pic0CriticalPath` | success | 22.27 s | 7,079,200 KB |
 | Review root | `lake build AlgebraicJacobian` | success | 13.36 s | 7,171,836 KB |
 | Affine guard (warm cache) | `lake build AlgebraicJacobian.Picard.Pic0CriticalPath` | success | 6.96 s | 971,360 KB |
+| Affine guard (cold downstream replay) | `lake build AlgebraicJacobian` | success | 35 min 32 s | 9,739,040 KB |
 | AJC current | `lake build AlgebraicJacobian.Picard.GaloisDescent.GaloisQuotientOverlap` | success | 21.57 s | 6.96 GB |
 | AJC current | `lake build AlgebraicJacobian.Picard.PicEtDescentGoal` | success | 11.11 s | 6.91 GB |
 | AJC current | `lake build AlgebraicJacobian.Picard.PicEtGaloisQuotient` | success | 9.49 s | 6.85 GB |
@@ -123,6 +124,12 @@ running work. The executable gate is the current critical root. No new heartbeat
 recursion-depth raise was introduced. The route guard uses the project-wide
 `maxSynthPendingDepth = 3` convention locally. AJC's quotient capstone adds no proof-budget raise;
 `PicEtDescentGoal` retains four pre-existing local `maxHeartbeats 1000000` blocks.
+
+The exact-tree umbrella build is logically green but is not a normal-budget regression result:
+its cold replay spent the tail in the superseded admissible-degree Abel subtree, including the
+existing `maxHeartbeats 8000000` spread declaration and a 254-second spread-descent build. The
+critical root itself remains within budget. This cost is tracked as obsolete-path cleanup rather
+than attributed to the affine guard or credited as rank-one progress.
 
 ## AJC descent inventory
 
