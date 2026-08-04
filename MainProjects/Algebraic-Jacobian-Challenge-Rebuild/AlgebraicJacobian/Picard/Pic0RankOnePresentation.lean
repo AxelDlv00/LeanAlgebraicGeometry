@@ -24,7 +24,9 @@ test and ties every piece of data to the input class:
 No existence, openness, or representability assertion is made here.  The first canonical
 consumer is `PicRankOneLocalPresentation.evaluation`, the pullback-pushforward counit.
 The method `PicRankOneLocalPresentation.h0BaseChange` derives arbitrary affine base change
-from the same presentation's `H^1`-vanishing field.
+from the same presentation's `H^1`-vanishing field.  The section bridge at the end identifies
+datum `H^0` with native global sections and proves, by the adjunction triangle identity, that
+the evaluation counit sends the canonical unit-lift back to that same section.
 -/
 
 set_option autoImplicit false
@@ -79,6 +81,12 @@ namespace PicRankOneLocalPresentation
 
 variable {pi} {lam : picDegLayer C (genus C : ℤ) (overSpec k A)}
 
+noncomputable local instance presentationModuleSections
+    (P : PicRankOneLocalPresentation pi lam) (U : (relCurve C P.cover.Carrier).Opens) :
+    Module P.cover.Carrier Γ(P.module, U) :=
+  Scheme.moduleKSections
+    (Over.mk (relCurve C P.cover.Carrier ↘ Spec (.of P.cover.Carrier))) P.module U
+
 /-- The canonical `H^0` base-change equivalence attached to a rank-one presentation.
 
 This is derived from `P.h1_vanishing`; it is not an independently chosen witness. -/
@@ -99,6 +107,81 @@ noncomputable def evaluation (P : PicRankOneLocalPresentation pi lam) :
       P.module :=
   (Scheme.Modules.pullbackPushforwardAdjunction
     (relCurve C P.cover.Carrier ↘ Spec (.of P.cover.Carrier))).counit.app P.module
+
+/-! ## The datum/native-section/evaluation bridge -/
+
+/-- The global datum section represented by a degree-zero cohomology class. -/
+noncomputable def datumSection (P : PicRankOneLocalPresentation pi lam)
+    (y : Sheaf.HModule P.datum.sheaf 0) :
+    P.datum.sheaf.obj.obj (op (⊤ : (relCurve C P.cover.Carrier).Opens)) :=
+  Sheaf.HModule.linearEquiv₀
+    (Opens.grothendieckTopology ((relCurve C P.cover.Carrier : Scheme.{u}) : TopCat))
+    isTerminalTop P.datum.sheaf y
+
+/-- The presentation identifies datum `H^0` with native global sections of its line bundle. -/
+noncomputable def moduleSectionsEquiv (P : PicRankOneLocalPresentation pi lam) :
+    Sheaf.HModule P.datum.sheaf 0 ≃ₗ[P.cover.Carrier] Γ(P.module, ⊤) :=
+  (Sheaf.HModule.mapEquiv P.module_iso.symm 0).trans
+    (Sheaf.HModule.linearEquiv₀
+      (Opens.grothendieckTopology ((relCurve C P.cover.Carrier : Scheme.{u}) : TopCat))
+      isTerminalTop
+      (Scheme.toModuleKSheafOfModules
+        (Over.mk (relCurve C P.cover.Carrier ↘ Spec (.of P.cover.Carrier))) P.module))
+
+/-- The native section is exactly the datum section transported through `module_iso`. -/
+theorem module_iso_inv_datumSection (P : PicRankOneLocalPresentation pi lam)
+    (y : Sheaf.HModule P.datum.sheaf 0) :
+    (P.module_iso.inv.hom.app (op (⊤ : (relCurve C P.cover.Carrier).Opens))).hom
+      (P.datumSection y) = P.moduleSectionsEquiv y := by
+  exact Sheaf.HModule.linearEquiv₀_naturality
+    (hT := isTerminalTop) (f := P.module_iso.inv) y
+
+/-- A datum `H^0` class, read as a global section of the native pushforward. -/
+noncomputable def pushforwardSectionOfH0 (P : PicRankOneLocalPresentation pi lam)
+    (y : Sheaf.HModule P.datum.sheaf 0) :
+    Γ((Scheme.Modules.pushforward
+      (relCurve C P.cover.Carrier ↘ Spec (.of P.cover.Carrier))).obj P.module, ⊤) := by
+  change Γ(P.module,
+    (relCurve C P.cover.Carrier ↘ Spec (.of P.cover.Carrier)) ⁻¹ᵁ
+      (⊤ : (Spec (.of P.cover.Carrier)).Opens))
+  simpa using P.moduleSectionsEquiv y
+
+/-- The canonical unit-lift of a datum `H^0` class to the source of evaluation. -/
+noncomputable def evaluationLiftOfH0 (P : PicRankOneLocalPresentation pi lam)
+    (y : Sheaf.HModule P.datum.sheaf 0) :
+    Γ((Scheme.Modules.pullback
+      (relCurve C P.cover.Carrier ↘ Spec (.of P.cover.Carrier))).obj
+        ((Scheme.Modules.pushforward
+          (relCurve C P.cover.Carrier ↘ Spec (.of P.cover.Carrier))).obj P.module),
+      (relCurve C P.cover.Carrier ↘ Spec (.of P.cover.Carrier)) ⁻¹ᵁ
+        (⊤ : (Spec (.of P.cover.Carrier)).Opens)) :=
+  ((Scheme.Modules.pullbackPushforwardAdjunction
+    (relCurve C P.cover.Carrier ↘ Spec (.of P.cover.Carrier))).unit.app
+      ((Scheme.Modules.pushforward
+        (relCurve C P.cover.Carrier ↘ Spec (.of P.cover.Carrier))).obj P.module)).app
+          (⊤ : (Spec (.of P.cover.Carrier)).Opens) (P.pushforwardSectionOfH0 y)
+
+/-- Evaluation of the canonical unit-lift returns the original native global section.
+
+This is the right triangle identity of pullback-pushforward.  It is the counit compatibility
+needed before the section can be used to define a divisor; no zero-locus claim is made here. -/
+theorem evaluation_evaluationLiftOfH0 (P : PicRankOneLocalPresentation pi lam)
+    (y : Sheaf.HModule P.datum.sheaf 0) :
+    (Scheme.Modules.Hom.app P.evaluation
+      ((relCurve C P.cover.Carrier ↘ Spec (.of P.cover.Carrier)) ⁻¹ᵁ
+        (⊤ : (Spec (.of P.cover.Carrier)).Opens))).hom
+      (P.evaluationLiftOfH0 y) = P.pushforwardSectionOfH0 y := by
+  have h := congrArg
+    (fun (f : (Scheme.Modules.pushforward
+        (relCurve C P.cover.Carrier ↘ Spec (.of P.cover.Carrier))).obj P.module ⟶
+      (Scheme.Modules.pushforward
+        (relCurve C P.cover.Carrier ↘ Spec (.of P.cover.Carrier))).obj P.module) =>
+      (Scheme.Modules.Hom.app f (⊤ : (Spec (.of P.cover.Carrier)).Opens)).hom
+        (P.pushforwardSectionOfH0 y))
+    ((Scheme.Modules.pullbackPushforwardAdjunction
+      (relCurve C P.cover.Carrier ↘ Spec (.of P.cover.Carrier))).right_triangle_components
+        P.module)
+  exact h
 
 end PicRankOneLocalPresentation
 
