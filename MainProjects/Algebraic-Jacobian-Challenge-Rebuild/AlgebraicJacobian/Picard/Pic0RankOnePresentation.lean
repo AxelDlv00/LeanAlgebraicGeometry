@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Cohomology.ModulesBaseSheaf
+import AlgebraicJacobian.Cohomology.GluedSheafH0BaseChange
 import AlgebraicJacobian.Picard.Pic0EndgameContract
 import AlgebraicJacobian.Picard.Pic0RingDatumEngine
 
@@ -22,6 +23,8 @@ test and ties every piece of data to the input class:
 
 No existence, openness, or representability assertion is made here.  The first canonical
 consumer is `PicRankOneLocalPresentation.evaluation`, the pullback-pushforward counit.
+The method `PicRankOneLocalPresentation.h0BaseChange` derives arbitrary affine base change
+from the same presentation's `H^1`-vanishing field.
 -/
 
 set_option autoImplicit false
@@ -30,6 +33,8 @@ set_option maxSynthPendingDepth 3
 universe u
 
 open CategoryTheory Limits TopologicalSpace Opposite MonoidalCategory CartesianMonoidalCategory
+
+open scoped TensorProduct
 
 namespace AlgebraicGeometry
 
@@ -73,6 +78,17 @@ structure PicRankOneLocalPresentation
 namespace PicRankOneLocalPresentation
 
 variable {pi} {lam : picDegLayer C (genus C : ℤ) (overSpec k A)}
+
+/-- The canonical `H^0` base-change equivalence attached to a rank-one presentation.
+
+This is derived from `P.h1_vanishing`; it is not an independently chosen witness. -/
+noncomputable def h0BaseChange (P : PicRankOneLocalPresentation pi lam)
+    (B : Type u) [CommRing B] [Algebra k B] [Algebra P.cover.Carrier B]
+    [IsScalarTower k P.cover.Carrier B] :
+    B ⊗[P.cover.Carrier] (Sheaf.HModule P.datum.sheaf 0) ≃ₗ[B]
+      Sheaf.HModule (P.datum.baseChange B).sheaf 0 :=
+  P.datum.datumH0BaseChange B
+    ((subsingleton_datumPair_h1_iff P.datum).mpr P.h1_vanishing)
 
 /-- The canonical evaluation map attached to a tied local rank-one presentation. -/
 noncomputable def evaluation (P : PicRankOneLocalPresentation pi lam) :

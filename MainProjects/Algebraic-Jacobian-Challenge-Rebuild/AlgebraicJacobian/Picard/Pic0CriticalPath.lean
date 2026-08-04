@@ -29,6 +29,7 @@ declarations do not yet exist. They are not replaced here by axioms or local hyp
 #check AlgebraicGeometry.abelDivAffGenusSigma
 #check AlgebraicGeometry.Scheme.toModuleKSheafOfModules
 #check AlgebraicGeometry.PicRankOneLocalPresentation
+#check AlgebraicGeometry.PicRankOneLocalPresentation.h0BaseChange
 #check AlgebraicGeometry.PicRankOneLocalPresentation.evaluation
 #check AlgebraicGeometry.PicRankOneOpen
 #check AlgebraicGeometry.divRankOnePresentationPreimageRepresenter
@@ -45,6 +46,7 @@ declarations do not yet exist. They are not replaced here by axioms or local hyp
 #print axioms AlgebraicGeometry.divFunctorAff_genus_representableBy
 #print axioms AlgebraicGeometry.divFunctorAff_admissible_representableBy
 #print axioms AlgebraicGeometry.abelDivAffGenusSigma
+#print axioms AlgebraicGeometry.PicRankOneLocalPresentation.h0BaseChange
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.evaluation
 #print axioms AlgebraicGeometry.rankOneAbelRepresented
 #print axioms AlgebraicGeometry.not_isOpenImmersion_abelSigmaChart_of_genus_lt_degree
