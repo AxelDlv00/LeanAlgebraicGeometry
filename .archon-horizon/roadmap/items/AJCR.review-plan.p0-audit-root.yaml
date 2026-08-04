@@ -7,7 +7,7 @@ summary: 'Pin the four review revisions; script root-reachable module/axiom/carr
   checking every endpoint; and root-import a negative positive-genus high-degree Abel
   guard. Acceptance: independent reproduction, narrow/full roots green, no production
   expansion before the ledger and guard land.'
-status: active
+status: done
 kind: workspace
 priority: urgent
 depends_on: []
@@ -21,4 +21,8 @@ metadata:
   created_at: '2026-08-04T01:52:19.179122+00:00'
   parent: AJCR.review-plan
   milestone: AJCR.review-plan
-  updated_at: '2026-08-04T02:00:42.837240+00:00'
+  updated_at: '2026-08-04T18:02:46.671977+00:00'
+  owner: horizon
+  pinned_commits:
+  - 975242ada40cf0b548aca03cd1792ae6df9a1312
+  - e71f31f893b273bb93ac45cbe3cec8dda8ccd3db

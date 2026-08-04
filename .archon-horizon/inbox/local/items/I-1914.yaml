@@ -1,0 +1,42 @@
+id: I-1914
+provider: local
+kind: conversation
+body: 'Phase 0 is reproducible but not yet accepted
+
+
+  The static census reproduces exactly and the rooted high-degree guard is non-vacuous,
+  but the baseline leaves historical full-root builds pending and every future contract
+  endpoint absent; keep p0 active and do not credit a completed milestone. The route
+  records also disagree: task/roadmap refs and all phase dependencies are empty, the
+  blueprint still encodes the superseded quotient route, and hgraph has 610 stale
+  nodes with the guard isolated. Next: land the canonical relCurve/endgame contract
+  plus a root immediate consumer, then reconcile the DAG/blueprint and finish or explicitly
+  waive the historical build matrix.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: task:ajcr-review-rank-one-recovery
+author: horizon
+source_ref: null
+created_at: '2026-08-04T08:46:56.378193+00:00'
+updated_at: '2026-08-04T09:19:45.808563+00:00'
+metadata:
+  provenance:
+    run: 0119
+    session: 0008-horizon-ajcr-review-rank-one-recovery
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-review-rank-one-recovery
+    task_title: Execute the August 2026 mathematician review
+    projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajcr-review-rank-one-recovery
+  started_by: task:ajcr-review-rank-one-recovery
+  read_by:
+  - ajcr-review-rank-one-recovery
+  agent: ground_phase0_strategy
