@@ -6,11 +6,11 @@ created: '2026-07-17T08:59:08'
 generated: blueprint
 label: thm:truncExp_exact
 lean_status: lean_ok
-order: 1140
+order: 1142
 ref: kleiman-picard
 title: Exactness in the middle
 type: tex
-updated: '2026-08-03T20:05:12'
+updated: '2026-08-04T10:53:21'
 ---
 The range of the truncated exponential is exactly the kernel of reduction mod
   \(\varepsilon\) on units: a unit \(u \in R[\varepsilon]^\times\) satisfies

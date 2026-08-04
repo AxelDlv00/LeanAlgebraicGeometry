@@ -6,11 +6,11 @@ created: '2026-07-17T10:19:50'
 generated: blueprint
 label: thm:indeterminacy_codimGe2
 lean_status: lean_ok
-order: 1236
+order: 1238
 ref: abelian-varieties:page-0022, abelian-varieties:page-0023
 title: 'Milne''s Theorem 3.1: indeterminacy in codimension \(\geq 2\)'
 type: tex
-updated: '2026-08-03T20:05:12'
+updated: '2026-08-04T10:53:22'
 ---
 Let \(\bar k\) be an algebraically closed field, \(X\) a nonsingular
   \(\bar k\)-variety (an integral scheme, smooth, geometrically irreducible,

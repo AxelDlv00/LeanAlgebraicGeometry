@@ -351,9 +351,28 @@ theorem chartValueAff_mem_pic0Subgroup (m : ℕ)
   ring
 
 omit [GeometricallyReduced C.hom] in
+/-- The widened Abel transformation agrees with the chart-typed transformation on the image of
+the old-to-widened vehicle comparison. -/
+theorem abelDivAff'_toAff {π : C.left ⟶ P1 k} [IsAffineHom π]
+    {T : Over (Spec (.of k))} (s : divFamZar C π n T) :
+    abelDivAff' C n T (divFamZarToAffVehicle C n π s) = abelDiv C π n T s := by
+  refine picEt.ext fun U => ?_
+  rw [abelDivAff'_val, abelDiv_val, divFamZarToAffVehicle_val, abelDivAffPlus_toAff]
+
+omit [GeometricallyReduced C.hom] in
+/-- The widened chart value extends the chart-typed chart value along the injective vehicle
+comparison. -/
+theorem chartValueAff_toAff {π : C.left ⟶ P1 k} [IsAffineHom π]
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    {T : Over (Spec (.of k))} (s : divFamZar C π n T) :
+    chartValueAff C n m Z T (divFamZarToAffVehicle C n π s) =
+      chartValue C π n m Z T s := by
+  rw [chartValueAff, chartValue, abelDivAff'_toAff]
+
+omit [GeometricallyReduced C.hom] in
 /-- **The widened ledger holds on the image of a chart-typed class** — so the hypothesis of
 `chartValueAff_mem_pic0Subgroup` is not vacuous: it is inhabited at every widened section that
-comes from a chart-typed one, by `degAt_abelDiv` transported along `abelDivAffPlus_toAff`.
+comes from a chart-typed one, by `degAt_abelDiv` transported along `abelDivAff'_toAff`.
 
 This is deliberately *not* offered as evidence that the general ledger holds.  It says the
 obligation has witnesses, which is what distinguishes a real hypothesis from an unsatisfiable
@@ -363,10 +382,7 @@ theorem degAt_abelDivAff'_toAff {π : C.left ⟶ P1 k} [IsAffineHom π]
     {T : Over (Spec (.of k))} (s : divFamZar C π n T) {K : Type u} [Field K] [Algebra k K]
     (t : overSpec k K ⟶ T) :
     degAt (abelDivAff' C n T (divFamZarToAffVehicle C n π s)) t = (n : ℤ) := by
-  have hval : abelDivAff' C n T (divFamZarToAffVehicle C n π s) = abelDiv C π n T s := by
-    refine picEt.ext fun U => ?_
-    rw [abelDivAff'_val, abelDiv_val, divFamZarToAffVehicle_val, abelDivAffPlus_toAff]
-  rw [hval, degAt_abelDiv]
+  rw [abelDivAff'_toAff, degAt_abelDiv]
 
 end ChartValueAff
 

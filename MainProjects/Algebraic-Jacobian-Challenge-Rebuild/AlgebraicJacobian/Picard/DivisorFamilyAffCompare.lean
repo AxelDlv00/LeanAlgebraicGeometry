@@ -271,6 +271,19 @@ lemma DivFamZar.toAff_mk {n : ℕ} (d : (relCurve C R).LocalEquations)
       = DivFamZarAff.mk d (isLocallyCertifiedAff_of_isLocallyCertified hd) :=
   rfl
 
+/-- The old-to-widened comparison is injective. Both quotients identify local-equation
+systems by the same `DivEq` relation; widening changes only which representatives are
+admissible. -/
+theorem DivFamZar.toAff_injective {n : ℕ} : Function.Injective
+    (fun F : DivFamZar C R π n => F.toAff) := by
+  intro F G h
+  induction F using Quotient.inductionOn with
+  | h dF =>
+    induction G using Quotient.inductionOn with
+    | h dG =>
+      apply DivFamZar.mk_eq_mk_iff.mpr
+      exact DivFamZarAff.mk_eq_mk_iff.mp h
+
 /-- **The Picard class is unchanged by the widening** — the Abel hook DAT-C consumes the
 same class whichever value it reads it from. -/
 @[simp]

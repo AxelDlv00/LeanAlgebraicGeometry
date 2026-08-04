@@ -272,6 +272,16 @@ lemma divFamZarToAffVehicle_val {T : Over (Spec (.of k))} (s : divFamZar C π n 
     (divFamZarToAffVehicle C n π s).1 U = (s.1 U).toAff :=
   rfl
 
+/-- The comparison of vehicles is injective because it is injective on every affine-open
+component. This remains only an old-to-widened statement. -/
+theorem divFamZarToAffVehicle_injective {T : Over (Spec (.of k))} : Function.Injective
+    (divFamZarToAffVehicle C n π (T := T)) := by
+  intro s t h
+  apply divFamZar.ext
+  intro U
+  apply DivFamZar.toAff_injective
+  exact congrArg (fun x => x.1 U) h
+
 /-- **The comparison intertwines the two affine comparisons**: on an affine test, passing to the
 widened vehicle and collapsing agrees with collapsing and passing to the widened value.
 

@@ -13392,7 +13392,7 @@
     "macros": {},
     "states": {
       "blocked": 25,
-      "closed": 11334,
+      "closed": 11398,
       "formalized_open": 175,
       "informal": 23,
       "ready": 116
@@ -13445,9 +13445,9 @@
       "AlgebraicGeometry.overSpec\u0393Top_appLE_comp: Lean declaration appears more than once (AlgebraicJacobian/Picard/DivisorFamilyZarMap.lean, AlgebraicJacobian/Picard/PicEtMap.lean)",
       "AlgebraicGeometry.Scheme.ord_ne_one_of_notMem_basicOpen: Lean declaration appears more than once (AlgebraicJacobian/Picard/PointDivisor.lean, AlgebraicJacobian/Picard/PointPresentation.lean)",
       "AlgebraicGeometry.Scheme.coe_unitsRestrict: Lean declaration appears more than once (AlgebraicJacobian/Picard/DivisorClass.lean, AlgebraicJacobian/Picard/RefinementInjectivity.lean)",
+      "AlgebraicGeometry.isoSpec_hom_fromSpec: Lean declaration appears more than once (AlgebraicJacobian/Picard/DivRepGlobalClassify.lean, AlgebraicJacobian/Picard/RelativeCurveAffineCover.lean)",
       "AlgebraicGeometry.Over.appLE_congr_hom: Lean declaration appears more than once (AlgebraicJacobian/Curve/DiagonalChart.lean, AlgebraicJacobian/Picard/SectionsDescent.lean)",
-      "AlgebraicGeometry.IsAffineOpen.germ_mem_nonZeroDivisors: Lean declaration appears more than once (AlgebraicJacobian/Curve/DiagonalChart.lean, AlgebraicJacobian/Picard/SectionsToDivisors.lean)",
-      "AlgebraicGeometry.flat_sections_basicOpen: Lean declaration appears more than once (AlgebraicJacobian/Picard/DivSchemeFamilySide.lean, AlgebraicJacobian/Picard/SectionsToDivisors.lean)"
+      "AlgebraicGeometry.IsAffineOpen.germ_mem_nonZeroDivisors: Lean declaration appears more than once (AlgebraicJacobian/Curve/DiagonalChart.lean, AlgebraicJacobian/Picard/SectionsToDivisors.lean)"
     ]
   },
   "nodes": [
