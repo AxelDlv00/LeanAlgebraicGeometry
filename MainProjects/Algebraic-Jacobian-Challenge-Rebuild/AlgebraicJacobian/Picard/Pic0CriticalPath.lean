@@ -43,6 +43,7 @@ declarations do not yet exist. They are not replaced here by axioms or local hyp
 #check AlgebraicGeometry.PicRankOneLocalPresentation.module_iso_inv_datumSection
 #check AlgebraicGeometry.PicRankOneLocalPresentation.evaluationLiftOfH0
 #check AlgebraicGeometry.PicRankOneLocalPresentation.evaluation_evaluationLiftOfH0
+#check AlgebraicGeometry.PicRankOneLocalPresentation.exists_baseOpen_evaluation_generator
 #check AlgebraicGeometry.PicRankOneOpen
 #check AlgebraicGeometry.divRankOnePresentationPreimageRepresenter
 #check AlgebraicGeometry.rankOneAbelRepresented
@@ -67,6 +68,8 @@ declarations do not yet exist. They are not replaced here by axioms or local hyp
   AlgebraicGeometry.PicRankOneLocalPresentation.evaluationSourceBaseChangeIso_hom_evaluation
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.module_iso_inv_datumSection
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.evaluation_evaluationLiftOfH0
+#print axioms
+  AlgebraicGeometry.PicRankOneLocalPresentation.exists_baseOpen_evaluation_generator
 #print axioms AlgebraicGeometry.rankOneAbelRepresented
 #print axioms AlgebraicGeometry.not_isOpenImmersion_abelSigmaChart_of_genus_lt_degree
 #print axioms AlgebraicGeometry.not_isOpenImmersion_abelSigmaChartAff_of_genus_lt_degree
