@@ -213,10 +213,10 @@ chart value.  Transporting along `rep.homEquiv` (a bijection) turns them into tw
 
 So the fork's negative branch reduces to a statement with **no** scheme-theoretic side
 condition: distinctness in `divFamZar C π n T` plus equality of `chartValue`. -/
-theorem not_isChartLocusFibre_of_divFamZar {T : Over (Spec (.of k))}
+theorem not_injective_abelSigmaChart_of_divFamZar {T : Over (Spec (.of k))}
     (s₁ s₂ : divFamZar C π n T) (hne : s₁ ≠ s₂)
     (hval : chartValue C π n m Z T s₁ = chartValue C π n m Z T s₂) :
-    ¬ IsChartLocusFibre C π n rep m Z hdeg := by
+    ¬ Function.Injective ((abelSigmaChart C π n rep m Z hdeg).app (op T.left)) := by
   set x₁ : T.left ⟶ D.left := (rep.homEquiv.symm s₁).left with hx₁
   set x₂ : T.left ⟶ D.left := (rep.homEquiv.symm s₂).left with hx₂
   -- both points have the test's own structure morphism, so the Σ-components agree
@@ -232,7 +232,7 @@ theorem not_isChartLocusFibre_of_divFamZar {T : Over (Spec (.of k))}
     refine (congrArg rep.homEquiv (Over.OverMorphism.ext ?_)).trans
       (rep.homEquiv.apply_symm_apply s₂)
     rfl
-  refine not_isChartLocusFibre_of_points rep m Z hdeg x₁ x₂ ?_ hstruct ?_
+  refine not_injective_abelSigmaChart_of_points rep m Z hdeg x₁ x₂ ?_ hstruct ?_
   · -- distinct families give distinct points, `rep.homEquiv.symm` being injective
     intro h
     exact hne (hrec₁.symm.trans ((congrArg rep.homEquiv
@@ -262,6 +262,15 @@ theorem not_isChartLocusFibre_of_divFamZar {T : Over (Spec (.of k))}
         (picEtMap_chartValue C π n m Z e s).symm
     exact (hstep s₁ _ hfac₁).trans
       ((congrArg (picEtMap C e) hval).trans (hstep s₂ _ hfac₂).symm)
+
+/-- Two distinct divisor families with equal chart value also refute the stronger chart-fibre
+certificate. This is the original consumer of `not_injective_abelSigmaChart_of_divFamZar`. -/
+theorem not_isChartLocusFibre_of_divFamZar {T : Over (Spec (.of k))}
+    (s₁ s₂ : divFamZar C π n T) (hne : s₁ ≠ s₂)
+    (hval : chartValue C π n m Z T s₁ = chartValue C π n m Z T s₂) :
+    ¬ IsChartLocusFibre C π n rep m Z hdeg :=
+  not_isChartLocusFibre_of_not_injective rep m Z hdeg (op T.left)
+    (not_injective_abelSigmaChart_of_divFamZar rep m Z hdeg s₁ s₂ hne hval)
 
 end
 
