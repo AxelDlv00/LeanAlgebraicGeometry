@@ -28,3 +28,5 @@
 {"at": "2026-07-26T17:14:07.807676+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
 {"at": "2026-08-04T02:00:25.232540+00:00", "actor": "Axel", "field": "edited", "from": "", "to": "", "note": "priority, objective, title, roadmap_refs updated"}
 {"at": "2026-08-04T02:16:18.195173+00:00", "actor": "Axel", "field": "edited", "from": "", "to": "", "note": "priority, objective, title, roadmap_refs updated"}
+{"at": "2026-08-04T02:27:03.529045+00:00", "actor": "Axel", "field": "edited", "from": "", "to": "", "note": "priority, objective, title, roadmap_refs updated"}
+{"at": "2026-08-04T02:28:49.088144+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "objective updated"}

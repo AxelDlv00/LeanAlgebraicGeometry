@@ -1,20 +1,11 @@
 id: ajcr-w4-rep-free
 project: Algebraic-Jacobian-Challenge-Rebuild
-objective: 'Before doing any work, read the complete mathematician review at /home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge/informal/Lean_Algebraic_Jacobian_Complete_Execution_Plan.pdf
-  and treat it as the binding execution plan. Then execute roadmap AJCR.review-plan
-  from Phase 0 in dependency order. Follow the AJCR-first rank-one route through the
-  reproducible baseline and critical root, endgame contract and canonical interfaces,
-  capped arbitrary-degree divisor spine, PicRankOneOpen and DivRankOneOpen, family-level
-  divisorOfRankOne and rankOneAbelIso, separably closed translated cover, pic0_sepClosed_representableBy,
-  shared AJC finite-Galois descent, arbitrary-field pic0_representableBy, and JacobianData
-  from the same pinned representation. Do not resume the high-degree admissible Abel
-  quotient as the primary route; it is fallback-only and may be reopened only under
-  the PDF explicit fallback conditions. At every milestone enforce the review acceptance
-  criteria: root reachability, an immediate consumer, kernel build, axiom audit, no
-  unrelated witness or vacuity, normal budgets, and deletion or specialization of
-  obsolete paths. Keep roadmap and task state plus ledger commits current, and use
-  AJC only for shared descent and substrate until AJCR Pic0 representation lands.'
-title: 'Execute the mathematician review: AJCR-first Pic0 recovery'
+objective: "The representability has been worked on for a few sessions already, it\
+  \ evolves very slowly, you should try to close it. It might require refactor the\
+  \ whole roadmap, or understanding where is the blocking points and break them down\
+  \ into subitems in the roadmap. \n**Note :** Other projects like Algebraic-Jacobian-Challenge\
+  \ are readable from your project if it can help."
+title: Representability of Pic^0
 explanation: "The representability has been worked on for a few sessions already,\
   \ it evolves very slowly, you should try to close it. It might require refactor\
   \ the whole roadmap, or understanding where is the blocking points and break them\
@@ -22,7 +13,7 @@ explanation: "The representability has been worked on for a few sessions already
   \ are readable from your project if it can help."
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-priority: urgent
+priority: normal
 status: queued
 write_set:
   files: []
@@ -35,12 +26,16 @@ scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
 roadmap_refs:
-- AJCR.review-plan
+- AJCR.w4-rep
+- AJCR.w4-rep.datum.dat-d.ddr.certificate
+- AJCR.w4-rep.datum.dat-d.ddr.certificate.tube-fibre
+- AJCR.w4-rep.datum.dat-d.ddr.certificate.away-kerspan
+- AJCR.w4-rep.datum.dat-d.ddr.certificate.away-assemble
 inbox_refs:
 - I-0320
 artifact_refs: []
 created_at: '2026-07-25T06:04:25.679374+00:00'
-updated_at: '2026-08-04T02:16:18.195150+00:00'
+updated_at: '2026-08-04T02:28:49.088124+00:00'
 metadata:
   updated_at: '2026-07-25T06:04:25.679374+00:00'
   author: Axel
