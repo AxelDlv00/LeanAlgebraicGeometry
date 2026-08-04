@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.DivRepAffChallenge
+import AlgebraicJacobian.Picard.Pic0EndgameContract
 import AlgebraicJacobian.Picard.Pic0HighDegreeRouteGuard
 
 /-!
@@ -20,6 +21,10 @@ hypotheses.
 #check AlgebraicGeometry.divFunctorAff_representableBy_at
 #check AlgebraicGeometry.divFunctorAff_genus_representableBy
 #check AlgebraicGeometry.divFunctorAff_admissible_representableBy
+#check AlgebraicGeometry.relCurve.isIntegral
+#check AlgebraicGeometry.abelDivAffTrans
+#check AlgebraicGeometry.abelDivAffSigma
+#check AlgebraicGeometry.abelDivAffGenusSigma
 #check AlgebraicGeometry.not_injective_abelSigmaChart_of_divFamZar
 #check AlgebraicGeometry.not_isOpenImmersion_abelSigmaChart_of_not_injective_chartValue
 #check AlgebraicGeometry.not_isOpenImmersion_abelSigmaChart_of_genus_lt_degree
@@ -31,5 +36,6 @@ hypotheses.
 #print axioms AlgebraicGeometry.divFunctorAff_representableBy_at
 #print axioms AlgebraicGeometry.divFunctorAff_genus_representableBy
 #print axioms AlgebraicGeometry.divFunctorAff_admissible_representableBy
+#print axioms AlgebraicGeometry.abelDivAffGenusSigma
 #print axioms AlgebraicGeometry.not_isOpenImmersion_abelSigmaChart_of_genus_lt_degree
 #print axioms AlgebraicGeometry.not_isOpenImmersion_abelSigmaChartAff_of_genus_lt_degree
