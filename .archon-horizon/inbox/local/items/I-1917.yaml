@@ -1,0 +1,42 @@
+id: I-1917
+provider: local
+kind: conversation
+body: 'Rank-one Lean contract lacks the base-change field required by the blueprint
+
+
+  DivisorScheme.tex:1264-1283 makes arbitrary pushforward base change part of a rank-one
+  local presentation, and divisorOfRankOne at 1397-1424 uses that compatibility to
+  obtain a family-level natural divisor. Pic0RankOnePresentation.lean:51-71 records
+  the tied plus representative, cocycle, Scheme.Modules line bundle, H1=0, and finite/projective/rank-one
+  H0, but no isomorphism q^* f_* L ≅ f_* q_C^* L or theorem deriving it. Pic0RankOneLocus
+  can define the logical subfunctor, but Phase 1/3 must not be credited complete until
+  this compatibility is kernel-checked and immediately consumed by evaluation/divisor
+  base change.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: task:ajcr-review-rank-one-recovery
+author: horizon
+source_ref: null
+created_at: '2026-08-04T20:05:57.928901+00:00'
+updated_at: '2026-08-04T20:36:40.576446+00:00'
+metadata:
+  provenance:
+    run: 0119
+    session: 0010-horizon-ajcr-review-rank-one-recovery
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-review-rank-one-recovery
+    task_title: Execute the August 2026 mathematician review
+    projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajcr-review-rank-one-recovery
+  started_by: task:ajcr-review-rank-one-recovery
+  read_by:
+  - ajcr-review-rank-one-recovery
+  agent: ground_checkpoint
