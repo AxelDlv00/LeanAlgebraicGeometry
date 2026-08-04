@@ -7,7 +7,7 @@ summary: 'Define PicRankOneOpen by R^1-vanishing, rank-one locally free pushforw
   on Div^g; prove openness and arbitrary base change; make chartLocus/H0Rank/H1 predicates
   implementation lemmas or equivalences. Acceptance: one public good-locus API consumed
   by the canonical inverse task.'
-status: pending
+status: active
 kind: proof
 priority: urgent
 depends_on: []
@@ -21,3 +21,7 @@ metadata:
   created_at: '2026-08-04T01:52:24.145421+00:00'
   parent: AJCR.review-plan
   milestone: AJCR.review-plan
+  updated_at: '2026-08-04T20:05:58.155598+00:00'
+  owner: horizon
+  pinned_commits:
+  - 298549f011
