@@ -43,7 +43,7 @@ projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 - Algebraic-Jacobian-Challenge
 priority: urgent
-status: queued
+status: running
 write_set:
   files: []
   projects:
@@ -58,11 +58,14 @@ scope:
   - Algebraic-Jacobian-Challenge
 roadmap_refs:
 - AJCR.review-plan
-- AJCR.review-plan.p1-contract-interfaces
-inbox_refs: []
+- AJCR.review-plan.p3-rank-one-loci
+- AJCR.review-plan.p4-rank-one-iso
+- AJCR.review-plan.p7-galois-descent
+inbox_refs:
+- I-1919
 artifact_refs: []
 created_at: '2026-08-04T02:27:37.236041+00:00'
-updated_at: '2026-08-04T22:19:30.409189+00:00'
+updated_at: '2026-08-04T23:06:39.914134+00:00'
 metadata:
   author: human
   updated_at: '2026-08-04T02:50:45.822467+00:00'
