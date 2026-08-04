@@ -38,6 +38,7 @@ declarations do not yet exist. They are not replaced here by axioms or local hyp
 #check AlgebraicGeometry.PicRankOneLocalPresentation.nativeBaseChangeIsoAffine
 #check AlgebraicGeometry.PicRankOneLocalPresentation.evaluationSourceBaseChangeIso
 #check AlgebraicGeometry.PicRankOneLocalPresentation.evaluationSourceBaseChangeIso_hom_evaluation
+#check AlgebraicGeometry.PicRankOneLocalPresentation.evaluationSourceBaseChangeIsoAffine_hom_evaluation
 #check AlgebraicGeometry.PicRankOneLocalPresentation.datumSection
 #check AlgebraicGeometry.PicRankOneLocalPresentation.moduleSectionsEquiv
 #check AlgebraicGeometry.PicRankOneLocalPresentation.module_iso_inv_datumSection
@@ -66,6 +67,8 @@ declarations do not yet exist. They are not replaced here by axioms or local hyp
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.nativeBaseChangeIsoAffine
 #print axioms
   AlgebraicGeometry.PicRankOneLocalPresentation.evaluationSourceBaseChangeIso_hom_evaluation
+#print axioms
+  AlgebraicGeometry.PicRankOneLocalPresentation.evaluationSourceBaseChangeIsoAffine_hom_evaluation
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.module_iso_inv_datumSection
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.evaluation_evaluationLiftOfH0
 #print axioms

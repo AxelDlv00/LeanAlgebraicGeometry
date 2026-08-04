@@ -204,6 +204,31 @@ theorem evaluationSourceBaseChangeIso_hom_evaluation
         (relCurve C P.cover.Carrier ↘ Spec (.of P.cover.Carrier))).counit.app P.module)
   exact canonicalBaseChangeMap_counit_cancel sq P.module
 
+/-! The affine coefficient-extension spelling of the evaluation/base-change contract.
+
+This is the consumer-facing specialization for the future zero-locus construction: it keeps
+the coefficient ring `B` and `relCurveMap` explicit while retaining the canonical cartesian
+square, rather than introducing a second base-change witness. -/
+theorem evaluationSourceBaseChangeIsoAffine_hom_evaluation
+    (P : PicRankOneLocalPresentation pi lam)
+    (B : Type u) [CommRing B] [Algebra k B] [Algebra P.cover.Carrier B]
+    [IsScalarTower k P.cover.Carrier B] :
+    (P.evaluationSourceBaseChangeIso
+      (overSpecMap (k := k) P.cover.Carrier B).left
+      (snd C (overSpec k B)).left
+      (relCurveMap C P.cover.Carrier B)
+      (Over.isPullback_whiskerLeft C
+        (overSpecMap (k := k) P.cover.Carrier B))).hom ≫
+        (Scheme.Modules.pullbackPushforwardAdjunction
+          (snd C (overSpec k B)).left).counit.app
+          ((Scheme.Modules.pullback (relCurveMap C P.cover.Carrier B)).obj P.module) =
+      (Scheme.Modules.pullback (relCurveMap C P.cover.Carrier B)).map P.evaluation := by
+  exact P.evaluationSourceBaseChangeIso_hom_evaluation
+    (overSpecMap (k := k) P.cover.Carrier B).left
+    (snd C (overSpec k B)).left
+    (relCurveMap C P.cover.Carrier B)
+    (Over.isPullback_whiskerLeft C (overSpecMap (k := k) P.cover.Carrier B))
+
 /-! ## The datum/native-section/evaluation bridge -/
 
 /-- The global datum section represented by a degree-zero cohomology class. -/
