@@ -1,0 +1,1 @@
+{"markdown": "The build remains clean, but this root imports an unusually broad Mathlib closure and is still discovering downstream jobs. I\u2019m keeping it foreground-bound as required; the next edit will be narrowly confined to the affine guard and its critical-root audit entries.", "recommendation": ""}

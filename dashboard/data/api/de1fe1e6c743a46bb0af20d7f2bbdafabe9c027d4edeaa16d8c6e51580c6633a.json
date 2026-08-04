@@ -1,0 +1,1 @@
+{"markdown": "The project-wide restart hit the same environmental stop condition as the historical audit: generated IR filled the filesystem, while the focused Lean checks were already green. I\u2019m pausing broader builds, checking disk ownership, and coordinating cleanup with the baseline auditor before continuing focused proof work.", "recommendation": ""}

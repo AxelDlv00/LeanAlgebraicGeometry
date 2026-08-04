@@ -1,0 +1,1 @@
+{"markdown": "The module build passed all 8,587 jobs, and both new declarations use only `propext`, `Classical.choice`, and `Quot.sound`; source scanning found no suspicious patterns. I\u2019m auditing the exact one-file delta against the `HEAD` blob, then committing it through a fresh private index with CAS and a post-commit path check.", "recommendation": ""}

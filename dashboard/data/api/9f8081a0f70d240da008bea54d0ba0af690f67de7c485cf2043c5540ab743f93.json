@@ -1,0 +1,1 @@
+{"markdown": "No additional source/task/roadmap changes remain uncommitted. The only durable mutation after `10d1c6c25f` is live conversation `I-1815`; reviewer explicitly owns and will checkpoint it, and instructed this lane not to commit it. The temporary private index was removed without altering shared state.\n", "recommendation": ""}
