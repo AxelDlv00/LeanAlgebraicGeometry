@@ -3,7 +3,7 @@ title: Ring-level plus-surjectivity from a module-finite representative (fact 1 
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: ''
-status: active
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -25,4 +25,4 @@ metadata:
     task_title: 'Pic rep lane G: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum
-  owner: pic-g
+  updated_at: '2026-08-04T01:51:08.971889+00:00'

@@ -1,0 +1,26 @@
+id: AJCR.review-plan.p7-galois-descent
+title: 'Phase 7: shared finite-Galois descent capstone'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+- Algebraic-Jacobian-Challenge
+summary: Package the separably closed representative, finite type, properness, group
+  structure, geometric irreducibility, and universal element; descend to a finite
+  Galois extension, build the semilinear action/cocycle and stable affine cover, and
+  reuse or share AJC quotient/gluing infrastructure. Produce representableBy_of_finiteGalois_baseChange
+  returning both descended scheme and certificate, then consume it immediately in
+  pic0_representableBy. Do not duplicate the descent stack.
+status: pending
+kind: proof
+priority: urgent
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: human
+  created_at: '2026-08-04T01:52:30.932692+00:00'
+  parent: AJCR.review-plan
+  milestone: AJCR.review-plan

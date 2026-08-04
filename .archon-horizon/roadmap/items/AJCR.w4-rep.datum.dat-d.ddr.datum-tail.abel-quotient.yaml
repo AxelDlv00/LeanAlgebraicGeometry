@@ -20,7 +20,7 @@ summary: 'Prove the single endpoint `noncomputable def pic0AdmissibleAbelQuotien
   a kernel-pair representer, or quotient data counts as progress. The raw admissible
   Abel map only feeds this quotient: positive-dimensional linear-system fibres prevent
   it from being an open Pic0 atlas.'
-status: blocked
+status: pending
 kind: proof
 priority: high
 depends_on: []
@@ -43,8 +43,7 @@ metadata:
       producer'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.datum-tail
-  updated_at: '2026-08-03T14:58:55.697262+00:00'
-  owner: ajcr-abel-quotient
+  updated_at: '2026-08-04T01:51:07.326764+00:00'
   pinned_commits:
   - 8c7d99ff44fc804d07794b2fdca29c9d3c75902f
   - 82e231e54848d9968a14f33033a15a438e71dca9

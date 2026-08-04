@@ -19,7 +19,7 @@ summary: 'Part 1 is closed: CurveProjectivity is explicitly imported and term-us
   prove Riemann--Roch degree, quotient and etale descent with pullback naturality,
   arbitrary-test Abel pin, intrinsic Pic^d carriers, and actual very-ample/FiniteInAffine
   Picard-piece assembly.'
-status: active
+status: pending
 kind: proof
 priority: high
 depends_on: []
@@ -43,7 +43,7 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.etale-rep
   milestone: AJC.picrep
-  updated_at: '2026-08-03T07:53:23.785661+00:00'
+  updated_at: '2026-08-04T01:57:52.581438+00:00'
   pinned_commits:
   - 24b82fecb1da5811c5c616634d2e3567c8b8771c
   - 9ea06d04ffad609a7603226edc8553ac6378e4b6

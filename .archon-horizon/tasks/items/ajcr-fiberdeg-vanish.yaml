@@ -24,7 +24,7 @@ projects:
 - Algebraic-Jacobian-Challenge
 - Algebraic-Jacobian-Challenge-Rebuild
 priority: high
-status: queued
+status: cancelled
 write_set:
   files: []
   projects:
@@ -41,6 +41,6 @@ inbox_refs:
 - I-1794
 artifact_refs: []
 created_at: '2026-08-02T11:45:41.663719+00:00'
-updated_at: '2026-08-03T01:44:41.485565+00:00'
+updated_at: '2026-08-04T01:56:57.331210+00:00'
 metadata:
   author: human

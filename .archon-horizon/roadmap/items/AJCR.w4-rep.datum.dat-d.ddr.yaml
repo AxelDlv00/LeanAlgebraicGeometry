@@ -8,7 +8,7 @@ summary: R2 carrier widening, certification, and diagonal genus representability
   the classifier, separation, naturality, global packaging, and RepresentableBy layers
   remain diagonal. Parameter-decouple owns that propagation; the Pic0 quotient is
   tracked downstream.
-status: active
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -21,5 +21,5 @@ metadata:
   author: horizon
   created_at: '2026-07-16T08:26:37.867341+00:00'
   parent: AJCR.w4-rep.datum.dat-d
-  updated_at: '2026-08-03T01:29:53.082025+00:00'
+  updated_at: '2026-08-04T01:58:21.730494+00:00'
   milestone: AJCR.w4-rep

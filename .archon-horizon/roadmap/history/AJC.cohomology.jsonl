@@ -1,3 +1,6 @@
 {"at": "2026-07-23T13:45:28.834214+00:00", "actor": "horizon", "field": "created", "from": "", "to": "pending", "note": "opened"}
 {"at": "2026-07-28T14:35:10.103738+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
 {"at": "2026-07-29T02:58:08.190605+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "milestone updated"}
+{"at": "2026-08-04T01:56:48.723862+00:00", "actor": "human", "field": "status", "from": "pending", "to": "rejected", "note": "synced from task ajc-fbc"}
+{"at": "2026-08-04T01:57:28.236471+00:00", "actor": "horizon", "field": "status", "from": "rejected", "to": "pending", "note": ""}
+{"at": "2026-08-04T01:57:28.236667+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "owner updated"}

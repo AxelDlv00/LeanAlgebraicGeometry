@@ -7,3 +7,6 @@
 {"at": "2026-07-28T09:32:19.129005+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
 {"at": "2026-07-28T11:01:49.767049+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary, pinned_commits updated"}
 {"at": "2026-07-29T03:01:31.506830+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "milestone updated"}
+{"at": "2026-08-04T01:57:04.939360+00:00", "actor": "human", "field": "status", "from": "blocked", "to": "rejected", "note": "synced from task ajcr-cert-r2"}
+{"at": "2026-08-04T01:58:24.929144+00:00", "actor": "horizon", "field": "status", "from": "rejected", "to": "blocked", "note": ""}
+{"at": "2026-08-04T01:58:24.929348+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "owner updated"}

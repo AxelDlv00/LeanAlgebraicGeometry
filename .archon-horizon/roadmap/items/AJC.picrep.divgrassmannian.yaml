@@ -12,7 +12,7 @@ summary: 'ACTIVE, currently unowned. The locally-quasi-finite support input is n
   affine epi substrate, finite presentation, quasi-coherence, flatness, and tensor
   globalization remain landed. Consumers must import the new producer module or DemandLedger;
   importing DivPushforwardFlat alone does not expose it.'
-status: active
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -35,7 +35,7 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-08-03T15:17:30.558221+00:00'
+  updated_at: '2026-08-04T01:50:53.167671+00:00'
   pinned_commits:
   - cb15d595e91dbc239e94329f56f994228937d04c
   - dd26508b7485d91ac602c6ede8db3229623486f0

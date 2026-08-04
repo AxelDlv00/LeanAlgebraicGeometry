@@ -20,7 +20,7 @@ title: Conclude the Jacobian challenge — genus, Jacobian, Abel–Jacobi, unive
 explanation: ''
 projects:
 - Algebraic-Jacobian-Challenge
-priority: high
+priority: low
 status: queued
 write_set:
   files:
@@ -41,6 +41,6 @@ roadmap_refs: []
 inbox_refs: []
 artifact_refs: []
 created_at: '2026-07-08T09:58:52.070613+00:00'
-updated_at: '2026-07-22T10:02:58.303993+00:00'
+updated_at: '2026-08-04T02:00:45.040420+00:00'
 metadata:
   author: human

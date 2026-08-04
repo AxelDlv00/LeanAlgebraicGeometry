@@ -1,0 +1,22 @@
+id: AJCR.review-plan.p5-sepclosed-cover
+title: 'Phase 5: translated rank-one cover over a separably closed field'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: For every extension K/k and input Picard class lam, construct a base-field
+  line bundle L0 whose translation lies in PicRankOneOpen by positive twisting, point
+  subtraction, and h0 reduction while preserving H1=0. The witness must explicitly
+  depend on lam and feed the gluing criterion directly; no unrelated existential carrier.
+status: pending
+kind: proof
+priority: urgent
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: human
+  created_at: '2026-08-04T01:52:27.443973+00:00'
+  parent: AJCR.review-plan
+  milestone: AJCR.review-plan

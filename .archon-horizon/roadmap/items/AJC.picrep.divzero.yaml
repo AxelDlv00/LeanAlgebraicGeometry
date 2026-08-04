@@ -16,7 +16,7 @@ summary: 'Div0 vanishing SUBSTRATE landed (pic-e 0105 r3, commits 64348cf522/4f6
   inclusion, absent) + degree-0-fibre => empty-fibre, both documented at DivSupportQuasiFinite.isFinite_support_of_fibers.
   Naive general-pi hz fails on the finrank junk value; a producer must gate on fibre
   finiteness. No new hypothesis.'
-status: active
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -38,7 +38,7 @@ metadata:
     task_title: 'Pic rep lane E: close Pic representability, no new hypotheses'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-31T11:51:38.283503+00:00'
+  updated_at: '2026-08-04T01:50:55.110484+00:00'
   pinned_commits:
   - 692b3fe104
   - 38e102eef6
@@ -46,4 +46,3 @@ metadata:
   - 10d411758b
   - aa38db9d26
   - 0d465e95d9
-  owner: pic-e

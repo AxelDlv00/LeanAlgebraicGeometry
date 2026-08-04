@@ -10,7 +10,7 @@ summary: 'The genus-parameter and admissible-parameter universal families and Ab
   relative and etale-local Abel kernel relation including picFromBase, form its effective
   scheme quotient, prove etale-sheaf local surjectivity, and identify its Yoneda functor
   with pic0TypeFunctor C; no witness binder may discharge it.'
-status: active
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -32,7 +32,7 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-08-03T05:21:19.617108+00:00'
+  updated_at: '2026-08-04T01:58:31.392420+00:00'
   milestone: AJCR.w4-rep
   pinned_commits:
   - dda5b519872d7003b232191c1a9f93949a3ca3ce

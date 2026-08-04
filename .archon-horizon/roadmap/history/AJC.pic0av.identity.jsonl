@@ -13,3 +13,6 @@
 {"at": "2026-07-29T02:59:25.908191+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "milestone updated"}
 {"at": "2026-07-29T10:29:18.689871+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "owner updated"}
 {"at": "2026-07-30T15:33:55.355523+00:00", "actor": "horizon", "field": "status", "from": "active", "to": "pending", "note": "", "provenance": {"run": "0095", "session": "0006-horizon-pic-e", "role": "horizon", "round": "2", "rounds": "8", "task": "pic-e", "task_title": "Pic rep lane E: close Pic representability, no new hypotheses", "projects": "Algebraic-Jacobian-Challenge"}}
+{"at": "2026-08-04T01:56:52.322453+00:00", "actor": "human", "field": "status", "from": "pending", "to": "rejected", "note": "synced from task ajc-pic0av"}
+{"at": "2026-08-04T01:57:44.547040+00:00", "actor": "horizon", "field": "status", "from": "rejected", "to": "pending", "note": ""}
+{"at": "2026-08-04T01:57:44.547252+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "owner updated"}

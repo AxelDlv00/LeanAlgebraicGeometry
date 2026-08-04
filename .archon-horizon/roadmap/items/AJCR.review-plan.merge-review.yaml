@@ -1,0 +1,23 @@
+id: AJCR.review-plan.merge-review
+title: Cross-cutting merge, credit, and stop-rule audit
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: At every merge verify critical-root import, immediate consumption, kernel
+  build, axiom output, obsolete-path deletion/specialization, duplicate/carrier counts,
+  normal proof budgets, and full-root green. Assign zero endpoint credit to unconsumed
+  wrappers, fieldwise substitutes, root-unreachable files, ineffective quotients,
+  or unrelated witnesses; trigger redesign under the review's stated stop conditions.
+status: pending
+kind: report
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: human
+  created_at: '2026-08-04T01:52:34.440817+00:00'
+  parent: AJCR.review-plan
+  milestone: AJCR.review-plan

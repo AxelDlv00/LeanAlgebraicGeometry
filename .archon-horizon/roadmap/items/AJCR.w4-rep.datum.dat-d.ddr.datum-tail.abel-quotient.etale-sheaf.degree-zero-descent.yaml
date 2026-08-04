@@ -28,7 +28,6 @@ metadata:
     task_title: 'Own the Altman-Kleiman quotient: pic0AdmissibleAbelQuotientRepresenter'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.etale-sheaf
-  owner: ajcr-abel-quotient
-  updated_at: '2026-08-03T19:59:53.307100+00:00'
+  updated_at: '2026-08-04T01:49:42.013158+00:00'
   pinned_commits:
   - 3d4560c9e4e2dcec4975c21981597d292c981022

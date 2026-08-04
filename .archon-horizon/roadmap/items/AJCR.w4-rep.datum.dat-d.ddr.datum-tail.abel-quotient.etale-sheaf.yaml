@@ -13,7 +13,7 @@ summary: 'The etale-local inputs are now closed under the exact endpoint hypothe
   Yoneda with pic0TypeFunctor C through the accepted comparison, and prove the required
   quasi-projectivity or project-local embedding. No quotient representer or pic0AdmissibleAbelQuotientRepresenter
   exists yet.'
-status: blocked
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -35,8 +35,7 @@ metadata:
     task_title: 'Own the Altman-Kleiman quotient: pic0AdmissibleAbelQuotientRepresenter'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient
-  owner: ajcr-abel-quotient
-  updated_at: '2026-08-03T22:58:29.211411+00:00'
+  updated_at: '2026-08-04T02:00:23.870534+00:00'
   pinned_commits:
   - 23d765428c04b5e9bf761479d1e0f450a66a3896
   - 3d4560c9e4e2dcec4975c21981597d292c981022

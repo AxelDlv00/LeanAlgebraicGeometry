@@ -306,7 +306,7 @@ summary: "r2 CORRECTION TO THIS NODE'S OWN BREAK ANALYSIS (pic-e, run 0095, 2026
   \ 'is not even a Zariski sheaf (Kleiman s2 L1292-L1302)', a citation about the ABSOLUTE\
   \ functor that was corrected in every .lean and .tex site. Its declaration no longer\
   \ exists, so `graph sync` will not refresh it; it needs deletion. Full detail I-1038."
-status: active
+status: pending
 kind: proof
 priority: high
 depends_on: []
@@ -319,6 +319,6 @@ scope:
 metadata:
   author: human
   created_at: '2026-07-01T10:06:40.928722+00:00'
-  updated_at: '2026-07-31T10:58:47.498075+00:00'
+  updated_at: '2026-08-04T01:57:49.425712+00:00'
   parent: AJC.jacobian
   milestone: AJC.picrep

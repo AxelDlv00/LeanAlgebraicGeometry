@@ -9,3 +9,4 @@
 {"at": "2026-07-09T03:18:07.059102+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "re-queued on resume: its Horizon session was interrupted mid-run"}
 {"at": "2026-07-09T03:18:16.587030+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
 {"at": "2026-07-22T10:02:58.304015+00:00", "actor": "horizon", "field": "status", "from": "running", "to": "queued", "note": ""}
+{"at": "2026-08-04T02:00:45.040438+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "priority updated"}
