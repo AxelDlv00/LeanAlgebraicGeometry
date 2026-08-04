@@ -210,7 +210,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c.c9-chartlocus
-  updated_at: '2026-07-29T20:47:22.151856+00:00'
+  updated_at: '2026-08-04T01:58:18.570368+00:00'
   milestone: AJCR.w4-rep
   pinned_commits:
   - c26f49f68

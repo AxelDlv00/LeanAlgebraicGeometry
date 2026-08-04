@@ -34,7 +34,7 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.projective-infra
   milestone: AJC.picrep
-  updated_at: '2026-08-03T15:37:34.109332+00:00'
+  updated_at: '2026-08-04T01:57:57.372828+00:00'
   pinned_commits:
   - 0f28a9e8e5
   - 650b9f291c30d87948001a1bab2bdb261f826219
