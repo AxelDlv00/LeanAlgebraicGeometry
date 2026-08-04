@@ -5,7 +5,7 @@ projects:
 summary: Construct relCurve C Gamma(T,U) isomorphic to the U-piece of the pulled-back
   directed affine cover of (C tensor T).left, with projection and restriction-transition
   coherence.
-status: active
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -28,3 +28,7 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.kernel-representer.universal-divisor.total-gluing
   owner: ajcr-abel-quotient
+  updated_at: '2026-08-04T00:37:02.927835+00:00'
+  pinned_commits:
+  - fcbc5ae027720257afe6daed701a9a60be905c8d
+  - 7f7e776e1d5019f56052a4363ef1835f57102066
