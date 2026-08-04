@@ -72,6 +72,28 @@ variable (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
 variable (hdeg : Scheme.CurveDivisor.deg k Z
   = (m : ℤ) * classDeg k (thetaCechClass C) - (n : ℤ))
 
+/- The base-change instances are keyed on the product spelling. Keep these bridges local so the
+public guard uses the canonical `relCurve` spelling without exporting overlapping instances. -/
+local instance routeGuardIntegral {K : Type u} [Field K] [Algebra k K] :
+    IsIntegral (relCurve C K) :=
+  instIsIntegralBaseChange C K
+
+local instance routeGuardSmooth {K : Type u} [Field K] [Algebra k K] :
+    SmoothOfRelativeDimension 1 (relCurve C K ↘ Spec (CommRingCat.of K)) :=
+  instSmoothOfRelativeDimensionBaseChange C K
+
+local instance routeGuardQuasiCompact {K : Type u} [Field K] [Algebra k K] :
+    QuasiCompact (relCurve C K ↘ Spec (CommRingCat.of K)) :=
+  instQuasiCompactBaseChange C K
+
+local instance routeGuardH0Finite {K : Type u} [Field K] [Algebra k K] :
+    Module.Finite K (Sheaf.HModule ((relCurve C K).moduleKSheaf K) 0) :=
+  instModuleFiniteHModuleZeroBaseChange C K
+
+local instance routeGuardH1Finite {K : Type u} [Field K] [Algebra k K] :
+    Module.Finite K (Sheaf.HModule ((relCurve C K).moduleKSheaf K) 1) :=
+  instModuleFiniteHModuleOneBaseChange C K
+
 /-- **Root route guard.** If the degree-`n` divisor space has a point after a field extension
 and `genus C < n`, the unrestricted degree-`n` Abel map is not an open immersion.
 
@@ -80,11 +102,6 @@ effective representative, and consumes `not_injective_chartValue_of_two_le_h0`. 
 than the positive-genus form required by the review: no positivity hypothesis is needed. -/
 theorem not_isOpenImmersion_abelSigmaChart_of_genus_lt_degree
     {K : Type u} [Field K] [Algebra k K]
-    [IsIntegral (relCurve C K)]
-    [SmoothOfRelativeDimension 1 (relCurve C K ↘ Spec (CommRingCat.of K))]
-    [QuasiCompact (relCurve C K ↘ Spec (CommRingCat.of K))]
-    [Module.Finite K (Sheaf.HModule ((relCurve C K).moduleKSheaf K) 0)]
-    [Module.Finite K (Sheaf.HModule ((relCurve C K).moduleKSheaf K) 1)]
     (W : (relCurve C K).CurveDivisor)
     (hdegW : Scheme.CurveDivisor.deg K W = (n : ℤ))
     (hng : genus C < n) :
