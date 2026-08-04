@@ -705,6 +705,7 @@ import AlgebraicJacobian.Picard.DivisorIntrinsicIdealSheaf
 import AlgebraicJacobian.Picard.DivisorFamilyIntrinsicIdealSheaf
 import AlgebraicJacobian.Picard.IdealSheafAffineComap
 import AlgebraicJacobian.Picard.IdealSheafRelativeGluing
+import AlgebraicJacobian.Picard.RelativeCurveAffineCover
 import AlgebraicJacobian.Picard.DivisorSubscheme
 import AlgebraicJacobian.Picard.DivisorSubschemeFinite
 import AlgebraicJacobian.Picard.DivisorSubschemeOverlap
