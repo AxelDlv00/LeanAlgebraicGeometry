@@ -7,7 +7,7 @@ summary: Produce divFunctorAff_representableBy_at with separate gC and nDiv para
   be specializations; the old diagonal implementation must be deleted or one line.
   Require diagonal, off-diagonal, and named-next-consumer tests, then freeze broad
   parameter propagation.
-status: pending
+status: done
 kind: proof
 priority: high
 depends_on: []
@@ -21,3 +21,7 @@ metadata:
   created_at: '2026-08-04T01:52:22.483169+00:00'
   parent: AJCR.review-plan
   milestone: AJCR.review-plan
+  updated_at: '2026-08-04T19:18:48.100079+00:00'
+  owner: horizon
+  pinned_commits:
+  - 540fe9770c
