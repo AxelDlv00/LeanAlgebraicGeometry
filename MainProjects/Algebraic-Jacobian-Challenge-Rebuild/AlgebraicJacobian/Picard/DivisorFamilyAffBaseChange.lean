@@ -293,11 +293,40 @@ theorem germ_pullbackEqn_mem_nonZeroDivisors
   rw [hSM]
   exact mul_mem hunit.unit⁻¹.isUnit.mem_nonZeroDivisors hF
 
-/-- **The pulled local-equation system**, widened: `d` pulls back along the relative-curve
-comparison, with regularity discharged by the certificate's colength projectivity. -/
+/-- **The pulled local-equation system from an explicit regularity witness**: this is the
+bare `Scheme.LocalEquations.pullback` construction along the relative-curve comparison.
+
+Unlike `pulledEquations` below, this definition does not ask for projective colengths: callers
+that already know the pulled equations are regular can supply exactly the `hreg` hypothesis
+accepted by `Scheme.LocalEquations.pullback`. -/
+noncomputable def pulledEquationsOfHreg
+    (hreg : ∀ (y z : relCurve C R')
+      (hz : z ∈ (d.cover.pullback (relCurveMap C R R')).opens y),
+      ((relCurve C R').presheaf.germ
+        ((d.cover.pullback (relCurveMap C R R')).opens y) z hz).hom
+          (Scheme.LocalEquations.pullbackEqn (relCurveMap C R R') d y)
+        ∈ nonZeroDivisors ((relCurve C R').presheaf.stalk z)) :
+    (relCurve C R').LocalEquations :=
+  d.pullback (relCurveMap C R R') hreg
+
+@[simp]
+lemma pulledEquationsOfHreg_cover
+    (hreg : ∀ (y z : relCurve C R')
+      (hz : z ∈ (d.cover.pullback (relCurveMap C R R')).opens y),
+      ((relCurve C R').presheaf.germ
+        ((d.cover.pullback (relCurveMap C R R')).opens y) z hz).hom
+          (Scheme.LocalEquations.pullbackEqn (relCurveMap C R R') d y)
+        ∈ nonZeroDivisors ((relCurve C R').presheaf.stalk z)) :
+    (pulledEquationsOfHreg (C := C) R' hreg).cover =
+      d.cover.pullback (relCurveMap C R R') :=
+  rfl
+
+/-- **The pulled local-equation system**, widened: the explicit-regularity construction above,
+with regularity discharged by the certificate's colength projectivity. -/
 noncomputable def pulledEquations (hproj : ∀ j, Module.Projective R (A.colength j)) :
     (relCurve C R').LocalEquations :=
-  d.pullback (relCurveMap C R R') (A.germ_pullbackEqn_mem_nonZeroDivisors R' hproj)
+  pulledEquationsOfHreg (C := C) R'
+    (A.germ_pullbackEqn_mem_nonZeroDivisors R' hproj)
 
 @[simp]
 lemma pulledEquations_cover (hproj : ∀ j, Module.Projective R (A.colength j)) :
@@ -312,48 +341,63 @@ lemma picClass_pulledEquations (hproj : ∀ j, Module.Projective R (A.colength j
 
 /-! ## The base-changed adaptation -/
 
-/-- **The base-changed widened adaptation**: the base-changed cover carrying the pulled
-equations.  The pointwise refinement clause `eqn_rel` transports clause for clause exactly as
-in `DivisorAdaptation.pullback` — the target overlap is the `relCurveMap`-preimage of the
-source overlap and the source clause pulls through `Scheme.Hom.unitsAppLE`.  Nothing in that
-argument mentions a chart; here it is even shorter, because the piece inclusion
-`pieces' j ≤ relCurveMap ⁻¹ᵁ pieces j` is `le_rfl` rather than the `≤`-form of a
-`basicOpen` identity. -/
-noncomputable def pullback (hproj : ∀ j, Module.Projective R (A.colength j)) :
-    AffAdaptation (D.baseChange R') (A.pulledEquations R' hproj) where
+/-- **The base-changed widened adaptation from an explicit regularity witness**: the
+base-changed cover carries `d.pullback (relCurveMap C R R') hreg`.
+
+The pointwise refinement clause `eqn_rel` transports clause for clause exactly as in
+`DivisorAdaptation.pullback`: the target overlap is the `relCurveMap`-preimage of the source
+overlap and the source clause pulls through `Scheme.Hom.unitsAppLE`.  The proof uses only the
+supplied regularity witness through the resulting pulled local-equation system; it does not
+use projectivity or any other colength property. -/
+noncomputable def pullbackOfHreg
+    (hreg : ∀ (y z : relCurve C R')
+      (hz : z ∈ (d.cover.pullback (relCurveMap C R R')).opens y),
+      ((relCurve C R').presheaf.germ
+        ((d.cover.pullback (relCurveMap C R R')).opens y) z hz).hom
+          (Scheme.LocalEquations.pullbackEqn (relCurveMap C R R') d y)
+        ∈ nonZeroDivisors ((relCurve C R').presheaf.stalk z)) :
+    AffAdaptation (D.baseChange R') (d.pullback (relCurveMap C R R') hreg) where
   eqn := A.pulledEqn R'
   eqn_rel := fun j y' => by
     obtain ⟨u, hu⟩ := A.eqn_rel j ((relCurveMap C R R').base y')
-    have hle₁ : (D.baseChange R').pieces j ⊓ (A.pulledEquations R' hproj).cover.opens y' ≤
+    have hle₁ : (D.baseChange R').pieces j ⊓
+        (d.pullback (relCurveMap C R R') hreg).cover.opens y' ≤
         relCurveMap C R R' ⁻¹ᵁ D.pieces j :=
       inf_le_left
-    have hle₂ : (D.baseChange R').pieces j ⊓ (A.pulledEquations R' hproj).cover.opens y' ≤
+    have hle₂ : (D.baseChange R').pieces j ⊓
+        (d.pullback (relCurveMap C R R') hreg).cover.opens y' ≤
         relCurveMap C R R' ⁻¹ᵁ d.cover.opens ((relCurveMap C R R').base y') :=
       inf_le_right
-    have hle : (D.baseChange R').pieces j ⊓ (A.pulledEquations R' hproj).cover.opens y' ≤
+    have hle : (D.baseChange R').pieces j ⊓
+        (d.pullback (relCurveMap C R R') hreg).cover.opens y' ≤
         relCurveMap C R R' ⁻¹ᵁ
           (D.pieces j ⊓ d.cover.opens ((relCurveMap C R R').base y')) :=
       (relCurveMap C R R').le_preimage_inf hle₁ hle₂
     refine ⟨(relCurveMap C R R').unitsAppLE
       (D.pieces j ⊓ d.cover.opens ((relCurveMap C R R').base y'))
-      ((D.baseChange R').pieces j ⊓ (A.pulledEquations R' hproj).cover.opens y') hle u, ?_⟩
+      ((D.baseChange R').pieces j ⊓
+        (d.pullback (relCurveMap C R R') hreg).cover.opens y') hle u, ?_⟩
     -- LHS: the restricted pulled equation collapses to `appLE` of the piece equation
     have hres₁ : ((relCurve C R').presheaf.map (homOfLE (inf_le_left :
-        (D.baseChange R').pieces j ⊓ (A.pulledEquations R' hproj).cover.opens y' ≤
+        (D.baseChange R').pieces j ⊓
+            (d.pullback (relCurveMap C R R') hreg).cover.opens y' ≤
           (D.baseChange R').pieces j)).op).hom (A.pulledEqn R' j) =
         ((relCurveMap C R R').appLE (D.pieces j)
-          ((D.baseChange R').pieces j ⊓ (A.pulledEquations R' hproj).cover.opens y')
+          ((D.baseChange R').pieces j ⊓
+            (d.pullback (relCurveMap C R R') hreg).cover.opens y')
           hle₁).hom (A.eqn j) := by
       rw [show A.pulledEqn R' j = ((relCurveMap C R R').appLE (D.pieces j)
           ((D.baseChange R').pieces j) le_rfl).hom (A.eqn j) from rfl,
         ← CommRingCat.comp_apply, Scheme.Hom.appLE_map]
     -- RHS: the restricted pulled system equation collapses to `appLE` of `d`'s equation
     have hres₂ : ((relCurve C R').presheaf.map (homOfLE (inf_le_right :
-        (D.baseChange R').pieces j ⊓ (A.pulledEquations R' hproj).cover.opens y' ≤
-          (A.pulledEquations R' hproj).cover.opens y')).op).hom
-        ((A.pulledEquations R' hproj).eqn y') =
+        (D.baseChange R').pieces j ⊓
+            (d.pullback (relCurveMap C R R') hreg).cover.opens y' ≤
+          (d.pullback (relCurveMap C R R') hreg).cover.opens y')).op).hom
+        ((d.pullback (relCurveMap C R R') hreg).eqn y') =
         ((relCurveMap C R R').appLE (d.cover.opens ((relCurveMap C R R').base y'))
-          ((D.baseChange R').pieces j ⊓ (A.pulledEquations R' hproj).cover.opens y')
+          ((D.baseChange R').pieces j ⊓
+            (d.pullback (relCurveMap C R R') hreg).cover.opens y')
           hle₂).hom (d.eqn ((relCurveMap C R R').base y')) :=
       Scheme.LocalEquations.pullbackEqn_res (relCurveMap C R R') d y' _
     -- the pre-restriction collapse on both sides
@@ -368,11 +412,31 @@ noncomputable def pullback (hproj : ∀ j, Module.Projective R (A.colength j)) :
     -- transport the unit relation through `appLE`
     have key := congrArg ((relCurveMap C R R').appLE
       (D.pieces j ⊓ d.cover.opens ((relCurveMap C R R').base y'))
-      ((D.baseChange R').pieces j ⊓ (A.pulledEquations R' hproj).cover.opens y')
+      ((D.baseChange R').pieces j ⊓
+        (d.pullback (relCurveMap C R R') hreg).cover.opens y')
       hle).hom hu
     rw [map_mul] at key
     exact hres₁.trans (e₁.symm.trans (key.trans (congrArg₂ (· * ·) rfl
       (e₂.trans hres₂.symm))))
+
+@[simp]
+lemma pullbackOfHreg_eqn
+    (hreg : ∀ (y z : relCurve C R')
+      (hz : z ∈ (d.cover.pullback (relCurveMap C R R')).opens y),
+      ((relCurve C R').presheaf.germ
+        ((d.cover.pullback (relCurveMap C R R')).opens y) z hz).hom
+          (Scheme.LocalEquations.pullbackEqn (relCurveMap C R R') d y)
+        ∈ nonZeroDivisors ((relCurve C R').presheaf.stalk z))
+    (j : D.index) :
+    (A.pullbackOfHreg R' hreg).eqn j = A.pulledEqn R' j :=
+  rfl
+
+/-- **The projective-colength specialization of `pullbackOfHreg`**.  This retains the
+original public base-change API while making its only use of projectivity explicit: it
+produces the regularity witness for the generic adaptation pullback. -/
+noncomputable def pullback (hproj : ∀ j, Module.Projective R (A.colength j)) :
+    AffAdaptation (D.baseChange R') (A.pulledEquations R' hproj) :=
+  A.pullbackOfHreg R' (A.germ_pullbackEqn_mem_nonZeroDivisors R' hproj)
 
 @[simp]
 lemma pullback_eqn (hproj : ∀ j, Module.Projective R (A.colength j)) (j : D.index) :
