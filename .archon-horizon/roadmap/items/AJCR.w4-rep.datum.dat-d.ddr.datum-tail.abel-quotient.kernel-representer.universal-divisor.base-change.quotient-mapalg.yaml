@@ -1,0 +1,32 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.kernel-representer.universal-divisor.base-change.quotient-mapalg
+title: Descend Cartier ideal base change to DivFamZarAff
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: Prove DivFamZarAff.cartierIdealData_mapAlg and the explicit-map cartierIdealData_mapAlgHom
+  theorem by quotient induction, consuming intrinsic pullback/comap compatibility.
+status: pending
+kind: proof
+priority: normal
+depends_on:
+- AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.kernel-representer.universal-divisor.base-change.intrinsic-comap
+- AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.kernel-representer.universal-divisor.quotient-lift
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-08-04T00:20:50.348708+00:00'
+  provenance:
+    run: '0115'
+    session: 0008-horizon-ajcr-abel-quotient
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-abel-quotient
+    task_title: 'Own the Altman-Kleiman quotient: pic0AdmissibleAbelQuotientRepresenter'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.kernel-representer.universal-divisor.base-change
+  owner: ajcr-abel-quotient
+  updated_at: '2026-08-04T00:22:00+00:00'
