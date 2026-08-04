@@ -5,7 +5,7 @@ projects:
 summary: Generalize AffAdaptation.pullback so its proof consumes the exact germwise
   nonzerodivisor witness used by LocalEquations.pullback; retain the existing projective-colength
   construction as a wrapper and prove the equation fields agree.
-status: active
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -28,3 +28,6 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.kernel-representer.universal-divisor.base-change
   owner: ajcr-abel-quotient
+  updated_at: '2026-08-04T01:15:22.465472+00:00'
+  pinned_commits:
+  - ccb286f163c1f6d7d5b82cba6d03780b781b885c
