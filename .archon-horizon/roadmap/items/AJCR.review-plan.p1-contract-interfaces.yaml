@@ -7,7 +7,7 @@ summary: Create Picard/Pic0EndgameContract.lean with the exact public signatures
   bridges/instances/simp lemmas in Curve/RelativeCurveBridge.lean; add normal-budget
   performance regressions and semantic tests tying every witness to its input. No
   parallel public APIs or high-priority instances.
-status: active
+status: done
 kind: refactor
 priority: urgent
 depends_on: []
@@ -21,9 +21,11 @@ metadata:
   created_at: '2026-08-04T01:52:20.823513+00:00'
   parent: AJCR.review-plan
   milestone: AJCR.review-plan
-  updated_at: '2026-08-04T20:35:26.620214+00:00'
+  updated_at: '2026-08-04T22:10:11.342970+00:00'
   owner: horizon
   pinned_commits:
+  - 36f2a8ca90
+  - eeb551911c1f894e95bbf053b1bcc9e1944695e3
   - 495443bd47170315fa57d841e0b4cfa153cf8138
   - bc9dce037b9ecf7f33e81d831c1434d6c73f88c9
   - c98f64128f

@@ -22,8 +22,10 @@ metadata:
   created_at: '2026-08-04T01:52:17.366226+00:00'
   parent: AJCR.jacobian
   milestone: AJCR.review-plan
-  updated_at: '2026-08-04T20:35:35.870699+00:00'
+  updated_at: '2026-08-04T22:11:07.037805+00:00'
   pinned_commits:
+  - 36f2a8ca90
+  - eeb551911c1f894e95bbf053b1bcc9e1944695e3
   - 495443bd47170315fa57d841e0b4cfa153cf8138
   - 298549f011
   - 05f3883825
