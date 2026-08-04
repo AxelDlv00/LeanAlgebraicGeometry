@@ -6,11 +6,11 @@ created: '2026-07-16T21:33:29'
 generated: blueprint
 label: cor:pointed_hom
 lean_status: lean_ok
-order: 1177
+order: 1199
 ref: abelian-varieties:page-0015, mumford-abelian-varieties:page-0054, mumford-abelian-varieties:page-0055
 title: Pointed morphisms are homomorphisms
 type: tex
-updated: '2026-08-04T10:53:22'
+updated: '2026-08-05T03:56:42'
 ---
 Let \(K\) be an algebraically closed field, let \(A\) be a monoid scheme over \(K\) which
   is proper and geometrically integral over \(K\), and let \(B\) be a group scheme over

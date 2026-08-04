@@ -22,7 +22,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.not_isOpenImmersion_abelSigmaChart_of_genus_lt_degree
 type: lean
-updated: '2026-08-04T14:08:52'
+updated: '2026-08-05T02:56:16'
 ---
 theorem not_isOpenImmersion_abelSigmaChart_of_genus_lt_degree
     {K : Type u} [Field K] [Algebra k K]
@@ -51,3 +51,5 @@ theorem not_isOpenImmersion_abelSigmaChart_of_genus_lt_degree
   exact not_isOpenImmersion_abelSigmaChart_of_not_injective_chartValue rep m Z hdeg
     (not_injective_chartValue_of_two_le_h0 (C := C) (π := π) (n := n)
       hO A hA hdegA hh0A m Z)
+
+include π

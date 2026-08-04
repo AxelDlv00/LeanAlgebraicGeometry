@@ -6,11 +6,11 @@ created: '2026-07-17T08:59:08'
 generated: blueprint
 label: def:truncExpUnit
 lean_status: lean_ok
-order: 1138
+order: 1160
 ref: kleiman-picard
 title: The truncated exponential unit
 type: tex
-updated: '2026-08-04T10:53:21'
+updated: '2026-08-05T03:56:42'
 ---
 Let \(R\) be a commutative ring and \(b \in R\). Since
   \((b\varepsilon)(c\varepsilon) = 0\) in \(R[\varepsilon]\), the element

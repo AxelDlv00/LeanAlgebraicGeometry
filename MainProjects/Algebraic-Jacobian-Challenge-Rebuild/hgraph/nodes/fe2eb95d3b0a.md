@@ -6,10 +6,10 @@ created: '2026-07-17T22:40:09'
 generated: blueprint
 label: lem:diff_diagonal_domain
 lean_status: lean_ok
-order: 1255
+order: 1277
 title: The diagonal maps into the domain of the difference map
 type: tex
-updated: '2026-08-04T10:53:22'
+updated: '2026-08-05T03:56:42'
 ---
 For \(z \in \operatorname{Dom} f\), the diagonal point \(\delta(z) = (z, z)\)
   lies in \(\operatorname{Dom}\Phi\).

@@ -7,9 +7,10 @@ file: Pic0ThetaCocycleProbe.lean
 generated: lean
 lean_status: lean_ok
 private: true
+stale: true
 title: AlgebraicGeometry.probe_pullback_fst_congr_left.{w}
 type: lean
-updated: '2026-08-03T22:58:50'
+updated: '2026-08-05T03:56:43'
 ---
 private theorem probe_pullback_fst_congr_left.{w} {D : Type w} [Category.{u} D]
     {W S T : D} (a : W ⟶ S) {f g : T ⟶ S} (hfg : f = g)

@@ -6,10 +6,10 @@ created: '2026-07-17T10:19:50'
 generated: blueprint
 label: def:ratmap_precomp
 lean_status: lean_ok
-order: 1179
+order: 1201
 title: Precomposition of a rational map with an open morphism
 type: tex
-updated: '2026-08-04T10:53:22'
+updated: '2026-08-05T03:56:42'
 ---
 Let \(f : X \dashrightarrow Y\) be a rational map and \(p : W \to X\) a
   morphism whose underlying continuous map is \emph{open}. The composite

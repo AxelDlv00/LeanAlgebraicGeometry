@@ -6,8 +6,9 @@ decl: AlgebraicGeometry.DropTest.controlSorry
 file: scratch_p4r6/drop_IsSeparated.lean
 generated: lean
 lean_status: sorry
+stale: true
 title: AlgebraicGeometry.DropTest.controlSorry
 type: lean
-updated: '2026-08-04T15:40:42'
+updated: '2026-08-05T03:56:43'
 ---
 theorem controlSorry : True := by sorry

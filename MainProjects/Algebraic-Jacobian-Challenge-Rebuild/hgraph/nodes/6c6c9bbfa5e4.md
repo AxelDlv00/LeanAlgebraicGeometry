@@ -6,10 +6,10 @@ created: '2026-07-17T10:19:50'
 generated: blueprint
 label: lem:point_translation_iso_points
 lean_status: lean_ok
-order: 1289
+order: 1311
 title: Translations act on points as prescribed
 type: tex
-updated: '2026-08-04T10:53:22'
+updated: '2026-08-05T03:56:42'
 ---
 In the situation of \ref{def:point_translation_iso}, for every point
   \(s \in S\),

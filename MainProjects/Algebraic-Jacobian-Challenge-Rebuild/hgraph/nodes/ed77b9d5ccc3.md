@@ -6,10 +6,10 @@ created: '2026-07-17T08:59:08'
 generated: blueprint
 label: lem:unitsFst_split
 lean_status: lean_ok
-order: 1141
+order: 1163
 title: Splitting identities
 type: tex
-updated: '2026-08-04T10:53:21'
+updated: '2026-08-05T03:56:42'
 ---
 \(\mathrm{fst}^\times \circ \mathrm{inl}^\times = \mathrm{id}\) on \(R^\times\);
   \(\mathrm{fst}^\times(\mathrm{tExp}(b)) = 1\) for every \(b \in R\); and for any unit

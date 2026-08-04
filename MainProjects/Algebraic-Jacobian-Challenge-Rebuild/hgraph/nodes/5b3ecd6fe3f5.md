@@ -6,10 +6,10 @@ created: '2026-07-17T10:21:00'
 generated: blueprint
 label: thm:jacobianData_geomIrreducible
 lean_status: lean_ok
-order: 1297
+order: 1319
 title: The representing object is geometrically irreducible
 type: tex
-updated: '2026-08-04T10:53:22'
+updated: '2026-08-05T03:56:42'
 ---
 Let \(d\) be a Jacobian datum admitting an Abel source. Then the structure
   morphism of the representing object \(J\) is geometrically irreducible: for

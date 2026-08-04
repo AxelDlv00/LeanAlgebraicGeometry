@@ -7,9 +7,10 @@ docstring: An iso onto the Sigma-functor IS a RepresentableBy datum.
 file: scratch_p4r6/probe7.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.ProbeP4R6c.probeRepBy
 type: lean
-updated: '2026-08-03T22:58:50'
+updated: '2026-08-05T03:56:44'
 ---
 noncomputable def probeRepBy {X : Scheme.{u}} (f : yoneda.obj X ⟶ (pic0SigmaSheaf C).1)
     [IsIso f] : (pic0SigmaFunctor C).RepresentableBy X where
