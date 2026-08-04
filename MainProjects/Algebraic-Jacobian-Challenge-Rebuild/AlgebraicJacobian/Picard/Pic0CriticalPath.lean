@@ -6,6 +6,7 @@ Authors: The AlgebraicJacobian Contributors
 import AlgebraicJacobian.Picard.DivRepAffChallenge
 import AlgebraicJacobian.Picard.Pic0EndgameContract
 import AlgebraicJacobian.Picard.Pic0HighDegreeRouteGuard
+import AlgebraicJacobian.Picard.Pic0RankOnePresentation
 
 /-!
 # Narrow root for the AJCR-first Picard strategy
@@ -13,9 +14,9 @@ import AlgebraicJacobian.Picard.Pic0HighDegreeRouteGuard
 This root deliberately imports only the current producers on the reviewed route. Every later
 contract endpoint must be checked here before it receives critical-path credit.
 
-The rank-one locus, canonical inverse, separably closed cover, representability, descent, and
-`JacobianData` declarations do not yet exist. They are not replaced here by axioms or local
-hypotheses.
+The tied local rank-one presentation and its canonical evaluation map are present. The rank-one
+locus, canonical divisor, separably closed cover, representability, descent, and `JacobianData`
+declarations do not yet exist. They are not replaced here by axioms or local hypotheses.
 -/
 
 #check AlgebraicGeometry.divFunctorAff_representableBy_at
@@ -25,6 +26,9 @@ hypotheses.
 #check AlgebraicGeometry.abelDivAffTrans
 #check AlgebraicGeometry.abelDivAffSigma
 #check AlgebraicGeometry.abelDivAffGenusSigma
+#check AlgebraicGeometry.Scheme.toModuleKSheafOfModules
+#check AlgebraicGeometry.PicRankOneLocalPresentation
+#check AlgebraicGeometry.PicRankOneLocalPresentation.evaluation
 #check AlgebraicGeometry.not_injective_abelSigmaChart_of_divFamZar
 #check AlgebraicGeometry.not_isOpenImmersion_abelSigmaChart_of_not_injective_chartValue
 #check AlgebraicGeometry.not_isOpenImmersion_abelSigmaChart_of_genus_lt_degree
@@ -37,5 +41,6 @@ hypotheses.
 #print axioms AlgebraicGeometry.divFunctorAff_genus_representableBy
 #print axioms AlgebraicGeometry.divFunctorAff_admissible_representableBy
 #print axioms AlgebraicGeometry.abelDivAffGenusSigma
+#print axioms AlgebraicGeometry.PicRankOneLocalPresentation.evaluation
 #print axioms AlgebraicGeometry.not_isOpenImmersion_abelSigmaChart_of_genus_lt_degree
 #print axioms AlgebraicGeometry.not_isOpenImmersion_abelSigmaChartAff_of_genus_lt_degree
