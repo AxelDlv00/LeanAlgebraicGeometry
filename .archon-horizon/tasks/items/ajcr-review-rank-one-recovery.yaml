@@ -20,7 +20,12 @@ objective: 'This is a fresh recovery task created specifically from the mathemat
   Keep the roadmap, task state, inbox handoffs, and ledger commits current throughout
   the Horizon run.'
 title: Execute the August 2026 mathematician review
-explanation: ''
+explanation: 'The previous Pic^0 task carries extensive history tied to a superseded
+  high-degree quotient campaign. This clean task starts from the August 2026 external
+  mathematical review and coordinates an AJCR-first rank-one recovery, using AJC only
+  for reusable shared infrastructure such as finite-Galois descent. It exists so a
+  new Horizon run can orient from the review itself instead of inheriting assumptions,
+  comments, or priorities from the older campaign.'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 - Algebraic-Jacobian-Challenge
