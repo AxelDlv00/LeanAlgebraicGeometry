@@ -28,9 +28,16 @@ declarations do not yet exist. They are not replaced here by axioms or local hyp
 #check AlgebraicGeometry.abelDivAffSigma
 #check AlgebraicGeometry.abelDivAffGenusSigma
 #check AlgebraicGeometry.Scheme.toModuleKSheafOfModules
+#check AlgebraicGeometry.canonicalBaseChangeMap
+#check AlgebraicGeometry.canonicalBaseChangeMap_pullback_counit
+#check AlgebraicGeometry.canonicalBaseChangeMap_counit_cancel
 #check AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.PicRankOneLocalPresentation.h0BaseChange
 #check AlgebraicGeometry.PicRankOneLocalPresentation.evaluation
+#check AlgebraicGeometry.PicRankOneLocalPresentation.nativeBaseChangeIso
+#check AlgebraicGeometry.PicRankOneLocalPresentation.nativeBaseChangeIsoAffine
+#check AlgebraicGeometry.PicRankOneLocalPresentation.evaluationSourceBaseChangeIso
+#check AlgebraicGeometry.PicRankOneLocalPresentation.evaluationSourceBaseChangeIso_hom_evaluation
 #check AlgebraicGeometry.PicRankOneLocalPresentation.datumSection
 #check AlgebraicGeometry.PicRankOneLocalPresentation.moduleSectionsEquiv
 #check AlgebraicGeometry.PicRankOneLocalPresentation.module_iso_inv_datumSection
@@ -53,6 +60,11 @@ declarations do not yet exist. They are not replaced here by axioms or local hyp
 #print axioms AlgebraicGeometry.abelDivAffGenusSigma
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.h0BaseChange
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.evaluation
+#print axioms AlgebraicGeometry.canonicalBaseChangeMap_pullback_counit
+#print axioms AlgebraicGeometry.canonicalBaseChangeMap_counit_cancel
+#print axioms AlgebraicGeometry.PicRankOneLocalPresentation.nativeBaseChangeIsoAffine
+#print axioms
+  AlgebraicGeometry.PicRankOneLocalPresentation.evaluationSourceBaseChangeIso_hom_evaluation
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.module_iso_inv_datumSection
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.evaluation_evaluationLiftOfH0
 #print axioms AlgebraicGeometry.rankOneAbelRepresented
