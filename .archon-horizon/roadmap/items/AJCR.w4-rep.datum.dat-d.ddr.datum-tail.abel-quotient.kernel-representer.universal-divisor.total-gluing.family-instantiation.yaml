@@ -10,7 +10,10 @@ summary: After quotient-level cartierIdealData_mapAlg/comap compatibility is ava
 status: pending
 kind: proof
 priority: normal
-depends_on: []
+depends_on:
+- AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.kernel-representer.universal-divisor.base-change.quotient-mapalg
+- AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.kernel-representer.universal-divisor.total-gluing.relative-curve-cover
+- AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.kernel-representer.universal-divisor.total-gluing.ideal-sheaf-adapter
 inbox_refs: []
 task_refs: []
 scope:
