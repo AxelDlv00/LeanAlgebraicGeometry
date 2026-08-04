@@ -108,8 +108,13 @@ noncomputable def divFunctorAffGenusRepresenter :
     moduleFinite_hModule_one C
   have hpi : divRepAffP1Map C ≫ P1.structureMap k = C.left ↘ Spec (.of k) :=
     divRepAffP1Map_comp C
-  exact divFunctorAffRepresenter C hpi (genus C)
-    (h0_moduleKSheaf C) (chi_moduleKSheaf C)
+  let D := divRepAffScheme_at (C := C) (pi := divRepAffP1Map C)
+    (hpi := hpi) (g := genus C) (hO := h0_moduleKSheaf C)
+    (gamma := genus C) (hgamma := Nat.le_refl _) (hchiGamma := chi_moduleKSheaf C)
+  exact ⟨D, divFunctorAff_representableBy_at
+    (C := C) (pi := divRepAffP1Map C) (hpi := hpi)
+    (g := genus C) (hO := h0_moduleKSheaf C)
+    (gamma := genus C) (hgamma := Nat.le_refl _) (hchiGamma := chi_moduleKSheaf C)⟩
 
 /-- A chosen scheme representing the widened divisor functor at the curve's genus. -/
 noncomputable def divRepAffGenusScheme : Over (Spec (.of k)) :=
@@ -142,11 +147,15 @@ noncomputable def divFunctorAffAdmissibleRepresenter :
     moduleFinite_hModule_one C
   have hpi : divRepAffP1Map C ≫ P1.structureMap k = C.left ↘ Spec (.of k) :=
     divRepAffP1Map_comp C
-  exact divFunctorAffRepresenter_at
+  let D := divRepAffScheme_at (C := C) (pi := divRepAffP1Map C)
+    (hpi := hpi) (g := divRepAffAdmissibleParameter C) (hO := h0_moduleKSheaf C)
+    (gamma := genus C) (hgamma := genus_le_divRepAffAdmissibleParameter C)
+    (hchiGamma := chi_moduleKSheaf C)
+  exact ⟨D, divFunctorAff_representableBy_at
     (C := C) (pi := divRepAffP1Map C) (hpi := hpi)
     (g := divRepAffAdmissibleParameter C) (hO := h0_moduleKSheaf C)
     (gamma := genus C) (hgamma := genus_le_divRepAffAdmissibleParameter C)
-    (hchiGamma := chi_moduleKSheaf C)
+    (hchiGamma := chi_moduleKSheaf C)⟩
 
 /-- The chosen scheme representing the widened divisor functor at the unconditional Picard
 coverage parameter. -/

@@ -99,32 +99,6 @@ noncomputable def divFunctorAff_representableBy_divScheme_at
 
 end Based
 
-include hO hchi in
-/-- The widened divisor functor has a representer in every genus.  The finite chart bases are
-chosen internally; genus zero is represented by the terminal object. -/
-noncomputable def divFunctorAffRepresenter :
-    Σ D : Over (Spec (.of k)), (divFunctorAff C g).RepresentableBy D := by
-  classical
-  by_cases hg : g = 0
-  · subst g
-    exact ⟨Over.mk (𝟙 (Spec (.of k))),
-      divFunctorAffZeroRepresentableBy (C := C) (pi := pi)⟩
-  · let r1 := Module.finrank k
-      ↥(divisorSections k (windowM_choice pi hpi g • fiberWeilDivisor pi) ⊤)
-    let r2 := Module.finrank k ↥(divisorSections k
-      ((windowM_choice pi hpi g + windowS_choice pi hpi g) • fiberWeilDivisor pi) ⊤)
-    let b1 : Module.Basis (Fin r1) k
-        ↥(divisorSections k (windowM_choice pi hpi g • fiberWeilDivisor pi) ⊤) :=
-      Module.finBasis k _
-    let b2 : Module.Basis (Fin r2) k ↥(divisorSections k
-        ((windowM_choice pi hpi g + windowS_choice pi hpi g) • fiberWeilDivisor pi) ⊤) :=
-      Module.finBasis k _
-    exact ⟨divSchemeOver k (windowS_choice pi hpi g • fiberWeilDivisor pi)
-        (windowM_choice pi hpi g • fiberWeilDivisor pi) g r1 r2 b1
-        (b2.map (windowShiftEquiv hpi g).symm),
-      divFunctorAff_representableBy_divScheme_of_ne_zero
-        C hpi g hO hchi r1 r2 b1 b2 hg⟩
-
 omit hchi in
 include hO in
 /-- The degree-`g` widened divisor functor has a chosen representer when the curve Euler
@@ -156,6 +130,13 @@ noncomputable def divFunctorAffRepresenter_at
         (C := C) (pi := pi) (hpi := hpi) (g := g) (hO := hO)
         (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
         (gamma := gamma) (hgamma := hgamma) (hchiGamma := hchiGamma)⟩
+
+include hO hchi in
+/-- The diagonal widened divisor representer, specialized from the arbitrary-degree producer. -/
+noncomputable def divFunctorAffRepresenter :
+    Σ D : Over (Spec (.of k)), (divFunctorAff C g).RepresentableBy D :=
+  divFunctorAffRepresenter_at (C := C) (pi := pi) (hpi := hpi) (g := g)
+    (hO := hO) (gamma := g) (Nat.le_refl g) hchi
 
 /-- A chosen scheme representing the widened divisor functor. -/
 noncomputable def divRepAffScheme : Over (Spec (.of k)) :=
