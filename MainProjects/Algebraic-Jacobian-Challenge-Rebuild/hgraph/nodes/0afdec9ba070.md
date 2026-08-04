@@ -9,7 +9,7 @@ lean_status: lean_ok
 stale: true
 title: AlgebraicGeometry.VV
 type: lean
-updated: '2026-08-05T03:56:42'
+updated: '2026-08-05T06:02:32'
 ---
 noncomputable def VV : (XX R).Opens := (coprod.inl : Spec R ⟶ XX R).opensRange
 

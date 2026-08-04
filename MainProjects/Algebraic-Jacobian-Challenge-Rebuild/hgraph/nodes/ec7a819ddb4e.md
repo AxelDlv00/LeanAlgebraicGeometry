@@ -9,7 +9,7 @@ lean_status: lean_ok
 stale: true
 title: AlgebraicGeometry.probeBaseChangeIdIso
 type: lean
-updated: '2026-08-05T03:56:44'
+updated: '2026-08-05T06:02:34'
 ---
 noncomputable def probeBaseChangeIdIso (k : Type u) [Field k] :
     baseChange k k ≅ 𝟭 (Over (Spec (.of k))) := by

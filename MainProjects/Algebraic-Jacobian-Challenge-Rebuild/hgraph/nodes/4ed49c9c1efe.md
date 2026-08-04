@@ -10,7 +10,7 @@ lean_status: lean_ok
 stale: true
 title: AlgebraicGeometry.ProbeP4R6.probeBij
 type: lean
-updated: '2026-08-05T03:56:43'
+updated: '2026-08-05T06:02:33'
 ---
 theorem probeBij {X : Scheme.{u}} (f : yoneda.obj X ⟶ (pic0SigmaSheaf C).1)
     (h : IsIso (chartSheafHom (C := C) f)) (T : Scheme.{u}ᵒᵖ) :

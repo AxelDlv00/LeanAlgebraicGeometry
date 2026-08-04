@@ -9,7 +9,7 @@ lean_status: lean_ok
 stale: true
 title: AlgebraicGeometry.A_noDominant
 type: lean
-updated: '2026-08-05T03:56:43'
+updated: '2026-08-05T06:02:33'
 ---
 theorem A_noDominant {X : Scheme.{u}} [IsReduced X] [X.IsSeparated]
     (V : X.Opens)
