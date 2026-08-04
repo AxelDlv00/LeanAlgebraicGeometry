@@ -18,7 +18,8 @@ Daily net AJCR Lean growth then remained large through 2026-08-01. From this pin
 | `run0108` | `9adb1151738acc7ae54e6905c78feb253f2184b0` | Workspace state recorded by run 0108 |
 | `run0109` | `8c9ea0abc7566c139e86a5ba1c6aa8f038766850` | Workspace state recorded by run 0109 |
 | `task-start` | `c37b414342de8a9df92753c1eec71f9a5fcab5c7` | Run 0119 system baseline |
-| `review-root` | `a4046bdead6237b9b802814303143b3c8d48ad28` | Rooted route guard plus its audit census |
+| `review-root` | `a4046bdead6237b9b802814303143b3c8d48ad28` | Rooted legacy-route guard plus its audit census |
+| `affine-guard` | `e71f31f893b273bb93ac45cbe3cec8dda8ccd3db` | Rooted stop theorem for the live arbitrary-affine Abel map |
 
 The AJCR Lean source trees at `run0108` and `run0109` are byte-identical. Their distinct pins are
 retained because their Horizon provenance is distinct.
@@ -31,7 +32,8 @@ python3 scripts/review_phase0_audit.py \
   run0108=9adb1151738acc7ae54e6905c78feb253f2184b0 \
   run0109=8c9ea0abc7566c139e86a5ba1c6aa8f038766850 \
   task-start=c37b414342de8a9df92753c1eec71f9a5fcab5c7 \
-  review-root=a4046bdead6237b9b802814303143b3c8d48ad28
+  review-root=a4046bdead6237b9b802814303143b3c8d48ad28 \
+  affine-guard=e71f31f893b273bb93ac45cbe3cec8dda8ccd3db
 ```
 
 The script reads immutable commit objects from `HORIZON_LEDGER_GIT_DIR`, strips Lean comments and
@@ -39,17 +41,17 @@ strings before token counts, and computes reachability from `AlgebraicJacobian.l
 
 ## Static measurements
 
-| Metric | Pre-major | Run 0108/0109 | Task start | Review root |
-| --- | ---: | ---: | ---: | ---: |
-| Library modules | 626 | 926 | 969 | 971 |
-| Root-reachable modules | 558 | 909 | 950 | 952 |
-| Unrooted modules | 68 | 17 | 19 | 19 |
-| Lean lines, all/rooted | 172,445 / 156,958 | 254,009 / 251,259 | 262,949 / 259,926 | 263,109 / 260,086 |
-| Rooted lexical `sorry` tokens | 15 | 15 | 15 | 15 |
-| Rooted explicit `axiom` declarations | 0 | 0 | 0 | 0 |
-| `maxHeartbeats` occurrences | 306 | 708 | 725 | 725 |
-| `maxRecDepth` occurrences | 121 | 301 | 304 | 304 |
-| `maxSynthPendingDepth` occurrences | 219 | 487 | 500 | 501 |
+| Metric | Pre-major | Run 0108/0109 | Task start | Review root | Affine guard |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Library modules | 626 | 926 | 969 | 971 | 971 |
+| Root-reachable modules | 558 | 909 | 950 | 952 | 952 |
+| Unrooted modules | 68 | 17 | 19 | 19 | 19 |
+| Lean lines, all/rooted | 172,445 / 156,958 | 254,009 / 251,259 | 262,949 / 259,926 | 263,109 / 260,086 | 263,320 / 260,297 |
+| Rooted lexical `sorry` tokens | 15 | 15 | 15 | 15 | 15 |
+| Rooted explicit `axiom` declarations | 0 | 0 | 0 | 0 | 0 |
+| `maxHeartbeats` occurrences | 306 | 708 | 725 | 725 | 725 |
+| `maxRecDepth` occurrences | 121 | 301 | 304 | 304 | 304 |
+| `maxSynthPendingDepth` occurrences | 219 | 487 | 500 | 501 | 501 |
 
 All 15 rooted `sorry` tokens are pre-existing in `AlgebraicJacobian/Challenge.lean`. The review
 adds no `sorry` and no project axiom. `#print axioms` on the three divisor producers and the new
@@ -58,10 +60,10 @@ route guard reports only `propext`, `Classical.choice`, and `Quot.sound`. As a c
 
 ## Carrier and consumer census
 
-| Carrier | Pre-major | Run 0108/0109 | Task start/review root |
-| --- | --- | --- | --- |
-| `DivFamZar` | 21 files, 305 occurrences, 13 outside named implementation modules | 50 files, 516 occurrences, 42 outside | 51 files, 519 occurrences, 43 outside |
-| `DivFamZarAff` | absent | 30 files, 417 occurrences, 13 outside named implementation modules | 36 files, 431 occurrences, 19 outside |
+| Carrier | Pre-major | Run 0108/0109 | Task start/review root | Affine guard |
+| --- | --- | --- | --- | --- |
+| `DivFamZar` | 21 files, 305 occurrences, 13 outside named implementation modules | 50 files, 516 occurrences, 42 outside | 51 files, 519 occurrences, 43 outside | 51 files, 523 occurrences, 43 outside |
+| `DivFamZarAff` | absent | 30 files, 417 occurrences, 13 outside named implementation modules | 36 files, 431 occurrences, 19 outside | 36 files, 432 occurrences, 19 outside |
 
 The widened arbitrary-affine carrier has therefore not superseded `DivFamZar`. The canonical
 arbitrary-degree producer `divFunctorAff_representableBy_at` is rooted but has no consumer. The
@@ -72,14 +74,16 @@ frozen until one named consumer is installed.
 ## Critical root
 
 `AlgebraicJacobian/Picard/Pic0CriticalPath.lean` is imported by the umbrella root. It checks the
-three current divisor producers and the following internal proof chain for the terminal route
-guard:
+three current divisor producers, retains the legacy stop theorem as a comparison input, and roots
+the following proof chain for the live arbitrary-affine route:
 
-1. `not_injective_abelSigmaChart_of_divFamZar` exposes noninjectivity of the actual Abel natural
-   transformation from two distinct divisor families with equal chart value.
-2. `not_isOpenImmersion_abelSigmaChart_of_not_injective_chartValue` consumes that theorem and the
-   injectivity consequence of a presheaf open immersion.
-3. `not_isOpenImmersion_abelSigmaChart_of_genus_lt_degree` uses Riemann's inequality and an
+1. `not_injective_abelSigmaChartAff_of_divFamZarAff` turns two distinct widened families with equal
+   chart value into noninjectivity of `abelSigmaChartAff`, including its structure component.
+2. `not_injective_chartValueAff_of_not_injective_chartValue` transports the field-dictionary
+   obstruction through the injective old-to-widened vehicle and `chartValueAff_toAff`.
+3. `not_isOpenImmersion_abelSigmaChartAff_of_not_injective_chartValueAff` consumes the first lemma
+   and the injectivity consequence of a presheaf open immersion.
+4. `not_isOpenImmersion_abelSigmaChartAff_of_genus_lt_degree` uses Riemann's inequality and an
    effective replacement to supply the noninjective pair whenever a degree-`n` divisor exists
    after a field extension and `genus C < n`.
 
@@ -87,8 +91,10 @@ The explicit divisor over the extension field is load-bearing: without a nonempt
 empty Abel map could be an open immersion. Every other explicit hypothesis in the main theorem is
 used, and the theorem assumes no rational point on the curve. Five geometric and cohomological
 `relCurve` instances are derived locally from the standing curve package rather than exposed as
-caller obligations. The theorem is stronger than the PDF's positive-genus guard because
-positivity is unnecessary. It is a rooted terminal guard, not a consumed headline milestone.
+caller obligations. The theorem's public type names the finite map used to obtain the pair, the
+actual `divFunctorAff` representation, and the extension-field divisor. It is stronger than the
+PDF's positive-genus guard because positivity is unnecessary. It is a rooted terminal stop
+condition, not a consumed headline milestone.
 
 The following required endpoints are still absent and receive no milestone credit:
 `PicRankOneOpen`, `DivRankOneOpen`, `rankOneAbel`, `divisorOfRankOne`,
@@ -106,16 +112,16 @@ family-level Picard loci or canonical inverse required by the plan.
 | Review root | `lake build AlgebraicJacobian.Picard.Pic0ChartAbelNonInjective` | success | 16.17 s | 6,963,048 KB |
 | Review root | `lake build AlgebraicJacobian.Picard.Pic0CriticalPath` | success | 22.27 s | 7,079,200 KB |
 | Review root | `lake build AlgebraicJacobian` | success | 13.36 s | 7,171,836 KB |
+| Affine guard (warm cache) | `lake build AlgebraicJacobian.Picard.Pic0CriticalPath` | success | 6.96 s | 971,360 KB |
 | AJC current | `lake build AlgebraicJacobian.Picard.GaloisDescent.GaloisQuotientOverlap` | success | 21.57 s | 6.96 GB |
 | AJC current | `lake build AlgebraicJacobian.Picard.PicEtDescentGoal` | success | 11.11 s | 6.91 GB |
 | AJC current | `lake build AlgebraicJacobian.Picard.PicEtGaloisQuotient` | success | 9.49 s | 6.85 GB |
-| Pre-major | isolated full root build | in flight | pending | pending |
-| Run 0108/0109 | isolated full root build | in flight | pending | pending |
-| Task start | isolated full root build | in flight | pending | pending |
 
-No new heartbeat or recursion-depth raise was introduced. The route guard uses the project-wide
-`maxSynthPendingDepth = 3` convention locally; its narrow and umbrella roots stay within the
-existing roughly 7 GB kernel-check envelope. AJC's quotient capstone adds no proof-budget raise;
+The historical revisions are immutable static-census pins, not separate kernel acceptance gates;
+the earlier draft's three `in flight` rows had no retained result and are no longer presented as
+running work. The executable gate is the current critical root. No new heartbeat or
+recursion-depth raise was introduced. The route guard uses the project-wide
+`maxSynthPendingDepth = 3` convention locally. AJC's quotient capstone adds no proof-budget raise;
 `PicEtDescentGoal` retains four pre-existing local `maxHeartbeats 1000000` blocks.
 
 ## AJC descent inventory
@@ -137,9 +143,10 @@ a finite Galois level. No AJC source was changed in Phase 0.
 
 ## Decision
 
-Phase 0 now has a reproducible ledger audit, a narrow rooted target, and a terminal negative route
-guard. It does not satisfy the future-endpoint portion of the final acceptance gate because the
-rank-one, separably closed, descent, and Jacobian declarations do not yet exist. The next honest
-production edge is the Phase 1 canonical `relCurve C A` interface and endgame contract, followed by
-the capped Phase 2 producer specialization. The high-degree quotient fallback conditions are not
-met, so that route remains closed.
+Phase 0 is complete: it has a reproducible ledger audit, a narrow rooted target, and a terminal
+negative guard for the live arbitrary-affine Abel map. The final theorem kernel-checks and its axiom
+audit reports only `propext`, `Classical.choice`, and `Quot.sound`. The future rank-one,
+separably-closed, descent, and Jacobian endpoints remain absent and receive no credit. The next
+honest production edge is the Phase 1 canonical `relCurve C A` interface and endgame contract,
+followed by the capped Phase 2 producer specialization. The high-degree quotient fallback
+conditions are not met, so that route remains closed.
