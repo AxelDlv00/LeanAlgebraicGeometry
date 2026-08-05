@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PicRankOneLocalPresentation.evaluation_evaluationLiftOfH0
 type: lean
-updated: '2026-08-05T04:36:57'
+updated: '2026-08-05T11:22:37'
 ---
 theorem evaluation_evaluationLiftOfH0 (P : PicRankOneLocalPresentation pi lam)
     (y : Sheaf.HModule P.datum.sheaf 0) :
@@ -35,3 +35,5 @@ theorem evaluation_evaluationLiftOfH0 (P : PicRankOneLocalPresentation pi lam)
       (relCurve C P.cover.Carrier ↘ Spec (.of P.cover.Carrier))).right_triangle_components
         P.module)
   exact h
+
+/-! ## Local-away generators for the canonical evaluation -/
