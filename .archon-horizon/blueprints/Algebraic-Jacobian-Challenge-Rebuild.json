@@ -13568,7 +13568,7 @@
     "macros": {},
     "states": {
       "blocked": 41,
-      "closed": 11446,
+      "closed": 11452,
       "formalized_open": 178,
       "informal": 46,
       "ready": 123
@@ -48281,7 +48281,7 @@
     },
     {
       "chapter": "The divisor scheme and the representability of \\(\\mathrm{Pic}^0\\)",
-      "comment_count": 0,
+      "comment_count": 1,
       "dep_count": 3,
       "descendant_count": 9,
       "group": "c1107",
