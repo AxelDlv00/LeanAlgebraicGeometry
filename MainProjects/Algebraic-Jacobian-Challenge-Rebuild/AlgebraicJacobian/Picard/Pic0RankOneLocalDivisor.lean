@@ -5,6 +5,8 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.Pic0RankOnePresentation
 import AlgebraicJacobian.Picard.Pic0AdmissibleAbelEtaleSurjectiveEffectivity
+import AlgebraicJacobian.Picard.DivisorFamilyMonoH1
+import Mathlib.RingTheory.TensorProduct.Finite
 
 /-!
 # The consumed local divisor package for the rank-one route
@@ -151,6 +153,42 @@ theorem baseOpenDatumSectionLocalEquations_classDeg
   exact P.datum_classDeg_baseChange L
 
 /-! ## The local widened divisor and its immediate consumer -/
+
+/- The next canonicality edge is expressed first in the localized H⁰ module.  The datum
+   section/native comparison needed to transport this unit to local equations is deliberately
+   a separate contract. -/
+theorem existsUnique_unit_tensorAway_rankOne_generators
+    (P : PicRankOneLocalPresentation pi lam)
+    (f : P.cover.Carrier)
+    (y y' : Sheaf.HModule P.datum.sheaf 0)
+    (hy : ∀ p : PrimeSpectrum P.cover.Carrier, f ∉ p.asIdeal →
+      (y ⊗ₜ (1 : p.asIdeal.ResidueField) :
+        Sheaf.HModule P.datum.sheaf 0 ⊗[P.cover.Carrier]
+          p.asIdeal.ResidueField) ≠ 0)
+    (hy' : ∀ p : PrimeSpectrum P.cover.Carrier, f ∉ p.asIdeal →
+      (y' ⊗ₜ (1 : p.asIdeal.ResidueField) :
+        Sheaf.HModule P.datum.sheaf 0 ⊗[P.cover.Carrier]
+          p.asIdeal.ResidueField) ≠ 0) :
+    ∃! v : (Localization.Away f)ˣ,
+      ((1 : Localization.Away f) ⊗ₜ[P.cover.Carrier] y') =
+        (v : Localization.Away f) •
+          ((1 : Localization.Away f) ⊗ₜ[P.cover.Carrier] y) := by
+  let B := Localization.Away f
+  let Q := Sheaf.HModule P.datum.sheaf 0
+  letI : Module.Finite P.cover.Carrier Q := P.h0_finite
+  letI : Module.Projective P.cover.Carrier Q := P.h0_projective
+  have hrankB : ∀ q : PrimeSpectrum B,
+      Module.rankAtStalk (B ⊗[P.cover.Carrier] Q) q = 1 := by
+    intro q
+    rw [Module.rankAtStalk_baseChange]
+    exact P.h0_rank_one (PrimeSpectrum.comap
+      (algebraMap P.cover.Carrier B) q)
+  exact Module.existsUnique_unit_smul_of_forall_tmul_ne_zero
+    hrankB ((1 : B) ⊗ₜ[P.cover.Carrier] y) ((1 : B) ⊗ₜ[P.cover.Carrier] y')
+    (AlgebraicGeometry.PicRankOneLocalPresentation.tensorAwayGenerator_fibre_ne_zero
+      f y hy)
+    (AlgebraicGeometry.PicRankOneLocalPresentation.tensorAwayGenerator_fibre_ne_zero
+      f y' hy')
 
 /-- The widened divisor cut by a tied rank-one section on its basic open. -/
 noncomputable def baseOpenRankOneDivisor
