@@ -66,6 +66,8 @@ not replaced here by axioms or local hypotheses.
   AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenRankOneDivisor_abelAff
 #check
   AlgebraicGeometry.PicRankOneLocalPresentation.exists_baseOpen_rankOne_divisor_with_evaluation
+#check
+  AlgebraicGeometry.PicRankOneLocalPresentation.exists_baseOpen_rankOne_divisor_with_abel_evaluation
 #check AlgebraicGeometry.PicRankOneLocalPresentation.datum_classDeg_baseChange
 #check AlgebraicGeometry.PicRankOneOpen
 #check AlgebraicGeometry.divRankOnePresentationPreimageRepresenter
@@ -113,6 +115,8 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
   AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenRankOneDivisor_abelAff
 #print axioms
   AlgebraicGeometry.PicRankOneLocalPresentation.exists_baseOpen_rankOne_divisor_with_evaluation
+#print axioms
+  AlgebraicGeometry.PicRankOneLocalPresentation.exists_baseOpen_rankOne_divisor_with_abel_evaluation
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.datum_classDeg_baseChange
 #print axioms AlgebraicGeometry.rankOneAbelRepresented
 #print axioms AlgebraicGeometry.not_isOpenImmersion_abelSigmaChart_of_genus_lt_degree

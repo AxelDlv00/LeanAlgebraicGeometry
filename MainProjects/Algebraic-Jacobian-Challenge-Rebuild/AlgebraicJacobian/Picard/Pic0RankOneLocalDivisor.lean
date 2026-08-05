@@ -153,9 +153,6 @@ theorem baseOpenDatumSectionLocalEquations_classDeg
 
 /-! ## The local widened divisor and its immediate consumer -/
 
-set_option maxHeartbeats 8000000 in
--- The effectivity certificate elaborates a dependent finite-away cover.
-set_option synthInstance.maxHeartbeats 800000 in
 /-- The widened divisor cut by a tied rank-one section on its basic open. -/
 noncomputable def baseOpenRankOneDivisor
     (P : PicRankOneLocalPresentation pi lam)
@@ -252,6 +249,33 @@ theorem exists_baseOpen_rankOne_divisor_with_evaluation
             (P.evaluationLiftOfH0 y) = P.pushforwardSectionOfH0 y := by
   obtain ⟨f, hf, y, hy, heval⟩ := P.exists_baseOpen_evaluation_generator p
   exact ⟨f, hf, y, hy, P.baseOpenRankOneDivisor_picClass f y hy, heval⟩
+
+/-- Every base point has one tied local divisor whose Abel value is the restriction of the
+input class and whose defining section satisfies the native evaluation identity. -/
+theorem exists_baseOpen_rankOne_divisor_with_abel_evaluation
+    (P : PicRankOneLocalPresentation pi lam)
+    [IsNoetherianRing P.cover.Carrier]
+    (p : PrimeSpectrum P.cover.Carrier) :
+    ∃ f : P.cover.Carrier, f ∉ p.asIdeal ∧
+      ∃ (y : Sheaf.HModule P.datum.sheaf 0)
+        (hy : ∀ q : PrimeSpectrum P.cover.Carrier, f ∉ q.asIdeal →
+          (y ⊗ₜ (1 : q.asIdeal.ResidueField) :
+            Sheaf.HModule P.datum.sheaf 0 ⊗[P.cover.Carrier]
+              q.asIdeal.ResidueField) ≠ 0),
+        abelDivAffPlus C (Localization.Away f) (P.baseOpenRankOneDivisor f y hy) =
+            PicEtAff.mapAlg C
+              ((Algebra.ofId P.cover.Carrier (Localization.Away f)).restrictScalars k)
+              (PicEtAff.mapAlg C ((Algebra.ofId A P.cover.Carrier).restrictScalars k)
+                (picEtAffineEquiv C A lam.1)) ∧
+          (P.baseOpenRankOneDivisor f y hy).picClass =
+              (P.datum.baseChange (Localization.Away f)).cechPicClass ∧
+            (Scheme.Modules.Hom.app P.evaluation
+              ((relCurve C P.cover.Carrier ↘ Spec (.of P.cover.Carrier)) ⁻¹ᵁ
+                (⊤ : (Spec (.of P.cover.Carrier)).Opens))).hom
+              (P.evaluationLiftOfH0 y) = P.pushforwardSectionOfH0 y := by
+  obtain ⟨f, hf, y, hy, hclass, heval⟩ :=
+    P.exists_baseOpen_rankOne_divisor_with_evaluation p
+  exact ⟨f, hf, y, hy, P.baseOpenRankOneDivisor_abelAff f y hy, hclass, heval⟩
 
 end PicRankOneLocalPresentation
 
