@@ -12,7 +12,7 @@ body: 'D3 finite-fibre producer frozen and consumed
   propext, Classical.choice, Quot.sound. Whole-fibre ExistsUnique D3 remains open.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge
@@ -20,7 +20,7 @@ audience: project:Algebraic-Jacobian-Challenge
 author: horizon
 source_ref: null
 created_at: '2026-08-03T15:19:23.925092+00:00'
-updated_at: '2026-08-03T15:20:39.779909+00:00'
+updated_at: '2026-08-05T09:48:35.217880+00:00'
 metadata:
   provenance:
     run: '0114'
