@@ -21,8 +21,7 @@ metadata:
   created_at: '2026-08-04T01:52:24.145421+00:00'
   parent: AJCR.review-plan
   milestone: AJCR.review-plan
-  updated_at: '2026-08-05T12:14:04.242277+00:00'
+  updated_at: '2026-08-05T12:33:19.344267+00:00'
   owner: horizon
   pinned_commits:
-  - 0732e370c0
   - 298549f011
