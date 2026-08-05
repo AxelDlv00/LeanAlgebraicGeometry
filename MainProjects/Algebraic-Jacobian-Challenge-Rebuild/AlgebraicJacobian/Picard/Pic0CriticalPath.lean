@@ -40,6 +40,8 @@ declarations do not yet exist. They are not replaced here by axioms or local hyp
 #check AlgebraicGeometry.PicRankOneLocalPresentation.evaluationSourceBaseChangeIso_hom_evaluation
 #check AlgebraicGeometry.PicRankOneLocalPresentation.evaluationSourceBaseChangeIsoAffine_hom_evaluation
 #check AlgebraicGeometry.PicRankOneLocalPresentation.datumSection
+#check AlgebraicGeometry.PicRankOneLocalPresentation.datumSectionBaseChange
+#check AlgebraicGeometry.PicRankOneLocalPresentation.datumSectionBaseChange_one_tmul
 #check AlgebraicGeometry.PicRankOneLocalPresentation.moduleSectionsEquiv
 #check AlgebraicGeometry.PicRankOneLocalPresentation.module_iso_inv_datumSection
 #check AlgebraicGeometry.PicRankOneLocalPresentation.evaluationLiftOfH0
@@ -70,6 +72,7 @@ declarations do not yet exist. They are not replaced here by axioms or local hyp
 #print axioms
   AlgebraicGeometry.PicRankOneLocalPresentation.evaluationSourceBaseChangeIsoAffine_hom_evaluation
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.module_iso_inv_datumSection
+#print axioms AlgebraicGeometry.PicRankOneLocalPresentation.datumSectionBaseChange_one_tmul
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.evaluation_evaluationLiftOfH0
 #print axioms
   AlgebraicGeometry.PicRankOneLocalPresentation.exists_baseOpen_evaluation_generator

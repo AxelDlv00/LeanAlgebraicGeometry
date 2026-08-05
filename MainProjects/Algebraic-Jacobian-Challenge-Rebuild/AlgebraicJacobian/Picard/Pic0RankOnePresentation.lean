@@ -7,6 +7,7 @@ import AlgebraicJacobian.Cohomology.ModulesBaseSheaf
 import AlgebraicJacobian.Cohomology.ModulesPushforwardBaseChange
 import AlgebraicJacobian.Cohomology.GluedSheafH0BaseChange
 import AlgebraicJacobian.Picard.LocalGenerators
+import AlgebraicJacobian.Picard.Pic0AdmissibleAbelEtaleSurjectiveH0BaseChange
 import AlgebraicJacobian.Picard.Pic0EndgameContract
 import AlgebraicJacobian.Picard.Pic0RingDatumEngine
 
@@ -238,6 +239,30 @@ noncomputable def datumSection (P : PicRankOneLocalPresentation pi lam)
   Sheaf.HModule.linearEquiv₀
     (Opens.grothendieckTopology ((relCurve C P.cover.Carrier : Scheme.{u}) : TopCat))
     isTerminalTop P.datum.sheaf y
+
+/-! The datum-side section after coefficient extension.  This deliberately stops at the
+glued cocycle sheaf; identifying it with native `Scheme.Modules` global sections is a
+separate contract and is not smuggled in here. -/
+noncomputable def datumSectionBaseChange (P : PicRankOneLocalPresentation pi lam)
+    (B : Type u) [CommRing B] [Algebra k B] [Algebra P.cover.Carrier B]
+    [IsScalarTower k P.cover.Carrier B]
+    (y : Sheaf.HModule P.datum.sheaf 0) :
+    (P.datum.baseChange B).sheaf.obj.obj
+      (op (⊤ : (relCurve C B).Opens)) :=
+  Sheaf.HModule.linearEquiv₀
+    (Opens.grothendieckTopology ((relCurve C B : Scheme.{u}) : TopCat))
+    isTerminalTop (P.datum.baseChange B).sheaf
+    (P.h0BaseChange B ((1 : B) ⊗ₜ[P.cover.Carrier] y))
+
+/-- H⁰ base change transports the tied datum section to the canonical glued-section map. -/
+theorem datumSectionBaseChange_one_tmul (P : PicRankOneLocalPresentation pi lam)
+    (B : Type u) [CommRing B] [Algebra k B] [Algebra P.cover.Carrier B]
+    [IsScalarTower k P.cover.Carrier B]
+    (y : Sheaf.HModule P.datum.sheaf 0) :
+    P.datumSectionBaseChange B y =
+      P.datum.sectionsMapTop B (P.datumSection y) := by
+  exact P.datum.linearEquiv₀_datumH0BaseChange_one_tmul B
+    ((subsingleton_datumPair_h1_iff P.datum).mpr P.h1_vanishing) y
 
 /-- The presentation identifies datum `H^0` with native global sections of its line bundle. -/
 noncomputable def moduleSectionsEquiv (P : PicRankOneLocalPresentation pi lam) :
