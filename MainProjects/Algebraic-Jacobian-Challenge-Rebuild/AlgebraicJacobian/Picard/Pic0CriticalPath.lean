@@ -7,6 +7,7 @@ import AlgebraicJacobian.Picard.DivRepAffChallenge
 import AlgebraicJacobian.Picard.Pic0EndgameContract
 import AlgebraicJacobian.Picard.Pic0HighDegreeRouteGuard
 import AlgebraicJacobian.Picard.Pic0RankOneLocus
+import AlgebraicJacobian.Picard.Pic0RankOneLocalDivisor
 
 /-!
 # Narrow root for the AJCR-first Picard strategy
@@ -46,8 +47,6 @@ not replaced here by axioms or local hypotheses.
 #check AlgebraicGeometry.PicRankOneLocalPresentation.datumSectionBaseChange
 #check AlgebraicGeometry.PicRankOneLocalPresentation.datumSectionBaseChange_one_tmul
 #check AlgebraicGeometry.PicRankOneLocalPresentation.sectionLocalEquationsOfDatumSectionBaseChange
-#check
-  AlgebraicGeometry.PicRankOneLocalPresentation.sectionLocalEquationsOfDatumSectionBaseChange_picClass
 #check AlgebraicGeometry.PicRankOneLocalPresentation.moduleSectionsEquiv
 #check AlgebraicGeometry.PicRankOneLocalPresentation.module_iso_inv_datumSection
 #check AlgebraicGeometry.PicRankOneLocalPresentation.evaluationLiftOfH0
@@ -58,6 +57,15 @@ not replaced here by axioms or local hypotheses.
 #check AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenDatumSectionLocalEquations
 #check
   AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenDatumSectionLocalEquations_picClass
+#check
+  AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenDatumSectionLocalEquations_fibrewiseRegular
+#check AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenDatumSectionLocalEquations_classDeg
+#check AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenRankOneDivisor
+#check AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenRankOneDivisor_picClass
+#check
+  AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenRankOneDivisor_abelAff
+#check
+  AlgebraicGeometry.PicRankOneLocalPresentation.exists_baseOpen_rankOne_divisor_with_evaluation
 #check AlgebraicGeometry.PicRankOneLocalPresentation.datum_classDeg_baseChange
 #check AlgebraicGeometry.PicRankOneOpen
 #check AlgebraicGeometry.divRankOnePresentationPreimageRepresenter
@@ -95,6 +103,16 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
   AlgebraicGeometry.PicRankOneLocalPresentation.sectionsMapTop_datumSectionBaseChange_away_ne_zero
 #print axioms
   AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenDatumSectionLocalEquations_picClass
+#print axioms
+  AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenDatumSectionLocalEquations_fibrewiseRegular
+#print axioms
+  AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenDatumSectionLocalEquations_classDeg
+#print axioms AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenRankOneDivisor
+#print axioms AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenRankOneDivisor_picClass
+#print axioms
+  AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenRankOneDivisor_abelAff
+#print axioms
+  AlgebraicGeometry.PicRankOneLocalPresentation.exists_baseOpen_rankOne_divisor_with_evaluation
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.datum_classDeg_baseChange
 #print axioms AlgebraicGeometry.rankOneAbelRepresented
 #print axioms AlgebraicGeometry.not_isOpenImmersion_abelSigmaChart_of_genus_lt_degree
