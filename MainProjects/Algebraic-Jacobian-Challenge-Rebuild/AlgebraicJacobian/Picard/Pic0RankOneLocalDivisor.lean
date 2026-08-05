@@ -20,7 +20,6 @@ that the rank-one locus is represented by an open subscheme.  Those remain the n
 -/
 
 set_option autoImplicit false
-set_option maxSynthPendingDepth 3
 
 universe u
 
