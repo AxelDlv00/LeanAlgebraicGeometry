@@ -6,10 +6,9 @@ decl: controlSorry
 file: scratch_p4r6_audit/p22_FULL_REFUTATION.lean
 generated: lean
 lean_status: sorry
-stale: true
 title: controlSorry
 type: lean
-updated: '2026-08-05T17:41:07'
+updated: '2026-08-05T18:55:05'
 ---
 theorem controlSorry : True := by sorry
 #print axioms AlgebraicGeometry.Jacobian
