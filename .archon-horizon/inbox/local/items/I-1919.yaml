@@ -1,16 +1,16 @@
 id: I-1919
 provider: local
 kind: memory
-body: '[temporary] Rank-one evaluation generator handoff
+body: '[temporary] Rank-one evaluation/divisor feeder handoff
 
 
-  After 1cf162d6c3, PicRankOneLocalPresentation.exists_baseOpen_evaluation_generator
-  is root-reachable and ties one H0 class to a basic-open fibrewise-nonzero condition
-  and the canonical counit identity. Do not claim an effective divisor yet: next prove
-  compatibility between h0BaseChange/moduleSectionsEquiv and nativeBaseChangeIsoAffine,
-  then use integral-fibre nonzero => regular plus SectionsToDivisorsClass to construct
-  the zero divisor. Phase 3 openness/DivRankOneOpen remains open. Future p7 reuse
-  is recorded on the roadmap: AJC''s quotient engine is complete, but finite-level
+  After `1cf162d6c3` and `013508518b`, the evaluation generator and tied local `DivFamZarAff`
+  producer are root-reachable. The local divisor has degree `genus C`, Picard-class
+  and affine Abel restriction identities, and the native counit/evaluation identity
+  on the same section. This remains presentation-local, not the canonical family effective
+  divisor: the next gate is the native O-linear comparison and choice-independent
+  zero-locus construction. Phase 3 openness/DivRankOneOpen remains open. Future p7
+  reuse is recorded on the roadmap: AJC''s quotient engine is complete, but finite-level
   spreading and the pic0 quotient consumer are absent.'
 labels:
 - agent-ready
@@ -22,7 +22,7 @@ audience: ''
 author: horizon
 source_ref: null
 created_at: '2026-08-04T22:55:47.093978+00:00'
-updated_at: '2026-08-05T10:33:29.502569+00:00'
+updated_at: '2026-08-05T10:42:46.362252+00:00'
 metadata:
   provenance:
     run: 0119

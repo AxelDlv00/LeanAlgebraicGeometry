@@ -4,11 +4,13 @@ kind: issue
 body: 'Graph sync leaves a large uncommitted/stale working set
 
 
-  The explicit AJCR sync at 4fad69791d reports 76 duplicate Lean declarations, 18
-  unresolved blueprint Lean references, 111 stale nodes, and 6,932 Lean declarations
+  The explicit AJCR sync at `4fad69791d` reported 76 duplicate Lean declarations,
+  18 unresolved blueprint Lean references, 111 stale nodes, and 6,933 Lean declarations
   unattached to blueprint nodes; the shared worktree currently shows roughly 957 staged,
-  352 unstaged, and 615 untracked hgraph paths. Reconcile only the intended six new
-  nodes and preserve concurrent work before the next credit audit.'
+  352 unstaged, and 615 untracked hgraph paths. The targeted rerun checkpointed seven
+  rank-one local-divisor nodes and provenance comments at `cc12401254`, with the override-free
+  recheck recorded at `b7569fcfdd`. Preserve the unrelated graph debt and concurrent
+  work; reconcile only those seven intended nodes.'
 labels:
 - agent-ready
 status: open
@@ -19,7 +21,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-08-05T09:54:17.392929+00:00'
-updated_at: '2026-08-05T10:33:53.504773+00:00'
+updated_at: '2026-08-05T10:43:03.860766+00:00'
 metadata:
   provenance:
     run: '0121'
