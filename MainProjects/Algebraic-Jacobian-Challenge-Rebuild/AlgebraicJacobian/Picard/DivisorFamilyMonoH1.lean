@@ -139,6 +139,73 @@ theorem exists_notMem_bijective_toSpanSingleton
     p.asIdeal (Algebra.linearMap B Rₚ)
     (LocalizedModule.mkLinearMap p.asIdeal.primeCompl Q) hstalk
 
+/-- A fibrewise-nonzero element of a finite projective module of constant stalk rank one
+is a global basis.  The local basis neighbourhoods supplied by
+`exists_notMem_bijective_toSpanSingleton` cover `Spec B`: if their generators failed to
+span the unit ideal, a maximal ideal containing that span would contain the generator
+chosen at its own prime.  Bijectivity then descends from this standard-open cover. -/
+theorem bijective_toSpanSingleton_of_forall_tmul_ne_zero
+    [Module.Finite B Q] [Module.Projective B Q]
+    (hrank : ∀ p : PrimeSpectrum B, Module.rankAtStalk Q p = 1)
+    (q : Q)
+    (hq : ∀ p : PrimeSpectrum B,
+      (q ⊗ₜ[B] (1 : p.asIdeal.ResidueField) :
+        Q ⊗[B] p.asIdeal.ResidueField) ≠ 0) :
+    Function.Bijective (LinearMap.toSpanSingleton B Q q) := by
+  classical
+  let f : PrimeSpectrum B → B := fun p ↦
+    (exists_notMem_bijective_toSpanSingleton p (hrank p) q (hq p)).choose
+  have hf (p : PrimeSpectrum B) : f p ∉ p.asIdeal :=
+    (exists_notMem_bijective_toSpanSingleton p (hrank p) q (hq p)).choose_spec.1
+  have hbij (p : PrimeSpectrum B) : Function.Bijective
+      (LocalizedModule.map (Submonoid.powers (f p))
+        (LinearMap.toSpanSingleton B Q q)) :=
+    (exists_notMem_bijective_toSpanSingleton p (hrank p) q (hq p)).choose_spec.2
+  have hspan : Ideal.span (Set.range f) = ⊤ := by
+    by_contra hne
+    obtain ⟨m, hm, hle⟩ := Ideal.exists_le_maximal _ hne
+    let p : PrimeSpectrum B := ⟨m, hm.isPrime⟩
+    exact hf p (hle (Ideal.subset_span (Set.mem_range_self p)))
+  refine bijective_of_localized_span (Set.range f) hspan
+    (LinearMap.toSpanSingleton B Q q) ?_
+  rintro ⟨r, p, rfl⟩
+  exact hbij p
+
+/-- Two fibrewise-nonzero elements of a finite projective module of constant stalk rank
+one differ by a unique unit.  This is the choice-independence form consumed by the
+rank-one divisor construction. -/
+theorem existsUnique_unit_smul_of_forall_tmul_ne_zero
+    [Module.Finite B Q] [Module.Projective B Q]
+    (hrank : ∀ p : PrimeSpectrum B, Module.rankAtStalk Q p = 1)
+    (q q' : Q)
+    (hq : ∀ p : PrimeSpectrum B,
+      (q ⊗ₜ[B] (1 : p.asIdeal.ResidueField) :
+        Q ⊗[B] p.asIdeal.ResidueField) ≠ 0)
+    (hq' : ∀ p : PrimeSpectrum B,
+      (q' ⊗ₜ[B] (1 : p.asIdeal.ResidueField) :
+        Q ⊗[B] p.asIdeal.ResidueField) ≠ 0) :
+    ∃! u : Bˣ, q' = (u : B) • q := by
+  let e : B ≃ₗ[B] Q := LinearEquiv.ofBijective
+    (LinearMap.toSpanSingleton B Q q)
+    (bijective_toSpanSingleton_of_forall_tmul_ne_zero hrank q hq)
+  let a : B := e.symm q'
+  have ha : q' = a • q := by
+    rw [← LinearMap.toSpanSingleton_apply]
+    exact (e.apply_symm_apply q').symm
+  have hqbij := bijective_toSpanSingleton_of_forall_tmul_ne_zero hrank q hq
+  have hq'bij := bijective_toSpanSingleton_of_forall_tmul_ne_zero hrank q' hq'
+  obtain ⟨b, hb⟩ := hq'bij.2 q
+  have hab : a * b = 1 := by
+    apply hqbij.1
+    rw [LinearMap.toSpanSingleton_apply, LinearMap.toSpanSingleton_apply, one_smul]
+    rw [mul_comm, mul_smul, ← ha, ← LinearMap.toSpanSingleton_apply]
+    exact hb
+  let u : Bˣ := ⟨a, b, hab, by rw [mul_comm, hab]⟩
+  refine ⟨u, ha, fun v hv ↦ ?_⟩
+  apply Units.ext
+  apply hqbij.1
+  simpa only [LinearMap.toSpanSingleton_apply] using hv.symm.trans ha
+
 /-- **The local-rescaling corollary** (the N5 engine input): with `q` a local basis at
 `p` (rank `1`, fibrewise nonzero), any second element `q'` lies in the `B_f`-span of `q`,
 so `q'` equals `a • q` in the away localization `Q_f` for a scalar `a : Localization.Away f`.

@@ -491,6 +491,25 @@ private theorem away_one_tmul_one_tmul_ne_zero
     fibre_tmul_ne_zero_of_away f y hy q
   exact one_tmul_one_tmul_ne_zero y hdirect
 
+/-- A generator which is nonzero on every fibre of `D(f)` remains nonzero in every
+residue fibre after extending the whole module to `Localization.Away f`.  This is the
+orientation consumed by the rank-one local-basis theorem. -/
+theorem tensorAwayGenerator_fibre_ne_zero
+    {R Q : Type u} [CommRing R] [AddCommGroup Q] [Module R Q]
+    (f : R) (y : Q)
+    (hy : ∀ p : PrimeSpectrum R, f ∉ p.asIdeal →
+      (y ⊗ₜ (1 : p.asIdeal.ResidueField) :
+        Q ⊗[R] p.asIdeal.ResidueField) ≠ 0)
+    (q : PrimeSpectrum (Localization.Away f)) :
+    (((1 : Localization.Away f) ⊗ₜ[R] y) ⊗ₜ[Localization.Away f]
+      (1 : q.asIdeal.ResidueField) :
+      (Localization.Away f ⊗[R] Q) ⊗[Localization.Away f]
+        q.asIdeal.ResidueField) ≠ 0 := by
+  have h := TensorProduct.comm (Localization.Away f)
+    q.asIdeal.ResidueField (Localization.Away f ⊗[R] Q) |>.map_ne_zero_iff.mpr
+      (away_one_tmul_one_tmul_ne_zero f y hy q)
+  simpa only [TensorProduct.comm_tmul] using h
+
 /-- Canonical `H⁰` base change preserves the localized pure tensor's nonvanishing. -/
 private theorem h0BaseChange_one_tmul_ne_zero
     (P : PicRankOneLocalPresentation pi lam)
