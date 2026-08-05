@@ -8,6 +8,7 @@ import AlgebraicJacobian.Cohomology.ModulesPushforwardBaseChange
 import AlgebraicJacobian.Cohomology.GluedSheafH0BaseChange
 import AlgebraicJacobian.Picard.LocalGenerators
 import AlgebraicJacobian.Picard.Pic0AdmissibleAbelEtaleSurjectiveH0BaseChange
+import AlgebraicJacobian.Picard.Pic0AdmissibleAbelEtaleSurjectiveSite
 import AlgebraicJacobian.Picard.Pic0EndgameContract
 import AlgebraicJacobian.Picard.Pic0RingDatumEngine
 import AlgebraicJacobian.Picard.SectionsToDivisorsClass
@@ -638,6 +639,102 @@ theorem baseOpenDatumSectionLocalEquations_picClass
   exact P.sectionLocalEquationsOfDatumSectionBaseChange_picClass
     (Localization.Away f) y
     (fun q => P.sectionsMapTop_datumSectionBaseChange_away_ne_zero f y hy q)
+
+/-! ## Degree of the tied datum -/
+
+/- The high-priority `relCurve.instOver` used by the section bridge and the degree stack's
+base-change `Over` instance have the same structure morphism but different instance keys.
+Re-key the standard base-change bundle locally before stating the degree theorem. -/
+noncomputable local instance (priority := 20000) rankOneDegreeOver
+    (L : Type u) [Field L] [Algebra k L] :
+    (relCurve C L).Over (Spec (.of L)) :=
+  instOverBaseChange C L
+
+noncomputable local instance rankOneDegreeSmooth
+    (L : Type u) [Field L] [Algebra k L] :
+    SmoothOfRelativeDimension 1 (relCurve C L ↘ Spec (.of L)) :=
+  instSmoothOfRelativeDimensionBaseChange C L
+
+noncomputable local instance rankOneDegreeIntegral
+    (L : Type u) [Field L] [Algebra k L] :
+    IsIntegral (relCurve C L) :=
+  instIsIntegralBaseChange C L
+
+noncomputable local instance rankOneDegreeQuasiCompact
+    (L : Type u) [Field L] [Algebra k L] :
+    QuasiCompact (relCurve C L ↘ Spec (.of L)) :=
+  instQuasiCompactBaseChange C L
+
+noncomputable local instance rankOneDegreeFiniteH0
+    (L : Type u) [Field L] [Algebra k L] :
+    Module.Finite L (Sheaf.HModule ((relCurve C L).moduleKSheaf L) 0) :=
+  instModuleFiniteHModuleZeroBaseChange C L
+
+noncomputable local instance rankOneDegreeFiniteH1
+    (L : Type u) [Field L] [Algebra k L] :
+    Module.Finite L (Sheaf.HModule ((relCurve C L).moduleKSheaf L) 1) :=
+  instModuleFiniteHModuleOneBaseChange C L
+
+/-- The cocycle datum tied to a genus-degree presentation has class degree `genus C`
+after every field-valued coefficient extension.
+
+The proof follows the presentation itself: restrict `lam` to its etale-cover carrier,
+identify that class with `representative`, rewrite it as the datum's relative Picard class,
+and read the defining degree condition of `lam`. -/
+theorem datum_classDeg_baseChange
+    (P : PicRankOneLocalPresentation pi lam)
+    (L : Type u) [Field L] [Algebra k L] [Algebra P.cover.Carrier L]
+    [IsScalarTower k P.cover.Carrier L] :
+    classDeg L
+      (Scheme.CechPic.map (relCurveMap C P.cover.Carrier L)
+        P.datum.cechPicClass) = genus C := by
+  let iota : A →ₐ[k] P.cover.Carrier :=
+    (Algebra.ofId A P.cover.Carrier).restrictScalars k
+  let psi : P.cover.Carrier →ₐ[k] L :=
+    (Algebra.ofId P.cover.Carrier L).restrictScalars k
+  have hcurve :
+      relCurveMap C P.cover.Carrier L =
+        (C ◁ Over.overSpecMap psi).left := by
+    refine congrArg
+      (fun f : overSpec k L ⟶ overSpec k P.cover.Carrier => (C ◁ f).left) ?_
+    exact Over.OverMorphism.ext rfl
+  have hpresentation :
+      picEtMap C (Over.overSpecMap iota) lam.1 =
+        relPicToPicEt C (overSpec k P.cover.Carrier)
+          (P.representative : relPic C (overSpec k P.cover.Carrier)) := by
+    exact picEtMap_eq_relPicToPicEt_of_affineRepresentative
+      C lam.1 P.cover P.representative P.represents.symm
+  calc
+    classDeg L
+        (Scheme.CechPic.map (relCurveMap C P.cover.Carrier L)
+          P.datum.cechPicClass) =
+      relPicDeg L
+        (relPicMk C (overSpec k L)
+          (Scheme.CechPic.map (relCurveMap C P.cover.Carrier L)
+            P.datum.cechPicClass)) :=
+      (relPicDeg_relPicMk L _).symm
+    _ = relPicDeg L
+        (relPicMap C (Over.overSpecMap psi)
+          (relPicMk C (overSpec k P.cover.Carrier)
+            P.datum.cechPicClass)) := by
+      rw [relPicMap_mk, ← hcurve]
+      rfl
+    _ = relPicDeg L
+        (relPicMap C (Over.overSpecMap psi)
+          (P.representative : relPic C (overSpec k P.cover.Carrier))) := by
+      rw [P.datum_class]
+    _ = degAt
+        (relPicToPicEt C (overSpec k P.cover.Carrier)
+          (P.representative : relPic C (overSpec k P.cover.Carrier)))
+        (Over.overSpecMap psi) :=
+      (degAt_relPicToPicEt
+        (P.representative : relPic C (overSpec k P.cover.Carrier))
+        (Over.overSpecMap psi)).symm
+    _ = degAt (picEtMap C (Over.overSpecMap iota) lam.1)
+        (Over.overSpecMap psi) := by rw [hpresentation]
+    _ = degAt lam.1 (Over.overSpecMap psi ≫ Over.overSpecMap iota) :=
+      degAt_picEtMap (Over.overSpecMap iota) lam.1 (Over.overSpecMap psi)
+    _ = genus C := lam.2 L (Over.overSpecMap psi ≫ Over.overSpecMap iota)
 
 end PicRankOneLocalPresentation
 

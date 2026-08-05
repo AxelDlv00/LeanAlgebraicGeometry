@@ -14,10 +14,12 @@ import AlgebraicJacobian.Picard.Pic0RankOneLocus
 This root deliberately imports only the current producers on the reviewed route. Every later
 contract endpoint must be checked here before it receives critical-path credit.
 
-The tied local rank-one presentation, its canonical evaluation map, and the pullback-stable
-presentation locus are present. The locus is not yet proved open or represented; the canonical
-divisor, Abel isomorphism, separably closed cover, representability, descent, and `JacobianData`
-declarations do not yet exist. They are not replaced here by axioms or local hypotheses.
+The tied local rank-one presentation, its canonical evaluation map, datum-side local-away
+divisor equations, and the pullback-stable presentation locus are present. The native
+evaluation zero locus is not yet identified with those datum equations, and the locus is not
+yet proved open or represented. The canonical divisor, Abel isomorphism, separably closed
+cover, representability, descent, and `JacobianData` declarations do not yet exist. They are
+not replaced here by axioms or local hypotheses.
 -/
 
 #check AlgebraicGeometry.divFunctorAff_representableBy_at
@@ -38,17 +40,25 @@ declarations do not yet exist. They are not replaced here by axioms or local hyp
 #check AlgebraicGeometry.PicRankOneLocalPresentation.nativeBaseChangeIsoAffine
 #check AlgebraicGeometry.PicRankOneLocalPresentation.evaluationSourceBaseChangeIso
 #check AlgebraicGeometry.PicRankOneLocalPresentation.evaluationSourceBaseChangeIso_hom_evaluation
-#check AlgebraicGeometry.PicRankOneLocalPresentation.evaluationSourceBaseChangeIsoAffine_hom_evaluation
+#check
+  AlgebraicGeometry.PicRankOneLocalPresentation.evaluationSourceBaseChangeIsoAffine_hom_evaluation
 #check AlgebraicGeometry.PicRankOneLocalPresentation.datumSection
 #check AlgebraicGeometry.PicRankOneLocalPresentation.datumSectionBaseChange
 #check AlgebraicGeometry.PicRankOneLocalPresentation.datumSectionBaseChange_one_tmul
 #check AlgebraicGeometry.PicRankOneLocalPresentation.sectionLocalEquationsOfDatumSectionBaseChange
-#check AlgebraicGeometry.PicRankOneLocalPresentation.sectionLocalEquationsOfDatumSectionBaseChange_picClass
+#check
+  AlgebraicGeometry.PicRankOneLocalPresentation.sectionLocalEquationsOfDatumSectionBaseChange_picClass
 #check AlgebraicGeometry.PicRankOneLocalPresentation.moduleSectionsEquiv
 #check AlgebraicGeometry.PicRankOneLocalPresentation.module_iso_inv_datumSection
 #check AlgebraicGeometry.PicRankOneLocalPresentation.evaluationLiftOfH0
 #check AlgebraicGeometry.PicRankOneLocalPresentation.evaluation_evaluationLiftOfH0
 #check AlgebraicGeometry.PicRankOneLocalPresentation.exists_baseOpen_evaluation_generator
+#check
+  AlgebraicGeometry.PicRankOneLocalPresentation.sectionsMapTop_datumSectionBaseChange_away_ne_zero
+#check AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenDatumSectionLocalEquations
+#check
+  AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenDatumSectionLocalEquations_picClass
+#check AlgebraicGeometry.PicRankOneLocalPresentation.datum_classDeg_baseChange
 #check AlgebraicGeometry.PicRankOneOpen
 #check AlgebraicGeometry.divRankOnePresentationPreimageRepresenter
 #check AlgebraicGeometry.rankOneAbelRepresented
@@ -81,6 +91,11 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.evaluation_evaluationLiftOfH0
 #print axioms
   AlgebraicGeometry.PicRankOneLocalPresentation.exists_baseOpen_evaluation_generator
+#print axioms
+  AlgebraicGeometry.PicRankOneLocalPresentation.sectionsMapTop_datumSectionBaseChange_away_ne_zero
+#print axioms
+  AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenDatumSectionLocalEquations_picClass
+#print axioms AlgebraicGeometry.PicRankOneLocalPresentation.datum_classDeg_baseChange
 #print axioms AlgebraicGeometry.rankOneAbelRepresented
 #print axioms AlgebraicGeometry.not_isOpenImmersion_abelSigmaChart_of_genus_lt_degree
 #print axioms AlgebraicGeometry.not_isOpenImmersion_abelSigmaChartAff_of_genus_lt_degree
