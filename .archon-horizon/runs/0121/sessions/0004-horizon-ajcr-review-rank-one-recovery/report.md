@@ -11,6 +11,8 @@ The binding execution-plan PDF was read in full before Lean work. Phase 0 and th
 
 The focused critical root builds successfully at default limits (`9226/9226`, 10.94 s, 942212 KB RSS). All seven new declarations audit to exactly `propext`, `Classical.choice`, and `Quot.sound`; the source scan reports only intentional local-instance patterns. The full default project build remains red at the pre-existing unsolved equality in `Pic0AdmissibleDivisorQuasiProjective.lean:178`; no unrelated repair was attempted. The graph sync still reports 76 duplicate declarations, 18 unresolved references, stale nodes, and a large unattached-declaration set; I-1922 preserves that debt. The global inbox advisory remains at 31 open non-protection items; janitor reviewed it and found no safe closure.
 
+The broader worktree also contains pre-existing or concurrent dashboard JSON, reference, hgraph, and state paths outside this task; they were intentionally not staged.
+
 ## Why I stopped
 
 The objective is partly advanced, not complete or blocked. The verified artifact is a presentation-local feeder, so no Phase 3/4 endpoint or later representability/descent/Jacobian milestone is credited. No PDF fallback condition fired. The task is intentionally left `running` at the native O-linear evaluation/zero-locus comparison gate.
