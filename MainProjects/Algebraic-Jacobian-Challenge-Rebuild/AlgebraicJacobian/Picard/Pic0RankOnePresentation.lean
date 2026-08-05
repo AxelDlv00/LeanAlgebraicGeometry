@@ -10,6 +10,7 @@ import AlgebraicJacobian.Picard.LocalGenerators
 import AlgebraicJacobian.Picard.Pic0AdmissibleAbelEtaleSurjectiveH0BaseChange
 import AlgebraicJacobian.Picard.Pic0EndgameContract
 import AlgebraicJacobian.Picard.Pic0RingDatumEngine
+import AlgebraicJacobian.Picard.SectionsToDivisorsClass
 
 /-!
 # The local-presentation contract for the rank-one Picard locus
@@ -263,6 +264,52 @@ theorem datumSectionBaseChange_one_tmul (P : PicRankOneLocalPresentation pi lam)
       P.datum.sectionsMapTop B (P.datumSection y) := by
   exact P.datum.linearEquiv₀_datumH0BaseChange_one_tmul B
     ((subsingleton_datumPair_h1_iff P.datum).mpr P.h1_vanishing) y
+
+/-- The conditional divisor datum cut by a base-changed presentation section.
+
+The explicit `hsec` hypothesis is the non-vacuous fibrewise nonvanishing input.  It is
+converted componentwise to the injectivity required by the fibrewise-regular section
+construction; the integral fibre instance is installed from the standing geometrically
+irreducible curve hypotheses.
+-/
+noncomputable def sectionLocalEquationsOfDatumSectionBaseChange
+    (P : PicRankOneLocalPresentation pi lam)
+    (B : Type u) [CommRing B] [Algebra k B] [Algebra P.cover.Carrier B]
+    [IsScalarTower k P.cover.Carrier B] [IsNoetherianRing B]
+    (y : Sheaf.HModule P.datum.sheaf 0)
+    (hsec : ∀ q : PrimeSpectrum B,
+      (P.datum.baseChange B).sectionsMapTop q.asIdeal.ResidueField
+        (P.datumSectionBaseChange B y) ≠ 0) :
+    (relCurve C B).LocalEquations :=
+  let D := P.datum.baseChange B
+  let s : ↥(gluedSubmodule B D.pieces D.unit ⊤) :=
+    P.datumSectionBaseChange B y
+  D.sectionLocalEquationsOfFibrewiseRegular s
+    (fun j q => by
+      letI : IsIntegral (relCurve C q.asIdeal.ResidueField) :=
+        instIsIntegralBaseChange C q.asIdeal.ResidueField
+      exact D.injective_rTensor_component_of_sectionsMapTop_ne_zero s q (hsec q) j)
+
+/-- The conditional section construction preserves the base-changed datum's Picard class. -/
+theorem sectionLocalEquationsOfDatumSectionBaseChange_picClass
+    (P : PicRankOneLocalPresentation pi lam)
+    (B : Type u) [CommRing B] [Algebra k B] [Algebra P.cover.Carrier B]
+    [IsScalarTower k P.cover.Carrier B] [IsNoetherianRing B]
+    (y : Sheaf.HModule P.datum.sheaf 0)
+    (hsec : ∀ q : PrimeSpectrum B,
+      (P.datum.baseChange B).sectionsMapTop q.asIdeal.ResidueField
+        (P.datumSectionBaseChange B y) ≠ 0) :
+    (P.sectionLocalEquationsOfDatumSectionBaseChange B y hsec).picClass =
+      (P.datum.baseChange B).cechPicClass := by
+  let D := P.datum.baseChange B
+  let s : ↥(gluedSubmodule B D.pieces D.unit ⊤) :=
+    P.datumSectionBaseChange B y
+  unfold sectionLocalEquationsOfDatumSectionBaseChange
+  exact D.sectionLocalEquationsOfFibrewiseRegular_picClass s
+    (fun j q => by
+      letI : IsIntegral (relCurve C q.asIdeal.ResidueField) :=
+        instIsIntegralBaseChange C q.asIdeal.ResidueField
+      exact D.injective_rTensor_component_of_sectionsMapTop_ne_zero s q (hsec q) j)
 
 /-- The presentation identifies datum `H^0` with native global sections of its line bundle. -/
 noncomputable def moduleSectionsEquiv (P : PicRankOneLocalPresentation pi lam) :

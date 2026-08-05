@@ -42,6 +42,8 @@ declarations do not yet exist. They are not replaced here by axioms or local hyp
 #check AlgebraicGeometry.PicRankOneLocalPresentation.datumSection
 #check AlgebraicGeometry.PicRankOneLocalPresentation.datumSectionBaseChange
 #check AlgebraicGeometry.PicRankOneLocalPresentation.datumSectionBaseChange_one_tmul
+#check AlgebraicGeometry.PicRankOneLocalPresentation.sectionLocalEquationsOfDatumSectionBaseChange
+#check AlgebraicGeometry.PicRankOneLocalPresentation.sectionLocalEquationsOfDatumSectionBaseChange_picClass
 #check AlgebraicGeometry.PicRankOneLocalPresentation.moduleSectionsEquiv
 #check AlgebraicGeometry.PicRankOneLocalPresentation.module_iso_inv_datumSection
 #check AlgebraicGeometry.PicRankOneLocalPresentation.evaluationLiftOfH0
@@ -73,6 +75,9 @@ declarations do not yet exist. They are not replaced here by axioms or local hyp
   AlgebraicGeometry.PicRankOneLocalPresentation.evaluationSourceBaseChangeIsoAffine_hom_evaluation
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.module_iso_inv_datumSection
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.datumSectionBaseChange_one_tmul
+namespace AlgebraicGeometry.PicRankOneLocalPresentation
+#print axioms sectionLocalEquationsOfDatumSectionBaseChange_picClass
+end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.evaluation_evaluationLiftOfH0
 #print axioms
   AlgebraicGeometry.PicRankOneLocalPresentation.exists_baseOpen_evaluation_generator
