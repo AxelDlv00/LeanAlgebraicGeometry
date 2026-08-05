@@ -43,7 +43,7 @@ projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 - Algebraic-Jacobian-Challenge
 priority: urgent
-status: running
+status: queued
 write_set:
   files: []
   projects:
@@ -65,7 +65,7 @@ inbox_refs:
 - I-1919
 artifact_refs: []
 created_at: '2026-08-04T02:27:37.236041+00:00'
-updated_at: '2026-08-05T08:11:45.345102+00:00'
+updated_at: '2026-08-05T10:53:23.519902+00:00'
 metadata:
   author: human
   updated_at: '2026-08-04T02:50:45.822467+00:00'

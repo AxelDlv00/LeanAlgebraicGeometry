@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.Vq_ne_top
 file: scratch_p4r6_audit/p22_FULL_REFUTATION.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Vq_ne_top
 type: lean
-updated: '2026-08-05T06:19:48'
+updated: '2026-08-05T17:41:06'
 ---
 theorem Vq_ne_top : Vq ≠ ⊤ := by
   intro h
