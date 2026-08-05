@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.ProbeP4R6.probeLocInj
 file: scratch_p4r6/probe2.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.ProbeP4R6.probeLocInj
 type: lean
-updated: '2026-08-05T06:02:33'
+updated: '2026-08-05T06:20:08'
 ---
 theorem probeLocInj {X : Scheme.{u}} (f : yoneda.obj X ⟶ (pic0SigmaSheaf C).1)
     (hf : IsOpenImmersion.presheaf f) :

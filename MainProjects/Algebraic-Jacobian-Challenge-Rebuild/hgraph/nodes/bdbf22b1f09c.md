@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.sheafiso_iff_presheafiso
 file: scratch_p4r6_audit/p04_isoequiv4.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.sheafiso_iff_presheafiso
 type: lean
-updated: '2026-08-05T06:02:33'
+updated: '2026-08-05T06:20:09'
 ---
 theorem sheafiso_iff_presheafiso {X : Scheme.{u}} (f : yoneda.obj X ⟶ (pic0SigmaSheaf C).1) :
     IsIso (chartSheafHom C f) ↔ IsIso f := by
