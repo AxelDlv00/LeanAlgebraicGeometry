@@ -13,6 +13,8 @@ The focused critical root builds successfully at default limits (`9226/9226`, 10
 
 The broader worktree also contains pre-existing or concurrent dashboard JSON, reference, hgraph, and state paths outside this task; they were intentionally not staged.
 
+No additional Lean check was run after the report-only commits because no Lean source changed; the latest source check is the successful critical-root build above.
+
 ## Why I stopped
 
 The objective is partly advanced, not complete or blocked. The verified artifact is a presentation-local feeder, so no Phase 3/4 endpoint or later representability/descent/Jacobian milestone is credited. No PDF fallback condition fired. The task is intentionally left `running` at the native O-linear evaluation/zero-locus comparison gate.
