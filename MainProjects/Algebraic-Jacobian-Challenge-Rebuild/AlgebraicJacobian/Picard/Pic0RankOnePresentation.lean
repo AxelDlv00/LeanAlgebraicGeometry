@@ -39,7 +39,8 @@ set_option maxSynthPendingDepth 3
 
 universe u
 
-open CategoryTheory Limits TopologicalSpace Opposite MonoidalCategory CartesianMonoidalCategory
+open CategoryTheory Limits TopologicalSpace Opposite MonoidalCategory
+  CartesianMonoidalCategory
 
 open scoped TensorProduct
 
@@ -378,6 +379,187 @@ theorem evaluation_evaluationLiftOfH0 (P : PicRankOneLocalPresentation pi lam)
 
 /-! ## Local-away generators for the canonical evaluation -/
 
+/-- Nonvanishing on every residue-field fibre of `D(f)` survives passage from the
+corresponding prime of the original ring to the residue field of a prime of `A_f`.
+
+The residue-field comparison is an isomorphism because localization induces bijective
+residue-field maps.  Keeping this as a private module lemma prevents the rank-one
+construction from depending on a false definitional transitivity of datum base change. -/
+private theorem fibre_tmul_ne_zero_of_away
+    {A Q : Type u} [CommRing A] [AddCommGroup Q] [Module A Q]
+    (f : A) (y : Q)
+    (hy : ∀ p : PrimeSpectrum A, f ∉ p.asIdeal →
+      (y ⊗ₜ (1 : p.asIdeal.ResidueField) :
+        Q ⊗[A] p.asIdeal.ResidueField) ≠ 0)
+    (q : PrimeSpectrum (Localization.Away f)) :
+    ((1 : q.asIdeal.ResidueField) ⊗ₜ[A] y :
+      q.asIdeal.ResidueField ⊗[A] Q) ≠ 0 := by
+  let p : PrimeSpectrum A :=
+    PrimeSpectrum.comap (algebraMap A (Localization.Away f)) q
+  have hfp : f ∉ p.asIdeal := by
+    intro hf
+    refine q.isPrime.ne_top (Ideal.eq_top_of_isUnit_mem q.asIdeal
+      (Ideal.mem_comap.mp hf) ?_)
+    exact IsLocalization.Away.algebraMap_isUnit f
+  have hp : ((1 : p.asIdeal.ResidueField) ⊗ₜ[A] y :
+      p.asIdeal.ResidueField ⊗[A] Q) ≠ 0 := by
+    have h := (TensorProduct.comm A Q p.asIdeal.ResidueField).map_ne_zero_iff.mpr
+      (hy p hfp)
+    simpa only [TensorProduct.comm_tmul] using h
+  have hcom : p.asIdeal =
+      q.asIdeal.comap (algebraMap A (Localization.Away f)) := rfl
+  let rho : p.asIdeal.ResidueField →ₐ[A] q.asIdeal.ResidueField :=
+    Ideal.ResidueField.mapₐ p.asIdeal q.asIdeal
+      (Algebra.ofId A (Localization.Away f)) hcom
+  have hrho : Function.Bijective rho :=
+    (RingHom.surjectiveOnStalks_of_isLocalization (Submonoid.powers f)
+      (Localization.Away f)).residueFieldMap_bijective
+        p.asIdeal q.asIdeal hcom
+  let e : p.asIdeal.ResidueField ≃ₗ[A] q.asIdeal.ResidueField :=
+    LinearEquiv.ofBijective rho.toLinearMap hrho
+  have he := (e.rTensor Q).map_ne_zero_iff.mpr hp
+  simpa only [LinearEquiv.rTensor_tmul, e, LinearEquiv.ofBijective_apply,
+    AlgHom.toLinearMap_apply, map_one] using he
+
+/-- Cancelling an iterated scalar extension preserves a nonzero pure tensor. -/
+private theorem one_tmul_one_tmul_ne_zero
+    {R S K Q : Type u} [CommRing R] [CommRing S] [Field K]
+    [Algebra R S] [Algebra R K] [Algebra S K] [IsScalarTower R S K]
+    [AddCommGroup Q] [Module R Q]
+    (y : Q) (hy : ((1 : K) ⊗ₜ[R] y : K ⊗[R] Q) ≠ 0) :
+    ((1 : K) ⊗ₜ[S] ((1 : S) ⊗ₜ[R] y) :
+      K ⊗[S] (S ⊗[R] Q)) ≠ 0 := by
+  let e : K ⊗[S] (S ⊗[R] Q) ≃ₗ[K] K ⊗[R] Q :=
+    TensorProduct.AlgebraTensorModule.cancelBaseChange R S K K Q
+  rw [← e.map_ne_zero_iff]
+  simpa only [e, TensorProduct.AlgebraTensorModule.cancelBaseChange_tmul,
+    one_smul] using hy
+
+/-- Base change of a linear equivalence preserves nonvanishing of a pure tensor. -/
+private theorem one_tmul_linearEquiv_ne_zero
+    {R K M N : Type u} [CommRing R] [Field K] [Algebra R K]
+    [AddCommGroup M] [Module R M] [AddCommGroup N] [Module R N]
+    (e : M ≃ₗ[R] N) (x : M)
+    (hx : ((1 : K) ⊗ₜ[R] x : K ⊗[R] M) ≠ 0) :
+    ((1 : K) ⊗ₜ[R] e x : K ⊗[R] N) ≠ 0 := by
+  let eK := LinearEquiv.baseChange R K M N e
+  have h := eK.map_ne_zero_iff.mpr hx
+  simpa only [eK, LinearEquiv.baseChange_tmul] using h
+
+omit [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+  [GeometricallyIrreducible C.hom] in
+/-- A nonzero cohomology class on a field fibre gives a nonzero glued section. -/
+private theorem sectionsMapTop_ne_zero_of_one_tmul_ne_zero
+    {B K : Type u} [CommRing B] [Algebra k B] [Field K]
+    [Algebra k K] [Algebra B K] [IsScalarTower k B K]
+    (D : BasicOpenCocycleDatum C B pi)
+    (hH1 : Subsingleton (datumPair D).H1)
+    (y : Sheaf.HModule D.sheaf 0)
+    (hy : ((1 : K) ⊗ₜ[B] y : K ⊗[B] Sheaf.HModule D.sheaf 0) ≠ 0) :
+    D.sectionsMapTop K
+      (Sheaf.HModule.linearEquiv₀
+        (Opens.grothendieckTopology ((relCurve C B : Scheme.{u}) : TopCat))
+        isTerminalTop D.sheaf y) ≠ 0 := by
+  let eDatum := D.datumH0BaseChange K hH1
+  have hDatum : eDatum ((1 : K) ⊗ₜ[B] y) ≠ 0 :=
+    eDatum.map_ne_zero_iff.mpr hy
+  let eSection := Sheaf.HModule.linearEquiv₀
+    (Opens.grothendieckTopology ((relCurve C K : Scheme.{u}) : TopCat))
+    isTerminalTop (D.baseChange K).sheaf
+  have hSection : eSection (eDatum ((1 : K) ⊗ₜ[B] y)) ≠ 0 :=
+    eSection.map_ne_zero_iff.mpr hDatum
+  rw [← D.linearEquiv₀_datumH0BaseChange_one_tmul K hH1 y]
+  exact hSection
+
+/-- A fibrewise-nonzero section remains nonzero after localizing and extending once more
+to a residue field of the localized ring. -/
+private theorem away_one_tmul_one_tmul_ne_zero
+    {R Q : Type u} [CommRing R] [AddCommGroup Q] [Module R Q]
+    (f : R) (y : Q)
+    (hy : ∀ p : PrimeSpectrum R, f ∉ p.asIdeal →
+      (y ⊗ₜ (1 : p.asIdeal.ResidueField) :
+        Q ⊗[R] p.asIdeal.ResidueField) ≠ 0)
+    (q : PrimeSpectrum (Localization.Away f)) :
+    ((1 : q.asIdeal.ResidueField) ⊗ₜ[Localization.Away f]
+      ((1 : Localization.Away f) ⊗ₜ[R] y) :
+      q.asIdeal.ResidueField ⊗[Localization.Away f]
+        (Localization.Away f ⊗[R] Q)) ≠ 0 := by
+  let B := Localization.Away f
+  let K := q.asIdeal.ResidueField
+  have hdirect : ((1 : K) ⊗ₜ[R] y : K ⊗[R] Q) ≠ 0 :=
+    fibre_tmul_ne_zero_of_away f y hy q
+  exact one_tmul_one_tmul_ne_zero y hdirect
+
+/-- Canonical `H⁰` base change preserves the localized pure tensor's nonvanishing. -/
+private theorem h0BaseChange_one_tmul_ne_zero
+    (P : PicRankOneLocalPresentation pi lam)
+    (B K : Type u) [CommRing B] [Algebra k B] [Algebra P.cover.Carrier B]
+    [IsScalarTower k P.cover.Carrier B] [Field K] [Algebra k K]
+    [Algebra B K] [IsScalarTower k B K]
+    (y : Sheaf.HModule P.datum.sheaf 0)
+    (hy : ((1 : K) ⊗ₜ[B] ((1 : B) ⊗ₜ[P.cover.Carrier] y) :
+      K ⊗[B] (B ⊗[P.cover.Carrier]
+        Sheaf.HModule P.datum.sheaf 0)) ≠ 0) :
+    ((1 : K) ⊗ₜ[B]
+      (P.h0BaseChange B ((1 : B) ⊗ₜ[P.cover.Carrier] y)) :
+      K ⊗[B] Sheaf.HModule (P.datum.baseChange B).sheaf 0) ≠ 0 := by
+  let eH0 : B ⊗[P.cover.Carrier] Sheaf.HModule P.datum.sheaf 0 ≃ₗ[B]
+      Sheaf.HModule (P.datum.baseChange B).sheaf 0 :=
+    P.h0BaseChange B
+  exact one_tmul_linearEquiv_ne_zero eH0
+    ((1 : B) ⊗ₜ[P.cover.Carrier] y) hy
+
+/-- `H¹`-vanishing in a presentation propagates to every coefficient extension. -/
+private theorem datumPair_h1_baseChange
+    (P : PicRankOneLocalPresentation pi lam)
+    (B : Type u) [CommRing B] [Algebra k B] [Algebra P.cover.Carrier B]
+    [IsScalarTower k P.cover.Carrier B] :
+    Subsingleton (datumPair (P.datum.baseChange B)).H1 :=
+  (subsingleton_datumPair_h1_iff (P.datum.baseChange B)).mpr
+    (P.datum.datum_subsingleton_h1_baseChange B
+      ((subsingleton_datumPair_h1_iff P.datum).mpr P.h1_vanishing))
+
+/-- The local-away generator supplied over the presentation ring gives the exact
+fibrewise-nonvanishing hypothesis required by the divisor construction after localizing.
+
+This is the missing consumer bridge between the finite-projective generator theorem and
+`sectionLocalEquationsOfDatumSectionBaseChange`.  It compares residue fields across the
+localization, cancels the iterated tensor product, and then uses the presentation's
+canonical `H⁰` base-change equivalence. -/
+theorem sectionsMapTop_datumSectionBaseChange_away_ne_zero
+    (P : PicRankOneLocalPresentation pi lam)
+    (f : P.cover.Carrier)
+    (y : Sheaf.HModule P.datum.sheaf 0)
+    (hy : ∀ p : PrimeSpectrum P.cover.Carrier, f ∉ p.asIdeal →
+      (y ⊗ₜ (1 : p.asIdeal.ResidueField) :
+        Sheaf.HModule P.datum.sheaf 0 ⊗[P.cover.Carrier]
+          p.asIdeal.ResidueField) ≠ 0)
+    (q : PrimeSpectrum (Localization.Away f)) :
+    (P.datum.baseChange (Localization.Away f)).sectionsMapTop
+      q.asIdeal.ResidueField
+      (P.datumSectionBaseChange (Localization.Away f) y) ≠ 0 := by
+  let B := Localization.Away f
+  let K := q.asIdeal.ResidueField
+  have hiter : ((1 : K) ⊗ₜ[B]
+      ((1 : B) ⊗ₜ[P.cover.Carrier] y) :
+      K ⊗[B] (B ⊗[P.cover.Carrier]
+        Sheaf.HModule P.datum.sheaf 0)) ≠ 0 :=
+    away_one_tmul_one_tmul_ne_zero f y hy q
+  have hyB : ((1 : K) ⊗ₜ[B]
+      (P.h0BaseChange B ((1 : B) ⊗ₜ[P.cover.Carrier] y)) :
+      K ⊗[B] Sheaf.HModule (P.datum.baseChange B).sheaf 0) ≠ 0 :=
+    P.h0BaseChange_one_tmul_ne_zero B K y hiter
+  have hH1 : Subsingleton (datumPair (P.datum.baseChange B)).H1 :=
+    P.datumPair_h1_baseChange B
+  let yB : Sheaf.HModule (P.datum.baseChange B).sheaf 0 :=
+    P.h0BaseChange B ((1 : B) ⊗ₜ[P.cover.Carrier] y)
+  change (P.datum.baseChange B).sectionsMapTop K
+    (Sheaf.HModule.linearEquiv₀
+      (Opens.grothendieckTopology ((relCurve C B : Scheme.{u}) : TopCat))
+      isTerminalTop (P.datum.baseChange B).sheaf yB) ≠ 0
+  exact sectionsMapTop_ne_zero_of_one_tmul_ne_zero
+    (P.datum.baseChange B) hH1 yB hyB
+
 /-- A rank-one presentation has a tied local-away evaluation generator.
 
 The rank-one field of `P` makes every residue-field fibre of its `H⁰` module nontrivial.
@@ -417,6 +599,45 @@ theorem exists_baseOpen_evaluation_generator
   refine ⟨f, hf, y, ?_, ?_⟩
   · simpa only [Q] using hy
   · exact P.evaluation_evaluationLiftOfH0 y
+
+/-- The fibrewise-regular local equations cut by a tied local-away datum section.
+
+The nonvanishing proof is derived by
+`sectionsMapTop_datumSectionBaseChange_away_ne_zero`; it is not additional witness data.
+Together with `exists_baseOpen_evaluation_generator`, this is the immediate local divisor
+consumer on the datum side.  Identifying it with the native evaluation zero locus remains
+a separate `O`-module base-change contract. -/
+noncomputable def baseOpenDatumSectionLocalEquations
+    (P : PicRankOneLocalPresentation pi lam)
+    [IsNoetherianRing P.cover.Carrier]
+    (f : P.cover.Carrier)
+    (y : Sheaf.HModule P.datum.sheaf 0)
+    (hy : ∀ p : PrimeSpectrum P.cover.Carrier, f ∉ p.asIdeal →
+      (y ⊗ₜ (1 : p.asIdeal.ResidueField) :
+        Sheaf.HModule P.datum.sheaf 0 ⊗[P.cover.Carrier]
+          p.asIdeal.ResidueField) ≠ 0) :
+    (relCurve C (Localization.Away f)).LocalEquations :=
+  P.sectionLocalEquationsOfDatumSectionBaseChange
+    (Localization.Away f) y
+    (fun q => P.sectionsMapTop_datumSectionBaseChange_away_ne_zero f y hy q)
+
+/-- The local equations cut by the tied datum section represent its base-changed
+cocycle datum. -/
+theorem baseOpenDatumSectionLocalEquations_picClass
+    (P : PicRankOneLocalPresentation pi lam)
+    [IsNoetherianRing P.cover.Carrier]
+    (f : P.cover.Carrier)
+    (y : Sheaf.HModule P.datum.sheaf 0)
+    (hy : ∀ p : PrimeSpectrum P.cover.Carrier, f ∉ p.asIdeal →
+      (y ⊗ₜ (1 : p.asIdeal.ResidueField) :
+        Sheaf.HModule P.datum.sheaf 0 ⊗[P.cover.Carrier]
+          p.asIdeal.ResidueField) ≠ 0) :
+    (P.baseOpenDatumSectionLocalEquations f y hy).picClass =
+      (P.datum.baseChange (Localization.Away f)).cechPicClass := by
+  unfold baseOpenDatumSectionLocalEquations
+  exact P.sectionLocalEquationsOfDatumSectionBaseChange_picClass
+    (Localization.Away f) y
+    (fun q => P.sectionsMapTop_datumSectionBaseChange_away_ne_zero f y hy q)
 
 end PicRankOneLocalPresentation
 
