@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PointedCover.pullback_mono
 type: lean
-updated: '2026-08-02T07:12:59'
+updated: '2026-08-07T05:01:59'
 ---
 lemma pullback_mono (f : X ⟶ Y) {𝒰 𝒱 : Y.PointedCover} (h : 𝒱 ≤ 𝒰) :
     𝒱.pullback f ≤ 𝒰.pullback f :=

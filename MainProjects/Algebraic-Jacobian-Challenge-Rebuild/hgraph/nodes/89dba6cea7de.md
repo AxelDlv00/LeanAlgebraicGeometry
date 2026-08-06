@@ -19,7 +19,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.hom_ext_fromSpecAffine
 type: lean
-updated: '2026-08-02T07:12:49'
+updated: '2026-08-07T05:01:47'
 ---
 private theorem hom_ext_fromSpecAffine {T Y : Over (Spec (CommRingCat.of k))} (a b : T ⟶ Y)
     (h : ∀ U : T.left.affineOpens,

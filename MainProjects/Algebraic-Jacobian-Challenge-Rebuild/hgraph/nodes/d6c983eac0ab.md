@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_mem_ne_zero_of_window_normalization_at
 type: lean
-updated: '2026-08-03T08:02:47'
+updated: '2026-08-07T05:01:52'
 ---
 theorem exists_mem_ne_zero_of_window_normalization_at (n : ℕ) {gamma : ℕ}
     (hgamma : gamma ≤ n)

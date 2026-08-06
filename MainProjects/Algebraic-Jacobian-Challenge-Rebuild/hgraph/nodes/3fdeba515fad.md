@@ -9,7 +9,7 @@ lean_status: sorry
 stale: true
 title: controlSorry
 type: lean
-updated: '2026-08-07T04:03:01'
+updated: '2026-08-07T04:54:12'
 ---
 theorem controlSorry : True := by sorry
 #print axioms AlgebraicGeometry.Jacobian

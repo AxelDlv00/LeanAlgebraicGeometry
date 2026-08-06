@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.LocalEquations.exists_eqn_of_cechPicMap_ι_eq_one
 type: lean
-updated: '2026-08-02T07:12:57'
+updated: '2026-08-07T05:01:55'
 ---
 theorem exists_eqn_of_cechPicMap_ι_eq_one {V : X.Opens}
     (hV : Scheme.CechPic.map V.ι d.picClass = 1) :

@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.thetaChartDatum_pieces
 type: lean
-updated: '2026-08-02T07:12:47'
+updated: '2026-08-07T05:01:44'
 ---
 lemma thetaChartDatum_pieces :
     (thetaChartDatum C B π a).pieces = (thetaChartCover C B π).pieces := rfl

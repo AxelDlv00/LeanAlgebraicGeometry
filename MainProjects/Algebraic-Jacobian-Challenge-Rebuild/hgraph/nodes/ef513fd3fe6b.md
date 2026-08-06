@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.Sheaf.freeModuleSheaf
 type: lean
-updated: '2026-08-02T07:12:47'
+updated: '2026-08-07T05:01:44'
 ---
 noncomputable def freeModuleSheaf (U : C) : Sheaf J (ModuleCat.{u} R) :=
   (presheafToSheaf J _).obj (yoneda.obj U ⋙ ModuleCat.free R)

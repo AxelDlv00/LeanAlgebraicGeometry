@@ -13,7 +13,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Over.telescope_core
 type: lean
-updated: '2026-08-02T07:12:57'
+updated: '2026-08-07T05:01:54'
 ---
 private lemma telescope_core {G : Type u} [CommGroup G] {a b d c₁ c₂ c₃ : G}
     (h₁ : a = b * c₁) (h₂ : b = d * c₂) (h₃ : a = d * c₃) : c₁ * c₂ = c₃ := by

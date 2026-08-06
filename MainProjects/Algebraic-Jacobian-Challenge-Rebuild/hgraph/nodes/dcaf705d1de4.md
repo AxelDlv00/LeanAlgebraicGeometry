@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.sectionCb_comp_face₁₃
 type: lean
-updated: '2026-08-02T07:12:57'
+updated: '2026-08-07T05:01:55'
 ---
 lemma sectionCb_comp_face₁₃ : scb ≫ w₁₃ = f₁₃ ≫ sq :=
   sectionOfPoint_left_comp_whiskerLeft C (Module.descentFace₁₃ A B) σ

@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.skyModule_obj_of_not_mem
 type: lean
-updated: '2026-08-02T07:13:00'
+updated: '2026-08-07T05:02:01'
 ---
 lemma skyModule_obj_of_not_mem (x : X) (M : ModuleCat.{u} K) {U : X.Opens} (h : x ∉ U) :
     (skyModule x M).obj.obj (op U) = terminal (ModuleCat.{u} K) := by

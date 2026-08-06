@@ -10,7 +10,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.degAffHom
 type: lean
-updated: '2026-08-02T07:12:48'
+updated: '2026-08-07T05:01:46'
 ---
 private def degAffHom (E : Algebra.EtaleCover K) : E.Carrier →ₐ[K] degAffField E :=
   E.exists_finiteSeparableField_algHom.choose_spec.choose_spec.choose_spec.choose_spec

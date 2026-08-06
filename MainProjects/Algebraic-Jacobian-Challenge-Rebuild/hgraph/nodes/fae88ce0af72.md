@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divRepAffP1Map_comp
 type: lean
-updated: '2026-08-03T08:02:46'
+updated: '2026-08-07T05:01:47'
 ---
 theorem divRepAffP1Map_comp :
     divRepAffP1Map C ≫ P1.structureMap k = C.hom :=

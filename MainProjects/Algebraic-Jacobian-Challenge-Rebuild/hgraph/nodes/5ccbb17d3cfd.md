@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divUniversalFibreHighWindow_one_at
 type: lean
-updated: '2026-08-03T08:02:46'
+updated: '2026-08-07T05:01:48'
 ---
 theorem divUniversalFibreHighWindow_one_at {gamma : ℕ}
     (hgamma : gamma ≤ g)

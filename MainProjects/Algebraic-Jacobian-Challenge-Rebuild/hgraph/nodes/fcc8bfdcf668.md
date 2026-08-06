@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.Sheaf.HModule.map_id_apply
 type: lean
-updated: '2026-08-02T07:12:47'
+updated: '2026-08-07T05:01:44'
 ---
 lemma map_id_apply {n : ℕ} (x : HModule F n) : map (𝟙 F) n x = x := by
   simp [map_apply]

@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.unitsCorrCochain
 type: lean
-updated: '2026-08-02T07:12:59'
+updated: '2026-08-07T05:01:59'
 ---
 noncomputable def unitsCorrCochain (y : Y) : Γ(Y, 𝒞.opens y ⊓ D)ˣ :=
   r₁.unitsAppLE (𝒩.opens a ⊓ 𝒩.opens (r₁.base y)) (𝒞.opens y ⊓ D)

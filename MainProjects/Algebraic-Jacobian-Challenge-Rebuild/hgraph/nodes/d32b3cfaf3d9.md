@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.isLocalization_away_piFactor
 type: lean
-updated: '2026-08-02T07:12:59'
+updated: '2026-08-07T05:01:58'
 ---
 lemma isLocalization_away_piFactor (i : ι) :
     letI := piFactorAlgebra B i

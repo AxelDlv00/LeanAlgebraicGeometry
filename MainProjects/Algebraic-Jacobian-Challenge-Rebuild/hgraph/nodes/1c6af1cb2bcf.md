@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.stalkHomCompatEquivAlgHom
 type: lean
-updated: '2026-08-02T07:13:00'
+updated: '2026-08-07T05:02:01'
 ---
 noncomputable def stalkHomCompatEquivAlgHom
     (X : Over (Spec (CommRingCat.of k))) (x : X.left) :

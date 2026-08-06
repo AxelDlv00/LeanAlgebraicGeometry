@@ -20,7 +20,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_sec_windowCompare_ne_zero_seedPrime
 type: lean
-updated: '2026-08-02T22:45:33'
+updated: '2026-08-07T05:01:50'
 ---
 theorem exists_sec_windowCompare_ne_zero_seedPrime
     (p : PrimeSpectrum (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)

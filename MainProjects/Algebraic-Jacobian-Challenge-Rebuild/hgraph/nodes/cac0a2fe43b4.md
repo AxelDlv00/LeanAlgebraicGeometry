@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divUniversalHighWindowSuccessorExponentFibreEquiv
 type: lean
-updated: '2026-08-02T07:12:49'
+updated: '2026-08-07T05:01:48'
 ---
 noncomputable def divUniversalHighWindowSuccessorExponentFibreEquiv (n : Nat) :
     ↥(Scheme.divisorSections K

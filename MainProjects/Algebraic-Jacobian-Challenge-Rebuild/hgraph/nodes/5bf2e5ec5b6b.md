@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divFam.toZarVehicle_val
 type: lean
-updated: '2026-08-02T07:12:56'
+updated: '2026-08-07T05:01:53'
 ---
 lemma divFam.toZarVehicle_val {T : Over (Spec (.of k))} (s : divFam C π n T)
     (U : T.left.affineOpens) :

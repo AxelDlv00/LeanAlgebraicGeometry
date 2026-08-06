@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.P1.autOfMatrix_preimage_chartOpen_sup
 type: lean
-updated: '2026-08-02T07:12:48'
+updated: '2026-08-07T05:01:45'
 ---
 theorem autOfMatrix_preimage_chartOpen_sup (M : Matrix.GeneralLinearGroup (Fin 2) k) :
     (autOfMatrix k M ⁻¹ᵁ chartOpen k 0) ⊔ (autOfMatrix k M ⁻¹ᵁ chartOpen k 1) = ⊤ := by

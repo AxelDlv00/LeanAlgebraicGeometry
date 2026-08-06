@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divFamZarAff_of_forall_prime_certified_adaptation
 type: lean
-updated: '2026-08-02T07:12:50'
+updated: '2026-08-07T05:01:50'
 ---
 noncomputable def divFamZarAff_of_forall_prime_certified_adaptation
     {d : (relCurve C R).LocalEquations}

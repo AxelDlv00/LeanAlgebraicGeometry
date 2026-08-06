@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.mem_pic0Subgroup_picEtCrossBase_iff
 type: lean
-updated: '2026-08-02T07:12:58'
+updated: '2026-08-07T05:01:57'
 ---
 theorem mem_pic0Subgroup_picEtCrossBase_iff
     (s : picEt C ((Over.map (Spec.map (CommRingCat.ofHom (algebraMap k L)))).obj T)) :

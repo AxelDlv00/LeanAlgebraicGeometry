@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.RigidEngine.comp_ker_subtype
 type: lean
-updated: '2026-08-02T07:12:47'
+updated: '2026-08-07T05:01:44'
 ---
 theorem comp_ker_subtype : δ ∘ₗ (LinearMap.ker δ).subtype = 0 := by
   ext x

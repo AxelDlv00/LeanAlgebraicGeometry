@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PointwiseAchiever.exists_fibre_chart_cofactor_pointwiseSectionVector
 type: lean
-updated: '2026-08-03T08:02:47'
+updated: '2026-08-07T05:01:50'
 ---
 theorem exists_fibre_chart_cofactor_pointwiseSectionVector
     (z : relCurve C RZ)

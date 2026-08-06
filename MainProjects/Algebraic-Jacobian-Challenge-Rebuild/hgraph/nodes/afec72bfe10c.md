@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.eq_of_isDivRepClassifyAff_at
 type: lean
-updated: '2026-08-03T13:09:52'
+updated: '2026-08-07T05:01:47'
 ---
 theorem eq_of_isDivRepClassifyAff_at
     (hOAt : Sheaf.h0 (C.left.moduleKSheaf k) = 1)

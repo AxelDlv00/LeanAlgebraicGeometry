@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DatG0.deltaCocone
 type: lean
-updated: '2026-08-02T07:12:58'
+updated: '2026-08-07T05:01:58'
 ---
 noncomputable def deltaCocone : Cocone (deltaRingDiagram (k := k) (K := K)) where
   pt := CommRingCat.of K

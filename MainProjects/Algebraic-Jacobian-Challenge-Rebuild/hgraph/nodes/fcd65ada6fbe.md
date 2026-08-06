@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: Algebra.DescentDatum.schemeBaseChangeIso_hom_structureMap
 type: lean
-updated: '2026-08-02T07:12:48'
+updated: '2026-08-07T05:01:46'
 ---
 theorem schemeBaseChangeIso_hom_structureMap
     (D : Algebra.DescentDatum A B R) [Module.Flat A B] :

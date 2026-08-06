@@ -33,7 +33,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.relQuotBaseChangeAff
 type: lean
-updated: '2026-08-02T07:12:51'
+updated: '2026-08-07T05:01:51'
 ---
 noncomputable def relQuotBaseChangeAff {V : (relCurve C R).Opens} (hV : IsAffineOpen V)
     (E : Set Γ(relCurve C R, V)) :

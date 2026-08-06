@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.sectionsInfSelfEquiv
 type: lean
-updated: '2026-08-02T07:12:50'
+updated: '2026-08-07T05:01:51'
 ---
 noncomputable def sectionsInfSelfEquiv (i : D.index) :
     Γ(relCurve C R, D.pieces i ⊓ D.pieces i) ≃ₐ[R] Γ(relCurve C R, D.pieces i) where

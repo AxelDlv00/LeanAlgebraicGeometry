@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: IsLocalization.Away.leftMap
 type: lean
-updated: '2026-08-02T07:12:47'
+updated: '2026-08-07T05:01:43'
 ---
 noncomputable def leftMap : B₁ ⊗[A] B₂ →ₐ[A] Si ⊗[A] B₂ :=
   Algebra.TensorProduct.map (IsScalarTower.toAlgHom A B₁ Si) (AlgHom.id A B₂)

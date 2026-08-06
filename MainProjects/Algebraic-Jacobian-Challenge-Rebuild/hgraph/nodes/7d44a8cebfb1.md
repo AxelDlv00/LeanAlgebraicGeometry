@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ker_graphSectionEval_eq_primeIdealOf
 type: lean
-updated: '2026-08-02T07:13:00'
+updated: '2026-08-07T05:02:00'
 ---
 theorem ker_graphSectionEval_eq_primeIdealOf (t : overSpec k K ⟶ C)
     {W : (C ⊗ overSpec k K).left.Opens} (hW : IsAffineOpen W)

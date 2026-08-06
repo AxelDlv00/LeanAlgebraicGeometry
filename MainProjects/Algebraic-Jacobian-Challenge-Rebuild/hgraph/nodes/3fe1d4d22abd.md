@@ -9,7 +9,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.chi_relCurve_affWindowGen
 type: lean
-updated: '2026-08-02T07:12:52'
+updated: '2026-08-07T05:01:52'
 ---
 private lemma chi_relCurve_affWindowGen (g : ℕ)
     (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))

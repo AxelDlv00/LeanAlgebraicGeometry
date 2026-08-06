@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divEq_of_isCertified_zero
 type: lean
-updated: '2026-08-02T07:12:53'
+updated: '2026-08-07T05:01:52'
 ---
 theorem divEq_of_isCertified_zero
     {d d' : (relCurve C K).LocalEquations}

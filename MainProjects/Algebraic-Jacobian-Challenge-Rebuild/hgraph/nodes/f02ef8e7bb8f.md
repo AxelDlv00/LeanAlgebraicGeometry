@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PointwiseAchiever.fibre_germ_mem_span_pointwiseSectionVector_local
 type: lean
-updated: '2026-08-02T07:12:50'
+updated: '2026-08-07T05:01:50'
 ---
 theorem fibre_germ_mem_span_pointwiseSectionVector_local
     (z : relCurve C RZ)

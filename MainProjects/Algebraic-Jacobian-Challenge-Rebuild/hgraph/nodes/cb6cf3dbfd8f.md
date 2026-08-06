@@ -10,7 +10,7 @@ lean_status: lean_ok
 stale: true
 title: AlgebraicGeometry.ProbeP4R6c.probeRepBy
 type: lean
-updated: '2026-08-07T04:03:03'
+updated: '2026-08-07T04:54:22'
 ---
 noncomputable def probeRepBy {X : Scheme.{u}} (f : yoneda.obj X ⟶ (pic0SigmaSheaf C).1)
     [IsIso f] : (pic0SigmaFunctor C).RepresentableBy X where

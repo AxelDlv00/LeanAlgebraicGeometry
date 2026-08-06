@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.one_le_coheight_of_ne_genericPoint
 type: lean
-updated: '2026-08-02T07:12:46'
+updated: '2026-08-07T05:01:42'
 ---
 lemma Scheme.one_le_coheight_of_ne_genericPoint {Y : Scheme.{u}}
     [IrreducibleSpace ↥Y] {z : ↥Y} (hz : z ≠ genericPoint ↥Y) :

@@ -43,7 +43,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.mem_chartLocus_of_ledgerIndex_of_isDegree_genus
 type: lean
-updated: '2026-08-02T07:12:58'
+updated: '2026-08-07T05:01:56'
 ---
 theorem mem_chartLocus_of_ledgerIndex_of_isDegree_genus
     {π : C.left ⟶ P1 k} [IsFinite π] [IsDominant π]

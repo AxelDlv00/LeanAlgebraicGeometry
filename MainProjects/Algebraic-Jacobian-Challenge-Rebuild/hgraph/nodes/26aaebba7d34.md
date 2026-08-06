@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivisorAdaptation.gluedEquivVanishing
 type: lean
-updated: '2026-08-02T07:12:49'
+updated: '2026-08-07T05:01:48'
 ---
 noncomputable def gluedEquivVanishing :
     A.ThetaIdealSections a ⊤ ≃ₗ[R]

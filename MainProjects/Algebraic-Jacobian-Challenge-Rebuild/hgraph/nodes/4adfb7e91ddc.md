@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.classDeg_divisorClass
 type: lean
-updated: '2026-08-02T07:12:59'
+updated: '2026-08-07T05:02:00'
 ---
 theorem classDeg_divisorClass (D : X.CurveDivisor) :
     classDeg K (divisorClass K D) = CurveDivisor.deg K D := by

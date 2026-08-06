@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.tripleAwayEquiv_faceA₁₃
 type: lean
-updated: '2026-08-02T07:12:59'
+updated: '2026-08-07T05:01:59'
 ---
 lemma tripleAwayEquiv_faceA₁₃ (i j l : P.ι)
     (t : Γ(XB, (XB).basicOpen (P.r i)) ⊗[A] Γ(XB, (XB).basicOpen (P.r l))) :

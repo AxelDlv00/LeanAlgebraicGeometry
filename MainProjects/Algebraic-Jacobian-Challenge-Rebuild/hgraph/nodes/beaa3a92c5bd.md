@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.DiagonalChartData.res_chartEqn_mem_nonZeroDivisors
 type: lean
-updated: '2026-08-02T07:12:48'
+updated: '2026-08-07T05:01:45'
 ---
 theorem res_chartEqn_mem_nonZeroDivisors {W : (C ⊗ C).left.Opens}
     (hW : W ≤ diagonalChart C (data.isAffineOpen p) (data.elift p)) :

@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.compactSpace_carveScheme
 type: lean
-updated: '2026-08-02T07:12:50'
+updated: '2026-08-07T05:01:49'
 ---
 instance compactSpace_carveScheme : CompactSpace (carveScheme k g r₁ r₂ μ) :=
   QuasiCompact.compactSpace_of_compactSpace (carveSchemeι k g r₁ r₂ μ)

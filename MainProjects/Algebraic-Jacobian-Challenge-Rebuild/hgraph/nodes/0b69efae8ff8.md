@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.LocalEquations.cartierIdealData_ideal
 type: lean
-updated: '2026-08-04T10:53:20'
+updated: '2026-08-07T05:01:53'
 ---
 theorem cartierIdealData_ideal [IsProper C.hom]
     (d : (relCurve C R).LocalEquations) (U : (relCurve C R).affineOpens) :

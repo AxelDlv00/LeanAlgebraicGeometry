@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.isDivRepClassifyAff_unique
 type: lean
-updated: '2026-08-02T07:12:49'
+updated: '2026-08-07T05:01:47'
 ---
 theorem isDivRepClassifyAff_unique (F₀ : DivFamZarAff C S g)
     {v v' : Spec (CommRingCat.of S) ⟶

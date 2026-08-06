@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.abelCechClass
 type: lean
-updated: '2026-08-02T07:12:48'
+updated: '2026-08-07T05:01:46'
 ---
 def abelCechClass (P : 𝟙_ (Over (Spec (.of k))) ⟶ C) : (C ⊗ C).left.CechPic :=
   Over.graphPicClass C (𝟙 C) * (Over.graphPicClass C (toUnit C ≫ P))⁻¹

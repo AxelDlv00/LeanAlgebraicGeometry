@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.mem_V₁_of_notMem_V₀
 type: lean
-updated: '2026-08-02T07:12:54'
+updated: '2026-08-07T05:01:52'
 ---
 lemma mem_V₁_of_notMem_V₀ {x : relCurve C K}
     (hx : x ∉ (relCover C K (fiberTwoCover π)).V₀) :

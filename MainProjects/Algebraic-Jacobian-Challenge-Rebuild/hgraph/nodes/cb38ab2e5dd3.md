@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivisorAdaptation.isClosed_supportLocus_inter_chart₀_of_forall_supportLeak_eq_empty
 type: lean
-updated: '2026-08-02T07:12:49'
+updated: '2026-08-07T05:01:47'
 ---
 theorem isClosed_supportLocus_inter_chart₀_of_forall_supportLeak_eq_empty
     (h : ∀ j : Fin A.m₀, d.supportLeak (A.pieces (Sum.inl j)) = ∅) :

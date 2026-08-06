@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.Pseudofunctor.pullHom'_hom_self_of_comp
 type: lean
-updated: '2026-08-02T07:12:48'
+updated: '2026-08-07T05:01:46'
 ---
 lemma pullHom'_hom_self_of_comp
     {obj : ∀ i, F.obj (.mk (op (X i)))}

@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.relCover_isAffineOpen₁
 type: lean
-updated: '2026-08-02T07:12:47'
+updated: '2026-08-07T05:01:44'
 ---
 theorem relCover_isAffineOpen₁ : IsAffineOpen (relCover C R D).V₁ :=
   (relCover C R D).isAffineOpen₁

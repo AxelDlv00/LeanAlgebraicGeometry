@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.BasicOpenCocycleDatum.sectionLocalEquations_eqn
 type: lean
-updated: '2026-08-02T07:12:59'
+updated: '2026-08-07T05:01:58'
 ---
 lemma sectionLocalEquations_eqn (y : relCurve C B) :
     (D.sectionLocalEquations s 𝒲 σ hσ hreg).eqn y

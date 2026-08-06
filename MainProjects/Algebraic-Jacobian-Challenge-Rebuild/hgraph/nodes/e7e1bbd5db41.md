@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.relUnitCocycle
 type: lean
-updated: '2026-08-02T07:12:47'
+updated: '2026-08-07T05:01:45'
 ---
 noncomputable def relUnitCocycle (gk : Γ(C.left, D.V₀ ⊓ D.V₁)ˣ) :
     Γ(relCurve C R, (relCover C R D).V₀ ⊓ (relCover C R D).V₁)ˣ :=

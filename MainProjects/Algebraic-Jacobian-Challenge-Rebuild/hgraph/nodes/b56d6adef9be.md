@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.map_eq_one_of_pullbackOverlapQuot_eq_one
 type: lean
-updated: '2026-08-02T07:13:00'
+updated: '2026-08-07T05:02:02'
 ---
 theorem map_eq_one_of_pullbackOverlapQuot_eq_one (f : X ⟶ Y)
     (hsel' : Function.Surjective (fun x ↦ sel (f.base x))) (q : overlapQuot Y V)

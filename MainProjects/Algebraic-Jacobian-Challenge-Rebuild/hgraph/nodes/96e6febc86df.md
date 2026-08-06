@@ -11,7 +11,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.skyModule_subsingleton_of_not_mem
 type: lean
-updated: '2026-08-02T07:13:00'
+updated: '2026-08-07T05:02:01'
 ---
 private lemma skyModule_subsingleton_of_not_mem (x : X) (M : ModuleCat.{u} K) {U : X.Opens}
     (h : x ∉ U) : Subsingleton ((skyModule x M).obj.obj (op U)) := by

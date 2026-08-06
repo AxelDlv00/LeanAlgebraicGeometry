@@ -26,7 +26,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.FinCoverData.toAffCoverData
 type: lean
-updated: '2026-08-02T07:12:50'
+updated: '2026-08-07T05:01:51'
 ---
 noncomputable def toAffCoverData : AffCoverData C R where
   m := D.m₀ + D.m₁

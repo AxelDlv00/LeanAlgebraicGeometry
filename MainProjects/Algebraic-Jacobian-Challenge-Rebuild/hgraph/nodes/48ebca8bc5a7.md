@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.overSpecMap_comp_divRepClassifyZarAff
 type: lean
-updated: '2026-08-03T13:09:52'
+updated: '2026-08-07T05:01:47'
 ---
 theorem overSpecMap_comp_divRepClassifyZarAff
     {A B : Type u} [CommRing A] [Algebra k A] [CommRing B] [Algebra k B]

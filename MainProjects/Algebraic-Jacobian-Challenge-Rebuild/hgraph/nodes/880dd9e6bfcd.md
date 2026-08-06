@@ -42,7 +42,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.NormalizedCechComparison
 type: lean
-updated: '2026-08-02T07:12:57'
+updated: '2026-08-07T05:01:55'
 ---
 structure NormalizedCechComparison (𝒩 : (XB).PointedCover)
     (γ : (XB).unitsCocycle 𝒩) : Type u where

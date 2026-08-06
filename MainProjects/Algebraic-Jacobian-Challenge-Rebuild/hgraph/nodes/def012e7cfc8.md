@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.FinCoverData.baseChange_pieces_le_preimage
 type: lean
-updated: '2026-08-02T07:12:55'
+updated: '2026-08-07T05:01:53'
 ---
 lemma baseChange_pieces_le_preimage (j : D.index) :
     (D.baseChange R').pieces j ≤ relCurveMap C R R' ⁻¹ᵁ D.pieces j :=

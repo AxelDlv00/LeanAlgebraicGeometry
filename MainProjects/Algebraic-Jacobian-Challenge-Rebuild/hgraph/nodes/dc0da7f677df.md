@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ThetaGeneratorSeed.forall_flat_colength_quotient
 type: lean
-updated: '2026-08-02T07:12:50'
+updated: '2026-08-07T05:01:50'
 ---
 theorem forall_flat_colength_quotient [IsNoetherianRing R] [Module.Finite R ↥K]
     (hcolFin : ∀ z : relCurve C R,

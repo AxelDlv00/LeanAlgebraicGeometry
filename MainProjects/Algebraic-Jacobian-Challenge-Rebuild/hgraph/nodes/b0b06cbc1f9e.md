@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.moduleToDivisorZeroApp_coe
 type: lean
-updated: '2026-08-02T07:12:59'
+updated: '2026-08-07T05:02:00'
 ---
 lemma moduleToDivisorZeroApp_coe {U : X.Opens} (hηU : genericPoint X ∈ U) (s : Γ(X, U)) :
     ((moduleToDivisorZeroApp K hηU s : divisorSections K 0 U) : X.functionField)

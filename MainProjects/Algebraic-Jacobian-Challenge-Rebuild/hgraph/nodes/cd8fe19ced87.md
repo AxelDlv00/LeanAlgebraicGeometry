@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.BasicOpenCocycleDatum.exists_away_away_divFamZarAff_of_admissible_fibre
 type: lean
-updated: '2026-08-03T22:58:50'
+updated: '2026-08-07T05:01:55'
 ---
 theorem exists_away_away_divFamZarAff_of_admissible_fibre
     (D : BasicOpenCocycleDatum C B pi) [IsNoetherianRing B]

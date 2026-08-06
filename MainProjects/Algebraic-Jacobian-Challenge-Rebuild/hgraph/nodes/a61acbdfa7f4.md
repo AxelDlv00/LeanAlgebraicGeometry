@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.amitsurPairOpen_le_face₁₂
 type: lean
-updated: '2026-08-02T07:12:48'
+updated: '2026-08-07T05:01:46'
 ---
 lemma amitsurPairOpen_le_face₁₂ (𝒲 : (Xq).PointedCover) (z z' : Xcb) :
     amitsurPairOpen C 𝒲 z z'

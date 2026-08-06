@@ -23,7 +23,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.LocalEquations.vanishingSubmodule
 type: lean
-updated: '2026-08-02T07:12:56'
+updated: '2026-08-07T05:01:53'
 ---
 noncomputable def Scheme.LocalEquations.vanishingSubmodule (d : X.LocalEquations) :
     Submodule k ↥(twistSubmodule k V₀ V₁ g ⊤) where

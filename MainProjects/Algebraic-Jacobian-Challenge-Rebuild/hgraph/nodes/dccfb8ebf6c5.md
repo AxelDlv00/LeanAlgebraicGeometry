@@ -76,7 +76,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.isEmpty_chartTyping_of_straddling
 type: lean
-updated: '2026-08-02T07:12:51'
+updated: '2026-08-07T05:01:51'
 ---
 theorem isEmpty_chartTyping_of_straddling (D : AffCoverData C R) (j : D.index)
     {x y : relCurve C R} (hxj : x ∈ D.pieces j) (hyj : y ∈ D.pieces j)

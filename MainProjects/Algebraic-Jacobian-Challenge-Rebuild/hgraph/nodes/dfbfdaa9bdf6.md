@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.BasicOpenCocycleDatum.component_relAffSectionsMap_mem_nonZeroDivisors
 type: lean
-updated: '2026-08-03T19:06:09'
+updated: '2026-08-07T05:01:55'
 ---
 theorem component_relAffSectionsMap_mem_nonZeroDivisors
     (hfib : ∀ (j : D.index) (p : PrimeSpectrum B), Function.Injective

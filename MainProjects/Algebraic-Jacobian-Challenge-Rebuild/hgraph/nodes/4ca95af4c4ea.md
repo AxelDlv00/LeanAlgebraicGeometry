@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.exists_isUnit_of_span_singleton_eq
 type: lean
-updated: '2026-08-02T07:12:48'
+updated: '2026-08-07T05:01:45'
 ---
 theorem exists_isUnit_of_span_singleton_eq {R : Type*} [CommRing R] {a b : R}
     (hab : Ideal.span {a} = Ideal.span {b}) (ha : a ∈ R⁰) :

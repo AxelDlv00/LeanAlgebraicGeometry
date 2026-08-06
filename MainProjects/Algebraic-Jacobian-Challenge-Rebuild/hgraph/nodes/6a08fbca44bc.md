@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divFam_stalkIdeal_eq_of_eps_eq
 type: lean
-updated: '2026-08-02T07:12:49'
+updated: '2026-08-07T05:01:49'
 ---
 theorem divFam_stalkIdeal_eq_of_eps_eq (g : ℕ)
     (G G' : CertifiedDivisorFamily C R π g)

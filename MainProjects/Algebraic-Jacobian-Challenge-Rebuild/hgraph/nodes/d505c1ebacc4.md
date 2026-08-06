@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.GrothendieckTopology.MayerVietorisSquare.exists_moduleDelta_eq
 type: lean
-updated: '2026-08-02T07:12:47'
+updated: '2026-08-07T05:01:44'
 ---
 theorem exists_moduleDelta_eq (y : Sheaf.HModule' F S.X₄ 1)
     (h₂ : Sheaf.HModule'.res S.f₂₄ F 1 y = 0)

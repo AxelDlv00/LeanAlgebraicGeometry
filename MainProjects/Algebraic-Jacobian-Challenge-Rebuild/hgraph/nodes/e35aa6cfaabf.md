@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divUniversalSndWindowEquiv
 type: lean
-updated: '2026-08-02T07:12:50'
+updated: '2026-08-07T05:01:49'
 ---
 noncomputable def divUniversalSndWindowEquiv :
     ↥(divUniversalSnd k (windowS_choice π hπ g • fiberWeilDivisor π)

@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PicEtAff.baseFieldShuffle_unit
 type: lean
-updated: '2026-08-02T07:12:58'
+updated: '2026-08-07T05:01:57'
 ---
 theorem baseFieldShuffle_unit (x : relPic C (overSpec k A)) :
     baseFieldShuffle k L C A (unit C A x)

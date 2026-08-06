@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.thetaPieceProdBaseChangeToOverlapEquiv_coaction
 type: lean
-updated: '2026-08-02T07:12:51'
+updated: '2026-08-07T05:01:51'
 ---
 theorem thetaPieceProdBaseChangeToOverlapEquiv_coaction {n : ℕ}
     (hc : A.IsCertified n) (s : A.ThetaPieceProd (π := π) a) :

@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.picFromBase
 type: lean
-updated: '2026-08-02T07:12:59'
+updated: '2026-08-07T05:01:58'
 ---
 def picFromBase (T : Over (Spec (.of k))) : Subgroup ((C ⊗ T).left.CechPic) :=
   (CechPic.map (snd C T).left).range

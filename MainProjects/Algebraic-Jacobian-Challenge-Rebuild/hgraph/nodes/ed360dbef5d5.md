@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.pairAwayEquiv
 type: lean
-updated: '2026-08-02T07:12:59'
+updated: '2026-08-07T05:01:59'
 ---
 noncomputable def pairAwayEquiv (i j : P.ι) :
     letI := IsLocalization.Away.tensorAwayAlgebra A B B Γ(XB, (XB).basicOpen (P.r i))

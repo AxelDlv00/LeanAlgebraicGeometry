@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ProjectiveSpace.Coordinates.homOfLE_fromOpen
 type: lean
-updated: '2026-08-03T16:37:45'
+updated: '2026-08-07T05:01:59'
 ---
 theorem homOfLE_fromOpen {Z : Scheme.{u}} {U V : Z.Opens} (h : V ≤ U)
     (i : J) (c : J → Γ(Z, U)) (hi : c i = 1) :

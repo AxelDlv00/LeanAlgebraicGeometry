@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divFamZarAffOfFibrewiseRegularLocalEquations
 type: lean
-updated: '2026-08-03T19:06:09'
+updated: '2026-08-07T05:01:55'
 ---
 noncomputable def divFamZarAffOfFibrewiseRegularLocalEquations
     (pi : C.left ⟶ P1 k) [IsFinite pi]

@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.carveIdeal_le_ker_of_map_pairTaut
 type: lean
-updated: '2026-08-02T07:12:49'
+updated: '2026-08-07T05:01:48'
 ---
 theorem carveIdeal_le_ker_of_map_pairTaut
     (i : (glueData k g r₁).J) (j : (glueData k g r₂).J)

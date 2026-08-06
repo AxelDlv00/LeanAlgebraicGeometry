@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: Algebra.TensorProduct.faceA₁₃
 type: lean
-updated: '2026-08-02T07:12:47'
+updated: '2026-08-07T05:01:43'
 ---
 noncomputable def faceA₁₃ (i j k : ι) : (S i ⊗[A] S k) →ₐ[A] S i ⊗[A] (S j ⊗[A] S k) :=
   Algebra.TensorProduct.map (AlgHom.id A (S i)) Algebra.TensorProduct.includeRight

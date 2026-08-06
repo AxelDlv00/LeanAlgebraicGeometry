@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ker_rTensor_le_range_subtype_of_flat_range_quotient
 type: lean
-updated: '2026-08-02T07:12:49'
+updated: '2026-08-07T05:01:48'
 ---
 theorem ker_rTensor_le_range_subtype_of_flat_range_quotient
     (δ : M →ₗ[R] N)

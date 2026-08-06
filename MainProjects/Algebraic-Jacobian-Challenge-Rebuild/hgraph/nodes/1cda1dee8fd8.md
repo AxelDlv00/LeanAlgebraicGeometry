@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.JacobianData.homEquiv_uniqueUpToIso_hom
 type: lean
-updated: '2026-08-02T07:12:57'
+updated: '2026-08-07T05:01:55'
 ---
 theorem homEquiv_uniqueUpToIso_hom (d d' : JacobianData C) {T : Over (Spec (.of k))}
     (f : T ⟶ d.J) :

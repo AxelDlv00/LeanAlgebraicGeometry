@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.twoChartCob
 type: lean
-updated: '2026-08-02T07:13:00'
+updated: '2026-08-07T05:02:02'
 ---
 noncomputable def twoChartCob (v₁ : Γ(X, V false)ˣ) (v₂ : Γ(X, V true)ˣ) :
     ∀ s : Bool, Γ(X, V s)ˣ

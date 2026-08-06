@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divFunctorAff_representableBy
 type: lean
-updated: '2026-08-03T13:09:52'
+updated: '2026-08-07T05:01:47'
 ---
 noncomputable def divFunctorAff_representableBy :
     (divFunctorAff C g).RepresentableBy (divRepAffScheme C hpi g hO hchi) :=

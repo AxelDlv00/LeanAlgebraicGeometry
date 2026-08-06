@@ -9,7 +9,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.IdealPurity.finite_mul_read_mem_span
 type: lean
-updated: '2026-08-02T07:12:50'
+updated: '2026-08-07T05:01:49'
 ---
 private theorem finite_mul_read_mem_span
     (m : ι → B) (r : K →ₗ[R] B) (x : ι → K) :

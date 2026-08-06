@@ -9,7 +9,7 @@ lean_status: sorry
 stale: true
 title: AlgebraicGeometry.ProbeP4R6i.controlSorry
 type: lean
-updated: '2026-08-07T04:03:03'
+updated: '2026-08-07T04:54:22'
 ---
 theorem controlSorry : True := by sorry
 

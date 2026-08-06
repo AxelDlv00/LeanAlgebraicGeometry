@@ -22,7 +22,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.not_isOpenImmersion_abelSigmaChart_of_genus_lt_degree
 type: lean
-updated: '2026-08-05T02:56:16'
+updated: '2026-08-07T05:01:56'
 ---
 theorem not_isOpenImmersion_abelSigmaChart_of_genus_lt_degree
     {K : Type u} [Field K] [Algebra k K]

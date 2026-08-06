@@ -24,7 +24,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.isLocalizedModule_secResₗ_glued
 type: lean
-updated: '2026-08-02T07:12:47'
+updated: '2026-08-07T05:01:44'
 ---
 theorem isLocalizedModule_secResₗ_glued (hV : IsAffineOpen V)
     (hc : Scheme.IsGluingCocycle U g)

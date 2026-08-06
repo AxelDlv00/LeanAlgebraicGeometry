@@ -15,9 +15,9 @@ that bridge: the componentwise `gluedQsmul` action gives a module on every open,
 `PresheafOfModules.ofPresheaf`, and `gluedQsmul_overAlgebraMap` identifies its
 restriction to the coefficient ring with the original datum sheaf.
 
-This is deliberately only the native-module bridge.  It does not assert
-`IsLineBundle`, pushforward base-change, or existence of a tied
-`PicRankOneLocalPresentation`; those remain genuine producer obligations.
+The canonical piece trivializations also prove that the native module is a line
+bundle.  Pushforward base-change and existence of a tied
+`PicRankOneLocalPresentation` remain genuine producer obligations.
 -/
 
 set_option autoImplicit false

@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.free_quotient_congrAmbient
 type: lean
-updated: '2026-08-02T07:12:49'
+updated: '2026-08-07T05:01:48'
 ---
 theorem free_quotient_congrAmbient (e : H ≃ₗ[k] H') (x : grFunctorAff k H g T)
     (hfree : Module.Free T (TensorProduct k T H ⧸ x.toSubmodule)) :

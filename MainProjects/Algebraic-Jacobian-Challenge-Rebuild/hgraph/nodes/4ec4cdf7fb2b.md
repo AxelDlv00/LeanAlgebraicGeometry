@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.span_twistGermSet_le_stalkIdeal
 type: lean
-updated: '2026-08-02T07:12:49'
+updated: '2026-08-07T05:01:49'
 ---
 lemma span_twistGermSet_le_stalkIdeal (d : X.LocalEquations)
     {T : Set ↥(twistSubmodule A V₀ V₁ gc ⊤)}

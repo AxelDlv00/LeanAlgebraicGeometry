@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divRankOneOpenPullbackMap_presheaf_isOpenImmersion
 type: lean
-updated: '2026-08-06T15:56:43'
+updated: '2026-08-07T05:01:47'
 ---
 theorem divRankOneOpenPullbackMap_presheaf_isOpenImmersion
     (h : DivRankOneOpenData (C := C) pi)

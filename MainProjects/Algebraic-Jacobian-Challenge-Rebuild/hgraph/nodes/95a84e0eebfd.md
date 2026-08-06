@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.LocalEquations.unitEquations
 type: lean
-updated: '2026-08-02T07:12:52'
+updated: '2026-08-07T05:01:52'
 ---
 noncomputable def unitEquations : X.LocalEquations where
   cover := ⊤

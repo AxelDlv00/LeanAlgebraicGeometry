@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: IsLocalization.AwayCover.tensorCollapse_piAssemblyUnit
 type: lean
-updated: '2026-08-02T07:12:46'
+updated: '2026-08-07T05:01:43'
 ---
 theorem tensorCollapse_piAssemblyUnit [Fintype ι] [DecidableEq ι]
     {w : ∀ i j, (S i ⊗[A] S j)ˣ} {c : ∀ i j, (T i j)ˣ}

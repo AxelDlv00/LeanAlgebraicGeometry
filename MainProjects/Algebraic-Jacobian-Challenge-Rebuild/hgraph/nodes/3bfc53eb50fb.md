@@ -22,7 +22,7 @@ lean_status: lean_ok
 private: true
 title: exists_comp_eq_id_of_lTensor_residueField_injective
 type: lean
-updated: '2026-08-02T07:12:50'
+updated: '2026-08-07T05:01:49'
 ---
 private lemma exists_comp_eq_id_of_lTensor_residueField_injective
     [Module.Finite R M] [Module.Free R N] (ψ : M →ₗ[R] N)

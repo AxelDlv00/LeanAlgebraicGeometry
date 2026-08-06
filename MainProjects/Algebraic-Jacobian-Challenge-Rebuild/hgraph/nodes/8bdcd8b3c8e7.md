@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.projectiveQuotientBaseChangeEquiv
 type: lean
-updated: '2026-08-02T07:12:50'
+updated: '2026-08-07T05:01:49'
 ---
 noncomputable def projectiveQuotientBaseChangeEquiv (N : Submodule R M)
     [Module.Projective R (M ⧸ N)] :

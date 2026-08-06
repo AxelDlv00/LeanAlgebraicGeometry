@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.PresheafOfGroups.OneCocycle.res_id
 type: lean
-updated: '2026-08-02T07:12:48'
+updated: '2026-08-07T05:01:46'
 ---
 lemma res_id (γ : OneCocycle G U) : γ.res (fun i ↦ 𝟙 (U i)) = γ :=
   ext γ.toOneCochain.res_id

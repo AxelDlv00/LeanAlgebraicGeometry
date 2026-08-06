@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.relCurveMap_fst
 type: lean
-updated: '2026-08-02T07:12:47'
+updated: '2026-08-07T05:01:44'
 ---
 lemma relCurveMap_fst :
     relCurveMap C R R' ≫ (fst C (overSpec k R)).left = (fst C (overSpec k R')).left :=

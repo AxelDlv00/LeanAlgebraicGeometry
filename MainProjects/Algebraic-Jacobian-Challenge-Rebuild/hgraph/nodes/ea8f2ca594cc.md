@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.overSpecMap_left_lmul'_inr
 type: lean
-updated: '2026-08-02T07:12:48'
+updated: '2026-08-07T05:01:46'
 ---
 lemma overSpecMap_left_lmul'_inr : Δs ≫ (q₂) = 𝟙 (SB) := by
   rw [← Over.comp_left, ← Over.overSpecMap_comp, tensorLmul'_comp_tensorInr,

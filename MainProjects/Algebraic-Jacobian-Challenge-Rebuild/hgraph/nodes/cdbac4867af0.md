@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.FlatRangeBridge.exact_imageInQuotient_subtype_quotientMapOfLE
 type: lean
-updated: '2026-08-02T07:12:50'
+updated: '2026-08-07T05:01:49'
 ---
 lemma exact_imageInQuotient_subtype_quotientMapOfLE {L P : Submodule R M}
     (hLP : L ≤ P) :

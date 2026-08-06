@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.faithfullyFlat_pieceCover
 type: lean
-updated: '2026-08-02T07:12:57'
+updated: '2026-08-07T05:01:54'
 ---
 theorem faithfullyFlat_pieceCover [Module.FaithfullyFlat A B] {U : (XA).Opens}
     (hU : IsAffineOpen U) :

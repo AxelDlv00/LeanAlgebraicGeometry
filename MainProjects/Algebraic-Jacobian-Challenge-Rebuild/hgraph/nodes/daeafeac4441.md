@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.PresheafOfGroups.OneCochain.mul_evInf
 type: lean
-updated: '2026-08-02T07:12:59'
+updated: '2026-08-07T05:01:59'
 ---
 lemma OneCochain.mul_evInf (γ₁ γ₂ : OneCochain G U) (i j : I) :
     (γ₁ * γ₂).evInf i j = γ₁.evInf i j * γ₂.evInf i j :=

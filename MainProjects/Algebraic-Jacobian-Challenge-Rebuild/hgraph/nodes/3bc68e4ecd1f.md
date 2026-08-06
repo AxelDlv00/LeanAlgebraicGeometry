@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.chartValueAff_toAff
 type: lean
-updated: '2026-08-04T14:08:51'
+updated: '2026-08-07T05:01:50'
 ---
 theorem chartValueAff_toAff {π : C.left ⟶ P1 k} [IsAffineHom π]
     (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)

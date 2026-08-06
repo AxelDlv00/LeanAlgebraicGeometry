@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.pullback_chart_divClassifyAff_compat
 type: lean
-updated: '2026-08-03T13:09:52'
+updated: '2026-08-07T05:01:47'
 ---
 theorem pullback_chart_divClassifyAff_compat (F₀ : DivFamZarAff C S g)
     {T : Type u} [CommRing T] [Algebra k T] [Algebra S T] [IsScalarTower k S T]

@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PointwiseAchiever.isGenerator_pointwiseGeneratorSeed_at
 type: lean
-updated: '2026-08-03T08:02:47'
+updated: '2026-08-07T05:01:50'
 ---
 theorem isGenerator_pointwiseGeneratorSeed_at {gamma : Nat}
     (hgamma : gamma ≤ g)

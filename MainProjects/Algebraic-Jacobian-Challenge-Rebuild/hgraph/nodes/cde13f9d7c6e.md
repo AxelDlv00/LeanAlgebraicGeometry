@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.Sheaf.HModule.surjective_map_g_zero
 type: lean
-updated: '2026-08-02T07:12:59'
+updated: '2026-08-07T05:02:00'
 ---
 theorem surjective_map_g_zero (hS : S.ShortExact) [Subsingleton (HModule S.X₁ 1)] :
     Function.Surjective (map S.g 0) := fun y =>

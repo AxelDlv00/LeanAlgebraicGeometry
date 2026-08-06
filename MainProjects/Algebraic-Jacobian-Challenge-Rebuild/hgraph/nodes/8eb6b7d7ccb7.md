@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.relCurveAffineOpenIso_inv_trans
 type: lean
-updated: '2026-08-04T10:53:20'
+updated: '2026-08-07T05:01:58'
 ---
 theorem relCurveAffineOpenIso_inv_trans
     {U V : T.left.directedAffineCover.I₀} (hUV : U ⟶ V) :

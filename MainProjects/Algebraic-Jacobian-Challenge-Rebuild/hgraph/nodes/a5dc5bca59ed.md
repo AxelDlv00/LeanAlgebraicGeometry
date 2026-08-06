@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.fiberTwist_pow
 type: lean
-updated: '2026-08-02T07:12:59'
+updated: '2026-08-07T05:02:00'
 ---
 theorem fiberTwist_pow (n : ℕ) : fiberTwist π n = fiberTwist π 1 ^ n := by
   induction n with

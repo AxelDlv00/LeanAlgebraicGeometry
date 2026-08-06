@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.unitsSndEquiv_apply
 type: lean
-updated: '2026-08-02T07:12:59'
+updated: '2026-08-07T05:01:58'
 ---
 lemma unitsSndEquiv_apply {V : T.left.Opens} (hV : IsAffineOpen V) (v : Γ(T.left, V)ˣ) :
     unitsSndEquiv C T hV v

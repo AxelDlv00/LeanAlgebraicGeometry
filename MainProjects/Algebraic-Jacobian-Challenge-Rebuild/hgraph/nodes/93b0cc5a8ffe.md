@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.BasicOpenCocycleDatum.exists_basicOpen_h1_vanishing
 type: lean
-updated: '2026-08-03T20:05:08'
+updated: '2026-08-07T05:01:55'
 ---
 theorem exists_basicOpen_h1_vanishing
     (D : BasicOpenCocycleDatum C B pi)

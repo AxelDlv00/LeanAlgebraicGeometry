@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_basis_baseChange_mul_eq_one
 type: lean
-updated: '2026-08-02T07:12:56'
+updated: '2026-08-07T05:01:53'
 ---
 theorem exists_basis_baseChange_mul_eq_one (basis : Module.Basis ι k M)
     (f : R ⊗[k] M →ₗ[R] B) (x : R ⊗[k] M) (hx : f x = 1) :

@@ -34,7 +34,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.surjective_of_forall_exists_residueField_lift
 type: lean
-updated: '2026-08-02T07:12:57'
+updated: '2026-08-07T05:01:55'
 ---
 theorem surjective_of_forall_exists_residueField_lift (f : X ⟶ Y)
     (h : ∀ y : Y, ∃ q : Spec (Y.residueField y) ⟶ X,

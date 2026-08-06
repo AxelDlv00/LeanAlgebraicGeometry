@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.pic0SigmaFunctor
 type: lean
-updated: '2026-08-02T07:12:58'
+updated: '2026-08-07T05:01:57'
 ---
 noncomputable abbrev pic0SigmaFunctor : Scheme.{u}ᵒᵖ ⥤ Type u :=
   Over.sigmaExtension (Spec (.of k)) (pic0TypeFunctor C)

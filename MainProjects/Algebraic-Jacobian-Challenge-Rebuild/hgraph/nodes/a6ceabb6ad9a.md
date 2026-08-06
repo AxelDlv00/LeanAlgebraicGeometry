@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.IsCertified.divisorWindow_pulledEquations_eq_at
 type: lean
-updated: '2026-08-03T08:02:47'
+updated: '2026-08-07T05:01:52'
 ---
 theorem IsCertified.divisorWindow_pulledEquations_eq_at
     {A : AffAdaptation D d} {g gamma a : ℕ} (hc : A.IsCertified g)

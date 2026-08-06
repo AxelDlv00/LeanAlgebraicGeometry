@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.picClassHom
 type: lean
-updated: '2026-08-02T07:12:50'
+updated: '2026-08-07T05:01:50'
 ---
 noncomputable def picClassHom : X.CurveDivisor →+ Additive X.CechPic where
   toFun D := Additive.ofMul (CurveDivisor.picClass K D)

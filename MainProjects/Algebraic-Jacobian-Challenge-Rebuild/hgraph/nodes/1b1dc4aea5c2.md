@@ -38,7 +38,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.graph_pullback_regular
 type: lean
-updated: '2026-08-02T07:12:48'
+updated: '2026-08-07T05:01:45'
 ---
 theorem graph_pullback_regular (data : DiagonalChartData C) [IsSeparated C.hom] (t : T ⟶ C)
     (y z : (C ⊗ T).left)

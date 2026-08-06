@@ -19,7 +19,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divFunctorToAff
 type: lean
-updated: '2026-08-02T07:12:50'
+updated: '2026-08-07T05:01:51'
 ---
 def divFunctorToAff : divFunctor C π n ⟶ divFunctorAff C n where
   app T := ↾divFamZarToAffVehicle C n π

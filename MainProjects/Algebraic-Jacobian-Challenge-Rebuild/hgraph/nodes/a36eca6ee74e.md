@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.mem_picRankOneOpen_of_localPresentations
 type: lean
-updated: '2026-08-06T12:29:31'
+updated: '2026-08-07T05:01:57'
 ---
 theorem mem_picRankOneOpen_of_localPresentations
     {T : (Over (Spec (.of k)))ᵒᵖ}

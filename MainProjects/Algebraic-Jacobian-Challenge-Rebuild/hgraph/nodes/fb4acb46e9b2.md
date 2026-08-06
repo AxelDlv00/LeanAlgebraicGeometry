@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.congrAmbient_symm_cancel
 type: lean
-updated: '2026-08-02T07:12:49'
+updated: '2026-08-07T05:01:48'
 ---
 theorem congrAmbient_symm_cancel (e : H ≃ₗ[k] H') (x : grFunctorAff k H' g T) :
     congrAmbient e (congrAmbient e.symm x) = x := by

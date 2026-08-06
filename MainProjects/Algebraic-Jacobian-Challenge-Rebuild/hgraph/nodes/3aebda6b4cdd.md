@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.relFiberCoord₀
 type: lean
-updated: '2026-08-02T07:12:47'
+updated: '2026-08-07T05:01:44'
 ---
 noncomputable def relFiberCoord₀ [IsAffineHom π] :
     Γ(relCurve C R, (relCover C R (fiberTwoCover π)).V₀) :=

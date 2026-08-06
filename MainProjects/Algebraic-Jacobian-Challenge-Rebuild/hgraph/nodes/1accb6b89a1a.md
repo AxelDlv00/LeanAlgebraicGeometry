@@ -22,7 +22,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.relPicDeg_relPicAlgMap_congr
 type: lean
-updated: '2026-08-02T07:12:48'
+updated: '2026-08-07T05:01:46'
 ---
 theorem relPicDeg_relPicAlgMap_congr {E : Algebra.EtaleCover K}
     {x : relPic C (overSpec k E.Carrier)} (hx : x ∈ descentClasses C E)

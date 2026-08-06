@@ -31,7 +31,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.isIntegral_pullback_self
 type: lean
-updated: '2026-08-02T07:12:46'
+updated: '2026-08-07T05:01:42'
 ---
 theorem isIntegral_pullback_self
     {kbar : Type u} [Field kbar] [IsAlgClosed kbar]

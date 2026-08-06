@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.thetaTripleQuotientModule
 type: lean
-updated: '2026-08-02T07:12:51'
+updated: '2026-08-07T05:01:52'
 ---
 noncomputable def thetaTripleQuotientModule (A : AffAdaptation D d) (a : ℕ)
     (i j l : D.index) :

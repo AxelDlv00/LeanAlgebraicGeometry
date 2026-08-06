@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.rankOneAbelRepresented_mem
 type: lean
-updated: '2026-08-06T12:29:31'
+updated: '2026-08-07T05:01:57'
 ---
 theorem rankOneAbelRepresented_mem {T : (Over (Spec (.of k)))ᵒᵖ}
     (x : (divRankOnePresentationPreimageRepresenter pi).obj T) :

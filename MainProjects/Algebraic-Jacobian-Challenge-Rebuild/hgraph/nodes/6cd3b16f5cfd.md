@@ -29,7 +29,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivFamZar.trivEqns
 type: lean
-updated: '2026-08-02T07:12:52'
+updated: '2026-08-07T05:01:52'
 ---
 noncomputable def trivEqns : (relCurve C R).LocalEquations where
   cover := ⊤

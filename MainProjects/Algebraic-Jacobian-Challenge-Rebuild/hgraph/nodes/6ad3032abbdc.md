@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.diagonal_left_fst_left
 type: lean
-updated: '2026-08-02T07:12:48'
+updated: '2026-08-07T05:01:45'
 ---
 lemma diagonal_left_fst_left : (diagonal C).left ≫ (fst C C).left = 𝟙 C.left := by
   rw [← Over.comp_left, diagonal_fst, Over.id_left]

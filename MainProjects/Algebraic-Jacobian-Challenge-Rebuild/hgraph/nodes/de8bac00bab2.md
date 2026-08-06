@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.Over.sigmaExtensionNat_app_fst
 type: lean
-updated: '2026-08-02T07:12:57'
+updated: '2026-08-07T05:01:55'
 ---
 lemma sigmaExtensionNat_app_fst (φ : F ⟶ G) (T : Cᵒᵖ) (x : (sigmaExtension S F).obj T) :
     ((sigmaExtensionNat φ).app T x).1 = x.1 :=

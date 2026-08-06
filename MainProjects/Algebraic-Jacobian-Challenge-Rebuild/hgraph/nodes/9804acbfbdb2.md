@@ -19,7 +19,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.rankAtStalk_colength_eq_zero_of_disjoint
 type: lean
-updated: '2026-08-02T07:12:51'
+updated: '2026-08-07T05:01:51'
 ---
 lemma rankAtStalk_colength_eq_zero_of_disjoint (j : D.index)
     (hdisj : Disjoint d.supportLocus (D.pieces j : Set (relCurve C R)))

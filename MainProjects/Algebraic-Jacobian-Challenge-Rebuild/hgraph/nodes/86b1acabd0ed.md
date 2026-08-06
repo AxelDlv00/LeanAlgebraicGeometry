@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.overSpecMap_comp
 type: lean
-updated: '2026-08-02T07:12:59'
+updated: '2026-08-07T05:01:58'
 ---
 lemma Over.overSpecMap_comp (f : A →ₐ[k] B) (g : B →ₐ[k] C') :
     Over.overSpecMap (g.comp f) = Over.overSpecMap g ≫ Over.overSpecMap f := by

@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.pic0SigmaFunctor_ulift_isSheaf_etale
 type: lean
-updated: '2026-08-04T10:53:20'
+updated: '2026-08-07T05:01:57'
 ---
 theorem pic0SigmaFunctor_ulift_isSheaf_etale :
     Presieve.IsSheaf Scheme.etaleTopology

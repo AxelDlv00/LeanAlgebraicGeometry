@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivFamZarAff.trivSectionAff
 type: lean
-updated: '2026-08-02T07:12:50'
+updated: '2026-08-07T05:01:51'
 ---
 noncomputable def trivSectionAff (T : Over (Spec (.of k))) : divFamZarAff C 0 T :=
   ⟨fun _ => trivZarAff (C := C) (pi := pi),

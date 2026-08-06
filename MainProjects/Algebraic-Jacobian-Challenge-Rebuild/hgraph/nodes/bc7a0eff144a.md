@@ -10,7 +10,7 @@ lean_status: lean_ok
 stale: true
 title: AlgebraicGeometry.ProbeP4R6d.probeSplitEpi
 type: lean
-updated: '2026-08-07T04:03:03'
+updated: '2026-08-07T04:54:21'
 ---
 theorem probeSplitEpi {X : Scheme.{u}} (f : yoneda.obj X ⟶ (pic0SigmaSheaf C).1)
     (V : X.Opens) [IsIso (restrictChart f V)] :

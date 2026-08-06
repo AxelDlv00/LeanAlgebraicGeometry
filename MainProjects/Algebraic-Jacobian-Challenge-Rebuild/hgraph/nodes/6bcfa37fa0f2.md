@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.mul_mem_unitGluedSubmodule
 type: lean
-updated: '2026-08-02T07:12:51'
+updated: '2026-08-07T05:01:51'
 ---
 theorem mul_mem_unitGluedSubmodule {s t : A.chartProd}
     (hs : s ∈ unitGluedSubmodule A u) (ht : t ∈ unitGluedSubmodule A v) :

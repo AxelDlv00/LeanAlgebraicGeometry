@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ProjectiveSpace.AffineChartAtRing.awayAlgEquiv_symm_X
 type: lean
-updated: '2026-08-03T16:37:45'
+updated: '2026-08-07T05:01:59'
 ---
 theorem awayAlgEquiv_symm_X (i : J) (j : {j : J // j ≠ i}) :
     (awayAlgEquiv R J i).symm (X j) = chartCoord R J i j :=

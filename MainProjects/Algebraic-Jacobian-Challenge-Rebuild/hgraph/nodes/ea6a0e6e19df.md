@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.gluedSubordUnit
 type: lean
-updated: '2026-08-02T07:12:47'
+updated: '2026-08-07T05:01:43'
 ---
 noncomputable def gluedSubordUnit (g : ∀ i j : J, Γ(X, U i ⊓ U j)ˣ) (𝒲 : X.PointedCover)
     (σ : X → J) (hσ : ∀ x : X, 𝒲.opens x ≤ U (σ x)) (x y : X) :

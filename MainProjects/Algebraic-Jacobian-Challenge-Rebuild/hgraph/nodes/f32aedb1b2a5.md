@@ -13,7 +13,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Over.pieceCoherent_exp₁₃
 type: lean
-updated: '2026-08-02T07:12:57'
+updated: '2026-08-07T05:01:54'
 ---
 private theorem pieceCoherent_exp₁₃
     {𝒩 : (XB).PointedCover} {γ : (XB).unitsCocycle 𝒩}

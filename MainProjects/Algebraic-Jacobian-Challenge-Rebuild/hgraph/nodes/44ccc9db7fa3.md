@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.TwoCover.truncExpClass_eq_zero_iff
 type: lean
-updated: '2026-08-02T07:13:00'
+updated: '2026-08-07T05:02:01'
 ---
 theorem truncExpClass_eq_zero_iff (b : Γ(X, U₀ ⊓ U₁)) :
     truncExpClass X U₀ U₁ b = 0

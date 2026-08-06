@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.representableByOfShift
 type: lean
-updated: '2026-08-02T07:12:59'
+updated: '2026-08-07T05:01:59'
 ---
 def representableByOfShift {J : Over (Spec (.of k))}
     (L₀ : (C ⊗ overSpec k k).left.CechPic) (m : ℕ)

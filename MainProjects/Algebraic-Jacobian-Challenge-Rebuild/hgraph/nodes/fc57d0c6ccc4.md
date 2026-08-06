@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffCoverData.swallowedBy_ofSwallowingPiece
 type: lean
-updated: '2026-08-02T07:12:51'
+updated: '2026-08-07T05:01:51'
 ---
 theorem swallowedBy_ofSwallowingPiece {d : (relCurve C R).LocalEquations}
     {W : (relCurve C R).Opens} (hW : IsAffineOpen W) {m : ℕ}

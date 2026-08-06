@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.germ_genericPoint_dvd_of_windowCompare_ne_zero
 type: lean
-updated: '2026-08-02T07:12:50'
+updated: '2026-08-07T05:01:49'
 ---
 theorem germ_genericPoint_dvd_of_windowCompare_ne_zero
     (b : Bool)

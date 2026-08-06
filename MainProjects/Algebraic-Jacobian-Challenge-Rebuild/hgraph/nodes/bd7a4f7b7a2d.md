@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PointwiseAchiever.germ_relThetaResSide_mem_span_pointwiseSection_of_residuePoint_generic_at
 type: lean
-updated: '2026-08-02T23:32:18'
+updated: '2026-08-07T05:01:49'
 ---
 theorem germ_relThetaResSide_mem_span_pointwiseSection_of_residuePoint_generic_at
     {gamma : ℕ} (hgamma : gamma ≤ g)

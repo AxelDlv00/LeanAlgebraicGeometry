@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.whiskerLeft_inl_comp_ofId
 type: lean
-updated: '2026-08-02T07:12:59'
+updated: '2026-08-07T05:01:58'
 ---
 lemma whiskerLeft_inl_comp_ofId :
     (u₁) ≫ (cg) = (cg₂) := by

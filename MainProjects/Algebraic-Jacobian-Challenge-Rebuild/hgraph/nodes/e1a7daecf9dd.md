@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PicEtAff.relPicAlgMap_tensor_eq_of_compat
 type: lean
-updated: '2026-08-02T07:12:58'
+updated: '2026-08-07T05:01:58'
 ---
 theorem relPicAlgMap_tensor_eq_of_compat (g₁ g₂ : A)
     [IsLocalization.Away g₁ S₁] [IsLocalization.Away g₂ S₂]

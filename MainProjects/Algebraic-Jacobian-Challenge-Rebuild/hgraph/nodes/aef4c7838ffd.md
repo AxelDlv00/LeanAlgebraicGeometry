@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.free_sections_relPinnedChart
 type: lean
-updated: '2026-08-02T07:12:50'
+updated: '2026-08-07T05:01:49'
 ---
 theorem free_sections_relPinnedChart (C : Over (Spec (.of k))) (R : Type u) [CommRing R]
     [Algebra k R] (π : C.left ⟶ P1 k) [IsFinite π] (b : Bool) :

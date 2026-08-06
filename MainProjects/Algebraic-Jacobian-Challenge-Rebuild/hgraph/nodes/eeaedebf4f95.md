@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ThetaGeneratorSeed.divFamZar_of_forall_away_certified
 type: lean
-updated: '2026-08-02T07:12:49'
+updated: '2026-08-07T05:01:48'
 ---
 noncomputable def divFamZar_of_forall_away_certified (hD : D.IsGenerator)
     {m : ℕ} (g : Fin m → R) (hg : Ideal.span (Set.range g) = ⊤)

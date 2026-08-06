@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: TensorProduct.baseChangeAlgebraModulePairing
 type: lean
-updated: '2026-08-02T07:12:57'
+updated: '2026-08-07T05:01:55'
 ---
 noncomputable def baseChangeAlgebraModulePairing :
     (S ⊗[R] A) →ₗ[R] M →ₗ[R] S ⊗[R] M :=

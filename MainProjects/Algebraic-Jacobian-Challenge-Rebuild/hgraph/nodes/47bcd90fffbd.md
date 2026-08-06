@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: Module.map_transitionUnit
 type: lean
-updated: '2026-08-02T07:12:46'
+updated: '2026-08-07T05:01:43'
 ---
 lemma map_transitionUnit (h : C →ₐ[A] C') :
     transitionUnit (trivializationPush h t₁) (trivializationPush h t₂)

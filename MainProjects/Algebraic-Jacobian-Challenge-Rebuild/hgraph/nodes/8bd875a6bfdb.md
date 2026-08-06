@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.productChart_le_fst_preimage
 type: lean
-updated: '2026-08-02T07:12:48'
+updated: '2026-08-07T05:01:45'
 ---
 lemma productChart_le_fst_preimage (U : X.left.Opens) (V : T.left.Opens) :
     productChart X T U V ≤ (fst X T).left ⁻¹ᵁ U :=

@@ -20,7 +20,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.normalizationCover
 type: lean
-updated: '2026-08-02T07:12:57'
+updated: '2026-08-07T05:01:55'
 ---
 noncomputable def normalizationCover (𝒩 : (XB).PointedCover) (𝒲 : (Xq).PointedCover) :
     (Sq).PointedCover :=

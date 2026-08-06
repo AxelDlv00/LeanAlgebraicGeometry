@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PointwiseAchiever.pointwiseSectionVector_fibreCoefficient_eq_zero_at
 type: lean
-updated: '2026-08-03T08:02:47'
+updated: '2026-08-07T05:01:50'
 ---
 theorem pointwiseSectionVector_fibreCoefficient_eq_zero_at {gamma : ℕ}
     (hgamma : gamma ≤ g)

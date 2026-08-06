@@ -1,0 +1,17 @@
+{
+  "role": "horizon",
+  "round": 11,
+  "project": "Algebraic-Jacobian-Challenge-Rebuild",
+  "task_id": "ajcr-review-rank-one-openness",
+  "status": "running",
+  "started_at": "2026-08-06T20:15:31.387213+00:00",
+  "projects": [
+    "Algebraic-Jacobian-Challenge-Rebuild"
+  ],
+  "harness_name": "codex",
+  "harness_kind": "codex",
+  "model": "gpt-5.6-sol",
+  "effort": "ultra",
+  "auth": "subscription",
+  "workspace_sha": "6c447408fc363431a7c18291ff489a0b7d2b635d"
+}

@@ -8,6 +8,6 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.toBaseTest_left
 type: lean
-updated: '2026-08-02T07:12:59'
+updated: '2026-08-07T05:01:59'
 ---
 lemma toBaseTest_left (T : Over (Spec (.of k))) : (toBaseTest T).left = T.hom := rfl

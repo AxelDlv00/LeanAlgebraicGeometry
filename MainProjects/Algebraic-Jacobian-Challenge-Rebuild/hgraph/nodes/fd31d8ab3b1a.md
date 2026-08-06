@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.Sheaf.constModuleSheafHomEquiv
 type: lean
-updated: '2026-08-02T07:12:47'
+updated: '2026-08-07T05:01:44'
 ---
 noncomputable def constModuleSheafHomEquiv (F : Sheaf J (ModuleCat.{u} R)) :
     (constModuleSheaf J R ⟶ F) ≃ₗ[R] F.obj.obj (op T) :=

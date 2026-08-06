@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.pieceAmitsurOpen_le_insertion₁
 type: lean
-updated: '2026-08-02T07:12:57'
+updated: '2026-08-07T05:01:54'
 ---
 lemma pieceAmitsurOpen_le_insertion₁ {𝒩 : (XB).PointedCover}
     {γ : (XB).unitsCocycle 𝒩} (W : NormalizedCechComparison k A B C σ 𝒩 γ)

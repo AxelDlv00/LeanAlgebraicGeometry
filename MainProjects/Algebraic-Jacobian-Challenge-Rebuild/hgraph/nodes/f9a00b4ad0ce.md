@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: LinearMap.quotRangeBaseChangeEquiv
 type: lean
-updated: '2026-08-02T07:12:47'
+updated: '2026-08-07T05:01:44'
 ---
 noncomputable def quotRangeBaseChangeEquiv :
     A ⊗[R] (N ⧸ LinearMap.range f) ≃ₗ[A]

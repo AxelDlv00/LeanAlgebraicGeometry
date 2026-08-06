@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.tripleColength
 type: lean
-updated: '2026-08-02T07:12:51'
+updated: '2026-08-07T05:01:52'
 ---
 noncomputable abbrev tripleColength (A : AffAdaptation D d)
     (i j l : D.index) : Type u :=

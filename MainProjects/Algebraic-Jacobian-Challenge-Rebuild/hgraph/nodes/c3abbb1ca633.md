@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.TrivializingFamily.cover_opens
 type: lean
-updated: '2026-08-02T07:12:48'
+updated: '2026-08-07T05:01:46'
 ---
 lemma cover_opens (x : X) : F.cover.opens x = X.basicOpen (F.sec x) :=
   rfl

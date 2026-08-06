@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.isZero_of_epi_unit_of_finrank_zero
 type: lean
-updated: '2026-08-02T21:35:45'
+updated: '2026-08-07T05:01:54'
 ---
 theorem isZero_of_epi_unit_of_finrank_zero
     {k : Type u} [Field k] {M : X.Modules}

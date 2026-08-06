@@ -16,7 +16,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Scheme.CechPic.pic_pullback_eq_mapRingHom
 type: lean
-updated: '2026-08-02T07:12:48'
+updated: '2026-08-07T05:01:46'
 ---
 private lemma pic_pullback_eq_mapRingHom [IsAffine X] [IsAffine Y] (g : X ⟶ Y)
     {𝒰 : Y.PointedCover} (γ : Y.unitsCocycle 𝒰)

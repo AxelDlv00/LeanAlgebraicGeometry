@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Cover.RelativeGluingData.ofIdealSheafData
 type: lean
-updated: '2026-08-04T10:53:20'
+updated: '2026-08-07T05:01:55'
 ---
 noncomputable def ofIdealSheafData (𝒰 : S.OpenCover) [Category 𝒰.I₀]
     [𝒰.LocallyDirected] (I : ∀ i, (𝒰.X i).IdealSheafData)

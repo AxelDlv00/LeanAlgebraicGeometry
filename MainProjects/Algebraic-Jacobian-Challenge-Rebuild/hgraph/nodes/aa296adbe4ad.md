@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.admissibleAbelEtaleSourceIso
 type: lean
-updated: '2026-08-03T20:05:08'
+updated: '2026-08-07T05:01:55'
 ---
 noncomputable def admissibleAbelEtaleSourceIso :
     Scheme.etaleTopology.uliftYoneda.{u + 1}.obj

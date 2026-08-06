@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivisorAdaptation.thetaGluedSubmodule
 type: lean
-updated: '2026-08-02T07:12:56'
+updated: '2026-08-07T05:01:53'
 ---
 noncomputable def thetaGluedSubmodule : Submodule R A.chartProd :=
   LinearMap.ker (A.deltaLeft - A.thetaDeltaRight a)

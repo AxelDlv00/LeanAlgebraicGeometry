@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivisorAdaptation.projective_pulledColength
 type: lean
-updated: '2026-08-02T07:12:55'
+updated: '2026-08-07T05:01:53'
 ---
 theorem projective_pulledColength (hproj : ∀ j, Module.Projective R (A.colength j))
     (j : A.index) :

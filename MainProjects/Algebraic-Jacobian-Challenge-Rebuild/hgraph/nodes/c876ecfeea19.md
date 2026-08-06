@@ -23,7 +23,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffCoverData.hasAffineOverlaps_of_isProper
 type: lean
-updated: '2026-08-02T07:12:50'
+updated: '2026-08-07T05:01:51'
 ---
 theorem AffCoverData.hasAffineOverlaps_of_isProper [IsProper C.hom] (D : AffCoverData C R) :
     D.HasAffineOverlaps := fun i j =>

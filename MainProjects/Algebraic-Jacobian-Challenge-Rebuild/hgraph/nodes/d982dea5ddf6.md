@@ -23,7 +23,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.chartSection
 type: lean
-updated: '2026-08-02T07:13:00'
+updated: '2026-08-07T05:02:02'
 ---
 noncomputable def chartSection (L : Y.CechPic)
     (h : ∀ s : Bool, CechPic.map (V s).ι L = 1) : overlapQuot Y V :=

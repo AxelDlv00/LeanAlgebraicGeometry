@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.thetaFamily_pow
 type: lean
-updated: '2026-08-02T07:12:58'
+updated: '2026-08-07T05:01:56'
 ---
 theorem thetaFamily_pow (L : (C ⊗ overSpec k k).left.CechPic)
     (T : Over (Spec (.of k))) (m : ℕ) :

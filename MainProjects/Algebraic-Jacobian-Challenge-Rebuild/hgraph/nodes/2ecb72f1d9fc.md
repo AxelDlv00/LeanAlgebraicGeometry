@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.classDeg_twistedClass_eq
 type: lean
-updated: '2026-08-03T20:05:08'
+updated: '2026-08-07T05:01:55'
 ---
 theorem classDeg_twistedClass_eq
     {T : Over (Spec (.of k))} (lam : pic0Subgroup C T)

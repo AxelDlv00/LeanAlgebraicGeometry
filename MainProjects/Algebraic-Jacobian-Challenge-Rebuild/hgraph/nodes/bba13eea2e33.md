@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.cechPicMap_sectionOfPoint_snd
 type: lean
-updated: '2026-08-02T07:12:59'
+updated: '2026-08-07T05:01:58'
 ---
 lemma cechPicMap_sectionOfPoint_snd (σ : T ⟶ C) (N : T.left.CechPic) :
     CechPic.map (sectionOfPoint σ).left (CechPic.map (snd C T).left N) = N := by

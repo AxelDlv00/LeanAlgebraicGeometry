@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivFamZar.congr_apply
 type: lean
-updated: '2026-08-02T07:12:56'
+updated: '2026-08-07T05:01:53'
 ---
 lemma congr_apply (e : A ≃ₐ[k] A') (F : DivFamZar C A π n) :
     congr e F = mapAlgHom e.toAlgHom F :=

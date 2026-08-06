@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.map_divFamPhi_top
 type: lean
-updated: '2026-08-02T07:12:50'
+updated: '2026-08-07T05:01:50'
 ---
 theorem map_divFamPhi_top
     (hH1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1) :

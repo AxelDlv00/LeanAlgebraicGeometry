@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.universalDivFamAffAdmissible
 type: lean
-updated: '2026-08-03T13:09:53'
+updated: '2026-08-07T05:01:55'
 ---
 def universalDivFamAffAdmissible :
     divFamZarAff C (divRepAffAdmissibleParameter C) (divRepAffAdmissibleScheme C) :=

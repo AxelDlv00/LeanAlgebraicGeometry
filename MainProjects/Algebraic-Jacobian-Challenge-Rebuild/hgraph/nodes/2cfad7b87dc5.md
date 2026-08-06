@@ -33,7 +33,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ThetaGeneratorSeed.forall_flat_colength_quotient_of_hsub_free
 type: lean
-updated: '2026-08-02T07:12:50'
+updated: '2026-08-07T05:01:49'
 ---
 theorem forall_flat_colength_quotient_of_hsub_free
     (K : Submodule R (relThetaSections C R π a)) (b : Bool) [Module.Finite R ↥K]

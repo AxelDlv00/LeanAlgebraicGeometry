@@ -40,7 +40,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.pic0Map_lamOfDivRep
 type: lean
-updated: '2026-08-02T07:12:57'
+updated: '2026-08-07T05:01:56'
 ---
 theorem pic0Map_lamOfDivRep {D : Over (Spec (.of k))}
     (divRep : (divFunctor C π n).RepresentableBy D)

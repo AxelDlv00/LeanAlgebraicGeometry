@@ -20,7 +20,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.RelPicTransportFamily.mapSig_rel
 type: lean
-updated: '2026-08-02T07:12:58'
+updated: '2026-08-07T05:01:58'
 ---
 private lemma mapSig_rel {U V : Algebra.EtaleCover A} {x : descentClasses E U}
     {y : descentClasses E V} (F : Algebra.EtaleCover A) (f : U.Carrier →ₐ[A] F.Carrier)

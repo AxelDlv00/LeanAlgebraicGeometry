@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Hom.coe_unitsAppLE
 type: lean
-updated: '2026-08-02T07:12:59'
+updated: '2026-08-07T05:01:59'
 ---
 lemma coe_unitsAppLE (e : U ≤ f ⁻¹ᵁ V) (u : Γ(Y, V)ˣ) :
     (f.unitsAppLE V U e u : Γ(X, U)) = f.appLE V U e u :=

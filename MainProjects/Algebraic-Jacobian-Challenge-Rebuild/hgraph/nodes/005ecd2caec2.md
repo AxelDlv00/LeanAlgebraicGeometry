@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.Sheaf.HModule.injective_map_f_zero
 type: lean
-updated: '2026-08-02T07:12:59'
+updated: '2026-08-07T05:01:59'
 ---
 theorem injective_map_f_zero (hS : S.ShortExact) :
     Function.Injective (map S.f 0) :=

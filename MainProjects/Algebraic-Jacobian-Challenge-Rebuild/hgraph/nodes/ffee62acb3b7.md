@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.Over.mkCongr_rfl
 type: lean
-updated: '2026-08-02T07:12:57'
+updated: '2026-08-07T05:01:55'
 ---
 lemma mkCongr_rfl {T : C} (a : T ⟶ S) : mkCongr (rfl : a = a) = 𝟙 (Over.mk a) := by
   ext

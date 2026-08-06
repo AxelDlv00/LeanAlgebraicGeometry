@@ -32,7 +32,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.IndexSeparated
 type: lean
-updated: '2026-08-02T07:12:58'
+updated: '2026-08-07T05:01:56'
 ---
 def IndexSeparated {ι : Type u} {X : ι → Scheme.{u}}
     (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1) : Prop :=

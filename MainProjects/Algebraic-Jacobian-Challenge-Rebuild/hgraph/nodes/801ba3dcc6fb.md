@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_divUniversalHighWindowMultiplierChartRead_mul_eq_one
 type: lean
-updated: '2026-08-02T07:12:49'
+updated: '2026-08-07T05:01:48'
 ---
 theorem exists_divUniversalHighWindowMultiplierChartRead_mul_eq_one (side : Bool) :
     ∃ c : Fin (Module.finrank k HS) →

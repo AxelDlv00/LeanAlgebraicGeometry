@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.Sheaf.HModule'.mapCoeff_id_apply
 type: lean
-updated: '2026-08-02T07:12:47'
+updated: '2026-08-07T05:01:44'
 ---
 @[simp] lemma HModule'.mapCoeff_id_apply {n : ℕ} (x : HModule' F U n) :
     HModule'.mapCoeff (𝟙 F) n x = x := by

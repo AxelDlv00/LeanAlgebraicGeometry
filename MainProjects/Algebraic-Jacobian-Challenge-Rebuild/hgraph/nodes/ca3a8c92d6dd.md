@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivisorAdaptation.gluedBaseChange
 type: lean
-updated: '2026-08-02T07:12:56'
+updated: '2026-08-07T05:01:53'
 ---
 noncomputable def gluedBaseChange
     [Module.Flat R (A.chartProd ⧸ A.gluedSubmodule)]

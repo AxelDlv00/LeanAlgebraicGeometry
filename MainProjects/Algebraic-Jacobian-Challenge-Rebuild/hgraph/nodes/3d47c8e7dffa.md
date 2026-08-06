@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: Module.Flat.mem_smul_top_of_tmul_residueField_one_eq_zero
 type: lean
-updated: '2026-08-02T07:12:57'
+updated: '2026-08-07T05:01:54'
 ---
 theorem Module.Flat.mem_smul_top_of_tmul_residueField_one_eq_zero [Module.Flat R M]
     (p : Ideal R) [p.IsPrime] {x : M}

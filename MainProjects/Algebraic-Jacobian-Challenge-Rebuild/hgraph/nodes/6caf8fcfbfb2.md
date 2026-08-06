@@ -24,7 +24,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.IsAffineOpen.isClosed_zeroLocus_inter_of_finite_quotient
 type: lean
-updated: '2026-08-02T07:12:49'
+updated: '2026-08-07T05:01:47'
 ---
 theorem isClosed_zeroLocus_inter_of_finite_quotient
     [IsSeparated (X ↘ Spec (CommRingCat.of R))]

@@ -25,7 +25,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.h1BaseFieldEquiv
 type: lean
-updated: '2026-08-02T07:12:47'
+updated: '2026-08-07T05:01:44'
 ---
 noncomputable def h1BaseFieldEquiv :
     letI : C.left.Over (Spec (.of k)) := .ofHom C.hom

@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divRepPullAtAff_mapAlgHom_eq_of_chartFactor
 type: lean
-updated: '2026-08-02T07:12:49'
+updated: '2026-08-07T05:01:47'
 ---
 theorem divRepPullAtAff_mapAlgHom_eq_of_chartFactor
     (U : ∀ (i : (glueData k g r1).J) (j : (glueData k g r2).J),

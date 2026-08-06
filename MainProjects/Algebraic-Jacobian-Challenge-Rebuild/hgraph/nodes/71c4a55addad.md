@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.P1.isDomain_tensor_away
 type: lean
-updated: '2026-08-02T07:12:48'
+updated: '2026-08-07T05:01:45'
 ---
 theorem isDomain_tensor_away {i j : Fin 2} (hij : i ≠ j)
     (K : Type u) [Field K] [Algebra k K] :

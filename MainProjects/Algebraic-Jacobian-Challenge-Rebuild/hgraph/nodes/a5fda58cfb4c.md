@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.pointEqn_of_ne
 type: lean
-updated: '2026-08-02T07:12:59'
+updated: '2026-08-07T05:01:58'
 ---
 lemma pointEqn_of_ne (d : PointUniformizerData K hx) {z : X} (hz : z ≠ x) :
     pointEqn K hx d z = 1 :=

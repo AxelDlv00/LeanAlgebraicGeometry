@@ -9,7 +9,7 @@ lean_status: lean_ok
 stale: true
 title: AlgebraicGeometry.Vq_ne_top
 type: lean
-updated: '2026-08-07T04:03:00'
+updated: '2026-08-07T04:54:08'
 ---
 theorem Vq_ne_top : Vq ≠ ⊤ := by
   intro h

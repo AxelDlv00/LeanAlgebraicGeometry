@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ProjectiveSpace.Coordinates.fromSpec_preimage_basicOpen
 type: lean
-updated: '2026-08-03T16:37:45'
+updated: '2026-08-07T05:01:59'
 ---
 theorem fromSpec_preimage_basicOpen (i j : J) (c : J → B) (hi : c i = 1) :
     fromSpec i c hi ⁻¹ᵁ

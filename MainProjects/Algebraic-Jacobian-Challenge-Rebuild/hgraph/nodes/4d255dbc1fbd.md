@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.top_le_preimage_of_closedPoint_mem
 type: lean
-updated: '2026-08-02T07:12:48'
+updated: '2026-08-07T05:01:46'
 ---
 lemma top_le_preimage_of_closedPoint_mem {K : Type u} [Field K] {X : Scheme.{u}}
     (p : Spec (.of K) ⟶ X) {U : X.Opens}

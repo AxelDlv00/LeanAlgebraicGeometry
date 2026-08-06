@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.presentationDivisor
 type: lean
-updated: '2026-08-02T07:12:59'
+updated: '2026-08-07T05:01:58'
 ---
 noncomputable def presentationDivisor [QuasiCompact (X ↘ Spec (CommRingCat.of K))]
     (P : X.MeromorphicPresentation) : X.CurveDivisor :=

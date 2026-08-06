@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.Functor.RepresentableBy.Over.mapCompPresheafCommon_comp
 type: lean
-updated: '2026-08-02T07:12:59'
+updated: '2026-08-07T05:01:58'
 ---
 theorem mapCompPresheafCommon_comp
     {W X Y Z : D} (q : W ⟶ X) (p : X ⟶ Y) (b : Y ⟶ Z)

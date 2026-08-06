@@ -25,7 +25,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.diagonalChart_inf_diagonalComplement
 type: lean
-updated: '2026-08-02T07:12:48'
+updated: '2026-08-07T05:01:45'
 ---
 theorem diagonalChart_inf_diagonalComplement (C : Over (Spec (.of k)))
     [IsSeparated C.hom] {U : C.left.Opens} (hU : IsAffineOpen U)

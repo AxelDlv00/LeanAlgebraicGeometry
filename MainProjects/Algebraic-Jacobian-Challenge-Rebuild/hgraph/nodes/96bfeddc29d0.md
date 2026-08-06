@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_forall_ge_exists_relThetaResSide_eq
 type: lean
-updated: '2026-08-02T07:12:49'
+updated: '2026-08-07T05:01:48'
 ---
 theorem exists_forall_ge_exists_relThetaResSide_eq (side : Bool)
     (x : Γ(relCurve C R, relPinnedChart C R pi side)) :

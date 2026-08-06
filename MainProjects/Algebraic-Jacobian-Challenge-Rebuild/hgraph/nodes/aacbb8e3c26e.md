@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.transitionMap_comp_algHom
 type: lean
-updated: '2026-08-02T07:12:57'
+updated: '2026-08-07T05:01:54'
 ---
 theorem transitionMap_comp_algHom (k : Type u) [Field k] (d r : ℕ)
     (I J : Finset (Fin r)) (hI : I.card = d) (hJ : J.card = d) :

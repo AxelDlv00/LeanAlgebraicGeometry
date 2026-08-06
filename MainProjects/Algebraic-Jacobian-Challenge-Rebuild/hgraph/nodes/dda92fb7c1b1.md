@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.isOpenImmersion_relCurveMap_away
 type: lean
-updated: '2026-08-02T07:12:56'
+updated: '2026-08-07T05:01:53'
 ---
 theorem isOpenImmersion_relCurveMap_away (f : R) [IsLocalization.Away f S] :
     IsOpenImmersion (relCurveMap C R S) := by

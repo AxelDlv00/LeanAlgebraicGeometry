@@ -23,7 +23,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.gluedSheaf
 type: lean
-updated: '2026-08-02T07:12:47'
+updated: '2026-08-07T05:01:43'
 ---
 noncomputable def gluedSheaf :
     Sheaf (Opens.grothendieckTopology (X : TopCat)) (ModuleCat.{u} k) :=

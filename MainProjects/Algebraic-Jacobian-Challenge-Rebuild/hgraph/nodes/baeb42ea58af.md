@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: RingHom.Flat.mem_nonZeroDivisors
 type: lean
-updated: '2026-08-02T07:12:46'
+updated: '2026-08-07T05:01:43'
 ---
 lemma mem_nonZeroDivisors {R S : Type*} [CommRing R] [CommRing S] {f : R →+* S}
     (hf : f.Flat) {r : R} (hr : r ∈ R⁰) : f r ∈ S⁰ := by

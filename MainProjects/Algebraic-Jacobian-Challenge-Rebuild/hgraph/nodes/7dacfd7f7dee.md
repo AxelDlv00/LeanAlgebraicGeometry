@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: Algebra.DescentDatum.Hom.ext
 type: lean
-updated: '2026-08-02T07:12:48'
+updated: '2026-08-07T05:01:46'
 ---
 theorem ext {f g : Hom D₁ D₂} (h : f.hom = g.hom) : f = g := by
   cases f

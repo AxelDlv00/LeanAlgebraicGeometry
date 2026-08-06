@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.relThetaSectionFst
 type: lean
-updated: '2026-08-02T07:12:56'
+updated: '2026-08-07T05:01:53'
 ---
 noncomputable def relThetaSectionFst : relThetaSections C R π a := by
   refine ⟨((relCurve C R).resHom inf_le_right (relFiberCoordPow C R π a), 1), ?_⟩

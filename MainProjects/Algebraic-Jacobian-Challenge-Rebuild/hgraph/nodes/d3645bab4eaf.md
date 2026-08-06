@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ThetaGeneratorSeed.relPinnedTermBaseChangeAlg_one_tmul
 type: lean
-updated: '2026-08-02T07:12:50'
+updated: '2026-08-07T05:01:49'
 ---
 lemma relPinnedTermBaseChangeAlg_one_tmul (b : Bool)
     (s : Γ(relCurve C R, relPinnedChart C R π b)) :

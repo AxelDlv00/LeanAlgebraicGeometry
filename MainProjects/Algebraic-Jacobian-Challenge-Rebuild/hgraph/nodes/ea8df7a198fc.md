@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.range_piRightHom_comp_baseChange_finiteKoszulBoundary
 type: lean
-updated: '2026-08-02T07:12:49'
+updated: '2026-08-07T05:01:48'
 ---
 theorem range_piRightHom_comp_baseChange_finiteKoszulBoundary
     (step : ι → L →ₗ[R] M) :

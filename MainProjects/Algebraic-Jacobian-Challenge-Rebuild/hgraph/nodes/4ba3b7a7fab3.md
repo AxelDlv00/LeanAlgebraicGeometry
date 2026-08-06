@@ -25,7 +25,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_separableClosure_finSubext_point
 type: lean
-updated: '2026-08-02T07:12:58'
+updated: '2026-08-07T05:01:56'
 ---
 theorem exists_separableClosure_finSubext_point {k : Type u} [Field k]
     (C : Over (Spec (.of k)))

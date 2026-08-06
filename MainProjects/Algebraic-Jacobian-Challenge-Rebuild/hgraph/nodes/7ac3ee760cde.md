@@ -32,7 +32,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivFamZar.existsUnique_glue_of_awaySpan
 type: lean
-updated: '2026-08-02T07:12:49'
+updated: '2026-08-07T05:01:47'
 ---
 theorem existsUnique_glue_of_awaySpan {m : ℕ} (f : Fin m → S)
     (hspan : Ideal.span (Set.range f) = ⊤)

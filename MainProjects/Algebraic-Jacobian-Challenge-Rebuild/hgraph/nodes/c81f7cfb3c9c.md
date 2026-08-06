@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.not_isOpenImmersion_abelSigmaChartAff_of_not_injective_chartValueAff
 type: lean
-updated: '2026-08-05T02:56:16'
+updated: '2026-08-07T05:01:56'
 ---
 theorem not_isOpenImmersion_abelSigmaChartAff_of_not_injective_chartValueAff
     {T : Over (Spec (.of k))}

@@ -22,7 +22,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PointwiseAchiever.divFamEps_highWindow_eq_universal_pair
 type: lean
-updated: '2026-08-03T08:02:46'
+updated: '2026-08-07T05:01:47'
 ---
 theorem divFamEps_highWindow_eq_universal_pair (hb : 0 < windowBound pi hpi)
     (hc : ((univSeed C hpi g r1 r2 b1 b2 i j hO hchi hb).divisorAdaptation

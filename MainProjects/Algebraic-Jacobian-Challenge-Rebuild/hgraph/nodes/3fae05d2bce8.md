@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.divisorPieceMap
 type: lean
-updated: '2026-08-02T07:12:56'
+updated: '2026-08-07T05:01:53'
 ---
 noncomputable def divisorPieceMap [IsProper C.hom]
     (A : AffAdaptation D d) (i : D.index) :

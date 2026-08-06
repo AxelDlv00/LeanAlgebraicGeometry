@@ -9,7 +9,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.relationReadMultipleWitness_add
 type: lean
-updated: '2026-08-02T07:12:49'
+updated: '2026-08-07T05:01:49'
 ---
 private theorem relationReadMultipleWitness_add (n : Nat) (x : G(n + 1))
     {c d : B}

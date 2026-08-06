@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PointwiseAchiever.isGenerator_univSeed_at
 type: lean
-updated: '2026-08-03T08:02:46'
+updated: '2026-08-07T05:01:47'
 ---
 theorem isGenerator_univSeed_at {gamma : Nat} (hgamma : gamma ≤ g)
     (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : Int)) :

@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divUniversalHighWindowFibreModel_succ_of_projective_at
 type: lean
-updated: '2026-08-03T08:02:46'
+updated: '2026-08-07T05:01:48'
 ---
 theorem divUniversalHighWindowFibreModel_succ_of_projective_at
     (n : Nat) [Module.Projective RZ (Amb[n] ⧸ Kr[n])]

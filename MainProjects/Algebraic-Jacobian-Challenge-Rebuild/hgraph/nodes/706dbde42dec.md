@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: Module.DescentDatum.descentEquiv_tmul
 type: lean
-updated: '2026-08-02T07:12:48'
+updated: '2026-08-07T05:01:46'
 ---
 @[simp] theorem descentEquiv_tmul [Module.Flat A B] (b : B) (m : D.descended) :
     D.descentEquiv (b ⊗ₜ m) = b • (m : M) := rfl

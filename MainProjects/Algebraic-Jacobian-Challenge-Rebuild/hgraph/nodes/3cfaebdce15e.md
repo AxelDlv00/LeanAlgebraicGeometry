@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.Functor.RepresentableBy.Over.mapCompPresheafOfEq_eq_canonical
 type: lean
-updated: '2026-08-02T07:12:59'
+updated: '2026-08-07T05:01:58'
 ---
 theorem mapCompPresheafOfEq_eq_canonical
     {X Y Z : D} (r : X ⟶ Z) (f : X ⟶ Y) (g : Y ⟶ Z)

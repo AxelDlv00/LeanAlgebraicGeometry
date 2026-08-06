@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.thetaSectionPair_thetaWindowMul
 type: lean
-updated: '2026-08-02T07:12:50'
+updated: '2026-08-07T05:01:50'
 ---
 theorem thetaSectionPair_thetaWindowMul (p q : Nat)
     (a : ↥(divisorSections k (p • F) ⊤))

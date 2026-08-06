@@ -13,7 +13,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.germ_auxWindowRes_mem
 type: lean
-updated: '2026-08-02T07:12:52'
+updated: '2026-08-07T05:01:52'
 ---
 private lemma germ_auxWindowRes_mem (g : ℕ) (F : CertifiedDivisorFamilyAff C R g)
     (B : DivisorAdaptation C R π F.eqns) (j : B.index)

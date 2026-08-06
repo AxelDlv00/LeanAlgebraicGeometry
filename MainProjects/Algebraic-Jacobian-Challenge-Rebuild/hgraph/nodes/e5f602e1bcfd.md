@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ThetaGeneratorSeed.res_eqn_mem_nonZeroDivisors_of_fibre_regular
 type: lean
-updated: '2026-08-02T07:12:50'
+updated: '2026-08-07T05:01:49'
 ---
 theorem res_eqn_mem_nonZeroDivisors_of_fibre_regular [IsNoetherianRing R]
     (hfr : ∀ (z : relCurve C R) (p : PrimeSpectrum R) (f : Γ(relCurve C R, D.piece z)),

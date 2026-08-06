@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.overSpecMap_id
 type: lean
-updated: '2026-08-02T07:12:55'
+updated: '2026-08-07T05:01:53'
 ---
 lemma overSpecMap_id : overSpecMap (k := k) R R = 𝟙 (overSpec k R) := by
   ext : 1

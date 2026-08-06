@@ -53,7 +53,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.two_mul_degree_le_S_mul_windowδ
 type: lean
-updated: '2026-08-02T21:35:45'
+updated: '2026-08-07T05:02:01'
 ---
 theorem two_mul_degree_le_S_mul_windowδ (n : ℕ) :
     2 * (n : ℤ) ≤ (windowS_choice π hπ n : ℤ) * windowδ π := by

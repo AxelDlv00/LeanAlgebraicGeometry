@@ -34,7 +34,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.existsUnique_effective_divisor_of_carve_windowN
 type: lean
-updated: '2026-08-02T22:45:33'
+updated: '2026-08-07T05:01:50'
 ---
 theorem existsUnique_effective_divisor_of_carve_windowN (g : ℕ)
     (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)

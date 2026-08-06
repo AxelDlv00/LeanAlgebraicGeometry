@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.exists_unitsAppLE_eq
 type: lean
-updated: '2026-08-02T07:12:59'
+updated: '2026-08-07T05:01:58'
 ---
 theorem exists_unitsAppLE_eq {U : (XA).Opens} (hU : IsAffineOpen U)
     (t : Γ(XB, (cg) ⁻¹ᵁ U)ˣ)
