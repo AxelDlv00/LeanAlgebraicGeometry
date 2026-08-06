@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.DivRepAffChallenge
+import AlgebraicJacobian.Picard.DivRankOneOpen
 import AlgebraicJacobian.Picard.Pic0EndgameContract
 import AlgebraicJacobian.Picard.Pic0HighDegreeRouteGuard
 import AlgebraicJacobian.Picard.Pic0RankOneLocus
 import AlgebraicJacobian.Picard.Pic0RankOneLocalDivisor
 import AlgebraicJacobian.Picard.Pic0RankOneNativePresentation
+import AlgebraicJacobian.Picard.Pic0RankOneTranslatedCoverPicZero
 
 /-!
 # Narrow root for the AJCR-first Picard strategy
@@ -17,13 +19,18 @@ This root deliberately imports only the current route modules and contracts. Eve
 contract endpoint must be checked here before it receives critical-path credit.
 
 The tied local rank-one presentation, its canonical evaluation map, datum-side local-away
-divisor equations, and the pullback-stable presentation locus are present. The native
-evaluation zero locus is not yet identified with those datum equations, and the locus is not
-yet proved open or represented. Fixed-open unit-independence now has a canonical H0 linearity
-bridge and a `DivFamZarAff` equality consumer, but no family-level divisor producer is claimed.
-The canonical divisor, Abel isomorphism, separably closed cover, representability, descent, and
-`JacobianData` declarations do not yet exist. They are not replaced here by axioms or local
-hypotheses.
+divisor equations, and the pullback-stable presentation locus are present. The conditional
+`DivRankOneOpenData` representer and its open-immersion/base-change consumers are rooted, but
+the arbitrary-affine presentation producer needed to prove `PicRankOneOpen.IsOpen` is still
+missing. The native evaluation zero locus is not yet identified with the datum equations.
+Fixed-open unit-independence has a canonical H0 linearity bridge and a `DivFamZarAff` equality
+consumer, but no family-level divisor producer is claimed.
+
+The Pic0-specialized separably closed translated-layer feeder is also rooted: it keeps the
+translator degree and the exact subtraction compatibility tied to one result. It does not
+supply membership in `PicRankOneOpen` or the translated-cover endpoint. The canonical divisor,
+Abel isomorphism, separably closed cover, representability, descent, and `JacobianData`
+declarations do not yet exist. They are not replaced here by axioms or local hypotheses.
 -/
 
 #check AlgebraicGeometry.divFunctorAff_representableBy_at
@@ -85,12 +92,22 @@ hypotheses.
   AlgebraicGeometry.PicRankOneLocalPresentation.exists_baseOpen_rankOne_divisor_with_abel_evaluation
 #check AlgebraicGeometry.PicRankOneLocalPresentation.datum_classDeg_baseChange
 #check AlgebraicGeometry.PicRankOneOpen
+#check AlgebraicGeometry.PicRankOneOpen.IsOpen
+#check AlgebraicGeometry.DivRankOneOpenData
+#check AlgebraicGeometry.divRankOneOpenData_of_picRankOneOpen_isOpen
+#check AlgebraicGeometry.DivRankOneOpen
+#check AlgebraicGeometry.divRankOneOpen_isOpenImmersion
+#check AlgebraicGeometry.divRankOneOpen_mem_iff
+#check AlgebraicGeometry.divRankOneOpen_baseChange_mem
 #check AlgebraicGeometry.PicRankOneNativePresentation
 #check AlgebraicGeometry.PicRankOneNativePresentation.toLocalPresentation
 #check AlgebraicGeometry.BasicOpenCocycleDatum.nativeModulePieceSectionsEquiv
 #check AlgebraicGeometry.BasicOpenCocycleDatum.nativeModulePieceSheafIso
 #check AlgebraicGeometry.BasicOpenCocycleDatum.nativeModule_isLineBundle
 #check AlgebraicGeometry.mem_picRankOneOpen_of_nativePresentations
+#check AlgebraicGeometry.exists_sepClosedTranslatedRankOneLayer_pic0
+#check AlgebraicGeometry.SepClosedTranslatedDropResult.translator_classDeg_of_pic0
+#check AlgebraicGeometry.SepClosedTranslatedDropResult.baseSubtraction_compatibility
 #check AlgebraicGeometry.divRankOnePresentationPreimageRepresenter
 #check AlgebraicGeometry.rankOneAbelRepresented
 #check AlgebraicGeometry.not_injective_abelSigmaChart_of_divFamZar
@@ -107,10 +124,16 @@ hypotheses.
 #print axioms AlgebraicGeometry.abelDivAffGenusSigma
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.h0BaseChange
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.evaluation
+#print axioms AlgebraicGeometry.divRankOneOpenData_of_picRankOneOpen_isOpen
+#print axioms AlgebraicGeometry.divRankOneOpen_isOpenImmersion
+#print axioms AlgebraicGeometry.divRankOneOpen_baseChange_mem
 #print axioms AlgebraicGeometry.PicRankOneNativePresentation.toLocalPresentation
 #print axioms AlgebraicGeometry.BasicOpenCocycleDatum.nativeModulePieceSheafIso
 #print axioms AlgebraicGeometry.BasicOpenCocycleDatum.nativeModule_isLineBundle
 #print axioms AlgebraicGeometry.mem_picRankOneOpen_of_nativePresentations
+#print axioms AlgebraicGeometry.exists_sepClosedTranslatedRankOneLayer_pic0
+#print axioms AlgebraicGeometry.SepClosedTranslatedDropResult.translator_classDeg_of_pic0
+#print axioms AlgebraicGeometry.SepClosedTranslatedDropResult.baseSubtraction_compatibility
 #print axioms AlgebraicGeometry.canonicalBaseChangeMap_pullback_counit
 #print axioms AlgebraicGeometry.canonicalBaseChangeMap_counit_cancel
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.nativeBaseChangeIsoAffine
