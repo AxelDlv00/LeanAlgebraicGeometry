@@ -126,6 +126,65 @@ silently treated as an open subscheme. -/
 def PicRankOneOpen.IsOpen : Prop :=
   IsOpenImmersion.presheaf (picRankOneOpenSigmaIncl pi)
 
+/-! ## The explicit fibre producer contract -/
+
+/-- A fibre of the rank-one locus over one test class, presented by an open of that test.
+
+The `exists_factor` field is tied to the displayed class `g` and to an arbitrary source value `v`.
+It is the family-level content needed for relative representability; the open immersion itself
+supplies uniqueness of the factor.  Thus this structure cannot be inhabited by an unrelated open
+or by a fieldwise dimension statement. -/
+structure PicRankOneOpen.FibrePresented
+    {X : Scheme.{u}}
+    (g : yoneda.obj X ⟶
+      Over.sigmaExtension (Spec (.of k)) (picDegLayerFunctor C (genus C : ℤ))) where
+  W : X.Opens
+  fst : yoneda.obj (W : Scheme.{u}) ⟶
+    Over.sigmaExtension (Spec (.of k)) (PicRankOneOpen pi).toFunctor
+  sq : fst ≫ picRankOneOpenSigmaIncl pi = yoneda.map W.ι ≫ g
+  exists_factor : ∀ (S : Scheme.{u})
+    (v : (Over.sigmaExtension (Spec (.of k)) (PicRankOneOpen pi).toFunctor).obj (Opposite.op S))
+    (w : S ⟶ X),
+    (picRankOneOpenSigmaIncl pi).app (Opposite.op S) v =
+      g.app (Opposite.op S) w →
+    ∃ u : S ⟶ (W : Scheme.{u}),
+      fst.app (Opposite.op S) u = v ∧ u ≫ W.ι = w
+
+namespace PicRankOneOpen.FibrePresented
+
+variable {X : Scheme.{u}}
+variable {g : yoneda.obj X ⟶
+  Over.sigmaExtension (Spec (.of k)) (picDegLayerFunctor C (genus C : ℤ))}
+
+/-- The fibre square supplied by `FibrePresented` is a pullback of presheaves. -/
+theorem isPullback (D : PicRankOneOpen.FibrePresented pi g) :
+    IsPullback D.fst (yoneda.map D.W.ι) (picRankOneOpenSigmaIncl pi) g := by
+  refine IsPullback.of_forall_isPullback_app fun S => ?_
+  rw [Types.isPullback_iff]
+  refine ⟨?_, ?_, ?_⟩
+  · exact congrArg (fun φ : yoneda.obj (D.W : Scheme.{u}) ⟶
+      Over.sigmaExtension (Spec (.of k)) (picDegLayerFunctor C (genus C : ℤ)) =>
+      φ.app S) D.sq
+  · rintro u₁ u₂ ⟨-, h₂⟩
+    exact (cancel_mono D.W.ι).mp h₂
+  · intro v w hvw
+    obtain ⟨u, hu₁, hu₂⟩ := D.exists_factor S.unop v w hvw
+    exact ⟨u, hu₁, hu₂⟩
+
+end PicRankOneOpen.FibrePresented
+
+/-- An arbitrary-test fibre producer discharges the relative openness gate. -/
+theorem picRankOneOpen_isOpen_of_fibrePresented
+    (D : ∀ (X : Scheme.{u})
+      (g : yoneda.obj X ⟶
+        Over.sigmaExtension (Spec (.of k)) (picDegLayerFunctor C (genus C : ℤ))),
+      PicRankOneOpen.FibrePresented pi g) :
+    PicRankOneOpen.IsOpen pi := by
+  refine MorphismProperty.relative.of_exists ?_
+  intro X g
+  let d := D X g
+  exact ⟨d.W, d.fst, d.W.ι, d.isPullback, inferInstance⟩
+
 /-- Expose a supplied relative-open certificate without hiding it behind typeclass search. -/
 theorem picRankOneOpen_isOpen_of_certificate
     (h : PicRankOneOpen.IsOpen pi) : PicRankOneOpen.IsOpen pi :=
