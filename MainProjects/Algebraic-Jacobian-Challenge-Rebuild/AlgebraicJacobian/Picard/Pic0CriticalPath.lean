@@ -8,11 +8,12 @@ import AlgebraicJacobian.Picard.Pic0EndgameContract
 import AlgebraicJacobian.Picard.Pic0HighDegreeRouteGuard
 import AlgebraicJacobian.Picard.Pic0RankOneLocus
 import AlgebraicJacobian.Picard.Pic0RankOneLocalDivisor
+import AlgebraicJacobian.Picard.Pic0RankOneNativePresentation
 
 /-!
 # Narrow root for the AJCR-first Picard strategy
 
-This root deliberately imports only the current producers on the reviewed route. Every later
+This root deliberately imports only the current route modules and contracts. Every later
 contract endpoint must be checked here before it receives critical-path credit.
 
 The tied local rank-one presentation, its canonical evaluation map, datum-side local-away
@@ -84,6 +85,9 @@ hypotheses.
   AlgebraicGeometry.PicRankOneLocalPresentation.exists_baseOpen_rankOne_divisor_with_abel_evaluation
 #check AlgebraicGeometry.PicRankOneLocalPresentation.datum_classDeg_baseChange
 #check AlgebraicGeometry.PicRankOneOpen
+#check AlgebraicGeometry.PicRankOneNativePresentation
+#check AlgebraicGeometry.PicRankOneNativePresentation.toLocalPresentation
+#check AlgebraicGeometry.mem_picRankOneOpen_of_nativePresentations
 #check AlgebraicGeometry.divRankOnePresentationPreimageRepresenter
 #check AlgebraicGeometry.rankOneAbelRepresented
 #check AlgebraicGeometry.not_injective_abelSigmaChart_of_divFamZar
@@ -100,6 +104,8 @@ hypotheses.
 #print axioms AlgebraicGeometry.abelDivAffGenusSigma
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.h0BaseChange
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.evaluation
+#print axioms AlgebraicGeometry.PicRankOneNativePresentation.toLocalPresentation
+#print axioms AlgebraicGeometry.mem_picRankOneOpen_of_nativePresentations
 #print axioms AlgebraicGeometry.canonicalBaseChangeMap_pullback_counit
 #print axioms AlgebraicGeometry.canonicalBaseChangeMap_counit_cancel
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.nativeBaseChangeIsoAffine
