@@ -10,6 +10,7 @@
 
 - The protected `PicRankOneNativePresentation` contract still has no arbitrary-affine family producer supplying tied cover/datum coherence, unconditional cartesian pushforward base-change `IsIso`, H1 vanishing, H0 finite/projective data, and rank-one stalk certificates.
 - `ModulesPushforwardBaseChange.lean` defines the canonical map and counit identities but no arbitrary `IsIso` theorem. Existing datum engines are chart-typed, field/affine-local, or conditional on Noetherian hypotheses.
+- Concurrent auto-commit `753bde963e` owns the final I-1927/I-1944 comment batch and recovery metadata. Those paths appeared as staged-delete/untracked pairs only because the shared index was stale; I did not stage them and verified this report directly through the commit tree and current `HEAD`.
 - One auxiliary verifier initially used the right declaration with the wrong file path; the corrected inverse-facing audit passed. One handoff shell command emitted a harmless backtick expansion warning; the handoff was corrected and no source was affected.
 
 ## Why I stopped
