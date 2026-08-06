@@ -16,9 +16,9 @@ pullback is exactly `picEtMap_comp`.
 
 The remaining declarations form the corresponding preimages in the widened divisor functor and
 in its canonical representing Yoneda functor, together with the restricted Abel transformations.
-These are logical subfunctors only.  In particular, this file does not prove that
-`PicRankOneOpen` is represented by an open subscheme, and it reserves `DivRankOneOpen` for the
-future actual open subscheme of the divisor representer.
+These are logical subfunctors only.  In particular, this file does not assert that
+`PicRankOneOpen` is represented by an open subscheme.  The relative-openness acceptance gate and
+the conditional universal-divisor carrier contract are exposed separately in `DivRankOneOpen.lean`.
 -/
 
 set_option autoImplicit false
@@ -58,6 +58,19 @@ def PicRankOneOpen :
 
 /-! ## The public membership contract -/
 
+/-- The exact producer predicate for the rank-one locus.
+
+This is intentionally lambda-tied and quantifies over every affine pullback.  In particular, it
+is stronger than a field-fibre `h⁰ = 1`/`H¹ = 0` statement: a producer must supply the complete
+`PicRankOneLocalPresentation` structure for the pulled-back class. -/
+def PicRankOneOpen.LocalPresentationCondition
+    {T : (Over (Spec (.of k)))ᵒᵖ}
+    (lam : (picDegLayerFunctor C (genus C : ℤ)).obj T) : Prop :=
+  ∀ (A : Type u) [CommRing A] [Algebra k A]
+    (t : overSpec k A ⟶ T.unop),
+    Nonempty (PicRankOneLocalPresentation pi
+      ((picDegLayerFunctor C (genus C : ℤ)).map t.op lam))
+
 /-- Unfolded membership in `PicRankOneOpen`, with the presentation tied to the pulled-back
 Picard class.  Keeping this predicate named is important for producers in later lanes: a
 field-level divisor or chart witness is not a substitute for this arbitrary-affine-pullback
@@ -82,12 +95,69 @@ theorem mem_picRankOneOpen_of_localPresentations
     lam ∈ (PicRankOneOpen pi).obj T :=
   (mem_picRankOneOpen_iff pi lam).mpr h
 
+/-- Constructor using the named arbitrary-affine producer predicate. -/
+theorem mem_picRankOneOpen_of_localPresentationCondition
+    {T : (Over (Spec (.of k)))ᵒᵖ}
+    {lam : (picDegLayerFunctor C (genus C : ℤ)).obj T}
+    (h : PicRankOneOpen.LocalPresentationCondition pi lam) :
+    lam ∈ (PicRankOneOpen pi).obj T := by
+  exact mem_picRankOneOpen_of_localPresentations pi h
+
+/-- The inclusion of the public rank-one locus into its degree-genus ambient functor. -/
+def picRankOneOpenIncl :
+    (PicRankOneOpen pi).toFunctor ⟶ picDegLayerFunctor C (genus C : ℤ) :=
+  (PicRankOneOpen pi).ι
+
+/-- The same inclusion after the slice-to-big-site `Σ` extension.
+
+`IsOpenImmersion.presheaf` is a property of presheaves on schemes.  The rank-one functor is
+defined on the slice over `Spec k`, so the `Σ` extension is the category-correct carrier for the
+relative-open gate below. -/
+def picRankOneOpenSigmaIncl :
+    Over.sigmaExtension (Spec (.of k)) (PicRankOneOpen pi).toFunctor ⟶
+      Over.sigmaExtension (Spec (.of k)) (picDegLayerFunctor C (genus C : ℤ)) :=
+  Over.sigmaExtensionNat (PicRankOneOpen pi).ι
+
+/-- Relative openness of the public locus, in Mathlib's presheaf sense.
+
+This is a named acceptance gate rather than an unproved global assertion.  A future geometric
+producer discharges it by supplying the represented open pullbacks; no arbitrary `Subfunctor` is
+silently treated as an open subscheme. -/
+def PicRankOneOpen.IsOpen : Prop :=
+  IsOpenImmersion.presheaf (picRankOneOpenSigmaIncl pi)
+
+/-- Expose a supplied relative-open certificate without hiding it behind typeclass search. -/
+theorem picRankOneOpen_isOpen_of_certificate
+    (h : PicRankOneOpen.IsOpen pi) : PicRankOneOpen.IsOpen pi :=
+  h
+
+/-- Extract the open immersion supplied by the relative-openness certificate on an arbitrary
+pullback.  This is the exact shape consumed by an eventual chart/fibre producer. -/
+theorem picRankOneOpen_openPullback
+    (h : PicRankOneOpen.IsOpen pi)
+    {X Z : Scheme.{u}}
+    (g : yoneda.obj X ⟶
+      Over.sigmaExtension (Spec (.of k)) (picDegLayerFunctor C (genus C : ℤ)))
+    (fst : yoneda.obj Z ⟶
+      Over.sigmaExtension (Spec (.of k)) (PicRankOneOpen pi).toFunctor)
+    (snd : Z ⟶ X)
+    (hpb : IsPullback fst (yoneda.map snd) (picRankOneOpenSigmaIncl pi) g) :
+    IsOpenImmersion snd :=
+  h.property g fst snd hpb
+
 /-- Pullback stability of the public rank-one locus, exposed independently of its definition. -/
 theorem picRankOneOpen_map_mem {T T' : (Over (Spec (.of k)))ᵒᵖ}
     (f : T ⟶ T') {lam : (picDegLayerFunctor C (genus C : ℤ)).obj T}
     (h : lam ∈ (PicRankOneOpen pi).obj T) :
     (picDegLayerFunctor C (genus C : ℤ)).map f lam ∈ (PicRankOneOpen pi).obj T' :=
   (PicRankOneOpen pi).map f h
+
+/-- Pullback stability of the public locus, with the base-change direction made explicit. -/
+theorem picRankOneOpen_baseChange_mem {T T' : (Over (Spec (.of k)))ᵒᵖ}
+    (f : T ⟶ T') {lam : (picDegLayerFunctor C (genus C : ℤ)).obj T}
+    (h : lam ∈ (PicRankOneOpen pi).obj T) :
+    (picDegLayerFunctor C (genus C : ℤ)).map f lam ∈ (PicRankOneOpen pi).obj T' :=
+  picRankOneOpen_map_mem pi f h
 
 /-- The inverse image of `PicRankOneOpen` under the affine widened Abel transformation.
 
