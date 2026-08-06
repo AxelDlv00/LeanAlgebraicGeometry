@@ -3,7 +3,7 @@ author: sync
 content_type: definition
 created: '2026-08-07T05:01:57'
 decl: AlgebraicGeometry.PicRankOneNativePresentation.toLocalPresentation
-docstring: 'Convert the native producer contract to the existing local-presentation
+docstring: 'Convert the native adapter contract to the existing local-presentation
   contract.
 
 
@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PicRankOneNativePresentation.toLocalPresentation
 type: lean
-updated: '2026-08-07T05:01:57'
+updated: '2026-08-07T05:50:50'
 ---
 noncomputable def toLocalPresentation
     (P : PicRankOneNativePresentation pi lam) :
@@ -27,7 +27,7 @@ noncomputable def toLocalPresentation
     datum_class := P.datum_class
     module := P.datum.nativeModule
     module_iso := P.datum.nativeModuleKSheafIso
-    line_bundle := P.line_bundle
+    line_bundle := P.datum.nativeModule_isLineBundle
     native_pushforward_base_change := P.native_pushforward_base_change
     h1_vanishing := P.h1_vanishing
     h0_finite := P.h0_finite
