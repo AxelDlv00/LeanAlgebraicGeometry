@@ -93,4 +93,43 @@ theorem residueDeg_one_of_mem_rationalPointBaseChange_image
   rw [← hpx]
   exact residueDeg_one_of_rationalPointBaseChange C L p hp
 
+/-! ## The dense point image used by the drop oracle -/
+
+/-- The points obtained by base-changing actual `k`-rational sections of `C` to `L`.
+
+The section certificate is retained in the membership predicate, so later consumers can recover
+the base point and its exact residue-degree proof.  This is deliberately an image set, rather
+than an existential carrier unrelated to the chosen curve and extension. -/
+def rationalPointBaseChangeImage
+    {k : Type u} [Field k] (C : Over (Spec (.of k)))
+    (L : Type u) [Field L] [Algebra k L] : Set (relCurve C L) :=
+  {x | ∃ (p : Spec (.of k) ⟶ C.left)
+      (hp : p ≫ C.hom = 𝟙 (Spec (.of k))),
+      (Over.rationalPointBaseChange C L p hp).base
+        (IsLocalRing.closedPoint L) = x}
+
+/-- Base-changed `k`-rational points are dense over a separably closed base. -/
+theorem dense_rationalPointBaseChangeImage
+    {k : Type u} [Field k] [IsSepClosed k]
+    (C : Over (Spec (.of k)))
+    (L : Type u) [Field L] [Algebra k L]
+    [SmoothOfRelativeDimension 1 C.hom] [IsIntegral C.left]
+    (U : (relCurve C L).Opens)
+    (hU : (U : Set (relCurve C L)).Nonempty) :
+    (rationalPointBaseChangeImage C L ∩ U).Nonempty := by
+  obtain ⟨p, hp, hmem⟩ := Over.dense_baseChange_rationalPoints C L U hU
+  exact ⟨_, ⟨⟨p, hp, rfl⟩, hmem⟩⟩
+
+/-- Every point in the dense image has residue degree one, by its retained section certificate. -/
+theorem residueDeg_one_of_mem_rationalPointBaseChangeImage'
+    {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    (L : Type u) [Field L] [Algebra k L] :
+    ∀ x ∈ rationalPointBaseChangeImage C L,
+      (relCurve C L).residueDeg L x = 1 := by
+  intro x hx
+  obtain ⟨p, hp, hpx⟩ := hx
+  rw [← hpx]
+  exact residueDeg_one_of_rationalPointBaseChange C L p hp
+
 end AlgebraicGeometry
