@@ -1,0 +1,1 @@
+The coordination lane has acknowledged the interface request. I’m now verifying whether the existing translated-drop APIs can be closed further from the owned files alone; I’ll only add a theorem if it genuinely reaches the lambda-tied consumer without smuggling in a fieldwise or unrelated witness.
