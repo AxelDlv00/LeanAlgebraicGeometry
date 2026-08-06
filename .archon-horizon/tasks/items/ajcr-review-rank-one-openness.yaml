@@ -21,7 +21,7 @@ explanation: ''
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 priority: urgent
-status: queued
+status: running
 write_set:
   files:
   - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RankOneLocus*.lean
@@ -48,6 +48,6 @@ inbox_refs:
 - I-1927
 artifact_refs: []
 created_at: '2026-08-06T03:18:37.411030+00:00'
-updated_at: '2026-08-06T07:20:02.491054+00:00'
+updated_at: '2026-08-06T07:21:02.022842+00:00'
 metadata:
   author: human

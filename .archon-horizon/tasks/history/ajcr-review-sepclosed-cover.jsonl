@@ -5,3 +5,4 @@
 {"at": "2026-08-06T06:50:30.945081+00:00", "actor": "horizon", "field": "status", "from": "running", "to": "blocked", "note": "", "provenance": {"run": "0123", "session": "0002-horizon-ajcr-review-sepclosed-cover", "role": "horizon", "round": "0", "rounds": "8", "task": "ajcr-review-sepclosed-cover", "task_title": "Review lane: separably closed translated rank-one cover", "projects": "Algebraic-Jacobian-Challenge-Rebuild"}}
 {"at": "2026-08-06T07:11:52.528701+00:00", "actor": "system", "field": "status", "from": "blocked", "to": "queued", "note": "re-queued for the next round of a focused run"}
 {"at": "2026-08-06T07:12:08.982991+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-06T07:25:13.303364+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
