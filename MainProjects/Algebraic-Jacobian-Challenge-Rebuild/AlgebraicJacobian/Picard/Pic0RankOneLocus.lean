@@ -53,8 +53,41 @@ def PicRankOneOpen :
     have e : F.map t.op (F.map f lam) = F.map (t ≫ f.unop).op lam := by
       apply Subtype.ext
       exact (picEtMap_comp C f.unop t lam.1).symm
-    rw [e]
-    exact hlam A (t ≫ f.unop)
+      rw [e]
+      exact hlam A (t ≫ f.unop)
+
+/-! ## The public membership contract -/
+
+/-- Unfolded membership in `PicRankOneOpen`, with the presentation tied to the pulled-back
+Picard class.  Keeping this predicate named is important for producers in later lanes: a
+field-level divisor or chart witness is not a substitute for this arbitrary-affine-pullback
+contract. -/
+theorem mem_picRankOneOpen_iff {T : (Over (Spec (.of k)))ᵒᵖ}
+    (lam : (picDegLayerFunctor C (genus C : ℤ)).obj T) :
+    lam ∈ (PicRankOneOpen pi).obj T ↔
+      ∀ (A : Type u) [CommRing A] [Algebra k A]
+        (t : overSpec k A ⟶ T.unop),
+        Nonempty (PicRankOneLocalPresentation pi
+          ((picDegLayerFunctor C (genus C : ℤ)).map t.op lam)) := by
+  rfl
+
+/-- Constructor for the exact lambda-tied arbitrary-affine-pullback presentation contract. -/
+theorem mem_picRankOneOpen_of_localPresentations
+    {T : (Over (Spec (.of k)))ᵒᵖ}
+    {lam : (picDegLayerFunctor C (genus C : ℤ)).obj T}
+    (h : ∀ (A : Type u) [CommRing A] [Algebra k A]
+        (t : overSpec k A ⟶ T.unop),
+        Nonempty (PicRankOneLocalPresentation pi
+          ((picDegLayerFunctor C (genus C : ℤ)).map t.op lam))) :
+    lam ∈ (PicRankOneOpen pi).obj T :=
+  (mem_picRankOneOpen_iff pi lam).mpr h
+
+/-- Pullback stability of the public rank-one locus, exposed independently of its definition. -/
+theorem picRankOneOpen_map_mem {T T' : (Over (Spec (.of k)))ᵒᵖ}
+    (f : T ⟶ T') {lam : (picDegLayerFunctor C (genus C : ℤ)).obj T}
+    (h : lam ∈ (PicRankOneOpen pi).obj T) :
+    (picDegLayerFunctor C (genus C : ℤ)).map f lam ∈ (PicRankOneOpen pi).obj T' :=
+  (PicRankOneOpen pi).map f h
 
 /-- The inverse image of `PicRankOneOpen` under the affine widened Abel transformation.
 
@@ -89,6 +122,15 @@ def rankOneAbelRepresented :
     (divRankOnePresentationPreimageRepresenter pi).toFunctor ⟶
       (PicRankOneOpen pi).toFunctor :=
   rankOneRepresenterRestriction pi ≫ rankOneAbelAff pi
+
+/-- Immediate consumer theorem: the restricted represented Abel map lands in the public locus.
+The stronger canonical inverse still needs the family-level divisor/evaluation producer; this
+theorem records the exact target API that consumer lanes can use today. -/
+theorem rankOneAbelRepresented_mem {T : (Over (Spec (.of k)))ᵒᵖ}
+    (x : (divRankOnePresentationPreimageRepresenter pi).obj T) :
+    ((rankOneAbelRepresented pi).app T x :
+      (picDegLayerFunctor C (genus C : ℤ)).obj T) ∈ (PicRankOneOpen pi).obj T :=
+  ((rankOneAbelRepresented pi).app T x).property
 
 end
 

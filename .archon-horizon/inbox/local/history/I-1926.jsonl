@@ -1,1 +1,2 @@
 {"at": "2026-08-06T03:21:27.873553+00:00", "actor": "human", "field": "created", "from": "", "to": "open", "note": "opened"}
+{"at": "2026-08-06T03:36:25.956805+00:00", "actor": "horizon", "field": "read_by", "from": "", "to": "read", "note": "", "provenance": {"run": "0122", "session": "0002-horizon-ajcr-review-rank-one-openness", "role": "horizon", "round": "0", "rounds": "8", "task": "ajcr-review-rank-one-openness", "task_title": "Review lane: rank-one loci and openness", "projects": "Algebraic-Jacobian-Challenge-Rebuild"}}

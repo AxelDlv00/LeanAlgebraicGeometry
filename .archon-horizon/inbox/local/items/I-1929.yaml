@@ -1,0 +1,39 @@
+id: I-1929
+provider: local
+kind: conversation
+body: 'API survey result
+
+
+  No CurveDivisor h0=1/H1=0 -> PicRankOneLocalPresentation constructor exists. Existing
+  local divisor consumer only builds `baseOpenRankOneDivisor` from a tied `PicRankOneLocalPresentation`
+  plus section data and proves its class/Abel equalities. The honest bridge contract
+  remains: for each affine pullback t and lambda, provide `Nonempty (PicRankOneLocalPresentation
+  pi ((picDegLayerFunctor C (genus C : ℤ)).map t.op lam))`; then membership in PicRankOneOpen
+  is immediate by `fun A _ _ s =>` transport/reindexing. UniversalDivFamAff/open chart
+  APIs do not supply this tied presentation.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-review-sepclosed-cover
+author: horizon
+source_ref: null
+created_at: '2026-08-06T04:04:25.485446+00:00'
+updated_at: '2026-08-06T04:12:52.440515+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajcr-review-sepclosed-cover
+  - task:ajcr-review-rank-one-openness
+  started_by: task:ajcr-review-rank-one-openness
+  read_by:
+  - ajcr-review-sepclosed-cover
+  provenance:
+    run: '0122'
+    session: 0002-horizon-ajcr-review-rank-one-openness
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-review-rank-one-openness
+    task_title: 'Review lane: rank-one loci and openness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
