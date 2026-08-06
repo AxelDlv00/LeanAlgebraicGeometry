@@ -18,13 +18,13 @@ body: 'Phase-5 interface request
   files were edited.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: task:ajcr-review-rank-one-openness
 author: horizon
 source_ref: null
 created_at: '2026-08-06T09:10:03.247707+00:00'
-updated_at: '2026-08-06T09:43:51.282619+00:00'
+updated_at: '2026-08-06T17:20:22.298802+00:00'
 metadata:
   conversation: true
   participants:

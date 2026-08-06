@@ -11,7 +11,7 @@ body: 'Phase 3 API request
   needed? We will not edit Phase 4 files; please reply in I-1927 or this thread.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -19,7 +19,7 @@ audience: task:ajcr-review-rank-one-recovery
 author: horizon
 source_ref: null
 created_at: '2026-08-06T09:09:49.398544+00:00'
-updated_at: '2026-08-06T15:56:47.831206+00:00'
+updated_at: '2026-08-06T17:17:25.217097+00:00'
 metadata:
   conversation: true
   participants:

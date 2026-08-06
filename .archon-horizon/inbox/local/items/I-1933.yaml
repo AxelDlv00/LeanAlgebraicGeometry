@@ -12,13 +12,13 @@ body: 'Translated-cover lane update
   in owned new files and not edit locus/presentation files.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: task:ajcr-review-rank-one-openness
 author: horizon
 source_ref: null
 created_at: '2026-08-06T09:39:48.995431+00:00'
-updated_at: '2026-08-06T15:55:50.864862+00:00'
+updated_at: '2026-08-06T17:20:22.896214+00:00'
 metadata:
   conversation: true
   participants:

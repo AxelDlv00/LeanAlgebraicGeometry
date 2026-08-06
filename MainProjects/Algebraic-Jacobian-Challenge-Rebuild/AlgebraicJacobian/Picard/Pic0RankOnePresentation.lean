@@ -267,6 +267,47 @@ theorem datumSectionBaseChange_one_tmul (P : PicRankOneLocalPresentation pi lam)
   exact P.datum.linearEquiv₀_datumH0BaseChange_one_tmul B
     ((subsingleton_datumPair_h1_iff P.datum).mpr P.h1_vanishing) y
 
+/-- The linear map underlying the canonical base-changed datum-section construction. -/
+noncomputable def datumSectionBaseChangeLinearMap
+    (P : PicRankOneLocalPresentation pi lam)
+    (B : Type u) [CommRing B] [Algebra k B] [Algebra P.cover.Carrier B]
+    [IsScalarTower k P.cover.Carrier B] :
+    (B ⊗[P.cover.Carrier] Sheaf.HModule P.datum.sheaf 0) →ₗ[B]
+      (P.datum.baseChange B).sheaf.obj.obj
+        (op (⊤ : (relCurve C B).Opens)) :=
+  ((P.h0BaseChange B).trans
+    (Sheaf.HModule.linearEquiv₀
+      (Opens.grothendieckTopology ((relCurve C B : Scheme.{u}) : TopCat))
+      isTerminalTop (P.datum.baseChange B).sheaf)).toLinearMap
+
+@[simp]
+theorem datumSectionBaseChangeLinearMap_one_tmul
+    (P : PicRankOneLocalPresentation pi lam)
+    (B : Type u) [CommRing B] [Algebra k B] [Algebra P.cover.Carrier B]
+    [IsScalarTower k P.cover.Carrier B]
+    (y : Sheaf.HModule P.datum.sheaf 0) :
+    P.datumSectionBaseChangeLinearMap B ((1 : B) ⊗ₜ[P.cover.Carrier] y) =
+      P.datumSectionBaseChange B y := by
+  rfl
+
+/-- Equality of localized H⁰ generators transports canonically to the associated datum
+sections.  This exposes the linearity used by fixed-open divisor canonicality without choosing
+a second section comparison. -/
+set_option maxHeartbeats 800000 in
+-- The composed H⁰ equivalences create a large dependent linear-map elaboration.
+theorem datumSectionBaseChange_eq_smul_of_tensor_eq
+    (P : PicRankOneLocalPresentation pi lam)
+    (B : Type u) [CommRing B] [Algebra k B] [Algebra P.cover.Carrier B]
+    [IsScalarTower k P.cover.Carrier B]
+    (y y' : Sheaf.HModule P.datum.sheaf 0) (v : B)
+    (h : (1 : B) ⊗ₜ[P.cover.Carrier] y' =
+      v • ((1 : B) ⊗ₜ[P.cover.Carrier] y)) :
+    P.datumSectionBaseChange B y' =
+      v • P.datumSectionBaseChange B y := by
+  rw [← P.datumSectionBaseChangeLinearMap_one_tmul B y',
+    ← P.datumSectionBaseChangeLinearMap_one_tmul B y,
+    ← map_smul, h]
+
 /-- The conditional divisor datum cut by a base-changed presentation section.
 
 The explicit `hsec` hypothesis is the non-vacuous fibrewise nonvanishing input.  It is
