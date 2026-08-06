@@ -147,7 +147,9 @@ theorem exists_sepClosedTranslatedDropData
           (chartTwistClass C m
             (0 : (C ⊗ overSpec k k).left.CurveDivisor)) =
         thetaL ^ m := by
-    simp [thetaL, chartTwistClass, map_pow]
+    simp [thetaL, chartTwistClass]
+    exact map_pow (Scheme.CechPic.map
+      ((C ◁ Over.overSpecMap (Algebra.ofId k L)).left)) (thetaCechClass C) m
   have hWtheta :
       Scheme.CurveDivisor.picClass L W₀ = M₀ * thetaL ^ m := by
     rw [hW₀raw, hchart]
@@ -170,10 +172,32 @@ theorem exists_sepClosedTranslatedDropData
     rw [Int.toNat_of_nonneg hexcessNonnegative]
     ring
 
+  letI : C.left.Over (Spec (.of k)) := .ofHom C.hom
+  haveI : SmoothOfRelativeDimension 1 (C.left ↘ Spec (.of k)) :=
+    inferInstanceAs (SmoothOfRelativeDimension 1 C.hom)
+  haveI : IsIntegral C.left := isIntegral_left_of_geometricallyReduced C
+  haveI : LocallyOfFiniteType (C.left ↘ Spec (.of k)) :=
+    inferInstanceAs (LocallyOfFiniteType C.hom)
+  haveI : QuasiCompact (C.left ↘ Spec (.of k)) :=
+    inferInstanceAs (QuasiCompact C.hom)
+  haveI : Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 0) :=
+    moduleFinite_hModule_zero C
+  haveI : Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 1) :=
+    moduleFinite_hModule_one C
+  let M₀rel : (relCurve C L).CechPic := M₀
+  have hM₀rel : PicEtAff.map C L (picEtAffineEquiv C K mu) =
+      PicEtAff.unit C L (relPicMk C (overSpec k L) M₀rel) := by
+    simpa only [M₀rel] using hM₀
+
   refine ⟨L, hLfield, hkL, hKL, htow, hfin, hsep, ?_⟩
   exact ⟨sepClosedTranslatedDropDataOfRationalPointImage
-    mu m M₀ hM₀ W₀ (by
+    mu m M₀rel hM₀rel W₀ (by
       rw [relCurveMap_eq_overSpecMap_ofId]
+      change Scheme.CurveDivisor.picClass L W₀ =
+        M₀ * Scheme.CechPic.map
+          ((C ◁ Over.overSpecMap (Algebra.ofId k L)).left)
+          (chartTwistClass C m
+            (0 : (C ⊗ overSpec k k).left.CurveDivisor))
       exact hW₀raw) excess hdegreeExact h1W₀⟩
 
 /-- Immediate consumer of the general producer through the existing translated-drop theorem.
