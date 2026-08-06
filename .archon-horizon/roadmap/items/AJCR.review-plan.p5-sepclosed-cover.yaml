@@ -6,7 +6,7 @@ summary: For every extension K/k and input Picard class lam, construct a base-fi
   line bundle L0 whose translation lies in PicRankOneOpen by positive twisting, point
   subtraction, and h0 reduction while preserving H1=0. The witness must explicitly
   depend on lam and feed the gluing criterion directly; no unrelated existential carrier.
-status: active
+status: blocked
 kind: proof
 priority: urgent
 depends_on: []
@@ -20,7 +20,7 @@ metadata:
   created_at: '2026-08-04T01:52:27.443973+00:00'
   parent: AJCR.review-plan
   milestone: AJCR.review-plan
-  updated_at: '2026-08-06T06:37:35.616800+00:00'
+  updated_at: '2026-08-06T06:50:31.174870+00:00'
   owner: ajcr-review-sepclosed-cover
   pinned_commits:
   - 15919005f8524314bc94a5f2fdb4db9748ddab6a
