@@ -29,8 +29,9 @@ consumer, but no family-level divisor producer is claimed.
 The Pic0-specialized separably closed translated-layer feeder is also rooted: it keeps the
 translator degree and the exact subtraction compatibility tied to one result. It does not
 supply membership in `PicRankOneOpen` or the translated-cover endpoint. The canonical divisor,
-Abel isomorphism, separably closed cover, representability, descent, and `JacobianData`
-declarations do not yet exist. They are not replaced here by axioms or local hypotheses.
+Abel isomorphism, separably closed cover, later representability/descent endpoints, and
+`JacobianData` declarations do not yet exist. They are not replaced here by axioms or local
+hypotheses.
 -/
 
 #check AlgebraicGeometry.divFunctorAff_representableBy_at
