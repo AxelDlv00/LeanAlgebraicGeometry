@@ -53,8 +53,8 @@ def PicRankOneOpen :
     have e : F.map t.op (F.map f lam) = F.map (t ≫ f.unop).op lam := by
       apply Subtype.ext
       exact (picEtMap_comp C f.unop t lam.1).symm
-      rw [e]
-      exact hlam A (t ≫ f.unop)
+    rw [e]
+    exact hlam A (t ≫ f.unop)
 
 /-! ## The public membership contract -/
 
