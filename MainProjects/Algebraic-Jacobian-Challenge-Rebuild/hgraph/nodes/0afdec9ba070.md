@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.VV
 file: scratch_p4r6_audit/p13_scheme_ce.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.VV
 type: lean
-updated: '2026-08-05T18:54:17'
+updated: '2026-08-07T03:05:49'
 ---
 noncomputable def VV : (XX R).Opens := (coprod.inl : Spec R ⟶ XX R).opensRange
 

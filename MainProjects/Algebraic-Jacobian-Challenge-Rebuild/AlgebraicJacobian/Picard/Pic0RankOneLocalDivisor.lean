@@ -140,12 +140,17 @@ theorem baseOpenDatumSectionLocalEquations_classDeg
     ((algebraMap (Localization.Away f) L).comp
       (algebraMap P.cover.Carrier (Localization.Away f))).toAlgebra
   haveI : IsScalarTower P.cover.Carrier (Localization.Away f) L :=
-    IsScalarTower.of_algebraMap_eq' rfl
+    ⟨fun r s x => by
+      rw [← IsScalarTower.algebraMap_smul (Localization.Away f) r s]
+      simp only [Algebra.smul_def, RingHom.algebraMap_toAlgebra, RingHom.comp_apply,
+        RingHom.id_apply, map_mul, mul_assoc]⟩
   haveI : IsScalarTower k P.cover.Carrier L :=
-    IsScalarTower.of_algebraMap_eq' (by
-      rw [RingHom.algebraMap_toAlgebra, RingHom.comp_assoc,
-        ← IsScalarTower.algebraMap_eq k P.cover.Carrier (Localization.Away f),
-        ← IsScalarTower.algebraMap_eq k (Localization.Away f) L])
+    IsScalarTower.of_algebraMap_eq' (R := k) (S := P.cover.Carrier) (A := L) (by
+      ext a
+      simp only [RingHom.comp_apply]
+      rw [IsScalarTower.algebraMap_apply k (Localization.Away f) L,
+        IsScalarTower.algebraMap_apply k P.cover.Carrier (Localization.Away f)] <;>
+        rfl)
   rw [P.baseOpenDatumSectionLocalEquations_picClass f y hy,
     P.datum.cechPicClass_baseChange (Localization.Away f),
     ← MonoidHom.comp_apply, ← Scheme.CechPic.map_comp,

@@ -21,9 +21,10 @@ metadata:
   created_at: '2026-08-04T01:52:24.145421+00:00'
   parent: AJCR.review-plan
   milestone: AJCR.review-plan
-  updated_at: '2026-08-06T17:44:37.023341+00:00'
+  updated_at: '2026-08-06T19:43:12.270837+00:00'
   owner: ajcr-review-rank-one-openness
   pinned_commits:
+  - 5ef9430cd9
   - 03e12bcce6
   - 535b70cece
   - bc2ec8db24

@@ -7,9 +7,10 @@ docstring: 'A: from IsIso of the sheaf hom, the presheaf map is app-wise bijecti
 file: scratch_p4r6/probe4.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.ProbeP4R6.probeBij
 type: lean
-updated: '2026-08-05T18:54:17'
+updated: '2026-08-07T03:05:50'
 ---
 theorem probeBij {X : Scheme.{u}} (f : yoneda.obj X ⟶ (pic0SigmaSheaf C).1)
     (h : IsIso (chartSheafHom (C := C) f)) (T : Scheme.{u}ᵒᵖ) :

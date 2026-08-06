@@ -18,9 +18,11 @@ contract endpoint must be checked here before it receives critical-path credit.
 The tied local rank-one presentation, its canonical evaluation map, datum-side local-away
 divisor equations, and the pullback-stable presentation locus are present. The native
 evaluation zero locus is not yet identified with those datum equations, and the locus is not
-yet proved open or represented. The canonical divisor, Abel isomorphism, separably closed
-cover, representability, descent, and `JacobianData` declarations do not yet exist. They are
-not replaced here by axioms or local hypotheses.
+yet proved open or represented. Fixed-open unit-independence now has a canonical H0 linearity
+bridge and a `DivFamZarAff` equality consumer, but no family-level divisor producer is claimed.
+The canonical divisor, Abel isomorphism, separably closed cover, representability, descent, and
+`JacobianData` declarations do not yet exist. They are not replaced here by axioms or local
+hypotheses.
 -/
 
 #check AlgebraicGeometry.divFunctorAff_representableBy_at
@@ -46,6 +48,9 @@ not replaced here by axioms or local hypotheses.
 #check AlgebraicGeometry.PicRankOneLocalPresentation.datumSection
 #check AlgebraicGeometry.PicRankOneLocalPresentation.datumSectionBaseChange
 #check AlgebraicGeometry.PicRankOneLocalPresentation.datumSectionBaseChange_one_tmul
+#check AlgebraicGeometry.PicRankOneLocalPresentation.datumSectionBaseChangeLinearMap
+#check
+  AlgebraicGeometry.PicRankOneLocalPresentation.datumSectionBaseChange_eq_smul_of_tensor_eq
 #check
   AlgebraicGeometry.PicRankOneLocalPresentation.tensorAwayGenerator_fibre_ne_zero
 #check Module.bijective_toSpanSingleton_of_forall_tmul_ne_zero
@@ -64,7 +69,12 @@ not replaced here by axioms or local hypotheses.
 #check
   AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenDatumSectionLocalEquations_fibrewiseRegular
 #check AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenDatumSectionLocalEquations_classDeg
+#check
+  AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenDatumSectionLocalEquations_divEq_of_unit
+#check
+  AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenDatumSectionLocalEquations_divEq
 #check AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenRankOneDivisor
+#check AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenRankOneDivisor_eq
 #check AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenRankOneDivisor_picClass
 #check
   AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenRankOneDivisor_abelAff
@@ -99,6 +109,9 @@ not replaced here by axioms or local hypotheses.
   AlgebraicGeometry.PicRankOneLocalPresentation.evaluationSourceBaseChangeIsoAffine_hom_evaluation
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.module_iso_inv_datumSection
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.datumSectionBaseChange_one_tmul
+#print axioms AlgebraicGeometry.PicRankOneLocalPresentation.datumSectionBaseChangeLinearMap
+#print axioms
+  AlgebraicGeometry.PicRankOneLocalPresentation.datumSectionBaseChange_eq_smul_of_tensor_eq
 #print axioms
   AlgebraicGeometry.PicRankOneLocalPresentation.tensorAwayGenerator_fibre_ne_zero
 #print axioms Module.bijective_toSpanSingleton_of_forall_tmul_ne_zero
@@ -117,7 +130,12 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
   AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenDatumSectionLocalEquations_fibrewiseRegular
 #print axioms
   AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenDatumSectionLocalEquations_classDeg
+#print axioms
+  AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenDatumSectionLocalEquations_divEq_of_unit
+#print axioms
+  AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenDatumSectionLocalEquations_divEq
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenRankOneDivisor
+#print axioms AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenRankOneDivisor_eq
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenRankOneDivisor_picClass
 #print axioms
   AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenRankOneDivisor_abelAff
