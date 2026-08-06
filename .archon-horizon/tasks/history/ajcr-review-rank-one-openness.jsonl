@@ -18,3 +18,4 @@
 {"at": "2026-08-06T08:59:45.845594+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
 {"at": "2026-08-06T09:10:42.576620+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
 {"at": "2026-08-06T09:11:34.924451+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-06T10:31:16.342456+00:00", "actor": "horizon", "field": "status", "from": "running", "to": "blocked", "note": "", "provenance": {"run": "0122", "session": "0016-horizon-ajcr-review-rank-one-openness", "role": "horizon", "round": "7", "rounds": "8", "task": "ajcr-review-rank-one-openness", "task_title": "Review lane: rank-one loci and openness", "projects": "Algebraic-Jacobian-Challenge-Rebuild"}}
