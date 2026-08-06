@@ -65,12 +65,12 @@ theorem subsingleton_chartIdealColengthModule_tensor_residueField_of_ideal_span
     exact Ideal.Quotient.eq_zero_iff_mem.mpr (Ideal.subset_span (by simp))
   have hzero := RankOneFibre.subsingleton_map_tensor_of_span_singleton
     P f (relThetaResSide a b le_rfl s) hsP (by
-      intro v
-      exact hspan v) hfs
+      · intro v
+        exact hspan v) (by
+      · exact hfs)
   change Subsingleton ((P.map f) ⊗[B] p.asIdeal.ResidueField) at hzero
   exact hzero
 
 end ThetaGeneratorSeed
 
 end AlgebraicGeometry
-
