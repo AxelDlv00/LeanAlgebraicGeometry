@@ -93,6 +93,13 @@ theorem divRankOneOpen_isOpenImmersion
   change IsOpenImmersion h.carrier.ι
   infer_instance
 
+/- The scheme-level certificate also has the presheaf form consumed by relative-open inverse
+   constructions.  This is conditional only on the explicit carrier witness above. -/
+theorem divRankOneOpenMap_presheaf_isOpenImmersion
+    (h : DivRankOneOpenData (C := C) pi) :
+    IsOpenImmersion.presheaf (yoneda.map (divRankOneOpenMap pi h)) := by
+  exact MorphismProperty.relative_map (divRankOneOpen_isOpenImmersion pi h)
+
 /-- The open represented object, retained in the slice over `Spec k` for consumers of the affine
 divisor functor. -/
 def divRankOneOpenOver (h : DivRankOneOpenData (C := C) pi) :
@@ -119,6 +126,14 @@ theorem divRankOneOpenPullback_isOpenImmersion
     {T : Over (Spec (.of k))} (q : T ⟶ divRepAffGenusScheme C) :
     IsOpenImmersion (divRankOneOpenPullback pi h q).ι := by
   infer_instance
+
+/-- The arbitrary slice pullback remains an open immersion after passing to Yoneda. -/
+theorem divRankOneOpenPullbackMap_presheaf_isOpenImmersion
+    (h : DivRankOneOpenData (C := C) pi)
+    {T : Over (Spec (.of k))} (q : T ⟶ divRepAffGenusScheme C) :
+    IsOpenImmersion.presheaf
+      (yoneda.map (divRankOneOpenPullback pi h q).ι) := by
+  exact MorphismProperty.relative_map (divRankOneOpenPullback_isOpenImmersion pi h q)
 
 /-- Pointwise form of arbitrary base-change compatibility for the certified open. -/
 theorem mem_divRankOneOpenPullback_iff
@@ -180,6 +195,20 @@ theorem divRankOneOpen_mem_iff_factorization_over
         (yoneda.map (divRankOneOpenOverMap pi h)).app T y = x := by
   rw [divRankOneOpen_mem_iff_factorization pi h x]
   rfl
+
+/-- The exact inverse-facing factorisation for a point of the represented rank-one preimage.
+
+The source point is retained as a subtype, so its membership proof is tied to the same divisor
+that is factored through `DivRankOneOpenOver`; no unrelated class or top-open witness can satisfy
+this endpoint. -/
+theorem rankOneRepresenterRestriction_factorization
+    (h : DivRankOneOpenData (C := C) pi)
+    {T : (Over (Spec (.of k)))ᵒᵖ}
+    (x : (divRankOnePresentationPreimageRepresenter pi).obj T) :
+    ∃ y : (yoneda.obj (divRankOneOpenOver pi h)).obj T,
+      (yoneda.map (divRankOneOpenOverMap pi h)).app T y = x.1 := by
+  apply (divRankOneOpen_mem_iff_factorization_over pi h x.1).mp
+  exact x.2
 
 /-- A point in the certified open carrier is a point of the universal rank-one predicate. -/
 theorem divRankOneOpen_mem_of_carrier
