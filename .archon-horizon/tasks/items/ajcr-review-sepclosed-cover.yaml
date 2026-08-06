@@ -1,22 +1,16 @@
 id: ajcr-review-sepclosed-cover
 project: Algebraic-Jacobian-Challenge-Rebuild
-objective: This is a fresh parallel lane created specifically from the August 2026
-  mathematician review. Before inspecting or editing Lean, read the complete PDF at
-  /home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge/informal/Lean_Algebraic_Jacobian_Complete_Execution_Plan.pdf
-  and treat its Phase 5 route, acceptance gates, stop rules, and anti-vacuity criteria
-  as binding. Own only AJCR.review-plan.p5-sepclosed-cover. For every extension K/k
-  and every input Picard class lambda, construct a base-field line bundle L0 whose
-  translation of lambda lies in the existing PicRankOneOpen predicate, using positive
-  twisting, point subtraction, and h0 reduction while preserving H1=0. The witness
-  must explicitly depend on lambda and must be packaged in the exact form later consumed
-  by the translated-open gluing criterion; unrelated existential carriers and fieldwise
-  substitutes receive no credit. Work only in new Pic0RankOneTranslatedCover*.lean
-  or Pic0SepClosedCover*.lean files and, if genuinely required, RiemannRoch/Ledger/VanishingFieldDescent.lean.
-  Treat all Phase-3 locus files, Phase-4 presentation/local-divisor files, and Pic0CriticalPath.lean
-  as owned by other lanes. Request API or root-integration changes through the coordination
-  conversation. Require narrow kernel checks, standard axiom audits, an immediate
-  consumer theorem, and normal proof budgets. Do not work on representability or Galois
-  descent and do not resume the high-degree Abel quotient route.
+objective: Resume the August 2026 mathematician-review Phase 5 lane after the prior
+  translated-drop feeder pass. Read the complete PDF at /home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge/informal/Lean_Algebraic_Jacobian_Complete_Execution_Plan.pdf
+  first. Continue the lambda-tied separably closed translated rank-one cover, but
+  target the missing general per-K/per-lambda SepClosedTranslatedDropData producer,
+  especially baseSubtraction and its finite-support/residue-one compatibility. The
+  result must feed the existing PicRankOneOpen/FibrePresented API without a fieldwise
+  substitute or unrelated existential carrier. Work only in new Pic0RankOneTranslatedCover*.lean
+  or Pic0SepClosedCover*.lean files and, if genuinely required, VanishingFieldDescent.lean;
+  request Phase-3, Phase-4, and Pic0CriticalPath changes through I-1927. Require narrow
+  kernel checks, standard axiom audits, immediate consumers, and normal budgets. Do
+  not resume the high-degree Abel quotient route or work on Galois descent.
 title: 'Review lane: separably closed translated rank-one cover'
 explanation: ''
 projects:
@@ -47,6 +41,6 @@ inbox_refs:
 - I-1927
 artifact_refs: []
 created_at: '2026-08-06T03:19:01.903480+00:00'
-updated_at: '2026-08-06T09:21:46.882573+00:00'
+updated_at: '2026-08-06T15:45:33.427209+00:00'
 metadata:
   author: human
