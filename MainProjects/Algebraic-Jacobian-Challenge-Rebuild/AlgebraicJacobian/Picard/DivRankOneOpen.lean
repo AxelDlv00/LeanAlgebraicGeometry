@@ -99,6 +99,15 @@ def divRankOneOpenOver (h : DivRankOneOpenData (C := C) pi) :
     Over (Spec (.of k)) :=
   Over.mk (divRankOneOpenMap pi h ≫ (divRepAffGenusScheme C).hom)
 
+/-- The inclusion of the certified open, as a morphism in the slice over `Spec k`.
+
+This is the map whose Yoneda action is consumed by the canonical rank-one Abel inverse.  Naming
+it separately keeps consumers independent of the implementation spelling of `divRankOneOpenOver`.
+-/
+def divRankOneOpenOverMap (h : DivRankOneOpenData (C := C) pi) :
+    divRankOneOpenOver pi h ⟶ divRepAffGenusScheme C :=
+  Over.homMk (divRankOneOpenMap pi h)
+
 /-- Pull back the certified rank-one open along an arbitrary slice morphism. -/
 def divRankOneOpenPullback
     (h : DivRankOneOpenData (C := C) pi)
@@ -156,6 +165,21 @@ theorem divRankOneOpen_mem_iff_factorization
           (h.carrier.ι ≫ (divRepAffGenusScheme C).hom))).obj T,
         (openSubfunctorMap (divRepAffGenusScheme C) h.carrier).app T y = x := by
   rw [divRankOneOpen_mem_iff pi h x, openSubfunctor_mem_iff]
+
+/-- The same factorisation contract with the named open object and slice inclusion.
+
+The source in the preceding theorem is definitionally the slice object
+`divRankOneOpenOver pi h`; this corollary gives the stable public names expected by inverse
+consumers. -/
+theorem divRankOneOpen_mem_iff_factorization_over
+    (h : DivRankOneOpenData (C := C) pi)
+    {T : (Over (Spec (.of k)))ᵒᵖ}
+    (x : (yoneda.obj (divRepAffGenusScheme C)).obj T) :
+    x ∈ (divRankOneUniversalPredicate pi).obj T ↔
+      ∃ y : (yoneda.obj (divRankOneOpenOver pi h)).obj T,
+        (yoneda.map (divRankOneOpenOverMap pi h)).app T y = x := by
+  rw [divRankOneOpen_mem_iff_factorization pi h x]
+  rfl
 
 /-- A point in the certified open carrier is a point of the universal rank-one predicate. -/
 theorem divRankOneOpen_mem_of_carrier
