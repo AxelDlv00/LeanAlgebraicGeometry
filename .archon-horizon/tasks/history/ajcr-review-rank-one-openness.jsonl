@@ -12,3 +12,6 @@
 {"at": "2026-08-06T07:33:59.342126+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
 {"at": "2026-08-06T07:34:47.496977+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
 {"at": "2026-08-06T08:26:31.537881+00:00", "actor": "horizon", "field": "status", "from": "running", "to": "blocked", "note": "", "provenance": {"run": "0122", "session": "0010-horizon-ajcr-review-rank-one-openness", "role": "horizon", "round": "4", "rounds": "8", "task": "ajcr-review-rank-one-openness", "task_title": "Review lane: rank-one loci and openness", "projects": "Algebraic-Jacobian-Challenge-Rebuild"}}
+{"at": "2026-08-06T08:51:00.610100+00:00", "actor": "system", "field": "status", "from": "blocked", "to": "queued", "note": "re-queued for the next round of a focused run"}
+{"at": "2026-08-06T08:51:12.589042+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-06T08:58:58.487288+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
