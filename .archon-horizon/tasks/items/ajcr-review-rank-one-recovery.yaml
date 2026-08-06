@@ -1,25 +1,17 @@
 id: ajcr-review-rank-one-recovery
 project: Algebraic-Jacobian-Challenge-Rebuild
-objective: 'This is a fresh recovery task created specifically from the mathematician
-  review. Before inspecting or editing Lean code, read the complete PDF at /home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge/informal/Lean_Algebraic_Jacobian_Complete_Execution_Plan.pdf
-  and treat its mathematical route, phase ordering, acceptance gates, stop conditions,
-  and fallback criteria as binding. Begin with the reproducible Phase 0 audit and
-  critical-root check, then execute the earliest unblocked phase of the AJCR-first
-  rank-one strategy recorded under roadmap AJCR.review-plan. The intended chain is:
-  stabilize endgame contracts and canonical interfaces; cap arbitrary-degree divisor
-  infrastructure; define the rank-one loci; construct the family-level divisorOfRankOne
-  and rankOneAbelIso/open immersion; prove the separably closed translated cover;
-  construct pic0_sepClosed_representableBy; reuse or build shared finite-Galois descent
-  returning both the descended scheme and representation certificate; obtain arbitrary-field
-  pic0_representableBy; and construct JacobianData from that same pinned representation.
-  Do not inherit the old ajcr-w4-rep-free campaign as the task objective, and do not
-  resume the high-degree Abel-quotient route unless the PDF explicit fallback conditions
-  are met. Credit a milestone only when it is root-reachable, has an immediate consumer,
-  kernel-checks, passes the axiom audit, avoids unrelated-witness or vacuous hypotheses,
-  stays within normal resource budgets, and superseded paths are deleted or specialized.
-  Keep the roadmap, task state, inbox handoffs, and ledger commits current throughout
-  the Horizon run.'
-title: Execute the August 2026 mathematician review
+objective: Continue the August 2026 mathematician review, but this team now owns only
+  the Phase 4 canonical rank-one Abel inverse and shared critical-root integration.
+  Read the complete PDF at /home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge/informal/Lean_Algebraic_Jacobian_Complete_Execution_Plan.pdf
+  and preserve its acceptance gates. Starting from the landed local-divisor feeders,
+  prove the native O-linear evaluation/zero-locus comparison, choice independence,
+  base-change compatibility, divisorOfRankOne, both inverse laws, rankOneAbelIso,
+  and the open-immersion consumer. This team owns Pic0RankOnePresentation.lean, Pic0RankOneLocalDivisor.lean,
+  new Phase-4 inverse files, and Pic0CriticalPath.lean integration. Do not edit Pic0RankOneLocus*.lean,
+  DivRankOneOpen*.lean, or Pic0RankOneTranslatedCover*.lean; those are parallel lanes.
+  Do not work on Phase 7 descent. Coordinate API needs through the inbox conversations
+  and serialize full project builds.
+title: 'Review lane: canonical rank-one Abel inverse'
 explanation: 'This is a fresh recovery task created specifically from the mathematician
   review. Before inspecting or editing Lean code, read the complete PDF at /home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge/informal/Lean_Algebraic_Jacobian_Complete_Execution_Plan.pdf
   and treat its mathematical route, phase ordering, acceptance gates, stop conditions,
@@ -43,7 +35,7 @@ projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 - Algebraic-Jacobian-Challenge
 priority: urgent
-status: queued
+status: running
 write_set:
   files: []
   projects:
@@ -57,15 +49,15 @@ scope:
   - Algebraic-Jacobian-Challenge-Rebuild
   - Algebraic-Jacobian-Challenge
 roadmap_refs:
-- AJCR.review-plan
-- AJCR.review-plan.p3-rank-one-loci
 - AJCR.review-plan.p4-rank-one-iso
-- AJCR.review-plan.p7-galois-descent
+- AJCR.review-plan.merge-review
 inbox_refs:
 - I-1919
+- I-1926
+- I-1927
 artifact_refs: []
 created_at: '2026-08-04T02:27:37.236041+00:00'
-updated_at: '2026-08-06T03:04:51.754416+00:00'
+updated_at: '2026-08-06T03:22:04.735693+00:00'
 metadata:
   author: human
   updated_at: '2026-08-04T02:50:45.822467+00:00'

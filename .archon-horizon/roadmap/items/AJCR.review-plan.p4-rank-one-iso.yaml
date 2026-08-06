@@ -8,7 +8,7 @@ summary: Construct divisorOfRankOne from the evaluation map f^* f_* L -> L witho
   laws, rankOneAbelIso, and rankOneAbel_isOpenImmersion on arbitrary test schemes;
   delete generator-selection, fieldwise-only, and source/test coupling workarounds
   no longer consumed.
-status: pending
+status: active
 kind: proof
 priority: urgent
 depends_on: []
@@ -22,7 +22,7 @@ metadata:
   created_at: '2026-08-04T01:52:25.741918+00:00'
   parent: AJCR.review-plan
   milestone: AJCR.review-plan
-  updated_at: '2026-08-05T12:33:34.535722+00:00'
+  updated_at: '2026-08-06T03:19:17.214711+00:00'
   pinned_commits:
   - 0732e370c0
   - 013508518b
@@ -35,3 +35,4 @@ metadata:
   - 1adae27c2e
   - b9281d1828
   - 1cf162d6c3
+  owner: ajcr-review-rank-one-recovery
