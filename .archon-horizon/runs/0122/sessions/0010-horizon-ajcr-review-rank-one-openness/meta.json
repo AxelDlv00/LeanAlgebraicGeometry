@@ -3,15 +3,23 @@
   "round": 4,
   "project": "Algebraic-Jacobian-Challenge-Rebuild",
   "task_id": "ajcr-review-rank-one-openness",
-  "status": "running",
-  "started_at": "2026-08-06T07:34:47.505165+00:00",
   "projects": [
     "Algebraic-Jacobian-Challenge-Rebuild"
   ],
+  "status": "blocked",
+  "started_at": "2026-08-06T07:34:47.505165+00:00",
+  "ended_at": "2026-08-06T08:50:29.731594+00:00",
   "harness_name": "codex",
   "harness_kind": "codex",
   "model": "gpt-5.6-sol",
   "effort": "ultra",
+  "config_dir": null,
   "auth": "subscription",
-  "workspace_sha": "95b52929dae0fac4a30c4825e1a10332630b742d"
+  "usage": {
+    "tokens_in": 29025005,
+    "tokens_out": 69463,
+    "cost_usd": null
+  },
+  "engine_session_id": "019fd5ff-05a8-7320-b431-783533e8b1fe",
+  "workspace_sha": "f020557f3490adf53a2898d23bc79d6299778f7c"
 }
