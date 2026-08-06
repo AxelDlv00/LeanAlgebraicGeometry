@@ -87,6 +87,9 @@ hypotheses.
 #check AlgebraicGeometry.PicRankOneOpen
 #check AlgebraicGeometry.PicRankOneNativePresentation
 #check AlgebraicGeometry.PicRankOneNativePresentation.toLocalPresentation
+#check AlgebraicGeometry.BasicOpenCocycleDatum.nativeModulePieceSectionsEquiv
+#check AlgebraicGeometry.BasicOpenCocycleDatum.nativeModulePieceSheafIso
+#check AlgebraicGeometry.BasicOpenCocycleDatum.nativeModule_isLineBundle
 #check AlgebraicGeometry.mem_picRankOneOpen_of_nativePresentations
 #check AlgebraicGeometry.divRankOnePresentationPreimageRepresenter
 #check AlgebraicGeometry.rankOneAbelRepresented
@@ -105,6 +108,8 @@ hypotheses.
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.h0BaseChange
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.evaluation
 #print axioms AlgebraicGeometry.PicRankOneNativePresentation.toLocalPresentation
+#print axioms AlgebraicGeometry.BasicOpenCocycleDatum.nativeModulePieceSheafIso
+#print axioms AlgebraicGeometry.BasicOpenCocycleDatum.nativeModule_isLineBundle
 #print axioms AlgebraicGeometry.mem_picRankOneOpen_of_nativePresentations
 #print axioms AlgebraicGeometry.canonicalBaseChangeMap_pullback_counit
 #print axioms AlgebraicGeometry.canonicalBaseChangeMap_counit_cancel

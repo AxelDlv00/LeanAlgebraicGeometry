@@ -11,8 +11,9 @@ import AlgebraicJacobian.Picard.Pic0RankOneLocusNative
 `PicRankOneLocalPresentation` deliberately leaves the geometric producer fields explicit.
 This file fixes the module part of that contract: for a tied cocycle datum `D`, the module is
 always `D.nativeModule` and its base-ring comparison is always
-`D.nativeModuleKSheafIso`.  The remaining fields (`IsLineBundle`, arbitrary-cartesian
-pushforward base change, and the cohomology/rank certificates) stay as explicit obligations.
+`D.nativeModuleKSheafIso`.  The native piece trivializations supply the line-bundle field;
+arbitrary-cartesian pushforward base change and the cohomology/rank certificates stay as
+explicit obligations.
 
 The resulting contract is therefore an adapter interface for a future producer, rather than a
 second choice of a line bundle.  Its conversion is consumed directly by the public
@@ -45,9 +46,10 @@ variable (pi : C.left ⟶ P1 k) [IsFinite pi]
 A lambda-tied rank-one presentation whose module is canonically the native module of its
 cocycle datum.
 
-The fields after `datum_class` are exactly the obligations which are absent from the native
-glued-sheaf bridge.  Keeping them explicit prevents a field-level H⁰/H¹ calculation or an
-unrelated line bundle from being silently substituted for the native evaluation module.
+The fields after `datum_class` are exactly the remaining producer obligations.  The line-bundle
+certificate is derived from the canonical piece trivializations, so a field-level H⁰/H¹
+calculation or an unrelated line bundle cannot be silently substituted for the native
+evaluation module.
 -/
 structure PicRankOneNativePresentation
     (lam : picDegLayer C (genus C : ℤ) (overSpec k A)) : Type (u + 1) where
@@ -59,7 +61,6 @@ structure PicRankOneNativePresentation
   datum_class :
     (representative : relPic C (overSpec k cover.Carrier)) =
       relPicMk C (overSpec k cover.Carrier) datum.cechPicClass
-  line_bundle : Scheme.Modules.IsLineBundle datum.nativeModule
   native_pushforward_base_change :
     ∀ {T' X' : Scheme.{u}}
       (g : T' ⟶ Spec (.of cover.Carrier)) (f' : X' ⟶ T')
@@ -93,7 +94,7 @@ noncomputable def toLocalPresentation
     datum_class := P.datum_class
     module := P.datum.nativeModule
     module_iso := P.datum.nativeModuleKSheafIso
-    line_bundle := P.line_bundle
+    line_bundle := P.datum.nativeModule_isLineBundle
     native_pushforward_base_change := P.native_pushforward_base_change
     h1_vanishing := P.h1_vanishing
     h0_finite := P.h0_finite
