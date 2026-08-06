@@ -10,9 +10,10 @@ import AlgebraicJacobian.Picard.Pic0RankOneLocus
 `BasicOpenCocycleDatum.sheaf` is already a sheaf of modules over the coefficient
 ring.  The presentation contract also asks for the same object as a sheaf of
 modules over the structure sheaf of the relative curve.  This file supplies
-that type-level bridge: the componentwise `gluedQsmul` action gives a module on
-every open, and `gluedRes_gluedQsmul` gives the semilinearity needed by
-`PresheafOfModules.ofPresheaf`.
+that bridge: the componentwise `gluedQsmul` action gives a module on every open,
+`gluedRes_gluedQsmul` gives the semilinearity needed by
+`PresheafOfModules.ofPresheaf`, and `gluedQsmul_overAlgebraMap` identifies its
+restriction to the coefficient ring with the original datum sheaf.
 
 This is deliberately only the native-module bridge.  It does not assert
 `IsLineBundle`, pushforward base-change, or existence of a tied
@@ -88,6 +89,50 @@ noncomputable def nativeModule : (relCurve C B).Modules := by
   convert (Presheaf.isSheaf_iff_isSheaf_forget _ _
     (CategoryTheory.forget (ModuleCat.{u} B))).mp D.sheaf.property using 1
   all_goals rfl
+
+/-- On every open, restricting `D.nativeModule` to the coefficient ring recovers
+the datum's original module of sections.
+
+The equivalence is the identity on sections. Its linearity is the substantive
+point: `gluedQsmul_overAlgebraMap` identifies the native structure-sheaf action
+of a coefficient scalar with the datum's coefficient action. -/
+noncomputable def nativeModuleKSectionsEquiv
+    (U : (relCurve C B).Opens) :
+    (Scheme.toModuleKSheafOfModules
+      (Over.mk (relCurve C B ↘ Spec (.of B))) (nativeModule D)).obj.obj (op U) ≃ₗ[B]
+      D.sheaf.obj.obj (op U) := by
+  let f :
+      (Scheme.toModuleKSheafOfModules
+        (Over.mk (relCurve C B ↘ Spec (.of B))) (nativeModule D)).obj.obj (op U) →ₗ[B]
+        D.sheaf.obj.obj (op U) :=
+    { toFun := fun x => x
+      map_add' := by
+        intros
+        rfl
+      map_smul' := by
+        intro r x
+        change gluedQsmul B D.pieces D.unit (le_rfl : U ≤ U)
+            ((relCurve C B).overAlgebraMap B U r) x =
+          r • (show D.sheaf.obj.obj (op U) from x)
+        exact gluedQsmul_overAlgebraMap B D.pieces D.unit
+          (le_rfl : U ≤ U) r x }
+  exact LinearEquiv.ofBijective f ⟨fun _ _ h => h, fun y => ⟨y, rfl⟩⟩
+
+/-- The base-ring sheaf of `D.nativeModule` is canonically the datum sheaf.
+
+This has exactly the type of `PicRankOneLocalPresentation.module_iso` when the
+presentation's native module is chosen to be `D.nativeModule`. -/
+noncomputable def nativeModuleKSheafIso :
+    Scheme.toModuleKSheafOfModules
+      (Over.mk (relCurve C B ↘ Spec (.of B))) (nativeModule D) ≅ D.sheaf :=
+  (fullyFaithfulSheafToPresheaf _ _).preimageIso
+    (NatIso.ofComponents
+      (fun U => (nativeModuleKSectionsEquiv D U.unop).toModuleIso)
+      (fun {_ _} _ => by
+        apply ModuleCat.hom_ext
+        apply LinearMap.ext
+        intro x
+        rfl))
 
 end
 
