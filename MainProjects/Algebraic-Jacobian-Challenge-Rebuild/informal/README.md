@@ -1,8 +1,8 @@
 # `informal/` — index of design worksheets, specs, and recon dumps
 
-78 files, ~31k lines. This index exists so a new session can tell **which file is still
+79 files, ~32k lines. This index exists so a new session can tell **which file is still
 authoritative** without reading them. Created 2026-07-27 (janitor pass, run 0048 round 5);
-re-reconciled against the directory 2026-07-29 (janitor pass, run 0073 s0016).
+re-reconciled against the directory 2026-08-06 (janitor pass, run 0122).
 
 **How the status column was derived — read this before trusting it.** Each entry's title comes
 from reading the file's header. `SUPERSEDED-BY` is recorded **only** where the file itself (or its
