@@ -2,10 +2,13 @@ id: AJCR.review-plan.p5-sepclosed-cover
 title: 'Phase 5: translated rank-one cover over a separably closed field'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: For every extension K/k and input Picard class lam, construct a base-field
-  line bundle L0 whose translation lies in PicRankOneOpen by positive twisting, point
-  subtraction, and h0 reduction while preserving H1=0. The witness must explicitly
-  depend on lam and feed the gluing criterion directly; no unrelated existential carrier.
+summary: 'The general per-K/per-lambda SepClosedTranslatedDropData producer is complete:
+  finite-separable splitting, positive FLV twist, rational-point-image support, residue
+  degree one, and baseSubtraction feed the existing translated-drop/IsSplitWitness
+  consumer. The remaining blocker is the protected arbitrary-affine native PicRankOneLocalPresentation
+  bridge (module/datum-sheaf, line-bundle, and iterated base-change compatibility),
+  followed by Phase-3/Pic0CriticalPath integration; no fieldwise substitute, high-degree
+  Abel quotient, or Galois descent route.'
 status: blocked
 kind: proof
 priority: urgent
@@ -20,9 +23,10 @@ metadata:
   created_at: '2026-08-04T01:52:27.443973+00:00'
   parent: AJCR.review-plan
   milestone: AJCR.review-plan
-  updated_at: '2026-08-06T06:50:31.174870+00:00'
+  updated_at: '2026-08-06T17:44:04.403351+00:00'
   owner: ajcr-review-sepclosed-cover
   pinned_commits:
+  - aeb089c137a214fe98825fc66bd381dbb9405848
   - 15919005f8524314bc94a5f2fdb4db9748ddab6a
   - 0abfccbdfb8b6cc43bba2f6a0dea5ad042a6c85b
   - ead22d32ee06218d8415ba85e15c2a231de2cfa1
