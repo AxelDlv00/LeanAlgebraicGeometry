@@ -63,9 +63,9 @@ theorem subsingleton_tensor_of_surjective_of_finrank_eq_one
     (hs : (1 : K) ⊗ₜ[B] s ≠ 0) (hfs : f s = 0) :
     Subsingleton (N ⊗[B] K) := by
   apply subsingleton_tensor_of_surjective_of_span_singleton f hf s
-  intro v
-  exact exists_smul_eq_of_finrank_eq_one hfin hs v
-  exact hfs
+  · intro v
+    exact exists_smul_eq_of_finrank_eq_one hfin hs v
+  · exact hfs
 
 /-- If a linear map kills a generator of a one-dimensional source fibre, the fibre of its
 range is zero. -/
