@@ -52,3 +52,4 @@
 {"at": "2026-08-06T03:06:07.759812+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
 {"at": "2026-08-06T03:17:57.962846+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "objective, title, roadmap_refs, inbox_refs updated"}
 {"at": "2026-08-06T03:22:04.735726+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "inbox_refs updated"}
+{"at": "2026-08-06T07:56:35.723682+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "re-queued on resume: its Horizon session was interrupted mid-run"}
