@@ -290,11 +290,11 @@ theorem datumSectionBaseChangeLinearMap_one_tmul
       P.datumSectionBaseChange B y := by
   rfl
 
+set_option maxHeartbeats 800000 in
+-- The composed H⁰ equivalences create a large dependent linear-map elaboration.
 /-- Equality of localized H⁰ generators transports canonically to the associated datum
 sections.  This exposes the linearity used by fixed-open divisor canonicality without choosing
 a second section comparison. -/
-set_option maxHeartbeats 800000 in
--- The composed H⁰ equivalences create a large dependent linear-map elaboration.
 theorem datumSectionBaseChange_eq_smul_of_tensor_eq
     (P : PicRankOneLocalPresentation pi lam)
     (B : Type u) [CommRing B] [Algebra k B] [Algebra P.cover.Carrier B]

@@ -26,3 +26,5 @@
 {"at": "2026-08-06T17:01:08.859449+00:00", "actor": "system", "field": "status", "from": "blocked", "to": "queued", "note": "re-queued for the next round of a focused run"}
 {"at": "2026-08-06T17:01:21.012054+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
 {"at": "2026-08-06T17:44:30.713836+00:00", "actor": "horizon", "field": "status", "from": "running", "to": "blocked", "note": "", "provenance": {"run": "0122", "session": "0021-horizon-ajcr-review-rank-one-openness", "role": "horizon", "round": "9", "rounds": "16", "task": "ajcr-review-rank-one-openness", "task_title": "Review lane: rank-one loci and openness", "projects": "Algebraic-Jacobian-Challenge-Rebuild"}}
+{"at": "2026-08-06T17:49:30.705166+00:00", "actor": "system", "field": "status", "from": "blocked", "to": "queued", "note": "re-queued for the next round of a focused run"}
+{"at": "2026-08-06T17:49:46.428205+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
