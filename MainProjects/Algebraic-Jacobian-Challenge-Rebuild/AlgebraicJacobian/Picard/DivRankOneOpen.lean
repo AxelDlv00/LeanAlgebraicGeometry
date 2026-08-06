@@ -41,14 +41,31 @@ def divRankOneUniversalPredicate :
     Subfunctor (yoneda.obj (divRepAffGenusScheme C)) :=
   divRankOnePresentationPreimageRepresenter pi
 
+/-- The Yoneda map induced by the inclusion of an open of an object in the slice.  Naming this
+map is useful to consumers which need the actual factorisation through the open, rather than only
+the proposition that a point lies in its range. -/
+def openSubfunctorMap (D : Over (Spec (.of k))) (U : D.left.Opens) :
+    yoneda.obj (Over.mk (U.ι ≫ D.hom)) ⟶ yoneda.obj D :=
+  yoneda.map (Over.homMk (U := Over.mk (U.ι ≫ D.hom)) U.ι)
+
 /-- The subfunctor represented by an open `U` of an object `D` in the slice over `Spec k`.
 
 Its values are precisely morphisms which factor through the open immersion `U.ι`; using the
 Yoneda range keeps this definition independent of any chosen affine presentation of `U`. -/
 def openSubfunctor (D : Over (Spec (.of k))) (U : D.left.Opens) :
     Subfunctor (yoneda.obj D) :=
-  Subfunctor.range (yoneda.map
-    (Over.homMk (U := Over.mk (U.ι ≫ D.hom)) U.ι))
+  Subfunctor.range (openSubfunctorMap D U)
+
+/-- Unpack range membership into the actual source point and its equality in the ambient Yoneda
+functor.  This is the pointwise factorisation API used by inverse constructions. -/
+theorem openSubfunctor_mem_iff
+    (D : Over (Spec (.of k))) (U : D.left.Opens)
+    {T : (Over (Spec (.of k)))ᵒᵖ}
+    (x : (yoneda.obj D).obj T) :
+    x ∈ (openSubfunctor D U).obj T ↔
+      ∃ y : (yoneda.obj (Over.mk (U.ι ≫ D.hom))).obj T,
+        (openSubfunctorMap D U).app T y = x := by
+  rfl
 
 /-- An explicit geometric certificate for the universal rank-one predicate.
 
@@ -125,6 +142,20 @@ theorem divRankOneOpen_mem_iff
     x ∈ (divRankOneUniversalPredicate pi).obj T ↔
       x ∈ (openSubfunctor (divRepAffGenusScheme C) h.carrier).obj T := by
   rw [h.carrier_eq]
+
+/-- A point of the universal rank-one predicate factors through the certified open immersion.
+
+Unlike a bare range-membership proof, the conclusion exposes the source point and the equality
+of its image with the given divisor point, which is the exact data needed by a canonical inverse. -/
+theorem divRankOneOpen_mem_iff_factorization
+    (h : DivRankOneOpenData (C := C) pi)
+    {T : (Over (Spec (.of k)))ᵒᵖ}
+    (x : (yoneda.obj (divRepAffGenusScheme C)).obj T) :
+    x ∈ (divRankOneUniversalPredicate pi).obj T ↔
+      ∃ y : (yoneda.obj (Over.mk
+          (h.carrier.ι ≫ (divRepAffGenusScheme C).hom))).obj T,
+        (openSubfunctorMap (divRepAffGenusScheme C) h.carrier).app T y = x := by
+  rw [divRankOneOpen_mem_iff pi h x, openSubfunctor_mem_iff]
 
 /-- A point in the certified open carrier is a point of the universal rank-one predicate. -/
 theorem divRankOneOpen_mem_of_carrier
