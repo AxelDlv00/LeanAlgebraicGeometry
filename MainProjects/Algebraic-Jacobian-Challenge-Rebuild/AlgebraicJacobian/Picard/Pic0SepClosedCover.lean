@@ -28,6 +28,8 @@ open TopologicalSpace Opposite
 
 namespace AlgebraicGeometry
 
+open AlgebraicJacobian
+
 attribute [local instance 10000] relCurve.instOver
 
 /-! ## Sections have residue degree one -/
@@ -76,6 +78,61 @@ theorem residueDeg_one_of_rationalPointBaseChange
     (e := Over.rationalPointBaseChange C L p hp)
   · exact Over.rationalPointBaseChange_snd C L p hp
   · rfl
+
+/-- The graph point of a field-valued point has residue degree one. -/
+theorem residueDeg_one_of_graphPoint
+    {k K : Type u} [Field k] [Field K] [Algebra k K]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIrreducible C.hom]
+    (t : overSpec k K ⟶ C) :
+    (C ⊗ overSpec k K).left.residueDeg K (Over.graphPoint C t) = 1 := by
+  exact residueDeg_one_of_section
+    (X := Over.mk (snd C (overSpec k K)).left)
+    (e := (Over.sectionOfPoint t).left)
+    (by
+      exact congrArg (fun q : overSpec k K ⟶ overSpec k K => q.left)
+        (Over.sectionOfPoint_snd t))
+    (by
+      change (Over.sectionOfPoint t).left.base (IsLocalRing.closedPoint K) =
+        (Over.sectionOfPoint t).left.base default
+      exact congrArg (Over.sectionOfPoint t).left.base
+        (Subsingleton.elim _ _))
+
+/-- The graph presentation has multiplicity one at its graph point.
+
+`presentationDivisor_graphLocalEquations` initially records the multiplicity as an order.
+The graph class and its residue field both have degree one, so the degree formula forces that
+order to be one.  This is the pointwise input for finite-support class descent below. -/
+theorem graphPicClass_eq_picClass_single
+    {k K : Type u} [Field k] [Field K] [Algebra k K]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIrreducible C.hom]
+    (t : overSpec k K ⟶ C) :
+    Over.graphPicClass C t =
+      Scheme.CurveDivisor.picClass K
+        (Scheme.CurveDivisor.single (graphPoint_ne_genericPoint C t) 1) := by
+  let hx := graphPoint_ne_genericPoint C t
+  let a : ℤ :=
+    Multiplicative.toAdd
+      (Scheme.ordZ ((C ⊗ overSpec k K).left ↘ Spec (CommRingCat.of K))
+        hx ((Over.graphLocalEquations C t).presentation.elem (Over.graphPoint C t)))
+  have hsingle :
+      Scheme.presentationDivisor K (Over.graphLocalEquations C t).presentation =
+        Scheme.CurveDivisor.single hx a := by
+    exact presentationDivisor_graphLocalEquations C t
+  have hclass :
+      Scheme.CurveDivisor.picClass K (Scheme.CurveDivisor.single hx a) =
+        Over.graphPicClass C t := by
+    rw [← hsingle, Scheme.CurveDivisor.picClass_presentationDivisor K,
+      Scheme.LocalEquations.presentation_picClass]
+    rfl
+  have hdeg := classDeg_graphPicClass C t
+  rw [← hclass, classDeg_picClass, Scheme.CurveDivisor.deg_single'] at hdeg
+  rw [residueDeg_one_of_graphPoint C t, Nat.cast_one, mul_one] at hdeg
+  rw [hdeg] at hclass
+  exact hclass.symm
 
 /-! ## Image-set packaging -/
 
@@ -131,5 +188,154 @@ theorem residueDeg_one_of_mem_rationalPointBaseChangeImage'
   obtain ⟨p, hp, hpx⟩ := hx
   rw [← hpx]
   exact residueDeg_one_of_rationalPointBaseChange C L p hp
+
+/-! ## Class descent for divisors supported on the rational-point image -/
+
+/-- Every point in the rational-point image is non-generic.  The retained section certificate
+identifies it with an actual graph point, where `graphPoint_ne_genericPoint` applies. -/
+theorem ne_genericPoint_of_mem_rationalPointBaseChangeImage
+    {k L : Type u} [Field k] [Field L] [Algebra k L]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIrreducible C.hom] :
+    ∀ x ∈ rationalPointBaseChangeImage C L,
+      x ≠ genericPoint (C ⊗ overSpec k L).left := by
+  intro x hx
+  obtain ⟨p, hp, hpx⟩ := hx
+  rw [← hpx]
+  let q : overSpec k k ⟶ C := Over.homMk p (by
+    rw [overSpec_self_hom]
+    exact hp)
+  change Over.graphPoint C
+      (Over.overSpecMap (Algebra.ofId k L) ≫ q) ≠
+        genericPoint (C ⊗ overSpec k L).left
+  exact graphPoint_ne_genericPoint C _
+
+/-- The one-point divisor at a base-changed rational point is the base change of a class on the
+base curve.  This is deliberately a class statement: no pullback operation on Weil divisors is
+needed. -/
+theorem exists_baseClass_picClass_single_of_mem_rationalPointBaseChangeImage
+    {k L : Type u} [Field k] [Field L] [Algebra k L]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIrreducible C.hom]
+    (x : (C ⊗ overSpec k L).left)
+    (hx : x ≠ genericPoint (C ⊗ overSpec k L).left)
+    (hmem : x ∈ rationalPointBaseChangeImage C L) :
+    ∃ c : (C ⊗ overSpec k k).left.CechPic,
+      Scheme.CurveDivisor.picClass L (Scheme.CurveDivisor.single hx 1) =
+        Scheme.CechPic.map (relCurveMap C k L) c := by
+  obtain ⟨p, hp, hpx⟩ := hmem
+  let q : overSpec k k ⟶ C := Over.homMk p (by
+    rw [overSpec_self_hom]
+    exact hp)
+  change Over.graphPoint C
+      (Over.overSpecMap (Algebra.ofId k L) ≫ q) = x at hpx
+  subst x
+  refine ⟨Over.graphPicClass C q, ?_⟩
+  rw [← graphPicClass_eq_picClass_single C]
+  exact graphPicClass_base_of_field C L q
+
+/-- A divisor whose finite support consists of base-changed rational points has a Picard class
+defined over the base field.
+
+The proof folds the pointwise graph-class identity over the divisor's `Finsupp` support.  It
+works for arbitrary integer multiplicities; effectivity and the prescribed drop degree are
+orthogonal hypotheses used by the greedy reduction, not by class descent. -/
+theorem exists_baseClass_of_supported_on_rationalPointBaseChangeImage
+    {k L : Type u} [Field k] [Field L] [Algebra k L]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIrreducible C.hom]
+    (S : (C ⊗ overSpec k L).left.CurveDivisor)
+    (hsupp : ∀ (x : (C ⊗ overSpec k L).left)
+      (hx : x ≠ genericPoint (C ⊗ overSpec k L).left),
+      coeffAt hx S ≠ 0 → x ∈ rationalPointBaseChangeImage C L) :
+    ∃ c : (C ⊗ overSpec k k).left.CechPic,
+      Scheme.CurveDivisor.picClass L S =
+        Scheme.CechPic.map (relCurveMap C k L) c := by
+  suffices hmain : ∀ f : {x : (C ⊗ overSpec k L).left //
+      x ≠ genericPoint (C ⊗ overSpec k L).left} →₀ ℤ,
+      (∀ (x : (C ⊗ overSpec k L).left)
+        (hx : x ≠ genericPoint (C ⊗ overSpec k L).left),
+        coeffAt hx f ≠ 0 → x ∈ rationalPointBaseChangeImage C L) →
+      ∃ c : (C ⊗ overSpec k k).left.CechPic,
+        Scheme.CurveDivisor.picClass L f =
+          Scheme.CechPic.map (relCurveMap C k L) c from hmain S hsupp
+  intro f
+  induction f using Finsupp.induction with
+  | zero =>
+      intro _
+      refine ⟨1, ?_⟩
+      change Scheme.CurveDivisor.picClass L
+        (0 : (C ⊗ overSpec k L).left.CurveDivisor) =
+          Scheme.CechPic.map (relCurveMap C k L) 1
+      rw [Scheme.CurveDivisor.picClass_zero, map_one]
+      rfl
+  | single_add p b f hpf hb ih =>
+      intro hsupport
+      have hfp : f p = 0 := Finsupp.notMem_support_iff.mp hpf
+      have hpMem : p.1 ∈ rationalPointBaseChangeImage C L := by
+        apply hsupport p.1 p.2
+        change (Finsupp.single p b + f) p ≠ 0
+        rw [Finsupp.add_apply, Finsupp.single_eq_same, hfp, add_zero]
+        exact hb
+      have hfSupport : ∀ (x : (C ⊗ overSpec k L).left)
+          (hx : x ≠ genericPoint (C ⊗ overSpec k L).left),
+          coeffAt hx f ≠ 0 → x ∈ rationalPointBaseChangeImage C L := by
+        intro x hx hfx
+        apply hsupport x hx
+        change (Finsupp.single p b + f) ⟨x, hx⟩ ≠ 0
+        have hxp : (⟨x, hx⟩ : {z : (C ⊗ overSpec k L).left //
+            z ≠ genericPoint (C ⊗ overSpec k L).left}) ≠ p := by
+          intro heq
+          subst p
+          exact hfx hfp
+        rw [Finsupp.add_apply, Finsupp.single_eq_of_ne hxp, zero_add]
+        exact hfx
+      obtain ⟨cp, hcp⟩ :=
+        exists_baseClass_picClass_single_of_mem_rationalPointBaseChangeImage
+          C p.1 p.2 hpMem
+      have key : ∀ D : (C ⊗ overSpec k L).left.CurveDivisor,
+          (∃ cf : (C ⊗ overSpec k k).left.CechPic,
+            Scheme.CurveDivisor.picClass L D =
+              Scheme.CechPic.map (relCurveMap C k L) cf) →
+          ∃ c : (C ⊗ overSpec k k).left.CechPic,
+            Scheme.CurveDivisor.picClass L
+              (Scheme.CurveDivisor.single p.2 b + D) =
+              Scheme.CechPic.map (relCurveMap C k L) c := by
+        intro D hD
+        obtain ⟨cf, hcf⟩ := hD
+        refine ⟨cp ^ b * cf, ?_⟩
+        unfold relCurveMap relCurve at hcp hcf ⊢
+        rw [Scheme.CurveDivisor.picClass_add,
+          ← Scheme.picClass_single_zpow L p.2 b, hcp, hcf, map_mul, map_zpow]
+      exact key f (ih hfSupport)
+
+/-- Exact discharge of `SepClosedTranslatedDropData.baseSubtraction` for the rational-point
+image.  The descended class is re-presented by an actual base-field divisor `Z`; at exponent
+zero, the inverse of `chartTwistClass C 0 Z` is precisely `picClass k Z`. -/
+theorem exists_baseSubtraction_of_supported_on_rationalPointBaseChangeImage
+    {k L : Type u} [Field k] [Field L] [Algebra k L]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIrreducible C.hom]
+    (S : (C ⊗ overSpec k L).left.CurveDivisor)
+    (hsupp : ∀ (x : (C ⊗ overSpec k L).left)
+      (hx : x ≠ genericPoint (C ⊗ overSpec k L).left),
+      coeffAt hx S ≠ 0 → x ∈ rationalPointBaseChangeImage C L) :
+    ∃ Z : (C ⊗ overSpec k k).left.CurveDivisor,
+      Scheme.CurveDivisor.picClass L S =
+        Scheme.CechPic.map (relCurveMap C k L)
+          ((chartTwistClass C 0 Z)⁻¹) := by
+  obtain ⟨c, hc⟩ :=
+    exists_baseClass_of_supported_on_rationalPointBaseChangeImage C S hsupp
+  obtain ⟨Z, hZ⟩ := Scheme.CurveDivisor.exists_picClass_eq k c
+  refine ⟨Z, ?_⟩
+  rw [hc]
+  apply congrArg
+  simp only [chartTwistClass, pow_zero, one_mul]
+  rw [hZ]
+  exact (inv_inv c).symm
 
 end AlgebraicGeometry
