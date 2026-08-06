@@ -41,6 +41,103 @@ def divRankOneUniversalPredicate :
     Subfunctor (yoneda.obj (divRepAffGenusScheme C)) :=
   divRankOnePresentationPreimageRepresenter pi
 
+/-- Evaluation of the represented genus Abel map on a slice point, with the base morphism
+transported from the point in the divisor representer to its source. -/
+theorem abelDivAffGenusSigma_app_left_rankOne
+    {T : Over (Spec (.of k))}
+    (q : T ⟶ divRepAffGenusScheme C) :
+    (abelDivAffGenusSigma C).app (op T.left) q.left =
+      (⟨T.hom,
+        (abelDivAffTrans C (genus C)).app (op T)
+          ((divFunctorAff_genus_representableBy C).homEquiv q)⟩ :
+        (Over.sigmaExtension (Spec (.of k))
+          (picDegLayerFunctor C (genus C : ℤ))).obj (op T.left)) := by
+  change (⟨q.left ≫ (divRepAffGenusScheme C).hom, _⟩ :
+      (Over.sigmaExtension (Spec (.of k))
+        (picDegLayerFunctor C (genus C : ℤ))).obj (op T.left)) =
+    ⟨T.hom,
+      (abelDivAffTrans C (genus C)).app (op T)
+        ((divFunctorAff_genus_representableBy C).homEquiv q)⟩
+  refine Over.sigmaExtension_ext
+    (picDegLayerFunctor C (genus C : ℤ)) q.w ?_
+  let e : Over.mk (q.left ≫ (divRepAffGenusScheme C).hom) ⟶ T :=
+    Over.mkCongr q.w
+  let q' : Over.mk (q.left ≫ (divRepAffGenusScheme C).hom) ⟶
+      divRepAffGenusScheme C :=
+    Over.homMk q.left rfl
+  have hq : e ≫ q = q' := by
+    apply Over.OverMorphism.ext
+    exact Category.id_comp _
+  change (picDegLayerFunctor C (genus C : ℤ)).map e.op
+      ((abelDivAffTrans C (genus C)).app (op T)
+        ((divFunctorAff_genus_representableBy C).homEquiv q)) =
+    (abelDivAffTrans C (genus C)).app
+      (op (Over.mk (q.left ≫ (divRepAffGenusScheme C).hom)))
+      ((divFunctorAff_genus_representableBy C).homEquiv q')
+  have hnat := ConcreteCategory.congr_hom
+    ((abelDivAffTrans C (genus C)).naturality e.op)
+      ((divFunctorAff_genus_representableBy C).homEquiv q)
+  have hhom :
+      (divFunctorAff_genus_representableBy C).homEquiv q' =
+        (divFunctorAff C (genus C)).map e.op
+          ((divFunctorAff_genus_representableBy C).homEquiv q) := by
+    calc
+      (divFunctorAff_genus_representableBy C).homEquiv q' =
+          (divFunctorAff_genus_representableBy C).homEquiv (e ≫ q) := by
+            rw [hq]
+      _ = (divFunctorAff C (genus C)).map e.op
+          ((divFunctorAff_genus_representableBy C).homEquiv q) :=
+        (divFunctorAff_genus_representableBy C).homEquiv_comp e q
+  rw [hhom]
+  simpa only [ConcreteCategory.comp_apply] using hnat.symm
+
+/-- A represented genus divisor lies in the universal predicate exactly when its Abel image
+lifts through the single public rank-one Picard locus. -/
+theorem divRankOneUniversalPredicate_mem_iff_sigma
+    {T : (Over (Spec (.of k)))ᵒᵖ}
+    (x : (yoneda.obj (divRepAffGenusScheme C)).obj T) :
+    x ∈ (divRankOneUniversalPredicate pi).obj T ↔
+      ∃ v : (Over.sigmaExtension (Spec (.of k))
+          (PicRankOneOpen pi).toFunctor).obj (op T.unop.left),
+        (picRankOneOpenSigmaIncl pi).app (op T.unop.left) v =
+          (abelDivAffGenusSigma C).app (op T.unop.left) x.left := by
+  simp only [divRankOneUniversalPredicate,
+    divRankOnePresentationPreimageRepresenter,
+    Subfunctor.preimage_obj, Set.mem_preimage]
+  let p := (abelDivAffTrans C (genus C)).app T
+    ((divFunctorAff_genus_representableBy C).homEquiv x)
+  change p ∈ (PicRankOneOpen pi).obj T ↔ _
+  have hleft :
+      (abelDivAffGenusSigma C).app (op T.unop.left) x.left =
+        (⟨T.unop.hom, p⟩ :
+          (Over.sigmaExtension (Spec (.of k))
+            (picDegLayerFunctor C (genus C : ℤ))).obj
+              (op T.unop.left)) :=
+    abelDivAffGenusSigma_app_left_rankOne x
+  constructor
+  · intro hp
+    refine ⟨⟨T.unop.hom, ⟨p, hp⟩⟩, ?_⟩
+    rw [hleft]
+    rfl
+  · rintro ⟨v, hv⟩
+    rw [hleft] at hv
+    dsimp [picRankOneOpenSigmaIncl,
+      CategoryTheory.Over.sigmaExtensionNat] at hv
+    rcases v with ⟨a, y⟩
+    dsimp at hv
+    have hfirst : a = T.unop.hom :=
+      congrArg (fun z => z.1) hv
+    cases hfirst
+    have hinj := Sigma.mk.inj hv
+    have heq :
+        ConcreteCategory.hom
+            ((PicRankOneOpen pi).ι.app
+              (op (Over.mk T.unop.hom))) y = p :=
+      eq_of_heq hinj.2
+    change p ∈ (PicRankOneOpen pi).obj T
+    rw [← heq]
+    exact y.property
+
 /-- The Yoneda map induced by the inclusion of an open of an object in the slice.  Naming this
 map is useful to consumers which need the actual factorisation through the open, rather than only
 the proposition that a point lies in its range. -/
@@ -77,6 +174,86 @@ structure DivRankOneOpenData (pi : C.left ⟶ P1 k) [IsFinite pi] where
   carrier_eq :
     openSubfunctor (divRepAffGenusScheme C) carrier =
       divRankOneUniversalPredicate pi
+
+/-- Genuine relative openness of the public Picard rank-one locus produces the universal
+divisor rank-one open.  The carrier is the open image of the represented pullback of the Abel
+map, and the proof below identifies its Yoneda range with the defining predicate. -/
+theorem divRankOneOpenData_of_picRankOneOpen_isOpen
+    (h : PicRankOneOpen.IsOpen pi) :
+    Nonempty (DivRankOneOpenData pi) := by
+  obtain ⟨X, snd, fst, hpb⟩ := h.rep (abelDivAffGenusSigma C)
+  letI : IsOpenImmersion snd :=
+    h.property (abelDivAffGenusSigma C) fst snd hpb
+  let U := snd.opensRange
+  refine ⟨⟨U, ?_⟩⟩
+  ext T x
+  rw [openSubfunctor_mem_iff]
+  rw [divRankOneUniversalPredicate_mem_iff_sigma]
+  have hpbT := (IsPullback.iff_app.mp hpb) (op T.unop.left)
+  rw [Types.isPullback_iff] at hpbT
+  constructor
+  · rintro ⟨y, hy⟩
+    have hxy : x.left = y.left ≫ U.ι := by
+      have hleft := congrArg Over.Hom.left hy
+      exact hleft.symm
+    have hrange : Set.range x.left.base ⊆ Set.range snd.base := by
+      rw [← Scheme.Hom.coe_opensRange snd]
+      rintro z ⟨t, rfl⟩
+      rw [hxy, Scheme.Hom.comp_apply]
+      change U.ι.base (y.left.base t) ∈ snd.opensRange
+      change U.ι.base (y.left.base t) ∈ U
+      exact (y.left.base t).property
+    let u : T.unop.left ⟶ X :=
+      IsOpenImmersion.lift snd x.left hrange
+    have hu : u ≫ snd = x.left :=
+      IsOpenImmersion.lift_fac _ _ _
+    refine ⟨fst.app (op T.unop.left) u, ?_⟩
+    have hcomm := congrArg
+      (fun f => (ConcreteCategory.hom f) u) hpbT.1
+    change (picRankOneOpenSigmaIncl pi).app (op T.unop.left)
+        (fst.app (op T.unop.left) u) =
+      (abelDivAffGenusSigma C).app (op T.unop.left) (u ≫ snd) at hcomm
+    simpa only [hu] using hcomm
+  · rintro ⟨v, hv⟩
+    obtain ⟨u, hu₁, hu₂⟩ := hpbT.2.2 v x.left hv
+    change u ≫ snd = x.left at hu₂
+    have hrange : Set.range x.left.base ⊆ Set.range U.ι.base := by
+      rw [Scheme.Opens.range_ι]
+      change Set.range x.left.base ⊆ snd.opensRange
+      rw [Scheme.Hom.coe_opensRange]
+      rintro z ⟨t, rfl⟩
+      refine ⟨u.base t, ?_⟩
+      have happ := congrArg (fun f => f.base t) hu₂
+      simpa only [Scheme.Hom.comp_apply] using happ
+    let V : Over (Spec (.of k)) :=
+      Over.mk (U.ι ≫ (divRepAffGenusScheme C).hom)
+    let j : V ⟶ divRepAffGenusScheme C :=
+      Over.homMk (U := V) U.ι
+    let e : U.toScheme = V.left := rfl
+    let l : T.unop.left ⟶ U.toScheme :=
+      IsOpenImmersion.lift U.ι x.left hrange
+    let l' : T.unop.left ⟶ V.left := l ≫ eqToHom e
+    have he : eqToHom e ≫ j.left = U.ι := by
+      subst e
+      rfl
+    have hl : l' ≫ j.left = x.left := by
+      dsimp only [l']
+      rw [Category.assoc, he]
+      dsimp only [l]
+      exact IsOpenImmersion.lift_fac _ _ _
+    have hlw : l' ≫ V.hom = T.unop.hom := by
+      rw [← j.w, ← Category.assoc, hl]
+      exact x.w
+    let y : (yoneda.obj V).obj T := Over.homMk l' hlw
+    refine ⟨y, ?_⟩
+    change y ≫ j = x
+    apply Over.OverMorphism.ext
+    exact hl
+
+/-- A named carrier choice for consumers which already possess the Picard openness theorem. -/
+def divRankOneOpenDataOfPicRankOneOpen
+    (h : PicRankOneOpen.IsOpen pi) : DivRankOneOpenData pi :=
+  Classical.choice (divRankOneOpenData_of_picRankOneOpen_isOpen pi h)
 
 /-- The open subscheme supplied by a `DivRankOneOpenData` witness. -/
 def DivRankOneOpen (h : DivRankOneOpenData (C := C) pi) : Scheme :=
@@ -209,6 +386,19 @@ theorem rankOneRepresenterRestriction_factorization
       (yoneda.map (divRankOneOpenOverMap pi h)).app T y = x.1 := by
   apply (divRankOneOpen_mem_iff_factorization_over pi h x.1).mp
   exact x.2
+
+/-- Immediate inverse-facing consumer of Picard rank-one openness: every point of the represented
+rank-one divisor preimage factors through the open carrier extracted from that certificate. -/
+theorem rankOneRepresenterRestriction_factorization_of_picRankOneOpen_isOpen
+    (hPic : PicRankOneOpen.IsOpen pi)
+    {T : (Over (Spec (.of k)))ᵒᵖ}
+    (x : (divRankOnePresentationPreimageRepresenter pi).obj T) :
+    ∃ y : (yoneda.obj (divRankOneOpenOver pi
+        (divRankOneOpenDataOfPicRankOneOpen pi hPic))).obj T,
+      (yoneda.map (divRankOneOpenOverMap pi
+        (divRankOneOpenDataOfPicRankOneOpen pi hPic))).app T y = x.1 :=
+  rankOneRepresenterRestriction_factorization pi
+    (divRankOneOpenDataOfPicRankOneOpen pi hPic) x
 
 /-- A point in the certified open carrier is a point of the universal rank-one predicate. -/
 theorem divRankOneOpen_mem_of_carrier
