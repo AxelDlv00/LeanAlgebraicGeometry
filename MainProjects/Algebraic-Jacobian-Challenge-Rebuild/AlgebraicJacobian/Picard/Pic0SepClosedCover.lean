@@ -338,4 +338,81 @@ theorem exists_baseSubtraction_of_supported_on_rationalPointBaseChangeImage
   rw [hZ]
   exact (inv_inv c).symm
 
+/-! ## The separably-closed drop package -/
+
+section DropPackage
+
+variable {k : Type u} [Field k] [IsSepClosed k]
+variable {C : Over (Spec (.of k))}
+variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+  [GeometricallyIrreducible C.hom]
+variable {K L : Type u} [Field K] [Algebra k K]
+  [Field L] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
+  [Module.Finite K L] [Algebra.IsSeparable K L]
+
+/-- Build the translated-drop package using the actual dense image of base-field rational
+points.  Density, non-genericity, residue degree one, and the base-subtraction class identity
+are derived here; only the lambda-tied positive-twist divisor and its degree/vanishing data
+remain inputs. -/
+noncomputable def sepClosedTranslatedDropDataOfRationalPointImage
+    (μ : picEt C (overSpec k K))
+    (m : ℕ)
+    (M₀ : (relCurve C L).CechPic)
+    (hM₀ : PicEtAff.map C L (picEtAffineEquiv C K μ) =
+      PicEtAff.unit C L (relPicMk C (overSpec k L) M₀))
+    (W₀ : (C ⊗ overSpec k L).left.CurveDivisor)
+    (hW₀ : Scheme.CurveDivisor.picClass L W₀ =
+      M₀ * Scheme.CechPic.map (relCurveMap C k L)
+        (chartTwistClass C m (0 : (C ⊗ overSpec k k).left.CurveDivisor)))
+    (excess : ℕ)
+    (hdeg : Scheme.CurveDivisor.deg L W₀ = (genus C : ℤ) + excess)
+    (h1 : Subsingleton (Sheaf.HModule
+      ((C ⊗ overSpec k L).left.divisorSheaf L W₀) 1)) :
+    SepClosedTranslatedDropData (C := C) (L := L) μ where
+  m := m
+  M₀ := M₀
+  hM₀ := hM₀
+  W₀ := W₀
+  hW₀ := hW₀
+  genusValue := genus C
+  excess := excess
+  hχ := chi_moduleKSheaf C
+  hdeg := hdeg
+  h1 := h1
+  P := rationalPointBaseChangeImage C L
+  hdense := dense_rationalPointBaseChangeImage C L
+  hPcl := ne_genericPoint_of_mem_rationalPointBaseChangeImage C
+  hPdeg := residueDeg_one_of_mem_rationalPointBaseChangeImage' C L
+  baseSubtraction := by
+    intro S _ _ hsupp
+    exact exists_baseSubtraction_of_supported_on_rationalPointBaseChangeImage C S hsupp
+
+/-- Immediate lambda-tied consumer of the rational-point-image package.
+
+The result contains the effective subtraction divisor, a base-field translating divisor,
+`h⁰ = 1`, preservation of `H¹ = 0`, the class-level base-change identity, and the existing
+`IsSplitWitness` for `μ` translated by that specific base-field class. -/
+theorem exists_sepClosedTranslatedDropResult_of_rationalPointImage
+    (μ : picEt C (overSpec k K))
+    (m : ℕ)
+    (M₀ : (relCurve C L).CechPic)
+    (hM₀ : PicEtAff.map C L (picEtAffineEquiv C K μ) =
+      PicEtAff.unit C L (relPicMk C (overSpec k L) M₀))
+    (W₀ : (C ⊗ overSpec k L).left.CurveDivisor)
+    (hW₀ : Scheme.CurveDivisor.picClass L W₀ =
+      M₀ * Scheme.CechPic.map (relCurveMap C k L)
+        (chartTwistClass C m (0 : (C ⊗ overSpec k k).left.CurveDivisor)))
+    (excess : ℕ)
+    (hdeg : Scheme.CurveDivisor.deg L W₀ = (genus C : ℤ) + excess)
+    (h1 : Subsingleton (Sheaf.HModule
+      ((C ⊗ overSpec k L).left.divisorSheaf L W₀) 1)) :
+    Nonempty (SepClosedTranslatedDropResult (C := C) (L := L) μ
+      (sepClosedTranslatedDropDataOfRationalPointImage
+        μ m M₀ hM₀ W₀ hW₀ excess hdeg h1)) := by
+  exact exists_sepClosedTranslatedDropResult μ
+    (sepClosedTranslatedDropDataOfRationalPointImage
+      μ m M₀ hM₀ W₀ hW₀ excess hdeg h1)
+
+end DropPackage
+
 end AlgebraicGeometry
