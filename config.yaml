@@ -2,6 +2,15 @@ workspace:
   name: JacobianChallenge
   state_dir: .archon-horizon
   rounds: 8
+  delegation:
+    allow_launch_tasks: true
+    allow_launch_runs: true
+    max_parallel_sessions: 3
+    accounts:
+    - name: codex-frenzy
+      harness: codex
+      config_dir: ~/.codex-frenzy
+      notes: Use for the AJCR review lanes; keep full project builds serialized.
   horizon_agent:
     harness: codex
   scheduler:
