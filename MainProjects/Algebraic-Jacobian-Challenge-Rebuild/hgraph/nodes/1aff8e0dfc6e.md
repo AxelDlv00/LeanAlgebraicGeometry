@@ -6,8 +6,9 @@ decl: AlgebraicGeometry.ProbeP4R6e.controlSorry
 file: scratch_p4r6/probe9.lean
 generated: lean
 lean_status: sorry
+stale: true
 title: AlgebraicGeometry.ProbeP4R6e.controlSorry
 type: lean
-updated: '2026-08-07T03:46:14'
+updated: '2026-08-07T04:03:01'
 ---
 theorem controlSorry : True := by sorry

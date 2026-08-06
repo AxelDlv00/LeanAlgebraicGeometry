@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.probeBaseChangeIdIso
 file: ExplicitIdIsoProbe.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.probeBaseChangeIdIso
 type: lean
-updated: '2026-08-07T03:46:14'
+updated: '2026-08-07T04:03:03'
 ---
 noncomputable def probeBaseChangeIdIso (k : Type u) [Field k] :
     baseChange k k ≅ 𝟭 (Over (Spec (.of k))) := by
