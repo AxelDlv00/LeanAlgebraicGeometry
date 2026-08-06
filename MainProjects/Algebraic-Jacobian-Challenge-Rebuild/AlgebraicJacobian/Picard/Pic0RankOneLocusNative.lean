@@ -90,6 +90,96 @@ noncomputable def nativeModule : (relCurve C B).Modules := by
     (CategoryTheory.forget (ModuleCat.{u} B))).mp D.sheaf.property using 1
   all_goals rfl
 
+/-! ## Piecewise line-bundle trivializations -/
+
+/-- Sections of the native module over one cocycle piece are the structure-ring sections.
+
+The open-immersion ring equivalence transports the component trivialization from the ambient
+relative curve to the restricted scheme.  The `gluedTriv_gluedQsmul` identity is exactly the
+structure-sheaf semilinearity needed for this to be a linear equivalence over the restricted
+ring of sections. -/
+noncomputable def nativeModulePieceSectionsEquiv
+    (j : D.index) (V : (D.pieces j).toScheme.Opens) :
+    Γ((Scheme.Modules.restrictFunctor (D.pieces j).ι).obj (nativeModule D), V) ≃ₗ[
+      Γ((D.pieces j).toScheme, V)] Γ((D.pieces j).toScheme, V) := by
+  let e := gluedTriv B D.isGluingCocycle j ((D.pieces j).ι_image_le V)
+  let ρ := ((D.pieces j).ι.appIso V).commRingCatIsoToRingEquiv
+  let f : Γ((Scheme.Modules.restrictFunctor (D.pieces j).ι).obj (nativeModule D), V) →ₗ[
+      Γ((D.pieces j).toScheme, V)] Γ((D.pieces j).toScheme, V) :=
+    { toFun := fun s => ρ (e s)
+      map_add' := by
+        intro s t
+        change ρ (e (s + t)) = ρ (e s) + ρ (e t)
+        change ρ (gluedTriv B D.isGluingCocycle j ((D.pieces j).ι_image_le V) (s + t)) =
+          ρ (gluedTriv B D.isGluingCocycle j ((D.pieces j).ι_image_le V) s) +
+            ρ (gluedTriv B D.isGluingCocycle j ((D.pieces j).ι_image_le V) t)
+        rw [show gluedTriv B D.isGluingCocycle j ((D.pieces j).ι_image_le V) (s + t) =
+            gluedTriv B D.isGluingCocycle j ((D.pieces j).ι_image_le V) s +
+              gluedTriv B D.isGluingCocycle j ((D.pieces j).ι_image_le V) t by
+              exact (gluedTriv B D.isGluingCocycle j ((D.pieces j).ι_image_le V)).map_add s t]
+        exact ρ.map_add _ _
+      map_smul' := by
+        intro r s
+        change ρ
+            (gluedTriv B D.isGluingCocycle j ((D.pieces j).ι_image_le V)
+              (gluedQsmul B D.pieces D.unit (le_rfl) (ρ.symm r) s)) =
+          r * ρ
+            (gluedTriv B D.isGluingCocycle j ((D.pieces j).ι_image_le V) s)
+        rw [gluedTriv_gluedQsmul]
+        simp [ρ] }
+  apply LinearEquiv.ofBijective f
+  constructor
+  · intro s t h
+    have h' := congrArg ρ.symm h
+    dsimp [f] at h'
+    rw [ρ.symm_apply_apply, ρ.symm_apply_apply] at h'
+    exact (gluedTriv B D.isGluingCocycle j ((D.pieces j).ι_image_le V)).injective h'
+  · intro r
+    refine ⟨e.symm (ρ.symm r), ?_⟩
+    change ρ (e (e.symm (ρ.symm r))) = r
+    rw [e.apply_symm_apply, ρ.apply_symm_apply]
+
+/-- The piecewise section equivalences assemble to a sheaf isomorphism with the unit module. -/
+noncomputable def nativeModulePieceSheafIso (j : D.index) :
+    (Scheme.Modules.restrictFunctor (D.pieces j).ι).obj (nativeModule D) ≅
+      SheafOfModules.unit (D.pieces j).toScheme.ringCatSheaf :=
+  (SheafOfModules.fullyFaithfulForget _).preimageIso
+    (PresheafOfModules.isoMk
+      (fun V => (nativeModulePieceSectionsEquiv D j V.unop).toModuleIso)
+      (fun {V W} f => by
+        apply ModuleCat.hom_ext
+        apply LinearMap.ext
+        intro x
+        change
+          ((D.pieces j).ι.appIso W.unop).commRingCatIsoToRingEquiv
+              (gluedTriv B D.isGluingCocycle j ((D.pieces j).ι_image_le W.unop)
+                (gluedRes B D.pieces D.unit
+                  ((D.pieces j).ι.image_mono (leOfHom f.unop)) x)) =
+            (D.pieces j).toScheme.presheaf.map f
+              (((D.pieces j).ι.appIso V.unop).commRingCatIsoToRingEquiv
+                (gluedTriv B D.isGluingCocycle j ((D.pieces j).ι_image_le V.unop) x))
+        rw [gluedTriv_res B D.isGluingCocycle j
+          ((D.pieces j).ι.image_mono (leOfHom f.unop))
+          ((D.pieces j).ι_image_le V.unop) x]
+        simp only [Scheme.Opens.ι_appIso]
+        change
+          (relCurve C B).resHom
+              ((D.pieces j).ι.image_mono (leOfHom f.unop))
+              (gluedTriv B D.isGluingCocycle j
+                ((D.pieces j).ι_image_le V.unop) x) =
+            (relCurve C B).presheaf.map
+              ((D.pieces j).ι.opensFunctor.map f.unop).op
+              (gluedTriv B D.isGluingCocycle j
+                ((D.pieces j).ι_image_le V.unop) x)
+        rfl))
+
+/-- The canonical native module is locally a free rank-one structure-sheaf module. -/
+theorem nativeModule_isLineBundle : Scheme.Modules.IsLineBundle (nativeModule D) := by
+  intro x
+  let j := D.pieceIndex x
+  refine ⟨D.pieces j, D.mem_pieces_pieceIndex x, ?_⟩
+  exact ⟨nativeModulePieceSheafIso D j⟩
+
 /-- On every open, restricting `D.nativeModule` to the coefficient ring recovers
 the datum's original module of sections.
 
