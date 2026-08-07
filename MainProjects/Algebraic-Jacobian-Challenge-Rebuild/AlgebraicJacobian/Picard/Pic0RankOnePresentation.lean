@@ -570,6 +570,47 @@ private theorem h0BaseChange_one_tmul_ne_zero
   exact one_tmul_linearEquiv_ne_zero eH0
     ((1 : B) ⊗ₜ[P.cover.Carrier] y) hy
 
+/-- The canonical scalar-extension certificate package attached to a tied presentation.
+
+The presentation's own `H¹`-vanishing, finite/projective `H⁰`, and stalk-rank-one fields are
+transported along its canonical `h0BaseChange` equivalence.  In particular, the target module
+is not replaced by an unrelated witness: it is exactly the datum module of `P.datum.baseChange`.
+This is a coefficient-extension feeder for the family producer; it does not assert the missing
+native pushforward base-change isomorphism or construct a presentation over a new affine test.
+-/
+theorem baseChangeRankOneCertificates
+    (P : PicRankOneLocalPresentation pi lam)
+    (B : Type u) [CommRing B] [Algebra k B] [Algebra P.cover.Carrier B]
+    [IsScalarTower k P.cover.Carrier B] :
+    Subsingleton (Sheaf.HModule (P.datum.baseChange B).sheaf 1) ∧
+      Module.Finite B (Sheaf.HModule (P.datum.baseChange B).sheaf 0) ∧
+      Module.Projective B (Sheaf.HModule (P.datum.baseChange B).sheaf 0) ∧
+      ∀ p : PrimeSpectrum B,
+        Module.rankAtStalk (Sheaf.HModule (P.datum.baseChange B).sheaf 0) p = 1 := by
+  let Q := Sheaf.HModule P.datum.sheaf 0
+  letI : Module.Finite P.cover.Carrier Q := P.h0_finite
+  letI : Module.Projective P.cover.Carrier Q := P.h0_projective
+  have hH1 : Subsingleton (datumPair P.datum).H1 :=
+    (subsingleton_datumPair_h1_iff P.datum).mpr P.h1_vanishing
+  have hh1 : Subsingleton (Sheaf.HModule (P.datum.baseChange B).sheaf 1) :=
+    P.datum.datum_subsingleton_h1_baseChange B hH1
+  let e : B ⊗[P.cover.Carrier] Q ≃ₗ[B]
+      Sheaf.HModule (P.datum.baseChange B).sheaf 0 := P.h0BaseChange B
+  letI : Module.Finite B (B ⊗[P.cover.Carrier] Q) := by
+    infer_instance
+  letI : Module.Projective B (B ⊗[P.cover.Carrier] Q) := by
+    infer_instance
+  have hfin : Module.Finite B (Sheaf.HModule (P.datum.baseChange B).sheaf 0) :=
+    Module.Finite.equiv e
+  have hproj : Module.Projective B (Sheaf.HModule (P.datum.baseChange B).sheaf 0) :=
+    Module.Projective.of_equiv e
+  have hrank : ∀ p : PrimeSpectrum B,
+      Module.rankAtStalk (Sheaf.HModule (P.datum.baseChange B).sheaf 0) p = 1 := by
+    intro p
+    rw [← Module.rankAtStalk_eq_of_equiv e, Module.rankAtStalk_baseChange]
+    exact P.h0_rank_one (p.comap (algebraMap P.cover.Carrier B))
+  exact ⟨hh1, hfin, hproj, hrank⟩
+
 /-- `H¹`-vanishing in a presentation propagates to every coefficient extension. -/
 private theorem datumPair_h1_baseChange
     (P : PicRankOneLocalPresentation pi lam)
@@ -577,8 +618,7 @@ private theorem datumPair_h1_baseChange
     [IsScalarTower k P.cover.Carrier B] :
     Subsingleton (datumPair (P.datum.baseChange B)).H1 :=
   (subsingleton_datumPair_h1_iff (P.datum.baseChange B)).mpr
-    (P.datum.datum_subsingleton_h1_baseChange B
-      ((subsingleton_datumPair_h1_iff P.datum).mpr P.h1_vanishing))
+    (P.baseChangeRankOneCertificates B).1
 
 /-- The local-away generator supplied over the presentation ring gives the exact
 fibrewise-nonvanishing hypothesis required by the divisor construction after localizing.
