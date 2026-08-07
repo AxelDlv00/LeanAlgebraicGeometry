@@ -16,7 +16,7 @@ explanation: ''
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 priority: urgent
-status: running
+status: blocked
 write_set:
   files:
   - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RankOneTranslatedCover*.lean
@@ -41,6 +41,6 @@ inbox_refs:
 - I-1927
 artifact_refs: []
 created_at: '2026-08-06T03:19:01.903480+00:00'
-updated_at: '2026-08-07T00:42:10.578785+00:00'
+updated_at: '2026-08-07T01:30:20.181045+00:00'
 metadata:
   author: human
