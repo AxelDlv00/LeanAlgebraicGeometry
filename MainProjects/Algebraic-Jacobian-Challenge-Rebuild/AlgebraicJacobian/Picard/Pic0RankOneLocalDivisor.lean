@@ -435,6 +435,67 @@ theorem exists_baseOpen_rankOne_divisor_with_abel_evaluation
     P.exists_baseOpen_rankOne_divisor_with_evaluation p
   exact ⟨f, hf, y, hy, P.baseOpenRankOneDivisor_abelAff f y hy, hclass, heval⟩
 
+/-! ## Finite away extraction -/
+
+set_option maxHeartbeats 800000 in
+-- The dependent finite-cover predicate repeats the localized divisor construction in full.
+/-- A tied rank-one presentation carries local divisor/evaluation data on one finite basic-open
+cover of its affine base.  The selected carriers span the unit ideal, and every member retains
+the Abel restriction, datum Picard-class identity, and native evaluation identity of the
+pointwise endpoint above.  This is only a finite extraction of presentation-local witnesses; it
+does not glue the divisors or identify them with a global native zero locus. -/
+theorem exists_fin_rankOne_away_divisor_with_abel_evaluation
+    (P : PicRankOneLocalPresentation pi lam)
+    [IsNoetherianRing P.cover.Carrier] :
+    ∃ (m : ℕ) (f : Fin m → P.cover.Carrier),
+      Ideal.span (Set.range f) = ⊤ ∧
+        ∀ i : Fin m,
+          ∃ (y : Sheaf.HModule P.datum.sheaf 0)
+            (hy : ∀ q : PrimeSpectrum P.cover.Carrier, f i ∉ q.asIdeal →
+              (y ⊗ₜ (1 : q.asIdeal.ResidueField) :
+                Sheaf.HModule P.datum.sheaf 0 ⊗[P.cover.Carrier]
+                  q.asIdeal.ResidueField) ≠ 0),
+            abelDivAffPlus C (Localization.Away (f i))
+                (P.baseOpenRankOneDivisor (f i) y hy) =
+                PicEtAff.mapAlg C
+                  ((Algebra.ofId P.cover.Carrier (Localization.Away (f i))).restrictScalars k)
+                  (PicEtAff.mapAlg C
+                    ((Algebra.ofId A P.cover.Carrier).restrictScalars k)
+                    (picEtAffineEquiv C A lam.1)) ∧
+              (P.baseOpenRankOneDivisor (f i) y hy).picClass =
+                (P.datum.baseChange (Localization.Away (f i))).cechPicClass ∧
+              (Scheme.Modules.Hom.app P.evaluation
+                ((relCurve C P.cover.Carrier ↘ Spec (.of P.cover.Carrier)) ⁻¹ᵁ
+                  (⊤ : (Spec (.of P.cover.Carrier)).Opens))).hom
+                (P.evaluationLiftOfH0 y) = P.pushforwardSectionOfH0 y := by
+  obtain ⟨m, f, hspan, hgood⟩ :=
+    exists_fin_span_eq_top_of_forall_prime (R := P.cover.Carrier)
+      (fun f =>
+        ∃ (y : Sheaf.HModule P.datum.sheaf 0)
+          (hy : ∀ q : PrimeSpectrum P.cover.Carrier, f ∉ q.asIdeal →
+            (y ⊗ₜ (1 : q.asIdeal.ResidueField) :
+              Sheaf.HModule P.datum.sheaf 0 ⊗[P.cover.Carrier]
+                q.asIdeal.ResidueField) ≠ 0),
+          abelDivAffPlus C (Localization.Away f)
+              (P.baseOpenRankOneDivisor f y hy) =
+              PicEtAff.mapAlg C
+                ((Algebra.ofId P.cover.Carrier (Localization.Away f)).restrictScalars k)
+                (PicEtAff.mapAlg C
+                  ((Algebra.ofId A P.cover.Carrier).restrictScalars k)
+                  (picEtAffineEquiv C A lam.1)) ∧
+            (P.baseOpenRankOneDivisor f y hy).picClass =
+              (P.datum.baseChange (Localization.Away f)).cechPicClass ∧
+            (Scheme.Modules.Hom.app P.evaluation
+              ((relCurve C P.cover.Carrier ↘ Spec (.of P.cover.Carrier)) ⁻¹ᵁ
+                (⊤ : (Spec (.of P.cover.Carrier)).Opens))).hom
+              (P.evaluationLiftOfH0 y) = P.pushforwardSectionOfH0 y)
+      (by
+        intro p
+        obtain ⟨f, hf, y, hy, habel, hclass, heval⟩ :=
+          P.exists_baseOpen_rankOne_divisor_with_abel_evaluation p
+        exact ⟨f, hf, y, hy, habel, hclass, heval⟩)
+  exact ⟨m, f, hspan, hgood⟩
+
 end PicRankOneLocalPresentation
 
 end AlgebraicGeometry
