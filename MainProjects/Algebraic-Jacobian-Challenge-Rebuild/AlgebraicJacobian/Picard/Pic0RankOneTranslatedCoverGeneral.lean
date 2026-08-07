@@ -68,7 +68,6 @@ theorem exists_sepClosedTranslatedDropData
   letI := htow
   letI := hfin
   letI := hsep
-
   haveI : IsIntegral (relCurve C L) := instIsIntegralBaseChange C L
   haveI : SmoothOfRelativeDimension 1
       (relCurve C L ↘ Spec (CommRingCat.of L)) :=
@@ -81,7 +80,6 @@ theorem exists_sepClosedTranslatedDropData
   haveI : Module.Finite L
       (Sheaf.HModule ((relCurve C L).moduleKSheaf L) 1) :=
     instModuleFiniteHModuleOneBaseChange C L
-
   haveI : SmoothOfRelativeDimension 1 (baseChangeBundle C L).hom :=
     instSmoothOfRelativeDimensionSndLeft C L
   haveI : IsProper (baseChangeBundle C L).hom :=
@@ -102,12 +100,10 @@ theorem exists_sepClosedTranslatedDropData
   haveI : Module.Finite L
       (Sheaf.HModule ((baseChangeBundle C L).left.moduleKSheaf L) 1) :=
     instModuleFiniteHModuleOneBaseChange C L
-
   obtain ⟨pi, hpiFinite, hpiDominant, hpi⟩ :=
     exists_isFinite_isDominant_toP1 (C := baseChangeBundle C L)
   letI : IsFinite pi := hpiFinite
   letI : IsDominant pi := hpiDominant
-
   let thetaL : (C ⊗ overSpec k L).left.CechPic :=
     Scheme.CechPic.map ((C ◁ Over.overSpecMap (Algebra.ofId k L)).left)
       (thetaCechClass C)
@@ -116,7 +112,6 @@ theorem exists_sepClosedTranslatedDropData
     exact one_le_classDeg_cechPicMap_baseFieldTransition_of_one_le
       (C := C) (Algebra.ofId k L) (thetaCechClass C)
       (one_le_classDeg_thetaCechClass (C := C))
-
   obtain ⟨n₀, hn₀⟩ :=
     exists_positive_twist_vanishing pi hpi M₀ thetaL hthetaL
   let deficit : ℕ := ((genus C : ℤ) - classDeg L M₀).toNat
@@ -136,7 +131,6 @@ theorem exists_sepClosedTranslatedDropData
         (m : ℤ) ≤ (m : ℤ) * classDeg L thetaL :=
       le_mul_of_one_le_right (Int.natCast_nonneg m) hthetaL
     linarith
-
   obtain ⟨W₀, hW₀raw⟩ := Scheme.CurveDivisor.exists_picClass_eq L
     (M₀ * Scheme.CechPic.map
       ((C ◁ Over.overSpecMap (Algebra.ofId k L)).left)
@@ -147,7 +141,9 @@ theorem exists_sepClosedTranslatedDropData
           (chartTwistClass C m
             (0 : (C ⊗ overSpec k k).left.CurveDivisor)) =
         thetaL ^ m := by
-    simp [thetaL, chartTwistClass]
+    simp only [thetaL, chartTwistClass, Over.tensorObj_left, overSpec_left,
+      Over.coe_hom, Algebra.algebraMap_self, CommRingCat.ofHom_id,
+      Scheme.CurveDivisor.picClass_zero, inv_one, mul_one]
     exact map_pow (Scheme.CechPic.map
       ((C ◁ Over.overSpecMap (Algebra.ofId k L)).left)) (thetaCechClass C) m
   have hWtheta :
@@ -160,7 +156,6 @@ theorem exists_sepClosedTranslatedDropData
   have h1W₀ : Subsingleton
       (Sheaf.HModule ((C ⊗ overSpec k L).left.divisorSheaf L W₀) 1) :=
     hn₀ m hn₀m W₀ hWtheta
-
   let excess : ℕ :=
     (Scheme.CurveDivisor.deg L W₀ - (genus C : ℤ)).toNat
   have hexcessNonnegative :
@@ -171,7 +166,6 @@ theorem exists_sepClosedTranslatedDropData
     dsimp [excess]
     rw [Int.toNat_of_nonneg hexcessNonnegative]
     ring
-
   letI : C.left.Over (Spec (.of k)) := .ofHom C.hom
   haveI : SmoothOfRelativeDimension 1 (C.left ↘ Spec (.of k)) :=
     inferInstanceAs (SmoothOfRelativeDimension 1 C.hom)
@@ -188,7 +182,6 @@ theorem exists_sepClosedTranslatedDropData
   have hM₀rel : PicEtAff.map C L (picEtAffineEquiv C K mu) =
       PicEtAff.unit C L (relPicMk C (overSpec k L) M₀rel) := by
     simpa only [M₀rel] using hM₀
-
   refine ⟨L, hLfield, hkL, hKL, htow, hfin, hsep, ?_⟩
   exact ⟨sepClosedTranslatedDropDataOfRationalPointImage
     mu m M₀rel hM₀rel W₀ (by
