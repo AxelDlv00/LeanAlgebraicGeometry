@@ -9,6 +9,7 @@ import AlgebraicJacobian.Picard.Pic0EndgameContract
 import AlgebraicJacobian.Picard.Pic0HighDegreeRouteGuard
 import AlgebraicJacobian.Picard.Pic0RankOneLocus
 import AlgebraicJacobian.Picard.Pic0RankOneLocalDivisor
+import AlgebraicJacobian.Picard.Pic0RankOneEvaluationZeroLocus
 import AlgebraicJacobian.Picard.Pic0RankOneNativePresentation
 import AlgebraicJacobian.Picard.Pic0RankOneTranslatedCoverPicZero
 
@@ -22,9 +23,11 @@ The tied local rank-one presentation, its canonical evaluation map, datum-side l
 divisor equations, and the pullback-stable presentation locus are present. The conditional
 `DivRankOneOpenData` representer and its open-immersion/base-change consumers are rooted, but
 the arbitrary-affine presentation producer needed to prove `PicRankOneOpen.IsOpen` is still
-missing. The native evaluation zero locus is not yet identified with the datum equations.
-Fixed-open unit-independence has a canonical H0 linearity bridge and a `DivFamZarAff` equality
-consumer, but no family-level divisor producer is claimed.
+missing. The native evaluation section and the tied datum section now have the same restriction-
+vanishing predicate on every open, without a Noetherian hypothesis. Identifying the resulting
+intrinsic zero locus with the datum local equations and gluing it to a family divisor are still
+missing. Fixed-open unit-independence has a canonical H0 linearity bridge and a `DivFamZarAff`
+equality consumer, but no family-level divisor producer is claimed.
 
 The Pic0-specialized separably closed translated-layer feeder is also rooted: it keeps the
 translator degree and the exact subtraction compatibility tied to one result. It does not
@@ -68,8 +71,13 @@ hypotheses.
 #check AlgebraicGeometry.PicRankOneLocalPresentation.sectionLocalEquationsOfDatumSectionBaseChange
 #check AlgebraicGeometry.PicRankOneLocalPresentation.moduleSectionsEquiv
 #check AlgebraicGeometry.PicRankOneLocalPresentation.module_iso_inv_datumSection
+#check AlgebraicGeometry.PicRankOneLocalPresentation.module_iso_inv_restrict
+#check AlgebraicGeometry.PicRankOneLocalPresentation.module_iso_inv_restrict_eq_zero_iff
 #check AlgebraicGeometry.PicRankOneLocalPresentation.evaluationLiftOfH0
 #check AlgebraicGeometry.PicRankOneLocalPresentation.evaluation_evaluationLiftOfH0
+#check
+  AlgebraicGeometry.PicRankOneLocalPresentation.evaluation_evaluationLiftOfH0_eq_moduleSectionsEquiv
+#check AlgebraicGeometry.PicRankOneLocalPresentation.evaluationLift_restrict_eq_zero_iff
 #check AlgebraicGeometry.PicRankOneLocalPresentation.exists_baseOpen_evaluation_generator
 #check
   AlgebraicGeometry.PicRankOneLocalPresentation.sectionsMapTop_datumSectionBaseChange_away_ne_zero
@@ -105,6 +113,7 @@ hypotheses.
 #check AlgebraicGeometry.divRankOneOpen_baseChange_mem
 #check AlgebraicGeometry.PicRankOneNativePresentation
 #check AlgebraicGeometry.PicRankOneNativePresentation.toLocalPresentation
+#check AlgebraicGeometry.PicRankOneNativePresentation.evaluationLift_restrict_eq_zero_iff
 #check AlgebraicGeometry.BasicOpenCocycleDatum.nativeModulePieceSectionsEquiv
 #check AlgebraicGeometry.BasicOpenCocycleDatum.nativeModulePieceSheafIso
 #check AlgebraicGeometry.BasicOpenCocycleDatum.nativeModule_isLineBundle
@@ -147,6 +156,15 @@ hypotheses.
 #print axioms
   AlgebraicGeometry.PicRankOneLocalPresentation.evaluationSourceBaseChangeIsoAffine_hom_evaluation
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.module_iso_inv_datumSection
+#print axioms AlgebraicGeometry.PicRankOneLocalPresentation.module_iso_inv_restrict
+#print axioms
+  AlgebraicGeometry.PicRankOneLocalPresentation.module_iso_inv_restrict_eq_zero_iff
+#print axioms
+  AlgebraicGeometry.PicRankOneLocalPresentation.evaluation_evaluationLiftOfH0_eq_moduleSectionsEquiv
+#print axioms
+  AlgebraicGeometry.PicRankOneLocalPresentation.evaluationLift_restrict_eq_zero_iff
+#print axioms
+  AlgebraicGeometry.PicRankOneNativePresentation.evaluationLift_restrict_eq_zero_iff
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.datumSectionBaseChange_one_tmul
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.datumSectionBaseChangeLinearMap
 #print axioms
