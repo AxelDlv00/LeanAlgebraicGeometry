@@ -775,66 +775,84 @@ noncomputable local instance rankOneDegreeFiniteH1
     Module.Finite L (Sheaf.HModule ((relCurve C L).moduleKSheaf L) 1) :=
   instModuleFiniteHModuleOneBaseChange C L
 
-/-- The cocycle datum tied to a genus-degree presentation has class degree `genus C`
+/-- A datum presenting an affine representative of a genus-degree class has degree `genus C`
 after every field-valued coefficient extension.
 
-The proof follows the presentation itself: restrict `lam` to its etale-cover carrier,
-identify that class with `representative`, rewrite it as the datum's relative Picard class,
-and read the defining degree condition of `lam`. -/
-theorem datum_classDeg_baseChange
-    (P : PicRankOneLocalPresentation pi lam)
-    (L : Type u) [Field L] [Algebra k L] [Algebra P.cover.Carrier L]
-    [IsScalarTower k P.cover.Carrier L] :
+These are exactly the first five, canonical inputs of `PicRankOneLocalPresentation`.  Stating
+the calculation before the remaining native and cohomological fields lets the family producer
+use it when proving rank one, without assuming the completed presentation it is constructing. -/
+theorem datum_classDeg_baseChange_of_representation
+    (E : Algebra.EtaleCover A)
+    (x : descentClasses C E)
+    (hrep : PicEtAff.mk C E x = picEtAffineEquiv C A lam.1)
+    (D : BasicOpenCocycleDatum C E.Carrier pi)
+    (hclass :
+      (x : relPic C (overSpec k E.Carrier)) =
+        relPicMk C (overSpec k E.Carrier) D.cechPicClass)
+    (L : Type u) [Field L] [Algebra k L] [Algebra E.Carrier L]
+    [IsScalarTower k E.Carrier L] :
     classDeg L
-      (Scheme.CechPic.map (relCurveMap C P.cover.Carrier L)
-        P.datum.cechPicClass) = genus C := by
-  let iota : A →ₐ[k] P.cover.Carrier :=
-    (Algebra.ofId A P.cover.Carrier).restrictScalars k
-  let psi : P.cover.Carrier →ₐ[k] L :=
-    (Algebra.ofId P.cover.Carrier L).restrictScalars k
+      (Scheme.CechPic.map (relCurveMap C E.Carrier L)
+        D.cechPicClass) = genus C := by
+  let iota : A →ₐ[k] E.Carrier :=
+    (Algebra.ofId A E.Carrier).restrictScalars k
+  let psi : E.Carrier →ₐ[k] L :=
+    (Algebra.ofId E.Carrier L).restrictScalars k
   have hcurve :
-      relCurveMap C P.cover.Carrier L =
+      relCurveMap C E.Carrier L =
         (C ◁ Over.overSpecMap psi).left := by
     refine congrArg
-      (fun f : overSpec k L ⟶ overSpec k P.cover.Carrier => (C ◁ f).left) ?_
+      (fun f : overSpec k L ⟶ overSpec k E.Carrier => (C ◁ f).left) ?_
     exact Over.OverMorphism.ext rfl
   have hpresentation :
       picEtMap C (Over.overSpecMap iota) lam.1 =
-        relPicToPicEt C (overSpec k P.cover.Carrier)
-          (P.representative : relPic C (overSpec k P.cover.Carrier)) := by
+        relPicToPicEt C (overSpec k E.Carrier)
+          (x : relPic C (overSpec k E.Carrier)) := by
     exact picEtMap_eq_relPicToPicEt_of_affineRepresentative
-      C lam.1 P.cover P.representative P.represents.symm
+      C lam.1 E x hrep.symm
   calc
     classDeg L
-        (Scheme.CechPic.map (relCurveMap C P.cover.Carrier L)
-          P.datum.cechPicClass) =
+        (Scheme.CechPic.map (relCurveMap C E.Carrier L)
+          D.cechPicClass) =
       relPicDeg L
         (relPicMk C (overSpec k L)
-          (Scheme.CechPic.map (relCurveMap C P.cover.Carrier L)
-            P.datum.cechPicClass)) :=
+          (Scheme.CechPic.map (relCurveMap C E.Carrier L)
+            D.cechPicClass)) :=
       (relPicDeg_relPicMk L _).symm
     _ = relPicDeg L
         (relPicMap C (Over.overSpecMap psi)
-          (relPicMk C (overSpec k P.cover.Carrier)
-            P.datum.cechPicClass)) := by
+          (relPicMk C (overSpec k E.Carrier)
+            D.cechPicClass)) := by
       rw [relPicMap_mk, ← hcurve]
       rfl
     _ = relPicDeg L
         (relPicMap C (Over.overSpecMap psi)
-          (P.representative : relPic C (overSpec k P.cover.Carrier))) := by
-      rw [P.datum_class]
+          (x : relPic C (overSpec k E.Carrier))) := by
+      rw [hclass]
     _ = degAt
-        (relPicToPicEt C (overSpec k P.cover.Carrier)
-          (P.representative : relPic C (overSpec k P.cover.Carrier)))
+        (relPicToPicEt C (overSpec k E.Carrier)
+          (x : relPic C (overSpec k E.Carrier)))
         (Over.overSpecMap psi) :=
       (degAt_relPicToPicEt
-        (P.representative : relPic C (overSpec k P.cover.Carrier))
+        (x : relPic C (overSpec k E.Carrier))
         (Over.overSpecMap psi)).symm
     _ = degAt (picEtMap C (Over.overSpecMap iota) lam.1)
         (Over.overSpecMap psi) := by rw [hpresentation]
     _ = degAt lam.1 (Over.overSpecMap psi ≫ Over.overSpecMap iota) :=
       degAt_picEtMap (Over.overSpecMap iota) lam.1 (Over.overSpecMap psi)
     _ = genus C := lam.2 L (Over.overSpecMap psi ≫ Over.overSpecMap iota)
+
+/-- The cocycle datum tied to a completed presentation has class degree `genus C`
+after every field-valued coefficient extension. -/
+theorem datum_classDeg_baseChange
+    (P : PicRankOneLocalPresentation pi lam)
+    (L : Type u) [Field L] [Algebra k L] [Algebra P.cover.Carrier L]
+    [IsScalarTower k P.cover.Carrier L] :
+    classDeg L
+      (Scheme.CechPic.map (relCurveMap C P.cover.Carrier L)
+        P.datum.cechPicClass) = genus C :=
+  datum_classDeg_baseChange_of_representation
+    P.cover P.representative P.represents P.datum P.datum_class L
 
 end PicRankOneLocalPresentation
 

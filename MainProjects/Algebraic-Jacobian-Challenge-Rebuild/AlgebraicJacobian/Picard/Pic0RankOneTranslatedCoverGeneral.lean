@@ -222,6 +222,64 @@ theorem exists_sepClosedTranslatedDropResult_general
   exact ⟨L, hLfield, hkL, hKL, htow, hfin, hsep, d,
     exists_sepClosedTranslatedDropResult mu d⟩
 
+/-! ## General support and base-subtraction compatibility -/
+
+section Compatibility
+
+variable {K L : Type u} [Field K] [Algebra k K] [Field L] [Algebra k L]
+  [Algebra K L] [IsScalarTower k K L]
+
+omit [IsSepClosed k] in
+/-- The exact subtraction divisor produced by a translated drop has finite support.
+
+This belongs to the general producer rather than the `Pic^0` specialization: the support is the
+`Finsupp` support of the result for an arbitrary input class `mu`. -/
+theorem SepClosedTranslatedDropResult.subtraction_support_finite
+    (mu : picEt C (overSpec k K))
+    (d : SepClosedTranslatedDropData (C := C) (L := L) mu)
+    (r : SepClosedTranslatedDropResult (C := C) (L := L) mu d) :
+    Set.Finite (r.S.support : Set {x : (C ⊗ overSpec k L).left //
+      x ≠ genericPoint (C ⊗ overSpec k L).left}) :=
+  r.S.support.finite_toSet
+
+omit [IsSepClosed k] in
+/-- Every support point of the exact subtraction divisor has residue degree one.
+
+The proof uses the same density image stored in `d`; it does not choose a separate residue-point
+carrier. -/
+theorem SepClosedTranslatedDropResult.residueDeg_one_of_mem_subtraction_support
+    (mu : picEt C (overSpec k K))
+    (d : SepClosedTranslatedDropData (C := C) (L := L) mu)
+    (r : SepClosedTranslatedDropResult (C := C) (L := L) mu d)
+    (p : {x : (C ⊗ overSpec k L).left //
+      x ≠ genericPoint (C ⊗ overSpec k L).left})
+    (hp : p ∈ r.S.support) :
+    (C ⊗ overSpec k L).left.residueDeg L p.1 = 1 := by
+  apply d.hPdeg p.1
+  apply r.support p.1 p.2
+  exact Finsupp.mem_support_iff.mp hp
+
+omit [IsSepClosed k] in
+/-- Bundle finite support, residue-one compatibility, and the descended class identity for the
+same subtraction divisor of an arbitrary translated-drop result. -/
+theorem SepClosedTranslatedDropResult.baseSubtraction_compatibility
+    (mu : picEt C (overSpec k K))
+    (d : SepClosedTranslatedDropData (C := C) (L := L) mu)
+    (r : SepClosedTranslatedDropResult (C := C) (L := L) mu d) :
+    Set.Finite (r.S.support : Set {x : (C ⊗ overSpec k L).left //
+        x ≠ genericPoint (C ⊗ overSpec k L).left}) ∧
+      (∀ p : {x : (C ⊗ overSpec k L).left //
+          x ≠ genericPoint (C ⊗ overSpec k L).left},
+        p ∈ r.S.support → (C ⊗ overSpec k L).left.residueDeg L p.1 = 1) ∧
+      Scheme.CurveDivisor.picClass L r.S =
+        Scheme.CechPic.map (relCurveMap C k L)
+          ((chartTwistClass C 0 r.Z)⁻¹) := by
+  exact ⟨r.subtraction_support_finite mu d,
+    fun p hp => r.residueDeg_one_of_mem_subtraction_support mu d p hp,
+    r.baseClass⟩
+
+end Compatibility
+
 end Producer
 
 end

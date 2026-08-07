@@ -47,6 +47,7 @@ hypotheses.
 #check AlgebraicGeometry.canonicalBaseChangeMap_counit_cancel
 #check AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.PicRankOneLocalPresentation.h0BaseChange
+#check AlgebraicGeometry.PicRankOneLocalPresentation.baseChangeRankOneCertificates
 #check AlgebraicGeometry.PicRankOneLocalPresentation.evaluation
 #check AlgebraicGeometry.PicRankOneLocalPresentation.nativeBaseChangeIso
 #check AlgebraicGeometry.PicRankOneLocalPresentation.nativeBaseChangeIsoAffine
@@ -91,6 +92,8 @@ hypotheses.
   AlgebraicGeometry.PicRankOneLocalPresentation.exists_baseOpen_rankOne_divisor_with_evaluation
 #check
   AlgebraicGeometry.PicRankOneLocalPresentation.exists_baseOpen_rankOne_divisor_with_abel_evaluation
+#check
+  AlgebraicGeometry.PicRankOneLocalPresentation.datum_classDeg_baseChange_of_representation
 #check AlgebraicGeometry.PicRankOneLocalPresentation.datum_classDeg_baseChange
 #check AlgebraicGeometry.PicRankOneOpen
 #check AlgebraicGeometry.PicRankOneOpen.IsOpen
@@ -124,6 +127,7 @@ hypotheses.
 #print axioms AlgebraicGeometry.divFunctorAff_admissible_representableBy
 #print axioms AlgebraicGeometry.abelDivAffGenusSigma
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.h0BaseChange
+#print axioms AlgebraicGeometry.PicRankOneLocalPresentation.baseChangeRankOneCertificates
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.evaluation
 #print axioms AlgebraicGeometry.divRankOneOpenData_of_picRankOneOpen_isOpen
 #print axioms AlgebraicGeometry.divRankOneOpen_isOpenImmersion
@@ -178,6 +182,8 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
   AlgebraicGeometry.PicRankOneLocalPresentation.exists_baseOpen_rankOne_divisor_with_evaluation
 #print axioms
   AlgebraicGeometry.PicRankOneLocalPresentation.exists_baseOpen_rankOne_divisor_with_abel_evaluation
+#print axioms
+  AlgebraicGeometry.PicRankOneLocalPresentation.datum_classDeg_baseChange_of_representation
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.datum_classDeg_baseChange
 #print axioms
   AlgebraicGeometry.PicRankOneLocalPresentation.existsUnique_unit_tensorAway_rankOne_generators

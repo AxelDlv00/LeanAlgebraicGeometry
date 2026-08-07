@@ -65,50 +65,6 @@ theorem SepClosedTranslatedDropResult.translator_classDeg_of_pic0
     degAt_thetaFamily, zero_add] at hdegree
   exact hdegree
 
-/-- The support of the exact divisor passed to `baseSubtraction` is finite.  This is the
-finiteness carried by the underlying `Finsupp`, exposed in the point type used by the residue
-calculation. -/
-theorem SepClosedTranslatedDropResult.subtraction_support_finite
-    (mu : picEt C (overSpec k K))
-    (d : SepClosedTranslatedDropData (C := C) (L := L) mu)
-    (r : SepClosedTranslatedDropResult (C := C) (L := L) mu d) :
-    Set.Finite (r.S.support : Set {x : (C ⊗ overSpec k L).left //
-      x ≠ genericPoint (C ⊗ overSpec k L).left}) :=
-  r.S.support.finite_toSet
-
-/-- Every point in the finite support of the exact subtraction divisor has residue degree one.
-The proof composes the result's support certificate with the datum's section-derived
-`hPdeg`; no independent residue witness is selected. -/
-theorem SepClosedTranslatedDropResult.residueDeg_one_of_mem_subtraction_support
-    (mu : picEt C (overSpec k K))
-    (d : SepClosedTranslatedDropData (C := C) (L := L) mu)
-    (r : SepClosedTranslatedDropResult (C := C) (L := L) mu d)
-    (p : {x : (C ⊗ overSpec k L).left //
-      x ≠ genericPoint (C ⊗ overSpec k L).left})
-    (hp : p ∈ r.S.support) :
-    (C ⊗ overSpec k L).left.residueDeg L p.1 = 1 := by
-  apply d.hPdeg p.1
-  apply r.support p.1 p.2
-  exact Finsupp.mem_support_iff.mp hp
-
-/-- The finite-support, residue-one, and descended base-class statements for the same
-subtraction divisor chosen by the translated-drop theorem. -/
-theorem SepClosedTranslatedDropResult.baseSubtraction_compatibility
-    (mu : picEt C (overSpec k K))
-    (d : SepClosedTranslatedDropData (C := C) (L := L) mu)
-    (r : SepClosedTranslatedDropResult (C := C) (L := L) mu d) :
-    Set.Finite (r.S.support : Set {x : (C ⊗ overSpec k L).left //
-        x ≠ genericPoint (C ⊗ overSpec k L).left}) ∧
-      (∀ p : {x : (C ⊗ overSpec k L).left //
-          x ≠ genericPoint (C ⊗ overSpec k L).left},
-        p ∈ r.S.support → (C ⊗ overSpec k L).left.residueDeg L p.1 = 1) ∧
-      Scheme.CurveDivisor.picClass L r.S =
-        Scheme.CechPic.map (relCurveMap C k L)
-          ((chartTwistClass C 0 r.Z)⁻¹) := by
-  exact ⟨r.subtraction_support_finite mu d,
-    fun p hp => r.residueDeg_one_of_mem_subtraction_support mu d p hp,
-    r.baseClass⟩
-
 end Compatibility
 
 section PicZeroProducer
