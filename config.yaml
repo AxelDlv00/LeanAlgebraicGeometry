@@ -12,7 +12,7 @@ workspace:
       config_dir: ~/.codex-frenzy
       notes: Use for the AJCR review lanes; keep full project builds serialized.
   horizon_agent:
-    harness: codex
+    harness: opus5
   scheduler:
     max_parallel_sessions: 14
 external_libraries:
@@ -47,6 +47,7 @@ harnesses:
     model: claude-opus-5
     options:
       effort: ultracode
+      config_dir: /home/axel/.claude-api
   codex:
     kind: codex
     model: gpt-5.6-sol
