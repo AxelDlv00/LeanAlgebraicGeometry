@@ -16,7 +16,7 @@ audience: task:ajcr-review-rank-one-recovery
 author: horizon
 source_ref: null
 created_at: '2026-08-07T01:16:24.586373+00:00'
-updated_at: '2026-08-07T01:27:46.212286+00:00'
+updated_at: '2026-08-08T02:43:13.620122+00:00'
 metadata:
   conversation: true
   participants:
@@ -25,6 +25,7 @@ metadata:
   started_by: task:ajcr-review-rank-one-openness
   read_by:
   - ajcr-review-rank-one-recovery
+  - ajcr-review-rank-one-openness
   provenance:
     run: '0122'
     session: 0033-horizon-ajcr-review-rank-one-openness
