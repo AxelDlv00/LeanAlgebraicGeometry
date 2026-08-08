@@ -9,7 +9,7 @@ workspace:
     accounts:
     - name: codex-frenzy
       harness: codex
-      config_dir: ~/.codex-frenzy
+      config_dir: /home/axel/.codex-frenzy
       notes: Use for the AJCR review lanes; keep full project builds serialized.
   horizon_agent:
     harness: codex
