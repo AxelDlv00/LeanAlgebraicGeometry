@@ -250,6 +250,7 @@ theorem sectionLocalEquationsOfDatumSectionBaseChange_divEq_of_unit
   let a : B →+* Γ(relCurve C B, D.pointedCover.opens x) :=
     (relCurve C B).overAlgebraMap B (D.pointedCover.opens x)
   refine ⟨Units.map a.toMonoidHom v, ?_⟩
+  simp only []
   rw [hcomp]
   simp only [Scheme.overModule_smul_def]
   change (relCurve C B).resHom _ ((relCurve C B).resHom _ _) =
