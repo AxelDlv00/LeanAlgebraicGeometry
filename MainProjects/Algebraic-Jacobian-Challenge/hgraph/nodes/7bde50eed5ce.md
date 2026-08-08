@@ -9,7 +9,7 @@ lean_status: lean_ok
 private: true
 title: HomogeneousLocalization.algebraMap_val
 type: lean
-updated: '2026-08-07T12:40:23'
+updated: '2026-08-08T10:30:17'
 ---
 private lemma algebraMap_val (r : R) :
     (algebraMap R (HomogeneousLocalization 𝒜 x) r).val =
