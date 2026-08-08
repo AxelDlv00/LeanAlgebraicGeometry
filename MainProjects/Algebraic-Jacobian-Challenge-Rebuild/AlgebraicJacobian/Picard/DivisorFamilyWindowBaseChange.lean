@@ -162,6 +162,28 @@ private lemma appLE_congr_hom {X Y : Scheme.{u}} {f g : X ⟶ Y} (h : f = g) {U 
     f.appLE U W e = g.appLE U W (h ▸ e) := by
   subst h; rfl
 
+/-- **The general tower law of the sections comparison** over `R → R' → R''`:
+comparing sections in two stages is comparing them along the composite tower. -/
+theorem relSectionsMap_relSectionsMap_tower
+    (R'' : Type u) [CommRing R''] [Algebra k R''] [Algebra R R''] [Algebra R' R'']
+    [IsScalarTower k R R''] [IsScalarTower k R' R''] [IsScalarTower R R' R'']
+    (V : C.left.Opens)
+    (s : Γ(relCurve C R, (fst C (overSpec k R)).left ⁻¹ᵁ V)) :
+    relSectionsMap C R' R'' V (relSectionsMap C R R' V s) =
+      relSectionsMap C R R'' V s := by
+  have h : (relCurveMap C R R').appLE ((fst C (overSpec k R)).left ⁻¹ᵁ V)
+        ((fst C (overSpec k R')).left ⁻¹ᵁ V)
+        (le_of_eq (relCurveMap_preimage C R R' V).symm) ≫
+      (relCurveMap C R' R'').appLE ((fst C (overSpec k R')).left ⁻¹ᵁ V)
+        ((fst C (overSpec k R'')).left ⁻¹ᵁ V)
+        (le_of_eq (relCurveMap_preimage C R' R'' V).symm) =
+      (relCurveMap C R R'').appLE ((fst C (overSpec k R)).left ⁻¹ᵁ V)
+        ((fst C (overSpec k R'')).left ⁻¹ᵁ V)
+        (le_of_eq (relCurveMap_preimage C R R'' V).symm) := by
+    rw [Scheme.Hom.appLE_comp_appLE]
+    exact appLE_congr_hom (relCurveMap_comp (R' := R') (R'' := R'')) _
+  exact congr($(h).hom s)
+
 /-- **The tower law of the sections comparison** over `k → R → R'`: comparing sections
 in two stages is comparing them along the composite tower,
 `relSectionsMap C R R' ∘ relSectionsMap C k R = relSectionsMap C k R'`. -/
@@ -169,18 +191,17 @@ theorem relSectionsMap_relSectionsMap (V : C.left.Opens)
     (s : Γ(relCurve C k, (fst C (overSpec k k)).left ⁻¹ᵁ V)) :
     relSectionsMap C R R' V (relSectionsMap C k R V s) =
       relSectionsMap C k R' V s := by
-  have h : (relCurveMap C k R).appLE ((fst C (overSpec k k)).left ⁻¹ᵁ V)
-        ((fst C (overSpec k R)).left ⁻¹ᵁ V)
-        (le_of_eq (relCurveMap_preimage C k R V).symm) ≫
-      (relCurveMap C R R').appLE ((fst C (overSpec k R)).left ⁻¹ᵁ V)
-        ((fst C (overSpec k R')).left ⁻¹ᵁ V)
-        (le_of_eq (relCurveMap_preimage C R R' V).symm) =
-      (relCurveMap C k R').appLE ((fst C (overSpec k k)).left ⁻¹ᵁ V)
-        ((fst C (overSpec k R')).left ⁻¹ᵁ V)
-        (le_of_eq (relCurveMap_preimage C k R' V).symm) := by
-    rw [Scheme.Hom.appLE_comp_appLE]
-    exact appLE_congr_hom (relCurveMap_comp (R := k) (R' := R) (R'' := R')) _
-  exact congr($(h).hom s)
+  exact relSectionsMap_relSectionsMap_tower C k R R' V s
+
+/-- Basic-open cover data base-changed along `R → R' → R''` agrees with direct
+base change along the composite tower. -/
+theorem BasicOpenCoverData.baseChange_baseChange
+    {pi : C.left ⟶ P1 k} [IsAffineHom pi] (D : BasicOpenCoverData C R pi)
+    (R'' : Type u) [CommRing R''] [Algebra k R''] [Algebra R R''] [Algebra R' R'']
+    [IsScalarTower k R R''] [IsScalarTower k R' R''] [IsScalarTower R R' R''] :
+    (D.baseChange R').baseChange R'' = D.baseChange R'' := by
+  cases D
+  simp only [BasicOpenCoverData.baseChange, relSectionsMap_relSectionsMap_tower]
 
 end Tower
 
