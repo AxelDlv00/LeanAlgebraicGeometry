@@ -26,8 +26,10 @@ the arbitrary-affine presentation producer needed to prove `PicRankOneOpen.IsOpe
 missing. The native evaluation section and the tied datum section now have the same restriction-
 vanishing predicate on every open, without a Noetherian hypothesis. Identifying the resulting
 intrinsic zero locus with the datum local equations and gluing it to a family divisor are still
-missing. Fixed-open unit-independence has a canonical H0 linearity bridge and a `DivFamZarAff`
-equality consumer, but no family-level divisor producer is claimed.
+missing. Unit rescaling of the section-cut equations is now coefficient-ring-uniform, and the
+fixed-open `DivFamZarAff` equality consumes that theorem. Naturality under coefficient extension,
+which is needed to compare two basic-open divisors on their overlap, and the resulting family-level
+divisor producer are not claimed.
 
 The Pic0-specialized separably closed translated-layer feeder is also rooted: it keeps the
 translator degree and the exact subtraction compatibility tied to one result. It does not
