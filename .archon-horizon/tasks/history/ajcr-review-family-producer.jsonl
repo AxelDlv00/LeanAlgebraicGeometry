@@ -1,2 +1,4 @@
 {"at": "2026-08-08T02:03:42.138393+00:00", "actor": "human", "field": "created", "from": "", "to": "queued", "note": "opened"}
 {"at": "2026-08-08T02:03:54.557081+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "roadmap_refs updated"}
+{"at": "2026-08-08T02:10:53.785179+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-08T02:11:13.440112+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
