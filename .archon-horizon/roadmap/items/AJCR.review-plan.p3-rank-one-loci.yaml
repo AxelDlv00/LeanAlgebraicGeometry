@@ -6,13 +6,16 @@ summary: 'Define PicRankOneOpen by R^1-vanishing, rank-one locally free pushforw
   and base-change compatibility; define DivRankOneOpen from the universal divisor
   on Div^g; prove openness and arbitrary base change; make chartLocus/H0Rank/H1 predicates
   implementation lemmas or equivalences. Acceptance: one public good-locus API consumed
-  by the canonical inverse task.'
+  by the canonical inverse task. Blocked on AJCR.review-plan.p4-family-producer.'
 status: blocked
 kind: proof
 priority: urgent
-depends_on: []
+depends_on:
+- AJCR.review-plan.p4-family-producer
 inbox_refs: []
-task_refs: []
+task_refs:
+- ajcr-review-rank-one-openness
+- ajcr-review-family-producer
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild

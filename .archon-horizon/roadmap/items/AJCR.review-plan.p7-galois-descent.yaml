@@ -12,7 +12,8 @@ summary: Package the separably closed representative, finite type, properness, g
 status: pending
 kind: proof
 priority: urgent
-depends_on: []
+depends_on:
+- AJCR.review-plan.p6-sepclosed-producer
 inbox_refs: []
 task_refs: []
 scope:

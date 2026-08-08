@@ -10,7 +10,8 @@ summary: Use the same pic0_representableBy datum for the group object, identity 
 status: pending
 kind: proof
 priority: urgent
-depends_on: []
+depends_on:
+- AJCR.review-plan.p7-galois-descent
 inbox_refs: []
 task_refs: []
 scope:

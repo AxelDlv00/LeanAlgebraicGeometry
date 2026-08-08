@@ -7,7 +7,7 @@ summary: At every merge verify critical-root import, immediate consumption, kern
   normal proof budgets, and full-root green. Assign zero endpoint credit to unconsumed
   wrappers, fieldwise substitutes, root-unreachable files, ineffective quotients,
   or unrelated witnesses; trigger redesign under the review's stated stop conditions.
-status: pending
+status: blocked
 kind: report
 priority: high
 depends_on: []
@@ -21,3 +21,4 @@ metadata:
   created_at: '2026-08-04T01:52:34.440817+00:00'
   parent: AJCR.review-plan
   milestone: AJCR.review-plan
+  updated_at: '2026-08-08T02:04:51.362667+00:00'

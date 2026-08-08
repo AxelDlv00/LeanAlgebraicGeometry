@@ -12,13 +12,16 @@ summary: 'The general per-K/per-lambda producer and its Pic0 specialization are 
   control plus tied H0/H1/rank data and coherent native presentations on every affine
   pullback, sufficient to feed PicRankOneOpen/FibrePresented. The native line-bundle
   piece already exists; no fieldwise substitute, high-degree Abel quotient, or Galois
-  descent route is used.'
+  descent route is used. Blocked on AJCR.review-plan.p4-family-producer.'
 status: blocked
 kind: proof
 priority: urgent
-depends_on: []
+depends_on:
+- AJCR.review-plan.p4-family-producer
 inbox_refs: []
-task_refs: []
+task_refs:
+- ajcr-review-sepclosed-cover
+- ajcr-review-family-producer
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild

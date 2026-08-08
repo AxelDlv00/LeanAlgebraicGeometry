@@ -9,7 +9,8 @@ summary: 'Represent translated rank-one opens and use the open-cover representab
 status: pending
 kind: proof
 priority: urgent
-depends_on: []
+depends_on:
+- AJCR.review-plan.p5-sepclosed-cover
 inbox_refs: []
 task_refs: []
 scope:
