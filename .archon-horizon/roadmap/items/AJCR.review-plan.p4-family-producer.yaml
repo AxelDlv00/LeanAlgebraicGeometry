@@ -11,7 +11,7 @@ summary: 'Reviewer supervision note 2026-08-07 identifies this as the single sha
   immediately in PicRankOneOpen / DivRankOneOpen and rankOneAbelIso; run narrow critical-path
   build, axiom audit, and root/index the result. Do not credit fieldwise substitutes,
   vacuous wrappers, or unrelated carriers.'
-status: active
+status: blocked
 kind: proof
 priority: urgent
 depends_on: []
@@ -27,3 +27,4 @@ metadata:
   parent: AJCR.review-plan.p4-rank-one-iso
   owner: ajcr-review-family-producer
   milestone: AJCR.review-plan
+  updated_at: '2026-08-08T03:24:11.024439+00:00'
