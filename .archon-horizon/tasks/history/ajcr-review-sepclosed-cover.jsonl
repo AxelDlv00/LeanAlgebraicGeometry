@@ -37,3 +37,4 @@
 {"at": "2026-08-07T01:35:08.405240+00:00", "actor": "system", "field": "status", "from": "blocked", "to": "queued", "note": "re-queued for the next round of a focused run"}
 {"at": "2026-08-07T01:35:23.695510+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
 {"at": "2026-08-07T02:39:51.794745+00:00", "actor": "horizon", "field": "status", "from": "running", "to": "blocked", "note": "", "provenance": {"run": "0123", "session": "0026-horizon-ajcr-review-sepclosed-cover", "role": "horizon", "round": "11", "rounds": "12", "task": "ajcr-review-sepclosed-cover", "task_title": "Review lane: separably closed translated rank-one cover", "projects": "Algebraic-Jacobian-Challenge-Rebuild"}}
+{"at": "2026-08-08T02:30:07.067498+00:00", "actor": "human", "field": "status", "from": "blocked", "to": "queued", "note": ""}

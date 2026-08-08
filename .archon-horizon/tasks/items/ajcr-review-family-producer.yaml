@@ -21,20 +21,14 @@ objective: 'Read the two review PDFs before touching Lean: /home/axel/LeanAlgebr
   disconnected from the public consumer, or restarts the high-degree Abel quotient/Galois
   fallback route.'
 title: 'Review lane: arbitrary-affine rank-one presentation/base-change producer'
-explanation: ''
+explanation: 'This producer lane is intentionally limited to Pic0RankOneNativePresentation*.lean. The Phase-3 locus, Phase-4 integration, and Phase-5 translated-cover files are protected by I-1924/I-1925/I-1926; request any consumer or import changes through I-1927 rather than editing those files.'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 priority: urgent
 status: queued
 write_set:
   files:
-  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RankOnePresentation*.lean
-  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RankOneLocalDivisor*.lean
-  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RankOneLocus*.lean
-  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/DivRankOneOpen*.lean
-  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/DivSchemeRedesignRankOneChart.lean
-  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/DivSchemeRedesignRankOneFibre.lean
-  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0CriticalPath.lean
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RankOneNativePresentation*.lean
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
   declarations: []
@@ -44,13 +38,7 @@ scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
   files:
-  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RankOnePresentation*.lean
-  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RankOneLocalDivisor*.lean
-  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RankOneLocus*.lean
-  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/DivRankOneOpen*.lean
-  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/DivSchemeRedesignRankOneChart.lean
-  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/DivSchemeRedesignRankOneFibre.lean
-  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0CriticalPath.lean
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RankOneNativePresentation*.lean
 roadmap_refs:
 - AJCR.review-plan.p4-family-producer
 - AJCR.review-plan.p3-rank-one-loci
@@ -61,6 +49,6 @@ artifact_refs:
 - MainProjects/Algebraic-Jacobian-Challenge/informal/Lean_Algebraic_Jacobian_Complete_Execution_Plan.pdf
 - MainProjects/Algebraic-Jacobian-Challenge/informal/AJCR_Runs_121_122_123_Supervision_Note_2026-08-07.pdf
 created_at: '2026-08-08T02:03:42.135228+00:00'
-updated_at: '2026-08-08T02:14:41.186339+00:00'
+updated_at: '2026-08-08T02:30:06.618825+00:00'
 metadata:
   author: human
