@@ -53,7 +53,7 @@ harnesses:
     model: gpt-5.6-sol
     options:
       effort: ultra
-      config_dir: ~/.codex-frenzy
+      config_dir: /home/axel/.codex-frenzy
 github:
   enabled: true
   repo: AxelDlv00/LeanAlgebraicGeometry-Horizon
