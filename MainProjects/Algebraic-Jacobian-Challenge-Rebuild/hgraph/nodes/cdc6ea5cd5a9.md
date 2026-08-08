@@ -8,6 +8,6 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.instRedXq
 type: lean
-updated: '2026-08-08T10:39:10'
+updated: '2026-08-08T11:13:20'
 ---
 instance instRedXq : IsReduced Xq := isReduced_of_isOpenImmersion (coprodSpec ℚ ℚ)
