@@ -14,3 +14,4 @@
 {"at": "2026-08-08T02:35:43.566359+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
 {"at": "2026-08-08T02:37:04.245290+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
 {"at": "2026-08-08T03:24:10.806977+00:00", "actor": "horizon", "field": "status", "from": "running", "to": "blocked", "note": "", "provenance": {"run": "0129", "session": "0011-horizon-ajcr-review-family-producer", "role": "horizon", "round": "3", "rounds": "4", "task": "ajcr-review-family-producer", "task_title": "Review lane: arbitrary-affine rank-one presentation/base-change producer", "projects": "Algebraic-Jacobian-Challenge-Rebuild"}}
+{"at": "2026-08-09T02:21:51.771926+00:00", "actor": "human", "field": "status", "from": "blocked", "to": "queued", "note": ""}
