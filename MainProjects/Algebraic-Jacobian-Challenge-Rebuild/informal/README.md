@@ -1,6 +1,6 @@
 # `informal/` — index of design worksheets, specs, and recon dumps
 
-79 files, ~32k lines. This index exists so a new session can tell **which file is still
+80 files, ~32k lines. This index exists so a new session can tell **which file is still
 authoritative** without reading them. Created 2026-07-27 (janitor pass, run 0048 round 5);
 re-reconciled against the directory 2026-08-06 (janitor pass, run 0122).
 
@@ -27,6 +27,7 @@ found", not "audited line by line".
 | File | What it is |
 |---|---|
 | `route-decision.md` | **CURRENT.** The mathematical architecture of the rebuild, in one paragraph plus justification. The north star; nothing else here overrides it. |
+| `review-phase0-baseline.md` | **CURRENT for the August 2026 review.** Reproducible pinned revisions and static audit measurements for the AJCR-first rank-one route. |
 | `w4-rep-critical-path.md` | **CURRENT, and the most recent file in the directory.** What `Challenge.lean:99` actually reduces to, with evidence. Carries a ROUND-5 AMENDMENT: **its §1 table is stale — read §7 first**, which holds the corrections. See also `I-0367` (§7.3 is a second, weaker witness, not a corroboration) and `I-0368` (§7.5's "finite Zariski atlas" understates the obligation). |
 | `protocol-concurrent-lanes.md` | **CURRENT, BINDING.** Private-index + compare-and-swap ledger commits, the mkdir `lake.lock` protocol, `/tmp` quota. Any session running two or more lanes must follow it. |
 | `session-handoff-2026-07-15.md` | **CURRENT** (latest handoff). Supersedes `-07-14b` for STATE. |
