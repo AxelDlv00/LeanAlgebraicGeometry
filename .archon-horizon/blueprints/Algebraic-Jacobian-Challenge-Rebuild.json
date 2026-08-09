@@ -13568,10 +13568,10 @@
     "macros": {},
     "states": {
       "blocked": 41,
-      "closed": 11579,
+      "closed": 11580,
       "formalized_open": 178,
       "informal": 46,
-      "ready": 123
+      "ready": 122
     },
     "warnings": [
       "AlgebraicGeometry.{k: Lean declaration appears more than once (AlgebraicJacobian/Challenge.lean, AlgebraicJacobian/Challenge.lean)",
