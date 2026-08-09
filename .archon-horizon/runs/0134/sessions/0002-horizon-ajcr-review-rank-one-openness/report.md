@@ -11,6 +11,7 @@
 - Direct checks of `Pic0RankOneLocus.lean`, `Pic0RankOneLocusNative.lean`, and `DivRankOneOpen.lean` stop at the pre-existing missing generated object `DivSchemeHighWindowFibreModelBase.olean`.
 - The bounded foreground target build reached 9,155/9,216 jobs before Ctrl-C; it was terminated cleanly after spending roughly 40 minutes in stale high-window/divisor support modules. No build error in an owned declaration was observed.
 - The protected producer still lacks the all-cartesian native pushforward `IsIso`, family coherence, and tied H1/H0 finite-projective rank certificates. No fieldwise or unrelated witness was introduced.
+- The final ledger checkpoint still sees concurrent/generated workspace state (`events.jsonl`, stopped run-0135 process/system records, search indexes, `.mcp.json`, session hook caches, temporary indexes, and longstanding untracked reference/hgraph trees). None is an authored change of this lane; all were deliberately left unstaged.
 
 ## Why I stopped
 
