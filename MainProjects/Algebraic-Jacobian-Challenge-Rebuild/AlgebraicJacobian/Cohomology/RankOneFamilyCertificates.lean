@@ -135,6 +135,8 @@ noncomputable def h0BaseChange
       Sheaf.HModule (D.baseChange B').sheaf 0 := by
   exact D.datumH0BaseChange B' ((subsingleton_datumPair_h1_iff D).mpr P.h1_vanishing)
 
+omit [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+  [GeometricallyIrreducible C.hom] in
 /-- H¹ vanishing is preserved by the same canonical coefficient extension. -/
 theorem h1_baseChange
     (P : RankOneFamilyCertificates D)
@@ -171,9 +173,11 @@ noncomputable def scalarExtension
 
 /-! ## The arbitrary-ring constructor -/
 
+set_option maxHeartbeats 1000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 /-- Construct the certificate package after a genuine finitely generated descent stage.
 
-`hfib` is the fibre-divisor/H¹ antecedent at the stage and `hdegree` is the corresponding
+`hW₀` is the fibre-divisor/H¹ antecedent at the stage and `hdegree` is the corresponding
 class-degree calculation.  Neither field mentions the desired H¹/H⁰/rank conclusions.  The
 Noetherian instance is created only for `B₀`; the result is over the original, unrestricted
 ring `B` by the canonical datum base-change equivalence. -/
@@ -194,9 +198,10 @@ noncomputable def of_descent_stage
     intro p
     exact D₀.subsingleton_pairH1_tensor_of_fibreWitness hW₀
       p.asIdeal.ResidueField
-  obtain ⟨-, hfin₀, hproj₀⟩ := datumRigidEngine D₀ hπ hfib
+  obtain ⟨h1₀, hfin₀, hproj₀⟩ :=
+    BasicOpenCocycleDatum.descentRigidEngine hfg D₀ hπ hfib
   have hpair₀ : Subsingleton (datumPair D₀).H1 :=
-    datum_subsingleton_pairH1 D₀ hπ hfib
+    (subsingleton_datumPair_h1_iff D₀).mpr h1₀
   have hrank₀ : ∀ p : PrimeSpectrum (↥B₀),
       Module.rankAtStalk (Sheaf.HModule D₀.sheaf 0) p = 1 := by
     intro p
