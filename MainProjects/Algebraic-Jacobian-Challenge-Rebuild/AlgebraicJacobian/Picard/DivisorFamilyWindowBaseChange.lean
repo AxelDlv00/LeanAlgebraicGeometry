@@ -162,6 +162,26 @@ private lemma appLE_congr_hom {X Y : Scheme.{u}} {f g : X ⟶ Y} (h : f = g) {U 
     f.appLE U W e = g.appLE U W (h ▸ e) := by
   subst h; rfl
 
+/-- Simultaneously transporting the morphism and source open of `appLE` does not
+change the compared section. -/
+private lemma cast_appLE_congr {X Y : Scheme.{u}} {f g : X ⟶ Y} (hf : f = g)
+    {U : Y.Opens} {W W' : X.Opens} (hW : W = W')
+    (e : W ≤ f ⁻¹ᵁ U) (e' : W' ≤ g ⁻¹ᵁ U) (s : Γ(Y, U)) :
+    cast (congrArg (fun V : X.Opens => ↑(Γ(X, V))) hW) ((f.appLE U W e).hom s) =
+      (g.appLE U W' e').hom s := by
+  subst hf
+  subst hW
+  rfl
+
+/-- Equality of unit values after transporting their ambient rings gives heterogeneous
+equality of the units themselves. -/
+private lemma units_heq_of_cast_val_eq {M N : CommRingCat} (h : M = N)
+    (a : (↑M)ˣ) (b : (↑N)ˣ)
+    (hab : cast (congrArg (fun A : CommRingCat => ↑A) h) (a : ↑M) = (b : ↑N)) :
+    HEq a b := by
+  subst h
+  exact heq_of_eq (Units.ext hab)
+
 /-- **The general tower law of the sections comparison** over `R → R' → R''`:
 comparing sections in two stages is comparing them along the composite tower. -/
 theorem relSectionsMap_relSectionsMap_tower
@@ -202,6 +222,64 @@ theorem BasicOpenCoverData.baseChange_baseChange
     (D.baseChange R').baseChange R'' = D.baseChange R'' := by
   cases D
   simp only [BasicOpenCoverData.baseChange, relSectionsMap_relSectionsMap_tower]
+
+/-- Each piece of a basic-open cover base-changed in two stages agrees with the
+corresponding piece after direct base change. -/
+theorem BasicOpenCoverData.pieces_tower
+    {pi : C.left ⟶ P1 k} [IsAffineHom pi] (D : BasicOpenCoverData C R pi)
+    (R'' : Type u) [CommRing R''] [Algebra k R''] [Algebra R R''] [Algebra R' R'']
+    [IsScalarTower k R R''] [IsScalarTower k R' R''] [IsScalarTower R R' R'']
+    (i : D.index) :
+    ((D.baseChange R').baseChange R'').pieces i =
+      (D.baseChange R'').pieces i := by
+  rw [(D.baseChange R').pieces_baseChange R'' i, D.pieces_baseChange R' i,
+    D.pieces_baseChange R'' i, ← Scheme.Hom.comp_preimage,
+    relCurveMap_comp (C := C) (R := R) (R' := R') (R'' := R'')]
+
+/-- The comparison map on a double overlap is transitive along an arbitrary tower of
+coefficient rings, after transporting the target overlap along `pieces_tower`. -/
+theorem BasicOpenCoverData.overlapMap_tower
+    {pi : C.left ⟶ P1 k} [IsAffineHom pi] (D : BasicOpenCoverData C R pi)
+    (R'' : Type u) [CommRing R''] [Algebra k R''] [Algebra R R''] [Algebra R' R'']
+    [IsScalarTower k R R''] [IsScalarTower k R' R''] [IsScalarTower R R' R'']
+    (i j : D.index) (s : Γ(relCurve C R, D.pieces i ⊓ D.pieces j)) :
+    let hopen := congrArg₂ (· ⊓ ·)
+      (D.pieces_tower C R R' R'' i) (D.pieces_tower C R R' R'' j)
+    cast (congrArg
+      (fun W : (relCurve C R'').Opens => ↑(Γ(relCurve C R'', W))) hopen)
+      ((D.baseChange R').overlapMap R'' i j (D.overlapMap R' i j s)) =
+        D.overlapMap R'' i j s := by
+  dsimp only
+  simp only [BasicOpenCoverData.overlapMap]
+  rw [← CommRingCat.comp_apply, Scheme.Hom.appLE_comp_appLE]
+  exact cast_appLE_congr
+    (relCurveMap_comp (C := C) (R := R) (R' := R') (R'' := R''))
+    (congrArg₂ (· ⊓ ·)
+      (D.pieces_tower C R R' R'' i) (D.pieces_tower C R R' R'' j)) _ _ s
+
+/-- Pinned cocycle data base-changed along `R → R' → R''` agrees with direct
+base change. The unit field is identified by `overlapMap_tower`. -/
+theorem BasicOpenCocycleDatum.baseChange_baseChange
+    {pi : C.left ⟶ P1 k} [IsAffineHom pi] (D : BasicOpenCocycleDatum C R pi)
+    (R'' : Type u) [CommRing R''] [Algebra k R''] [Algebra R R''] [Algebra R' R'']
+    [IsScalarTower k R R''] [IsScalarTower k R' R''] [IsScalarTower R R' R''] :
+    (D.baseChange R').baseChange R'' = D.baseChange R'' := by
+  rw [BasicOpenCocycleDatum.mk.injEq]
+  constructor
+  · exact BasicOpenCoverData.baseChange_baseChange C R R' D.toBasicOpenCoverData R''
+  · apply Function.hfunext rfl
+    intro i i' hi
+    cases hi
+    apply Function.hfunext rfl
+    intro j j' hj
+    cases hj
+    let hopen := congrArg₂ (· ⊓ ·)
+      (D.toBasicOpenCoverData.pieces_tower C R R' R'' i)
+      (D.toBasicOpenCoverData.pieces_tower C R R' R'' j)
+    apply units_heq_of_cast_val_eq
+      (congrArg (fun W : (relCurve C R'').Opens => Γ(relCurve C R'', W)) hopen)
+    simp only [BasicOpenCocycleDatum.baseChange, Units.coe_map]
+    exact D.toBasicOpenCoverData.overlapMap_tower C R R' R'' i j (D.unit i j)
 
 end Tower
 
