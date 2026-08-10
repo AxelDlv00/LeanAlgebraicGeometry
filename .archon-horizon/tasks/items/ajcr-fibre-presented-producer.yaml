@@ -13,7 +13,7 @@ explanation: ''
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 priority: urgent
-status: running
+status: queued
 write_set:
   files:
   - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RankOneFibrePresentedProducer*.lean
@@ -34,6 +34,6 @@ inbox_refs:
 - I-1927
 artifact_refs: []
 created_at: '2026-08-10T01:41:27.963190+00:00'
-updated_at: '2026-08-10T01:43:30.774485+00:00'
+updated_at: '2026-08-10T03:13:50.002885+00:00'
 metadata:
   author: human
