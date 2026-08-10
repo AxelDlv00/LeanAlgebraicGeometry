@@ -1,0 +1,1 @@
+The coordination thread has been updated again by the producer lane while the Lean worker runs. I’m re-opening it to acknowledge the new status, then I’ll finish the local parser fix and keep the integration request explicit.
