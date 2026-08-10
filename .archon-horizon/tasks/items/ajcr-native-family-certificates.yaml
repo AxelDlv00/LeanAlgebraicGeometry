@@ -13,7 +13,7 @@ explanation: ''
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 priority: urgent
-status: queued
+status: running
 write_set:
   files:
   - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Cohomology/RankOneFamilyCertificates*.lean
@@ -36,6 +36,6 @@ inbox_refs:
 - I-1927
 artifact_refs: []
 created_at: '2026-08-10T01:41:26.237287+00:00'
-updated_at: '2026-08-10T01:41:57.198579+00:00'
+updated_at: '2026-08-10T01:43:47.079739+00:00'
 metadata:
   author: human

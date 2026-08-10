@@ -17,3 +17,4 @@
 {"at": "2026-08-09T02:21:51.771926+00:00", "actor": "human", "field": "status", "from": "blocked", "to": "queued", "note": ""}
 {"at": "2026-08-09T02:23:36.836654+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
 {"at": "2026-08-09T03:49:21.568943+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-08-10T01:44:06.613228+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
