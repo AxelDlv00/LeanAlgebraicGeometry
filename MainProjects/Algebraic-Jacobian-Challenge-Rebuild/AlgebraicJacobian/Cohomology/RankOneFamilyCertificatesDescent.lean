@@ -105,6 +105,24 @@ noncomputable def ofDescentStage
   have hrank : forall p : PrimeSpectrum (B0 : Type u),
       Module.rankAtStalk (Sheaf.HModule D0.sheaf 0) p = 1 := by
     intro p
+    haveI : IsIntegral (relCurve C p.asIdeal.ResidueField) :=
+      instIsIntegralBaseChange C p.asIdeal.ResidueField
+    haveI : SmoothOfRelativeDimension 1
+        (relCurve C p.asIdeal.ResidueField ↘
+          Spec (CommRingCat.of p.asIdeal.ResidueField)) :=
+      instSmoothOfRelativeDimensionBaseChange C p.asIdeal.ResidueField
+    haveI : QuasiCompact
+        (relCurve C p.asIdeal.ResidueField ↘
+          Spec (CommRingCat.of p.asIdeal.ResidueField)) :=
+      instQuasiCompactBaseChange C p.asIdeal.ResidueField
+    haveI : Module.Finite p.asIdeal.ResidueField
+        (Sheaf.HModule
+          ((relCurve C p.asIdeal.ResidueField).moduleKSheaf p.asIdeal.ResidueField) 0) :=
+      instModuleFiniteHModuleZeroBaseChange C p.asIdeal.ResidueField
+    haveI : Module.Finite p.asIdeal.ResidueField
+        (Sheaf.HModule
+          ((relCurve C p.asIdeal.ResidueField).moduleKSheaf p.asIdeal.ResidueField) 1) :=
+      instModuleFiniteHModuleOneBaseChange C p.asIdeal.ResidueField
     exact BasicOpenCocycleDatum.rankAtStalk_hModule_zero_eq_one D0 (n := genus C) hpi
       (chi_moduleKSheaf C) hfib p (hdegree p)
   let Q := Sheaf.HModule D0.sheaf 0
