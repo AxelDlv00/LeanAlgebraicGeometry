@@ -302,6 +302,91 @@ theorem linearEquivZero_h0BaseChange_one_tmul
 
 end PureTensor
 
+/-! ## Coherence of the H0 equivalence -/
+
+/-- The canonical two-step H0 comparison, including reassociation of tensor products and
+transport along the canonical equality of the two base-changed cocycle data. -/
+noncomputable def h0BaseChangeTwoStep
+    (D : BasicOpenCocycleDatum C R pi) (P : RankOneFamilyCertificates D)
+    (R'' : Type u) [CommRing R''] [Algebra k R''] [Algebra R R''] [Algebra R' R'']
+    [IsScalarTower k R R''] [IsScalarTower k R' R''] [IsScalarTower R R' R''] :
+    R'' ⊗[R] Sheaf.HModule D.sheaf 0 ≃ₗ[R'']
+      Sheaf.HModule (D.baseChange R'').sheaf 0 :=
+  let hD : (D.baseChange R').baseChange R'' = D.baseChange R'' :=
+    D.baseChange_baseChange C R R' R''
+  ((((TensorProduct.AlgebraTensorModule.cancelBaseChange R R' R'' R''
+      (Sheaf.HModule D.sheaf 0)).symm.trans
+      (LinearEquiv.baseChange R' R'' _ _ (P.h0BaseChange R'))).trans
+      ((P.scalarExtension R').h0BaseChange R'')).trans
+      (Sheaf.HModule.mapEquiv
+        (eqToIso (congrArg
+          (fun E : BasicOpenCocycleDatum C R'' pi => E.sheaf) hD)) 0))
+
+set_option maxHeartbeats 2000000 in
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxRecDepth 4000 in
+/-- Direct and iterated canonical H0 base change agree along every affine coefficient tower. -/
+theorem h0BaseChange_tower
+    (D : BasicOpenCocycleDatum C R pi) (P : RankOneFamilyCertificates D)
+    (R'' : Type u) [CommRing R''] [Algebra k R''] [Algebra R R''] [Algebra R' R'']
+    [IsScalarTower k R R''] [IsScalarTower k R' R''] [IsScalarTower R R' R''] :
+    P.h0BaseChange R'' = h0BaseChangeTwoStep C R R' D P R'' := by
+  letI : Module R (Sheaf.HModule (D.baseChange R'').sheaf 0) :=
+    Module.compHom _ (algebraMap R R'')
+  letI : IsScalarTower R R'' (Sheaf.HModule (D.baseChange R'').sheaf 0) :=
+    IsScalarTower.of_compHom R R'' _
+  apply LinearEquiv.toLinearMap_injective
+  apply LinearMap.restrictScalars_injective R
+  apply TensorProduct.ext'
+  intro r'' y
+  have hone : P.h0BaseChange R'' ((1 : R'') ⊗ₜ[R] y) =
+      h0BaseChangeTwoStep C R R' D P R'' ((1 : R'') ⊗ₜ[R] y) := by
+    let hD : (D.baseChange R').baseChange R'' = D.baseChange R'' :=
+      D.baseChange_baseChange C R R' R''
+    let hH1 := (subsingleton_datumPair_h1_iff D).mpr P.h1_vanishing
+    let hH1' := (subsingleton_datumPair_h1_iff (D.baseChange R')).mpr
+      (P.scalarExtension R').h1_vanishing
+    simp only [h0BaseChangeTwoStep, LinearEquiv.trans_apply,
+      TensorProduct.AlgebraTensorModule.cancelBaseChange_symm_tmul]
+    symm
+    change Sheaf.HModule.mapEquiv
+          (eqToIso (congrArg
+            (fun E : BasicOpenCocycleDatum C R'' pi => E.sheaf) hD)) 0
+          ((P.scalarExtension R').h0BaseChange R''
+            (LinearEquiv.baseChange R' R'' _ _ (P.h0BaseChange R')
+              ((1 : R'') ⊗ₜ[R'] ((1 : R') ⊗ₜ[R] y)))) =
+        P.h0BaseChange R'' ((1 : R'') ⊗ₜ[R] y)
+    apply (Sheaf.HModule.linearEquiv₀
+      (Opens.grothendieckTopology ((relCurve C R'' : Scheme.{u}) : TopCat))
+      isTerminalTop (D.baseChange R'').sheaf).injective
+    rw [linearEquivZero_mapEquiv_eq_cast C hD]
+    rw [LinearEquiv.baseChange_tmul]
+    change cast (congrArg (fun E : BasicOpenCocycleDatum C R'' pi =>
+        ↑(gluedSubmodule R'' E.pieces E.unit ⊤)) hD)
+        (Sheaf.HModule.linearEquiv₀
+          (Opens.grothendieckTopology ((relCurve C R'' : Scheme.{u}) : TopCat))
+          isTerminalTop ((D.baseChange R').baseChange R'').sheaf
+          ((D.baseChange R').datumH0BaseChange R'' hH1'
+            ((1 : R'') ⊗ₜ[R'] (D.datumH0BaseChange R' hH1
+              ((1 : R') ⊗ₜ[R] y))))) =
+      Sheaf.HModule.linearEquiv₀
+        (Opens.grothendieckTopology ((relCurve C R'' : Scheme.{u}) : TopCat))
+        isTerminalTop (D.baseChange R'').sheaf
+        (D.datumH0BaseChange R'' hH1 ((1 : R'') ⊗ₜ[R] y))
+    rw [linearEquivZero_h0BaseChange_one_tmul C R' R'' (D.baseChange R') hH1']
+    rw [linearEquivZero_h0BaseChange_one_tmul C R R' D hH1]
+    rw [linearEquivZero_h0BaseChange_one_tmul C R R'' D hH1]
+    exact sectionsMapTop_tower C R R' D R''
+      (Sheaf.HModule.linearEquiv₀
+        (Opens.grothendieckTopology ((relCurve C R : Scheme.{u}) : TopCat))
+        isTerminalTop D.sheaf y)
+  have hr : (r'' ⊗ₜ[R] y : R'' ⊗[R] Sheaf.HModule D.sheaf 0) =
+      r'' • ((1 : R'') ⊗ₜ[R] y) := by
+    rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]
+  rw [hr]
+  simp only [LinearMap.coe_restrictScalars, map_smul]
+  exact congrArg (r'' • ·) hone
+
 end RankOneFamilyCertificates
 
 end AlgebraicGeometry
