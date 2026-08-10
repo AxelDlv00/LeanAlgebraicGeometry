@@ -21,7 +21,7 @@ set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option maxSynthPendingDepth 3
 
-universe u
+universe u v w
 
 open CategoryTheory Limits TopologicalSpace Opposite
 open scoped TensorProduct
@@ -66,6 +66,36 @@ private lemma cast_gluedSubmodule_eq_of_val_heq
       ↑(gluedSubmodule S E.pieces E.unit W)) hD) x = y := by
   subst D₂
   exact Subtype.ext (eq_of_heq hval)
+
+private lemma cast_congrArg_self {A : Sort v} (P : A → Sort w)
+    {a : A} (h : a = a) (x : P a) :
+    cast (congrArg P h) x = x := by
+  cases h
+  rfl
+
+private lemma linearEquivZero_mapEquiv_eq_cast
+    {S : Type u} [CommRing S] [Algebra k S]
+    {D₁ D₂ : BasicOpenCocycleDatum C S pi} (hD : D₁ = D₂)
+    (x : Sheaf.HModule D₁.sheaf 0) :
+    Sheaf.HModule.linearEquiv₀
+        (Opens.grothendieckTopology ((relCurve C S : Scheme.{u}) : TopCat))
+        isTerminalTop D₂.sheaf
+        (Sheaf.HModule.mapEquiv
+          (eqToIso (congrArg
+            (fun E : BasicOpenCocycleDatum C S pi => E.sheaf) hD)) 0 x) =
+      cast (congrArg (fun E : BasicOpenCocycleDatum C S pi =>
+        ↑(gluedSubmodule S E.pieces E.unit ⊤)) hD)
+        (Sheaf.HModule.linearEquiv₀
+          (Opens.grothendieckTopology ((relCurve C S : Scheme.{u}) : TopCat))
+          isTerminalTop D₁.sheaf x) := by
+  cases hD
+  rw [show congrArg (fun E : BasicOpenCocycleDatum C S pi => E.sheaf)
+      (rfl : D₁ = D₁) = rfl from rfl,
+    eqToIso_refl, Sheaf.HModule.mapEquiv_apply, Iso.refl_hom,
+    Sheaf.HModule.map_id_apply]
+  exact (cast_congrArg_self
+    (fun E : BasicOpenCocycleDatum C S pi =>
+      ↑(gluedSubmodule S E.pieces E.unit ⊤)) (rfl : D₁ = D₁) _).symm
 
 /-- Comparing glued sections in two stages agrees with direct comparison after transport by the
 canonical equality of the two base-changed cocycle data. -/
