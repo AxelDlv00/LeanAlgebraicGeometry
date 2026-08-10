@@ -19,12 +19,12 @@ this to the canonical unit-lift through the evaluation counit identifies its res
 vanishing predicate with that of `datumSection`.  The final theorem specializes the comparison
 to `PicRankOneNativePresentation`, whose converted module is definitionally the native module.
 
-This is a base-ring-linear section zero predicate, expressed through
-`toModuleKSheafOfModules`.  It is not an isomorphism of `O_X`-modules and does not identify the
-local equation ideals of the native line bundle.  That O-linear ideal comparison is still needed
-before the datum-side equations can be shown to cut out the intrinsic evaluation divisor.  This
-file also does not assert regularity, construct a family-level divisor, or manufacture the
-still-missing arbitrary-affine presentation producer.
+The second half passes to the canonical `O_X`-linear piece trivializations of the native module.
+It proves that the evaluated section has coordinate `datum.component` on every cocycle piece, and
+hence that the two principal local ideals agree.  This closes the local equation comparison, but
+does not yet glue those ideals into a base-change-compatible family-level evaluation divisor.  The
+file also does not assert regularity or manufacture the still-missing arbitrary-affine presentation
+producer.
 -/
 
 set_option autoImplicit false
@@ -46,6 +46,54 @@ variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
 variable {A : Type u} [CommRing A] [Algebra k A]
 variable {pi : C.left ⟶ P1 k} [IsFinite pi]
 variable {lam : picDegLayer C (genus C : ℤ) (overSpec k A)}
+
+namespace BasicOpenCocycleDatum
+
+variable {B : Type u} [CommRing B] [Algebra k B]
+
+/-- The coordinate of a native global section on one cocycle piece.
+
+This is obtained by restricting the section to `D.pieces j` and applying the canonical
+`O_X`-linear trivialization of the native module there. -/
+noncomputable def nativePieceCoordinate
+    (D : BasicOpenCocycleDatum C B pi)
+    (s : Γ(D.nativeModule, (⊤ : (relCurve C B).Opens)))
+    (j : D.index) : Γ(relCurve C B, D.pieces j) :=
+  gluedTriv B D.isGluingCocycle j le_rfl
+    (gluedRes B D.pieces D.unit
+      (le_top : D.pieces j ≤ (⊤ : (relCurve C B).Opens)) s)
+
+/-- The native coordinate is the datum component of the same global section. -/
+theorem nativePieceCoordinate_eq_component
+    (D : BasicOpenCocycleDatum C B pi)
+    (s : Γ(D.nativeModule, (⊤ : (relCurve C B).Opens)))
+    (j : D.index) :
+    D.nativePieceCoordinate s j = D.component s j := by
+  rw [nativePieceCoordinate, gluedTriv_apply, gluedRes_coe]
+  simp only [Scheme.resHom_resHom]
+
+/-- The inverse of the native base-ring section equivalence is the identity on underlying
+sections. -/
+@[simp]
+theorem nativeModuleKSectionsEquiv_symm_apply
+    (D : BasicOpenCocycleDatum C B pi)
+    (U : (relCurve C B).Opens) (s : D.sheaf.obj.obj (op U)) :
+    (D.nativeModuleKSectionsEquiv U).symm s = s := by
+  apply (D.nativeModuleKSectionsEquiv U).injective
+  rw [LinearEquiv.apply_symm_apply]
+  rfl
+
+/-- The inverse component of the native base-ring sheaf isomorphism is the identity on
+underlying sections. -/
+@[simp]
+theorem nativeModuleKSheafIso_inv_app
+    (D : BasicOpenCocycleDatum C B pi)
+    (U : (relCurve C B).Opens) (s : D.sheaf.obj.obj (op U)) :
+    (D.nativeModuleKSheafIso.inv.hom.app (op U)).hom s = s := by
+  change (D.nativeModuleKSectionsEquiv U).symm s = s
+  exact D.nativeModuleKSectionsEquiv_symm_apply U s
+
+end BasicOpenCocycleDatum
 
 namespace PicRankOneLocalPresentation
 
@@ -141,6 +189,51 @@ theorem evaluationLift_restrict_eq_zero_iff
       ((P.toLocalPresentation.datum.sheaf.obj.map (homOfLE h).op).hom
         (P.toLocalPresentation.datumSection y) = 0) := by
   exact P.toLocalPresentation.evaluationLift_restrict_eq_zero_iff h y
+
+/-- Under the native trivialization, the section attached to a datum `H⁰` class has the datum's
+component as its coordinate on every cocycle piece. -/
+theorem moduleSectionsEquiv_nativePieceCoordinate_eq_component
+    (P : PicRankOneNativePresentation pi lam)
+    (y : Sheaf.HModule P.toLocalPresentation.datum.sheaf 0)
+    (j : P.datum.index) :
+    P.datum.nativePieceCoordinate (P.toLocalPresentation.moduleSectionsEquiv y) j =
+      P.datum.component (P.toLocalPresentation.datumSection y) j := by
+  rw [← P.toLocalPresentation.module_iso_inv_datumSection y]
+  change P.datum.nativePieceCoordinate
+      ((P.datum.nativeModuleKSheafIso.inv.hom.app
+        (op (⊤ : (relCurve C P.cover.Carrier).Opens))).hom
+          (P.toLocalPresentation.datumSection y)) j = _
+  rw [P.datum.nativeModuleKSheafIso_inv_app]
+  exact P.datum.nativePieceCoordinate_eq_component _ j
+
+/-- The canonical evaluation counit section has `datum.component` as its coordinate under the
+native `O_X`-linear trivialization on every cocycle piece. -/
+theorem evaluationLift_nativePieceCoordinate_eq_component
+    (P : PicRankOneNativePresentation pi lam)
+    (y : Sheaf.HModule P.toLocalPresentation.datum.sheaf 0)
+    (j : P.datum.index) :
+    P.datum.nativePieceCoordinate
+        ((Scheme.Modules.Hom.app P.toLocalPresentation.evaluation
+          ((relCurve C P.cover.Carrier ↘ Spec (.of P.cover.Carrier)) ⁻¹ᵁ
+            (⊤ : (Spec (.of P.cover.Carrier)).Opens))).hom
+          (P.toLocalPresentation.evaluationLiftOfH0 y)) j =
+      P.datum.component (P.toLocalPresentation.datumSection y) j := by
+  rw [P.toLocalPresentation.evaluation_evaluationLiftOfH0_eq_moduleSectionsEquiv y]
+  exact P.moduleSectionsEquiv_nativePieceCoordinate_eq_component y j
+
+/-- The principal ideal cut out by the native evaluation section on a cocycle piece is exactly
+the principal ideal generated by the datum component consumed by the divisor engine. -/
+theorem evaluationLift_nativePieceIdeal_eq_componentIdeal
+    (P : PicRankOneNativePresentation pi lam)
+    (y : Sheaf.HModule P.toLocalPresentation.datum.sheaf 0)
+    (j : P.datum.index) :
+    Ideal.span {P.datum.nativePieceCoordinate
+        ((Scheme.Modules.Hom.app P.toLocalPresentation.evaluation
+          ((relCurve C P.cover.Carrier ↘ Spec (.of P.cover.Carrier)) ⁻¹ᵁ
+            (⊤ : (Spec (.of P.cover.Carrier)).Opens))).hom
+          (P.toLocalPresentation.evaluationLiftOfH0 y)) j} =
+      Ideal.span {P.datum.component (P.toLocalPresentation.datumSection y) j} := by
+  rw [P.evaluationLift_nativePieceCoordinate_eq_component y j]
 
 end PicRankOneNativePresentation
 

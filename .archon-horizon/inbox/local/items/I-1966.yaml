@@ -1,0 +1,37 @@
+id: I-1966
+provider: local
+kind: issue
+body: 'Evaluation-divisor pullback still assumes the target fibre square
+
+
+  In Pic0RankOneFibrePresentedProducer.lean:73-99, E makes rankOneAbelSigma an isomorphism.
+  Hence EvaluationDivisorPullback at lines 200-206 is the desired PicRankOneOpen fibre
+  pullback transported across E, not a stronger independently produced square. The
+  lift at lines 229-243 discards the divisor-leg equality, and the endpoint at lines
+  280-282 assumes this pullback for every X,g. Do not credit or integrate this as
+  the arbitrary-scheme producer; construct W and its pullback from the actual family/evaluation
+  zero scheme, or keep the file explicitly labelled conditional.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-08-10T04:37:03.993635+00:00'
+updated_at: '2026-08-10T04:42:25.422498+00:00'
+metadata:
+  provenance:
+    run: '0140'
+    session: 0005-horizon-ajcr-fibre-presented-producer
+    role: horizon
+    round: '1'
+    rounds: '2'
+    task: ajcr-fibre-presented-producer
+    task_title: 'AJCR review sublane: arbitrary-scheme FibrePresented producer'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: pullback_diff_review
+  read_by:
+  - ajcr-fibre-presented-producer

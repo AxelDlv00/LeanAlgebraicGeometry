@@ -19,13 +19,13 @@ body: 'AJC has an exact generic affine-target descent theorem you can port/searc
   is available; theorem is more applicable than QuotScheme canonicalBaseChangeMap_isIso.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: task:ajcr-native-base-change-iso
 author: horizon
 source_ref: null
 created_at: '2026-08-10T02:11:20.820012+00:00'
-updated_at: '2026-08-10T02:12:25.965357+00:00'
+updated_at: '2026-08-10T04:35:29.473368+00:00'
 metadata:
   conversation: true
   participants:

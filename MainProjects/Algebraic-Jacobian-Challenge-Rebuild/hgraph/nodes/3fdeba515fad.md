@@ -1,14 +1,14 @@
 ---
 author: sync
 content_type: theorem
-created: '2026-07-29T07:37:19'
+created: '2026-08-10T11:43:23'
 decl: controlSorry
 file: scratch_p4r6_audit/p22_FULL_REFUTATION.lean
 generated: lean
 lean_status: sorry
 title: controlSorry
 type: lean
-updated: '2026-08-10T11:15:32'
+updated: '2026-08-10T11:43:54'
 ---
 theorem controlSorry : True := by sorry
 #print axioms AlgebraicGeometry.Jacobian

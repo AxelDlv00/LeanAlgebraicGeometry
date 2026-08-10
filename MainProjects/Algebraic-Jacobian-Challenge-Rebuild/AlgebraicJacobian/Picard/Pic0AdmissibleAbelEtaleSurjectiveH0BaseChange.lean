@@ -23,6 +23,78 @@ attribute [local instance] Scheme.overModule Scheme.overSectionsAlgebra
 
 namespace BasicOpenCocycleDatum
 
+section Tower
+
+variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
+variable (R : Type u) [CommRing R] [Algebra k R]
+variable (R' : Type u) [CommRing R'] [Algebra k R'] [Algebra R R']
+  [IsScalarTower k R R']
+variable {pi : C.left ⟶ P1 k} [IsAffineHom pi]
+
+private lemma appLE_congr_hom_tower {X Y : Scheme.{u}} {f g : X ⟶ Y} (h : f = g)
+    {U : Y.Opens} {W : X.Opens} (e : W ≤ f ⁻¹ᵁ U) :
+    f.appLE U W e = g.appLE U W (h ▸ e) := by
+  subst h
+  rfl
+
+/-- Comparing a glued section over arbitrary nested opens along `R → R' → R''`
+agrees, after transporting the cocycle datum, with direct comparison along `R → R''`. -/
+theorem sectionsMap_tower (D : BasicOpenCocycleDatum C R pi)
+    (R'' : Type u) [CommRing R''] [Algebra k R''] [Algebra R R''] [Algebra R' R'']
+    [IsScalarTower k R R''] [IsScalarTower k R' R''] [IsScalarTower R R' R'']
+    {W : (relCurve C R).Opens} {W' : (relCurve C R').Opens}
+    {W'' : (relCurve C R'').Opens}
+    (hW' : W' ≤ relCurveMap C R R' ⁻¹ᵁ W)
+    (hW'' : W'' ≤ relCurveMap C R' R'' ⁻¹ᵁ W')
+    (s : ↑(gluedSubmodule R D.pieces D.unit W)) :
+    let hD : (D.baseChange R').baseChange R'' = D.baseChange R'' :=
+      D.baseChange_baseChange C R R' R''
+    let hcomp : W'' ≤ relCurveMap C R R'' ⁻¹ᵁ W := by
+      rw [← relCurveMap_comp (C := C) (R := R) (R' := R') (R'' := R''),
+        Scheme.Hom.comp_preimage]
+      exact hW''.trans (Scheme.Hom.preimage_mono _ hW')
+    cast (congrArg (fun E : BasicOpenCocycleDatum C R'' pi =>
+      ↑(gluedSubmodule R'' E.pieces E.unit W'')) hD)
+        ((D.baseChange R').sectionsMap R'' hW'' (D.sectionsMap R' hW' s)) =
+      D.sectionsMap R'' hcomp s := by
+  dsimp only
+  simp only [BasicOpenCocycleDatum.baseChange_baseChange]
+  apply Subtype.ext
+  funext j
+  simp only [sectionsMap_coe]
+  have hmaps := Scheme.Hom.appLE_comp_appLE
+    (relCurveMap C R' R'') (relCurveMap C R R')
+    (W ⊓ D.pieces j)
+    (W' ⊓ (D.baseChange R').pieces j)
+    (W'' ⊓ ((D.baseChange R').baseChange R'').pieces j)
+    (D.sectionsMap_component_le R' hW' j)
+    ((D.baseChange R').sectionsMap_component_le R'' hW'' j)
+  rw [← CommRingCat.comp_apply, hmaps]
+  exact congr($(appLE_congr_hom_tower
+    (relCurveMap_comp (C := C) (R := R) (R' := R') (R'' := R'')) _).hom (s.val j))
+
+/-- Global glued-section comparison is transitive along an arbitrary coefficient
+tower, with the codomain transported by `baseChange_baseChange`. -/
+theorem sectionsMapTop_tower (D : BasicOpenCocycleDatum C R pi)
+    (R'' : Type u) [CommRing R''] [Algebra k R''] [Algebra R R''] [Algebra R' R'']
+    [IsScalarTower k R R''] [IsScalarTower k R' R''] [IsScalarTower R R' R'']
+    (s : ↑(gluedSubmodule R D.pieces D.unit ⊤)) :
+    let hD : (D.baseChange R').baseChange R'' = D.baseChange R'' :=
+      D.baseChange_baseChange C R R' R''
+    cast (congrArg (fun E : BasicOpenCocycleDatum C R'' pi =>
+      ↑(gluedSubmodule R'' E.pieces E.unit ⊤)) hD)
+        ((D.baseChange R').sectionsMapTop R'' (D.sectionsMapTop R' s)) =
+      D.sectionsMapTop R'' s := by
+  let hW' : (⊤ : (relCurve C R').Opens) ≤
+      relCurveMap C R R' ⁻¹ᵁ (⊤ : (relCurve C R).Opens) := by
+    rw [Scheme.Hom.preimage_top]
+  let hW'' : (⊤ : (relCurve C R'').Opens) ≤
+      relCurveMap C R' R'' ⁻¹ᵁ (⊤ : (relCurve C R').Opens) := by
+    rw [Scheme.Hom.preimage_top]
+  simpa only [sectionsMapTop] using D.sectionsMap_tower C R R' R'' hW' hW'' s
+
+end Tower
+
 variable {k : Type u} [Field k] {C : Over (Spec (.of k))}
 variable {B : Type u} [CommRing B] [Algebra k B]
 variable (B' : Type u) [CommRing B'] [Algebra k B'] [Algebra B B']

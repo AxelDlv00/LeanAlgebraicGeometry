@@ -4,10 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 
-import AlgebraicJacobian.Cohomology.DatumDescent
 import AlgebraicJacobian.Cohomology.GluedSheafDatumFibre
 import AlgebraicJacobian.Cohomology.GluedSheafH0BaseChange
-import AlgebraicJacobian.Picard.DivisorDatumRankOne
 import AlgebraicJacobian.Picard.Pic0ChartLocusFibreField
 
 /-!
@@ -92,38 +90,6 @@ namespace RankOneFamilyCertificates
 
 variable {D : BasicOpenCocycleDatum C B pi}
 
-/- The standard base-change geometry is keyed by the structure morphism supplied by
-`relCurve.instOver`; re-key it locally so the rank theorem sees the same `Over` object. -/
-noncomputable local instance (priority := 20000) rankOneCertificateOver
-    (L : Type u) [Field L] [Algebra k L] :
-    (relCurve C L).Over (Spec (.of L)) :=
-  instOverBaseChange C L
-
-noncomputable local instance rankOneCertificateSmooth
-    (L : Type u) [Field L] [Algebra k L] :
-    SmoothOfRelativeDimension 1 (relCurve C L ↘ Spec (.of L)) :=
-  instSmoothOfRelativeDimensionBaseChange C L
-
-noncomputable local instance rankOneCertificateIntegral
-    (L : Type u) [Field L] [Algebra k L] :
-    IsIntegral (relCurve C L) :=
-  instIsIntegralBaseChange C L
-
-noncomputable local instance rankOneCertificateQuasiCompact
-    (L : Type u) [Field L] [Algebra k L] :
-    QuasiCompact (relCurve C L ↘ Spec (.of L)) :=
-  instQuasiCompactBaseChange C L
-
-noncomputable local instance rankOneCertificateFiniteH0
-    (L : Type u) [Field L] [Algebra k L] :
-    Module.Finite L (Sheaf.HModule ((relCurve C L).moduleKSheaf L) 0) :=
-  instModuleFiniteHModuleZeroBaseChange C L
-
-noncomputable local instance rankOneCertificateFiniteH1
-    (L : Type u) [Field L] [Algebra k L] :
-    Module.Finite L (Sheaf.HModule ((relCurve C L).moduleKSheaf L) 1) :=
-  instModuleFiniteHModuleOneBaseChange C L
-
 /-! ## Canonical scalar extension -/
 
 /-- The canonical H⁰ equivalence attached to a certificate. -/
@@ -170,77 +136,6 @@ noncomputable def scalarExtension
   intro p
   rw [← Module.rankAtStalk_eq_of_equiv e, Module.rankAtStalk_baseChange]
   exact P.h0_rank_one (p.comap (algebraMap B B'))
-
-/-! ## The arbitrary-ring constructor -/
-
-set_option maxHeartbeats 1000000 in
-set_option synthInstance.maxHeartbeats 400000 in
-/-- Construct the certificate package after a genuine finitely generated descent stage.
-
-`hW₀` is the fibre-divisor/H¹ antecedent at the stage and `hdegree` is the corresponding
-class-degree calculation.  Neither field mentions the desired H¹/H⁰/rank conclusions.  The
-Noetherian instance is created only for `B₀`; the result is over the original, unrestricted
-ring `B` by the canonical datum base-change equivalence. -/
-noncomputable def of_descent_stage
-    {B₀ : Subalgebra k B} (hfg : B₀.FG)
-    (D₀ : BasicOpenCocycleDatum C (↥B₀) pi)
-    (hbc : D₀.baseChange (B' := B) = D)
-    (hπ : pi ≫ P1.structureMap k = C.hom)
-    (hW₀ : D₀.FibreH1Witness)
-    (hdegree : ∀ p : PrimeSpectrum (↥B₀),
-      classDeg p.asIdeal.ResidueField
-        (D₀.baseChange p.asIdeal.ResidueField).cechPicClass = (genus C : ℤ)) :
-    RankOneFamilyCertificates D := by
-  subst D
-  letI : IsNoetherianRing (↥B₀) := hfg.isNoetherianRing
-  have hfib : ∀ p : PrimeSpectrum (↥B₀),
-      Subsingleton ((datumPair D₀).H1 ⊗[↥B₀] p.asIdeal.ResidueField) := by
-    intro p
-    exact D₀.subsingleton_pairH1_tensor_of_fibreWitness hW₀
-      p.asIdeal.ResidueField
-  obtain ⟨h1₀, hfin₀, hproj₀⟩ :=
-    BasicOpenCocycleDatum.descentRigidEngine hfg D₀ hπ hfib
-  have hpair₀ : Subsingleton (datumPair D₀).H1 :=
-    (subsingleton_datumPair_h1_iff D₀).mpr h1₀
-  have hrank₀ : ∀ p : PrimeSpectrum (↥B₀),
-      Module.rankAtStalk (Sheaf.HModule D₀.sheaf 0) p = 1 := by
-    intro p
-    haveI : IsIntegral (relCurve C p.asIdeal.ResidueField) :=
-      instIsIntegralBaseChange C p.asIdeal.ResidueField
-    haveI : SmoothOfRelativeDimension 1
-        (relCurve C p.asIdeal.ResidueField ↘
-          Spec (CommRingCat.of p.asIdeal.ResidueField)) :=
-      instSmoothOfRelativeDimensionBaseChange C p.asIdeal.ResidueField
-    haveI : QuasiCompact
-        (relCurve C p.asIdeal.ResidueField ↘
-          Spec (CommRingCat.of p.asIdeal.ResidueField)) :=
-      instQuasiCompactBaseChange C p.asIdeal.ResidueField
-    haveI : Module.Finite p.asIdeal.ResidueField
-        (Sheaf.HModule
-          ((relCurve C p.asIdeal.ResidueField).moduleKSheaf p.asIdeal.ResidueField) 0) :=
-      instModuleFiniteHModuleZeroBaseChange C p.asIdeal.ResidueField
-    haveI : Module.Finite p.asIdeal.ResidueField
-        (Sheaf.HModule
-          ((relCurve C p.asIdeal.ResidueField).moduleKSheaf p.asIdeal.ResidueField) 1) :=
-      instModuleFiniteHModuleOneBaseChange C p.asIdeal.ResidueField
-    exact BasicOpenCocycleDatum.rankAtStalk_hModule_zero_eq_one D₀ (n := genus C) hπ
-      (chi_moduleKSheaf C) hfib p (hdegree p)
-  let Q := Sheaf.HModule D₀.sheaf 0
-  letI : Module.Finite (↥B₀) Q := hfin₀
-  letI : Module.Projective (↥B₀) Q := hproj₀
-  let e : B ⊗[↥B₀] Q ≃ₗ[B]
-      Sheaf.HModule (D₀.baseChange (B' := B)).sheaf 0 :=
-    D₀.datumH0BaseChange B hpair₀
-  letI : Module.Finite B (B ⊗[↥B₀] Q) := by infer_instance
-  letI : Module.Projective B (B ⊗[↥B₀] Q) := by infer_instance
-  refine {
-    h1_vanishing := D₀.datum_subsingleton_h1_baseChange B hpair₀
-    h0_finite := Module.Finite.equiv e
-    h0_projective := Module.Projective.of_equiv e
-    h0_rank_one := ?_ }
-  intro p
-  rw [← Module.rankAtStalk_eq_of_equiv e, Module.rankAtStalk_baseChange]
-  exact hrank₀ (p.comap (algebraMap (↥B₀) B))
 
 end RankOneFamilyCertificates
 

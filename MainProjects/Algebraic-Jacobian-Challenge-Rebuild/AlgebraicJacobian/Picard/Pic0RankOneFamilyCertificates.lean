@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 
-import AlgebraicJacobian.Cohomology.RankOneFamilyCertificates
+import AlgebraicJacobian.Cohomology.RankOneFamilyCertificatesDescent
 import AlgebraicJacobian.Picard.Pic0RankOneNativePresentation
 
 /-!

@@ -1,7 +1,7 @@
 ---
 author: sync
 content_type: lemma
-created: '2026-07-16T21:33:29'
+created: '2026-08-10T11:43:23'
 decl: AlgebraicGeometry.mem_boundedSections_unit_iff
 docstring: 'Membership of a *nonzero* rational function in a bounded lattice, read
   through its
@@ -13,7 +13,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.mem_boundedSections_unit_iff
 type: lean
-updated: '2026-08-10T11:15:32'
+updated: '2026-08-10T11:43:54'
 ---
 private lemma mem_boundedSections_unit_iff (s : X.functionFieldˣ) (A : X.CurveDivisor)
     (U : X.Opens) :
