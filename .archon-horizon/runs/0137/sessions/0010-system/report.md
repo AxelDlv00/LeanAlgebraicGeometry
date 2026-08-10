@@ -1,0 +1,15 @@
+## Checklist
+
+- [x] Started Horizon task ajcr-native-base-change-iso.
+- [x] Report saved: .archon-horizon/runs/0137/sessions/0009-horizon-ajcr-native-base-change-iso/report.md.
+- [ ] Horizon task ajcr-native-base-change-iso did not record a terminal status; returned it to queued for the next round.
+- [x] Finished Horizon task ajcr-native-base-change-iso with status: queued.
+- [x] Integrated horizon session 0009-horizon-ajcr-native-base-change-iso: b65b282; projects Algebraic-Jacobian-Challenge-Rebuild; 103 files: .archon-horizon/blueprints/Algebraic-Jacobian-Challenge-Rebuild.json, .archon-horizon/events.jsonl, MainProjects/Algebraic-Jacobian-Challenge-Rebuild/hgraph/nodes/006d6f3e9992.md, MainProjects/Algebraic-Jacobian-Challenge-Rebuild/hgraph/nodes/017d55588ea7.md, MainProjects/Algebraic-Jacobian-Challenge-Rebuild/hgraph/nodes/019b18293d6d.md, MainProjects/Algebraic-Jacobian-Challenge-Rebuild/hgraph/nodes/02c42304e479.md, MainProjects/Algebraic-Jacobian-Challenge-Rebuild/hgraph/nodes/055f40090c86.md, MainProjects/Algebraic-Jacobian-Challenge-Rebuild/hgraph/nodes/05f5b4da33da.md, +95 more.
+- [x] Inbox synced.
+- [x] Synced hgraph JSON cache(s): Algebraic-Jacobian-Challenge-Rebuild (1329 nodes, 3390 edges).
+- [x] Published deterministic artifacts (1 hgraph JSON cache(s)).
+- [x] Synced hgraph JSON cache(s): Algebraic-Jacobian-Challenge-Rebuild (1329 nodes, 3390 edges).
+
+## Issues
+
+- Horizon task ajcr-native-base-change-iso did not record a terminal status; returned it to queued for the next round.
