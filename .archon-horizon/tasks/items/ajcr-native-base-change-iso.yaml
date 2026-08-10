@@ -1,0 +1,45 @@
+id: ajcr-native-base-change-iso
+project: Algebraic-Jacobian-Challenge-Rebuild
+objective: Read both reviewer PDFs before Lean work. Prove the missing arbitrary-affine,
+  all-cartesian IsIso theorem for canonicalBaseChangeMap on the actual BasicOpenCocycleDatum.nativeModule
+  used by PicRankOneNativePresentation. The theorem must match every pullback square
+  required by the public rank-one locus and have an immediate constructor or consumer
+  in the owned native base-change module. Do not weaken it to flat, fieldwise, finite-type-only,
+  or Noetherian-only base change; do not restate IsIso as a hypothesis. Work only
+  in the listed cohomology/native-base-change files, coordinate integration through
+  I-1927, use narrow checks and an axiom audit, and do not run a full project build.
+title: 'AJCR review sublane: arbitrary-cartesian native pushforward base change'
+explanation: ''
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+priority: urgent
+status: queued
+write_set:
+  files:
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Cohomology/NativePushforwardBaseChange*.lean
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Cohomology/ModulesPushforwardBaseChange.lean
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Cohomology/GluedSheafDatumBaseChange.lean
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RankOneNativeBaseChange*.lean
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  files:
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Cohomology/NativePushforwardBaseChange*.lean
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Cohomology/ModulesPushforwardBaseChange.lean
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Cohomology/GluedSheafDatumBaseChange.lean
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RankOneNativeBaseChange*.lean
+roadmap_refs:
+- AJCR.review-plan.p4-family-producer
+- AJCR.review-plan.p4-rank-one-iso
+inbox_refs:
+- I-1927
+artifact_refs: []
+created_at: '2026-08-10T01:41:25.294043+00:00'
+updated_at: '2026-08-10T01:41:57.434068+00:00'
+metadata:
+  author: human

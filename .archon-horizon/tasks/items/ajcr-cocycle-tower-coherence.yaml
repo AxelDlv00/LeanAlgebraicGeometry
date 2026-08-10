@@ -1,0 +1,42 @@
+id: ajcr-cocycle-tower-coherence
+project: Algebraic-Jacobian-Challenge-Rebuild
+objective: Read both reviewer PDFs before Lean work. Continue from relSectionsMap_relSectionsMap_tower
+  and BasicOpenCoverData.baseChange_baseChange. Prove the missing BasicOpenCocycleDatum
+  and sectionsMapTop arbitrary-tower transitivity, overlap/gluing coherence, and one
+  immediate Phase-4 consumer needed by the canonical evaluation divisor. Do not touch
+  the protected inverse or locus files, do not add compatibility aliases without a
+  consumer, use narrow checks and standard axiom audits, and do not run a full project
+  build.
+title: 'AJCR review sublane: cocycle and sections tower coherence'
+explanation: ''
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+priority: urgent
+status: queued
+write_set:
+  files:
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/DivisorFamilyWindowBaseChange.lean
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0AdmissibleAbelEtaleSurjectiveH0.lean
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RankOneCocycleBaseChange*.lean
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  files:
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/DivisorFamilyWindowBaseChange.lean
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0AdmissibleAbelEtaleSurjectiveH0.lean
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RankOneCocycleBaseChange*.lean
+roadmap_refs:
+- AJCR.review-plan.p4-family-producer
+- AJCR.review-plan.p4-rank-one-iso
+inbox_refs:
+- I-1927
+artifact_refs: []
+created_at: '2026-08-10T01:41:27.107526+00:00'
+updated_at: '2026-08-10T01:41:57.296429+00:00'
+metadata:
+  author: human
