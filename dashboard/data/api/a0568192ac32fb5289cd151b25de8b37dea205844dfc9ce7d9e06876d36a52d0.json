@@ -1,0 +1,1 @@
+{"markdown": "The exact prerequisite target is close to completion (`8628/8659` jobs); this is the workspace\u2019s dependency materialization behavior, not an intentional umbrella build. Once it exits, I\u2019ll keep verification to the new file and its two public declarations.", "recommendation": ""}
