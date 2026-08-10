@@ -9,9 +9,9 @@ import AlgebraicJacobian.Cohomology.GluedSheafH0BaseChange
 import AlgebraicJacobian.Picard.LocalGenerators
 import AlgebraicJacobian.Picard.Pic0AdmissibleAbelEtaleSurjectiveH0BaseChange
 import AlgebraicJacobian.Picard.Pic0AdmissibleAbelEtaleSurjectiveSite
-import AlgebraicJacobian.Picard.Pic0EndgameContract
 import AlgebraicJacobian.Picard.Pic0RingDatumEngine
 import AlgebraicJacobian.Picard.SectionsToDivisorsClass
+import AlgebraicJacobian.Picard.ThetaShift
 
 /-!
 # The local-presentation contract for the rank-one Picard locus

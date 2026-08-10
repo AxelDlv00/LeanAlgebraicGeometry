@@ -37,6 +37,13 @@ private lemma appLE_congr_hom_tower {X Y : Scheme.{u}} {f g : X ⟶ Y} (h : f = 
   subst h
   rfl
 
+private lemma baseChange_baseChange_tower
+    (R'' : Type u) [CommRing R''] [Algebra k R''] [Algebra R R''] [Algebra R' R'']
+    [IsScalarTower k R R''] [IsScalarTower k R' R''] [IsScalarTower R R' R'']
+    (D : BasicOpenCocycleDatum C R pi) :
+    (D.baseChange R').baseChange R'' = D.baseChange R'' :=
+  D.baseChange_baseChange C R R' R''
+
 /-- Comparing a glued section over arbitrary nested opens along `R → R' → R''`
 agrees, after transporting the cocycle datum, with direct comparison along `R → R''`. -/
 theorem sectionsMap_tower (D : BasicOpenCocycleDatum C R pi)
@@ -58,7 +65,7 @@ theorem sectionsMap_tower (D : BasicOpenCocycleDatum C R pi)
         ((D.baseChange R').sectionsMap R'' hW'' (D.sectionsMap R' hW' s)) =
       D.sectionsMap R'' hcomp s := by
   dsimp only
-  simp only [BasicOpenCocycleDatum.baseChange_baseChange]
+  simp only [baseChange_baseChange_tower C R R' R'']
   apply Subtype.ext
   funext j
   simp only [sectionsMap_coe]

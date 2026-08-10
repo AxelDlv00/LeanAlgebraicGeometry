@@ -49,7 +49,6 @@ noncomputable def nativeModuleSectionsMap :
         (fun s ↦ D.sectionsMap B' le_rfl s)
         (fun s t ↦ D.sectionsMap_add B' le_rfl s t)
       naturality := fun {U V} i ↦ by
-        apply ModuleCat.hom_ext
         ext s
         change D.sectionsMap B' le_rfl
             (gluedRes B D.pieces D.unit i.unop.le s) =
