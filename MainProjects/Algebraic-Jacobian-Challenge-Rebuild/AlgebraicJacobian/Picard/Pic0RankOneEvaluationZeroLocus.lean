@@ -72,6 +72,32 @@ theorem nativePieceCoordinate_eq_component
   rw [nativePieceCoordinate, gluedTriv_apply, gluedRes_coe]
   simp only [Scheme.resHom_resHom]
 
+/-- Native piece coordinates commute with arbitrary affine coefficient extension. -/
+theorem nativePieceCoordinate_sectionsMapTop
+    (D : BasicOpenCocycleDatum C B pi)
+    (B' : Type u) [CommRing B'] [Algebra k B'] [Algebra B B']
+    [IsScalarTower k B B']
+    (s : Γ(D.nativeModule, (⊤ : (relCurve C B).Opens)))
+    (j : D.index) :
+    (D.baseChange B').nativePieceCoordinate (D.sectionsMapTop B' s) j =
+      D.toBasicOpenCoverData.piecesMap B' j (D.nativePieceCoordinate s j) := by
+  rw [(D.baseChange B').nativePieceCoordinate_eq_component,
+    D.component_sectionsMapTop, D.nativePieceCoordinate_eq_component]
+
+/-- The principal native-coordinate ideal is preserved by arbitrary affine coefficient
+extension. This is the ideal-level consumer of `nativePieceCoordinate_sectionsMapTop`. -/
+theorem nativePieceIdeal_sectionsMapTop
+    (D : BasicOpenCocycleDatum C B pi)
+    (B' : Type u) [CommRing B'] [Algebra k B'] [Algebra B B']
+    [IsScalarTower k B B']
+    (s : Γ(D.nativeModule, (⊤ : (relCurve C B).Opens)))
+    (j : D.index) :
+    Ideal.map (D.toBasicOpenCoverData.piecesMap B' j)
+        (Ideal.span {D.nativePieceCoordinate s j}) =
+      Ideal.span {
+        (D.baseChange B').nativePieceCoordinate (D.sectionsMapTop B' s) j} := by
+  rw [Ideal.map_span, Set.image_singleton, D.nativePieceCoordinate_sectionsMapTop]
+
 /-- The inverse of the native base-ring section equivalence is the identity on underlying
 sections. -/
 @[simp]

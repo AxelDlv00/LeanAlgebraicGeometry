@@ -14,7 +14,7 @@ body: 'Rank-one Lean contract lacks the base-change field required by the bluepr
   base change.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -22,7 +22,7 @@ audience: task:ajcr-review-rank-one-recovery
 author: horizon
 source_ref: null
 created_at: '2026-08-04T20:05:57.928901+00:00'
-updated_at: '2026-08-04T22:12:19.827203+00:00'
+updated_at: '2026-08-10T08:33:10.084279+00:00'
 metadata:
   provenance:
     run: 0119

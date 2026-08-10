@@ -1,7 +1,7 @@
 ---
 author: sync
 content_type: theorem
-created: '2026-07-16T21:33:29'
+created: '2026-08-10T17:36:31'
 decl: AlgebraicGeometry.classDeg_cechPicMap_picClass_single
 docstring: 'The single-point case of EV-main: pulling back the class of a one-point
   divisor
@@ -13,7 +13,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.classDeg_cechPicMap_picClass_single
 type: lean
-updated: '2026-08-10T15:09:51'
+updated: '2026-08-10T17:37:19'
 ---
 private theorem classDeg_cechPicMap_picClass_single (f : X ⟶ Y) [IsFinite f]
     (hcomp : f ≫ (Y ↘ Spec (CommRingCat.of K)) = X ↘ Spec (CommRingCat.of K))

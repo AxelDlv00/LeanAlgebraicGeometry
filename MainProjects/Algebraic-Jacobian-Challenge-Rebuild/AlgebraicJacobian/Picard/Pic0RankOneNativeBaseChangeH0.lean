@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 import AlgebraicJacobian.Picard.Pic0RankOneLocusNative
 import AlgebraicJacobian.Cohomology.GluedSheafH0BaseChange
+import AlgebraicJacobian.Picard.Pic0RankOneFamilyCertificatesH0BaseChange
 
 /-!
 # Degree-zero sections of the native rank-one module under coefficient change
@@ -73,6 +74,25 @@ lemma nativeH0BaseChange_one_tmul
       ((D.baseChange B').nativeH0SectionsEquiv B')
         (D.datumH0BaseChange B' hH1
           (1 ⊗ₜ[B] (D.nativeH0SectionsEquiv).symm x)) := by
+  rfl
+
+/-- On a pure tensor, the native H0 base-change equivalence is the componentwise
+comparison of the corresponding glued section. -/
+@[simp]
+theorem nativeH0BaseChange_one_tmul_eq_sectionsMap
+    (hH1 : Subsingleton (datumPair D).H1) (x : Γ(D.nativeModule, ⊤)) :
+    D.nativeH0BaseChange B' hH1 (1 ⊗ₜ[B] x) =
+      D.sectionsMap B' le_rfl x := by
+  rw [nativeH0BaseChange_one_tmul]
+  change ((D.baseChange B').nativeModuleKSectionsEquiv
+      (⊤ : (relCurve C B').Opens)).symm
+        (Sheaf.HModule.linearEquiv₀
+          (Opens.grothendieckTopology ((relCurve C B' : Scheme.{u}) : TopCat))
+          isTerminalTop (D.baseChange B').sheaf
+          (D.datumH0BaseChange B' hH1
+            (1 ⊗ₜ[B] (D.nativeH0SectionsEquiv).symm x))) = _
+  rw [RankOneFamilyCertificates.linearEquivZero_h0BaseChange_one_tmul
+    C B B' D hH1 ((D.nativeH0SectionsEquiv).symm x)]
   rfl
 
 end

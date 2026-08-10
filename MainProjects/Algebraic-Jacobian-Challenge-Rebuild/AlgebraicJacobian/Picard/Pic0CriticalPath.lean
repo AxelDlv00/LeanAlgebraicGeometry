@@ -10,6 +10,7 @@ import AlgebraicJacobian.Picard.Pic0HighDegreeRouteGuard
 import AlgebraicJacobian.Picard.Pic0RankOneLocus
 import AlgebraicJacobian.Picard.Pic0RankOneLocalDivisor
 import AlgebraicJacobian.Picard.Pic0RankOneEvaluationZeroLocus
+import AlgebraicJacobian.Picard.Pic0RankOneFamilyCertificates
 import AlgebraicJacobian.Picard.Pic0RankOneNativePresentation
 import AlgebraicJacobian.Picard.Pic0RankOneTranslatedCoverPicZero
 
@@ -24,12 +25,12 @@ divisor equations, and the pullback-stable presentation locus are present. The c
 `DivRankOneOpenData` representer and its open-immersion/base-change consumers are rooted, but
 the arbitrary-affine presentation producer needed to prove `PicRankOneOpen.IsOpen` is still
 missing. The native evaluation section and the tied datum section now have the same restriction-
-vanishing predicate on every open, without a Noetherian hypothesis. Identifying the resulting
-intrinsic zero locus with the datum local equations and gluing it to a family divisor are still
-missing. Unit rescaling of the section-cut equations is now coefficient-ring-uniform, and the
-fixed-open `DivFamZarAff` equality consumes that theorem. Naturality under coefficient extension,
-which is needed to compare two basic-open divisors on their overlap, and the resulting family-level
-divisor producer are not claimed.
+vanishing predicate on every open, without a Noetherian hypothesis. Their piece coordinates and
+principal piece ideals agree, and those native-coordinate ideals commute with arbitrary affine
+coefficient extension. Identifying the resulting intrinsic zero locus with the datum local
+equations and gluing the piecewise ideals to a family divisor are still missing. Unit rescaling of
+the section-cut equations is coefficient-ring-uniform, and the fixed-open `DivFamZarAff` equality
+consumes that theorem. The resulting family-level divisor producer is not claimed.
 
 The Pic0-specialized separably closed translated-layer feeder is also rooted: it keeps the
 translator degree and the exact subtraction compatibility tied to one result. It does not
@@ -53,6 +54,9 @@ hypotheses.
 #check AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.PicRankOneLocalPresentation.h0BaseChange
 #check AlgebraicGeometry.PicRankOneLocalPresentation.baseChangeRankOneCertificates
+#check AlgebraicGeometry.RankOneFamilyCertificates.sectionsMap_tower
+#check AlgebraicGeometry.RankOneFamilyCertificates.h0BaseChange_tower
+#check AlgebraicGeometry.PicRankOneNativePresentation.ofCertificates
 #check AlgebraicGeometry.PicRankOneLocalPresentation.evaluation
 #check AlgebraicGeometry.PicRankOneLocalPresentation.nativeBaseChangeIso
 #check AlgebraicGeometry.PicRankOneLocalPresentation.nativeBaseChangeIsoAffine
@@ -118,6 +122,11 @@ hypotheses.
 #check AlgebraicGeometry.PicRankOneNativePresentation
 #check AlgebraicGeometry.PicRankOneNativePresentation.toLocalPresentation
 #check AlgebraicGeometry.PicRankOneNativePresentation.evaluationLift_restrict_eq_zero_iff
+#check AlgebraicGeometry.BasicOpenCocycleDatum.nativePieceCoordinate
+#check AlgebraicGeometry.BasicOpenCocycleDatum.nativePieceCoordinate_sectionsMapTop
+#check AlgebraicGeometry.BasicOpenCocycleDatum.nativePieceIdeal_sectionsMapTop
+#check
+  AlgebraicGeometry.PicRankOneNativePresentation.evaluationLift_nativePieceIdeal_eq_componentIdeal
 #check AlgebraicGeometry.BasicOpenCocycleDatum.nativeModulePieceSectionsEquiv
 #check AlgebraicGeometry.BasicOpenCocycleDatum.nativeModulePieceSheafIso
 #check AlgebraicGeometry.BasicOpenCocycleDatum.nativeModule_isLineBundle
@@ -141,6 +150,9 @@ hypotheses.
 #print axioms AlgebraicGeometry.abelDivAffGenusSigma
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.h0BaseChange
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.baseChangeRankOneCertificates
+#print axioms AlgebraicGeometry.RankOneFamilyCertificates.sectionsMap_tower
+#print axioms AlgebraicGeometry.RankOneFamilyCertificates.h0BaseChange_tower
+#print axioms AlgebraicGeometry.PicRankOneNativePresentation.ofCertificates
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.evaluation
 #print axioms AlgebraicGeometry.divRankOneOpenData_of_picRankOneOpen_isOpen
 #print axioms AlgebraicGeometry.divRankOneOpen_isOpenImmersion
@@ -169,6 +181,18 @@ hypotheses.
   AlgebraicGeometry.PicRankOneLocalPresentation.evaluationLift_restrict_eq_zero_iff
 #print axioms
   AlgebraicGeometry.PicRankOneNativePresentation.evaluationLift_restrict_eq_zero_iff
+#print axioms AlgebraicGeometry.BasicOpenCocycleDatum.nativePieceCoordinate
+#print axioms AlgebraicGeometry.BasicOpenCocycleDatum.nativePieceCoordinate_eq_component
+#print axioms AlgebraicGeometry.BasicOpenCocycleDatum.nativePieceCoordinate_sectionsMapTop
+#print axioms AlgebraicGeometry.BasicOpenCocycleDatum.nativePieceIdeal_sectionsMapTop
+#print axioms AlgebraicGeometry.BasicOpenCocycleDatum.nativeModuleKSectionsEquiv_symm_apply
+#print axioms AlgebraicGeometry.BasicOpenCocycleDatum.nativeModuleKSheafIso_inv_app
+#print axioms
+  AlgebraicGeometry.PicRankOneNativePresentation.moduleSectionsEquiv_nativePieceCoordinate_eq_component
+#print axioms
+  AlgebraicGeometry.PicRankOneNativePresentation.evaluationLift_nativePieceCoordinate_eq_component
+#print axioms
+  AlgebraicGeometry.PicRankOneNativePresentation.evaluationLift_nativePieceIdeal_eq_componentIdeal
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.datumSectionBaseChange_one_tmul
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.datumSectionBaseChangeLinearMap
 #print axioms

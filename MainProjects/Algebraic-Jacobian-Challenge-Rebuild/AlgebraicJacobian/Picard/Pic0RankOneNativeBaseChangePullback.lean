@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 import AlgebraicJacobian.Picard.Pic0RankOneLocusNative
 import AlgebraicJacobian.Cohomology.GluedSheafDatumBaseChange
+import AlgebraicJacobian.Cohomology.NativePushforwardBaseChangeMate
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -93,6 +94,24 @@ theorem nativePullbackComparison_adjunct :
         (D.baseChange B').nativeModule (D.nativePullbackComparison B') =
       D.nativeModuleSectionsMap B' := by
   exact Equiv.apply_symm_apply _ _
+
+/-- On a full preimage open, the native pullback comparison sends the
+adjunction-unit base-map section to the datum-level base-changed section. -/
+theorem nativePullbackComparison_baseMap (V : (relCurve C B).Opens)
+    (s : Γ(D.nativeModule, V)) :
+    ((D.nativePullbackComparison B').app (relCurveMap C B B' ⁻¹ᵁ V)).hom
+        (pullback_app_isoTensor_baseMap (relCurveMap C B B') D.nativeModule
+          (le_refl (relCurveMap C B B' ⁻¹ᵁ V)) s) =
+      D.sectionsMap B' (le_refl (relCurveMap C B B' ⁻¹ᵁ V)) s := by
+  have h := congrArg
+    (fun (f : D.nativeModule ⟶
+        (Scheme.Modules.pushforward (relCurveMap C B B')).obj
+          (D.baseChange B').nativeModule) ↦
+      (Scheme.Modules.Hom.app f V).hom s)
+    (D.nativePullbackComparison_adjunct B')
+  rw [Adjunction.homEquiv_unit] at h
+  rw [pullback_app_isoTensor_baseMap_le_refl]
+  exact h
 
 end
 

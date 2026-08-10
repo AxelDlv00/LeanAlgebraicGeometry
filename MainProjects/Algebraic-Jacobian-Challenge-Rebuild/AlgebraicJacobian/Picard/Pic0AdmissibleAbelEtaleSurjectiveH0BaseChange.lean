@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.Pic0AdmissibleAbelEtaleSurjectiveH0
 import AlgebraicJacobian.Picard.DivisorFamilyWindowBaseChange
+import AlgebraicJacobian.Picard.Pic0RankOneFamilyCertificatesH0BaseChange
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -29,7 +30,7 @@ variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
 variable (R : Type u) [CommRing R] [Algebra k R]
 variable (R' : Type u) [CommRing R'] [Algebra k R'] [Algebra R R']
   [IsScalarTower k R R']
-variable {pi : C.left ⟶ P1 k} [IsAffineHom pi]
+variable {pi : C.left ⟶ P1 k} [IsFinite pi]
 
 private lemma appLE_congr_hom_tower {X Y : Scheme.{u}} {f g : X ⟶ Y} (h : f = g)
     {U : Y.Opens} {W : X.Opens} (e : W ≤ f ⁻¹ᵁ U) :
@@ -64,21 +65,7 @@ theorem sectionsMap_tower (D : BasicOpenCocycleDatum C R pi)
       ↑(gluedSubmodule R'' E.pieces E.unit W'')) hD)
         ((D.baseChange R').sectionsMap R'' hW'' (D.sectionsMap R' hW' s)) =
       D.sectionsMap R'' hcomp s := by
-  dsimp only
-  simp only [baseChange_baseChange_tower C R R' R'']
-  apply Subtype.ext
-  funext j
-  simp only [sectionsMap_coe]
-  have hmaps := Scheme.Hom.appLE_comp_appLE
-    (relCurveMap C R' R'') (relCurveMap C R R')
-    (W ⊓ D.pieces j)
-    (W' ⊓ (D.baseChange R').pieces j)
-    (W'' ⊓ ((D.baseChange R').baseChange R'').pieces j)
-    (D.sectionsMap_component_le R' hW' j)
-    ((D.baseChange R').sectionsMap_component_le R'' hW'' j)
-  rw [← CommRingCat.comp_apply, hmaps]
-  exact congr($(appLE_congr_hom_tower
-    (relCurveMap_comp (C := C) (R := R) (R' := R') (R'' := R'')) _).hom (s.val j))
+  exact RankOneFamilyCertificates.sectionsMap_tower C R R' D R'' hW' hW'' s
 
 /-- Global glued-section comparison is transitive along an arbitrary coefficient
 tower, with the codomain transported by `baseChange_baseChange`. -/

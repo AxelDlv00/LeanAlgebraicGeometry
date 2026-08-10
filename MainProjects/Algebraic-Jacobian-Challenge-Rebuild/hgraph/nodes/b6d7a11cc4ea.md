@@ -1,14 +1,14 @@
 ---
 author: sync
 content_type: theorem
-created: '2026-07-30T10:29:03'
+created: '2026-08-10T17:36:32'
 decl: AlgebraicGeometry.ProbeP4R6.probeLocInj
 file: scratch_p4r6/probe2.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ProbeP4R6.probeLocInj
 type: lean
-updated: '2026-08-10T15:09:51'
+updated: '2026-08-10T17:37:19'
 ---
 theorem probeLocInj {X : Scheme.{u}} (f : yoneda.obj X ⟶ (pic0SigmaSheaf C).1)
     (hf : IsOpenImmersion.presheaf f) :

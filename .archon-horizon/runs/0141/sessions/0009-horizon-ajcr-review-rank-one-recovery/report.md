@@ -1,0 +1,1 @@
+The provenance review is complete and agrees with the intended integration sequence: the cocycle theorem has now kernel-built with the standard axioms but is still owner-controlled and uncommitted; recovery will not touch it until the owner lands it. The root build is at `8885/9250` and remains error-free.

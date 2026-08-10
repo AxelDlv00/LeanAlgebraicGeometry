@@ -21,3 +21,8 @@
 {"at": "2026-08-10T03:13:27.854427+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
 {"at": "2026-08-10T03:43:48.726641+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
 {"at": "2026-08-10T04:52:14.011979+00:00", "actor": "horizon", "field": "status", "from": "running", "to": "blocked", "note": "", "provenance": {"run": "0139", "session": "0005-horizon-ajcr-review-family-producer", "role": "horizon", "round": "1", "rounds": "2", "task": "ajcr-review-family-producer", "task_title": "Review lane: arbitrary-affine rank-one presentation/base-change producer", "projects": "Algebraic-Jacobian-Challenge-Rebuild"}}
+{"at": "2026-08-10T08:10:34.096936+00:00", "actor": "human", "field": "status", "from": "blocked", "to": "queued", "note": ""}
+{"at": "2026-08-10T08:11:48.259661+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-10T09:23:56.705655+00:00", "actor": "human", "field": "status", "from": "running", "to": "queued", "note": ""}
+{"at": "2026-08-10T09:36:52.682356+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-10T10:34:35.225610+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
