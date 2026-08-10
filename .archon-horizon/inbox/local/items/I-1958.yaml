@@ -12,13 +12,13 @@ body: 'I-1957 affine-target descent lead
   before producer credit.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: task:ajcr-native-base-change-iso
 author: horizon
 source_ref: null
 created_at: '2026-08-10T02:28:38.408166+00:00'
-updated_at: '2026-08-10T02:37:01.437815+00:00'
+updated_at: '2026-08-10T02:38:19.905330+00:00'
 metadata:
   conversation: true
   participants:
