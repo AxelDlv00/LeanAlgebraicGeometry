@@ -4,11 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import Mathlib.AlgebraicGeometry.Modules.Tilde
+import Mathlib.Algebra.Category.ModuleCat.Sheaf.PullbackFree
 
 /-!
-# Pullback of a tilde module along a morphism of affine schemes
+# Pullback of unit and tilde modules
 
-This file supplies the affine tensor dictionary needed by native pushforward base change.
+This file supplies the unit and affine tensor dictionaries needed by native pushforward base
+change.  For every map of schemes, inverse image on opens is final: the top open gives a terminal
+object in each structured-arrow category.  Consequently, pullback carries the unit module
+canonically to the unit module.
+
 For a ring map `A \to B`, pullback along `Spec B \to Spec A` takes the tilde sheaf of an
 `A`-module to the tilde sheaf of its scalar extension to `B`.
 
@@ -27,6 +32,37 @@ open CategoryTheory Limits TopologicalSpace Opposite
 namespace AlgebraicGeometry
 
 open Scheme Scheme.Modules
+
+/-! ## Pullback of the unit module -/
+
+private noncomputable def opensMapStructuredArrowTerminal {X Y : TopCat.{u}}
+    (f : X ⟶ Y) (U : Opens X) :
+    IsTerminal (StructuredArrow.mk (Opens.leMapTop f U)) :=
+  IsTerminal.ofUniqueHom
+    (fun s => StructuredArrow.homMk (Opens.leTop s.right) (Subsingleton.elim _ _))
+    (fun _ _ => by
+      apply StructuredArrow.hom_ext
+      exact Subsingleton.elim _ _)
+
+@[reducible]
+private noncomputable def opensMapFinal {X Y : TopCat.{u}} (f : X ⟶ Y) :
+    (Opens.map f).Final where
+  out U := isConnected_of_isTerminal _ (opensMapStructuredArrowTerminal f U)
+
+/-- Pullback along any morphism of schemes carries the unit module to the unit module by an
+isomorphism.  No openness, flatness, or finiteness hypothesis is needed. -/
+theorem Scheme.Modules.isIso_pullbackObjUnitToUnit {X Y : Scheme.{u}} (f : X ⟶ Y) :
+    IsIso (SheafOfModules.pullbackObjUnitToUnit f.toRingCatSheafHom) := by
+  letI : (Opens.map f.base).Final := opensMapFinal f.base
+  infer_instance
+
+/-- The canonical isomorphism from the pullback of the unit module to the unit module. -/
+noncomputable def Scheme.Modules.pullbackUnitIso {X Y : Scheme.{u}} (f : X ⟶ Y) :
+    (Scheme.Modules.pullback f).obj (SheafOfModules.unit Y.ringCatSheaf) ≅
+      SheafOfModules.unit X.ringCatSheaf :=
+  @asIso _ _ _ _ _ (Scheme.Modules.isIso_pullbackObjUnitToUnit f)
+
+/-! ## Pullback of an affine tilde module -/
 
 set_option backward.isDefEq.respectTransparency false in
 private lemma modulesRestrictionPreimageTopEqId {X Y : Scheme.{u}} (g : Y ⟶ X)
