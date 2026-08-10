@@ -114,4 +114,15 @@ theorem Scheme.Modules.isIso_of_isIso_app_affine
     infer_instance
   exact isIso_of_reflects_iso φ (Scheme.Modules.toPresheaf X)
 
+/-- Direct consumer for the Beck--Chevalley mate: it is enough to verify its module component on
+every affine open of the target scheme `S'`. -/
+theorem isIso_canonicalBaseChangeMap_app_of_affine
+    {X X' S S' : Scheme.{u}}
+    {f : X ⟶ S} {g : S' ⟶ S} {g' : X' ⟶ X} {f' : X' ⟶ S'}
+    (sq : IsPullback g' f' f g) (M : X.Modules)
+    (h : ∀ (U : S'.Opens), IsAffineOpen U →
+      IsIso (((canonicalBaseChangeMap sq).app M).app U)) :
+    IsIso ((canonicalBaseChangeMap sq).app M) := by
+  exact Scheme.Modules.isIso_of_isIso_app_affine _ h
+
 end AlgebraicGeometry
