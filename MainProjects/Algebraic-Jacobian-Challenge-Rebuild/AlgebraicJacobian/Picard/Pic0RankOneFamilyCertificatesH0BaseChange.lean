@@ -28,6 +28,8 @@ open scoped TensorProduct
 
 namespace AlgebraicGeometry
 
+open AlgebraicJacobian
+
 attribute [local instance] Scheme.overModule Scheme.overSectionsAlgebra
 
 namespace RankOneFamilyCertificates
@@ -129,6 +131,146 @@ theorem sectionsMapTop_tower (D : BasicOpenCocycleDatum C R pi)
     rw [Scheme.Hom.preimage_top]
   simpa only [BasicOpenCocycleDatum.sectionsMapTop] using
     sectionsMap_tower C R R' D R'' hW' hW'' s
+
+section PureTensor
+
+set_option maxHeartbeats 2000000 in
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxRecDepth 4000 in
+private lemma h0Equiv_val_h0BaseChange_one_tmul
+    (D : BasicOpenCocycleDatum C R pi) (hH1 : Subsingleton (datumPair D).H1)
+    (y : Sheaf.HModule D.sheaf 0) :
+    (((D.baseChange R').pairData.h0Equiv
+      (relCover_isAffineOpen₀ C R' (fiberTwoCover pi))
+      (relCover_isAffineOpen₁ C R' (fiberTwoCover pi))
+      (relCover_sup C R' (fiberTwoCover pi)))
+      (D.datumH0BaseChange R' hH1 ((1 : R') ⊗ₜ[R] y))).val =
+    D.datumDomBaseChange R' ((1 : R') ⊗ₜ[R]
+      ((D.pairData.h0Equiv
+        (relCover_isAffineOpen₀ C R (fiberTwoCover pi))
+        (relCover_isAffineOpen₁ C R (fiberTwoCover pi))
+        (relCover_sup C R (fiberTwoCover pi)) y).val)) := by
+  letI := D.projective_sectionsInf
+  have hinner : ((datumH0BaseChangeEquiv D hH1 R' ((1 : R') ⊗ₜ[R] y) :
+      LinearMap.ker ((datumPair D).diff.baseChange R')) :
+        R' ⊗[R] ((D.sheaf.obj.obj
+          (op (relCover C R (fiberTwoCover pi)).V₀)) ×
+          (D.sheaf.obj.obj (op (relCover C R (fiberTwoCover pi)).V₁)))) =
+      (1 : R') ⊗ₜ[R] (((D.pairData.h0Equiv
+        (relCover_isAffineOpen₀ C R (fiberTwoCover pi))
+        (relCover_isAffineOpen₁ C R (fiberTwoCover pi))
+        (relCover_sup C R (fiberTwoCover pi)) y).val)) := by
+    unfold datumH0BaseChangeEquiv
+    rw [Scheme.TwoCoverPairData.h0BaseChangeEquiv, LinearEquiv.trans_apply,
+      LinearEquiv.baseChange_tmul]
+    change (((LinearMap.ker (datumPair D).diff).subtype.baseChange R')
+      ((1 : R') ⊗ₜ[R] (D.pairData.h0Equiv
+        (relCover_isAffineOpen₀ C R (fiberTwoCover pi))
+        (relCover_isAffineOpen₁ C R (fiberTwoCover pi))
+        (relCover_sup C R (fiberTwoCover pi)) y)) : _) = _
+    rw [LinearMap.baseChange_tmul, Submodule.subtype_apply]
+  let e := (D.baseChange R').pairData.h0Equiv
+    (relCover_isAffineOpen₀ C R' (fiberTwoCover pi))
+    (relCover_isAffineOpen₁ C R' (fiberTwoCover pi))
+    (relCover_sup C R' (fiberTwoCover pi))
+  change (e (e.symm ((RigidEngine.kerCongr
+      ((datumPair D).diff.baseChange R')
+      (datumPair (D.baseChange R')).diff
+      (D.datumDomBaseChange R') (D.termBaseChangeInf R')
+      (fun x => D.datumDiffBaseChange R' x))
+      (datumH0BaseChangeEquiv D hH1 R' ((1 : R') ⊗ₜ[R] y))))).val =
+    D.datumDomBaseChange R' ((1 : R') ⊗ₜ[R]
+      ((D.pairData.h0Equiv
+        (relCover_isAffineOpen₀ C R (fiberTwoCover pi))
+        (relCover_isAffineOpen₁ C R (fiberTwoCover pi))
+        (relCover_sup C R (fiberTwoCover pi)) y).val))
+  rw [e.apply_symm_apply]
+  refine (RigidEngine.kerCongr_apply_coe _ _ _ _ _ _).trans ?_
+  exact congrArg (D.datumDomBaseChange R') hinner
+
+set_option maxHeartbeats 2000000 in
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxRecDepth 4000 in
+/-- On a pure tensor, the certificate's H0 comparison is comparison of the corresponding global
+glued section. -/
+theorem linearEquivZero_h0BaseChange_one_tmul
+    (D : BasicOpenCocycleDatum C R pi) (hH1 : Subsingleton (datumPair D).H1)
+    (y : Sheaf.HModule D.sheaf 0) :
+    Sheaf.HModule.linearEquiv₀
+        (Opens.grothendieckTopology ((relCurve C R' : Scheme.{u}) : TopCat))
+        isTerminalTop (D.baseChange R').sheaf
+        (D.datumH0BaseChange R' hH1 ((1 : R') ⊗ₜ[R] y)) =
+      D.sectionsMapTop R'
+        (Sheaf.HModule.linearEquiv₀
+          (Opens.grothendieckTopology ((relCurve C R : Scheme.{u}) : TopCat))
+          isTerminalTop D.sheaf y) := by
+  let e := Sheaf.HModule.linearEquiv₀
+    (Opens.grothendieckTopology ((relCurve C R' : Scheme.{u}) : TopCat))
+    isTerminalTop (D.baseChange R').sheaf
+  apply e.symm.injective
+  rw [e.symm_apply_apply]
+  apply ((D.baseChange R').pairData.h0Equiv
+    (relCover_isAffineOpen₀ C R' (fiberTwoCover pi))
+    (relCover_isAffineOpen₁ C R' (fiberTwoCover pi))
+    (relCover_sup C R' (fiberTwoCover pi))).injective
+  apply Subtype.ext
+  unfold e
+  rw [h0Equiv_val_h0BaseChange_one_tmul C R R' D hH1 y]
+  rw [Scheme.TwoCoverPairData.h0Equiv_val]
+  rw [Scheme.TwoCoverPairData.h0Equiv_val]
+  rw [LinearEquiv.apply_symm_apply, D.datumDomBaseChange_tmul R',
+    D.termBaseChange₀_tmul R', D.termBaseChange₁_tmul R', one_smul]
+  rw [one_smul]
+  simp only
+  apply Prod.ext
+  · change D.sectionsMap R'
+      (BasicOpenCocycleDatum.le_preimage_chart R' (fiberTwoCover pi).V₀)
+        (gluedRes R D.pieces D.unit
+          (le_top : (relCover C R (fiberTwoCover pi)).V₀ ≤ ⊤)
+          (Sheaf.HModule.linearEquiv₀
+            (Opens.grothendieckTopology ((relCurve C R : Scheme.{u}) : TopCat))
+            isTerminalTop D.sheaf y)) =
+      gluedRes R' (D.baseChange R').pieces (D.baseChange R').unit
+        (le_top : (relCover C R' (fiberTwoCover pi)).V₀ ≤ ⊤)
+        (D.sectionsMapTop R'
+          (Sheaf.HModule.linearEquiv₀
+            (Opens.grothendieckTopology ((relCurve C R : Scheme.{u}) : TopCat))
+            isTerminalTop D.sheaf y))
+    convert
+      (D.gluedRes_sectionsMap R'
+        (le_top : (relCover C R (fiberTwoCover pi)).V₀ ≤ ⊤)
+        (by rw [Scheme.Hom.preimage_top])
+        (BasicOpenCocycleDatum.le_preimage_chart R' (fiberTwoCover pi).V₀)
+        (le_top : (relCover C R' (fiberTwoCover pi)).V₀ ≤ ⊤)
+        (Sheaf.HModule.linearEquiv₀
+          (Opens.grothendieckTopology ((relCurve C R : Scheme.{u}) : TopCat))
+          isTerminalTop D.sheaf y)).symm using 1
+    rfl
+  · change D.sectionsMap R'
+      (BasicOpenCocycleDatum.le_preimage_chart R' (fiberTwoCover pi).V₁)
+        (gluedRes R D.pieces D.unit
+          (le_top : (relCover C R (fiberTwoCover pi)).V₁ ≤ ⊤)
+          (Sheaf.HModule.linearEquiv₀
+            (Opens.grothendieckTopology ((relCurve C R : Scheme.{u}) : TopCat))
+            isTerminalTop D.sheaf y)) =
+      gluedRes R' (D.baseChange R').pieces (D.baseChange R').unit
+        (le_top : (relCover C R' (fiberTwoCover pi)).V₁ ≤ ⊤)
+        (D.sectionsMapTop R'
+          (Sheaf.HModule.linearEquiv₀
+            (Opens.grothendieckTopology ((relCurve C R : Scheme.{u}) : TopCat))
+            isTerminalTop D.sheaf y))
+    convert
+      (D.gluedRes_sectionsMap R'
+        (le_top : (relCover C R (fiberTwoCover pi)).V₁ ≤ ⊤)
+        (by rw [Scheme.Hom.preimage_top])
+        (BasicOpenCocycleDatum.le_preimage_chart R' (fiberTwoCover pi).V₁)
+        (le_top : (relCover C R' (fiberTwoCover pi)).V₁ ≤ ⊤)
+        (Sheaf.HModule.linearEquiv₀
+          (Opens.grothendieckTopology ((relCurve C R : Scheme.{u}) : TopCat))
+          isTerminalTop D.sheaf y)).symm using 1
+    rfl
+
+end PureTensor
 
 end RankOneFamilyCertificates
 
