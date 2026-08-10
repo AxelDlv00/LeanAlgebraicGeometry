@@ -28,9 +28,10 @@ docstring: 'The data needed to assemble one arbitrary-scheme rank-one fibre.
 file: AlgebraicJacobian/Picard/Pic0RankOneFibrePresentedProducer.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.PicRankOneCanonicalEvaluationFamily
 type: lean
-updated: '2026-08-10T10:38:33'
+updated: '2026-08-10T11:14:02'
 ---
 structure PicRankOneCanonicalEvaluationFamily
     {X : Scheme.{u}}

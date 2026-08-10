@@ -1,0 +1,23 @@
+---
+author: sync
+content_type: lemma
+created: '2026-08-10T11:13:58'
+decl: AlgebraicGeometry.PicRankOneFibrePresentationInput.picRankOneOpenSigmaIncl_app_injective
+docstring: The Sigma-extended public-locus inclusion is injective on every test scheme.
+file: AlgebraicJacobian/Picard/Pic0RankOneFibrePresentedProducer.lean
+generated: lean
+lean_status: lean_ok
+title: AlgebraicGeometry.PicRankOneFibrePresentationInput.picRankOneOpenSigmaIncl_app_injective
+type: lean
+updated: '2026-08-10T11:13:58'
+---
+lemma picRankOneOpenSigmaIncl_app_injective (S : Scheme.{u}) :
+    Function.Injective ((picRankOneOpenSigmaIncl pi).app (op S)) := by
+  rintro ⟨a, x⟩ ⟨b, y⟩ h
+  dsimp [picRankOneOpenSigmaIncl,
+    CategoryTheory.Over.sigmaExtensionNat] at h
+  have hab : a = b := congrArg Sigma.fst h
+  subst b
+  congr 1
+  apply Subtype.ext
+  exact eq_of_heq (Sigma.mk.inj h).2

@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.sheafiso_iff_presheafiso
 type: lean
-updated: '2026-08-10T11:13:58'
+updated: '2026-08-10T11:14:19'
 ---
 theorem sheafiso_iff_presheafiso {X : Scheme.{u}} (f : yoneda.obj X ⟶ (pic0SigmaSheaf C).1) :
     IsIso (chartSheafHom C f) ↔ IsIso f := by
