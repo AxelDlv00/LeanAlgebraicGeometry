@@ -7,9 +7,10 @@ docstring: The Sigma-extended public-locus inclusion is injective on every test 
 file: AlgebraicJacobian/Picard/Pic0RankOneFibrePresentedProducer.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.PicRankOneFibrePresentationInput.picRankOneOpenSigmaIncl_app_injective
 type: lean
-updated: '2026-08-10T11:13:58'
+updated: '2026-08-10T13:01:51'
 ---
 lemma picRankOneOpenSigmaIncl_app_injective (S : Scheme.{u}) :
     Function.Injective ((picRankOneOpenSigmaIncl pi).app (op S)) := by

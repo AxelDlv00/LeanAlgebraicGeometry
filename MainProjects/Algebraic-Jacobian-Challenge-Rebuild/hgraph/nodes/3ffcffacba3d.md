@@ -8,9 +8,9 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PicRankOneFibrePresentationInput.fst_comp_incl
 type: lean
-updated: '2026-08-10T11:13:58'
+updated: '2026-08-10T13:01:42'
 ---
-lemma fst_comp_incl (F : PicRankOneFibrePresentationInput pi g) :
+lemma fst_comp_incl (F : PicRankOneFibrePresentationInput pi E g) :
     F.fst ≫ picRankOneOpenSigmaIncl pi = yoneda.map F.W.ι ≫ g := by
   apply yonedaEquiv.injective
   change (picRankOneOpenSigmaIncl pi).app (op (F.W : Scheme.{u})) F.locusValue =

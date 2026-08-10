@@ -39,36 +39,18 @@ canonical comparison from the geometric pullback of `D.nativeModule` to the
 native module rebuilt from `D.baseChange B'`.
 -/
 
-/-- The component of the datum sections comparison on an arbitrary open. -/
-noncomputable def nativeModuleSectionsMapApp (U : (relCurve C B).Opens) :
-    (D.nativeModule.val.obj (op U)) ⟶
-      (((Scheme.Modules.pushforward (relCurveMap C B B')).obj
-        (D.baseChange B').nativeModule).val.obj (op U)) := by
-  refine ModuleCat.ofHom
-    { toFun := fun s ↦ D.sectionsMap B' le_rfl s
-      map_add' := fun s t ↦ D.sectionsMap_add B' le_rfl s t
-      map_smul' := fun r s ↦ ?_ }
-  change D.sectionsMap B' le_rfl
-      (gluedQsmul B D.pieces D.unit le_rfl r s) =
-    gluedQsmul B' (D.baseChange B').pieces (D.baseChange B').unit le_rfl
-      (((relCurveMap C B B').app U).hom r) (D.sectionsMap B' le_rfl s)
-  simpa only [Scheme.Hom.appLE_eq_app] using
-    D.sectionsMap_gluedQsmul B'
-      (W := U) (W' := relCurveMap C B B' ⁻¹ᵁ U)
-      (V := U) (V' := relCurveMap C B B' ⁻¹ᵁ U)
-      le_rfl le_rfl le_rfl le_rfl r s
-
 /-- `sectionsMap`, assembled as an `O_{C_B}`-linear map into pushforward. -/
 noncomputable def nativeModuleSectionsMap :
     D.nativeModule ⟶
       (Scheme.Modules.pushforward (relCurveMap C B B')).obj
-        (D.baseChange B').nativeModule where
-  val :=
-    { app := fun U ↦ D.nativeModuleSectionsMapApp B' U.unop
+        (D.baseChange B').nativeModule :=
+  ⟨PresheafOfModules.homMk
+    { app := fun U ↦ AddCommGrpCat.ofHom <| AddMonoidHom.mk'
+        (fun s ↦ D.sectionsMap B' le_rfl s)
+        (fun s t ↦ D.sectionsMap_add B' le_rfl s t)
       naturality := fun {U V} i ↦ by
         apply ModuleCat.hom_ext
-        apply LinearMap.ext
-        intro s
+        ext s
         change D.sectionsMap B' le_rfl
             (gluedRes B D.pieces D.unit i.unop.le s) =
           gluedRes B' (D.baseChange B').pieces (D.baseChange B').unit
@@ -76,6 +58,16 @@ noncomputable def nativeModuleSectionsMap :
             (D.sectionsMap B' le_rfl s)
         exact (D.gluedRes_sectionsMap B' i.unop.le le_rfl le_rfl
           (Scheme.Hom.preimage_mono (relCurveMap C B B') i.unop.le) s).symm }
+    (fun U r s ↦ by
+      change D.sectionsMap B' le_rfl
+          (gluedQsmul B D.pieces D.unit le_rfl r s) =
+        gluedQsmul B' (D.baseChange B').pieces (D.baseChange B').unit le_rfl
+          (((relCurveMap C B B').app U.unop).hom r) (D.sectionsMap B' le_rfl s)
+      simpa only [Scheme.Hom.appLE_eq_app] using
+        D.sectionsMap_gluedQsmul B'
+          (W := U.unop) (W' := relCurveMap C B B' ⁻¹ᵁ U.unop)
+          (V := U.unop) (V' := relCurveMap C B B' ⁻¹ᵁ U.unop)
+          le_rfl le_rfl le_rfl le_rfl r s)⟩
 
 @[simp]
 theorem nativeModuleSectionsMap_app_apply (U : (relCurve C B).Opens)
