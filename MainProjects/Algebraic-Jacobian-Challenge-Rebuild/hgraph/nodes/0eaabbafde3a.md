@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ProbeP4R6.probeSheaf
 type: lean
-updated: '2026-08-10T11:14:38'
+updated: '2026-08-10T11:15:32'
 ---
 theorem probeSheaf (X : Scheme.{u}) :
     Presheaf.IsSheaf Scheme.zariskiTopology (yoneda.obj X) :=
