@@ -19,9 +19,12 @@ this to the canonical unit-lift through the evaluation counit identifies its res
 vanishing predicate with that of `datumSection`.  The final theorem specializes the comparison
 to `PicRankOneNativePresentation`, whose converted module is definitionally the native module.
 
-This is the O-linear zero-locus seam needed before the datum-side local equations can be shown to
-cut out the intrinsic evaluation divisor.  It does not assert regularity, construct a family-level
-divisor, or manufacture the still-missing arbitrary-affine presentation producer.
+This is a base-ring-linear section zero predicate, expressed through
+`toModuleKSheafOfModules`.  It is not an isomorphism of `O_X`-modules and does not identify the
+local equation ideals of the native line bundle.  That O-linear ideal comparison is still needed
+before the datum-side equations can be shown to cut out the intrinsic evaluation divisor.  This
+file also does not assert regularity, construct a family-level divisor, or manufacture the
+still-missing arbitrary-affine presentation producer.
 -/
 
 set_option autoImplicit false
@@ -60,9 +63,9 @@ theorem module_iso_inv_restrict
   exact congrArg (fun z => z.hom s)
     (P.module_iso.inv.hom.naturality (homOfLE h).op).symm
 
-/-- Restriction vanishes after transport to the module exactly when the datum restriction
-vanishes.  This is the pointwise zero-locus comparison supplied by `module_iso`; it needs no
-Noetherian hypothesis. -/
+/-- Restriction vanishes after transport to the base-ring module exactly when the datum restriction
+vanishes.  This is a pointwise section comparison supplied by `module_iso`; it is not a statement
+about the native `O_X`-module ideal and needs no Noetherian hypothesis. -/
 theorem module_iso_inv_restrict_eq_zero_iff
     (P : PicRankOneLocalPresentation pi lam)
     {U V : (relCurve C P.cover.Carrier).Opens} (h : V ≤ U)
@@ -120,7 +123,8 @@ namespace PicRankOneNativePresentation
 /-- Native specialization of the evaluation/datum zero-locus comparison.
 
 `toLocalPresentation.module` is definitionally `P.datum.nativeModule`, so this theorem is the
-consumer-facing native O-linear seam rather than a second choice of line bundle. -/
+consumer-facing native base-ring section comparison rather than a second choice of line bundle.
+The native `O_X`-linear ideal comparison remains a separate producer obligation. -/
 theorem evaluationLift_restrict_eq_zero_iff
     (P : PicRankOneNativePresentation pi lam)
     {V : (relCurve C P.toLocalPresentation.cover.Carrier).Opens} (h : V ≤ ⊤)
