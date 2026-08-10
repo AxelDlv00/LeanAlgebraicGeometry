@@ -165,7 +165,9 @@ private lemma pullback_app_isoTensor_baseMap_comp
   exact hs4 _
 
 set_option backward.isDefEq.respectTransparency false in
-private lemma pullback_app_isoTensor_baseMap_le_refl
+/-- On the full preimage of an open, `pullback_app_isoTensor_baseMap` is exactly the component of
+the pullback--pushforward adjunction unit. -/
+lemma pullback_app_isoTensor_baseMap_le_refl
     {X Y : Scheme.{u}} (g : Y ⟶ X) (N : X.Modules) (V : X.Opens) (x : Γ(N, V)) :
     pullback_app_isoTensor_baseMap g N (le_refl (g ⁻¹ᵁ V)) x =
       (Scheme.Modules.Hom.app
