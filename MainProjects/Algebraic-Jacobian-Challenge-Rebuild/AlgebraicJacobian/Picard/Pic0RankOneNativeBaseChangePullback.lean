@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 import AlgebraicJacobian.Picard.Pic0RankOneLocusNative
 import AlgebraicJacobian.Cohomology.GluedSheafDatumBaseChange
+import AlgebraicJacobian.Cohomology.NativePushforwardBaseChangeAffine
 import AlgebraicJacobian.Cohomology.NativePushforwardBaseChangeMate
+import AlgebraicJacobian.Cohomology.NativePushforwardBaseChangeTensor
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -112,6 +114,21 @@ theorem nativePullbackComparison_baseMap (V : (relCurve C B).Opens)
   rw [Adjunction.homEquiv_unit] at h
   rw [pullback_app_isoTensor_baseMap_le_refl]
   exact h
+
+/-- On every cocycle piece, the geometric pullback of the native module is canonically
+trivial: restrict pullback to the full preimage, pull back the original piece
+trivialization, then identify the pullback of the unit module with the unit module. -/
+noncomputable def nativePullbackPieceSheafIso (j : D.index) :
+    (Scheme.Modules.restrictFunctor ((D.baseChange B').pieces j).ι).obj
+        ((Scheme.Modules.pullback (relCurveMap C B B')).obj D.nativeModule) ≅
+      SheafOfModules.unit ((D.baseChange B').pieces j).toScheme.ringCatSheaf := by
+  rw [D.pieces_baseChange B' j]
+  exact
+    (Scheme.Modules.pullbackRestrictIso (relCurveMap C B B') (D.pieces j)).app
+        D.nativeModule ≫≅
+      (Scheme.Modules.pullback ((relCurveMap C B B') ∣_ D.pieces j)).mapIso
+        (D.nativeModulePieceSheafIso j) ≫≅
+      Scheme.Modules.pullbackUnitIso ((relCurveMap C B B') ∣_ D.pieces j)
 
 end
 

@@ -10,6 +10,7 @@ import AlgebraicJacobian.Picard.Pic0HighDegreeRouteGuard
 import AlgebraicJacobian.Picard.Pic0RankOneLocus
 import AlgebraicJacobian.Picard.Pic0RankOneLocalDivisor
 import AlgebraicJacobian.Picard.Pic0RankOneEvaluationZeroLocus
+import AlgebraicJacobian.Picard.Pic0RankOneFibrePresentedProducerAffineEvaluation
 import AlgebraicJacobian.Picard.Pic0RankOneFamilyCertificates
 import AlgebraicJacobian.Picard.Pic0RankOneNativePresentation
 import AlgebraicJacobian.Picard.Pic0RankOneTranslatedCoverPicZero
@@ -28,9 +29,11 @@ missing. The native evaluation section and the tied datum section now have the s
 vanishing predicate on every open, without a Noetherian hypothesis. Their piece coordinates and
 principal piece ideals agree, and those native-coordinate ideals commute with arbitrary affine
 coefficient extension. Identifying the resulting intrinsic zero locus with the datum local
-equations and gluing the piecewise ideals to a family divisor are still missing. Unit rescaling of
-the section-cut equations is coefficient-ring-uniform, and the fixed-open `DivFamZarAff` equality
-consumes that theorem. The resulting family-level divisor producer is not claimed.
+equations and gluing the piecewise ideals to a family divisor are still missing. The tied datum
+section is coherent along arbitrary affine coefficient towers, and local evaluation divisors cut
+by two generators agree on their pairwise product open. Comparing these local divisors with
+`DivFamZarAff.mapAlg` after coefficient change, and then gluing them, are still missing. The
+resulting family-level divisor producer is not claimed.
 
 The Pic0-specialized separably closed translated-layer feeder is also rooted: it keeps the
 translator degree and the exact subtraction compatibility tied to one result. It does not
@@ -56,6 +59,10 @@ hypotheses.
 #check AlgebraicGeometry.PicRankOneLocalPresentation.baseChangeRankOneCertificates
 #check AlgebraicGeometry.RankOneFamilyCertificates.sectionsMap_tower
 #check AlgebraicGeometry.RankOneFamilyCertificates.h0BaseChange_tower
+#check AlgebraicGeometry.BasicOpenCocycleDatum.sectionsMap_tower
+#check AlgebraicGeometry.BasicOpenCocycleDatum.sectionsMapTop_tower
+#check AlgebraicGeometry.PicRankOneLocalPresentation.datumSectionBaseChange_tower
+#check AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenRankOneDivisor_mul_eq
 #check AlgebraicGeometry.PicRankOneNativePresentation.ofCertificates
 #check AlgebraicGeometry.PicRankOneLocalPresentation.evaluation
 #check AlgebraicGeometry.PicRankOneLocalPresentation.nativeBaseChangeIso
@@ -152,6 +159,10 @@ hypotheses.
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.baseChangeRankOneCertificates
 #print axioms AlgebraicGeometry.RankOneFamilyCertificates.sectionsMap_tower
 #print axioms AlgebraicGeometry.RankOneFamilyCertificates.h0BaseChange_tower
+#print axioms AlgebraicGeometry.BasicOpenCocycleDatum.sectionsMap_tower
+#print axioms AlgebraicGeometry.BasicOpenCocycleDatum.sectionsMapTop_tower
+#print axioms AlgebraicGeometry.PicRankOneLocalPresentation.datumSectionBaseChange_tower
+#print axioms AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenRankOneDivisor_mul_eq
 #print axioms AlgebraicGeometry.PicRankOneNativePresentation.ofCertificates
 #print axioms AlgebraicGeometry.PicRankOneLocalPresentation.evaluation
 #print axioms AlgebraicGeometry.divRankOneOpenData_of_picRankOneOpen_isOpen

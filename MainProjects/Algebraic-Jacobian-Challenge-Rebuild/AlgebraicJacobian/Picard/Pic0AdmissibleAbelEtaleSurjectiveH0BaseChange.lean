@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.Pic0AdmissibleAbelEtaleSurjectiveH0
 import AlgebraicJacobian.Picard.DivisorFamilyWindowBaseChange
+import AlgebraicJacobian.Picard.Pic0RankOneCocycleBaseChange
 import AlgebraicJacobian.Picard.Pic0RankOneFamilyCertificatesH0BaseChange
 
 set_option autoImplicit false
@@ -23,71 +24,6 @@ open AlgebraicJacobian
 attribute [local instance] Scheme.overModule Scheme.overSectionsAlgebra
 
 namespace BasicOpenCocycleDatum
-
-section Tower
-
-variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
-variable (R : Type u) [CommRing R] [Algebra k R]
-variable (R' : Type u) [CommRing R'] [Algebra k R'] [Algebra R R']
-  [IsScalarTower k R R']
-variable {pi : C.left ⟶ P1 k} [IsFinite pi]
-
-private lemma appLE_congr_hom_tower {X Y : Scheme.{u}} {f g : X ⟶ Y} (h : f = g)
-    {U : Y.Opens} {W : X.Opens} (e : W ≤ f ⁻¹ᵁ U) :
-    f.appLE U W e = g.appLE U W (h ▸ e) := by
-  subst h
-  rfl
-
-private lemma baseChange_baseChange_tower
-    (R'' : Type u) [CommRing R''] [Algebra k R''] [Algebra R R''] [Algebra R' R'']
-    [IsScalarTower k R R''] [IsScalarTower k R' R''] [IsScalarTower R R' R'']
-    (D : BasicOpenCocycleDatum C R pi) :
-    (D.baseChange R').baseChange R'' = D.baseChange R'' :=
-  D.baseChange_baseChange C R R' R''
-
-/-- Comparing a glued section over arbitrary nested opens along `R → R' → R''`
-agrees, after transporting the cocycle datum, with direct comparison along `R → R''`. -/
-theorem sectionsMap_tower (D : BasicOpenCocycleDatum C R pi)
-    (R'' : Type u) [CommRing R''] [Algebra k R''] [Algebra R R''] [Algebra R' R'']
-    [IsScalarTower k R R''] [IsScalarTower k R' R''] [IsScalarTower R R' R'']
-    {W : (relCurve C R).Opens} {W' : (relCurve C R').Opens}
-    {W'' : (relCurve C R'').Opens}
-    (hW' : W' ≤ relCurveMap C R R' ⁻¹ᵁ W)
-    (hW'' : W'' ≤ relCurveMap C R' R'' ⁻¹ᵁ W')
-    (s : ↑(gluedSubmodule R D.pieces D.unit W)) :
-    let hD : (D.baseChange R').baseChange R'' = D.baseChange R'' :=
-      D.baseChange_baseChange C R R' R''
-    let hcomp : W'' ≤ relCurveMap C R R'' ⁻¹ᵁ W := by
-      rw [← relCurveMap_comp (C := C) (R := R) (R' := R') (R'' := R''),
-        Scheme.Hom.comp_preimage]
-      exact hW''.trans (Scheme.Hom.preimage_mono _ hW')
-    cast (congrArg (fun E : BasicOpenCocycleDatum C R'' pi =>
-      ↑(gluedSubmodule R'' E.pieces E.unit W'')) hD)
-        ((D.baseChange R').sectionsMap R'' hW'' (D.sectionsMap R' hW' s)) =
-      D.sectionsMap R'' hcomp s := by
-  exact RankOneFamilyCertificates.sectionsMap_tower C R R' D R'' hW' hW'' s
-
-/-- Global glued-section comparison is transitive along an arbitrary coefficient
-tower, with the codomain transported by `baseChange_baseChange`. -/
-theorem sectionsMapTop_tower (D : BasicOpenCocycleDatum C R pi)
-    (R'' : Type u) [CommRing R''] [Algebra k R''] [Algebra R R''] [Algebra R' R'']
-    [IsScalarTower k R R''] [IsScalarTower k R' R''] [IsScalarTower R R' R'']
-    (s : ↑(gluedSubmodule R D.pieces D.unit ⊤)) :
-    let hD : (D.baseChange R').baseChange R'' = D.baseChange R'' :=
-      D.baseChange_baseChange C R R' R''
-    cast (congrArg (fun E : BasicOpenCocycleDatum C R'' pi =>
-      ↑(gluedSubmodule R'' E.pieces E.unit ⊤)) hD)
-        ((D.baseChange R').sectionsMapTop R'' (D.sectionsMapTop R' s)) =
-      D.sectionsMapTop R'' s := by
-  let hW' : (⊤ : (relCurve C R').Opens) ≤
-      relCurveMap C R R' ⁻¹ᵁ (⊤ : (relCurve C R).Opens) := by
-    rw [Scheme.Hom.preimage_top]
-  let hW'' : (⊤ : (relCurve C R'').Opens) ≤
-      relCurveMap C R' R'' ⁻¹ᵁ (⊤ : (relCurve C R').Opens) := by
-    rw [Scheme.Hom.preimage_top]
-  simpa only [sectionsMapTop] using D.sectionsMap_tower C R R' R'' hW' hW'' s
-
-end Tower
 
 variable {k : Type u} [Field k] {C : Over (Spec (.of k))}
 variable {B : Type u} [CommRing B] [Algebra k B]

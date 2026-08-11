@@ -1,0 +1,18 @@
+{
+  "role": "horizon",
+  "round": 2,
+  "project": "Algebraic-Jacobian-Challenge-Rebuild",
+  "task_id": "ajcr-native-family-certificates",
+  "status": "running",
+  "started_at": "2026-08-11T01:16:06.442363+00:00",
+  "projects": [
+    "Algebraic-Jacobian-Challenge-Rebuild"
+  ],
+  "harness_name": "codex",
+  "harness_kind": "codex",
+  "model": "gpt-5.6-sol",
+  "effort": "ultra",
+  "config_dir": "/home/axel/.codex-frenzy",
+  "auth": "api-key",
+  "workspace_sha": "4dc938eb694b880a56cadf823d8cf024230c8c2a"
+}
