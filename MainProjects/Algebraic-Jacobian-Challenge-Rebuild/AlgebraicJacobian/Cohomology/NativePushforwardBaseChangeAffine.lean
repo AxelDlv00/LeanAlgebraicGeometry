@@ -36,6 +36,22 @@ namespace AlgebraicGeometry
 
 open Scheme Scheme.Modules
 
+/-! ## Restricting a pullback to a full preimage -/
+
+/-- Restricting the pullback of a module to the full preimage of an open agrees with
+first restricting the module and then pulling back along the restricted scheme map. -/
+noncomputable def Scheme.Modules.pullbackRestrictIso
+    {X Y : Scheme.{u}} (g : Y ⟶ X) (U : X.Opens) :
+    pullback g ⋙ restrictFunctor (g ⁻¹ᵁ U).ι ≅
+      restrictFunctor U.ι ⋙ pullback (g ∣_ U) :=
+  Functor.isoWhiskerLeft (pullback g)
+      (restrictFunctorIsoPullback (g ⁻¹ᵁ U).ι) ≪≫
+    pullbackComp (g ⁻¹ᵁ U).ι g ≪≫
+    pullbackCongr (morphismRestrict_ι g U).symm ≪≫
+    (pullbackComp (g ∣_ U) U.ι).symm ≪≫
+    Functor.isoWhiskerRight
+      (restrictFunctorIsoPullback U.ι).symm (pullback (g ∣_ U))
+
 -- The composite defining `e.hom` unfolds only below reducible transparency.
 set_option backward.isDefEq.respectTransparency false in
 /-- A morphism between two modules on `Spec R` with known affine presentations is an isomorphism
