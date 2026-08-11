@@ -42,6 +42,12 @@ namespace BasicOpenCocycleDatum
 
 noncomputable section
 
+local instance nativeSectionsModuleCartesian
+    (D : BasicOpenCocycleDatum C B pi)
+    (W : (relCurve C B).Opens) : Module B Γ(D.nativeModule, W) :=
+  Scheme.moduleKSections
+    (Over.mk (relCurve C B ↘ Spec (.of B))) D.nativeModule W
+
 private noncomputable def pullbackCongrCompSectionsEquiv
     {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (h : X ⟶ Z)
     (eq : h = f ≫ g) (N : Z.Modules) :
@@ -296,55 +302,85 @@ private lemma cartesianAffineChart_appLE
         (snd C (overSpec k Γ(T', U))).left.appLE ⊤ ⊤ le_top := by
       rw [hFrom]
 
-set_option diagnostics true in
-set_option maxHeartbeats 400000 in
-/-- The canonical pushforward base-change map for the native module is an
-isomorphism for every cartesian square over the affine coefficient base. -/
-theorem isIso_canonicalBaseChangeMap_nativeModule
+set_option maxHeartbeats 800000 in
+private theorem affineSourceSectionsPresentation
     (D : BasicOpenCocycleDatum C B pi)
     (hH1 : Subsingleton (datumPair D).H1)
-    {T' X' : Scheme.{u}}
-    (g : T' ⟶ Spec (.of B)) (f' : X' ⟶ T')
-    (g' : X' ⟶ relCurve C B)
-    (sq : IsPullback g' f'
-      (relCurve C B ↘ Spec (.of B)) g) :
-    IsIso ((canonicalBaseChangeMap sq).app D.nativeModule) := by
-  refine isIso_canonicalBaseChangeMap_app_of_affine sq D.nativeModule ?_
-  intro U hU
-  let T : Over (Spec (.of k)) := Over.mk (g ≫ (overSpec k B).hom)
-  let gOver : T ⟶ overSpec k B := Over.homMk g rfl
-  let Ua : T.left.affineOpens := ⟨U, hU⟩
-  let R := Γ(T.left, Ua.1)
-  let phi : B →ₐ[k] R :=
-    (Over.appLEAlgHom gOver ⊤ Ua.1 le_top).comp
-      (Over.overSpecΓTopAlgEquiv k B).symm.toAlgHom
-  letI : Algebra B R := phi.toRingHom.toAlgebra
-  letI : IsScalarTower k B R :=
-    IsScalarTower.of_algebraMap_eq fun x ↦ (phi.commutes x).symm
-  let phiCat : CommRingCat.of B ⟶ CommRingCat.of R :=
-    CommRingCat.ofHom phi.toRingHom
-  have hOverMap : overSpecMap (k := k) B R =
-      Over.fromSpecAffine T Ua ≫ gOver :=
-    affineChart_overSpecMap T Ua gOver
-  have hSpec : Spec.map phiCat = hU.fromSpec ≫ g := by
-    have h := congrArg Over.Hom.left hOverMap
-    change Spec.map phiCat = hU.fromSpec ≫ g at h
-    exact h
-  obtain ⟨a, ha, haRange, ha_g', ha_f'⟩ :=
-    cartesianAffineChart g f' g' sq U hU
-  letI : IsOpenImmersion a := ha
-
+    {T' : Scheme.{u}} (g : T' ⟶ Spec (.of B))
+    (U : T'.Opens) (hU : IsAffineOpen U)
+    [Algebra B Γ(T', U)]
+    (phiCat : CommRingCat.of B ⟶ Γ(T', U))
+    (hSpec : Spec.map phiCat = hU.fromSpec ≫ g) :
+    Nonempty {e : Γ(T', U) ⊗[B] Γ(D.nativeModule, ⊤) ≃ₗ[Γ(T', U)]
+        Γ((Scheme.Modules.pullback g).obj
+          ((Scheme.Modules.pushforward
+            (relCurve C B ↘ Spec (.of B))).obj D.nativeModule), U) //
+      ∀ x : Γ(D.nativeModule, ⊤), e (1 ⊗ₜ[B] x) =
+        pullback_app_isoTensor_baseMap g
+          ((Scheme.Modules.pushforward
+            (relCurve C B ↘ Spec (.of B))).obj D.nativeModule) le_top x} := by
+  let R : CommRingCat := Γ(T', U)
   let N : (Spec (.of B)).Modules :=
     (Scheme.Modules.pushforward
       (relCurve C B ↘ Spec (.of B))).obj D.nativeModule
   letI : IsIso N.fromTildeΓ := D.isIso_nativePushforward_fromTildeΓ hH1
-  letI : Algebra R Γ(Spec (.of R), ⊤) :=
-    (Scheme.ΓSpecIso (.of R)).inv.hom.toAlgebra
+  letI : Algebra R Γ(Spec R, ⊤) :=
+    (Scheme.ΓSpecIso R).inv.hom.toAlgebra
+  obtain ⟨eSpec, heSpec⟩ :=
+    (Scheme.Modules.pullback_app_isoTensor_baseMap_sectionLinearEquiv_of_fromTildeΓ
+      phiCat N).some
+  let eSourceChart :
+      Γ((Scheme.Modules.pullback (Spec.map phiCat)).obj N, ⊤) ≃ₗ[R]
+        Γ((Scheme.Modules.pullback hU.fromSpec).obj
+          ((Scheme.Modules.pullback g).obj N), ⊤) :=
+    (pullbackCongrCompSectionsEquiv hU.fromSpec g
+      (Spec.map phiCat) hSpec N).restrictScalars R
+  obtain ⟨eFromSpec, heFromSpec⟩ :=
+    (pullbackFromSpecSectionsEquiv
+      ((Scheme.Modules.pullback g).obj N) hU).some
+  let e : R ⊗[B] Γ(D.nativeModule, ⊤) ≃ₗ[R]
+      Γ((Scheme.Modules.pullback g).obj N, U) :=
+    eSpec.trans (eSourceChart.trans eFromSpec)
+  have eSourceChart_baseMap (x : Γ(D.nativeModule, ⊤)) :
+      eSourceChart
+          (pullback_app_isoTensor_baseMap (Spec.map phiCat) N le_top x) =
+        pullback_app_isoTensor_baseMap hU.fromSpec
+          ((Scheme.Modules.pullback g).obj N)
+          (le_of_eq hU.fromSpec_preimage_self.symm)
+          (pullback_app_isoTensor_baseMap g N le_top x) :=
+    pullbackCongrCompSectionsEquiv_baseMap hU.fromSpec g
+      (Spec.map phiCat) hSpec N le_top
+      (le_of_eq hU.fromSpec_preimage_self.symm) le_top x
+  have he (x : Γ(D.nativeModule, ⊤)) :
+      e (1 ⊗ₜ[B] x) =
+        pullback_app_isoTensor_baseMap g N le_top x := by
+    change eFromSpec (eSourceChart (eSpec (1 ⊗ₜ[B] x))) = _
+    rw [heSpec x, eSourceChart_baseMap]
+    rw [← heFromSpec, LinearEquiv.apply_symm_apply]
+  exact ⟨e, he⟩
 
-  letI nativeSectionsModule (W : (relCurve C B).Opens) :
-      Module B Γ(D.nativeModule, W) :=
-    Scheme.moduleKSections
-      (Over.mk (relCurve C B ↘ Spec (.of B))) D.nativeModule W
+set_option maxHeartbeats 800000 in
+private theorem cartesianTargetSectionsPresentation
+    (D : BasicOpenCocycleDatum C B pi)
+    (hH1 : Subsingleton (datumPair D).H1)
+    {T' X' : Scheme.{u}} (f' : X' ⟶ T')
+    (g' : X' ⟶ relCurve C B)
+    (U : T'.Opens) (hU : IsAffineOpen U)
+    [Algebra k Γ(T', U)] [Algebra B Γ(T', U)]
+    [IsScalarTower k B Γ(T', U)]
+    (a : relCurve C Γ(T', U) ⟶ X') [IsOpenImmersion a]
+    (haRange : a.opensRange = f' ⁻¹ᵁ U)
+    (ha_g' : a ≫ g' = relCurveMap C B Γ(T', U))
+    (ha_f' : a ≫ f' =
+      (snd C (overSpec k Γ(T', U))).left ≫ hU.fromSpec) :
+    Nonempty {e : Γ(T', U) ⊗[B] Γ(D.nativeModule, ⊤) ≃ₗ[Γ(T', U)]
+        Γ((Scheme.Modules.pushforward f').obj
+          ((Scheme.Modules.pullback g').obj D.nativeModule), U) //
+      ∀ x : Γ(D.nativeModule, ⊤), e (1 ⊗ₜ[B] x) =
+        pullback_app_isoTensor_baseMap g' D.nativeModule le_top x} := by
+  let R : CommRingCat := Γ(T', U)
+  letI : Algebra R Γ(Spec R, ⊤) :=
+    (Scheme.ΓSpecIso R).inv.hom.toAlgebra
   letI nativeBaseChangedSectionsModule (W : (relCurve C R).Opens) :
       Module R Γ((D.baseChange R).nativeModule, W) :=
     Scheme.moduleKSections
@@ -362,40 +398,6 @@ theorem isIso_canonicalBaseChangeMap_nativeModule
     Scheme.moduleKSections
       (Over.mk (relCurve C R ↘ Spec (.of R)))
       ((Scheme.Modules.pullback a).obj N') W
-
-  obtain ⟨eSpec, heSpec⟩ :=
-    (Scheme.Modules.pullback_app_isoTensor_baseMap_sectionLinearEquiv_of_fromTildeΓ
-      phiCat N).some
-  let eSourceChart :
-      Γ((Scheme.Modules.pullback (Spec.map phiCat)).obj N, ⊤) ≃ₗ[R]
-        Γ((Scheme.Modules.pullback hU.fromSpec).obj
-          ((Scheme.Modules.pullback g).obj N), ⊤) :=
-    (pullbackCongrCompSectionsEquiv hU.fromSpec g
-      (Spec.map phiCat) hSpec N).restrictScalars R
-  obtain ⟨eFromSpec, heFromSpec⟩ :=
-    (pullbackFromSpecSectionsEquiv
-      ((Scheme.Modules.pullback g).obj N) hU).some
-  let eL : R ⊗[B] ((Scheme.Modules.moduleSpecΓFunctor
-        (R := CommRingCat.of B)).obj N) ≃ₗ[R]
-      Γ((Scheme.Modules.pullback g).obj N, U) :=
-    eSpec.trans (eSourceChart.trans eFromSpec)
-  have eSourceChart_baseMap (x : Γ(N, ⊤)) :
-      eSourceChart
-          (pullback_app_isoTensor_baseMap (Spec.map phiCat) N le_top x) =
-        pullback_app_isoTensor_baseMap hU.fromSpec
-          ((Scheme.Modules.pullback g).obj N)
-          (le_of_eq hU.fromSpec_preimage_self.symm)
-          (pullback_app_isoTensor_baseMap g N le_top x) :=
-    pullbackCongrCompSectionsEquiv_baseMap hU.fromSpec g
-      (Spec.map phiCat) hSpec N le_top
-      (le_of_eq hU.fromSpec_preimage_self.symm) le_top x
-  have heL (x : Γ(N, ⊤)) :
-      eL (1 ⊗ₜ[B] x) =
-        pullback_app_isoTensor_baseMap g N le_top x := by
-    change eFromSpec (eSourceChart (eSpec (1 ⊗ₜ[B] x))) = _
-    rw [heSpec x, eSourceChart_baseMap]
-    rw [← heFromSpec, LinearEquiv.apply_symm_apply]
-
   let eH0 : R ⊗[B] Γ(D.nativeModule, ⊤) ≃ₗ[R]
       Γ((D.baseChange R).nativeModule, ⊤) :=
     D.nativeH0BaseChange R hH1
@@ -405,8 +407,7 @@ theorem isIso_canonicalBaseChangeMap_nativeModule
       Γ((Scheme.Modules.pullback
         (relCurveMap C B R)).obj D.nativeModule, ⊤) :=
     ((asIso ((D.nativePullbackComparison R).app ⊤)).toLinearEquiv.symm).restrictScalars R
-  let eTargetChart :
-      Γ((Scheme.Modules.pullback
+  let eTargetChart : Γ((Scheme.Modules.pullback
         (relCurveMap C B R)).obj D.nativeModule, ⊤) ≃ₗ[R]
       Γ((Scheme.Modules.pullback a).obj N', ⊤) :=
     (pullbackCongrCompSectionsEquiv a g'
@@ -444,9 +445,8 @@ theorem isIso_canonicalBaseChangeMap_nativeModule
       change (f'.appLE U (f' ⁻¹ᵁ U) le_rfl).hom r • x =
         (f'.app U).hom r • x
       rw [Scheme.Hom.appLE_eq_app])
-  let eR := eH0.trans
+  let e := eH0.trans
     (eComparison.trans (eTargetChart.trans (eOpen.trans eRange)))
-
   have eComparison_sectionsMap (x : Γ(D.nativeModule, ⊤)) :
       eComparison (D.sectionsMap R le_rfl x) =
         pullback_app_isoTensor_baseMap (relCurveMap C B R) D.nativeModule
@@ -480,14 +480,60 @@ theorem isIso_canonicalBaseChangeMap_nativeModule
         pullback_app_isoTensor_baseMap g' D.nativeModule le_top x := by
     cases haRange
     rfl
-  have heR (x : Γ(D.nativeModule, ⊤)) :
-      eR (1 ⊗ₜ[B] x) =
+  have he (x : Γ(D.nativeModule, ⊤)) :
+      e (1 ⊗ₜ[B] x) =
         pullback_app_isoTensor_baseMap g' D.nativeModule le_top x := by
     change eRange (eOpen (eTargetChart (eComparison (eH0 (1 ⊗ₜ[B] x))))) = _
     rw [show eH0 (1 ⊗ₜ[B] x) = D.sectionsMap R le_rfl x from
       D.nativeH0BaseChange_one_tmul_eq_sectionsMap R hH1 x]
     rw [eComparison_sectionsMap, eTargetChart_baseMap, eOpen_baseMap,
       eRange_baseMap]
+  exact ⟨e, he⟩
+
+set_option maxHeartbeats 800000 in
+private theorem isIso_canonicalBaseChangeMap_nativeModule_app
+    (D : BasicOpenCocycleDatum C B pi)
+    (hH1 : Subsingleton (datumPair D).H1)
+    {T' X' : Scheme.{u}}
+    (g : T' ⟶ Spec (.of B)) (f' : X' ⟶ T')
+    (g' : X' ⟶ relCurve C B)
+    (sq : IsPullback g' f'
+      (relCurve C B ↘ Spec (.of B)) g)
+    (U : T'.Opens) (hU : IsAffineOpen U) :
+    IsIso (((canonicalBaseChangeMap sq).app D.nativeModule).app U) := by
+  let T : Over (Spec (.of k)) := Over.mk (g ≫ (overSpec k B).hom)
+  let gOver : T ⟶ overSpec k B := Over.homMk g rfl
+  let Ua : T.left.affineOpens := ⟨U, hU⟩
+  let R : CommRingCat := Γ(T', U)
+  letI : Algebra k R := Over.sectionsAlgebra (X := T) U
+  let phi : B →ₐ[k] R :=
+    (Over.appLEAlgHom gOver ⊤ U le_top).comp
+      (Over.overSpecΓTopAlgEquiv k B).symm.toAlgHom
+  letI : Algebra B R := phi.toRingHom.toAlgebra
+  letI : IsScalarTower k B R :=
+    IsScalarTower.of_algebraMap_eq fun x ↦ (phi.commutes x).symm
+  let phiCat : CommRingCat.of B ⟶ R :=
+    CommRingCat.ofHom phi.toRingHom
+  have hOverMap : overSpecMap (k := k) B R =
+      Over.fromSpecAffine T Ua ≫ gOver :=
+    affineChart_overSpecMap T Ua gOver
+  have hSpec : Spec.map phiCat = hU.fromSpec ≫ g := by
+    have h := congrArg Over.Hom.left hOverMap
+    change Spec.map phiCat = hU.fromSpec ≫ g at h
+    exact h
+  obtain ⟨a, ha, haRange, ha_g', ha_f'⟩ :=
+    cartesianAffineChart g f' g' sq U hU
+  letI : IsOpenImmersion a := ha
+
+  let N : (Spec (.of B)).Modules :=
+    (Scheme.Modules.pushforward
+      (relCurve C B ↘ Spec (.of B))).obj D.nativeModule
+  obtain ⟨eL, heL⟩ :=
+    affineSourceSectionsPresentation D hH1 g U hU phiCat hSpec
+  let N' := (Scheme.Modules.pullback g').obj D.nativeModule
+  obtain ⟨eR, heR⟩ :=
+    cartesianTargetSectionsPresentation
+      D hH1 f' g' U hU a haRange ha_g' ha_f'
 
   let χ : Γ((Scheme.Modules.pullback g).obj N, U) →ₗ[R]
       Γ((Scheme.Modules.pushforward f').obj N', U) :=
@@ -524,6 +570,22 @@ theorem isIso_canonicalBaseChangeMap_nativeModule
       ⇑eR ∘ ⇑eL.symm from funext hfun]
     exact eR.bijective.comp eL.symm.bijective
   exact (ConcreteCategory.isIso_iff_bijective _).mpr hbij
+
+/-- The canonical pushforward base-change map for the native module is an
+isomorphism for every cartesian square over the affine coefficient base. -/
+theorem isIso_canonicalBaseChangeMap_nativeModule
+    (D : BasicOpenCocycleDatum C B pi)
+    (hH1 : Subsingleton (datumPair D).H1)
+    {T' X' : Scheme.{u}}
+    (g : T' ⟶ Spec (.of B)) (f' : X' ⟶ T')
+    (g' : X' ⟶ relCurve C B)
+    (sq : IsPullback g' f'
+      (relCurve C B ↘ Spec (.of B)) g) :
+    IsIso ((canonicalBaseChangeMap sq).app D.nativeModule) := by
+  refine isIso_canonicalBaseChangeMap_app_of_affine sq D.nativeModule ?_
+  intro U hU
+  exact isIso_canonicalBaseChangeMap_nativeModule_app
+    D hH1 g f' g' sq U hU
 
 end
 

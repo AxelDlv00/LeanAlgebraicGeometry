@@ -23,7 +23,8 @@ set_option backward.isDefEq.respectTransparency false
 
 universe u
 
-open CategoryTheory Limits Opposite TopologicalSpace
+open CategoryTheory Limits Opposite TopologicalSpace MonoidalCategory
+  CartesianMonoidalCategory
 open scoped TensorProduct
 
 namespace AlgebraicGeometry
@@ -41,7 +42,7 @@ noncomputable section
 
 variable (D : BasicOpenCocycleDatum C B pi)
 
-local instance nativeSectionsModule (U : (relCurve C B).Opens) :
+local instance nativeLocalizingSectionsModule (U : (relCurve C B).Opens) :
     Module B Γ(D.nativeModule, U) :=
   Scheme.moduleKSections
     (Over.mk (relCurve C B ↘ Spec (.of B))) D.nativeModule U
@@ -50,8 +51,9 @@ local instance nativeSectionsModule (U : (relCurve C B).Opens) :
 of global sections as soon as the datum has vanishing first cohomology. -/
 theorem isIso_nativePushforward_fromTildeΓ
     (hH1 : Subsingleton (datumPair D).H1) :
-    IsIso (((Scheme.Modules.pushforward
-      (relCurve C B ↘ Spec (.of B))).obj D.nativeModule).fromTildeΓ) := by
+    IsIso (Scheme.Modules.fromTildeΓ (R := CommRingCat.of B)
+      ((Scheme.Modules.pushforward
+        (relCurve C B ↘ Spec (.of B))).obj D.nativeModule)) := by
   rw [isIso_fromTildeΓ_iff_isLocalizing]
   intro f
   let S := Localization.Away f
@@ -59,12 +61,15 @@ theorem isIso_nativePushforward_fromTildeΓ
     rw [overSpecMap_left]
     exact IsOpenImmersion.of_isLocalization f
   haveI : IsOpenImmersion (relCurveMap C B S) := by
+    unfold relCurveMap
     infer_instance
   have hRange : (relCurveMap C B S).opensRange =
       (relCurve C B ↘ Spec (.of B)) ⁻¹ᵁ
-        (Spec (.of B)).basicOpen f := by
+        PrimeSpectrum.basicOpen f := by
     apply Opens.ext
-    change Set.range (relCurveMap C B S).base = _
+    change Set.range ((C ◁ overSpecMap (k := k) B S).left).base =
+      (snd C (overSpec k B)).left.base ⁻¹'
+        (PrimeSpectrum.basicOpen f : Set (PrimeSpectrum B))
     rw [Over.range_whiskerLeft C (overSpecMap (k := k) B S)]
     rw [PrimeSpectrum.localization_away_comap_range S f]
   letI nativeBaseChangedSectionsModule
@@ -120,7 +125,7 @@ theorem isIso_nativePushforward_fromTildeΓ
   let eRange : Γ(D.nativeModule, (relCurveMap C B S).opensRange) ≃ₗ[B]
       Γ(D.nativeModule,
         (relCurve C B ↘ Spec (.of B)) ⁻¹ᵁ
-          (Spec (.of B)).basicOpen f) :=
+          PrimeSpectrum.basicOpen f) :=
     LinearEquiv.cast (M := fun U : (relCurve C B).Opens ↦ Γ(D.nativeModule, U)) hRange
   let e := eH0.trans (eComparison.trans (eOpen.trans eRange))
   have eComparison_sectionsMap (x : Γ(D.nativeModule, ⊤)) :
@@ -158,7 +163,7 @@ theorem isIso_nativePushforward_fromTildeΓ
         (D.nativeModule.presheaf.map
           (homOfLE (le_top :
             (relCurve C B ↘ Spec (.of B)) ⁻¹ᵁ
-              (Spec (.of B)).basicOpen f ≤ ⊤)).op).hom x := by
+              PrimeSpectrum.basicOpen f ≤ ⊤)).op).hom x := by
     change eRange (eOpen (eComparison (eH0 (1 ⊗ₜ[B] x)))) = _
     rw [show eH0 (1 ⊗ₜ[B] x) = D.sectionsMap S le_rfl x from
       D.nativeH0BaseChange_one_tmul_eq_sectionsMap S hH1 x]
@@ -168,7 +173,7 @@ theorem isIso_nativePushforward_fromTildeΓ
   let res : Γ(D.nativeModule, ⊤) →ₗ[B]
       Γ(D.nativeModule,
         (relCurve C B ↘ Spec (.of B)) ⁻¹ᵁ
-          (Spec (.of B)).basicOpen f) :=
+          PrimeSpectrum.basicOpen f) :=
     ((Scheme.toModuleKSheafOfModules
       (Over.mk (relCurve C B ↘ Spec (.of B))) D.nativeModule).obj.map
         (homOfLE le_top).op).hom
