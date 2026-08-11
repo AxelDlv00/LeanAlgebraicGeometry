@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import Mathlib.AlgebraicGeometry.Modules.Tilde
 import Mathlib.Algebra.Category.ModuleCat.Sheaf.PullbackFree
+import AlgebraicJacobian.Cohomology.NativePushforwardBaseChangeMate
 
 /-!
 # Pullback of unit and tilde modules
@@ -140,5 +141,43 @@ noncomputable def Scheme.Modules.pullbackTildeIso {A B : CommRingCat.{u}}
       (Scheme.Modules.pullbackPushforwardAdjunction (Spec.map phi))).ofNatIsoRight
       (pullbackTildeGammaBridge phi))
     ((ModuleCat.extendRestrictScalarsAdj phi.hom).comp (tilde.adjunction (R := B)))
+
+set_option backward.isDefEq.respectTransparency false in
+set_option maxHeartbeats 1600000 in
+-- Unfolding both composed adjunction units traverses the pullback/tilde comparison.
+/-- On top sections, `pullbackTildeIso` sends the adjunction-unit image of a tilde section
+to the corresponding pure tensor. -/
+theorem Scheme.Modules.pullbackTildeIso_baseMap {A B : CommRingCat.{u}}
+    (phi : A ⟶ B) (M : ModuleCat.{u} A) (m : M) :
+    letI : Algebra A B := phi.hom.toAlgebra
+    letI : Algebra Γ(Spec A, ⊤) Γ(Spec B, ⊤) :=
+      ((Spec.map phi).appLE ⊤ ⊤ le_top).hom.toAlgebra
+    letI : Module Γ(Spec A, ⊤)
+        Γ((Scheme.Modules.pullback (Spec.map phi)).obj (tilde M), ⊤) :=
+      Module.compHom _ ((Spec.map phi).appLE ⊤ ⊤ le_top).hom
+    (Scheme.Modules.Hom.app
+        ((Scheme.Modules.pullbackTildeIso phi).hom.app M) ⊤).hom
+        (pullback_app_isoTensor_baseMap (Spec.map phi) (tilde M) le_top
+          ((tilde.toOpen M ⊤).hom m)) =
+      (tilde.toOpen (ModuleCat.of B (TensorProduct A B M)) ⊤).hom
+        (1 ⊗ₜ[A] m) := by
+  letI : Algebra A B := phi.hom.toAlgebra
+  letI : Algebra Γ(Spec A, ⊤) Γ(Spec B, ⊤) :=
+    ((Spec.map phi).appLE ⊤ ⊤ le_top).hom.toAlgebra
+  letI : Module Γ(Spec A, ⊤)
+      Γ((Scheme.Modules.pullback (Spec.map phi)).obj (tilde M), ⊤) :=
+    Module.compHom _ ((Spec.map phi).appLE ⊤ ⊤ le_top).hom
+  let adj1 : (tilde.functor A ⋙ Scheme.Modules.pullback (Spec.map phi)) ⊣
+      (moduleSpecΓFunctor (R := B) ⋙ ModuleCat.restrictScalars phi.hom) :=
+    ((tilde.adjunction (R := A)).comp
+      (Scheme.Modules.pullbackPushforwardAdjunction (Spec.map phi))).ofNatIsoRight
+      (pullbackTildeGammaBridge phi)
+  let adj2 : (ModuleCat.extendScalars phi.hom ⋙ tilde.functor B) ⊣
+      (moduleSpecΓFunctor (R := B) ⋙ ModuleCat.restrictScalars phi.hom) :=
+    (ModuleCat.extendRestrictScalarsAdj phi.hom).comp (tilde.adjunction (R := B))
+  have key := Adjunction.unit_leftAdjointUniq_hom_app adj1 adj2 M
+  exact congrArg (fun (f : M ⟶ (moduleSpecΓFunctor (R := B) ⋙
+    ModuleCat.restrictScalars phi.hom).obj ((ModuleCat.extendScalars phi.hom ⋙
+      tilde.functor B).obj M)) => f.hom m) key
 
 end AlgebraicGeometry
