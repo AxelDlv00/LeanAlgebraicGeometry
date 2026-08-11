@@ -303,55 +303,71 @@ private lemma cartesianAffineChart_appLE
       rw [hFrom]
 
 set_option maxHeartbeats 800000 in
-private theorem affineSourceSectionsPresentation
-    (D : BasicOpenCocycleDatum C B pi)
-    (hH1 : Subsingleton (datumPair D).H1)
+private theorem affineSourceSectionsPresentationRaw
     {T' : Scheme.{u}} (g : T' ⟶ Spec (.of B))
     (U : T'.Opens) (hU : IsAffineOpen U)
-    [Algebra B Γ(T', U)]
-    (phiCat : CommRingCat.of B ⟶ Γ(T', U))
-    (hSpec : Spec.map phiCat = hU.fromSpec ≫ g) :
-    Nonempty {e : Γ(T', U) ⊗[B] Γ(D.nativeModule, ⊤) ≃ₗ[Γ(T', U)]
-        Γ((Scheme.Modules.pullback g).obj
-          ((Scheme.Modules.pushforward
-            (relCurve C B ↘ Spec (.of B))).obj D.nativeModule), U) //
-      ∀ x : Γ(D.nativeModule, ⊤), e (1 ⊗ₜ[B] x) =
-        pullback_app_isoTensor_baseMap g
-          ((Scheme.Modules.pushforward
-            (relCurve C B ↘ Spec (.of B))).obj D.nativeModule) le_top x} := by
+    (N : (Spec (.of B)).Modules)
+    [IsIso (Scheme.Modules.fromTildeΓ
+      (R := CommRingCat.of B) N)]
+    (phi : B →+* Γ(T', U))
+    (hSpec : Spec.map (CommRingCat.ofHom phi) = hU.fromSpec ≫ g) :
+    letI : Algebra B Γ(T', U) := phi.toAlgebra
+    Nonempty {e : Γ(T', U) ⊗[B]
+        ((moduleSpecΓFunctor (R := CommRingCat.of B)).obj N) ≃ₗ[Γ(T', U)]
+        Γ((Scheme.Modules.pullback g).obj N, U) //
+      ∀ x : Γ(N, ⊤), e (1 ⊗ₜ[B] x) =
+        pullback_app_isoTensor_baseMap g N le_top x} := by
   let R : CommRingCat := Γ(T', U)
-  let N : (Spec (.of B)).Modules :=
-    (Scheme.Modules.pushforward
-      (relCurve C B ↘ Spec (.of B))).obj D.nativeModule
-  letI : IsIso N.fromTildeΓ := D.isIso_nativePushforward_fromTildeΓ hH1
+  letI : Algebra B R := phi.toAlgebra
+  let phiCat : CommRingCat.of B ⟶ R :=
+    CommRingCat.ofHom phi
   letI : Algebra R Γ(Spec R, ⊤) :=
     (Scheme.ΓSpecIso R).inv.hom.toAlgebra
+  letI sourceChartModule : Module R
+      Γ((Scheme.Modules.pullback hU.fromSpec).obj
+        ((Scheme.Modules.pullback g).obj N), ⊤) :=
+    Module.compHom _ (Scheme.ΓSpecIso R).inv.hom
   obtain ⟨eSpec, heSpec⟩ :=
     (Scheme.Modules.pullback_app_isoTensor_baseMap_sectionLinearEquiv_of_fromTildeΓ
       phiCat N).some
+  let eSourceChartRing :
+      Γ((Scheme.Modules.pullback (Spec.map phiCat)).obj N, ⊤) ≃ₗ[Γ(Spec R, ⊤)]
+        Γ((Scheme.Modules.pullback hU.fromSpec).obj
+          ((Scheme.Modules.pullback g).obj N), ⊤) :=
+    pullbackCongrCompSectionsEquiv hU.fromSpec g
+      (Spec.map phiCat) hSpec N
+  let eSourceChartAdd := eSourceChartRing.toAddEquiv
   let eSourceChart :
       Γ((Scheme.Modules.pullback (Spec.map phiCat)).obj N, ⊤) ≃ₗ[R]
         Γ((Scheme.Modules.pullback hU.fromSpec).obj
           ((Scheme.Modules.pullback g).obj N), ⊤) :=
-    (pullbackCongrCompSectionsEquiv hU.fromSpec g
-      (Spec.map phiCat) hSpec N).restrictScalars R
+    eSourceChartAdd.toLinearEquiv (by
+      intro r x
+      change eSourceChartRing
+          ((Scheme.ΓSpecIso R).inv.hom r • x) =
+        (Scheme.ΓSpecIso R).inv.hom r • eSourceChartRing x
+      exact eSourceChartRing.map_smul _ _)
   obtain ⟨eFromSpec, heFromSpec⟩ :=
     (pullbackFromSpecSectionsEquiv
       ((Scheme.Modules.pullback g).obj N) hU).some
-  let e : R ⊗[B] Γ(D.nativeModule, ⊤) ≃ₗ[R]
+  let e : R ⊗[B]
+      ((moduleSpecΓFunctor (R := CommRingCat.of B)).obj N) ≃ₗ[R]
       Γ((Scheme.Modules.pullback g).obj N, U) :=
     eSpec.trans (eSourceChart.trans eFromSpec)
-  have eSourceChart_baseMap (x : Γ(D.nativeModule, ⊤)) :
+  have eSourceChart_baseMap (x : Γ(N, ⊤)) :
       eSourceChart
           (pullback_app_isoTensor_baseMap (Spec.map phiCat) N le_top x) =
         pullback_app_isoTensor_baseMap hU.fromSpec
           ((Scheme.Modules.pullback g).obj N)
           (le_of_eq hU.fromSpec_preimage_self.symm)
           (pullback_app_isoTensor_baseMap g N le_top x) :=
-    pullbackCongrCompSectionsEquiv_baseMap hU.fromSpec g
-      (Spec.map phiCat) hSpec N le_top
-      (le_of_eq hU.fromSpec_preimage_self.symm) le_top x
-  have he (x : Γ(D.nativeModule, ⊤)) :
+    by
+      change (pullbackCongrCompSectionsEquiv hU.fromSpec g
+        (Spec.map phiCat) hSpec N) _ = _
+      exact pullbackCongrCompSectionsEquiv_baseMap hU.fromSpec g
+        (Spec.map phiCat) hSpec N le_top
+        (le_of_eq hU.fromSpec_preimage_self.symm) le_top x
+  have he (x : Γ(N, ⊤)) :
       e (1 ⊗ₜ[B] x) =
         pullback_app_isoTensor_baseMap g N le_top x := by
     change eFromSpec (eSourceChart (eSpec (1 ⊗ₜ[B] x))) = _
@@ -360,6 +376,71 @@ private theorem affineSourceSectionsPresentation
   exact ⟨e, he⟩
 
 set_option maxHeartbeats 800000 in
+private theorem affineSourceSectionsPresentation
+    (D : BasicOpenCocycleDatum C B pi)
+    (hH1 : Subsingleton (datumPair D).H1)
+    {T' X' : Scheme.{u}} (g : T' ⟶ Spec (.of B))
+    (f' : X' ⟶ T') (g' : X' ⟶ relCurve C B)
+    (sq : IsPullback g' f'
+      (relCurve C B ↘ Spec (.of B)) g)
+    (U : T'.Opens) (hU : IsAffineOpen U)
+    (phi : B →+* Γ(T', U))
+    (hSpec : Spec.map (CommRingCat.ofHom phi) = hU.fromSpec ≫ g) :
+    letI : Algebra B Γ(T', U) := phi.toAlgebra
+    Nonempty {e : Γ(T', U) ⊗[B] Γ(D.nativeModule, ⊤) ≃ₗ[Γ(T', U)]
+        Γ((Scheme.Modules.pullback g).obj
+          ((Scheme.Modules.pushforward
+            (relCurve C B ↘ Spec (.of B))).obj D.nativeModule), U) //
+      ∀ x : Γ(D.nativeModule, ⊤),
+        (((canonicalBaseChangeMap sq).app D.nativeModule).app U).hom
+            (e (1 ⊗ₜ[B] x)) =
+          pullback_app_isoTensor_baseMap
+            (U := f' ⁻¹ᵁ U) (V := ⊤) g' D.nativeModule le_top x} := by
+  let R : CommRingCat := Γ(T', U)
+  letI : Algebra B R := phi.toAlgebra
+  let N : (Spec (.of B)).Modules :=
+    (Scheme.Modules.pushforward
+      (relCurve C B ↘ Spec (.of B))).obj D.nativeModule
+  letI : IsIso (Scheme.Modules.fromTildeΓ
+      (R := CommRingCat.of B) N) :=
+    D.isIso_nativePushforward_fromTildeΓ hH1
+  obtain ⟨eRaw, heRaw⟩ :=
+    affineSourceSectionsPresentationRaw g U hU N phi hSpec
+  let ePushTop := D.nativePushforwardTopSectionsLinearEquiv
+  let ePushTopR := LinearEquiv.baseChange B R _ _ ePushTop
+  let e : R ⊗[B] Γ(D.nativeModule, ⊤) ≃ₗ[R]
+      Γ((Scheme.Modules.pullback g).obj N, U) :=
+    ePushTopR.trans eRaw
+  have he (x : Γ(D.nativeModule, ⊤)) :
+      e (1 ⊗ₜ[B] x) =
+        pullback_app_isoTensor_baseMap g N le_top (ePushTop x) := by
+    change eRaw (ePushTopR (1 ⊗ₜ[B] x)) = _
+    rw [LinearEquiv.baseChange_tmul]
+    exact heRaw (ePushTop x)
+  have heMate (x : Γ(D.nativeModule, ⊤)) :
+      (((canonicalBaseChangeMap sq).app D.nativeModule).app U).hom
+          (e (1 ⊗ₜ[B] x)) =
+        pullback_app_isoTensor_baseMap
+          (U := f' ⁻¹ᵁ U) (V := ⊤) g' D.nativeModule le_top x := by
+    rw [he x]
+    have hMate := canonicalBaseChangeMap_app_baseMap_compat sq D.nativeModule
+      (V := ⊤) (U := U) le_top le_top (ePushTop x)
+    have hePushTop : ePushTop x = x := by
+      rw [nativePushforwardTopSectionsLinearEquiv_apply]
+      change (D.nativeModule.presheaf.map _).hom x = x
+      rw [show (eqToHom (Scheme.Hom.preimage_top
+          (relCurve C B ↘ Spec (.of B)))).op =
+            𝟙 (Opposite.op (⊤ : (relCurve C B).Opens)) from
+          Subsingleton.elim _ _,
+        CategoryTheory.Functor.map_id, AddCommGrpCat.hom_id,
+        AddMonoidHom.id_apply]
+    rw [hePushTop] at hMate
+    rw [hePushTop]
+    exact hMate
+  exact ⟨e, heMate⟩
+
+set_option maxHeartbeats 800000 in
+set_option maxRecDepth 4000 in
 private theorem cartesianTargetSectionsPresentation
     (D : BasicOpenCocycleDatum C B pi)
     (hH1 : Subsingleton (datumPair D).H1)
@@ -381,11 +462,11 @@ private theorem cartesianTargetSectionsPresentation
   let R : CommRingCat := Γ(T', U)
   letI : Algebra R Γ(Spec R, ⊤) :=
     (Scheme.ΓSpecIso R).inv.hom.toAlgebra
-  letI nativeBaseChangedSectionsModule (W : (relCurve C R).Opens) :
-      Module R Γ((D.baseChange R).nativeModule, W) :=
+  letI nativeBaseChangedTopSectionsModule :
+      Module R Γ((D.baseChange R).nativeModule, ⊤) :=
     Scheme.moduleKSections
       (Over.mk (relCurve C R ↘ Spec (.of R)))
-      (D.baseChange R).nativeModule W
+      (D.baseChange R).nativeModule ⊤
   letI nativePullbackSectionsModule (W : (relCurve C R).Opens) :
       Module R Γ((Scheme.Modules.pullback
         (relCurveMap C B R)).obj D.nativeModule, W) :=
@@ -398,22 +479,69 @@ private theorem cartesianTargetSectionsPresentation
     Scheme.moduleKSections
       (Over.mk (relCurve C R ↘ Spec (.of R)))
       ((Scheme.Modules.pullback a).obj N') W
+  letI nativeComposedPullbackTopSectionsModule :
+      Module R Γ((Scheme.Modules.pullback g' ⋙
+        Scheme.Modules.pullback a).obj D.nativeModule, ⊤) :=
+    Scheme.moduleKSections
+      (Over.mk (relCurve C R ↘ Spec (.of R)))
+      ((Scheme.Modules.pullback g' ⋙
+        Scheme.Modules.pullback a).obj D.nativeModule) ⊤
   let eH0 : R ⊗[B] Γ(D.nativeModule, ⊤) ≃ₗ[R]
       Γ((D.baseChange R).nativeModule, ⊤) :=
     D.nativeH0BaseChange R hH1
   letI : IsIso (D.nativePullbackComparison R) :=
     D.isIso_nativePullbackComparison R
+  let comparisonIso := asIso (D.nativePullbackComparison R)
+  let eComparisonAdd : Γ((D.baseChange R).nativeModule, ⊤) ≃+
+      Γ((Scheme.Modules.pullback
+        (relCurveMap C B R)).obj D.nativeModule, ⊤) :=
+    { toFun := fun x ↦
+        (Scheme.Modules.Hom.app comparisonIso.inv ⊤).hom x
+      invFun := fun x ↦
+        (Scheme.Modules.Hom.app comparisonIso.hom ⊤).hom x
+      left_inv := fun x ↦ by
+        simp only [← AddCommGrpCat.comp_apply,
+          ← Scheme.Modules.Hom.comp_app, comparisonIso.inv_hom_id,
+          Scheme.Modules.Hom.id_app, AddCommGrpCat.hom_id,
+          AddMonoidHom.id_apply]
+      right_inv := fun x ↦ by
+        simp only [← AddCommGrpCat.comp_apply,
+          ← Scheme.Modules.Hom.comp_app, comparisonIso.hom_inv_id,
+          Scheme.Modules.Hom.id_app, AddCommGrpCat.hom_id,
+          AddMonoidHom.id_apply]
+      map_add' := fun x y ↦
+        (Scheme.Modules.Hom.app comparisonIso.inv ⊤).hom.map_add x y }
   let eComparison : Γ((D.baseChange R).nativeModule, ⊤) ≃ₗ[R]
       Γ((Scheme.Modules.pullback
         (relCurveMap C B R)).obj D.nativeModule, ⊤) :=
-    ((asIso ((D.nativePullbackComparison R).app ⊤)).toLinearEquiv.symm).restrictScalars R
+    eComparisonAdd.toLinearEquiv (by
+      intro r x
+      change (Scheme.Modules.Hom.app comparisonIso.inv ⊤).hom
+          ((relCurve C R).overAlgebraMap R ⊤ r • x) =
+        (relCurve C R).overAlgebraMap R ⊤ r •
+          (Scheme.Modules.Hom.app comparisonIso.inv ⊤).hom x
+      exact Scheme.Modules.Hom.app_smul comparisonIso.inv _ x)
+  let eTargetChartRing : Γ((Scheme.Modules.pullback
+        (relCurveMap C B R)).obj D.nativeModule, ⊤) ≃ₗ[R]
+      Γ((Scheme.Modules.pullback a).obj N', ⊤) := by
+    let eRing := pullbackCongrCompSectionsEquiv a g'
+      (relCurveMap C B R) ha_g'.symm D.nativeModule
+    exact eRing.toAddEquiv.toLinearEquiv (by
+      intro r x
+      change eRing ((relCurve C R).overAlgebraMap R ⊤ r • x) =
+        (relCurve C R).overAlgebraMap R ⊤ r • eRing x
+      exact eRing.map_smul _ _)
   let eTargetChart : Γ((Scheme.Modules.pullback
         (relCurveMap C B R)).obj D.nativeModule, ⊤) ≃ₗ[R]
       Γ((Scheme.Modules.pullback a).obj N', ⊤) :=
-    (pullbackCongrCompSectionsEquiv a g'
-      (relCurveMap C B R) ha_g'.symm D.nativeModule).restrictScalars R
+    eTargetChartRing
   letI nativeRangeSectionsModule : Module R Γ(N', a.opensRange) :=
     Module.compHom _ (f'.appLE U a.opensRange haRange.le).hom
+  letI nativeOpenPullbackSectionsModule :
+      Module Γ(X', a.opensRange)
+        Γ((Scheme.Modules.pullback a).obj N', ⊤) :=
+    Module.compHom _ (a.appLE a.opensRange ⊤
+      (le_of_eq (Scheme.Hom.preimage_opensRange a).symm)).hom
   let eOpenAdd := pullbackOpenImmersionSectionsEquiv a N'
   let eOpen : Γ((Scheme.Modules.pullback a).obj N', ⊤) ≃ₗ[R]
       Γ(N', a.opensRange) :=
@@ -424,7 +552,8 @@ private theorem cartesianTargetSectionsPresentation
       apply eOpenAdd.symm.injective
       rw [eOpenAdd.symm_apply_apply,
         pullbackOpenImmersionSectionsEquiv_symm_apply]
-      rw [map_smul]
+      rw [(pullback_app_isoTensor_baseMap a N'
+        (le_of_eq (Scheme.Hom.preimage_opensRange a).symm)).map_smul]
       rw [← pullbackOpenImmersionSectionsEquiv_symm_apply,
         eOpenAdd.symm_apply_apply]
       change (relCurve C R).overAlgebraMap R ⊤ r • x =
@@ -434,28 +563,56 @@ private theorem cartesianTargetSectionsPresentation
       exact congrArg (fun s ↦ s • x)
         (congrArg (fun q : Γ(T', U) ⟶ Γ(relCurve C R, ⊤) ↦ q.hom r)
           (cartesianAffineChart_appLE f' U hU a haRange ha_f')).symm)
+  let eRangeHom := N'.presheaf.map (eqToHom haRange.symm).op
   let eRangeAdd : Γ(N', a.opensRange) ≃+
       Γ((Scheme.Modules.pushforward f').obj N', U) :=
-    AddEquiv.cast (M := fun W : X'.Opens ↦ Γ(N', W)) haRange
+    AddEquiv.ofBijective eRangeHom.hom
+      (ConcreteCategory.bijective_of_isIso eRangeHom)
   let eRange : Γ(N', a.opensRange) ≃ₗ[R]
       Γ((Scheme.Modules.pushforward f').obj N', U) :=
     eRangeAdd.toLinearEquiv (by
       intro r x
-      cases haRange
-      change (f'.appLE U (f' ⁻¹ᵁ U) le_rfl).hom r • x =
-        (f'.app U).hom r • x
-      rw [Scheme.Hom.appLE_eq_app])
+      change eRangeHom.hom
+          ((f'.appLE U a.opensRange haRange.le).hom r • x) =
+        (f'.app U).hom r • eRangeHom.hom x
+      rw [N'.map_smul]
+      congr 1
+      have hAppLE :
+          f'.appLE U a.opensRange haRange.le ≫
+              X'.presheaf.map (eqToHom haRange.symm).op =
+            f'.app U := by
+        calc
+          f'.appLE U a.opensRange haRange.le ≫
+                X'.presheaf.map (eqToHom haRange.symm).op =
+              f'.appLE U a.opensRange
+                  (haRange.symm ▸ (le_rfl : f' ⁻¹ᵁ U ≤ f' ⁻¹ᵁ U)) ≫
+                X'.presheaf.map (eqToHom haRange.symm).op := by
+                  congr 2
+          _ = f'.appLE U (f' ⁻¹ᵁ U) le_rfl :=
+            f'.appLE_map' le_rfl haRange.symm
+          _ = f'.app U := f'.appLE_eq_app
+      exact congrArg (fun q ↦ q.hom r) hAppLE)
   let e := eH0.trans
     (eComparison.trans (eTargetChart.trans (eOpen.trans eRange)))
   have eComparison_sectionsMap (x : Γ(D.nativeModule, ⊤)) :
       eComparison (D.sectionsMap R le_rfl x) =
         pullback_app_isoTensor_baseMap (relCurveMap C B R) D.nativeModule
           le_top x := by
-    change ((asIso ((D.nativePullbackComparison R).app ⊤)).toLinearEquiv.symm)
-        (D.sectionsMap R le_rfl x) = _
-    rw [LinearEquiv.eq_symm_apply]
-    simpa only [Scheme.Hom.preimage_top] using
-      D.nativePullbackComparison_baseMap R (⊤ : (relCurve C B).Opens) x
+    change (Scheme.Modules.Hom.app comparisonIso.inv ⊤).hom
+      (D.sectionsMap R le_rfl x) = _
+    have hComparison :
+        (Scheme.Modules.Hom.app comparisonIso.hom ⊤).hom
+            (pullback_app_isoTensor_baseMap
+              (relCurveMap C B R) D.nativeModule le_top x) =
+          D.sectionsMap R le_rfl x := by
+      change ((D.nativePullbackComparison R).app ⊤).hom _ = _
+      simpa only [Scheme.Hom.preimage_top] using
+        D.nativePullbackComparison_baseMap R
+          (⊤ : (relCurve C B).Opens) x
+    rw [← hComparison, ← AddCommGrpCat.comp_apply,
+      ← Scheme.Modules.Hom.comp_app, comparisonIso.hom_inv_id,
+      Scheme.Modules.Hom.id_app]
+    exact CategoryTheory.id_apply _
   have eTargetChart_baseMap (x : Γ(D.nativeModule, ⊤)) :
       eTargetChart
           (pullback_app_isoTensor_baseMap (relCurveMap C B R)
@@ -463,9 +620,12 @@ private theorem cartesianTargetSectionsPresentation
         pullback_app_isoTensor_baseMap a N'
           (le_of_eq (Scheme.Hom.preimage_opensRange a).symm)
           (pullback_app_isoTensor_baseMap g' D.nativeModule le_top x) :=
-    pullbackCongrCompSectionsEquiv_baseMap a g'
-      (relCurveMap C B R) ha_g'.symm D.nativeModule le_top
-      (le_of_eq (Scheme.Hom.preimage_opensRange a).symm) le_top x
+    by
+      change (pullbackCongrCompSectionsEquiv a g'
+        (relCurveMap C B R) ha_g'.symm D.nativeModule) _ = _
+      exact pullbackCongrCompSectionsEquiv_baseMap a g'
+        (relCurveMap C B R) ha_g'.symm D.nativeModule le_top
+        (le_of_eq (Scheme.Hom.preimage_opensRange a).symm) le_top x
   have eOpen_baseMap (x : Γ(D.nativeModule, ⊤)) :
       eOpen
           (pullback_app_isoTensor_baseMap a N'
@@ -478,8 +638,18 @@ private theorem cartesianTargetSectionsPresentation
   have eRange_baseMap (x : Γ(D.nativeModule, ⊤)) :
       eRange (pullback_app_isoTensor_baseMap g' D.nativeModule le_top x) =
         pullback_app_isoTensor_baseMap g' D.nativeModule le_top x := by
-    cases haRange
-    rfl
+    change eRangeHom.hom _ = _
+    have hres := pullback_app_isoTensor_baseMap_res g' D.nativeModule
+      (V' := ⊤) (V'' := ⊤)
+      (W' := a.opensRange) (W'' := f' ⁻¹ᵁ U)
+      le_top le_top le_rfl haRange.symm.le x
+    simpa only [eRangeHom,
+      show homOfLE haRange.symm.le = eqToHom haRange.symm from
+        Subsingleton.elim _ _,
+      show homOfLE (le_rfl : (⊤ : (relCurve C B).Opens) ≤ ⊤) =
+        𝟙 (⊤ : (relCurve C B).Opens) from rfl,
+      op_id, CategoryTheory.Functor.map_id, AddCommGrpCat.hom_id,
+      AddMonoidHom.id_apply] using hres
   have he (x : Γ(D.nativeModule, ⊤)) :
       e (1 ⊗ₜ[B] x) =
         pullback_app_isoTensor_baseMap g' D.nativeModule le_top x := by
@@ -528,8 +698,9 @@ private theorem isIso_canonicalBaseChangeMap_nativeModule_app
   let N : (Spec (.of B)).Modules :=
     (Scheme.Modules.pushforward
       (relCurve C B ↘ Spec (.of B))).obj D.nativeModule
-  obtain ⟨eL, heL⟩ :=
-    affineSourceSectionsPresentation D hH1 g U hU phiCat hSpec
+  obtain ⟨eL, hMate⟩ :=
+    affineSourceSectionsPresentation
+      D hH1 g f' g' sq U hU phi.toRingHom hSpec
   let N' := (Scheme.Modules.pullback g').obj D.nativeModule
   obtain ⟨eR, heR⟩ :=
     cartesianTargetSectionsPresentation
@@ -544,13 +715,17 @@ private theorem isIso_canonicalBaseChangeMap_nativeModule_app
           ((canonicalBaseChangeMap sq).app D.nativeModule) r x }
   have hgen (x : Γ(D.nativeModule, ⊤)) :
       χ (eL (1 ⊗ₜ[B] x)) = eR (1 ⊗ₜ[B] x) := by
-    rw [heL x, heR x]
-    exact canonicalBaseChangeMap_app_baseMap_compat sq D.nativeModule
-      le_top le_top x
+    rw [show χ (eL (1 ⊗ₜ[B] x)) =
+      pullback_app_isoTensor_baseMap g' D.nativeModule le_top x from hMate x,
+      heR x]
   have hall (z : R ⊗[B] Γ(D.nativeModule, ⊤)) :
       χ (eL z) = eR z := by
     induction z using TensorProduct.induction_on with
-    | zero => simp only [map_zero]
+    | zero =>
+      calc
+        χ (eL 0) = χ 0 := congrArg χ eL.map_zero
+        _ = 0 := χ.map_zero
+        _ = eR 0 := eR.map_zero.symm
     | tmul r x =>
       have hr : (r ⊗ₜ[B] x : R ⊗[B] Γ(D.nativeModule, ⊤)) =
           r • ((1 : R) ⊗ₜ[B] x) := by
