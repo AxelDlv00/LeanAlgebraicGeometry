@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.Pic0ChartTwistSplit
+import AlgebraicJacobian.Picard.Pic0RankOneNativePresentationDatum
 
 /-!
 # Field-extension stability for rank-one presentation witnesses
@@ -64,8 +65,7 @@ theorem isSplitWitness_map_overSpecMap_of_algHom
   haveI htowkKL : IsScalarTower k K L :=
     .of_algebraMap_eq fun x => (e.commutes x).symm
   obtain ⟨P, hPf, hLP, hPfin, hPsep, ⟨q⟩⟩ :=
-    ((Algebra.EtaleCover.ofField (K := K) N).baseChange L)
-      .exists_finiteSeparableField_algHom
+    ((Algebra.EtaleCover.ofField (K := K) N).baseChange L).exists_finiteSeparableField_algHom
   letI := hPf
   letI := hLP
   letI := hPfin
@@ -117,6 +117,65 @@ theorem isSplitWitness_map_overSpecMap_of_algHom
     rw [PicEtAff.map_map]
     exact hMP
   · rw [hW', hD]
+
+/-- A native datum for the arbitrary-affine pullback of a split field class has the required
+residue-field `H¹` witnesses.
+
+This is a field-origin specialization, not a claim for an arbitrary affine Picard class.  The
+map to each residue field factors through the affine algebra and the chosen etale cover, so the
+single split witness over `K` supplies all pointwise witnesses needed by the datum. -/
+theorem PicRankOneNativeDatum.residueH1Witness_of_fieldPullback
+    {K A : Type u} [Field K] [Algebra k K] [CommRing A] [Algebra k A]
+    {pi : C.left ⟶ P1 k} [IsFinite pi]
+    {lam : picDegLayer C (genus C : ℤ) (overSpec k A)}
+    (P : PicRankOneNativeDatum pi lam)
+    (e : K →ₐ[k] A) (nu : picEt C (overSpec k K))
+    (hlam : lam.1 = picEtMap C (Over.overSpecMap e) nu)
+    (hsplit : IsSplitWitness C nu) :
+    ∀ p : PrimeSpectrum P.cover.Carrier,
+      P.datum.HasWitnessH1Vanishing p.asIdeal.ResidueField := by
+  apply P.residueH1Witness_of_isSplitWitness
+  intro t
+  let iota : A →ₐ[k] P.cover.Carrier :=
+    (Algebra.ofId A P.cover.Carrier).restrictScalars k
+  let rho : P.cover.Carrier →ₐ[k]
+      Over.testPointField (T := overSpec k P.cover.Carrier) t :=
+    IsScalarTower.toAlgHom k P.cover.Carrier _
+  let phi : K →ₐ[k]
+      Over.testPointField (T := overSpec k P.cover.Carrier) t :=
+    rho.comp (iota.comp e)
+  have hcover :
+      picEtMap C (Over.overSpecMap iota) lam.1 =
+        relPicToPicEt C (overSpec k P.cover.Carrier)
+          (P.representative : relPic C (overSpec k P.cover.Carrier)) :=
+    picEtMap_eq_relPicToPicEt_of_affineRepresentative
+      C lam.1 P.cover P.representative P.represents.symm
+  have hpoint : Over.testPoint t = Over.overSpecMap rho := by
+    rw [testPoint_eq_overSpecMap]
+    apply Over.OverMorphism.ext
+    rfl
+  have hmaps : Over.overSpecMap phi =
+      Over.testPoint t ≫ Over.overSpecMap iota ≫ Over.overSpecMap e := by
+    calc
+      Over.overSpecMap phi =
+          Over.overSpecMap rho ≫ Over.overSpecMap (iota.comp e) :=
+        Over.overSpecMap_comp _ _
+      _ = Over.overSpecMap rho ≫
+          (Over.overSpecMap iota ≫ Over.overSpecMap e) := by
+        rw [Over.overSpecMap_comp]
+      _ = (Over.overSpecMap rho ≫ Over.overSpecMap iota) ≫
+          Over.overSpecMap e := (Category.assoc _ _ _).symm
+      _ = Over.testPoint t ≫ Over.overSpecMap iota ≫
+          Over.overSpecMap e := by rw [hpoint]
+  have hclass :
+      picEtMap C (Over.testPoint t)
+          (relPicToPicEt C (overSpec k P.cover.Carrier)
+            (P.representative : relPic C (overSpec k P.cover.Carrier))) =
+        picEtMap C (Over.overSpecMap phi) nu := by
+    rw [← hcover, ← picEtMap_comp, hlam, ← picEtMap_comp, ← hmaps]
+  rw [hclass]
+  exact isSplitWitness_map_overSpecMap_of_algHom
+    (C := C) (pi := pi) phi nu hsplit
 
 end
 

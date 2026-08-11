@@ -6,6 +6,7 @@ import AlgebraicJacobian.Picard.Pic0RankOneLocusNative
 import AlgebraicJacobian.Cohomology.GluedSheafDatumBaseChange
 import AlgebraicJacobian.Cohomology.NativePushforwardBaseChangeAffine
 import AlgebraicJacobian.Cohomology.NativePushforwardBaseChangeMate
+import AlgebraicJacobian.Cohomology.NativePushforwardBaseChangeOpen
 import AlgebraicJacobian.Cohomology.NativePushforwardBaseChangeTensor
 
 set_option autoImplicit false
@@ -114,6 +115,137 @@ theorem nativePullbackComparison_baseMap (V : (relCurve C B).Opens)
   rw [Adjunction.homEquiv_unit] at h
   rw [pullback_app_isoTensor_baseMap_le_refl]
   exact h
+
+private theorem unit_hom_ext_top {X : Scheme.{u}} {M : X.Modules}
+    (f g : SheafOfModules.unit X.ringCatSheaf ⟶ M)
+    (h : f.val.app (.op (⊤ : X.Opens)) (1 : Γ(X, ⊤)) =
+      g.val.app (.op (⊤ : X.Opens)) (1 : Γ(X, ⊤))) : f = g := by
+  apply (SheafOfModules.fullyFaithfulForget X.ringCatSheaf).map_injective
+  apply PresheafOfModules.hom_ext
+  intro U
+  apply ModuleCat.hom_ext
+  apply LinearMap.ext
+  intro x
+  change Γ(X, U.unop) at x
+  change f.val.app U x = g.val.app U x
+  rw [show x = x • (1 : Γ(X, U.unop)) by simp, map_smul, map_smul]
+  congr 1
+  have hf := congrArg (fun k ↦ k.hom (1 : Γ(X, ⊤)))
+    ((Scheme.Modules.Hom.mapPresheaf f).naturality
+      (homOfLE (le_top : U.unop ≤ (⊤ : X.Opens))).op)
+  have hg := congrArg (fun k ↦ k.hom (1 : Γ(X, ⊤)))
+    ((Scheme.Modules.Hom.mapPresheaf g).naturality
+      (homOfLE (le_top : U.unop ≤ (⊤ : X.Opens))).op)
+  change f.val.app U ((X.presheaf.map
+      (homOfLE (le_top : U.unop ≤ (⊤ : X.Opens))).op).hom 1) =
+    (M.presheaf.map (homOfLE (le_top : U.unop ≤ (⊤ : X.Opens))).op).hom
+      (f.val.app (.op (⊤ : X.Opens)) (1 : Γ(X, ⊤))) at hf
+  change g.val.app U ((X.presheaf.map
+      (homOfLE (le_top : U.unop ≤ (⊤ : X.Opens))).op).hom 1) =
+    (M.presheaf.map (homOfLE (le_top : U.unop ≤ (⊤ : X.Opens))).op).hom
+      (g.val.app (.op (⊤ : X.Opens)) (1 : Γ(X, ⊤))) at hg
+  rw [map_one] at hf hg
+  exact hf.trans ((congrArg
+    (fun z ↦ (M.presheaf.map
+      (homOfLE (le_top : U.unop ≤ (⊤ : X.Opens))).op).hom z) h).trans hg.symm)
+
+private theorem pullbackRestrictIso_baseMap_top
+    {X Y : Scheme.{u}} (g : Y ⟶ X) (U : X.Opens)
+    (N : X.Modules) (x : Γ(N, U)) :
+    (Scheme.Modules.Hom.app
+      ((Scheme.Modules.pullbackRestrictIso g U).hom.app N)
+        (⊤ : (g ⁻¹ᵁ U).toScheme.Opens)).hom
+      (pullback_app_isoTensor_baseMap g N
+        (show (g ⁻¹ᵁ U).ι ''ᵁ (⊤ : (g ⁻¹ᵁ U).toScheme.Opens) ≤ g ⁻¹ᵁ U by simp) x) =
+      pullback_app_isoTensor_baseMap (g ∣_ U)
+        ((Scheme.Modules.restrictFunctor U.ι).obj N)
+        (le_top : (⊤ : (g ⁻¹ᵁ U).toScheme.Opens) ≤
+          (g ∣_ U) ⁻¹ᵁ (⊤ : U.toScheme.Opens))
+        ((N.restrictAppIso U.ι ⊤).inv (by simpa using x)) := by
+  have hOpenSource :
+      (Scheme.Modules.Hom.app
+        ((Scheme.Modules.restrictFunctorIsoPullback (g ⁻¹ᵁ U).ι).hom.app
+          ((Scheme.Modules.pullback g).obj N)) ⊤).hom
+        (pullback_app_isoTensor_baseMap g N
+          (show (g ⁻¹ᵁ U).ι ''ᵁ (⊤ : (g ⁻¹ᵁ U).toScheme.Opens) ≤
+            g ⁻¹ᵁ U by simp) x) =
+      pullback_app_isoTensor_baseMap (g ⁻¹ᵁ U).ι
+        ((Scheme.Modules.pullback g).obj N) le_top
+        (pullback_app_isoTensor_baseMap g N (le_refl (g ⁻¹ᵁ U)) x) := by
+    simpa only [pullbackOpenImmersionSectionsEquiv,
+      Scheme.Opens.opensRange_ι, Scheme.Opens.ι_image_top,
+      Scheme.Opens.ι_preimage_self, eqToHom_refl, op_id,
+      CategoryTheory.Functor.map_id, AddCommGrpCat.hom_id,
+      AddMonoidHom.id_apply] using
+      (pullbackOpenImmersionSectionsEquiv_symm_apply (g ⁻¹ᵁ U).ι
+        ((Scheme.Modules.pullback g).obj N)
+        (by simpa only [Scheme.Opens.opensRange_ι] using
+          pullback_app_isoTensor_baseMap g N (le_refl (g ⁻¹ᵁ U)) x))
+  have hCompSource := pullback_app_isoTensor_baseMap_comp
+    (g ⁻¹ᵁ U).ι g N
+    (T := (⊤ : (g ⁻¹ᵁ U).toScheme.Opens))
+    (V := g ⁻¹ᵁ U) (U := U)
+    (le_refl (g ⁻¹ᵁ U)) le_top le_top x
+  have hCongr := pullback_app_isoTensor_baseMap_congr
+    (Scheme.morphismRestrict_ι g U).symm N
+    (U := (⊤ : (g ⁻¹ᵁ U).toScheme.Opens)) (V := U)
+    le_top le_top x
+  have hCompTarget := pullback_app_isoTensor_baseMap_comp
+    (g ∣_ U) U.ι N
+    (T := (⊤ : (g ⁻¹ᵁ U).toScheme.Opens))
+    (V := (⊤ : U.toScheme.Opens)) (U := U)
+    le_top le_top le_top x
+  have hCompTargetInv :
+      (Scheme.Modules.Hom.app
+        ((Scheme.Modules.pullbackComp (g ∣_ U) U.ι).inv.app N) ⊤).hom
+        (pullback_app_isoTensor_baseMap (g ∣_ U ≫ U.ι) N le_top x) =
+      pullback_app_isoTensor_baseMap (g ∣_ U)
+        ((Scheme.Modules.pullback U.ι).obj N) le_top
+        (pullback_app_isoTensor_baseMap U.ι N le_top x) := by
+    apply (Scheme.Modules.Hom.app
+      ((Scheme.Modules.pullbackComp (g ∣_ U) U.ι).hom.app N) ⊤).hom.injective
+    simpa only [← Scheme.Modules.Hom.comp_app, Iso.inv_hom_id_app,
+      Scheme.Modules.Hom.id_app, AddCommGrpCat.hom_id, AddMonoidHom.id_apply]
+      using hCompTarget
+  have hOpenTarget :
+      (Scheme.Modules.Hom.app
+        ((Scheme.Modules.restrictFunctorIsoPullback U.ι).inv.app N) ⊤).hom
+        (pullback_app_isoTensor_baseMap U.ι N le_top x) =
+      (N.restrictAppIso U.ι ⊤).inv (by simpa using x) := by
+    have h := pullbackOpenImmersionSectionsEquiv_symm_apply U.ι N
+      (by simpa only [Scheme.Opens.opensRange_ι] using x)
+    apply (Scheme.Modules.Hom.app
+      ((Scheme.Modules.restrictFunctorIsoPullback U.ι).hom.app N) ⊤).hom.injective
+    simpa only [pullbackOpenImmersionSectionsEquiv,
+      Scheme.Opens.opensRange_ι, Scheme.Opens.ι_image_top,
+      Scheme.Opens.ι_preimage_self, eqToHom_refl, op_id,
+      CategoryTheory.Functor.map_id, AddCommGrpCat.hom_id,
+      AddMonoidHom.id_apply, ← Scheme.Modules.Hom.comp_app,
+      Iso.inv_hom_id_app, Scheme.Modules.Hom.id_app] using h.symm
+  have hNatural := pullback_app_isoTensor_baseMap_naturality (g ∣_ U)
+    ((Scheme.Modules.restrictFunctorIsoPullback U.ι).inv.app N)
+    (U := (⊤ : (g ⁻¹ᵁ U).toScheme.Opens))
+    (V := (⊤ : U.toScheme.Opens)) le_top
+    (pullback_app_isoTensor_baseMap U.ι N le_top x)
+  change
+    (Scheme.Modules.Hom.app
+      ((Scheme.Modules.pullback (g ∣_ U)).map
+        ((Scheme.Modules.restrictFunctorIsoPullback U.ι).inv.app N)) ⊤).hom
+      ((Scheme.Modules.Hom.app
+        ((Scheme.Modules.pullbackComp (g ∣_ U) U.ι).inv.app N) ⊤).hom
+        ((Scheme.Modules.Hom.app
+          ((Scheme.Modules.pullbackCongr
+            (Scheme.morphismRestrict_ι g U).symm).hom.app N) ⊤).hom
+          ((Scheme.Modules.Hom.app
+            ((Scheme.Modules.pullbackComp (g ⁻¹ᵁ U).ι g).hom.app N) ⊤).hom
+            ((Scheme.Modules.Hom.app
+              ((Scheme.Modules.restrictFunctorIsoPullback
+                (g ⁻¹ᵁ U).ι).hom.app
+                ((Scheme.Modules.pullback g).obj N)) ⊤).hom
+              (pullback_app_isoTensor_baseMap g N
+                (show (g ⁻¹ᵁ U).ι ''ᵁ
+                  (⊤ : (g ⁻¹ᵁ U).toScheme.Opens) ≤ g ⁻¹ᵁ U by simp) x))))) = _
+  rw [hOpenSource, hCompSource, hCongr, hCompTargetInv, hNatural, hOpenTarget]
 
 /-- On every cocycle piece, the geometric pullback of the native module is canonically
 trivial: restrict pullback to the full preimage, pull back the original piece

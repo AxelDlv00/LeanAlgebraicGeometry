@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 
-import AlgebraicJacobian.Cohomology.RankOneFamilyCertificatesArbitraryRank
+import AlgebraicJacobian.Cohomology.RankOneFamilyCertificatesActualDatumRank
 import AlgebraicJacobian.Cohomology.RankOneFamilyCertificatesDescent
 import AlgebraicJacobian.Cohomology.RankOneFamilyCertificatesFiniteStage
+import AlgebraicJacobian.Cohomology.RigidEngine2Nakayama
+import AlgebraicJacobian.Cohomology.RigidEngine4Assembly
 
 /-!
 # Rank-one certificates for the displayed arbitrary-affine datum
@@ -39,6 +41,40 @@ variable {pi : C.left ⟶ P1 k} [IsFinite pi]
 
 variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
   [GeometricallyIrreducible C.hom]
+
+noncomputable local instance actualDatumOverCleft :
+    C.left.Over (Spec (.of k)) := ⟨C.hom⟩
+
+/- Re-key the canonical field base-change package for the degree predicate. -/
+noncomputable local instance (priority := 20000) actualDatumDegreeOver
+    (L : Type u) [Field L] [Algebra k L] :
+    (relCurve C L).Over (Spec (.of L)) :=
+  instOverBaseChange C L
+
+noncomputable local instance actualDatumDegreeSmooth
+    (L : Type u) [Field L] [Algebra k L] :
+    SmoothOfRelativeDimension 1 (relCurve C L ↘ Spec (.of L)) :=
+  instSmoothOfRelativeDimensionBaseChange C L
+
+noncomputable local instance actualDatumDegreeIntegral
+    (L : Type u) [Field L] [Algebra k L] :
+    IsIntegral (relCurve C L) :=
+  instIsIntegralBaseChange C L
+
+noncomputable local instance actualDatumDegreeQuasiCompact
+    (L : Type u) [Field L] [Algebra k L] :
+    QuasiCompact (relCurve C L ↘ Spec (.of L)) :=
+  instQuasiCompactBaseChange C L
+
+noncomputable local instance actualDatumDegreeFiniteH0
+    (L : Type u) [Field L] [Algebra k L] :
+    Module.Finite L (Sheaf.HModule ((relCurve C L).moduleKSheaf L) 0) :=
+  instModuleFiniteHModuleZeroBaseChange C L
+
+noncomputable local instance actualDatumDegreeFiniteH1
+    (L : Type u) [Field L] [Algebra k L] :
+    Module.Finite L (Sheaf.HModule ((relCurve C L).moduleKSheaf L) 1) :=
+  instModuleFiniteHModuleOneBaseChange C L
 
 /-! ## Geometric inputs on the displayed datum -/
 
@@ -77,7 +113,14 @@ noncomputable def ofActualDatum
     intro p
     exact (D.hasWitnessH1Vanishing_iff_subsingleton p.asIdeal.ResidueField).mp (hW p)
   have hpair : Subsingleton (datumPair D).H1 :=
-    D.datum_subsingleton_pairH1 hpi hfib
+    by
+      letI := D.moduleFinite_aeval'_pair_t₀ hpi
+      letI := D.moduleFinite_aeval'_pair_t₁ hpi
+      letI : Module.Finite B (datumPair D).H1 :=
+        (datumPair D).moduleFinite_h1
+      exact
+        AlgebraicJacobian.RigidEngine.subsingleton_of_forall_subsingleton_residueField_tensor
+          hfib
   have h1 : Subsingleton (Sheaf.HModule D.sheaf 1) :=
     (subsingleton_datumPair_h1_iff D).mp hpair
 
@@ -98,8 +141,22 @@ noncomputable def ofActualDatum
         ((datumPair (D0.baseChange A)).H1 ⊗[A] p.asIdeal.ResidueField) := by
     intro p
     infer_instance
+  letI := (D0.baseChange A).moduleFinite_aeval'_pair_t₀ hpi
+  letI := (D0.baseChange A).moduleFinite_aeval'_pair_t₁ hpi
+  letI := (D0.baseChange A).projective_sections₀
+  letI := (D0.baseChange A).projective_sections₁
+  letI := (D0.baseChange A).projective_sectionsInf
+  letI : Module.Projective A
+      (((D0.baseChange A).sheaf.obj.obj
+          (op (relCover C A (fiberTwoCover pi)).V₀)) ×
+        ((D0.baseChange A).sheaf.obj.obj
+          (op (relCover C A (fiberTwoCover pi)).V₁))) :=
+    Module.Projective.prod
   obtain ⟨_, hfiniteA, hprojectiveA⟩ :=
-    BasicOpenCocycleDatum.datumRigidEngine (D0.baseChange A) hpi hfibA
+    (D0.baseChange A).pairData.rigidEngine
+      (relCover_isAffineOpen₀ C A (fiberTwoCover pi))
+      (relCover_isAffineOpen₁ C A (fiberTwoCover pi))
+      (relCover_sup C A (fiberTwoCover pi)) hfibA
 
   have hbase : (D0.baseChange A).baseChange B = D := hAA.trans hD0
   let Q := Sheaf.HModule (D0.baseChange A).sheaf 0
@@ -118,7 +175,7 @@ noncomputable def ofActualDatum
     Module.Projective.of_equiv e
   have hrank : ∀ p : PrimeSpectrum B,
       Module.rankAtStalk (Sheaf.HModule D.sheaf 0) p = 1 :=
-    D.rankAtStalk_hModule_zero_eq_one_of_pairH1
+    D.rankAtStalk_hModule_zero_eq_one_of_actualPairH1
       (n := genus C) (chi_moduleKSheaf C) hpair hfinite hprojective hdegree
   exact ⟨h1, hfinite, hprojective, hrank⟩
 
