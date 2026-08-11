@@ -202,28 +202,61 @@ private lemma cartesianAffineChart
       (pullbackRestrictIsoRestrict (snd C T).left U).hom ≫ W.ι =
         (relCurveAffineCover C T).f Ua := by
     exact pullbackRestrictIsoRestrict_hom_ι (snd C T).left U
+  have hPreimage :
+      (eX.hom.preimageIso W).symm.hom ≫
+          (eX.hom ⁻¹ᵁ W).ι ≫ eX.hom = W.ι := by
+    change (eX.hom.preimageIso W).inv ≫
+      (eX.hom ⁻¹ᵁ W).ι ≫ eX.hom = W.ι
+    exact Scheme.Hom.preimageIso_inv_ι eX.hom W
   have ha_eX : a ≫ eX.hom =
       (C ◁ Over.fromSpecAffine T Ua).left := by
-    dsimp only [a, eU]
-    simp only [Iso.trans_hom, Category.assoc,
-      Scheme.isoOfEq_hom_ι_assoc,
-      Scheme.Hom.preimageIso_inv_ι_assoc]
-    rw [hCover, relCurveAffineOpenIso_hom_f]
+    calc
+      a ≫ eX.hom =
+          (relCurveAffineOpenIso C T Ua).hom ≫
+            (pullbackRestrictIsoRestrict (snd C T).left U).hom ≫
+              (eX.hom.preimageIso W).symm.hom ≫
+                (X'.isoOfEq hpre).hom ≫ (f' ⁻¹ᵁ U).ι ≫ eX.hom := by
+        simp only [a, eU, Iso.trans_hom, Category.assoc]
+      _ = (relCurveAffineOpenIso C T Ua).hom ≫
+            (pullbackRestrictIsoRestrict (snd C T).left U).hom ≫
+              (eX.hom.preimageIso W).symm.hom ≫
+                (eX.hom ⁻¹ᵁ W).ι ≫ eX.hom := by
+        rw [Scheme.isoOfEq_hom_ι_assoc]
+      _ = (relCurveAffineOpenIso C T Ua).hom ≫
+            (pullbackRestrictIsoRestrict (snd C T).left U).hom ≫ W.ι := by
+        simpa only [Category.assoc] using congrArg
+          (fun q ↦ (relCurveAffineOpenIso C T Ua).hom ≫
+            (pullbackRestrictIsoRestrict (snd C T).left U).hom ≫ q)
+          hPreimage
+      _ = (relCurveAffineOpenIso C T Ua).hom ≫
+            (relCurveAffineCover C T).f Ua := by
+        rw [hCover]
+      _ = (C ◁ Over.fromSpecAffine T Ua).left :=
+        relCurveAffineOpenIso_hom_f C T Ua
   have ha_f' : a ≫ f' =
       (snd C (overSpec k R)).left ≫ hU.fromSpec := by
-    rw [← heXsnd]
-    rw [Category.assoc, ha_eX]
-    rw [← Over.comp_left, ← Over.comp_left, whiskerLeft_snd]
+    calc
+      a ≫ f' = a ≫ (eX.hom ≫ (snd C T).left) := by rw [heXsnd]
+      _ = (a ≫ eX.hom) ≫ (snd C T).left := (Category.assoc _ _ _).symm
+      _ = (C ◁ Over.fromSpecAffine T Ua).left ≫ (snd C T).left := by rw [ha_eX]
+      _ = (snd C (overSpec k R)).left ≫ hU.fromSpec := by
+        exact congrArg Over.Hom.left
+          (whiskerLeft_snd C (Over.fromSpecAffine T Ua))
   have ha_g' : a ≫ g' = relCurveMap C B R := by
-    rw [← heXfst]
-    rw [Category.assoc, ha_eX]
-    rw [← Over.comp_left, ← MonoidalCategory.whiskerLeft_comp, ← hOverMap]
-    rfl
+    calc
+      a ≫ g' = a ≫ (eX.hom ≫ (C ◁ gOver).left) := by rw [heXfst]
+      _ = (a ≫ eX.hom) ≫ (C ◁ gOver).left := (Category.assoc _ _ _).symm
+      _ = (C ◁ Over.fromSpecAffine T Ua).left ≫ (C ◁ gOver).left := by
+        rw [ha_eX]
+      _ = relCurveMap C B R := by
+        rw [← Over.comp_left, ← MonoidalCategory.whiskerLeft_comp, ← hOverMap]
+        rfl
   exact ⟨a, inferInstance, haRange, ha_g', ha_f'⟩
 
 private lemma cartesianAffineChart_appLE
     {T' X' : Scheme.{u}} (f' : X' ⟶ T')
     (U : T'.Opens) (hU : IsAffineOpen U)
+    [Algebra k Γ(T', U)]
     (a : relCurve C Γ(T', U) ⟶ X') [IsOpenImmersion a]
     (haRange : a.opensRange = f' ⁻¹ᵁ U)
     (ha_f' : a ≫ f' =
@@ -231,7 +264,7 @@ private lemma cartesianAffineChart_appLE
     f'.appLE U a.opensRange haRange.le ≫
         a.appLE a.opensRange ⊤
           (le_of_eq (Scheme.Hom.preimage_opensRange a).symm) =
-      (Scheme.ΓSpecIso (.of Γ(T', U))).inv ≫
+      (Scheme.ΓSpecIso Γ(T', U)).inv ≫
         (snd C (overSpec k Γ(T', U))).left.appLE ⊤ ⊤ le_top := by
   let ea : (⊤ : (relCurve C Γ(T', U)).Opens) ≤
       a ⁻¹ᵁ a.opensRange :=
@@ -239,24 +272,32 @@ private lemma cartesianAffineChart_appLE
   let eFrom : (⊤ : (Spec (.of Γ(T', U))).Opens) ≤
       hU.fromSpec ⁻¹ᵁ U :=
     le_of_eq hU.fromSpec_preimage_self.symm
+  let eAF : (⊤ : (relCurve C Γ(T', U)).Opens) ≤
+      (a ≫ f') ⁻¹ᵁ U :=
+    ea.trans (Scheme.Hom.preimage_mono a haRange.le)
+  let eSF : (⊤ : (relCurve C Γ(T', U)).Opens) ≤
+      ((snd C (overSpec k Γ(T', U))).left ≫ hU.fromSpec) ⁻¹ᵁ U := by
+    rw [← ha_f']
+    exact eAF
   have hFrom : hU.fromSpec.appLE U ⊤ eFrom =
-      (Scheme.ΓSpecIso (.of Γ(T', U))).inv := by
+      (Scheme.ΓSpecIso Γ(T', U)).inv := by
     simp [Scheme.Hom.appLE, hU.fromSpec_app_self, ← Functor.map_comp]
   calc
     f'.appLE U a.opensRange haRange.le ≫ a.appLE a.opensRange ⊤ ea =
-        (a ≫ f').appLE U ⊤
-          (ea.trans (Scheme.Hom.preimage_mono a haRange.le)) :=
+        (a ≫ f').appLE U ⊤ eAF :=
       Scheme.Hom.appLE_comp_appLE _ _ _ _ _ _ _
     _ = ((snd C (overSpec k Γ(T', U))).left ≫ hU.fromSpec).appLE U ⊤
-          le_top :=
+          eSF :=
       Scheme.Hom.appLE_congr_hom ha_f' U ⊤ _ _
     _ = hU.fromSpec.appLE U ⊤ eFrom ≫
         (snd C (overSpec k Γ(T', U))).left.appLE ⊤ ⊤ le_top :=
       (Scheme.Hom.appLE_comp_appLE _ _ _ _ _ _ _).symm
-    _ = (Scheme.ΓSpecIso (.of Γ(T', U))).inv ≫
+    _ = (Scheme.ΓSpecIso Γ(T', U)).inv ≫
         (snd C (overSpec k Γ(T', U))).left.appLE ⊤ ⊤ le_top := by
       rw [hFrom]
 
+set_option diagnostics true in
+set_option maxHeartbeats 400000 in
 /-- The canonical pushforward base-change map for the native module is an
 isomorphism for every cartesian square over the affine coefficient base. -/
 theorem isIso_canonicalBaseChangeMap_nativeModule
