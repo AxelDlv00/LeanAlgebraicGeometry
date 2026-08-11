@@ -79,8 +79,8 @@ private lemma pullbackCongrCompSectionsEquiv_baseMap
       pullback_app_isoTensor_baseMap f
         ((Scheme.Modules.pullback g).obj N) eT
           (pullback_app_isoTensor_baseMap g N eV x) := by
-  apply (asIso (Scheme.Modules.Hom.app
-    ((Scheme.Modules.pullbackComp f g).hom.app N) ⊤)).toEquiv.injective
+  apply (ConcreteCategory.bijective_of_isIso (Scheme.Modules.Hom.app
+    ((Scheme.Modules.pullbackComp f g).hom.app N) ⊤)).injective
   change (Scheme.Modules.Hom.app
       ((Scheme.Modules.pullbackComp f g).hom.app N) ⊤).hom
         ((Scheme.Modules.Hom.app
@@ -90,7 +90,7 @@ private lemma pullbackCongrCompSectionsEquiv_baseMap
             (pullback_app_isoTensor_baseMap h N eTW x))) = _
   rw [← AddCommGrpCat.comp_apply, ← Scheme.Modules.Hom.comp_app,
     Iso.inv_hom_id_app, Scheme.Modules.Hom.id_app,
-    AddCommGrpCat.hom_id, AddMonoidHom.id_apply]
+    id_apply]
   rw [pullback_app_isoTensor_baseMap_congr eq N eTW
     (eT.trans (Scheme.Hom.preimage_mono f eV)) x]
   exact (pullback_app_isoTensor_baseMap_comp f g N eV eT

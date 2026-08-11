@@ -35,7 +35,7 @@ projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 - Algebraic-Jacobian-Challenge
 priority: urgent
-status: running
+status: queued
 write_set:
   files:
   - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RankOnePresentation.lean
@@ -68,7 +68,7 @@ inbox_refs:
 - I-1927
 artifact_refs: []
 created_at: '2026-08-04T02:27:37.236041+00:00'
-updated_at: '2026-08-11T04:59:43.701458+00:00'
+updated_at: '2026-08-11T07:04:56.784486+00:00'
 metadata:
   author: human
   updated_at: '2026-08-04T02:50:45.822467+00:00'

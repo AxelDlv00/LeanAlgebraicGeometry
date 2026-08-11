@@ -12,10 +12,12 @@ import AlgebraicJacobian.Picard.Pic0VanishingAffineReduction
 /-!
 # Native presentations for split field classes
 
-A split genus-degree class over a field stays split after every affine coefficient extension.
-For each such extension, the lambda-tied cocycle datum supplies its own arbitrary-ring
+A residue-field H¹ witness for the lambda-tied cocycle datum supplies its arbitrary-ring
 cohomology and rank certificates.  The native all-cartesian base-change theorem then completes
-the corresponding `PicRankOneNativePresentation`.
+the corresponding `PicRankOneNativePresentation` without a separate pushforward hypothesis.
+
+A split genus-degree class over a field stays split after every affine coefficient extension,
+so it supplies those witnesses for each pullback datum.
 
 The final theorem is the direct public consumer: a split field class belongs to
 `PicRankOneOpen`, because every affine pullback receives the presentation constructed here.
@@ -40,6 +42,26 @@ variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
 
 noncomputable section
 
+/-- Complete the native presentation attached to an actual lambda-tied datum.
+
+The input is exactly the remaining family-level H¹ obligation.  The degree law follows from the
+two class equalities stored in `P`; finiteness, projectivity, and rank one follow from the
+arbitrary-ring certificate theorem; and native pushforward base change is the canonical
+all-cartesian theorem.  Thus every field concerns the same cocycle datum. -/
+noncomputable def PicRankOneNativeDatum.toNativePresentation_of_residueH1Witness
+    {A : Type u} [CommRing A] [Algebra k A]
+    {pi : C.left ⟶ P1 k} [IsFinite pi]
+    {lam : picDegLayer C (genus C : ℤ) (overSpec k A)}
+    (P : PicRankOneNativeDatum pi lam)
+    (hpi : pi ≫ P1.structureMap k = C.hom)
+    (hres : ∀ p : PrimeSpectrum P.cover.Carrier,
+      P.datum.HasWitnessH1Vanishing p.asIdeal.ResidueField) :
+    PicRankOneNativePresentation pi lam :=
+  PicRankOneNativePresentation.ofCertificatesWithNativeBaseChange
+    P.cover P.representative P.represents P.datum P.datum_class
+      (RankOneFamilyCertificates.ofActualDatum P.datum hpi hres
+        (fun L ↦ P.classDeg_baseChange L))
+
 /-- The arbitrary-affine pullback of a split field class has a complete native presentation.
 
 The datum is the representative extracted from the displayed pullback `lam`.  Its residue-field
@@ -56,16 +78,8 @@ theorem PicRankOneNativePresentation.nonempty_of_fieldPullback
     (hsplit : IsSplitWitness C nu) :
     Nonempty (PicRankOneNativePresentation pi lam) := by
   obtain ⟨P⟩ := PicRankOneNativeDatum.nonempty (C := C) pi lam
-  let cert : RankOneFamilyCertificates P.datum :=
-    RankOneFamilyCertificates.ofActualDatum P.datum hpi
-      (P.residueH1Witness_of_fieldPullback e nu hlam hsplit)
-      (fun L ↦ P.classDeg_baseChange L)
-  refine ⟨PicRankOneNativePresentation.ofCertificates
-    P.cover P.representative P.represents P.datum P.datum_class ?_ cert⟩
-  intro T' X' g f' g' sq
-  exact P.datum.isIso_canonicalBaseChangeMap_nativeModule
-    ((subsingleton_datumPair_h1_iff P.datum).mpr cert.h1_vanishing)
-    g f' g' sq
+  exact ⟨P.toNativePresentation_of_residueH1Witness hpi
+    (P.residueH1Witness_of_fieldPullback e nu hlam hsplit)⟩
 
 /-- A split genus-degree class over a field belongs to the public rank-one Picard locus.
 
