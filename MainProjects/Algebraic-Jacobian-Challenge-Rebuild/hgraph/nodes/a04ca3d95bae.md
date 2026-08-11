@@ -8,6 +8,6 @@ generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.DropTest.controlSorry
 type: lean
-updated: '2026-08-11T12:59:00'
+updated: '2026-08-11T13:47:58'
 ---
 theorem controlSorry : True := by sorry

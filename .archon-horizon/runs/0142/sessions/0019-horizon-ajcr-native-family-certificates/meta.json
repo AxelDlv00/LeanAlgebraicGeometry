@@ -3,16 +3,23 @@
   "round": 2,
   "project": "Algebraic-Jacobian-Challenge-Rebuild",
   "task_id": "ajcr-native-family-certificates",
-  "status": "running",
-  "started_at": "2026-08-11T01:16:06.442363+00:00",
   "projects": [
     "Algebraic-Jacobian-Challenge-Rebuild"
   ],
+  "status": "done",
+  "started_at": "2026-08-11T01:16:06.442363+00:00",
+  "ended_at": "2026-08-11T06:48:21.475863+00:00",
   "harness_name": "codex",
   "harness_kind": "codex",
   "model": "gpt-5.6-sol",
   "effort": "ultra",
   "config_dir": "/home/axel/.codex-frenzy",
   "auth": "api-key",
-  "workspace_sha": "4dc938eb694b880a56cadf823d8cf024230c8c2a"
+  "usage": {
+    "tokens_in": 121823937,
+    "tokens_out": 157259,
+    "cost_usd": null
+  },
+  "engine_session_id": "019fee64-1fb8-7de3-83fc-986601c62a33",
+  "workspace_sha": "81bdc03e6f4d1a3dec95c2795506f1fa33ad4f85"
 }
