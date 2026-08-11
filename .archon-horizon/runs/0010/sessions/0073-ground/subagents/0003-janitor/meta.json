@@ -1,8 +1,15 @@
 {
+  "model": "claude-opus-4-8",
   "name": "janitor",
   "native_subagent_id": "toolu_019rwQfFGL5HHh4dAse2akjG",
+  "ok": false,
   "parent_session": "0073-ground",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
   "role": "subagent",
+  "status": "orphaned",
+  "subagent_type": "janitor",
+  "summary": "",
   "usage": {
     "cost_usd": null,
     "tokens_in": 15178,

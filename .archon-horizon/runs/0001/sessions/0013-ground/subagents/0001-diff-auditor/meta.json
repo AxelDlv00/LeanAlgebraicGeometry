@@ -1,8 +1,15 @@
 {
+  "model": "claude-opus-4-8",
   "name": "diff-auditor",
   "native_subagent_id": "toolu_01TExWAVRx5L6YXZnhs67yLv",
+  "ok": false,
   "parent_session": "0013-ground",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
   "role": "subagent",
+  "status": "orphaned",
+  "subagent_type": "diff-auditor",
+  "summary": "",
   "usage": {
     "cost_usd": null,
     "tokens_in": 21918,

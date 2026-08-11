@@ -1,8 +1,15 @@
 {
+  "model": "claude-opus-4-8",
   "name": "work-reviewer",
   "native_subagent_id": "toolu_01Y9z5kMRquikPWJvAUR1HNk",
+  "ok": false,
   "parent_session": "0015-ground",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
   "role": "subagent",
+  "status": "orphaned",
+  "subagent_type": "work-reviewer",
+  "summary": "",
   "usage": {
     "cost_usd": null,
     "tokens_in": 22010,

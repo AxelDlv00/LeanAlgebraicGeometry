@@ -1,0 +1,16 @@
+{
+  "name": "native-toolu_bd",
+  "native_subagent_id": "toolu_bdrk_013xCbuFxZ3E9CTbg9ksv5YJ",
+  "ok": false,
+  "parent_session": "0010-horizon-review-ajcr",
+  "parent_subagent_id": null,
+  "report_ref": null,
+  "role": "subagent",
+  "status": "orphaned",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 0,
+    "tokens_out": 0
+  }
+}

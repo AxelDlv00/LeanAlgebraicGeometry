@@ -1,66 +1,101 @@
-Investigation complete. Here is the chain.
+The map is complete. Report:
 
-## 1. `divFunctor` verbatim
+# Reduction chain: `hf` of `pic0RepresentableByOfCharts`
 
-`AlgebraicJacobian/Picard/DivisorFamilyZarFunctor.lean:45`
+All files below are sorry-free (zero `sorry`/`admit`/`native_decide` in code; the hits my grep found are all in docstring prose). Every declaration I probed carries only `[propext, Classical.choice, Quot.sound]`.
+
+## The chain, verbatim
+
+**1. The consumer.** `AlgebraicGeometry.pic0RepresentableByOfCharts`, `Picard/Pic0SigmaSheaf.lean:161`. Its `hf : ∀ i, IsOpenImmersion.presheaf (f i)`.
+
+**2. `IsChartUniv`** — `Picard/Pic0ChartPair.lean:173`:
+```lean
+def IsChartUniv {D : Over (Spec (.of k))} (rep : (divFunctor C π n).RepresentableBy D)
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - (n : ℤ))
+    (V : D.left.Opens) : Prop :=
+  IsOpenImmersion.presheaf (restrictChart (abelSigmaChart C π n rep m Z hdeg) V)
+```
+Section binders: `{k}[Field k]{C}{π}[IsAffineHom π]{n}[SmoothOfRelativeDimension 1 C.hom][IsProper C.hom][GeometricallyIrreducible C.hom]`.
+
+**3. The composition half, landed unconditionally** — `isOpenImmersion_presheaf_restrictChart` (`Pic0ChartPair.lean:139`), takes `(V : X.Opens) (hfV : IsOpenImmersion.presheaf f)`.
+
+**4. The criterion** — `isOpenImmersion_presheaf_of_chartFibrePresented` (`Pic0ChartOpenImmersionCriterion.lean:195`): takes `f` and `D : ∀ T g, ChartFibrePresented C f g`, gives `IsOpenImmersion.presheaf f`. Discharges both clauses of `MorphismProperty.relative`. Genuinely certificate-free.
+
+**5. `ChartFibrePresented`** — `Pic0ChartOpenImmersionCriterion.lean:129`, four fields, verbatim: `W : T.Opens`; `r : (W : Scheme.{u}) ⟶ X`; `sq : yoneda.map r ≫ f = yoneda.map W.ι ≫ g`; `exists_factor : ∀ (S : Scheme.{u}) (v : S ⟶ X) (w : S ⟶ T), f.app (op S) v = g.app (op S) w → ∃ u : S ⟶ (W : Scheme.{u}), u ≫ r = v ∧ u ≫ W.ι = w`.
+
+**6. `IsChartLocusFibre`** — `Pic0ChartUnivReduce.lean:152`, same binders as `IsChartUniv` minus `V`:
+```lean
+  ∀ (T : Scheme.{u}) (g : yoneda.obj T ⟶ (pic0SigmaSheaf C).1),
+    Nonempty (ChartFibrePresented C (abelSigmaChart C π n rep m Z hdeg) g)
+```
+
+## Findings, in order of value
+
+### A. `IsChartLocusFibre` is stated about the UNRESTRICTED Abel chart, which the tree proves is the false statement
+
+This is the load-bearing defect. `IsChartLocusFibre`'s body binds `abelSigmaChart … ` with **no `V`, no restriction**. So it is not "the residue of `IsChartUniv`"; it is strictly stronger — it implies the unrestricted certificate three files call false. I compiled both, from the file's own lemmas:
 
 ```lean
-noncomputable def divFunctor : (Over (Spec (.of k)))ᵒᵖ ⥤ Type u where
-  obj T := divFamZar C π n T.unop
-  map g := ↾divFamZar.map C π n g.unop
+example … (h : IsChartLocusFibre C π n rep m Z hdeg) :
+    IsOpenImmersion.presheaf (abelSigmaChart C π n rep m Z hdeg) :=
+  isOpenImmersion_presheaf_of_chartFibrePresented _ fun T g => (h T g).some
 ```
-Ambient binders (file lines 38-39): `{k : Type u} [Field k] (C : Over (Spec (.of k))) (π : C.left ⟶ P1 k) [IsAffineHom π] (n : ℕ)`.
+and hence `Function.Injective ((abelSigmaChart …).app T)` on **every** test, unrestricted — the linear system `|D|` non-injectivity the `Pic0AtlasFromDivRep.lean:54` header says makes this fail. I also compiled the contrapositive: one non-injective test refutes `IsChartLocusFibre` outright, via the file's own `isEmpty_forall_chartFibrePresented_of_not_injective`.
 
-A **section** at test `T` (`DivisorFamilyZarVehicle.lean:187`) is a compatible family over the affine opens of `T.left`:
+`isChartUniv_of_isChartLocusFibre` (`:170`) is *true* (it throws the strength away through `restrictChart`), but the reduction runs the wrong way: its hypothesis is expected-false for `g ≥ 1`. The `V`-arbitrariness the docstring celebrates ("restriction never has to be to the chart locus") is the symptom, not a feature. The sound route — instantiate the criterion at `restrictChart … V` so `X := V` — also compiles and is one line; nothing in the tree does it.
+
+### B. Vacuity: neither `IsChartLocusFibre` nor `ChartFibrePresented` mentions `chartLocus`
+
+The `W` field is an arbitrary `T.Opens`, existentially chosen by the producer. `IsChartLocusFibre`'s name, its docstring ("`ChartFibrePresented` with its `W` field already discharged — it is `chartLocus`"), and the `Pic0ChartUnivReduce.lean:23-27` table row all assert `W = chartLocus`. **The Lean binders do not.** Nothing constrains `W`; a producer may pick `⊥`, and `exists_factor` then carries everything. This is the `HasDivFunctor` shape: the structure does not mention the object it claims to be about. Consequence: the whole `chartLocus`/`haff`/B-4 leg is **not on `IsChartUniv`'s critical path at all** — `IsChartUniv` never mentions `chartLocus`, and `chartLocusOpens` has zero call sites in any proof term. The two legs are disjoint, not composed.
+
+### C. LOUDLY: the `haff` prerequisite the chain declares open ALREADY EXISTS, discharged
+
+`Pic0ChartUnivReduce.lean:46` (and `Pic0ChartCoverageAbel.lean:42`, and `Pic0ChartUnivReduce.lean:105`) state: `chartLocusOpens` takes `haff`, "and **nothing in the tree discharges it**". That is stale. `Pic0ChartPlusFibreProducer.lean` (Jul 29 15:24, in the root import list, olean fresh, zero diagnostics) closes it. I compiled `ChartLocusAffineLocal C m Z T lam` from `IsPlusHonest C T lam` alone. The full landed chain: `isChartDatumPresentation_of_plusFibre_tower` → `chartLocusAffineLocal_of_presentation` → `chartLocusAffineLocal_of_plusFibre` → `exists_isChartDatumPlusFibre_of_mem_range` → `isOpen_chartLocus_of_isPlusHonest` / `chartLocusOpensOfIsPlusHonest`. Three files' prose still price a discharged obligation as the gate.
+
+### D. `ChartLocusAffineLocal` / `chartLocusAffineLocal_of_presentation`
+
+`ChartLocusAffineLocal` (`Pic0ChartCoverageAbel.lean:132`) — takes `(m) (Z) (T : Over (Spec (.of k))) (lam : picEt C T)`, is `∀ U : T.left.affineOpens, IsOpen (chartLocus C m Z (picEtMap C (Over.fromSpecAffine T U) lam))`. Exactly the `haff` argument of `isOpen_chartLocus_of_affineLocal'`. `chartLocusAffineLocal_of_presentation` (`:182`) takes `[IsFinite π] (hπ : π ≫ P1.structureMap k = C.hom) (m) (Z) (T) (lam)` plus `hpres : ∀ U : T.left.affineOpens, ∃ D : BasicOpenCocycleDatum C (Γ(T.left, U.1)) π, IsChartDatumPresentation C π (chartTwist C m Z _ (picEtMap C (Over.fromSpecAffine T U) lam)) D`, and produces `ChartLocusAffineLocal C m Z T lam`. Note `[IsFinite π]`, strictly stronger than the `[IsAffineHom π]` that `IsChartUniv` carries.
+
+### E. `IsChartDatumPresentation` (B-4) — the witness-half claim VERIFIED, and the stated remainder is stale
+
+Definition, `Pic0ChartLocusIsOpen.lean:178`:
 ```lean
-def divFamZar (T : Over (Spec (.of k))) : Type u :=
-  {s : Π U : T.left.affineOpens, DivFamZar C Γ(T.left, U.1) π n //
-    ∀ (U V : T.left.affineOpens) (h : U.1 ≤ V.1),
-      DivFamZar.mapAlgHom (Over.resAlgHom T h) (s V) = s U}
+def IsChartDatumPresentation {A : Type u} [CommRing A] [Algebra k A]
+    (μ : picEt C (overSpec k A)) (D : BasicOpenCocycleDatum C A π) : Prop :=
+  ∀ t : (overSpec k A).left,
+    D.HasWitnessH1Vanishing (Over.testPointField (T := overSpec k A) t)
+      ↔ IsSplitWitness C (picEtMap C (Over.testPoint t) μ)
 ```
-and `DivFamZar C R π n` (`DivisorFamilyZar.lean:235`) is `Quotient (divFamZarSetoid …)` on `{d : (relCurve C R).LocalEquations // IsLocallyCertified C R π n d}` modulo `DivEq`. `IsLocallyCertified` (`:71`) = ∃ span-⊤ family `g : Fin m → R` with a `CertifiedDivisorFamily C (Localization.Away (g i)) π n` divisor-equal to the pullback on each piece.
+The witness half is discharged by **`hasWitnessH1Vanishing_of_isSplitWitness_at`** (`Pic0ChartPresentationConverse.lean:163`), via `PicEtAff.unit_injective` + `relPicMk_injective_of_subsingleton`. So the `Pic0ChartUnivReduce.lean:109` claim is accurate.
 
-## 2. Every producer of `(divFunctor _ _ _).RepresentableBy _`
+But its "leaving a plus-class base-change identity" is **stale by two files**. That residue (`hplus`/`IsChartDatumPlusFibreAt`) was closed by `isChartDatumPlusFibreAt_of_isScalarTower` (`Pic0ChartPlusFibreTower.lean:112`), leaving `IsChartDatumPlusFibre` alone (`isChartDatumPresentation_of_plusFibre_tower`, `:215`) — and *that* was closed by `exists_isChartDatumPlusFibre_of_mem_range` (`Pic0ChartPlusFibreProducer.lean:178`), leaving only `IsPlusHonest`. `IsChartDatumPresentation` is no longer an open obligation for an honest class.
 
-Exactly **five**, all in a single linear chain, all with the same ambient instance block (`[IsFinite pi]`, `[SmoothOfRelativeDimension 1 …]`, `[IsIntegral C.left]`, `[LocallyOfFiniteType …]`, `[QuasiCompact …]`, `[IsDominant pi]`, `[IsProper C.hom]`, `[GeometricallyIrreducible C.hom]`, `[Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 0/1)]`) plus explicit `(hpi) (g) (hO) (hchi) (r1 r2) (b1 b2)`, and target `DivOver := divSchemeOver k (windowS_choice … • fiberWeilDivisor pi) (windowM_choice … • fiberWeilDivisor pi) g r1 r2 b1 (b2.map (windowShiftEquiv hpi g).symm)`. **Note the index is pinned to `g` — the ledger genus — in every one; no producer exists at any other `n`.**
+### F. `IsChartLocusFibre` / `ChartFibrePresented` field-by-field: see 5 and 6 above. The `W`-vacuity is B; the "W field discharged" claim is false in the binders.
 
-| # | file:line | signature (the non-ambient hypothesis) |
-|---|---|---|
-| P1 | `DivRepKit.lean:113` | `DivRepGlobalData.representableBy (D : DivRepGlobalData hpi g r1 r2 b1 b2) : (divFunctor C pi g).RepresentableBy DivOver` |
-| P2 | `DivRepGlobalClassify.lean:306` | `DivRepAffinePullback.representableBy (D : DivRepAffinePullback hpi g hO hchi r1 r2 b1 b2) : …` |
-| P3 | `DivRepAffPullClause.lean:482` | `divFunctor_representableBy_of_chartClause (U : ∀ i j, DivFamZar C (ChartRing i j) pi g) (hU : DivRepChartFamily.IsChartClause (hpi := hpi) g r1 r2 b1 b2 U) : …` |
-| P4 | `DivRepAffPullClause.lean:502` | `divFunctor_representableBy_of_id (U : ∀ i j, DivFamZar C (ChartRing i j) pi g) (hid : ∀ i j, IsDivRepClassify hpi g r1 r2 b1 b2 (U i j) (ChartMap i j)) : …` |
-| P5 | `DivRepChartRange.lean:220` | `divFunctor_representableBy_of_chartRange (hrange : ∀ i j, ∃ F : DivFamZar C (ChartRing i j) pi g, (divRepClassifyZar hpi g hO hchi r1 r2 b1 b2 (ChartRing i j) F).left = ChartMap i j) : …` |
+### G. Smaller flags
+- **`isChartLocusFibre_of_isChartUniv`** — advertised as "the **converse**" at `Pic0ChartUnivReduce.lean:55`. **Does not exist.** One workspace hit: that sentence. The converse-check role is actually filled by `injective_of_isChartUniv` (`:191`), which is much weaker (injectivity, not the datum). This is the `docstring-declaration-lists-unchecked` mode this very file's neighbours filed lessons about.
+- **`isChartUniv_of_unrestricted`** (`Pic0ChartPair.lean:184`) and the criterion route are the same statement; per A, `IsChartLocusFibre` is a renaming of the hypothesis the file's own docstring calls false.
+- **`IsPlusHonest`** (`Pic0ChartPlusFibreProducer.lean:200`) is genuinely open for an arbitrary class (`exact?` fails, as its docstring claims). It is *not* open for a chart value: I compiled `IsPlusHonest C T (chartValue C π n m Z T s)` from `abelDiv_isPlusHonest` + the three closure lemmas. That composite is **not in the tree under any name** — grep for `chartValue_isPlusHonest` returns nothing. Cheap, and it is the last brick of the openness leg.
+- `[IsFinite π]` vs `[IsAffineHom π]`: the openness leg needs finiteness (rigid engine), `IsChartUniv` declares only affineness. Any assembly must strengthen.
 
-`DivRepGlobalData` (`DivRepKit.lean:68`) is a 5-field structure (`pull`, `classify`, `classify_pull`, `pull_classify`, `pull_comp`); `DivRepAffinePullback` (`DivRepAffKit.lean:175`) is a 4-field one (`pull`, `pull_classify`, `isDivRepClassify_pull`, `pull_naturality`), reduced to 3 by `ofPull` (`DivRepAffPullbackReduce.lean:140`). There is **no** `DivRepAffineData`. No producer of `divFunctorAff` (the widened R2 functor) representability exists — `DivRepGlobalAffLift.lean:36-39` states explicitly it does not claim one.
+## The single innermost still-open obligation
 
-## 3. Sorry-freeness and the chain
+Because of A and B, `chartLocus` is not beneath `IsChartUniv` in Lean. The innermost genuinely-open mathematical obligation on the `hf` chain is `exists_factor` **at the restricted chart** — which nothing in the tree states. Written with binders (`{k}[Field k]{C}{π}[IsAffineHom π]{n}` + the three curve instances):
 
-Chain: `rep` ⟸ P5 ⟸ P3 ⟸ (`divRepAffinePullback_ofChartClause`, `:461`) ⟸ P2 ⟸ `toGlobalData` (`:288`) ⟸ P1. All sorry-free; kernel-verified with `lean_verify`: `divFunctor_representableBy_of_chartRange` and `divFunctor_representableBy_of_id` both report axioms `[propext, Classical.choice, Quot.sound]` — **no `sorryAx`**. All chain files (`DivRepChartRange`, `DivRepAffPullClause`, `DivRepGlobalClassify`, `DivRepGlobalLift`→`DivRepKit`) are rooted in `AlgebraicJacobian.lean`.
+```lean
+∀ {D : Over (Spec (.of k))} (rep : (divFunctor C π n).RepresentableBy D)
+  (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+  (hdeg : Scheme.CurveDivisor.deg k Z
+    = (m : ℤ) * classDeg k (thetaCechClass C) - (n : ℤ))
+  (V : D.left.Opens) (T : Scheme.{u}) (g : yoneda.obj T ⟶ (pic0SigmaSheaf C).1),
+  ∃ (W : T.Opens) (r : (W : Scheme.{u}) ⟶ (V : Scheme.{u})),
+    yoneda.map r ≫ restrictChart (abelSigmaChart C π n rep m Z hdeg) V
+        = yoneda.map W.ι ≫ g
+      ∧ ∀ (S : Scheme.{u}) (v : S ⟶ (V : Scheme.{u})) (w : S ⟶ T),
+        (restrictChart (abelSigmaChart C π n rep m Z hdeg) V).app (op S) v = g.app (op S) w →
+          ∃ u : S ⟶ (W : Scheme.{u}), u ≫ r = v ∧ u ≫ W.ι = w
+```
 
-So the chain bottoms out at exactly one open obligation, in three interchangeable spellings (P5's `hrange` ⟺ P3's `IsChartClause` ⟺ P4's `hid`, the ⟺ being `isChartClause_iff_forall_classify_eq`, `DivRepChartRange.lean:183`, and `IsChartClause.of_id`, `:156`):
-
-> for each pair chart `(i,j)` in `(glueData k g r1).J × (glueData k g r2).J`, produce a `DivFamZar C (DivCarveChartRing … i j) pi g` whose backward classifier is that chart's own map to `DivScheme`.
-
-**Is it inhabitable? No witness exists anywhere in the project.** `DivRepChartRange.lean:222` is the *only* occurrence in the tree of `∃ F : DivFamZar C (ChartRing i j) pi g` and it is a hypothesis binder, not a conclusion. No declaration concludes `IsChartClause` (grep: every hit is a binder or a docstring). No declaration concludes `IsDivRepClassify … (U i j) (ChartMap i j)`. No `DivRepGlobalData` or `DivRepAffinePullback` term is ever constructed except from the hypothesis-bearing constructors above. And no consumer downstream ever calls any of P1–P5 — `Pic0AtlasFromDivRep.abelSigmaChart` (`:205`) and `mixedParamRepresentableBy` (`Pic0ChartAtlasParamFree.lean:125`) take `rep` as a binder, so the whole `rep` lane is currently an unused hypothesis.
-
-## 4. U2 (`…divrep.u2`) in the Lean sources
-
-U2's residue is the **class half**, and it is a hypothesis binder, never a `sorry`. Three files carry the ε half plus increasingly weak class demands, all sorry-free, all rooted:
-
-- `DivRepChartClassUniv.lean:166` — `divFamEps_highWindow_eq_universal_pair (hb : 0 < windowBound pi hpi) (hc : ((univSeed …).divisorAdaptation (isGenerator_univSeed …)).IsCertified g) : divFamEps hpi g (DivFam.mk ((univSeed …).certifiedFamily g … hc)) = ((divUniversalFstWindow …).toSubmodule, (divUniversalSndWindow …).toSubmodule)`. Verified: axioms `[propext, Classical.choice, Quot.sound]`. Companion `divFamZarUniv` (`:213`) builds the class from the same `hc`.
-- `DivRepChartClassUnivFree.lean:139/175/186` — same with `hb` replaced by `hg : g ≠ 0`.
-- `DivRepChartClassUnivAny.lean:232` — `exists_divFamZar_divFamEps_eq_universal_pair_of_hasCertifiedAdaptation (hg : g ≠ 0) (hca : (univSeed …).HasCertifiedAdaptation g (isGenerator_univSeed …))`, i.e. `∃ A : DivisorAdaptation C R π (D.localEquations hD), A.IsCertified n` (`:155`). Its own docstring records that this hypothesis is **refuted** by `forall_not_isCertified_of_straddling` (`DivisorFamilyAffStrict.lean:127`: `∀ (A : DivisorAdaptation C R pi d) (n : ℕ), ¬ A.IsCertified n` for connected `d` meeting both pinned fibres) whenever the universal seed straddles — unmeasured either way.
-- `DivRepChartClassUnivQuot.lean:319` — `divFamEps_eq_of_le` discharges the ε half **unconditionally**: the two window-quotient facts are landed on every `DivFam` (`DivSchemeFrameCover.lean`), so only the two containments remain, both landed. Sorry-free.
-
-Two `sorry`-token hits in `DivRepChartClassUnivQuot.lean` (`:89`, `:292`) and one in `DivRepGlobalAffLift.lean:31` are docstring prose about sorry censuses, not tactics. The only real `sorry`s near the lane are `Pic0ThetaCocycle.lean:246/320` (unrooted) and `Challenge.lean` (the top-level statement file).
-
-**Critical gap: nothing connects the U2 files to the `rep` chain.** `divFamZarUniv` / `divFamZarUnivOfNeZero` / `divFamZarUnivOfHasCertifiedAdaptation` / `exists_certifiedFamily_divFamEps_eq_universal_pair` have **zero consumers outside their defining files** (grepped). The consumer side wants `IsDivRepClassify (U i j) (ChartMap i j)`; the producer side delivers `divFamEps … = (universal pair)`. No declaration in the tree mentions both `divUniversal*` and `IsDivRepClassify` in a statement — `DivRepChartClassUniv.lean` mentions `IsDivRepClassify` only in a docstring (`:194`) asserting the shapes match. That bridge is unwritten.
-
-## Verdict
-
-**No sorry-free witness for `(divFunctor C π n).RepresentableBy D` exists, for any `n` and any curve `C`.** All five producers are sorry-free reductions and nothing more; each still takes an inhabitant of the same undischarged obligation, which no declaration anywhere in the tree concludes. Three further facts sharpen this:
-
-1. The lane reaches only `n = g` (every producer's `DivOver` and `divFunctor` index is the ledger `g`), so `mixedParamRepresentableBy`'s per-index `rep i` at `nn i ≠ g` has no route at all.
-2. The `b1`/`b2` basis binders are inhabitable (`moduleFinite_divisorSections_top`, `SectionSpaces.lean:396`), and `hb`/`hg` are discharged; the ε half is discharged outright by `DivRepChartClassUnivQuot.divFamEps_eq_of_le`. The residue is purely the **class over the chart ring**.
-3. That class's strongest landed reduction (`HasCertifiedAdaptation`) is standing-refuted on straddling seeds by `forall_not_isCertified_of_straddling`, and whether `(univSeed …).localEquations` straddles is measured nowhere. So the remaining obligation is not merely open — it may be false in the chart-typed carrier, and no bridge from the widened R2 carrier (`AffAdaptation.IsCertified`, which *is* inhabited by `exists_isCertified_of_seed_of_swallowing_affineOpen`) back to `DivisorAdaptation.IsCertified` exists; `DivisorFamilyAffCompare.isCertified_toAff` runs the wrong way.
+**Distance from what is proved.** The `W`/`r`/`sq` triple is reachable: `W := chartLocusOpensOfIsPlusHonest` once the `chartValue` honesty composite above is written (one line), and `r` is `divRepClassifyZar` (`DivRepClassifyZar.lean:244`) with `sq` its characterising property. The `exists_factor` conjunct is the real gap and is **two steps** from landed material: the absolute case is `Scheme.CurveDivisor.eq_of_picClass_eq_of_h0_one` (`RiemannRoch/EffectiveUniqueness.lean:144`, landed, takes `0 ≤ D`, `0 ≤ D'`, equal `picClass`, `h⁰ = 1`), and the family-level injectivity of the classifier is `divRepClassifyZar_injective` (`DivRepClassifyZarSep.lean:414`, landed). What is missing between them is the relative/in-families uniqueness over the locus — no declaration in the tree states it. Note `Pic0ChartLocus.lean:146-149` warns explicitly that `IsSplitWitness` supplies **neither** `0 ≤ W` nor `deg W = g`, so effectivity must be re-supplied at exactly this step; the degree comes free from `degAt_chartTwist` + the `hdeg` constraint, giving `h⁰ = 1` by the `FLVClass.lean:412` anchor.

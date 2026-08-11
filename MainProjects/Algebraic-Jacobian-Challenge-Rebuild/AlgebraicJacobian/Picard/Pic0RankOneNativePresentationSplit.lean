@@ -95,7 +95,22 @@ theorem mem_picRankOneOpen_of_isSplitWitness
     lam ∈ (PicRankOneOpen pi).obj (op (overSpec k K)) := by
   apply mem_picRankOneOpen_of_nativePresentations pi
   intro A _ _ t
-  obtain ⟨e, rfl⟩ := exists_algHom_eq_of_overSpec_hom (k := k) K A t
+  have hw : t.left ≫ (overSpec k K).hom = (overSpec k A).hom := Over.w t
+  let psi : CommRingCat.of K ⟶ CommRingCat.of A := Spec.preimage t.left
+  have hmap : Spec.map psi = t.left := Spec.map_preimage t.left
+  have htower : CommRingCat.ofHom (algebraMap k K) ≫ psi =
+      CommRingCat.ofHom (algebraMap k A) := by
+    apply Spec.map_injective
+    rw [Spec.map_comp, hmap]
+    exact hw
+  let e : K →ₐ[k] A :=
+    { __ := psi.hom
+      commutes' := fun r ↦
+        congrArg (fun f => f r) (congrArg CommRingCat.Hom.hom htower) }
+  have ht : t = Over.overSpecMap e := by
+    ext : 1
+    exact hmap.symm
+  rw [ht]
   exact PicRankOneNativePresentation.nonempty_of_fieldPullback
     (C := C) hpi e lam.1 rfl hsplit
 

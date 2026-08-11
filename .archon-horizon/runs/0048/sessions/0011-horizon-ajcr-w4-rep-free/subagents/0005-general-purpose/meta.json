@@ -1,8 +1,15 @@
 {
+  "model": "claude-opus-5",
   "name": "general-purpose",
   "native_subagent_id": "toolu_011qtNkfRQwSK25trdqU1mwr",
+  "ok": false,
   "parent_session": "0011-horizon-ajcr-w4-rep-free",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
   "role": "subagent",
+  "status": "orphaned",
+  "subagent_type": "general-purpose",
+  "summary": "",
   "usage": {
     "cost_usd": null,
     "tokens_in": 128,

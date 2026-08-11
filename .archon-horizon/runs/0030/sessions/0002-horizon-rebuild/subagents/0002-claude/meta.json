@@ -1,8 +1,15 @@
 {
+  "model": "claude-sonnet-5",
   "name": "claude",
   "native_subagent_id": "toolu_012vXa5QmT3kyC5FZ9LC3BAS",
+  "ok": false,
   "parent_session": "0002-horizon-rebuild",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
   "role": "subagent",
+  "status": "orphaned",
+  "subagent_type": "claude",
+  "summary": "",
   "usage": {
     "cost_usd": null,
     "tokens_in": 236,

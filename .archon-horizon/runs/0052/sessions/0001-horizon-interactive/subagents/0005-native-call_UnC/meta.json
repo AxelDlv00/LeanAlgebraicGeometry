@@ -1,0 +1,16 @@
+{
+  "name": "native-call_UnC",
+  "native_subagent_id": "call_UnC5lswKMmJR704HS1Px7sjl",
+  "ok": false,
+  "parent_session": "0001-horizon-interactive",
+  "parent_subagent_id": null,
+  "report_ref": null,
+  "role": "subagent",
+  "status": "orphaned",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 0,
+    "tokens_out": 0
+  }
+}

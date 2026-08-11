@@ -1,8 +1,15 @@
 {
+  "model": "opus",
   "name": "work-reviewer",
   "native_subagent_id": "toolu_bdrk_01WF5hLQMXLyESeUy8cfoce3",
+  "ok": false,
   "parent_session": "0019-horizon-ajcr-cert-r2",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
   "role": "subagent",
+  "status": "orphaned",
+  "subagent_type": "work-reviewer",
+  "summary": "",
   "usage": {
     "cost_usd": null,
     "tokens_in": 3168182,

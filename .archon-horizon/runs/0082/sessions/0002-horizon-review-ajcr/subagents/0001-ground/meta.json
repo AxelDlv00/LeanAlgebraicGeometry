@@ -1,8 +1,15 @@
 {
+  "model": "sonnet",
   "name": "ground",
   "native_subagent_id": "toolu_bdrk_01Uc4BEmNWKc4rLEJa2KaU4m",
+  "ok": false,
   "parent_session": "0002-horizon-review-ajcr",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
   "role": "subagent",
+  "status": "orphaned",
+  "subagent_type": "ground",
+  "summary": "",
   "usage": {
     "cost_usd": null,
     "tokens_in": 1119138,
