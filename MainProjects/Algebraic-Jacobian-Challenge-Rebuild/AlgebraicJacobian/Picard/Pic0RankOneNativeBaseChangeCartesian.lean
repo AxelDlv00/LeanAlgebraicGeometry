@@ -198,22 +198,25 @@ private lemma cartesianAffineChart
   have haRange : a.opensRange = f' ⁻¹ᵁ U := by
     dsimp [a]
     rw [Scheme.Hom.opensRange_comp_of_isIso, Scheme.Opens.opensRange_ι]
+  have hCover :
+      (pullbackRestrictIsoRestrict (snd C T).left U).hom ≫ W.ι =
+        (relCurveAffineCover C T).f Ua := by
+    exact pullbackRestrictIsoRestrict_hom_ι (snd C T).left U
+  have ha_eX : a ≫ eX.hom =
+      (C ◁ Over.fromSpecAffine T Ua).left := by
+    dsimp only [a, eU]
+    simp only [Iso.trans_hom, Category.assoc,
+      Scheme.isoOfEq_hom_ι_assoc,
+      Scheme.Hom.preimageIso_inv_ι_assoc]
+    rw [hCover, relCurveAffineOpenIso_hom_f]
   have ha_f' : a ≫ f' =
       (snd C (overSpec k R)).left ≫ hU.fromSpec := by
     rw [← heXsnd]
-    dsimp [a, eU]
-    simp only [Iso.trans_hom, Category.assoc,
-      Scheme.isoOfEq_hom_ι_assoc, Scheme.Hom.preimageIso_inv_ι_assoc,
-      pullbackRestrictIsoRestrict_hom_ι_assoc,
-      relCurveAffineOpenIso_hom_f]
+    rw [Category.assoc, ha_eX]
     rw [← Over.comp_left, ← Over.comp_left, whiskerLeft_snd]
   have ha_g' : a ≫ g' = relCurveMap C B R := by
     rw [← heXfst]
-    dsimp [a, eU]
-    simp only [Iso.trans_hom, Category.assoc,
-      Scheme.isoOfEq_hom_ι_assoc, Scheme.Hom.preimageIso_inv_ι_assoc,
-      pullbackRestrictIsoRestrict_hom_ι_assoc,
-      relCurveAffineOpenIso_hom_f]
+    rw [Category.assoc, ha_eX]
     rw [← Over.comp_left, ← MonoidalCategory.whiskerLeft_comp, ← hOverMap]
     rfl
   exact ⟨a, inferInstance, haRange, ha_g', ha_f'⟩
