@@ -94,7 +94,9 @@ abbrev BasicOpenCocycleDatum.FibreClassDegree
 namespace RankOneFamilyCertificates
 
 set_option maxHeartbeats 2000000 in
+-- Finite-stage refinement and its scalar-extension equivalences need a larger budget.
 set_option synthInstance.maxHeartbeats 800000 in
+-- The same construction synthesizes two nontrivial scalar-tower module structures.
 /-- Produce all four certificates for the displayed datum over an arbitrary coefficient ring.
 
 The only H1 input is a divisor witness on each residue field.  It first gives pair-H1
