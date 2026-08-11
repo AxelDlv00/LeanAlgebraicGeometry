@@ -44,6 +44,7 @@ variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
 noncomputable section
 
 set_option maxHeartbeats 1600000 in
+-- Constructing and transporting through a field factor of `L ⊗[K] N` needs the larger budget.
 /-- A split witness remains a split witness after an arbitrary extension of its reading field.
 
 The output splitting field is not the original one: it is a finite-separable field factor of
@@ -51,6 +52,7 @@ the base change of the original field cover.  Consequently no finiteness, separa
 algebraicity assumption is imposed on the reading-field extension itself. -/
 theorem isSplitWitness_map_overSpecMap_of_algHom
     {K L : Type u} [Field K] [Algebra k K] [Field L] [Algebra k L]
+    {pi : C.left ⟶ P1 k} [IsFinite pi]
     (e : K →ₐ[k] L) (nu : picEt C (overSpec k K))
     (h : IsSplitWitness C nu) :
     IsSplitWitness C (picEtMap C (Over.overSpecMap e) nu) := by
@@ -85,9 +87,9 @@ theorem isSplitWitness_map_overSpecMap_of_algHom
   haveI htowKNP : IsScalarTower K N P :=
     .of_algebraMap_eq fun x => (sigma.commutes x).symm
   haveI htowkNP : IsScalarTower k N P := .of_algebraMap_eq fun x => by
-    rw [← IsScalarTower.algebraMap_apply k K N,
-      ← IsScalarTower.algebraMap_apply K N P,
-      IsScalarTower.algebraMap_apply k K P]
+    change algebraMap k P x = sigma (algebraMap k N x)
+    rw [IsScalarTower.algebraMap_apply k K N, sigma.commutes,
+      ← IsScalarTower.algebraMap_apply k K P]
   obtain ⟨D, hD⟩ :=
     BasicOpenCocycleDatum.exists_cechPicClass_eq (C := C) (B := N) (π := pi) M
   have hid : Scheme.CechPic.map (relCurveMap C N N) D.cechPicClass
@@ -154,25 +156,31 @@ theorem PicRankOneNativeDatum.residueH1Witness_of_fieldPullback
     rw [testPoint_eq_overSpecMap]
     apply Over.OverMorphism.ext
     rfl
-  have hmaps : Over.overSpecMap phi =
-      Over.testPoint t ≫ Over.overSpecMap iota ≫ Over.overSpecMap e := by
-    calc
-      Over.overSpecMap phi =
-          Over.overSpecMap rho ≫ Over.overSpecMap (iota.comp e) :=
-        Over.overSpecMap_comp _ _
-      _ = Over.overSpecMap rho ≫
-          (Over.overSpecMap iota ≫ Over.overSpecMap e) := by
-        rw [Over.overSpecMap_comp]
-      _ = (Over.overSpecMap rho ≫ Over.overSpecMap iota) ≫
-          Over.overSpecMap e := (Category.assoc _ _ _).symm
-      _ = Over.testPoint t ≫ Over.overSpecMap iota ≫
-          Over.overSpecMap e := by rw [hpoint]
+  have hmaps :
+      (Over.testPoint t ≫ Over.overSpecMap iota) ≫ Over.overSpecMap e =
+        Over.overSpecMap phi := by
+    rw [Category.assoc, hpoint, ← Over.overSpecMap_comp, ← Over.overSpecMap_comp]
   have hclass :
       picEtMap C (Over.testPoint t)
           (relPicToPicEt C (overSpec k P.cover.Carrier)
             (P.representative : relPic C (overSpec k P.cover.Carrier))) =
         picEtMap C (Over.overSpecMap phi) nu := by
-    rw [← hcover, ← picEtMap_comp, hlam, ← picEtMap_comp, ← hmaps]
+    calc
+      _ = picEtMap C (Over.testPoint t)
+          (picEtMap C (Over.overSpecMap iota) lam.1) := by rw [hcover]
+      _ = picEtMap C
+          (Over.testPoint t ≫ Over.overSpecMap iota) lam.1 :=
+        (picEtMap_comp (C := C) (Over.overSpecMap iota)
+          (Over.testPoint t) lam.1).symm
+      _ = picEtMap C (Over.testPoint t ≫ Over.overSpecMap iota)
+          (picEtMap C (Over.overSpecMap e) nu) := by rw [hlam]
+      _ = picEtMap C
+          ((Over.testPoint t ≫ Over.overSpecMap iota) ≫
+            Over.overSpecMap e) nu :=
+        (picEtMap_comp (C := C) (Over.overSpecMap e)
+          (Over.testPoint t ≫ Over.overSpecMap iota) nu).symm
+      _ = picEtMap C (Over.overSpecMap phi) nu :=
+        congrArg (fun f => picEtMap C f nu) hmaps
   rw [hclass]
   exact isSplitWitness_map_overSpecMap_of_algHom
     (C := C) (pi := pi) phi nu hsplit
