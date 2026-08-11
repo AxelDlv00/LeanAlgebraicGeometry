@@ -4,6 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Cohomology.GluedSheafExtraction
+import AlgebraicJacobian.Picard.Pic0ChartPlusFibreProducer
+import AlgebraicJacobian.Picard.Pic0ChartPlusFibreTower
+import AlgebraicJacobian.Picard.Pic0RankOnePresentation
 import AlgebraicJacobian.Picard.ThetaShift
 
 /-!
@@ -85,6 +88,98 @@ theorem nonempty
         relPicMk C (overSpec k E.Carrier) c := hc.symm
     _ = relPicMk C (overSpec k E.Carrier) D.cechPicClass :=
       congrArg (relPicMk C (overSpec k E.Carrier)) hD.symm
+
+noncomputable local instance (priority := 20000) nativeDatumDegreeOver
+    (L : Type u) [Field L] [Algebra k L] :
+    (relCurve C L).Over (Spec (.of L)) :=
+  instOverBaseChange C L
+
+noncomputable local instance nativeDatumDegreeSmooth
+    (L : Type u) [Field L] [Algebra k L] :
+    SmoothOfRelativeDimension 1 (relCurve C L ↘ Spec (.of L)) :=
+  instSmoothOfRelativeDimensionBaseChange C L
+
+noncomputable local instance nativeDatumDegreeIntegral
+    (L : Type u) [Field L] [Algebra k L] :
+    IsIntegral (relCurve C L) :=
+  instIsIntegralBaseChange C L
+
+noncomputable local instance nativeDatumDegreeQuasiCompact
+    (L : Type u) [Field L] [Algebra k L] :
+    QuasiCompact (relCurve C L ↘ Spec (.of L)) :=
+  instQuasiCompactBaseChange C L
+
+noncomputable local instance nativeDatumDegreeFiniteH0
+    (L : Type u) [Field L] [Algebra k L] :
+    Module.Finite L (Sheaf.HModule ((relCurve C L).moduleKSheaf L) 0) :=
+  instModuleFiniteHModuleZeroBaseChange C L
+
+noncomputable local instance nativeDatumDegreeFiniteH1
+    (L : Type u) [Field L] [Algebra k L] :
+    Module.Finite L (Sheaf.HModule ((relCurve C L).moduleKSheaf L) 1) :=
+  instModuleFiniteHModuleOneBaseChange C L
+
+/-- The datum extracted from a genus-degree class has genus degree after every field-valued
+coefficient extension.
+
+This is forced by the two class-identification fields of `P`; it is not an additional rank-one
+hypothesis. -/
+theorem classDeg_baseChange
+    {pi : C.left ⟶ P1 k} [IsFinite pi]
+    {lam : picDegLayer C (genus C : ℤ) (overSpec k A)}
+    (P : PicRankOneNativeDatum pi lam)
+    (L : Type u) [Field L] [Algebra k L] [Algebra P.cover.Carrier L]
+    [IsScalarTower k P.cover.Carrier L] :
+    classDeg L
+      (Scheme.CechPic.map (relCurveMap C P.cover.Carrier L)
+        P.datum.cechPicClass) = genus C :=
+  PicRankOneLocalPresentation.datum_classDeg_baseChange_of_representation
+    P.cover P.representative P.represents P.datum P.datum_class L
+
+/-- Split witnesses for the represented class on every residue field give the exact residue
+`H¹` witnesses for the same extracted datum.
+
+The proof first identifies the datum with its relative Picard representative, uses the existing
+pointwise presentation equivalence, and then transports across the canonical comparison between
+the scheme-theoretic and algebraic residue fields. -/
+theorem residueH1Witness_of_isSplitWitness
+    {pi : C.left ⟶ P1 k} [IsFinite pi]
+    {lam : picDegLayer C (genus C : ℤ) (overSpec k A)}
+    (P : PicRankOneNativeDatum pi lam)
+    (hsplit : ∀ t : (overSpec k P.cover.Carrier).left,
+      IsSplitWitness C
+        (picEtMap C (Over.testPoint t)
+          (relPicToPicEt C (overSpec k P.cover.Carrier)
+            (P.representative : relPic C (overSpec k P.cover.Carrier))))) :
+    ∀ p : PrimeSpectrum P.cover.Carrier,
+      P.datum.HasWitnessH1Vanishing p.asIdeal.ResidueField := by
+  intro p
+  have hfib : IsChartDatumPlusFibre C pi
+      (relPicToPicEt C (overSpec k P.cover.Carrier)
+        (relPicMk C (overSpec k P.cover.Carrier) P.datum.cechPicClass))
+      P.datum :=
+    isChartDatumPlusFibre_of_relPicToPicEt C pi
+      P.datum.cechPicClass P.datum rfl
+  have hpres := isChartDatumPresentation_of_plusFibre_tower C pi hfib
+  have hs : IsSplitWitness C
+      (picEtMap C (Over.testPoint
+        (show (overSpec k P.cover.Carrier).left from p))
+        (relPicToPicEt C (overSpec k P.cover.Carrier)
+          (relPicMk C (overSpec k P.cover.Carrier) P.datum.cechPicClass))) := by
+    simpa only [← P.datum_class] using hsplit p
+  have hp : P.datum.HasWitnessH1Vanishing
+      (Over.testPointField (T := overSpec k P.cover.Carrier) p) :=
+    (hpres p).mpr hs
+  letI : Algebra p.asIdeal.ResidueField
+      (Over.testPointField (T := overSpec k P.cover.Carrier) p) :=
+    ((Scheme.Spec.residueFieldIso (.of P.cover.Carrier) p).inv).hom.toAlgebra
+  haveI : IsScalarTower P.cover.Carrier p.asIdeal.ResidueField
+      (Over.testPointField (T := overSpec k P.cover.Carrier) p) :=
+    IsScalarTower.of_algebraMap_eq'
+      (algebraMap_testPointFieldAffine_factors p)
+  exact (P.datum.hasWitnessH1Vanishing_iff_of_fieldExtension
+    p.asIdeal.ResidueField
+      (Over.testPointField (T := overSpec k P.cover.Carrier) p)).mpr hp
 
 end PicRankOneNativeDatum
 
