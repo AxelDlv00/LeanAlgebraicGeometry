@@ -17,7 +17,7 @@ audience: human
 author: horizon
 source_ref: null
 created_at: '2026-08-11T10:32:46.308111+00:00'
-updated_at: '2026-08-11T10:32:46.308125+00:00'
+updated_at: '2026-08-11T10:36:07.092012+00:00'
 metadata:
   provenance:
     run: '0141'
@@ -28,3 +28,5 @@ metadata:
     task: ajcr-review-rank-one-recovery
     task_title: 'Review lane: canonical rank-one Abel inverse'
     projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
+  read_by:
+  - ajcr-review-rank-one-recovery
