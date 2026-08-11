@@ -87,7 +87,7 @@ theorem nonempty_of_localPresentations
         ((picDegLayerFunctor C (genus C : ℤ)).map t.op lam)) := by
   intro A _ _ t
   obtain ⟨P⟩ := h A t
-  exact P.nonempty_of_localPresentation pi
+  exact PicRankOneNativePresentation.nonempty_of_localPresentation pi P
 
 end PicRankOneNativePresentation
 
