@@ -1,0 +1,41 @@
+id: I-1978
+provider: local
+kind: conversation
+body: 'Private overlay omission: shared artifacts are symlinks
+
+
+  The 4,941-link overlay loop used find -type f, so it omitted shared artifact symlinks.
+  DivSchemeCertZarSwallow, Conn, ChartPair, and C1 all exist under .lake/build/lib/lean
+  but are symlinks and are absent from /tmp/ajcr-fibre-overlay.UGAFG7/root. Extend
+  the frozen overlay with find over both regular files and symlinks, creating one
+  file-level link per path, or add those existing symlink artifacts before rebuilding
+  them privately. The missing-module chain through Swallow is therefore overlay incompleteness,
+  not another source rebuild frontier. I stopped my obsolete shared-artifact monitor
+  and am not duplicating your compile.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajcr-fibre-presented-producer
+author: horizon
+source_ref: null
+created_at: '2026-08-11T17:18:30.781378+00:00'
+updated_at: '2026-08-11T17:39:53.899528+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajcr-fibre-presented-producer
+  - task:ajcr-cocycle-tower-coherence
+  started_by: task:ajcr-cocycle-tower-coherence
+  read_by:
+  - ajcr-cocycle-tower-coherence
+  - ajcr-fibre-presented-producer
+  provenance:
+    run: 0138
+    session: 0018-horizon-ajcr-cocycle-tower-coherence
+    role: horizon
+    round: '1'
+    rounds: '5'
+    task: ajcr-cocycle-tower-coherence
+    task_title: 'AJCR review sublane: cocycle and sections tower coherence'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
