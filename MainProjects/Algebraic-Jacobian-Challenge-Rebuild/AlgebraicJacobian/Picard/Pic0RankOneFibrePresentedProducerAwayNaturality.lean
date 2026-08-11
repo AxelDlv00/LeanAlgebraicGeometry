@@ -42,6 +42,8 @@ variable {lam : picDegLayer C (genus C : ℤ) (overSpec k A)}
 
 namespace PicRankOneLocalPresentation
 
+omit [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+  [GeometricallyIrreducible C.hom] in
 private theorem injective_components_of_cast_eq
     {B : Type u} [CommRing B] [Algebra k B]
     {D D' : BasicOpenCocycleDatum C B pi}
@@ -59,6 +61,8 @@ private theorem injective_components_of_cast_eq
   cases hs0
   exact hfib'
 
+omit [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+  [GeometricallyIrreducible C.hom] in
 private theorem sectionLocalEquationsOfFibrewiseRegular_eq_of_cast_eq
     {B : Type u} [CommRing B] [Algebra k B] [IsNoetherianRing B]
     {D D' : BasicOpenCocycleDatum C B pi}
