@@ -71,7 +71,10 @@ theorem isIso_nativePushforward_fromTildeΓ
       (snd C (overSpec k B)).left.base ⁻¹'
         (PrimeSpectrum.basicOpen f : Set (PrimeSpectrum B))
     rw [Over.range_whiskerLeft C (overSpecMap (k := k) B S)]
-    rw [PrimeSpectrum.localization_away_comap_range S f]
+    simpa only [overSpecMap_left] using congrArg
+      (fun T : Set (PrimeSpectrum B) ↦
+        (snd C (overSpec k B)).left.base ⁻¹' T)
+      (PrimeSpectrum.localization_away_comap_range S f)
   letI nativeBaseChangedSectionsModule
       (U : (relCurve C S).Opens) :
       Module S Γ((D.baseChange S).nativeModule, U) :=

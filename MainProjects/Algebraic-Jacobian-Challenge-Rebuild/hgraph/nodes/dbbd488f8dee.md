@@ -9,7 +9,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.BasicOpenCocycleDatum.nativeTargetPieceCoordinate_one
 type: lean
-updated: '2026-08-11T17:13:18'
+updated: '2026-08-11T18:41:37'
 ---
 private theorem nativeTargetPieceCoordinate_one (j : D.index)
     (s : Γ(D.nativeModule, D.pieces j))
@@ -53,7 +53,4 @@ private theorem nativeTargetPieceCoordinate_one (j : D.index)
         (D.sectionsMap B' eTargetOpen s)) = 1
   rw [htriv, map_one]
 
-/-- The canonical comparison from the geometric pullback of the native module to the
-native module rebuilt from the base-changed cocycle datum is an isomorphism for every
-affine base change. -/
 set_option maxHeartbeats 1600000 in
