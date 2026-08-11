@@ -3,16 +3,23 @@
   "round": 5,
   "project": "Algebraic-Jacobian-Challenge-Rebuild",
   "task_id": "ajcr-review-family-producer",
-  "status": "running",
-  "started_at": "2026-08-11T13:52:34.364806+00:00",
   "projects": [
     "Algebraic-Jacobian-Challenge-Rebuild"
   ],
+  "status": "queued",
+  "started_at": "2026-08-11T13:52:34.364806+00:00",
+  "ended_at": "2026-08-11T15:04:17.278302+00:00",
   "harness_name": "codex",
   "harness_kind": "codex",
   "model": "gpt-5.6-sol",
   "effort": "ultra",
   "config_dir": "/home/axel/.codex-frenzy",
   "auth": "api-key",
-  "workspace_sha": "05676de0039410b3c53ed8ea9b7fc07225d3a332"
+  "usage": {
+    "tokens_in": 32367947,
+    "tokens_out": 56699,
+    "cost_usd": null
+  },
+  "engine_session_id": "019ff118-b2b1-7260-9302-192698f354c0",
+  "workspace_sha": "6ad5b1960a6ce12cf8f288271e1ef963dc86e55c"
 }
