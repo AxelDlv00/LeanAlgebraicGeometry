@@ -63,9 +63,9 @@ noncomputable def nativeH0BaseChange
     (hH1 : Subsingleton (datumPair D).H1) :
     B' ⊗[B] Γ(D.nativeModule, ⊤) ≃ₗ[B']
       Γ((D.baseChange B').nativeModule, ⊤) :=
-  ((D.nativeH0SectionsEquiv).symm.lTensor B').trans
+  (LinearEquiv.baseChange B B' _ _ (D.nativeH0SectionsEquiv).symm).trans
     ((D.datumH0BaseChange B' hH1).trans
-      ((D.baseChange B').nativeH0SectionsEquiv).symm)
+      (D.baseChange B').nativeH0SectionsEquiv)
 
 @[simp]
 lemma nativeH0BaseChange_one_tmul
@@ -74,7 +74,8 @@ lemma nativeH0BaseChange_one_tmul
       (D.baseChange B').nativeH0SectionsEquiv
         (D.datumH0BaseChange B' hH1
           (1 ⊗ₜ[B] (D.nativeH0SectionsEquiv).symm x)) := by
-  rfl
+  simp only [nativeH0BaseChange, LinearEquiv.trans_apply,
+    LinearEquiv.baseChange_tmul]
 
 /-- On a pure tensor, the native H0 base-change equivalence is the componentwise
 comparison of the corresponding glued section. -/
@@ -93,6 +94,20 @@ theorem nativeH0BaseChange_one_tmul_eq_sectionsMap
             (1 ⊗ₜ[B] (D.nativeH0SectionsEquiv).symm x))) = _
   rw [RankOneFamilyCertificates.linearEquivZero_h0BaseChange_one_tmul
     C B B' D hH1 ((D.nativeH0SectionsEquiv).symm x)]
+  have hx :
+      Sheaf.HModule.linearEquiv₀
+          (Opens.grothendieckTopology ((relCurve C B : Scheme.{u}) : TopCat))
+          isTerminalTop D.sheaf ((D.nativeH0SectionsEquiv).symm x) =
+        D.nativeModuleKSectionsEquiv (⊤ : (relCurve C B).Opens) x := by
+    simp only [nativeH0SectionsEquiv, LinearEquiv.symm_trans_apply,
+      LinearEquiv.apply_symm_apply]
+    rfl
+  rw [hx]
+  apply ((D.baseChange B').nativeModuleKSectionsEquiv
+    (⊤ : (relCurve C B').Opens)).injective
+  rw [LinearEquiv.apply_symm_apply]
+  change D.sectionsMap B' (by rw [Scheme.Hom.preimage_top]) x =
+    D.sectionsMap B' le_rfl x
   rfl
 
 end
