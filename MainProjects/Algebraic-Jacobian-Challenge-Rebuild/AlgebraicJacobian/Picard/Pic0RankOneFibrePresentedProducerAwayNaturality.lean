@@ -98,6 +98,7 @@ theorem baseOpenRankOneDivisor_mapAlgHom_mul_left
   let phi : B →ₐ[k] B' :=
     DivFamZar.awayMulOfDvd (k := k) (f * g) f g rfl
   letI algBB' : Algebra B B' := phi.toRingHom.toAlgebra
+  letI smulBB' : SMul B B' := algBB'.toSMul
   haveI towPB : IsScalarTower P.cover.Carrier B B' :=
     IsScalarTower.of_algebraMap_eq' (RingHom.ext fun x => by
       rw [RingHom.comp_apply, RingHom.algebraMap_toAlgebra]
@@ -151,18 +152,99 @@ theorem baseOpenRankOneDivisor_mapAlgHom_mul_left
         D'.sectionLocalEquationsOfFibrewiseRegular s' hfib' :=
     sectionLocalEquationsOfFibrewiseRegular_eq_of_cast_eq
       hD (D.sectionsMapTop B' s) s' hs hfibIter hfib'
+  let hcert : IsLocallyCertifiedAff (genus C)
+      (P.baseOpenDatumSectionLocalEquations f y hy) :=
+    isLocallyCertifiedAff_of_forall_prime_certified_adaptation
+      (exists_away_certifiedAff_of_fibrewiseRegular_of_classDeg C (genus C)
+        (P.baseOpenDatumSectionLocalEquations f y hy) pi
+        (P.baseOpenDatumSectionLocalEquations_fibrewiseRegular f y hy)
+        (P.baseOpenDatumSectionLocalEquations_classDeg f y hy))
+  let hcert' : IsLocallyCertifiedAff (genus C)
+      (P.baseOpenDatumSectionLocalEquations (f * g) y hy') :=
+    isLocallyCertifiedAff_of_forall_prime_certified_adaptation
+      (exists_away_certifiedAff_of_fibrewiseRegular_of_classDeg C (genus C)
+        (P.baseOpenDatumSectionLocalEquations (f * g) y hy') pi
+        (P.baseOpenDatumSectionLocalEquations_fibrewiseRegular (f * g) y hy')
+        (P.baseOpenDatumSectionLocalEquations_classDeg (f * g) y hy'))
   change DivFamZarAff.mapAlgHom phi
-      (DivFamZarAff.mk (P.baseOpenDatumSectionLocalEquations f y hy) _) =
-    DivFamZarAff.mk (P.baseOpenDatumSectionLocalEquations (f * g) y hy') _
+      (DivFamZarAff.mk (P.baseOpenDatumSectionLocalEquations f y hy) hcert) =
+    DivFamZarAff.mk (P.baseOpenDatumSectionLocalEquations (f * g) y hy') hcert'
   rw [DivFamZarAff.mapAlgHom_eq_mapAlg phi (fun _ => rfl),
     DivFamZarAff.mapAlg_mk]
   apply DivFamZarAff.mk_eq_mk_iff.mpr
   have hgeneric :=
     D.pullback_sectionLocalEquationsOfFibrewiseRegular_divEq_sectionsMapTop
-      s hfib B' hfibIter _
+      s hfib B' hfibIter
+      (hcert.germ_pullbackEqn_mem_nonZeroDivisors B' (genus C))
   rw [heq] at hgeneric
   simpa only [D, D', s, s', hy', baseOpenDatumSectionLocalEquations,
     sectionLocalEquationsOfDatumSectionBaseChange] using hgeneric
+
+set_option maxHeartbeats 2000000 in
+/-- The same localization identity with the two factors interchanged. -/
+theorem baseOpenRankOneDivisor_mapAlgHom_mul_right
+    (P : PicRankOneLocalPresentation pi lam)
+    [IsNoetherianRing P.cover.Carrier]
+    (f g : P.cover.Carrier)
+    (y : Sheaf.HModule P.datum.sheaf 0)
+    (hy : ∀ p : PrimeSpectrum P.cover.Carrier, g ∉ p.asIdeal →
+      (y ⊗ₜ (1 : p.asIdeal.ResidueField) :
+        Sheaf.HModule P.datum.sheaf 0 ⊗[P.cover.Carrier]
+          p.asIdeal.ResidueField) ≠ 0) :
+    DivFamZarAff.mapAlgHom
+        (DivFamZar.awayMulOfDvd (k := k) (f * g) g f (mul_comm g f))
+        (P.baseOpenRankOneDivisor g y hy) =
+      P.baseOpenRankOneDivisor (f * g) y
+        (P.generator_nonzero_on_mul_right f g y hy) := by
+  let hgen : ∀ (t : P.cover.Carrier), g * f = t →
+      ∀ p : PrimeSpectrum P.cover.Carrier, t ∉ p.asIdeal →
+        (y ⊗ₜ (1 : p.asIdeal.ResidueField) :
+          Sheaf.HModule P.datum.sheaf 0 ⊗[P.cover.Carrier]
+            p.asIdeal.ResidueField) ≠ 0 :=
+    fun t ht p htp => hy p (fun hg =>
+      htp (ht ▸ p.asIdeal.mul_mem_right f hg))
+  let Q : ∀ (t : P.cover.Carrier), g * f = t → Prop := fun t ht =>
+    DivFamZarAff.mapAlgHom
+        (DivFamZar.awayMulOfDvd (k := k) t g f ht)
+        (P.baseOpenRankOneDivisor g y hy) =
+      P.baseOpenRankOneDivisor t y (hgen t ht)
+  have hleft : Q (g * f) rfl := by
+    dsimp [Q, hgen]
+    exact P.baseOpenRankOneDivisor_mapAlgHom_mul_left g f y hy
+  have hright : Q (f * g) (mul_comm g f) :=
+    Eq.rec (motive := fun t ht => Q t ht) hleft (mul_comm g f)
+  simpa only [Q, hgen] using hright
+
+/-- The two canonical comparison maps agree on the pairwise product open, after allowing
+different fibrewise-nonzero rank-one generators on the two source opens. -/
+theorem baseOpenRankOneDivisor_awayMul_compat
+    (P : PicRankOneLocalPresentation pi lam)
+    [IsNoetherianRing P.cover.Carrier]
+    (f g : P.cover.Carrier)
+    (y y' : Sheaf.HModule P.datum.sheaf 0)
+    (hy : ∀ p : PrimeSpectrum P.cover.Carrier, f ∉ p.asIdeal →
+      (y ⊗ₜ (1 : p.asIdeal.ResidueField) :
+        Sheaf.HModule P.datum.sheaf 0 ⊗[P.cover.Carrier]
+          p.asIdeal.ResidueField) ≠ 0)
+    (hy' : ∀ p : PrimeSpectrum P.cover.Carrier, g ∉ p.asIdeal →
+      (y' ⊗ₜ (1 : p.asIdeal.ResidueField) :
+        Sheaf.HModule P.datum.sheaf 0 ⊗[P.cover.Carrier]
+          p.asIdeal.ResidueField) ≠ 0) :
+    DivFamZarAff.mapAlgHom
+        (DivFamZar.awayMulOfDvd (k := k) (f * g) f g rfl)
+        (P.baseOpenRankOneDivisor f y hy) =
+      DivFamZarAff.mapAlgHom
+        (DivFamZar.awayMulOfDvd (k := k) (f * g) g f (mul_comm g f))
+        (P.baseOpenRankOneDivisor g y' hy') := by
+  calc
+    _ = P.baseOpenRankOneDivisor (f * g) y
+        (P.generator_nonzero_on_mul_left f g y hy) :=
+      P.baseOpenRankOneDivisor_mapAlgHom_mul_left f g y hy
+    _ = P.baseOpenRankOneDivisor (f * g) y'
+        (P.generator_nonzero_on_mul_right f g y' hy') :=
+      P.baseOpenRankOneDivisor_mul_eq f g y y' hy hy'
+    _ = _ :=
+      (P.baseOpenRankOneDivisor_mapAlgHom_mul_right f g y' hy').symm
 
 end PicRankOneLocalPresentation
 
