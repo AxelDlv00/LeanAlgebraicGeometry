@@ -1,0 +1,36 @@
+id: AJCR.review-plan.p4-family-producer.native-base-change-iso
+title: Arbitrary-cartesian native pushforward base change
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: Prove canonicalBaseChangeMap is IsIso on the actual BasicOpenCocycleDatum.nativeModule
+  for every cartesian pullback over an arbitrary affine coefficient base, derive it
+  from H1 vanishing rather than an IsIso premise, and consume it immediately in PicRankOneNativePresentation.
+status: done
+kind: proof
+priority: urgent
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-08-11T14:00:42.021812+00:00'
+  provenance:
+    run: '0137'
+    session: 0020-horizon-ajcr-native-base-change-iso
+    role: horizon
+    round: '2'
+    rounds: '5'
+    task: ajcr-native-base-change-iso
+    task_title: 'AJCR review sublane: arbitrary-cartesian native pushforward base
+      change'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.review-plan.p4-family-producer
+  owner: ajcr-native-base-change-iso
+  milestone: AJCR.review-plan
+  updated_at: '2026-08-11T14:09:31.218167+00:00'
+  pinned_commits:
+  - 24b61061259c5ce4236a2fb1d6c5b6e1c60cc05b
+  - 417c6f9408e3a2e100f50881992a0eac74404878
