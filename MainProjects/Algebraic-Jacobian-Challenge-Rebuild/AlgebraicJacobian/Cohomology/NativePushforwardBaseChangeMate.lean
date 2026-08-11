@@ -65,7 +65,49 @@ private lemma modules_res_res
     (AddCommGrpCat.Hom.hom (N.presheaf.map i.op)) x) (Subsingleton.elim _ _)).symm
 
 set_option backward.isDefEq.respectTransparency false in
-private lemma pullback_app_isoTensor_baseMap_naturality
+/-- The canonical pullback base map commutes with restriction on both the source and target
+opens. -/
+lemma pullback_app_isoTensor_baseMap_res
+    {X Y : Scheme.{u}} (g : Y ⟶ X) (N : X.Modules)
+    {V' V'' : X.Opens} {W' W'' : Y.Opens}
+    (hW' : W' ≤ g ⁻¹ᵁ V') (hW'' : W'' ≤ g ⁻¹ᵁ V'')
+    (hV : V'' ≤ V') (hW : W'' ≤ W') (x : Γ(N, V')) :
+    (((Scheme.Modules.pullback g).obj N).presheaf.map (homOfLE hW).op).hom
+        (pullback_app_isoTensor_baseMap g N hW' x) =
+      pullback_app_isoTensor_baseMap g N hW''
+        ((N.presheaf.map (homOfLE hV).op).hom x) := by
+  have hnat := congrArg
+    (fun (k : Γ(N, V') ⟶
+        Γ((Scheme.Modules.pushforward g).obj ((Scheme.Modules.pullback g).obj N), V'')) =>
+      (AddCommGrpCat.Hom.hom k) x)
+    ((Scheme.Modules.Hom.mapPresheaf
+      ((Scheme.Modules.pullbackPushforwardAdjunction g).unit.app N)).naturality
+      (homOfLE hV).op)
+  have hL := modules_res_res ((Scheme.Modules.pullback g).obj N)
+    hW hW' (hW.trans hW')
+    ((Scheme.Modules.Hom.app
+      ((Scheme.Modules.pullbackPushforwardAdjunction g).unit.app N) V').hom x)
+  have hR := modules_res_res ((Scheme.Modules.pullback g).obj N)
+    hW'' (Scheme.Hom.preimage_mono g hV) (hW.trans hW')
+    ((Scheme.Modules.Hom.app
+      ((Scheme.Modules.pullbackPushforwardAdjunction g).unit.app N) V').hom x)
+  change (((Scheme.Modules.pullback g).obj N).presheaf.map (homOfLE hW).op).hom
+      ((((Scheme.Modules.pullback g).obj N).presheaf.map (homOfLE hW').op).hom
+        ((Scheme.Modules.Hom.app
+          ((Scheme.Modules.pullbackPushforwardAdjunction g).unit.app N) V').hom x)) =
+    (((Scheme.Modules.pullback g).obj N).presheaf.map (homOfLE hW'').op).hom
+      ((Scheme.Modules.Hom.app
+        ((Scheme.Modules.pullbackPushforwardAdjunction g).unit.app N) V'').hom
+        ((N.presheaf.map (homOfLE hV).op).hom x))
+  rw [hL]
+  refine hR.symm.trans ?_
+  exact (congrArg
+    (fun w => (((Scheme.Modules.pullback g).obj N).presheaf.map (homOfLE hW'').op).hom w)
+    hnat).symm
+
+set_option backward.isDefEq.respectTransparency false in
+/-- The canonical pullback base map is natural in the module. -/
+lemma pullback_app_isoTensor_baseMap_naturality
     {X Y : Scheme.{u}} (g : Y ⟶ X) {N N' : X.Modules}
     (h : N ⟶ N') {U : Y.Opens} {V : X.Opens} (e : U ≤ g ⁻¹ᵁ V) (x : Γ(N, V)) :
     (Scheme.Modules.Hom.app ((Scheme.Modules.pullback g).map h) U).hom
@@ -88,7 +130,8 @@ private lemma pullback_app_isoTensor_baseMap_naturality
     hb.symm)
 
 set_option backward.isDefEq.respectTransparency false in
-private lemma pullback_app_isoTensor_baseMap_congr
+/-- The canonical pullback base map is compatible with equality of scheme morphisms. -/
+lemma pullback_app_isoTensor_baseMap_congr
     {X Y : Scheme.{u}} {g g' : Y ⟶ X} (hgg' : g = g')
     (N : X.Modules) {U : Y.Opens} {V : X.Opens} (e : U ≤ g ⁻¹ᵁ V) (e' : U ≤ g' ⁻¹ᵁ V)
     (x : Γ(N, V)) :
@@ -101,7 +144,8 @@ private lemma pullback_app_isoTensor_baseMap_congr
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 -- Expanding the composed adjunction unit traverses nested pullback transports.
-private lemma pullback_app_isoTensor_baseMap_comp
+/-- The canonical pullback base map is compatible with composition of scheme morphisms. -/
+lemma pullback_app_isoTensor_baseMap_comp
     {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (N : Z.Modules)
     {T : X.Opens} {V : Y.Opens} {U : Z.Opens}
     (eV : V ≤ g ⁻¹ᵁ U) (eT : T ≤ f ⁻¹ᵁ V) (eTU : T ≤ (f ≫ g) ⁻¹ᵁ U) (x : Γ(N, U)) :
