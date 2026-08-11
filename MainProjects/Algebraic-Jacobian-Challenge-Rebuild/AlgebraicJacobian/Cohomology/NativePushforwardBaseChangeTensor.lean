@@ -269,7 +269,10 @@ theorem Scheme.Modules.pullback_app_isoTensor_baseMap_sectionLinearEquiv_of_from
           ((modulesSpecToSheaf.map N.fromTildeΓ).hom.app (.op ⊤)).hom z :=
       fun _ => rfl
     rw [happ]
-    simpa using h
+    convert h using 1
+    · rfl
+    · rfl
+    · simp
   change (Scheme.Modules.Hom.app
       ((Scheme.Modules.pullback (Spec.map phi)).map N.fromTildeΓ) ⊤).hom
       ((Scheme.Modules.Hom.app
