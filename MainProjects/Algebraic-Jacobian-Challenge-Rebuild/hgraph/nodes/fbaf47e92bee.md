@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PicRankOneLocalPresentation.evaluation_evaluationLiftOfH0
 type: lean
-updated: '2026-08-11T22:15:11'
+updated: '2026-08-11T23:04:58'
 ---
 theorem evaluation_evaluationLiftOfH0 (P : PicRankOneLocalPresentation pi lam)
     (y : Sheaf.HModule P.datum.sheaf 0) :
