@@ -42,6 +42,31 @@ variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
 
 noncomputable section
 
+/-- Every morphism between affine tests over `Spec k` is induced by a `k`-algebra map.
+
+Unlike `exists_algHom_eq_of_overSpec_hom`, neither coefficient ring is required to be a
+field.  This is the form needed when the target of a field-valued Picard point is tested by an
+arbitrary affine scheme. -/
+theorem exists_algHom_eq_of_overSpec_hom_of_commRing
+    (R S : Type u) [CommRing R] [CommRing S] [Algebra k R] [Algebra k S]
+    (t : overSpec k S ⟶ overSpec k R) :
+    ∃ e : R →ₐ[k] S, t = Over.overSpecMap e := by
+  have hw : t.left ≫ (overSpec k R).hom = (overSpec k S).hom := Over.w t
+  let psi : CommRingCat.of R ⟶ CommRingCat.of S := Spec.preimage t.left
+  have hmap : Spec.map psi = t.left := Spec.map_preimage t.left
+  have htower : CommRingCat.ofHom (algebraMap k R) ≫ psi =
+      CommRingCat.ofHom (algebraMap k S) := by
+    apply Spec.map_injective
+    rw [Spec.map_comp, hmap]
+    exact hw
+  let e : R →ₐ[k] S :=
+    { __ := psi.hom
+      commutes' := fun r ↦
+        congrArg (fun f => f r) (congrArg CommRingCat.Hom.hom htower) }
+  refine ⟨e, ?_⟩
+  ext : 1
+  exact hmap.symm
+
 /-- Complete the native presentation attached to an actual lambda-tied datum.
 
 The input is exactly the remaining family-level H¹ obligation.  The degree law follows from the
@@ -95,21 +120,7 @@ theorem mem_picRankOneOpen_of_isSplitWitness
     lam ∈ (PicRankOneOpen pi).obj (op (overSpec k K)) := by
   apply mem_picRankOneOpen_of_nativePresentations pi
   intro A _ _ t
-  have hw : t.left ≫ (overSpec k K).hom = (overSpec k A).hom := Over.w t
-  let psi : CommRingCat.of K ⟶ CommRingCat.of A := Spec.preimage t.left
-  have hmap : Spec.map psi = t.left := Spec.map_preimage t.left
-  have htower : CommRingCat.ofHom (algebraMap k K) ≫ psi =
-      CommRingCat.ofHom (algebraMap k A) := by
-    apply Spec.map_injective
-    rw [Spec.map_comp, hmap]
-    exact hw
-  let e : K →ₐ[k] A :=
-    { __ := psi.hom
-      commutes' := fun r ↦
-        congrArg (fun f => f r) (congrArg CommRingCat.Hom.hom htower) }
-  have ht : t = Over.overSpecMap e := by
-    ext : 1
-    exact hmap.symm
+  obtain ⟨e, ht⟩ := exists_algHom_eq_of_overSpec_hom_of_commRing (k := k) K A t
   rw [ht]
   exact PicRankOneNativePresentation.nonempty_of_fieldPullback
     (C := C) hpi e lam.1 rfl hsplit
