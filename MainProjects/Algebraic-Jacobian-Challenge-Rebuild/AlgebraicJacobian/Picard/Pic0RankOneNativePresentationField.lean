@@ -37,7 +37,6 @@ attribute [local instance] Scheme.overModule Scheme.overSectionsAlgebra
 attribute [local instance 10000] relCurve.instOver
 
 variable {k : Type u} [Field k] {C : Over (Spec (.of k))}
-variable {pi : C.left ⟶ P1 k} [IsFinite pi]
 variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
   [GeometricallyIrreducible C.hom]
 
@@ -49,10 +48,12 @@ set_option maxHeartbeats 1600000 in
 
 The output splitting field is not the original one: it is a finite-separable field factor of
 the base change of the original field cover.  Consequently no finiteness, separability, or
-algebraicity assumption is imposed on the reading-field extension itself. -/
+algebraicity assumption is imposed on the reading-field extension itself.  The auxiliary finite
+map `pi` is used only to choose a basic-open cocycle datum through which the `H¹` witness is
+transported. -/
 theorem isSplitWitness_map_overSpecMap_of_algHom
+    (pi : C.left ⟶ P1 k) [IsFinite pi]
     {K L : Type u} [Field K] [Algebra k K] [Field L] [Algebra k L]
-    {pi : C.left ⟶ P1 k} [IsFinite pi]
     (e : K →ₐ[k] L) (nu : picEt C (overSpec k K))
     (h : IsSplitWitness C nu) :
     IsSplitWitness C (picEtMap C (Over.overSpecMap e) nu) := by
@@ -183,7 +184,7 @@ theorem PicRankOneNativeDatum.residueH1Witness_of_fieldPullback
         congrArg (fun f => picEtMap C f nu) hmaps
   rw [hclass]
   exact isSplitWitness_map_overSpecMap_of_algHom
-    (C := C) (pi := pi) phi nu hsplit
+    (C := C) pi phi nu hsplit
 
 end
 
