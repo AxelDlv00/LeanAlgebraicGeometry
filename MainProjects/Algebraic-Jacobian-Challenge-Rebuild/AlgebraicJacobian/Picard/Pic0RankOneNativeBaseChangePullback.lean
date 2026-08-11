@@ -426,10 +426,10 @@ private theorem nativeTargetPieceCoordinate_one (j : D.index)
         (D.sectionsMap B' eTargetOpen s)) = 1
   rw [htriv, map_one]
 
+set_option maxHeartbeats 1600000 in
 /-- The canonical comparison from the geometric pullback of the native module to the
 native module rebuilt from the base-changed cocycle datum is an isomorphism for every
 affine base change. -/
-set_option maxHeartbeats 1600000 in
 theorem isIso_nativePullbackComparison :
     IsIso (D.nativePullbackComparison B') := by
   classical
