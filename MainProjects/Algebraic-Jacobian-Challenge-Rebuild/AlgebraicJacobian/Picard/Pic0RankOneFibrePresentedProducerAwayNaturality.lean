@@ -82,6 +82,7 @@ private theorem sectionLocalEquationsOfFibrewiseRegular_eq_of_cast_eq
   cases hs0
   rfl
 
+-- The dependent fibrewise-regularity and local-equation cast comparison is expensive to elaborate.
 set_option maxHeartbeats 8000000 in
 theorem baseOpenRankOneDivisor_mapAlgHom_mul_left
     (P : PicRankOneLocalPresentation pi lam)
@@ -184,6 +185,7 @@ theorem baseOpenRankOneDivisor_mapAlgHom_mul_left
   simpa only [D, D', s, s', hy', baseOpenDatumSectionLocalEquations,
     sectionLocalEquationsOfDatumSectionBaseChange] using hgeneric
 
+-- The commutative-product transport is dependent on the localization target and needs extra budget.
 set_option maxHeartbeats 2000000 in
 /-- The same localization identity with the two factors interchanged. -/
 theorem baseOpenRankOneDivisor_mapAlgHom_mul_right
