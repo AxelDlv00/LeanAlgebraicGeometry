@@ -28,7 +28,7 @@ explanation: This producer lane is intentionally limited to Pic0RankOneNativePre
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 priority: urgent
-status: running
+status: queued
 write_set:
   files:
   - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RankOneNativePresentation*.lean
@@ -47,11 +47,18 @@ roadmap_refs:
 - AJCR.review-plan.p3-rank-one-loci
 - AJCR.review-plan.p4-rank-one-iso
 - AJCR.review-plan.p5-sepclosed-cover
-inbox_refs: []
+inbox_refs:
+- I-1924
+- I-1925
+- I-1926
+- I-1927
+- I-1961
+- I-1963
+- I-1967
 artifact_refs:
 - MainProjects/Algebraic-Jacobian-Challenge/informal/Lean_Algebraic_Jacobian_Complete_Execution_Plan.pdf
 - MainProjects/Algebraic-Jacobian-Challenge/informal/AJCR_Runs_121_122_123_Supervision_Note_2026-08-07.pdf
 created_at: '2026-08-08T02:03:42.135228+00:00'
-updated_at: '2026-08-11T03:11:45.305981+00:00'
+updated_at: '2026-08-11T05:44:56.346193+00:00'
 metadata:
   author: human

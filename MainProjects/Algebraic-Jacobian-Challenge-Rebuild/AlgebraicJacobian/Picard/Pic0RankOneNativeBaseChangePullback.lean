@@ -149,6 +149,7 @@ private theorem unit_hom_ext_top {X : Scheme.{u}} {M : X.Modules}
     (fun z ↦ (M.presheaf.map
       (homOfLE (le_top : U.unop ≤ (⊤ : X.Opens))).op).hom z) h).trans hg.symm)
 
+set_option maxHeartbeats 1600000 in
 private theorem pullbackRestrictIso_baseMap_top
     {X Y : Scheme.{u}} (g : Y ⟶ X) (U : X.Opens)
     (N : X.Modules) (x : Γ(N, U)) :
@@ -170,7 +171,9 @@ private theorem pullbackRestrictIso_baseMap_top
           (show (g ⁻¹ᵁ U).ι ''ᵁ (⊤ : (g ⁻¹ᵁ U).toScheme.Opens) ≤
             g ⁻¹ᵁ U by simp) x) =
       pullback_app_isoTensor_baseMap (g ⁻¹ᵁ U).ι
-        ((Scheme.Modules.pullback g).obj N) le_top
+        ((Scheme.Modules.pullback g).obj N)
+        (show (⊤ : (g ⁻¹ᵁ U).toScheme.Opens) ≤
+          (g ⁻¹ᵁ U).ι ⁻¹ᵁ (g ⁻¹ᵁ U) by simp)
         (pullback_app_isoTensor_baseMap g N (le_refl (g ⁻¹ᵁ U)) x) := by
     simpa only [pullbackOpenImmersionSectionsEquiv,
       Scheme.Opens.opensRange_ι, Scheme.Opens.ι_image_top,
@@ -254,12 +257,12 @@ noncomputable def nativePullbackPieceSheafIso (j : D.index) :
     (Scheme.Modules.restrictFunctor ((D.baseChange B').pieces j).ι).obj
         ((Scheme.Modules.pullback (relCurveMap C B B')).obj D.nativeModule) ≅
       SheafOfModules.unit ((D.baseChange B').pieces j).toScheme.ringCatSheaf := by
-  rw [D.pieces_baseChange B' j]
+  rw [D.toBasicOpenCoverData.pieces_baseChange B' j]
   exact
     (Scheme.Modules.pullbackRestrictIso (relCurveMap C B B') (D.pieces j)).app
-        D.nativeModule ≫≅
+        D.nativeModule ≪≫
       (Scheme.Modules.pullback ((relCurveMap C B B') ∣_ D.pieces j)).mapIso
-        (D.nativeModulePieceSheafIso j) ≫≅
+        (D.nativeModulePieceSheafIso j) ≪≫
       Scheme.Modules.pullbackUnitIso ((relCurveMap C B B') ∣_ D.pieces j)
 
 end

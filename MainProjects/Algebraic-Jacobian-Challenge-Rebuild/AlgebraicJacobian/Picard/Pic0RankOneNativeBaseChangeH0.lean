@@ -28,7 +28,7 @@ namespace AlgebraicGeometry
 variable {k : Type u} [Field k]
 variable {C : Over (Spec (.of k))}
 variable {B : Type u} [CommRing B] [Algebra k B]
-variable {pi : C.left ⟶ P1 k} [IsAffineHom pi]
+variable {pi : C.left ⟶ P1 k} [IsFinite pi]
 
 namespace BasicOpenCocycleDatum
 
@@ -65,13 +65,13 @@ noncomputable def nativeH0BaseChange
       Γ((D.baseChange B').nativeModule, ⊤) :=
   ((D.nativeH0SectionsEquiv).symm.lTensor B').trans
     ((D.datumH0BaseChange B' hH1).trans
-      ((D.baseChange B').nativeH0SectionsEquiv B').symm)
+      ((D.baseChange B').nativeH0SectionsEquiv).symm)
 
 @[simp]
 lemma nativeH0BaseChange_one_tmul
     (hH1 : Subsingleton (datumPair D).H1) (x : Γ(D.nativeModule, ⊤)) :
     D.nativeH0BaseChange B' hH1 (1 ⊗ₜ[B] x) =
-      ((D.baseChange B').nativeH0SectionsEquiv B')
+      (D.baseChange B').nativeH0SectionsEquiv
         (D.datumH0BaseChange B' hH1
           (1 ⊗ₜ[B] (D.nativeH0SectionsEquiv).symm x)) := by
   rfl

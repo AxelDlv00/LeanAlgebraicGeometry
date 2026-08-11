@@ -27,6 +27,8 @@ metadata:
   parent: AJCR.review-plan.p4-rank-one-iso
   owner: ajcr-review-family-producer
   milestone: AJCR.review-plan
-  updated_at: '2026-08-11T02:49:24.398703+00:00'
+  updated_at: '2026-08-11T05:34:37.343534+00:00'
   pinned_commits:
+  - cf1cf94155
+  - abd1d776d5
   - fd1df6a07c

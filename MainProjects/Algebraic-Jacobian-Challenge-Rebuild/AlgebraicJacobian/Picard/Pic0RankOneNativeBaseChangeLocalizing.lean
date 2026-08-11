@@ -33,7 +33,7 @@ attribute [local instance] Scheme.overModule
 variable {k : Type u} [Field k]
 variable {C : Over (Spec (.of k))}
 variable {B : Type u} [CommRing B] [Algebra k B]
-variable {pi : C.left ⟶ P1 k} [IsAffineHom pi]
+variable {pi : C.left ⟶ P1 k} [IsFinite pi]
 
 namespace BasicOpenCocycleDatum
 
@@ -52,7 +52,7 @@ theorem isIso_nativePushforward_fromTildeΓ
     (hH1 : Subsingleton (datumPair D).H1) :
     IsIso (((Scheme.Modules.pushforward
       (relCurve C B ↘ Spec (.of B))).obj D.nativeModule).fromTildeΓ) := by
-  rw [Scheme.Modules.isIso_fromTildeΓ_iff_isLocalizing]
+  rw [isIso_fromTildeΓ_iff_isLocalizing]
   intro f
   let S := Localization.Away f
   haveI : IsOpenImmersion (overSpecMap (k := k) B S).left := by
