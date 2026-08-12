@@ -1,0 +1,10 @@
+{
+  "run_id": "0144",
+  "reason": "usage_limit",
+  "at": "2026-08-12T10:42:25.252891+00:00",
+  "focus_tasks": [
+    "ajcr-reviewer-full"
+  ],
+  "focus_projects": [],
+  "resume": "horizon run --resume 0144"
+}
