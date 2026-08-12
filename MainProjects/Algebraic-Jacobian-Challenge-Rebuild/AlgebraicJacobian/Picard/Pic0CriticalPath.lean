@@ -21,6 +21,7 @@ import AlgebraicJacobian.Picard.Pic0RankOneTranslatedCoverMembership
 import AlgebraicJacobian.Picard.RelPicBaseLocalTriviality
 import AlgebraicJacobian.Picard.Pic0RankOneCanonicalDivisorDescent
 import AlgebraicJacobian.Picard.Pic0RankOneSplitMembership
+import AlgebraicJacobian.Picard.Pic0RankOneSectionFibreNonzero
 
 /-!
 # Narrow root for the AJCR-first Picard strategy
@@ -65,9 +66,14 @@ die Zariski-locally). The public locus is fibrewise split:
 `mem_picRankOneOpen_iff_isSplitWitness` at field bases, and
 `isSplitWitness_testPoint_of_mem` at every point of an arbitrary test.
 
+Fibre nonvanishing toward that discharge is landed:
+`sectionsMapTop_ne_zero_of_divEq_certified` and its tensor-form consumer say a datum section
+cutting a certified divisor is nonzero on every residue-field fibre — the exact input shape of
+the rank-one unit-extraction engine.
+
 Still missing, and NOT replaced here by axioms or local hypotheses: the discharge of
-`RankOneDivisorUniqueness` (datum-section extraction from a class-matched divisor, fibre
-nonvanishing, and the unit-rescaling chain), existence of Abel-correct witnesses over
+`RankOneDivisorUniqueness` (datum-section extraction from a class-matched divisor and the
+unit-rescaling chain), existence of Abel-correct witnesses over
 non-Noetherian affine bases, an inhabitant of `PicRankOneEvaluationDivisorData` (the canonical
 global divisor / Abel section), the Abel isomorphism (the `AbelInverse` uniqueness obligation
 and `evaluationIso` remain hypothetical), `PicRankOneOpen.IsOpen` itself, and the later
@@ -350,6 +356,9 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.isSplitWitness_of_mem_picRankOneOpen_field
 #check AlgebraicGeometry.mem_picRankOneOpen_iff_isSplitWitness
 #check AlgebraicGeometry.isSplitWitness_testPoint_of_mem
+-- Fibre nonvanishing of a class-matched datum section (Pic0RankOneSectionFibreNonzero.lean)
+#check AlgebraicGeometry.BasicOpenCocycleDatum.sectionsMapTop_ne_zero_of_divEq_certified
+#check AlgebraicGeometry.BasicOpenCocycleDatum.tmul_residueField_ne_zero_of_divEq_certified
 
 #print axioms AlgebraicGeometry.BasicOpenCocycleDatum.isIso_canonicalBaseChangeMap_nativeModule
 #print axioms AlgebraicGeometry.PicRankOneNativePresentation.ofCertificatesWithNativeBaseChange
@@ -373,3 +382,5 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.isSplitWitness_of_mem_picRankOneOpen_field
 #print axioms AlgebraicGeometry.mem_picRankOneOpen_iff_isSplitWitness
 #print axioms AlgebraicGeometry.isSplitWitness_testPoint_of_mem
+#print axioms AlgebraicGeometry.BasicOpenCocycleDatum.sectionsMapTop_ne_zero_of_divEq_certified
+#print axioms AlgebraicGeometry.BasicOpenCocycleDatum.tmul_residueField_ne_zero_of_divEq_certified
