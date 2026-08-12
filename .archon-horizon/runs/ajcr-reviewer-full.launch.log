@@ -25,3 +25,5 @@ claude >= 2.1.154; each substantive task may fan out to many agents).
 Starting Run (ID: 0144) - 8 rounds ─────────────────────────────────────────────
 [HORIZON] ›  Started task: ajcr-reviewer-full
 [HORIZON] ›  Finished task: ajcr-reviewer-full (queued)
+[HORIZON] ⚠ Stopped run 0144: usage_limit.
+[HORIZON] ⚠ Run 0144 ended after stopping early: usage_limit.
