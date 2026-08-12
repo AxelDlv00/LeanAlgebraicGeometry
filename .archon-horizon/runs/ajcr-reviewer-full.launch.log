@@ -23,3 +23,5 @@ dynamic-workflow orchestration via --settings (needs workflows enabled and
 claude >= 2.1.154; each substantive task may fan out to many agents).
 
 Starting Run (ID: 0144) - 8 rounds ─────────────────────────────────────────────
+[HORIZON] ›  Started task: ajcr-reviewer-full
+[HORIZON] ›  Finished task: ajcr-reviewer-full (queued)

@@ -1,0 +1,17 @@
+{
+  "model": "fable",
+  "name": "general-purpose",
+  "native_subagent_id": "toolu_01DxYgXuAyS1KZXBL7deFZ6b",
+  "parent_session": "0002-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "running",
+  "subagent_type": "general-purpose",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 156,
+    "tokens_out": 446
+  }
+}

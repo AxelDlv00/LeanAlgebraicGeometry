@@ -144,7 +144,7 @@ variable {E : PicRankOneEvaluationDivisorData pi}
 
 /-- The public-locus element carried by the restricted family value over `W`. -/
 noncomputable def locusValue (F : PicRankOneFibrePresentationInput pi E g) :
-    rankOneLocus.obj (op (F.W : Scheme.{u})) :=
+    (rankOneLocus (C := C) (pi := pi)).obj (op (F.W : Scheme.{u})) :=
   ⟨F.restrictedValue.1, ⟨F.restrictedValue.2,
     mem_picRankOneOpen_of_nativePresentations pi
       (fun A _ _ t => F.nativePresentation A t)⟩⟩
@@ -164,7 +164,7 @@ noncomputable def evaluationDivisor
 of the represented evaluation-divisor argument below. -/
 def FibreFactorizationClause
     (F : PicRankOneFibrePresentationInput pi E g) : Prop :=
-  ∀ (S : Scheme.{u}) (v : rankOneLocus.obj (op S)) (w : S ⟶ X),
+  ∀ (S : Scheme.{u}) (v : (rankOneLocus (C := C) (pi := pi)).obj (op S)) (w : S ⟶ X),
     (picRankOneOpenSigmaIncl pi).app (op S) v =
       g.app (op S) w →
     ∃ u : S ⟶ (F.W : Scheme.{u}),
@@ -232,10 +232,10 @@ lemma fibreFactorizationClause_of_evaluationDivisorPullback
     F.fst.app (op S) u =
         (rankOneAbelSigma pi).app (op S)
           (E.divisor.app (op S) (F.fst.app (op S) u)) :=
-      (E.divisor_abel_app S (F.fst.app (op S) u)).symm
+      (E.divisor_abel_app pi S (F.fst.app (op S) u)).symm
     _ = (rankOneAbelSigma pi).app (op S) (E.divisor.app (op S) v) :=
       congrArg _ huDivisor
-    _ = v := E.divisor_abel_app S v
+    _ = v := E.divisor_abel_app pi S v
 
 /-! ## Assembly of the stronger fibre datum -/
 
@@ -250,20 +250,20 @@ noncomputable def toFibrePresented_of_evaluationDivisorPullback
   sq := F.fst_comp_incl
   exists_factor := by
     simpa only [FibreFactorizationClause] using
-      F.fibreFactorizationClause_of_evaluationDivisorPullback hpb
+      F.fibreFactorizationClause_of_evaluationDivisorPullback pi hpb
 
 @[simp]
 lemma toFibrePresented_of_evaluationDivisorPullback_W
     (F : PicRankOneFibrePresentationInput pi E g)
     (hpb : F.EvaluationDivisorPullback) :
-    (F.toFibrePresented_of_evaluationDivisorPullback hpb).W = F.W :=
+    (F.toFibrePresented_of_evaluationDivisorPullback pi hpb).W = F.W :=
   rfl
 
 lemma toFibrePresented_of_evaluationDivisorPullback_isPullback
     (F : PicRankOneFibrePresentationInput pi E g)
     (hpb : F.EvaluationDivisorPullback) :
     IsPullback F.fst (yoneda.map F.W.ι) (picRankOneOpenSigmaIncl pi) g :=
-  (F.toFibrePresented_of_evaluationDivisorPullback hpb).isPullback
+  (F.toFibrePresented_of_evaluationDivisorPullback pi hpb).isPullback
 
 /-! ## Immediate openness consumer -/
 
@@ -278,7 +278,7 @@ theorem picRankOneOpen_isOpen_of_evaluationDivisorPullbackFamilies
     PicRankOneOpen.IsOpen pi := by
   apply picRankOneOpen_isOpen_of_fibrePresented pi
   intro X g
-  exact (D X g).toFibrePresented_of_evaluationDivisorPullback (hpb X g)
+  exact (D X g).toFibrePresented_of_evaluationDivisorPullback pi (hpb X g)
 
 end PicRankOneFibrePresentationInput
 
