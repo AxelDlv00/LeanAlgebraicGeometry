@@ -1,0 +1,26 @@
+{
+  "role": "horizon",
+  "round": 2,
+  "project": "Algebraic-Jacobian-Challenge-Rebuild",
+  "task_id": "ajcr-reviewer-full",
+  "projects": [
+    "Algebraic-Jacobian-Challenge-Rebuild",
+    "Algebraic-Jacobian-Challenge"
+  ],
+  "status": "queued",
+  "started_at": "2026-08-12T09:59:05.707238+00:00",
+  "ended_at": "2026-08-12T10:42:07.523978+00:00",
+  "harness_name": "horizon-fable5",
+  "harness_kind": "claude-code",
+  "model": "claude-fable-5",
+  "effort": "ultracode",
+  "config_dir": "/home/axel/.claude-zeming",
+  "auth": "subscription",
+  "usage": {
+    "tokens_in": 189,
+    "tokens_out": 163840,
+    "cost_usd": 51.465735000000016
+  },
+  "engine_session_id": "065cb837-ff77-41b0-b157-241885dbfb5e",
+  "workspace_sha": "a9eba84717843dbdbaf4eccbc6960c2eec6dff8b"
+}
