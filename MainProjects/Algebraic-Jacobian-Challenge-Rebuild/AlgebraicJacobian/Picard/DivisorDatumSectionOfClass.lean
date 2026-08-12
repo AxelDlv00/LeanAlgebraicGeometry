@@ -279,6 +279,79 @@ theorem exists_gluedSection_sectionLocalEquations_divEq
     (D.sectionLocalEquations_divEq_of_same_section s 𝒲 𝒲₀ σ D.pieceIndex hσ hσ₀
       hreg).trans hdiv0⟩
 
+/-! ## Unit rescaling of the glued section -/
+
+/-- The `j`-th component of a scalar multiple of a glued section is the scalar multiple
+of the component. -/
+lemma component_smul (v : B) (s : ↥(gluedSubmodule B D.pieces D.unit ⊤))
+    (j : D.index) :
+    D.component (v • s) j = v • D.component s j := by
+  unfold BasicOpenCocycleDatum.component
+  change (relCurve C B).resHom (le_inf le_top le_rfl) (v • s.val j)
+    = v • (relCurve C B).resHom (le_inf le_top le_rfl) (s.val j)
+  rw [Scheme.overModule_smul_def, map_mul, Scheme.overModule_smul_def]
+  congr 1
+  exact (relCurve C B).overAlgebraMap_apply_res B (homOfLE (le_inf le_top le_rfl)).op v
+
+/-- Germ-regularity of the components transfers to unit multiples of a glued section. -/
+lemma germ_component_smul_mem_nonZeroDivisors (v : Bˣ)
+    (s : ↥(gluedSubmodule B D.pieces D.unit ⊤))
+    (hreg : ∀ (j : D.index) (y : relCurve C B) (hy : y ∈ D.pieces j),
+      ((relCurve C B).presheaf.germ (D.pieces j) y hy).hom (D.component s j)
+        ∈ nonZeroDivisors ((relCurve C B).presheaf.stalk y))
+    (j : D.index) (y : relCurve C B) (hy : y ∈ D.pieces j) :
+    ((relCurve C B).presheaf.germ (D.pieces j) y hy).hom
+        (D.component ((v : B) • s) j)
+      ∈ nonZeroDivisors ((relCurve C B).presheaf.stalk y) := by
+  rw [D.component_smul, Scheme.overModule_smul_def, map_mul]
+  exact mul_mem
+    ((v.isUnit.map ((relCurve C B).overAlgebraMap B (D.pieces j))).map
+      ((relCurve C B).presheaf.germ (D.pieces j) y hy).hom).mem_nonZeroDivisors
+    (hreg j y hy)
+
+/-- **Unit rescaling of the glued section does not change the cut divisor** (up to
+`DivEq`, on any subordinated pointed cover, over an arbitrary test algebra): scaling the
+glued section by a global unit of `B` multiplies each local equation by the image of the
+unit in the section ring — a unit rescaling of the local-equation system. -/
+theorem sectionLocalEquations_smul_divEq (v : Bˣ)
+    (s : ↥(gluedSubmodule B D.pieces D.unit ⊤))
+    (𝒲 : (relCurve C B).PointedCover) (σ : relCurve C B → D.index)
+    (hσ : ∀ x : relCurve C B, 𝒲.opens x ≤ D.pieces (σ x))
+    (hreg : ∀ (j : D.index) (y : relCurve C B) (hy : y ∈ D.pieces j),
+      ((relCurve C B).presheaf.germ (D.pieces j) y hy).hom (D.component s j)
+        ∈ nonZeroDivisors ((relCurve C B).presheaf.stalk y))
+    (hreg' : ∀ (j : D.index) (y : relCurve C B) (hy : y ∈ D.pieces j),
+      ((relCurve C B).presheaf.germ (D.pieces j) y hy).hom
+          (D.component ((v : B) • s) j)
+        ∈ nonZeroDivisors ((relCurve C B).presheaf.stalk y)) :
+    Scheme.LocalEquations.DivEq
+      (D.sectionLocalEquations ((v : B) • s) 𝒲 σ hσ hreg')
+      (D.sectionLocalEquations s 𝒲 σ hσ hreg) := by
+  refine ⟨𝒲, fun x => le_rfl, fun x => le_rfl, fun x => ?_⟩
+  refine ⟨Units.map ((relCurve C B).overAlgebraMap B (𝒲.opens x)).toMonoidHom v, ?_⟩
+  have hL : ((relCurve C B).presheaf.map (homOfLE
+      (le_rfl : 𝒲.opens x ≤ 𝒲.opens x)).op).hom
+        ((D.sectionLocalEquations ((v : B) • s) 𝒲 σ hσ hreg').eqn x)
+      = (relCurve C B).resHom (hσ x) (D.component ((v : B) • s) (σ x)) := by
+    rw [sectionLocalEquations_eqn]
+    exact Scheme.resHom_self _ _
+  have hR : ((relCurve C B).presheaf.map (homOfLE
+      (le_rfl : 𝒲.opens x ≤ 𝒲.opens x)).op).hom
+        ((D.sectionLocalEquations s 𝒲 σ hσ hreg).eqn x)
+      = (relCurve C B).resHom (hσ x) (D.component s (σ x)) := by
+    rw [sectionLocalEquations_eqn]
+    exact Scheme.resHom_self _ _
+  have hmain : (relCurve C B).resHom (hσ x) (D.component ((v : B) • s) (σ x))
+      = ((Units.map ((relCurve C B).overAlgebraMap B (𝒲.opens x)).toMonoidHom v :
+            Γ(relCurve C B, 𝒲.opens x)ˣ) : Γ(relCurve C B, 𝒲.opens x))
+        * (relCurve C B).resHom (hσ x) (D.component s (σ x)) := by
+    rw [D.component_smul, Scheme.overModule_smul_def, map_mul]
+    congr 1
+    exact (relCurve C B).overAlgebraMap_apply_res B (homOfLE (hσ x)).op (v : B)
+  exact hL.trans (hmain.trans (congrArg
+    (((Units.map ((relCurve C B).overAlgebraMap B (𝒲.opens x)).toMonoidHom v :
+        Γ(relCurve C B, 𝒲.opens x)ˣ) : Γ(relCurve C B, 𝒲.opens x)) * ·) hR.symm))
+
 end BasicOpenCocycleDatum
 
 end AlgebraicGeometry
