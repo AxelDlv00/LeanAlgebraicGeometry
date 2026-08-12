@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ProbeP4R6.probeLocInj
 type: lean
-updated: '2026-08-12T01:44:13'
+updated: '2026-08-12T10:36:23'
 ---
 theorem probeLocInj {X : Scheme.{u}} (f : yoneda.obj X ⟶ (pic0SigmaSheaf C).1)
     (hf : IsOpenImmersion.presheaf f) :

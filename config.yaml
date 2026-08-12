@@ -12,7 +12,7 @@ workspace:
       config_dir: /home/axel/.codex-frenzy
       notes: Use for the AJCR review lanes; keep full project builds serialized.
   horizon_agent:
-    harness: codex
+    harness: horizon-fable5
   scheduler:
     max_parallel_sessions: 14
 external_libraries:
@@ -37,6 +37,7 @@ harnesses:
     model: claude-fable-5
     options:
       effort: ultracode
+      config_dir: /home/axel/.claude-zeming
   horizon-opus-ultra:
     kind: claude-code
     model: claude-opus-4-8
