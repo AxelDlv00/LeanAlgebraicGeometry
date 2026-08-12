@@ -96,7 +96,9 @@ theorem Over.exists_overSpecMap_testPoint_comp
     (Over.homMk (Spec.map (Over.testPointFieldMap f t)) hw)
   refine ⟨φ, ?_⟩
   apply Over.OverMorphism.ext
-  rw [Over.comp_left, Over.comp_left, ← hφ, Over.homMk_left]
+  have key : (Over.overSpecMap φ).left = Spec.map (Over.testPointFieldMap f t) :=
+    congrArg Over.Hom.left hφ.symm
+  rw [Over.comp_left, Over.comp_left, key]
   exact Over.testPoint_comp_left f t
 
 /-! ## D1: presentation at a field ⇒ split witness -/
@@ -147,12 +149,17 @@ theorem PicRankOneLocalPresentation.isSplitWitness
     change algebraMap k L x = ψ (algebraMap k P.cover.Carrier x)
     rw [IsScalarTower.algebraMap_apply k K P.cover.Carrier, ψ.commutes,
       ← IsScalarTower.algebraMap_apply k K L]
+  have hcurve : Over.Hom.left (C ◁ Over.overSpecMap (AlgHom.restrictScalars k ψ))
+      = relCurveMap C P.cover.Carrier L := by
+    refine congrArg (fun g : overSpec k L ⟶ overSpec k P.cover.Carrier => (C ◁ g).left) ?_
+    exact Over.OverMorphism.ext rfl
   have hM : PicEtAff.map C L (picEtAffineEquiv C K lam.1)
       = PicEtAff.unit C L (relPicMk C (overSpec k L)
           (Scheme.CechPic.map (relCurveMap C P.cover.Carrier L)
             P.datum.cechPicClass)) := by
     rw [← P.represents, PicEtAff.map_mk_eq_unit_of_algHom C P.representative ψ,
-      P.datum_class, relPicAlgMap_mk]
+      P.datum_class, relPicAlgMap_mk, hcurve]
+    rfl
   have hsub : Subsingleton ((datumPair P.datum).H1 ⊗[P.cover.Carrier] L) :=
     subsingleton_tensorProduct_of_subsingleton_left
       ((subsingleton_datumPair_h1_iff P.datum).mpr P.h1_vanishing)
@@ -177,7 +184,7 @@ theorem isSplitWitness_of_mem_picRankOneOpen_field
         (𝟙 (overSpec k K)).op lam).1 = lam.1 :=
     picEtMap_id C lam.1
   have hsplit := P.isSplitWitness
-  rwa [e] at hsplit
+  exact e ▸ hsplit
 
 end
 
