@@ -18,6 +18,9 @@ import AlgebraicJacobian.Picard.Pic0RankOneFibrePresentedProducer
 import AlgebraicJacobian.Picard.Pic0RankOneFibrePresentedProducerFiniteGlue
 import AlgebraicJacobian.Picard.Pic0RankOneTranslatedCoverPicZero
 import AlgebraicJacobian.Picard.Pic0RankOneTranslatedCoverMembership
+import AlgebraicJacobian.Picard.RelPicBaseLocalTriviality
+import AlgebraicJacobian.Picard.Pic0RankOneCanonicalDivisorDescent
+import AlgebraicJacobian.Picard.Pic0RankOneSplitMembership
 
 /-!
 # Narrow root for the AJCR-first Picard strategy
@@ -49,12 +52,26 @@ glue: `exists_glued_rankOne_away_divisor_with_abel_evaluation` produces a `DivFa
 the Noetherian etale carrier with the global Abel and relative-Picard identities, resting on
 `baseOpenRankOneDivisor_awayMul_compat`. The big-site consumer scaffold reduces
 `PicRankOneOpen.IsOpen` to one canonical evaluation-divisor classifier and per-test pullback
-squares: `picRankOneOpen_isOpen_of_evaluationDivisorPullbackFamilies`. Still missing, and NOT
-replaced here by axioms or local hypotheses: an inhabitant of `PicRankOneEvaluationDivisorData`
-(the canonical global divisor / Abel section), the Abel isomorphism (the `AbelInverse`
-uniqueness obligation and `evaluationIso` remain hypothetical), `PicRankOneOpen.IsOpen` itself,
-the descent of the glued family divisor from the etale carrier to the arbitrary affine base,
-and the later representability/descent/`JacobianData` endpoints.
+squares: `picRankOneOpen_isOpen_of_evaluationDivisorPullbackFamilies`.
+
+The glued divisor now descends: `existsUnique_abel_divFamZarAff_of_localPresentation` consumes
+the finite-glue output and returns the unique Abel-correct `DivFamZarAff` over the original
+affine base, conditional only on the named `RankOneDivisorUniqueness` interface (the
+tensor-square cocycle is manufactured from uniqueness, the descended class is pinned by étale
+separatedness); `canonicalRankOneDivisorOfPresentation` names that divisor. Toward discharging
+the uniqueness interface, `exists_notMem_cechPicMap_eq_of_relPicMk_eq` localizes
+`relPicMk`-equality to on-the-nose `picClass` equality near every prime (base Picard classes
+die Zariski-locally). The public locus is fibrewise split:
+`mem_picRankOneOpen_iff_isSplitWitness` at field bases, and
+`isSplitWitness_testPoint_of_mem` at every point of an arbitrary test.
+
+Still missing, and NOT replaced here by axioms or local hypotheses: the discharge of
+`RankOneDivisorUniqueness` (datum-section extraction from a class-matched divisor, fibre
+nonvanishing, and the unit-rescaling chain), existence of Abel-correct witnesses over
+non-Noetherian affine bases, an inhabitant of `PicRankOneEvaluationDivisorData` (the canonical
+global divisor / Abel section), the Abel isomorphism (the `AbelInverse` uniqueness obligation
+and `evaluationIso` remain hypothetical), `PicRankOneOpen.IsOpen` itself, and the later
+representability/descent/`JacobianData` endpoints.
 -/
 
 #check AlgebraicGeometry.divFunctorAff_representableBy_at
@@ -317,6 +334,22 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
   AlgebraicGeometry.PicRankOneFibrePresentationInput.picRankOneOpen_isOpen_of_evaluationDivisorPullbackFamilies
 -- Phase-5 translated-cover membership endpoint (Pic0RankOneTranslatedCoverMembership.lean)
 #check AlgebraicGeometry.exists_sepClosedTranslated_mem_picRankOneOpen
+-- Base-discrepancy localization (RelPicBaseLocalTriviality.lean)
+#check CommRing.Pic.exists_notMem_mapAlgebra_eq_one
+#check AlgebraicGeometry.exists_notMem_cechPicMap_specMap_eq_one
+#check AlgebraicGeometry.exists_notMem_cechPicMap_eq_of_relPicMk_eq
+#check AlgebraicGeometry.DivFamZarAff.exists_notMem_picClass_map_eq_of_relPicMk_eq
+-- Canonical divisor descent to the affine base (Pic0RankOneCanonicalDivisorDescent.lean)
+#check AlgebraicGeometry.RankOneDivisorUniqueness
+#check AlgebraicGeometry.existsUnique_abel_divFamZarAff_of_etale_witness
+#check AlgebraicGeometry.existsUnique_abel_divFamZarAff_of_localPresentation
+#check AlgebraicGeometry.canonicalRankOneDivisorOfPresentation
+#check AlgebraicGeometry.canonicalRankOneDivisorOfPresentation_abel
+#check AlgebraicGeometry.canonicalRankOneDivisorOfPresentation_unique
+-- Fibrewise split characterization of the public locus (Pic0RankOneSplitMembership.lean)
+#check AlgebraicGeometry.isSplitWitness_of_mem_picRankOneOpen_field
+#check AlgebraicGeometry.mem_picRankOneOpen_iff_isSplitWitness
+#check AlgebraicGeometry.isSplitWitness_testPoint_of_mem
 
 #print axioms AlgebraicGeometry.BasicOpenCocycleDatum.isIso_canonicalBaseChangeMap_nativeModule
 #print axioms AlgebraicGeometry.PicRankOneNativePresentation.ofCertificatesWithNativeBaseChange
@@ -331,3 +364,12 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms
   AlgebraicGeometry.PicRankOneFibrePresentationInput.picRankOneOpen_isOpen_of_evaluationDivisorPullbackFamilies
 #print axioms AlgebraicGeometry.exists_sepClosedTranslated_mem_picRankOneOpen
+#print axioms AlgebraicGeometry.exists_notMem_cechPicMap_eq_of_relPicMk_eq
+#print axioms AlgebraicGeometry.DivFamZarAff.exists_notMem_picClass_map_eq_of_relPicMk_eq
+#print axioms AlgebraicGeometry.existsUnique_abel_divFamZarAff_of_etale_witness
+#print axioms AlgebraicGeometry.existsUnique_abel_divFamZarAff_of_localPresentation
+#print axioms AlgebraicGeometry.canonicalRankOneDivisorOfPresentation_abel
+#print axioms AlgebraicGeometry.canonicalRankOneDivisorOfPresentation_unique
+#print axioms AlgebraicGeometry.isSplitWitness_of_mem_picRankOneOpen_field
+#print axioms AlgebraicGeometry.mem_picRankOneOpen_iff_isSplitWitness
+#print axioms AlgebraicGeometry.isSplitWitness_testPoint_of_mem
