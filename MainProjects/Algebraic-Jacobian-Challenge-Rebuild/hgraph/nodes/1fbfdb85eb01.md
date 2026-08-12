@@ -9,20 +9,20 @@ docstring: "Assemble the public fibre presentation from the represented canonica
   \    (F : PicRankOneFibrePresentationInput pi E g)\n    (hpb : F.EvaluationDivisorPullback)\
   \ :\n    PicRankOneOpen.FibrePresented pi g where\n  W := F.W\n  fst := F.fst\n\
   \  sq := F.fst_comp_incl\n  exists_factor := by\n    simpa only [FibreFactorizationClause]\
-  \ using\n      F.fibreFactorizationClause_of_evaluationDivisorPullback hpb\n\n@[simp]\n\
-  lemma toFibrePresented_of_evaluationDivisorPullback_W\n    (F : PicRankOneFibrePresentationInput\
+  \ using\n      F.fibreFactorizationClause_of_evaluationDivisorPullback pi hpb\n\n\
+  @[simp]\nlemma toFibrePresented_of_evaluationDivisorPullback_W\n    (F : PicRankOneFibrePresentationInput\
   \ pi E g)\n    (hpb : F.EvaluationDivisorPullback) :\n    (F.toFibrePresented_of_evaluationDivisorPullback\
-  \ hpb).W = F.W :=\n  rfl\n\nlemma toFibrePresented_of_evaluationDivisorPullback_isPullback\n\
+  \ pi hpb).W = F.W :=\n  rfl\n\nlemma toFibrePresented_of_evaluationDivisorPullback_isPullback\n\
   \    (F : PicRankOneFibrePresentationInput pi E g)\n    (hpb : F.EvaluationDivisorPullback)\
   \ :\n    IsPullback F.fst (yoneda.map F.W.ι) (picRankOneOpenSigmaIncl pi) g :=\n\
-  \  (F.toFibrePresented_of_evaluationDivisorPullback hpb).isPullback\n\n/-! ## Immediate\
-  \ openness consumer"
+  \  (F.toFibrePresented_of_evaluationDivisorPullback pi hpb).isPullback\n\n/-! ##\
+  \ Immediate openness consumer"
 file: AlgebraicJacobian/Picard/Pic0RankOneFibrePresentedProducer.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PicRankOneFibrePresentationInput.picRankOneOpen_isOpen_of_evaluationDivisorPullbackFamilies
 type: lean
-updated: '2026-08-10T13:01:42'
+updated: '2026-08-12T15:42:09'
 ---
 theorem picRankOneOpen_isOpen_of_evaluationDivisorPullbackFamilies
     (E : PicRankOneEvaluationDivisorData pi)
@@ -35,4 +35,4 @@ theorem picRankOneOpen_isOpen_of_evaluationDivisorPullbackFamilies
     PicRankOneOpen.IsOpen pi := by
   apply picRankOneOpen_isOpen_of_fibrePresented pi
   intro X g
-  exact (D X g).toFibrePresented_of_evaluationDivisorPullback (hpb X g)
+  exact (D X g).toFibrePresented_of_evaluationDivisorPullback pi (hpb X g)

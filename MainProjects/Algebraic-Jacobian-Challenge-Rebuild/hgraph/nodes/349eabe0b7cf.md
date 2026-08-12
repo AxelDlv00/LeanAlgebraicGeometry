@@ -23,7 +23,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PicRankOneLocalPresentation.sectionsMapTop_datumSectionBaseChange_away_ne_zero
 type: lean
-updated: '2026-08-12T10:38:44'
+updated: '2026-08-12T15:42:30'
 ---
 theorem sectionsMapTop_datumSectionBaseChange_away_ne_zero
     (P : PicRankOneLocalPresentation pi lam)

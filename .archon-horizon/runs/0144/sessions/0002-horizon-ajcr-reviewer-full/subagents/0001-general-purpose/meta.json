@@ -2,11 +2,12 @@
   "model": "fable",
   "name": "general-purpose",
   "native_subagent_id": "toolu_011UfBF4qCNDy9VU2JNLbEtj",
+  "ok": false,
   "parent_session": "0002-horizon-ajcr-reviewer-full",
   "parent_subagent_id": null,
   "report_ref": "report.md",
   "role": "subagent",
-  "status": "running",
+  "status": "orphaned",
   "subagent_type": "general-purpose",
   "summary": "",
   "usage": {
