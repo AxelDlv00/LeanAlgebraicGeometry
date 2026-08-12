@@ -22,6 +22,7 @@ import AlgebraicJacobian.Picard.RelPicBaseLocalTriviality
 import AlgebraicJacobian.Picard.Pic0RankOneCanonicalDivisorDescent
 import AlgebraicJacobian.Picard.Pic0RankOneSplitMembership
 import AlgebraicJacobian.Picard.Pic0RankOneSectionFibreNonzero
+import AlgebraicJacobian.Picard.DivisorDatumSectionOfClass
 
 /-!
 # Narrow root for the AJCR-first Picard strategy
@@ -71,9 +72,16 @@ Fibre nonvanishing toward that discharge is landed:
 cutting a certified divisor is nonzero on every residue-field fibre — the exact input shape of
 the rank-one unit-extraction engine.
 
+Datum-section extraction is landed, Noetherian-free:
+`exists_gluedSection_sectionLocalEquations_divEq` cuts any `LocalEquations` divisor whose
+Picard class matches the datum's Čech class from a germ-regular global section of the glued
+sheaf, up to `DivEq` on every subordinated pointed cover — the α-corrected gluing through the
+glued sheaf's own sheaf property; and `sectionLocalEquations_smul_divEq` records that global
+unit rescalings of the section do not move the cut divisor.
+
 Still missing, and NOT replaced here by axioms or local hypotheses: the discharge of
-`RankOneDivisorUniqueness` (datum-section extraction from a class-matched divisor and the
-unit-rescaling chain), existence of Abel-correct witnesses over
+`RankOneDivisorUniqueness` itself (the assembly of the extraction, fibre nonvanishing, and
+the base-discrepancy localization into injectivity), existence of Abel-correct witnesses over
 non-Noetherian affine bases, an inhabitant of `PicRankOneEvaluationDivisorData` (the canonical
 global divisor / Abel section), the Abel isomorphism (the `AbelInverse` uniqueness obligation
 and `evaluationIso` remain hypothetical), `PicRankOneOpen.IsOpen` itself, and the later
@@ -359,6 +367,11 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 -- Fibre nonvanishing of a class-matched datum section (Pic0RankOneSectionFibreNonzero.lean)
 #check AlgebraicGeometry.BasicOpenCocycleDatum.sectionsMapTop_ne_zero_of_divEq_certified
 #check AlgebraicGeometry.BasicOpenCocycleDatum.tmul_residueField_ne_zero_of_divEq_certified
+-- Datum-section extraction from a class-matched divisor (DivisorDatumSectionOfClass.lean)
+#check AlgebraicGeometry.BasicOpenCocycleDatum.exists_gluedSection_sectionLocalEquations_divEq
+#check AlgebraicGeometry.BasicOpenCocycleDatum.component_smul
+#check AlgebraicGeometry.BasicOpenCocycleDatum.germ_component_smul_mem_nonZeroDivisors
+#check AlgebraicGeometry.BasicOpenCocycleDatum.sectionLocalEquations_smul_divEq
 
 #print axioms AlgebraicGeometry.BasicOpenCocycleDatum.isIso_canonicalBaseChangeMap_nativeModule
 #print axioms AlgebraicGeometry.PicRankOneNativePresentation.ofCertificatesWithNativeBaseChange
@@ -384,3 +397,6 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.isSplitWitness_testPoint_of_mem
 #print axioms AlgebraicGeometry.BasicOpenCocycleDatum.sectionsMapTop_ne_zero_of_divEq_certified
 #print axioms AlgebraicGeometry.BasicOpenCocycleDatum.tmul_residueField_ne_zero_of_divEq_certified
+#print axioms
+  AlgebraicGeometry.BasicOpenCocycleDatum.exists_gluedSection_sectionLocalEquations_divEq
+#print axioms AlgebraicGeometry.BasicOpenCocycleDatum.sectionLocalEquations_smul_divEq
