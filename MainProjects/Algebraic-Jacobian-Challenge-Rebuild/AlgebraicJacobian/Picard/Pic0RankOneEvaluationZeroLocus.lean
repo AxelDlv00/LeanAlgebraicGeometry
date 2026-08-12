@@ -70,7 +70,7 @@ theorem nativePieceCoordinate_eq_component
     (j : D.index) :
     D.nativePieceCoordinate s j = D.component s j := by
   rw [nativePieceCoordinate, gluedTriv_apply, gluedRes_coe]
-  simp only [Scheme.resHom_resHom]
+  simp only [Scheme.resHom_resHom, component]
 
 /-- Native piece coordinates commute with arbitrary affine coefficient extension. -/
 theorem nativePieceCoordinate_sectionsMapTop
@@ -82,7 +82,7 @@ theorem nativePieceCoordinate_sectionsMapTop
     (D.baseChange B').nativePieceCoordinate (D.sectionsMapTop B' s) j =
       D.toBasicOpenCoverData.piecesMap B' j (D.nativePieceCoordinate s j) := by
   rw [(D.baseChange B').nativePieceCoordinate_eq_component,
-    D.component_sectionsMapTop, D.nativePieceCoordinate_eq_component]
+    D.component_sectionsMapTop B' s, D.nativePieceCoordinate_eq_component]
 
 /-- The principal native-coordinate ideal is preserved by arbitrary affine coefficient
 extension. This is the ideal-level consumer of `nativePieceCoordinate_sectionsMapTop`. -/
@@ -97,6 +97,7 @@ theorem nativePieceIdeal_sectionsMapTop
       Ideal.span {
         (D.baseChange B').nativePieceCoordinate (D.sectionsMapTop B' s) j} := by
   rw [Ideal.map_span, Set.image_singleton, D.nativePieceCoordinate_sectionsMapTop]
+  rfl
 
 /-- The inverse of the native base-ring section equivalence is the identity on underlying
 sections. -/
@@ -244,7 +245,8 @@ theorem evaluationLift_nativePieceCoordinate_eq_component
             (⊤ : (Spec (.of P.cover.Carrier)).Opens))).hom
           (P.toLocalPresentation.evaluationLiftOfH0 y)) j =
       P.datum.component (P.toLocalPresentation.datumSection y) j := by
-  rw [P.toLocalPresentation.evaluation_evaluationLiftOfH0_eq_moduleSectionsEquiv y]
+  -- `erw` bridges the defeq `P.cover` vs `P.toLocalPresentation.cover` projection gap
+  erw [P.toLocalPresentation.evaluation_evaluationLiftOfH0_eq_moduleSectionsEquiv y]
   exact P.moduleSectionsEquiv_nativePieceCoordinate_eq_component y j
 
 /-- The principal ideal cut out by the native evaluation section on a cocycle piece is exactly

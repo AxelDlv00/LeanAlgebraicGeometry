@@ -178,6 +178,7 @@ theorem divRepAffAdmissibleScheme_eq_concrete :
     divRepAffAdmissibleScheme C = divRepAffAdmissibleConcreteScheme C := by
   classical
   unfold divRepAffAdmissibleScheme divFunctorAffAdmissibleRepresenter
+    divRepAffScheme_at
     divRepAffAdmissibleConcreteScheme divRepAffAdmissibleWindowRankOne
     divRepAffAdmissibleWindowRankTwo divRepAffAdmissibleWindowBasisOne
     divRepAffAdmissibleWindowBasisTwo

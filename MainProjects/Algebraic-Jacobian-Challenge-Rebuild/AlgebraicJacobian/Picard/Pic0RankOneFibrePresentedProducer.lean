@@ -173,11 +173,11 @@ def FibreFactorizationClause
 lemma fst_comp_incl (F : PicRankOneFibrePresentationInput pi E g) :
     F.fst ≫ picRankOneOpenSigmaIncl pi = yoneda.map F.W.ι ≫ g := by
   apply yonedaEquiv.injective
-  change (picRankOneOpenSigmaIncl pi).app (op (F.W : Scheme.{u})) F.locusValue =
-    (yoneda.map F.W.ι ≫ g).app (op (F.W : Scheme.{u})) (𝟙 (F.W : Scheme.{u}))
+  rw [yonedaEquiv_comp, fst, Equiv.apply_symm_apply, yonedaEquiv_apply,
+    ← F.restrictedValue_eq]
   dsimp [locusValue, picRankOneOpenSigmaIncl,
     CategoryTheory.Over.sigmaExtensionNat]
-  rw [← F.restrictedValue_eq]
+  rfl
 
 /-- The family evaluation divisor has the displayed family as its Abel class. -/
 lemma evaluationDivisor_abel
