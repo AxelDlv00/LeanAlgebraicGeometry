@@ -6,7 +6,7 @@ summary: Import the verified native presentation/Split producer through the prot
   Phase-4 boundary, construct the arbitrary-test evaluation divisor, and consume it
   in PicRankOneOpen, DivRankOneOpen, and rankOneAbelIso. Native base change itself
   is complete; this remaining source/root integration belongs to the recovery owner.
-status: blocked
+status: active
 kind: proof
 priority: urgent
 depends_on: []
@@ -29,5 +29,6 @@ metadata:
       change'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.review-plan.p4-family-producer
-  owner: ajcr-review-rank-one-recovery
+  owner: ajcr-reviewer-full
   milestone: AJCR.review-plan
+  updated_at: '2026-08-12T04:03:39.076240+00:00'

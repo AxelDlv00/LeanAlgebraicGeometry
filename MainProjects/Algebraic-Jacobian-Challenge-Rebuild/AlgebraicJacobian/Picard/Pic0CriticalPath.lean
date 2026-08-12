@@ -13,7 +13,11 @@ import AlgebraicJacobian.Picard.Pic0RankOneEvaluationZeroLocus
 import AlgebraicJacobian.Picard.Pic0RankOneFibrePresentedProducerAffineEvaluation
 import AlgebraicJacobian.Picard.Pic0RankOneFamilyCertificates
 import AlgebraicJacobian.Picard.Pic0RankOneNativePresentation
+import AlgebraicJacobian.Picard.Pic0RankOneNativePresentationOfLocal
+import AlgebraicJacobian.Picard.Pic0RankOneFibrePresentedProducer
+import AlgebraicJacobian.Picard.Pic0RankOneFibrePresentedProducerFiniteGlue
 import AlgebraicJacobian.Picard.Pic0RankOneTranslatedCoverPicZero
+import AlgebraicJacobian.Picard.Pic0RankOneTranslatedCoverMembership
 
 /-!
 # Narrow root for the AJCR-first Picard strategy
@@ -23,24 +27,34 @@ contract endpoint must be checked here before it receives critical-path credit.
 
 The tied local rank-one presentation, its canonical evaluation map, datum-side local-away
 divisor equations, and the pullback-stable presentation locus are present. The conditional
-`DivRankOneOpenData` representer and its open-immersion/base-change consumers are rooted, but
-the arbitrary-affine presentation producer needed to prove `PicRankOneOpen.IsOpen` is still
-missing. The native evaluation section and the tied datum section now have the same restriction-
-vanishing predicate on every open, without a Noetherian hypothesis. Their piece coordinates and
-principal piece ideals agree, and those native-coordinate ideals commute with arbitrary affine
-coefficient extension. Identifying the resulting intrinsic zero locus with the datum local
-equations and gluing the piecewise ideals to a family divisor are still missing. The tied datum
-section is coherent along arbitrary affine coefficient towers, and local evaluation divisors cut
-by two generators agree on their pairwise product open. Comparing these local divisors with
-`DivFamZarAff.mapAlg` after coefficient change, and then gluing them, are still missing. The
-resulting family-level divisor producer is not claimed.
+`DivRankOneOpenData` representer and its open-immersion/base-change consumers are rooted. The
+native evaluation section and the tied datum section have the same restriction-vanishing
+predicate on every open, without a Noetherian hypothesis; their piece coordinates and principal
+piece ideals agree, and those native-coordinate ideals commute with arbitrary affine
+coefficient extension.
 
-The Pic0-specialized separably closed translated-layer feeder is also rooted: it keeps the
-translator degree and the exact subtraction compatibility tied to one result. It does not
-supply membership in `PicRankOneOpen` or the translated-cover endpoint. The canonical divisor,
-Abel isomorphism, separably closed cover, later representability/descent endpoints, and
-`JacobianData` declarations do not yet exist. They are not replaced here by axioms or local
-hypotheses.
+The native rank-one route now closes from certificates to public membership on the field fibre.
+`RankOneFamilyCertificates.ofActualDatum` produces all four family certificates from a single
+per-residue-field H1 witness plus a fibre class-degree law, with rank one computed
+Noetherian-freely by `rankAtStalk_hModule_zero_eq_one_of_actualPairH1`. Arbitrary-cartesian
+native base change is internalized by `isIso_canonicalBaseChangeMap_nativeModule`, so
+`ofCertificatesWithNativeBaseChange` and `ofLocalPresentation` build native presentations with
+no extra base-change certificate. Consequently `mem_picRankOneOpen_of_isSplitWitness` places
+every split genus-degree field class in `PicRankOneOpen`, and the Pic0 separably closed
+translated-cover feeder lands its translated layer element in the public locus:
+`exists_sepClosedTranslated_mem_picRankOneOpen` is the phase-5 membership endpoint.
+
+On the divisor side, the tied local presentation's finite principal-open evaluation divisors
+glue: `exists_glued_rankOne_away_divisor_with_abel_evaluation` produces a `DivFamZarAff` over
+the Noetherian etale carrier with the global Abel and relative-Picard identities, resting on
+`baseOpenRankOneDivisor_awayMul_compat`. The big-site consumer scaffold reduces
+`PicRankOneOpen.IsOpen` to one canonical evaluation-divisor classifier and per-test pullback
+squares: `picRankOneOpen_isOpen_of_evaluationDivisorPullbackFamilies`. Still missing, and NOT
+replaced here by axioms or local hypotheses: an inhabitant of `PicRankOneEvaluationDivisorData`
+(the canonical global divisor / Abel section), the Abel isomorphism (the `AbelInverse`
+uniqueness obligation and `evaluationIso` remain hypothetical), `PicRankOneOpen.IsOpen` itself,
+the descent of the glued family divisor from the etale carrier to the arbitrary affine base,
+and the later representability/descent/`JacobianData` endpoints.
 -/
 
 #check AlgebraicGeometry.divFunctorAff_representableBy_at
@@ -250,3 +264,70 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.rankOneAbelRepresented
 #print axioms AlgebraicGeometry.not_isOpenImmersion_abelSigmaChart_of_genus_lt_degree
 #print axioms AlgebraicGeometry.not_isOpenImmersion_abelSigmaChartAff_of_genus_lt_degree
+
+-- Native datum layer (Pic0RankOneNativePresentationDatum.lean)
+#check AlgebraicGeometry.PicRankOneNativeDatum
+#check AlgebraicGeometry.PicRankOneNativeDatum.nonempty
+#check AlgebraicGeometry.PicRankOneNativeDatum.classDeg_baseChange
+#check AlgebraicGeometry.PicRankOneNativeDatum.residueH1Witness_of_isSplitWitness
+-- Native datum from a field pullback (Pic0RankOneNativePresentationField.lean)
+#check AlgebraicGeometry.PicRankOneNativeDatum.residueH1Witness_of_fieldPullback
+#check AlgebraicGeometry.isSplitWitness_map_overSpecMap_of_algHom
+-- Arbitrary-cartesian native base change (Pic0RankOneNativeBaseChangeCartesian.lean)
+#check AlgebraicGeometry.BasicOpenCocycleDatum.isIso_canonicalBaseChangeMap_nativeModule
+#check AlgebraicGeometry.PicRankOneNativePresentation.ofCertificatesWithNativeBaseChange
+-- Four-certificate producer from the actual datum (Cohomology/RankOneFamilyCertificatesActualDatum.lean)
+#check AlgebraicGeometry.BasicOpenCocycleDatum.ResidueH1Witness
+#check AlgebraicGeometry.BasicOpenCocycleDatum.FibreClassDegree
+#check AlgebraicGeometry.RankOneFamilyCertificates.ofActualDatum
+-- Rank one without a Noetherian hypothesis (Cohomology/RankOneFamilyCertificatesActualDatumRank.lean)
+#check AlgebraicGeometry.BasicOpenCocycleDatum.rankAtStalk_hModule_zero_eq_one_of_actualPairH1
+-- Datum-to-certificates-to-native-presentation wrappers (Pic0RankOneFamilyCertificatesActualDatum.lean)
+#check AlgebraicGeometry.PicRankOneNativeDatum.familyCertificates
+#check AlgebraicGeometry.PicRankOneNativeDatum.familyCertificatesBaseChange
+#check AlgebraicGeometry.PicRankOneNativePresentation.ofNativeDatum
+-- Local-to-native presentation converter (Pic0RankOneNativePresentationOfLocal.lean)
+#check AlgebraicGeometry.PicRankOneNativePresentation.ofLocalPresentation
+#check AlgebraicGeometry.PicRankOneNativePresentation.nonempty_of_localPresentation
+#check AlgebraicGeometry.PicRankOneNativePresentation.nonempty_of_localPresentations
+-- Split field class gives membership in PicRankOneOpen (Pic0RankOneNativePresentationSplit.lean)
+#check AlgebraicGeometry.exists_algHom_eq_of_overSpec_hom_of_commRing
+#check AlgebraicGeometry.PicRankOneNativeDatum.toNativePresentation_of_residueH1Witness
+#check AlgebraicGeometry.PicRankOneNativePresentation.nonempty_of_fieldPullback
+#check AlgebraicGeometry.mem_picRankOneOpen_of_isSplitWitness
+-- Datum-side away-divisor naturality (Pic0RankOneFibrePresentedProducerAwayNaturality.lean)
+#check AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenRankOneDivisor_mapAlgHom_mul_left
+#check AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenRankOneDivisor_mapAlgHom_mul_right
+#check AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenRankOneDivisor_awayMul_compat
+-- Section/divisor equality helpers (Pic0RankOneFibrePresentedProducerSectionDivEq.lean)
+#check AlgebraicGeometry.BasicOpenCocycleDatum.sectionLocalEquations_divEq_of_same_section
+#check
+  AlgebraicGeometry.BasicOpenCocycleDatum.pullback_sectionLocalEquationsOfFibrewiseRegular_divEq_sectionsMapTop
+-- Finite gluing of away-divisors to a family divisor (Pic0RankOneFibrePresentedProducerFiniteGlue.lean)
+#check
+  AlgebraicGeometry.PicRankOneLocalPresentation.exists_glued_rankOne_away_divisor_with_abel_evaluation
+-- Big-site consumer scaffold (Pic0RankOneFibrePresentedProducer.lean)
+#check AlgebraicGeometry.rankOneAbelSigma
+#check AlgebraicGeometry.rankOneDivisorToAmbient
+#check AlgebraicGeometry.PicRankOneEvaluationDivisorData
+#check AlgebraicGeometry.PicRankOneFibrePresentationInput
+#check AlgebraicGeometry.PicRankOneFibrePresentationInput.EvaluationDivisorPullback
+#check AlgebraicGeometry.PicRankOneFibrePresentationInput.toFibrePresented_of_evaluationDivisorPullback
+#check
+  AlgebraicGeometry.PicRankOneFibrePresentationInput.picRankOneOpen_isOpen_of_evaluationDivisorPullbackFamilies
+-- Phase-5 translated-cover membership endpoint (Pic0RankOneTranslatedCoverMembership.lean)
+#check AlgebraicGeometry.exists_sepClosedTranslated_mem_picRankOneOpen
+
+#print axioms AlgebraicGeometry.BasicOpenCocycleDatum.isIso_canonicalBaseChangeMap_nativeModule
+#print axioms AlgebraicGeometry.PicRankOneNativePresentation.ofCertificatesWithNativeBaseChange
+#print axioms AlgebraicGeometry.RankOneFamilyCertificates.ofActualDatum
+#print axioms
+  AlgebraicGeometry.BasicOpenCocycleDatum.rankAtStalk_hModule_zero_eq_one_of_actualPairH1
+#print axioms AlgebraicGeometry.PicRankOneNativePresentation.nonempty_of_localPresentations
+#print axioms AlgebraicGeometry.mem_picRankOneOpen_of_isSplitWitness
+#print axioms AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenRankOneDivisor_awayMul_compat
+#print axioms
+  AlgebraicGeometry.PicRankOneLocalPresentation.exists_glued_rankOne_away_divisor_with_abel_evaluation
+#print axioms
+  AlgebraicGeometry.PicRankOneFibrePresentationInput.picRankOneOpen_isOpen_of_evaluationDivisorPullbackFamilies
+#print axioms AlgebraicGeometry.exists_sepClosedTranslated_mem_picRankOneOpen

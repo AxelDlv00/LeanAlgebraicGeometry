@@ -425,9 +425,9 @@ theorem evaluation_evaluationLiftOfH0 (P : PicRankOneLocalPresentation pi lam)
 corresponding prime of the original ring to the residue field of a prime of `A_f`.
 
 The residue-field comparison is an isomorphism because localization induces bijective
-residue-field maps.  Keeping this as a private module lemma prevents the rank-one
+residue-field maps.  Keeping this as a module-level lemma prevents the rank-one
 construction from depending on a false definitional transitivity of datum base change. -/
-private theorem fibre_tmul_ne_zero_of_away
+theorem fibre_tmul_ne_zero_of_away
     {A Q : Type u} [CommRing A] [AddCommGroup Q] [Module A Q]
     (f : A) (y : Q)
     (hy : ∀ p : PrimeSpectrum A, f ∉ p.asIdeal →
@@ -464,7 +464,7 @@ private theorem fibre_tmul_ne_zero_of_away
     AlgHom.toLinearMap_apply, map_one] using he
 
 /-- Cancelling an iterated scalar extension preserves a nonzero pure tensor. -/
-private theorem one_tmul_one_tmul_ne_zero
+theorem one_tmul_one_tmul_ne_zero
     {R S K Q : Type u} [CommRing R] [CommRing S] [Field K]
     [Algebra R S] [Algebra R K] [Algebra S K] [IsScalarTower R S K]
     [AddCommGroup Q] [Module R Q]
@@ -478,7 +478,7 @@ private theorem one_tmul_one_tmul_ne_zero
     one_smul] using hy
 
 /-- Base change of a linear equivalence preserves nonvanishing of a pure tensor. -/
-private theorem one_tmul_linearEquiv_ne_zero
+theorem one_tmul_linearEquiv_ne_zero
     {R K M N : Type u} [CommRing R] [Field K] [Algebra R K]
     [AddCommGroup M] [Module R M] [AddCommGroup N] [Module R N]
     (e : M ≃ₗ[R] N) (x : M)
@@ -491,7 +491,7 @@ private theorem one_tmul_linearEquiv_ne_zero
 omit [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
   [GeometricallyIrreducible C.hom] in
 /-- A nonzero cohomology class on a field fibre gives a nonzero glued section. -/
-private theorem sectionsMapTop_ne_zero_of_one_tmul_ne_zero
+theorem sectionsMapTop_ne_zero_of_one_tmul_ne_zero
     {B K : Type u} [CommRing B] [Algebra k B] [Field K]
     [Algebra k K] [Algebra B K] [IsScalarTower k B K]
     (D : BasicOpenCocycleDatum C B pi)
@@ -515,7 +515,7 @@ private theorem sectionsMapTop_ne_zero_of_one_tmul_ne_zero
 
 /-- A fibrewise-nonzero section remains nonzero after localizing and extending once more
 to a residue field of the localized ring. -/
-private theorem away_one_tmul_one_tmul_ne_zero
+theorem away_one_tmul_one_tmul_ne_zero
     {R Q : Type u} [CommRing R] [AddCommGroup Q] [Module R Q]
     (f : R) (y : Q)
     (hy : ∀ p : PrimeSpectrum R, f ∉ p.asIdeal →
@@ -552,7 +552,7 @@ theorem tensorAwayGenerator_fibre_ne_zero
   simpa only [TensorProduct.comm_tmul] using h
 
 /-- Canonical `H⁰` base change preserves the localized pure tensor's nonvanishing. -/
-private theorem h0BaseChange_one_tmul_ne_zero
+theorem h0BaseChange_one_tmul_ne_zero
     (P : PicRankOneLocalPresentation pi lam)
     (B K : Type u) [CommRing B] [Algebra k B] [Algebra P.cover.Carrier B]
     [IsScalarTower k P.cover.Carrier B] [Field K] [Algebra k K]
