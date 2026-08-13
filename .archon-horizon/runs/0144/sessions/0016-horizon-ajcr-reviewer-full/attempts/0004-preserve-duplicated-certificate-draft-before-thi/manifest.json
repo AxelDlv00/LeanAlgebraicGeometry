@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "preserve duplicated certificate draft before thin cached-interface refactor",
+  "created_at": "2026-08-13T11:17:38.942943+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RankOneCanonicalDivisorStageCert.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RankOneCanonicalDivisorStageCert.lean",
+      "bytes": 6719,
+      "lines": 157
+    }
+  ],
+  "diagnostics": ""
+}

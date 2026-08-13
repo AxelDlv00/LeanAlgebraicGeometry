@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "preserve degree-dependent wrapper before direct engine-stageRank certificate packaging",
+  "created_at": "2026-08-13T12:11:08.150044+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RankOneCanonicalDivisorStageCert.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RankOneCanonicalDivisorStageCert.lean",
+      "bytes": 2730,
+      "lines": 69
+    }
+  ],
+  "diagnostics": ""
+}

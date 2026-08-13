@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Tesla",
+  "agent_path": "/root/stagecert_review",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "019ffa55-0e50-72d2-a98d-b6bcbb8a3015",
+  "ok": false,
+  "parent_session": "0016-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "explorer",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 80277150,
+    "tokens_out": 134886
+  }
+}

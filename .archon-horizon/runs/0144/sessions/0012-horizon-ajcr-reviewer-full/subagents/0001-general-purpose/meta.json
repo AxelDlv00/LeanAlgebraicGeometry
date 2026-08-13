@@ -1,0 +1,17 @@
+{
+  "model": "claude-fable-5",
+  "name": "general-purpose",
+  "native_subagent_id": "toolu_01GYt3zrtmrDr4EnRe1WP3DH",
+  "parent_session": "0012-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "running",
+  "subagent_type": "general-purpose",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 84,
+    "tokens_out": 257
+  }
+}

@@ -22,7 +22,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-08-03T09:22:51.778175+00:00'
-updated_at: '2026-08-11T01:55:46.801829+00:00'
+updated_at: '2026-08-13T07:03:20.035180+00:00'
 metadata:
   provenance:
     run: 0118
@@ -39,3 +39,4 @@ metadata:
   - ajcr-abel-quotient
   - ajcr-review-rank-one-recovery
   - ajcr-native-base-change-iso
+  - ajcr-reviewer-full
