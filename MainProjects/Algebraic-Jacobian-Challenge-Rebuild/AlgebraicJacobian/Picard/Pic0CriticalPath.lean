@@ -26,6 +26,7 @@ import AlgebraicJacobian.Picard.DivisorDatumSectionOfClass
 import AlgebraicJacobian.Picard.Pic0RankOneDivisorUnique
 import AlgebraicJacobian.Picard.Pic0RankOneUniquenessDischarge
 import AlgebraicJacobian.Picard.Pic0RankOneAbelInverse
+import AlgebraicJacobian.Picard.Pic0RankOneCanonicalEvaluation
 import AlgebraicJacobian.Picard.Pic0RankOneDatumGluedDivisor
 import AlgebraicJacobian.Picard.Pic0RankOneCanonicalDivisorStageCert
 
@@ -99,11 +100,17 @@ restricted Abel map is componentwise injective on the big site
 two-sided inverse (`abelInverse_of_uniqueness`); `rankOneAbelIso` packages the isomorphism,
 gated only on an inhabitant of `PicRankOneEvaluationDivisorData`.
 
-Still missing, and NOT replaced here by axioms or local hypotheses: existence of Abel-correct
-witnesses over non-Noetherian affine bases (the presentation carrier must currently be
-Noetherian), an inhabitant of `PicRankOneEvaluationDivisorData` (the canonical global divisor
-/ Abel section), `PicRankOneOpen.IsOpen` itself, and the later
-representability/descent/`JacobianData` endpoints.
+The noetherian-free canonical divisor theorem is now integrated at family level:
+`canonicalRankOneSection` is natural on every test scheme, its representer transport is
+`canonicalRankOneRepresenterTrans`, and `canonicalRankOneEvaluationDivisorData` is a genuine
+inhabitant of the evaluator contract.  Consequently
+`PicRankOneEvaluationDivisorData.rankOneAbelIso (canonicalRankOneEvaluationDivisorData C)` is
+root-reachable and kernel-clean.
+
+Still missing, and NOT replaced here by axioms or local hypotheses: the geometric open-locus
+producer (`PicRankOneOpen.IsOpen` / `DivRankOneOpenData`), translated separably-closed coverage
+as a representability input, and the later finite-Galois descent, `pic0_representableBy`, and
+`JacobianData` endpoints.
 -/
 
 #check AlgebraicGeometry.divFunctorAff_representableBy_at
@@ -405,6 +412,9 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.rankOneAbelSigma_app_injective
 #check AlgebraicGeometry.PicRankOneEvaluationDivisorData.abelInverse_of_uniqueness
 #check AlgebraicGeometry.PicRankOneEvaluationDivisorData.rankOneAbelIso
+#check AlgebraicGeometry.canonicalRankOneSection
+#check AlgebraicGeometry.canonicalRankOneRepresenterTrans
+#check AlgebraicGeometry.canonicalRankOneEvaluationDivisorData
 -- Datum-level glued divisor over a Noetherian base (Pic0RankOneDatumGluedDivisor.lean)
 #check AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
 
@@ -444,5 +454,8 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms
   AlgebraicGeometry.PicRankOneEvaluationDivisorData.abelInverse_of_uniqueness
 #print axioms AlgebraicGeometry.PicRankOneEvaluationDivisorData.rankOneAbelIso
+#print axioms AlgebraicGeometry.canonicalRankOneSection
+#print axioms AlgebraicGeometry.canonicalRankOneRepresenterTrans
+#print axioms AlgebraicGeometry.canonicalRankOneEvaluationDivisorData
 #print axioms
   AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
