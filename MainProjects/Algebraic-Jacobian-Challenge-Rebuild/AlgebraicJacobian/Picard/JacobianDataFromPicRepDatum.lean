@@ -97,6 +97,14 @@ lemma toJacobianData_rep (d : PicRepDatum k k C) (hqc : QuasiCompact d.J.hom) :
     (d.toJacobianData hqc).rep = d.rep :=
   rfl
 
+/-! The group-object structure survives the DJ-IN packaging definitionally.  This is the
+headline-facing compatibility lemma: a consumer that activates `d.grpObj` before packaging
+can use the same structure after switching to `JacobianData`. -/
+@[simp]
+lemma toJacobianData_grpObj (d : PicRepDatum k k C) (hqc : QuasiCompact d.J.hom) :
+    (d.toJacobianData hqc).grpObj = d.grpObj :=
+  rfl
+
 /-- The universal properties agree: `JacobianData.homEquiv` of the packaged datum is
 `PicRepDatum.homEquiv` of the original.  Both accessors are `.rep.homEquiv`, so this is
 `rfl` — recorded so a consumer that switches between the two interfaces never needs a
