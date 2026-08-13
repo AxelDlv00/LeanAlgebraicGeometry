@@ -23,6 +23,7 @@ import AlgebraicJacobian.Picard.Pic0RankOneCanonicalDivisorDescent
 import AlgebraicJacobian.Picard.Pic0RankOneSplitMembership
 import AlgebraicJacobian.Picard.Pic0RankOneSectionFibreNonzero
 import AlgebraicJacobian.Picard.DivisorDatumSectionOfClass
+import AlgebraicJacobian.Picard.Pic0RankOneDivisorUnique
 
 /-!
 # Narrow root for the AJCR-first Picard strategy
@@ -372,6 +373,8 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.BasicOpenCocycleDatum.component_smul
 #check AlgebraicGeometry.BasicOpenCocycleDatum.germ_component_smul_mem_nonZeroDivisors
 #check AlgebraicGeometry.BasicOpenCocycleDatum.sectionLocalEquations_smul_divEq
+-- Uniqueness of the divisor family in a rank-one datum class (Pic0RankOneDivisorUnique.lean)
+#check AlgebraicGeometry.BasicOpenCocycleDatum.divFamZarAff_eq_of_picClass_eq_cechPicClass
 
 #print axioms AlgebraicGeometry.BasicOpenCocycleDatum.isIso_canonicalBaseChangeMap_nativeModule
 #print axioms AlgebraicGeometry.PicRankOneNativePresentation.ofCertificatesWithNativeBaseChange
@@ -400,3 +403,5 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms
   AlgebraicGeometry.BasicOpenCocycleDatum.exists_gluedSection_sectionLocalEquations_divEq
 #print axioms AlgebraicGeometry.BasicOpenCocycleDatum.sectionLocalEquations_smul_divEq
+#print axioms
+  AlgebraicGeometry.BasicOpenCocycleDatum.divFamZarAff_eq_of_picClass_eq_cechPicClass
