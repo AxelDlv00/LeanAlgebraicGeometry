@@ -27,6 +27,7 @@ import AlgebraicJacobian.Picard.Pic0RankOneDivisorUnique
 import AlgebraicJacobian.Picard.Pic0RankOneUniquenessDischarge
 import AlgebraicJacobian.Picard.Pic0RankOneAbelInverse
 import AlgebraicJacobian.Picard.Pic0RankOneDatumGluedDivisor
+import AlgebraicJacobian.Picard.Pic0RankOneCanonicalDivisorStageCert
 
 /-!
 # Narrow root for the AJCR-first Picard strategy
