@@ -8,3 +8,8 @@
 {"at": "2026-08-13T02:39:53.475935+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
 {"at": "2026-08-13T04:33:21.809557+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
 {"at": "2026-08-13T04:34:39.813208+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-13T05:25:01.815182+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "re-queued on resume: its Horizon session was interrupted mid-run"}
+{"at": "2026-08-13T05:25:49.243007+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-13T05:27:25.085065+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "re-queued on resume: its Horizon session was interrupted mid-run"}
+{"at": "2026-08-13T05:28:12.329532+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-13T13:51:26.234645+00:00", "actor": "horizon", "field": "status", "from": "running", "to": "blocked", "note": "", "provenance": {"run": "0144", "session": "0016-horizon-ajcr-reviewer-full", "role": "horizon", "round": "4", "rounds": "12", "task": "ajcr-reviewer-full", "task_title": "Fully answer the two AJCR reviewer PDFs — land pic0_representableBy and the Jacobian headline", "projects": "Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge"}}
