@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Darwin",
+  "agent_path": "/root/ajc_probe2",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "019ffbc0-1bad-75d1-9b64-b6d020178ce2",
+  "ok": true,
+  "parent_session": "0018-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "The audit is complete. No concrete family-level producer exists: `PicRankOneEvaluationDivisorData` is only declared and consumed, while the global divisor representability route remains conditional on `DivRepAffinePullback`/`IsChartClause`.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 9508240,
+    "tokens_out": 40658
+  }
+}
