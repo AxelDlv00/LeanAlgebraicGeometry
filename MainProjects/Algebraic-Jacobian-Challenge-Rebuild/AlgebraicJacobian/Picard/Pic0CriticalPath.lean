@@ -26,6 +26,7 @@ import AlgebraicJacobian.Picard.DivisorDatumSectionOfClass
 import AlgebraicJacobian.Picard.Pic0RankOneDivisorUnique
 import AlgebraicJacobian.Picard.Pic0RankOneUniquenessDischarge
 import AlgebraicJacobian.Picard.Pic0RankOneAbelInverse
+import AlgebraicJacobian.Picard.Pic0RankOneDatumGluedDivisor
 
 /-!
 # Narrow root for the AJCR-first Picard strategy
@@ -403,6 +404,8 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.rankOneAbelSigma_app_injective
 #check AlgebraicGeometry.PicRankOneEvaluationDivisorData.abelInverse_of_uniqueness
 #check AlgebraicGeometry.PicRankOneEvaluationDivisorData.rankOneAbelIso
+-- Datum-level glued divisor over a Noetherian base (Pic0RankOneDatumGluedDivisor.lean)
+#check AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
 
 #print axioms AlgebraicGeometry.BasicOpenCocycleDatum.isIso_canonicalBaseChangeMap_nativeModule
 #print axioms AlgebraicGeometry.PicRankOneNativePresentation.ofCertificatesWithNativeBaseChange
@@ -440,3 +443,5 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms
   AlgebraicGeometry.PicRankOneEvaluationDivisorData.abelInverse_of_uniqueness
 #print axioms AlgebraicGeometry.PicRankOneEvaluationDivisorData.rankOneAbelIso
+#print axioms
+  AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
