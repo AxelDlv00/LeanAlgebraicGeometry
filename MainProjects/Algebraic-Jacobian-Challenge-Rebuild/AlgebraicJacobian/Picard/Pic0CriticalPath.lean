@@ -25,6 +25,7 @@ import AlgebraicJacobian.Picard.Pic0RankOneSectionFibreNonzero
 import AlgebraicJacobian.Picard.DivisorDatumSectionOfClass
 import AlgebraicJacobian.Picard.Pic0RankOneDivisorUnique
 import AlgebraicJacobian.Picard.Pic0RankOneUniquenessDischarge
+import AlgebraicJacobian.Picard.Pic0RankOneAbelInverse
 
 /-!
 # Narrow root for the AJCR-first Picard strategy
@@ -89,11 +90,17 @@ an unconditional proof of `RankOneDivisorUniqueness`. The canonical rank-one div
 Abel/uniqueness accessors are re-exported without the interface hypothesis
 (`canonicalRankOneDivisor`).
 
+The Abel inverse law is also discharged: `divFamZarAff_eq_of_rankOne` upgrades the affine
+uniqueness to arbitrary tests through the vehicle's affine-open separatedness, so the
+restricted Abel map is componentwise injective on the big site
+(`rankOneAbelSigma_app_injective`) and every evaluation-divisor classifier is automatically a
+two-sided inverse (`abelInverse_of_uniqueness`); `rankOneAbelIso` packages the isomorphism,
+gated only on an inhabitant of `PicRankOneEvaluationDivisorData`.
+
 Still missing, and NOT replaced here by axioms or local hypotheses: existence of Abel-correct
 witnesses over non-Noetherian affine bases (the presentation carrier must currently be
 Noetherian), an inhabitant of `PicRankOneEvaluationDivisorData` (the canonical global divisor
-/ Abel section), the Abel isomorphism (the `AbelInverse` obligation and `evaluationIso` remain
-hypothetical), `PicRankOneOpen.IsOpen` itself, and the later
+/ Abel section), `PicRankOneOpen.IsOpen` itself, and the later
 representability/descent/`JacobianData` endpoints.
 -/
 
@@ -391,6 +398,11 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.canonicalRankOneDivisor
 #check AlgebraicGeometry.canonicalRankOneDivisor_abel
 #check AlgebraicGeometry.canonicalRankOneDivisor_unique
+-- Abel inverse law and the packaged rank-one iso (Pic0RankOneAbelInverse.lean)
+#check AlgebraicGeometry.divFamZarAff_eq_of_rankOne
+#check AlgebraicGeometry.rankOneAbelSigma_app_injective
+#check AlgebraicGeometry.PicRankOneEvaluationDivisorData.abelInverse_of_uniqueness
+#check AlgebraicGeometry.PicRankOneEvaluationDivisorData.rankOneAbelIso
 
 #print axioms AlgebraicGeometry.BasicOpenCocycleDatum.isIso_canonicalBaseChangeMap_nativeModule
 #print axioms AlgebraicGeometry.PicRankOneNativePresentation.ofCertificatesWithNativeBaseChange
@@ -424,3 +436,7 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.rankOneDivisorUniqueness
 #print axioms AlgebraicGeometry.canonicalRankOneDivisor_abel
 #print axioms AlgebraicGeometry.canonicalRankOneDivisor_unique
+#print axioms AlgebraicGeometry.divFamZarAff_eq_of_rankOne
+#print axioms
+  AlgebraicGeometry.PicRankOneEvaluationDivisorData.abelInverse_of_uniqueness
+#print axioms AlgebraicGeometry.PicRankOneEvaluationDivisorData.rankOneAbelIso
