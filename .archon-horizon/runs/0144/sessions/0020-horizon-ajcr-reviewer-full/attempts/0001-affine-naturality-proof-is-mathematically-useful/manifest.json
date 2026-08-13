@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Affine naturality proof is mathematically useful but could not be kernel-verified because its Noetherian-free dependency exceeded the bounded foreground check and produced no olean.",
+  "created_at": "2026-08-13T19:50:41.146374+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RankOneCanonicalDivisorNaturality.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RankOneCanonicalDivisorNaturality.lean",
+      "bytes": 1864,
+      "lines": 52
+    }
+  ],
+  "diagnostics": ""
+}
