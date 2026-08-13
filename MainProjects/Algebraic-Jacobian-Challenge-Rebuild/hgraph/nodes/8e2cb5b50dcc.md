@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PicRankOneLocalPresentation.h0BaseChange
 type: lean
-updated: '2026-08-14T02:58:17'
+updated: '2026-08-14T04:55:44'
 ---
 noncomputable def h0BaseChange (P : PicRankOneLocalPresentation pi lam)
     (B : Type u) [CommRing B] [Algebra k B] [Algebra P.cover.Carrier B]

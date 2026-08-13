@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Sagan",
+  "agent_path": "/root/producer_audit",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "Sagan",
+  "native_subagent_id": "019ffcf6-9df3-7581-9ea5-6e90411df4b2",
+  "ok": true,
+  "parent_session": "0022-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "Sagan",
+  "summary": "Audited and reported to `/root`:",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 47982213,
+    "tokens_out": 132064
+  }
+}
