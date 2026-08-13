@@ -6,8 +6,8 @@
       1785770722.804927
     ],
     "Algebraic-Jacobian-Challenge-Rebuild": [
-      1122,
-      1786531263.9666765
+      1134,
+      1786633889.6504552
     ],
     "mathlib": [
       8688,
@@ -15,9 +15,9 @@
     ]
   },
   "roots": {
-    "Algebraic-Jacobian-Challenge-Rebuild": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild",
-    "Algebraic-Jacobian-Challenge": "MainProjects/Algebraic-Jacobian-Challenge",
-    "mathlib": ".lake-packages/mathlib"
+    "Algebraic-Jacobian-Challenge-Rebuild": "/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild",
+    "Algebraic-Jacobian-Challenge": "/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge",
+    "mathlib": "/home/axel/LeanAlgebraicGeometry-Horizon/.lake-packages/mathlib"
   },
-  "declarations": 262222
+  "declarations": 262279
 }
