@@ -1,0 +1,17 @@
+{
+  "model": "opus",
+  "name": "general-purpose",
+  "native_subagent_id": "toolu_017XKTHAwoVua5cijeaM8Qoq",
+  "parent_session": "0010-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "running",
+  "subagent_type": "general-purpose",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 288,
+    "tokens_out": 697
+  }
+}
