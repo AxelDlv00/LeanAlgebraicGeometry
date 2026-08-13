@@ -105,7 +105,8 @@ The noetherian-free canonical divisor theorem is now integrated at family level:
 `canonicalRankOneRepresenterTrans`, and `canonicalRankOneEvaluationDivisorData` is a genuine
 inhabitant of the evaluator contract.  Consequently
 `PicRankOneEvaluationDivisorData.rankOneAbelIso (canonicalRankOneEvaluationDivisorData C)` is
-root-reachable and kernel-clean.
+source-rooted here.  Kernel verification remains pending until the expensive
+`Pic0RankOneCanonicalDivisorFree` prerequisite produces its build artifact.
 
 Still missing, and NOT replaced here by axioms or local hypotheses: the geometric open-locus
 producer (`PicRankOneOpen.IsOpen` / `DivRankOneOpenData`), translated separably-closed coverage
