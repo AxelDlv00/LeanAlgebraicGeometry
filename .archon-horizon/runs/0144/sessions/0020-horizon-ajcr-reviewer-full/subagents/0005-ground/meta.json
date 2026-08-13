@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Faraday",
+  "agent_path": "/root/ground_review",
+  "agent_role": "ground",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "ground",
+  "native_subagent_id": "019ffcb4-23c6-7be0-91a7-a92b645acf00",
+  "ok": true,
+  "parent_session": "0020-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "ground",
+  "summary": "Ground review complete. The work is converging only at the conditional-interface level, not at either requested endpoint.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 4473098,
+    "tokens_out": 38129
+  }
+}
