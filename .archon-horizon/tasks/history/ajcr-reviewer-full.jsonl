@@ -13,3 +13,5 @@
 {"at": "2026-08-13T05:27:25.085065+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "re-queued on resume: its Horizon session was interrupted mid-run"}
 {"at": "2026-08-13T05:28:12.329532+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
 {"at": "2026-08-13T13:51:26.234645+00:00", "actor": "horizon", "field": "status", "from": "running", "to": "blocked", "note": "", "provenance": {"run": "0144", "session": "0016-horizon-ajcr-reviewer-full", "role": "horizon", "round": "4", "rounds": "12", "task": "ajcr-reviewer-full", "task_title": "Fully answer the two AJCR reviewer PDFs — land pic0_representableBy and the Jacobian headline", "projects": "Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge"}}
+{"at": "2026-08-13T14:44:50.846862+00:00", "actor": "system", "field": "status", "from": "blocked", "to": "queued", "note": "re-queued for the next round of a focused run"}
+{"at": "2026-08-13T14:45:12.645441+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
