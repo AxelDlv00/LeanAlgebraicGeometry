@@ -24,6 +24,7 @@ import AlgebraicJacobian.Picard.Pic0RankOneSplitMembership
 import AlgebraicJacobian.Picard.Pic0RankOneSectionFibreNonzero
 import AlgebraicJacobian.Picard.DivisorDatumSectionOfClass
 import AlgebraicJacobian.Picard.Pic0RankOneDivisorUnique
+import AlgebraicJacobian.Picard.Pic0RankOneUniquenessDischarge
 
 /-!
 # Narrow root for the AJCR-first Picard strategy
@@ -80,12 +81,19 @@ sheaf, up to `DivEq` on every subordinated pointed cover — the α-corrected gl
 glued sheaf's own sheaf property; and `sectionLocalEquations_smul_divEq` records that global
 unit rescalings of the section do not move the cut divisor.
 
-Still missing, and NOT replaced here by axioms or local hypotheses: the discharge of
-`RankOneDivisorUniqueness` itself (the assembly of the extraction, fibre nonvanishing, and
-the base-discrepancy localization into injectivity), existence of Abel-correct witnesses over
-non-Noetherian affine bases, an inhabitant of `PicRankOneEvaluationDivisorData` (the canonical
-global divisor / Abel section), the Abel isomorphism (the `AbelInverse` uniqueness obligation
-and `evaluationIso` remain hypothetical), `PicRankOneOpen.IsOpen` itself, and the later
+The uniqueness interface is now DISCHARGED: `divFamZarAff_eq_of_picClass_eq_cechPicClass`
+proves at most one certified divisor family per rank-one datum class (extraction + fibre
+nonvanishing + the unit-extraction engine), and `rankOneDivisorUniqueness` assembles it with
+the base-discrepancy localization, away-span separatedness, and faithfully-flat descent into
+an unconditional proof of `RankOneDivisorUniqueness`. The canonical rank-one divisor and its
+Abel/uniqueness accessors are re-exported without the interface hypothesis
+(`canonicalRankOneDivisor`).
+
+Still missing, and NOT replaced here by axioms or local hypotheses: existence of Abel-correct
+witnesses over non-Noetherian affine bases (the presentation carrier must currently be
+Noetherian), an inhabitant of `PicRankOneEvaluationDivisorData` (the canonical global divisor
+/ Abel section), the Abel isomorphism (the `AbelInverse` obligation and `evaluationIso` remain
+hypothetical), `PicRankOneOpen.IsOpen` itself, and the later
 representability/descent/`JacobianData` endpoints.
 -/
 
@@ -375,6 +383,14 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.BasicOpenCocycleDatum.sectionLocalEquations_smul_divEq
 -- Uniqueness of the divisor family in a rank-one datum class (Pic0RankOneDivisorUnique.lean)
 #check AlgebraicGeometry.BasicOpenCocycleDatum.divFamZarAff_eq_of_picClass_eq_cechPicClass
+-- Uniqueness interface discharged; canonical divisor unconditional
+-- (Pic0RankOneUniquenessDischarge.lean)
+#check AlgebraicGeometry.PicRankOneLocalPresentation.exists_notMem_mapAlgHom_eq
+#check AlgebraicGeometry.rankOneDivisorUniqueness
+#check AlgebraicGeometry.existsUnique_abel_divFamZarAff_of_presentation
+#check AlgebraicGeometry.canonicalRankOneDivisor
+#check AlgebraicGeometry.canonicalRankOneDivisor_abel
+#check AlgebraicGeometry.canonicalRankOneDivisor_unique
 
 #print axioms AlgebraicGeometry.BasicOpenCocycleDatum.isIso_canonicalBaseChangeMap_nativeModule
 #print axioms AlgebraicGeometry.PicRankOneNativePresentation.ofCertificatesWithNativeBaseChange
@@ -405,3 +421,6 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.BasicOpenCocycleDatum.sectionLocalEquations_smul_divEq
 #print axioms
   AlgebraicGeometry.BasicOpenCocycleDatum.divFamZarAff_eq_of_picClass_eq_cechPicClass
+#print axioms AlgebraicGeometry.rankOneDivisorUniqueness
+#print axioms AlgebraicGeometry.canonicalRankOneDivisor_abel
+#print axioms AlgebraicGeometry.canonicalRankOneDivisor_unique
