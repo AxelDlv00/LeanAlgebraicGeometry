@@ -811,6 +811,7 @@ import AlgebraicJacobian.Albanese.Genus0VanishingDatum
 import AlgebraicJacobian.RiemannRoch.EffectiveNonUniqueness
 import AlgebraicJacobian.Picard.Pic0ChartForkNegativeBranch
 import AlgebraicJacobian.Picard.Pic0ChartSeamPairDecided
+import AlgebraicJacobian.Picard.Pic0RankOneIsoBaseChange
 import AlgebraicJacobian.Picard.Pic0CriticalPath
 
 /-!
