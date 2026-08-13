@@ -104,3 +104,4 @@ claude >= 2.1.154; each substantive task may fan out to many agents).
 Starting Run (ID: 0144) - 8 rounds (resuming, continuing from round 3) ─────────
 [HORIZON] ›  Started task: ajcr-reviewer-full
 [HORIZON] ›  Finished task: ajcr-reviewer-full (queued)
+[HORIZON] ›  Started task: ajcr-reviewer-full

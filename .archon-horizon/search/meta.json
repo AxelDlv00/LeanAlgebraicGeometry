@@ -1,53 +1,23 @@
 {
   "fingerprint": {
     "__index_version__": 2,
-    "Albanese": [
-      25,
-      1782985512.726312
-    ],
     "Algebraic-Jacobian-Challenge": [
-      189,
-      1785195951.3336456
+      438,
+      1785770722.804927
     ],
     "Algebraic-Jacobian-Challenge-Rebuild": [
-      627,
-      1785152126.8800654
-    ],
-    "Cech-Cohomology": [
-      26,
-      1782958670.781247
-    ],
-    "GR-Quot-Closure": [
-      8,
-      1782980010.285404
-    ],
-    "Line-Bundle-Comparison-Iso": [
-      15,
-      1782894660.0
-    ],
-    "MR0555258-Compactifying-Picard": [
-      2,
-      1783046808.154535
-    ],
-    "Picard-IdentityComponent": [
-      10,
-      1782968013.0110133
+      1122,
+      1786531263.9666765
     ],
     "mathlib": [
       8688,
-      1783934844.0006344
+      1785254578.526218
     ]
   },
   "roots": {
-    "Algebraic-Jacobian-Challenge-Rebuild": "/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild",
-    "Algebraic-Jacobian-Challenge": "/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge",
-    "Line-Bundle-Comparison-Iso": "/home/axel/LeanAlgebraicGeometry-Horizon/SubProjects/Line-Bundle-Comparison-Iso",
-    "Albanese": "/home/axel/LeanAlgebraicGeometry-Horizon/SubProjects/Albanese",
-    "Cech-Cohomology": "/home/axel/LeanAlgebraicGeometry-Horizon/SubProjects/Cech-Cohomology",
-    "GR-Quot-Closure": "/home/axel/LeanAlgebraicGeometry-Horizon/SubProjects/GR-Quot-Closure",
-    "MR0555258-Compactifying-Picard": "/home/axel/LeanAlgebraicGeometry-Horizon/SubProjects/RelatedPapersFormalisation/MR0555258-Compactifying-Picard",
-    "Picard-IdentityComponent": "/home/axel/LeanAlgebraicGeometry-Horizon/SubProjects/Picard-IdentityComponent",
-    "mathlib": "/home/axel/LeanAlgebraicGeometry-Horizon/.lake-packages/mathlib"
+    "Algebraic-Jacobian-Challenge-Rebuild": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild",
+    "Algebraic-Jacobian-Challenge": "MainProjects/Algebraic-Jacobian-Challenge",
+    "mathlib": ".lake-packages/mathlib"
   },
-  "declarations": 257796
+  "declarations": 262222
 }
