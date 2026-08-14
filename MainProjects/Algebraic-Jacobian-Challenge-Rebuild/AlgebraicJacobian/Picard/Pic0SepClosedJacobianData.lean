@@ -1,0 +1,126 @@
+/-
+Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: The AlgebraicJacobian Contributors
+-/
+import AlgebraicJacobian.Picard.Pic0SepClosedRepresentable
+import AlgebraicJacobian.Picard.Pic0AdmissibleAbelEtaleSurjective
+import AlgebraicJacobian.Picard.Pic0AdmissibleDivisorQuasiProjective
+import AlgebraicJacobian.Picard.CompactImageQc
+import AlgebraicJacobian.Picard.JacobianDataFromPicRepDatum
+
+/-!
+# The separably closed Picard representer as Jacobian data
+
+The admissible Abel chart is etale-locally surjective onto the exact representing
+scheme obtained from the separably closed Picard construction.  Its quasi-compact
+divisor source therefore supplies quasi-compactness of that exact carrier, which
+packages into `PicRepDatum` and then `JacobianData` without changing the carrier or
+its representation.
+-/
+
+set_option autoImplicit false
+set_option maxSynthPendingDepth 3
+
+universe u
+
+open CategoryTheory Limits Opposite MonoidalCategory CartesianMonoidalCategory
+
+namespace AlgebraicGeometry
+
+attribute [local instance] Over.sectionsAlgebra Scheme.overModule Scheme.overSectionsAlgebra
+attribute [local instance 10000] relCurve.instOver
+
+variable {k : Type u} [Field k] [IsSeparablyClosed k] {C : Over (Spec (.of k))}
+  [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+  [GeometricallyIrreducible C.hom]
+
+noncomputable section
+
+/-- Etale-local surjectivity of a Yoneda map is surjectivity on the underlying points. -/
+theorem surjective_of_isLocallySurjective_yoneda_map {X Y : Scheme.{u}} (f : X ⟶ Y)
+    (h : Presheaf.IsLocallySurjective Scheme.etaleTopology (yoneda.map f)) :
+    Function.Surjective f.base := by
+  intro y
+  obtain ⟨cover, hcover⟩ := (Scheme.mem_grothendieckTopology_iff (P := @Etale)).mp
+    (h.imageSieve_mem (𝟙 Y))
+  obtain ⟨i, x, hx⟩ := cover.exists_eq y
+  obtain ⟨g, hg⟩ := hcover (cover.X i) (cover.f i) (Presieve.ofArrows.mk i)
+  refine ⟨g.base x, ?_⟩
+  simpa only [yoneda_map_app_apply, Scheme.comp_coeBase, Function.comp_apply] using
+    congrArg (fun q => q.base x) hg
+
+/-- The admissible Abel chart, viewed as a scheme morphism to the exact separably closed
+Picard representing scheme. -/
+noncomputable def abelToPic0SepClosedRepresenter (C : Over (Spec (.of k))) :
+    divRepAffAdmissibleScheme C ⟶ (pic0_sepClosed_representableBy C).1 :=
+  yoneda.preimage (abelSigmaChartAffAdmissible C ≫
+    (representableBySigmaIso (pic0_sepClosed_representableBy C).2).inv)
+
+/-- The Yoneda map of the represented Abel morphism is the admissible Abel chart after
+identifying the exact representing carrier with its sigma extension. -/
+theorem yoneda_map_abelToPic0SepClosedRepresenter (C : Over (Spec (.of k))) :
+    yoneda.map (abelToPic0SepClosedRepresenter C) =
+      abelSigmaChartAffAdmissible C ≫
+        (representableBySigmaIso (pic0_sepClosed_representableBy C).2).inv :=
+  yoneda.preimage_spec _
+
+/-- The Abel morphism to the exact separably closed Picard representer is etale-locally
+surjective. -/
+theorem isLocallySurjective_abelToPic0SepClosedRepresenter (C : Over (Spec (.of k))) :
+    Presheaf.IsLocallySurjective Scheme.etaleTopology
+      (yoneda.map (abelToPic0SepClosedRepresenter C)) := by
+  rw [yoneda_map_abelToPic0SepClosedRepresenter]
+  exact Presheaf.IsLocallySurjective.comp_right_isIso
+    (isLocallySurjective_abelSigmaChartAffAdmissible C) _
+
+/-- The admissible Abel morphism is surjective on the underlying points of the exact
+separably closed Picard representative. -/
+theorem surjective_abelToPic0SepClosedRepresenter (C : Over (Spec (.of k))) :
+    Function.Surjective (abelToPic0SepClosedRepresenter C).left.base :=
+  surjective_of_isLocallySurjective_yoneda_map _
+    (isLocallySurjective_abelToPic0SepClosedRepresenter C)
+
+/-- The exact separably closed Picard representing scheme is quasi-compact over its field. -/
+theorem quasiCompact_pic0SepClosedRepresenter (C : Over (Spec (.of k))) :
+    QuasiCompact (pic0_sepClosed_representableBy C).1.hom := by
+  haveI : CompactSpace (divRepAffAdmissibleScheme C).left :=
+    HasAffineProperty.iff_of_isAffine.mp (quasiCompact_divRepAffAdmissibleScheme C)
+  exact quasiCompact_of_surjective (abelToPic0SepClosedRepresenter C).left
+    (pic0_sepClosed_representableBy C).1.hom
+    (surjective_abelToPic0SepClosedRepresenter C)
+
+/-- The separably closed representability theorem, recorded in the finite-level Picard datum
+shape at the same field. -/
+noncomputable def picRepDatumSepClosed (C : Over (Spec (.of k))) : PicRepDatum k k C where
+  J := (pic0_sepClosed_representableBy C).1
+  rep := (pic0_sepClosed_representableBy C).2
+  lft := locallyOfFiniteType_pic0_sepClosed_representableBy
+
+/-- The exact separably closed Picard representative packages as Jacobian data. -/
+noncomputable def jacobianDataSepClosed (C : Over (Spec (.of k))) : JacobianData C :=
+  (picRepDatumSepClosed C).toJacobianData (quasiCompact_pic0SepClosedRepresenter C)
+
+@[simp]
+theorem picRepDatumSepClosed_J (C : Over (Spec (.of k))) :
+    (picRepDatumSepClosed C).J = (pic0_sepClosed_representableBy C).1 :=
+  rfl
+
+@[simp]
+theorem picRepDatumSepClosed_rep (C : Over (Spec (.of k))) :
+    (picRepDatumSepClosed C).rep = (pic0_sepClosed_representableBy C).2 :=
+  rfl
+
+@[simp]
+theorem jacobianDataSepClosed_J (C : Over (Spec (.of k))) :
+    (jacobianDataSepClosed C).J = (pic0_sepClosed_representableBy C).1 :=
+  rfl
+
+@[simp]
+theorem jacobianDataSepClosed_rep (C : Over (Spec (.of k))) :
+    (jacobianDataSepClosed C).rep = (pic0_sepClosed_representableBy C).2 :=
+  rfl
+
+end
+
+end AlgebraicGeometry

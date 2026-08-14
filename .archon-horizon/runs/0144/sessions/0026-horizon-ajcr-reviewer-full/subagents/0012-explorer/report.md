@@ -1,0 +1,1 @@
+I’ve split the audit into three independent reads: the colimit compatibility layer, the Phase 7 descent consumer, and the available finite-presentation/spreading infrastructure. Each is read-only and explicitly excludes the concurrent Galois-comparison lane.

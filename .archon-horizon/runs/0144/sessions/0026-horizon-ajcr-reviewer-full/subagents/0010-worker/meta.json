@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Helmholtz",
+  "agent_path": "/root/pic0_invariant_comparison",
+  "agent_role": "worker",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "worker",
+  "native_subagent_id": "019ffec5-88a4-7e12-a507-09095617fe1c",
+  "parent_session": "0026-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "running",
+  "subagent_type": "worker",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 13016704,
+    "tokens_out": 36621
+  }
+}

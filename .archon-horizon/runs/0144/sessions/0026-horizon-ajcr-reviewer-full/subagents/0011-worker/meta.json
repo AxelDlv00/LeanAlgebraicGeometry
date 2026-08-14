@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Noether",
+  "agent_path": "/root/sepclosed_jacobian_data",
+  "agent_role": "worker",
+  "depth": 1,
+  "model": "gpt-5.6-terra",
+  "name": "worker",
+  "native_subagent_id": "019ffee3-1bca-7fe1-ac92-e5fe1e4d8a0c",
+  "parent_session": "0026-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "running",
+  "subagent_type": "worker",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 712986,
+    "tokens_out": 8420
+  }
+}

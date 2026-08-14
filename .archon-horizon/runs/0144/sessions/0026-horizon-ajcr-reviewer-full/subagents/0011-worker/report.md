@@ -1,0 +1,1 @@
+I’m creating the new module now. It will expose the generic Yoneda-local-surjectivity bridge, define the Abel map directly into `(pic0_sepClosed_representableBy C).1`, obtain compactness from the admissible divisor scheme, and package the exact same carrier/representation into `PicRepDatum` and `JacobianData`.
