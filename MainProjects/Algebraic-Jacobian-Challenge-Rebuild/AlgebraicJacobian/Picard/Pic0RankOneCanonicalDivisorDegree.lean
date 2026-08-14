@@ -184,4 +184,23 @@ theorem stage_classDeg_field
             D.cechPicClass) := hinv
     _ = (genus C : ℤ) := hres p
 
+set_option maxHeartbeats 2000000 in
+-- The composition crosses the residue-field comparison and its scalar-tower lift.
+set_option synthInstance.maxHeartbeats 800000 in
+/-- Finite-projective rank-one certificates force the degree law at every field-valued point. -/
+theorem stage_classDeg_all_fields
+    {R : Type u} [CommRing R] [Algebra k R] [IsNoetherianRing R]
+    (D : BasicOpenCocycleDatum C R pi)
+    (hH1 : Subsingleton (datumPair D).H1)
+    (cert : RankOneFamilyCertificates D) :
+    ∀ (K : Type u) [Field K] [Algebra k K] [Algebra R K]
+      [IsScalarTower k R K],
+      classDeg K (Scheme.CechPic.map (relCurveMap C R K) D.cechPicClass)
+        = (genus C : ℤ) := by
+  letI : Module.Finite R (Sheaf.HModule D.sheaf 0) := cert.h0_finite
+  letI : Module.Projective R (Sheaf.HModule D.sheaf 0) := cert.h0_projective
+  intro K _ _ _ _
+  exact stage_classDeg_field pi D
+    (fun p => stage_classDeg_residueField pi D hH1 p (cert.h0_rank_one p)) K
+
 end AlgebraicGeometry
