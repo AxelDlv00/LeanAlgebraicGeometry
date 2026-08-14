@@ -10,6 +10,7 @@ import AlgebraicJacobian.Picard.Pic0HighDegreeRouteGuard
 import AlgebraicJacobian.Picard.Pic0RankOneLocus
 import AlgebraicJacobian.Picard.Pic0RankOneOpenProducer
 import AlgebraicJacobian.Picard.Pic0SepClosedRepresentable
+import AlgebraicJacobian.Picard.Pic0SepClosedJacobianData
 import AlgebraicJacobian.Picard.Pic0RankOneLocalDivisor
 import AlgebraicJacobian.Picard.Pic0RankOneEvaluationZeroLocus
 import AlgebraicJacobian.Picard.Pic0RankOneFibrePresentedProducerAffineEvaluation
@@ -131,11 +132,15 @@ The separably closed endpoint is now complete.  The exact translator returned by
 `exists_sepClosedTranslated_mem_picRankOneOpen` indexes a translated canonical Abel chart;
 these charts are open immersions and cover every residue-field point.  Consequently
 `pic0_sepClosed_representableBy` is unconditional and represents the same pinned
-`pic0TypeFunctor` over every separably closed base field.
+`pic0TypeFunctor` over every separably closed base field.  The widened admissible Abel chart
+is etale-locally surjective onto this exact carrier, so its quasi-compact source proves
+`quasiCompact_pic0SepClosedRepresenter`; `picRepDatumSepClosed` and
+`jacobianDataSepClosed` package that same carrier and the same representation without
+changing either component.
 
 Still missing, and NOT replaced here by axioms or local hypotheses: the finite-stage spread,
-the Picard-specific Galois quotient comparison, `pic0_representableBy`, and `JacobianData`
-endpoints.
+the Picard-specific Galois quotient comparison, and the arbitrary-base-field
+`pic0_representableBy` and `JacobianData` endpoints.
 -/
 
 #check AlgebraicGeometry.divFunctorAff_representableBy_at
@@ -458,6 +463,13 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.picRankOneTranslatedChart_pointwiseCoverage
 #check AlgebraicGeometry.pic0_sepClosed_representableBy
 #check AlgebraicGeometry.locallyOfFiniteType_pic0_sepClosed_representableBy
+#check AlgebraicGeometry.quasiCompact_pic0SepClosedRepresenter
+#check AlgebraicGeometry.picRepDatumSepClosed
+#check AlgebraicGeometry.picRepDatumSepClosed_J
+#check AlgebraicGeometry.picRepDatumSepClosed_rep
+#check AlgebraicGeometry.jacobianDataSepClosed
+#check AlgebraicGeometry.jacobianDataSepClosed_J
+#check AlgebraicGeometry.jacobianDataSepClosed_rep
 -- Generic non-affine finite-Galois quotient engine
 #check AlgebraicJacobian.GaloisDescent.galoisQuotientUniversal_of_equivariant
 #check AlgebraicJacobian.GaloisDescent.galoisQuotientWitnessOfInvariantProjection
@@ -525,6 +537,9 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.picRankOneTranslatedChart_pointwiseCoverage
 #print axioms AlgebraicGeometry.pic0_sepClosed_representableBy
 #print axioms AlgebraicGeometry.locallyOfFiniteType_pic0_sepClosed_representableBy
+#print axioms AlgebraicGeometry.quasiCompact_pic0SepClosedRepresenter
+#print axioms AlgebraicGeometry.picRepDatumSepClosed
+#print axioms AlgebraicGeometry.jacobianDataSepClosed
 #print axioms AlgebraicJacobian.GaloisDescent.galoisQuotientUniversal_of_equivariant
 #print axioms AlgebraicJacobian.GaloisDescent.galoisQuotientWitnessOfInvariantProjection
 #print axioms AlgebraicJacobian.GaloisDescent.StableAffineOpen.isGaloisQuotient_glued
