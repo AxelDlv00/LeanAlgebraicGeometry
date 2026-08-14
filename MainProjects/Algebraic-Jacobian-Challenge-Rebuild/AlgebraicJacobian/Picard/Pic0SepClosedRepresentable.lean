@@ -7,6 +7,8 @@ import AlgebraicJacobian.Picard.Pic0RankOneCanonicalEvaluation
 import AlgebraicJacobian.Picard.Pic0RankOneOpenProducer
 import AlgebraicJacobian.Picard.Pic0RankOneTranslatedCoverMembership
 import AlgebraicJacobian.Picard.Pic0ChartAtlasCoupling
+import AlgebraicJacobian.Picard.JacobianDataCharts
+import AlgebraicJacobian.Picard.DivSchemeQProj
 
 /-!
 # Representability of `Pic^0` over a separably closed field
@@ -224,6 +226,52 @@ theorem picRankOneTranslatedChart_isOpenImmersion
     · exact hopen
     · exact MorphismProperty.of_isIso (P := IsOpenImmersion.presheaf) _
 
+/-! ## Finiteness of the translated charts -/
+
+/-- The chosen genus divisor representer is locally of finite type over the base.  In positive
+genus it is definitionally a divisor scheme.  In genus zero, representer uniqueness transports
+the certificate from the terminal representer. -/
+theorem locallyOfFiniteType_divRepAffGenusScheme :
+    LocallyOfFiniteType (divRepAffGenusScheme C).hom := by
+  by_cases hg : genus C = 0
+  · let D0 : Over (Spec (.of k)) := Over.mk (𝟙 (Spec (.of k)))
+    have rep0 : (divFunctorAff C (genus C)).RepresentableBy D0 := by
+      rw [hg]
+      exact divFunctorAffZeroRepresentableBy (C := C) (pi := divRepAffP1Map C)
+    let e := (divFunctorAff_genus_representableBy C).uniqueUpToIso rep0
+    haveI : LocallyOfFiniteType D0.hom := by
+      change LocallyOfFiniteType (𝟙 (Spec (.of k)))
+      infer_instance
+    rw [← Over.w e.hom]
+    infer_instance
+  · unfold divRepAffGenusScheme divFunctorAffGenusRepresenter divRepAffScheme_at
+      divFunctorAffRepresenter_at
+    dsimp only
+    rw [dif_neg hg]
+    infer_instance
+
+/-- The certified rank-one divisor open is locally of finite type over the base field. -/
+theorem locallyOfFiniteType_divRankOneOpenOver
+    (h : DivRankOneOpenData (C := C) (divRepAffP1Map C)) :
+    LocallyOfFiniteType (divRankOneOpenOver (divRepAffP1Map C) h).hom := by
+  change LocallyOfFiniteType
+    (divRankOneOpenMap (divRepAffP1Map C) h ≫ (divRepAffGenusScheme C).hom)
+  letI : IsOpenImmersion (divRankOneOpenMap (divRepAffP1Map C) h) :=
+    divRankOneOpen_isOpenImmersion (divRepAffP1Map C) h
+  haveI : LocallyOfFiniteType (divRepAffGenusScheme C).hom :=
+    locallyOfFiniteType_divRepAffGenusScheme (C := C)
+  infer_instance
+
+/-- The structure map read from a translated rank-one chart is the structure map of its
+rank-one divisor-open source. -/
+lemma chartHom_picRankOneTranslatedChart
+    (h : DivRankOneOpenData (C := C) (divRepAffP1Map C))
+    (a : PicRankOneTranslatorIndex (C := C)) :
+    chartHom C (fun a : PicRankOneTranslatorIndex (C := C) =>
+      picRankOneTranslatedChart (C := C) h a) a =
+      (divRankOneOpenOver (divRepAffP1Map C) h).hom :=
+  rfl
+
 /-! ## From residue-field coverage to pointwise coverage -/
 
 /-- A family of representable open immersions covers pointwise as soon as it covers the class at
@@ -379,6 +427,26 @@ noncomputable def pic0_sepClosed_representableBy :
     Σ J : Over (Spec (.of k)), (pic0TypeFunctor C).RepresentableBy J :=
   pic0_sepClosed_representableBy_of_isOpen
     (C := C) (picRankOneOpen_isOpen (divRepAffP1Map C) (divRepAffP1Map_comp C))
+
+/-- The exact separably closed representing scheme constructed above is locally of finite type
+over the base field. -/
+theorem locallyOfFiniteType_pic0_sepClosed_representableBy :
+    LocallyOfFiniteType (pic0_sepClosed_representableBy (C := C)).1.hom := by
+  let hopen := picRankOneOpen_isOpen (C := C)
+    (divRepAffP1Map C) (divRepAffP1Map_comp C)
+  let h := divRankOneOpenDataOfPicRankOneOpen (divRepAffP1Map C) hopen
+  let f := fun a : PicRankOneTranslatorIndex (C := C) =>
+    picRankOneTranslatedChart (C := C) h a
+  let hf := fun a : PicRankOneTranslatorIndex (C := C) =>
+    picRankOneTranslatedChart_isOpenImmersion (C := C) hopen a
+  letI : Presheaf.IsLocallySurjective Scheme.zariskiTopology (Sigma.desc f) :=
+    isLocallySurjective_sigmaDesc_of_pointwise C f
+      (picRankOneTranslatedChart_pointwiseCoverage (C := C) hopen)
+  change LocallyOfFiniteType (gluedHom C f hf)
+  apply locallyOfFiniteType_gluedHom C f hf
+  intro a
+  rw [chartHom_picRankOneTranslatedChart]
+  exact locallyOfFiniteType_divRankOneOpenOver h
 
 end
 
