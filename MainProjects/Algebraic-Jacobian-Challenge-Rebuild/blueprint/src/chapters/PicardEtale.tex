@@ -32,6 +32,7 @@ cascades through.
     AlgebraicGeometry.relPicMk_surjective, AlgebraicGeometry.relPicMk_eq_relPicMk_iff}
   \leanok
   \source{kleiman-picard}
+  \provenancetag{REFERENCE}
   Let \(C\) be an object of \(\Over(\Spec k)\) and \(T\) a test object. Write
   \(H_T \le \Pic(C \otimes T)\) for the subgroup of \v Cech Picard classes \emph{pulled back
   from the base}: the range of \(\mathrm{pr}_2^{*} = \mathrm{snd}^{*} \colon \Pic(T) \to
@@ -58,6 +59,7 @@ cascades through.
   \lean{AlgebraicGeometry.picFromBase_le_comap, AlgebraicGeometry.relPicMap,
     AlgebraicGeometry.relPicMap_mk, AlgebraicGeometry.relPicMap_id,
     AlgebraicGeometry.relPicMap_comp, AlgebraicGeometry.relPicFunctor}
+  \provenancetag{CUSTOM}
   \uses{def:relPic}
   \leanok
   For a morphism \(g \colon T' \to T\) of test objects, pullback of \v Cech classes along
@@ -95,6 +97,7 @@ cascades through.
     AlgebraicGeometry.relPicMapCurveApp_id, AlgebraicGeometry.relPicMapCurveApp_comp,
     AlgebraicGeometry.relPicMap_relPicMapCurveApp,
     AlgebraicGeometry.relPicAlgMap_relPicMapCurveApp}
+  \provenancetag{CUSTOM}
   \uses{def:relPic, def:relPicMap, def:relPicAlgMap}
   \leanok
   A morphism of curves \(g \colon C' \to C\) over \(\Spec k\) induces, by pullback along
@@ -118,6 +121,7 @@ cascades through.
   \label{lem:relPicMapCurveConstant}
   \lean{AlgebraicGeometry.cechPicMap_toUnit_whiskerRight_mem_picFromBase,
     AlgebraicGeometry.relPicMapCurveApp_toUnit_comp}
+  \provenancetag{CUSTOM}
   \uses{def:relPic, lem:relPicMapCurve}
   \leanok
   Let \(g \colon C' \to C\) be a morphism of curve bundles over \(\Spec k\) that factors
@@ -150,6 +154,7 @@ Picard group is trivial.
 \begin{theorem}[Morphisms factoring through a residue field kill \v Cech classes]
   \label{thm:cechPicMap_eq_one_of_factorization}
   \lean{AlgebraicGeometry.cechPicMap_eq_one_of_factorization}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(K\) be a field, \(D, E\) objects of \(\Over(\Spec K)\), and \(h : D \to E\) a
   morphism of \(\Over(\Spec K)\) whose underlying morphism factors as
@@ -177,6 +182,7 @@ Picard group is trivial.
 \begin{corollary}[Morphisms with one-point range kill \v Cech classes]
   \label{cor:cechPicMap_eq_one_of_range_eq_singleton}
   \lean{AlgebraicGeometry.cechPicMap_eq_one_of_range_eq_singleton}
+  \provenancetag{CUSTOM}
   \uses{thm:cechPicMap_eq_one_of_factorization, thm:hom_factors_fromSpecResidueField}
   \leanok
   Let \(K\) be a field, \(D, E\) objects of \(\Over(\Spec K)\) with \(D\) reduced, and
@@ -204,6 +210,7 @@ finite-variable presentation, at the cost of carrying a witness of the presentat
 \begin{definition}[Presented \'etale cover]
   \label{def:etale_cover}
   \lean{Algebra.EtaleCover, Algebra.EtaleCover.Carrier}
+  \provenancetag{CUSTOM}
   \leanok
   A \emph{presented \'etale cover} \(E\) of \(A\) consists of a natural number \(n\), an ideal
   \(I\) of the polynomial ring \(A[x_1,\dots,x_n]\), a proof that the quotient algebra
@@ -216,6 +223,7 @@ finite-variable presentation, at the cost of carrying a witness of the presentat
 \begin{definition}[Presented covers from an \'etale algebra]
   \label{def:etale_cover_of}
   \lean{Algebra.EtaleCover.of}
+  \provenancetag{CUSTOM}
   \uses{def:etale_cover}
   \leanok
   Let \(B\) be an \'etale \(A\)-algebra such that \(\Spec B \to \Spec A\) is surjective. Since
@@ -227,6 +235,7 @@ finite-variable presentation, at the cost of carrying a witness of the presentat
 \begin{lemma}[Carrier of a presented cover from an algebra]
   \label{lem:etale_cover_ofEquiv}
   \lean{Algebra.EtaleCover.ofEquiv}
+  \provenancetag{CUSTOM}
   \uses{def:etale_cover_of}
   \leanok
   In the situation of Definition~\ref{def:etale_cover_of}, the carrier \(B_E\) of
@@ -243,6 +252,7 @@ finite-variable presentation, at the cost of carrying a witness of the presentat
 \begin{definition}[Refinement]
   \label{def:etale_cover_refines}
   \lean{Algebra.EtaleCover.Refines}
+  \provenancetag{CUSTOM}
   \uses{def:etale_cover}
   \leanok
   For presented \'etale covers \(E, E'\) of \(A\), we say \(E'\) \emph{refines} \(E\) if there
@@ -254,6 +264,7 @@ finite-variable presentation, at the cost of carrying a witness of the presentat
 \begin{lemma}[Refinement is a preorder]
   \label{lem:etale_cover_refines_preorder}
   \lean{Algebra.EtaleCover.refines_refl, Algebra.EtaleCover.Refines.trans}
+  \provenancetag{CUSTOM}
   \uses{def:etale_cover_refines}
   \leanok
   Every presented \'etale cover \(E\) of \(A\) refines itself, and if \(E''\) refines \(E'\)
@@ -270,6 +281,7 @@ finite-variable presentation, at the cost of carrying a witness of the presentat
 \begin{definition}[Common refinement]
   \label{def:etale_cover_prod}
   \lean{Algebra.EtaleCover.prod, Algebra.EtaleCover.prodEquiv}
+  \provenancetag{CUSTOM}
   \uses{def:etale_cover_of}
   \leanok
   For presented \'etale covers \(E, E'\) of \(A\), the \emph{common refinement} \(E \times E'\)
@@ -282,6 +294,7 @@ finite-variable presentation, at the cost of carrying a witness of the presentat
 \begin{definition}[Coprojections of the common refinement]
   \label{def:etale_cover_prod_coproj}
   \lean{Algebra.EtaleCover.prodInl, Algebra.EtaleCover.prodInr}
+  \provenancetag{CUSTOM}
   \uses{def:etale_cover_prod}
   \leanok
   The two canonical homomorphisms of \(A\)-algebras
@@ -293,6 +306,7 @@ finite-variable presentation, at the cost of carrying a witness of the presentat
 \begin{lemma}[The common refinement refines both factors]
   \label{lem:etale_cover_prod_refines}
   \lean{Algebra.EtaleCover.prod_refines_left, Algebra.EtaleCover.prod_refines_right}
+  \provenancetag{CUSTOM}
   \uses{def:etale_cover_prod_coproj, def:etale_cover_refines}
   \leanok
   \(E \times E'\) refines both \(E\) and \(E'\).
@@ -306,6 +320,7 @@ finite-variable presentation, at the cost of carrying a witness of the presentat
 \begin{definition}[Universal map out of the common refinement]
   \label{def:etale_cover_prodLift}
   \lean{Algebra.EtaleCover.prodLift}
+  \provenancetag{CUSTOM}
   \uses{def:etale_cover_prod}
   \leanok
   Given homomorphisms of \(A\)-algebras \(f \colon B_E \to B_F\) and \(g \colon B_{E'} \to
@@ -318,6 +333,7 @@ finite-variable presentation, at the cost of carrying a witness of the presentat
 \begin{lemma}[The universal map is a common section]
   \label{lem:etale_cover_prodLift_comp}
   \lean{Algebra.EtaleCover.prodLift_comp_prodInl, Algebra.EtaleCover.prodLift_comp_prodInr}
+  \provenancetag{CUSTOM}
   \uses{def:etale_cover_prodLift, def:etale_cover_prod_coproj}
   \leanok
   In the situation of Definition~\ref{def:etale_cover_prodLift}, the induced map composed with
@@ -334,6 +350,7 @@ finite-variable presentation, at the cost of carrying a witness of the presentat
 \begin{theorem}[Directedness]
   \label{thm:etale_cover_exists_refines_prod}
   \lean{Algebra.EtaleCover.exists_refines_prod}
+  \provenancetag{CUSTOM}
   \uses{def:etale_cover_refines}
   \leanok
   Any two presented \'etale covers \(E, E'\) of \(A\) admit a common refinement: there is a
@@ -348,6 +365,7 @@ finite-variable presentation, at the cost of carrying a witness of the presentat
 \begin{definition}[The trivial cover]
   \label{def:etale_cover_self}
   \lean{Algebra.EtaleCover.self, Algebra.EtaleCover.selfEquiv}
+  \provenancetag{CUSTOM}
   \uses{def:etale_cover_of}
   \leanok
   The presented \'etale cover of \(A\) by itself, obtained by applying
@@ -358,6 +376,7 @@ finite-variable presentation, at the cost of carrying a witness of the presentat
 \begin{definition}[Canonical map from the trivial cover]
   \label{def:etale_cover_fromSelf}
   \lean{Algebra.EtaleCover.fromSelf}
+  \provenancetag{CUSTOM}
   \uses{def:etale_cover_self}
   \leanok
   For a presented \'etale cover \(E\) of \(A\), the canonical homomorphism of \(A\)-algebras
@@ -369,6 +388,7 @@ finite-variable presentation, at the cost of carrying a witness of the presentat
 \begin{lemma}[Every cover refines the trivial cover]
   \label{lem:etale_cover_refines_self}
   \lean{Algebra.EtaleCover.refines_self}
+  \provenancetag{CUSTOM}
   \uses{def:etale_cover_fromSelf, def:etale_cover_refines}
   \leanok
   Every presented \'etale cover \(E\) of \(A\) refines the trivial cover.
@@ -381,6 +401,7 @@ finite-variable presentation, at the cost of carrying a witness of the presentat
 \begin{definition}[Base change of a cover]
   \label{def:etale_cover_baseChange}
   \lean{Algebra.EtaleCover.baseChange, Algebra.EtaleCover.baseChangeEquiv}
+  \provenancetag{CUSTOM}
   \uses{def:etale_cover_of}
   \leanok
   Let \(A'\) be a commutative \(A\)-algebra and \(E\) a presented \'etale cover of \(A\). The
@@ -393,6 +414,7 @@ finite-variable presentation, at the cost of carrying a witness of the presentat
 \begin{definition}[Canonical inclusion into the base change]
   \label{def:etale_cover_baseChangeInclude}
   \lean{Algebra.EtaleCover.baseChangeInclude}
+  \provenancetag{CUSTOM}
   \uses{def:etale_cover_baseChange}
   \leanok
   The canonical homomorphism of \(A\)-algebras \(\kappa_E \colon B_E \to B_{E_{A'}}\), which
@@ -403,6 +425,7 @@ finite-variable presentation, at the cost of carrying a witness of the presentat
 \begin{definition}[Base change of a refinement map]
   \label{def:etale_cover_baseChangeMap}
   \lean{Algebra.EtaleCover.baseChangeMap}
+  \provenancetag{CUSTOM}
   \uses{def:etale_cover_baseChange}
   \leanok
   For presented \'etale covers \(E, F\) of \(A\) and a homomorphism of \(A\)-algebras
@@ -414,6 +437,7 @@ finite-variable presentation, at the cost of carrying a witness of the presentat
 \begin{lemma}[Naturality of the canonical inclusion]
   \label{lem:etale_cover_baseChangeMap_comp_baseChangeInclude}
   \lean{Algebra.EtaleCover.baseChangeMap_comp_baseChangeInclude}
+  \provenancetag{CUSTOM}
   \uses{def:etale_cover_baseChangeMap, def:etale_cover_baseChangeInclude}
   \leanok
   For \(h \colon B_E \to B_F\) as in Definition~\ref{def:etale_cover_baseChangeMap}, the square
@@ -432,6 +456,7 @@ finite-variable presentation, at the cost of carrying a witness of the presentat
 \begin{lemma}[Nontrivial carrier]
   \label{lem:etale_cover_nontrivial_carrier}
   \lean{Algebra.EtaleCover.nontrivial_carrier}
+  \provenancetag{CUSTOM}
   \uses{def:etale_cover}
   \leanok
   If \(A\) is a nontrivial ring, then the carrier \(B_E\) of any presented \'etale cover \(E\)
@@ -446,6 +471,7 @@ finite-variable presentation, at the cost of carrying a witness of the presentat
 \begin{theorem}[Field cofinality]
   \label{thm:etale_cover_field_cofinality}
   \lean{Algebra.EtaleCover.exists_finiteSeparableField_algHom}
+  \provenancetag{CUSTOM}
   \uses{def:etale_cover}
   \leanok
   Let \(K\) be a field and \(E\) a presented \'etale cover of \(K\). Then there exist a field
@@ -472,6 +498,7 @@ because it is a finite-type algebra over a field which is moreover finite as a m
 \begin{definition}[Field extension covers]
   \label{def:etale_cover_ofField}
   \lean{Algebra.EtaleCover.ofField, Algebra.EtaleCover.ofFieldEquiv}
+  \provenancetag{CUSTOM}
   \uses{def:etale_cover_of}
   \leanok
   Let \(K\) be a field and \(L\) a finite separable field extension of \(K\). Since \(\Spec K\)
@@ -487,6 +514,7 @@ In this section \(k\) is a field and \(C\) is an object of \(\Over(\Spec k)\).
 \begin{definition}[\(\Spec\) of an algebra map, as a morphism of test objects]
   \label{def:overSpecMap}
   \lean{AlgebraicGeometry.Over.overSpecMap}
+  \provenancetag{CUSTOM}
   \leanok
   For commutative \(k\)-algebras \(A, B\) and a homomorphism of \(k\)-algebras
   \(f \colon A \to B\), the induced morphism \(\Spec B \to \Spec A\) of \(\Over(\Spec k)\):
@@ -496,6 +524,7 @@ In this section \(k\) is a field and \(C\) is an object of \(\Over(\Spec k)\).
 \begin{lemma}[Functoriality of \(\Spec\) on algebra maps]
   \label{lem:overSpecMap_functor}
   \lean{AlgebraicGeometry.Over.overSpecMap_id, AlgebraicGeometry.Over.overSpecMap_comp}
+  \provenancetag{CUSTOM}
   \uses{def:overSpecMap}
   \leanok
   \(\Spec\) of the identity homomorphism of \(A\) is the identity morphism of \(\Spec A\); and
@@ -513,6 +542,7 @@ In this section \(k\) is a field and \(C\) is an object of \(\Over(\Spec k)\).
 \begin{definition}[Restriction of relative Picard classes along an algebra map]
   \label{def:relPicAlgMap}
   \lean{AlgebraicGeometry.relPicAlgMap}
+  \provenancetag{CUSTOM}
   \uses{def:overSpecMap, def:relPicMap}
   \leanok
   For a homomorphism of \(k\)-algebras \(f \colon A \to B\), the induced homomorphism of groups
@@ -524,6 +554,7 @@ In this section \(k\) is a field and \(C\) is an object of \(\Over(\Spec k)\).
 \begin{lemma}[Functoriality in the algebra]
   \label{lem:relPicAlgMap_functor}
   \lean{AlgebraicGeometry.relPicAlgMap_id, AlgebraicGeometry.relPicAlgMap_comp}
+  \provenancetag{CUSTOM}
   \uses{def:relPicAlgMap, lem:overSpecMap_functor}
   \leanok
   For every \(k\)-algebra \(A\), \((\id_A)^{*} = \id\) on \(\mathrm{relPic}(C,A)\); and for
@@ -562,6 +593,7 @@ relative Picard groups, natural in \(A\).
   \label{lem:picFromBase_crossBaseAffineIso}
   \lean{AlgebraicGeometry.picFromBase_le_comap_crossBaseAffineIso,
     AlgebraicGeometry.picFromBase_le_comap_crossBaseAffineIso_inv}
+  \provenancetag{CUSTOM}
   \uses{def:relPic, def:crossBaseAffineIso, lem:crossBaseAffineIso_snd}
   \leanok
   Write \(\mathrm{snd}_k\), \(\mathrm{snd}_L\) for the second projections of the two
@@ -591,6 +623,7 @@ relative Picard groups, natural in \(A\).
   \label{def:relPicCrossBase}
   \lean{AlgebraicGeometry.relPicCrossBase, AlgebraicGeometry.relPicCrossBase_mk,
     AlgebraicGeometry.relPicCrossBaseInv, AlgebraicGeometry.relPicCrossBaseInv_mk}
+  \provenancetag{CUSTOM}
   \uses{def:relPic, lem:picFromBase_crossBaseAffineIso, def:crossBaseAffineIso,
     def:baseChange}
   \leanok
@@ -622,6 +655,7 @@ relative Picard groups, natural in \(A\).
   \lean{AlgebraicGeometry.relPicCrossBaseEquiv,
     AlgebraicGeometry.relPicCrossBaseEquiv_apply,
     AlgebraicGeometry.relPicCrossBaseEquiv_symm_apply}
+  \provenancetag{CUSTOM}
   \uses{def:relPicCrossBase, def:relPic}
   \leanok
   The two descended homomorphisms of Definition~\ref{def:relPicCrossBase} are mutually
@@ -648,6 +682,7 @@ relative Picard groups, natural in \(A\).
 \begin{theorem}[Naturality of the shuffle against restriction along algebra maps]
   \label{thm:relPicCrossBase_relPicAlgMap}
   \lean{AlgebraicGeometry.relPicCrossBase_relPicAlgMap}
+  \provenancetag{CUSTOM}
   \uses{def:relPicCrossBase, def:relPicAlgMap, thm:crossBaseAffineIso_naturality,
     def:relPicMap}
   \leanok
@@ -693,6 +728,7 @@ overlap data of the cover \(E\).
 \begin{definition}[Coprojections of the double cover]
   \label{def:doubleInl_doubleInr}
   \lean{AlgebraicGeometry.doubleInl, AlgebraicGeometry.doubleInr}
+  \provenancetag{CUSTOM}
   \uses{def:etale_cover}
   \leanok
   For a presented \'etale cover \(E\) of \(A\), the two homomorphisms of \(k\)-algebras
@@ -706,6 +742,7 @@ overlap data of the cover \(E\).
   \lean{AlgebraicGeometry.descentClasses, AlgebraicGeometry.mem_descentClasses_iff}
   \uses{def:doubleInl_doubleInr, def:relPicAlgMap}
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   \leanok
   For a presented \'etale cover \(E\) of \(A\), the subgroup
   \(\mathrm{Desc}(C,E) \subseteq \mathrm{relPic}(C,B_E)\) of classes \(\lambda\) satisfying the
@@ -724,6 +761,7 @@ overlap data of the cover \(E\).
 \begin{lemma}[Naturality of the descent condition]
   \label{lem:relPicAlgMap_mem_descentClasses}
   \lean{AlgebraicGeometry.relPicAlgMap_mem_descentClasses}
+  \provenancetag{CUSTOM}
   \uses{def:descentClasses}
   \leanok
   Let \(E, F\) be presented \'etale covers of \(A\) and \(h \colon B_E \to B_F\) a
@@ -749,6 +787,7 @@ overlap data of the cover \(E\).
 \begin{definition}[Transport of descent classes]
   \label{def:descentMap}
   \lean{AlgebraicGeometry.descentMap}
+  \provenancetag{CUSTOM}
   \uses{lem:relPicAlgMap_mem_descentClasses}
   \leanok
   For \(h \colon B_E \to B_F\) a homomorphism of \(A\)-algebras between the carriers of two
@@ -760,6 +799,7 @@ overlap data of the cover \(E\).
 \begin{lemma}[Transport along the identity]
   \label{lem:descentMap_id}
   \lean{AlgebraicGeometry.descentMap_id}
+  \provenancetag{CUSTOM}
   \uses{def:descentMap}
   \leanok
   For every presented \'etale cover \(E\) of \(A\), transport along the identity homomorphism
@@ -774,6 +814,7 @@ overlap data of the cover \(E\).
 \begin{lemma}[Transport is functorial]
   \label{lem:descentMap_comp}
   \lean{AlgebraicGeometry.descentMap_comp}
+  \provenancetag{CUSTOM}
   \uses{def:descentMap}
   \leanok
   For homomorphisms of \(A\)-algebras \(h \colon B_E \to B_F\) and \(h' \colon B_F \to B_G\)
@@ -791,6 +832,7 @@ overlap data of the cover \(E\).
 \begin{theorem}[Refinement independence, the keystone]
   \label{thm:relPicAlgMap_congr}
   \lean{AlgebraicGeometry.relPicAlgMap_congr}
+  \provenancetag{CUSTOM}
   \uses{def:descentClasses}
   \leanok
   Let \(E\) be a presented \'etale cover of \(A\) with carrier \(B = B_E\), let \(R\) be a
@@ -819,6 +861,7 @@ overlap data of the cover \(E\).
 \begin{theorem}[Refinement-map independence]
   \label{thm:descentMap_congr}
   \lean{AlgebraicGeometry.descentMap_congr}
+  \provenancetag{CUSTOM}
   \uses{thm:relPicAlgMap_congr, def:descentMap}
   \leanok
   Let \(E, F\) be presented \'etale covers of \(A\) and \(h_1, h_2 \colon B_E \to B_F\) two
@@ -838,6 +881,7 @@ overlap data of the cover \(E\).
 \begin{definition}[The refinement equivalence]
   \label{def:picEtAffSetoid}
   \lean{AlgebraicGeometry.picEtAffSetoid}
+  \provenancetag{CUSTOM}
   \uses{thm:descentMap_congr, def:etale_cover_prod, def:etale_cover_prod_coproj}
   \leanok
   Consider pairs \((E,\lambda)\) with \(E\) a presented \'etale cover of \(A\) and
@@ -878,6 +922,7 @@ overlap data of the cover \(E\).
   \lean{AlgebraicGeometry.PicEtAff}
   \uses{def:picEtAffSetoid}
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   \leanok
   The set of pairs \((E,\lambda)\) as in Definition~\ref{def:picEtAffSetoid}, modulo the
   equivalence relation there, is denoted \(\mathrm{PicEtAff}(C,A)\): the one-step \'etale plus
@@ -889,6 +934,7 @@ overlap data of the cover \(E\).
 \begin{definition}[The plus class of a descent class]
   \label{def:PicEtAff_mk}
   \lean{AlgebraicGeometry.PicEtAff.mk}
+  \provenancetag{CUSTOM}
   \uses{def:PicEtAff}
   \leanok
   For a presented \'etale cover \(E\) of \(A\) and \(\lambda \in \mathrm{Desc}(C,E)\), write
@@ -898,6 +944,7 @@ overlap data of the cover \(E\).
 \begin{lemma}[Every plus class is so represented]
   \label{lem:PicEtAff_ind}
   \lean{AlgebraicGeometry.PicEtAff.ind}
+  \provenancetag{CUSTOM}
   \uses{def:PicEtAff_mk}
   \leanok
   Every element of \(\mathrm{PicEtAff}(C,A)\) is of the form \([E,\lambda]\) for some presented
@@ -912,6 +959,7 @@ overlap data of the cover \(E\).
 \begin{theorem}[Equality of plus classes]
   \label{thm:PicEtAff_mk_eq_mk_iff}
   \lean{AlgebraicGeometry.PicEtAff.mk_eq_mk_iff}
+  \provenancetag{CUSTOM}
   \uses{def:PicEtAff_mk, def:picEtAffSetoid}
   \leanok
   \([E,\lambda] = [F,\mu]\) in \(\mathrm{PicEtAff}(C,A)\) if and only if there exist a presented
@@ -927,6 +975,7 @@ overlap data of the cover \(E\).
 \begin{lemma}[Transport to a finer cover preserves the plus class]
   \label{lem:PicEtAff_mk_descentMap}
   \lean{AlgebraicGeometry.PicEtAff.mk_descentMap}
+  \provenancetag{CUSTOM}
   \uses{thm:PicEtAff_mk_eq_mk_iff, def:descentMap}
   \leanok
   For \(h \colon B_E \to B_F\) a homomorphism of \(A\)-algebras between carriers of presented
@@ -946,6 +995,7 @@ overlap data of the cover \(E\).
   \label{lem:PicEtAff_descentMap_prodLift}
   \lean{AlgebraicGeometry.PicEtAff.descentMap_prodLift_inl,
     AlgebraicGeometry.PicEtAff.descentMap_prodLift_inr}
+  \provenancetag{CUSTOM}
   \uses{lem:etale_cover_prodLift_comp, lem:descentMap_comp}
   \leanok
   Let \(E, F, H\) be presented \'etale covers of \(A\), \(f \colon B_E \to B_H\) and
@@ -970,6 +1020,7 @@ overlap data of the cover \(E\).
 \begin{theorem}[Multiplication]
   \label{thm:PicEtAff_mk_mul_mk}
   \lean{AlgebraicGeometry.PicEtAff.instMul, AlgebraicGeometry.PicEtAff.mk_mul_mk}
+  \provenancetag{CUSTOM}
   \uses{lem:PicEtAff_descentMap_prodLift, thm:PicEtAff_mk_eq_mk_iff, thm:descentMap_congr,
     def:etale_cover_prod_coproj}
   \leanok
@@ -1008,6 +1059,7 @@ overlap data of the cover \(E\).
 \begin{theorem}[Multiplication of classes on the same cover]
   \label{thm:PicEtAff_mk_mul_mk_same}
   \lean{AlgebraicGeometry.PicEtAff.mk_mul_mk_same}
+  \provenancetag{CUSTOM}
   \uses{thm:PicEtAff_mk_mul_mk, thm:descentMap_congr, lem:PicEtAff_mk_descentMap}
   \leanok
   For a presented \'etale cover \(E\) of \(A\) and \(\lambda, \mu \in \mathrm{Desc}(C,E)\),
@@ -1028,6 +1080,7 @@ overlap data of the cover \(E\).
 \begin{definition}[Identity]
   \label{def:PicEtAff_one}
   \lean{AlgebraicGeometry.PicEtAff.instOne, AlgebraicGeometry.PicEtAff.one_def}
+  \provenancetag{CUSTOM}
   \uses{def:etale_cover_self, def:PicEtAff_mk}
   \leanok
   The identity element of \(\mathrm{PicEtAff}(C,A)\) is \(1 := [\mathrm{self}(A), 1]\), the
@@ -1037,6 +1090,7 @@ overlap data of the cover \(E\).
 \begin{theorem}[The identity is represented on every cover]
   \label{thm:PicEtAff_mk_one}
   \lean{AlgebraicGeometry.PicEtAff.mk_one}
+  \provenancetag{CUSTOM}
   \uses{def:PicEtAff_one, def:etale_cover_fromSelf, thm:PicEtAff_mk_eq_mk_iff}
   \leanok
   For every presented \'etale cover \(E\) of \(A\), \([E,1] = 1\) in \(\mathrm{PicEtAff}(C,A)\).
@@ -1052,6 +1106,7 @@ overlap data of the cover \(E\).
 \begin{definition}[Inverse]
   \label{def:PicEtAff_inv}
   \lean{AlgebraicGeometry.PicEtAff.instInv, AlgebraicGeometry.PicEtAff.mk_inv}
+  \provenancetag{CUSTOM}
   \uses{def:PicEtAff_mk, def:picEtAffSetoid}
   \leanok
   \(\mathrm{PicEtAff}(C,A)\) carries an inversion, defined on representatives by
@@ -1065,6 +1120,7 @@ overlap data of the cover \(E\).
 \begin{theorem}[\(\mathrm{PicEtAff}(C,A)\) is a commutative group]
   \label{thm:PicEtAff_commGroup}
   \lean{AlgebraicGeometry.PicEtAff.instCommGroup}
+  \provenancetag{CUSTOM}
   \uses{thm:PicEtAff_mk_mul_mk_same, thm:PicEtAff_mk_one, def:PicEtAff_inv,
     lem:PicEtAff_ind, lem:PicEtAff_mk_descentMap, def:etale_cover_prod_coproj}
   \leanok
@@ -1114,6 +1170,7 @@ overlap data of the cover \(E\).
 \begin{lemma}[Tautological descent datum]
   \label{lem:PicEtAff_tautological_mem_descentClasses}
   \lean{AlgebraicGeometry.PicEtAff.tautological_mem_descentClasses}
+  \provenancetag{CUSTOM}
   \uses{def:descentClasses, def:doubleInl_doubleInr}
   \leanok
   Let \(E\) be a presented \'etale cover of \(A\) and \(\iota_E \colon A \to B_E\) the
@@ -1137,6 +1194,7 @@ overlap data of the cover \(E\).
   \uses{lem:PicEtAff_tautological_mem_descentClasses, def:etale_cover_self,
     thm:PicEtAff_mk_one, thm:PicEtAff_mk_mul_mk_same}
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   \leanok
   The homomorphism of groups \(\eta_A \colon \mathrm{relPic}(C,A) \to
   \mathrm{PicEtAff}(C,A)\) sending \(x\) to the class \([\mathrm{self}(A), \iota^{*}x]\) of \(x\)
@@ -1169,6 +1227,7 @@ of \(A\), write \(E_{A'}\) for its base change (Definition~\ref{def:etale_cover_
 \begin{lemma}[Descent survives base change of the cover]
   \label{lem:baseChangeInclude_mem_descentClasses}
   \lean{AlgebraicGeometry.baseChangeInclude_mem_descentClasses}
+  \provenancetag{CUSTOM}
   \uses{def:etale_cover_baseChangeInclude, thm:relPicAlgMap_congr, def:descentClasses}
   \leanok
   Let \(E\) be a presented \'etale cover of \(A\) and \(\lambda \in \mathrm{Desc}(C,E)\). Then
@@ -1193,6 +1252,7 @@ of \(A\), write \(E_{A'}\) for its base change (Definition~\ref{def:etale_cover_
 \begin{definition}[Transport along base change of the cover]
   \label{def:descentBaseChange}
   \lean{AlgebraicGeometry.descentBaseChange}
+  \provenancetag{CUSTOM}
   \uses{lem:baseChangeInclude_mem_descentClasses}
   \leanok
   The induced homomorphism of groups \(\mathrm{Desc}(C,E) \to \mathrm{Desc}(C,E_{A'})\),
@@ -1202,6 +1262,7 @@ of \(A\), write \(E_{A'}\) for its base change (Definition~\ref{def:etale_cover_
 \begin{lemma}[Naturality of base-change transport]
   \label{lem:descentMap_baseChangeMap}
   \lean{AlgebraicGeometry.descentMap_baseChangeMap}
+  \provenancetag{CUSTOM}
   \uses{def:descentBaseChange, lem:etale_cover_baseChangeMap_comp_baseChangeInclude,
     def:descentMap}
   \leanok
@@ -1225,6 +1286,7 @@ of \(A\), write \(E_{A'}\) for its base change (Definition~\ref{def:etale_cover_
 \begin{definition}[Restriction along a base extension]
   \label{def:PicEtAff_map}
   \lean{AlgebraicGeometry.PicEtAff.map}
+  \provenancetag{CUSTOM}
   \uses{def:descentBaseChange, lem:descentMap_baseChangeMap, thm:PicEtAff_mk_mul_mk,
     thm:descentMap_congr}
   \leanok
@@ -1260,6 +1322,7 @@ of \(A\), write \(E_{A'}\) for its base change (Definition~\ref{def:etale_cover_
 \begin{theorem}[Naturality of the unit]
   \label{thm:PicEtAff_map_unit}
   \lean{AlgebraicGeometry.PicEtAff.map_unit}
+  \provenancetag{CUSTOM}
   \uses{def:PicEtAff_map, def:PicEtAff_unit}
   \leanok
   For \(x \in \mathrm{relPic}(C,A)\), \(\tau^{*}(\eta_A(x)) = \eta_{A'}(\tau^{*}x)\) in
@@ -1298,6 +1361,7 @@ of \(A\), write \(E_{A'}\) for its base change (Definition~\ref{def:etale_cover_
 \begin{theorem}[Restriction along the trivial extension is the identity]
   \label{thm:PicEtAff_map_id}
   \lean{AlgebraicGeometry.PicEtAff.map_id}
+  \provenancetag{CUSTOM}
   \uses{def:PicEtAff_map}
   \leanok
   When \(A' = A\) with \(\tau = \id_A\), the induced homomorphism \(\tau^{*} \colon
@@ -1318,6 +1382,7 @@ of \(A\), write \(E_{A'}\) for its base change (Definition~\ref{def:etale_cover_
 \begin{theorem}[Restriction is transitive]
   \label{thm:PicEtAff_map_map}
   \lean{AlgebraicGeometry.PicEtAff.map_map}
+  \provenancetag{CUSTOM}
   \uses{def:PicEtAff_map, thm:relPicAlgMap_congr, thm:PicEtAff_mk_eq_mk_iff}
   \leanok
   Let \(A''\) be a commutative \(k\)-algebra with compatible algebra structures forming a tower
@@ -1360,6 +1425,7 @@ consumers of this section are the curve-direction functoriality of the plus (the
 \begin{definition}[Transport family]
   \label{def:relPicTransportFamily}
   \lean{AlgebraicGeometry.RelPicTransportFamily}
+  \provenancetag{CUSTOM}
   \leanok
   A \emph{transport family} from \(D\) to \(E\) assigns to every test algebra \(B\) a
   morphism
@@ -1383,6 +1449,7 @@ consumers of this section are the curve-direction functoriality of the plus (the
   \lean{AlgebraicGeometry.RelPicTransportFamily.picFromBase_le_comap_hom,
     AlgebraicGeometry.RelPicTransportFamily.relPicHom,
     AlgebraicGeometry.RelPicTransportFamily.relPicHom_mk}
+  \provenancetag{CUSTOM}
   \uses{def:relPicTransportFamily, def:relPic}
   \leanok
   Let \(h\) be a transport family from \(D\) to \(E\). For a test algebra \(B\), the
@@ -1402,6 +1469,7 @@ consumers of this section are the curve-direction functoriality of the plus (the
 \begin{lemma}[Bilateral naturality of the relative Picard transport]
   \label{lem:relPicTransport_naturality}
   \lean{AlgebraicGeometry.RelPicTransportFamily.relPicAlgMap_relPicHom}
+  \provenancetag{CUSTOM}
   \uses{def:relPicTransport, def:relPicAlgMap}
   \leanok
   Let \(h\) be a transport family from \(D\) to \(E\) and \(f \colon B \to B'\) a
@@ -1422,6 +1490,7 @@ consumers of this section are the curve-direction functoriality of the plus (the
 \begin{lemma}[Pointwise-inverse families invert the transport]
   \label{lem:relPicTransport_inverse}
   \lean{AlgebraicGeometry.RelPicTransportFamily.relPicHom_relPicHom}
+  \provenancetag{CUSTOM}
   \uses{def:relPicTransport}
   \leanok
   Let \(h\) be a transport family from \(D\) to \(E\) and \(h'\) a transport family from
@@ -1441,6 +1510,7 @@ consumers of this section are the curve-direction functoriality of the plus (the
     AlgebraicGeometry.RelPicTransportFamily.descentHom,
     AlgebraicGeometry.RelPicTransportFamily.descentHom_coe,
     AlgebraicGeometry.RelPicTransportFamily.descentHom_descentMap}
+  \provenancetag{CUSTOM}
   \uses{def:descentClasses, def:descentMap, lem:relPicTransport_naturality}
   \leanok
   Let \(h\) be a transport family from \(D\) to \(E\), \(A\) a test algebra and \(F\) a
@@ -1466,6 +1536,7 @@ consumers of this section are the curve-direction functoriality of the plus (the
   \label{def:PicEtAffTransport}
   \lean{AlgebraicGeometry.RelPicTransportFamily.picEtAffHom,
     AlgebraicGeometry.RelPicTransportFamily.picEtAffHom_mk}
+  \provenancetag{CUSTOM}
   \uses{def:PicEtAff, def:PicEtAff_mk, thm:PicEtAff_mk_eq_mk_iff, thm:PicEtAff_mk_mul_mk,
     lem:relPicTransport_descent}
   \leanok
@@ -1497,6 +1568,7 @@ consumers of this section are the curve-direction functoriality of the plus (the
 \begin{theorem}[The transport is compatible with the unit]
   \label{thm:PicEtAffTransport_unit}
   \lean{AlgebraicGeometry.RelPicTransportFamily.picEtAffHom_unit}
+  \provenancetag{CUSTOM}
   \uses{def:PicEtAffTransport, def:PicEtAff_unit}
   \leanok
   For \(x \in \mathrm{relPic}(E, \Spec A)\),
@@ -1516,6 +1588,7 @@ consumers of this section are the curve-direction functoriality of the plus (the
   \label{thm:PicEtAffTransport_map}
   \lean{AlgebraicGeometry.RelPicTransportFamily.map_picEtAffHom,
     AlgebraicGeometry.RelPicTransportFamily.mapAlg_picEtAffHom}
+  \provenancetag{CUSTOM}
   \uses{def:PicEtAffTransport, def:PicEtAff_map}
   \leanok
   Let \(\tau \colon A \to A'\) be a homomorphism of test algebras linear over both base
@@ -1536,6 +1609,7 @@ consumers of this section are the curve-direction functoriality of the plus (the
 \begin{theorem}[Pointwise-inverse families invert the transport of the plus]
   \label{thm:PicEtAffTransport_inverse}
   \lean{AlgebraicGeometry.RelPicTransportFamily.picEtAffHom_picEtAffHom}
+  \provenancetag{CUSTOM}
   \uses{def:PicEtAffTransport, lem:relPicTransport_inverse}
   \leanok
   Let \(h\) be a transport family from \(D\) to \(E\) and \(h'\) a transport family from
@@ -1565,6 +1639,7 @@ Throughout this section \(k\) is a field, \(D, E\) are objects of \(\Over(\Spec 
     AlgebraicGeometry.PicEtAff.curveMap_mk,
     AlgebraicGeometry.PicEtAff.curveTransportFamily_descentHom_coe,
     AlgebraicGeometry.PicEtAff.curveMap_mk_eq_mk}
+  \provenancetag{CUSTOM}
   \uses{def:relPicTransportFamily, def:PicEtAffTransport, lem:relPicMapCurve}
   \leanok
   Let \(g \colon D \to E\) be a morphism of \(\Over(\Spec k)\). The assignment
@@ -1595,6 +1670,7 @@ Throughout this section \(k\) is a field, \(D, E\) are objects of \(\Over(\Spec 
     AlgebraicGeometry.PicEtAff.curveMap_unit,
     AlgebraicGeometry.PicEtAff.map_curveMap,
     AlgebraicGeometry.PicEtAff.mapAlg_curveMap}
+  \provenancetag{CUSTOM}
   \uses{def:PicEtAff_curveMap, def:PicEtAff_unit, def:PicEtAff_map}
   \leanok
   The curve-direction transport of the plus is contravariantly functorial in the curve:
@@ -1640,6 +1716,7 @@ directions.
     AlgebraicGeometry.PicEtAff.baseFieldShuffle_symm_apply,
     AlgebraicGeometry.PicEtAff.baseFieldShuffle_mk,
     AlgebraicGeometry.PicEtAff.baseFieldShuffle_symm_mk}
+  \provenancetag{CUSTOM}
   \uses{def:relPicTransportFamily, def:PicEtAffTransport, thm:PicEtAffTransport_inverse,
     def:crossBaseAffineIso, def:baseChange}
   \leanok
@@ -1677,6 +1754,7 @@ directions.
     AlgebraicGeometry.crossBaseTransportFamilyInv_relPicHom,
     AlgebraicGeometry.PicEtAff.crossBaseTransportFamily_descentHom_coe,
     AlgebraicGeometry.PicEtAff.crossBaseTransportFamilyInv_descentHom_coe}
+  \provenancetag{CUSTOM}
   \uses{def:PicEtAff_baseFieldShuffle, def:relPicCrossBase, def:relPicTransport}
   \leanok
   The relative Picard transports induced by the two families of
@@ -1711,6 +1789,7 @@ directions.
     AlgebraicGeometry.PicEtAff.map_baseFieldShuffle_symm,
     AlgebraicGeometry.PicEtAff.mapAlg_baseFieldShuffle,
     AlgebraicGeometry.PicEtAff.mapAlg_baseFieldShuffle_symm}
+  \provenancetag{CUSTOM}
   \uses{def:PicEtAff_baseFieldShuffle, def:PicEtAff_unit, def:PicEtAff_map,
     thm:PicEtAff_baseFieldShuffle_relPic}
   \leanok
@@ -1776,6 +1855,7 @@ by pulling back the cover pointwise and the cocycle by \(f^{\sharp}\).
 \begin{lemma}[Separation for unit sections]
   \label{lem:units_separation}
   \lean{AlgebraicGeometry.Scheme.unitsRestrict_eq_of_locally_eq}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(X\) be a scheme, \(V \subseteq X\) open, and \((W_i)_{i \in I}\) a family of opens
   with \(W_i \subseteq V\) and \(V \subseteq \bigcup_i W_i\). If two units
@@ -1791,6 +1871,7 @@ by pulling back the cover pointwise and the cocycle by \(f^{\sharp}\).
 \begin{lemma}[Gluing for unit sections]
   \label{lem:units_gluing}
   \lean{AlgebraicGeometry.Scheme.exists_unitsRestrict_eq}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(X\) be a scheme, \(V \subseteq X\) open, and \((W_i)_{i \in I}\) a family of opens
   with \(W_i \subseteq V\) and \(V \subseteq \bigcup_i W_i\). Any family of units
@@ -1810,6 +1891,7 @@ by pulling back the cover pointwise and the cocycle by \(f^{\sharp}\).
 \begin{lemma}[Restriction of unit sections is transitive]
   \label{lem:unitsRestrict_trans}
   \lean{AlgebraicGeometry.Scheme.unitsRestrict_unitsRestrict}
+  \provenancetag{CUSTOM}
   \leanok
   For opens \(W \subseteq V \subseteq U\) of a scheme \(X\) and
   \(u \in \struct X(U)^{\times}\), restricting \(u\) to \(V\) and then to \(W\) is
@@ -1823,6 +1905,7 @@ by pulling back the cover pointwise and the cocycle by \(f^{\sharp}\).
 \begin{theorem}[Refinement injectivity in degree one]
   \label{thm:unitsRes_injective}
   \lean{AlgebraicGeometry.Scheme.unitsRes_injective}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(X\) be a scheme and \(\mathcal W \le \mathcal U\) pointed covers of \(X\). Then
   restriction \(\check H^1(\mathcal U) \to \check H^1(\mathcal W)\) is injective.
@@ -1859,6 +1942,7 @@ by pulling back the cover pointwise and the cocycle by \(f^{\sharp}\).
 \begin{corollary}[Triviality is detected on the representing cover]
   \label{cor:cechPic_mk_eq_one}
   \lean{AlgebraicGeometry.Scheme.CechPic.mk_eq_one_iff}
+  \provenancetag{CUSTOM}
   \leanok
   For a pointed cover \(\mathcal U\) of a scheme \(X\) and \(a \in \check H^1(\mathcal U)\),
   the Picard class \([\mathcal U, a] \in \Pic(X)\) is trivial if and only if \(a = 1\).
@@ -1874,6 +1958,7 @@ by pulling back the cover pointwise and the cocycle by \(f^{\sharp}\).
 \begin{corollary}[\(\check H^1\) of a cover embeds in the Picard group]
   \label{cor:cechPic_mk_injective}
   \lean{AlgebraicGeometry.Scheme.CechPic.mk_injective}
+  \provenancetag{CUSTOM}
   \leanok
   For every pointed cover \(\mathcal U\) of a scheme \(X\), the canonical map
   \(\check H^1(\mathcal U) \to \Pic(X)\), \(a \mapsto [\mathcal U, a]\), is injective.
@@ -1888,6 +1973,7 @@ by pulling back the cover pointwise and the cocycle by \(f^{\sharp}\).
 \begin{lemma}[Everything is flat over a field]
   \label{lem:flat_of_field}
   \lean{AlgebraicGeometry.Flat.of_field}
+  \provenancetag{CUSTOM}
   \leanok
   Every morphism of schemes \(X \to \Spec K\), \(K\) a field, is flat.
 \end{lemma}
@@ -1901,6 +1987,7 @@ by pulling back the cover pointwise and the cocycle by \(f^{\sharp}\).
 \begin{lemma}[Affine refinement of pointed covers]
   \label{lem:pointedCover_affine_refinement}
   \lean{AlgebraicGeometry.Scheme.PointedCover.exists_isAffineOpen_le}
+  \provenancetag{CUSTOM}
   \leanok
   Every pointed cover of a scheme admits a refinement all of whose members are affine open.
 \end{lemma}
@@ -1913,6 +2000,7 @@ by pulling back the cover pointwise and the cocycle by \(f^{\sharp}\).
 \begin{theorem}[Sections over an affine open pull back bijectively]
   \label{thm:isIso_appLE_snd}
   \lean{AlgebraicGeometry.Over.isIso_appLE_snd}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(T\) be an object of \(\Over(\Spec k)\) and \(V \subseteq T\) an affine open. Then
   pullback of sections along the second projection
@@ -1942,6 +2030,7 @@ by pulling back the cover pointwise and the cocycle by \(f^{\sharp}\).
 \begin{corollary}[Sections pull back injectively over every open]
   \label{cor:appLE_snd_injective}
   \lean{AlgebraicGeometry.Over.appLE_snd_injective}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(T\) be an object of \(\Over(\Spec k)\) and \(W \subseteq T\) any open. Then pullback
   of sections along the second projection,
@@ -1959,6 +2048,7 @@ by pulling back the cover pointwise and the cocycle by \(f^{\sharp}\).
 \begin{corollary}[Unit sections over an affine open pull back bijectively]
   \label{cor:unitsAppLE_snd_bijective}
   \lean{AlgebraicGeometry.Over.unitsAppLE_snd_bijective}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(T\) be an object of \(\Over(\Spec k)\) and \(V \subseteq T\) an affine open. Then
   pullback along the second projection is a bijection
@@ -1979,6 +2069,7 @@ by pulling back the cover pointwise and the cocycle by \(f^{\sharp}\).
 \begin{lemma}[The projection is surjective]
   \label{lem:surjective_snd}
   \lean{AlgebraicGeometry.Over.surjective_snd_left}
+  \provenancetag{CUSTOM}
   \leanok
   For every object \(T\) of \(\Over(\Spec k)\), the second projection
   \(C \otimes T \to T\) is surjective on points.
@@ -1996,6 +2087,7 @@ by pulling back the cover pointwise and the cocycle by \(f^{\sharp}\).
   \lean{AlgebraicGeometry.Over.prPullback_injective}
   \leanok
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   For every object \(T\) of \(\Over(\Spec k)\), pullback of Picard classes along the second
   projection, \(\mathrm{pr}^{*} \colon \Pic(T) \to \Pic(C \otimes T)\), is injective.
 \end{theorem}
@@ -2056,6 +2148,7 @@ flat descent produces from this datum an \(A\)-module, well defined up to isomor
 \begin{theorem}[Trivializing elements span the unit ideal]
   \label{thm:invertible_span_free}
   \lean{Module.Invertible.span_tensor_free_eq_top}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(A\) be a commutative ring and \(N\) an invertible \(A\)-module. The ideal generated by
   \[
@@ -2078,6 +2171,7 @@ flat descent produces from this datum an \(A\)-module, well defined up to isomor
 \begin{lemma}[Existence of a trivializing family]
   \label{lem:trivializingFamily_nonempty}
   \lean{AlgebraicGeometry.Scheme.TrivializingFamily.nonempty}
+  \provenancetag{CUSTOM}
   \uses{thm:invertible_span_free}
   \leanok
   Let \(X\) be an affine scheme with global ring \(A = \Gamma(X,\struct X)\) and \(N\) an
@@ -2101,6 +2195,7 @@ flat descent produces from this datum an \(A\)-module, well defined up to isomor
 \begin{definition}[The cocycle of a trivializing family]
   \label{def:trivializingFamily_cocycle}
   \lean{AlgebraicGeometry.Scheme.TrivializingFamily.cocycle}
+  \provenancetag{CUSTOM}
   \uses{lem:trivializingFamily_nonempty}
   \leanok
   Let \(F = (s_x, \mathrm{triv}_x)_{x \in X}\) be a trivializing family for \(N\) as in
@@ -2135,6 +2230,7 @@ flat descent produces from this datum an \(A\)-module, well defined up to isomor
 \begin{theorem}[Descent identification for the trivializing cocycle]
   \label{thm:trivializingFamily_pic_cocycle}
   \lean{AlgebraicGeometry.Scheme.TrivializingFamily.pic_cocycle}
+  \provenancetag{CUSTOM}
   \uses{def:trivializingFamily_cocycle}
   \leanok
   In the situation of Definition~\ref{def:trivializingFamily_cocycle}, let \(\mathcal W \le
@@ -2164,6 +2260,7 @@ flat descent produces from this datum an \(A\)-module, well defined up to isomor
 \begin{definition}[The \v Cech--Picard descent homomorphism]
   \label{def:cechPic_toPic}
   \lean{AlgebraicGeometry.Scheme.CechPic.toPic}
+  \provenancetag{CUSTOM}
   \leanok
   For an affine scheme \(X\) with global ring \(A = \Gamma(X,\struct X)\), the homomorphism of
   groups
@@ -2190,6 +2287,7 @@ flat descent produces from this datum an \(A\)-module, well defined up to isomor
 \begin{theorem}[Injectivity of the descent homomorphism]
   \label{thm:cechPic_toPic_injective}
   \lean{AlgebraicGeometry.Scheme.CechPic.toPic_injective}
+  \provenancetag{CUSTOM}
   \uses{def:cechPic_toPic, cor:cechPic_mk_eq_one}
   \leanok
   For every affine scheme \(X\), the descent homomorphism \(\operatorname{toPic} \colon
@@ -2213,6 +2311,7 @@ flat descent produces from this datum an \(A\)-module, well defined up to isomor
 \begin{theorem}[Surjectivity of the descent homomorphism]
   \label{thm:cechPic_toPic_surjective}
   \lean{AlgebraicGeometry.Scheme.CechPic.toPic_surjective}
+  \provenancetag{CUSTOM}
   \uses{def:cechPic_toPic, lem:trivializingFamily_nonempty, thm:trivializingFamily_pic_cocycle}
   \leanok
   For every affine scheme \(X\), the descent homomorphism \(\operatorname{toPic} \colon
@@ -2232,6 +2331,7 @@ flat descent produces from this datum an \(A\)-module, well defined up to isomor
 \begin{theorem}[The \v Cech--Picard dictionary]
   \label{thm:cechPicEquivPic}
   \lean{AlgebraicGeometry.Scheme.cechPicEquivPic}
+  \provenancetag{CUSTOM}
   \uses{thm:cechPic_toPic_injective, thm:cechPic_toPic_surjective}
   \leanok
   For every affine scheme \(X\) with global ring \(A = \Gamma(X,\struct X)\), the descent
@@ -2276,6 +2376,7 @@ recording the three faces of the \(2\)-simplex of the cover \(B\) of \(A\).
 \begin{definition}[Descent \(1\)-cocycle]
   \label{def:module_descent_cocycle}
   \lean{Module.IsDescentCocycle}
+  \provenancetag{CUSTOM}
   \leanok
   A \emph{descent \(1\)-cocycle} relative to \(A \to B\) is a unit \(u \in (B \otimes_A
   B)^{\times}\) such that:
@@ -2291,6 +2392,7 @@ recording the three faces of the \(2\)-simplex of the cover \(B\) of \(A\).
 \begin{definition}[The descended module of a cocycle]
   \label{def:module_descended}
   \lean{Module.IsDescentCocycle.descended}
+  \provenancetag{CUSTOM}
   \uses{def:module_descent_cocycle}
   \leanok
   Let \(u\) be a descent \(1\)-cocycle relative to \(A \to B\). The \emph{descended} \(A\)-module
@@ -2307,6 +2409,7 @@ recording the three faces of the \(2\)-simplex of the cover \(B\) of \(A\).
 \begin{definition}[The Picard class of a cocycle]
   \label{def:module_picClass}
   \lean{Module.IsDescentCocycle.picClass}
+  \provenancetag{CUSTOM}
   \uses{def:module_descended}
   \leanok
   Assume moreover that \(B\) is faithfully flat over \(A\), and let \(u\) be a descent
@@ -2327,6 +2430,7 @@ recording the three faces of the \(2\)-simplex of the cover \(B\) of \(A\).
 \begin{definition}[Base change of the tensor square and tensor cube of a cover]
   \label{def:module_tensorSqBaseChange}
   \lean{Module.tensorSqBaseChange, Module.tensorCubeBaseChange}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(A \to A'\) be a homomorphism of commutative rings and \(B\) a commutative
   \(A\)-algebra. The \emph{base change of the tensor square} of the cover \(B\) along
@@ -2348,6 +2452,7 @@ recording the three faces of the \(2\)-simplex of the cover \(B\) of \(A\).
 \begin{theorem}[Base change of a descent cocycle]
   \label{thm:module_descentCocycle_baseChange}
   \lean{Module.IsDescentCocycle.baseChange}
+  \provenancetag{CUSTOM}
   \uses{def:module_descent_cocycle, def:module_tensorSqBaseChange}
   \leanok
   Let \(A \to A'\) and \(A \to B\) be homomorphisms of commutative rings and let \(u\) be a
@@ -2392,6 +2497,7 @@ recording the three faces of the \(2\)-simplex of the cover \(B\) of \(A\).
 \begin{theorem}[Base change of the descended module]
   \label{thm:module_descendedBaseChangeEquiv}
   \lean{Module.descendedBaseChangeEquiv}
+  \provenancetag{CUSTOM}
   \uses{thm:module_descentCocycle_baseChange, def:module_descended}
   \leanok
   Let \(A \to A'\) and \(A \to B\) be homomorphisms of commutative rings with \(B\) faithfully
@@ -2435,6 +2541,7 @@ recording the three faces of the \(2\)-simplex of the cover \(B\) of \(A\).
   \lean{Module.IsDescentCocycle.picClass_baseChange}
   \uses{thm:module_descendedBaseChangeEquiv, def:module_picClass}
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   \leanok
   Let \(A \to A'\) and \(A \to B\) be homomorphisms of commutative rings with \(B\) faithfully
   flat over \(A\) and \(A' \otimes_A B\) faithfully flat over \(A'\), and let \(u\) be a descent
@@ -2476,6 +2583,7 @@ section transports the whole \v Cech picture of the cover \(f\) to the cover \(f
   \label{def:awayCover_baseChangeMaps}
   \lean{IsLocalization.AwayCover.mapAway, IsLocalization.AwayCover.mapOverlap,
     IsLocalization.AwayCover.mapTriple}
+  \provenancetag{CUSTOM}
   \leanok
   Because \(f_i\) becomes invertible in \(S'_i\) through the tower \(A \to A' \to S'_i\),
   there is a unique \(A\)-algebra homomorphism \(S_i = A_{f_i} \to S'_i\); denote it by
@@ -2490,6 +2598,7 @@ section transports the whole \v Cech picture of the cover \(f\) to the cover \(f
 \begin{theorem}[Base change of a cover cocycle]
   \label{thm:awayCover_isCoverCocycle_baseChange}
   \lean{IsLocalization.AwayCover.IsCoverCocycle.baseChange}
+  \provenancetag{CUSTOM}
   \uses{def:awayCover_baseChangeMaps}
   \leanok
   Let \(\gamma = (\gamma_{ij})\) with \(\gamma_{ij} \in T_{ij}^{\times}\) be a cover cocycle
@@ -2517,6 +2626,7 @@ section transports the whole \v Cech picture of the cover \(f\) to the cover \(f
 \begin{definition}[Base-change map of cover algebras]
   \label{def:awayCover_piBaseChangeLift}
   \lean{IsLocalization.AwayCover.piBaseChangeLift}
+  \provenancetag{CUSTOM}
   \uses{def:awayCover_baseChangeMaps}
   \leanok
   The maps \(\mathrm{mapAway}_i\) assemble into a componentwise \(A\)-algebra homomorphism
@@ -2532,6 +2642,7 @@ section transports the whole \v Cech picture of the cover \(f\) to the cover \(f
 \begin{theorem}[Base change of the descent unit]
   \label{thm:awayCover_cocycleUnit_baseChange}
   \lean{IsLocalization.AwayCover.cocycleUnit_baseChange}
+  \provenancetag{CUSTOM}
   \uses{def:awayCover_baseChangeMaps, def:awayCover_piBaseChangeLift,
     thm:awayCover_isCoverCocycle_baseChange, def:module_tensorSqBaseChange}
   \leanok
@@ -2573,6 +2684,7 @@ section transports the whole \v Cech picture of the cover \(f\) to the cover \(f
 \begin{lemma}[Base change preserves covering families]
   \label{lem:awayCover_span_range_baseChange}
   \lean{IsLocalization.AwayCover.span_range_algebraMap_eq_top}
+  \provenancetag{CUSTOM}
   \leanok
   If the family \(f\) is covering, \(\mathrm{span}\,\{f_i\} = A\), then the pushed family
   \(f'_i = \varphi(f_i)\) is covering as well, \(\mathrm{span}\,\{f'_i\} = A'\).
@@ -2589,6 +2701,7 @@ section transports the whole \v Cech picture of the cover \(f\) to the cover \(f
 \begin{lemma}[Base change of a covering product of localizations is faithfully flat]
   \label{lem:awayCover_faithfullyFlat_tensor}
   \lean{IsLocalization.AwayCover.faithfullyFlat_tensor}
+  \provenancetag{CUSTOM}
   \uses{lem:awayCover_span_range_baseChange}
   \leanok
   If \(f\) is a covering family, \(\mathrm{span}\,\{f_i\} = A\), then the base change \(A'
@@ -2613,6 +2726,7 @@ section transports the whole \v Cech picture of the cover \(f\) to the cover \(f
     thm:module_picClass_baseChange, def:module_picClass,
     lem:awayCover_span_range_baseChange, lem:awayCover_faithfullyFlat_tensor}
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   \leanok
   Assume the localization covers are faithfully flat, \(\prod_i S_i\) over \(A\) and \(\prod_i
   S'_i\) over \(A'\), and that \(f\) is a covering family, \(\mathrm{span}\,\{f_i\} = A\).  Then
@@ -2653,6 +2767,7 @@ projection.
 \begin{definition}[The projection-descent equivalence for unit sections]
   \label{def:unitsSndEquiv}
   \lean{AlgebraicGeometry.Over.unitsSndEquiv}
+  \provenancetag{CUSTOM}
   \uses{cor:unitsAppLE_snd_bijective}
   \leanok
   For an affine open \(V \subseteq T_{\mathrm{left}}\), pullback of unit sections along the
@@ -2676,6 +2791,7 @@ projection.
 \begin{lemma}[Uniqueness of the descended unit]
   \label{lem:unitsSndEquiv_symm_eq_of_unitsAppLE}
   \lean{AlgebraicGeometry.Over.unitsSndEquiv_symm_eq_of_unitsAppLE}
+  \provenancetag{CUSTOM}
   \uses{def:unitsSndEquiv}
   \leanok
   Let \(V \subseteq T_{\mathrm{left}}\) be an affine open, \(v \in \Gamma(T_{\mathrm{left}},
@@ -2694,6 +2810,7 @@ projection.
   \label{lem:unitsSndEquiv_unitsRestrict}
   \lean{AlgebraicGeometry.Over.unitsSndEquiv_unitsRestrict,
     AlgebraicGeometry.Over.unitsSndEquiv_symm_unitsRestrict}
+  \provenancetag{CUSTOM}
   \uses{def:unitsSndEquiv}
   \leanok
   For affine opens \(V' \subseteq V \subseteq T_{\mathrm{left}}\), pullback of unit sections
@@ -2716,6 +2833,7 @@ projection.
   \label{lem:snd_left_naturality}
   \lean{AlgebraicGeometry.Over.snd_left_naturality,
     AlgebraicGeometry.Over.snd_left_preimage_naturality}
+  \provenancetag{CUSTOM}
   \leanok
   For a morphism \(g \colon T' \to T\) of test objects, whiskering \(C \lhd g\) on the product
   intertwines the two projections:
@@ -2738,6 +2856,7 @@ projection.
 \begin{theorem}[Naturality of the descent equivalence in the test object]
   \label{thm:unitsSndEquiv_naturality}
   \lean{AlgebraicGeometry.Over.unitsSndEquiv_naturality}
+  \provenancetag{CUSTOM}
   \uses{def:unitsSndEquiv, lem:snd_left_naturality}
   \leanok
   Let \(g \colon T' \to T\) be a morphism of test objects and \(V \subseteq T_{\mathrm{left}}\)
@@ -2764,6 +2883,7 @@ through the intermediate ring \(B\).
 \begin{definition}[The collapse maps on tensor squares and cubes]
   \label{def:module_tensorCollapse}
   \lean{Module.tensorCollapse, Module.tensorCubeCollapse}
+  \provenancetag{CUSTOM}
   \leanok
   The \emph{collapse map} is the canonical \(A\)-algebra homomorphism
   \[
@@ -2782,6 +2902,7 @@ through the intermediate ring \(B\).
 \begin{theorem}[Collapse of a descent cocycle]
   \label{thm:module_descentCocycle_collapse}
   \lean{Module.IsDescentCocycle.collapse}
+  \provenancetag{CUSTOM}
   \uses{def:module_descent_cocycle, def:module_tensorCollapse}
   \leanok
   Let \(v \in (P \otimes_A P)^{\times}\) be an \(A\)-descent \(1\)-cocycle relative to \(A \to
@@ -2803,6 +2924,7 @@ through the intermediate ring \(B\).
 \begin{lemma}[The descended module lies in the collapsed descended module]
   \label{lem:module_descended_le_collapse}
   \lean{Module.descended_le_descended_collapse}
+  \provenancetag{CUSTOM}
   \uses{def:module_descended, thm:module_descentCocycle_collapse}
   \leanok
   For an \(A\)-descent \(1\)-cocycle \(v\), the \(A\)-descended module of \(v\) is contained,
@@ -2820,6 +2942,7 @@ through the intermediate ring \(B\).
 \begin{theorem}[Descent in stages for the descended module]
   \label{thm:module_descendedCollapseEquiv}
   \lean{Module.descendedCollapseEquiv}
+  \provenancetag{CUSTOM}
   \uses{thm:module_descentCocycle_collapse, def:module_descended}
   \leanok
   Assume \(A \to B\) and \(B \to P\) are faithfully flat (so \(A \to P\) is faithfully flat as
@@ -2854,6 +2977,7 @@ through the intermediate ring \(B\).
   \lean{Module.IsDescentCocycle.picClass_collapse}
   \uses{thm:module_descendedCollapseEquiv, def:module_picClass}
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   \leanok
   Under the hypotheses of Theorem~\ref{thm:module_descendedCollapseEquiv}, the Picard class over
   \(B\) of the collapsed cocycle is the image of the Picard class over \(A\) of \(v\) under the
@@ -2880,6 +3004,7 @@ through the intermediate ring \(B\).
   \lean{AlgebraicGeometry.Scheme.CechPic.toPic_map}
   \uses{def:cechPic_toPic, thm:awayCover_pic_baseChange, thm:prPullback_injective}
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   \leanok
   For a morphism \(g \colon X \to Y\) of affine schemes, base change of Picard classes along the
   ring map \(g^{\#} \colon \Gamma(Y, \top) \to \Gamma(X, \top)\) intertwines the \v
@@ -2919,6 +3044,7 @@ through the intermediate ring \(B\).
 \begin{theorem}[Algebra form of the naturality]
   \label{thm:cechPic_toPic_mapAlgebra}
   \lean{AlgebraicGeometry.Scheme.CechPic.toPic_mapAlgebra}
+  \provenancetag{CUSTOM}
   \uses{thm:cechPic_toPic_map}
   \leanok
   With \(\Gamma(X, \top)\) regarded as a \(\Gamma(Y, \top)\)-algebra through \(g^{\#}\), the
@@ -2944,6 +3070,7 @@ theorem — the separatedness half of Kleiman, \emph{The Picard Scheme}, Theorem
 \begin{definition}[The two coprojections of a double cover of a test algebra]
   \label{def:tensorInl_tensorInr}
   \lean{AlgebraicGeometry.tensorInl, AlgebraicGeometry.tensorInr}
+  \provenancetag{CUSTOM}
   \leanok
   The two \emph{coprojections} of the double cover \(B \otimes_A B\) of \(B\) are the
   \(k\)-algebra homomorphisms
@@ -2956,6 +3083,7 @@ theorem — the separatedness half of Kleiman, \emph{The Picard Scheme}, Theorem
 \begin{lemma}[Diagonal coherence of the two coprojections]
   \label{lem:tensorInl_comp_ofId}
   \lean{AlgebraicGeometry.tensorInl_comp_ofId}
+  \provenancetag{CUSTOM}
   \uses{def:tensorInl_tensorInr}
   \leanok
   Precomposed with the base inclusion \(A \to B\), the two coprojections agree:
@@ -2975,6 +3103,7 @@ theorem — the separatedness half of Kleiman, \emph{The Picard Scheme}, Theorem
   \uses{def:tensorInl_tensorInr, lem:tensorInl_comp_ofId, thm:prPullback_injective,
     lem:snd_left_naturality, def:overSpecMap, lem:overSpecMap_functor}
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   \leanok
   Let \(L\) be a \v Cech Picard class on the curve-product \(C \otimes \Spec A\) and \(N\) a \v
   Cech Picard class on \(\Spec B\).  Suppose that over the test algebra \(A \to B\) the class
@@ -3011,6 +3140,7 @@ units cross the curve projection \(\mathrm{pr}\).
   \label{thm:exists_global_unit_of_compatible}
   \lean{AlgebraicGeometry.Scheme.exists_global_unit_of_compatible,
     AlgebraicGeometry.Scheme.global_unit_ext}
+  \provenancetag{CUSTOM}
   \uses{lem:units_gluing, lem:units_separation}
   \leanok
   Let \(\mathcal U\) be a pointed cover of a scheme \(X\).  A family of units \(\beta_x \in
@@ -3031,6 +3161,7 @@ units cross the curve projection \(\mathrm{pr}\).
   \label{def:tensorFaces}
   \lean{AlgebraicGeometry.tensorFace₁₂, AlgebraicGeometry.tensorFace₁₃,
     AlgebraicGeometry.tensorFace₂₃}
+  \provenancetag{CUSTOM}
   \leanok
   Extending the coprojection idiom of Definition~\ref{def:tensorInl_tensorInr}, the three
   \emph{cofaces} on the triple tensor are the \(k\)-algebra homomorphisms \(B \otimes_A B \to B
@@ -3048,6 +3179,7 @@ units cross the curve projection \(\mathrm{pr}\).
   \lean{AlgebraicGeometry.tensorFace₁₂_comp_tensorInl,
     AlgebraicGeometry.tensorFace₁₂_comp_tensorInr,
     AlgebraicGeometry.tensorFace₁₃_comp_tensorInr}
+  \provenancetag{CUSTOM}
   \uses{def:tensorFaces, def:tensorInl_tensorInr}
   \leanok
   The six composites \(\mathrm{tensorFace} \circ \mathrm{coprojection} \colon B \to B \otimes_A
@@ -3068,6 +3200,7 @@ units cross the curve projection \(\mathrm{pr}\).
 \begin{definition}[The top-open descent equivalence for global units]
   \label{def:unitsSndTopEquiv}
   \lean{AlgebraicGeometry.Over.unitsSndTopEquiv}
+  \provenancetag{CUSTOM}
   \uses{def:unitsSndEquiv}
   \leanok
   Specializing the projection-descent equivalence (Definition~\ref{def:unitsSndEquiv}) to the
@@ -3091,6 +3224,7 @@ units cross the curve projection \(\mathrm{pr}\).
   \label{thm:appTop_units_bijective}
   \lean{AlgebraicGeometry.Over.appTop_units_surjective,
     AlgebraicGeometry.Over.appTop_units_injective}
+  \provenancetag{CUSTOM}
   \uses{def:unitsSndTopEquiv}
   \leanok
   Pullback of global units along the second projection \(\mathrm{pr} \colon (C \otimes \Spec
@@ -3108,6 +3242,7 @@ units cross the curve projection \(\mathrm{pr}\).
 \begin{theorem}[Naturality of the top-open descent]
   \label{thm:unitsSndTopEquiv_naturality}
   \lean{AlgebraicGeometry.Over.unitsSndTopEquiv_naturality}
+  \provenancetag{CUSTOM}
   \uses{def:unitsSndTopEquiv, thm:unitsSndEquiv_naturality}
   \leanok
   For a \(k\)-algebra homomorphism \(\varphi \colon R \to R'\), descending a global unit on
@@ -3143,6 +3278,7 @@ the global-section pullback \(f^{\sharp}_\top u \in \struct X(\top)^{\times}\).
   \label{lem:unitsAppLE_congr_hom}
   \lean{AlgebraicGeometry.Scheme.Hom.unitsAppLE_section_congr_hom,
     AlgebraicGeometry.Scheme.Hom.unitsAppLE_pair_congr_hom}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(g, g' \colon X \to Y\) be two morphisms with \(g = g'\), let \(V\) assign to each point
   of \(Y\) an open of \(Y\), and let \(s\) assign to each point \(y\) a unit section
@@ -3164,6 +3300,7 @@ the global-section pullback \(f^{\sharp}_\top u \in \struct X(\top)^{\times}\).
 \begin{lemma}[Pullback of a coboundary relation]
   \label{lem:unitsAppLE_coboundary_rel}
   \lean{AlgebraicGeometry.Scheme.Hom.unitsAppLE_coboundary_rel}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(\varphi \colon X \to Y\), \(r_1 \colon Y \to Z_1\), \(r_2 \colon Y \to Z_2\). Suppose a
   unit \(0\)-cochain \(c\) on a pointed cover \(\mathcal C\) of \(Y\) cobounds the comparison of
@@ -3196,6 +3333,7 @@ the global-section pullback \(f^{\sharp}_\top u \in \struct X(\top)^{\times}\).
   \label{lem:global_unit_pullback}
   \lean{AlgebraicGeometry.Scheme.Hom.unitsAppLE_unitsRestrict_top,
     AlgebraicGeometry.unitsRestrict_top_self, AlgebraicGeometry.unitsAppLE_top_global}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(f \colon X \to Y\) and \(u \in \struct Y(\top)^{\times}\) a global unit. The restriction
   of \(u\) along \(\top \le \top\) is \(u\) itself; and for any point-indexed open \(V\) and any
@@ -3219,6 +3357,7 @@ the global-section pullback \(f^{\sharp}_\top u \in \struct X(\top)^{\times}\).
 \begin{lemma}[Functoriality of the global-unit pullback]
   \label{lem:units_map_appTop_comp}
   \lean{AlgebraicGeometry.units_map_appTop_comp}
+  \provenancetag{CUSTOM}
   \leanok
   For morphisms \(f \colon X \to Y\), \(g \colon Y \to Z\) and a global unit
   \(u \in \struct Z(\top)^{\times}\), pulling \(u\) back along \(g\) and then along \(f\) equals
@@ -3236,6 +3375,7 @@ the global-section pullback \(f^{\sharp}_\top u \in \struct X(\top)^{\times}\).
 \begin{lemma}[Pushing a pullback through a product of cochain values]
   \label{lem:unitsAppLE_merge}
   \lean{AlgebraicGeometry.unitsAppLE_mulDiv_comp, AlgebraicGeometry.unitsAppLE_mulRatio_comp}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(\varphi \colon X \to Y\) and let \(a, b, c\) be pulled-back cochain values along
   morphisms \(g_1, g_2, g_3 \colon Y \to Z\), each a unit section on a common open \(V\) of
@@ -3257,6 +3397,7 @@ the global-section pullback \(f^{\sharp}_\top u \in \struct X(\top)^{\times}\).
 \begin{lemma}[Pullback of a glued identity in composite normal form]
   \label{lem:unitsAppLE_glued_pullback}
   \lean{AlgebraicGeometry.unitsAppLE_defect_pullback, AlgebraicGeometry.unitsAppLE_ratio_pullback}
+  \provenancetag{CUSTOM}
   \uses{lem:global_unit_pullback, lem:unitsAppLE_merge}
   \leanok
   Let \(\varphi \colon X \to Y\) and morphisms \(m_1, m_2, m_3 \colon Y \to S\) with composites
@@ -3302,6 +3443,7 @@ tensor, correcting an arbitrary witness by a single global unit.
     AlgebraicGeometry.Over.whiskerLeft_face₁₂_inl,
     AlgebraicGeometry.Over.whiskerLeft_face₁₂_inr,
     AlgebraicGeometry.Over.whiskerLeft_face₁₃_inr}
+  \provenancetag{CUSTOM}
   \uses{lem:tensorFace_comp, def:tensorFaces, def:tensorInl_tensorInr, def:overSpecMap}
   \leanok
   The three coface--coprojection coincidences of Lemma~\ref{lem:tensorFace_comp} persist after
@@ -3326,6 +3468,7 @@ tensor, correcting an arbitrary witness by a single global unit.
 \begin{lemma}[The diagonal coincidence on the curve product]
   \label{lem:whisker_inl_ofId}
   \lean{AlgebraicGeometry.Over.whiskerLeft_inl_ofId}
+  \provenancetag{CUSTOM}
   \uses{lem:tensorInl_comp_ofId, def:tensorInl_tensorInr, def:overSpecMap}
   \leanok
   Composed with the whiskered base inclusion \(C \lhd \Spec(A \to B)\), the two whiskered
@@ -3345,6 +3488,7 @@ tensor, correcting an arbitrary witness by a single global unit.
 \begin{definition}[The common refinement of the three coface pullbacks]
   \label{def:amitsurCover}
   \lean{AlgebraicGeometry.amitsurCover}
+  \provenancetag{CUSTOM}
   \uses{def:tensorFaces}
   \leanok
   For a pointed cover \(\mathcal V\) of \(\Spec(B \otimes_A B)\), its \emph{Amitsur refinement}
@@ -3361,6 +3505,7 @@ tensor, correcting an arbitrary witness by a single global unit.
   \lean{AlgebraicGeometry.CoherentCechWitness}
   \uses{def:amitsurCover, def:tensorInl_tensorInr, def:tensorFaces}
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   \leanok
   Let \(\gamma\) be a unit \v Cech cocycle on a pointed cover \(\mathcal N\) of \(\Spec B\). An
   \emph{Amitsur-coherent \v Cech witness} for \(\gamma\) consists of a pointed cover
@@ -3385,6 +3530,7 @@ tensor, correcting an arbitrary witness by a single global unit.
   \lean{AlgebraicGeometry.CoherentCechWitness.nonempty_of_defect_eq_coboundary}
   \uses{def:CoherentCechWitness, def:amitsurCover, lem:global_unit_pullback}
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   \leanok
   Let \(\theta_0\) be a witness cochain on a common refinement \(\mathcal V\) of the two
   coprojection pullbacks of \(\mathcal N\) (satisfying the witness relation for \(\gamma\)), and
@@ -3414,6 +3560,7 @@ tensor, correcting an arbitrary witness by a single global unit.
 \begin{definition}[The Amitsur defect of a witness cochain]
   \label{def:defectCochain}
   \lean{AlgebraicGeometry.Over.defectCochain}
+  \provenancetag{CUSTOM}
   \uses{def:amitsurCover}
   \leanok
   The \emph{Amitsur defect} of a unit \(0\)-cochain \(\theta_0\) on a pointed cover
@@ -3429,6 +3576,7 @@ tensor, correcting an arbitrary witness by a single global unit.
 \begin{theorem}[The Amitsur defect of a witness glues to a global unit]
   \label{thm:exists_glued_defect}
   \lean{AlgebraicGeometry.Over.exists_glued_defect}
+  \provenancetag{CUSTOM}
   \uses{def:defectCochain, lem:unitsAppLE_coboundary_rel, lem:unitsAppLE_congr_hom,
     lem:overSpec_whisker_face, thm:exists_global_unit_of_compatible}
   \leanok
@@ -3458,6 +3606,7 @@ tensor, correcting an arbitrary witness by a single global unit.
 \begin{lemma}[Compatibility of a ratio cochain from two coboundary relations]
   \label{lem:ratio_compat}
   \lean{AlgebraicGeometry.Scheme.Hom.unitsAppLE_coboundary_ratio_compat}
+  \provenancetag{CUSTOM}
   \uses{lem:unitsAppLE_coboundary_rel, lem:unitsAppLE_congr_hom}
   \leanok
   Let \(\varphi_t \colon X \to Y_c\) and \(\varphi_1, \varphi_2 \colon X \to Y_a\). Suppose a
@@ -3485,6 +3634,7 @@ tensor, correcting an arbitrary witness by a single global unit.
 \begin{definition}[The comparison cover on the curve product]
   \label{def:comparisonCover}
   \lean{AlgebraicGeometry.Over.comparisonCover}
+  \provenancetag{CUSTOM}
   \uses{def:tensorInl_tensorInr}
   \leanok
   On the curve product \(X_{B \otimes B} := C \otimes \Spec(B \otimes_A B)\), the
@@ -3501,6 +3651,7 @@ tensor, correcting an arbitrary witness by a single global unit.
 \begin{definition}[The comparison cochain]
   \label{def:comparisonCochain}
   \lean{AlgebraicGeometry.Over.comparisonCochain}
+  \provenancetag{CUSTOM}
   \uses{def:comparisonCover}
   \leanok
   Given a witness cochain \(\theta_0\) on \(\mathcal V\) and an upstairs witness cochain
@@ -3515,6 +3666,7 @@ tensor, correcting an arbitrary witness by a single global unit.
 \begin{theorem}[The comparison cochain is \v Cech-compatible]
   \label{thm:comparisonCochain_compat}
   \lean{AlgebraicGeometry.Over.comparisonCochain_compat}
+  \provenancetag{CUSTOM}
   \uses{def:comparisonCochain, lem:ratio_compat, lem:whisker_inl_ofId, lem:snd_left_naturality}
   \leanok
   Let \(\theta_0\) be a witness cochain for \(\gamma\) downstairs and \(\alpha\) a witness
@@ -3541,6 +3693,7 @@ tensor, correcting an arbitrary witness by a single global unit.
 \begin{theorem}[The comparison cochain glues and descends to the correcting unit]
   \label{thm:exists_comparison_unit}
   \lean{AlgebraicGeometry.Over.exists_comparison_unit}
+  \provenancetag{CUSTOM}
   \uses{thm:comparisonCochain_compat, thm:exists_global_unit_of_compatible, def:unitsSndTopEquiv}
   \leanok
   In the setting of Theorem~\ref{thm:comparisonCochain_compat}, the comparison cochain glues to
@@ -3561,6 +3714,7 @@ tensor, correcting an arbitrary witness by a single global unit.
 \begin{theorem}[The glued defect is the Amitsur coboundary of the comparison unit]
   \label{thm:glued_defect_eq_amitsur_coboundary}
   \lean{AlgebraicGeometry.Over.glued_defect_eq_amitsur_coboundary}
+  \provenancetag{CUSTOM}
   \uses{def:defectCochain, def:comparisonCochain, lem:unitsAppLE_glued_pullback,
     lem:global_unit_pullback, lem:units_map_appTop_comp, lem:overSpec_whisker_face,
     thm:appTop_units_bijective, lem:snd_left_naturality}
@@ -3600,6 +3754,7 @@ tensor, correcting an arbitrary witness by a single global unit.
     thm:exists_comparison_unit, thm:glued_defect_eq_amitsur_coboundary,
     lem:nonempty_of_defect_eq_coboundary}
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   \leanok
   Let \(C\) be proper, geometrically irreducible and geometrically reduced over the field
   \(k\), let \(k \to A \to B\) be a tower of algebras, let \(L\) be a \v Cech Picard class on
@@ -3643,6 +3798,7 @@ degeneracy of the triple tensor.
   \label{def:tensorMul}
   \lean{AlgebraicGeometry.tensorMul, AlgebraicGeometry.descentMul₁₂,
     AlgebraicGeometry.tensorMul₁₂}
+  \provenancetag{CUSTOM}
   \uses{def:tensorInl_tensorInr, def:tensorFaces}
   \leanok
   The \emph{multiplication} is the \(k\)-algebra homomorphism
@@ -3667,6 +3823,7 @@ degeneracy of the triple tensor.
     AlgebraicGeometry.tensorMul₁₂_comp_tensorFace₂₃,
     AlgebraicGeometry.tensorMul₁₂_comp_tensorFace₁₂,
     AlgebraicGeometry.tensorMul₁₂_comp_tensorFace₁₃}
+  \provenancetag{CUSTOM}
   \uses{def:tensorMul, def:tensorInl_tensorInr, def:tensorFaces}
   \leanok
   The degeneracies satisfy the simplicial identities against the coprojections and cofaces:
@@ -3700,6 +3857,7 @@ degeneracy of the triple tensor.
     AlgebraicGeometry.Over.overSpecMap_left_mul₁₂_face₂₃,
     AlgebraicGeometry.Over.overSpecMap_left_mul₁₂_face₁₂,
     AlgebraicGeometry.Over.overSpecMap_left_mul₁₂_face₁₃}
+  \provenancetag{CUSTOM}
   \uses{lem:tensorMul_simplicial, def:overSpecMap}
   \leanok
   Applying \(\Spec\) to Lemma~\ref{lem:tensorMul_simplicial} gives the degeneracy coincidences
@@ -3742,6 +3900,7 @@ are two points; and \(D \subseteq Y\) is an open on which \(r_1\) lands in \(\ma
 \begin{definition}[The corrected witness cochain]
   \label{def:unitsCorrCochain}
   \lean{AlgebraicGeometry.unitsCorrCochain}
+  \provenancetag{CUSTOM}
   \leanok
   The \emph{corrected witness value} at a point \(y \in Y\) is the unit on
   \(\mathcal C_y \cap D\)
@@ -3759,6 +3918,7 @@ are two points; and \(D \subseteq Y\) is an open on which \(r_1\) lands in \(\ma
 \begin{theorem}[The corrected values are \v Cech-compatible]
   \label{thm:unitsCorrCochain_compat}
   \lean{AlgebraicGeometry.unitsCorrCochain_compat}
+  \provenancetag{CUSTOM}
   \uses{def:unitsCorrCochain}
   \leanok
   Assume the witness relation for \(c\): on the overlaps of \(\mathcal C\),
@@ -3786,6 +3946,7 @@ are two points; and \(D \subseteq Y\) is an open on which \(r_1\) lands in \(\ma
 \begin{theorem}[The corrected values glue to a unit]
   \label{thm:exists_glued_unitsCorrCochain}
   \lean{AlgebraicGeometry.exists_glued_unitsCorrCochain}
+  \provenancetag{CUSTOM}
   \uses{def:unitsCorrCochain, thm:unitsCorrCochain_compat, lem:units_gluing}
   \leanok
   Under the witness relation of Theorem~\ref{thm:unitsCorrCochain_compat}, the corrected values
@@ -3803,6 +3964,7 @@ are two points; and \(D \subseteq Y\) is an open on which \(r_1\) lands in \(\ma
 \begin{theorem}[Pullback expansion of a glued corrected unit]
   \label{thm:unitsAppLE_glued_corr}
   \lean{AlgebraicGeometry.Scheme.Hom.unitsAppLE_glued_corr}
+  \provenancetag{CUSTOM}
   \uses{def:unitsCorrCochain, thm:exists_glued_unitsCorrCochain}
   \leanok
   Let \(\varphi \colon X' \to Y\) and let \(O \subseteq X'\) be an open inside
@@ -3829,6 +3991,7 @@ are two points; and \(D \subseteq Y\) is an open on which \(r_1\) lands in \(\ma
 \begin{theorem}[Coherence kills the witness along a coface section]
   \label{thm:unitsAppLE_eq_one_of_coherent}
   \lean{AlgebraicGeometry.unitsAppLE_eq_one_of_coherent}
+  \provenancetag{CUSTOM}
   \uses{def:CoherentCechWitness}
   \leanok
   Let \(g_{23}, g_{12}, g_{13} \colon T \to Y\) satisfy the Amitsur coherence relation for a
@@ -3852,6 +4015,7 @@ are two points; and \(D \subseteq Y\) is an open on which \(r_1\) lands in \(\ma
 \begin{theorem}[Diagonal triviality of a coherent witness]
   \label{thm:unitsAppLE_diag_eq_one_of_coherent}
   \lean{AlgebraicGeometry.unitsAppLE_diag_eq_one_of_coherent}
+  \provenancetag{CUSTOM}
   \uses{thm:unitsAppLE_eq_one_of_coherent}
   \leanok
   Let \(\delta \colon Z \to Y\) and \(\delta_r \colon Y \to Y\) satisfy \(\delta \circ
@@ -3870,6 +4034,7 @@ are two points; and \(D \subseteq Y\) is an open on which \(r_1\) lands in \(\ma
 \begin{theorem}[The glued corrected units satisfy the Amitsur cocycle identity]
   \label{thm:glued_corr_amitsur}
   \lean{AlgebraicGeometry.glued_corr_amitsur}
+  \provenancetag{CUSTOM}
   \uses{def:unitsCorrCochain, thm:unitsAppLE_glued_corr}
   \leanok
   Let \(g_{23}, g_{12}, g_{13} \colon T \to Y\) satisfy the simplicial coincidences
@@ -3901,6 +4066,7 @@ are two points; and \(D \subseteq Y\) is an open on which \(r_1\) lands in \(\ma
 \begin{theorem}[The glued corrected unit collapses onto the cocycle value on the diagonal]
   \label{thm:glued_corr_collapse}
   \lean{AlgebraicGeometry.glued_corr_collapse}
+  \provenancetag{CUSTOM}
   \uses{def:unitsCorrCochain, thm:unitsAppLE_glued_corr}
   \leanok
   Let \(\delta \colon Z \to Y\) be a common section of \(r_1, r_2\) (\(\delta \circ r_1 =
@@ -3936,6 +4102,7 @@ coprojections and \(f_{12}, f_{13}, f_{23}\) for the cofaces.
 \begin{definition}[The double and triple basic sections]
   \label{def:pairTripleSection}
   \lean{AlgebraicGeometry.Over.pairSection, AlgebraicGeometry.Over.tripleSection}
+  \provenancetag{CUSTOM}
   \uses{def:tensorInl_tensorInr, def:tensorFaces}
   \leanok
   The \emph{double basic section} cutting out the double basic open of \(\Spec(B \otimes_A B)\)
@@ -3957,6 +4124,7 @@ coprojections and \(f_{12}, f_{13}, f_{23}\) for the cofaces.
 \begin{definition}[The glued witness component]
   \label{def:witnessBasicSection}
   \lean{AlgebraicGeometry.Over.witnessBasicSection}
+  \provenancetag{CUSTOM}
   \uses{def:pairTripleSection, def:unitsCorrCochain, thm:exists_glued_unitsCorrCochain,
     def:CoherentCechWitness}
   \leanok
@@ -3971,6 +4139,7 @@ coprojections and \(f_{12}, f_{13}, f_{23}\) for the cofaces.
 \begin{theorem}[Diagonal triviality of the coherent witness]
   \label{thm:witnessAppLE_diag_eq_one}
   \lean{AlgebraicGeometry.Over.witnessAppLE_diag_eq_one}
+  \provenancetag{CUSTOM}
   \uses{thm:unitsAppLE_diag_eq_one_of_coherent, thm:unitsAppLE_eq_one_of_coherent,
     lem:overSpecMap_left_degeneracy, def:CoherentCechWitness}
   \leanok
@@ -3994,6 +4163,7 @@ coprojections and \(f_{12}, f_{13}, f_{23}\) for the cofaces.
 \begin{theorem}[The Amitsur cocycle identity of the glued components]
   \label{thm:witnessBasicSection_amitsur}
   \lean{AlgebraicGeometry.Over.witnessBasicSection_amitsur}
+  \provenancetag{CUSTOM}
   \uses{def:witnessBasicSection, thm:glued_corr_amitsur, lem:overSpec_whisker_face,
     def:pairTripleSection, def:CoherentCechWitness}
   \leanok
@@ -4021,6 +4191,7 @@ coprojections and \(f_{12}, f_{13}, f_{23}\) for the cofaces.
 \begin{theorem}[The diagonal collapse of the glued components]
   \label{thm:witnessBasicSection_collapse}
   \lean{AlgebraicGeometry.Over.witnessBasicSection_collapse}
+  \provenancetag{CUSTOM}
   \uses{def:witnessBasicSection, thm:glued_corr_collapse, thm:witnessAppLE_diag_eq_one,
     lem:overSpecMap_left_degeneracy, def:pairTripleSection}
   \leanok
@@ -4057,6 +4228,7 @@ the global-sections isomorphism \(\Gamma\Spec\)-iso followed by restriction.
 \begin{theorem}[Section rings on basic opens are localizations of the ring]
   \label{thm:isLocalization_away_sections}
   \lean{AlgebraicGeometry.isLocalization_away_sections}
+  \provenancetag{CUSTOM}
   \leanok
   For a commutative ring \(R\) and a global section \(g \in \Gamma(\Spec R, \top)\), the
   section ring on the basic open \(D(g)\) is the localization of \(R\) itself away from the
@@ -4076,6 +4248,7 @@ the global-sections isomorphism \(\Gamma\Spec\)-iso followed by restriction.
   \label{lem:GammaSpecIso_hom_pairTripleSection}
   \lean{AlgebraicGeometry.Over.ΓSpecIso_hom_pairSection,
     AlgebraicGeometry.Over.ΓSpecIso_hom_tripleSection}
+  \provenancetag{CUSTOM}
   \uses{def:pairTripleSection, def:tensorInl_tensorInr, def:tensorFaces}
   \leanok
   Write \(b_i \in B\) for the element cutting out \(D(P.r_i)\). The global-sections
@@ -4107,6 +4280,7 @@ the global-sections isomorphism \(\Gamma\Spec\)-iso followed by restriction.
 \begin{definition}[The two-base localization identifications]
   \label{def:pairTripleAwayEquiv}
   \lean{AlgebraicGeometry.Over.pairAwayEquiv, AlgebraicGeometry.Over.tripleAwayEquiv}
+  \provenancetag{CUSTOM}
   \uses{def:tensorAwayEquiv, thm:isLocalization_away_sections, thm:isLocalization_away_tensor,
     lem:GammaSpecIso_hom_pairTripleSection, def:pairTripleSection}
   \leanok
@@ -4143,6 +4317,7 @@ components are \(\mathrm{Away}\) localizations — never over \(A\).
 \begin{lemma}[The diagonal pullback is the index-wise collapse]
   \label{lem:pairAwayEquiv_appLE_diag}
   \lean{AlgebraicGeometry.Over.pairAwayEquiv_appLE_diag}
+  \provenancetag{CUSTOM}
   \uses{def:pairTripleAwayEquiv, def:componentCollapse, thm:isLocalization_away_tensor,
     lem:overSpecMap_left_degeneracy}
   \leanok
@@ -4170,6 +4345,7 @@ components are \(\mathrm{Away}\) localizations — never over \(A\).
   \lean{AlgebraicGeometry.Over.tripleAwayEquiv_faceA₂₃,
     AlgebraicGeometry.Over.tripleAwayEquiv_faceA₁₂,
     AlgebraicGeometry.Over.tripleAwayEquiv_faceA₁₃}
+  \provenancetag{CUSTOM}
   \uses{def:pairTripleAwayEquiv, def:indexwiseMaps, lem:faceA_comp_tensorMap,
     thm:isLocalization_away_tensor, lem:overSpec_whisker_face, def:pairTripleSection}
   \leanok
@@ -4203,6 +4379,7 @@ halves of the deliverable and the headline class equation handed onward. Write \
 \begin{definition}[The witness component]
   \label{def:witnessComponent}
   \lean{AlgebraicGeometry.Over.witnessComponent}
+  \provenancetag{CUSTOM}
   \uses{def:witnessBasicSection, def:pairTripleAwayEquiv}
   \leanok
   The \emph{witness component} \(w_{ij} \in (S_i \otimes_A S_j)^{\times}\) is the glued witness
@@ -4213,6 +4390,7 @@ halves of the deliverable and the headline class equation handed onward. Write \
 \begin{definition}[The composite descent unit of the assembly]
   \label{def:assemblyUnit}
   \lean{AlgebraicGeometry.Over.assemblyUnit}
+  \provenancetag{CUSTOM}
   \uses{def:witnessComponent, def:piAssemblyUnit}
   \leanok
   The \emph{composite descent unit} \(\mathrm{assemblyUnit} \in (P_{\!\bullet} \otimes_A
@@ -4223,6 +4401,7 @@ halves of the deliverable and the headline class equation handed onward. Write \
 \begin{theorem}[The witness components collapse onto the Zariski cover cocycle]
   \label{thm:componentCollapse_witnessComponent}
   \lean{AlgebraicGeometry.Over.componentCollapse_witnessComponent}
+  \provenancetag{CUSTOM}
   \uses{def:witnessComponent, lem:pairAwayEquiv_appLE_diag, thm:witnessBasicSection_collapse,
     def:componentCollapse}
   \leanok
@@ -4240,6 +4419,7 @@ halves of the deliverable and the headline class equation handed onward. Write \
 \begin{theorem}[The witness components satisfy the index-wise cocycle identity]
   \label{thm:faceA_cocycle_witnessComponent}
   \lean{AlgebraicGeometry.Over.faceA_cocycle_witnessComponent}
+  \provenancetag{CUSTOM}
   \uses{def:witnessComponent, lem:tripleAwayEquiv_faceA, thm:witnessBasicSection_amitsur,
     def:indexwiseMaps}
   \leanok
@@ -4262,6 +4442,7 @@ halves of the deliverable and the headline class equation handed onward. Write \
     thm:diagA_eq_one_of_componentCollapse, thm:componentCollapse_witnessComponent,
     thm:faceA_cocycle_witnessComponent}
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   \leanok
   The composite descent unit \(\mathrm{assemblyUnit}\) is an \(A\)-descent \(1\)-cocycle
   relative to \(A \to P_{\!\bullet}\).
@@ -4283,6 +4464,7 @@ halves of the deliverable and the headline class equation handed onward. Write \
 \begin{theorem}[The collapse of the assembled unit is the descent unit of the cover cocycle]
   \label{thm:tensorCollapse_assemblyUnit}
   \lean{AlgebraicGeometry.Over.tensorCollapse_assemblyUnit}
+  \provenancetag{CUSTOM}
   \uses{def:assemblyUnit, thm:tensorCollapse_piAssemblyUnit,
     thm:componentCollapse_witnessComponent, def:module_tensorCollapse}
   \leanok
@@ -4305,6 +4487,7 @@ halves of the deliverable and the headline class equation handed onward. Write \
   \label{lem:faithfullyFlat_sectionsTop}
   \lean{AlgebraicGeometry.Over.sectionsTopAlgEquiv,
     AlgebraicGeometry.Over.faithfullyFlat_sectionsTop}
+  \provenancetag{CUSTOM}
   \leanok
   The global-sections isomorphism is an isomorphism of \(A\)-algebras \(\Gamma(\Spec B, \top)
   \cong B\) for the composed \(A\)-structure. Consequently, if \(A \to B\) is faithfully flat,
@@ -4326,6 +4509,7 @@ halves of the deliverable and the headline class equation handed onward. Write \
     thm:module_picClass_collapse, lem:faithfullyFlat_sectionsTop, thm:pi_tower,
     def:module_picClass, thm:trivializingFamily_pic_cocycle}
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   \leanok
   Assume \(A \to B\) is faithfully flat. Then the Picard class of the composite descent unit
   maps, under the base-change homomorphism \(\Pic(A) \to \Pic(\Gamma(\Spec B, \top))\) along
@@ -4369,6 +4553,7 @@ This section proves that sections of the structure sheaf, and of its units, desc
 \begin{theorem}[The base-change square of the product is a pullback]
   \label{thm:isPullback_whiskerLeft_snd}
   \lean{AlgebraicGeometry.Over.isPullback_whiskerLeft_snd}
+  \provenancetag{CUSTOM}
   \uses{lem:snd_left_naturality}
   \leanok
   For \(C, T, T'\) over \(\Spec k\) and \(g \colon T' \to T\), the square with horizontal legs
@@ -4398,6 +4583,7 @@ This section proves that sections of the structure sheaf, and of its units, desc
 \begin{theorem}[Descent of sections along the base change of the curve product]
   \label{thm:existsUnique_appLE_eq}
   \lean{AlgebraicGeometry.Over.existsUnique_appLE_eq}
+  \provenancetag{CUSTOM}
   \uses{thm:isPullback_whiskerLeft_snd, thm:descent_existsUnique_tmul_one,
     def:tensorInl_tensorInr}
   \leanok
@@ -4422,6 +4608,7 @@ This section proves that sections of the structure sheaf, and of its units, desc
 \begin{theorem}[Injectivity of pullback along the base change]
   \label{thm:appLE_whiskerLeft_injective}
   \lean{AlgebraicGeometry.Over.appLE_whiskerLeft_injective}
+  \provenancetag{CUSTOM}
   \uses{thm:isPullback_whiskerLeft_snd, lem:units_separation}
   \leanok
   For every open \(W \subseteq X_A\), pullback of sections along \(\mathrm{cg}\) is injective,
@@ -4442,6 +4629,7 @@ This section proves that sections of the structure sheaf, and of its units, desc
 \begin{theorem}[Descent of unit sections along the base change]
   \label{thm:exists_unitsAppLE_eq}
   \lean{AlgebraicGeometry.Over.exists_unitsAppLE_eq}
+  \provenancetag{CUSTOM}
   \uses{thm:existsUnique_appLE_eq, thm:appLE_whiskerLeft_injective}
   \leanok
   Let \(U \subseteq X_A\) be an affine open. A unit \(t \in \Gamma(X_B,
@@ -4475,6 +4663,7 @@ the geometric pieces on which a covering-and-overlaps effectivity argument runs.
 \begin{theorem}[The cover inclusion is an affine morphism]
   \label{thm:isAffineHom_cg}
   \lean{AlgebraicGeometry.Over.isAffineHom_cg, AlgebraicGeometry.Over.isAffineOpen_cgPreimage}
+  \provenancetag{CUSTOM}
   \uses{thm:isPullback_whiskerLeft_snd}
   \leanok
   The base-change morphism \(\mathrm{cg} \colon X_B \to X_A\) is affine. Consequently the
@@ -4495,6 +4684,7 @@ the geometric pieces on which a covering-and-overlaps effectivity argument runs.
   \uses{thm:isAffineHom_cg, thm:isPullback_whiskerLeft_snd}
   \lean{AlgebraicGeometry.Over.isPushout_cgSections,
     AlgebraicGeometry.Over.isPushout_cgAlgebraMap}
+  \provenancetag{CUSTOM}
   \leanok
   Give \(\Gamma(X_A, U)\) its \(A\)-algebra structure by pullback along the projection
   \(\mathrm{pr}_A\). For every affine open \(U \subseteq X_A\) the square of commutative rings
@@ -4526,6 +4716,7 @@ the geometric pieces on which a covering-and-overlaps effectivity argument runs.
   \lean{AlgebraicGeometry.Over.pieceTensorIso, AlgebraicGeometry.Over.pieceRingEquiv,
     AlgebraicGeometry.Over.pieceRingEquiv_tmul_one, AlgebraicGeometry.Over.pieceRingEquiv_one_tmul,
     AlgebraicGeometry.Over.pieceRingEquiv_tmul}
+  \provenancetag{CUSTOM}
   \leanok
   For every affine open \(U \subseteq X_A\) there is a ring isomorphism
   \[
@@ -4551,6 +4742,7 @@ the geometric pieces on which a covering-and-overlaps effectivity argument runs.
   \uses{def:pieceRingEquiv}
   \lean{AlgebraicGeometry.Over.pieceCoverAlgebra, AlgebraicGeometry.Over.pieceTensorAlgEquiv,
     AlgebraicGeometry.Over.pieceEquiv}
+  \provenancetag{CUSTOM}
   \leanok
   Give the cover-piece ring \(\Gamma(X_B, \mathrm{cg}^{-1}U)\) its \(\Gamma(X_A,
   U)\)-algebra structure by pullback along \(\mathrm{cg}\). Then the identification of
@@ -4572,6 +4764,7 @@ the geometric pieces on which a covering-and-overlaps effectivity argument runs.
   \label{thm:faithfullyFlat_pieceCover}
   \uses{def:pieceAlgEquiv}
   \lean{AlgebraicGeometry.Over.faithfullyFlat_pieceCover}
+  \provenancetag{CUSTOM}
   \leanok
   Assume \(A \to B\) is faithfully flat. Then for every affine open \(U \subseteq X_A\) the
   structure map \(\Gamma(X_A, U) \to \Gamma(X_B, \mathrm{cg}^{-1}U)\) is faithfully flat.
@@ -4588,6 +4781,7 @@ the geometric pieces on which a covering-and-overlaps effectivity argument runs.
   \label{thm:pieceRingEquiv_naturality}
   \uses{def:pieceRingEquiv}
   \lean{AlgebraicGeometry.Over.pieceRingEquiv_naturality}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(W \le V\) be affine opens of \(X_A\), so \(\mathrm{cg}^{-1}W \le \mathrm{cg}^{-1}V\). The
   identification of Definition~\ref{def:pieceRingEquiv} commutes with restriction: for every \(x
@@ -4614,6 +4808,7 @@ the geometric pieces on which a covering-and-overlaps effectivity argument runs.
   \label{thm:exists_isAffineOpen_cg_le}
   \uses{thm:isAffineHom_cg}
   \lean{AlgebraicGeometry.Over.exists_isAffineOpen_cg_le}
+  \provenancetag{CUSTOM}
   \leanok
   Every neighbourhood \(V\) of a point \(x\) of \(X_A\) contains an affine open \(W\) with \(x \in
   W\) whose preimage \(\mathrm{cg}^{-1}W\) is again affine.
@@ -4628,6 +4823,7 @@ the geometric pieces on which a covering-and-overlaps effectivity argument runs.
 \begin{theorem}[The curve product over a proper curve is separated]
   \label{thm:isSeparated_left}
   \lean{AlgebraicGeometry.Over.isSeparated_left}
+  \provenancetag{CUSTOM}
   \leanok
   Assume \(C\) is proper over \(k\). Then \(X_A = (C \otimes \Spec A)_{\mathrm{left}}\) is a
   separated scheme.
@@ -4644,6 +4840,7 @@ the geometric pieces on which a covering-and-overlaps effectivity argument runs.
   \label{thm:isAffineOpen_inf}
   \uses{thm:isSeparated_left}
   \lean{AlgebraicGeometry.Over.isAffineOpen_inf}
+  \provenancetag{CUSTOM}
   \leanok
   Assume \(C\) is proper over \(k\). Then the affine opens of \(X_A\) are closed under
   intersection: if \(V, W \subseteq X_A\) are affine open, so is \(V \cap W\).
@@ -4667,6 +4864,7 @@ descended line bundle.
 \begin{theorem}[The descent unit of a killed class]
   \label{thm:exists_kernelDescentUnit}
   \lean{AlgebraicGeometry.Over.exists_kernelDescentUnit}
+  \provenancetag{CUSTOM}
   \uses{thm:exists_global_unit_of_compatible, thm:appTop_units_bijective, def:tensorFaces,
     lem:overSpecMap_left_degeneracy, def:tensorMul, def:module_descent_cocycle,
     lem:tensorMul_simplicial}
@@ -4720,6 +4918,7 @@ coprojections.
 \begin{definition}[The evaluation transform of a section–module tensor]
   \label{def:evalT}
   \lean{AlgebraicGeometry.Over.evalT}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(N\) be an \(A\)-submodule of \(B\) and \(V \subseteq \Spec A\), \(U \subseteq \Spec B\)
   opens with \(U \subseteq \mathrm{gS}^{-1}V\).  The \emph{evaluation transform} is the
@@ -4736,6 +4935,7 @@ coprojections.
 \begin{lemma}[The coprojection ratio of an evaluation]
   \label{lem:evalT_ratio}
   \lean{AlgebraicGeometry.Over.evalT_ratio}
+  \provenancetag{CUSTOM}
   \uses{def:evalT, def:tensorInl_tensorInr}
   \leanok
   Let \(w \in \Gamma(\Spec(B \otimes_A B), \top)^{\times}\) and suppose every \(m \in N\)
@@ -4761,6 +4961,7 @@ coprojections.
 \begin{definition}[The \v Cech representative of a descended class]
   \label{def:DescentClassRep}
   \lean{AlgebraicGeometry.Over.DescentClassRep}
+  \provenancetag{CUSTOM}
   \uses{def:module_descent_cocycle, def:tensorInl_tensorInr}
   \leanok
   Let \(w\) be a global unit of \(\Spec(B \otimes_A B)\) whose avatar is a descent
@@ -4781,6 +4982,7 @@ coprojections.
 \begin{theorem}[Existence of the \v Cech representative]
   \label{thm:descentClassRep}
   \lean{AlgebraicGeometry.Over.descentClassRep}
+  \provenancetag{CUSTOM}
   \uses{def:DescentClassRep, lem:trivializingFamily_nonempty, def:module_descended,
     lem:evalT_ratio, thm:isUnit_map_rTensor_generator, def:descentMulEval}
   \leanok
@@ -4817,6 +5019,7 @@ the cobounding \(0\)-cochain that exhibits \([\mathcal E, \mathrm{lam}]\) as pul
 \begin{theorem}[The cobounding unit at an affine chart]
   \label{thm:exists_kernelCobounding}
   \lean{AlgebraicGeometry.Over.exists_kernelCobounding}
+  \provenancetag{CUSTOM}
   \uses{def:DescentClassRep, thm:exists_kernelDescentUnit, thm:exists_unitsAppLE_eq,
     lem:units_gluing}
   \leanok
@@ -4864,6 +5067,7 @@ Kleiman's separatedness of the relative Picard functor.
     thm:appLE_whiskerLeft_injective, lem:pointedCover_affine_refinement, thm:unitsRes_injective,
     cor:cechPic_mk_eq_one}
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   \leanok
   Let \(C\) be proper, geometrically irreducible and geometrically reduced over \(k\), and \(A
   \to B\) faithfully flat.  Then the kernel of the base-change pullback \(\mathrm{cg}^{*} \colon
@@ -4910,6 +5114,7 @@ Kleiman's separatedness of the relative Picard functor.
     thm:mapAlgebra_picClass_assemblyUnit, thm:cechPicEquivPic, thm:cechPic_toPic_injective,
     thm:cechPic_toPic_map, lem:snd_left_naturality, def:module_picClass}
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   \leanok
   Assume the kernel property of \(\mathrm{cg}^{*}\) (Theorem~\ref{thm:exists_cechPic_map_snd_of_ker_whiskerLeft}).
   Let \(L\) be a \v Cech Picard class on \(X_A\) and \(N_0\) a class on \(\Spec B\) with
@@ -4943,6 +5148,7 @@ Kleiman's separatedness of the relative Picard functor.
 \begin{theorem}[The plus unfold of \'etale separatedness]
   \label{thm:PicEtAff_unit_injective_of_ker}
   \lean{AlgebraicGeometry.PicEtAff.unit_injective_of_ker}
+  \provenancetag{CUSTOM}
   \uses{def:PicEtAff_unit, thm:PicEtAff_mk_eq_mk_iff, def:PicEtAff_one,
     thm:exists_cechPic_map_snd_eq_of_ker, def:relPicAlgMap, def:descentClasses}
   \leanok
@@ -4973,6 +5179,7 @@ Kleiman's separatedness of the relative Picard functor.
   \lean{AlgebraicGeometry.PicEtAff.unit_injective}
   \uses{thm:PicEtAff_unit_injective_of_ker, thm:exists_cechPic_map_snd_of_ker_whiskerLeft}
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   \leanok
   Let \(C\) be a curve over \(k\) that is proper, geometrically irreducible and geometrically
   reduced, and let \(A\) be any \(k\)-algebra.  Then the unit \(\eta_A \colon
@@ -5003,6 +5210,7 @@ for decomposing \v Cech Picard classes along clopen partitions.
 \begin{lemma}[Units over an empty open form a trivial group]
   \label{lem:subsingleton_units_empty}
   \lean{AlgebraicGeometry.Scheme.subsingleton_units_of_le_bot}
+  \provenancetag{CUSTOM}
   \leanok
   For a scheme \(X\) and an open \(O \subseteq X\) with \(O \subseteq \emptyset\) (that is,
   \(O = \emptyset\)), the unit group \(\Gamma(X, O)^{\times}\) is trivial (a subsingleton).
@@ -5016,6 +5224,7 @@ for decomposing \v Cech Picard classes along clopen partitions.
 \begin{lemma}[Sections pull back isomorphically over an open inside the image]
   \label{lem:isIso_appLE_of_le_opensRange}
   \lean{AlgebraicGeometry.Scheme.Hom.isIso_appLE_of_le_opensRange}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(V \subseteq Y\) be an open with \(V \subseteq \operatorname{range}(w)\). Then pullback of
   sections along \(w\) is an isomorphism of rings
@@ -5032,6 +5241,7 @@ for decomposing \v Cech Picard classes along clopen partitions.
 \begin{definition}[Transport of unit sections across an open immersion]
   \label{def:unitsPreimageEquiv}
   \lean{AlgebraicGeometry.Scheme.Hom.unitsPreimageEquiv}
+  \provenancetag{CUSTOM}
   \uses{lem:isIso_appLE_of_le_opensRange}
   \leanok
   For an open \(V \subseteq Y\) with \(V \subseteq \operatorname{range}(w)\), the isomorphism of
@@ -5062,6 +5272,7 @@ Picard group recalled in Section~\ref{sec:etaleSeparatedness}, with pullback
 \begin{theorem}[Separation of \v Cech Picard classes along a clopen partition]
   \label{thm:cechPic_clopen_separation}
   \lean{AlgebraicGeometry.Scheme.CechPic.eq_of_map_eq_of_clopen}
+  \provenancetag{CUSTOM}
   \uses{def:unitsPreimageEquiv, lem:subsingleton_units_empty, cor:cechPic_mk_injective}
   \leanok
   Let \((w_i)_{i \in \iota}\) be a clopen partition of \(Y\). Two \v Cech Picard classes
@@ -5116,6 +5327,7 @@ Picard group recalled in Section~\ref{sec:etaleSeparatedness}, with pullback
   \lean{AlgebraicGeometry.Scheme.CechPic.extendClass,
     AlgebraicGeometry.Scheme.CechPic.map_extendClass,
     AlgebraicGeometry.Scheme.CechPic.map_extendClass_of_le_compl}
+  \provenancetag{CUSTOM}
   \uses{def:unitsPreimageEquiv, lem:subsingleton_units_empty}
   \leanok
   Let \(w \colon Z \to Y\) be an open immersion whose range is complemented by an open
@@ -5156,6 +5368,7 @@ Picard group recalled in Section~\ref{sec:etaleSeparatedness}, with pullback
 \begin{theorem}[Gluing of \v Cech Picard classes along a finite clopen partition]
   \label{thm:cechPic_clopen_gluing}
   \lean{AlgebraicGeometry.Scheme.CechPic.exists_map_eq_of_clopen}
+  \provenancetag{CUSTOM}
   \uses{thm:cechPic_extendClass}
   \leanok
   Let \((w_i)_{i \in \iota}\) be a \emph{finite} clopen partition of \(Y\). Every family
@@ -5189,6 +5402,7 @@ and \(\pi_i \colon P \to B_i\) for the projection.
 \begin{lemma}[Range of a whiskered open immersion]
   \label{lem:range_whiskerLeft}
   \lean{AlgebraicGeometry.Over.range_whiskerLeft}
+  \provenancetag{CUSTOM}
   \uses{thm:isPullback_whiskerLeft_snd}
   \leanok
   Let \(g \colon T' \to T\) be a morphism of test objects with \(g_{\mathrm{left}}\) an open
@@ -5213,6 +5427,7 @@ and \(\pi_i \colon P \to B_i\) for the projection.
 \begin{lemma}[A factor is the localization away from the coordinate idempotent]
   \label{lem:isLocalization_away_piFactor}
   \lean{AlgebraicGeometry.isLocalization_away_piFactor}
+  \provenancetag{CUSTOM}
   \leanok
   For a finite product \(P = \prod_j B_j\) and an index \(i\), the projection \(\pi_i \colon P \to
   B_i\) exhibits \(B_i\) as the localization of \(P\) away from the coordinate idempotent \(e_i\).
@@ -5230,6 +5445,7 @@ and \(\pi_i \colon P \to B_i\) for the projection.
   \lean{AlgebraicGeometry.isOpenImmersion_overSpecMap_evalAlgHom,
     AlgebraicGeometry.opensRange_overSpecMap_evalAlgHom_disjoint,
     AlgebraicGeometry.exists_mem_opensRange_overSpecMap_evalAlgHom}
+  \provenancetag{CUSTOM}
   \uses{lem:isLocalization_away_piFactor, def:overSpecMap}
   \leanok
   The morphisms \(\Spec \pi_i \colon \Spec B_i \to \Spec P\) (for the finite family
@@ -5250,6 +5466,7 @@ and \(\pi_i \colon P \to B_i\) for the projection.
 \begin{theorem}[Separation of relative Picard classes over a finite product]
   \label{thm:relPic_pi_separation}
   \lean{AlgebraicGeometry.relPic.eq_of_pi_proj_eq}
+  \provenancetag{CUSTOM}
   \uses{thm:cechPic_clopen_separation, thm:cechPic_clopen_gluing, lem:range_whiskerLeft,
     lem:opensRange_eval_clopen, def:relPicAlgMap, lem:snd_left_naturality}
   \leanok
@@ -5290,6 +5507,7 @@ and \(\pi_i \colon P \to B_i\) for the projection.
 \begin{theorem}[Gluing of relative Picard classes over a finite product]
   \label{thm:relPic_pi_gluing}
   \lean{AlgebraicGeometry.relPic.exists_pi_lift}
+  \provenancetag{CUSTOM}
   \uses{thm:cechPic_clopen_gluing, lem:range_whiskerLeft, lem:opensRange_eval_clopen,
     def:relPicAlgMap}
   \leanok
@@ -5322,6 +5540,7 @@ agreeing on a finite covering family of localizations agree. The argument is ins
 \begin{theorem}[Unfolding an equality of restricted plus classes]
   \label{thm:PicEtAff_exists_relPicAlgMap_eq}
   \lean{AlgebraicGeometry.PicEtAff.exists_relPicAlgMap_eq_of_mapAlg_eq}
+  \provenancetag{CUSTOM}
   \uses{thm:PicEtAff_mk_eq_mk_iff, def:PicEtAff_map, def:etale_cover_baseChange,
     def:etale_cover_baseChangeInclude, def:relPicAlgMap, lem:relPicAlgMap_functor}
   \leanok
@@ -5354,6 +5573,7 @@ agreeing on a finite covering family of localizations agree. The argument is ins
 \begin{theorem}[A finite covering family of localizations assembles into an \'etale cover]
   \label{thm:PicEtAff_exists_etaleCover_pi}
   \lean{AlgebraicGeometry.PicEtAff.exists_etaleCover_pi}
+  \provenancetag{CUSTOM}
   \uses{def:etale_cover_of, lem:etale_cover_ofEquiv, def:etale_cover}
   \leanok
   Let \(A\) be a \(k\)-algebra and \((g_i)_{i \in \iota}\) a finite family with
@@ -5379,6 +5599,7 @@ agreeing on a finite covering family of localizations agree. The argument is ins
 \begin{theorem}[Zariski separation of the \'etale plus construction]
   \label{thm:PicEtAff_eq_of_away_eq}
   \lean{AlgebraicGeometry.PicEtAff.eq_of_away_eq}
+  \provenancetag{CUSTOM}
   \uses{thm:relPic_pi_separation, thm:PicEtAff_exists_relPicAlgMap_eq,
     thm:PicEtAff_exists_etaleCover_pi, lem:PicEtAff_ind, thm:PicEtAff_mk_one, def:PicEtAff_map}
   \leanok
@@ -5413,6 +5634,7 @@ geometrically reduced) and \(R\) is a commutative \(k\)-algebra.
 \begin{theorem}[The unit represented on an arbitrary cover]
   \label{thm:PicEtAff_unit_eq_mk}
   \lean{AlgebraicGeometry.PicEtAff.unit_eq_mk}
+  \provenancetag{CUSTOM}
   \uses{def:PicEtAff_unit, lem:PicEtAff_tautological_mem_descentClasses, def:PicEtAff_mk,
     def:descentMap, lem:PicEtAff_mk_descentMap, def:etale_cover_fromSelf, def:relPicAlgMap}
   \leanok
@@ -5441,6 +5663,7 @@ geometrically reduced) and \(R\) is a commutative \(k\)-algebra.
 \begin{theorem}[Restriction to an \'etale cover is injective --- the (C1) consumable]
   \label{thm:relPicAlgMap_injective_of_etaleCover}
   \lean{AlgebraicGeometry.relPicAlgMap_injective_of_etaleCover}
+  \provenancetag{CUSTOM}
   \uses{thm:PicEtAff_unit_injective, thm:PicEtAff_unit_eq_mk, def:relPicAlgMap, def:PicEtAff_mk}
   \leanok
   For a presented \'etale cover \(E\) of \(R\), restriction of relative Picard classes along the
@@ -5468,6 +5691,7 @@ consumes the (C1) \'etale separatedness.
 \begin{theorem}[The pair condition]
   \label{thm:PicEtAff_pair_condition}
   \lean{AlgebraicGeometry.PicEtAff.relPicAlgMap_tensor_eq_of_compat}
+  \provenancetag{CUSTOM}
   \uses{thm:relPicAlgMap_injective_of_etaleCover, thm:PicEtAff_exists_relPicAlgMap_eq,
     thm:relPicAlgMap_congr, def:etale_cover_baseChange, def:relPicAlgMap}
   \leanok
@@ -5522,6 +5746,7 @@ consumes the (C1) \'etale separatedness.
 \begin{lemma}[Restriction along an algebra isomorphism is injective]
   \label{lem:relPicAlgMap_algEquiv_injective}
   \lean{AlgebraicGeometry.relPicAlgMap_algEquiv_injective}
+  \provenancetag{CUSTOM}
   \uses{def:relPicAlgMap, lem:relPicAlgMap_functor}
   \leanok
   For an isomorphism of \(k\)-algebras \(e \colon A \xrightarrow{\ \sim\ } B\), restriction of
@@ -5538,6 +5763,7 @@ consumes the (C1) \'etale separatedness.
 \begin{lemma}[Computing a restricted plus class on a given cover]
   \label{lem:PicEtAff_mapAlg_mk_eq_mk}
   \lean{AlgebraicGeometry.PicEtAff.mapAlg_mk_eq_mk}
+  \provenancetag{CUSTOM}
   \uses{thm:PicEtAff_mk_eq_mk_iff, def:PicEtAff_map, def:PicEtAff_mapAlg,
     def:etale_cover_baseChange, def:relPicAlgMap}
   \leanok
@@ -5563,6 +5789,7 @@ consumes the (C1) \'etale separatedness.
 \begin{theorem}[Zariski gluing of the \'etale plus construction]
   \label{thm:PicEtAff_exists_mapAlg_eq_of_compat}
   \lean{AlgebraicGeometry.PicEtAff.exists_mapAlg_eq_of_compat}
+  \provenancetag{CUSTOM}
   \uses{thm:PicEtAff_pair_condition, thm:PicEtAff_exists_etaleCover_pi, thm:relPic_pi_gluing,
     thm:relPic_pi_separation, lem:PicEtAff_mapAlg_mk_eq_mk, lem:relPicAlgMap_algEquiv_injective,
     lem:PicEtAff_ind}
@@ -5614,6 +5841,7 @@ vehicle. Throughout, \(k\) is a field and \(C\) is a curve over \(k\).
 \begin{definition}[Transport of plus classes along an algebra isomorphism]
   \label{def:PicEtAff_congr}
   \lean{AlgebraicGeometry.PicEtAff.congr}
+  \provenancetag{CUSTOM}
   \uses{def:PicEtAff_map, thm:PicEtAff_map_map, thm:PicEtAff_map_id}
   \leanok
   For an isomorphism of \(k\)-algebras \(e \colon A \xrightarrow{\ \sim\ } B\), restriction of plus
@@ -5632,6 +5860,7 @@ vehicle. Throughout, \(k\) is a field and \(C\) is a curve over \(k\).
 \begin{definition}[The affine identification of global sections]
   \label{def:overSpecGammaTop}
   \lean{AlgebraicGeometry.Over.overSpecΓTopAlgEquiv}
+  \provenancetag{CUSTOM}
   \leanok
   For a \(k\)-algebra \(A\), the global sections of the affine test \(\Spec A\) over its top open
   are identified with \(A\) as a \(k\)-algebra: \(\Gamma((\Spec A)_{\mathrm{left}}, \top)
@@ -5651,6 +5880,7 @@ vehicle. Throughout, \(k\) is a field and \(C\) is a curve over \(k\).
   \lean{AlgebraicGeometry.picEtSubgroup, AlgebraicGeometry.picEt}
   \uses{def:PicEtAff, def:PicEtAff_map}
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   \leanok
   For a test object \(T\) of \(\Over(\Spec k)\), \(\mathrm{picEt}(C, T)\) is the group of
   \emph{compatible families}: an element assigns to each affine open \(V \subseteq T_{\mathrm{left}}\)
@@ -5676,6 +5906,7 @@ vehicle. Throughout, \(k\) is a field and \(C\) is a curve over \(k\).
 \begin{definition}[The affine comparison isomorphism]
   \label{def:picEtAffineEquiv}
   \lean{AlgebraicGeometry.picEtAffineEquiv}
+  \provenancetag{CUSTOM}
   \uses{def:picEt, def:PicEtAff_congr, def:overSpecGammaTop, def:PicEtAff_map}
   \leanok
   On an affine test \(\Spec A\), evaluation at the top affine open \(\top\) is a group isomorphism
@@ -5713,6 +5944,7 @@ Throughout, \(C\) is a curve over \(k\).
 \begin{theorem}[Finite basic subcovers subordinate to a constraint]
   \label{thm:exists_basic_subcover}
   \lean{AlgebraicGeometry.Scheme.exists_basic_subcover}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(W\) be an affine open of a scheme \(X\) and \(P\) a property of opens such that every point
   of \(W\) has an open neighbourhood inside \(W\) satisfying \(P\). Then there is a finite family of
@@ -5731,6 +5963,7 @@ Throughout, \(C\) is a curve over \(k\).
 \begin{theorem}[Zariski separation of the plus over the section rings of a basic cover]
   \label{thm:picEt_eq_of_basic_eq}
   \lean{AlgebraicGeometry.picEt.eq_of_basic_eq}
+  \provenancetag{CUSTOM}
   \uses{thm:PicEtAff_eq_of_away_eq}
   \leanok
   Let \(W\) be an affine open of a test object \(T\) and \((r_i)_{i \in s}\) a finite family in
@@ -5748,6 +5981,7 @@ Throughout, \(C\) is a curve over \(k\).
 \begin{definition}[The pullback-value property]
   \label{def:picEt_IsPullbackValue}
   \lean{AlgebraicGeometry.picEt.IsPullbackValue}
+  \provenancetag{CUSTOM}
   \uses{def:picEt, def:PicEtAff_map}
   \leanok
   Let \(f \colon T' \to T\) be a morphism of test objects, \(s \in \mathrm{picEt}(C, T)\), and
@@ -5762,6 +5996,7 @@ Throughout, \(C\) is a curve over \(k\).
 \begin{theorem}[Choice independence]
   \label{thm:picEt_mapAlg_appLE_eq}
   \lean{AlgebraicGeometry.picEt.mapAlg_appLE_eq}
+  \provenancetag{CUSTOM}
   \uses{thm:picEt_eq_of_basic_eq, thm:exists_basic_subcover, def:picEt}
   \leanok
   Let \(f \colon T' \to T\), \(s \in \mathrm{picEt}(C, T)\), \(W_0\) an affine open of
@@ -5785,6 +6020,7 @@ Throughout, \(C\) is a curve over \(k\).
 \begin{theorem}[Uniqueness of the pullback value]
   \label{thm:picEt_pullbackValue_unique}
   \lean{AlgebraicGeometry.picEt.pullbackValue_unique}
+  \provenancetag{CUSTOM}
   \uses{def:picEt_IsPullbackValue, thm:picEt_eq_of_basic_eq, thm:exists_basic_subcover}
   \leanok
   For fixed \((f, s, W)\), a plus class with the pullback-value property is unique: if \(v, v'\)
@@ -5805,6 +6041,7 @@ Throughout, \(C\) is a curve over \(k\).
   \label{thm:picEt_exists_isPullbackValue}
   \lean{AlgebraicGeometry.picEt.exists_isPullbackValue,
     AlgebraicGeometry.picEt.existsUnique_isPullbackValue}
+  \provenancetag{CUSTOM}
   \uses{def:picEt_IsPullbackValue, thm:PicEtAff_exists_mapAlg_eq_of_compat,
     thm:picEt_eq_of_basic_eq, thm:exists_basic_subcover, thm:picEt_mapAlg_appLE_eq,
     thm:picEt_pullbackValue_unique}
@@ -5839,6 +6076,7 @@ Throughout, \(C\) is a curve over \(k\).
 \begin{definition}[Restriction of \(\mathrm{picEt}\) along an arbitrary morphism]
   \label{def:picEtMap}
   \lean{AlgebraicGeometry.picEtMapVal, AlgebraicGeometry.picEtMap}
+  \provenancetag{CUSTOM}
   \uses{thm:picEt_exists_isPullbackValue, def:picEt}
   \leanok
   For a morphism \(f \colon T' \to T\) of test objects, the homomorphism of groups \(f^{*} \colon
@@ -5860,6 +6098,7 @@ Throughout, \(C\) is a curve over \(k\).
 \begin{theorem}[The functor laws]
   \label{thm:picEtMap_functor_laws}
   \lean{AlgebraicGeometry.picEtMap_id, AlgebraicGeometry.picEtMap_comp}
+  \provenancetag{CUSTOM}
   \uses{def:picEtMap, thm:picEt_exists_isPullbackValue, thm:exists_basic_subcover,
     thm:picEt_eq_of_basic_eq, def:picEt}
   \leanok
@@ -5891,6 +6130,7 @@ Throughout, \(C\) is a curve over \(k\).
 \begin{definition}[The \'etale-sheafified relative Picard functor]
   \label{def:picEtFunctor}
   \lean{AlgebraicGeometry.picEtFunctor}
+  \provenancetag{CUSTOM}
   \uses{def:picEt, def:picEtMap, thm:picEtMap_functor_laws}
   \leanok
   For a curve \(C\) over \(k\) (proper, geometrically irreducible, geometrically reduced), the
@@ -5912,6 +6152,7 @@ Throughout, \(C\) is a curve over \(k\).
 \begin{theorem}[Naturality of the affine comparison]
   \label{thm:picEtAffineEquiv_naturality}
   \lean{AlgebraicGeometry.picEtAffineEquiv_naturality}
+  \provenancetag{CUSTOM}
   \uses{def:picEtAffineEquiv, def:picEtMap, def:PicEtAff_map, def:overSpecGammaTop,
     thm:picEt_exists_isPullbackValue}
   \leanok
@@ -5936,6 +6177,7 @@ Throughout, \(C\) is a curve over \(k\).
 \begin{theorem}[Uniqueness of gluings for \(\mathrm{picEt}\)]
   \label{thm:picEt_ext_of_le_cover}
   \lean{AlgebraicGeometry.picEt.ext_of_le_cover}
+  \provenancetag{CUSTOM}
   \uses{def:picEt, thm:picEt_eq_of_basic_eq, thm:exists_basic_subcover}
   \leanok
   Two sections \(s, t \in \mathrm{picEt}(C, T)\) agreeing on every affine open subordinate to an
@@ -5970,6 +6212,7 @@ inputs to the \((C2)\) comparison of the next section.
     AlgebraicGeometry.Over.sectionOfPoint_snd, AlgebraicGeometry.Over.sectionOfPoint_naturality}
   \leanok
   \source{kleiman-picard}
+  \provenancetag{REFERENCE}
   For a \(T\)-point \(\sigma \colon T \to C\), the \emph{section of the projection}
   \(g_\sigma \colon T \to C \otimes T\) is the map \(\langle \sigma, \id_T \rangle\) into the
   product, characterised by
@@ -5995,6 +6238,7 @@ inputs to the \((C2)\) comparison of the next section.
   \uses{def:sectionOfPoint}
   \leanok
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   A \v Cech Picard class \(L\) on the product \(C \otimes T\) is \emph{rigidified} along a point
   \(\sigma \colon T \to C\) when its pullback along the section of the projection is trivial,
   \[
@@ -6012,6 +6256,7 @@ inputs to the \((C2)\) comparison of the next section.
   \uses{def:sectionOfPoint, thm:isIso_appLE_snd}
   \leanok
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   Let the curve \(C\) be proper, geometrically irreducible and geometrically reduced. For every
   point \(\sigma \colon \Spec A \to C\), pullback of global unit sections along the section of the
   projection,
@@ -6047,6 +6292,7 @@ inputs to the \((C2)\) comparison of the next section.
   \uses{def:sectionOfPoint}
   \leanok
   \source{kleiman-picard}
+  \provenancetag{REFERENCE}
   For a point \(\sigma \colon T \to C\), pullback of \v Cech Picard classes along the section
   of the projection retracts pullback along the projection: for every \(N \in \Pic(T)\),
   \[
@@ -6064,6 +6310,7 @@ inputs to the \((C2)\) comparison of the next section.
 \begin{lemma}[Stability of rigidification under restriction]
   \label{lem:isRigidified_cechPicMap}
   \lean{AlgebraicGeometry.Over.isRigidified_one, AlgebraicGeometry.Over.IsRigidified.cechPicMap}
+  \provenancetag{CUSTOM}
   \uses{def:isRigidified, def:sectionOfPoint}
   \leanok
   The trivial class is rigidified along every point. Moreover, for \(h \colon T' \to T\) and a
@@ -6090,6 +6337,7 @@ inputs to the \((C2)\) comparison of the next section.
   \uses{def:isRigidified, lem:cechPicMap_sectionOfPoint_snd, def:relPic}
   \leanok
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   Two \v Cech Picard classes on \(C \otimes T\), both rigidified along a point
   \(\sigma \colon T \to C\), which represent the same relative Picard class, are equal on the
   nose. In particular a rigidified representative of the identity relative class is \(1\).
@@ -6116,6 +6364,7 @@ inputs to the \((C2)\) comparison of the next section.
   \uses{def:isRigidified, def:relPic, lem:cechPicMap_sectionOfPoint_snd}
   \leanok
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   Every relative Picard class on \(C \otimes T\) has a representative rigidified along any
   given point \(\sigma \colon T \to C\). This is the surjectivity half of Kleiman's Lemma
   \(\mathrm{lm{:}idn}\), in cocycle form.
@@ -6141,6 +6390,7 @@ inputs to the \((C2)\) comparison of the next section.
     lem:isRigidified_cechPicMap, def:descentClasses, def:relPicMap, def:overSpecMap}
   \leanok
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   Let \(A\) be a \(k\)-algebra, \(E\) a presented \'etale cover of \(A\), \(R\) an
   \(A\)-algebra, \(\sigma \colon \Spec A \to C\) a point, and \(L\) a \v Cech Picard class on
   \(C \otimes \Spec B_E\) such that the relative class of \(L\) is a descent class on \(E\)
@@ -6170,6 +6420,7 @@ inputs to the \((C2)\) comparison of the next section.
   \uses{thm:isRigidified_cechPicMap_congr, def:doubleInl_doubleInr}
   \leanok
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   In the situation of Theorem~\ref{thm:isRigidified_cechPicMap_congr}, the two pullbacks of
   the rigidified representative \(L\) to the double cover \(\Spec(B_E \otimes_A B_E)\), along
   the two coprojections, are \emph{equal \v Cech Picard classes} — not merely equal relative
@@ -6211,6 +6462,7 @@ realisation of the descent equation \(u_1^{*} L = u_2^{*} L\), normalized along 
     AlgebraicGeometry.Over.sectionSq_comp_inl, AlgebraicGeometry.Over.sectionSq_comp_inr,
     AlgebraicGeometry.Over.sectionCb_comp_face₁₂, AlgebraicGeometry.Over.sectionCb_comp_face₁₃,
     AlgebraicGeometry.Over.sectionCb_comp_face₂₃}
+  \provenancetag{CUSTOM}
   \uses{def:sectionOfPoint, def:overSpecMap, def:tensorInl_tensorInr, def:tensorFaces}
   \leanok
   The section of the projection is natural across the base-change coprojections and cofaces: as
@@ -6236,6 +6488,7 @@ realisation of the descent equation \(u_1^{*} L = u_2^{*} L\), normalized along 
 \begin{lemma}[Pullback of a one-sided trivializing relation]
   \label{lem:unitsAppLE_trivializing_rel}
   \lean{AlgebraicGeometry.Scheme.Hom.unitsAppLE_trivializing_rel}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(\varphi \colon X \to Y\) and \(r \colon Y \to Z\). Suppose a unit \(0\)-cochain \(a\) on a
   pointed cover of \(Y\) trivializes the pullback along \(r\) of a pair-indexed unit family \(E\):
@@ -6263,6 +6516,7 @@ realisation of the descent equation \(u_1^{*} L = u_2^{*} L\), normalized along 
 \begin{lemma}[Compatibility of a ratio cochain]
   \label{lem:unitsAppLE_trivializing_ratio_compat}
   \lean{AlgebraicGeometry.Scheme.Hom.unitsAppLE_trivializing_ratio_compat}
+  \provenancetag{CUSTOM}
   \uses{lem:unitsAppLE_coboundary_rel, lem:unitsAppLE_trivializing_rel, lem:unitsAppLE_congr_hom}
   \leanok
   Let \(\varphi_t \colon X \to Y_c\), \(\varphi_1, \varphi_2 \colon X \to Y_a\), \(r_1, r_2
@@ -6293,6 +6547,7 @@ realisation of the descent equation \(u_1^{*} L = u_2^{*} L\), normalized along 
     AlgebraicGeometry.Over.normalizationCover_le_section,
     AlgebraicGeometry.Over.normalizationCover_le_inl,
     AlgebraicGeometry.Over.normalizationCover_le_inr}
+  \provenancetag{CUSTOM}
   \uses{def:sectionOfPoint}
   \leanok
   For a pointed cover \(\mathcal N\) of the curve \(X_B\) and a pointed cover \(\mathcal W\) of
@@ -6308,6 +6563,7 @@ realisation of the descent equation \(u_1^{*} L = u_2^{*} L\), normalized along 
 \begin{definition}[The \(\sigma\)-normalized comparison datum]
   \label{def:normalizedCechComparison}
   \lean{AlgebraicGeometry.NormalizedCechComparison}
+  \provenancetag{CUSTOM}
   \uses{def:sectionOfPoint, def:isRigidified, def:normalizationCover}
   \leanok
   Fix a unit \v Cech cocycle \(\gamma\) on a pointed cover \(\mathcal N\) of \(X_B\), representing
@@ -6336,6 +6592,7 @@ realisation of the descent equation \(u_1^{*} L = u_2^{*} L\), normalized along 
   \label{thm:exists_glued_sigmaDefect}
   \lean{AlgebraicGeometry.Over.sigmaDefectCochain,
     AlgebraicGeometry.Over.exists_glued_sigmaDefect}
+  \provenancetag{CUSTOM}
   \uses{def:normalizationCover, lem:sectionSquares,
     lem:unitsAppLE_trivializing_ratio_compat, thm:exists_global_unit_of_compatible}
   \leanok
@@ -6362,6 +6619,7 @@ realisation of the descent equation \(u_1^{*} L = u_2^{*} L\), normalized along 
   \label{thm:exists_normalizedCechComparison}
   \lean{AlgebraicGeometry.Over.correctedComparison,
     AlgebraicGeometry.Over.exists_normalizedCechComparison}
+  \provenancetag{CUSTOM}
   \uses{def:isRigidified, def:normalizedCechComparison, thm:exists_glued_sigmaDefect,
     lem:sectionSquares, cor:cechPic_mk_eq_one,
     thm:isRigidified_cechPicMap_doubleInl_eq_doubleInr}
@@ -6412,6 +6670,7 @@ the whiskerings \(C \lhd (\Spec\ \text{of})\) of the \(A\)-algebra maps \(x \map
   \label{def:amitsurProductCover}
   \lean{AlgebraicGeometry.Over.amitsurProductCover, AlgebraicGeometry.Over.amitsurInsertion₁,
     AlgebraicGeometry.Over.amitsurInsertion₂, AlgebraicGeometry.Over.amitsurInsertion₃}
+  \provenancetag{CUSTOM}
   \uses{def:amitsurCover, def:tensorInl_tensorInr, def:tensorFaces}
   \leanok
   For a pointed cover \(\mathcal W\) of the curve \(X_{B \otimes_A B}\), the \emph{Amitsur product
@@ -6443,6 +6702,7 @@ the whiskerings \(C \lhd (\Spec\ \text{of})\) of the \(A\)-algebra maps \(x \map
   \label{thm:exists_glued_productDefect}
   \lean{AlgebraicGeometry.Over.productDefectCochain,
     AlgebraicGeometry.Over.exists_glued_productDefect}
+  \provenancetag{CUSTOM}
   \uses{def:amitsurProductCover, def:normalizedCechComparison, thm:exists_global_unit_of_compatible}
   \leanok
   Let \(\gamma\) be a unit cocycle on \(\mathcal N\) and \(\theta_0\) a comparison cochain on a
@@ -6477,6 +6737,7 @@ the whiskerings \(C \lhd (\Spec\ \text{of})\) of the \(A\)-algebra maps \(x \map
     thm:unitsAppTop_sectionOfPoint_bijective, def:module_descent_cocycle}
   \leanok
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   Let the curve \(C\) be proper, geometrically irreducible and geometrically reduced. Then the
   comparison cochain \(\theta\) of a \(\sigma\)-normalized comparison of \(\gamma\) satisfies the
   Amitsur cocycle identity on the nose:
@@ -6514,6 +6775,7 @@ the whiskerings \(C \lhd (\Spec\ \text{of})\) of the \(A\)-algebra maps \(x \map
     thm:unitsAppTop_sectionOfPoint_bijective}
   \leanok
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   Let the curve \(C\) be proper, geometrically irreducible and geometrically reduced. Two comparison
   cochains \(\theta, \theta'\) on the same cover \(\mathcal W\), each satisfying \textbf{(N1)}
   against the same cocycle \(\gamma\) and \textbf{(N2)} against the same trivializing cochain
@@ -6538,6 +6800,7 @@ the whiskerings \(C \lhd (\Spec\ \text{of})\) of the \(A\)-algebra maps \(x \map
   \lean{AlgebraicGeometry.Over.exists_glued_diagonalSeed,
     AlgebraicGeometry.tensorLmul'_comp_tensorInl, AlgebraicGeometry.tensorLmul'_comp_tensorInr,
     AlgebraicGeometry.Over.whiskerLeft_lmul'_inl, AlgebraicGeometry.Over.whiskerLeft_lmul'_inr}
+  \provenancetag{CUSTOM}
   \uses{def:normalizedCechComparison, def:tensorInl_tensorInr, thm:exists_global_unit_of_compatible}
   \leanok
   The multiplication \(\nabla \colon B \otimes_A B \to B\) retracts both coprojections, \(\nabla
@@ -6564,6 +6827,7 @@ the whiskerings \(C \lhd (\Spec\ \text{of})\) of the \(A\)-algebra maps \(x \map
     thm:unitsAppTop_sectionOfPoint_bijective}
   \leanok
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   Let the curve \(C\) be proper, geometrically irreducible and geometrically reduced. The pullback
   of the comparison cochain \(\theta\) of a \(\sigma\)-normalized comparison along the diagonal
   \(\Delta\) of \(X_{B \otimes_A B}\) is trivial: \(\Delta^{\sharp}\theta = 1\). This is the
@@ -6598,6 +6862,7 @@ S \otimes_A B\).
 \begin{definition}[The descent-cocycle ring identification]
   \label{def:pieceDescentEquiv}
   \lean{Algebra.TensorProduct.pieceDescentEquiv, Algebra.TensorProduct.pieceDescentTripleEquiv}
+  \provenancetag{CUSTOM}
   \uses{def:module_descent_cocycle}
   \leanok
   The ring \(M \otimes_S M\) in which a descent \(1\)-cocycle relative to \(S \to M\)
@@ -6626,6 +6891,7 @@ S \otimes_A B\).
     Algebra.TensorProduct.pieceDescentTripleEquiv_descentFace₂₃,
     Algebra.TensorProduct.pieceDescentTripleEquiv_descentFace₁₂,
     Algebra.TensorProduct.pieceDescentTripleEquiv_descentFace₁₃}
+  \provenancetag{CUSTOM}
   \uses{def:pieceDescentEquiv, def:module_descent_cocycle}
   \leanok
   Under the identification of Definition~\ref{def:pieceDescentEquiv}, the multiplication
@@ -6644,6 +6910,7 @@ S \otimes_A B\).
 \begin{theorem}[A coherent comparison unit is a descent \(1\)-cocycle]
   \label{thm:isDescentCocycle_comparisonDescentUnit}
   \lean{Module.comparisonDescentUnit, Module.isDescentCocycle_comparisonDescentUnit}
+  \provenancetag{CUSTOM}
   \uses{def:pieceDescentEquiv, lem:pieceDescentEquiv_faces, def:module_descent_cocycle}
   \leanok
   Let \(v \in (S \otimes_A (B \otimes_A B))^{\times}\) be a \emph{comparison unit} that is
@@ -6672,6 +6939,7 @@ S \otimes_A B\).
   \label{def:comparisonDescentClass}
   \lean{Module.comparisonDescentClass, Module.mapAlgebra_comparisonDescentClass_eq_one,
     Module.IsDescentCocycle.mapAlgebra_picClass_eq_one}
+  \provenancetag{CUSTOM}
   \uses{thm:isDescentCocycle_comparisonDescentUnit, def:module_picClass, def:module_descended}
   \leanok
   Assume \(A \to B\) is faithfully flat, and let \(v\) be a coherent comparison unit as in
@@ -6695,6 +6963,7 @@ S \otimes_A B\).
   \label{def:pieceDescentGeom}
   \lean{AlgebraicGeometry.Over.pieceDescentTensorEquiv,
     AlgebraicGeometry.Over.pieceDescentCoverEquiv}
+  \provenancetag{CUSTOM}
   \uses{def:pieceAlgEquiv, def:pieceDescentEquiv}
   \leanok
   For a \(\mathrm{cg}\)-saturated affine piece \(U \subseteq X_A\), with base-piece ring \(\Gamma(X_A,
@@ -6731,6 +7000,7 @@ descended class.
   \lean{AlgebraicGeometry.Over.PieceTrivialization, AlgebraicGeometry.Over.whiskerLeft_inl_comp_cover,
     AlgebraicGeometry.Over.whiskerLeft_inr_comp_cover, AlgebraicGeometry.Over.cgqPreimage_le_inl,
     AlgebraicGeometry.Over.cgqPreimage_le_inr}
+  \provenancetag{CUSTOM}
   \uses{def:tensorInl_tensorInr, cor:cechPic_mk_eq_one}
   \leanok
   A \emph{piece trivialization} of a representing cocycle \(\gamma\) on a pointed cover \(\mathcal N\)
@@ -6756,6 +7026,7 @@ descended class.
   \lean{AlgebraicGeometry.unitsTrivTwistCochain, AlgebraicGeometry.unitsTrivTwistCochain_compat,
     AlgebraicGeometry.exists_glued_unitsTrivTwist,
     AlgebraicGeometry.Scheme.Hom.unitsAppLE_glued_trivTwist}
+  \provenancetag{CUSTOM}
   \uses{thm:exists_global_unit_of_compatible}
   \leanok
   Over abstract schemes, let \(r_1, r_2 \colon Y \to Z\), let \(\mathcal C\) be a pointed cover of
@@ -6788,6 +7059,7 @@ descended class.
   \label{thm:pieceComparisonUnit}
   \lean{AlgebraicGeometry.Over.pieceComparisonUnit, AlgebraicGeometry.Over.pieceComparisonUnit_spec,
     AlgebraicGeometry.Over.pieceComparisonUnit_unique}
+  \provenancetag{CUSTOM}
   \uses{thm:exists_glued_unitsTrivTwist, def:pieceTrivialization, def:normalizedCechComparison}
   \leanok
   Let \(W\) be a \(\sigma\)-normalized comparison of \(\gamma\)
@@ -6820,6 +7092,7 @@ descended class.
     AlgebraicGeometry.Over.coverPreimage_le_whiskerLeft,
     AlgebraicGeometry.Over.restrictScalars_comp_ofId,
     AlgebraicGeometry.Over.pieceRingEquiv_pieceEquiv}
+  \provenancetag{CUSTOM}
   \uses{def:pieceRingEquiv, def:pieceAlgEquiv, thm:pieceRingEquiv_naturality}
   \leanok
   The section-ring identification \(\Gamma(X_R, \mathrm{cg}_R^{-1}V) \cong \Gamma(X_A, V)
@@ -6854,6 +7127,7 @@ descended class.
     thm:exists_glued_diagonalSeed}
   \leanok
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   Let \(C\) be proper, geometrically irreducible and geometrically reduced. The pullback of the
   per-piece comparison unit \(v_V\) along the diagonal \(\Delta = (C \lhd \Spec\, \nabla) \colon X_B
   \to X_{B \otimes_A B}\) (\(\nabla\) the multiplication of \(B \otimes_A B\)) is \(1\).
@@ -6879,6 +7153,7 @@ descended class.
   \uses{thm:pieceComparisonUnit, thm:normalizedComparison_coherent, def:amitsurProductCover}
   \leanok
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   Let \(C\) be proper, geometrically irreducible and geometrically reduced. The three coface
   pullbacks of \(v_V\) to the triple piece \(\Gamma(X_{B \otimes_A (B \otimes_A B)},
   \mathrm{cgcb}^{-1}V)^{\times}\) satisfy the Amitsur cocycle identity on the nose:
@@ -6906,6 +7181,7 @@ descended class.
     AlgebraicGeometry.Over.pieceComparisonTensorUnit_val,
     AlgebraicGeometry.Over.pieceComparisonTensorUnit_lmul,
     AlgebraicGeometry.Over.pieceComparisonTensorUnit_cocycle}
+  \provenancetag{CUSTOM}
   \uses{thm:pieceComparisonUnit, thm:pieceRingEquiv_whiskerLeft_naturality,
     thm:pieceComparisonUnit_diagonal_eq_one, thm:pieceComparisonUnit_coherent, def:pieceAlgEquiv,
     def:pieceDescentEquiv}
@@ -6938,6 +7214,7 @@ descended class.
   \label{def:pieceDescentClass}
   \lean{AlgebraicGeometry.Over.pieceDescentClass,
     AlgebraicGeometry.Over.mapAlgebra_pieceDescentClass_eq_one}
+  \provenancetag{CUSTOM}
   \uses{thm:pieceComparisonTensorUnit, thm:isDescentCocycle_comparisonDescentUnit,
     def:comparisonDescentClass}
   \leanok
@@ -6964,6 +7241,7 @@ descended class.
   \label{thm:cechPicMap_pieceI_eq_one}
   \lean{AlgebraicGeometry.Scheme.Hom.pullbackUnitsCocycle_isCohomologous_one,
     AlgebraicGeometry.Over.cechPicMap_pieceι_eq_one}
+  \provenancetag{CUSTOM}
   \uses{def:pieceTrivialization, cor:cechPic_mk_eq_one}
   \leanok
   The class \(L = [\gamma]\) of the \((C2)\) setting, restricted to the open subscheme
@@ -6986,6 +7264,7 @@ descended class.
 \begin{theorem}[Base-change naturality of the descent extraction]
   \label{thm:comparisonDescentClass_mapAlgebra}
   \lean{Module.comparisonDescentUnit_baseChange, Module.comparisonDescentClass_mapAlgebra}
+  \provenancetag{CUSTOM}
   \uses{def:comparisonDescentClass, thm:isDescentCocycle_comparisonDescentUnit,
     thm:module_descentCocycle_baseChange, thm:module_picClass_baseChange,
     def:module_tensorSqBaseChange, def:pieceDescentEquiv}
@@ -7019,6 +7298,7 @@ descended class.
   \lean{AlgebraicGeometry.Over.PieceTrivialization.res, AlgebraicGeometry.Over.pieceComparisonUnit_res,
     AlgebraicGeometry.Over.pieceComparisonTensorUnit_res,
     AlgebraicGeometry.Over.pieceDescentClass_res}
+  \provenancetag{CUSTOM}
   \uses{def:pieceDescentClass, thm:comparisonDescentClass_mapAlgebra, thm:pieceComparisonUnit,
     thm:pieceComparisonTensorUnit, thm:pieceRingEquiv_naturality}
   \leanok
@@ -7062,6 +7342,7 @@ basic open of the base.
   \label{lem:invertible_cyclic_free}
   \lean{Module.Invertible.bijective_toSpanSingleton_of_span_eq_top,
     Module.Invertible.free_of_span_singleton_eq_top}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(R\) be a commutative ring and \(N\) an invertible \(R\)-module generated by a single element
   \(m_0\), i.e.\ \(R \cdot m_0 = N\). Then the scalar map \(r \mapsto r \cdot m_0\) is an isomorphism
@@ -7081,6 +7362,7 @@ basic open of the base.
 \begin{theorem}[The avoidance brick]
   \label{thm:invertible_avoid_free}
   \lean{Module.Invertible.exists_notMem_isUnit_free}
+  \provenancetag{CUSTOM}
   \uses{lem:invertible_cyclic_free}
   \leanok
   Let \(R\) be a commutative ring, \(N\) an invertible \(R\)-module, and \((\mathfrak q_i)_{i \in I}\)
@@ -7118,6 +7400,7 @@ basic open of the base.
 \begin{lemma}[The algebraic tube]
   \label{lem:algebraic_tube}
   \lean{Algebra.exists_notMem_algebraMap_eq_mul}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(S \to R\) be an integral extension of commutative rings, \(\mathfrak p\) a prime of \(S\),
   and \(f \in R\) an element avoiding every prime of \(R\) lying over \(\mathfrak p\) (that is,
@@ -7147,6 +7430,7 @@ section. Throughout, \(\mathrm{cg} \colon X_B \to X_A\) is the cover inclusion.
   \label{def:cechPicClass_affineOpen}
   \lean{AlgebraicGeometry.Scheme.Opens.cechPicClass, AlgebraicGeometry.Scheme.Opens.ιTop,
     AlgebraicGeometry.Scheme.Opens.cechPicClass_of_le}
+  \provenancetag{CUSTOM}
   \uses{def:cechPic_toPic}
   \leanok
   Let \(Z\) be a scheme and \(O \subseteq Z\) an affine open. Pullback along the open immersion \(O
@@ -7181,6 +7465,7 @@ section. Throughout, \(\mathrm{cg} \colon X_B \to X_A\) is the cover inclusion.
   \lean{AlgebraicGeometry.Scheme.Opens.cechPicMap_ι_eq_one_of_cechPicClass_eq_one,
     AlgebraicGeometry.Scheme.cechPicMap_ι_eq_one_of_le,
     AlgebraicGeometry.Scheme.Opens.cechPicClass_basicOpen_eq_one_of_free}
+  \provenancetag{CUSTOM}
   \uses{def:cechPicClass_affineOpen, thm:cechPic_toPic_injective}
   \leanok
   Let \(Z\) be a scheme and \(L\) a \v Cech Picard class on \(Z\).
@@ -7212,6 +7497,7 @@ section. Throughout, \(\mathrm{cg} \colon X_B \to X_A\) is the cover inclusion.
 \begin{lemma}[Module-finiteness of the cover piece over the base piece]
   \label{lem:finite_pieceCover}
   \lean{AlgebraicGeometry.Over.finite_pieceCover}
+  \provenancetag{CUSTOM}
   \uses{def:pieceAlgEquiv}
   \leanok
   Let \(A \to B\) be a module-finite homomorphism of \(k\)-algebras and \(V \subseteq X_A\) an affine
@@ -7229,6 +7515,7 @@ section. Throughout, \(\mathrm{cg} \colon X_B \to X_A\) is the cover inclusion.
 \begin{theorem}[The moving lemma]
   \label{thm:moving_lemma}
   \lean{AlgebraicGeometry.Over.exists_isAffineOpen_cechPicMap_preimage_eq_one}
+  \provenancetag{CUSTOM}
   \uses{thm:cechPicClass_triv, thm:invertible_avoid_free, lem:algebraic_tube, lem:finite_pieceCover,
     def:cechPicClass_affineOpen, thm:exists_isAffineOpen_cg_le, def:pieceAlgEquiv}
   \leanok
@@ -7285,6 +7572,7 @@ converts the one to the other.
 \begin{theorem}[The trimmed trivializing cochain of a class trivial on an open subscheme]
   \label{thm:exists_trimmed_trivializing}
   \lean{AlgebraicGeometry.Scheme.exists_trimmed_trivializing_of_cechPicMap_ι_eq_one}
+  \provenancetag{CUSTOM}
   \uses{cor:cechPic_mk_eq_one, def:unitsPreimageEquiv, lem:units_gluing}
   \leanok
   Let \(Z\) be a scheme, \(\mathcal N\) a pointed cover of \(Z\), \(\gamma\) a unit \(1\)-cocycle on
@@ -7318,6 +7606,7 @@ converts the one to the other.
 \begin{theorem}[A piece trivialization from restriction triviality]
   \label{thm:pieceTrivialization_of_triv}
   \lean{AlgebraicGeometry.Over.pieceTrivialization_of_cechPicMap_eq_one}
+  \provenancetag{CUSTOM}
   \uses{thm:exists_trimmed_trivializing, def:pieceTrivialization}
   \leanok
   Let \(\gamma\) be a representing unit cocycle on a pointed cover \(\mathcal N\) of \(X_B\) and \(V
@@ -7345,6 +7634,7 @@ trivialization-independence of the descended class and the flattening of a trivi
   \label{thm:pieceComparisonUnit_twist}
   \lean{AlgebraicGeometry.Over.PieceTrivialization.twist, AlgebraicGeometry.Over.geomCoboundary,
     AlgebraicGeometry.Over.pieceComparisonUnit_eq_of_triv_eq}
+  \provenancetag{CUSTOM}
   \uses{def:pieceTrivialization, thm:pieceComparisonUnit}
   \leanok
   Let \(T\) be a piece trivialization of \(\gamma\) on \(V\) and \(e \in \Gamma(X_B, \mathrm{cg}^{-1}
@@ -7379,6 +7669,7 @@ trivialization-independence of the descended class and the flattening of a trivi
   \label{thm:geomCoboundary_seams}
   \lean{Module.comparisonDescentUnit_coboundary,
     AlgebraicGeometry.Over.map_pieceEquiv_geomCoboundary}
+  \provenancetag{CUSTOM}
   \uses{thm:pieceComparisonUnit_twist, def:pieceDescentEquiv,
     thm:isDescentCocycle_comparisonDescentUnit, thm:pieceRingEquiv_whiskerLeft_naturality}
   \leanok
@@ -7421,6 +7712,7 @@ The flat pieces produced here are what the refinement splice glues.
 \begin{theorem}[Two piece trivializations differ by a glued global unit]
   \label{thm:exists_ratio_unit}
   \lean{AlgebraicGeometry.Over.exists_ratio_unit}
+  \provenancetag{CUSTOM}
   \uses{def:pieceTrivialization, lem:units_gluing}
   \leanok
   Any two piece trivializations \(T, T'\) of the same cocycle \(\gamma\) on the same piece \(V\)
@@ -7441,6 +7733,7 @@ The flat pieces produced here are what the refinement splice glues.
   \label{thm:pieceDescentClass_congr}
   \lean{AlgebraicGeometry.Over.comparisonDescentUnit_twist,
     AlgebraicGeometry.Over.pieceDescentClass_congr}
+  \provenancetag{CUSTOM}
   \uses{thm:exists_ratio_unit, thm:pieceComparisonUnit_twist, thm:geomCoboundary_seams,
     def:pieceDescentClass, def:module_picClass}
   \leanok
@@ -7464,6 +7757,7 @@ The flat pieces produced here are what the refinement splice glues.
 \begin{theorem}[Flattening a trivialization along a trivial descended class]
   \label{thm:exists_pieceComparisonUnit_eq_one}
   \lean{AlgebraicGeometry.Over.exists_pieceComparisonUnit_eq_one}
+  \provenancetag{CUSTOM}
   \uses{thm:pieceComparisonUnit_twist, thm:geomCoboundary_seams, def:pieceDescentClass,
     def:module_picClass, thm:pieceComparisonUnit}
   \leanok
@@ -7488,6 +7782,7 @@ The flat pieces produced here are what the refinement splice glues.
 \begin{theorem}[Localize and flatten]
   \label{thm:exists_flat_pieceTrivialization}
   \lean{AlgebraicGeometry.Over.exists_flat_pieceTrivialization_of_le}
+  \provenancetag{CUSTOM}
   \uses{thm:exists_pieceComparisonUnit_eq_one, thm:invertible_avoid_free, thm:pieceDescentClass_res}
   \leanok
   Let \(C\) be proper, geometrically irreducible and geometrically reduced, \(A \to B\) faithfully
@@ -7517,6 +7812,7 @@ direction of the \((C1)\) kernel lemma's final assembly.
 \begin{theorem}[The refinement splice]
   \label{thm:refinement_splice}
   \lean{AlgebraicGeometry.Over.exists_cechPic_map_whiskerLeft_eq_of_flat}
+  \provenancetag{CUSTOM}
   \uses{thm:exists_ratio_unit, thm:pieceComparisonUnit_twist, thm:exists_unitsAppLE_eq,
     thm:appLE_whiskerLeft_injective, thm:isAffineOpen_inf, def:pieceTrivialization,
     cor:cechPic_mk_eq_one}
@@ -7555,6 +7851,7 @@ of the \'etale plus construction over a section-admitting field test.
 \begin{theorem}[Effectivity from a covering family of trivialized pieces]
   \label{thm:effectivity_of_pieces}
   \lean{AlgebraicGeometry.Over.exists_cechPic_map_whiskerLeft_eq_of_pieces}
+  \provenancetag{CUSTOM}
   \uses{thm:exists_normalizedCechComparison, thm:exists_flat_pieceTrivialization,
     thm:refinement_splice, def:isRigidified}
   \leanok
@@ -7581,6 +7878,7 @@ of the \'etale plus construction over a section-admitting field test.
   \uses{thm:effectivity_of_pieces, thm:moving_lemma, thm:pieceTrivialization_of_triv}
   \leanok
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   Let \(C\) be proper, geometrically irreducible and geometrically reduced, and \(A \to B\) a
   \emph{module-finite} faithfully flat cover. Every \v Cech Picard class \(L\) on the cover curve
   \(X_B\) that is rigidified along the base-changed section and satisfies the on-the-nose descent
@@ -7607,6 +7905,7 @@ of the \'etale plus construction over a section-admitting field test.
     lem:PicEtAff_ind}
   \leanok
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   Let \(C\) be a curve over \(k\) that is proper, geometrically irreducible and geometrically
   reduced, and let \(K\) be a field extension of \(k\) admitting a \(K\)-point \(\sigma \colon
   \operatorname{Spec} K \to C\). Then the unit \(\eta_K \colon \mathrm{relPic}(C, \operatorname{Spec}
@@ -7637,6 +7936,7 @@ of the \'etale plus construction over a section-admitting field test.
   \uses{thm:unit_surjective_of_section, thm:PicEtAff_unit_injective}
   \leanok
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   Under the hypotheses of Theorem~\ref{thm:unit_surjective_of_section}, the unit is a group
   isomorphism
   \[
@@ -7666,6 +7966,7 @@ the chosen equations up to units; the next builds from it the class of a Weil di
 \begin{definition}[Local equations for an effective divisor]
   \label{def:localEquations}
   \lean{AlgebraicGeometry.Scheme.LocalEquations}
+  \provenancetag{CUSTOM}
   \leanok
   A system of \emph{local equations} on \(X\), adapted to a pointed cover \(\mathcal U\), consists
   of a section \(f_x \in \struct X(\mathcal U(x))\) on each member, subject to two conditions:
@@ -7684,6 +7985,7 @@ the chosen equations up to units; the next builds from it the class of a Weil di
   \lean{AlgebraicGeometry.Scheme.LocalEquations.ratioUnit,
     AlgebraicGeometry.Scheme.LocalEquations.eqn_restrict_eq,
     AlgebraicGeometry.Scheme.LocalEquations.ratioUnit_unique}
+  \provenancetag{CUSTOM}
   \uses{def:localEquations}
   \leanok
   For a local-equation system and points \(x, y\) there is a \emph{unique} unit \(g_{xy} \in
@@ -7703,6 +8005,7 @@ the chosen equations up to units; the next builds from it the class of a Weil di
 \begin{lemma}[The cocycle identity of the transition units]
   \label{lem:localEquations_cocycle}
   \lean{AlgebraicGeometry.Scheme.LocalEquations.ratioUnit_trans}
+  \provenancetag{CUSTOM}
   \uses{lem:localEquations_ratioUnit}
   \leanok
   On the triple overlap \(\mathcal U(x) \cap \mathcal U(y) \cap \mathcal U(z)\) the transition
@@ -7724,6 +8027,7 @@ the chosen equations up to units; the next builds from it the class of a Weil di
   \label{def:localEquations_picClass}
   \lean{AlgebraicGeometry.Scheme.LocalEquations.unitsCocycle,
     AlgebraicGeometry.Scheme.LocalEquations.picClass}
+  \provenancetag{CUSTOM}
   \uses{def:localEquations, lem:localEquations_ratioUnit, lem:localEquations_cocycle}
   \leanok
   The transition units \(g_{xy}\) of a local-equation system \(d\) form a unit \v Cech
@@ -7746,6 +8050,7 @@ the chosen equations up to units; the next builds from it the class of a Weil di
   \lean{AlgebraicGeometry.Scheme.LocalEquations.rescale,
     AlgebraicGeometry.Scheme.LocalEquations.rescale_ratioUnit,
     AlgebraicGeometry.Scheme.LocalEquations.picClass_rescale}
+  \provenancetag{CUSTOM}
   \uses{def:localEquations, lem:localEquations_ratioUnit, def:localEquations_picClass}
   \leanok
   Let \(d\) be a local-equation system on \(\mathcal U\) and \((v_x)_x\) a family of units
@@ -7778,6 +8083,7 @@ the associated invertible sheaf, \(f^{*}\struct X(D) = \struct Y(f^{*}D)\).
   \label{def:localEquations_pullback}
   \lean{AlgebraicGeometry.Scheme.LocalEquations.pullback,
     AlgebraicGeometry.Scheme.LocalEquations.pullbackEqn}
+  \provenancetag{CUSTOM}
   \uses{def:localEquations, lem:localEquations_ratioUnit}
   \leanok
   Let \(f \colon Y \to X\) be a morphism of schemes and \(E\) a local-equation system on \(X\)
@@ -7812,6 +8118,7 @@ the associated invertible sheaf, \(f^{*}\struct X(D) = \struct Y(f^{*}D)\).
   \label{lem:localEquations_pullback_ratioUnit}
   \lean{AlgebraicGeometry.Scheme.LocalEquations.pullback_ratioUnit,
     AlgebraicGeometry.Scheme.LocalEquations.pullback_unitsCocycle}
+  \provenancetag{CUSTOM}
   \uses{def:localEquations_pullback, lem:localEquations_ratioUnit, def:localEquations_picClass}
   \leanok
   The transition units of the pulled-back system \(f^{*}E\) are the \(f\)-pullbacks of those of
@@ -7834,6 +8141,7 @@ the associated invertible sheaf, \(f^{*}\struct X(D) = \struct Y(f^{*}D)\).
 \begin{theorem}[The Picard class of a pullback is the pullback of the class]
   \label{thm:localEquations_picClass_pullback}
   \lean{AlgebraicGeometry.Scheme.LocalEquations.picClass_pullback}
+  \provenancetag{CUSTOM}
   \uses{def:localEquations_pullback, def:localEquations_picClass,
     lem:localEquations_pullback_ratioUnit}
   \leanok
@@ -7865,6 +8173,7 @@ extending the point classes.
 \begin{lemma}[A uniformizer isolated to a single zero]
   \label{lem:exists_pointLocalEquation}
   \lean{AlgebraicGeometry.Scheme.exists_pointLocalEquation}
+  \provenancetag{CUSTOM}
   \uses{lem:uniformizer, lem:exists_stalk_of_ord_le_one, lem:germ_generic_eq_algebraMap_germ,
     thm:ordZ_support_finite, thm:closedpoint_isClosed, lem:ord_eq_one_of_mem_basicOpen,
     def:scheme_ordZ}
@@ -7917,6 +8226,7 @@ extending the point classes.
   \label{def:pointDivisor}
   \lean{AlgebraicGeometry.Scheme.pointDivisor,
     AlgebraicGeometry.Scheme.germGeneric_pointDivisorEqn_self}
+  \provenancetag{CUSTOM}
   \uses{def:localEquations, lem:exists_pointLocalEquation, thm:closedpoint_isClosed}
   \leanok
   For a closed point \(x\), the \emph{point divisor} \(1 \cdot x\) is the local-equation system on
@@ -7949,6 +8259,7 @@ extending the point classes.
 \begin{definition}[The class of a Weil divisor]
   \label{def:divisorClass}
   \lean{AlgebraicGeometry.Scheme.divisorClass}
+  \provenancetag{CUSTOM}
   \uses{def:pointDivisor, def:localEquations_picClass, def:curveDivisor}
   \leanok
   For a Weil divisor \(D \in \Div(X)\) (\ref{def:curveDivisor}), its \emph{Picard class} is the
@@ -7967,6 +8278,7 @@ extending the point classes.
 \begin{theorem}[Additivity of the divisor class]
   \label{thm:divisorClass_add}
   \lean{AlgebraicGeometry.Scheme.divisorClass_add}
+  \provenancetag{CUSTOM}
   \uses{def:divisorClass}
   \leanok
   The class map \(D \mapsto \struct X(D)\) is a homomorphism \(\Div(X) \to \Pic(X)\): for all
@@ -7989,6 +8301,7 @@ extending the point classes.
 \begin{theorem}[Normalization at a one-point divisor]
   \label{thm:divisorClass_single}
   \lean{AlgebraicGeometry.Scheme.divisorClass_single_eq_pointDivisor}
+  \provenancetag{CUSTOM}
   \uses{def:divisorClass, def:curveDivisor_single, def:pointDivisor, def:localEquations_picClass}
   \leanok
   For a closed point \(x\), the class of the one-point divisor \(1 \cdot x\)
@@ -8021,6 +8334,7 @@ which every cochain comparison downstream is a literal equality of elements of t
   \lean{AlgebraicGeometry.Scheme.germGenericUnits,
     AlgebraicGeometry.Scheme.germGenericUnits_unitsRestrict,
     AlgebraicGeometry.Scheme.germGenericUnits_injective}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(X\) be an integral scheme with generic point \(\eta\) and \(U\) an open with
   \(\eta \in U\). Taking the germ at \(\eta\) is a homomorphism of groups
@@ -8045,6 +8359,7 @@ which every cochain comparison downstream is a literal equality of elements of t
   \label{lem:pointedCover_genericPoint_mem}
   \lean{AlgebraicGeometry.Scheme.PointedCover.genericPoint_mem_opens,
     AlgebraicGeometry.Scheme.PointedCover.genericPoint_mem_inf}
+  \provenancetag{CUSTOM}
   \leanok
   On an irreducible scheme \(X\), every member \(\mathcal U(x)\) of a pointed cover contains the
   generic point \(\eta\), and hence so does every pairwise overlap \(\mathcal U(x) \cap \mathcal
@@ -8061,6 +8376,7 @@ which every cochain comparison downstream is a literal equality of elements of t
   \label{def:meromorphicPresentation}
   \lean{AlgebraicGeometry.Scheme.MeromorphicPresentation,
     AlgebraicGeometry.Scheme.MeromorphicPresentation.picClass}
+  \provenancetag{CUSTOM}
   \uses{def:germGenericUnits, lem:pointedCover_genericPoint_mem}
   \leanok
   A \emph{meromorphic presentation} of a \v Cech Picard class on an integral scheme \(X\) consists
@@ -8088,6 +8404,7 @@ which every cochain comparison downstream is a literal equality of elements of t
 \begin{theorem}[Existence of meromorphic presentations]
   \label{thm:exists_meromorphicPresentation}
   \lean{AlgebraicGeometry.Scheme.exists_meromorphicPresentation}
+  \provenancetag{CUSTOM}
   \uses{def:meromorphicPresentation, def:germGenericUnits, lem:pointedCover_genericPoint_mem}
   \leanok
   Every \v Cech Picard class \(L \in \Pic(X)\) of an integral scheme is the class of a meromorphic
@@ -8117,6 +8434,7 @@ which every cochain comparison downstream is a literal equality of elements of t
   \label{lem:localEquations_presentation}
   \lean{AlgebraicGeometry.Scheme.LocalEquations.presentation,
     AlgebraicGeometry.Scheme.LocalEquations.presentation_picClass}
+  \provenancetag{CUSTOM}
   \uses{def:meromorphicPresentation, def:localEquations, lem:localEquations_ratioUnit,
     def:localEquations_picClass}
   \leanok
@@ -8146,6 +8464,7 @@ point from their orders of vanishing.
 \begin{theorem}[Unit sections have trivial order]
   \label{thm:ordZ_germGenericUnits}
   \lean{AlgebraicGeometry.Scheme.ordZ_germGenericUnits}
+  \provenancetag{CUSTOM}
   \uses{def:germGenericUnits, def:scheme_ordZ, lem:ord_eq_one_of_mem_basicOpen}
   \leanok
   For an open \(U \ni \eta\), a unit section \(u \in \Gamma(X,U)^{\times}\), and a closed point
@@ -8164,6 +8483,7 @@ point from their orders of vanishing.
 \begin{theorem}[Piece-independence of the order]
   \label{thm:ordZ_elem_eq}
   \lean{AlgebraicGeometry.Scheme.MeromorphicPresentation.ordZ_elem_eq}
+  \provenancetag{CUSTOM}
   \uses{def:meromorphicPresentation, thm:ordZ_germGenericUnits, def:scheme_ordZ}
   \leanok
   Let \(P\) be a meromorphic presentation and \(x\) a closed point lying in a member
@@ -8186,6 +8506,7 @@ point from their orders of vanishing.
 \begin{theorem}[Finite support of the orders]
   \label{thm:ordZ_elem_support_finite}
   \lean{AlgebraicGeometry.Scheme.MeromorphicPresentation.ordZ_elem_support_finite}
+  \provenancetag{CUSTOM}
   \uses{def:meromorphicPresentation, thm:ordZ_elem_eq, thm:ordZ_support_finite}
   \leanok
   For a meromorphic presentation \(P\) on the quasi-compact curve, the set of closed points \(x\)
@@ -8206,6 +8527,7 @@ point from their orders of vanishing.
   \label{def:presentationDivisor}
   \lean{AlgebraicGeometry.Scheme.presentationDivisor,
     AlgebraicGeometry.Scheme.coeffAt_presentationDivisor}
+  \provenancetag{CUSTOM}
   \uses{def:meromorphicPresentation, thm:ordZ_elem_eq, thm:ordZ_elem_support_finite,
     def:curveDivisor, def:scheme_ordZ}
   \leanok
@@ -8235,6 +8557,7 @@ the Picard class and of the divisor.
 \begin{definition}[The principal presentation]
   \label{def:meromorphicPresentation_principal}
   \lean{AlgebraicGeometry.Scheme.MeromorphicPresentation.principal}
+  \provenancetag{CUSTOM}
   \uses{def:meromorphicPresentation}
   \leanok
   For \(g \in K(X)^{\times}\), the \emph{principal presentation} of \(g\) is the trivial cocycle on
@@ -8253,6 +8576,7 @@ the Picard class and of the divisor.
     AlgebraicGeometry.Scheme.MeromorphicPresentation.picClass_mul,
     AlgebraicGeometry.Scheme.MeromorphicPresentation.picClass_inv,
     AlgebraicGeometry.Scheme.MeromorphicPresentation.picClass_principal}
+  \provenancetag{CUSTOM}
   \uses{def:meromorphicPresentation, def:meromorphicPresentation_principal}
   \leanok
   Write \(1\) for the \emph{unit presentation} (the trivial cocycle on \(\{X\}\) with all elements
@@ -8284,6 +8608,7 @@ the Picard class and of the divisor.
     AlgebraicGeometry.Scheme.MeromorphicPresentation.presentationDivisor_mul,
     AlgebraicGeometry.Scheme.MeromorphicPresentation.presentationDivisor_inv,
     AlgebraicGeometry.Scheme.MeromorphicPresentation.presentationDivisor_principal}
+  \provenancetag{CUSTOM}
   \uses{def:presentationDivisor, def:meromorphicPresentation_principal, def:divOf}
   \leanok
   With the operations of \ref{thm:meromorphicPresentation_picClass_hom}, the divisor is additive:
@@ -8319,6 +8644,7 @@ embedding --- on an integral scheme no gluing of sheaf sections is ever required
   \label{lem:exists_germGenericUnits_ordMatch}
   \lean{AlgebraicGeometry.Scheme.exists_germGenericUnits_eq_of_forall_ordZ_eq_one,
     AlgebraicGeometry.Scheme.exists_germGenericUnits_eq_mul_inv_of_forall_ordZ_eq}
+  \provenancetag{CUSTOM}
   \uses{def:germGenericUnits, def:scheme_ordZ, def:divisorSections, lem:exists_section_germ_eq}
   \leanok
   Let \(V\) be a nonempty open (\(\eta \in V\)). A rational function \(q \in K(X)^{\times}\) whose
@@ -8344,6 +8670,7 @@ embedding --- on an integral scheme no gluing of sheaf sections is ever required
 \begin{theorem}[The class law]
   \label{thm:picClass_eq_of_presentationDivisor_eq}
   \lean{AlgebraicGeometry.Scheme.MeromorphicPresentation.picClass_eq_of_presentationDivisor_eq}
+  \provenancetag{CUSTOM}
   \uses{def:presentationDivisor, thm:ordZ_elem_eq, lem:exists_germGenericUnits_ordMatch,
     def:meromorphicPresentation}
   \leanok
@@ -8385,6 +8712,7 @@ embedding --- on an integral scheme no gluing of sheaf sections is ever required
   \label{thm:meromorphicPresentation_extraction}
   \lean{AlgebraicGeometry.Scheme.MeromorphicPresentation.exists_divOf_of_picClass_eq,
     AlgebraicGeometry.Scheme.MeromorphicPresentation.picClass_eq_iff_exists_divOf}
+  \provenancetag{CUSTOM}
   \uses{thm:picClass_eq_of_presentationDivisor_eq, thm:meromorphicPresentation_picClass_hom,
     thm:presentationDivisor_hom, def:presentationDivisor, thm:ordZ_germGenericUnits,
     def:meromorphicPresentation_principal, def:divOf}
@@ -8438,6 +8766,7 @@ whose germ at \(\eta\) is recorded.
   \lean{AlgebraicGeometry.Scheme.PointUniformizerData,
     AlgebraicGeometry.Scheme.nonempty_pointUniformizerData,
     AlgebraicGeometry.Scheme.pointUniformizerData}
+  \provenancetag{CUSTOM}
   \uses{lem:uniformizer, lem:exists_stalk_of_ord_le_one, lem:germ_generic_eq_algebraMap_germ,
     thm:ordZ_support_finite, thm:closedpoint_isClosed, def:scheme_ordZ,
     lem:ord_eq_one_of_mem_basicOpen}
@@ -8475,6 +8804,7 @@ whose germ at \(\eta\) is recorded.
   \label{def:pointEquations}
   \lean{AlgebraicGeometry.Scheme.pointCover, AlgebraicGeometry.Scheme.pointEquations,
     AlgebraicGeometry.Scheme.germGeneric_pointEqn_self}
+  \provenancetag{CUSTOM}
   \uses{lem:pointUniformizerData, def:localEquations, thm:closedpoint_isClosed}
   \leanok
   From a tracked point-uniformizer \(d\) at \(x\) (\ref{lem:pointUniformizerData}), the
@@ -8501,6 +8831,7 @@ whose germ at \(\eta\) is recorded.
 \begin{theorem}[The divisor of the point presentation]
   \label{thm:presentationDivisor_pointEquations}
   \lean{AlgebraicGeometry.Scheme.presentationDivisor_pointEquations}
+  \provenancetag{CUSTOM}
   \uses{def:pointEquations, lem:localEquations_presentation, def:presentationDivisor,
     def:curveDivisor_single, lem:uniformizer}
   \leanok
@@ -8530,6 +8861,7 @@ map descends to an isomorphism of \(\Div(X)\) modulo principal divisors onto \(\
 \begin{theorem}[Realization of Weil divisors]
   \label{thm:exists_presentationDivisor_eq}
   \lean{AlgebraicGeometry.Scheme.exists_presentationDivisor_eq}
+  \provenancetag{CUSTOM}
   \uses{thm:presentationDivisor_pointEquations, thm:presentationDivisor_hom,
     lem:pointUniformizerData, def:curveDivisor_single, lem:curveDivisor_single_arith}
   \leanok
@@ -8555,6 +8887,7 @@ map descends to an isomorphism of \(\Div(X)\) modulo principal divisors onto \(\
     AlgebraicGeometry.Scheme.CurveDivisor.picClass_presentationDivisor,
     AlgebraicGeometry.Scheme.CurveDivisor.exists_picClass_eq,
     AlgebraicGeometry.Scheme.CurveDivisor.picClass_surjective}
+  \provenancetag{CUSTOM}
   \uses{thm:exists_presentationDivisor_eq, thm:picClass_eq_of_presentationDivisor_eq,
     thm:exists_meromorphicPresentation, def:curveDivisor}
   \leanok
@@ -8580,6 +8913,7 @@ map descends to an isomorphism of \(\Div(X)\) modulo principal divisors onto \(\
   \lean{AlgebraicGeometry.Scheme.CurveDivisor.picClass_zero,
     AlgebraicGeometry.Scheme.CurveDivisor.picClass_add,
     AlgebraicGeometry.Scheme.CurveDivisor.picClass_divOf}
+  \provenancetag{CUSTOM}
   \uses{def:curveDivisor_picClass, thm:presentationDivisor_hom,
     thm:meromorphicPresentation_picClass_hom, def:divOf}
   \leanok
@@ -8608,6 +8942,7 @@ map descends to an isomorphism of \(\Div(X)\) modulo principal divisors onto \(\
   \label{thm:curveDivisor_picClass_eq_iff}
   \lean{AlgebraicGeometry.Scheme.CurveDivisor.exists_divOf_of_picClass_eq,
     AlgebraicGeometry.Scheme.CurveDivisor.picClass_eq_iff}
+  \provenancetag{CUSTOM}
   \uses{def:curveDivisor_picClass, thm:meromorphicPresentation_extraction,
     thm:curveDivisor_picClass_hom, def:divOf}
   \leanok
@@ -8638,6 +8973,7 @@ map descends to an isomorphism of \(\Div(X)\) modulo principal divisors onto \(\
 \begin{theorem}[Normalization at a one-point divisor]
   \label{thm:curveDivisor_picClass_single}
   \lean{AlgebraicGeometry.Scheme.CurveDivisor.picClass_single}
+  \provenancetag{CUSTOM}
   \uses{def:curveDivisor_picClass, thm:presentationDivisor_pointEquations,
     lem:localEquations_presentation, def:curveDivisor_single}
   \leanok
@@ -8670,6 +9006,7 @@ the agreement propagates from one-point divisors to all divisors by homomorphism
 \begin{theorem}[The divisor of the point-divisor presentation]
   \label{thm:presentationDivisor_pointDivisor}
   \lean{AlgebraicGeometry.Scheme.presentationDivisor_pointDivisor}
+  \provenancetag{CUSTOM}
   \uses{def:pointDivisor, lem:localEquations_presentation, def:presentationDivisor,
     def:curveDivisor_single, lem:uniformizer}
   \leanok
@@ -8693,6 +9030,7 @@ the agreement propagates from one-point divisors to all divisors by homomorphism
 \begin{theorem}[The point-divisor class is the anchored one-point class]
   \label{thm:pointDivisor_picClass_eq}
   \lean{AlgebraicGeometry.Scheme.pointDivisor_picClass_eq}
+  \provenancetag{CUSTOM}
   \uses{def:pointDivisor, def:curveDivisor_single, thm:presentationDivisor_pointDivisor,
     def:curveDivisor_picClass, lem:localEquations_presentation}
   \leanok
@@ -8716,6 +9054,7 @@ the agreement propagates from one-point divisors to all divisors by homomorphism
 \begin{theorem}[The two divisor-class maps coincide]
   \label{thm:divisorClass_eq_picClass}
   \lean{AlgebraicGeometry.Scheme.divisorClass_eq_picClass}
+  \provenancetag{CUSTOM}
   \uses{def:divisorClass, def:curveDivisor_picClass, thm:divisorClass_add,
     thm:curveDivisor_picClass_hom, thm:pointDivisor_picClass_eq, def:curveDivisor_single}
   \leanok
@@ -8753,6 +9092,7 @@ affine opens.
   \label{def:PicEtAff_mapAlg}
   \lean{AlgebraicGeometry.PicEtAff.mapAlg, AlgebraicGeometry.PicEtAff.mapAlg_id,
     AlgebraicGeometry.PicEtAff.mapAlg_comp, AlgebraicGeometry.PicEtAff.mapAlg_unit}
+  \provenancetag{CUSTOM}
   \uses{def:PicEtAff_map, thm:PicEtAff_map_id, thm:PicEtAff_map_map, thm:PicEtAff_map_unit,
     def:PicEtAff_unit, def:relPicAlgMap}
   \leanok
@@ -8780,6 +9120,7 @@ affine opens.
   \lean{AlgebraicGeometry.Over.fromSpecAffine, AlgebraicGeometry.Over.fromSpecAffine_naturality,
     AlgebraicGeometry.Over.fromSpecAffine_resAlgHom,
     AlgebraicGeometry.Over.overSpecMap_ΓTop_fromSpecAffine_top}
+  \provenancetag{CUSTOM}
   \uses{def:overSpecMap, def:overSpecGammaTop}
   \leanok
   For a test object \(T\) and an affine open \(U \subseteq T_{\mathrm{left}}\), the spectrum
@@ -8812,6 +9153,7 @@ affine opens.
 \begin{definition}[The component of the unit at a test object]
   \label{def:relPicToPicEt}
   \lean{AlgebraicGeometry.relPicToPicEt, AlgebraicGeometry.relPicToPicEt_val}
+  \provenancetag{CUSTOM}
   \uses{def:picEt, def:PicEtAff_unit, def:fromSpecAffine, def:relPicMap, def:PicEtAff_mapAlg}
   \leanok
   For a test object \(T\), the homomorphism
@@ -8838,6 +9180,7 @@ affine opens.
 \begin{theorem}[Affine consistency of the unit]
   \label{thm:picEtAffineEquiv_relPicToPicEt}
   \lean{AlgebraicGeometry.picEtAffineEquiv_relPicToPicEt}
+  \provenancetag{CUSTOM}
   \uses{def:relPicToPicEt, def:picEtAffineEquiv, def:PicEtAff_mapAlg, def:fromSpecAffine,
     def:relPicMap, def:PicEtAff_unit}
   \leanok
@@ -8863,6 +9206,7 @@ affine opens.
 \begin{theorem}[Naturality of the unit]
   \label{thm:picEtMap_relPicToPicEt}
   \lean{AlgebraicGeometry.picEtMap_relPicToPicEt}
+  \provenancetag{CUSTOM}
   \uses{def:relPicToPicEt, def:picEtMap, def:picEt_IsPullbackValue,
     thm:picEt_pullbackValue_unique, def:fromSpecAffine, def:PicEtAff_mapAlg, def:relPicMap}
   \leanok
@@ -8897,6 +9241,7 @@ affine opens.
   \label{def:picEtUnit}
   \lean{AlgebraicGeometry.picEtUnit, AlgebraicGeometry.picEtUnit_app,
     AlgebraicGeometry.picEtAffineEquiv_picEtUnit_app}
+  \provenancetag{CUSTOM}
   \uses{def:relPicToPicEt, thm:picEtMap_relPicToPicEt, def:picEtFunctor, def:relPicMap,
     thm:picEtAffineEquiv_relPicToPicEt}
   \leanok
@@ -8927,6 +9272,7 @@ reading is independent of every choice.
 \begin{lemma}[The relative degree is additive]
   \label{lem:relPicDeg_hom}
   \lean{AlgebraicGeometry.relPicDeg_mul, AlgebraicGeometry.relPicDeg_one}
+  \provenancetag{CUSTOM}
   \uses{def:relPicDeg}
   \leanok
   For a field extension \(K\) of \(k\) and relative Picard classes
@@ -8946,6 +9292,7 @@ reading is independent of every choice.
 \begin{theorem}[The zigzag, leg (i): one degree through any two field readings]
   \label{thm:relPicDeg_relPicAlgMap_congr}
   \lean{AlgebraicGeometry.relPicDeg_relPicAlgMap_congr}
+  \provenancetag{CUSTOM}
   \uses{def:relPicDeg, thm:relPicDeg_relPicAlgMap, thm:relPicAlgMap_congr,
     thm:etale_cover_field_cofinality, def:etale_cover_prod, def:etale_cover_prod_coproj,
     def:etale_cover_ofField, def:descentClasses, lem:relPicAlgMap_functor}
@@ -8984,6 +9331,7 @@ reading is independent of every choice.
 \begin{theorem}[The zigzag: well-definedness of the plus-class degree]
   \label{thm:relPicDeg_eq_of_descentMap_eq}
   \lean{AlgebraicGeometry.relPicDeg_eq_of_descentMap_eq}
+  \provenancetag{CUSTOM}
   \uses{thm:relPicDeg_relPicAlgMap_congr, def:descentMap, thm:etale_cover_field_cofinality,
     lem:relPicAlgMap_functor, def:descentClasses}
   \leanok
@@ -9022,6 +9370,7 @@ reading is independent of every choice.
   \label{def:degAff}
   \lean{AlgebraicGeometry.PicEtAff.degAff, AlgebraicGeometry.PicEtAff.degAff_mk,
     AlgebraicGeometry.PicEtAff.degAff_mk_ofField}
+  \provenancetag{CUSTOM}
   \uses{def:PicEtAff, def:PicEtAff_mk, thm:relPicDeg_eq_of_descentMap_eq,
     thm:relPicDeg_relPicAlgMap_congr, thm:etale_cover_field_cofinality, def:relPicDeg,
     def:etale_cover_ofField}
@@ -9058,6 +9407,7 @@ reading is independent of every choice.
   \label{thm:degAff_hom}
   \lean{AlgebraicGeometry.PicEtAff.degAff_one, AlgebraicGeometry.PicEtAff.degAff_mul,
     AlgebraicGeometry.PicEtAff.degAff_inv}
+  \provenancetag{CUSTOM}
   \uses{def:degAff, def:PicEtAff_one, thm:PicEtAff_mk_mul_mk, lem:PicEtAff_ind,
     def:etale_cover_prod, def:etale_cover_prod_coproj, thm:etale_cover_field_cofinality,
     lem:relPicDeg_hom, def:etale_cover_self, lem:relPicAlgMap_functor}
@@ -9091,6 +9441,7 @@ reading is independent of every choice.
 \begin{theorem}[The unit normalization of the plus-class degree]
   \label{thm:degAff_unit}
   \lean{AlgebraicGeometry.PicEtAff.degAff_unit}
+  \provenancetag{CUSTOM}
   \uses{def:degAff, def:PicEtAff_unit, def:etale_cover_self,
     lem:PicEtAff_tautological_mem_descentClasses, lem:relPicAlgMap_functor}
   \leanok
@@ -9118,6 +9469,7 @@ reading is independent of every choice.
 \begin{definition}[The degree of an \'etale Picard class at a field point]
   \label{def:degAt}
   \lean{AlgebraicGeometry.degAt}
+  \provenancetag{CUSTOM}
   \uses{def:degAff, def:picEtAffineEquiv, def:picEtMap}
   \leanok
   Let \(T\) be a test object, \(\lambda \in \mathrm{picEt}(C,T)\), \(K\) a field extension of
@@ -9133,6 +9485,7 @@ reading is independent of every choice.
 \begin{lemma}[The degree at a field point is additive]
   \label{lem:degAt_hom}
   \lean{AlgebraicGeometry.degAt_one, AlgebraicGeometry.degAt_mul, AlgebraicGeometry.degAt_inv}
+  \provenancetag{CUSTOM}
   \uses{def:degAt, thm:degAff_hom}
   \leanok
   For classes \(\lambda, \mu \in \mathrm{picEt}(C,T)\) and a field point \(t\),
@@ -9151,6 +9504,7 @@ reading is independent of every choice.
 \begin{theorem}[Functoriality of the degree at field points]
   \label{thm:degAt_picEtMap}
   \lean{AlgebraicGeometry.degAt_picEtMap, AlgebraicGeometry.degAt_picEtFunctor_map}
+  \provenancetag{CUSTOM}
   \uses{def:degAt, thm:picEtMap_functor_laws}
   \leanok
   For \(f \colon T' \to T\), \(\lambda \in \mathrm{picEt}(C,T)\) and a field point
@@ -9169,6 +9523,7 @@ reading is independent of every choice.
 \begin{definition}[The degree-zero subgroup]
   \label{def:pic0Subgroup}
   \lean{AlgebraicGeometry.pic0Subgroup, AlgebraicGeometry.mem_pic0Subgroup_iff}
+  \provenancetag{CUSTOM}
   \uses{def:degAt, lem:degAt_hom}
   \leanok
   For a test object \(T\), the subgroup
@@ -9190,6 +9545,7 @@ reading is independent of every choice.
   \lean{AlgebraicGeometry.pic0Map, AlgebraicGeometry.pic0Map_coe,
     AlgebraicGeometry.pic0Functor, AlgebraicGeometry.pic0Functor_obj,
     AlgebraicGeometry.pic0Functor_map, AlgebraicGeometry.pic0Inclusion}
+  \provenancetag{CUSTOM}
   \uses{def:pic0Subgroup, thm:degAt_picEtMap, def:picEtFunctor, thm:picEtMap_functor_laws}
   \leanok
   The degree-zero condition is stable under restriction: for \(f \colon T' \to T\), the
@@ -9225,6 +9581,7 @@ geometrically reduced over \(k\).
 \begin{definition}[Curve-direction transport of the limit]
   \label{def:picEtPullback}
   \lean{AlgebraicGeometry.picEtPullback, AlgebraicGeometry.picEtPullback_val}
+  \provenancetag{CUSTOM}
   \uses{def:picEt, def:PicEtAff_curveMap, def:PicEtAff_mapAlg}
   \leanok
   Let \(g \colon D \to E\) be a morphism of \(\Over(\Spec k)\) and \(T\) a test object.
@@ -9256,6 +9613,7 @@ geometrically reduced over \(k\).
   \lean{AlgebraicGeometry.picEtPullback_id, AlgebraicGeometry.picEtPullback_comp,
     AlgebraicGeometry.picEtAffineEquiv_picEtPullback,
     AlgebraicGeometry.picEtPullback_picEtAffineEquiv_symm}
+  \provenancetag{CUSTOM}
   \uses{def:picEtPullback, def:picEtAffineEquiv}
   \leanok
   The curve-direction transport of the limit is contravariantly functorial in the curve:
@@ -9283,6 +9641,7 @@ geometrically reduced over \(k\).
 \begin{theorem}[Naturality of the curve transport in the test object]
   \label{thm:picEtMap_picEtPullback}
   \lean{AlgebraicGeometry.picEtMap_picEtPullback}
+  \provenancetag{CUSTOM}
   \uses{def:picEtPullback, def:picEtMap, def:picEt_IsPullbackValue,
     thm:picEt_pullbackValue_unique}
   \leanok
@@ -9312,6 +9671,7 @@ geometrically reduced over \(k\).
   \label{def:picEtPullbackNat}
   \lean{AlgebraicGeometry.picEtPullbackNat, AlgebraicGeometry.picEtPullbackNat_app,
     AlgebraicGeometry.picEtPullbackNat_id, AlgebraicGeometry.picEtPullbackNat_comp}
+  \provenancetag{CUSTOM}
   \uses{def:picEtFunctor, def:picEtPullback, thm:picEtMap_picEtPullback}
   \leanok
   For \(D, E\) proper, geometrically irreducible and geometrically reduced over \(k\)
@@ -9335,6 +9695,7 @@ geometrically reduced over \(k\).
 \begin{theorem}[Degree of a pulled-back class at a field point]
   \label{thm:degAt_picEtPullback}
   \lean{AlgebraicGeometry.degAt_picEtPullback}
+  \provenancetag{CUSTOM}
   \uses{def:degAt, thm:picEtMap_picEtPullback, thm:picEtPullback_laws}
   \leanok
   Let \(D\) be smooth of relative dimension \(1\), proper and geometrically irreducible
@@ -9373,6 +9734,7 @@ different fields.
 \begin{theorem}[Pullback preserves degree zero on every fibre]
   \label{thm:classDeg_cechPicMap_whiskerRight_eq_zero}
   \lean{AlgebraicGeometry.classDeg_cechPicMap_whiskerRight_eq_zero}
+  \provenancetag{CUSTOM}
   \uses{def:classDeg, thm:baseChangeCurve_bundle}
   \leanok
   Let \(L\) be a field extension of \(k\) and let \(\Lambda\) be a \v Cech Picard class
@@ -9406,6 +9768,7 @@ different fields.
 \begin{theorem}[Relative-degree-zero preservation]
   \label{thm:relPicDeg_relPicMapCurveApp_eq_zero}
   \lean{AlgebraicGeometry.relPicDeg_relPicMapCurveApp_eq_zero}
+  \provenancetag{CUSTOM}
   \uses{def:relPicDeg, lem:relPicMapCurve}
   \leanok
   Let \(L\) be a field extension of \(k\) and \(y \in \mathrm{relPic}(E, \Spec L)\) a
@@ -9425,6 +9788,7 @@ different fields.
 \begin{theorem}[The affine curve transport preserves degree zero]
   \label{thm:degAff_curveMap_eq_zero}
   \lean{AlgebraicGeometry.PicEtAff.degAff_curveMap_eq_zero}
+  \provenancetag{CUSTOM}
   \uses{def:degAff, def:PicEtAff_curveMap}
   \leanok
   Let \(K\) be a field extension of \(k\) and \(a \in \mathrm{PicEtAff}(E, K)\) a plus
@@ -9452,6 +9816,7 @@ different fields.
 \begin{definition}[Curve transport of the degree-zero functor]
   \label{def:pic0Pullback}
   \lean{AlgebraicGeometry.pic0Pullback, AlgebraicGeometry.pic0Pullback_coe}
+  \provenancetag{CUSTOM}
   \uses{def:pic0Subgroup, def:picEtPullback, def:degAt}
   \leanok
   For a test object \(T\), the curve transport of Definition~\ref{def:picEtPullback}
@@ -9475,6 +9840,7 @@ different fields.
   \label{thm:pic0Pullback_laws}
   \lean{AlgebraicGeometry.pic0Map_pic0Pullback, AlgebraicGeometry.pic0Pullback_id,
     AlgebraicGeometry.pic0Pullback_comp}
+  \provenancetag{CUSTOM}
   \uses{def:pic0Pullback, def:pic0Functor}
   \leanok
   The degree-zero curve transport commutes with restriction along an arbitrary
@@ -9497,6 +9863,7 @@ different fields.
   \lean{AlgebraicGeometry.pic0PullbackNat, AlgebraicGeometry.pic0PullbackNat_app,
     AlgebraicGeometry.pic0PullbackNat_id, AlgebraicGeometry.pic0PullbackNat_comp,
     AlgebraicGeometry.pic0PullbackNat_inclusion}
+  \provenancetag{CUSTOM}
   \uses{def:pic0Functor, def:pic0Pullback, def:picEtPullbackNat}
   \leanok
   The degree-zero curve transports assemble into a natural transformation
@@ -9527,6 +9894,7 @@ and stratification arguments spend degree-zero-ness.
 \begin{theorem}[The degree seam, unit form]
   \label{thm:degAt_of_affineEquiv_eq_unit}
   \lean{AlgebraicGeometry.degAt_of_affineEquiv_eq_unit}
+  \provenancetag{CUSTOM}
   \uses{def:degAt, thm:picEtAffineEquiv_naturality, def:PicEtAff_mapAlg, thm:degAff_unit,
     def:relPicAlgMap}
   \leanok
@@ -9551,6 +9919,7 @@ and stratification arguments spend degree-zero-ness.
 \begin{theorem}[The degree seam: cocycle-presented classes]
   \label{thm:degAt_of_affineEquiv_eq_unit_relPicMk}
   \lean{AlgebraicGeometry.degAt_of_affineEquiv_eq_unit_relPicMk}
+  \provenancetag{CUSTOM}
   \uses{thm:degAt_of_affineEquiv_eq_unit, def:relPicMap, def:relPic, def:relPicDeg}
   \leanok
   In the situation of Theorem~\ref{thm:degAt_of_affineEquiv_eq_unit}, suppose
@@ -9575,6 +9944,7 @@ and stratification arguments spend degree-zero-ness.
   \label{thm:degAt_baseChange}
   \lean{AlgebraicGeometry.degAt_of_affineEquiv_eq_unit_baseChange,
     AlgebraicGeometry.degAt_eq_classDeg_of_affineEquiv_eq_unit_baseChange}
+  \provenancetag{CUSTOM}
   \uses{thm:degAt_of_affineEquiv_eq_unit, lem:relPicAlgMap_functor,
     thm:relPicDeg_relPicAlgMap, def:relPicDeg, def:relPic}
   \leanok
@@ -9599,6 +9969,7 @@ and stratification arguments spend degree-zero-ness.
 \begin{theorem}[The fibre degree of a degree-zero twist]
   \label{thm:degAt_pic0_mul_pow}
   \lean{AlgebraicGeometry.degAt_pow, AlgebraicGeometry.degAt_pic0_mul_pow}
+  \provenancetag{CUSTOM}
   \uses{lem:degAt_hom, def:pic0Subgroup}
   \leanok
   For any class \(\theta \in \mathrm{picEt}(C,T)\), \(m \in \N\), and a field point \(t\),
@@ -9637,6 +10008,7 @@ with base change \(C_L := \sigma^{*}C\) over \(L\) (\ref{def:baseChange}).
 \begin{definition}[Pushing a field point forward]
   \label{def:pushFieldPoint}
   \lean{AlgebraicGeometry.pushFieldPoint, AlgebraicGeometry.pushFieldPoint_left}
+  \provenancetag{CUSTOM}
   \uses{def:mapOverSpecIso}
   \leanok
   Let \(K\) be a field in a scalar tower \(k \to L \to K\) and
@@ -9662,6 +10034,7 @@ with base change \(C_L := \sigma^{*}C\) over \(L\) (\ref{def:baseChange}).
   \label{def:fieldPointAlgebra}
   \lean{AlgebraicGeometry.fieldPointAlgebra,
     AlgebraicGeometry.fieldPointAlgebra_algebraMap}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(K\) be a field extension of \(k\) and
   \(t : \Spec K/\Spec k \to \sigma_{!}T\) a \(k\)-field-point of the pushed test. The
@@ -9682,6 +10055,7 @@ with base change \(C_L := \sigma^{*}C\) over \(L\) (\ref{def:baseChange}).
 \begin{lemma}[The unpacked structure completes the tower]
   \label{lem:isScalarTower_fieldPointAlgebra}
   \lean{AlgebraicGeometry.isScalarTower_fieldPointAlgebra}
+  \provenancetag{CUSTOM}
   \uses{def:fieldPointAlgebra}
   \leanok
   In the situation of Definition~\ref{def:fieldPointAlgebra}, write
@@ -9705,6 +10079,7 @@ with base change \(C_L := \sigma^{*}C\) over \(L\) (\ref{def:baseChange}).
 \begin{definition}[Lifting a field point of the pushed test]
   \label{def:liftFieldPoint}
   \lean{AlgebraicGeometry.liftFieldPoint, AlgebraicGeometry.liftFieldPoint_left}
+  \provenancetag{CUSTOM}
   \uses{def:fieldPointAlgebra}
   \leanok
   In the situation of Definition~\ref{def:fieldPointAlgebra}, endow \(K\) with the
@@ -9728,6 +10103,7 @@ with base change \(C_L := \sigma^{*}C\) over \(L\) (\ref{def:baseChange}).
   \lean{AlgebraicGeometry.pushFieldPoint_liftFieldPoint,
     AlgebraicGeometry.fieldPointAlgebra_pushFieldPoint,
     AlgebraicGeometry.liftFieldPoint_pushFieldPoint_left}
+  \provenancetag{CUSTOM}
   \uses{def:pushFieldPoint, def:fieldPointAlgebra,
     lem:isScalarTower_fieldPointAlgebra, def:liftFieldPoint}
   \leanok
@@ -9757,6 +10133,7 @@ with base change \(C_L := \sigma^{*}C\) over \(L\) (\ref{def:baseChange}).
 \begin{theorem}[The quantifier exchange for degree zero on a pushed test]
   \label{thm:mem_pic0Subgroup_iff_forall_pushFieldPoint}
   \lean{AlgebraicGeometry.mem_pic0Subgroup_iff_forall_pushFieldPoint}
+  \provenancetag{CUSTOM}
   \uses{def:pic0Subgroup, def:degAt, def:pushFieldPoint, def:fieldPointAlgebra,
     lem:isScalarTower_fieldPointAlgebra, def:liftFieldPoint, thm:fieldPoint_roundTrip}
   \leanok
@@ -9787,6 +10164,7 @@ with base change \(C_L := \sigma^{*}C\) over \(L\) (\ref{def:baseChange}).
     degree zero]
   \label{thm:mem_pic0Subgroup_iff_of_degAt_pushFieldPoint_eq}
   \lean{AlgebraicGeometry.mem_pic0Subgroup_iff_of_degAt_pushFieldPoint_eq}
+  \provenancetag{CUSTOM}
   \uses{thm:mem_pic0Subgroup_iff_forall_pushFieldPoint, def:pic0Subgroup, def:degAt,
     def:pushFieldPoint, def:picEt, def:baseChange}
   \leanok
@@ -9839,6 +10217,7 @@ along \(\sigma_{!}\).
   \label{lem:isScalarTower_sections_map}
   \lean{AlgebraicGeometry.Over.ofHom_algebraMap_sections_map,
     AlgebraicGeometry.Over.isScalarTower_sections_map}
+  \provenancetag{CUSTOM}
   \uses{def:baseChange}
   \leanok
   Let \(T\) be a test object of \(\Over(\Spec L)\) and \(U \subseteq T_{\mathrm{left}}\)
@@ -9868,6 +10247,7 @@ along \(\sigma_{!}\).
     AlgebraicGeometry.picEtCrossBaseEquiv,
     AlgebraicGeometry.picEtCrossBaseEquiv_apply,
     AlgebraicGeometry.picEtCrossBaseEquiv_symm_apply}
+  \provenancetag{CUSTOM}
   \uses{def:picEt, def:PicEtAff_baseFieldShuffle, lem:isScalarTower_sections_map,
     def:baseChange}
   \leanok
@@ -9901,6 +10281,7 @@ along \(\sigma_{!}\).
     AlgebraicGeometry.appLE_sectionShuffle,
     AlgebraicGeometry.picEtMap_picEtCrossBase,
     AlgebraicGeometry.picEtMap_picEtCrossBaseInv}
+  \provenancetag{CUSTOM}
   \uses{def:picEtCrossBase, def:picEtMap}
   \leanok
   For a morphism \(f \colon T' \to T\) of test objects of \(\Over(\Spec L)\),
@@ -9927,6 +10308,7 @@ along \(\sigma_{!}\).
   \label{thm:picEtAffineEquiv_picEtCrossBase}
   \lean{AlgebraicGeometry.overSpecΓTop_map_restrictScalars,
     AlgebraicGeometry.picEtAffineEquiv_picEtCrossBase}
+  \provenancetag{CUSTOM}
   \uses{def:picEtCrossBase, def:picEtAffineEquiv, def:mapOverSpecIso, def:picEtMap}
   \leanok
   Let \(A\) be an algebra in a scalar tower \(k \to L \to A\).  Under the affine
@@ -9953,6 +10335,7 @@ along \(\sigma_{!}\).
 \begin{theorem}[Degree invariance of the base-field shuffle at a field]
   \label{thm:degAff_baseFieldShuffle}
   \lean{AlgebraicGeometry.degAff_baseFieldShuffle}
+  \provenancetag{CUSTOM}
   \uses{def:degAff, def:PicEtAff_baseFieldShuffle, def:baseChange}
   \leanok
   Let \(K\) be a field in a scalar tower \(k \to L \to K\).  For every plus class
@@ -9986,6 +10369,7 @@ along \(\sigma_{!}\).
 \begin{theorem}[The degree matching at pushed field points]
   \label{thm:degAt_pushFieldPoint_picEtCrossBase}
   \lean{AlgebraicGeometry.degAt_pushFieldPoint_picEtCrossBase}
+  \provenancetag{CUSTOM}
   \uses{def:degAt, def:pushFieldPoint, def:picEtCrossBase}
   \leanok
   Let \(T\) be a test object of \(\Over(\Spec L)\) and
@@ -10018,6 +10402,7 @@ along \(\sigma_{!}\).
 \begin{theorem}[The componentwise lift restricts to the degree-zero subgroups]
   \label{thm:mem_pic0Subgroup_picEtCrossBase_iff}
   \lean{AlgebraicGeometry.mem_pic0Subgroup_picEtCrossBase_iff}
+  \provenancetag{CUSTOM}
   \uses{def:pic0Subgroup, def:picEtCrossBase,
     thm:mem_pic0Subgroup_iff_of_degAt_pushFieldPoint_eq}
   \leanok
@@ -10042,6 +10427,7 @@ along \(\sigma_{!}\).
     AlgebraicGeometry.pic0CrossBaseEquiv_symm_apply_coe,
     AlgebraicGeometry.pic0Theta, AlgebraicGeometry.pic0Theta_hom_app,
     AlgebraicGeometry.pic0Theta_inv_app}
+  \provenancetag{CUSTOM}
   \uses{def:pic0Functor, def:picEtCrossBase,
     thm:mem_pic0Subgroup_picEtCrossBase_iff}
   \leanok
@@ -10071,6 +10457,7 @@ along \(\sigma_{!}\).
   \label{def:pic0ThetaType}
   \lean{AlgebraicGeometry.pic0ThetaType, AlgebraicGeometry.pic0ThetaType_hom_app,
     AlgebraicGeometry.pic0ThetaType_inv_app}
+  \provenancetag{CUSTOM}
   \uses{def:pic0Theta, def:pic0SigmaFunctor}
   \leanok
   Composing \(\theta\) with the forgetful functor from commutative groups to sets
@@ -10095,6 +10482,7 @@ degree-\(m d_1\) layer.
   \label{def:toBaseTest}
   \lean{AlgebraicGeometry.toBaseTest, AlgebraicGeometry.toBaseTest_left,
     AlgebraicGeometry.toBaseTest_naturality, AlgebraicGeometry.toBaseTest_overSpec}
+  \provenancetag{CUSTOM}
   \uses{def:overSpecMap}
   \leanok
   The base test \(\Spec k\) (the affine test of the \(k\)-algebra \(k\)) is terminal in
@@ -10115,6 +10503,7 @@ degree-\(m d_1\) layer.
   \label{def:thetaFamily}
   \lean{AlgebraicGeometry.thetaBase, AlgebraicGeometry.thetaFamily,
     AlgebraicGeometry.thetaFamily_natural}
+  \provenancetag{CUSTOM}
   \uses{def:toBaseTest, def:picEtAffineEquiv, def:PicEtAff_unit, def:relPic, def:picEtMap,
     thm:picEtMap_functor_laws}
   \leanok
@@ -10141,6 +10530,7 @@ degree-\(m d_1\) layer.
   \label{thm:degAt_thetaFamily}
   \lean{AlgebraicGeometry.thetaFamily_overSpec_affineEquiv,
     AlgebraicGeometry.degAt_thetaFamily, AlgebraicGeometry.degAt_thetaFamily_pow}
+  \provenancetag{CUSTOM}
   \uses{def:thetaFamily, thm:degAt_baseChange, thm:picEtAffineEquiv_naturality,
     def:PicEtAff_mapAlg, thm:degAt_picEtMap, thm:degAt_pic0_mul_pow, def:toBaseTest,
     def:relPicAlgMap}
@@ -10171,6 +10561,7 @@ degree-\(m d_1\) layer.
 \begin{definition}[The degree-\(d\) layer functor]
   \label{def:picDegLayerFunctor}
   \lean{AlgebraicGeometry.picDegLayer, AlgebraicGeometry.picDegLayerFunctor}
+  \provenancetag{CUSTOM}
   \uses{def:degAt, def:picEtFunctor, thm:degAt_picEtMap, thm:picEtMap_functor_laws}
   \leanok
   For \(d \in \Z\), the \emph{degree-\(d\) layer}
@@ -10194,6 +10585,7 @@ degree-\(m d_1\) layer.
   \label{thm:mulThetaPowNatIso}
   \lean{AlgebraicGeometry.mulThetaPowEquiv, AlgebraicGeometry.mulThetaPowNatIso,
     AlgebraicGeometry.representableByOfShift}
+  \provenancetag{CUSTOM}
   \uses{def:picDegLayerFunctor, def:pic0Functor, thm:degAt_pic0_mul_pow,
     thm:degAt_thetaFamily, def:thetaFamily, lem:degAt_hom}
   \leanok
@@ -10224,6 +10616,7 @@ degree-\(m d_1\) layer.
   \lean{AlgebraicGeometry.baseCurveObj, AlgebraicGeometry.thetaP1,
     AlgebraicGeometry.isFinite_thetaP1, AlgebraicGeometry.isDominant_thetaP1,
     AlgebraicGeometry.thetaCechClass, AlgebraicGeometry.one_le_classDeg_thetaCechClass}
+  \provenancetag{CUSTOM}
   \uses{thm:exists_finite_dominant_toP1, thm:baseChangeCurve_bundle, def:fiberTwist,
     thm:classDeg_fiberTwist_one}
   \leanok
@@ -10256,6 +10649,7 @@ here we add gluing, and the S-lemma making the degree-zero subfunctor a subsheaf
 \begin{definition}[Compatible local data on an open cover]
   \label{def:picEt_LocalData}
   \lean{AlgebraicGeometry.picEt.LocalData, AlgebraicGeometry.picEt.IsGlueValue}
+  \provenancetag{CUSTOM}
   \uses{def:picEt, def:PicEtAff_mapAlg}
   \leanok
   Let \(T\) be a test object and \((O_i)_{i \in \iota}\) an open cover of
@@ -10272,6 +10666,7 @@ here we add gluing, and the S-lemma making the degree-zero subfunctor a subsheaf
 \begin{theorem}[Uniqueness of glue values]
   \label{thm:picEt_glueValue_unique}
   \lean{AlgebraicGeometry.picEt.glueValue_unique}
+  \provenancetag{CUSTOM}
   \uses{def:picEt_LocalData, thm:exists_basic_subcover, thm:picEt_eq_of_basic_eq}
   \leanok
   If the \(O_i\) cover \(T_{\mathrm{left}}\), then any two glue values of the same data at
@@ -10289,6 +10684,7 @@ here we add gluing, and the S-lemma making the degree-zero subfunctor a subsheaf
 \begin{theorem}[Existence of glue values]
   \label{thm:picEt_exists_isGlueValue}
   \lean{AlgebraicGeometry.picEt.exists_isGlueValue}
+  \provenancetag{CUSTOM}
   \uses{def:picEt_LocalData, thm:PicEtAff_exists_mapAlg_eq_of_compat,
     thm:exists_basic_subcover, thm:picEt_eq_of_basic_eq, def:PicEtAff_mapAlg}
   \leanok
@@ -10322,6 +10718,7 @@ here we add gluing, and the S-lemma making the degree-zero subfunctor a subsheaf
     AlgebraicGeometry.picEt.glueValue_eq_of, AlgebraicGeometry.picEt.glueSection,
     AlgebraicGeometry.picEt.glueSection_eq,
     AlgebraicGeometry.picEt.existsUnique_glue_of_le_cover}
+  \provenancetag{CUSTOM}
   \uses{thm:picEt_glueValue_unique, thm:picEt_exists_isGlueValue, thm:picEt_ext_of_le_cover,
     def:picEt, def:PicEtAff_mapAlg}
   \leanok
@@ -10345,6 +10742,7 @@ here we add gluing, and the S-lemma making the degree-zero subfunctor a subsheaf
 \begin{theorem}[Separation of the degree-zero subfunctor]
   \label{thm:pic0Subgroup_ext_of_le_cover}
   \lean{AlgebraicGeometry.pic0Subgroup_ext_of_le_cover}
+  \provenancetag{CUSTOM}
   \uses{def:pic0Subgroup, thm:picEt_ext_of_le_cover}
   \leanok
   Two degree-zero classes on \(T\) whose values agree at every affine open subordinate to an
@@ -10360,6 +10758,7 @@ here we add gluing, and the S-lemma making the degree-zero subfunctor a subsheaf
 \begin{theorem}[The S-lemma: degree-zero membership is Zariski-local]
   \label{thm:mem_pic0Subgroup_of_cover}
   \lean{AlgebraicGeometry.mem_pic0Subgroup_of_cover}
+  \provenancetag{CUSTOM}
   \uses{def:pic0Subgroup, thm:degAt_picEtMap, def:picEtMap}
   \leanok
   Let \((f_i \colon T_i \to T)\) be a family of test morphisms whose left legs are open
@@ -10395,6 +10794,7 @@ morphisms with open-immersion left legs carrying sections. This section is the b
     AlgebraicGeometry.Over.appLEAlgEquiv,
     AlgebraicGeometry.Over.appLEAlgHom_comp_appLEAlgEquiv_symm,
     AlgebraicGeometry.PicEtAff.mapAlg_injective}
+  \provenancetag{CUSTOM}
   \uses{def:PicEtAff_mapAlg}
   \leanok
   Let \(f \colon T' \to T\) be a test morphism whose left leg is an open immersion, and
@@ -10416,6 +10816,7 @@ morphisms with open-immersion left legs carrying sections. This section is the b
   \lean{AlgebraicGeometry.picEt.coverValue, AlgebraicGeometry.picEt.mapAlg_coverValue,
     AlgebraicGeometry.picEt.coverValue_res, AlgebraicGeometry.picEt.overlapTest,
     AlgebraicGeometry.picEt.overlapInclusion, AlgebraicGeometry.picEt.coverValue_glue}
+  \provenancetag{CUSTOM}
   \uses{lem:appLEAlgEquiv, def:picEt_LocalData, def:picEt, def:picEtMap,
     def:PicEtAff_mapAlg, thm:picEt_mapAlg_appLE_eq}
   \leanok
@@ -10449,6 +10850,7 @@ morphisms with open-immersion left legs carrying sections. This section is the b
 \begin{theorem}[The sheaf property of \(\mathrm{picEt}\) in morphism-cover form]
   \label{thm:picEt_existsUnique_of_cover}
   \lean{AlgebraicGeometry.picEt.ext_of_cover, AlgebraicGeometry.picEt.existsUnique_of_cover}
+  \provenancetag{CUSTOM}
   \uses{def:picEt_coverValue, thm:picEt_existsUnique_glue_of_le_cover,
     thm:picEt_ext_of_le_cover, thm:picEt_glueValue_unique, lem:appLEAlgEquiv}
   \leanok
@@ -10478,6 +10880,7 @@ morphisms with open-immersion left legs carrying sections. This section is the b
   \label{thm:pic0Subgroup_existsUnique_of_cover}
   \lean{AlgebraicGeometry.pic0Subgroup_ext_of_cover,
     AlgebraicGeometry.pic0Subgroup_existsUnique_of_cover}
+  \provenancetag{CUSTOM}
   \uses{thm:picEt_existsUnique_of_cover, thm:mem_pic0Subgroup_of_cover, def:pic0Functor,
     def:pic0Subgroup}
   \leanok
@@ -10507,6 +10910,7 @@ engine, and a representation of the extension descends to one of the original fu
   \lean{CategoryTheory.Over.mkCongr, CategoryTheory.Over.mkCongr_left,
     CategoryTheory.Over.mkCongr_rfl, CategoryTheory.Over.mkCongr_comp_mkCongr,
     CategoryTheory.Over.mkCongr_comp_homMk}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(\mathcal C\) be a category, \(S\) an object, and \(a = b\) two equal morphisms
   \(T \to S\). The identity of \(T\) is a morphism of slice objects
@@ -10528,6 +10932,7 @@ engine, and a representation of the extension descends to one of the original fu
     CategoryTheory.Over.sigmaExtension_obj, CategoryTheory.Over.sigmaExtension_map_mk,
     CategoryTheory.Over.sigmaExtension_map_fst, CategoryTheory.Over.sigmaExtension_ext,
     CategoryTheory.Over.sigmaExtension_snd_eq}
+  \provenancetag{CUSTOM}
   \uses{def:mkCongr}
   \leanok
   For a presheaf \(F\) on the slice \(\Over(S)\), the \emph{\(\Sigma\)-extension}
@@ -10558,6 +10963,7 @@ engine, and a representation of the extension descends to one of the original fu
   \lean{CategoryTheory.Over.sigmaExtension_map_mk_eq_iff,
     CategoryTheory.Over.sigmaExtension_map_left_mk,
     CategoryTheory.Over.map_eq_of_sigmaExtension_map_eq}
+  \provenancetag{CUSTOM}
   \uses{def:sigmaExtension, def:mkCongr}
   \leanok
   Let \(F\) be a presheaf on \(\Over(S)\) and \(\widetilde F\) its \(\Sigma\)-extension.
@@ -10593,6 +10999,7 @@ engine, and a representation of the extension descends to one of the original fu
 \begin{theorem}[The \(\Sigma\)-descent of a representation]
   \label{thm:representableBy_overSlice}
   \lean{CategoryTheory.Functor.RepresentableBy.overSlice}
+  \provenancetag{CUSTOM}
   \uses{def:sigmaExtension, lem:sigmaExtension_seams}
   \leanok
   Let \(F\) be a presheaf on \(\Over(S)\) and suppose the \(\Sigma\)-extension
@@ -10626,6 +11033,7 @@ engine, and a representation of the extension descends to one of the original fu
   \label{def:pic0SigmaFunctor}
   \lean{AlgebraicGeometry.pic0TypeFunctor, AlgebraicGeometry.pic0TypeFunctor_obj,
     AlgebraicGeometry.pic0TypeFunctor_map_apply, AlgebraicGeometry.pic0SigmaFunctor}
+  \provenancetag{CUSTOM}
   \uses{def:pic0Functor, def:sigmaExtension}
   \leanok
   Write \(\mathrm{pic}^0_{\mathrm{Set}}(C)\) for the set-valued functor underlying the
@@ -10642,6 +11050,7 @@ engine, and a representation of the extension descends to one of the original fu
 \begin{theorem}[The big-site Zariski sheaf certificate]
   \label{thm:pic0SigmaFunctor_isSheaf}
   \lean{AlgebraicGeometry.pic0SigmaFunctor_isSheaf, AlgebraicGeometry.pic0SigmaSheaf}
+  \provenancetag{CUSTOM}
   \uses{def:pic0SigmaFunctor, thm:pic0Subgroup_existsUnique_of_cover,
     lem:sigmaExtension_seams, def:sigmaExtension}
   \leanok
@@ -10678,6 +11087,7 @@ engine, and a representation of the extension descends to one of the original fu
 \begin{definition}[Local representability descends to the slice]
   \label{def:pic0RepresentableByOfCharts}
   \lean{AlgebraicGeometry.pic0RepresentableByOfCharts}
+  \provenancetag{CUSTOM}
   \uses{thm:pic0SigmaFunctor_isSheaf, thm:representableBy_overSlice, def:pic0SigmaFunctor}
   \leanok
   Suppose given a family of schemes \(X_i\) with maps
@@ -10734,6 +11144,7 @@ correspondence of the representation is the Abel map.
 \begin{theorem}[The unit seam at arbitrary tests]
   \label{thm:degAt_relPicToPicEt}
   \lean{AlgebraicGeometry.degAt_relPicToPicEt}
+  \provenancetag{CUSTOM}
   \uses{def:degAt, thm:picEtMap_relPicToPicEt, thm:picEtAffineEquiv_relPicToPicEt,
     thm:degAff_unit, def:relPicToPicEt, def:relPicMap}
   \leanok
@@ -10759,6 +11170,8 @@ correspondence of the representation is the Abel map.
   \uses{def:graphLocalEquations, def:relPicToPicEt, def:relPic}
   \leanok
   \source{kleiman-picard, abelian-varieties:page-0107}
+  \provenancetag{ADAPTED}
+  \alignmentcheck{TO CHECK: Milne page~0107 is under the standing hypothesis \(g(C)>0\), while this construction is stated for all genera; verify the genus-zero scope against the cited source.}
   Let \(P \colon \mathbf{1} \to C\) be a rational point of the curve (a morphism from the
   unit test). The \emph{Abel \v Cech class} on the test \(T = C\) is
   \[
@@ -10776,6 +11189,7 @@ correspondence of the representation is the Abel map.
 \begin{theorem}[The functor-point formula, \v Cech level]
   \label{thm:cechPicMap_abelCechClass}
   \lean{AlgebraicGeometry.cechPicMap_abelCechClass}
+  \provenancetag{CUSTOM}
   \uses{def:abelCechClass, thm:graphLocalEquations_base_change}
   \leanok
   For any test \(T\) and any point \(f \colon T \to C\), the pullback of the Abel \v Cech
@@ -10798,6 +11212,7 @@ correspondence of the representation is the Abel map.
 \begin{theorem}[The degree-zero certificate of the Abel class]
   \label{thm:degAt_abelPicEt}
   \lean{AlgebraicGeometry.degAt_abelPicEt}
+  \provenancetag{CUSTOM}
   \uses{thm:degAt_relPicToPicEt, thm:cechPicMap_abelCechClass, thm:classDeg_graphPicClass,
     def:relPicMap, def:relPicDeg, lem:degAt_hom}
   \leanok
@@ -10824,6 +11239,8 @@ correspondence of the representation is the Abel map.
   \uses{def:pic0Subgroup, thm:degAt_abelPicEt, def:abelCechClass}
   \leanok
   \source{kleiman-picard, abelian-varieties:page-0107}
+  \provenancetag{ADAPTED}
+  \alignmentcheck{TO CHECK: Milne page~0107 is under the standing hypothesis \(g(C)>0\), while this construction is stated for all genera; verify the genus-zero scope against the cited source.}
   The \emph{Abel element} is the Abel class as an element of the degree-zero subgroup,
   \[
     \alpha_P \in \mathrm{pic}^0(C, C),
@@ -10838,6 +11255,7 @@ correspondence of the representation is the Abel map.
 \begin{theorem}[The functor-point formula of the Abel element]
   \label{thm:abelElement_map}
   \lean{AlgebraicGeometry.abelPicEt_map, AlgebraicGeometry.abelElement_map}
+  \provenancetag{CUSTOM}
   \uses{def:abelElement, thm:picEtMap_relPicToPicEt, thm:cechPicMap_abelCechClass,
     def:pic0Functor, def:relPicMap}
   \leanok
@@ -10860,6 +11278,7 @@ correspondence of the representation is the Abel map.
 \begin{theorem}[The pointing law]
   \label{thm:abelElement_map_point}
   \lean{AlgebraicGeometry.abelElement_map_point}
+  \provenancetag{CUSTOM}
   \uses{thm:abelElement_map, def:pic0Functor}
   \leanok
   Restriction of the Abel element along the rational point \(P\) itself is trivial:

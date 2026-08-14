@@ -20,6 +20,7 @@ irreducibility.
 \begin{definition}[Jacobian datum]
   \label{def:jacobian_data}
   \lean{AlgebraicGeometry.JacobianData}
+  \provenancetag{CUSTOM}
   \uses{def:pic0Functor}
   \leanok
   A \emph{Jacobian datum} for \(C\) consists of:
@@ -41,6 +42,7 @@ irreducibility.
 \begin{definition}[The group structure of the representing object]
   \label{def:jacobian_data_grp}
   \lean{AlgebraicGeometry.JacobianData.grpObj}
+  \provenancetag{CUSTOM}
   \uses{def:jacobian_data, def:pic0Functor}
   \leanok
   For a Jacobian datum \(d\) with representing object \(J\), the scheme \(J\)
@@ -66,6 +68,7 @@ irreducibility.
   \label{lem:jacobian_data_homEquiv}
   \lean{AlgebraicGeometry.JacobianData.homEquiv,
     AlgebraicGeometry.JacobianData.homEquiv_comp}
+  \provenancetag{CUSTOM}
   \uses{def:jacobian_data, def:pic0Functor}
   \leanok
   Let \(d\) be a Jacobian datum with representing object \(J\). For every test
@@ -91,6 +94,7 @@ irreducibility.
   \label{def:jacobian_data_unique}
   \lean{AlgebraicGeometry.JacobianData.uniqueUpToIso,
     AlgebraicGeometry.JacobianData.homEquiv_uniqueUpToIso_hom}
+  \provenancetag{CUSTOM}
   \uses{def:jacobian_data, lem:jacobian_data_homEquiv}
   \leanok
   Let \(d\), \(d'\) be two Jacobian data for the same curve, with representing
@@ -136,6 +140,7 @@ Jacobian data \(d_X\), \(d_Y\), \(d_Z\) and representing objects \(J_X\),
   \label{thm:yonedaGrp}
   \lean{CategoryTheory.yonedaGrp, CategoryTheory.yonedaGrpFullyFaithful,
     CategoryTheory.yonedaGrpObjIsoOfRepresentableBy}
+  \provenancetag{CUSTOM}
   \mathlibok
   \leanok
   Let \(\mathcal C\) be a cartesian monoidal category. Sending a group object
@@ -151,6 +156,7 @@ Jacobian data \(d_X\), \(d_Y\), \(d_Z\) and representing objects \(J_X\),
   \label{def:jacobian_data_pullbackHom}
   \lean{AlgebraicGeometry.JacobianData.pullbackHom,
     AlgebraicGeometry.JacobianData.yonedaGrp_map_pullbackHom}
+  \provenancetag{CUSTOM}
   \uses{def:jacobian_data, def:jacobian_data_grp, def:pic0PullbackNat,
     thm:yonedaGrp}
   \leanok
@@ -177,6 +183,7 @@ Jacobian data \(d_X\), \(d_Y\), \(d_Z\) and representing objects \(J_X\),
   \label{thm:jacobian_data_pullbackHom_laws}
   \lean{AlgebraicGeometry.JacobianData.pullbackHom_id,
     AlgebraicGeometry.JacobianData.pullbackHom_comp}
+  \provenancetag{CUSTOM}
   \uses{def:jacobian_data_pullbackHom}
   \leanok
   \(\id_X^{*} = \id_{J_X}\) (both slots taken by the same datum \(d_X\)), and
@@ -202,6 +209,7 @@ Jacobian data \(d_X\), \(d_Y\), \(d_Z\) and representing objects \(J_X\),
   \label{lem:jacobian_data_comp_pullbackHom}
   \lean{AlgebraicGeometry.JacobianData.comp_pullbackHom,
     AlgebraicGeometry.JacobianData.homEquiv_comp_pullbackHom}
+  \provenancetag{CUSTOM}
   \uses{def:jacobian_data_pullbackHom, lem:jacobian_data_homEquiv,
     def:pic0Pullback}
   \leanok
@@ -236,6 +244,7 @@ schemes locally of finite type over a field.
 \begin{theorem}[The diagonal of a group object is a pullback of the unit]
   \label{thm:grp_diagonal_pullback}
   \lean{CategoryTheory.GrpObj.isPullback_diagonal}
+  \provenancetag{CUSTOM}
   \uses{def:grp_diff}
   \leanok
   Let \(G\) be a group object in a cartesian monoidal category, with unit
@@ -274,6 +283,7 @@ schemes locally of finite type over a field.
 \begin{theorem}[A group scheme with closed unit section is separated]
   \label{thm:separated_of_closed_unit}
   \lean{AlgebraicGeometry.isSeparated_of_isClosedImmersion_one}
+  \provenancetag{CUSTOM}
   \uses{thm:grp_diagonal_pullback}
   \leanok
   Let \(S\) be a scheme and \(G\) a group object of \(\Over(S)\). If the unit
@@ -295,6 +305,7 @@ schemes locally of finite type over a field.
 \begin{theorem}[Group schemes over a field are separated]
   \label{thm:group_scheme_separated}
   \lean{AlgebraicGeometry.isSeparated_of_grpObj}
+  \provenancetag{CUSTOM}
   \uses{thm:separated_of_closed_unit}
   \leanok
   Every group scheme \(G\) over a field \(K\) is separated over \(K\).
@@ -310,6 +321,7 @@ schemes locally of finite type over a field.
 \begin{corollary}[The representing object of a Jacobian datum is separated]
   \label{cor:jacobianData_separated}
   \lean{AlgebraicGeometry.JacobianData.isSeparated}
+  \provenancetag{CUSTOM}
   \uses{def:jacobian_data_grp, thm:group_scheme_separated}
   \leanok
   For every Jacobian datum \(d\) with representing object \(J\), the structure
@@ -339,6 +351,7 @@ isomorphism \(\rho_g = \mu \circ \langle \mathrm{id}_G,\ g \circ t_G\rangle\)
   \label{lem:comp_mulRight}
   \lean{CategoryTheory.GrpObj.comp_mulRight_hom,
     CategoryTheory.GrpObj.comp_mulRight_inv}
+  \provenancetag{CUSTOM}
   \leanok
   For morphisms \(f : X \to G\) and points \(g : 1 \to G\) of a group object
   \(G\),
@@ -366,6 +379,7 @@ isomorphism \(\rho_g = \mu \circ \langle \mathrm{id}_G,\ g \circ t_G\rangle\)
   \lean{CategoryTheory.GrpObj.pointTranslation}
   \leanok
   \source{kleiman-picard}
+  \provenancetag{CUSTOM}
   For points \(x, y : 1 \to G\) of a group object \(G\), the
   \emph{point translation}
   \[
@@ -377,6 +391,7 @@ isomorphism \(\rho_g = \mu \circ \langle \mathrm{id}_G,\ g \circ t_G\rangle\)
 \begin{lemma}[The point translation carries \(x\) to \(y\)]
   \label{lem:point_translation_apply}
   \lean{CategoryTheory.GrpObj.comp_pointTranslation_hom}
+  \provenancetag{CUSTOM}
   \uses{def:point_translation, lem:comp_mulRight}
   \leanok
   For points \(x, y : 1 \to G\),
@@ -396,6 +411,7 @@ isomorphism \(\rho_g = \mu \circ \langle \mathrm{id}_G,\ g \circ t_G\rangle\)
   \lean{CategoryTheory.GrpObj.pointTranslationIso,
     CategoryTheory.GrpObj.pointTranslationIso_hom,
     CategoryTheory.GrpObj.pointTranslationIso_inv}
+  \provenancetag{CUSTOM}
   \uses{def:point_translation}
   \leanok
   Let \(S\) be a scheme, \(G\) a group scheme over \(S\), and \(x, y\) two
@@ -409,6 +425,7 @@ isomorphism \(\rho_g = \mu \circ \langle \mathrm{id}_G,\ g \circ t_G\rangle\)
 \begin{lemma}[Translations commute with the structure morphism]
   \label{lem:point_translation_iso_over}
   \lean{CategoryTheory.GrpObj.pointTranslationIso_hom_comp}
+  \provenancetag{CUSTOM}
   \uses{def:point_translation_iso}
   \leanok
   In the situation of \ref{def:point_translation_iso}, composing
@@ -425,6 +442,7 @@ isomorphism \(\rho_g = \mu \circ \langle \mathrm{id}_G,\ g \circ t_G\rangle\)
 \begin{lemma}[Translations act on points as prescribed]
   \label{lem:point_translation_iso_points}
   \lean{CategoryTheory.GrpObj.pointTranslationIso_hom_apply}
+  \provenancetag{CUSTOM}
   \uses{def:point_translation_iso, lem:point_translation_apply}
   \leanok
   In the situation of \ref{def:point_translation_iso}, for every point
@@ -444,6 +462,7 @@ isomorphism \(\rho_g = \mu \circ \langle \mathrm{id}_G,\ g \circ t_G\rangle\)
 \begin{lemma}[Transport of the smooth locus]
   \label{lem:smooth_locus_transport}
   \lean{AlgebraicGeometry.mem_smoothLocus_iff_of_comp_eq}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(f : X \to S\) be a morphism locally of finite presentation and
   \(e : X \to X\) an open immersion with \(f \circ e = f\). Then for every
@@ -466,6 +485,7 @@ isomorphism \(\rho_g = \mu \circ \langle \mathrm{id}_G,\ g \circ t_G\rangle\)
 \begin{lemma}[Transport of stalk reducedness]
   \label{lem:stalk_reduced_transport}
   \lean{AlgebraicGeometry.isReduced_stalk_iff_of_isOpenImmersion}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(e : X \to Y\) be an open immersion of schemes and \(z \in X\). Then
   \(\struct{X,z}\) is reduced if and only if \(\struct{Y, e(z)}\) is reduced.
@@ -479,6 +499,7 @@ isomorphism \(\rho_g = \mu \circ \langle \mathrm{id}_G,\ g \circ t_G\rangle\)
 \begin{lemma}[Transport of irreducibility]
   \label{lem:irreducible_transport}
   \lean{AlgebraicGeometry.isIrreducible_preimage_iff_of_isIso}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(e : X \to Y\) be an isomorphism of schemes and \(t \subseteq Y\) a
   subset. Then \(e^{-1}(t)\) is irreducible if and only if \(t\) is
@@ -502,6 +523,7 @@ isomorphism \(\rho_g = \mu \circ \langle \mathrm{id}_G,\ g \circ t_G\rangle\)
     AlgebraicGeometry.JacobianData.pointTranslationIso_mem_smoothLocus_iff,
     AlgebraicGeometry.JacobianData.isReduced_stalk_pointTranslationIso_iff,
     AlgebraicGeometry.JacobianData.isIrreducible_pointTranslationIso_preimage_iff}
+  \provenancetag{CUSTOM}
   \uses{def:jacobian_data_grp, def:point_translation,
     lem:point_translation_apply, def:point_translation_iso,
     lem:point_translation_iso_over, lem:point_translation_iso_points,
@@ -537,6 +559,7 @@ isomorphism \(\rho_g = \mu \circ \langle \mathrm{id}_G,\ g \circ t_G\rangle\)
 \begin{definition}[Abel source]
   \label{def:abel_source}
   \lean{AlgebraicGeometry.AbelSourceData}
+  \provenancetag{CUSTOM}
   \uses{def:jacobian_data}
   \leanok
   Let \(d\) be a Jacobian datum with representing object \(J\). An
@@ -558,6 +581,7 @@ isomorphism \(\rho_g = \mu \circ \langle \mathrm{id}_G,\ g \circ t_G\rangle\)
 \begin{theorem}[The representing object is universally closed]
   \label{thm:jacobianData_universallyClosed}
   \lean{AlgebraicGeometry.universallyClosed_of_abelSource}
+  \provenancetag{CUSTOM}
   \uses{def:abel_source, def:jacobian_data}
   \leanok
   Let \(d\) be a Jacobian datum admitting an Abel source. Then the structure
@@ -580,6 +604,7 @@ isomorphism \(\rho_g = \mu \circ \langle \mathrm{id}_G,\ g \circ t_G\rangle\)
 \begin{theorem}[The representing object is proper]
   \label{thm:jacobianData_proper}
   \lean{AlgebraicGeometry.isProper_of_abelSource}
+  \provenancetag{CUSTOM}
   \uses{def:abel_source, cor:jacobianData_separated,
     thm:jacobianData_universallyClosed, def:jacobian_data}
   \leanok
@@ -600,6 +625,7 @@ isomorphism \(\rho_g = \mu \circ \langle \mathrm{id}_G,\ g \circ t_G\rangle\)
 \begin{theorem}[The representing object is geometrically irreducible]
   \label{thm:jacobianData_geomIrreducible}
   \lean{AlgebraicGeometry.geometricallyIrreducible_of_abelSource}
+  \provenancetag{CUSTOM}
   \uses{def:abel_source}
   \leanok
   Let \(d\) be a Jacobian datum admitting an Abel source. Then the structure
@@ -631,6 +657,7 @@ datum-level mechanism behind \ref{thm:baseChangeIso}.
 \begin{definition}[Base change of a Jacobian datum]
   \label{def:jacobianData_baseChange}
   \lean{AlgebraicGeometry.JacobianData.baseChange}
+  \provenancetag{CUSTOM}
   \uses{def:jacobian_data, def:baseChange, lem:jacobian_data_homEquiv}
   \leanok
   A Jacobian datum \(d\) for \(C\), with representing object \(J\), base-changes to a Jacobian datum
@@ -645,6 +672,7 @@ datum-level mechanism behind \ref{thm:baseChangeIso}.
 \begin{lemma}[Base change respects the group structure]
   \label{lem:grpObjObj_baseChange_eq}
   \lean{AlgebraicGeometry.grpObjObj_baseChange_eq}
+  \provenancetag{CUSTOM}
   \uses{def:jacobianData_baseChange, def:jacobian_data_grp}
   \leanok
   Let \(d\) be a Jacobian datum for \(C\). The group-object structure that base change induces on
@@ -666,6 +694,7 @@ datum-level mechanism behind \ref{thm:baseChangeIso}.
 \begin{definition}[Datum-level base-change isomorphism]
   \label{def:baseChangeIsoOfData}
   \lean{AlgebraicGeometry.baseChangeIsoOfData}
+  \provenancetag{CUSTOM}
   \uses{lem:grpObjObj_baseChange_eq, def:jacobianData_baseChange, def:jacobian_data_unique}
   \leanok
   Let \(d\) be a Jacobian datum for \(C\) and \(d_L\) a Jacobian datum for \(C_L\). There is a

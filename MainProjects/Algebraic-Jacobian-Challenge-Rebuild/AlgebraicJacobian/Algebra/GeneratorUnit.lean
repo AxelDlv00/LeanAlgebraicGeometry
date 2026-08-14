@@ -60,7 +60,11 @@ lemma rTensor_smul_of_ringHom (φ : R →+* R') (φₗ : R →ₗ[A] R')
 /-- **Unit production from an evaluated generator**: pushing the (collapsed) generator
 of a trivialization `t : M' ≃ₗ[R] R` along `φ : R → R'` (through a collapse
 `cN : M' ≃ₗ[R] R ⊗[A] M`) and evaluating by any surjective `R'`-linear map
-`R' ⊗[A] M → R'` produces a unit of `R'`. -/
+`R' ⊗[A] M → R'` produces a unit of `R'`. 
+
+
+ * Provenance: CUSTOM.
+-/
 theorem isUnit_map_rTensor_generator (φ : R →+* R') (φₗ : R →ₗ[A] R')
     (hφ : ∀ r, φₗ r = φ r) {M' : Type u} [AddCommGroup M'] [Module R M']
     (t : M' ≃ₗ[R] R) (cN : M' ≃ₗ[R] R ⊗[A] M)
@@ -107,7 +111,11 @@ theorem isUnit_map_rTensor_generator (φ : R →+* R') (φₗ : R →ₗ[A] R')
 
 variable (A M) in
 /-- The base change of a descent equivalence `B' ⊗[A] M ≃ₗ[B'] B'` along `B' → R'`,
-collapsed to an `R'`-linear equivalence `R' ⊗[A] M ≃ₗ[R'] R'`. -/
+collapsed to an `R'`-linear equivalence `R' ⊗[A] M ≃ₗ[R'] R'`. 
+
+
+ * Provenance: CUSTOM.
+-/
 noncomputable def descentMulEval {B' : Type u} [CommRing B'] [Algebra A B']
     [Algebra B' R'] [IsScalarTower A B' R'] (dE : B' ⊗[A] M ≃ₗ[B'] B') :
     (R' ⊗[A] M) ≃ₗ[R'] R' :=

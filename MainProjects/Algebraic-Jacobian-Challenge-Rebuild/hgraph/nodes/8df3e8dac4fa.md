@@ -3,8 +3,8 @@ author: sync
 content_type: definition
 created: '2026-07-16T21:33:27'
 decl: AlgebraicGeometry.genus
-docstring: 'The genus of a smooth proper curve: the `k`-dimension of the first cohomology
-  group
+docstring: '**ADAPTED.** The genus of a smooth proper curve: the `k`-dimension of
+  the first cohomology group
 
   `H¹(C, 𝒪_C)` of the structure sheaf, viewed as a sheaf of `k`-modules on the small
   Zariski
@@ -16,9 +16,11 @@ docstring: 'The genus of a smooth proper curve: the `k`-dimension of the first c
 file: AlgebraicJacobian/Challenge.lean
 generated: lean
 lean_status: lean_ok
+tags:
+- ADAPTED
 title: AlgebraicGeometry.genus
 type: lean
-updated: '2026-08-07T05:01:43'
+updated: '2026-08-14T17:31:52'
 ---
 noncomputable def genus (C : Over (Spec (.of k))) [IsProper C.hom]
     [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIrreducible C.hom] : ℕ :=

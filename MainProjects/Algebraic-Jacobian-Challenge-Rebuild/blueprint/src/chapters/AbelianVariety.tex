@@ -35,6 +35,7 @@ of a point \(y\) of \(Y\) is the morphism with components \(\mathrm{id}_X\) and
 
 \begin{lemma}[Morphisms with constant second component factor through a slice]
   \label{lem:slice_factorisation}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.CartesianMonoidalCategory.eq_comp_lift_id_of_comp_snd_eq}
   \leanok
   Let \(T\), \(X\), \(Y\) be objects of \(\mathcal C\), let \(y\) be a point of \(Y\), and
@@ -59,6 +60,7 @@ of a point \(y\) of \(Y\) is the morphism with components \(\mathrm{id}_X\) and
 
 \begin{lemma}[Transfer of slice constancy]
   \label{lem:slice_constancy_transfer}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.CartesianMonoidalCategory.comp_eq_toUnit_comp_of_comp_snd_eq}
   \leanok
   In the situation of \ref{lem:slice_factorisation}, let moreover \(f : X \times Y \to Z\) be
@@ -81,6 +83,7 @@ of a point \(y\) of \(Y\) is the morphism with components \(\mathrm{id}_X\) and
 
 \begin{lemma}[Constancy]
   \label{lem:constant_into_affine}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicGeometry.exists_eq_comp_of_isIso_appTop_of_range_subset}
   \leanok
   \source{abelian-varieties:page-0014}
@@ -113,6 +116,7 @@ of a point \(y\) of \(Y\) is the morphism with components \(\mathrm{id}_X\) and
 
 \begin{lemma}[Constancy, relative form]
   \label{lem:constant_into_affine_over}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.exists_eq_toUnit_comp_of_isIso_appTop_of_range_subset}
   \leanok
   Let \(R\) be a commutative ring and let \(V\), \(W\) be schemes over \(\Spec R\), with
@@ -145,6 +149,7 @@ arbitrary field.
 
 \begin{lemma}[Points are determined by their underlying points]
   \label{lem:point_ext}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.point_ext_of_apply_closedPoint_eq}
   \leanok
   Let \(T\) be a scheme locally of finite type over the algebraically closed field \(K\), and
@@ -172,6 +177,7 @@ arbitrary field.
 
 \begin{lemma}[Products of geometrically integral schemes are integral]
   \label{lem:product_integral}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.isIntegral_tensorObj_left}
   \leanok
   Let \(X\) and \(Y\) be schemes over a field \(k\), each geometrically integral and locally
@@ -205,6 +211,7 @@ arbitrary field.
 
 \begin{theorem}[Rigidity]
   \label{thm:rigidity}
+  \provenancetag{REFERENCE}
   \lean{AlgebraicGeometry.exists_unique_eq_snd_comp_of_isProper_of_geometricallyIntegral}
   \uses{lem:product_integral}
   \leanok
@@ -349,6 +356,7 @@ morphism of monoid schemes \(g : A \to B\) is a \emph{homomorphism} if it preser
 
 \begin{corollary}[Pointed morphisms are homomorphisms]
   \label{cor:pointed_hom}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicGeometry.isMonHom_of_isProper_of_geometricallyIntegral}
   \leanok
   \source{abelian-varieties:page-0015, mumford-abelian-varieties:page-0054, mumford-abelian-varieties:page-0055}

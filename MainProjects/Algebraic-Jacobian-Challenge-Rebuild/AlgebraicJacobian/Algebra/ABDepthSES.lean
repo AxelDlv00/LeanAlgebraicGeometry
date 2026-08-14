@@ -92,6 +92,7 @@ private lemma natCast_add_one_le_of_le_sub_one
     have hle : a + 1 ≤ n := by omega
     exact Nat.cast_le.mpr hle
 
+/-- Provenance: REFERENCE. -/
 theorem depth_of_short_exact
     {R : Type u} [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
     {N' N N'' : Type u}
@@ -224,7 +225,15 @@ via `LinearEquiv.isRegular_congr`.
 
 Together with `depth_pi_const_eq_depth_of_nonempty` below it identifies
 `depth(M)` with `depth(R)` for `M` finite free, which closes the `pd(M) = 0`
-base case of the Auslander–Buchsbaum formula. -/
+base case of the Auslander–Buchsbaum formula. 
+
+
+
+
+
+
+ * Provenance: CUSTOM.
+-/
 lemma depth_eq_of_linearEquiv {R : Type u} [CommRing R] (I : Ideal R)
     {M M' : Type v} [AddCommGroup M] [Module R M] [AddCommGroup M'] [Module R M']
     (e : M ≃ₗ[R] M') :
@@ -274,7 +283,15 @@ Auslander–Buchsbaum formula (where `M ≃ₗ[R] Fin k → R` via a basis). -/
 
 /-- For any commutative ring `R`, ideal `I`, finite index `ι`, and module `M`,
 the ideal-action `I • ⊤_{ι → M}` equals the pi-submodule of fibre `I • ⊤_M`s.
-(Non-private: reused by the minimality argument in `ABFormula`.) -/
+(Non-private: reused by the minimality argument in `ABFormula`.) 
+
+
+
+
+
+
+ * Provenance: CUSTOM.
+-/
 lemma ideal_smul_top_pi_const
     {R : Type u} [CommRing R] {ι : Type*} [Fintype ι] [DecidableEq ι]
     (I : Ideal R) {M : Type v} [AddCommGroup M] [Module R M] :
@@ -399,7 +416,15 @@ private lemma isRegular_pi_const_iff_of_nonempty
 ```
 This is the substrate for the `pd_R(M) = 0` case of the Auslander–Buchsbaum
 formula: a finite free module `M ≃ₗ[R] Fin k → R` has `depth(M) = depth(R)`,
-so `0 + depth(M) = depth(R)` holds. -/
+so `0 + depth(M) = depth(R)` holds. 
+
+
+
+
+
+
+ * Provenance: CUSTOM.
+-/
 lemma depth_pi_const_eq_depth_of_nonempty
     {R : Type u} [CommRing R] (I : Ideal R)
     {ι : Type*} [Fintype ι] [DecidableEq ι] [Nonempty ι]

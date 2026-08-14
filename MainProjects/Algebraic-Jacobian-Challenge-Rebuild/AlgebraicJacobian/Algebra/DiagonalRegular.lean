@@ -56,7 +56,11 @@ namespace RingHom.Flat
 /-- **The `IsSMulRegular` bridge.** A flat ring homomorphism carries nonzerodivisors to
 nonzerodivisors: if `r ∈ R⁰` and `f : R →+* S` is flat, then `f r ∈ S⁰`. Scalar
 multiplication by `r` is injective on the flat `R`-module `S`
-(`Module.Flat.isSMulRegular_of_nonZeroDivisors`), and `r • · = f r * ·`. -/
+(`Module.Flat.isSMulRegular_of_nonZeroDivisors`), and `r • · = f r * ·`. 
+
+
+ * Provenance: CUSTOM.
+-/
 lemma mem_nonZeroDivisors {R S : Type*} [CommRing R] [CommRing S] {f : R →+* S}
     (hf : f.Flat) {r : R} (hr : r ∈ R⁰) : f r ∈ S⁰ := by
   letI : Algebra R S := f.toAlgebra
@@ -84,7 +88,11 @@ nonzerodivisor of `B ⊗[k] A`, where `u := algebraMap (Polynomial k) B X`.
 Instantiations: deg-D4b's `regular` field is `A = B`, `b = u`
 (`diagGen_mem_nonZeroDivisors`); deg-D4c's `hreg` is `A =` a chart of the test object,
 `b = t^♯ u`. No integrality of `B ⊗[k] A` is used, so the engine runs at every point of a
-non-integral product. -/
+non-integral product. 
+
+
+ * Provenance: CUSTOM.
+-/
 theorem tmul_one_sub_one_tmul_mem_nonZeroDivisors
     {A : Type*} [CommRing A] [Algebra k A] (b : A) :
     algebraMap (Polynomial k) B X ⊗ₜ[k] (1 : A) - (1 : B) ⊗ₜ[k] b ∈ (B ⊗[k] A)⁰ := by
@@ -114,7 +122,11 @@ theorem tmul_one_sub_one_tmul_mem_nonZeroDivisors
 
 /-- The section-level `regular` datum of deg-D4b: the diagonal equation `u ⊗ 1 - 1 ⊗ u` is a
 nonzerodivisor of `B ⊗[k] B` (the `A = B`, `b = u` instance of the engine). This is the
-input to the affine germ-regularity helper (built in brick B4). -/
+input to the affine germ-regularity helper (built in brick B4). 
+
+
+ * Provenance: CUSTOM.
+-/
 theorem diagGen_mem_nonZeroDivisors :
     algebraMap (Polynomial k) B X ⊗ₜ[k] (1 : B)
         - (1 : B) ⊗ₜ[k] algebraMap (Polynomial k) B X ∈ (B ⊗[k] B)⁰ :=

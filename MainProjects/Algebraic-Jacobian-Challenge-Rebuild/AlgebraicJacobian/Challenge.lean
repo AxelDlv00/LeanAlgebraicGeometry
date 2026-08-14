@@ -62,8 +62,8 @@ variable {k : Type u} [Field k] {C : Over (Spec (.of k))}
   -- geometrically irreducible
   [GeometricallyIrreducible C.hom]
 
-/-- The category of smooth, proper, geometrically irreducible curves over `k`, with morphisms the
-morphisms of `k`-schemes. -/
+/-- **CUSTOM.** The category of smooth, proper, geometrically irreducible curves over `k`, with
+morphisms the morphisms of `k`-schemes. -/
 structure Curve (k : Type u) [Field k] where
   /-- The underlying `k`-scheme. -/
   carrier : Over (Spec (.of k))
@@ -82,7 +82,7 @@ noncomputable instance (k : Type u) [Field k] : Category (Curve k) where
   assoc := Category.assoc
 
 -- data
-/-- The genus of a smooth proper curve: the `k`-dimension of the first cohomology group
+/-- **ADAPTED.** The genus of a smooth proper curve: the `k`-dimension of the first cohomology group
 `H¹(C, 𝒪_C)` of the structure sheaf, viewed as a sheaf of `k`-modules on the small Zariski
 site of `C` (`Scheme.moduleKSheaf`), with cohomology the `Ext` from the constant sheaf
 (`CategoryTheory.Sheaf.HModule`). Finite-dimensionality of `H¹` is proved downstream. -/
@@ -92,7 +92,7 @@ noncomputable def genus (C : Over (Spec (.of k))) [IsProper C.hom]
   Module.finrank k (Sheaf.HModule (C.left.moduleKSheaf k) 1)
 
 -- data
-/-- The Jacobian of a smooth, proper curve over a field `k`. -/
+/-- **ADAPTED.** The Jacobian of a smooth, proper curve over a field `k`. -/
 noncomputable def Jacobian (C : Over (Spec (.of k))) [IsProper C.hom]
     [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIrreducible C.hom] :
     Over (Spec (.of k)) :=
@@ -103,30 +103,36 @@ namespace Jacobian
 /-! ## The Jacobian of `C` is an abelian variety. -/
 
 -- data
-/-- The group scheme structure on the Jacobian of the curve `C`. -/
+/-- **ADAPTED.** The group scheme structure on the Jacobian of the curve `C`. -/
 noncomputable instance instGrpObj : GrpObj (Jacobian C) :=
   sorry
 
-/-- The Jacobian of `C` is smooth of relative dimension `g` over `k`, where `g` is the
+/-- **ADAPTED.** The Jacobian of `C` is smooth of relative dimension `g` over `k`, where `g` is the
 genus of `C`. -/
 instance smoothOfRelativeDimension_genus : SmoothOfRelativeDimension (genus C) (Jacobian C).hom :=
   sorry
 
-/-- The Jacobian of `C` is proper over `k`. -/
+/-- **ADAPTED.**
+
+**TO CHECK:** The blueprint's named Lean target is unresolved because this instance is declared
+anonymously. The Jacobian of `C` is proper over `k`. -/
 instance : IsProper (Jacobian C).hom :=
   sorry
 
-/-- The Jacobian of `C` is geometrically irreducible over `k`. -/
+/-- **ADAPTED.**
+
+**TO CHECK:** The blueprint's named Lean target is unresolved because this instance is declared
+anonymously. The Jacobian of `C` is geometrically irreducible over `k`. -/
 instance : GeometricallyIrreducible (Jacobian C).hom :=
   sorry
 
-/-- The Abel-Jacobi map from a smooth, proper curve to its Jacobian associated
+/-- **ADAPTED.** The Abel-Jacobi map from a smooth, proper curve to its Jacobian associated
 to a `k`-rational point of `C`. -/
 noncomputable def ofCurve (P : 𝟙_ (Over (Spec (.of k))) ⟶ C) : C ⟶ Jacobian C :=
   sorry
 
-/-- The Abel-Jacobi map sends the `k`-rational point `P` to `0`, where `0` (denoted by `η`) is the
-neutral element of the group scheme `Jacobian C`. -/
+/-- **ADAPTED.** The Abel-Jacobi map sends the `k`-rational point `P` to `0`, where `0`
+(denoted by `η`) is the neutral element of the group scheme `Jacobian C`. -/
 theorem comp_ofCurve (C : Over (Spec (.of k))) [IsProper C.hom]
     [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIrreducible C.hom]
     (P : 𝟙_ (Over (Spec (.of k))) ⟶ C) :
@@ -134,6 +140,11 @@ theorem comp_ofCurve (C : Over (Spec (.of k))) [IsProper C.hom]
   sorry
 
 /--
+**ADAPTED.**
+
+**TO CHECK:** Milne's Proposition 6.1 assumes positive genus, while this declaration also covers
+genus zero (`references/abelian-varieties/tex/page-0110.tex`).
+
 The universal property of the Jacobian variety: For any abelian variety `A`, any morphism
 `f : C ⟶ A` with `f(P) = 0` factors uniquely through the Jacobian of `C`. In other words,
 `Jacobian C` is the Albanese variety of `C`.
@@ -146,10 +157,11 @@ theorem exists_unique_ofCurve_comp (C : Over (Spec (.of k))) [IsProper C.hom]
     ∃! (g : Jacobian C ⟶ A), f = ofCurve P ≫ g :=
   sorry
 
-/-- **Functoriality of the Jacobian**, bundled as a single contravariant functor: a curve goes to
-its Jacobian group scheme over `k`, and a morphism of curves to the pullback of line bundles. The
-functor laws (`map_id`, `map_comp`) are embedded in this `Functor`. The object action is pinned to
-the `Jacobian` above, so everything downstream stays phrased in terms of `Jacobian C`. -/
+/-- **CUSTOM.** **Functoriality of the Jacobian**, bundled as a single contravariant functor: a
+curve goes to its Jacobian group scheme over `k`, and a morphism of curves to the pullback of line
+bundles. The functor laws (`map_id`, `map_comp`) are embedded in this `Functor`. The object action
+is pinned to the `Jacobian` above, so everything downstream stays phrased in terms of
+`Jacobian C`. -/
 noncomputable def functor (k : Type u) [Field k] :
     (Curve k)ᵒᵖ ⥤ Grp (Over (Spec (.of k))) where
   obj X := .mk (Jacobian X.unop.carrier)
@@ -165,8 +177,8 @@ Base change of `k`-schemes along `k → L` sends `X` to `X ×_{Spec k} Spec L`. 
 the stability instances are genuine (no `sorry`); they set up the statements of the base-change
 compatibility of the Jacobian. -/
 
-/-- Base change of `k`-schemes along a field homomorphism `k → L`, i.e. `X ↦ X ×_{Spec k} Spec L`.
--/
+/-- **CUSTOM.** Base change of `k`-schemes along a field homomorphism `k → L`, i.e.
+`X ↦ X ×_{Spec k} Spec L`. -/
 noncomputable abbrev baseChange (k L : Type u) [Field k] [Field L] [Algebra k L] :
     Over (Spec (.of k)) ⥤ Over (Spec (.of L)) :=
   Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap k L)))
@@ -239,8 +251,8 @@ noncomputable def congr {k : Type u} [Field k] {C C' : Over (Spec (.of k))}
     { hom := e.hom, inv := e.inv, hom_inv_id := e.hom_inv_id, inv_hom_id := e.inv_hom_id }
   (Jacobian.functor k).mapIso j.symm.op
 
-/-- **The base-change condition.** Jacobians commute with base change of fields: a canonical
-isomorphism `Jac(C)_L ≅ Jac(C_L)`, as group schemes over `L`. -/
+/-- **CUSTOM.** **The base-change condition.** Jacobians commute with base change of fields: a
+canonical isomorphism `Jac(C)_L ≅ Jac(C_L)`, as group schemes over `L`. -/
 noncomputable def baseChangeIso (k L : Type u) [Field k] [Field L] [Algebra k L]
     (C : Over (Spec (.of k))) [IsProper C.hom]
     [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIrreducible C.hom] :
@@ -249,7 +261,7 @@ noncomputable def baseChangeIso (k L : Type u) [Field k] [Field L] [Algebra k L]
 
 /-! ## Functoriality: the base change isomorphisms form a coherent system. -/
 
-/-- Identity coherence. -/
+/-- **CUSTOM.** Identity coherence. -/
 theorem baseChangeIso_id (C : Over (Spec (.of k))) [IsProper C.hom]
     [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIrreducible C.hom] :
     baseChangeIso k k C =
@@ -258,7 +270,7 @@ theorem baseChangeIso_id (C : Over (Spec (.of k))) [IsProper C.hom]
         ≪≫ Jacobian.congr ((baseChange.idIso k).app C).symm :=
   sorry
 
-/-- Cocycle coherence for a tower `k → L → M`. -/
+/-- **CUSTOM.** Cocycle coherence for a tower `k → L → M`. -/
 theorem baseChangeIso_comp (k L M : Type u) [Field k] [Field L] [Field M]
     [Algebra k L] [Algebra L M] [Algebra k M] [IsScalarTower k L M]
     (C : Over (Spec (.of k))) [IsProper C.hom]
@@ -275,6 +287,7 @@ theorem baseChangeIso_comp (k L M : Type u) [Field k] [Field L] [Field M]
 
 variable {L : Type u} [Field L] [Algebra k L]
 
+/-- **CUSTOM.** -/
 theorem baseChange_ofCurve (C : Over (Spec (.of k))) [IsProper C.hom]
     [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIrreducible C.hom]
     (P : 𝟙_ (Over (Spec (.of k))) ⟶ C) :

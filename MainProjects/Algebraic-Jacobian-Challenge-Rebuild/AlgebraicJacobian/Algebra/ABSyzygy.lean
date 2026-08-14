@@ -65,6 +65,7 @@ Mathlib substrate used:
   the chosen image set.
 * `Module.Basis.linearIndependent` — independence of a κ-basis.
 * `IsLocalRing.residue_eq_zero_iff` — `r ∈ 𝔪 ↔ residue r = 0`. -/
+/-- Provenance: CUSTOM. -/
 lemma exists_minimalSurjection_finite_localRing
     (R : Type u) [CommRing R] [IsLocalRing R]
     (M : Type u) [AddCommGroup M] [Module R M] [_root_.Module.Finite R M] :
@@ -156,6 +157,7 @@ the SES `0 → K → R^n → M → 0` plus
 `ShortComplex.ShortExact.hasProjectiveDimensionLT_X₁` deliver the syzygy descent
 (`HasProjectiveDimensionLT K n`) abstractly, with no minimal-resolution carving
 required. -/
+/-- Provenance: CUSTOM. -/
 lemma hasProjectiveDimensionLT_succ_of_projectiveDimension_eq
     {R : Type u} [Ring R] {M : Type u} [AddCommGroup M] [Module R M] {n : ℕ}
     (hpd : _root_.Module.projectiveDimension R M = ((n : ℕ) : WithBot ℕ∞)) :
@@ -174,6 +176,7 @@ Nat-recursion on `pd` happens entirely at the Ext-vanishing-class level via
 `ShortComplex.ShortExact.hasProjectiveDimensionLT_X₁`
 applied to the SES `0 → K → R^n → M → 0`, with `R^n` projective discharged via
 `ModuleCat.projective_of_free` + `projective_iff_hasProjectiveDimensionLT_one`. -/
+/-- Provenance: CUSTOM. -/
 lemma hasProjectiveDimensionLT_ker_of_surjection
     {R : Type u} [CommRing R]
     {M : Type u} [AddCommGroup M] [Module R M]
@@ -199,6 +202,7 @@ a clean way to extract `pd K = k+1` exactly (assuming we know
 `pd M ≥ k+2`): the contrapositive form is "if `pd K < k+1` then `pd M < k+2`".
 This is the input the inductive closure assembly of
 `auslander_buchsbaum_formula_succ_pd` needs to extract `pd K = k` exactly. -/
+/-- Provenance: CUSTOM. -/
 lemma hasProjectiveDimensionLT_succ_of_hasProjectiveDimensionLT_ker
     {R : Type u} [CommRing R]
     {M : Type u} [AddCommGroup M] [Module R M]
@@ -223,6 +227,7 @@ Noetherian local ring, after identifying `depth(R^n) = depth(R)` via
 `depth_pi_const_eq_depth_of_nonempty`. These are precisely the two inequalities
 fed to `enat_ab_inductive_combine` to close the inductive step of the
 Auslander–Buchsbaum formula. -/
+/-- Provenance: CUSTOM. -/
 lemma depth_ses_ineqs_of_surjection_finite_localRing
     {R : Type u} [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
     {M : Type u} [AddCommGroup M] [Module R M] [_root_.Module.Finite R M] [Nontrivial M]
@@ -260,6 +265,7 @@ nonzero element of `Ext^D_R(κ, M)`. (Below `↑D` all `Ext` vanish; the strict
 failure of vanishing at `↑(D+1)` must therefore occur at index `D`.) This is
 the input that exhibits a nonzero class in the base case of Auslander–Buchsbaum:
 `Ext^{depth R}(κ, R^k) ≠ 0`. -/
+/-- Provenance: CUSTOM. -/
 lemma exists_ne_zero_ext_of_depth_eq
     {R : Type u} [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
     {M : Type u} [AddCommGroup M] [Module R M] [_root_.Module.Finite R M]
@@ -366,7 +372,14 @@ plus `ofHom_smul / mk₀_smul / comp_smul`. Each summand becomes
 `A_{i,j} • (e.comp (mk₀ (ofHom (elemMap _ _ i j))))`, where the scalar `A_{i,j}`
 lies in `Ann_R N`. The existing `ext_smul_eq_zero_of_mem_annihilator` (Stacks
 00LW fragment) makes each such scalar action zero. Hence the total sum is zero.
-(Non-private: reused by the base case of `ABFormula`.) -/
+(Non-private: reused by the base case of `ABFormula`.) 
+
+
+
+
+
+ * Provenance: CUSTOM.
+-/
 lemma ext_comp_mk₀_ofHom_eq_zero_of_entries_mem_annihilator
     {R : Type u} [CommRing R]
     {N : ModuleCat.{u} R}

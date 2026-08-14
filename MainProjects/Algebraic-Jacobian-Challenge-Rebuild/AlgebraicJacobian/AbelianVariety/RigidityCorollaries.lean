@@ -62,7 +62,15 @@ separated and locally of finite type over `K`. If `g : A ⟶ B` is pointed (`η[
 then `g` is a homomorphism of monoid objects.
 
 For `A` a group object this makes `g` a homomorphism of group objects: a monoid homomorphism
-automatically commutes with inversion (`CategoryTheory.inv_hom`). -/
+automatically commutes with inversion (`CategoryTheory.inv_hom`). 
+
+
+
+
+
+
+ * Provenance: ADAPTED.
+-/
 theorem isMonHom_of_isProper_of_geometricallyIntegral
     {A B : Over (Spec (CommRingCat.of K))} [MonObj A] [GrpObj B]
     [IsProper A.hom] [GeometricallyIntegral A.hom]

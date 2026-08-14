@@ -27,6 +27,7 @@ Throughout this section \(N\) is an abelian group carrying both a \(k\)-module s
 
 \begin{lemma}[Stability under nonnegative powers of \(T\)]
   \label{lem:T_pow_stable}
+  \provenancetag{CUSTOM}
   \lean{LaurentPolynomial.T_natCast_smul_mem}
   \leanok
   Let \(Q \subseteq N\) be a \(k\)-submodule such that \(T \cdot x \in Q\) for every
@@ -44,6 +45,7 @@ Throughout this section \(N\) is an abelian group carrying both a \(k\)-module s
 
 \begin{lemma}[Stability under nonnegative powers of \(T^{-1}\)]
   \label{lem:T_inv_pow_stable}
+  \provenancetag{CUSTOM}
   \lean{LaurentPolynomial.T_neg_natCast_smul_mem}
   \leanok
   Let \(Q \subseteq N\) be a \(k\)-submodule such that \(T^{-1} \cdot x \in Q\) for every
@@ -65,6 +67,7 @@ Throughout this section \(N\) is an abelian group carrying both a \(k\)-module s
 
 \begin{theorem}[Two-lattice finiteness, spanning-set form]
   \label{thm:two_lattice_span}
+  \provenancetag{ADAPTED}
   \lean{LaurentPolynomial.moduleFinite_quotient_sup_of_span_eq_top}
   \leanok
   \source{hartshorne-algebraic-geometry:page-0242, hartshorne-algebraic-geometry:page-0243}
@@ -148,6 +151,7 @@ finite module away from an element.
 
 \begin{corollary}[Two-lattice finiteness, localization form]
   \label{cor:two_lattice_loc}
+  \provenancetag{CUSTOM}
   \lean{LaurentPolynomial.moduleFinite_quotient_sup_of_exists_smul_mem}
   \leanok
   Let \(k\) be a commutative ring and \(N\) a finite module over \(k[T,T^{-1}]\) whose
@@ -196,6 +200,7 @@ finite module away from an element.
 
 \begin{corollary}[Two-lattice finiteness, localization form via powers of the generator]
   \label{cor:two_lattice_loc_pow}
+  \provenancetag{CUSTOM}
   \lean{LaurentPolynomial.moduleFinite_quotient_sup_of_exists_pow_smul_mem}
   \leanok
   Let \(k\), \(N\), \(Q_0\), \(Q_1\) be as in Corollary~\ref{cor:two_lattice_loc}, satisfying
@@ -236,6 +241,7 @@ finite product of localizations into their pairwise and triple components.
 
 \begin{definition}[The tensor-localization algebra structure]
   \label{def:tensorAwayAlgebra}
+  \provenancetag{CUSTOM}
   \lean{IsLocalization.Away.tensorMap, IsLocalization.Away.tensorAwayAlgebra}
   \leanok
   Let \(A \to B_1\) and \(A \to B_2\) be homomorphisms of commutative rings, let \(r \in B_1\)
@@ -253,6 +259,7 @@ finite product of localizations into their pairwise and triple components.
 
 \begin{theorem}[The tensor product of two localizations is a localization of the tensor square]
   \label{thm:isLocalization_away_tensor}
+  \provenancetag{CUSTOM}
   \lean{IsLocalization.Away.isLocalization_away_tensor}
   \uses{def:tensorAwayAlgebra}
   \leanok
@@ -277,6 +284,7 @@ finite product of localizations into their pairwise and triple components.
 
 \begin{definition}[Comparison with an arbitrary model]
   \label{def:tensorAwayEquiv}
+  \provenancetag{CUSTOM}
   \lean{IsLocalization.Away.tensorAwayEquiv}
   \uses{thm:isLocalization_away_tensor}
   \leanok
@@ -290,6 +298,7 @@ finite product of localizations into their pairwise and triple components.
 
 \begin{lemma}[Values of the comparison isomorphism]
   \label{lem:tensorAwayEquiv_tmul}
+  \provenancetag{CUSTOM}
   \lean{IsLocalization.Away.tensorAwayEquiv_tensorMap, IsLocalization.Away.tensorAwayEquiv_tmul}
   \uses{def:tensorAwayEquiv}
   \leanok
@@ -311,6 +320,7 @@ Throughout this subsection \(A\) is a commutative ring, \(\iota\) a finite index
 
 \begin{definition}[The pairwise and triple decompositions]
   \label{def:piDoubleEquivA}
+  \provenancetag{CUSTOM}
   \lean{Algebra.TensorProduct.piDoubleEquivA, Algebra.TensorProduct.piDoubleEquivA_tmul}
   \leanok
   Distributing the tensor product over the finite product in each factor gives the canonical
@@ -323,6 +333,7 @@ Throughout this subsection \(A\) is a commutative ring, \(\iota\) a finite index
 
 \begin{definition}[The triple decomposition]
   \label{def:piTripleEquivA}
+  \provenancetag{CUSTOM}
   \lean{Algebra.TensorProduct.piTripleEquivA, Algebra.TensorProduct.piTripleEquivA_tmul}
   \uses{def:piDoubleEquivA}
   \leanok
@@ -338,6 +349,7 @@ Throughout this subsection \(A\) is a commutative ring, \(\iota\) a finite index
 
 \begin{definition}[The index-wise simplicial maps]
   \label{def:indexwiseMaps}
+  \provenancetag{CUSTOM}
   \lean{Algebra.TensorProduct.inclLeftA, Algebra.TensorProduct.inclRightA,
     Algebra.TensorProduct.faceA₁₂, Algebra.TensorProduct.faceA₁₃, Algebra.TensorProduct.faceA₂₃,
     Algebra.TensorProduct.diagA}
@@ -353,6 +365,7 @@ Throughout this subsection \(A\) is a commutative ring, \(\iota\) a finite index
 
 \begin{lemma}[The descent inclusions become the index-wise inclusions]
   \label{lem:descentIncl_transport}
+  \provenancetag{CUSTOM}
   \lean{Algebra.TensorProduct.piDoubleEquivA_descentIncl₁,
     Algebra.TensorProduct.piDoubleEquivA_descentIncl₂}
   \uses{def:piDoubleEquivA, def:indexwiseMaps}
@@ -371,6 +384,7 @@ Throughout this subsection \(A\) is a commutative ring, \(\iota\) a finite index
 
 \begin{lemma}[The descent faces become the index-wise faces]
   \label{lem:descentFace_transport}
+  \provenancetag{CUSTOM}
   \lean{Algebra.TensorProduct.piTripleEquivA_descentFace₂₃,
     Algebra.TensorProduct.piTripleEquivA_descentFace₁₂,
     Algebra.TensorProduct.piTripleEquivA_descentFace₁₃}
@@ -396,6 +410,7 @@ Throughout this subsection \(A\) is a commutative ring, \(\iota\) a finite index
 
 \begin{lemma}[Multiplication becomes the index-wise diagonal]
   \label{lem:lmul_transport}
+  \provenancetag{CUSTOM}
   \lean{Algebra.TensorProduct.lmul'_piDoubleEquivA_symm}
   \uses{def:piDoubleEquivA, def:indexwiseMaps}
   \leanok
@@ -413,6 +428,7 @@ Throughout this subsection \(A\) is a commutative ring, \(\iota\) a finite index
 
 \begin{theorem}[Faithful flatness of the composite cover tower]
   \label{thm:pi_tower}
+  \provenancetag{CUSTOM}
   \lean{Module.FaithfullyFlat.pi_tower}
   \leanok
   Let \(A \to B\) be faithfully flat, let \(f \colon \iota \to B\) be a covering family — the
@@ -444,6 +460,7 @@ campaign.
 
 \begin{definition}[The composite descent unit]
   \label{def:piAssemblyUnit}
+  \provenancetag{CUSTOM}
   \lean{Algebra.TensorProduct.piAssemblyUnit}
   \uses{def:piDoubleEquivA}
   \leanok
@@ -456,6 +473,7 @@ campaign.
 
 \begin{theorem}[The assembled unit of a coherent family is a descent cocycle]
   \label{thm:isDescentCocycle_piAssemblyUnit}
+  \provenancetag{CUSTOM}
   \lean{Algebra.TensorProduct.isDescentCocycle_piAssemblyUnit}
   \uses{def:piAssemblyUnit, def:module_descent_cocycle, def:indexwiseMaps,
     def:piTripleEquivA, lem:lmul_transport, lem:descentFace_transport}
@@ -505,6 +523,7 @@ in \(T_{ij}\)).
 
 \begin{definition}[The index-wise collapse]
   \label{def:componentCollapse}
+  \provenancetag{CUSTOM}
   \lean{IsLocalization.AwayCover.componentCollapse}
   \uses{thm:isLocalization_away_tensor}
   \leanok
@@ -520,6 +539,7 @@ in \(T_{ij}\)).
 
 \begin{lemma}[The collapse computes componentwise]
   \label{lem:piDoubleEquiv_tensorCollapse}
+  \provenancetag{CUSTOM}
   \lean{IsLocalization.AwayCover.piDoubleEquiv_tensorCollapse}
   \uses{def:componentCollapse, def:piDoubleEquivA, def:module_tensorCollapse}
   \leanok
@@ -545,6 +565,7 @@ in \(T_{ij}\)).
 
 \begin{theorem}[The collapse of the assembled unit is the descent unit of the cover cocycle]
   \label{thm:tensorCollapse_piAssemblyUnit}
+  \provenancetag{CUSTOM}
   \lean{IsLocalization.AwayCover.tensorCollapse_piAssemblyUnit}
   \uses{def:piAssemblyUnit, def:componentCollapse, lem:piDoubleEquiv_tensorCollapse,
     def:module_tensorCollapse, def:module_descent_cocycle}
@@ -575,6 +596,7 @@ in \(T_{ij}\)).
 
 \begin{theorem}[Diagonal normalization from a collapse onto a normalized family]
   \label{thm:diagA_eq_one_of_componentCollapse}
+  \provenancetag{CUSTOM}
   \lean{IsLocalization.AwayCover.diagA_eq_one_of_componentCollapse}
   \uses{def:componentCollapse, def:indexwiseMaps}
   \leanok
@@ -606,6 +628,7 @@ in \(T_{ij}\)).
 
 \begin{lemma}[The index-wise operators intertwine the two-base structure maps]
   \label{lem:faceA_comp_tensorMap}
+  \provenancetag{CUSTOM}
   \lean{IsLocalization.AwayCover.faceA₂₃_comp_tensorMap,
     IsLocalization.AwayCover.faceA₁₂_comp_tensorMap,
     IsLocalization.AwayCover.faceA₁₃_comp_tensorMap,
@@ -651,6 +674,7 @@ unit from the evaluated generator of a trivialized invertible module.
 
 \begin{theorem}[The degree-zero Amitsur equalizer]
   \label{thm:descent_existsUnique_tmul_one}
+  \provenancetag{CUSTOM}
   \lean{Module.FaithfullyFlat.existsUnique_tmul_one_eq}
   \leanok
   Let \(A \to B\) be faithfully flat and \(S_0\) an \(A\)-algebra. If an element \(x \in S_0
@@ -677,6 +701,7 @@ unit from the evaluated generator of a trivialized invertible module.
 
 \begin{theorem}[Unit production from an evaluated generator]
   \label{thm:isUnit_map_rTensor_generator}
+  \provenancetag{CUSTOM}
   \lean{Module.isUnit_map_rTensor_generator}
   \leanok
   Let \(A \to R \to R'\) be a tower with \(R'\) also an \(A\)-algebra and \(\varphi \colon R \to
@@ -705,6 +730,7 @@ unit from the evaluated generator of a trivialized invertible module.
 
 \begin{definition}[Base change of a descent equivalence]
   \label{def:descentMulEval}
+  \provenancetag{CUSTOM}
   \lean{Module.descentMulEval}
   \uses{thm:isUnit_map_rTensor_generator}
   \leanok
@@ -730,6 +756,7 @@ finite-dimensional over \(k\); \(\dim_k\) is the dimension.
 
 \begin{theorem}[Additivity of dimension along a short exact sequence]
   \label{thm:finrank_add_of_exact}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.finrank_add_of_exact}
   \leanok
   Let
@@ -754,6 +781,7 @@ finite-dimensional over \(k\); \(\dim_k\) is the dimension.
 
 \begin{theorem}[Vanishing of the alternating sum of dimensions along a five-term sequence]
   \label{thm:finrank_alt_sum_exact5}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.finrank_alt_sum_eq_zero_of_exact₅}
   \leanok
   Let
@@ -804,6 +832,7 @@ commutative domain with a \(k\)-algebra structure; ideals of \(B\) are written \
 
 \begin{theorem}[One-step filtration jump]
   \label{thm:finrank_quotSucc_jump}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.finrank_quotSucc_jump, AlgebraicGeometry.quotEquivMapPow}
   \leanok
   Let \(I = (\pi)\) be a nonzero principal ideal of \(B\), with \(B/I\) finite-dimensional over
@@ -830,6 +859,7 @@ commutative domain with a \(k\)-algebra structure; ideals of \(B\) are written \
 
 \begin{theorem}[Inductive step of the colength formula]
   \label{thm:finrank_quotient_pow_succ}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.finrank_quotient_pow_succ}
   \uses{thm:finrank_add_of_exact, thm:finrank_quotSucc_jump}
   \leanok
@@ -856,6 +886,7 @@ commutative domain with a \(k\)-algebra structure; ideals of \(B\) are written \
 
 \begin{theorem}[Prime-power (DVR) colength formula]
   \label{thm:finrank_quotient_span_pow}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.finrank_quotient_span_pow}
   \uses{thm:finrank_quotient_pow_succ}
   \leanok
@@ -884,6 +915,7 @@ of \(I\) and \(\mathrm{ord}_P(I) \ge 1\) the multiplicity of \(P\).
 
 \begin{definition}[The Chinese remainder decomposition of a Dedekind quotient]
   \label{def:quotAlgEquivPiFactors}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.quotAlgEquivPiFactors}
   \leanok
   Let \(B\) be a Dedekind domain, a \(k\)-algebra, and \(I \neq 0\) an ideal with prime
@@ -906,6 +938,7 @@ of \(I\) and \(\mathrm{ord}_P(I) \ge 1\) the multiplicity of \(P\).
 
 \begin{theorem}[Multi-prime colength via the Chinese remainder theorem]
   \label{thm:finrank_quotient_eq_sum_factors_pow}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.finrank_quotient_eq_sum_factors_pow}
   \leanok
   Let \(B\) be a Dedekind domain, a \(k\)-algebra, and let \(I \neq 0\) be an ideal with each
@@ -926,6 +959,7 @@ of \(I\) and \(\mathrm{ord}_P(I) \ge 1\) the multiplicity of \(P\).
 
 \begin{theorem}[Dedekind colength formula, ord-weighted form]
   \label{thm:finrank_quotient_span_eq_sum_ord}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.finrank_quotient_span_eq_sum_ord}
   \uses{thm:finrank_quotient_eq_sum_factors_pow, thm:finrank_quotient_span_pow}
   \leanok
@@ -968,6 +1002,7 @@ stated; and for a nonzero ideal \(I \subseteq B\) of a Dedekind domain,
 
 \begin{theorem}[Finiteness d\'evissage along principal prime powers]
   \label{thm:moduleFinite_quotient_pow_of_isPrincipal}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.moduleFinite_quotient_pow_of_isPrincipal}
   \leanok
   Let \(B\) be a domain over \(k\) and \(I = (\pi)\) a nonzero principal ideal with
@@ -987,6 +1022,7 @@ stated; and for a nonzero ideal \(I \subseteq B\) of a Dedekind domain,
 
 \begin{lemma}[The adic valuation counts the multiplicity]
   \label{lem:adic_valuation_count}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.intValuation_eq_exp_neg_count}
   \leanok
   Let \(B\) be a Dedekind domain, \(P\) a nonzero prime of \(B\), and \(f \neq 0\).
@@ -1007,6 +1043,7 @@ stated; and for a nonzero ideal \(I \subseteq B\) of a Dedekind domain,
 
 \begin{lemma}[Membership in prime powers reads off the multiplicity]
   \label{lem:mem_pow_iff_le_count}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.mem_pow_iff_le_count}
   \uses{lem:adic_valuation_count}
   \leanok
@@ -1026,6 +1063,7 @@ stated; and for a nonzero ideal \(I \subseteq B\) of a Dedekind domain,
 
 \begin{theorem}[Multiplicities are preserved by localization at the prime]
   \label{thm:count_factors_span_localization}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.count_factors_span_algebraMap}
   \uses{lem:mem_pow_iff_le_count}
   \leanok
@@ -1060,6 +1098,7 @@ stated; and for a nonzero ideal \(I \subseteq B\) of a Dedekind domain,
 
 \begin{definition}[The localization isomorphisms, \(k\)-linearly]
   \label{def:quotPowLinearEquiv}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.quotPowLinearEquiv, AlgebraicGeometry.residueQuotLinearEquiv}
   \leanok
   Let \(B\) be a \(k\)-algebra, \(P\) a maximal ideal of \(B\), and \(S\) a local
@@ -1085,6 +1124,7 @@ stated; and for a nonzero ideal \(I \subseteq B\) of a Dedekind domain,
 
 \begin{theorem}[Per-prime finiteness through the localization]
   \label{thm:moduleFinite_quotient_pow_atPrime}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.moduleFinite_quotient_pow_atPrime}
   \uses{def:quotPowLinearEquiv}
   \leanok
@@ -1107,6 +1147,7 @@ stated; and for a nonzero ideal \(I \subseteq B\) of a Dedekind domain,
 
 \begin{theorem}[The per-prime colength collapse]
   \label{thm:finrank_quotient_pow_atPrime}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.finrank_quotient_pow_atPrime}
   \uses{def:quotPowLinearEquiv}
   \leanok
@@ -1131,6 +1172,7 @@ stated; and for a nonzero ideal \(I \subseteq B\) of a Dedekind domain,
 
 \begin{lemma}[Prime factors of a principal ideal]
   \label{lem:prime_factor_span}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.prime_factor_span}
   \leanok
   Let \(B\) be a Dedekind domain and \(f \in B\). Every prime factor \(P\) of the
@@ -1145,6 +1187,7 @@ stated; and for a nonzero ideal \(I \subseteq B\) of a Dedekind domain,
 
 \begin{theorem}[Finiteness of the Dedekind colength module]
   \label{thm:moduleFinite_quotient_span}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.moduleFinite_quotient_span}
   \uses{def:quotAlgEquivPiFactors}
   \leanok
@@ -1167,6 +1210,7 @@ stated; and for a nonzero ideal \(I \subseteq B\) of a Dedekind domain,
 
 \begin{theorem}[Dedekind colength formula, localized form]
   \label{thm:finrank_quotient_span_eq_sum_count}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.finrank_quotient_span_eq_sum_count}
   \uses{thm:finrank_quotient_eq_sum_factors_pow}
   \leanok
@@ -1213,6 +1257,7 @@ idempotent lift.
 
 \begin{definition}[The diagonal equation and the base-change collapse]
   \label{def:diagonalSetup}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicJacobian.Diagonal.coord, AlgebraicJacobian.Diagonal.diagGen,
     AlgebraicJacobian.Diagonal.baseChange, AlgebraicJacobian.Diagonal.lmul'_diagGen,
     AlgebraicJacobian.Diagonal.baseChange_diagGen, AlgebraicJacobian.Diagonal.lmul'_baseChange}
@@ -1249,6 +1294,7 @@ idempotent lift.
 
 \begin{lemma}[Polynomial telescoping]
   \label{lem:diagonal_telescoping}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicJacobian.Diagonal.algebraMap_tmul_sub_mem_span}
   \uses{def:diagonalSetup}
   \leanok
@@ -1272,6 +1318,7 @@ idempotent lift.
 
 \begin{lemma}[The section of the collapse]
   \label{lem:diagonal_section}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicJacobian.Diagonal.sectionMap, AlgebraicJacobian.Diagonal.qRight,
     AlgebraicJacobian.Diagonal.sectionMap_baseChange}
   \uses{def:diagonalSetup, lem:diagonal_telescoping}
@@ -1299,6 +1346,7 @@ idempotent lift.
 
 \begin{theorem}[The kernel of the base-change collapse]
   \label{thm:ker_baseChange}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicJacobian.Diagonal.ker_baseChange}
   \uses{def:diagonalSetup, lem:diagonal_section}
   \leanok
@@ -1320,6 +1368,7 @@ idempotent lift.
 
 \begin{theorem}[Idempotent generator of the {\(k[X]\)}-diagonal ideal]
   \label{thm:exists_idempotent_lift}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicJacobian.Diagonal.exists_idempotent_lift}
   \uses{def:diagonalSetup}
   \leanok
@@ -1342,6 +1391,7 @@ idempotent lift.
 
 \begin{theorem}[Localised principality of the \(k\)-diagonal ideal]
   \label{thm:ker_map_localization_eq}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicJacobian.Diagonal.ker_map_localization_eq}
   \uses{def:diagonalSetup, thm:ker_baseChange, thm:exists_idempotent_lift}
   \leanok
@@ -1374,6 +1424,7 @@ idempotent lift.
 
 \begin{theorem}[Packaged diagonal localisation]
   \label{thm:exists_diagonalLocalization}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicJacobian.Diagonal.exists_diagonalLocalization,
     AlgebraicJacobian.Diagonal.lmul'_lift}
   \uses{thm:ker_baseChange, thm:exists_idempotent_lift, thm:ker_map_localization_eq}
@@ -1403,6 +1454,7 @@ point of a non-integral product.
 
 \begin{lemma}[A flat ring homomorphism preserves nonzerodivisors]
   \label{lem:flat_mem_nonZeroDivisors}
+  \provenancetag{CUSTOM}
   \lean{RingHom.Flat.mem_nonZeroDivisors}
   \leanok
   Let \(f \colon R \to S\) be a flat homomorphism of commutative rings. If \(r \in R\) is a
@@ -1418,6 +1470,7 @@ point of a non-integral product.
 
 \begin{theorem}[The regularity engine]
   \label{thm:diagonal_regularity_engine}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicJacobian.Diagonal.tmul_one_sub_one_tmul_mem_nonZeroDivisors,
     AlgebraicJacobian.Diagonal.diagGen_mem_nonZeroDivisors}
   \uses{def:diagonalSetup, lem:flat_mem_nonZeroDivisors}
@@ -1465,6 +1518,7 @@ of the exchange-property analysis for the Picard functor.
 
 \begin{lemma}[A module with vanishing localisations vanishes]
   \label{lem:zero_of_forall_localization_zero}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicJacobian.RigidEngine.subsingleton_of_forall_subsingleton_localizedModule}
   \leanok
   Let \(M\) be an \(R\)-module with \(M_{\mathfrak p} = 0\) for every prime
@@ -1482,6 +1536,7 @@ of the exchange-property analysis for the Picard functor.
 
 \begin{lemma}[The Nakayama fibre criterion]
   \label{lem:fibre_vanishing_iff_localization_zero}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicJacobian.RigidEngine.subsingleton_residueField_tensor_iff_notMem_support}
   \leanok
   Let \(M\) be a finitely generated \(R\)-module and \(\mathfrak p\) a prime. Then
@@ -1512,6 +1567,7 @@ of the exchange-property analysis for the Picard functor.
 
 \begin{theorem}[Vanishing propagation]
   \label{thm:fibrewise_vanishing_propagates}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicJacobian.RigidEngine.subsingleton_of_forall_subsingleton_residueField_tensor}
   \uses{lem:fibre_vanishing_iff_localization_zero, lem:zero_of_forall_localization_zero}
   \leanok
@@ -1529,6 +1585,7 @@ of the exchange-property analysis for the Picard functor.
 
 \begin{lemma}[The fibre-vanishing locus is the complement of the support]
   \label{lem:fibre_vanishing_locus_compl_support}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicJacobian.RigidEngine.setOf_subsingleton_residueField_tensor_eq_compl_support}
   \uses{lem:fibre_vanishing_iff_localization_zero}
   \leanok
@@ -1545,6 +1602,7 @@ of the exchange-property analysis for the Picard functor.
 
 \begin{theorem}[Openness of the fibre-vanishing locus]
   \label{thm:isOpen_fibre_vanishing}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicJacobian.RigidEngine.isOpen_setOf_subsingleton_residueField_tensor}
   \uses{lem:fibre_vanishing_locus_compl_support}
   \leanok
@@ -1587,6 +1645,7 @@ split. Without the surjectivity, kernels do not commute with tensor products: fo
 
 \begin{lemma}[Right-exactness of the tensor product]
   \label{lem:tensor_right_exact}
+  \provenancetag{CUSTOM}
   \lean{rTensor_exact, lTensor_exact, LinearMap.rTensor_surjective,
     LinearMap.lTensor_surjective}
   \mathlibok
@@ -1599,6 +1658,7 @@ split. Without the surjectivity, kernels do not commute with tensor products: fo
 
 \begin{lemma}[A flat cokernel keeps the kernel inclusion injective under tensoring]
   \label{lem:lTensor_injective_of_flat}
+  \provenancetag{CUSTOM}
   \lean{LinearMap.lTensor_injective_of_exact_of_flat}
   \mathlibok
   \textit{Provided by Mathlib.}
@@ -1609,6 +1669,7 @@ split. Without the surjectivity, kernels do not commute with tensor products: fo
 
 \begin{lemma}[A vanishing cokernel means surjectivity]
   \label{lem:rigid_surjective_of_coker_zero}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicJacobian.RigidEngine.surjective_of_subsingleton_quotient}
   \leanok
   If \(H^1 = B/\delta(A) = 0\), then \(\delta\) is surjective.
@@ -1620,6 +1681,7 @@ split. Without the surjectivity, kernels do not commute with tensor products: fo
 
 \begin{lemma}[The cokernel of a surjective complex base-changes to zero]
   \label{lem:rigid_coker_tensor_zero}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicJacobian.RigidEngine.rTensor_surjective,
     AlgebraicJacobian.RigidEngine.subsingleton_coker_rTensor}
   \uses{lem:rigid_surjective_of_coker_zero}
@@ -1640,6 +1702,7 @@ split. Without the surjectivity, kernels do not commute with tensor products: fo
 
 \begin{theorem}[Base change of \(H^0\) with module coefficients]
   \label{thm:rigid_ker_tensor}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicJacobian.RigidEngine.kerRTensorToKer,
     AlgebraicJacobian.RigidEngine.kerRTensorEquiv}
   \uses{lem:rigid_surjective_of_coker_zero, lem:tensor_right_exact,
@@ -1670,6 +1733,7 @@ split. Without the surjectivity, kernels do not commute with tensor products: fo
 
 \begin{theorem}[Base change of \(H^0\) along a ring map]
   \label{thm:rigid_ker_baseChange}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicJacobian.RigidEngine.kerBaseChangeToKer,
     AlgebraicJacobian.RigidEngine.kerBaseChangeEquiv}
   \uses{thm:rigid_ker_tensor}
@@ -1694,6 +1758,7 @@ split. Without the surjectivity, kernels do not commute with tensor products: fo
 
 \begin{theorem}[Flatness of \(H^0\): the splitting argument]
   \label{thm:rigid_flat_ker}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicJacobian.RigidEngine.flat_ker}
   \leanok
   Let \(\delta : A \to B\) be surjective with \(A\) flat and \(B\) projective. Then
@@ -1716,6 +1781,7 @@ split. Without the surjectivity, kernels do not commute with tensor products: fo
 
 \begin{lemma}[Finite modules over a Noetherian ring are finitely presented]
   \label{lem:finitePresentation_of_finite}
+  \provenancetag{CUSTOM}
   \lean{Module.finitePresentation_of_finite}
   \mathlibok
   \textit{Provided by Mathlib.}
@@ -1725,6 +1791,7 @@ split. Without the surjectivity, kernels do not commute with tensor products: fo
 
 \begin{lemma}[Finitely presented flat modules are projective]
   \label{lem:projective_of_finitePresentation}
+  \provenancetag{CUSTOM}
   \lean{Module.Flat.projective_of_finitePresentation}
   \mathlibok
   \textit{Provided by Mathlib.}
@@ -1733,6 +1800,7 @@ split. Without the surjectivity, kernels do not commute with tensor products: fo
 
 \begin{theorem}[\(H^0\) is finite projective]
   \label{thm:rigid_projective_ker}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicJacobian.RigidEngine.projective_ker}
   \uses{thm:rigid_flat_ker, lem:finitePresentation_of_finite,
     lem:projective_of_finitePresentation}
@@ -1751,6 +1819,7 @@ split. Without the surjectivity, kernels do not commute with tensor products: fo
 
 \begin{theorem}[Base change commutes with cokernels]
   \label{thm:quot_range_baseChange}
+  \provenancetag{CUSTOM}
   \lean{LinearMap.quotRangeBaseChangeEquiv, LinearMap.quotRangeBaseChangeEquiv_tmul_mk}
   \uses{lem:tensor_right_exact}
   \leanok
@@ -1793,6 +1862,7 @@ in which the representing module of the exchange isomorphism is consumed
 
 \begin{lemma}[Contraction is an equivalence for finite free modules]
   \label{lem:dualTensorHomEquiv_free}
+  \provenancetag{CUSTOM}
   \lean{dualTensorHomEquiv}
   \mathlibok
   \textit{Provided by Mathlib.}
@@ -1802,6 +1872,7 @@ in which the representing module of the exchange isomorphism is consumed
 
 \begin{theorem}[Contraction is an equivalence for finite projective modules]
   \label{thm:dualTensorHom_projective}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicJacobian.RigidEngine.bijective_dualTensorHom_of_projective,
     AlgebraicJacobian.RigidEngine.dualTensorHomEquivProjective}
   \uses{lem:dualTensorHomEquiv_free}
@@ -1835,6 +1906,7 @@ in which the representing module of the exchange isomorphism is consumed
 
 \begin{theorem}[Duality: \(M \otimes P \cong \Hom(M^{\vee}, P)\)]
   \label{thm:tensorDualHom_projective}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicJacobian.RigidEngine.tensorDualHomEquiv}
   \uses{thm:dualTensorHom_projective}
   \leanok
@@ -1884,6 +1956,7 @@ hypothesis under which the coherence theorems of two-lattice pairs fire
 
 \begin{lemma}[Kernel and surjectivity transport along a commuting square]
   \label{lem:kerCongr}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicJacobian.RigidEngine.kerCongr,
     AlgebraicJacobian.RigidEngine.kerCongr_apply_coe,
     AlgebraicJacobian.RigidEngine.surjective_congr}
@@ -1906,6 +1979,7 @@ hypothesis under which the coherence theorems of two-lattice pairs fire
 
 \begin{lemma}[Chart-lattice transport along an equivariant equivalence]
   \label{lem:aevalCongr}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicJacobian.RigidEngine.aevalCongr,
     AlgebraicJacobian.RigidEngine.moduleFinite_aeval'_of_linearEquiv}
   \leanok
@@ -1926,6 +2000,7 @@ hypothesis under which the coherence theorems of two-lattice pairs fire
 
 \begin{lemma}[Chart-lattice finiteness from a finite ring map]
   \label{lem:moduleFinite_aeval_ringHom}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicJacobian.RigidEngine.aeval_apply_of_ringHom,
     AlgebraicJacobian.RigidEngine.moduleFinite_aeval'_of_ringHom_finite}
   \leanok
@@ -1948,6 +2023,7 @@ hypothesis under which the coherence theorems of two-lattice pairs fire
 
 \begin{theorem}[Base change of chart-lattice finiteness]
   \label{thm:moduleFinite_aeval_baseChange}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicJacobian.RigidEngine.aeval_baseChange_map_apply_one_tmul,
     AlgebraicJacobian.RigidEngine.moduleFinite_aeval'_baseChange}
   \leanok
@@ -1995,6 +2071,7 @@ denote the coordinates, and \(c \colon B \to F\) is a \(k[t]\)-algebra homomorph
 
 \begin{definition}[The point generator and the point evaluations]
   \label{def:pointGen_pointEv}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicJacobian.Diagonal.pointGen, AlgebraicJacobian.Diagonal.map_coord,
     AlgebraicJacobian.Diagonal.pointEv, AlgebraicJacobian.Diagonal.pointEv_tmul,
     AlgebraicJacobian.Diagonal.pointEv_pointGen, AlgebraicJacobian.Diagonal.pointEvTwo,
@@ -2028,6 +2105,7 @@ denote the coordinates, and \(c \colon B \to F\) is a \(k[t]\)-algebra homomorph
 
 \begin{theorem}[The kernel of the point base change]
   \label{thm:ker_pointBaseChange}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicJacobian.Diagonal.coord_tmul_one_point,
     AlgebraicJacobian.Diagonal.pointBaseChange_pointGen,
     AlgebraicJacobian.Diagonal.aeval_sub_dvd_point,
@@ -2059,6 +2137,7 @@ denote the coordinates, and \(c \colon B \to F\) is a \(k[t]\)-algebra homomorph
 
 \begin{theorem}[The kernel of the {\(k[t]\)}-level point evaluation]
   \label{thm:ker_pointEvTwo}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicJacobian.Diagonal.pointEvTwo_mapRightTwo,
     AlgebraicJacobian.Diagonal.tmul_sub_tmul_mem_span_mapRightTwo,
     AlgebraicJacobian.Diagonal.ker_pointEvTwo}
@@ -2090,6 +2169,7 @@ denote the coordinates, and \(c \colon B \to F\) is a \(k[t]\)-algebra homomorph
 
 \begin{theorem}[The localised point-fiber ideal]
   \label{thm:ker_pointEv_map_localization_eq}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicJacobian.Diagonal.ker_pointEv_le_sup,
     AlgebraicJacobian.Diagonal.ker_pointEv_map_localization_eq}
   \uses{thm:ker_pointBaseChange, thm:ker_pointEvTwo, def:pointGen_pointEv,
@@ -2139,6 +2219,7 @@ the Auslander--Buchsbaum formula
 
 \begin{definition}[Depth of a module]
   \label{def:depth}
+  \provenancetag{REFERENCE}
   \lean{RingTheory.Module.depth}
   \leanok
   \source{stacks-project}
@@ -2159,6 +2240,7 @@ the Auslander--Buchsbaum formula
 
 \begin{definition}[Projective dimension]
   \label{def:projectiveDimension}
+  \provenancetag{CUSTOM}
   \lean{Module.projectiveDimension}
   \leanok
   For a ring \(R\) and an \(R\)-module \(M\), the \emph{projective dimension}
@@ -2170,6 +2252,7 @@ the Auslander--Buchsbaum formula
 
 \begin{lemma}[The covariant long exact sequence of \(\Ext\)]
   \label{lem:ext_covariant_les}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.Abelian.Ext.covariant_sequence_exact₁,
     CategoryTheory.Abelian.Ext.covariant_sequence_exact₂,
     CategoryTheory.Abelian.Ext.covariant_sequence_exact₃,
@@ -2194,6 +2277,7 @@ the Auslander--Buchsbaum formula
 
 \begin{lemma}[Annihilator elements kill \(\Ext\)]
   \label{lem:ext_annihilator_smul}
+  \provenancetag{CUSTOM}
   \lean{RingTheory.Module.ext_smul_eq_zero_of_mem_annihilator}
   \leanok
   Let \(R\) be a commutative ring, \(N, M\) two \(R\)-modules, \(i \geq 0\), and
@@ -2213,6 +2297,7 @@ the Auslander--Buchsbaum formula
 
 \begin{theorem}[Depth via \(\Ext\)]
   \label{thm:depth_ext}
+  \provenancetag{REFERENCE}
   \lean{RingTheory.Module.depth_eq_smallest_ext_index}
   \uses{def:depth, lem:ext_annihilator_smul, lem:ext_covariant_les}
   \leanok
@@ -2288,6 +2373,7 @@ the Auslander--Buchsbaum formula
 
 \begin{theorem}[Depth in short exact sequences]
   \label{thm:depth_ses}
+  \provenancetag{REFERENCE}
   \lean{RingTheory.Module.depth_of_short_exact}
   \uses{thm:depth_ext, lem:ext_covariant_les}
   \leanok
@@ -2335,6 +2421,7 @@ the Auslander--Buchsbaum formula
 
 \begin{lemma}[Depth is invariant under linear equivalence]
   \label{lem:depth_linearEquiv}
+  \provenancetag{CUSTOM}
   \lean{RingTheory.Module.depth_eq_of_linearEquiv}
   \uses{def:depth}
   \leanok
@@ -2355,6 +2442,7 @@ the Auslander--Buchsbaum formula
 
 \begin{lemma}[Ideal action on a finite power is componentwise]
   \label{lem:ideal_smul_top_pi}
+  \provenancetag{CUSTOM}
   \lean{RingTheory.Module.ideal_smul_top_pi_const}
   \leanok
   Let \(R\) be a commutative ring, \(I \subseteq R\) an ideal, \(M\) an \(R\)-module and
@@ -2377,6 +2465,7 @@ the Auslander--Buchsbaum formula
 
 \begin{lemma}[Depth of a finite power]
   \label{lem:depth_pi_const}
+  \provenancetag{CUSTOM}
   \lean{RingTheory.Module.depth_pi_const_eq_depth_of_nonempty}
   \uses{def:depth, lem:ideal_smul_top_pi, lem:depth_linearEquiv}
   \leanok
@@ -2407,6 +2496,7 @@ the Auslander--Buchsbaum formula
 
 \begin{lemma}[Minimal surjections from a free module]
   \label{lem:minimal_surjection}
+  \provenancetag{CUSTOM}
   \lean{RingTheory.Module.exists_minimalSurjection_finite_localRing}
   \leanok
   Let \((R, \mathfrak m)\) be a local ring with residue field \(\kappa\) and \(M\) a
@@ -2430,6 +2520,7 @@ the Auslander--Buchsbaum formula
 
 \begin{lemma}[From the dimension equation to the vanishing bound]
   \label{lem:pd_lt_of_pd_eq}
+  \provenancetag{CUSTOM}
   \lean{RingTheory.Module.hasProjectiveDimensionLT_succ_of_projectiveDimension_eq}
   \uses{def:projectiveDimension}
   \leanok
@@ -2446,6 +2537,7 @@ the Auslander--Buchsbaum formula
 
 \begin{lemma}[Syzygy descent]
   \label{lem:syzygy_descent}
+  \provenancetag{CUSTOM}
   \lean{RingTheory.Module.hasProjectiveDimensionLT_ker_of_surjection}
   \uses{lem:ext_covariant_les, lem:ext_contravariant_les}
   \leanok
@@ -2468,6 +2560,7 @@ the Auslander--Buchsbaum formula
 
 \begin{lemma}[Syzygy ascent]
   \label{lem:syzygy_ascent}
+  \provenancetag{CUSTOM}
   \lean{RingTheory.Module.hasProjectiveDimensionLT_succ_of_hasProjectiveDimensionLT_ker}
   \uses{lem:ext_contravariant_les}
   \leanok
@@ -2489,6 +2582,7 @@ the Auslander--Buchsbaum formula
 
 \begin{lemma}[The two depth inequalities of the kernel sequence]
   \label{lem:depth_ses_kernel}
+  \provenancetag{CUSTOM}
   \lean{RingTheory.Module.depth_ses_ineqs_of_surjection_finite_localRing}
   \uses{thm:depth_ses, lem:depth_pi_const}
   \leanok
@@ -2511,6 +2605,7 @@ the Auslander--Buchsbaum formula
 
 \begin{lemma}[A nonzero class at the depth index]
   \label{lem:ext_nonzero_at_depth}
+  \provenancetag{CUSTOM}
   \lean{RingTheory.Module.exists_ne_zero_ext_of_depth_eq}
   \uses{thm:depth_ext}
   \leanok
@@ -2527,6 +2622,7 @@ the Auslander--Buchsbaum formula
 
 \begin{lemma}[Matrix collapse on \(\Ext\)]
   \label{lem:ext_matrix_collapse}
+  \provenancetag{CUSTOM}
   \lean{RingTheory.Module.ext_comp_mk₀_ofHom_eq_zero_of_entries_mem_annihilator}
   \uses{lem:ext_annihilator_smul}
   \leanok
@@ -2548,6 +2644,7 @@ the Auslander--Buchsbaum formula
 
 \begin{theorem}[Auslander--Buchsbaum, positive projective dimension]
   \label{thm:auslander_buchsbaum_succ}
+  \provenancetag{REFERENCE}
   \lean{RingTheory.auslander_buchsbaum_formula_succ_pd}
   \uses{lem:minimal_surjection, lem:pd_lt_of_pd_eq, lem:syzygy_descent,
     lem:syzygy_ascent, lem:depth_ses_kernel, lem:ext_nonzero_at_depth,
@@ -2634,6 +2731,7 @@ the Auslander--Buchsbaum formula
 
 \begin{theorem}[The Auslander--Buchsbaum formula]
   \label{thm:auslander_buchsbaum}
+  \provenancetag{REFERENCE}
   \lean{RingTheory.auslander_buchsbaum_formula}
   \uses{thm:auslander_buchsbaum_succ, lem:depth_pi_const, lem:depth_linearEquiv,
     def:projectiveDimension}
@@ -2671,6 +2769,7 @@ that \(R\) is \emph{regular} when \(\mu(\mathfrak m) = \dim R\), the Krull dimen
 
 \begin{definition}[Cohen--Macaulay local ring]
   \label{def:cohen_macaulay}
+  \provenancetag{REFERENCE}
   \lean{RingTheory.CohenMacaulay}
   \uses{def:depth}
   \leanok
@@ -2682,6 +2781,7 @@ that \(R\) is \emph{regular} when \(\mu(\mathfrak m) = \dim R\), the Krull dimen
 
 \begin{theorem}[Cotangent dimension drop]
   \label{thm:cotangent_dim_drop}
+  \provenancetag{CUSTOM}
   \lean{RingTheory.CohenMacaulay.finrank_cotangentSpace_quot_span_singleton_succ}
   \leanok
   Let \((R, \mathfrak m)\) be a Noetherian local ring and
@@ -2724,6 +2824,7 @@ that \(R\) is \emph{regular} when \(\mu(\mathfrak m) = \dim R\), the Krull dimen
 
 \begin{lemma}[The Nakayama witness \(x \in \mathfrak m \setminus \mathfrak m^2\)]
   \label{lem:notMemSq_witness}
+  \provenancetag{CUSTOM}
   \lean{RingTheory.CohenMacaulay.exists_notMemSq_of_spanFinrank_pos}
   \leanok
   Let \((R, \mathfrak m)\) be a Noetherian local ring with \(\mu(\mathfrak m) \geq 1\).
@@ -2739,6 +2840,7 @@ that \(R\) is \emph{regular} when \(\mu(\mathfrak m) = \dim R\), the Krull dimen
 
 \begin{lemma}[The regular quotient step]
   \label{lem:regular_quotient}
+  \provenancetag{CUSTOM}
   \lean{RingTheory.CohenMacaulay.regularLocal_quotient_isRegularLocal_of_notMemSq}
   \uses{thm:cotangent_dim_drop, lem:notMemSq_witness}
   \leanok
@@ -2763,6 +2865,7 @@ that \(R\) is \emph{regular} when \(\mu(\mathfrak m) = \dim R\), the Krull dimen
 
 \begin{theorem}[Regular local rings are domains]
   \label{thm:regular_isDomain}
+  \provenancetag{REFERENCE}
   \lean{RingTheory.CohenMacaulay.isDomain_of_regularLocal}
   \uses{lem:notMemSq_witness, lem:regular_quotient}
   \leanok
@@ -2812,6 +2915,7 @@ that \(R\) is \emph{regular} when \(\mu(\mathfrak m) = \dim R\), the Krull dimen
 
 \begin{theorem}[A regular system of parameters is a regular sequence]
   \label{thm:regular_system_isRegular}
+  \provenancetag{CUSTOM}
   \lean{RingTheory.CohenMacaulay.exists_isRegular_of_regularLocal}
   \uses{lem:notMemSq_witness, thm:regular_isDomain, lem:regular_quotient}
   \leanok
@@ -2837,6 +2941,7 @@ that \(R\) is \emph{regular} when \(\mu(\mathfrak m) = \dim R\), the Krull dimen
 
 \begin{theorem}[Regular local rings are Cohen--Macaulay]
   \label{thm:regular_is_CM}
+  \provenancetag{REFERENCE}
   \lean{RingTheory.CohenMacaulay.of_regular}
   \uses{def:cohen_macaulay, def:depth, thm:regular_system_isRegular}
   \leanok

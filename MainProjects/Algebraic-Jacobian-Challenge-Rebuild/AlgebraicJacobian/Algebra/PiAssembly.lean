@@ -60,7 +60,11 @@ variable (S : ι → Type u) [∀ i, CommRing (S i)] [∀ i, Algebra A (S i)]
 
 /-- The **composite descent unit** assembled from a family of componentwise units
 `w i j : (S i ⊗[A] S j)ˣ`: the unit of `P ⊗[A] P`, `P := ∀ i, S i`, corresponding to `w`
-under the pi-decomposition `piDoubleEquivA`. -/
+under the pi-decomposition `piDoubleEquivA`. 
+
+
+ * Provenance: CUSTOM.
+-/
 noncomputable def piAssemblyUnit (w : ∀ i j, (S i ⊗[A] S j)ˣ) :
     ((∀ i, S i) ⊗[A] ∀ i, S i)ˣ :=
   Units.map ((piDoubleEquivA A S).symm :
@@ -84,7 +88,11 @@ lemma piDoubleEquivA_piAssemblyUnit_val (w : ∀ i j, (S i ⊗[A] S j)ˣ) :
 1-cocycle** (ζ2·ii, G4).  The diagonal condition is the index-wise normalization through
 `diagA`; the cocycle condition is the index-wise identity on the triple components,
 transported through `piTripleEquivA` by the pure-tensor face lemmas of
-`AlgebraicJacobian.Algebra.TensorAwayPi`. -/
+`AlgebraicJacobian.Algebra.TensorAwayPi`. 
+
+
+ * Provenance: CUSTOM.
+-/
 theorem isDescentCocycle_piAssemblyUnit {w : ∀ i j, (S i ⊗[A] S j)ˣ}
     (hdiag : ∀ i, diagA A S i (w i i).val = 1)
     (hcoc : ∀ i j k,
@@ -120,7 +128,11 @@ variable [∀ i j, IsLocalization.Away (f i * f j) (T i j)]
 
 /-- The index-wise collapse `S i ⊗[A] S j →ₐ[A] T i j` from the two-base tensor
 localization onto the one-base overlap localization: on pure tensors,
-`x ⊗ₜ y ↦ inclLeft x * inclRight y`. -/
+`x ⊗ₜ y ↦ inclLeft x * inclRight y`. 
+
+
+ * Provenance: CUSTOM.
+-/
 noncomputable def componentCollapse (i j : ι) : S i ⊗[A] S j →ₐ[A] T i j :=
   Algebra.TensorProduct.lift
     ((inclLeft f S T i j).restrictScalars A)
@@ -148,7 +160,11 @@ lemma tensorEquiv'_tmul (i j : ι) (x : S i) (y : S j) :
   simpa using h
 
 /-- The collapse `Module.tensorCollapse A B P` computes componentwise through the two
-pi-decompositions: it becomes the index-wise `componentCollapse`. -/
+pi-decompositions: it becomes the index-wise `componentCollapse`. 
+
+
+ * Provenance: CUSTOM.
+-/
 lemma piDoubleEquiv_tensorCollapse [Fintype ι] [DecidableEq ι]
     (v : (∀ i, S i) ⊗[A] ∀ i, S i) :
     piDoubleEquiv f S T (Module.tensorCollapse A B (∀ i, S i) v)
@@ -170,7 +186,11 @@ lemma piDoubleEquiv_tensorCollapse [Fintype ι] [DecidableEq ι]
 /-- **The collapse of the assembled unit is the descent unit of the cover cocycle**
 (ζ2·ii, G6): if the componentwise units `w i j` collapse onto the values of a family
 `c i j : (T i j)ˣ` on the overlap models, then `Module.tensorCollapse` carries
-`piAssemblyUnit w` to `cocycleUnit c`. -/
+`piAssemblyUnit w` to `cocycleUnit c`. 
+
+
+ * Provenance: CUSTOM.
+-/
 theorem tensorCollapse_piAssemblyUnit [Fintype ι] [DecidableEq ι]
     {w : ∀ i j, (S i ⊗[A] S j)ˣ} {c : ∀ i j, (T i j)ˣ}
     (hcol : ∀ i j, componentCollapse B f S T i j (w i j).val = (c i j).val) :
@@ -189,7 +209,11 @@ theorem tensorCollapse_piAssemblyUnit [Fintype ι] [DecidableEq ι]
   exact hcol p.1 p.2
 
 /-- If the components collapse onto a family that is `1` on the diagonal (e.g. a cover
-cocycle), the diagonal hypothesis of `isDescentCocycle_piAssemblyUnit` is automatic. -/
+cocycle), the diagonal hypothesis of `isDescentCocycle_piAssemblyUnit` is automatic. 
+
+
+ * Provenance: CUSTOM.
+-/
 theorem diagA_eq_one_of_componentCollapse {w : ∀ i j, (S i ⊗[A] S j)ˣ} {c : ∀ i j, (T i j)ˣ}
     (hcol : ∀ i j, componentCollapse B f S T i j (w i j).val = (c i j).val)
     (hdiagc : ∀ i, diag f S T i (c i i).val = 1) (i : ι) :
@@ -225,7 +249,11 @@ the scheme-side bridge (`AlgebraicJacobian.Picard.WitnessAssembly`). -/
 
 open IsLocalization.Away in
 /-- The face `faceA₂₃` intertwines the double and triple structure maps over the
-simplicial coface `descentFace₂₃`. -/
+simplicial coface `descentFace₂₃`. 
+
+
+ * Provenance: CUSTOM.
+-/
 lemma faceA₂₃_comp_tensorMap (i j k : ι) :
     letI := tensorAwayAlgebra A B B (S j) (S k)
     haveI := tensorAwayScalarTower A B B (S j) (S k)
@@ -241,7 +269,11 @@ lemma faceA₂₃_comp_tensorMap (i j k : ι) :
 
 open IsLocalization.Away in
 /-- The face `faceA₁₂` intertwines the double and triple structure maps over the
-simplicial coface `descentFace₁₂`. -/
+simplicial coface `descentFace₁₂`. 
+
+
+ * Provenance: CUSTOM.
+-/
 lemma faceA₁₂_comp_tensorMap (i j k : ι) :
     letI := tensorAwayAlgebra A B B (S j) (S k)
     haveI := tensorAwayScalarTower A B B (S j) (S k)
@@ -257,7 +289,11 @@ lemma faceA₁₂_comp_tensorMap (i j k : ι) :
 
 open IsLocalization.Away in
 /-- The face `faceA₁₃` intertwines the double and triple structure maps over the
-simplicial coface `descentFace₁₃`. -/
+simplicial coface `descentFace₁₃`. 
+
+
+ * Provenance: CUSTOM.
+-/
 lemma faceA₁₃_comp_tensorMap (i j k : ι) :
     letI := tensorAwayAlgebra A B B (S j) (S k)
     haveI := tensorAwayScalarTower A B B (S j) (S k)
@@ -273,7 +309,11 @@ lemma faceA₁₃_comp_tensorMap (i j k : ι) :
 
 open IsLocalization.Away in
 /-- The index-wise collapse intertwines the double structure map with the multiplication
-`lmul' : B ⊗[A] B →ₐ[A] B`. -/
+`lmul' : B ⊗[A] B →ₐ[A] B`. 
+
+
+ * Provenance: CUSTOM.
+-/
 lemma componentCollapse_comp_tensorMap (i j : ι) :
     (componentCollapse B f S T i j).comp (tensorMap A B B (S i) (S j))
       = (IsScalarTower.toAlgHom A B (T i j)).comp (Algebra.TensorProduct.lmul' A) := by

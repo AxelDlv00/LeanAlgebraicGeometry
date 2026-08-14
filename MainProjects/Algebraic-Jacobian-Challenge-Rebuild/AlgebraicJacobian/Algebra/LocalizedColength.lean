@@ -61,7 +61,11 @@ variable {K : Type*} [Field K] {B : Type*} [CommRing B] [IsDomain B] [Algebra K 
 /-- **Finiteness dévissage.** If `B ⧸ I` is a finite `K`-module for a nonzero principal
 ideal `I`, then so is `B ⧸ Iⁿ` for every `n`: induct along the filtration
 `Iⁿ ⧸ Iⁿ⁺¹ ≅ B ⧸ I` (the landed `quotEquivMapPow`), using that module finiteness is closed
-under extensions (`Module.Finite.of_submodule_quotient`). -/
+under extensions (`Module.Finite.of_submodule_quotient`). 
+
+
+ * Provenance: CUSTOM.
+-/
 theorem moduleFinite_quotient_pow_of_isPrincipal {I : Ideal B} (h : I.IsPrincipal)
     (h' : I ≠ ⊥) [Module.Finite K (B ⧸ I)] (n : ℕ) : Module.Finite K (B ⧸ I ^ n) := by
   induction n with
@@ -98,7 +102,11 @@ variable {B : Type*} [CommRing B] [IsDedekindDomain B]
 
 /-- The `p`-adic valuation of a nonzero `f : B` is `exp (−count p (factors (f)))`: mathlib's
 `intValuation` is defined by the `Associates` count, which agrees with the `Multiset` count
-of the `factors` multiset used by the landed colength engine. -/
+of the `factors` multiset used by the landed colength engine. 
+
+
+ * Provenance: CUSTOM.
+-/
 theorem intValuation_eq_exp_neg_count (v : HeightOneSpectrum B) {f : B} (hf : f ≠ 0) :
     v.intValuation f
       = WithZero.exp (-(Multiset.count v.asIdeal (factors (Ideal.span {f})) : ℤ)) := by
@@ -109,7 +117,11 @@ theorem intValuation_eq_exp_neg_count (v : HeightOneSpectrum B) {f : B} (hf : f 
     ← Ideal.count_associates_factors_eq hsp v.isPrime v.ne_bot]
 
 /-- **Membership in prime powers reads off the multiplicity**: `f ∈ pⁿ` if and only if
-`n ≤ count p (factors (f))`. -/
+`n ≤ count p (factors (f))`. 
+
+
+ * Provenance: CUSTOM.
+-/
 theorem mem_pow_iff_le_count (v : HeightOneSpectrum B) {f : B} (hf : f ≠ 0) (n : ℕ) :
     f ∈ v.asIdeal ^ n ↔ n ≤ Multiset.count v.asIdeal (factors (Ideal.span {f})) := by
   rw [← v.intValuation_le_pow_iff_mem, intValuation_eq_exp_neg_count v hf,
@@ -121,7 +133,11 @@ the nonzero prime `p` and a nonzero `f : B`, the multiplicity of the maximal ide
 in the factorization of `f·S` equals the multiplicity of `p` in the factorization of
 `(f) ⊆ B`.  Both multiplicities are characterized by membership in prime powers
 (`mem_pow_iff_le_count`), and those memberships correspond along the localization
-(`IsLocalization.AtPrime.under_maximalIdeal_pow`). -/
+(`IsLocalization.AtPrime.under_maximalIdeal_pow`). 
+
+
+ * Provenance: CUSTOM.
+-/
 theorem count_factors_span_algebraMap (S : Type*) [CommRing S] [IsDedekindDomain S]
     [Algebra B S] {p : Ideal B} [hp : p.IsPrime] (hp0 : p ≠ ⊥) [IsLocalization.AtPrime S p]
     [IsLocalRing S] {f : B} (hf : f ≠ 0) :
@@ -160,13 +176,21 @@ variable {K : Type*} [Field K] {B : Type*} [CommRing B] [Algebra K B]
   (p : Ideal B) [p.IsMaximal] [IsLocalization.AtPrime S p] [IsLocalRing S]
 
 /-- The localization isomorphism `B ⧸ pⁿ ≃ Rₚ ⧸ mⁿ`
-(`IsLocalization.AtPrime.equivQuotMaximalIdealPow`), as a `K`-linear equivalence. -/
+(`IsLocalization.AtPrime.equivQuotMaximalIdealPow`), as a `K`-linear equivalence. 
+
+
+ * Provenance: CUSTOM.
+-/
 noncomputable def quotPowLinearEquiv (n : ℕ) :
     (B ⧸ p ^ n) ≃ₗ[K] S ⧸ maximalIdeal S ^ n :=
   ((IsLocalization.AtPrime.equivQuotMaximalIdealPow p S n).toLinearEquiv).restrictScalars K
 
 /-- The residue-field isomorphism `B ⧸ p ≃ S ⧸ m`
-(`IsLocalization.AtPrime.equivQuotMaximalIdeal`), as a `K`-linear equivalence. -/
+(`IsLocalization.AtPrime.equivQuotMaximalIdeal`), as a `K`-linear equivalence. 
+
+
+ * Provenance: CUSTOM.
+-/
 noncomputable def residueQuotLinearEquiv : (B ⧸ p) ≃ₗ[K] S ⧸ maximalIdeal S :=
   (AlgEquiv.ofRingEquiv (f := IsLocalization.AtPrime.equivQuotMaximalIdeal p S)
     (fun c : K => by
@@ -178,7 +202,11 @@ variable {S p}
 
 /-- **Per-prime finiteness**: if the residue `B ⧸ p` is a finite `K`-module, so is every
 `B ⧸ pⁿ` — transported through the localization `S`, where the maximal ideal is principal
-(`S` is a DVR when `B` is Dedekind), and dévissaged there. -/
+(`S` is a DVR when `B` is Dedekind), and dévissaged there. 
+
+
+ * Provenance: CUSTOM.
+-/
 theorem moduleFinite_quotient_pow_atPrime [IsDedekindDomain B] [IsDomain S] (hp0 : p ≠ ⊥)
     [Module.Finite K (B ⧸ p)] (n : ℕ) : Module.Finite K (B ⧸ p ^ n) := by
   haveI : IsDiscreteValuationRing S :=
@@ -194,7 +222,11 @@ theorem moduleFinite_quotient_pow_atPrime [IsDedekindDomain B] [IsDomain S] (hp0
 /-- **The per-prime colength collapse**: `finrank K (B ⧸ pⁿ) = n * finrank K (B ⧸ p)` for a
 nonzero prime `p` of a Dedekind domain with `K`-finite residue.  Proved in the localization
 `S` at `p` — a DVR, where the maximal ideal is principal and the landed
-`finrank_quotient_span_pow` applies. -/
+`finrank_quotient_span_pow` applies. 
+
+
+ * Provenance: CUSTOM.
+-/
 theorem finrank_quotient_pow_atPrime [IsDedekindDomain B] [IsDomain S] (hp0 : p ≠ ⊥)
     [Module.Finite K (B ⧸ p)] (n : ℕ) :
     finrank K (B ⧸ p ^ n) = n * finrank K (B ⧸ p) := by
@@ -219,7 +251,11 @@ section Master
 
 variable {K : Type*} [Field K] {B : Type*} [CommRing B] [IsDedekindDomain B] [Algebra K B]
 
-/-- Every prime factor of `(f)` is a nonzero prime ideal containing `f`. -/
+/-- Every prime factor of `(f)` is a nonzero prime ideal containing `f`. 
+
+
+ * Provenance: CUSTOM.
+-/
 theorem prime_factor_span (f : B) {P : Ideal B}
     (hP : P ∈ (factors (Ideal.span {f})).toFinset) : P.IsPrime ∧ P ≠ ⊥ ∧ f ∈ P := by
   have hprime : Prime P := prime_of_factor _ (Multiset.mem_toFinset.mp hP)
@@ -251,7 +287,11 @@ private theorem master_aux {f : B}
 /-- **Finiteness of the Dedekind colength module**: for a nonzero `f` in a Dedekind domain
 over `K` with `K`-finite residues at the prime factors of `(f)`, the quotient `B ⧸ (f)` is
 a finite `K`-module.  (Via the landed Chinese-remainder decomposition
-`quotAlgEquivPiFactors` and per-prime dévissage.) -/
+`quotAlgEquivPiFactors` and per-prime dévissage.) 
+
+
+ * Provenance: CUSTOM.
+-/
 theorem moduleFinite_quotient_span {f : B} (hf : f ≠ 0)
     [∀ P : (factors (Ideal.span {f})).toFinset, Module.Finite K (B ⧸ (P : Ideal B))] :
     Module.Finite K (B ⧸ Ideal.span {f}) := by
@@ -270,7 +310,11 @@ prime factors,
 `finrank K (B ⧸ (f)) = ∑_{P ∣ (f)} count P (factors (f)) * finrank K (B ⧸ P)`.
 
 Each prime-power block collapses through the localization at `P` — a discrete valuation
-ring — where the maximal ideal is principal. -/
+ring — where the maximal ideal is principal. 
+
+
+ * Provenance: CUSTOM.
+-/
 theorem finrank_quotient_span_eq_sum_count {f : B} (hf : f ≠ 0)
     [∀ P : (factors (Ideal.span {f})).toFinset, Module.Finite K (B ⧸ (P : Ideal B))] :
     finrank K (B ⧸ Ideal.span {f})

@@ -11,6 +11,7 @@ dimension one.
 \begin{definition}[Category of curves]
   \label{def:Curve}
   \lean{AlgebraicGeometry.Curve}
+  \provenancetag{CUSTOM}
   Let \(\mathrm{Curve}(k)\) denote the category whose objects are smooth proper geometrically
   irreducible curves over \(k\) and whose morphisms are morphisms of \(k\)-schemes.
 \end{definition}
@@ -19,6 +20,7 @@ dimension one.
   \label{def:jacobian_functor}
   \uses{def:Curve, def:jacobian, prop:jacobian_grpobj}
   \lean{AlgebraicGeometry.Jacobian.functor}
+  \provenancetag{CUSTOM}
   The Jacobian is a contravariant functor
   \[
     \Jac : \mathrm{Curve}(k)^{\op} \longrightarrow \mathrm{Grp}\bigl(\Over(\Spec k)\bigr),
@@ -37,6 +39,7 @@ preserves properness, geometric irreducibility, and smoothness of relative dimen
 \begin{definition}[Base change of schemes]
   \label{def:baseChange}
   \lean{AlgebraicGeometry.baseChange}
+  \provenancetag{CUSTOM}
   \leanok
   For a field extension \(k \to L\), base change is the functor
   \(X \mapsto X \times_{\Spec k} \Spec L\) from \(k\)-schemes to \(L\)-schemes.
@@ -46,6 +49,7 @@ preserves properness, geometric irreducibility, and smoothness of relative dimen
   \label{thm:baseChangeIso}
   \uses{def:jacobian_functor, def:baseChange}
   \lean{AlgebraicGeometry.Jacobian.baseChangeIso}
+  \provenancetag{CUSTOM}
   For every field extension \(k \to L\) and every curve \(C\) over \(k\) there is a canonical
   isomorphism of group schemes over \(L\)
   \[
@@ -57,6 +61,7 @@ preserves properness, geometric irreducibility, and smoothness of relative dimen
   \label{thm:baseChangeIso_id}
   \uses{thm:baseChangeIso}
   \lean{AlgebraicGeometry.Jacobian.baseChangeIso_id}
+  \provenancetag{CUSTOM}
   The base-change isomorphism for the trivial extension \(k \to k\) is the identity, compatibly with
   the identification \(C_k \cong C\).
 \end{proposition}
@@ -65,6 +70,7 @@ preserves properness, geometric irreducibility, and smoothness of relative dimen
   \label{thm:baseChangeIso_comp}
   \uses{thm:baseChangeIso}
   \lean{AlgebraicGeometry.Jacobian.baseChangeIso_comp}
+  \provenancetag{CUSTOM}
   For a tower \(k \to L \to M\) the base-change isomorphisms compose: the isomorphism for \(k \to M\)
   agrees with base-changing the isomorphism for \(k \to L\) along \(L \to M\) and then applying the
   isomorphism for \(L \to M\), compatibly with the identification \((C_L)_M \cong C_M\).
@@ -74,6 +80,7 @@ preserves properness, geometric irreducibility, and smoothness of relative dimen
   \label{thm:baseChange_ofCurve}
   \uses{thm:baseChangeIso, def:ofCurve}
   \lean{AlgebraicGeometry.Jacobian.baseChange_ofCurve}
+  \provenancetag{CUSTOM}
   Base change carries the Abel--Jacobi map of \((C, P)\) to the Abel--Jacobi map of \((C_L, P_L)\):
   under \(\Jac(C)_L \cong \Jac(C_L)\), the base change of \(\varphi_P\) is \(\varphi_{P_L}\).
 \end{proposition}

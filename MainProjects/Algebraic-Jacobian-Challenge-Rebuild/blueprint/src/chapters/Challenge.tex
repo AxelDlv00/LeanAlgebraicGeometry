@@ -19,6 +19,7 @@ guessed.
   \lean{AlgebraicGeometry.genus}
   \leanok
   \uses{def:moduleKSheaf, def:HModule}
+  \provenancetag{ADAPTED}
   The \emph{genus} of a smooth proper curve \(C\) over \(k\) is
   \[
     g(C) \;=\; \dim_k H^1\!\bigl(C, \struct C\bigr),
@@ -36,6 +37,7 @@ guessed.
  \lean{AlgebraicGeometry.Jacobian}
  \uses{def:pic0Functor}
  \source{kleiman-picard}
+ \provenancetag{ADAPTED}
   The \emph{Jacobian} \(\Jac(C)\) of a smooth proper curve \(C\) over \(k\) is the identity
   component \(\Pic^0_{C/k}\) of the relative Picard scheme of \(C\) over \(k\): the \(k\)-scheme
   representing the degree-zero subfunctor of the \'etale-sheafified relative Picard functor.
@@ -45,6 +47,7 @@ guessed.
   \label{prop:jacobian_grpobj}
   \uses{def:jacobian}
   \lean{AlgebraicGeometry.Jacobian.instGrpObj}
+  \provenancetag{ADAPTED}
   \(\Jac(C)\) is a commutative group scheme over \(k\), with multiplication induced by the tensor
   product of line bundles.
 \end{proposition}
@@ -53,6 +56,7 @@ guessed.
   \label{thm:jacobian_smooth}
   \uses{def:genus, def:jacobian}
   \lean{AlgebraicGeometry.Jacobian.smoothOfRelativeDimension_genus}
+  \provenancetag{ADAPTED}
   \(\Jac(C)\) is smooth over \(k\) of relative dimension \(g(C)\).
 \end{theorem}
 
@@ -60,6 +64,9 @@ guessed.
   \label{thm:jacobian_proper}
   \uses{def:jacobian}
   \lean{AlgebraicGeometry.Jacobian.instIsProper}
+  \provenancetag{ADAPTED}
+  \alignmentcheck{TO CHECK: the named Lean target is unresolved; Challenge.lean
+  declares this instance anonymously.}
   \(\Jac(C)\) is proper over \(k\).
 \end{theorem}
 
@@ -67,6 +74,9 @@ guessed.
   \label{thm:jacobian_geomirred}
   \uses{def:jacobian}
   \lean{AlgebraicGeometry.Jacobian.instGeometricallyIrreducible}
+  \provenancetag{ADAPTED}
+  \alignmentcheck{TO CHECK: the named Lean target is unresolved; Challenge.lean
+  declares this instance anonymously.}
   \(\Jac(C)\) is geometrically irreducible over \(k\).
 \end{theorem}
 
@@ -78,6 +88,7 @@ In particular \(\Jac(C)\) is an abelian variety over \(k\) of dimension \(g(C)\)
   \label{def:ofCurve}
   \uses{def:jacobian}
   \lean{AlgebraicGeometry.Jacobian.ofCurve}
+  \provenancetag{ADAPTED}
   For a \(k\)-rational point \(P : \Spec k \to C\), the \emph{Abel--Jacobi map}
   \(\varphi_P : C \to \Jac(C)\) sends a point \(Q\) to the class of the line bundle
   \(\struct C(Q - P)\).
@@ -87,6 +98,7 @@ In particular \(\Jac(C)\) is an abelian variety over \(k\) of dimension \(g(C)\)
   \label{lem:comp_ofCurve}
   \uses{def:ofCurve, prop:jacobian_grpobj}
   \lean{AlgebraicGeometry.Jacobian.comp_ofCurve}
+  \provenancetag{ADAPTED}
   The Abel--Jacobi map \(\varphi_P\) sends the base point \(P\) to the neutral element of
   \(\Jac(C)\): \(\varphi_P \circ P = 0\).
 \end{lemma}
@@ -96,6 +108,9 @@ In particular \(\Jac(C)\) is an abelian variety over \(k\) of dimension \(g(C)\)
   \uses{def:ofCurve, lem:comp_ofCurve, prop:jacobian_grpobj}
   \lean{AlgebraicGeometry.Jacobian.exists_unique_ofCurve_comp}
   \source{abelian-varieties:page-0110}
+  \provenancetag{ADAPTED}
+  \alignmentcheck{TO CHECK: Milne's Proposition~6.1 assumes \(g(C)>0\), whereas this node and its
+  Lean declaration also quantify over genus zero (source page~0110).}
   \(\Jac(C)\) is the Albanese variety of \(C\): for every abelian variety \(A\) over \(k\) and every
   morphism \(f : C \to A\) with \(f \circ P = 0\), there is a unique homomorphism of group schemes
   \(g : \Jac(C) \to A\) such that \(f = g \circ \varphi_P\).  Milne's Proposition~6.1

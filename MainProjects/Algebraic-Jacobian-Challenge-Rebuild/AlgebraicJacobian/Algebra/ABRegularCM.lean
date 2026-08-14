@@ -303,6 +303,7 @@ private lemma regularLocal_inductive_step {R : Type u} [CommRing R] [IsLocalRing
     }
     exact (LinearEquiv.isRegular_congr e.symm rs'_q).mp hreg_q
 
+/-- Provenance: CUSTOM. -/
 lemma exists_isRegular_of_regularLocal
     (R : Type u) [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
     [IsRegularLocalRing R] :
@@ -348,7 +349,15 @@ which is exactly the input the local-cohomology vanishing `H^i_x(O_S) = 0` for
 
 The body combines `length_le_ringKrullDim_of_isRegular` (the upper bound) and
 `exists_isRegular_of_regularLocal` (the lower bound) into
-`depth = ringKrullDim`. -/
+`depth = ringKrullDim`. 
+
+
+
+
+
+
+ * Provenance: REFERENCE.
+-/
 instance of_regular (R : Type u) [CommRing R] [IsLocalRing R]
     [IsNoetherianRing R] [IsRegularLocalRing R] : CohenMacaulay R where
   depth_eq_krullDim := by

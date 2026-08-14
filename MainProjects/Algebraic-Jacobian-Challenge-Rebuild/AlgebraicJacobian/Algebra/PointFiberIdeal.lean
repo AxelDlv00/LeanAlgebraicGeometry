@@ -54,7 +54,11 @@ variable {k B F : Type*} [CommRing k] [CommRing B] [Algebra k B]
 variable (k B F) in
 /-- The point generator `u ⊗ 1 − 1 ⊗ u_F ∈ B ⊗[k] F`: the two étale coordinates spread
 across the tensor factors.  In the application `u_F = c u` is the coordinate of the tracked
-point (`map_coord`). -/
+point (`map_coord`). 
+
+
+ * Provenance: CUSTOM.
+-/
 noncomputable def pointGen : B ⊗[k] F :=
   coord k B ⊗ₜ[k] (1 : F) - (1 : B) ⊗ₜ[k] coord k F
 
@@ -62,28 +66,43 @@ variable (c : B →ₐ[Polynomial k] F)
 
 omit [Algebra k B] [IsScalarTower k (Polynomial k) B]
   [Algebra k F] [IsScalarTower k (Polynomial k) F] in
-/-- A `Polynomial k`-algebra homomorphism matches the étale coordinates. -/
+/-- A `Polynomial k`-algebra homomorphism matches the étale coordinates. 
+
+
+ * Provenance: CUSTOM.
+-/
 lemma map_coord : c (coord k B) = coord k F :=
   c.commutes X
 
 /-- The `k`-level point evaluation `B ⊗[k] F → F`, `x ⊗ λ ↦ c x · λ`: the section ring of
-the graph point inside the chart of the fiber. -/
+the graph point inside the chart of the fiber. 
+
+
+ * Provenance: CUSTOM.
+-/
 noncomputable def pointEv : B ⊗[k] F →ₐ[k] F :=
   Algebra.TensorProduct.lift (c.restrictScalars k) (AlgHom.id k F)
     (fun _ _ => Commute.all _ _)
 
+/-- Provenance: CUSTOM. -/
 @[simp] lemma pointEv_tmul (x : B) (y : F) : pointEv c (x ⊗ₜ[k] y) = c x * y := by
   rw [pointEv, Algebra.TensorProduct.lift_tmul]
   rfl
 
-/-- The point evaluation kills the point generator. -/
+/-- The point evaluation kills the point generator. 
+ * Provenance: CUSTOM.
+-/
 @[simp] lemma pointEv_pointGen : pointEv c (pointGen k B F) = 0 := by
   rw [pointGen, map_sub, pointEv_tmul, pointEv_tmul, map_one, map_coord c, mul_one, one_mul,
     sub_self]
 
 variable (B F) in
 /-- The base-change surjection `B ⊗[k] F →ₐ[k] B ⊗[Polynomial k] F` (mirror of
-`Diagonal.baseChange`); its kernel is `(pointGen)` (`ker_pointBaseChange`). -/
+`Diagonal.baseChange`); its kernel is `(pointGen)` (`ker_pointBaseChange`). 
+
+
+ * Provenance: CUSTOM.
+-/
 noncomputable def pointBaseChange : B ⊗[k] F →ₐ[k] B ⊗[Polynomial k] F :=
   Algebra.TensorProduct.lift
     ((Algebra.TensorProduct.includeLeft :
@@ -99,6 +118,7 @@ noncomputable def pointBaseChange : B ⊗[k] F →ₐ[k] B ⊗[Polynomial k] F :
   rw [Algebra.TensorProduct.includeLeft_apply, Algebra.TensorProduct.includeRight_apply,
     Algebra.TensorProduct.tmul_mul_tmul, one_mul, mul_one]
 
+/-- Provenance: CUSTOM. -/
 lemma pointBaseChange_surjective : Function.Surjective (pointBaseChange (k := k) B F) := by
   intro z
   induction z with
@@ -108,7 +128,11 @@ lemma pointBaseChange_surjective : Function.Surjective (pointBaseChange (k := k)
       obtain ⟨a', ha'⟩ := ha; obtain ⟨b', hb'⟩ := hb
       exact ⟨a' + b', by rw [map_add, ha', hb']⟩
 
-/-- The `Polynomial k`-level point evaluation `B ⊗[Polynomial k] F → F`. -/
+/-- The `Polynomial k`-level point evaluation `B ⊗[Polynomial k] F → F`. 
+
+
+ * Provenance: CUSTOM.
+-/
 noncomputable def pointEvTwo : B ⊗[Polynomial k] F →ₐ[Polynomial k] F :=
   Algebra.TensorProduct.lift c (AlgHom.id (Polynomial k) F)
     (fun _ _ => Commute.all _ _)
@@ -120,7 +144,11 @@ omit [Algebra k B] [IsScalarTower k (Polynomial k) B]
   rw [pointEvTwo, Algebra.TensorProduct.lift_tmul]
   rfl
 
-/-- The `k`-level evaluation factors through the base change. -/
+/-- The `k`-level evaluation factors through the base change. 
+
+
+ * Provenance: CUSTOM.
+-/
 lemma pointEvTwo_pointBaseChange (z : B ⊗[k] F) :
     pointEvTwo c (pointBaseChange B F z) = pointEv c z := by
   induction z with
@@ -131,7 +159,11 @@ lemma pointEvTwo_pointBaseChange (z : B ⊗[k] F) :
 omit [Algebra k B] [IsScalarTower k (Polynomial k) B]
   [Algebra k F] [IsScalarTower k (Polynomial k) F] in
 /-- In `B ⊗[Polynomial k] F` the two coordinates agree across the tensor: both are
-`X • (1 ⊗ 1)`. -/
+`X • (1 ⊗ 1)`. 
+
+
+ * Provenance: CUSTOM.
+-/
 lemma coord_tmul_one_point :
     coord k B ⊗ₜ[Polynomial k] (1 : F) = (1 : B) ⊗ₜ[Polynomial k] coord k F := by
   have h1 : (coord k B : B) = (X : Polynomial k) • (1 : B) := by
@@ -140,7 +172,11 @@ lemma coord_tmul_one_point :
     rw [Algebra.smul_def, mul_one]; rfl
   rw [h1, h2, TensorProduct.smul_tmul]
 
-/-- The base change kills the point generator. -/
+/-- The base change kills the point generator. 
+
+
+ * Provenance: CUSTOM.
+-/
 lemma pointBaseChange_pointGen : pointBaseChange B F (pointGen k B F) = 0 := by
   rw [pointGen, map_sub, pointBaseChange_tmul, pointBaseChange_tmul, coord_tmul_one_point,
     sub_self]
@@ -150,14 +186,22 @@ lemma pointBaseChange_pointGen : pointBaseChange B F (pointGen k B F) = 0 := by
 omit [Algebra (Polynomial k) B] [IsScalarTower k (Polynomial k) B]
   [Algebra (Polynomial k) F] [IsScalarTower k (Polynomial k) F] in
 /-- Difference of evaluations at two points is divisible by the difference of the points
-(the `B ⊗[k] F` copy of `Diagonal.aeval_sub_dvd`). -/
+(the `B ⊗[k] F` copy of `Diagonal.aeval_sub_dvd`). 
+
+
+ * Provenance: CUSTOM.
+-/
 lemma aeval_sub_dvd_point (a b : B ⊗[k] F) (p : Polynomial k) :
     a - b ∣ aeval a p - aeval b p := by
   rw [aeval_def, aeval_def, eval₂_eq_eval_map, eval₂_eq_eval_map]
   exact sub_dvd_eval_sub a b _
 
 /-- **Telescoping** (mirror): for every `p`, the element
-`g_B(p) ⊗ 1 − 1 ⊗ g_F(p)` lies in the ideal generated by the point generator. -/
+`g_B(p) ⊗ 1 − 1 ⊗ g_F(p)` lies in the ideal generated by the point generator. 
+
+
+ * Provenance: CUSTOM.
+-/
 lemma algebraMap_tmul_sub_mem_span_point (p : Polynomial k) :
     (algebraMap (Polynomial k) B p) ⊗ₜ[k] (1 : F)
         - (1 : B) ⊗ₜ[k] (algebraMap (Polynomial k) F p)
@@ -177,7 +221,11 @@ lemma algebraMap_tmul_sub_mem_span_point (p : Polynomial k) :
 
 variable (B F) in
 /-- The right inclusion `λ ↦ 1 ⊗ λ` into the quotient by the point generator, promoted to a
-`Polynomial k`-algebra homomorphism by telescoping (mirror of `Diagonal.qRight`). -/
+`Polynomial k`-algebra homomorphism by telescoping (mirror of `Diagonal.qRight`). 
+
+
+ * Provenance: CUSTOM.
+-/
 noncomputable def pointQRight :
     F →ₐ[Polynomial k] (B ⊗[k] F) ⧸ Ideal.span {pointGen k B F} where
   toFun y := Ideal.Quotient.mk _ ((1 : B) ⊗ₜ[k] y)
@@ -195,7 +243,11 @@ noncomputable def pointQRight :
 
 variable (B F) in
 /-- The section `B ⊗[Polynomial k] F → (B ⊗[k] F) ⧸ (pointGen)` of the base change (mirror
-of `Diagonal.sectionMap`). -/
+of `Diagonal.sectionMap`). 
+
+
+ * Provenance: CUSTOM.
+-/
 noncomputable def pointSectionMap :
     B ⊗[Polynomial k] F →ₐ[Polynomial k] (B ⊗[k] F) ⧸ Ideal.span {pointGen k B F} :=
   Algebra.TensorProduct.lift
@@ -209,7 +261,11 @@ lemma pointSectionMap_tmul (x : B) (y : F) :
   change (Ideal.Quotient.mk _ (x ⊗ₜ[k] 1)) * (Ideal.Quotient.mk _ (1 ⊗ₜ[k] y)) = _
   rw [← map_mul, Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]
 
-/-- The section composed with the base change is the quotient map. -/
+/-- The section composed with the base change is the quotient map. 
+
+
+ * Provenance: CUSTOM.
+-/
 lemma pointSectionMap_pointBaseChange (z : B ⊗[k] F) :
     pointSectionMap B F (pointBaseChange B F z)
       = Ideal.Quotient.mk (Ideal.span {pointGen k B F}) z := by
@@ -220,7 +276,11 @@ lemma pointSectionMap_pointBaseChange (z : B ⊗[k] F) :
 
 variable (B F) in
 /-- **Mirror of deliverable (a).** The kernel of the base-change surjection
-`B ⊗[k] F → B ⊗[Polynomial k] F` is exactly the principal ideal on the point generator. -/
+`B ⊗[k] F → B ⊗[Polynomial k] F` is exactly the principal ideal on the point generator. 
+
+
+ * Provenance: CUSTOM.
+-/
 theorem ker_pointBaseChange :
     RingHom.ker (pointBaseChange (k := k) B F) = Ideal.span {pointGen k B F} := by
   apply le_antisymm
@@ -234,7 +294,11 @@ theorem ker_pointBaseChange :
 
 /-! ### The kernel of the `Polynomial k`-level evaluation (mirror of (b)) -/
 
-/-- The second-factor push `B ⊗[Polynomial k] B → B ⊗[Polynomial k] F` along `c`. -/
+/-- The second-factor push `B ⊗[Polynomial k] B → B ⊗[Polynomial k] F` along `c`. 
+
+
+ * Provenance: CUSTOM.
+-/
 noncomputable def mapRightTwo :
     B ⊗[Polynomial k] B →ₐ[Polynomial k] B ⊗[Polynomial k] F :=
   Algebra.TensorProduct.map (AlgHom.id (Polynomial k) B) c
@@ -247,7 +311,11 @@ omit [Algebra k B] [IsScalarTower k (Polynomial k) B]
 
 omit [Algebra k B] [IsScalarTower k (Polynomial k) B]
   [Algebra k F] [IsScalarTower k (Polynomial k) F] in
-/-- The `Polynomial k`-evaluation of a pushed element is `c` of its multiplication. -/
+/-- The `Polynomial k`-evaluation of a pushed element is `c` of its multiplication. 
+
+
+ * Provenance: CUSTOM.
+-/
 lemma pointEvTwo_mapRightTwo (z : B ⊗[Polynomial k] B) :
     pointEvTwo c (mapRightTwo c z)
       = c (Algebra.TensorProduct.lmul' (R := Polynomial k) (S := B) z) := by
@@ -267,7 +335,11 @@ omit [Algebra k B] [IsScalarTower k (Polynomial k) B]
   [Algebra k F] [IsScalarTower k (Polynomial k) F] in
 include hgen in
 /-- The pushed generators of the point ideal lie in the pushed diagonal ideal:
-`x ⊗ 1 − 1 ⊗ c x` is the push of the diagonal-ideal element `x ⊗ 1 − 1 ⊗ x`. -/
+`x ⊗ 1 − 1 ⊗ c x` is the push of the diagonal-ideal element `x ⊗ 1 − 1 ⊗ x`. 
+
+
+ * Provenance: CUSTOM.
+-/
 lemma tmul_sub_tmul_mem_span_mapRightTwo (x : B) :
     x ⊗ₜ[Polynomial k] (1 : F) - (1 : B) ⊗ₜ[Polynomial k] c x
       ∈ Ideal.span {mapRightTwo c e} := by
@@ -288,7 +360,11 @@ omit [Algebra k B] [IsScalarTower k (Polynomial k) B]
 include hgen in
 /-- **Mirror of deliverable (b).** Given the diagonal-package kernel presentation, the
 kernel of the `Polynomial k`-level point evaluation is the principal ideal on the push of
-the diagonal generator — the section trick `mk ∘ includeRight ∘ ev₂ = mk`. -/
+the diagonal generator — the section trick `mk ∘ includeRight ∘ ev₂ = mk`. 
+
+
+ * Provenance: CUSTOM.
+-/
 theorem ker_pointEvTwo :
     RingHom.ker (pointEvTwo c) = Ideal.span {mapRightTwo c e} := by
   have he : Algebra.TensorProduct.lmul' (R := Polynomial k) (S := B) e = 0 := by
@@ -327,18 +403,30 @@ end EvTwoKernel
 
 /-! ### The localised point-fiber ideal (mirror of (c)) -/
 
-/-- The second-factor push `B ⊗[k] B → B ⊗[k] F` along `c` (the `k`-level). -/
+/-- The second-factor push `B ⊗[k] B → B ⊗[k] F` along `c` (the `k`-level). 
+
+
+ * Provenance: CUSTOM.
+-/
 noncomputable def mapRight : B ⊗[k] B →ₐ[k] B ⊗[k] F :=
   Algebra.TensorProduct.map (AlgHom.id k B) (c.restrictScalars k)
 
 @[simp] lemma mapRight_tmul (x y : B) : mapRight c (x ⊗ₜ[k] y) = x ⊗ₜ[k] c y :=
   rfl
 
-/-- The point generator is the push of the diagonal generator. -/
+/-- The point generator is the push of the diagonal generator. 
+
+
+ * Provenance: CUSTOM.
+-/
 lemma mapRight_diagGen : mapRight c (diagGen (k := k) (B := B)) = pointGen k B F := by
   rw [diagGen, pointGen, map_sub, mapRight_tmul, mapRight_tmul, map_one, map_coord c]
 
-/-- Naturality of the base changes with the second-factor pushes. -/
+/-- Naturality of the base changes with the second-factor pushes. 
+
+
+ * Provenance: CUSTOM.
+-/
 lemma pointBaseChange_mapRight (z : B ⊗[k] B) :
     pointBaseChange B F (mapRight c z) = mapRightTwo c (baseChange z) := by
   induction z with
@@ -355,7 +443,11 @@ variable (elift : B ⊗[k] B)
 
 include hgen in
 /-- The point-evaluation kernel is contained in the sum of the point-generator ideal and
-the principal ideal of the pushed lift (mirror of `ker_lmul'_le_sup`). -/
+the principal ideal of the pushed lift (mirror of `ker_lmul'_le_sup`). 
+
+
+ * Provenance: CUSTOM.
+-/
 lemma ker_pointEv_le_sup :
     RingHom.ker (pointEv c)
       ≤ Ideal.span {pointGen k B F} ⊔ Ideal.span {mapRight c elift} := by
@@ -383,7 +475,11 @@ include hidem hgen in
 evaluation `B ⊗[k] F → F`, extended along any localisation away from `1 − eliftF` (the
 push of the frozen idempotent lift), is the principal ideal generated by the point
 generator `u ⊗ 1 − 1 ⊗ u_F`.  This is the ideal of the graph section on the chart of the
-curve fiber. -/
+curve fiber. 
+
+
+ * Provenance: CUSTOM.
+-/
 theorem ker_pointEv_map_localization_eq :
     (RingHom.ker (pointEv c)).map (algebraMap (B ⊗[k] F) L)
       = Ideal.span {algebraMap (B ⊗[k] F) L (pointGen k B F)} := by

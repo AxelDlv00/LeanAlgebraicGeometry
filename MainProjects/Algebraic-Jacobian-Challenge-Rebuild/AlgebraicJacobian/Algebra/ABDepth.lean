@@ -64,7 +64,15 @@ depth function — that is the gap this declaration fills (Stacks tag 00LI). -/
 When `IM = M` (the "trivial-quotient" case, e.g. `M = 0` or `I = R`) the
 supremum is taken to be `⊤` by convention. When `(R, 𝔪)` is local one usually
 calls `depth (IsLocalRing.maximalIdeal R) M` simply *the depth* of `M`
-(Stacks tag 00LI). -/
+(Stacks tag 00LI). 
+
+
+
+
+
+
+ * Provenance: REFERENCE.
+-/
 noncomputable def depth {R : Type u} [CommRing R] (_I : Ideal R)
     (_M : Type v) [AddCommGroup _M] [Module R _M] : ℕ∞ :=
   open Classical in
@@ -92,7 +100,15 @@ categorical projective dimension of `ModuleCat.of R M`.
 
 The categorical definition is the infimum (in `WithBot ℕ∞`) of `n : ℕ` such
 that all `Ext^i(M, -)` vanish for `i > n`, equivalently the smallest length of
-a projective resolution of `M`. -/
+a projective resolution of `M`. 
+
+
+
+
+
+
+ * Provenance: CUSTOM.
+-/
 noncomputable def projectiveDimension (R : Type u) [Ring R]
     (_M : Type u) [AddCommGroup _M] [Module R _M] : WithBot ℕ∞ :=
   CategoryTheory.projectiveDimension (ModuleCat.of R _M)

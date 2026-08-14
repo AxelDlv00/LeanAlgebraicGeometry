@@ -7,8 +7,11 @@ generated: blueprint
 label: thm:jacobian_smooth
 lean_status: sorry
 order: 3
+tags:
+- ADAPTED
 title: Smoothness of the Jacobian
 type: tex
-updated: '2026-07-16T21:33:29'
+updated: '2026-08-14T17:31:56'
 ---
-\(\Jac(C)\) is smooth over \(k\) of relative dimension \(g(C)\).
+\provenancetag{ADAPTED}
+  \(\Jac(C)\) is smooth over \(k\) of relative dimension \(g(C)\).

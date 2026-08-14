@@ -74,7 +74,11 @@ private theorem pow_smul_mem {S : Type*} [Monoid S] [MulAction S N] {Q : Submodu
 
 omit [IsScalarTower k k[T;T⁻¹] N] in
 /-- A `k`-submodule of a `k[T;T⁻¹]`-module stable under the action of `T` is stable under
-every nonnegative power of `T`. -/
+every nonnegative power of `T`. 
+
+
+ * Provenance: CUSTOM.
+-/
 theorem T_natCast_smul_mem {Q : Submodule k N} (hQ : ∀ x ∈ Q, (T 1 : k[T;T⁻¹]) • x ∈ Q)
     {x : N} (hx : x ∈ Q) (m : ℕ) : (T (m : ℤ) : k[T;T⁻¹]) • x ∈ Q := by
   have h : (T (m : ℤ) : k[T;T⁻¹]) = T 1 ^ m := by rw [T_pow, mul_one]
@@ -83,7 +87,11 @@ theorem T_natCast_smul_mem {Q : Submodule k N} (hQ : ∀ x ∈ Q, (T 1 : k[T;T�
 
 omit [IsScalarTower k k[T;T⁻¹] N] in
 /-- A `k`-submodule of a `k[T;T⁻¹]`-module stable under the action of `T⁻¹` is stable under
-every negative power of `T`. -/
+every negative power of `T`. 
+
+
+ * Provenance: CUSTOM.
+-/
 theorem T_neg_natCast_smul_mem {Q : Submodule k N} (hQ : ∀ x ∈ Q, (T (-1) : k[T;T⁻¹]) • x ∈ Q)
     {x : N} (hx : x ∈ Q) (m : ℕ) : (T (-(m : ℤ)) : k[T;T⁻¹]) • x ∈ Q := by
   have h : (T (-(m : ℤ)) : k[T;T⁻¹]) = T (-1) ^ m := by rw [T_pow, mul_neg_one]
@@ -99,7 +107,11 @@ polynomial ring `k[T;T⁻¹]` and let `Q₀ Q₁ : Submodule k N` be such that
 
 Then `N ⧸ (Q₀ ⊔ Q₁)` is a finite `k`-module: it is spanned by the classes of the monomials
 `T j • x` for `x ∈ s` and `-M < j < 0`, where `M` is a uniform bound with
-`T (-M) • x ∈ Q₁` for all `x ∈ s`. -/
+`T (-M) • x ∈ Q₁` for all `x ∈ s`. 
+
+
+ * Provenance: ADAPTED.
+-/
 theorem moduleFinite_quotient_sup_of_span_eq_top {Q₀ Q₁ : Submodule k N} {s : Finset N}
     (hsQ₀ : ∀ x ∈ s, x ∈ Q₀)
     (hs : span k[T;T⁻¹] (s : Set N) = ⊤)
@@ -172,7 +184,11 @@ Then `N ⧸ (Q₀ ⊔ Q₁)` is a finite `k`-module.
 The hypotheses on `Q₀` and `Q₁` are exactly the "surjectivity up to powers" statements
 furnished by `IsLocalization.Away` when `N` is the sections of a scheme on an intersection of
 two affine opens and `Q₀`, `Q₁` are the images of the restriction maps; see also
-`moduleFinite_quotient_sup_of_exists_pow_smul_mem` for the variant phrased via `T 1 ^ m`. -/
+`moduleFinite_quotient_sup_of_exists_pow_smul_mem` for the variant phrased via `T 1 ^ m`. 
+
+
+ * Provenance: CUSTOM.
+-/
 theorem moduleFinite_quotient_sup_of_exists_smul_mem [Module.Finite k[T;T⁻¹] N]
     {Q₀ Q₁ : Submodule k N}
     (hQ₀ : ∀ x ∈ Q₀, (T 1 : k[T;T⁻¹]) • x ∈ Q₀)
@@ -201,7 +217,11 @@ theorem moduleFinite_quotient_sup_of_exists_smul_mem [Module.Finite k[T;T⁻¹] 
 /-- **The two-lattice lemma**, localization form with the "surjectivity up to powers"
 hypotheses phrased via powers of `T 1` and `T (-1)` — the exact output shape of
 `IsLocalization.Away`-style statements after transport to `k[T;T⁻¹]`.
-See `moduleFinite_quotient_sup_of_exists_smul_mem`. -/
+See `moduleFinite_quotient_sup_of_exists_smul_mem`. 
+
+
+ * Provenance: CUSTOM.
+-/
 theorem moduleFinite_quotient_sup_of_exists_pow_smul_mem [Module.Finite k[T;T⁻¹] N]
     {Q₀ Q₁ : Submodule k N}
     (hQ₀ : ∀ x ∈ Q₀, (T 1 : k[T;T⁻¹]) • x ∈ Q₀)

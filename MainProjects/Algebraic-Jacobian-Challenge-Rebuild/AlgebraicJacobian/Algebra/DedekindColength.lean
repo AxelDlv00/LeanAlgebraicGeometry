@@ -59,7 +59,13 @@ namespace AlgebraicGeometry
 For a short exact sequence of finite-dimensional `k`-vector spaces
 `0 → A →f B →g C → 0` (`f` injective, `g` surjective, `Function.Exact f g`),
 the dimension of the middle term is the sum of the outer dimensions:
-`finrank k B = finrank k A + finrank k C`. -/
+`finrank k B = finrank k A + finrank k C`. 
+
+
+
+
+ * Provenance: CUSTOM.
+-/
 theorem finrank_add_of_exact
     {k A B C : Type*} [Field k]
     [AddCommGroup A] [Module k A] [AddCommGroup B] [Module k B] [AddCommGroup C] [Module k C]
@@ -74,7 +80,13 @@ theorem finrank_add_of_exact
 /-- **Vanishing of the alternating sum of finranks along a five-term exact sequence.**
 Given an exact sequence of finite-dimensional `k`-vector spaces
 `0 → V₁ →f₁ V₂ →f₂ V₃ →f₃ V₄ →f₄ V₅ → 0`
-(with `f₁` injective and `f₄` surjective), the alternating sum of dimensions vanishes in `ℤ`. -/
+(with `f₁` injective and `f₄` surjective), the alternating sum of dimensions vanishes in `ℤ`. 
+
+
+
+
+ * Provenance: CUSTOM.
+-/
 theorem finrank_alt_sum_eq_zero_of_exact₅
     {k V₁ V₂ V₃ V₄ V₅ : Type*} [Field k]
     [AddCommGroup V₁] [Module k V₁] [AddCommGroup V₂] [Module k V₂] [AddCommGroup V₃] [Module k V₃]
@@ -113,21 +125,39 @@ variable {k : Type*} [Field k] {B : Type*} [CommRing B] [IsDomain B] [Algebra k 
 
 /-- **One-step filtration jump.**  For a nonzero principal ideal `I = (π)`, multiplication by
 `π ^ n` induces a `B`-linear (hence `k`-linear) isomorphism `B ⧸ I ≃ I ^ n ⧸ I • ⊤`, so the two
-quotients have the same `k`-dimension. -/
+quotients have the same `k`-dimension. 
+
+
+
+
+ * Provenance: CUSTOM.
+-/
 theorem finrank_quotSucc_jump {I : Ideal B} (h : I.IsPrincipal) (h' : I ≠ ⊥) (n : ℕ)
     [Module.Finite k (B ⧸ I)] :
     finrank k ((I ^ n : Ideal B) ⧸ (I • ⊤ : Submodule B (I ^ n : Ideal B))) = finrank k (B ⧸ I) :=
   ((Ideal.quotEquivPowQuotPowSucc h h' n).restrictScalars k).finrank_eq.symm
 
 /-- The `k`-linear iso `B ⧸ I ≃ₗ[k] I ^ n ⧸ I ^ (n+1)`, realised as the image ideal
-`(I ^ n).map (mk (I ^ (n+1)))` inside `B ⧸ I ^ (n+1)`. -/
+`(I ^ n).map (mk (I ^ (n+1)))` inside `B ⧸ I ^ (n+1)`. 
+
+
+
+
+ * Provenance: CUSTOM.
+-/
 noncomputable def quotEquivMapPow {I : Ideal B} (h : I.IsPrincipal) (h' : I ≠ ⊥) (n : ℕ) :
     (B ⧸ I) ≃ₗ[k] (Ideal.map (Ideal.Quotient.mk (I ^ (n + 1))) (I ^ n)) :=
   ((Ideal.quotEquivPowQuotPowSucc h h' n).trans
     (Ideal.powQuotPowSuccLinearEquivMapMkPowSuccPow I n)).restrictScalars k
 
 /-- **Inductive step of the colength formula.**  For a nonzero principal ideal `I`,
-`finrank k (B ⧸ I ^ (n+1)) = finrank k (B ⧸ I) + finrank k (B ⧸ I ^ n)`. -/
+`finrank k (B ⧸ I ^ (n+1)) = finrank k (B ⧸ I) + finrank k (B ⧸ I ^ n)`. 
+
+
+
+
+ * Provenance: CUSTOM.
+-/
 theorem finrank_quotient_pow_succ {I : Ideal B} (h : I.IsPrincipal) (h' : I ≠ ⊥) (n : ℕ)
     [Module.Finite k (B ⧸ I ^ (n + 1))] [Module.Finite k (B ⧸ I ^ n)] :
     finrank k (B ⧸ I ^ (n + 1)) = finrank k (B ⧸ I) + finrank k (B ⧸ I ^ n) := by
@@ -175,7 +205,13 @@ private theorem finrank_quotient_span_pow_aux {I : Ideal B} (h : I.IsPrincipal) 
 
 /-- **Prime-power / DVR colength formula.**  For a nonzero principal ideal `I = (π)` in `B`
 whose quotient `B ⧸ I ^ e` is finite over the base field `k`, the `k`-dimension of `B ⧸ I ^ e`
-is `e` copies of the residue dimension: `finrank k (B ⧸ I ^ e) = e • finrank k (B ⧸ I)`. -/
+is `e` copies of the residue dimension: `finrank k (B ⧸ I ^ e) = e • finrank k (B ⧸ I)`. 
+
+
+
+
+ * Provenance: CUSTOM.
+-/
 theorem finrank_quotient_span_pow {I : Ideal B} (h : I.IsPrincipal) (h' : I ≠ ⊥) (e : ℕ)
     [Module.Finite k (B ⧸ I ^ e)] :
     finrank k (B ⧸ I ^ e) = e • finrank k (B ⧸ I) :=
@@ -192,7 +228,13 @@ open UniqueFactorizationMonoid
 variable {k : Type*} [Field k] {B : Type*} [CommRing B] [IsDedekindDomain B] [Algebra k B]
 
 /-- The Chinese remainder theorem for a Dedekind domain, upgraded to a `k`-algebra equivalence:
-`B ⧸ I ≃ₐ[k] ∏_P B ⧸ P ^ (mult of P in I)`. -/
+`B ⧸ I ≃ₐ[k] ∏_P B ⧸ P ^ (mult of P in I)`. 
+
+
+
+
+ * Provenance: CUSTOM.
+-/
 noncomputable def quotAlgEquivPiFactors {I : Ideal B} (hI : I ≠ ⊥) :
     (B ⧸ I) ≃ₐ[k]
       (∀ P : (factors I).toFinset,
@@ -209,7 +251,13 @@ noncomputable def quotAlgEquivPiFactors {I : Ideal B} (hI : I ≠ ⊥) :
 /-- **Multi-prime colength via the Chinese remainder theorem.**  For a nonzero ideal `I` of a
 Dedekind domain `B`, finite over the base field `k`, the `k`-dimension of `B ⧸ I` is the sum,
 over the prime factors `P` of `I`, of the `k`-dimensions of the prime-power quotients
-`B ⧸ P ^ (mult of P in I)`. -/
+`B ⧸ P ^ (mult of P in I)`. 
+
+
+
+
+ * Provenance: CUSTOM.
+-/
 theorem finrank_quotient_eq_sum_factors_pow {I : Ideal B} (hI : I ≠ ⊥)
     [∀ P : (factors I).toFinset,
         Module.Finite k (B ⧸ (P : Ideal B) ^ Multiset.count (P : Ideal B) (factors I))] :
@@ -222,7 +270,13 @@ theorem finrank_quotient_eq_sum_factors_pow {I : Ideal B} (hI : I ≠ ⊥)
 whose height-one-prime factors are principal (e.g. `B` a PID) and whose prime-power residues are
 finite over the base field `k`, the `k`-dimension of `B ⧸ (f)` is
 `∑_P (ord_P f) • finrank k (B ⧸ P)`, the sum ranging over the prime factors of `(f)` with
-`ord_P f` the multiplicity of `P` in the factorization. -/
+`ord_P f` the multiplicity of `P` in the factorization. 
+
+
+
+
+ * Provenance: CUSTOM.
+-/
 theorem finrank_quotient_span_eq_sum_ord {f : B} (hf : f ≠ 0)
     (hprin : ∀ P : (factors (Ideal.span {f})).toFinset, (P : Ideal B).IsPrincipal)
     [∀ P : (factors (Ideal.span {f})).toFinset,

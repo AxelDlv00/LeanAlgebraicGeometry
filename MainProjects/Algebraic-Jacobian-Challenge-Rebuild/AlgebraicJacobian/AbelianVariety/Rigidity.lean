@@ -67,7 +67,15 @@ namespace CategoryTheory.CartesianMonoidalCategory
 variable {C : Type u} [Category.{v} C] [CartesianMonoidalCategory C]
 
 /-- A morphism `p : T ⟶ X ⊗ Y` whose second component is constant with value the point
-`y : 𝟙_ C ⟶ Y` factors through the slice `lift (𝟙 X) (toUnit X ≫ y) : X ⟶ X ⊗ Y` over `y`. -/
+`y : 𝟙_ C ⟶ Y` factors through the slice `lift (𝟙 X) (toUnit X ≫ y) : X ⟶ X ⊗ Y` over `y`. 
+
+
+
+
+
+
+ * Provenance: CUSTOM.
+-/
 theorem eq_comp_lift_id_of_comp_snd_eq {T X Y : C} {p : T ⟶ X ⊗ Y} {y : 𝟙_ C ⟶ Y}
     (h : p ≫ snd X Y = toUnit T ≫ y) :
     p = (p ≫ fst X Y) ≫ lift (𝟙 X) (toUnit X ≫ y) := by
@@ -75,7 +83,15 @@ theorem eq_comp_lift_id_of_comp_snd_eq {T X Y : C} {p : T ⟶ X ⊗ Y} {y : 𝟙
 
 /-- If `f : X ⊗ Y ⟶ Z` is constant on the slice over the point `y : 𝟙_ C ⟶ Y` (with value the
 point `c : 𝟙_ C ⟶ Z`), then `f` composed with any morphism whose second component is constant
-with value `y` is constant with value `c`. -/
+with value `y` is constant with value `c`. 
+
+
+
+
+
+
+ * Provenance: CUSTOM.
+-/
 theorem comp_eq_toUnit_comp_of_comp_snd_eq {T X Y Z : C} {p : T ⟶ X ⊗ Y} {y : 𝟙_ C ⟶ Y}
     {f : X ⊗ Y ⟶ Z} {c : 𝟙_ C ⟶ Z} (h : p ≫ snd X Y = toUnit T ≫ y)
     (hf : lift (𝟙 X) (toUnit X ≫ y) ≫ f = toUnit X ≫ c) :
@@ -93,7 +109,15 @@ set_option backward.isDefEq.respectTransparency false in
 sections of `V` come from a base ring `R` (`IsIso sV.appTop` for a structure morphism
 `sV : V ⟶ Spec R`; e.g. `V` proper and geometrically integral over a field `R`) and the
 set-theoretic image of `q` is contained in an affine open `U` of `W`, is *constant*: it factors
-through the base as `q = sV ≫ z` for a point `z : Spec R ⟶ W`. -/
+through the base as `q = sV ≫ z` for a point `z : Spec R ⟶ W`. 
+
+
+
+
+
+
+ * Provenance: ADAPTED.
+-/
 theorem exists_eq_comp_of_isIso_appTop_of_range_subset {V W : Scheme.{u}} {R : CommRingCat.{u}}
     (sV : V ⟶ Spec R) [IsIso sV.appTop] (q : V ⟶ W) {U : W.Opens} (hU : IsAffineOpen U)
     (hq : Set.range ⇑q ⊆ (U : Set W)) :
@@ -117,7 +141,15 @@ set_option backward.isDefEq.respectTransparency false in
 /-- `Over`-category form of the constancy lemma
 `AlgebraicGeometry.exists_eq_comp_of_isIso_appTop_of_range_subset`: a morphism `q : V ⟶ W` of
 schemes over `Spec R` with `Γ(V, 𝒪_V) = R` whose image lies in an affine open of `W` factors
-through a point `c : 𝟙_ (Over (Spec R)) ⟶ W`. -/
+through a point `c : 𝟙_ (Over (Spec R)) ⟶ W`. 
+
+
+
+
+
+
+ * Provenance: CUSTOM.
+-/
 theorem exists_eq_toUnit_comp_of_isIso_appTop_of_range_subset {R : CommRingCat.{u}}
     {V W : Over (Spec R)} [IsIso V.hom.appTop] (q : V ⟶ W) {U : W.left.Opens}
     (hU : IsAffineOpen U) (hq : Set.range ⇑q.left ⊆ (U : Set W.left)) :
@@ -147,7 +179,15 @@ variable {K : Type u} [Field K]
 
 set_option backward.isDefEq.respectTransparency false in
 /-- Two `K`-points (in the `Over`-category sense) of a scheme locally of finite type over an
-algebraically closed field `K` are equal as soon as their underlying points agree. -/
+algebraically closed field `K` are equal as soon as their underlying points agree. 
+
+
+
+
+
+
+ * Provenance: CUSTOM.
+-/
 theorem point_ext_of_apply_closedPoint_eq [IsAlgClosed K]
     {T : Over (Spec (CommRingCat.of K))} [LocallyOfFiniteType T.hom]
     {p q : 𝟙_ (Over (Spec (CommRingCat.of K))) ⟶ T}
@@ -156,7 +196,15 @@ theorem point_ext_of_apply_closedPoint_eq [IsAlgClosed K]
     (by simp) (by simp) h)
 
 /-- A product of geometrically integral schemes locally of finite type over a field is
-integral. Instance form, keyed on the monoidal product of `Over (Spec K)`. -/
+integral. Instance form, keyed on the monoidal product of `Over (Spec K)`. 
+
+
+
+
+
+
+ * Provenance: CUSTOM.
+-/
 instance isIntegral_tensorObj_left {X Y : Over (Spec (CommRingCat.of K))}
     [GeometricallyIntegral X.hom] [GeometricallyIntegral Y.hom]
     [LocallyOfFiniteType X.hom] [LocallyOfFiniteType Y.hom] :
@@ -180,7 +228,15 @@ the slice `X × {y₀}` over a `K`-point `y₀` of `Y` to a `K`-point `z₀` of 
 uniquely through the second projection.
 
 The integrality of `X ⊗ Y` holds automatically when `Y` is also geometrically integral
-(`AlgebraicGeometry.isIntegral_tensorObj_left`). -/
+(`AlgebraicGeometry.isIntegral_tensorObj_left`). 
+
+
+
+
+
+
+ * Provenance: REFERENCE.
+-/
 theorem exists_unique_eq_snd_comp_of_isProper_of_geometricallyIntegral
     {X Y Z : Over (Spec (CommRingCat.of K))}
     [IsProper X.hom] [GeometricallyIntegral X.hom] [LocallyOfFiniteType Y.hom]

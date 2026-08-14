@@ -74,7 +74,11 @@ noncomputable def leftMap : B₁ ⊗[A] B₂ →ₐ[A] Si ⊗[A] B₂ :=
 noncomputable def rightMap : Si ⊗[A] B₂ →ₐ[A] Si ⊗[A] Sj :=
   Algebra.TensorProduct.map (AlgHom.id A Si) (IsScalarTower.toAlgHom A B₂ Sj)
 
-/-- The `A`-algebra map `B₁ ⊗[A] B₂ →ₐ[A] Si ⊗[A] Sj` localizing both factors. -/
+/-- The `A`-algebra map `B₁ ⊗[A] B₂ →ₐ[A] Si ⊗[A] Sj` localizing both factors. 
+
+
+ * Provenance: CUSTOM.
+-/
 noncomputable def tensorMap : B₁ ⊗[A] B₂ →ₐ[A] Si ⊗[A] Sj :=
   Algebra.TensorProduct.map (IsScalarTower.toAlgHom A B₁ Si) (IsScalarTower.toAlgHom A B₂ Sj)
 
@@ -91,7 +95,9 @@ lemma rightMap_comp_leftMap :
 /-- The canonical `B₁ ⊗[A] B₂`-algebra structure on `Si ⊗[A] Sj`, given by `tensorMap`.
 
 Provided as a `def` (introduce it with `letI`), *not* a global instance: as a global
-instance it would compete with `Algebra.id` in the degenerate case `Si = B₁`, `Sj = B₂`. -/
+instance it would compete with `Algebra.id` in the degenerate case `Si = B₁`, `Sj = B₂`. 
+ * Provenance: CUSTOM.
+-/
 @[reducible] noncomputable def tensorAwayAlgebra : Algebra (B₁ ⊗[A] B₂) (Si ⊗[A] Sj) :=
   (tensorMap A B₁ B₂ Si Sj).toRingHom.toAlgebra
 
@@ -108,7 +114,11 @@ lemma tensorAwayScalarTower :
 /-- **The tensor product of an `Away` localization over `B₁` and an `Away` localization
 over `B₂` is an `Away` localization of the tensor product `B₁ ⊗[A] B₂`.**  Namely,
 `Si ⊗[A] Sj` (with the canonical `tensorAwayAlgebra` structure) is the localization of
-`B₁ ⊗[A] B₂` away from `(r ⊗ₜ 1) * (1 ⊗ₜ s)`, which equals `r ⊗ₜ s`. -/
+`B₁ ⊗[A] B₂` away from `(r ⊗ₜ 1) * (1 ⊗ₜ s)`, which equals `r ⊗ₜ s`. 
+
+
+ * Provenance: CUSTOM.
+-/
 theorem isLocalization_away_tensor
     [IsLocalization.Away r Si] [IsLocalization.Away s Sj] :
     letI := tensorAwayAlgebra A B₁ B₂ Si Sj
@@ -181,7 +191,11 @@ variable (Tij : Type u) [CommRing Tij] [Algebra (B₁ ⊗[A] B₂) Tij]
 
 /-- The canonical `B₁ ⊗[A] B₂`-algebra equivalence from `Si ⊗[A] Sj` (with the
 `tensorAwayAlgebra` structure) to any other model `Tij` of the localization of
-`B₁ ⊗[A] B₂` away from `(r ⊗ₜ 1) * (1 ⊗ₜ s)`. -/
+`B₁ ⊗[A] B₂` away from `(r ⊗ₜ 1) * (1 ⊗ₜ s)`. 
+
+
+ * Provenance: CUSTOM.
+-/
 noncomputable def tensorAwayEquiv
     [IsLocalization.Away r Si] [IsLocalization.Away s Sj]
     [IsLocalization.Away ((r ⊗ₜ[A] 1) * (1 ⊗ₜ[A] s) : B₁ ⊗[A] B₂) Tij] :
@@ -193,7 +207,11 @@ noncomputable def tensorAwayEquiv
 
 /-- `tensorAwayEquiv` sends `tensorMap w` (equivalently, the image of `w : B₁ ⊗[A] B₂`
 under the canonical structure map) to `algebraMap w`; in particular it is a
-`B₁ ⊗[A] B₂`-algebra map. -/
+`B₁ ⊗[A] B₂`-algebra map. 
+
+
+ * Provenance: CUSTOM.
+-/
 lemma tensorAwayEquiv_tensorMap
     [IsLocalization.Away r Si] [IsLocalization.Away s Sj]
     [IsLocalization.Away ((r ⊗ₜ[A] 1) * (1 ⊗ₜ[A] s) : B₁ ⊗[A] B₂) Tij] (w : B₁ ⊗[A] B₂) :
@@ -204,7 +222,11 @@ lemma tensorAwayEquiv_tensorMap
   (tensorAwayEquiv A B₁ B₂ r s Si Sj Tij).commutes w
 
 /-- `tensorAwayEquiv` on a pure tensor of structure-map images: it sends
-`algebraMap B₁ Si x ⊗ₜ algebraMap B₂ Sj y` to `algebraMap (B₁ ⊗[A] B₂) Tij (x ⊗ₜ y)`. -/
+`algebraMap B₁ Si x ⊗ₜ algebraMap B₂ Sj y` to `algebraMap (B₁ ⊗[A] B₂) Tij (x ⊗ₜ y)`. 
+
+
+ * Provenance: CUSTOM.
+-/
 lemma tensorAwayEquiv_tmul
     [IsLocalization.Away r Si] [IsLocalization.Away s Sj]
     [IsLocalization.Away ((r ⊗ₜ[A] 1) * (1 ⊗ₜ[A] s) : B₁ ⊗[A] B₂) Tij] (x : B₁) (y : B₂) :

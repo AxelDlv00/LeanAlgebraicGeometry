@@ -45,7 +45,15 @@ Proof: `x • e = (mk₀ (x • 𝟙_N)).comp e (zero_add i)` (by R-linearity:
 This is the precise statement of the Stacks-00LW "`x ∈ 𝔪` annihilates
 `Ext^*(κ, -)`" trick, lifted to the more general `x ∈ Ann(N)` form so it covers
 both `N = κ` and `N = R/(x_1,…,x_k)`. It is reused by the matrix-collapse
-argument of `ABSyzygy`. -/
+argument of `ABSyzygy`. 
+
+
+
+
+
+
+ * Provenance: CUSTOM.
+-/
 lemma ext_smul_eq_zero_of_mem_annihilator
     {R : Type u} [CommRing R]
     {N M : ModuleCat.{u} R} {i : ℕ} (e : Abelian.Ext.{u} N M i)
@@ -95,7 +103,15 @@ hypothesis applies recursively to `M/xM`) via the long exact sequence of
   obtain `x ∈ 𝔪` with `IsSMulRegular M x`, chases the LES to get Ext-vanishing
   on `M/xM` below `n`, applies the inductive hypothesis on `M/xM` (nontrivial
   by `nontrivial_quotSMulTop_of_mem_maximalIdeal`), and conses `x` onto the
-  resulting regular sequence via `isRegular_cons_iff` + `le_sSup`. -/
+  resulting regular sequence via `isRegular_cons_iff` + `le_sSup`. 
+
+
+
+
+
+
+ * Provenance: REFERENCE.
+-/
 theorem depth_eq_smallest_ext_index
     {R : Type u} [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
     {M : Type u} [AddCommGroup M] [Module R M] [_root_.Module.Finite R M]

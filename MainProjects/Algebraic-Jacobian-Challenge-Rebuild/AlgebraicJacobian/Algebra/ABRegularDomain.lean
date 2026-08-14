@@ -274,7 +274,15 @@ The body is a strong induction on `spanFinrank 𝔪 R`:
   a domain by the IH, hence `(x)` is prime. Take a minimal prime `𝔭 ⊆ (x)`:
   the `x ∉ 𝔭` branch closes via `𝔭 ⊆ x·𝔭` + Nakayama (`𝔭 = ⊥`, so `⊥` is
   prime); the `x ∈ 𝔭` branch is refuted by
-  `notMem_minimalPrimes_of_regularLocal_succ`. -/
+  `notMem_minimalPrimes_of_regularLocal_succ`. 
+
+
+
+
+
+
+ * Provenance: REFERENCE.
+-/
 lemma isDomain_of_regularLocal
     (R : Type u) [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
     [IsRegularLocalRing R] : IsDomain R := by

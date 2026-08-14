@@ -46,24 +46,34 @@ variable (S : ι → Type u) [∀ i, CommRing (S i)] [∀ i, Algebra A (S i)]
 /-! ## The pi-double and pi-triple decompositions -/
 
 /-- The `A`-algebra identification of `P ⊗[A] P`, `P := ∀ i, S i`, with the product of the
-pairwise tensor products `S p.1 ⊗[A] S p.2`. -/
+pairwise tensor products `S p.1 ⊗[A] S p.2`. 
+
+
+ * Provenance: CUSTOM.
+-/
 noncomputable def piDoubleEquivA :
     ((∀ i, S i) ⊗[A] ∀ i, S i) ≃ₐ[A] ∀ p : ι × ι, S p.1 ⊗[A] S p.2 :=
   Algebra.TensorProduct.piPiAlgEquiv A S S
 
 @[simp]
+/-- Provenance: CUSTOM. -/
 lemma piDoubleEquivA_tmul (s t : ∀ i, S i) :
     piDoubleEquivA A S (s ⊗ₜ[A] t) = fun p : ι × ι => s p.1 ⊗ₜ[A] t p.2 :=
   rfl
 
 /-- The `A`-algebra identification of `P ⊗[A] (P ⊗[A] P)` with the product of the triple
-tensor products `S t.1 ⊗[A] (S t.2.1 ⊗[A] S t.2.2)`. -/
+tensor products `S t.1 ⊗[A] (S t.2.1 ⊗[A] S t.2.2)`. 
+
+
+ * Provenance: CUSTOM.
+-/
 noncomputable def piTripleEquivA :
     ((∀ i, S i) ⊗[A] ((∀ i, S i) ⊗[A] ∀ i, S i)) ≃ₐ[A]
       ∀ t : ι × ι × ι, S t.1 ⊗[A] (S t.2.1 ⊗[A] S t.2.2) :=
   (Algebra.TensorProduct.congr AlgEquiv.refl (piDoubleEquivA A S)).trans
     (Algebra.TensorProduct.piPiAlgEquiv A S (fun p : ι × ι => S p.1 ⊗[A] S p.2))
 
+/-- Provenance: CUSTOM. -/
 lemma piTripleEquivA_tmul (s : ∀ i, S i) (v : (∀ i, S i) ⊗[A] ∀ i, S i) :
     piTripleEquivA A S (s ⊗ₜ[A] v)
       = fun t : ι × ι × ι => s t.1 ⊗ₜ[A] piDoubleEquivA A S v t.2 :=
@@ -71,27 +81,53 @@ lemma piTripleEquivA_tmul (s : ∀ i, S i) (v : (∀ i, S i) ⊗[A] ∀ i, S i) 
 
 /-! ## The index-wise inclusions, faces and diagonal on the components -/
 
-/-- Index-wise inclusion of the first factor: `S i →ₐ[A] S i ⊗[A] S j`. -/
+/-- Index-wise inclusion of the first factor: `S i →ₐ[A] S i ⊗[A] S j`. 
+
+
+ * Provenance: CUSTOM.
+-/
 noncomputable def inclLeftA (i j : ι) : S i →ₐ[A] S i ⊗[A] S j :=
   Algebra.TensorProduct.includeLeft
 
-/-- Index-wise inclusion of the second factor: `S j →ₐ[A] S i ⊗[A] S j`. -/
+/-- Index-wise inclusion of the second factor: `S j →ₐ[A] S i ⊗[A] S j`. 
+
+
+ * Provenance: CUSTOM.
+-/
 noncomputable def inclRightA (i j : ι) : S j →ₐ[A] S i ⊗[A] S j :=
   Algebra.TensorProduct.includeRight
 
-/-- Index-wise face hitting tensor positions `1, 2`. -/
+/-- Index-wise face hitting tensor positions `1, 2`. 
+
+
+ * Provenance: CUSTOM.
+-/
 noncomputable def faceA₁₂ (i j k : ι) : (S i ⊗[A] S j) →ₐ[A] S i ⊗[A] (S j ⊗[A] S k) :=
   Algebra.TensorProduct.map (AlgHom.id A (S i)) Algebra.TensorProduct.includeLeft
 
-/-- Index-wise face hitting tensor positions `1, 3`. -/
+/-- Index-wise face hitting tensor positions `1, 3`. 
+
+
+ * Provenance: CUSTOM.
+-/
 noncomputable def faceA₁₃ (i j k : ι) : (S i ⊗[A] S k) →ₐ[A] S i ⊗[A] (S j ⊗[A] S k) :=
   Algebra.TensorProduct.map (AlgHom.id A (S i)) Algebra.TensorProduct.includeRight
 
-/-- Index-wise face hitting tensor positions `2, 3`. -/
+/-- Index-wise face hitting tensor positions `2, 3`. 
+
+
+ * Provenance: CUSTOM.
+-/
 noncomputable def faceA₂₃ (i j k : ι) : (S j ⊗[A] S k) →ₐ[A] S i ⊗[A] (S j ⊗[A] S k) :=
   Algebra.TensorProduct.includeRight
 
-/-- Index-wise diagonal (multiplication) `S i ⊗[A] S i →ₐ[A] S i`. -/
+/-- Index-wise diagonal (multiplication) `S i ⊗[A] S i →ₐ[A] S i`. 
+Algebra.TensorProduct.faceA₁₂.
+
+
+
+ * Provenance: CUSTOM.
+-/
 noncomputable def diagA (i : ι) : (S i ⊗[A] S i) →ₐ[A] S i :=
   Algebra.TensorProduct.lmul' A
 
@@ -99,7 +135,11 @@ noncomputable def diagA (i : ι) : (S i ⊗[A] S i) →ₐ[A] S i :=
 
 variable {A S}
 
-/-- The inclusion `descentIncl₁ : P → P ⊗[A] P` becomes the index-wise left inclusion. -/
+/-- The inclusion `descentIncl₁ : P → P ⊗[A] P` becomes the index-wise left inclusion. 
+
+
+ * Provenance: CUSTOM.
+-/
 lemma piDoubleEquivA_descentIncl₁ (s : ∀ i, S i) :
     piDoubleEquivA A S (Module.descentIncl₁ A (∀ i, S i) s)
       = fun p : ι × ι => inclLeftA A S p.1 p.2 (s p.1) := by
@@ -108,7 +148,11 @@ lemma piDoubleEquivA_descentIncl₁ (s : ∀ i, S i) :
     Algebra.TensorProduct.piPiAlgEquiv_tmul, Pi.one_apply,
     Algebra.TensorProduct.includeLeft_apply]
 
-/-- The inclusion `descentIncl₂ : P → P ⊗[A] P` becomes the index-wise right inclusion. -/
+/-- The inclusion `descentIncl₂ : P → P ⊗[A] P` becomes the index-wise right inclusion. 
+
+
+ * Provenance: CUSTOM.
+-/
 lemma piDoubleEquivA_descentIncl₂ (s : ∀ i, S i) :
     piDoubleEquivA A S (Module.descentIncl₂ A (∀ i, S i) s)
       = fun p : ι × ι => inclRightA A S p.1 p.2 (s p.2) := by
@@ -117,7 +161,11 @@ lemma piDoubleEquivA_descentIncl₂ (s : ∀ i, S i) :
     Algebra.TensorProduct.piPiAlgEquiv_tmul, Pi.one_apply,
     Algebra.TensorProduct.includeRight_apply]
 
-/-- The face `descentFace₂₃` becomes the index-wise `2,3`-face. -/
+/-- The face `descentFace₂₃` becomes the index-wise `2,3`-face. 
+
+
+ * Provenance: CUSTOM.
+-/
 lemma piTripleEquivA_descentFace₂₃ (w : ∀ p : ι × ι, S p.1 ⊗[A] S p.2) :
     piTripleEquivA A S (Module.descentFace₂₃ A (∀ i, S i) ((piDoubleEquivA A S).symm w))
       = fun t : ι × ι × ι => faceA₂₃ A S t.1 t.2.1 t.2.2 (w (t.2.1, t.2.2)) := by
@@ -125,7 +173,11 @@ lemma piTripleEquivA_descentFace₂₃ (w : ∀ p : ι × ι, S p.1 ⊗[A] S p.2
   rw [Module.descentFace₂₃_apply, piTripleEquivA_tmul, AlgEquiv.apply_symm_apply]
   simp only [faceA₂₃, Pi.one_apply, Algebra.TensorProduct.includeRight_apply]
 
-/-- The face `descentFace₁₂` becomes the index-wise `1,2`-face. -/
+/-- The face `descentFace₁₂` becomes the index-wise `1,2`-face. 
+
+
+ * Provenance: CUSTOM.
+-/
 lemma piTripleEquivA_descentFace₁₂ (w : ∀ p : ι × ι, S p.1 ⊗[A] S p.2) :
     piTripleEquivA A S (Module.descentFace₁₂ A (∀ i, S i) ((piDoubleEquivA A S).symm w))
       = fun t : ι × ι × ι => faceA₁₂ A S t.1 t.2.1 t.2.2 (w (t.1, t.2.1)) := by
@@ -141,7 +193,11 @@ lemma piTripleEquivA_descentFace₁₂ (w : ∀ p : ι × ι, S p.1 ⊗[A] S p.2
   simp only [AlgHom.comp_apply, AlgEquiv.coe_algHom, AlgEquiv.apply_symm_apply] at h
   exact h
 
-/-- The face `descentFace₁₃` becomes the index-wise `1,3`-face. -/
+/-- The face `descentFace₁₃` becomes the index-wise `1,3`-face. 
+
+
+ * Provenance: CUSTOM.
+-/
 lemma piTripleEquivA_descentFace₁₃ (w : ∀ p : ι × ι, S p.1 ⊗[A] S p.2) :
     piTripleEquivA A S (Module.descentFace₁₃ A (∀ i, S i) ((piDoubleEquivA A S).symm w))
       = fun t : ι × ι × ι => faceA₁₃ A S t.1 t.2.1 t.2.2 (w (t.1, t.2.2)) := by
@@ -157,7 +213,11 @@ lemma piTripleEquivA_descentFace₁₃ (w : ∀ p : ι × ι, S p.1 ⊗[A] S p.2
   simp only [AlgHom.comp_apply, AlgEquiv.coe_algHom, AlgEquiv.apply_symm_apply] at h
   exact h
 
-/-- Multiplication `P ⊗[A] P → P` becomes the index-wise diagonal. -/
+/-- Multiplication `P ⊗[A] P → P` becomes the index-wise diagonal. 
+
+
+ * Provenance: CUSTOM.
+-/
 lemma lmul'_piDoubleEquivA_symm (w : ∀ p : ι × ι, S p.1 ⊗[A] S p.2) :
     Algebra.TensorProduct.lmul' A (S := ∀ i, S i) ((piDoubleEquivA A S).symm w)
       = fun i => diagA A S i (w (i, i)) := by
@@ -186,7 +246,11 @@ variable [∀ i, IsLocalization.Away (f i) (S i)]
 
 /-- **Faithful flatness of the composite cover tower `A → B → P`.**  If `A → B` is faithfully
 flat and `f : ι → B` is a covering family (`span (range f) = ⊤`), then `P := ∀ i, S i` is a
-faithfully flat `A`-algebra.  This is the tower over which staged descent (`ε2`) is run. -/
+faithfully flat `A`-algebra.  This is the tower over which staged descent (`ε2`) is run. 
+
+
+ * Provenance: CUSTOM.
+-/
 theorem pi_tower [Module.FaithfullyFlat A B] (hspan : Ideal.span (Set.range f) = ⊤) :
     Module.FaithfullyFlat A (∀ i, S i) :=
   haveI : Module.FaithfullyFlat B (∀ i, S i) :=

@@ -154,7 +154,15 @@ Proof by Nat-induction on `k`, generalising `M`:
   `pd (ker f) = k + 1` exactly (`projectiveDimension_ker_eq_of_surjection`);
   the induction hypothesis on `ker f` plus the two Stacks-00LX inequalities
   (`depth_ses_ineqs_of_surjection_finite_localRing`) combine arithmetically via
-  `enat_ab_inductive_combine`. -/
+  `enat_ab_inductive_combine`. 
+
+
+
+
+
+
+ * Provenance: REFERENCE.
+-/
 lemma auslander_buchsbaum_formula_succ_pd
     {R : Type u} [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
     {M : Type u} [AddCommGroup M] [Module R M] [_root_.Module.Finite R M]
@@ -399,7 +407,15 @@ subtleties).
 
 The case `pd_R(M) = 0` (`M` finite free) goes via the finite-free-module +
 `depth_pi_const_eq_depth_of_nonempty` route; the case `pd_R(M) = k + 1` is
-`auslander_buchsbaum_formula_succ_pd`. -/
+`auslander_buchsbaum_formula_succ_pd`. 
+
+
+
+
+
+
+ * Provenance: REFERENCE.
+-/
 theorem auslander_buchsbaum_formula
     {R : Type u} [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
     {M : Type u} [AddCommGroup M] [Module R M] [_root_.Module.Finite R M]

@@ -54,7 +54,11 @@ predicate nor the class — this is the gap-fill. -/
 equals its Krull dimension: `depth(R) = dim R` (Stacks tag 00N8).
 
 Encoded as a `Prop`-valued type class so downstream consumers can write
-`[CohenMacaulay R]` and use Cohen–Macaulay as a hypothesis. -/
+`[CohenMacaulay R]` and use Cohen–Macaulay as a hypothesis. 
+
+
+ * Provenance: REFERENCE.
+-/
 class CohenMacaulay (R : Type u) [CommRing R] [IsLocalRing R]
     [IsNoetherianRing R] : Prop where
   /-- The Cohen–Macaulay equation: `depth(R) = ringKrullDim R`. The numeric
@@ -93,7 +97,14 @@ Both sides reduce to `spanFinrank` of the maximal ideal via
   surjection `R → R/(x)` and, together with `x`, generates `𝔪`.
 
 This is the building block that upgrades `R/(x)` back to `IsRegularLocalRing`
-in `regularLocal_quotient_isRegularLocal_of_notMemSq` below. -/
+in `regularLocal_quotient_isRegularLocal_of_notMemSq` below. 
+
+
+
+
+
+ * Provenance: CUSTOM.
+-/
 theorem finrank_cotangentSpace_quot_span_singleton_succ
     {R : Type u} [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
     (x : R) (hx : x ∈ IsLocalRing.maximalIdeal R)
@@ -330,7 +341,14 @@ theorem finrank_cotangentSpace_quot_span_singleton_succ
 `spanFinrank 𝔪 ≥ 1`, there exists `x ∈ 𝔪` with `x ∉ 𝔪²`.
 
 This is the "cotangent space is nonzero" content: by Nakayama, if `𝔪 ⊆ 𝔪²`
-then `𝔪 = 0` (so `spanFinrank 𝔪 = 0`), contradicting the hypothesis. -/
+then `𝔪 = 0` (so `spanFinrank 𝔪 = 0`), contradicting the hypothesis. 
+
+
+
+
+
+ * Provenance: CUSTOM.
+-/
 lemma exists_notMemSq_of_spanFinrank_pos
     {R : Type u} [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
     (h : 0 < (IsLocalRing.maximalIdeal R).spanFinrank) :
@@ -372,6 +390,7 @@ by routing the dimension lower bound through
 `ringKrullDim_le_ringKrullDim_quotient_add_encard` — a Krull-height bound
 that does NOT require `x` to be a non-zero-divisor — instead of
 `ringKrullDim_quotient_span_singleton_succ_eq_ringKrullDim`. -/
+/-- Provenance: CUSTOM. -/
 lemma regularLocal_quotient_isRegularLocal_of_notMemSq
     {R : Type u} [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
     [IsRegularLocalRing R] {k : ℕ}

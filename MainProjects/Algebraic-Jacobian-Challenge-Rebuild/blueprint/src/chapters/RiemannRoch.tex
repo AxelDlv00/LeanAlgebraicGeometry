@@ -24,6 +24,7 @@ and \(K(X)\) for the function field (the stalk at \(\eta\)).
 \begin{theorem}[Discrete valuation ring at a closed point of an affine Dedekind chart]
   \label{thm:affine_dedekind_dvr_stalk}
   \lean{AlgebraicGeometry.IsAffineOpen.isDiscreteValuationRing_stalk}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(X\) be an integral scheme, \(V \subseteq X\) an affine open whose ring of sections
   \(\Gamma(X, V)\) is a Dedekind domain, and \(x \in V\) a point which is not the generic point
@@ -43,6 +44,7 @@ and \(K(X)\) for the function field (the stalk at \(\eta\)).
 \begin{theorem}[Discrete valuation ring at a closed point of a curve]
   \label{thm:closedpoint_dvr_stalk}
   \lean{AlgebraicGeometry.isDiscreteValuationRing_stalk}
+  \provenancetag{CUSTOM}
   \uses{thm:affine_dedekind_dvr_stalk, thm:relDim1_dedekind_charts}
   \leanok
   Let \(X\) be an integral scheme smooth of relative dimension one over a field \(K\), and let
@@ -58,6 +60,7 @@ and \(K(X)\) for the function field (the stalk at \(\eta\)).
 \begin{theorem}[Dedekind stalk at a closed point of a curve]
   \label{thm:closedpoint_dedekind_stalk}
   \lean{AlgebraicGeometry.isDedekindDomain_stalk}
+  \provenancetag{CUSTOM}
   \uses{thm:closedpoint_dvr_stalk}
   \leanok
   In the situation of \ref{thm:closedpoint_dvr_stalk}, the stalk \(\struct{X,x}\) is a Dedekind
@@ -72,6 +75,7 @@ and \(K(X)\) for the function field (the stalk at \(\eta\)).
 \begin{theorem}[Non-generic points of a curve are closed]
   \label{thm:closedpoint_isClosed}
   \lean{AlgebraicGeometry.isClosed_singleton_of_ne_genericPoint}
+  \provenancetag{CUSTOM}
   \uses{thm:relDim1_specializes, lem:height_one_closed_points}
   \leanok
   Let \(X\) be an integral scheme smooth of relative dimension one over a field \(K\), and let
@@ -91,6 +95,7 @@ and \(K(X)\) for the function field (the stalk at \(\eta\)).
   \uses{thm:closedpoint_dvr_stalk, thm:closedpoint_dedekind_stalk}
   \leanok
   \source{papaioannou-algebraic-rr:page-0003}
+  \provenancetag{REFERENCE}
   For a closed point \(x\) of \(X\) (a point other than the generic point), the
   \emph{order valuation} \(\mathrm{ord}_x\) is the discrete valuation of the function field
   \(K(X)\) with values in \(\Z \cup \{+\infty\}\) determined by the discrete valuation ring
@@ -118,6 +123,7 @@ structure on each residue field.
 \begin{definition}[The base-field algebra map on a residue field]
   \label{def:residueOverAlgebraMap}
   \lean{AlgebraicGeometry.Scheme.residueOverAlgebraMap}
+  \provenancetag{CUSTOM}
   \uses{def:overAlgebraMap}
   \leanok
   For a scheme \(X\) over \(\Spec K\) and a point \(x \in X\), the canonical ring homomorphism
@@ -143,6 +149,7 @@ structure on each residue field.
   \uses{def:residueOverAlgebraMap}
   \leanok
   \source{papaioannou-algebraic-rr:page-0004}
+  \provenancetag{REFERENCE}
   For a scheme \(X\) over \(\Spec K\) and a point \(x \in X\), the \emph{residue degree} at
   \(x\) is
   \[
@@ -169,6 +176,7 @@ vanishes, as the degree of a principal divisor must.
   \uses{thm:closedpoint_isClosed}
   \leanok
   \source{papaioannou-algebraic-rr:page-0006}
+  \provenancetag{REFERENCE}
   For an integral scheme \(X\) with generic point \(\eta\), a \emph{Weil divisor} is a finitely
   supported \(\Z\)-valued function on the non-generic points, i.e.\ an element of the free abelian
   group
@@ -187,6 +195,7 @@ vanishes, as the degree of a principal divisor must.
   \uses{def:curveDivisor, def:residueDeg}
   \leanok
   \source{papaioannou-algebraic-rr:page-0007}
+  \provenancetag{REFERENCE}
   For a scheme \(X\) over \(\Spec K\) and a Weil divisor \(D \in \Div(X)\), the \emph{degree} of
   \(D\), weighted by the residue degrees over the base field, is
   \[
@@ -204,6 +213,7 @@ vanishes, as the degree of a principal divisor must.
   \uses{def:curveDivisor_deg}
   \leanok
   \source{papaioannou-algebraic-rr:page-0007}
+  \provenancetag{REFERENCE}
   The degree map \(\deg_K : \Div(X) \to \Z\) is a homomorphism of abelian groups: it satisfies
   \(\deg_K 0 = 0\), \(\deg_K(D + D') = \deg_K D + \deg_K D'\) and \(\deg_K(-D) = -\deg_K D\).
 \end{theorem}
@@ -221,6 +231,7 @@ vanishes, as the degree of a principal divisor must.
 \begin{lemma}[Degree of a single-point divisor]
   \label{lem:curveDivisor_deg_single}
   \lean{AlgebraicGeometry.Scheme.CurveDivisor.deg_single}
+  \provenancetag{CUSTOM}
   \uses{def:curveDivisor_deg}
   \leanok
   For a closed point \(x\) and an integer \(n\), the degree of the single-point divisor
@@ -245,6 +256,7 @@ and a \(K\)-module \(M\) the skyscraper sheaf concentrates \(M\) at \(x\).
 \begin{definition}[The skyscraper sheaf of \(K\)-modules]
   \label{def:skyModule}
   \lean{AlgebraicGeometry.skyModule}
+  \provenancetag{CUSTOM}
   \leanok
   For \(x \in X\) and a \(K\)-module \(M\), the \emph{skyscraper sheaf} \(\mathrm{sky}_x(M)\) of
   \(K\)-modules on the small Zariski site of \(X\) is the sheaf whose sections over an open
@@ -261,6 +273,7 @@ and a \(K\)-module \(M\) the skyscraper sheaf concentrates \(M\) at \(x\).
 \begin{definition}[Degree-zero cohomology of a skyscraper is its value]
   \label{def:skyModuleGammaEquiv}
   \lean{AlgebraicGeometry.skyModuleGammaEquiv}
+  \provenancetag{CUSTOM}
   \uses{def:skyModule, def:HModule_linearEquiv0}
   \leanok
   For \(x \in X\) and a \(K\)-module \(M\), there is a \(K\)-linear equivalence
@@ -279,6 +292,7 @@ and a \(K\)-module \(M\) the skyscraper sheaf concentrates \(M\) at \(x\).
 \begin{theorem}[Global lifting along the cokernel of a skyscraper embedding]
   \label{thm:sky_cokernel_app_top_surjective}
   \lean{AlgebraicGeometry.cokernelπ_app_top_surjective}
+  \provenancetag{CUSTOM}
   \uses{def:skyModule, lem:sections_left_exact, lem:app_injective_of_mono}
   \leanok
   Let \(x \in X\), let \(M\) be a \(K\)-module, and let \(\iota : \mathrm{sky}_x(M) \to G\) be a
@@ -348,6 +362,7 @@ and a \(K\)-module \(M\) the skyscraper sheaf concentrates \(M\) at \(x\).
 \begin{theorem}[Degree-one cohomology of a skyscraper vanishes]
   \label{thm:skyModule_h1_vanishing}
   \lean{AlgebraicGeometry.skyModule_subsingleton_hModule_one}
+  \provenancetag{CUSTOM}
   \uses{def:skyModule, def:HModule}
   \leanok
   For every point \(x \in X\) and every \(K\)-module \(M\),
@@ -382,6 +397,7 @@ local term to the ledger.
   \uses{thm:relDim1_dedekind_charts, thm:affine_dedekind_dvr_stalk, def:residueOverAlgebraMap}
   \leanok
   \source{papaioannou-algebraic-rr:page-0004}
+  \provenancetag{REFERENCE}
   Let \(X\) be an integral scheme smooth of relative dimension one and locally of finite type over a
   field \(K\), and let \(x\) be a non-generic (hence closed) point. Then the residue field
   \(\kappa(x)\) is a finite \(K\)-module; equivalently the residue degree \([\kappa(x):K]\) is
@@ -405,6 +421,7 @@ local term to the ledger.
 \begin{theorem}[Positivity of the residue degree]
   \label{thm:residueDeg_pos}
   \lean{AlgebraicGeometry.Scheme.residueDeg_pos}
+  \provenancetag{CUSTOM}
   \uses{thm:residueDeg_finite, def:residueDeg}
   \leanok
   In the situation of \ref{thm:residueDeg_finite}, the residue degree is positive:
@@ -429,6 +446,7 @@ finiteness of the set of points where a given function has a zero or a pole.
   \uses{def:scheme_ord}
   \leanok
   \source{papaioannou-algebraic-rr:page-0005}
+  \provenancetag{REFERENCE}
   For a closed point \(x\), the \emph{order homomorphism}
   \[
     \mathrm{ord}_x : K(X)^\times \longrightarrow \Z
@@ -449,6 +467,7 @@ finiteness of the set of points where a given function has a zero or a pole.
 \begin{lemma}[Trivial order where a section is invertible]
   \label{lem:ord_eq_one_of_mem_basicOpen}
   \lean{AlgebraicGeometry.Scheme.ord_eq_one_of_mem_basicOpen}
+  \provenancetag{CUSTOM}
   \uses{def:scheme_ord, thm:closedpoint_dvr_stalk}
   \leanok
   Let \(s \in \Gamma(X, U)\) represent the rational function \(g = \mathrm{germ}_\eta(s)\) at the
@@ -470,6 +489,7 @@ finiteness of the set of points where a given function has a zero or a pole.
   \uses{lem:ord_eq_one_of_mem_basicOpen, thm:height_one_finite_closed, thm:relDim1_specializes}
   \leanok
   \source{papaioannou-algebraic-rr:page-0006}
+  \provenancetag{REFERENCE}
   For \(g \in K(X)^\times\), the set of closed points at which \(g\) has nonzero order,
   \(\{ x : \mathrm{ord}_x g \neq 0 \}\), is finite. (Here \(X\) is additionally assumed
   quasi-compact over \(K\), so that its underlying space is Noetherian.)
@@ -493,6 +513,7 @@ finiteness of the set of points where a given function has a zero or a pole.
   \uses{def:curveDivisor, def:scheme_ordZ, thm:ordZ_support_finite}
   \leanok
   \source{papaioannou-algebraic-rr:page-0007}
+  \provenancetag{REFERENCE}
   For \(g \in K(X)^\times\), the \emph{principal divisor}
   \[
     \mathrm{div}(g) = \sum_{x} \mathrm{ord}_x(g)\, x
@@ -508,6 +529,7 @@ finiteness of the set of points where a given function has a zero or a pole.
   \uses{def:divOf, def:scheme_ordZ}
   \leanok
   \source{papaioannou-algebraic-rr:page-0007}
+  \provenancetag{REFERENCE}
   The principal divisor is a homomorphism from \(K(X)^\times\) to \(\Div(X)\): for all
   \(g, g' \in K(X)^\times\),
   \[
@@ -532,6 +554,7 @@ family of such functions shares a single underlying rational function.
 \begin{definition}[The \(K\)-structure on the function field]
   \label{def:functionFieldOverAlgebraMap}
   \lean{AlgebraicGeometry.Scheme.functionFieldOverAlgebraMap}
+  \provenancetag{CUSTOM}
   \uses{def:overAlgebraMap}
   \leanok
   For \(X\) over \(\Spec K\), the function field \(K(X)\) carries a canonical \(K\)-algebra structure
@@ -547,6 +570,7 @@ family of such functions shares a single underlying rational function.
 \begin{lemma}[Integral elements have no pole]
   \label{lem:ord_algebraMap_stalk_le_one}
   \lean{AlgebraicGeometry.Scheme.ord_algebraMap_stalk_le_one}
+  \provenancetag{CUSTOM}
   \uses{thm:closedpoint_dvr_stalk, def:scheme_ord}
   \leanok
   The image in \(K(X)\) of any element of the stalk \(\struct{X,x}\) at a closed point \(x\) has no
@@ -563,6 +587,7 @@ family of such functions shares a single underlying rational function.
 \begin{lemma}[Constants have no pole]
   \label{lem:ord_functionFieldOverAlgebraMap_le_one}
   \lean{AlgebraicGeometry.Scheme.ord_functionFieldOverAlgebraMap_le_one}
+  \provenancetag{CUSTOM}
   \uses{lem:ord_algebraMap_stalk_le_one, def:functionFieldOverAlgebraMap}
   \leanok
   The image in \(K(X)\) of a constant \(r \in K\) has no pole at any closed point \(x\):
@@ -582,6 +607,7 @@ family of such functions shares a single underlying rational function.
     def:functionFieldOverAlgebraMap}
   \leanok
   \source{papaioannou-algebraic-rr:page-0007}
+  \provenancetag{ADAPTED}
   For a Weil divisor \(D\) and a nonempty open \(U\), the sections of \(\mathcal O(D)\) over \(U\)
   are
   \[
@@ -599,6 +625,7 @@ family of such functions shares a single underlying rational function.
 \begin{lemma}[Nonempty opens of an irreducible space meet]
   \label{lem:opens_inf_nonempty}
   \lean{AlgebraicGeometry.Scheme.opens_inf_nonempty}
+  \provenancetag{CUSTOM}
   \leanok
   Any two nonempty open subsets of the irreducible space \(X\) have nonempty intersection.
 \end{lemma}
@@ -611,6 +638,7 @@ family of such functions shares a single underlying rational function.
 \begin{definition}[The divisor sheaf \(\mathcal O(D)\)]
   \label{def:divisorSheaf}
   \lean{AlgebraicGeometry.Scheme.divisorSheaf}
+  \provenancetag{CUSTOM}
   \uses{def:divisorSections, lem:opens_inf_nonempty}
   \leanok
   The presheaf \(U \mapsto \mathcal O(D)(U)\) of \ref{def:divisorSections} is a sheaf of
@@ -631,6 +659,7 @@ family of such functions shares a single underlying rational function.
 \begin{theorem}[Monotone inclusion of divisor sheaves]
   \label{thm:divisorSheafLE}
   \lean{AlgebraicGeometry.Scheme.divisorSheafLE, AlgebraicGeometry.Scheme.divisorSheafLE_mono}
+  \provenancetag{CUSTOM}
   \uses{def:divisorSheaf, def:curveDivisor}
   \leanok
   For \(D \le D'\) the identity on rational functions gives a monomorphism of sheaves
@@ -648,6 +677,7 @@ family of such functions shares a single underlying rational function.
 \begin{lemma}[No pole means integral]
   \label{lem:exists_stalk_of_ord_le_one}
   \lean{AlgebraicGeometry.Scheme.exists_stalk_of_ord_le_one}
+  \provenancetag{CUSTOM}
   \uses{thm:closedpoint_dvr_stalk, thm:closedpoint_dedekind_stalk, def:scheme_ord}
   \leanok
   If a rational function \(g\) has no pole at a closed point \(x\) (order of vanishing \(\ge 0\)),
@@ -673,6 +703,7 @@ characteristic of \(\mathcal O(0)\) to that of \(\struct X\).
 \begin{lemma}[The germ/stalk seam]
   \label{lem:germ_generic_eq_algebraMap_germ}
   \lean{AlgebraicGeometry.Scheme.germ_generic_eq_algebraMap_germ}
+  \provenancetag{CUSTOM}
   \leanok
   For a section \(s \in \Gamma(X, U)\) over an open containing both the generic point \(\eta\) and a
   point \(x\), the germ at \(\eta\) equals the image of the germ at \(x\) under the localization map
@@ -688,6 +719,7 @@ characteristic of \(\mathcal O(0)\) to that of \(\struct X\).
 \begin{lemma}[Regular germs have poles bounded by zero]
   \label{lem:germGenericLinear_mem}
   \lean{AlgebraicGeometry.Scheme.germGenericLinear_mem}
+  \provenancetag{CUSTOM}
   \uses{lem:germ_generic_eq_algebraMap_germ, lem:ord_algebraMap_stalk_le_one, def:divisorSections}
   \leanok
   For a section \(s \in \Gamma(X, U)\) over a nonempty open \(U\), its germ at the generic point
@@ -705,6 +737,7 @@ characteristic of \(\mathcal O(0)\) to that of \(\struct X\).
 \begin{lemma}[Local regular representatives]
   \label{lem:exists_local_section}
   \lean{AlgebraicGeometry.Scheme.exists_local_section}
+  \provenancetag{CUSTOM}
   \uses{lem:exists_stalk_of_ord_le_one, lem:germ_generic_eq_algebraMap_germ, def:divisorSections}
   \leanok
   A rational function \(g \in \mathcal O(0)(U)\) is, near every point \(x \in U\), the germ at
@@ -723,6 +756,7 @@ characteristic of \(\mathcal O(0)\) to that of \(\struct X\).
 \begin{lemma}[Global representability]
   \label{lem:exists_section_germ_eq}
   \lean{AlgebraicGeometry.Scheme.exists_section_germ_eq}
+  \provenancetag{CUSTOM}
   \uses{lem:exists_local_section}
   \leanok
   Every \(g \in \mathcal O(0)(U)\) over a nonempty open \(U\) is the germ at \(\eta\) of a section
@@ -740,6 +774,7 @@ characteristic of \(\mathcal O(0)\) to that of \(\struct X\).
 \begin{theorem}[\(\mathcal O(0) \cong \struct X\)]
   \label{thm:divisorSheafZeroIso}
   \lean{AlgebraicGeometry.Scheme.divisorSheafZeroIso}
+  \provenancetag{CUSTOM}
   \uses{lem:germGenericLinear_mem, lem:exists_section_germ_eq, def:divisorSheaf, def:moduleKSheaf}
   \leanok
   The divisor sheaf of the zero divisor is the structure sheaf of \(X\) as a sheaf of \(K\)-modules:
@@ -767,6 +802,7 @@ the pole-order filtration at \(x\).
 \begin{definition}[The one-point lattice]
   \label{def:pointLattice}
   \lean{AlgebraicGeometry.pointLattice}
+  \provenancetag{CUSTOM}
   \uses{def:scheme_ord, lem:ord_functionFieldOverAlgebraMap_le_one}
   \leanok
   For a closed point \(x\) and \(n \in \Z\), the \emph{one-point lattice} \(L_n\) is the
@@ -780,6 +816,7 @@ the pole-order filtration at \(x\).
 \begin{definition}[The jump module]
   \label{def:jumpModule}
   \lean{AlgebraicGeometry.jumpModule}
+  \provenancetag{CUSTOM}
   \uses{def:pointLattice, def:curveDivisor}
   \leanok
   The \emph{jump module} at \(x\) is the quotient
@@ -794,6 +831,7 @@ the pole-order filtration at \(x\).
 \begin{definition}[The projection to the jump module]
   \label{def:jumpProj}
   \lean{AlgebraicGeometry.jumpProj}
+  \provenancetag{CUSTOM}
   \uses{def:jumpModule, def:divisorSections, def:pointLattice}
   \leanok
   For an open \(U \ni x\), the \emph{jump projection} \(\mathrm{proj} : \mathcal O(D)(U) \to J\),
@@ -805,6 +843,7 @@ the pole-order filtration at \(x\).
 \begin{definition}[The divisor minus a point]
   \label{def:devissageDivisor}
   \lean{AlgebraicGeometry.devissageDivisor}
+  \provenancetag{CUSTOM}
   \uses{def:curveDivisor}
   \leanok
   For a closed point \(x\), the divisor \(D - x\) is obtained by decreasing the coefficient of \(D\)
@@ -815,6 +854,7 @@ the pole-order filtration at \(x\).
 \begin{definition}[The skyscraper projection \(\pi\)]
   \label{def:devissagePi}
   \lean{AlgebraicGeometry.devissageπ}
+  \provenancetag{CUSTOM}
   \uses{def:jumpProj, def:skyModule, def:divisorSheaf}
   \leanok
   The morphism of sheaves \(\pi : \mathcal O(D) \to \mathrm{sky}_x(J)\) sending a section \(g\) over
@@ -827,6 +867,7 @@ the pole-order filtration at \(x\).
 \begin{lemma}[The dévissage complex vanishes]
   \label{lem:devissage_comp_eq_zero}
   \lean{AlgebraicGeometry.devissage_comp_eq_zero}
+  \provenancetag{CUSTOM}
   \uses{def:devissagePi, def:devissageDivisor, thm:divisorSheafLE, def:jumpProj}
   \leanok
   The composite \(\mathcal O(D-x) \hookrightarrow \mathcal O(D) \xrightarrow{\ \pi\ }
@@ -843,6 +884,7 @@ the pole-order filtration at \(x\).
 \begin{definition}[The dévissage short complex]
   \label{def:devissageSES}
   \lean{AlgebraicGeometry.devissageSES, AlgebraicGeometry.devissageSES_mono_f}
+  \provenancetag{CUSTOM}
   \uses{lem:devissage_comp_eq_zero, thm:divisorSheafLE, def:devissagePi}
   \leanok
   The \emph{dévissage short complex}
@@ -869,6 +911,7 @@ transported to the sheaf level by reflection of limits.
 \begin{lemma}[Local lifting of a jump class]
   \label{lem:devissage_local_lift}
   \lean{AlgebraicGeometry.devissage_local_lift}
+  \provenancetag{CUSTOM}
   \uses{def:jumpModule, thm:ordZ_support_finite, def:divOf, thm:closedpoint_isClosed,
     def:pointLattice, def:divisorSections, def:jumpProj}
   \leanok
@@ -894,6 +937,7 @@ transported to the sheaf level by reflection of limits.
 \begin{theorem}[The projection is an epimorphism]
   \label{thm:devissageSES_epi_g}
   \lean{AlgebraicGeometry.devissageSES_epi_g}
+  \provenancetag{CUSTOM}
   \uses{lem:devissage_local_lift, def:devissagePi, def:skyModule, def:devissageSES}
   \leanok
   The dévissage projection \(\pi : \mathcal O(D) \to \mathrm{sky}_x(J)\) is an epimorphism of
@@ -910,6 +954,7 @@ transported to the sheaf level by reflection of limits.
 \begin{lemma}[Sectionwise middle exactness]
   \label{lem:devissageSES_map_exact}
   \lean{AlgebraicGeometry.devissageSES_map_exact}
+  \provenancetag{CUSTOM}
   \uses{def:jumpProj, def:pointLattice, def:devissageDivisor, thm:divisorSheafLE, def:devissagePi,
     def:divisorSections}
   \leanok
@@ -931,6 +976,7 @@ transported to the sheaf level by reflection of limits.
 \begin{theorem}[Middle exactness of the dévissage complex]
   \label{thm:devissageSES_exact}
   \lean{AlgebraicGeometry.devissageSES_exact}
+  \provenancetag{CUSTOM}
   \uses{lem:devissageSES_map_exact, def:devissageSES, def:devissagePi}
   \leanok
   The dévissage short complex is exact at \(\mathcal O(D)\).
@@ -948,6 +994,7 @@ transported to the sheaf level by reflection of limits.
 \begin{theorem}[The dévissage sequence is short exact]
   \label{thm:devissageSES_shortExact}
   \lean{AlgebraicGeometry.devissageSES_shortExact}
+  \provenancetag{CUSTOM}
   \uses{def:devissageSES, thm:devissageSES_epi_g, thm:devissageSES_exact}
   \leanok
   The dévissage sequence
@@ -974,6 +1021,7 @@ skyscraper term with the residue degree of the point.
 \begin{lemma}[A uniformizer at a closed point]
   \label{lem:uniformizer}
   \lean{AlgebraicGeometry.uniformizer, AlgebraicGeometry.ord_uniformizer}
+  \provenancetag{CUSTOM}
   \uses{thm:closedpoint_dvr_stalk, def:scheme_ord}
   \leanok
   There is a rational function \(t \in K(X)\) with \(\mathrm{ord}_x t = 1\): a uniformizer of the
@@ -990,6 +1038,7 @@ skyscraper term with the residue degree of the point.
 \begin{theorem}[The shift isomorphism]
   \label{thm:shiftMap}
   \lean{AlgebraicGeometry.shiftMap, AlgebraicGeometry.shiftMap_surjective}
+  \provenancetag{CUSTOM}
   \uses{lem:uniformizer, def:pointLattice}
   \leanok
   Let \(t\) be a uniformizer at \(x\). Multiplication by \(t^a\) is a \(K\)-linear isomorphism
@@ -1008,6 +1057,7 @@ skyscraper term with the residue degree of the point.
   \label{thm:baseHom}
   \lean{AlgebraicGeometry.baseHom, AlgebraicGeometry.baseHom_surjective,
     AlgebraicGeometry.baseHom_ker}
+  \provenancetag{CUSTOM}
   \uses{lem:exists_stalk_of_ord_le_one, def:pointLattice, def:residueOverAlgebraMap,
     thm:closedpoint_dvr_stalk}
   \leanok
@@ -1029,6 +1079,7 @@ skyscraper term with the residue degree of the point.
 \begin{theorem}[The jump module is the residue field]
   \label{thm:jumpEquivResidueField}
   \lean{AlgebraicGeometry.jumpEquivResidueField}
+  \provenancetag{CUSTOM}
   \uses{thm:shiftMap, thm:baseHom, def:jumpModule}
   \leanok
   There is a \(K\)-linear isomorphism
@@ -1048,6 +1099,7 @@ skyscraper term with the residue degree of the point.
 \begin{theorem}[Dimension of the jump module]
   \label{thm:finrank_jumpModule}
   \lean{AlgebraicGeometry.finrank_jumpModule}
+  \provenancetag{CUSTOM}
   \uses{thm:jumpEquivResidueField, def:residueDeg}
   \leanok
   The \(K\)-dimension of the jump module is the residue degree:
@@ -1064,6 +1116,7 @@ skyscraper term with the residue degree of the point.
 \begin{corollary}[The jump module is finite]
   \label{cor:moduleFinite_jumpModule}
   \lean{AlgebraicGeometry.moduleFinite_jumpModule}
+  \provenancetag{CUSTOM}
   \uses{thm:jumpEquivResidueField, thm:residueDeg_finite}
   \leanok
   The jump module \(J\) is a finite \(K\)-module.
@@ -1083,6 +1136,7 @@ to vanish: the two sheaves being isomorphic, their Euler characteristics agree.
 \begin{theorem}[The bound-shift]
   \label{thm:mem_boundedSections_mul_iff}
   \lean{AlgebraicGeometry.Scheme.mem_boundedSections_mul_iff}
+  \provenancetag{CUSTOM}
   \uses{def:divOf, def:divisorSections, def:scheme_ord}
   \leanok
   Let \(g \in K(X)^\times\) and \(h \in K(X)\). For any open \(U\), the product \(g h\) has poles
@@ -1107,6 +1161,7 @@ to vanish: the two sheaves being isomorphic, their Euler characteristics agree.
   \uses{thm:mem_boundedSections_mul_iff, def:divisorSheaf, def:divOf}
   \leanok
   \source{papaioannou-algebraic-rr:page-0007}
+  \provenancetag{ADAPTED}
   For \(g \in K(X)^\times\) and any Weil divisor \(D\), multiplication by \(g\) is an isomorphism of
   sheaves of \(K\)-modules
   \[
@@ -1140,6 +1195,7 @@ cohomology vanishes and the truncation below is the honest Euler characteristic.
 \begin{definition}[Transport of cohomology along a sheaf isomorphism]
   \label{def:HModule_mapEquiv}
   \lean{CategoryTheory.Sheaf.HModule.mapEquiv}
+  \provenancetag{CUSTOM}
   \uses{def:HModule_map}
   \leanok
   Let \(F, G\) be sheaves of \(R\)-modules on \((\mathcal C, J)\) and \(e : F \cong G\) an
@@ -1162,6 +1218,7 @@ cohomology vanishes and the truncation below is the honest Euler characteristic.
 \begin{definition}[The ledger invariants \(h^0\), \(h^1\) and \(\chi\)]
   \label{def:h0_h1_chi}
   \lean{CategoryTheory.Sheaf.h0, CategoryTheory.Sheaf.h1, CategoryTheory.Sheaf.chi}
+  \provenancetag{CUSTOM}
   \uses{def:HModule}
   \leanok
   For a sheaf \(F\) of \(R\)-modules on \((\mathcal C, J)\), set
@@ -1182,6 +1239,7 @@ cohomology vanishes and the truncation below is the honest Euler characteristic.
   \label{thm:chi_congr}
   \lean{CategoryTheory.Sheaf.h0_congr, CategoryTheory.Sheaf.h1_congr,
     CategoryTheory.Sheaf.chi_congr}
+  \provenancetag{CUSTOM}
   \uses{def:h0_h1_chi, def:HModule_mapEquiv}
   \leanok
   Isomorphic sheaves have equal ledger invariants: if \(F \cong G\) then
@@ -1198,6 +1256,7 @@ cohomology vanishes and the truncation below is the honest Euler characteristic.
 \begin{theorem}[Degenerate ledger when \(H^1\) vanishes]
   \label{thm:chi_eq_h0}
   \lean{CategoryTheory.Sheaf.h1_eq_zero, CategoryTheory.Sheaf.chi_eq_h0}
+  \provenancetag{CUSTOM}
   \uses{def:h0_h1_chi}
   \leanok
   If \(R\) is nontrivial and \(H^1(F) = 0\), then \(h^1(F) = 0\) and
@@ -1226,6 +1285,7 @@ on the vanishing of the alternating sum of dimensions along the five-term exact 
 \begin{theorem}[Extension of finite dimensionality along an exact pair]
   \label{thm:finiteDimensional_of_exact}
   \lean{FiniteDimensional.of_exact}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(K\) be a division ring and let \(V_1 \xrightarrow{f} V_2 \xrightarrow{g} V_3\) be a pair
   of \(K\)-linear maps, exact at \(V_2\) (\(\ker g = \operatorname{im} f\)), with \(V_1\) and
@@ -1245,6 +1305,7 @@ on the vanishing of the alternating sum of dimensions along the five-term exact 
 \begin{definition}[The connecting homomorphism]
   \label{def:HModule_delta}
   \lean{CategoryTheory.Sheaf.HModule.delta}
+  \provenancetag{CUSTOM}
   \uses{def:HModule, def:constModuleSheaf}
   \leanok
   For a short exact sequence \(0 \to X_1 \to X_2 \to X_3 \to 0\) of sheaves of \(R\)-modules and
@@ -1261,6 +1322,7 @@ on the vanishing of the alternating sum of dimensions along the five-term exact 
   \lean{CategoryTheory.Sheaf.HModule.exact_map_f_map_g,
     CategoryTheory.Sheaf.HModule.exact_map_g_delta,
     CategoryTheory.Sheaf.HModule.exact_delta_map_f}
+  \provenancetag{CUSTOM}
   \uses{def:HModule_map, def:HModule_delta}
   \leanok
   For a short exact sequence \(0 \to X_1 \to X_2 \to X_3 \to 0\) of sheaves of \(R\)-modules and
@@ -1284,6 +1346,7 @@ on the vanishing of the alternating sum of dimensions along the five-term exact 
 \begin{theorem}[Left end of the slice: injectivity at \(H^0\)]
   \label{thm:HModule_injective_map_f_zero}
   \lean{CategoryTheory.Sheaf.HModule.injective_map_f_zero}
+  \provenancetag{CUSTOM}
   \uses{def:HModule_map}
   \leanok
   For a short exact sequence \(0 \to X_1 \xrightarrow{f} X_2 \to X_3 \to 0\) of sheaves of
@@ -1298,6 +1361,7 @@ on the vanishing of the alternating sum of dimensions along the five-term exact 
 \begin{theorem}[Right end of the slice: surjectivity into a vanishing term]
   \label{thm:HModule_surjective_map_f}
   \lean{CategoryTheory.Sheaf.HModule.surjective_map_f}
+  \provenancetag{CUSTOM}
   \uses{thm:HModule_slice_exact}
   \leanok
   For a short exact sequence \(0 \to X_1 \xrightarrow{f} X_2 \to X_3 \to 0\) of sheaves of
@@ -1316,6 +1380,7 @@ on the vanishing of the alternating sum of dimensions along the five-term exact 
   \lean{CategoryTheory.Sheaf.HModule.moduleFinite_middle,
     CategoryTheory.Sheaf.HModule.moduleFinite_left_zero,
     CategoryTheory.Sheaf.HModule.moduleFinite_left_succ}
+  \provenancetag{CUSTOM}
   \uses{thm:finiteDimensional_of_exact, thm:HModule_slice_exact,
     thm:HModule_injective_map_f_zero, def:HModule_delta}
   \leanok
@@ -1343,6 +1408,7 @@ on the vanishing of the alternating sum of dimensions along the five-term exact 
 \begin{theorem}[Additivity of \(\chi\) along a short exact sequence]
   \label{thm:chi_eq_add_of_shortExact}
   \lean{CategoryTheory.Sheaf.chi_eq_add_of_shortExact}
+  \provenancetag{CUSTOM}
   \uses{thm:finrank_alt_sum_exact5, thm:HModule_injective_map_f_zero, thm:HModule_slice_exact,
     thm:HModule_surjective_map_f, def:HModule_delta, thm:chi_eq_h0, def:h0_h1_chi}
   \leanok
@@ -1390,6 +1456,7 @@ has finite cohomology.
 \begin{definition}[The one-point divisor]
   \label{def:curveDivisor_single}
   \lean{AlgebraicGeometry.Scheme.CurveDivisor.single}
+  \provenancetag{CUSTOM}
   \uses{def:curveDivisor}
   \leanok
   For a closed point \(x\) (a point other than the generic point \(\eta\)) and \(n \in \Z\), the
@@ -1403,6 +1470,7 @@ has finite cohomology.
     AlgebraicGeometry.Scheme.CurveDivisor.single_add,
     AlgebraicGeometry.Scheme.CurveDivisor.nsmul_single_one,
     AlgebraicGeometry.Scheme.CurveDivisor.deg_single'}
+  \provenancetag{CUSTOM}
   \uses{def:curveDivisor_single, lem:curveDivisor_deg_single, def:residueDeg}
   \leanok
   The one-point divisor at a fixed closed point \(x\) is additive in its multiplicity and
@@ -1427,6 +1495,7 @@ has finite cohomology.
   \label{lem:devissageDivisor_sub}
   \lean{AlgebraicGeometry.devissageDivisor_eq_sub,
     AlgebraicGeometry.devissageDivisor_add_single}
+  \provenancetag{CUSTOM}
   \uses{def:devissageDivisor, def:curveDivisor_single}
   \leanok
   The dévissage twist \(D - x\) (Definition~\ref{def:devissageDivisor}) is the subtraction of the
@@ -1445,6 +1514,7 @@ has finite cohomology.
 \begin{lemma}[Degree drop along the twist]
   \label{lem:deg_devissageDivisor}
   \lean{AlgebraicGeometry.deg_devissageDivisor}
+  \provenancetag{CUSTOM}
   \uses{lem:devissageDivisor_sub, thm:curveDivisor_deg_hom, lem:curveDivisor_single_arith}
   \leanok
   The degree drops by the residue degree along the dévissage twist:
@@ -1464,6 +1534,7 @@ has finite cohomology.
 \begin{theorem}[Dévissage induction on Weil divisors]
   \label{thm:induction_devissage}
   \lean{AlgebraicGeometry.Scheme.CurveDivisor.induction_devissage}
+  \provenancetag{CUSTOM}
   \uses{def:curveDivisor, def:devissageDivisor, lem:devissageDivisor_sub}
   \leanok
   Let \(P\) be a predicate on Weil divisors of \(X\) that holds for the zero divisor and, for
@@ -1490,6 +1561,7 @@ has finite cohomology.
   \label{thm:moduleFinite_skyModule}
   \lean{AlgebraicGeometry.moduleFinite_hModule_skyModule_zero,
     AlgebraicGeometry.moduleFinite_hModule_skyModule_one}
+  \provenancetag{CUSTOM}
   \uses{def:skyModuleGammaEquiv, thm:skyModule_h1_vanishing}
   \leanok
   For a point \(x \in X\) and a finite-dimensional \(K\)-module \(M\), the cohomology of the
@@ -1508,6 +1580,7 @@ has finite cohomology.
   \label{thm:moduleFinite_divisorSheaf}
   \lean{AlgebraicGeometry.moduleFinite_hModule_divisorSheaf_zero,
     AlgebraicGeometry.moduleFinite_hModule_divisorSheaf_one}
+  \provenancetag{CUSTOM}
   \uses{thm:induction_devissage, thm:divisorSheafZeroIso, thm:devissageSES_shortExact,
     thm:moduleFinite_skyModule, cor:moduleFinite_jumpModule, thm:HModule_finiteness_transfer,
     def:jumpModule}
@@ -1560,6 +1633,7 @@ divisors have degree zero, and \(h^0\) grows without bound along multiples of an
 \begin{theorem}[The Euler characteristic of a skyscraper]
   \label{thm:chi_skyModule}
   \lean{AlgebraicGeometry.h0_skyModule, AlgebraicGeometry.chi_skyModule}
+  \provenancetag{CUSTOM}
   \uses{def:skyModuleGammaEquiv, thm:skyModule_h1_vanishing, def:h0_h1_chi, thm:chi_eq_h0}
   \leanok
   For a point \(x \in X\) and a \(K\)-module \(M\) (with \(K\) a field), the degree-zero
@@ -1581,6 +1655,7 @@ divisors have degree zero, and \(h^0\) grows without bound along multiples of an
 \begin{theorem}[The dévissage step of the \(\chi\)-ledger]
   \label{thm:chi_step}
   \lean{AlgebraicGeometry.chi_step}
+  \provenancetag{CUSTOM}
   \uses{thm:chi_eq_add_of_shortExact, thm:devissageSES_shortExact, thm:chi_skyModule,
     thm:finrank_jumpModule, thm:moduleFinite_divisorSheaf, thm:moduleFinite_skyModule,
     cor:moduleFinite_jumpModule, def:devissageDivisor}
@@ -1608,6 +1683,7 @@ divisors have degree zero, and \(h^0\) grows without bound along multiples of an
 \begin{theorem}[The \(\chi\)-ledger, closed]
   \label{thm:chi_divisorSheaf}
   \lean{AlgebraicGeometry.chi_divisorSheaf}
+  \provenancetag{CUSTOM}
   \uses{thm:induction_devissage, thm:divisorSheafZeroIso, thm:chi_congr, thm:chi_step,
     lem:deg_devissageDivisor, thm:curveDivisor_deg_hom, lem:devissageDivisor_sub}
   \leanok
@@ -1635,6 +1711,7 @@ divisors have degree zero, and \(h^0\) grows without bound along multiples of an
 \begin{theorem}[Principal divisors have degree zero]
   \label{thm:deg_divOf}
   \lean{AlgebraicGeometry.deg_divOf}
+  \provenancetag{CUSTOM}
   \uses{thm:mulEquivDivisorSheaf, thm:chi_congr, thm:chi_divisorSheaf, thm:curveDivisor_deg_hom}
   \leanok
   For a nonzero rational function \(g \in K(X)^\times\),
@@ -1661,6 +1738,7 @@ divisors have degree zero, and \(h^0\) grows without bound along multiples of an
 \begin{theorem}[The Riemann inequality]
   \label{thm:riemann_inequality}
   \lean{AlgebraicGeometry.riemann_inequality}
+  \provenancetag{CUSTOM}
   \uses{thm:chi_divisorSheaf, def:h0_h1_chi}
   \leanok
   Under the standing finiteness hypotheses, for every Weil divisor \(D\),
@@ -1679,6 +1757,7 @@ divisors have degree zero, and \(h^0\) grows without bound along multiples of an
 \begin{theorem}[Unbounded growth of \(h^0\) along multiples of a point]
   \label{thm:h0_nsmul_point_unbounded}
   \lean{AlgebraicGeometry.h0_nsmul_point_unbounded}
+  \provenancetag{CUSTOM}
   \uses{thm:chi_divisorSheaf, lem:curveDivisor_single_arith, thm:residueDeg_pos, def:h0_h1_chi}
   \leanok
   Under the standing finiteness hypotheses, for every closed point \(x\) and every bound \(N\)
@@ -1714,6 +1793,7 @@ ledger then reads as Riemann--Roch-lite: \(\chi(\mathcal O(D)) = 1 - g(C) + \deg
 \begin{definition}[The \(k\)-linear structure map on global sections]
   \label{def:overAlgebraMapTopLinear}
   \lean{AlgebraicGeometry.Scheme.overAlgebraMapTopLinear}
+  \provenancetag{CUSTOM}
   \uses{def:overAlgebraMap, def:moduleKSheaf}
   \leanok
   For a scheme \(X\) over \(\Spec k\), the structure map \(k \to \Gamma(X, \top)\) of
@@ -1731,6 +1811,7 @@ ledger then reads as Riemann--Roch-lite: \(\chi(\mathcal O(D)) = 1 - g(C) + \deg
   \label{thm:overAlgebraMapTopEquiv}
   \lean{AlgebraicGeometry.Scheme.bijective_overAlgebraMap_top,
     AlgebraicGeometry.Scheme.overAlgebraMapTopEquiv}
+  \provenancetag{CUSTOM}
   \uses{def:overAlgebraMapTopLinear}
   \leanok
   Let \(X\) be a scheme over \(\Spec k\) whose structure morphism is bijective on global sections
@@ -1754,6 +1835,7 @@ ledger then reads as Riemann--Roch-lite: \(\chi(\mathcal O(D)) = 1 - g(C) + \deg
   \label{thm:h0_moduleKSheaf_bijective}
   \lean{AlgebraicGeometry.Scheme.h0_moduleKSheaf_of_bijective,
     AlgebraicGeometry.moduleFinite_hModule_zero_of_bijective}
+  \provenancetag{CUSTOM}
   \uses{thm:overAlgebraMapTopEquiv, def:moduleKSheafHZero, def:h0_h1_chi}
   \leanok
   Let \(X\) be a scheme over \(\Spec k\) whose structure morphism is bijective on global
@@ -1771,6 +1853,7 @@ ledger then reads as Riemann--Roch-lite: \(\chi(\mathcal O(D)) = 1 - g(C) + \deg
 \begin{theorem}[Global sections of the challenge curve]
   \label{thm:h0_moduleKSheaf_curve}
   \lean{AlgebraicGeometry.moduleFinite_hModule_zero, AlgebraicGeometry.h0_moduleKSheaf}
+  \provenancetag{CUSTOM}
   \uses{thm:h0_moduleKSheaf_bijective, thm:sections_k}
   \leanok
   For the challenge curve \(C\) --- proper, smooth of relative dimension one and geometrically
@@ -1788,6 +1871,7 @@ ledger then reads as Riemann--Roch-lite: \(\chi(\mathcal O(D)) = 1 - g(C) + \deg
 \begin{theorem}[Euler characteristic of the structure sheaf of the curve]
   \label{thm:chi_moduleKSheaf_curve}
   \lean{AlgebraicGeometry.chi_moduleKSheaf}
+  \provenancetag{CUSTOM}
   \uses{thm:h0_moduleKSheaf_curve, def:genus, def:h0_h1_chi}
   \leanok
   For the challenge curve \(C\),
@@ -1806,6 +1890,7 @@ ledger then reads as Riemann--Roch-lite: \(\chi(\mathcal O(D)) = 1 - g(C) + \deg
 \begin{theorem}[Riemann--Roch-lite for the challenge curve]
   \label{thm:chi_divisorSheaf_curve}
   \lean{AlgebraicGeometry.chi_divisorSheaf_curve}
+  \provenancetag{CUSTOM}
   \uses{thm:chi_divisorSheaf, thm:chi_moduleKSheaf_curve, thm:h0_moduleKSheaf_curve,
     thm:moduleFinite_hModule_one}
   \leanok
@@ -1831,6 +1916,8 @@ ledger then reads as Riemann--Roch-lite: \(\chi(\mathcal O(D)) = 1 - g(C) + \deg
     thm:moduleFinite_hModule_one}
   \leanok
   \source{papaioannou-algebraic-rr:page-0007}
+  \provenancetag{ADAPTED}
+  \alignmentcheck{TO CHECK: Papaioannou Definition~1.10 on page~0007 defines genus via \(\sup(\deg D-\dim L(D)+1)\), while this conclusion uses the cohomological genus \(\dim H^1(C,O_C)\); the cited page does not identify these notions.}
   For every Weil divisor \(D\) on the challenge curve \(C\),
   \[
     \deg_k D + 1 - g(C) \;\le\; h^0(\mathcal O(D)).
@@ -1850,6 +1937,7 @@ ledger then reads as Riemann--Roch-lite: \(\chi(\mathcal O(D)) = 1 - g(C) + \deg
 \begin{theorem}[Unbounded \(h^0\) along a closed point of the curve]
   \label{thm:h0_nsmul_point_unbounded_curve}
   \lean{AlgebraicGeometry.h0_nsmul_point_unbounded_curve}
+  \provenancetag{CUSTOM}
   \uses{thm:h0_nsmul_point_unbounded, thm:h0_moduleKSheaf_curve, thm:moduleFinite_hModule_one}
   \leanok
   For every closed point \(x\) of the challenge curve \(C\) and every bound \(N\), there is
@@ -1885,6 +1973,7 @@ Section~\ref{sec:localized_colength}.
 \begin{lemma}[The point of a prime lies in the chart]
   \label{lem:fromSpec_base_mem}
   \lean{AlgebraicGeometry.IsAffineOpen.fromSpec_base_mem}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(X\) be a scheme and \(V\) an affine open. For every prime \(\mathfrak q\) of
   \(B = \Gamma(X, V)\), the point \(x_{\mathfrak q}\) lies in \(V\).
@@ -1898,6 +1987,7 @@ Section~\ref{sec:localized_colength}.
 \begin{lemma}[The correspondences are mutually inverse]
   \label{lem:primeIdealOf_fromSpec_base}
   \lean{AlgebraicGeometry.IsAffineOpen.primeIdealOf_fromSpec_base}
+  \provenancetag{CUSTOM}
   \uses{lem:fromSpec_base_mem}
   \leanok
   Let \(X\) be a scheme and \(V\) an affine open. For every prime \(\mathfrak q\) of
@@ -1918,6 +2008,7 @@ Section~\ref{sec:localized_colength}.
 \begin{lemma}[Nonzero prime at a non-generic point]
   \label{lem:primeIdealOf_ne_bot}
   \lean{AlgebraicGeometry.IsAffineOpen.primeIdealOf_ne_bot}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(X\) be an integral scheme and \(V\) an affine open. For a point \(x \in V\)
   which is not the generic point of \(X\), the prime \(\mathfrak p_x\) is nonzero.
@@ -1935,6 +2026,7 @@ Section~\ref{sec:localized_colength}.
 \begin{lemma}[The point of a nonzero prime is non-generic]
   \label{lem:fromSpec_base_ne_genericPoint}
   \lean{AlgebraicGeometry.IsAffineOpen.fromSpec_base_ne_genericPoint}
+  \provenancetag{CUSTOM}
   \uses{lem:fromSpec_base_mem}
   \leanok
   Let \(X\) be an integral scheme and \(V\) an affine open. For a prime
@@ -1952,6 +2044,7 @@ Section~\ref{sec:localized_colength}.
 \begin{theorem}[Finite type of the chart sections]
   \label{thm:overAlgebraMap_finiteType}
   \lean{AlgebraicGeometry.Scheme.overAlgebraMap_finiteType}
+  \provenancetag{CUSTOM}
   \uses{def:overAlgebraMap}
   \leanok
   Let \(K\) be a commutative ring and \(X\) a scheme locally of finite type over
@@ -1971,6 +2064,7 @@ Section~\ref{sec:localized_colength}.
 \begin{theorem}[Dedekind sections on every affine chart]
   \label{thm:isDedekindDomain_section}
   \lean{AlgebraicGeometry.isDedekindDomain_section}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(X\) be an integral scheme, smooth of relative dimension one and locally of
   finite type over the field \(K\), and let \(V\) be an affine open containing the
@@ -2001,6 +2095,7 @@ Section~\ref{sec:localized_colength}.
 \begin{theorem}[Finiteness of the chart residue]
   \label{thm:moduleFinite_quotient_primeIdealOf}
   \lean{AlgebraicGeometry.moduleFinite_quotient_primeIdealOf}
+  \provenancetag{CUSTOM}
   \uses{def:overAlgebraMap}
   \leanok
   Let \(X\) be as in \ref{thm:isDedekindDomain_section}, \(V\) an affine open, and
@@ -2022,6 +2117,7 @@ Section~\ref{sec:localized_colength}.
 \begin{theorem}[The residue leg: the chart residue is the residue field]
   \label{thm:finrank_quotient_primeIdealOf}
   \lean{AlgebraicGeometry.finrank_quotient_primeIdealOf}
+  \provenancetag{CUSTOM}
   \uses{def:residueDeg}
   \leanok
   Let \(X\) be an integral scheme smooth of relative dimension one over the field
@@ -2051,6 +2147,7 @@ Section~\ref{sec:localized_colength}.
 \begin{theorem}[The multiplicity leg: order of vanishing is the multiplicity]
   \label{thm:toAdd_ordZ_eq_count_factors}
   \lean{AlgebraicGeometry.toAdd_ordZ_eq_count_factors}
+  \provenancetag{CUSTOM}
   \uses{def:scheme_ordZ}
   \leanok
   Let \(X\) be an integral scheme smooth of relative dimension one over the field
@@ -2096,6 +2193,7 @@ Section~\ref{sec:localized_colength}.
 \begin{theorem}[Finiteness of the chart colength module]
   \label{thm:moduleFinite_quotient_span_section}
   \lean{AlgebraicGeometry.moduleFinite_quotient_span_section}
+  \provenancetag{CUSTOM}
   \uses{def:overAlgebraMap}
   \leanok
   Let \(X\) be an integral scheme, smooth of relative dimension one and locally of
@@ -2121,6 +2219,7 @@ Section~\ref{sec:localized_colength}.
 \begin{theorem}[The chart colength dictionary]
   \label{thm:finrank_quotient_span_section}
   \lean{AlgebraicGeometry.finrank_quotient_span_section}
+  \provenancetag{CUSTOM}
   \uses{def:scheme_ordZ, def:residueDeg}
   \leanok
   Let \(X\) be an integral scheme, smooth of relative dimension one and locally of
@@ -2199,6 +2298,7 @@ hypothesis at all.
 \begin{lemma}[Linearly equivalent divisors have equal degree]
   \label{lem:deg_eq_deg_of_picClass_eq}
   \lean{AlgebraicGeometry.deg_eq_deg_of_picClass_eq}
+  \provenancetag{CUSTOM}
   \uses{def:curveDivisor_deg, thm:curveDivisor_picClass_eq_iff, thm:deg_divOf,
     thm:curveDivisor_deg_hom}
   \leanok
@@ -2217,6 +2317,7 @@ hypothesis at all.
 \begin{theorem}[The Euler characteristic of a class is well-defined]
   \label{thm:chi_divisorSheaf_eq_of_picClass_eq}
   \lean{AlgebraicGeometry.chi_divisorSheaf_eq_of_picClass_eq}
+  \provenancetag{CUSTOM}
   \uses{def:divisorSheaf, def:h0_h1_chi, thm:curveDivisor_picClass_eq_iff,
     thm:mulEquivDivisorSheaf, thm:chi_congr}
   \leanok
@@ -2237,6 +2338,7 @@ hypothesis at all.
 \begin{definition}[The degree homomorphism on the Picard group]
   \label{def:classDeg}
   \lean{AlgebraicGeometry.classDeg, AlgebraicGeometry.classDeg_picClass}
+  \provenancetag{CUSTOM}
   \uses{lem:deg_eq_deg_of_picClass_eq, def:curveDivisor_picClass, def:curveDivisor_deg}
   \leanok
   The degree descends to a group homomorphism
@@ -2264,6 +2366,7 @@ hypothesis at all.
 \begin{theorem}[Additivity of the class degree]
   \label{thm:classDeg_mul}
   \lean{AlgebraicGeometry.classDeg_mul}
+  \provenancetag{CUSTOM}
   \uses{def:classDeg, def:curveDivisor_picClass, thm:curveDivisor_picClass_hom,
     thm:curveDivisor_deg_hom}
   \leanok
@@ -2288,6 +2391,7 @@ hypothesis at all.
 \begin{theorem}[The \(\chi\)-ledger in class form]
   \label{thm:chi_divisorSheaf_classDeg}
   \lean{AlgebraicGeometry.chi_divisorSheaf_classDeg}
+  \provenancetag{CUSTOM}
   \uses{def:classDeg, thm:chi_divisorSheaf}
   \leanok
   Under the standing finiteness hypotheses, for every Weil divisor \(D\),
@@ -2305,6 +2409,7 @@ hypothesis at all.
 \begin{theorem}[The point-product class map has the same degree]
   \label{thm:classDeg_divisorClass}
   \lean{AlgebraicGeometry.classDeg_divisorClass}
+  \provenancetag{CUSTOM}
   \uses{def:classDeg, def:divisorClass, thm:divisorClass_eq_picClass}
   \leanok
   For every Weil divisor \(D\), the degree of the point-product class equals the degree of \(D\):
@@ -2323,6 +2428,7 @@ hypothesis at all.
 \begin{theorem}[Riemann--Roch-lite in class form on the challenge curve]
   \label{thm:chi_divisorSheaf_classDeg_curve}
   \lean{AlgebraicGeometry.chi_divisorSheaf_classDeg_curve}
+  \provenancetag{CUSTOM}
   \uses{def:classDeg, thm:chi_divisorSheaf_curve}
   \leanok
   For every Weil divisor \(D\) on the challenge curve \(C\),
@@ -2358,6 +2464,7 @@ X(D) \cong \struct X(D')\). Every statement below is transport along this isomor
   \label{thm:h0h1_divisorSheaf_class}
   \lean{AlgebraicGeometry.h0_divisorSheaf_eq_of_picClass_eq,
     AlgebraicGeometry.h1_divisorSheaf_eq_of_picClass_eq}
+  \provenancetag{CUSTOM}
   \uses{def:divisorSheaf, def:h0_h1_chi, thm:curveDivisor_picClass_eq_iff,
     thm:mulEquivDivisorSheaf, thm:chi_congr}
   \leanok
@@ -2381,6 +2488,7 @@ X(D) \cong \struct X(D')\). Every statement below is transport along this isomor
 \begin{theorem}[Vanishing of \(H^1\) is a Picard-class invariant]
   \label{thm:subsingleton_hModule_one_class}
   \lean{AlgebraicGeometry.subsingleton_hModule_one_of_picClass_eq}
+  \provenancetag{CUSTOM}
   \uses{def:divisorSheaf, def:HModule, thm:curveDivisor_picClass_eq_iff,
     thm:mulEquivDivisorSheaf, def:HModule_mapEquiv}
   \leanok
@@ -2401,6 +2509,7 @@ X(D) \cong \struct X(D')\). Every statement below is transport along this isomor
   \label{thm:moduleFinite_hModule_divisorSheaf_class}
   \lean{AlgebraicGeometry.moduleFinite_hModule_divisorSheaf_zero_of_picClass_eq,
     AlgebraicGeometry.moduleFinite_hModule_divisorSheaf_one_of_picClass_eq}
+  \provenancetag{CUSTOM}
   \uses{def:divisorSheaf, def:HModule, thm:curveDivisor_picClass_eq_iff,
     thm:mulEquivDivisorSheaf, def:HModule_mapEquiv}
   \leanok
@@ -2434,6 +2543,7 @@ irreducible --- transports along base change, from which integrality and the fin
     AlgebraicGeometry.instGeometricallyIrreducibleSndLeft,
     AlgebraicGeometry.instSmoothOfRelativeDimensionBaseChange,
     AlgebraicGeometry.instIsProperBaseChange, AlgebraicGeometry.instQuasiCompactBaseChange}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(K/k\) be a field extension. The base-changed curve \(C_K\), as a scheme over \(\Spec K\)
   via the second projection, is smooth of relative dimension one, proper, quasi-compact, and
@@ -2452,6 +2562,7 @@ irreducible --- transports along base change, from which integrality and the fin
   \label{thm:baseChangeCurve_integral}
   \uses{thm:baseChangeCurve_bundle, prop:curve_integral}
   \lean{AlgebraicGeometry.instIsIntegralBaseChange}
+  \provenancetag{CUSTOM}
   \leanok
   For every field extension \(K/k\), the base-changed curve \(C_K\) is an integral scheme.
 \end{theorem}
@@ -2470,6 +2581,7 @@ irreducible --- transports along base change, from which integrality and the fin
   \uses{thm:baseChangeCurve_bundle, thm:h0_moduleKSheaf_curve, thm:moduleFinite_hModule_one}
   \lean{AlgebraicGeometry.instModuleFiniteHModuleZeroBaseChange,
     AlgebraicGeometry.instModuleFiniteHModuleOneBaseChange}
+  \provenancetag{CUSTOM}
   \leanok
   For every field extension \(K/k\), both \(H^0(C_K, \struct{C_K/K})\) and \(H^1(C_K,
   \struct{C_K/K})\) are finite-dimensional \(K\)-vector spaces.
@@ -2485,6 +2597,7 @@ irreducible --- transports along base change, from which integrality and the fin
 
 \begin{remark}[The degree homomorphism over every extension field]
   \label{rem:classDeg_baseChange}
+  \provenancetag{CUSTOM}
   \uses{thm:baseChangeCurve_bundle, thm:baseChangeCurve_integral,
     thm:baseChangeCurve_cohomFinite, def:classDeg}
   \leanok
@@ -2521,6 +2634,7 @@ the transition.
 \begin{lemma}[The degree of a power of a class]
   \label{lem:classDeg_zpow}
   \lean{AlgebraicGeometry.classDeg_zpow}
+  \provenancetag{CUSTOM}
   \uses{def:classDeg, thm:classDeg_mul}
   \leanok
   Under the standing hypotheses of \ref{def:classDeg}, for every class \(L\) and every
@@ -2541,6 +2655,7 @@ the transition.
 \begin{theorem}[The fiber-degree identity]
   \label{thm:sum_ordZ_residueDeg_baseFieldTransition}
   \lean{AlgebraicGeometry.sum_ordZ_residueDeg_baseFieldTransition}
+  \provenancetag{CUSTOM}
   \uses{def:scheme_ordZ, def:residueDeg, lem:baseFieldTransition_genericPoint,
     def:functionFieldMap}
   \leanok
@@ -2620,6 +2735,7 @@ the transition.
 \begin{lemma}[Pulled local equations are regular on integral schemes]
   \label{lem:pullbackEqn_regular}
   \lean{AlgebraicGeometry.Scheme.LocalEquations.pullbackEqn_germ_mem_nonZeroDivisors}
+  \provenancetag{CUSTOM}
   \uses{def:localEquations_pullback, def:localEquations, lem:functionFieldMap_germ}
   \leanok
   Let \(f : Y \to X\) be a morphism of \emph{integral} schemes with
@@ -2650,6 +2766,7 @@ the transition.
   \lean{AlgebraicGeometry.pointTransitionEquations,
     AlgebraicGeometry.pointTransitionEquations_eqn,
     AlgebraicGeometry.pointTransitionUnit, AlgebraicGeometry.coe_pointTransitionUnit}
+  \provenancetag{CUSTOM}
   \uses{def:pointEquations, lem:pointUniformizerData, def:localEquations_pullback,
     lem:pullbackEqn_regular, lem:baseFieldTransition_genericPoint, def:functionFieldMap,
     lem:uniformizer, thm:baseChangeCurve_integral}
@@ -2670,6 +2787,7 @@ the transition.
   \label{lem:pointTransitionEquations_elem}
   \lean{AlgebraicGeometry.pointTransitionEquations_presentation_elem_of_ne,
     AlgebraicGeometry.pointTransitionEquations_presentation_elem_of_eq}
+  \provenancetag{CUSTOM}
   \uses{def:pointTransitionEquations, lem:localEquations_presentation,
     def:pointEquations, lem:functionFieldMap_germ}
   \leanok
@@ -2700,6 +2818,7 @@ the transition.
 \begin{theorem}[E-iv: the degree is invariant under the base-field transition]
   \label{thm:classDeg_cechPicMap_baseFieldTransition}
   \lean{AlgebraicGeometry.classDeg_cechPicMap_baseFieldTransition}
+  \provenancetag{CUSTOM}
   \uses{def:classDeg, thm:baseChangeCurve_bundle, thm:baseChangeCurve_integral,
     thm:baseChangeCurve_cohomFinite, def:overSpecMap}
   \leanok
@@ -2789,6 +2908,7 @@ the transition.
 \begin{lemma}[The degree vanishes on classes from the base field]
   \label{lem:classDeg_picFromBase}
   \lean{AlgebraicGeometry.classDeg_eq_zero_of_mem_picFromBase}
+  \provenancetag{CUSTOM}
   \uses{def:classDeg}
   \leanok
   Let \(K/k\) be a field extension. Every \v Cech Picard class on \(C_K\) pulled back
@@ -2810,6 +2930,7 @@ the transition.
 \begin{definition}[The degree on the relative Picard group over a field]
   \label{def:relPicDeg}
   \lean{AlgebraicGeometry.relPicDeg, AlgebraicGeometry.relPicDeg_relPicMk}
+  \provenancetag{CUSTOM}
   \uses{lem:classDeg_picFromBase, def:classDeg}
   \leanok
   For a field extension \(K/k\), recall the relative Picard group
@@ -2834,6 +2955,7 @@ the transition.
 \begin{theorem}[E-iv descends to the relative Picard group]
   \label{thm:relPicDeg_relPicAlgMap}
   \lean{AlgebraicGeometry.relPicDeg_relPicAlgMap}
+  \provenancetag{CUSTOM}
   \uses{def:relPicDeg, def:relPicAlgMap, thm:classDeg_cechPicMap_baseFieldTransition}
   \leanok
   For every \(k\)-algebra homomorphism \(\varphi : K_1 \to K_2\) of field extensions
@@ -2884,6 +3006,7 @@ node.
 \begin{lemma}[Naturality of the algebra map on sections]
   \label{lem:overAlgebraMap_app}
   \lean{AlgebraicGeometry.overAlgebraMap_app}
+  \provenancetag{CUSTOM}
   \uses{def:overAlgebraMap}
   \leanok
   Let \(W, X\) be schemes over \(\Spec K\) and \(f : W \to X\) a morphism of schemes
@@ -2911,6 +3034,7 @@ node.
 \begin{lemma}[Residue degrees transport along an isomorphism]
   \label{lem:residueDeg_eq_of_isIso}
   \lean{AlgebraicGeometry.residueDeg_eq_of_isIso}
+  \provenancetag{CUSTOM}
   \uses{def:residueDeg, def:residueOverAlgebraMap}
   \leanok
   Let \(W, X\) be schemes over \(\Spec K\) and \(f : W \to X\) an isomorphism of
@@ -2950,6 +3074,7 @@ node.
   \label{def:pointPullbackEquations}
   \lean{AlgebraicGeometry.pointPullbackEquations, AlgebraicGeometry.pointPullbackUnit,
     AlgebraicGeometry.coe_pointPullbackUnit}
+  \provenancetag{CUSTOM}
   \uses{def:pointEquations, lem:pointUniformizerData, def:localEquations_pullback,
     lem:pullbackEqn_regular, def:functionFieldMap, lem:uniformizer}
   \leanok
@@ -2971,6 +3096,7 @@ node.
   \label{lem:pointPullbackEquations_elem}
   \lean{AlgebraicGeometry.pointPullbackEquations_presentation_elem_of_ne,
     AlgebraicGeometry.pointPullbackEquations_presentation_elem_of_eq}
+  \provenancetag{CUSTOM}
   \uses{def:pointPullbackEquations, lem:localEquations_presentation,
     def:pointEquations, lem:functionFieldMap_germ}
   \leanok
@@ -3001,6 +3127,7 @@ node.
 \begin{lemma}[The pulled uniformizer has order one at the preimage point]
   \label{lem:ordZ_pointPullbackUnit}
   \lean{AlgebraicGeometry.ordZ_pointPullbackUnit}
+  \provenancetag{CUSTOM}
   \uses{def:pointPullbackEquations, def:scheme_ordZ, lem:uniformizer,
     lem:pointUniformizerData}
   \leanok
@@ -3062,6 +3189,7 @@ node.
 \begin{theorem}[The degree is invariant under isomorphisms: scheme form]
   \label{thm:classDeg_cechPicMap_of_isIso}
   \lean{AlgebraicGeometry.classDeg_cechPicMap_of_isIso}
+  \provenancetag{CUSTOM}
   \uses{def:classDeg}
   \leanok
   Let \(W\) and \(X\) both be curve bundles over the field \(K\) --- integral, smooth
@@ -3137,6 +3265,7 @@ node.
 \begin{theorem}[The degree is invariant under isomorphisms of curve bundles]
   \label{thm:classDeg_map_iso}
   \lean{AlgebraicGeometry.classDeg_map_iso}
+  \provenancetag{CUSTOM}
   \uses{def:classDeg, thm:smooth_geometrically_reduced, prop:curve_integral,
     thm:h0_moduleKSheaf_curve, thm:moduleFinite_hModule_one}
   \leanok
@@ -3189,6 +3318,7 @@ test of \(K\) over \(L\), as in Section~\ref{sec:relPicCrossBase}.
 \begin{theorem}[Degree invariance along the same-carrier comparison]
   \label{thm:classDeg_cechPicMap_crossBaseAffineIso}
   \lean{AlgebraicGeometry.classDeg_cechPicMap_crossBaseAffineIso}
+  \provenancetag{CUSTOM}
   \uses{def:classDeg, thm:classDeg_cechPicMap_of_isIso, def:crossBaseAffineIso,
     lem:crossBaseAffineIso_snd, thm:baseChangeCurve_bundle,
     thm:baseChangeCurve_integral, thm:baseChangeCurve_cohomFinite, def:baseChange}
@@ -3229,6 +3359,7 @@ test of \(K\) over \(L\), as in Section~\ref{sec:relPicCrossBase}.
 \begin{theorem}[The relative degree is invariant under the base-field shuffle]
   \label{thm:relPicDeg_relPicCrossBase}
   \lean{AlgebraicGeometry.relPicDeg_relPicCrossBase}
+  \provenancetag{CUSTOM}
   \uses{def:relPicDeg, def:relPicCrossBase,
     thm:classDeg_cechPicMap_crossBaseAffineIso}
   \leanok
@@ -3284,6 +3415,7 @@ denote the generic points.
     AlgebraicGeometry.Scheme.Hom.pullbackSectionsFunctionFieldAlgebra,
     AlgebraicGeometry.Scheme.Hom.isScalarTower_pullbackSections_functionField,
     AlgebraicGeometry.Scheme.Hom.isScalarTower_functionFieldAlgebra}
+  \provenancetag{CUSTOM}
   \uses{def:functionFieldMap}
   \leanok
   Let \(f : X \to Y\) be a morphism of schemes and \(V \subseteq Y\) an open. Pullback
@@ -3316,6 +3448,7 @@ denote the generic points.
 \begin{lemma}[Module finiteness of the chart extension]
   \label{lem:moduleFinite_pullbackSections}
   \lean{AlgebraicGeometry.Scheme.Hom.moduleFinite_pullbackSections}
+  \provenancetag{CUSTOM}
   \uses{def:pullbackSectionsAlgebra}
   \leanok
   Let \(f : X \to Y\) be a finite morphism of schemes and \(V \subseteq Y\) an affine
@@ -3334,6 +3467,7 @@ denote the generic points.
 \begin{lemma}[Injectivity of the chart extension]
   \label{lem:faithfulSMul_pullbackSections}
   \lean{AlgebraicGeometry.Scheme.Hom.faithfulSMul_pullbackSections}
+  \provenancetag{CUSTOM}
   \uses{def:pullbackSectionsAlgebra}
   \leanok
   Let \(f : X \to Y\) be a morphism of integral schemes with \(f(\eta_X) = \eta_Y\),
@@ -3357,6 +3491,7 @@ denote the generic points.
   \uses{def:pullbackSectionsAlgebra}
   \leanok
   \source{hartshorne-algebraic-geometry:page-0154, hartshorne-algebraic-geometry:page-0155}
+  \provenancetag{ADAPTED}
   Let \(f : X \to Y\) be a finite morphism of integral schemes with
   \(f(\eta_X) = \eta_Y\), and let \(V \subseteq Y\) be an affine open containing
   \(\eta_Y\). Then the degree of the function-field extension equals the rank of the
@@ -3403,6 +3538,7 @@ denote the generic points.
     def:pullbackSectionsAlgebra}
   \leanok
   \source{hartshorne-algebraic-geometry:page-0155}
+  \provenancetag{ADAPTED}
   Let \(K\) be a field, \(X\) and \(Y\) integral schemes smooth of relative dimension
   one over \(\Spec K\), and \(f : X \to Y\) a finite morphism over \(\Spec K\) with
   \(f(\eta_X) = \eta_Y\). Let \(V \ni \eta_Y\) be an affine chart of \(Y\), let
@@ -3537,6 +3673,7 @@ denote the generic points.
   \uses{def:classDeg, def:pullbackSectionsAlgebra}
   \leanok
   \source{hartshorne-algebraic-geometry:page-0155}
+  \provenancetag{ADAPTED}
   Let \(X\) and \(Y\) be curve bundles over the field \(K\) --- integral, smooth of
   relative dimension one and quasi-compact over \(\Spec K\) --- with \(H^0\) and
   \(H^1\) of their structure sheaves finite-dimensional over \(K\), and let
@@ -3629,6 +3766,7 @@ denote the generic points.
   \uses{def:classDeg, def:pullbackSectionsAlgebra}
   \leanok
   \source{hartshorne-algebraic-geometry:page-0155}
+  \provenancetag{ADAPTED}
   Let \(K\) be a field and \(D, E\) objects of \(\Over(\Spec K)\) which are proper,
   smooth of relative dimension one and geometrically irreducible over \(K\), and let
   \(h : D \to E\) be a morphism of \(\Over(\Spec K)\) whose underlying morphism is
@@ -3659,6 +3797,7 @@ denote the generic points.
 \begin{theorem}[The constant leg: pullbacks along one-point morphisms have degree zero]
   \label{thm:classDeg_cechPicMap_eq_zero_of_range_eq_singleton}
   \lean{AlgebraicGeometry.classDeg_cechPicMap_eq_zero_of_range_eq_singleton}
+  \provenancetag{CUSTOM}
   \uses{def:classDeg}
   \leanok
   Let \(K\) be a field, \(D\) an object of \(\Over(\Spec K)\) which is proper, smooth
@@ -3701,6 +3840,7 @@ and to record that its degree scales linearly in \(n\).
   \label{def:fiberCover}
   \lean{AlgebraicGeometry.fiberCoord, AlgebraicGeometry.preimage_inf_eq_basicOpen_fiberCoord,
     AlgebraicGeometry.isUnit_fiberCoord_res_inf, AlgebraicGeometry.fiberCover}
+  \provenancetag{CUSTOM}
   \uses{def:P1_chartOpen, def:P1_chartCoord, lem:preimage_chart_sup, lem:P1_chartOpen_inf}
   \leanok
   Write \(V_0 = \pi^{-1}(U_0)\) and \(V_1 = \pi^{-1}(U_1)\) for the preimages of the two standard
@@ -3736,6 +3876,7 @@ and to record that its degree scales linearly in \(n\).
   \label{def:fiberDivisor}
   \lean{AlgebraicGeometry.fiberDivisor, AlgebraicGeometry.germ_fiberCoord_mem_nonZeroDivisors,
     AlgebraicGeometry.genericPoint_mem_preimage_inf}
+  \provenancetag{CUSTOM}
   \uses{def:fiberCover, def:localEquations}
   \leanok
   For \(n \in \N\), the \emph{fibre divisor of \(n\cdot(\text{fibre of }\pi)\)} is the
@@ -3771,6 +3912,7 @@ and to record that its degree scales linearly in \(n\).
   \label{def:fiberTwist}
   \lean{AlgebraicGeometry.fiberTwist, AlgebraicGeometry.fiberTwist_succ,
     AlgebraicGeometry.fiberTwist_pow}
+  \provenancetag{CUSTOM}
   \uses{def:fiberDivisor, def:localEquations_picClass}
   \leanok
   The \emph{fibre twist} \(\Theta_n \in \Pic(Y)\) is the Picard class of the fibre divisor of
@@ -3809,6 +3951,7 @@ and to record that its degree scales linearly in \(n\).
 \begin{theorem}[The degree of the fibre twist scales linearly]
   \label{thm:classDeg_fiberTwist}
   \lean{AlgebraicGeometry.classDeg_fiberTwist}
+  \provenancetag{CUSTOM}
   \uses{def:fiberTwist, def:classDeg, thm:classDeg_mul}
   \leanok
   Assume in addition that \(Y\) is smooth of relative dimension one and quasi-compact over \(K\)
@@ -3844,6 +3987,7 @@ is nonempty whenever \(\pi\) is surjective, in particular for a finite dominant 
   \label{def:fiberCoordUnit}
   \lean{AlgebraicGeometry.fiberCoord₁, AlgebraicGeometry.fiberCoord_mul_fiberCoord₁_res,
     AlgebraicGeometry.fiberCoordUnit}
+  \provenancetag{CUSTOM}
   \uses{def:fiberCover, def:fiberDivisor, def:P1_chartCoord, lem:P1_chartOpen_inf}
   \leanok
   Let \(t_1 = \pi^{\sharp}(t_{10}) \in \Gamma(Y, V_1)\) be the pullback of the chart-\(1\) coordinate
@@ -3872,6 +4016,7 @@ is nonempty whenever \(\pi\) is surjective, in particular for a finite dominant 
   \lean{AlgebraicGeometry.fiberCoordUnit_coeffAt_divOf_nonneg_of_mem_chart₀,
     AlgebraicGeometry.fiberCoordUnit_coeffAt_divOf_nonpos_of_mem_chart₁,
     AlgebraicGeometry.one_le_fiberCoordUnit_coeffAt_divOf_of_notMem_chart₁}
+  \provenancetag{CUSTOM}
   \uses{def:fiberCoordUnit, def:fiberCover, def:divOf, def:scheme_ord, def:scheme_ordZ,
     lem:germ_generic_eq_algebraMap_germ, lem:ord_algebraMap_stalk_le_one}
   \leanok
@@ -3911,6 +4056,7 @@ is nonempty whenever \(\pi\) is surjective, in particular for a finite dominant 
     AlgebraicGeometry.fiberWeilDivisor_deg_nonneg,
     AlgebraicGeometry.fiberWeilDivisor_ne_zero_of_notMem_chart₁,
     AlgebraicGeometry.fiberWeilDivisor_deg_pos_of_notMem_chart₁}
+  \provenancetag{CUSTOM}
   \uses{thm:fiberCoordUnit_order, def:divOf, def:curveDivisor, def:curveDivisor_deg,
     thm:residueDeg_pos}
   \leanok
@@ -3947,6 +4093,7 @@ finite fibre over \([1 : 0]\).
   \label{thm:divisorSections_twist_fixed}
   \lean{AlgebraicGeometry.divisorSections_add_nsmul_fiberWeilDivisor_chart₁,
     AlgebraicGeometry.divisorSections_add_nsmul_fiberWeilDivisor_overlap}
+  \provenancetag{CUSTOM}
   \uses{def:fiberWeilDivisor, def:divisorSections}
   \leanok
   For every Weil divisor \(D\) and every \(n \in \N\), the sections of \(\struct Y(D + nF)\)
@@ -3970,6 +4117,7 @@ finite fibre over \([1 : 0]\).
 \begin{theorem}[The twist grows the lattice over \(V_0\)]
   \label{thm:divisorSections_twist_chart0}
   \lean{AlgebraicGeometry.divisorSections_add_nsmul_fiberWeilDivisor_chart₀}
+  \provenancetag{CUSTOM}
   \uses{def:fiberWeilDivisor, def:fiberCoordUnit, def:divisorSections, thm:mem_boundedSections_mul_iff,
     def:divOf}
   \leanok
@@ -3999,6 +4147,7 @@ finite fibre over \([1 : 0]\).
   \label{def:fiberLattice}
   \lean{AlgebraicGeometry.fiberLattice, AlgebraicGeometry.fiberLattice_le_overlap,
     AlgebraicGeometry.fiberLattice_mono, AlgebraicGeometry.iSup_fiberLattice}
+  \provenancetag{CUSTOM}
   \uses{thm:divisorSections_twist_fixed, thm:divisorSections_twist_chart0, def:fiberWeilDivisor,
     thm:fiberCoordUnit_order, def:divisorSections, def:divOf}
   \leanok
@@ -4054,6 +4203,7 @@ affine vanishing fires on every \(\struct X(D)\).
 \begin{theorem}[The divisor sheaves are quasi-coherently packaged]
   \label{thm:divisorSheaf_qcohOn}
   \lean{AlgebraicGeometry.Scheme.divisorSheaf.instQcohOn}
+  \provenancetag{CUSTOM}
   \uses{def:qcohOn, def:divisorSheaf, def:divisorSections, lem:ord_algebraMap_stalk_le_one,
     lem:ord_eq_one_of_mem_basicOpen, def:divOf, def:curveDivisor}
   \leanok
@@ -4096,6 +4246,7 @@ affine vanishing fires on every \(\struct X(D)\).
 \begin{theorem}[Twisted affine vanishing for divisor sheaves]
   \label{thm:subsingleton_hModule_divisorSheaf_one}
   \lean{AlgebraicGeometry.IsAffineOpen.subsingleton_hModule'_divisorSheaf_one}
+  \provenancetag{CUSTOM}
   \uses{thm:divisorSheaf_qcohOn, thm:hModule1_vanishing_qcoh}
   \leanok
   For every affine open \(U\) of the curve bundle \(X\) and every Weil divisor \(D\), the
@@ -4122,6 +4273,7 @@ conclude vanishing for all large \(n\).
   \lean{AlgebraicGeometry.fiberLatticeOverlap, AlgebraicGeometry.mem_fiberLatticeOverlap,
     AlgebraicGeometry.fiberLatticeOverlap_mono, AlgebraicGeometry.iSup_fiberLatticeOverlap,
     AlgebraicGeometry.fiberLatticeH1Equiv}
+  \provenancetag{CUSTOM}
   \uses{def:fiberLattice, thm:twoCoverH1LinearEquiv, thm:subsingleton_hModule_divisorSheaf_one,
     thm:divisorSections_twist_fixed, def:divisorSheaf, def:TwoCover_diff}
   \leanok
@@ -4157,6 +4309,7 @@ conclude vanishing for all large \(n\).
 \begin{theorem}[Noetherian stabilisation of an exhausting chain]
   \label{thm:eventually_eq_top_of_monotone_of_iSup_eq_top}
   \lean{Submodule.eventually_eq_top_of_monotone_of_iSup_eq_top}
+  \provenancetag{CUSTOM}
   \leanok
   Let \(M\) be a module over a ring \(R\) and \((A_n)_{n \in \N}\) an increasing chain of submodules
   with \(\bigsqcup_n A_n = M\). If the quotient \(M / A_0\) is Noetherian, then the chain is
@@ -4175,6 +4328,7 @@ conclude vanishing for all large \(n\).
 \begin{theorem}[Fibrewise large-twist vanishing]
   \label{thm:subsingleton_hModule_divisorSheaf_one_of_isDominant_toP1}
   \lean{AlgebraicGeometry.subsingleton_hModule_divisorSheaf_one_of_isDominant_toP1}
+  \provenancetag{CUSTOM}
   \uses{def:fiberLatticeH1Equiv, thm:eventually_eq_top_of_monotone_of_iSup_eq_top, def:fiberLattice,
     thm:moduleFinite_divisorSheaf, def:fiberWeilDivisor}
   \leanok
@@ -4203,6 +4357,7 @@ conclude vanishing for all large \(n\).
 \begin{theorem}[Fibrewise large-twist vanishing along a finite map]
   \label{thm:subsingleton_hModule_divisorSheaf_one_of_isFinite_toP1}
   \lean{AlgebraicGeometry.subsingleton_hModule_divisorSheaf_one_of_isFinite_toP1}
+  \provenancetag{CUSTOM}
   \uses{thm:subsingleton_hModule_divisorSheaf_one_of_isDominant_toP1,
     thm:moduleFinite_hModule_one_of_isFinite_toP1}
   \leanok
@@ -4231,6 +4386,7 @@ of finite type and quasi-compact over a field \(K\), with finite-dimensional \(H
   \label{lem:picClass_nsmul}
   \lean{AlgebraicGeometry.divisorBound_le_iff, AlgebraicGeometry.picClass_nsmul,
     AlgebraicGeometry.classDeg_pow}
+  \provenancetag{CUSTOM}
   \uses{def:curveDivisor_picClass, thm:curveDivisor_picClass_hom, def:classDeg,
     thm:classDeg_mul, lem:classDeg_zpow}
   \leanok
@@ -4249,6 +4405,7 @@ of finite type and quasi-compact over a field \(K\), with finite-dimensional \(H
 \begin{lemma}[A point of \(\PP^1\) off the second chart]
   \label{lem:P1_point_off_chart1}
   \lean{AlgebraicGeometry.exists_mem_chartOpen_zero_notMem_one}
+  \provenancetag{CUSTOM}
   \uses{def:P1_chartOpen, def:P1_chartIota, lem:P1_chartIota_range, def:P1_chartCoord,
     def:P1_awayAlgEquiv}
   \leanok
@@ -4270,6 +4427,7 @@ of finite type and quasi-compact over a field \(K\), with finite-dimensional \(H
 \begin{lemma}[A finite dominant morphism is surjective]
   \label{lem:surjective_of_isFinite_of_isDominant}
   \lean{AlgebraicGeometry.surjective_of_isFinite_of_isDominant}
+  \provenancetag{CUSTOM}
   \leanok
   A finite dominant morphism of schemes is surjective.
 \end{lemma}
@@ -4282,6 +4440,7 @@ of finite type and quasi-compact over a field \(K\), with finite-dimensional \(H
 \begin{theorem}[Strict positivity of the fiber divisor's degree]
   \label{thm:zero_lt_deg_fiberWeilDivisor}
   \lean{AlgebraicGeometry.zero_lt_deg_fiberWeilDivisor}
+  \provenancetag{CUSTOM}
   \uses{lem:P1_point_off_chart1, lem:surjective_of_isFinite_of_isDominant,
     def:fiberWeilDivisor, def:fiberCover}
   \leanok
@@ -4303,6 +4462,7 @@ of finite type and quasi-compact over a field \(K\), with finite-dimensional \(H
 \begin{lemma}[An effective witness of a class of large degree]
   \label{lem:exists_effective_of_picClass}
   \lean{AlgebraicGeometry.exists_effective_of_picClass}
+  \provenancetag{CUSTOM}
   \uses{thm:riemann_inequality, def:h0_h1_chi, def:divisorSheaf, def:HModule_linearEquiv0,
     def:divisorSections, def:scheme_ord, def:divOf, thm:curveDivisor_picClass_hom,
     def:curveDivisor}
@@ -4328,6 +4488,7 @@ of finite type and quasi-compact over a field \(K\), with finite-dimensional \(H
 \begin{lemma}[Peeling one point]
   \label{lem:peel_single}
   \lean{AlgebraicGeometry.peel_single, AlgebraicGeometry.peel_nsmul_single}
+  \provenancetag{CUSTOM}
   \uses{def:devissageSES, thm:devissageSES_shortExact, thm:skyModule_h1_vanishing,
     thm:HModule_surjective_map_f, lem:devissageDivisor_sub, def:curveDivisor_single,
     def:jumpModule}
@@ -4352,6 +4513,7 @@ of finite type and quasi-compact over a field \(K\), with finite-dimensional \(H
 \begin{lemma}[Effective peeling]
   \label{lem:peel_effective}
   \lean{AlgebraicGeometry.peel_effective}
+  \provenancetag{CUSTOM}
   \uses{lem:peel_single, def:curveDivisor_single, def:curveDivisor}
   \leanok
   Let \(A\) be a Weil divisor with \(H^1(\struct Y(A)) = 0\) and \(E \ge 0\) an effective
@@ -4370,6 +4532,7 @@ of finite type and quasi-compact over a field \(K\), with finite-dimensional \(H
 \begin{theorem}[The class form of the fibrewise large-twist vanishing]
   \label{thm:flv_class_form}
   \lean{AlgebraicGeometry.exists_subsingleton_hModule_one_of_one_le_classDeg_of_isFinite_toP1}
+  \provenancetag{CUSTOM}
   \uses{thm:subsingleton_hModule_divisorSheaf_one_of_isFinite_toP1,
     thm:zero_lt_deg_fiberWeilDivisor, lem:exists_effective_of_picClass, lem:peel_effective,
     thm:subsingleton_hModule_one_class, lem:picClass_nsmul, def:classDeg,
@@ -4409,6 +4572,7 @@ of finite type and quasi-compact over a field \(K\), with finite-dimensional \(H
 \begin{theorem}[The rank anchor]
   \label{thm:h0_eq_deg_add_chi}
   \lean{AlgebraicGeometry.h0_eq_deg_add_chi_of_subsingleton_hModule_one}
+  \provenancetag{CUSTOM}
   \uses{thm:chi_eq_h0, thm:chi_divisorSheaf, def:h0_h1_chi}
   \leanok
   For a Weil divisor \(D\) with \(H^1(\struct Y(D)) = 0\),
@@ -4432,6 +4596,7 @@ of finite type and quasi-compact over a field \(K\), with finite-dimensional \(H
 \begin{theorem}[The uniform \(H^1\)-vanishing bound]
   \label{thm:exists_bound_subsingleton_hModule_one}
   \lean{AlgebraicGeometry.exists_bound_subsingleton_hModule_one_of_isFinite_toP1}
+  \provenancetag{CUSTOM}
   \uses{thm:subsingleton_hModule_divisorSheaf_one_of_isFinite_toP1,
     thm:zero_lt_deg_fiberWeilDivisor, lem:exists_effective_of_picClass, lem:peel_effective,
     thm:subsingleton_hModule_one_class, lem:picClass_nsmul, def:classDeg,
@@ -4474,6 +4639,7 @@ of finite type and quasi-compact over a field \(K\), with finite-dimensional \(H
 \begin{theorem}[The presentation divisor of the unit fiber divisor]
   \label{thm:presentationDivisor_fiberDivisor_one}
   \lean{AlgebraicGeometry.presentationDivisor_presentation_fiberDivisor_one}
+  \provenancetag{CUSTOM}
   \uses{def:fiberDivisor, def:fiberCoordUnit, thm:fiberCoordUnit_order,
     def:fiberWeilDivisor, def:presentationDivisor, lem:localEquations_presentation,
     def:curveDivisor, def:fiberCover}
@@ -4508,6 +4674,7 @@ of finite type and quasi-compact over a field \(K\), with finite-dimensional \(H
     AlgebraicGeometry.classDeg_fiberTwist_one,
     AlgebraicGeometry.zero_lt_classDeg_fiberTwist_one,
     AlgebraicGeometry.one_le_classDeg_fiberTwist_one}
+  \provenancetag{CUSTOM}
   \uses{thm:presentationDivisor_fiberDivisor_one, lem:localEquations_presentation,
     def:curveDivisor_picClass, def:classDeg, def:fiberTwist,
     thm:zero_lt_deg_fiberWeilDivisor, thm:picClass_eq_of_presentationDivisor_eq}
@@ -4538,6 +4705,7 @@ of finite type and quasi-compact over a field \(K\), with finite-dimensional \(H
 \begin{theorem}[The positivity constant transports across base-field transitions]
   \label{thm:one_le_classDeg_baseFieldTransition}
   \lean{AlgebraicGeometry.one_le_classDeg_cechPicMap_baseFieldTransition_of_one_le}
+  \provenancetag{CUSTOM}
   \uses{thm:classDeg_cechPicMap_baseFieldTransition}
   \leanok
   For the challenge curve \(C\) over \(k\), a base-field transition
@@ -4565,6 +4733,7 @@ the residue half of the degree-one certificate.
   \label{def:graphSectionEval}
   \lean{AlgebraicGeometry.Over.top_le_sectionOfPoint_preimage,
     AlgebraicGeometry.graphSectionEval, AlgebraicGeometry.graphSectionEval_res}
+  \provenancetag{CUSTOM}
   \uses{def:sectionOfPoint, def:graphPoint}
   \leanok
   Let \(W\) be an open of \(C_K\) containing the graph point \(x_t\). The preimage of
@@ -4582,6 +4751,7 @@ the residue half of the degree-one certificate.
     AlgebraicGeometry.bijective_graphSectionEval_algebraMap,
     AlgebraicGeometry.isField_sections_top_overSpec,
     AlgebraicGeometry.surjective_graphSectionEval}
+  \provenancetag{CUSTOM}
   \uses{def:graphSectionEval, def:overSpecGammaTop, def:sectionOfPoint}
   \leanok
   The composite of the structure map \(K \to \Gamma(C_K, W)\) (sections carry the
@@ -4604,6 +4774,7 @@ the residue half of the degree-one certificate.
 \begin{theorem}[The point--evaluation dictionary]
   \label{thm:ker_graphSectionEval_eq_primeIdealOf}
   \lean{AlgebraicGeometry.ker_graphSectionEval_eq_primeIdealOf}
+  \provenancetag{CUSTOM}
   \uses{def:graphSectionEval, thm:graphSectionEval_algebraMap, def:graphPoint}
   \leanok
   On an \emph{affine} open \(W \ni x_t\), the kernel of the evaluation at the graph section
@@ -4633,6 +4804,7 @@ the residue half of the degree-one certificate.
   \label{thm:finrank_quotient_ker_graphSectionEval}
   \lean{AlgebraicGeometry.finrank_quotient_ker_graphSectionEval,
     AlgebraicGeometry.isMaximal_ker_graphSectionEval}
+  \provenancetag{CUSTOM}
   \uses{def:graphSectionEval, thm:graphSectionEval_algebraMap}
   \leanok
   For any open \(W \ni x_t\), the kernel of \(\varepsilon_t\) is a maximal ideal and
@@ -4663,6 +4835,7 @@ which the ideal of the graph section is principal on the transported point gener
     AlgebraicGeometry.graphGen, AlgebraicGeometry.graphElift, AlgebraicGeometry.graphChart,
     AlgebraicGeometry.isAffineOpen_graphChart, AlgebraicGeometry.graphChart_le_productChart,
     AlgebraicGeometry.graphChartEqn}
+  \provenancetag{CUSTOM}
   \uses{def:diagonalChartData, def:productChart, def:productChartSections,
     thm:isLocalization_away_basicOpen_productChartSections, def:pointGen_pointEv}
   \leanok
@@ -4694,6 +4867,7 @@ which the ideal of the graph section is principal on the transported point gener
     AlgebraicGeometry.graphTensorEval_map, AlgebraicGeometry.graphTensorEval_graphElift,
     AlgebraicGeometry.graphPoint_mem_productChart,
     AlgebraicGeometry.graphSectionEval_productChartSections}
+  \provenancetag{CUSTOM}
   \uses{def:graphChart, thm:appLE_productChartSections, def:graphSectionEval,
     def:graphPoint, def:diagonalChartData, def:pointGen_pointEv}
   \leanok
@@ -4725,6 +4899,7 @@ which the ideal of the graph section is principal on the transported point gener
 \begin{theorem}[The graph point lies in the graph chart]
   \label{thm:graphPoint_mem_graphChart}
   \lean{AlgebraicGeometry.graphPoint_mem_graphChart}
+  \provenancetag{CUSTOM}
   \uses{lem:graphTensorEval, thm:ker_graphSectionEval_eq_primeIdealOf, def:graphChart,
     thm:graphSectionEval_algebraMap}
   \leanok
@@ -4745,6 +4920,7 @@ which the ideal of the graph section is principal on the transported point gener
 \begin{theorem}[The kernel presentation of the graph ideal]
   \label{thm:ker_graphSectionEval_eq_span_graphChartEqn}
   \lean{AlgebraicGeometry.ker_graphSectionEval_eq_span_graphChartEqn}
+  \provenancetag{CUSTOM}
   \uses{def:graphChart, lem:graphTensorEval, thm:graphPoint_mem_graphChart,
     thm:ker_pointEv_map_localization_eq, def:diagonalChartData,
     thm:isLocalization_away_basicOpen_productChartSections, def:graphSectionEval}
@@ -4781,6 +4957,7 @@ which the ideal of the graph section is principal on the transported point gener
 \begin{theorem}[The colength of the graph equation is one]
   \label{thm:finrank_quotient_span_graphChartEqn}
   \lean{AlgebraicGeometry.finrank_quotient_span_graphChartEqn}
+  \provenancetag{CUSTOM}
   \uses{thm:ker_graphSectionEval_eq_span_graphChartEqn,
     thm:finrank_quotient_ker_graphSectionEval}
   \leanok
@@ -4803,6 +4980,7 @@ which the ideal of the graph section is principal on the transported point gener
   \label{lem:graphChartEqn_ne_zero}
   \lean{AlgebraicGeometry.graphGen_mem_nonZeroDivisors,
     AlgebraicGeometry.graphChartEqn_ne_zero}
+  \provenancetag{CUSTOM}
   \uses{thm:diagonal_regularity_engine, def:graphChart, thm:graphSectionEval_algebraMap,
     thm:graphPoint_mem_graphChart, def:diagonalChartData,
     thm:isLocalization_away_basicOpen_productChartSections}
@@ -4826,6 +5004,7 @@ which the ideal of the graph section is principal on the transported point gener
 \begin{theorem}[The graph point is closed]
   \label{thm:graphPoint_ne_genericPoint}
   \lean{AlgebraicGeometry.graphPoint_ne_genericPoint}
+  \provenancetag{CUSTOM}
   \uses{lem:graphChartEqn_ne_zero, thm:ker_graphSectionEval_eq_span_graphChartEqn,
     thm:ker_graphSectionEval_eq_primeIdealOf, lem:fromSpec_base_ne_genericPoint,
     lem:primeIdealOf_fromSpec_base}
@@ -4848,6 +5027,7 @@ which the ideal of the graph section is principal on the transported point gener
 \begin{lemma}[The graph equation is a unit away from the graph point]
   \label{lem:isUnit_germ_graphChartEqn_of_ne}
   \lean{AlgebraicGeometry.isUnit_germ_graphChartEqn_of_ne}
+  \provenancetag{CUSTOM}
   \uses{thm:ker_graphSectionEval_eq_span_graphChartEqn,
     thm:finrank_quotient_ker_graphSectionEval, thm:ker_graphSectionEval_eq_primeIdealOf,
     lem:primeIdealOf_fromSpec_base}
@@ -4869,6 +5049,7 @@ which the ideal of the graph section is principal on the transported point gener
 \begin{lemma}[The trivialising element away from the graph point is \(1\)]
   \label{lem:presentationElem_graphLocalEquations_of_ne}
   \lean{AlgebraicGeometry.presentationElem_graphLocalEquations_of_ne}
+  \provenancetag{CUSTOM}
   \uses{def:graphLocalEquations, def:graphPoint, def:diagonalCover,
     def:localEquations_pullback, lem:localEquations_presentation}
   \leanok
@@ -4888,6 +5069,7 @@ which the ideal of the graph section is principal on the transported point gener
 \begin{theorem}[The overlap identity at the graph point]
   \label{thm:presentationElem_graphLocalEquations_val}
   \lean{AlgebraicGeometry.presentationElem_graphLocalEquations_val}
+  \provenancetag{CUSTOM}
   \uses{def:graphLocalEquations, def:graphChart, thm:appLE_productChartSections,
     def:diagonalChartData, def:diagonalCover, def:diagonalChart,
     def:localEquations_pullback, lem:localEquations_presentation, def:diagonalSetup,
@@ -4936,6 +5118,7 @@ which the ideal of the graph section is principal on the transported point gener
 \begin{theorem}[The presentation divisor of the graph is a one-point divisor]
   \label{thm:presentationDivisor_graphLocalEquations}
   \lean{AlgebraicGeometry.presentationDivisor_graphLocalEquations}
+  \provenancetag{CUSTOM}
   \uses{lem:presentationElem_graphLocalEquations_of_ne, thm:graphPoint_ne_genericPoint,
     def:presentationDivisor, def:curveDivisor_single, def:scheme_ordZ,
     lem:localEquations_presentation, def:graphLocalEquations}
@@ -4969,6 +5152,7 @@ which the ideal of the graph section is principal on the transported point gener
     thm:picClass_eq_of_presentationDivisor_eq, thm:graphPoint_mem_graphChart}
   \leanok
   \source{kleiman-picard}
+  \provenancetag{ADAPTED}
   For every field point \(t \colon \Spec K \to C\) of the challenge curve,
   \[
     \deg_{\Pic}\bigl(\struct{C_K}(\Gamma_t)\bigr) \;=\; 1 .
