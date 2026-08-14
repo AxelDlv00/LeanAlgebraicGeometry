@@ -417,6 +417,7 @@ end AlgebraicGeometry
 namespace AlgebraicJacobian.GaloisDescent
 
 open scoped TensorProduct
+open AlgebraicGeometry
 open AlgebraicGeometry.Scheme.PicScheme
 
 variable {k : Type u} [Field k] {k' : Type u} [Field k'] [Algebra k k']
