@@ -13568,7 +13568,7 @@
     "macros": {},
     "states": {
       "blocked": 41,
-      "closed": 12103,
+      "closed": 12109,
       "formalized_open": 178,
       "informal": 46,
       "ready": 123
@@ -13616,14 +13616,14 @@
       "AlgebraicGeometry.DivisorAdaptation.val_unitsRestrict': Lean declaration appears more than once (AlgebraicJacobian/Picard/DivisorFamilyThetaSections.lean, AlgebraicJacobian/Picard/DivisorThetaPairing.lean)",
       "AlgebraicGeometry.DivisorAdaptation.val_unitsRestrict_inv: Lean declaration appears more than once (AlgebraicJacobian/Picard/DivisorFamilyThetaSections.lean, AlgebraicJacobian/Picard/DivisorThetaPairing.lean)",
       "AlgebraicGeometry.BasicOpenCocycleDatum.component_tmul_one_mem_nonZeroDivisors: Lean declaration appears more than once (AlgebraicJacobian/Picard/Pic0AdmissibleAbelEtaleSurjectiveDivisor.lean, AlgebraicJacobian/Picard/Pic0AdmissibleAbelEtaleSurjectiveEffectivity.lean)",
-      "AlgebraicGeometry.stage_classDeg_residueField: Lean declaration appears more than once (AlgebraicJacobian/Picard/Pic0RankOneCanonicalDivisorDegree.lean, AlgebraicJacobian/Picard/Pic0RankOneCanonicalDivisorFree.lean)",
-      "AlgebraicGeometry.stage_classDeg_field: Lean declaration appears more than once (AlgebraicJacobian/Picard/Pic0RankOneCanonicalDivisorDegree.lean, AlgebraicJacobian/Picard/Pic0RankOneCanonicalDivisorFree.lean)",
       "AlgebraicGeometry.PicRankOneLocalPresentation: Lean declaration appears more than once (.lake/ajcr-family-producer-source/AlgebraicJacobian/Picard/Pic0RankOnePresentation.lean, AlgebraicJacobian/Picard/Pic0RankOnePresentation.lean)",
       "AlgebraicGeometry.PicRankOneLocalPresentation.h0BaseChange: Lean declaration appears more than once (.lake/ajcr-family-producer-source/AlgebraicJacobian/Picard/Pic0RankOnePresentation.lean, AlgebraicJacobian/Picard/Pic0RankOnePresentation.lean)",
       "AlgebraicGeometry.PicRankOneLocalPresentation.evaluation: Lean declaration appears more than once (.lake/ajcr-family-producer-source/AlgebraicJacobian/Picard/Pic0RankOnePresentation.lean, AlgebraicJacobian/Picard/Pic0RankOnePresentation.lean)",
       "AlgebraicGeometry.PicRankOneLocalPresentation.nativeBaseChangeIso: Lean declaration appears more than once (.lake/ajcr-family-producer-source/AlgebraicJacobian/Picard/Pic0RankOnePresentation.lean, AlgebraicJacobian/Picard/Pic0RankOnePresentation.lean)",
       "AlgebraicGeometry.PicRankOneLocalPresentation.nativeBaseChangeIsoAffine: Lean declaration appears more than once (.lake/ajcr-family-producer-source/AlgebraicJacobian/Picard/Pic0RankOnePresentation.lean, AlgebraicJacobian/Picard/Pic0RankOnePresentation.lean)",
-      "AlgebraicGeometry.PicRankOneLocalPresentation.evaluationSourceBaseChangeIso: Lean declaration appears more than once (.lake/ajcr-family-producer-source/AlgebraicJacobian/Picard/Pic0RankOnePresentation.lean, AlgebraicJacobian/Picard/Pic0RankOnePresentation.lean)"
+      "AlgebraicGeometry.PicRankOneLocalPresentation.evaluationSourceBaseChangeIso: Lean declaration appears more than once (.lake/ajcr-family-producer-source/AlgebraicJacobian/Picard/Pic0RankOnePresentation.lean, AlgebraicJacobian/Picard/Pic0RankOnePresentation.lean)",
+      "AlgebraicGeometry.PicRankOneLocalPresentation.evaluationSourceBaseChangeIso_hom_evaluation: Lean declaration appears more than once (.lake/ajcr-family-producer-source/AlgebraicJacobian/Picard/Pic0RankOnePresentation.lean, AlgebraicJacobian/Picard/Pic0RankOnePresentation.lean)",
+      "AlgebraicGeometry.PicRankOneLocalPresentation.evaluationSourceBaseChangeIsoAffine_hom_evaluation: Lean declaration appears more than once (.lake/ajcr-family-producer-source/AlgebraicJacobian/Picard/Pic0RankOnePresentation.lean, AlgebraicJacobian/Picard/Pic0RankOnePresentation.lean)"
     ]
   },
   "nodes": [

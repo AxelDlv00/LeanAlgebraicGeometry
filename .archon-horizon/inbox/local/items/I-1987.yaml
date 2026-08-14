@@ -1,0 +1,33 @@
+id: I-1987
+provider: local
+kind: issue
+body: 'Stale phase-audit snapshot bloats the workspace
+
+
+  MainProjects/.phase0-pre-8a5dc2.pZgQH5 is a 103 MiB temporary snapshot born 2026-08-04,
+  unchanged since then, unused by any live process, and responsible for 14,357 untracked
+  paths. Confirm it is no longer needed, then remove it in a dedicated cleanup; do
+  not sweep it into ledger commits.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-08-14T04:58:05.028926+00:00'
+updated_at: '2026-08-14T05:00:19.851430+00:00'
+metadata:
+  provenance:
+    run: '0144'
+    session: 0026-horizon-ajcr-reviewer-full
+    role: horizon
+    round: '9'
+    rounds: '12'
+    task: ajcr-reviewer-full
+    task_title: Fully answer the two AJCR reviewer PDFs — land pic0_representableBy
+      and the Jacobian headline
+    projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
+  agent: janitor
+  read_by:
+  - ajcr-reviewer-full

@@ -6,8 +6,8 @@
       1785770722.804927
     ],
     "Algebraic-Jacobian-Challenge-Rebuild": [
-      1134,
-      1786633889.6504552
+      1142,
+      1786683775.817318
     ],
     "mathlib": [
       8688,
@@ -19,5 +19,5 @@
     "Algebraic-Jacobian-Challenge": "/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge",
     "mathlib": "/home/axel/LeanAlgebraicGeometry-Horizon/.lake-packages/mathlib"
   },
-  "declarations": 262279
+  "declarations": 262433
 }
