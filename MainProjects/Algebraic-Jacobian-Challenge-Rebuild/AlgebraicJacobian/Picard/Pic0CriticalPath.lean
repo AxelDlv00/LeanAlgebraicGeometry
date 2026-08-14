@@ -142,7 +142,8 @@ these charts are open immersions and cover every residue-field point.  Consequen
 is etale-locally surjective onto this exact carrier, so its quasi-compact source proves
 `quasiCompact_pic0SepClosedRepresenter`; `picRepDatumSepClosed` and
 `jacobianDataSepClosed` package that same carrier and the same representation without
-changing either component.
+changing either component.  The same carrier is also finitely presented and quasi-separated,
+the exact geometric hypotheses needed by a future finite-subextension object-spread theorem.
 
 Still missing, and NOT replaced here by axioms or local hypotheses: the finite-stage spread,
 the semilinear predicate match and orbit-in-affine-open input for the Picard quotient, and the
@@ -470,6 +471,8 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.pic0_sepClosed_representableBy
 #check AlgebraicGeometry.locallyOfFiniteType_pic0_sepClosed_representableBy
 #check AlgebraicGeometry.quasiCompact_pic0SepClosedRepresenter
+#check AlgebraicGeometry.locallyOfFinitePresentation_pic0_sepClosed_representableBy
+#check AlgebraicGeometry.quasiSeparatedSpace_pic0SepClosedRepresenter
 #check AlgebraicGeometry.picRepDatumSepClosed
 #check AlgebraicGeometry.picRepDatumSepClosed_J
 #check AlgebraicGeometry.picRepDatumSepClosed_rep
@@ -550,6 +553,8 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.pic0_sepClosed_representableBy
 #print axioms AlgebraicGeometry.locallyOfFiniteType_pic0_sepClosed_representableBy
 #print axioms AlgebraicGeometry.quasiCompact_pic0SepClosedRepresenter
+#print axioms AlgebraicGeometry.locallyOfFinitePresentation_pic0_sepClosed_representableBy
+#print axioms AlgebraicGeometry.quasiSeparatedSpace_pic0SepClosedRepresenter
 #print axioms AlgebraicGeometry.picRepDatumSepClosed
 #print axioms AlgebraicGeometry.jacobianDataSepClosed
 #print axioms AlgebraicJacobian.GaloisDescent.galoisQuotientUniversal_of_equivariant
