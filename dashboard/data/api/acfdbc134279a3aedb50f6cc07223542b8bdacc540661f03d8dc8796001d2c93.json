@@ -1,0 +1,1 @@
+{"markdown": "Kernel verification and the three projective transport endpoints are clean, using only Lean\u2019s standard classical axioms and no suspicious source patterns. I\u2019m doing the final scoped diff and API scan, then I\u2019ll hand the exact missing H-quasi-projectivity dependency back to the parent task.\n", "recommendation": ""}
