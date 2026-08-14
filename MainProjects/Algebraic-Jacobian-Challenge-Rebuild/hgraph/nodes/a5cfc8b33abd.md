@@ -8,6 +8,6 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.V2
 type: lean
-updated: '2026-08-14T10:32:39'
+updated: '2026-08-14T14:17:30'
 ---
 noncomputable abbrev V2 : (X2 R).Opens := (coprod.inl : Spec R ⟶ X2 R).opensRange

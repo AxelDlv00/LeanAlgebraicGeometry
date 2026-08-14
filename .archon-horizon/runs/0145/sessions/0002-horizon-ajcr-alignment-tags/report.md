@@ -1,0 +1,1 @@
+The plumbing unit now renders in both available targets: plasTeX completed, and LuaLaTeX produced a 343-page PDF. I’m checkpointing exactly the two authored files through a fresh private index, force-adding the explicitly scoped but normally ignored Horizon skill, then auditing every path in the resulting commit against the moving HEAD.

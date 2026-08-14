@@ -6,16 +6,17 @@
   "model": "gpt-5.6-terra",
   "name": "worker",
   "native_subagent_id": "019ffee3-1bca-7fe1-ac92-e5fe1e4d8a0c",
+  "ok": true,
   "parent_session": "0026-horizon-ajcr-reviewer-full",
   "parent_subagent_id": null,
   "report_ref": "report.md",
   "role": "subagent",
-  "status": "running",
+  "status": "completed",
   "subagent_type": "worker",
-  "summary": "",
+  "summary": "Implemented [Pic0SepClosedJacobianData.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0SepClosedJacobianData.lean:1).",
   "usage": {
     "cost_usd": null,
-    "tokens_in": 712986,
-    "tokens_out": 8420
+    "tokens_in": 2662917,
+    "tokens_out": 21037
   }
 }

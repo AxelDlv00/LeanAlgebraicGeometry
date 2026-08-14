@@ -1,0 +1,1 @@
+The target now has clean LSP diagnostics. I’m adding the first compiled slice: the `L`-slice deck morphism, its comparison with the existing `K`-slice `twistTest`, and the iff that turns scheme-level equivariance into the corresponding slice square.

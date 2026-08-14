@@ -22,3 +22,9 @@ metadata:
   created_at: '2026-08-04T01:52:32.684094+00:00'
   parent: AJCR.review-plan
   milestone: AJCR.review-plan
+  updated_at: '2026-08-14T06:53:15.815251+00:00'
+  pinned_commits:
+  - 118a6e320b
+  - 64c98ec988
+  - 6d7f9ca3b2
+  - 8f637d3fcd

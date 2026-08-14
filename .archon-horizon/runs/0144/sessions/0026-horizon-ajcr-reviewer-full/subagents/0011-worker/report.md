@@ -1,1 +1,12 @@
-I’m creating the new module now. It will expose the generic Yoneda-local-surjectivity bridge, define the Abel map directly into `(pic0_sepClosed_representableBy C).1`, obtain compactness from the admissible divisor scheme, and package the exact same carrier/representation into `PicRepDatum` and `JacobianData`.
+Implemented [Pic0SepClosedJacobianData.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0SepClosedJacobianData.lean:1).
+
+It contains the requested exact carrier cone, point-surjectivity bridge, compactness proof, `PicRepDatum`, `JacobianData`, and rfl projection lemmas.
+
+Verification passed:
+
+- `lake env lean` and `horizon check --lean`
+- `lake build AlgebraicJacobian.Picard.Pic0SepClosedJacobianData`
+- source scan: no `sorry`, `axiom`, or `unsafe`
+- `git diff --check`
+
+`lean_verify` LSP was not available in this agent session. No commit made.

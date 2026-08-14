@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = { 
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Jacobian of a smooth proper curve</title>
+<link rel="next" href="chap-BaseChange.html" title="Functoriality and base change of fields" />
+<link rel="prev" href="index.html" title="AlgebraicJacobian" />
+<link rel="up" href="index.html" title="AlgebraicJacobian" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/showmore.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/extra_styles.css" />
+</head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">AlgebraicJacobian</a></h1>
+</header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class=" active current">
+  <a href="chap-Challenge.html"><span class="toc_ref">1</span> <span class="toc_entry">The Jacobian of a smooth proper curve</span></a>
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
+     <li class="">
+  <a href="chap-Challenge.html#a0000000002"><span class="toc_ref">1.1</span> <span class="toc_entry">Genus</span></a>
+ </li>
+<li class="">
+  <a href="chap-Challenge.html#a0000000004"><span class="toc_ref">1.2</span> <span class="toc_entry">The Jacobian as an abelian variety</span></a>
+ </li>
+<li class="">
+  <a href="chap-Challenge.html#a0000000005"><span class="toc_ref">1.3</span> <span class="toc_entry">The Abel–Jacobi map and the universal property</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-BaseChange.html"><span class="toc_ref">2</span> <span class="toc_entry">Functoriality and base change of fields</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-BaseChange.html#a0000000006"><span class="toc_ref">2.1</span> <span class="toc_entry">Functoriality</span></a>
+ </li>
+<li class="">
+  <a href="chap-BaseChange.html#a0000000007"><span class="toc_ref">2.2</span> <span class="toc_entry">Base change of fields</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Curves.html"><span class="toc_ref">3</span> <span class="toc_entry">Curves over a field</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-Curves.html#a0000000008"><span class="toc_ref">3.1</span> <span class="toc_entry">Smooth algebras over a domain are reduced</span></a>
+ </li>
+<li class="">
+  <a href="chap-Curves.html#a0000000009"><span class="toc_ref">3.2</span> <span class="toc_entry">Schemes over a field: the topological substrate</span></a>
+ </li>
+<li class="">
+  <a href="chap-Curves.html#a0000000010"><span class="toc_ref">3.3</span> <span class="toc_entry">Global sections of a proper geometrically integral scheme</span></a>
+ </li>
+<li class="">
+  <a href="chap-Curves.html#a0000000011"><span class="toc_ref">3.4</span> <span class="toc_entry">The projective line and its charts</span></a>
+ </li>
+<li class="">
+  <a href="chap-Curves.html#a0000000012"><span class="toc_ref">3.5</span> <span class="toc_entry">The chart overlap and Laurent polynomials</span></a>
+ </li>
+<li class="">
+  <a href="chap-Curves.html#a0000000013"><span class="toc_ref">3.6</span> <span class="toc_entry">Section rings and the Laurent chart pair</span></a>
+ </li>
+<li class="">
+  <a href="chap-Curves.html#a0000000014"><span class="toc_ref">3.7</span> <span class="toc_entry">Unramified finite-type algebras over Dedekind domains</span></a>
+ </li>
+<li class="">
+  <a href="chap-Curves.html#a0000000015"><span class="toc_ref">3.8</span> <span class="toc_entry">Stalks, specializations and finiteness on curve-like schemes</span></a>
+ </li>
+<li class="">
+  <a href="chap-Curves.html#sec:curve_morphism_dichotomy"><span class="toc_ref">3.9</span> <span class="toc_entry">The curve-morphism dichotomy</span></a>
+ </li>
+<li class="">
+  <a href="chap-Curves.html#a0000000016"><span class="toc_ref">3.10</span> <span class="toc_entry">The topology of the projective line and morphisms into it</span></a>
+ </li>
+<li class="">
+  <a href="chap-Curves.html#a0000000017"><span class="toc_ref">3.11</span> <span class="toc_entry">Spreading out a rational function to the projective line</span></a>
+ </li>
+<li class="">
+  <a href="chap-Curves.html#a0000000018"><span class="toc_ref">3.12</span> <span class="toc_entry">A finite morphism to the projective line</span></a>
+ </li>
+<li class="">
+  <a href="chap-Curves.html#a0000000019"><span class="toc_ref">3.13</span> <span class="toc_entry">An affine two-chart cover of the curve, and its stability under base change</span></a>
+ </li>
+<li class="">
+  <a href="chap-Curves.html#a0000000020"><span class="toc_ref">3.14</span> <span class="toc_entry">Product charts on a fibre product</span></a>
+ </li>
+<li class="">
+  <a href="chap-Curves.html#a0000000021"><span class="toc_ref">3.15</span> <span class="toc_entry">The diagonal of the curve square</span></a>
+ </li>
+<li class="">
+  <a href="chap-Curves.html#a0000000022"><span class="toc_ref">3.16</span> <span class="toc_entry">The per-chart local equation of the diagonal</span></a>
+ </li>
+<li class="">
+  <a href="chap-Curves.html#a0000000023"><span class="toc_ref">3.17</span> <span class="toc_entry">The frozen étale-coordinate chart data</span></a>
+ </li>
+<li class="">
+  <a href="chap-Curves.html#a0000000024"><span class="toc_ref">3.18</span> <span class="toc_entry">The graph of a curve point as an effective divisor</span></a>
+ </li>
+<li class="">
+  <a href="chap-Curves.html#sec:graphFibre"><span class="toc_ref">3.19</span> <span class="toc_entry">The graph square and the graph fibre</span></a>
+ </li>
+<li class="">
+  <a href="chap-Curves.html#sec:separablyClosedPoints"><span class="toc_ref">3.20</span> <span class="toc_entry">Rational points over a separably closed field</span></a>
+ </li>
+<li class="">
+  <a href="chap-Curves.html#sec:coheight_stalk"><span class="toc_ref">3.21</span> <span class="toc_entry">Coheight and the Krull dimension of stalks</span></a>
+ </li>
+<li class="">
+  <a href="chap-Curves.html#sec:standard_smooth_dimension"><span class="toc_ref">3.22</span> <span class="toc_entry">The dimension of a standard-smooth algebra at a maximal ideal</span></a>
+ </li>
+<li class="">
+  <a href="chap-Curves.html#sec:smooth_prime_regularity"><span class="toc_ref">3.23</span> <span class="toc_entry">The trdeg–height inequality and smooth-prime regularity</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Algebra.html"><span class="toc_ref">4</span> <span class="toc_entry">Lattice finiteness over the Laurent ring</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-Algebra.html#a0000000025"><span class="toc_ref">4.1</span> <span class="toc_entry">Stability under powers of the generator</span></a>
+ </li>
+<li class="">
+  <a href="chap-Algebra.html#a0000000026"><span class="toc_ref">4.2</span> <span class="toc_entry">The two-lattice lemma</span></a>
+ </li>
+<li class="">
+  <a href="chap-Algebra.html#a0000000027"><span class="toc_ref">4.3</span> <span class="toc_entry">Localization forms</span></a>
+ </li>
+<li class="">
+  <a href="chap-Algebra.html#sec:tensorAway"><span class="toc_ref">4.4</span> <span class="toc_entry">Tensor products of localizations and the descent decompositions</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Algebra.html#a0000000028"><span class="toc_ref">4.4.1</span> <span class="toc_entry">The tensor product of two localizations</span></a>
+ </li>
+<li class="">
+  <a href="chap-Algebra.html#a0000000029"><span class="toc_ref">4.4.2</span> <span class="toc_entry">Decompositions of the tensor square and cube of a finite product</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Algebra.html#sec:piAssembly"><span class="toc_ref">4.5</span> <span class="toc_entry">The composite descent unit of a coherent family of units</span></a>
+ </li>
+<li class="">
+  <a href="chap-Algebra.html#sec:amitsurDescentAlgebra"><span class="toc_ref">4.6</span> <span class="toc_entry">Degree-zero Amitsur descent and unit production</span></a>
+ </li>
+<li class="">
+  <a href="chap-Algebra.html#sec:finrank_additivity"><span class="toc_ref">4.7</span> <span class="toc_entry">Additivity of dimension along exact sequences</span></a>
+ </li>
+<li class="">
+  <a href="chap-Algebra.html#sec:dedekind_colength"><span class="toc_ref">4.8</span> <span class="toc_entry">The colength of Dedekind quotients</span></a>
+ </li>
+<li class="">
+  <a href="chap-Algebra.html#sec:localized_colength"><span class="toc_ref">4.9</span> <span class="toc_entry">The Dedekind colength through localization at a prime</span></a>
+ </li>
+<li class="">
+  <a href="chap-Algebra.html#sec:diagonal_ideal"><span class="toc_ref">4.10</span> <span class="toc_entry">The diagonal ideal of an étale-coordinatised algebra</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Algebra.html#a0000000030"><span class="toc_ref">4.10.1</span> <span class="toc_entry">The kernel of the collapse (deliverable (a))</span></a>
+ </li>
+<li class="">
+  <a href="chap-Algebra.html#a0000000031"><span class="toc_ref">4.10.2</span> <span class="toc_entry">The idempotent generator and the localised principality (deliverables (b), (c))</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Algebra.html#sec:diagonal_regular"><span class="toc_ref">4.11</span> <span class="toc_entry">The diagonal-equation regularity engine</span></a>
+ </li>
+<li class="">
+  <a href="chap-Algebra.html#sec:nakayama_vanishing"><span class="toc_ref">4.12</span> <span class="toc_entry">Vanishing propagation via residue fields</span></a>
+ </li>
+<li class="">
+  <a href="chap-Algebra.html#sec:split_rigidity"><span class="toc_ref">4.13</span> <span class="toc_entry">Split rigidity of a surjective two-term complex</span></a>
+ </li>
+<li class="">
+  <a href="chap-Algebra.html#sec:finite_projective_duality"><span class="toc_ref">4.14</span> <span class="toc_entry">Duality for finite projective modules</span></a>
+ </li>
+<li class="">
+  <a href="chap-Algebra.html#sec:aeval_transport"><span class="toc_ref">4.15</span> <span class="toc_entry">Transport of kernels and of chart-lattice finiteness</span></a>
+ </li>
+<li class="">
+  <a href="chap-Algebra.html#sec:point_fiber_ideal"><span class="toc_ref">4.16</span> <span class="toc_entry">The point-fiber ideal of an étale-coordinatised algebra</span></a>
+ </li>
+<li class="">
+  <a href="chap-Algebra.html#sec:auslander_buchsbaum"><span class="toc_ref">4.17</span> <span class="toc_entry">Depth and the Auslander–Buchsbaum formula</span></a>
+ </li>
+<li class="">
+  <a href="chap-Algebra.html#sec:regular_cm"><span class="toc_ref">4.18</span> <span class="toc_entry">Cohen–Macaulay and regular local rings</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Cohomology.html"><span class="toc_ref">5</span> <span class="toc_entry">Cohomology of sheaves of modules</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-Cohomology.html#a0000000032"><span class="toc_ref">5.1</span> <span class="toc_entry">Cohomology on a site</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology.html#a0000000033"><span class="toc_ref">5.2</span> <span class="toc_entry">Cohomology of an object of the site</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology.html#a0000000034"><span class="toc_ref">5.3</span> <span class="toc_entry">The structure sheaf as a sheaf of modules</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology.html#a0000000035"><span class="toc_ref">5.4</span> <span class="toc_entry">Čech cobounding on affine opens</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology.html#a0000000036"><span class="toc_ref">5.5</span> <span class="toc_entry">Vanishing of degree-one cohomology on affine opens</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology.html#sec:qcoh_vanishing"><span class="toc_ref">5.6</span> <span class="toc_entry">Twisted affine vanishing: quasi-coherent coefficients</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology.html#sec:mv-in-text"><span class="toc_ref">5.7</span> <span class="toc_entry">The Mayer–Vietoris \((0,1)\)-slice</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology.html#a0000000037"><span class="toc_ref">5.8</span> <span class="toc_entry">The two-affine-cover cokernel bridge</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology.html#a0000000038"><span class="toc_ref">5.9</span> <span class="toc_entry">Base change of the two-cover cohomology over an affine test ring</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology.html#a0000000039"><span class="toc_ref">5.10</span> <span class="toc_entry">The projective line: inputs for the finiteness argument</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology.html#a0000000040"><span class="toc_ref">5.11</span> <span class="toc_entry">Finiteness of the first cohomology</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology.html#sec:twisted_sheaf"><span class="toc_ref">5.12</span> <span class="toc_entry">The cocycle-glued twisted sheaf on a two-cover</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology.html#sec:relative_h1_base_change"><span class="toc_ref">5.13</span> <span class="toc_entry">Base change of the two-term complex and of \(H^1\) on the relative curve</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology.html#sec:base_field_transition"><span class="toc_ref">5.14</span> <span class="toc_entry">The base-field transition and its sections base change</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology.html#sec:two_lattice_pairs"><span class="toc_ref">5.15</span> <span class="toc_entry">Two-lattice pairs and their cohomology</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology.html#sec:two_lattice_sixterm"><span class="toc_ref">5.16</span> <span class="toc_entry">The six-term exact sequence of two-lattice pairs</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology.html#sec:two_lattice_models"><span class="toc_ref">5.17</span> <span class="toc_entry">The line-bundle models and the finite surjection</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology.html#sec:two_lattice_coherence"><span class="toc_ref">5.18</span> <span class="toc_entry">The coherence theorems for two-lattice pairs</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology.html#sec:rigid_engine_assembly"><span class="toc_ref">5.19</span> <span class="toc_entry">The rigid engine on a packaged two-cover</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology.html#sec:twist_pair_data"><span class="toc_ref">5.20</span> <span class="toc_entry">The pair data of the twisted sheaf</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology.html#sec:relative_cover_coordinates"><span class="toc_ref">5.21</span> <span class="toc_entry">The pinned relative cover: coordinates, finiteness and freeness</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology.html#sec:rel_twist_rigid_engine"><span class="toc_ref">5.22</span> <span class="toc_entry">The rigid engine on the relative twisted sheaf</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology.html#sec:h1_base_field_invariance"><span class="toc_ref">5.23</span> <span class="toc_entry">Base-field invariance of \(H^0\), \(H^1\) and the genus</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html"><span class="toc_ref">6</span> <span class="toc_entry">Closed points, divisors and skyscraper cohomology</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-RiemannRoch.html#a0000000041"><span class="toc_ref">6.1</span> <span class="toc_entry">Discrete valuations at closed points</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#a0000000042"><span class="toc_ref">6.2</span> <span class="toc_entry">The residue degree</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#a0000000043"><span class="toc_ref">6.3</span> <span class="toc_entry">Weil divisors and their degree</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#a0000000044"><span class="toc_ref">6.4</span> <span class="toc_entry">Skyscraper sheaves and the vanishing of \(H^1\)</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#a0000000045"><span class="toc_ref">6.5</span> <span class="toc_entry">Finiteness of the residue degree</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#a0000000046"><span class="toc_ref">6.6</span> <span class="toc_entry">Principal divisors</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#a0000000047"><span class="toc_ref">6.7</span> <span class="toc_entry">The divisor sheaf of a Weil divisor</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#a0000000048"><span class="toc_ref">6.8</span> <span class="toc_entry">Comparison of \(\mathcal O(0)\) with the structure sheaf</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#a0000000049"><span class="toc_ref">6.9</span> <span class="toc_entry">The dévissage complex at a closed point</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#a0000000050"><span class="toc_ref">6.10</span> <span class="toc_entry">Short exactness of the dévissage sequence</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#a0000000051"><span class="toc_ref">6.11</span> <span class="toc_entry">The jump module and the residue field</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#a0000000052"><span class="toc_ref">6.12</span> <span class="toc_entry">The multiplication isomorphism</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#a0000000053"><span class="toc_ref">6.13</span> <span class="toc_entry">The cohomological ledger: \(h^0\), \(h^1\) and \(\chi \)</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#a0000000054"><span class="toc_ref">6.14</span> <span class="toc_entry">The six-term cohomology slice of a short exact sequence</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#a0000000055"><span class="toc_ref">6.15</span> <span class="toc_entry">Finiteness of the cohomology of divisor sheaves</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#a0000000056"><span class="toc_ref">6.16</span> <span class="toc_entry">The \(\chi \)-ledger and the Riemann inequality</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#a0000000057"><span class="toc_ref">6.17</span> <span class="toc_entry">Riemann–Roch on the challenge curve</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#sec:chart_colength"><span class="toc_ref">6.18</span> <span class="toc_entry">The chart colength dictionary</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#a0000000058"><span class="toc_ref">6.19</span> <span class="toc_entry">The degree homomorphism on the Čech Picard group</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#sec:classCohomology"><span class="toc_ref">6.20</span> <span class="toc_entry">Cohomology of a Picard class is well-defined</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#a0000000059"><span class="toc_ref">6.21</span> <span class="toc_entry">The degree homomorphism over an extension field</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#sec:degree_base_field_invariance"><span class="toc_ref">6.22</span> <span class="toc_entry">Invariance of the degree under the base-field transition</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#sec:degree_iso_invariance"><span class="toc_ref">6.23</span> <span class="toc_entry">Invariance of the degree under isomorphisms</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#sec:degree_crossBase_seam"><span class="toc_ref">6.24</span> <span class="toc_entry">The degree seam of the same-carrier comparison</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#sec:degree_pullback"><span class="toc_ref">6.25</span> <span class="toc_entry">Multiplicativity of the degree under a finite morphism</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#a0000000060"><span class="toc_ref">6.26</span> <span class="toc_entry">The fibre twist of a map to the projective line</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#a0000000061"><span class="toc_ref">6.27</span> <span class="toc_entry">The fibre unit and the fibre Weil divisor</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#a0000000062"><span class="toc_ref">6.28</span> <span class="toc_entry">The twist lattices on the two-cover</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#a0000000063"><span class="toc_ref">6.29</span> <span class="toc_entry">Quasi-coherence of the divisor sheaves</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#a0000000064"><span class="toc_ref">6.30</span> <span class="toc_entry">Fibrewise large-twist vanishing</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#sec:effective_peeling"><span class="toc_ref">6.31</span> <span class="toc_entry">Effective witnesses and peeling</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#sec:uniformVanishing"><span class="toc_ref">6.32</span> <span class="toc_entry">The uniform vanishing bound</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#sec:thetaDegree"><span class="toc_ref">6.33</span> <span class="toc_entry">The degree of the fiber twist</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#sec:graphSectionEval"><span class="toc_ref">6.34</span> <span class="toc_entry">Evaluation at the graph section</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#sec:graphChart"><span class="toc_ref">6.35</span> <span class="toc_entry">The graph chart</span></a>
+ </li>
+<li class="">
+  <a href="chap-RiemannRoch.html#sec:graphDegree"><span class="toc_ref">6.36</span> <span class="toc_entry">The degree-one certificate of the graph class</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html"><span class="toc_ref">7</span> <span class="toc_entry">The étale plus construction of the relative Picard functor</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-PicardEtale.html#a0000000065"><span class="toc_ref">7.1</span> <span class="toc_entry">The relative Picard group as a quotient</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#a0000000066"><span class="toc_ref">7.2</span> <span class="toc_entry">Presented étale covers of an affine scheme</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#a0000000067"><span class="toc_ref">7.3</span> <span class="toc_entry">The algebra-indexed relative Picard functor</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:relPicCrossBase"><span class="toc_ref">7.4</span> <span class="toc_entry">The base-field shuffle of the relative Picard group at an affine test</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#a0000000068"><span class="toc_ref">7.5</span> <span class="toc_entry">Descent classes on an étale cover</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#a0000000069"><span class="toc_ref">7.6</span> <span class="toc_entry">The one-step étale plus</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#a0000000070"><span class="toc_ref">7.7</span> <span class="toc_entry">The group structure and the unit</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#a0000000071"><span class="toc_ref">7.8</span> <span class="toc_entry">Functoriality in the test algebra</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#a0000000072"><span class="toc_ref">7.9</span> <span class="toc_entry">The transport core: comparing the plus across curves and base fields</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#a0000000073"><span class="toc_ref">7.10</span> <span class="toc_entry">Functoriality of the plus in the curve</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:PicEtAffBaseFieldShuffle"><span class="toc_ref">7.11</span> <span class="toc_entry">The base-field shuffle of the plus</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#a0000000074"><span class="toc_ref">7.12</span> <span class="toc_entry">Separatedness I: pullback along the projection is injective</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#a0000000075"><span class="toc_ref">7.13</span> <span class="toc_entry">The Čech–Picard dictionary</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#a0000000076"><span class="toc_ref">7.14</span> <span class="toc_entry">The cocycle presentation of the dictionary, and its naturality in the base</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:awayCover_baseChange"><span class="toc_ref">7.15</span> <span class="toc_entry">Base change of a finite localization cover cocycle</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:projectionUnits"><span class="toc_ref">7.16</span> <span class="toc_entry">The projection-descent equivalence for unit sections</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:unitDescentComposite"><span class="toc_ref">7.17</span> <span class="toc_entry">Descent in stages for unit \(1\)-cocycles</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:cechPic_naturality"><span class="toc_ref">7.18</span> <span class="toc_entry">Naturality of the Čech–Picard dictionary in the affine scheme</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:etaleSeparatedness"><span class="toc_ref">7.19</span> <span class="toc_entry">The class-level coherence seed for étale separatedness</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:amitsurCochain"><span class="toc_ref">7.20</span> <span class="toc_entry">The Amitsur toolkit for étale separatedness</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:cochainPullback"><span class="toc_ref">7.21</span> <span class="toc_entry">The pullback calculus for unit cochains</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:coherentWitness"><span class="toc_ref">7.22</span> <span class="toc_entry">The Amitsur-coherent Čech witness</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:specDegeneracy"><span class="toc_ref">7.23</span> <span class="toc_entry">The simplicial degeneracies of the tensor tower</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:witnessCorrection"><span class="toc_ref">7.24</span> <span class="toc_entry">The trivialization-corrected witness cochain</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:witnessComponents"><span class="toc_ref">7.25</span> <span class="toc_entry">The glued witness components on the tensor square</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:witnessAway"><span class="toc_ref">7.26</span> <span class="toc_entry">Section rings on basic opens as two-base localizations</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:witnessTransport"><span class="toc_ref">7.27</span> <span class="toc_entry">Transport of the simplicial maps through the two-base identifications</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:witnessAssembly"><span class="toc_ref">7.28</span> <span class="toc_entry">The composite descent unit of the étale-separatedness assembly</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:sectionsDescent"><span class="toc_ref">7.29</span> <span class="toc_entry">Faithfully flat descent of sections along the base change of the curve product</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:effectivityPieces"><span class="toc_ref">7.30</span> <span class="toc_entry">Saturated affine pieces of the base-change cover</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:kernelDescentUnit"><span class="toc_ref">7.31</span> <span class="toc_entry">The descent unit of a killed Čech class</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:descentClassRep"><span class="toc_ref">7.32</span> <span class="toc_entry">The Čech representative of a descended Picard class</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:kernelCobounding"><span class="toc_ref">7.33</span> <span class="toc_entry">The cobounding units on an affine chart</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:cechKernelLemma"><span class="toc_ref">7.34</span> <span class="toc_entry">The Čech kernel lemma and the close of étale separatedness</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#a0000000077"><span class="toc_ref">7.35</span> <span class="toc_entry">Unit sections across an open immersion</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#a0000000078"><span class="toc_ref">7.36</span> <span class="toc_entry">Decomposition of the Čech Picard group along a clopen partition</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#a0000000079"><span class="toc_ref">7.37</span> <span class="toc_entry">The relative Picard group of a finite product of test algebras</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#a0000000080"><span class="toc_ref">7.38</span> <span class="toc_entry">Zariski separation of the étale plus construction</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#a0000000081"><span class="toc_ref">7.39</span> <span class="toc_entry">Restriction of relative Picard classes to an étale cover is injective</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#a0000000082"><span class="toc_ref">7.40</span> <span class="toc_entry">Zariski gluing of the étale plus construction</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#a0000000083"><span class="toc_ref">7.41</span> <span class="toc_entry">The étale-sheafified relative Picard functor: the affine-opens limit</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#a0000000084"><span class="toc_ref">7.42</span> <span class="toc_entry">Functoriality by the unique-pullback-value characterization</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:rigidification"><span class="toc_ref">7.43</span> <span class="toc_entry">Rigidification along a section of the projection</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:normalizedComparison"><span class="toc_ref">7.44</span> <span class="toc_entry">The \(\sigma \)-normalized comparison cochain</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:comparisonCoherence"><span class="toc_ref">7.45</span> <span class="toc_entry">Coherence and uniqueness of the \(\sigma \)-normalized comparison</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:effectivityDescentDatum"><span class="toc_ref">7.46</span> <span class="toc_entry">The per-piece descent datum</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:effectivityComparisonUnit"><span class="toc_ref">7.47</span> <span class="toc_entry">The per-piece comparison unit and its descended class</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:effectivityInvertibleAvoid"><span class="toc_ref">7.48</span> <span class="toc_entry">Trivializing an invertible module away from finitely many primes</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:effectivityMoving"><span class="toc_ref">7.49</span> <span class="toc_entry">The moving lemma: pieces on which the class trivializes</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:effectivityTrivialization"><span class="toc_ref">7.50</span> <span class="toc_entry">From subscheme triviality to a trimmed trivializing cochain</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:effectivityTwist"><span class="toc_ref">7.51</span> <span class="toc_entry">Twisting a piece trivialization</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:effectivityOverlap"><span class="toc_ref">7.52</span> <span class="toc_entry">Trivialization independence and flat trivializations</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:effectivitySplice"><span class="toc_ref">7.53</span> <span class="toc_entry">The refinement splice</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:effectivityClose"><span class="toc_ref">7.54</span> <span class="toc_entry">The \((C2)\) effectivity theorem and the surjectivity close</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#a0000000085"><span class="toc_ref">7.55</span> <span class="toc_entry">Divisor classes from local equations</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#a0000000086"><span class="toc_ref">7.56</span> <span class="toc_entry">Pullback of a local-equation system</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#a0000000087"><span class="toc_ref">7.57</span> <span class="toc_entry">The point divisor and the class of a Weil divisor</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#a0000000088"><span class="toc_ref">7.58</span> <span class="toc_entry">Meromorphic presentations of Čech Picard classes</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#a0000000089"><span class="toc_ref">7.59</span> <span class="toc_entry">The divisor of a meromorphic presentation</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#a0000000090"><span class="toc_ref">7.60</span> <span class="toc_entry">The calculus of meromorphic presentations</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#a0000000091"><span class="toc_ref">7.61</span> <span class="toc_entry">The class law: equal divisors give equal classes</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#a0000000092"><span class="toc_ref">7.62</span> <span class="toc_entry">Extraction: equal classes differ by a principal divisor</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#a0000000093"><span class="toc_ref">7.63</span> <span class="toc_entry">The point presentation</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#a0000000094"><span class="toc_ref">7.64</span> <span class="toc_entry">The Čech Picard class of a Weil divisor</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#a0000000095"><span class="toc_ref">7.65</span> <span class="toc_entry">The point-divisor class map and the meromorphic class map coincide</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:picEtUnit"><span class="toc_ref">7.66</span> <span class="toc_entry">The unit of the étale sheafification</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:degAff"><span class="toc_ref">7.67</span> <span class="toc_entry">The degree of a plus class</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:pic0"><span class="toc_ref">7.68</span> <span class="toc_entry">The degree at field points and the degree-zero Picard functor</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#a0000000096"><span class="toc_ref">7.69</span> <span class="toc_entry">Functoriality of the étale-sheafified Picard functor in the curve</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#a0000000097"><span class="toc_ref">7.70</span> <span class="toc_entry">Degree-zero preservation under the curve transport</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:degreeSeam"><span class="toc_ref">7.71</span> <span class="toc_entry">The degree seam at field points</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:fieldPointMatching"><span class="toc_ref">7.72</span> <span class="toc_entry">Field points across a base-field extension</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:pic0Theta"><span class="toc_ref">7.73</span> <span class="toc_entry">The base-field comparison of the degree-zero Picard functor</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:thetaShift"><span class="toc_ref">7.74</span> <span class="toc_entry">The \(\theta \)-family and the multiplication shift</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:pic0ZariskiSheaf"><span class="toc_ref">7.75</span> <span class="toc_entry">The Zariski sheaf property of the degree-zero functor on the slice</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:coverBridge"><span class="toc_ref">7.76</span> <span class="toc_entry">The morphism-form cover bridge</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:sigmaExtension"><span class="toc_ref">7.77</span> <span class="toc_entry">The \(\Sigma \)-extension and the big-site sheaf</span></a>
+ </li>
+<li class="">
+  <a href="chap-PicardEtale.html#sec:abelElement"><span class="toc_ref">7.78</span> <span class="toc_entry">The Abel element</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-DivisorScheme.html"><span class="toc_ref">8</span> <span class="toc_entry">The divisor scheme and the representability of \(\mathrm{Pic}^0\)</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-DivisorScheme.html#sec:diveq"><span class="toc_ref">8.1</span> <span class="toc_entry">Divisor equality of local-equation systems</span></a>
+ </li>
+<li class="">
+  <a href="chap-DivisorScheme.html#sec:divfam"><span class="toc_ref">8.2</span> <span class="toc_entry">The relative divisor functor of the curve</span></a>
+ </li>
+<li class="">
+  <a href="chap-DivisorScheme.html#sec:divfamzar"><span class="toc_ref">8.3</span> <span class="toc_entry">The Zariski-local certificate</span></a>
+ </li>
+<li class="">
+  <a href="chap-DivisorScheme.html#sec:divscheme"><span class="toc_ref">8.4</span> <span class="toc_entry">The window embedding and the divisor scheme</span></a>
+ </li>
+<li class="">
+  <a href="chap-DivisorScheme.html#sec:divclassify"><span class="toc_ref">8.5</span> <span class="toc_entry">The classifying morphism</span></a>
+ </li>
+<li class="">
+  <a href="chap-DivisorScheme.html#sec:divrep"><span class="toc_ref">8.6</span> <span class="toc_entry">Affine representability, and what remains</span></a>
+ </li>
+<li class="">
+  <a href="chap-DivisorScheme.html#sec:rankOneAbelDescent"><span class="toc_ref">8.7</span> <span class="toc_entry">The rank-one Abel chart and descent</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-DivisorScheme.html#a0000000098"><span class="toc_ref">8.7.1</span> <span class="toc_entry">The represented sources and the fibre obstruction</span></a>
+ </li>
+<li class="">
+  <a href="chap-DivisorScheme.html#a0000000099"><span class="toc_ref">8.7.2</span> <span class="toc_entry">The intrinsic rank-one locus</span></a>
+ </li>
+<li class="">
+  <a href="chap-DivisorScheme.html#a0000000100"><span class="toc_ref">8.7.3</span> <span class="toc_entry">The canonical divisor and the Abel isomorphism</span></a>
+ </li>
+<li class="">
+  <a href="chap-DivisorScheme.html#a0000000101"><span class="toc_ref">8.7.4</span> <span class="toc_entry">The separably closed cover</span></a>
+ </li>
+<li class="">
+  <a href="chap-DivisorScheme.html#a0000000102"><span class="toc_ref">8.7.5</span> <span class="toc_entry">Finite Galois descent and the Jacobian datum</span></a>
+ </li>
+
+  </ul>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Tangent.html"><span class="toc_ref">9</span> <span class="toc_entry">The tangent space of the Picard functor: the truncated exponential</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-Tangent.html#a0000000103"><span class="toc_ref">9.1</span> <span class="toc_entry">Units of the dual numbers and the truncated exponential</span></a>
+ </li>
+<li class="">
+  <a href="chap-Tangent.html#a0000000104"><span class="toc_ref">9.2</span> <span class="toc_entry">Dual numbers under base change</span></a>
+ </li>
+<li class="">
+  <a href="chap-Tangent.html#a0000000105"><span class="toc_ref">9.3</span> <span class="toc_entry">The two-chart Čech unit-cocycle engine</span></a>
+ </li>
+<li class="">
+  <a href="chap-Tangent.html#a0000000106"><span class="toc_ref">9.4</span> <span class="toc_entry">\(H^1\) as the \(\varepsilon \)-kernel on a two-cover</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-AbelianVariety.html"><span class="toc_ref">10</span> <span class="toc_entry">The rigidity lemma</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-AbelianVariety.html#a0000000107"><span class="toc_ref">10.1</span> <span class="toc_entry">Slices in a category with finite products</span></a>
+ </li>
+<li class="">
+  <a href="chap-AbelianVariety.html#a0000000108"><span class="toc_ref">10.2</span> <span class="toc_entry">Constancy of morphisms into affine opens</span></a>
+ </li>
+<li class="">
+  <a href="chap-AbelianVariety.html#sec:points_products"><span class="toc_ref">10.3</span> <span class="toc_entry">Points and products</span></a>
+ </li>
+<li class="">
+  <a href="chap-AbelianVariety.html#a0000000109"><span class="toc_ref">10.4</span> <span class="toc_entry">The rigidity lemma</span></a>
+ </li>
+<li class="">
+  <a href="chap-AbelianVariety.html#a0000000110"><span class="toc_ref">10.5</span> <span class="toc_entry">Pointed morphisms of group schemes</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Albanese.html"><span class="toc_ref">11</span> <span class="toc_entry">Rational maps into group varieties</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-Albanese.html#sec:ratmaps"><span class="toc_ref">11.1</span> <span class="toc_entry">Rational maps: precomposition, pairing, function fields</span></a>
+ </li>
+<li class="">
+  <a href="chap-Albanese.html#sec:difference_map"><span class="toc_ref">11.2</span> <span class="toc_entry">The difference map</span></a>
+ </li>
+<li class="">
+  <a href="chap-Albanese.html#sec:pole_purity"><span class="toc_ref">11.3</span> <span class="toc_entry">Purity of the polar locus</span></a>
+ </li>
+<li class="">
+  <a href="chap-Albanese.html#sec:milne33_substeps"><span class="toc_ref">11.4</span> <span class="toc_entry">Two substeps of Milne’s Lemma 3.3</span></a>
+ </li>
+<li class="">
+  <a href="chap-Albanese.html#sec:smooth_stalks"><span class="toc_ref">11.5</span> <span class="toc_entry">Smooth varieties: charts, reducedness, regular stalks, discrete valuation rings</span></a>
+ </li>
+<li class="">
+  <a href="chap-Albanese.html#sec:indeterminacy"><span class="toc_ref">11.6</span> <span class="toc_entry">The indeterminacy locus and Milne’s Theorem 3.1</span></a>
+ </li>
+<li class="">
+  <a href="chap-Albanese.html#sec:cm_equidim"><span class="toc_ref">11.7</span> <span class="toc_entry">Cohen–Macaulay equidimensionality and kernel generation</span></a>
+ </li>
+<li class="">
+  <a href="chap-Albanese.html#sec:milne33_transport"><span class="toc_ref">11.8</span> <span class="toc_entry">Milne’s Lemma 3.3: rows, diagonal triviality, and the codimension-one transport</span></a>
+ </li>
+<li class="">
+  <a href="chap-Albanese.html#sec:extension"><span class="toc_ref">11.9</span> <span class="toc_entry">The extension theorem</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Jacobian.html"><span class="toc_ref">12</span> <span class="toc_entry">The Jacobian datum</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-Jacobian.html#sec:jacobian_datum"><span class="toc_ref">12.1</span> <span class="toc_entry">The representability datum</span></a>
+ </li>
+<li class="">
+  <a href="chap-Jacobian.html#sec:jacobian_datum_functoriality"><span class="toc_ref">12.2</span> <span class="toc_entry">Functoriality of the datum in the curve</span></a>
+ </li>
+<li class="">
+  <a href="chap-Jacobian.html#sec:group_separated"><span class="toc_ref">12.3</span> <span class="toc_entry">Group schemes are separated</span></a>
+ </li>
+<li class="">
+  <a href="chap-Jacobian.html#sec:translations"><span class="toc_ref">12.4</span> <span class="toc_entry">Translations</span></a>
+ </li>
+<li class="">
+  <a href="chap-Jacobian.html#sec:abel_source"><span class="toc_ref">12.5</span> <span class="toc_entry">The Abel source: properness and geometric irreducibility</span></a>
+ </li>
+<li class="">
+  <a href="chap-Jacobian.html#sec:jacobian_datum_basechange"><span class="toc_ref">12.6</span> <span class="toc_entry">Base change of the representability datum</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li ><a href="dep_graph_document.html">Dependency graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<h1 id="chap:Challenge">1 The Jacobian of a smooth proper curve</h1>
+
+<p>Throughout, \(k\) is a field and \(C\) a <em>smooth curve</em> over \(k\): a geometrically irreducible, smooth \(k\)-scheme of relative dimension one, proper over \(k\). We write \(C \to \operatorname{Spec}k\) for its structure morphism. This chapter states the goal of the project — the genus, the Jacobian, the Abel–Jacobi map, and the universal property that characterizes the Jacobian as the Albanese variety of \(C\). It is the mathematical counterpart of the statement file <span class="ttfamily">AlgebraicJacobian/Challenge.lean</span>. </p>
+<p><em>Provenance.</em> Each node below should carry a <code class="verbatim">\source{...}</code> anchor to the reference it is read from once that reference has been consulted; anchors are added during the rebuild, never guessed. </p>
+<h1 id="a0000000002">1.1 Genus</h1>
+<div class="definition_thmwrapper theorem-style-definition" id="def:genus">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
+    </span>
+    <span class="definition_thmlabel">1</span>
+    <span class="definition_thmtitle">Genus</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-Challenge.html#def:genus">#</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-Cohomology.html#def:moduleKSheaf">Definition 305</a></li>
+          
+          <li><a href="chap-Cohomology.html#def:HModule">Definition 284</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.genus" class="lean_decl">AlgebraicGeometry.genus</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="definition_thmcontent">
+  <p>    The <em>genus</em> of a smooth proper curve \(C\) over \(k\) is </p>
+<div class="displaymath" id="a0000000003">
+  \[  g(C) \; =\;  \dim _k H^1\! \bigl(C, \mathcal{O}_{C}\bigr),  \]
+</div>
+<p> the \(k\)-dimension of the first cohomology group of the structure sheaf, viewed as a sheaf of \(k\)-modules on the small Zariski site of \(C\) (Definition&#160;<a href="chap-Cohomology.html#def:moduleKSheaf">305</a>), with cohomology the \(\operatorname{Ext}\)-groups from the constant sheaf (Definition&#160;<a href="chap-Cohomology.html#def:HModule">284</a>). </p>
+
+  </div>
+</div>
+<h1 id="a0000000004">1.2 The Jacobian as an abelian variety</h1>
+<div class="definition_thmwrapper theorem-style-definition" id="def:jacobian">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
+    </span>
+    <span class="definition_thmlabel">2</span>
+    <span class="definition_thmtitle">Jacobian</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-Challenge.html#def:jacobian">#</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-PicardEtale.html#def:pic0Functor">Definition 1038</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Jacobian" class="lean_decl">AlgebraicGeometry.Jacobian</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="definition_thmcontent">
+  <p>    kleiman-picard The <em>Jacobian</em> \(\mathrm{Jac}(C)\) of a smooth proper curve \(C\) over \(k\) is the identity component \(\operatorname{Pic}^0_{C/k}\) of the relative Picard scheme of \(C\) over \(k\): the \(k\)-scheme representing the degree-zero subfunctor of the étale-sheafified relative Picard functor. </p>
+
+  </div>
+</div>
+<div class="proposition_thmwrapper theorem-style-plain" id="prop:jacobian_grpobj">
+  <div class="proposition_thmheading">
+    <span class="proposition_thmcaption">
+    Proposition
+    </span>
+    <span class="proposition_thmlabel">3</span>
+    <span class="proposition_thmtitle">Group scheme structure</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-Challenge.html#prop:jacobian_grpobj">#</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-Challenge.html#def:jacobian">Definition 2</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Jacobian.instGrpObj" class="lean_decl">AlgebraicGeometry.Jacobian.instGrpObj</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="proposition_thmcontent">
+  <p>    \(\mathrm{Jac}(C)\) is a commutative group scheme over \(k\), with multiplication induced by the tensor product of line bundles. </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:jacobian_smooth">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">4</span>
+    <span class="theorem_thmtitle">Smoothness of the Jacobian</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-Challenge.html#thm:jacobian_smooth">#</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-Challenge.html#def:genus">Definition 1</a></li>
+          
+          <li><a href="chap-Challenge.html#def:jacobian">Definition 2</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Jacobian.smoothOfRelativeDimension_genus" class="lean_decl">AlgebraicGeometry.Jacobian.smoothOfRelativeDimension_genus</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>    \(\mathrm{Jac}(C)\) is smooth over \(k\) of relative dimension \(g(C)\). </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:jacobian_proper">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">5</span>
+    <span class="theorem_thmtitle">Properness of the Jacobian</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-Challenge.html#thm:jacobian_proper">#</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-Challenge.html#def:jacobian">Definition 2</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Jacobian.instIsProper" class="lean_decl">AlgebraicGeometry.Jacobian.instIsProper</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>    \(\mathrm{Jac}(C)\) is proper over \(k\). </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:jacobian_geomirred">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">6</span>
+    <span class="theorem_thmtitle">Geometric irreducibility of the Jacobian</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-Challenge.html#thm:jacobian_geomirred">#</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-Challenge.html#def:jacobian">Definition 2</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Jacobian.instGeometricallyIrreducible" class="lean_decl">AlgebraicGeometry.Jacobian.instGeometricallyIrreducible</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>    \(\mathrm{Jac}(C)\) is geometrically irreducible over \(k\). </p>
+
+  </div>
+</div>
+<p>In particular \(\mathrm{Jac}(C)\) is an abelian variety over \(k\) of dimension \(g(C)\). </p>
+<h1 id="a0000000005">1.3 The Abel–Jacobi map and the universal property</h1>
+<div class="definition_thmwrapper theorem-style-definition" id="def:ofCurve">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
+    </span>
+    <span class="definition_thmlabel">7</span>
+    <span class="definition_thmtitle">Abel–Jacobi map</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-Challenge.html#def:ofCurve">#</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-Challenge.html#def:jacobian">Definition 2</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Jacobian.ofCurve" class="lean_decl">AlgebraicGeometry.Jacobian.ofCurve</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="definition_thmcontent">
+  <p>    For a \(k\)-rational point \(P : \operatorname{Spec}k \to C\), the <em>Abel–Jacobi map</em> \(\varphi _P : C \to \mathrm{Jac}(C)\) sends a point \(Q\) to the class of the line bundle \(\mathcal{O}_{C}(Q - P)\). </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:comp_ofCurve">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">8</span>
+    <span class="lemma_thmtitle">Base point maps to the origin</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-Challenge.html#lem:comp_ofCurve">#</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-Challenge.html#def:ofCurve">Definition 7</a></li>
+          
+          <li><a href="chap-Challenge.html#prop:jacobian_grpobj">Proposition 3</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Jacobian.comp_ofCurve" class="lean_decl">AlgebraicGeometry.Jacobian.comp_ofCurve</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    The Abel–Jacobi map \(\varphi _P\) sends the base point \(P\) to the neutral element of \(\mathrm{Jac}(C)\): \(\varphi _P \circ P = 0\). </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:exists_unique_ofCurve_comp">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">9</span>
+    <span class="theorem_thmtitle">Universal property of the Jacobian</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-Challenge.html#thm:exists_unique_ofCurve_comp">#</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-Challenge.html#def:ofCurve">Definition 7</a></li>
+          
+          <li><a href="chap-Challenge.html#lem:comp_ofCurve">Lemma 8</a></li>
+          
+          <li><a href="chap-Challenge.html#prop:jacobian_grpobj">Proposition 3</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Jacobian.exists_unique_ofCurve_comp" class="lean_decl">AlgebraicGeometry.Jacobian.exists_unique_ofCurve_comp</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>    abelian-varieties:page-0110 \(\mathrm{Jac}(C)\) is the Albanese variety of \(C\): for every abelian variety \(A\) over \(k\) and every morphism \(f : C \to A\) with \(f \circ P = 0\), there is a unique homomorphism of group schemes \(g : \mathrm{Jac}(C) \to A\) such that \(f = g \circ \varphi _P\). Milne’s Proposition&#160;6.1 proves this under the standing hypothesis \(g(C){\gt}0\), with \(P\) a \(k\)-rational point. The statement here includes genus zero; that case requires a separate argument and is not supplied by the cited proposition alone. </p>
+
+  </div>
+</div>
+
+</div> <!--main-text -->
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <svg  id="showmore-minus" class="icon icon-eye-minus showmore"><use xlink:href="symbol-defs.svg#icon-eye-minus"></use></svg>
+
+  <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
+
+  <a href="index.html" title="AlgebraicJacobian"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="index.html" title="AlgebraicJacobian"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+  <a href="chap-BaseChange.html" title="Functoriality and base change of fields"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+<script type="text/javascript" src="js/js.cookie.min.js"></script>
+<script type="text/javascript" src="js/showmore.js"></script>
+</body>
+</html>

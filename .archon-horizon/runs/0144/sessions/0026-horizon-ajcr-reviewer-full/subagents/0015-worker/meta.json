@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Locke",
+  "agent_path": "/root/qproj_finite_in_affine_port",
+  "agent_role": "worker",
+  "depth": 1,
+  "model": "gpt-5.6-terra",
+  "name": "worker",
+  "native_subagent_id": "019fff09-6693-7703-a3c1-2ad499321081",
+  "ok": true,
+  "parent_session": "0026-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "worker",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 2237885,
+    "tokens_out": 10892
+  }
+}
