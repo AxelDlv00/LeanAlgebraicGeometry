@@ -221,6 +221,7 @@ noncomputable def canonicalRankOneRepresenterTrans :
   naturality T T' f := by
     ext lam
     apply Subtype.ext
+    symm
     change (yoneda.obj (divRepAffGenusScheme C)).map f
         ((divFunctorAff_genus_representableBy C).toIso.inv.app T
           ((canonicalRankOneSectionTrans (C := C)).app T lam).1) =
@@ -231,8 +232,7 @@ noncomputable def canonicalRankOneRepresenterTrans :
       ← (divFunctorAff_genus_representableBy C).toIso.inv.naturality]
     exact congrArg
       (fun s => (divFunctorAff_genus_representableBy C).toIso.inv.app T' s)
-      (ConcreteCategory.congr_hom
-        ((canonicalRankOneSectionTrans (C := C)).naturality f) lam)
+      (canonicalRankOneSection_naturality f.unop lam)
 
 theorem canonicalRankOneRepresenterTrans_abel
     {T : (Over (Spec (.of k)))ᵒᵖ}
@@ -254,6 +254,13 @@ noncomputable def canonicalRankOneEvaluationDivisorData :
     ext Y x
     rcases x with ⟨a, lam⟩
     exact congrArg (Sigma.mk a) (canonicalRankOneRepresenterTrans_abel lam)
+
+/-- The canonical evaluation divisor is inverse to the rank-one Abel map on the big site. -/
+noncomputable def canonicalRankOneAbelIso :
+    rankOneDivisorLocus (C := C) (pi := divRepAffP1Map C) ≅
+      rankOneLocus (C := C) (pi := divRepAffP1Map C) :=
+  (canonicalRankOneEvaluationDivisorData (C := C)).rankOneAbelIso
+    (divRepAffP1Map C)
 
 end
 
