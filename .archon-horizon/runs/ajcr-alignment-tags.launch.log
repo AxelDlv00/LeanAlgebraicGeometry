@@ -40,3 +40,16 @@ Starting Run (ID: 0145) - 8 rounds ───────────────
 [HORIZON] ›  Started task: ajcr-alignment-tags
 [HORIZON] ›  Finished task: ajcr-alignment-tags (queued)
 [HORIZON] ✓ Run 0145 finished.
+                                   Run                                   
+┏━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Name    ┃ Status ┃ Detail                                             ┃
+┡━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ round 0 │ done   │ ran ajcr-alignment-tags; blocked -; not runnable - │
+│ round 1 │ done   │ ran ajcr-alignment-tags; blocked -; not runnable - │
+│ round 2 │ done   │ ran ajcr-alignment-tags; blocked -; not runnable - │
+│ round 3 │ done   │ ran ajcr-alignment-tags; blocked -; not runnable - │
+│ round 4 │ done   │ ran ajcr-alignment-tags; blocked -; not runnable - │
+│ round 5 │ done   │ ran ajcr-alignment-tags; blocked -; not runnable - │
+│ round 6 │ done   │ ran ajcr-alignment-tags; blocked -; not runnable - │
+│ round 7 │ done   │ ran ajcr-alignment-tags; blocked -; not runnable - │
+└─────────┴────────┴────────────────────────────────────────────────────┘

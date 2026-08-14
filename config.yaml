@@ -7,9 +7,9 @@ workspace:
     allow_launch_runs: true
     max_parallel_sessions: 3
     accounts:
-    - name: codex-frenzy
+    - name: codex-temp
       harness: codex
-      config_dir: /home/axel/.codex-frenzy
+      config_dir: /home/axel/.codex-temp
       notes: Use for the AJCR review lanes; keep full project builds serialized.
   horizon_agent:
     harness: codex
@@ -54,7 +54,7 @@ harnesses:
     model: gpt-5.6-sol
     options:
       effort: ultra
-      config_dir: /home/axel/.codex-frenzy
+      config_dir: /home/axel/.codex-temp
 github:
   enabled: true
   repo: AxelDlv00/LeanAlgebraicGeometry-Horizon
