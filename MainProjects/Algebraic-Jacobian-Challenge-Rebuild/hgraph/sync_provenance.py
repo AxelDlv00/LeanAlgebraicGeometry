@@ -514,7 +514,7 @@ def _audit(root: Path, path_specs: list[str], mirror_hgraph: bool) -> Audit:
     # because tags on TeX are the source metadata that hgraph exposes.
     tex_tags: dict[str, tuple[str, bool]] = {}
     for node_id, record in nodes.items():
-        if record.meta.get("type") != "tex":
+        if record.meta.get("type") != "tex" or record.meta.get("stale") is True:
             continue
         primary, check, errors = _source_tags(record)
         audit.errors.extend(errors)
@@ -544,6 +544,8 @@ def _audit(root: Path, path_specs: list[str], mirror_hgraph: bool) -> Audit:
         source, target = nodes[source_id], nodes[target_id]
         if source.meta.get("type") != "tex" or target.meta.get("type") != "lean":
             audit.errors.append(f"{edge.path}: formalizes endpoints are not tex -> lean")
+            continue
+        if source.meta.get("stale") is True or target.meta.get("stale") is True:
             continue
         if source_id not in tex_tags:
             continue
