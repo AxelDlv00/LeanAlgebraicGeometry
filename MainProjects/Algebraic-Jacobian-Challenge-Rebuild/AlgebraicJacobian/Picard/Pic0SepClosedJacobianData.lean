@@ -108,6 +108,31 @@ theorem quasiCompact_pic0SepClosedRepresenter (C : Over (Spec (.of k)))
     (pic0_sepClosed_representableBy (C := C)).1.hom
     (surjective_abelToPic0SepClosedRepresenter C)
 
+/-- The exact separably closed Picard representative is finitely presented over the field. -/
+theorem locallyOfFinitePresentation_pic0_sepClosed_representableBy
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIrreducible C.hom] [IsSepClosed k] :
+    LocallyOfFinitePresentation
+      (pic0_sepClosed_representableBy (C := C)).1.hom :=
+  LocallyOfFinitePresentation.iff_locallyOfFiniteType.mpr
+    (locallyOfFiniteType_pic0_sepClosed_representableBy (C := C))
+
+/-- The exact separably closed Picard representing scheme is quasi-separated. -/
+theorem quasiSeparatedSpace_pic0SepClosedRepresenter (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIrreducible C.hom] [IsSepClosed k] :
+    QuasiSeparatedSpace
+      (pic0_sepClosed_representableBy (C := C)).1.left := by
+  letI : LocallyOfFiniteType
+      (pic0_sepClosed_representableBy (C := C)).1.hom :=
+    locallyOfFiniteType_pic0_sepClosed_representableBy (C := C)
+  letI : IsLocallyNoetherian
+      (pic0_sepClosed_representableBy (C := C)).1.left :=
+    LocallyOfFiniteType.isLocallyNoetherian
+      (pic0_sepClosed_representableBy (C := C)).1.hom
+  infer_instance
+
 /-- The separably closed representability theorem, recorded in the finite-level Picard datum
 shape at the same field. -/
 noncomputable def picRepDatumSepClosed (C : Over (Spec (.of k)))
