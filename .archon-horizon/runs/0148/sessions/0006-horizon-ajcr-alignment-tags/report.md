@@ -1,0 +1,1 @@
+The alignment utility is now clean on the full current graph: 2,114 public target declarations, 1,931 pending doc edits, 3,437 taggable current nodes, and exactly two private exclusions. I’m committing the validated utility as its own unit before it touches any source.

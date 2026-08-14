@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: LinearMap.quotRangeBaseChangeEquiv
 type: lean
-updated: '2026-08-14T19:11:11'
+updated: '2026-08-14T20:11:51'
 ---
 noncomputable def quotRangeBaseChangeEquiv :
     A ⊗[R] (N ⧸ LinearMap.range f) ≃ₗ[A]
@@ -22,4 +22,5 @@ noncomputable def quotRangeBaseChangeEquiv :
     (((LinearMap.range f).mkQ.baseChange A).quotKerEquivOfSurjective
       (surjective_mkQ_baseChange A f))).symm
 
+/-- Provenance: CUSTOM. -/
 @[simp]
