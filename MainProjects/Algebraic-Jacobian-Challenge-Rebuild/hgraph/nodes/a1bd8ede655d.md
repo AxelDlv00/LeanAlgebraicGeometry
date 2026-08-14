@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 286
 title: The adjunction, linearly
 type: tex
-updated: '2026-07-17T16:57:15'
+updated: '2026-08-14T19:11:14'
 ---
-Assume the category \(\mathcal C\) has a terminal object \(\top\). For every \(R\)-module
+\provenancetag{CUSTOM}
+  
+  
+  Assume the category \(\mathcal C\) has a terminal object \(\top\). For every \(R\)-module
   \(M\) and every sheaf \(F\) of \(R\)-modules there is an \(R\)-linear equivalence
   \[
     \Hom\bigl(\underline{M},\, F\bigr) \;\cong\; \Hom_R\bigl(M,\, F(\top)\bigr),

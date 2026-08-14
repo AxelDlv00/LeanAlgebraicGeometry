@@ -9,9 +9,13 @@ lean_status: lean_ok
 order: 298
 title: Functoriality in the coefficient sheaf
 type: tex
-updated: '2026-07-17T16:57:15'
+updated: '2026-08-14T19:11:14'
 ---
-A morphism of sheaves of \(R\)-modules \(f : F \to G\) induces, for every object \(U\) of
+\provenancetag{CUSTOM}
+  
+  
+  
+  A morphism of sheaves of \(R\)-modules \(f : F \to G\) induces, for every object \(U\) of
   \(\mathcal C\) and every \(n\), an \(R\)-linear map \(H'^n(U, F) \to H'^n(U, G)\),
   \(x \mapsto x \cdot f\): composition (Yoneda product) with the degree-zero class of \(f\), i.e.\
   covariant functoriality of \(\Ext^n(R[U], -)\) in the coefficient variable. This is the

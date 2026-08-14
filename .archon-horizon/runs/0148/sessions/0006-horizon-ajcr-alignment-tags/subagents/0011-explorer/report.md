@@ -1,0 +1,1 @@
+The duplicate scan found two formalizes-linked names declared in multiple files and confirmed the three hgraph doc snapshots are stale exactly at the reported marker sites. A second direct thread (I-1992) has arrived; I’m acknowledging it before finishing the read-only report.

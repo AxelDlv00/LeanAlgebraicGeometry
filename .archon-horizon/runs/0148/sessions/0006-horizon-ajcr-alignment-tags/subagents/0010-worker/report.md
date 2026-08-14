@@ -1,0 +1,1 @@
+A live build-triage conversation just arrived about marker placement after standalone attributes. I’m acknowledging it now; my utility will explicitly preserve declaration attributes by inserting a missing docstring before the declaration line, while existing docstrings are edited only inside their comment block.

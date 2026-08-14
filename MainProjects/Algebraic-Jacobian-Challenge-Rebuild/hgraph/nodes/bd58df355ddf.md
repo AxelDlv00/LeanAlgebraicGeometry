@@ -9,9 +9,13 @@ lean_status: lean_ok
 order: 197
 title: The collapse of the assembled unit is the descent unit of the cover cocycle
 type: tex
-updated: '2026-07-17T16:57:15'
+updated: '2026-08-14T19:11:14'
 ---
-Let \((c_{ij})\), \(c_{ij} \in T_{ij}^{\times}\), be a cover cocycle for \(f\), and suppose
+\provenancetag{CUSTOM}
+  
+  
+  
+  Let \((c_{ij})\), \(c_{ij} \in T_{ij}^{\times}\), be a cover cocycle for \(f\), and suppose
   the componentwise units \(w_{ij}\) collapse onto it: \(\kappa_{ij}(w_{ij}) = c_{ij}\) for
   all \(i, j\). Then the collapse of the composite descent unit along the tower
   \(A \to B \to P\) is the descent unit of \(c\):

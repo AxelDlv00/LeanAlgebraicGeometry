@@ -50,7 +50,11 @@ variable {R : Type u} [CommRing R]
 /-- **Finite-projective duality (bijectivity of the contraction map).** For a finite
 projective `R`-module `M`, the natural contraction map `dualTensorHom : M^∨ ⊗ N → Hom(M, N)`
 is bijective. Proved by transporting the finite-free equivalence `dualTensorHomEquiv` along a
-retract `M → Fⁿ → M` (`Module.Finite.exists_comp_eq_id_of_projective`). -/
+retract `M → Fⁿ → M` (`Module.Finite.exists_comp_eq_id_of_projective`). 
+
+
+ * Provenance: CUSTOM.
+-/
 theorem bijective_dualTensorHom_of_projective
     (M : Type v) [AddCommGroup M] [Module R M] [Module.Finite R M] [Module.Projective R M]
     (N : Type w) [AddCommGroup N] [Module R N] :
@@ -95,7 +99,11 @@ theorem bijective_dualTensorHom_of_projective
 
 /-- **Finite-projective duality (`dualTensorHom` form).** For a finite projective
 `R`-module `M`, the natural contraction map `M^∨ ⊗ N → Hom(M, N)` is an equivalence — the
-finite-projective upgrade of the finite-free `dualTensorHomEquiv`. -/
+finite-projective upgrade of the finite-free `dualTensorHomEquiv`. 
+
+
+ * Provenance: CUSTOM.
+-/
 noncomputable def dualTensorHomEquivProjective
     (M : Type v) [AddCommGroup M] [Module R M] [Module.Finite R M] [Module.Projective R M]
     (N : Type w) [AddCommGroup N] [Module R N] :
@@ -108,7 +116,11 @@ noncomputable def dualTensorHomEquivProjective
 `M ⊗[R] P ≃ₗ[R] Hom(M^∨, P)`; i.e. `H⁰ ⊗ P ≅ Hom(H⁰^∨, P)`. This is the representing-functor
 bookkeeping consumed by the `th:LinSys` step of the datum (worksheet §1.2, §4.5). It is
 obtained from `dualTensorHomEquivProjective` at `Module.Dual R M` together with the
-reflexivity `M ≅ M^∨∨`. -/
+reflexivity `M ≅ M^∨∨`. 
+
+
+ * Provenance: ADAPTED.
+-/
 noncomputable def tensorDualHomEquiv
     (M : Type v) [AddCommGroup M] [Module R M] [Module.Finite R M] [Module.Projective R M]
     (P : Type w) [AddCommGroup P] [Module R P] :

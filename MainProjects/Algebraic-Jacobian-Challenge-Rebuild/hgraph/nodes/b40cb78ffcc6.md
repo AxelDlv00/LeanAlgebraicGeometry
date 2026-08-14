@@ -10,9 +10,11 @@ order: 788
 ref: kleiman-picard
 title: Naturality of the Picard class in the base ring
 type: tex
-updated: '2026-07-20T12:01:18'
+updated: '2026-08-14T19:11:15'
 ---
-Let \(A \to A'\) and \(A \to B\) be homomorphisms of commutative rings with \(B\) faithfully
+\provenancetag{ADAPTED}
+  
+  Let \(A \to A'\) and \(A \to B\) be homomorphisms of commutative rings with \(B\) faithfully
   flat over \(A\) and \(A' \otimes_A B\) faithfully flat over \(A'\), and let \(u\) be a descent
   \(1\)-cocycle relative to \(A \to B\) with base change \(u'\) relative to \(A' \to A'
   \otimes_A B\) (Theorem~\ref{thm:module_descentCocycle_baseChange}). Then

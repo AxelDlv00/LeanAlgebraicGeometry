@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 796
 title: The projection-descent equivalence for unit sections
 type: tex
-updated: '2026-07-17T18:01:33'
+updated: '2026-08-14T19:11:15'
 ---
-For an affine open \(V \subseteq T_{\mathrm{left}}\), pullback of unit sections along the
+\provenancetag{CUSTOM}
+  
+  
+  For an affine open \(V \subseteq T_{\mathrm{left}}\), pullback of unit sections along the
   second projection is a group isomorphism
   \[
     \mathrm{unitsSndEquiv} \colon \Gamma(T_{\mathrm{left}}, V)^{\times} \;\xrightarrow{\ \sim\

@@ -6,16 +6,17 @@
   "model": "gpt-5.6-terra",
   "name": "explorer",
   "native_subagent_id": "019fff41-b88d-74a2-98fa-3878d0745625",
+  "ok": true,
   "parent_session": "0004-horizon-ajcr-reviewer-full",
   "parent_subagent_id": null,
   "report_ref": "report.md",
   "role": "subagent",
-  "status": "running",
+  "status": "completed",
   "subagent_type": "explorer",
-  "summary": "",
+  "summary": "Read-only audit complete; no source or metadata edited.",
   "usage": {
     "cost_usd": null,
-    "tokens_in": 1680553,
-    "tokens_out": 7617
+    "tokens_in": 3963454,
+    "tokens_out": 12456
   }
 }

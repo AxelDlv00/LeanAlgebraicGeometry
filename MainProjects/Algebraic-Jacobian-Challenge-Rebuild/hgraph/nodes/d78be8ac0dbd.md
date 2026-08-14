@@ -9,9 +9,13 @@ lean_status: lean_ok
 order: 361
 title: The basic-open models lie over the base
 type: tex
-updated: '2026-07-24T17:02:48'
+updated: '2026-08-14T19:11:14'
 ---
-Let \(f \in k[X_0, X_1]\) be homogeneous of positive degree. The composite of the affine
+\provenancetag{CUSTOM}
+  
+  
+  
+  Let \(f \in k[X_0, X_1]\) be homogeneous of positive degree. The composite of the affine
   model \(\Spec A_{(f)} \to \PP^1\) of the basic open \(D_+(f)\) with the structure
   morphism \(\PP^1 \to \Spec k\) is the morphism induced by the algebra map
   \(k \to A_{(f)}\). (This generalizes \ref{lem:P1_chartIota_structureMap} from the two

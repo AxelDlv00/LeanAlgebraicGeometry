@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 978
 title: Effectivity from a covering family of trivialized pieces
 type: tex
-updated: '2026-07-17T18:01:33'
+updated: '2026-08-14T19:11:15'
 ---
-Let \(C\) be proper, geometrically irreducible and geometrically reduced, and \(A \to B\)
+\provenancetag{CUSTOM}
+  
+  
+  Let \(C\) be proper, geometrically irreducible and geometrically reduced, and \(A \to B\)
   faithfully flat. Let \(\gamma\) be a representing cocycle on \(X_B\) whose class \(L = [\gamma]\) is
   rigidified along the base-changed section (Definition~\ref{def:isRigidified}) and satisfies the
   on-the-nose descent equation \(u_1^{*}L = u_2^{*}L\). If every point of \(X_A\) lies in an affine

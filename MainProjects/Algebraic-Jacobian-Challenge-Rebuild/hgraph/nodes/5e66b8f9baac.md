@@ -11,9 +11,12 @@ mathlib_name:
 order: 326
 title: Mayer--Vietoris square
 type: tex
-updated: '2026-07-17T16:57:15'
+updated: '2026-08-14T19:11:14'
 ---
-\textit{Provided by Mathlib.}
+\provenancetag{CUSTOM}
+  
+  
+  \textit{Provided by Mathlib.}
   Let \((\mathcal C, J)\) be a small site. A Mayer--Vietoris square consists of four objects
   \(X_1, X_2, X_3, X_4\) of \(\mathcal C\) and morphisms \(f_{12} : X_1 \to X_2\),
   \(f_{13} : X_1 \to X_3\), \(f_{24} : X_2 \to X_4\), \(f_{34} : X_3 \to X_4\) such that the

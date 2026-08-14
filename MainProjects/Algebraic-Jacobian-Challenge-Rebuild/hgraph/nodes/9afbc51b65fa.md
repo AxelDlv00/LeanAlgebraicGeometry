@@ -9,6 +9,9 @@ lean_status: lean_ok
 order: 701
 title: Every cover refines the trivial cover
 type: tex
-updated: '2026-07-17T16:57:16'
+updated: '2026-08-14T19:11:15'
 ---
-Every presented \'etale cover \(E\) of \(A\) refines the trivial cover.
+\provenancetag{CUSTOM}
+  
+  
+  Every presented \'etale cover \(E\) of \(A\) refines the trivial cover.

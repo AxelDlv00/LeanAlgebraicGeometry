@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 252
 title: Base change of chart-lattice finiteness
 type: tex
-updated: '2026-07-17T16:57:15'
+updated: '2026-08-14T19:11:14'
 ---
-Let \(k\) be a commutative ring, \(R\) a commutative \(k\)-algebra, \(M\) a
+\provenancetag{CUSTOM}
+  
+  
+  Let \(k\) be a commutative ring, \(R\) a commutative \(k\)-algebra, \(M\) a
   \(k\)-module and \(e\) a \(k\)-linear endomorphism of \(M\). If \(M_e\) is a finite
   \(k[t]\)-module, then \((R \otimes_k M)_{\mathrm{id} \otimes e}\) is a finite
   \(R[t]\)-module.

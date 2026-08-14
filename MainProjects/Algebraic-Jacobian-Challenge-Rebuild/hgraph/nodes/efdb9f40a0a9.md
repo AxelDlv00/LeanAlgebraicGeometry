@@ -10,9 +10,13 @@ order: 308
 ref: stacks-project
 title: Degree-one \v{C}ech cobounding on an affine open
 type: tex
-updated: '2026-07-20T12:01:18'
+updated: '2026-08-14T19:11:14'
 ---
-Let \(X\) be a scheme and \(U\) an affine open of \(X\). Let \(f_1, \dots, f_n \in
+\provenancetag{REFERENCE}
+  
+  
+  
+  Let \(X\) be a scheme and \(U\) an affine open of \(X\). Let \(f_1, \dots, f_n \in
   \Gamma(X, U)\) with \(D(f_1) \cup \dots \cup D(f_n) = U\). Let
   \(a_{ij} \in \Gamma\bigl(X, D(f_i) \cap D(f_j)\bigr)\) be a \v{C}ech \(1\)-cocycle: for all
   \(i, j, l\),

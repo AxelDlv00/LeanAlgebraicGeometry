@@ -9,8 +9,11 @@ lean_status: lean_ok
 order: 1319
 title: The representing object is geometrically irreducible
 type: tex
-updated: '2026-08-05T03:56:42'
+updated: '2026-08-14T19:11:16'
 ---
-Let \(d\) be a Jacobian datum admitting an Abel source. Then the structure
+\provenancetag{CUSTOM}
+  
+  
+  Let \(d\) be a Jacobian datum admitting an Abel source. Then the structure
   morphism of the representing object \(J\) is geometrically irreducible: for
   every field extension \(K/k\), the base change \(J_K\) is irreducible.

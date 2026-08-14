@@ -10,9 +10,10 @@ order: 1191
 ref: kleiman-picard
 title: Mumford-scaling equivariance of the keystone
 type: tex
-updated: '2026-08-05T03:56:42'
+updated: '2026-08-14T19:11:16'
 ---
-Through the identification of \ref{thm:h1_truncExp_kernel}, the \(k\)-scalar action
+\provenancetag{ADAPTED}
+  Through the identification of \ref{thm:h1_truncExp_kernel}, the \(k\)-scalar action
   on \(H^1(X, \struct X)\) corresponds to the Mumford scaling of the thickened
   \v{C}ech group: for \(a \in k\) and an overlap section \(s\), the underlying
   thickened class of the image of \(a \cdot \mathrm{delta}(s)\) equals the Mumford

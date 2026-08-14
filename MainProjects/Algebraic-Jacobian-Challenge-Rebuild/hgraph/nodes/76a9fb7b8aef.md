@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 307
 title: Annihilation on an affine open
 type: tex
-updated: '2026-07-17T16:57:15'
+updated: '2026-08-14T19:11:14'
 ---
-Let \(X\) be a scheme, \(U \subseteq X\) an affine open, \(V \subseteq X\) an open with
+\provenancetag{CUSTOM}
+  
+  
+  Let \(X\) be a scheme, \(U \subseteq X\) an affine open, \(V \subseteq X\) an open with
   \(U \subseteq V\), and \(g \in \Gamma(X, V)\) a section of the structure sheaf on \(V\) (so
   that \(D(g) \subseteq V\) is its basic open). If \(t \in \Gamma(X, U)\) restricts to zero
   on \(U \cap D(g)\), then \((g|_U)^{M} \cdot t = 0\) in \(\Gamma(X, U)\) for some \(M \ge 0\).

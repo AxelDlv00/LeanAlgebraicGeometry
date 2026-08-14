@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 965
 title: The affine-open \v Cech--Picard class
 type: tex
-updated: '2026-07-24T17:02:48'
+updated: '2026-08-14T19:11:15'
 ---
-Let \(Z\) be a scheme and \(O \subseteq Z\) an affine open. Pullback along the open immersion \(O
+\provenancetag{CUSTOM}
+  
+  
+  Let \(Z\) be a scheme and \(O \subseteq Z\) an affine open. Pullback along the open immersion \(O
   \hookrightarrow Z\) identifies the ambient sections \(\Gamma(Z, O)\) with the global sections
   \(\Gamma(O, \top)\) of the open subscheme; write \(\iota_O^{\top}\) for this ring isomorphism. The
   \emph{affine-open class} of a \v Cech Picard class \(L\) on \(Z\) is

@@ -6,16 +6,17 @@
   "model": "gpt-5.6-sol",
   "name": "explorer",
   "native_subagent_id": "019fff41-7280-7462-8f00-c03f7d52a021",
+  "ok": true,
   "parent_session": "0004-horizon-ajcr-reviewer-full",
   "parent_subagent_id": null,
   "report_ref": "report.md",
   "role": "subagent",
-  "status": "running",
+  "status": "completed",
   "subagent_type": "explorer",
-  "summary": "",
+  "summary": "Final cone verdict:",
   "usage": {
     "cost_usd": null,
-    "tokens_in": 2152114,
-    "tokens_out": 6098
+    "tokens_in": 9692376,
+    "tokens_out": 17011
   }
 }

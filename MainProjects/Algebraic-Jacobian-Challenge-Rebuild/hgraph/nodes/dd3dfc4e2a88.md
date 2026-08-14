@@ -9,7 +9,10 @@ lean_status: lean_ok
 order: 531
 title: Local regular representatives
 type: tex
-updated: '2026-07-17T16:57:16'
+updated: '2026-08-14T19:11:15'
 ---
-A rational function \(g \in \mathcal O(0)(U)\) is, near every point \(x \in U\), the germ at
+\provenancetag{CUSTOM}
+  
+  
+  A rational function \(g \in \mathcal O(0)(U)\) is, near every point \(x \in U\), the germ at
   \(\eta\) of a regular section over a neighbourhood of \(x\) inside \(U\).

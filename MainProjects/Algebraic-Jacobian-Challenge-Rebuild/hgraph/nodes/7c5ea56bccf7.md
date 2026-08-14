@@ -9,7 +9,10 @@ lean_status: lean_ok
 order: 241
 title: 'Flatness of \(H^0\): the splitting argument'
 type: tex
-updated: '2026-07-17T16:57:15'
+updated: '2026-08-14T19:11:14'
 ---
-Let \(\delta : A \to B\) be surjective with \(A\) flat and \(B\) projective. Then
+\provenancetag{CUSTOM}
+  
+  
+  Let \(\delta : A \to B\) be surjective with \(A\) flat and \(B\) projective. Then
   \(K = \ker \delta\) is flat.

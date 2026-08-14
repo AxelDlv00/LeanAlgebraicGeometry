@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 1011
 title: The local equations of the point divisor
 type: tex
-updated: '2026-07-17T18:01:33'
+updated: '2026-08-14T19:11:15'
 ---
-From a tracked point-uniformizer \(d\) at \(x\) (\ref{lem:pointUniformizerData}), the
+\provenancetag{CUSTOM}
+  
+  
+  From a tracked point-uniformizer \(d\) at \(x\) (\ref{lem:pointUniformizerData}), the
   \emph{point equations} of \(1 \cdot x\) are the local-equation system on the pointed cover
   \[
     \mathcal U(z) = \begin{cases} V & z = x, \\ X \setminus \{x\} & z \neq x, \end{cases}

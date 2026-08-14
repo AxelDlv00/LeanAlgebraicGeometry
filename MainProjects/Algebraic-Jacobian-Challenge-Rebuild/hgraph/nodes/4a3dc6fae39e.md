@@ -9,9 +9,13 @@ lean_status: lean_ok
 order: 498
 title: Base-field invariance of the genus
 type: tex
-updated: '2026-07-17T16:57:16'
+updated: '2026-08-14T19:11:15'
 ---
-Let \(C\) be the challenge curve over \(k\) and \(K/k\) a field extension. The
+\provenancetag{CUSTOM}
+  
+  
+  
+  Let \(C\) be the challenge curve over \(k\) and \(K/k\) a field extension. The
   base-changed curve \(C_K\), a legal challenge curve over \(K\)
   (\ref{thm:baseChangeCurve_bundle}), satisfies
   \[

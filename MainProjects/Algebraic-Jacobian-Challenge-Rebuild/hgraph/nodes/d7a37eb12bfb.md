@@ -9,9 +9,13 @@ lean_status: lean_ok
 order: 486
 title: \(H^1\) of the twisted sheaf vanishes after base change
 type: tex
-updated: '2026-07-17T16:57:16'
+updated: '2026-08-14T19:11:15'
 ---
-On the vanishing locus (\(H^1\) of the pair of \(F_g\) over \(R\) trivial), for
+\provenancetag{CUSTOM}
+  
+  
+  
+  On the vanishing locus (\(H^1\) of the pair of \(F_g\) over \(R\) trivial), for
   every homomorphism \(R \to R'\) of commutative \(k\)-algebras: the twisted
   differential over \(R'\) at the base-changed cocycle \(g'\) is surjective, and
   \[

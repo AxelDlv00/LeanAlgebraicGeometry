@@ -10,9 +10,14 @@ order: 147
 ref: kleiman-picard
 title: The diagonal as an effective divisor in local equations
 type: tex
-updated: '2026-07-20T12:01:18'
+updated: '2026-08-14T19:11:14'
 ---
-Let \(C\) be smooth of relative dimension one and separated over \(\Spec k\). The diagonal cover
+\provenancetag{ADAPTED}
+  
+  
+  
+  
+  Let \(C\) be smooth of relative dimension one and separated over \(\Spec k\). The diagonal cover
   and equation of Definition~\ref{def:diagonalCover} (for the frozen chart datum) form a system of
   local equations (Definition~\ref{def:localEquations}) on \(C \otimes C\), cutting out the
   diagonal \(\Delta\). Its Picard class is the class of the diagonal,

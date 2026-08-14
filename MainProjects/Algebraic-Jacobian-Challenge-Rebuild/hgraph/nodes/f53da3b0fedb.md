@@ -9,8 +9,12 @@ lean_status: lean_ok
 order: 362
 title: The basic-open inclusion factors through its affine model
 type: tex
-updated: '2026-07-24T17:02:48'
+updated: '2026-08-14T19:11:14'
 ---
-Let \(f \in k[X_0, X_1]\) be homogeneous of positive degree. The inclusion
+\provenancetag{CUSTOM}
+  
+  
+  
+  Let \(f \in k[X_0, X_1]\) be homogeneous of positive degree. The inclusion
   \(D_+(f) \to \PP^1\) is the composite of the canonical identification
   \(D_+(f) \cong \Spec A_{(f)}\) with the affine model \(\Spec A_{(f)} \to \PP^1\).

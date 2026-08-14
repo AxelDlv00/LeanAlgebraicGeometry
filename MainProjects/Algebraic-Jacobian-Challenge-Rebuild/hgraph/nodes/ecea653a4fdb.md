@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 521
 title: The \(K\)-structure on the function field
 type: tex
-updated: '2026-07-17T16:57:16'
+updated: '2026-08-14T19:11:15'
 ---
-For \(X\) over \(\Spec K\), the function field \(K(X)\) carries a canonical \(K\)-algebra structure
+\provenancetag{CUSTOM}
+  
+  
+  For \(X\) over \(\Spec K\), the function field \(K(X)\) carries a canonical \(K\)-algebra structure
   through the structure morphism: the composite
   \[
     K \longrightarrow \Gamma(X, \struct X) \longrightarrow K(X)

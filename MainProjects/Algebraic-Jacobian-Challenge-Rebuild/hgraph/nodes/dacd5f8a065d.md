@@ -9,7 +9,10 @@ lean_status: lean_ok
 order: 721
 title: Transport along the identity
 type: tex
-updated: '2026-07-17T16:57:16'
+updated: '2026-08-14T19:11:15'
 ---
-For every presented \'etale cover \(E\) of \(A\), transport along the identity homomorphism
+\provenancetag{CUSTOM}
+  
+  
+  For every presented \'etale cover \(E\) of \(A\), transport along the identity homomorphism
   of \(B_E\) is the identity on \(\mathrm{Desc}(C,E)\).

@@ -3,13 +3,13 @@ author: sync
 content_type: lemma
 created: '2026-07-16T21:33:27'
 decl: AlgebraicJacobian.Diagonal.pointBaseChange_pointGen
-docstring: The base change kills the point generator.
+docstring: "The base change kills the point generator. \n\n\n * Provenance: CUSTOM."
 file: AlgebraicJacobian/Algebra/PointFiberIdeal.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.Diagonal.pointBaseChange_pointGen
 type: lean
-updated: '2026-08-07T05:01:43'
+updated: '2026-08-14T19:11:11'
 ---
 lemma pointBaseChange_pointGen : pointBaseChange B F (pointGen k B F) = 0 := by
   rw [pointGen, map_sub, pointBaseChange_tmul, pointBaseChange_tmul, coord_tmul_one_point,

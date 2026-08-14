@@ -3,16 +3,15 @@ author: sync
 content_type: lemma
 created: '2026-07-16T21:33:27'
 decl: AlgebraicJacobian.Diagonal.ker_pointEv_le_sup
-docstring: 'The point-evaluation kernel is contained in the sum of the point-generator
-  ideal and
-
-  the principal ideal of the pushed lift (mirror of `ker_lmul''_le_sup`).'
+docstring: "The point-evaluation kernel is contained in the sum of the point-generator\
+  \ ideal and\nthe principal ideal of the pushed lift (mirror of `ker_lmul'_le_sup`).\
+  \ \n\n\n * Provenance: CUSTOM."
 file: AlgebraicJacobian/Algebra/PointFiberIdeal.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.Diagonal.ker_pointEv_le_sup
 type: lean
-updated: '2026-08-07T05:01:43'
+updated: '2026-08-14T19:11:11'
 ---
 lemma ker_pointEv_le_sup :
     RingHom.ker (pointEv c)

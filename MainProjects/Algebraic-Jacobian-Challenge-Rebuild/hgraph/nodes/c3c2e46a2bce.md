@@ -9,9 +9,13 @@ lean_status: lean_ok
 order: 475
 title: The pair data of the relative twisted sheaf
 type: tex
-updated: '2026-07-24T17:02:48'
+updated: '2026-08-14T19:11:15'
 ---
-The relative twisted sheaf is packaged quasi-coherently on both base-changed charts
+\provenancetag{CUSTOM}
+  
+  
+  
+  The relative twisted sheaf is packaged quasi-coherently on both base-changed charts
   (\ref{thm:twistSheaf_qcohOn}, read on the cover of \(C_R\)), and the relative chart
   coordinates \((t_0^R, t_1^R)\) satisfy the two hypotheses of \ref{def:twistPairData}
   on the base-changed pinned cover: the overlap-as-basic-open identifications

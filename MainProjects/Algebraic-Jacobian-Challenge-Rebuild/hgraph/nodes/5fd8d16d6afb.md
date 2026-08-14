@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 1061
 title: The componentwise lift of the base-field shuffle
 type: tex
-updated: '2026-07-17T21:42:07'
+updated: '2026-08-14T19:11:16'
 ---
-Let \(T\) be a test object of \(\Over(\Spec L)\).  The underlying schemes of \(T\)
+\provenancetag{CUSTOM}
+  
+  
+  Let \(T\) be a test object of \(\Over(\Spec L)\).  The underlying schemes of \(T\)
   and \(\sigma_{!}T\) coincide, so their affine opens and section rings are literally
   shared, and by the scalar tower of
   Lemma~\ref{lem:isScalarTower_sections_map} each section ring \(\Gamma(T, U)\) is a

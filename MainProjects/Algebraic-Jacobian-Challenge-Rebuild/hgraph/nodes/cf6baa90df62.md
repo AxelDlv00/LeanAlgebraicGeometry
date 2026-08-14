@@ -9,9 +9,11 @@ lean_status: lean_ok
 order: 801
 title: The collapse maps on tensor squares and cubes
 type: tex
-updated: '2026-07-17T18:01:33'
+updated: '2026-08-14T19:11:15'
 ---
-The \emph{collapse map} is the canonical \(A\)-algebra homomorphism
+\provenancetag{CUSTOM}
+  
+  The \emph{collapse map} is the canonical \(A\)-algebra homomorphism
   \[
     \pi \colon P \otimes_A P \longrightarrow P \otimes_B P, \qquad x \otimes y \mapsto x \otimes
     y,

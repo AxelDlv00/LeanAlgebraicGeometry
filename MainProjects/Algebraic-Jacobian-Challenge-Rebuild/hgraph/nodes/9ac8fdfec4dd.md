@@ -9,8 +9,12 @@ lean_status: lean_ok
 order: 1213
 title: The pairing is over the base
 type: tex
-updated: '2026-08-05T03:56:42'
+updated: '2026-08-14T19:11:16'
 ---
-In the situation of \ref{def:ratmap_prod}, composing \((a,b)\) with the
+\provenancetag{CUSTOM}
+  
+  
+  
+  In the situation of \ref{def:ratmap_prod}, composing \((a,b)\) with the
   structure morphism \(s_Y \circ \mathrm{pr}_1\) of \(Y \times_S Z\) gives
   \(s_X\), as rational maps \(X \dashrightarrow S\).

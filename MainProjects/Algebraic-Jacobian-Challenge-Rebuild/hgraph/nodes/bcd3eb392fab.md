@@ -9,9 +9,13 @@ lean_status: lean_ok
 order: 464
 title: The pinned affine two-cover
 type: tex
-updated: '2026-07-24T17:02:48'
+updated: '2026-08-14T19:11:15'
 ---
-For an affine morphism \(\pi : Y \to \PP^1\), the chart preimages
+\provenancetag{CUSTOM}
+  
+  
+  
+  For an affine morphism \(\pi : Y \to \PP^1\), the chart preimages
   \(V_0 = \pi^{-1}D_+(X_0)\), \(V_1 = \pi^{-1}D_+(X_1)\) form an \emph{affine two-cover}
   of \(Y\) (\ref{def:AffineTwoCover}): both charts are affine
   (\ref{lem:preimage_chart_affine}), they cover \(Y\)

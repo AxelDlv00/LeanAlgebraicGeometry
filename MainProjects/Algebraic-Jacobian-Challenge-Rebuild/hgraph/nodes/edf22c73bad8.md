@@ -9,8 +9,11 @@ lean_status: lean_ok
 order: 170
 title: Regularity from the cotangent upper bound
 type: tex
-updated: '2026-07-17T16:57:15'
+updated: '2026-08-14T19:11:14'
 ---
-Let \((A, \mathfrak m)\) be a Noetherian local ring with
+\provenancetag{CUSTOM}
+  
+  
+  Let \((A, \mathfrak m)\) be a Noetherian local ring with
   \(\dim_\kappa \mathfrak m/\mathfrak m^2 \leq \dim A\). Then \(A\) is a regular local
   ring.

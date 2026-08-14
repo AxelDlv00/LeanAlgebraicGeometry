@@ -9,9 +9,13 @@ lean_status: lean_ok
 order: 1201
 title: Precomposition of a rational map with an open morphism
 type: tex
-updated: '2026-08-05T03:56:42'
+updated: '2026-08-14T19:11:16'
 ---
-Let \(f : X \dashrightarrow Y\) be a rational map and \(p : W \to X\) a
+\provenancetag{CUSTOM}
+  
+  
+  
+  Let \(f : X \dashrightarrow Y\) be a rational map and \(p : W \to X\) a
   morphism whose underlying continuous map is \emph{open}. The composite
   \[
     f \circ p : W \dashrightarrow Y

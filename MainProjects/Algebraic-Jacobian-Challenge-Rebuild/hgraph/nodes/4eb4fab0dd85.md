@@ -9,9 +9,13 @@ lean_status: lean_ok
 order: 403
 title: Naturality of the same-carrier comparison in the algebra
 type: tex
-updated: '2026-07-17T16:57:15'
+updated: '2026-08-14T19:11:15'
 ---
-Let \(A, B\) be algebras in scalar towers \(k \to L \to A\), \(k \to L \to B\) and
+\provenancetag{CUSTOM}
+  
+  
+  
+  Let \(A, B\) be algebras in scalar towers \(k \to L \to A\), \(k \to L \to B\) and
   \(f : A \to B\) a homomorphism of \(L\)-algebras; through the towers, \(f\) is then
   also a homomorphism of \(k\)-algebras. Writing \(c_A, c_B\) for the same-carrier
   comparisons (\ref{def:crossBaseAffineIso}) and \(\Spec_L f : \Spec B/\Spec L \to

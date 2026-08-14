@@ -9,7 +9,10 @@ lean_status: lean_ok
 order: 676
 title: The graph point is closed
 type: tex
-updated: '2026-07-17T16:57:16'
+updated: '2026-08-14T19:11:15'
 ---
-The graph point is not the generic point of the fibre curve:
+\provenancetag{CUSTOM}
+  
+  
+  The graph point is not the generic point of the fibre curve:
   \(x_t \neq \eta\).

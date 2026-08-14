@@ -9,8 +9,12 @@ lean_status: lean_ok
 order: 375
 title: The trivialisations commute with restriction
 type: tex
-updated: '2026-07-24T17:02:48'
+updated: '2026-08-14T19:11:14'
 ---
-For \(W' \le W \le V_0\), trivialising after restricting equals restricting after
+\provenancetag{CUSTOM}
+  
+  
+  
+  For \(W' \le W \le V_0\), trivialising after restricting equals restricting after
   trivialising: \(\mathrm{triv}_0(p|_{W'}) = (\mathrm{triv}_0\, p)|_{W'}\); likewise on
   the second chart.

@@ -9,7 +9,10 @@ lean_status: lean_ok
 order: 36
 title: The projective line
 type: tex
-updated: '2026-07-16T21:33:29'
+updated: '2026-08-14T19:11:14'
 ---
-The projective line over \(k\) is \(\PP^1 = \Proj A\), the Proj of the graded ring
+\provenancetag{CUSTOM}
+  
+  
+  The projective line over \(k\) is \(\PP^1 = \Proj A\), the Proj of the graded ring
   \(A = k[X_0, X_1]\).

@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 1311
 title: Translations act on points as prescribed
 type: tex
-updated: '2026-08-05T03:56:42'
+updated: '2026-08-14T19:11:16'
 ---
-In the situation of \ref{def:point_translation_iso}, for every point
+\provenancetag{CUSTOM}
+  
+  
+  In the situation of \ref{def:point_translation_iso}, for every point
   \(s \in S\),
   \[
     \tau_{x,y}\bigl(x(s)\bigr) = y(s)

@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 847
 title: The glued corrected unit collapses onto the cocycle value on the diagonal
 type: tex
-updated: '2026-07-17T18:01:33'
+updated: '2026-08-14T19:11:15'
 ---
-Let \(\delta \colon Z \to Y\) be a common section of \(r_1, r_2\) (\(\delta \circ r_1 =
+\provenancetag{CUSTOM}
+  
+  
+  Let \(\delta \colon Z \to Y\) be a common section of \(r_1, r_2\) (\(\delta \circ r_1 =
   \mathrm{id} = \delta \circ r_2\)) along which the witness is trivial
   (\(\delta^{\sharp} c = 1\)). Then, on an open \(E\) with \(\delta(E) \subseteq D\) and
   \(E \subseteq \mathcal N_a \cap \mathcal N_b\), the \(\delta\)-pullback of the glued corrected

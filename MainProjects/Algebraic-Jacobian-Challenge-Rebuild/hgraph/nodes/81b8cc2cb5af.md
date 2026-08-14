@@ -10,9 +10,11 @@ order: 584
 ref: papaioannou-algebraic-rr:page-0007
 title: The Riemann inequality for the challenge curve
 type: tex
-updated: '2026-07-20T12:01:18'
+updated: '2026-08-14T19:11:15'
 ---
-For every Weil divisor \(D\) on the challenge curve \(C\),
+\provenancetag{ADAPTED}
+  \alignmentcheck{TO CHECK: Papaioannou Definition~1.10 on page~0007 defines genus via \(\sup(\deg D-\dim L(D)+1)\), while this conclusion uses the cohomological genus \(\dim H^1(C,O_C)\); the cited page does not identify these notions.}
+  For every Weil divisor \(D\) on the challenge curve \(C\),
   \[
     \deg_k D + 1 - g(C) \;\le\; h^0(\mathcal O(D)).
   \]

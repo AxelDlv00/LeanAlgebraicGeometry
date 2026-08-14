@@ -9,9 +9,13 @@ lean_status: lean_ok
 order: 322
 title: The chart-ring module structure on packaged sections
 type: tex
-updated: '2026-07-17T16:57:15'
+updated: '2026-08-14T19:11:14'
 ---
-Let \(F\) carry a quasi-coherence packaging on \(U\) and let \(V \le U\). The (P1) action
+\provenancetag{CUSTOM}
+  
+  
+  
+  Let \(F\) carry a quasi-coherence packaging on \(U\) and let \(V \le U\). The (P1) action
   makes the \(k\)-module \(F(V)\) a module over the chart ring \(\Gamma(X, U)\): the unit,
   associativity and distributivity laws are the (P1) axioms, and the remaining law
   \(0 \cdot m = 0\) follows by adding \(0 \cdot m\) to both sides of

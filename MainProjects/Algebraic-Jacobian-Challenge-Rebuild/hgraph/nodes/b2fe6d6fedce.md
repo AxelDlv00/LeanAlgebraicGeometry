@@ -9,9 +9,11 @@ lean_status: lean_ok
 order: 761
 title: Separation for unit sections
 type: tex
-updated: '2026-07-17T18:01:33'
+updated: '2026-08-14T19:11:15'
 ---
-Let \(X\) be a scheme, \(V \subseteq X\) open, and \((W_i)_{i \in I}\) a family of opens
+\provenancetag{CUSTOM}
+  
+  Let \(X\) be a scheme, \(V \subseteq X\) open, and \((W_i)_{i \in I}\) a family of opens
   with \(W_i \subseteq V\) and \(V \subseteq \bigcup_i W_i\). If two units
   \(s, t \in \struct X(V)^{\times}\) satisfy \(s|_{W_i} = t|_{W_i}\) for all \(i\), then
   \(s = t\).

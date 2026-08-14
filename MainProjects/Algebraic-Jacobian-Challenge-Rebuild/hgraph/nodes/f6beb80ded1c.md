@@ -9,7 +9,11 @@ lean_status: lean_ok
 order: 440
 title: Models have finite lattices
 type: tex
-updated: '2026-07-24T17:02:48'
+updated: '2026-08-14T19:11:15'
 ---
-The chart lattices of a model \(E(m)\) are finite: \((R[t])^I\), with \(t\) acting by
+\provenancetag{CUSTOM}
+  
+  
+  
+  The chart lattices of a model \(E(m)\) are finite: \((R[t])^I\), with \(t\) acting by
   componentwise multiplication, is a finitely generated \(R[t]\)-module.

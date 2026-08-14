@@ -10,9 +10,13 @@ order: 1283
 ref: abelian-varieties:page-0023
 title: 'Definedness gives germ-range membership: substep 3, easy direction'
 type: tex
-updated: '2026-08-05T03:56:42'
+updated: '2026-08-14T19:11:16'
 ---
-Let \(F : Y \dashrightarrow Z\) with \(Y\) integral, and let \(V\) be an affine
+\provenancetag{ADAPTED}
+  
+  
+  
+  Let \(F : Y \dashrightarrow Z\) with \(Y\) integral, and let \(V\) be an affine
   open containing the generic image. If a representative \(g\) of \(F\) is defined
   at a point \(Q\) with value \(g(Q) \in V\), then for every section \(s \in
   \Gamma(Z, V)\) the generic germ pullback \(\Lambda s\) lies in the image of

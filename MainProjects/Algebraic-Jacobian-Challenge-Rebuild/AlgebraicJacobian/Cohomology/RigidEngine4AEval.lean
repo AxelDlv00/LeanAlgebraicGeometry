@@ -56,7 +56,9 @@ variable [AddCommGroup M] [Module S M] [AddCommGroup M'] [Module S M']
 
 /-- **`AEval'` transport along an equivariant equivalence**: an `S`-linear equivalence
 intertwining two endomorphisms induces an `S[X]`-linear equivalence of their `AEval'`
-modules. -/
+modules. 
+ * Provenance: CUSTOM.
+-/
 noncomputable def aevalCongr (e : Module.End S M) (e' : Module.End S M')
     (φ : M ≃ₗ[S] M') (h : ∀ m : M, φ (e m) = e' (φ m)) :
     Module.AEval' e ≃ₗ[S[X]] Module.AEval' e' :=
@@ -64,7 +66,9 @@ noncomputable def aevalCongr (e : Module.End S M) (e' : Module.End S M')
     change Module.AEval'.of e' (φ (e m)) = (X : S[X]) • Module.AEval'.of e' (φ m)
     rw [h, Module.AEval'.X_smul_of]
 
-/-- Finiteness of the `AEval'` lattice transports along an equivariant equivalence. -/
+/-- Finiteness of the `AEval'` lattice transports along an equivariant equivalence. 
+ * Provenance: CUSTOM.
+-/
 theorem moduleFinite_aeval'_of_linearEquiv (e : Module.End S M) (e' : Module.End S M')
     (φ : M ≃ₗ[S] M') (h : ∀ m : M, φ (e m) = e' (φ m))
     [Module.Finite S[X] (Module.AEval' e)] :
@@ -91,7 +95,9 @@ private lemma pow_apply_of_mul (e : Module.End k A) (u : A) (he : ∀ a : A, e a
 
 /-- **The polynomial action through a ring map.** If `e` acts as multiplication by `φ X`
 and the `k`-scalars act as multiplication by `φ ∘ C`, then the `aeval`-action of any
-polynomial `p` on `A` is multiplication by `φ p`. -/
+polynomial `p` on `A` is multiplication by `φ p`. 
+ * Provenance: CUSTOM.
+-/
 lemma aeval_apply_of_ringHom (φ : k[X] →+* A) (e : Module.End k A)
     (he : ∀ a : A, e a = φ X * a)
     (hC : ∀ (c : k) (a : A), c • a = φ (C c) * a)
@@ -108,7 +114,9 @@ lemma aeval_apply_of_ringHom (φ : k[X] →+* A) (e : Module.End k A)
 acts as multiplication by `φ X`, and the `k`-scalar action is multiplication by `φ ∘ C`,
 then the chart lattice `Module.AEval' e` is a finite `k[X]`-module (the engine's pinned
 finiteness spelling). With `φ = π^* ∘ (chartSectionsEquiv)⁻¹` this is
-`finite_app_chartOpen` in `AEval'` form. -/
+`finite_app_chartOpen` in `AEval'` form. 
+ * Provenance: CUSTOM.
+-/
 theorem moduleFinite_aeval'_of_ringHom_finite (φ : k[X] →+* A) (hfin : φ.Finite)
     (e : Module.End k A) (he : ∀ a : A, e a = φ X * a)
     (hC : ∀ (c : k) (a : A), c • a = φ (C c) * a) :
@@ -147,7 +155,9 @@ variable {M : Type u} [AddCommGroup M] [Module k M]
 
 /-- **Base change of the polynomial action on a pure tensor**: the `aeval`-action of the
 coefficient-pushed polynomial `p.map (algebraMap k R)` through the base-changed
-endomorphism computes the original action in the second tensor factor. -/
+endomorphism computes the original action in the second tensor factor. 
+ * Provenance: CUSTOM.
+-/
 lemma aeval_baseChange_map_apply_one_tmul (e : Module.End k M) (p : k[X]) (m : M) :
     Polynomial.aeval (LinearMap.baseChange R e) (p.map (algebraMap k R))
         ((1 : R) ⊗ₜ[k] m)
@@ -166,7 +176,9 @@ lemma aeval_baseChange_map_apply_one_tmul (e : Module.End k M) (p : k[X]) (m : M
 `Module.AEval' e` is `k[X]`-finite, then the base-changed lattice
 `Module.AEval' (e.baseChange R)` on `R ⊗[k] M` is `R[X]`-finite, for every `k`-algebra
 `R`. Generators are `1 ⊗ mᵢ`, with polynomial coefficients pushed through
-`Polynomial.map (algebraMap k R)`. -/
+`Polynomial.map (algebraMap k R)`. 
+ * Provenance: CUSTOM.
+-/
 theorem moduleFinite_aeval'_baseChange (e : Module.End k M)
     [Module.Finite k[X] (Module.AEval' e)] :
     Module.Finite R[X] (Module.AEval' (LinearMap.baseChange R e)) := by

@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 960
 title: Base-change naturality of the descent extraction
 type: tex
-updated: '2026-07-17T18:01:33'
+updated: '2026-08-14T19:11:15'
 ---
-Let \(S \to S'\) be a map of \(A\)-algebras and \(v\) a coherent comparison unit over \(S\). The
+\provenancetag{CUSTOM}
+  
+  
+  Let \(S \to S'\) be a map of \(A\)-algebras and \(v\) a coherent comparison unit over \(S\). The
   class descended over \(S'\) from the base-changed comparison \((\mathrm{algebraMap} \otimes \id)(v)\)
   is the \(\operatorname{Pic}\)-image of the class descended over \(S\):
   \[

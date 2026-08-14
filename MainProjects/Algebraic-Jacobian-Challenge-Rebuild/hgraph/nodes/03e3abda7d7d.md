@@ -10,9 +10,13 @@ order: 1247
 ref: stacks-project
 title: Cotangent dimension at a rational point
 type: tex
-updated: '2026-08-05T03:56:42'
+updated: '2026-08-14T19:11:16'
 ---
-Let \(R\) be a ring and \((S, \mathfrak m, \kappa)\) a local \(R\)-algebra,
+\provenancetag{REFERENCE}
+  
+  
+  
+  Let \(R\) be a ring and \((S, \mathfrak m, \kappa)\) a local \(R\)-algebra,
   formally smooth over \(R\), with \(\Omega_{S/R}\) free of rank
   \(n \in \mathbb{N}\). If the composite \(R \to S \to \kappa\) is
   \emph{bijective}, then

@@ -3,21 +3,17 @@ author: sync
 content_type: definition
 created: '2026-07-16T21:33:27'
 decl: LinearMap.quotRangeBaseChangeEquiv
-docstring: '**Base change commutes with cokernels**: for a linear map `f : M →ₗ[R]
-  N` and an
-
-  `R`-algebra `A`, the base change of the cokernel of `f` is the cokernel of the base
-
-  change of `f`, `A`-linearly. Right-exactness of `A ⊗[R] -` in the two-term form
-  consumed
-
-  by the Čech-complex base change.'
+docstring: "**Base change commutes with cokernels**: for a linear map `f : M →ₗ[R]\
+  \ N` and an\n`R`-algebra `A`, the base change of the cokernel of `f` is the cokernel\
+  \ of the base\nchange of `f`, `A`-linearly. Right-exactness of `A ⊗[R] -` in the\
+  \ two-term form consumed\nby the Čech-complex base change. \n\n\n * Provenance:\
+  \ CUSTOM."
 file: AlgebraicJacobian/Cohomology/RelativeH1BaseChange.lean
 generated: lean
 lean_status: lean_ok
 title: LinearMap.quotRangeBaseChangeEquiv
 type: lean
-updated: '2026-08-07T05:01:44'
+updated: '2026-08-14T19:11:11'
 ---
 noncomputable def quotRangeBaseChangeEquiv :
     A ⊗[R] (N ⧸ LinearMap.range f) ≃ₗ[A]

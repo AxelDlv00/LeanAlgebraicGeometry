@@ -9,9 +9,13 @@ lean_status: lean_ok
 order: 1220
 title: Function-field pullback of a dominant rational map
 type: tex
-updated: '2026-08-05T03:56:42'
+updated: '2026-08-14T19:11:16'
 ---
-Let \(X\) be integral, \(Y\) irreducible and \(f : X \dashrightarrow Y\)
+\provenancetag{CUSTOM}
+  
+  
+  
+  Let \(X\) be integral, \(Y\) irreducible and \(f : X \dashrightarrow Y\)
   dominant. By \ref{thm:ratmap_dominant_generic} the source of the germ pullback
   \ref{def:ratmap_stalkPullback} is the local ring of \(Y\) at its generic
   point, i.e.\ the function field \(K(Y)\); the resulting field homomorphism

@@ -10,9 +10,14 @@ order: 480
 ref: kleiman-picard
 title: The openness export on the relative twisted sheaf
 type: tex
-updated: '2026-07-20T12:01:18'
+updated: '2026-08-14T19:11:15'
 ---
-With no Noetherian hypothesis on \(R\), the fibrewise-vanishing locus
+\provenancetag{ADAPTED}
+  
+  
+  
+  
+  With no Noetherian hypothesis on \(R\), the fibrewise-vanishing locus
   \(\{\mathfrak p \in \Spec R : H^1(\text{pair of } F_g) \otimes_R
   \kappa(\mathfrak p) = 0\}\) is open in \(\Spec R\) --- the strata over which the
   engine fires.

@@ -3,12 +3,13 @@ author: sync
 content_type: lemma
 created: '2026-07-17T08:41:24'
 decl: RingTheory.Module.exists_minimalSurjection_finite_localRing
+docstring: 'Provenance: CUSTOM.'
 file: AlgebraicJacobian/Algebra/ABSyzygy.lean
 generated: lean
 lean_status: lean_ok
 title: RingTheory.Module.exists_minimalSurjection_finite_localRing
 type: lean
-updated: '2026-08-07T05:01:43'
+updated: '2026-08-14T19:11:10'
 ---
 lemma exists_minimalSurjection_finite_localRing
     (R : Type u) [CommRing R] [IsLocalRing R]

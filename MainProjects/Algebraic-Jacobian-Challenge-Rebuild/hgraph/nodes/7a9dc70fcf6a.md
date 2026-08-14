@@ -10,9 +10,14 @@ order: 1260
 ref: abelian-varieties:page-0022, abelian-varieties:page-0023
 title: 'Milne''s Theorem 3.1: indeterminacy in codimension \(\geq 2\)'
 type: tex
-updated: '2026-08-05T03:56:42'
+updated: '2026-08-14T19:11:16'
 ---
-Let \(\bar k\) be an algebraically closed field, \(X\) a nonsingular
+\provenancetag{REFERENCE}
+  
+  
+  
+  
+  Let \(\bar k\) be an algebraically closed field, \(X\) a nonsingular
   \(\bar k\)-variety (an integral scheme, smooth, geometrically irreducible,
   separated and locally of finite type over \(\bar k\)) and \(Y\) a complete
   \(\bar k\)-variety (an integral scheme, proper and geometrically irreducible

@@ -9,7 +9,11 @@ lean_status: lean_ok
 order: 1277
 title: The diagonal maps into the domain of the difference map
 type: tex
-updated: '2026-08-05T03:56:42'
+updated: '2026-08-14T19:11:16'
 ---
-For \(z \in \operatorname{Dom} f\), the diagonal point \(\delta(z) = (z, z)\)
+\provenancetag{CUSTOM}
+  
+  
+  
+  For \(z \in \operatorname{Dom} f\), the diagonal point \(\delta(z) = (z, z)\)
   lies in \(\operatorname{Dom}\Phi\).

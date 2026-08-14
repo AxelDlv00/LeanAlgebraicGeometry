@@ -9,8 +9,11 @@ lean_status: lean_ok
 order: 1004
 title: The principal presentation
 type: tex
-updated: '2026-07-17T18:01:33'
+updated: '2026-08-14T19:11:15'
 ---
-For \(g \in K(X)^{\times}\), the \emph{principal presentation} of \(g\) is the trivial cocycle on
+\provenancetag{CUSTOM}
+  
+  
+  For \(g \in K(X)^{\times}\), the \emph{principal presentation} of \(g\) is the trivial cocycle on
   the one-member cover \(\{X\}\), trivialized by the constant \(g\) (so \(f_x = g\) for all
   \(x\)).

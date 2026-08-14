@@ -3,21 +3,17 @@ author: sync
 content_type: theorem
 created: '2026-07-16T21:33:27'
 decl: AlgebraicGeometry.moduleFinite_quotient_pow_of_isPrincipal
-docstring: '**Finiteness dévissage.** If `B ⧸ I` is a finite `K`-module for a nonzero
-  principal
-
-  ideal `I`, then so is `B ⧸ Iⁿ` for every `n`: induct along the filtration
-
-  `Iⁿ ⧸ Iⁿ⁺¹ ≅ B ⧸ I` (the landed `quotEquivMapPow`), using that module finiteness
-  is closed
-
-  under extensions (`Module.Finite.of_submodule_quotient`).'
+docstring: "**Finiteness dévissage.** If `B ⧸ I` is a finite `K`-module for a nonzero\
+  \ principal\nideal `I`, then so is `B ⧸ Iⁿ` for every `n`: induct along the filtration\n\
+  `Iⁿ ⧸ Iⁿ⁺¹ ≅ B ⧸ I` (the landed `quotEquivMapPow`), using that module finiteness\
+  \ is closed\nunder extensions (`Module.Finite.of_submodule_quotient`). \n\n\n *\
+  \ Provenance: CUSTOM."
 file: AlgebraicJacobian/Algebra/LocalizedColength.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.moduleFinite_quotient_pow_of_isPrincipal
 type: lean
-updated: '2026-08-07T05:01:43'
+updated: '2026-08-14T19:11:10'
 ---
 theorem moduleFinite_quotient_pow_of_isPrincipal {I : Ideal B} (h : I.IsPrincipal)
     (h' : I ≠ ⊥) [Module.Finite K (B ⧸ I)] (n : ℕ) : Module.Finite K (B ⧸ I ^ n) := by

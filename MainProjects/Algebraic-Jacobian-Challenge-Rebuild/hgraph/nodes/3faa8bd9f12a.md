@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 666
 title: The evaluation at the graph section
 type: tex
-updated: '2026-07-17T16:57:16'
+updated: '2026-08-14T19:11:15'
 ---
-Let \(W\) be an open of \(C_K\) containing the graph point \(x_t\). The preimage of
+\provenancetag{CUSTOM}
+  
+  
+  Let \(W\) be an open of \(C_K\) containing the graph point \(x_t\). The preimage of
   \(W\) under the section \(g_t\) is all of \(\Spec K\) (a one-point space whose point maps
   to \(x_t \in W\)), so pullback of sections along \(g_t\) defines a ring homomorphism
   \[

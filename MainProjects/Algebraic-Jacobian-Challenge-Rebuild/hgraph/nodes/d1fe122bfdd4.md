@@ -10,9 +10,16 @@ order: 1199
 ref: abelian-varieties:page-0015, mumford-abelian-varieties:page-0054, mumford-abelian-varieties:page-0055
 title: Pointed morphisms are homomorphisms
 type: tex
-updated: '2026-08-05T03:56:42'
+updated: '2026-08-14T19:11:16'
 ---
-Let \(K\) be an algebraically closed field, let \(A\) be a monoid scheme over \(K\) which
+\provenancetag{ADAPTED}
+  \alignmentcheck{TO CHECK: the cited Mumford and Milne statements assume abelian-variety
+  source and target, while this corollary uses only a proper geometrically integral monoid
+  source and a separated locally finite-type group target; verify the hypothesis weakening.}
+  
+  
+  
+  Let \(K\) be an algebraically closed field, let \(A\) be a monoid scheme over \(K\) which
   is proper and geometrically integral over \(K\), and let \(B\) be a group scheme over
   \(K\) which is separated and locally of finite type over \(K\). Then every morphism
   \(g : A \to B\) over \(K\) with \(g \circ e_A = e_B\) is a homomorphism of monoid schemes.

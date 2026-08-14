@@ -10,9 +10,11 @@ order: 911
 ref: kleiman-picard
 title: The \'etale-sheafified relative Picard functor at a test object
 type: tex
-updated: '2026-07-20T12:01:18'
+updated: '2026-08-14T19:11:15'
 ---
-For a test object \(T\) of \(\Over(\Spec k)\), \(\mathrm{picEt}(C, T)\) is the group of
+\provenancetag{ADAPTED}
+  
+  For a test object \(T\) of \(\Over(\Spec k)\), \(\mathrm{picEt}(C, T)\) is the group of
   \emph{compatible families}: an element assigns to each affine open \(V \subseteq T_{\mathrm{left}}\)
   a plus class \(s_V \in \mathrm{PicEtAff}(C, \Gamma(T, V))\) such that for affine opens
   \(U \subseteq V\), the value \(s_U\) is the restriction of \(s_V\) along the section-restriction

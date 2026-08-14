@@ -9,9 +9,11 @@ lean_status: lean_ok
 order: 799
 title: The base square of the second projection
 type: tex
-updated: '2026-07-17T18:01:33'
+updated: '2026-08-14T19:11:15'
 ---
-For a morphism \(g \colon T' \to T\) of test objects, whiskering \(C \lhd g\) on the product
+\provenancetag{CUSTOM}
+  
+  For a morphism \(g \colon T' \to T\) of test objects, whiskering \(C \lhd g\) on the product
   intertwines the two projections:
   \[
     (C \lhd g)_{\mathrm{left}} \circ (\mathrm{snd}_{C,T})_{\mathrm{left}}

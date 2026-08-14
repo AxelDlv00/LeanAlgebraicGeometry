@@ -1,0 +1,1 @@
+The requested files are complete and intentionally uncommitted, per the task instruction. I’m doing the Horizon checkpoint check on just those two paths so the parent has a clean scope report.

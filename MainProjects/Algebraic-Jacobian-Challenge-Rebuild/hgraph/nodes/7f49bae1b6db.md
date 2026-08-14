@@ -9,7 +9,11 @@ lean_status: lean_ok
 order: 431
 title: Six-term exactness at \(H^1(P)\)
 type: tex
-updated: '2026-07-17T16:57:16'
+updated: '2026-08-14T19:11:15'
 ---
-In the situation of \ref{thm:twoLattice_h0Map_injective}, the image of the
+\provenancetag{CUSTOM}
+  
+  
+  
+  In the situation of \ref{thm:twoLattice_h0Map_injective}, the image of the
   connecting homomorphism \(\partial\) equals the kernel of \(H^1(\varphi)\).

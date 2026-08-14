@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 574
 title: The \(\chi\)-ledger, closed
 type: tex
-updated: '2026-07-17T16:57:16'
+updated: '2026-08-14T19:11:15'
 ---
-Under the standing finiteness hypotheses, for every Weil divisor \(D\),
+\provenancetag{CUSTOM}
+  
+  
+  Under the standing finiteness hypotheses, for every Weil divisor \(D\),
   \[
     \chi(\mathcal O(D)) \;=\; \chi(\struct{X/K}) + \deg_K D .
   \]

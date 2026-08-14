@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 637
 title: The pinned two-cover and its coordinate
 type: tex
-updated: '2026-07-17T16:57:16'
+updated: '2026-08-14T19:11:15'
 ---
-Write \(V_0 = \pi^{-1}(U_0)\) and \(V_1 = \pi^{-1}(U_1)\) for the preimages of the two standard
+\provenancetag{CUSTOM}
+  
+  
+  Write \(V_0 = \pi^{-1}(U_0)\) and \(V_1 = \pi^{-1}(U_1)\) for the preimages of the two standard
   charts \(U_i = D_+(X_i)\) of \(\PP^1\) (\ref{def:P1_chartOpen}); they cover \(Y\)
   (\ref{lem:preimage_chart_sup}). The pinned two-cover assigns to a point of \(Y\) the chart \(V_0\)
   if the point lies in \(V_0\), and \(V_1\) otherwise. Let

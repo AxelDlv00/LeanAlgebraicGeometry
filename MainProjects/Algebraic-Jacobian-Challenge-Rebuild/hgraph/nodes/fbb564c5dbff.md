@@ -10,9 +10,10 @@ order: 1160
 ref: kleiman-picard
 title: The truncated exponential unit
 type: tex
-updated: '2026-08-05T03:56:42'
+updated: '2026-08-14T19:11:16'
 ---
-Let \(R\) be a commutative ring and \(b \in R\). Since
+\provenancetag{ADAPTED}
+  Let \(R\) be a commutative ring and \(b \in R\). Since
   \((b\varepsilon)(c\varepsilon) = 0\) in \(R[\varepsilon]\), the element
   \(1 + b\varepsilon\) is a unit of \(R[\varepsilon]\), with inverse
   \(1 - b\varepsilon\). We write

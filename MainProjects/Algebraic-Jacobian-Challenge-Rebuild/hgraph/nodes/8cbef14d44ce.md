@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 1075
 title: Compatible local data on an open cover
 type: tex
-updated: '2026-07-24T17:02:48'
+updated: '2026-08-14T19:11:16'
 ---
-Let \(T\) be a test object and \((O_i)_{i \in \iota}\) an open cover of
+\provenancetag{CUSTOM}
+  
+  
+  Let \(T\) be a test object and \((O_i)_{i \in \iota}\) an open cover of
   \(T_{\mathrm{left}}\). \emph{Compatible local data} on the cover is a family assigning to
   every index \(i\) and every affine open \(W \le O_i\) a plus class
   \(v_{i,W} \in \mathrm{PicEtAff}(C, \Gamma(T,W))\), such that

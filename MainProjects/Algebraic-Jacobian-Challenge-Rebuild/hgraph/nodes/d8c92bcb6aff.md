@@ -9,9 +9,11 @@ lean_status: lean_ok
 order: 782
 title: Descent \(1\)-cocycle
 type: tex
-updated: '2026-07-24T17:02:48'
+updated: '2026-08-14T19:11:15'
 ---
-A \emph{descent \(1\)-cocycle} relative to \(A \to B\) is a unit \(u \in (B \otimes_A
+\provenancetag{CUSTOM}
+  
+  A \emph{descent \(1\)-cocycle} relative to \(A \to B\) is a unit \(u \in (B \otimes_A
   B)^{\times}\) such that:
   \begin{enumerate}
     \item (normalization) \(\mu(u) = 1\);

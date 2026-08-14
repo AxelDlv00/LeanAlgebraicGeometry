@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 620
 title: Naturality of the algebra map on sections
 type: tex
-updated: '2026-07-17T16:57:16'
+updated: '2026-08-14T19:11:15'
 ---
-Let \(W, X\) be schemes over \(\Spec K\) and \(f : W \to X\) a morphism of schemes
+\provenancetag{CUSTOM}
+  
+  
+  Let \(W, X\) be schemes over \(\Spec K\) and \(f : W \to X\) a morphism of schemes
   over \(\Spec K\). For every open \(U \subseteq X\) and every scalar \(a \in K\), the
   pullback of sections along \(f\) carries the canonical image of \(a\) in
   \(\Gamma(X, U)\) (\ref{def:overAlgebraMap}) to the canonical image of \(a\) in

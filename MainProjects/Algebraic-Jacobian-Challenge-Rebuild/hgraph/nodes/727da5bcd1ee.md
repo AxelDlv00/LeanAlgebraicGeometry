@@ -9,7 +9,11 @@ lean_status: lean_ok
 order: 428
 title: Six-term exactness, left end
 type: tex
-updated: '2026-07-17T16:57:16'
+updated: '2026-08-14T19:11:15'
 ---
-For a short exact sequence \(0 \to P \xrightarrow{\varphi} P' \xrightarrow{\psi}
+\provenancetag{CUSTOM}
+  
+  
+  
+  For a short exact sequence \(0 \to P \xrightarrow{\varphi} P' \xrightarrow{\psi}
   P'' \to 0\), the map \(H^0(\varphi) : H^0(P) \to H^0(P')\) is injective.

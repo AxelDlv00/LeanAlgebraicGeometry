@@ -1,0 +1,3 @@
+Implemented the conditional producer in [Pic0FiniteGaloisRepresentable.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteGaloisRepresentable.lean).
+
+`pic0RepresentableBy_finiteGaloisDescent` composes quotient, equivariant, invariant, and base Picard equivalences, with naturality proved using all requested precomposition lemmas. Horizon LSP check and `lake env lean` pass; whitespace and forbidden-token audits are clean. The file remains untracked and uncommitted as requested.

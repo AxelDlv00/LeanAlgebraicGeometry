@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 643
 title: The fibre Weil divisor
 type: tex
-updated: '2026-07-24T17:02:48'
+updated: '2026-08-14T19:11:15'
 ---
-The \emph{fibre Weil divisor} \(F\) is the effective part of \(\mathrm{div}(u)\): the Weil divisor
+\provenancetag{CUSTOM}
+  
+  
+  The \emph{fibre Weil divisor} \(F\) is the effective part of \(\mathrm{div}(u)\): the Weil divisor
   (\ref{def:curveDivisor}) with coefficient \(F_x = \max(\mathrm{ord}_x(u), 0)\) at each closed point
   \(x\). It is effective (\(F \ge 0\)); it vanishes on \(V_1\) (\(F_x = 0\) for \(x \in V_1\)); it
   agrees with \(\mathrm{div}(u)\) on \(V_0\) (\(F_x = \mathrm{ord}_x(u)\) for \(x \in V_0\)); and its

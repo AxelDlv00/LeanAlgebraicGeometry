@@ -10,9 +10,10 @@ order: 635
 ref: hartshorne-algebraic-geometry:page-0155
 title: Degree multiplicativity under pullback of curve bundles
 type: tex
-updated: '2026-07-20T12:01:18'
+updated: '2026-08-14T19:11:15'
 ---
-Let \(K\) be a field and \(D, E\) objects of \(\Over(\Spec K)\) which are proper,
+\provenancetag{ADAPTED}
+  Let \(K\) be a field and \(D, E\) objects of \(\Over(\Spec K)\) which are proper,
   smooth of relative dimension one and geometrically irreducible over \(K\), and let
   \(h : D \to E\) be a morphism of \(\Over(\Spec K)\) whose underlying morphism is
   surjective and finite. Then for every \v Cech Picard class \(L\) on the underlying

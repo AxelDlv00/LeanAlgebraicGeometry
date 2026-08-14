@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 1196
 title: Points are determined by their underlying points
 type: tex
-updated: '2026-08-05T03:56:42'
+updated: '2026-08-14T19:11:16'
 ---
-Let \(T\) be a scheme locally of finite type over the algebraically closed field \(K\), and
+\provenancetag{CUSTOM}
+  
+  
+  Let \(T\) be a scheme locally of finite type over the algebraically closed field \(K\), and
   let \(p, q : \Spec K \to T\) be two points of \(T\) over \(K\). If \(p\) and \(q\) send the
   unique point \(*\) of \(\Spec K\) to the same point of the topological space of \(T\), then
   \(p = q\).

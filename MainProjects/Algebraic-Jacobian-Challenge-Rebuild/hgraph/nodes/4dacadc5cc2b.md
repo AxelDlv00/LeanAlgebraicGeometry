@@ -10,9 +10,14 @@ order: 261
 ref: stacks-project
 title: Depth via \(\Ext\)
 type: tex
-updated: '2026-07-20T12:01:18'
+updated: '2026-08-14T19:11:14'
 ---
-Let \((R, \mathfrak m)\) be a Noetherian local ring with residue field
+\provenancetag{REFERENCE}
+  
+  
+  
+  
+  Let \((R, \mathfrak m)\) be a Noetherian local ring with residue field
   \(\kappa = R/\mathfrak m\) and let \(M\) be a nonzero finite \(R\)-module. For every
   \(n \in \mathbb{N}\),
   \[

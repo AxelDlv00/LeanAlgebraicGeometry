@@ -3,20 +3,16 @@ author: sync
 content_type: lemma
 created: '2026-07-16T21:33:27'
 decl: RingHom.Flat.mem_nonZeroDivisors
-docstring: '**The `IsSMulRegular` bridge.** A flat ring homomorphism carries nonzerodivisors
-  to
-
-  nonzerodivisors: if `r ∈ R⁰` and `f : R →+* S` is flat, then `f r ∈ S⁰`. Scalar
-
-  multiplication by `r` is injective on the flat `R`-module `S`
-
-  (`Module.Flat.isSMulRegular_of_nonZeroDivisors`), and `r • · = f r * ·`.'
+docstring: "**The `IsSMulRegular` bridge.** A flat ring homomorphism carries nonzerodivisors\
+  \ to\nnonzerodivisors: if `r ∈ R⁰` and `f : R →+* S` is flat, then `f r ∈ S⁰`. Scalar\n\
+  multiplication by `r` is injective on the flat `R`-module `S`\n(`Module.Flat.isSMulRegular_of_nonZeroDivisors`),\
+  \ and `r • · = f r * ·`. \n\n\n * Provenance: CUSTOM."
 file: AlgebraicJacobian/Algebra/DiagonalRegular.lean
 generated: lean
 lean_status: lean_ok
 title: RingHom.Flat.mem_nonZeroDivisors
 type: lean
-updated: '2026-08-07T05:01:43'
+updated: '2026-08-14T19:11:10'
 ---
 lemma mem_nonZeroDivisors {R S : Type*} [CommRing R] [CommRing S] {f : R →+* S}
     (hf : f.Flat) {r : R} (hr : r ∈ R⁰) : f r ∈ S⁰ := by

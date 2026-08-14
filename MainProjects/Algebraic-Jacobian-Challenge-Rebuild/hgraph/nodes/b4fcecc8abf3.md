@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 907
 title: Computing a restricted plus class on a given cover
 type: tex
-updated: '2026-07-17T18:01:33'
+updated: '2026-08-14T19:11:15'
 ---
-Let \(\varphi \colon A_1 \to R\) be a homomorphism of \(k\)-algebras, \(E_1\) a presented \'etale
+\provenancetag{CUSTOM}
+  
+  
+  Let \(\varphi \colon A_1 \to R\) be a homomorphism of \(k\)-algebras, \(E_1\) a presented \'etale
   cover of \(A_1\), \(F\) a presented \'etale cover of \(R\), \(\xi \in \mathrm{Desc}(C, E_1)\) and
   \(\eta \in \mathrm{Desc}(C, F)\). Suppose there is a homomorphism of \(k\)-algebras \(n \colon
   B_{E_1} \to B_F\), semilinear over \(\varphi\) (\(n \circ \iota_{E_1} = \iota_F \circ \varphi\)),

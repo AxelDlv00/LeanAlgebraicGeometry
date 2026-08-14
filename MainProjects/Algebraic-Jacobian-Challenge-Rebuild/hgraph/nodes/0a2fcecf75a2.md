@@ -9,9 +9,11 @@ lean_status: lean_ok
 order: 591
 title: Dedekind sections on every affine chart
 type: tex
-updated: '2026-07-17T16:57:16'
+updated: '2026-08-14T19:11:15'
 ---
-Let \(X\) be an integral scheme, smooth of relative dimension one and locally of
+\provenancetag{CUSTOM}
+  
+  Let \(X\) be an integral scheme, smooth of relative dimension one and locally of
   finite type over the field \(K\), and let \(V\) be an affine open containing the
   generic point (equivalently, nonempty). Then \(B = \Gamma(X, V)\) is a Dedekind
   domain. (This upgrades \ref{thm:relDim1_dedekind_charts}, which produces \emph{some}

@@ -9,6 +9,9 @@ lean_status: lean_ok
 order: 1304
 title: Group schemes over a field are separated
 type: tex
-updated: '2026-08-05T03:56:42'
+updated: '2026-08-14T19:11:16'
 ---
-Every group scheme \(G\) over a field \(K\) is separated over \(K\).
+\provenancetag{CUSTOM}
+  
+  
+  Every group scheme \(G\) over a field \(K\) is separated over \(K\).

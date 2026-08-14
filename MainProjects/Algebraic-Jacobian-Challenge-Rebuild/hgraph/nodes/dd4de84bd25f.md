@@ -9,7 +9,11 @@ lean_status: lean_ok
 order: 1267
 title: Equidimensionality at a height-one prime
 type: tex
-updated: '2026-08-05T03:56:42'
+updated: '2026-08-14T19:11:16'
 ---
-In a Cohen--Macaulay Noetherian local ring \(R\), a prime \(\mathfrak p\) of
+\provenancetag{CUSTOM}
+  
+  
+  
+  In a Cohen--Macaulay Noetherian local ring \(R\), a prime \(\mathfrak p\) of
   height \(1\) satisfies \(\dim(R/\mathfrak p) + 1 = \dim R\).

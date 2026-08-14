@@ -32,7 +32,8 @@ variable {A B : Type u} [CommRing A] [CommRing B] [Algebra A B]
 /-- **The degree-`0` Amitsur equalizer** (right-tensor form): for a faithfully flat
 `A → B` and an `A`-algebra `S₀`, an element of `S₀ ⊗[A] B` on which the two coprojection
 faces into `S₀ ⊗[A] (B ⊗[A] B)` agree is `s ⊗ₜ 1` for a unique `s : S₀`.  Transport of
-`Module.DescentDatum.exact_mk_coactionSub` through `TensorProduct.comm`/`assoc`. -/
+`Module.DescentDatum.exact_mk_coactionSub` through `TensorProduct.comm`/`assoc`.
+ * Provenance: CUSTOM. -/
 theorem FaithfullyFlat.existsUnique_tmul_one_eq [Module.FaithfullyFlat A B]
     {S₀ : Type u} [CommRing S₀] [Algebra A S₀] (x : S₀ ⊗[A] B)
     (hx : Algebra.TensorProduct.map (AlgHom.id A S₀) (Module.descentIncl₁ A B) x

@@ -9,9 +9,13 @@ lean_status: lean_ok
 order: 333
 title: The connecting map
 type: tex
-updated: '2026-07-17T16:57:15'
+updated: '2026-08-14T19:11:14'
 ---
-For a Mayer--Vietoris square \(S\) and a sheaf \(F\) of \(R\)-modules, the connecting map
+\provenancetag{CUSTOM}
+  
+  
+  
+  For a Mayer--Vietoris square \(S\) and a sheaf \(F\) of \(R\)-modules, the connecting map
   \(F(X_1) \to H'^1(X_4, F)\): the identification
   \(F(X_1) \cong H'^0(X_1,F) = \Ext^0(R[X_1], F)\) of \ref{def:HModule'_linearEquiv0},
   followed by the map \(\delta \cdot (-) : \Ext^0(R[X_1],F) \to \Ext^1(R[X_4],F) = H'^1(X_4,F)\)

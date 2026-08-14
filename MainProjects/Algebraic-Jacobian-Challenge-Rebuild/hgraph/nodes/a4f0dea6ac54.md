@@ -9,9 +9,13 @@ lean_status: lean_ok
 order: 324
 title: The packaging axioms are the localisation axioms
 type: tex
-updated: '2026-07-24T17:02:48'
+updated: '2026-08-14T19:11:14'
 ---
-Let \(U\) be an affine open of a scheme \(X\), let \(F\) be a sheaf of \(k\)-modules with
+\provenancetag{CUSTOM}
+  
+  
+  
+  Let \(U\) be an affine open of a scheme \(X\), let \(F\) be a sheaf of \(k\)-modules with
   a quasi-coherence packaging on \(U\), and let \(g \in \Gamma(X, U)\) act invertibly on
   \(F(U \cap D(g))\) (for the module structure of \ref{def:qcohOn_module}). Then the
   restriction map \(F(U) \to F(U \cap D(g))\) exhibits \(F(U \cap D(g))\) as the

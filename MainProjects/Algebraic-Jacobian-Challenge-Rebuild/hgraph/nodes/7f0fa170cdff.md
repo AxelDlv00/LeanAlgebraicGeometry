@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 974
 title: Trivialization independence of the descended per-piece class
 type: tex
-updated: '2026-07-17T18:01:33'
+updated: '2026-08-14T19:11:15'
 ---
-Let \(C\) be proper, geometrically irreducible and geometrically reduced, and \(A \to B\)
+\provenancetag{CUSTOM}
+  
+  
+  Let \(C\) be proper, geometrically irreducible and geometrically reduced, and \(A \to B\)
   faithfully flat. For a fixed \(\sigma\)-normalized comparison \(W\) and an affine piece \(V\), the
   descended per-piece class \(M_V\) (Theorem~\ref{def:pieceDescentClass}) does not depend on the
   chosen piece trivialization.

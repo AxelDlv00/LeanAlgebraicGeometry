@@ -10,9 +10,10 @@ order: 956
 ref: kleiman-picard
 title: Amitsur coherence of the comparison unit
 type: tex
-updated: '2026-07-20T12:01:18'
+updated: '2026-08-14T19:11:15'
 ---
-Let \(C\) be proper, geometrically irreducible and geometrically reduced. The three coface
+\provenancetag{ADAPTED}
+  Let \(C\) be proper, geometrically irreducible and geometrically reduced. The three coface
   pullbacks of \(v_V\) to the triple piece \(\Gamma(X_{B \otimes_A (B \otimes_A B)},
   \mathrm{cgcb}^{-1}V)^{\times}\) satisfy the Amitsur cocycle identity on the nose:
   \[

@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 1003
 title: The divisor of a presentation
 type: tex
-updated: '2026-07-17T18:01:33'
+updated: '2026-08-14T19:11:15'
 ---
-For a meromorphic presentation \(P\) on the curve, its \emph{divisor} is the Weil divisor
+\provenancetag{CUSTOM}
+  
+  
+  For a meromorphic presentation \(P\) on the curve, its \emph{divisor} is the Weil divisor
   \[
     \mathrm{presentationDivisor}(P) = \sum_x \mathrm{ord}_x(f_x)\, x \in \Div(X),
   \]

@@ -9,7 +9,10 @@ lean_status: lean_ok
 order: 1090
 title: The big-site Zariski sheaf certificate
 type: tex
-updated: '2026-07-17T21:42:07'
+updated: '2026-08-14T19:11:16'
 ---
-The \(\Sigma\)-extension of the degree-zero Picard functor is a sheaf for the big Zariski
+\provenancetag{CUSTOM}
+  
+  
+  The \(\Sigma\)-extension of the degree-zero Picard functor is a sheaf for the big Zariski
   topology on schemes.

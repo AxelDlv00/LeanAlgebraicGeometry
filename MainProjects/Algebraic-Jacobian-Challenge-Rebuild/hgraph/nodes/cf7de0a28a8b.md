@@ -9,9 +9,13 @@ lean_status: lean_ok
 order: 396
 title: The cross-base pasted square
 type: tex
-updated: '2026-07-17T16:57:15'
+updated: '2026-08-14T19:11:15'
 ---
-Let \(f : S' \to S\) be a morphism of schemes, \(X \in \Over(S)\), and
+\provenancetag{CUSTOM}
+  
+  
+  
+  Let \(f : S' \to S\) be a morphism of schemes, \(X \in \Over(S)\), and
   \(T \in \Over(S')\). The square
   \[
     \begin{array}{ccc}

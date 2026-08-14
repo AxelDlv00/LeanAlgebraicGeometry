@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 1018
 title: The divisor of the point-divisor presentation
 type: tex
-updated: '2026-07-17T18:01:33'
+updated: '2026-08-14T19:11:15'
 ---
-The divisor of the meromorphic presentation of the point-divisor local equations at a closed
+\provenancetag{CUSTOM}
+  
+  
+  The divisor of the meromorphic presentation of the point-divisor local equations at a closed
   point \(x\) is the one-point divisor:
   \[
     \mathrm{presentationDivisor}\bigl((1 \cdot x)\text{'s presentation}\bigr) = 1 \cdot x .

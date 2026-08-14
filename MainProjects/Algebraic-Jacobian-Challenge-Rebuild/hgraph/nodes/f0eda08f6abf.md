@@ -9,8 +9,12 @@ lean_status: lean_ok
 order: 267
 title: From the dimension equation to the vanishing bound
 type: tex
-updated: '2026-07-17T16:57:15'
+updated: '2026-08-14T19:11:14'
 ---
-Let \(R\) be a ring, \(M\) an \(R\)-module and \(n \in \mathbb{N}\) with
+\provenancetag{CUSTOM}
+  
+  
+  
+  Let \(R\) be a ring, \(M\) an \(R\)-module and \(n \in \mathbb{N}\) with
   \(\mathrm{pd}_R(M) = n\). Then \(M\) has projective dimension \(< n + 1\), i.e.\
   \(\Ext^i_R(M, -) = 0\) for all \(i \geq n + 1\).

@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 882
 title: The \v Cech representative of a descended class
 type: tex
-updated: '2026-07-24T17:02:48'
+updated: '2026-08-14T19:11:15'
 ---
-Let \(w\) be a global unit of \(\Spec(B \otimes_A B)\) whose avatar is a descent
+\provenancetag{CUSTOM}
+  
+  
+  Let \(w\) be a global unit of \(\Spec(B \otimes_A B)\) whose avatar is a descent
   \(1\)-cocycle.  A \emph{\v Cech representative} of the descended class consists of a pointed
   cover \(\mathcal C\) of \(\Spec A\), a unit \v Cech cocycle \(d\) on \(\mathcal C\), and a
   family of trivializing units \(\mu_a \in \Gamma(\Spec B, \mathrm{gS}^{-1}\mathcal

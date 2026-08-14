@@ -9,7 +9,10 @@ lean_status: lean_ok
 order: 1045
 title: The affine curve transport preserves degree zero
 type: tex
-updated: '2026-07-17T21:17:13'
+updated: '2026-08-14T19:11:16'
 ---
-Let \(K\) be a field extension of \(k\) and \(a \in \mathrm{PicEtAff}(E, K)\) a plus
+\provenancetag{CUSTOM}
+  
+  
+  Let \(K\) be a field extension of \(k\) and \(a \in \mathrm{PicEtAff}(E, K)\) a plus
   class with \(\deg^{+}_K(a) = 0\). Then \(\deg^{+}_K\bigl(g^{*}a\bigr) = 0\).

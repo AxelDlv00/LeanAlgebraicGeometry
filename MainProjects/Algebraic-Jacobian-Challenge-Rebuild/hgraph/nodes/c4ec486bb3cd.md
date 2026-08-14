@@ -9,7 +9,9 @@ lean_status: lean_ok
 order: 896
 title: A factor is the localization away from the coordinate idempotent
 type: tex
-updated: '2026-07-17T18:01:33'
+updated: '2026-08-14T19:11:15'
 ---
-For a finite product \(P = \prod_j B_j\) and an index \(i\), the projection \(\pi_i \colon P \to
+\provenancetag{CUSTOM}
+  
+  For a finite product \(P = \prod_j B_j\) and an index \(i\), the projection \(\pi_i \colon P \to
   B_i\) exhibits \(B_i\) as the localization of \(P\) away from the coordinate idempotent \(e_i\).

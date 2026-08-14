@@ -9,9 +9,13 @@ lean_status: lean_ok
 order: 473
 title: 'The relative E-i: chart-lattice finiteness over the test ring'
 type: tex
-updated: '2026-07-24T17:02:48'
+updated: '2026-08-14T19:11:15'
 ---
-In the setting of \ref{thm:moduleFinite_aeval_fiberCoord}, for every commutative
+\provenancetag{CUSTOM}
+  
+  
+  
+  In the setting of \ref{thm:moduleFinite_aeval_fiberCoord}, for every commutative
   \(k\)-algebra \(R\): the relative chart sections \(\Gamma(C_R, V_i^R)\) are finite
   over \(R[t]\), with \(t\) acting as multiplication by the relative coordinate
   \(t_i^R\) (\ref{def:mulSectionEnd}).

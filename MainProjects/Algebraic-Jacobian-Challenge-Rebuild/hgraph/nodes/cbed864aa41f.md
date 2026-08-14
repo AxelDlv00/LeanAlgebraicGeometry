@@ -3,29 +3,19 @@ author: sync
 content_type: theorem
 created: '2026-07-16T21:33:27'
 decl: AlgebraicJacobian.Diagonal.tmul_one_sub_one_tmul_mem_nonZeroDivisors
-docstring: '**The regularity engine (deg-D4b §D2).** For a flat coordinate `Polynomial
-  k → B`, an
-
-  *arbitrary* `k`-algebra `A`, and *any* `b : A`, the element `u ⊗ 1 - 1 ⊗ b` is a
-
-  nonzerodivisor of `B ⊗[k] A`, where `u := algebraMap (Polynomial k) B X`.
-
-
-  Instantiations: deg-D4b''s `regular` field is `A = B`, `b = u`
-
-  (`diagGen_mem_nonZeroDivisors`); deg-D4c''s `hreg` is `A =` a chart of the test
-  object,
-
-  `b = t^♯ u`. No integrality of `B ⊗[k] A` is used, so the engine runs at every point
-  of a
-
-  non-integral product.'
+docstring: "**The regularity engine (deg-D4b §D2).** For a flat coordinate `Polynomial\
+  \ k → B`, an\n*arbitrary* `k`-algebra `A`, and *any* `b : A`, the element `u ⊗ 1\
+  \ - 1 ⊗ b` is a\nnonzerodivisor of `B ⊗[k] A`, where `u := algebraMap (Polynomial\
+  \ k) B X`.\n\nInstantiations: deg-D4b's `regular` field is `A = B`, `b = u`\n(`diagGen_mem_nonZeroDivisors`);\
+  \ deg-D4c's `hreg` is `A =` a chart of the test object,\n`b = t^♯ u`. No integrality\
+  \ of `B ⊗[k] A` is used, so the engine runs at every point of a\nnon-integral product.\
+  \ \n\n\n * Provenance: CUSTOM."
 file: AlgebraicJacobian/Algebra/DiagonalRegular.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.Diagonal.tmul_one_sub_one_tmul_mem_nonZeroDivisors
 type: lean
-updated: '2026-08-07T05:01:43'
+updated: '2026-08-14T19:11:10'
 ---
 theorem tmul_one_sub_one_tmul_mem_nonZeroDivisors
     {A : Type*} [CommRing A] [Algebra k A] (b : A) :

@@ -1,0 +1,1 @@
+I’ll inspect the current invariant-match file and the action/quotient APIs, then send the smallest exact transport proof strategy to the parent without editing the shared tree.

@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 582
 title: Euler characteristic of the structure sheaf of the curve
 type: tex
-updated: '2026-07-17T16:57:16'
+updated: '2026-08-14T19:11:15'
 ---
-For the challenge curve \(C\),
+\provenancetag{CUSTOM}
+  
+  
+  For the challenge curve \(C\),
   \[
     \chi(\struct C) \;=\; 1 - g(C),
   \]

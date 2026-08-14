@@ -9,8 +9,11 @@ lean_status: lean_ok
 order: 914
 title: Zariski separation of the plus over the section rings of a basic cover
 type: tex
-updated: '2026-07-17T18:01:33'
+updated: '2026-08-14T19:11:15'
 ---
-Let \(W\) be an affine open of a test object \(T\) and \((r_i)_{i \in s}\) a finite family in
+\provenancetag{CUSTOM}
+  
+  
+  Let \(W\) be an affine open of a test object \(T\) and \((r_i)_{i \in s}\) a finite family in
   \(\Gamma(T, W)\) spanning the unit ideal. Two plus classes \(x, y \in \mathrm{PicEtAff}(C,
   \Gamma(T, W))\) whose restrictions to \(\Gamma(T, D(r_i))\) agree for every \(i\) are equal.

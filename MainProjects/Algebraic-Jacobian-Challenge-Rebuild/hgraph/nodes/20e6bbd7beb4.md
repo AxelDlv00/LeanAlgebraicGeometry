@@ -9,6 +9,8 @@ lean_status: lean_ok
 order: 655
 title: A finite dominant morphism is surjective
 type: tex
-updated: '2026-07-17T16:57:16'
+updated: '2026-08-14T19:11:15'
 ---
-A finite dominant morphism of schemes is surjective.
+\provenancetag{CUSTOM}
+  
+  A finite dominant morphism of schemes is surjective.

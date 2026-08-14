@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 843
 title: Pullback expansion of a glued corrected unit
 type: tex
-updated: '2026-07-17T18:01:33'
+updated: '2026-08-14T19:11:15'
 ---
-Let \(\varphi \colon X' \to Y\) and let \(O \subseteq X'\) be an open inside
+\provenancetag{CUSTOM}
+  
+  
+  Let \(\varphi \colon X' \to Y\) and let \(O \subseteq X'\) be an open inside
   \(\varphi^{-1}(\mathcal C_{\varphi x} \cap D)\). Then the \(\varphi\)-pullback of a glued
   corrected unit \(u\) expands into its three factors, the correction factors pulled back along
   the composites \(\varphi \circ r_1\) and \(\varphi \circ r_2\):

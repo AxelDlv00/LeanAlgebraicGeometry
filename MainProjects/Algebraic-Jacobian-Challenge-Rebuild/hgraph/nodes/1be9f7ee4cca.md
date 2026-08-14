@@ -9,9 +9,13 @@ lean_status: lean_ok
 order: 1229
 title: The pairing representative represents the pairing of the pullbacks
 type: tex
-updated: '2026-08-05T03:56:42'
+updated: '2026-08-14T19:11:16'
 ---
-In the situation of \ref{def:difference_pairing}, assume moreover that
+\provenancetag{CUSTOM}
+  
+  
+  
+  In the situation of \ref{def:difference_pairing}, assume moreover that
   \(X \times_k X\) is integral and \(G\) is locally of finite type over \(k\).
   Then the class of the pairing representative equals the pairing
   \(\bigl(f \circ \mathrm{pr}_1,\ f \circ \mathrm{pr}_2\bigr)\) of

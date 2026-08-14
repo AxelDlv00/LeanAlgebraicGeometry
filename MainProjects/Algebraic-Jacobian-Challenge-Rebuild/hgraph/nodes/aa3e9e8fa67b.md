@@ -10,7 +10,12 @@ order: 1261
 ref: abelian-varieties:page-0022
 title: Rational maps to complete varieties are codimension-one-free
 type: tex
-updated: '2026-08-05T03:56:42'
+updated: '2026-08-14T19:11:16'
 ---
-In the situation of \ref{thm:indeterminacy_codimGe2}, \(f\) is
+\provenancetag{ADAPTED}
+  
+  
+  
+  
+  In the situation of \ref{thm:indeterminacy_codimGe2}, \(f\) is
   codimension-one-indeterminacy-free.

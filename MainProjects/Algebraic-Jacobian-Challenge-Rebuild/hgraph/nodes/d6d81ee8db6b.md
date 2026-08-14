@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.BasicOpenCocycleDatum.sectionsMap_tower_probe
 file: ScratchSectionsTowerProbe.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.BasicOpenCocycleDatum.sectionsMap_tower_probe
 type: lean
-updated: '2026-08-10T10:38:34'
+updated: '2026-08-14T17:00:22'
 ---
 theorem sectionsMap_tower_probe
     (R'' : Type u) [CommRing R''] [Algebra k R''] [Algebra R R''] [Algebra R' R'']

@@ -9,9 +9,13 @@ lean_status: lean_ok
 order: 1107
 title: The chart obstruction to a global certificate
 type: tex
-updated: '2026-07-26T15:04:51'
+updated: '2026-08-14T19:11:16'
 ---
-Write \(\operatorname{Supp}(d) \subseteq C_R\) for the support of \(d\), the closed set
+\provenancetag{CUSTOM}
+  
+  
+  
+  Write \(\operatorname{Supp}(d) \subseteq C_R\) for the support of \(d\), the closed set
   of points at which the equation of \(d\) is not a unit.
   \begin{enumerate}
     \item At a single piece \(P_j\), the chart colength module \(Q_j\) is a finite

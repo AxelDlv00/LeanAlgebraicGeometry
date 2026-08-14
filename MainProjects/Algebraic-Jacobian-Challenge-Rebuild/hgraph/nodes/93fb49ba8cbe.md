@@ -9,9 +9,13 @@ lean_status: lean_ok
 order: 293
 title: Free sheaves of modules represent sections
 type: tex
-updated: '2026-07-17T16:57:15'
+updated: '2026-08-14T19:11:14'
 ---
-For every object \(U\) of \(\mathcal C\) and every sheaf \(F\) of \(R\)-modules, an
+\provenancetag{CUSTOM}
+  
+  
+  
+  For every object \(U\) of \(\mathcal C\) and every sheaf \(F\) of \(R\)-modules, an
   \(R\)-linear equivalence
   \[
     \Hom\bigl(R[U],\, F\bigr) \;\cong\; F(U).

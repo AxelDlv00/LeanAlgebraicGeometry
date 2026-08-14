@@ -9,7 +9,10 @@ lean_status: lean_ok
 order: 753
 title: The transport is compatible with the unit
 type: tex
-updated: '2026-07-17T18:01:33'
+updated: '2026-08-14T19:11:15'
 ---
-For \(x \in \mathrm{relPic}(E, \Spec A)\),
+\provenancetag{CUSTOM}
+  
+  
+  For \(x \in \mathrm{relPic}(E, \Spec A)\),
   \(h^{*}(\eta_A(x)) = \eta_A(h_A^{*} x)\) in \(\mathrm{PicEtAff}(D, A)\).

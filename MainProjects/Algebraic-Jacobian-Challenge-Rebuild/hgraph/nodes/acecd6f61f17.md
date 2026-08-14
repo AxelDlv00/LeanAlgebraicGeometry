@@ -10,9 +10,10 @@ order: 1164
 ref: kleiman-picard
 title: Exactness in the middle
 type: tex
-updated: '2026-08-05T03:56:42'
+updated: '2026-08-14T19:11:16'
 ---
-The range of the truncated exponential is exactly the kernel of reduction mod
+\provenancetag{ADAPTED}
+  The range of the truncated exponential is exactly the kernel of reduction mod
   \(\varepsilon\) on units: a unit \(u \in R[\varepsilon]^\times\) satisfies
   \(\mathrm{fst}^\times(u) = 1\) if and only if \(u = 1 + b\varepsilon\) for a (unique)
   \(b \in R\). Together with \ref{lem:unitsFst_split} this exhibits the split short

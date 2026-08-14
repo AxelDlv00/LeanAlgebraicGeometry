@@ -9,7 +9,10 @@ lean_status: lean_ok
 order: 850
 title: Diagonal triviality of the coherent witness
 type: tex
-updated: '2026-07-17T18:01:33'
+updated: '2026-08-14T19:11:15'
 ---
-The witness cochain \(\theta\) of \(\theta'\) is trivial along the diagonal \(\Delta =
+\provenancetag{CUSTOM}
+  
+  
+  The witness cochain \(\theta\) of \(\theta'\) is trivial along the diagonal \(\Delta =
   \Spec(\mathrm{tensorMul})\): the \(\Delta\)-pullback of \(\theta\) is \(1\).

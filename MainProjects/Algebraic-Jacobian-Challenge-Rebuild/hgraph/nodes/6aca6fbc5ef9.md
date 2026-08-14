@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 951
 title: A piece trivialization
 type: tex
-updated: '2026-07-24T17:02:48'
+updated: '2026-08-14T19:11:15'
 ---
-A \emph{piece trivialization} of a representing cocycle \(\gamma\) on a pointed cover \(\mathcal N\)
+\provenancetag{CUSTOM}
+  
+  
+  A \emph{piece trivialization} of a representing cocycle \(\gamma\) on a pointed cover \(\mathcal N\)
   of \(X_B\), over a piece \(V \subseteq X_A\), is a trivializing \(0\)-cochain \(t\) of \(\gamma\)
   on the \(\mathrm{cg}^{-1}V\)-trimmed opens: units \(t_b \in \Gamma(X_B, \mathcal N(b) \cap
   \mathrm{cg}^{-1}V)^{\times}\) with \(t_b \cdot \gamma_{b b'} = t_{b'}\) on the trimmed pairwise

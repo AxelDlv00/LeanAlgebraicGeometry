@@ -9,9 +9,13 @@ lean_status: lean_ok
 order: 383
 title: The comparison morphism of relative curves
 type: tex
-updated: '2026-07-17T16:57:15'
+updated: '2026-08-14T19:11:15'
 ---
-Let \(\varphi : R \to R'\) be a homomorphism of commutative \(k\)-algebras. Applying
+\provenancetag{CUSTOM}
+  
+  
+  
+  Let \(\varphi : R \to R'\) be a homomorphism of commutative \(k\)-algebras. Applying
   \(\Spec\) gives a morphism \(\Spec R' \to \Spec R\) over \(\Spec k\), and the induced
   morphism of fibre products
   \[

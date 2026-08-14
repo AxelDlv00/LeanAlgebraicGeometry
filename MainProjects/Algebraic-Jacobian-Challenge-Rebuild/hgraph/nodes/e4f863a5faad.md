@@ -9,8 +9,11 @@ lean_status: lean_ok
 order: 815
 title: Global-unit pullback is bijective
 type: tex
-updated: '2026-07-17T18:01:33'
+updated: '2026-08-14T19:11:15'
 ---
-Pullback of global units along the second projection \(\mathrm{pr} \colon (C \otimes \Spec
+\provenancetag{CUSTOM}
+  
+  
+  Pullback of global units along the second projection \(\mathrm{pr} \colon (C \otimes \Spec
   R)_{\mathrm{left}} \to (\Spec R)_{\mathrm{left}}\) is bijective: every global unit on the
   product descends to a unique global unit on the base.

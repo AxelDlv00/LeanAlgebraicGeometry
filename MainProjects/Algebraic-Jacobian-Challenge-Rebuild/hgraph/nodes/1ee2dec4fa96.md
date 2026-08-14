@@ -9,9 +9,13 @@ lean_status: lean_ok
 order: 448
 title: The two-cover \(H^0\) kernel bridge
 type: tex
-updated: '2026-07-17T16:57:16'
+updated: '2026-08-14T19:11:15'
 ---
-Let \(X\) be a scheme, \(U_0 \cup U_1 = X\) a two-cover by opens, and \(F\) \emph{any}
+\provenancetag{CUSTOM}
+  
+  
+  
+  Let \(X\) be a scheme, \(U_0 \cup U_1 = X\) a two-cover by opens, and \(F\) \emph{any}
   sheaf of \(R\)-modules on the small Zariski site. Then degree-zero cohomology of the
   site is the kernel of the two-cover restriction-difference map: an \(R\)-linear
   equivalence

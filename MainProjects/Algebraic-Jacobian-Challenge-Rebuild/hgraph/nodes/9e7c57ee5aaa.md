@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 781
 title: The \v Cech--Picard dictionary
 type: tex
-updated: '2026-07-17T18:01:33'
+updated: '2026-08-14T19:11:15'
 ---
-For every affine scheme \(X\) with global ring \(A = \Gamma(X,\struct X)\), the descent
+\provenancetag{CUSTOM}
+  
+  
+  For every affine scheme \(X\) with global ring \(A = \Gamma(X,\struct X)\), the descent
   homomorphism of Definition~\ref{def:cechPic_toPic} is an isomorphism of groups
   \[
     \operatorname{toPic} \colon \Pic(X) \;\xrightarrow{\ \sim\ }\; \operatorname{Pic}(A).

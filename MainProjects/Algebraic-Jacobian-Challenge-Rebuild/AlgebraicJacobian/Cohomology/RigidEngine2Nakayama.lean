@@ -66,7 +66,11 @@ p.asIdeal.ResidueField`) is subsingleton exactly when `p` lies off the support o
 
 This is mathlib's `Module.mem_support_iff_nontrivial_residueField_tensorProduct` — the
 Nakayama step `Mₚ = 0 ↔ M ⊗ κ(p) = 0` for finite `M` — reflected across `not`, with a
-`TensorProduct.comm` reconciling the fibre order. -/
+`TensorProduct.comm` reconciling the fibre order. 
+
+
+ * Provenance: CUSTOM.
+-/
 theorem subsingleton_residueField_tensor_iff_notMem_support [Module.Finite R M]
     (p : PrimeSpectrum R) :
     Subsingleton (M ⊗[R] p.asIdeal.ResidueField) ↔ p ∉ Module.support R M := by
@@ -79,7 +83,11 @@ residue-field fibre `M ⊗ κ(p)` of a finite `R`-module `M` is subsingleton, th
 is subsingleton. Noetherian-free: consumes only `Module.Finite R M` (the engine's COH-1).
 
 Applied with `M := H¹`, this is the vanishing-propagation clause of Kleiman 3.10 (v)⟹(i):
-fibrewise vanishing of `H¹` forces `H¹(C_R, L) = 0` over the whole base. -/
+fibrewise vanishing of `H¹` forces `H¹(C_R, L) = 0` over the whole base. 
+
+
+ * Provenance: ADAPTED.
+-/
 theorem subsingleton_of_forall_subsingleton_residueField_tensor [Module.Finite R M]
     (hfib : ∀ p : PrimeSpectrum R, Subsingleton (M ⊗[R] p.asIdeal.ResidueField)) :
     Subsingleton M := by
@@ -87,7 +95,11 @@ theorem subsingleton_of_forall_subsingleton_residueField_tensor [Module.Finite R
   exact fun p ↦ (subsingleton_residueField_tensor_iff_notMem_support p).mp (hfib p)
 
 /-- **The vanishing locus as a complement of the support.** The set of primes at which the
-fibre `M ⊗ κ(p)` vanishes is exactly the complement of `Supp M`. -/
+fibre `M ⊗ κ(p)` vanishes is exactly the complement of `Supp M`. 
+
+
+ * Provenance: CUSTOM.
+-/
 theorem setOf_subsingleton_residueField_tensor_eq_compl_support [Module.Finite R M] :
     {p : PrimeSpectrum R | Subsingleton (M ⊗[R] p.asIdeal.ResidueField)} =
       (Module.support R M)ᶜ := by
@@ -101,7 +113,11 @@ open in `Spec R`, being the complement of the closed support `Supp M = Z(Ann M)`
 
 Applied with `M := H¹`, this is the strata gift (worksheet §3.3): the fibrewise-`H¹`-
 vanishing locus is open, the curve-lite replacement for Kleiman's Serre-openness passage
-(tex 2298–2306). Noetherian-free. -/
+(tex 2298–2306). Noetherian-free. 
+
+
+ * Provenance: ADAPTED.
+-/
 theorem isOpen_setOf_subsingleton_residueField_tensor [Module.Finite R M] :
     IsOpen {p : PrimeSpectrum R | Subsingleton (M ⊗[R] p.asIdeal.ResidueField)} := by
   rw [setOf_subsingleton_residueField_tensor_eq_compl_support]
@@ -111,7 +127,11 @@ theorem isOpen_setOf_subsingleton_residueField_tensor [Module.Finite R M] :
 `R`-module `M` vanishes, then `M` is subsingleton. This is `Module.support_eq_empty_iff`
 unpacked; unlike the fibre form it needs neither `Module.Finite` nor Nakayama (the support
 is defined by the `Mₚ`). Provided for consumers already phrasing vanishing at localizations
-rather than at residue fields. -/
+rather than at residue fields. 
+
+
+ * Provenance: CUSTOM.
+-/
 theorem subsingleton_of_forall_subsingleton_localizedModule
     (hfib : ∀ p : PrimeSpectrum R, Subsingleton (LocalizedModule p.asIdeal.primeCompl M)) :
     Subsingleton M := by

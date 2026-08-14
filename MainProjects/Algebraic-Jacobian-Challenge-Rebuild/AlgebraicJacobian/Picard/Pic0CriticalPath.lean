@@ -34,6 +34,7 @@ import AlgebraicJacobian.Picard.Pic0RankOneDatumGluedDivisor
 import AlgebraicJacobian.Picard.Pic0RankOneCanonicalDivisorStageCert
 import AlgebraicJacobian.Picard.Pic0FiniteGaloisDescent
 import AlgebraicJacobian.Picard.Pic0GaloisInvariantComparison
+import AlgebraicJacobian.Picard.Pic0FiniteGaloisRepresentable
 
 /-!
 # Narrow root for the AJCR-first Picard strategy
@@ -125,14 +126,14 @@ property, while `StableAffineOpen.isGaloisQuotient_glued` and
 `StableAffineOpen.hasGaloisQuotient_of_orbitsInAffineOpen` construct the quotient under the
 honest orbit-in-affine-open condition.  `GaloisQuotientWitness.overHomEquiv` and
 `StableAffineOpen.gluedQuotientOverHomEquiv` now identify arbitrary maps into those quotients
-with equivariant maps after base change, naturally under precomposition.  This does not
-manufacture the orbit condition for a Picard representer or identify those equivariant maps
-with `pic0` over the base field.  The sheaf-theoretic half of the latter comparison is now
-complete: `pic0GaloisInvariantEquiv` identifies `Pic^0(T)` with the exact deck-invariant
-classes after every finite-Galois base change, and `pic0GaloisInvariantEquiv_precomp` proves
-that identification natural for arbitrary test morphisms.  What remains on the quotient side
-is to match this deck-invariance predicate with equivariance for the semilinear action on the
-chosen representing scheme.
+with equivariant maps after base change, naturally under precomposition.  The Picard-zero
+comparison is now matched on both sides: `pic0GaloisInvariantEquivGaloisEquivariantOver`
+identifies deck-invariant classes with equivariant maps for the semilinear action on a chosen
+finite-level representer, and its `_precomp` theorem supplies the needed naturality.  Thus
+`pic0RepresentableBy_finiteGaloisDescent` immediately turns a finite-Galois Picard-zero
+representer into a descended `RepresentableBy` certificate, under the explicit
+`OrbitsInAffineOpen` hypothesis.  This producer is deliberately conditional: it does not
+manufacture either the finite-stage representer or the orbit-in-affine-open input.
 
 The separably closed endpoint is now complete.  The exact translator returned by
 `exists_sepClosedTranslated_mem_picRankOneOpen` indexes a translated canonical Abel chart;
@@ -145,9 +146,10 @@ is etale-locally surjective onto this exact carrier, so its quasi-compact source
 changing either component.  The same carrier is also finitely presented and quasi-separated,
 the exact geometric hypotheses needed by a future finite-subextension object-spread theorem.
 
-Still missing, and NOT replaced here by axioms or local hypotheses: the finite-stage spread,
-the semilinear predicate match and orbit-in-affine-open input for the Picard quotient, and the
-arbitrary-base-field `pic0_representableBy` and `JacobianData` endpoints.
+Still missing, and NOT replaced here by axioms or local hypotheses: the finite-stage spread of
+the separably closed representer (including its universal datum), the orbit-in-affine-open input
+for the finite-level Picard quotient, and the arbitrary-base-field `pic0_representableBy` and
+`JacobianData` endpoints.
 -/
 
 #check AlgebraicGeometry.divFunctorAff_representableBy_at
@@ -494,6 +496,10 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.pic0RestrictToGaloisInvariant_bijective
 #check AlgebraicGeometry.pic0GaloisInvariantEquiv
 #check AlgebraicGeometry.pic0GaloisInvariantEquiv_precomp
+-- Invariant/equivariant comparison and the conditional descended representer
+#check AlgebraicGeometry.pic0GaloisInvariantEquivGaloisEquivariantOver
+#check AlgebraicGeometry.pic0GaloisInvariantEquivGaloisEquivariantOver_precomp
+#check AlgebraicGeometry.pic0RepresentableBy_finiteGaloisDescent
 -- Datum-level glued divisor over a Noetherian base (Pic0RankOneDatumGluedDivisor.lean)
 #check AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
 
@@ -571,5 +577,8 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.pic0RestrictToGaloisInvariant_bijective
 #print axioms AlgebraicGeometry.pic0GaloisInvariantEquiv
 #print axioms AlgebraicGeometry.pic0GaloisInvariantEquiv_precomp
+#print axioms AlgebraicGeometry.pic0GaloisInvariantEquivGaloisEquivariantOver
+#print axioms AlgebraicGeometry.pic0GaloisInvariantEquivGaloisEquivariantOver_precomp
+#print axioms AlgebraicGeometry.pic0RepresentableBy_finiteGaloisDescent
 #print axioms
   AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre

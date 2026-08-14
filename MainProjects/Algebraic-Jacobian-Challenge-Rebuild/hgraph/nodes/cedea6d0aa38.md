@@ -9,9 +9,13 @@ lean_status: lean_ok
 order: 217
 title: The per-prime colength collapse
 type: tex
-updated: '2026-07-17T16:57:15'
+updated: '2026-08-14T19:11:14'
 ---
-In the situation of \ref{thm:moduleFinite_quotient_pow_atPrime},
+\provenancetag{CUSTOM}
+  
+  
+  
+  In the situation of \ref{thm:moduleFinite_quotient_pow_atPrime},
   \[
     \dim_k\bigl(B/P^n\bigr) \;=\; n \cdot \dim_k(B/P)
     \qquad (n \ge 0).

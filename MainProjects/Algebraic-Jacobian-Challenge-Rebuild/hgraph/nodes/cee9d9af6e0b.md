@@ -10,7 +10,9 @@ order: 862
 ref: kleiman-picard
 title: The assembled witness unit is an \(A\)-descent \(1\)-cocycle
 type: tex
-updated: '2026-07-20T12:01:18'
+updated: '2026-08-14T19:11:15'
 ---
-The composite descent unit \(\mathrm{assemblyUnit}\) is an \(A\)-descent \(1\)-cocycle
+\provenancetag{ADAPTED}
+  
+  The composite descent unit \(\mathrm{assemblyUnit}\) is an \(A\)-descent \(1\)-cocycle
   relative to \(A \to P_{\!\bullet}\).

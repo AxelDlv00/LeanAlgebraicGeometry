@@ -3,19 +3,16 @@ author: sync
 content_type: theorem
 created: '2026-07-16T21:33:27'
 decl: AlgebraicJacobian.Diagonal.ker_pointEvTwo
-docstring: '**Mirror of deliverable (b).** Given the diagonal-package kernel presentation,
-  the
-
-  kernel of the `Polynomial k`-level point evaluation is the principal ideal on the
-  push of
-
-  the diagonal generator — the section trick `mk ∘ includeRight ∘ ev₂ = mk`.'
+docstring: "**Mirror of deliverable (b).** Given the diagonal-package kernel presentation,\
+  \ the\nkernel of the `Polynomial k`-level point evaluation is the principal ideal\
+  \ on the push of\nthe diagonal generator — the section trick `mk ∘ includeRight\
+  \ ∘ ev₂ = mk`. \n\n\n * Provenance: CUSTOM."
 file: AlgebraicJacobian/Algebra/PointFiberIdeal.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.Diagonal.ker_pointEvTwo
 type: lean
-updated: '2026-08-07T05:01:43'
+updated: '2026-08-14T19:11:11'
 ---
 theorem ker_pointEvTwo :
     RingHom.ker (pointEvTwo c) = Ideal.span {mapRightTwo c e} := by

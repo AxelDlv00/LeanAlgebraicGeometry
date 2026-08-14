@@ -3,13 +3,13 @@ author: sync
 content_type: theorem
 created: '2026-07-16T21:33:27'
 decl: AlgebraicGeometry.Jacobian.baseChangeIso_comp
-docstring: Cocycle coherence for a tower `k → L → M`.
+docstring: '**CUSTOM.** Cocycle coherence for a tower `k → L → M`.'
 file: AlgebraicJacobian/Challenge.lean
 generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.Jacobian.baseChangeIso_comp
 type: lean
-updated: '2026-08-07T05:01:43'
+updated: '2026-08-14T19:11:11'
 ---
 theorem baseChangeIso_comp (k L M : Type u) [Field k] [Field L] [Field M]
     [Algebra k L] [Algebra L M] [Algebra k M] [IsScalarTower k L M]

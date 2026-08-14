@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 953
 title: The per-piece comparison unit
 type: tex
-updated: '2026-07-17T18:01:33'
+updated: '2026-08-14T19:11:15'
 ---
-Let \(W\) be a \(\sigma\)-normalized comparison of \(\gamma\)
+\provenancetag{CUSTOM}
+  
+  
+  Let \(W\) be a \(\sigma\)-normalized comparison of \(\gamma\)
   (Definition~\ref{def:normalizedCechComparison}) with comparison cochain \(\theta\), and \(T\) a
   piece trivialization of \(\gamma\) on \(V\). The \emph{per-piece comparison unit}
   \[

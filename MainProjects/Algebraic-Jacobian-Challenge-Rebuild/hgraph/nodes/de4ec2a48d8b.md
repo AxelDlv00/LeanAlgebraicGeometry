@@ -9,9 +9,11 @@ lean_status: lean_ok
 order: 840
 title: The corrected witness cochain
 type: tex
-updated: '2026-07-17T18:01:33'
+updated: '2026-08-14T19:11:15'
 ---
-The \emph{corrected witness value} at a point \(y \in Y\) is the unit on
+\provenancetag{CUSTOM}
+  
+  The \emph{corrected witness value} at a point \(y \in Y\) is the unit on
   \(\mathcal C_y \cap D\)
   \[
     (\mathrm{corr}\,c)_y := r_1^{\sharp}\gamma_Z(a,\, r_1 y) \cdot (c_y)^{-1} \cdot

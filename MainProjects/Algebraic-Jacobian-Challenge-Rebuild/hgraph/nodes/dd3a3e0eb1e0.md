@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 550
 title: Dimension of the jump module
 type: tex
-updated: '2026-07-17T16:57:16'
+updated: '2026-08-14T19:11:15'
 ---
-The \(K\)-dimension of the jump module is the residue degree:
+\provenancetag{CUSTOM}
+  
+  
+  The \(K\)-dimension of the jump module is the residue degree:
   \[
     \dim_K J \;=\; [\kappa(x):K] \;=\; \deg_K(x).
   \]

@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 511
 title: Degree-zero cohomology of a skyscraper is its value
 type: tex
-updated: '2026-07-17T16:57:16'
+updated: '2026-08-14T19:11:15'
 ---
-For \(x \in X\) and a \(K\)-module \(M\), there is a \(K\)-linear equivalence
+\provenancetag{CUSTOM}
+  
+  
+  For \(x \in X\) and a \(K\)-module \(M\), there is a \(K\)-linear equivalence
   \[
     H^0\bigl(X, \mathrm{sky}_x(M)\bigr) \;\cong\; M .
   \]

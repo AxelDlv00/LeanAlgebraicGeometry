@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 1163
 title: Splitting identities
 type: tex
-updated: '2026-08-05T03:56:42'
+updated: '2026-08-14T19:11:16'
 ---
-\(\mathrm{fst}^\times \circ \mathrm{inl}^\times = \mathrm{id}\) on \(R^\times\);
+\provenancetag{CUSTOM}
+  
+  
+  \(\mathrm{fst}^\times \circ \mathrm{inl}^\times = \mathrm{id}\) on \(R^\times\);
   \(\mathrm{fst}^\times(\mathrm{tExp}(b)) = 1\) for every \(b \in R\); and for any unit
   \(u \in R[\varepsilon]^\times\),
   \(\mathrm{fst}(u^{-1}) \cdot \mathrm{fst}(u) = 1 = \mathrm{fst}(u) \cdot

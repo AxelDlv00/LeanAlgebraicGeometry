@@ -3,24 +3,18 @@ author: sync
 content_type: theorem
 created: '2026-07-16T21:33:27'
 decl: AlgebraicGeometry.exists_eq_comp_of_isIso_appTop_of_range_subset
-docstring: '**Constancy of morphisms into affines.** A morphism `q : V ⟶ W` of schemes,
-  where all global
-
-  sections of `V` come from a base ring `R` (`IsIso sV.appTop` for a structure morphism
-
-  `sV : V ⟶ Spec R`; e.g. `V` proper and geometrically integral over a field `R`)
-  and the
-
-  set-theoretic image of `q` is contained in an affine open `U` of `W`, is *constant*:
-  it factors
-
-  through the base as `q = sV ≫ z` for a point `z : Spec R ⟶ W`.'
+docstring: "**Constancy of morphisms into affines.** A morphism `q : V ⟶ W` of schemes,\
+  \ where all global\nsections of `V` come from a base ring `R` (`IsIso sV.appTop`\
+  \ for a structure morphism\n`sV : V ⟶ Spec R`; e.g. `V` proper and geometrically\
+  \ integral over a field `R`) and the\nset-theoretic image of `q` is contained in\
+  \ an affine open `U` of `W`, is *constant*: it factors\nthrough the base as `q =\
+  \ sV ≫ z` for a point `z : Spec R ⟶ W`. \n\n\n\n\n\n\n * Provenance: ADAPTED."
 file: AlgebraicJacobian/AbelianVariety/Rigidity.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_eq_comp_of_isIso_appTop_of_range_subset
 type: lean
-updated: '2026-08-07T05:01:42'
+updated: '2026-08-14T19:11:10'
 ---
 theorem exists_eq_comp_of_isIso_appTop_of_range_subset {V W : Scheme.{u}} {R : CommRingCat.{u}}
     (sV : V ⟶ Spec R) [IsIso sV.appTop] (q : V ⟶ W) {U : W.Opens} (hU : IsAffineOpen U)

@@ -10,9 +10,14 @@ order: 1278
 ref: abelian-varieties:page-0023
 title: The generic image specialises to the unit
 type: tex
-updated: '2026-08-05T03:56:42'
+updated: '2026-08-14T19:11:16'
 ---
-If a point \(P \in \operatorname{Dom}\Phi_0\) specialises to a diagonal point
+\provenancetag{ADAPTED}
+  
+  
+  
+  
+  If a point \(P \in \operatorname{Dom}\Phi_0\) specialises to a diagonal point
   \(\delta(z)\) with \(z \in \operatorname{Dom} f\), then \(\Phi_0(P)
   \rightsquigarrow e\). In particular, applied to the generic point \(\eta_Y\),
   the generic image \(\gamma = \Phi(\eta_Y)\) satisfies \(\gamma

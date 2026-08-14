@@ -9,9 +9,12 @@ lean_status: lean_ok
 order: 992
 title: The class of a Weil divisor
 type: tex
-updated: '2026-07-17T18:01:33'
+updated: '2026-08-14T19:11:15'
 ---
-For a Weil divisor \(D \in \Div(X)\) (\ref{def:curveDivisor}), its \emph{Picard class} is the
+\provenancetag{CUSTOM}
+  
+  
+  For a Weil divisor \(D \in \Div(X)\) (\ref{def:curveDivisor}), its \emph{Picard class} is the
   finite product
   \[
     \struct X(D) = \prod_{x} \struct X(x)^{D_x} \in \Pic(X),
