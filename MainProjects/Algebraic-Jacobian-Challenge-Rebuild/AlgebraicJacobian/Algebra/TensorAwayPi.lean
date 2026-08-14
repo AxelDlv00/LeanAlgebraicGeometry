@@ -55,8 +55,8 @@ noncomputable def piDoubleEquivA :
     ((∀ i, S i) ⊗[A] ∀ i, S i) ≃ₐ[A] ∀ p : ι × ι, S p.1 ⊗[A] S p.2 :=
   Algebra.TensorProduct.piPiAlgEquiv A S S
 
-@[simp]
 /-- Provenance: CUSTOM. -/
+@[simp]
 lemma piDoubleEquivA_tmul (s t : ∀ i, S i) :
     piDoubleEquivA A S (s ⊗ₜ[A] t) = fun p : ι × ι => s p.1 ⊗ₜ[A] t p.2 :=
   rfl

@@ -98,8 +98,8 @@ noncomputable def kerCongr (h : ∀ a : A, e₂ (δ a) = δ' (e₁ a)) :
   map_add' x y := Subtype.ext (map_add e₁ (x : A) (y : A))
   map_smul' c x := Subtype.ext (map_smul e₁ c (x : A))
 
-@[simp]
 /-- Provenance: CUSTOM. -/
+@[simp]
 lemma kerCongr_apply_coe (h : ∀ a : A, e₂ (δ a) = δ' (e₁ a)) (x : LinearMap.ker δ) :
     (kerCongr δ δ' e₁ e₂ h x : A') = e₁ (x : A) := rfl
 

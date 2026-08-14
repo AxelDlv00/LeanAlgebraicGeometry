@@ -78,7 +78,11 @@ private lemma surjective_mkQ_baseChange :
 /-- **Base change commutes with cokernels**: for a linear map `f : M →ₗ[R] N` and an
 `R`-algebra `A`, the base change of the cokernel of `f` is the cokernel of the base
 change of `f`, `A`-linearly. Right-exactness of `A ⊗[R] -` in the two-term form consumed
-by the Čech-complex base change. -/
+by the Čech-complex base change. 
+
+
+ * Provenance: CUSTOM.
+-/
 noncomputable def quotRangeBaseChangeEquiv :
     A ⊗[R] (N ⧸ LinearMap.range f) ≃ₗ[A]
       (A ⊗[R] N) ⧸ LinearMap.range (f.baseChange A) :=
@@ -86,6 +90,7 @@ noncomputable def quotRangeBaseChangeEquiv :
     (((LinearMap.range f).mkQ.baseChange A).quotKerEquivOfSurjective
       (surjective_mkQ_baseChange A f))).symm
 
+/-- Provenance: CUSTOM. -/
 @[simp]
 lemma quotRangeBaseChangeEquiv_tmul_mk (a : A) (n : N) :
     quotRangeBaseChangeEquiv A f (a ⊗ₜ Submodule.Quotient.mk n) =
