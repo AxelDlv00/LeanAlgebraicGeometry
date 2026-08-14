@@ -31,9 +31,7 @@ namespace AlgebraicGeometry
 attribute [local instance] Over.sectionsAlgebra Scheme.overModule Scheme.overSectionsAlgebra
 attribute [local instance 10000] relCurve.instOver
 
-variable {k : Type u} [Field k] [IsSeparablyClosed k] {C : Over (Spec (.of k))}
-  [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
-  [GeometricallyIrreducible C.hom]
+variable {k : Type u} [Field k]
 
 noncomputable section
 
@@ -42,83 +40,115 @@ theorem surjective_of_isLocallySurjective_yoneda_map {X Y : Scheme.{u}} (f : X �
     (h : Presheaf.IsLocallySurjective Scheme.etaleTopology (yoneda.map f)) :
     Function.Surjective f.base := by
   intro y
-  obtain ⟨cover, hcover⟩ := (Scheme.mem_grothendieckTopology_iff (P := @Etale)).mp
-    (h.imageSieve_mem (𝟙 Y))
-  obtain ⟨i, x, hx⟩ := cover.exists_eq y
-  obtain ⟨g, hg⟩ := hcover (cover.X i) (cover.f i) (Presieve.ofArrows.mk i)
-  refine ⟨g.base x, ?_⟩
-  simpa only [yoneda_map_app_apply, Scheme.comp_coeBase, Function.comp_apply] using
-    congrArg (fun q => q.base x) hg
+  let s : ToType ((yoneda.obj Y).obj (op (Spec (Y.residueField y)))) :=
+    Y.fromSpecResidueField y
+  have hmem := h.imageSieve_mem s
+  obtain ⟨cover, hcover⟩ :=
+    (Scheme.mem_grothendieckTopology_iff (P := @Etale)).mp hmem
+  obtain ⟨r⟩ := (inferInstance : Nonempty (PrimeSpectrum (Y.residueField y)))
+  obtain ⟨i, z, hz⟩ := cover.exists_eq r
+  have hi : (Presieve.ofArrows cover.X cover.f) (cover.f i) := ⟨i⟩
+  obtain ⟨q, hq⟩ := hcover (cover.X i) (cover.f i) hi
+  change q ≫ f = cover.f i ≫ Y.fromSpecResidueField y at hq
+  refine ⟨q.base z, ?_⟩
+  have hqz := congrArg (fun g : cover.X i ⟶ Y => g.base z) hq
+  change f.base (q.base z) = (Y.fromSpecResidueField y).base ((cover.f i).base z) at hqz
+  rw [hz, Scheme.fromSpecResidueField_apply] at hqz
+  exact hqz
 
 /-- The admissible Abel chart, viewed as a scheme morphism to the exact separably closed
 Picard representing scheme. -/
-noncomputable def abelToPic0SepClosedRepresenter (C : Over (Spec (.of k))) :
-    divRepAffAdmissibleScheme C ⟶ (pic0_sepClosed_representableBy C).1 :=
+noncomputable def abelToPic0SepClosedRepresenter (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIrreducible C.hom] [IsSepClosed k] :
+    (divRepAffAdmissibleScheme C).left ⟶ (pic0_sepClosed_representableBy (C := C)).1.left :=
   yoneda.preimage (abelSigmaChartAffAdmissible C ≫
-    (representableBySigmaIso (pic0_sepClosed_representableBy C).2).inv)
+    (representableBySigmaIso (pic0_sepClosed_representableBy (C := C)).2).inv)
 
 /-- The Yoneda map of the represented Abel morphism is the admissible Abel chart after
 identifying the exact representing carrier with its sigma extension. -/
-theorem yoneda_map_abelToPic0SepClosedRepresenter (C : Over (Spec (.of k))) :
+theorem yoneda_map_abelToPic0SepClosedRepresenter (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIrreducible C.hom] [IsSepClosed k] :
     yoneda.map (abelToPic0SepClosedRepresenter C) =
       abelSigmaChartAffAdmissible C ≫
-        (representableBySigmaIso (pic0_sepClosed_representableBy C).2).inv :=
-  yoneda.preimage_spec _
+        (representableBySigmaIso (pic0_sepClosed_representableBy (C := C)).2).inv :=
+  yoneda.map_preimage _
 
 /-- The Abel morphism to the exact separably closed Picard representer is etale-locally
 surjective. -/
-theorem isLocallySurjective_abelToPic0SepClosedRepresenter (C : Over (Spec (.of k))) :
+theorem isLocallySurjective_abelToPic0SepClosedRepresenter (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIrreducible C.hom] [IsSepClosed k] :
     Presheaf.IsLocallySurjective Scheme.etaleTopology
       (yoneda.map (abelToPic0SepClosedRepresenter C)) := by
   rw [yoneda_map_abelToPic0SepClosedRepresenter]
-  exact Presheaf.IsLocallySurjective.comp_right_isIso
-    (isLocallySurjective_abelSigmaChartAffAdmissible C) _
+  letI : Presheaf.IsLocallySurjective Scheme.etaleTopology
+      (abelSigmaChartAffAdmissible C) :=
+    isLocallySurjective_abelSigmaChartAffAdmissible C
+  infer_instance
 
 /-- The admissible Abel morphism is surjective on the underlying points of the exact
 separably closed Picard representative. -/
-theorem surjective_abelToPic0SepClosedRepresenter (C : Over (Spec (.of k))) :
-    Function.Surjective (abelToPic0SepClosedRepresenter C).left.base :=
+theorem surjective_abelToPic0SepClosedRepresenter (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIrreducible C.hom] [IsSepClosed k] :
+    Function.Surjective (abelToPic0SepClosedRepresenter C).base :=
   surjective_of_isLocallySurjective_yoneda_map _
     (isLocallySurjective_abelToPic0SepClosedRepresenter C)
 
 /-- The exact separably closed Picard representing scheme is quasi-compact over its field. -/
-theorem quasiCompact_pic0SepClosedRepresenter (C : Over (Spec (.of k))) :
-    QuasiCompact (pic0_sepClosed_representableBy C).1.hom := by
+theorem quasiCompact_pic0SepClosedRepresenter (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIrreducible C.hom] [IsSepClosed k] :
+    QuasiCompact (pic0_sepClosed_representableBy (C := C)).1.hom := by
   haveI : CompactSpace (divRepAffAdmissibleScheme C).left :=
     HasAffineProperty.iff_of_isAffine.mp (quasiCompact_divRepAffAdmissibleScheme C)
-  exact quasiCompact_of_surjective (abelToPic0SepClosedRepresenter C).left
-    (pic0_sepClosed_representableBy C).1.hom
+  exact quasiCompact_of_surjective (abelToPic0SepClosedRepresenter C)
+    (pic0_sepClosed_representableBy (C := C)).1.hom
     (surjective_abelToPic0SepClosedRepresenter C)
 
 /-- The separably closed representability theorem, recorded in the finite-level Picard datum
 shape at the same field. -/
-noncomputable def picRepDatumSepClosed (C : Over (Spec (.of k))) : PicRepDatum k k C where
-  J := (pic0_sepClosed_representableBy C).1
-  rep := (pic0_sepClosed_representableBy C).2
-  lft := locallyOfFiniteType_pic0_sepClosed_representableBy
+noncomputable def picRepDatumSepClosed (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIrreducible C.hom] [IsSepClosed k] : PicRepDatum k k C where
+  J := (pic0_sepClosed_representableBy (C := C)).1
+  rep := (pic0_sepClosed_representableBy (C := C)).2
+  lft := locallyOfFiniteType_pic0_sepClosed_representableBy (C := C)
 
 /-- The exact separably closed Picard representative packages as Jacobian data. -/
-noncomputable def jacobianDataSepClosed (C : Over (Spec (.of k))) : JacobianData C :=
+noncomputable def jacobianDataSepClosed (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIrreducible C.hom] [IsSepClosed k] : JacobianData C :=
   (picRepDatumSepClosed C).toJacobianData (quasiCompact_pic0SepClosedRepresenter C)
 
 @[simp]
-theorem picRepDatumSepClosed_J (C : Over (Spec (.of k))) :
-    (picRepDatumSepClosed C).J = (pic0_sepClosed_representableBy C).1 :=
+theorem picRepDatumSepClosed_J (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIrreducible C.hom] [IsSepClosed k] :
+    (picRepDatumSepClosed C).J = (pic0_sepClosed_representableBy (C := C)).1 :=
   rfl
 
 @[simp]
-theorem picRepDatumSepClosed_rep (C : Over (Spec (.of k))) :
-    (picRepDatumSepClosed C).rep = (pic0_sepClosed_representableBy C).2 :=
+theorem picRepDatumSepClosed_rep (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIrreducible C.hom] [IsSepClosed k] :
+    (picRepDatumSepClosed C).rep = (pic0_sepClosed_representableBy (C := C)).2 :=
   rfl
 
 @[simp]
-theorem jacobianDataSepClosed_J (C : Over (Spec (.of k))) :
-    (jacobianDataSepClosed C).J = (pic0_sepClosed_representableBy C).1 :=
+theorem jacobianDataSepClosed_J (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIrreducible C.hom] [IsSepClosed k] :
+    (jacobianDataSepClosed C).J = (pic0_sepClosed_representableBy (C := C)).1 :=
   rfl
 
 @[simp]
-theorem jacobianDataSepClosed_rep (C : Over (Spec (.of k))) :
-    (jacobianDataSepClosed C).rep = (pic0_sepClosed_representableBy C).2 :=
+theorem jacobianDataSepClosed_rep (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIrreducible C.hom] [IsSepClosed k] :
+    (jacobianDataSepClosed C).rep = (pic0_sepClosed_representableBy (C := C)).2 :=
   rfl
 
 end
