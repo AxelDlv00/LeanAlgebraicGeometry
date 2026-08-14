@@ -8,6 +8,7 @@ import AlgebraicJacobian.Picard.DivRankOneOpen
 import AlgebraicJacobian.Picard.Pic0EndgameContract
 import AlgebraicJacobian.Picard.Pic0HighDegreeRouteGuard
 import AlgebraicJacobian.Picard.Pic0RankOneLocus
+import AlgebraicJacobian.Picard.Pic0RankOneOpenProducer
 import AlgebraicJacobian.Picard.Pic0RankOneLocalDivisor
 import AlgebraicJacobian.Picard.Pic0RankOneEvaluationZeroLocus
 import AlgebraicJacobian.Picard.Pic0RankOneFibrePresentedProducerAffineEvaluation
@@ -108,10 +109,15 @@ carrier transport, arbitrary-affine canonical divisor, and family integration mi
 independently kernel-checked.  Consequently `canonicalRankOneAbelIso` is a root-reachable
 two-sided inverse to the restricted Abel map on the big site.
 
-Still missing, and NOT replaced here by axioms or local hypotheses: the geometric open-locus
-producer (`PicRankOneOpen.IsOpen` / `DivRankOneOpenData`), translated separably-closed coverage
-as a representability input, and the later finite-Galois descent, `pic0_representableBy`, and
-`JacobianData` endpoints.
+The geometric open-locus producer is now unconditional.  `picRankOneSplitLocus` is open on an
+arbitrary test, pointwise splitting constructs the native presentation of the same pulled-back
+class, and `picRankOneOpen_fibrePresented` identifies this open with the pullback of the public
+rank-one locus along an arbitrary Yoneda family.  Thus `picRankOneOpen_isOpen`, specialized to
+`divRepAffP1Map C`, supplies the actual `DivRankOneOpenData` consumed by the canonical Abel chart.
+
+Still missing, and NOT replaced here by axioms or local hypotheses: translated
+separably-closed coverage as a representability input, and the later finite-Galois descent,
+`pic0_representableBy`, and `JacobianData` endpoints.
 -/
 
 #check AlgebraicGeometry.divFunctorAff_representableBy_at
@@ -423,6 +429,12 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.canonicalRankOneRepresenterTrans
 #check AlgebraicGeometry.canonicalRankOneEvaluationDivisorData
 #check AlgebraicGeometry.canonicalRankOneAbelIso
+-- Unconditional arbitrary-family rank-one open producer
+#check AlgebraicGeometry.isOpen_picRankOneSplitLocus_overSpec
+#check AlgebraicGeometry.PicRankOneNativePresentation.nonempty_of_pointwiseSplit
+#check AlgebraicGeometry.mem_picRankOneOpen_of_pointwiseSplit
+#check AlgebraicGeometry.picRankOneOpen_fibrePresented
+#check AlgebraicGeometry.picRankOneOpen_isOpen
 -- Datum-level glued divisor over a Noetherian base (Pic0RankOneDatumGluedDivisor.lean)
 #check AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
 
@@ -472,5 +484,10 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.canonicalRankOneRepresenterTrans
 #print axioms AlgebraicGeometry.canonicalRankOneEvaluationDivisorData
 #print axioms AlgebraicGeometry.canonicalRankOneAbelIso
+#print axioms AlgebraicGeometry.isOpen_picRankOneSplitLocus_overSpec
+#print axioms AlgebraicGeometry.PicRankOneNativePresentation.nonempty_of_pointwiseSplit
+#print axioms AlgebraicGeometry.mem_picRankOneOpen_of_pointwiseSplit
+#print axioms AlgebraicGeometry.picRankOneOpen_fibrePresented
+#print axioms AlgebraicGeometry.picRankOneOpen_isOpen
 #print axioms
   AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
