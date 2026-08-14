@@ -9,7 +9,7 @@ summary: Construct divisorOfRankOne from the evaluation map f^* f_* L -> L witho
   delete generator-selection, fieldwise-only, and source/test coupling workarounds
   no longer consumed. Integrate the shared family-level producer as the first Phase-4
   blocker owner.
-status: blocked
+status: done
 kind: proof
 priority: urgent
 depends_on: []
@@ -25,8 +25,9 @@ metadata:
   created_at: '2026-08-04T01:52:25.741918+00:00'
   parent: AJCR.review-plan
   milestone: AJCR.review-plan
-  updated_at: '2026-08-14T05:01:46.293140+00:00'
+  updated_at: '2026-08-14T05:38:58.769733+00:00'
   pinned_commits:
+  - 42654b14c6
   - 9db84b60d0
   - 0c0771b6b00da741a76960ae4d69c228e20b2309
   - 0102c54f973fd73df581b44bd0b956e2130258a8

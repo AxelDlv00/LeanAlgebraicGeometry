@@ -2,16 +2,12 @@ id: AJCR.review-plan.p4-family-producer
 title: 'Phase 4A: arbitrary-affine rank-one presentation/base-change producer'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'Reviewer supervision note 2026-08-07 identifies this as the single shared
-  Phase-3/5 structural blocker. Acceptance contract: produce arbitrary-affine PicRankOneNativePresentation
-  / FibrePresented data for the actual family; prove cartesian pushforward/base-change
-  IsIso for every public-locus pullback; tie H1=0, H0 finite-projective rank one,
-  and the native presentation to the same object coherently under affine pullback;
-  construct the arbitrary-test divisor with base-change compatibility; consume it
-  immediately in PicRankOneOpen / DivRankOneOpen and rankOneAbelIso; run narrow critical-path
-  build, axiom audit, and root/index the result. Do not credit fieldwise substitutes,
-  vacuous wrappers, or unrelated carriers.'
-status: blocked
+summary: 'Complete: the tied actual-family certificates, native pushforward base-change
+  isomorphisms, arbitrary-affine native presentations, FibrePresented producer, and
+  canonical evaluation divisor are integrated through PicRankOneOpen, DivRankOneOpen,
+  and canonicalRankOneAbelIso. Fieldwise substitutes and hypothesis-shifted wrappers
+  are not used.'
+status: done
 kind: proof
 priority: urgent
 depends_on: []
@@ -27,8 +23,9 @@ metadata:
   parent: AJCR.review-plan.p4-rank-one-iso
   owner: ajcr-reviewer-full
   milestone: AJCR.review-plan
-  updated_at: '2026-08-14T05:01:48.810293+00:00'
+  updated_at: '2026-08-14T05:40:47.923366+00:00'
   pinned_commits:
+  - 42654b14c6
   - a04e410147
   - ea93364818
   - 5f19fa76cc0b4ebcf881e319022097857bd505c8

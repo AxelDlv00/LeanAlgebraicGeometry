@@ -2,18 +2,12 @@ id: AJCR.review-plan.p5-sepclosed-cover
 title: 'Phase 5: translated rank-one cover over a separably closed field'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'The general per-K/per-lambda producer and its Pic0 specialization are complete:
-  finite-separable splitting, the positive FLV twist, actual rational-point-image
-  support, residue degree one, baseSubtraction, and IsSplitWitness now additionally
-  expose translator degree genus and finite-support/residue-one/exact descended-class
-  compatibility for the same subtraction divisor. Commit 7decac68b5 roots these APIs
-  in Pic0CriticalPath and 42b53cf822 registers their lean_ok graph nodes. The remaining
-  blocker is a production arbitrary-affine presentation family: cartesian pushforward/base-change
-  control plus tied H0/H1/rank data and coherent native presentations on every affine
-  pullback, sufficient to feed PicRankOneOpen/FibrePresented. The native line-bundle
-  piece already exists; no fieldwise substitute, high-degree Abel quotient, or Galois
-  descent route is used. Blocked on AJCR.review-plan.p4-family-producer.'
-status: blocked
+summary: 'Complete: over a separably closed field, the finite-separable splitting
+  and subtraction construction returns an exact genus-degree translator whose translated
+  Pic0 class lies in the public PicRankOneOpen. The same translator indexes a canonical
+  rank-one Abel chart; residue-field factorization and open-neighborhood lifting give
+  pointwise coverage.'
+status: done
 kind: proof
 priority: urgent
 depends_on:
@@ -30,9 +24,10 @@ metadata:
   created_at: '2026-08-04T01:52:27.443973+00:00'
   parent: AJCR.review-plan
   milestone: AJCR.review-plan
-  updated_at: '2026-08-12T04:03:42.255067+00:00'
+  updated_at: '2026-08-14T05:40:56.320981+00:00'
   owner: ajcr-reviewer-full
   pinned_commits:
+  - db30125ac5
   - 42b53cf822
   - 7decac68b5
   - 1759ffa7fb

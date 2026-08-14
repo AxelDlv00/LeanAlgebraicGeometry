@@ -9,7 +9,7 @@ summary: Package the separably closed representative, finite type, properness, g
   reuse or share AJC quotient/gluing infrastructure. Produce representableBy_of_finiteGalois_baseChange
   returning both descended scheme and certificate, then consume it immediately in
   pic0_representableBy. Do not duplicate the descent stack.
-status: pending
+status: active
 kind: proof
 priority: urgent
 depends_on:
@@ -25,3 +25,8 @@ metadata:
   created_at: '2026-08-04T01:52:30.932692+00:00'
   parent: AJCR.review-plan
   milestone: AJCR.review-plan
+  updated_at: '2026-08-14T05:39:37.850189+00:00'
+  owner: ajcr-reviewer-full
+  pinned_commits:
+  - 894597cf58
+  - 7612448a43
