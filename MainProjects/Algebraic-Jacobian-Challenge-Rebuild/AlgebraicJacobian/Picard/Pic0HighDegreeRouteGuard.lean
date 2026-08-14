@@ -246,7 +246,11 @@ theorem not_isOpenImmersion_abelSigmaChart_of_genus_lt_degree
 include π
 
 /-- **Widened root route guard.** Under the same nonemptiness and degree hypotheses, the live
-arbitrary-affine-open Abel map is not an open immersion when `genus C < n`. -/
+arbitrary-affine-open Abel map is not an open immersion when `genus C < n`.
+
+* Provenance: ADAPTED.
+* TO CHECK: Milne's cited page assumes positive genus, while this statement is
+  packaged for all genera; verify the genus-zero scope. -/
 theorem not_isOpenImmersion_abelSigmaChartAff_of_genus_lt_degree
     {Daff : Over (Spec (.of k))} (repAff : (divFunctorAff C n).RepresentableBy Daff)
     {K : Type u} [Field K] [Algebra k K]

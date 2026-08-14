@@ -370,7 +370,12 @@ variable {k : Type u} [Field k]
 form, quantified over the finite morphism): let `X` be a scheme over `Spec k` and
 `π : X ⟶ ℙ¹` a finite morphism with `π ≫ P1.structureMap k = X ↘ Spec k`. Then the
 degree-one cohomology of the structure sheaf of `X` as a sheaf of `k`-modules on the small
-Zariski site is a finite `k`-module. -/
+Zariski site is a finite `k`-module.
+
+* Provenance: ADAPTED.
+* TO CHECK: Hartshorne's cited calculation treats projective space over a
+  Noetherian base, whereas this theorem allows an arbitrary scheme over a
+  field and a finite map; verify that the calculation supports this scope. -/
 theorem moduleFinite_hModule_one_of_isFinite_toP1 {X : Scheme.{u}} [X.Over (Spec (.of k))]
     (π : X ⟶ P1 k) [IsFinite π] (hπ : π ≫ P1.structureMap k = X ↘ Spec (.of k)) :
     Module.Finite k (Sheaf.HModule (X.moduleKSheaf k) 1) := by

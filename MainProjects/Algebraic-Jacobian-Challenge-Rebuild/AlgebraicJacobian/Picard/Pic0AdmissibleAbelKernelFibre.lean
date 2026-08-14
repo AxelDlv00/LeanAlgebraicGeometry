@@ -58,7 +58,11 @@ local instance instModuleFiniteH1RelCurveKernelFibre :
 
 /-- Divisors of degree at least the admissible Abel parameter have vanishing first
 cohomology.  The statement is monotone in the degree, so exact admissible degree is a direct
-special case rather than an additional hypothesis. -/
+special case rather than an additional hypothesis.
+
+* Provenance: ADAPTED.
+* TO CHECK: Milne's cited page assumes positive genus, while this fibrewise
+  statement is packaged for all genera; verify the genus-zero scope. -/
 theorem subsingleton_h1_of_divRepAffAdmissibleParameter_le_deg
     (D : (relCurve C L).CurveDivisor)
     (hD : (divRepAffAdmissibleParameter C : ℤ) ≤

@@ -80,7 +80,9 @@ variable (e₁ : A ≃ₗ[S] A') (e₂ : B ≃ₗ[S] B')
 
 /-- **Kernel transport along a commuting square of equivalences.** If
 `e₂ ∘ δ = δ' ∘ e₁` then `ker δ ≃ₗ[S] ker δ'`. Layer 2 uses this to thread the ring-map
-base-change clause through the CBC-1 term identifications. -/
+base-change clause through the CBC-1 term identifications. 
+ * Provenance: CUSTOM.
+-/
 noncomputable def kerCongr (h : ∀ a : A, e₂ (δ a) = δ' (e₁ a)) :
     ↥(LinearMap.ker δ) ≃ₗ[S] ↥(LinearMap.ker δ') where
   toFun x := ⟨e₁ x, by
@@ -97,10 +99,13 @@ noncomputable def kerCongr (h : ∀ a : A, e₂ (δ a) = δ' (e₁ a)) :
   map_smul' c x := Subtype.ext (map_smul e₁ c (x : A))
 
 @[simp]
+/-- Provenance: CUSTOM. -/
 lemma kerCongr_apply_coe (h : ∀ a : A, e₂ (δ a) = δ' (e₁ a)) (x : LinearMap.ker δ) :
     (kerCongr δ δ' e₁ e₂ h x : A') = e₁ (x : A) := rfl
 
-/-- **Surjectivity transport along a commuting square of equivalences.** -/
+/-- **Surjectivity transport along a commuting square of equivalences.** 
+ * Provenance: CUSTOM.
+-/
 theorem surjective_congr (h : ∀ a : A, e₂ (δ a) = δ' (e₁ a))
     (hδ : Function.Surjective δ) : Function.Surjective δ' := by
   intro b
@@ -437,7 +442,12 @@ theorem rigidEngine [IsNoetherianRing R]
 
 /-- **The openness export** (the strata gift, worksheet §3.3): the fibrewise-vanishing
 locus of `H¹` of the pair is open in `Spec R` — COH-1 (Noetherian-free) plus RE-2's
-support argument. -/
+support argument.
+
+* Provenance: ADAPTED.
+* TO CHECK: Kleiman's cited openness argument assumes a Noetherian base, while
+  this export claims the same result over an arbitrary commutative ring;
+  verify the source-to-blueprint hypothesis change. -/
 theorem rigidEngine_isOpen_vanishing
     [Module.Finite R[X] (Module.AEval' (dat.pair hU₀ hU₁).t₀)]
     [Module.Finite R[X] (Module.AEval' (dat.pair hU₀ hU₁).t₁)] :

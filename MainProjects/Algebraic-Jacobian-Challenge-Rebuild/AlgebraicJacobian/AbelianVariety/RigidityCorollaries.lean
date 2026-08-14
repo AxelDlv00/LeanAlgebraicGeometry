@@ -70,6 +70,10 @@ automatically commutes with inversion (`CategoryTheory.inv_hom`).
 
 
  * Provenance: ADAPTED.
+ * TO CHECK: the cited Mumford and Milne statements assume abelian-variety
+   source and target, while this result weakens them to a proper geometrically
+   integral monoid source and a separated locally finite-type group target;
+   verify the hypothesis weakening.
 -/
 theorem isMonHom_of_isProper_of_geometricallyIntegral
     {A B : Over (Spec (CommRingCat.of K))} [MonObj A] [GrpObj B]
