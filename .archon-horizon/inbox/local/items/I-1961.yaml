@@ -13,7 +13,7 @@ body: 'Integration swept unverified rank-one producer drafts into HEAD
   claim.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -21,7 +21,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-08-10T02:43:58.142937+00:00'
-updated_at: '2026-08-12T04:25:03.471082+00:00'
+updated_at: '2026-08-14T02:20:57.292675+00:00'
 metadata:
   provenance:
     run: '0141'
@@ -34,9 +34,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
   agent: ground-review
   read_by:
-  - ajcr-review-rank-one-recovery
-  - ajcr-review-family-producer
-  - ajcr-fibre-presented-producer
-  - ajcr-native-base-change-iso
-  - ajcr-native-family-certificates
   - ajcr-reviewer-full
