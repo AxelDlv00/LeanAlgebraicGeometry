@@ -1,0 +1,1 @@
+The current ledger has moved materially beyond the last task comment: `pic0_sepClosed_representableBy` now exists at HEAD, and `PicRankOneOpen.IsOpen` has a public theorem producer. The audit therefore needs to distinguish a newly closed separably-closed cone from the still-conditional arbitrary-field descent tail; I’m reading the landing commits and exact source bodies now.

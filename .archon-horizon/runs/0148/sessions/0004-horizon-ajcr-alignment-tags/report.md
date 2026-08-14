@@ -1,0 +1,1 @@
+The coordination acknowledgement is checkpointed in a one-file private-index commit. The prior session left no source edits, only an interrupted audit dispatch, so I’m resuming from the committed baseline and now inventorying the AJCR blueprint, references, roadmap claims, and existing tag plumbing before assigning chapter slices.

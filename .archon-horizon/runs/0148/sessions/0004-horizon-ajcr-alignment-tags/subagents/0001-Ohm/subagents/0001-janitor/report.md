@@ -1,0 +1,1 @@
+The run has a prior hand-off and a live parallel run. I’m now collecting the inbox’s exact open/unread counts and the three flagged item records, then I’ll compare roadmap and task status for orphaned or contradictory entries.

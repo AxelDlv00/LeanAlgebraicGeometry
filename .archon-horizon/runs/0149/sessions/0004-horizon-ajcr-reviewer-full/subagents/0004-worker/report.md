@@ -1,0 +1,1 @@
+The janitor requirement is already satisfied by the parent session, so I’m proceeding. Before reading proof obligations into an edit plan, I’m taking the required initial LSP diagnostic snapshot of the exact target module.

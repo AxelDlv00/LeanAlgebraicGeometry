@@ -1,0 +1,1 @@
+The inbox audit shows collection-health warnings (44 open non-protection items, 11 memories, 10 conversations) and two concrete workspace incidents (stale snapshot and concurrent dashboard writers). I’m dispatching a read-only janitor pass now, then I’ll reconcile its findings with the roadmap/task state.
