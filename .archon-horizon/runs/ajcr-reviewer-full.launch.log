@@ -148,3 +148,16 @@ Starting Run (ID: 0144) - 8 rounds (resuming, continuing from round 4) ───
 [HORIZON] ›  Started task: ajcr-reviewer-full
 [HORIZON] ›  Finished task: ajcr-reviewer-full (queued)
 [HORIZON] ✓ Run 0144 finished.
+                                   Run                                   
+┏━━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Name     ┃ Status ┃ Detail                                            ┃
+┡━━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ round 4  │ done   │ ran ajcr-reviewer-full; blocked -; not runnable - │
+│ round 5  │ done   │ ran ajcr-reviewer-full; blocked -; not runnable - │
+│ round 6  │ done   │ ran ajcr-reviewer-full; blocked -; not runnable - │
+│ round 7  │ done   │ ran ajcr-reviewer-full; blocked -; not runnable - │
+│ round 8  │ done   │ ran ajcr-reviewer-full; blocked -; not runnable - │
+│ round 9  │ done   │ ran ajcr-reviewer-full; blocked -; not runnable - │
+│ round 10 │ done   │ ran ajcr-reviewer-full; blocked -; not runnable - │
+│ round 11 │ done   │ ran ajcr-reviewer-full; blocked -; not runnable - │
+└──────────┴────────┴───────────────────────────────────────────────────┘
