@@ -1,5 +1,5 @@
 id: AJCR.picard.c2.functor-lift
-title: Functor-level field-point comparison (C1/C2 lifted from PicEtAff to picEt)
+title: Functor-level field-point comparison (C1/C2 lifted from PicEtAff to picEt) [CUSTOM]
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'The C1/C2 campaign, stated on the plus construction PicEtAff, lifted through

@@ -1,5 +1,5 @@
 id: AJCR.picard.degree.pic0.sb5
-title: 'SB-5: E-iv-alg — $\mathrm{classDeg}_{K_2}(\pi^* L) = \mathrm{classDeg}_{K_1}(L)$;
+title: '[CUSTOM] SB-5: E-iv-alg — $\mathrm{classDeg}_{K_2}(\pi^* L) = \mathrm{classDeg}_{K_1}(L)$;
   $\mathrm{CechPic}(\mathrm{Spec}\,K)$ trivial and $\mathrm{relPicDeg}$ descends'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild

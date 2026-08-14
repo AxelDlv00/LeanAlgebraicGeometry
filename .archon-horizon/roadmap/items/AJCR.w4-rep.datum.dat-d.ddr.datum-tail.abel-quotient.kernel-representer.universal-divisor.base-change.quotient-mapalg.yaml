@@ -1,5 +1,5 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.kernel-representer.universal-divisor.base-change.quotient-mapalg
-title: Descend Cartier ideal base change to DivFamZarAff
+title: Descend Cartier ideal base change to DivFamZarAff [CUSTOM]
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: Prove DivFamZarAff.cartierIdealData_mapAlg and the explicit-map cartierIdealData_mapAlgHom

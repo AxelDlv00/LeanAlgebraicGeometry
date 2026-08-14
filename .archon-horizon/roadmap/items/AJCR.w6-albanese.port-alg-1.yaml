@@ -1,5 +1,5 @@
 id: AJCR.w6-albanese.port-alg-1
-title: 'Port: depth / \(\mathrm{Ext}\)-characterization / Auslander–Buchsbaum / Cohen–Macaulay
+title: '[CUSTOM] Port: depth / \(\mathrm{Ext}\)-characterization / Auslander–Buchsbaum / Cohen–Macaulay
   / regular\(\Rightarrow\)domain package (mathlib-only, split \(\le\)500L)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild

@@ -1,5 +1,5 @@
 id: AJCR.w5-av.data
-title: 'The pinned \(\mathrm{JacobianData}\) interface file: structure + \(\mathrm{GrpObj}\)
+title: '[CUSTOM] The pinned \(\mathrm{JacobianData}\) interface file: structure + \(\mathrm{GrpObj}\)
   / homEquiv consumers (frozen shape, no producer)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild

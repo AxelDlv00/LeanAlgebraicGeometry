@@ -1,5 +1,5 @@
 id: AJCR.review-plan.p4-family-producer.protected-integration
-title: Protected rank-one consumer integration
+title: Protected rank-one consumer integration [CUSTOM]
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: Import the verified native presentation/Split producer through the protected

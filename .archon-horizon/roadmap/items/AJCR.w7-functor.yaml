@@ -1,5 +1,5 @@
 id: AJCR.w7-functor
-title: 'Wave 7: functoriality and base change of fields'
+title: '[CUSTOM] Wave 7: functoriality and base change of fields'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'Jacobian.functor with map_id/map_comp, baseChangeIso (Jac(C)_L = Jac(C_L))

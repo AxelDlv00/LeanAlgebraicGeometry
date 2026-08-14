@@ -1,5 +1,5 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.certificate.finite-field-avoid.descent
-title: Optional finite-field P1 containment/tube endpoint (no R2 consumer)
+title: Optional finite-field P1 containment/tube endpoint (no R2 consumer) [CUSTOM]
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'PENDING, LOW, unowned, and not required by R2. Combining the landed support-cardinality

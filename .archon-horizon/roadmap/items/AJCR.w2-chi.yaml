@@ -1,5 +1,5 @@
 id: AJCR.w2-chi
-title: 'Wave 2b: Euler-characteristic ledger (Riemann-Roch-lite)'
+title: '[CUSTOM] Wave 2b: Euler-characteristic ledger (Riemann-Roch-lite)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'The chi-ledger for line bundles on the curve, DIVISOR-FIRST per the binding

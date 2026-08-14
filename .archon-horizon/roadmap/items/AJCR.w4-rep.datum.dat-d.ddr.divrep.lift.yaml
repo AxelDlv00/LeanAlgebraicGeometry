@@ -1,5 +1,5 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.divrep.lift
-title: 'F6 to F7: the affine-to-general lift (DivRepGlobalData.ofAffine)'
+title: '[CUSTOM] F6 to F7: the affine-to-general lift (DivRepGlobalData.ofAffine)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'DONE: the affine-to-general global lift is landed and consumed by the genus-level

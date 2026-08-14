@@ -1,5 +1,5 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.certificate.chart-trace
-title: 'Chart-trace + satisfiability verdict: no-leak forces closed chart traces;
+title: '[CUSTOM] Chart-trace + satisfiability verdict: no-leak forces closed chart traces;
   a connected divisor must sit in ONE chart'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild

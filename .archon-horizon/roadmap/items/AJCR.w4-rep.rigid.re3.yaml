@@ -1,5 +1,5 @@
 id: AJCR.w4-rep.rigid.re3
-title: 'RE-3: split/flat rigidity — $H^0 \otimes_R P \cong \ker(\delta \otimes P)$
+title: '[CUSTOM] RE-3: split/flat rigidity — $H^0 \otimes_R P \cong \ker(\delta \otimes P)$
   for every module $P$ once $H^1 = 0$; kernel flat, finite projective over Noetherian
   $R$; finite-projective duality'
 projects:

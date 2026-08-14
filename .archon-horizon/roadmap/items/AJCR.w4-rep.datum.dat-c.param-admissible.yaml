@@ -1,5 +1,5 @@
 id: AJCR.w4-rep.datum.dat-c.param-admissible
-title: 'PARAM-ADMISSIBLE: is the chart-index binder hdeg satisfiable, and at which
+title: '[CUSTOM] PARAM-ADMISSIBLE: is the chart-index binder hdeg satisfiable, and at which
   n?'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild

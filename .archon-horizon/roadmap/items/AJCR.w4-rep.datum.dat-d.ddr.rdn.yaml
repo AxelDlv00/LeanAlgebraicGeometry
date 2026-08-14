@@ -1,5 +1,5 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.rdn
-title: 'DD-R RD-N: ideal purity and local principal generation via flatness and Nakayama'
+title: '[CUSTOM] DD-R RD-N: ideal purity and local principal generation via flatness and Nakayama'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'DONE. PointwiseSeedRDN is now promoted to an unconditional ThetaGeneratorSeed.IsGenerator.

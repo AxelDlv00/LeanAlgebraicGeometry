@@ -1,5 +1,5 @@
 id: AJCR.review-plan.p2-parameter-cap
-title: 'Phase 2: complete and cap the arbitrary-degree divisor spine'
+title: '[CUSTOM] Phase 2: complete and cap the arbitrary-degree divisor spine'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: Produce divFunctorAff_representableBy_at with separate gC and nDiv parameters

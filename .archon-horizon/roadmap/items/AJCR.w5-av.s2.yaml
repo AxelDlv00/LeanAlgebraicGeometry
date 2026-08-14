@@ -1,5 +1,5 @@
 id: AJCR.w5-av.s2
-title: 'S2: \(\mathrm{Smooth}\ d.J.\mathrm{hom}\) via smooth_of_grpObj'
+title: '[CUSTOM] S2: \(\mathrm{Smooth}\ d.J.\mathrm{hom}\) via smooth_of_grpObj'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'DONE (run 0073). AbelianVariety/JacobianSmooth.lean: JacobianData.smooth

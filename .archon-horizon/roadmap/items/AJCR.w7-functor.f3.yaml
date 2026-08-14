@@ -1,5 +1,5 @@
 id: AJCR.w7-functor.f3
-title: 'F-3: picEt curve map — componentwise lift through the affine-opens limit,
+title: '[CUSTOM] F-3: picEt curve map — componentwise lift through the affine-opens limit,
   natural vs picEtMap (Picard/PicEtCurveMap.lean); gate F-2'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild

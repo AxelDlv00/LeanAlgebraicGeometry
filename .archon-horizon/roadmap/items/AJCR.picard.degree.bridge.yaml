@@ -1,5 +1,5 @@
 id: AJCR.picard.degree.bridge
-title: 'Meromorphic bridge: $\mathrm{divisorClass}$ is surjective and $[D]=[D^{\prime}]
+title: '[CUSTOM] Meromorphic bridge: $\mathrm{divisorClass}$ is surjective and $[D]=[D^{\prime}]
   \Rightarrow D-D^{\prime} = \mathrm{div}(f)$'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild

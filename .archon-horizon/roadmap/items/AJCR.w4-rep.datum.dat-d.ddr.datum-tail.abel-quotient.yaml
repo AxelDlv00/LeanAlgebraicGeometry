@@ -1,5 +1,5 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient
-title: Admissible divisor quotient represents Pic0 (corrected Altman-Kleiman)
+title: Admissible divisor quotient represents Pic0 (corrected Altman-Kleiman) [ADAPTED]
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'Prove the single endpoint `noncomputable def pic0AdmissibleAbelQuotientRepresenter

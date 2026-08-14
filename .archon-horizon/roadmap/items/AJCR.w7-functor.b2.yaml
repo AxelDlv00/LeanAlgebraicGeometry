@@ -1,5 +1,5 @@
 id: AJCR.w7-functor.b2
-title: 'B-2: PicEtAff base-field shuffle — D2-ii core + B-1 instantiation (Picard/PicEtAffBaseFieldShuffle.lean);
+title: '[CUSTOM] B-2: PicEtAff base-field shuffle — D2-ii core + B-1 instantiation (Picard/PicEtAffBaseFieldShuffle.lean);
   gate D2-ii core (F-2 lane)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild

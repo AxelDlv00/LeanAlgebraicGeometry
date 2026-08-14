@@ -1,5 +1,5 @@
 id: AJCR.review-plan.p4-rank-one-iso
-title: 'Phase 4: canonical family-level rank-one Abel isomorphism'
+title: '[CUSTOM] Phase 4: canonical family-level rank-one Abel isomorphism'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: Construct divisorOfRankOne from the evaluation map f^* f_* L -> L without

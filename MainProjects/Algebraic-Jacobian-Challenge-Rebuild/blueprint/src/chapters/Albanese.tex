@@ -39,6 +39,7 @@ left of the arrow, written \(g \circ f\), is represented by \((U, \varphi
 
 \begin{lemma}[Restriction square]
   \label{lem:ratmap_restrict_square}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.PartialMap.homOfLE_comp_morphismRestrict}
   \leanok
   Let \(p : W \to X\) be a morphism of schemes and \(V \subseteq U\) open subsets
@@ -64,6 +65,7 @@ left of the arrow, written \(g \circ f\), is represented by \((U, \varphi
 
 \begin{definition}[Precomposition of a rational map with an open morphism]
   \label{def:ratmap_precomp}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.PartialMap.precomp,
     AlgebraicGeometry.Scheme.PartialMap.precomp_equiv,
     AlgebraicGeometry.Scheme.RationalMap.precomp,
@@ -102,6 +104,7 @@ left of the arrow, written \(g \circ f\), is represented by \((U, \varphi
 
 \begin{lemma}[Precomposition preserves being over the base]
   \label{lem:ratmap_precomp_over}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.PartialMap.precomp_isOver}
   \uses{def:ratmap_precomp}
   \leanok
@@ -123,6 +126,7 @@ left of the arrow, written \(g \circ f\), is represented by \((U, \varphi
 
 \begin{lemma}[Precomposition commutes with post-composition]
   \label{lem:ratmap_precomp_compHom}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.RationalMap.precomp_compHom}
   \uses{def:ratmap_precomp}
   \leanok
@@ -143,6 +147,7 @@ left of the arrow, written \(g \circ f\), is represented by \((U, \varphi
 
 \begin{lemma}[Precomposing a morphism]
   \label{lem:ratmap_precomp_morphism}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.RationalMap.precomp_hom_toRationalMap}
   \uses{def:ratmap_precomp}
   \leanok
@@ -160,6 +165,7 @@ left of the arrow, written \(g \circ f\), is represented by \((U, \varphi
 
 \begin{lemma}[Precomposition enlarges the domain by the preimage]
   \label{lem:ratmap_le_domain_precomp}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.RationalMap.le_domain_precomp}
   \uses{def:ratmap_precomp}
   \leanok
@@ -178,6 +184,7 @@ left of the arrow, written \(g \circ f\), is represented by \((U, \varphi
 
 \begin{lemma}[Post-composition only enlarges the domain]
   \label{lem:ratmap_le_domain_compHom}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.RationalMap.le_domain_compHom}
   \leanok
   For a rational map \(F : X \dashrightarrow Y\) and a morphism \(g : Y \to Z\),
@@ -194,6 +201,7 @@ left of the arrow, written \(g \circ f\), is represented by \((U, \varphi
 
 \begin{lemma}[Associativity of post-composition]
   \label{lem:ratmap_compHom_compHom}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.RationalMap.compHom_compHom}
   \leanok
   For a rational map \(f : X \dashrightarrow Y\) and morphisms \(g : Y \to Z\),
@@ -220,6 +228,7 @@ each representative \((U, \varphi)\) of a rational map
 
 \begin{theorem}[The function-field correspondence]
   \label{thm:ratmap_functionField_correspondence}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.RationalMap.fromFunctionField,
     AlgebraicGeometry.Scheme.RationalMap.ofFunctionField,
     AlgebraicGeometry.Scheme.RationalMap.equivFunctionField,
@@ -238,6 +247,7 @@ each representative \((U, \varphi)\) of a rational map
 
 \begin{lemma}[Generic-point morphism of a post-composition]
   \label{lem:ratmap_fromFunctionField_compHom}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.RationalMap.fromFunctionField_compHom}
   \uses{thm:ratmap_functionField_correspondence}
   \leanok
@@ -253,6 +263,7 @@ each representative \((U, \varphi)\) of a rational map
 
 \begin{lemma}[Generic-point morphism of a map over the base]
   \label{lem:ratmap_fromFunctionField_over}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.RationalMap.fromFunctionField_comp_structure}
   \uses{lem:ratmap_fromFunctionField_compHom}
   \leanok
@@ -274,6 +285,7 @@ each representative \((U, \varphi)\) of a rational map
 
 \begin{definition}[Pairing of rational maps into a fibre product]
   \label{def:ratmap_prod}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.RationalMap.prod,
     AlgebraicGeometry.Scheme.RationalMap.prod_fromFunctionField}
   \uses{thm:ratmap_functionField_correspondence, lem:ratmap_fromFunctionField_over}
@@ -304,6 +316,7 @@ each representative \((U, \varphi)\) of a rational map
 
 \begin{lemma}[The projections of the pairing recover the factors]
   \label{lem:ratmap_prod_proj}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.RationalMap.prod_compHom_fst,
     AlgebraicGeometry.Scheme.RationalMap.prod_compHom_snd}
   \uses{def:ratmap_prod, lem:ratmap_fromFunctionField_compHom,
@@ -328,6 +341,7 @@ each representative \((U, \varphi)\) of a rational map
 
 \begin{lemma}[The pairing is over the base]
   \label{lem:ratmap_prod_over}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.RationalMap.prod_compHom_over}
   \uses{def:ratmap_prod, lem:ratmap_prod_proj, lem:ratmap_compHom_compHom}
   \leanok
@@ -352,6 +366,7 @@ agree on a dense open of a reduced scheme agree, cf.\
 
 \begin{definition}[The maximal representative]
   \label{def:ratmap_toPartialMap}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.RationalMap.toPartialMap,
     AlgebraicGeometry.Scheme.RationalMap.toRationalMap_toPartialMap}
   \mathlibok
@@ -364,6 +379,7 @@ agree on a dense open of a reduced scheme agree, cf.\
 
 \begin{definition}[The explicit pairing representative]
   \label{def:ratmap_pairPartialMap}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.RationalMap.pairPartialMap}
   \uses{def:ratmap_toPartialMap}
   \leanok
@@ -390,6 +406,7 @@ agree on a dense open of a reduced scheme agree, cf.\
 
 \begin{lemma}[The pairing representative represents the pairing]
   \label{lem:ratmap_pairPartialMap_represents}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.RationalMap.pairPartialMap_toRationalMap}
   \uses{def:ratmap_pairPartialMap, def:ratmap_prod,
     thm:ratmap_functionField_correspondence}
@@ -411,6 +428,7 @@ agree on a dense open of a reduced scheme agree, cf.\
 
 \begin{lemma}[The pairing is defined wherever both factors are]
   \label{lem:ratmap_le_domain_prod}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.RationalMap.le_domain_prod}
   \uses{lem:ratmap_pairPartialMap_represents}
   \leanok
@@ -430,6 +448,7 @@ agree on a dense open of a reduced scheme agree, cf.\
 
 \begin{definition}[Germ pullback along a rational map]
   \label{def:ratmap_stalkPullback}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.RationalMap.stalkPullback}
   \uses{thm:ratmap_functionField_correspondence}
   \leanok
@@ -445,6 +464,7 @@ agree on a dense open of a reduced scheme agree, cf.\
 
 \begin{theorem}[A dominant rational map hits the generic point]
   \label{thm:ratmap_dominant_generic}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.RationalMap.fromFunctionField_base_eq_genericPoint}
   \uses{thm:ratmap_functionField_correspondence}
   \leanok
@@ -473,6 +493,7 @@ agree on a dense open of a reduced scheme agree, cf.\
 
 \begin{definition}[Function-field pullback of a dominant rational map]
   \label{def:ratmap_functionFieldPullback}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.RationalMap.functionFieldPullback}
   \uses{def:ratmap_stalkPullback, thm:ratmap_dominant_generic}
   \leanok
@@ -500,6 +521,7 @@ group homomorphism. We use this \emph{hom-group calculus} freely.
 
 \begin{definition}[The difference morphism of a group object]
   \label{def:grp_diff}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.GrpObj.diff}
   \leanok
   For a group object \(G\) in a cartesian monoidal category, the
@@ -514,6 +536,7 @@ group homomorphism. We use this \emph{hom-group calculus} freely.
 
 \begin{lemma}[Reconstruction identity]
   \label{lem:grp_diff_reconstruct}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.GrpObj.lift_diff_lift_mul}
   \uses{def:grp_diff}
   \leanok
@@ -542,6 +565,7 @@ this category.
 
 \begin{definition}[The difference and multiplication morphisms of a group scheme]
   \label{def:grp_scheme_diff}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.grpObjDiffLeft,
     AlgebraicGeometry.grpObjMulLeft,
     AlgebraicGeometry.grpObjDiffLeft_comp_hom}
@@ -562,6 +586,7 @@ this category.
 
 \begin{lemma}[Scheme-level reconstruction identity]
   \label{lem:grp_scheme_diff_reconstruct}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.pullback_lift_diff_lift_mul}
   \uses{def:grp_scheme_diff, lem:grp_diff_reconstruct}
   \leanok
@@ -588,6 +613,7 @@ this category.
 
 \begin{lemma}[The projections of a smooth self-product are open]
   \label{lem:self_product_open}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.isOpenMap_pullback_fst_self,
     AlgebraicGeometry.isOpenMap_pullback_snd_self}
   \leanok
@@ -603,6 +629,7 @@ this category.
 
 \begin{definition}[Milne's difference rational map]
   \label{def:difference_map}
+  \provenancetag{REFERENCE}
   \lean{AlgebraicGeometry.Scheme.RationalMap.differenceRationalMap}
   \uses{def:ratmap_precomp, lem:self_product_open, def:ratmap_prod,
     def:grp_scheme_diff, lem:ratmap_precomp_over, lem:ratmap_precomp_compHom,
@@ -629,6 +656,7 @@ this category.
 
 \begin{lemma}[The difference map is over the base]
   \label{lem:difference_map_over}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.RationalMap.differenceRationalMap_compHom_over}
   \uses{def:difference_map, lem:ratmap_compHom_compHom, lem:ratmap_prod_over,
     def:grp_scheme_diff}
@@ -648,6 +676,7 @@ this category.
 
 \begin{definition}[The explicit pairing representative of the difference map]
   \label{def:difference_pairing}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.RationalMap.precompDiffPairing}
   \uses{def:ratmap_toPartialMap, def:ratmap_precomp, lem:self_product_open,
     lem:ratmap_precomp_over}
@@ -674,6 +703,7 @@ this category.
 
 \begin{lemma}[The pairing representative represents the pairing of the pullbacks]
   \label{lem:difference_pairing_represents}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.RationalMap.precompDiffPairing_toRationalMap}
   \uses{def:difference_pairing, def:ratmap_prod,
     thm:ratmap_functionField_correspondence}
@@ -697,6 +727,7 @@ this category.
 \begin{theorem}[The difference map is defined on
     \(\operatorname{Dom}(f) \times \operatorname{Dom}(f)\)]
   \label{thm:difference_map_domain}
+  \provenancetag{REFERENCE}
   \lean{AlgebraicGeometry.Scheme.RationalMap.le_domain_differenceRationalMap}
   \uses{def:difference_map, lem:difference_pairing_represents,
     lem:ratmap_le_domain_compHom}
@@ -726,6 +757,7 @@ this category.
 
 \begin{theorem}[Reconstruction of \(f \circ \mathrm{pr}_1\) from the difference map]
   \label{thm:difference_reconstruct}
+  \provenancetag{REFERENCE}
   \lean{AlgebraicGeometry.Scheme.RationalMap.reconstruct_precomp_fst}
   \uses{def:difference_map, lem:difference_map_over, def:ratmap_prod,
     lem:grp_scheme_diff_reconstruct, lem:ratmap_fromFunctionField_compHom,
@@ -760,6 +792,7 @@ this category.
 
 \begin{theorem}[Domain reflection through the difference map]
   \label{thm:difference_domain_reflection}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicGeometry.Scheme.RationalMap.le_domain_precomp_fst_of_difference}
   \uses{thm:difference_reconstruct, lem:ratmap_le_domain_compHom,
     lem:ratmap_le_domain_prod, lem:ratmap_le_domain_precomp}
@@ -804,6 +837,7 @@ regular local ring of dimension \(\geq 2\).
 
 \begin{lemma}[Swap lemma]
   \label{lem:swap_lemma}
+  \provenancetag{CUSTOM}
   \lean{mem_span_singleton_of_swap_pair}
   \leanok
   Let \(A\) be a domain, and let \(u, v, b, x \in A\) with \(u \neq 0\) and
@@ -825,6 +859,7 @@ regular local ring of dimension \(\geq 2\).
 
 \begin{theorem}[Swap pairs exist in regular local rings of dimension \(\geq 2\)]
   \label{thm:swap_pair_exists}
+  \provenancetag{CUSTOM}
   \lean{IsRegularLocalRing.exists_swap_pair_of_two_le_ringKrullDim}
   \uses{lem:notMemSq_witness, lem:regular_quotient, thm:regular_isDomain}
   \leanok
@@ -852,6 +887,7 @@ regular local ring of dimension \(\geq 2\).
 
 \begin{theorem}[Height bound for colon primes of principal ideals]
   \label{thm:colon_height_le_one}
+  \provenancetag{CUSTOM}
   \lean{Ideal.height_le_one_of_colon_span_singleton}
   \uses{lem:swap_lemma, thm:swap_pair_exists}
   \leanok
@@ -889,6 +925,7 @@ regular local ring of dimension \(\geq 2\).
 
 \begin{theorem}[Existence of a height-one pole prime]
   \label{thm:pole_prime_height_one}
+  \provenancetag{CUSTOM}
   \lean{exists_height_one_prime_colon_le}
   \uses{thm:colon_height_le_one}
   \leanok
@@ -940,6 +977,7 @@ regular local ring of dimension \(\geq 2\).
 
 \begin{theorem}[Purity of the polar locus]
   \label{thm:pole_purity}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicGeometry.Scheme.exists_specializes_coheight_eq_one_of_notMem_stalk_range}
   \uses{thm:pole_prime_height_one, thm:stalk_dim_coheight}
   \leanok
@@ -1010,6 +1048,7 @@ codimension one.
 
 \begin{theorem}[Slice witness on the self-product]
   \label{thm:fibre_slice_witness}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicGeometry.exists_snd_mem_of_fst_eq_of_mem}
   \uses{lem:self_product_open}
   \leanok
@@ -1048,6 +1087,7 @@ codimension one.
 
 \begin{theorem}[Slice witness for the difference map]
   \label{thm:difference_slice_witness}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicGeometry.Scheme.RationalMap.exists_mem_domain_precomp_fst_of_differenceRationalMap}
   \uses{thm:fibre_slice_witness, thm:difference_domain_reflection}
   \leanok
@@ -1070,6 +1110,7 @@ codimension one.
 
 \begin{theorem}[Height-one transport of Krull's Hauptidealsatz]
   \label{thm:krull_height_one_transport}
+  \provenancetag{REFERENCE}
   \lean{Ideal.exists_height_one_prime_mem_le}
   \leanok
   \source{stacks-project}
@@ -1092,6 +1133,7 @@ codimension one.
 
 \begin{lemma}[Regularity propagates to generisations]
   \label{lem:regular_at_generisation}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.range_algebraMap_stalk_le_of_specializes}
   \leanok
   Let \(X\) be an irreducible scheme and \(z \rightsquigarrow P\) a
@@ -1115,6 +1157,7 @@ codimension one.
 
 \begin{theorem}[The zero locus of a regular function is pure codimension one]
   \label{thm:zero_locus_pure_codim_one}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicGeometry.Scheme.exists_specializes_coheight_eq_one_of_mem_maximalIdeal}
   \uses{thm:pole_purity, lem:regular_at_generisation}
   \leanok
@@ -1161,6 +1204,7 @@ valuation rings at codimension-one points.
 
 \begin{theorem}[Standard-smooth charts]
   \label{thm:smooth_chart}
+  \provenancetag{REFERENCE}
   \lean{AlgebraicGeometry.Scheme.exists_isStandardSmooth_at_of_smooth}
   \leanok
   \source{stacks-project}
@@ -1181,6 +1225,7 @@ valuation rings at codimension-one points.
 
 \begin{lemma}[K\"ahler differentials of a standard-smooth algebra are free]
   \label{lem:ss_kaehler_free}
+  \provenancetag{REFERENCE}
   \lean{AlgebraicGeometry.Scheme.module_free_kaehlerDifferential_of_isStandardSmooth}
   \leanok
   \source{stacks-project}
@@ -1199,6 +1244,7 @@ valuation rings at codimension-one points.
 
 \begin{lemma}[Freeness of K\"ahler differentials localises]
   \label{lem:kaehler_free_localization}
+  \provenancetag{REFERENCE}
   \lean{AlgebraicGeometry.Scheme.module_free_kaehlerDifferential_localization}
   \leanok
   \source{stacks-project}
@@ -1215,6 +1261,7 @@ valuation rings at codimension-one points.
 
 \begin{lemma}[Rank of the localised K\"ahler differentials]
   \label{lem:kaehler_rank_localization}
+  \provenancetag{REFERENCE}
   \lean{AlgebraicGeometry.Scheme.rank_kaehlerDifferential_localization_eq_relativeDimension}
   \uses{lem:ss_kaehler_free, lem:kaehler_free_localization}
   \leanok
@@ -1235,6 +1282,7 @@ valuation rings at codimension-one points.
 
 \begin{theorem}[Cotangent dimension at a rational point]
   \label{thm:cotangent_finrank_rational}
+  \provenancetag{REFERENCE}
   \lean{AlgebraicGeometry.Scheme.finrank_cotangentSpace_of_bijective_algebraMap_residue}
   \leanok
   \source{stacks-project}
@@ -1276,6 +1324,7 @@ valuation rings at codimension-one points.
 
 \begin{lemma}[Sections of the point over a field]
   \label{lem:gamma_spec_field}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.gammaSpecField_ringEquiv}
   \leanok
   Let \(k\) be a field and \(U\) a nonempty open of \(\Spec k\). Then
@@ -1290,6 +1339,7 @@ valuation rings at codimension-one points.
 \begin{theorem}[Regularity at a rational closed point of a standard-smooth
     algebra]
   \label{thm:ss_regular_rational}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.isRegularLocalRing_localization_of_isStandardSmooth_of_bijective_residue}
   \uses{lem:kaehler_free_localization, lem:kaehler_rank_localization,
     thm:cotangent_finrank_rational, lem:standard_smooth_dim_lower_localized,
@@ -1322,6 +1372,7 @@ valuation rings at codimension-one points.
 \begin{theorem}[Regularity at every closed point over an algebraically closed
     field]
   \label{thm:ss_regular_closed}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.isRegularLocalRing_localizationAtPrime_of_isStandardSmooth_of_isAlgClosed}
   \uses{thm:ss_regular_rational}
   \leanok
@@ -1342,6 +1393,7 @@ valuation rings at codimension-one points.
 \begin{theorem}[Standard-smooth algebras over an algebraically closed field are
     reduced]
   \label{thm:ss_reduced}
+  \provenancetag{REFERENCE}
   \lean{AlgebraicGeometry.Scheme.isReduced_of_isStandardSmooth_of_isAlgClosed}
   \uses{thm:ss_regular_closed, thm:regular_isDomain}
   \leanok
@@ -1361,6 +1413,7 @@ valuation rings at codimension-one points.
 
 \begin{theorem}[A scheme smooth over an algebraically closed field is reduced]
   \label{thm:smooth_scheme_reduced}
+  \provenancetag{REFERENCE}
   \lean{AlgebraicGeometry.Scheme.isReduced_of_smooth_of_isAlgClosed}
   \uses{thm:smooth_chart, lem:gamma_spec_field, thm:ss_reduced}
   \leanok
@@ -1381,6 +1434,7 @@ valuation rings at codimension-one points.
 
 \begin{theorem}[Regularity of all stalks of a smooth variety]
   \label{thm:smooth_stalk_regular}
+  \provenancetag{REFERENCE}
   \lean{AlgebraicGeometry.Scheme.isRegularLocalRing_stalk_of_smooth}
   \uses{thm:smooth_chart, lem:gamma_spec_field, thm:smooth_prime_regularity}
   \leanok
@@ -1403,6 +1457,7 @@ valuation rings at codimension-one points.
 
 \begin{theorem}[Integrality of the self-product]
   \label{thm:self_product_integral}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.isIntegral_pullback_self}
   \uses{thm:smooth_scheme_reduced}
   \leanok
@@ -1426,6 +1481,7 @@ valuation rings at codimension-one points.
 
 \begin{theorem}[Matsumura's regular-sequence criterion]
   \label{thm:matsumura_regular_sequence}
+  \provenancetag{CUSTOM}
   \lean{matsumura_isRegular_of_linearIndependent_cotangent}
   \uses{thm:regular_isDomain, lem:regular_quotient}
   \leanok
@@ -1481,6 +1537,7 @@ valuation rings at codimension-one points.
 
 \begin{theorem}[Smooth and codimension one implies a discrete valuation ring]
   \label{thm:smooth_codim_one_dvr}
+  \provenancetag{REFERENCE}
   \lean{AlgebraicGeometry.Scheme.localRing_dvr_of_codim_one}
   \uses{thm:smooth_stalk_regular, thm:stalk_dim_coheight, thm:regular_isDomain}
   \leanok
@@ -1511,6 +1568,7 @@ valuation rings at codimension-one points.
 
 \begin{definition}[Indeterminacy locus]
   \label{def:indeterminacy_locus}
+  \provenancetag{REFERENCE}
   \lean{AlgebraicGeometry.Scheme.RationalMap.indeterminacyLocus}
   \leanok
   \source{abelian-varieties:page-0022}
@@ -1525,6 +1583,7 @@ valuation rings at codimension-one points.
 
 \begin{definition}[Codimension-one-indeterminacy-free rational maps]
   \label{def:codim_one_free}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.RationalMap.CodimOneFree}
   \uses{def:indeterminacy_locus}
   \leanok
@@ -1536,6 +1595,7 @@ valuation rings at codimension-one points.
 
 \begin{definition}[The Milne 3.3 indeterminacy property]
   \label{def:milne33_indeterminacy}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicGeometry.Scheme.RationalMap.Milne33Indeterminacy}
   \uses{def:indeterminacy_locus}
   \leanok
@@ -1568,6 +1628,7 @@ valuation rings at codimension-one points.
 
 \begin{theorem}[Milne's Theorem 3.1: indeterminacy in codimension \(\geq 2\)]
   \label{thm:indeterminacy_codimGe2}
+  \provenancetag{REFERENCE}
   \lean{AlgebraicGeometry.Scheme.RationalMap.indeterminacy_codimGe2_of_smooth_of_complete}
   \uses{def:indeterminacy_locus, thm:smooth_codim_one_dvr,
     thm:ratmap_functionField_correspondence,
@@ -1635,6 +1696,7 @@ valuation rings at codimension-one points.
 
 \begin{corollary}[Rational maps to complete varieties are codimension-one-free]
   \label{cor:codim_one_free_complete}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicGeometry.Scheme.RationalMap.codimOneFree_of_smooth_of_complete}
   \uses{thm:indeterminacy_codimGe2, def:codim_one_free}
   \leanok
@@ -1661,6 +1723,7 @@ count that pins the pole point of the difference map to codimension one.
 
 \begin{lemma}[The quotient dimension is the coheight]
   \label{lem:ringKrullDim_quotient_eq_coheight}
+  \provenancetag{CUSTOM}
   \lean{ringKrullDim_quotient_eq_coheight}
   \leanok
   For a prime \(\mathfrak p\) of a commutative ring \(R\),
@@ -1682,6 +1745,7 @@ count that pins the pole point of the difference map to codimension one.
 
 \begin{lemma}[Depth drop along a regular element]
   \label{lem:depth_quotSMulTop}
+  \provenancetag{CUSTOM}
   \lean{RingTheory.Module.depth_le_depth_quotSMulTop_add_one}
   \uses{thm:depth_ses, def:depth}
   \leanok
@@ -1704,6 +1768,7 @@ count that pins the pole point of the difference map to codimension one.
 
 \begin{theorem}[Ischebeck's bound]
   \label{thm:ischebeck}
+  \provenancetag{CUSTOM}
   \lean{RingTheory.Module.depth_le_coheight_of_isAssociatedPrime}
   \uses{def:depth, lem:depth_quotSMulTop, lem:ringKrullDim_quotient_eq_coheight}
   \leanok
@@ -1750,6 +1815,7 @@ count that pins the pole point of the difference map to codimension one.
 
 \begin{theorem}[Cohen--Macaulay unmixedness]
   \label{thm:cm_unmixed}
+  \provenancetag{CUSTOM}
   \lean{RingTheory.CohenMacaulay.coheight_eq_ringKrullDim_of_isAssociatedPrime,
     RingTheory.CohenMacaulay.ringKrullDim_quotient_eq_of_isAssociatedPrime}
   \uses{thm:ischebeck, def:cohen_macaulay, lem:ringKrullDim_quotient_eq_coheight}
@@ -1772,6 +1838,7 @@ count that pins the pole point of the difference map to codimension one.
 
 \begin{theorem}[Associated primes of a Cohen--Macaulay ring are minimal]
   \label{thm:cm_ass_minimal}
+  \provenancetag{CUSTOM}
   \lean{RingTheory.CohenMacaulay.mem_minimalPrimes_of_isAssociatedPrime}
   \uses{thm:cm_unmixed}
   \leanok
@@ -1791,6 +1858,7 @@ count that pins the pole point of the difference map to codimension one.
 
 \begin{theorem}[Equidimensionality at a height-one prime]
   \label{thm:cm_height_one}
+  \provenancetag{CUSTOM}
   \lean{RingTheory.CohenMacaulay.ringKrullDim_quotient_add_one_of_height_eq_one}
   \uses{thm:ischebeck, thm:cm_ass_minimal, lem:depth_quotSMulTop, def:cohen_macaulay,
     lem:ringKrullDim_quotient_eq_coheight}
@@ -1836,6 +1904,7 @@ count that pins the pole point of the difference map to codimension one.
 
 \begin{lemma}[A prime of maximal coheight is minimal]
   \label{lem:coheight_eq_dim_minimal}
+  \provenancetag{CUSTOM}
   \lean{RingTheory.mem_minimalPrimes_of_coheight_eq_ringKrullDim}
   \leanok
   In a commutative ring \(R\) of finite Krull dimension, a prime \(\mathfrak p\)
@@ -1852,6 +1921,7 @@ count that pins the pole point of the difference map to codimension one.
 
 \begin{lemma}[Equal-dimension surjection has trivial kernel]
   \label{lem:ker_eq_bot_equal_dim}
+  \provenancetag{CUSTOM}
   \lean{RingTheory.CohenMacaulay.ker_eq_bot_of_spanFinrank_eq}
   \uses{thm:regular_isDomain, lem:coheight_eq_dim_minimal,
     lem:ringKrullDim_quotient_eq_coheight}
@@ -1874,6 +1944,7 @@ count that pins the pole point of the difference map to codimension one.
 
 \begin{lemma}[Cotangent detection of a kernel element]
   \label{lem:exists_mem_ker_notMemSq}
+  \provenancetag{CUSTOM}
   \lean{RingTheory.CohenMacaulay.exists_mem_ker_notMem_sq}
   \leanok
   Let \(\varphi : B \twoheadrightarrow A\) be a surjection of Noetherian local
@@ -1895,6 +1966,7 @@ count that pins the pole point of the difference map to codimension one.
 
 \begin{theorem}[Kernels of surjections of regular local rings]
   \label{thm:ker_gen_regular_local}
+  \provenancetag{CUSTOM}
   \lean{RingTheory.CohenMacaulay.exists_ofList_eq_ker_of_surjective,
     RingTheory.CohenMacaulay.exists_ofList_eq_ker_length_add_ringKrullDim}
   \uses{thm:regular_isDomain, lem:regular_quotient, lem:ker_eq_bot_equal_dim,
@@ -1923,6 +1995,7 @@ count that pins the pole point of the difference map to codimension one.
 
 \begin{theorem}[Krull codimension count]
   \label{thm:krull_codim_count}
+  \provenancetag{CUSTOM}
   \lean{RingTheory.CohenMacaulay.ringKrullDim_le_length_add_one_of_forall_le_isPrime}
   \uses{thm:cm_height_one}
   \leanok
@@ -1948,6 +2021,7 @@ count that pins the pole point of the difference map to codimension one.
 
 \begin{theorem}[Transported codimension count]
   \label{thm:transport_codim_count}
+  \provenancetag{CUSTOM}
   \lean{RingTheory.CohenMacaulay.ringKrullDim_le_one_of_minimalPrimes_of_surjective}
   \uses{thm:ker_gen_regular_local, thm:krull_codim_count}
   \leanok
@@ -1995,6 +2069,7 @@ germ-anchored spreading criterion (substep~3), and the diagonal--pole transport
 
 \begin{lemma}[Representative agreement of the difference map]
   \label{lem:diff_representative_agreement}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.RationalMap.comp_toPartialMap_hom_of_fac}
   \uses{def:difference_map, def:difference_pairing, def:grp_scheme_diff}
   \leanok
@@ -2025,6 +2100,7 @@ germ-anchored spreading criterion (substep~3), and the diagonal--pole transport
 
 \begin{lemma}[The evaluation formula]
   \label{lem:diff_evaluation_formula}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicGeometry.Scheme.RationalMap.comp_toPartialMap_hom_eq_diff}
   \uses{lem:diff_representative_agreement, def:difference_pairing, def:grp_scheme_diff}
   \leanok
@@ -2055,6 +2131,7 @@ germ-anchored spreading criterion (substep~3), and the diagonal--pole transport
 
 \begin{theorem}[Diagonal triviality]
   \label{thm:diagonal_triviality}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicGeometry.Scheme.RationalMap.selfDiag_comp_toPartialMap_hom,
     AlgebraicGeometry.Scheme.RationalMap.toPartialMap_hom_base_selfDiag_eq}
   \uses{lem:diff_evaluation_formula, def:grp_scheme_diff}
@@ -2078,6 +2155,7 @@ germ-anchored spreading criterion (substep~3), and the diagonal--pole transport
 
 \begin{lemma}[The diagonal maps into the domain of the difference map]
   \label{lem:diff_diagonal_domain}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.RationalMap.selfDiag_base_mem_domain}
   \uses{thm:difference_map_domain}
   \leanok
@@ -2094,6 +2172,7 @@ germ-anchored spreading criterion (substep~3), and the diagonal--pole transport
 
 \begin{theorem}[The generic image specialises to the unit]
   \label{thm:generic_image_specializes_unit}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicGeometry.Scheme.RationalMap.toPartialMap_hom_base_specializes_unit}
   \uses{thm:diagonal_triviality, lem:diff_diagonal_domain}
   \leanok
@@ -2116,6 +2195,7 @@ germ-anchored spreading criterion (substep~3), and the diagonal--pole transport
 
 \begin{lemma}[Jacobson density of closed points]
   \label{lem:jacobson_closed_points}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.exists_isClosed_singleton_mem_of_isLocallyClosed,
     AlgebraicGeometry.exists_isClosed_singleton_mem_of_isOpen}
   \leanok
@@ -2135,6 +2215,7 @@ germ-anchored spreading criterion (substep~3), and the diagonal--pole transport
 
 \begin{theorem}[The row argument: substep 2, hard direction]
   \label{thm:row_section}
+  \provenancetag{REFERENCE}
   \lean{AlgebraicGeometry.Scheme.RationalMap.mem_domain_of_selfDiag_mem_domain}
   \uses{lem:diff_evaluation_formula, lem:grp_scheme_diff_reconstruct,
     lem:jacobson_closed_points}
@@ -2174,6 +2255,7 @@ germ-anchored spreading criterion (substep~3), and the diagonal--pole transport
 
 \begin{theorem}[The abstract spreading criterion]
   \label{thm:spreading_criterion_stalk}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicGeometry.Scheme.RationalMap.mem_domain_of_fromSpecStalk}
   \leanok
   \source{abelian-varieties:page-0023}
@@ -2203,6 +2285,7 @@ germ-anchored spreading criterion (substep~3), and the diagonal--pole transport
 
 \begin{theorem}[The germ-range criterion: substep 3]
   \label{thm:germ_range_criterion}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicGeometry.Scheme.RationalMap.mem_domain_of_forall_germ_mem_range}
   \uses{thm:spreading_criterion_stalk}
   \leanok
@@ -2234,6 +2317,7 @@ germ-anchored spreading criterion (substep~3), and the diagonal--pole transport
 
 \begin{theorem}[Definedness gives germ-range membership: substep 3, easy direction]
   \label{thm:germ_range_of_domain}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicGeometry.Scheme.RationalMap.germ_stalkPullback_mem_range_of_mem_domain}
   \leanok
   \source{abelian-varieties:page-0023}
@@ -2254,6 +2338,7 @@ germ-anchored spreading criterion (substep~3), and the diagonal--pole transport
 
 \begin{theorem}[Pole existence where the map is undefined]
   \label{thm:pole_existence}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicGeometry.Scheme.RationalMap.exists_germ_stalkPullback_notMem_range_of_notMem_domain}
   \uses{thm:germ_range_criterion, thm:pole_purity}
   \leanok
@@ -2277,6 +2362,7 @@ germ-anchored spreading criterion (substep~3), and the diagonal--pole transport
 
 \begin{lemma}[Chart image point of a closed immersion]
   \label{lem:chart_image_point}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicGeometry.Scheme.exists_base_eq_fromSpec_of_ker_app_le}
   \leanok
   \source{abelian-varieties:page-0024}
@@ -2297,6 +2383,7 @@ germ-anchored spreading criterion (substep~3), and the diagonal--pole transport
 
 \begin{theorem}[The transport kernel]
   \label{thm:transport_kernel}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicGeometry.Scheme.exists_specializes_ringKrullDim_stalk_le_one_of_notMem_stalk_range}
   \uses{lem:chart_image_point, thm:transport_codim_count, lem:regular_at_generisation}
   \leanok
@@ -2334,6 +2421,7 @@ germ-anchored spreading criterion (substep~3), and the diagonal--pole transport
 
 \begin{lemma}[The generic-value bridge]
   \label{lem:generic_value_bridge}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.PartialMap.hom_base_genericPoint}
   \leanok
   For a partial map \(g : Y \dashrightarrow Z\) out of an integral scheme,
@@ -2351,6 +2439,7 @@ germ-anchored spreading criterion (substep~3), and the diagonal--pole transport
 
 \begin{lemma}[Coheight strictness]
   \label{lem:coheight_strictness}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.coheight_add_one_le_of_specializes,
     AlgebraicGeometry.Scheme.one_le_coheight_of_ne_genericPoint}
   \leanok
@@ -2372,6 +2461,7 @@ germ-anchored spreading criterion (substep~3), and the diagonal--pole transport
 
 \begin{theorem}[The codimension-one transport: substep 4b]
   \label{thm:transport_assembly}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicGeometry.Scheme.RationalMap.exists_notMem_domain_specializes_coheight_eq_one}
   \uses{thm:row_section, thm:pole_existence, thm:transport_kernel,
     lem:diff_diagonal_domain, thm:diagonal_triviality, thm:germ_range_of_domain,
@@ -2418,6 +2508,7 @@ germ-anchored spreading criterion (substep~3), and the diagonal--pole transport
 
 \begin{theorem}[Milne's Lemma 3.3]
   \label{thm:milne33_keystone}
+  \provenancetag{REFERENCE}
   \lean{AlgebraicGeometry.Scheme.RationalMap.indeterminacy_pure_codim_one_into_grpScheme}
   \uses{def:milne33_indeterminacy, def:indeterminacy_locus, thm:transport_assembly,
     lem:jacobson_closed_points, lem:coheight_strictness}
@@ -2460,6 +2551,7 @@ germ-anchored spreading criterion (substep~3), and the diagonal--pole transport
 
 \begin{lemma}[Morphisms are determined by their rational-map class]
   \label{lem:ratmap_hom_ext}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.RationalMap.hom_ext_of_toRationalMap_eq}
   \leanok
   Let \(X\) be a reduced scheme, \(Y\) a separated scheme, and
@@ -2480,6 +2572,7 @@ germ-anchored spreading criterion (substep~3), and the diagonal--pole transport
 
 \begin{theorem}[Extension from an empty indeterminacy locus]
   \label{thm:extension_unique_of_empty}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.RationalMap.existsUnique_hom_of_indeterminacyLocus_eq_empty}
   \uses{def:indeterminacy_locus, def:ratmap_toPartialMap, lem:ratmap_hom_ext}
   \leanok
@@ -2504,6 +2597,7 @@ germ-anchored spreading criterion (substep~3), and the diagonal--pole transport
 
 \begin{theorem}[Milne's Theorem 3.2: extension to an abelian variety]
   \label{thm:extend_to_av}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicGeometry.Scheme.RationalMap.extend_to_av}
   \uses{def:milne33_indeterminacy, thm:indeterminacy_codimGe2,
     thm:extension_unique_of_empty, thm:smooth_scheme_reduced}

@@ -1,5 +1,5 @@
 id: AJCR.w4-rep.datum.dat-g.genus-chart-finite-descent.fpqc-descent.cover-package
-title: Package one finite Galois point cover and all chart indices
+title: Package one finite Galois point cover and all chart indices [CUSTOM]
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: Produce one finite Galois extension L/k, prove Spec L to Spec k is an fpqc

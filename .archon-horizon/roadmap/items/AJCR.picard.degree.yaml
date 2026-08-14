@@ -1,5 +1,5 @@
 id: AJCR.picard.degree
-title: Degree and the Pic^0 subfunctor
+title: Degree and the Pic^0 subfunctor [CUSTOM]
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: The degree map on picEt via the chi-ledger (degree = chi(L) - chi(O)), its

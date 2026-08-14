@@ -1,5 +1,5 @@
 id: AJCR.w6-albanese.aj-datum
-title: Datum-level Abel-Jacobi map and pointing law (ofCurve / comp_ofCurve)
+title: Datum-level Abel-Jacobi map and pointing law (ofCurve / comp_ofCurve) [CUSTOM]
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "DONE 2026-07-26 (run 0048 round 2), commit 7e5e268a6, Picard/JacobianDataAbel.lean.\n\

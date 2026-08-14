@@ -1,5 +1,5 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.seed-fibre-models
-title: 'DD-R seed fibre models: relation-image models at stages zero and one'
+title: '[CUSTOM] DD-R seed fibre models: relation-image models at stages zero and one'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: LANDED. DivSchemeHighWindowFibreModelBase proves the residue-prime relation-image

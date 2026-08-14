@@ -1,5 +1,5 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.kernel-representer.universal-divisor.base-change.intrinsic-comap
-title: Compare intrinsic Cartier ideals under pullback
+title: Compare intrinsic Cartier ideals under pullback [CUSTOM]
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: For LocalEquations.pullback along an affine morphism, identify cartierIdealData

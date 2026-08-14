@@ -1,5 +1,5 @@
 id: AJCR.w2-chi.ledger
-title: chi additivity along point twists
+title: chi additivity along point twists [CUSTOM]
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'DONE (560403474e): $\chi(\mathcal{O}(D)) = \chi(\mathcal{O}(D - x)) + \deg_K

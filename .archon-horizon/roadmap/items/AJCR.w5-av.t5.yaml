@@ -1,5 +1,5 @@
 id: AJCR.w5-av.t5
-title: 'T5: the scalar identity \(\dim_k T_0(d.J) = g\) (scalar-identity-first discipline)'
+title: '[CUSTOM] T5: the scalar identity \(\dim_k T_0(d.J) = g\) (scalar-identity-first discipline)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'SPINE LANDED, numeral open (run 0073). Tangent/Pic0TangentSpace.lean, against

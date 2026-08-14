@@ -1,5 +1,5 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.certificate.finite-field-avoid
-title: Auxiliary finite-field P1 avoidance (off the R2 critical path)
+title: Auxiliary finite-field P1 avoidance (off the R2 critical path) [CUSTOM]
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'OFF THE R2 CRITICAL PATH (protection I-0492). The cardinality theorem and

@@ -1,5 +1,5 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.certificate.finite-field-avoid.cardinality
-title: Finite-cardinality P1 avoidance with a two-point margin
+title: Finite-cardinality P1 avoidance with a two-point margin [CUSTOM]
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: Prove that a finite subset S of P1(k) can be moved into the overlap of two

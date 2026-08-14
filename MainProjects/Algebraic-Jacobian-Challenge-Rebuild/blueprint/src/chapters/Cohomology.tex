@@ -27,6 +27,7 @@ Grothendieck abelian category; in particular it has enough injectives, and all
 
 \begin{definition}[The constant sheaf]
   \label{def:constModuleSheaf}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.Sheaf.constModuleSheaf}
   \leanok
   The constant sheaf \(R_J\) of \(R\)-modules on \((\mathcal C, J)\) with value \(R\): the
@@ -35,6 +36,7 @@ Grothendieck abelian category; in particular it has enough injectives, and all
 
 \begin{definition}[Sheaf cohomology]
   \label{def:HModule}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.Sheaf.HModule}
   \uses{def:constModuleSheaf}
   \leanok
@@ -48,6 +50,7 @@ Grothendieck abelian category; in particular it has enough injectives, and all
 
 \begin{definition}[Functoriality]
   \label{def:HModule_map}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.Sheaf.HModule.map}
   \uses{def:HModule}
   \leanok
@@ -63,6 +66,7 @@ Grothendieck abelian category; in particular it has enough injectives, and all
 
 \begin{lemma}[No higher cohomology on injectives]
   \label{lem:HModule_injective_vanishing}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.Sheaf.HModule.instSubsingletonHAddNatOfNat}
   \uses{def:HModule}
   \leanok
@@ -76,6 +80,7 @@ Grothendieck abelian category; in particular it has enough injectives, and all
 
 \begin{definition}[The adjunction, linearly]
   \label{def:constAdjHomEquiv}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.Sheaf.constantSheafAdjHomLinearEquiv}
   \leanok
   Assume the category \(\mathcal C\) has a terminal object \(\top\). For every \(R\)-module
@@ -96,6 +101,7 @@ Grothendieck abelian category; in particular it has enough injectives, and all
 
 \begin{definition}[Morphisms out of the constant sheaf are sections]
   \label{def:constHomEquiv}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.Sheaf.constModuleSheafHomEquiv}
   \uses{def:constModuleSheaf, def:constAdjHomEquiv}
   \leanok
@@ -106,6 +112,7 @@ Grothendieck abelian category; in particular it has enough injectives, and all
 
 \begin{lemma}[Naturality]
   \label{lem:constHomEquiv_naturality}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.Sheaf.constModuleSheafHomEquiv_naturality}
   \uses{def:constHomEquiv}
   \leanok
@@ -121,6 +128,7 @@ Grothendieck abelian category; in particular it has enough injectives, and all
 
 \begin{definition}[Degree-zero cohomology is global sections]
   \label{def:HModule_linearEquiv0}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.Sheaf.HModule.linearEquiv₀}
   \uses{def:HModule, def:constHomEquiv}
   \leanok
@@ -130,6 +138,7 @@ Grothendieck abelian category; in particular it has enough injectives, and all
 
 \begin{lemma}[Naturality in degree zero]
   \label{lem:HModule_linearEquiv0_naturality}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.Sheaf.HModule.linearEquiv₀_naturality}
   \uses{def:HModule_linearEquiv0, def:HModule_map}
   \leanok
@@ -156,6 +165,7 @@ below).
 
 \begin{definition}[The free sheaf of \(R\)-modules on an object of the site]
   \label{def:freeModuleSheaf}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.Sheaf.freeModuleSheaf}
   \leanok
   For an object \(U\) of \(\mathcal C\), the free sheaf of \(R\)-modules on \(U\), written
@@ -165,6 +175,7 @@ below).
 
 \begin{definition}[Functoriality in the object of the site]
   \label{def:freeModuleSheafMap}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.Sheaf.freeModuleSheafMap}
   \uses{def:freeModuleSheaf}
   \leanok
@@ -176,6 +187,7 @@ below).
 
 \begin{definition}[Free sheaves of modules represent sections]
   \label{def:freeModuleSheafHomEquiv}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.Sheaf.freeModuleSheafHomEquiv}
   \uses{def:freeModuleSheaf}
   \leanok
@@ -207,6 +219,7 @@ below).
 
 \begin{lemma}[Naturality of the section equivalence]
   \label{lem:freeModuleSheafHomEquiv_naturality}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.Sheaf.freeModuleSheafHomEquiv_comp,
     CategoryTheory.Sheaf.freeModuleSheafHomEquiv_map}
   \uses{def:freeModuleSheafHomEquiv, def:freeModuleSheafMap}
@@ -233,6 +246,7 @@ below).
 
 \begin{definition}[Cohomology of an object of the site]
   \label{def:HModule'}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.Sheaf.HModule'}
   \uses{def:freeModuleSheaf}
   \leanok
@@ -245,6 +259,7 @@ below).
 
 \begin{definition}[Degree zero is sections]
   \label{def:HModule'_linearEquiv0}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.Sheaf.HModule'.linearEquiv₀}
   \uses{def:HModule', def:freeModuleSheafHomEquiv}
   \leanok
@@ -254,6 +269,7 @@ below).
 
 \begin{definition}[Restriction]
   \label{def:HModule'_res}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.Sheaf.HModule'.res}
   \uses{def:HModule', def:freeModuleSheafMap}
   \leanok
@@ -264,6 +280,7 @@ below).
 
 \begin{definition}[Functoriality in the coefficient sheaf]
   \label{def:HModule'_mapCoeff}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.Sheaf.HModule'.mapCoeff,
     CategoryTheory.Sheaf.HModule'.mapCoeff_id_apply,
     CategoryTheory.Sheaf.HModule'.mapCoeff_comp_apply}
@@ -286,6 +303,7 @@ below).
 
 \begin{definition}[Coefficient-isomorphism transport for cohomology of an object]
   \label{def:HModule'_congrCoeff}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.Sheaf.HModule'.congrCoeff}
   \uses{def:HModule'_mapCoeff}
   \leanok
@@ -302,6 +320,7 @@ below).
 
 \begin{lemma}[Transport of vanishing along a coefficient isomorphism]
   \label{lem:HModule'_subsingleton_of_congrCoeff}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.Sheaf.HModule'.subsingleton_of_congrCoeff}
   \uses{def:HModule'_congrCoeff}
   \leanok
@@ -316,6 +335,7 @@ below).
 
 \begin{definition}[The free sheaf on a terminal object is the constant sheaf]
   \label{def:freeModuleSheafIsoConstModuleSheaf}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.Sheaf.freeModuleSheafIsoConstModuleSheaf}
   \uses{def:freeModuleSheaf, def:constModuleSheaf, def:freeModuleSheafHomEquiv,
     def:constHomEquiv}
@@ -336,6 +356,7 @@ below).
 
 \begin{definition}[Cohomology of the site is cohomology of a terminal object]
   \label{def:HModule_linearEquivHModule'}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.Sheaf.HModule.linearEquivHModule'}
   \uses{def:HModule, def:HModule', def:freeModuleSheafIsoConstModuleSheaf}
   \leanok
@@ -359,6 +380,7 @@ is the \emph{small Zariski site} of \(X\): the partially ordered set of open sub
 
 \begin{definition}[The algebra map on sections]
   \label{def:overAlgebraMap}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.overAlgebraMap}
   \leanok
   For every open \(U \subseteq X\), the canonical ring homomorphism \(k \to \Gamma(X, U)\):
@@ -376,6 +398,7 @@ is the \emph{small Zariski site} of \(X\): the partially ordered set of open sub
 
 \begin{definition}[The structure sheaf as a sheaf of \(k\)-modules]
   \label{def:moduleKSheaf}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.moduleKSheaf}
   \uses{def:overAlgebraMap}
   \leanok
@@ -394,6 +417,7 @@ is the \emph{small Zariski site} of \(X\): the partially ordered set of open sub
 
 \begin{definition}[Degree-zero cohomology of the structure sheaf]
   \label{def:moduleKSheafHZero}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.moduleKSheafHZero}
   \uses{def:moduleKSheaf, def:HModule_linearEquiv0}
   \leanok
@@ -413,6 +437,7 @@ invertible, and \(g|_U\), \(s|_U\) for restrictions of sections.
 
 \begin{lemma}[Denominator clearing on an affine open]
   \label{lem:denominator_clearing}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.IsAffineOpen.exists_res_eq_pow_mul}
   \leanok
   Let \(X\) be a scheme, \(U \subseteq X\) an affine open, \(V \subseteq X\) an open with
@@ -434,6 +459,7 @@ invertible, and \(g|_U\), \(s|_U\) for restrictions of sections.
 
 \begin{lemma}[Annihilation on an affine open]
   \label{lem:section_annihilation}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.IsAffineOpen.exists_pow_mul_eq_zero_of_res_eq_zero}
   \leanok
   Let \(X\) be a scheme, \(U \subseteq X\) an affine open, \(V \subseteq X\) an open with
@@ -450,6 +476,7 @@ invertible, and \(g|_U\), \(s|_U\) for restrictions of sections.
 
 \begin{theorem}[Degree-one \v{C}ech cobounding on an affine open]
   \label{thm:affine_open_cech_cobounding}
+  \provenancetag{REFERENCE}
   \lean{AlgebraicGeometry.IsAffineOpen.exists_cech_cobounding}
   \leanok
   \source{stacks-project}
@@ -514,6 +541,7 @@ invertible, and \(g|_U\), \(s|_U\) for restrictions of sections.
 
 \begin{theorem}[Degree-one \v{C}ech cobounding on an affine scheme]
   \label{thm:cech_cobounding}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.exists_cech_cobounding}
   \uses{thm:affine_open_cech_cobounding}
   \leanok
@@ -534,6 +562,7 @@ invertible, and \(g|_U\), \(s|_U\) for restrictions of sections.
 
 \begin{lemma}[A vanishing criterion for \(\Ext^1\)]
   \label{lem:ext_one_vanishing_criterion}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.Abelian.Ext.subsingleton_one_of_injective_of_surjective}
   \leanok
   Let \(\mathcal A\) be an abelian category (with \(\Ext\)-groups), let
@@ -558,6 +587,7 @@ invertible, and \(g|_U\), \(s|_U\) for restrictions of sections.
 
 \begin{lemma}[Sections are left exact]
   \label{lem:sections_left_exact}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.Sheaf.exists_app_eq_of_cokernelπ_app_eq_zero}
   \leanok
   Let \(\iota : F \to G\) be a monomorphism of sheaves of \(R\)-modules on a site and let
@@ -575,6 +605,7 @@ invertible, and \(g|_U\), \(s|_U\) for restrictions of sections.
 
 \begin{lemma}[Monomorphisms are injective on sections]
   \label{lem:app_injective_of_mono}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.Sheaf.app_injective_of_mono}
   \leanok
   A monomorphism of sheaves of \(R\)-modules on a site is injective on sections over every
@@ -589,6 +620,7 @@ invertible, and \(g|_U\), \(s|_U\) for restrictions of sections.
 
 \begin{theorem}[Sections surjectivity on an affine open]
   \label{thm:cokernel_app_surjective_affine_open}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.IsAffineOpen.cokernel_app_surjective}
   \uses{def:moduleKSheaf}
   \leanok
@@ -634,6 +666,7 @@ invertible, and \(g|_U\), \(s|_U\) for restrictions of sections.
 
 \begin{theorem}[Vanishing of \(H^1{}'\) on affine opens]
   \label{thm:affine_open_h1_vanishing}
+  \provenancetag{REFERENCE}
   \lean{AlgebraicGeometry.IsAffineOpen.subsingleton_moduleKSheaf_hModule'_one}
   \uses{def:HModule', def:moduleKSheaf, thm:cokernel_app_surjective_affine_open}
   \leanok
@@ -661,6 +694,7 @@ invertible, and \(g|_U\), \(s|_U\) for restrictions of sections.
 
 \begin{theorem}[Vanishing of \(H^1\) on affine schemes]
   \label{thm:affine_vanishing}
+  \provenancetag{REFERENCE}
   \lean{AlgebraicGeometry.Scheme.subsingleton_moduleKSheaf_hModule_one}
   \uses{def:HModule, def:moduleKSheaf}
   \leanok
@@ -704,6 +738,7 @@ natural in \(F\).
 
 \begin{definition}[Quasi-coherence packaging on an open]
   \label{def:qcohOn}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.QcohOn}
   \leanok
   Let \(X\) be a scheme, \(U\) an open of \(X\), and \(F\) a sheaf of \(k\)-modules on the small
@@ -729,6 +764,7 @@ natural in \(F\).
 
 \begin{theorem}[The structure sheaf is quasi-coherently packaged]
   \label{thm:moduleKSheaf_qcohOn}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.moduleKSheaf.instQcohOn}
   \uses{def:qcohOn, def:moduleKSheaf, lem:denominator_clearing, lem:section_annihilation}
   \leanok
@@ -747,6 +783,7 @@ natural in \(F\).
 
 \begin{theorem}[Degree-one \v{C}ech cobounding, quasi-coherent coefficients]
   \label{thm:cech_cobounding_qcoh}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.IsAffineOpen.exists_cech_cobounding_of_qcoh}
   \uses{def:qcohOn}
   \leanok
@@ -772,6 +809,7 @@ natural in \(F\).
 
 \begin{theorem}[Sections surjectivity on an affine open, quasi-coherent coefficients]
   \label{thm:cokernel_app_surjective_qcoh}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.IsAffineOpen.cokernel_app_surjective_of_qcoh}
   \uses{def:qcohOn, thm:cech_cobounding_qcoh, lem:sections_left_exact, lem:app_injective_of_mono}
   \leanok
@@ -794,6 +832,7 @@ natural in \(F\).
 
 \begin{theorem}[Twisted affine vanishing of \(H^1{}'\)]
   \label{thm:hModule1_vanishing_qcoh}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.IsAffineOpen.subsingleton_hModule'_one_of_qcoh}
   \uses{def:qcohOn, def:HModule', thm:cokernel_app_surjective_qcoh,
     lem:ext_one_vanishing_criterion, def:freeModuleSheafHomEquiv}
@@ -818,6 +857,7 @@ natural in \(F\).
 
 \begin{theorem}[Twisted affine vanishing of \(H^1\)]
   \label{thm:hModule_vanishing_qcoh}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.subsingleton_hModule_one_of_qcoh}
   \uses{def:qcohOn, def:HModule, thm:hModule1_vanishing_qcoh, def:HModule_linearEquivHModule'}
   \leanok
@@ -841,6 +881,7 @@ consumes the packaging.
 
 \begin{definition}[The chart-ring module structure on packaged sections]
   \label{def:qcohOn_module}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.QcohOn.moduleOfLE}
   \uses{def:qcohOn}
   \leanok
@@ -853,6 +894,7 @@ consumes the packaging.
 
 \begin{definition}[Restriction is linear over the chart ring]
   \label{def:qcohOn_secRes_linear}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.QcohOn.secResₗ}
   \uses{def:qcohOn_module}
   \leanok
@@ -864,6 +906,7 @@ consumes the packaging.
 
 \begin{theorem}[The packaging axioms are the localisation axioms]
   \label{thm:qcohOn_isLocalizedModule}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.QcohOn.isLocalizedModule_secResₗ}
   \uses{def:qcohOn, def:qcohOn_module, def:qcohOn_secRes_linear}
   \leanok
@@ -897,6 +940,7 @@ consumes the packaging.
 
 \begin{theorem}[Sections over a basic open are the localised sections]
   \label{thm:qcohOn_isLocalizedModule_moduleKSheaf}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.QcohOn.isLocalizedModule_secResₗ_moduleKSheaf}
   \uses{thm:qcohOn_isLocalizedModule, thm:moduleKSheaf_qcohOn, def:moduleKSheaf}
   \leanok
@@ -931,6 +975,7 @@ the quotient map being the connecting homomorphism \(\delta\).
 
 \begin{definition}[Mayer--Vietoris square]
   \label{def:MayerVietorisSquare}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.GrothendieckTopology.MayerVietorisSquare}
   \mathlibok
   \textit{Provided by Mathlib.}
@@ -948,6 +993,7 @@ the quotient map being the connecting homomorphism \(\delta\).
 
 \begin{definition}[The sheaf condition of a Mayer--Vietoris square]
   \label{def:mv_sheaf_condition}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.GrothendieckTopology.MayerVietorisSquare.SheafCondition,
     CategoryTheory.GrothendieckTopology.MayerVietorisSquare.sheafCondition_of_sheaf}
   \uses{def:MayerVietorisSquare}
@@ -964,6 +1010,7 @@ the quotient map being the connecting homomorphism \(\delta\).
 
 \begin{definition}[The Mayer--Vietoris short complex of free sheaves]
   \label{def:moduleShortComplex}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.GrothendieckTopology.MayerVietorisSquare.moduleShortComplex}
   \uses{def:MayerVietorisSquare, def:freeModuleSheaf, def:freeModuleSheafMap}
   \leanok
@@ -978,6 +1025,7 @@ the quotient map being the connecting homomorphism \(\delta\).
 
 \begin{theorem}[The Mayer--Vietoris short complex is short exact]
   \label{thm:moduleShortComplex_shortExact}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.GrothendieckTopology.MayerVietorisSquare.moduleShortComplex_shortExact}
   \uses{def:moduleShortComplex}
   \leanok
@@ -1027,6 +1075,7 @@ the quotient map being the connecting homomorphism \(\delta\).
 
 \begin{definition}[The restriction-difference map]
   \label{def:moduleDiff}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.GrothendieckTopology.MayerVietorisSquare.moduleDiff}
   \uses{def:MayerVietorisSquare}
   \leanok
@@ -1040,6 +1089,7 @@ the quotient map being the connecting homomorphism \(\delta\).
 
 \begin{lemma}[Degree-zero exactness]
   \label{lem:mv_exact_degree0}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.GrothendieckTopology.MayerVietorisSquare.sections_ext,
     CategoryTheory.GrothendieckTopology.MayerVietorisSquare.exists_glue_of_moduleDiff_eq_zero}
   \uses{def:moduleDiff, def:mv_sheaf_condition}
@@ -1063,6 +1113,7 @@ the quotient map being the connecting homomorphism \(\delta\).
 
 \begin{lemma}[Contravariant long exact sequence of \(\Ext\)]
   \label{lem:ext_contravariant_les}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.Abelian.Ext.contravariant_sequence_exact₁,
     CategoryTheory.Abelian.Ext.contravariant_sequence_exact₃,
     CategoryTheory.ShortComplex.ShortExact.extClass,
@@ -1087,6 +1138,7 @@ the quotient map being the connecting homomorphism \(\delta\).
 
 \begin{definition}[The connecting map]
   \label{def:moduleDelta}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.GrothendieckTopology.MayerVietorisSquare.moduleDelta}
   \uses{def:HModule'_linearEquiv0, thm:moduleShortComplex_shortExact,
     lem:ext_contravariant_les}
@@ -1102,6 +1154,7 @@ the quotient map being the connecting homomorphism \(\delta\).
 
 \begin{lemma}[Exactness at \(F(X_1)\)]
   \label{lem:mv_exact_at_X1}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.GrothendieckTopology.MayerVietorisSquare.moduleDelta_moduleDiff,
     CategoryTheory.GrothendieckTopology.MayerVietorisSquare.exists_of_moduleDelta_eq_zero}
   \uses{def:moduleDelta, def:moduleDiff}
@@ -1129,6 +1182,7 @@ the quotient map being the connecting homomorphism \(\delta\).
 
 \begin{lemma}[Exactness at \(H'^1(X_4,F)\)]
   \label{lem:mv_exact_at_H1X4}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.GrothendieckTopology.MayerVietorisSquare.res_moduleDelta₂,
     CategoryTheory.GrothendieckTopology.MayerVietorisSquare.res_moduleDelta₃,
     CategoryTheory.GrothendieckTopology.MayerVietorisSquare.exists_moduleDelta_eq}
@@ -1154,6 +1208,7 @@ the quotient map being the connecting homomorphism \(\delta\).
 
 \begin{theorem}[Surjectivity of the connecting map]
   \label{thm:moduleDelta_surjective}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.GrothendieckTopology.MayerVietorisSquare.moduleDelta_surjective}
   \uses{lem:mv_exact_at_H1X4}
   \leanok
@@ -1169,6 +1224,7 @@ the quotient map being the connecting homomorphism \(\delta\).
 
 \begin{definition}[The connecting map on the cokernel]
   \label{def:moduleDeltaQuotient}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.GrothendieckTopology.MayerVietorisSquare.moduleDeltaQuotient}
   \uses{def:moduleDelta, lem:mv_exact_at_X1}
   \leanok
@@ -1181,6 +1237,7 @@ the quotient map being the connecting homomorphism \(\delta\).
 
 \begin{theorem}[The Mayer--Vietoris two-cover cokernel computation]
   \label{thm:h1LinearEquiv}
+  \provenancetag{ADAPTED}
   \lean{CategoryTheory.GrothendieckTopology.MayerVietorisSquare.h1LinearEquiv}
   \uses{def:moduleDeltaQuotient, lem:mv_exact_at_X1, thm:moduleDelta_surjective}
   \leanok
@@ -1201,6 +1258,7 @@ the quotient map being the connecting homomorphism \(\delta\).
 
 \begin{lemma}[Compatibility with the connecting map]
   \label{lem:h1LinearEquiv_mk}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.GrothendieckTopology.MayerVietorisSquare.h1LinearEquiv_mk}
   \uses{thm:h1LinearEquiv}
   \leanok
@@ -1231,6 +1289,7 @@ route bypasses.
 
 \begin{definition}[Mayer--Vietoris square of two opens]
   \label{def:opens_mayerVietorisSquare'}
+  \provenancetag{CUSTOM}
   \lean{Opens.mayerVietorisSquare'}
   \uses{def:MayerVietorisSquare}
   \mathlibok
@@ -1243,6 +1302,7 @@ route bypasses.
 
 \begin{definition}[The two-cover square]
   \label{def:twoCoverSquare}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.twoCoverSquare}
   \uses{def:opens_mayerVietorisSquare'}
   \leanok
@@ -1254,6 +1314,7 @@ route bypasses.
 
 \begin{theorem}[The two-cover \(H^1\) computation, general coefficients]
   \label{thm:twoCoverH1LinearEquiv}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicGeometry.Scheme.twoCoverH1LinearEquiv}
   \uses{def:twoCoverSquare, def:HModule_linearEquivHModule', thm:h1LinearEquiv}
   \leanok
@@ -1278,6 +1339,7 @@ route bypasses.
 
 \begin{definition}[The two-cover restriction-difference map]
   \label{def:TwoCover_diff}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.TwoCover.diff}
   \uses{def:moduleKSheaf}
   \leanok
@@ -1293,6 +1355,7 @@ route bypasses.
 
 \begin{definition}[The two-cover cokernel carrier]
   \label{def:TwoCover_H1Cok}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.TwoCover.H1Cok}
   \uses{def:TwoCover_diff}
   \leanok
@@ -1302,6 +1365,7 @@ route bypasses.
 
 \begin{lemma}[Sections extending to one piece vanish in the cokernel]
   \label{lem:TwoCover_h1Cok_mk_res}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.TwoCover.h1Cok_mk_resHom_left,
     AlgebraicGeometry.TwoCover.h1Cok_mk_resHom_right}
   \uses{def:TwoCover_H1Cok}
@@ -1318,6 +1382,7 @@ route bypasses.
 
 \begin{definition}[The two-cover connecting map]
   \label{def:TwoCover_delta}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.TwoCover.delta}
   \uses{def:twoCoverSquare, def:HModule_linearEquivHModule', def:moduleDelta}
   \leanok
@@ -1331,6 +1396,7 @@ route bypasses.
 
 \begin{lemma}[The connecting class of a difference vanishes]
   \label{lem:TwoCover_delta_diff}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.TwoCover.delta_diff}
   \uses{def:TwoCover_delta, def:TwoCover_diff, lem:mv_exact_at_X1}
   \leanok
@@ -1347,6 +1413,7 @@ route bypasses.
 
 \begin{lemma}[The connecting class of an extending section vanishes]
   \label{lem:TwoCover_delta_resHom}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.TwoCover.delta_resHom_left,
     AlgebraicGeometry.TwoCover.delta_resHom_right}
   \uses{lem:TwoCover_delta_diff}
@@ -1363,6 +1430,7 @@ route bypasses.
 
 \begin{theorem}[Surjectivity of the two-cover connecting map]
   \label{thm:TwoCover_delta_surjective}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.TwoCover.delta_surjective}
   \uses{def:TwoCover_delta, thm:affine_open_h1_vanishing, thm:moduleDelta_surjective}
   \leanok
@@ -1380,6 +1448,7 @@ route bypasses.
 
 \begin{theorem}[The two-affine-cover \(H^1\) cokernel bridge]
   \label{thm:TwoCover_h1CokEquiv}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicGeometry.TwoCover.h1CokEquiv}
   \uses{thm:affine_open_h1_vanishing, thm:h1LinearEquiv, def:HModule_linearEquivHModule',
     def:TwoCover_H1Cok}
@@ -1411,6 +1480,7 @@ route bypasses.
 
 \begin{lemma}[Compatibility with the connecting map]
   \label{lem:TwoCover_h1CokEquiv_delta}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.TwoCover.h1CokEquiv_delta}
   \uses{thm:TwoCover_h1CokEquiv, def:TwoCover_delta, lem:h1LinearEquiv_mk}
   \leanok
@@ -1429,6 +1499,7 @@ route bypasses.
 
 \begin{lemma}[Compatibility with the connecting map, inverse form]
   \label{lem:TwoCover_h1CokEquiv_symm_mk}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.TwoCover.h1CokEquiv_symm_mk}
   \uses{lem:TwoCover_h1CokEquiv_delta}
   \leanok
@@ -1453,6 +1524,7 @@ cohomology of the relative curve is the test ring itself, \(H^0(C_R, \struct{C_R
 
 \begin{definition}[The relative curve over the test ring]
   \label{def:relCurve}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.relCurve, AlgebraicGeometry.relCurve.instOver}
   \leanok
   For \(C \in \Over(\Spec k)\) and a commutative \(k\)-algebra \(R\), the \emph{relative curve}
@@ -1463,6 +1535,7 @@ cohomology of the relative curve is the test ring itself, \(H^0(C_R, \struct{C_R
 
 \begin{definition}[The base-changed affine two-cover]
   \label{def:relCover}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.relCover}
   \uses{def:relCurve, def:AffineTwoCover, thm:AffineTwoCover_pullbackProd}
   \leanok
@@ -1475,6 +1548,7 @@ cohomology of the relative curve is the test ring itself, \(H^0(C_R, \struct{C_R
 
 \begin{lemma}[The base-changed charts are affine and cover the relative curve]
   \label{lem:relCover_charts}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.relCover_isAffineOpen₀, AlgebraicGeometry.relCover_isAffineOpen₁,
     AlgebraicGeometry.relCover_sup}
   \uses{def:relCover}
@@ -1491,6 +1565,7 @@ cohomology of the relative curve is the test ring itself, \(H^0(C_R, \struct{C_R
 
 \begin{lemma}[The overlap of the base-changed charts]
   \label{lem:relCover_inf}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.relCover_inf}
   \uses{def:relCover}
   \leanok
@@ -1506,6 +1581,7 @@ cohomology of the relative curve is the test ring itself, \(H^0(C_R, \struct{C_R
 
 \begin{definition}[The relative two-cover cohomology carrier]
   \label{def:relTwoCoverH1}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.relTwoCoverH1}
   \uses{def:relCurve, def:relCover, def:moduleKSheaf, def:TwoCover_diff, def:TwoCover_H1Cok}
   \leanok
@@ -1530,6 +1606,7 @@ cohomology of the relative curve is the test ring itself, \(H^0(C_R, \struct{C_R
 
 \begin{theorem}[Degree-zero cohomology of the relative curve is the test ring]
   \label{thm:relStructureSectionsTop}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.relStructureSectionsTop}
   \uses{def:relCurve, thm:isIso_appLE_snd}
   \leanok
@@ -1573,6 +1650,7 @@ degree-zero localization to the sections over the basic open (an isomorphism).
 
 \begin{lemma}[Morphisms over the base intertwine the structure algebra maps]
   \label{lem:appTop_map_appLE}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.Hom.appTop_map_appLE}
   \leanok
   Let \(k\) be a commutative ring, let \(X, Y\) be schemes over \(\Spec k\) and let
@@ -1598,6 +1676,7 @@ degree-zero localization to the sections over the basic open (an isomorphism).
 
 \begin{lemma}[Pulling back the structure algebra map]
   \label{lem:appLE_overAlgebraMap}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.Hom.appLE_overAlgebraMap}
   \uses{def:overAlgebraMap, lem:appTop_map_appLE}
   \leanok
@@ -1614,6 +1693,7 @@ degree-zero localization to the sections over the basic open (an isomorphism).
 
 \begin{lemma}[The basic-open models lie over the base]
   \label{lem:P1_awayi_structureMap}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.P1.awayι_structureMap}
   \uses{def:P1_structureMap}
   \leanok
@@ -1634,6 +1714,7 @@ degree-zero localization to the sections over the basic open (an isomorphism).
 
 \begin{lemma}[The basic-open inclusion factors through its affine model]
   \label{lem:P1_basicOpen_iota_eq}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.P1.basicOpen_ι_eq}
   \uses{def:P1}
   \leanok
@@ -1650,6 +1731,7 @@ degree-zero localization to the sections over the basic open (an isomorphism).
 
 \begin{lemma}[The structure algebra map on a basic open]
   \label{lem:P1_structureMap_appTop_awayToSection}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.P1.structureMap_appTop_awayToSection}
   \uses{def:P1_structureMap, lem:P1_awayi_structureMap, lem:P1_basicOpen_iota_eq}
   \leanok
@@ -1674,6 +1756,7 @@ degree-zero localization to the sections over the basic open (an isomorphism).
 
 \begin{lemma}[The distinguished fraction of a chart pair is the chart coordinate]
   \label{lem:P1_isLocalizationElem_X_eq}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.P1.isLocalizationElem_X_eq}
   \uses{def:P1_chartCoord}
   \leanok
@@ -1688,6 +1771,7 @@ degree-zero localization to the sections over the basic open (an isomorphism).
 
 \begin{theorem}[The chart coordinate cuts out the overlap]
   \label{thm:P1_basicOpen_chartCoord}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.P1.basicOpen_awayToSection_chartCoord}
   \uses{def:P1_chartOpen, def:P1_chartCoord, lem:P1_basicOpen_iota_eq,
     lem:P1_isLocalizationElem_X_eq}
@@ -1725,6 +1809,7 @@ degree-zero localization to the sections over the basic open (an isomorphism).
 
 \begin{lemma}[The Laurent generators as restrictions from the charts]
   \label{lem:P1_laurent_generators}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.P1.overlapSectionsEquiv_symm_T,
     AlgebraicGeometry.P1.overlapSectionsEquiv_symm_T_neg,
     AlgebraicGeometry.P1.overlapSectionsEquiv_symm_algebraMap}
@@ -1769,6 +1854,10 @@ model for the explicit two-chart argument below, whose hypotheses are stated ind
 
 \begin{theorem}[Finiteness of \(H^1\) along a finite morphism to the projective line]
   \label{thm:moduleFinite_hModule_one_of_isFinite_toP1}
+  \provenancetag{ADAPTED}
+  \alignmentcheck{TO CHECK: Hartshorne pages~0242--0243 treat projective space over a Noetherian
+  base, while this theorem is stated for a finite map from an arbitrary scheme over a field;
+  verify that the cited calculation supports this scope.}
   \lean{AlgebraicGeometry.moduleFinite_hModule_one_of_isFinite_toP1}
   \uses{def:HModule, def:moduleKSheaf, def:P1_structureMap}
   \leanok
@@ -1876,6 +1965,7 @@ model for the explicit two-chart argument below, whose hypotheses are stated ind
 
 \begin{theorem}[Finiteness of \(H^1\) of the curve]
   \label{thm:moduleFinite_hModule_one}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.moduleFinite_hModule_one}
   \uses{def:HModule, def:moduleKSheaf}
   \leanok
@@ -1893,6 +1983,7 @@ model for the explicit two-chart argument below, whose hypotheses are stated ind
 
 \begin{remark}[The genus is the dimension of a finite-dimensional space]
   \label{rem:genus_finite}
+  \provenancetag{CUSTOM}
   \uses{def:genus, thm:moduleFinite_hModule_one}
   \leanok
   For a smooth curve \(C\) over \(k\), the genus of Definition~\ref{def:genus} is the
@@ -1918,6 +2009,7 @@ trivialisations.
 
 \begin{definition}[Transport of the packaging along a sections-level trivialisation]
   \label{def:qcohOn_transport}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.QcohOn.ofSectionsEquiv}
   \uses{def:qcohOn}
   \leanok
@@ -1942,6 +2034,7 @@ trivialisations.
 
 \begin{definition}[Twisted sections of a unit cocycle]
   \label{def:twistSections}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.twistDefect, AlgebraicGeometry.twistSubmodule}
   \uses{def:moduleKSheaf}
   \leanok
@@ -1959,6 +2052,7 @@ trivialisations.
 
 \begin{lemma}[Twisted sections form a presheaf]
   \label{lem:twistSections_presheaf}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.twistRes, AlgebraicGeometry.twistSubmodule_res,
     AlgebraicGeometry.twistPresheaf}
   \uses{def:twistSections}
@@ -1977,6 +2071,7 @@ trivialisations.
 
 \begin{theorem}[The twisted sheaf]
   \label{thm:twistSheaf}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.isSheaf_twistPresheaf, AlgebraicGeometry.twistSheaf}
   \uses{lem:twistSections_presheaf}
   \leanok
@@ -1999,6 +2094,7 @@ trivialisations.
 
 \begin{definition}[Chart trivialisations of the twisted sheaf]
   \label{def:twistTriv}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.twistTriv₀, AlgebraicGeometry.twistTriv₁}
   \uses{def:twistSections}
   \leanok
@@ -2024,6 +2120,7 @@ trivialisations.
 
 \begin{lemma}[The trivialisations commute with restriction]
   \label{lem:twistTriv_res}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.twistTriv₀_res, AlgebraicGeometry.twistTriv₁_res}
   \uses{def:twistTriv, lem:twistSections_presheaf}
   \leanok
@@ -2039,6 +2136,7 @@ trivialisations.
 
 \begin{theorem}[The twisted sheaf is quasi-coherently packaged on each chart]
   \label{thm:twistSheaf_qcohOn}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.twistSheaf.instQcohOn₀, AlgebraicGeometry.twistSheaf.instQcohOn₁}
   \uses{thm:twistSheaf, def:qcohOn_transport, def:twistTriv, lem:twistTriv_res,
     thm:moduleKSheaf_qcohOn}
@@ -2057,6 +2155,7 @@ trivialisations.
 
 \begin{theorem}[Twisted affine vanishing]
   \label{thm:twistSheaf_affine_vanishing}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.subsingleton_hModule'_twistSheaf_one₀,
     AlgebraicGeometry.subsingleton_hModule'_twistSheaf_one₁}
   \uses{def:HModule', thm:twistSheaf_qcohOn, thm:hModule1_vanishing_qcoh}
@@ -2072,6 +2171,7 @@ trivialisations.
 
 \begin{definition}[The two-cover \(H^1\) carrier of the twisted sheaf]
   \label{def:twistTwoCoverH1}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.twistTwoCoverH1}
   \uses{thm:twistSheaf, def:twoCoverSquare, thm:twistSheaf_affine_vanishing,
     thm:twoCoverH1LinearEquiv}
@@ -2098,6 +2198,7 @@ trivialisations.
 
 \begin{definition}[The relative twisted sheaf]
   \label{def:relTwistSheaf}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.relUnitCocycle, AlgebraicGeometry.relTwistSheaf}
   \uses{def:relCurve, def:relCover, lem:relCover_inf, def:twistSections, thm:twistSheaf}
   \leanok
@@ -2115,6 +2216,7 @@ trivialisations.
 
 \begin{definition}[The relative twisted \(H^1\) carrier]
   \label{def:relTwistTwoCoverH1}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.relTwistTwoCoverH1}
   \uses{def:relTwistSheaf, def:twistTwoCoverH1, lem:relCover_charts}
   \leanok
@@ -2148,6 +2250,7 @@ two-cover \(H^1\) is a cokernel and cokernels commute with arbitrary base change
 
 \begin{theorem}[Sections of the relative curve are the base change of sections]
   \label{thm:sectionsBaseChange}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Over.sectionsBaseChange, AlgebraicGeometry.Over.sectionsBaseChange_tmul}
   \uses{def:relCurve}
   \leanok
@@ -2197,6 +2300,7 @@ two-cover \(H^1\) is a cokernel and cokernels commute with arbitrary base change
 
 \begin{definition}[Relative sections as a free \(R\)-module base change]
   \label{def:relSectionsBaseChange}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.relPullbackSection, AlgebraicGeometry.relSectionsBaseChange,
     AlgebraicGeometry.relSectionsBaseChange_tmul,
     AlgebraicGeometry.Over.sectionsBaseChange_one_tmul_overAlgebraMap}
@@ -2226,6 +2330,7 @@ two-cover \(H^1\) is a cokernel and cokernels commute with arbitrary base change
 
 \begin{definition}[The comparison morphism of relative curves]
   \label{def:relCurveMap}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.overSpecMap, AlgebraicGeometry.relCurveMap}
   \uses{def:relCurve}
   \leanok
@@ -2240,6 +2345,7 @@ two-cover \(H^1\) is a cokernel and cokernels commute with arbitrary base change
 
 \begin{lemma}[Projection identities of the comparison morphism]
   \label{lem:relCurveMap_proj}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.relCurveMap_fst, AlgebraicGeometry.relCurveMap_snd,
     AlgebraicGeometry.relCurveMap_preimage}
   \uses{def:relCurveMap}
@@ -2258,6 +2364,7 @@ two-cover \(H^1\) is a cokernel and cokernels commute with arbitrary base change
 
 \begin{definition}[The sections comparison map]
   \label{def:relSectionsMap}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.relSectionsMap}
   \uses{def:relCurveMap, lem:relCurveMap_proj}
   \leanok
@@ -2270,6 +2377,7 @@ two-cover \(H^1\) is a cokernel and cokernels commute with arbitrary base change
 
 \begin{lemma}[Governing identities of the sections comparison map]
   \label{lem:relSectionsMap_props}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.relSectionsMap_pullback,
     AlgebraicGeometry.relSectionsMap_overAlgebraMap,
     AlgebraicGeometry.relSectionsMap_smul, AlgebraicGeometry.relSectionsMap_resHom}
@@ -2301,6 +2409,7 @@ two-cover \(H^1\) is a cokernel and cokernels commute with arbitrary base change
 
 \begin{theorem}[CBC-1: termwise base change of relative sections]
   \label{thm:relTermBaseChange}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.relTermBaseChange, AlgebraicGeometry.relTermBaseChange_tmul}
   \uses{def:relSectionsBaseChange, lem:relSectionsMap_props}
   \leanok
@@ -2331,6 +2440,7 @@ two-cover \(H^1\) is a cokernel and cokernels commute with arbitrary base change
 
 \begin{lemma}[CBC-1: the two-cover complex base-changes]
   \label{lem:relDiffBaseChange}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.relDiffDomBaseChange, AlgebraicGeometry.relDiffCodBaseChange,
     AlgebraicGeometry.relDiffBaseChange, AlgebraicGeometry.relDiffBaseChange_range}
   \uses{thm:relTermBaseChange, def:TwoCover_diff, def:relCover, lem:relCover_charts,
@@ -2362,6 +2472,7 @@ two-cover \(H^1\) is a cokernel and cokernels commute with arbitrary base change
 
 \begin{theorem}[CBC-2, cokernel form: the two-cover \(H^1\) carrier base-changes]
   \label{thm:relH1CokBaseChange}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.relH1CokBaseChange, AlgebraicGeometry.relH1CokBaseChange_tmul_mk}
   \uses{thm:quot_range_baseChange, lem:relDiffBaseChange, def:TwoCover_H1Cok}
   \leanok
@@ -2389,6 +2500,7 @@ two-cover \(H^1\) is a cokernel and cokernels commute with arbitrary base change
 
 \begin{theorem}[CBC-2: \(H^1\) of the relative curve commutes with change of the test ring]
   \label{thm:relH1BaseChange}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicGeometry.relH1BaseChange}
   \uses{def:relTwoCoverH1, thm:relH1CokBaseChange}
   \leanok
@@ -2414,6 +2526,7 @@ two-cover \(H^1\) is a cokernel and cokernels commute with arbitrary base change
 
 \begin{definition}[Base change of the unit cocycle]
   \label{def:relCocycleBaseChange}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.relCocycleBaseChange}
   \uses{def:relTwistSheaf, def:relSectionsMap, lem:relCurveMap_proj}
   \leanok
@@ -2425,6 +2538,7 @@ two-cover \(H^1\) is a cokernel and cokernels commute with arbitrary base change
 
 \begin{definition}[CBC-1 for the twisted sheaf: term equivalences]
   \label{def:relTwistTermBaseChange}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.relTwistTermBaseChange₀, AlgebraicGeometry.relTwistTermBaseChange₁,
     AlgebraicGeometry.relTwistOverlapBaseChange}
   \uses{def:relTwistSheaf, def:relCocycleBaseChange, def:twistTriv, thm:relTermBaseChange,
@@ -2474,6 +2588,7 @@ pushout argument is re-run against the pasted square instead, with the
 
 \begin{lemma}[The product bridge]
   \label{lem:over_isPullback_left}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Over.isPullback_left}
   \leanok
   Let \(S\) be a scheme and \(X, T \in \Over(S)\). The underlying scheme of the
@@ -2498,6 +2613,7 @@ pushout argument is re-run against the pasted square instead, with the
 
 \begin{theorem}[The pasted square of a morphism of test objects]
   \label{thm:isPullback_whiskerLeft_left}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Over.isPullback_whiskerLeft_left}
   \uses{lem:over_isPullback_left}
   \leanok
@@ -2529,6 +2645,7 @@ pushout argument is re-run against the pasted square instead, with the
 
 \begin{theorem}[The base-field transition square]
   \label{thm:isPullback_baseFieldTransition}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.isPullback_baseFieldTransition}
   \uses{thm:isPullback_whiskerLeft_left, def:overSpecMap}
   \leanok
@@ -2563,6 +2680,7 @@ over \(S\) through \(f\): the same underlying scheme, with structure morphism
 
 \begin{theorem}[The cross-base pasted square]
   \label{thm:over_isPullback_crossBase}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Over.isPullback_crossBase}
   \uses{lem:over_isPullback_left}
   \leanok
@@ -2607,6 +2725,7 @@ over \(S\) through \(f\): the same underlying scheme, with structure morphism
 
 \begin{definition}[The cross-base comparison isomorphism]
   \label{def:crossBaseIso}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Over.crossBaseIso}
   \uses{thm:over_isPullback_crossBase, lem:over_isPullback_left}
   \leanok
@@ -2634,6 +2753,7 @@ over \(S\) through \(f\): the same underlying scheme, with structure morphism
 
 \begin{theorem}[Naturality of the cross-base isomorphism in the test]
   \label{thm:crossBaseIso_naturality}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Over.crossBaseIso_naturality}
   \uses{def:crossBaseIso, lem:over_isPullback_left}
   \leanok
@@ -2669,6 +2789,7 @@ over \(S\) through \(f\): the same underlying scheme, with structure morphism
 
 \begin{theorem}[The cross-base square at a base-changed curve]
   \label{thm:crossBase_baseChange}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.isPullback_crossBase, AlgebraicGeometry.crossBaseIso,
     AlgebraicGeometry.crossBaseIso_naturality}
   \uses{thm:over_isPullback_crossBase, def:crossBaseIso, thm:crossBaseIso_naturality,
@@ -2697,6 +2818,7 @@ over \(S\) through \(f\): the same underlying scheme, with structure morphism
 
 \begin{definition}[Pushing an affine test down a field extension]
   \label{def:mapOverSpecIso}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.mapOverSpecIso}
   \leanok
   Let \(k \to L\) be a field extension, \(\sigma : \Spec L \to \Spec k\) the induced
@@ -2733,6 +2855,7 @@ carrier \(\Spec A\) and natural in \(A\).
 
 \begin{definition}[The same-carrier comparison at an affine test]
   \label{def:crossBaseAffineIso}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.crossBaseAffineIso, AlgebraicGeometry.crossBaseAffineIso_hom}
   \uses{thm:crossBase_baseChange, def:mapOverSpecIso, def:baseChange}
   \leanok
@@ -2766,6 +2889,7 @@ carrier \(\Spec A\) and natural in \(A\).
 
 \begin{lemma}[The same-carrier comparison lies over \(\Spec A\)]
   \label{lem:crossBaseAffineIso_snd}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.crossBaseAffineIso_hom_snd,
     AlgebraicGeometry.crossBaseAffineIso_inv_snd}
   \uses{def:crossBaseAffineIso, def:crossBaseIso, def:mapOverSpecIso}
@@ -2802,6 +2926,7 @@ carrier \(\Spec A\) and natural in \(A\).
 
 \begin{theorem}[Naturality of the same-carrier comparison in the algebra]
   \label{thm:crossBaseAffineIso_naturality}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.crossBaseAffineIso_naturality}
   \uses{def:crossBaseAffineIso, thm:crossBase_baseChange, thm:crossBaseIso_naturality,
     def:mapOverSpecIso, def:overSpecMap}
@@ -2862,6 +2987,7 @@ carrier \(\Spec A\) and natural in \(A\).
 
 \begin{lemma}[The transition is flat, affine and surjective]
   \label{lem:baseFieldTransition_flat_affine_surjective}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.flat_specMap_algHom, AlgebraicGeometry.surjective_specMap_algHom,
     AlgebraicGeometry.flat_baseFieldTransition,
     AlgebraicGeometry.isAffineHom_baseFieldTransition,
@@ -2887,6 +3013,7 @@ carrier \(\Spec A\) and natural in \(A\).
 
 \begin{lemma}[Generic points under surjective morphisms]
   \label{lem:genericPoint_eq_of_surjective}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.genericPoint_eq_of_surjective}
   \leanok
   A surjective morphism \(f : X \to Y\) of schemes with irreducible underlying spaces
@@ -2904,6 +3031,7 @@ carrier \(\Spec A\) and natural in \(A\).
 
 \begin{lemma}[The transition matches generic points]
   \label{lem:baseFieldTransition_genericPoint}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.baseFieldTransition_genericPoint}
   \uses{lem:genericPoint_eq_of_surjective, lem:baseFieldTransition_flat_affine_surjective,
     thm:baseChangeCurve_integral}
@@ -2922,6 +3050,7 @@ carrier \(\Spec A\) and natural in \(A\).
 
 \begin{definition}[Pullback of rational functions]
   \label{def:functionFieldMap}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.Hom.functionFieldMap,
     AlgebraicGeometry.Scheme.Hom.functionFieldMapUnits,
     AlgebraicGeometry.Scheme.Hom.coe_functionFieldMapUnits}
@@ -2941,6 +3070,7 @@ carrier \(\Spec A\) and natural in \(A\).
 
 \begin{lemma}[Germ naturality and injectivity of the function-field map]
   \label{lem:functionFieldMap_germ}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.Hom.functionFieldMap_germ,
     AlgebraicGeometry.Scheme.Hom.functionFieldMap_injective}
   \uses{def:functionFieldMap}
@@ -2967,6 +3097,7 @@ carrier \(\Spec A\) and natural in \(A\).
 
 \begin{theorem}[Base change of sections along the transition, pushout form]
   \label{thm:isPushout_transitionSections}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Over.isPushout_transitionSections_of_isAffineOpen}
   \uses{thm:isPullback_baseFieldTransition}
   \leanok
@@ -2997,6 +3128,7 @@ carrier \(\Spec A\) and natural in \(A\).
 
 \begin{definition}[The second-projection algebra structure on sections]
   \label{def:baseChangeSectionsAlgebra}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.baseChangeBundle, AlgebraicGeometry.baseChangeSectionsAlgebra,
     AlgebraicGeometry.ofHom_algebraMap_baseChangeSections}
   \uses{thm:baseChangeCurve_bundle}
@@ -3015,6 +3147,7 @@ carrier \(\Spec A\) and natural in \(A\).
 
 \begin{lemma}[Restriction of sections is \(K\)-algebraic]
   \label{lem:baseChangeResAlgHom}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.ofHom_algebraMap_baseChangeSections_comp_res,
     AlgebraicGeometry.baseChangeResAlgHom, AlgebraicGeometry.baseChangeResAlgHom_apply}
   \uses{def:baseChangeSectionsAlgebra}
@@ -3035,6 +3168,7 @@ carrier \(\Spec A\) and natural in \(A\).
 
 \begin{theorem}[The algebra-corner pushout square]
   \label{thm:isPushout_algebraMap_transitionSections}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Over.isPushout_algebraMap_transitionSections}
   \uses{thm:isPushout_transitionSections, def:baseChangeSectionsAlgebra}
   \leanok
@@ -3063,6 +3197,7 @@ carrier \(\Spec A\) and natural in \(A\).
 
 \begin{definition}[Sections base change along the base-field transition]
   \label{def:transitionSectionsBaseChange}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Over.transitionSectionsBaseChangeIso,
     AlgebraicGeometry.Over.transitionSectionsBaseChange}
   \uses{thm:isPushout_algebraMap_transitionSections, def:baseChangeSectionsAlgebra}
@@ -3089,6 +3224,7 @@ carrier \(\Spec A\) and natural in \(A\).
 
 \begin{lemma}[The base change on pure tensors]
   \label{lem:transitionSectionsBaseChange_tmul}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Over.transitionSectionsBaseChange_tmul_one,
     AlgebraicGeometry.Over.transitionSectionsBaseChange_one_tmul,
     AlgebraicGeometry.Over.transitionSectionsBaseChange_tmul}
@@ -3114,6 +3250,7 @@ carrier \(\Spec A\) and natural in \(A\).
 
 \begin{lemma}[Naturality of the base change in the open]
   \label{lem:transitionSectionsBaseChange_naturality}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Over.transitionSectionsBaseChange_naturality}
   \uses{def:transitionSectionsBaseChange, lem:transitionSectionsBaseChange_tmul,
     lem:baseChangeResAlgHom}
@@ -3167,6 +3304,7 @@ Throughout, \(R\) is a commutative ring.
 
 \begin{definition}[Two-lattice pair]
   \label{def:twoLatticePair}
+  \provenancetag{CUSTOM}
   \lean{TwoLatticePair}
   \leanok
   A \emph{two-lattice pair} \(P\) over \(R\) consists of:
@@ -3202,6 +3340,7 @@ Throughout, \(R\) is a commutative ring.
 
 \begin{definition}[The two-term complex of a pair]
   \label{def:twoLattice_diff}
+  \provenancetag{CUSTOM}
   \lean{TwoLatticePair.diff}
   \uses{def:twoLatticePair}
   \leanok
@@ -3216,6 +3355,7 @@ Throughout, \(R\) is a commutative ring.
 
 \begin{definition}[\(H^0\) of a pair]
   \label{def:twoLattice_H0}
+  \provenancetag{CUSTOM}
   \lean{TwoLatticePair.H0}
   \uses{def:twoLattice_diff}
   \leanok
@@ -3230,6 +3370,7 @@ Throughout, \(R\) is a commutative ring.
 
 \begin{definition}[\(H^1\) of a pair]
   \label{def:twoLattice_H1}
+  \provenancetag{CUSTOM}
   \lean{TwoLatticePair.H1, TwoLatticePair.imageLattice, TwoLatticePair.h1Mk}
   \uses{def:twoLatticePair}
   \leanok
@@ -3244,6 +3385,7 @@ Throughout, \(R\) is a commutative ring.
 
 \begin{lemma}[\(H^1\) is the cokernel of the difference map]
   \label{lem:twoLattice_range_diff}
+  \provenancetag{CUSTOM}
   \lean{TwoLatticePair.range_diff_eq}
   \uses{def:twoLattice_diff, def:twoLattice_H1}
   \leanok
@@ -3261,6 +3403,7 @@ Throughout, \(R\) is a commutative ring.
 
 \begin{definition}[Map of two-lattice pairs]
   \label{def:twoLattice_hom}
+  \provenancetag{CUSTOM}
   \lean{TwoLatticePair.Hom}
   \uses{def:twoLatticePair}
   \leanok
@@ -3281,6 +3424,7 @@ Throughout, \(R\) is a commutative ring.
 
 \begin{lemma}[Naturality of the difference map]
   \label{lem:twoLattice_diff_natural}
+  \provenancetag{CUSTOM}
   \lean{TwoLatticePair.Hom.diff_comm}
   \uses{def:twoLattice_hom, def:twoLattice_diff}
   \leanok
@@ -3299,6 +3443,7 @@ Throughout, \(R\) is a commutative ring.
 
 \begin{definition}[The induced map on \(H^0\)]
   \label{def:twoLattice_h0Map}
+  \provenancetag{CUSTOM}
   \lean{TwoLatticePair.Hom.h0Map}
   \uses{def:twoLattice_hom, def:twoLattice_H0}
   \leanok
@@ -3317,6 +3462,7 @@ Throughout, \(R\) is a commutative ring.
 
 \begin{definition}[The induced map on \(H^1\)]
   \label{def:twoLattice_h1Map}
+  \provenancetag{CUSTOM}
   \lean{TwoLatticePair.Hom.h1Map}
   \uses{def:twoLattice_hom, def:twoLattice_H1}
   \leanok
@@ -3332,6 +3478,7 @@ Throughout, \(R\) is a commutative ring.
 
 \begin{lemma}[Right exactness of \(H^1\) in the pair]
   \label{lem:twoLattice_h1Map_surjective}
+  \provenancetag{CUSTOM}
   \lean{TwoLatticePair.Hom.h1Map_surjective}
   \uses{def:twoLattice_h1Map}
   \leanok
@@ -3359,6 +3506,7 @@ chases on the two-term complexes.
 
 \begin{definition}[Short exact sequence of pairs]
   \label{def:twoLattice_shortExact}
+  \provenancetag{CUSTOM}
   \lean{TwoLatticePair.IsShortExact}
   \uses{def:twoLattice_hom}
   \leanok
@@ -3371,6 +3519,7 @@ chases on the two-term complexes.
 
 \begin{definition}[The connecting homomorphism]
   \label{def:twoLattice_delta}
+  \provenancetag{CUSTOM}
   \lean{TwoLatticePair.IsShortExact.delta, TwoLatticePair.IsShortExact.delta_apply}
   \uses{def:twoLattice_shortExact, def:twoLattice_H0, def:twoLattice_H1}
   \leanok
@@ -3415,6 +3564,7 @@ chases on the two-term complexes.
 
 \begin{theorem}[Six-term exactness, left end]
   \label{thm:twoLattice_h0Map_injective}
+  \provenancetag{CUSTOM}
   \lean{TwoLatticePair.IsShortExact.h0Map_injective}
   \uses{def:twoLattice_shortExact, def:twoLattice_h0Map}
   \leanok
@@ -3429,6 +3579,7 @@ chases on the two-term complexes.
 
 \begin{theorem}[Six-term exactness at \(H^0(P')\)]
   \label{thm:twoLattice_exact_h0_middle}
+  \provenancetag{CUSTOM}
   \lean{TwoLatticePair.IsShortExact.range_h0Map_eq_ker_h0Map}
   \uses{def:twoLattice_shortExact, def:twoLattice_h0Map}
   \leanok
@@ -3450,6 +3601,7 @@ chases on the two-term complexes.
 
 \begin{theorem}[Six-term exactness at \(H^0(P'')\)]
   \label{thm:twoLattice_exact_h0_delta}
+  \provenancetag{CUSTOM}
   \lean{TwoLatticePair.IsShortExact.range_h0Map_eq_ker_delta}
   \uses{def:twoLattice_delta, def:twoLattice_h0Map}
   \leanok
@@ -3476,6 +3628,7 @@ chases on the two-term complexes.
 
 \begin{theorem}[Six-term exactness at \(H^1(P)\)]
   \label{thm:twoLattice_exact_delta_h1}
+  \provenancetag{CUSTOM}
   \lean{TwoLatticePair.IsShortExact.range_delta_eq_ker_h1Map}
   \uses{def:twoLattice_delta, def:twoLattice_h1Map}
   \leanok
@@ -3499,6 +3652,7 @@ chases on the two-term complexes.
 
 \begin{theorem}[Six-term exactness at \(H^1(P')\)]
   \label{thm:twoLattice_exact_h1_middle}
+  \provenancetag{CUSTOM}
   \lean{TwoLatticePair.IsShortExact.range_h1Map_eq_ker_h1Map}
   \uses{def:twoLattice_shortExact, def:twoLattice_h1Map}
   \leanok
@@ -3522,6 +3676,7 @@ chases on the two-term complexes.
 
 \begin{theorem}[Six-term exactness, right end]
   \label{thm:twoLattice_h1Map_surjective_ses}
+  \provenancetag{CUSTOM}
   \lean{TwoLatticePair.IsShortExact.h1Map_surjective}
   \uses{def:twoLattice_shortExact, def:twoLattice_h1Map}
   \leanok
@@ -3551,6 +3706,7 @@ terminating in one step because generation is measured over \(R[t]\) rather than
 
 \begin{definition}[The family line-bundle model]
   \label{def:twoLattice_model}
+  \provenancetag{CUSTOM}
   \lean{TwoLatticePair.model}
   \uses{def:twoLatticePair}
   \leanok
@@ -3591,6 +3747,7 @@ terminating in one step because generation is measured over \(R[t]\) rather than
 
 \begin{theorem}[The monomial window: \(H^1\) of a model over any ring]
   \label{thm:moduleFinite_h1_model}
+  \provenancetag{ADAPTED}
   \lean{TwoLatticePair.moduleFinite_h1_model}
   \uses{def:twoLattice_model, def:twoLattice_H1}
   \leanok
@@ -3617,6 +3774,7 @@ terminating in one step because generation is measured over \(R[t]\) rather than
 
 \begin{theorem}[The degree window: \(H^0\) of a model over a Noetherian ring]
   \label{thm:moduleFinite_h0_model}
+  \provenancetag{ADAPTED}
   \lean{TwoLatticePair.moduleFinite_h0_model}
   \uses{def:twoLattice_model, def:twoLattice_H0}
   \leanok
@@ -3640,6 +3798,7 @@ terminating in one step because generation is measured over \(R[t]\) rather than
 
 \begin{definition}[The Laurent action on the overlap module]
   \label{def:twoLattice_laurentToEnd}
+  \provenancetag{CUSTOM}
   \lean{TwoLatticePair.laurentToEnd}
   \uses{def:twoLatticePair}
   \leanok
@@ -3657,6 +3816,7 @@ terminating in one step because generation is measured over \(R[t]\) rather than
 
 \begin{lemma}[The Laurent action intertwines the chart actions]
   \label{lem:twoLattice_laurent_intertwine}
+  \provenancetag{CUSTOM}
   \lean{TwoLatticePair.laurentToEnd_toLaurent_ι₀,
     TwoLatticePair.laurentToEnd_invert_toLaurent_ι₁}
   \uses{def:twoLattice_laurentToEnd}
@@ -3682,6 +3842,7 @@ terminating in one step because generation is measured over \(R[t]\) rather than
 
 \begin{definition}[The model map determined by matched generators]
   \label{def:twoLattice_modelHom}
+  \provenancetag{CUSTOM}
   \lean{TwoLatticePair.modelHom}
   \uses{def:twoLattice_model, def:twoLattice_hom, def:twoLattice_laurentToEnd}
   \leanok
@@ -3720,6 +3881,7 @@ terminating in one step because generation is measured over \(R[t]\) rather than
 
 \begin{lemma}[Models have finite lattices]
   \label{lem:moduleFinite_aeval_model}
+  \provenancetag{CUSTOM}
   \lean{TwoLatticePair.moduleFinite_aeval_model_t₀, TwoLatticePair.moduleFinite_aeval_model_t₁}
   \uses{def:twoLattice_model}
   \leanok
@@ -3735,6 +3897,7 @@ terminating in one step because generation is measured over \(R[t]\) rather than
 
 \begin{theorem}[The finite model surjection]
   \label{thm:exists_hom_model_surjective}
+  \provenancetag{CUSTOM}
   \lean{TwoLatticePair.exists_hom_model_surjective}
   \uses{def:twoLattice_modelHom}
   \leanok
@@ -3787,6 +3950,7 @@ relative to an arbitrary base ring.
 
 \begin{definition}[The kernel pair of a map of pairs]
   \label{def:twoLattice_kernelPair}
+  \provenancetag{CUSTOM}
   \lean{TwoLatticePair.Hom.kernelPair, TwoLatticePair.Hom.kernelPairIncl}
   \uses{def:twoLattice_hom}
   \leanok
@@ -3817,6 +3981,7 @@ relative to an arbitrary base ring.
 
 \begin{lemma}[The kernel pair sits in a short exact sequence]
   \label{lem:twoLattice_kernelPair_shortExact}
+  \provenancetag{CUSTOM}
   \lean{TwoLatticePair.Hom.isShortExact_kernelPairIncl}
   \uses{def:twoLattice_kernelPair, def:twoLattice_shortExact}
   \leanok
@@ -3835,6 +4000,7 @@ relative to an arbitrary base ring.
 
 \begin{lemma}[Kernel lattices are finite over a Noetherian ring]
   \label{lem:moduleFinite_aeval_kernelPair}
+  \provenancetag{CUSTOM}
   \lean{TwoLatticePair.Hom.moduleFinite_aeval_kernelPair_t₀,
     TwoLatticePair.Hom.moduleFinite_aeval_kernelPair_t₁}
   \uses{def:twoLattice_kernelPair}
@@ -3853,6 +4019,7 @@ relative to an arbitrary base ring.
 
 \begin{theorem}[COH-1: coherence of \(H^1\) over any base ring]
   \label{thm:twoLattice_coh1}
+  \provenancetag{CUSTOM}
   \lean{TwoLatticePair.moduleFinite_h1}
   \uses{def:twoLatticePair, def:twoLattice_H1}
   \leanok
@@ -3874,6 +4041,7 @@ relative to an arbitrary base ring.
 
 \begin{theorem}[COH-0: coherence of \(H^0\) over a Noetherian base ring]
   \label{thm:twoLattice_coh0}
+  \provenancetag{CUSTOM}
   \lean{TwoLatticePair.moduleFinite_h0}
   \uses{def:twoLatticePair, def:twoLattice_H0}
   \leanok
@@ -3928,6 +4096,7 @@ the cokernel bridge --- is built first.
 
 \begin{theorem}[The Mayer--Vietoris degree-zero kernel bridge]
   \label{thm:sectionsKerEquiv}
+  \provenancetag{CUSTOM}
   \lean{CategoryTheory.GrothendieckTopology.MayerVietorisSquare.sectionsToKerModuleDiff,
     CategoryTheory.GrothendieckTopology.MayerVietorisSquare.sectionsToKerModuleDiff_coe,
     CategoryTheory.GrothendieckTopology.MayerVietorisSquare.sectionsKerEquiv,
@@ -3953,6 +4122,7 @@ the cokernel bridge --- is built first.
 
 \begin{theorem}[The two-cover \(H^0\) kernel bridge]
   \label{thm:twoCoverH0LinearEquiv}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.twoCoverH0LinearEquiv}
   \uses{thm:sectionsKerEquiv, def:twoCoverSquare, def:HModule_linearEquivHModule',
     def:HModule'_linearEquiv0}
@@ -3978,6 +4148,7 @@ the cokernel bridge --- is built first.
 
 \begin{definition}[The two-cover pair data of a packaged sheaf]
   \label{def:twoCoverPairData}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.TwoCoverPairData}
   \uses{def:qcohOn}
   \leanok
@@ -3998,6 +4169,7 @@ the cokernel bridge --- is built first.
 
 \begin{definition}[The two-lattice pair of a packaged sheaf]
   \label{def:twoCoverPairData_pair}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.TwoCoverPairData.end₀,
     AlgebraicGeometry.Scheme.TwoCoverPairData.end₁,
     AlgebraicGeometry.Scheme.TwoCoverPairData.end₀_apply,
@@ -4045,6 +4217,7 @@ the cokernel bridge --- is built first.
 
 \begin{definition}[The cohomology carriers of the pair]
   \label{def:twoCoverPair_h0h1}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.TwoCoverPairData.h0Equiv,
     AlgebraicGeometry.Scheme.TwoCoverPairData.h1Equiv}
   \uses{def:twoCoverPairData_pair, thm:twoCoverH0LinearEquiv,
@@ -4075,6 +4248,7 @@ the cokernel bridge --- is built first.
 
 \begin{lemma}[Vanishing of \(H^1\) of the pair makes the differential surjective]
   \label{lem:twoCoverPair_surjective_diff}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.TwoCoverPairData.surjective_diff}
   \uses{def:twoCoverPairData_pair, lem:twoLattice_range_diff,
     lem:rigid_surjective_of_coker_zero}
@@ -4092,6 +4266,7 @@ the cokernel bridge --- is built first.
 
 \begin{theorem}[The rigid engine, sheaf level]
   \label{thm:twoCoverPair_rigidEngine}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicGeometry.Scheme.TwoCoverPairData.rigidEngine}
   \uses{def:twoCoverPair_h0h1, def:twoCoverPairData_pair}
   \leanok
@@ -4138,6 +4313,10 @@ the cokernel bridge --- is built first.
 
 \begin{theorem}[The openness export]
   \label{thm:twoCoverPair_isOpen_vanishing}
+  \provenancetag{ADAPTED}
+  \alignmentcheck{TO CHECK: the cited Kleiman argument uses a Noetherian base, whereas this
+  export claims the same openness over an arbitrary commutative ring via finite-module
+  coherence; verify the source-to-blueprint hypothesis change.}
   \lean{AlgebraicGeometry.Scheme.TwoCoverPairData.rigidEngine_isOpen_vanishing}
   \uses{def:twoCoverPairData_pair, thm:twoLattice_coh1, thm:isOpen_fibre_vanishing}
   \leanok
@@ -4161,6 +4340,7 @@ the cokernel bridge --- is built first.
 
 \begin{definition}[The module-coefficient clause]
   \label{def:twoCoverPair_h0TensorEquiv}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicGeometry.Scheme.TwoCoverPairData.h0TensorEquiv}
   \uses{def:twoCoverPair_h0h1, lem:twoCoverPair_surjective_diff, thm:rigid_ker_tensor}
   \leanok
@@ -4188,6 +4368,7 @@ the cokernel bridge --- is built first.
 
 \begin{definition}[The ring-map clause, abstract half]
   \label{def:twoCoverPair_h0BaseChangeEquiv}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.TwoCoverPairData.h0BaseChangeEquiv}
   \uses{def:twoCoverPair_h0h1, lem:twoCoverPair_surjective_diff, thm:rigid_ker_baseChange}
   \leanok
@@ -4217,6 +4398,7 @@ algebra in the structure sheaf.
 
 \begin{definition}[Multiplication by a section as an endomorphism]
   \label{def:mulSectionEnd}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.Scheme.mulSectionEnd, AlgebraicGeometry.Scheme.mulSectionEnd_apply}
   \uses{def:moduleKSheaf}
   \leanok
@@ -4229,6 +4411,7 @@ algebra in the structure sheaf.
 
 \begin{lemma}[The packaged action of the twisted sheaf, and its \(k\)-linearity]
   \label{lem:twistSheaf_qsmul_eq}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.twistSheaf_qsmul₀_eq, AlgebraicGeometry.twistSheaf_qsmul₁_eq,
     AlgebraicGeometry.twistSheaf_smul_qsmul₀, AlgebraicGeometry.twistSheaf_smul_qsmul₁}
   \uses{thm:twistSheaf_qcohOn, def:twistTriv, def:qcohOn_transport}
@@ -4254,6 +4437,7 @@ algebra in the structure sheaf.
 
 \begin{lemma}[The two trivialisations differ by the cocycle on the overlap]
   \label{lem:twistTriv_inf_eq}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.twistTriv₀_inf_eq, AlgebraicGeometry.twistTriv₁_inf_eq}
   \uses{def:twistTriv, def:twistSections}
   \leanok
@@ -4274,6 +4458,7 @@ algebra in the structure sheaf.
 
 \begin{lemma}[The mutual-inverse law of the coordinate actions]
   \label{lem:twistSheaf_qsmul_inverse}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.twistSheaf_qsmul₀_qsmul₁, AlgebraicGeometry.twistSheaf_qsmul₁_qsmul₀}
   \uses{lem:twistSheaf_qsmul_eq, lem:twistTriv_inf_eq}
   \leanok
@@ -4295,6 +4480,7 @@ algebra in the structure sheaf.
 
 \begin{definition}[The pair data of the twisted sheaf]
   \label{def:twistPairData}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.twistPairData}
   \uses{def:twoCoverPairData, thm:twistSheaf_qcohOn, lem:twistSheaf_qsmul_eq,
     lem:twistSheaf_qsmul_inverse}
@@ -4309,6 +4495,7 @@ algebra in the structure sheaf.
 
 \begin{theorem}[Chart-lattice finiteness of the twisted pair]
   \label{thm:moduleFinite_aeval_twistPair}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.moduleFinite_aeval'_twistPair_t₀,
     AlgebraicGeometry.moduleFinite_aeval'_twistPair_t₁}
   \uses{def:twistPairData, def:twoCoverPairData_pair, def:mulSectionEnd, def:twistTriv,
@@ -4330,6 +4517,7 @@ algebra in the structure sheaf.
 
 \begin{theorem}[Freeness of the twisted section modules]
   \label{thm:free_twistSheafSections}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.free_twistSheafSections₀, AlgebraicGeometry.free_twistSheafSections₁}
   \uses{def:twistTriv}
   \leanok
@@ -4354,6 +4542,7 @@ where stated).
 
 \begin{definition}[The pinned affine two-cover]
   \label{def:fiberTwoCover}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.fiberTwoCover, AlgebraicGeometry.fiberTwoCover_V₀,
     AlgebraicGeometry.fiberTwoCover_V₁}
   \uses{def:AffineTwoCover, lem:preimage_chart_affine, lem:preimage_chart_sup,
@@ -4372,6 +4561,7 @@ where stated).
 
 \begin{theorem}[The overlap is the basic open of the chart-1 coordinate]
   \label{thm:preimage_inf_eq_basicOpen_fiberCoord1}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.preimage_inf_eq_basicOpen_fiberCoord₁}
   \uses{def:fiberCover, def:fiberCoordUnit, thm:P1_basicOpen_chartCoord}
   \leanok
@@ -4389,6 +4579,7 @@ where stated).
 
 \begin{definition}[The chart polynomial algebras]
   \label{def:fiberPolyHom}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.fiberPolyHom₀, AlgebraicGeometry.fiberPolyHom₁,
     AlgebraicGeometry.fiberPolyHom₀_X, AlgebraicGeometry.fiberPolyHom₁_X}
   \uses{def:P1_chartSectionsEquiv0, def:P1_chartSectionsEquiv1, def:fiberCover,
@@ -4414,6 +4605,7 @@ where stated).
 
 \begin{theorem}[E-i: the chart polynomial algebras are finite ring maps]
   \label{thm:fiberPolyHom_finite}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.fiberPolyHom₀_finite, AlgebraicGeometry.fiberPolyHom₁_finite}
   \uses{def:fiberPolyHom, lem:finite_app_chart}
   \leanok
@@ -4429,6 +4621,7 @@ where stated).
 
 \begin{theorem}[Scalar compatibility of the chart polynomial algebras]
   \label{thm:fiberPolyHom_algebraMap}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.fiberPolyHom₀_algebraMap, AlgebraicGeometry.fiberPolyHom₁_algebraMap}
   \uses{def:fiberPolyHom, lem:P1_structureMap_appTop_awayToSection,
     lem:appLE_overAlgebraMap, def:overAlgebraMap}
@@ -4454,6 +4647,7 @@ where stated).
 
 \begin{theorem}[E-i in chart-lattice form, field level]
   \label{thm:moduleFinite_aeval_fiberCoord}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.moduleFinite_aeval'_mulLeft_fiberCoord₀,
     AlgebraicGeometry.moduleFinite_aeval'_mulLeft_fiberCoord₁}
   \uses{thm:fiberPolyHom_finite, thm:fiberPolyHom_algebraMap, lem:moduleFinite_aeval_ringHom}
@@ -4473,6 +4667,7 @@ where stated).
 
 \begin{definition}[The relative chart coordinates]
   \label{def:relFiberCoord}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.relFiberCoord₀, AlgebraicGeometry.relFiberCoord₁,
     AlgebraicGeometry.relPullbackSection_mul}
   \uses{def:relSectionsBaseChange, def:relCover, def:fiberTwoCover, def:fiberCover,
@@ -4491,6 +4686,7 @@ where stated).
 
 \begin{theorem}[The relative overlap identifications]
   \label{thm:relCover_inf_eq_basicOpen}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.relCover_fiberTwoCover_inf_eq_basicOpen₀,
     AlgebraicGeometry.relCover_fiberTwoCover_inf_eq_basicOpen₁}
   \uses{def:relFiberCoord, lem:relCover_inf, def:fiberCover,
@@ -4511,6 +4707,7 @@ where stated).
 
 \begin{theorem}[The relative coordinates are mutually inverse on the overlap]
   \label{thm:relFiberCoord_mul}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.relFiberCoord_mul}
   \uses{def:relFiberCoord, def:fiberCoordUnit, lem:relCover_inf}
   \leanok
@@ -4527,6 +4724,7 @@ where stated).
 
 \begin{theorem}[The relative E-i: chart-lattice finiteness over the test ring]
   \label{thm:moduleFinite_aeval_relFiberCoord}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.moduleFinite_aeval'_mulSectionEnd_relFiberCoord₀,
     AlgebraicGeometry.moduleFinite_aeval'_mulSectionEnd_relFiberCoord₁}
   \uses{thm:moduleFinite_aeval_fiberCoord, thm:moduleFinite_aeval_baseChange,
@@ -4554,6 +4752,7 @@ where stated).
 
 \begin{theorem}[Freeness of the relative section modules]
   \label{thm:free_relSections}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.free_relSections}
   \uses{def:relSectionsBaseChange}
   \leanok
@@ -4596,6 +4795,7 @@ base-changed pinned cover \((V_0^R, V_1^R)\) of \(C_R\), with relative twisted s
 
 \begin{definition}[The pair data of the relative twisted sheaf]
   \label{def:relTwistPairData}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.relTwistSheaf.instQcohOn₀,
     AlgebraicGeometry.relTwistSheaf.instQcohOn₁, AlgebraicGeometry.relTwistPairData}
   \uses{def:relTwistSheaf, def:twistPairData, thm:twistSheaf_qcohOn, def:relFiberCoord,
@@ -4612,6 +4812,7 @@ base-changed pinned cover \((V_0^R, V_1^R)\) of \(C_R\), with relative twisted s
 
 \begin{theorem}[Chart-lattice finiteness of the relative twisted pair]
   \label{thm:moduleFinite_aeval_relTwistPair}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.moduleFinite_aeval'_relTwistPair_t₀,
     AlgebraicGeometry.moduleFinite_aeval'_relTwistPair_t₁}
   \uses{def:relTwistPairData, thm:moduleFinite_aeval_twistPair,
@@ -4631,6 +4832,7 @@ base-changed pinned cover \((V_0^R, V_1^R)\) of \(C_R\), with relative twisted s
 
 \begin{theorem}[Freeness of the twisted section modules on the pinned relative cover]
   \label{thm:free_relTwistSections}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.free_relTwistSections₀, AlgebraicGeometry.free_relTwistSections₁,
     AlgebraicGeometry.free_relTwistSectionsOverlap}
   \uses{thm:free_relSections, thm:free_twistSheafSections, def:fiberTwoCover,
@@ -4650,6 +4852,7 @@ base-changed pinned cover \((V_0^R, V_1^R)\) of \(C_R\), with relative twisted s
 
 \begin{theorem}[The rigid engine on the relative twisted sheaf]
   \label{thm:relTwistRigidEngine}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicGeometry.relTwistRigidEngine}
   \uses{thm:twoCoverPair_rigidEngine, def:relTwistPairData,
     thm:moduleFinite_aeval_relTwistPair, thm:free_relTwistSections, lem:relCover_charts}
@@ -4683,6 +4886,7 @@ base-changed pinned cover \((V_0^R, V_1^R)\) of \(C_R\), with relative twisted s
 
 \begin{lemma}[Fibrewise vanishing propagates to the pair]
   \label{lem:relTwist_subsingleton_pairH1}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.relTwist_subsingleton_pairH1}
   \uses{thm:moduleFinite_aeval_relTwistPair, thm:twoLattice_coh1,
     thm:fibrewise_vanishing_propagates}
@@ -4702,6 +4906,7 @@ base-changed pinned cover \((V_0^R, V_1^R)\) of \(C_R\), with relative twisted s
 
 \begin{theorem}[The openness export on the relative twisted sheaf]
   \label{thm:relTwistRigidEngine_isOpen}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicGeometry.relTwistRigidEngine_isOpen_vanishing}
   \uses{thm:twoCoverPair_isOpen_vanishing, thm:moduleFinite_aeval_relTwistPair}
   \leanok
@@ -4720,6 +4925,7 @@ base-changed pinned cover \((V_0^R, V_1^R)\) of \(C_R\), with relative twisted s
 
 \begin{definition}[The module-coefficient clause on the relative twisted sheaf]
   \label{def:relTwistH0TensorEquiv}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicGeometry.relTwistH0TensorEquiv}
   \uses{def:twoCoverPair_h0TensorEquiv, thm:free_relTwistSections, def:relTwistPairData}
   \leanok
@@ -4742,6 +4948,7 @@ base-changed pinned cover \((V_0^R, V_1^R)\) of \(C_R\), with relative twisted s
 
 \begin{definition}[The ring-map clause on the relative twisted sheaf, abstract half]
   \label{def:relTwistH0BaseChangeEquiv}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.relTwistH0BaseChangeEquiv}
   \uses{def:twoCoverPair_h0BaseChangeEquiv, thm:free_relTwistSections, def:relTwistPairData}
   \leanok
@@ -4760,6 +4967,7 @@ base-changed pinned cover \((V_0^R, V_1^R)\) of \(C_R\), with relative twisted s
 
 \begin{lemma}[The twisted differential in trivialised coordinates]
   \label{lem:twistTriv_pairDiff}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.twistTriv₀_pairDiff}
   \uses{def:twistTriv, lem:twistTriv_res, lem:twistTriv_inf_eq}
   \leanok
@@ -4784,6 +4992,7 @@ base-changed pinned cover \((V_0^R, V_1^R)\) of \(C_R\), with relative twisted s
 
 \begin{definition}[CBC-1 for the twisted complex, assembled]
   \label{def:relTwistDomBaseChange}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.relTwistDomBaseChange,
     AlgebraicGeometry.twistTriv₀_relTwistTermBaseChange₀,
     AlgebraicGeometry.twistTriv₁_relTwistTermBaseChange₁,
@@ -4817,6 +5026,7 @@ base-changed pinned cover \((V_0^R, V_1^R)\) of \(C_R\), with relative twisted s
 
 \begin{theorem}[The twisted \(\delta\)-naturality square]
   \label{thm:relTwistDiffBaseChange}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.relTwistDiff, AlgebraicGeometry.relTwistDiff_apply,
     AlgebraicGeometry.relTwistPair_diff, AlgebraicGeometry.relTwistDiffBaseChange,
     AlgebraicGeometry.relTwistPairDiffBaseChange}
@@ -4861,6 +5071,7 @@ base-changed pinned cover \((V_0^R, V_1^R)\) of \(C_R\), with relative twisted s
 
 \begin{theorem}[\(H^1\) of the twisted sheaf vanishes after base change]
   \label{thm:relTwist_h1_baseChange}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.relTwist_surjective_diff_baseChange,
     AlgebraicGeometry.relTwist_subsingleton_h1_baseChange}
   \uses{thm:relTwistDiffBaseChange, lem:twoCoverPair_surjective_diff, lem:kerCongr,
@@ -4888,6 +5099,7 @@ base-changed pinned cover \((V_0^R, V_1^R)\) of \(C_R\), with relative twisted s
 
 \begin{definition}[\(H^0\) base change on the nose]
   \label{def:relTwistH0BaseChange}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicGeometry.relTwistH0BaseChange}
   \uses{def:relTwistH0BaseChangeEquiv, lem:kerCongr, thm:relTwistDiffBaseChange,
     def:twoCoverPair_h0h1, def:relTwistPairData}
@@ -4930,6 +5142,7 @@ No flatness, semicontinuity or exchange argument is used.
 
 \begin{lemma}[Pullback of sections commutes with restriction]
   \label{lem:relPullbackSection_resHom}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.relPullbackSection_resHom}
   \uses{def:relSectionsBaseChange}
   \leanok
@@ -4952,6 +5165,7 @@ No flatness, semicontinuity or exchange argument is used.
 
 \begin{definition}[Termwise base change of the two-cover complex of the curve]
   \label{def:curveDiffTermsBaseChange}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.curveDiffDomBaseChange, AlgebraicGeometry.curveDiffCodBaseChange,
     AlgebraicGeometry.curveDiffCodBaseChange_tmul}
   \uses{def:relSectionsBaseChange, def:relCover, lem:relCover_inf, def:AffineTwoCover}
@@ -4977,6 +5191,7 @@ No flatness, semicontinuity or exchange argument is used.
 
 \begin{theorem}[The base-changed difference map is the relative difference map]
   \label{thm:curveDiffBaseChange}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.curveDiffBaseChange, AlgebraicGeometry.curveDiffBaseChange_range}
   \uses{def:curveDiffTermsBaseChange, def:TwoCover_diff, lem:relPullbackSection_resHom}
   \leanok
@@ -5007,6 +5222,7 @@ No flatness, semicontinuity or exchange argument is used.
 
 \begin{theorem}[Base change of the two-cover \(H^1\) cokernel of the curve]
   \label{thm:curveH1CokBaseChange}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.curveH1CokBaseChange, AlgebraicGeometry.curveH1CokBaseChange_tmul_mk}
   \uses{thm:quot_range_baseChange, thm:curveDiffBaseChange, def:TwoCover_H1Cok}
   \leanok
@@ -5034,6 +5250,7 @@ No flatness, semicontinuity or exchange argument is used.
 \begin{theorem}[Cohomology commutes with base change in degree one, from the absolute
   curve]
   \label{thm:curveH1BaseChange}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.curveH1BaseChange}
   \uses{thm:TwoCover_h1CokEquiv, thm:curveH1CokBaseChange, def:relTwoCoverH1,
     def:moduleKSheaf, def:HModule}
@@ -5058,6 +5275,7 @@ No flatness, semicontinuity or exchange argument is used.
 
 \begin{definition}[A pinned affine two-cover of the challenge curve]
   \label{def:curveCover}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.curveCover}
   \uses{thm:AffineTwoCover_nonempty_of_curve}
   \leanok
@@ -5069,6 +5287,7 @@ No flatness, semicontinuity or exchange argument is used.
 
 \begin{theorem}[Cohomology commutes with base change in degree zero]
   \label{thm:curveH0BaseChange}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.curveH0BaseChange}
   \uses{def:moduleKSheafHZero, def:relSectionsBaseChange}
   \leanok
@@ -5090,6 +5309,7 @@ No flatness, semicontinuity or exchange argument is used.
 
 \begin{theorem}[\(H^1\) base-field invariance]
   \label{thm:h1BaseFieldEquiv}
+  \provenancetag{ADAPTED}
   \lean{AlgebraicGeometry.h1BaseFieldEquiv}
   \uses{thm:curveH1BaseChange, def:curveCover, thm:baseChangeCurve_bundle}
   \leanok
@@ -5110,6 +5330,7 @@ No flatness, semicontinuity or exchange argument is used.
 
 \begin{theorem}[\(H^0\) base-field invariance]
   \label{thm:h0BaseFieldEquiv}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.h0BaseFieldEquiv}
   \uses{thm:curveH0BaseChange, thm:baseChangeCurve_bundle}
   \leanok
@@ -5124,6 +5345,7 @@ No flatness, semicontinuity or exchange argument is used.
 
 \begin{theorem}[The scalar identities of base-field invariance]
   \label{thm:finrank_h1_baseField}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.finrank_h1_baseField, AlgebraicGeometry.finrank_h0_baseField,
     AlgebraicGeometry.finrank_h1_baseField_eq_genus}
   \uses{thm:h1BaseFieldEquiv, thm:h0BaseFieldEquiv, def:genus}
@@ -5146,6 +5368,7 @@ No flatness, semicontinuity or exchange argument is used.
 
 \begin{theorem}[Base-field invariance of the genus]
   \label{thm:genus_baseField}
+  \provenancetag{CUSTOM}
   \lean{AlgebraicGeometry.genus_baseField}
   \uses{thm:finrank_h1_baseField, thm:baseChangeCurve_bundle, def:genus}
   \leanok

@@ -1,5 +1,5 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.kernel-representer.universal-divisor.total-gluing.family-instantiation
-title: Instantiate the quotient family ideal on the total curve
+title: Instantiate the quotient family ideal on the total curve [CUSTOM]
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: After quotient-level cartierIdealData_mapAlg/comap compatibility is available,

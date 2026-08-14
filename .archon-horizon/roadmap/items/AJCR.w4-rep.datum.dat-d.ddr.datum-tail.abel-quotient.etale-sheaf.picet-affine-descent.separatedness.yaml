@@ -1,5 +1,5 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.etale-sheaf.picet-affine-descent.separatedness
-title: Prove PicEtAff etale separatedness
+title: Prove PicEtAff etale separatedness [CUSTOM]
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'Landed PicEtAff.map_injective_of_etaleCover: restriction along any presented

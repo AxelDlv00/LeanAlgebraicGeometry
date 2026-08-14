@@ -1,5 +1,5 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.kernel-representer.universal-divisor.total-gluing
-title: Glue affine divisor ideals on the total relative curve
+title: Glue affine divisor ideals on the total relative curve [CUSTOM]
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: Use a locally directed affine cover and RelativeGluingData to glue compatible

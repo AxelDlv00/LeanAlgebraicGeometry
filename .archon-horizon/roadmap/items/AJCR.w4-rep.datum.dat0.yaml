@@ -1,5 +1,5 @@
 id: AJCR.w4-rep.datum.dat0
-title: 'DAT-0: normalizations — P5-uniform $\exists b,\ b \le \deg D \Rightarrow H^1(\mathcal{O}(D))
+title: '[CUSTOM] DAT-0: normalizations — P5-uniform $\exists b,\ b \le \deg D \Rightarrow H^1(\mathcal{O}(D))
   = 0$; $\Theta$-positivity $1 \le \mathrm{classDeg}\,\Theta$'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild

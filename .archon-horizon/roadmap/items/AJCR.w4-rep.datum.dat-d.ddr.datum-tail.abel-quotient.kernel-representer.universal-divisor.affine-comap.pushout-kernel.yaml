@@ -1,5 +1,5 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.kernel-representer.universal-divisor.affine-comap.pushout-kernel
-title: Compute the kernel of a surjective pushout leg
+title: Compute the kernel of a surjective pushout leg [CUSTOM]
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: For a CommRingCat pushout with one surjective leg, identify the kernel of

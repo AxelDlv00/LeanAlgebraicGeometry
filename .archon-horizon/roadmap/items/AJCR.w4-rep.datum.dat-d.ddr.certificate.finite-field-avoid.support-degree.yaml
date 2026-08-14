@@ -1,5 +1,5 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.certificate.finite-field-avoid.support-degree
-title: Bound pointwise-seed residue support by degree g
+title: Bound pointwise-seed residue support by degree g [CUSTOM]
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: Identify the residue-fibre support locus of the concrete pointwise universal

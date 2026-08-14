@@ -1,5 +1,5 @@
 id: AJCR.w7-functor.f2
-title: 'F-2: PicEtAff curve map — D2-ii parameterized transport core + curve-morphism
+title: '[CUSTOM] F-2: PicEtAff curve map — D2-ii parameterized transport core + curve-morphism
   instantiation (Picard/PicEtAffCurveMap.lean); gate F-1 shapes (done)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild

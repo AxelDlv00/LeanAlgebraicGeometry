@@ -1,5 +1,5 @@
 id: AJCR.w4-rep.datum.dat-g.genus-chart-finite-descent
-title: 'DAT-G genus charts: finite Galois cover and descent'
+title: '[CUSTOM] DAT-G genus charts: finite Galois cover and descent'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: Unconditionally choose a finite Galois extension L/k carrying a curve point

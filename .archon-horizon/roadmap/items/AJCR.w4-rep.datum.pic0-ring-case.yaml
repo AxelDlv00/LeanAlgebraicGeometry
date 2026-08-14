@@ -1,5 +1,5 @@
 id: AJCR.w4-rep.datum.pic0-ring-case
-title: The pic0 vanishing at a general test RING, via the landed datum rigid engine
+title: The pic0 vanishing at a general test RING, via the landed datum rigid engine [CUSTOM]
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: The ring-level pic0 vanishing obligation remains open. The rigid engine and

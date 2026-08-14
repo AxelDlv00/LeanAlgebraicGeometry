@@ -1,5 +1,5 @@
 id: AJCR.w7-functor.b56
-title: 'B-5→B-6a→B-6b: JacobianData base change + mapGrp coherence via GrpObj.ext
+title: '[CUSTOM] B-5→B-6a→B-6b: JacobianData base change + mapGrp coherence via GrpObj.ext
   (Picard/JacobianDataBaseChange.lean); gates B-2/B-4'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild

@@ -1,5 +1,5 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.kernel-representer
-title: Represent the admissible Abel kernel pair
+title: Represent the admissible Abel kernel pair [CUSTOM]
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: Construct a Scheme representer for the concrete kernel relation and prove

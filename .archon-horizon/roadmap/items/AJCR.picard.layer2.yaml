@@ -1,5 +1,5 @@
 id: AJCR.picard.layer2
-title: 'Layer 2: the etale-sheafified functor picEt'
+title: '[CUSTOM] Layer 2: the etale-sheafified functor picEt'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'The sheaf-on-affines corollary of (C1), then picEt as the bespoke affine-opens

@@ -1,5 +1,5 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.datum-tail.abel-quotient.etale-sheaf.picet-affine-descent.effectivity
-title: Descend compatible PicEtAff classes
+title: Descend compatible PicEtAff classes [CUSTOM]
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'Landed PicEtAff.exists_map_eq_of_double_eq: compatible data over a singleton

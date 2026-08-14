@@ -1,5 +1,5 @@
 id: AJCR.w4-rep.datum.dat-g.genus-chart-finite-descent.fpqc-descent.effectivity.pic0-orbits-affine
-title: Prove finite Pic0 Galois orbits lie in affine opens
+title: Prove finite Pic0 Galois orbits lie in affine opens [CUSTOM]
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'Landed reusable no-hypothesis substrate: Scheme.FiniteInAffine and its conversion
