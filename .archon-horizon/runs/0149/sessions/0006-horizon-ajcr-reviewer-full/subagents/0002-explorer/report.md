@@ -1,0 +1,1 @@
+The Horizon skill is loaded. Its startup discipline requires reading all active protections, and the workspace prompt additionally requires consuming and acknowledging `I-1997`; that acknowledgment changes inbox read state but is mandatory workspace coordination, while the audit itself remains source/git/graph read-only.

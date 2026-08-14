@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Goodall",
+  "agent_path": "/root/next_descent_gate",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a00046-0ea8-73e2-ae6e-72f510282a43",
+  "ok": true,
+  "parent_session": "0006-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 389865,
+    "tokens_out": 2106
+  }
+}
