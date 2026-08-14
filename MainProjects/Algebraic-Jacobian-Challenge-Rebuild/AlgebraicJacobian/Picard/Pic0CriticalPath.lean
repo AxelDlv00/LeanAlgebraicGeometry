@@ -9,6 +9,7 @@ import AlgebraicJacobian.Picard.Pic0EndgameContract
 import AlgebraicJacobian.Picard.Pic0HighDegreeRouteGuard
 import AlgebraicJacobian.Picard.Pic0RankOneLocus
 import AlgebraicJacobian.Picard.Pic0RankOneOpenProducer
+import AlgebraicJacobian.Picard.Pic0SepClosedRepresentable
 import AlgebraicJacobian.Picard.Pic0RankOneLocalDivisor
 import AlgebraicJacobian.Picard.Pic0RankOneEvaluationZeroLocus
 import AlgebraicJacobian.Picard.Pic0RankOneFibrePresentedProducerAffineEvaluation
@@ -123,9 +124,15 @@ property, while `StableAffineOpen.isGaloisQuotient_glued` and
 honest orbit-in-affine-open condition.  This does not manufacture that condition for a Picard
 representer or identify quotient points with `pic0`.
 
-Still missing, and NOT replaced here by axioms or local hypotheses: translated separably-closed
-coverage as a representability input, the finite-stage spread, the Picard-specific Galois
-quotient comparison, `pic0_representableBy`, and `JacobianData` endpoints.
+The separably closed endpoint is now complete.  The exact translator returned by
+`exists_sepClosedTranslated_mem_picRankOneOpen` indexes a translated canonical Abel chart;
+these charts are open immersions and cover every residue-field point.  Consequently
+`pic0_sepClosed_representableBy` is unconditional and represents the same pinned
+`pic0TypeFunctor` over every separably closed base field.
+
+Still missing, and NOT replaced here by axioms or local hypotheses: the finite-stage spread,
+the Picard-specific Galois quotient comparison, `pic0_representableBy`, and `JacobianData`
+endpoints.
 -/
 
 #check AlgebraicGeometry.divFunctorAff_representableBy_at
@@ -443,6 +450,10 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.mem_picRankOneOpen_of_pointwiseSplit
 #check AlgebraicGeometry.picRankOneOpen_fibrePresented
 #check AlgebraicGeometry.picRankOneOpen_isOpen
+-- Separably closed representability from the exact translated rank-one cover
+#check AlgebraicGeometry.exists_picRankOneTranslatedChart_fieldFactorization
+#check AlgebraicGeometry.picRankOneTranslatedChart_pointwiseCoverage
+#check AlgebraicGeometry.pic0_sepClosed_representableBy
 -- Generic non-affine finite-Galois quotient engine
 #check AlgebraicJacobian.GaloisDescent.galoisQuotientUniversal_of_equivariant
 #check AlgebraicJacobian.GaloisDescent.galoisQuotientWitnessOfInvariantProjection
@@ -502,6 +513,9 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.mem_picRankOneOpen_of_pointwiseSplit
 #print axioms AlgebraicGeometry.picRankOneOpen_fibrePresented
 #print axioms AlgebraicGeometry.picRankOneOpen_isOpen
+#print axioms AlgebraicGeometry.exists_picRankOneTranslatedChart_fieldFactorization
+#print axioms AlgebraicGeometry.picRankOneTranslatedChart_pointwiseCoverage
+#print axioms AlgebraicGeometry.pic0_sepClosed_representableBy
 #print axioms AlgebraicJacobian.GaloisDescent.galoisQuotientUniversal_of_equivariant
 #print axioms AlgebraicJacobian.GaloisDescent.galoisQuotientWitnessOfInvariantProjection
 #print axioms AlgebraicJacobian.GaloisDescent.StableAffineOpen.isGaloisQuotient_glued
