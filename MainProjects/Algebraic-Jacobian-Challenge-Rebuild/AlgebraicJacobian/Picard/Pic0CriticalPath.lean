@@ -30,6 +30,7 @@ import AlgebraicJacobian.Picard.Pic0RankOneAbelInverse
 import AlgebraicJacobian.Picard.Pic0RankOneCanonicalEvaluation
 import AlgebraicJacobian.Picard.Pic0RankOneDatumGluedDivisor
 import AlgebraicJacobian.Picard.Pic0RankOneCanonicalDivisorStageCert
+import AlgebraicJacobian.Descent.GaloisQuotientOverlap
 
 /-!
 # Narrow root for the AJCR-first Picard strategy
@@ -115,9 +116,16 @@ class, and `picRankOneOpen_fibrePresented` identifies this open with the pullbac
 rank-one locus along an arbitrary Yoneda family.  Thus `picRankOneOpen_isOpen`, specialized to
 `divRepAffP1Map C`, supplies the actual `DivRankOneOpenData` consumed by the canonical Abel chart.
 
-Still missing, and NOT replaced here by axioms or local hypotheses: translated
-separably-closed coverage as a representability input, and the later finite-Galois descent,
-`pic0_representableBy`, and `JacobianData` endpoints.
+The generic finite-Galois quotient engine is also complete through non-affine stable-chart
+gluing.  `galoisQuotientWitnessOfInvariantProjection` supplies the effective universal
+property, while `StableAffineOpen.isGaloisQuotient_glued` and
+`StableAffineOpen.hasGaloisQuotient_of_orbitsInAffineOpen` construct the quotient under the
+honest orbit-in-affine-open condition.  This does not manufacture that condition for a Picard
+representer or identify quotient points with `pic0`.
+
+Still missing, and NOT replaced here by axioms or local hypotheses: translated separably-closed
+coverage as a representability input, the finite-stage spread, the Picard-specific Galois
+quotient comparison, `pic0_representableBy`, and `JacobianData` endpoints.
 -/
 
 #check AlgebraicGeometry.divFunctorAff_representableBy_at
@@ -435,6 +443,11 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.mem_picRankOneOpen_of_pointwiseSplit
 #check AlgebraicGeometry.picRankOneOpen_fibrePresented
 #check AlgebraicGeometry.picRankOneOpen_isOpen
+-- Generic non-affine finite-Galois quotient engine
+#check AlgebraicJacobian.GaloisDescent.galoisQuotientUniversal_of_equivariant
+#check AlgebraicJacobian.GaloisDescent.galoisQuotientWitnessOfInvariantProjection
+#check AlgebraicJacobian.GaloisDescent.StableAffineOpen.isGaloisQuotient_glued
+#check AlgebraicJacobian.GaloisDescent.StableAffineOpen.hasGaloisQuotient_of_orbitsInAffineOpen
 -- Datum-level glued divisor over a Noetherian base (Pic0RankOneDatumGluedDivisor.lean)
 #check AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
 
@@ -489,5 +502,10 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.mem_picRankOneOpen_of_pointwiseSplit
 #print axioms AlgebraicGeometry.picRankOneOpen_fibrePresented
 #print axioms AlgebraicGeometry.picRankOneOpen_isOpen
+#print axioms AlgebraicJacobian.GaloisDescent.galoisQuotientUniversal_of_equivariant
+#print axioms AlgebraicJacobian.GaloisDescent.galoisQuotientWitnessOfInvariantProjection
+#print axioms AlgebraicJacobian.GaloisDescent.StableAffineOpen.isGaloisQuotient_glued
+#print axioms
+  AlgebraicJacobian.GaloisDescent.StableAffineOpen.hasGaloisQuotient_of_orbitsInAffineOpen
 #print axioms
   AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
