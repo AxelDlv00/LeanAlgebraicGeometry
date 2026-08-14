@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Carson",
+  "agent_path": "/root/health_audit",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "janitor",
+  "native_subagent_id": "019fff37-6b48-75e0-a8da-0d3940948a01",
+  "ok": false,
+  "parent_session": "0002-horizon-ajcr-alignment-tags",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "janitor",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 66242,
+    "tokens_out": 471
+  }
+}
