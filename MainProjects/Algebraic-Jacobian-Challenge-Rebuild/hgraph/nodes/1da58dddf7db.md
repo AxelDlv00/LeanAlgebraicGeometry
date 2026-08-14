@@ -12,9 +12,11 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.abelToPic0SepClosedRepresenter
 type: lean
-updated: '2026-08-14T14:17:16'
+updated: '2026-08-14T15:00:51'
 ---
-noncomputable def abelToPic0SepClosedRepresenter (C : Over (Spec (.of k))) :
-    divRepAffAdmissibleScheme C ⟶ (pic0_sepClosed_representableBy C).1 :=
+noncomputable def abelToPic0SepClosedRepresenter (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIrreducible C.hom] [IsSepClosed k] :
+    (divRepAffAdmissibleScheme C).left ⟶ (pic0_sepClosed_representableBy (C := C)).1.left :=
   yoneda.preimage (abelSigmaChartAffAdmissible C ≫
-    (representableBySigmaIso (pic0_sepClosed_representableBy C).2).inv)
+    (representableBySigmaIso (pic0_sepClosed_representableBy (C := C)).2).inv)
