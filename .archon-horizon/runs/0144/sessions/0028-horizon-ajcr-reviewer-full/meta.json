@@ -1,0 +1,19 @@
+{
+  "role": "horizon",
+  "round": 10,
+  "project": "Algebraic-Jacobian-Challenge-Rebuild",
+  "task_id": "ajcr-reviewer-full",
+  "status": "running",
+  "started_at": "2026-08-14T07:04:28.810565+00:00",
+  "projects": [
+    "Algebraic-Jacobian-Challenge-Rebuild",
+    "Algebraic-Jacobian-Challenge"
+  ],
+  "harness_name": "codex",
+  "harness_kind": "codex",
+  "model": "gpt-5.6-sol",
+  "effort": "ultra",
+  "config_dir": "/home/axel/.codex-frenzy",
+  "auth": "api-key",
+  "workspace_sha": "f09ccefbb73e4b1c619b3ae2970f8797ec819f94"
+}
