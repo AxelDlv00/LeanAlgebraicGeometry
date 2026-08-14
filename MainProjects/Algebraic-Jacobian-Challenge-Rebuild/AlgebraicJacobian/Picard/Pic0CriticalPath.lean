@@ -33,6 +33,7 @@ import AlgebraicJacobian.Picard.Pic0RankOneCanonicalEvaluation
 import AlgebraicJacobian.Picard.Pic0RankOneDatumGluedDivisor
 import AlgebraicJacobian.Picard.Pic0RankOneCanonicalDivisorStageCert
 import AlgebraicJacobian.Picard.Pic0FiniteGaloisDescent
+import AlgebraicJacobian.Picard.Pic0GaloisInvariantComparison
 
 /-!
 # Narrow root for the AJCR-first Picard strategy
@@ -126,7 +127,12 @@ honest orbit-in-affine-open condition.  `GaloisQuotientWitness.overHomEquiv` and
 `StableAffineOpen.gluedQuotientOverHomEquiv` now identify arbitrary maps into those quotients
 with equivariant maps after base change, naturally under precomposition.  This does not
 manufacture the orbit condition for a Picard representer or identify those equivariant maps
-with `pic0` over the base field.
+with `pic0` over the base field.  The sheaf-theoretic half of the latter comparison is now
+complete: `pic0GaloisInvariantEquiv` identifies `Pic^0(T)` with the exact deck-invariant
+classes after every finite-Galois base change, and `pic0GaloisInvariantEquiv_precomp` proves
+that identification natural for arbitrary test morphisms.  What remains on the quotient side
+is to match this deck-invariance predicate with equivariance for the semilinear action on the
+chosen representing scheme.
 
 The separably closed endpoint is now complete.  The exact translator returned by
 `exists_sepClosedTranslated_mem_picRankOneOpen` indexes a translated canonical Abel chart;
@@ -139,8 +145,8 @@ is etale-locally surjective onto this exact carrier, so its quasi-compact source
 changing either component.
 
 Still missing, and NOT replaced here by axioms or local hypotheses: the finite-stage spread,
-the Picard-specific Galois quotient comparison, and the arbitrary-base-field
-`pic0_representableBy` and `JacobianData` endpoints.
+the semilinear predicate match and orbit-in-affine-open input for the Picard quotient, and the
+arbitrary-base-field `pic0_representableBy` and `JacobianData` endpoints.
 -/
 
 #check AlgebraicGeometry.divFunctorAff_representableBy_at
@@ -479,6 +485,12 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicJacobian.GaloisDescent.GaloisQuotientWitness.overHomEquiv_precomp
 #check AlgebraicJacobian.GaloisDescent.StableAffineOpen.gluedQuotientOverHomEquiv
 #check AlgebraicJacobian.GaloisDescent.StableAffineOpen.gluedQuotientOverHomEquiv_precomp
+-- Picard-zero finite-Galois fixed-point comparison on arbitrary tests
+#check AlgebraicGeometry.Pic0GaloisInvariant
+#check AlgebraicGeometry.pic0GaloisInvariant_existsUnique_descend
+#check AlgebraicGeometry.pic0RestrictToGaloisInvariant_bijective
+#check AlgebraicGeometry.pic0GaloisInvariantEquiv
+#check AlgebraicGeometry.pic0GaloisInvariantEquiv_precomp
 -- Datum-level glued divisor over a Noetherian base (Pic0RankOneDatumGluedDivisor.lean)
 #check AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
 
@@ -550,5 +562,9 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicJacobian.GaloisDescent.StableAffineOpen.gluedQuotientOverHomEquiv
 #print axioms
   AlgebraicJacobian.GaloisDescent.StableAffineOpen.gluedQuotientOverHomEquiv_precomp
+#print axioms AlgebraicGeometry.pic0GaloisInvariant_existsUnique_descend
+#print axioms AlgebraicGeometry.pic0RestrictToGaloisInvariant_bijective
+#print axioms AlgebraicGeometry.pic0GaloisInvariantEquiv
+#print axioms AlgebraicGeometry.pic0GaloisInvariantEquiv_precomp
 #print axioms
   AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
