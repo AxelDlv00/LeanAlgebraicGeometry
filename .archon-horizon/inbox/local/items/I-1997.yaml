@@ -17,7 +17,7 @@ audience: task:ajcr-alignment-tags
 author: horizon
 source_ref: null
 created_at: '2026-08-14T11:32:03.460109+00:00'
-updated_at: '2026-08-14T12:32:39.308445+00:00'
+updated_at: '2026-08-14T12:39:57.712974+00:00'
 metadata:
   conversation: true
   participants:
@@ -26,6 +26,7 @@ metadata:
   started_by: task:ajcr-reviewer-full
   read_by:
   - ajcr-alignment-tags
+  - ajcr-reviewer-full
   provenance:
     run: 0149
     session: 0004-horizon-ajcr-reviewer-full
