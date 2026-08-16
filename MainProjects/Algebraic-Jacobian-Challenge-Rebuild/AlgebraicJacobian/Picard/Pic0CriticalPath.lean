@@ -55,6 +55,7 @@ import AlgebraicJacobian.Picard.Pic0FiniteStageOverlapRings
 import AlgebraicJacobian.Picard.Pic0FiniteStageRestrictionModels
 import AlgebraicJacobian.Picard.Pic0FiniteStageRestrictionOpenImmersions
 import AlgebraicJacobian.Picard.Pic0FiniteStageTransitionModels
+import AlgebraicJacobian.Picard.Pic0FiniteStageDiagonalRestrictions
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleOverlapRings
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleTransitions
 import AlgebraicJacobian.Picard.Pic0FiniteStageDatum
@@ -194,7 +195,9 @@ transported commuting squares for every leg.  Canonical chart-to-overlap restric
 open immersions on spectra, and tensor-tower fpqc descent proves that every one of those
 finite-stage restriction legs is an open immersion as well.  The ordered pair-overlap
 transitions descend simultaneously with those restrictions, and equation reflection proves
-that the two transition directions are inverse at the same finite stage.  Scalar extension
+that the two transition directions are inverse at the same finite stage.  On diagonal chart
+pairs, the exact restriction and every descended model restriction induce isomorphisms on
+spectra, supplying the diagonal open-leg condition needed by the gluing datum.  Scalar extension
 also commutes with the tensor-product pushouts that present affine triple-overlap pullbacks,
 with explicit pure-tensor comparison laws, and cancellation through a field tower is natural
 for every descended map satisfying its ambient comparison square.  The literal triple
@@ -639,6 +642,8 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.Pic0FiniteStageMapIndex
 #check AlgebraicGeometry.Pic0FiniteStageModelRing
 #check AlgebraicGeometry.exists_finSubext_pic0FiniteStageTransition_models
+#check AlgebraicGeometry.isIso_specMap_pic0FiniteStageRestriction_diagonal_left
+#check AlgebraicGeometry.isIso_specMap_pic0FiniteStageModelRestriction_diagonal_left
 #check AlgebraicGeometry.Pic0FiniteStageTripleOpen
 #check AlgebraicGeometry.pic0FiniteStageTripleOpen_isAffine
 #check AlgebraicGeometry.Pic0FiniteStageTripleRing
@@ -793,6 +798,8 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.pic0FiniteStageTransition_inverse
 #print axioms AlgebraicGeometry.pic0FiniteStageTransportedTransition_inverse
 #print axioms AlgebraicGeometry.exists_finSubext_pic0FiniteStageTransition_models
+#print axioms AlgebraicGeometry.isIso_specMap_pic0FiniteStageRestriction_diagonal_left
+#print axioms AlgebraicGeometry.isIso_specMap_pic0FiniteStageModelRestriction_diagonal_left
 #print axioms AlgebraicGeometry.pic0FiniteStageTripleOpen_isAffine
 #print axioms AlgebraicGeometry.isPushout_pic0FiniteStageTripleRing
 #print axioms AlgebraicGeometry.pic0FiniteStageTripleTensorEquiv
