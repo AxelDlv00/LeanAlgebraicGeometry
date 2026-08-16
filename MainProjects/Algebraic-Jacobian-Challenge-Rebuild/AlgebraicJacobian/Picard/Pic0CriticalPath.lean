@@ -64,6 +64,7 @@ import AlgebraicJacobian.Picard.Pic0FiniteStageTripleModelScalarExtension
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleModelComparison
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleTransitions
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleTransitionModels
+import AlgebraicJacobian.Picard.Pic0FiniteStageTripleTransitionEquations
 import AlgebraicJacobian.Picard.Pic0FiniteStageDatum
 import AlgebraicJacobian.Picard.Pic0RepresentableColimit
 
@@ -224,7 +225,9 @@ on section rings.
 Those relative tensor-product rings are finite type over the finite-stage ground field whenever
 their two overlap rings are.  Given comparison equivalences from their scalar extensions to the
 exact triple section rings, the exact cyclic transitions therefore descend simultaneously through
-one further finite subextension, with explicit comparison squares for every triple index.  Finally,
+one further finite subextension, with explicit comparison squares for every triple index.  The
+three-cycle identity survives the comparison conjugations and reflects through those squares to
+every compatible family of descended triple transitions.  Finally,
 `pic0PreservesFilteredBaseColimit_of_representableBy` proves the filtered-colimit statement once
 an arbitrary-field locally finitely presented representer has actually been produced.
 
@@ -236,8 +239,8 @@ ring equations have been reflected.
 
 These inputs do not yet constitute object descent.  Still missing, and NOT replaced here by
 axioms or local hypotheses: the concrete compatible comparison family consumed by the conditional
-triple-transition descent theorem, followed by reflection of its face and cyclic cocycle equations
-and hence the assembled `Scheme.GlueData`; a glued-scheme base-change comparison;
+triple-transition descent theorem, followed by reflection of its face equation and hence the
+assembled `Scheme.GlueData`; a glued-scheme base-change comparison;
 descent of the universal Picard natural equivalence; the
 orbit-in-affine-open input for the finite-level Picard quotient; and the arbitrary-base-field
 `pic0_representableBy` and
@@ -695,6 +698,8 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.pic0FiniteStageTransportedTripleTransition
 #check
   AlgebraicGeometry.exists_finSubext_pic0FiniteStageTripleTransition_models_of_comparisons
+#check AlgebraicGeometry.pic0FiniteStageTransportedTripleTransition_cocycle
+#check AlgebraicGeometry.pic0FiniteStageTripleTransitionModel_cocycle
 #check AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 -- Datum-level glued divisor over a Noetherian base (Pic0RankOneDatumGluedDivisor.lean)
 #check AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
@@ -873,6 +878,8 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.pic0FiniteStageTransportedTripleTransition
 #print axioms
   AlgebraicGeometry.exists_finSubext_pic0FiniteStageTripleTransition_models_of_comparisons
+#print axioms AlgebraicGeometry.pic0FiniteStageTransportedTripleTransition_cocycle
+#print axioms AlgebraicGeometry.pic0FiniteStageTripleTransitionModel_cocycle
 #print axioms AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 #print axioms
   AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
