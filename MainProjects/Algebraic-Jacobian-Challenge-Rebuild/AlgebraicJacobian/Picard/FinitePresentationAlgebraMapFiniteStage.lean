@@ -68,6 +68,25 @@ theorem exists_finSubext_tensorProduct_algHom
       Algebra.TensorProduct.map_tmul, AlgHom.id_apply, map_one, one_smul]
     exact hbase x
 
+/-- Two algebra maps at a finite tensor stage are equal if their composites with the
+canonical map to the ambient algebraic extension are equal.  This is the equation-reflection
+step used after spreading inverse and cocycle identities. -/
+theorem tensorProduct_algHom_eq_of_map_comp_eq
+    {F K A B : Type u} [Field F] [Field K] [Algebra F K]
+    [Algebra.IsAlgebraic F K] [CommRing A] [Algebra F A]
+    [CommRing B] [Algebra F B] (L : FinSubext F K)
+    (phi psi : L.1 ⊗[F] A →ₐ[L.1] L.1 ⊗[F] B)
+    (h :
+      (Algebra.TensorProduct.map L.1.val (AlgHom.id F B)).comp
+          (phi.restrictScalars F) =
+        (Algebra.TensorProduct.map L.1.val (AlgHom.id F B)).comp
+          (psi.restrictScalars F)) :
+    phi = psi := by
+  apply DFunLike.ext _ _
+  intro x
+  apply tensorProduct_map_finSubext_injective L
+  exact congrArg (fun f => f x) h
+
 set_option synthInstance.maxHeartbeats 200000 in
 -- The dependent finite family creates one tensor-product algebra instance per member.
 /-- A finite family of algebra maps between base changes of `F`-algebras descends to one

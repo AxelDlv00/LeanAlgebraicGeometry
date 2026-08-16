@@ -165,7 +165,8 @@ a tensor coefficient ring descends to one finite tensor stage.  The exact separa
 representer has a chosen finite affine atlas with finitely presented chart rings and finite
 affine presentations of pairwise overlaps, and all of its chart rings are simultaneously
 modeled over one finite subextension.  A finite family of maps between scalar-extended algebras
-also descends to one common finite subextension when every source is of finite type.  The atlas
+also descends to one common finite subextension when every source is of finite type, and equality
+of two finite-stage maps is reflected by equality after the ambient algebraic extension.  The atlas
 is now also rooted as an actual finite open cover whose pairwise intersections are affine, and
 Mathlib's `gluedCover` packages its canonical restriction maps, transition maps, and cocycle as
 an affine `Scheme.GlueData`.  A single finite tag contains every chart ring and every ordered
@@ -543,6 +544,7 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check
   AlgebraicGeometry.DatG0.exists_finSubext_finitePresentation_algebra_model_finite
 #check AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_algHom
+#check AlgebraicGeometry.DatG0.tensorProduct_algHom_eq_of_map_comp_eq
 #check AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_algHom_finite
 #check AlgebraicGeometry.DatG0.exists_finSubext_etale_model
 #check AlgebraicGeometry.DatG0.exists_finSubext_etaleCover_model
@@ -660,6 +662,7 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms
   AlgebraicGeometry.DatG0.exists_finSubext_finitePresentation_algebra_model_finite
 #print axioms AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_algHom
+#print axioms AlgebraicGeometry.DatG0.tensorProduct_algHom_eq_of_map_comp_eq
 #print axioms AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_algHom_finite
 #print axioms AlgebraicGeometry.DatG0.exists_finSubext_etale_model
 #print axioms AlgebraicGeometry.DatG0.exists_finSubext_etaleCover_model
