@@ -739,6 +739,9 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.isIso_specMap_of_tensorProduct_conjugate
 #print axioms AlgebraicGeometry.isIso_specMap_of_fieldTower_tensorProducts
 #print axioms AlgebraicJacobian.scalarExtensionMapOfAlgHom
+#print axioms AlgebraicJacobian.scalarExtensionMapOfAlgHom_tower
+#print axioms AlgebraicJacobian.scalarExtensionMapOfAlgHom_comp
+#print axioms AlgebraicJacobian.scalarExtensionMapOfAlgHom_id
 #print axioms AlgebraicJacobian.cancelBaseChange_tmul_baseChange
 #print axioms AlgebraicJacobian.cancelBaseChange_naturality
 #print axioms AlgebraicJacobian.tensorProductPushoutBaseChange

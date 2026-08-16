@@ -44,6 +44,44 @@ theorem scalarExtensionMapOfAlgHom_tmul {R K A B : Type u}
       c ⊗ₜ[R] f a := by
   simp [scalarExtensionMapOfAlgHom]
 
+/-- Scalar extension of a map is natural in a tower of scalar rings. -/
+theorem scalarExtensionMapOfAlgHom_tower {F L K A B : Type u}
+    [CommRing F] [CommRing L] [CommRing K] [CommRing A] [CommRing B]
+    [Algebra F L] [Algebra F K] [Algebra L K] [IsScalarTower F L K]
+    [Algebra F A] [Algebra F B]
+    (f : A →ₐ[F] B) :
+    (Algebra.TensorProduct.map (IsScalarTower.toAlgHom F L K)
+        (AlgHom.id F B)).comp
+        ((scalarExtensionMapOfAlgHom (R := F) (K := L) f).restrictScalars F) =
+      ((scalarExtensionMapOfAlgHom (R := F) (K := K) f).restrictScalars F).comp
+        (Algebra.TensorProduct.map (IsScalarTower.toAlgHom F L K)
+          (AlgHom.id F A)) := by
+  ext x
+  · simp [scalarExtensionMapOfAlgHom]
+  · simp [scalarExtensionMapOfAlgHom]
+
+/-- Scalar extension preserves composition of algebra maps. -/
+@[simp]
+theorem scalarExtensionMapOfAlgHom_comp {R K A B D : Type u}
+    [CommRing R] [CommRing K] [CommRing A] [CommRing B] [CommRing D]
+    [Algebra R K] [Algebra R A] [Algebra R B] [Algebra R D]
+    (f : A →ₐ[R] B) (g : B →ₐ[R] D) :
+    (scalarExtensionMapOfAlgHom (R := R) (K := K) g).comp
+        (scalarExtensionMapOfAlgHom (R := R) (K := K) f) =
+      scalarExtensionMapOfAlgHom (R := R) (K := K) (g.comp f) := by
+  ext x
+  · simp [scalarExtensionMapOfAlgHom]
+
+/-- Scalar extension preserves the identity algebra map. -/
+@[simp]
+theorem scalarExtensionMapOfAlgHom_id {R K A : Type u}
+    [CommRing R] [CommRing K] [CommRing A]
+    [Algebra R K] [Algebra R A] :
+    scalarExtensionMapOfAlgHom (R := R) (K := K) (AlgHom.id R A) =
+      AlgHom.id K (K ⊗[R] A) := by
+  ext x
+  · simp [scalarExtensionMapOfAlgHom]
+
 /-- Cancellation on a tensor whose right factor is itself a scalar extension. -/
 theorem cancelBaseChange_tmul_baseChange {F L K A : Type u}
     [CommRing F] [CommRing L] [CommRing K] [CommRing A]
