@@ -171,7 +171,8 @@ is now also rooted as an actual finite open cover whose pairwise intersections a
 Mathlib's `gluedCover` packages its canonical restriction maps, transition maps, and cocycle as
 an affine `Scheme.GlueData`.  A single finite tag contains every chart ring and every ordered
 pair-overlap ring, and all rings in that family are simultaneously modeled over one finite
-subextension.  Finally,
+subextension.  The two canonical restrictions from each chart to its overlap are also rooted
+as one finite dependent family, ready for synchronized map descent.  Finally,
 `pic0PreservesFilteredBaseColimit_of_representableBy` proves the filtered-colimit statement once
 an arbitrary-field locally finitely presented representer has actually been produced.
 
@@ -571,6 +572,10 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.Pic0FiniteStageRing
 #check AlgebraicGeometry.finitePresentation_pic0FiniteStageRing
 #check AlgebraicGeometry.exists_finSubext_pic0FiniteStageAtlas_ring_models
+#check AlgebraicGeometry.pic0FiniteStageRestrictionLeft
+#check AlgebraicGeometry.pic0FiniteStageRestrictionRight
+#check AlgebraicGeometry.Pic0FiniteStageRestrictionIndex
+#check AlgebraicGeometry.pic0FiniteStageRestriction
 #check AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 -- Datum-level glued divisor over a Noetherian base (Pic0RankOneDatumGluedDivisor.lean)
 #check AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
@@ -682,6 +687,9 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.finitePresentation_pic0FiniteStageOverlapRing
 #print axioms AlgebraicGeometry.finitePresentation_pic0FiniteStageRing
 #print axioms AlgebraicGeometry.exists_finSubext_pic0FiniteStageAtlas_ring_models
+#print axioms AlgebraicGeometry.pic0FiniteStageRestrictionLeft
+#print axioms AlgebraicGeometry.pic0FiniteStageRestrictionRight
+#print axioms AlgebraicGeometry.pic0FiniteStageRestriction
 #print axioms AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 #print axioms
   AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre

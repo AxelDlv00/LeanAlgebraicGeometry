@@ -104,6 +104,61 @@ theorem finitePresentation_pic0FiniteStageRing
   · exact finitePresentation_pic0FiniteStageChartRing C U
   · exact finitePresentation_pic0FiniteStageOverlapRing C U V
 
+/-! ## The finite family of canonical restriction maps -/
+
+/-- Restriction from the left chart to its exact pairwise overlap, as an algebra map over
+the separably closed ground field. -/
+noncomputable def pic0FiniteStageRestrictionLeft
+    (U V : Pic0FiniteStageChartIndex C) :
+    Pic0FiniteStageChartRing C U →ₐ[k] Pic0FiniteStageOverlapRing C U V := by
+  let J := (pic0_sepClosed_representableBy (C := C)).1
+  letI : J.left.Over (Spec (.of k)) := ⟨J.hom⟩
+  exact
+    { J.left.resHom (pic0FiniteStageAffineOverlap_le_left C U V) with
+      commutes' := fun r =>
+        J.left.overAlgebraMap_apply_res k
+          (homOfLE (pic0FiniteStageAffineOverlap_le_left C U V)).op r }
+
+/-- Restriction from the right chart to its exact pairwise overlap, as an algebra map over
+the separably closed ground field. -/
+noncomputable def pic0FiniteStageRestrictionRight
+    (U V : Pic0FiniteStageChartIndex C) :
+    Pic0FiniteStageChartRing C V →ₐ[k] Pic0FiniteStageOverlapRing C U V := by
+  let J := (pic0_sepClosed_representableBy (C := C)).1
+  letI : J.left.Over (Spec (.of k)) := ⟨J.hom⟩
+  exact
+    { J.left.resHom (pic0FiniteStageAffineOverlap_le_right C U V) with
+      commutes' := fun r =>
+        J.left.overAlgebraMap_apply_res k
+          (homOfLE (pic0FiniteStageAffineOverlap_le_right C U V)).op r }
+
+/-- A finite tag for both restriction maps associated to every ordered chart pair. -/
+abbrev Pic0FiniteStageRestrictionIndex :=
+  (Pic0FiniteStageChartIndex C × Pic0FiniteStageChartIndex C) ⊕
+    (Pic0FiniteStageChartIndex C × Pic0FiniteStageChartIndex C)
+
+/-- The source-ring tag of a canonical atlas restriction map. -/
+def Pic0FiniteStageRestrictionSource :
+    Pic0FiniteStageRestrictionIndex C → Pic0FiniteStageRingIndex C
+  | Sum.inl UV => Sum.inl UV.1
+  | Sum.inr UV => Sum.inl UV.2
+
+/-- The target-ring tag of a canonical atlas restriction map. -/
+def Pic0FiniteStageRestrictionTarget :
+    Pic0FiniteStageRestrictionIndex C → Pic0FiniteStageRingIndex C
+  | Sum.inl UV => Sum.inr UV
+  | Sum.inr UV => Sum.inr UV
+
+/-- Every left and right restriction map in the exact finite affine atlas, packaged as one
+finite dependent family. -/
+noncomputable def pic0FiniteStageRestriction
+    (i : Pic0FiniteStageRestrictionIndex C) :
+    Pic0FiniteStageRing C (Pic0FiniteStageRestrictionSource C i) →ₐ[k]
+      Pic0FiniteStageRing C (Pic0FiniteStageRestrictionTarget C i) := by
+  rcases i with ⟨U, V⟩ | ⟨U, V⟩
+  · exact pic0FiniteStageRestrictionLeft C U V
+  · exact pic0FiniteStageRestrictionRight C U V
+
 set_option synthInstance.maxHeartbeats 200000 in
 -- The generic family theorem elaborates a dependent presentation for every finite tag.
 /-- All chart rings and all exact pair-overlap rings are simultaneously defined over one
