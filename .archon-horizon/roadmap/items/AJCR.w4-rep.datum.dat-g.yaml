@@ -1,6 +1,6 @@
 id: AJCR.w4-rep.datum.dat-g
-title: '[CUSTOM] DAT-G (worksheet-first): finite-Galois/Speiser descent of the datum — $\Gamma$-semilinear
-  chart action, $\mathrm{pic}^0(C,T) \cong (\mathrm{pic}^0(C_{k^\prime},T_{k^\prime}))^\Gamma$
+title: '[CUSTOM] DAT-G (worksheet-first): finite-Galois/Speiser descent of the datum
+  — $\Gamma$-semilinear chart action, $\mathrm{pic}^0(C,T) \cong (\mathrm{pic}^0(C_{k^\prime},T_{k^\prime}))^\Gamma$
   through rigidified pairs only'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild

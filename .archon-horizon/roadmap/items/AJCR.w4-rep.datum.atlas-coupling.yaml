@@ -1,6 +1,6 @@
 id: AJCR.w4-rep.datum.atlas-coupling
-title: '[CUSTOM] Atlas-coupling: the coverage witness must land in a V CONTAINED IN the one
-  hf is certified at -- and the nesting buys nothing'
+title: '[CUSTOM] Atlas-coupling: the coverage witness must land in a V CONTAINED IN
+  the one hf is certified at -- and the nesting buys nothing'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: LEGACY CONDITIONAL ATLAS BRANCH. The genus-level RepresentableBy producer

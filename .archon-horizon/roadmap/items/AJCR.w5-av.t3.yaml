@@ -1,6 +1,6 @@
 id: AJCR.w5-av.t3
-title: '[CUSTOM] T3: \(\ker(\mathrm{relPic}(k[\varepsilon]) \to \mathrm{relPic}(k)) \simeq_+
-  H^1(C,\mathcal{O})\) via nilpotent unit-lifting'
+title: '[CUSTOM] T3: \(\ker(\mathrm{relPic}(k[\varepsilon]) \to \mathrm{relPic}(k))
+  \simeq_+ H^1(C,\mathcal{O})\) via nilpotent unit-lifting'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "T3: SEVEN of the eight arrows are landed; the COMPOSITE (T3-6) is still\

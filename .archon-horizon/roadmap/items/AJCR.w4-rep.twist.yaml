@@ -1,6 +1,6 @@
 id: AJCR.w4-rep.twist
-title: The fiber twist $\Theta_n = \pi^* \mathcal{O}_{\mathbb{P}^1}(n)$ is two-cover-trivial [CUSTOM]
-  by construction
+title: The fiber twist $\Theta_n = \pi^* \mathcal{O}_{\mathbb{P}^1}(n)$ is two-cover-trivial
+  [CUSTOM] by construction
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'DONE: $\Theta_n = [(t_0^n \text{ on } V_0,\ 1 \text{ on } V_1)]$ on the

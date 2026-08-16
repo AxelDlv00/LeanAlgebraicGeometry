@@ -1,6 +1,6 @@
 id: AJCR.picard.c2.eff
-title: '[CUSTOM] Effectivity: rigidified $L$ on $C_B$ with $u_1^*L = u_2^*L$ descends — $\exists
-  M,\ cg^* M = L$'
+title: '[CUSTOM] Effectivity: rigidified $L$ on $C_B$ with $u_1^*L = u_2^*L$ descends
+  — $\exists M,\ cg^* M = L$'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'DONE: $\mathrm{relPic}\,C(\mathrm{Spec}\,K) \simeq^* \mathrm{PicEtAff}\,C\,K$

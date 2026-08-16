@@ -1,6 +1,6 @@
 id: AJCR.w4-rep.datum.dat-p
-title: '[CUSTOM] DAT-P: every nonempty open of the curve over a separably closed field has
-  a rational point'
+title: '[CUSTOM] DAT-P: every nonempty open of the curve over a separably closed field
+  has a rational point'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'DAT-P DONE: over a separably closed field $K$, every nonempty open of a

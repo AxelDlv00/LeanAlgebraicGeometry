@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Jason",
+  "agent_path": "/root/terminal_hygiene",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "janitor",
+  "native_subagent_id": "01a00a6a-b492-7973-8220-9c6c7c08574f",
+  "ok": true,
+  "parent_session": "0025-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Terminal hygiene audit complete.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 42716972,
+    "tokens_out": 121129
+  }
+}

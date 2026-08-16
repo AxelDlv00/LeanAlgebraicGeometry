@@ -1,6 +1,6 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.certificate.sep-nogo
-title: '[CUSTOM] Separated-adaptation route: certificate without kernel-spanning, and its proved
-  no-go'
+title: '[CUSTOM] Separated-adaptation route: certificate without kernel-spanning,
+  and its proved no-go'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'DONE (run 0047 r6, kernel-checked). isCertified_of_separated (Picard/DivSchemeCertZarSep.lean)

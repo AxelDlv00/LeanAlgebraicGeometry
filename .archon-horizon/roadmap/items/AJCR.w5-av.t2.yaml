@@ -1,6 +1,7 @@
 id: AJCR.w5-av.t2
-title: '[CUSTOM] T2: truncated-exponential Čech kernel \(H^1(C,\mathcal{O}) \simeq_+ \ker(\check{H}^{1,\times}(B[\varepsilon])
-  \to \check{H}^{1,\times}(B))\) on the TwoCover section rings'
+title: '[CUSTOM] T2: truncated-exponential Čech kernel \(H^1(C,\mathcal{O}) \simeq_+
+  \ker(\check{H}^{1,\times}(B[\varepsilon]) \to \check{H}^{1,\times}(B))\) on the
+  TwoCover section rings'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: ''

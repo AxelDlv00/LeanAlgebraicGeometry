@@ -1,6 +1,6 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.divrep
-title: '[CUSTOM] DD-R divRep: affine classification, Zariski/global representability, and consumer
-  export'
+title: '[CUSTOM] DD-R divRep: affine classification, Zariski/global representability,
+  and consumer export'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: DONE. The divisor-representability subtree now covers affine classification,

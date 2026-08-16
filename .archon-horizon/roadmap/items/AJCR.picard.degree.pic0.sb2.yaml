@@ -1,6 +1,6 @@
 id: AJCR.picard.degree.pic0.sb2
-title: '[CUSTOM] SB-2: sections base change along the transition — $\Gamma(C_{K_1}, V) \otimes_{K_1}
-  K_2 \cong \Gamma(C_{K_2}, \pi^{-1}V)$ for affine $V$'
+title: '[CUSTOM] SB-2: sections base change along the transition — $\Gamma(C_{K_1},
+  V) \otimes_{K_1} K_2 \cong \Gamma(C_{K_2}, \pi^{-1}V)$ for affine $V$'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: ''

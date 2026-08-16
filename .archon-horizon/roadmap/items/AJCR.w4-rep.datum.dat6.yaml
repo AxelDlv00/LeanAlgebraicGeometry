@@ -1,6 +1,6 @@
 id: AJCR.w4-rep.datum.dat6
-title: '[CUSTOM] DAT-6: the slice trick — big-site Zariski-sheaf packaging of pic^0 and the
-  RepresentableBy transfer to the slice'
+title: '[CUSTOM] DAT-6: the slice trick — big-site Zariski-sheaf packaging of pic^0
+  and the RepresentableBy transfer to the slice'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'DONE: Pic0SigmaSheaf defines the big-site Pic0 Sigma sheaf, its affine restriction,

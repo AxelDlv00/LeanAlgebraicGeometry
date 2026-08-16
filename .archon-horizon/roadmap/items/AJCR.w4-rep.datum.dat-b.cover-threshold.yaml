@@ -1,5 +1,6 @@
 id: AJCR.w4-rep.datum.dat-b.cover-threshold
-title: '[CUSTOM] COVER-THRESHOLD: unconditional admissible parameter and uniform chart locus'
+title: '[CUSTOM] COVER-THRESHOLD: unconditional admissible parameter and uniform chart
+  locus'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: DONE (pic-h, run 0098). With B = M*delta + g and n = B*d1, n is both above

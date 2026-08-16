@@ -1,18 +1,10 @@
 ## Progress
 
-Read both binding AJCR reviewer PDFs and audited the complete rooted route.  The rank-one cone
-through `canonicalRankOneAbelIso`, openness, translated coverage, and
-`pic0_sepClosed_representableBy` is real and kernel-clean.
+Read both binding AJCR reviewer PDFs and audited the complete rooted route. The rank-one cone through `canonicalRankOneAbelIso`, openness, translated coverage, and `pic0_sepClosed_representableBy` is real and kernel-clean.
 
-Landed ten source commits from `36630b5f37` through `61e79f0e7f`.  They add simultaneous
-finite-stage models for the separably closed representer's chart and overlap rings, a canonical
-finite affine `GlueData`, finite families of restriction maps, descent of those restrictions
-through chosen presentation models, reflection of map and composition identities, and fpqc
-reflection of affine open immersions.  Every milestone is rooted in `Pic0CriticalPath.lean` and
-therefore in the library root.
+Landed ten source commits from `36630b5f37` through `61e79f0e7f`. They add simultaneous finite-stage models for the separably closed representer's chart and overlap rings, a canonical finite affine `GlueData`, finite families of restriction maps, descent of those restrictions through chosen presentation models, reflection of map and composition identities, and fpqc reflection of affine open immersions. Every milestone is rooted in `Pic0CriticalPath.lean` and therefore in the library root.
 
-The separate Horizon hygiene checkpoint is `c5126197d1`.  The terminal janitor archived three
-superseded issues (`I-1967`, `I-1859`, `I-1982`) without touching protections or conversations.
+The separate Horizon hygiene checkpoint is `c5126197d1`. The terminal janitor archived three superseded issues (`I-1967`, `I-1859`, `I-1982`) without touching protections or conversations.
 
 ## Checks
 
@@ -25,26 +17,12 @@ superseded issues (`I-1967`, `I-1859`, `I-1982`) without touching protections or
 
 ## Issues
 
-The requested arbitrary-field `pic0_representableBy`, `JacobianData`, and `Challenge.lean`
-headline are not proved.  Rebuild `Challenge.lean` still has 15 pre-existing proof holes, while
-the sibling `Jacobian.lean` still has four; both projects nevertheless build because those leaves
-are existing `sorry` declarations.
+The requested arbitrary-field `pic0_representableBy`, `JacobianData`, and `Challenge.lean` headline are not proved. Rebuild `Challenge.lean` still has 15 pre-existing proof holes, while the sibling `Jacobian.lean` still has four; both projects nevertheless build because those leaves are existing `sorry` declarations.
 
-The remaining mathematical gates are finite-stage assembly of the descended restrictions as open
-immersions and transition isomorphisms with cocycle equations, a glued-scheme base-change
-comparison, descent of the universal Picard natural equivalence, and a finite-level
-`OrbitsInAffineOpen` producer (or the missing projectivity/quasi-projectivity input).  The current
-finite-Galois theorem consumes these inputs but does not produce them.  The current rank-one
-producer also depends transitively on `Challenge.genus`, so direct headline wiring would create an
-import cycle before those mathematical gates are solved.
+The remaining mathematical gates are finite-stage assembly of the descended restrictions as open immersions and transition isomorphisms with cocycle equations, a glued-scheme base-change comparison, descent of the universal Picard natural equivalence, and a finite-level `OrbitsInAffineOpen` producer or the missing projectivity/quasi-projectivity input. The current finite-Galois theorem consumes these inputs but does not produce them. The current rank-one producer also depends transitively on `Challenge.genus`, so direct headline wiring would create an import cycle before those mathematical gates are solved.
 
-Workspace-owned generated drift remains uncommitted in the AJCR blueprint aggregate, legacy
-roadmap rows, search indexes, and live-session telemetry.  A fresh private-index audit confirmed
-that every authored inbox, task-comment, source, and report path otherwise matched HEAD; the drift
-was not committed because it predates this closeout or belongs to concurrent writers.
+Workspace-owned generated drift remains uncommitted in the AJCR blueprint aggregate, legacy roadmap rows, search indexes, and live-session telemetry. A fresh private-index audit confirmed that every authored inbox, task-comment, source, and report path otherwise matched HEAD; the drift was not committed because it predates this closeout or belongs to concurrent writers.
 
 ## Why I Stopped
 
-No effective non-affine `GlueData` descent theorem or fpqc/filtered-colimit reflection theorem for
-the Picard universal element exists in the current project or Mathlib API.  Asserting either would
-fake the reviewer endpoint.  The task therefore remains `running`; Phase 7 remains active.
+No effective non-affine `GlueData` descent theorem or fpqc/filtered-colimit reflection theorem for the Picard universal element exists in the current project or Mathlib API. Asserting either would fake the reviewer endpoint. The task therefore remains `running`; Phase 7 remains active.

@@ -1,6 +1,6 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.certificate.pull-transport
-title: Pullback transport of the support locus (composability of the verdict with [CUSTOM]
-  the pointwise gate)
+title: Pullback transport of the support locus (composability of the verdict with
+  [CUSTOM] the pointwise gate)
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'DONE (run 0047 r6, kernel-checked, in the default build). supportLocus_pullback

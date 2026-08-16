@@ -1,6 +1,6 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.fibre-koszul
-title: '[CUSTOM] DD-R fibre exactness: all-window field Koszul equality and normalized multiplication
-  conjugacy'
+title: '[CUSTOM] DD-R fibre exactness: all-window field Koszul equality and normalized
+  multiplication conjugacy'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: LANDED. The divisor-window pencil gives the field multiplication-kernel equals

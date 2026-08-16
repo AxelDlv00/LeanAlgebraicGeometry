@@ -1,6 +1,6 @@
 id: AJCR.w4-rep.datum.dat-d.dd2
-title: '[CUSTOM] DD-2: divFunctor is a Zariski sheaf (separation from equation rigidity + certificate
-  locality; DAT-2 pattern)'
+title: '[CUSTOM] DD-2: divFunctor is a Zariski sheaf (separation from equation rigidity
+  + certificate locality; DAT-2 pattern)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'DD-2: divFam functoriality + Zariski sheaf (spec informal/spec-dd-2.md +

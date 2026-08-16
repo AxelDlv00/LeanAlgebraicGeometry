@@ -1,5 +1,6 @@
 id: AJCR.w4-rep.curve-projectivity
-title: '[CUSTOM] Curve projectivity bridge: smooth proper geometrically integral implies IsProjective'
+title: '[CUSTOM] Curve projectivity bridge: smooth proper geometrically integral implies
+  IsProjective'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'Closed: AJCR now provides the projectivity bridge from smooth proper geometrically

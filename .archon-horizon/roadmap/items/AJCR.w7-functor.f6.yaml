@@ -1,6 +1,6 @@
 id: AJCR.w7-functor.f6
-title: '[CUSTOM] F-6: functor packaging — pic0Pullback + the pinned probe-C functor.map construction
-  (Picard/Pic0Pullback.lean); gates F-3 + EV-4 (done) + D1'
+title: '[CUSTOM] F-6: functor packaging — pic0Pullback + the pinned probe-C functor.map
+  construction (Picard/Pic0Pullback.lean); gates F-3 + EV-4 (done) + D1'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: ''

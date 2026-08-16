@@ -1,6 +1,7 @@
 id: AJCR.w4-rep.datum.dat-d.dd1
-title: '[CUSTOM] DD-1: the divisor-functor pin — certified families (LocalEquations + finite
-  chart adaptation + colength certificate), setoid, certified pullback, field dictionary'
+title: '[CUSTOM] DD-1: the divisor-functor pin — certified families (LocalEquations
+  + finite chart adaptation + colength certificate), setoid, certified pullback, field
+  dictionary'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'DD-1 divisor-functor pin. LANDED: Stage 1 spec+probe (831c6fbef, addendum

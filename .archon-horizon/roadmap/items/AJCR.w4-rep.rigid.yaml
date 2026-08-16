@@ -1,6 +1,7 @@
 id: AJCR.w4-rep.rigid
-title: '[ADAPTED] Rigid engine (curve-lite Kleiman 3.10): $H^1(C_R,L) = 0$ on the vanishing
-  locus and $Q = H^0$ finite projective, $\forall N:\ H^0 \otimes_R N$ on the nose'
+title: '[ADAPTED] Rigid engine (curve-lite Kleiman 3.10): $H^1(C_R,L) = 0$ on the
+  vanishing locus and $Q = H^0$ finite projective, $\forall N:\ H^0 \otimes_R N$ on
+  the nose'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'WORKSHEET DONE (w4-rigid-engine-worksheet.md, binding): full II.5 descoped

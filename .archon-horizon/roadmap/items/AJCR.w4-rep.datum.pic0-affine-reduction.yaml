@@ -1,6 +1,6 @@
 id: AJCR.w4-rep.datum.pic0-affine-reduction
-title: '[CUSTOM] PIC0-AFFINE-REDUCTION: reduce the forall-T binder of the pic0 vanishing to
-  test RINGS'
+title: '[CUSTOM] PIC0-AFFINE-REDUCTION: reduce the forall-T binder of the pic0 vanishing
+  to test RINGS'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'DONE: the Pic0 affine reduction and field case are landed. This is a completed

@@ -1,6 +1,6 @@
 id: AJCR.picard.degree.pic0.sb4
-title: '[CUSTOM] SB-4: the fiber-degree identity $(\dagger)$ — $\sum_{x'' \mapsto x} \mathrm{ord}_{x''}(\pi^\sharp
-  t)\,[\kappa(x''):K_2] = [\kappa(x):K_1]$'
+title: '[CUSTOM] SB-4: the fiber-degree identity $(\dagger)$ — $\sum_{x'' \mapsto
+  x} \mathrm{ord}_{x''}(\pi^\sharp t)\,[\kappa(x''):K_2] = [\kappa(x):K_1]$'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: ''

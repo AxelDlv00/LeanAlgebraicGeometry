@@ -1,6 +1,6 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.certificate.joint-cover
-title: Relax FinCoverData's chart-wise partitions to a joint covering (I-0346's cheaper [ADAPTED]
-  option)
+title: Relax FinCoverData's chart-wise partitions to a joint covering (I-0346's cheaper
+  [ADAPTED] option)
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "REJECTED 2026-07-26 (run 0048 round 2), on a source fact, before any Lean\

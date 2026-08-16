@@ -1,6 +1,6 @@
 id: AJCR.w7-functor.b4
-title: '[CUSTOM] B-4a+B-4b: theta — same-K iso via crossBaseIso∘mapOverSpecIso feeding classDeg_map_iso,
-  then the theta twist (Picard/Pic0Theta.lean); gates B-1/B-3 (done)'
+title: '[CUSTOM] B-4a+B-4b: theta — same-K iso via crossBaseIso∘mapOverSpecIso feeding
+  classDeg_map_iso, then the theta twist (Picard/Pic0Theta.lean); gates B-1/B-3 (done)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'B-4a+B-4b: theta COMPLETE. B-4a (Pic0Theta.lean, 4d716896f): same-$K$ comparison

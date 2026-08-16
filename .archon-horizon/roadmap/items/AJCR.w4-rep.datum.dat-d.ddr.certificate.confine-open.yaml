@@ -1,6 +1,6 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.certificate.confine-open
-title: '[CUSTOM] Confine-open: chart confinement is a divisor invariant and an OPEN condition
-  on the base — LANDED'
+title: '[CUSTOM] Confine-open: chart confinement is a divisor invariant and an OPEN
+  condition on the base — LANDED'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "LANDED 2026-07-25 (run 0048 round 1), Picard/DivSchemeCertZarConfine.lean,\

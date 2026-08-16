@@ -1,6 +1,7 @@
 id: AJCR.w4-rep.datum.p1-witness
-title: '[CUSTOM] P1 WITNESS: AJCR now has a curve and genus(P1)=0; one input remains to a JacobianData
-  at P1 (relative Pic0 vanishing) and two more to the challenge target'
+title: '[CUSTOM] P1 WITNESS: AJCR now has a curve and genus(P1)=0; one input remains
+  to a JacobianData at P1 (relative Pic0 vanishing) and two more to the challenge
+  target'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'DONE pic-g (0096 r5). Row consumed: the field-test vanishing IS PROVED,

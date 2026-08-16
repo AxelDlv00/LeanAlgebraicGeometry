@@ -1,6 +1,6 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.coefficient-saturation
-title: '[CUSTOM] DD-R saturation: coefficient action, ideal-span assembly, and eventual read-kernel
-  killing'
+title: '[CUSTOM] DD-R saturation: coefficient action, ideal-span assembly, and eventual
+  read-kernel killing'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: LANDED. Pure-window coefficient products, chart-coefficient action, ideal-span

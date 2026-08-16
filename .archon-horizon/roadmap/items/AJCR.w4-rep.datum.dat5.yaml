@@ -1,6 +1,6 @@
 id: AJCR.w4-rep.datum.dat5
-title: '[CUSTOM] DAT-5: the shift $\varepsilon^+$ — the natural family $\theta_T$ and the Type-valued
-  multiplication iso $\mathrm{pic}^0 \cong \mathrm{pic}^{d}$-layer'
+title: '[CUSTOM] DAT-5: the shift $\varepsilon^+$ — the natural family $\theta_T$
+  and the Type-valued multiplication iso $\mathrm{pic}^0 \cong \mathrm{pic}^{d}$-layer'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'DAT-5 LANDED (Picard/ThetaShift.lean, ledger e6aecef9d). The ε⁺ shift packaged:

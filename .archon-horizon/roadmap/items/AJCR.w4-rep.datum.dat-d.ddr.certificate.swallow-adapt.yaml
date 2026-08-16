@@ -1,6 +1,6 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.certificate.swallow-adapt
-title: '[CUSTOM] Swallow-adapt: coarse chart-pair adaptation LANDED; chart-principality datum
-  remains'
+title: '[CUSTOM] Swallow-adapt: coarse chart-pair adaptation LANDED; chart-principality
+  datum remains'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "HALF LANDED 2026-07-25 (run 0048, commit on Picard/DivSchemeCertZarChartPair.lean).\n\

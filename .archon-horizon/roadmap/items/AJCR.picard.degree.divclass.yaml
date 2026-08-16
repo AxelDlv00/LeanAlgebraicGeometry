@@ -1,6 +1,6 @@
 id: AJCR.picard.degree.divclass
-title: '[CUSTOM] The divisor class map $\mathrm{div} \mapsto [\mathcal{O}(D)]$: points, totality,
-  pullback'
+title: '[CUSTOM] The divisor class map $\mathrm{div} \mapsto [\mathcal{O}(D)]$: points,
+  totality, pullback'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'LANDED + REPAIRED (058d3f180a, 704176f08d, 5d20fc70c5). The point divisor

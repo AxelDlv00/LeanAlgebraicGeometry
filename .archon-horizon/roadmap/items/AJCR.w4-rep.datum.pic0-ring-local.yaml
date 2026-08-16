@@ -1,6 +1,6 @@
 id: AJCR.w4-rep.datum.pic0-ring-local
-title: '[CUSTOM] PIC0-RING-LOCAL: pointwise prime/Away reduction of the ring-case vanishing
-  (no local-ring theorem yet)'
+title: '[CUSTOM] PIC0-RING-LOCAL: pointwise prime/Away reduction of the ring-case
+  vanishing (no local-ring theorem yet)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'ADVANCED, NO GATE CLOSED (pic-g, 0096 r7). Released; all declarations are
