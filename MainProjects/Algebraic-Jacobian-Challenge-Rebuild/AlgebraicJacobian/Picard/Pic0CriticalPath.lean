@@ -48,6 +48,7 @@ import AlgebraicJacobian.Picard.Pic0FiniteStageAtlas
 import AlgebraicJacobian.Picard.Pic0FiniteStageAffineIntersections
 import AlgebraicJacobian.Picard.Pic0FiniteStageOverlapRings
 import AlgebraicJacobian.Picard.Pic0FiniteStageRestrictionModels
+import AlgebraicJacobian.Picard.Pic0FiniteStageRestrictionOpenImmersions
 import AlgebraicJacobian.Picard.Pic0FiniteStageDatum
 import AlgebraicJacobian.Picard.Pic0RepresentableColimit
 
@@ -180,14 +181,16 @@ pair-overlap ring, and all rings in that family are simultaneously modeled over 
 subextension.  The two canonical restrictions from each chart to its overlap are also rooted
 as one finite dependent family.  After choosing the ring presentations at that stage, one
 further finite subextension simultaneously supplies descended restriction maps and explicit
-transported commuting squares for every leg.  Finally,
+transported commuting squares for every leg.  Canonical chart-to-overlap restrictions induce
+open immersions on spectra, and tensor-tower fpqc descent proves that every one of those
+finite-stage restriction legs is an open immersion as well.  Finally,
 `pic0PreservesFilteredBaseColimit_of_representableBy` proves the filtered-colimit statement once
 an arbitrary-field locally finitely presented representer has actually been produced.
 
 These inputs do not yet constitute object descent.  Still missing, and NOT replaced here by
-axioms or local hypotheses: assembly of the descended restrictions into finite-stage open
-immersions and transition isomorphisms together with their cocycle equations; a glued-scheme
-base-change comparison; descent of the universal Picard natural equivalence; the
+axioms or local hypotheses: finite-stage transition isomorphisms together with their inverse
+and cocycle equations; a glued-scheme base-change comparison; descent of the universal Picard
+natural equivalence; the
 orbit-in-affine-open input for the finite-level Picard quotient; and the arbitrary-base-field
 `pic0_representableBy` and
 `JacobianData` endpoints.
@@ -590,6 +593,12 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.Pic0FiniteStageRestrictionIndex
 #check AlgebraicGeometry.pic0FiniteStageRestriction
 #check AlgebraicGeometry.exists_finSubext_pic0FiniteStageRestriction_models
+#check AlgebraicGeometry.tensorProductFieldTowerEquiv
+#check AlgebraicGeometry.isOpenImmersion_of_tensorProduct_conjugate
+#check AlgebraicGeometry.isOpenImmersion_of_fieldTower_tensorProducts
+#check AlgebraicGeometry.isOpenImmersion_specMap_affineRestriction
+#check AlgebraicGeometry.isOpenImmersion_pic0FiniteStageRestriction
+#check AlgebraicGeometry.exists_finSubext_pic0FiniteStageRestriction_openImmersion_models
 #check AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 -- Datum-level glued divisor over a Noetherian base (Pic0RankOneDatumGluedDivisor.lean)
 #check AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
@@ -709,6 +718,12 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.pic0FiniteStageRestrictionRight
 #print axioms AlgebraicGeometry.pic0FiniteStageRestriction
 #print axioms AlgebraicGeometry.exists_finSubext_pic0FiniteStageRestriction_models
+#print axioms AlgebraicGeometry.isOpenImmersion_of_tensorProduct_conjugate
+#print axioms AlgebraicGeometry.isOpenImmersion_of_fieldTower_tensorProducts
+#print axioms AlgebraicGeometry.isOpenImmersion_specMap_affineRestriction
+#print axioms AlgebraicGeometry.isOpenImmersion_pic0FiniteStageRestriction
+#print axioms
+  AlgebraicGeometry.exists_finSubext_pic0FiniteStageRestriction_openImmersion_models
 #print axioms AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 #print axioms
   AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
