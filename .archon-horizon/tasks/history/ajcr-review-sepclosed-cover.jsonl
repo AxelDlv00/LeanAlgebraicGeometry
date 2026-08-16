@@ -43,3 +43,4 @@
 {"at": "2026-08-09T02:21:51.722107+00:00", "actor": "human", "field": "status", "from": "blocked", "to": "queued", "note": ""}
 {"at": "2026-08-09T02:23:03.725225+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
 {"at": "2026-08-09T02:52:15.323907+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-08-16T10:22:07.037348+00:00", "actor": "horizon", "field": "status", "from": "queued", "to": "done", "note": "", "provenance": {"run": "0149", "session": "0025-horizon-ajcr-reviewer-full", "role": "horizon", "round": "10", "rounds": "17", "task": "ajcr-reviewer-full", "task_title": "Fully answer the two AJCR reviewer PDFs — land pic0_representableBy and the Jacobian headline", "projects": "Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge"}}

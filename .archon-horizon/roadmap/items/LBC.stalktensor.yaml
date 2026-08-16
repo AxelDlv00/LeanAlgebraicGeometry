@@ -7,7 +7,7 @@ summary: '**Stalk-tensor / internal-hom machinery (sorry-free).** `TensorObjSubs
   sheaves used by the comparison.
 
   '
-status: done
+status: rejected
 kind: proof
 priority: normal
 depends_on: []
@@ -19,5 +19,5 @@ scope:
 metadata:
   author: human
   created_at: '2026-07-01T10:06:50.196950+00:00'
-  updated_at: '2026-07-29T03:04:57.528581+00:00'
+  updated_at: '2026-08-16T10:22:54.737343+00:00'
   milestone: LBC.linebundle-legacy
