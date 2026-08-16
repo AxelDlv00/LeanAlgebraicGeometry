@@ -52,6 +52,7 @@ import AlgebraicJacobian.Picard.Pic0FiniteStageOverlapRings
 import AlgebraicJacobian.Picard.Pic0FiniteStageRestrictionModels
 import AlgebraicJacobian.Picard.Pic0FiniteStageRestrictionOpenImmersions
 import AlgebraicJacobian.Picard.Pic0FiniteStageTransitionModels
+import AlgebraicJacobian.Picard.Pic0FiniteStageTripleOverlapRings
 import AlgebraicJacobian.Picard.Pic0FiniteStageDatum
 import AlgebraicJacobian.Picard.Pic0RepresentableColimit
 
@@ -190,10 +191,12 @@ finite-stage restriction legs is an open immersion as well.  The ordered pair-ov
 transitions descend simultaneously with those restrictions, and equation reflection proves
 that the two transition directions are inverse at the same finite stage.  Scalar extension
 also commutes with the tensor-product pushouts that present affine triple-overlap pullbacks,
-with explicit pure-tensor comparison laws.  Those relative tensor-product rings are finite
-type over the finite-stage ground field whenever their two overlap rings are, so the future
-triple-transition family meets the source finiteness hypothesis of the map-descent theorem.
-Finally,
+with explicit pure-tensor comparison laws.  The literal triple intersections are affine, their
+section rings are those tensor pushouts with both face formulas pinned, and the corresponding
+pushouts of the descended restriction legs carry an explicit scalar-extension comparison.
+Those relative tensor-product rings are finite type over the finite-stage ground field whenever
+their two overlap rings are, so the future triple-transition family meets the source finiteness
+hypothesis of the map-descent theorem.  Finally,
 `pic0PreservesFilteredBaseColimit_of_representableBy` proves the filtered-colimit statement once
 an arbitrary-field locally finitely presented representer has actually been produced.
 
@@ -620,6 +623,17 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.Pic0FiniteStageMapIndex
 #check AlgebraicGeometry.Pic0FiniteStageModelRing
 #check AlgebraicGeometry.exists_finSubext_pic0FiniteStageTransition_models
+#check AlgebraicGeometry.Pic0FiniteStageTripleOpen
+#check AlgebraicGeometry.pic0FiniteStageTripleOpen_isAffine
+#check AlgebraicGeometry.Pic0FiniteStageTripleRing
+#check AlgebraicGeometry.isPushout_pic0FiniteStageTripleRing
+#check AlgebraicGeometry.pic0FiniteStageTripleTensorEquiv
+#check AlgebraicGeometry.pic0FiniteStageTripleTensorEquiv_tmul_one
+#check AlgebraicGeometry.pic0FiniteStageTripleTensorEquiv_one_tmul
+#check AlgebraicGeometry.finiteType_pic0FiniteStageTensorPushoutRing
+#check AlgebraicGeometry.Pic0FiniteStageTripleModelRing
+#check AlgebraicGeometry.finiteType_pic0FiniteStageTripleModelRing
+#check AlgebraicGeometry.pic0FiniteStageTripleModelBaseChange
 #check AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 -- Datum-level glued divisor over a Noetherian base (Pic0RankOneDatumGluedDivisor.lean)
 #check AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
@@ -752,6 +766,14 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.pic0FiniteStageTransition_inverse
 #print axioms AlgebraicGeometry.pic0FiniteStageTransportedTransition_inverse
 #print axioms AlgebraicGeometry.exists_finSubext_pic0FiniteStageTransition_models
+#print axioms AlgebraicGeometry.pic0FiniteStageTripleOpen_isAffine
+#print axioms AlgebraicGeometry.isPushout_pic0FiniteStageTripleRing
+#print axioms AlgebraicGeometry.pic0FiniteStageTripleTensorEquiv
+#print axioms AlgebraicGeometry.pic0FiniteStageTripleTensorEquiv_tmul_one
+#print axioms AlgebraicGeometry.pic0FiniteStageTripleTensorEquiv_one_tmul
+#print axioms AlgebraicGeometry.finiteType_pic0FiniteStageTensorPushoutRing
+#print axioms AlgebraicGeometry.finiteType_pic0FiniteStageTripleModelRing
+#print axioms AlgebraicGeometry.pic0FiniteStageTripleModelBaseChange
 #print axioms AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 #print axioms
   AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
