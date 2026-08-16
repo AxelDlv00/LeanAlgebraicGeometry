@@ -43,6 +43,7 @@ import AlgebraicJacobian.Picard.CechPicFiniteStage
 import AlgebraicJacobian.Picard.RelPicFiniteStage
 import AlgebraicJacobian.Picard.PicEtAffFiniteStage
 import AlgebraicJacobian.Picard.Pic0FiniteStageAtlas
+import AlgebraicJacobian.Picard.Pic0FiniteStageAffineIntersections
 import AlgebraicJacobian.Picard.Pic0FiniteStageDatum
 import AlgebraicJacobian.Picard.Pic0RepresentableColimit
 
@@ -163,16 +164,18 @@ a tensor coefficient ring descends to one finite tensor stage.  The exact separa
 representer has a chosen finite affine atlas with finitely presented chart rings and finite
 affine presentations of pairwise overlaps, and all of its chart rings are simultaneously
 modeled over one finite subextension.  A finite family of maps between scalar-extended algebras
-also descends to one common finite subextension when every source is of finite type.  Finally,
+also descends to one common finite subextension when every source is of finite type.  The atlas
+is now also rooted as an actual finite open cover whose pairwise intersections are affine, and
+Mathlib's `gluedCover` packages its canonical restriction maps, transition maps, and cocycle as
+an affine `Scheme.GlueData`.  Finally,
 `pic0PreservesFilteredBaseColimit_of_representableBy` proves the filtered-colimit statement once
 an arbitrary-field locally finitely presented representer has actually been produced.
 
 These inputs do not yet constitute object descent.  Still missing, and NOT replaced here by
-axioms or local hypotheses: applying the common-stage algebra-map theorem to finite-stage
-models of the atlas restriction maps;
-chosen overlap transition isomorphisms, triple-overlap cocycles, and a glued-scheme base-change
-comparison; descent of the universal Picard natural equivalence; the orbit-in-affine-open input
-for the finite-level Picard quotient; and the arbitrary-base-field `pic0_representableBy` and
+axioms or local hypotheses: finite-stage descent of the canonical GlueData's restriction and
+transition maps together with their cocycle equations; a glued-scheme base-change comparison;
+descent of the universal Picard natural equivalence; the orbit-in-affine-open input for the
+finite-level Picard quotient; and the arbitrary-base-field `pic0_representableBy` and
 `JacobianData` endpoints.
 -/
 
@@ -552,6 +555,11 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.Pic0FiniteStageChartRing
 #check AlgebraicGeometry.finitePresentation_pic0FiniteStageChartRing
 #check AlgebraicGeometry.exists_finSubext_pic0FiniteStageAtlas_chartRing_models
+#check AlgebraicGeometry.Pic0FiniteStageChartIndex
+#check AlgebraicGeometry.pic0FiniteStageAtlas_inter_isAffine
+#check AlgebraicGeometry.pic0FiniteStageAffineOverlap
+#check AlgebraicGeometry.pic0SepClosedAtlasOpenCover
+#check AlgebraicGeometry.pic0SepClosedAtlasGlueData
 #check AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 -- Datum-level glued divisor over a Noetherian base (Pic0RankOneDatumGluedDivisor.lean)
 #check AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
@@ -655,6 +663,10 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.pic0FiniteStageAtlas
 #print axioms AlgebraicGeometry.finitePresentation_pic0FiniteStageChartRing
 #print axioms AlgebraicGeometry.exists_finSubext_pic0FiniteStageAtlas_chartRing_models
+#print axioms AlgebraicGeometry.pic0FiniteStageAtlas_inter_isAffine
+#print axioms AlgebraicGeometry.pic0FiniteStageAffineOverlap
+#print axioms AlgebraicGeometry.pic0SepClosedAtlasOpenCover
+#print axioms AlgebraicGeometry.pic0SepClosedAtlasGlueData
 #print axioms AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 #print axioms
   AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
