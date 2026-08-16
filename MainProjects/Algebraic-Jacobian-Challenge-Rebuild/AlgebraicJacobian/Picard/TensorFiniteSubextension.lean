@@ -111,6 +111,63 @@ theorem exists_finSubext_tensorProduct_preimage_finite
   let L : FinSubext F K := ⟨L0, inferInstance⟩
   exact ⟨L, xA0, hxA0⟩
 
+/-- The canonical map from a finite tensor stage into the tensor product over `K` is injective.
+This is flatness of `B` over the field `F`, expressed through the tensor-product algebra map. -/
+theorem tensorProduct_map_finSubext_injective
+    {F K B : Type u} [Field F] [Field K] [Algebra F K] [Algebra.IsAlgebraic F K]
+    [CommRing B] [Algebra F B] (L : FinSubext F K) :
+    Function.Injective
+      (Algebra.TensorProduct.map L.1.val (AlgHom.id F B) :
+        L.1 ⊗[F] B →ₐ[F] K ⊗[F] B) := by
+  have hmap :
+      (Algebra.TensorProduct.map L.1.val (AlgHom.id F B) :
+        L.1 ⊗[F] B →ₐ[F] K ⊗[F] B).toLinearMap =
+        LinearMap.rTensor B L.1.val.toLinearMap := by
+    ext x b
+    rfl
+  have hinj : Function.Injective (LinearMap.rTensor B L.1.val.toLinearMap) :=
+    Module.Flat.rTensor_preserves_injective_linearMap
+      L.1.val.toLinearMap Subtype.val_injective
+  rw [← hmap] at hinj
+  exact hinj
+
+/-- A finitely generated subalgebra of `K ⊗[F] B` factors through one finite tensor stage.
+The factorization is an algebra map, so it can be used directly to base-change a cocycle datum. -/
+theorem exists_finSubext_fg_subalgebra_tensorProduct_factor
+    {F K B : Type u} [Field F] [Field K] [Algebra F K] [Algebra.IsAlgebraic F K]
+    [CommRing B] [Algebra F B]
+    (A₀ : Subalgebra F (K ⊗[F] B)) (hA₀ : A₀.FG) :
+    ∃ (M : FinSubext F K) (f : A₀ →ₐ[F] M.1 ⊗[F] B),
+      (Algebra.TensorProduct.map M.1.val (AlgHom.id F B)).comp f = A₀.val := by
+  classical
+  obtain ⟨s, hsfinite, hs⟩ := Subalgebra.fg_def.mp hA₀
+  letI : Finite s := hsfinite.to_subtype
+  obtain ⟨M, xM, hxM⟩ :=
+    exists_finSubext_tensorProduct_preimage_finite
+      (x := fun a : s => (a.1 : K ⊗[F] B))
+  let ι : M.1 ⊗[F] B →ₐ[F] K ⊗[F] B :=
+    Algebra.TensorProduct.map M.1.val (AlgHom.id F B)
+  have hmap : ι.toLinearMap = LinearMap.rTensor B M.1.val.toLinearMap := by
+    ext x b
+    rfl
+  have hsrange : s ⊆ (ι.range : Set (K ⊗[F] B)) := by
+    intro x hx
+    refine ⟨xM ⟨x, hx⟩, ?_⟩
+    change ι.toLinearMap (xM ⟨x, hx⟩) = x
+    rw [hmap]
+    exact hxM ⟨x, hx⟩
+  have hArange : A₀ ≤ ι.range := by
+    rw [← hs]
+    exact Algebra.adjoin_le hsrange
+  have hι : Function.Injective ι := tensorProduct_map_finSubext_injective M
+  let e : M.1 ⊗[F] B ≃ₐ[F] ι.range := AlgEquiv.ofInjective ι hι
+  let f : A₀ →ₐ[F] M.1 ⊗[F] B :=
+    e.symm.toAlgHom.comp (Subalgebra.inclusion hArange)
+  refine ⟨M, f, ?_⟩
+  ext a
+  change ι (e.symm ⟨a.1, hArange a.2⟩) = a.1
+  exact congrArg Subtype.val (e.apply_symm_apply ⟨a.1, hArange a.2⟩)
+
 /-- A finite family of tensor equalities that holds over `K` already holds over one common
 finite subextension containing the original stage. -/
 theorem exists_finSubext_tensorProduct_eq_finite
