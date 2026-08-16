@@ -37,6 +37,7 @@ import AlgebraicJacobian.Picard.Pic0GaloisInvariantComparison
 import AlgebraicJacobian.Picard.Pic0FiniteGaloisRepresentable
 import AlgebraicJacobian.Picard.TensorFiniteSubextension
 import AlgebraicJacobian.Picard.FinitePresentationAlgebraFiniteStage
+import AlgebraicJacobian.Picard.FinitePresentationAlgebraMapFiniteStage
 import AlgebraicJacobian.Picard.PicEtFiniteStageCover
 import AlgebraicJacobian.Picard.CechPicFiniteStage
 import AlgebraicJacobian.Picard.RelPicFiniteStage
@@ -161,7 +162,9 @@ representative PicEt cover all descend to finite subextensions.  A basic-open co
 a tensor coefficient ring descends to one finite tensor stage.  The exact separably closed
 representer has a chosen finite affine atlas with finitely presented chart rings and finite
 affine presentations of pairwise overlaps, and all of its chart rings are simultaneously
-modeled over one finite subextension.  Finally,
+modeled over one finite subextension.  A map between two scalar-extended algebras also descends
+to a finite subextension when its source is of finite type; synchronization of the atlas's
+whole map family remains open.  Finally,
 `pic0PreservesFilteredBaseColimit_of_representableBy` proves the filtered-colimit statement once
 an arbitrary-field locally finitely presented representer has actually been produced.
 
@@ -533,6 +536,7 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
   AlgebraicGeometry.DatG0.exists_finSubext_finitePresentation_algebra_model
 #check
   AlgebraicGeometry.DatG0.exists_finSubext_finitePresentation_algebra_model_finite
+#check AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_algHom
 #check AlgebraicGeometry.DatG0.exists_finSubext_etale_model
 #check AlgebraicGeometry.DatG0.exists_finSubext_etaleCover_model
 #check AlgebraicGeometry.exists_finSubext_cechPic_model
@@ -637,6 +641,7 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
   AlgebraicGeometry.DatG0.exists_finSubext_finitePresentation_algebra_model
 #print axioms
   AlgebraicGeometry.DatG0.exists_finSubext_finitePresentation_algebra_model_finite
+#print axioms AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_algHom
 #print axioms AlgebraicGeometry.DatG0.exists_finSubext_etale_model
 #print axioms AlgebraicGeometry.DatG0.exists_finSubext_etaleCover_model
 #print axioms AlgebraicGeometry.exists_finSubext_cechPic_model
