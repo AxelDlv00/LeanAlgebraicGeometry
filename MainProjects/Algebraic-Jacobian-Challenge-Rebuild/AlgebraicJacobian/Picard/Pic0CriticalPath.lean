@@ -36,6 +36,7 @@ import AlgebraicJacobian.Picard.Pic0FiniteGaloisDescent
 import AlgebraicJacobian.Picard.Pic0GaloisInvariantComparison
 import AlgebraicJacobian.Picard.Pic0FiniteGaloisRepresentable
 import AlgebraicJacobian.Descent.OpenImmersionFieldDescent
+import AlgebraicJacobian.Descent.TensorProductPushoutBaseChange
 import AlgebraicJacobian.Picard.TensorFiniteSubextension
 import AlgebraicJacobian.Picard.FinitePresentationAlgebraFiniteStage
 import AlgebraicJacobian.Picard.FinitePresentationAlgebraMapFiniteStage
@@ -186,7 +187,9 @@ transported commuting squares for every leg.  Canonical chart-to-overlap restric
 open immersions on spectra, and tensor-tower fpqc descent proves that every one of those
 finite-stage restriction legs is an open immersion as well.  The ordered pair-overlap
 transitions descend simultaneously with those restrictions, and equation reflection proves
-that the two transition directions are inverse at the same finite stage.  Finally,
+that the two transition directions are inverse at the same finite stage.  Scalar extension
+also commutes with the tensor-product pushouts that present affine triple-overlap pullbacks,
+with explicit pure-tensor comparison laws.  Finally,
 `pic0PreservesFilteredBaseColimit_of_representableBy` proves the filtered-colimit statement once
 an arbitrary-field locally finitely presented representer has actually been produced.
 
@@ -549,6 +552,10 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.pic0RepresentableBy_finiteGaloisDescent
 #check AlgebraicGeometry.isOpenImmersion_of_fpqc_pushout
 #check AlgebraicGeometry.isOpenImmersion_of_tensorProduct
+#check AlgebraicJacobian.scalarExtensionMap
+#check AlgebraicJacobian.tensorProductPushoutBaseChange
+#check AlgebraicJacobian.tensorProductPushoutBaseChange_tmul
+#check AlgebraicJacobian.tensorProductPushoutBaseChange_symm_tmul
 -- Finite-stage algebra, cover, class, datum, atlas, and colimit substrate
 #check AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_preimage
 #check AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_eq
@@ -691,6 +698,9 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.pic0RepresentableBy_finiteGaloisDescent
 #print axioms AlgebraicGeometry.isOpenImmersion_of_fpqc_pushout
 #print axioms AlgebraicGeometry.isOpenImmersion_of_tensorProduct
+#print axioms AlgebraicJacobian.tensorProductPushoutBaseChange
+#print axioms AlgebraicJacobian.tensorProductPushoutBaseChange_tmul
+#print axioms AlgebraicJacobian.tensorProductPushoutBaseChange_symm_tmul
 #print axioms AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_preimage_finite
 #print axioms AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_eq_finite
 #print axioms AlgebraicGeometry.DatG0.tensorProduct_map_finSubext_injective
