@@ -44,6 +44,7 @@ import AlgebraicJacobian.Descent.TensorProductPushoutBaseChange
 import AlgebraicJacobian.Picard.TensorFiniteSubextension
 import AlgebraicJacobian.Picard.FinitePresentationAlgebraFiniteStage
 import AlgebraicJacobian.Picard.FinitePresentationAlgebraMapFiniteStage
+import AlgebraicJacobian.Picard.FinitePresentationAlgebraMapTripleReflection
 import AlgebraicJacobian.Picard.FinitePresentationAlgebraMapModels
 import AlgebraicJacobian.Picard.PicEtFiniteStageCover
 import AlgebraicJacobian.Picard.CechPicFiniteStage
@@ -61,6 +62,7 @@ import AlgebraicJacobian.Picard.Pic0FiniteStageTripleOverlapRings
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleModelScalarExtension
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleModelComparison
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleTransitions
+import AlgebraicJacobian.Picard.Pic0FiniteStageTripleTransitionModels
 import AlgebraicJacobian.Picard.Pic0FiniteStageDatum
 import AlgebraicJacobian.Picard.Pic0RepresentableColimit
 
@@ -182,8 +184,9 @@ representer has a chosen finite affine atlas with finitely presented chart rings
 affine presentations of pairwise overlaps, and all of its chart rings are simultaneously
 modeled over one finite subextension.  A finite family of maps between scalar-extended algebras,
 including maps transported through chosen finite-presentation models, also descends to one common
-finite subextension when every source is of finite type.  Equality and composition identities
-between finite-stage maps are reflected by their identities after the ambient algebraic extension,
+finite subextension when every source is of finite type.  Equality, two-map composition, and
+three-map composition identities between finite-stage maps are reflected by their identities
+after the ambient algebraic extension,
 and an affine map whose scalar extension is an open immersion is itself an open immersion by fpqc
 descent.  The parallel fpqc argument also reflects affine isomorphisms through a single field
 extension, conjugated model comparisons, and iterated field towers.  The atlas
@@ -216,8 +219,9 @@ The exact cyclic transition between the three presentations of a triple intersec
 canonical restriction map; its face equation and three-cycle identity are now proved directly
 on section rings.
 Those relative tensor-product rings are finite type over the finite-stage ground field whenever
-their two overlap rings are, so the future triple-transition family meets the source finiteness
-hypothesis of the map-descent theorem.  Finally,
+their two overlap rings are.  Given comparison equivalences from their scalar extensions to the
+exact triple section rings, the exact cyclic transitions therefore descend simultaneously through
+one further finite subextension, with explicit comparison squares for every triple index.  Finally,
 `pic0PreservesFilteredBaseColimit_of_representableBy` proves the filtered-colimit statement once
 an arbitrary-field locally finitely presented representer has actually been produced.
 
@@ -228,8 +232,9 @@ identities.  Thus no additional scheme-level gluing axiom is needed once those f
 ring equations have been reflected.
 
 These inputs do not yet constitute object descent.  Still missing, and NOT replaced here by
-axioms or local hypotheses: finite-stage triple-overlap transition maps and their cyclic
-cocycle equation, hence the assembled `Scheme.GlueData`; a glued-scheme base-change comparison;
+axioms or local hypotheses: the concrete compatible comparison family consumed by the conditional
+triple-transition descent theorem, followed by reflection of its face and cyclic cocycle equations
+and hence the assembled `Scheme.GlueData`; a glued-scheme base-change comparison;
 descent of the universal Picard natural equivalence; the
 orbit-in-affine-open input for the finite-level Picard quotient; and the arbitrary-base-field
 `pic0_representableBy` and
@@ -606,6 +611,7 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_algHom
 #check AlgebraicGeometry.DatG0.tensorProduct_algHom_eq_of_map_comp_eq
 #check AlgebraicGeometry.DatG0.tensorProduct_algHom_comp_eq_of_baseChange
+#check AlgebraicGeometry.DatG0.tensorProduct_algHom_triple_comp_eq_of_baseChange
 #check AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_algHom_finite
 #check AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_algHom_finite_of_models
 #check AlgebraicGeometry.DatG0.exists_finSubext_etale_model
@@ -676,6 +682,12 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.tensorPushoutAlgEquivCongr
 #check AlgebraicGeometry.tensorPushoutAlgEquivCongr_faces
 #check AlgebraicGeometry.pic0FiniteStageModelBaseChangeEquiv_restrictionLeft
+#check AlgebraicGeometry.Pic0FiniteStageTripleTransitionIndex
+#check AlgebraicGeometry.Pic0FiniteStageTripleTransitionModelSource
+#check AlgebraicGeometry.Pic0FiniteStageTripleTransitionModelTarget
+#check AlgebraicGeometry.pic0FiniteStageTransportedTripleTransition
+#check
+  AlgebraicGeometry.exists_finSubext_pic0FiniteStageTripleTransition_models_of_comparisons
 #check AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 -- Datum-level glued divisor over a Noetherian base (Pic0RankOneDatumGluedDivisor.lean)
 #check AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
@@ -786,6 +798,7 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_algHom
 #print axioms AlgebraicGeometry.DatG0.tensorProduct_algHom_eq_of_map_comp_eq
 #print axioms AlgebraicGeometry.DatG0.tensorProduct_algHom_comp_eq_of_baseChange
+#print axioms AlgebraicGeometry.DatG0.tensorProduct_algHom_triple_comp_eq_of_baseChange
 #print axioms AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_algHom_finite
 #print axioms AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_algHom_finite_of_models
 #print axioms AlgebraicGeometry.DatG0.exists_finSubext_etale_model
@@ -846,6 +859,9 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.pic0FiniteStageTripleTransition_fac
 #print axioms AlgebraicGeometry.pic0FiniteStageTripleTransition_cocycle
 #print axioms AlgebraicGeometry.pic0FiniteStageTransition_self
+#print axioms AlgebraicGeometry.pic0FiniteStageTransportedTripleTransition
+#print axioms
+  AlgebraicGeometry.exists_finSubext_pic0FiniteStageTripleTransition_models_of_comparisons
 #print axioms AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 #print axioms
   AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
