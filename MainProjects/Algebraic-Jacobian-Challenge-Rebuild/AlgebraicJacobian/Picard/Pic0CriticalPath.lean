@@ -36,6 +36,7 @@ import AlgebraicJacobian.Picard.Pic0FiniteGaloisDescent
 import AlgebraicJacobian.Picard.Pic0GaloisInvariantComparison
 import AlgebraicJacobian.Picard.Pic0FiniteGaloisRepresentable
 import AlgebraicJacobian.Descent.OpenImmersionFieldDescent
+import AlgebraicJacobian.Descent.TensorProductFieldTowerMap
 import AlgebraicJacobian.Descent.TensorProductFiniteType
 import AlgebraicJacobian.Descent.TensorProductPushoutBaseChange
 import AlgebraicJacobian.Picard.TensorFiniteSubextension
@@ -192,7 +193,9 @@ finite-stage restriction legs is an open immersion as well.  The ordered pair-ov
 transitions descend simultaneously with those restrictions, and equation reflection proves
 that the two transition directions are inverse at the same finite stage.  Scalar extension
 also commutes with the tensor-product pushouts that present affine triple-overlap pullbacks,
-with explicit pure-tensor comparison laws.  The literal triple intersections are affine, their
+with explicit pure-tensor comparison laws, and cancellation through a field tower is natural
+for every descended map satisfying its ambient comparison square.  The literal triple
+intersections are affine, their
 section rings are those tensor pushouts with both face formulas pinned, and the corresponding
 pushouts of the descended restriction legs carry an explicit scalar-extension comparison.
 The exact cyclic transition between the three presentations of a triple intersection is a
@@ -721,6 +724,9 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.pic0RepresentableBy_finiteGaloisDescent
 #print axioms AlgebraicGeometry.isOpenImmersion_of_fpqc_pushout
 #print axioms AlgebraicGeometry.isOpenImmersion_of_tensorProduct
+#print axioms AlgebraicJacobian.scalarExtensionMapOfAlgHom
+#print axioms AlgebraicJacobian.cancelBaseChange_tmul_baseChange
+#print axioms AlgebraicJacobian.cancelBaseChange_naturality
 #print axioms AlgebraicJacobian.tensorProductPushoutBaseChange
 #print axioms AlgebraicJacobian.tensorProductPushoutBaseChange_tmul
 #print axioms AlgebraicJacobian.tensorProductPushoutBaseChange_symm_tmul
