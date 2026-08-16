@@ -47,6 +47,7 @@ import AlgebraicJacobian.Picard.PicEtAffFiniteStage
 import AlgebraicJacobian.Picard.Pic0FiniteStageAtlas
 import AlgebraicJacobian.Picard.Pic0FiniteStageAffineIntersections
 import AlgebraicJacobian.Picard.Pic0FiniteStageOverlapRings
+import AlgebraicJacobian.Picard.Pic0FiniteStageRestrictionModels
 import AlgebraicJacobian.Picard.Pic0FiniteStageDatum
 import AlgebraicJacobian.Picard.Pic0RepresentableColimit
 
@@ -177,15 +178,18 @@ Mathlib's `gluedCover` packages its canonical restriction maps, transition maps,
 an affine `Scheme.GlueData`.  A single finite tag contains every chart ring and every ordered
 pair-overlap ring, and all rings in that family are simultaneously modeled over one finite
 subextension.  The two canonical restrictions from each chart to its overlap are also rooted
-as one finite dependent family, ready for synchronized map descent.  Finally,
+as one finite dependent family.  After choosing the ring presentations at that stage, one
+further finite subextension simultaneously supplies descended restriction maps and explicit
+transported commuting squares for every leg.  Finally,
 `pic0PreservesFilteredBaseColimit_of_representableBy` proves the filtered-colimit statement once
 an arbitrary-field locally finitely presented representer has actually been produced.
 
 These inputs do not yet constitute object descent.  Still missing, and NOT replaced here by
-axioms or local hypotheses: finite-stage descent of the canonical GlueData's restriction and
-transition maps together with their cocycle equations; a glued-scheme base-change comparison;
-descent of the universal Picard natural equivalence; the orbit-in-affine-open input for the
-finite-level Picard quotient; and the arbitrary-base-field `pic0_representableBy` and
+axioms or local hypotheses: assembly of the descended restrictions into finite-stage open
+immersions and transition isomorphisms together with their cocycle equations; a glued-scheme
+base-change comparison; descent of the universal Picard natural equivalence; the
+orbit-in-affine-open input for the finite-level Picard quotient; and the arbitrary-base-field
+`pic0_representableBy` and
 `JacobianData` endpoints.
 -/
 
@@ -585,6 +589,7 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.pic0FiniteStageRestrictionRight
 #check AlgebraicGeometry.Pic0FiniteStageRestrictionIndex
 #check AlgebraicGeometry.pic0FiniteStageRestriction
+#check AlgebraicGeometry.exists_finSubext_pic0FiniteStageRestriction_models
 #check AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 -- Datum-level glued divisor over a Noetherian base (Pic0RankOneDatumGluedDivisor.lean)
 #check AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
@@ -703,6 +708,7 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.pic0FiniteStageRestrictionLeft
 #print axioms AlgebraicGeometry.pic0FiniteStageRestrictionRight
 #print axioms AlgebraicGeometry.pic0FiniteStageRestriction
+#print axioms AlgebraicGeometry.exists_finSubext_pic0FiniteStageRestriction_models
 #print axioms AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 #print axioms
   AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
