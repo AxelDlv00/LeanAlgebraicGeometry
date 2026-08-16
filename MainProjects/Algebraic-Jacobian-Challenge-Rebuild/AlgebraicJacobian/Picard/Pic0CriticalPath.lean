@@ -35,6 +35,7 @@ import AlgebraicJacobian.Picard.Pic0RankOneCanonicalDivisorStageCert
 import AlgebraicJacobian.Picard.Pic0FiniteGaloisDescent
 import AlgebraicJacobian.Picard.Pic0GaloisInvariantComparison
 import AlgebraicJacobian.Picard.Pic0FiniteGaloisRepresentable
+import AlgebraicJacobian.Descent.OpenImmersionFieldDescent
 import AlgebraicJacobian.Picard.TensorFiniteSubextension
 import AlgebraicJacobian.Picard.FinitePresentationAlgebraFiniteStage
 import AlgebraicJacobian.Picard.FinitePresentationAlgebraMapFiniteStage
@@ -168,7 +169,9 @@ affine presentations of pairwise overlaps, and all of its chart rings are simult
 modeled over one finite subextension.  A finite family of maps between scalar-extended algebras,
 including maps transported through chosen finite-presentation models, also descends to one common
 finite subextension when every source is of finite type.  Equality and composition identities
-between finite-stage maps are reflected by their identities after the ambient algebraic extension.  The atlas
+between finite-stage maps are reflected by their identities after the ambient algebraic extension,
+and an affine map whose scalar extension is an open immersion is itself an open immersion by fpqc
+descent.  The atlas
 is now also rooted as an actual finite open cover whose pairwise intersections are affine, and
 Mathlib's `gluedCover` packages its canonical restriction maps, transition maps, and cocycle as
 an affine `Scheme.GlueData`.  A single finite tag contains every chart ring and every ordered
@@ -534,6 +537,8 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.pic0GaloisInvariantEquivGaloisEquivariantOver
 #check AlgebraicGeometry.pic0GaloisInvariantEquivGaloisEquivariantOver_precomp
 #check AlgebraicGeometry.pic0RepresentableBy_finiteGaloisDescent
+#check AlgebraicGeometry.isOpenImmersion_of_fpqc_pushout
+#check AlgebraicGeometry.isOpenImmersion_of_tensorProduct
 -- Finite-stage algebra, cover, class, datum, atlas, and colimit substrate
 #check AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_preimage
 #check AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_eq
@@ -661,6 +666,8 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.pic0GaloisInvariantEquivGaloisEquivariantOver
 #print axioms AlgebraicGeometry.pic0GaloisInvariantEquivGaloisEquivariantOver_precomp
 #print axioms AlgebraicGeometry.pic0RepresentableBy_finiteGaloisDescent
+#print axioms AlgebraicGeometry.isOpenImmersion_of_fpqc_pushout
+#print axioms AlgebraicGeometry.isOpenImmersion_of_tensorProduct
 #print axioms AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_preimage_finite
 #print axioms AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_eq_finite
 #print axioms AlgebraicGeometry.DatG0.tensorProduct_map_finSubext_injective
