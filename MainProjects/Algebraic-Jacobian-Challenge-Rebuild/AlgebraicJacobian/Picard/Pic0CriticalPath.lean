@@ -53,6 +53,7 @@ import AlgebraicJacobian.Picard.Pic0FiniteStageRestrictionModels
 import AlgebraicJacobian.Picard.Pic0FiniteStageRestrictionOpenImmersions
 import AlgebraicJacobian.Picard.Pic0FiniteStageTransitionModels
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleOverlapRings
+import AlgebraicJacobian.Picard.Pic0FiniteStageTripleTransitions
 import AlgebraicJacobian.Picard.Pic0FiniteStageDatum
 import AlgebraicJacobian.Picard.Pic0RepresentableColimit
 
@@ -194,6 +195,9 @@ also commutes with the tensor-product pushouts that present affine triple-overla
 with explicit pure-tensor comparison laws.  The literal triple intersections are affine, their
 section rings are those tensor pushouts with both face formulas pinned, and the corresponding
 pushouts of the descended restriction legs carry an explicit scalar-extension comparison.
+The exact cyclic transition between the three presentations of a triple intersection is a
+canonical restriction map; its face equation and three-cycle identity are now proved directly
+on section rings.
 Those relative tensor-product rings are finite type over the finite-stage ground field whenever
 their two overlap rings are, so the future triple-transition family meets the source finiteness
 hypothesis of the map-descent theorem.  Finally,
@@ -774,6 +778,10 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.finiteType_pic0FiniteStageTensorPushoutRing
 #print axioms AlgebraicGeometry.finiteType_pic0FiniteStageTripleModelRing
 #print axioms AlgebraicGeometry.pic0FiniteStageTripleModelBaseChange
+#print axioms AlgebraicGeometry.pic0FiniteStageTripleTransition
+#print axioms AlgebraicGeometry.pic0FiniteStageTripleTransition_fac
+#print axioms AlgebraicGeometry.pic0FiniteStageTripleTransition_cocycle
+#print axioms AlgebraicGeometry.pic0FiniteStageTransition_self
 #print axioms AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 #print axioms
   AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
