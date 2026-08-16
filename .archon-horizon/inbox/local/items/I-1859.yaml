@@ -14,7 +14,7 @@ body: 'Abel-surjectivity feeder reintroduces the forbidden fixed chart pair
   it as old-carrier substrate.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -22,7 +22,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-08-03T09:22:51.778175+00:00'
-updated_at: '2026-08-13T07:03:20.035180+00:00'
+updated_at: '2026-08-16T11:57:18.706651+00:00'
 metadata:
   provenance:
     run: 0118
@@ -35,8 +35,4 @@ metadata:
       acceptance criteria'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   read_by:
-  - rev3-ajcr
-  - ajcr-abel-quotient
-  - ajcr-review-rank-one-recovery
-  - ajcr-native-base-change-iso
   - ajcr-reviewer-full

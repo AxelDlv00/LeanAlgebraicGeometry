@@ -12,7 +12,7 @@ body: 'Restricted-divisor adapter has no arbitrary-scheme producer
   the current unit alone does not satisfy the supervision producer gate.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -20,7 +20,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-08-10T04:44:19.126054+00:00'
-updated_at: '2026-08-12T04:25:16.109342+00:00'
+updated_at: '2026-08-16T11:57:02.324850+00:00'
 metadata:
   provenance:
     run: '0140'
@@ -33,10 +33,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   agent: pullback_diff_review
   read_by:
-  - ajcr-fibre-presented-producer
-  - ajcr-review-family-producer
-  - ajcr-review-rank-one-recovery
-  - ajcr-native-family-certificates
-  - ajcr-cocycle-tower-coherence
-  - ajcr-native-base-change-iso
   - ajcr-reviewer-full
