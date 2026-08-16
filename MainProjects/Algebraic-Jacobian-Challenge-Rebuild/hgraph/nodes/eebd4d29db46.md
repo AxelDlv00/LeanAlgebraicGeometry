@@ -13,7 +13,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.mem_boundedSections_unit_iff
 type: lean
-updated: '2026-08-16T14:04:07'
+updated: '2026-08-16T14:08:13'
 ---
 private lemma mem_boundedSections_unit_iff (s : X.functionFieldˣ) (A : X.CurveDivisor)
     (U : X.Opens) :
