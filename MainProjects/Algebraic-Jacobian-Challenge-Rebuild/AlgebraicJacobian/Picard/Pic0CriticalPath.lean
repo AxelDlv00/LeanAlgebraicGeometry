@@ -160,7 +160,8 @@ coefficients and equalities, etale algebras and covers, Cech and relative-Picard
 representative PicEt cover all descend to finite subextensions.  A basic-open cocycle datum over
 a tensor coefficient ring descends to one finite tensor stage.  The exact separably closed
 representer has a chosen finite affine atlas with finitely presented chart rings and finite
-affine presentations of pairwise overlaps.  Finally,
+affine presentations of pairwise overlaps, and all of its chart rings are simultaneously
+modeled over one finite subextension.  Finally,
 `pic0PreservesFilteredBaseColimit_of_representableBy` proves the filtered-colimit statement once
 an arbitrary-field locally finitely presented representer has actually been produced.
 
@@ -530,6 +531,8 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.DatG0.FiniteRelationAlgebra
 #check
   AlgebraicGeometry.DatG0.exists_finSubext_finitePresentation_algebra_model
+#check
+  AlgebraicGeometry.DatG0.exists_finSubext_finitePresentation_algebra_model_finite
 #check AlgebraicGeometry.DatG0.exists_finSubext_etale_model
 #check AlgebraicGeometry.DatG0.exists_finSubext_etaleCover_model
 #check AlgebraicGeometry.exists_finSubext_cechPic_model
@@ -541,6 +544,9 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.Scheme.finiteAffineOverlapPresentation
 #check AlgebraicGeometry.Pic0FiniteStageAtlas
 #check AlgebraicGeometry.pic0FiniteStageAtlas
+#check AlgebraicGeometry.Pic0FiniteStageChartRing
+#check AlgebraicGeometry.finitePresentation_pic0FiniteStageChartRing
+#check AlgebraicGeometry.exists_finSubext_pic0FiniteStageAtlas_chartRing_models
 #check AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 -- Datum-level glued divisor over a Noetherian base (Pic0RankOneDatumGluedDivisor.lean)
 #check AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
@@ -629,6 +635,8 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
   AlgebraicGeometry.DatG0.exists_finSubext_fg_subalgebra_tensorProduct_factor
 #print axioms
   AlgebraicGeometry.DatG0.exists_finSubext_finitePresentation_algebra_model
+#print axioms
+  AlgebraicGeometry.DatG0.exists_finSubext_finitePresentation_algebra_model_finite
 #print axioms AlgebraicGeometry.DatG0.exists_finSubext_etale_model
 #print axioms AlgebraicGeometry.DatG0.exists_finSubext_etaleCover_model
 #print axioms AlgebraicGeometry.exists_finSubext_cechPic_model
@@ -638,6 +646,8 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.Scheme.exists_finite_affineCover_inter_isQuasiCompact
 #print axioms AlgebraicGeometry.Scheme.finiteAffineOverlapPresentation
 #print axioms AlgebraicGeometry.pic0FiniteStageAtlas
+#print axioms AlgebraicGeometry.finitePresentation_pic0FiniteStageChartRing
+#print axioms AlgebraicGeometry.exists_finSubext_pic0FiniteStageAtlas_chartRing_models
 #print axioms AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 #print axioms
   AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre

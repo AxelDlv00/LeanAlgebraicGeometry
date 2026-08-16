@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.Pic0SepClosedJacobianData
+import AlgebraicJacobian.Picard.FinitePresentationAlgebraFiniteStage
 
 /-!
 # A finite affine atlas for the separably closed Picard representer
@@ -19,7 +20,7 @@ set_option autoImplicit false
 
 universe u
 
-open CategoryTheory TopologicalSpace
+open CategoryTheory TopologicalSpace TensorProduct
 
 namespace AlgebraicGeometry
 
@@ -128,6 +129,61 @@ noncomputable def pic0FiniteStageAtlas : Pic0FiniteStageAtlas C := by
         J.left.finiteAffineOverlapPresentation U V (hinter U hU V hV) }⟩
   intro U _
   exact J.hom.finitePresentation_appLE (isAffineOpen_top _) U.2 le_top
+
+/-! ## Simultaneous finite-stage chart-ring models -/
+
+/-- The section ring of one chart in the chosen finite `Pic^0` atlas, equipped below with
+the algebra structure induced by the structure morphism of the exact representer. -/
+def Pic0FiniteStageChartRing
+    (U : { U // U ∈ (pic0FiniteStageAtlas C).charts }) : Type u :=
+  Γ((pic0_sepClosed_representableBy (C := C)).1.left, U.1.1)
+
+instance (U : { U // U ∈ (pic0FiniteStageAtlas C).charts }) :
+    CommRing (Pic0FiniteStageChartRing C U) := by
+  dsimp [Pic0FiniteStageChartRing]
+  infer_instance
+
+noncomputable instance (U : { U // U ∈ (pic0FiniteStageAtlas C).charts }) :
+    Algebra k (Pic0FiniteStageChartRing C U) := by
+  let J := (pic0_sepClosed_representableBy (C := C)).1
+  letI : J.left.Over (Spec (.of k)) := ⟨J.hom⟩
+  exact (J.left.overAlgebraMap k U.1.1).toAlgebra
+
+/-- Every ring in the chosen finite `Pic^0` atlas is finitely presented for its canonical
+algebra structure over the separably closed ground field. -/
+theorem finitePresentation_pic0FiniteStageChartRing
+    (U : { U // U ∈ (pic0FiniteStageAtlas C).charts }) :
+    Algebra.FinitePresentation k (Pic0FiniteStageChartRing C U) := by
+  let J := (pic0_sepClosed_representableBy (C := C)).1
+  letI : J.left.Over (Spec (.of k)) := ⟨J.hom⟩
+  change (J.left.overAlgebraMap k U.1.1).FinitePresentation
+  rw [Scheme.overAlgebraMap, CommRingCat.hom_comp, CommRingCat.hom_comp]
+  apply RingHom.FinitePresentation.comp
+  · exact (pic0FiniteStageAtlas C).chartRing_finitePresentation U.1 U.2
+  · exact RingHom.FinitePresentation.of_bijective
+      (ConcreteCategory.bijective_of_isIso (Scheme.ΓSpecIso (.of k)).inv)
+
+set_option synthInstance.maxHeartbeats 100000 in
+-- Elaborating the dependent quotient inside the tensor product requires a larger typeclass budget.
+/-- All chart rings in the finite atlas of the exact separably closed `Pic^0` representer
+are simultaneously defined over one finite subextension.  This is the object layer of
+spreading out the atlas; restriction maps and their cocycle equations remain separate data. -/
+theorem exists_finSubext_pic0FiniteStageAtlas_chartRing_models
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k] :
+    ∃ L : DatG0.FinSubext F k,
+      ∀ U : { U // U ∈ (pic0FiniteStageAtlas C).charts },
+        ∃ n m : ℕ, ∃ relation : Fin m → MvPolynomial (Fin n) L.1,
+          Nonempty
+            (k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1 n m relation ≃ₐ[k]
+              Pic0FiniteStageChartRing C U) := by
+  letI : Finite { U // U ∈ (pic0FiniteStageAtlas C).charts } :=
+    (pic0FiniteStageAtlas C).finite_charts.to_subtype
+  letI (U : { U // U ∈ (pic0FiniteStageAtlas C).charts }) :
+      Algebra.FinitePresentation k (Pic0FiniteStageChartRing C U) :=
+    finitePresentation_pic0FiniteStageChartRing C U
+  exact DatG0.exists_finSubext_finitePresentation_algebra_model_finite
+    (fun U : { U // U ∈ (pic0FiniteStageAtlas C).charts } =>
+      Pic0FiniteStageChartRing C U)
 
 end
 
