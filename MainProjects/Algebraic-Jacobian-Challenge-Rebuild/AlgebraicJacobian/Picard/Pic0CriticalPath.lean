@@ -35,6 +35,15 @@ import AlgebraicJacobian.Picard.Pic0RankOneCanonicalDivisorStageCert
 import AlgebraicJacobian.Picard.Pic0FiniteGaloisDescent
 import AlgebraicJacobian.Picard.Pic0GaloisInvariantComparison
 import AlgebraicJacobian.Picard.Pic0FiniteGaloisRepresentable
+import AlgebraicJacobian.Picard.TensorFiniteSubextension
+import AlgebraicJacobian.Picard.FinitePresentationAlgebraFiniteStage
+import AlgebraicJacobian.Picard.PicEtFiniteStageCover
+import AlgebraicJacobian.Picard.CechPicFiniteStage
+import AlgebraicJacobian.Picard.RelPicFiniteStage
+import AlgebraicJacobian.Picard.PicEtAffFiniteStage
+import AlgebraicJacobian.Picard.Pic0FiniteStageAtlas
+import AlgebraicJacobian.Picard.Pic0FiniteStageDatum
+import AlgebraicJacobian.Picard.Pic0RepresentableColimit
 
 /-!
 # Narrow root for the AJCR-first Picard strategy
@@ -146,9 +155,20 @@ is etale-locally surjective onto this exact carrier, so its quasi-compact source
 changing either component.  The same carrier is also finitely presented and quasi-separated,
 the exact geometric hypotheses needed by a future finite-subextension object-spread theorem.
 
-Still missing, and NOT replaced here by axioms or local hypotheses: the finite-stage spread of
-the separably closed representer (including its universal datum), the orbit-in-affine-open input
-for the finite-level Picard quotient, and the arbitrary-base-field `pic0_representableBy` and
+The finite-stage algebraic substrate is now rooted too.  Finitely presented algebras, tensor
+coefficients and equalities, etale algebras and covers, Cech and relative-Picard classes, and a
+representative PicEt cover all descend to finite subextensions.  A basic-open cocycle datum over
+a tensor coefficient ring descends to one finite tensor stage.  The exact separably closed
+representer has a chosen finite affine atlas with finitely presented chart rings and finite
+affine presentations of pairwise overlaps.  Finally,
+`pic0PreservesFilteredBaseColimit_of_representableBy` proves the filtered-colimit statement once
+an arbitrary-field locally finitely presented representer has actually been produced.
+
+These inputs do not yet constitute object descent.  Still missing, and NOT replaced here by
+axioms or local hypotheses: simultaneous finite-stage models for the atlas restriction maps;
+chosen overlap transition isomorphisms, triple-overlap cocycles, and a glued-scheme base-change
+comparison; descent of the universal Picard natural equivalence; the orbit-in-affine-open input
+for the finite-level Picard quotient; and the arbitrary-base-field `pic0_representableBy` and
 `JacobianData` endpoints.
 -/
 
@@ -500,6 +520,28 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.pic0GaloisInvariantEquivGaloisEquivariantOver
 #check AlgebraicGeometry.pic0GaloisInvariantEquivGaloisEquivariantOver_precomp
 #check AlgebraicGeometry.pic0RepresentableBy_finiteGaloisDescent
+-- Finite-stage algebra, cover, class, datum, atlas, and colimit substrate
+#check AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_preimage
+#check AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_eq
+#check AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_preimage_finite
+#check AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_eq_finite
+#check AlgebraicGeometry.DatG0.tensorProduct_map_finSubext_injective
+#check AlgebraicGeometry.DatG0.exists_finSubext_fg_subalgebra_tensorProduct_factor
+#check AlgebraicGeometry.DatG0.FiniteRelationAlgebra
+#check
+  AlgebraicGeometry.DatG0.exists_finSubext_finitePresentation_algebra_model
+#check AlgebraicGeometry.DatG0.exists_finSubext_etale_model
+#check AlgebraicGeometry.DatG0.exists_finSubext_etaleCover_model
+#check AlgebraicGeometry.exists_finSubext_cechPic_model
+#check AlgebraicGeometry.exists_finSubext_relPic_model
+#check AlgebraicGeometry.exists_finSubext_baseChanged_cover_representation
+#check AlgebraicGeometry.BasicOpenCocycleDatum.exists_finSubext_tensorStage
+#check AlgebraicGeometry.Scheme.exists_finite_affineCover_inter_isQuasiCompact
+#check AlgebraicGeometry.Scheme.FiniteAffineOverlapPresentation
+#check AlgebraicGeometry.Scheme.finiteAffineOverlapPresentation
+#check AlgebraicGeometry.Pic0FiniteStageAtlas
+#check AlgebraicGeometry.pic0FiniteStageAtlas
+#check AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 -- Datum-level glued divisor over a Noetherian base (Pic0RankOneDatumGluedDivisor.lean)
 #check AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
 
@@ -580,5 +622,22 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.pic0GaloisInvariantEquivGaloisEquivariantOver
 #print axioms AlgebraicGeometry.pic0GaloisInvariantEquivGaloisEquivariantOver_precomp
 #print axioms AlgebraicGeometry.pic0RepresentableBy_finiteGaloisDescent
+#print axioms AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_preimage_finite
+#print axioms AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_eq_finite
+#print axioms AlgebraicGeometry.DatG0.tensorProduct_map_finSubext_injective
+#print axioms
+  AlgebraicGeometry.DatG0.exists_finSubext_fg_subalgebra_tensorProduct_factor
+#print axioms
+  AlgebraicGeometry.DatG0.exists_finSubext_finitePresentation_algebra_model
+#print axioms AlgebraicGeometry.DatG0.exists_finSubext_etale_model
+#print axioms AlgebraicGeometry.DatG0.exists_finSubext_etaleCover_model
+#print axioms AlgebraicGeometry.exists_finSubext_cechPic_model
+#print axioms AlgebraicGeometry.exists_finSubext_relPic_model
+#print axioms AlgebraicGeometry.exists_finSubext_baseChanged_cover_representation
+#print axioms AlgebraicGeometry.BasicOpenCocycleDatum.exists_finSubext_tensorStage
+#print axioms AlgebraicGeometry.Scheme.exists_finite_affineCover_inter_isQuasiCompact
+#print axioms AlgebraicGeometry.Scheme.finiteAffineOverlapPresentation
+#print axioms AlgebraicGeometry.pic0FiniteStageAtlas
+#print axioms AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 #print axioms
   AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
