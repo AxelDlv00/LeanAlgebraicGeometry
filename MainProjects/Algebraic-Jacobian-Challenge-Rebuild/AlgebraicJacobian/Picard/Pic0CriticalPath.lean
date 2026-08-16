@@ -162,14 +162,14 @@ representative PicEt cover all descend to finite subextensions.  A basic-open co
 a tensor coefficient ring descends to one finite tensor stage.  The exact separably closed
 representer has a chosen finite affine atlas with finitely presented chart rings and finite
 affine presentations of pairwise overlaps, and all of its chart rings are simultaneously
-modeled over one finite subextension.  A map between two scalar-extended algebras also descends
-to a finite subextension when its source is of finite type; synchronization of the atlas's
-whole map family remains open.  Finally,
+modeled over one finite subextension.  A finite family of maps between scalar-extended algebras
+also descends to one common finite subextension when every source is of finite type.  Finally,
 `pic0PreservesFilteredBaseColimit_of_representableBy` proves the filtered-colimit statement once
 an arbitrary-field locally finitely presented representer has actually been produced.
 
 These inputs do not yet constitute object descent.  Still missing, and NOT replaced here by
-axioms or local hypotheses: simultaneous finite-stage models for the atlas restriction maps;
+axioms or local hypotheses: applying the common-stage algebra-map theorem to finite-stage
+models of the atlas restriction maps;
 chosen overlap transition isomorphisms, triple-overlap cocycles, and a glued-scheme base-change
 comparison; descent of the universal Picard natural equivalence; the orbit-in-affine-open input
 for the finite-level Picard quotient; and the arbitrary-base-field `pic0_representableBy` and
@@ -537,6 +537,7 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check
   AlgebraicGeometry.DatG0.exists_finSubext_finitePresentation_algebra_model_finite
 #check AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_algHom
+#check AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_algHom_finite
 #check AlgebraicGeometry.DatG0.exists_finSubext_etale_model
 #check AlgebraicGeometry.DatG0.exists_finSubext_etaleCover_model
 #check AlgebraicGeometry.exists_finSubext_cechPic_model
@@ -642,6 +643,7 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms
   AlgebraicGeometry.DatG0.exists_finSubext_finitePresentation_algebra_model_finite
 #print axioms AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_algHom
+#print axioms AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_algHom_finite
 #print axioms AlgebraicGeometry.DatG0.exists_finSubext_etale_model
 #print axioms AlgebraicGeometry.DatG0.exists_finSubext_etaleCover_model
 #print axioms AlgebraicGeometry.exists_finSubext_cechPic_model
