@@ -35,6 +35,7 @@ import AlgebraicJacobian.Picard.Pic0RankOneCanonicalDivisorStageCert
 import AlgebraicJacobian.Picard.Pic0FiniteGaloisDescent
 import AlgebraicJacobian.Picard.Pic0GaloisInvariantComparison
 import AlgebraicJacobian.Picard.Pic0FiniteGaloisRepresentable
+import AlgebraicJacobian.Descent.AffineRingGlueData
 import AlgebraicJacobian.Descent.OpenImmersionFieldDescent
 import AlgebraicJacobian.Descent.IsomorphismFieldTowerDescent
 import AlgebraicJacobian.Descent.TensorProductFieldTowerMap
@@ -208,6 +209,12 @@ their two overlap rings are, so the future triple-transition family meets the so
 hypothesis of the map-descent theorem.  Finally,
 `pic0PreservesFilteredBaseColimit_of_representableBy` proves the filtered-colimit statement once
 an arbitrary-field locally finitely presented representer has actually been produced.
+
+At the assembly boundary, `affineRingGlueData` now turns chart rings, overlap rings, open
+restriction legs, pair transitions, and triple-tensor transitions into an actual
+`Scheme.GlueData`; its diagonal, face, and cocycle fields follow from the corresponding ring
+identities.  Thus no additional scheme-level gluing axiom is needed once those finite-stage
+ring equations have been reflected.
 
 These inputs do not yet constitute object descent.  Still missing, and NOT replaced here by
 axioms or local hypotheses: finite-stage triple-overlap transition maps and their cyclic
@@ -724,6 +731,7 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.pic0GaloisInvariantEquivGaloisEquivariantOver
 #print axioms AlgebraicGeometry.pic0GaloisInvariantEquivGaloisEquivariantOver_precomp
 #print axioms AlgebraicGeometry.pic0RepresentableBy_finiteGaloisDescent
+#print axioms AlgebraicJacobian.affineRingGlueData
 #print axioms AlgebraicGeometry.isOpenImmersion_of_fpqc_pushout
 #print axioms AlgebraicGeometry.isOpenImmersion_of_tensorProduct
 #print axioms AlgebraicGeometry.isIso_specMap_of_fpqc_pushout
