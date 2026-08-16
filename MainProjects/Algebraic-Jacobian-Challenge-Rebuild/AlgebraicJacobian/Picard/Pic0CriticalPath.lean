@@ -59,6 +59,7 @@ import AlgebraicJacobian.Picard.Pic0FiniteStageTransitionIdentity
 import AlgebraicJacobian.Picard.Pic0FiniteStageDiagonalRestrictions
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleOverlapRings
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleModelScalarExtension
+import AlgebraicJacobian.Picard.Pic0FiniteStageTripleModelComparison
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleTransitions
 import AlgebraicJacobian.Picard.Pic0FiniteStageDatum
 import AlgebraicJacobian.Picard.Pic0RepresentableColimit
@@ -205,9 +206,10 @@ open-leg condition needed by the gluing datum.  Scalar extension
 also commutes with the tensor-product pushouts that present affine triple-overlap pullbacks,
 with explicit pure-tensor comparison laws.  Instance-stable generic left and right faces,
 arbitrary scalar extension, and both scalar-extended face laws are rooted for those pushouts;
-cancellation through a field tower is natural
-for every descended map satisfying its ambient comparison square.  The literal triple
-intersections are affine, their
+cancellation through a field tower is natural for every descended map, and compatible
+component equivalences transport tensor pushouts with both factor faces pinned.  In particular,
+the component comparison square for every descended left restriction is rooted.  The literal
+triple intersections are affine, their
 section rings are those tensor pushouts with both face formulas pinned, and the corresponding
 pushouts of the descended restriction legs carry an explicit scalar-extension comparison.
 The exact cyclic transition between the three presentations of a triple intersection is a
@@ -669,6 +671,11 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.finiteStageTensorPushoutScalarExtension_tmul
 #check AlgebraicGeometry.finiteStageTensorPushoutScalarExtension_faceLeft
 #check AlgebraicGeometry.finiteStageTensorPushoutScalarExtension_faceRight
+#check AlgebraicGeometry.pic0FiniteStageModelBaseChangeEquiv
+#check AlgebraicGeometry.pic0FiniteStageModelBaseChangeEquiv_naturality
+#check AlgebraicGeometry.tensorPushoutAlgEquivCongr
+#check AlgebraicGeometry.tensorPushoutAlgEquivCongr_faces
+#check AlgebraicGeometry.pic0FiniteStageModelBaseChangeEquiv_restrictionLeft
 #check AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 -- Datum-level glued divisor over a Noetherian base (Pic0RankOneDatumGluedDivisor.lean)
 #check AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
@@ -830,6 +837,11 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.finiteStageTensorPushoutScalarExtension_tmul
 #print axioms AlgebraicGeometry.finiteStageTensorPushoutScalarExtension_faceLeft
 #print axioms AlgebraicGeometry.finiteStageTensorPushoutScalarExtension_faceRight
+#print axioms AlgebraicGeometry.pic0FiniteStageModelBaseChangeEquiv
+#print axioms AlgebraicGeometry.pic0FiniteStageModelBaseChangeEquiv_naturality
+#print axioms AlgebraicGeometry.tensorPushoutAlgEquivCongr
+#print axioms AlgebraicGeometry.tensorPushoutAlgEquivCongr_faces
+#print axioms AlgebraicGeometry.pic0FiniteStageModelBaseChangeEquiv_restrictionLeft
 #print axioms AlgebraicGeometry.pic0FiniteStageTripleTransition
 #print axioms AlgebraicGeometry.pic0FiniteStageTripleTransition_fac
 #print axioms AlgebraicGeometry.pic0FiniteStageTripleTransition_cocycle
