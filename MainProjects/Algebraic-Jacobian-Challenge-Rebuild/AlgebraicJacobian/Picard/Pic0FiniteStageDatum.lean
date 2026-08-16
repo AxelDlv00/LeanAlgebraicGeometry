@@ -1,0 +1,81 @@
+/-
+Copyright (c) 2026 The AlgebraicJacobian Contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: The AlgebraicJacobian Contributors
+-/
+import AlgebraicJacobian.Picard.TensorFiniteSubextension
+import AlgebraicJacobian.Cohomology.DatumDescent
+import AlgebraicJacobian.Picard.DivisorFamilyWindowBaseChange
+
+/-!
+# Finite tensor-stage descent of a pinned cocycle datum
+
+A `BasicOpenCocycleDatum` over `K ⊗[F] B` descends to a datum over
+`M ⊗[F] B` for a finite intermediate field `M/F`.  The datum is first descended to a
+finitely generated coefficient subalgebra, then that subalgebra is factored through one
+finite tensor stage.  The tower law for datum base change transports the certificate strictly.
+-/
+
+set_option autoImplicit false
+
+universe u
+
+open CategoryTheory
+
+open scoped TensorProduct
+
+namespace AlgebraicGeometry
+
+noncomputable section
+
+/-- Spread a pinned cocycle datum over `K ⊗[F] B` to one finite tensor stage over `F`. -/
+theorem BasicOpenCocycleDatum.exists_finSubext_tensorStage
+    {F K B : Type u} [Field F] [Field K] [Algebra F K] [Algebra.IsAlgebraic F K]
+    [CommRing B] [Algebra F B]
+    {C : Over (Spec (.of F))} {pi : C.left ⟶ P1 F} [IsAffineHom pi]
+    (D : BasicOpenCocycleDatum C (K ⊗[F] B) pi) :
+    ∃ M : DatG0.FinSubext F K,
+      letI : Algebra F (M.1 ⊗[F] B) := Algebra.TensorProduct.instAlgebra
+      let ι : M.1 ⊗[F] B →ₐ[F] K ⊗[F] B :=
+        Algebra.TensorProduct.map M.1.val (AlgHom.id F B)
+      letI : Algebra (M.1 ⊗[F] B) (K ⊗[F] B) := ι.toAlgebra
+      letI : IsScalarTower F (M.1 ⊗[F] B) (K ⊗[F] B) :=
+        @IsScalarTower.of_algebraMap_eq F (M.1 ⊗[F] B) (K ⊗[F] B)
+          inferInstance inferInstance inferInstance inferInstance inferInstance inferInstance
+          (fun x => (ι.commutes x).symm)
+      ∃ D_M : BasicOpenCocycleDatum C (M.1 ⊗[F] B) pi,
+        D_M.baseChange (K ⊗[F] B) = D := by
+  obtain ⟨A₀, hA₀, D₀, hD₀⟩ := D.exists_fg_subalgebra_baseChange_eq
+  obtain ⟨M, f, hfactor⟩ :=
+    DatG0.exists_finSubext_fg_subalgebra_tensorProduct_factor A₀ hA₀
+  letI : Algebra F (M.1 ⊗[F] B) := Algebra.TensorProduct.instAlgebra
+  let ι : M.1 ⊗[F] B →ₐ[F] K ⊗[F] B :=
+    Algebra.TensorProduct.map M.1.val (AlgHom.id F B)
+  letI : Algebra A₀ (M.1 ⊗[F] B) :=
+    f.toRingHom.toAlgebra' (by
+      intro c x
+      exact mul_comm (f.toRingHom c) x)
+  letI : IsScalarTower F A₀ (M.1 ⊗[F] B) :=
+    IsScalarTower.of_algebraMap_eq fun x => (f.commutes x).symm
+  letI : Algebra (M.1 ⊗[F] B) (K ⊗[F] B) :=
+    ι.toRingHom.toAlgebra' (by
+      intro c x
+      exact mul_comm (ι.toRingHom c) x)
+  letI : IsScalarTower F (M.1 ⊗[F] B) (K ⊗[F] B) :=
+    @IsScalarTower.of_algebraMap_eq F (M.1 ⊗[F] B) (K ⊗[F] B)
+      inferInstance inferInstance inferInstance inferInstance inferInstance inferInstance
+      (fun x => (ι.commutes x).symm)
+  letI : IsScalarTower A₀ (M.1 ⊗[F] B) (K ⊗[F] B) :=
+    @IsScalarTower.of_algebraMap_eq A₀ (M.1 ⊗[F] B) (K ⊗[F] B)
+      inferInstance inferInstance inferInstance inferInstance inferInstance inferInstance
+      (fun a => by
+        change a.1 = ι (f a)
+        exact congrArg (fun g : A₀ →ₐ[F] K ⊗[F] B => g a) hfactor.symm)
+  refine ⟨M, ?_⟩
+  dsimp only
+  exact ⟨D₀.baseChange (M.1 ⊗[F] B),
+    (D₀.baseChange_baseChange C (A₀ : Type u) (M.1 ⊗[F] B) (K ⊗[F] B)).trans hD₀⟩
+
+end
+
+end AlgebraicGeometry
