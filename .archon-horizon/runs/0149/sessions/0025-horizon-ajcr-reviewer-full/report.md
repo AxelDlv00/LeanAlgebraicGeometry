@@ -38,6 +38,11 @@ finite-Galois theorem consumes these inputs but does not produce them.  The curr
 producer also depends transitively on `Challenge.genus`, so direct headline wiring would create an
 import cycle before those mathematical gates are solved.
 
+Workspace-owned generated drift remains uncommitted in the AJCR blueprint aggregate, legacy
+roadmap rows, search indexes, and live-session telemetry.  A fresh private-index audit confirmed
+that every authored inbox, task-comment, source, and report path otherwise matched HEAD; the drift
+was not committed because it predates this closeout or belongs to concurrent writers.
+
 ## Why I Stopped
 
 No effective non-affine `GlueData` descent theorem or fpqc/filtered-colimit reflection theorem for
