@@ -36,6 +36,7 @@ import AlgebraicJacobian.Picard.Pic0FiniteGaloisDescent
 import AlgebraicJacobian.Picard.Pic0GaloisInvariantComparison
 import AlgebraicJacobian.Picard.Pic0FiniteGaloisRepresentable
 import AlgebraicJacobian.Descent.OpenImmersionFieldDescent
+import AlgebraicJacobian.Descent.IsomorphismFieldTowerDescent
 import AlgebraicJacobian.Descent.TensorProductFieldTowerMap
 import AlgebraicJacobian.Descent.TensorProductFiniteType
 import AlgebraicJacobian.Descent.TensorProductPushoutBaseChange
@@ -179,7 +180,8 @@ including maps transported through chosen finite-presentation models, also desce
 finite subextension when every source is of finite type.  Equality and composition identities
 between finite-stage maps are reflected by their identities after the ambient algebraic extension,
 and an affine map whose scalar extension is an open immersion is itself an open immersion by fpqc
-descent.  The atlas
+descent.  The parallel fpqc argument also reflects affine isomorphisms through a single field
+extension, conjugated model comparisons, and iterated field towers.  The atlas
 is now also rooted as an actual finite open cover whose pairwise intersections are affine, and
 Mathlib's `gluedCover` packages its canonical restriction maps, transition maps, and cocycle as
 an affine `Scheme.GlueData`.  A single finite tag contains every chart ring and every ordered
@@ -724,6 +726,10 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.pic0RepresentableBy_finiteGaloisDescent
 #print axioms AlgebraicGeometry.isOpenImmersion_of_fpqc_pushout
 #print axioms AlgebraicGeometry.isOpenImmersion_of_tensorProduct
+#print axioms AlgebraicGeometry.isIso_specMap_of_fpqc_pushout
+#print axioms AlgebraicGeometry.isIso_specMap_of_tensorProduct
+#print axioms AlgebraicGeometry.isIso_specMap_of_tensorProduct_conjugate
+#print axioms AlgebraicGeometry.isIso_specMap_of_fieldTower_tensorProducts
 #print axioms AlgebraicJacobian.scalarExtensionMapOfAlgHom
 #print axioms AlgebraicJacobian.cancelBaseChange_tmul_baseChange
 #print axioms AlgebraicJacobian.cancelBaseChange_naturality
