@@ -36,6 +36,7 @@ import AlgebraicJacobian.Picard.Pic0FiniteGaloisDescent
 import AlgebraicJacobian.Picard.Pic0GaloisInvariantComparison
 import AlgebraicJacobian.Picard.Pic0FiniteGaloisRepresentable
 import AlgebraicJacobian.Descent.OpenImmersionFieldDescent
+import AlgebraicJacobian.Descent.TensorProductFiniteType
 import AlgebraicJacobian.Descent.TensorProductPushoutBaseChange
 import AlgebraicJacobian.Picard.TensorFiniteSubextension
 import AlgebraicJacobian.Picard.FinitePresentationAlgebraFiniteStage
@@ -189,7 +190,10 @@ finite-stage restriction legs is an open immersion as well.  The ordered pair-ov
 transitions descend simultaneously with those restrictions, and equation reflection proves
 that the two transition directions are inverse at the same finite stage.  Scalar extension
 also commutes with the tensor-product pushouts that present affine triple-overlap pullbacks,
-with explicit pure-tensor comparison laws.  Finally,
+with explicit pure-tensor comparison laws.  Those relative tensor-product rings are finite
+type over the finite-stage ground field whenever their two overlap rings are, so the future
+triple-transition family meets the source finiteness hypothesis of the map-descent theorem.
+Finally,
 `pic0PreservesFilteredBaseColimit_of_representableBy` proves the filtered-colimit statement once
 an arbitrary-field locally finitely presented representer has actually been produced.
 
@@ -556,6 +560,7 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicJacobian.tensorProductPushoutBaseChange
 #check AlgebraicJacobian.tensorProductPushoutBaseChange_tmul
 #check AlgebraicJacobian.tensorProductPushoutBaseChange_symm_tmul
+#check AlgebraicJacobian.finiteType_tensorProduct_over
 -- Finite-stage algebra, cover, class, datum, atlas, and colimit substrate
 #check AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_preimage
 #check AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_eq
@@ -701,6 +706,7 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicJacobian.tensorProductPushoutBaseChange
 #print axioms AlgebraicJacobian.tensorProductPushoutBaseChange_tmul
 #print axioms AlgebraicJacobian.tensorProductPushoutBaseChange_symm_tmul
+#print axioms AlgebraicJacobian.finiteType_tensorProduct_over
 #print axioms AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_preimage_finite
 #print axioms AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_eq_finite
 #print axioms AlgebraicGeometry.DatG0.tensorProduct_map_finSubext_injective
