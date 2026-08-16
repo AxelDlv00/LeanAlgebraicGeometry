@@ -37,6 +37,7 @@ import AlgebraicJacobian.Picard.Pic0GaloisInvariantComparison
 import AlgebraicJacobian.Picard.Pic0FiniteGaloisRepresentable
 import AlgebraicJacobian.Descent.AffineRingGlueData
 import AlgebraicJacobian.Descent.OpenImmersionFieldDescent
+import AlgebraicJacobian.Descent.OpenImmersionScalarExtension
 import AlgebraicJacobian.Descent.IsomorphismFieldTowerDescent
 import AlgebraicJacobian.Descent.TensorProductFieldTowerMap
 import AlgebraicJacobian.Descent.TensorProductFiniteType
@@ -205,7 +206,9 @@ that the two transition directions are inverse at the same finite stage.  The ex
 transition is the identity, and injectivity of scalar extension reflects that identity to every
 compatible finite-stage transition model.  On diagonal chart pairs, the exact restriction and
 every descended model restriction induce isomorphisms on spectra, supplying the diagonal
-open-leg condition needed by the gluing datum.  Scalar extension
+open-leg condition needed by the gluing datum.  Scalar extension of an arbitrary algebra map
+is now identified with the corresponding affine pushout and Spec pullback; consequently both
+open immersions and diagonal isomorphisms ascend to every later scalar stage.  Scalar extension
 also commutes with the tensor-product pushouts that present affine triple-overlap pullbacks,
 with explicit pure-tensor comparison laws.  Instance-stable generic left and right faces,
 arbitrary scalar extension, and both scalar-extended face laws are rooted for those pushouts;
@@ -591,6 +594,10 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.pic0RepresentableBy_finiteGaloisDescent
 #check AlgebraicGeometry.isOpenImmersion_of_fpqc_pushout
 #check AlgebraicGeometry.isOpenImmersion_of_tensorProduct
+#check AlgebraicJacobian.isPushout_scalarExtensionMapOfAlgHom
+#check AlgebraicGeometry.isPullback_specMap_scalarExtensionMapOfAlgHom
+#check AlgebraicGeometry.isOpenImmersion_scalarExtensionMapOfAlgHom
+#check AlgebraicGeometry.isIso_specMap_scalarExtensionMapOfAlgHom
 #check AlgebraicJacobian.scalarExtensionMap
 #check AlgebraicJacobian.tensorProductPushoutBaseChange
 #check AlgebraicJacobian.tensorProductPushoutBaseChange_tmul
@@ -772,6 +779,10 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicJacobian.affineRingGlueData
 #print axioms AlgebraicGeometry.isOpenImmersion_of_fpqc_pushout
 #print axioms AlgebraicGeometry.isOpenImmersion_of_tensorProduct
+#print axioms AlgebraicJacobian.isPushout_scalarExtensionMapOfAlgHom
+#print axioms AlgebraicGeometry.isPullback_specMap_scalarExtensionMapOfAlgHom
+#print axioms AlgebraicGeometry.isOpenImmersion_scalarExtensionMapOfAlgHom
+#print axioms AlgebraicGeometry.isIso_specMap_scalarExtensionMapOfAlgHom
 #print axioms AlgebraicGeometry.isIso_specMap_of_fpqc_pushout
 #print axioms AlgebraicGeometry.isIso_specMap_of_tensorProduct
 #print axioms AlgebraicGeometry.isIso_specMap_of_tensorProduct_conjugate
