@@ -63,6 +63,7 @@ import AlgebraicJacobian.Picard.Pic0FiniteStageTripleOverlapRings
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleModelScalarExtension
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleModelScalarExtensionFaces
 import AlgebraicJacobian.Picard.Pic0FiniteStageTensorPushoutUniversal
+import AlgebraicJacobian.Picard.Pic0FiniteStageTensorPushoutComparison
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleModelComparison
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleTransitions
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleTransitionModels
@@ -218,7 +219,9 @@ arbitrary scalar extension, and both scalar-extended face laws are rooted for th
 including their map-level forms needed for composition with descended transitions.  Their named
 ring interface now carries the canonical pushout property, its comparison equivalence to any
 other pushout with both faces pinned, and a named scalar-extension equivalence that preserves
-the selected tensor instances;
+the selected tensor instances.  Given component equivalences and their two naturality squares,
+the generic comparison now identifies that scalar-extended named pushout with the exact target
+and pins both forward faces without reconstructing dependent tensor instances;
 cancellation through a field tower is natural for every descended map, and compatible
 component equivalences transport tensor pushouts with both factor faces pinned.  In particular,
 the component comparison square for every descended left restriction is rooted.  The literal
@@ -700,6 +703,11 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.finiteStageTensorPushoutAlgEquivOfIsPushout_faceLeft
 #check AlgebraicGeometry.finiteStageTensorPushoutAlgEquivOfIsPushout_faceRight
 #check AlgebraicGeometry.finiteStageTensorPushoutScalarExtension_named
+#check AlgebraicGeometry.finiteStageTensorPushoutComparisonSquare
+#check AlgebraicGeometry.finiteStageTensorPushoutMiddleComparison
+#check AlgebraicGeometry.finiteStageTensorPushoutComparison
+#check AlgebraicGeometry.finiteStageTensorPushoutComparison_faceLeft
+#check AlgebraicGeometry.finiteStageTensorPushoutComparison_faceRight
 #check AlgebraicGeometry.pic0FiniteStageModelBaseChangeEquiv
 #check AlgebraicGeometry.pic0FiniteStageModelBaseChangeEquiv_naturality
 #check AlgebraicGeometry.tensorPushoutAlgEquivCongr
@@ -886,6 +894,11 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.finiteStageTensorPushoutAlgEquivOfIsPushout_faceLeft
 #print axioms AlgebraicGeometry.finiteStageTensorPushoutAlgEquivOfIsPushout_faceRight
 #print axioms AlgebraicGeometry.finiteStageTensorPushoutScalarExtension_named
+#print axioms AlgebraicGeometry.finiteStageTensorPushoutComparisonSquare
+#print axioms AlgebraicGeometry.finiteStageTensorPushoutMiddleComparison
+#print axioms AlgebraicGeometry.finiteStageTensorPushoutComparison
+#print axioms AlgebraicGeometry.finiteStageTensorPushoutComparison_faceLeft
+#print axioms AlgebraicGeometry.finiteStageTensorPushoutComparison_faceRight
 #print axioms AlgebraicGeometry.pic0FiniteStageModelBaseChangeEquiv
 #print axioms AlgebraicGeometry.pic0FiniteStageModelBaseChangeEquiv_naturality
 #print axioms AlgebraicGeometry.tensorPushoutAlgEquivCongr
