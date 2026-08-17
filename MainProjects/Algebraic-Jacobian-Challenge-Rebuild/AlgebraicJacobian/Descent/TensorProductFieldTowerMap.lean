@@ -27,7 +27,7 @@ noncomputable section
 `scalarExtensionMap`, whose special case induced by an algebra structure is recorded
 separately in the pushout base-change file. -/
 def scalarExtensionMapOfAlgHom {R K A B : Type u}
-    [CommRing R] [CommRing K] [CommRing A] [CommRing B]
+    [CommRing R] [CommRing K] [Semiring A] [Semiring B]
     [Algebra R K] [Algebra R A] [Algebra R B]
     (f : A →ₐ[R] B) :
     (K ⊗[R] A) →ₐ[K] (K ⊗[R] B) :=
@@ -37,7 +37,7 @@ def scalarExtensionMapOfAlgHom {R K A B : Type u}
 its algebra factor. -/
 @[simp]
 theorem scalarExtensionMapOfAlgHom_tmul {R K A B : Type u}
-    [CommRing R] [CommRing K] [CommRing A] [CommRing B]
+    [CommRing R] [CommRing K] [Semiring A] [Semiring B]
     [Algebra R K] [Algebra R A] [Algebra R B]
     (f : A →ₐ[R] B) (c : K) (a : A) :
     scalarExtensionMapOfAlgHom (R := R) (K := K) f (c ⊗ₜ[R] a) =
@@ -46,7 +46,7 @@ theorem scalarExtensionMapOfAlgHom_tmul {R K A B : Type u}
 
 /-- Scalar extension of a map is natural in a tower of scalar rings. -/
 theorem scalarExtensionMapOfAlgHom_tower {F L K A B : Type u}
-    [CommRing F] [CommRing L] [CommRing K] [CommRing A] [CommRing B]
+    [CommRing F] [CommRing L] [CommRing K] [Semiring A] [Semiring B]
     [Algebra F L] [Algebra F K] [Algebra L K] [IsScalarTower F L K]
     [Algebra F A] [Algebra F B]
     (f : A →ₐ[F] B) :
@@ -63,7 +63,7 @@ theorem scalarExtensionMapOfAlgHom_tower {F L K A B : Type u}
 /-- Scalar extension preserves composition of algebra maps. -/
 @[simp]
 theorem scalarExtensionMapOfAlgHom_comp {R K A B D : Type u}
-    [CommRing R] [CommRing K] [CommRing A] [CommRing B] [CommRing D]
+    [CommRing R] [CommRing K] [Semiring A] [Semiring B] [Semiring D]
     [Algebra R K] [Algebra R A] [Algebra R B] [Algebra R D]
     (f : A →ₐ[R] B) (g : B →ₐ[R] D) :
     (scalarExtensionMapOfAlgHom (R := R) (K := K) g).comp
@@ -75,7 +75,7 @@ theorem scalarExtensionMapOfAlgHom_comp {R K A B D : Type u}
 /-- Scalar extension preserves the identity algebra map. -/
 @[simp]
 theorem scalarExtensionMapOfAlgHom_id {R K A : Type u}
-    [CommRing R] [CommRing K] [CommRing A]
+    [CommRing R] [CommRing K] [Semiring A]
     [Algebra R K] [Algebra R A] :
     scalarExtensionMapOfAlgHom (R := R) (K := K) (AlgHom.id R A) =
       AlgHom.id K (K ⊗[R] A) := by
