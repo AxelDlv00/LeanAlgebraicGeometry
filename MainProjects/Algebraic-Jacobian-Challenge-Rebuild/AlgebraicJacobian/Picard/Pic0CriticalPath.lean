@@ -76,6 +76,7 @@ import AlgebraicJacobian.Picard.Pic0FiniteStageFinalBaseChange
 import AlgebraicJacobian.Picard.Pic0FiniteStageChartBaseChange
 import AlgebraicJacobian.Picard.Pic0FiniteStageAffineBaseChange
 import AlgebraicJacobian.Picard.Pic0FiniteStageGluingBaseChange
+import AlgebraicJacobian.Picard.Pic0FiniteStageRestrictionBaseChange
 import AlgebraicJacobian.Picard.Pic0FiniteStageDatum
 import AlgebraicJacobian.Picard.Pic0RepresentableColimit
 
@@ -254,7 +255,11 @@ pushout equivalences then conjugate the descended transitions onto the literal t
 preserving both the face equation and the three-cycle identity.  The simultaneous pair- and
 triple-transition descent producers inhabit one dependent package carrying all of these inputs;
 its computed `glueData` applies `affineRingGlueData` and therefore produces an actual finite-stage
-`Scheme.GlueData` from the descended chart and overlap rings.  Finally,
+`Scheme.GlueData` from the descended chart and overlap rings.  The resulting glued scheme retains
+its map to the finite-stage field spectrum.  After extension to the separably closed field, its
+global pullback is identified with the gluing of the pulled-back charts; the chart and overlap
+objects recover the exact Picard atlas, and the descended restriction legs commute with those
+comparisons.  Finally,
 `pic0PreservesFilteredBaseColimit_of_representableBy` proves the filtered-colimit statement once
 an arbitrary-field locally finitely presented representer has actually been produced.
 
@@ -265,8 +270,9 @@ identities.  Thus no additional scheme-level gluing axiom is needed once those f
 ring equations have been reflected.
 
 These inputs do not yet constitute object descent.  Still missing, and NOT replaced here by
-axioms or local hypotheses: a glued-scheme base-change comparison; descent of the universal
-Picard natural equivalence; preservation of Picard zero under the original-base filtered colimit;
+axioms or local hypotheses: assembly of the local comparisons into the global glued-scheme
+base-change isomorphism; descent of the universal Picard natural equivalence; preservation of
+Picard zero under the original-base filtered colimit;
 the orbit-in-affine-open (or projectivity) input for the finite-level Picard quotient; and the
 arbitrary-base-field `pic0_representableBy` and `JacobianData` endpoints.
 -/
@@ -978,6 +984,9 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.Pic0FiniteStageGluePackage.baseChangeGluingIso
 #print axioms AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingChartIso
 #print axioms AlgebraicGeometry.Pic0FiniteStageGluePackage.overlapBaseChangeIso
+#print axioms AlgebraicGeometry.Pic0FiniteStageGluePackage.glueData_f
+#print axioms AlgebraicGeometry.Pic0FiniteStageGluePackage.restrictionSpec_naturality
+#print axioms AlgebraicGeometry.Pic0FiniteStageGluePackage.restrictionBaseChangeMap_naturality
 #print axioms AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 #print axioms
   AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
