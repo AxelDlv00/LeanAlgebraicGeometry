@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Generic comparison specialization remains LSP-clean but faithful kernel whnf times out at both explicit Q result boundary and application under 6.4M; preserve before inferred-result opaque specialization",
+  "created_at": "2026-08-16T22:00:33.099065+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageTripleModelComparisonNamed.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageTripleModelComparisonNamed.lean",
+      "bytes": 7772,
+      "lines": 187
+    }
+  ],
+  "diagnostics": ""
+}

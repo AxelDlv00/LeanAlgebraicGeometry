@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Categorical inclusion morphism/pointwise split still times out after verified square+iso; preserve full face-law draft",
+  "created_at": "2026-08-16T19:20:21.323151+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageTripleCategoricalComparison.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageTripleCategoricalComparison.lean",
+      "bytes": 19513,
+      "lines": 408
+    }
+  ],
+  "diagnostics": ""
+}

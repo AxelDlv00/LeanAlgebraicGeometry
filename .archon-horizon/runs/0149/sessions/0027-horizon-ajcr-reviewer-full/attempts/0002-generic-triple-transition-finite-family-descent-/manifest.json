@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Generic triple-transition finite-family descent is mathematically typed through the indexed Q interface, but both LSP and direct elaboration deterministically time out at whnf with maxHeartbeats 6400000 and no preceding type error; preserving the full draft before refactoring.",
+  "created_at": "2026-08-16T18:30:17.359543+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageTripleTransitionModels.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageTripleTransitionModels.lean",
+      "bytes": 10854,
+      "lines": 248
+    }
+  ],
+  "diagnostics": ""
+}
