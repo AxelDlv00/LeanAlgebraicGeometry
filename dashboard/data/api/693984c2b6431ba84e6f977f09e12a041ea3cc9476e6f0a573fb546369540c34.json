@@ -1,0 +1,1 @@
+{"markdown": "The failed monolithic build removed the cached cocycle `.olean`, even though the restored source hash exactly matches commit `2492d312e1`. I\u2019m rebuilding that verified 204-line module first; once its artifact is restored, the isolated face module can elaborate without redoing both heavy declarations in one process.", "recommendation": ""}

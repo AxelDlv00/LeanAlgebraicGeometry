@@ -1,0 +1,1 @@
+{"markdown": "The LSP is spending its time on the same declaration boundary, which confirms this is elaboration pressure rather than a new proof obligation. I\u2019m checking the generated instance argument order directly so the caller can supply only the expensive `Algebra M.1` dictionaries and leave the package\u2019s map types untouched.\n", "recommendation": ""}
