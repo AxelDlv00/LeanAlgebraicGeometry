@@ -73,6 +73,7 @@ import AlgebraicJacobian.Picard.Pic0FiniteStageTripleTransitionEquations
 import AlgebraicJacobian.Picard.Pic0FiniteStageGluePackage
 import AlgebraicJacobian.Picard.Pic0FiniteStageGluedOver
 import AlgebraicJacobian.Picard.Pic0FiniteStageFinalBaseChange
+import AlgebraicJacobian.Picard.Pic0FiniteStageChartBaseChange
 import AlgebraicJacobian.Picard.Pic0FiniteStageDatum
 import AlgebraicJacobian.Picard.Pic0RepresentableColimit
 
@@ -969,6 +970,8 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.Pic0FiniteStageGluePackage.gluedOver
 #print axioms AlgebraicGeometry.pic0FiniteStageFinalBaseChangeEquiv
 #print axioms AlgebraicGeometry.pic0FiniteStageFinalBaseChangeEquiv_naturality
+#print axioms AlgebraicGeometry.Pic0FiniteStageGluePackage.glueData_ι_gluedMap
+#print axioms AlgebraicGeometry.Pic0FiniteStageGluePackage.chartBaseChangeIso
 #print axioms AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 #print axioms
   AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
