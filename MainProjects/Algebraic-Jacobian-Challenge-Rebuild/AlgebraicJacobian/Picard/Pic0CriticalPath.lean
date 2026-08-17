@@ -68,6 +68,7 @@ import AlgebraicJacobian.Picard.Pic0FiniteStageTripleModelComparison
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleModelComparisonNamed
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleTransitions
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleTransitionModels
+import AlgebraicJacobian.Picard.Pic0FiniteStageTransportedTripleTransitionFace
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleTransitionEquations
 import AlgebraicJacobian.Picard.Pic0FiniteStageDatum
 import AlgebraicJacobian.Picard.Pic0RepresentableColimit
@@ -239,7 +240,9 @@ their two overlap rings are.  Given comparison equivalences from their scalar ex
 exact triple section rings, the exact cyclic transitions therefore descend simultaneously through
 one further finite subextension, with explicit comparison squares for every triple index.  The
 three-cycle identity survives the comparison conjugations and reflects through those squares to
-every compatible family of descended triple transitions.  Finally,
+every compatible family of descended triple transitions.  The exact cyclic transition transported
+through the concrete model comparisons also carries the rotated right face to the original left
+face after the component-conjugated pair transition.  Finally,
 `pic0PreservesFilteredBaseColimit_of_representableBy` proves the filtered-colimit statement once
 an arbitrary-field locally finitely presented representer has actually been produced.
 
@@ -715,6 +718,10 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.pic0FiniteStageTripleModelFaceRight
 #check AlgebraicGeometry.pic0FiniteStageTripleModelComparison_faceLeft
 #check AlgebraicGeometry.pic0FiniteStageTripleModelComparison_faceRight
+#check AlgebraicGeometry.pic0FiniteStageTripleModelComparisonFamily
+#check AlgebraicGeometry.pic0FiniteStageTransportedTripleTransitionOfModels
+#check AlgebraicGeometry.pic0FiniteStagePairModelComparisonTransition
+#check AlgebraicGeometry.pic0FiniteStageTransportedTripleTransition_fac
 #check AlgebraicGeometry.pic0FiniteStageModelBaseChangeEquiv
 #check AlgebraicGeometry.pic0FiniteStageModelBaseChangeEquiv_naturality
 #check AlgebraicGeometry.tensorPushoutAlgEquivCongr
@@ -911,6 +918,10 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.pic0FiniteStageTripleModelFaceRight
 #print axioms AlgebraicGeometry.pic0FiniteStageTripleModelComparison_faceLeft
 #print axioms AlgebraicGeometry.pic0FiniteStageTripleModelComparison_faceRight
+#print axioms AlgebraicGeometry.pic0FiniteStageTripleModelComparisonFamily
+#print axioms AlgebraicGeometry.pic0FiniteStageTransportedTripleTransitionOfModels
+#print axioms AlgebraicGeometry.pic0FiniteStagePairModelComparisonTransition
+#print axioms AlgebraicGeometry.pic0FiniteStageTransportedTripleTransition_fac
 #print axioms AlgebraicGeometry.pic0FiniteStageModelBaseChangeEquiv
 #print axioms AlgebraicGeometry.pic0FiniteStageModelBaseChangeEquiv_naturality
 #print axioms AlgebraicGeometry.tensorPushoutAlgEquivCongr
