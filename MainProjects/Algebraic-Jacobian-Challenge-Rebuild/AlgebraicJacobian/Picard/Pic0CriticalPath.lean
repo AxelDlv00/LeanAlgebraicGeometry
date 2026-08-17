@@ -70,6 +70,7 @@ import AlgebraicJacobian.Picard.Pic0FiniteStageTripleTransitions
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleTransitionModels
 import AlgebraicJacobian.Picard.Pic0FiniteStageTransportedTripleTransitionFace
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleTransitionEquations
+import AlgebraicJacobian.Picard.Pic0FiniteStageGlueDataAssembly
 import AlgebraicJacobian.Picard.Pic0FiniteStageDatum
 import AlgebraicJacobian.Picard.Pic0RepresentableColimit
 
@@ -242,7 +243,12 @@ one further finite subextension, with explicit comparison squares for every trip
 three-cycle identity survives the comparison conjugations and reflects through those squares to
 every compatible family of descended triple transitions.  The exact cyclic transition transported
 through the concrete model comparisons also carries the rotated right face to the original left
-face after the component-conjugated pair transition.  Finally,
+face after the component-conjugated pair transition.  Scalar extension to the final finite stage
+reflects that face equation without rebuilding the dependent tensor-product carriers.  Canonical
+pushout equivalences then conjugate the descended transitions onto the literal triple tensor rings,
+preserving both the face equation and the three-cycle identity.  These equations feed
+`affineRingGlueData`, producing an actual finite-stage `Scheme.GlueData` from the descended chart
+and overlap rings.  Finally,
 `pic0PreservesFilteredBaseColimit_of_representableBy` proves the filtered-colimit statement once
 an arbitrary-field locally finitely presented representer has actually been produced.
 
@@ -253,12 +259,10 @@ identities.  Thus no additional scheme-level gluing axiom is needed once those f
 ring equations have been reflected.
 
 These inputs do not yet constitute object descent.  Still missing, and NOT replaced here by
-axioms or local hypotheses: reflection of the triple-transition face equation and hence the
-assembled `Scheme.GlueData`; a glued-scheme base-change comparison;
-descent of the universal Picard natural equivalence; the
-orbit-in-affine-open input for the finite-level Picard quotient; and the arbitrary-base-field
-`pic0_representableBy` and
-`JacobianData` endpoints.
+axioms or local hypotheses: a glued-scheme base-change comparison; descent of the universal
+Picard natural equivalence; preservation of Picard zero under the original-base filtered colimit;
+the orbit-in-affine-open (or projectivity) input for the finite-level Picard quotient; and the
+arbitrary-base-field `pic0_representableBy` and `JacobianData` endpoints.
 -/
 
 #check AlgebraicGeometry.divFunctorAff_representableBy_at
@@ -735,6 +739,14 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
   AlgebraicGeometry.exists_finSubext_pic0FiniteStageTripleTransition_models_of_comparisons
 #check AlgebraicGeometry.pic0FiniteStageTransportedTripleTransition_cocycle
 #check AlgebraicGeometry.pic0FiniteStageTripleTransitionModel_cocycle
+#check AlgebraicGeometry.scalarExtensionMapOfAlgHom_tower_finSubext
+#check AlgebraicGeometry.scalarExtensionMapOfPairModel_eq_pairModelComparisonTransition
+#check AlgebraicGeometry.pic0FiniteStageTripleTransitionModel_fac
+#check AlgebraicGeometry.conjugateAlgHom_threeCycle
+#check AlgebraicGeometry.pic0FiniteStageAffineTripleTransition_cocycle
+#check AlgebraicGeometry.conjugateAlgHom_face_of_squares
+#check AlgebraicGeometry.pic0FiniteStageAffineTripleTransition_fac
+#check AlgebraicGeometry.pic0FiniteStageAffineRingGlueData
 #check AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 -- Datum-level glued divisor over a Noetherian base (Pic0RankOneDatumGluedDivisor.lean)
 #check AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
@@ -936,6 +948,15 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
   AlgebraicGeometry.exists_finSubext_pic0FiniteStageTripleTransition_models_of_comparisons
 #print axioms AlgebraicGeometry.pic0FiniteStageTransportedTripleTransition_cocycle
 #print axioms AlgebraicGeometry.pic0FiniteStageTripleTransitionModel_cocycle
+#print axioms AlgebraicGeometry.scalarExtensionMapOfAlgHom_tower_finSubext
+#print axioms
+  AlgebraicGeometry.scalarExtensionMapOfPairModel_eq_pairModelComparisonTransition
+#print axioms AlgebraicGeometry.pic0FiniteStageTripleTransitionModel_fac
+#print axioms AlgebraicGeometry.conjugateAlgHom_threeCycle
+#print axioms AlgebraicGeometry.pic0FiniteStageAffineTripleTransition_cocycle
+#print axioms AlgebraicGeometry.conjugateAlgHom_face_of_squares
+#print axioms AlgebraicGeometry.pic0FiniteStageAffineTripleTransition_fac
+#print axioms AlgebraicGeometry.pic0FiniteStageAffineRingGlueData
 #print axioms AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 #print axioms
   AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
