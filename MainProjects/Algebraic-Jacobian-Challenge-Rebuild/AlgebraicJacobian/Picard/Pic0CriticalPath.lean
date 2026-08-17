@@ -65,6 +65,7 @@ import AlgebraicJacobian.Picard.Pic0FiniteStageTripleModelScalarExtensionFaces
 import AlgebraicJacobian.Picard.Pic0FiniteStageTensorPushoutUniversal
 import AlgebraicJacobian.Picard.Pic0FiniteStageTensorPushoutComparison
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleModelComparison
+import AlgebraicJacobian.Picard.Pic0FiniteStageTripleModelComparisonNamed
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleTransitions
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleTransitionModels
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleTransitionEquations
@@ -221,7 +222,9 @@ ring interface now carries the canonical pushout property, its comparison equiva
 other pushout with both faces pinned, and a named scalar-extension equivalence that preserves
 the selected tensor instances.  Given component equivalences and their two naturality squares,
 the generic comparison now identifies that scalar-extended named pushout with the exact target
-and pins both forward faces without reconstructing dependent tensor instances;
+and pins both forward faces without reconstructing dependent tensor instances.  The concrete
+Picard specialization supplies this comparison for every ordered triple of atlas charts, with
+opaque left and right model faces and their exact transported equations;
 cancellation through a field tower is natural for every descended map, and compatible
 component equivalences transport tensor pushouts with both factor faces pinned.  In particular,
 the component comparison square for every descended left restriction is rooted.  The literal
@@ -247,8 +250,7 @@ identities.  Thus no additional scheme-level gluing axiom is needed once those f
 ring equations have been reflected.
 
 These inputs do not yet constitute object descent.  Still missing, and NOT replaced here by
-axioms or local hypotheses: the concrete compatible comparison family consumed by the conditional
-triple-transition descent theorem, followed by reflection of its face equation and hence the
+axioms or local hypotheses: reflection of the triple-transition face equation and hence the
 assembled `Scheme.GlueData`; a glued-scheme base-change comparison;
 descent of the universal Picard natural equivalence; the
 orbit-in-affine-open input for the finite-level Picard quotient; and the arbitrary-base-field
@@ -708,6 +710,11 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.finiteStageTensorPushoutComparison
 #check AlgebraicGeometry.finiteStageTensorPushoutComparison_faceLeft
 #check AlgebraicGeometry.finiteStageTensorPushoutComparison_faceRight
+#check AlgebraicGeometry.pic0FiniteStageTripleModelComparison
+#check AlgebraicGeometry.pic0FiniteStageTripleModelFaceLeft
+#check AlgebraicGeometry.pic0FiniteStageTripleModelFaceRight
+#check AlgebraicGeometry.pic0FiniteStageTripleModelComparison_faceLeft
+#check AlgebraicGeometry.pic0FiniteStageTripleModelComparison_faceRight
 #check AlgebraicGeometry.pic0FiniteStageModelBaseChangeEquiv
 #check AlgebraicGeometry.pic0FiniteStageModelBaseChangeEquiv_naturality
 #check AlgebraicGeometry.tensorPushoutAlgEquivCongr
@@ -899,6 +906,11 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.finiteStageTensorPushoutComparison
 #print axioms AlgebraicGeometry.finiteStageTensorPushoutComparison_faceLeft
 #print axioms AlgebraicGeometry.finiteStageTensorPushoutComparison_faceRight
+#print axioms AlgebraicGeometry.pic0FiniteStageTripleModelComparison
+#print axioms AlgebraicGeometry.pic0FiniteStageTripleModelFaceLeft
+#print axioms AlgebraicGeometry.pic0FiniteStageTripleModelFaceRight
+#print axioms AlgebraicGeometry.pic0FiniteStageTripleModelComparison_faceLeft
+#print axioms AlgebraicGeometry.pic0FiniteStageTripleModelComparison_faceRight
 #print axioms AlgebraicGeometry.pic0FiniteStageModelBaseChangeEquiv
 #print axioms AlgebraicGeometry.pic0FiniteStageModelBaseChangeEquiv_naturality
 #print axioms AlgebraicGeometry.tensorPushoutAlgEquivCongr
