@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Heisenberg",
+  "agent_path": "/root/audit_terminal_descent_gates",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "Heisenberg",
+  "native_subagent_id": "01a00f38-1ed1-7cf3-93e1-8ae4db1811ef",
+  "ok": true,
+  "parent_session": "0029-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "Heisenberg",
+  "summary": "Audit result: literal gate (a) is available over a separably closed base, but it does not discharge the DAT-G0 gate over the original field. Gate (b) has no producer for the finite-stage Pic0 model.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 67892216,
+    "tokens_out": 94521
+  }
+}

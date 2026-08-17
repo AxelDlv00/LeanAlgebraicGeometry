@@ -1,0 +1,24 @@
+---
+author: sync
+content_type: definition
+created: '2026-08-17T13:21:30'
+decl: AlgebraicGeometry.pic0FiniteStageTripleModelFaceRight
+file: AlgebraicJacobian/Picard/Pic0FiniteStageTripleModelComparisonNamed.lean
+generated: lean
+lean_status: lean_ok
+title: AlgebraicGeometry.pic0FiniteStageTripleModelFaceRight
+type: lean
+updated: '2026-08-17T13:21:30'
+---
+noncomputable def pic0FiniteStageTripleModelFaceRight
+    (U V W : Pic0FiniteStageChartIndex C) :=
+  finiteStageTensorPushoutFaceRight
+    (R := M.1)
+    (A := Pic0FiniteStageChartModelRing C L n m relation M U)
+    (B₁ := Pic0FiniteStageOverlapModelRing C L n m relation M U V)
+    (B₂ := Pic0FiniteStageOverlapModelRing C L n m relation M U W)
+    (pic0FiniteStageRestrictionLeftModel C L n m relation M mapM U V)
+    (pic0FiniteStageRestrictionLeftModel C L n m relation M mapM U W)
+
+set_option maxHeartbeats 3200000 in
+-- Both sides retain the same dependent named-pushout instances.
