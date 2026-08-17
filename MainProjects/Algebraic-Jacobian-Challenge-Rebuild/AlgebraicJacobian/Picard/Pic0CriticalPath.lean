@@ -70,7 +70,7 @@ import AlgebraicJacobian.Picard.Pic0FiniteStageTripleTransitions
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleTransitionModels
 import AlgebraicJacobian.Picard.Pic0FiniteStageTransportedTripleTransitionFace
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleTransitionEquations
-import AlgebraicJacobian.Picard.Pic0FiniteStageGlueDataAssembly
+import AlgebraicJacobian.Picard.Pic0FiniteStageGluePackage
 import AlgebraicJacobian.Picard.Pic0FiniteStageDatum
 import AlgebraicJacobian.Picard.Pic0RepresentableColimit
 
@@ -246,9 +246,10 @@ through the concrete model comparisons also carries the rotated right face to th
 face after the component-conjugated pair transition.  Scalar extension to the final finite stage
 reflects that face equation without rebuilding the dependent tensor-product carriers.  Canonical
 pushout equivalences then conjugate the descended transitions onto the literal triple tensor rings,
-preserving both the face equation and the three-cycle identity.  These equations feed
-`affineRingGlueData`, producing an actual finite-stage `Scheme.GlueData` from the descended chart
-and overlap rings.  Finally,
+preserving both the face equation and the three-cycle identity.  The simultaneous pair- and
+triple-transition descent producers inhabit one dependent package carrying all of these inputs;
+its computed `glueData` applies `affineRingGlueData` and therefore produces an actual finite-stage
+`Scheme.GlueData` from the descended chart and overlap rings.  Finally,
 `pic0PreservesFilteredBaseColimit_of_representableBy` proves the filtered-colimit statement once
 an arbitrary-field locally finitely presented representer has actually been produced.
 
@@ -747,6 +748,9 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.conjugateAlgHom_face_of_squares
 #check AlgebraicGeometry.pic0FiniteStageAffineTripleTransition_fac
 #check AlgebraicGeometry.pic0FiniteStageAffineRingGlueData
+#check AlgebraicGeometry.Pic0FiniteStageGluePackage
+#check AlgebraicGeometry.Pic0FiniteStageGluePackage.glueData
+#check AlgebraicGeometry.exists_pic0FiniteStageGluePackage
 #check AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 -- Datum-level glued divisor over a Noetherian base (Pic0RankOneDatumGluedDivisor.lean)
 #check AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
@@ -957,6 +961,8 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.conjugateAlgHom_face_of_squares
 #print axioms AlgebraicGeometry.pic0FiniteStageAffineTripleTransition_fac
 #print axioms AlgebraicGeometry.pic0FiniteStageAffineRingGlueData
+#print axioms AlgebraicGeometry.Pic0FiniteStageGluePackage.glueData
+#print axioms AlgebraicGeometry.exists_pic0FiniteStageGluePackage
 #print axioms AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 #print axioms
   AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
