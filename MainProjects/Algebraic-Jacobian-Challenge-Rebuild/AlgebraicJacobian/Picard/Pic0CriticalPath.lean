@@ -77,6 +77,8 @@ import AlgebraicJacobian.Picard.Pic0FiniteStageChartBaseChange
 import AlgebraicJacobian.Picard.Pic0FiniteStageAffineBaseChange
 import AlgebraicJacobian.Picard.Pic0FiniteStageGluingBaseChange
 import AlgebraicJacobian.Picard.Pic0FiniteStageRestrictionBaseChange
+import AlgebraicJacobian.Picard.Pic0FiniteStageAffineBaseChangeTrans
+import AlgebraicJacobian.Picard.Pic0FiniteStageRestrictionNaturality
 import AlgebraicJacobian.Picard.Pic0FiniteStageDatum
 import AlgebraicJacobian.Picard.Pic0RepresentableColimit
 
@@ -259,7 +261,9 @@ its computed `glueData` applies `affineRingGlueData` and therefore produces an a
 its map to the finite-stage field spectrum.  After extension to the separably closed field, its
   global pullback is identified with the gluing of the pulled-back charts.  The chart and overlap
   objects have typed comparisons with the exact Picard atlas, and the descended restriction legs
-  have explicit base-changed morphisms between them.  Finally,
+  have explicit base-changed morphisms between them.  The affine comparison transitivity lemma
+  now turns the final ring naturality square into a Scheme-level square, and
+  `restrictionBaseChangeMap_naturality` discharges that square for every left restriction.  Finally,
 `pic0PreservesFilteredBaseColimit_of_representableBy` proves the filtered-colimit statement once
 an arbitrary-field locally finitely presented representer has actually been produced.
 
@@ -270,8 +274,9 @@ identities.  Thus no additional scheme-level gluing axiom is needed once those f
 ring equations have been reflected.
 
 These inputs do not yet constitute object descent.  Still missing, and NOT replaced here by
-  axioms or local hypotheses: naturality of each restriction comparison and assembly of the local
-  comparisons into the global glued-scheme base-change isomorphism; descent of the universal
+  axioms or local hypotheses: a kernel-clean comparison for the nested overlap objects, the right
+  overlap leg, and assembly of those local comparisons into the global glued-scheme base-change
+  isomorphism; descent of the universal
   Picard natural equivalence; preservation of
 Picard zero under the original-base filtered colimit;
 the orbit-in-affine-open (or projectivity) input for the finite-level Picard quotient; and the
@@ -763,6 +768,8 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.Pic0FiniteStageGluePackage
 #check AlgebraicGeometry.Pic0FiniteStageGluePackage.glueData
 #check AlgebraicGeometry.exists_pic0FiniteStageGluePackage
+#check AlgebraicGeometry.Pic0FiniteStageGluePackage.affineBaseChangeIso_trans_naturality
+#check AlgebraicGeometry.Pic0FiniteStageGluePackage.restrictionBaseChangeMap_naturality
 #check AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 -- Datum-level glued divisor over a Noetherian base (Pic0RankOneDatumGluedDivisor.lean)
 #check AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
@@ -989,6 +996,10 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.Pic0FiniteStageGluePackage.restrictionBaseChangeMap
 #print axioms AlgebraicGeometry.Pic0FiniteStageGluePackage.chartRingBaseChangeIso
 #print axioms AlgebraicGeometry.Pic0FiniteStageGluePackage.overlapRingBaseChangeIso
+#print axioms
+  AlgebraicGeometry.Pic0FiniteStageGluePackage.affineBaseChangeIso_trans_naturality
+#print axioms
+  AlgebraicGeometry.Pic0FiniteStageGluePackage.restrictionBaseChangeMap_naturality
 #print axioms AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 #print axioms
   AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
