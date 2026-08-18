@@ -1,0 +1,1 @@
+I’ll inspect the horizon instructions and protection inbox, then identify the smallest unblocked finite-stage Pic0 theorem after the verified helpers. I’ll keep edits confined to one file and validate with Lean before reporting back.

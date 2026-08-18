@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Cicero",
+  "agent_path": "/root/glue_edge",
+  "agent_role": "worker",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "worker",
+  "native_subagent_id": "01a01712-4efc-78b0-8aae-d236108857e8",
+  "ok": true,
+  "parent_session": "0046-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "worker",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 2160698,
+    "tokens_out": 6458
+  }
+}
