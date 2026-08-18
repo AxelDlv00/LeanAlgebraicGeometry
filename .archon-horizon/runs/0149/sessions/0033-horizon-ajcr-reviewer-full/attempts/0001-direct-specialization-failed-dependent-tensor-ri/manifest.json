@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Direct specialization failed: dependent tensor-ring aliases do not expose enough CommRing/Semiring instance information in this leaf statement; use the already-proved all-map naturality inside a downstream consumer instead.",
+  "created_at": "2026-08-18T01:10:16.161678+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageRestrictionNaturality.rejected.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageRestrictionNaturality.rejected.lean",
+      "bytes": 2218,
+      "lines": 63
+    }
+  ],
+  "diagnostics": "diagnostics.txt"
+}

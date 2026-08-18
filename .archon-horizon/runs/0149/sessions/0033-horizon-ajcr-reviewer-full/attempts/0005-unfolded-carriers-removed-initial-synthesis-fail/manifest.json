@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Unfolded carriers removed initial synthesis failures, but explicitly reinstalling CommRing and Algebra instances created incoherent semiring paths between algebraMap and CommRingCat; next attempt must retain canonical tensor instances.",
+  "created_at": "2026-08-18T02:15:45.084203+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageOverlapBaseChange.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageOverlapBaseChange.lean",
+      "bytes": 7157,
+      "lines": 180
+    }
+  ],
+  "diagnostics": "diagnostics.txt"
+}

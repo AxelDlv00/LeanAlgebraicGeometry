@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Both Scheme-level declarations elaborated successfully in LSP, but preserved-exit kernel checks at 300 and 900 seconds timed out silently and produced no olean; the unit is paused rather than claimed.",
+  "created_at": "2026-08-18T01:49:35.587320+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageRestrictionSchemeNaturality.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageRestrictionSchemeNaturality.lean",
+      "bytes": 6004,
+      "lines": 148
+    }
+  ],
+  "diagnostics": "diagnostics.txt"
+}

@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Explicit tensor carriers and typed package restriction removed all immediate instance errors, but the dependency-fresh olean build exceeded six minutes without a target diagnostic; preserved before the final longer kernel bound.",
+  "created_at": "2026-08-18T02:05:52.112458+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageOverlapBaseChange.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageOverlapBaseChange.lean",
+      "bytes": 7157,
+      "lines": 180
+    }
+  ],
+  "diagnostics": "diagnostics.txt"
+}

@@ -1,0 +1,12 @@
+Fresh explicit-output compilation emitted no olean and failed before the
+overlap_gluedMap proof rewrite.
+
+Errors:
+- line 77: cannot synthesize Algebra P.N.1 for the dependent overlap base-change ring;
+- line 76: cannot synthesize CommRing for that overlap ring;
+- line 82: cannot synthesize CommSemiring for the dependent chart base-change ring;
+- line 87: pic0FiniteStageAlgebraOfMap r has a type mismatch because those
+  dependent instances remain unresolved.
+
+The later warning that gluingOverlapBaseChangeIso uses sorry is cascading
+elaboration recovery. The source contains no sorry, admit, or axiom.

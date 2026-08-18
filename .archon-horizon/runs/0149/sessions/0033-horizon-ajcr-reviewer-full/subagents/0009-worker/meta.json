@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Helmholtz",
+  "agent_path": "/root/overlap_instance_repair",
+  "agent_role": "worker",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "worker",
+  "native_subagent_id": "01a0128c-bf72-7911-bd9c-413f9fa25afe",
+  "ok": true,
+  "parent_session": "0033-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "worker",
+  "summary": "Frozen verification failed:",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 29036248,
+    "tokens_out": 63587
+  }
+}

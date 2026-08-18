@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Canonical tensor instances removed incoherence, but the final Spec composition still exposes the restriction source through dependent MapSource rather than the literal chart carrier; bounded lane closed without kernel certificate.",
+  "created_at": "2026-08-18T02:32:20.478723+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageOverlapBaseChange.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageOverlapBaseChange.lean",
+      "bytes": 6189,
+      "lines": 156
+    }
+  ],
+  "diagnostics": "diagnostics.txt"
+}
