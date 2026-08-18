@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Anscombe",
+  "agent_path": "/root/right_naturality",
+  "agent_role": "worker",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "worker",
+  "native_subagent_id": "01a01408-5ce6-7760-88b6-5dd434257181",
+  "parent_session": "0037-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "running",
+  "subagent_type": "worker",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 6128548,
+    "tokens_out": 12840
+  }
+}

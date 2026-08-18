@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Composite right-restriction scheme naturality is LSP-diagnostic-clean/partial, but fresh standalone Lean rejects the first helper before its proof: cannot synthesize Semiring (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N V), even when the public result is inferred and the explicit chart-to-overlap carrier appears only inside a body after local P.L/P.M algebraicity instances; downstream map/theorem errors cascade. Uses the rooted scalarExtension_transition_comp_restrictionLeft_eq_right and no public Pic0FiniteStageFinalModelRing aliases.",
+  "created_at": "2026-08-18T09:25:49.054285+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageRightRestrictionNaturality.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageRightRestrictionNaturality.lean",
+      "bytes": 5333,
+      "lines": 124
+    }
+  ],
+  "diagnostics": ""
+}

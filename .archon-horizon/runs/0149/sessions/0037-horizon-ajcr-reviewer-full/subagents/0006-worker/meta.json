@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Fermat",
+  "agent_path": "/root/diagram_iso",
+  "agent_role": "worker",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "worker",
+  "native_subagent_id": "01a0140f-3783-75b3-9546-e8566d4ed695",
+  "parent_session": "0037-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "running",
+  "subagent_type": "worker",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 5929608,
+    "tokens_out": 14507
+  }
+}

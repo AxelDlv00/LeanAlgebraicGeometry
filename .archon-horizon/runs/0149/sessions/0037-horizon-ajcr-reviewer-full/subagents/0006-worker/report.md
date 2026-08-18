@@ -1,0 +1,1 @@
+The upstream checks are still running in the foreground tool environment, which is why their object file is not yet available. I’m letting those finish before rechecking the owned module; I won’t add diagram equations against a moving import.

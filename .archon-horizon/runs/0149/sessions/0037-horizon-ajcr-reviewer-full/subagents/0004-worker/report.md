@@ -1,0 +1,1 @@
+LSP twice reached only a partial timeout, still with zero diagnostics; it is now stuck on the pullback/final-square elaboration rather than the carrier headers. I’m moving to the decisive fresh-process kernel check, which will tell us whether the explicit head symbols actually fixed the standalone reconstruction problem.
