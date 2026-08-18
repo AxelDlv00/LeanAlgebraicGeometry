@@ -80,6 +80,7 @@ import AlgebraicJacobian.Picard.Pic0FiniteStageRestrictionBaseChange
 import AlgebraicJacobian.Picard.Pic0FiniteStageAffineBaseChangeTrans
 import AlgebraicJacobian.Picard.Pic0FiniteStageRestrictionNaturality
 import AlgebraicJacobian.Picard.Pic0FiniteStageOverlapBaseChange
+import AlgebraicJacobian.Picard.Pic0FiniteStageRightLegEquality
 import AlgebraicJacobian.Picard.Pic0FiniteStageDatum
 import AlgebraicJacobian.Picard.Pic0RepresentableColimit
 
@@ -266,7 +267,10 @@ its map to the finite-stage field spectrum.  After extension to the separably cl
   now turns the final ring naturality square into a Scheme-level square, and
   `restrictionBaseChangeMap_naturality` discharges that square for every left restriction.  The
   generic nested pullback produced by first base-changing a chart and then intersecting it with a
-  second chart is now flattened by a kernel-clean categorical isomorphism.  Finally,
+  second chart is now flattened by a kernel-clean categorical isomorphism.  On rings, transition
+  from the reversed overlap followed by its left restriction is now identified with the forward
+  right restriction on the exact atlas, reflected to the finite model stage, and preserved by
+  scalar extension to the package's final finite subextension.  Finally,
 `pic0PreservesFilteredBaseColimit_of_representableBy` proves the filtered-colimit statement once
 an arbitrary-field locally finitely presented representer has actually been produced.
 
@@ -278,14 +282,16 @@ ring equations have been reflected.
 
 These inputs do not yet constitute object descent.  Still missing, and NOT replaced here by
   axioms or local hypotheses: a kernel-clean specialization of the generic flattening isomorphism
-  to the dependent finite-stage overlap package, the right overlap leg, and assembly of those local
-  comparisons into the global glued-scheme base-change
+  to the dependent finite-stage overlap package, the scheme-level comparison for the now-identified
+  right overlap leg, and assembly of those local comparisons into the global glued-scheme base-change
   isomorphism; descent of the universal
   Picard natural equivalence; preservation of
 Picard zero under the original-base filtered colimit;
 the orbit-in-affine-open (or projectivity) input for the finite-level Picard quotient; and the
 arbitrary-base-field `pic0_representableBy` and `JacobianData` endpoints.
 -/
+
+open AlgebraicGeometry.Pic0FiniteStageGluePackage
 
 #check AlgebraicGeometry.divFunctorAff_representableBy_at
 #check AlgebraicGeometry.divFunctorAff_genus_representableBy
@@ -775,6 +781,10 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.Pic0FiniteStageGluePackage.affineBaseChangeIso_trans_naturality
 #check AlgebraicGeometry.Pic0FiniteStageGluePackage.restrictionBaseChangeMap_naturality
 #check AlgebraicGeometry.nestedPullbackFlatteningIso
+#check AlgebraicGeometry.Pic0FiniteStageGluePackage.transition_comp_restrictionLeft_eq_restrictionRight
+#check AlgebraicGeometry.Pic0FiniteStageGluePackage.transportedMap_transition_comp_restrictionLeft_eq_right
+#check AlgebraicGeometry.Pic0FiniteStageGluePackage.mapM_transition_comp_restrictionLeft_eq_right
+#check AlgebraicGeometry.Pic0FiniteStageGluePackage.scalarExtension_transition_comp_restrictionLeft_eq_right
 #check AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 -- Datum-level glued divisor over a Noetherian base (Pic0RankOneDatumGluedDivisor.lean)
 #check AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
@@ -1006,6 +1016,14 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms
   AlgebraicGeometry.Pic0FiniteStageGluePackage.restrictionBaseChangeMap_naturality
 #print axioms AlgebraicGeometry.nestedPullbackFlatteningIso
+#print axioms
+  AlgebraicGeometry.Pic0FiniteStageGluePackage.transition_comp_restrictionLeft_eq_restrictionRight
+#print axioms
+  transportedMap_transition_comp_restrictionLeft_eq_right
+#print axioms
+  AlgebraicGeometry.Pic0FiniteStageGluePackage.mapM_transition_comp_restrictionLeft_eq_right
+#print axioms
+  scalarExtension_transition_comp_restrictionLeft_eq_right
 #print axioms AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 #print axioms
   AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
