@@ -1,0 +1,5 @@
+Read-only audit complete and reported to the parent with exact declarations and line references.
+
+The honest frontier is the global glued-scheme base-change comparison. The active overlap-iso draft is untracked and unverified. Even after that object iso lands, universal Picard equivalence descent, the finite-Galois tower, exact finite-level representation, and the original-field colimit bridge remain open. Commits `7d861b2c01` and `da5bb57c0b` close useful conditional/internal edges but do not produce `pic0_representableBy` or `JacobianData`.
+
+No files were edited and no builds were run.

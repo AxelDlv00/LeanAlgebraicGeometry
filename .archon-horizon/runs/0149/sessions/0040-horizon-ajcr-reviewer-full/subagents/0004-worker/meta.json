@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Kuhn",
+  "agent_path": "/root/gluing_overlap_worker",
+  "agent_role": "worker",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "worker",
+  "native_subagent_id": "01a014fc-4c2d-7163-92af-e1542de76c0e",
+  "ok": true,
+  "parent_session": "0040-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "worker",
+  "summary": "## Progress",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 21838809,
+    "tokens_out": 42998
+  }
+}

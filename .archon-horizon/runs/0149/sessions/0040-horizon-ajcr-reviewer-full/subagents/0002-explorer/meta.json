@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Volta",
+  "agent_path": "/root/rebuild_frontier",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a014f2-68ce-72f0-9b35-59fc8de30594",
+  "ok": true,
+  "parent_session": "0040-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Read-only audit complete and reported to the parent with exact declarations and line references.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 12901383,
+    "tokens_out": 33812
+  }
+}
