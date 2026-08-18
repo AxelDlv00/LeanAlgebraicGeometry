@@ -522,6 +522,19 @@ theorem orbitsInAffineOpen_of_isProjective
     ρ.OrbitsInAffineOpen :=
   orbitsInAffineOpen_of_finiteInAffine ρ (finiteInAffine_of_isProjective h)
 
+/-- **The orbit hypothesis of the Galois-descent engine for every
+H-quasi-projective scheme.**  The finite projective-space immersion in
+`IsHQuasiProjective` supplies `FiniteInAffine`, which contains every finite
+Galois orbit in an affine open. -/
+theorem orbitsInAffineOpen_of_isHQuasiProjective
+    {K L : Type u} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L]
+    {X : Scheme.{u}} {f : X ⟶ Spec (CommRingCat.of L)}
+    (ρ : AlgebraicJacobian.GaloisDescent.SemilinearGalAction K L X f)
+    {S : Scheme.{u}} [IsAffine S] {π : X ⟶ S} (h : π.IsHQuasiProjective) :
+    ρ.OrbitsInAffineOpen :=
+  orbitsInAffineOpen_of_finiteInAffine ρ (finiteInAffine_of_isHQuasiProjective h)
+
 /-- **§4.2 — The curve itself satisfies `FiniteInAffine`, unconditionally.**
 
 Smooth proper geometrically integral curves are projective in this project
