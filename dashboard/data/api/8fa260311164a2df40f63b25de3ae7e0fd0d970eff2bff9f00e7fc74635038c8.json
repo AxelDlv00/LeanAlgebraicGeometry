@@ -1,0 +1,1 @@
+{"markdown": "The bounded language-server check did not return after intervention, so I stopped that agent and am taking ownership of the one-file repair. The change now is mechanical: use the indexed wrappers consistently in both naturality statements, avoiding all hidden dependent-ring reductions in the build elaborator.", "recommendation": ""}
