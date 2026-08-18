@@ -36,6 +36,19 @@ variable [SmoothOfRelativeDimension 1 Ck.hom] [IsProper Ck.hom]
 variable (P : Pic0FiniteStageGluePackage Ck F)
 variable [Algebra K P.N.1] [FiniteDimensional K P.N.1] [IsGalois K P.N.1]
 
+/-- On an algebraically closed finite-stage field, the represented group structure and
+irreducibility produce the stable affine cover directly, without an immersion binder. -/
+@[implicit_reducible]
+noncomputable def
+    pic0FiniteStageHasStableAffineCover_of_isAlgClosed_of_irreducible
+    [IsAlgClosed P.N.1] [IrreducibleSpace P.glueData.glued]
+    (rep : (pic0TypeFunctor ((baseChange K P.N.1).obj C)).RepresentableBy P.gluedOver) :
+    HasStableAffineCover K P.N.1
+      (pic0SemilinearGalActionOfRepresentableBy C rep) := by
+  letI : (pic0SemilinearGalActionOfRepresentableBy C rep).OrbitsInAffineOpen :=
+    pic0FiniteStageOrbitsInAffineOpen_of_isAlgClosed_of_irreducible C Ck P rep
+  infer_instance
+
 /-- A finite-dimensional projective-space immersion produces the stable affine cover used by
 the finite-Galois quotient construction. -/
 @[implicit_reducible]
@@ -74,6 +87,20 @@ noncomputable def pic0RepresentableBy_finiteStageGaloisDescent_of_isImmersion
         (pic0SemilinearGalActionOfRepresentableBy C rep)) := by
   letI : (pic0SemilinearGalActionOfRepresentableBy C rep).OrbitsInAffineOpen :=
     pic0FiniteStageOrbitsInAffineOpen_of_isImmersion C Ck P rep i hi
+  exact pic0RepresentableBy_finiteGaloisDescent C rep
+
+/-- Consume the algebraically-closed irreducible group producer in finite-Galois Picard
+descent.  The arbitrary-field analogue awaits the corresponding algebraic-group
+`FiniteInAffine` theorem. -/
+noncomputable def
+    pic0RepresentableBy_finiteStageGaloisDescent_of_isAlgClosed_of_irreducible
+    [IsAlgClosed P.N.1] [IrreducibleSpace P.glueData.glued]
+    (rep : (pic0TypeFunctor ((baseChange K P.N.1).obj C)).RepresentableBy P.gluedOver) :
+    (pic0TypeFunctor C).RepresentableBy
+      (StableAffineOpen.gluedQuotientOver
+        (pic0SemilinearGalActionOfRepresentableBy C rep)) := by
+  letI : (pic0SemilinearGalActionOfRepresentableBy C rep).OrbitsInAffineOpen :=
+    pic0FiniteStageOrbitsInAffineOpen_of_isAlgClosed_of_irreducible C Ck P rep
   exact pic0RepresentableBy_finiteGaloisDescent C rep
 
 /-- Compatibility wrapper consuming projectivity in the finite-Galois Picard descent theorem. -/
