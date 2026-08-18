@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.moduleKSheaf_map_apply
 type: lean
-updated: '2026-08-07T05:01:44'
+updated: '2026-08-18T20:50:51'
 ---
 lemma Scheme.moduleKSheaf_map_apply {U V : X.Opensᵒᵖ} (i : U ⟶ V)
     (s : Γ(X, U.unop)) :

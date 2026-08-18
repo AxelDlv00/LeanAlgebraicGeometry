@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.WeilDivisor.addEquivNonGeneric
 type: lean
-updated: '2026-07-28T15:48:28'
+updated: '2026-08-18T20:52:10'
 ---
 noncomputable def addEquivNonGeneric (hdim : ∀ z : X, Order.coheight z ≤ 1) :
     X.WeilDivisor ≃+ ({x : X // x ≠ genericPoint X} →₀ ℤ) :=

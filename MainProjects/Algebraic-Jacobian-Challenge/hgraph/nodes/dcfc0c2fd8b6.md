@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.sectionSub_top_eq_inf
 type: lean
-updated: '2026-07-28T04:32:28'
+updated: '2026-08-18T20:52:10'
 ---
 theorem sectionSub_top_eq_inf (hcov : U₀ ⊔ U₁ = ⊤) (D : X.WeilDivisor) :
     sectionSub k ⊤ D = sectionSub k U₀ D ⊓ sectionSub k U₁ D := by

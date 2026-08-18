@@ -9,7 +9,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.windowA_exists
 type: lean
-updated: '2026-08-07T05:01:50'
+updated: '2026-08-18T20:50:59'
 ---
 private theorem windowA_exists : ∃ a : ℕ, windowBound π hπ ≤ (a : ℤ) * windowδ π := by
   refine ⟨(windowBound π hπ).toNat, ?_⟩

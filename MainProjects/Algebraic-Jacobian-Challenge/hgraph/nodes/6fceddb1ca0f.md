@@ -62,7 +62,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicScheme.HasAbelMap
 type: lean
-updated: '2026-07-29T22:29:08'
+updated: '2026-08-18T20:52:04'
 ---
 class HasAbelMap {k : Type u} [Field k] (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]

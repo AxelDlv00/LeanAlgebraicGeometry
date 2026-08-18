@@ -28,7 +28,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.isConstantField_functionField
 type: lean
-updated: '2026-07-26T04:23:59'
+updated: '2026-08-18T20:52:10'
 ---
 theorem isConstantField_functionField (C : Over (Spec (CommRingCat.of k)))
     [IsIntegral C.left] [IsLocallyNoetherian C.left]

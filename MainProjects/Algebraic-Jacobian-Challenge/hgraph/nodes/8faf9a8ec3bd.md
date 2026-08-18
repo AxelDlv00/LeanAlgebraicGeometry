@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.pullbackObjUnitToUnit_isIso_of_isIso
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-08-18T20:52:02'
 ---
 instance pullbackObjUnitToUnit_isIso_of_isIso {T T' : Scheme.{u}} (φ : T ⟶ T') [IsIso φ] :
     IsIso (SheafOfModules.pullbackObjUnitToUnit φ.toRingCatSheafHom) := by

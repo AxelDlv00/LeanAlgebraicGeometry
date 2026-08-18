@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.diagonalEqn_of_notMem
 type: lean
-updated: '2026-08-07T05:01:45'
+updated: '2026-08-18T20:50:52'
 ---
 lemma diagonalEqn_of_notMem {z : (C ⊗ C).left} (h : z ∉ Set.range (diagonal C).left.base) :
     diagonalEqn data z = 1 := by

@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.residueDeg
 type: lean
-updated: '2026-07-28T18:12:20'
+updated: '2026-08-18T20:52:10'
 ---
 noncomputable def Scheme.residueDeg (x : X) : ℕ :=
   Module.finrank K (X.residueField x)

@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.MonObj.permAut_comp
 type: lean
-updated: '2026-07-29T04:25:58'
+updated: '2026-08-18T20:51:52'
 ---
 theorem permAut_comp (C : K) {n : ℕ} (σ τ : Equiv.Perm (Fin n)) :
     permAut C σ ≫ permAut C τ = permAut C (σ * τ) := by

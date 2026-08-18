@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.P1.specPoint_structureMap
 type: lean
-updated: '2026-08-07T05:01:45'
+updated: '2026-08-18T20:50:53'
 ---
 theorem specPoint_structureMap :
     specPoint k A ≫ structureMap k = Spec.map (CommRingCat.ofHom (algebraMap k A)) := by

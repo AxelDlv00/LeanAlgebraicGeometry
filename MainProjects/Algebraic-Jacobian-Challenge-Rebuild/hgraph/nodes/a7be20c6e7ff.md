@@ -22,7 +22,7 @@ lean_status: lean_ok
 private: true
 title: isRegular_cons_of_quotient_ring
 type: lean
-updated: '2026-08-07T05:01:42'
+updated: '2026-08-18T20:50:49'
 ---
 private theorem isRegular_cons_of_quotient_ring
     {A : Type u} [CommRing A] {r : A} {rs : List A}

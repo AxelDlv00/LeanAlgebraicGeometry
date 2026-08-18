@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.ZariskiDescent.repG_eq
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-08-18T20:52:09'
 ---
 lemma repG_eq {V : Scheme.{0}} (t : V ⟶ Ŷ) :
     RepG.homEquiv t = GluedPoint.res R t (RepG.homEquiv (𝟙 Ŷ)) := by

@@ -10,7 +10,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Adelic.p1Eval_monomial
 type: lean
-updated: '2026-07-28T13:22:17'
+updated: '2026-08-18T20:52:10'
 ---
 private lemma p1Eval_monomial (b₀ b₁ : B) (d : ULift.{u} (Fin 2) →₀ ℕ) (c : ULift.{u} ℤ) :
     p1Eval b₀ b₁ (monomial d c) = (c.down : B) * (b₀ ^ d ⟨0⟩ * b₁ ^ d ⟨1⟩) := by

@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.P1.SpecMap_awayToOverlapRight_chartι
 type: lean
-updated: '2026-07-28T18:12:20'
+updated: '2026-08-18T20:52:11'
 ---
 theorem SpecMap_awayToOverlapRight_chartι :
     Spec.map (CommRingCat.ofHom (awayToOverlapRight k)) ≫ chartι k 1 =

@@ -27,7 +27,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PicEtAff.degAff_map
 type: lean
-updated: '2026-08-07T05:01:47'
+updated: '2026-08-18T20:50:55'
 ---
 theorem PicEtAff.degAff_map {K : Type u} [Field K] [Algebra k K]
     (L : Type u) [Field L] [Algebra k L] [Algebra K L] [IsScalarTower k K L]

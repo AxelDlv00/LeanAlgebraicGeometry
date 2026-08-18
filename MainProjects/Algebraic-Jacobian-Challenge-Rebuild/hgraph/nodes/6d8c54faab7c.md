@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.grpObjDiffLeft_comp_hom
 type: lean
-updated: '2026-08-07T05:01:42'
+updated: '2026-08-18T20:50:49'
 ---
 lemma grpObjDiffLeft_comp_hom (G : Over (Spec (.of kbar))) [GrpObj G] :
     grpObjDiffLeft G ≫ G.hom = pullback.fst G.hom G.hom ≫ G.hom :=

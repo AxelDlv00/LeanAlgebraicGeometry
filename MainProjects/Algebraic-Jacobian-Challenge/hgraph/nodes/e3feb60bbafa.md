@@ -44,7 +44,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.sigmaAssembledComponent
 type: lean
-updated: '2026-07-29T05:40:30'
+updated: '2026-08-18T20:52:01'
 ---
 noncomputable def sigmaAssembledComponent (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
     (F : X.Modules) (n : ℕ) (T : (Fin (n + 1) → 𝒰.I₀) → Y.Modules)

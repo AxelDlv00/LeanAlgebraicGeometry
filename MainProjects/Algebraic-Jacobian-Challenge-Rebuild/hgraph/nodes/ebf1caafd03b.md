@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.pulledEquations
 type: lean
-updated: '2026-08-07T05:01:51'
+updated: '2026-08-18T20:51:00'
 ---
 noncomputable def pulledEquations (hproj : ∀ j, Module.Projective R (A.colength j)) :
     (relCurve C R').LocalEquations :=

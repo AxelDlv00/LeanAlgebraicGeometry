@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.GaloisDescent.galoisSelfTensorHom
 type: lean
-updated: '2026-07-30T08:42:03'
+updated: '2026-08-18T20:52:05'
 ---
 noncomputable def galoisSelfTensorHom : L ⊗[K] L →ₐ[L] ((L ≃ₐ[K] L) → L) :=
   Algebra.TensorProduct.lift (Algebra.ofId L _) (galoisEvalHom K L)

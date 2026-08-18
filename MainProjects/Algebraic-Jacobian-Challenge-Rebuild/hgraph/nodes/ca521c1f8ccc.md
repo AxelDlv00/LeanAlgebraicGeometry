@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.deg_windowN
 type: lean
-updated: '2026-08-07T05:02:01'
+updated: '2026-08-18T20:51:09'
 ---
 theorem deg_windowN (g : ℕ) :
     CurveDivisor.deg K (windowN C K hπ g)

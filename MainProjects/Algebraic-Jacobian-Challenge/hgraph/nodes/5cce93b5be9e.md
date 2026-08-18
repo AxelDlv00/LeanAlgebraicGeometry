@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.annihilator_tensorObj_eq_right_of_isLocallyTrivial
 type: lean
-updated: '2026-08-01T04:12:00'
+updated: '2026-08-18T20:52:03'
 ---
 theorem annihilator_tensorObj_eq_right_of_isLocallyTrivial
     {X : Scheme.{u}} (L F : X.Modules)

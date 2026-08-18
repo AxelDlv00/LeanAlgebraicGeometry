@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.finrank_quotient_primeIdealOf
 type: lean
-updated: '2026-08-07T05:01:59'
+updated: '2026-08-18T20:51:08'
 ---
 theorem finrank_quotient_primeIdealOf {x : X} (hx : x ∈ V) (hxg : x ≠ genericPoint X) :
     finrank K (Γ(X, V) ⧸ (hV.primeIdealOf ⟨x, hx⟩).asIdeal) = X.residueDeg K x := by

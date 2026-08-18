@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.DivFamily.grassmannianEval_epi
 type: lean
-updated: '2026-08-01T12:39:19'
+updated: '2026-08-18T20:52:03'
 ---
 theorem grassmannianEval_epi (L : X.Modules) (x : DivFamily π T)
     (hbase : Epi (pushforwardBaseChangeMap π T.hom

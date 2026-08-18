@@ -19,7 +19,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.universalQuotient_isLocallyFreeOfRank
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-08-18T20:52:05'
 ---
 theorem universalQuotient_isLocallyFreeOfRank (d r : ℕ) :
     SheafOfModules.IsLocallyFreeOfRank (universalQuotient d r) d := by

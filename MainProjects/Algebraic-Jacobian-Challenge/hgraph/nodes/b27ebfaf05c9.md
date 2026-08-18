@@ -25,7 +25,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.HasFiniteMapToP1
 type: lean
-updated: '2026-07-27T19:45:31'
+updated: '2026-08-18T20:52:10'
 ---
 class HasFiniteMapToP1 (C : Over (Spec (CommRingCat.of k))) : Prop where
   /-- There exists a finite `k`-morphism `C ⟶ ℙ¹_k`. -/

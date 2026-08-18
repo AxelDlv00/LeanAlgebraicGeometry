@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Grassmannian.restrictBase_rel
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-08-18T20:52:06'
 ---
 lemma restrictBase_rel {S' : Scheme.{0}} (j : S' ⟶ S) {V : S.Modules} {d : ℕ}
     {T : Over S'} {x y : Scheme.LocallyFreeQuotient V d ((Over.map j).obj T)}

@@ -10,7 +10,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.fiberEqn_of_mem'
 type: lean
-updated: '2026-08-07T05:01:44'
+updated: '2026-08-18T20:50:51'
 ---
 private lemma fiberEqn_of_mem' {z : Y} (h : z ∈ fiberChart₀ π) :
     fiberEqn π a z

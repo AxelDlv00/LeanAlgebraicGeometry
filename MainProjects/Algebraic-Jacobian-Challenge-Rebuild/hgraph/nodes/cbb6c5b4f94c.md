@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ThetaGeneratorSeed.sec_mem_ker_kColengthMap_comp_subtype
 type: lean
-updated: '2026-08-07T05:01:49'
+updated: '2026-08-18T20:50:59'
 ---
 theorem sec_mem_ker_kColengthMap_comp_subtype (z : relCurve C R) :
     (⟨D.sec z, D.sec_mem z⟩ : ↥K) ∈

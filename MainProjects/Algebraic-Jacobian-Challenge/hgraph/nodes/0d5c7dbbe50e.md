@@ -9,6 +9,6 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.PluckerIndex
 type: lean
-updated: '2026-08-03T14:01:22'
+updated: '2026-08-18T20:52:09'
 ---
 abbrev PluckerIndex (d r : ℕ) := {I : Finset (Fin r) // I.card = d}

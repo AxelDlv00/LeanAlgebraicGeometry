@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.pullbackTensorMap_restrict
 type: lean
-updated: '2026-07-25T05:32:31'
+updated: '2026-08-18T20:52:09'
 ---
 lemma pullbackTensorMap_restrict {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X)
     (M N : X.Modules) :

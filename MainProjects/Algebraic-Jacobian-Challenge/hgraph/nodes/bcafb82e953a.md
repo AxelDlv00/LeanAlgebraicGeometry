@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicScheme.mono_coverMap_of_mono
 type: lean
-updated: '2026-07-30T10:26:46'
+updated: '2026-08-18T20:52:05'
 ---
 instance mono_coverMap_of_mono [Mono (specMapAlgebra k k')]
     (T : Over (Spec (CommRingCat.of k))) : Mono (coverMap (k := k) (k' := k') T) := by

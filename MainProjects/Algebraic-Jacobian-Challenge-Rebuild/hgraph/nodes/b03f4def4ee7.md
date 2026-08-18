@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.glued_corr_collapse
 type: lean
-updated: '2026-08-07T05:01:59'
+updated: '2026-08-18T20:51:07'
 ---
 theorem glued_corr_collapse (δ : Z ⟶ Y)
     (hδ₁ : δ ≫ r₁ = 𝟙 Z) (hδ₂ : δ ≫ r₂ = 𝟙 Z)

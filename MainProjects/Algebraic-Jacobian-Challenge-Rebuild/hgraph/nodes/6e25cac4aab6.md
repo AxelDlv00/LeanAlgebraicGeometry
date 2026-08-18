@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.ordZ_germGenericUnits
 type: lean
-updated: '2026-08-07T05:01:58'
+updated: '2026-08-18T20:51:07'
 ---
 theorem ordZ_germGenericUnits {U : X.Opens} (hηU : genericPoint X ∈ U) (u : Γ(X, U)ˣ)
     {x : X} (hx : x ≠ genericPoint X) (hxU : x ∈ U) :

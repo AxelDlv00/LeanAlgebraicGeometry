@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: Algebra.EtaleCover.ofSurjectiveEquiv
 type: lean
-updated: '2026-08-07T05:01:43'
+updated: '2026-08-18T20:50:49'
 ---
 noncomputable def ofSurjectiveEquiv
     (hB : Function.Surjective (PrimeSpectrum.comap (algebraMap A B)))

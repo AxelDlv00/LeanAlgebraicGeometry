@@ -9,7 +9,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Over.sectionsPushoutIso_tmul_one
 type: lean
-updated: '2026-08-07T05:01:58'
+updated: '2026-08-18T20:51:07'
 ---
 private lemma sectionsPushoutIso_tmul_one {U : (XA).Opens} (hU : IsAffineOpen U) (s : Γ(XA, U)) :
     (sectionsPushoutIso (R := R) hU).hom (s ⊗ₜ 1)

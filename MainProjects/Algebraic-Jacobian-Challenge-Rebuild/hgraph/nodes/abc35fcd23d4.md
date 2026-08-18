@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.divisorPresheaf_map_val
 type: lean
-updated: '2026-08-07T05:02:00'
+updated: '2026-08-18T20:51:08'
 ---
 lemma divisorPresheaf_map_val {D : X.CurveDivisor} {U V : (X.Opens)ᵒᵖ} (i : U ⟶ V)
     (hV : (V.unop : Set X).Nonempty) (s : (divisorPresheaf K D).obj U) :

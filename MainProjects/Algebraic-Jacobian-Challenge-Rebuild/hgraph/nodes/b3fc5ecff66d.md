@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.Diagonal.pointSectionMap_tmul
 type: lean
-updated: '2026-08-07T05:01:43'
+updated: '2026-08-18T20:50:50'
 ---
 lemma pointSectionMap_tmul (x : B) (y : F) :
     pointSectionMap B F (x ⊗ₜ[Polynomial k] y)

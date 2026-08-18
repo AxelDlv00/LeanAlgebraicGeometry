@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.pieces_inf_le_relPinnedChart_inf
 type: lean
-updated: '2026-08-07T05:01:51'
+updated: '2026-08-18T20:51:01'
 ---
 lemma pieces_inf_le_relPinnedChart_inf (i j : D.index) :
     D.pieces i ⊓ D.pieces j

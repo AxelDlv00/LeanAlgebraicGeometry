@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.FiberCoordinateData.uniformVanishing_fixedCoordinate
 type: lean
-updated: '2026-07-31T19:55:23'
+updated: '2026-08-18T20:52:11'
 ---
 theorem uniformVanishing_fixedCoordinate : UniformVanishing C :=
   uniformVanishing_of_uniformBaseDivisor_curve C (uniformBaseDivisor_fixedCoordinate C)

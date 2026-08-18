@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Hom.Spec_map_structureStalk
 type: lean
-updated: '2026-07-28T18:12:20'
+updated: '2026-08-18T20:52:12'
 ---
 theorem Scheme.Hom.Spec_map_structureStalk (x : X) :
     Spec.map (f.structureStalk x) = X.fromSpecStalk x ≫ f := by

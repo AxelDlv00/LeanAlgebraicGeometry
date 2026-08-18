@@ -98,7 +98,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicSharp.etaleSheaf
 type: lean
-updated: '2026-07-30T08:42:03'
+updated: '2026-08-18T20:52:07'
 ---
 noncomputable def etaleSheaf {k : Type u} [Field k] (C : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] :

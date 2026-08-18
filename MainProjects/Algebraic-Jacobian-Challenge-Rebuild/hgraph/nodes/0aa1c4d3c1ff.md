@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.eqnDiv
 type: lean
-updated: '2026-08-07T05:01:52'
+updated: '2026-08-18T20:51:01'
 ---
 noncomputable def eqnDiv (A : AffAdaptation D d) (j : D.index)
     {W : (relCurve C R).Opens} (hW : W ≤ D.pieces j) (s : Γ(relCurve C R, W))

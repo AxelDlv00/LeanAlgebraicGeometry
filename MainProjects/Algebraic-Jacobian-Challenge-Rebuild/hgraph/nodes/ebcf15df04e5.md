@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: Algebra.EtaleCover.selfEquiv
 type: lean
-updated: '2026-08-07T05:01:43'
+updated: '2026-08-18T20:50:49'
 ---
 noncomputable def selfEquiv (A : Type u) [CommRing A] : (self A).Carrier ≃ₐ[A] A :=
   ofEquiv A _

@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.PresheafOfGroups.OneCochain.one_evInf
 type: lean
-updated: '2026-08-07T05:01:59'
+updated: '2026-08-18T20:51:07'
 ---
 lemma OneCochain.one_evInf (i j : I) : (1 : OneCochain G U).evInf i j = 1 :=
   rfl

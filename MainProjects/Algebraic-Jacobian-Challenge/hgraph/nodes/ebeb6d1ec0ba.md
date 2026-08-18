@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Pic0Et.quasiSeparated
 type: lean
-updated: '2026-07-30T00:50:57'
+updated: '2026-08-18T20:52:06'
 ---
 theorem quasiSeparated : QuasiSeparated (Pic0SchemeEt C).hom := by
   haveI : IsSeparated (Pic0SchemeEt C).hom := isSeparated C

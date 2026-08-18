@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.resInv_mul
 type: lean
-updated: '2026-08-07T05:01:47'
+updated: '2026-08-18T20:50:55'
 ---
 lemma resInv_mul (U : (SB).Opens) (b b' : B) :
     ((SB).presheaf.map (homOfLE (le_top : U ≤ ⊤)).op).hom

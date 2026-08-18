@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.FiberCoordinateData.overlapInverseCoordinate_baseChangeField
 type: lean
-updated: '2026-07-31T17:19:39'
+updated: '2026-08-18T20:52:11'
 ---
 lemma overlapInverseCoordinate_baseChangeField :
     (D.baseChangeField κ).overlapInverseCoordinate =

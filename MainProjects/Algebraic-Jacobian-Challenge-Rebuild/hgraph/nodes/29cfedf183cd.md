@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.Over.sigmaExtension_obj
 type: lean
-updated: '2026-08-07T05:01:55'
+updated: '2026-08-18T20:51:04'
 ---
 lemma sigmaExtension_obj (T : Cᵒᵖ) :
     (sigmaExtension S F).obj T = Σ a : T.unop ⟶ S, F.obj (op (Over.mk a)) :=

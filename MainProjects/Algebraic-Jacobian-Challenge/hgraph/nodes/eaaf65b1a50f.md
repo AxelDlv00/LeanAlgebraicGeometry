@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicScheme.crossBase_relPicRel_inv
 type: lean
-updated: '2026-07-30T03:33:55'
+updated: '2026-08-18T20:52:06'
 ---
 theorem crossBase_relPicRel_inv (C : Over (Spec (CommRingCat.of k)))
     (T : Over (Spec (CommRingCat.of k')))

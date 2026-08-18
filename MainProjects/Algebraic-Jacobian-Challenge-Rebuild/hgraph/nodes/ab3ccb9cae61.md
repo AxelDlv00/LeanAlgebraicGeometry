@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.GaloisDescent.SemilinearGalAction.quotientOpenOfStableSubopen_mono
 type: lean
-updated: '2026-08-12T15:42:08'
+updated: '2026-08-18T20:50:54'
 ---
 theorem quotientOpenOfStableSubopen_mono [FiniteDimensional K L]
     (hUa : IsAffineOpen U) {V W : X.Opens}

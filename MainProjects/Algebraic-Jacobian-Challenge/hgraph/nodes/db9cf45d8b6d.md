@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ProjectiveSpace.affineChart.incl
 type: lean
-updated: '2026-07-30T13:03:22'
+updated: '2026-08-18T20:52:07'
 ---
 def incl : affineChart n S ⟶ ℙ(Option n; S) :=
   pullback.fst (toProjInt (Option n) S)

@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.LaurentChartData.FiniteMapGenerators.lifted_compatible
 type: lean
-updated: '2026-07-31T02:29:39'
+updated: '2026-08-18T20:52:04'
 ---
 theorem lifted_compatible (i : G.LiftedIndex) :
     D.sourceRestriction0 pi (G.liftedAA i) =

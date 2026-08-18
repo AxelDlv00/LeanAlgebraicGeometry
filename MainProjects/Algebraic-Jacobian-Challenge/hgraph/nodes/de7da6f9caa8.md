@@ -35,7 +35,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.exists_finiteSeparable_level_factorization
 type: lean
-updated: '2026-07-30T07:02:15'
+updated: '2026-08-18T20:52:03'
 ---
 theorem exists_finiteSeparable_level_factorization {k : Type u} [Field k] {X : Scheme.{u}}
     (f : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType f]

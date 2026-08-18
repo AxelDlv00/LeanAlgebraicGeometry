@@ -19,7 +19,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.restrictedChartFibre_bot
 type: lean
-updated: '2026-08-07T05:01:56'
+updated: '2026-08-18T20:51:05'
 ---
 theorem restrictedChartFibre_bot {D : Over (Spec (.of k))}
     (rep : (divFunctor C π n).RepresentableBy D)

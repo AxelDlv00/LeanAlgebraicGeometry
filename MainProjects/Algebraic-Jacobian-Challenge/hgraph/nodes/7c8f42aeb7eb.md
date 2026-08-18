@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.p1Index_zero_ne_one
 type: lean
-updated: '2026-07-27T19:08:27'
+updated: '2026-08-18T20:52:08'
 ---
 theorem p1Index_zero_ne_one : (⟨0⟩ : ULift.{u} (Fin 2)) ≠ ⟨1⟩ := by
   intro h

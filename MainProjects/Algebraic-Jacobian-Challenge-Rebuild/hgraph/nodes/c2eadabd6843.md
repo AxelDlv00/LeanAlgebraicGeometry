@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.flat_sections_relPinnedChart
 type: lean
-updated: '2026-08-07T05:01:48'
+updated: '2026-08-18T20:50:57'
 ---
 theorem flat_sections_relPinnedChart (b : Bool) :
     Module.Flat R Γ(relCurve C R, relPinnedChart C R π b) := by

@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Hom.IsHQuasiProjectiveWith.isSeparated
 type: lean
-updated: '2026-08-03T02:07:56'
+updated: '2026-08-18T20:52:07'
 ---
 theorem isSeparated (h : π.IsHQuasiProjectiveWith L) : IsSeparated π :=
   h.isHQuasiProjective.isSeparated

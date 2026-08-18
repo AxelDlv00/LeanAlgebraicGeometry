@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.divisorVal_mulEquiv
 type: lean
-updated: '2026-08-07T05:02:00'
+updated: '2026-08-18T20:51:08'
 ---
 theorem divisorVal_mulEquiv {U : X.Opens} (hU : (U : Set X).Nonempty)
     (s : (divisorPresheaf K D).obj (op U)) :

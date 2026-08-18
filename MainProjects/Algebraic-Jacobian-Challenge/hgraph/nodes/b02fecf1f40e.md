@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.Adjunction.conjugateEquiv_leftAdjointCompIso_hom
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-08-18T20:52:09'
 ---
 lemma conjugateEquiv_leftAdjointCompIso_hom
     (adj₀₁ : F₀₁ ⊣ G₁₀) (adj₁₂ : F₁₂ ⊣ G₂₁) (adj₀₂ : F₀₂ ⊣ G₂₀) (e : G₂₁ ⋙ G₁₀ ≅ G₂₀) :

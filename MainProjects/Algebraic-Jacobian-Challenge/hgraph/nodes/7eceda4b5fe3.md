@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.matrixEndRect_one
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-08-18T20:52:05'
 ---
 lemma matrixEndRect_one {S : Scheme.{0}} {d : ℕ} :
     matrixEndRect (1 : Matrix (Fin d) (Fin d) Γ(S, ⊤)) = 𝟙 _ :=

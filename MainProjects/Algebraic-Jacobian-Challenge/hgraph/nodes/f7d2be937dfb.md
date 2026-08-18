@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.instIsDomainULiftInt
 type: lean
-updated: '2026-07-27T17:35:58'
+updated: '2026-08-18T20:52:08'
 ---
 instance instIsDomainULiftInt : IsDomain (ULift.{u} ℤ) :=
   Function.Injective.isDomain (ULift.ringEquiv : ULift.{u} ℤ ≃+* ℤ).toRingHom

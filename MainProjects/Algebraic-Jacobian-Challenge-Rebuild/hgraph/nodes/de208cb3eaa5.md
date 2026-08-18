@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.exists_pieceComparisonUnit_eq_one
 type: lean
-updated: '2026-08-07T05:01:54'
+updated: '2026-08-18T20:51:03'
 ---
 theorem exists_pieceComparisonUnit_eq_one [Module.FaithfullyFlat A B]
     [IsProper C.hom] [GeometricallyIrreducible C.hom] [GeometricallyReduced C.hom]

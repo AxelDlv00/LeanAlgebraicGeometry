@@ -19,7 +19,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.divUniversalFst_toSubmodule_eq_span_aux
 type: lean
-updated: '2026-08-07T05:01:50'
+updated: '2026-08-18T20:50:59'
 ---
 private lemma divUniversalFst_toSubmodule_eq_span_aux :
     (divUniversalFst k (windowS_choice π hπ g • fiberWeilDivisor π)

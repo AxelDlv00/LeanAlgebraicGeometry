@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.Adjunction.conjugateEquiv_leftAdjointUniq_hom
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-08-18T20:52:09'
 ---
 lemma conjugateEquiv_leftAdjointUniq_hom {F F' : C₀ ⥤ C₁} {G : C₁ ⥤ C₀}
     (adj1 : F ⊣ G) (adj2 : F' ⊣ G) :

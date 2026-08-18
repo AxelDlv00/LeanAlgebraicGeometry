@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.instSmoothOfRelativeDimensionOneP1Over
 type: lean
-updated: '2026-07-27T22:48:27'
+updated: '2026-08-18T20:52:08'
 ---
 instance instSmoothOfRelativeDimensionOneP1Over :
     SmoothOfRelativeDimension 1 ((p1Over k).hom) :=

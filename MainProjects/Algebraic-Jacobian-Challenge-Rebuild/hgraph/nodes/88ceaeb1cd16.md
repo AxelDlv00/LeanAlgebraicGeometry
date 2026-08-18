@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PicRepDatum.grpObj
 type: lean
-updated: '2026-08-07T05:01:58'
+updated: '2026-08-18T20:51:06'
 ---
 noncomputable def grpObj (d : PicRepDatum k k' C') : GrpObj d.J :=
   GrpObj.ofRepresentableBy d.J

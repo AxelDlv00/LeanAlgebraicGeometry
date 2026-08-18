@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Pic0Et.topologically_specializingMap
 type: lean
-updated: '2026-07-30T03:33:55'
+updated: '2026-08-18T20:52:06'
 ---
 theorem topologically_specializingMap :
     (topologically @SpecializingMap) (Pic0SchemeEt C).hom :=

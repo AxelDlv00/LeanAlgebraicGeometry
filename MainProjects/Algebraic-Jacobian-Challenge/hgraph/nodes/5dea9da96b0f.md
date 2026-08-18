@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.InjectiveResolution.horseshoeφ_comm₂₃
 type: lean
-updated: '2026-07-24T17:02:56'
+updated: '2026-08-18T20:51:59'
 ---
 lemma horseshoeφ_comm₂₃ :
     horseshoeι hses I_A I_C ≫ (horseshoeSES hses I_A I_C).g =

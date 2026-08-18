@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.relPinnedSectionsMap_relThetaResSide_windowEquiv
 type: lean
-updated: '2026-08-07T05:01:50'
+updated: '2026-08-18T20:50:59'
 ---
 theorem relPinnedSectionsMap_relThetaResSide_windowEquiv (b : Bool)
     (x : R ⊗[k] ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤)) :

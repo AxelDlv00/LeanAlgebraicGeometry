@@ -16,7 +16,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Scheme.Modules.pushforward₀IsRightAdjoint
 type: lean
-updated: '2026-07-28T13:22:17'
+updated: '2026-08-18T20:52:09'
 ---
 private lemma pushforward₀IsRightAdjoint (F : C ⥤ D) (R : Dᵒᵖ ⥤ RingCat.{u}) :
     (PresheafOfModules.pushforward₀.{u} F R).IsRightAdjoint :=

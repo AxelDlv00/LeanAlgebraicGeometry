@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ThetaGeneratorSeed.chartReadIdealMap
 type: lean
-updated: '2026-08-07T05:01:49'
+updated: '2026-08-18T20:50:58'
 ---
 noncomputable def chartReadIdealMap
     (K : Submodule R (relThetaSections C R π a)) (b : Bool) :

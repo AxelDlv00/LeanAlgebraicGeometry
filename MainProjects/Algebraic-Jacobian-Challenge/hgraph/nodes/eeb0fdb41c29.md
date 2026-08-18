@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.LaurentChartData.FiniteMapGenerators.range_liftedBB
 type: lean
-updated: '2026-07-30T23:35:09'
+updated: '2026-08-18T20:52:04'
 ---
 theorem LaurentChartData.FiniteMapGenerators.range_liftedBB
     {D : LaurentChartData Y} {pi : C ⟶ Y} (G : D.FiniteMapGenerators pi) :

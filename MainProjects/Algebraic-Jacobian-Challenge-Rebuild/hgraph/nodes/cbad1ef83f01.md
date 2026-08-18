@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PointwiseAchiever.isLocallyCertifiedAff_univSeed
 type: lean
-updated: '2026-08-07T05:01:47'
+updated: '2026-08-18T20:50:56'
 ---
 theorem isLocallyCertifiedAff_univSeed (i : (glueData k g r1).J)
     (j : (glueData k g r2).J) (hb : 0 < windowBound pi hpi) :

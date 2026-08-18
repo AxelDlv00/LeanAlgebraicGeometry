@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.relThetaResSide_relThetaWindowEquiv_thetaWindowMul
 type: lean
-updated: '2026-08-07T05:01:50'
+updated: '2026-08-18T20:51:00'
 ---
 theorem relThetaResSide_relThetaWindowEquiv_thetaWindowMul (p q : Nat)
     (a : ↥(divisorSections k (p • fiberWeilDivisor pi) ⊤))

@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PicRankOneLocalPresentation.exists_carrier_divFamZarAff_abel
 type: lean
-updated: '2026-08-14T10:32:16'
+updated: '2026-08-18T20:51:05'
 ---
 theorem exists_carrier_divFamZarAff_abel
     (P : PicRankOneLocalPresentation pi lam)

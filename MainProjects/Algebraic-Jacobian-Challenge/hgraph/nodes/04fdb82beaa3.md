@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.p1AwayAlgEquiv_p1CoordAway
 type: lean
-updated: '2026-07-27T17:35:58'
+updated: '2026-08-18T20:52:08'
 ---
 theorem p1AwayAlgEquiv_p1CoordAway {i j : ULift.{u} (Fin 2)} (hij : i ≠ j) :
     p1AwayAlgEquiv (ULift.{u} ℤ) hij (p1CoordAway (ULift.{u} (Fin 2)) i j) = Polynomial.X := by

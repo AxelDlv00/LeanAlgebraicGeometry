@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.sectionsBaseChangeField
 type: lean
-updated: '2026-07-29T06:43:23'
+updated: '2026-08-18T20:52:12'
 ---
 noncomputable def sectionsBaseChangeField {V : C.left.Opens}
     (hV : IsCompact (V : Set C.left)) (hV' : IsQuasiSeparated (V : Set C.left)) :

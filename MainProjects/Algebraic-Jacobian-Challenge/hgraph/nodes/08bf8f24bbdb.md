@@ -22,7 +22,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Scheme.Modules.side_collapse_left
 type: lean
-updated: '2026-07-28T13:22:16'
+updated: '2026-08-18T20:52:05'
 ---
 private lemma side_collapse_left {𝒞 : Type*} [Category 𝒞]
     {x₀ x₁ y₁ y₂ y₃ y₄ y₅ a₁ a₂ a₃ a₄ a₅ a₆ b₁ m₁ m₂ m₃ : 𝒞}

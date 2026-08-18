@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.pic0FiniteStageAtlas_inter_isAffine
 type: lean
-updated: '2026-08-16T20:15:44'
+updated: '2026-08-18T20:51:05'
 ---
 theorem pic0FiniteStageAtlas_inter_isAffine
     (U V : Pic0FiniteStageChartIndex C) :

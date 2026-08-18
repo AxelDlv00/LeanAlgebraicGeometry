@@ -9,7 +9,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Scheme.Modules.restrictFunctor_eq_pushforward_psiRestrict
 type: lean
-updated: '2026-07-28T13:22:17'
+updated: '2026-08-18T20:52:08'
 ---
 private lemma restrictFunctor_eq_pushforward_psiRestrict :
     Scheme.Modules.restrictFunctor U.ι = SheafOfModules.pushforward (psiRestrict U) := rfl

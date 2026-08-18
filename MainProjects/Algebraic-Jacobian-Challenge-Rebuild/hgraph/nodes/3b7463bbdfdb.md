@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: Submodule.directLimitQuotientToIdeal_of_mk
 type: lean
-updated: '2026-08-07T05:01:48'
+updated: '2026-08-18T20:50:57'
 ---
 theorem directLimitQuotientToIdeal_of_mk (i : ι) (x : G i) :
     directLimitQuotientToIdeal f K hK read J hreadK hread

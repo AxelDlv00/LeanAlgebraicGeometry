@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.actionDiagram
 type: lean
-updated: '2026-07-28T22:30:22'
+updated: '2026-08-18T20:51:56'
 ---
 noncomputable def actionDiagram (G : Type u) [Group G] (A : Type u) [CommRing A]
     [MulSemiringAction G A] : SingleObj G ⥤ CommRingCat.{u} :=

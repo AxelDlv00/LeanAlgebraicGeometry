@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.twistGermSet
 type: lean
-updated: '2026-08-07T05:01:49'
+updated: '2026-08-18T20:50:58'
 ---
 def Scheme.twistGermSet (T : Set ↥(twistSubmodule A V₀ V₁ gc ⊤)) (z : X) :
     Set (X.presheaf.stalk z) :=

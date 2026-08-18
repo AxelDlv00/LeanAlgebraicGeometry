@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: PiTensorProduct.toUnder_algHomOfMkUnderHom
 type: lean
-updated: '2026-07-29T06:00:33'
+updated: '2026-08-18T20:51:57'
 ---
 theorem toUnder_algHomOfMkUnderHom {B : Under k} (f : CommRingCat.mkUnder k A ⟶ B) :
     (algHomOfMkUnderHom k A f).toUnder = f := rfl

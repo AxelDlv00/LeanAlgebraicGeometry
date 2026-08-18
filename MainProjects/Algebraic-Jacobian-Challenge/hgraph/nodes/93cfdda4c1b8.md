@@ -22,7 +22,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Scheme.Modules.trivialisation_restrict_eM_leg
 type: lean
-updated: '2026-07-28T13:22:17'
+updated: '2026-08-18T20:52:09'
 ---
 private lemma trivialisation_restrict_eM_leg {X : Scheme.{u}} {L : X.Modules}
     {U V : X.Opens} (hVU : V ≤ U)

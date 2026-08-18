@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.intrinsicWindowCarve
 type: lean
-updated: '2026-08-07T05:01:52'
+updated: '2026-08-18T20:51:01'
 ---
 noncomputable def intrinsicWindowCarve (A : AffAdaptation D d) (a : ℕ)
     (hH1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1) :

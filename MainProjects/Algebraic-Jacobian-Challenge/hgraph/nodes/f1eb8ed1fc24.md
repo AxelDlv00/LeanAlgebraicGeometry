@@ -26,7 +26,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.tensorObj_isLocallyTrivial
 type: lean
-updated: '2026-07-25T05:59:05'
+updated: '2026-08-18T20:52:09'
 ---
 lemma tensorObj_isLocallyTrivial {X : Scheme.{u}} {M N : X.Modules}
     (hM : LineBundle.IsLocallyTrivial M) (hN : LineBundle.IsLocallyTrivial N) :

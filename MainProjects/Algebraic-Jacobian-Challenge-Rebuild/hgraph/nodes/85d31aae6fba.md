@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.isOpenImmersion_presheaf_mixedParamChart
 type: lean
-updated: '2026-08-07T05:01:55'
+updated: '2026-08-18T20:51:04'
 ---
 theorem isOpenImmersion_presheaf_mixedParamChart {ι : Type u} (nn : ι → ℕ)
     (D : ι → Over (Spec (.of k)))

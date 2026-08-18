@@ -13,7 +13,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Grassmannian.algebraMap_comp_liftToBaseOfMemRange
 type: lean
-updated: '2026-07-28T13:22:16'
+updated: '2026-08-18T20:52:05'
 ---
 private lemma algebraMap_comp_liftToBaseOfMemRange {A R K : Type*} [CommRing A] [CommRing R]
     [Field K] [Algebra R K] [IsFractionRing R K] (φ : A →+* K)

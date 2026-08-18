@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicScheme.twistMor_mul
 type: lean
-updated: '2026-07-30T16:21:12'
+updated: '2026-08-18T20:52:05'
 ---
 theorem twistMor_mul (γ τ : k' ≃ₐ[k] k') :
     twistMor C rep (γ * τ) =

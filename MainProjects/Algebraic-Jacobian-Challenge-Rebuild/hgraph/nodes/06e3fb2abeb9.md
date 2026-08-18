@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.IsCertified.thetaDescentCoaction_coassoc
 type: lean
-updated: '2026-08-07T05:01:52'
+updated: '2026-08-18T20:51:01'
 ---
 theorem IsCertified.thetaDescentCoaction_coassoc {n : ℕ}
     (hc : A.IsCertified n) (s : A.ThetaPieceProd (π := π) a) :

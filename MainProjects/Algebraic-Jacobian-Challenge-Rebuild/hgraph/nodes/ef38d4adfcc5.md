@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.FlatRangeBridge.subsingleton_imageInQuotient_tmul_residueField_of_flat_quotient
 type: lean
-updated: '2026-08-07T05:01:49'
+updated: '2026-08-18T20:50:59'
 ---
 lemma subsingleton_imageInQuotient_tmul_residueField_of_flat_quotient
     {L P : Submodule R M} (hLP : L ≤ P) [Module.Flat R (M ⧸ P)]

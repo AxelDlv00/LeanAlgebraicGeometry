@@ -15,7 +15,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Scheme.Modules.comp_slide_three
 type: lean
-updated: '2026-07-28T13:22:17'
+updated: '2026-08-18T20:52:09'
 ---
 private lemma comp_slide_three {C : Type*} [Category C]
     {a b b3 c1 c2 c3 d1 d2 d3 d4 d5 g : C}

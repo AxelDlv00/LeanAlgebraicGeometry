@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divFamZar.ext
 type: lean
-updated: '2026-08-07T05:01:53'
+updated: '2026-08-18T20:51:02'
 ---
 lemma ext {s t : divFamZar C π n T} (h : ∀ U : T.left.affineOpens, s.1 U = t.1 U) :
     s = t :=

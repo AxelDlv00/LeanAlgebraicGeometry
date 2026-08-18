@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.coprodOverIncl
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-08-18T20:52:01'
 ---
 noncomputable def coprodOverIncl {ι : Type*} (legs : ι → Over X)
     [HasCoproduct (fun i => (legs i).left)] (i : ι) :

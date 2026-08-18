@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.chartAlg_eq_top_of_isField
 type: lean
-updated: '2026-07-28T15:48:28'
+updated: '2026-08-18T20:52:10'
 ---
 theorem chartAlg_eq_top_of_isField {U : X.Opens} (hU : IsAffineOpen U) [Nonempty U]
     (hfield : IsField (chartAlg k U)) : chartAlg k U = ⊤ := by

@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: Algebra.EtaleCover.prod_refines_left
 type: lean
-updated: '2026-08-07T05:01:43'
+updated: '2026-08-18T20:50:49'
 ---
 theorem prod_refines_left (E E' : EtaleCover A) : (E.prod E').Refines E :=
   ⟨E.prodInl E'⟩

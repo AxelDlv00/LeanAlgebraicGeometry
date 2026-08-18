@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.flat_appTop_of_flat
 type: lean
-updated: '2026-07-28T18:12:19'
+updated: '2026-08-18T20:52:01'
 ---
 theorem flat_appTop_of_flat (g : S' ⟶ S) [Flat g] [IsAffine S] [IsAffine S'] :
     (Scheme.Hom.appTop g).hom.Flat := by

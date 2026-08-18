@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.finiteStageTensorPushoutScalarExtension_faceRight_map
 type: lean
-updated: '2026-08-17T13:21:30'
+updated: '2026-08-18T20:51:05'
 ---
 theorem finiteStageTensorPushoutScalarExtension_faceRight_map
     {R K A B₁ B₂ : Type u}

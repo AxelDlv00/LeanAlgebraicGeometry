@@ -20,7 +20,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Scheme.Modules.sheafifyMap_pullbackComp_hom_inv_id
 type: lean
-updated: '2026-07-28T13:22:17'
+updated: '2026-08-18T20:52:09'
 ---
 private lemma sheafifyMap_pullbackComp_hom_inv_id {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X)
     (T : _root_.PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)) :

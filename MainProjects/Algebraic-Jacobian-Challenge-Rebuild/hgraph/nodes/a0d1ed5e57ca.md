@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.grFunctorAffineEquiv
 type: lean
-updated: '2026-08-07T05:01:54'
+updated: '2026-08-18T20:51:03'
 ---
 noncomputable def grFunctorAffineEquiv :
     grFunctor k H d (overSpec k A) ≃ grFunctorAff k H d A where

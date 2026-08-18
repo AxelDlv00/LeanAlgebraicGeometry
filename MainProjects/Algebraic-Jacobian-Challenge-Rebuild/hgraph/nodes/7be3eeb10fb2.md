@@ -12,5 +12,5 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.carveLocusToGrPair
 type: lean
-updated: '2026-08-07T05:01:47'
+updated: '2026-08-18T20:50:55'
 ---

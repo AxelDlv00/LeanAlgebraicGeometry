@@ -24,7 +24,7 @@ generated: lean
 lean_status: lean_ok
 title: PiTensorProduct.permAlgHom_comp
 type: lean
-updated: '2026-07-29T01:14:28'
+updated: '2026-08-18T20:51:57'
 ---
 theorem permAlgHom_comp (d e : Equiv.Perm ι) :
     (permAlgHom R A d).comp (permAlgHom R A e) = permAlgHom R A (e * d) := by

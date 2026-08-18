@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.CurveDivisor.single
 type: lean
-updated: '2026-08-07T05:01:59'
+updated: '2026-08-18T20:51:08'
 ---
 noncomputable def Scheme.CurveDivisor.single {x : X} (hx : x ≠ genericPoint X) (n : ℤ) :
     X.CurveDivisor :=

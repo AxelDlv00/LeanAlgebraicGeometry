@@ -47,7 +47,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.isLocalizedModule_restrict_of_isIso_fromTildeΓ
 type: lean
-updated: '2026-07-24T17:02:57'
+updated: '2026-08-18T20:52:07'
 ---
 theorem isLocalizedModule_restrict_of_isIso_fromTildeΓ {R : CommRingCat.{u}}
     (M : (Spec R).Modules) [IsIso M.fromTildeΓ] (f : R) :

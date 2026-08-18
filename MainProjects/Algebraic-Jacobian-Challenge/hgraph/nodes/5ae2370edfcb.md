@@ -25,7 +25,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.exists_bound_forall_generatedAt_of_bump_curve
 type: lean
-updated: '2026-07-28T02:46:10'
+updated: '2026-08-18T20:52:10'
 ---
 theorem exists_bound_forall_generatedAt_of_bump_curve [IsAlgClosed k]
     (C : Over (Spec (CommRingCat.of k))) [IsIntegral C.left]

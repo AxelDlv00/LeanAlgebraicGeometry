@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.relPicFunctor_map
 type: lean
-updated: '2026-08-07T05:01:58'
+updated: '2026-08-18T20:51:07'
 ---
 lemma relPicFunctor_map {T T' : (Over (Spec (.of k)))ᵒᵖ} (g : T ⟶ T')
     (x : relPic C T.unop) :

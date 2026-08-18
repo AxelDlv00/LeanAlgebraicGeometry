@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.picEtAffineEquiv_picEtPullback
 type: lean
-updated: '2026-08-07T05:01:58'
+updated: '2026-08-18T20:51:06'
 ---
 theorem picEtAffineEquiv_picEtPullback (g : D ⟶ E) (s : picEt E (overSpec k A)) :
     picEtAffineEquiv D A (picEtPullback g (overSpec k A) s)

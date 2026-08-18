@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.exists_ne_zero_mem_of_one_le_chi
 type: lean
-updated: '2026-07-27T15:50:35'
+updated: '2026-08-18T20:52:09'
 ---
 theorem exists_ne_zero_mem_of_one_le_chi {D : X.WeilDivisor}
     (hchi : 1 ≤ chi k U₀ U₁ D) :

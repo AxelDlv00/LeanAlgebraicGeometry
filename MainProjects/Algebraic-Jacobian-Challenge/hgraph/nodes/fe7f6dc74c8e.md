@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.TwoTerm.finitePresentation_quotRange
 type: lean
-updated: '2026-07-29T22:29:09'
+updated: '2026-08-18T20:52:09'
 ---
 instance finitePresentation_quotRange (n : ℕ) (k : K →ₗ[A] (Fin n → A))
     [Module.Finite A K] :

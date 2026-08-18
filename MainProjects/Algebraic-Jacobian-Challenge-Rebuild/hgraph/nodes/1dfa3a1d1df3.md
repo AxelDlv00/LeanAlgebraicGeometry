@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Pic0FiniteStageGluePackage.restrictionBaseChangeAlgHom
 type: lean
-updated: '2026-08-18T08:27:19'
+updated: '2026-08-18T20:51:05'
 ---
 noncomputable def restrictionBaseChangeAlgHom
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]

@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Hom.pullbackUnitsCocycle_ev
 type: lean
-updated: '2026-08-07T05:01:59'
+updated: '2026-08-18T20:51:07'
 ---
 lemma pullbackUnitsCocycle_ev (γ : Y.unitsCocycle 𝒰) (x y : X) {T : X.Opens}
     (a : T ⟶ (𝒰.pullback f).opens x) (b : T ⟶ (𝒰.pullback f).opens y) :

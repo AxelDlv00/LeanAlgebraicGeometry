@@ -16,7 +16,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Scheme.Modules.sheafification_map_unit_eq
 type: lean
-updated: '2026-07-28T13:22:17'
+updated: '2026-08-18T20:52:08'
 ---
 private lemma sheafification_map_unit_eq (P : MonoidalPresheaf X) :
     sheafification.map

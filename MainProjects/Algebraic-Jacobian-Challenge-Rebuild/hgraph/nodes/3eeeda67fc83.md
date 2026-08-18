@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.GaloisDescent.StableAffineOpen.restrict_act_hom_stableAffineQuotientMap
 type: lean
-updated: '2026-08-14T14:17:15'
+updated: '2026-08-18T20:50:54'
 ---
 theorem restrict_act_hom_stableAffineQuotientMap
     [FiniteDimensional K L] [IsGalois K L]

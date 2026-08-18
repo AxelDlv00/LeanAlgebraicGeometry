@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.StableGroupAction.act_mul_hom
 type: lean
-updated: '2026-07-29T02:01:52'
+updated: '2026-08-18T20:51:55'
 ---
 lemma act_mul_hom (g t : G) : (act (g * t)).hom = (act t).hom ≫ (act g).hom := by
   rw [map_mul]; rfl

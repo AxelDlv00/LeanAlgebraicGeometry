@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.etaleTopology_eq_propQCTopology
 type: lean
-updated: '2026-08-07T05:01:57'
+updated: '2026-08-18T20:51:06'
 ---
 theorem Scheme.etaleTopology_eq_propQCTopology :
     Scheme.etaleTopology.{u} = Scheme.propQCTopology (@Etale) := by

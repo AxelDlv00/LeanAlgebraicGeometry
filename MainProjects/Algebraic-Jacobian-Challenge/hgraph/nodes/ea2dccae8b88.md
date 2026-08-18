@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.FiberCoordinateData.coordinateWeilDivisor_ofMap
 type: lean
-updated: '2026-07-31T08:04:21'
+updated: '2026-08-18T20:52:11'
 ---
 lemma coordinateWeilDivisor_ofMap :
     (ofMap π).coordinateWeilDivisor (K := K) = fiberWeilDivisor π := by

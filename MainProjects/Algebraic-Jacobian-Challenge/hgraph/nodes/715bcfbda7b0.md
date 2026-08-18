@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.pullback_lift_diff_self
 type: lean
-updated: '2026-07-28T12:23:40'
+updated: '2026-08-18T20:51:53'
 ---
 lemma pullback_lift_diff_self (G : Over (Spec (.of kbar))) [GrpObj G]
     {T : Scheme.{u}} (t : T ⟶ Spec (.of kbar)) (A : T ⟶ G.left)

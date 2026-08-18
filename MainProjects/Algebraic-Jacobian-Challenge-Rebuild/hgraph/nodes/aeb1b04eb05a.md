@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DatG0.tensorProduct_algHom_comp_eq_of_baseChange
 type: lean
-updated: '2026-08-16T20:15:44'
+updated: '2026-08-18T20:51:03'
 ---
 theorem tensorProduct_algHom_comp_eq_of_baseChange
     {F K A B D : Type u} [Field F] [Field K] [Algebra F K]

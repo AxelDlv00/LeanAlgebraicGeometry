@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PicEtAff.descentMap_prodLift_inr
 type: lean
-updated: '2026-08-07T05:01:57'
+updated: '2026-08-18T20:51:06'
 ---
 lemma descentMap_prodLift_inr {E F H : Algebra.EtaleCover A}
     (f : E.Carrier →ₐ[A] H.Carrier) (g : F.Carrier →ₐ[A] H.Carrier)

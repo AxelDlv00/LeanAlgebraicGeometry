@@ -16,7 +16,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.isAffineOpen_iInf_fin
 type: lean
-updated: '2026-07-28T13:22:16'
+updated: '2026-08-18T20:52:02'
 ---
 private lemma isAffineOpen_iInf_fin [X.IsSeparated] :
     ∀ (p : ℕ) (W : Fin (p + 1) → X.Opens), (∀ k, IsAffineOpen (W k)) →

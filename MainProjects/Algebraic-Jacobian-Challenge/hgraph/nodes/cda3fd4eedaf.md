@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.pluckerToProj_preimage_basicOpen
 type: lean
-updated: '2026-08-03T14:28:06'
+updated: '2026-08-18T20:52:09'
 ---
 theorem pluckerToProj_preimage_basicOpen (d r : ℕ)
     (I : PluckerIndex d r) :

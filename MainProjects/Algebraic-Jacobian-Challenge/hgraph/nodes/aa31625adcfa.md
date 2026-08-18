@@ -56,7 +56,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.leakProbe_cechTerm_isQuasicoherent
 type: lean
-updated: '2026-08-03T16:00:49'
+updated: '2026-08-18T20:52:12'
 ---
 theorem leakProbe_cechTerm_isQuasicoherent {S X : Scheme.{u}} (f : X ⟶ S) [IsSeparated f]
     [IsAffine S] (𝒰 : X.OpenCover) [Finite 𝒰.I₀] [∀ i, IsAffine (𝒰.X i)]

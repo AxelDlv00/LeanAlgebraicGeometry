@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.GaloisDescent.GaloisQuotientWitness.overHomEquiv
 type: lean
-updated: '2026-08-14T14:17:16'
+updated: '2026-08-18T20:51:05'
 ---
 noncomputable def overHomEquiv (w : GaloisQuotientWitness rho Y g)
     (T : Over (Spec (CommRingCat.of K))) :

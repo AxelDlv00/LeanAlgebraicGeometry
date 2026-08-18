@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.Sheaf.freeModuleSheafMap
 type: lean
-updated: '2026-08-07T05:01:44'
+updated: '2026-08-18T20:50:51'
 ---
 noncomputable def freeModuleSheafMap {U V : C} (i : U ⟶ V) :
     freeModuleSheaf J R U ⟶ freeModuleSheaf J R V :=

@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.GaloisDescent.specSemilinearGalAction_act
 type: lean
-updated: '2026-08-12T15:42:08'
+updated: '2026-08-18T20:50:53'
 ---
 @[simp] lemma specSemilinearGalAction_act (γ : L ≃ₐ[K] L) :
     (specSemilinearGalAction K L A).act γ = toSpecAut (L ≃ₐ[K] L) A γ := rfl

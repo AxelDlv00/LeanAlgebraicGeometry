@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.bijective_aeval_p1YSection
 type: lean
-updated: '2026-07-27T19:08:27'
+updated: '2026-08-18T20:52:08'
 ---
 theorem bijective_aeval_p1YSection :
     Function.Bijective (Polynomial.aeval (p1YSection k) :

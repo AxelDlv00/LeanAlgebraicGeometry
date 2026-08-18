@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.intrinsicThetaGluedOverLift_apply
 type: lean
-updated: '2026-08-07T05:01:51'
+updated: '2026-08-18T20:51:01'
 ---
 lemma intrinsicThetaGluedOverLift_apply (a : ℕ)
     (f : ∀ j : D.index, M →ₗ[↥(gluedSubalgebra A)]

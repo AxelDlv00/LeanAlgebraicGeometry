@@ -33,7 +33,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.mem_chartLocus_of_witness_h1
 type: lean
-updated: '2026-08-07T05:01:55'
+updated: '2026-08-18T20:51:04'
 ---
 theorem mem_chartLocus_of_witness_h1 {T : Over (Spec (.of k))} (lam : picEt C T) (t : T.left)
     (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)

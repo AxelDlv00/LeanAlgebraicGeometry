@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivisorAdaptation.thetaIdealIncl_app
 type: lean
-updated: '2026-08-07T05:01:54'
+updated: '2026-08-18T20:51:03'
 ---
 theorem thetaIdealIncl_app (W : (relCurve C R).Opens) :
     (thetaIdealIncl (A := A) (a := a)).hom.app (op W) =

@@ -28,7 +28,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.degK_principal_eq_zero
 type: lean
-updated: '2026-07-27T15:50:35'
+updated: '2026-08-18T20:52:10'
 ---
 theorem degK_principal_eq_zero
     (hledger : ∀ D : X.WeilDivisor, chi k U₀ U₁ D = chi k U₀ U₁ 0 + degK k D)

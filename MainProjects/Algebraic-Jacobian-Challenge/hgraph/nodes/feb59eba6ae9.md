@@ -47,7 +47,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.topologicalKrullDim_eq_of_forall_ringKrullDim_stalk_eq
 type: lean
-updated: '2026-07-29T06:43:22'
+updated: '2026-08-18T20:52:08'
 ---
 theorem topologicalKrullDim_eq_of_forall_ringKrullDim_stalk_eq
     (X : Scheme.{u}) [Nonempty X] (d : WithBot ℕ∞)

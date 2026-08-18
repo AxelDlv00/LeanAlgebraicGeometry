@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.HighWindowTransitionKit.transitionOfLE_read
 type: lean
-updated: '2026-08-07T05:01:49'
+updated: '2026-08-18T20:50:58'
 ---
 theorem transitionOfLE_read
     (read : ∀ n, G n → B)

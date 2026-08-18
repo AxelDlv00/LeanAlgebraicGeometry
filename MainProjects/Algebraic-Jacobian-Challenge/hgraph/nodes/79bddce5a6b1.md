@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.MonObj.permAutIso
 type: lean
-updated: '2026-07-29T04:25:58'
+updated: '2026-08-18T20:51:52'
 ---
 noncomputable def permAutIso (C : K) {n : ℕ} (σ : Equiv.Perm (Fin n)) :
     Aut (∏ᶜ (fun _ : Fin n => C)) where

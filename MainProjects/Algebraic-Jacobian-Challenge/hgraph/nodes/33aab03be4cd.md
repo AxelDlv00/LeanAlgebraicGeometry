@@ -13,7 +13,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Scheme.Modules.restrictScalarsIsRightAdjoint
 type: lean
-updated: '2026-07-28T13:22:17'
+updated: '2026-08-18T20:52:09'
 ---
 private lemma restrictScalarsIsRightAdjoint (φ : S ⟶ F.op ⋙ R) :
     (PresheafOfModules.restrictScalars.{u} φ).IsRightAdjoint :=

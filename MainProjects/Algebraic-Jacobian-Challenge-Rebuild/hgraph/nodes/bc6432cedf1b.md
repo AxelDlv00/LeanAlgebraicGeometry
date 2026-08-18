@@ -26,7 +26,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.DiagonalChartData
 type: lean
-updated: '2026-08-07T05:01:45'
+updated: '2026-08-18T20:50:52'
 ---
 structure DiagonalChartData (C : Over (Spec (.of k))) where
   /-- The chosen affine chart at each point. -/

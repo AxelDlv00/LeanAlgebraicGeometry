@@ -22,7 +22,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.picFromBase_eq_bot_of_subsingleton
 type: lean
-updated: '2026-08-07T05:02:01'
+updated: '2026-08-18T20:51:09'
 ---
 theorem picFromBase_eq_bot_of_subsingleton (T : Over (Spec (.of k)))
     [Subsingleton T.left] : picFromBase C T = ⊥ := by

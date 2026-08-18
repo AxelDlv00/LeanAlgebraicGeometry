@@ -8,6 +8,6 @@ generated: lean
 lean_status: lean_ok
 title: Module.unitCoaction_apply
 type: lean
-updated: '2026-08-07T05:01:46'
+updated: '2026-08-18T20:50:55'
 ---
 lemma unitCoaction_apply (x : B) : unitCoaction A B u x = u.val * x ⊗ₜ 1 := rfl

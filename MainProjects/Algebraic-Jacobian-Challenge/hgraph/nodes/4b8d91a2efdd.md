@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.sieve_specMap_mem_etaleTopology
 type: lean
-updated: '2026-07-29T23:41:45'
+updated: '2026-08-18T20:52:04'
 ---
 theorem sieve_specMap_mem_etaleTopology :
     Sieve.generate

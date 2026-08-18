@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.IsCertified.projective_intrinsicThetaGlued_of_swallowedBy
 type: lean
-updated: '2026-08-07T05:01:52'
+updated: '2026-08-18T20:51:01'
 ---
 theorem IsCertified.projective_intrinsicThetaGlued_of_swallowedBy
     (hc : A.IsCertified g) (a : Nat) (h : D.SwallowedBy d) :

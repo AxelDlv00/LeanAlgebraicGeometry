@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: IsLocalization.AwayCover.mapTriple
 type: lean
-updated: '2026-08-07T05:01:43'
+updated: '2026-08-18T20:50:50'
 ---
 noncomputable def mapTriple (i j k : ι) : W i j k →ₐ[A] W' i j k :=
   IsLocalization.Away.algHomOfIsUnit (S := W i j k) (W' i j k) (f i * (f j * f k)) <| by

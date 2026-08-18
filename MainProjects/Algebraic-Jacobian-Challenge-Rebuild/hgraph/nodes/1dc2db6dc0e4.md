@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ProjectiveSpace.AffineChartAtRing.awayToPoly_mk
 type: lean
-updated: '2026-08-07T05:01:59'
+updated: '2026-08-18T20:51:07'
 ---
 theorem awayToPoly_mk (i : J) (a : ℕ) (p : MvPolynomial J R)
     (hp : p ∈ homogeneousSubmodule J R (a • 1)) :

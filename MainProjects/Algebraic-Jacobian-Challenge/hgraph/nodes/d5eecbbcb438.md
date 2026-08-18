@@ -16,7 +16,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.sigma_ι_eqToHom_transport
 type: lean
-updated: '2026-07-28T13:22:16'
+updated: '2026-08-18T20:52:02'
 ---
 private lemma sigma_ι_eqToHom_transport {C : Type*} [Category C] {β : Type*} (B : β → C)
     [HasCoproduct B] {a b : β} (e : a = b) :

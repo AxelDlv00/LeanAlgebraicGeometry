@@ -19,7 +19,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Scheme.isIso_appTop_of_isoSq
 type: lean
-updated: '2026-07-28T13:22:17'
+updated: '2026-08-18T20:52:08'
 ---
 private lemma isIso_appTop_of_isoSq {W X Y Z : Scheme.{u}} {a : W ⟶ X} {b : Y ⟶ Z}
     (l : W ≅ Y) (r : X ≅ Z) (comm : a ≫ r.hom = l.hom ≫ b) [IsIso (b.appTop)] :

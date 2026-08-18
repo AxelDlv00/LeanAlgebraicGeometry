@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.toModuleKPresheaf_obj
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-08-18T20:52:03'
 ---
 @[simp] lemma toModuleKPresheaf_obj (C : Over (Spec (CommRingCat.of k)))
     (U : (TopologicalSpace.Opens C.left.toTopCat)ᵒᵖ) :

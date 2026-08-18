@@ -20,7 +20,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.GradedModule.polyEndHom_lastVar_sub_mem
 type: lean
-updated: '2026-07-27T12:05:12'
+updated: '2026-08-18T20:52:05'
 ---
 lemma polyEndHom_lastVar_sub_mem {r : ℕ} (t : Fin (r + 1) → Module.End κ M)
     (hcomm : ∀ i j, Commute (t i) (t j)) {P P' : Submodule κ M}

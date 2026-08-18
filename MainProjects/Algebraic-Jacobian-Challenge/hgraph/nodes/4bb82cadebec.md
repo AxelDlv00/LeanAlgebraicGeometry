@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.selfDiag_base_eq_rowFst_base
 type: lean
-updated: '2026-07-28T12:23:40'
+updated: '2026-08-18T20:51:54'
 ---
 lemma selfDiag_base_eq_rowFst_base (s : ↥(Spec (.of kbar))) :
     (selfDiag X).base (p.base s) = (rowFst p hp).base (p.base s) := by

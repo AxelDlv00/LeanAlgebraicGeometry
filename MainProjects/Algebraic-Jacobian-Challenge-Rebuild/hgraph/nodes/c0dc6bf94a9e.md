@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.bot_ne_top_specObj
 type: lean
-updated: '2026-08-07T05:01:55'
+updated: '2026-08-18T20:51:04'
 ---
 theorem bot_ne_top_specObj : (⊥ : (Spec (CommRingCat.of k)).Opens) ≠ ⊤ := by
   intro h

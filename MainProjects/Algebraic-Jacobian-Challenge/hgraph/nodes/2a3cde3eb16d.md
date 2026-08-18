@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.GaloisDescent.GaloisQuotientWitnessWithProjection.quotientMap_comp_base
 type: lean
-updated: '2026-07-31T03:47:20'
+updated: '2026-08-18T20:52:04'
 ---
 theorem quotientMap_comp_base
     {K L : Type u} [Field K] [Field L] [Algebra K L]

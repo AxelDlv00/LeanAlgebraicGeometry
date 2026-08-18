@@ -19,7 +19,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.chartIndex_iff_isDegree
 type: lean
-updated: '2026-08-07T05:01:56'
+updated: '2026-08-18T20:51:04'
 ---
 theorem chartIndex_iff_isDegree (c : ℤ) :
     (∃ (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor),

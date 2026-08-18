@@ -29,7 +29,7 @@ generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.pullback_app_isoTensor_baseMap_sectionLinearEquiv
 type: lean
-updated: '2026-07-25T06:32:31'
+updated: '2026-08-18T20:52:07'
 ---
 theorem pullback_app_isoTensor_baseMap_sectionLinearEquiv
     {X Y : Scheme.{u}} (g : Y ⟶ X) (N : X.Modules) [N.IsQuasicoherent]

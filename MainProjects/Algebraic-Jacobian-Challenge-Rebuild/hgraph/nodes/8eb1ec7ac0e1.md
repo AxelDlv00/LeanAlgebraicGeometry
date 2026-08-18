@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.testPoint_comp
 type: lean
-updated: '2026-08-07T05:01:56'
+updated: '2026-08-18T20:51:04'
 ---
 theorem testPoint_comp {T T' : Over (Spec (.of k))} (f : T' ⟶ T) (t : T'.left) :
     testPoint t ≫ f

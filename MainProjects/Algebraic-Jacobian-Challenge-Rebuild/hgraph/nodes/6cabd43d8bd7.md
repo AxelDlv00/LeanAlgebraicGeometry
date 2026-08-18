@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivFamZarAff.exists_certified_away_rep_of_mk
 type: lean
-updated: '2026-08-07T05:01:50'
+updated: '2026-08-18T20:51:00'
 ---
 theorem DivFamZarAff.exists_certified_away_rep_of_mk
     {d : (relCurve C S).LocalEquations} (hd : IsLocallyCertifiedAff n d) :

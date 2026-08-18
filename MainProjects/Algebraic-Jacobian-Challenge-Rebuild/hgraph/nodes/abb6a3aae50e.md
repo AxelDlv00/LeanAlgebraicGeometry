@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: RingTheory.CohenMacaulay.exists_notMemSq_of_spanFinrank_pos
 type: lean
-updated: '2026-08-14T19:11:10'
+updated: '2026-08-18T20:50:49'
 ---
 lemma exists_notMemSq_of_spanFinrank_pos
     {R : Type u} [CommRing R] [IsLocalRing R] [IsNoetherianRing R]

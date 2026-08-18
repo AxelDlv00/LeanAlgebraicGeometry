@@ -32,7 +32,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Scheme.Modules.descent_smul_eq_zero
 type: lean
-updated: '2026-07-28T13:22:16'
+updated: '2026-08-18T20:52:07'
 ---
 private lemma descent_smul_eq_zero {R : CommRingCat.{u}} (M : (Spec R).Modules) (f : R)
     (t : Finset R) (hspan : Ideal.span (t : Set R) = ⊤)

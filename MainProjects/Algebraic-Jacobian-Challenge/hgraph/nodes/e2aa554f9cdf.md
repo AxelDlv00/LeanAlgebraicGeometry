@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: Algebra.IsStandardSmooth.isReduced_of_isDomain
 type: lean
-updated: '2026-07-27T17:00:52'
+updated: '2026-08-18T20:52:03'
 ---
 theorem Algebra.IsStandardSmooth.isReduced_of_isDomain (B S : Type*) [CommRing B] [CommRing S]
     [IsDomain B] [Algebra B S] [Algebra.IsStandardSmooth B S] : IsReduced S :=

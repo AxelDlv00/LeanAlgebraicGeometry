@@ -26,7 +26,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.instIsIntegralP1OverLeft
 type: lean
-updated: '2026-07-27T19:45:31'
+updated: '2026-08-18T20:52:08'
 ---
 instance instIsIntegralP1OverLeft : IsIntegral ((p1Over k).left) :=
   isIntegral_p1Over_left_of_isDomain_charts k inferInstance inferInstance

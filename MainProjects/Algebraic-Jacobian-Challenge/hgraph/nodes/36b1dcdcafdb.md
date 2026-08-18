@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.surjective_eval_of_deg_ge
 type: lean
-updated: '2026-07-29T06:43:23'
+updated: '2026-08-18T20:52:10'
 ---
 theorem surjective_eval_of_deg_ge {D₀ : X.CurveDivisor}
     (h₀ : Subsingleton (Sheaf.HModule (X.divisorSheaf K D₀) 1))

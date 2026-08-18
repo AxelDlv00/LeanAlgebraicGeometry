@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.CurveDivisor.deg_single
 type: lean
-updated: '2026-07-28T18:12:20'
+updated: '2026-08-18T20:52:10'
 ---
 theorem deg_single (x : {x : X // x ≠ genericPoint X}) (n : ℤ) :
     deg K (Finsupp.single x n : X.CurveDivisor) = n * (X.residueDeg K x.1 : ℤ) := by

@@ -10,7 +10,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Scheme.Modules.W_tripWhisker
 type: lean
-updated: '2026-07-28T13:22:17'
+updated: '2026-08-18T20:52:08'
 ---
 private lemma W_tripWhisker {P Q : X.PresheafOfModules} (f : P ⟶ Q)
     (hf : (opensTopology X).W ((PresheafOfModules.toPresheaf X.ringCatSheaf.obj).map f))

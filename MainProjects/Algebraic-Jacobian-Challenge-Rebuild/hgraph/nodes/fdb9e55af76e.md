@@ -26,7 +26,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divFamEps
 type: lean
-updated: '2026-08-07T05:01:53'
+updated: '2026-08-18T20:51:02'
 ---
 noncomputable def divFamEps (g : ℕ) (F : DivFam C R π g) :
     Submodule R (R ⊗[k]

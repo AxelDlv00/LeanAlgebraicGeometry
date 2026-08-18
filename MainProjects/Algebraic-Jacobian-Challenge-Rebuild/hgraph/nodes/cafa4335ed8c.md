@@ -9,7 +9,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.PicEtAff.mapFun_mul
 type: lean
-updated: '2026-08-07T05:01:58'
+updated: '2026-08-18T20:51:06'
 ---
 private lemma mapFun_mul (a b : PicEtAff C A) :
     mapFun C A' (a * b) = mapFun C A' a * mapFun C A' b := by

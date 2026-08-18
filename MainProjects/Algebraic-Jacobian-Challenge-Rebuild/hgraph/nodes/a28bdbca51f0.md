@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.CechPic.extOpens
 type: lean
-updated: '2026-08-07T05:01:46'
+updated: '2026-08-18T20:50:55'
 ---
 noncomputable def extOpens (y : Y) : Y.Opens :=
   if hy : y ∈ w.opensRange then w ''ᵁ (𝒰₀.opens hy.choose) else Ω'

@@ -27,7 +27,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.exists_res_eq_pow_smul_of_isCompact
 type: lean
-updated: '2026-07-25T06:32:31'
+updated: '2026-08-18T20:52:07'
 ---
 theorem exists_res_eq_pow_smul_of_isCompact
     (M : X.Modules) [M.IsQuasicoherent] {W : X.Opens} (g : Γ(X, W))

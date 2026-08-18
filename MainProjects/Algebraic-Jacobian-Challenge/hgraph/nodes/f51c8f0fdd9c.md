@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicScheme.twistTestFunctor
 type: lean
-updated: '2026-07-30T10:40:20'
+updated: '2026-08-18T20:52:05'
 ---
 noncomputable abbrev twistTestFunctor (γ : k' ≃ₐ[k] k') :
     Over (Spec (CommRingCat.of k')) ⥤ Over (Spec (CommRingCat.of k')) :=

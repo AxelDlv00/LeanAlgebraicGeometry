@@ -25,7 +25,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.pullbackTensorMap_isIso_of_left_unit
 type: lean
-updated: '2026-07-29T20:27:12'
+updated: '2026-08-18T20:52:07'
 ---
 theorem pullbackTensorMap_isIso_of_left_unit {X Y : Scheme.{u}} (f : Y ⟶ X)
     (M : X.Modules) :

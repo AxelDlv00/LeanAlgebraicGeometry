@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.etProbe_picSchemeEt_carriers
 type: lean
-updated: '2026-08-03T16:00:49'
+updated: '2026-08-18T20:52:12'
 ---
 theorem etProbe_picSchemeEt_carriers :
     LocallyOfFiniteType (PicSchemeEt C).hom ∧ IsSeparated (PicSchemeEt C).hom :=

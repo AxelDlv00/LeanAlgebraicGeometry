@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: Submodule.directedSystem_directedQuotientMap
 type: lean
-updated: '2026-08-07T05:01:43'
+updated: '2026-08-18T20:50:49'
 ---
 noncomputable instance directedSystem_directedQuotientMap
     (N : ι → Submodule R M) (hN : Monotone N) :

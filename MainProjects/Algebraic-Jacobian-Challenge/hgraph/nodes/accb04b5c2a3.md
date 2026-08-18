@@ -20,7 +20,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.isZero_iff_isEmpty_schematicSupport
 type: lean
-updated: '2026-07-31T19:37:12'
+updated: '2026-08-18T20:52:03'
 ---
 theorem isZero_iff_isEmpty_schematicSupport {M : Y.Modules} [M.IsQuasicoherent] :
     IsZero M ↔ IsEmpty (Scheme.Modules.schematicSupport M : Type u) :=

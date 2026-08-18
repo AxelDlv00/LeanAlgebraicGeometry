@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.finite_divUniversalHighWindowMulSource
 type: lean
-updated: '2026-08-07T05:01:48'
+updated: '2026-08-18T20:50:58'
 ---
 theorem finite_divUniversalHighWindowMulSource (n : Nat)
     (K : Submodule RZ

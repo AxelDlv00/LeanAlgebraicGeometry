@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicScheme.twistAction
 type: lean
-updated: '2026-07-30T16:55:39'
+updated: '2026-08-18T20:52:05'
 ---
 noncomputable def twistAction :
     (k' ≃ₐ[k] k') →* Aut X'.left :=

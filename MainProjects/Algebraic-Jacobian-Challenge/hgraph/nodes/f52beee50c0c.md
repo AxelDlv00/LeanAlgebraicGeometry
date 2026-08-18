@@ -24,7 +24,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.pullback_preservesFiniteLimits_of_preservesMonomorphisms
 type: lean
-updated: '2026-07-28T13:22:16'
+updated: '2026-08-18T20:52:01'
 ---
 theorem pullback_preservesFiniteLimits_of_preservesMonomorphisms (g : S' ⟶ S)
     (h : (Scheme.Modules.pullback g).PreservesMonomorphisms) :

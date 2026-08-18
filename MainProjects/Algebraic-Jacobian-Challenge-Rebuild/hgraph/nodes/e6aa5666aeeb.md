@@ -27,7 +27,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PicEtAff.rigidity_of_away
 type: lean
-updated: '2026-08-07T05:01:57'
+updated: '2026-08-18T20:51:06'
 ---
 theorem PicEtAff.rigidity_of_away (hg : Ideal.span (Set.range g) = ⊤)
     (hloc : ∀ i, ∀ q : PicEtAff C (S i),

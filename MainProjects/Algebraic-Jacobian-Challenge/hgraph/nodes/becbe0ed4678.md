@@ -23,7 +23,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.isQuasicoherent_pi_of_isAffine
 type: lean
-updated: '2026-07-28T20:09:16'
+updated: '2026-08-18T20:52:01'
 ---
 theorem isQuasicoherent_pi_of_isAffine {B : Scheme.{u}} [IsAffine B] {J : Type u} [Finite J]
     (A : J → B.Modules) (hA : ∀ j, (A j).IsQuasicoherent) : (∏ᶜ A).IsQuasicoherent := by

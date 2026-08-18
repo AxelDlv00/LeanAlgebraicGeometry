@@ -30,7 +30,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_bound_subsingleton_hModule_one_of_isFinite_toP1
 type: lean
-updated: '2026-08-07T05:02:01'
+updated: '2026-08-18T20:51:08'
 ---
 theorem exists_bound_subsingleton_hModule_one_of_isFinite_toP1
     [Module.Finite K (Sheaf.HModule (Y.moduleKSheaf K) 0)]

@@ -33,7 +33,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.ker_windowCarve
 type: lean
-updated: '2026-08-07T05:01:51'
+updated: '2026-08-18T20:51:01'
 ---
 theorem ker_windowCarve :
     LinearMap.ker (windowCarve A τ a hH1) = divisorWindow d hH1 := by

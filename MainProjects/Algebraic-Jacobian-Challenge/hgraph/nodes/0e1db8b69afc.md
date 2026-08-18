@@ -35,7 +35,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.genus_baseChangeField
 type: lean
-updated: '2026-07-29T06:43:23'
+updated: '2026-08-18T20:52:11'
 ---
 theorem genus_baseChangeField [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
     [GeometricallyIntegral C.hom] (S : C.left.AffineCoverMVSquare) :

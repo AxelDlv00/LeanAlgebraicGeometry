@@ -9,7 +9,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.ProjectiveSpace.affineChart.changeChartHom_over
 type: lean
-updated: '2026-07-30T16:21:25'
+updated: '2026-08-18T20:52:07'
 ---
 private theorem changeChartHom_over :
     changeChartHom n S ≫ (𝔸(n; S) ↘ S) =

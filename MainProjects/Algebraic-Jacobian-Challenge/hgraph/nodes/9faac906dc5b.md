@@ -13,7 +13,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Scheme.Modules.comp4_solve_front
 type: lean
-updated: '2026-07-28T13:22:16'
+updated: '2026-08-18T20:52:05'
 ---
 private lemma comp4_solve_front {𝒞 : Type*} [Category 𝒞] {a b c d e : 𝒞}
     {A : a ⟶ b} {B : b ⟶ c} (Cc : c ≅ d) (D : d ≅ e) {E : a ⟶ e}

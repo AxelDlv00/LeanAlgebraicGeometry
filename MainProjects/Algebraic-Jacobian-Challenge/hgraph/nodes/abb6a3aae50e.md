@@ -17,5 +17,5 @@ lean_status: lean_ok
 private: true
 title: RingTheory.CohenMacaulay.exists_notMemSq_of_spanFinrank_pos
 type: lean
-updated: '2026-07-28T13:22:15'
+updated: '2026-08-18T20:51:50'
 ---

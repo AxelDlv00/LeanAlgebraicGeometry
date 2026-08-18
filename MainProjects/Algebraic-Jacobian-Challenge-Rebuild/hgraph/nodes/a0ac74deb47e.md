@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.JacobianData.isIso_hom_of_isTerminal
 type: lean
-updated: '2026-08-07T05:01:42'
+updated: '2026-08-18T20:50:49'
 ---
 theorem isIso_hom_of_isTerminal {J : Over (Spec (.of k))} (hJ : IsTerminal J) :
     IsIso J.hom := by

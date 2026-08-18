@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.abelSigmaChartAffAdmissible_eq_sigmaExtension_admissibleAbelTrans
 type: lean
-updated: '2026-08-07T05:01:55'
+updated: '2026-08-18T20:51:04'
 ---
 theorem abelSigmaChartAffAdmissible_eq_sigmaExtension_admissibleAbelTrans :
     abelSigmaChartAffAdmissible C =

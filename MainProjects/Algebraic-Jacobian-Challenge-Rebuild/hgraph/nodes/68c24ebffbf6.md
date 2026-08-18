@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: IsLocalization.Away.tensorAwayEquiv
 type: lean
-updated: '2026-08-14T19:11:11'
+updated: '2026-08-18T20:50:50'
 ---
 noncomputable def tensorAwayEquiv
     [IsLocalization.Away r Si] [IsLocalization.Away s Sj]

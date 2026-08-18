@@ -19,7 +19,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.isDedekindDomain_of_forall_localization_dvr
 type: lean
-updated: '2026-07-24T17:02:57'
+updated: '2026-08-18T20:52:10'
 ---
 theorem isDedekindDomain_of_forall_localization_dvr {R : Type*} [CommRing R]
     [IsDomain R] [IsNoetherianRing R]

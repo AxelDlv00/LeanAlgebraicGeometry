@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.divisorGluedFamily_compatible
 type: lean
-updated: '2026-08-07T05:01:53'
+updated: '2026-08-18T20:51:03'
 ---
 lemma divisorGluedFamily_compatible [IsProper C.hom]
     (A : AffAdaptation D d) (x : ↑(gluedSubalgebra A)) :

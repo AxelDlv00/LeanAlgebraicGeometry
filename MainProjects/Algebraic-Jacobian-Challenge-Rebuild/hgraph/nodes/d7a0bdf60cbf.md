@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.instFlatRelCurveHom
 type: lean
-updated: '2026-08-07T05:01:51'
+updated: '2026-08-18T20:51:00'
 ---
 instance instFlatRelCurveHom : AlgebraicGeometry.Flat (relCurve C R ↘ Spec (.of R)) :=
   AlgebraicGeometry.Flat.isStableUnderBaseChange.of_isPullback

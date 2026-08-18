@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.LocalEquations.mem_sectionIdeal_iff
 type: lean
-updated: '2026-08-07T05:01:53'
+updated: '2026-08-18T20:51:02'
 ---
 lemma mem_sectionIdeal_iff {d : X.LocalEquations} {U : X.Opens} {s : Γ(X, U)} :
     s ∈ d.sectionIdeal U ↔ ∀ (z : X) (hz : z ∈ U),

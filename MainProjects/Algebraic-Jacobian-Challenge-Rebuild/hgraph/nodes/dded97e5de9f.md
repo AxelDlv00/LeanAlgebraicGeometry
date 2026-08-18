@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.pic0FiniteStageModelBaseChangeEquiv
 type: lean
-updated: '2026-08-17T13:21:30'
+updated: '2026-08-18T20:51:05'
 ---
 def pic0FiniteStageModelBaseChangeEquiv
     {F : Type u} [Field F] [Algebra F k]

@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.isUnit_germ_eqn_of_coeffAt_eq_zero
 type: lean
-updated: '2026-08-07T05:01:51'
+updated: '2026-08-18T20:51:01'
 ---
 lemma isUnit_germ_eqn_of_coeffAt_eq_zero (j : D.index) {z : relCurve C K}
     (hz : z ∈ D.pieces j) (hzg : z ≠ genericPoint (relCurve C K))

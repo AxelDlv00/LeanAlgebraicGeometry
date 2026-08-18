@@ -9,7 +9,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.modulesRestrictionPreimageTopEqId
 type: lean
-updated: '2026-08-10T13:01:39'
+updated: '2026-08-18T20:50:51'
 ---
 private lemma modulesRestrictionPreimageTopEqId {X Y : Scheme.{u}} (g : Y ⟶ X)
     (N : Y.Modules) (e : (⊤ : Y.Opens) ≤ g ⁻¹ᵁ ⊤) :

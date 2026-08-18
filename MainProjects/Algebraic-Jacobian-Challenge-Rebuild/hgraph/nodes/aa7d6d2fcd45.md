@@ -19,7 +19,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.LocalEquations.divEq_pullback_pullback
 type: lean
-updated: '2026-08-07T05:01:53'
+updated: '2026-08-18T20:51:02'
 ---
 theorem divEq_pullback_pullback {X Y Z : Scheme.{u}} {f : Y ⟶ X} {g : Z ⟶ Y} {h : Z ⟶ X}
     (hgf : g ≫ f = h) (E : X.LocalEquations) (hreg₁) (hreg₂) (hreg₃) :

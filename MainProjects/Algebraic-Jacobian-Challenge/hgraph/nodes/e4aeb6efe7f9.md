@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.overEquivalence_functor_isContinuous_toScheme
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-08-18T20:52:02'
 ---
 instance overEquivalence_functor_isContinuous_toScheme (g : R) :
     (Opens.overEquivalence (specBasicOpen g)).functor.IsContinuous

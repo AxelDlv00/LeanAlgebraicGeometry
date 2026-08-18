@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.freeMap_chartMatrixHom
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-08-18T20:52:06'
 ---
 lemma freeMap_chartMatrixHom {T : Scheme.{0}} {r d : ℕ} (x : RankQuotient r d T)
     (I : Finset (Fin r)) (hI : I.card = d) :

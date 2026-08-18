@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.Diagonal.mapRightTwo
 type: lean
-updated: '2026-08-14T19:11:11'
+updated: '2026-08-18T20:50:50'
 ---
 noncomputable def mapRightTwo :
     B ⊗[Polynomial k] B →ₐ[Polynomial k] B ⊗[Polynomial k] F :=

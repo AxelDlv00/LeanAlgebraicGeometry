@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.GaloisDescent.SemilinearAction.extendScalarsAlgHom
 type: lean
-updated: '2026-08-12T15:42:08'
+updated: '2026-08-18T20:50:54'
 ---
 noncomputable def extendScalarsAlgHom (g : invariantsSubalgebra K L A →ₐ[K] B) :
     A →ₐ[L] L ⊗[K] B :=

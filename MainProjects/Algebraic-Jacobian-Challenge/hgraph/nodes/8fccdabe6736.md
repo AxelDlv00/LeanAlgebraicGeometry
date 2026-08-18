@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: Pr.twistIso_w
 type: lean
-updated: '2026-08-03T16:00:49'
+updated: '2026-08-18T20:52:12'
 ---
 theorem twistIso_w (γ : k' ≃ₐ[k] k') :
     (twistIso C rep γ).hom.left ≫ X'.hom

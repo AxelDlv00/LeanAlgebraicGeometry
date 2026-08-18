@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.P1.fromSpecChart_base_genericPoint
 type: lean
-updated: '2026-07-28T18:12:20'
+updated: '2026-08-18T20:52:11'
 ---
 theorem fromSpecChart_base_genericPoint [IsDomain A] (a : A)
     (hinj : ∀ P : Polynomial k, P ≠ 0 → Polynomial.eval₂ ρ.hom a P ≠ 0) :

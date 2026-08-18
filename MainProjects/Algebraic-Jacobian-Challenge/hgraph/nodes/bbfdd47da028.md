@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: RingTheory.CohenMacaulay.exists_ofList_eq_ker_length_add_ringKrullDim
 type: lean
-updated: '2026-07-28T12:23:40'
+updated: '2026-08-18T20:51:53'
 ---
 theorem exists_ofList_eq_ker_length_add_ringKrullDim
     [IsRegularLocalRing B] [IsRegularLocalRing A]

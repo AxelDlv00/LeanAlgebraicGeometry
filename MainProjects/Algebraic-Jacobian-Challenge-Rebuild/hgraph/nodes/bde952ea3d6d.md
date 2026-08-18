@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.unitsAppLE_dualNumberSectionsUnits
 type: lean
-updated: '2026-08-07T05:02:01'
+updated: '2026-08-18T20:51:09'
 ---
 theorem unitsAppLE_dualNumberSectionsUnits {W : C.left.Opens}
     (hW : IsCompact (W : Set C.left)) (hW' : IsQuasiSeparated (W : Set C.left))

@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: DualNumber.isNilpotent_span_eps
 type: lean
-updated: '2026-08-07T05:02:01'
+updated: '2026-08-18T20:51:09'
 ---
 theorem isNilpotent_span_eps : IsNilpotent (Ideal.span {(ε : DualNumber A)}) := by
   rw [← ker_fstHom_eq_span_eps]

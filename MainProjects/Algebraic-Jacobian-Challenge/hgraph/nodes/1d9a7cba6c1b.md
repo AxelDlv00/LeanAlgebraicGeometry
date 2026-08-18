@@ -29,7 +29,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicScheme.equivariantToClass_injective
 type: lean
-updated: '2026-07-30T09:17:02'
+updated: '2026-08-18T20:52:07'
 ---
 theorem equivariantToClass_injective
     (C : Over (Spec (CommRingCat.of k)))

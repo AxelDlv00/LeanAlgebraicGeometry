@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.glueTransition_self
 type: lean
-updated: '2026-07-26T05:02:39'
+updated: '2026-08-18T20:52:06'
 ---
 lemma glueTransition_self (k : κ) :
     glueTransition hcpt k k = eqToIso (congrArg

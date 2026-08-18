@@ -30,7 +30,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.twistedNerve_δ_square_concrete
 type: lean
-updated: '2026-07-29T04:25:58'
+updated: '2026-08-18T20:52:01'
 ---
 theorem twistedNerve_δ_square_concrete
     (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)

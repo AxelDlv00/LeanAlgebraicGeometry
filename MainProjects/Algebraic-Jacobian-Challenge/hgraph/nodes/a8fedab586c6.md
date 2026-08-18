@@ -12,7 +12,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.CombinatorialCech.combSign_flip
 type: lean
-updated: '2026-07-28T13:22:16'
+updated: '2026-08-18T20:52:00'
 ---
 private lemma combSign_flip (j : Fin (n + 2)) (i : Fin (n + 1)) :
     ((-1 : ℤ) ^ (j : ℕ)) * ((-1) ^ (i : ℕ))

@@ -28,7 +28,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicSharp.relPicQuotAddEquivAbs
 type: lean
-updated: '2026-07-28T15:48:27'
+updated: '2026-08-18T20:52:06'
 ---
 noncomputable def relPicQuotAddEquivAbs {S C T : Scheme.{u}} (πC : C ⟶ S) (πT : T ⟶ S)
     [Subsingleton T] [Nonempty T] :

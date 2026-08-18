@@ -37,7 +37,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.abelDiv_isPlusHonest
 type: lean
-updated: '2026-08-07T05:01:56'
+updated: '2026-08-18T20:51:05'
 ---
 theorem abelDiv_isPlusHonest {n : ℕ} (T : Over (Spec (.of k)))
     (s : divFamZar C π n T) :

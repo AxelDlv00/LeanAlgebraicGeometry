@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.GaloisDescent.pullbackSpecLIso_inv_snd
 type: lean
-updated: '2026-08-12T15:42:08'
+updated: '2026-08-18T20:50:53'
 ---
 lemma pullbackSpecLIso_inv_snd :
     (pullbackSpecLIso K L C).inv ≫ pullback.snd _ _

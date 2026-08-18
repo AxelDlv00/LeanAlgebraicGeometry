@@ -22,7 +22,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicScheme.seamClauseOne_of_isGaloisQuotient
 type: lean
-updated: '2026-07-30T20:02:49'
+updated: '2026-08-18T20:52:07'
 ---
 theorem seamClauseOne_of_isGaloisQuotient
     (hq : IsGaloisQuotient ρ Y.hom)

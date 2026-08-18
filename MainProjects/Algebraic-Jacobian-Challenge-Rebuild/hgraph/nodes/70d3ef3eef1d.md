@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PicRankOneNoetherianStage.admissibility
 type: lean
-updated: '2026-08-14T10:32:16'
+updated: '2026-08-18T20:51:05'
 ---
 theorem admissibility (S : PicRankOneNoetherianStage P)
     (hpi : pi ≫ P1.structureMap k = C.hom) : S.Admissibility := by

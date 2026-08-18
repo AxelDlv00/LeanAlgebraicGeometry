@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: Module.trivialization_smul_symm_one
 type: lean
-updated: '2026-08-07T05:01:43'
+updated: '2026-08-18T20:50:49'
 ---
 lemma trivialization_smul_symm_one {M₀ : Type u} [AddCommGroup M₀] [Module R M₀]
     (t : M₀ ≃ₗ[R] R) (x : M₀) :

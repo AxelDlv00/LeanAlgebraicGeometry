@@ -12,7 +12,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.sectionProdEquiv_symm_apply
 type: lean
-updated: '2026-07-28T13:22:16'
+updated: '2026-08-18T20:52:00'
 ---
 private lemma sectionProdEquiv_symm_apply (q : ℕ) (z : ∀ σ : Fin (q + 1) → ι, dCoeff s M σ)
     (τ : Fin (q + 1) → ι) :

@@ -23,7 +23,7 @@ generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.cech_flatBaseChange_oneLeaf
 type: lean
-updated: '2026-07-29T11:05:39'
+updated: '2026-08-18T20:52:01'
 ---
 theorem cech_flatBaseChange_oneLeaf
     (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)

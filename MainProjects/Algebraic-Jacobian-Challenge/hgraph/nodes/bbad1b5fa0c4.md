@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ProjectiveSpace.isProjectiveWith_over
 type: lean
-updated: '2026-07-31T04:59:30'
+updated: '2026-08-18T20:52:07'
 ---
 theorem isProjectiveWith_over (d : ℕ) (S : Scheme.{0}) :
     (ℙ(Fin (d + 1); S) ↘ S).IsProjectiveWith (twistingSheaf (Fin (d + 1)) S 1) :=

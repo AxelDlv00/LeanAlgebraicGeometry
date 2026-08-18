@@ -22,7 +22,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PicRankOneFibrePresentationInput.picRankOneOpen_isOpen_of_evaluationDivisorPullbackFamilies
 type: lean
-updated: '2026-08-12T15:42:09'
+updated: '2026-08-18T20:51:05'
 ---
 theorem picRankOneOpen_isOpen_of_evaluationDivisorPullbackFamilies
     (E : PicRankOneEvaluationDivisorData pi)

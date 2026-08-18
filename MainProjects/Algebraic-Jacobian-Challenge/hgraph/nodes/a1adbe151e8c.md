@@ -24,7 +24,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.cech_pushforward_baseChange_natIso_flat
 type: lean
-updated: '2026-07-29T01:14:28'
+updated: '2026-08-18T20:52:01'
 ---
 noncomputable def cech_pushforward_baseChange_natIso_flat
     (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)

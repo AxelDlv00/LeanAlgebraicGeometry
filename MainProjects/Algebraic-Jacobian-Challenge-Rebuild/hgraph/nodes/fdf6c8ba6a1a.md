@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.BasicOpenCoverData.hInf
 type: lean
-updated: '2026-08-07T05:01:44'
+updated: '2026-08-18T20:50:50'
 ---
 noncomputable def hInf (j : D.J₀) :
     Γ(relCurve C B,

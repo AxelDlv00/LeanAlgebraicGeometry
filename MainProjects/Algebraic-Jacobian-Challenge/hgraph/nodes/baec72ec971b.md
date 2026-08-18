@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Grassmannian.universalCandidateIdeal
 type: lean
-updated: '2026-08-01T12:39:19'
+updated: '2026-08-18T20:52:03'
 ---
 noncomputable def universalCandidateIdeal (L : X.Modules) {r d : ℕ}
     (hV : SheafOfModules.IsLocallyFreeOfRank

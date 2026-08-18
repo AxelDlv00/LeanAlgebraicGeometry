@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divUniversalHighWindowThetaSubmodule
 type: lean
-updated: '2026-08-07T05:01:48'
+updated: '2026-08-18T20:50:58'
 ---
 noncomputable def divUniversalHighWindowThetaSubmodule (n : Nat)
     (x : DivUniversalHighWindowStage (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j n) :

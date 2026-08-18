@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.thetaFieldH1PairEquiv
 type: lean
-updated: '2026-08-07T05:01:44'
+updated: '2026-08-18T20:50:51'
 ---
 noncomputable def thetaFieldH1PairEquiv :
     Sheaf.HModule (thetaTwistSheaf π n) 1 ≃ₗ[k] (thetaFieldPair C π n).H1 :=

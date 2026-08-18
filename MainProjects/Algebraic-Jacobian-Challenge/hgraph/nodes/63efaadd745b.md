@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.T_mem_nonneg_of_nonneg
 type: lean
-updated: '2026-07-24T03:02:13'
+updated: '2026-08-18T20:52:10'
 ---
 lemma T_mem_nonneg_of_nonneg {n : ℤ} (hn : 0 ≤ n) :
     (T n : LaurentPolynomial R) ∈ nonnegLaurentSubmodule R := by

@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.GaloisDescent.StableAffineOpen.gluedQuotientOverHomEquiv_precomp
 type: lean
-updated: '2026-08-14T14:17:16'
+updated: '2026-08-18T20:51:05'
 ---
 theorem gluedQuotientOverHomEquiv_precomp
     [FiniteDimensional K L] [IsGalois K L] [rho.OrbitsInAffineOpen]

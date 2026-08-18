@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.relTwistDiff_apply
 type: lean
-updated: '2026-08-07T05:01:44'
+updated: '2026-08-18T20:50:51'
 ---
 lemma relTwistDiff_apply
     (p : ↥(twistSubmodule R (relCover C R D).V₀ (relCover C R D).V₁ g

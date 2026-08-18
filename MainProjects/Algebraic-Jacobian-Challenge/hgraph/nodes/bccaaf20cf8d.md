@@ -23,7 +23,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.bcNerve_drop_δ_sigma
 type: lean
-updated: '2026-07-29T07:08:52'
+updated: '2026-08-18T20:52:01'
 ---
 theorem bcNerve_drop_δ_sigma (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
     (h : IsPullback g' f' f g) (𝒰 : X.OpenCover)

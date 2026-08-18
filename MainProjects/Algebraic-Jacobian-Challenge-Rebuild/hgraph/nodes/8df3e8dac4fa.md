@@ -20,7 +20,7 @@ tags:
 - ADAPTED
 title: AlgebraicGeometry.genus
 type: lean
-updated: '2026-08-14T17:31:52'
+updated: '2026-08-18T20:50:50'
 ---
 noncomputable def genus (C : Over (Spec (.of k))) [IsProper C.hom]
     [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIrreducible C.hom] : ℕ :=

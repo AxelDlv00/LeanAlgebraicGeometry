@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.SepClosedTranslatedDropResult.rankOneLayer_isSplitWitness
 type: lean
-updated: '2026-08-07T04:54:08'
+updated: '2026-08-18T20:51:05'
 ---
 theorem SepClosedTranslatedDropResult.rankOneLayer_isSplitWitness
     (mu : picEt C (overSpec k K))

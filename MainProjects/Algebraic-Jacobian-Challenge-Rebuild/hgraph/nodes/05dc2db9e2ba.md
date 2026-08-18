@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.abelDivAffPlus_toAff
 type: lean
-updated: '2026-08-07T05:01:50'
+updated: '2026-08-18T20:51:00'
 ---
 theorem abelDivAffPlus_toAff {A : Type u} [CommRing A] [Algebra k A]
     {π : C.left ⟶ P1 k} [IsAffineHom π] (F₀ : DivFamZar C A π n) :

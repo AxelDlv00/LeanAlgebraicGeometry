@@ -10,7 +10,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.modules_res_res
 type: lean
-updated: '2026-07-28T13:22:16'
+updated: '2026-08-18T20:52:07'
 ---
 private lemma modules_res_res {Y : Scheme.{u}} (N : Y.Modules) {W₁ W₂ W₃ : Y.Opens}
     (i₁ : W₁ ≤ W₂) (i₂ : W₂ ≤ W₃) (i₃ : W₁ ≤ W₃) (ξ : Γ(N, W₃)) :

@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivisorAdaptation.exists_germ_pulledEqn_eq_unit_mul_pullbackEqn
 type: lean
-updated: '2026-08-07T05:01:47'
+updated: '2026-08-18T20:50:56'
 ---
 theorem exists_germ_pulledEqn_eq_unit_mul_pullbackEqn
     (j : A.index) (z : relCurve C R')

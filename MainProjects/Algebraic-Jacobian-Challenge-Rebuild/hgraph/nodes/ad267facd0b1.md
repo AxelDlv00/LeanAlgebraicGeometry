@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.windowBound_add_two_mul_genus_le_M_sub_S_mul
 type: lean
-updated: '2026-08-07T05:02:01'
+updated: '2026-08-18T20:51:09'
 ---
 theorem windowBound_add_two_mul_genus_le_M_sub_S_mul (g : ℕ) :
     windowBound π hπ + 2 * (g : ℤ) + (windowS_choice π hπ g : ℤ) * windowδ π

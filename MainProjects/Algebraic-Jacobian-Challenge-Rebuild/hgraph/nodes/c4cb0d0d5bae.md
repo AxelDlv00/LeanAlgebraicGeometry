@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.not_pointwiseCoverage_abelSigmaChartZero_of_ne_top
 type: lean
-updated: '2026-08-07T05:01:56'
+updated: '2026-08-18T20:51:05'
 ---
 theorem not_pointwiseCoverage_abelSigmaChartZero_of_ne_top
     (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)

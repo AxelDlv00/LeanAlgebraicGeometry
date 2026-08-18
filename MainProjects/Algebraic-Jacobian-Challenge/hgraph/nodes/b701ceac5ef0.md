@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.cechSectionAugComplex_d_zero_one
 type: lean
-updated: '2026-07-25T08:32:26'
+updated: '2026-08-18T20:52:01'
 ---
 lemma cechSectionAugComplex_d_zero_one :
     (cechSectionAugComplex 𝒰 F V).d 0 1 = sectionCechAugV 𝒰 F V :=

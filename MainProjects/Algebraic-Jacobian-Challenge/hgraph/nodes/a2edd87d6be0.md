@@ -13,7 +13,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Grassmannian.biproduct_matrix_comp
 type: lean
-updated: '2026-07-28T13:22:16'
+updated: '2026-08-18T20:52:05'
 ---
 private lemma biproduct_matrix_comp {S : Scheme.{0}} {d : ℕ}
     (mM mN : Fin d → Fin d →

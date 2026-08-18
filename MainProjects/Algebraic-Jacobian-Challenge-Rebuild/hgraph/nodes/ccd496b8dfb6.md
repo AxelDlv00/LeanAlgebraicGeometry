@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ProjectiveSpace.map_toProjInt
 type: lean
-updated: '2026-08-07T05:01:59'
+updated: '2026-08-18T20:51:08'
 ---
 lemma map_toProjInt (f : S ⟶ T) : map n f ≫ toProjInt n T = toProjInt n S := by
   rw [toProjInt_eq_snd, toProjInt_eq_snd]

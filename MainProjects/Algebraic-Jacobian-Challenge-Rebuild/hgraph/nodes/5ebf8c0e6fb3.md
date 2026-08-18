@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.thetaOverlapSectionsToTriple
 type: lean
-updated: '2026-08-07T05:01:52'
+updated: '2026-08-18T20:51:01'
 ---
 noncomputable def thetaOverlapSectionsToTriple (A : AffAdaptation D d) (a : ℕ)
     (p q i j l : D.index)

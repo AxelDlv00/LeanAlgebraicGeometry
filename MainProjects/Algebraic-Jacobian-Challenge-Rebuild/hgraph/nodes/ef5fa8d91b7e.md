@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.Functor.RepresentableBy.uniqueUpToIsoOfIso_ofLeftAdjoint_conjugate
 type: lean
-updated: '2026-08-07T05:01:58'
+updated: '2026-08-18T20:51:07'
 ---
 theorem uniqueUpToIsoOfIso_ofLeftAdjoint_conjugate
     {C : Type u} {D : Type u'} [Category.{v, u} C] [Category.{v, u'} D]

@@ -36,7 +36,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.exists_moduleFinite_subalgebra_factorization
 type: lean
-updated: '2026-07-30T05:53:10'
+updated: '2026-08-18T20:52:03'
 ---
 theorem exists_moduleFinite_subalgebra_factorization {k Ks : Type u} [Field k] [Field Ks]
     [Algebra k Ks] [Algebra.IsAlgebraic k Ks] {X : Scheme.{u}}

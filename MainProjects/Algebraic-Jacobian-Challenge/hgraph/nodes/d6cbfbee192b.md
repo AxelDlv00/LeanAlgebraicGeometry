@@ -22,7 +22,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicScheme.picEt_isSheaf_forget
 type: lean
-updated: '2026-07-28T12:23:41'
+updated: '2026-08-18T20:52:07'
 ---
 theorem picEt_isSheaf_forget {k : Type u} [Field k]
     (C : Over (Spec (CommRingCat.of k)))

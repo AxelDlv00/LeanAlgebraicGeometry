@@ -25,7 +25,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.overRestrictPresentationInv
 type: lean
-updated: '2026-07-25T06:32:31'
+updated: '2026-08-18T20:52:07'
 ---
 noncomputable def overRestrictPresentationInv (V : X.Opens) (M : X.Modules)
     (P : ((Scheme.Modules.pullback V.ι).obj M).Presentation) : (M.over V).Presentation :=

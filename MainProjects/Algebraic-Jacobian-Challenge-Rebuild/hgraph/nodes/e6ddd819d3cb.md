@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.localDualNumberHomEquivCotangentSpaceDual
 type: lean
-updated: '2026-08-07T05:02:01'
+updated: '2026-08-18T20:51:09'
 ---
 noncomputable def localDualNumberHomEquivCotangentSpaceDual :
     {f : R →ₐ[k] DualNumber k // ∀ x ∈ maximalIdeal R, fst (f x) = 0}

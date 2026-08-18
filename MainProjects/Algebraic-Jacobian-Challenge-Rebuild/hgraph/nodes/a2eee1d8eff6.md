@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_snd_mem_of_fst_eq_of_mem
 type: lean
-updated: '2026-08-07T05:01:42'
+updated: '2026-08-18T20:50:49'
 ---
 theorem exists_snd_mem_of_fst_eq_of_mem
     {kbar : Type u} [Field kbar]

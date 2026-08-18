@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.toOvlLeft
 type: lean
-updated: '2026-08-07T05:01:50'
+updated: '2026-08-18T20:51:00'
 ---
 noncomputable def toOvlLeft (i j : D.index) : A.colength i →ₐ[R] A.ovlColength i j :=
   Ideal.Quotient.liftₐ (Ideal.span {A.eqn i})

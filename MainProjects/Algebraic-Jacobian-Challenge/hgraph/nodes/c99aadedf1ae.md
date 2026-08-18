@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.cechEngineComplexAug
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-08-18T20:52:02'
 ---
 noncomputable def cechEngineComplexAug (𝒰 : X.OpenCover) (V : TopologicalSpace.Opens ↥X) :
     cechEngineComplex 𝒰 V ⟶ (ChainComplex.single₀ _).obj (coverSectionModule V) :=

@@ -19,7 +19,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.DivFamily.hasFiberDeg_pullbackAlong_degLocusHom
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-08-18T20:52:03'
 ---
 theorem hasFiberDeg_pullbackAlong_degLocusHom {T : Over S} (x : DivFamily π T)
     (hlc : IsLocallyConstant x.fiberDeg) (d : ℕ) :

@@ -12,7 +12,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Scheme.PicSharp.relFunctorial_id
 type: lean
-updated: '2026-07-28T13:22:17'
+updated: '2026-08-18T20:52:07'
 ---
 private lemma relFunctorial_id {S C T : Scheme.{u}}
     (πC : C ⟶ S) (πT : T ⟶ S) (hg : πT = 𝟙 T ≫ πT)

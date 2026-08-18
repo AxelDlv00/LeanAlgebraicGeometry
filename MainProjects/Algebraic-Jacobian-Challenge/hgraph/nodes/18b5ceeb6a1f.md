@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.unitEndSection_id
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-08-18T20:52:06'
 ---
 lemma unitEndSection_id {X : Scheme.{0}} :
     unitEndSection (𝟙 (SheafOfModules.unit X.ringCatSheaf)) = 1 := rfl

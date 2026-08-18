@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DatG0.exists_finSubext_tensorProduct_algHom
 type: lean
-updated: '2026-08-16T20:15:44'
+updated: '2026-08-18T20:51:03'
 ---
 theorem exists_finSubext_tensorProduct_algHom
     {F K A B : Type u} [Field F] [Field K] [Algebra F K]

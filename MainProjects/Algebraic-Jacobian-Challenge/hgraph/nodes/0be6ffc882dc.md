@@ -49,7 +49,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.isQuasicoherent_pushforward_specMap
 type: lean
-updated: '2026-07-29T01:14:28'
+updated: '2026-08-18T20:52:01'
 ---
 theorem isQuasicoherent_pushforward_specMap {R R' : CommRingCat.{u}} (φ : R ⟶ R')
     (M : (Spec R').Modules) (hM : M.IsQuasicoherent) :

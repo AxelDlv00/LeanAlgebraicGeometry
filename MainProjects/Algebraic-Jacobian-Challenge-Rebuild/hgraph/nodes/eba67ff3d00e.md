@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivFamZarAff.picClass_mk
 type: lean
-updated: '2026-08-07T05:01:52'
+updated: '2026-08-18T20:51:01'
 ---
 lemma picClass_mk (d : (relCurve C R).LocalEquations)
     (hd : IsLocallyCertifiedAff n d) : picClass (mk d hd) = d.picClass :=

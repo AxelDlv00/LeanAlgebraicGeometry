@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.LaurentChartData.FiniteMapGenerators.localProjectiveFamily
 type: lean
-updated: '2026-07-31T02:29:39'
+updated: '2026-08-18T20:52:04'
 ---
 def localProjectiveFamily (b : ULift.{u} Bool) :
     (G.projectiveOpen b).toScheme ⟶

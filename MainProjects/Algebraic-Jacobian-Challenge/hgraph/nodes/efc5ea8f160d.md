@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ProjTwist.chart_overlap_swap
 type: lean
-updated: '2026-07-27T12:33:55'
+updated: '2026-08-18T20:52:08'
 ---
 lemma chart_overlap_swap (i j : n) :
     (glueData n).f i j ≫ (basicOpenCover n).f i

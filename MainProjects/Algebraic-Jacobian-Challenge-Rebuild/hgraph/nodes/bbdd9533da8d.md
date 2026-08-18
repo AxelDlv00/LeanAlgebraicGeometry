@@ -19,7 +19,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.LocalEquations.germ_pullbackEqn_mem_nonZeroDivisors_of_immersion_cover
 type: lean
-updated: '2026-08-07T05:01:53'
+updated: '2026-08-18T20:51:02'
 ---
 theorem germ_pullbackEqn_mem_nonZeroDivisors_of_immersion_cover
     {ι : Type*} {Z : ι → Scheme.{u}} (w : ∀ i, Z i ⟶ Y) [∀ i, IsOpenImmersion (w i)]

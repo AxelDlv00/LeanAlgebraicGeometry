@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.matrixPoint_toSubmodule
 type: lean
-updated: '2026-08-07T05:01:54'
+updated: '2026-08-18T20:51:03'
 ---
 lemma matrixPoint_toSubmodule (X : Matrix (Fin d) (Fin r) S)
     (hX : Function.Surjective (matrixProj k d r S X)) :

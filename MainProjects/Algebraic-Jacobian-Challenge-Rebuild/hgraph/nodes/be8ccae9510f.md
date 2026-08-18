@@ -27,7 +27,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PointwiseAchiever.rankAtStalk_colength_univSeed_of_swallowedBy
 type: lean
-updated: '2026-08-07T05:01:47'
+updated: '2026-08-18T20:50:56'
 ---
 theorem rankAtStalk_colength_univSeed_of_swallowedBy (hb : 0 < windowBound pi hpi)
     (Dc : AffCoverData C RZ)

@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.picClass_thetaFieldDivisor
 type: lean
-updated: '2026-08-07T05:01:52'
+updated: '2026-08-18T20:51:02'
 ---
 theorem picClass_thetaFieldDivisor :
     Scheme.CurveDivisor.picClass K (thetaFieldDivisor C K π a)

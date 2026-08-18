@@ -9,6 +9,6 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.AffineTwoCover.boolFamily_inf
 type: lean
-updated: '2026-08-07T05:02:02'
+updated: '2026-08-18T20:51:09'
 ---
 @[simp] theorem boolFamily_inf : D.boolFamily false ⊓ D.boolFamily true = D.V₀ ⊓ D.V₁ := rfl

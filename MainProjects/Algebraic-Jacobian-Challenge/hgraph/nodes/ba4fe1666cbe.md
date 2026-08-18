@@ -18,7 +18,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Scheme.Modules.sheafificationCounitIso
 type: lean
-updated: '2026-07-28T13:22:17'
+updated: '2026-08-18T20:52:08'
 ---
 private noncomputable def sheafificationCounitIso (G : X.Modules) :
     sheafification.obj ((toPresheafOfModules X).obj G) ≅ G :=

@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.singleton_pullback_mem_etalePrecoverage
 type: lean
-updated: '2026-07-29T23:41:45'
+updated: '2026-08-18T20:52:04'
 ---
 theorem singleton_pullback_mem_etalePrecoverage (T : Over (Spec (CommRingCat.of k))) :
     Presieve.singleton

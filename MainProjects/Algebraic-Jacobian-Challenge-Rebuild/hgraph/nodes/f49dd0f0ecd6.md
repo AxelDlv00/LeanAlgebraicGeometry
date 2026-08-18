@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ThetaGeneratorSeed.relPinnedTermBaseChangeAlg
 type: lean
-updated: '2026-08-07T05:01:49'
+updated: '2026-08-18T20:50:58'
 ---
 noncomputable def relPinnedTermBaseChangeAlg (b : Bool) :
     R' ⊗[R] Γ(relCurve C R, relPinnedChart C R π b) ≃ₐ[R']

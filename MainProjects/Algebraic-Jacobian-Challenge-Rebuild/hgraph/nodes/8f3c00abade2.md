@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.thetaFieldRead_apply
 type: lean
-updated: '2026-08-07T05:01:52'
+updated: '2026-08-18T20:51:02'
 ---
 lemma thetaFieldRead_apply (s : relThetaSections C K π a) :
     thetaFieldRead C K π a s

@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divisorSectionsEquivH0
 type: lean
-updated: '2026-08-07T05:02:01'
+updated: '2026-08-18T20:51:08'
 ---
 noncomputable def divisorSectionsEquivH0 (A : X.CurveDivisor) :
     Sheaf.HModule (X.divisorSheaf K A) 0 ≃ₗ[K] ↥(divisorSections K A ⊤) :=

@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.BasicOpenCocycleDatum.resHom_piecesMap_eq_relAffSectionsMap
 type: lean
-updated: '2026-08-11T11:10:29'
+updated: '2026-08-18T20:51:05'
 ---
 theorem resHom_piecesMap_eq_relAffSectionsMap
     [IsAffineHom pi]

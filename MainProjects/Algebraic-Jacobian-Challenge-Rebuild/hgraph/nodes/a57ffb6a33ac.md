@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.thetaTripleOpen_le_pair23
 type: lean
-updated: '2026-08-07T05:01:52'
+updated: '2026-08-18T20:51:01'
 ---
 theorem thetaTripleOpen_le_pair23 (A : AffAdaptation D d) (i j l : D.index) :
     A.thetaTripleOpen i j l ≤ D.pieces j ⊓ D.pieces l := by

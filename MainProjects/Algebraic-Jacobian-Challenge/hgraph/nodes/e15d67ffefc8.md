@@ -38,7 +38,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Pic0Et.geometricallyReduced_of_leafB
 type: lean
-updated: '2026-07-30T00:50:57'
+updated: '2026-08-18T20:52:06'
 ---
 theorem geometricallyReduced_of_leafB
     (hB : SmoothOfRelativeDimension (genus C) (Pic0SchemeEt C).hom) :

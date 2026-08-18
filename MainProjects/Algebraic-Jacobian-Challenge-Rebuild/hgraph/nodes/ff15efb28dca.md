@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.tensorPushoutAlgEquivCongr
 type: lean
-updated: '2026-08-17T13:21:30'
+updated: '2026-08-18T20:51:05'
 ---
 noncomputable def tensorPushoutAlgEquivCongr
     {R A1 A2 B1 B2 D1 D2 : Type u}

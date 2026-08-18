@@ -22,7 +22,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ThetaGeneratorSeed.isLocallyCertifiedAff_of_forall_prime_certified_adaptation
 type: lean
-updated: '2026-08-07T05:01:51'
+updated: '2026-08-18T20:51:01'
 ---
 theorem isLocallyCertifiedAff_of_forall_prime_certified_adaptation [IsNoetherianRing R] {n : ℕ}
     (hD : D.IsGenerator)

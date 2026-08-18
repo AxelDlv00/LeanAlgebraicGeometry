@@ -20,7 +20,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.coherentSheafFlat_of_isZero
 type: lean
-updated: '2026-07-30T16:21:06'
+updated: '2026-08-18T20:52:03'
 ---
 theorem coherentSheafFlat_of_isZero {S' : Scheme.{u}} (g : Y ⟶ S') {M : Y.Modules}
     (hM : IsZero M) : Scheme.CoherentSheafFlat g M := by

@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.mem_orderGe_of_ne_zero
 type: lean
-updated: '2026-07-24T03:02:13'
+updated: '2026-08-18T20:52:10'
 ---
 theorem mem_orderGe_of_ne_zero {P : X.PrimeDivisor} {m : ℤ} {f : X.functionField}
     (hf : f ≠ 0) : f ∈ orderGe P m ↔ m ≤ Scheme.RationalMap.order P f := by

@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: Module.DescentDatum.projective_descended
 type: lean
-updated: '2026-08-07T05:01:46'
+updated: '2026-08-18T20:50:54'
 ---
 theorem projective_descended [Module.Finite B M] [Projective B M] :
     Projective A D.descended := by

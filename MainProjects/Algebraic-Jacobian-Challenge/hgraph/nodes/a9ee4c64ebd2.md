@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.isSheaf_moduleKPresheaf
 type: lean
-updated: '2026-07-28T18:12:20'
+updated: '2026-08-18T20:52:11'
 ---
 lemma Scheme.isSheaf_moduleKPresheaf :
     Presheaf.IsSheaf (Opens.grothendieckTopology (X : TopCat)) (X.moduleKPresheaf k) := by

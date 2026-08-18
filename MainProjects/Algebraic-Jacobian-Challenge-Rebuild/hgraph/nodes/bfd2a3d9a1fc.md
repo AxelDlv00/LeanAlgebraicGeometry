@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.finite_submodule_of_projective_quotient
 type: lean
-updated: '2026-08-07T05:01:47'
+updated: '2026-08-18T20:50:55'
 ---
 theorem finite_submodule_of_projective_quotient [Module.Finite R M] :
     Module.Finite R ↥N :=

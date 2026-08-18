@@ -29,7 +29,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.ordZ_toAdd_eq_log_ordFrac
 type: lean
-updated: '2026-07-28T19:26:15'
+updated: '2026-08-18T20:52:11'
 ---
 theorem Scheme.ordZ_toAdd_eq_log_ordFrac (f : X ⟶ Spec (CommRingCat.of K))
     [SmoothOfRelativeDimension 1 f] [IsIntegral X] [IsLocallyNoetherian X]

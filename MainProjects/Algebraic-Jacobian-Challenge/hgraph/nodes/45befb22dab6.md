@@ -27,7 +27,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.tilde_section_isLocalizedModule
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-08-18T20:52:02'
 ---
 lemma tilde_section_isLocalizedModule (M : ModuleCat.{u} R) (f : R) :
     IsLocalizedModule (Submonoid.powers f)

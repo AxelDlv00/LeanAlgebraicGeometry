@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.sliceDualTransportInv_app_apply
 type: lean
-updated: '2026-07-25T13:02:37'
+updated: '2026-08-18T20:52:09'
 ---
 lemma sliceDualTransportInv_app_apply {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImmersion f]
     (M : X.Modules) (V : (TopologicalSpace.Opens ↥Y)ᵒᵖ)

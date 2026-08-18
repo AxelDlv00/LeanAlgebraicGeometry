@@ -28,7 +28,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.SheafGammaObj_linearEquiv_top
 type: lean
-updated: '2026-07-27T01:33:11'
+updated: '2026-08-18T20:52:03'
 ---
 noncomputable def SheafGammaObj_linearEquiv_top
     (k : Type u) [Field k] {X : TopCat.{u}}

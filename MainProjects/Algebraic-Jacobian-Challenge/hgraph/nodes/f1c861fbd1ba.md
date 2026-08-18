@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.FGDescent.rTensorAlgHom_tmul
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-08-18T20:52:04'
 ---
 lemma rTensorAlgHom_tmul {R R' : Type w} [CommRing R] [CommRing R']
     [Algebra k R] [Algebra k R'] (ρ : R →ₐ[k] R')

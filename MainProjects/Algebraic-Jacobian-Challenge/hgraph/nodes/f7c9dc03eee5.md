@@ -23,7 +23,7 @@ generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.leakProbe_wiringConsumed
 type: lean
-updated: '2026-08-03T16:00:49'
+updated: '2026-08-18T20:52:12'
 ---
 noncomputable def leakProbe_wiringConsumed (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
     (h : IsPullback g' f' f g) (𝒰 : X.OpenCover) [Finite 𝒰.I₀]

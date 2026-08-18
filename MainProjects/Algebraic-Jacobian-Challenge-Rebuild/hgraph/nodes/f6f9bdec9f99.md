@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.pic0SigmaEtaleSheafIso
 type: lean
-updated: '2026-08-07T05:01:57'
+updated: '2026-08-18T20:51:06'
 ---
 noncomputable def pic0SigmaEtaleSheafIso :
     pic0SigmaEtaleSheaf C ≅ pic0SigmaEtaleSheafification C :=

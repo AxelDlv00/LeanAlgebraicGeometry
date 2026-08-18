@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: Module.IsDescentCocycle
 type: lean
-updated: '2026-08-07T05:01:46'
+updated: '2026-08-18T20:50:55'
 ---
 structure IsDescentCocycle (u : (B ⊗[A] B)ˣ) : Prop where
   /-- Normalization: the multiplication `B ⊗[A] B → B` sends the cocycle to `1`. -/

@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.leakProbe_isIso_app_pi
 type: lean
-updated: '2026-08-03T16:00:49'
+updated: '2026-08-18T20:52:12'
 ---
 theorem leakProbe_isIso_app_pi {C D : Type*} [Category C] [Category D]
     {P Q : C ⥤ D} (α : P ⟶ Q) {J : Type*} [Finite J] (A : J → C)

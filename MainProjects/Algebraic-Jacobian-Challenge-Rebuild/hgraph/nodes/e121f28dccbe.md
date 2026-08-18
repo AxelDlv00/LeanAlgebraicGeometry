@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.appLE_whiskerLeft_injective
 type: lean
-updated: '2026-08-07T05:01:58'
+updated: '2026-08-18T20:51:07'
 ---
 theorem appLE_whiskerLeft_injective (W : (XA).Opens) :
     Function.Injective ((cg).appLE W ((cg) ⁻¹ᵁ W) le_rfl).hom := by

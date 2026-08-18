@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.mem_prime_of_windowEquiv_fibre_dvd
 type: lean
-updated: '2026-08-07T05:01:49'
+updated: '2026-08-18T20:50:59'
 ---
 theorem mem_prime_of_windowEquiv_fibre_dvd
     (b : Bool) {z : relCurve C R}

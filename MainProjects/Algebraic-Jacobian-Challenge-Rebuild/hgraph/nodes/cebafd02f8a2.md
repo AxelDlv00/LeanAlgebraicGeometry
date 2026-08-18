@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.overSpecFieldExtension_mem_fpqcTopology
 type: lean
-updated: '2026-08-07T05:01:56'
+updated: '2026-08-18T20:51:04'
 ---
 theorem overSpecFieldExtension_mem_fpqcTopology :
     Sieve.generate (Presieve.singleton (overSpec k L).hom) ∈

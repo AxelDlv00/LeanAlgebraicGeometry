@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.restrictFunctor_preservesLimits.{w,
 type: lean
-updated: '2026-07-28T12:23:40'
+updated: '2026-08-18T20:52:05'
 ---
 noncomputable instance restrictFunctor_preservesLimits.{w, w'} {X Y : Scheme.{u}}
     (f : X ⟶ Y) [IsOpenImmersion f] :

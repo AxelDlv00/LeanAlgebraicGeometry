@@ -30,7 +30,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.functor
 type: lean
-updated: '2026-07-26T06:03:22'
+updated: '2026-08-18T20:52:05'
 ---
 noncomputable def functor (d r : ℕ) : Scheme.{0}ᵒᵖ ⥤ Type 1 where
   obj T := Quotient (rqSetoid r d T.unop)

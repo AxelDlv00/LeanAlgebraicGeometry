@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.twistCollapseN_diff
 type: lean
-updated: '2026-08-07T05:01:44'
+updated: '2026-08-18T20:50:51'
 ---
 lemma twistCollapseN_diff
     (z : (thetaTwistSheaf π n).obj.obj (op (fiberChart₀ π)) ×

@@ -31,7 +31,7 @@ generated: lean
 lean_status: lean_ok
 title: Module.Flat.of_surjective_exact_of_forall_mem_smul_top
 type: lean
-updated: '2026-08-07T05:01:58'
+updated: '2026-08-18T20:51:07'
 ---
 theorem Module.Flat.of_surjective_exact_of_forall_mem_smul_top [Module.Flat R M]
     (φ : M →ₗ[R] M) (π : M →ₗ[R] Q) (hsurj : Function.Surjective π)

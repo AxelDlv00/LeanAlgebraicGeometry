@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.fromSpec_restrict_ring_section
 type: lean
-updated: '2026-08-01T04:12:00'
+updated: '2026-08-18T20:52:03'
 ---
 lemma fromSpec_restrict_ring_section
     {U : X.Opens} (hU : IsAffineOpen U)

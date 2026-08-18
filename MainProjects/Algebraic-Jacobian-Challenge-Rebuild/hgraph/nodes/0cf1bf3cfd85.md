@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divFamZarAff.eval
 type: lean
-updated: '2026-08-07T05:01:52'
+updated: '2026-08-18T20:51:01'
 ---
 def eval (U : T.left.affineOpens) : divFamZarAff C n T → DivFamZarAff C Γ(T.left, U.1) n :=
   fun s => s.1 U

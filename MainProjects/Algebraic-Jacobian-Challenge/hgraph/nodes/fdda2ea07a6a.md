@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.TwoTermFiniteReplacement.fiberVirtualRank_independent
 type: lean
-updated: '2026-08-03T08:55:17'
+updated: '2026-08-18T20:52:09'
 ---
 theorem fiberVirtualRank_independent
     {A : Type u} [CommRing A]

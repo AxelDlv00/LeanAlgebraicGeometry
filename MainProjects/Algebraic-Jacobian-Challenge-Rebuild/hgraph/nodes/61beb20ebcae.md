@@ -41,7 +41,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.pullbackOverlapQuot_dualNumberCechH1Equiv_mk
 type: lean
-updated: '2026-08-07T05:02:01'
+updated: '2026-08-18T20:51:09'
 ---
 theorem pullbackOverlapQuot_dualNumberCechH1Equiv_mk
     (hc : ∀ s, IsCompact ((U s : Set C.left))) (hq : ∀ s, IsQuasiSeparated ((U s : Set C.left)))

@@ -21,7 +21,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.CombinatorialCech.combDifferential_exact
 type: lean
-updated: '2026-07-28T13:22:16'
+updated: '2026-08-18T20:52:00'
 ---
 private lemma combDifferential_exact (r : ι) (n : ℕ) :
     Function.Exact (combDifferential : ((Fin (n + 1) → ι) → M) → ((Fin (n + 2) → ι) → M))

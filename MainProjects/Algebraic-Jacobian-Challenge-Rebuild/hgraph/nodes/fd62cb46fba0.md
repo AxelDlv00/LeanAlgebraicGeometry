@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.subsingleton_hModule'_twistSheaf_one₁
 type: lean
-updated: '2026-08-07T05:01:45'
+updated: '2026-08-18T20:50:52'
 ---
 theorem subsingleton_hModule'_twistSheaf_one₁ (h₁ : IsAffineOpen V₁) :
     Subsingleton (Sheaf.HModule' (twistSheaf k V₀ V₁ g) V₁ 1) :=

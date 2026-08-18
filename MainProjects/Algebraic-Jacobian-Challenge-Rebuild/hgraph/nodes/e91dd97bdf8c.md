@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.germGenericUnits_val
 type: lean
-updated: '2026-08-07T05:01:55'
+updated: '2026-08-18T20:51:04'
 ---
 lemma germGenericUnits_val {U : X.Opens} (hηU : genericPoint X ∈ U) (u : Γ(X, U)ˣ) :
     (germGenericUnits hηU u : X.functionField)

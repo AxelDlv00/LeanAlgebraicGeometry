@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.DivFamily.twistQuotientMap_rel
 type: lean
-updated: '2026-07-31T18:08:01'
+updated: '2026-08-18T20:52:03'
 ---
 lemma twistQuotientMap_rel (L : X.Modules) {x y : DivFamily π T} (h : x.Rel y) :
     ∃ f : x.twist L ≅ y.twist L,

@@ -22,7 +22,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.QcohAlgebra.pullback_fst_isAffineHom
 type: lean
-updated: '2026-07-24T19:18:18'
+updated: '2026-08-18T20:52:07'
 ---
 lemma QcohAlgebra.pullback_fst_isAffineHom {X T : Scheme.{u}} (g : T ⟶ X)
     (𝒜 : X.QcohAlgebra) :

@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.degK_nonneg_of_nonneg
 type: lean
-updated: '2026-07-27T15:50:35'
+updated: '2026-08-18T20:52:10'
 ---
 theorem degK_nonneg_of_nonneg {D : X.WeilDivisor}
     (hD : ∀ P : X.PrimeDivisor, 0 ≤ (show X.PrimeDivisor →₀ ℤ from D) P) :

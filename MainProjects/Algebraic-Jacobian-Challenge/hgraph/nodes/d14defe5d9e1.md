@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.unitHomEquiv_scalarEnd
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-08-18T20:52:05'
 ---
 lemma unitHomEquiv_scalarEnd (c : Γ(X, ⊤)) :
     (SheafOfModules.unit X.ringCatSheaf).unitHomEquiv (scalarEnd c) = globalUnitSection c := by

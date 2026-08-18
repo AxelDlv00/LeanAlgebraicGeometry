@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.pic0SepClosedAtlasGlueData
 type: lean
-updated: '2026-08-16T20:15:44'
+updated: '2026-08-18T20:51:05'
 ---
 noncomputable def pic0SepClosedAtlasGlueData : Scheme.GlueData :=
   (pic0SepClosedAtlasOpenCover C).gluedCover

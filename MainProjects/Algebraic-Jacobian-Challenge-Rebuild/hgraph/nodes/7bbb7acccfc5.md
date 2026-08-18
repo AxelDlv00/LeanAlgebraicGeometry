@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.isClosed_sdiff_basicOpen_of_closure_subset
 type: lean
-updated: '2026-08-07T05:01:49'
+updated: '2026-08-18T20:50:59'
 ---
 theorem isClosed_sdiff_basicOpen_of_closure_subset {X : Scheme.{u}} {V : X.Opens}
     (g : Γ(X, V))

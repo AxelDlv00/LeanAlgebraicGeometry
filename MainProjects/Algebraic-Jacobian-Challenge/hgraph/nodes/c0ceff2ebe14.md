@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.annihilator_le_annihilator_tensorObj_right
 type: lean
-updated: '2026-08-01T04:12:00'
+updated: '2026-08-18T20:52:03'
 ---
 theorem annihilator_le_annihilator_tensorObj_right
     {X : Scheme.{u}} (A B : X.Modules) :

@@ -9,7 +9,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.FiberCoordinateData.coeffAt_nsmul
 type: lean
-updated: '2026-07-31T08:04:21'
+updated: '2026-08-18T20:52:11'
 ---
 private lemma coeffAt_nsmul (n : ℕ) (A : Y.CurveDivisor) {x : Y}
     (hx : x ≠ genericPoint Y) : coeffAt hx (n • A) = (n : ℤ) * coeffAt hx A := by

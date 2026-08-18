@@ -105,7 +105,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.GaloisDescent.isGaloisQuotient_away
 type: lean
-updated: '2026-07-30T10:40:20'
+updated: '2026-08-18T20:52:05'
 ---
 theorem isGaloisQuotient_away :
     letI := SemilinearAction.awayAction K L N hN S

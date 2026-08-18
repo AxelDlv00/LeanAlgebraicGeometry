@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: Module.trivialization_hom_ext
 type: lean
-updated: '2026-08-07T05:01:43'
+updated: '2026-08-18T20:50:49'
 ---
 theorem trivialization_hom_ext {t₁ t₂ : C ⊗[A] N →ₗ[C] C}
     (h : ∀ n : N, t₁ (1 ⊗ₜ n) = t₂ (1 ⊗ₜ n)) : t₁ = t₂ := by

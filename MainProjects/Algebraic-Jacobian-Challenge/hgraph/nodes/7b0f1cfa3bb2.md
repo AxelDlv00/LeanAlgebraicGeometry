@@ -43,7 +43,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Pic0.proper_of_ambient_universallyClosed
 type: lean
-updated: '2026-07-29T06:43:22'
+updated: '2026-08-18T20:52:06'
 ---
 theorem proper_of_ambient_universallyClosed {k : Type u} [Field k]
     (C : Over (Spec (.of k)))

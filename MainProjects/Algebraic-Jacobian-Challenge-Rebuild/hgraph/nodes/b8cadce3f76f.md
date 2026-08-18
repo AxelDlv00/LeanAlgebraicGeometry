@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.fiberCoordUnit_inv_val
 type: lean
-updated: '2026-08-07T05:02:00'
+updated: '2026-08-18T20:51:08'
 ---
 lemma fiberCoordUnit_inv_val : ((fiberCoordUnit π)⁻¹).val
     = (Y.presheaf.germ (fiberChart₁ π) (genericPoint Y)

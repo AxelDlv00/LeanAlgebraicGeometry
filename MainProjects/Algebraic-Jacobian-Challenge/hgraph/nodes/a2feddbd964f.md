@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.permDiagram
 type: lean
-updated: '2026-07-28T18:12:19'
+updated: '2026-08-18T20:51:55'
 ---
 noncomputable def permDiagram (C : K) (n : ℕ) : SingleObj (Equiv.Perm (Fin n)) ⥤ K :=
   SingleObj.functor (permEnd C n)

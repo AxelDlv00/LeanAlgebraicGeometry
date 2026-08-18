@@ -20,7 +20,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.restrictScalars_laxMonoidal_ε_app
 type: lean
-updated: '2026-07-25T11:32:39'
+updated: '2026-08-18T20:52:09'
 ---
 lemma restrictScalars_laxMonoidal_ε_app {C : Type u} [Category.{u} C]
     {R S : Cᵒᵖ ⥤ CommRingCat.{u}}

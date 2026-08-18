@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.JacobianData.uniqueUpToIso
 type: lean
-updated: '2026-08-07T05:01:55'
+updated: '2026-08-18T20:51:03'
 ---
 noncomputable def uniqueUpToIso (d d' : JacobianData C) : d.J ≅ d'.J :=
   d.rep.uniqueUpToIso d'.rep

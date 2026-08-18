@@ -42,7 +42,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.exists_gammaBaseChange_of_kerPure
 type: lean
-updated: '2026-07-27T20:42:16'
+updated: '2026-08-18T20:52:07'
 ---
 theorem exists_gammaBaseChange_of_kerPure {X Y X' Y' : Scheme.{u}}
     {f : X ⟶ Y} {g : Y' ⟶ Y} {f' : X' ⟶ Y'} {g' : X' ⟶ X}

@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.p1PolyToAway
 type: lean
-updated: '2026-07-27T17:35:58'
+updated: '2026-08-18T20:52:08'
 ---
 noncomputable def p1PolyToAway (i j : ULift.{u} (Fin 2)) :
     Polynomial R →ₐ[R] Away (homogeneousSubmodule (ULift.{u} (Fin 2)) R) (X i) :=

@@ -32,7 +32,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.epi_pullbackKernelComparison
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-08-18T20:52:04'
 ---
 lemma Modules.epi_pullbackKernelComparison
     {X' X : Scheme.{u}} (g' : X' ⟶ X) {E F : X.Modules} (q : E ⟶ F) [Epi q] :

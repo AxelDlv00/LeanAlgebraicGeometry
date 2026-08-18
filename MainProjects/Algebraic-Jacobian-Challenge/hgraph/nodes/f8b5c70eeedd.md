@@ -22,7 +22,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Pic0Et.isReduced_algebraicClosureBaseChange_of_geometricallyReduced
 type: lean
-updated: '2026-07-29T23:31:11'
+updated: '2026-08-18T20:52:06'
 ---
 theorem isReduced_algebraicClosureBaseChange_of_geometricallyReduced
     (h : GeometricallyReduced (Pic0SchemeEt C).hom) :

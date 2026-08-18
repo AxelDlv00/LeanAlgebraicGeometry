@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.HModule'_shortComplex
 type: lean
-updated: '2026-07-29T11:05:39'
+updated: '2026-08-18T20:52:02'
 ---
 noncomputable def HModule'_shortComplex
     (k : Type u) [Field k]

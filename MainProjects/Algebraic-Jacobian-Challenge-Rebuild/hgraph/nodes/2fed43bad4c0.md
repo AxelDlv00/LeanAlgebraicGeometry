@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.transitionSectionsBaseChange
 type: lean
-updated: '2026-08-07T05:01:45'
+updated: '2026-08-18T20:50:52'
 ---
 noncomputable def Over.transitionSectionsBaseChange {V : (C ⊗ overSpec k K₁).left.Opens}
     (hV : IsAffineOpen V) :

@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.BasicOpenCocycleDatum.moduleFinite_aeval'_pair_t₁
 type: lean
-updated: '2026-08-07T05:01:44'
+updated: '2026-08-18T20:50:50'
 ---
 theorem moduleFinite_aeval'_pair_t₁ (hπ : π ≫ P1.structureMap k = C.hom) :
     Module.Finite (Polynomial B) (Module.AEval'

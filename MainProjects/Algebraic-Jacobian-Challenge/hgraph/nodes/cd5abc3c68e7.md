@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.GradedModule.SubquotientDatum.coker
 type: lean
-updated: '2026-07-27T12:05:12'
+updated: '2026-08-18T20:52:05'
 ---
 noncomputable def SubquotientDatum.coker {r : ℕ} (D : SubquotientDatum ℳ (r + 1)) :
     SubquotientDatum ℳ r where

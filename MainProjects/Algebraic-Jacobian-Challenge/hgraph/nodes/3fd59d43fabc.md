@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.cechSectionHomotopyZeroAug_eq
 type: lean
-updated: '2026-07-26T00:02:54'
+updated: '2026-08-18T20:52:01'
 ---
 lemma cechSectionHomotopyZeroAug_eq :
     cechSectionHomotopyZeroAug 𝒰 F V i_fix hiV =

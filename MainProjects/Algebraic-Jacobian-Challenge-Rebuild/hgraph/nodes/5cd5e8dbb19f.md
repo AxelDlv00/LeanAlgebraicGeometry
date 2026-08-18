@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.canonicalRankOneAbelSliceIso
 type: lean
-updated: '2026-08-14T14:17:16'
+updated: '2026-08-18T20:51:06'
 ---
 noncomputable def canonicalRankOneAbelSliceIso :
     (divRankOnePresentationPreimageRepresenter (divRepAffP1Map C)).toFunctor ≅

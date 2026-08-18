@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.finrank_cotangentSpace_eq_of_ringEquiv
 type: lean
-updated: '2026-07-29T05:21:16'
+updated: '2026-08-18T20:52:06'
 ---
 theorem finrank_cotangentSpace_eq_of_ringEquiv
     {A B : Type u} [CommRing A] [CommRing B] [IsLocalRing A] [IsLocalRing B]

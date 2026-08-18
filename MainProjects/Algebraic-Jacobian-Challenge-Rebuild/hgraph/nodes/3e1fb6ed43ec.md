@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.germ_eqn_span_eq_stalkIdeal
 type: lean
-updated: '2026-08-07T05:01:51'
+updated: '2026-08-18T20:51:01'
 ---
 theorem germ_eqn_span_eq_stalkIdeal (j : D.index) {z : relCurve C R}
     (hz : z ∈ D.pieces j) :

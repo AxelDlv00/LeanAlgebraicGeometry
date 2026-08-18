@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.canonicalRankOneAbelIso
 type: lean
-updated: '2026-08-14T10:32:16'
+updated: '2026-08-18T20:51:05'
 ---
 noncomputable def canonicalRankOneAbelIso :
     rankOneDivisorLocus (C := C) (pi := divRepAffP1Map C) ≅

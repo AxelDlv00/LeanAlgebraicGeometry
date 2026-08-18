@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.FiberCoordinateData.coordinateUnit
 type: lean
-updated: '2026-07-31T08:04:21'
+updated: '2026-08-18T20:52:11'
 ---
 noncomputable def coordinateUnit : Y.functionFieldˣ where
   val := (Y.presheaf.germ D.V₀ (genericPoint Y) (D.genericPoint_mem_inf).1).hom D.x

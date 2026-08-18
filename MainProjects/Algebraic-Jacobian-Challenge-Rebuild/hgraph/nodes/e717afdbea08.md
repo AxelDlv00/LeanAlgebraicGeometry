@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.P1.isStandardSmoothOfRelativeDimension_away
 type: lean
-updated: '2026-08-07T05:01:45'
+updated: '2026-08-18T20:50:53'
 ---
 theorem isStandardSmoothOfRelativeDimension_away {i j : Fin 2} (hij : i ≠ j) :
     Algebra.IsStandardSmoothOfRelativeDimension 1 k (Away 𝒜 (X i)) :=

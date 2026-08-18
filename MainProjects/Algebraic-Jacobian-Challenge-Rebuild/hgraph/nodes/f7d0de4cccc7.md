@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.mem_picRankOneOpen_overSpecMap_iff
 type: lean
-updated: '2026-08-14T02:57:56'
+updated: '2026-08-18T20:51:05'
 ---
 theorem mem_picRankOneOpen_overSpecMap_iff
     (pi : C.left ⟶ P1 k) [IsFinite pi]

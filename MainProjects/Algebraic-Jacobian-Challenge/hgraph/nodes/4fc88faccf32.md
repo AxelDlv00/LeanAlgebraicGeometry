@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.cechCochain_d12_π
 type: lean
-updated: '2026-07-24T17:02:57'
+updated: '2026-08-18T20:52:10'
 ---
 lemma cechCochain_d12_π (x : Fin 3 → ι) :
     (Scheme.cechCochain C F 𝒰).d 1 2 ≫ Pi.π (cechTerm 𝒰 F 3) x

@@ -26,7 +26,7 @@ generated: lean
 lean_status: lean_ok
 title: Submodule.exists_sub_smul_mem_of_quotient_cyclic
 type: lean
-updated: '2026-08-07T05:02:01'
+updated: '2026-08-18T20:51:09'
 ---
 theorem exists_sub_smul_mem_of_quotient_cyclic (N : Submodule R M)
     (h : ∃ y : M ⧸ N, ∀ z : M ⧸ N, ∃ r : R, z = r • y) :

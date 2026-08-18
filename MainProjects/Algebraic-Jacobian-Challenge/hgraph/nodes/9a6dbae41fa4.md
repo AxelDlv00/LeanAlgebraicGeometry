@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.GradedModule.ker_le
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-08-18T20:52:05'
 ---
 lemma ker_le {x : M →ₗ[κ] M} {N N' : Submodule κ M} (hle : N' ≤ N)
     (hpresN' : N'.map x ≤ N') : N' ≤ N ⊓ N'.comap x :=

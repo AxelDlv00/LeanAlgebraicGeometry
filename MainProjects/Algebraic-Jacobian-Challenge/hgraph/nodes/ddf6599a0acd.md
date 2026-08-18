@@ -19,7 +19,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.localStepMapₖ_surjective
 type: lean
-updated: '2026-07-24T17:02:57'
+updated: '2026-08-18T20:52:10'
 ---
 theorem localStepMapₖ_surjective {U : X.Opens} {P : X.PrimeDivisor}
     (hPU : P.point ∈ U) {D D' : X.WeilDivisor}

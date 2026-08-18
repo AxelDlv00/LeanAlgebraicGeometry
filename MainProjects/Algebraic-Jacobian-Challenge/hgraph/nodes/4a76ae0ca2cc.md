@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.P1.overlapSectionsEquiv_res_left
 type: lean
-updated: '2026-07-28T18:12:20'
+updated: '2026-08-18T20:52:11'
 ---
 theorem overlapSectionsEquiv_res_left (a : Γ(P1 k, chartOpen k 0)) :
     overlapSectionsEquiv k (((P1 k).presheaf.map (homOfLE (overlap_le_left k)).op).hom a) =

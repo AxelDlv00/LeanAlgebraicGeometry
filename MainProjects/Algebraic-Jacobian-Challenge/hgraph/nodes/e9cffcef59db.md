@@ -57,7 +57,7 @@ generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.Scheme.gammaFiber_finrank_baseChange_field
 type: lean
-updated: '2026-07-27T12:05:13'
+updated: '2026-08-18T20:52:07'
 ---
 theorem gammaFiber_finrank_baseChange_field (π : X ⟶ S) (L : X.Modules)
     [L.IsQuasicoherent] {T T' : Over S} (ψ : T' ⟶ T)

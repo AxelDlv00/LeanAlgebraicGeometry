@@ -49,7 +49,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.flatteningStratification
 type: lean
-updated: '2026-07-27T01:04:43'
+updated: '2026-08-18T20:52:05'
 ---
 theorem flatteningStratification {S X : Scheme.{u}} [IsNoetherian S]
     (π : X ⟶ S) [IsProper π] (F : X.Modules) [F.IsFinitePresentation] :

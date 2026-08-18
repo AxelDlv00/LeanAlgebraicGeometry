@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.localStepQuot_injective
 type: lean
-updated: '2026-07-24T03:02:13'
+updated: '2026-08-18T20:52:10'
 ---
 theorem localStepQuot_injective {U : X.Opens} {P : X.PrimeDivisor}
     (hPU : P.point ∈ U) {D D' : X.WeilDivisor}

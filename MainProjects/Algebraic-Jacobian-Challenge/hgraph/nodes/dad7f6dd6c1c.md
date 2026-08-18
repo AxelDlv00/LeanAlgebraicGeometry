@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.preimage_inf_eq_basicOpen_fiberCoord
 type: lean
-updated: '2026-07-29T06:43:23'
+updated: '2026-08-18T20:52:11'
 ---
 theorem preimage_inf_eq_basicOpen_fiberCoord :
     fiberChart₀ π ⊓ fiberChart₁ π = Y.basicOpen (fiberCoord π) := by

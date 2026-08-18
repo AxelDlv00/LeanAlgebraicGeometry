@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.isIso_of_bijective_appTop_of_fromTildeGamma
 type: lean
-updated: '2026-08-10T13:01:39'
+updated: '2026-08-18T20:50:51'
 ---
 theorem Scheme.Modules.isIso_of_bijective_appTop_of_fromTildeGamma
     {R : CommRingCat.{u}} {M N : (Spec R).Modules}

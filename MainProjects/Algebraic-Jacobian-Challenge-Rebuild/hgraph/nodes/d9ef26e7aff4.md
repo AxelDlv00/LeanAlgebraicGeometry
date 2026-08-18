@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.shiftMap_coe
 type: lean
-updated: '2026-08-07T05:02:00'
+updated: '2026-08-18T20:51:08'
 ---
 @[simp] lemma shiftMap_coe (a : ℤ) (g : ↥(pointLattice K hx a)) :
     (shiftMap K hx a g : X.functionField) = uniformizer K hx ^ a * (g : X.functionField) :=

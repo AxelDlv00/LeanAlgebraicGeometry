@@ -9,7 +9,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.DivRepAffinePullbackAff.classifyPiece_over
 type: lean
-updated: '2026-08-07T05:01:47'
+updated: '2026-08-18T20:50:56'
 ---
 private theorem classifyPiece_over
     {T : Over (Spec (CommRingCat.of k))} (F : divFamZarAff C g T)

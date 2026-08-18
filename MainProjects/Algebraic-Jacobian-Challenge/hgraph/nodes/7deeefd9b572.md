@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.isAffineOpen_preimage_chartOpen
 type: lean
-updated: '2026-07-28T18:12:20'
+updated: '2026-08-18T20:52:11'
 ---
 theorem isAffineOpen_preimage_chartOpen [IsAffineHom π] (i : Fin 2) :
     IsAffineOpen (π ⁻¹ᵁ P1.chartOpen k i) :=

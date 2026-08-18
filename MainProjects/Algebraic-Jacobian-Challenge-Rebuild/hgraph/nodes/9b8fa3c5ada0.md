@@ -11,7 +11,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Scheme.sectionRestrict_comp
 type: lean
-updated: '2026-08-07T05:01:50'
+updated: '2026-08-18T20:51:00'
 ---
 private lemma sectionRestrict_comp {W V U : X.Opens} (h₁ : W ≤ V) (h₂ : V ≤ U)
     (s : Γ(X, U)) :

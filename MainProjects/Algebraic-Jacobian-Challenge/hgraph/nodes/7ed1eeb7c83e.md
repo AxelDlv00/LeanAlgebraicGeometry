@@ -10,7 +10,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.GroupScheme.identityComponentHomEquiv
 type: lean
-updated: '2026-07-28T13:22:16'
+updated: '2026-08-18T20:52:06'
 ---
 private noncomputable def identityComponentHomEquiv (T : Over (Spec (.of k))) :
     (T ⟶ IdentityComponent G) ≃ ↥(identityComponentSubgroup G T) where

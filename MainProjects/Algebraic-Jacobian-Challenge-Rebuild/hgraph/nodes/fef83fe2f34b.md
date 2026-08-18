@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.picEtMap_picEtPullback
 type: lean
-updated: '2026-08-07T05:01:58'
+updated: '2026-08-18T20:51:06'
 ---
 theorem picEtMap_picEtPullback (g : D ⟶ E) {T T' : Over (Spec (.of k))} (f : T' ⟶ T)
     (s : picEt E T) :

@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.TwoChart.TwistedCoordinates.chart1
 type: lean
-updated: '2026-07-30T20:03:05'
+updated: '2026-08-18T20:52:09'
 ---
 def chart1 (d : ℕ) (y : R1) (bb : I → R1) :
     Fin (d + 1) ⊕ I → R1

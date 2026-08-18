@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.thetaToDivisorApp_injective
 type: lean
-updated: '2026-08-07T05:02:01'
+updated: '2026-08-18T20:51:08'
 ---
 lemma thetaToDivisorApp_injective {W : Y.Opens} (hηW : genericPoint Y ∈ W) :
     Function.Injective (thetaToDivisorApp K π n hηW) := by

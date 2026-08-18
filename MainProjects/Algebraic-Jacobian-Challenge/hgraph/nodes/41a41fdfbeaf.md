@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.IsFinite.exists_closedImmersion_affineSpace
 type: lean
-updated: '2026-07-30T13:03:21'
+updated: '2026-08-18T20:52:04'
 ---
 theorem exists_closedImmersion_affineSpace {X Y : Scheme.{u}} (f : X ⟶ Y)
     [IsFinite f] [IsAffine Y] :

@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.Diagonal.ker_pointEv_le_sup
 type: lean
-updated: '2026-08-14T19:11:11'
+updated: '2026-08-18T20:50:50'
 ---
 lemma ker_pointEv_le_sup :
     RingHom.ker (pointEv c)

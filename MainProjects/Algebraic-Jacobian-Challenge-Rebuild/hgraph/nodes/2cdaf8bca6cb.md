@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.TwoCoverPairData.h0TensorEquiv
 type: lean
-updated: '2026-08-07T05:01:44'
+updated: '2026-08-18T20:50:51'
 ---
 noncomputable def h0TensorEquiv (hH1 : Subsingleton (dat.pair hU₀ hU₁).H1)
     [Module.Flat R (F.obj.obj (op (U₀ ⊓ U₁)))]

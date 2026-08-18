@@ -19,7 +19,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Adelic.awayMap_coord_mul_eq_one
 type: lean
-updated: '2026-07-28T13:22:17'
+updated: '2026-08-18T20:52:10'
 ---
 private lemma awayMap_coord_mul_eq_one :
     HomogeneousLocalization.awayMap (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))

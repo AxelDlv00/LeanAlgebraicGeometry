@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.FinCoverData.ovlMap_eq_conj
 type: lean
-updated: '2026-08-07T05:01:53'
+updated: '2026-08-18T20:51:02'
 ---
 lemma ovlMap_eq_conj (i j : D.index) (s : Γ(relCurve C R, D.pieces i ⊓ D.pieces j)) :
     D.ovlMap R' i j s =

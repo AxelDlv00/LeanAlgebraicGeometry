@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.finiteInAffine_projectiveSpace
 type: lean
-updated: '2026-08-14T15:00:50'
+updated: '2026-08-18T20:50:54'
 ---
 theorem finiteInAffine_projectiveSpace (n : Type u) (S : Scheme.{u}) [IsAffine S] :
     FiniteInAffine (ProjectiveSpace n S) := by

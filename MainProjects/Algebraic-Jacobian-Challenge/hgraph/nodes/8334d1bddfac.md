@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.AffineCoverMVSquare.instModuleH1Cok
 type: lean
-updated: '2026-07-24T03:02:13'
+updated: '2026-08-18T20:52:10'
 ---
 noncomputable instance AffineCoverMVSquare.instModuleH1Cok
     (S : X.AffineCoverMVSquare) : Module k (S.H1Cok F) :=

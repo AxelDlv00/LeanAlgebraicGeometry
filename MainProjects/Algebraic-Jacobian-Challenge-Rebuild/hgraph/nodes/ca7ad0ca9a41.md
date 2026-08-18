@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.residueDeg_one_of_graphPoint
 type: lean
-updated: '2026-08-07T05:01:57'
+updated: '2026-08-18T20:51:06'
 ---
 theorem residueDeg_one_of_graphPoint
     {k K : Type u} [Field k] [Field K] [Algebra k K]

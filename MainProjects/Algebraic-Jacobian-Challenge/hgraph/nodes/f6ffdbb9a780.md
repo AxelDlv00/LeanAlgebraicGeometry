@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Grassmannian.homEquiv_eq_pullback_universalQuotient
 type: lean
-updated: '2026-08-01T12:39:19'
+updated: '2026-08-18T20:52:06'
 ---
 theorem homEquiv_eq_pullback_universalQuotient
     {V : S.Modules} {r d : ℕ}

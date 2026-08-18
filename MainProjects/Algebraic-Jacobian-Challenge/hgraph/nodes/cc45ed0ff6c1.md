@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.GaloisDescent.SemilinearAction.avg_mem_invariants
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-08-18T20:52:05'
 ---
 lemma avg_mem_invariants [FiniteDimensional K L] [IsSemilinear K L V] (a : L) (v : V) :
     avg K L a v ∈ invariants K L V := by

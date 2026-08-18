@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.positivePart_apply
 type: lean
-updated: '2026-07-27T19:08:28'
+updated: '2026-08-18T20:52:10'
 ---
 theorem positivePart_apply (D : X.WeilDivisor) (P : X.PrimeDivisor) :
     (show X.PrimeDivisor →₀ ℤ from Scheme.WeilDivisor.positivePart D) P =

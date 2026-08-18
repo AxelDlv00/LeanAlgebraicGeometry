@@ -22,7 +22,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.GaloisDescent.SemilinearAction.powers_map_eq_forces_pow
 type: lean
-updated: '2026-07-30T10:26:46'
+updated: '2026-08-18T20:52:05'
 ---
 theorem powers_map_eq_forces_pow (N : A) (γ : L ≃ₐ[K] L)
     (h : Submonoid.map (MulSemiringAction.toRingAut (L ≃ₐ[K] L) A γ).toMonoidHom

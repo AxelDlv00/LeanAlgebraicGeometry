@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivisorAdaptation.pulledToOvlLeft_colengthBaseChange
 type: lean
-updated: '2026-08-07T05:01:53'
+updated: '2026-08-18T20:51:02'
 ---
 lemma pulledToOvlLeft_colengthBaseChange (i j : A.index) (x : R' ⊗[R] A.colength i) :
     A.pulledToOvlLeft R' i j (A.colengthBaseChange R' i x) =

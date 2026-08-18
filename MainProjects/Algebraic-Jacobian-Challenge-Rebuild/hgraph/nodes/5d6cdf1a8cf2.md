@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ProjectiveSpace.AffineChartAtRing.awayToPoly
 type: lean
-updated: '2026-08-07T05:01:59'
+updated: '2026-08-18T20:51:07'
 ---
 def awayToPoly (i : J) : Away (homogeneousSubmodule J R) (X i) →ₐ[R]
     MvPolynomial {j : J // j ≠ i} R where

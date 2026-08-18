@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivFamZar.mapAlgHom
 type: lean
-updated: '2026-08-07T05:01:53'
+updated: '2026-08-18T20:51:02'
 ---
 def mapAlgHom (φ : A →ₐ[k] A') : DivFamZar C A π n → DivFamZar C A' π n :=
   letI : Algebra A A' := φ.toRingHom.toAlgebra

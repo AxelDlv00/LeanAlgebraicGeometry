@@ -24,7 +24,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.rqPullback_grPointOfRankQuotient_rel
 type: lean
-updated: '2026-07-26T06:25:05'
+updated: '2026-08-18T20:52:06'
 ---
 lemma rqPullback_grPointOfRankQuotient_rel {T : Scheme.{0}} (d r : ℕ)
     (x : RankQuotient r d T) :

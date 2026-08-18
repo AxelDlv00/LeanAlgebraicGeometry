@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divFamFieldEquivOfDegOfSurj
 type: lean
-updated: '2026-08-07T05:01:53'
+updated: '2026-08-18T20:51:02'
 ---
 noncomputable def divFamFieldEquivOfDegOfSurj
     (hdeg : ∀ F : DivFam C K π n,

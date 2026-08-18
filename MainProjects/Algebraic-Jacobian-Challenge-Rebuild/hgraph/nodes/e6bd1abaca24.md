@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: IsBaseChange.tensorProduct_mk_one
 type: lean
-updated: '2026-08-07T05:01:43'
+updated: '2026-08-18T20:50:50'
 ---
 theorem IsBaseChange.tensorProduct_mk_one
     (hA : IsBaseChange R' ((IsScalarTower.toAlgHom R A A').toLinearMap)) :

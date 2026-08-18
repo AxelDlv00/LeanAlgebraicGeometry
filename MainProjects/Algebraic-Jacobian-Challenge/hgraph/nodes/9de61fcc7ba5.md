@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.chartFiberRank_basicOpen
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-08-18T20:52:04'
 ---
 theorem chartFiberRank_basicOpen {V : X.affineOpens} (f : Γ(X, V.1))
     (x : X) (hx : x ∈ X.basicOpen f) :

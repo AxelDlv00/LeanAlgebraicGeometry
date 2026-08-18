@@ -36,7 +36,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.hasRigidPushforward_of_gammaBaseChange
 type: lean
-updated: '2026-07-27T19:45:31'
+updated: '2026-08-18T20:52:08'
 ---
 theorem hasRigidPushforward_of_gammaBaseChange
     (C : Over (Spec (CommRingCat.of k)))

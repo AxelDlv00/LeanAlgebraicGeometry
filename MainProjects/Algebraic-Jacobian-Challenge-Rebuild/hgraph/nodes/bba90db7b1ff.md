@@ -19,7 +19,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.exists_trimmed_trivializing_of_cechPicMap_ι_eq_one
 type: lean
-updated: '2026-08-07T05:01:54'
+updated: '2026-08-18T20:51:03'
 ---
 theorem exists_trimmed_trivializing_of_cechPicMap_ι_eq_one
     (h1 : Scheme.CechPic.map D.ι (Scheme.CechPic.mk 𝒩 γ.class) = 1) :

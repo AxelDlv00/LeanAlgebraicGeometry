@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicScheme.coverMap_left
 type: lean
-updated: '2026-07-30T05:53:10'
+updated: '2026-08-18T20:52:06'
 ---
 theorem coverMap_left (T : Over (Spec (CommRingCat.of k))) :
     (coverMap (k' := k') T).left = pullback.fst T.hom (specMapAlgebra k k') := rfl

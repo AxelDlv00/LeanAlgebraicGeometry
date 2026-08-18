@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.BaseSections.val
 type: lean
-updated: '2026-07-24T03:02:13'
+updated: '2026-08-18T20:52:10'
 ---
 def BaseSections.val {C : Over (Spec (CommRingCat.of k))} {M : C.left.Modules}
     {U : C.left.Opens} (m : BaseSections C M U) : Γ(M, U) := m

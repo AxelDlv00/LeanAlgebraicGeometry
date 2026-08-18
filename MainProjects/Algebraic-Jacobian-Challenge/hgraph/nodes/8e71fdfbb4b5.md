@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.NonVacuity.galoisLevel_p1Over_rat
 type: lean
-updated: '2026-07-30T08:42:03'
+updated: '2026-08-18T20:52:03'
 ---
 theorem galoisLevel_p1Over_rat :
     ∃ (k'' : IntermediateField ℚ (SeparableClosure ℚ)) (_ : FiniteDimensional ℚ k'')

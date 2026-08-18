@@ -20,7 +20,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.algebraMap_germ_thetaFieldGluedEquiv_eq
 type: lean
-updated: '2026-08-07T05:01:50'
+updated: '2026-08-18T20:51:00'
 ---
 lemma algebraMap_germ_thetaFieldGluedEquiv_eq (s : relThetaSections C K π a)
     (z : relCurve C K) :

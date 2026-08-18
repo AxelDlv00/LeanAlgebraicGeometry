@@ -19,7 +19,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.riemann_inequality
 type: lean
-updated: '2026-07-24T03:02:13'
+updated: '2026-08-18T20:52:10'
 ---
 theorem riemann_inequality {D : X.WeilDivisor} {degD : ℤ}
     (htel : chi k U₀ U₁ D = chi k U₀ U₁ 0 + degD) :

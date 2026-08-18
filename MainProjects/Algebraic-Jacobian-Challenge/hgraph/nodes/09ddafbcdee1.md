@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.ZariskiDescent.resSecHom
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-08-18T20:52:09'
 ---
 noncomputable def resSecHom {V T : Scheme.{0}} (b : V ⟶ T) (a : T ⟶ S) :
     Over.mk (b ≫ a) ⟶ Over.mk a :=

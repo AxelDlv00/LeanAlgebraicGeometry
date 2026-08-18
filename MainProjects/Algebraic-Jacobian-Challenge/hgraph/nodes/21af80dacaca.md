@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.glueChart_preimage_opensRange
 type: lean
-updated: '2026-08-03T14:28:06'
+updated: '2026-08-18T20:52:09'
 ---
 theorem glueChart_preimage_opensRange (d r : ℕ)
     (I J : (theGlueData d r).J) :

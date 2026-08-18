@@ -18,7 +18,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Scheme.Modules.tensorObjAssoc_associator_counit_coherence_stage2
 type: lean
-updated: '2026-07-28T13:22:17'
+updated: '2026-08-18T20:52:08'
 ---
 private lemma tensorObjAssoc_associator_counit_coherence_stage2
     {M : Type*} [Category M] [MonoidalCategory M]

@@ -9,7 +9,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.ι_whiskerEquiv_inv
 type: lean
-updated: '2026-07-28T13:22:16'
+updated: '2026-08-18T20:52:01'
 ---
 private lemma ι_whiskerEquiv_inv {β γ : Type*} {f : β → C} {g : γ → C}
     [HasCoproduct f] [HasCoproduct g] (e : β ≃ γ) (w : ∀ b, g (e b) ≅ f b) (c : γ) :

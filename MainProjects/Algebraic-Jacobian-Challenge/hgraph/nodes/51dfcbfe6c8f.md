@@ -29,7 +29,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.uniformVanishing_of_uniform_base_of_genus_invariant
 type: lean
-updated: '2026-07-29T06:43:23'
+updated: '2026-08-18T20:52:11'
 ---
 theorem uniformVanishing_of_uniform_base_of_genus_invariant {d : ℤ} {g : ℕ}
     (hbase : UniformBaseDivisor C d)

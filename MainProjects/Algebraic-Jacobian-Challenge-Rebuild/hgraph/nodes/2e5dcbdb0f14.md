@@ -57,7 +57,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_isSplitWitness_of_drop
 type: lean
-updated: '2026-08-07T05:01:55'
+updated: '2026-08-18T20:51:04'
 ---
 theorem exists_isSplitWitness_of_drop {K : Type u} [Field K] [Algebra k K]
     (μ : picEt C (overSpec k K)) (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)

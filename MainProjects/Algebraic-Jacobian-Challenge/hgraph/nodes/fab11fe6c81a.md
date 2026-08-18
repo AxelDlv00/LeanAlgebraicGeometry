@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.instIsStandardSmoothOfRelativeDimensionOnePolynomial
 type: lean
-updated: '2026-07-29T11:05:41'
+updated: '2026-08-18T20:52:08'
 ---
 instance instIsStandardSmoothOfRelativeDimensionOnePolynomial (R : Type u) [CommRing R] :
     Algebra.IsStandardSmoothOfRelativeDimension 1 R (Polynomial R) :=

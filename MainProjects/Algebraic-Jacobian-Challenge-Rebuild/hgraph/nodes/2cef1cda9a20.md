@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.CechPic.ind
 type: lean
-updated: '2026-08-07T05:01:55'
+updated: '2026-08-18T20:51:04'
 ---
 theorem ind {motive : X.CechPic → Prop}
     (mk : ∀ (𝒰 : X.PointedCover) (a : X.unitsH1 𝒰), motive (mk 𝒰 a)) (x : X.CechPic) :

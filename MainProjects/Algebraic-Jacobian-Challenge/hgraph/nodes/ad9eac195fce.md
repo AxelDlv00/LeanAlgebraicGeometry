@@ -14,7 +14,7 @@ lean_status: lean_ok
 private: true
 title: PresheafOfModules.revInner
 type: lean
-updated: '2026-07-28T13:22:17'
+updated: '2026-08-18T20:52:09'
 ---
 private noncomputable def revInner (U : Opens X) (hxU : x ∈ U) (a : ↑(A.obj (op U))) :
     TopCat.Presheaf.stalk B.presheaf x ⟶

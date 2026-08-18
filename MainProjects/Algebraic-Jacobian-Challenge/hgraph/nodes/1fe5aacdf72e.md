@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: PresheafOfModules.pushforwardNatTrans_app_app_apply
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-08-18T20:52:09'
 ---
 @[simp] lemma pushforwardNatTrans_app_app_apply (α : F ⟶ G) (M : PresheafOfModules.{u} R)
     (U : Cᵒᵖ) (x) :

@@ -17,7 +17,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Adelic.p1Chart_inf_eq_basicOpen_coordSection
 type: lean
-updated: '2026-07-28T13:22:17'
+updated: '2026-08-18T20:52:10'
 ---
 private lemma p1Chart_inf_eq_basicOpen_coordSection (k : Type u) [Field k]
     (i j : ULift.{u} (Fin 2)) :

@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.BasicOpenCocycleDatum.exists_cechPicClass_eq
 type: lean
-updated: '2026-08-07T05:01:44'
+updated: '2026-08-18T20:50:50'
 ---
 theorem exists_cechPicClass_eq (c : (relCurve C B).CechPic) :
     ∃ D : BasicOpenCocycleDatum C B π, D.cechPicClass = c := by

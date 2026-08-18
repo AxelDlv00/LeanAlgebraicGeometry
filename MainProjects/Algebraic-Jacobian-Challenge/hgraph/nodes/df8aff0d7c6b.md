@@ -26,5 +26,5 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.leakEndpoint_cech_flatBaseChange_qcoh
 type: lean
-updated: '2026-08-03T16:00:49'
+updated: '2026-08-18T20:52:12'
 ---

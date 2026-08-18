@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.h1_eq_zero_of_h1_sub_point_eq_zero
 type: lean
-updated: '2026-07-28T22:30:24'
+updated: '2026-08-18T20:52:12'
 ---
 theorem h1_eq_zero_of_h1_sub_point_eq_zero {x : X} (hx : x ≠ genericPoint X)
     (D : X.CurveDivisor)

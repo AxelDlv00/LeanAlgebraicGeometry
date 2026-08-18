@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.GaloisDescent.preimage_finset_inf
 type: lean
-updated: '2026-08-12T15:42:08'
+updated: '2026-08-18T20:50:54'
 ---
 lemma preimage_finset_inf {X Y : Scheme.{u}} (h : X ⟶ Y) {ι : Type*} (s : Finset ι)
     (F : ι → Y.Opens) :

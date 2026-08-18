@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.algebraMap_testPointFieldAffine
 type: lean
-updated: '2026-08-07T05:01:56'
+updated: '2026-08-18T20:51:05'
 ---
 lemma algebraMap_testPointFieldAffine (t : (overSpec k A).left) :
     algebraMap A (testPointField (T := overSpec k A) t)

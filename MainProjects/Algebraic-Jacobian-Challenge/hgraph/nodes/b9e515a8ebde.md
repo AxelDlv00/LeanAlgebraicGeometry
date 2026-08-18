@@ -22,7 +22,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.isIso_ε_restrictScalars_appIso
 type: lean
-updated: '2026-07-25T13:02:37'
+updated: '2026-08-18T20:52:09'
 ---
 lemma isIso_ε_restrictScalars_appIso {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImmersion f]
     (W' : TopologicalSpace.Opens ↥Y) :

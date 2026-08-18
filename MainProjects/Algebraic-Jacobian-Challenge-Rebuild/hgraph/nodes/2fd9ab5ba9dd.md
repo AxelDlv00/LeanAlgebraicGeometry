@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.AffineTripleTensor
 type: lean
-updated: '2026-08-17T13:21:29'
+updated: '2026-08-18T20:50:53'
 ---
 abbrev AffineTripleTensor (i j k : J) : Type u :=
   B i j ⊗[A i] B i k

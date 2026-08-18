@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.topologicalKrullDim_eq_of_forall_finrank_cotangentSpace_le_of_regular
 type: lean
-updated: '2026-07-29T04:25:58'
+updated: '2026-08-18T20:52:04'
 ---
 theorem topologicalKrullDim_eq_of_forall_finrank_cotangentSpace_le_of_regular
     (X : Scheme.{u}) [IsLocallyNoetherian X] (d : ℕ)

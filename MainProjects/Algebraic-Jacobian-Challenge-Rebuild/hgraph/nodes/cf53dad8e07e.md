@@ -19,7 +19,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.relThetaWindowEquiv
 type: lean
-updated: '2026-08-07T05:01:53'
+updated: '2026-08-18T20:51:02'
 ---
 noncomputable def relThetaWindowEquiv
     (hH1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1) :

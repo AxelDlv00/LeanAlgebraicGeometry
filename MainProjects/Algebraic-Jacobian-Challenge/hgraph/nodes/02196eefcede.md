@@ -22,7 +22,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.homCechComplex_d_eq
 type: lean
-updated: '2026-07-28T13:22:16'
+updated: '2026-08-18T20:52:00'
 ---
 private lemma homCechComplex_d_eq (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
     (F : X.PresheafOfModules) (p : ℕ) :

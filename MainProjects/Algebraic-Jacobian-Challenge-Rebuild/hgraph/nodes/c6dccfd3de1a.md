@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.finite_divUniversalHighWindowThetaQuotient
 type: lean
-updated: '2026-08-07T05:01:48'
+updated: '2026-08-18T20:50:58'
 ---
 theorem finite_divUniversalHighWindowThetaQuotient (n : Nat)
     (x : DivUniversalHighWindowStage (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j n) :

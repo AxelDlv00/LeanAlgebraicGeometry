@@ -29,7 +29,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ThetaGeneratorSeed.hdvd_of_forall_smul_relThetaResSide_mem_span
 type: lean
-updated: '2026-08-07T05:01:49'
+updated: '2026-08-18T20:50:58'
 ---
 theorem hdvd_of_forall_smul_relThetaResSide_mem_span
     (D : ThetaGeneratorSeed C R π a K)

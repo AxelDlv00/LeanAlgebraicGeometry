@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.existsUnique_abel_divFamZarAff_of_presentation
 type: lean
-updated: '2026-08-13T12:33:46'
+updated: '2026-08-18T20:51:05'
 ---
 theorem existsUnique_abel_divFamZarAff_of_presentation
     (hlam : lam ∈ (PicRankOneOpen pi).obj (op (overSpec k A)))

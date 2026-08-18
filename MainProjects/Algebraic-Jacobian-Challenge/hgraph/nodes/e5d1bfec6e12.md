@@ -35,7 +35,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.rigidity_eqOn_saturated_open_to_affine
 type: lean
-updated: '2026-07-27T01:33:12'
+updated: '2026-08-18T20:52:12'
 ---
 theorem rigidity_eqOn_saturated_open_to_affine
     [IsAlgClosed kbar]

@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PicRankOneLocalPresentation.baseOpenDatumSectionLocalEquations_divEq_of_unit
 type: lean
-updated: '2026-08-08T11:34:20'
+updated: '2026-08-18T20:51:05'
 ---
 theorem baseOpenDatumSectionLocalEquations_divEq_of_unit
     (P : PicRankOneLocalPresentation pi lam)

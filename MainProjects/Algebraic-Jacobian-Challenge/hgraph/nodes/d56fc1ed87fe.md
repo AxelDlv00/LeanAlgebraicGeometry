@@ -13,7 +13,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.fiberLattice_step
 type: lean
-updated: '2026-07-31T06:25:53'
+updated: '2026-08-18T20:52:11'
 ---
 private lemma fiberLattice_step (D : Y.CurveDivisor) (n : ℕ) :
     Submodule.map (mulByUnit K (fiberCoordUnit π)⁻¹).toLinearMap (fiberLattice π D n)

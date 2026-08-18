@@ -47,7 +47,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.rank_pushforward_eq_fiberH0
 type: lean
-updated: '2026-07-27T19:54:25'
+updated: '2026-08-18T20:52:08'
 ---
 theorem rank_pushforward_eq_fiberH0
     (p : X ⟶ Spec R) (𝒰 : X.AffineCoverMVSquare) (M : X.Modules)

@@ -28,7 +28,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.appLE_fromSpecResidueField_apply
 type: lean
-updated: '2026-08-03T11:56:32'
+updated: '2026-08-18T20:52:08'
 ---
 theorem appLE_fromSpecResidueField_apply (R : CommRingCat.{u}) (t : Spec R)
     (x : Γ(Spec R, ⊤)) :

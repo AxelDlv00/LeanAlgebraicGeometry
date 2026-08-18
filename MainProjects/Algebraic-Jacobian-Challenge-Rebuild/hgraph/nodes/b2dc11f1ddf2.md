@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.polyUnit_eq_C_of_reduced
 type: lean
-updated: '2026-08-07T05:01:43'
+updated: '2026-08-18T20:50:49'
 ---
 theorem polyUnit_eq_C_of_reduced [_root_.IsReduced A] {P : Polynomial A} (hP : IsUnit P) :
     ∃ c : A, IsUnit c ∧ P = Polynomial.C c := by

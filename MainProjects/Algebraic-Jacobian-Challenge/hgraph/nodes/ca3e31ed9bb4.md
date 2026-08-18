@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.valuativeUniqueness_toSpecZ
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-08-18T20:52:05'
 ---
 theorem valuativeUniqueness_toSpecZ (d r : ℕ) :
     ValuativeCriterion.Uniqueness (toSpecZ d r) := by

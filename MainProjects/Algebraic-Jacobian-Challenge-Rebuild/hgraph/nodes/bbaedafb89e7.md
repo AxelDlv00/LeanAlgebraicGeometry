@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.IsCertified.finite_gluedSubalgebra
 type: lean
-updated: '2026-08-07T05:01:52'
+updated: '2026-08-18T20:51:01'
 ---
 theorem IsCertified.finite_gluedSubalgebra (hc : A.IsCertified g) :
     Module.Finite R ↥(gluedSubalgebra A) := by

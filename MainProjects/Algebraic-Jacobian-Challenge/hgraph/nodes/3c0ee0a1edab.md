@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.GaloisDescent.SemilinearAction.awayAutHom
 type: lean
-updated: '2026-07-30T10:26:46'
+updated: '2026-08-18T20:52:05'
 ---
 noncomputable def awayAutHom : (L ≃ₐ[K] L) →* RingAut S where
   toFun γ := awayAut K L N hN S γ

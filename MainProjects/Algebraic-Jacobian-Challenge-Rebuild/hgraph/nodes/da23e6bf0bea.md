@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.IsGluingCoboundary.inv
 type: lean
-updated: '2026-08-07T05:01:44'
+updated: '2026-08-18T20:50:50'
 ---
 lemma inv (hc : Scheme.IsGluingCoboundary U g g' c) :
     Scheme.IsGluingCoboundary U g' g (fun j => (c j)⁻¹) := by

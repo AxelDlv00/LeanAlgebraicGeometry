@@ -22,7 +22,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.isLocallyConstant_fiberEulerIndex_finiteMapToP1BaseChange
 type: lean
-updated: '2026-08-03T15:24:41'
+updated: '2026-08-18T20:52:03'
 ---
 theorem isLocallyConstant_fiberEulerIndex_finiteMapToP1BaseChange
     (C : Over (Spec (CommRingCat.of k)))

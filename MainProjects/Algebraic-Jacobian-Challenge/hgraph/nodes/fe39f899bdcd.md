@@ -20,7 +20,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Modules.mono_of_injective_app
 type: lean
-updated: '2026-07-28T14:03:57'
+updated: '2026-08-18T20:52:01'
 ---
 theorem Modules.mono_of_injective_app {X : Scheme.{u}} {M N : X.Modules} {φ : M ⟶ N}
     (h : ∀ U : X.Opens, Function.Injective (φ.app U)) : Mono φ := by

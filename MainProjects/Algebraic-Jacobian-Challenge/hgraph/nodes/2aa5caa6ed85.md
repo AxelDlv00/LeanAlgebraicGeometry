@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.chart_finiteness_iff_module_finite_functionField
 type: lean
-updated: '2026-07-28T15:48:28'
+updated: '2026-08-18T20:52:10'
 ---
 theorem chart_finiteness_iff_module_finite_functionField {U : X.Opens} (hU : IsAffineOpen U)
     [Nonempty U] :

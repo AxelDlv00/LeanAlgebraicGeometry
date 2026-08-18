@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.sigmaExtensionIso
 type: lean
-updated: '2026-08-14T14:17:16'
+updated: '2026-08-18T20:51:06'
 ---
 noncomputable def sigmaExtensionIso {F G : (Over (Spec (.of k)))ᵒᵖ ⥤ Type u}
     (e : F ≅ G) :

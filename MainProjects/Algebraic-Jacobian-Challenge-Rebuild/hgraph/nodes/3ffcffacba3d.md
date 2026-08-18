@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PicRankOneFibrePresentationInput.fst_comp_incl
 type: lean
-updated: '2026-08-12T17:58:24'
+updated: '2026-08-18T20:51:05'
 ---
 lemma fst_comp_incl (F : PicRankOneFibrePresentationInput pi E g) :
     F.fst ≫ picRankOneOpenSigmaIncl pi = yoneda.map F.W.ι ≫ g := by

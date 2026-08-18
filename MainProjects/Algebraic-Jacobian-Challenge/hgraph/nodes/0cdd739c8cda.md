@@ -24,7 +24,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.cechFreeAug_eval_eqFam
 type: lean
-updated: '2026-07-28T13:22:16'
+updated: '2026-08-18T20:52:02'
 ---
 private lemma cechFreeAug_eval_eqFam
     (V : TopologicalSpace.Opens ↥X) :

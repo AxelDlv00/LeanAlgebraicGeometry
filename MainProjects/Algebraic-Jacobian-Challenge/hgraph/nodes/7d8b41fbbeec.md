@@ -25,7 +25,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.RelativeSpec.pullback_iso_desc_isIso
 type: lean
-updated: '2026-07-24T19:18:18'
+updated: '2026-08-18T20:52:07'
 ---
 lemma pullback_iso_desc_isIso {X T : Scheme.{u}} (g : T ⟶ X)
     (𝒜 : X.QcohAlgebra) :

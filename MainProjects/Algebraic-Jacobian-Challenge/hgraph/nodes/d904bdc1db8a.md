@@ -9,7 +9,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.iota_image_preimage_eq_inf
 type: lean
-updated: '2026-07-28T13:22:16'
+updated: '2026-08-18T20:52:01'
 ---
 private lemma iota_image_preimage_eq_inf (U V : TopologicalSpace.Opens X) :
     Scheme.Opens.ι U ''ᵁ (Scheme.Opens.ι U ⁻¹ᵁ V) = U ⊓ V := by

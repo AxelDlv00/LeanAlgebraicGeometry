@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ProjectiveSpace.AffineChartRing.awayAlgEquiv
 type: lean
-updated: '2026-07-30T13:03:22'
+updated: '2026-08-18T20:52:07'
 ---
 def awayAlgEquiv :
     Away (homogeneousSubmodule (Option n) R) (X none) ≃ₐ[R] MvPolynomial n R :=

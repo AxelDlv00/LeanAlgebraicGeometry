@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Grassmannian.freeCompare_naturality_core
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-08-18T20:52:06'
 ---
 lemma freeCompare_naturality_core {r : ℕ} {T T' : Over S} (ψ : T' ⟶ T) :
     (Scheme.Modules.pullbackFreeIso T'.hom (Fin r)).inv ≫

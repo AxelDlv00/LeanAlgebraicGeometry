@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divUniversalHighWindowKernelSyzygySpans_of_adjacent_fibreModels_at
 type: lean
-updated: '2026-08-07T05:01:48'
+updated: '2026-08-18T20:50:58'
 ---
 theorem divUniversalHighWindowKernelSyzygySpans_of_adjacent_fibreModels_at
     (n : Nat)

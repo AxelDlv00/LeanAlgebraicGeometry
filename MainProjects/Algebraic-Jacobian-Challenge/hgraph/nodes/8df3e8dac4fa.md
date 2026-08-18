@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.genus
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-08-18T20:52:03'
 ---
 noncomputable def genus {k : Type u} [Field k] (C : Over (Spec (.of k)))
     [IsProper C.hom] [SmoothOfRelativeDimension 1 C.hom]

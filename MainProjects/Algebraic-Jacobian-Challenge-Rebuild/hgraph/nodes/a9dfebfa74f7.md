@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.GrothendieckTopology.MayerVietorisSquare.moduleDeltaQuotient_mk
 type: lean
-updated: '2026-08-07T05:01:44'
+updated: '2026-08-18T20:50:51'
 ---
 lemma moduleDeltaQuotient_mk (s : F.obj.obj (op S.X₁)) :
     S.moduleDeltaQuotient F (Submodule.Quotient.mk s) = S.moduleDelta F s :=

@@ -19,7 +19,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.DivFamily.isLocallyTrivial_fiber_kernel
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-08-18T20:52:03'
 ---
 theorem isLocallyTrivial_fiber_kernel {T : Over S} (x : DivFamily π T)
     (t : (T.left : Scheme.{u})) :

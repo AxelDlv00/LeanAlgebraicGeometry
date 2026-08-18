@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: Algebra.DescentDatum.Hom.id_comp
 type: lean
-updated: '2026-08-07T05:01:46'
+updated: '2026-08-18T20:50:53'
 ---
 theorem id_comp (f : Hom D₁ D₂) : comp (id D₁) f = f := by
   ext

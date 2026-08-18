@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.tensorProductFieldTowerEquiv_tmul
 type: lean
-updated: '2026-08-17T13:21:29'
+updated: '2026-08-18T20:50:54'
 ---
 theorem tensorProductFieldTowerEquiv_tmul {F L K A : Type u}
     [Field F] [Field L] [Field K]

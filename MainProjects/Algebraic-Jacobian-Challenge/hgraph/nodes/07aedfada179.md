@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.RankQuotient
 type: lean
-updated: '2026-07-24T17:02:57'
+updated: '2026-08-18T20:52:05'
 ---
 structure RankQuotient (r d : ℕ) (T : Scheme.{0}) where
   /-- The quotient sheaf. -/

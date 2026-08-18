@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.SymPowData.symAVMap_unique
 type: lean
-updated: '2026-07-28T15:48:27'
+updated: '2026-08-18T20:51:56'
 ---
 theorem symAVMap_unique {A : K} [MonObj A] [IsCommMonObj A]
     (D : SymPowData C n) (φ : C ⟶ A) (u : D.carrier ⟶ A)

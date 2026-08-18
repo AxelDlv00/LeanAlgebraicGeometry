@@ -26,7 +26,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.degK_eq_degree_of_residueDeg_eq_one
 type: lean
-updated: '2026-07-27T15:50:35'
+updated: '2026-08-18T20:52:10'
 ---
 theorem degK_eq_degree_of_residueDeg_eq_one {D : X.WeilDivisor}
     (h1 : ∀ P ∈ (show X.PrimeDivisor →₀ ℤ from D).support, residueDeg k P = 1) :

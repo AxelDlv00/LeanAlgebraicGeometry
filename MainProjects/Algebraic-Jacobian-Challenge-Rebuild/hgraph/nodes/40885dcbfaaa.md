@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.picEtOfAff
 type: lean
-updated: '2026-08-07T05:01:57'
+updated: '2026-08-18T20:51:06'
 ---
 def picEtOfAff : PicEtAff C A →* picEt C (overSpec k A) where
   toFun x :=

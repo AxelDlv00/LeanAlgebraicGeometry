@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.map_twoChartClass_eq_one_iff
 type: lean
-updated: '2026-08-07T05:02:02'
+updated: '2026-08-18T20:51:09'
 ---
 theorem map_twoChartClass_eq_one_iff (f : X ⟶ Y) (sel : Y → Bool) (hmem : ∀ y, y ∈ V (sel y))
     (hsel : Function.Surjective sel)

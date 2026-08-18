@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.gluedTriv_gluedQsmul
 type: lean
-updated: '2026-08-07T05:01:44'
+updated: '2026-08-18T20:50:51'
 ---
 lemma gluedTriv_gluedQsmul (hc : Scheme.IsGluingCocycle U g) {V W : X.Opens}
     (hWV : W ≤ V) {j : J} (hWj : W ≤ U j) (r : Γ(X, V))

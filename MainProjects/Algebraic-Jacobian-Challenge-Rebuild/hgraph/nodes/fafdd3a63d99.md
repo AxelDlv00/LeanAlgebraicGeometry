@@ -10,7 +10,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.classDegFun_picClass
 type: lean
-updated: '2026-08-07T05:02:00'
+updated: '2026-08-18T20:51:08'
 ---
 private theorem classDegFun_picClass (D : X.CurveDivisor) :
     classDegFun K (CurveDivisor.picClass K D) = CurveDivisor.deg K D :=

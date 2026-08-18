@@ -10,7 +10,7 @@ generated: lean
 lean_status: sorry
 title: control_mem_fixedAway_iff
 type: lean
-updated: '2026-08-03T16:00:49'
+updated: '2026-08-18T20:52:12'
 ---
 theorem control_mem_fixedAway_iff [Finite G] (b : A) (hb : ∀ g : G, g • b = b)
     (x : Localization.Away b) :

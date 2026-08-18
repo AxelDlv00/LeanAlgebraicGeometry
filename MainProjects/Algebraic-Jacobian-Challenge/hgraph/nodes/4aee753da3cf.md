@@ -53,7 +53,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.GroupScheme.IdentityComponent.isFiniteTypeGeometricallyIrreducible
 type: lean
-updated: '2026-07-27T12:33:55'
+updated: '2026-08-18T20:52:06'
 ---
 theorem IdentityComponent.isFiniteTypeGeometricallyIrreducible
     {k : Type u} [Field k]

@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.Functor.RepresentableBy.Over.mapCompPresheafOfEq
 type: lean
-updated: '2026-08-07T05:01:58'
+updated: '2026-08-18T20:51:07'
 ---
 noncomputable def Over.mapCompPresheafOfEq
     {D : Type u} [Category.{v, u} D]

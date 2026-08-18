@@ -33,7 +33,7 @@ lean_status: lean_ok
 private: true
 title: Module.Flat.rTensor_injective_of_exact_aux
 type: lean
-updated: '2026-07-28T13:22:16'
+updated: '2026-08-18T20:52:04'
 ---
 private theorem Module.Flat.rTensor_injective_of_exact_aux
     {R : Type*} [CommRing R] {A B C K F₀ N : Type*}

@@ -27,7 +27,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.DivFamily.isQuasicoherent_pushforward
 type: lean
-updated: '2026-07-29T22:46:00'
+updated: '2026-08-18T20:52:03'
 ---
 theorem Scheme.DivFamily.isQuasicoherent_pushforward
     {S X : Scheme.{u}} {π : X ⟶ S} [IsProper π] {T : Over S}

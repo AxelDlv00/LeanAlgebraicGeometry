@@ -44,7 +44,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Pic0Et.geometricallyReduced_of_isReduced_algebraicClosureBaseChange
 type: lean
-updated: '2026-07-29T23:31:11'
+updated: '2026-08-18T20:52:06'
 ---
 theorem geometricallyReduced_of_isReduced_algebraicClosureBaseChange
     (h : IsReduced (Limits.pullback (Pic0SchemeEt C).hom

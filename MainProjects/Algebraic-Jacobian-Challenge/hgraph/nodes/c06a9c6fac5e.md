@@ -16,7 +16,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.freeYonedaAug_app_comp
 type: lean
-updated: '2026-07-28T13:22:16'
+updated: '2026-08-18T20:52:02'
 ---
 private lemma freeYonedaAug_app_comp {A B V : TopologicalSpace.Opens ↥X} (h₁ : A ≤ B) :
     (PresheafOfModules.evaluation X.ringCatSheaf.obj (Opposite.op V)).map

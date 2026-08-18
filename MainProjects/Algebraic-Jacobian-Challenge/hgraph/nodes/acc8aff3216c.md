@@ -36,7 +36,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_unit_nonneg_of_h0_pos
 type: lean
-updated: '2026-07-29T06:43:23'
+updated: '2026-08-18T20:52:10'
 ---
 theorem exists_unit_nonneg_of_h0_pos (A : X.CurveDivisor)
     (hA : 0 < Sheaf.h0 (X.divisorSheaf K A)) :

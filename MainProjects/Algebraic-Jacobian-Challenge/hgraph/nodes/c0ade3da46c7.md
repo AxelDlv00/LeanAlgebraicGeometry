@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.H1Mod
 type: lean
-updated: '2026-07-24T03:02:13'
+updated: '2026-08-18T20:52:10'
 ---
 abbrev H1Mod (D : X.WeilDivisor) : Type u :=
   ↥(sectionSub k (U₀ ⊓ U₁) D) ⧸

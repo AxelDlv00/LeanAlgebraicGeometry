@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.JacobianData.isProper_and_smooth_of_abelSource
 type: lean
-updated: '2026-08-07T05:01:42'
+updated: '2026-08-18T20:50:48'
 ---
 theorem isProper_and_smooth_of_abelSource (a : AbelSourceData d)
     [GeometricallyReduced d.J.hom] :

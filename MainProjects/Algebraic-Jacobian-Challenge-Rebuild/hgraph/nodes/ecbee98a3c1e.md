@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_eq_comp_of_isIso_appTop_of_range_subset
 type: lean
-updated: '2026-08-14T19:11:10'
+updated: '2026-08-18T20:50:48'
 ---
 theorem exists_eq_comp_of_isIso_appTop_of_range_subset {V W : Scheme.{u}} {R : CommRingCat.{u}}
     (sV : V ⟶ Spec R) [IsIso sV.appTop] (q : V ⟶ W) {U : W.Opens} (hU : IsAffineOpen U)

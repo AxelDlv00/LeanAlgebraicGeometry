@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.finrank_cotangentSpace_stalk_eq_of_isIso
 type: lean
-updated: '2026-07-29T13:43:15'
+updated: '2026-08-18T20:52:06'
 ---
 theorem finrank_cotangentSpace_stalk_eq_of_isIso {X Y : Scheme.{u}} (f : X ⟶ Y) [IsIso f]
     (x : X) [IsLocalRing (X.presheaf.stalk x)] [IsLocalRing (Y.presheaf.stalk (f.base x))]

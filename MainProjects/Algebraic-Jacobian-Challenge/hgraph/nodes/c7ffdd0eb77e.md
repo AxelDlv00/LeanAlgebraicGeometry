@@ -9,7 +9,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Scheme.Modules.unitEndSection'
 type: lean
-updated: '2026-08-04T00:08:09'
+updated: '2026-08-18T20:52:09'
 ---
 private noncomputable def unitEndSection'
     {X : Scheme.{u}}

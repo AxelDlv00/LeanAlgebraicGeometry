@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.relPicToPicEt_injective
 type: lean
-updated: '2026-08-07T05:01:58'
+updated: '2026-08-18T20:51:06'
 ---
 theorem relPicToPicEt_injective (A : Type u) [CommRing A] [Algebra k A] :
     Function.Injective (relPicToPicEt C (overSpec k A)) := fun x y h => by

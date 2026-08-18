@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.cechEngineDFam
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-08-18T20:52:02'
 ---
 noncomputable def cechEngineDFam (V : TopologicalSpace.Opens ↥X) (p : ℕ) :
     cechEngineXFam U V (p + 1) ⟶ cechEngineXFam U V p :=

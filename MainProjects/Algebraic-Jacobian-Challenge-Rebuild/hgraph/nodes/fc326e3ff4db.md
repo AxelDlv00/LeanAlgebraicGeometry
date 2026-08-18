@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.twistedFiberTwoCover
 type: lean
-updated: '2026-08-07T05:01:45'
+updated: '2026-08-18T20:50:52'
 ---
 noncomputable def twistedFiberTwoCover {Y : Scheme.{u}} (π : Y ⟶ P1 k)
     [IsAffineHom π] (M : Matrix.GeneralLinearGroup (Fin 2) k) : Y.AffineTwoCover :=

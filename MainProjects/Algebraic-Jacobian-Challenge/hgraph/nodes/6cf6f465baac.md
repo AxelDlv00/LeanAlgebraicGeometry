@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicScheme.picEt_comparison_eq_iff_map_inv
 type: lean
-updated: '2026-07-30T22:32:50'
+updated: '2026-08-18T20:52:07'
 ---
 theorem picEt_comparison_eq_iff_map_inv (D : Over (Spec (CommRingCat.of k')))
     (γ : k' ≃ₐ[k] k')

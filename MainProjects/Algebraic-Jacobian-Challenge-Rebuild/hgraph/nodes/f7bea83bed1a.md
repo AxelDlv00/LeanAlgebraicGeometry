@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PicRankOneFibrePresentationInput.fst
 type: lean
-updated: '2026-08-10T13:01:42'
+updated: '2026-08-18T20:51:05'
 ---
 noncomputable def fst (F : PicRankOneFibrePresentationInput pi E g) :
     yoneda.obj (F.W : Scheme.{u}) ⟶ rankOneLocus (C := C) (pi := pi) :=

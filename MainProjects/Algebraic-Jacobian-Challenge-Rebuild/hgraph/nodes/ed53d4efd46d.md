@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.FinCoverData.toAffCoverData_pieces
 type: lean
-updated: '2026-08-07T05:01:51'
+updated: '2026-08-18T20:51:00'
 ---
 lemma toAffCoverData_pieces (j : Fin (D.m₀ + D.m₁)) :
     D.toAffCoverData.pieces j = D.pieces (finSumFinEquiv.symm j) := rfl

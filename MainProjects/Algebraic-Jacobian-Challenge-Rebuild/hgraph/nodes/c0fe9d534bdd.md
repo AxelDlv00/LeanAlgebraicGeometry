@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.pullbackOpenImmersionSectionsEquiv
 type: lean
-updated: '2026-08-11T12:56:17'
+updated: '2026-08-18T20:50:51'
 ---
 noncomputable def pullbackOpenImmersionSectionsEquiv
     {X Y : Scheme.{u}} (f : X ⟶ Y) [IsOpenImmersion f] (N : Y.Modules) :

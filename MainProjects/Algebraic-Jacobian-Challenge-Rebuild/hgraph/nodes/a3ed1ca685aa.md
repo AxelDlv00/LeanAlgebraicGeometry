@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.projective_glued_pullback
 type: lean
-updated: '2026-08-07T05:01:51'
+updated: '2026-08-18T20:51:00'
 ---
 theorem projective_glued_pullback
     [Module.Flat R (A.chartProd ⧸ A.gluedSubmodule)]

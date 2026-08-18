@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.windowBound_le_S_mul
 type: lean
-updated: '2026-08-07T05:02:01'
+updated: '2026-08-18T20:51:09'
 ---
 theorem windowBound_le_S_mul (g : ℕ) :
     windowBound π hπ ≤ (windowS_choice π hπ g : ℤ) * windowδ π := by

@@ -12,7 +12,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Scheme.Hom.IsProjectiveWith.baseChangeLift
 type: lean
-updated: '2026-07-31T04:59:30'
+updated: '2026-08-18T20:52:07'
 ---
 private def baseChangeLift {S' : Scheme.{0}} (g : S' ⟶ S) {n : Type} [Finite n]
     (i : X ⟶ ℙ(n; S)) (hcomp : i ≫ (ℙ(n; S) ↘ S) = π) :

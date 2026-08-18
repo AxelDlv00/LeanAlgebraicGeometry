@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.pushforward_locallyFree_of_h1_vanishing
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-08-18T20:52:07'
 ---
 theorem pushforward_locallyFree_of_h1_vanishing [HasRigidPushforward C]
     (L : (Limits.pullback C.hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))).Modules)

@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.FiberCoordinateData.coordinateUnit_inv_pow_eq_germ_overlap
 type: lean
-updated: '2026-07-31T19:37:13'
+updated: '2026-08-18T20:52:11'
 ---
 lemma coordinateUnit_inv_pow_eq_germ_overlap (n : ℕ) :
     ((Q.coordinateUnit⁻¹ ^ n : Y.functionFieldˣ) : Y.functionField) =

@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ProjectiveSpace.affineChartAt.opensRange_incl
 type: lean
-updated: '2026-07-31T02:29:40'
+updated: '2026-08-18T20:52:07'
 ---
 theorem opensRange_incl :
     (incl J i S).opensRange =

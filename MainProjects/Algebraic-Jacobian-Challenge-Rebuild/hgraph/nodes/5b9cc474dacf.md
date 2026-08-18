@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.tensorPointEval
 type: lean
-updated: '2026-08-07T05:01:46'
+updated: '2026-08-18T20:50:53'
 ---
 noncomputable def tensorPointEval (φ : A →ₐ[k] k) : A ⊗[k] L →ₐ[k] L :=
   (Algebra.TensorProduct.lid k L).toAlgHom.comp

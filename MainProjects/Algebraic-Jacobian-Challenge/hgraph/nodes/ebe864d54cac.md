@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicScheme.IsGalInvariant
 type: lean
-updated: '2026-07-30T10:26:46'
+updated: '2026-08-18T20:52:07'
 ---
 def IsGalInvariant (C : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]

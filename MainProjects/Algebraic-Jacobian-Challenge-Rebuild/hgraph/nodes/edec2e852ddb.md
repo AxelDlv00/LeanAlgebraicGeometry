@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.BasicOpenCocycleDatum.germ_component_smul_mem_nonZeroDivisors
 type: lean
-updated: '2026-08-13T10:39:11'
+updated: '2026-08-18T20:51:00'
 ---
 lemma germ_component_smul_mem_nonZeroDivisors (v : Bˣ)
     (s : ↥(gluedSubmodule B D.pieces D.unit ⊤))

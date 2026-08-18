@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.gluedQsmul_mul
 type: lean
-updated: '2026-08-07T05:01:44'
+updated: '2026-08-18T20:50:51'
 ---
 lemma gluedQsmul_mul {V W : X.Opens} (hWV : W ≤ V) (r r' : Γ(X, V))
     (s : ↥(gluedSubmodule k U g W)) :

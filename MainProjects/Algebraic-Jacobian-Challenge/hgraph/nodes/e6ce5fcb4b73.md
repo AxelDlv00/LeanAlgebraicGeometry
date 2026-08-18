@@ -25,7 +25,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.isIso_sheafifyEta_of_unitSquare
 type: lean
-updated: '2026-07-25T05:59:05'
+updated: '2026-08-18T20:52:09'
 ---
 lemma isIso_sheafifyEta_of_unitSquare {X Y : Scheme.{u}} (f : Y ⟶ X)
     (hsq : letI φ' : (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶

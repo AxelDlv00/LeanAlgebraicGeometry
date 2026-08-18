@@ -26,7 +26,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.rankOneDivisorUniqueness
 type: lean
-updated: '2026-08-13T12:33:46'
+updated: '2026-08-18T20:51:05'
 ---
 theorem rankOneDivisorUniqueness : RankOneDivisorUniqueness pi := by
   intro S _ _ lam hlam F G hF hG

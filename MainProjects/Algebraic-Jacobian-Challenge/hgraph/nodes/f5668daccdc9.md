@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.GaloisDescent.SemilinearGalAction.preimage_basicOpen_actApp
 type: lean
-updated: '2026-07-30T19:28:49'
+updated: '2026-08-18T20:52:05'
 ---
 lemma preimage_basicOpen_actApp (γ : L ≃ₐ[K] L) (s : Γ(X, U)) :
     (ρ.act γ).hom ⁻¹ᵁ X.basicOpen s = X.basicOpen (ρ.actApp hU γ s) := by

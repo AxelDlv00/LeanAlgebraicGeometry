@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divOf_msCoherenceUnit
 type: lean
-updated: '2026-08-07T05:01:49'
+updated: '2026-08-18T20:50:59'
 ---
 theorem divOf_msCoherenceUnit :
     windowTransportDivisor C K π (windowM_choice π hπ g + windowS_choice π hπ g)

@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivRepGlobalData.representableBy_homEquiv_symm_apply
 type: lean
-updated: '2026-08-07T05:01:47'
+updated: '2026-08-18T20:50:56'
 ---
 theorem representableBy_homEquiv_symm_apply
     (D : DivRepGlobalData hpi g r1 r2 b1 b2)

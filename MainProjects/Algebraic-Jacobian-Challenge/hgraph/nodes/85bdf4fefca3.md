@@ -60,7 +60,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicScheme.smoothProperQuotient
 type: lean
-updated: '2026-07-29T20:27:12'
+updated: '2026-08-18T20:52:04'
 ---
 theorem smoothProperQuotient {k : Type u} [Field k]
     {Z P : (Over (Spec (.of k)))ᵒᵖ ⥤ Type (u + 1)}

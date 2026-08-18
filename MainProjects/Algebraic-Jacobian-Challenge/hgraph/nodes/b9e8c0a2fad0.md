@@ -53,7 +53,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.dual
 type: lean
-updated: '2026-07-25T05:32:31'
+updated: '2026-08-18T20:52:09'
 ---
 noncomputable def dual {X : Scheme.{u}} (M : X.Modules) : X.Modules :=
   ((PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).obj

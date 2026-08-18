@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.preservesFiniteLimits_of_preservesMonomorphisms
 type: lean
-updated: '2026-07-28T14:03:57'
+updated: '2026-08-18T20:52:01'
 ---
 theorem preservesFiniteLimits_of_preservesMonomorphisms (F : C ⥤ D) [F.Additive]
     [Limits.PreservesFiniteColimits F] [F.PreservesMonomorphisms] :

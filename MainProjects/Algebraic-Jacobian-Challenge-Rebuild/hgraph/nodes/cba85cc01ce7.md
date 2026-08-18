@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.GaloisDescent.GaloisQuotientWitness.uniqueIso
 type: lean
-updated: '2026-08-12T15:42:08'
+updated: '2026-08-18T20:50:54'
 ---
 noncomputable def uniqueIso
     {K L : Type u} [Field K] [Field L] [Algebra K L]

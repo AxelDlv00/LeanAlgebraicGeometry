@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.Diagonal.tmul_one_sub_one_tmul_mem_nonZeroDivisors
 type: lean
-updated: '2026-08-14T19:11:10'
+updated: '2026-08-18T20:50:49'
 ---
 theorem tmul_one_sub_one_tmul_mem_nonZeroDivisors
     {A : Type*} [CommRing A] [Algebra k A] (b : A) :

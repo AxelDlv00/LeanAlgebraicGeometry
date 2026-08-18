@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.DivFamily.twist_isFiniteSupport
 type: lean
-updated: '2026-08-01T04:12:00'
+updated: '2026-08-18T20:52:03'
 ---
 theorem twist_isFiniteSupport
     (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)

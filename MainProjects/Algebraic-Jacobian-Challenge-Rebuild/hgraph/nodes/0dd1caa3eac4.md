@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.pic0FiniteStageTripleTransition
 type: lean
-updated: '2026-08-17T13:21:30'
+updated: '2026-08-18T20:51:05'
 ---
 noncomputable def pic0FiniteStageTripleTransition
     (U V W : Pic0FiniteStageChartIndex C) :

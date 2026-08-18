@@ -9,7 +9,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.canonicalRankOneSection_compat
 type: lean
-updated: '2026-08-14T07:25:47'
+updated: '2026-08-18T20:51:05'
 ---
 private theorem canonicalRankOneSection_compat {T : Over (Spec (.of k))}
     (lam : picDegLayer C (genus C : ℤ) T)

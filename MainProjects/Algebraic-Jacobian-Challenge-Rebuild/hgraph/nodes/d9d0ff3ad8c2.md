@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PointwiseAchiever.pointwiseGeneratorSeed
 type: lean
-updated: '2026-08-07T05:01:50'
+updated: '2026-08-18T20:50:59'
 ---
 noncomputable def pointwiseGeneratorSeed
     (hrdn : PointwiseSeedRDN C hpi g r1 r2 b1 b2 i j hO hchi) :

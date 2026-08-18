@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.universalMulMap
 type: lean
-updated: '2026-08-07T05:01:50'
+updated: '2026-08-18T20:50:59'
 ---
 noncomputable def universalMulMap :
     universalMulSource (hπ := hπ) g r₁ r₂ b₁ b₂ i j →ₗ[RZ]

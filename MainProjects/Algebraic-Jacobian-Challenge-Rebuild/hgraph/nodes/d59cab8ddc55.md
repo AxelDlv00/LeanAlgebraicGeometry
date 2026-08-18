@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divRepPullAtAff_awayMul_compat_at
 type: lean
-updated: '2026-08-07T05:01:47'
+updated: '2026-08-18T20:50:56'
 ---
 theorem divRepPullAtAff_awayMul_compat_at
     (hOAt : Sheaf.h0 (C.left.moduleKSheaf k) = 1)

@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: synth_uniformGeneration_p1
 type: lean
-updated: '2026-08-03T16:00:49'
+updated: '2026-08-18T20:52:12'
 ---
 theorem synth_uniformGeneration_p1 : UniformGeneration (p1Over (ULift.{u} ℚ)) :=
   uniformGeneration_p1Over (ULift.{u} ℚ)

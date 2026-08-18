@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.FiberCoordinateData.divisorSections_add_nsmul_coordinateWeilDivisor_V1
 type: lean
-updated: '2026-07-31T08:04:21'
+updated: '2026-08-18T20:52:11'
 ---
 theorem divisorSections_add_nsmul_coordinateWeilDivisor_V1 (A : Y.CurveDivisor) (n : ℕ) :
     divisorSections K (A + n • Q.coordinateWeilDivisor (K := K)) Q.V₁ =

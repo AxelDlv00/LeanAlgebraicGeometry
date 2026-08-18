@@ -40,7 +40,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.relPicSeparates_of_injective_chartValue
 type: lean
-updated: '2026-08-07T05:01:55'
+updated: '2026-08-18T20:51:04'
 ---
 theorem relPicSeparates_of_injective_chartValue [GeometricallyReduced C.hom] (m : ℕ)
     (Z : (C ⊗ overSpec k k).left.CurveDivisor) (A : Type u) [CommRing A] [Algebra k A]

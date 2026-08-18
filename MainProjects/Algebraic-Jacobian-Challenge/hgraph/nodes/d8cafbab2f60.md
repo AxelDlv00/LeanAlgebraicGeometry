@@ -19,7 +19,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.RationalMap.mem_domain_of_forall_germ_mem_range
 type: lean
-updated: '2026-07-28T12:23:40'
+updated: '2026-08-18T20:51:53'
 ---
 theorem Scheme.RationalMap.mem_domain_of_forall_germ_mem_range
     {Y Z S : Scheme.{u}} [IsIntegral Y] [IsAffine S] (qY : Y ⟶ S) (qZ : Z ⟶ S)

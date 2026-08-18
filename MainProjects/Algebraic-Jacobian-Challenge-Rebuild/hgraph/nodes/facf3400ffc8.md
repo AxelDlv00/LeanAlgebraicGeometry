@@ -26,7 +26,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.relThetaTwistH0BaseChange
 type: lean
-updated: '2026-08-07T05:01:44'
+updated: '2026-08-18T20:50:51'
 ---
 noncomputable def relThetaTwistH0BaseChange
     (hH1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π n)).H1) :

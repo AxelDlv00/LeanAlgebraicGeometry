@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.uniformBaseDivisor_zero_of_genus_eq_zero
 type: lean
-updated: '2026-07-29T07:30:33'
+updated: '2026-08-18T20:52:12'
 ---
 theorem uniformBaseDivisor_zero_of_genus_eq_zero (hg : genus C = 0) :
     UniformBaseDivisor C 0 :=

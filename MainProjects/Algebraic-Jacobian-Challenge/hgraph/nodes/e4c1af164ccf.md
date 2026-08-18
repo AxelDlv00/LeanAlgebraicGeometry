@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.GaloisDescent.StableAffineOpen.inf_stable
 type: lean
-updated: '2026-07-30T23:35:09'
+updated: '2026-08-18T20:52:04'
 ---
 theorem inf_stable (i j : StableAffineOpen ρ) :
     ρ.IsStableOpen (i.U ⊓ j.U) := by

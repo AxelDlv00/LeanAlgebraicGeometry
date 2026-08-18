@@ -13,6 +13,6 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.amitsurInsertion₁
 type: lean
-updated: '2026-08-07T05:01:46'
+updated: '2026-08-18T20:50:55'
 ---
 noncomputable def amitsurInsertion₁ : Xcb ⟶ XB := w₁₂ ≫ (u₁)

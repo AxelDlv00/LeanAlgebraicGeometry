@@ -21,7 +21,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.cechFreeEvalEngine_commFam
 type: lean
-updated: '2026-07-28T13:22:16'
+updated: '2026-08-18T20:52:02'
 ---
 private lemma cechFreeEvalEngine_commFam
     (V : TopologicalSpace.Opens ↥X) (p : ℕ) :

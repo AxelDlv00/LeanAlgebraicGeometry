@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.AffineCoverMVSquare.pairLift
 type: lean
-updated: '2026-07-24T03:02:13'
+updated: '2026-08-18T20:52:10'
 ---
 noncomputable def AffineCoverMVSquare.pairLift :
     ModuleCat.of k

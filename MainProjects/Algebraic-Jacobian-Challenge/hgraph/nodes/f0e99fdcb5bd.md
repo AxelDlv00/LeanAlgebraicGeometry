@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.hasColimit_permDiagram_iff
 type: lean
-updated: '2026-07-28T18:12:19'
+updated: '2026-08-18T20:51:56'
 ---
 theorem hasColimit_permDiagram_iff :
     HasColimit (permDiagram C n) ↔

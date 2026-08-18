@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.GaloisDescent.quotientUniqueIso_inv_base
 type: lean
-updated: '2026-08-12T15:42:08'
+updated: '2026-08-18T20:50:54'
 ---
 theorem quotientUniqueIso_inv_base
     {K L : Type u} [Field K] [Field L] [Algebra K L]

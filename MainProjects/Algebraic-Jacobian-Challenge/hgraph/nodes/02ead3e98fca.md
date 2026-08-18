@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.stratumι
 type: lean
-updated: '2026-07-24T17:02:56'
+updated: '2026-08-18T20:52:04'
 ---
 noncomputable def stratumι (hcov : ChartsCover G e) :
     stratum G e hcov ⟶ X :=

@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.twistedPerSigmaCompat_of_bcNaturality
 type: lean
-updated: '2026-07-29T06:00:33'
+updated: '2026-08-18T20:52:01'
 ---
 theorem twistedPerSigmaCompat_of_bcNaturality
     (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)

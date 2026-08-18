@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.opensMapHomBase_isEquivalence
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-08-18T20:52:02'
 ---
 instance opensMapHomBase_isEquivalence : (Opens.map φ.hom.base).IsEquivalence :=
   inferInstanceAs (Opens.mapMapIso (Scheme.forgetToTop.mapIso φ)).functor.IsEquivalence

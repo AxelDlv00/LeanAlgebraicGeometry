@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.thetaFieldPencilFstUnit
 type: lean
-updated: '2026-08-07T05:01:48'
+updated: '2026-08-18T20:50:58'
 ---
 noncomputable def thetaFieldPencilFstUnit : (relCurve C K).functionFieldˣ :=
   Units.mk0 (thetaFieldRead C K π a (relThetaSectionFst C K π a))

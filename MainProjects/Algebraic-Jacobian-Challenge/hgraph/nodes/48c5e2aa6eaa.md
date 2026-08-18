@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.isDominant_opens_ι
 type: lean
-updated: '2026-07-28T15:48:27'
+updated: '2026-08-18T20:51:48'
 ---
 theorem isDominant_opens_ι {X : Scheme.{u}} (V : X.Opens) (hV : Dense (V : Set X)) :
     IsDominant V.ι := by

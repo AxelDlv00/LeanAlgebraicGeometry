@@ -28,5 +28,5 @@ lean_status: lean_ok
 private: true
 title: RingTheory.Module.ext_comp_mk₀_ofHom_eq_zero_of_entries_mem_annihilator
 type: lean
-updated: '2026-07-28T13:22:15'
+updated: '2026-08-18T20:51:50'
 ---

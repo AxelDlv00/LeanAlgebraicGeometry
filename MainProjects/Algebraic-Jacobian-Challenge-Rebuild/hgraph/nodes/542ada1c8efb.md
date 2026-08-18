@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.scalarExtensionMapOfAlgHom_tower_finSubext
 type: lean
-updated: '2026-08-18T01:05:18'
+updated: '2026-08-18T20:51:05'
 ---
 theorem scalarExtensionMapOfAlgHom_tower_finSubext
     {F K A B : Type u}

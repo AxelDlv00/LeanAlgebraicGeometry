@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.derivationToDualNumberHom_fst_of_mem
 type: lean
-updated: '2026-08-07T05:02:01'
+updated: '2026-08-18T20:51:09'
 ---
 lemma derivationToDualNumberHom_fst_of_mem (D : Derivation k R (ResidueField R))
     {x : R} (hx : x ∈ maximalIdeal R) :

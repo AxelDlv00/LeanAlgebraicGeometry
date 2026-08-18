@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.ell_eq_of_linearEquivalence
 type: lean
-updated: '2026-07-27T15:50:35'
+updated: '2026-08-18T20:52:10'
 ---
 theorem ell_eq_of_linearEquivalence {D D' : X.WeilDivisor}
     (h : Scheme.WeilDivisor.LinearEquivalence D D') :

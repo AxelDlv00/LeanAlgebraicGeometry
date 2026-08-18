@@ -10,7 +10,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.germ_resHom_assemble
 type: lean
-updated: '2026-08-07T05:01:49'
+updated: '2026-08-18T20:50:59'
 ---
 private lemma germ_resHom_assemble {X : Scheme.{u}} {W V : X.Opens} (h : W ≤ V) (z : X)
     (hz : z ∈ W) (t : Γ(X, V)) :

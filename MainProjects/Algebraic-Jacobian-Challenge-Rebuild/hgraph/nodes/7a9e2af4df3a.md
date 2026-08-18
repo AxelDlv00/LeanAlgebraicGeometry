@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divQProj
 type: lean
-updated: '2026-08-07T05:01:49'
+updated: '2026-08-18T20:50:58'
 ---
 theorem divQProj : DivQProjBundle k A B g r₁ r₂ b₁ b₂ where
   isClosedImmersion_ι := isClosedImmersion_divSchemeι k A B g r₁ r₂ b₁ b₂

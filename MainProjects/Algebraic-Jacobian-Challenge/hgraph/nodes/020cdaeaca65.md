@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.chartFiberRank_congr_chart
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-08-18T20:52:04'
 ---
 lemma chartFiberRank_congr_chart {V W : X.affineOpens} (h : V = W) (x : X)
     (hxV : x ∈ V.1) (hxW : x ∈ W.1) :

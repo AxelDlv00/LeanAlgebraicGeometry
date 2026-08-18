@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.pullbackLanDecomposition
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-08-18T20:52:09'
 ---
 noncomputable def pullbackLanDecomposition (φ : S ⟶ F.op ⋙ R) :
     PresheafOfModules.pullback φ ≅ extendScalars φ ⋙ pullback0 F R :=

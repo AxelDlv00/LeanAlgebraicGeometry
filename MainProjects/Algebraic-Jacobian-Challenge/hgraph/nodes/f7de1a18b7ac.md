@@ -54,7 +54,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.pullback_tildeIso
 type: lean
-updated: '2026-07-28T13:22:16'
+updated: '2026-08-18T20:52:07'
 ---
 private theorem pullback_tildeIso
     {A B : CommRingCat.{u}} (φ : A ⟶ B) (M : ModuleCat.{u} A) :

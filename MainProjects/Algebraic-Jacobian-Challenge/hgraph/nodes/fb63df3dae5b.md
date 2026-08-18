@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.p1ChartRetraction_p1CoordSection
 type: lean
-updated: '2026-07-27T19:08:27'
+updated: '2026-08-18T20:52:08'
 ---
 theorem p1ChartRetraction_p1CoordSection {i j : ULift.{u} (Fin 2)} (hij : i ≠ j) :
     (p1ChartRetraction k hij).hom (p1CoordSection k i j) = Polynomial.X := by

@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: Algebra.DescentDatum.coactionAlgHom
 type: lean
-updated: '2026-08-07T05:01:46'
+updated: '2026-08-18T20:50:53'
 ---
 noncomputable def coactionAlgHom (D : DescentDatum A B R) :
     R →ₐ[B] B ⊗[A] R :=

@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.gluedPieceEquiv
 type: lean
-updated: '2026-08-07T05:01:44'
+updated: '2026-08-18T20:50:50'
 ---
 noncomputable def gluedPieceEquiv (hc : Scheme.IsGluingCocycle U g)
     (hP : ∀ i : ι, X.basicOpen (h i) ≤ U (σ i)) (i : ι) :

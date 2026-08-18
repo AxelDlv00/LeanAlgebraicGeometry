@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.fiberCoordUnit_coeffAt_divOf_nonneg_of_mem_chart₀
 type: lean
-updated: '2026-07-29T06:43:23'
+updated: '2026-08-18T20:52:11'
 ---
 theorem fiberCoordUnit_coeffAt_divOf_nonneg_of_mem_chart₀ {x : Y} (hx : x ≠ genericPoint Y)
     (hxV₀ : x ∈ fiberChart₀ π) :

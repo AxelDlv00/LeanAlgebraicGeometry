@@ -24,7 +24,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.qcoh_section_kernel_comparison
 type: lean
-updated: '2026-07-24T13:02:37'
+updated: '2026-08-18T20:52:03'
 ---
 noncomputable def qcoh_section_kernel_comparison (F : (Spec R).Modules) [F.IsQuasicoherent]
     (f : R) :

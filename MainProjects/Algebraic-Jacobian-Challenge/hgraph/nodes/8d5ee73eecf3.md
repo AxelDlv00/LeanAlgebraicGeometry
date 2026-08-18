@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.permAut_eq_map
 type: lean
-updated: '2026-07-28T18:12:19'
+updated: '2026-08-18T20:51:55'
 ---
 theorem permAut_eq_map (σ : Equiv.Perm (Fin n)) :
     MonObj.permAut C σ = (permDiagram C n).map (SingleObj.toEnd (Equiv.Perm (Fin n)) σ⁻¹) := by

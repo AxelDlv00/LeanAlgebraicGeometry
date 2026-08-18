@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivRepAffinePullbackAff.pullGlobal_classifyGlobal
 type: lean
-updated: '2026-08-07T05:01:47'
+updated: '2026-08-18T20:50:56'
 ---
 theorem pullGlobal_classifyGlobal
     (D : DivRepAffinePullbackAff hpi g r1 r2 b1 b2)

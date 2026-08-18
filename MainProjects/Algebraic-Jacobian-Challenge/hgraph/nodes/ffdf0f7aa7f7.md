@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.shortExact_of_degreewise_splitting
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-08-18T20:51:58'
 ---
 lemma shortExact_of_degreewise_splitting
     {S : ShortComplex (CochainComplex 𝒜 ℕ)}

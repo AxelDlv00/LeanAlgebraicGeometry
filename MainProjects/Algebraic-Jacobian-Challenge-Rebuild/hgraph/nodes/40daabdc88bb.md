@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.fiberLattice_mono
 type: lean
-updated: '2026-08-07T05:02:00'
+updated: '2026-08-18T20:51:08'
 ---
 theorem fiberLattice_mono (D : Y.CurveDivisor) (n : ℕ) :
     fiberLattice π D n ≤ fiberLattice π D (n + 1) := by

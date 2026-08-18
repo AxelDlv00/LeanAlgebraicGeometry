@@ -28,7 +28,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_fiberChartTensorEquiv
 type: lean
-updated: '2026-07-27T16:23:53'
+updated: '2026-08-18T20:52:07'
 ---
 theorem exists_fiberChartTensorEquiv {X Y : Scheme.{u}} (f : X ⟶ Y) [IsAffine Y] (t : Y)
     (M : X.Modules) [M.IsQuasicoherent] {W : X.Opens} (hW : IsAffineOpen W)

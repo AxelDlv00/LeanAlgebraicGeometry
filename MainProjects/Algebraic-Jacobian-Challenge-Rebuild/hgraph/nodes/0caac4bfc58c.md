@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.twoCoverH1LinearEquiv
 type: lean
-updated: '2026-08-07T05:01:45'
+updated: '2026-08-18T20:50:52'
 ---
 noncomputable def Scheme.twoCoverH1LinearEquiv
     (F : Sheaf (Opens.grothendieckTopology (X : TopCat)) (ModuleCat.{u} k))

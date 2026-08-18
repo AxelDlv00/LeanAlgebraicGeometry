@@ -10,7 +10,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Adelic.homOfLE_chartMor₁
 type: lean
-updated: '2026-07-28T13:22:17'
+updated: '2026-08-18T20:52:10'
 ---
 private lemma homOfLE_chartMor₁ {U V : Y.Opens} (h : V ≤ U) (s : Γ(Y, U)) :
     Y.homOfLE h ≫ chartMor₁ U s = chartMor₁ V (Y.presheaf.map (homOfLE h).op s) := by

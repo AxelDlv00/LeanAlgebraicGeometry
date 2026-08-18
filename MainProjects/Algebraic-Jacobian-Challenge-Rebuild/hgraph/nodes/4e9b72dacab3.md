@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divUniversalHighWindowShiftMulLinear
 type: lean
-updated: '2026-08-07T05:01:49'
+updated: '2026-08-18T20:50:58'
 ---
 noncomputable def divUniversalHighWindowShiftMulLinear (n : Nat) :
     HS →ₗ[k] ((H n) →ₗ[k] (H (n + 1))) :=

@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.linearMap_bijective_of_comp_localizations
 type: lean
-updated: '2026-08-01T04:12:00'
+updated: '2026-08-18T20:52:03'
 ---
 theorem linearMap_bijective_of_comp_localizations
     {R : Type u} [CommRing R] (S : Submonoid R)

@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.isHQuasiProjectiveWith_openImage
 type: lean
-updated: '2026-08-03T04:16:17'
+updated: '2026-08-18T20:52:07'
 ---
 theorem Scheme.isHQuasiProjectiveWith_openImage
     {S : Scheme.{0}} {X Y : Over S} (e : X ≅ Y) (U : X.left.Opens)

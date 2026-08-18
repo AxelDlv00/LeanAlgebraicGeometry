@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.pieceStalkEval
 type: lean
-updated: '2026-08-07T05:01:51'
+updated: '2026-08-18T20:51:01'
 ---
 noncomputable def pieceStalkEval (j : D.index) :
     A.colength j →ₗ[K]

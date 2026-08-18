@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.GaloisDescent.pullbackBaseChange_comp
 type: lean
-updated: '2026-08-12T15:42:08'
+updated: '2026-08-18T20:50:53'
 ---
 lemma pullbackBaseChange_comp {T' T Y : Scheme.{u}}
     (g : Y ⟶ Spec (CommRingCat.of K)) (t : T ⟶ Spec (CommRingCat.of K))

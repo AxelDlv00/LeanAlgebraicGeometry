@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.GVΨ_map_eq
 type: lean
-updated: '2026-07-24T17:02:56'
+updated: '2026-08-18T20:52:01'
 ---
 lemma GVΨ_map_eq (V : TopologicalSpace.Opens ↥X) {M N : X.Modules} (φ : M ⟶ N) :
     (PresheafOfModules.toPresheaf X.ringCatSheaf.obj ⋙

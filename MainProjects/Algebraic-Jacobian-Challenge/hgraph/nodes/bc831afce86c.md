@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Hom.fiberEulerIndex_eq_baseChangedCechIndex_spec
 type: lean
-updated: '2026-08-03T14:01:21'
+updated: '2026-08-18T20:52:08'
 ---
 theorem Hom.fiberEulerIndex_eq_baseChangedCechIndex_spec
     {R : CommRingCat.{u}} (p : X ⟶ Spec R)

@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.cechSectionHomotopyZero
 type: lean
-updated: '2026-07-25T22:02:35'
+updated: '2026-08-18T20:52:01'
 ---
 noncomputable def cechSectionHomotopyZero :
     (cechSectionAugComplex 𝒰 F V).X 1 ⟶ (cechSectionAugComplex 𝒰 F V).X 0 :=

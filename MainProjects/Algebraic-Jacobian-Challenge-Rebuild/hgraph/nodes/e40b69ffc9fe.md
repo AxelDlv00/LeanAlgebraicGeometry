@@ -24,7 +24,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.pieceTermBaseChangeAlg_one_tmul
 type: lean
-updated: '2026-08-07T05:01:53'
+updated: '2026-08-18T20:51:02'
 ---
 theorem pieceTermBaseChangeAlg_one_tmul
     (s : Γ(relCurve C R, (relCurve C R).basicOpen h)) :

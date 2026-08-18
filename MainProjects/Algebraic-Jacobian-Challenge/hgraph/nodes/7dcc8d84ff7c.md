@@ -33,7 +33,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.dualUnitIso_dualIsoOfIso
 type: lean
-updated: '2026-07-25T02:02:27'
+updated: '2026-08-18T20:52:09'
 ---
 lemma dualUnitIso_dualIsoOfIso {V : Scheme.{u}}
     (s : SheafOfModules.unit V.ringCatSheaf ≅ SheafOfModules.unit V.ringCatSheaf) :

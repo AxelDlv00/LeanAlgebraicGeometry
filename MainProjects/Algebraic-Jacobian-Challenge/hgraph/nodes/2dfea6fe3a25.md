@@ -25,7 +25,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.p1PushforwardLocalFreenessBridge_of_rank
 type: lean
-updated: '2026-07-27T17:00:52'
+updated: '2026-08-18T20:52:08'
 ---
 theorem p1PushforwardLocalFreenessBridge_of_rank
     (A : Type u) [CommRing A] [Algebra k A] [Algebra.FiniteType k A]

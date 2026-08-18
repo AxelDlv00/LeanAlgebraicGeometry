@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.thetaChartUnit_zero
 type: lean
-updated: '2026-08-07T05:01:50'
+updated: '2026-08-18T20:51:00'
 ---
 theorem thetaChartUnit_zero (i j : (thetaChartCover C B π).index) :
     thetaChartUnit C B π 0 i j = 1 := by

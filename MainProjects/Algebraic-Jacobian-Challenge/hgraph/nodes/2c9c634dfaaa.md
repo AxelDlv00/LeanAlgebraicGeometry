@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.mem_range_rankStratumι_iff
 type: lean
-updated: '2026-07-26T06:25:05'
+updated: '2026-08-18T20:52:04'
 ---
 theorem mem_range_rankStratumι_iff [IsLocallyNoetherian S]
     [F.IsFinitePresentation] (s : S) :

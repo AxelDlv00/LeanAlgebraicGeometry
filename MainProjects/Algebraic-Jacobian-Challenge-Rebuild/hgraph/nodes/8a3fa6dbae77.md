@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.BasicOpenCoverData.pinnedGenerator
 type: lean
-updated: '2026-08-07T05:01:55'
+updated: '2026-08-18T20:51:04'
 ---
 noncomputable def pinnedGenerator (D : BasicOpenCoverData C B pi) :
     (j : D.index) → Γ(relCurve C B, relPinnedChart C B pi (D.pinnedSide j))

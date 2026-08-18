@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: IsLocalization.AwayCover.IsCoverCocycle.baseChange
 type: lean
-updated: '2026-08-07T05:01:43'
+updated: '2026-08-18T20:50:50'
 ---
 theorem IsCoverCocycle.baseChange {γ : ∀ i j, (T i j)ˣ}
     (hγ : IsCoverCocycle (f := f) (S := S) (W := W) γ) :

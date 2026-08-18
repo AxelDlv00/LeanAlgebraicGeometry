@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ProjTwist.coordSection
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-08-18T20:52:08'
 ---
 def coordSection (j : n₀) : Γ(serreTwist n₀ 1, ⊤) :=
   (serreTwistSectionsCompatible n₀ 1).symm

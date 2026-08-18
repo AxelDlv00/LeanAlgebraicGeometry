@@ -119,7 +119,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicScheme.picSharp_isSheaf_zariski_of_representableBy
 type: lean
-updated: '2026-07-30T08:42:03'
+updated: '2026-08-18T20:52:07'
 ---
 theorem picSharp_isSheaf_zariski_of_representableBy {k : Type u} [Field k]
     (C : Over (Spec (CommRingCat.of k)))

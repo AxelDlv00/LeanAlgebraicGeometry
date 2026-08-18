@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Pic0Et.identityCotangentSpace
 type: lean
-updated: '2026-07-29T22:29:09'
+updated: '2026-08-18T20:52:06'
 ---
 noncomputable abbrev identityCotangentSpace (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]

@@ -25,7 +25,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.subsingleton_tensorProduct_field_ext_iff
 type: lean
-updated: '2026-08-07T05:01:56'
+updated: '2026-08-18T20:51:04'
 ---
 theorem subsingleton_tensorProduct_field_ext_iff
     {S L L' H : Type u} [CommRing S] [Field L] [Field L'] [Algebra S L] [Algebra S L']

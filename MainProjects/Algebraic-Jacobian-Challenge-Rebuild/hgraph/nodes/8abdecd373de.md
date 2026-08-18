@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PicRankOneNativePresentation.toLocalPresentation
 type: lean
-updated: '2026-08-07T05:50:50'
+updated: '2026-08-18T20:51:05'
 ---
 noncomputable def toLocalPresentation
     (P : PicRankOneNativePresentation pi lam) :

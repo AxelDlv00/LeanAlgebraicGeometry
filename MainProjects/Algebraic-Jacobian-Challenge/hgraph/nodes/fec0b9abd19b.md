@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.LaurentChartData.FiniteMapGenerators.openSectionsEquiv_algebraMap
 type: lean
-updated: '2026-07-31T02:29:39'
+updated: '2026-08-18T20:52:04'
 ---
 theorem openSectionsEquiv_algebraMap (U : C.left.Opens) (c : k) :
     openSectionsEquiv U (algebraMap k Γ(C.left, U) c) =

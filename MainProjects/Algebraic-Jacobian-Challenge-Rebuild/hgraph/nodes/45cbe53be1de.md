@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: Module.DescentDatum.coaction_actionMap
 type: lean
-updated: '2026-08-07T05:01:46'
+updated: '2026-08-18T20:50:54'
 ---
 theorem coaction_actionMap {x : B ⊗[A] M}
     (hx : (D.coaction.restrictScalars A).baseChange B x =

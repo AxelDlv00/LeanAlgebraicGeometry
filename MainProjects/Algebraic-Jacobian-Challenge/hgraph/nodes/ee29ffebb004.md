@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Hom.fiberEulerIndex_eq_cech
 type: lean
-updated: '2026-08-03T11:10:50'
+updated: '2026-08-18T20:52:04'
 ---
 theorem Hom.fiberEulerIndex_eq_cech (f : X ⟶ S) (s : S)
     (M : X.Modules) [M.IsQuasicoherent]

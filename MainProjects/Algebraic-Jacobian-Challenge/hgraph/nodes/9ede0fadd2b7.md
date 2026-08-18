@@ -25,7 +25,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicScheme.classOfSection
 type: lean
-updated: '2026-07-28T13:22:16'
+updated: '2026-08-18T20:52:06'
 ---
 noncomputable def classOfSection {k : Type u} [Field k]
     (C : Over (Spec (.of k)))

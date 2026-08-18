@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.FGDescent.MVCoboundaryRel.symm
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-08-18T20:52:04'
 ---
 theorem MVCoboundaryRel.symm {B : Type v} [CommRing B] [Algebra k B]
     {u v : R₀₁ ⊗[k] B} (h : MVCoboundaryRel ρ₀ ρ₁ B u v) :

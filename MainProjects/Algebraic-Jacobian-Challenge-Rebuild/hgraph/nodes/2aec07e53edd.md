@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.thetaToTriple_from_first_reversed
 type: lean
-updated: '2026-08-07T05:01:52'
+updated: '2026-08-18T20:51:01'
 ---
 theorem thetaToTriple_from_first_reversed (i j l : D.index)
     (x : A.ThetaPieceQuotient (π := π) a i) :

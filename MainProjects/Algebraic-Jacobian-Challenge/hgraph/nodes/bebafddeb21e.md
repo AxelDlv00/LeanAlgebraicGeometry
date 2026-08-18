@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.tilde_injective_app_basicOpen
 type: lean
-updated: '2026-07-28T14:28:36'
+updated: '2026-08-18T20:52:03'
 ---
 theorem tilde_injective_app_basicOpen (f : M ⟶ N) (hf : Function.Injective f.hom) (r : R) :
     Function.Injective

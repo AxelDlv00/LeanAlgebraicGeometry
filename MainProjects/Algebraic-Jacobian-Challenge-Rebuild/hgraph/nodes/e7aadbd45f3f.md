@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivRepAffinePullback.divFamZarAffineEquiv_pullGlobal
 type: lean
-updated: '2026-08-07T05:01:47'
+updated: '2026-08-18T20:50:56'
 ---
 theorem divFamZarAffineEquiv_pullGlobal
     (D : DivRepAffinePullback hpi g hO hchi r1 r2 b1 b2)

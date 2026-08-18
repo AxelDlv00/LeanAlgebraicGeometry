@@ -10,7 +10,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.mem_pointLattice_zero_iff
 type: lean
-updated: '2026-08-07T05:02:00'
+updated: '2026-08-18T20:51:08'
 ---
 private lemma mem_pointLattice_zero_iff {g : X.functionField} :
     g ∈ pointLattice K hx 0 ↔ Scheme.ord (X ↘ Spec (CommRingCat.of K)) hx g ≤ 1 := by

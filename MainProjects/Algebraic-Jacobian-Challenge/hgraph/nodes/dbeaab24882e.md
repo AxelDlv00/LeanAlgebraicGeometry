@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: DualNumber.scaleRingHom
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-08-18T20:52:06'
 ---
 def scaleRingHom (a : R) : R[ε] →+* R[ε] :=
   (TrivSqZeroExt.map (a • (LinearMap.id : R →ₗ[R] R))).toRingHom

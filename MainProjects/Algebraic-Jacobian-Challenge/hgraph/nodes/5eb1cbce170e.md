@@ -22,7 +22,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.pullbackTensorPowIso
 type: lean
-updated: '2026-07-27T12:05:12'
+updated: '2026-08-18T20:52:07'
 ---
 noncomputable def Modules.pullbackTensorPowIso {Z Y : Scheme.{u}} (f : Y ⟶ Z)
     (L : Z.Modules) :

@@ -19,7 +19,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.pushforwardSliceAdjunctionH1
 type: lean
-updated: '2026-07-24T17:32:44'
+updated: '2026-08-18T20:52:02'
 ---
 lemma pushforwardSliceAdjunctionH1 :
     Functor.whiskerRight (NatTrans.op (sliceOversEquiv φ Ui).symm.toAdjunction.counit)

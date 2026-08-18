@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ProjectiveSpace.Coordinates.chartHom
 type: lean
-updated: '2026-08-07T05:01:59'
+updated: '2026-08-18T20:51:07'
 ---
 def chartHom (i : J) (c : J → B) (hi : c i = 1) :
     Away (homogeneousSubmodule J (ULift.{u} ℤ)) (X i) →+* B :=

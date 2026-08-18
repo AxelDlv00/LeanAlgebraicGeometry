@@ -29,7 +29,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.finrank_stabilisationAmbient_eq_h1
 type: lean
-updated: '2026-07-31T06:25:53'
+updated: '2026-08-18T20:52:10'
 ---
 theorem finrank_stabilisationAmbient_eq_h1 (D : Y.CurveDivisor) (n : ℕ) :
     Module.finrank K

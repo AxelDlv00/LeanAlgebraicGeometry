@@ -20,7 +20,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.RationalMap.exists_germ_stalkPullback_notMem_range_of_notMem_domain
 type: lean
-updated: '2026-07-28T12:23:40'
+updated: '2026-08-18T20:51:53'
 ---
 theorem Scheme.RationalMap.exists_germ_stalkPullback_notMem_range_of_notMem_domain
     {Y Z S : Scheme.{u}} [IsIntegral Y] [IsAffine S] [IsLocallyNoetherian Y]

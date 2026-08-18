@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.Sheaf.HModule'.mapCoeff
 type: lean
-updated: '2026-08-07T05:01:44'
+updated: '2026-08-18T20:50:51'
 ---
 noncomputable def HModule'.mapCoeff (f : F ⟶ G) (n : ℕ) :
     HModule' F U n →ₗ[R] HModule' G U n :=

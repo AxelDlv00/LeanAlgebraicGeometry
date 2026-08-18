@@ -16,7 +16,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.per_j_surj
 type: lean
-updated: '2026-07-28T13:22:16'
+updated: '2026-08-18T20:52:02'
 ---
 private lemma per_j_surj (g : M →ₗ[R] N) (f : R) (c : R)
     (hj : IsLocalizedModule (Submonoid.powers f)

@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicSharp.Rigidification
 type: lean
-updated: '2026-07-24T17:02:57'
+updated: '2026-08-18T20:52:08'
 ---
 structure Rigidification {S C T : Scheme.{u}} {πC : C ⟶ S} {πT : T ⟶ S}
     (σ : T ⟶ Limits.pullback πC πT) (L : LineBundle.OnProduct πC πT) where

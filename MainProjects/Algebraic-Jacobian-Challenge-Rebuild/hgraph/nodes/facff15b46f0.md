@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ker_graphSectionEval_eq_span_graphChartEqn
 type: lean
-updated: '2026-08-07T05:02:00'
+updated: '2026-08-18T20:51:08'
 ---
 theorem ker_graphSectionEval_eq_span_graphChartEqn :
     RingHom.ker (graphSectionEval t (graphPoint_mem_graphChart C t))

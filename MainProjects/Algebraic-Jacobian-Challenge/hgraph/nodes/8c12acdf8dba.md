@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.degK_principal_eq_zero_of_bump
 type: lean
-updated: '2026-07-28T00:32:02'
+updated: '2026-08-18T20:52:10'
 ---
 theorem degK_principal_eq_zero_of_bump
     (hbump : ∀ (P : X.PrimeDivisor) (E : X.WeilDivisor),

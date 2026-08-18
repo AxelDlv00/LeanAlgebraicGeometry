@@ -11,7 +11,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Scheme.Modules.tensorObjWhiskerLeftIso_refl
 type: lean
-updated: '2026-07-28T13:22:17'
+updated: '2026-08-18T20:52:08'
 ---
 private lemma tensorObjWhiskerLeftIso_refl (F G : X.Modules) :
     tensorObjWhiskerLeftIso F (Iso.refl G) = Iso.refl _ := by

@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.not_injective_abelSigmaChartAff_of_divFamZarAff
 type: lean
-updated: '2026-08-07T05:01:56'
+updated: '2026-08-18T20:51:05'
 ---
 theorem not_injective_abelSigmaChartAff_of_divFamZarAff {T : Over (Spec (.of k))}
     (s₁ s₂ : divFamZarAff C n T) (hne : s₁ ≠ s₂)

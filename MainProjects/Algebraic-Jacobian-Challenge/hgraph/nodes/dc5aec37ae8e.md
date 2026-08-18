@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.sectionSub_divisorOfList_replicate_of_notMem
 type: lean
-updated: '2026-07-28T04:57:35'
+updated: '2026-08-18T20:52:10'
 ---
 theorem sectionSub_divisorOfList_replicate_of_notMem (U : X.Opens)
     {P : X.PrimeDivisor} (hP : P.point ∉ U) (E : X.WeilDivisor) (n : ℕ) :

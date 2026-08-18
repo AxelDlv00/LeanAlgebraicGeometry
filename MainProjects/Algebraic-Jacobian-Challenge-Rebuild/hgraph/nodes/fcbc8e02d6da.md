@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divFamZarToAffVehicle_map
 type: lean
-updated: '2026-08-07T05:01:51'
+updated: '2026-08-18T20:51:00'
 ---
 theorem divFamZarToAffVehicle_map {T T' : Over (Spec (.of k))} (f : T' ⟶ T)
     (s : divFamZar C π n T) :

@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DatG0.isSeparable_finSubext
 type: lean
-updated: '2026-08-07T05:01:58'
+updated: '2026-08-18T20:51:06'
 ---
 instance isSeparable_finSubext [Algebra.IsSeparable k K] (L : FinSubext k K) :
     Algebra.IsSeparable k L.1 :=

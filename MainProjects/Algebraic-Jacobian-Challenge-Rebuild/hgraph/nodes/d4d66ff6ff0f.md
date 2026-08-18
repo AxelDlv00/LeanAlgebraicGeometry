@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.GaloisDescent.StableAffineOpen.quotientGlueData
 type: lean
-updated: '2026-08-14T14:17:15'
+updated: '2026-08-18T20:50:54'
 ---
 noncomputable def quotientGlueData [FiniteDimensional K L] [IsGalois K L] :
     Scheme.GlueData where

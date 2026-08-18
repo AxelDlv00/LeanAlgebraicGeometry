@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.P1FiniteMap.basicOpen_coord1
 type: lean
-updated: '2026-08-07T05:01:59'
+updated: '2026-08-18T20:51:07'
 ---
 theorem basicOpen_coord1 :
     (P1 k).basicOpen (coord1 (k := k)) =

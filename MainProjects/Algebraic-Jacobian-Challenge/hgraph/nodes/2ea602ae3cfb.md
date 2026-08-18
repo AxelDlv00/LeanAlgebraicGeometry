@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PrimeDivisor.functionFieldIso_compat
 type: lean
-updated: '2026-07-26T02:25:43'
+updated: '2026-08-18T20:52:12'
 ---
 theorem Scheme.PrimeDivisor.functionFieldIso_compat {X : Scheme.{u}} [IsIntegral X]
     (U : X.Opens) [Nonempty U] [IsIntegral U.toScheme]

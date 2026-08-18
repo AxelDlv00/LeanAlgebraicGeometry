@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivisorAdaptation.forall_noLeak_of_forall_supportLocus_subset
 type: lean
-updated: '2026-08-07T05:01:48'
+updated: '2026-08-18T20:50:57'
 ---
 theorem forall_noLeak_of_forall_supportLocus_subset
     (hsub : ∀ j : A.index, d.supportLocus ⊆ (A.pieces j : Set (relCurve C R))) :

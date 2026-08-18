@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.FinCoverData.thetaOvlUnit_inr_inl
 type: lean
-updated: '2026-08-07T05:01:53'
+updated: '2026-08-18T20:51:02'
 ---
 lemma thetaOvlUnit_inr_inl (a : ℕ) (j₁ : Fin D.m₁) (j₀ : Fin D.m₀) :
     D.thetaOvlUnit a (Sum.inr j₁) (Sum.inl j₀)

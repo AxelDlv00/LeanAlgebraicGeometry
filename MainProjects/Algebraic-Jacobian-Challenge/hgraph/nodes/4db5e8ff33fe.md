@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.coverInterOpen_baseChange_restrictedMap
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-08-18T20:52:01'
 ---
 noncomputable def coverInterOpen_baseChange_restrictedMap
     (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)

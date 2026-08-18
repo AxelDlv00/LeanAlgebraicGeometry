@@ -9,7 +9,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.BasicOpenCocycleDatum.nativeTargetPieceCoordinate_one
 type: lean
-updated: '2026-08-11T18:41:37'
+updated: '2026-08-18T20:51:05'
 ---
 private theorem nativeTargetPieceCoordinate_one (j : D.index)
     (s : Γ(D.nativeModule, D.pieces j))

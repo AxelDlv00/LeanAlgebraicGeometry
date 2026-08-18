@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.BasicOpenCoverData.chartAt_inl
 type: lean
-updated: '2026-08-07T05:01:45'
+updated: '2026-08-18T20:50:52'
 ---
 lemma chartAt_inl (j : D.J₀) : D.chartAt (Sum.inl j) = (fiberTwoCover π).V₀ := rfl
 

@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.stalkMapₗ_injective
 type: lean
-updated: '2026-07-28T14:28:36'
+updated: '2026-08-18T20:52:03'
 ---
 theorem stalkMapₗ_injective {M N : ModuleCat R} (f : M ⟶ N) (hf : Function.Injective f.hom)
     (x : PrimeSpectrum.Top R) : Function.Injective (stalkMapₗ f x) := by

@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.tensorPresheaf
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-08-18T20:52:09'
 ---
 noncomputable abbrev tensorPresheaf (A B : X.Modules) : X.PresheafOfModules :=
   PresheafOfModules.Monoidal.tensorObj (R := X.presheaf) A.val B.val

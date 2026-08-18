@@ -20,7 +20,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.exists_bound_subsingleton_h1Mod
 type: lean
-updated: '2026-07-27T22:48:27'
+updated: '2026-08-18T20:52:09'
 ---
 theorem exists_bound_subsingleton_h1Mod
     (hledger : ∀ D : X.WeilDivisor, chi k U₀ U₁ D = chi k U₀ U₁ 0 + degK k D)

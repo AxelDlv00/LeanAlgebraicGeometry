@@ -21,7 +21,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.isAffineOpen_preimage_inf_preimage_of_isPullback
 type: lean
-updated: '2026-07-28T13:22:16'
+updated: '2026-08-18T20:52:07'
 ---
 private lemma isAffineOpen_preimage_inf_preimage_of_isPullback
     {X X' S S' : Scheme.{u}}

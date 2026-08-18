@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: LaurentPolynomial.unitsHom_surjective
 type: lean
-updated: '2026-08-07T05:01:43'
+updated: '2026-08-18T20:50:49'
 ---
 theorem unitsHom_surjective : Function.Surjective (unitsHom (R := R)) := by
   intro u

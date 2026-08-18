@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.canonicalRankOneDivisorOfMem_unique
 type: lean
-updated: '2026-08-13T22:44:24'
+updated: '2026-08-18T20:51:05'
 ---
 theorem canonicalRankOneDivisorOfMem_unique
     (hpi : pi ≫ P1.structureMap k = C.hom)

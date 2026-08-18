@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ThetaGeneratorSeed.map_divFamPhi_divUniversalFibreSeedW
 type: lean
-updated: '2026-08-07T05:01:49'
+updated: '2026-08-18T20:50:58'
 ---
 theorem map_divFamPhi_divUniversalFibreSeedW :
     Submodule.map (divFamPhi C K π (windowM_choice π hπ g)

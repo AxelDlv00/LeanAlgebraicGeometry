@@ -9,7 +9,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.BasicOpenCocycleDatum.pullbackCongrCompSectionsEquiv_baseMap
 type: lean
-updated: '2026-08-11T15:07:04'
+updated: '2026-08-18T20:51:05'
 ---
 private lemma pullbackCongrCompSectionsEquiv_baseMap
     {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (h : X ⟶ Z)

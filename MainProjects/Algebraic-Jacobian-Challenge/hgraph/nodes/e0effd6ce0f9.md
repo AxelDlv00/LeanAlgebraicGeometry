@@ -10,7 +10,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Adelic.awayLift_mul_eq
 type: lean
-updated: '2026-07-28T13:22:17'
+updated: '2026-08-18T20:52:10'
 ---
 private lemma awayLift_mul_eq {f : MvPolynomial (ULift.{u} (Fin 2)) (ULift.{u} ℤ)} {i : ℕ}
     (hf : f ∈ homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ) i)

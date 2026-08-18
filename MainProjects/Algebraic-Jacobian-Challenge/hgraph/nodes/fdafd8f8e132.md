@@ -23,7 +23,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Scheme.Modules.braiding_comp_unit_eq_unit_of_isInvertible
 type: lean
-updated: '2026-07-28T13:22:17'
+updated: '2026-08-18T20:52:08'
 ---
 private lemma braiding_comp_unit_eq_unit_of_isInvertible (L : X.Modules) [IsInvertibleGr L] :
     (BraidedCategory.braiding (C := MonoidalPresheaf X)

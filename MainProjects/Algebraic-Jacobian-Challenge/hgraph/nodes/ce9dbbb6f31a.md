@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.instIsDomainP1ChartSectionsY
 type: lean
-updated: '2026-07-27T19:08:27'
+updated: '2026-08-18T20:52:08'
 ---
 instance instIsDomainP1ChartSectionsY :
     IsDomain Γ(ℙ(ULift.{u} (Fin 2); Spec (CommRingCat.of k)), p1Chart k ⟨1⟩) :=

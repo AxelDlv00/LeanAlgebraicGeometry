@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.relFiberCoordSidePow_false
 type: lean
-updated: '2026-08-07T05:01:51'
+updated: '2026-08-18T20:51:01'
 ---
 lemma relFiberCoordSidePow_false (n : ℕ) :
     relFiberCoordSidePow (C := C) (R := R) (π := π) n false

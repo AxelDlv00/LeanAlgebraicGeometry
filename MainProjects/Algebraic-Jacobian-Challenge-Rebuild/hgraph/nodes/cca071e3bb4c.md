@@ -15,6 +15,6 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.relCover
 type: lean
-updated: '2026-08-07T05:01:44'
+updated: '2026-08-18T20:50:51'
 ---
 noncomputable def relCover : (relCurve C R).AffineTwoCover := D.pullbackProd R

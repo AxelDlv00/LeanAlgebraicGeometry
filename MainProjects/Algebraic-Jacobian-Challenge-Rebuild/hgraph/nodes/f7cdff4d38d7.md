@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.cechPicMap_injective_of_isIso
 type: lean
-updated: '2026-08-07T05:02:01'
+updated: '2026-08-18T20:51:09'
 ---
 theorem cechPicMap_injective_of_isIso (f : X ⟶ Y) [IsIso f] :
     Function.Injective (CechPic.map f) := by

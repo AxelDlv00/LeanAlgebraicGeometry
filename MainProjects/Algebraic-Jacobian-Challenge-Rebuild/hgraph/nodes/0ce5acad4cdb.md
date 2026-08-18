@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.specMap_pairChartMap_eq_of_aff_window_frames
 type: lean
-updated: '2026-08-07T05:01:47'
+updated: '2026-08-18T20:50:56'
 ---
 theorem specMap_pairChartMap_eq_of_aff_window_frames
     {S₁ S₂ B : Type u}

@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.BasicOpenCocycleDatum.exists_etale_divFamZarAff_of_admissible_fibre
 type: lean
-updated: '2026-08-07T05:01:55'
+updated: '2026-08-18T20:51:04'
 ---
 theorem exists_etale_divFamZarAff_of_admissible_fibre
     (D : BasicOpenCocycleDatum C B pi)

@@ -9,7 +9,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.CombinatorialCech.combHomotopy_zero
 type: lean
-updated: '2026-07-28T13:22:16'
+updated: '2026-08-18T20:52:00'
 ---
 @[simp] private lemma combHomotopy_zero (r : ι) :
     combHomotopy (M := M) (n := n) r 0 = 0 := by

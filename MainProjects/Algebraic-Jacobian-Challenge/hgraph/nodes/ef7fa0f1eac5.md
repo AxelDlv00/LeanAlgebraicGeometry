@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.isFinitePresentation_tensorObj_left_of_isLocallyTrivial
 type: lean
-updated: '2026-08-01T12:39:19'
+updated: '2026-08-18T20:52:03'
 ---
 theorem isFinitePresentation_tensorObj_left_of_isLocallyTrivial
     {X : Scheme.{u}} (L F : X.Modules)

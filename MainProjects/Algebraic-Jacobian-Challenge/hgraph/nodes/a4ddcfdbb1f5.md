@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.TwoTerm.isClosed_le_finrank_ker_baseChange
 type: lean
-updated: '2026-07-29T23:31:12'
+updated: '2026-08-18T20:52:09'
 ---
 theorem isClosed_le_finrank_ker_baseChange (n : ℕ) (k : K →ₗ[A] (Fin n → A))
     [Module.FinitePresentation A K] (e : ℕ) :

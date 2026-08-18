@@ -26,7 +26,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.finrank_alternating_of_exact4
 type: lean
-updated: '2026-07-24T03:02:13'
+updated: '2026-08-18T20:52:10'
 ---
 theorem finrank_alternating_of_exact4
     (i : A →ₗ[k] B) (p : B →ₗ[k] C) (q : C →ₗ[k] E)

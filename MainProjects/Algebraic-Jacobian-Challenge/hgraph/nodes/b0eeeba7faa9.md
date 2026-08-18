@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: Module.MatrixPresentation.congr
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-08-18T20:52:04'
 ---
 noncomputable def congr (P : MatrixPresentation R M e m) (σ : M ≃ₗ[R] N) :
     MatrixPresentation R N e m where

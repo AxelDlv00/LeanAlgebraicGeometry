@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.GaloisDescent.StableAffineOpen.quotientChartBaseChangeToGlued_isOpenImmersion
 type: lean
-updated: '2026-08-14T14:17:15'
+updated: '2026-08-18T20:50:54'
 ---
 instance quotientChartBaseChangeToGlued_isOpenImmersion
     [FiniteDimensional K L] [IsGalois K L] (i : StableAffineOpen ρ) :

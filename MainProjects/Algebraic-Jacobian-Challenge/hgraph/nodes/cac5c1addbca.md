@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.order_algebraMap_chart_nonneg
 type: lean
-updated: '2026-07-28T15:48:28'
+updated: '2026-08-18T20:52:09'
 ---
 theorem order_algebraMap_chart_nonneg {U : X.Opens} [Nonempty U]
     (Y : X.PrimeDivisor) (hYU : Y.point ∈ U) (r : Γ(X, U)) :

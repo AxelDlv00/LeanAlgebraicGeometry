@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.twistedBiprodInl
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-08-18T20:51:58'
 ---
 noncomputable def twistedBiprodInl : K ⟶ twistedBiprod τ hτ where
   f n := biprod.inl

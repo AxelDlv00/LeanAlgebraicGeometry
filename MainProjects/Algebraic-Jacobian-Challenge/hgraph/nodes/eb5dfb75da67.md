@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.cechSectionCoeff
 type: lean
-updated: '2026-07-24T10:02:45'
+updated: '2026-08-18T20:52:01'
 ---
 noncomputable abbrev cechSectionCoeff (m : ℕ) (σ : Fin m → 𝒰.I₀) : Type u :=
   ToType (((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.obj

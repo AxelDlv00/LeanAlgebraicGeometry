@@ -25,7 +25,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.collapseCechH1Equiv
 type: lean
-updated: '2026-08-07T05:02:01'
+updated: '2026-08-18T20:51:09'
 ---
 noncomputable def collapseCechH1Equiv
     (hc : ∀ s, IsCompact ((V s : Set C.left))) (hq : ∀ s, IsQuasiSeparated ((V s : Set C.left)))

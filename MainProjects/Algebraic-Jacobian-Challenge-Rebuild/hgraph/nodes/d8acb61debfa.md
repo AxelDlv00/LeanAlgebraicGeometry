@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.intrinsicThetaGluedToPiece_overlap
 type: lean
-updated: '2026-08-07T05:01:51'
+updated: '2026-08-18T20:51:01'
 ---
 theorem intrinsicThetaGluedToPiece_overlap (A : AffAdaptation D d) (a : ℕ)
     (i j : D.index) :

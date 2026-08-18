@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.cechEngineComplex_exactAt
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-08-18T20:52:02'
 ---
 lemma cechEngineComplex_exactAt (𝒰 : X.OpenCover) (V : TopologicalSpace.Opens ↥X)
     (i_fix : {i : 𝒰.I₀ // V ≤ coverOpen 𝒰 i}) (n : ℕ) :

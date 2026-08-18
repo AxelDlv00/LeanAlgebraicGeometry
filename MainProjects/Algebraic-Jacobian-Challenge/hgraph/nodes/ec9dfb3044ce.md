@@ -37,7 +37,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.seamClauseOne_of_representableBy_locallyOfFiniteType
 type: lean
-updated: '2026-07-30T07:16:15'
+updated: '2026-08-18T20:52:07'
 ---
 theorem seamClauseOne_of_representableBy_locallyOfFiniteType {k : Type u} [Field k]
     (C : Over (Spec (.of k)))

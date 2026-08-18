@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PointwiseAchiever.pointwiseSeedRDN_of_forall_germ_mem_span
 type: lean
-updated: '2026-08-07T05:01:50'
+updated: '2026-08-18T20:50:59'
 ---
 theorem pointwiseSeedRDN_of_forall_germ_mem_span
     (hgerm : ∀ (z : relCurve C RZ)

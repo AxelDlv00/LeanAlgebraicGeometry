@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.DivFamily.twist_hasProperSupport
 type: lean
-updated: '2026-08-01T04:12:00'
+updated: '2026-08-18T20:52:03'
 ---
 theorem twist_hasProperSupport (L : X.Modules) (x : DivFamily π T) :
     Modules.HasProperSupport (pullback.snd π T.hom) (x.twist L) := by

@@ -22,7 +22,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.pushPullObj_coverInter_baseChange_spec
 type: lean
-updated: '2026-07-25T14:32:45'
+updated: '2026-08-18T20:52:01'
 ---
 noncomputable def pushPullObj_coverInter_baseChange_spec
     (h : IsPullback g' f' f g) [IsSeparated f] [IsSeparated f']

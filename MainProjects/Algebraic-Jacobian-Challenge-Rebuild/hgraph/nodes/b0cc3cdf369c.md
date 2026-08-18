@@ -45,7 +45,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_effective_of_classDeg_eq_zero_of_toP1
 type: lean
-updated: '2026-08-07T05:01:55'
+updated: '2026-08-18T20:51:03'
 ---
 theorem exists_effective_of_classDeg_eq_zero_of_toP1 (g : ℕ)
     (hχ : Sheaf.chi (Y.moduleKSheaf K) = 1 - (g : ℤ))

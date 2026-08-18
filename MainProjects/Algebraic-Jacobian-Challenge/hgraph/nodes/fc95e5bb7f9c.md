@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.pullbackTopIsoSelf
 type: lean
-updated: '2026-07-28T15:48:27'
+updated: '2026-08-18T20:52:06'
 ---
 noncomputable def Modules.pullbackTopIsoSelf {T : Scheme.{u}} (N : T.Modules) :
     (Scheme.Modules.pullback (T.topIso).inv).obj

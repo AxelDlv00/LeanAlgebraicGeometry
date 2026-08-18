@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.Peel.of_list
 type: lean
-updated: '2026-07-27T16:23:54'
+updated: '2026-08-18T20:52:09'
 ---
 theorem Peel.of_list (hstep : ∀ (P : X.PrimeDivisor) (E : X.WeilDivisor),
       Peel k U₀ U₁ E (pointDivisor P + E))

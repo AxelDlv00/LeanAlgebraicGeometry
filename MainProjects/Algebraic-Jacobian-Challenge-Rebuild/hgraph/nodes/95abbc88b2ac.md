@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.germAlgHom_apply
 type: lean
-updated: '2026-08-07T05:02:01'
+updated: '2026-08-18T20:51:08'
 ---
 lemma Scheme.germAlgHom_apply {V : X.Opens} {z : X} (hz : z ∈ V) (s : Γ(X, V)) :
     Scheme.germAlgHom K hz s = (X.presheaf.germ V z hz).hom s :=

@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.twoChartCob_spec
 type: lean
-updated: '2026-08-07T05:02:02'
+updated: '2026-08-18T20:51:09'
 ---
 theorem twoChartCob_spec (v₁ : Γ(X, V false)ˣ) (v₂ : Γ(X, V true)ˣ)
     (u : Γ(X, V false ⊓ V true)ˣ)

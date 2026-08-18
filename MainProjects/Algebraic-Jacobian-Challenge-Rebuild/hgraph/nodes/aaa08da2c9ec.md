@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.isClosedImmersion_vanishingLocusι
 type: lean
-updated: '2026-08-07T05:01:59'
+updated: '2026-08-18T20:51:07'
 ---
 instance isClosedImmersion_vanishingLocusι (φ : M →ₗ[R] N) :
     IsClosedImmersion (vanishingLocusι φ) :=

@@ -53,7 +53,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Pic0.geometricallyReduced_of_isReduced_algebraicClosureBaseChange
 type: lean
-updated: '2026-07-28T19:06:12'
+updated: '2026-08-18T20:52:06'
 ---
 theorem geometricallyReduced_of_isReduced_algebraicClosureBaseChange {k : Type u} [Field k]
     (C : Over (Spec (.of k)))

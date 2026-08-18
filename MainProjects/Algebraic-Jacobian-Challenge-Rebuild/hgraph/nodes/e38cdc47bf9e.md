@@ -23,7 +23,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divEq_pullback_awayGluedEquations
 type: lean
-updated: '2026-08-07T05:01:53'
+updated: '2026-08-18T20:51:02'
 ---
 theorem divEq_pullback_awayGluedEquations (hg : Ideal.span (Set.range g) = ⊤)
     (hcompat : AwayCompatDivEq S E T) (i : ι) (hreg) :

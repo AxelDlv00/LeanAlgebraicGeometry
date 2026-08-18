@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.entryIdeal_matrixPresentationBasicOpen
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-08-18T20:52:04'
 ---
 lemma entryIdeal_matrixPresentationBasicOpen {mm : ℕ} {V : X.affineOpens}
     (P : MatrixPresentation Γ(X, V.1) Γ(G, V.1) e mm) (f : Γ(X, V.1)) :

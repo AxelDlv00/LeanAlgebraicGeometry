@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.representableBy_homEquiv_toGlued
 type: lean
-updated: '2026-08-07T05:01:55'
+updated: '2026-08-18T20:51:03'
 ---
 lemma representableBy_homEquiv_toGlued (i : ι) :
     (Scheme.LocalRepresentability.representableBy hf).homEquiv

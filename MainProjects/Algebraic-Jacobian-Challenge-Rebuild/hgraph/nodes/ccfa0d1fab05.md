@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.gluedPieceEquiv_symm_apply
 type: lean
-updated: '2026-08-07T05:01:44'
+updated: '2026-08-18T20:50:50'
 ---
 lemma gluedPieceEquiv_symm_apply (hc : Scheme.IsGluingCocycle U g)
     (hP : ∀ i : ι, X.basicOpen (h i) ≤ U (σ i)) (i : ι)

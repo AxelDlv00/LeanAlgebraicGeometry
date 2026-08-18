@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.chi_toModuleKSheafOfModules_congr
 type: lean
-updated: '2026-08-03T08:55:16'
+updated: '2026-08-18T20:52:03'
 ---
 theorem chi_toModuleKSheafOfModules_congr
     (C : Over (Spec (CommRingCat.of k))) {M N : C.left.Modules} (e : M ≅ N) :

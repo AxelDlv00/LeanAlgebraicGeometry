@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.thetaFieldRead_eq_germ_snd
 type: lean
-updated: '2026-08-07T05:01:49'
+updated: '2026-08-18T20:50:59'
 ---
 lemma thetaFieldRead_eq_germ_snd
     (hη : genericPoint (relCurve C K) ∉ (relCover C K (fiberTwoCover π)).V₀)

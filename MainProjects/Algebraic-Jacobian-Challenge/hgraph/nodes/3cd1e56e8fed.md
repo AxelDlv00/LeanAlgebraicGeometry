@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.universalQuotient
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-08-18T20:52:05'
 ---
 noncomputable def universalQuotient (d r : ℕ) : (scheme d r).Modules :=
   Scheme.Modules.glue (theGlueData d r)

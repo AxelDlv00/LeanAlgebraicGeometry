@@ -13,7 +13,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.Scheme.LocalEquations.range_relCurveMap_residueField_aff
 type: lean
-updated: '2026-08-07T05:01:51'
+updated: '2026-08-18T20:51:00'
 ---
 private theorem range_relCurveMap_residueField_aff (p : PrimeSpectrum R) :
     Set.range (relCurveMap C R p.asIdeal.ResidueField).base =

@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.cechSectionHomotopyComp_coord
 type: lean
-updated: '2026-07-24T10:02:45'
+updated: '2026-08-18T20:52:01'
 ---
 lemma cechSectionHomotopyComp_coord (m : ℕ)
     (t : ToType ((sectionCechComplexV 𝒰 F V).X (m + 1))) (τ : Fin (m + 1) → 𝒰.I₀) :

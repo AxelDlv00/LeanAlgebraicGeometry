@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PointwiseAchiever.pointwiseSectionVector_fibreAchieverData
 type: lean
-updated: '2026-08-07T05:01:50'
+updated: '2026-08-18T20:50:59'
 ---
 theorem pointwiseSectionVector_fibreAchieverData
     (z : relCurve C RZ)

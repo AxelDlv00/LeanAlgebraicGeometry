@@ -28,7 +28,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.nonempty_pullbackIsoFree_of_free_sections
 type: lean
-updated: '2026-07-27T16:23:53'
+updated: '2026-08-18T20:52:08'
 ---
 theorem nonempty_pullbackIsoFree_of_free_sections {R S : CommRingCat.{u}} (j : Spec S ⟶ Spec R)
     [IsOpenImmersion j] (N : (Spec R).Modules) (hN : N.IsQuasicoherent) (n : ℕ)

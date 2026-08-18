@@ -11,7 +11,7 @@ generated: lean
 lean_status: sorry
 title: Pr.twistIso_hom_left_isIso
 type: lean
-updated: '2026-08-03T16:00:49'
+updated: '2026-08-18T20:52:12'
 ---
 instance twistIso_hom_left_isIso (γ : k' ≃ₐ[k] k') :
     IsIso (twistIso C rep γ).hom.left :=

@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divUniversalHighWindowChartRead_one_comp_oneEquiv_eq_sndWindowChartRead
 type: lean
-updated: '2026-08-07T05:01:48'
+updated: '2026-08-18T20:50:58'
 ---
 theorem divUniversalHighWindowChartRead_one_comp_oneEquiv_eq_sndWindowChartRead
     (side : Bool) :

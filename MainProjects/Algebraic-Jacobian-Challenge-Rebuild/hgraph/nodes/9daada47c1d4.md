@@ -19,7 +19,7 @@ generated: lean
 lean_status: lean_ok
 title: Module.IsDescentCocycle.picClass_baseChange
 type: lean
-updated: '2026-08-07T05:01:46'
+updated: '2026-08-18T20:50:55'
 ---
 theorem IsDescentCocycle.picClass_baseChange [Module.FaithfullyFlat A B]
     [Module.FaithfullyFlat A' (A' ⊗[A] B)] {u : (B ⊗[A] B)ˣ} (hu : IsDescentCocycle u) :

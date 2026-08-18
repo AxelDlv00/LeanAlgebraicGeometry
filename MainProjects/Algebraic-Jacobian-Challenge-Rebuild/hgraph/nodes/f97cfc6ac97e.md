@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divUniversalFibreHighWindowInAmbientEquiv_symm_coe
 type: lean
-updated: '2026-08-07T05:01:48'
+updated: '2026-08-18T20:50:57'
 ---
 theorem divUniversalFibreHighWindowInAmbientEquiv_symm_coe (n : Nat)
     (x : ↥HF[n]) :

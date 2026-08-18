@@ -31,7 +31,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.P1.genus_asOver_eq_zero
 type: lean
-updated: '2026-08-07T05:01:45'
+updated: '2026-08-18T20:50:53'
 ---
 theorem genus_asOver_eq_zero (k : Type u) [Field k] : genus (asOver k) = 0 := by
   rw [genus]

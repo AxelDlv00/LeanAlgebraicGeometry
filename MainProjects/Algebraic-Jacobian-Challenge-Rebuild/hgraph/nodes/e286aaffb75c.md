@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.isOpenImmersion_of_tensorProduct
 type: lean
-updated: '2026-08-16T20:15:43'
+updated: '2026-08-18T20:50:54'
 ---
 theorem isOpenImmersion_of_tensorProduct {L K A B : Type u}
     [Field L] [Field K] [Algebra L K]

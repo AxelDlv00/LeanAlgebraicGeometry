@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DatG0.deltaSchemeDiagram_compactSpace
 type: lean
-updated: '2026-08-07T05:01:58'
+updated: '2026-08-18T20:51:06'
 ---
 instance deltaSchemeDiagram_compactSpace (L : (FinSubext k K)ᵒᵖ) :
     CompactSpace ((deltaSchemeDiagram.obj L).left) :=

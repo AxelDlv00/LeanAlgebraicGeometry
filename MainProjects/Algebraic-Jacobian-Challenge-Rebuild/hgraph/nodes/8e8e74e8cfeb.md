@@ -9,7 +9,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.modules_res_res
 type: lean
-updated: '2026-08-10T13:01:39'
+updated: '2026-08-18T20:50:51'
 ---
 private lemma modules_res_res
     {Y : Scheme.{u}} (N : Y.Modules) {W₁ W₂ W₃ : Y.Opens}

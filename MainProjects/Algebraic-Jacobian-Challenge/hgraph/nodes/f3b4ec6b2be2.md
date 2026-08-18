@@ -20,7 +20,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicSharp.kernelClass_divFamilyZero
 type: lean
-updated: '2026-07-30T16:21:06'
+updated: '2026-08-18T20:52:03'
 ---
 theorem PicSharp.kernelClass_divFamilyZero (T : (Over (Spec (CommRingCat.of k)))ᵒᵖ) :
     (Quotient.mk (PicSharp.relPicSetoid C.hom T.unop.hom)

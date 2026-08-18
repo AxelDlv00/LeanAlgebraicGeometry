@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divRepClassifyZarAff_eq_of_isDivRepClassifyAff
 type: lean
-updated: '2026-08-07T05:01:47'
+updated: '2026-08-18T20:50:56'
 ---
 theorem divRepClassifyZarAff_eq_of_isDivRepClassifyAff (F₀ : DivFamZarAff C S g)
     (u : overSpec k S ⟶

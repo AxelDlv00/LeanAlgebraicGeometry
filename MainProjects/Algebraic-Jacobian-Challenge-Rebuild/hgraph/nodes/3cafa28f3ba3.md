@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.divisorPresheaf
 type: lean
-updated: '2026-08-07T05:02:00'
+updated: '2026-08-18T20:51:08'
 ---
 noncomputable def divisorPresheaf (D : X.CurveDivisor) : (X.Opens)ᵒᵖ ⥤ ModuleCat.{u} K where
   obj U := ModuleCat.of K (divisorSections K D U.unop)

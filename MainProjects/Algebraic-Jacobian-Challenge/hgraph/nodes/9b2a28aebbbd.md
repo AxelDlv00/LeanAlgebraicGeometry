@@ -18,7 +18,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.coprodToProd_isIso_option
 type: lean
-updated: '2026-07-28T13:22:16'
+updated: '2026-08-18T20:52:01'
 ---
 private theorem coprodToProd_isIso_option (F : X.Modules) {α : Type u}
     (ih : ∀ (legs : α → Over X), IsIso (coprodToProdMap F legs))

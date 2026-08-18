@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.h0_relCurve_baseField
 type: lean
-updated: '2026-08-07T05:01:49'
+updated: '2026-08-18T20:50:59'
 ---
 theorem h0_relCurve_baseField : Sheaf.h0 ((relCurve C K).moduleKSheaf K) = 1 := by
   haveI : IsProper (baseChangeBundle C K).hom := instIsProperSndLeft C K

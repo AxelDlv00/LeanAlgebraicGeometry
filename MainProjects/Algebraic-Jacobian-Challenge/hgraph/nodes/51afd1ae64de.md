@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.TwoTerm.bijective_kerBaseChange_of_surjective
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-08-18T20:52:09'
 ---
 theorem bijective_kerBaseChange_of_surjective [Module.Flat A M1]
     {d : M0 →ₗ[A] M1} (hd : Function.Surjective d)

@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.DivFamily.classHasFiberDeg_mk
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-08-18T20:52:03'
 ---
 theorem classHasFiberDeg_mk {T : Over S} (d : ℕ) (x : DivFamily π T) :
     ClassHasFiberDeg d (Quotient.mk (DivFamily.setoid π T) x) ↔ x.HasFiberDeg d :=

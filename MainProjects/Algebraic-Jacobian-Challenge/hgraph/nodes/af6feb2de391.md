@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.CombinatorialCech.depDiff_eq_of_cocycle
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-08-18T20:52:00'
 ---
 lemma depDiff_eq_of_cocycle
     (hu : ∀ {m : ℕ} (σ : Fin (m + 1) → ι)

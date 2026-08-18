@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PicEtAff.degAff_unit
 type: lean
-updated: '2026-08-07T05:01:47'
+updated: '2026-08-18T20:50:55'
 ---
 theorem PicEtAff.degAff_unit (z : relPic C (overSpec k K)) :
     PicEtAff.degAff K (PicEtAff.unit C K z) = relPicDeg K z := by

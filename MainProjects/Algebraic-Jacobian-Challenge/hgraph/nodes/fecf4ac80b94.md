@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.pluckerToProjectiveSpace_isImmersion
 type: lean
-updated: '2026-08-03T14:28:06'
+updated: '2026-08-18T20:52:09'
 ---
 theorem pluckerToProjectiveSpace_isImmersion (d r : ℕ) :
     IsImmersion (pluckerToProjectiveSpace d r) := by

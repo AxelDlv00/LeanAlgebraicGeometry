@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.ordZ_support_finite
 type: lean
-updated: '2026-07-28T18:12:20'
+updated: '2026-08-18T20:52:12'
 ---
 theorem Scheme.ordZ_support_finite (f : X ⟶ Spec (CommRingCat.of K))
     [SmoothOfRelativeDimension 1 f] [IsIntegral X] [LocallyOfFiniteType f] [QuasiCompact f]

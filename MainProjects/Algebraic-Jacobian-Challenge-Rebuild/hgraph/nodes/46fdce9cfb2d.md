@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.GaloisDescent.galoisEvalHom_apply
 type: lean
-updated: '2026-08-12T15:42:08'
+updated: '2026-08-18T20:50:54'
 ---
 @[simp] lemma galoisEvalHom_apply (b : L) (γ : L ≃ₐ[K] L) :
     galoisEvalHom K L b γ = γ b := rfl

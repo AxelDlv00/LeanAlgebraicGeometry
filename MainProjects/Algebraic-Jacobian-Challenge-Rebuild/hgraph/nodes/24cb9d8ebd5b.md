@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divFamZarAffOfAff_val
 type: lean
-updated: '2026-08-07T05:01:52'
+updated: '2026-08-18T20:51:01'
 ---
 lemma divFamZarAffOfAff_val (x : DivFamZarAff C R n)
     (U : (overSpec k R).left.affineOpens) :

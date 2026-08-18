@@ -44,7 +44,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.injective_cech_acyclic
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-08-18T20:52:00'
 ---
 theorem injective_cech_acyclic (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (I : X.Modules) [Injective I]
     (p : ℕ) (hp : 0 < p) :

@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivisorAdaptation.map_pulledGluedSubmodule_symm
 type: lean
-updated: '2026-08-07T05:01:53'
+updated: '2026-08-18T20:51:02'
 ---
 lemma map_pulledGluedSubmodule_symm :
     (A.pulledGluedSubmodule R').map

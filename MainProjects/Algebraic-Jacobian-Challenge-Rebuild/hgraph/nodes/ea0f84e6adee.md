@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.isClosedImmersion_diagonal_left
 type: lean
-updated: '2026-08-07T05:01:45'
+updated: '2026-08-18T20:50:52'
 ---
 instance isClosedImmersion_diagonal_left : IsClosedImmersion (diagonal C).left := by
   haveI : IsClosedImmersion ((diagonal C).left ≫ (snd C C).left) := by

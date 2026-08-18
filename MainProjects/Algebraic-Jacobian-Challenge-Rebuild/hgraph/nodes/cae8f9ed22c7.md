@@ -22,7 +22,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffAdaptation.mem_gluedSubmodule_reindex_iff
 type: lean
-updated: '2026-08-07T05:01:51'
+updated: '2026-08-18T20:51:00'
 ---
 lemma mem_gluedSubmodule_reindex_iff (A : AffAdaptation D d) {m' : ℕ} (e : Fin m' ≃ D.index)
     (s : (A.reindex e).chartProd) :

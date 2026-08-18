@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivisorAdaptation.thetaInvSpan
 type: lean
-updated: '2026-08-07T05:01:53'
+updated: '2026-08-18T20:51:02'
 ---
 noncomputable def thetaInvSpan : Submodule ↥A.gluedSubalgebra A.chartProd :=
   A.unitGluedOver (A.thetaOvlUnit a)⁻¹

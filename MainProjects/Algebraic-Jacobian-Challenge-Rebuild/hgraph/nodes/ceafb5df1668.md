@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.Over.sigmaExtensionNat
 type: lean
-updated: '2026-08-07T05:01:55'
+updated: '2026-08-18T20:51:04'
 ---
 def sigmaExtensionNat (φ : F ⟶ G) : sigmaExtension S F ⟶ sigmaExtension S G where
   app T := TypeCat.ofHom fun x => ⟨x.1, φ.app _ x.2⟩

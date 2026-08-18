@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PicEtAff.mk_mul_mk
 type: lean
-updated: '2026-08-07T05:01:57'
+updated: '2026-08-18T20:51:06'
 ---
 lemma mk_mul_mk (E F : Algebra.EtaleCover A) (x : descentClasses C E)
     (y : descentClasses C F) :

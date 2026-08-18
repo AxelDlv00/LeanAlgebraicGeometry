@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_base_subsingleton_of_isFinite_toP1
 type: lean
-updated: '2026-07-31T06:25:53'
+updated: '2026-08-18T20:52:11'
 ---
 theorem exists_base_subsingleton_of_isFinite_toP1
     (π : Y ⟶ P1 K) [IsFinite π] [IsDominant π]

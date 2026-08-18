@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DatG0.deltaSchemeMap_isAffineHom
 type: lean
-updated: '2026-08-07T05:01:58'
+updated: '2026-08-18T20:51:06'
 ---
 instance deltaSchemeMap_isAffineHom {L₁ L₂ : FinSubext k K} (h : L₁.1 ≤ L₂.1) :
     IsAffineHom (deltaSchemeMap h).left :=

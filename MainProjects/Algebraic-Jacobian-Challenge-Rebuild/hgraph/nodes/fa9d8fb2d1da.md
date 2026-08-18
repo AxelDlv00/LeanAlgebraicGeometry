@@ -21,7 +21,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.ord_functionFieldMap_germ_of_isIso
 type: lean
-updated: '2026-08-07T05:02:00'
+updated: '2026-08-18T20:51:08'
 ---
 private lemma ord_functionFieldMap_germ_of_isIso (f : W ⟶ X) [IsIso f]
     (hgen : f.base (genericPoint W) = genericPoint X)

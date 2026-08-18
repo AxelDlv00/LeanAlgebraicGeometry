@@ -26,7 +26,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.chartQuotientMap
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-08-18T20:52:05'
 ---
 noncomputable def chartQuotientMap (d r : ℕ) (I : Finset (Fin r)) (hI : I.card = d) :
     SheafOfModules.free (R := (affineChart d r I).ringCatSheaf) (Fin r) ⟶

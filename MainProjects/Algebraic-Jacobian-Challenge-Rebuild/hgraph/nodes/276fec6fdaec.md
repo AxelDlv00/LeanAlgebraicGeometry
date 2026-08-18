@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.locallyOfFiniteType_pic0_sepClosed_representableBy
 type: lean
-updated: '2026-08-14T14:17:16'
+updated: '2026-08-18T20:51:06'
 ---
 theorem locallyOfFiniteType_pic0_sepClosed_representableBy :
     LocallyOfFiniteType (pic0_sepClosed_representableBy (C := C)).1.hom := by

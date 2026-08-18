@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PicRepDatum.toJacobianData_grpObj
 type: lean
-updated: '2026-08-14T04:55:15'
+updated: '2026-08-18T20:51:03'
 ---
 lemma toJacobianData_grpObj (d : PicRepDatum k k C) (hqc : QuasiCompact d.J.hom) :
     (d.toJacobianData hqc).grpObj = d.grpObj :=

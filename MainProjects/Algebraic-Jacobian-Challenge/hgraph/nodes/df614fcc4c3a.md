@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.coverInterProdIso
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-08-18T20:52:01'
 ---
 noncomputable def coverInterProdIso (𝒰 : X.OpenCover) {p : ℕ} (σ : Fin (p + 1) → 𝒰.I₀) :
     (∏ᶜ fun k : Fin (p + 1) => Over.mk (𝒰.f (σ k))) ≅

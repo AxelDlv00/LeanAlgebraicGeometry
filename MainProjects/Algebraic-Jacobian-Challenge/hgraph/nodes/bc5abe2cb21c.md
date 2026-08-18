@@ -36,7 +36,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.sigmaAssembled_δ_square
 type: lean
-updated: '2026-07-29T04:25:58'
+updated: '2026-08-18T20:52:01'
 ---
 theorem sigmaAssembled_δ_square (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
     (F : X.Modules) (n : ℕ)

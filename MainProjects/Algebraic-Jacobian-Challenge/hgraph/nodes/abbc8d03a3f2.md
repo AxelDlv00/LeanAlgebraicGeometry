@@ -19,7 +19,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.cechFreeSimplicial_δ_comp_augFam
 type: lean
-updated: '2026-07-28T13:22:16'
+updated: '2026-08-18T20:52:02'
 ---
 private lemma cechFreeSimplicial_δ_comp_augFam (i : Fin 2) :
     (cechFreeSimplicialFam U).δ i ≫ cechFreeAugFam U

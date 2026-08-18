@@ -27,7 +27,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.isRegularLocalRing_localization_of_isStandardSmooth_of_bijective_residue
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-08-18T20:51:51'
 ---
 theorem isRegularLocalRing_localization_of_isStandardSmooth_of_bijective_residue
     {k : Type u} [Field k]

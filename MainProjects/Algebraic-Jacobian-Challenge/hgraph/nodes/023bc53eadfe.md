@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.chartIncl_opensRange
 type: lean
-updated: '2026-08-03T14:28:06'
+updated: '2026-08-18T20:52:09'
 ---
 theorem chartIncl_opensRange (d r : ℕ) (I J : PluckerIndex d r) :
     (chartIncl d r I.1 J.1 I.2 J.2).opensRange =

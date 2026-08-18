@@ -13,6 +13,6 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.toFinsupp
 type: lean
-updated: '2026-07-28T18:12:20'
+updated: '2026-08-18T20:52:10'
 ---
 def toFinsupp (D : X.CurveDivisor) : {p : X // p ≠ genericPoint X} →₀ ℤ := D

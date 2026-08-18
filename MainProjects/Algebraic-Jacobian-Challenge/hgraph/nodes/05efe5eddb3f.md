@@ -52,7 +52,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.HasPicScheme
 type: lean
-updated: '2026-08-03T02:07:56'
+updated: '2026-08-18T20:52:04'
 ---
 class HasPicScheme {k : Type u} [Field k] (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]

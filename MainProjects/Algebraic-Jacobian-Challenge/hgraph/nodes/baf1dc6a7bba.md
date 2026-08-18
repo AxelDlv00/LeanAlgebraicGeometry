@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.sub_pointDivisor_le
 type: lean
-updated: '2026-07-27T19:08:28'
+updated: '2026-08-18T20:52:10'
 ---
 theorem sub_pointDivisor_le (D : X.WeilDivisor) (P Q : X.PrimeDivisor) :
     (show X.PrimeDivisor →₀ ℤ from D - pointDivisor P) Q ≤

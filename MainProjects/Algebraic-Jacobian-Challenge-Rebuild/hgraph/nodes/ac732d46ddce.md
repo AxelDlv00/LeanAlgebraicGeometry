@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_uniform_admissibleCoverageChart_eq_univ
 type: lean
-updated: '2026-08-07T05:01:56'
+updated: '2026-08-18T20:51:04'
 ---
 theorem exists_uniform_admissibleCoverageChart_eq_univ
     {π : C.left ⟶ P1 k} [IsFinite π] [IsDominant π]

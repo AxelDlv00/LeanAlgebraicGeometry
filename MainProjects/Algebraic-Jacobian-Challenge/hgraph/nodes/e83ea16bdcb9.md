@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.DivFamily.twist_isQuasicoherent
 type: lean
-updated: '2026-08-01T07:20:39'
+updated: '2026-08-18T20:52:03'
 ---
 theorem twist_isQuasicoherent
     (L : X.Modules) (hL : LineBundle.IsLocallyTrivial L)

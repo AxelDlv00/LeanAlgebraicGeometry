@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.fiberPolyHom₀_X
 type: lean
-updated: '2026-08-07T05:01:44'
+updated: '2026-08-18T20:50:52'
 ---
 theorem fiberPolyHom₀_X : fiberPolyHom₀ π Polynomial.X = fiberCoord π := by
   have h : (P1.chartSectionsEquiv₀ k).symm Polynomial.X

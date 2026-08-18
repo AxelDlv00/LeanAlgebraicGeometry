@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.GroupScheme.point_comp_rightMul_eq_point_comp_leftMul
 type: lean
-updated: '2026-08-07T05:01:46'
+updated: '2026-08-18T20:50:54'
 ---
 lemma point_comp_rightMul_eq_point_comp_leftMul
     (G : Over (Spec (.of K))) [GrpObj G]

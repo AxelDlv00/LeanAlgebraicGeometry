@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.instHasH0SemicontinuityOfCurve
 type: lean
-updated: '2026-08-03T16:00:48'
+updated: '2026-08-18T20:52:06'
 ---
 instance instHasH0SemicontinuityOfCurve
     (C : Over (Spec (CommRingCat.of k)))

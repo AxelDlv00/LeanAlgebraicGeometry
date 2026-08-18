@@ -23,7 +23,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ThetaGeneratorSeed.hcolFin_of_forall_fibre
 type: lean
-updated: '2026-08-07T05:01:49'
+updated: '2026-08-18T20:50:59'
 ---
 theorem hcolFin_of_forall_fibre
     (hfib : ∀ (z : relCurve C R) (s : Spec (CommRingCat.of R)),

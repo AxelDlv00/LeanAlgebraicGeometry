@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.RationalMap.differenceRationalMap_compHom_over
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-08-18T20:51:52'
 ---
 theorem differenceRationalMap_compHom_over
     (f : X.left.RationalMap G.left)

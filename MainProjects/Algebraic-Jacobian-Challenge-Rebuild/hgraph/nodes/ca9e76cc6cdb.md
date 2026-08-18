@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: MvPolynomial.substAlgHom_of_mem_zero
 type: lean
-updated: '2026-08-07T05:01:45'
+updated: '2026-08-18T20:50:53'
 ---
 theorem substAlgHom_of_mem_zero (M : Matrix σ σ R) {p : MvPolynomial σ R}
     (hp : p ∈ homogeneousSubmodule σ R 0) : substAlgHom M p = p := by

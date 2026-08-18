@@ -25,7 +25,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.DivFamily.isFinitePresentation_pushforward
 type: lean
-updated: '2026-07-29T22:37:03'
+updated: '2026-08-18T20:52:03'
 ---
 theorem Scheme.DivFamily.isFinitePresentation_pushforward
     {S X : Scheme.{u}} {π : X ⟶ S} [IsProper π] {T : Over S}

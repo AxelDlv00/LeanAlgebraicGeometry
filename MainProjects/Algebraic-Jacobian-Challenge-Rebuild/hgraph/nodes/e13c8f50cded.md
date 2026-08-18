@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.overDualNumber
 type: lean
-updated: '2026-08-07T05:02:01'
+updated: '2026-08-18T20:51:09'
 ---
 noncomputable def overDualNumber (k : Type u) [Field k] :
     Over (Spec (CommRingCat.of k)) :=

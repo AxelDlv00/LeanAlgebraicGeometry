@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Pic0Et.universallyClosed_of_universally_specializing
 type: lean
-updated: '2026-07-30T03:33:55'
+updated: '2026-08-18T20:52:06'
 ---
 theorem universallyClosed_of_universally_specializing
     (h : ∀ {T : Scheme.{u}} (g : T ⟶ Spec (.of k)),

@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divUniversalHighWindowMulRow_fibre_conjugacy
 type: lean
-updated: '2026-08-07T05:01:48'
+updated: '2026-08-18T20:50:58'
 ---
 theorem divUniversalHighWindowMulRow_fibre_conjugacy (n : Nat)
     [Module.Projective RZ (Amb[n] ⧸ Kr[n])]

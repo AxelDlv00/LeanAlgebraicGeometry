@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.h0_eq_one_of_subsingleton_of_deg
 type: lean
-updated: '2026-08-07T05:01:56'
+updated: '2026-08-18T20:51:04'
 ---
 theorem h0_eq_one_of_subsingleton_of_deg
     {L : Type u} [Field L] [Algebra k L]

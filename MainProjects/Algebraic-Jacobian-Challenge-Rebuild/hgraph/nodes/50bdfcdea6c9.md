@@ -13,7 +13,7 @@ lean_status: lean_ok
 private: true
 title: AlgebraicGeometry.BasicOpenCocycleDatum.coe_unitsRestrict
 type: lean
-updated: '2026-08-13T10:39:11'
+updated: '2026-08-18T20:51:00'
 ---
 private lemma coe_unitsRestrict {X : Scheme.{u}} {W U : X.Opens} (h : W ≤ U)
     (u : Γ(X, U)ˣ) :

@@ -31,7 +31,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.cotangent_iso_maximalIdeal_residue_tensor_kaehler_of_formallySmooth_residue
 type: lean
-updated: '2026-07-24T22:11:50'
+updated: '2026-08-18T20:51:51'
 ---
 noncomputable def cotangent_iso_maximalIdeal_residue_tensor_kaehler_of_formallySmooth_residue
     {R Sₘ : Type*} [CommRing R] [CommRing Sₘ] [IsLocalRing Sₘ] [Algebra R Sₘ]

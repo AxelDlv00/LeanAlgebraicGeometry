@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.DivFamily.d3Support_locallyQuasiFinite_of_curve
 type: lean
-updated: '2026-08-03T23:03:51'
+updated: '2026-08-18T20:52:09'
 ---
 theorem d3Support_locallyQuasiFinite_of_curve
     {S X : Scheme.{u}} {π : X ⟶ S} {T : Over S}

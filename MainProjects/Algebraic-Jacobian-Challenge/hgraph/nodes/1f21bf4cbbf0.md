@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.twistedSMul_zero_right
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-08-18T20:52:06'
 ---
 lemma twistedSMul_zero_right (F L : X.Modules) (i j : ℕ) (U : X.Opens)
     (r : Γ(tensorPow L i, U)) :

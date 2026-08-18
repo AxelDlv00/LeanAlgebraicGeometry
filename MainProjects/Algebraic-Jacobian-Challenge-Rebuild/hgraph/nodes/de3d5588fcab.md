@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivisorAdaptation.thetaSpan_mul_thetaInvSpan_le_one
 type: lean
-updated: '2026-08-07T05:01:53'
+updated: '2026-08-18T20:51:02'
 ---
 theorem thetaSpan_mul_thetaInvSpan_le_one :
     A.thetaSpan a * A.thetaInvSpan a ≤ 1 := by

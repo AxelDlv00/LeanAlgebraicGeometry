@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.cechEngineComplexAugFam
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-08-18T20:52:02'
 ---
 noncomputable def cechEngineComplexAugFam (V : TopologicalSpace.Opens ↥X) :
     cechEngineComplexFam U V ⟶ (ChainComplex.single₀ _).obj (coverSectionModule V) :=

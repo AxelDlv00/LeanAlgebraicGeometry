@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Pic0.probe_smooth_converse
 type: lean
-updated: '2026-08-03T16:00:49'
+updated: '2026-08-18T20:52:12'
 ---
 theorem probe_smooth_converse {k : Type u} [Field k]
     (C : Over (Spec (.of k)))

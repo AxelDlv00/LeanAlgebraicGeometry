@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ProjectiveSpace.Coordinates.SpecMap_fromSpec
 type: lean
-updated: '2026-07-30T17:37:57'
+updated: '2026-08-18T20:52:07'
 ---
 theorem SpecMap_fromSpec (r : B →+* B') (i : J) (c : J → B)
     (hi : c i = 1) :
