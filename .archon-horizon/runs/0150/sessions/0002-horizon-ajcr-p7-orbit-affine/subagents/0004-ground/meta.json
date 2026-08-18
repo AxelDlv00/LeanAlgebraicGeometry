@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Confucius",
+  "agent_path": "/root/final_ground_review",
+  "agent_role": "ground",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "ground",
+  "native_subagent_id": "01a014a3-4627-7711-8a2e-b03f547c80fc",
+  "ok": true,
+  "parent_session": "0002-horizon-ajcr-p7-orbit-affine",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "ground",
+  "summary": "**Findings**",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 4246569,
+    "tokens_out": 15341
+  }
+}

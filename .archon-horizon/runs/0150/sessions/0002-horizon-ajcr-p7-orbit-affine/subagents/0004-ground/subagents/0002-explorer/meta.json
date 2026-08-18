@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Maxwell",
+  "agent_path": "/root/final_ground_review/graph_audit",
+  "agent_role": "explorer",
+  "depth": 2,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a014a5-c70c-7400-9a9d-8c02e22a2a45",
+  "ok": false,
+  "parent_session": "0002-horizon-ajcr-p7-orbit-affine",
+  "parent_subagent_id": "01a014a3-4627-7711-8a2e-b03f547c80fc",
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "explorer",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 2577343,
+    "tokens_out": 11249
+  }
+}

@@ -1,0 +1,1 @@
+I have enough evidence for the audit. The stdin-based Lean print probe did not return before the stop request, so I’m terminating that probe and reporting only the verified source/graph/kernel evidence already gathered.
