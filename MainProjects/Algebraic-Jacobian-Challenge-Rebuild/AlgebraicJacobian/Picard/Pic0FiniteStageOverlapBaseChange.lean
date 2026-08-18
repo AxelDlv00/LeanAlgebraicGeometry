@@ -58,6 +58,73 @@ noncomputable def nestedPullbackFlatteningIso
           congrArg (fun q => q ≫ iU ≫ f) e_inv_fst.symm)
       (by simp))
 
+set_option backward.isDefEq.respectTransparency false in
+/-- The first projection of the flattened pullback recovers the first projection
+of the inner pullback after composing with the first leg of the displayed overlap. -/
+@[reassoc]
+theorem nestedPullbackFlatteningIso_hom_comp_fst_comp_a
+    {U V X Y Z W : Scheme.{u}}
+    (iU : U ⟶ X) (iV : V ⟶ X) (f : X ⟶ Z) (g : Y ⟶ Z)
+    (a : W ⟶ U) (b : W ⟶ V)
+    (hab : a ≫ iU = b ≫ iV)
+    (hW : IsLimit (PullbackCone.mk a b hab)) :
+    (nestedPullbackFlatteningIso iU iV f g a b hab hW).hom ≫
+        pullback.fst (a ≫ iU ≫ f) g ≫ a =
+      pullback.fst (pullback.fst (iU ≫ f) g ≫ iU) iV ≫
+        pullback.fst (iU ≫ f) g := by
+  let e : W ≅ pullback iU iV :=
+    hW.conePointUniqueUpToIso (pullback.isLimit iU iV)
+  have e_inv_fst : e.inv ≫ a = pullback.fst iU iV := by
+    change e.inv ≫ (PullbackCone.mk a b hab).fst = _
+    exact IsLimit.conePointUniqueUpToIso_inv_comp hW
+      (pullback.isLimit iU iV) WalkingCospan.left
+  simp only [nestedPullbackFlatteningIso, Iso.trans_hom, asIso_hom,
+    pullback.map, Category.assoc, pullback.lift_fst_assoc,
+    pullbackSymmetry_hom_comp_fst_assoc]
+  rw [e_inv_fst]
+  simp
+
+set_option backward.isDefEq.respectTransparency false in
+/-- The first projection of the flattened pullback recovers the outer second
+projection after composing with the second leg of the displayed overlap. -/
+@[reassoc]
+theorem nestedPullbackFlatteningIso_hom_comp_fst_comp_b
+    {U V X Y Z W : Scheme.{u}}
+    (iU : U ⟶ X) (iV : V ⟶ X) (f : X ⟶ Z) (g : Y ⟶ Z)
+    (a : W ⟶ U) (b : W ⟶ V)
+    (hab : a ≫ iU = b ≫ iV)
+    (hW : IsLimit (PullbackCone.mk a b hab)) :
+    (nestedPullbackFlatteningIso iU iV f g a b hab hW).hom ≫
+        pullback.fst (a ≫ iU ≫ f) g ≫ b =
+      pullback.snd (pullback.fst (iU ≫ f) g ≫ iU) iV := by
+  let e : W ≅ pullback iU iV :=
+    hW.conePointUniqueUpToIso (pullback.isLimit iU iV)
+  have e_inv_snd : e.inv ≫ b = pullback.snd iU iV := by
+    change e.inv ≫ (PullbackCone.mk a b hab).snd = _
+    exact IsLimit.conePointUniqueUpToIso_inv_comp hW
+      (pullback.isLimit iU iV) WalkingCospan.right
+  simp only [nestedPullbackFlatteningIso, Iso.trans_hom, asIso_hom,
+    pullback.map, Category.assoc, pullback.lift_fst_assoc,
+    pullbackSymmetry_hom_comp_fst_assoc]
+  rw [e_inv_snd]
+  simp
+
+set_option backward.isDefEq.respectTransparency false in
+/-- The second projection of the flattened pullback is the second projection of
+the inner pullback after the outer first projection. -/
+@[reassoc]
+theorem nestedPullbackFlatteningIso_hom_comp_snd
+    {U V X Y Z W : Scheme.{u}}
+    (iU : U ⟶ X) (iV : V ⟶ X) (f : X ⟶ Z) (g : Y ⟶ Z)
+    (a : W ⟶ U) (b : W ⟶ V)
+    (hab : a ≫ iU = b ≫ iV)
+    (hW : IsLimit (PullbackCone.mk a b hab)) :
+    (nestedPullbackFlatteningIso iU iV f g a b hab hW).hom ≫
+        pullback.snd (a ≫ iU ≫ f) g =
+      pullback.fst (pullback.fst (iU ≫ f) g ≫ iU) iV ≫
+        pullback.snd (iU ≫ f) g := by
+  simp [nestedPullbackFlatteningIso, pullback.map, Category.assoc]
+
 end
 
 end AlgebraicGeometry

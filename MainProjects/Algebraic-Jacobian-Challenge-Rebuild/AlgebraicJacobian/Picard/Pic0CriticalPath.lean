@@ -267,7 +267,8 @@ its map to the finite-stage field spectrum.  After extension to the separably cl
   now turns the final ring naturality square into a Scheme-level square, and
   `restrictionBaseChangeMap_naturality` discharges that square for every left restriction.  The
   generic nested pullback produced by first base-changing a chart and then intersecting it with a
-  second chart is now flattened by a kernel-clean categorical isomorphism.  On rings, transition
+  second chart is now flattened by a kernel-clean categorical isomorphism, with all three
+  projection equations exposed for the scheme-level overlap comparison.  On rings, transition
   from the reversed overlap followed by its left restriction is now identified with the forward
   right restriction on the exact atlas, reflected to the finite model stage, and preserved by
   scalar extension to the package's final finite subextension.  Finally,
@@ -781,6 +782,9 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.Pic0FiniteStageGluePackage.affineBaseChangeIso_trans_naturality
 #check AlgebraicGeometry.Pic0FiniteStageGluePackage.restrictionBaseChangeMap_naturality
 #check AlgebraicGeometry.nestedPullbackFlatteningIso
+#check AlgebraicGeometry.nestedPullbackFlatteningIso_hom_comp_fst_comp_a
+#check AlgebraicGeometry.nestedPullbackFlatteningIso_hom_comp_fst_comp_b
+#check AlgebraicGeometry.nestedPullbackFlatteningIso_hom_comp_snd
 #check AlgebraicGeometry.Pic0FiniteStageGluePackage.transition_comp_restrictionLeft_eq_restrictionRight
 #check AlgebraicGeometry.Pic0FiniteStageGluePackage.transportedMap_transition_comp_restrictionLeft_eq_right
 #check AlgebraicGeometry.Pic0FiniteStageGluePackage.mapM_transition_comp_restrictionLeft_eq_right
@@ -1016,6 +1020,9 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms
   AlgebraicGeometry.Pic0FiniteStageGluePackage.restrictionBaseChangeMap_naturality
 #print axioms AlgebraicGeometry.nestedPullbackFlatteningIso
+#print axioms AlgebraicGeometry.nestedPullbackFlatteningIso_hom_comp_fst_comp_a
+#print axioms AlgebraicGeometry.nestedPullbackFlatteningIso_hom_comp_fst_comp_b
+#print axioms AlgebraicGeometry.nestedPullbackFlatteningIso_hom_comp_snd
 #print axioms
   AlgebraicGeometry.Pic0FiniteStageGluePackage.transition_comp_restrictionLeft_eq_restrictionRight
 #print axioms
