@@ -81,6 +81,7 @@ import AlgebraicJacobian.Picard.Pic0FiniteStageAffineBaseChangeTrans
 import AlgebraicJacobian.Picard.Pic0FiniteStageRestrictionNaturality
 import AlgebraicJacobian.Picard.Pic0FiniteStageOverlapBaseChange
 import AlgebraicJacobian.Picard.Pic0FiniteStageRightLegEquality
+import AlgebraicJacobian.Picard.Pic0FiniteStageRightRestrictionAlgHom
 import AlgebraicJacobian.Picard.Pic0FiniteStageDatum
 import AlgebraicJacobian.Picard.Pic0RepresentableColimit
 
@@ -271,7 +272,9 @@ its map to the finite-stage field spectrum.  After extension to the separably cl
   projection equations exposed for the scheme-level overlap comparison.  On rings, transition
   from the reversed overlap followed by its left restriction is now identified with the forward
   right restriction on the exact atlas, reflected to the finite model stage, and preserved by
-  scalar extension to the package's final finite subextension.  Finally,
+  scalar extension to the package's final finite subextension.  The corresponding composite
+  scalar-extended right restriction is now named on the dependent carrier and identified with
+  the directly descended right restriction.  Finally,
 `pic0PreservesFilteredBaseColimit_of_representableBy` proves the filtered-colimit statement once
 an arbitrary-field locally finitely presented representer has actually been produced.
 
@@ -789,6 +792,8 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.Pic0FiniteStageGluePackage.transportedMap_transition_comp_restrictionLeft_eq_right
 #check AlgebraicGeometry.Pic0FiniteStageGluePackage.mapM_transition_comp_restrictionLeft_eq_right
 #check AlgebraicGeometry.Pic0FiniteStageGluePackage.scalarExtension_transition_comp_restrictionLeft_eq_right
+#check AlgebraicGeometry.Pic0FiniteStageGluePackage.rightRestrictionBaseChangeAlgHom
+#check AlgebraicGeometry.Pic0FiniteStageGluePackage.rightRestrictionBaseChangeAlgHom_eq_direct
 #check AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 -- Datum-level glued divisor over a Noetherian base (Pic0RankOneDatumGluedDivisor.lean)
 #check AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
@@ -1031,6 +1036,10 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
   AlgebraicGeometry.Pic0FiniteStageGluePackage.mapM_transition_comp_restrictionLeft_eq_right
 #print axioms
   scalarExtension_transition_comp_restrictionLeft_eq_right
+#print axioms
+  AlgebraicGeometry.Pic0FiniteStageGluePackage.rightRestrictionBaseChangeAlgHom
+#print axioms
+  AlgebraicGeometry.Pic0FiniteStageGluePackage.rightRestrictionBaseChangeAlgHom_eq_direct
 #print axioms AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 #print axioms
   AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
