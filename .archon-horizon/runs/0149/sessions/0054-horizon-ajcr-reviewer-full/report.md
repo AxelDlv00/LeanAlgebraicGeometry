@@ -1,0 +1,1 @@
+The Horizon skill is loaded. Before any code inspection that could lead to edits, I’m checking the active protections, unread conversations, task/roadmap state, and live runs so the implementation follows the current lane assignments rather than stale round notes.
