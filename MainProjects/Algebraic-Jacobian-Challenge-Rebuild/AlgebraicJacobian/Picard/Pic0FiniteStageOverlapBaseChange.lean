@@ -125,6 +125,39 @@ theorem nestedPullbackFlatteningIso_hom_comp_snd
         pullback.snd (iU ≫ f) g := by
   simp [nestedPullbackFlatteningIso, pullback.map, Category.assoc]
 
+variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
+variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+  [GeometricallyIrreducible C.hom] [IsSepClosed k]
+
+namespace Pic0FiniteStageGluePackage
+
+set_option synthInstance.maxHeartbeats 3200000 in
+-- Projecting the package unfolds the dependent finite-subextension towers.
+set_option maxHeartbeats 12800000 in
+/-- Flatten the overlap in the base-changed gluing to the pullback of the
+original overlap structure map. -/
+noncomputable def gluingOverlapFlatteningIso
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U V : Pic0FiniteStageChartIndex C) :
+    (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+      (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).V (U, V) ≅
+    pullback
+      (P.glueData.f U V ≫ P.glueData.ι U ≫ P.gluedMap)
+      (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) := by
+  let g : Spec (.of k) ⟶ Spec (.of P.N.1) :=
+    Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))
+  exact nestedPullbackFlatteningIso
+    (P.glueData.ι U) (P.glueData.ι V) P.gluedMap g
+    (P.glueData.f U V)
+    (P.glueData.t U V ≫ P.glueData.f V U)
+    (by
+      simpa only [Category.assoc] using
+        (P.glueData.glue_condition U V).symm)
+    (P.glueData.vPullbackConeIsLimit U V)
+
+end Pic0FiniteStageGluePackage
+
 end
 
 end AlgebraicGeometry
