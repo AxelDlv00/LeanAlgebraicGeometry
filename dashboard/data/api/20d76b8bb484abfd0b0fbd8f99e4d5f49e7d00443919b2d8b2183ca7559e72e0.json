@@ -1,0 +1,1 @@
+{"markdown": "Frozen verification failed:\n\n- Command exited `1` after 440 seconds.\n- Failures at lines 116, 122, and 144 are caused by incoherent algebra/semiring instance paths.\n- No edits or axiom checks were performed.\n", "recommendation": ""}
