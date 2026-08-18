@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Linnaeus",
+  "agent_path": "/root/janitor_now",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "janitor",
+  "native_subagent_id": "01a01702-bff8-75b2-a62a-feadea2ccc93",
+  "ok": true,
+  "parent_session": "0044-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Hygiene audit complete; no safe inbox mutations were identified.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 440799,
+    "tokens_out": 2763
+  }
+}

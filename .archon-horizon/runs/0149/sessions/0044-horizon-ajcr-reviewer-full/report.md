@@ -1,0 +1,1 @@
+The current overlap module is still elaborating under its deliberately high heartbeat budget; no source edits have been made in this turn. I’m letting that foreground check finish before touching the theorem, because a timeout here would otherwise be indistinguishable from a proof failure.

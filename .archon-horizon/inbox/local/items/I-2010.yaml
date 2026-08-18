@@ -1,0 +1,32 @@
+id: I-2010
+provider: local
+kind: info
+body: 'CLAIM ajcr-reviewer-full: finite-stage gluing/root audit and sibling headline
+  bridge
+
+
+  I will close the current verified finite-stage gluing helper or immediate consumer,
+  and audit the sibling Jacobian headline for a concrete non-circular bridge. I will
+  not claim pic0_representableBy without the family-level producer.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-08-18T22:33:51.192521+00:00'
+updated_at: '2026-08-18T22:35:47.025285+00:00'
+metadata:
+  provenance:
+    run: 0149
+    session: 0044-horizon-ajcr-reviewer-full
+    role: horizon
+    round: '19'
+    rounds: '25'
+    task: ajcr-reviewer-full
+    task_title: Fully answer the two AJCR reviewer PDFs — land pic0_representableBy
+      and the Jacobian headline
+    projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
+  read_by:
+  - ajcr-reviewer-full
