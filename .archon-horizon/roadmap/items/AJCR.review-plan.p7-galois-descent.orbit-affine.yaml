@@ -3,16 +3,13 @@ title: Finite-level stable affine cover
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 - Algebraic-Jacobian-Challenge
-summary: 'Verified conditional boundary. The exact finite-stage RepresentableBy witness
-  now canonically installs GrpObj on P.gluedOver; over an algebraically closed field
-  with irreducible carrier, commit 50453c8ea9 derives FiniteInAffine, produces OrbitsInAffineOpen,
-  and immediately consumes it in the stable-cover and finite-Galois representability
-  paths. Existing AJC H-quasi-projective and AJCR immersion/projectivity consumers
-  are also verified, and gluedMap is LFT and QC. Blocked for the actual arbitrary
-  finite Galois field: neither project provides an unconditional immersion/H-quasi-projective
-  witness or the needed arbitrary-field algebraic-group theorem GrpObj + LFT + QC
-  => FiniteInAffine. The quarantined run-0149 gluing comparison is not an input.'
-status: active
+summary: 'Round 3 landed 042292a818, axiom-clean closure of FiniteInAffine under arbitrary
+  scheme coproducts, and verified the existing Pic0 orbit-affine consumer target.
+  The gate remains blocked: component reduction needs irreducibility of connected
+  components, while the arbitrary finite-Galois stage needs finite-type algebraic-group
+  quasi-projectivity/FiniteInAffine (or equivalent ample descent). Next theorem: GroupScheme.finiteInAffine_of_finiteType
+  from GrpObj, LocallyOfFiniteType, and QuasiCompact.'
+status: blocked
 kind: proof
 priority: urgent
 depends_on: []
@@ -27,8 +24,9 @@ metadata:
   created_at: '2026-08-18T06:12:00.953355+00:00'
   parent: AJCR.review-plan.p7-galois-descent
   milestone: AJCR.review-plan
-  updated_at: '2026-08-18T14:45:01.591498+00:00'
+  updated_at: '2026-08-18T15:34:38.711192+00:00'
   pinned_commits:
+  - 042292a818
   - 50453c8ea9
   - da5bb57c0b
   - 7d861b2c01
