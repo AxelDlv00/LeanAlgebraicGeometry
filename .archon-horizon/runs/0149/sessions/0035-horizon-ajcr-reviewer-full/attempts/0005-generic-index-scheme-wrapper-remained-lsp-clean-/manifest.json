@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Generic-index scheme wrapper remained LSP-clean but failed standalone kernel elaboration: FinalModelRing Semiring/CommRing/Algebra instances were not reconstructed at public definition boundaries, followed by cascading unknown declarations and deterministic isDefEq timeout at 12.8M heartbeats.",
+  "created_at": "2026-08-18T06:57:40.887765+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageRightRestrictionNaturality.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageRightRestrictionNaturality.lean",
+      "bytes": 6728,
+      "lines": 152
+    }
+  ],
+  "diagnostics": ""
+}
