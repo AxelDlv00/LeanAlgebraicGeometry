@@ -1,3 +1,4 @@
 {"at": "2026-08-18T09:46:35.316427+00:00", "actor": "human", "field": "created", "from": "", "to": "queued", "note": "opened"}
 {"at": "2026-08-18T09:46:36.702367+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "roadmap_refs updated"}
 {"at": "2026-08-18T09:51:13.196864+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-18T11:43:55.437797+00:00", "actor": "horizon", "field": "status", "from": "running", "to": "blocked", "note": "", "provenance": {"run": "0150", "session": "0002-horizon-ajcr-p7-orbit-affine", "role": "horizon", "round": "0", "rounds": "8", "task": "ajcr-p7-orbit-affine", "task_title": "Phase 7 parallel lane: finite-level stable affine cover", "projects": "Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge"}}

@@ -3,11 +3,14 @@ title: Finite-level stable affine cover
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 - Algebraic-Jacobian-Challenge
-summary: Active in parallel run 0150 on the codex-frenzy account. Produce and consume
-  the finite-Galois-stable affine cover through OrbitsInAffineOpen, FiniteInAffine,
-  or an axiom-clean projectivity replacement, without touching the global base-change
-  files owned by run 0149.
-status: active
+summary: 'Partial bridge landed in 5ee5a7f: the exact finite-stage carrier now has
+  a conditional projectivity-to-OrbitsInAffineOpen producer, immediately consumed
+  by the stable-cover and finite-Galois descent APIs and imported from the root. The
+  gate remains open because no axiom-clean producer of P.gluedMap.IsProjective, a
+  projective-space immersion, or direct FiniteInAffine exists. Final use also requires
+  the exact RepresentableBy P.gluedOver witness and a finite-Galois tower; the sibling
+  H-quasi-projectivity layer does not supply the missing immersion.'
+status: blocked
 kind: proof
 priority: urgent
 depends_on: []
@@ -22,5 +25,6 @@ metadata:
   created_at: '2026-08-18T06:12:00.953355+00:00'
   parent: AJCR.review-plan.p7-galois-descent
   milestone: AJCR.review-plan
-  updated_at: '2026-08-18T09:53:09.339258+00:00'
-  owner: ajcr-p7-orbit-affine
+  updated_at: '2026-08-18T11:43:55.556207+00:00'
+  pinned_commits:
+  - 5ee5a7f349e0e5514460d9e9a055f306fcc04ffc
