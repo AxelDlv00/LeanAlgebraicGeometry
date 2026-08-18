@@ -1,0 +1,1 @@
+I’m loading the Horizon operating instructions first, then I’ll inspect the binding protection and conversation lanes before touching the Lean code. I’ll keep the run one-shot, delegate bounded review/build work, and verify each committed unit with the required Lean checks.
