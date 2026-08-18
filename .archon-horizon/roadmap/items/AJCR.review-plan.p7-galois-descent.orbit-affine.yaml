@@ -10,7 +10,7 @@ summary: 'Partial bridge landed in 5ee5a7f: the exact finite-stage carrier now h
   projective-space immersion, or direct FiniteInAffine exists. Final use also requires
   the exact RepresentableBy P.gluedOver witness and a finite-Galois tower; the sibling
   H-quasi-projectivity layer does not supply the missing immersion.'
-status: blocked
+status: active
 kind: proof
 priority: urgent
 depends_on: []
@@ -25,6 +25,7 @@ metadata:
   created_at: '2026-08-18T06:12:00.953355+00:00'
   parent: AJCR.review-plan.p7-galois-descent
   milestone: AJCR.review-plan
-  updated_at: '2026-08-18T11:43:55.556207+00:00'
+  updated_at: '2026-08-18T12:23:22.052417+00:00'
   pinned_commits:
   - 5ee5a7f349e0e5514460d9e9a055f306fcc04ffc
+  owner: ajcr-p7-orbit-affine
