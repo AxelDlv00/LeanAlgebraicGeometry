@@ -16,7 +16,7 @@ workspace:
       config_dir: /home/axel/.codex-frenzy
       notes: Use for an isolated parallel AJCR lane; keep full project builds serialized.
   horizon_agent:
-    harness: codex-frenzy
+    harness: codex
   scheduler:
     max_parallel_sessions: 14
 external_libraries:
