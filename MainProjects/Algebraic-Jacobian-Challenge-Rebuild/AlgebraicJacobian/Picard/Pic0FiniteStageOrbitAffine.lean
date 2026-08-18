@@ -82,6 +82,37 @@ noncomputable def
   Scheme.orbitsInAffineOpen_of_finiteInAffine _
     (pic0FiniteStageFiniteInAffine_of_isAlgClosed_of_irreducible C Ck P rep)
 
+/-- Over an algebraically closed finite-stage field, connectedness and the represented
+group law make the exact glued Picard-zero carrier `FiniteInAffine`. -/
+theorem pic0FiniteStageFiniteInAffine_of_isAlgClosed_of_connected
+    (P : Pic0FiniteStageGluePackage Ck F)
+    [Algebra K P.N.1] [IsAlgClosed P.N.1]
+    [ConnectedSpace P.glueData.glued]
+    (rep : (pic0TypeFunctor ((baseChange K P.N.1).obj C)).RepresentableBy P.gluedOver) :
+    Scheme.FiniteInAffine P.glueData.glued := by
+  letI : GrpObj P.gluedOver :=
+    pic0FiniteStageGrpObjOfRepresentableBy C Ck P rep
+  letI : LocallyOfFiniteType P.gluedOver.hom := by
+    change LocallyOfFiniteType P.gluedMap
+    infer_instance
+  letI : ConnectedSpace P.gluedOver.left := by
+    change ConnectedSpace P.glueData.glued
+    infer_instance
+  exact GroupScheme.finiteInAffine_of_isAlgClosed_of_connected P.gluedOver
+
+/-- Connectedness of the represented finite-stage group supplies orbit affineness over an
+algebraically closed field.  No arbitrary-field closure is asserted here. -/
+@[implicit_reducible]
+noncomputable def
+    pic0FiniteStageOrbitsInAffineOpen_of_isAlgClosed_of_connected
+    (P : Pic0FiniteStageGluePackage Ck F)
+    [Algebra K P.N.1] [FiniteDimensional K P.N.1] [IsGalois K P.N.1]
+    [IsAlgClosed P.N.1] [ConnectedSpace P.glueData.glued]
+    (rep : (pic0TypeFunctor ((baseChange K P.N.1).obj C)).RepresentableBy P.gluedOver) :
+    (pic0SemilinearGalActionOfRepresentableBy C rep).OrbitsInAffineOpen :=
+  Scheme.orbitsInAffineOpen_of_finiteInAffine _
+    (pic0FiniteStageFiniteInAffine_of_isAlgClosed_of_connected C Ck P rep)
+
 /-- A finite-dimensional projective-space immersion makes the finite-stage glue
 `FiniteInAffine`. -/
 theorem pic0FiniteStageFiniteInAffine_of_isImmersion

@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.Pic0FiniteStageOverlapBaseChange
+import AlgebraicJacobian.Picard.Pic0FiniteStageRestrictionNaturality
 
 /-!
 # The finite-stage Picard gluing diagram after base change
@@ -44,6 +45,42 @@ variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
 namespace Pic0FiniteStageGluePackage
 
 set_option synthInstance.maxHeartbeats 3200000 in
+-- The composite retains the package's dependent finite-subextension towers.
+set_option maxHeartbeats 12800000 in
+/-- The finite-stage overlap structure map becomes the canonical structure map
+after scalar extension to the separably closed field. -/
+theorem glueData_f_comp_inclusion_comp_gluedMap
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U V : Pic0FiniteStageChartIndex C) :
+    P.glueData.f U V ≫ P.glueData.ι U ≫ P.gluedMap =
+      Spec.map (CommRingCat.ofHom
+        (algebraMap P.N.1
+          (Pic0FiniteStageOverlapBaseChangeRing
+            C P.L P.n P.m P.relation P.M P.N U V))) := by
+  rw [glueData_f C P U V, glueData_ι_gluedMap C P U]
+  exact specMap_algHom_comp_algebraMap
+    (restrictionBaseChangeAlgHom C P U V)
+
+/-- The spectrum of the exact left restriction, followed by the chart's affine
+identification, is the affine-overlap identification. -/
+theorem exactRestrictionAlgHom_fromSpec
+    (U V : Pic0FiniteStageChartIndex C) :
+    Spec.map (CommRingCat.ofHom
+        (exactRestrictionAlgHom C U V).toRingHom) ≫
+        U.1.2.fromSpec =
+      (pic0FiniteStageAffineOverlap C U V).2.fromSpec := by
+  change Spec.map (CommRingCat.ofHom
+      (pic0FiniteStageRestrictionLeft C U V).toRingHom) ≫
+      U.1.2.fromSpec = _
+  change Spec.map
+      ((pic0_sepClosed_representableBy (C := C)).1.left.presheaf.map
+        (homOfLE (pic0FiniteStageAffineOverlap_le_left C U V)).op) ≫
+      U.1.2.fromSpec = _
+  exact U.1.2.map_fromSpec (pic0FiniteStageAffineOverlap C U V).2
+    (homOfLE (pic0FiniteStageAffineOverlap_le_left C U V)).op
+
+set_option synthInstance.maxHeartbeats 3200000 in
 -- Raw tensor carriers keep the dependent finite-subextension instances visible.
 set_option maxHeartbeats 12800000 in
 /-- An overlap in the base-changed finite-stage gluing is the corresponding
@@ -55,23 +92,9 @@ noncomputable def gluingOverlapIso
     (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
         (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).V (U, V) ≅
       (pic0SepClosedAtlasGlueData C).V (U, V) := by
-  letI : Algebra.IsAlgebraic P.L.1 k := by infer_instance
-  letI : Algebra.IsAlgebraic P.M.1 k := by infer_instance
-  let r :=
-    AlgebraicJacobian.scalarExtensionMapOfAlgHom
-      (R := P.M.1) (K := P.N.1)
-        (P.mapM (Sum.inl (Sum.inl (U, V))))
-  have hStructure :=
-    calc
-      P.glueData.f U V ≫ P.glueData.ι U ≫ P.gluedMap =
-          Spec.map (CommRingCat.ofHom r.toRingHom) ≫
-            Spec.map (CommRingCat.ofHom (algebraMap P.N.1 _)) := by
-        rw [glueData_f C P U V, glueData_ι_gluedMap C P U]
-        rfl
-      _ = _ := specMap_algHom_comp_algebraMap r
   exact
     gluingOverlapFlatteningIso C P U V ≪≫
-      pullback.congrHom hStructure rfl ≪≫
+      pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl ≪≫
       overlapBaseChangeIso C P U V ≪≫
       (isPullback_opens_inf U.1.1 V.1.1).isoPullback
 

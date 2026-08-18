@@ -49,6 +49,19 @@ noncomputable def
     pic0FiniteStageOrbitsInAffineOpen_of_isAlgClosed_of_irreducible C Ck P rep
   infer_instance
 
+/-- Over an algebraically closed finite-stage field, connectedness of the represented group
+produces the stable affine cover directly. -/
+@[implicit_reducible]
+noncomputable def
+    pic0FiniteStageHasStableAffineCover_of_isAlgClosed_of_connected
+    [IsAlgClosed P.N.1] [ConnectedSpace P.glueData.glued]
+    (rep : (pic0TypeFunctor ((baseChange K P.N.1).obj C)).RepresentableBy P.gluedOver) :
+    HasStableAffineCover K P.N.1
+      (pic0SemilinearGalActionOfRepresentableBy C rep) := by
+  letI : (pic0SemilinearGalActionOfRepresentableBy C rep).OrbitsInAffineOpen :=
+    pic0FiniteStageOrbitsInAffineOpen_of_isAlgClosed_of_connected C Ck P rep
+  infer_instance
+
 /-- A finite-dimensional projective-space immersion produces the stable affine cover used by
 the finite-Galois quotient construction. -/
 @[implicit_reducible]
@@ -101,6 +114,20 @@ noncomputable def
         (pic0SemilinearGalActionOfRepresentableBy C rep)) := by
   letI : (pic0SemilinearGalActionOfRepresentableBy C rep).OrbitsInAffineOpen :=
     pic0FiniteStageOrbitsInAffineOpen_of_isAlgClosed_of_irreducible C Ck P rep
+  exact pic0RepresentableBy_finiteGaloisDescent C rep
+
+/-- Consume the algebraically-closed connected group producer in finite-Galois Picard
+descent.  This remains conditional on connectedness at the finite-stage carrier and does not
+assert an arbitrary-field analogue. -/
+noncomputable def
+    pic0RepresentableBy_finiteStageGaloisDescent_of_isAlgClosed_of_connected
+    [IsAlgClosed P.N.1] [ConnectedSpace P.glueData.glued]
+    (rep : (pic0TypeFunctor ((baseChange K P.N.1).obj C)).RepresentableBy P.gluedOver) :
+    (pic0TypeFunctor C).RepresentableBy
+      (StableAffineOpen.gluedQuotientOver
+        (pic0SemilinearGalActionOfRepresentableBy C rep)) := by
+  letI : (pic0SemilinearGalActionOfRepresentableBy C rep).OrbitsInAffineOpen :=
+    pic0FiniteStageOrbitsInAffineOpen_of_isAlgClosed_of_connected C Ck P rep
   exact pic0RepresentableBy_finiteGaloisDescent C rep
 
 /-- Compatibility wrapper consuming projectivity in the finite-Galois Picard descent theorem. -/

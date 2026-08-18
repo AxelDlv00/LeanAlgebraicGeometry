@@ -2,8 +2,12 @@ id: AJCR.review-plan.p7-galois-descent.colimit
 title: Original-field filtered-colimit bridge for Pic^0
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: Prove the filtered-colimit preservation needed to extend the descended finite-stage
-  equivalence from finite presentation tests to the full original-field Pic^0 functor.
+summary: 'Audit correction: the only current theorem, pic0PreservesFilteredBaseColimit_of_representableBy,
+  assumes an arbitrary-field locally finitely presented representer and is therefore
+  downstream, not an antecedent of pic0_representableBy. Keep this leaf pending only
+  for a genuinely independent replacement if another route needs it; the active finite-Galois
+  quotient route instead needs universal-equivalence descent, a finite-Galois refinement,
+  orbit-in-affine, and quotient geometry.'
 status: pending
 kind: proof
 priority: high
@@ -18,3 +22,4 @@ metadata:
   created_at: '2026-08-18T06:11:58.610344+00:00'
   parent: AJCR.review-plan.p7-galois-descent
   milestone: AJCR.review-plan
+  updated_at: '2026-08-18T20:39:09.732771+00:00'
