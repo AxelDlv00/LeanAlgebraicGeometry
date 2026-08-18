@@ -7,7 +7,7 @@ import AlgebraicJacobian.Picard.Pic0SepClosedRepresentable
 import AlgebraicJacobian.Picard.Pic0AdmissibleAbelEtaleSurjective
 import AlgebraicJacobian.Picard.Pic0AdmissibleDivisorQuasiProjective
 import AlgebraicJacobian.Picard.CompactImageQc
-import AlgebraicJacobian.Picard.JacobianDataFromPicRepDatum
+import AlgebraicJacobian.Picard.JacobianDataHandoff
 
 /-!
 # The separably closed Picard representer as Jacobian data

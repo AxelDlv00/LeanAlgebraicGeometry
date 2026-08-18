@@ -3,11 +3,11 @@ Copyright (c) 2026 The AlgebraicJacobian Contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
-import AlgebraicJacobian.Picard.PicRepDatum
+import AlgebraicJacobian.Picard.JacobianDataHandoff
 import AlgebraicJacobian.Picard.JacobianDataAbelSurj
 
 /-!
-# DJ-IN — the DAT-G → DAT-J handoff: a `PicRepDatum` at the challenge field is a `JacobianData`
+# The `PicRepDatum` handoff with quasi-compactness supplied by Abel lifts
 
 `informal/w4-datj-worksheet.md` §1.1/§0.9 pins the interface DAT-J consumes from DAT-G as
 **DJ-IN** = `PicRepDatum k k C`, and its §1.1 producer target reads
@@ -23,9 +23,9 @@ with the note that *"every symbol on the RHS except `datGDatum` (DAT-G) and
 because the two field types are definitionally equal (`Picard/PicRepDatum.lean`, the module's
 defeq smoke test).
 
-That packaging had never been written.  `PicRepDatum` occurs in no other Lean file in the
-tree: the defeq is recorded as an `example`, so nothing *consumes* it, and DAT-J's assembly
-was left as the pair (DAT-G output, qc) with no term joining them.  This file writes it.
+The lightweight packaging and its definitional compatibility lemmas live in
+`Picard/JacobianDataHandoff.lean`.  Keeping them there prevents the eventual challenge-field
+producer from importing the Abel-surjectivity and Riemann--Roch dependency cone.
 
 The content is exactly the interface, so it is short by design — but it is not nothing:
 writing it is what turns "DAT-G produces a datum over `k'`, and separately DAT-J wants one
@@ -35,11 +35,6 @@ assembly.
 
 ## Main declarations
 
-* `AlgebraicGeometry.PicRepDatum.toJacobianData` — DJ-IN: a `PicRepDatum k k C` plus
-  quasi-compactness of its representing object is a `JacobianData C`, with `J`, `rep` and
-  `lft` carried across unchanged.
-* `AlgebraicGeometry.PicRepDatum.toJacobianData_J` / `_rep` — the two projections, `rfl`, so
-  a consumer never unfolds the packaging.
 * `AlgebraicGeometry.PicRepDatum.toJacobianDataOfAbelLifts` — the same with quasi-compactness
   supplied in the shape the classical argument delivers it: per-point residue-field lifts of
   an Abel morphism out of `DivScheme g` (`Picard/JacobianDataAbelSurj.lean`).
@@ -62,60 +57,6 @@ open CategoryTheory Limits
 namespace AlgebraicGeometry
 
 namespace PicRepDatum
-
-section Handoff
-
-variable {k : Type u} [Field k] {C : Over (Spec (.of k))}
-  [IsProper C.hom] [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIrreducible C.hom]
-
-/-- **DJ-IN, the DAT-G → DAT-J handoff** (w4-datj §1.1): a representability datum at the
-*challenge* field `k` — i.e. `PicRepDatum k k C`, the `k' = k` specialization of DAT-G's
-output — together with quasi-compactness of its representing object, is a `JacobianData C`.
-
-Three of the four fields are carried across verbatim.  The `rep` field needs **no adapter**:
-`(pic0TypeFunctor C).RepresentableBy J` and
-`((pic0Functor C ⋙ forget₂ CommGrpCat GrpCat) ⋙ forget GrpCat).RepresentableBy J` are
-definitionally equal, which `Picard/PicRepDatum.lean`'s smoke test records and this
-definition is the first thing to actually *use*.
-
-Quasi-compactness is not stored by `PicRepDatum` on purpose (it is a-posteriori, via the
-Abel image — w4-datj §2.2), so it is the one argument here. -/
-noncomputable def toJacobianData (d : PicRepDatum k k C) (hqc : QuasiCompact d.J.hom) :
-    JacobianData C where
-  J := d.J
-  rep := d.rep
-  locallyOfFiniteType := d.lft
-  quasiCompact := hqc
-
-@[simp]
-lemma toJacobianData_J (d : PicRepDatum k k C) (hqc : QuasiCompact d.J.hom) :
-    (d.toJacobianData hqc).J = d.J :=
-  rfl
-
-@[simp]
-lemma toJacobianData_rep (d : PicRepDatum k k C) (hqc : QuasiCompact d.J.hom) :
-    (d.toJacobianData hqc).rep = d.rep :=
-  rfl
-
-/-! The group-object structure survives the DJ-IN packaging definitionally.  This is the
-headline-facing compatibility lemma: a consumer that activates `d.grpObj` before packaging
-can use the same structure after switching to `JacobianData`. -/
-@[simp]
-lemma toJacobianData_grpObj (d : PicRepDatum k k C) (hqc : QuasiCompact d.J.hom) :
-    (d.toJacobianData hqc).grpObj = d.grpObj :=
-  rfl
-
-/-- The universal properties agree: `JacobianData.homEquiv` of the packaged datum is
-`PicRepDatum.homEquiv` of the original.  Both accessors are `.rep.homEquiv`, so this is
-`rfl` — recorded so a consumer that switches between the two interfaces never needs a
-transport lemma. -/
-@[simp]
-lemma homEquiv_toJacobianData (d : PicRepDatum k k C) (hqc : QuasiCompact d.J.hom)
-    {T : Over (Spec (.of k))} :
-    (d.toJacobianData hqc).homEquiv (T := T) = d.homEquiv (T := T) :=
-  rfl
-
-end Handoff
 
 /-! ## The handoff with quasi-compactness in its a-posteriori shape -/
 
