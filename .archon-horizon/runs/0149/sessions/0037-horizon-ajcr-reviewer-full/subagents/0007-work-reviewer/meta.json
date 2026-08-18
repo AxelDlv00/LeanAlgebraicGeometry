@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Sartre",
+  "agent_path": "/root/final_review",
+  "agent_role": "work-reviewer",
+  "depth": 1,
+  "model": "gpt-5.6-terra",
+  "name": "work-reviewer",
+  "native_subagent_id": "01a01433-8b48-73d3-bb7b-cf9ac34b5c51",
+  "ok": true,
+  "parent_session": "0037-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "work-reviewer",
+  "summary": "Verdict: converging. No substantive issue found, so I filed no inbox item.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 539460,
+    "tokens_out": 10063
+  }
+}

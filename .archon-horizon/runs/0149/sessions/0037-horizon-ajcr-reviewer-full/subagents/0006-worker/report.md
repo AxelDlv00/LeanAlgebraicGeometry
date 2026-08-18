@@ -1,1 +1,1 @@
-The upstream checks are still running in the foreground tool environment, which is why their object file is not yet available. I’m letting those finish before rechecking the owned module; I won’t add diagram equations against a moving import.
+Standalone verification failed. Lean could not synthesize the chart/overlap base-change ring and algebra instances in `hAffineStructure`; the file is not kernel-clean and should not be committed as-is. No further edits were made.

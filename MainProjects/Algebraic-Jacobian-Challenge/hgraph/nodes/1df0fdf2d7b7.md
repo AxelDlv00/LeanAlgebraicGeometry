@@ -27,7 +27,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.one_le_coheight_of_ne_genericPoint
 type: lean
-updated: '2026-08-18T16:25:47'
+updated: '2026-08-18T17:51:04'
 ---
 theorem Scheme.one_le_coheight_of_ne_genericPoint {X : Scheme.{u}} [IrreducibleSpace X]
     {x : X} (hx : x ≠ genericPoint X) : 1 ≤ Order.coheight x := by
