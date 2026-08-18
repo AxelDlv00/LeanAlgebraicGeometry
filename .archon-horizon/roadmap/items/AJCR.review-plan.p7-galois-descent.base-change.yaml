@@ -2,9 +2,12 @@ id: AJCR.review-plan.p7-galois-descent.base-change
 title: Global glued-scheme base-change isomorphism
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'Active: complete left and right restriction naturality, nested-overlap projections,
-  and the diagram isomorphism identifying the scalar extension of the finite-stage
-  glued scheme with the separably closed Pic^0 representative.'
+summary: 'Active: finite GlueData, chart comparisons, left restriction naturality,
+  the final right-leg ring equality, generic nested-pullback flattening, and all three
+  flattening projection equations are complete. Next construct the right affine square
+  locally inside the multispan compatibility proof using raw tensor carriers; exported
+  dependent ring aliases fail fresh kernel elaboration. Then assemble the overlap/chart
+  diagram and global glued-scheme base-change isomorphism.'
 status: active
 kind: proof
 priority: urgent
@@ -20,3 +23,6 @@ metadata:
   parent: AJCR.review-plan.p7-galois-descent
   owner: ajcr-reviewer-full
   milestone: AJCR.review-plan
+  updated_at: '2026-08-18T09:51:24.282473+00:00'
+  pinned_commits:
+  - 109980ff4c3510669c2a42a662ace4df00288601
