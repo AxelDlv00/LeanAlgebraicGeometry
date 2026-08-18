@@ -1,5 +1,5 @@
 id: AJCR.review-plan.p4-family-producer
-title: '[CUSTOM] Phase 4A: arbitrary-affine rank-one presentation/base-change producer'
+title: 'Phase 4A: arbitrary-affine rank-one presentation/base-change producer'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'Complete: the tied actual-family certificates, native pushforward base-change
@@ -23,7 +23,7 @@ metadata:
   parent: AJCR.review-plan.p4-rank-one-iso
   owner: ajcr-reviewer-full
   milestone: AJCR.review-plan
-  updated_at: '2026-08-14T05:40:47.923366+00:00'
+  updated_at: '2026-08-18T06:26:30.712576+00:00'
   pinned_commits:
   - 42654b14c6
   - a04e410147

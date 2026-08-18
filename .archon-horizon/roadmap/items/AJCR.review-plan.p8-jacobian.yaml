@@ -1,12 +1,12 @@
 id: AJCR.review-plan.p8-jacobian
-title: '[CUSTOM] Phase 8: construct JacobianData from the pinned Pic^0 representation'
+title: 'Phase 8: construct and verify the Jacobian capstone'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: Use the same pic0_representableBy datum for the group object, identity component,
-  universal element, finite type/properness/smoothness/dimension g, Abel-Jacobi map,
-  Albanese universal property, base-change isomorphism, and cocycle coherence. Complete
-  jacobianData, audit protected challenge declarations, and require narrow/full builds
-  with no project-specific axioms or sorryAx.
+summary: Pending on Phase 7. Reuse the pinned representation and JacobianData interfaces;
+  construct the original-field PicRepDatum, instantiate the geometric properties,
+  complete Abel-Jacobi and the universal property, close functoriality/base-change/cocycle
+  coherence, and discharge the protected challenge statements with narrow and full
+  builds.
 status: pending
 kind: proof
 priority: urgent
@@ -22,7 +22,7 @@ metadata:
   created_at: '2026-08-04T01:52:32.684094+00:00'
   parent: AJCR.review-plan
   milestone: AJCR.review-plan
-  updated_at: '2026-08-14T06:53:15.815251+00:00'
+  updated_at: '2026-08-18T06:11:03.635468+00:00'
   pinned_commits:
   - 118a6e320b
   - 64c98ec988

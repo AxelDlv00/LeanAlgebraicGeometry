@@ -1,0 +1,23 @@
+id: AJCR.review-plan.p7-galois-descent.orbit-affine
+title: Finite-level stable affine cover
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+- Algebraic-Jacobian-Challenge
+summary: Produce the finite-Galois-stable affine cover required by descent, either
+  through OrbitsInAffineOpen or through an axiom-clean quasi-projectivity/projectivity
+  replacement.
+status: pending
+kind: proof
+priority: urgent
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: human
+  created_at: '2026-08-18T06:12:00.953355+00:00'
+  parent: AJCR.review-plan.p7-galois-descent
+  milestone: AJCR.review-plan

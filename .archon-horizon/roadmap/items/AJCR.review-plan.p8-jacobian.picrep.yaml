@@ -1,0 +1,20 @@
+id: AJCR.review-plan.p8-jacobian.picrep
+title: Construct the original-field PicRepDatum
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: Build the canonical PicRepDatum from the Phase 7 pic0_representableBy output
+  and its descended universal element.
+status: pending
+kind: proof
+priority: urgent
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: human
+  created_at: '2026-08-18T06:12:10.922210+00:00'
+  parent: AJCR.review-plan.p8-jacobian
+  milestone: AJCR.review-plan

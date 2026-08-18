@@ -1,10 +1,10 @@
 id: AJCR.picard.degree
-title: Degree and the Pic^0 subfunctor [CUSTOM]
+title: Degree and the Pic^0 subfunctor
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: The degree map on picEt via the chi-ledger (degree = chi(L) - chi(O)), its
-  additivity and base-change invariance, and Pic^0 as the degree-zero subfunctor (design
-  section 6). Consumes Wave 2b.
+summary: 'Complete: the Euler-characteristic ledger defines the degree map on picEt,
+  proves additivity and base-change invariance, and identifies Pic^0 as the degree-zero
+  subfunctor.'
 status: done
 kind: proof
 priority: normal
@@ -18,5 +18,5 @@ metadata:
   author: horizon
   created_at: '2026-07-14T01:19:43.867751+00:00'
   parent: AJCR.picard
-  updated_at: '2026-07-29T03:00:20.321823+00:00'
+  updated_at: '2026-08-18T06:28:05.740672+00:00'
   milestone: AJCR.picard

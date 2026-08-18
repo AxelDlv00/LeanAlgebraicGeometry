@@ -1,5 +1,5 @@
 id: AJCR.w2-rigidity
-title: '[ADAPTED] Wave 2a: rigidity'
+title: Rigidity
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'Mumford Form-I rigidity and Milne I 1.2: a pointed morphism of group schemes
@@ -17,6 +17,6 @@ scope:
 metadata:
   author: horizon
   created_at: '2026-07-14T01:19:16.701368+00:00'
-  parent: AJCR.jacobian
-  updated_at: '2026-07-29T03:00:50.590562+00:00'
+  parent: AJCR.foundation
+  updated_at: '2026-08-18T06:10:38.243975+00:00'
   milestone: AJCR.w2-rigidity

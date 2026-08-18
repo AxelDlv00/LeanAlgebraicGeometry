@@ -1,0 +1,21 @@
+id: AJCR.review-plan.p7-galois-descent.universal
+title: Universal Picard element and equivalence descent
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: Descend the universal Picard class and the natural equivalence represented
+  over the separable closure to the finite-stage glued scheme and then to the original
+  field.
+status: pending
+kind: proof
+priority: urgent
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: human
+  created_at: '2026-08-18T06:11:56.225176+00:00'
+  parent: AJCR.review-plan.p7-galois-descent
+  milestone: AJCR.review-plan

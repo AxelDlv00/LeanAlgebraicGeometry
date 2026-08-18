@@ -1,5 +1,5 @@
 id: AJCR.review-plan.p3-rank-one-loci
-title: '[CUSTOM] Phase 3: one public rank-one Picard and divisor locus'
+title: 'Phase 3: one public rank-one Picard and divisor locus'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'Complete: PicRankOneOpen is the public arbitrary-test locus; pointwise splitting
@@ -24,7 +24,7 @@ metadata:
   created_at: '2026-08-04T01:52:24.145421+00:00'
   parent: AJCR.review-plan
   milestone: AJCR.review-plan
-  updated_at: '2026-08-14T05:40:42.128528+00:00'
+  updated_at: '2026-08-18T06:10:50.684412+00:00'
   owner: ajcr-reviewer-full
   pinned_commits:
   - 42654b14c6

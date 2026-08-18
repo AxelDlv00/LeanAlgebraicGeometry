@@ -1,12 +1,11 @@
 id: AJCR.picard
-title: Relative Picard via étale plus construction (Wave-3) [CUSTOM]
+title: Relative Picard functor via the etale plus construction
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: DONE. Wave 3 constructed the relative Picard functor via the etale plus construction,
-  proved unconditional (C1) injectivity on affine tests, proved (C2) descent for module-finite
-  faithfully flat covers and bijectivity at section-admitting field tests, lifted
-  the comparison to picEt, and built the degree/Pic0 interface. General-ring surjectivity
-  is not part of this completed package; it remains on AJCR.w4-rep.datum.pic0-ring-effectivity.
+summary: 'Complete: the relative Picard functor is constructed by the etale plus construction,
+  with affine-test injectivity, finite faithfully flat effectivity, pointed-field
+  equivalences, and the degree-zero interface. General-ring effectivity is outside
+  this completed foundation and is handled by the current representability route.'
 status: done
 kind: proof
 priority: high
@@ -23,6 +22,6 @@ metadata:
     run: '0027'
     session: 0012-ground
     role: ground
-  parent: AJCR.jacobian
-  updated_at: '2026-07-31T14:05:24.550428+00:00'
+  parent: AJCR.foundation
+  updated_at: '2026-08-18T06:28:04.293891+00:00'
   milestone: AJCR.picard

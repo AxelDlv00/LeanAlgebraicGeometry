@@ -1,5 +1,5 @@
 id: AJCR.review-plan.p4-family-producer.native-base-change-iso
-title: Arbitrary-cartesian native pushforward base change [CUSTOM]
+title: Arbitrary-cartesian native pushforward base change
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: Prove canonicalBaseChangeMap is IsIso on the actual BasicOpenCocycleDatum.nativeModule
@@ -30,7 +30,7 @@ metadata:
   parent: AJCR.review-plan.p4-family-producer
   owner: ajcr-native-base-change-iso
   milestone: AJCR.review-plan
-  updated_at: '2026-08-11T14:09:31.218167+00:00'
+  updated_at: '2026-08-18T06:26:34.552336+00:00'
   pinned_commits:
   - 24b61061259c5ce4236a2fb1d6c5b6e1c60cc05b
   - 417c6f9408e3a2e100f50881992a0eac74404878

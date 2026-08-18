@@ -1,17 +1,12 @@
 id: AJCR.jacobian
-title: Jacobian = abelian variety (rebuild north star) [ADAPTED]
+title: 'Algebraic Jacobian challenge: rebuild route'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'North star: the EXTENDED challenge in Challenge.lean — genus (done), Jacobian
-  with its group/smoothness/properness/irreducibility instances, Abel-Jacobi and the
-  Albanese universal property, Jacobian.functor, and field base change with cocycle
-  coherence. Route fixed in informal/route-decision.md: J := Pic^0 of the etale-sheafified
-  Picard functor, curve-specialised Kleiman (no Quot schemes), Albanese via Milne
-  III 6.1. Wave order: W1 substrate (done) -> W2a rigidity (done) -> W3 Picard functor
-  (done at its stated scope: affine C1, module-finite/section-admitting-field C2,
-  picEt and degree/Pic0 interfaces; general-ring surjectivity remains AJCR.w4-rep.datum.pic0-ring-effectivity)
-  -> W2b chi-ledger -> W4 representability -> W5 abelian variety -> W6 Albanese ->
-  W7 functoriality/base change.'
+summary: 'North star: construct the Jacobian from the etale-sheafified Picard functor,
+  prove the required geometry and universal property, and establish functoriality
+  and field-base-change coherence. Completed prerequisites are grouped under AJCR.foundation.
+  The authoritative execution order is AJCR.review-plan: Phases 0-6 done, Phase 7
+  finite-Galois descent active, Phase 8 Jacobian capstone pending.'
 status: active
 kind: proof
 priority: high
@@ -28,5 +23,5 @@ metadata:
     run: '0027'
     session: 0012-ground
     role: ground
-  updated_at: '2026-08-04T01:58:08.606378+00:00'
+  updated_at: '2026-08-18T06:10:40.945923+00:00'
   milestone: AJCR.jacobian

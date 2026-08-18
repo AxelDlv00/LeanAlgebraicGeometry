@@ -1,5 +1,5 @@
 id: AJCR.w2-chi.carrier
-title: Cohomology and divisor substrate (landed) [CUSTOM]
+title: Cohomology and divisor substrate (landed)
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: The general-coefficient two-cover H^1 equivalence, structure-sheaf affine
@@ -19,5 +19,5 @@ metadata:
   author: horizon
   created_at: '2026-07-14T01:19:17.827440+00:00'
   parent: AJCR.w2-chi
-  updated_at: '2026-07-29T03:00:45.609472+00:00'
+  updated_at: '2026-08-18T06:26:26.122694+00:00'
   milestone: AJCR.w2-chi

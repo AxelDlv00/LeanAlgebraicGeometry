@@ -1,6 +1,6 @@
 id: AJCR.picard.degree.pic0
 title: The degree at field points and $\mathrm{Pic}^0 = \ker(\deg)$; the Abel element
-  [CUSTOM] $[\mathcal{O}(\Gamma_t - P_T)]$
+  $[\mathcal{O}(\Gamma_t - P_T)]$
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'WORKSHEET DONE (deg-d5b-worksheet.md, binding): $\deg_t$ needs NO geometric
@@ -23,5 +23,5 @@ metadata:
   author: horizon
   created_at: '2026-07-15T01:51:21.505384+00:00'
   parent: AJCR.picard.degree
-  updated_at: '2026-07-29T03:00:28.485427+00:00'
+  updated_at: '2026-08-18T06:26:10.767585+00:00'
   milestone: AJCR.picard

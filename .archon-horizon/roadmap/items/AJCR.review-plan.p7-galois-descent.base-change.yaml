@@ -1,0 +1,22 @@
+id: AJCR.review-plan.p7-galois-descent.base-change
+title: Global glued-scheme base-change isomorphism
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'Active: complete left and right restriction naturality, nested-overlap projections,
+  and the diagram isomorphism identifying the scalar extension of the finite-stage
+  glued scheme with the separably closed Pic^0 representative.'
+status: active
+kind: proof
+priority: urgent
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: human
+  created_at: '2026-08-18T06:11:53.823161+00:00'
+  parent: AJCR.review-plan.p7-galois-descent
+  owner: ajcr-reviewer-full
+  milestone: AJCR.review-plan

@@ -1,14 +1,10 @@
 id: AJCR.review-plan.p4-rank-one-iso
-title: '[CUSTOM] Phase 4: canonical family-level rank-one Abel isomorphism'
+title: 'Phase 4: canonical family-level rank-one Abel isomorphism'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: Construct divisorOfRankOne from the evaluation map f^* f_* L -> L without
-  choosing a generator; prove its zero scheme is finite locally free of degree g,
-  base-change compatible, and Picard-equivalent up to pullback. Prove both inverse
-  laws, rankOneAbelIso, and rankOneAbel_isOpenImmersion on arbitrary test schemes;
-  delete generator-selection, fieldwise-only, and source/test coupling workarounds
-  no longer consumed. Integrate the shared family-level producer as the first Phase-4
-  blocker owner.
+summary: 'Complete: the canonical evaluation-divisor construction, arbitrary-affine
+  presentation and base-change producers, inverse laws, rankOneAbelIso, and the open-immersion
+  consumer are root-reachable and kernel-clean.'
 status: done
 kind: proof
 priority: urgent
@@ -25,7 +21,7 @@ metadata:
   created_at: '2026-08-04T01:52:25.741918+00:00'
   parent: AJCR.review-plan
   milestone: AJCR.review-plan
-  updated_at: '2026-08-14T05:38:58.769733+00:00'
+  updated_at: '2026-08-18T06:10:53.373089+00:00'
   pinned_commits:
   - 42654b14c6
   - 9db84b60d0

@@ -1,7 +1,5 @@
 id: AJCR.picard.degree.pic0.sb7
-title: '[CUSTOM] SB-7: $\mathrm{degAt}$ at field points and the subfunctor $\mathrm{Pic}^0
-  = \{\lambda \mid \mathrm{degAt}\,\lambda\,t = 0\ \forall t\}$ — the Wave-4 RepresentableBy
-  carrier'
+title: Field-point degree and the Pic^0 subfunctor
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: ''
@@ -18,5 +16,5 @@ metadata:
   author: ground
   created_at: '2026-07-16T03:39:11.869061+00:00'
   parent: AJCR.picard.degree.pic0
-  updated_at: '2026-07-29T03:00:40.321813+00:00'
+  updated_at: '2026-08-18T06:28:08.837751+00:00'
   milestone: AJCR.picard

@@ -1,6 +1,5 @@
 id: AJCR.picard.c2
 title: (C2) Rigidified effectivity on module-finite covers and pointed field tests
-  [CUSTOM]
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: DONE at the stated scope. Rigidified Cech classes descend along module-finite
@@ -21,5 +20,5 @@ metadata:
   author: horizon
   created_at: '2026-07-14T01:19:43.277671+00:00'
   parent: AJCR.picard
-  updated_at: '2026-07-31T14:05:26.445821+00:00'
+  updated_at: '2026-08-18T06:24:40.086364+00:00'
   milestone: AJCR.picard

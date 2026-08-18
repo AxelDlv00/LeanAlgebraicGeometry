@@ -1,7 +1,6 @@
 id: AJCR.picard.degree.pic0.sb1
-title: '[CUSTOM] SB-1: the base-field transition toolkit — the pasted pullback square
-  for $\pi\colon C_{K_2} \to C_{K_1}$ along $\varphi\colon K_1 \to K_2$; $\pi$ flat,
-  affine, surjective'
+title: 'SB-1: the base-field transition toolkit — the pasted pullback square for $\pi\colon
+  C_{K_2} \to C_{K_1}$ along $\varphi\colon K_1 \to K_2$; $\pi$ flat, affine, surjective'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: ''
@@ -18,5 +17,5 @@ metadata:
   author: ground
   created_at: '2026-07-16T03:39:07.446581+00:00'
   parent: AJCR.picard.degree.pic0
-  updated_at: '2026-07-29T03:00:30.155699+00:00'
+  updated_at: '2026-08-18T06:26:12.592772+00:00'
   milestone: AJCR.picard

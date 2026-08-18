@@ -1,14 +1,13 @@
 id: AJCR.review-plan.p7-galois-descent
-title: '[CUSTOM] Phase 7: shared finite-Galois descent capstone'
+title: 'Phase 7: finite-Galois descent to the original field'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 - Algebraic-Jacobian-Challenge
-summary: Package the separably closed representative, finite type, properness, group
-  structure, geometric irreducibility, and universal element; descend to a finite
-  Galois extension, build the semilinear action/cocycle and stable affine cover, and
-  reuse or share AJC quotient/gluing infrastructure. Produce representableBy_of_finiteGalois_baseChange
-  returning both descended scheme and certificate, then consume it immediately in
-  pic0_representableBy. Do not duplicate the descent stack.
+summary: Active. The finite-stage affine atlas and GlueData are complete. Current
+  work is the global glued-scheme base-change isomorphism. Remaining gates are descent
+  of the universal Picard element/equivalence, the original-field filtered-colimit
+  bridge, a stable affine cover via orbit containment or quasi-projectivity, and final
+  construction and consumption of pic0_representableBy.
 status: active
 kind: proof
 priority: urgent
@@ -25,7 +24,7 @@ metadata:
   created_at: '2026-08-04T01:52:30.932692+00:00'
   parent: AJCR.review-plan
   milestone: AJCR.review-plan
-  updated_at: '2026-08-18T03:01:25.234274+00:00'
+  updated_at: '2026-08-18T06:11:01.699458+00:00'
   owner: ajcr-reviewer-full
   pinned_commits:
   - cc737b8ba17b5d127d6f3b0d38a8a56dad1cec40

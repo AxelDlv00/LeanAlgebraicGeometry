@@ -1,7 +1,0 @@
-{"at": "2026-07-16T17:13:47.951757+00:00", "actor": "horizon", "field": "created", "from": "", "to": "pending", "note": "opened"}
-{"at": "2026-07-28T04:17:10.058860+00:00", "actor": "horizon", "field": "status", "from": "pending", "to": "done", "note": ""}
-{"at": "2026-07-28T05:29:41.406938+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
-{"at": "2026-07-29T03:03:28.842545+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "milestone updated"}
-{"at": "2026-08-04T01:57:15.062945+00:00", "actor": "human", "field": "status", "from": "done", "to": "rejected", "note": "synced from task ajcr-w5-av"}
-{"at": "2026-08-04T01:58:44.125043+00:00", "actor": "horizon", "field": "status", "from": "rejected", "to": "done", "note": ""}
-{"at": "2026-08-04T01:58:44.125253+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "owner updated"}
