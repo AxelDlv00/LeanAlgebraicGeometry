@@ -156,6 +156,96 @@ noncomputable def gluingOverlapFlatteningIso
         (P.glueData.glue_condition U V).symm)
     (P.glueData.vPullbackConeIsLimit U V)
 
+set_option synthInstance.maxHeartbeats 3200000 in
+-- Specializing the overlap projections unfolds the package's dependent scalar towers.
+set_option maxHeartbeats 12800000 in
+set_option backward.isDefEq.respectTransparency false in
+/-- The flattened overlap's left restriction is the base-changed gluing restriction
+followed by the first chart projection. -/
+theorem gluingOverlapFlatteningIso_hom_comp_fst_comp_f
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U V : Pic0FiniteStageChartIndex C) :
+    (gluingOverlapFlatteningIso C P U V).hom ≫
+        pullback.fst
+          (P.glueData.f U V ≫ P.glueData.ι U ≫ P.gluedMap)
+          (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≫
+        P.glueData.f U V =
+      (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+          (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f U V ≫
+        pullback.fst
+          (P.glueData.ι U ≫ P.gluedMap)
+          (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) := by
+  exact nestedPullbackFlatteningIso_hom_comp_fst_comp_a
+    (P.glueData.ι U) (P.glueData.ι V) P.gluedMap
+    (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))
+    (P.glueData.f U V)
+    (P.glueData.t U V ≫ P.glueData.f V U)
+    (by
+      simpa only [Category.assoc] using
+        (P.glueData.glue_condition U V).symm)
+    (P.glueData.vPullbackConeIsLimit U V)
+
+set_option synthInstance.maxHeartbeats 3200000 in
+-- Specializing the overlap projections unfolds the package's dependent scalar towers.
+set_option maxHeartbeats 12800000 in
+set_option backward.isDefEq.respectTransparency false in
+/-- The flattened overlap's right restriction is the second projection of the
+base-changed gluing overlap. -/
+theorem gluingOverlapFlatteningIso_hom_comp_fst_comp_t_f
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U V : Pic0FiniteStageChartIndex C) :
+    (gluingOverlapFlatteningIso C P U V).hom ≫
+        pullback.fst
+          (P.glueData.f U V ≫ P.glueData.ι U ≫ P.gluedMap)
+          (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≫
+        (P.glueData.t U V ≫ P.glueData.f V U) =
+      pullback.snd
+        (pullback.fst
+            (P.glueData.ι U ≫ P.gluedMap)
+            (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≫
+          P.glueData.ι U)
+        (P.glueData.ι V) := by
+  exact nestedPullbackFlatteningIso_hom_comp_fst_comp_b
+    (P.glueData.ι U) (P.glueData.ι V) P.gluedMap
+    (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))
+    (P.glueData.f U V)
+    (P.glueData.t U V ≫ P.glueData.f V U)
+    (by
+      simpa only [Category.assoc] using
+        (P.glueData.glue_condition U V).symm)
+    (P.glueData.vPullbackConeIsLimit U V)
+
+set_option synthInstance.maxHeartbeats 3200000 in
+-- Specializing the overlap projections unfolds the package's dependent scalar towers.
+set_option maxHeartbeats 12800000 in
+set_option backward.isDefEq.respectTransparency false in
+/-- The flattened overlap's base projection is the gluing restriction followed
+by the base projection of its chart. -/
+theorem gluingOverlapFlatteningIso_hom_comp_snd
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U V : Pic0FiniteStageChartIndex C) :
+    (gluingOverlapFlatteningIso C P U V).hom ≫
+        pullback.snd
+          (P.glueData.f U V ≫ P.glueData.ι U ≫ P.gluedMap)
+          (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) =
+      (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+          (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f U V ≫
+        pullback.snd
+          (P.glueData.ι U ≫ P.gluedMap)
+          (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) := by
+  exact nestedPullbackFlatteningIso_hom_comp_snd
+    (P.glueData.ι U) (P.glueData.ι V) P.gluedMap
+    (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))
+    (P.glueData.f U V)
+    (P.glueData.t U V ≫ P.glueData.f V U)
+    (by
+      simpa only [Category.assoc] using
+        (P.glueData.glue_condition U V).symm)
+    (P.glueData.vPullbackConeIsLimit U V)
+
 end Pic0FiniteStageGluePackage
 
 end
