@@ -3,15 +3,11 @@ title: Finite-level stable affine cover
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 - Algebraic-Jacobian-Challenge
-summary: 'Commits 679c29ec6d, 7d861b2c01, and da5bb57c0b sharpen the finite-stage
-  gate: the sibling H-quasi-projective certificate now yields orbit affineness; the
-  exact glued carrier gets FiniteInAffine, OrbitsInAffineOpen, stable-cover, and Galois-descent
-  consumers from a finite projective-space immersion; and its structure map is unconditionally
-  locally of finite type and quasi-compact. All declarations are root-reachable, axiom-clean,
-  and project builds pass. The gate remains blocked because neither project supplies
-  that exact immersion, a direct arbitrary-field group-scheme FiniteInAffine theorem,
-  or the exact RepresentableBy P.gluedOver witness and finite-Galois tower.'
-status: blocked
+summary: 'Run 0150 resumes the exact finite-stage geometry producer after verified
+  conditional consumers. Current target: derive the glued carrier''s projective/quasi-projective
+  certificate or direct FiniteInAffine instance without touching run 0149 base-change
+  files.'
+status: active
 kind: proof
 priority: urgent
 depends_on: []
@@ -26,9 +22,10 @@ metadata:
   created_at: '2026-08-18T06:12:00.953355+00:00'
   parent: AJCR.review-plan.p7-galois-descent
   milestone: AJCR.review-plan
-  updated_at: '2026-08-18T13:03:51.497193+00:00'
+  updated_at: '2026-08-18T13:31:24.987515+00:00'
   pinned_commits:
   - da5bb57c0b
   - 7d861b2c01
   - 679c29ec6d
   - 5ee5a7f349e0e5514460d9e9a055f306fcc04ffc
+  owner: ajcr-p7-orbit-affine

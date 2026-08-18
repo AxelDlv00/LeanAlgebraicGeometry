@@ -5,3 +5,5 @@
 {"at": "2026-08-18T12:00:48.886917+00:00", "actor": "system", "field": "status", "from": "blocked", "to": "queued", "note": "re-queued for the next round of a focused run"}
 {"at": "2026-08-18T12:01:15.910070+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
 {"at": "2026-08-18T13:04:22.163246+00:00", "actor": "horizon", "field": "status", "from": "running", "to": "blocked", "note": "", "provenance": {"run": "0150", "session": "0004-horizon-ajcr-p7-orbit-affine", "role": "horizon", "round": "1", "rounds": "8", "task": "ajcr-p7-orbit-affine", "task_title": "Phase 7 parallel lane: finite-level stable affine cover", "projects": "Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge"}}
+{"at": "2026-08-18T13:25:11.059715+00:00", "actor": "system", "field": "status", "from": "blocked", "to": "queued", "note": "re-queued for the next round of a focused run"}
+{"at": "2026-08-18T13:25:36.794222+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
