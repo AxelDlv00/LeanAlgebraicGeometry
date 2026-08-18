@@ -48,6 +48,66 @@ theorem glueData_f
   rfl
 
 set_option synthInstance.maxHeartbeats 3200000 in
+-- The annotation fixes the source and target instances hidden by dependent indices.
+set_option maxHeartbeats 12800000 in
+/-- The scalar-extended descended restriction, with its chart and overlap types
+fixed opaquely for use by the affine base-change API. -/
+noncomputable def restrictionBaseChangeAlgHom
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U V : Pic0FiniteStageChartIndex C) :
+    Pic0FiniteStageChartBaseChangeRing
+        C P.L P.n P.m P.relation P.M P.N U →ₐ[P.N.1]
+      Pic0FiniteStageOverlapBaseChangeRing
+        C P.L P.n P.m P.relation P.M P.N U V :=
+  (pic0FiniteStageRestrictionBaseChange
+      C P.L P.n P.m P.relation P.M P.mapM P.N U V :
+    Pic0FiniteStageChartBaseChangeRing
+        C P.L P.n P.m P.relation P.M P.N U →ₐ[P.N.1]
+      Pic0FiniteStageOverlapBaseChangeRing
+        C P.L P.n P.m P.relation P.M P.N U V)
+
+/-- The exact left restriction with indexed source and target rings.  Keeping
+the indexed rings avoids relying on typeclass transparency for their aliases. -/
+noncomputable def exactRestrictionAlgHom
+    (U V : Pic0FiniteStageChartIndex C) :
+    Pic0FiniteStageRing C (Sum.inl U) →ₐ[k]
+      Pic0FiniteStageRing C (Sum.inr (U, V)) :=
+  pic0FiniteStageMap C (Sum.inl (Sum.inl (U, V)))
+
+set_option synthInstance.maxHeartbeats 3200000 in
+-- The annotation fixes the indexed exact-ring instance on the chart target.
+set_option maxHeartbeats 12800000 in
+/-- Final scalar-extension comparison for a chart, with an indexed exact-ring
+target. -/
+noncomputable def chartFinalBaseChangeEquiv
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U : Pic0FiniteStageChartIndex C) :
+    k ⊗[P.N.1]
+        Pic0FiniteStageChartBaseChangeRing
+          C P.L P.n P.m P.relation P.M P.N U ≃ₐ[k]
+      Pic0FiniteStageRing C (Sum.inl U) :=
+  pic0FiniteStageFinalBaseChangeEquiv
+    C P.L P.n P.m P.relation P.e P.M P.N (Sum.inl U)
+
+set_option synthInstance.maxHeartbeats 3200000 in
+-- The annotation fixes the indexed exact-ring instance on the overlap target.
+set_option maxHeartbeats 12800000 in
+/-- Final scalar-extension comparison for an overlap, with an indexed
+exact-ring target. -/
+noncomputable def overlapFinalBaseChangeEquiv
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U V : Pic0FiniteStageChartIndex C) :
+    k ⊗[P.N.1]
+        Pic0FiniteStageOverlapBaseChangeRing
+          C P.L P.n P.m P.relation P.M P.N U V ≃ₐ[k]
+      Pic0FiniteStageRing C (Sum.inr (U, V)) :=
+  pic0FiniteStageFinalBaseChangeEquiv
+    C P.L P.n P.m P.relation P.e P.M P.N (Sum.inr (U, V))
+
+set_option synthInstance.maxHeartbeats 3200000 in
 -- Specializing the generic pullback map infers both scalar-extended model rings.
 set_option maxHeartbeats 12800000 in
 /-- Pullback of a finite-stage left restriction from an overlap to its left
@@ -73,8 +133,7 @@ noncomputable def restrictionBaseChangeMap
       C P.L P.n P.m P.relation P.M P.N U)
     (Pic0FiniteStageOverlapBaseChangeRing
       C P.L P.n P.m P.relation P.M P.N U V)
-    (pic0FiniteStageRestrictionBaseChange
-      C P.L P.n P.m P.relation P.M P.mapM P.N U V)
+    (restrictionBaseChangeAlgHom C P U V)
 
 set_option synthInstance.maxHeartbeats 3200000 in
 -- The chart comparison cancels the package's nested scalar extensions.
@@ -91,14 +150,12 @@ noncomputable def chartRingBaseChangeIso
             (Pic0FiniteStageChartBaseChangeRing
               C P.L P.n P.m P.relation P.M P.N U))))
         (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≅
-      Spec (.of (Pic0FiniteStageChartRing C U)) :=
+      Spec (.of (Pic0FiniteStageRing C (Sum.inl U))) :=
   affineBaseChangeIso P.N.1 k
       (Pic0FiniteStageChartBaseChangeRing
         C P.L P.n P.m P.relation P.M P.N U) ≪≫
     Scheme.Spec.mapIso
-      (pic0FiniteStageFinalBaseChangeEquiv
-        C P.L P.n P.m P.relation P.e P.M P.N
-          (Sum.inl U)).symm.toRingEquiv.toCommRingCatIso.op
+      (chartFinalBaseChangeEquiv C P U).symm.toRingEquiv.toCommRingCatIso.op
 
 set_option synthInstance.maxHeartbeats 3200000 in
 -- The overlap comparison cancels the package's nested scalar extensions.
@@ -115,95 +172,13 @@ noncomputable def overlapRingBaseChangeIso
             (Pic0FiniteStageOverlapBaseChangeRing
               C P.L P.n P.m P.relation P.M P.N U V))))
         (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≅
-      Spec (.of (Pic0FiniteStageOverlapRing C U V)) :=
+      Spec (.of (Pic0FiniteStageRing C (Sum.inr (U, V)))) :=
   affineBaseChangeIso P.N.1 k
       (Pic0FiniteStageOverlapBaseChangeRing
         C P.L P.n P.m P.relation P.M P.N U V) ≪≫
     Scheme.Spec.mapIso
-      (pic0FiniteStageFinalBaseChangeEquiv
-        C P.L P.n P.m P.relation P.e P.M P.N
-          (Sum.inr (U, V))).symm.toRingEquiv.toCommRingCatIso.op
-
-set_option synthInstance.maxHeartbeats 3200000 in
--- Naturality elaborates the final comparison equivalences and their inverses.
-set_option maxHeartbeats 12800000 in
-/-- Scalar extension of the finite-stage restriction intertwines the final-ring
-comparisons with the exact restriction on affine coordinate rings. -/
-theorem restrictionSpec_naturality
-    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F)
-    (U V : Pic0FiniteStageChartIndex C) :
-    Spec.map (CommRingCat.ofHom
-        (AlgebraicJacobian.scalarExtensionMapOfAlgHom
-          (R := P.N.1) (K := k)
-          (pic0FiniteStageRestrictionBaseChange
-              C P.L P.n P.m P.relation P.M P.mapM P.N U V :
-            Pic0FiniteStageChartBaseChangeRing
-                C P.L P.n P.m P.relation P.M P.N U →ₐ[P.N.1]
-              Pic0FiniteStageOverlapBaseChangeRing
-                C P.L P.n P.m P.relation P.M P.N U V)).toRingHom) ≫
-      (Scheme.Spec.mapIso
-        (pic0FiniteStageFinalBaseChangeEquiv
-          C P.L P.n P.m P.relation P.e P.M P.N
-            (Sum.inl U)).symm.toRingEquiv.toCommRingCatIso.op).hom =
-    (Scheme.Spec.mapIso
-      (pic0FiniteStageFinalBaseChangeEquiv
-        C P.L P.n P.m P.relation P.e P.M P.N
-          (Sum.inr (U, V))).symm.toRingEquiv.toCommRingCatIso.op).hom ≫
-      Spec.map (CommRingCat.ofHom
-        (pic0FiniteStageRestrictionLeft C U V).toRingHom) := by
-  letI : Algebra.IsAlgebraic P.L.1 k := by infer_instance
-  letI : Algebra.IsAlgebraic P.M.1 k := by infer_instance
-  let eSource := pic0FiniteStageFinalBaseChangeEquiv
-    C P.L P.n P.m P.relation P.e P.M P.N (Sum.inl U)
-  let eTarget := pic0FiniteStageFinalBaseChangeEquiv
-    C P.L P.n P.m P.relation P.e P.M P.N (Sum.inr (U, V))
-  let f := AlgebraicJacobian.scalarExtensionMapOfAlgHom
-    (R := P.N.1) (K := k)
-    (pic0FiniteStageRestrictionBaseChange
-        C P.L P.n P.m P.relation P.M P.mapM P.N U V :
-      Pic0FiniteStageChartBaseChangeRing
-          C P.L P.n P.m P.relation P.M P.N U →ₐ[P.N.1]
-        Pic0FiniteStageOverlapBaseChangeRing
-          C P.L P.n P.m P.relation P.M P.N U V)
-  let g := pic0FiniteStageRestrictionLeft C U V
-  have hnat : eTarget.toAlgHom.comp f = g.comp eSource.toAlgHom := by
-    simpa [eTarget, eSource, f, g, pic0FiniteStageRestrictionBaseChange,
-      pic0FiniteStageMap, Pic0FiniteStageMapSource, Pic0FiniteStageMapTarget,
-      Pic0FiniteStageRestrictionSource, Pic0FiniteStageRestrictionTarget,
-      pic0FiniteStageRestriction] using
-      (pic0FiniteStageFinalBaseChangeEquiv_naturality
-        C P.L P.n P.m P.relation P.e P.M P.mapM P.hmapM P.N
-          (Sum.inl (Sum.inl (U, V))))
-  have hinv : f.comp eSource.symm.toAlgHom = eTarget.symm.toAlgHom.comp g := by
-    ext x
-    apply eTarget.injective
-    have hx := DFunLike.congr_fun hnat (eSource.symm x)
-    simpa using hx
-  simp only [Functor.mapIso_hom, Iso.op_hom, Scheme.Spec_map,
-    Quiver.Hom.unop_op]
-  rw [← Spec.map_comp, ← Spec.map_comp]
-  congr 1
-  simpa only [← CommRingCat.ofHom_comp] using congrArg CommRingCat.ofHom hinv
-
-set_option synthInstance.maxHeartbeats 3200000 in
--- The pullback square combines affine naturality with the final-ring square.
-set_option maxHeartbeats 12800000 in
-/-- The base-changed left restriction is the canonical exact restriction under
-the tensor-product and final-ring comparisons. -/
-theorem restrictionBaseChangeMap_naturality
-    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F)
-    (U V : Pic0FiniteStageChartIndex C) :
-    restrictionBaseChangeMap C P U V ≫
-        (chartRingBaseChangeIso C P U).hom =
-      (overlapRingBaseChangeIso C P U V).hom ≫
-        Spec.map (CommRingCat.ofHom
-          (pic0FiniteStageRestrictionLeft C U V).toRingHom) := by
-  simp only [restrictionBaseChangeMap, chartRingBaseChangeIso,
-    overlapRingBaseChangeIso, Iso.trans_hom, Category.assoc]
-  rw [affineBaseChangeIso_naturality]
-  rw [restrictionSpec_naturality C P U V]
+      (overlapFinalBaseChangeEquiv
+        C P U V).symm.toRingEquiv.toCommRingCatIso.op
 
 end Pic0FiniteStageGluePackage
 
