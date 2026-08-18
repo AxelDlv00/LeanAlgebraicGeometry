@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Rejected after a 16-minute active Lean check: reconstructing all five glue-data coherence fields is unnecessary for the structure map and too expensive; replace with direct Multicoequalizer.desc over P.glueData.",
+  "created_at": "2026-08-17T20:18:32.064235+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/Pic0FiniteStageGluedOver.reconstruct.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/Pic0FiniteStageGluedOver.reconstruct.lean",
+      "bytes": 4414,
+      "lines": 104
+    }
+  ],
+  "diagnostics": ""
+}

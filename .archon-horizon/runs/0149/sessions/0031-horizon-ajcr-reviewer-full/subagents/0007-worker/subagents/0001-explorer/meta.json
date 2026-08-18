@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Halley",
+  "agent_path": "/root/restriction_base_change_leaf/api_audit",
+  "agent_role": "explorer",
+  "depth": 2,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a011e9-ced8-72a3-a4c4-4b05968886d3",
+  "ok": true,
+  "parent_session": "0031-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": "01a011e7-9e98-7852-8813-7bb24fe593ad",
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Read-only API audit complete.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 4407241,
+    "tokens_out": 28055
+  }
+}

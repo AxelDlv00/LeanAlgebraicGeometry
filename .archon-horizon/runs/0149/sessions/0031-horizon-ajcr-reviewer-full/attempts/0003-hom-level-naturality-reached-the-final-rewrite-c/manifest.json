@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Hom-level naturality reached the final rewrite chain but generic rw matching hit the 12.8M heartbeat ceiling at isDefEq; retain the same normal form and replace rw with explicit calc/congrArg steps.",
+  "created_at": "2026-08-17T21:33:00.728238+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageFinalBaseChange.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageFinalBaseChange.lean",
+      "bytes": 6312,
+      "lines": 148
+    }
+  ],
+  "diagnostics": ""
+}
