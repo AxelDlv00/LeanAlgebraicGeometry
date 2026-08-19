@@ -1,0 +1,1 @@
+I’m loading the Horizon workflow first, then I’ll inspect the protection/conversation inbox lanes and the two binding reviewer PDFs before touching Lean. I’ll keep the run one-shot, use the required `lean-check` loop around edits, and commit each verified unit.
