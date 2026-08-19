@@ -1,0 +1,1 @@
+With the transparency override removed, the focused kernel process is again computing at the final proof but has not produced the previous `isDefEq` timeout. I’m holding the single-process boundary and waiting for a definitive exit before considering any structural rewrite.

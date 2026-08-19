@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Anscombe",
+  "agent_path": "/root/final_janitor",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-terra",
+  "name": "janitor",
+  "native_subagent_id": "01a01a15-9636-76e0-ae0e-34800b8604f4",
+  "ok": true,
+  "parent_session": "0076-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Full hash: `4b774a4056ae84eece4654434d945da4eb521494`",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 2818065,
+    "tokens_out": 12136
+  }
+}

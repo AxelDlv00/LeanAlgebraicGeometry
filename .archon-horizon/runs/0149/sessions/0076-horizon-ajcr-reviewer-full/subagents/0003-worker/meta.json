@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Meitner",
+  "agent_path": "/root/global_gluing_worker",
+  "agent_role": "worker",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "worker",
+  "native_subagent_id": "01a01910-3ff4-7b32-9d72-a2e2c7cc685f",
+  "ok": true,
+  "parent_session": "0076-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "worker",
+  "summary": "## Progress",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 13988900,
+    "tokens_out": 32271
+  }
+}
