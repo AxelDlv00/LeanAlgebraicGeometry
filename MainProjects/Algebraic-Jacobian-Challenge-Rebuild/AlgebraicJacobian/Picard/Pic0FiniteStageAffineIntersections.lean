@@ -102,6 +102,17 @@ does not yet assert that the datum descends to a finite subextension. -/
 noncomputable def pic0SepClosedAtlasGlueData : Scheme.GlueData :=
   (pic0SepClosedAtlasOpenCover C).gluedCover
 
+/-- The left leg of the canonical atlas gluing, with its dependent chart indices fixed.
+
+Keeping this projection opaque as a whole avoids transporting the `HasPullback` witness
+when downstream proofs compare the canonical gluing with a finite-stage gluing. -/
+@[simp]
+theorem pic0SepClosedAtlasGlueData_f
+    (U V : Pic0FiniteStageChartIndex C) :
+    (pic0SepClosedAtlasGlueData C).f U V =
+      pullback.fst U.1.1.ι V.1.1.ι := by
+  rfl
+
 /-- Every pairwise overlap scheme in the canonical finite gluing datum is affine. -/
 instance isAffine_pic0SepClosedAtlasGlueData_V
     (U V : Pic0FiniteStageChartIndex C) :
