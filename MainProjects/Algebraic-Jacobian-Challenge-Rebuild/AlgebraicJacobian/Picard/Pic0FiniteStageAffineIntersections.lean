@@ -104,7 +104,7 @@ noncomputable def pic0SepClosedAtlasGlueData : Scheme.GlueData :=
 
 /-- The left leg of the canonical atlas gluing, with its dependent chart indices fixed.
 
-Keeping this projection opaque as a whole avoids transporting the `HasPullback` witness
+Keeping this projection folded as a whole avoids transporting the `HasPullback` witness
 when downstream proofs compare the canonical gluing with a finite-stage gluing. -/
 @[simp]
 theorem pic0SepClosedAtlasGlueData_f
@@ -112,6 +112,64 @@ theorem pic0SepClosedAtlasGlueData_f
     (pic0SepClosedAtlasGlueData C).f U V =
       pullback.fst U.1.1.ι V.1.1.ι := by
   rfl
+
+/-- The right leg of the canonical atlas gluing, exposed as one typed composite. -/
+theorem pic0SepClosedAtlasGlueData_t_f
+    (U V : Pic0FiniteStageChartIndex C) :
+    (pic0SepClosedAtlasGlueData C).t U V ≫
+        (pic0SepClosedAtlasGlueData C).f V U =
+      pullback.snd ((pic0SepClosedAtlasOpenCover C).f U)
+        ((pic0SepClosedAtlasOpenCover C).f V) := by
+  change (pullbackSymmetry ((pic0SepClosedAtlasOpenCover C).f U)
+      ((pic0SepClosedAtlasOpenCover C).f V)).hom ≫
+      pullback.fst ((pic0SepClosedAtlasOpenCover C).f V)
+        ((pic0SepClosedAtlasOpenCover C).f U) = _
+  exact pullbackSymmetry_hom_comp_fst _ _
+
+/-- The canonical affine overlap is a pullback against the atlas's own cover maps. -/
+theorem pic0SepClosedAtlasOverlap_isPullback
+    (U V : Pic0FiniteStageChartIndex C) :
+    IsPullback
+      ((pic0_sepClosed_representableBy (C := C)).1.left.homOfLE
+        (pic0FiniteStageAffineOverlap_le_left C U V))
+      ((pic0_sepClosed_representableBy (C := C)).1.left.homOfLE
+        (pic0FiniteStageAffineOverlap_le_right C U V))
+      ((pic0SepClosedAtlasOpenCover C).f U)
+      ((pic0SepClosedAtlasOpenCover C).f V) := by
+  change IsPullback _ _ U.1.1.ι V.1.1.ι
+  exact isPullback_opens_inf U.1.1 V.1.1
+
+/-- The affine overlap identified with the exact pullback object chosen by `gluedCover`. -/
+noncomputable def pic0SepClosedAtlasOverlapIso
+    (U V : Pic0FiniteStageChartIndex C) :
+    (pic0FiniteStageAffineOverlap C U V).1.toScheme ≅
+      (pic0SepClosedAtlasGlueData C).V (U, V) :=
+  (pic0SepClosedAtlasOverlap_isPullback C U V).isoPullback
+
+/-- The typed overlap isomorphism has the canonical left projection. -/
+@[reassoc]
+theorem pic0SepClosedAtlasOverlapIso_hom_f
+    (U V : Pic0FiniteStageChartIndex C) :
+    (pic0SepClosedAtlasOverlapIso C U V).hom ≫
+        (pic0SepClosedAtlasGlueData C).f U V =
+      (pic0_sepClosed_representableBy (C := C)).1.left.homOfLE
+        (pic0FiniteStageAffineOverlap_le_left C U V) := by
+  change (pic0SepClosedAtlasOverlap_isPullback C U V).isoPullback.hom ≫
+      pullback.fst ((pic0SepClosedAtlasOpenCover C).f U)
+        ((pic0SepClosedAtlasOpenCover C).f V) = _
+  exact (pic0SepClosedAtlasOverlap_isPullback C U V).isoPullback_hom_fst
+
+/-- The typed overlap isomorphism has the canonical right projection. -/
+@[reassoc]
+theorem pic0SepClosedAtlasOverlapIso_hom_t_f
+    (U V : Pic0FiniteStageChartIndex C) :
+    (pic0SepClosedAtlasOverlapIso C U V).hom ≫
+        ((pic0SepClosedAtlasGlueData C).t U V ≫
+          (pic0SepClosedAtlasGlueData C).f V U) =
+      (pic0_sepClosed_representableBy (C := C)).1.left.homOfLE
+        (pic0FiniteStageAffineOverlap_le_right C U V) := by
+  rw [pic0SepClosedAtlasGlueData_t_f]
+  exact (pic0SepClosedAtlasOverlap_isPullback C U V).isoPullback_hom_snd
 
 /-- Every pairwise overlap scheme in the canonical finite gluing datum is affine. -/
 instance isAffine_pic0SepClosedAtlasGlueData_V
