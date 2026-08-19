@@ -1,0 +1,1 @@
+The kernel check has passed one minute with no output, so this import cone remains expensive even after removing the duplicated raw carriers. I’m keeping it in the foreground and watching CPU/time; if it approaches the prior unsafe duration, I’ll stop with a precise verification caveat instead of claiming success.

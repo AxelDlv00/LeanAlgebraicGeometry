@@ -38,6 +38,28 @@ theorem specMap_algHom_comp_algebraMap
   ext x
   exact r.commutes x
 
+@[reassoc]
+theorem pullback_congrHom_hom_fst
+    {X Y Z : Scheme.{u}} {f₁ f₂ : X ⟶ Z} {g₁ g₂ : Y ⟶ Z}
+    (h₁ : f₁ = f₂) (h₂ : g₁ = g₂)
+    [HasPullback f₁ g₁] [HasPullback f₂ g₂] :
+    (pullback.congrHom h₁ h₂).hom ≫ pullback.fst f₂ g₂ =
+      pullback.fst f₁ g₁ := by
+  subst f₂
+  subst g₂
+  simp [pullback.congrHom, pullback.map]
+
+@[reassoc]
+theorem pullback_congrHom_hom_snd
+    {X Y Z : Scheme.{u}} {f₁ f₂ : X ⟶ Z} {g₁ g₂ : Y ⟶ Z}
+    (h₁ : f₁ = f₂) (h₂ : g₁ = g₂)
+    [HasPullback f₁ g₁] [HasPullback f₂ g₂] :
+    (pullback.congrHom h₁ h₂).hom ≫ pullback.snd f₂ g₂ =
+      pullback.snd f₁ g₁ := by
+  subst f₂
+  subst g₂
+  simp [pullback.congrHom, pullback.map]
+
 variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
 variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
   [GeometricallyIrreducible C.hom] [IsSepClosed k]
@@ -79,6 +101,33 @@ theorem exactRestrictionAlgHom_fromSpec
       U.1.2.fromSpec = _
   exact U.1.2.map_fromSpec (pic0FiniteStageAffineOverlap C U V).2
     (homOfLE (pic0FiniteStageAffineOverlap_le_left C U V)).op
+
+set_option synthInstance.maxHeartbeats 3200000 in
+-- The two projections reduce to the specialized flattening identities.
+set_option maxHeartbeats 12800000 in
+theorem gluingOverlapIso_pre_fst
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U V : Pic0FiniteStageChartIndex C) :
+    (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+          (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f U V ≫
+        (pullback.congrHom (glueData_ι_gluedMap C P U) rfl).hom =
+      (gluingOverlapFlatteningIso C P U V).hom ≫
+        (pullback.congrHom
+          (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫
+        restrictionBaseChangeMap C P U V := by
+  apply pullback.hom_ext
+  · simp only [Category.assoc]
+    rw [pullback_congrHom_hom_fst]
+    rw [restrictionBaseChangeMap, affineBaseChangeMap_fst_assoc]
+    rw [pullback_congrHom_hom_fst_assoc]
+    rw [glueData_f C P U V]
+    exact (gluingOverlapFlatteningIso_hom_comp_fst_comp_f C P U V).symm
+  · simp only [Category.assoc]
+    rw [pullback_congrHom_hom_snd]
+    rw [restrictionBaseChangeMap, affineBaseChangeMap_snd_assoc]
+    rw [pullback_congrHom_hom_snd_assoc]
+    exact (gluingOverlapFlatteningIso_hom_comp_snd C P U V).symm
 
 set_option synthInstance.maxHeartbeats 3200000 in
 -- Raw tensor carriers keep the dependent finite-subextension instances visible.
