@@ -250,6 +250,41 @@ noncomputable def gluingOverlapIso
       overlapBaseChangeIso C P U V ≪≫
       (isPullback_opens_inf U.1.1 V.1.1).isoPullback
 
+set_option synthInstance.maxHeartbeats 3200000 in
+set_option maxHeartbeats 12800000 in
+theorem gluingOverlapIso_fst
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U V : Pic0FiniteStageChartIndex C) :
+    (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
+          (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f U V ≫
+        (gluingChartIso C P U).hom =
+      (gluingOverlapIso C P U V).hom ≫
+        (pic0SepClosedAtlasGlueData C).f U V := by
+  have chart_fac :
+      (chartBaseChangeIso C P U).hom ≫ U.1.1.ι =
+        (chartRingBaseChangeIso C P U).hom ≫ U.1.2.fromSpec := by
+    simp only [chartBaseChangeIso, chartRingBaseChangeIso,
+      affineBaseChangeIso, Iso.trans_hom, Category.assoc,
+      IsAffineOpen.isoSpec_inv_ι]
+  have overlap_fac :
+      (overlapBaseChangeIso C P U V).hom ≫
+          (pic0FiniteStageAffineOverlap C U V).1.ι =
+        (overlapRingBaseChangeIso C P U V).hom ≫
+          (pic0FiniteStageAffineOverlap C U V).2.fromSpec := by
+    simp only [overlapBaseChangeIso, overlapRingBaseChangeIso,
+      affineBaseChangeIso, Iso.trans_hom, Category.assoc,
+      IsAffineOpen.isoSpec_inv_ι]
+  rw [← cancel_mono U.1.1.ι]
+  simp only [gluingChartIso, gluingOverlapIso, Iso.trans_hom,
+    pic0SepClosedAtlasGlueData, Scheme.Cover.gluedCover, Category.assoc]
+  rw [chart_fac]
+  rw [reassoc_of% gluingOverlapIso_pre_fst C P U V]
+  rw [reassoc_of% restrictionBaseChangeMap_naturality C P U V]
+  rw [reassoc_of% exactRestrictionAlgHom_fromSpec C U V]
+  rw [IsPullback.isoPullback_hom_fst_assoc, Scheme.homOfLE_ι]
+  rw [overlap_fac]
+
 end Pic0FiniteStageGluePackage
 
 end

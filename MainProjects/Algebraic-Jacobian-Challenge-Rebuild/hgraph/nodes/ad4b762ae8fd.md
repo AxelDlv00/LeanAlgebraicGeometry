@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.specMap_algHom_comp_algebraMap
 type: lean
-updated: '2026-08-19T06:28:15'
+updated: '2026-08-19T09:50:24'
 ---
 theorem specMap_algHom_comp_algebraMap
     {R A B : Type u} [CommRing R] [CommRing A] [CommRing B]
@@ -23,12 +23,4 @@ theorem specMap_algHom_comp_algebraMap
   ext x
   exact r.commutes x
 
-variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
-variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
-  [GeometricallyIrreducible C.hom] [IsSepClosed k]
-
-namespace Pic0FiniteStageGluePackage
-
-set_option synthInstance.maxHeartbeats 3200000 in
--- The composite retains the package's dependent finite-subextension towers.
-set_option maxHeartbeats 12800000 in
+@[reassoc]

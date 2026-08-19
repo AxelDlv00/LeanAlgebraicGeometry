@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Explicit pullback legs let hom_ext create the correct projection goals, but rewriting pullback_congrHom_hom_fst still rechecked Scheme.Pullback.gluing.J under instances transparency and rejected U; kernel build rc=1 at line 126 after 357s.",
+  "created_at": "2026-08-19T03:04:28.807257+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingDiagramIso.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingDiagramIso.lean",
+      "bytes": 6361,
+      "lines": 159
+    }
+  ],
+  "diagnostics": ""
+}
