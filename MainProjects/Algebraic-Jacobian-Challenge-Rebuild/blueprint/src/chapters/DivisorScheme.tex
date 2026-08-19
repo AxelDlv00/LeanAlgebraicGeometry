@@ -1500,9 +1500,10 @@ properties above.
 
 \begin{definition}[The rank-one Abel isomorphism]
   \label{def:rankOneAbelIso}
+  \lean{AlgebraicGeometry.canonicalRankOneAbelIso}
   \provenancetag{CUSTOM}
   \uses{thm:rankOneAbel_inverse}
-  \notready
+  \leanok
   The mutually inverse transformations form a natural isomorphism
   \[
     \operatorname{rankOneAbelIso}\colon
@@ -1613,10 +1614,11 @@ properties above.
 
 \begin{definition}[The separably closed degree-zero Picard representer]
   \label{def:pic0_sepClosed_representableBy}
+  \lean{AlgebraicGeometry.pic0_sepClosed_representableBy}
   \provenancetag{CUSTOM}
   \uses{thm:pic0TranslatedRankOneOpen_representable,
     thm:rankOne_translate_cover_sepClosed, def:pic0RepresentableByOfCharts}
-  \notready
+  \leanok
   If \(k\) is separably closed, there is a scheme \(J_s\) over \(k\) and a representation
   \[
     h_{J_s}\xrightarrow{\ \sim\ }\mathrm{pic}^0(C).
