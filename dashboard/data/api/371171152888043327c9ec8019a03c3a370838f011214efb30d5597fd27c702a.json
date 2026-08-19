@@ -1,0 +1,1 @@
+{"markdown": "One helper\u2019s Unicode identifier cannot be addressed by the verification tool even though the root `#print axioms` succeeded. I\u2019m renaming that new declaration to an ASCII identifier and updating its two consumers, so every checkpoint theorem can be verified directly rather than relying only on root output.\n", "recommendation": ""}
