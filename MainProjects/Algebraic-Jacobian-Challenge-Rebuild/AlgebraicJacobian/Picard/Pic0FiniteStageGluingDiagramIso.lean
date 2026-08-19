@@ -248,7 +248,7 @@ noncomputable def gluingOverlapIso
     gluingOverlapFlatteningIso C P U V ≪≫
       pullback.congrHom (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl ≪≫
       overlapBaseChangeIso C P U V ≪≫
-      (isPullback_opens_inf U.1.1 V.1.1).isoPullback
+      pic0SepClosedAtlasOverlapIso C U V
 
 set_option synthInstance.maxHeartbeats 3200000 in
 -- Keep the dependent finite-subextension comparison out of the global diagram proof.
@@ -293,6 +293,39 @@ private theorem overlapBaseChangeIso_hom_ι
       (pic0FiniteStageAffineOverlap C U V).2.isoSpec_inv_ι
 
 set_option synthInstance.maxHeartbeats 3200000 in
+-- Isolate the exact-atlas projection from the full dependent diagram equality.
+set_option maxHeartbeats 12800000 in
+set_option backward.isDefEq.respectTransparency false in
+private theorem overlapBaseChangeIso_hom_atlas_f_ι
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U V : Pic0FiniteStageChartIndex C) :
+    (overlapBaseChangeIso C P U V).hom ≫
+        ((pic0SepClosedAtlasOverlapIso C U V).hom ≫
+          ((pic0SepClosedAtlasGlueData C).f U V ≫ U.1.1.ι)) =
+      (overlapRingBaseChangeIso C P U V).hom ≫
+        (pic0FiniteStageAffineOverlap C U V).2.fromSpec := by
+  have atlas_projection :
+      (pic0SepClosedAtlasOverlapIso C U V).hom ≫
+          ((pic0SepClosedAtlasGlueData C).f U V ≫ U.1.1.ι) =
+        (pic0FiniteStageAffineOverlap C U V).1.ι := by
+    calc
+      _ = ((pic0SepClosedAtlasOverlapIso C U V).hom ≫
+            (pic0SepClosedAtlasGlueData C).f U V) ≫ U.1.1.ι :=
+        (Category.assoc _ _ _).symm
+      _ = ((pic0_sepClosed_representableBy (C := C)).1.left.homOfLE
+          (pic0FiniteStageAffineOverlap_le_left C U V)) ≫ U.1.1.ι :=
+        congrArg (fun q => q ≫ U.1.1.ι)
+          (pic0SepClosedAtlasOverlapIso_hom_f C U V)
+      _ = _ := Scheme.homOfLE_ι _ _
+  calc
+    _ = (overlapBaseChangeIso C P U V).hom ≫
+        (pic0FiniteStageAffineOverlap C U V).1.ι :=
+      congrArg (fun q => (overlapBaseChangeIso C P U V).hom ≫ q)
+        atlas_projection
+    _ = _ := overlapBaseChangeIso_hom_ι C P U V
+
+set_option synthInstance.maxHeartbeats 3200000 in
 -- Package the stable-index naturality tail before entering the glued diagram.
 set_option maxHeartbeats 12800000 in
 set_option backward.isDefEq.respectTransparency false in
@@ -326,9 +359,11 @@ theorem gluingOverlapIso_fst
   rw [reassoc_of% gluingOverlapIso_pre_fst C P U V]
   simp only [gluingOverlapIso, Iso.trans_hom, Category.assoc]
   rw [restrictionBaseChangeMap_fromSpec C P U V]
-  simp only [pic0SepClosedAtlasGlueData, Scheme.Cover.gluedCover_f]
-  rw [IsPullback.isoPullback_hom_fst_assoc, Scheme.homOfLE_ι]
-  rw [overlapBaseChangeIso_hom_ι C P U V]
+  exact congrArg
+    (fun q => (gluingOverlapFlatteningIso C P U V).hom ≫
+      (pullback.congrHom
+        (glueData_f_comp_inclusion_comp_gluedMap C P U V) rfl).hom ≫ q)
+    (overlapBaseChangeIso_hom_atlas_f_ι C P U V).symm
 
 end Pic0FiniteStageGluePackage
 
