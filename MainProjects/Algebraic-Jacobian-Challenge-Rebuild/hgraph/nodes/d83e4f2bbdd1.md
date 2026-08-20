@@ -15,7 +15,13 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.pic0SepClosedAtlasGlueData
 type: lean
-updated: '2026-08-18T20:51:05'
+updated: '2026-08-20T16:59:53'
 ---
 noncomputable def pic0SepClosedAtlasGlueData : Scheme.GlueData :=
   (pic0SepClosedAtlasOpenCover C).gluedCover
+
+/-- The left leg of the canonical atlas gluing, with its dependent chart indices fixed.
+
+Keeping this projection folded as a whole avoids transporting the `HasPullback` witness
+when downstream proofs compare the canonical gluing with a finite-stage gluing. -/
+@[simp]
