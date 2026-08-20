@@ -86,6 +86,7 @@ import AlgebraicJacobian.Picard.Pic0FiniteStageRightRestrictionAlgHom
 import AlgebraicJacobian.Picard.Pic0FiniteStageRightRestrictionNaturality
 import AlgebraicJacobian.Picard.Pic0FiniteStageDatum
 import AlgebraicJacobian.Picard.Pic0RepresentableColimit
+import AlgebraicJacobian.Picard.Pic0RepresentableByTransport
 
 /-!
 # Narrow root for the AJCR-first Picard strategy
@@ -813,6 +814,7 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.Pic0FiniteStageGluePackage.rightRestrictionBaseChangeMap
 #check AlgebraicGeometry.Pic0FiniteStageGluePackage.rightRestrictionBaseChangeMap_naturality
 #check AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
+#check AlgebraicGeometry.pic0RepresentableBy_of_baseChangeObjectIso
 -- Datum-level glued divisor over a Noetherian base (Pic0RankOneDatumGluedDivisor.lean)
 #check AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
 
@@ -1080,5 +1082,6 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms
   AlgebraicGeometry.Pic0FiniteStageGluePackage.rightRestrictionBaseChangeMap_naturality
 #print axioms AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
+#print axioms AlgebraicGeometry.pic0RepresentableBy_of_baseChangeObjectIso
 #print axioms
   AlgebraicGeometry.BasicOpenCocycleDatum.exists_glued_divFamZarAff_of_admissible_fibre
