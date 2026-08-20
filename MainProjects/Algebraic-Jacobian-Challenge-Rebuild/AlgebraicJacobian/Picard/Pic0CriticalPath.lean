@@ -35,6 +35,7 @@ import AlgebraicJacobian.Picard.Pic0RankOneCanonicalDivisorStageCert
 import AlgebraicJacobian.Picard.Pic0FiniteGaloisDescent
 import AlgebraicJacobian.Picard.Pic0GaloisInvariantComparison
 import AlgebraicJacobian.Picard.Pic0FiniteGaloisRepresentable
+import AlgebraicJacobian.Picard.Pic0FiniteGaloisJacobianData
 import AlgebraicJacobian.Descent.AffineRingGlueData
 import AlgebraicJacobian.Descent.OpenImmersionFieldDescent
 import AlgebraicJacobian.Descent.OpenImmersionScalarExtension
@@ -184,8 +185,12 @@ identifies deck-invariant classes with equivariant maps for the semilinear actio
 finite-level representer, and its `_precomp` theorem supplies the needed naturality.  Thus
 `pic0RepresentableBy_finiteGaloisDescent` immediately turns a finite-Galois Picard-zero
 representer into a descended `RepresentableBy` certificate, under the explicit
-`OrbitsInAffineOpen` hypothesis.  This producer is deliberately conditional: it does not
-manufacture either the finite-stage representer or the orbit-in-affine-open input.
+`OrbitsInAffineOpen` hypothesis.  The quotient geometry now descends too:
+`locallyOfFiniteType_pic0FiniteGaloisDescent` and
+`quasiCompact_pic0FiniteGaloisDescent` package the same carrier as
+`picRepDatum_finiteGaloisDescent` and `jacobianData_finiteGaloisDescent`.  These producers are
+deliberately conditional: they do not manufacture either the finite-stage representer or the
+orbit-in-affine-open input.
 
 The separably closed endpoint is now complete.  The exact translator returned by
 `exists_sepClosedTranslated_mem_picRankOneOpen` indexes a translated canonical Abel chart;
@@ -649,6 +654,12 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.pic0GaloisInvariantEquivGaloisEquivariantOver
 #check AlgebraicGeometry.pic0GaloisInvariantEquivGaloisEquivariantOver_precomp
 #check AlgebraicGeometry.pic0RepresentableBy_finiteGaloisDescent
+#check AlgebraicJacobian.GaloisDescent.IsGaloisQuotient.locallyOfFiniteType
+#check AlgebraicJacobian.GaloisDescent.IsGaloisQuotient.quasiCompact
+#check AlgebraicGeometry.locallyOfFiniteType_pic0FiniteGaloisDescent
+#check AlgebraicGeometry.quasiCompact_pic0FiniteGaloisDescent
+#check AlgebraicGeometry.picRepDatum_finiteGaloisDescent
+#check AlgebraicGeometry.jacobianData_finiteGaloisDescent
 #check AlgebraicGeometry.isOpenImmersion_of_fpqc_pushout
 #check AlgebraicGeometry.isOpenImmersion_of_tensorProduct
 #check AlgebraicJacobian.isPushout_scalarExtensionMapOfAlgHom
@@ -897,6 +908,12 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.pic0GaloisInvariantEquivGaloisEquivariantOver
 #print axioms AlgebraicGeometry.pic0GaloisInvariantEquivGaloisEquivariantOver_precomp
 #print axioms AlgebraicGeometry.pic0RepresentableBy_finiteGaloisDescent
+#print axioms AlgebraicJacobian.GaloisDescent.IsGaloisQuotient.locallyOfFiniteType
+#print axioms AlgebraicJacobian.GaloisDescent.IsGaloisQuotient.quasiCompact
+#print axioms AlgebraicGeometry.locallyOfFiniteType_pic0FiniteGaloisDescent
+#print axioms AlgebraicGeometry.quasiCompact_pic0FiniteGaloisDescent
+#print axioms AlgebraicGeometry.picRepDatum_finiteGaloisDescent
+#print axioms AlgebraicGeometry.jacobianData_finiteGaloisDescent
 #print axioms AlgebraicJacobian.affineRingGlueData
 #print axioms AlgebraicGeometry.isOpenImmersion_of_fpqc_pushout
 #print axioms AlgebraicGeometry.isOpenImmersion_of_tensorProduct
