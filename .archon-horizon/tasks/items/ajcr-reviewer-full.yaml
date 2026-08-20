@@ -21,7 +21,7 @@ projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 - Algebraic-Jacobian-Challenge
 priority: urgent
-status: running
+status: blocked
 write_set:
   files: []
   projects:
@@ -40,6 +40,6 @@ roadmap_refs:
 inbox_refs: []
 artifact_refs: []
 created_at: '2026-08-12T02:35:23.632931+00:00'
-updated_at: '2026-08-20T19:41:16.391511+00:00'
+updated_at: '2026-08-20T21:41:18.408467+00:00'
 metadata:
   author: human
