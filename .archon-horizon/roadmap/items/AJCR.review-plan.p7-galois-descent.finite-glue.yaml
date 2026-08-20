@@ -19,3 +19,6 @@ metadata:
   created_at: '2026-08-18T06:11:51.159581+00:00'
   parent: AJCR.review-plan.p7-galois-descent
   milestone: AJCR.review-plan
+  updated_at: '2026-08-20T19:21:00.979136+00:00'
+  pinned_commits:
+  - 5adee30ada
