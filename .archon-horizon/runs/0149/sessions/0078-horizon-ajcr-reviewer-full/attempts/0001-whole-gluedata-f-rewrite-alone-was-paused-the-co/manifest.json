@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Whole GlueData.f rewrite alone was paused: the compiled target still requires a typed IsPullback boundary to avoid dependent HasPullback transport.",
+  "created_at": "2026-08-19T14:21:38.534471+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingDiagramIso.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingDiagramIso.lean",
+      "bytes": 14431,
+      "lines": 337
+    }
+  ],
+  "diagnostics": ""
+}

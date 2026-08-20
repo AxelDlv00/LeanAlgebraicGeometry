@@ -1,0 +1,1 @@
+The verified commits are intact (`d0260ae562`, `17a00fb17e`, `335af85201`, `4a692944a2`). I’m removing only the five unverified split drafts and restoring the tracked `GluingOverlapIsoSnd.lean` to its last committed content; the failed source is already preserved in Horizon attempts 0013–0015.

@@ -24,7 +24,7 @@ metadata:
   created_at: '2026-08-18T06:12:00.953355+00:00'
   parent: AJCR.review-plan.p7-galois-descent
   milestone: AJCR.review-plan
-  updated_at: '2026-08-18T15:34:38.711192+00:00'
+  updated_at: '2026-08-20T05:45:02.507533+00:00'
   pinned_commits:
   - 042292a818
   - 50453c8ea9
@@ -32,4 +32,3 @@ metadata:
   - 7d861b2c01
   - 679c29ec6d
   - 5ee5a7f349e0e5514460d9e9a055f306fcc04ffc
-  owner: ajcr-p7-orbit-affine

@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Kernel elaboration remained CPU-active for 2h02m with no verdict; source audits identified a missing explicit glueData t-f bridge causing deep dependent definitional unfolding in the first pullback projection.",
+  "created_at": "2026-08-20T04:02:17.059240+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingOverlapIsoPreSnd.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingOverlapIsoPreSnd.lean",
+      "bytes": 5164,
+      "lines": 125
+    }
+  ],
+  "diagnostics": ""
+}
