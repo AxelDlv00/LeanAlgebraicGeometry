@@ -1,0 +1,5 @@
+Read-only sibling audit complete; no files edited or committed.
+
+The AJC headline is `AlgebraicJacobian/Jacobian.lean`, with `JacobianWitness` requiring group, properness, smoothness, geometric irreducibility, genus-relative dimension, and Albanese data. Its headline `picardJacobianWitness` is built from `PicSchemeEt`/`Pic0SchemeEt`; the key leaves and FGA representability theorem remain `sorry`-backed. Rebuild’s `PicRepDatum`/`JacobianData` represent a different, custom degree-zero functor and provide only representability, LFT, and QC, so they cannot be consumed directly by AJC.
+
+Both projects use independent `AlgebraicJacobian` packages with no lake edge. AJC’s own `PicEtCrossBase.lean` explicitly records that the Rebuild functor is a hand-built affine-open limit while AJC uses categorical sheafification, making wholesale porting invalid. An honest sibling adapter would require a deliberate functor equivalence plus independent geometric and Albanese hypotheses; until then, only a parameterized packaging/consumer theorem is possible, not headline closure.

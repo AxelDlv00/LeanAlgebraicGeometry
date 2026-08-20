@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Implicit pullback.hom_ext wrapper formulation omitted explicit dependent f/g arguments; the foreground root build did not certify it, so preserve and restore the ledger-pinned explicit formulation.",
+  "created_at": "2026-08-20T22:52:25.812642+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingOverlapIsoPreSnd.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingOverlapIsoPreSnd.lean",
+      "bytes": 2915,
+      "lines": 78
+    }
+  ],
+  "diagnostics": ""
+}
