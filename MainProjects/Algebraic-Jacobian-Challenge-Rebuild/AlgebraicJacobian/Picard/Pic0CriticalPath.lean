@@ -81,7 +81,6 @@ import AlgebraicJacobian.Picard.Pic0FiniteStageAffineBaseChangeTrans
 import AlgebraicJacobian.Picard.Pic0FiniteStageRestrictionNaturality
 import AlgebraicJacobian.Picard.Pic0FiniteStageOverlapBaseChange
 import AlgebraicJacobian.Picard.Pic0FiniteStageGluingDiagramIso
-import AlgebraicJacobian.Picard.Pic0FiniteStageGluedComparison
 import AlgebraicJacobian.Picard.Pic0FiniteStageRightLegEquality
 import AlgebraicJacobian.Picard.Pic0FiniteStageRightRestrictionAlgHom
 import AlgebraicJacobian.Picard.Pic0FiniteStageRightRestrictionNaturality
@@ -277,9 +276,7 @@ its map to the finite-stage field spectrum.  After extension to the separably cl
   right restriction on the exact atlas, reflected to the finite model stage, and preserved by
   scalar extension to the package's final finite subextension.  The corresponding composite
   scalar-extended right restriction is now named on the dependent carrier and identified with
-  the directly descended right restriction.  The two overlap projections assemble into
-  `gluingGluedIso`, and `finiteStageBaseChangeIso` identifies the scalar extension of the
-  finite-stage glued scheme with the exact separably closed Picard atlas.  Finally,
+  the directly descended right restriction.  Finally,
 `pic0PreservesFilteredBaseColimit_of_representableBy` proves the filtered-colimit statement once
 an arbitrary-field locally finitely presented representer has actually been produced.
 
@@ -290,7 +287,10 @@ identities.  Thus no additional scheme-level gluing axiom is needed once those f
 ring equations have been reflected.
 
 These inputs do not yet constitute object descent.  Still missing, and NOT replaced here by
-  axioms or local hypotheses: descent of the universal
+  axioms or local hypotheses: a kernel-clean specialization of the generic flattening isomorphism
+  to the dependent finite-stage overlap package, the scheme-level comparison for the now-identified
+  right overlap leg, and assembly of those local comparisons into the global glued-scheme base-change
+  isomorphism; descent of the universal
   Picard natural equivalence; preservation of
 Picard zero under the original-base filtered colimit;
 the orbit-in-affine-open (or projectivity) input for the finite-level Picard quotient; and the
@@ -801,10 +801,6 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.Pic0FiniteStageGluePackage.restrictionBaseChangeMap_snd
 #check AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingOverlapIso_pre_fst
 #check AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingOverlapIso
-#check AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingOverlapIso_fst
-#check AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingOverlapIso_snd
-#check AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingGluedIso
-#check AlgebraicGeometry.Pic0FiniteStageGluePackage.finiteStageBaseChangeIso
 #check AlgebraicGeometry.Pic0FiniteStageGluePackage.transition_comp_restrictionLeft_eq_restrictionRight
 #check AlgebraicGeometry.Pic0FiniteStageGluePackage.transportedMap_transition_comp_restrictionLeft_eq_right
 #check AlgebraicGeometry.Pic0FiniteStageGluePackage.mapM_transition_comp_restrictionLeft_eq_right
@@ -1065,10 +1061,6 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.Pic0FiniteStageGluePackage.restrictionBaseChangeMap_snd
 #print axioms AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingOverlapIso_pre_fst
 #print axioms AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingOverlapIso
-#print axioms AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingOverlapIso_fst
-#print axioms AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingOverlapIso_snd
-#print axioms AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingGluedIso
-#print axioms AlgebraicGeometry.Pic0FiniteStageGluePackage.finiteStageBaseChangeIso
 #print axioms
   AlgebraicGeometry.Pic0FiniteStageGluePackage.transition_comp_restrictionLeft_eq_restrictionRight
 #print axioms

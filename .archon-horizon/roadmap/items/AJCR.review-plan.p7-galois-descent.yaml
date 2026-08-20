@@ -3,12 +3,12 @@ title: 'Phase 7: finite-Galois descent to the original field'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 - Algebraic-Jacobian-Challenge
-summary: Active. The finite-stage affine atlas and GlueData are complete. Current
-  work is the global glued-scheme base-change isomorphism. Remaining gates are descent
-  of the universal Picard element/equivalence, the original-field filtered-colimit
-  bridge, a stable affine cover via orbit containment or quasi-projectivity, and final
-  construction and consumption of pic0_representableBy.
-status: active
+summary: Finite-stage GlueData and the object-level comparison API are rooted at 312f90ea27,
+  but the dependent pre-SndSnd projection composition is not kernel-certified after
+  a 69-minute foreground attempt and preserved attempt 0001. Universal Picard equivalence
+  descent, original-base colimit preservation, finite-stage RepresentableBy production,
+  orbit-affine/projectivity, and arbitrary-field pic0_representableBy remain missing.
+status: blocked
 kind: proof
 priority: urgent
 depends_on:
@@ -24,9 +24,10 @@ metadata:
   created_at: '2026-08-04T01:52:30.932692+00:00'
   parent: AJCR.review-plan
   milestone: AJCR.review-plan
-  updated_at: '2026-08-18T06:11:01.699458+00:00'
+  updated_at: '2026-08-20T11:59:57.363095+00:00'
   owner: ajcr-reviewer-full
   pinned_commits:
+  - 312f90ea27
   - cc737b8ba17b5d127d6f3b0d38a8a56dad1cec40
   - 0b3ea3479fc15bdf29ab27b477b874125bb0ac45
   - 0da7ee232250d27c0c8b0c10020da53f96ba7bcc

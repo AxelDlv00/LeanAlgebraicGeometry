@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Direct composition of the separately kernel-built source and target equalities remained CPU-active for 69 minutes in lake build; an isolated inferred-bridge harness also remained CPU-active for over 3 minutes, so the dependent final equality is paused as a performance/type-elaboration blocker.",
+  "created_at": "2026-08-20T11:53:51.578146+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingOverlapIsoPreSndSnd.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingOverlapIsoPreSndSnd.lean",
+      "bytes": 2553,
+      "lines": 69
+    }
+  ],
+  "diagnostics": ""
+}

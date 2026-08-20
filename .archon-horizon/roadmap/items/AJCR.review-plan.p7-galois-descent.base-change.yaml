@@ -2,12 +2,11 @@ id: AJCR.review-plan.p7-galois-descent.base-change
 title: Global glued-scheme base-change isomorphism
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'Active: the package-specialized nested-overlap flattening and object-level
-  overlap comparison gluingOverlapIso are committed and kernel-clean. Remaining exact
-  object-comparison work is the left and right multispan projection compatibilities,
-  then WalkingMultispan.functorExt, HasColimit.isoOfNatIso, and the global glued-scheme
-  base-change isomorphism.'
-status: active
+summary: Root integration at 312f90ea27 exposes the finite-stage glued comparison
+  API, but its dependent pre-SndSnd projection theorem remains uncompiled after a
+  bounded 69-minute attempt (attempt 0001). Source is complete; kernel certification
+  and the downstream universal/descent gates remain open.
+status: blocked
 kind: proof
 priority: urgent
 depends_on: []
@@ -22,8 +21,9 @@ metadata:
   parent: AJCR.review-plan.p7-galois-descent
   owner: ajcr-reviewer-full
   milestone: AJCR.review-plan
-  updated_at: '2026-08-18T20:38:53.344096+00:00'
+  updated_at: '2026-08-20T12:00:23.786701+00:00'
   pinned_commits:
+  - 312f90ea27
   - 663dea427f
   - b914523466
   - 109980ff4c3510669c2a42a662ace4df00288601
