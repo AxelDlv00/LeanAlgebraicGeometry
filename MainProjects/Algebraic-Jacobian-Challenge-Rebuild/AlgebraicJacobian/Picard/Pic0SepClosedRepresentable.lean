@@ -200,6 +200,17 @@ noncomputable def picRankOneOpenSigmaIso
       (rankOneDivisorOpenRepresentableBy (C := C) (divRepAffP1Map C) h) ≪≫
     canonicalRankOneAbelIso (C := C)
 
+/-- The canonical rank-one Abel isomorphism followed by the public rank-one-locus
+inclusion is an open immersion. -/
+theorem rankOneAbel_isOpenImmersion
+    (hopen : PicRankOneOpen.IsOpen (divRepAffP1Map C)) :
+    IsOpenImmersion.presheaf
+      ((canonicalRankOneAbelIso (C := C)).hom ≫
+        picRankOneOpenSigmaIncl (divRepAffP1Map C)) := by
+  apply MorphismProperty.IsStableUnderComposition.comp_mem
+  · exact MorphismProperty.of_isIso (P := IsOpenImmersion.presheaf) _
+  · exact hopen
+
 /-- The chart indexed by a base class `a` of degree `genus C`: first use canonical Abel on the
 rank-one divisor open, then multiply by `a⁻¹` to return to degree zero. -/
 noncomputable def picRankOneTranslatedChart
@@ -218,13 +229,19 @@ theorem picRankOneTranslatedChart_isOpenImmersion
     IsOpenImmersion.presheaf
       (picRankOneTranslatedChart (C := C)
         (divRankOneOpenDataOfPicRankOneOpen (divRepAffP1Map C) hopen) a) := by
-  apply MorphismProperty.IsStableUnderComposition.comp_mem
-  · apply MorphismProperty.IsStableUnderComposition.comp_mem
-    · exact MorphismProperty.of_isIso (P := IsOpenImmersion.presheaf) _
-    · exact MorphismProperty.of_isIso (P := IsOpenImmersion.presheaf) _
-  · apply MorphismProperty.IsStableUnderComposition.comp_mem
-    · exact hopen
-    · exact MorphismProperty.of_isIso (P := IsOpenImmersion.presheaf) _
+  have hrepresenter : IsOpenImmersion.presheaf
+      (representableBySigmaIso
+        (rankOneDivisorOpenRepresentableBy (C := C) (divRepAffP1Map C)
+          (divRankOneOpenDataOfPicRankOneOpen (divRepAffP1Map C) hopen))).hom :=
+    MorphismProperty.of_isIso (P := IsOpenImmersion.presheaf) _
+  have htranslation : IsOpenImmersion.presheaf
+      (sigmaExtensionIso (pic0GenusTranslationIso (C := C) a)).inv :=
+    MorphismProperty.of_isIso (P := IsOpenImmersion.presheaf) _
+  simpa only [picRankOneTranslatedChart, picRankOneOpenSigmaIso, Iso.trans_hom,
+    Category.assoc] using
+      MorphismProperty.IsStableUnderComposition.comp_mem _ _
+        (MorphismProperty.IsStableUnderComposition.comp_mem _ _ hrepresenter
+          (rankOneAbel_isOpenImmersion (C := C) hopen)) htranslation
 
 /-! ## Finiteness of the translated charts -/
 

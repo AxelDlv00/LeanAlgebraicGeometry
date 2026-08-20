@@ -609,6 +609,7 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.canonicalRankOneRepresenterTrans
 #check AlgebraicGeometry.canonicalRankOneEvaluationDivisorData
 #check AlgebraicGeometry.canonicalRankOneAbelIso
+#check AlgebraicGeometry.rankOneAbel_isOpenImmersion
 -- Unconditional arbitrary-family rank-one open producer
 #check AlgebraicGeometry.isOpen_picRankOneSplitLocus_overSpec
 #check AlgebraicGeometry.PicRankOneNativePresentation.nonempty_of_pointwiseSplit
@@ -864,6 +865,7 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.canonicalRankOneRepresenterTrans
 #print axioms AlgebraicGeometry.canonicalRankOneEvaluationDivisorData
 #print axioms AlgebraicGeometry.canonicalRankOneAbelIso
+#print axioms AlgebraicGeometry.rankOneAbel_isOpenImmersion
 #print axioms AlgebraicGeometry.isOpen_picRankOneSplitLocus_overSpec
 #print axioms AlgebraicGeometry.PicRankOneNativePresentation.nonempty_of_pointwiseSplit
 #print axioms AlgebraicGeometry.mem_picRankOneOpen_of_pointwiseSplit
