@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Rejected finite-stage specialization probe: P.N.1 is a finite subfield of k, so target baseChange k P.N.1 is ill-typed (no Algebra k P.N.1); consumers have independent K/k/C/Ck binders. Preserve generic transport only.",
+  "created_at": "2026-08-20T20:54:16.676587+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RepresentableByTransport.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RepresentableByTransport.lean",
+      "bytes": 4369,
+      "lines": 114
+    }
+  ],
+  "diagnostics": ""
+}
