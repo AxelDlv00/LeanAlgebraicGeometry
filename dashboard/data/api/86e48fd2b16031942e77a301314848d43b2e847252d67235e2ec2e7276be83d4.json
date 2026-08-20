@@ -1,0 +1,1 @@
+{"markdown": "I\u2019m loading the Horizon workflow first, then I\u2019ll inspect the protection/conversation inbox lanes and the two binding reviewer PDFs before touching Lean. I\u2019ll keep the run one-shot, use the required `lean-check` loop around edits, and commit each verified unit.\n", "recommendation": ""}
