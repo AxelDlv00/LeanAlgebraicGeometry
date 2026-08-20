@@ -34,7 +34,7 @@ set_option synthInstance.maxHeartbeats 3200000 in
 -- The second projection keeps the chart/base pullback transport abstract.
 set_option maxHeartbeats 12800000 in
 set_option backward.isDefEq.respectTransparency false in
-def gluingOverlapIso_pre_snd_snd
+@[irreducible] def gluingOverlapIso_pre_snd_snd
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F)
     (U V : Pic0FiniteStageChartIndex C) :=
