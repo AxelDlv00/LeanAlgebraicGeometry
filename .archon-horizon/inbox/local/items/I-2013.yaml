@@ -10,7 +10,7 @@ body: 'CLAIM: AJCR reviewer descent cone
   no endpoint claim until kernel/build gates pass.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -18,7 +18,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-08-20T20:04:34.634819+00:00'
-updated_at: '2026-08-20T20:10:10.415514+00:00'
+updated_at: '2026-08-20T21:44:34.411494+00:00'
 metadata:
   provenance:
     run: 0149
