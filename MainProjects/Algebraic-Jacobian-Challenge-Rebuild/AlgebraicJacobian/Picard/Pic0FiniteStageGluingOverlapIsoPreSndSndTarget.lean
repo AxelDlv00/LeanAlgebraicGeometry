@@ -3,7 +3,7 @@ Copyright (c) 2026 The AlgebraicJacobian Contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
-import AlgebraicJacobian.Picard.Pic0FiniteStageGluingOverlapIsoPreSndBridge
+import AlgebraicJacobian.Picard.Pic0FiniteStageGluingOverlapIsoPreSndSndCommon
 
 /-! The target half of the second right-gluing projection. -/
 
@@ -41,10 +41,7 @@ theorem gluingOverlapIso_pre_snd_snd_target
             (Pic0FiniteStageChartBaseChangeRing
               C P.L P.n P.m P.relation P.M P.N V))))
         (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) =
-    (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
-        (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f U V ≫
-      pullback.snd (P.glueData.ι U ≫ P.gluedMap)
-        (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) := by
+    gluingOverlapIso_pre_snd_snd_common C P U V := by
   have hsnd :
       rightRestrictionBaseChangeMap C P U V ≫
           pullback.snd
@@ -92,11 +89,8 @@ theorem gluingOverlapIso_pre_snd_snd_target
           (P.glueData.f U V ≫ P.glueData.ι U ≫ P.gluedMap)
           (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) :=
       congrArg (fun q => (gluingOverlapFlatteningIso C P U V).hom ≫ q) hcongr_snd
-    _ = (Scheme.Pullback.gluing P.glueData.openCover P.gluedMap
-        (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).f U V ≫
-        pullback.snd (P.glueData.ι U ≫ P.gluedMap)
-          (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) :=
-      gluingOverlapFlatteningIso_hom_comp_snd C P U V
+    _ = gluingOverlapIso_pre_snd_snd_common C P U V := by
+      exact (gluingOverlapFlatteningIso_hom_comp_snd C P U V).trans rfl
 
 end Pic0FiniteStageGluePackage
 
