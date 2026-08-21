@@ -9,10 +9,9 @@ lean_status: lean_ok
 order: 1164
 title: Effective finite-Galois descent for Picard-zero classes
 type: tex
-updated: '2026-08-21T11:58:56'
+updated: '2026-08-21T12:30:13'
 ---
 \provenancetag{CUSTOM}
-  
   
   For every \(k\)-test scheme \(T\), restriction along a finite Galois extension \(L/k\)
   identifies \(\mathrm{pic}^0(C,T)\) with the Galois-invariant degree-zero Picard classes on

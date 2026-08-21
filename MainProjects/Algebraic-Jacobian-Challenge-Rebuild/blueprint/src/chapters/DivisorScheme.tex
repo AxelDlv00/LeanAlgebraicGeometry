@@ -1476,26 +1476,19 @@ properties above.
 
 \begin{theorem}[The two rank-one constructions are inverse]
   \label{thm:rankOneAbel_inverse}
+  \lean{AlgebraicGeometry.canonicalRankOneRepresenterTrans_abel,
+    AlgebraicGeometry.canonicalRankOneAbelSliceIso}
   \provenancetag{CUSTOM}
-  \uses{def:rankOneAbel, def:divisorOfRankOne}
-  \notready
-  The natural transformations \(\operatorname{rankOneAbel}\) and
-  \(\operatorname{divisorOfRankOne}\) are mutually inverse.
+  \leanok
+  On the represented rank-one divisor locus, the restricted Abel transformation and the
+  canonical evaluation-divisor transformation are mutually inverse.  Equivalently, they form
+  an isomorphism with the rank-one Picard locus on the slice over \(\Spec k\).
 \end{theorem}
 \begin{proof}
-  Starting with a rank-one class \(\lambda\), the construction of
-  Definition~\ref{def:divisorOfRankOne} gives a divisor \(E\) with
-  \([\mathcal O(E)]=\lambda\) in the relative Picard functor.  Applying the Abel map therefore
-  returns \(\lambda\).
-
-  Conversely, start with a divisor \(E\in W(T)\) and put
-  \(\mathcal L=\mathcal O(E)\).  The canonical divisor section gives a morphism
-  \(\mathcal O_T\to f_{T*}\mathcal L\).  Both sides are invertible, and on each geometric
-  fibre this morphism is the nonzero element represented by the divisor \(E_t\); it is
-  therefore an isomorphism.  Under this isomorphism the evaluation section is exactly the
-  canonical section of \(\mathcal O(E)\), whose zero scheme is \(E\).  Thus applying
-  \(\operatorname{divisorOfRankOne}\) after the Abel map returns \(E\).  Both equalities are
-  compatible with pullback, so they are equalities of natural transformations.
+  \leanok
+  The canonical evaluation divisor has Abel class equal to the original rank-one class.
+  Injectivity of the restricted represented Abel transformation gives the other composite;
+  naturality packages the two identities into the displayed isomorphism.
 \end{proof}
 
 \begin{definition}[The rank-one Abel isomorphism]
@@ -1521,7 +1514,7 @@ properties above.
   \label{thm:rankOneAbel_isOpenImmersion}
   \lean{AlgebraicGeometry.rankOneAbel_isOpenImmersion}
   \provenancetag{CUSTOM}
-  \uses{def:rankOneAbelIso, thm:picRankOneOpen_isOpen}
+  \uses{def:rankOneAbelIso}
   \leanok
   Assume that the inclusion of the rank-one Picard locus is relatively representable by
   open immersions.  Then the composite
@@ -1740,7 +1733,6 @@ properties above.
   \label{def:pic0FiniteGaloisAction}
   \lean{AlgebraicGeometry.pic0SemilinearGalActionOfRepresentableBy}
   \provenancetag{CUSTOM}
-  \uses{thm:pic0FiniteGaloisStage}
   \leanok
   For a finite Galois extension \(L/k\) and any chosen representation
   \(r_L:h_{J_L}\simeq\mathrm{pic}^0(C_L)\), transport of Picard classes along Galois
@@ -1785,7 +1777,6 @@ properties above.
   \label{lem:finiteGalois_stableAffineCover}
   \lean{AlgebraicJacobian.GaloisDescent.hasStableAffineCover_of_orbitsInAffineOpen}
   \provenancetag{CUSTOM}
-  \uses{thm:pic0FiniteStage_orbitsInAffine}
   \leanok
   Let \(L/k\) be finite Galois and let \(X_L\) carry a semilinear Galois action.  If every
   orbit is contained in an affine open, then every point of \(X_L\) has a Galois-stable affine
@@ -1823,7 +1814,6 @@ properties above.
   \label{thm:pic0_finiteGalois_effectiveDescent}
   \lean{AlgebraicGeometry.pic0GaloisInvariantEquiv}
   \provenancetag{CUSTOM}
-  \uses{def:pic0Functor}
   \leanok
   For every \(k\)-test scheme \(T\), restriction along a finite Galois extension \(L/k\)
   identifies \(\mathrm{pic}^0(C,T)\) with the Galois-invariant degree-zero Picard classes on
