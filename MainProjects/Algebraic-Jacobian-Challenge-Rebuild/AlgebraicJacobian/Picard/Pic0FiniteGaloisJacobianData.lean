@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Descent.FiniteGaloisQuotientGeometry
 import AlgebraicJacobian.Picard.Pic0FiniteGaloisRepresentable
+import AlgebraicJacobian.Picard.Pic0FiniteStageOrbitAffine
 import AlgebraicJacobian.Picard.JacobianDataHandoff
 
 /-!
@@ -99,6 +100,66 @@ noncomputable def jacobianData_finiteGaloisDescent
     JacobianData C :=
   (picRepDatum_finiteGaloisDescent C rep hlft).toJacobianData
     (quasiCompact_pic0FiniteGaloisDescent C rep hqc)
+
+/-! ## Finite-stage projective specialization -/
+
+variable {k F : Type u} [Field k] [Field F]
+variable [Algebra F k] [Algebra.IsAlgebraic F k]
+
+/-- Finite-stage projectivity packages the conditional finite Galois descent as a
+`PicRepDatum` over the original field.
+
+This is still a conditional producer: the projectivity of the finite-stage glued carrier is
+the visible geometric input which supplies orbit-affineness for the canonical semilinear
+action. -/
+noncomputable def picRepDatum_finiteStageGaloisDescent_of_isProjective
+    (C : Over (Spec (CommRingCat.of K)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIrreducible C.hom]
+    (Ck : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 Ck.hom] [IsProper Ck.hom]
+    [GeometricallyIrreducible Ck.hom] [IsSepClosed k]
+    (P : Pic0FiniteStageGluePackage Ck F)
+    [Algebra K P.N.1] [FiniteDimensional K P.N.1] [IsGalois K P.N.1]
+    (rep : (pic0TypeFunctor ((baseChange K P.N.1).obj C)).RepresentableBy P.gluedOver)
+    (hproj : P.gluedMap.IsProjective) :
+    PicRepDatum K K C := by
+  letI : (pic0SemilinearGalActionOfRepresentableBy C rep).OrbitsInAffineOpen :=
+    pic0FiniteStageOrbitsInAffineOpen_of_isProjective C Ck P rep hproj
+  exact
+    { J := StableAffineOpen.gluedQuotientOver
+        (pic0SemilinearGalActionOfRepresentableBy C rep)
+      rep := pic0RepresentableBy_finiteStageGaloisDescent_of_isProjective C Ck P rep hproj
+      lft :=
+        locallyOfFiniteType_pic0FiniteGaloisDescent C rep
+          (by
+            change LocallyOfFiniteType P.gluedMap
+            infer_instance) }
+
+/-- Finite-stage projectivity packages the conditional finite Galois descent directly as
+`JacobianData`.  The finite-stage glued carrier is already locally of finite type and
+quasi-compact; projectivity is only used to discharge the orbit-affineness input to the
+Galois quotient. -/
+noncomputable def jacobianData_finiteStageGaloisDescent_of_isProjective
+    (C : Over (Spec (CommRingCat.of K)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIrreducible C.hom]
+    (Ck : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 Ck.hom] [IsProper Ck.hom]
+    [GeometricallyIrreducible Ck.hom] [IsSepClosed k]
+    (P : Pic0FiniteStageGluePackage Ck F)
+    [Algebra K P.N.1] [FiniteDimensional K P.N.1] [IsGalois K P.N.1]
+    (rep : (pic0TypeFunctor ((baseChange K P.N.1).obj C)).RepresentableBy P.gluedOver)
+    (hproj : P.gluedMap.IsProjective) :
+    JacobianData C :=
+  (picRepDatum_finiteStageGaloisDescent_of_isProjective C Ck P rep hproj).toJacobianData
+    (by
+      letI : (pic0SemilinearGalActionOfRepresentableBy C rep).OrbitsInAffineOpen :=
+        pic0FiniteStageOrbitsInAffineOpen_of_isProjective C Ck P rep hproj
+      exact quasiCompact_pic0FiniteGaloisDescent C rep
+        (by
+          change QuasiCompact P.gluedMap
+          infer_instance))
 
 end
 

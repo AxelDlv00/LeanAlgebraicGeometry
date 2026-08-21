@@ -1,0 +1,52 @@
+id: ajcr-blueprint-reconcile
+project: Algebraic-Jacobian-Challenge-Rebuild
+objective: 'Audit and update the AJCR blueprint and roadmap metadata so they form
+  a correct, useful, self-contained mathematical artifact for the current finite-Galois
+  Pic^0 descent route. Reconcile stale node states and declarations with verified
+  source and roadmap status; split broad aspirational contracts where necessary into
+  the actual route (separably-closed package, universal Picard equivalence descent,
+  finite Galois stage, orbit-affine cover, effective scheme/representation descent,
+  pic0_representableBy, PicRepDatum, JacobianData, and Phase 8 consumers); record
+  the current dependent elaboration/glued-base-change blocker as an implementation
+  risk without pretending it is a mathematical theorem; distinguish done, blocked,
+  pending, conditional, and stale metadata; preserve provenance and do not alter Lean
+  source. Acceptance: every AJCR p7/p8 node has a truthful status and concise self-contained
+  statement; blueprint labels match current intended declarations or explicitly identify
+  planned contracts; dependencies reflect the route; stale rankOneAbel_isOpenImmersion
+  state is corrected; no roadmap/blueprint consistency warnings; a short reconciliation
+  report is added to the task.'
+title: Reconcile the AJCR blueprint with the current mathematical route
+explanation: ''
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+- Algebraic-Jacobian-Challenge
+priority: high
+status: queued
+write_set:
+  files:
+  - .archon-horizon/blueprints/Algebraic-Jacobian-Challenge-Rebuild.json
+  - .archon-horizon/roadmap/items/AJCR.review-plan.p7-galois-descent*.yaml
+  - .archon-horizon/roadmap/items/AJCR.review-plan.p8-jacobian*.yaml
+  - .archon-horizon/tasks/comments/ajcr-blueprint-reconcile/*.md
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  - Algebraic-Jacobian-Challenge
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  - Algebraic-Jacobian-Challenge
+  files:
+  - .archon-horizon/blueprints/Algebraic-Jacobian-Challenge-Rebuild.json
+  - .archon-horizon/roadmap/items/AJCR.review-plan.p7-galois-descent*.yaml
+  - .archon-horizon/roadmap/items/AJCR.review-plan.p8-jacobian*.yaml
+  - .archon-horizon/tasks/comments/ajcr-blueprint-reconcile/*.md
+roadmap_refs: []
+inbox_refs: []
+artifact_refs: []
+created_at: '2026-08-21T02:39:16.293333+00:00'
+updated_at: '2026-08-21T02:39:16.293344+00:00'
+metadata:
+  author: human
