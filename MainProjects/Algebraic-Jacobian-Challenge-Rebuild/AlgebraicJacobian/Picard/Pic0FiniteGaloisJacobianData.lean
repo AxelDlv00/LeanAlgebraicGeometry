@@ -16,6 +16,10 @@ and quasi-compactness from the chosen representer after scalar extension.  This
 packages the existing conditional representability theorem into the exact
 `PicRepDatum` and `JacobianData` interfaces, without hiding either the local
 representer or the orbit-in-an-affine-open hypothesis.
+
+The finite-stage specializations below import the orbit-affineness producer directly. They
+remain conditional on the displayed projectivity witness; this module does not assert the
+missing arbitrary-field `pic0_representableBy` theorem.
 -/
 
 set_option autoImplicit false
