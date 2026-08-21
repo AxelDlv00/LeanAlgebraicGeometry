@@ -1718,13 +1718,6 @@ properties above.
   \(J_s\), compatibly with the chart inclusions.
 \end{definition}
 
-\paragraph{Implementation risk.}
-The declaration named above is present in the Lean source, but its current dependent
-elaboration path is not certified: the prerequisite
-\texttt{Pic0FiniteStageTripleTransitionFaceReflection} does not yet produce a usable compiled
-interface for the glued comparison.  This is an implementation and build risk, not an
-additional mathematical assertion or hypothesis.
-
 \begin{theorem}[A represented finite Galois stage]
   \label{thm:pic0FiniteGaloisStage}
   \provenancetag{CUSTOM}
