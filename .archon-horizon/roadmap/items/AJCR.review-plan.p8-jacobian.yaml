@@ -2,11 +2,14 @@ id: AJCR.review-plan.p8-jacobian
 title: 'Phase 8: construct and verify the Jacobian capstone'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: Pending on Phase 7. Reuse the pinned representation and JacobianData interfaces;
-  construct the original-field PicRepDatum, instantiate the geometric properties,
-  complete Abel-Jacobi and the universal property, close functoriality/base-change/cocycle
-  coherence, and discharge the protected challenge statements with narrow and full
-  builds.
+summary: Commit 3914ddcd7d adds a clean conditional handoff from finite-Galois Pic0
+  descent to same-carrier PicRepDatum and JacobianData once RepresentableBy, LFT,
+  QC, and orbit-affine data exist. Phase 8 is still blocked on the absent arbitrary-field
+  producer, and Challenge.lean cannot import the current rank-one cone without breaking
+  its transitive import cycle. Proper/geometric irreducibility, dimension equals genus,
+  Albanese, and final base-change/Abel coherence remain independent headline gates;
+  sibling AJC also uses an incompatible full-Picard API and retains its own sorry-backed
+  leaves.
 status: blocked
 kind: proof
 priority: urgent
@@ -22,8 +25,9 @@ metadata:
   created_at: '2026-08-04T01:52:32.684094+00:00'
   parent: AJCR.review-plan
   milestone: AJCR.review-plan
-  updated_at: '2026-08-20T11:59:29.170176+00:00'
+  updated_at: '2026-08-21T00:10:43.563201+00:00'
   pinned_commits:
+  - 3914ddcd7d
   - 118a6e320b
   - 64c98ec988
   - 6d7f9ca3b2
