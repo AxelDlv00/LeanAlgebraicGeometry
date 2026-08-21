@@ -6,11 +6,11 @@ created: '2026-07-17T08:59:08'
 generated: blueprint
 label: thm:truncExp_exact
 lean_status: lean_ok
-order: 1164
+order: 1176
 ref: kleiman-picard
 title: Exactness in the middle
 type: tex
-updated: '2026-08-14T19:11:16'
+updated: '2026-08-21T11:58:56'
 ---
 \provenancetag{ADAPTED}
   The range of the truncated exponential is exactly the kernel of reduction mod

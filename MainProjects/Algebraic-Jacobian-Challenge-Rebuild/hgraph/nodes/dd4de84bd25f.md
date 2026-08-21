@@ -6,10 +6,10 @@ created: '2026-07-17T22:40:09'
 generated: blueprint
 label: thm:cm_height_one
 lean_status: lean_ok
-order: 1267
+order: 1279
 title: Equidimensionality at a height-one prime
 type: tex
-updated: '2026-08-14T19:11:16'
+updated: '2026-08-21T11:58:56'
 ---
 \provenancetag{CUSTOM}
   

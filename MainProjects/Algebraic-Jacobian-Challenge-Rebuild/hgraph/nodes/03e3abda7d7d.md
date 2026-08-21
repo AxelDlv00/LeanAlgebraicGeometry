@@ -6,11 +6,11 @@ created: '2026-07-17T10:19:50'
 generated: blueprint
 label: thm:cotangent_finrank_rational
 lean_status: lean_ok
-order: 1247
+order: 1259
 ref: stacks-project
 title: Cotangent dimension at a rational point
 type: tex
-updated: '2026-08-14T19:11:16'
+updated: '2026-08-21T11:58:56'
 ---
 \provenancetag{REFERENCE}
   

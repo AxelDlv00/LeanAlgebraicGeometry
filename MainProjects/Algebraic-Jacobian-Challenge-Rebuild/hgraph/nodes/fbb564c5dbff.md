@@ -6,11 +6,11 @@ created: '2026-07-17T08:59:08'
 generated: blueprint
 label: def:truncExpUnit
 lean_status: lean_ok
-order: 1160
+order: 1172
 ref: kleiman-picard
 title: The truncated exponential unit
 type: tex
-updated: '2026-08-14T19:11:16'
+updated: '2026-08-21T11:58:56'
 ---
 \provenancetag{ADAPTED}
   Let \(R\) be a commutative ring and \(b \in R\). Since

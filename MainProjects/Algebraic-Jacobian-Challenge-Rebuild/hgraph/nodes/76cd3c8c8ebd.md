@@ -6,10 +6,10 @@ created: '2026-07-17T10:19:50'
 generated: blueprint
 label: thm:group_scheme_separated
 lean_status: lean_ok
-order: 1304
+order: 1316
 title: Group schemes over a field are separated
 type: tex
-updated: '2026-08-14T19:11:16'
+updated: '2026-08-21T11:58:56'
 ---
 \provenancetag{CUSTOM}
   

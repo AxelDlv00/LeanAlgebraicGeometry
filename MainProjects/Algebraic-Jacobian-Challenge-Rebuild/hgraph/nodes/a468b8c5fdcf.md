@@ -6,11 +6,11 @@ created: '2026-07-17T22:40:09'
 generated: blueprint
 label: thm:germ_range_of_domain
 lean_status: lean_ok
-order: 1283
+order: 1295
 ref: abelian-varieties:page-0023
 title: 'Definedness gives germ-range membership: substep 3, easy direction'
 type: tex
-updated: '2026-08-14T19:11:16'
+updated: '2026-08-21T11:58:56'
 ---
 \provenancetag{ADAPTED}
   

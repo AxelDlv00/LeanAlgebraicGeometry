@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Chandrasekhar",
+  "agent_path": "/root/janitor_health",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "janitor",
+  "native_subagent_id": "01a02252-11a0-7d10-9240-06304a409107",
+  "ok": true,
+  "parent_session": "0002-horizon-ajcr-blueprint-reconcile",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Read-only audit findings:",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 383176,
+    "tokens_out": 3466
+  }
+}

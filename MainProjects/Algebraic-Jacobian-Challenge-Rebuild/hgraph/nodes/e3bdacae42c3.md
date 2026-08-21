@@ -6,11 +6,11 @@ created: '2026-07-17T22:40:09'
 generated: blueprint
 label: thm:generic_image_specializes_unit
 lean_status: lean_ok
-order: 1278
+order: 1290
 ref: abelian-varieties:page-0023
 title: The generic image specialises to the unit
 type: tex
-updated: '2026-08-14T19:11:16'
+updated: '2026-08-21T11:58:56'
 ---
 \provenancetag{ADAPTED}
   

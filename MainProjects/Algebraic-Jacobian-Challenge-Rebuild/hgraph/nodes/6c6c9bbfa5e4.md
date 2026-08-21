@@ -6,10 +6,10 @@ created: '2026-07-17T10:19:50'
 generated: blueprint
 label: lem:point_translation_iso_points
 lean_status: lean_ok
-order: 1311
+order: 1323
 title: Translations act on points as prescribed
 type: tex
-updated: '2026-08-14T19:11:16'
+updated: '2026-08-21T11:58:56'
 ---
 \provenancetag{CUSTOM}
   

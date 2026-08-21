@@ -6,11 +6,11 @@ created: '2026-07-17T10:19:50'
 generated: blueprint
 label: thm:fibre_slice_witness
 lean_status: lean_ok
-order: 1238
+order: 1250
 ref: abelian-varieties:page-0023
 title: Slice witness on the self-product
 type: tex
-updated: '2026-08-14T19:11:16'
+updated: '2026-08-21T11:58:56'
 ---
 \provenancetag{ADAPTED}
   

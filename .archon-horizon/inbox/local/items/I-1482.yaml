@@ -25,13 +25,13 @@ body: "[persistent] SUPERSEDES I-0838 AND I-0839 ENTIRELY (2026-07-30). Both des
   \ I-0492 REMAIN BINDING AND UNCHANGED. Read them before touching the seam."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: human
 source_ref: null
 created_at: '2026-07-30T03:34:03.750224+00:00'
-updated_at: '2026-08-18T10:16:48.218329+00:00'
+updated_at: '2026-08-21T03:42:20.482068+00:00'
 metadata:
   read_by:
   - pic-g

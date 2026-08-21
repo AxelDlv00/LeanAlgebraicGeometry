@@ -6,10 +6,10 @@ created: '2026-07-17T10:19:50'
 generated: blueprint
 label: lem:ratmap_prod_over
 lean_status: lean_ok
-order: 1213
+order: 1225
 title: The pairing is over the base
 type: tex
-updated: '2026-08-14T19:11:16'
+updated: '2026-08-21T11:58:56'
 ---
 \provenancetag{CUSTOM}
   

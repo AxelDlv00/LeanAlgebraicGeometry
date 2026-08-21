@@ -6,10 +6,10 @@ created: '2026-07-17T22:40:09'
 generated: blueprint
 label: lem:diff_diagonal_domain
 lean_status: lean_ok
-order: 1277
+order: 1289
 title: The diagonal maps into the domain of the difference map
 type: tex
-updated: '2026-08-14T19:11:16'
+updated: '2026-08-21T11:58:56'
 ---
 \provenancetag{CUSTOM}
   

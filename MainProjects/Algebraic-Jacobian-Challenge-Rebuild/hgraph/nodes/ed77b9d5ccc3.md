@@ -6,10 +6,10 @@ created: '2026-07-17T08:59:08'
 generated: blueprint
 label: lem:unitsFst_split
 lean_status: lean_ok
-order: 1163
+order: 1175
 title: Splitting identities
 type: tex
-updated: '2026-08-14T19:11:16'
+updated: '2026-08-21T11:58:56'
 ---
 \provenancetag{CUSTOM}
   

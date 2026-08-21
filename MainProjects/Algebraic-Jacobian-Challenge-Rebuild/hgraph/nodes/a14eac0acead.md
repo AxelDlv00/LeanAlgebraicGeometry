@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.jacobianData_finiteGaloisDescent
 type: lean
-updated: '2026-08-21T08:24:53'
+updated: '2026-08-21T10:45:40'
 ---
 noncomputable def jacobianData_finiteGaloisDescent
     (C : Over (Spec (CommRingCat.of K)))
@@ -25,3 +25,8 @@ noncomputable def jacobianData_finiteGaloisDescent
     JacobianData C :=
   (picRepDatum_finiteGaloisDescent C rep hlft).toJacobianData
     (quasiCompact_pic0FiniteGaloisDescent C rep hqc)
+
+/-! ## Finite-stage projective specialization -/
+
+variable {k F : Type u} [Field k] [Field F]
+variable [Algebra F k] [Algebra.IsAlgebraic F k]
