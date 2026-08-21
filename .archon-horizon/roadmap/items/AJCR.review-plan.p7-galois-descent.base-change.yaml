@@ -2,10 +2,11 @@ id: AJCR.review-plan.p7-galois-descent.base-change
 title: Global glued-scheme base-change isomorphism
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: The finite-stage glued base-change comparison is present in source, but certification
-  is blocked in the dependent elaboration cone rooted at Pic0FiniteStageTripleTransitionFaceReflection.
-  This is an implementation risk, not a missing mathematical hypothesis or theorem;
-  downstream nodes must not treat the comparison as kernel-checked yet.
+summary: The finite-stage glued base-change comparison is present in source. FaceReflection
+  and GlueData now have native artifacts; the first missing artifact is Pic0FiniteStageGlueDataFace,
+  with PreSnd, Snd, and GluedComparison downstream. This is a dependent-elaboration
+  certification risk, not a missing mathematical hypothesis; downstream nodes must
+  not treat finiteStageBaseChangeIso as kernel-checked yet.
 status: blocked
 kind: proof
 priority: urgent
@@ -22,7 +23,7 @@ metadata:
   parent: AJCR.review-plan.p7-galois-descent
   owner: ajcr-reviewer-full
   milestone: AJCR.review-plan
-  updated_at: '2026-08-20T12:00:23.786701+00:00'
+  updated_at: '2026-08-21T07:42:30.895742+00:00'
   pinned_commits:
   - 312f90ea27
   - 663dea427f
