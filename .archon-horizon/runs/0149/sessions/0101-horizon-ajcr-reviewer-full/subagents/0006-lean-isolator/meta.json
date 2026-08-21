@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Carson",
+  "agent_path": "/root/presnd_compile",
+  "agent_role": "lean-isolator",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "lean-isolator",
+  "native_subagent_id": "01a0240b-e10a-75c2-8b86-56f44244b0a1",
+  "ok": true,
+  "parent_session": "0101-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "lean-isolator",
+  "summary": "## Result",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 57081657,
+    "tokens_out": 85200
+  }
+}

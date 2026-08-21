@@ -13,10 +13,10 @@
   "role": "subagent",
   "status": "completed",
   "subagent_type": "explorer",
-  "summary": "## State Audit",
+  "summary": "Reconciliation sent to the parent. Key result: no unconditional endpoint landed. `GlueDataFace.olean` now exists, but top-level `PreSnd`, `OverlapIsoSnd`, and `GluedComparison` artifacts remain absent. The mathematical blocker is still bind",
   "usage": {
     "cost_usd": null,
-    "tokens_in": 2382973,
-    "tokens_out": 11719
+    "tokens_in": 4124395,
+    "tokens_out": 17465
   }
 }
