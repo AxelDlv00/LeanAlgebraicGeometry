@@ -3,9 +3,9 @@ title: Assemble and consume pic0_representableBy
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: The quotient scheme, Picard fixed-point comparison, invariant-to-equivariant
-  matching, and conditional Pic^0 representation descent are implemented. The
-  unconditional pic0_representableBy producer remains pending on a represented finite
-  Galois stage and orbit-affineness; the filtered-colimit theorem is downstream.
+  matching, and conditional Pic^0 representation descent are implemented. The unconditional
+  pic0_representableBy producer remains pending on a represented finite Galois stage
+  and orbit-affineness; the filtered-colimit theorem is downstream.
 status: pending
 kind: proof
 priority: urgent

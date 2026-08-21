@@ -2,9 +2,9 @@ id: AJCR.review-plan.p8-jacobian.abel
 title: Complete Abel-Jacobi and the universal property
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: Conditional datum-level Abel consumers and the rational-map extension
-  substrate are present. The final pointed Abel-Jacobi map and universal factorization
-  remain pending on the original-field Jacobian datum and its geometry.
+summary: Conditional datum-level Abel consumers and the rational-map extension substrate
+  are present. The final pointed Abel-Jacobi map and universal factorization remain
+  pending on the original-field Jacobian datum and its geometry.
 status: pending
 kind: proof
 priority: urgent

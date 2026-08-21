@@ -5,9 +5,9 @@ projects:
 - Algebraic-Jacobian-Challenge
 summary: Conditional consumers from projectivity or a projective-space immersion to
   OrbitsInAffineOpen and a stable affine cover are checked. The actual finite-stage
-  representative still needs a finite-type algebraic-group quasi-projectivity or
-  FiniteInAffine theorem (or equivalent ample descent), so this mathematical gate is
-  blocked rather than done.
+  representative still needs a finite-type algebraic-group quasi-projectivity or FiniteInAffine
+  theorem (or equivalent ample descent), so this mathematical gate is blocked rather
+  than done.
 status: blocked
 kind: proof
 priority: urgent

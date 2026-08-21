@@ -6,7 +6,8 @@ summary: PicRepDatum and JacobianData interfaces, same-carrier conditional finit
   producers, and generic geometry/functoriality/Abel consumers are done. Phase 8 is
   blocked on Phase 7's absent arbitrary-field producer; all remaining leaves consume
   that datum rather than constructing a substitute. Challenge.lean still has an import-cycle
-  boundary, while sibling AJC retains a distinct full-Picard API and its own open leaves.
+  boundary, while sibling AJC retains a distinct full-Picard API and its own open
+  leaves.
 status: blocked
 kind: proof
 priority: urgent
@@ -23,7 +24,7 @@ metadata:
   created_at: '2026-08-04T01:52:32.684094+00:00'
   parent: AJCR.review-plan
   milestone: AJCR.review-plan
-  updated_at: '2026-08-21T00:10:43.563201+00:00'
+  updated_at: '2026-08-21T04:43:37.843805+00:00'
   pinned_commits:
   - 3914ddcd7d
   - 118a6e320b

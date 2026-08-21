@@ -4,8 +4,8 @@ projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: Descend the separably closed representative and its universal Picard class
   as one RepresentableBy equivalence onto the finite-stage glued carrier, then refine
-  the field of definition to a finite Galois extension. Carrier descent alone does not
-  close this pending mathematical contract.
+  the field of definition to a finite Galois extension. Carrier descent alone does
+  not close this pending mathematical contract.
 status: pending
 kind: proof
 priority: urgent

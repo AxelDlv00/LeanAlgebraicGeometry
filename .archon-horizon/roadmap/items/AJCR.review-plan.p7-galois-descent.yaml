@@ -3,12 +3,12 @@ title: 'Phase 7: finite-Galois descent to the original field'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 - Algebraic-Jacobian-Challenge
-summary: Finite-stage affine glue, generic finite-Galois scheme descent, Picard
-  fixed-point effectivity, conditional representability descent, and conditional
-  PicRepDatum/JacobianData packaging are done. Universal-equivalence descent is pending,
-  actual orbit-affineness is mathematically blocked, and the source-present glued
-  base-change comparison remains certification-blocked in dependent elaboration. Hence
-  unconditional pic0_representableBy is not yet available.
+summary: Finite-stage affine glue, generic finite-Galois scheme descent, Picard fixed-point
+  effectivity, conditional representability descent, and conditional PicRepDatum/JacobianData
+  packaging are done. Universal-equivalence descent is pending, actual orbit-affineness
+  is mathematically blocked, and the source-present glued base-change comparison remains
+  certification-blocked in dependent elaboration. Hence unconditional pic0_representableBy
+  is not yet available.
 status: blocked
 kind: proof
 priority: urgent
@@ -26,7 +26,7 @@ metadata:
   created_at: '2026-08-04T01:52:30.932692+00:00'
   parent: AJCR.review-plan
   milestone: AJCR.review-plan
-  updated_at: '2026-08-21T00:10:25.467134+00:00'
+  updated_at: '2026-08-21T04:42:35.599805+00:00'
   owner: ajcr-reviewer-full
   pinned_commits:
   - 3914ddcd7d
