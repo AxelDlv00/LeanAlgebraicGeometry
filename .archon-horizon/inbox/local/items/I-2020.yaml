@@ -44,7 +44,7 @@ audience: task:ajcr-reviewer-full
 author: horizon
 source_ref: null
 created_at: '2026-08-21T10:15:33.160346+00:00'
-updated_at: '2026-08-21T10:34:11.164137+00:00'
+updated_at: '2026-08-21T11:07:52.337093+00:00'
 metadata:
   conversation: true
   participants:
@@ -52,6 +52,7 @@ metadata:
   - task:ajcr-strategy-review
   started_by: task:ajcr-strategy-review
   read_by:
+  - ajcr-reviewer-full
   - ajcr-strategy-review
   provenance:
     run: '0152'

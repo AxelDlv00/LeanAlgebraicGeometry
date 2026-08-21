@@ -47,7 +47,7 @@ which carries the full charter (target, constraints, working model, and phases).
 ## Acceptance review (measured 2026-08-21)
 
 The following matrix is the acceptance boundary, measured against canonical ledger HEAD
-`dd4ac3c67a0a4e6903d480eca9791ffea3c8ea3e` (run 0149, baseline
+`340206c19ec68bebc9e7878472d0168849f190d0` (run 0149, baseline
 `3b3ac81f3a3cf123fb66ec9957afcaad9a702ba1`). A declaration with a `(rep : ...)` binder is
 an input consumer, never an unconditional producer.
 
@@ -64,19 +64,20 @@ an input consumer, never an unconditional producer.
 
 ### Run 0149 classification
 
-From baseline through `dd4ac3c67a`, there are 262 ledger commits: 118 touch Lean and 144 are
-metadata/churn. The exhaustive Lean-touching classification is **0 acceptance edges closed,
-80 consumed direct prerequisites, 10 conditional downstream consumers, 11 compile/performance
-splits, and 17 metadata/churn**; including the 144 non-Lean commits gives 161 metadata/churn.
+From baseline through `340206c19e`, there are 266 ledger commits: 120 touch Lean and 146 are
+metadata/churn. The exhaustive classification is **0 acceptance edges closed, 82 consumed
+direct prerequisites, 10 conditional downstream consumers, 11 compile/performance splits, and
+163 metadata/churn**. The two newest consumed prerequisites are `7fabbbdedd` (the universal
+finite-atlas class package) and `340206c19e` (the explicit-argument repair of the finite-family
+common-stage helper).
 The conditional set is `0feb6f0, da36a03, 5ee5a7f, 7d861b2, 50453c8, 9ea2b87, eb16127,
 3914ddc, 4490448, c23dfeb`. The performance set is `bc7ee92, 11ef35, 1f320ae, 5be243c,
-d0260ae, 17a00fb, 335af85, beac527, fe860d9, b7ddc93, 5adee30`. The latest
-`dd4ac3c67a` theorem, `exists_finSubext_relPic_tensorStage_finite`, is one of the 80
-consumed finite-stage feeders; it is not an endpoint. Reverted/quarantined attempts and
-root-only import/check commits remain metadata, not acceptance evidence. A fresh narrow Lake
-check shows that `dd4ac3c67a` does not elaborate: the call to the single-class helper leaves
-`IsAffineHom (?m i)` stuck, and the LSP path inserted `sorryAx`. The single-class helper itself
-has only the standard three axioms. Thus this consumed feeder is not kernel-clean evidence.
+d0260ae, 17a00fb, 335af85, beac527, fe860d9, b7ddc93, 5adee30`. The
+`exists_finSubext_relPic_tensorStage_finite` theorem is a finite-stage feeder, not an endpoint.
+The initial `dd4ac3c67a` version failed at `IsAffineHom (?m i)`; `340206c19e` supplies explicit
+arguments and algebra instances. Fresh Lake plus independent compiled probes now report only
+`propext, Classical.choice, Quot.sound`. Reverted/quarantined attempts and root-only
+import/check commits remain metadata, not acceptance evidence.
 
 ### Organization and convergence
 
@@ -103,7 +104,8 @@ The next package signatures, in dependency order, are:
 
 The next checkpoint is a fresh narrow/native check of the four-module glue cone, root reach and
 `#print axioms`, followed by a committed binder-free producer and the same-carrier capstone.
-The active lane's uncommitted `Pic0FiniteStageUniversalClass.lean` is intentionally not counted.
+`Pic0FiniteStageUniversalClass.lean` is committed in `7fabbbdedd` and remains a consumed
+universal-class prerequisite, not a `RepresentableBy` producer.
 
 ## Sources
 
