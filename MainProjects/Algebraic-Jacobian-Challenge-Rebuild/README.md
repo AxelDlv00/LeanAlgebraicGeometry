@@ -46,9 +46,11 @@ which carries the full charter (target, constraints, working model, and phases).
 
 ## Acceptance review (measured 2026-08-21)
 
-The following matrix is the acceptance boundary, measured against canonical ledger HEAD
+The following matrix is the acceptance boundary, measured against implementation HEAD
 `340206c19ec68bebc9e7878472d0168849f190d0` (run 0149, baseline
-`3b3ac81f3a3cf123fb66ec9957afcaad9a702ba1`). A declaration with a `(rep : ...)` binder is
+`3b3ac81f3a3cf123fb66ec9957afcaad9a702ba1`). The canonical ledger is now
+`45b5ea3c9e`; the four commits after that implementation delta are review metadata only.
+A declaration with a `(rep : ...)` binder is
 an input consumer, never an unconditional producer.
 
 | Declaration / role | Carrier and base | Exact consumer | Root and axioms | Remaining dependency |
@@ -64,10 +66,10 @@ an input consumer, never an unconditional producer.
 
 ### Run 0149 classification
 
-From baseline through `340206c19e`, there are 266 ledger commits: 120 touch Lean and 146 are
-metadata/churn. The exhaustive classification is **0 acceptance edges closed, 82 consumed
+From baseline through the current canonical ledger `45b5ea3c9e`, there are 270 commits: 120
+touch Lean and 150 are metadata/churn. The exhaustive classification is **0 acceptance edges closed, 82 consumed
 direct prerequisites, 10 conditional downstream consumers, 11 compile/performance splits, and
-163 metadata/churn**. The two newest consumed prerequisites are `7fabbbdedd` (the universal
+167 metadata/churn**. The two newest consumed prerequisites are `7fabbbdedd` (the universal
 finite-atlas class package) and `340206c19e` (the explicit-argument repair of the finite-family
 common-stage helper).
 The conditional set is `0feb6f0, da36a03, 5ee5a7f, 7d861b2, 50453c8, 9ea2b87, eb16127,
@@ -83,9 +85,10 @@ import/check commits remain metadata, not acceptance evidence.
 
 At exact HEAD, the Rebuild import graph has 1,143 local modules and 3,105 local edges; the
 library root reaches 1,109, leaving 34 unrooted. The graph is syntactically acyclic. The
-critical unrooted cone is `GlueDataFace -> PreSnd -> OverlapIsoSnd -> GluedComparison`;
-the top `GlueDataFace`, `PreSnd`, `OverlapIsoSnd`, and `GluedComparison` artifacts are absent
-from the current native cache. `Pic0CriticalPath.lean` is itself rooted, but its 86 direct
+critical unrooted cone is `GlueDataFace -> PreSnd -> OverlapIsoSnd -> GluedComparison`.
+A fresh local cache now contains `Pic0FiniteStageGlueDataFace.olean`, but the source remains
+outside root reach and the top `PreSnd`, `OverlapIsoSnd`, and `GluedComparison` artifacts are
+absent; this artifact is therefore not root certification. `Pic0CriticalPath.lean` is itself rooted, but its 86 direct
 imports and 1,109 lines make it an index, not proof of root certification. The ten-file
 PreSnd split is primarily a compile-performance choice; it is a correctness risk only while
 the composition is unrooted. The older DivSchemeRedesign family and other one-lemma files

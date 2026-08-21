@@ -8,10 +8,11 @@ summary: Finite-stage affine glue, generic finite-Galois scheme descent, conditi
   present but do not close an acceptance edge. Commits 7fabbbdedd and 340206c19e add
   a pinned universal class on every finite atlas chart/overlap and a clean common
   finite-subextension theorem for finite dependent relPic families; both audit to
-  [propext, Classical.choice, Quot.sound]. Critical-root certification still stops
-  at missing Pic0FiniteStageGlueDataFace.olean before PreSnd, OverlapIsoSnd, and GluedComparison.
-  Binder-free RepresentableBy P.gluedOver and exact-carrier projectivity/orbit-affineness
-  remain blockers.
+  [propext, Classical.choice, Quot.sound]. A fresh local cache now contains
+  Pic0FiniteStageGlueDataFace.olean, moving the artifact frontier to top PreSnd, but
+  Face remains outside the committed critical-root reach and PreSnd, OverlapIsoSnd,
+  and GluedComparison artifacts are still absent. Binder-free RepresentableBy
+  P.gluedOver and exact-carrier projectivity/orbit-affineness remain blockers.
 status: blocked
 kind: proof
 priority: urgent
@@ -29,7 +30,7 @@ metadata:
   created_at: '2026-08-04T01:52:30.932692+00:00'
   parent: AJCR.review-plan
   milestone: AJCR.review-plan
-  updated_at: '2026-08-21T11:04:38.467452+00:00'
+  updated_at: '2026-08-21T11:31:45+00:00'
   owner: ajcr-reviewer-full
   pinned_commits:
   - 340206c19e
