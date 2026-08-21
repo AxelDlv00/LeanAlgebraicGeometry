@@ -2,11 +2,15 @@ id: AJCR.review-plan.p7-galois-descent.universal
 title: Universal Picard element and equivalence descent
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: Descend the separably closed representative and its universal Picard class
-  as one RepresentableBy equivalence onto the finite-stage glued carrier, then refine
-  the field of definition to a finite Galois extension. Carrier descent alone does
-  not close this pending mathematical contract.
-status: pending
+summary: 'Active implementation target for the next resumed round. Build the first
+  concrete finite-stage universal package from exists_finSubext_relPic_tensorStage:
+  choose one finite field stage simultaneously for the finite atlas and overlaps,
+  descend the universal classes and their equality/naturality witnesses, and construct
+  the RepresentableBy/Yoneda equivalence on P.gluedOver. Do not spend the round on
+  a full or critical-root build, restate this as a blocker, or add another conditional
+  downstream consumer; use LSP and narrow modules, and treat GlueDataFace certification
+  as a separate compile-engineering issue.'
+status: active
 kind: proof
 priority: urgent
 depends_on:
@@ -21,3 +25,5 @@ metadata:
   created_at: '2026-08-18T06:11:56.225176+00:00'
   parent: AJCR.review-plan.p7-galois-descent
   milestone: AJCR.review-plan
+  updated_at: '2026-08-21T08:31:26.744211+00:00'
+  owner: ajcr-reviewer-full
