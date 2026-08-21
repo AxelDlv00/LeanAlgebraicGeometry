@@ -1,1 +1,0 @@
-{"markdown": "The kernel checks found one edit typo: `RigidEngine4Assembly.lean` now has `/**` instead of Lean\u2019s `/--` doc-comment opener, causing the only syntax error. I\u2019m correcting that opener and rerunning diagnostics/checks for the affected file.\n", "recommendation": ""}

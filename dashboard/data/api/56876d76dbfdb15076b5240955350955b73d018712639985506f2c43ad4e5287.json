@@ -1,1 +1,0 @@
-{"markdown": "The partial application still does not synthesize the intended rewrite rule. I\u2019m adding a private proof-order adapter with `R''` before `D`, used only by this implementation; that reproduces the exact kernel-checked simplifier shape without adding a public compatibility alias.", "recommendation": ""}

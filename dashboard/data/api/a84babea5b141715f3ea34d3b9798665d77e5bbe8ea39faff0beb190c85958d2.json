@@ -1,1 +1,0 @@
-{"markdown": "HEAD has not moved since the integration sweep. The recovery import cap is the only owned disk delta; the failing H0 module has a separate uncommitted edit, so I\u2019m treating it as live foreign work and inspecting only its status and diagnostics.", "recommendation": ""}

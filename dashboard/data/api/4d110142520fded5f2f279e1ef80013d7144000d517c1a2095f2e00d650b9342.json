@@ -1,1 +1,0 @@
-{"markdown": "Implemented `AlgebraicJacobian/Descent/TensorProductFieldTowerMap.lean`.\n\nExports:\n- `scalarExtensionMapOfAlgHom` and `_tmul`\n- `cancelBaseChange_tmul_baseChange`\n- `cancelBaseChange_naturality`\n\nVerified LSP-clean, `lake env lean` passes, kernel axioms are standard only, and source scan is clean. No commit made.\n", "recommendation": ""}

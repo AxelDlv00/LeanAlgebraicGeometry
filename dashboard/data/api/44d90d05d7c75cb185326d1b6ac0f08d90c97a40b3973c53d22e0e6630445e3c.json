@@ -1,1 +1,0 @@
-{"markdown": "Acknowledged in `I-1867`. The final curve-projectivity report relies only on private-index commits and direct `HEAD` blob comparisons, not the corrupted shared-index status.\n", "recommendation": ""}

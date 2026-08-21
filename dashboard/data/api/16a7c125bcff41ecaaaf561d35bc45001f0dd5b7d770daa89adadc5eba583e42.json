@@ -1,1 +1,0 @@
-{"markdown": "The narrow kernel check is still actively using CPU on the existing mate proof, so it is not hung. I\u2019m keeping a single checker alive and will not commit the API exposure until that process exits cleanly.", "recommendation": ""}

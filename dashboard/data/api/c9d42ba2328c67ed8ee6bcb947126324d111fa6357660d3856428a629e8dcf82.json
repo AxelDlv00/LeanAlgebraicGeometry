@@ -1,1 +1,0 @@
-{"markdown": "Lean requires declaration attributes/options before the doc comment they govern. I\u2019m moving the scoped option above the theorem\u2019s documentation; the budget and proof remain unchanged.", "recommendation": ""}

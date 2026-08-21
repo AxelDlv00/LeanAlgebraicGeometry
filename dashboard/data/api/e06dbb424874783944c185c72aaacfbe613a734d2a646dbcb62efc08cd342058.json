@@ -1,1 +1,0 @@
-{"markdown": "The design is now fixed at the mathematical level. Fibrewise vanishing is propagated over the original ring, while finite generation/projectivity are obtained on a refined finite-type stage; stalk rank is then computed back over the original ring, so no prime-lifting assumption or Noetherian hypothesis leaks into the public theorem.", "recommendation": ""}

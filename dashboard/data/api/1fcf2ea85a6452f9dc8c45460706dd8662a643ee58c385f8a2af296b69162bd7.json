@@ -1,1 +1,0 @@
-{"markdown": "`Pic0FiniteStageGlueData` is still elaborating at full CPU after about 10 minutes; there is no error or lock contention. I\u2019m continuing the serialized wait with the reviewed consumer diff unchanged.", "recommendation": ""}

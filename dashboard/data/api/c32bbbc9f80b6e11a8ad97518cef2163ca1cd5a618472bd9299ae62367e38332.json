@@ -1,1 +1,0 @@
-{"markdown": "The TeX pass is complete at 8/8 Abelian and 105/105 Algebra markers with the requested `REFERENCE/ADAPTED/CUSTOM` counts. The Lean pass now has one marker per each of the 165 project declarations identified by hgraph metadata; I\u2019m running the required post-edit LSP diagnostics and will flag the 12 external names as residue.\n", "recommendation": ""}

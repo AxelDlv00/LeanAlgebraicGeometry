@@ -1,1 +1,0 @@
-{"markdown": "The inbox audit shows collection-health warnings (44 open non-protection items, 11 memories, 10 conversations) and two concrete workspace incidents (stale snapshot and concurrent dashboard writers). I\u2019m dispatching a read-only janitor pass now, then I\u2019ll reconcile its findings with the roadmap/task state.\n", "recommendation": ""}

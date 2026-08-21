@@ -1,1 +1,0 @@
-{"markdown": "The committed file is now a thin wrapper over separately built engine/rank declarations. I\u2019m doing one bounded kernel invocation on that exact source to see whether the timeout is only LSP overhead or also affects direct Lean.\n", "recommendation": ""}
