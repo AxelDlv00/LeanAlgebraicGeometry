@@ -86,6 +86,7 @@ import AlgebraicJacobian.Picard.Pic0FiniteStageRightLegEquality
 import AlgebraicJacobian.Picard.Pic0FiniteStageRightRestrictionAlgHom
 import AlgebraicJacobian.Picard.Pic0FiniteStageRightRestrictionNaturality
 import AlgebraicJacobian.Picard.Pic0FiniteStageDatum
+import AlgebraicJacobian.Picard.RelPicTensorStageFiniteStage
 import AlgebraicJacobian.Picard.Pic0RepresentableColimit
 import AlgebraicJacobian.Picard.Pic0RepresentableByTransport
 
@@ -695,6 +696,7 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.exists_finSubext_relPic_model
 #check AlgebraicGeometry.exists_finSubext_baseChanged_cover_representation
 #check AlgebraicGeometry.BasicOpenCocycleDatum.exists_finSubext_tensorStage
+#check AlgebraicGeometry.exists_finSubext_relPic_tensorStage
 #check AlgebraicGeometry.Scheme.exists_finite_affineCover_inter_isQuasiCompact
 #check AlgebraicGeometry.Scheme.FiniteAffineOverlapPresentation
 #check AlgebraicGeometry.Scheme.finiteAffineOverlapPresentation
@@ -956,6 +958,7 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.exists_finSubext_relPic_model
 #print axioms AlgebraicGeometry.exists_finSubext_baseChanged_cover_representation
 #print axioms AlgebraicGeometry.BasicOpenCocycleDatum.exists_finSubext_tensorStage
+#print axioms AlgebraicGeometry.exists_finSubext_relPic_tensorStage
 #print axioms AlgebraicGeometry.Scheme.exists_finite_affineCover_inter_isQuasiCompact
 #print axioms AlgebraicGeometry.Scheme.finiteAffineOverlapPresentation
 #print axioms AlgebraicGeometry.pic0FiniteStageAtlas
