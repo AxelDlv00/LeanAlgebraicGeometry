@@ -3,20 +3,20 @@ title: 'Phase 7: finite-Galois descent to the original field'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 - Algebraic-Jacobian-Challenge
-summary: 'Commit 3914ddcd7d lands generic finite-Galois quotient LFT/QC and conditional
-  PicRepDatum/JacobianData packaging, with focused builds and exact permitted axioms.
-  This closes quotient geometry only: the first missing mathematical producer remains
-  descent of the universal Picard class/natural equivalence to a finite-stage RepresentableBy;
-  finite-Galois refinement and orbit affineness then remain before arbitrary-field
-  pic0_representableBy. The finite-stage comparison is present in source but its dependent
-  wrapper/root build is still uncertified at Pic0FiniteStageTripleTransitionFaceReflection.'
+summary: Finite-stage affine glue, generic finite-Galois scheme descent, Picard
+  fixed-point effectivity, conditional representability descent, and conditional
+  PicRepDatum/JacobianData packaging are done. Universal-equivalence descent is pending,
+  actual orbit-affineness is mathematically blocked, and the source-present glued
+  base-change comparison remains certification-blocked in dependent elaboration. Hence
+  unconditional pic0_representableBy is not yet available.
 status: blocked
 kind: proof
 priority: urgent
 depends_on:
 - AJCR.review-plan.p6-sepclosed-producer
 inbox_refs: []
-task_refs: []
+task_refs:
+- ajcr-blueprint-reconcile
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild

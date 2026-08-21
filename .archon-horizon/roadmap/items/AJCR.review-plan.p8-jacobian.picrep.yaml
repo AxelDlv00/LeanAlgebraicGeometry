@@ -2,12 +2,14 @@ id: AJCR.review-plan.p8-jacobian.picrep
 title: Construct the original-field PicRepDatum
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: Build the canonical PicRepDatum from the Phase 7 pic0_representableBy output
-  and its descended universal element.
+summary: The PicRepDatum interface and conditional finite-Galois producer are done.
+  Building the canonical original-field datum remains pending on Phase 7's unconditional
+  pic0_representableBy output; no second universal element should be chosen.
 status: pending
 kind: proof
 priority: urgent
-depends_on: []
+depends_on:
+- AJCR.review-plan.p7-galois-descent.representability
 inbox_refs: []
 task_refs: []
 scope:

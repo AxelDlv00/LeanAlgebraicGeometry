@@ -2,12 +2,16 @@ id: AJCR.review-plan.p8-jacobian.geometry
 title: Instantiate the Jacobian geometry
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: Prove finite type, properness, smoothness of relative dimension g, and geometric
-  irreducibility for the original-field representing scheme.
+summary: Instantiate the checked generic consumers on the original-field datum to
+  prove finite type, properness, smoothness of relative dimension g, and geometric
+  irreducibility for its representing scheme.
 status: pending
 kind: proof
 priority: urgent
-depends_on: []
+depends_on:
+- AJCR.review-plan.p8-jacobian.interfaces
+- AJCR.review-plan.p8-jacobian.geometry-consumers
+- AJCR.review-plan.p8-jacobian.picrep
 inbox_refs: []
 task_refs: []
 scope:

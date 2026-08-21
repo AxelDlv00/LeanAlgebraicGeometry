@@ -2,12 +2,15 @@ id: AJCR.review-plan.p8-jacobian.functoriality
 title: Complete functoriality and field base change
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: Consume the existing Pic^0 pullback, curve-map, theta, and base-change substrate
-  to finish Jacobian.functor, the base-change isomorphism, and cocycle coherence.
+summary: Pic^0 pullback, curve-map, theta, and datum-level base-change consumers are
+  implemented conditionally. The global Jacobian functor, base-change isomorphism,
+  and cocycle coherence remain pending on the original-field datum producer.
 status: pending
 kind: proof
 priority: high
-depends_on: []
+depends_on:
+- AJCR.review-plan.p8-jacobian.interfaces
+- AJCR.review-plan.p8-jacobian.picrep
 inbox_refs: []
 task_refs: []
 scope:

@@ -2,13 +2,16 @@ id: AJCR.review-plan.p7-galois-descent.representability
 title: Assemble and consume pic0_representableBy
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: Combine the descended scheme, universal equivalence, colimit bridge, and
-  stable affine cover into the original-field RepresentableBy datum and consume it
-  immediately in the critical path.
+summary: The quotient scheme, Picard fixed-point comparison, invariant-to-equivariant
+  matching, and conditional Pic^0 representation descent are implemented. The
+  unconditional pic0_representableBy producer remains pending on a represented finite
+  Galois stage and orbit-affineness; the filtered-colimit theorem is downstream.
 status: pending
 kind: proof
 priority: urgent
-depends_on: []
+depends_on:
+- AJCR.review-plan.p7-galois-descent.universal
+- AJCR.review-plan.p7-galois-descent.orbit-affine
 inbox_refs: []
 task_refs: []
 scope:

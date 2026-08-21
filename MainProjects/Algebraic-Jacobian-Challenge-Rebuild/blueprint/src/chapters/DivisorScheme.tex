@@ -1519,10 +1519,12 @@ properties above.
 
 \begin{theorem}[The rank-one Abel map is an open immersion]
   \label{thm:rankOneAbel_isOpenImmersion}
+  \lean{AlgebraicGeometry.rankOneAbel_isOpenImmersion}
   \provenancetag{CUSTOM}
   \uses{def:rankOneAbelIso, thm:picRankOneOpen_isOpen}
-  \notready
-  The composite
+  \leanok
+  Assume that the inclusion of the rank-one Picard locus is relatively representable by
+  open immersions.  Then the composite
   \[
     h_W\xrightarrow{\operatorname{rankOneAbelIso}}
     \mathrm{PicRankOneOpen}(C)\hookrightarrow\mathrm{pic}^{g(C)}(C)
@@ -1530,6 +1532,7 @@ properties above.
   is relatively representable by open immersions.
 \end{theorem}
 \begin{proof}
+  \leanok
   A natural isomorphism is relatively representable by isomorphisms, and the second arrow is
   relatively representable by open immersions by
   Theorem~\ref{thm:picRankOneOpen_isOpen}.  The composite of an isomorphism with an open
@@ -1538,79 +1541,55 @@ properties above.
 
 \subsection{The separably closed cover}
 
-\begin{definition}[Translated rank-one opens in degree zero]
+\begin{definition}[Translated rank-one charts in degree zero]
   \label{def:pic0TranslatedRankOneOpen}
+  \lean{AlgebraicGeometry.picRankOneTranslatedChart}
   \provenancetag{CUSTOM}
-  \uses{def:picRankOneOpen, def:pic0Functor}
-  \notready
-  Let \(\mathcal M\) be an invertible sheaf of degree \(g(C)\) on \(C\).  Define
-  \[
-    U_{\mathcal M}(T)=
-      \{\lambda\in\mathrm{pic}^0(C,T):
-        \lambda\otimes\mathcal M_T\in\mathrm{PicRankOneOpen}(C,T)\}.
-  \]
-  Translation by \(\mathcal M\) identifies \(U_{\mathcal M}\) with
-  \(\mathrm{PicRankOneOpen}(C)\).
+  \uses{def:picRankOneOpen, def:rankOneAbelIso, def:pic0Functor}
+  \leanok
+  Fix the represented rank-one divisor open and a Picard class \(a\) of degree \(g(C)\).
+  The \emph{translated rank-one chart} is the natural transformation from that divisor open
+  to \(\mathrm{pic}^0(C)\) obtained by the canonical rank-one Abel isomorphism, inclusion in
+  degree \(g(C)\), and translation by \(a^{-1}\).
 \end{definition}
 
 \begin{theorem}[Representability of each translated open]
   \label{thm:pic0TranslatedRankOneOpen_representable}
+  \lean{AlgebraicGeometry.picRankOneTranslatedChart_isOpenImmersion}
   \provenancetag{CUSTOM}
   \uses{def:pic0TranslatedRankOneOpen, def:rankOneAbelIso,
     thm:rankOneAbel_isOpenImmersion}
-  \notready
-  Each \(U_{\mathcal M}\) is represented by a scheme, and its inclusion in
-  \(\mathrm{pic}^0(C)\) is relatively representable by open immersions.
+  \leanok
+  If the rank-one Picard locus is open, every translated rank-one chart is relatively
+  representable by open immersions.
 \end{theorem}
 \begin{proof}
-  Tensoring by \(\mathcal M_T\) is a natural isomorphism from the degree-zero layer to the
-  degree-\(g(C)\) layer, with inverse tensoring by \(\mathcal M_T^{-1}\).  It carries
-  \(U_{\mathcal M}\) isomorphically onto \(\mathrm{PicRankOneOpen}(C)\), which is represented
-  by \(W\) through Definition~\ref{def:rankOneAbelIso}.  Transporting that representation
-  and the open-immersion certificate through the translation proves both assertions.
+  \leanok
+  The canonical Abel isomorphism and Picard translation are isomorphisms, and the intervening
+  rank-one inclusion is an open immersion by
+  Theorem~\ref{thm:rankOneAbel_isOpenImmersion}.  Stability under composition gives the
+  result.
 \end{proof}
 
 \begin{theorem}[Translated rank-one opens cover over a separably closed field]
   \label{thm:rankOne_translate_cover_sepClosed}
+  \lean{AlgebraicGeometry.picRankOneTranslatedChart_pointwiseCoverage}
   \provenancetag{CUSTOM}
   \uses{def:pic0TranslatedRankOneOpen, thm:exists_rationalPoint_mem,
     thm:h0_eq_deg_add_chi, thm:chi_moduleKSheaf_curve}
-  \notready
-  Suppose \(k\) is separably closed.  For every field extension \(K/k\) and every
-  \(\lambda\in\mathrm{pic}^0(C,\Spec K)\), there is an invertible sheaf
-  \(\mathcal M\) of degree \(g(C)\) on \(C\) such that
-  \(\lambda\in U_{\mathcal M}(\Spec K)\).
+  \leanok
+  Suppose \(k\) is separably closed and the rank-one Picard locus is open.  For every test
+  scheme \(T\), every class \(\lambda\in\mathrm{pic}^0(C,T)\), and every point \(t\in T\),
+  there are a field-valued neighbourhood of \(t\), a degree-\(g(C)\) translator, and a point
+  of its rank-one divisor chart whose image is the restriction of \(\lambda\).  Thus the
+  translated charts cover \(\mathrm{pic}^0(C)\) pointwise.
 \end{theorem}
 \begin{proof}
-  Membership in the rank-one locus is etale local, so after a finite separable extension of
-  \(K\) we may represent \(\lambda\) by an invertible sheaf \(\mathcal L\) on the base-changed
-  curve.  Fix a positive invertible sheaf \(\mathcal A\) on \(C\).  Serre vanishing gives an
-  \(n\) such that
-  \(H^1(\mathcal L\otimes\mathcal A_K^n)=0\), and increasing \(n\) if necessary makes its
-  space of sections nonzero.  Write this sheaf as \(\mathcal L_0\).
-
-  If \(h^0(\mathcal L_j)>1\), choose a nonzero section \(s_j\).  Its zero scheme has finite
-  support.  The \(k\)-rational points of \(C\) are infinite and dense by
-  Theorem~\ref{thm:exists_rationalPoint_mem}, so there is a point \(P_j\in C(k)\) outside that
-  support.  Evaluation at \(P_j\) is then onto, and the exact sequence
-  \[
-    0\longrightarrow\mathcal L_j(-P_j)\longrightarrow\mathcal L_j
-      \longrightarrow\mathcal L_j|_{P_j}\longrightarrow0
-  \]
-  shows that \(h^0\) drops by one while \(H^1\) remains zero.  Repeating this finite process
-  gives
-  \[
-    \mathcal L_r=\mathcal L\otimes
-      \bigl(\mathcal A^n(-P_0-\cdots-P_{r-1})\bigr)_K
-  \]
-  with \(h^0(\mathcal L_r)=1\) and \(H^1(\mathcal L_r)=0\).  Put
-  \(\mathcal M=\mathcal A^n(-P_0-\cdots-P_{r-1})\), which is defined over \(k\).
-  Riemann--Roch gives
-  \(1=\deg(\mathcal L_r)+1-g(C)\).  Since \(\lambda\) has degree zero, this says
-  \(\deg\mathcal M=g(C)\).  Cohomology and base change now gives a rank-one local
-  presentation of \(\lambda\otimes\mathcal M_K\).  The construction was made after an etale
-  extension of \(K\), so etale descent of membership places the original class in
-  \(U_{\mathcal M}(\Spec K)\).
+  \leanok
+  Restrict \(\lambda\) to the residue field at \(t\).  The separably closed translated-drop
+  theorem supplies a degree-\(g(C)\) base class for which this restriction lies in the
+  rank-one locus.  The canonical Abel isomorphism lifts it to the represented divisor open;
+  taking the residue-field point as source gives the required local factorisation.
 \end{proof}
 
 \begin{definition}[The separably closed degree-zero Picard representer]
@@ -1640,176 +1619,274 @@ properties above.
 
 \subsection{Finite Galois descent and the Jacobian datum}
 
-\begin{definition}[The separably closed descent package]
-  \label{def:pic0SepClosedDescentInput}
+\begin{theorem}[Local finite type of the separably closed representer]
+  \label{thm:pic0SepClosed_lft}
+  \lean{AlgebraicGeometry.locallyOfFiniteType_pic0_sepClosed_representableBy}
   \provenancetag{CUSTOM}
-  \uses{def:pic0Functor}
-  \notready
-  A separably closed descent package consists of a scheme \(J_s\) representing
-  \(\mathrm{pic}^0(C)\), its universal Picard class, and certificates that \(J_s\) is of
-  finite type, proper, geometrically irreducible, and a group scheme.  The representation and
-  the universal class in the package are the same datum, related by Yoneda, rather than two
-  independently chosen witnesses.
+  \uses{def:pic0_sepClosed_representableBy}
+  \leanok
+  Over a separably closed field, the structure morphism of the translated-chart
+  representative \(J_s\) is locally of finite type.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Local finite type holds on each represented divisor chart and therefore on their glued
+  target.
+\end{proof}
+
+\begin{theorem}[Finite presentation of the separably closed representer]
+  \label{thm:pic0SepClosed_lfp}
+  \lean{AlgebraicGeometry.locallyOfFinitePresentation_pic0_sepClosed_representableBy}
+  \provenancetag{CUSTOM}
+  \uses{thm:pic0SepClosed_lft}
+  \leanok
+  The structure morphism \(J_s\to\Spec k\) is locally of finite presentation.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Over a field, local finite type is equivalent to local finite presentation.
+\end{proof}
+
+\begin{theorem}[Quasi-compactness of the separably closed representer]
+  \label{thm:pic0SepClosed_qc}
+  \lean{AlgebraicGeometry.quasiCompact_pic0SepClosedRepresenter}
+  \provenancetag{CUSTOM}
+  \uses{def:pic0_sepClosed_representableBy, def:genusAbelMap}
+  \leanok
+  The structure morphism \(J_s\to\Spec k\) is quasi-compact.
+\end{theorem}
+\begin{proof}
+  \leanok
+  The admissible Abel source is quasi-compact and maps surjectively to the exact
+  separably closed representative; quasi-compactness descends through that surjection.
+\end{proof}
+
+\begin{definition}[The separably closed Picard representation datum]
+  \label{def:pic0SepClosedDescentInput}
+  \lean{AlgebraicGeometry.picRepDatumSepClosed}
+  \provenancetag{CUSTOM}
+  \uses{def:pic0_sepClosed_representableBy, thm:pic0SepClosed_lft}
+  \leanok
+  The exact pair \((J_s,r_s)\) of
+  Definition~\ref{def:pic0_sepClosed_representableBy}, together with its locally-finite-type
+  certificate, forms a \(\mathrm{PicRepDatum}\).  Its group structure and universal Picard
+  class are transported from the same representation \(r_s\); properness and geometric
+  irreducibility are not fields of this datum.
 \end{definition}
 
-\begin{theorem}[The rank-one representer supplies the descent package]
+\begin{theorem}[The separably closed Jacobian datum]
   \label{thm:pic0SepClosedDescentInput_exists}
+  \lean{AlgebraicGeometry.jacobianDataSepClosed}
   \provenancetag{CUSTOM}
-  \uses{def:pic0_sepClosed_representableBy,
-    thm:genusDivisorSource_geometry, def:genusAbelMap,
-    def:pic0SepClosedDescentInput}
-  \notready
-  Over a separably closed field, the representation of
-  Definition~\ref{def:pic0_sepClosed_representableBy} extends to a separably closed descent
-  package.
+  \uses{def:pic0SepClosedDescentInput, thm:pic0SepClosed_qc,
+    def:jacobian_data}
+  \leanok
+  Over a separably closed field, the same carrier and the same representation form a Jacobian
+  datum after adjoining the quasi-compactness certificate.
 \end{theorem}
 \begin{proof}
-  The commutative-group law on \(\mathrm{pic}^0(C)\) transfers uniquely across the
-  representation to a group-scheme law on \(J_s\), and the image of the identity morphism is
-  its universal class.  The translated rank-one charts show that \(J_s\) is locally of finite
-  type.  Its identity point is closed because it is a rational point of a scheme locally of
-  finite type over a field.  The diagonal is the inverse image of that point under the
-  difference morphism \(J_s\times J_s\to J_s\), so the group scheme is separated.
-
-  Choose a point of \(C\) over the separably closed base and use its \(g(C)\)-fold divisor to
-  translate the degree-\(g(C)\) Abel map to \(\mathrm{pic}^0(C)\).  After any algebraically
-  closed extension, Riemann--Roch gives a section of every degree-\(g(C)\) line bundle, so this
-  translated Abel map \(D_g\to J_s\) is surjective.  It is proper because \(D_g\) is projective
-  and \(J_s\) is separated.  A surjective image of the quasi-compact scheme \(D_g\) makes
-  \(J_s\) quasi-compact; combined with local finite type, this gives finite type.  Properness
-  descends through the surjective proper map: after every base change, the image in the base
-  of a closed subset of \(J_s\) is the image of its closed inverse image in \(D_g\), hence is
-  closed.  Finally, the geometric fibres of \(D_g\) are irreducible by
-  Theorem~\ref{thm:genusDivisorSource_geometry}, and their surjective images are irreducible.
-  These are exactly the certificates required by the package.
+  \leanok
+  Apply the canonical handoff from \(\mathrm{PicRepDatum}\) to
+  Definition~\ref{def:jacobian_data} using Theorem~\ref{thm:pic0SepClosed_qc}.
 \end{proof}
 
-\begin{theorem}[Limit and faithfully flat compatibility of \(\mathrm{pic}^0\)]
+\begin{theorem}[Finite-stage descent of the universal Picard equivalence]
   \label{thm:pic0DescentCompatibility}
   \provenancetag{CUSTOM}
-  \uses{def:pic0Functor}
+  \uses{def:pic0SepClosedDescentInput, thm:pic0SepClosed_lfp}
   \notready
-  The degree-zero etale Picard functor commutes with filtered unions of field extensions and
-  satisfies effective descent along faithfully flat field extensions, compatibly with its
-  universal classes.
+  Let \(k^s/k\) be a separable closure.  There are a finite subextension \(F/k\), an
+  \(F\)-scheme \(J_F\), and a representation
+  \(r_F:h_{J_F}\simeq\mathrm{pic}^0(C_F)\) whose scalar extension to \(k^s\), including its
+  universal Picard class, is the separably closed pair \((J_s,r_s)\).
 \end{theorem}
 \begin{proof}
-  An invertible sheaf is given on a finite affine cover by finitely many finitely presented
-  rank-one modules, transition isomorphisms, and finitely many cocycle equations.  All this
-  data, as well as an isomorphism between two such data, descends to a finite stage of a
-  filtered union.  The degree-zero condition is preserved and reflected after field extension
-  because degree is invariant under scalar extension.  This proves filtered compatibility.
-  Faithfully flat descent for finitely presented modules descends the local line bundles and
-  their transition maps, while the cocycle equation gives effectivity and uniqueness.  Passing
-  to the quotient by line bundles from the base and then to the etale sheafification preserves
-  this descent statement, since both equivalence and effectivity may be checked after a common
-  faithfully flat refinement.
+  The locally finitely presented carrier and its gluing data descend to a finite stage.  The
+  remaining mathematical obligation is to descend the universal Picard class and prove that
+  its Yoneda transformation is an equivalence at the same stage.  Filtered-colimit
+  preservation of \(\mathrm{pic}^0\) is a later consequence of representability and is not an
+  input to this step.
 \end{proof}
 
-\begin{theorem}[A finite Galois stage for the Picard representer]
+\begin{definition}[The finite-stage glued base-change comparison]
+  \label{def:pic0FiniteStageBaseChangeIso}
+  \lean{AlgebraicGeometry.Pic0FiniteStageGluePackage.finiteStageBaseChangeIso}
+  \provenancetag{CUSTOM}
+  \uses{def:pic0_sepClosed_representableBy}
+  Given a finite-stage affine atlas package, scalar extension of its glued scheme to the
+  separable closure is canonically isomorphic to the exact separably closed representative
+  \(J_s\), compatibly with the chart inclusions.
+\end{definition}
+
+\paragraph{Implementation risk.}
+The declaration named above is present in the Lean source, but its current dependent
+elaboration path is not certified: the prerequisite
+\texttt{Pic0FiniteStageTripleTransitionFaceReflection} does not yet produce a usable compiled
+interface for the glued comparison.  This is an implementation and build risk, not an
+additional mathematical assertion or hypothesis.
+
+\begin{theorem}[A represented finite Galois stage]
   \label{thm:pic0FiniteGaloisStage}
   \provenancetag{CUSTOM}
-  \uses{def:pic0SepClosedDescentInput, thm:pic0SepClosedDescentInput_exists,
-    thm:pic0DescentCompatibility}
+  \uses{thm:pic0DescentCompatibility, def:pic0FiniteStageBaseChangeIso}
   \notready
-  Let \(k^s\) be a separable closure of \(k\).  The separably closed descent package descends
-  to a finite Galois extension \(L/k\): there are a finite-type proper group scheme \(J_L\)
-  representing \(\mathrm{pic}^0(C_L)\), its universal class, and a semilinear action of
-  \(\operatorname{Gal}(L/k)\) preserving that class and satisfying the cocycle condition.
-  Every orbit of this action is contained in an affine open of \(J_L\).
+  There is a finite Galois extension \(L/k\) and an \(L\)-scheme \(J_L\), obtained from the
+  finite-stage glue, together with a representation
+  \(r_L:h_{J_L}\simeq\mathrm{pic}^0(C_L)\) whose universal class and scalar extension agree
+  with \((J_s,r_s)\).  The locally-finite-type and quasi-compact certificates are carried with
+  this pair.  No orbit-affineness conclusion is included in this statement.
 \end{theorem}
 \begin{proof}
-  Because \(J_{k^s}\) is of finite presentation, it descends to a finite subextension
-  \(L_0/k\).  The universal class descends after enlarging \(L_0\), by
-  Theorem~\ref{thm:pic0DescentCompatibility}.  The natural transformation defined by the
-  descended class becomes the given representation after extension to \(k^s\); faithful flat
-  descent for both the Yoneda functor and the Picard sheaf shows that it is already an
-  isomorphism over \(L_0\).  Properness, the group operations, and their finitely many axioms
-  also descend after one further finite extension.  Enlarge \(L_0\) to a finite Galois
-  extension \(L/k\).
+  Enlarge the finite field of definition in
+  Theorem~\ref{thm:pic0DescentCompatibility} to a finite Galois extension and transport the
+  representation across the glued base-change comparison.  Compatibility of the universal
+  classes is part of the descended equivalence, not a separately chosen witness.
+\end{proof}
 
-  For \(\sigma\in\operatorname{Gal}(L/k)\), both \(\sigma^*J_L\) and \(J_L\), equipped with
-  their transported universal classes, represent the same functor.  Yoneda uniqueness gives
-  a unique semilinear isomorphism between them.  The two composites associated to
-  \(\sigma\tau\) carry the universal class to the same element, so uniqueness proves the
-  cocycle equation.  A proper finite-type group scheme over a field is projective.  Given a
-  finite Galois orbit, choose a closed specialization of each of its finitely many points.
-  For a sufficiently high power of an ample line bundle, restriction of global sections to
-  the resulting finite closed subscheme is surjective.  Lift the section that is \(1\) at
-  every member of that subscheme.  Its nonvanishing locus contains the chosen closed
-  specializations and therefore the original orbit; as the complement of an ample effective
-  divisor, this locus is affine.  This proves the final certificate.
+\begin{definition}[The canonical semilinear action on a finite-stage representative]
+  \label{def:pic0FiniteGaloisAction}
+  \lean{AlgebraicGeometry.pic0SemilinearGalActionOfRepresentableBy}
+  \provenancetag{CUSTOM}
+  \uses{thm:pic0FiniteGaloisStage}
+  \leanok
+  For a finite Galois extension \(L/k\) and any chosen representation
+  \(r_L:h_{J_L}\simeq\mathrm{pic}^0(C_L)\), transport of Picard classes along Galois
+  automorphisms defines a semilinear action on \(J_L\).  Yoneda uniqueness makes the action
+  preserve the universal class and satisfy the cocycle law.
+\end{definition}
+
+\begin{theorem}[Conditional orbit-affineness from projectivity]
+  \label{thm:pic0FiniteStage_orbitsInAffine_of_projective}
+  \lean{AlgebraicGeometry.pic0FiniteStageOrbitsInAffineOpen_of_isProjective}
+  \provenancetag{CUSTOM}
+  \uses{def:pic0FiniteGaloisAction}
+  \leanok
+  Let a finite-stage glued scheme represent \(\mathrm{pic}^0(C_L)\).  If its structure
+  morphism is projective, then every orbit of its canonical finite Galois action lies in an
+  affine open.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Projectivity supplies an immersion into finite-dimensional projective space; finite subsets
+  of such a scheme lie in affine opens, and this applies to each finite Galois orbit.
+\end{proof}
+
+\begin{theorem}[Orbit-affineness of the actual finite-stage representative]
+  \label{thm:pic0FiniteStage_orbitsInAffine}
+  \provenancetag{CUSTOM}
+  \uses{thm:pic0FiniteGaloisStage,
+    thm:pic0FiniteStage_orbitsInAffine_of_projective}
+  \notready
+  The represented finite-stage scheme \(J_L\) of
+  Theorem~\ref{thm:pic0FiniteGaloisStage} is finite-in-affine (for example, projective), and
+  hence every orbit of its canonical Galois action is contained in an affine open.
+\end{theorem}
+\begin{proof}
+  The checked implication from projectivity is
+  Theorem~\ref{thm:pic0FiniteStage_orbitsInAffine_of_projective}.  What remains is a genuine
+  geometric theorem giving projectivity or finite-in-affine for the constructed finite-stage
+  group scheme; the existing conditional wrapper does not supply that input.
 \end{proof}
 
 \begin{lemma}[Stable affine neighbourhoods for a finite action]
   \label{lem:finiteGalois_stableAffineCover}
+  \lean{AlgebraicJacobian.GaloisDescent.hasStableAffineCover_of_orbitsInAffineOpen}
   \provenancetag{CUSTOM}
-  \notready
-  Let a finite group \(G\) act on a separated scheme \(X\).  If every \(G\)-orbit is contained
-  in an affine open, then \(X\) has a \(G\)-stable affine open cover.
+  \uses{thm:pic0FiniteStage_orbitsInAffine}
+  \leanok
+  Let \(L/k\) be finite Galois and let \(X_L\) carry a semilinear Galois action.  If every
+  orbit is contained in an affine open, then every point of \(X_L\) has a Galois-stable affine
+  open neighbourhood, and these neighbourhoods form a stable affine cover.
 \end{lemma}
 \begin{proof}
-  Fix \(x\in X\) and choose an affine open \(V\) containing its whole orbit.  Every translate
-  \(gV\) also contains that orbit.  Hence
-  \(U_x=\bigcap_{g\in G}gV\) is a \(G\)-stable open containing \(x\).  A finite intersection
-  of affine opens in a separated scheme is affine: the intersection of two is the inverse
-  image of the affine \(V\times V'\) under the affine diagonal, and induction handles the
-  finite intersection.  The opens \(U_x\), as \(x\) varies, form the required cover.
+  \leanok
+  Starting from an affine containing the orbit, a norm of a suitable basic-open function
+  produces a stable basic affine neighbourhood of the chosen point.  This construction does
+  not require a separate global separatedness assumption.
 \end{proof}
 
 \begin{theorem}[Finite Galois descent of a scheme]
   \label{thm:finiteGalois_schemeDescent}
+  \lean{AlgebraicJacobian.GaloisDescent.StableAffineOpen.gluedQuotientBaseChangeIso,
+    AlgebraicJacobian.GaloisDescent.StableAffineOpen.isGaloisQuotient_glued,
+    AlgebraicJacobian.GaloisDescent.StableAffineOpen.gluedQuotientOver}
   \provenancetag{CUSTOM}
   \uses{lem:finiteGalois_stableAffineCover}
-  \notready
+  \leanok
   Let \(L/k\) be finite Galois and let an \(L\)-scheme \(X_L\) carry a semilinear Galois
   action satisfying the cocycle condition.  If every orbit lies in an affine open, then there
-  are a \(k\)-scheme \(X\) and an isomorphism
-  \(X\times_kL\simeq X_L\) inducing the given action.
+  is a glued invariant-ring quotient \(X\) over \(k\), an equivariant isomorphism
+  \(X\times_kL\simeq X_L\), and the corresponding finite-Galois quotient universal property.
 \end{theorem}
 \begin{proof}
-  By Lemma~\ref{lem:finiteGalois_stableAffineCover}, cover \(X_L\) by stable affine opens
-  \(U_i=\Spec A_i\).  Semilinear Galois descent for algebras gives
-  \(B_i=A_i^G\) and an isomorphism \(L\otimes_kB_i\simeq A_i\).  Since \(X_L\) is separated,
-  every overlap \(U_i\cap U_j\) and every triple overlap is affine and stable.  Applying the
-  same invariant construction to these overlaps descends both open immersions
-  \(U_i\cap U_j\rightrightarrows U_i,U_j\); faithful flatness of \(L/k\) reflects the open
-  immersions and their cocycle identities.  The affine schemes \(\Spec B_i\) therefore glue
-  along the descended overlaps to a \(k\)-scheme \(X\).  The local isomorphisms
-  \(L\otimes_kB_i\simeq A_i\) agree on overlaps and glue to
-  \(X\times_kL\simeq X_L\).  Their defining invariant maps identify the canonical descent
-  action with the prescribed semilinear action.
+  \leanok
+  Lemma~\ref{lem:finiteGalois_stableAffineCover} supplies stable affine charts.  Taking
+  invariant rings descends the charts and their overlaps; the descended open immersions glue.
+  The affine base-change isomorphisms glue to the displayed equivariant isomorphism, and their
+  universal properties glue to the quotient witness.
 \end{proof}
 
-\begin{theorem}[Finite Galois descent of a representation]
-  \label{thm:representableBy_of_finiteGalois_baseChange}
+\begin{theorem}[Effective finite-Galois descent for Picard-zero classes]
+  \label{thm:pic0_finiteGalois_effectiveDescent}
+  \lean{AlgebraicGeometry.pic0GaloisInvariantEquiv}
   \provenancetag{CUSTOM}
-  \uses{thm:finiteGalois_schemeDescent}
-  \notready
-  Let \(F\) be a set-valued sheaf on \(k\)-schemes satisfying faithfully flat descent, and let
-  \(L/k\) be finite Galois.  Suppose \(F_L\) is represented by \(X_L\), and the universal
-  element is preserved by a semilinear Galois action on \(X_L\) satisfying the cocycle
-  condition and the orbit-in-affine hypothesis.  Then there are a \(k\)-scheme \(X\) and a
-  representation \(h_X\simeq F\); the pair \((X,h_X\simeq F)\) is returned together, and its
-  base change is the given pair over \(L\).
+  \uses{def:pic0Functor}
+  \leanok
+  For every \(k\)-test scheme \(T\), restriction along a finite Galois extension \(L/k\)
+  identifies \(\mathrm{pic}^0(C,T)\) with the Galois-invariant degree-zero Picard classes on
+  \(T_L\), naturally in \(T\).
 \end{theorem}
 \begin{proof}
-  Descend \(X_L\) to \(X\) by Theorem~\ref{thm:finiteGalois_schemeDescent}.  The invariance of
-  the universal element is precisely a descent datum on its two pullbacks to
-  \(X_L\times_X X_L\).  The sheaf condition gives a unique element \(u\in F(X)\) descending
-  it.  Yoneda turns \(u\) into a natural map \(h_X\to F\).  After base change to \(L\) this is
-  the given representing isomorphism.  For any test \(T\), apply the sheaf equalizer diagrams
-  for the finite faithfully flat cover \(T_L\to T\) to both \(h_X\) and \(F\).  The maps on
-  \(T_L\) and \(T_L\times_TT_L\) are bijections and commute with the two restriction maps;
-  hence the map on their equalizers is a bijection.  Thus \(u\) represents \(F\).  The
-  construction keeps \(X\) and this certificate in the same pair, and the glued base-change
-  isomorphism identifies it with the original represented pair over \(L\).
+  \leanok
+  Etale sheaf descent gives existence and uniqueness of a class below every invariant class;
+  restriction is therefore a bijection onto the invariant subtype.
+\end{proof}
+
+\begin{theorem}[Invariant classes are equivariant maps]
+  \label{thm:pic0_invariants_equivariant}
+  \lean{AlgebraicGeometry.pic0GaloisInvariantEquivGaloisEquivariantOver}
+  \provenancetag{CUSTOM}
+  \uses{def:pic0FiniteGaloisAction,
+    thm:pic0_finiteGalois_effectiveDescent}
+  \leanok
+  Given a representation of \(\mathrm{pic}^0(C_L)\) by \(J_L\), Galois-invariant Picard-zero
+  classes on \(T_L\) are naturally equivalent to Galois-equivariant morphisms
+  \(T_L\to J_L\) for the canonical semilinear action.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Apply the representing equivalence over \(L\); invariance of the class is exactly the
+  equivariance equation for the associated morphism.
+\end{proof}
+
+\begin{theorem}[Conditional finite-Galois descent of Picard-zero representability]
+  \label{thm:representableBy_of_finiteGalois_baseChange}
+  \lean{AlgebraicGeometry.pic0RepresentableBy_finiteGaloisDescent}
+  \provenancetag{CUSTOM}
+  \uses{thm:finiteGalois_schemeDescent,
+    thm:pic0_finiteGalois_effectiveDescent,
+    thm:pic0_invariants_equivariant}
+  \leanok
+  Let \(L/k\) be finite Galois.  Suppose \(J_L\) represents
+  \(\mathrm{pic}^0(C_L)\) and every orbit of its canonical semilinear action lies in an affine
+  open.  Then the glued quotient over \(k\) represents \(\mathrm{pic}^0(C)\).  This is a
+  conditional theorem: it consumes the finite-level representation and orbit-affineness and
+  does not produce either one.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Equivariant maps into \(J_L\) are maps into its glued quotient by
+  Theorem~\ref{thm:finiteGalois_schemeDescent}.  Theorem~\ref{thm:pic0_invariants_equivariant}
+  identifies those maps with invariant Picard-zero classes, and
+  Theorem~\ref{thm:pic0_finiteGalois_effectiveDescent} identifies the latter with
+  \(\mathrm{pic}^0(C,T)\), naturally in \(T\).
 \end{proof}
 
 \begin{definition}[The arbitrary-field degree-zero Picard representer]
   \label{def:pic0_representableBy}
   \provenancetag{CUSTOM}
   \uses{thm:pic0FiniteGaloisStage,
+    thm:pic0FiniteStage_orbitsInAffine,
     thm:representableBy_of_finiteGalois_baseChange}
   \notready
   For every field \(k\), there is a distinguished pair
@@ -1819,18 +1896,51 @@ properties above.
   obtained by finite Galois descent from the separably closed rank-one construction.
 \end{definition}
 \begin{proof}
-  Apply Theorem~\ref{thm:pic0FiniteGaloisStage} to obtain the represented finite Galois model,
-  its action, cocycle, invariant universal class, and orbit-in-affine certificate.  The Picard
-  functor has the descent property of Theorem~\ref{thm:pic0DescentCompatibility}, so
-  Theorem~\ref{thm:representableBy_of_finiteGalois_baseChange} returns the required scheme and
-  representation certificate as one pair.  This is the asserted distinguished datum.
+  Apply Theorem~\ref{thm:pic0FiniteGaloisStage} for the finite-level represented pair and
+  Theorem~\ref{thm:pic0FiniteStage_orbitsInAffine} for its orbit-affine certificate.  The
+  conditional descent theorem
+  \ref{thm:representableBy_of_finiteGalois_baseChange} then returns the quotient carrier and
+  its representing equivalence as one pair.
 \end{proof}
+
+\begin{definition}[Finite-level Picard representation datum]
+  \label{def:picRepDatum}
+  \lean{AlgebraicGeometry.PicRepDatum}
+  \provenancetag{CUSTOM}
+  \uses{def:pic0Functor}
+  \leanok
+  A \(\mathrm{PicRepDatum}\) over a field extension consists of a scheme \(J\), a specified
+  representation \(h_J\simeq\mathrm{pic}^0(C)\), and a locally-finite-type certificate.  Its
+  group object is transported from the representation and is not an extra field.
+\end{definition}
+
+\begin{definition}[Conditional Picard datum from finite-Galois descent]
+  \label{def:picRepDatum_finiteGaloisDescent}
+  \lean{AlgebraicGeometry.picRepDatum_finiteGaloisDescent}
+  \provenancetag{CUSTOM}
+  \uses{def:picRepDatum, thm:representableBy_of_finiteGalois_baseChange}
+  \leanok
+  Given a finite Galois representative \((J_L,r_L)\), its locally-finite-type certificate,
+  and orbit-affineness for the canonical action, the glued quotient and its descended
+  representation form a \(\mathrm{PicRepDatum}\) over \(k\).
+\end{definition}
+
+\begin{definition}[Conditional Jacobian datum from finite-Galois descent]
+  \label{def:jacobianData_finiteGaloisDescent}
+  \lean{AlgebraicGeometry.jacobianData_finiteGaloisDescent}
+  \provenancetag{CUSTOM}
+  \uses{def:picRepDatum_finiteGaloisDescent, def:jacobian_data}
+  \leanok
+  Under the same finite-level representation and orbit-affine hypotheses, if \(J_L\) is also
+  quasi-compact, the descended \(\mathrm{PicRepDatum}\) packages as a Jacobian datum.  The
+  carrier and representing equivalence are unchanged by this handoff.
+\end{definition}
 
 \begin{definition}[The Jacobian datum from the chosen representation]
   \label{def:jacobianData}
   \provenancetag{CUSTOM}
   \uses{def:pic0_representableBy, def:jacobian_data,
-    thm:pic0FiniteGaloisStage}
+    def:jacobianData_finiteGaloisDescent}
   \notready
   Let \((J,r)\) be the pair of
   Definition~\ref{def:pic0_representableBy}.  The \emph{rank-one descent Jacobian datum} is
@@ -1839,10 +1949,8 @@ properties above.
   certificates at the finite Galois stage.
 \end{definition}
 \begin{proof}
-  Finite type and properness descend and are reflected by the finite faithfully flat extension
-  \(L/k\) in Theorem~\ref{thm:pic0FiniteGaloisStage}; in particular \(J\to\Spec k\) is locally
-  of finite type and quasi-compact.  Insert \(J\), the same certificate \(r\), and
-  these two properties into Definition~\ref{def:jacobian_data}.  No second representing object
-  or universal element is chosen: the group law and universal class are transported from the
-  same \(r\) by Yoneda.
+  Once Definition~\ref{def:pic0_representableBy} supplies its unconditional represented pair,
+  carry local finite type and quasi-compactness through the finite Galois quotient and apply
+  Definition~\ref{def:jacobianData_finiteGaloisDescent}.  No second carrier, representation,
+  or universal class is chosen.
 \end{proof}

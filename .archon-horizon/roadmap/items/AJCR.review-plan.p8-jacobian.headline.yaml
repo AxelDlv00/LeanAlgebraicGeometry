@@ -2,12 +2,17 @@ id: AJCR.review-plan.p8-jacobian.headline
 title: Verify the protected Jacobian headlines
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: Construct jacobianData, discharge the protected challenge declarations, and
-  require critical-root and full-project builds with only the standard Lean axioms.
+summary: After the datum, geometry, Abel, and functoriality leaves close, discharge
+  the protected challenge declarations and require critical-root and full-project
+  builds with only the standard Lean axioms.
 status: pending
 kind: proof
 priority: urgent
-depends_on: []
+depends_on:
+- AJCR.review-plan.p8-jacobian.picrep
+- AJCR.review-plan.p8-jacobian.geometry
+- AJCR.review-plan.p8-jacobian.abel
+- AJCR.review-plan.p8-jacobian.functoriality
 inbox_refs: []
 task_refs: []
 scope:

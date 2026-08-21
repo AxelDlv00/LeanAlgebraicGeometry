@@ -1,17 +1,16 @@
 id: AJCR.review-plan.p7-galois-descent.colimit
-title: Original-field filtered-colimit bridge for Pic^0
+title: Filtered-colimit consequence of Pic^0 representability
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'Audit correction: the only current theorem, pic0PreservesFilteredBaseColimit_of_representableBy,
-  assumes an arbitrary-field locally finitely presented representer and is therefore
-  downstream, not an antecedent of pic0_representableBy. Keep this leaf pending only
-  for a genuinely independent replacement if another route needs it; the active finite-Galois
-  quotient route instead needs universal-equivalence descent, a finite-Galois refinement,
-  orbit-in-affine, and quotient geometry.'
+summary: The conditional theorem pic0PreservesFilteredBaseColimit_of_representableBy
+  is implemented, but it assumes an arbitrary-field locally finitely presented representer.
+  The unconditional consequence is pending downstream of representability and is not
+  an input to the active finite-Galois route.
 status: pending
 kind: proof
 priority: high
-depends_on: []
+depends_on:
+- AJCR.review-plan.p7-galois-descent.representability
 inbox_refs: []
 task_refs: []
 scope:

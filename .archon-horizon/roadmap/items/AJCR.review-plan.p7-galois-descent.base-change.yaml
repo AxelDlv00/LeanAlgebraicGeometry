@@ -2,14 +2,15 @@ id: AJCR.review-plan.p7-galois-descent.base-change
 title: Global glued-scheme base-change isomorphism
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: Root integration at 312f90ea27 exposes the finite-stage glued comparison
-  API, but its dependent pre-SndSnd projection theorem remains uncompiled after a
-  bounded 69-minute attempt (attempt 0001). Source is complete; kernel certification
-  and the downstream universal/descent gates remain open.
+summary: The finite-stage glued base-change comparison is present in source, but
+  certification is blocked in the dependent elaboration cone rooted at Pic0FiniteStageTripleTransitionFaceReflection.
+  This is an implementation risk, not a missing mathematical hypothesis or theorem;
+  downstream nodes must not treat the comparison as kernel-checked yet.
 status: blocked
 kind: proof
 priority: urgent
-depends_on: []
+depends_on:
+- AJCR.review-plan.p7-galois-descent.finite-glue
 inbox_refs: []
 task_refs: []
 scope:

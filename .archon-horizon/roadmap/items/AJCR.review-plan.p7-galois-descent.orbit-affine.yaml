@@ -3,16 +3,16 @@ title: Finite-level stable affine cover
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 - Algebraic-Jacobian-Challenge
-summary: 'Round 3 landed 042292a818, axiom-clean closure of FiniteInAffine under arbitrary
-  scheme coproducts, and verified the existing Pic0 orbit-affine consumer target.
-  The gate remains blocked: component reduction needs irreducibility of connected
-  components, while the arbitrary finite-Galois stage needs finite-type algebraic-group
-  quasi-projectivity/FiniteInAffine (or equivalent ample descent). Next theorem: GroupScheme.finiteInAffine_of_finiteType
-  from GrpObj, LocallyOfFiniteType, and QuasiCompact.'
+summary: Conditional consumers from projectivity or a projective-space immersion to
+  OrbitsInAffineOpen and a stable affine cover are checked. The actual finite-stage
+  representative still needs a finite-type algebraic-group quasi-projectivity or
+  FiniteInAffine theorem (or equivalent ample descent), so this mathematical gate is
+  blocked rather than done.
 status: blocked
 kind: proof
 priority: urgent
-depends_on: []
+depends_on:
+- AJCR.review-plan.p7-galois-descent.universal
 inbox_refs: []
 task_refs: []
 scope:
