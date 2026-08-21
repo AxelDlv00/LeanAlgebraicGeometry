@@ -1,0 +1,1 @@
+The initial check exposed an environment issue rather than a theorem error: the target’s transitive `.olean` was missing. I started the narrow dependency build; it is still running in the foreground and must finish before I can trust any proof result.
