@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Curie",
+  "agent_path": "/root/finite_stage_frontier",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a02175-842c-7121-bd1d-5eed512822ac",
+  "ok": true,
+  "parent_session": "0090-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "The current comparison is not yet kernel-landed: `.olean` files are missing for `Pic0FiniteStageGluingOverlapIsoPreSnd`, `...IsoSnd`, and `Pic0FiniteStageGluedComparison`, and `Pic0CriticalPath.lean` does not import them. The immediate prer",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 9723261,
+    "tokens_out": 41208
+  }
+}
