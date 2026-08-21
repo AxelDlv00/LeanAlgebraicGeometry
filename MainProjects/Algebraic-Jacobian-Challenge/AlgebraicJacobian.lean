@@ -512,3 +512,58 @@ import AlgebraicJacobian.Albanese.CodimOnePerfectFieldWitness
 -- ARBITRARY field from RATIONAL-POINT hypotheses, so its obstruction is a
 -- statement about the curve, not about the base field.
 import AlgebraicJacobian.Albanese.Milne33RowSectionRational
+
+/-!
+## Conditional bridge for the étale headline
+
+The unconditional headline in `AlgebraicJacobian.Jacobian` deliberately has no
+`SymPowData` or rational-point hypothesis.  The arbitrary-field Albanese engine is
+already axiom-clean, but it consumes the symmetric-power carrier and a descent datum.
+This theorem exposes that exact interface at `Pic0SchemeEt`; it is a reduction of the
+headline leaf, not an unconditional representability claim.
+-/
+
+set_option autoImplicit false
+
+universe u
+
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj
+
+namespace AlgebraicGeometry
+
+variable {k : Type u} [Field k]
+
+/-- The étale Picard identity component is Albanese once the symmetric-power and
+descent inputs required by the arbitrary-field Milne engine are supplied.
+
+This is intentionally conditional: no construction of `SymPowData C g` or of the
+uniform target-wise descent datum is asserted here.  Supplying those inputs gives the
+exact `IsAlbanese` conclusion consumed by `JacobianWitness.isAlbaneseFor`. -/
+theorem isAlbanese_pic0Et_of_symPowData
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIrreducible C.hom] [GeometricallyIntegral C.hom]
+    (g : ℕ) (D : SymPowData C g)
+    (hproj : ∀ σ : Equiv.Perm (Fin g),
+      permAut C σ ≫ D.proj = D.proj)
+    (P : 𝟙_ (Over (Spec (.of k))) ⟶ C) (i₀ : Fin g)
+    [GrpObj (Scheme.Pic0SchemeEt C)]
+    [IsProper (Scheme.Pic0SchemeEt C).hom]
+    [Smooth (Scheme.Pic0SchemeEt C).hom]
+    [GeometricallyIrreducible (Scheme.Pic0SchemeEt C).hom]
+    (aj : C ⟶ Scheme.Pic0SchemeEt C)
+    (f : D.carrier ⟶ Scheme.Pic0SchemeEt C)
+    (hf : letI : IsCommMonObj (Scheme.Pic0SchemeEt C) :=
+      isCommMonObj_of_package_arbitraryField (Scheme.Pic0SchemeEt C)
+      D.proj ≫ f = powSum g aj)
+    (haj0 : P ≫ aj = η[Scheme.Pic0SchemeEt C])
+    (hdesc : ∀ (A : Over (Spec (.of k))) [GrpObj A] [IsProper A.hom]
+      [Smooth A.hom] [GeometricallyIrreducible A.hom] (φ : C ⟶ A),
+      letI : IsCommMonObj A := isCommMonObj_of_package_arbitraryField A
+      ∃! ψ : Scheme.Pic0SchemeEt C ⟶ A,
+        D.symAVMap φ = f ≫ ψ) :
+    IsAlbanese C P (Scheme.Pic0SchemeEt C) := by
+  exact isAlbanese_of_symPowData_arbitraryField C g D hproj P i₀
+    (Scheme.Pic0SchemeEt C) aj f hf haj0 hdesc
+
+end AlgebraicGeometry
