@@ -2,12 +2,12 @@ id: AJCR.review-plan.p8-jacobian
 title: 'Phase 8: construct and verify the Jacobian capstone'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: PicRepDatum and JacobianData interfaces, same-carrier conditional finite-Galois
-  producers, and generic geometry/functoriality/Abel consumers are done. Phase 8 is
-  blocked on Phase 7's absent arbitrary-field producer; all remaining leaves consume
-  that datum rather than constructing a substitute. Challenge.lean still has an import-cycle
-  boundary, while sibling AJC retains a distinct full-Picard API and its own open
-  leaves.
+summary: Phase 8 remains blocked. The sep-closed PicRepDatum/JacobianData handoff
+  is same-carrier and axiom-clean only under IsSepClosed; every finite-Galois wrapper
+  binds rep (and often orbit/projectivity), so it is a consumer. Challenge.lean is
+  root-imported but still independently sorry-bearing and has no JacobianData consumer.
+  Do not claim the capstone until an original-field pic0_representableBy feeds the
+  same PicRepDatum, JacobianData, and Challenge statement without an import cycle.
 status: blocked
 kind: proof
 priority: urgent
@@ -24,7 +24,7 @@ metadata:
   created_at: '2026-08-04T01:52:32.684094+00:00'
   parent: AJCR.review-plan
   milestone: AJCR.review-plan
-  updated_at: '2026-08-21T04:43:37.843805+00:00'
+  updated_at: '2026-08-21T10:26:24.269926+00:00'
   pinned_commits:
   - 3914ddcd7d
   - 118a6e320b

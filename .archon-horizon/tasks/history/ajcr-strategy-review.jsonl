@@ -1,2 +1,5 @@
 {"at": "2026-08-21T08:52:42.466413+00:00", "actor": "horizon", "field": "created", "from": "", "to": "queued", "note": "opened"}
 {"at": "2026-08-21T08:53:12.540122+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "objective, roadmap_refs updated"}
+{"at": "2026-08-21T09:40:53.821792+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-21T09:44:16.981586+00:00", "actor": "human", "field": "status", "from": "running", "to": "queued", "note": ""}
+{"at": "2026-08-21T10:30:02.288233+00:00", "actor": "ground", "field": "edited", "from": "", "to": "", "note": "roadmap_refs, inbox_refs updated"}

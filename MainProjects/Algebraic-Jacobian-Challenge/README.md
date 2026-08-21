@@ -33,14 +33,11 @@ available for the schemes this route quotients.
 It is developed alongside `Algebraic-Jacobian-Challenge-Rebuild`, which attacks the
 same theorem by a separate curve-specialized strategy.
 
-## State (measured 2026-07-30)
+## State (measured 2026-08-21 at canonical ledger HEAD)
 
-- **361 modules, 191,855 lines** (re-measured 2026-07-31 by the recipe below, up from
-  312/173,191 the previous day — the tree grew 49 modules in one day of parallel-lane work,
-  so any figure quoted here is stale within hours).  The `sorry`
-  count is deliberately not restated here: parallel lanes land work continuously, and a
-  comment-stripped census is the only honest way to take it.  These counts move whenever a
-  module lands, so re-measure rather
+- **388 modules** are present at the measured HEAD. The line and `sorry` counts are deliberately
+  not restated here: parallel lanes land work continuously, and a comment-stripped census is the
+  only honest way to take them. These counts move whenever a module lands, so re-measure rather
   than quoting them:
 
   ```bash
@@ -56,21 +53,16 @@ same theorem by a separate curve-specialized strategy.
   header.  Modules land here from several parallel efforts, so the unrooted set is
   routinely non-empty for a short while: a module not yet committed to the workspace
   ledger must **not** be rooted, since a clean checkout would then fail to build.  That
-  grace period ends at the commit — once a module is in the ledger, leaving it unrooted
-  means the build does not check it.  **Currently violated in 4 modules** (re-measured
-  2026-07-31 by walking `import AlgebraicJacobian` transitively from the root module: 357
-  of 361 in the root cone, 4 outside it): `Cohomology/CechTwistedCoherenceReductionProof`,
-  `Picard/DivGrassmannianEmbedding`, `RiemannRoch/Ledger/FiberCoordinateComplex`,
-  `RiemannRoch/Ledger/UniformRiemannRoch`.  All 4 are at ledger `HEAD`, so none is inside
-  the grace period.  The 40-file `RiemannRoch/Ledger` cone that earlier measurements
-  flagged has since been rooted (its issue `I-0600` is closed), so this is no longer one
-  lane's port: the remainder is scattered across three areas.
-
-  The count has moved 6 → 14 → 18 → 19 → 20 → 4 over six measurements, in both directions;
-  re-measure rather than quoting, and walk imports transitively rather than reading the
-  root's import lines.  Declarations in these
-  modules are not elaborated by `lake build AlgebraicJacobian`, and no `#print axioms`
-  line through the root can reach them.  Use the reachability snippet in
+  grace period ends at the commit — once a module is in the ledger, leaving it unrooted means
+  the build does not check it. **Currently 10 modules are unrooted**: the root reaches 378 of
+  388 by the same transitive walk. The exact unrooted set is
+  `Cohomology/CechTwistedCoherenceReductionProof`, `DivGrassmannianEmbedding`,
+  `PicSchemeSectionComponent`, `Projective/DemandLedger`, `Grassmannian`,
+  `GrassmannianPlucker`, `GrassmannianPluckerGlobalImmersion`,
+  `GrassmannianPluckerImmersion`, `GrassmannianProjective`, and
+  `RiemannRoch/Ledger/UniformRiemannRoch`. Declarations in these modules are not elaborated by
+  `lake build AlgebraicJacobian`, and no `#print axioms` line through the root can reach them.
+  Use the reachability snippet in
   [`scripts/axiom-frontier.lean`](scripts/axiom-frontier.lean)'s header, seeded at
   `AlgebraicJacobian` rather than `AlgebraicJacobian.Jacobian`.
 - **Locally sorry-free is not axiom-clean.**  The synthesis-leak surface is now a single
@@ -112,6 +104,15 @@ same theorem by a separate curve-specialized strategy.
   the count rises with the module count, so the ratio is not improving;
   this is the dominant build cost and is being converted bottom-up with the helpers
   in `scripts/`.
+
+## Cross-project acceptance boundary (2026-08-21)
+
+This sibling project has no `rankOneAbelIso`, `pic0_representableBy`, `PicRepDatum`, or
+`JacobianData` declaration. Its `Jacobian.lean` route uses `picardJacobianWitness` and the
+separate `fgaPicardRepresentability` obligation (currently a named `sorry`). It is therefore
+not a second producer for the Rebuild acceptance chain and does not supply the same carrier to
+`Challenge.lean`. Keep the routes distinct: a clean conditional witness here must not be used
+to claim the Rebuild's original-field capstone.
 
 ## Decision made: the headline is stated over an arbitrary field
 
