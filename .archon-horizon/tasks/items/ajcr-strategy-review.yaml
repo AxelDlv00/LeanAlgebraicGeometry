@@ -1,0 +1,70 @@
+id: ajcr-strategy-review
+project: Algebraic-Jacobian-Challenge-Rebuild
+objective: 'Act as the independent strategic reviewer for task ajcr-reviewer-full/run
+  0149 and successor AJCR lanes. Read both binding reviewer PDFs and audit actual
+  HEAD/ledger evidence, not reports or commit volume. Stay read-only on Lean source:
+  do not prove or refactor Lean and do not run a full build while an implementation
+  lane is active; only update roadmap, task, inbox, hgraph review state, and organizational
+  documentation. Enforce the exact acceptance chain rankOneAbelIso -> unconditional
+  pic0_representableBy -> the same PicRepDatum/JacobianData -> Challenge.lean. Build
+  an acceptance matrix listing each unconditional producer, exact consumer, carrier/base
+  field, root-import status, axiom evidence, and remaining dependency; declarations
+  with a (rep :) binder are consumers, not producers. Audit run 0149 from baseline
+  3b3ac81f3a through current HEAD and classify substantive commits as acceptance edge
+  closed, consumed direct prerequisite, conditional downstream consumer, compile-performance
+  split, or metadata/churn. Audit both projects for import cycles, unrooted or duplicated
+  routes, excessive one-lemma fragmentation, Pic0CriticalPath organization, stale
+  board/docs/graph claims, and the GlueDataFace/PreSnd bottleneck, separating correctness
+  risks from cosmetic cleanup. Reprice universal Picard/Yoneda descent and orbit-affineness
+  from actual theorem signatures and give the next one to three concrete package signatures
+  in dependency order; reject handoffs that only say missing. Verify important claims
+  with binder inspection, #print axioms, and narrow checks only. Open one conversation
+  with task:ajcr-reviewer-full for actionable findings and update that thread instead
+  of creating repeated notices. Deliver measured facts separately from inference,
+  state whether the strategy converges, name work that should stop, and define the
+  next checkpoint evidence. Do not mark this review done until the active lane''s
+  newest committed delta has been inspected; if it is still running, leave the review
+  queued with the exact checkpoint owed.'
+title: 'AJCR strategic reviewer: enforce reviewer intent, organization, and convergence'
+explanation: ''
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+- Algebraic-Jacobian-Challenge
+priority: urgent
+status: queued
+write_set:
+  files:
+  - .archon-horizon/roadmap/**
+  - .archon-horizon/inbox/**
+  - .archon-horizon/tasks/**
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/hgraph/**
+  - MainProjects/Algebraic-Jacobian-Challenge/hgraph/**
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/README.md
+  - MainProjects/Algebraic-Jacobian-Challenge/README.md
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  - Algebraic-Jacobian-Challenge
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  - Algebraic-Jacobian-Challenge
+  files:
+  - .archon-horizon/roadmap/**
+  - .archon-horizon/inbox/**
+  - .archon-horizon/tasks/**
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/hgraph/**
+  - MainProjects/Algebraic-Jacobian-Challenge/hgraph/**
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/README.md
+  - MainProjects/Algebraic-Jacobian-Challenge/README.md
+roadmap_refs:
+- AJCR.review-plan.p7-galois-descent
+- AJCR.review-plan.p8-jacobian
+inbox_refs: []
+artifact_refs: []
+created_at: '2026-08-21T08:52:42.458527+00:00'
+updated_at: '2026-08-21T08:53:12.540093+00:00'
+metadata:
+  author: horizon

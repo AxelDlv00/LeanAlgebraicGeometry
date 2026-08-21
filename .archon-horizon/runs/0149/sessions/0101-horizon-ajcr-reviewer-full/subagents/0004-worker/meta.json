@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Huygens",
+  "agent_path": "/root/finite_relpic_family",
+  "agent_role": "worker",
+  "depth": 1,
+  "model": "gpt-5.6-terra",
+  "name": "worker",
+  "native_subagent_id": "01a02384-3e9d-7e40-a675-64b0495a2c8c",
+  "parent_session": "0101-horizon-ajcr-reviewer-full",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "running",
+  "subagent_type": "worker",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 3911601,
+    "tokens_out": 11691
+  }
+}
