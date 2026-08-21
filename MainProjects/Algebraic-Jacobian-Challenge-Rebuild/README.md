@@ -48,8 +48,8 @@ which carries the full charter (target, constraints, working model, and phases).
 
 The following matrix is the acceptance boundary, measured against implementation HEAD
 `340206c19ec68bebc9e7878472d0168849f190d0` (run 0149, baseline
-`3b3ac81f3a3cf123fb66ec9957afcaad9a702ba1`). The canonical ledger is now
-`45b5ea3c9e`; the four commits after that implementation delta are review metadata only.
+`3b3ac81f3a3cf123fb66ec9957afcaad9a702ba1`). The canonical ledger has a review-only
+metadata tail after this implementation delta; that tail does not change source evidence.
 A declaration with a `(rep : ...)` binder is
 an input consumer, never an unconditional producer.
 
@@ -66,10 +66,11 @@ an input consumer, never an unconditional producer.
 
 ### Run 0149 classification
 
-From baseline through the current canonical ledger `45b5ea3c9e`, there are 270 commits: 120
-touch Lean and 150 are metadata/churn. The exhaustive classification is **0 acceptance edges closed, 82 consumed
+From baseline through implementation HEAD `340206c19e`, there are 266 commits: 120 touch
+Lean and 146 are metadata/churn. The exhaustive classification is **0 acceptance edges closed, 82 consumed
 direct prerequisites, 10 conditional downstream consumers, 11 compile/performance splits, and
-167 metadata/churn**. The two newest consumed prerequisites are `7fabbbdedd` (the universal
+163 metadata/churn**. Subsequent review-only commits are excluded from this substantive count.
+The two newest consumed prerequisites are `7fabbbdedd` (the universal
 finite-atlas class package) and `340206c19e` (the explicit-argument repair of the finite-family
 common-stage helper).
 The conditional set is `0feb6f0, da36a03, 5ee5a7f, 7d861b2, 50453c8, 9ea2b87, eb16127,
