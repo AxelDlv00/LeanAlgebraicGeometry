@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: Probe.twistLeft_snd
 type: lean
-updated: '2026-08-21T07:12:11'
+updated: '2026-08-21T08:25:29'
 ---
 theorem twistLeft_snd (T : Over (Spec (CommRingCat.of k))) (γ : k' ≃ₐ[k] k') :
     twistLeft T γ ≫ pullback.snd T.hom (specMapAlgebra k k')
