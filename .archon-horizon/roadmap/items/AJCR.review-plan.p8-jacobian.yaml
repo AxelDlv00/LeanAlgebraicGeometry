@@ -2,7 +2,8 @@ id: AJCR.review-plan.p8-jacobian
 title: 'Phase 8: construct and verify the Jacobian capstone'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: Phase 8 remains blocked at ledger HEAD 16b35b635b. The sep-closed
+summary: Phase 8 remains blocked at implementation checkpoint 16b35b635b (review metadata
+  now reaches 00b70eb221). The sep-closed
   PicRepDatum/JacobianData handoff is same-carrier and axiom-clean only under IsSepClosed;
   every finite-Galois wrapper binds rep (and often orbit/projectivity), so it is a
   consumer. Challenge.lean is root-imported but still independently sorry-bearing and

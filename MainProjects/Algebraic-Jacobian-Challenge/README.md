@@ -116,7 +116,8 @@ to claim the Rebuild's original-field capstone.
 
 The current generated AJC graph cache reports 9,483 nodes, 6,804 edges, and 281 stale nodes;
 those labels are not a fresh root-import or axiom certification. The sibling remains a separate
-route at ledger HEAD `16b35b635b`; until the Rebuild lands a binder-free original-field
+route at implementation checkpoint `16b35b635b` (review metadata now reaches `00b70eb221`);
+until the Rebuild lands a binder-free original-field
 `RepresentableBy` producer, neither this project nor its `fgaPicardRepresentability` witness
 closes the AJCR `pic0_representableBy -> PicRepDatum -> JacobianData -> Challenge.lean` chain.
 

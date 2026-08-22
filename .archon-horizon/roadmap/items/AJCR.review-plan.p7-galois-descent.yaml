@@ -8,7 +8,8 @@ summary: Finite-stage affine glue, generic finite-Galois scheme descent, conditi
   present but do not close an acceptance edge. Commits 7fabbbdedd and 340206c19e add
   a pinned universal class on every finite atlas chart/overlap and a clean common
   finite-subextension theorem for finite dependent relPic families; both audit to
-  [propext, Classical.choice, Quot.sound]. At ledger HEAD 16b35b635b, narrow native
+  [propext, Classical.choice, Quot.sound]. At the implementation ledger checkpoint
+  16b35b635b (review metadata now reaches 00b70eb221), narrow native
   compilation has artifacts for GlueDataFace, GlueDataAssembly, and (from the active
   continuation) Pic0FiniteStageTransitionModels and Pic0FiniteStageTripleTransitionModels.
   The tracked GluePackage target reached 9361/9370 before its 1800-second cap (exit 124);

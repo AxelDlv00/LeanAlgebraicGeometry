@@ -50,8 +50,9 @@ The following matrix is the acceptance boundary, measured against implementation
 `340206c19ec68bebc9e7878472d0168849f190d0` (run 0149 implementation checkpoint, baseline
 `3b3ac81f3a3cf123fb66ec9957afcaad9a702ba1`). The canonical ledger has a review-only
 metadata tail through `16b35b635b` after this implementation delta; that tail does not
-change the implementation source evidence. Run 0149 session 0104 is active and has not
-landed a newer committed source delta.
+change the implementation source evidence. Review metadata from this session now reaches
+`00b70eb221`; run 0149 session 0104 is active and has not landed a newer committed source
+delta.
 A declaration with a `(rep : ...)` binder is
 an input consumer, never an unconditional producer.
 
@@ -116,8 +117,9 @@ The next package signatures, in dependency order, are:
 2. `pic0FiniteStage_isProjective (P : Pic0FiniteStageGluePackage Ck F) ... : P.gluedMap.IsProjective` (or the exact-carrier `FiniteInAffine` theorem), so the existing orbit lemma applies to that same carrier.
 3. `pic0_representableBy (C : Over (Spec K)) ... : Sigma J, (pic0TypeFunctor C).RepresentableBy J`, immediately followed by `PicRepDatum`/`JacobianData` projections from the same `J` and `rep`, then a Challenge handoff.
 
-The full ledger range through `16b35b635b` is 282 commits; the 16-commit tail is review,
-dashboard, and run-lifecycle metadata, not a new acceptance edge. The active 0149 continuation
+The measured ledger range through `16b35b635b` is 282 commits; the 16-commit tail is review,
+dashboard, and run-lifecycle metadata, not a new acceptance edge. Subsequent review commits
+through `00b70eb221` likewise add no implementation edge. The active 0149 continuation
 has scratch compiler work but no newer committed source delta. The next checkpoint is a fresh
 narrow/native check of the four-module glue cone, root reach and `#print axioms`, followed by a
 committed binder-free producer and the same-carrier capstone.
