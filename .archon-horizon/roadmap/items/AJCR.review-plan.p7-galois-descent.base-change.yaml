@@ -3,8 +3,9 @@ title: Global glued-scheme base-change isomorphism
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: The finite-stage glued base-change comparison is present in the canonical source
-  root. GlueDataFace and GlueDataAssembly have native artifacts, but GluePackage and the
-  top PreSnd, OverlapIsoSnd, and GluedComparison artifacts are still absent from the local
+  root. GlueDataFace, GlueDataAssembly, and the active continuation's
+  Pic0FiniteStageTransitionModels have native artifacts, but GluePackage and the top
+  PreSnd, OverlapIsoSnd, and GluedComparison artifacts are still absent from the local
   cache; a fresh import of Pic0CriticalPath therefore stops before finiteStageBaseChangeIso.
   This is a dependent-elaboration certification risk, not a missing mathematical
   hypothesis; downstream nodes must not treat finiteStageBaseChangeIso as kernel-checked

@@ -94,8 +94,9 @@ A current hgraph cache reports 12,995 nodes / 5,548 edges for Rebuild (752 stale
 9,483 / 6,804 for the sibling AJC (281 stale nodes); those generated counts are not a fresh
 Lean-root measurement. The graph labels many glue declarations `lean_ok`, but a narrow
 `import AlgebraicJacobian.Picard.Pic0CriticalPath` currently stops at the missing
-`Pic0FiniteStageGluePackage.olean`. The cache has `GlueDataFace.olean` and
-`GlueDataAssembly.olean`, while `GluePackage`, top `PreSnd`, `OverlapIsoSnd`, and
+`Pic0FiniteStageGluePackage.olean`. The cache has `GlueDataFace.olean`,
+`GlueDataAssembly.olean`, and the active continuation has additionally produced
+`Pic0FiniteStageTransitionModels.olean`; `GluePackage`, top `PreSnd`, `OverlapIsoSnd`, and
 `GluedComparison` artifacts are absent. `Pic0CriticalPath.lean` is 1,120 lines with 87
 imports, over the 500-line house rule (I-0220 tracks 27 over-limit files); this is
 organization/compile risk, not an acceptance edge. The ten-file PreSnd split is primarily a

@@ -9,9 +9,10 @@ summary: Finite-stage affine glue, generic finite-Galois scheme descent, conditi
   a pinned universal class on every finite atlas chart/overlap and a clean common
   finite-subextension theorem for finite dependent relPic families; both audit to
   [propext, Classical.choice, Quot.sound]. At ledger HEAD 16b35b635b, narrow native
-  compilation has artifacts for GlueDataFace and GlueDataAssembly, while the source-rooted
-  critical cone still lacks GluePackage, top PreSnd, OverlapIsoSnd, and GluedComparison
-  artifacts. The active 0149 continuation has no newer committed source delta. Binder-free
+  compilation has artifacts for GlueDataFace, GlueDataAssembly, and (from the active
+  continuation) Pic0FiniteStageTransitionModels, while the source-rooted critical cone
+  still lacks GluePackage, top PreSnd, OverlapIsoSnd, and GluedComparison artifacts. The
+  active 0149 continuation has no newer committed source delta. Binder-free
   RepresentableBy P.gluedOver and exact-carrier projectivity/orbit-affineness remain blockers.
 status: blocked
 kind: proof
