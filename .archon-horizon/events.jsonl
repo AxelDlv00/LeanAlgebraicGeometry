@@ -9002,3 +9002,4 @@
 {"type": "publish.completed", "id": "2d11559c12ca4e18b7f9a89c4913c42a", "created_at": "2026-08-22T03:35:47.860660+00:00", "actor": "orchestrator", "data": {"run_id": "0152", "reports": [], "blueprints": [".archon-horizon/blueprints/Algebraic-Jacobian-Challenge-Rebuild.json", ".archon-horizon/blueprints/Algebraic-Jacobian-Challenge.json"]}}
 {"type": "inbox.temporary_archived", "id": "dfd9b1c9aefe465fb8764a43f51373a0", "created_at": "2026-08-22T03:36:21.644053+00:00", "actor": "orchestrator", "data": {"items": ["I-2019"]}}
 {"type": "run.finished", "id": "577c0fff7b8c4118ae35c0fb69ef5939", "created_at": "2026-08-22T03:36:21.646265+00:00", "actor": "orchestrator", "data": {"run_id": "0152"}}
+{"type": "workspace.run_integrated", "id": "11323541f3924da7b0ea327f92f07fda", "created_at": "2026-08-22T03:40:29.457952+00:00", "actor": "orchestrator", "data": {"run_id": "0152", "sha": "fe3985b2523f8673bfc49ac3028ef74cac363c11", "changed": true}}
