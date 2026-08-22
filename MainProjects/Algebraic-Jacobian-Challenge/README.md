@@ -105,7 +105,7 @@ same theorem by a separate curve-specialized strategy.
   this is the dominant build cost and is being converted bottom-up with the helpers
   in `scripts/`.
 
-## Cross-project acceptance boundary (2026-08-21)
+## Cross-project acceptance boundary (2026-08-22)
 
 This sibling project has no `rankOneAbelIso`, `pic0_representableBy`, `PicRepDatum`, or
 `JacobianData` declaration. Its `Jacobian.lean` route uses `picardJacobianWitness` and the
@@ -113,6 +113,12 @@ separate `fgaPicardRepresentability` obligation (currently a named `sorry`). It 
 not a second producer for the Rebuild acceptance chain and does not supply the same carrier to
 `Challenge.lean`. Keep the routes distinct: a clean conditional witness here must not be used
 to claim the Rebuild's original-field capstone.
+
+The current generated AJC graph cache reports 9,483 nodes, 6,804 edges, and 281 stale nodes;
+those labels are not a fresh root-import or axiom certification. The sibling remains a separate
+route at ledger HEAD `16b35b635b`; until the Rebuild lands a binder-free original-field
+`RepresentableBy` producer, neither this project nor its `fgaPicardRepresentability` witness
+closes the AJCR `pic0_representableBy -> PicRepDatum -> JacobianData -> Challenge.lean` chain.
 
 ## Decision made: the headline is stated over an arbitrary field
 
