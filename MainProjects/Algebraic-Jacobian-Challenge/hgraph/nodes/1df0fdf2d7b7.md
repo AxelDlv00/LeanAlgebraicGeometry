@@ -1,7 +1,7 @@
 ---
 author: sync
 content_type: theorem
-created: '2026-07-28T12:23:40'
+created: '2026-08-22T09:46:03'
 decl: AlgebraicGeometry.Scheme.one_le_coheight_of_ne_genericPoint
 docstring: '**A non-generic point has coheight at least one.** The elementary half
   of the converse of
@@ -27,7 +27,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.one_le_coheight_of_ne_genericPoint
 type: lean
-updated: '2026-08-21T20:06:55'
+updated: '2026-08-22T09:46:03'
 ---
 theorem Scheme.one_le_coheight_of_ne_genericPoint {X : Scheme.{u}} [IrreducibleSpace X]
     {x : X} (hx : x ≠ genericPoint X) : 1 ≤ Order.coheight x := by
