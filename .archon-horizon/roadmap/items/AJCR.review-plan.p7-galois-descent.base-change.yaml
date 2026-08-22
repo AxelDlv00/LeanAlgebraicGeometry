@@ -4,9 +4,11 @@ projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: The finite-stage glued base-change comparison is present in the canonical source
   root. GlueDataFace, GlueDataAssembly, and the active continuation's
-  Pic0FiniteStageTransitionModels have native artifacts, but GluePackage and the top
-  PreSnd, OverlapIsoSnd, and GluedComparison artifacts are still absent from the local
-  cache; a fresh import of Pic0CriticalPath therefore stops before finiteStageBaseChangeIso.
+  Pic0FiniteStageTransitionModels/Pic0FiniteStageTripleTransitionModels have native
+  artifacts. The tracked GluePackage target reached 9361/9370 before its 1800-second cap
+  (exit 124); GluePackage and the top PreSnd, OverlapIsoSnd, and GluedComparison artifacts
+  remain absent from the local cache, so a fresh import of Pic0CriticalPath stops before
+  finiteStageBaseChangeIso.
   This is a dependent-elaboration certification risk, not a missing mathematical
   hypothesis; downstream nodes must not treat finiteStageBaseChangeIso as kernel-checked
   until the four-module cone is rebuilt and root-imported.
