@@ -44,22 +44,24 @@ which carries the full charter (target, constraints, working model, and phases).
   and `\source{}` anchors). Build with `leanblueprint pdf` / `leanblueprint web`.
 - `archon-protected.yaml` — the mathematician-owned signatures agents must not modify.
 
-## Acceptance review (measured 2026-08-21)
+## Acceptance review (measured 2026-08-22)
 
 The following matrix is the acceptance boundary, measured against implementation HEAD
-`340206c19ec68bebc9e7878472d0168849f190d0` (run 0149, baseline
+`340206c19ec68bebc9e7878472d0168849f190d0` (run 0149 implementation checkpoint, baseline
 `3b3ac81f3a3cf123fb66ec9957afcaad9a702ba1`). The canonical ledger has a review-only
-metadata tail after this implementation delta; that tail does not change source evidence.
+metadata tail through `16b35b635b` after this implementation delta; that tail does not
+change the implementation source evidence. Run 0149 session 0104 is active and has not
+landed a newer committed source delta.
 A declaration with a `(rep : ...)` binder is
 an input consumer, never an unconditional producer.
 
 | Declaration / role | Carrier and base | Exact consumer | Root and axioms | Remaining dependency |
 | --- | --- | --- | --- | --- |
-| `canonicalRankOneAbelIso` (producer) | `rankOneDivisorLocus ... ≅ rankOneLocus ...` over `k` | `pic0_sepClosed_representableBy` uses it directly in `Pic0SepClosedRepresentable.lean:201,208` | Rooted through `Pic0CriticalPath` and `AlgebraicJacobian`; narrow `#print axioms`: `propext, Classical.choice, Quot.sound` | None on this edge; this is the canonical specialization, not the parameterized `(E)` consumer |
-| `pic0_sepClosed_representableBy` (producer, `[IsSepClosed k]`) | `J : Over (Spec k)` and `RepresentableBy J` for `pic0TypeFunctor C` | `picRepDatumSepClosed` takes the exact `.1/.2` | Rooted via `Pic0CriticalPath`; same axiom set | Descent from the separably closed field is still required |
-| `picRepDatumSepClosed` (producer, sep-closed) | `PicRepDatum k k C`, with exactly the preceding `J` and `rep` | `jacobianDataSepClosed` is `toJacobianData` on that datum | Rooted; same axiom set | No arbitrary-field producer and no Challenge consumer |
-| `jacobianDataSepClosed` (producer, sep-closed) | `JacobianData C`, same `J`/`rep` plus QC | No consumer in `Challenge.lean` | Rooted; same axiom set | Must be replaced/transported by the original-field datum |
-| `pic0RepresentableBy_finiteGaloisDescent` (consumer) | quotient carrier over `K`, from a finite-level `J/L` | `picRepDatum_finiteGaloisDescent`, then `jacobianData_finiteGaloisDescent` | Rooted and axiom-clean, but has `(rep : ...)` and `OrbitsInAffineOpen` | A binder-free `RepresentableBy P.gluedOver` producer and exact-carrier orbit/projectivity |
+| `canonicalRankOneAbelIso` (producer) | `rankOneDivisorLocus ... ≅ rankOneLocus ...` over `k` | `pic0_sepClosed_representableBy` uses it directly in `Pic0SepClosedRepresentable.lean:201,208` | Source-rooted through `Pic0CriticalPath` and `AlgebraicJacobian`; narrow `#print axioms`: `propext, Classical.choice, Quot.sound` | None on this edge; this is the canonical specialization, not the parameterized `(E)` consumer |
+| `pic0_sepClosed_representableBy` (producer, `[IsSepClosed k]`) | `J : Over (Spec k)` and `RepresentableBy J` for `pic0TypeFunctor C` | `picRepDatumSepClosed` takes the exact `.1/.2` | Source-rooted; narrow probe gives the same axiom set, but a fresh critical-root import is blocked at `GluePackage.olean` | Descent from the separably closed field is still required |
+| `picRepDatumSepClosed` (producer, sep-closed) | `PicRepDatum k k C`, with exactly the preceding `J` and `rep` | `jacobianDataSepClosed` is `toJacobianData` on that datum | Source-rooted; narrow probe gives the same axiom set | No arbitrary-field producer and no Challenge consumer |
+| `jacobianDataSepClosed` (producer, sep-closed) | `JacobianData C`, same `J`/`rep` plus QC | No consumer in `Challenge.lean` | Source-rooted; narrow probe gives the same axiom set | Must be replaced/transported by the original-field datum |
+| `pic0RepresentableBy_finiteGaloisDescent` (consumer) | quotient carrier over `K`, from a finite-level `J/L` | `picRepDatum_finiteGaloisDescent`, then `jacobianData_finiteGaloisDescent` | Source-rooted and narrow-axiom-clean, but has `(rep : ...)` and `OrbitsInAffineOpen` | A binder-free `RepresentableBy P.gluedOver` producer and exact-carrier orbit/projectivity |
 | finite-stage PicRep/JD wrappers (consumers) | `P.gluedOver` over `K`, preserving their input `rep` | No unconditional downstream consumer | Narrowly green; all bind `(rep :)` (and often `(hproj :)`) | Do not count as a producer or as the capstone |
 | `pic0_representableBy` (required producer) | Original-field `C/K` | None exists at this HEAD | Absent, hence unrooted | Universal finite-stage/Yoneda representation, then orbit/projectivity |
 | `Challenge.Jacobian` (statement boundary) | Standalone `C` | No `JacobianData` handoff | Root-imported at `AlgebraicJacobian.lean:168`, but `#print axioms` includes `sorryAx` | Wire the same original-field datum without creating an import cycle |
@@ -84,15 +86,20 @@ import/check commits remain metadata, not acceptance evidence.
 
 ### Organization and convergence
 
-At exact HEAD, the Rebuild import graph has 1,143 local modules and 3,105 local edges; the
-library root reaches 1,109, leaving 34 unrooted. The graph is syntactically acyclic. The
-critical unrooted cone is `GlueDataFace -> PreSnd -> OverlapIsoSnd -> GluedComparison`.
-A fresh local cache now contains `Pic0FiniteStageGlueDataFace.olean`, but the source remains
-outside root reach and the top `PreSnd`, `OverlapIsoSnd`, and `GluedComparison` artifacts are
-absent; this artifact is therefore not root certification. `Pic0CriticalPath.lean` is itself rooted, but its 86 direct
-imports and 1,109 lines make it an index, not proof of root certification. The ten-file
-PreSnd split is primarily a compile-performance choice; it is a correctness risk only while
-the composition is unrooted. The older DivSchemeRedesign family and other one-lemma files
+The last canonical source-root measurement (at the implementation checkpoint) has 1,143 local
+modules and 3,105 local edges; the
+library root reaches 1,109, leaving 34 unrooted, with no syntactic import cycle. The
+critical cone is `GlueDataFace -> PreSnd -> OverlapIsoSnd -> GluedComparison`.
+A current hgraph cache reports 12,995 nodes / 5,548 edges for Rebuild (752 stale nodes) and
+9,483 / 6,804 for the sibling AJC (281 stale nodes); those generated counts are not a fresh
+Lean-root measurement. The graph labels many glue declarations `lean_ok`, but a narrow
+`import AlgebraicJacobian.Picard.Pic0CriticalPath` currently stops at the missing
+`Pic0FiniteStageGluePackage.olean`. The cache has `GlueDataFace.olean` and
+`GlueDataAssembly.olean`, while `GluePackage`, top `PreSnd`, `OverlapIsoSnd`, and
+`GluedComparison` artifacts are absent. `Pic0CriticalPath.lean` is 1,120 lines with 87
+imports, over the 500-line house rule (I-0220 tracks 27 over-limit files); this is
+organization/compile risk, not an acceptance edge. The ten-file PreSnd split is primarily a
+compile-performance choice. The older DivSchemeRedesign family and other one-lemma files
 outside the root are unconsumed routes, not progress toward the headline.
 
 The strategy converges through the canonical rank-one -> separably closed representer ->
@@ -106,8 +113,11 @@ The next package signatures, in dependency order, are:
 2. `pic0FiniteStage_isProjective (P : Pic0FiniteStageGluePackage Ck F) ... : P.gluedMap.IsProjective` (or the exact-carrier `FiniteInAffine` theorem), so the existing orbit lemma applies to that same carrier.
 3. `pic0_representableBy (C : Over (Spec K)) ... : Sigma J, (pic0TypeFunctor C).RepresentableBy J`, immediately followed by `PicRepDatum`/`JacobianData` projections from the same `J` and `rep`, then a Challenge handoff.
 
-The next checkpoint is a fresh narrow/native check of the four-module glue cone, root reach and
-`#print axioms`, followed by a committed binder-free producer and the same-carrier capstone.
+The full ledger range through `16b35b635b` is 282 commits; the 16-commit tail is review,
+dashboard, and run-lifecycle metadata, not a new acceptance edge. The active 0149 continuation
+has scratch compiler work but no newer committed source delta. The next checkpoint is a fresh
+narrow/native check of the four-module glue cone, root reach and `#print axioms`, followed by a
+committed binder-free producer and the same-carrier capstone.
 `Pic0FiniteStageUniversalClass.lean` is committed in `7fabbbdedd` and remains a consumed
 universal-class prerequisite, not a `RepresentableBy` producer.
 
