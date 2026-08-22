@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "OverlapIsoSnd proof-body isolation: gluingOverlapIso_snd stub is unreachable because top Pic0FiniteStageGluingOverlapIsoPreSnd.olean is absent (itself blocked by GluingDiagramIso.olean).",
+  "created_at": "2026-08-22T15:15:14.998575+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingOverlapIsoSnd.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingOverlapIsoSnd.lean",
+      "bytes": 1889,
+      "lines": 56
+    }
+  ],
+  "diagnostics": "diagnostics.txt"
+}
