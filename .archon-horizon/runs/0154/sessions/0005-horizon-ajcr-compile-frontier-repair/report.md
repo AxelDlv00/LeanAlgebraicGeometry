@@ -11,7 +11,7 @@
 
 ## Why I stopped
 
-The objective is partly advanced, not fully complete: GluePackage is certified, but DiagramIso remains beyond the current elaboration/resource frontier even with coherent upstream caches and has no verified `.olean` artifact. The shared worktree retains unrelated metadata changes; they were left untouched. Horizon also reports the existing 0.1.2/0.1.3 version drift and stale run-0149 marker.
+The objective is partly advanced, not fully complete: GluePackage is certified, but DiagramIso remains beyond the current elaboration/resource frontier even with coherent upstream caches and has no verified `.olean` artifact. The shared worktree retains unrelated metadata changes; they were left untouched. In the finalization audit, `.archon-horizon/search/index.jsonl`, `.archon-horizon/search/meta.json`, `MainProjects/Algebraic-Jacobian-Challenge-Rebuild/hgraph/nodes/006d6f3e9992.md`, and roughly 23,512 other paths were identified as concurrent/pre-existing and were not committed by this task. Horizon also reports the existing 0.1.2/0.1.3 version drift and stale run-0149 marker.
 
 ## Next
 
