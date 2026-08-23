@@ -45,15 +45,25 @@ noncomputable def pic0FiniteStageModelMapToRingHom
         Pic0FiniteStageModelRing C L n m relation M
           (Pic0FiniteStageMapTarget C q))
     (q : Pic0FiniteStageMapIndex C) :
-    Pic0FiniteStageModelRing C L n m relation M
-        (Pic0FiniteStageMapSource C q) →+*
-      Pic0FiniteStageModelRing C L n m relation M
-        (Pic0FiniteStageMapTarget C q) :=
-  { toFun := mapM q
-    map_one' := (mapM q).map_one
-    map_mul' := (mapM q).map_mul
-    map_zero' := (mapM q).map_zero
-    map_add' := (mapM q).map_add }
+    CommRingCat.of
+        (Pic0FiniteStageModelRing C L n m relation M
+          (Pic0FiniteStageMapSource C q)) ⟶
+      CommRingCat.of
+        (Pic0FiniteStageModelRing C L n m relation M
+          (Pic0FiniteStageMapTarget C q)) := by
+  letI : Semiring
+      (Pic0FiniteStageModelRing C L n m relation M
+        (Pic0FiniteStageMapSource C q)) :=
+    (inferInstance : CommRing
+      (Pic0FiniteStageModelRing C L n m relation M
+        (Pic0FiniteStageMapSource C q))).toSemiring
+  letI : Semiring
+      (Pic0FiniteStageModelRing C L n m relation M
+        (Pic0FiniteStageMapTarget C q)) :=
+    (inferInstance : CommRing
+      (Pic0FiniteStageModelRing C L n m relation M
+        (Pic0FiniteStageMapTarget C q))).toSemiring
+  exact CommRingCat.ofHom (mapM q).toRingHom
 
 set_option synthInstance.maxHeartbeats 400000 in
 -- The fields retain three nested finite-subextension scalar towers.
@@ -94,8 +104,8 @@ structure Pic0FiniteStageGluePackage
               (relation (Pic0FiniteStageMapSource C q)))))
   hOpen : forall i : Pic0FiniteStageRestrictionIndex C,
     IsOpenImmersion
-      (Spec.map (CommRingCat.ofHom
-        (pic0FiniteStageModelMapToRingHom C L n m relation M mapM (Sum.inl i))))
+      (Spec.map
+        (pic0FiniteStageModelMapToRingHom C L n m relation M mapM (Sum.inl i)))
   N : DatG0.FinSubext M.1 k
   thetaN : forall p : Pic0FiniteStageTripleTransitionIndex C,
     N.1 ⊗[M.1] Pic0FiniteStageTripleTransitionModelSource
@@ -126,9 +136,14 @@ noncomputable def glueData
     (P : Pic0FiniteStageGluePackage C F) : Scheme.GlueData := by
   letI : Algebra.IsAlgebraic P.L.1 k := by infer_instance
   letI : Algebra.IsAlgebraic P.M.1 k := by infer_instance
+  have hOpen' : ∀ i : Pic0FiniteStageRestrictionIndex C,
+      IsOpenImmersion
+        (Spec.map (CommRingCat.ofHom (P.mapM (Sum.inl i)).toRingHom)) := by
+    intro i
+    simpa only [pic0FiniteStageModelMapToRingHom] using P.hOpen i
   exact pic0FiniteStageAffineRingGlueData
     C P.L P.n P.m P.relation P.M P.mapM P.N
-      P.e P.hmapM P.hOpen P.thetaN P.hthetaN
+      P.e P.hmapM hOpen' P.thetaN P.hthetaN
 
 end Pic0FiniteStageGluePackage
 
@@ -140,7 +155,7 @@ theorem exists_pic0FiniteStageGluePackage
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k] :
     Nonempty (Pic0FiniteStageGluePackage C F) := by
   classical
-  obtain ⟨L, n, m, relation, e, M, mapM, hmapM, hOpen, _⟩ :=
+  obtain ⟨L, n, m, relation, e, M, mapM, hmapM, hOpenOld, _⟩ :=
     exists_finSubext_pic0FiniteStageTransition_models (C := C) (F := F)
   letI : Algebra.IsAlgebraic L.1 k := by infer_instance
   letI : Algebra.IsAlgebraic M.1 k := by infer_instance
@@ -159,7 +174,9 @@ theorem exists_pic0FiniteStageGluePackage
     M := M
     mapM := mapM
     hmapM := hmapM
-    hOpen := hOpen
+    hOpen := by
+      intro i
+      simpa only [pic0FiniteStageModelMapToRingHom] using hOpenOld i
     N := N
     thetaN := thetaN
     hthetaN := by

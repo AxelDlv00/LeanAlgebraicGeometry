@@ -1,24 +1,26 @@
 ## Progress
 
-- Rebuilt the Phase 7 board as a 25-row declaration-sized route covering GluePackage, the overlap left/right legs, glued comparison, root-import acceptance, universal-class/common-stage inputs, Yoneda descent, orbit affineness, finite-stage representation, Galois consumers, and the sibling bridge.
-- Recorded source/cache/root evidence in roadmap summaries and hgraph comments. The five top finite-stage artifacts remain absent; UniversalClass, OrbitAffine/StableCover, finite-Galois consumers, and the common-stage artifact are present.
-- Marked conditional orbit and Galois/PicRepDatum wrappers as consumers, and left binder-free `RepresentableBy P.gluedOver`, exact-carrier orbit affineness, and original-field representability blocked for mathematical reasons.
-- Corrected the executable DAG: universal glue-equivalence -> Yoneda -> finite-stage `RepresentableBy` -> exact-carrier orbit affineness -> quotient/Galois/PicRepDatum/original-field consumers; the representability parent’s orbit dependency is final-assembly-only.
-- Reconciled dead run 0149 / `ajcr-reviewer-full` to `blocked`; active run 0154 ownership remains limited to its four-file compile cone. Janitor and ground both found no roadmap or task warnings.
+- Rebuilt the AJCR Phase 7 route as 25 declaration-sized roadmap rows, including the finite-stage compile chain, root-import acceptance, Universal Picard/Yoneda descent, orbit affineness, representability consumers, and the AJC sibling bridge.
+- Corrected execution order to:
+  `glue-equivalence -> Yoneda -> finite-stage RepresentableBy -> exact-carrier orbit affineness -> quotient/Galois/PicRepDatum consumers`.
+- Distinguished source-scan labels from native artifacts and separated cache/build blockers from mathematical blockers. Added hgraph evidence comments and acknowledged I-2024.
+- Reconciled dead run 0149 and blocked `ajcr-reviewer-full`; run 0154 remains active with its original four-file ownership. Roadmap and task warnings are clear.
+- Durable scoped commits: `68d27466a8`, `c39adcf17e`, `0d9217e2e4`, `6259fc0137`. The initial broad integration was concurrent run 0155’s `55ad633b4f`.
 
 ## Issues
 
-- Horizon CLI 0.1.3 has no `depends_on` option for roadmap add/set. The strict compile chain is represented by parent nesting; cross-branch dependency IDs are repeated in summaries and comments. No dashboard/API write was used.
-- No Lean, blueprint, or Lake files were edited, so no Lean check was required. Native compilation remains the active 0154 frontier; do not infer kernel certification from source-scan `lean_ok` labels.
-- The workspace still reports the pre-existing managed-file drift (initialized 0.1.2, running 0.1.3) and advisory inbox volume; protections were left untouched.
-- Concurrent 0154 source/cache activity (including its GluePackage edit), pre-existing source deletions/replacement copies, unrelated AJC/AJCR and subproject hgraph trees, replacement-source/reference trees, and generated event/search/run markers remain outside these commits; none were staged or reverted.
-- The broad initial roadmap/hgraph integration was already recorded by concurrent run 0155 in `55ad633b4f`; this session only committed the scoped correction/acknowledgement/report paths (`68d27466a8`, `c39adcf17e`, `0d9217e2e4`).
-- Reviewed and acknowledged the unrelated `I-0144` `overSpecMap` API advisory; no source or API change was made.
+- Native `.olean` artifacts are still missing for GluePackage, GluingDiagramIso, PreSnd, OverlapIsoSnd, and GluedComparison. UniversalClass, OrbitAffine/StableCover, and downstream conditional consumer artifacts are present.
+- Remaining mathematical blockers are the binder-free Yoneda/`RepresentableBy P.gluedOver` certificate, arbitrary-field exact-carrier orbit affineness, and unconditional original-field assembly.
+- Horizon CLI 0.1.3 cannot set leaf `depends_on`; strict order is encoded through nesting and explicit summary dependencies.
+- No Lean, blueprint, Lake, or source edits were made by this task, so no Lean checks were run.
+- Concurrent source/cache edits, pre-existing source deletions/replacement copies, generated graph/reference trees, and operational markers remain uncommitted and were not staged or reverted.
 
 ## Why I stopped
 
-The requested roadmap audit, decomposition, evidence annotations, and stale-task reconciliation are complete. The actual mathematical and cache blockers remain for the next prover; claiming Phase 7 or the Jacobian endpoint would be premature.
+The requested roadmap audit, decomposition, evidence annotations, root-reachability gate, and stale-task reconciliation are complete. The remaining work requires the active 0154 compile frontier and later mathematical proofs.
 
 ## Next
 
-Wait for run 0154 to produce native GluePackage/GluingDiagramIso artifacts, then execute the nested PreSnd -> Snd -> GluedComparison -> root-import gate before attempting universal Yoneda or exact-carrier orbit proofs.
+After 0154 produces artifacts, execute `PreSnd -> Snd -> GluedComparison -> root-import`, then the Universal Yoneda and finite-stage representation leaves, followed by exact-carrier orbit affineness.
+
+[Session report](/home/axel/LeanAlgebraicGeometry-Horizon/.archon-horizon/runs/0156/sessions/0002-horizon-ajcr-roadmap-decomposition/report.md)
