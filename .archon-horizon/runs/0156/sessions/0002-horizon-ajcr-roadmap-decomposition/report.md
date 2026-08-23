@@ -12,6 +12,7 @@
 - No Lean, blueprint, or Lake files were edited, so no Lean check was required. Native compilation remains the active 0154 frontier; do not infer kernel certification from source-scan `lean_ok` labels.
 - The workspace still reports the pre-existing managed-file drift (initialized 0.1.2, running 0.1.3) and advisory inbox volume; protections were left untouched.
 - Concurrent 0154 source/cache activity (including its GluePackage edit), unrelated AJC/AJCR and subproject hgraph trees, replacement-source/reference trees, and generated event/search/run markers remain outside these commits; none were staged or reverted.
+- The broad initial roadmap/hgraph integration was already recorded by concurrent run 0155 in `55ad633b4f`; this session only committed the scoped correction/acknowledgement/report paths (`68d27466a8`, `c39adcf17e`, `0d9217e2e4`).
 - Reviewed and acknowledged the unrelated `I-0144` `overSpecMap` API advisory; no source or API change was made.
 
 ## Why I stopped
