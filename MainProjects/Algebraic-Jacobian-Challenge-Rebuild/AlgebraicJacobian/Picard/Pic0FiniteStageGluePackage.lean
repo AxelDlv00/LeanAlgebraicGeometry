@@ -66,6 +66,78 @@ noncomputable def pic0FiniteStageModelMapToRingHom
   exact CommRingCat.ofHom (mapM q).toRingHom
 
 set_option synthInstance.maxHeartbeats 400000 in
+-- Name the dependent triple-map carrier once to avoid repeated tower synthesis.
+set_option maxHeartbeats 12800000 in
+abbrev Pic0FiniteStageTripleTransitionModelAlgHom
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C → Nat)
+    (relation : ∀ j, Fin (m j) → MvPolynomial (Fin (n j)) L.1)
+    (M : DatG0.FinSubext L.1 k)
+    (mapM : ∀ q : Pic0FiniteStageMapIndex C,
+      Pic0FiniteStageModelRing C L n m relation M
+          (Pic0FiniteStageMapSource C q) →ₐ[M.1]
+        Pic0FiniteStageModelRing C L n m relation M
+          (Pic0FiniteStageMapTarget C q))
+    (N : DatG0.FinSubext M.1 k)
+    (p : Pic0FiniteStageTripleTransitionIndex C) : Type u :=
+  N.1 ⊗[M.1] Pic0FiniteStageTripleTransitionModelSource
+      C L n m relation M mapM p →ₐ[N.1]
+    N.1 ⊗[M.1] Pic0FiniteStageTripleTransitionModelTarget
+      C L n m relation M mapM p
+
+set_option synthInstance.maxHeartbeats 400000 in
+-- Name the comparison proposition once so the package field elaborates at a stable boundary.
+set_option maxHeartbeats 12800000 in
+abbrev Pic0FiniteStageTripleTransitionModelComparison
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C → Nat)
+    (relation : ∀ j, Fin (m j) → MvPolynomial (Fin (n j)) L.1)
+    (e : ∀ j,
+      k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j) ≃ₐ[k]
+        Pic0FiniteStageRing C j)
+    (M : DatG0.FinSubext L.1 k)
+    (mapM : ∀ q : Pic0FiniteStageMapIndex C,
+      Pic0FiniteStageModelRing C L n m relation M
+          (Pic0FiniteStageMapSource C q) →ₐ[M.1]
+        Pic0FiniteStageModelRing C L n m relation M
+          (Pic0FiniteStageMapTarget C q))
+    (hmapM : ∀ q,
+      (Algebra.TensorProduct.map M.1.val
+          (AlgHom.id L.1
+            (DatG0.FiniteRelationAlgebra L.1
+              (n (Pic0FiniteStageMapTarget C q))
+              (m (Pic0FiniteStageMapTarget C q))
+              (relation (Pic0FiniteStageMapTarget C q))))).comp
+          ((mapM q).restrictScalars L.1) =
+        ((pic0FiniteStageTransportedMap C L n m relation e q).restrictScalars
+          L.1).comp
+          (Algebra.TensorProduct.map M.1.val
+            (AlgHom.id L.1
+              (DatG0.FiniteRelationAlgebra L.1
+                (n (Pic0FiniteStageMapSource C q))
+                (m (Pic0FiniteStageMapSource C q))
+                (relation (Pic0FiniteStageMapSource C q))))))
+    (N : DatG0.FinSubext M.1 k)
+    (thetaN : ∀ p : Pic0FiniteStageTripleTransitionIndex C,
+      Pic0FiniteStageTripleTransitionModelAlgHom
+        C L n m relation M mapM N p)
+    (p : Pic0FiniteStageTripleTransitionIndex C) : Prop :=
+  (Algebra.TensorProduct.map N.1.val
+      (AlgHom.id M.1
+        (Pic0FiniteStageTripleTransitionModelTarget
+          C L n m relation M mapM p))).comp
+      ((thetaN p).restrictScalars M.1) =
+    ((pic0FiniteStageTransportedTripleTransitionOfModels
+      C L n m relation e M mapM hmapM p.1 p.2.1 p.2.2).restrictScalars
+        M.1).comp
+      (Algebra.TensorProduct.map N.1.val
+        (AlgHom.id M.1
+          (Pic0FiniteStageTripleTransitionModelSource
+            C L n m relation M mapM p)))
+
+set_option synthInstance.maxHeartbeats 400000 in
 -- The fields retain three nested finite-subextension scalar towers.
 set_option maxHeartbeats 12800000 in
 /-- All finite-stage models and comparison equations needed to assemble the descended
@@ -108,23 +180,11 @@ structure Pic0FiniteStageGluePackage
         (pic0FiniteStageModelMapToRingHom C L n m relation M mapM (Sum.inl i)))
   N : DatG0.FinSubext M.1 k
   thetaN : forall p : Pic0FiniteStageTripleTransitionIndex C,
-    N.1 ⊗[M.1] Pic0FiniteStageTripleTransitionModelSource
-        C L n m relation M mapM p →ₐ[N.1]
-      N.1 ⊗[M.1] Pic0FiniteStageTripleTransitionModelTarget
-        C L n m relation M mapM p
+    Pic0FiniteStageTripleTransitionModelAlgHom
+      C L n m relation M mapM N p
   hthetaN : forall p : Pic0FiniteStageTripleTransitionIndex C,
-    (Algebra.TensorProduct.map N.1.val
-        (AlgHom.id M.1
-          (Pic0FiniteStageTripleTransitionModelTarget
-            C L n m relation M mapM p))).comp
-        ((thetaN p).restrictScalars M.1) =
-      ((pic0FiniteStageTransportedTripleTransitionOfModels
-        C L n m relation e M mapM hmapM p.1 p.2.1 p.2.2).restrictScalars
-          M.1).comp
-    (Algebra.TensorProduct.map N.1.val
-          (AlgHom.id M.1
-            (Pic0FiniteStageTripleTransitionModelSource
-              C L n m relation M mapM p)))
+    Pic0FiniteStageTripleTransitionModelComparison
+      C L n m relation e M mapM hmapM N thetaN p
 
 namespace Pic0FiniteStageGluePackage
 
@@ -174,6 +234,21 @@ theorem exists_pic0FiniteStageGluePackage
     exists_finSubext_pic0FiniteStageTripleTransition_models_of_comparisons
       C L n m relation M mapM Q
   choose thetaN hthetaN using hN
+  have hOpen' :
+      ∀ i : Pic0FiniteStageRestrictionIndex C,
+        IsOpenImmersion
+          (Spec.map
+            (pic0FiniteStageModelMapToRingHom C L n m relation M mapM (Sum.inl i))) := by
+    intro i
+    simpa only [pic0FiniteStageModelMapToRingHom] using hOpenOld i
+  have hthetaN' :
+      ∀ p : Pic0FiniteStageTripleTransitionIndex C,
+        Pic0FiniteStageTripleTransitionModelComparison
+          C L n m relation e M mapM hmapM N thetaN p := by
+    intro p
+    simpa only [Pic0FiniteStageTripleTransitionModelComparison, Q,
+      pic0FiniteStageTransportedTripleTransitionOfModels] using
+      hthetaN p
   exact ⟨{
     L := L
     n := n
@@ -183,15 +258,10 @@ theorem exists_pic0FiniteStageGluePackage
     M := M
     mapM := mapM
     hmapM := hmapM
-    hOpen := by
-      intro i
-      simpa only [pic0FiniteStageModelMapToRingHom] using hOpenOld i
+    hOpen := hOpen'
     N := N
     thetaN := thetaN
-    hthetaN := by
-      intro p
-      simpa only [Q, pic0FiniteStageTransportedTripleTransitionOfModels] using
-        hthetaN p
+    hthetaN := hthetaN'
   }⟩
 
 end
