@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Descartes",
+  "agent_path": "/root/frontier_janitor",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-terra",
+  "name": "janitor",
+  "native_subagent_id": "01a02e64-738f-7203-a844-0c92576c9cfb",
+  "ok": true,
+  "parent_session": "0005-horizon-ajcr-compile-frontier-repair",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Health audit complete, read-only.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 447945,
+    "tokens_out": 3948
+  }
+}
