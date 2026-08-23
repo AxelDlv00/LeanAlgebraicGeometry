@@ -3,13 +3,13 @@ title: 'Phase 8: construct and verify the Jacobian capstone'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: Phase 8 remains blocked at implementation checkpoint 16b35b635b (review metadata
-  now reaches 00b70eb221). The sep-closed
-  PicRepDatum/JacobianData handoff is same-carrier and axiom-clean only under IsSepClosed;
-  every finite-Galois wrapper binds rep (and often orbit/projectivity), so it is a
-  consumer. Challenge.lean is root-imported but still independently sorry-bearing and
-  has no JacobianData consumer. Do not claim the capstone until an original-field
-  pic0_representableBy feeds the same PicRepDatum, JacobianData, and Challenge statement
-  without an import cycle; the active 0149 continuation has not landed that delta.
+  now reaches 00b70eb221). The sep-closed PicRepDatum/JacobianData handoff is same-carrier
+  and axiom-clean only under IsSepClosed; every finite-Galois wrapper binds rep (and
+  often orbit/projectivity), so it is a consumer. Challenge.lean is root-imported
+  but still independently sorry-bearing and has no JacobianData consumer. Do not claim
+  the capstone until an original-field pic0_representableBy feeds the same PicRepDatum,
+  JacobianData, and Challenge statement without an import cycle; the active 0149 continuation
+  has not landed that delta.
 status: blocked
 kind: proof
 priority: urgent

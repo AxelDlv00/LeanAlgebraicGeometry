@@ -2,16 +2,13 @@ id: AJCR.review-plan.p7-galois-descent.base-change
 title: Global glued-scheme base-change isomorphism
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: The finite-stage glued base-change comparison is present in the canonical source
-  root. GlueDataFace, GlueDataAssembly, and the active continuation's
-  Pic0FiniteStageTransitionModels/Pic0FiniteStageTripleTransitionModels have native
-  artifacts. The tracked GluePackage target reached 9361/9370 before its 1800-second cap
-  (exit 124); GluePackage and the top PreSnd, OverlapIsoSnd, and GluedComparison artifacts
-  remain absent from the local cache, so a fresh import of Pic0CriticalPath stops before
-  finiteStageBaseChangeIso.
-  This is a dependent-elaboration certification risk, not a missing mathematical
-  hypothesis; downstream nodes must not treat finiteStageBaseChangeIso as kernel-checked
-  until the four-module cone is rebuilt and root-imported.
+summary: 'Build/certification chain: finite-glue -> compile-glue-package -> compile-diagram-iso
+  -> diagram-left-leg -> pre-snd -> snd -> glued-comparison -> root-import-acceptance.
+  Source declarations for GluePackage, overlap projections, and finiteStageBaseChangeIso
+  exist, but the critical cache lacks all five top artifacts. Run 0154 owns only GluePackage,
+  GluingDiagramIso, GluingBaseChange, and OverlapBaseChange; do not edit or reassign
+  it. Pic0CriticalPath currently stops before importing top PreSnd, Snd, and GluedComparison,
+  so no root acceptance is claimed.'
 status: blocked
 kind: proof
 priority: urgent
@@ -26,9 +23,8 @@ metadata:
   author: human
   created_at: '2026-08-18T06:11:53.823161+00:00'
   parent: AJCR.review-plan.p7-galois-descent
-  owner: ajcr-reviewer-full
   milestone: AJCR.review-plan
-  updated_at: '2026-08-22T02:40:00.000000+00:00'
+  updated_at: '2026-08-23T02:30:46.953646+00:00'
   pinned_commits:
   - 312f90ea27
   - 663dea427f

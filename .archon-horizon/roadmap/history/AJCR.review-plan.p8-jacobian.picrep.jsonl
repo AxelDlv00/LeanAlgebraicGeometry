@@ -1,1 +1,2 @@
 {"at": "2026-08-18T06:12:12.007762+00:00", "actor": "human", "field": "created", "from": "", "to": "pending", "note": "opened"}
+{"at": "2026-08-23T02:20:48.808078+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated", "provenance": {"run": "0156", "session": "0002-horizon-ajcr-roadmap-decomposition", "role": "horizon", "round": "0", "rounds": "1", "task": "ajcr-roadmap-decomposition", "task_title": "AJCR blocked-route decomposition and roadmap repair", "projects": "Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge"}}

@@ -1,0 +1,33 @@
+id: AJCR.review-plan.p7-galois-descent.universal.glue-equivalence
+title: Assemble the glued universal Picard equivalence
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'Target: a binder-free RepresentableBy certificate for P.gluedOver, with
+  chart/overlap classes and restriction equalities descended through the finite glue.
+  Dependencies: universal.class, universal.common-stage, and base-change.glued-comparison.
+  No producer declaration exists; this is a mathematical descent gap after the cache
+  gate, not a missing conditional wrapper.'
+status: blocked
+kind: proof
+priority: urgent
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-08-23T02:23:07.878344+00:00'
+  provenance:
+    run: '0156'
+    session: 0002-horizon-ajcr-roadmap-decomposition
+    role: horizon
+    round: '0'
+    rounds: '1'
+    task: ajcr-roadmap-decomposition
+    task_title: AJCR blocked-route decomposition and roadmap repair
+    projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
+  parent: AJCR.review-plan.p7-galois-descent.universal
+  milestone: AJCR.review-plan
+  updated_at: '2026-08-23T02:47:21.899267+00:00'

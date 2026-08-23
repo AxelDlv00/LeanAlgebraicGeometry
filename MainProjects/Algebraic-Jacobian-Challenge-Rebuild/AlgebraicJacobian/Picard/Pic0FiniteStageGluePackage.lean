@@ -30,16 +30,30 @@ variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
 variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
   [GeometricallyIrreducible C.hom] [IsSepClosed k]
 
--- Keep the tensor-product model maps on the canonical `CommRing` semiring path.
-local instance pic0FiniteStageModelRingSemiring
+-- Rebuild a model map against the canonical `CommRing` semiring instances before
+-- passing it to `CommRingCat.ofHom`; the `AlgHom` producer carries a tensor-product
+-- semiring instance that is propositionally equal but not definitionally identical.
+noncomputable def pic0FiniteStageModelMapToRingHom
     {F : Type u} [Field F] [Algebra F k]
     (L : DatG0.FinSubext F k)
     (n m : Pic0FiniteStageRingIndex C → Nat)
     (relation : ∀ j, Fin (m j) → MvPolynomial (Fin (n j)) L.1)
     (M : DatG0.FinSubext L.1 k)
-    (j : Pic0FiniteStageRingIndex C) :
-    Semiring (Pic0FiniteStageModelRing C L n m relation M j) :=
-  (inferInstance : CommRing (Pic0FiniteStageModelRing C L n m relation M j)).toSemiring
+    (mapM : forall q : Pic0FiniteStageMapIndex C,
+      Pic0FiniteStageModelRing C L n m relation M
+          (Pic0FiniteStageMapSource C q) →ₐ[M.1]
+        Pic0FiniteStageModelRing C L n m relation M
+          (Pic0FiniteStageMapTarget C q))
+    (q : Pic0FiniteStageMapIndex C) :
+    Pic0FiniteStageModelRing C L n m relation M
+        (Pic0FiniteStageMapSource C q) →+*
+      Pic0FiniteStageModelRing C L n m relation M
+        (Pic0FiniteStageMapTarget C q) :=
+  { toFun := mapM q
+    map_one' := (mapM q).map_one
+    map_mul' := (mapM q).map_mul
+    map_zero' := (mapM q).map_zero
+    map_add' := (mapM q).map_add }
 
 set_option synthInstance.maxHeartbeats 400000 in
 -- The fields retain three nested finite-subextension scalar towers.
@@ -80,7 +94,8 @@ structure Pic0FiniteStageGluePackage
               (relation (Pic0FiniteStageMapSource C q)))))
   hOpen : forall i : Pic0FiniteStageRestrictionIndex C,
     IsOpenImmersion
-      (Spec.map (CommRingCat.ofHom (mapM (Sum.inl i)).toRingHom))
+      (Spec.map (CommRingCat.ofHom
+        (pic0FiniteStageModelMapToRingHom C L n m relation M mapM (Sum.inl i))))
   N : DatG0.FinSubext M.1 k
   thetaN : forall p : Pic0FiniteStageTripleTransitionIndex C,
     N.1 ⊗[M.1] Pic0FiniteStageTripleTransitionModelSource
@@ -96,7 +111,7 @@ structure Pic0FiniteStageGluePackage
       ((pic0FiniteStageTransportedTripleTransitionOfModels
         C L n m relation e M mapM hmapM p.1 p.2.1 p.2.2).restrictScalars
           M.1).comp
-        (Algebra.TensorProduct.map N.1.val
+    (Algebra.TensorProduct.map N.1.val
           (AlgHom.id M.1
             (Pic0FiniteStageTripleTransitionModelSource
               C L n m relation M mapM p)))

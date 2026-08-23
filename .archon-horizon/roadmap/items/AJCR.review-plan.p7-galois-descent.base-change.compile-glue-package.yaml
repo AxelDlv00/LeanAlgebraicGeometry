@@ -1,0 +1,33 @@
+id: AJCR.review-plan.p7-galois-descent.base-change.compile-glue-package
+title: Compile and certify GluePackage
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'Declaration: exists_pic0FiniteStageGluePackage in Pic0FiniteStageGluePackage.lean.
+  Dependency: finite-glue is done. Current source sync is lean_ok, but GluePackage.olean
+  is absent; run 0154 is actively repairing the line-72 RingHom/CommRing cache boundary
+  and owns this file. Acceptance requires a fresh native artifact and a root import;
+  do not infer success from source scanning.'
+status: active
+kind: proof
+priority: urgent
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-08-23T02:22:31.507302+00:00'
+  provenance:
+    run: '0156'
+    session: 0002-horizon-ajcr-roadmap-decomposition
+    role: horizon
+    round: '0'
+    rounds: '1'
+    task: ajcr-roadmap-decomposition
+    task_title: AJCR blocked-route decomposition and roadmap repair
+    projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
+  parent: AJCR.review-plan.p7-galois-descent.base-change
+  owner: ajcr-compile-frontier-repair
+  milestone: AJCR.review-plan

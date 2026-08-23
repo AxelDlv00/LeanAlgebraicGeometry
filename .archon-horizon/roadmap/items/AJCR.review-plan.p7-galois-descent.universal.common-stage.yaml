@@ -1,0 +1,35 @@
+id: AJCR.review-plan.p7-galois-descent.universal.common-stage
+title: Descend the common finite relPic stage
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'Declaration: exists_finSubext_relPic_tensorStage and the common-stage dependent-family
+  producer. Dependency: finite-stage tensor and relPic infrastructure are done. RelPicTensorStageFiniteStage.olean
+  is present and commits 92c130dce7 and 340206c19e provide the checked evidence. This
+  leaf chooses a common stage; it does not yet assemble maps on P.gluedOver.'
+status: done
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-08-23T02:23:03.554357+00:00'
+  provenance:
+    run: '0156'
+    session: 0002-horizon-ajcr-roadmap-decomposition
+    role: horizon
+    round: '0'
+    rounds: '1'
+    task: ajcr-roadmap-decomposition
+    task_title: AJCR blocked-route decomposition and roadmap repair
+    projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
+  parent: AJCR.review-plan.p7-galois-descent.universal
+  milestone: AJCR.review-plan
+  updated_at: '2026-08-23T02:32:10.177282+00:00'
+  pinned_commits:
+  - 340206c19e
+  - 92c130dce7

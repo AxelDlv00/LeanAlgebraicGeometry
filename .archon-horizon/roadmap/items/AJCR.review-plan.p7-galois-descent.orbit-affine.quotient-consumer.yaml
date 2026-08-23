@@ -1,0 +1,35 @@
+id: AJCR.review-plan.p7-galois-descent.orbit-affine.quotient-consumer
+title: Consume exact orbit affineness in the quotient
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+- Algebraic-Jacobian-Challenge
+summary: 'Declaration: pic0RepresentableBy_finiteStageGaloisDescent_of_isProjective/of_isImmersion
+  and the stable affine quotient consumer. Dependencies: orbit-affine.exact-carrier
+  plus representability.finite-stage. Conditional source and artifacts are present,
+  but no unconditional input currently instantiates them; leave pending until the
+  exact-carrier producer lands.'
+status: pending
+kind: proof
+priority: urgent
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-08-23T02:23:27.228143+00:00'
+  provenance:
+    run: '0156'
+    session: 0002-horizon-ajcr-roadmap-decomposition
+    role: horizon
+    round: '0'
+    rounds: '1'
+    task: ajcr-roadmap-decomposition
+    task_title: AJCR blocked-route decomposition and roadmap repair
+    projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
+  parent: AJCR.review-plan.p7-galois-descent.orbit-affine.exact-carrier
+  milestone: AJCR.review-plan
+  updated_at: '2026-08-23T02:45:53.690368+00:00'

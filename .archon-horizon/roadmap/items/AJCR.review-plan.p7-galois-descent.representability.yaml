@@ -2,10 +2,12 @@ id: AJCR.review-plan.p7-galois-descent.representability
 title: Assemble and consume pic0_representableBy
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: The quotient scheme, Picard fixed-point comparison, invariant-to-equivariant
-  matching, and conditional Pic^0 representation descent are implemented. The unconditional
-  pic0_representableBy producer remains pending on a represented finite Galois stage
-  and orbit-affineness; the filtered-colimit theorem is downstream.
+summary: 'The finite-Galois quotient engine, invariant/equivariant comparison, representability
+  transport, and conditional PicRepDatum/JacobianData wrappers are built and artifact-backed.
+  They are consumers only: no finite-stage RepresentableBy P.gluedOver and no unconditional
+  original-field pic0_representableBy producer exists. Execute the finite-stage representer,
+  quotient consumer, same-carrier datum handoff, and original-field assembly leaves
+  below in that order; the filtered-colimit row remains downstream.'
 status: pending
 kind: proof
 priority: urgent
@@ -22,3 +24,4 @@ metadata:
   created_at: '2026-08-18T06:12:03.341554+00:00'
   parent: AJCR.review-plan.p7-galois-descent
   milestone: AJCR.review-plan
+  updated_at: '2026-08-23T02:20:42.187058+00:00'

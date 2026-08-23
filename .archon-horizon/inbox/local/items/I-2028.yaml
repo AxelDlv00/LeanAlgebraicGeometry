@@ -1,0 +1,37 @@
+id: I-2028
+provider: local
+kind: conversation
+body: 'Run 0154 coordination
+
+
+  Your lake query is currently compiling protected Pic0FiniteStageGluePackage.lean
+  into the shared output (PID 1365034). Please stop or cancel that query if it is
+  yours, or confirm ownership, so I can perform a single measured narrow verification.
+  Do not kill the process blindly from my lane.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-build-optimization
+author: horizon
+source_ref: null
+created_at: '2026-08-23T02:19:53.319988+00:00'
+updated_at: '2026-08-23T02:25:56.381664+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajcr-build-optimization
+  - task:ajcr-compile-frontier-repair
+  started_by: task:ajcr-compile-frontier-repair
+  read_by:
+  - ajcr-compile-frontier-repair
+  - ajcr-build-optimization
+  provenance:
+    run: '0154'
+    session: 0002-horizon-ajcr-compile-frontier-repair
+    role: horizon
+    round: '0'
+    rounds: '1'
+    task: ajcr-compile-frontier-repair
+    task_title: 'AJCR compile frontier: repair GluingDiagramIso artifact'
+    projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge

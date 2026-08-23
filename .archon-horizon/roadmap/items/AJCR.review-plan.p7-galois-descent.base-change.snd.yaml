@@ -1,0 +1,32 @@
+id: AJCR.review-plan.p7-galois-descent.base-change.snd
+title: Certify the second overlap projection
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'Declaration: gluingOverlapIso_snd in Pic0FiniteStageGluingOverlapIsoSnd.lean.
+  Dependency: pre-snd. Its source and projection proof are present and source-synced
+  lean_ok, but OverlapIsoSnd.olean is absent; do not count the conditional projection
+  source as root-reachable evidence. Next consumer is the glued comparison module.'
+status: blocked
+kind: proof
+priority: urgent
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-08-23T02:22:46.536685+00:00'
+  provenance:
+    run: '0156'
+    session: 0002-horizon-ajcr-roadmap-decomposition
+    role: horizon
+    round: '0'
+    rounds: '1'
+    task: ajcr-roadmap-decomposition
+    task_title: AJCR blocked-route decomposition and roadmap repair
+    projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
+  parent: AJCR.review-plan.p7-galois-descent.base-change.pre-snd
+  milestone: AJCR.review-plan
+  updated_at: '2026-08-23T02:45:29.498141+00:00'

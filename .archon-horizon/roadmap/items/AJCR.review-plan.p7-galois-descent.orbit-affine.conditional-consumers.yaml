@@ -1,0 +1,38 @@
+id: AJCR.review-plan.p7-galois-descent.orbit-affine.conditional-consumers
+title: Retain conditional orbit and stable-cover consumers
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+- Algebraic-Jacobian-Challenge
+summary: 'Declarations: pic0FiniteStageOrbitsInAffineOpen_of_isImmersion/of_isProjective,
+  pic0FiniteStageHasStableAffineCover_of_isProjective, and the finite-Galois quotient
+  consumer. Dependencies: generic FiniteInAffine/orbit and stable-cover engines. Pic0FiniteStageOrbitAffine.olean,
+  Pic0FiniteStageStableAffineCover.olean, and Pic0FiniteGaloisRepresentable.olean
+  are present. Complete as conditional infrastructure only; it does not discharge
+  the exact-carrier gate.'
+status: done
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-08-23T02:23:16.559467+00:00'
+  provenance:
+    run: '0156'
+    session: 0002-horizon-ajcr-roadmap-decomposition
+    role: horizon
+    round: '0'
+    rounds: '1'
+    task: ajcr-roadmap-decomposition
+    task_title: AJCR blocked-route decomposition and roadmap repair
+    projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
+  parent: AJCR.review-plan.p7-galois-descent.orbit-affine
+  milestone: AJCR.review-plan
+  updated_at: '2026-08-23T02:32:14.521070+00:00'
+  pinned_commits:
+  - 3914ddcd7d

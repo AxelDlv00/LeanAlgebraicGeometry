@@ -1,0 +1,33 @@
+id: AJCR.review-plan.p7-galois-descent.base-change.diagram-left-leg
+title: Certify the left overlap projection
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'Declarations: gluingOverlapIso_pre_fst and gluingOverlapIso_fst in Pic0FiniteStageGluingDiagramIso.lean.
+  Dependency: compile-diagram-iso. Run 0154 owns this file and is actively compiling
+  it; source sync is lean_ok but no GluingDiagramIso.olean is present. Acceptance
+  is a native artifact plus a fresh root import, not a source scan.'
+status: active
+kind: proof
+priority: urgent
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-08-23T02:30:17.814707+00:00'
+  provenance:
+    run: '0156'
+    session: 0002-horizon-ajcr-roadmap-decomposition
+    role: horizon
+    round: '0'
+    rounds: '1'
+    task: ajcr-roadmap-decomposition
+    task_title: AJCR blocked-route decomposition and roadmap repair
+    projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
+  parent: AJCR.review-plan.p7-galois-descent.base-change.compile-diagram-iso
+  owner: ajcr-compile-frontier-repair
+  milestone: AJCR.review-plan
+  updated_at: '2026-08-23T02:45:18.718959+00:00'

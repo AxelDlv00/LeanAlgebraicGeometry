@@ -2,9 +2,11 @@ id: AJCR.review-plan.p7-galois-descent.finite-glue
 title: Finite-stage affine atlas and GlueData
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'Complete: finite-stage charts, overlap rings, restrictions, transitions,
-  triple-face and cocycle laws, and an inhabited Scheme.GlueData package are root-reachable
-  and kernel-clean.'
+summary: 'Complete for the assembled finite transition/triple data: GlueDataFace,
+  GlueDataAssembly, and the finite-stage face/cocycle infrastructure have native artifacts
+  and root evidence. The source-level Pic0FiniteStageGluePackage and exists_pic0FiniteStageGluePackage
+  declarations are tracked separately under base-change.compile-glue-package until
+  GluePackage.olean and a fresh root import exist.'
 status: done
 kind: proof
 priority: high
@@ -19,6 +21,6 @@ metadata:
   created_at: '2026-08-18T06:11:51.159581+00:00'
   parent: AJCR.review-plan.p7-galois-descent
   milestone: AJCR.review-plan
-  updated_at: '2026-08-20T19:21:00.979136+00:00'
+  updated_at: '2026-08-23T02:30:42.658879+00:00'
   pinned_commits:
   - 5adee30ada
