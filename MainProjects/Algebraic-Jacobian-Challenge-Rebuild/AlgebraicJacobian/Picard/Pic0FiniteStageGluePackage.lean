@@ -188,6 +188,55 @@ structure Pic0FiniteStageGluePackage
 
 namespace Pic0FiniteStageGluePackage
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 3200000 in
+-- The raw overlap tensor needs the model's canonical left algebra before its ring
+-- instance can be reconstructed.  Naming that instance keeps downstream `ofHom`
+-- statements independent of whichever tensor-product semiring was used to build a map.
+noncomputable instance pic0FiniteStageOverlapBaseChangeRingCommRing
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (M : DatG0.FinSubext L.1 k)
+    (N : DatG0.FinSubext M.1 k)
+    (U V : Pic0FiniteStageChartIndex C) :
+    CommRing (Pic0FiniteStageOverlapBaseChangeRing C L n m relation M N U V) := by
+  letI : Algebra M.1 (Pic0FiniteStageOverlapModelRing C L n m relation M U V) :=
+    Algebra.TensorProduct.leftAlgebra
+      (R := L.1) (S := M.1) (A := M.1)
+      (B := DatG0.FiniteRelationAlgebra L.1
+        (n (Sum.inr (U, V))) (m (Sum.inr (U, V)))
+        (relation (Sum.inr (U, V))))
+  letI : CommRing (Pic0FiniteStageOverlapModelRing C L n m relation M U V) := inferInstance
+  letI : CommSemiring (Pic0FiniteStageOverlapModelRing C L n m relation M U V) :=
+    (inferInstance : CommRing (Pic0FiniteStageOverlapModelRing C L n m relation M U V)).toCommSemiring
+  dsimp only [Pic0FiniteStageOverlapBaseChangeRing]
+  exact Algebra.TensorProduct.instCommRing
+
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 3200000 in
+-- The scalar map into the overlap uses the same canonical tensor carrier as its ring.
+noncomputable instance pic0FiniteStageOverlapBaseChangeRingAlgebra
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (M : DatG0.FinSubext L.1 k)
+    (N : DatG0.FinSubext M.1 k)
+    (U V : Pic0FiniteStageChartIndex C) :
+    Algebra N.1 (Pic0FiniteStageOverlapBaseChangeRing C L n m relation M N U V) := by
+  letI : Algebra M.1 (Pic0FiniteStageOverlapModelRing C L n m relation M U V) :=
+    Algebra.TensorProduct.leftAlgebra
+      (R := L.1) (S := M.1) (A := M.1)
+      (B := DatG0.FiniteRelationAlgebra L.1
+        (n (Sum.inr (U, V))) (m (Sum.inr (U, V)))
+        (relation (Sum.inr (U, V))))
+  dsimp only [Pic0FiniteStageOverlapBaseChangeRing]
+  exact Algebra.TensorProduct.leftAlgebra
+    (R := M.1) (S := N.1) (A := N.1)
+    (B := Pic0FiniteStageOverlapModelRing C L n m relation M U V)
+
 set_option maxHeartbeats 25600000 in
 -- The package projections retain the dependent tensor-product instances of the constructor.
 /-- The scheme glue datum computed from an inhabited finite-stage package. -/
