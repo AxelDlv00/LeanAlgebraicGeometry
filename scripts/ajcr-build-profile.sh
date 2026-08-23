@@ -73,6 +73,7 @@ esac
 command -v "$lake_bin" >/dev/null 2>&1 || die "Lake executable not found: $lake_bin"
 [[ -f "$project_dir/lakefile.toml" ]] || die "AJCR project not found: $project_dir"
 command -v /usr/bin/time >/dev/null 2>&1 || die "/usr/bin/time is required"
+cd -- "$project_dir"
 
 if ((${#explicit_targets[@]} > 0)); then
   targets=("${explicit_targets[@]}")
@@ -99,7 +100,7 @@ validate_target() {
     *) die "target must be a module target beginning with +AlgebraicJacobian.: $target" ;;
   esac
   case "$target" in
-    *Pic0FiniteStage*)
+    *Pic0FiniteStage*|*Pic0CriticalPath*)
       die "finite-stage targets are intentionally excluded from this profile: $target"
       ;;
   esac
