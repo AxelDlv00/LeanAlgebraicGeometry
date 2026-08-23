@@ -6,13 +6,13 @@
 
 ## Issues
 
-- A direct narrow DiagramIso compile was run with a 900-second timeout. It reached roughly 9.9 GB child RSS and 198% CPU, then exited 124 without producing `Pic0FiniteStageGluingDiagramIso.olean`; LSP verification likewise timed out.
+- Two direct narrow DiagramIso compiles were run with 900-second timeouts. The final retry used the regenerated upstream caches, reached about 10.3 GB child RSS and 198% CPU, and exited 124 at 15:00.11 without producing `Pic0FiniteStageGluingDiagramIso.olean`; LSP verification likewise timed out. The failed retry is preserved as Horizon attempt `0007`.
 - The adjacent `Pic0FiniteStageScalarExtendedAtlas.lean` rebuild still reports the upstream tensor `Semiring`/`CommRing` instance-identity mismatch at lines 121 and 160, plus missing `Semiring` synthesis at line 202. No protected or forbidden files were changed.
 
 ## Why I stopped
 
-The objective is partly advanced, not fully complete: GluePackage is certified, but DiagramIso remains beyond the current elaboration/resource frontier and has no verified `.olean` artifact. The shared worktree retains unrelated metadata changes; they were left untouched. Horizon also reports the existing 0.1.2/0.1.3 version drift and stale run-0149 marker.
+The objective is partly advanced, not fully complete: GluePackage is certified, but DiagramIso remains beyond the current elaboration/resource frontier even with coherent upstream caches and has no verified `.olean` artifact. The shared worktree retains unrelated metadata changes; they were left untouched. Horizon also reports the existing 0.1.2/0.1.3 version drift and stale run-0149 marker.
 
 ## Next
 
-Normalize the scalar-tensor ring/module instances in `Pic0FiniteStageScalarExtendedAtlas.lean` (the smallest upstream blocker), run its narrow check, then retry DiagramIso with the helper split. Keep the current 900-second/resource measurements as the baseline.
+The next safe refactor is to split/normalize the dependent tensor-ring instances around the scalar-extension declarations (or isolate the remaining expensive helper into a separately cached declaration), then retry DiagramIso. Use the final 900-second / 10.3 GB / 198% measurement as the baseline; do not broaden to a project build.
