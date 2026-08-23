@@ -30,6 +30,17 @@ variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
 variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
   [GeometricallyIrreducible C.hom] [IsSepClosed k]
 
+-- Keep the tensor-product model maps on the canonical `CommRing` semiring path.
+local instance pic0FiniteStageModelRingSemiring
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C → Nat)
+    (relation : ∀ j, Fin (m j) → MvPolynomial (Fin (n j)) L.1)
+    (M : DatG0.FinSubext L.1 k)
+    (j : Pic0FiniteStageRingIndex C) :
+    Semiring (Pic0FiniteStageModelRing C L n m relation M j) :=
+  (inferInstance : CommRing (Pic0FiniteStageModelRing C L n m relation M j)).toSemiring
+
 set_option synthInstance.maxHeartbeats 400000 in
 -- The fields retain three nested finite-subextension scalar towers.
 set_option maxHeartbeats 12800000 in
