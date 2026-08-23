@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Rejected transparent-abbrev draft: direct probe confirms defining tensor abbreviation captures a stale IntermediateField module instance; rebuild scalar-extension source/cache instead of changing GluedOver.",
+  "created_at": "2026-08-23T10:55:01.131895+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluedOver.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluedOver.lean",
+      "bytes": 4515,
+      "lines": 105
+    }
+  ],
+  "diagnostics": ""
+}

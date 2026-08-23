@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Rejected local CommRing/Algebra witness draft: tensor AlgHom semiring identities differ from CommRing projections; preserve before simplifying to raw producer types.",
+  "created_at": "2026-08-23T10:39:46.435951+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluedOver.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluedOver.lean",
+      "bytes": 4357,
+      "lines": 106
+    }
+  ],
+  "diagnostics": ""
+}
