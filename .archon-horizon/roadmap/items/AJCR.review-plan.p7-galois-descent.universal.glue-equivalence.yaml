@@ -2,11 +2,12 @@ id: AJCR.review-plan.p7-galois-descent.universal.glue-equivalence
 title: Assemble the glued universal Picard equivalence
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'Target: a binder-free RepresentableBy certificate for P.gluedOver, with
-  chart/overlap classes and restriction equalities descended through the finite glue.
-  Dependencies: universal.class, universal.common-stage, and base-change.glued-comparison.
-  No producer declaration exists; this is a mathematical descent gap after the cache
-  gate, not a missing conditional wrapper.'
+summary: 'Infrastructure leaf: descend and reconcile the chart/overlap universal classes,
+  restriction equalities, and glued maps on P.gluedOver using universal.class, universal.common-stage,
+  and the certified glued comparison. It must hand a coherent map/equality package
+  to universal.yoneda; it is not itself the final RepresentableBy certificate. No
+  producer declaration exists; this is a mathematical descent gap after the cache
+  gate.'
 status: blocked
 kind: proof
 priority: urgent
@@ -30,4 +31,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
   parent: AJCR.review-plan.p7-galois-descent.universal
   milestone: AJCR.review-plan
-  updated_at: '2026-08-23T02:47:21.899267+00:00'
+  updated_at: '2026-08-23T03:01:23.772779+00:00'

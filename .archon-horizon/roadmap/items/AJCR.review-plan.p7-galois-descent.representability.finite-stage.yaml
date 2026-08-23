@@ -4,9 +4,12 @@ projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'Target: (pic0TypeFunctor ((baseChange K P.N.1).obj C)).RepresentableBy P.gluedOver
   with the exact glued carrier and no extra binder. Dependencies: universal.yoneda
-  and base-change.glued-comparison. Pic0FiniteStageGluedOver defines the carrier,
-  but no producer declaration constructs this certificate; this is a mathematical
-  blocker after compile certification.'
+  and base-change.glued-comparison; this finite-stage certificate must be produced
+  before orbit-affine.exact-carrier, whose theorem signatures consume the same rep.
+  Pic0FiniteStageGluedOver defines the carrier, but no producer declaration constructs
+  this certificate; this is a mathematical blocker after compile certification. The
+  parent representability gate is for later original-field assembly and does not reorder
+  this child.'
 status: blocked
 kind: proof
 priority: urgent
@@ -28,5 +31,6 @@ metadata:
     task: ajcr-roadmap-decomposition
     task_title: AJCR blocked-route decomposition and roadmap repair
     projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
-  parent: AJCR.review-plan.p7-galois-descent.representability
+  parent: AJCR.review-plan.p7-galois-descent.universal.yoneda
   milestone: AJCR.review-plan
+  updated_at: '2026-08-23T03:08:27.140058+00:00'

@@ -5,7 +5,8 @@ projects:
 - Algebraic-Jacobian-Challenge
 summary: 'Target: FiniteInAffine P.glueData.glued, or an equivalent finite-type projective-space
   immersion/projectivity theorem for P.gluedMap over an arbitrary finite Galois stage.
-  Dependencies: universal.yoneda and the finite-stage glue package. Existing algebraically-closed
+  Dependencies: universal.yoneda -> representability.finite-stage -> this exact-carrier
+  producer, plus the certified finite-stage glue package. Existing algebraically-closed
   connected/irreducible and projective/immersion wrappers do not supply the arbitrary-field
   exact carrier. This is the primary mathematical orbit-affineness blocker.'
 status: blocked
@@ -32,3 +33,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
   parent: AJCR.review-plan.p7-galois-descent.orbit-affine
   milestone: AJCR.review-plan
+  updated_at: '2026-08-23T03:01:19.395112+00:00'
