@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Chandrasekhar",
+  "agent_path": "/root/frontier_probe/frontier_janitor",
+  "agent_role": "janitor",
+  "depth": 2,
+  "model": "gpt-5.6-sol",
+  "name": "janitor",
+  "native_subagent_id": "01a02c62-d98b-7ac2-b7dc-b8c40ea376e6",
+  "ok": false,
+  "parent_session": "0002-horizon-ajcr-compile-frontier-repair",
+  "parent_subagent_id": "01a02c4e-4eb0-7ba2-ba32-3efc52862d02",
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "janitor",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 1578092,
+    "tokens_out": 10607
+  }
+}
