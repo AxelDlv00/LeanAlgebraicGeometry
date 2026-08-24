@@ -714,7 +714,94 @@ noncomputable def pic0FiniteStageFinalBaseChangeEquiv
     (j : Pic0FiniteStageRingIndex C) :
     k ⊗[N.1] Pic0FiniteStageFinalModelRing C L n m relation M N j ≃ₐ[k]
       Pic0FiniteStageRing C j := by
-  sorry
+  letI : Semiring (Pic0FiniteStageModelRing C L n m relation M j) :=
+    (pic0FiniteStageModelRingCommRing C L n m relation M j).toSemiring
+  letI : Algebra M.1 (Pic0FiniteStageModelRing C L n m relation M j) :=
+    pic0FiniteStageModelRingAlgebra C L n m relation M j
+  letI : Semiring
+      (N.1 ⊗[M.1] Pic0FiniteStageModelRing C L n m relation M j) :=
+    @Algebra.TensorProduct.instSemiring M.1 N.1
+      (Pic0FiniteStageModelRing C L n m relation M j)
+      (inferInstance : CommSemiring M.1)
+      (inferInstance : Semiring N.1)
+      (inferInstance : Algebra M.1 N.1)
+      (pic0FiniteStageModelRingCommRing C L n m relation M j).toSemiring
+      (pic0FiniteStageModelRingAlgebra C L n m relation M j)
+  letI : Algebra N.1
+      (N.1 ⊗[M.1] Pic0FiniteStageModelRing C L n m relation M j) :=
+    @Algebra.TensorProduct.leftAlgebra M.1 N.1 N.1
+      (Pic0FiniteStageModelRing C L n m relation M j)
+      (inferInstance : CommSemiring M.1)
+      (inferInstance : Semiring N.1)
+      (inferInstance : Algebra M.1 N.1)
+      (pic0FiniteStageModelRingCommRing C L n m relation M j).toSemiring
+      (pic0FiniteStageModelRingAlgebra C L n m relation M j)
+      (inferInstance : CommSemiring N.1)
+      (inferInstance : Algebra N.1 N.1)
+      (inferInstance : SMulCommClass M.1 N.1 N.1)
+  letI : Semiring
+      (k ⊗[N.1] (N.1 ⊗[M.1] Pic0FiniteStageModelRing C L n m relation M j)) :=
+    @Algebra.TensorProduct.instSemiring N.1 k
+      (N.1 ⊗[M.1] Pic0FiniteStageModelRing C L n m relation M j)
+      (inferInstance : CommSemiring N.1)
+      (inferInstance : Semiring k)
+      (inferInstance : Algebra N.1 k)
+      (inferInstance : Semiring
+        (N.1 ⊗[M.1] Pic0FiniteStageModelRing C L n m relation M j))
+      (inferInstance : Algebra N.1
+        (N.1 ⊗[M.1] Pic0FiniteStageModelRing C L n m relation M j))
+  letI : Algebra k
+      (k ⊗[N.1] (N.1 ⊗[M.1] Pic0FiniteStageModelRing C L n m relation M j)) :=
+    @Algebra.TensorProduct.leftAlgebra N.1 k k
+      (N.1 ⊗[M.1] Pic0FiniteStageModelRing C L n m relation M j)
+      (inferInstance : CommSemiring N.1)
+      (inferInstance : Semiring k)
+      (inferInstance : Algebra N.1 k)
+      (inferInstance : Semiring
+        (N.1 ⊗[M.1] Pic0FiniteStageModelRing C L n m relation M j))
+      (inferInstance : Algebra N.1
+        (N.1 ⊗[M.1] Pic0FiniteStageModelRing C L n m relation M j))
+      (inferInstance : CommSemiring k)
+      (inferInstance : Algebra k k)
+      (inferInstance : SMulCommClass N.1 k k)
+  letI : Semiring (k ⊗[M.1] Pic0FiniteStageModelRing C L n m relation M j) :=
+    @Algebra.TensorProduct.instSemiring M.1 k
+      (Pic0FiniteStageModelRing C L n m relation M j)
+      (inferInstance : CommSemiring M.1)
+      (inferInstance : Semiring k)
+      (inferInstance : Algebra M.1 k)
+      (pic0FiniteStageModelRingCommRing C L n m relation M j).toSemiring
+      (pic0FiniteStageModelRingAlgebra C L n m relation M j)
+  letI : Algebra k (k ⊗[M.1] Pic0FiniteStageModelRing C L n m relation M j) :=
+    @Algebra.TensorProduct.leftAlgebra M.1 k k
+      (Pic0FiniteStageModelRing C L n m relation M j)
+      (inferInstance : CommSemiring M.1)
+      (inferInstance : Semiring k)
+      (inferInstance : Algebra M.1 k)
+      (pic0FiniteStageModelRingCommRing C L n m relation M j).toSemiring
+      (pic0FiniteStageModelRingAlgebra C L n m relation M j)
+      (inferInstance : CommSemiring k)
+      (inferInstance : Algebra k k)
+      (inferInstance : SMulCommClass M.1 k k)
+  exact (@Algebra.TensorProduct.cancelBaseChange
+    M.1 N.1
+    (inferInstance : CommSemiring M.1)
+    (inferInstance : CommSemiring N.1)
+    (inferInstance : Algebra M.1 N.1)
+    k k (Pic0FiniteStageModelRing C L n m relation M j)
+    (inferInstance : CommSemiring k)
+    (inferInstance : CommSemiring k)
+    (pic0FiniteStageModelRingCommRing C L n m relation M j).toCommSemiring
+    (inferInstance : Algebra M.1 k)
+    (inferInstance : Algebra M.1 k)
+    (pic0FiniteStageModelRingAlgebra C L n m relation M j)
+    (inferInstance : Algebra k k)
+    (inferInstance : IsScalarTower M.1 k k)
+    (inferInstance : Algebra N.1 k)
+    (inferInstance : IsScalarTower M.1 N.1 k)
+    (inferInstance : Algebra N.1 k)
+    (inferInstance : IsScalarTower N.1 k k)).trans
+      (pic0FiniteStageModelBaseChangeEquiv C L n m relation e M j)
 
 set_option synthInstance.maxHeartbeats 400000 in
 -- Naturality elaborates the cancellation and model-comparison squares together.
