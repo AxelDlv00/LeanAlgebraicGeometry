@@ -281,6 +281,368 @@ noncomputable def pic0FiniteStageModelRestrictScalarsExplicit
       (pic0FiniteStageModelRingTowerExplicit C L n m relation M j2)
       f
 
+/- The outer scalar extension sees these inner tensors as dependent carriers.
+   Name their canonical instances so the nested map in the theorem header does
+   not synthesize a fresh, incoherent `Semiring` structure for each `q`. -/
+@[reducible] noncomputable def pic0FiniteStageModelScalarExtensionSemiring
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (M : DatG0.FinSubext L.1 k)
+    (N : DatG0.FinSubext M.1 k)
+    (j : Pic0FiniteStageRingIndex C) :
+    Semiring (N.1 ⊗[M.1] Pic0FiniteStageModelRing C L n m relation M j) :=
+  @Algebra.TensorProduct.instSemiring M.1 N.1
+    (Pic0FiniteStageModelRing C L n m relation M j)
+    (inferInstance : CommSemiring M.1)
+    (inferInstance : Semiring N.1)
+    (inferInstance : Algebra M.1 N.1)
+    (pic0FiniteStageModelRingCommRing C L n m relation M j).toSemiring
+    (pic0FiniteStageModelRingAlgebra C L n m relation M j)
+
+attribute [local instance] pic0FiniteStageModelScalarExtensionSemiring
+
+@[reducible] noncomputable def pic0FiniteStageModelScalarExtensionAlgebra
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (M : DatG0.FinSubext L.1 k)
+    (N : DatG0.FinSubext M.1 k)
+    (j : Pic0FiniteStageRingIndex C) :
+    Algebra N.1 (N.1 ⊗[M.1] Pic0FiniteStageModelRing C L n m relation M j) :=
+  @Algebra.TensorProduct.leftAlgebra M.1 N.1 N.1
+    (Pic0FiniteStageModelRing C L n m relation M j)
+    (inferInstance : CommSemiring M.1)
+    (inferInstance : Semiring N.1)
+    (inferInstance : Algebra M.1 N.1)
+    (pic0FiniteStageModelRingCommRing C L n m relation M j).toSemiring
+    (pic0FiniteStageModelRingAlgebra C L n m relation M j)
+    (inferInstance : CommSemiring N.1)
+    (inferInstance : Algebra N.1 N.1)
+    (inferInstance : SMulCommClass M.1 N.1 N.1)
+
+attribute [local instance] pic0FiniteStageModelScalarExtensionAlgebra
+attribute [local instance] pic0FiniteStageModelScalarExtensionSemiring
+
+noncomputable def pic0FiniteStageModelScalarExtensionMap
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (M : DatG0.FinSubext L.1 k)
+    (N : DatG0.FinSubext M.1 k)
+    (j1 j2 : Pic0FiniteStageRingIndex C)
+    (f : @AlgHom M.1
+      (Pic0FiniteStageModelRing C L n m relation M j1)
+      (Pic0FiniteStageModelRing C L n m relation M j2)
+      (inferInstance : CommSemiring M.1)
+      (pic0FiniteStageModelRingCommRing C L n m relation M j1).toSemiring
+      (pic0FiniteStageModelRingCommRing C L n m relation M j2).toSemiring
+      (pic0FiniteStageModelRingAlgebra C L n m relation M j1)
+      (pic0FiniteStageModelRingAlgebra C L n m relation M j2)) :
+    @AlgHom N.1
+      (N.1 ⊗[M.1] Pic0FiniteStageModelRing C L n m relation M j1)
+      (N.1 ⊗[M.1] Pic0FiniteStageModelRing C L n m relation M j2)
+      (inferInstance : CommSemiring N.1)
+      (pic0FiniteStageModelScalarExtensionSemiring C L n m relation M N j1)
+      (pic0FiniteStageModelScalarExtensionSemiring C L n m relation M N j2)
+      (pic0FiniteStageModelScalarExtensionAlgebra C L n m relation M N j1)
+      (pic0FiniteStageModelScalarExtensionAlgebra C L n m relation M N j2) := by
+  letI : Algebra M.1 (Pic0FiniteStageModelRing C L n m relation M j1) :=
+    pic0FiniteStageModelRingAlgebra C L n m relation M j1
+  letI : Algebra M.1 (Pic0FiniteStageModelRing C L n m relation M j2) :=
+    pic0FiniteStageModelRingAlgebra C L n m relation M j2
+  exact @AlgebraicJacobian.scalarExtensionMapOfAlgHom
+    M.1 N.1
+      (Pic0FiniteStageModelRing C L n m relation M j1)
+      (Pic0FiniteStageModelRing C L n m relation M j2)
+      (inferInstance : CommRing M.1)
+      (inferInstance : CommRing N.1)
+      (pic0FiniteStageModelRingCommRing C L n m relation M j1).toSemiring
+      (pic0FiniteStageModelRingCommRing C L n m relation M j2).toSemiring
+      (inferInstance : Algebra M.1 N.1)
+      (pic0FiniteStageModelRingAlgebra C L n m relation M j1)
+      (pic0FiniteStageModelRingAlgebra C L n m relation M j2)
+      f
+
+@[reducible] noncomputable def pic0FiniteStageModelAmbientSemiring
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (j : Pic0FiniteStageRingIndex C) :
+    Semiring
+      (k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1
+        (n j) (m j) (relation j)) :=
+  @Algebra.TensorProduct.instSemiring L.1 k
+    (DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j))
+    (inferInstance : CommSemiring L.1)
+    (inferInstance : Semiring k)
+    (inferInstance : Algebra L.1 k)
+    (inferInstance : Semiring
+      (DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j)))
+    (inferInstance : Algebra L.1
+      (DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j)))
+
+attribute [local instance] pic0FiniteStageModelAmbientSemiring
+
+@[reducible] noncomputable def pic0FiniteStageModelAmbientAlgebra
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (j : Pic0FiniteStageRingIndex C) :
+    Algebra L.1
+      (k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1
+        (n j) (m j) (relation j)) :=
+  @Algebra.TensorProduct.instAlgebra L.1 k
+    (DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j))
+    (inferInstance : CommSemiring L.1)
+    (inferInstance : Semiring k)
+    (inferInstance : Algebra L.1 k)
+    (inferInstance : Semiring
+      (DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j)))
+    (inferInstance : Algebra L.1
+      (DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j)))
+
+attribute [local instance] pic0FiniteStageModelAmbientAlgebra
+
+@[reducible] noncomputable def pic0FiniteStageModelAmbientKAlgebra
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (j : Pic0FiniteStageRingIndex C) :
+    Algebra k
+      (k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1
+        (n j) (m j) (relation j)) :=
+  @Algebra.TensorProduct.leftAlgebra L.1 k k
+    (DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j))
+    (inferInstance : CommSemiring L.1)
+    (inferInstance : Semiring k)
+    (inferInstance : Algebra L.1 k)
+    (inferInstance : Semiring
+      (DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j)))
+    (inferInstance : Algebra L.1
+      (DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j)))
+    (inferInstance : CommSemiring k)
+    (inferInstance : Algebra k k)
+    (inferInstance : SMulCommClass L.1 k k)
+
+attribute [local instance] pic0FiniteStageModelAmbientKAlgebra
+
+@[reducible] noncomputable def pic0FiniteStageModelAmbientTower
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (j : Pic0FiniteStageRingIndex C) :
+    IsScalarTower L.1 k
+      (k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1
+        (n j) (m j) (relation j)) := by
+  letI : Algebra k
+      (k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1
+        (n j) (m j) (relation j)) :=
+    pic0FiniteStageModelAmbientKAlgebra C L n m relation j
+  letI : Algebra L.1
+      (k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1
+        (n j) (m j) (relation j)) :=
+    pic0FiniteStageModelAmbientAlgebra C L n m relation j
+  exact IsScalarTower.of_algebraMap_eq' rfl
+
+noncomputable def pic0FiniteStageModelAmbientMap
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (M : DatG0.FinSubext L.1 k)
+    (j : Pic0FiniteStageRingIndex C) :
+    @AlgHom L.1
+      (Pic0FiniteStageModelRing C L n m relation M j)
+      (k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1
+        (n j) (m j) (relation j))
+      (inferInstance : CommSemiring L.1)
+      (pic0FiniteStageModelRingCommRing C L n m relation M j).toSemiring
+      (pic0FiniteStageModelAmbientSemiring C L n m relation j)
+      (pic0FiniteStageModelRingBaseAlgebra C L n m relation M j)
+      (pic0FiniteStageModelAmbientAlgebra C L n m relation j) := by
+  letI : Algebra L.1 (Pic0FiniteStageModelRing C L n m relation M j) :=
+    pic0FiniteStageModelRingBaseAlgebra C L n m relation M j
+  letI : Algebra L.1
+      (k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1
+        (n j) (m j) (relation j)) :=
+    pic0FiniteStageModelAmbientAlgebra C L n m relation j
+  exact Algebra.TensorProduct.map M.1.val
+    (AlgHom.id L.1
+      (DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j)))
+
+noncomputable def pic0FiniteStageModelAmbientMapCompRestrict
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (M : DatG0.FinSubext L.1 k)
+    (j1 j2 : Pic0FiniteStageRingIndex C)
+    (f : @AlgHom M.1
+      (Pic0FiniteStageModelRing C L n m relation M j1)
+      (Pic0FiniteStageModelRing C L n m relation M j2)
+      (inferInstance : CommSemiring M.1)
+      (pic0FiniteStageModelRingCommRing C L n m relation M j1).toSemiring
+      (pic0FiniteStageModelRingCommRing C L n m relation M j2).toSemiring
+      (pic0FiniteStageModelRingAlgebra C L n m relation M j1)
+      (pic0FiniteStageModelRingAlgebra C L n m relation M j2)) :
+    @AlgHom L.1
+      (Pic0FiniteStageModelRing C L n m relation M j1)
+      (k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1
+        (n j2) (m j2) (relation j2))
+      (inferInstance : CommSemiring L.1)
+      (pic0FiniteStageModelRingCommRing C L n m relation M j1).toSemiring
+      (pic0FiniteStageModelAmbientSemiring C L n m relation j2)
+      (pic0FiniteStageModelRingBaseAlgebra C L n m relation M j1)
+      (pic0FiniteStageModelAmbientAlgebra C L n m relation j2) := by
+  exact @AlgHom.comp L.1
+    (Pic0FiniteStageModelRing C L n m relation M j1)
+    (Pic0FiniteStageModelRing C L n m relation M j2)
+    (k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1
+      (n j2) (m j2) (relation j2))
+    (inferInstance : CommSemiring L.1)
+    (pic0FiniteStageModelRingCommRing C L n m relation M j1).toSemiring
+    (pic0FiniteStageModelRingCommRing C L n m relation M j2).toSemiring
+    (pic0FiniteStageModelAmbientSemiring C L n m relation j2)
+    (pic0FiniteStageModelRingBaseAlgebra C L n m relation M j1)
+    (pic0FiniteStageModelRingBaseAlgebra C L n m relation M j2)
+    (pic0FiniteStageModelAmbientAlgebra C L n m relation j2)
+    (pic0FiniteStageModelAmbientMap C L n m relation M j2)
+    (pic0FiniteStageModelRestrictScalarsExplicit C L n m relation M j1 j2 f)
+
+noncomputable def pic0FiniteStageTransportedMapRestrictScalars
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (e : forall j,
+      k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j) ≃ₐ[k]
+        Pic0FiniteStageRing C j)
+    (q : Pic0FiniteStageMapIndex C) :
+    @AlgHom L.1
+      (k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1
+        (n (Pic0FiniteStageMapSource C q))
+        (m (Pic0FiniteStageMapSource C q))
+        (relation (Pic0FiniteStageMapSource C q)))
+      (k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1
+        (n (Pic0FiniteStageMapTarget C q))
+        (m (Pic0FiniteStageMapTarget C q))
+        (relation (Pic0FiniteStageMapTarget C q)))
+      (inferInstance : CommSemiring L.1)
+      (pic0FiniteStageModelAmbientSemiring C L n m relation
+        (Pic0FiniteStageMapSource C q))
+      (pic0FiniteStageModelAmbientSemiring C L n m relation
+        (Pic0FiniteStageMapTarget C q))
+      (pic0FiniteStageModelAmbientAlgebra C L n m relation
+        (Pic0FiniteStageMapSource C q))
+      (pic0FiniteStageModelAmbientAlgebra C L n m relation
+        (Pic0FiniteStageMapTarget C q)) := by
+  letI : Algebra k
+      (k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1
+        (n (Pic0FiniteStageMapSource C q))
+        (m (Pic0FiniteStageMapSource C q))
+        (relation (Pic0FiniteStageMapSource C q))) :=
+    pic0FiniteStageModelAmbientKAlgebra C L n m relation
+      (Pic0FiniteStageMapSource C q)
+  letI : Algebra k
+      (k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1
+        (n (Pic0FiniteStageMapTarget C q))
+        (m (Pic0FiniteStageMapTarget C q))
+        (relation (Pic0FiniteStageMapTarget C q))) :=
+    pic0FiniteStageModelAmbientKAlgebra C L n m relation
+      (Pic0FiniteStageMapTarget C q)
+  exact @AlgHom.restrictScalars
+    L.1 k
+      (k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1
+        (n (Pic0FiniteStageMapSource C q))
+        (m (Pic0FiniteStageMapSource C q))
+        (relation (Pic0FiniteStageMapSource C q)))
+      (k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1
+        (n (Pic0FiniteStageMapTarget C q))
+        (m (Pic0FiniteStageMapTarget C q))
+        (relation (Pic0FiniteStageMapTarget C q)))
+      (inferInstance : CommSemiring L.1)
+      (inferInstance : CommSemiring k)
+      (pic0FiniteStageModelAmbientSemiring C L n m relation
+        (Pic0FiniteStageMapSource C q))
+      (pic0FiniteStageModelAmbientSemiring C L n m relation
+        (Pic0FiniteStageMapTarget C q))
+      (inferInstance : Algebra L.1 k)
+      (pic0FiniteStageModelAmbientKAlgebra C L n m relation
+        (Pic0FiniteStageMapSource C q))
+      (pic0FiniteStageModelAmbientKAlgebra C L n m relation
+        (Pic0FiniteStageMapTarget C q))
+      (pic0FiniteStageModelAmbientAlgebra C L n m relation
+        (Pic0FiniteStageMapSource C q))
+      (pic0FiniteStageModelAmbientAlgebra C L n m relation
+        (Pic0FiniteStageMapTarget C q))
+      (pic0FiniteStageModelAmbientTower C L n m relation
+        (Pic0FiniteStageMapSource C q))
+      (pic0FiniteStageModelAmbientTower C L n m relation
+        (Pic0FiniteStageMapTarget C q))
+      (pic0FiniteStageTransportedMap C L n m relation e q)
+
+noncomputable def pic0FiniteStageTransportedMapRestrictCompAmbient
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (e : forall j,
+      k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j) ≃ₐ[k]
+        Pic0FiniteStageRing C j)
+    (M : DatG0.FinSubext L.1 k)
+    (q : Pic0FiniteStageMapIndex C) :
+    @AlgHom L.1
+      (Pic0FiniteStageModelRing C L n m relation M
+        (Pic0FiniteStageMapSource C q))
+      (k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1
+        (n (Pic0FiniteStageMapTarget C q))
+        (m (Pic0FiniteStageMapTarget C q))
+        (relation (Pic0FiniteStageMapTarget C q)))
+      (inferInstance : CommSemiring L.1)
+      (pic0FiniteStageModelRingCommRing C L n m relation M
+        (Pic0FiniteStageMapSource C q)).toSemiring
+      (pic0FiniteStageModelAmbientSemiring C L n m relation
+        (Pic0FiniteStageMapTarget C q))
+      (pic0FiniteStageModelRingBaseAlgebra C L n m relation M
+        (Pic0FiniteStageMapSource C q))
+      (pic0FiniteStageModelAmbientAlgebra C L n m relation
+        (Pic0FiniteStageMapTarget C q)) := by
+  exact @AlgHom.comp L.1
+    (Pic0FiniteStageModelRing C L n m relation M
+      (Pic0FiniteStageMapSource C q))
+    (k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1
+      (n (Pic0FiniteStageMapSource C q))
+      (m (Pic0FiniteStageMapSource C q))
+      (relation (Pic0FiniteStageMapSource C q)))
+    (k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1
+      (n (Pic0FiniteStageMapTarget C q))
+      (m (Pic0FiniteStageMapTarget C q))
+      (relation (Pic0FiniteStageMapTarget C q)))
+    (inferInstance : CommSemiring L.1)
+    (pic0FiniteStageModelRingCommRing C L n m relation M
+      (Pic0FiniteStageMapSource C q)).toSemiring
+    (pic0FiniteStageModelAmbientSemiring C L n m relation
+      (Pic0FiniteStageMapSource C q))
+    (pic0FiniteStageModelAmbientSemiring C L n m relation
+      (Pic0FiniteStageMapTarget C q))
+    (pic0FiniteStageModelRingBaseAlgebra C L n m relation M
+      (Pic0FiniteStageMapSource C q))
+    (pic0FiniteStageModelAmbientAlgebra C L n m relation
+      (Pic0FiniteStageMapSource C q))
+    (pic0FiniteStageModelAmbientAlgebra C L n m relation
+      (Pic0FiniteStageMapTarget C q))
+    (pic0FiniteStageTransportedMapRestrictScalars C L n m relation e q)
+    (pic0FiniteStageModelAmbientMap C L n m relation M
+      (Pic0FiniteStageMapSource C q))
+
 @[reducible] noncomputable def pic0FiniteStageFinalModelRingModule
     {F : Type u} [Field F] [Algebra F k]
     (L : DatG0.FinSubext F k)
@@ -308,10 +670,8 @@ attribute [local instance] pic0FiniteStageFinalModelRingModule
     (inferInstance : CommSemiring N.1)
     (inferInstance : Semiring k)
     (inferInstance : Algebra N.1 k)
-    (inferInstance : Semiring
-      (Pic0FiniteStageFinalModelRing C L n m relation M N j))
-    (inferInstance : Algebra N.1
-      (Pic0FiniteStageFinalModelRing C L n m relation M N j))
+    (pic0FiniteStageFinalModelRingCommSemiring C L n m relation M N j).toSemiring
+    (pic0FiniteStageFinalModelRingAlgebra C L n m relation M N j)
 
 attribute [local instance] pic0FiniteStageFinalScalarExtensionSemiring
 
@@ -329,10 +689,8 @@ attribute [local instance] pic0FiniteStageFinalScalarExtensionSemiring
     (inferInstance : CommSemiring N.1)
     (inferInstance : Semiring k)
     (inferInstance : Algebra N.1 k)
-    (inferInstance : Semiring
-      (Pic0FiniteStageFinalModelRing C L n m relation M N j))
-    (inferInstance : Algebra N.1
-      (Pic0FiniteStageFinalModelRing C L n m relation M N j))
+    (pic0FiniteStageFinalModelRingCommSemiring C L n m relation M N j).toSemiring
+    (pic0FiniteStageFinalModelRingAlgebra C L n m relation M N j)
     (inferInstance : CommSemiring k)
     (inferInstance : Algebra k k)
     (inferInstance : SMulCommClass N.1 k k)
@@ -379,32 +737,21 @@ theorem pic0FiniteStageFinalBaseChangeEquiv_naturality
         Pic0FiniteStageModelRing C L n m relation M
           (Pic0FiniteStageMapTarget C q))
     (hmapM : forall q,
-      (Algebra.TensorProduct.map M.1.val
-          (AlgHom.id L.1
-            (DatG0.FiniteRelationAlgebra L.1
-              (n (Pic0FiniteStageMapTarget C q))
-              (m (Pic0FiniteStageMapTarget C q))
-              (relation (Pic0FiniteStageMapTarget C q))))).comp
-          (pic0FiniteStageModelRestrictScalarsExplicit C L n m relation M
-            (Pic0FiniteStageMapSource C q)
-            (Pic0FiniteStageMapTarget C q)
-            (mapM q)) =
-        ((pic0FiniteStageTransportedMap C L n m relation e q).restrictScalars
-          L.1).comp
-          (Algebra.TensorProduct.map M.1.val
-            (AlgHom.id L.1
-              (DatG0.FiniteRelationAlgebra L.1
-                (n (Pic0FiniteStageMapSource C q))
-                (m (Pic0FiniteStageMapSource C q))
-                (relation (Pic0FiniteStageMapSource C q))))))
+      (pic0FiniteStageModelAmbientMapCompRestrict C L n m relation M
+        (Pic0FiniteStageMapSource C q)
+        (Pic0FiniteStageMapTarget C q)
+        (mapM q)) =
+        (pic0FiniteStageTransportedMapRestrictCompAmbient C L n m relation e M q))
     (N : DatG0.FinSubext M.1 k)
     (q : Pic0FiniteStageMapIndex C) :
     (pic0FiniteStageFinalBaseChangeEquiv C L n m relation e M N
         (Pic0FiniteStageMapTarget C q)).toAlgHom.comp
         (AlgebraicJacobian.scalarExtensionMapOfAlgHom
           (R := N.1) (K := k)
-          (AlgebraicJacobian.scalarExtensionMapOfAlgHom
-            (R := M.1) (K := N.1) (mapM q))) =
+          (pic0FiniteStageModelScalarExtensionMap C L n m relation M N
+            (Pic0FiniteStageMapSource C q)
+            (Pic0FiniteStageMapTarget C q)
+            (mapM q))) =
       (pic0FiniteStageMap C q).comp
         (pic0FiniteStageFinalBaseChangeEquiv C L n m relation e M N
           (Pic0FiniteStageMapSource C q)).toAlgHom := by
