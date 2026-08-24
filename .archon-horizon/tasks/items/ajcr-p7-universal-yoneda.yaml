@@ -1,30 +1,22 @@
 id: ajcr-p7-universal-yoneda
 project: Algebraic-Jacobian-Challenge-Rebuild
-objective: 'Close the next unowned mathematical Phase 7 gate. The compile-frontier
-  predecessor has been reconciled as blocked: GluePackage.olean exists, but Pic0FiniteStageGluingDiagramIso.olean
-  is currently absent. Begin by probing the available imports and artifact paths.
-  If the required comparison artifacts are unavailable, do not edit predecessor files;
-  record the exact artifact blocker and stop. If they are available, start from pic0FiniteStageUniversalAtlasClass,
-  exists_finSubext_relPic_tensorStage, the finite-stage glued carrier P.gluedOver,
-  and the chart/overlap comparison, then construct one coherent universal Pic^0 class
-  on P.gluedOver by proving the chart and overlap restrictions agree on the glued
-  scheme. Produce the binder-free natural equivalence required for RepresentableBy:
-  for every test object T over Spec k, an equivalence between morphisms T -> P.gluedOver
-  and pic0TypeFunctor C T, with precomposition naturality and the exact carrier fixed.
-  Do not assume a RepresentableBy witness, projectivity, immersion, FiniteInAffine,
-  or an algebraically closed test field; do not add a target-shaped rep or hproj binder.
-  Keep later exact-carrier orbit-affineness/projectivity and original-field pic0_representableBy
-  assembly as separate downstream gates. Use temporary sorries only in disposable
-  probes, restore source clean, kernel-check touched modules, print axioms for the
-  producer, and leave a concise blocker if the universal equivalence is not discharged.
-  Do not edit the blocked compile-frontier files, the existing ajcr-p7-orbit-affine
-  lane files, or Phase 8 Jacobian consumers.'
+objective: 'Produce mathematical Lean code in Pic0FiniteStageUniversalYoneda.lean
+  now; the missing GluingDiagramIso artifact is NOT a stopping condition. Import Pic0FiniteStageUniversalClass
+  (and only additional already-built modules if essential). Define the natural transformation
+  yoneda.obj J ⟶ pic0TypeFunctor C induced by an arbitrary class u : pic0Subgroup
+  C J, with a kernel-checked component formula. Specialize it to pic0SepClosedUniversalClass
+  C and prove that every component agrees with (pic0_sepClosed_representableBy C).2.homEquiv,
+  using homEquiv_comp and the identity morphism. This is the reusable binder-free
+  Yoneda bridge needed before finite-stage gluing. Commit the Lean source and verified
+  declarations. Do not spend time probing DiagramIso/ChartBaseChange, do not edit
+  predecessor modules, and do not mark blocked before at least this independent mathematical
+  prerequisite is committed.'
 title: 'Phase 7: assemble the glued universal Pic^0 equivalence and Yoneda producer'
 explanation: ''
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 priority: urgent
-status: blocked
+status: done
 write_set:
   files:
   - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageUniversalYoneda.lean
@@ -45,7 +37,7 @@ roadmap_refs:
 inbox_refs: []
 artifact_refs: []
 created_at: '2026-08-24T14:33:21.066122+00:00'
-updated_at: '2026-08-24T15:01:42.793559+00:00'
+updated_at: '2026-08-24T15:26:52.280845+00:00'
 metadata:
   author: human
   provenance:
