@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Tesla",
+  "agent_path": "/root/scalar_cone_probe",
+  "agent_role": "worker",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "worker",
+  "native_subagent_id": "01a02f1f-7a5c-72e3-a076-ed67449bb5f4",
+  "ok": true,
+  "parent_session": "0008-horizon-ajcr-compile-frontier-repair",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "worker",
+  "summary": "Bounded `ScalarExtendedAtlas` check completed with exact failure: exit `1` after `3:00.09`, peak RSS `7,278,824 KB` (~7.28 GB), CPU ~101%.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 10404675,
+    "tokens_out": 19765
+  }
+}

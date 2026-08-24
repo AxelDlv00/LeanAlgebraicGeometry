@@ -1,0 +1,11 @@
+{
+  "role": "horizon",
+  "interactive": true,
+  "engine": "codex",
+  "engine_session_id": null,
+  "task_id": null,
+  "project": null,
+  "projects": [],
+  "started_at": "2026-08-24T03:40:27.294061+00:00",
+  "status": "running"
+}
