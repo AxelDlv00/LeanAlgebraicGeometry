@@ -82,6 +82,10 @@ same PR and the panel will re-review the new head.
   different Picard functor.  The repair boundary is to tie `Ck` to the chosen
   base change (or pass and use an explicit curve `Over` iso) before removing
   the external `rep` binder.  The Galois/Jacobian wrappers inherit this gap.
+  In particular, `Pic0FiniteGaloisJacobianData.lean:119-166` repackages the
+  same independent binders and external `rep` into `PicRepDatum` and
+  `JacobianData`, so those challenge-facing declarations do not restore the
+  missing curve identification or finite-stage representability theorem.
 
 ## 🟠 Architecture / validation finding
 
