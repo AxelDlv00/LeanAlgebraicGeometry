@@ -146,13 +146,6 @@
     "tasks": {"done": 28, "blocked": 3, "queued": 4, "running": 1, "failed": 1, "cancelled": 45},
     "open_inbox": {"conversation": 12, "issue": 18, "memory": 11, "hint": 1, "info": 1, "protection": 1}
   },
-  "review_questions": [
-    "Does P.gluedOver actually implement the finite-level representer required by the reviewed Phase 7 route, including its universal class and natural Yoneda equivalence?",
-    "Can the existing AJC representableBy_of_finiteGalois_baseChange theorem consume a smaller, already-certified finite-level producer instead of extending the custom glue cone?",
-    "What proves orbit affineness or projectivity for the exact glued carrier?",
-    "Is the missing binder-free RepresentableBy theorem a functor/sheaf descent argument rather than another overlap identity?",
-    "Which single theorem should be the next bounded acceptance milestone?"
-  ],
   "evidence_reports": [
     ".archon-horizon/runs/0152/sessions/0006-horizon-ajcr-strategy-review/report.md",
     ".archon-horizon/runs/0153/sessions/0002-horizon-ajcr-compile-isolation/report.md",
