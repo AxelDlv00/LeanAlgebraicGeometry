@@ -129,11 +129,11 @@ same PR and the panel will re-review the new head.
 - `git diff --check` passes for this review capsule.
 - A fresh `lean_diagnostic_messages` pass on
   `Pic0FiniteStageUniversalClass.lean` completed with no diagnostics.
-  `Pic0FiniteStageGluePackage.lean` timed out while still elaborating (lines
-  36 and 66-319), while `Pic0FiniteStageGluedOver.lean` and
-  `Pic0CriticalPath.lean` were unavailable because their broad dependency
-  graph did not finish.  These outcomes are recorded as limits, not as a
-  local full-build claim.
+  `Pic0FiniteStageGluePackage.lean` completed with three style warnings
+  (max-heartbeat comments at lines 191 and 217, and a long line at 213).
+  `Pic0FiniteStageGluedOver.lean` and `Pic0CriticalPath.lean` were unavailable
+  because their broad dependency graph did not finish.  These outcomes are
+  recorded as limits, not as a local full-build claim.
 - A focused `lean_verify`/source scan of
   `Pic0FiniteStageGluePackage.glueData` reported only `propext`,
   `Classical.choice`, and `Quot.sound`, with no source warnings.
