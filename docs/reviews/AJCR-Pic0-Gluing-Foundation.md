@@ -134,6 +134,9 @@ same PR and the panel will re-review the new head.
   `Pic0CriticalPath.lean` were unavailable because their broad dependency
   graph did not finish.  These outcomes are recorded as limits, not as a
   local full-build claim.
+- A focused `lean_verify`/source scan of
+  `Pic0FiniteStageGluePackage.glueData` reported only `propext`,
+  `Classical.choice`, and `Quot.sound`, with no source warnings.
 - The existing `.github/workflows/lean.yml` `lake-build` job remains the
   authoritative full-build check; this audit makes no local full-build claim
   and does not change repository CI.
@@ -141,12 +144,20 @@ same PR and the panel will re-review the new head.
 ## 📚 References consulted
 
 - A focused search of public mathlib4 pull requests for `Over`-category
-  isomorphisms, scheme base change, and `RepresentableBy` transport found no
-  close PR analogue to this finite-stage comparison, so no PR is presented as
-  precedent.
+  isomorphisms, scheme base change, and `RepresentableBy` transport found two
+  close API precedents: [mathlib PR #24059](https://github.com/leanprover-community/mathlib4/pull/24059)
+  adds explicit isomorphisms between representing objects, and [mathlib PR
+  #40054](https://github.com/leanprover-community/mathlib4/pull/40054) adds
+  Over-scoped base-change/pullback transport.  Their common design point is
+  that the structure-preserving object isomorphism is a first-class API value,
+  not an underlying carrier isomorphism.
 - The current mathlib `Over.isoMk` API requires an underlying isomorphism plus
   an explicit commuting triangle in
   [`CategoryTheory/Comma/Over/Basic.lean`](https://github.com/leanprover-community/mathlib4/blob/master/Mathlib/CategoryTheory/Comma/Over/Basic.lean).
+  The pullback API makes the same boundary explicit through
+  `IsPullback.isoOverPullback` and
+  `IsPullback.iff_exists_over_iso` in
+  [`Limits/Pullback/IsPullback/Basic`](https://leanprover-community.github.io/mathlib4_docs/Mathlib/CategoryTheory/Limits/Shapes/Pullback/IsPullback/Basic.html).
   The current scheme API likewise preserves explicit underlying-map equalities
   in [`AlgebraicGeometry/Scheme.lean`](https://github.com/leanprover-community/mathlib4/blob/master/Mathlib/AlgebraicGeometry/Scheme.lean).
   These sources support the raw-`Scheme` versus `Over` distinction above; the
