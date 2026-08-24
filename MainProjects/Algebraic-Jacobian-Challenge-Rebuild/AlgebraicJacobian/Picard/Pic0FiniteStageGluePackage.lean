@@ -240,9 +240,10 @@ noncomputable instance pic0FiniteStageOverlapBaseChangeRingAlgebra
 set_option maxHeartbeats 25600000 in
 -- The package projections retain the dependent tensor-product instances of the constructor.
 /-- The scheme glue datum computed from an inhabited finite-stage package. -/
-noncomputable def glueData
+noncomputable opaque glueData
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F) : Scheme.GlueData := by
+    (P : Pic0FiniteStageGluePackage C F) : Scheme.GlueData := by sorry
+/- ORIGINAL glueData BODY (temporary isolation probe)
   letI : Algebra.IsAlgebraic P.L.1 k := by infer_instance
   letI : Algebra.IsAlgebraic P.M.1 k := by infer_instance
   refine pic0FiniteStageAffineRingGlueData
@@ -262,6 +263,7 @@ noncomputable def glueData
       (Pic0FiniteStageModelRing C P.L P.n P.m P.relation P.M
         (Pic0FiniteStageMapTarget C (Sum.inl i)))).toSemiring
   simpa only [pic0FiniteStageModelMapToRingHom] using P.hOpen i
+-/
 
 end Pic0FiniteStageGluePackage
 
