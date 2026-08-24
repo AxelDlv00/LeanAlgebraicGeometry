@@ -2,110 +2,131 @@
 \usepackage[margin=0.68in]{geometry}
 \usepackage{longtable}
 \usepackage{array}
+\usepackage{amsmath}
 \usepackage{xcolor}
 \usepackage{hyperref}
 \definecolor{accent}{HTML}{173B57}
-\definecolor{donebg}{HTML}{E6F4EA}
-\definecolor{donefg}{HTML}{185A37}
-\definecolor{openbg}{HTML}{FFF3D6}
-\definecolor{openfg}{HTML}{855A00}
-\definecolor{redbg}{HTML}{FDE7E7}
+\definecolor{greenbg}{HTML}{E5F5E9}
+\definecolor{greenfg}{HTML}{145A32}
+\definecolor{redbg}{HTML}{FCE4E4}
 \definecolor{redfg}{HTML}{8B1E1E}
-\definecolor{infobg}{HTML}{E8F0F8}
+\definecolor{amberbg}{HTML}{FFF1D6}
+\definecolor{amberfg}{HTML}{805500}
+\definecolor{bluebg}{HTML}{E7F0FA}
+\definecolor{bluefg}{HTML}{174A7C}
+\definecolor{linegray}{HTML}{D8E0E8}
 \newcommand{\code}[1]{\texttt{\small #1}}
 \newcommand{\pointer}[1]{\par\noindent\textcolor{accent}{\texttt{\scriptsize\detokenize{#1}}}\par}
-\newcommand{\inlinepointer}[1]{\textcolor{accent}{\texttt{\scriptsize\detokenize{#1}}}}
-\newcommand{\statusbox}[3]{\par\noindent\colorbox{#1}{\parbox{0.95\linewidth}{\textcolor{#2}{\textbf{#3}}}}\par\medskip}
-\newcommand{\done}{\textcolor{donefg}{\textbf{Established}}}
-\newcommand{\open}{\textcolor{openfg}{\textbf{Open theorem}}}
-\newcommand{\red}{\textcolor{redfg}{\textbf{Downstream consequence}}}
-\title{AJCR Mathematical Status for Human Review}
+\newcommand{\ipointer}[1]{\textcolor{accent}{\texttt{\scriptsize\detokenize{#1}}}}
+\newcommand{\statusbox}[3]{\par\noindent\colorbox{#1}{\parbox{0.95\linewidth}{\textcolor{#2}{#3}}}\par\medskip}
+\newcommand{\band}[3]{\par\noindent\colorbox{#1}{\parbox{0.95\linewidth}{\textcolor{#2}{\textbf{#3}}}}\par\smallskip}
+\newcommand{\established}{\textcolor{greenfg}{\textbf{Established}}}
+\newcommand{\confirmed}{\textcolor{redfg}{\textbf{Confirmed mathematical gap}}}
+\newcommand{\conditional}{\textcolor{amberfg}{\textbf{Conditional geometric gap}}}
+\newcommand{\transport}{\textcolor{bluefg}{\textbf{Likely formal transport}}}
+\title{AJCR Mathematical Diagnosis for Human Review}
 \author{Human mathematician handoff}
 \date{24 August 2026}
 \begin{document}
 \maketitle
 
-\noindent\textbf{Review state:} 24 August 2026.
+\statusbox{redbg}{redfg}{\textbf{Diagnosis.} The route is not stalled by formal transport alone. Two producer theorems are missing: (i) a functor-level representability theorem for the exact finite-stage carrier \code{P.gluedOver}; and (ii) orbit-affine/projective geometry for that same carrier over an arbitrary finite Galois stage. The later descent and Jacobian steps are conditional downstream work.}
 
-\statusbox{infobg}{accent}{This handoff is deliberately mathematical. It compares the current route with the supplied execution plan and supervision note; file pointers identify the definitions and theorem statements where each issue lives.}
+\noindent This is a mathematics-only comparison with the supplied execution plan and supervision note. File pointers below identify the definitions and theorem statements where each claim lives.
 \pointer{MainProjects/Algebraic-Jacobian-Challenge/informal/Lean_Algebraic_Jacobian_Complete_Execution_Plan.pdf}
 \pointer{MainProjects/Algebraic-Jacobian-Challenge/informal/AJCR_Runs_121_122_123_Supervision_Note_2026-08-07.pdf}
 
-\section*{The mathematical route}
-The intended curve-specialized route is:
+\section*{1. Route being formalized}
 \begin{verbatim}
 rank-one Picard/divisor chart
   -> family-level Abel isomorphism
-  -> translated rank-one charts over a separably closed field
+  -> translated charts over a separably closed field
   -> Pic^0 represented over that field
-  -> finite-Galois descent
-  -> Pic^0 represented over the original field
+  -> finite-stage glued carrier P.gluedOver
+  -> finite-Galois quotient and descent
+  -> Pic^0 over the original field
   -> Jacobian
 \end{verbatim}
+The candidate carrier is defined at:
+\pointer{MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluedOver.lean:1}
+The decomposition of the finite-stage descent is recorded at:
+\pointer{.archon-horizon/roadmap/items/AJCR.review-plan.p7-galois-descent.yaml}
 
-\section*{Established mathematics}
-\begin{longtable}{>{\raggedright\arraybackslash}p{0.18\linewidth} >{\raggedright\arraybackslash}p{0.16\linewidth} p{0.52\linewidth}}
-\textbf{Stage} & \textbf{Status} & \textbf{Mathematical content and pointer}\\\hline
-Rank-one chart & \done & The good locus of line bundles and the matching divisor locus are defined for arbitrary test schemes. \pointer{Pic0CriticalPath.lean:205}\\
-Family Abel map & \done & The evaluation divisor gives a natural two-sided inverse, rather than only fieldwise uniqueness. \pointer{Pic0CriticalPath.lean:618}\\
-Sep-closed cover & \done & Translations of the rank-one chart cover Picard classes after passing to a separably closed field. \pointer{Pic0CriticalPath.lean:640}\\
-Sep-closed Pic0 & \done & A scheme and a representing universal class exist over the separably closed field; the same pair feeds the current Picard/Jacobian datum. \pointer{Pic0SepClosedRepresentable.lean:443}\\
+\section*{2. Established mathematics}
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.19\linewidth} >{\raggedright\arraybackslash}p{0.70\linewidth}}
+\textbf{Stage} & \textbf{Statement and pointer}\\\hline
+Rank-one chart & \established\; The good line-bundle locus and matching divisor locus are defined over arbitrary test schemes. \ipointer{Pic0CriticalPath.lean:205}\\
+Family Abel map & \established\; The evaluation divisor gives a natural two-sided inverse, not only a fieldwise bijection. \ipointer{Pic0CriticalPath.lean:618}\\
+Separably-closed cover & \established\; Translates of the rank-one chart cover Picard classes over a separably closed field. \ipointer{Pic0CriticalPath.lean:640}\\
+Separably-closed Pic0 & \established\; A scheme and a representing universal class exist over the separably closed field. \ipointer{Pic0SepClosedRepresentable.lean:443}\\
+Local universal class & \established\; The pinned class has both chart-to-overlap restriction equalities and is packaged as \code{Pic0FiniteStageUniversalAtlasClass}. \ipointer{Pic0FiniteStageUniversalClass.lean:119}\\
+Scheme comparison & \established\; \code{gluingGluedIso} and \code{finiteStageBaseChangeIso} compare the scalar-extended finite-stage glue with the separably-closed atlas glue as schemes. \ipointer{Pic0FiniteStageGluedComparison.lean:239}\\
 \end{longtable}
 
-The rank-one family producer emphasized in the review PDFs is therefore no longer the mathematical obstruction.
+\noindent The original rank-one family producer is therefore no longer the obstruction, and local overlap compatibility of the universal class is already present.
 
-\section*{Current descent strategy}
-The current strategy starts with the separably-closed representing scheme and attempts to spread it to a finite field of definition:
+\newpage
+\section*{3. The two mathematical producer gaps}
+
+\band{redbg}{redfg}{GAP A --- finite-stage Yoneda representability}
+\textbf{Missing statement.} For every test scheme \code{T} over \code{Spec k}, construct a precomposition-natural equivalence between maps to \code{P.gluedOver} and \code{pic0TypeFunctor C T}. Equivalently, produce the following Lean proposition with the exact carrier and no additional binder:
 \begin{verbatim}
-finite affine charts and overlap maps for the separably-closed representer
-  -> finite-stage glued scheme P.gluedOver
-  -> one universal Picard class on P.gluedOver
-  -> natural equivalence: maps to P.gluedOver <-> Pic0 families
-  -> projectivity or affine-orbit control for that same scheme
-  -> finite-Galois quotient and descent to the original field
-  -> PicRepDatum -> JacobianData
+(pic0TypeFunctor ((baseChange K P.N.1).obj C)).RepresentableBy P.gluedOver
 \end{verbatim}
-The candidate scheme is defined at:
-\pointer{Pic0FiniteStageGluedOver.lean:1}
-The mathematical decomposition is recorded at:
-\pointer{AJCR.review-plan.p7-galois-descent.yaml}
 
-\section*{Open mathematical obligations}
-\begin{longtable}{>{\raggedright\arraybackslash}p{0.22\linewidth} >{\raggedright\arraybackslash}p{0.16\linewidth} p{0.50\linewidth}}
-\textbf{Obligation} & \textbf{Status} & \textbf{Mathematical question and pointer}\\\hline
-Universal property of the finite carrier & \open & Does \code{P.gluedOver} represent the finite-stage Pic0 functor? The required result is a natural equivalence between maps into this one scheme and Pic0 families on every test scheme. \pointer{p7-galois-descent.representability.finite-stage.yaml}\\
-Coherence of the universal class & \open & Do the local universal classes, restrictions, and overlap identifications assemble into one natural class on \code{P.gluedOver}? \pointer{Pic0FiniteStageUniversalClass.lean:1}\\
-Exact-carrier orbit geometry & \open & Can one prove projectivity, \code{FiniteInAffine}, or an equivalent affine-orbit statement for the same carrier \code{P.gluedOver}? \pointer{p7-galois-descent.orbit-affine.exact-carrier.yaml}\\
-Effective Galois descent & \open & Given the finite-stage representer and its semilinear action, can the quotient and the descended universal class be constructed with the required cocycle identities? \pointer{DivisorScheme.tex:1777}\\
-Original-field Jacobian datum & \red & Does the descended scheme and universal class pass unchanged through \code{PicRepDatum}, \code{JacobianData}, and the final Jacobian statement? \pointer{Pic0FiniteGaloisJacobianData.lean:1}\\
-\end{longtable}
+\textbf{Why the current objects do not prove it.} The glue package gives charts, overlaps, and a glued scheme. \code{finiteStageBaseChangeIso} and \code{gluingGluedIso} give an isomorphism of schemes after base change. Neither statement identifies maps from an arbitrary \code{T} with Pic0 families on \code{T}; that identification is the missing natural \code{homEquiv}. The roadmap names this target explicitly and records that no producer for it exists.
+\pointer{.archon-horizon/roadmap/items/AJCR.review-plan.p7-galois-descent.universal.yoneda.yaml}
+\pointer{.archon-horizon/roadmap/items/AJCR.review-plan.p7-galois-descent.representability.finite-stage.yaml}
+\pointer{MainProjects/Algebraic-Jacobian-Challenge-Rebuild/blueprint/src/chapters/DivisorScheme.tex:1846}
 
-The relevant mathematical files are:
-\begin{verbatim}
-Pic0FiniteStageGluePackage.lean
-Pic0FiniteStageGluingDiagramIso.lean
-Pic0FiniteStageGluingOverlapIsoPreSnd.lean
-Pic0FiniteStageGluingOverlapIsoSnd.lean
-Pic0FiniteStageGluedComparison.lean
-\end{verbatim}
-The blueprint states the representation-preserving descent theorem at:
-\pointer{DivisorScheme.tex:1846}
+\band{amberbg}{amberfg}{GAP B --- geometry of the exact finite carrier}
+\textbf{Missing statement.} Prove \code{FiniteInAffine P.glueData.glued}, or an equivalent finite-dimensional projective-space immersion/projectivity theorem, over the arbitrary finite Galois stage used by \code{P}. The statement must concern the same carrier that is supposed to represent the functor.
 
-\section*{Mathematical diagnosis}
-\begin{enumerate}
-\item The separably-closed representer is available, but the passage from its finite affine atlas to one universal object is not yet expressed as a single theorem.
-\item The current work strengthens local restriction, overlap, and base-change identities. Those identities are necessary, but they do not by themselves prove that the glued carrier represents the functor.
-\item The quotient step needs projectivity or affine-orbit control for the exact carrier that represents the functor. A theorem about another carrier cannot discharge this obligation.
-\item Until the universal property and exact-carrier geometry are settled, the original-field representer and the Jacobian datum cannot be assembled from one representing object and one universal class.
-\end{enumerate}
+\textbf{What is conditional already.} \code{Pic0FiniteStageOrbitAffine.lean} has producers after consuming \code{rep}; some require an algebraically closed field plus connectedness or irreducibility, while another requires an explicit immersion or projectivity input. The stable-cover wrappers consume the same hypotheses. There is no unconditional arbitrary-field producer before Gap A. This is a genuine geometric gap unless the reviewed finite-type/proper/group facts imply the missing hypotheses.
+\pointer{.archon-horizon/roadmap/items/AJCR.review-plan.p7-galois-descent.orbit-affine.exact-carrier.yaml}
+\pointer{MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageOrbitAffine.lean:56}
+\pointer{MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageStableAffineCover.lean:43}
 
-\section*{The route decision}
-The central mathematical question is:
-\begin{quote}
-Is \code{P.gluedOver} genuinely the finite-level representing scheme required by the reviewed descent theorem, or is the current strategy constructing an atlas without yet identifying its universal property?
-\end{quote}
+\statusbox{bluebg}{bluefg}{\textbf{Dependency order.} Gap B's orbit-affine producers consume Gap A's \code{RepresentableBy} certificate. They cannot create that certificate. This is why strengthening orbit lemmas before proving the finite-stage universal property does not move the route forward.}
 
-If it is the correct carrier, the next meaningful milestone is one theorem saying that \code{P.gluedOver} represents the finite-stage Pic0 functor, including its universal class, naturality for every test scheme, and the compatibility needed for Galois descent. If that theorem cannot be stated without changing carriers or adding unrelated hypotheses, the route needs redesign.
+\section*{4. What is not a new mathematical obstruction}
 
-\statusbox{redbg}{redfg}{BOTTOM LINE --- The rank-one and separably-closed mathematics is in place. The unresolved mathematics is concentrated in the finite-stage universal property, the geometry of the exact glued carrier, effective descent of the same representing datum, and the final Jacobian handoff.}
+\band{bluebg}{bluefg}{LIKELY FORMAL TRANSPORT --- global class gluing}
+The chart and overlap classes already satisfy both restriction equations. The remaining statement is to pass them through the multicoequalizer and show that pullback along every test map gives the class selected by Gap A. This should preserve the one pinned universal class; introducing a second class would change the route.
+\pointer{MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageUniversalClass.lean:135}
+\pointer{MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluedComparison.lean:284}
+
+\band{bluebg}{bluefg}{LIKELY FORMAL TRANSPORT --- finite-Galois descent}
+The blueprint already states the representation-preserving quotient/descent theorem. Once Gap A and Gap B supply its hypotheses, the remaining work is to carry the same scheme, semilinear action, universal class, cocycle, and naturality through that theorem.
+\pointer{MainProjects/Algebraic-Jacobian-Challenge-Rebuild/blueprint/src/chapters/DivisorScheme.tex:1777}
+\pointer{MainProjects/Algebraic-Jacobian-Challenge-Rebuild/blueprint/src/chapters/DivisorScheme.tex:1846}
+
+\band{bluebg}{bluefg}{LIKELY FORMAL TRANSPORT --- Jacobian handoff}
+The descended \code{RepresentableBy} datum should pass unchanged through \code{PicRepDatum}, \code{JacobianData}, and the final Jacobian statement. A second representing scheme or universal class would be a change of mathematics, not packaging.
+\pointer{MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteGaloisJacobianData.lean:1}
+\pointer{MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Challenge.lean:1}
+
+\newpage
+\section*{5. Why the route keeps reaching the same boundary}
+
+The current strategy accumulates restriction, overlap, diagram, and base-change
+identities for a finite atlas. Those facts show that \code{P.gluedOver} is a
+plausible model and that its scalar extension matches the separably-closed model.
+They do not prove the universal assertion
+\[
+\mbox{for every }T,\quad \operatorname{Maps}(T, P.\mathrm{gluedOver})
+\mbox{ is naturally }\operatorname{Pic}^{0}(T).
+\]
+That assertion is the first producer theorem consumed by every later descent
+construction. The orbit-affine lemmas then consume the missing \code{rep}; they
+cannot create it. Thus local identities can all be correct while the route still
+stops at Gap A.
+
+\section*{6. Mathematical conclusion}
+\statusbox{redbg}{redfg}{The unresolved route is concentrated in two concrete claims: (A) finite-stage functor-level representability by \code{P.gluedOver}; and (B) exact-carrier orbit geometry over an arbitrary finite Galois stage. These are the places where a new mathematical idea, a stronger hypothesis, or a different carrier may be required.}
+
+\statusbox{bluebg}{bluefg}{Class gluing, effective finite-Galois descent, and the Jacobian handoff are conditional downstream work. They should be attempted only after the two producer statements are mathematically justified, and they should preserve the same representing scheme and universal class.}
+
+\noindent\textbf{The useful review decision is therefore concrete:} validate or reject Gap A and Gap B as stated. If either theorem cannot be formulated for the exact carrier without extra hypotheses, the present route needs redesign; further local overlap identities will not resolve that issue.
+
 \end{document}

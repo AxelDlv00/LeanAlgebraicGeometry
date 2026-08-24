@@ -1,19 +1,21 @@
 {
   "review_state": "2026-08-24",
-  "purpose": "Mathematical status of the AJCR route after the separably-closed Pic0 milestone",
+  "purpose": "Give a mathematician an exact diagnosis of the remaining AJCR route, separating theorem gaps from downstream formal transport.",
+  "verdict": "The route is not stalled by formal transport alone. The two producer statements below are the mathematical boundary: finite-stage Yoneda representability and exact-carrier orbit geometry over an arbitrary finite Galois stage.",
   "review_route": [
     "rank-one Picard/divisor chart",
     "family-level Abel isomorphism",
-    "translated rank-one charts over a separably closed field",
+    "translated charts over a separably closed field",
     "Pic0 represented over that field",
-    "finite-Galois descent",
+    "finite-stage glued carrier P.gluedOver",
+    "finite-Galois quotient and descent",
     "Pic0 represented over the original field",
     "Jacobian"
   ],
   "established": [
     {
       "stage": "rank_one_chart",
-      "statement": "The good Picard locus and matching divisor locus are defined for arbitrary test schemes.",
+      "statement": "The good line-bundle locus and matching divisor locus are defined over arbitrary test schemes.",
       "pointer": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0CriticalPath.lean:205"
     },
     {
@@ -28,8 +30,18 @@
     },
     {
       "stage": "separably_closed_pic0",
-      "statement": "A scheme and universal Pic0 class represent Pic0 over the separably closed field.",
+      "statement": "A scheme and a representing universal Pic0 class exist over the separably closed field.",
       "pointer": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0SepClosedRepresentable.lean:443"
+    },
+    {
+      "stage": "local_universal_class",
+      "statement": "The pinned universal class has both chart-to-overlap restriction equalities and is packaged as Pic0FiniteStageUniversalAtlasClass.",
+      "pointer": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageUniversalClass.lean:119"
+    },
+    {
+      "stage": "object_level_comparison",
+      "statement": "gluingGluedIso and finiteStageBaseChangeIso compare the scalar-extended finite-stage glue with the separably-closed atlas glue as schemes.",
+      "pointer": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluedComparison.lean:239"
     }
   ],
   "current_strategy": [
@@ -37,42 +49,52 @@
     "finite-stage glued scheme P.gluedOver",
     "one universal Picard class on P.gluedOver",
     "natural equivalence between maps to P.gluedOver and Pic0 families",
-    "projectivity or affine-orbit control for P.gluedOver",
-    "finite-Galois quotient and descent to the original field",
+    "projectivity or orbit-affine control for P.gluedOver",
+    "finite-Galois quotient and descent",
     "PicRepDatum -> JacobianData"
   ],
-  "open_mathematical_obligations": [
+  "issue_classification": [
     {
       "id": "finite_stage_universal_property",
-      "statement": "Prove that P.gluedOver represents the finite-stage Pic0 functor, with a natural equivalence for every test scheme.",
-      "why_it_matters": "Compatible charts and overlap maps are not by themselves a universal property.",
+      "classification": "confirmed_mathematical_gap",
+      "exact_target": "For every test scheme T over Spec k, produce a precomposition-natural equivalence between maps to P.gluedOver and pic0TypeFunctor C T; equivalently produce (pic0TypeFunctor ((baseChange K P.N.1).obj C)).RepresentableBy P.gluedOver with the exact carrier and no extra binder.",
+      "current_evidence": "The glue package gives charts, overlaps, and a glued scheme. finiteStageBaseChangeIso and gluingGluedIso give an object-level scheme comparison after base change. Neither gives the natural homEquiv for arbitrary T. The roadmap explicitly records that no binder-free homEquiv producer exists.",
+      "mathematical_obstruction": "A scheme isomorphism after scalar extension does not identify the finite-stage moduli functor unless the Pic0 functor itself is transported through that isomorphism for every test scheme.",
       "pointers": [
+        ".archon-horizon/roadmap/items/AJCR.review-plan.p7-galois-descent.universal.yoneda.yaml",
         ".archon-horizon/roadmap/items/AJCR.review-plan.p7-galois-descent.representability.finite-stage.yaml",
         "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/blueprint/src/chapters/DivisorScheme.tex:1846"
       ]
     },
     {
-      "id": "universal_class_coherence",
-      "statement": "Assemble the local universal Picard classes, restrictions, and overlap identifications into one natural class on P.gluedOver.",
-      "why_it_matters": "The construction must become a family-level object under arbitrary base change.",
+      "id": "global_universal_class_gluing",
+      "classification": "partly_established_partly_formal_transport",
+      "exact_target": "Turn the compatible chart and overlap classes into one class on the glued scheme, and prove that its pullback along every test map is the class corresponding to that map under the Yoneda equivalence.",
+      "current_evidence": "The local universal class and both restriction equations are already explicit in Pic0FiniteStageUniversalClass.lean.",
+      "mathematical_obstruction": "The remaining statement depends on the missing functor-level equivalence; local compatibility alone does not assert a global universal property.",
       "pointers": [
-        "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageUniversalClass.lean:1",
-        "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluedComparison.lean:1"
+        "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageUniversalClass.lean:135",
+        "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluedComparison.lean:284"
       ]
     },
     {
       "id": "exact_carrier_orbit_geometry",
-      "statement": "Prove projectivity, FiniteInAffine, or an equivalent affine-orbit statement for the exact carrier P.gluedOver.",
-      "why_it_matters": "The finite-Galois quotient requires this property for the same scheme that represents the functor.",
+      "classification": "confirmed_geometric_gap_with_conditional_lemmas",
+      "exact_target": "Prove FiniteInAffine P.glueData.glued, or an equivalent finite-dimensional projective-space immersion/projectivity statement, over the arbitrary finite Galois stage used by P.",
+      "current_evidence": "Pic0FiniteStageOrbitAffine.lean supplies producers only after consuming rep and, by route, assuming an algebraically closed field plus connectedness/irreducibility or an explicit immersion/projectivity input. Stable-affine wrappers have the same dependency.",
+      "mathematical_obstruction": "The finite-Galois quotient needs orbit affineness for the same carrier that represents Pic0. Existing conditional lemmas do not provide an unconditional arbitrary-field theorem before rep has been constructed.",
       "pointers": [
         ".archon-horizon/roadmap/items/AJCR.review-plan.p7-galois-descent.orbit-affine.exact-carrier.yaml",
-        "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageOrbitAffine.lean:1"
+        "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageOrbitAffine.lean:56",
+        "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageStableAffineCover.lean:43"
       ]
     },
     {
       "id": "effective_galois_descent",
-      "statement": "Descend the finite-stage scheme and the same universal class through the semilinear Galois action, quotient, and cocycle identities.",
-      "why_it_matters": "The descended object must retain the representing property, not only the underlying scheme.",
+      "classification": "likely_formal_transport_conditional_on_the_two_producers",
+      "exact_target": "Apply the representation-preserving finite-Galois descent theorem to P.gluedOver, its semilinear action, exact-carrier orbit geometry, and the same universal class, retaining cocycle and naturality.",
+      "current_evidence": "The reviewed blueprint already states the finite-Galois quotient and representation-preserving descent route.",
+      "mathematical_obstruction": "The remaining issue is whether the hypotheses produced by the two preceding theorems match the descent theorem; no new moduli object should be introduced here.",
       "pointers": [
         "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/blueprint/src/chapters/DivisorScheme.tex:1777",
         "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/blueprint/src/chapters/DivisorScheme.tex:1846"
@@ -80,27 +102,20 @@
     },
     {
       "id": "jacobian_handoff",
-      "statement": "Pass the descended scheme and universal class unchanged through PicRepDatum, JacobianData, and the final Jacobian statement.",
-      "why_it_matters": "A second representing object or universal class would break the intended construction.",
+      "classification": "likely_formal_transport_downstream",
+      "exact_target": "Pass the descended scheme and the same universal class unchanged through PicRepDatum, JacobianData, and the final Jacobian statement.",
+      "current_evidence": "The Jacobian data file is downstream of the original-field RepresentableBy certificate.",
+      "mathematical_obstruction": "Choosing a second representing scheme or a second universal class would change the route; otherwise this is packaging of the descended datum.",
       "pointers": [
         "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteGaloisJacobianData.lean:1",
         "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Challenge.lean:1"
       ]
     }
   ],
-  "mathematical_diagnosis": [
-    "The finite affine atlas has not yet been converted into one theorem asserting a universal property.",
-    "Local restriction, overlap, and base-change identities are being strengthened without settling whether the glued carrier represents the functor.",
-    "The quotient step is conditional on geometry of the exact carrier; results for a different carrier do not solve this obligation.",
-    "Until the universal property and exact-carrier geometry are settled, original-field Pic0 and the Jacobian cannot be assembled from one representing datum."
-  ],
-  "minimal_mathematical_checkpoint": {
-    "statement": "P.gluedOver represents the finite-stage Pic0 functor.",
-    "required_content": [
-      "universal Picard class",
-      "natural map/equivalence for every test scheme",
-      "compatibility needed by finite-Galois descent"
-    ],
-    "interpretation": "If this theorem cannot be stated without changing carriers or adding unrelated hypotheses, the current route needs redesign."
-  }
+  "why_the_same_boundary_reappears": "The current strategy keeps proving restriction, overlap, diagram, and base-change identities for the finite atlas. These establish a plausible carrier and compatible local classes, but not the assertion that for every T, maps(T, P.gluedOver) are naturally the same as Pic0-families on T. The orbit-affine producers then consume the missing rep rather than create it.",
+  "mathematical_conclusion": "The route contains one confirmed functor-level theorem gap and one confirmed exact-carrier geometry gap. Class gluing, finite-Galois descent, and the Jacobian handoff are conditional downstream work. A route change is needed if either producer theorem requires a different carrier or extra hypotheses.",
+  "pointers_to_route_documents": [
+    "MainProjects/Algebraic-Jacobian-Challenge/informal/Lean_Algebraic_Jacobian_Complete_Execution_Plan.pdf",
+    "MainProjects/Algebraic-Jacobian-Challenge/informal/AJCR_Runs_121_122_123_Supervision_Note_2026-08-07.pdf"
+  ]
 }
