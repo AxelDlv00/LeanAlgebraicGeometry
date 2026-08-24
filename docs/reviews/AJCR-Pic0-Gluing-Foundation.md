@@ -128,13 +128,12 @@ same PR and the panel will re-review the new head.
 
 - `git diff --check` passes for this review capsule.
 - A fresh `lean_diagnostic_messages` pass on
-  `Pic0FiniteStageUniversalClass.lean` timed out while the file was still
-  elaborating (lines 117-151).  Passes on
-  `Pic0FiniteStageGluedOver.lean`,
-  `Pic0FiniteStageGluingDiagramIso.lean`, and
-  `Pic0FiniteStageGluedComparison.lean` were unavailable because their broad
-  dependency graph did not finish.  These outcomes are recorded as limits,
-  not as successful compilation evidence.
+  `Pic0FiniteStageUniversalClass.lean` completed with no diagnostics.
+  `Pic0FiniteStageGluePackage.lean` timed out while still elaborating (lines
+  36 and 66-319), while `Pic0FiniteStageGluedOver.lean` and
+  `Pic0CriticalPath.lean` were unavailable because their broad dependency
+  graph did not finish.  These outcomes are recorded as limits, not as a
+  local full-build claim.
 - The existing `.github/workflows/lean.yml` `lake-build` job remains the
   authoritative full-build check; this audit makes no local full-build claim
   and does not change repository CI.
