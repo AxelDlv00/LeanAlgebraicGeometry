@@ -367,6 +367,81 @@ noncomputable def pic0FiniteStageModelScalarExtensionMap
       (pic0FiniteStageModelRingAlgebra C L n m relation M j2)
       f
 
+noncomputable def pic0FiniteStageScalarExtensionMapOver
+    {F : Type u} [Field F] [Algebra F k]
+    {K : Type u} [CommRing K]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (M : DatG0.FinSubext L.1 k) [Algebra M.1 K]
+    (j1 j2 : Pic0FiniteStageRingIndex C)
+    (f : @AlgHom M.1
+      (Pic0FiniteStageModelRing C L n m relation M j1)
+      (Pic0FiniteStageModelRing C L n m relation M j2)
+      (inferInstance : CommSemiring M.1)
+      (pic0FiniteStageModelRingCommRing C L n m relation M j1).toSemiring
+      (pic0FiniteStageModelRingCommRing C L n m relation M j2).toSemiring
+      (pic0FiniteStageModelRingAlgebra C L n m relation M j1)
+      (pic0FiniteStageModelRingAlgebra C L n m relation M j2)) :
+    @AlgHom K
+      (K ⊗[M.1] Pic0FiniteStageModelRing C L n m relation M j1)
+      (K ⊗[M.1] Pic0FiniteStageModelRing C L n m relation M j2)
+      (inferInstance : CommSemiring K)
+      (@Algebra.TensorProduct.instSemiring M.1 K
+        (Pic0FiniteStageModelRing C L n m relation M j1)
+        (inferInstance : CommSemiring M.1)
+        (inferInstance : Semiring K)
+        (inferInstance : Algebra M.1 K)
+        (pic0FiniteStageModelRingCommRing C L n m relation M j1).toSemiring
+        (pic0FiniteStageModelRingAlgebra C L n m relation M j1))
+      (@Algebra.TensorProduct.instSemiring M.1 K
+        (Pic0FiniteStageModelRing C L n m relation M j2)
+        (inferInstance : CommSemiring M.1)
+        (inferInstance : Semiring K)
+        (inferInstance : Algebra M.1 K)
+        (pic0FiniteStageModelRingCommRing C L n m relation M j2).toSemiring
+        (pic0FiniteStageModelRingAlgebra C L n m relation M j2))
+      (@Algebra.TensorProduct.leftAlgebra M.1 K K
+        (Pic0FiniteStageModelRing C L n m relation M j1)
+        (inferInstance : CommSemiring M.1)
+        (inferInstance : Semiring K)
+        (inferInstance : Algebra M.1 K)
+        (pic0FiniteStageModelRingCommRing C L n m relation M j1).toSemiring
+        (pic0FiniteStageModelRingAlgebra C L n m relation M j1)
+        (inferInstance : CommSemiring K)
+        (inferInstance : Algebra K K)
+        (inferInstance : SMulCommClass M.1 K K))
+      (@Algebra.TensorProduct.leftAlgebra M.1 K K
+        (Pic0FiniteStageModelRing C L n m relation M j2)
+        (inferInstance : CommSemiring M.1)
+        (inferInstance : Semiring K)
+        (inferInstance : Algebra M.1 K)
+        (pic0FiniteStageModelRingCommRing C L n m relation M j2).toSemiring
+        (pic0FiniteStageModelRingAlgebra C L n m relation M j2)
+        (inferInstance : CommSemiring K)
+        (inferInstance : Algebra K K)
+        (inferInstance : SMulCommClass M.1 K K)) := by
+  letI : Semiring (Pic0FiniteStageModelRing C L n m relation M j1) :=
+    (pic0FiniteStageModelRingCommRing C L n m relation M j1).toSemiring
+  letI : Semiring (Pic0FiniteStageModelRing C L n m relation M j2) :=
+    (pic0FiniteStageModelRingCommRing C L n m relation M j2).toSemiring
+  letI : Algebra M.1 (Pic0FiniteStageModelRing C L n m relation M j1) :=
+    pic0FiniteStageModelRingAlgebra C L n m relation M j1
+  letI : Algebra M.1 (Pic0FiniteStageModelRing C L n m relation M j2) :=
+    pic0FiniteStageModelRingAlgebra C L n m relation M j2
+  exact @AlgebraicJacobian.scalarExtensionMapOfAlgHom
+    M.1 K
+      (Pic0FiniteStageModelRing C L n m relation M j1)
+      (Pic0FiniteStageModelRing C L n m relation M j2)
+      (inferInstance : CommRing M.1)
+      (inferInstance : CommRing K)
+      (pic0FiniteStageModelRingCommRing C L n m relation M j1).toSemiring
+      (pic0FiniteStageModelRingCommRing C L n m relation M j2).toSemiring
+      (inferInstance : Algebra M.1 K)
+      (pic0FiniteStageModelRingAlgebra C L n m relation M j1)
+      (pic0FiniteStageModelRingAlgebra C L n m relation M j2)
+      f
+
 @[reducible] noncomputable def pic0FiniteStageModelAmbientSemiring
     {F : Type u} [Field F] [Algebra F k]
     (L : DatG0.FinSubext F k)
@@ -450,7 +525,19 @@ attribute [local instance] pic0FiniteStageModelAmbientKAlgebra
       (k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1
         (n j) (m j) (relation j)) :=
     pic0FiniteStageModelAmbientAlgebra C L n m relation j
-  exact IsScalarTower.of_algebraMap_eq' rfl
+  exact @IsScalarTower.of_algebraMap_eq
+    L.1 k
+      (k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1
+        (n j) (m j) (relation j))
+      (inferInstance : CommSemiring L.1)
+      (inferInstance : CommSemiring k)
+      (inferInstance : Semiring
+        (k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1
+          (n j) (m j) (relation j)))
+      (inferInstance : Algebra L.1 k)
+      (pic0FiniteStageModelAmbientKAlgebra C L n m relation j)
+      (pic0FiniteStageModelAmbientAlgebra C L n m relation j)
+      (fun _ => rfl)
 
 noncomputable def pic0FiniteStageModelAmbientMap
     {F : Type u} [Field F] [Algebra F k]
@@ -697,6 +784,78 @@ attribute [local instance] pic0FiniteStageFinalScalarExtensionSemiring
 
 attribute [local instance] pic0FiniteStageFinalScalarExtensionAlgebra
 
+noncomputable def pic0FiniteStageFinalScalarExtensionMapExplicit
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (M : DatG0.FinSubext L.1 k)
+    (N : DatG0.FinSubext M.1 k)
+    (j1 j2 : Pic0FiniteStageRingIndex C)
+    (f : @AlgHom N.1
+      (Pic0FiniteStageFinalModelRing C L n m relation M N j1)
+      (Pic0FiniteStageFinalModelRing C L n m relation M N j2)
+      (inferInstance : CommSemiring N.1)
+      (pic0FiniteStageFinalModelRingCommRing C L n m relation M N j1).toSemiring
+      (pic0FiniteStageFinalModelRingCommRing C L n m relation M N j2).toSemiring
+      (pic0FiniteStageFinalModelRingAlgebra C L n m relation M N j1)
+      (pic0FiniteStageFinalModelRingAlgebra C L n m relation M N j2)) :
+    @AlgHom k
+      (k ⊗[N.1] Pic0FiniteStageFinalModelRing C L n m relation M N j1)
+      (k ⊗[N.1] Pic0FiniteStageFinalModelRing C L n m relation M N j2)
+      (inferInstance : CommSemiring k)
+      (pic0FiniteStageFinalScalarExtensionSemiring C L n m relation M N j1)
+      (pic0FiniteStageFinalScalarExtensionSemiring C L n m relation M N j2)
+      (pic0FiniteStageFinalScalarExtensionAlgebra C L n m relation M N j1)
+      (pic0FiniteStageFinalScalarExtensionAlgebra C L n m relation M N j2) := by
+  letI : Semiring (Pic0FiniteStageFinalModelRing C L n m relation M N j1) :=
+    (pic0FiniteStageFinalModelRingCommRing C L n m relation M N j1).toSemiring
+  letI : Semiring (Pic0FiniteStageFinalModelRing C L n m relation M N j2) :=
+    (pic0FiniteStageFinalModelRingCommRing C L n m relation M N j2).toSemiring
+  letI : Algebra N.1 (Pic0FiniteStageFinalModelRing C L n m relation M N j1) :=
+    pic0FiniteStageFinalModelRingAlgebra C L n m relation M N j1
+  letI : Algebra N.1 (Pic0FiniteStageFinalModelRing C L n m relation M N j2) :=
+    pic0FiniteStageFinalModelRingAlgebra C L n m relation M N j2
+  exact @AlgebraicJacobian.scalarExtensionMapOfAlgHom
+    N.1 k
+      (Pic0FiniteStageFinalModelRing C L n m relation M N j1)
+      (Pic0FiniteStageFinalModelRing C L n m relation M N j2)
+      (inferInstance : CommRing N.1)
+      (inferInstance : CommRing k)
+      (pic0FiniteStageFinalModelRingCommRing C L n m relation M N j1).toSemiring
+      (pic0FiniteStageFinalModelRingCommRing C L n m relation M N j2).toSemiring
+      (inferInstance : Algebra N.1 k)
+      (pic0FiniteStageFinalModelRingAlgebra C L n m relation M N j1)
+      (pic0FiniteStageFinalModelRingAlgebra C L n m relation M N j2)
+      f
+
+noncomputable def pic0FiniteStageCancelBaseChange
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (M : DatG0.FinSubext L.1 k)
+    (N : DatG0.FinSubext M.1 k)
+    (j : Pic0FiniteStageRingIndex C) :=
+  @Algebra.TensorProduct.cancelBaseChange
+    M.1 N.1
+    (inferInstance : CommSemiring M.1)
+    (inferInstance : CommSemiring N.1)
+    (inferInstance : Algebra M.1 N.1)
+    k k (Pic0FiniteStageModelRing C L n m relation M j)
+    (inferInstance : CommSemiring k)
+    (inferInstance : CommSemiring k)
+    (pic0FiniteStageModelRingCommRing C L n m relation M j).toCommSemiring
+    (inferInstance : Algebra M.1 k)
+    (inferInstance : Algebra M.1 k)
+    (pic0FiniteStageModelRingAlgebra C L n m relation M j)
+    (inferInstance : Algebra k k)
+    (inferInstance : IsScalarTower M.1 k k)
+    (inferInstance : Algebra N.1 k)
+    (inferInstance : IsScalarTower M.1 N.1 k)
+    (inferInstance : Algebra N.1 k)
+    (inferInstance : IsScalarTower N.1 k k)
+
 set_option synthInstance.maxHeartbeats 400000 in
 -- The comparison cancels two nested finite-subextension scalar towers.
 set_option maxHeartbeats 6400000 in
@@ -839,9 +998,11 @@ theorem pic0FiniteStageFinalBaseChangeEquiv_naturality
             (Pic0FiniteStageMapSource C q)
             (Pic0FiniteStageMapTarget C q)
             (mapM q))) =
-      (pic0FiniteStageMap C q).comp
+        (pic0FiniteStageMap C q).comp
         (pic0FiniteStageFinalBaseChangeEquiv C L n m relation e M N
           (Pic0FiniteStageMapSource C q)).toAlgHom := by
+  -- Temporary quarantine: the archived proof is preserved in Horizon attempt 0033.
+  -- The remaining issue is dependent `AlgHom` instance coherence, not the statement.
   sorry
 
 end
