@@ -5,12 +5,6 @@ on:
   push:
     branches: [palimpsest/main, main]
 
-permissions:
-  contents: read
-
-env:
-  PROJECT_DIR: MainProjects/Algebraic-Jacobian-Challenge-Rebuild
-
 jobs:
   lake-build:
     name: lake-build
@@ -21,51 +15,8 @@ jobs:
         run: |
           curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
-      - name: Compute cache window
-        id: cache-meta
-        shell: bash
-        run: |
-          set -euo pipefail
-          echo "fingerprint=${{ hashFiles('MainProjects/Algebraic-Jacobian-Challenge-Rebuild/lean-toolchain', 'MainProjects/Algebraic-Jacobian-Challenge-Rebuild/lake-manifest.json') }}" >> "$GITHUB_OUTPUT"
-          echo "week=$(date -u +%G-W%V)" >> "$GITHUB_OUTPUT"
-      - name: Restore dependency cache
-        id: dependency-cache
-        uses: actions/cache/restore@v4
-        continue-on-error: true
-        with:
-          path: |
-            ~/.elan/toolchains
-            .lake-packages
-          key: lake-deps-${{ runner.os }}-${{ steps.cache-meta.outputs.fingerprint }}
-          restore-keys: |
-            lake-deps-${{ runner.os }}-
-      - name: Restore project build cache
-        id: project-cache
-        uses: actions/cache/restore@v4
-        continue-on-error: true
-        with:
-          path: ${{ env.PROJECT_DIR }}/.lake/build
-          key: lake-build-${{ runner.os }}-${{ steps.cache-meta.outputs.fingerprint }}-${{ steps.cache-meta.outputs.week }}
-          restore-keys: |
-            lake-build-${{ runner.os }}-${{ steps.cache-meta.outputs.fingerprint }}-
       - name: Build AJCR
-        working-directory: ${{ env.PROJECT_DIR }}
+        working-directory: MainProjects/Algebraic-Jacobian-Challenge-Rebuild
         run: |
           lake exe cache get || true
           lake build
-      - name: Publish dependency cache
-        if: ${{ success() && github.event_name == 'push' && (github.ref == 'refs/heads/palimpsest/main' || github.ref == 'refs/heads/main') && steps.dependency-cache.outputs.cache-hit != 'true' }}
-        uses: actions/cache/save@v4
-        continue-on-error: true
-        with:
-          path: |
-            ~/.elan/toolchains
-            .lake-packages
-          key: lake-deps-${{ runner.os }}-${{ steps.cache-meta.outputs.fingerprint }}
-      - name: Publish project build cache
-        if: ${{ success() && github.event_name == 'push' && (github.ref == 'refs/heads/palimpsest/main' || github.ref == 'refs/heads/main') && steps.project-cache.outputs.cache-hit != 'true' }}
-        uses: actions/cache/save@v4
-        continue-on-error: true
-        with:
-          path: ${{ env.PROJECT_DIR }}/.lake/build
-          key: lake-build-${{ runner.os }}-${{ steps.cache-meta.outputs.fingerprint }}-${{ steps.cache-meta.outputs.week }}
