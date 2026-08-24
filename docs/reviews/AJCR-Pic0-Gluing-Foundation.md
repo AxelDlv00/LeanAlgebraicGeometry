@@ -28,76 +28,64 @@ same PR and the panel will re-review the new head.
 
 ## ✅ Applied repairs and retained debt
 
-- The two panel-blocking `sorryAx` dependencies were removed from
+- The two review-blocking `sorryAx` dependencies were removed from
   `Pic0FiniteStageGluePackage.glueData` and
   `Pic0FiniteStageGluePackage.gluedMap`.
 - `Pic0FiniteStageUniversalAtlasClass` now carries `universal_eq`, so its
   global class is propositionally pinned to
   `pic0SepClosedUniversalClass`; the canonical constructor discharges this by
   `rfl`.
+- `chartBaseChangeIso_hom_structureMap`,
+  `gluingChartIso_hom_structureMap`, and
+  `gluingGluedIso_hom_structureMap` now propagate the chart-level structure
+  map through the global gluing comparison.  The resulting
+  `finiteStageBaseChangeIso_hom_structureMap` bundles the existing raw
+  comparison as `finiteStageBaseChangeOverIso` in `Over (Spec k)`.
+- The independent `C`/`Ck` consumer binders were re-audited without weakening
+  their theorem statements.  The displayed `RepresentableBy P.gluedOver`
+  value is already the formal evidence connecting the carrier to the named
+  Picard functor; the actual route gap is the absence of a theorem constructing
+  that evidence from the finite-stage package.
+- `Pic0CriticalPath.lean` now imports `Pic0FiniteStageGluedComparison` and
+  checks the structure-map and `Over` declarations, bringing the complete
+  comparison chain into the default root-build graph.
 - The finite-stage package still does not expose the producer's pair-transition
   inverse certificate.  The certificate is available in
   `exists_finSubext_pic0FiniteStageTransition_models`; retaining it in the
   package is deferred until a downstream consumer needs that API explicitly.
 - The finite-stage universal-class package still has no theorem transporting
   its canonical class through the finite-stage glued carrier or proving the
-  corresponding representability/descent statement.  Likewise,
-  `finiteStageBaseChangeIso` remains a raw scheme isomorphism whose direct
-  consumers supply representability separately; no structure-map equality or
-  `Over`-category companion is proved.  These are follow-up architecture work,
-  not claims established by this review capsule.
-- The default `AlgebraicJacobian` target imports
-  `Pic0FiniteStageGluingDiagramIso` but not
-  `Pic0FiniteStageGluedComparison` or the `...GluingOverlapIsoSnd` chain.
-  The comparison declarations are therefore outside the ordinary root-build
-  validation graph.  A future milestone must add an intentional import or a
-  dedicated test target before treating that chain as CI-validated.
-- `Pic0FiniteStageOrbitAffine` and `Pic0FiniteStageStableAffineCover` still
-  quantify independent `C : Over (Spec K)` and `Ck : Over (Spec k)` and take
-  `RepresentableBy P.gluedOver` as an external hypothesis.  No producer links
-  those binders to `finiteStageBaseChangeIso`; this remains a conditional
-  endpoint pending base-change identification and representability transport.
+  corresponding representability/descent statement.  The new `Over`
+  comparison is object-level only: it neither supplies a curve over `P.N.1`
+  nor transports the Picard natural equivalence in the descent direction.
+  Direct consumers therefore continue to expose
+  `RepresentableBy P.gluedOver` as an external hypothesis.  This is follow-up
+  architecture work, not a claim established by the object comparison.
 
-## 🔴 Blocking audit findings
+## ✅ Resolved audit findings
 
-- **Raw comparison is not representability transport.**
-  `Pic0FiniteStageGluedComparison.lean:284-292` exports
-  `finiteStageBaseChangeIso` as an isomorphism of underlying `Scheme`s.  The
-  source object is the pullback of `P.gluedMap` and the target is
-  `(pic0_sepClosed_representableBy (C := C)).1.left`, but the declaration has
-  no equality relating either structure map to `Spec k`.  The local transport
-  API `Pic0RepresentableByTransport.lean:75-86` requires an isomorphism of
-  `Over (Spec k)` objects.  The required repair is a structure-map square,
-  followed by an exported `Over` isomorphism and the corresponding universal
-  class/naturality transport; a raw `Scheme` iso must not be presented as a
-  representer comparison.
-- **The conditional consumers can mention unrelated curves.**
-  `Pic0FiniteStageOrbitAffine.lean:31-49` and
-  `Pic0FiniteStageStableAffineCover.lean:28-46` quantify an independent
-  `C : Over (Spec K)` and `Ck : Over (Spec k)`, construct
-  `P : Pic0FiniteStageGluePackage Ck F`, and then accept
+- **The raw comparison now has the required object-level `Over` API.**
+  `finiteStageBaseChangeIso_hom_structureMap` proves the commuting triangle
+  from the affine chart algebra maps through both multicoequalizers, and
+  `finiteStageBaseChangeOverIso` packages that triangle with
+  `finiteStageBaseChangeIso` using `Over.isoMk`.  Its docstring explicitly
+  excludes curve, natural-equivalence, and representability descent.
+- **The independent consumer binders do not create an unsound theorem.**
+  Each result assumes
   `rep : (pic0TypeFunctor ((baseChange K P.N.1).obj C)).RepresentableBy
-  P.gluedOver`.  No equality or `Over` isomorphism connects `Ck` with the
-  base-changed `C`; the same carrier can therefore be asserted to represent a
-  different Picard functor.  The repair boundary is to tie `Ck` to the chosen
-  base change (or pass and use an explicit curve `Over` iso) before removing
-  the external `rep` binder.  The Galois/Jacobian wrappers inherit this gap.
-  In particular, `Pic0FiniteGaloisJacobianData.lean:119-166` repackages the
-  same independent binders and external `rep` into `PicRepDatum` and
-  `JacobianData`, so those challenge-facing declarations do not restore the
-  missing curve identification or finite-stage representability theorem.
+  P.gluedOver`; that proof, rather than the provenance of `P`, is exactly what
+  its group-action and descent arguments consume.  Restricting `P` to a
+  definitionally chosen base change would unnecessarily weaken these valid
+  conditional results.  The remaining route debt is a binder-free producer
+  deriving `rep` from a curve-compatible finite-stage construction.
 
-## 🟠 Architecture / validation finding
+## ✅ Validation graph repair
 
-- **The comparison cone is not in the default validation graph.**
-  `AlgebraicJacobian.lean:815-817` reaches
-  `Pic0CriticalPath.lean`, `Pic0FiniteStageGeometry.lean`, and
-  `Pic0FiniteStageStableAffineCover.lean`, while
-  `Pic0FiniteStageGluedComparison.lean` (and the
-  `...GluingOverlapIsoSnd` chain) is not imported by the root.  Thus the
-  exported `finiteStageBaseChangeIso` is not ordinary root-build evidence.
-  Add an intentional root import or a dedicated CI test target before using
-  that chain as validated infrastructure.
+- `Pic0CriticalPath.lean` intentionally imports
+  `Pic0FiniteStageGluedComparison.lean`, which transitively roots the
+  `...GluingOverlapIsoSnd` chain.  It also checks the local, global, raw, and
+  `Over` comparison declarations.  Protected CI remains authoritative for the
+  resulting expanded root-build graph.
 
 ## 🟠 Follow-up API observations
 
@@ -106,9 +94,11 @@ same PR and the panel will re-review the new head.
   `Pic0FiniteStageGluePackage.lean:276`; the package consequently cannot expose
   a reusable pair-transition equivalence without rederiving it.
 - `gluingGluedHom_ι` and `gluingGluedInv_ι` are private in
-  `Pic0FiniteStageGluedComparison.lean:97-108,225-236`, so a future `Over`
-  bridge cannot reuse the chart equations without reproving them.  The helper
-  `gluingOverlapIso_pre_snd_snd` is also marked `[irreducible]` at
+  `Pic0FiniteStageGluedComparison.lean`; the public
+  `gluingGluedIso_hom_structureMap` now exposes the structure-map consequence
+  needed by downstream code, so those implementation equations need not be
+  exported solely for the `Over` bridge.  The helper
+  `gluingOverlapIso_pre_snd_snd` remains marked `[irreducible]` at
   `Pic0FiniteStageGluingOverlapIsoPreSndSnd.lean:37`, which makes the eventual
   naturality API needlessly opaque.
 
@@ -120,8 +110,8 @@ same PR and the panel will re-review the new head.
   level; no reversed-leg equality was found in this audit.
 - `Pic0FiniteStageUniversalAtlasClass.universal_eq` pins only the exact
   separably-closed universal class.  It does not claim a class on
-  `P.gluedOver`, which is the correct limitation until the missing `Over`
-  comparison exists.
+  `P.gluedOver`, which remains the correct limitation after adding the
+  object-level `Over` comparison.
 - The repository README's acceptance matrix
   (`MainProjects/Algebraic-Jacobian-Challenge-Rebuild/README.md:56-67,114-127`)
   independently classifies the `(rep : ...)` declarations as conditional
@@ -130,20 +120,28 @@ same PR and the panel will re-review the new head.
 
 ## 🧪 Validation boundary
 
-- `git diff --check` passes for this review capsule.
-- A fresh `lean_diagnostic_messages` pass on
-  `Pic0FiniteStageUniversalClass.lean` completed with no diagnostics.
-  `Pic0FiniteStageGluePackage.lean` completed with three style warnings
-  (max-heartbeat comments at lines 191 and 217, and a long line at 213).
-  `Pic0FiniteStageGluedOver.lean` and `Pic0CriticalPath.lean` were unavailable
-  because their broad dependency graph did not finish.  These outcomes are
-  recorded as limits, not as a local full-build claim.
+- The generic affine structure-map calculation underlying
+  `chartBaseChangeIso_hom_structureMap` compiles in a focused
+  `lean_run_code` probe.  A second probe verifies the
+  `limit.isoLimitCone_hom_π` projection equation used by
+  `baseChangeGluingIso_hom_p2`.  A separate `Over.isoMk` probe verifies the
+  exact source-object shape used by `finiteStageBaseChangeOverIso`.
+- `lean_diagnostic_messages` was requested for every Lean file changed by the
+  `Over` repair: `Pic0FiniteStageChartBaseChange.lean`,
+  `Pic0FiniteStageGluingBaseChange.lean`,
+  `Pic0FiniteStageGluingDiagramIso.lean`,
+  `Pic0FiniteStageGluedComparison.lean`, and `Pic0CriticalPath.lean`.  Each
+  request stopped before the file at the same broad failed-dependency graph
+  (82 dependencies for the four comparison files and 85 for the root), so none
+  is recorded as locally clean.  The earlier focused pass on
+  `Pic0FiniteStageUniversalClass.lean` completed without diagnostics; this is
+  supporting evidence only, not validation of the new head.
 - A focused `lean_verify`/source scan of
   `Pic0FiniteStageGluePackage.glueData` reported only `propext`,
   `Classical.choice`, and `Quot.sound`, with no source warnings.
 - The existing `.github/workflows/lean.yml` `lake-build` job remains the
-  authoritative full-build check; this audit makes no local full-build claim
-  and does not change repository CI.
+  authoritative full-build check; this repair makes no local full-build claim
+  and adds no further workflow change.
 
 ## 📚 References consulted
 
@@ -172,9 +170,16 @@ same PR and the panel will re-review the new head.
 
 - Roadmap revision: `f7806c7ce1ce4889eec9bb5bfce154cffe933c24`
 - Roadmap nodes: AJCR review lane / mathematical correctness / local Pic0 architecture
-- Delivers: a review-scope manifest plus the panel-requested constructor repairs and the universal-class pinning invariant
-- Unlocks: re-review of the repaired finite-stage glue constructors and a focused follow-up architecture milestone
-- Provisional debt: the branch carries the two proof-restoration commits in `Pic0FiniteStageGluePackage.lean` and `Pic0FiniteStageGluedOver.lean`; the dropped transition-inverse field, finite-stage class transport, raw-to-`Over` comparison bridge, orphan comparison imports, conditional `C`/`Ck` consumers, and irreducible overlap equality remain explicit follow-up debt
+- Delivers: a review-scope ledger, constructor repairs, the universal-class
+  pinning invariant, a rooted `Over` comparison, and a corrected account of
+  the conditional consumer boundary
+- Unlocks: exact-head panel review and a focused finite-stage curve plus
+  Picard-natural-equivalence descent milestone
+- Provisional debt: the branch carries the two proof-restoration commits in
+  `Pic0FiniteStageGluePackage.lean` and `Pic0FiniteStageGluedOver.lean`; the
+  dropped transition-inverse field, finite-stage curve and class transport,
+  binder-free representability producer, and irreducible overlap equality
+  remain explicit follow-up debt
 - References: `ROADMAP.md`; `docs/references.bib`; current declarations and direct Pic0 consumers
 
 The two carried proof-restoration commits replace baseline `opaque ... := by

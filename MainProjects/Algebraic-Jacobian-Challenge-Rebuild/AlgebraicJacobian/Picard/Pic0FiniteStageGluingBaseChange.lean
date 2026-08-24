@@ -46,6 +46,23 @@ noncomputable def baseChangeGluingIso
       (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))⟩
 
 set_option synthInstance.maxHeartbeats 3200000 in
+set_option maxHeartbeats 12800000 in
+/-- The global gluing/base-change comparison preserves the projection to the new base. -/
+@[reassoc]
+theorem baseChangeGluingIso_hom_p2
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F) :
+    (baseChangeGluingIso C P).hom ≫
+        Scheme.Pullback.p2 P.glueData.openCover P.gluedMap
+          (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) =
+      pullback.snd P.gluedMap
+        (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) := by
+  exact limit.isoLimitCone_hom_π
+    ⟨_, Scheme.Pullback.gluedIsLimit P.glueData.openCover P.gluedMap
+      (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))⟩
+    WalkingCospan.right
+
+set_option synthInstance.maxHeartbeats 3200000 in
 -- The chart comparison elaborates the package's dependent scalar towers.
 set_option maxHeartbeats 12800000 in
 /-- A chart in the base-changed gluing is its corresponding exact Picard chart. -/
