@@ -117,7 +117,9 @@ theorem pic0FiniteStageUniversalChartClass_restrict_right
 /-- The finite atlas carries restrictions of one pinned universal Picard class, with both
 overlap equations retained as data for finite-stage descent. -/
 structure Pic0FiniteStageUniversalAtlasClass where
+  /-- The atlas package uses the canonical universal class, not an independent choice. -/
   universal : pic0Subgroup C (pic0_sepClosed_representableBy (C := C)).1
+  universal_eq : universal = pic0SepClosedUniversalClass C
   chart : forall U : Pic0FiniteStageChartIndex C,
     pic0Subgroup C (overSpec k (Pic0FiniteStageChartRing C U))
   overlap : forall U V : Pic0FiniteStageChartIndex C,
@@ -135,6 +137,7 @@ structure Pic0FiniteStageUniversalAtlasClass where
 noncomputable def pic0FiniteStageUniversalAtlasClass :
     Pic0FiniteStageUniversalAtlasClass C where
   universal := pic0SepClosedUniversalClass C
+  universal_eq := rfl
   chart := pic0FiniteStageUniversalChartClass C
   overlap := pic0FiniteStageUniversalOverlapClass C
   chart_eq := fun _ => rfl

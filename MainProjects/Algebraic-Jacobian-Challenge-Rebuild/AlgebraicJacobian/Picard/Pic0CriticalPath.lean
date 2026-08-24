@@ -294,12 +294,14 @@ restriction legs, pair transitions, and triple-tensor transitions into an actual
 identities.  Thus no additional scheme-level gluing axiom is needed once those finite-stage
 ring equations have been reflected.
 
-These inputs do not yet constitute object descent.  Still missing, and NOT replaced here by
-  axioms or local hypotheses: a kernel-clean specialization of the generic flattening isomorphism
-  to the dependent finite-stage overlap package, the scheme-level comparison for the now-identified
-  right overlap leg, and assembly of those local comparisons into the global glued-scheme base-change
-  isomorphism; descent of the universal
-  Picard natural equivalence; preservation of
+These inputs do not yet constitute object descent.  The source modules provide the dependent
+flattening specialization, the scheme-level comparison for the identified right overlap leg, and
+the underlying-scheme comparison `finiteStageBaseChangeIso`.  The critical-path root and the
+default `AlgebraicJacobian` target do not import the comparison or `...OverlapIsoSnd` modules, so
+those declarations are not covered by ordinary root-build validation.  Still missing, and NOT
+replaced here by axioms or local hypotheses: the structure-map compatibility for that raw comparison
+and the resulting `Over`-category isomorphism required by representability transport; descent of the universal
+Picard natural equivalence; preservation of
 Picard zero under the original-base filtered colimit;
 the orbit-in-affine-open (or projectivity) input for the finite-level Picard quotient; and the
 arbitrary-base-field `pic0_representableBy` and `JacobianData` endpoints.
