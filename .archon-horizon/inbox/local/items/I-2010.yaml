@@ -16,7 +16,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-08-18T22:33:51.192521+00:00'
-updated_at: '2026-08-23T02:40:29.408491+00:00'
+updated_at: '2026-08-24T03:50:15.653175+00:00'
 metadata:
   provenance:
     run: 0149
@@ -36,3 +36,4 @@ metadata:
   - ajcr-compile-frontier-repair
   - ajcr-roadmap-decomposition
   - ajcr-build-optimization
+  - '0157'
