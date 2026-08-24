@@ -1,0 +1,34 @@
+# archon-protected.yaml
+# Declarations whose signatures must not be modified by any agent.
+# The mathematician owns these; agents are read-only on the signatures and must
+# discharge the `sorry`s by building infrastructure, never by weakening or restating them.
+#
+# The whole statement of the challenge lives in one reviewable file,
+# AlgebraicJacobian/Challenge.lean, so a reviewer reads exactly one file to trust the result.
+# This is the extended challenge: the eight core declarations plus Jacobian functoriality and
+# compatibility with base change of fields.
+
+AlgebraicJacobian/Challenge.lean:
+  # --- Statement vocabulary (genuinely proved scaffolding; frozen so the theorems keep meaning) ---
+  - AlgebraicGeometry.Curve
+  - AlgebraicGeometry.baseChange
+  - AlgebraicGeometry.baseChange.idIso
+  - AlgebraicGeometry.baseChange.compIso
+  - AlgebraicGeometry.Jacobian.congr
+  # --- Core challenge (Merten v0.1) ---
+  - AlgebraicGeometry.genus
+  - AlgebraicGeometry.Jacobian
+  - AlgebraicGeometry.Jacobian.instGrpObj
+  - AlgebraicGeometry.Jacobian.smoothOfRelativeDimension_genus
+  - AlgebraicGeometry.Jacobian.instIsProper
+  - AlgebraicGeometry.Jacobian.instGeometricallyIrreducible
+  - AlgebraicGeometry.Jacobian.ofCurve
+  - AlgebraicGeometry.Jacobian.comp_ofCurve
+  - AlgebraicGeometry.Jacobian.exists_unique_ofCurve_comp
+  # --- Functoriality ---
+  - AlgebraicGeometry.Jacobian.functor
+  # --- Compatibility with base change of fields ---
+  - AlgebraicGeometry.Jacobian.baseChangeIso
+  - AlgebraicGeometry.Jacobian.baseChangeIso_id
+  - AlgebraicGeometry.Jacobian.baseChangeIso_comp
+  - AlgebraicGeometry.Jacobian.baseChange_ofCurve

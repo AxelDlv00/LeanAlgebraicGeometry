@@ -1,0 +1,31 @@
+.env
+.archon-horizon/vcs/
+.archon-horizon/locks/
+.claude/agents/
+.codex/agents/
+# Lean build artifacts — large; never commit (shared packagesDir + per-project builds)
+.lake/
+.lake-packages/
+.shared-packages/
+*.olean
+*.ilean
+
+# Ignore local git-dir databases (large pack files)
+**/git-dir/
+
+# Local pre-refactor backup copy of the main project (genus-0 snapshot) — local only
+/MainProjects/Algebraic-Jacobian-Challenge-*/
+# ...but the Rebuild is a first-class registered project (config.yaml), not a backup:
+!/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/
+.archon-horizon/cache/
+
+# Scratch Lean probes dropped by a session. The rule was ROOT-ANCHORED and matched
+# only the substring "probe", so it covered nothing inside a member project and nothing
+# named otherwise: pic-e's zz_pice_axioms*.lean reached HEAD via another lane's
+# integrate sweep in run 0095. Both gaps widened. Keep probes worth retaining under the
+# session's own probes/ directory instead.
+/*probe*.lean
+*probe*.lean
+zz_*.lean
+scratch_*.lean
+.palimpsest/

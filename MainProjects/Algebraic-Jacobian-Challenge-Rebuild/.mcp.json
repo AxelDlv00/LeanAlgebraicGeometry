@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "lean-lsp": {
+      "command": "uvx",
+      "args": [
+        "lean-lsp-mcp"
+      ]
+    },
+    "leansearch": {
+      "command": "/home/Axel/.archon-venv/bin/python",
+      "args": [
+        "-m",
+        "archon_horizon.search.mcp_server"
+      ]
+    }
+  }
+}

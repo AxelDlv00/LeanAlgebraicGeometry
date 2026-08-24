@@ -1,0 +1,48 @@
+import AlgebraicJacobian.Picard.DivisorFamilyAffThetaCokernelGlobal
+import AlgebraicJacobian.Picard.DivisorFamilyAffThetaCech
+set_option autoImplicit false
+set_option synthInstance.maxHeartbeats 300000
+universe u
+open CategoryTheory Opposite TopologicalSpace
+open scoped TensorProduct
+namespace AlgebraicGeometry
+attribute [local instance] Scheme.overModule Scheme.overSectionsAlgebra
+variable {k : Type u} [Field k] {C : Over (Spec (.of k))}
+variable {R : Type u} [CommRing R] [Algebra k R]
+variable {π : C.left ⟶ P1 k} [IsFinite π]
+variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+  [GeometricallyIrreducible C.hom]
+variable [IsDominant π] [IsIntegral C.left]
+variable [SmoothOfRelativeDimension 1 (C.left ↘ Spec (.of k))]
+  [LocallyOfFiniteType (C.left ↘ Spec (.of k))]
+  [QuasiCompact (C.left ↘ Spec (.of k))]
+  [Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 0)]
+  [Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 1)]
+namespace AffAdaptation
+example {D : AffCoverData C R} {d : (relCurve C R).LocalEquations}
+    {A : AffAdaptation D d} {g : ℕ} (hc : A.IsCertified g)
+    (hπ : π ≫ P1.structureMap k = C.hom)
+    (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
+    {a : ℕ} (ha1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1)
+    (hMa : windowM_choice π hπ g ≤ a) :
+    Module.Finite (↥(gluedSubalgebra A))
+      (A.IntrinsicThetaGluedOver (π := π) a) := by
+  let M := A.IntrinsicThetaGluedOver (π := π) a
+  let AD := ↥(gluedSubalgebra A)
+  letI : Module R M := Module.compHom M (algebraMap R AD)
+  letI : IsScalarTower R AD M :=
+    IsScalarTower.of_algebraMap_smul fun _ _ => rfl
+  haveI : Module.Finite k ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤) :=
+    inferInstance
+  haveI : Module.Finite R (R ⊗[k] ↥(Scheme.divisorSections k
+      (a • fiberWeilDivisor π) ⊤)) := inferInstance
+  haveI : Module.Finite R (relThetaSections C R π a) :=
+    Module.Finite.equiv (relThetaWindowEquiv C R π a ha1)
+  have hfin : Module.Finite R (A.IntrinsicThetaGlued (π := π) a) :=
+    Module.Finite.of_surjective (A.intrinsicThetaEvalRel (π := π) a)
+      (hc.intrinsicThetaEvalRel_surjective C R π hπ hO hχ ha1 hMa)
+  let e : M ≃ₗ[R] A.IntrinsicThetaGlued (π := π) a :=
+    { toFun := fun x => ⟨x.1, x.2⟩
+      invFun := fun x => ⟨x.1, x.2⟩
+      map_add\:=fun__=

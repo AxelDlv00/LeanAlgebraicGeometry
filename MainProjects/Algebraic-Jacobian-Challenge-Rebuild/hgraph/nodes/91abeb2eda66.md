@@ -1,0 +1,27 @@
+---
+author: sync
+content_type: definition
+created: '2026-08-17T13:21:30'
+decl: AlgebraicGeometry.finiteStageTensorPushoutFaceRight
+docstring: The right factor inclusion into the tensor pushout selected by two algebra
+  maps.
+file: AlgebraicJacobian/Picard/Pic0FiniteStageTripleModelScalarExtension.lean
+generated: lean
+lean_status: lean_ok
+title: AlgebraicGeometry.finiteStageTensorPushoutFaceRight
+type: lean
+updated: '2026-08-18T20:51:05'
+---
+noncomputable def finiteStageTensorPushoutFaceRight
+    {R A B₁ B₂ : Type u}
+    [CommRing R] [CommRing A] [CommRing B₁] [CommRing B₂]
+    [Algebra R A] [Algebra R B₁] [Algebra R B₂]
+    (f₁ : A →ₐ[R] B₁) (f₂ : A →ₐ[R] B₂) :
+    B₂ →ₐ[R] Pic0FiniteStageTensorPushoutRing f₁ f₂ := by
+  letI := pic0FiniteStageAlgebraOfMap f₁
+  letI := pic0FiniteStageAlgebraOfMap f₂
+  letI := pic0FiniteStageTowerOfMap f₁
+  exact (Algebra.TensorProduct.includeRight
+    (R := A) (A := B₁) (B := B₂)).restrictScalars R
+
+/-! ## Arbitrary scalar extension -/

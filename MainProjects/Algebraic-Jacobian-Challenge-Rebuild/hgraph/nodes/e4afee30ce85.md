@@ -1,0 +1,90 @@
+---
+author: sync
+content_type: theorem
+created: '2026-08-03T13:09:52'
+decl: AlgebraicGeometry.CertifiedDivisorFamilyAff.IsPairChartFramed.mapAlg_at
+docstring: 'A pair-chart framing remains a framing after arbitrary base change when
+  the curve
+
+  parameter is independent of the certified divisor degree.'
+file: AlgebraicJacobian/Picard/DivRepClassifyZarAffLocal.lean
+generated: lean
+lean_status: lean_ok
+title: AlgebraicGeometry.CertifiedDivisorFamilyAff.IsPairChartFramed.mapAlg_at
+type: lean
+updated: '2026-08-18T20:50:56'
+---
+theorem IsPairChartFramed.mapAlg_at
+    {R B : Type u} [CommRing R] [Algebra k R]
+    [CommRing B] [Algebra k B] [Algebra R B] [IsScalarTower k R B]
+    (F : CertifiedDivisorFamilyAff C R g) (hinf : F.cover.HasAffineOverlaps)
+    {gamma : ℕ} (hgamma : gamma ≤ g)
+    (hchiGamma : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (gamma : ℤ))
+    {i : (glueData k g r₁).J} {j : (glueData k g r₂).J}
+    (w : PairChartRing k g r₁ g r₂ i j →ₐ[k] R)
+    (hw : F.IsPairChartFramed hpi g b₁ b₂ i j w) :
+    (F.mapAlg B g hinf).IsPairChartFramed hpi g b₁ b₂ i j
+      ((IsScalarTower.toAlgHom k R B).comp w) := by
+  let beta : R →ₐ[k] B := IsScalarTower.toAlgHom k R B
+  have hbeta : beta.toRingHom.comp (algebraMap R R) = algebraMap R B := by
+    rw [Algebra.algebraMap_self, RingHom.comp_id]
+    rfl
+  haveI hfin₁ := F.certified.finite_intrinsicWindowQuotient_at hpi hgamma hchiGamma
+    (relThetaPairH1_windowM C pi hpi g) le_rfl
+  haveI hproj₁ := F.certified.projective_intrinsicWindowQuotient_at
+    (π := pi) F.adaptation (windowM_choice pi hpi g) hpi hgamma hchiGamma
+    (relThetaPairH1_windowM C pi hpi g) le_rfl
+  have hrank₁ := fun p : PrimeSpectrum R =>
+    F.certified.rankAtStalk_intrinsicWindowQuotient_at
+      (π := pi) F.adaptation (windowM_choice pi hpi g) hpi hgamma hchiGamma
+      (relThetaPairH1_windowM C pi hpi g) le_rfl p
+  haveI hfin₂ := F.certified.finite_intrinsicWindowQuotient_at hpi hgamma hchiGamma
+    (relThetaPairH1_windowMS C pi hpi g) (Nat.le_add_right _ _)
+  haveI hproj₂ := F.certified.projective_intrinsicWindowQuotient_at
+    (π := pi) F.adaptation
+      (windowM_choice pi hpi g + windowS_choice pi hpi g) hpi hgamma hchiGamma
+    (relThetaPairH1_windowMS C pi hpi g) (Nat.le_add_right _ _)
+  have hrank₂ := fun p : PrimeSpectrum R =>
+    F.certified.rankAtStalk_intrinsicWindowQuotient_at
+      (π := pi) F.adaptation
+        (windowM_choice pi hpi g + windowS_choice pi hpi g) hpi hgamma hchiGamma
+      (relThetaPairH1_windowMS C pi hpi g) (Nat.le_add_right _ _) p
+  change (_ = Submodule.map _
+      (divisorWindow
+        (F.adaptation.pulledEquations B F.certified.projective_colength)
+        (relThetaPairH1_windowM C pi hpi g))) ∧
+    (_ = Submodule.map _
+      (divisorWindow
+        (F.adaptation.pulledEquations B F.certified.projective_colength)
+        (relThetaPairH1_windowMS C pi hpi g)))
+  constructor
+  · rw [F.certified.divisorWindow_pulledEquations_eq_at
+      (R' := B) hpi hgamma hchiGamma (relThetaPairH1_windowM C pi hpi g) le_rfl]
+    have emap : Module.Grassmannian.map (beta.comp w)
+        (pairTautFst k g r₁ r₂ i j)
+        = Module.Grassmannian.map beta
+            (Module.Grassmannian.map w (pairTautFst k g r₁ r₂ i j)) :=
+      Module.Grassmannian.map_comp (f := w) (g := beta)
+        (N := pairTautFst k g r₁ r₂ i j)
+    refine (congrArg Module.Grassmannian.toSubmodule emap).trans ?_
+    apply map_windowFrameOfQuot_toSubmodule g (windowM_choice pi hpi g)
+      (relThetaPairH1_windowM C pi hpi g) b₁ F.eqns hrank₁ beta hbeta
+    simpa [CertifiedDivisorFamilyAff.eps_fst, windowBaseChange_self] using hw.1
+  · rw [F.certified.divisorWindow_pulledEquations_eq_at
+      (R' := B) hpi hgamma hchiGamma
+      (relThetaPairH1_windowMS C pi hpi g) (Nat.le_add_right _ _)]
+    have emap : Module.Grassmannian.map (beta.comp w)
+        (pairTautSnd k g r₁ r₂ i j)
+        = Module.Grassmannian.map beta
+            (Module.Grassmannian.map w (pairTautSnd k g r₁ r₂ i j)) :=
+      Module.Grassmannian.map_comp (f := w) (g := beta)
+        (N := pairTautSnd k g r₁ r₂ i j)
+    refine (congrArg Module.Grassmannian.toSubmodule emap).trans ?_
+    apply map_windowFrameOfQuot_toSubmodule g
+      (windowM_choice pi hpi g + windowS_choice pi hpi g)
+      (relThetaPairH1_windowMS C pi hpi g) b₂ F.eqns hrank₂ beta hbeta
+    simpa [CertifiedDivisorFamilyAff.eps_snd, windowBaseChange_self] using hw.2
+
+set_option maxHeartbeats 800000 in
+-- The generic carve-scheme universal property elaborates both Grassmannian components.
+set_option linter.unusedSectionVars false in

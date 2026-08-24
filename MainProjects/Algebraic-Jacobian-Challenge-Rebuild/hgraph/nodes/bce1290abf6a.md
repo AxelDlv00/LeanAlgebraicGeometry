@@ -1,0 +1,18 @@
+---
+author: sync
+chapter: The Jacobian datum
+content_type: theorem
+created: '2026-07-17T10:21:00'
+generated: blueprint
+label: thm:jacobianData_proper
+lean_status: lean_ok
+order: 1330
+title: The representing object is proper
+type: tex
+updated: '2026-08-21T11:58:56'
+---
+\provenancetag{CUSTOM}
+  
+  
+  Let \(d\) be a Jacobian datum admitting an Abel source. Then the structure
+  morphism of the representing object \(J\) is proper.

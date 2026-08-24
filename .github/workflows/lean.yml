@@ -1,0 +1,22 @@
+name: Lean CI
+
+on:
+  pull_request:
+  push:
+    branches: [palimpsest/main, main]
+
+jobs:
+  lake-build:
+    name: lake-build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install elan
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Build AJCR
+        working-directory: MainProjects/Algebraic-Jacobian-Challenge-Rebuild
+        run: |
+          lake exe cache get || true
+          lake build
