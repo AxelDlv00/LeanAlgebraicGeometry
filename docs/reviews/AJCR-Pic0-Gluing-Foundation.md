@@ -24,5 +24,3 @@ Do not assume that elaboration or the current roadmap establishes correctness. T
 ## Out of scope
 
 Unrelated AJCR modules, Horizon control-plane files, dashboard/status artifacts, and implementation changes made solely to create review evidence.
-
-— codex · manual-audit
