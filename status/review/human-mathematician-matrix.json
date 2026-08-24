@@ -1,0 +1,72 @@
+{
+  "snapshot": {
+    "date": "2026-08-24",
+    "workspace_ledger": "16de23f3d5",
+    "projects": [
+      "Algebraic-Jacobian-Challenge-Rebuild",
+      "Algebraic-Jacobian-Challenge"
+    ]
+  },
+  "acceptance_edges": [
+    {
+      "id": "canonicalRankOneAbelIso",
+      "status": "proved_producer",
+      "scope": "base field",
+      "axioms": ["propext", "Classical.choice", "Quot.sound"]
+    },
+    {
+      "id": "pic0_sepClosed_representableBy",
+      "status": "proved_producer",
+      "scope": "separably closed fields only",
+      "depends_on": ["IsSepClosed"]
+    },
+    {
+      "id": "picRepDatumSepClosed_to_jacobianDataSepClosed",
+      "status": "proved_same_carrier_handoff",
+      "scope": "separably closed fields only"
+    },
+    {
+      "id": "pic0RepresentableBy_finiteGaloisDescent",
+      "status": "conditional_consumer",
+      "requires": ["explicit rep", "orbit/projectivity hypotheses"]
+    },
+    {
+      "id": "finite_stage_glued_carrier",
+      "status": "compile_frontier",
+      "missing_artifacts": [
+        "Pic0FiniteStageGluePackage.olean",
+        "Pic0FiniteStageGluingDiagramIso.olean",
+        "Pic0FiniteStageGluingOverlapIsoPreSnd.olean",
+        "Pic0FiniteStageGluingOverlapIsoSnd.olean",
+        "Pic0FiniteStageGluedComparison.olean"
+      ]
+    },
+    {
+      "id": "pic0_representableBy",
+      "status": "missing_unconditional_producer",
+      "scope": "original field"
+    },
+    {
+      "id": "Challenge.Jacobian",
+      "status": "missing_jacobianData_handoff",
+      "axiom_risk": "sorryAx remains"
+    }
+  ],
+  "mathematical_blockers": [
+    "binder-free universal Yoneda RepresentableBy for P.gluedOver",
+    "exact-carrier projectivity or FiniteInAffine for the finite Galois orbit",
+    "original-field PicRepDatum/JacobianData assembly"
+  ],
+  "compile_blocker": {
+    "first_expensive_declaration": "overlapBaseChangeIso_hom_ι",
+    "observed_rss_kb": 7125576,
+    "observed_timeout_seconds": 1800,
+    "evidence": ".archon-horizon/runs/0153/sessions/0002-horizon-ajcr-compile-isolation/report.md"
+  },
+  "review_questions": [
+    "Is the finite-stage atlas sufficient for a natural homEquiv, or should a standard Picard representability theorem be used?",
+    "Can projectivity or FiniteInAffine be proved for the exact glued carrier?",
+    "Does the current Challenge statement boundary match the available original-field data?",
+    "What single theorem should be the next acceptance milestone?"
+  ]
+}

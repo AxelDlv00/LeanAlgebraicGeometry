@@ -1,0 +1,80 @@
+\documentclass[10pt]{article}
+\usepackage[margin=1.55cm,top=1.2cm,bottom=1.2cm]{geometry}
+\usepackage{longtable,booktabs,array,enumitem,xcolor,hyperref,parskip}
+\definecolor{accent}{RGB}{35,65,100}
+\definecolor{block}{RGB}{153,27,27}
+\definecolor{muted}{RGB}{75,85,99}
+\hypersetup{colorlinks=true,linkcolor=blue,urlcolor=blue}
+\setlist[itemize]{leftmargin=1.15em,itemsep=0.15em,topsep=0.2em}
+\setlist[enumerate]{leftmargin=1.4em,itemsep=0.15em,topsep=0.2em}
+\newcommand{\code}[1]{\texttt{\small #1}}
+\newcommand{\bad}[1]{\textcolor{block}{\textbf{#1}}}
+\begin{document}
+
+{\LARGE\bfseries\color{accent} AJCR Human Mathematician Review Packet}\\[-0.1em]
+{\small Snapshot: 2026-08-24 \quad Workspace ledger: \code{16de23f3d5}}\\
+
+\textbf{Purpose.} This packet is a compact, auditable briefing for a human mathematician. It is not a completion claim. The question is whether the current finite-descent route can produce an unconditional original-field Picard-zero representer, or whether the route must change.
+
+\section*{Executive diagnosis}
+The rank-one and separably-closed portions are genuine and kernel-clean. The arbitrary-field capstone is absent. The two decisive missing bridges are:
+\begin{enumerate}
+\item a binder-free finite-stage \code{RepresentableBy}/Yoneda equivalence for the glued carrier;
+\item exact-carrier projectivity or \code{FiniteInAffine} control of the finite Galois orbit.
+\end{enumerate}
+The compile chain needed to test these bridges is also uncertified, so many sessions have produced prerequisites and conditional consumers without moving the headline theorem.
+
+\section*{Acceptance boundary}
+\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.28\textwidth} >{\raggedright\arraybackslash}p{0.19\textwidth} >{\raggedright\arraybackslash}p{0.45\textwidth}}
+\toprule
+\textbf{Edge} & \textbf{Status} & \textbf{Meaning for review}\\
+\midrule
+\endhead
+\code{canonicalRankOneAbelIso} & Proved producer & Rank-one divisor and Picard loci are identified over the base field; narrow axioms are \code{propext}, \code{Classical.choice}, \code{Quot.sound}.\\
+\code{pic0\_sepClosed\_representableBy} & Proved, sep-closed only & Produces the exact \code{J}/\code{rep} pair under \code{[IsSepClosed k]}.\\
+Finite-stage Galois wrappers & Conditional consumer & Bind an explicit \code{rep} and orbit/projectivity hypotheses; they are not producers.\\
+Glue package chain & Compile frontier & \code{GluePackage -> GluingDiagramIso -> PreSnd -> OverlapIsoSnd -> GluedComparison} lacks native artifacts.\\
+\code{pic0\_representableBy} & Missing producer & No unconditional original-field \code{RepresentableBy} theorem exists at the current checkpoint.\\
+\code{Challenge.Jacobian} & Missing handoff & No original-field \code{JacobianData} consumer is wired in; \code{sorryAx} remains.\\
+\bottomrule
+\end{longtable}
+
+\section*{Critical path}
+\begin{verbatim}
+canonicalRankOneAbelIso
+  -> pic0_sepClosed_representableBy
+  -> picRepDatumSepClosed -> jacobianDataSepClosed
+
+finite-stage package
+  -> GluePackage -> GluingDiagramIso -> PreSnd
+  -> OverlapIsoSnd -> GluedComparison
+  -> binder-free RepresentableBy P.gluedOver
+  -> exact-carrier projectivity / FiniteInAffine
+  -> original-field pic0_representableBy
+  -> PicRepDatum -> JacobianData -> Challenge.Jacobian
+\end{verbatim}
+
+\section*{Evidence and blockers}
+\begin{itemize}
+\item \code{GluePackage.lean} fails before its proof body at about 7.1 GB RSS.
+\item \code{overlapBaseChangeIso\_hom\_iota} is the first expensive declaration in the coherent cone; prior checks reached about 610 seconds.
+\item Run 0154 produced no \code{GluePackage.olean} or \code{GluingDiagramIso.olean}; downstream checks cannot proceed.
+\item The mathematical blockers are universal Yoneda descent, exact-carrier orbit geometry, and original-field assembly.
+\item The strategy audit classified one implementation interval as 266 commits but 0 acceptance edges, 82 consumed prerequisites, 10 conditional consumers, 11 compile/performance splits, and 163 metadata/churn.
+\end{itemize}
+
+\section*{Questions for the reviewer}
+\begin{enumerate}
+\item Is the finite-stage atlas sufficient for a natural \code{homEquiv}, or should a standard Picard representability theorem be used?
+\item Can projectivity or \code{FiniteInAffine} be proved for the exact glued carrier?
+\item Does the current \code{Challenge.lean} statement boundary match the available original-field data?
+\item What single theorem should be the next acceptance milestone?
+\end{enumerate}
+
+\section*{Reading order}
+This packet, then the ``Acceptance review'' section of \code{MainProjects/Algebraic-Jacobian-Challenge-Rebuild/README.md}; next read the reports in \code{.archon-horizon/runs/0152}, \code{0153}, \code{0154}, and \code{0156}; finally inspect \code{Pic0CriticalPath.lean} and the two reviewer PDFs under \code{MainProjects/Algebraic-Jacobian-Challenge/informal/}.
+
+\vfill
+{\footnotesize The status PDFs under \code{status/} predate runs 0153--0156. Use this packet and the evidence reports as the current snapshot.}
+\end{document}
