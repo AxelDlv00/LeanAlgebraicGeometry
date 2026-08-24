@@ -1,8 +1,9 @@
 # AJCR Pic0 finite-stage gluing foundation: review capsule
 
-This file is the inspection boundary for the Palimpsest review of issue #2. It
-does not pre-classify a defect or propose a repair. Reviewers are expected to
-discover the mathematical and maths-Lean issues from the complete source.
+This file began as the inspection boundary for the Palimpsest review of issue
+#2 and now records the concrete findings from that audit. It is a review
+ledger, not a substitute for the panel's independent re-review or for a
+mathematical repair.
 
 ## 🔍 Review scope
 
@@ -56,6 +57,102 @@ same PR and the panel will re-review the new head.
   `RepresentableBy P.gluedOver` as an external hypothesis.  No producer links
   those binders to `finiteStageBaseChangeIso`; this remains a conditional
   endpoint pending base-change identification and representability transport.
+
+## 🔴 Blocking audit findings
+
+- **Raw comparison is not representability transport.**
+  `Pic0FiniteStageGluedComparison.lean:284-292` exports
+  `finiteStageBaseChangeIso` as an isomorphism of underlying `Scheme`s.  The
+  source object is the pullback of `P.gluedMap` and the target is
+  `(pic0_sepClosed_representableBy (C := C)).1.left`, but the declaration has
+  no equality relating either structure map to `Spec k`.  The local transport
+  API `Pic0RepresentableByTransport.lean:75-86` requires an isomorphism of
+  `Over (Spec k)` objects.  The required repair is a structure-map square,
+  followed by an exported `Over` isomorphism and the corresponding universal
+  class/naturality transport; a raw `Scheme` iso must not be presented as a
+  representer comparison.
+- **The conditional consumers can mention unrelated curves.**
+  `Pic0FiniteStageOrbitAffine.lean:31-49` and
+  `Pic0FiniteStageStableAffineCover.lean:28-46` quantify an independent
+  `C : Over (Spec K)` and `Ck : Over (Spec k)`, construct
+  `P : Pic0FiniteStageGluePackage Ck F`, and then accept
+  `rep : (pic0TypeFunctor ((baseChange K P.N.1).obj C)).RepresentableBy
+  P.gluedOver`.  No equality or `Over` isomorphism connects `Ck` with the
+  base-changed `C`; the same carrier can therefore be asserted to represent a
+  different Picard functor.  The repair boundary is to tie `Ck` to the chosen
+  base change (or pass and use an explicit curve `Over` iso) before removing
+  the external `rep` binder.  The Galois/Jacobian wrappers inherit this gap.
+
+## 🟠 Architecture / validation finding
+
+- **The comparison cone is not in the default validation graph.**
+  `AlgebraicJacobian.lean:815-817` reaches
+  `Pic0CriticalPath.lean`, `Pic0FiniteStageGeometry.lean`, and
+  `Pic0FiniteStageStableAffineCover.lean`, while
+  `Pic0FiniteStageGluedComparison.lean` (and the
+  `...GluingOverlapIsoSnd` chain) is not imported by the root.  Thus the
+  exported `finiteStageBaseChangeIso` is not ordinary root-build evidence.
+  Add an intentional root import or a dedicated CI test target before using
+  that chain as validated infrastructure.
+
+## 🟠 Follow-up API observations
+
+- `exists_finSubext_pic0FiniteStageTransition_models` returns an inverse
+  certificate, but `exists_pic0FiniteStageGluePackage` discards it at
+  `Pic0FiniteStageGluePackage.lean:276`; the package consequently cannot expose
+  a reusable pair-transition equivalence without rederiving it.
+- `gluingGluedHom_ι` and `gluingGluedInv_ι` are private in
+  `Pic0FiniteStageGluedComparison.lean:97-108,225-236`, so a future `Over`
+  bridge cannot reuse the chart equations without reproving them.  The helper
+  `gluingOverlapIso_pre_snd_snd` is also marked `[irreducible]` at
+  `Pic0FiniteStageGluingOverlapIsoPreSndSnd.lean:37`, which makes the eventual
+  naturality API needlessly opaque.
+
+## ✅ Verified locally
+
+- The directional chart/overlap equations in
+  `Pic0FiniteStageGluingDiagramIso.lean` and
+  `Pic0FiniteStageGluingOverlapIsoSnd.lean` are type-correct at the source
+  level; no reversed-leg equality was found in this audit.
+- `Pic0FiniteStageUniversalAtlasClass.universal_eq` pins only the exact
+  separably-closed universal class.  It does not claim a class on
+  `P.gluedOver`, which is the correct limitation until the missing `Over`
+  comparison exists.
+- The repository README's acceptance matrix
+  (`MainProjects/Algebraic-Jacobian-Challenge-Rebuild/README.md:56-67,114-127`)
+  independently classifies the `(rep : ...)` declarations as conditional
+  consumers and names a binder-free finite-stage producer as the next required
+  milestone.  This agrees with the type-level findings above.
+
+## 🧪 Validation boundary
+
+- `git diff --check` passes for this review capsule.
+- A fresh `lean_diagnostic_messages` pass on
+  `Pic0FiniteStageUniversalClass.lean` timed out while the file was still
+  elaborating (lines 117-151).  Passes on
+  `Pic0FiniteStageGluedOver.lean`,
+  `Pic0FiniteStageGluingDiagramIso.lean`, and
+  `Pic0FiniteStageGluedComparison.lean` were unavailable because their broad
+  dependency graph did not finish.  These outcomes are recorded as limits,
+  not as successful compilation evidence.
+- The existing `.github/workflows/lean.yml` `lake-build` job remains the
+  authoritative full-build check; this audit makes no local full-build claim
+  and does not change repository CI.
+
+## 📚 References consulted
+
+- A focused search of public mathlib4 pull requests for `Over`-category
+  isomorphisms, scheme base change, and `RepresentableBy` transport found no
+  close PR analogue to this finite-stage comparison, so no PR is presented as
+  precedent.
+- The current mathlib `Over.isoMk` API requires an underlying isomorphism plus
+  an explicit commuting triangle in
+  [`CategoryTheory/Comma/Over/Basic.lean`](https://github.com/leanprover-community/mathlib4/blob/master/Mathlib/CategoryTheory/Comma/Over/Basic.lean).
+  The current scheme API likewise preserves explicit underlying-map equalities
+  in [`AlgebraicGeometry/Scheme.lean`](https://github.com/leanprover-community/mathlib4/blob/master/Mathlib/AlgebraicGeometry/Scheme.lean).
+  These sources support the raw-`Scheme` versus `Over` distinction above; the
+  repository's `Pic0RepresentableByTransport.lean` is the implementation-level
+  authority for the required transport theorem.
 
 ## 🗺️ Roadmap alignment
 
