@@ -7,41 +7,32 @@
 \definecolor{accent}{HTML}{173B57}
 \definecolor{donebg}{HTML}{E6F4EA}
 \definecolor{donefg}{HTML}{185A37}
-\definecolor{buildbg}{HTML}{FFF3D6}
-\definecolor{buildfg}{HTML}{855A00}
-\definecolor{missingbg}{HTML}{FDE7E7}
-\definecolor{missingfg}{HTML}{8B1E1E}
+\definecolor{openbg}{HTML}{FFF3D6}
+\definecolor{openfg}{HTML}{855A00}
+\definecolor{redbg}{HTML}{FDE7E7}
+\definecolor{redfg}{HTML}{8B1E1E}
 \definecolor{infobg}{HTML}{E8F0F8}
 \newcommand{\code}[1]{\texttt{\small #1}}
 \newcommand{\pointer}[1]{\par\noindent\textcolor{accent}{\texttt{\scriptsize\detokenize{#1}}}\par}
 \newcommand{\inlinepointer}[1]{\textcolor{accent}{\texttt{\scriptsize\detokenize{#1}}}}
 \newcommand{\statusbox}[3]{\par\noindent\colorbox{#1}{\parbox{0.95\linewidth}{\textcolor{#2}{\textbf{#3}}}}\par\medskip}
-\newcommand{\done}{\textcolor{donefg}{\textbf{Complete}}}
-\newcommand{\build}{\textcolor{buildfg}{\textbf{Build blocked}}}
-\newcommand{\missing}{\textcolor{missingfg}{\textbf{Missing}}}
-\newcommand{\downstream}{\textcolor{missingfg}{\textbf{Blocked downstream}}}
-\title{AJCR Horizon Status: Why Phase 7 Is Stuck}
+\newcommand{\done}{\textcolor{donefg}{\textbf{Established}}}
+\newcommand{\open}{\textcolor{openfg}{\textbf{Open theorem}}}
+\newcommand{\red}{\textcolor{redfg}{\textbf{Downstream consequence}}}
+\title{AJCR Mathematical Status for Human Review}
 \author{Human mathematician handoff}
 \date{24 August 2026}
 \begin{document}
 \maketitle
 
-\noindent\textbf{Snapshot:} 2026-08-24 10:06 +0800.\quad
-\textbf{Source ledger:} \code{a58a86aca1}.
+\noindent\textbf{Review state:} 24 August 2026.
 
-\statusbox{infobg}{accent}{This handoff compares Horizon with the supplied execution plan and supervision note. It is written in mathematical stages; Lean file pointers are included only where they help locate the claim.}
+\statusbox{infobg}{accent}{This handoff is deliberately mathematical. It compares the current route with the supplied execution plan and supervision note; file pointers identify the definitions and theorem statements where each issue lives.}
 \pointer{MainProjects/Algebraic-Jacobian-Challenge/informal/Lean_Algebraic_Jacobian_Complete_Execution_Plan.pdf}
 \pointer{MainProjects/Algebraic-Jacobian-Challenge/informal/AJCR_Runs_121_122_123_Supervision_Note_2026-08-07.pdf}
 
-\section*{Status at a glance}
-\statusbox{donebg}{donefg}{GREEN --- The rank-one chart and the separably-closed Pic0 representer are reported as genuine results.}
-\statusbox{buildbg}{buildfg}{AMBER --- The finite-stage descent construction is present in source, but the critical compiled proof cone is incomplete.}
-\statusbox{missingbg}{missingfg}{RED --- The universal original-field representer and the exact geometric hypothesis needed by the quotient are still absent.}
-
-The important correction to the previous handoff is that the family-level rank-one producer is no longer the blocker.
-
-\section*{What has landed}
-The reviewed route is:
+\section*{The mathematical route}
+The intended curve-specialized route is:
 \begin{verbatim}
 rank-one Picard/divisor chart
   -> family-level Abel isomorphism
@@ -52,67 +43,69 @@ rank-one Picard/divisor chart
   -> Jacobian
 \end{verbatim}
 
+\section*{Established mathematics}
 \begin{longtable}{>{\raggedright\arraybackslash}p{0.18\linewidth} >{\raggedright\arraybackslash}p{0.16\linewidth} p{0.52\linewidth}}
-\textbf{Stage} & \textbf{Status} & \textbf{Mathematical meaning and pointer}\\\hline
+\textbf{Stage} & \textbf{Status} & \textbf{Mathematical content and pointer}\\\hline
 Rank-one chart & \done & The good locus of line bundles and the matching divisor locus are defined for arbitrary test schemes. \pointer{Pic0CriticalPath.lean:205}\\
 Family Abel map & \done & The evaluation divisor gives a natural two-sided inverse, rather than only fieldwise uniqueness. \pointer{Pic0CriticalPath.lean:618}\\
 Sep-closed cover & \done & Translations of the rank-one chart cover Picard classes after passing to a separably closed field. \pointer{Pic0CriticalPath.lean:640}\\
-Sep-closed Pic0 & \done & A scheme and a representing universal class exist over the separably closed field; the same pair feeds the current datum objects. \pointer{Pic0SepClosedRepresentable.lean:443}\\
+Sep-closed Pic0 & \done & A scheme and a representing universal class exist over the separably closed field; the same pair feeds the current Picard/Jacobian datum. \pointer{Pic0SepClosedRepresentable.lean:443}\\
 \end{longtable}
 
-The narrow source audit for this part reports only \code{propext}, \code{Classical.choice}, and \code{Quot.sound}.
+The rank-one family producer emphasized in the review PDFs is therefore no longer the mathematical obstruction.
 
-\section*{Where progress stops}
-Horizon is now trying to descend the separably-closed representer through a custom finite-stage atlas:
+\section*{Current descent strategy}
+The current strategy starts with the separably-closed representing scheme and attempts to spread it to a finite field of definition:
 \begin{verbatim}
-finite-stage affine charts and overlap maps
-  -> candidate glued scheme P.gluedOver
-  -> universal Picard class on that scheme
-  -> natural equivalence: maps to P.gluedOver <-> Pic^0 families
-  -> projectivity / affine-orbit control for the same scheme
-  -> finite-Galois quotient and original-field Pic^0
-  -> Jacobian data
+finite affine charts and overlap maps for the separably-closed representer
+  -> finite-stage glued scheme P.gluedOver
+  -> one universal Picard class on P.gluedOver
+  -> natural equivalence: maps to P.gluedOver <-> Pic0 families
+  -> projectivity or affine-orbit control for that same scheme
+  -> finite-Galois quotient and descent to the original field
+  -> PicRepDatum -> JacobianData
 \end{verbatim}
-The candidate scheme is defined in \inlinepointer{Pic0FiniteStageGluedOver.lean:1}; the decomposition is in \inlinepointer{AJCR.review-plan.p7-galois-descent.yaml}.
+The candidate scheme is defined at:
+\pointer{Pic0FiniteStageGluedOver.lean:1}
+The mathematical decomposition is recorded at:
+\pointer{AJCR.review-plan.p7-galois-descent.yaml}
 
+\section*{Open mathematical obligations}
 \begin{longtable}{>{\raggedright\arraybackslash}p{0.22\linewidth} >{\raggedright\arraybackslash}p{0.16\linewidth} p{0.50\linewidth}}
-\textbf{Remaining item} & \textbf{Status} & \textbf{What must be shown}\\\hline
-Compile the glued scheme & \build & A fresh root import must certify the diagram isomorphism, the two overlap projections, and the glued comparison. \code{GluePackage.olean} appeared on Aug 24; four top artifacts remain absent. \pointer{Pic0FiniteStageGluingDiagramIso.lean:276}\\
-Finite-stage representation & \missing & Show that maps into \code{P.gluedOver} are naturally equivalent to families of \code{Pic0} classes. This is the universal property, not just chart compatibility. \pointer{p7-galois-descent.representability.finite-stage.yaml}\ \pointer{DivisorScheme.tex:1846}\\
-Exact-carrier geometry & \missing & Prove projectivity or affine-orbit control for this exact glued scheme. Existing quotient results assume this property; they do not produce it. \pointer{p7-galois-descent.orbit-affine.exact-carrier.yaml}\\
-Original-field Pic0 & \missing & Produce the original-field scheme together with its universal representation, rather than a theorem that accepts a representation as an input. \pointer{p7-galois-descent.representability.original-field.yaml}\\
-Jacobian handoff & \downstream & The final \code{JacobianData} must use the same original-field scheme and universal class. That handoff does not exist. \pointer{Pic0FiniteGaloisJacobianData.lean:1}\\
+\textbf{Obligation} & \textbf{Status} & \textbf{Mathematical question and pointer}\\\hline
+Universal property of the finite carrier & \open & Does \code{P.gluedOver} represent the finite-stage Pic0 functor? The required result is a natural equivalence between maps into this one scheme and Pic0 families on every test scheme. \pointer{p7-galois-descent.representability.finite-stage.yaml}\\
+Coherence of the universal class & \open & Do the local universal classes, restrictions, and overlap identifications assemble into one natural class on \code{P.gluedOver}? \pointer{Pic0FiniteStageUniversalClass.lean:1}\\
+Exact-carrier orbit geometry & \open & Can one prove projectivity, \code{FiniteInAffine}, or an equivalent affine-orbit statement for the same carrier \code{P.gluedOver}? \pointer{p7-galois-descent.orbit-affine.exact-carrier.yaml}\\
+Effective Galois descent & \open & Given the finite-stage representer and its semilinear action, can the quotient and the descended universal class be constructed with the required cocycle identities? \pointer{DivisorScheme.tex:1777}\\
+Original-field Jacobian datum & \red & Does the descended scheme and universal class pass unchanged through \code{PicRepDatum}, \code{JacobianData}, and the final Jacobian statement? \pointer{Pic0FiniteGaloisJacobianData.lean:1}\\
 \end{longtable}
 
-The finite-stage compile cone is concentrated in \pointer{Pic0FiniteStageGluePackage.lean:1}, \pointer{Pic0FiniteStageGluingDiagramIso.lean:1}, \pointer{Pic0FiniteStageGluingOverlapIsoPreSnd.lean:1}, \pointer{Pic0FiniteStageGluingOverlapIsoSnd.lean:1}, and \pointer{Pic0FiniteStageGluedComparison.lean:1}.
+The relevant mathematical files are:
+\begin{verbatim}
+Pic0FiniteStageGluePackage.lean
+Pic0FiniteStageGluingDiagramIso.lean
+Pic0FiniteStageGluingOverlapIsoPreSnd.lean
+Pic0FiniteStageGluingOverlapIsoSnd.lean
+Pic0FiniteStageGluedComparison.lean
+\end{verbatim}
+The blueprint states the representation-preserving descent theorem at:
+\pointer{DivisorScheme.tex:1846}
 
-\section*{Why Horizon appears stuck}
+\section*{Mathematical diagnosis}
 \begin{enumerate}
-\item \textbf{Mathematical and build work are mixed.} After the sep-closed milestone, Horizon split one producer-level descent target into transition models, triple overlaps, ring maps, glue records, base-change maps, and projection lemmas. These are useful prerequisites, but none is the universal property of the candidate scheme.
-\item \textbf{The critical compile is too expensive for normal iteration.} The GluePackage probe used about 7.1 GB of memory. The first expensive declaration in the next file is \code{overlapBaseChangeIso\_hom\_iota}, line 276 of \inlinepointer{Pic0FiniteStageGluingDiagramIso.lean}; historical checks reached roughly 610 seconds.
-\item \textbf{Source labels are being confused with root evidence.} The graph contains \code{lean\_ok} labels for source declarations whose compiled artifacts are absent. The critical root is \inlinepointer{Pic0CriticalPath.lean:1}; a meaningful acceptance check needs a fresh native build, a root import, and an axiom check.
-\item \textbf{Orchestration leaves dead work looking active.} Run 0154 still has metadata marked \code{running} from \code{2026-08-23T14:55:00Z}, while Horizon reports a zombie marker and no live Lean process. Its system sessions returned the task to \code{queued}. Runs 0145 and 0148 repeatedly relaunched the same alignment task; later sessions mostly returned \code{exit 1} or \code{queued}. The current reports are:
-\pointer{runs/0153/.../report.md}
-\pointer{runs/0154/.../report.md}
-\pointer{runs/0156/.../report.md}
-\item \textbf{The candidate carrier is the architectural uncertainty.} The plan says to reuse the AJC finite-Galois quotient/gluing engine. Horizon instead first constructs \code{P.gluedOver} and then needs a new universal equivalence on it. This may be correct, but it may also be a second descent stack not yet shown to represent the same \code{Pic0} functor. The generic descent contract is in \inlinepointer{blueprint/src/chapters/DivisorScheme.tex:1846}.
+\item The separably-closed representer is available, but the passage from its finite affine atlas to one universal object is not yet expressed as a single theorem.
+\item The current work strengthens local restriction, overlap, and base-change identities. Those identities are necessary, but they do not by themselves prove that the glued carrier represents the functor.
+\item The quotient step needs projectivity or affine-orbit control for the exact carrier that represents the functor. A theorem about another carrier cannot discharge this obligation.
+\item Until the universal property and exact-carrier geometry are settled, the original-field representer and the Jacobian datum cannot be assembled from one representing object and one universal class.
 \end{enumerate}
 
-\section*{The decision point}
-The next useful human decision is whether \code{P.gluedOver} is the correct finite-level representer for the reviewed descent theorem. If it is, Horizon needs one bounded producer milestone: a root-imported universal equivalence for that carrier. If it is not, the route should be refactored around the generic AJC descent theorem before more overlap and glue files are added.
+\section*{The route decision}
+The central mathematical question is:
+\begin{quote}
+Is \code{P.gluedOver} genuinely the finite-level representing scheme required by the reviewed descent theorem, or is the current strategy constructing an atlas without yet identifying its universal property?
+\end{quote}
 
-\section*{Run pattern}
-\begin{longtable}{>{\raggedright\arraybackslash}p{0.12\linewidth} p{0.15\linewidth} p{0.57\linewidth}}
-\textbf{Run} & \textbf{Date} & \textbf{Observable result}\\\hline
-0145 & 14 Aug & Eight-round alignment task; later sessions repeatedly returned \code{exit 1} or \code{queued}.\\
-0148 & 14 Aug & Same alignment task relaunched; metadata/audit work, then queued or failed sessions.\\
-0149 & 14 Aug onward & Audit classified 266 commits as 0 acceptance edges, 82 consumed prerequisites, and 10 conditional consumers.\\
-0153 & 22 Aug & Compile isolation measured the GluePackage/DiagramIso frontier.\\
-0154 & 23--24 Aug & Compile repair produced \code{GluePackage.olean}, but no root-certified downstream top cone; stale \code{running} metadata remains.\\
-0156 & 23 Aug & Roadmap decomposition separated build, universal-property, orbit, and original-field gates; no theorem edge was added.\\
-\end{longtable}
+If it is the correct carrier, the next meaningful milestone is one theorem saying that \code{P.gluedOver} represents the finite-stage Pic0 functor, including its universal class, naturality for every test scheme, and the compatibility needed for Galois descent. If that theorem cannot be stated without changing carriers or adding unrelated hypotheses, the route needs redesign.
 
-The current task database has 28 done, 3 blocked, 4 queued, 1 running, 1 failed, and 45 cancelled tasks. Open inbox items include 12 conversations, 18 issues, and 11 memories. The dashboard still has an empty \code{generatedAt}, and the existing status PDFs describe the older Aug 21 state.
-
-\statusbox{missingbg}{missingfg}{BOTTOM LINE --- Horizon is not stuck because the rank-one route failed. It is stuck because Phase 7 interleaves a resource-bound custom glue construction with missing universal and geometric producers. The central issue is whether \code{P.gluedOver} is the right object for the reviewed finite-Galois route.}
+\statusbox{redbg}{redfg}{BOTTOM LINE --- The rank-one and separably-closed mathematics is in place. The unresolved mathematics is concentrated in the finite-stage universal property, the geometry of the exact glued carrier, effective descent of the same representing datum, and the final Jacobian handoff.}
 \end{document}

@@ -1,156 +1,106 @@
 {
-  "snapshot": "2026-08-24T10:06:00+08:00",
-  "source_ledger": "a58a86aca1",
-  "purpose": "Status relative to the human review PDFs and diagnosis of the repeated Horizon Phase 7 stall",
+  "review_state": "2026-08-24",
+  "purpose": "Mathematical status of the AJCR route after the separably-closed Pic0 milestone",
   "review_route": [
-    "PicRankOneOpen / DivRankOneOpen",
-    "rankOneAbelIso",
-    "rankOne_translate_cover_sepClosed",
-    "pic0_sepClosed_representableBy",
-    "finiteGaloisDescent",
-    "pic0_representableBy",
-    "JacobianData"
+    "rank-one Picard/divisor chart",
+    "family-level Abel isomorphism",
+    "translated rank-one charts over a separably closed field",
+    "Pic0 represented over that field",
+    "finite-Galois descent",
+    "Pic0 represented over the original field",
+    "Jacobian"
   ],
-  "phase_status": [
+  "established": [
     {
-      "phase": "P3",
-      "title": "Public rank-one Picard and divisor loci",
-      "status": "board_done",
-      "evidence": "PicRankOneOpen, DivRankOneOpen, openness, and base-change APIs are reported as unconditional."
+      "stage": "rank_one_chart",
+      "statement": "The good Picard locus and matching divisor locus are defined for arbitrary test schemes.",
+      "pointer": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0CriticalPath.lean:205"
     },
     {
-      "phase": "P4",
-      "title": "Family-level rank-one Abel isomorphism",
-      "status": "board_done",
-      "evidence": "canonicalRankOneAbelIso is root-reachable and consumed by the separably-closed representability route."
+      "stage": "family_level_abel_isomorphism",
+      "statement": "The evaluation divisor gives a natural two-sided inverse to the rank-one Abel map.",
+      "pointer": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0CriticalPath.lean:618"
     },
     {
-      "phase": "P5",
-      "title": "Translated rank-one cover over a separably closed field",
-      "status": "board_done",
-      "evidence": "The translator is tied to the input Picard class and lands in PicRankOneOpen."
+      "stage": "separably_closed_cover",
+      "statement": "Translations of the rank-one chart cover Picard classes over a separably closed field.",
+      "pointer": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0CriticalPath.lean:640"
     },
     {
-      "phase": "P6",
-      "title": "Pic0 representability over the separable closure",
-      "status": "board_done",
-      "evidence": "pic0_sepClosed_representableBy and same-carrier picRepDatumSepClosed / jacobianDataSepClosed are present."
-    },
-    {
-      "phase": "P7",
-      "title": "Finite-Galois descent",
-      "status": "blocked",
-      "evidence": "The custom finite-stage glue route has no root-certified universal RepresentableBy producer, no exact-carrier orbit-affineness producer, and no original-field pic0_representableBy."
-    },
-    {
-      "phase": "P8",
-      "title": "Jacobian capstone",
-      "status": "blocked",
-      "evidence": "No original-field J/rep pair is consumed by PicRepDatum, JacobianData, and Challenge.Jacobian."
+      "stage": "separably_closed_pic0",
+      "statement": "A scheme and universal Pic0 class represent Pic0 over the separably closed field.",
+      "pointer": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0SepClosedRepresentable.lean:443"
     }
   ],
-  "current_route": [
-    "finite-stage atlas and GlueData",
-    "P.gluedOver and glued base-change maps",
-    "universal class and overlap/glue equivalences",
-    "binder-free RepresentableBy P.gluedOver",
-    "exact-carrier FiniteInAffine or projectivity",
-    "original-field pic0_representableBy",
-    "PicRepDatum -> JacobianData -> Challenge.Jacobian"
+  "current_strategy": [
+    "finite affine charts and overlap maps for the separably-closed representer",
+    "finite-stage glued scheme P.gluedOver",
+    "one universal Picard class on P.gluedOver",
+    "natural equivalence between maps to P.gluedOver and Pic0 families",
+    "projectivity or affine-orbit control for P.gluedOver",
+    "finite-Galois quotient and descent to the original field",
+    "PicRepDatum -> JacobianData"
   ],
-  "remaining_gates": [
+  "open_mathematical_obligations": [
     {
-      "id": "native_glue_root",
-      "kind": "build",
-      "status": "blocked",
-      "target": "GluingDiagramIso, top PreSnd, OverlapIsoSnd, GluedComparison native artifacts and fresh Pic0CriticalPath import",
-      "current_evidence": "Pic0FiniteStageGluePackage.olean exists as of 2026-08-24 00:29; the four downstream top artifacts are absent.",
-      "source": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0CriticalPath.lean"
+      "id": "finite_stage_universal_property",
+      "statement": "Prove that P.gluedOver represents the finite-stage Pic0 functor, with a natural equivalence for every test scheme.",
+      "why_it_matters": "Compatible charts and overlap maps are not by themselves a universal property.",
+      "pointers": [
+        ".archon-horizon/roadmap/items/AJCR.review-plan.p7-galois-descent.representability.finite-stage.yaml",
+        "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/blueprint/src/chapters/DivisorScheme.tex:1846"
+      ]
     },
     {
-      "id": "finite_stage_representability",
-      "kind": "mathematical",
-      "status": "missing",
-      "target": "pic0RepresentableBy_finiteStageGlue with exact carrier P.gluedOver and no rep binder",
-      "blocker": "No binder-free natural Yoneda homEquiv producer is present."
+      "id": "universal_class_coherence",
+      "statement": "Assemble the local universal Picard classes, restrictions, and overlap identifications into one natural class on P.gluedOver.",
+      "why_it_matters": "The construction must become a family-level object under arbitrary base change.",
+      "pointers": [
+        "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageUniversalClass.lean:1",
+        "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluedComparison.lean:1"
+      ]
     },
     {
-      "id": "exact_carrier_orbit",
-      "kind": "mathematical",
-      "status": "missing",
-      "target": "P.gluedMap.IsProjective or FiniteInAffine P.glueData.glued",
-      "blocker": "Existing orbit and quotient theorems consume orbit/projectivity hypotheses; they do not produce them for this carrier."
+      "id": "exact_carrier_orbit_geometry",
+      "statement": "Prove projectivity, FiniteInAffine, or an equivalent affine-orbit statement for the exact carrier P.gluedOver.",
+      "why_it_matters": "The finite-Galois quotient requires this property for the same scheme that represents the functor.",
+      "pointers": [
+        ".archon-horizon/roadmap/items/AJCR.review-plan.p7-galois-descent.orbit-affine.exact-carrier.yaml",
+        "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageOrbitAffine.lean:1"
+      ]
     },
     {
-      "id": "original_field_pic0",
-      "kind": "mathematical",
-      "status": "missing",
-      "target": "pic0_representableBy returning the original-field scheme and RepresentableBy certificate",
-      "blocker": "Only conditional finite-Galois consumers exist."
+      "id": "effective_galois_descent",
+      "statement": "Descend the finite-stage scheme and the same universal class through the semilinear Galois action, quotient, and cocycle identities.",
+      "why_it_matters": "The descended object must retain the representing property, not only the underlying scheme.",
+      "pointers": [
+        "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/blueprint/src/chapters/DivisorScheme.tex:1777",
+        "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/blueprint/src/chapters/DivisorScheme.tex:1846"
+      ]
     },
     {
       "id": "jacobian_handoff",
-      "kind": "integration",
-      "status": "missing",
-      "target": "same J/rep through PicRepDatum, JacobianData, and Challenge.Jacobian",
-      "blocker": "Challenge.lean remains independently sorry-bearing and has no original-field JacobianData consumer."
+      "statement": "Pass the descended scheme and universal class unchanged through PicRepDatum, JacobianData, and the final Jacobian statement.",
+      "why_it_matters": "A second representing object or universal class would break the intended construction.",
+      "pointers": [
+        "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteGaloisJacobianData.lean:1",
+        "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Challenge.lean:1"
+      ]
     }
   ],
-  "stagnation_evidence": [
-    {
-      "run": "0145",
-      "date": "2026-08-14",
-      "observation": "Eight-round alignment task; later sessions repeatedly returned exit 1 or queued.",
-      "acceptance_edges": 0
-    },
-    {
-      "run": "0148",
-      "date": "2026-08-14",
-      "observation": "Same alignment task relaunched; later sessions again returned queued or failed after metadata/audit work.",
-      "acceptance_edges": 0
-    },
-    {
-      "run": "0149",
-      "date": "2026-08-14 onward",
-      "observation": "Review/implementation audit classified 266 commits as 0 acceptance edges, 82 consumed prerequisites, and 10 conditional consumers.",
-      "acceptance_edges": 0
-    },
-    {
-      "run": "0153",
-      "date": "2026-08-22",
-      "observation": "Compile isolation measured the GluePackage/DiagramIso frontier.",
-      "acceptance_edges": 0
-    },
-    {
-      "run": "0154",
-      "date": "2026-08-23 to 2026-08-24",
-      "observation": "Compile repair eventually produced GluePackage.olean, but no root-certified downstream top cone; metadata still says running and Horizon reports a zombie marker.",
-      "acceptance_edges": 0
-    },
-    {
-      "run": "0156",
-      "date": "2026-08-23",
-      "observation": "Roadmap decomposition separated compile, Yoneda, orbit, and original-field gates; no Lean source or theorem edge was added.",
-      "acceptance_edges": 0
-    }
+  "mathematical_diagnosis": [
+    "The finite affine atlas has not yet been converted into one theorem asserting a universal property.",
+    "Local restriction, overlap, and base-change identities are being strengthened without settling whether the glued carrier represents the functor.",
+    "The quotient step is conditional on geometry of the exact carrier; results for a different carrier do not solve this obligation.",
+    "Until the universal property and exact-carrier geometry are settled, original-field Pic0 and the Jacobian cannot be assembled from one representing datum."
   ],
-  "resource_evidence": {
-    "glue_package_rss_kb": 7125576,
-    "expensive_declaration": "overlapBaseChangeIso_hom_iota",
-    "expensive_declaration_source": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageGluingDiagramIso.lean:276",
-    "historical_wall_seconds": 610,
-    "zombie_runs": ["0149", "0154"],
-    "active_lean_process_at_snapshot": false
-  },
-  "queue_snapshot": {
-    "tasks": {"done": 28, "blocked": 3, "queued": 4, "running": 1, "failed": 1, "cancelled": 45},
-    "open_inbox": {"conversation": 12, "issue": 18, "memory": 11, "hint": 1, "info": 1, "protection": 1}
-  },
-  "evidence_reports": [
-    ".archon-horizon/runs/0152/sessions/0006-horizon-ajcr-strategy-review/report.md",
-    ".archon-horizon/runs/0153/sessions/0002-horizon-ajcr-compile-isolation/report.md",
-    ".archon-horizon/runs/0154/sessions/0002-horizon-ajcr-compile-frontier-repair/report.md",
-    ".archon-horizon/runs/0154/sessions/0005-horizon-ajcr-compile-frontier-repair/report.md",
-    ".archon-horizon/runs/0156/sessions/0002-horizon-ajcr-roadmap-decomposition/report.md"
-  ]
+  "minimal_mathematical_checkpoint": {
+    "statement": "P.gluedOver represents the finite-stage Pic0 functor.",
+    "required_content": [
+      "universal Picard class",
+      "natural map/equivalence for every test scheme",
+      "compatibility needed by finite-Galois descent"
+    ],
+    "interpretation": "If this theorem cannot be stated without changing carriers or adding unrelated hypotheses, the current route needs redesign."
+  }
 }
