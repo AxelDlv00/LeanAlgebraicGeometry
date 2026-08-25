@@ -16,3 +16,7 @@ The objective is partly advanced but blocked: `Pic0FiniteStageGluingDiagramIso.o
 ## Next
 
 Split the atlas projection and transport in `overlapBaseChangeIso_hom_atlas_f_ι` into separate private helpers, then benchmark `restrictionBaseChangeMap_fromSpec` independently with one-at-a-time probes. Preserve imports and theorem statements, and regenerate the `.olean.hash`/`.trace` companions in an isolated cache before the next DiagramIso retry.
+
+## Workspace hygiene
+
+After the authored commits, the remaining modified ledger paths are concurrent Horizon synchronization (blueprint, events, inbox, search, and hgraph state); they are outside this task and were not staged. This session's saved attempts and narrow-check records are staged separately below; locks, notify caches, logs, and other writers' state remain untouched.
