@@ -329,6 +329,25 @@ private theorem overlapBaseChangeIso_hom_ι
       (pic0FiniteStageAffineOverlap C U V).2.isoSpec_inv_ι
 
 set_option synthInstance.maxHeartbeats 3200000 in
+-- This exact-atlas projection is independent of the finite-stage package.
+set_option maxHeartbeats 12800000 in
+set_option backward.isDefEq.respectTransparency false in
+private theorem overlapAtlasProjection_left
+    (U V : Pic0FiniteStageChartIndex C) :
+    (pic0SepClosedAtlasOverlapIso C U V).hom ≫
+        ((pic0SepClosedAtlasGlueData C).f U V ≫ U.1.1.ι) =
+      (pic0FiniteStageAffineOverlap C U V).1.ι := by
+  calc
+    _ = ((pic0SepClosedAtlasOverlapIso C U V).hom ≫
+          (pic0SepClosedAtlasGlueData C).f U V) ≫ U.1.1.ι :=
+      (Category.assoc _ _ _).symm
+    _ = ((pic0_sepClosed_representableBy (C := C)).1.left.homOfLE
+          (pic0FiniteStageAffineOverlap_le_left C U V)) ≫ U.1.1.ι :=
+      congrArg (fun q => q ≫ U.1.1.ι)
+        (pic0SepClosedAtlasOverlapIso_hom_f C U V)
+    _ = _ := Scheme.homOfLE_ι _ _
+
+set_option synthInstance.maxHeartbeats 3200000 in
 -- Isolate the exact-atlas projection from the full dependent diagram equality.
 set_option maxHeartbeats 12800000 in
 set_option backward.isDefEq.respectTransparency false in
@@ -339,26 +358,13 @@ private theorem overlapBaseChangeIso_hom_atlas_f_ι
     (overlapBaseChangeIso C P U V).hom ≫
         ((pic0SepClosedAtlasOverlapIso C U V).hom ≫
           ((pic0SepClosedAtlasGlueData C).f U V ≫ U.1.1.ι)) =
-      (overlapRingBaseChangeIso C P U V).hom ≫
+    (overlapRingBaseChangeIso C P U V).hom ≫
         (pic0FiniteStageAffineOverlap C U V).2.fromSpec := by
-  have atlas_projection :
-      (pic0SepClosedAtlasOverlapIso C U V).hom ≫
-          ((pic0SepClosedAtlasGlueData C).f U V ≫ U.1.1.ι) =
-        (pic0FiniteStageAffineOverlap C U V).1.ι := by
-    calc
-      _ = ((pic0SepClosedAtlasOverlapIso C U V).hom ≫
-            (pic0SepClosedAtlasGlueData C).f U V) ≫ U.1.1.ι :=
-        (Category.assoc _ _ _).symm
-      _ = ((pic0_sepClosed_representableBy (C := C)).1.left.homOfLE
-          (pic0FiniteStageAffineOverlap_le_left C U V)) ≫ U.1.1.ι :=
-        congrArg (fun q => q ≫ U.1.1.ι)
-          (pic0SepClosedAtlasOverlapIso_hom_f C U V)
-      _ = _ := Scheme.homOfLE_ι _ _
   calc
     _ = (overlapBaseChangeIso C P U V).hom ≫
         (pic0FiniteStageAffineOverlap C U V).1.ι :=
       congrArg (fun q => (overlapBaseChangeIso C P U V).hom ≫ q)
-        atlas_projection
+        (overlapAtlasProjection_left C U V)
     _ = _ := overlapBaseChangeIso_hom_ι C P U V
 
 set_option synthInstance.maxHeartbeats 3200000 in
@@ -373,8 +379,21 @@ private theorem restrictionBaseChangeMap_fromSpec
           (chartRingBaseChangeIso C P U).hom ≫ U.1.2.fromSpec =
       (overlapRingBaseChangeIso C P U V).hom ≫
         (pic0FiniteStageAffineOverlap C U V).2.fromSpec := by
-  rw [← Category.assoc, restrictionBaseChangeMap_naturality C P U V]
-  rw [Category.assoc, exactRestrictionAlgHom_fromSpec C U V]
+  calc
+    _ = (restrictionBaseChangeMap C P U V ≫
+        (chartRingBaseChangeIso C P U).hom) ≫ U.1.2.fromSpec :=
+      (Category.assoc _ _ _).symm
+    _ = ((overlapRingBaseChangeIso C P U V).hom ≫
+        Spec.map (CommRingCat.ofHom
+          (exactRestrictionAlgHom C U V).toRingHom)) ≫ U.1.2.fromSpec :=
+      congrArg (fun q => q ≫ U.1.2.fromSpec)
+        (restrictionBaseChangeMap_naturality C P U V)
+    _ = (overlapRingBaseChangeIso C P U V).hom ≫
+        (Spec.map (CommRingCat.ofHom
+          (exactRestrictionAlgHom C U V).toRingHom) ≫ U.1.2.fromSpec) :=
+      Category.assoc _ _ _
+    _ = _ := congrArg (fun q => (overlapRingBaseChangeIso C P U V).hom ≫ q)
+      (exactRestrictionAlgHom_fromSpec C U V)
 
 set_option synthInstance.maxHeartbeats 3200000 in
 -- Matching the complete glued multispan equality crosses several dependent pullbacks.
