@@ -9,3 +9,5 @@
 {"at": "2026-08-25T02:29:15.308232+00:00", "actor": "human", "field": "status", "from": "blocked", "to": "queued", "note": ""}
 {"at": "2026-08-25T02:30:24.983422+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
 {"at": "2026-08-25T03:42:55.858422+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-08-25T05:44:59.847775+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-25T14:24:40.135251+00:00", "actor": "horizon", "field": "status", "from": "running", "to": "blocked", "note": "", "provenance": {"run": "0161", "session": "0002-horizon-ajcr-compile-frontier-repair", "role": "horizon", "round": "0", "rounds": "5", "task": "ajcr-compile-frontier-repair", "task_title": "AJCR compile frontier: repair GluingDiagramIso artifact", "projects": "Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge"}}
