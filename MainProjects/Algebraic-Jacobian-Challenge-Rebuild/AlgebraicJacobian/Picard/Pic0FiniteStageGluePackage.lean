@@ -244,6 +244,17 @@ noncomputable instance pic0FiniteStageOverlapBaseChangeRingAlgebra
 -- generic carrier instance above remains available to the lower-level atlas modules.
 @[reducible]
 noncomputable instance (priority := 100)
+    pic0FiniteStageGluePackageOverlapBaseChangeRingCommRing
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U V : Pic0FiniteStageChartIndex C) :
+    CommRing
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
+  pic0FiniteStageOverlapBaseChangeRingCommRing
+    C P.L P.n P.m P.relation P.M P.N U V
+
+@[reducible]
+noncomputable instance (priority := 100)
     pic0FiniteStageGluePackageOverlapBaseChangeRingAlgebra
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F)
