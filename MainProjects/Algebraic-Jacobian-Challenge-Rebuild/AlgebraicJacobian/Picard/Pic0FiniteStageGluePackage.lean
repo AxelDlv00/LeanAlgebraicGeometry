@@ -193,6 +193,7 @@ set_option maxHeartbeats 3200000 in
 -- The raw overlap tensor needs the model's canonical left algebra before its ring
 -- instance can be reconstructed.  Naming that instance keeps downstream `ofHom`
 -- statements independent of whichever tensor-product semiring was used to build a map.
+@[reducible]
 noncomputable instance pic0FiniteStageOverlapBaseChangeRingCommRing
     {F : Type u} [Field F] [Algebra F k]
     (L : DatG0.FinSubext F k)
@@ -217,6 +218,7 @@ noncomputable instance pic0FiniteStageOverlapBaseChangeRingCommRing
 set_option synthInstance.maxHeartbeats 400000 in
 set_option maxHeartbeats 3200000 in
 -- The scalar map into the overlap uses the same canonical tensor carrier as its ring.
+@[reducible]
 noncomputable instance pic0FiniteStageOverlapBaseChangeRingAlgebra
     {F : Type u} [Field F] [Algebra F k]
     (L : DatG0.FinSubext F k)
@@ -239,6 +241,7 @@ noncomputable instance pic0FiniteStageOverlapBaseChangeRingAlgebra
 
 -- Expose the chart base-change carrier before package projections and downstream
 -- restriction maps elaborate their dependent `AlgHom` parameters.
+@[reducible]
 noncomputable instance pic0FiniteStageChartBaseChangeRingCommRing
     {F : Type u} [Field F] [Algebra F k]
     (L : DatG0.FinSubext F k)
@@ -263,6 +266,7 @@ noncomputable instance pic0FiniteStageChartBaseChangeRingCommRing
   dsimp only [Pic0FiniteStageChartBaseChangeRing]
   exact Algebra.TensorProduct.instCommRing
 
+@[reducible]
 noncomputable instance pic0FiniteStageChartBaseChangeRingAlgebra
     {F : Type u} [Field F] [Algebra F k]
     (L : DatG0.FinSubext F k)
