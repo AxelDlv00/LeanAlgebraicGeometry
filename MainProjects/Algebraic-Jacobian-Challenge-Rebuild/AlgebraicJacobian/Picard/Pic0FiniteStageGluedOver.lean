@@ -36,11 +36,10 @@ set_option synthInstance.maxHeartbeats 3200000 in
 -- Projecting the dependent scalar towers from `P` requires a larger local synthesis budget.
 set_option maxHeartbeats 12800000 in
 /-- The structure map from the finite-stage glued scheme to its field of definition. -/
-noncomputable opaque gluedMap
+noncomputable def gluedMap
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F) :
-    P.glueData.glued ⟶ Spec (.of P.N.1) := by sorry
-/- ORIGINAL gluedMap BODY (temporary isolation probe)
+    P.glueData.glued ⟶ Spec (.of P.N.1) := by
   letI : Algebra.IsAlgebraic P.L.1 k := by infer_instance
   letI : Algebra.IsAlgebraic P.M.1 k := by infer_instance
   let A : Pic0FiniteStageChartIndex C -> Type u := fun U =>
@@ -48,46 +47,6 @@ noncomputable opaque gluedMap
   let B : Pic0FiniteStageChartIndex C -> Pic0FiniteStageChartIndex C -> Type u :=
     fun U V =>
       Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V
-  letI : ∀ U, Algebra P.M.1
-      (Pic0FiniteStageChartModelRing C P.L P.n P.m P.relation P.M U) := fun U =>
-    by
-      dsimp only [Pic0FiniteStageChartModelRing, Pic0FiniteStageModelRing]
-      exact Algebra.TensorProduct.leftAlgebra
-        (R := P.L.1) (S := P.M.1) (A := P.M.1)
-        (B := DatG0.FiniteRelationAlgebra P.L.1
-          (P.n (Sum.inl U)) (P.m (Sum.inl U))
-          (P.relation (Sum.inl U)))
-  letI : ∀ U, CommRing
-      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
-    fun U => by
-      letI : CommRing
-          (Pic0FiniteStageChartModelRing C P.L P.n P.m P.relation P.M U) := inferInstance
-      letI : CommSemiring
-          (Pic0FiniteStageChartModelRing C P.L P.n P.m P.relation P.M U) :=
-        (inferInstance : CommRing
-          (Pic0FiniteStageChartModelRing C P.L P.n P.m P.relation P.M U)).toCommSemiring
-      dsimp only [Pic0FiniteStageChartBaseChangeRing]
-      exact Algebra.TensorProduct.instCommRing
-  letI : ∀ U, Algebra P.N.1
-      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U) :=
-    fun U => by
-      letI : Algebra P.M.1
-          (Pic0FiniteStageChartModelRing C P.L P.n P.m P.relation P.M U) :=
-        Algebra.TensorProduct.leftAlgebra
-          (R := P.L.1) (S := P.M.1) (A := P.M.1)
-          (B := DatG0.FiniteRelationAlgebra P.L.1
-            (P.n (Sum.inl U)) (P.m (Sum.inl U))
-            (P.relation (Sum.inl U)))
-      letI : CommRing
-          (Pic0FiniteStageChartModelRing C P.L P.n P.m P.relation P.M U) := inferInstance
-      letI : CommSemiring
-          (Pic0FiniteStageChartModelRing C P.L P.n P.m P.relation P.M U) :=
-        (inferInstance : CommRing
-          (Pic0FiniteStageChartModelRing C P.L P.n P.m P.relation P.M U)).toCommSemiring
-      dsimp only [Pic0FiniteStageChartBaseChangeRing]
-      exact Algebra.TensorProduct.leftAlgebra
-        (R := P.M.1) (S := P.N.1) (A := P.N.1)
-        (B := Pic0FiniteStageChartModelRing C P.L P.n P.m P.relation P.M U)
   let r : ∀ U V, A U →ₐ[P.N.1] B U V := fun U V =>
     pic0FiniteStageRestrictionBaseChange
       C P.L P.n P.m P.relation P.M P.mapM P.N U V
@@ -121,7 +80,6 @@ noncomputable opaque gluedMap
     rw [← IsScalarTower.algebraMap_apply P.N.1 (A U) (B U V)]
     rw [← IsScalarTower.algebraMap_apply P.N.1 (A V) (B V U)]
     exact (tau U V).commutes x |>.symm
--/
 
 /-- The finite-stage Picard glue, retained over the finite field `P.N.1`. -/
 noncomputable def gluedOver

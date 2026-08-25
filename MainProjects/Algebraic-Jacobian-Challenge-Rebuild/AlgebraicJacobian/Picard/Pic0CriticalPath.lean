@@ -85,6 +85,7 @@ import AlgebraicJacobian.Picard.Pic0FiniteStageGluingDiagramIso
 import AlgebraicJacobian.Picard.Pic0FiniteStageRightLegEquality
 import AlgebraicJacobian.Picard.Pic0FiniteStageRightRestrictionAlgHom
 import AlgebraicJacobian.Picard.Pic0FiniteStageRightRestrictionNaturality
+import AlgebraicJacobian.Picard.Pic0FiniteStageGluedComparison
 import AlgebraicJacobian.Picard.Pic0FiniteStageDatum
 import AlgebraicJacobian.Picard.RelPicTensorStageFiniteStage
 import AlgebraicJacobian.Picard.Pic0FiniteStageUniversalClass
@@ -294,12 +295,16 @@ restriction legs, pair transitions, and triple-tensor transitions into an actual
 identities.  Thus no additional scheme-level gluing axiom is needed once those finite-stage
 ring equations have been reflected.
 
-These inputs do not yet constitute object descent.  Still missing, and NOT replaced here by
-  axioms or local hypotheses: a kernel-clean specialization of the generic flattening isomorphism
-  to the dependent finite-stage overlap package, the scheme-level comparison for the now-identified
-  right overlap leg, and assembly of those local comparisons into the global glued-scheme base-change
-  isomorphism; descent of the universal
-  Picard natural equivalence; preservation of
+These inputs do not yet constitute object descent.  The source modules now provide the dependent
+flattening specialization, the scheme-level comparison for the identified right overlap leg, the
+underlying-scheme comparison `finiteStageBaseChangeIso`, its structure-map triangle, and the
+bundled `finiteStageBaseChangeOverIso`.  The critical-path root imports that complete comparison
+chain, so the declarations are part of ordinary root-build validation.  The finite-Galois consumers
+remain general in the package's source curve: their explicit `RepresentableBy P.gluedOver`
+hypothesis is the formal bridge to the Picard functor named in their result.  Still missing, and NOT
+replaced here by axioms or local hypotheses: a theorem constructing that representation from the
+finite-stage package, descent of the curve and universal Picard natural equivalence to the finite
+stage, and preservation of
 Picard zero under the original-base filtered colimit;
 the orbit-in-affine-open (or projectivity) input for the finite-level Picard quotient; and the
 arbitrary-base-field `pic0_representableBy` and `JacobianData` endpoints.
@@ -817,6 +822,9 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #check AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingOverlapFlatteningIso_hom_comp_fst_comp_t_f
 #check AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingOverlapFlatteningIso_hom_comp_snd
 #check AlgebraicGeometry.specMap_algHom_comp_algebraMap
+#check AlgebraicGeometry.Pic0FiniteStageGluePackage.chartBaseChangeIso_hom_structureMap
+#check AlgebraicGeometry.Pic0FiniteStageGluePackage.baseChangeGluingIso_hom_p2
+#check AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingChartIso_hom_structureMap
 #check AlgebraicGeometry.Pic0FiniteStageGluePackage.glueData_f_comp_inclusion_comp_gluedMap
 #check AlgebraicGeometry.Pic0FiniteStageGluePackage.exactRestrictionAlgHom_fromSpec
 #check AlgebraicGeometry.Pic0FiniteStageGluePackage.restrictionBaseChangeMap_fst
@@ -834,6 +842,11 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
   AlgebraicGeometry.Pic0FiniteStageGluePackage.rightRestrictionFinalBaseChangeEquiv_naturality
 #check AlgebraicGeometry.Pic0FiniteStageGluePackage.rightRestrictionBaseChangeMap
 #check AlgebraicGeometry.Pic0FiniteStageGluePackage.rightRestrictionBaseChangeMap_naturality
+#check AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingGluedIso
+#check AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingGluedIso_hom_structureMap
+#check AlgebraicGeometry.Pic0FiniteStageGluePackage.finiteStageBaseChangeIso
+#check AlgebraicGeometry.Pic0FiniteStageGluePackage.finiteStageBaseChangeIso_hom_structureMap
+#check AlgebraicGeometry.Pic0FiniteStageGluePackage.finiteStageBaseChangeOverIso
 #check AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 #check AlgebraicGeometry.pic0RepresentableBy_of_baseChangeObjectIso
 -- Datum-level glued divisor over a Noetherian base (Pic0RankOneDatumGluedDivisor.lean)
@@ -1090,6 +1103,10 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
   AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingOverlapFlatteningIso_hom_comp_snd
 #print axioms AlgebraicGeometry.specMap_algHom_comp_algebraMap
 #print axioms
+  AlgebraicGeometry.Pic0FiniteStageGluePackage.chartBaseChangeIso_hom_structureMap
+#print axioms AlgebraicGeometry.Pic0FiniteStageGluePackage.baseChangeGluingIso_hom_p2
+#print axioms AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingChartIso_hom_structureMap
+#print axioms
   AlgebraicGeometry.Pic0FiniteStageGluePackage.glueData_f_comp_inclusion_comp_gluedMap
 #print axioms AlgebraicGeometry.Pic0FiniteStageGluePackage.exactRestrictionAlgHom_fromSpec
 #print axioms AlgebraicGeometry.Pic0FiniteStageGluePackage.restrictionBaseChangeMap_fst
@@ -1114,6 +1131,13 @@ end AlgebraicGeometry.PicRankOneLocalPresentation
 #print axioms AlgebraicGeometry.Pic0FiniteStageGluePackage.rightRestrictionBaseChangeMap
 #print axioms
   AlgebraicGeometry.Pic0FiniteStageGluePackage.rightRestrictionBaseChangeMap_naturality
+#print axioms AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingGluedIso
+#print axioms
+  AlgebraicGeometry.Pic0FiniteStageGluePackage.gluingGluedIso_hom_structureMap
+#print axioms AlgebraicGeometry.Pic0FiniteStageGluePackage.finiteStageBaseChangeIso
+#print axioms
+  AlgebraicGeometry.Pic0FiniteStageGluePackage.finiteStageBaseChangeIso_hom_structureMap
+#print axioms AlgebraicGeometry.Pic0FiniteStageGluePackage.finiteStageBaseChangeOverIso
 #print axioms AlgebraicGeometry.pic0PreservesFilteredBaseColimit_of_representableBy
 #print axioms AlgebraicGeometry.pic0RepresentableBy_of_baseChangeObjectIso
 #print axioms

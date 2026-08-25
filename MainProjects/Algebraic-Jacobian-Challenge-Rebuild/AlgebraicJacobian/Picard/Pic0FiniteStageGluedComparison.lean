@@ -279,6 +279,43 @@ noncomputable def gluingGluedIso
 
 set_option synthInstance.maxHeartbeats 3200000 in
 set_option maxHeartbeats 12800000 in
+set_option backward.isDefEq.respectTransparency false in
+/-- The comparison of the two glued atlases preserves their morphisms to `Spec k`. -/
+@[reassoc]
+theorem gluingGluedIso_hom_structureMap
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F) :
+    (gluingGluedIso C P).hom ≫
+        (pic0SepClosedAtlasOpenCover C).fromGlued ≫
+        (pic0_sepClosed_representableBy (C := C)).1.hom =
+      Scheme.Pullback.p2 P.glueData.openCover P.gluedMap
+        (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) := by
+  apply Multicoequalizer.hom_ext
+  intro U
+  change
+    (baseChangedGlueData C P).ι U ≫
+        (gluingGluedHom C P ≫
+          (pic0SepClosedAtlasOpenCover C).fromGlued ≫
+          (pic0_sepClosed_representableBy (C := C)).1.hom) =
+      (baseChangedGlueData C P).ι U ≫
+        Scheme.Pullback.p2 P.glueData.openCover P.gluedMap
+          (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))
+  rw [← Category.assoc, gluingGluedHom_ι]
+  rw [Category.assoc,
+    (pic0SepClosedAtlasOpenCover C).ι_fromGlued_assoc]
+  change
+    (gluingChartIso C P U).hom ≫ U.1.1.ι ≫
+        (pic0_sepClosed_representableBy (C := C)).1.hom =
+      (baseChangedGlueData C P).ι U ≫
+        Scheme.Pullback.p2 P.glueData.openCover P.gluedMap
+          (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))
+  rw [gluingChartIso_hom_structureMap]
+  symm
+  unfold Scheme.Pullback.p2
+  exact Multicoequalizer.π_desc _ _ _ _ _
+
+set_option synthInstance.maxHeartbeats 3200000 in
+set_option maxHeartbeats 12800000 in
 /-- Scalar extension of the descended finite-stage glue recovers the exact separably
 closed Picard representing scheme. -/
 noncomputable def finiteStageBaseChangeIso
@@ -290,6 +327,33 @@ noncomputable def finiteStageBaseChangeIso
   baseChangeGluingIso C P ≪≫
     gluingGluedIso C P ≪≫
       asIso (pic0SepClosedAtlasOpenCover C).fromGlued
+
+set_option synthInstance.maxHeartbeats 3200000 in
+set_option maxHeartbeats 12800000 in
+/-- The global comparison commutes with the structure morphisms to `Spec k`. -/
+@[reassoc]
+theorem finiteStageBaseChangeIso_hom_structureMap
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F) :
+    (finiteStageBaseChangeIso C P).hom ≫
+        (pic0_sepClosed_representableBy (C := C)).1.hom =
+      pullback.snd P.gluedMap
+        (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) := by
+  rw [finiteStageBaseChangeIso, Iso.trans_hom, Iso.trans_hom]
+  simp only [asIso_hom, Category.assoc]
+  rw [gluingGluedIso_hom_structureMap, baseChangeGluingIso_hom_p2]
+
+/-- Base change of the finite-stage glued object is the exact Picard representer as an
+object over `Spec k`.  This is an object comparison only; it does not descend the Picard
+representation or a curve to the finite stage. -/
+noncomputable def finiteStageBaseChangeOverIso
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F) :
+    (Over.pullback
+      (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))).obj P.gluedOver ≅
+        (pic0_sepClosed_representableBy (C := C)).1 :=
+  Over.isoMk (finiteStageBaseChangeIso C P)
+    (finiteStageBaseChangeIso_hom_structureMap C P)
 
 end Pic0FiniteStageGluePackage
 

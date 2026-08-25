@@ -5,18 +5,132 @@ on:
   push:
     branches: [palimpsest/main, main]
 
+# Cancel superseded runs on the same PR/branch so the queue does not pile up.
+concurrency:
+  group: lean-ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   lake-build:
     name: lake-build
     runs-on: ubuntu-latest
+    # The cache-disabled bootstrap path builds more than 1,100 modules and can
+    # exceed the default six-hour job window before bounded caches are restored.
+    timeout-minutes: 720
     steps:
       - uses: actions/checkout@v4
+
       - name: Install elan
         run: |
           curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Detect Actions cache
+        id: cache-availability
+        shell: bash
+        run: |
+          if [[ -n "${ACTIONS_CACHE_URL:-}" ]]; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "available=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Compute cache week
+        id: cache-week
+        shell: bash
+        run: echo "week=$(date -u +%G-W%V)" >> "$GITHUB_OUTPUT"
+
+      - name: Restore elan toolchains
+        id: elan-cache
+        if: ${{ steps.cache-availability.outputs.available == 'true' }}
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.elan/toolchains
+          key: ajcr-elan-${{ runner.os }}-${{ hashFiles('MainProjects/Algebraic-Jacobian-Challenge-Rebuild/lean-toolchain', 'MainProjects/Algebraic-Jacobian-Challenge-Rebuild/lake-manifest.json') }}
+
+      - name: Restore Lake packages
+        id: lake-packages-cache
+        if: ${{ steps.cache-availability.outputs.available == 'true' }}
+        uses: actions/cache/restore@v4
+        with:
+          path: .lake-packages
+          key: ajcr-lake-packages-${{ runner.os }}-${{ hashFiles('MainProjects/Algebraic-Jacobian-Challenge-Rebuild/lean-toolchain', 'MainProjects/Algebraic-Jacobian-Challenge-Rebuild/lake-manifest.json') }}
+
+      - name: Restore project build outputs
+        id: project-build-cache
+        if: ${{ steps.cache-availability.outputs.available == 'true' }}
+        uses: actions/cache/restore@v4
+        with:
+          path: MainProjects/Algebraic-Jacobian-Challenge-Rebuild/.lake/build
+          key: ajcr-project-build-${{ runner.os }}-${{ hashFiles('MainProjects/Algebraic-Jacobian-Challenge-Rebuild/lean-toolchain', 'MainProjects/Algebraic-Jacobian-Challenge-Rebuild/lake-manifest.json') }}-${{ steps.cache-week.outputs.week }}
+          restore-keys: |
+            ajcr-project-build-${{ runner.os }}-${{ hashFiles('MainProjects/Algebraic-Jacobian-Challenge-Rebuild/lean-toolchain', 'MainProjects/Algebraic-Jacobian-Challenge-Rebuild/lake-manifest.json') }}-
+
       - name: Build AJCR
         working-directory: MainProjects/Algebraic-Jacobian-Challenge-Rebuild
+        shell: bash
         run: |
+          # Remote mathlib oleans (mathlib4 cache server). Safe to fail open.
           lake exe cache get || true
-          lake build
+
+          # Legacy AJCR files import `Mathlib` without a module header. Lake
+          # therefore writes a large transitive-import setup file for every
+          # module. Those files are only inputs to the compiler invocation;
+          # the olean/ilean/C outputs and traces are the durable build state.
+          # Remove old setup files before the build and finished ones during it
+          # so the cacheless runner does not exhaust its single filesystem.
+          cleanup_finished_setups() {
+            local setup prefix suffix olean
+            while IFS= read -r -d '' setup; do
+              if [[ "$setup" == */.lake/build/ir/*.setup.json ]]; then
+                prefix="${setup%%/.lake/build/ir/*}"
+                suffix="${setup#"$prefix/.lake/build/ir/"}"
+                olean="$prefix/.lake/build/lib/lean/${suffix%.setup.json}.olean"
+                if [[ -f "$olean" && "$olean" -nt "$setup" ]]; then
+                  rm -f -- "$setup"
+                fi
+              fi
+            done < <(
+              find ./.lake/build/ir ./.lake-packages \
+                -type f -path '*/.lake/build/ir/*.setup.json' -print0 2>/dev/null
+            )
+            return 0
+          }
+
+          # A restored build may contain setup files from an earlier run.
+          find ./.lake/build/ir ./.lake-packages \
+            -type f -path '*/.lake/build/ir/*.setup.json' -delete 2>/dev/null || true
+
+          set +e
+          lake build &
+          build_pid=$!
+          while kill -0 "$build_pid" 2>/dev/null; do
+            cleanup_finished_setups
+            sleep 15
+          done
+          wait "$build_pid"
+          build_status=$?
+          set -e
+          cleanup_finished_setups
+          exit "$build_status"
+
+      - name: Save elan toolchains
+        if: ${{ success() && steps.cache-availability.outputs.available == 'true' && github.event_name == 'push' && github.ref == 'refs/heads/palimpsest/main' && steps.elan-cache.outputs.cache-hit != 'true' }}
+        uses: actions/cache/save@v4
+        with:
+          path: ~/.elan/toolchains
+          key: ajcr-elan-${{ runner.os }}-${{ hashFiles('MainProjects/Algebraic-Jacobian-Challenge-Rebuild/lean-toolchain', 'MainProjects/Algebraic-Jacobian-Challenge-Rebuild/lake-manifest.json') }}
+
+      - name: Save Lake packages
+        if: ${{ success() && steps.cache-availability.outputs.available == 'true' && github.event_name == 'push' && github.ref == 'refs/heads/palimpsest/main' && steps.lake-packages-cache.outputs.cache-hit != 'true' }}
+        uses: actions/cache/save@v4
+        with:
+          path: .lake-packages
+          key: ajcr-lake-packages-${{ runner.os }}-${{ hashFiles('MainProjects/Algebraic-Jacobian-Challenge-Rebuild/lean-toolchain', 'MainProjects/Algebraic-Jacobian-Challenge-Rebuild/lake-manifest.json') }}
+
+      - name: Save project build outputs
+        if: ${{ success() && steps.cache-availability.outputs.available == 'true' && github.event_name == 'push' && github.ref == 'refs/heads/palimpsest/main' && steps.project-build-cache.outputs.cache-hit != 'true' }}
+        uses: actions/cache/save@v4
+        with:
+          path: MainProjects/Algebraic-Jacobian-Challenge-Rebuild/.lake/build
+          key: ajcr-project-build-${{ runner.os }}-${{ hashFiles('MainProjects/Algebraic-Jacobian-Challenge-Rebuild/lean-toolchain', 'MainProjects/Algebraic-Jacobian-Challenge-Rebuild/lake-manifest.json') }}-${{ steps.cache-week.outputs.week }}

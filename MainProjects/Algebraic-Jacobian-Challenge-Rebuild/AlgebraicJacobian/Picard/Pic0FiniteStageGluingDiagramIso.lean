@@ -25,19 +25,6 @@ namespace AlgebraicGeometry
 
 noncomputable section
 
-/-- The spectrum of an algebra homomorphism lies over the base spectrum. -/
-theorem specMap_algHom_comp_algebraMap
-    {R A B : Type u} [CommRing R] [CommRing A] [CommRing B]
-    [Algebra R A] [Algebra R B] (r : A →ₐ[R] B) :
-    Spec.map (CommRingCat.ofHom r.toRingHom) ≫
-        Spec.map (CommRingCat.ofHom (algebraMap R A)) =
-      Spec.map (CommRingCat.ofHom (algebraMap R B)) := by
-  rw [← Spec.map_comp]
-  rw [← CommRingCat.ofHom_comp]
-  congr 1
-  ext x
-  exact r.commutes x
-
 @[reassoc]
 theorem pullback_congrHom_hom_fst
     {X Y Z : Scheme.{u}} {f₁ f₂ : X ⟶ Z} {g₁ g₂ : Y ⟶ Z}
@@ -65,6 +52,24 @@ variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
   [GeometricallyIrreducible C.hom] [IsSepClosed k]
 
 namespace Pic0FiniteStageGluePackage
+
+set_option synthInstance.maxHeartbeats 3200000 in
+set_option maxHeartbeats 12800000 in
+/-- The chart comparison in the pulled-back gluing preserves the projection to the
+separably closed field. -/
+@[reassoc]
+theorem gluingChartIso_hom_structureMap
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U : Pic0FiniteStageChartIndex C) :
+    (gluingChartIso C P U).hom ≫ U.1.1.ι ≫
+        (pic0_sepClosed_representableBy (C := C)).1.hom =
+      pullback.snd
+        (P.glueData.ι U ≫ P.gluedMap)
+        (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) := by
+  simp only [gluingChartIso, Iso.trans_hom, Category.assoc]
+  rw [chartBaseChangeIso_hom_structureMap]
+  exact pullback_congrHom_hom_snd (glueData_ι_gluedMap C P U) rfl
 
 set_option synthInstance.maxHeartbeats 3200000 in
 -- The composite retains the package's dependent finite-subextension towers.
