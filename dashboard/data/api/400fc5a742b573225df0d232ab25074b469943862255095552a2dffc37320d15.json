@@ -1,0 +1,1 @@
+{"markdown": "The finalization hook lists additional ledger paths. I\u2019m checking only those paths to distinguish any session-owned residue from concurrent workspace changes; I will not expand the requested commit scope.", "recommendation": ""}
