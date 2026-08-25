@@ -23,25 +23,46 @@ jobs:
           curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
 
-      - name: Cache elan toolchains
-        uses: actions/cache@v4
-        with:
-          path: ~/.elan
-          key: elan-${{ runner.os }}-${{ hashFiles('lean-toolchain', '**/lean-toolchain', 'lake-manifest.json', '**/lake-manifest.json') }}
-          restore-keys: |
-            elan-${{ runner.os }}-
+      - name: Detect Actions cache
+        id: cache-availability
+        shell: bash
+        run: |
+          if [[ -n "${ACTIONS_CACHE_URL:-}" ]]; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "available=false" >> "$GITHUB_OUTPUT"
+          fi
 
-      - name: Cache Lake packages and build
-        uses: actions/cache@v4
+      - name: Compute cache week
+        id: cache-week
+        shell: bash
+        run: echo "week=$(date -u +%G-W%V)" >> "$GITHUB_OUTPUT"
+
+      - name: Restore elan toolchains
+        id: elan-cache
+        if: ${{ steps.cache-availability.outputs.available == 'true' }}
+        uses: actions/cache/restore@v4
         with:
-          # Mathlib oleans + package builds dominate wall clock when cold.
-          path: |
-            .lake
-            .lake-packages
-            MainProjects/Algebraic-Jacobian-Challenge-Rebuild/.lake
-          key: lake-${{ runner.os }}-${{ hashFiles('lake-manifest.json', '**/lake-manifest.json', 'lean-toolchain', '**/lean-toolchain', 'lakefile.lean', '**/lakefile.lean', 'lakefile.toml', '**/lakefile.toml') }}
+          path: ~/.elan/toolchains
+          key: ajcr-elan-${{ runner.os }}-${{ hashFiles('MainProjects/Algebraic-Jacobian-Challenge-Rebuild/lean-toolchain', 'MainProjects/Algebraic-Jacobian-Challenge-Rebuild/lake-manifest.json') }}
+
+      - name: Restore Lake packages
+        id: lake-packages-cache
+        if: ${{ steps.cache-availability.outputs.available == 'true' }}
+        uses: actions/cache/restore@v4
+        with:
+          path: .lake-packages
+          key: ajcr-lake-packages-${{ runner.os }}-${{ hashFiles('MainProjects/Algebraic-Jacobian-Challenge-Rebuild/lean-toolchain', 'MainProjects/Algebraic-Jacobian-Challenge-Rebuild/lake-manifest.json') }}
+
+      - name: Restore project build outputs
+        id: project-build-cache
+        if: ${{ steps.cache-availability.outputs.available == 'true' }}
+        uses: actions/cache/restore@v4
+        with:
+          path: MainProjects/Algebraic-Jacobian-Challenge-Rebuild/.lake/build
+          key: ajcr-project-build-${{ runner.os }}-${{ hashFiles('MainProjects/Algebraic-Jacobian-Challenge-Rebuild/lean-toolchain', 'MainProjects/Algebraic-Jacobian-Challenge-Rebuild/lake-manifest.json') }}-${{ steps.cache-week.outputs.week }}
           restore-keys: |
-            lake-${{ runner.os }}-
+            ajcr-project-build-${{ runner.os }}-${{ hashFiles('MainProjects/Algebraic-Jacobian-Challenge-Rebuild/lean-toolchain', 'MainProjects/Algebraic-Jacobian-Challenge-Rebuild/lake-manifest.json') }}-
 
       - name: Build AJCR
         working-directory: MainProjects/Algebraic-Jacobian-Challenge-Rebuild
@@ -49,3 +70,24 @@ jobs:
           # Remote mathlib oleans (mathlib4 cache server). Safe to fail open.
           lake exe cache get || true
           lake build
+
+      - name: Save elan toolchains
+        if: ${{ success() && steps.cache-availability.outputs.available == 'true' && github.event_name == 'push' && github.ref == 'refs/heads/palimpsest/main' && steps.elan-cache.outputs.cache-hit != 'true' }}
+        uses: actions/cache/save@v4
+        with:
+          path: ~/.elan/toolchains
+          key: ajcr-elan-${{ runner.os }}-${{ hashFiles('MainProjects/Algebraic-Jacobian-Challenge-Rebuild/lean-toolchain', 'MainProjects/Algebraic-Jacobian-Challenge-Rebuild/lake-manifest.json') }}
+
+      - name: Save Lake packages
+        if: ${{ success() && steps.cache-availability.outputs.available == 'true' && github.event_name == 'push' && github.ref == 'refs/heads/palimpsest/main' && steps.lake-packages-cache.outputs.cache-hit != 'true' }}
+        uses: actions/cache/save@v4
+        with:
+          path: .lake-packages
+          key: ajcr-lake-packages-${{ runner.os }}-${{ hashFiles('MainProjects/Algebraic-Jacobian-Challenge-Rebuild/lean-toolchain', 'MainProjects/Algebraic-Jacobian-Challenge-Rebuild/lake-manifest.json') }}
+
+      - name: Save project build outputs
+        if: ${{ success() && steps.cache-availability.outputs.available == 'true' && github.event_name == 'push' && github.ref == 'refs/heads/palimpsest/main' && steps.project-build-cache.outputs.cache-hit != 'true' }}
+        uses: actions/cache/save@v4
+        with:
+          path: MainProjects/Algebraic-Jacobian-Challenge-Rebuild/.lake/build
+          key: ajcr-project-build-${{ runner.os }}-${{ hashFiles('MainProjects/Algebraic-Jacobian-Challenge-Rebuild/lean-toolchain', 'MainProjects/Algebraic-Jacobian-Challenge-Rebuild/lake-manifest.json') }}-${{ steps.cache-week.outputs.week }}
