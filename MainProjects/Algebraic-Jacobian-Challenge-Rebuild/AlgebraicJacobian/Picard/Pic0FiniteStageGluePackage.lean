@@ -239,6 +239,20 @@ noncomputable instance pic0FiniteStageOverlapBaseChangeRingAlgebra
     (R := M.1) (S := N.1) (A := N.1)
     (B := Pic0FiniteStageOverlapModelRing C L n m relation M U V)
 
+-- Package projections occur behind local aliases in `gluedMap`.  This specialized
+-- wrapper gives instance search a single package parameter to unify there, while the
+-- generic carrier instance above remains available to the lower-level atlas modules.
+@[reducible]
+noncomputable instance (priority := 100)
+    pic0FiniteStageGluePackageOverlapBaseChangeRingAlgebra
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U V : Pic0FiniteStageChartIndex C) :
+    Algebra P.N.1
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V) :=
+  pic0FiniteStageOverlapBaseChangeRingAlgebra
+    C P.L P.n P.m P.relation P.M P.N U V
+
 -- Expose the chart base-change carrier before package projections and downstream
 -- restriction maps elaborate their dependent `AlgHom` parameters.
 @[reducible]
