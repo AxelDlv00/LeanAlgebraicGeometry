@@ -36,11 +36,10 @@ set_option synthInstance.maxHeartbeats 3200000 in
 -- Projecting the dependent scalar towers from `P` requires a larger local synthesis budget.
 set_option maxHeartbeats 12800000 in
 /-- The structure map from the finite-stage glued scheme to its field of definition. -/
-noncomputable opaque gluedMap
+noncomputable def gluedMap
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F) :
-    P.glueData.glued ⟶ Spec (.of P.N.1) := by sorry
-/- ORIGINAL gluedMap BODY (temporary isolation probe)
+    P.glueData.glued ⟶ Spec (.of P.N.1) := by
   letI : Algebra.IsAlgebraic P.L.1 k := by infer_instance
   letI : Algebra.IsAlgebraic P.M.1 k := by infer_instance
   let A : Pic0FiniteStageChartIndex C -> Type u := fun U =>
@@ -121,7 +120,6 @@ noncomputable opaque gluedMap
     rw [← IsScalarTower.algebraMap_apply P.N.1 (A U) (B U V)]
     rw [← IsScalarTower.algebraMap_apply P.N.1 (A V) (B V U)]
     exact (tau U V).commutes x |>.symm
--/
 
 /-- The finite-stage Picard glue, retained over the finite field `P.N.1`. -/
 noncomputable def gluedOver

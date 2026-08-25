@@ -62,17 +62,72 @@ noncomputable def chartBaseChangeIso
           (algebraMap P.N.1
             (Pic0FiniteStageChartBaseChangeRing
               C P.L P.n P.m P.relation P.M P.N U))))
-        (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≅
-      (pic0SepClosedAtlasOpenCover C).X U :=
-  pullbackSymmetry _ _ ≪≫
-    pullbackSpecIso P.N.1 k
-      (Pic0FiniteStageChartBaseChangeRing
-        C P.L P.n P.m P.relation P.M P.N U) ≪≫
-    Scheme.Spec.mapIso
-      (pic0FiniteStageFinalBaseChangeEquiv
-        C P.L P.n P.m P.relation P.e P.M P.N
-          (Sum.inl U)).symm.toRingEquiv.toCommRingCatIso.op ≪≫
-    U.1.2.isoSpec.symm
+      (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≅
+      (pic0SepClosedAtlasOpenCover C).X U := by
+  letI : Algebra P.N.1
+      (Pic0FiniteStageFinalModelRing C P.L P.n P.m P.relation P.M P.N
+        (Sum.inl U)) :=
+    pic0FiniteStageFinalModelRingAlgebra C P.L P.n P.m P.relation P.M P.N
+      (Sum.inl U)
+  letI : Module P.N.1
+      (Pic0FiniteStageFinalModelRing C P.L P.n P.m P.relation P.M P.N
+        (Sum.inl U)) :=
+    pic0FiniteStageFinalModelRingModule C P.L P.n P.m P.relation P.M P.N
+      (Sum.inl U)
+  letI : CommRing
+      (Pic0FiniteStageFinalModelRing C P.L P.n P.m P.relation P.M P.N
+        (Sum.inl U)) :=
+    pic0FiniteStageFinalModelRingCommRing C P.L P.n P.m P.relation P.M P.N
+      (Sum.inl U)
+  letI : CommSemiring
+      (Pic0FiniteStageFinalModelRing C P.L P.n P.m P.relation P.M P.N
+        (Sum.inl U)) :=
+    (inferInstance : CommRing
+      (Pic0FiniteStageFinalModelRing C P.L P.n P.m P.relation P.M P.N
+        (Sum.inl U))).toCommSemiring
+  letI : Semiring
+      (Pic0FiniteStageFinalModelRing C P.L P.n P.m P.relation P.M P.N
+        (Sum.inl U)) :=
+    (pic0FiniteStageFinalModelRingCommSemiring C P.L P.n P.m P.relation P.M P.N
+      (Sum.inl U)).toSemiring
+  letI : CommRing
+      (k ⊗[P.N.1] Pic0FiniteStageFinalModelRing C P.L P.n P.m P.relation P.M P.N
+        (Sum.inl U)) :=
+    @Algebra.TensorProduct.instCommRing P.N.1 k
+      (Pic0FiniteStageFinalModelRing C P.L P.n P.m P.relation P.M P.N (Sum.inl U))
+      (inferInstance : CommSemiring P.N.1)
+      (inferInstance : CommRing k)
+      (inferInstance : Algebra P.N.1 k)
+      (inferInstance : CommSemiring
+        (Pic0FiniteStageFinalModelRing C P.L P.n P.m P.relation P.M P.N (Sum.inl U)))
+      (pic0FiniteStageFinalModelRingAlgebra C P.L P.n P.m P.relation P.M P.N
+        (Sum.inl U))
+  letI : CommSemiring
+      (k ⊗[P.N.1] Pic0FiniteStageFinalModelRing C P.L P.n P.m P.relation P.M P.N
+        (Sum.inl U)) :=
+    (inferInstance : CommRing
+      (k ⊗[P.N.1] Pic0FiniteStageFinalModelRing C P.L P.n P.m P.relation P.M P.N
+        (Sum.inl U))).toCommSemiring
+  letI : Semiring
+      (k ⊗[P.N.1] Pic0FiniteStageFinalModelRing C P.L P.n P.m P.relation P.M P.N
+        (Sum.inl U)) :=
+    (inferInstance : CommSemiring
+      (k ⊗[P.N.1] Pic0FiniteStageFinalModelRing C P.L P.n P.m P.relation P.M P.N
+        (Sum.inl U))).toSemiring
+  letI : Algebra k
+      (k ⊗[P.N.1] Pic0FiniteStageFinalModelRing C P.L P.n P.m P.relation P.M P.N
+        (Sum.inl U)) :=
+    pic0FiniteStageFinalScalarExtensionAlgebra C P.L P.n P.m P.relation P.M P.N
+      (Sum.inl U)
+  exact pullbackSymmetry _ _ ≪≫
+      pullbackSpecIso P.N.1 k
+        (Pic0FiniteStageChartBaseChangeRing
+          C P.L P.n P.m P.relation P.M P.N U) ≪≫
+      Scheme.Spec.mapIso
+        (pic0FiniteStageFinalBaseChangeEquiv
+          C P.L P.n P.m P.relation P.e P.M P.N
+            (Sum.inl U)).symm.toRingEquiv.toCommRingCatIso.op ≪≫
+      U.1.2.isoSpec.symm
 
 end Pic0FiniteStageGluePackage
 
