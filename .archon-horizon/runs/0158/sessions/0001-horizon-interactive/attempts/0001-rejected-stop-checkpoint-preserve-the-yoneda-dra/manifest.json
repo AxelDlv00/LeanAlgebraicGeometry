@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "rejected",
+  "reason": "Rejected stop checkpoint: preserve the Yoneda draft before final kernel-checked commit.",
+  "created_at": "2026-08-24T15:25:23.747271+00:00",
+  "files": [
+    {
+      "path": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageUniversalYoneda.lean",
+      "artifact": "files/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageUniversalYoneda.lean",
+      "bytes": 2977,
+      "lines": 82
+    }
+  ],
+  "diagnostics": ""
+}

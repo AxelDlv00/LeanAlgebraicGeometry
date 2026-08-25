@@ -1,0 +1,83 @@
+---
+author: sync
+content_type: definition
+created: '2026-08-25T10:27:23'
+decl: AlgebraicGeometry.pic0FiniteStageTransportedMapRestrictScalars
+file: AlgebraicJacobian/Picard/Pic0FiniteStageFinalBaseChange.lean
+generated: lean
+lean_status: lean_ok
+title: AlgebraicGeometry.pic0FiniteStageTransportedMapRestrictScalars
+type: lean
+updated: '2026-08-25T10:27:23'
+---
+noncomputable def pic0FiniteStageTransportedMapRestrictScalars
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (e : forall j,
+      k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j) ≃ₐ[k]
+        Pic0FiniteStageRing C j)
+    (q : Pic0FiniteStageMapIndex C) :
+    @AlgHom L.1
+      (k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1
+        (n (Pic0FiniteStageMapSource C q))
+        (m (Pic0FiniteStageMapSource C q))
+        (relation (Pic0FiniteStageMapSource C q)))
+      (k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1
+        (n (Pic0FiniteStageMapTarget C q))
+        (m (Pic0FiniteStageMapTarget C q))
+        (relation (Pic0FiniteStageMapTarget C q)))
+      (inferInstance : CommSemiring L.1)
+      (pic0FiniteStageModelAmbientSemiring C L n m relation
+        (Pic0FiniteStageMapSource C q))
+      (pic0FiniteStageModelAmbientSemiring C L n m relation
+        (Pic0FiniteStageMapTarget C q))
+      (pic0FiniteStageModelAmbientAlgebra C L n m relation
+        (Pic0FiniteStageMapSource C q))
+      (pic0FiniteStageModelAmbientAlgebra C L n m relation
+        (Pic0FiniteStageMapTarget C q)) := by
+  letI : Algebra k
+      (k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1
+        (n (Pic0FiniteStageMapSource C q))
+        (m (Pic0FiniteStageMapSource C q))
+        (relation (Pic0FiniteStageMapSource C q))) :=
+    pic0FiniteStageModelAmbientKAlgebra C L n m relation
+      (Pic0FiniteStageMapSource C q)
+  letI : Algebra k
+      (k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1
+        (n (Pic0FiniteStageMapTarget C q))
+        (m (Pic0FiniteStageMapTarget C q))
+        (relation (Pic0FiniteStageMapTarget C q))) :=
+    pic0FiniteStageModelAmbientKAlgebra C L n m relation
+      (Pic0FiniteStageMapTarget C q)
+  exact @AlgHom.restrictScalars
+    L.1 k
+      (k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1
+        (n (Pic0FiniteStageMapSource C q))
+        (m (Pic0FiniteStageMapSource C q))
+        (relation (Pic0FiniteStageMapSource C q)))
+      (k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1
+        (n (Pic0FiniteStageMapTarget C q))
+        (m (Pic0FiniteStageMapTarget C q))
+        (relation (Pic0FiniteStageMapTarget C q)))
+      (inferInstance : CommSemiring L.1)
+      (inferInstance : CommSemiring k)
+      (pic0FiniteStageModelAmbientSemiring C L n m relation
+        (Pic0FiniteStageMapSource C q))
+      (pic0FiniteStageModelAmbientSemiring C L n m relation
+        (Pic0FiniteStageMapTarget C q))
+      (inferInstance : Algebra L.1 k)
+      (pic0FiniteStageModelAmbientKAlgebra C L n m relation
+        (Pic0FiniteStageMapSource C q))
+      (pic0FiniteStageModelAmbientKAlgebra C L n m relation
+        (Pic0FiniteStageMapTarget C q))
+      (pic0FiniteStageModelAmbientAlgebra C L n m relation
+        (Pic0FiniteStageMapSource C q))
+      (pic0FiniteStageModelAmbientAlgebra C L n m relation
+        (Pic0FiniteStageMapTarget C q))
+      (pic0FiniteStageModelAmbientTower C L n m relation
+        (Pic0FiniteStageMapSource C q))
+      (pic0FiniteStageModelAmbientTower C L n m relation
+        (Pic0FiniteStageMapTarget C q))
+      (pic0FiniteStageTransportedMap C L n m relation e q)

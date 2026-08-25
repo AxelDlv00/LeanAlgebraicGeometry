@@ -18164,7 +18164,7 @@
   ],
   "meta": {
     "engine": "hgraph",
-    "entry": "MainProjects/Algebraic-Jacobian-Challenge/blueprint/src/web.tex",
+    "entry": "/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge/blueprint/src/web.tex",
     "macros": {},
     "states": {
       "blocked": 250,

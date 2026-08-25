@@ -5,3 +5,5 @@
 {"at": "2026-08-23T12:19:17.624863+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
 {"at": "2026-08-23T14:55:00.788148+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
 {"at": "2026-08-24T14:54:43.394189+00:00", "actor": "human", "field": "status", "from": "running", "to": "blocked", "note": ""}
+{"at": "2026-08-25T02:17:07.473432+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "objective updated"}
+{"at": "2026-08-25T02:29:15.308232+00:00", "actor": "human", "field": "status", "from": "blocked", "to": "queued", "note": ""}
