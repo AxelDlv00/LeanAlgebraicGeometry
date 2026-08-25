@@ -304,7 +304,7 @@ private theorem overlapBaseChangeIso_hom_comp_isoSpec_inv
         ((pic0FiniteStageAffineOverlap C U V).2.isoSpec.inv ≫
           (pic0FiniteStageAffineOverlap C U V).1.ι) := by
   simp only [overlapBaseChangeIso, overlapRingBaseChangeIso,
-    affineBaseChangeIso, Iso.trans_hom,
+    overlapFinalBaseChangeEquiv, affineBaseChangeIso, Iso.trans_hom,
     Iso.symm_hom, Category.assoc]
 
 set_option synthInstance.maxHeartbeats 3200000 in
