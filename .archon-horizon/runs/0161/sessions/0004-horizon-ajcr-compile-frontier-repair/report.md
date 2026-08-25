@@ -20,3 +20,5 @@ Split the atlas projection and transport in `overlapBaseChangeIso_hom_atlas_f_ι
 ## Workspace hygiene
 
 After the authored commits, the remaining modified ledger paths are concurrent Horizon synchronization (blueprint, events, inbox, search, and hgraph state); they are outside this task and were not staged. This session's saved attempts and narrow-check records are staged separately below; locks, notify caches, logs, and other writers' state remain untouched.
+
+The remaining target-named untracked snapshots under `runs/0161/sessions/0002-...` belong to the prior session and were not restaged. Ignored transcript/usage files and the live run marker are runtime state, not source changes.
