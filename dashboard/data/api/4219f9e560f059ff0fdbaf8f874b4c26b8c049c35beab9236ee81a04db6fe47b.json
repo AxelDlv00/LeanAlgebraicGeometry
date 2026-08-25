@@ -1,0 +1,1 @@
+{"path": "AlgebraicJacobian/Picard/_ajcr_scalar_sig_probe.lean", "size": 210, "content": "import AlgebraicJacobian.Picard.Pic0FiniteStageScalarExtendedAtlas\nset_option pp.universes true\nset_option pp.explicit true\nset_option pp.all true\n#check @AlgebraicGeometry.pic0FiniteStageRestrictionBaseChange\n"}
