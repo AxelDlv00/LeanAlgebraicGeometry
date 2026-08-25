@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.pic0FiniteStageModelRingCommRing
 type: lean
-updated: '2026-08-25T10:27:55'
+updated: '2026-08-25T10:30:05'
 ---
 @[reducible] noncomputable instance pic0FiniteStageModelRingCommRing
     {F : Type u} [Field F] [Algebra F k]

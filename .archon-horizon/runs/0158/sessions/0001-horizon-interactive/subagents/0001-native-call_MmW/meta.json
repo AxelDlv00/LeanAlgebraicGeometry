@@ -5,11 +5,13 @@
   "parent_subagent_id": null,
   "report_ref": null,
   "role": "subagent",
-  "status": "running",
+  "status": "interrupted",
   "summary": "",
   "usage": {
     "cost_usd": null,
     "tokens_in": 0,
     "tokens_out": 0
-  }
+  },
+  "ended_at": "2026-08-25T03:15:08+00:00",
+  "interrupt_reason": "process-marker-reaped"
 }
