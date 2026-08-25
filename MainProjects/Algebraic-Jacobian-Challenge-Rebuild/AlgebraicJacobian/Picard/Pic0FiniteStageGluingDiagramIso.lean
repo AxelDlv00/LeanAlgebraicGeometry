@@ -83,9 +83,23 @@ private noncomputable def restrictionBaseChangeAlgHomCanonical
       (pic0FiniteStageFinalModelRingAlgebra C P.L P.n P.m P.relation P.M P.N
         (Sum.inl U))
       (pic0FiniteStageOverlapBaseChangeRingAlgebra C P.L P.n P.m P.relation P.M P.N U V) := by
-  exact AlgebraicJacobian.scalarExtensionMapOfAlgHom
-    (R := P.M.1) (K := P.N.1)
+  exact pic0FiniteStageModelScalarExtensionMap
+    C P.L P.n P.m P.relation P.M P.N (Sum.inl U) (Sum.inr (U, V))
     (P.mapM (Sum.inl (Sum.inl (U, V))))
+
+set_option synthInstance.maxHeartbeats 3200000 in
+-- Normalize the raw glue leg once so downstream spectrum compositions use the
+-- same tensor-product witnesses as the affine comparison APIs.
+set_option maxHeartbeats 12800000 in
+private theorem glueData_f_canonical
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U V : Pic0FiniteStageChartIndex C) :
+    P.glueData.f U V =
+      Spec.map (CommRingCat.ofHom
+        (restrictionBaseChangeAlgHomCanonical C P U V).toRingHom) := by
+  rw [glueData_f C P U V]
+  congr 1
 
 set_option synthInstance.maxHeartbeats 3200000 in
 -- The composite retains the package's dependent finite-subextension towers.
@@ -101,7 +115,7 @@ theorem glueData_f_comp_inclusion_comp_gluedMap
         (algebraMap P.N.1
           (Pic0FiniteStageOverlapBaseChangeRing
             C P.L P.n P.m P.relation P.M P.N U V))) := by
-  rw [glueData_f C P U V, glueData_ι_gluedMap C P U]
+  rw [glueData_f_canonical C P U V, glueData_ι_gluedMap C P U]
   exact specMap_algHom_comp_algebraMap
     (restrictionBaseChangeAlgHomCanonical C P U V)
 
