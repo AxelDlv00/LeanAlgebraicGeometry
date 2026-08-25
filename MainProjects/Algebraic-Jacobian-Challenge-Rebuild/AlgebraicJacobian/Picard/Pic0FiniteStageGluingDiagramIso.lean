@@ -66,6 +66,27 @@ variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
 
 namespace Pic0FiniteStageGluePackage
 
+-- Pin the scalar-extension map to the same ring structures used by the affine
+-- spectrum APIs.  The generic tensor map otherwise carries a distinct `Semiring`
+-- witness through `CommRingCat.ofHom`, which makes this dependent application costly.
+private noncomputable def restrictionBaseChangeAlgHomCanonical
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U V : Pic0FiniteStageChartIndex C) :
+    @AlgHom P.N.1
+      (Pic0FiniteStageChartBaseChangeRing C P.L P.n P.m P.relation P.M P.N U)
+      (Pic0FiniteStageOverlapBaseChangeRing C P.L P.n P.m P.relation P.M P.N U V)
+      (inferInstance : CommSemiring P.N.1)
+      (pic0FiniteStageFinalModelRingCommRing C P.L P.n P.m P.relation P.M P.N
+        (Sum.inl U)).toSemiring
+      (pic0FiniteStageOverlapBaseChangeRingCommRing C P.L P.n P.m P.relation P.M P.N U V).toSemiring
+      (pic0FiniteStageFinalModelRingAlgebra C P.L P.n P.m P.relation P.M P.N
+        (Sum.inl U))
+      (pic0FiniteStageOverlapBaseChangeRingAlgebra C P.L P.n P.m P.relation P.M P.N U V) := by
+  exact AlgebraicJacobian.scalarExtensionMapOfAlgHom
+    (R := P.M.1) (K := P.N.1)
+    (P.mapM (Sum.inl (Sum.inl (U, V))))
+
 set_option synthInstance.maxHeartbeats 3200000 in
 -- The composite retains the package's dependent finite-subextension towers.
 set_option maxHeartbeats 12800000 in
@@ -82,7 +103,7 @@ theorem glueData_f_comp_inclusion_comp_gluedMap
             C P.L P.n P.m P.relation P.M P.N U V))) := by
   rw [glueData_f C P U V, glueData_ι_gluedMap C P U]
   exact specMap_algHom_comp_algebraMap
-    (restrictionBaseChangeAlgHom C P U V)
+    (restrictionBaseChangeAlgHomCanonical C P U V)
 
 /-- The spectrum of the exact left restriction, followed by the chart's affine
 identification, is the affine-overlap identification. -/
