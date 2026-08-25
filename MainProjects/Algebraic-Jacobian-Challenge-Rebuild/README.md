@@ -126,6 +126,12 @@ committed binder-free producer and the same-carrier capstone.
 `Pic0FiniteStageUniversalClass.lean` is committed in `7fabbbdedd` and remains a consumed
 universal-class prerequisite, not a `RepresentableBy` producer.
 
+The matrix above is a historical acceptance snapshot.  Since that measurement, issue #2's
+finite-stage review branch has rooted `Pic0FiniteStageGluedComparison` and its overlap chain in
+`Pic0CriticalPath`; the older missing-`GluePackage.olean` observation should not be read as the
+current root status.  The current branch still does not provide the binder-free representability
+producer listed above.
+
 ## Sources
 
 The shared workspace-root [`references/`](../../references/) library (indexed by
