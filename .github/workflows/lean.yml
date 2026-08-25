@@ -14,7 +14,9 @@ jobs:
   lake-build:
     name: lake-build
     runs-on: ubuntu-latest
-    timeout-minutes: 360
+    # The cache-disabled bootstrap path builds more than 1,100 modules and has
+    # exceeded GitHub's six-hour default; later runs restore the bounded caches.
+    timeout-minutes: 720
     steps:
       - uses: actions/checkout@v4
 
