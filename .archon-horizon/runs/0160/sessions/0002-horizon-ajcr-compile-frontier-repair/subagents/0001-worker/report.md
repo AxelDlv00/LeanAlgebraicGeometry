@@ -1,0 +1,5 @@
+Read-only investigation complete; no source edits remain.
+
+The blocker is concentrated at `Pic0FiniteStageGluingDiagramIso.lean:276-287`. The helper is only categorical reassociation, but its `simp only` unfolds the dependent `overlapFinalBaseChangeEquiv`, whose underlying `pic0FiniteStageFinalBaseChangeEquiv` carries the large tensor-instance body (`Pic0FiniteStageFinalBaseChange.lean:862-963`). The smallest patch to try is removing `overlapFinalBaseChangeEquiv` from the simp set and relying on definitional matching. If that fails, use a category-generic cached Iso-trans reassociation lemma and apply it after unfolding only the two overlap iso definitions.
+
+Prior commit `249c47d5b2` already performed the first projection split; `a58a86aca1` normalized overlap tensor ring instances but does not affect this proof. Narrow checks could not elaborate probes because current caches lack `Pic0FiniteStageChartBaseChange.olean` and `Pic0FiniteStageFinalBaseChange.olean`; each failed in about 1.1s with ~820MB RSS.

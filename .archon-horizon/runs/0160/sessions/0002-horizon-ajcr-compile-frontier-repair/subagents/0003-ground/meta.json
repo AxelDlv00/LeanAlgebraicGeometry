@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Mencius",
+  "agent_path": "/root/ajcr_ground",
+  "agent_role": "ground",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "ground",
+  "native_subagent_id": "01a036f1-9845-7b11-87f1-4ecbe3e99265",
+  "ok": true,
+  "parent_session": "0002-horizon-ajcr-compile-frontier-repair",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "ground",
+  "summary": "Review complete.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 703305,
+    "tokens_out": 4945
+  }
+}
