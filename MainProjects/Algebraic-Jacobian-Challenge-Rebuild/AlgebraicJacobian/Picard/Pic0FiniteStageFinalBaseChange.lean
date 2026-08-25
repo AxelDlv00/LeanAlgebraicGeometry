@@ -41,6 +41,52 @@ noncomputable abbrev Pic0FiniteStageFinalModelRing
     (j : Pic0FiniteStageRingIndex C) : Type u :=
   N.1 ⊗[M.1] Pic0FiniteStageModelRing C L n m relation M j
 
+/-
+The relation-algebra quotient has a generic `Algebra` instance, but letting
+typeclass search rediscover it through a dependent `FinSubext` carrier can loop
+on the quotient's `Module` parent.  Keep the quotient carriers canonical at
+this boundary so every tensor instance below sees the same structures.
+-/
+@[reducible] noncomputable def pic0FiniteStageRelationAlgebraCommRing
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (j : Pic0FiniteStageRingIndex C) :
+    CommRing (DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j)) :=
+  Ideal.Quotient.commRing (Ideal.span (Set.range (relation j)))
+
+@[reducible] noncomputable def pic0FiniteStageRelationAlgebraSemiring
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (j : Pic0FiniteStageRingIndex C) :
+    Semiring (DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j)) :=
+  (pic0FiniteStageRelationAlgebraCommRing C L n m relation j).toSemiring
+
+@[reducible] noncomputable def pic0FiniteStageRelationAlgebraAlgebra
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (j : Pic0FiniteStageRingIndex C) :
+    Algebra L.1 (DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j)) :=
+  Ideal.instAlgebraQuotient L.1 (Ideal.span (Set.range (relation j)))
+
+@[reducible] noncomputable def pic0FiniteStageRelationAlgebraModule
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (j : Pic0FiniteStageRingIndex C) :
+    Module L.1 (DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j)) :=
+  (pic0FiniteStageRelationAlgebraAlgebra C L n m relation j).toModule
+
+attribute [local instance] pic0FiniteStageRelationAlgebraCommRing
+  pic0FiniteStageRelationAlgebraSemiring pic0FiniteStageRelationAlgebraAlgebra
+  pic0FiniteStageRelationAlgebraModule
+
 /-!
 The nested tensor aliases above hide the carrier instances that `cancelBaseChange`
 needs.  Keep the witnesses named and local to this module, mirroring the explicit
@@ -56,9 +102,17 @@ overlap instances in `Pic0FiniteStageGluePackage`.
     CommRing (Pic0FiniteStageModelRing C L n m relation M j) := by
   dsimp only [Pic0FiniteStageModelRing]
   letI : Algebra M.1 (Pic0FiniteStageModelRing C L n m relation M j) :=
-    Algebra.TensorProduct.leftAlgebra
-      (R := L.1) (S := M.1) (A := M.1)
-      (B := DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j))
+    @Algebra.TensorProduct.leftAlgebra
+      L.1 M.1 M.1
+      (DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j))
+      (inferInstance : CommSemiring L.1)
+      (inferInstance : Semiring M.1)
+      (inferInstance : Algebra L.1 M.1)
+      (pic0FiniteStageRelationAlgebraSemiring C L n m relation j)
+      (pic0FiniteStageRelationAlgebraAlgebra C L n m relation j)
+      (inferInstance : CommSemiring M.1)
+      (inferInstance : Algebra M.1 M.1)
+      (inferInstance : SMulCommClass L.1 M.1 M.1)
   exact Algebra.TensorProduct.instCommRing
 
 @[reducible] noncomputable instance pic0FiniteStageModelRingAlgebra
@@ -70,9 +124,17 @@ overlap instances in `Pic0FiniteStageGluePackage`.
     (j : Pic0FiniteStageRingIndex C) :
     Algebra M.1 (Pic0FiniteStageModelRing C L n m relation M j) := by
   dsimp only [Pic0FiniteStageModelRing]
-  exact Algebra.TensorProduct.leftAlgebra
-    (R := L.1) (S := M.1) (A := M.1)
-    (B := DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j))
+  exact @Algebra.TensorProduct.leftAlgebra
+    L.1 M.1 M.1
+    (DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j))
+    (inferInstance : CommSemiring L.1)
+    (inferInstance : Semiring M.1)
+    (inferInstance : Algebra L.1 M.1)
+    (pic0FiniteStageRelationAlgebraSemiring C L n m relation j)
+    (pic0FiniteStageRelationAlgebraAlgebra C L n m relation j)
+    (inferInstance : CommSemiring M.1)
+    (inferInstance : Algebra M.1 M.1)
+    (inferInstance : SMulCommClass L.1 M.1 M.1)
 
 @[reducible] noncomputable instance pic0FiniteStageFinalModelRingCommRing
     {F : Type u} [Field F] [Algebra F k]
@@ -85,9 +147,17 @@ overlap instances in `Pic0FiniteStageGluePackage`.
     CommRing (Pic0FiniteStageFinalModelRing C L n m relation M N j) := by
   dsimp only [Pic0FiniteStageFinalModelRing]
   letI : Algebra M.1 (Pic0FiniteStageModelRing C L n m relation M j) :=
-    Algebra.TensorProduct.leftAlgebra
-      (R := L.1) (S := M.1) (A := M.1)
-      (B := DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j))
+    @Algebra.TensorProduct.leftAlgebra
+      L.1 M.1 M.1
+      (DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j))
+      (inferInstance : CommSemiring L.1)
+      (inferInstance : Semiring M.1)
+      (inferInstance : Algebra L.1 M.1)
+      (pic0FiniteStageRelationAlgebraSemiring C L n m relation j)
+      (pic0FiniteStageRelationAlgebraAlgebra C L n m relation j)
+      (inferInstance : CommSemiring M.1)
+      (inferInstance : Algebra M.1 M.1)
+      (inferInstance : SMulCommClass L.1 M.1 M.1)
   letI : CommRing (Pic0FiniteStageModelRing C L n m relation M j) :=
     pic0FiniteStageModelRingCommRing C L n m relation M j
   letI : CommSemiring (Pic0FiniteStageModelRing C L n m relation M j) :=
@@ -122,12 +192,27 @@ overlap instances in `Pic0FiniteStageGluePackage`.
     Algebra N.1 (Pic0FiniteStageFinalModelRing C L n m relation M N j) := by
   dsimp only [Pic0FiniteStageFinalModelRing]
   letI : Algebra M.1 (Pic0FiniteStageModelRing C L n m relation M j) :=
-    Algebra.TensorProduct.leftAlgebra
-      (R := L.1) (S := M.1) (A := M.1)
-      (B := DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j))
-  exact Algebra.TensorProduct.leftAlgebra
-    (R := M.1) (S := N.1) (A := N.1)
-    (B := Pic0FiniteStageModelRing C L n m relation M j)
+    @Algebra.TensorProduct.leftAlgebra
+      L.1 M.1 M.1
+      (DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j))
+      (inferInstance : CommSemiring L.1)
+      (inferInstance : Semiring M.1)
+      (inferInstance : Algebra L.1 M.1)
+      (pic0FiniteStageRelationAlgebraSemiring C L n m relation j)
+      (pic0FiniteStageRelationAlgebraAlgebra C L n m relation j)
+      (inferInstance : CommSemiring M.1)
+      (inferInstance : Algebra M.1 M.1)
+      (inferInstance : SMulCommClass L.1 M.1 M.1)
+  exact @Algebra.TensorProduct.leftAlgebra
+    M.1 N.1 N.1 (Pic0FiniteStageModelRing C L n m relation M j)
+    (inferInstance : CommSemiring M.1)
+    (inferInstance : Semiring N.1)
+    (inferInstance : Algebra M.1 N.1)
+    (pic0FiniteStageModelRingCommRing C L n m relation M j).toSemiring
+    (pic0FiniteStageModelRingAlgebra C L n m relation M j)
+    (inferInstance : CommSemiring N.1)
+    (inferInstance : Algebra N.1 N.1)
+    (inferInstance : SMulCommClass M.1 N.1 N.1)
 
 attribute [instance 2000] pic0FiniteStageFinalModelRingAlgebra
 
@@ -144,12 +229,57 @@ attribute [instance 2000] pic0FiniteStageFinalModelRingAlgebra
     (inferInstance : CommSemiring L.1)
     (inferInstance : Semiring M.1)
     (inferInstance : Algebra L.1 M.1)
-    (inferInstance : Semiring
-      (DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j)))
-    (inferInstance : Algebra L.1
-      (DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j)))
+    (pic0FiniteStageRelationAlgebraSemiring C L n m relation j)
+    (pic0FiniteStageRelationAlgebraAlgebra C L n m relation j)
 
 attribute [local instance] pic0FiniteStageModelRingBaseAlgebra
+
+private theorem pic0FiniteStageFinSubext_smul_assoc
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k) (M : DatG0.FinSubext L.1 k)
+    (x : L.1) (y a : M.1) :
+    (x • y) • a = x • (y • a) := by
+  simp only [Algebra.smul_def, Algebra.algebraMap_self_apply, map_mul]
+  rw [mul_assoc]
+
+@[reducible] noncomputable def pic0FiniteStageModelRingDistribMulActionM
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (M : DatG0.FinSubext L.1 k)
+    (j : Pic0FiniteStageRingIndex C) :
+    DistribMulAction M.1 (Pic0FiniteStageModelRing C L n m relation M j) :=
+  @TensorProduct.leftDistribMulAction
+    L.1 M.1
+    (inferInstance : CommSemiring L.1)
+    (inferInstance : Monoid M.1)
+    M.1 (DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j))
+    (inferInstance : AddCommMonoid M.1)
+    (inferInstance : AddCommMonoid
+      (DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j)))
+    (inferInstance : DistribMulAction M.1 M.1)
+    (inferInstance : Module L.1 M.1)
+    (pic0FiniteStageRelationAlgebraModule C L n m relation j)
+    (inferInstance : SMulCommClass L.1 M.1 M.1)
+
+@[reducible] noncomputable def pic0FiniteStageModelRingDistribMulActionL
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (M : DatG0.FinSubext L.1 k)
+    (j : Pic0FiniteStageRingIndex C) :
+    DistribMulAction L.1 (Pic0FiniteStageModelRing C L n m relation M j) :=
+  @TensorProduct.instDistribMulAction
+    L.1
+    (inferInstance : CommSemiring L.1)
+    M.1 (DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j))
+    (inferInstance : AddCommMonoid M.1)
+    (inferInstance : AddCommMonoid
+      (DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j)))
+    (inferInstance : Module L.1 M.1)
+    (pic0FiniteStageRelationAlgebraModule C L n m relation j)
 
 set_option synthInstance.maxHeartbeats 400000 in
 -- Register the fixed tensor actions so dependent `restrictScalars` declarations see this tower.
@@ -166,17 +296,25 @@ noncomputable instance pic0FiniteStageModelRingIsScalarTower
     pic0FiniteStageModelRingBaseAlgebra C L n m relation M j
   letI : Algebra M.1 (Pic0FiniteStageModelRing C L n m relation M j) :=
     pic0FiniteStageModelRingAlgebra C L n m relation M j
+  letI : DistribMulAction M.1 (Pic0FiniteStageModelRing C L n m relation M j) :=
+    pic0FiniteStageModelRingDistribMulActionM C L n m relation M j
   letI : SMul M.1 (Pic0FiniteStageModelRing C L n m relation M j) :=
-    TensorProduct.leftHasSMul
+    (pic0FiniteStageModelRingDistribMulActionM C L n m relation M j).toDistribSMul.toSMul
+  letI : DistribMulAction L.1 (Pic0FiniteStageModelRing C L n m relation M j) :=
+    pic0FiniteStageModelRingDistribMulActionL C L n m relation M j
   letI : SMul L.1 (Pic0FiniteStageModelRing C L n m relation M j) :=
-    TensorProduct.instSMul
+    (pic0FiniteStageModelRingDistribMulActionL C L n m relation M j).toDistribSMul.toSMul
   refine { smul_assoc := ?_ }
   intro x y z
   induction z using TensorProduct.induction_on with
-  | zero => simp
-  | add z₁ z₂ ih₁ ih₂ => simp [ih₁, ih₂]
+  | zero => simp only [smul_zero]
+  | add z₁ z₂ ih₁ ih₂ => rw [smul_add, smul_add, ih₁, ih₂, smul_add]
   | tmul a b =>
-      simp [Algebra.smul_def, TensorProduct.smul_tmul', ← mul_assoc]
+      rw [TensorProduct.smul_tmul' (x • y) a b]
+      rw [TensorProduct.smul_tmul' y a b]
+      rw [TensorProduct.smul_tmul' x (y • a) b]
+      exact congrArg (fun q : M.1 => q ⊗ₜ[L.1] b)
+        (pic0FiniteStageFinSubext_smul_assoc L M x y a)
 
 attribute [instance 100000] pic0FiniteStageModelRingIsScalarTower
 
@@ -201,7 +339,7 @@ noncomputable abbrev pic0FiniteStageModelRingSMulM
     (M : DatG0.FinSubext L.1 k)
     (j : Pic0FiniteStageRingIndex C) :
     SMul M.1 (Pic0FiniteStageModelRing C L n m relation M j) :=
-  TensorProduct.leftHasSMul
+  (pic0FiniteStageModelRingDistribMulActionM C L n m relation M j).toDistribSMul.toSMul
 
 noncomputable abbrev pic0FiniteStageModelRingSMulL
     {F : Type u} [Field F] [Algebra F k]
@@ -211,7 +349,7 @@ noncomputable abbrev pic0FiniteStageModelRingSMulL
     (M : DatG0.FinSubext L.1 k)
     (j : Pic0FiniteStageRingIndex C) :
     SMul L.1 (Pic0FiniteStageModelRing C L n m relation M j) :=
-  TensorProduct.instSMul
+  (pic0FiniteStageModelRingDistribMulActionL C L n m relation M j).toDistribSMul.toSMul
 
 @[reducible] noncomputable def pic0FiniteStageModelRingTowerExplicit
     {F : Type u} [Field F] [Algebra F k]
@@ -231,15 +369,23 @@ noncomputable abbrev pic0FiniteStageModelRingSMulL
   letI : SMul L.1 M.1 := pic0FiniteStageModelRingSMulLM L M
   letI : SMul M.1 (Pic0FiniteStageModelRing C L n m relation M j) :=
     pic0FiniteStageModelRingSMulM C L n m relation M j
+  letI : DistribMulAction M.1 (Pic0FiniteStageModelRing C L n m relation M j) :=
+    pic0FiniteStageModelRingDistribMulActionM C L n m relation M j
   letI : SMul L.1 (Pic0FiniteStageModelRing C L n m relation M j) :=
     pic0FiniteStageModelRingSMulL C L n m relation M j
+  letI : DistribMulAction L.1 (Pic0FiniteStageModelRing C L n m relation M j) :=
+    pic0FiniteStageModelRingDistribMulActionL C L n m relation M j
   refine { smul_assoc := ?_ }
   intro x y z
   induction z using TensorProduct.induction_on with
-  | zero => simp
-  | add z1 z2 ih1 ih2 => simp [ih1, ih2]
+  | zero => simp only [smul_zero]
+  | add z1 z2 ih1 ih2 => rw [smul_add, smul_add, ih1, ih2, smul_add]
   | tmul a b =>
-      simp [Algebra.smul_def, TensorProduct.smul_tmul', ← mul_assoc]
+      rw [TensorProduct.smul_tmul' (x • y) a b]
+      rw [TensorProduct.smul_tmul' y a b]
+      rw [TensorProduct.smul_tmul' x (y • a) b]
+      exact congrArg (fun q : M.1 => q ⊗ₜ[L.1] b)
+        (pic0FiniteStageFinSubext_smul_assoc L M x y a)
 
 noncomputable def pic0FiniteStageModelRestrictScalarsExplicit
     {F : Type u} [Field F] [Algebra F k]
