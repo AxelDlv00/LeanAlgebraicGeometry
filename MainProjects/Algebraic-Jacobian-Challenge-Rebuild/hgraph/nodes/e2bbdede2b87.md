@@ -5,10 +5,10 @@ created: '2026-08-25T10:27:23'
 decl: AlgebraicGeometry.Pic0FiniteStageGluePackage.pic0FiniteStageOverlapBaseChangeRingAlgebra
 file: AlgebraicJacobian/Picard/Pic0FiniteStageGluePackage.lean
 generated: lean
-lean_status: sorry
+lean_status: lean_ok
 title: AlgebraicGeometry.Pic0FiniteStageGluePackage.pic0FiniteStageOverlapBaseChangeRingAlgebra
 type: lean
-updated: '2026-08-25T10:27:23'
+updated: '2026-08-25T11:44:32'
 ---
 noncomputable instance pic0FiniteStageOverlapBaseChangeRingAlgebra
     {F : Type u} [Field F] [Algebra F k]
@@ -32,34 +32,3 @@ noncomputable instance pic0FiniteStageOverlapBaseChangeRingAlgebra
 
 set_option maxHeartbeats 25600000 in
 -- The package projections retain the dependent tensor-product instances of the constructor.
-/-- The scheme glue datum computed from an inhabited finite-stage package. -/
-noncomputable opaque glueData
-    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F) : Scheme.GlueData := by sorry
-/- ORIGINAL glueData BODY (temporary isolation probe)
-  letI : Algebra.IsAlgebraic P.L.1 k := by infer_instance
-  letI : Algebra.IsAlgebraic P.M.1 k := by infer_instance
-  refine pic0FiniteStageAffineRingGlueData
-    C P.L P.n P.m P.relation P.M P.mapM P.N
-      P.e P.hmapM ?_ P.thetaN P.hthetaN
-  intro i
-  letI : Semiring
-      (Pic0FiniteStageModelRing C P.L P.n P.m P.relation P.M
-        (Pic0FiniteStageMapSource C (Sum.inl i))) :=
-    (inferInstance : CommRing
-      (Pic0FiniteStageModelRing C P.L P.n P.m P.relation P.M
-        (Pic0FiniteStageMapSource C (Sum.inl i)))).toSemiring
-  letI : Semiring
-      (Pic0FiniteStageModelRing C P.L P.n P.m P.relation P.M
-        (Pic0FiniteStageMapTarget C (Sum.inl i))) :=
-    (inferInstance : CommRing
-      (Pic0FiniteStageModelRing C P.L P.n P.m P.relation P.M
-        (Pic0FiniteStageMapTarget C (Sum.inl i)))).toSemiring
-  simpa only [pic0FiniteStageModelMapToRingHom] using P.hOpen i
--/
-
-end Pic0FiniteStageGluePackage
-
-set_option synthInstance.maxHeartbeats 400000 in
--- Selecting both finite families exposes many dependent quotient-algebra instances.
-set_option maxHeartbeats 12800000 in
