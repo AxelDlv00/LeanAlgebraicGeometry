@@ -57,9 +57,71 @@ theorem toSigma_ofSigma (P : RepresenterData C F) :
   cases P
   rfl
 
+/-- The universal property in consumer form, without exposing the packaged
+`RepresentableBy` proof. -/
+def homEquiv (P : RepresenterData C F) {X : C} :
+    (X ⟶ P.object) ≃ F.obj (Opposite.op X) :=
+  P.representation.homEquiv
+
+/-- The universal element associated to the pinned representing object. -/
+def universalElement (P : RepresenterData C F) : F.obj (Opposite.op P.object) :=
+  P.homEquiv (𝟙 P.object)
+
+/-- Naturality of the packaged universal property. -/
+theorem homEquiv_comp (P : RepresenterData C F) {X Y : C}
+    (f : X ⟶ Y) (g : Y ⟶ P.object) :
+    P.homEquiv (f ≫ g) = F.map f.op (P.homEquiv g) :=
+  P.representation.homEquiv_comp f g
+
+/-- Every represented element is obtained by pulling back the universal element. -/
+theorem homEquiv_eq (P : RepresenterData C F) {X : C} (f : X ⟶ P.object) :
+    P.homEquiv f = F.map f.op P.universalElement :=
+  P.representation.homEquiv_eq f
+
+@[simp]
+theorem homEquiv_id (P : RepresenterData C F) :
+    P.homEquiv (𝟙 P.object) = P.universalElement :=
+  rfl
+
 /-- The canonical comparison between two chosen representing objects. -/
 noncomputable def uniqueIso (P Q : RepresenterData C F) : P.object ≅ Q.object :=
   P.representation.uniqueUpToIso Q.representation
+
+/-- The canonical comparison intertwines the two packaged universal properties. -/
+theorem homEquiv_uniqueIso_hom (P Q : RepresenterData C F)
+    {X : C} (f : X ⟶ P.object) :
+    Q.homEquiv (f ≫ (P.uniqueIso Q).hom) = P.homEquiv f := by
+  change Q.representation.homEquiv (f ≫ (P.uniqueIso Q).hom) =
+    P.representation.homEquiv f
+  have h : (P.uniqueIso Q).hom =
+      Q.representation.homEquiv.symm
+        (P.representation.homEquiv (𝟙 P.object)) := rfl
+  rw [h, Functor.RepresentableBy.comp_homEquiv_symm, Equiv.apply_symm_apply]
+  rw [← P.representation.homEquiv_comp f (𝟙 P.object), Category.comp_id]
+
+/-- The inverse canonical comparison intertwines the universal properties in
+the opposite direction. -/
+theorem homEquiv_uniqueIso_inv (P Q : RepresenterData C F)
+    {X : C} (f : X ⟶ Q.object) :
+    P.homEquiv (f ≫ (P.uniqueIso Q).inv) = Q.homEquiv f := by
+  rw [← P.homEquiv_uniqueIso_hom Q (f ≫ (P.uniqueIso Q).inv)]
+  simp
+
+/-- Canonical comparisons between three pinned representers satisfy the
+cocycle law. -/
+theorem uniqueIso_trans (P Q R : RepresenterData C F) :
+    P.uniqueIso R = P.uniqueIso Q ≪≫ Q.uniqueIso R := by
+  apply Iso.ext
+  apply R.homEquiv.injective
+  calc
+    R.homEquiv (P.uniqueIso R).hom = P.homEquiv (𝟙 P.object) := by
+      simpa using P.homEquiv_uniqueIso_hom R (𝟙 P.object)
+    _ = Q.homEquiv (P.uniqueIso Q).hom := by
+      symm
+      simpa using P.homEquiv_uniqueIso_hom Q (𝟙 P.object)
+    _ = R.homEquiv ((P.uniqueIso Q).hom ≫ (Q.uniqueIso R).hom) := by
+      symm
+      exact Q.homEquiv_uniqueIso_hom R (P.uniqueIso Q).hom
 
 /-- Transport a representation along a specified object isomorphism. -/
 def transport (P : RepresenterData C F) {Y : C} (e : Y ≅ P.object) :
@@ -75,6 +137,43 @@ def transportData (P : RepresenterData C F) {Y : C} (e : Y ≅ P.object) :
 theorem transportData_object (P : RepresenterData C F) {Y : C} (e : Y ≅ P.object) :
     (P.transportData e).object = Y :=
   rfl
+
+@[simp]
+theorem transportData_homEquiv (P : RepresenterData C F)
+    {Y X : C} (e : Y ≅ P.object) (f : X ⟶ Y) :
+    (P.transportData e).homEquiv f = P.homEquiv (f ≫ e.hom) :=
+  rfl
+
+@[simp]
+theorem transportData_homEquiv_symm (P : RepresenterData C F)
+    {Y X : C} (e : Y ≅ P.object) (x : F.obj (Opposite.op X)) :
+    (P.transportData e).homEquiv.symm x = P.homEquiv.symm x ≫ e.inv :=
+  rfl
+
+/-- Repackage `P` on the object selected by `Q`, using the canonical comparison
+rather than a fresh choice. -/
+noncomputable def transportTo (P Q : RepresenterData C F) : RepresenterData C F :=
+  P.transportData (P.uniqueIso Q).symm
+
+@[simp]
+theorem transportTo_object (P Q : RepresenterData C F) :
+    (P.transportTo Q).object = Q.object :=
+  rfl
+
+/-- Canonical transport to `Q.object` has the same universal property as `Q`. -/
+@[simp]
+theorem transportTo_homEquiv (P Q : RepresenterData C F)
+    {X : C} (f : X ⟶ Q.object) :
+    (P.transportTo Q).homEquiv f = Q.homEquiv f :=
+  P.homEquiv_uniqueIso_inv Q f
+
+@[simp]
+theorem transportTo_homEquiv_symm (P Q : RepresenterData C F)
+    {X : C} (x : F.obj (Opposite.op X)) :
+    (P.transportTo Q).homEquiv.symm x = Q.homEquiv.symm x := by
+  apply (P.transportTo Q).homEquiv.injective
+  rw [Equiv.apply_symm_apply, P.transportTo_homEquiv Q,
+    Equiv.apply_symm_apply]
 
 end RepresenterData
 
