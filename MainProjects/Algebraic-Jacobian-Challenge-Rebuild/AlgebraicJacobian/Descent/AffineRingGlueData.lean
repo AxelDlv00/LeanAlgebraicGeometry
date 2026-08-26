@@ -385,6 +385,66 @@ abbrev over (P : AffineRingGluePresentation R) : Over (Spec (CommRingCat.of R)) 
 
 end AffineRingGluePresentation
 
+namespace AffineRingGluePackage
+
+/-! Upgrade the legacy map-only package to the pinned presentation API. -/
+noncomputable def toPresentation
+    (tau : ∀ i j, B j i →ₐ[R] B i j)
+    (theta : ∀ i j k,
+      AffineTripleTensor A B j k i →ₐ[R] AffineTripleTensor A B i j k)
+    (fId : ∀ i, IsIso (affineRestriction A B i i))
+    (fOpen : ∀ i j, IsOpenImmersion (affineRestriction A B i j))
+    (tauId : ∀ i, tau i i = AlgHom.id R (B i i))
+    (thetaFac : ∀ i j k,
+      (theta i j k).comp (affineTensorIncludeRight A B j k i) =
+        (affineTensorIncludeLeft A B i j k).comp (tau i j))
+    (thetaCocycle : ∀ i j k,
+      (theta i j k).comp ((theta j k i).comp (theta k i j)) =
+        AlgHom.id R (AffineTripleTensor A B i j k))
+    (P : AffineRingGluePackage A B tau theta fId fOpen tauId thetaFac thetaCocycle) :
+    AffineRingGluePresentation R :=
+  { glueData := affineRingGlueData A B tau theta fId fOpen tauId thetaFac thetaCocycle
+    mapData := P.mapData }
+
+@[simp]
+theorem toPresentation_glueData
+    (tau : ∀ i j, B j i →ₐ[R] B i j)
+    (theta : ∀ i j k,
+      AffineTripleTensor A B j k i →ₐ[R] AffineTripleTensor A B i j k)
+    (fId : ∀ i, IsIso (affineRestriction A B i i))
+    (fOpen : ∀ i j, IsOpenImmersion (affineRestriction A B i j))
+    (tauId : ∀ i, tau i i = AlgHom.id R (B i i))
+    (thetaFac : ∀ i j k,
+      (theta i j k).comp (affineTensorIncludeRight A B j k i) =
+        (affineTensorIncludeLeft A B i j k).comp (tau i j))
+    (thetaCocycle : ∀ i j k,
+      (theta i j k).comp ((theta j k i).comp (theta k i j)) =
+        AlgHom.id R (AffineTripleTensor A B i j k))
+    (P : AffineRingGluePackage A B tau theta fId fOpen tauId thetaFac thetaCocycle) :
+    (toPresentation A B tau theta fId fOpen tauId thetaFac thetaCocycle P).glueData =
+      affineRingGlueData A B tau theta fId fOpen tauId thetaFac thetaCocycle :=
+  rfl
+
+@[simp]
+theorem toPresentation_mapData
+    (tau : ∀ i j, B j i →ₐ[R] B i j)
+    (theta : ∀ i j k,
+      AffineTripleTensor A B j k i →ₐ[R] AffineTripleTensor A B i j k)
+    (fId : ∀ i, IsIso (affineRestriction A B i i))
+    (fOpen : ∀ i j, IsOpenImmersion (affineRestriction A B i j))
+    (tauId : ∀ i, tau i i = AlgHom.id R (B i i))
+    (thetaFac : ∀ i j k,
+      (theta i j k).comp (affineTensorIncludeRight A B j k i) =
+        (affineTensorIncludeLeft A B i j k).comp (tau i j))
+    (thetaCocycle : ∀ i j k,
+      (theta i j k).comp ((theta j k i).comp (theta k i j)) =
+        AlgHom.id R (AffineTripleTensor A B i j k))
+    (P : AffineRingGluePackage A B tau theta fId fOpen tauId thetaFac thetaCocycle) :
+    (toPresentation A B tau theta fId fOpen tauId thetaFac thetaCocycle P).mapData = P.mapData :=
+  rfl
+
+end AffineRingGluePackage
+
 /-- Build a pinned presentation from affine ring charts and the coherence certificates. -/
 noncomputable def affineRingGluePresentation
     (A : J → Type u) (B : J → J → Type u)
