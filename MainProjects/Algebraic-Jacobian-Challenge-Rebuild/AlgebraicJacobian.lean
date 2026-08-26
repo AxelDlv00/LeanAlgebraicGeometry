@@ -815,6 +815,7 @@ import AlgebraicJacobian.Picard.Pic0RankOneIsoBaseChange
 import AlgebraicJacobian.Picard.Pic0CriticalPath
 import AlgebraicJacobian.Picard.Pic0FiniteStageGeometry
 import AlgebraicJacobian.Picard.Pic0FiniteStageStableAffineCover
+import AlgebraicJacobian.Descent.FiniteStageApi
 
 /-!
 # AlgebraicJacobian — library root

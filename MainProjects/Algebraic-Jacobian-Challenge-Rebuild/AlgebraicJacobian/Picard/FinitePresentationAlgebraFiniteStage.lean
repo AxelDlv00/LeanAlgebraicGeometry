@@ -27,6 +27,31 @@ abbrev FiniteRelationAlgebra (R : Type u) [CommRing R] (n m : ℕ)
     (relation : Fin m → MvPolynomial (Fin n) R) : Type u :=
   MvPolynomial (Fin n) R ⧸ Ideal.span (Set.range relation)
 
+/-!
+The quotient carrier is dependent on the relation family.  The generic quotient
+instances are mathematically sufficient, but typeclass search can fail to recover
+the `Module` parent through a `FinSubext` projection.  These named canonical
+witnesses keep the carrier structures identical in the presentation theorem and
+in its consumers.
+-/
+@[reducible] noncomputable instance finiteRelationAlgebraCommRing
+    (R : Type u) [CommRing R] (n m : ℕ)
+    (relation : Fin m → MvPolynomial (Fin n) R) :
+    CommRing (FiniteRelationAlgebra R n m relation) :=
+  Ideal.Quotient.commRing (Ideal.span (Set.range relation))
+
+@[reducible] noncomputable instance finiteRelationAlgebraAlgebra
+    (R : Type u) [CommRing R] (n m : ℕ)
+    (relation : Fin m → MvPolynomial (Fin n) R) :
+    Algebra R (FiniteRelationAlgebra R n m relation) :=
+  Ideal.instAlgebraQuotient R (Ideal.span (Set.range relation))
+
+@[reducible] noncomputable instance finiteRelationAlgebraModule
+    (R : Type u) [CommRing R] (n m : ℕ)
+    (relation : Fin m → MvPolynomial (Fin n) R) :
+    Module R (FiniteRelationAlgebra R n m relation) :=
+  (finiteRelationAlgebraAlgebra R n m relation).toModule
+
 instance finitePresentation_finiteRelationAlgebra
     (R : Type u) [CommRing R] (n m : ℕ)
     (relation : Fin m → MvPolynomial (Fin n) R) :

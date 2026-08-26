@@ -222,6 +222,7 @@ structure FiniteStageModelFamilyData
 
 namespace FiniteStageModelFamilyData
 
+set_option synthInstance.maxHeartbeats 200000 in
 /-- Adapter from the raw simultaneous finite-presentation existential. -/
 theorem exists_of_raw
     {F K : Type u} [Field F] [Field K] [Algebra F K]
