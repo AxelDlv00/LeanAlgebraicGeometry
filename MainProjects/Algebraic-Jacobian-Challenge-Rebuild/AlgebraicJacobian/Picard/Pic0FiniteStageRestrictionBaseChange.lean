@@ -4,7 +4,6 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.Pic0FiniteStageAffineBaseChange
-import AlgebraicJacobian.Picard.Pic0FiniteStageGluingBaseChange
 
 /-!
 # Naturality of finite-stage Picard restrictions after base change
