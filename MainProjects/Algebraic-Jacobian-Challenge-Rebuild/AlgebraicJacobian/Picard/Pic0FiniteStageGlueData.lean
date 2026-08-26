@@ -154,10 +154,10 @@ theorem pic0FiniteStageAffineTripleTransition_cocycle
         ((pic0FiniteStageTransportedTripleTransitionOfModels
           C L n m relation e M mapM hmapM p.1 p.2.1 p.2.2).restrictScalars
             M.1).comp
-          (Algebra.TensorProduct.map N.1.val
-            (AlgHom.id M.1
-              (Pic0FiniteStageTripleTransitionModelSource
-                C L n m relation M mapM p))))
+      (Algebra.TensorProduct.map N.1.val
+          (AlgHom.id M.1
+            (Pic0FiniteStageTripleTransitionModelSource
+              C L n m relation M mapM p))))
     (U V W : Pic0FiniteStageChartIndex C) :
     (pic0FiniteStageAffineTripleTransition
         C L n m relation M mapM N thetaN U V W).comp
@@ -168,6 +168,11 @@ theorem pic0FiniteStageAffineTripleTransition_cocycle
       AlgHom.id N.1
         (Pic0FiniteStageTripleBaseChangeRing
           C L n m relation M mapM N U V W) := by
+  -- Elaborate the dependent comparison family once.  Reconstructing it in both
+  -- the compatibility square and the cocycle call makes instance search revisit
+  -- the same nested tensor towers and was the observed timeout hotspot.
+  let Q := pic0FiniteStageTripleModelComparisonFamily
+    C L n m relation e M mapM hmapM
   have hthetaN' : forall p : Pic0FiniteStageTripleTransitionIndex C,
       (Algebra.TensorProduct.map N.1.val
           (AlgHom.id M.1
@@ -175,8 +180,7 @@ theorem pic0FiniteStageAffineTripleTransition_cocycle
               C L n m relation M mapM p))).comp
           ((thetaN p).restrictScalars M.1) =
         ((pic0FiniteStageTransportedTripleTransition C L n m relation M mapM
-          (pic0FiniteStageTripleModelComparisonFamily
-            C L n m relation e M mapM hmapM) p).restrictScalars M.1).comp
+          Q p).restrictScalars M.1).comp
           (Algebra.TensorProduct.map N.1.val
             (AlgHom.id M.1
               (Pic0FiniteStageTripleTransitionModelSource
@@ -185,8 +189,7 @@ theorem pic0FiniteStageAffineTripleTransition_cocycle
     simpa only [pic0FiniteStageTransportedTripleTransitionOfModels] using hthetaN p
   have hcycle := pic0FiniteStageTripleTransitionModel_cocycle
     C L n m relation M mapM
-      (pic0FiniteStageTripleModelComparisonFamily
-        C L n m relation e M mapM hmapM)
+      Q
       N thetaN hthetaN' U V W
   exact conjugateAlgHom_threeCycle
     (pic0FiniteStageTripleBaseChangeEquiv
