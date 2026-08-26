@@ -111,6 +111,60 @@ theorem exists_finSubext_tensorProduct_preimage_finite
   let L : FinSubext F K := ⟨L0, inferInstance⟩
   exact ⟨L, xA0, hxA0⟩
 
+/-! ## Bundled finite-stage presentations -/
+
+/-- A finite family of tensors presented at one pinned finite subextension.
+
+The older existential theorem returns the stage, the family of preimages, and the
+compatibility equations as three nested witnesses.  This record keeps the stage and
+the map that transports it to `K` together, so consumers do not have to reconstruct
+the map (or unfold a `LinearMap.rTensor`) at every use site.
+-/
+structure FinSubextTensorPreimageFamilyData
+    (F K B : Type u) [Field F] [Field K] [Algebra F K]
+    [CommRing B] [Algebra F B] {ι : Type*}
+    (x : ι → K ⊗[F] B) where
+  stage : FinSubext F K
+  map : stage.1 ⊗[F] B →ₐ[F] K ⊗[F] B
+  map_spec : map = Algebra.TensorProduct.map stage.1.val (AlgHom.id F B)
+  preimage : ∀ i, stage.1 ⊗[F] B
+  map_eq : ∀ i, map (preimage i) = x i
+
+namespace FinSubextTensorPreimageFamilyData
+
+/-- Package the raw common-stage finite-family theorem. -/
+theorem of_raw
+    {F K B : Type u} [Field F] [Field K] [Algebra F K]
+    [Algebra.IsAlgebraic F K] [CommRing B] [Algebra F B]
+    {ι : Type*} [Finite ι] (x : ι → K ⊗[F] B) :
+    Nonempty (FinSubextTensorPreimageFamilyData F K B x) := by
+  obtain ⟨L, xL, hxL⟩ :=
+    exists_finSubext_tensorProduct_preimage_finite (x := x)
+  let ιL : L.1 ⊗[F] B →ₐ[F] K ⊗[F] B :=
+    Algebra.TensorProduct.map L.1.val (AlgHom.id F B)
+  refine ⟨{
+    stage := L
+    map := ιL
+    map_spec := by rfl
+    preimage := xL
+    map_eq := ?_ }⟩
+  intro i
+  change LinearMap.rTensor B L.1.val.toLinearMap (xL i) = x i
+  exact hxL i
+
+@[simp]
+theorem map_apply_tmul
+    {F K B : Type u} [Field F] [Field K] [Algebra F K]
+    [CommRing B] [Algebra F B]
+    {ι : Type*} {x : ι → K ⊗[F] B}
+    (D : FinSubextTensorPreimageFamilyData F K B x)
+    (a : D.stage.1) (b : B) :
+    D.map (a ⊗ₜ[F] b) = (a : K) ⊗ₜ[F] b := by
+  rw [D.map_spec]
+  rfl
+
+end FinSubextTensorPreimageFamilyData
+
 /-- The canonical map from a finite tensor stage into the tensor product over `K` is injective.
 This is flatness of `B` over the field `F`, expressed through the tensor-product algebra map. -/
 theorem tensorProduct_map_finSubext_injective
