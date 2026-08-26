@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleModelComparison
+import AlgebraicJacobian.Descent.TensorProductPushoutData
 
 /-!
 # Base change of the final finite-stage Picard atlas
@@ -53,7 +54,7 @@ this boundary so every tensor instance below sees the same structures.
     (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
     (j : Pic0FiniteStageRingIndex C) :
     CommRing (DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j)) :=
-  Ideal.Quotient.commRing (Ideal.span (Set.range (relation j)))
+  DatG0.finiteRelationAlgebraCommRing L.1 (n j) (m j) (relation j)
 
 @[reducible] noncomputable def pic0FiniteStageRelationAlgebraSemiring
     {F : Type u} [Field F] [Algebra F k]
@@ -62,7 +63,7 @@ this boundary so every tensor instance below sees the same structures.
     (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
     (j : Pic0FiniteStageRingIndex C) :
     Semiring (DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j)) :=
-  (pic0FiniteStageRelationAlgebraCommRing C L n m relation j).toSemiring
+  (DatG0.finiteRelationAlgebraCommRing L.1 (n j) (m j) (relation j)).toSemiring
 
 @[reducible] noncomputable def pic0FiniteStageRelationAlgebraAlgebra
     {F : Type u} [Field F] [Algebra F k]
@@ -71,7 +72,7 @@ this boundary so every tensor instance below sees the same structures.
     (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
     (j : Pic0FiniteStageRingIndex C) :
     Algebra L.1 (DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j)) :=
-  Ideal.instAlgebraQuotient L.1 (Ideal.span (Set.range (relation j)))
+  DatG0.finiteRelationAlgebraAlgebra L.1 (n j) (m j) (relation j)
 
 @[reducible] noncomputable def pic0FiniteStageRelationAlgebraModule
     {F : Type u} [Field F] [Algebra F k]
@@ -80,7 +81,7 @@ this boundary so every tensor instance below sees the same structures.
     (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
     (j : Pic0FiniteStageRingIndex C) :
     Module L.1 (DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j)) :=
-  (pic0FiniteStageRelationAlgebraAlgebra C L n m relation j).toModule
+  (DatG0.finiteRelationAlgebraAlgebra L.1 (n j) (m j) (relation j)).toModule
 
 attribute [local instance] pic0FiniteStageRelationAlgebraCommRing
   pic0FiniteStageRelationAlgebraSemiring pic0FiniteStageRelationAlgebraAlgebra
