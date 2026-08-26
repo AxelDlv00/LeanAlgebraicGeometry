@@ -59,7 +59,14 @@ theorem exists_finSubext_tensorProduct_algHom
           (A := L.1) (B := A) x))
     simp only [Algebra.TensorProduct.includeLeft_apply, phiL, AlgHom.liftEquiv_tmul,
       Algebra.TensorProduct.map_tmul, map_one]
-    simpa [Algebra.smul_def] using (phi.commutes (x : K)).symm
+    have hunit :
+        (Algebra.TensorProduct.map L.1.val (AlgHom.id F B)) (fL 1) = 1 := by
+      calc
+        (Algebra.TensorProduct.map L.1.val (AlgHom.id F B)) (fL 1) =
+            (Algebra.TensorProduct.map L.1.val (AlgHom.id F B)) 1 :=
+          congrArg (Algebra.TensorProduct.map L.1.val (AlgHom.id F B)) fL.map_one'
+        _ = 1 := map_one _
+    simpa [Algebra.smul_def, hunit] using (phi.commutes (x : K)).symm
   · change (Algebra.TensorProduct.map L.1.val (AlgHom.id F B))
         (phiL (Algebra.TensorProduct.includeRight (R := F) (A := L.1) (B := A) x)) =
       phi ((Algebra.TensorProduct.map L.1.val (AlgHom.id F A))
@@ -67,6 +74,70 @@ theorem exists_finSubext_tensorProduct_algHom
     simp only [Algebra.TensorProduct.includeRight_apply, phiL, AlgHom.liftEquiv_tmul,
       Algebra.TensorProduct.map_tmul, AlgHom.id_apply, map_one, one_smul]
     exact hbase x
+
+/-! ## Bundled finite families of descended algebra maps -/
+
+/-- A finite-stage family of algebra maps together with one pinned common stage.
+
+The raw finite-family theorem below exposes the stage and every descended map through
+nested existential witnesses.  This record keeps those dependent choices together and
+stores the base-change equations at the same stage, so consumers do not have to reopen
+the existential or reconstruct the family of maps.
+-/
+structure FinSubextTensorAlgHomFamilyData
+    {F K : Type u} [Field F] [Field K] [Algebra F K]
+    [Algebra.IsAlgebraic F K] {ι : Type*}
+    (A B : ι → Type u) [∀ i, CommRing (A i)] [∀ i, Algebra F (A i)]
+    [∀ i, CommRing (B i)] [∀ i, Algebra F (B i)]
+    (phi : ∀ i, K ⊗[F] A i →ₐ[K] K ⊗[F] B i) where
+  stage : FinSubext F K
+  map : ∀ i, stage.1 ⊗[F] A i →ₐ[stage.1] stage.1 ⊗[F] B i
+  commutes : ∀ i,
+    (Algebra.TensorProduct.map stage.1.val (AlgHom.id F (B i))).comp
+        ((map i).restrictScalars F) =
+      ((phi i).restrictScalars F).comp
+        (Algebra.TensorProduct.map stage.1.val (AlgHom.id F (A i)))
+
+namespace FinSubextTensorAlgHomFamilyData
+
+/-- Package a raw common-stage finite-family witness. -/
+theorem of_raw
+    {F K : Type u} [Field F] [Field K] [Algebra F K]
+    [Algebra.IsAlgebraic F K] {ι : Type*}
+    (A B : ι → Type u) [∀ i, CommRing (A i)] [∀ i, Algebra F (A i)]
+    [∀ i, CommRing (B i)] [∀ i, Algebra F (B i)]
+    (phi : ∀ i, K ⊗[F] A i →ₐ[K] K ⊗[F] B i)
+    (h : ∃ L : FinSubext F K, ∀ i,
+      ∃ phiL : L.1 ⊗[F] A i →ₐ[L.1] L.1 ⊗[F] B i,
+        (Algebra.TensorProduct.map L.1.val (AlgHom.id F (B i))).comp
+            (phiL.restrictScalars F) =
+          ((phi i).restrictScalars F).comp
+            (Algebra.TensorProduct.map L.1.val (AlgHom.id F (A i)))) :
+    Nonempty (FinSubextTensorAlgHomFamilyData A B phi) := by
+  obtain ⟨L, hL⟩ := h
+  choose phiL hphiL using hL
+  exact ⟨{
+    stage := L
+    map := phiL
+    commutes := hphiL }⟩
+
+/-- Recover the legacy nested-existential shape from a packaged family. -/
+theorem exists_raw
+    {F K : Type u} [Field F] [Field K] [Algebra F K]
+    [Algebra.IsAlgebraic F K] {ι : Type*}
+    (A B : ι → Type u) [∀ i, CommRing (A i)] [∀ i, Algebra F (A i)]
+    [∀ i, CommRing (B i)] [∀ i, Algebra F (B i)]
+    (phi : ∀ i, K ⊗[F] A i →ₐ[K] K ⊗[F] B i)
+    (D : FinSubextTensorAlgHomFamilyData A B phi) :
+    ∃ L : FinSubext F K, ∀ i,
+      ∃ phiL : L.1 ⊗[F] A i →ₐ[L.1] L.1 ⊗[F] B i,
+        (Algebra.TensorProduct.map L.1.val (AlgHom.id F (B i))).comp
+            (phiL.restrictScalars F) =
+          ((phi i).restrictScalars F).comp
+            (Algebra.TensorProduct.map L.1.val (AlgHom.id F (A i))) := by
+  exact ⟨D.stage, fun i => ⟨D.map i, D.commutes i⟩⟩
+
+end FinSubextTensorAlgHomFamilyData
 
 /-- Two algebra maps at a finite tensor stage are equal if their composites with the
 canonical map to the ambient algebraic extension are equal.  This is the equation-reflection
@@ -203,7 +274,15 @@ theorem exists_finSubext_tensorProduct_algHom_finite
           (A := L.1) (B := A i) x))
     simp only [Algebra.TensorProduct.includeLeft_apply, phiL, AlgHom.liftEquiv_tmul,
       Algebra.TensorProduct.map_tmul, map_one]
-    simpa [Algebra.smul_def] using ((phi i).commutes (x : K)).symm
+    have hunit :
+        (Algebra.TensorProduct.map L.1.val (AlgHom.id F (B i)))
+            (fL 1) = 1 := by
+      calc
+        (Algebra.TensorProduct.map L.1.val (AlgHom.id F (B i))) (fL 1) =
+            (Algebra.TensorProduct.map L.1.val (AlgHom.id F (B i))) 1 :=
+          congrArg (Algebra.TensorProduct.map L.1.val (AlgHom.id F (B i))) fL.map_one'
+        _ = 1 := map_one _
+    simpa [Algebra.smul_def, hunit] using ((phi i).commutes (x : K)).symm
   · change (Algebra.TensorProduct.map L.1.val (AlgHom.id F (B i)))
         (phiL (Algebra.TensorProduct.includeRight (R := F) (A := L.1) (B := A i) x)) =
       phi i ((Algebra.TensorProduct.map L.1.val (AlgHom.id F (A i)))
@@ -214,5 +293,20 @@ theorem exists_finSubext_tensorProduct_algHom_finite
     rw [← AlgHom.comp_apply, hmap]
     exact DFunLike.congr_fun (hphiLi i)
       (Algebra.TensorProduct.includeRight (R := F) (A := (Li i).1) (B := A i) x)
+
+namespace FinSubextTensorAlgHomFamilyData
+
+/-- Package the finite-family descent theorem. -/
+theorem of_exists
+    {F K : Type u} [Field F] [Field K] [Algebra F K]
+    [Algebra.IsAlgebraic F K] {ι : Type*} [Finite ι]
+    (A B : ι → Type u) [∀ i, CommRing (A i)] [∀ i, Algebra F (A i)]
+    [∀ i, Algebra.FiniteType F (A i)]
+    [∀ i, CommRing (B i)] [∀ i, Algebra F (B i)]
+    (phi : ∀ i, K ⊗[F] A i →ₐ[K] K ⊗[F] B i) :
+    Nonempty (FinSubextTensorAlgHomFamilyData A B phi) :=
+  of_raw A B phi (exists_finSubext_tensorProduct_algHom_finite A B phi)
+
+end FinSubextTensorAlgHomFamilyData
 
 end AlgebraicGeometry.DatG0
