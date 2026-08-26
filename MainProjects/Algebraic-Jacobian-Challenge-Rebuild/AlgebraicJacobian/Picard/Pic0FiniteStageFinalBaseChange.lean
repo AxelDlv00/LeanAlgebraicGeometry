@@ -3,7 +3,6 @@ Copyright (c) 2026 The AlgebraicJacobian Contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
-import AlgebraicJacobian.Picard.Pic0FiniteStageGluedOver
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleModelComparison
 
 /-!
@@ -214,7 +213,10 @@ overlap instances in `Pic0FiniteStageGluePackage`.
     (inferInstance : Algebra N.1 N.1)
     (inferInstance : SMulCommClass M.1 N.1 N.1)
 
-attribute [instance 2000] pic0FiniteStageFinalModelRingAlgebra
+-- Keep this witness inside the module.  Exporting it at priority 2000 makes every
+-- downstream tensor expression pick this proof term, even when a packaged stage
+-- supplies a different (but propositionally equal) algebra structure.
+attribute [local instance] pic0FiniteStageFinalModelRingAlgebra
 
 @[reducible] noncomputable def pic0FiniteStageModelRingBaseAlgebra
     {F : Type u} [Field F] [Algebra F k]
@@ -316,7 +318,9 @@ noncomputable instance pic0FiniteStageModelRingIsScalarTower
       exact congrArg (fun q : M.1 => q ⊗ₜ[L.1] b)
         (pic0FiniteStageFinSubext_smul_assoc L M x y a)
 
-attribute [instance 100000] pic0FiniteStageModelRingIsScalarTower
+-- The tower is a declaration-local implementation detail; callers should use the
+-- pinned stage data APIs instead of inheriting a global high-priority witness.
+attribute [local instance] pic0FiniteStageModelRingIsScalarTower
 
 /-
 The source maps below are indexed by `q`, so elaborating `restrictScalars` directly

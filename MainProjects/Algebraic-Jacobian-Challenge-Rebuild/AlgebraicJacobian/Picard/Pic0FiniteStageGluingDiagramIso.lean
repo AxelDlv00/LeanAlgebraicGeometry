@@ -38,7 +38,6 @@ theorem specMap_algHom_comp_algebraMap
   ext x
   exact r.commutes x
 
-@[reassoc]
 theorem pullback_congrHom_hom_fst
     {X Y Z : Scheme.{u}} {f₁ f₂ : X ⟶ Z} {g₁ g₂ : Y ⟶ Z}
     (h₁ : f₁ = f₂) (h₂ : g₁ = g₂)
@@ -49,7 +48,15 @@ theorem pullback_congrHom_hom_fst
   subst g₂
   simp [pullback.congrHom, pullback.map]
 
-@[reassoc]
+theorem pullback_congrHom_hom_fst_assoc
+    {X Y Z W : Scheme.{u}} {f₁ f₂ : X ⟶ Z} {g₁ g₂ : Y ⟶ Z}
+    (h₁ : f₁ = f₂) (h₂ : g₁ = g₂)
+    [HasPullback f₁ g₁] [HasPullback f₂ g₂]
+    (t : X ⟶ W) :
+    (pullback.congrHom h₁ h₂).hom ≫ pullback.fst f₂ g₂ ≫ t =
+      pullback.fst f₁ g₁ ≫ t := by
+  rw [Category.assoc, pullback_congrHom_hom_fst]
+
 theorem pullback_congrHom_hom_snd
     {X Y Z : Scheme.{u}} {f₁ f₂ : X ⟶ Z} {g₁ g₂ : Y ⟶ Z}
     (h₁ : f₁ = f₂) (h₂ : g₁ = g₂)
@@ -59,6 +66,15 @@ theorem pullback_congrHom_hom_snd
   subst f₂
   subst g₂
   simp [pullback.congrHom, pullback.map]
+
+theorem pullback_congrHom_hom_snd_assoc
+    {X Y Z W : Scheme.{u}} {f₁ f₂ : X ⟶ Z} {g₁ g₂ : Y ⟶ Z}
+    (h₁ : f₁ = f₂) (h₂ : g₁ = g₂)
+    [HasPullback f₁ g₁] [HasPullback f₂ g₂]
+    (t : Y ⟶ W) :
+    (pullback.congrHom h₁ h₂).hom ≫ pullback.snd f₂ g₂ ≫ t =
+      pullback.snd f₁ g₁ ≫ t := by
+  rw [Category.assoc, pullback_congrHom_hom_snd]
 
 variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
 variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
@@ -140,7 +156,6 @@ theorem exactRestrictionAlgHom_fromSpec
 set_option synthInstance.maxHeartbeats 3200000 in
 -- Explicit legs avoid unfolding the package while rewriting gluing projections.
 set_option maxHeartbeats 12800000 in
-@[reassoc]
 theorem restrictionBaseChangeMap_fst
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F)
@@ -167,10 +182,32 @@ theorem restrictionBaseChangeMap_fst
       C P.L P.n P.m P.relation P.M P.N U V)
     (restrictionBaseChangeAlgHom C P U V)
 
+theorem restrictionBaseChangeMap_fst_assoc
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U V : Pic0FiniteStageChartIndex C)
+    {W : Scheme.{u}}
+    (t : _ ⟶ W) :
+    (restrictionBaseChangeMap C P U V ≫
+          pullback.fst
+            (Spec.map (CommRingCat.ofHom
+              (algebraMap P.N.1
+                (Pic0FiniteStageChartBaseChangeRing
+                  C P.L P.n P.m P.relation P.M P.N U))))
+            (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))) ≫ t =
+      (pullback.fst
+          (Spec.map (CommRingCat.ofHom
+            (algebraMap P.N.1
+              (Pic0FiniteStageOverlapBaseChangeRing
+                C P.L P.n P.m P.relation P.M P.N U V))))
+          (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k))) ≫
+        Spec.map (CommRingCat.ofHom
+          (restrictionBaseChangeAlgHom C P U V).toRingHom)) ≫ t := by
+  rw [Category.assoc, restrictionBaseChangeMap_fst]
+
 set_option synthInstance.maxHeartbeats 3200000 in
 -- Explicit legs avoid unfolding the package while rewriting gluing projections.
 set_option maxHeartbeats 12800000 in
-@[reassoc]
 theorem restrictionBaseChangeMap_snd
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F)
@@ -194,6 +231,27 @@ theorem restrictionBaseChangeMap_snd
     (Pic0FiniteStageOverlapBaseChangeRing
       C P.L P.n P.m P.relation P.M P.N U V)
     (restrictionBaseChangeAlgHom C P U V)
+
+theorem restrictionBaseChangeMap_snd_assoc
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U V : Pic0FiniteStageChartIndex C)
+    {W : Scheme.{u}}
+    (t : _ ⟶ W) :
+    (restrictionBaseChangeMap C P U V ≫
+          pullback.snd
+            (Spec.map (CommRingCat.ofHom
+              (algebraMap P.N.1
+                (Pic0FiniteStageChartBaseChangeRing
+                  C P.L P.n P.m P.relation P.M P.N U))))
+            (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))) ≫ t =
+      (pullback.snd
+        (Spec.map (CommRingCat.ofHom
+          (algebraMap P.N.1
+            (Pic0FiniteStageOverlapBaseChangeRing
+              C P.L P.n P.m P.relation P.M P.N U V))))
+        (Spec.map (CommRingCat.ofHom (algebraMap P.N.1 k)))) ≫ t := by
+  rw [Category.assoc, restrictionBaseChangeMap_snd]
 
 set_option synthInstance.maxHeartbeats 3200000 in
 -- The two projections reduce to the specialized flattening identities.
