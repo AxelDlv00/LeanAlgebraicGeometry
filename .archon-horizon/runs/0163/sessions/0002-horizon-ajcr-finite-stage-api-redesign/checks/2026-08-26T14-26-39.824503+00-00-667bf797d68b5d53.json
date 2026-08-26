@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "667bf797d68b5d53",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0FiniteStageTransitionModels.lean"
+  ],
+  "cwd": "MainProjects/Algebraic-Jacobian-Challenge-Rebuild",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.0,
+  "duration_seconds": 114.249,
+  "started_at": "2026-08-26T14:24:45.575893+00:00",
+  "finished_at": "2026-08-26T14:26:39.824503+00:00",
+  "finished_epoch": 1787754399.824503
+}
