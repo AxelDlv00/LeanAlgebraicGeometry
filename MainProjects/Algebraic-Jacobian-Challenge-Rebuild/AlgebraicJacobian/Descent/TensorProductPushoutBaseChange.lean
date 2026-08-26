@@ -423,6 +423,16 @@ abbrev tensorProductPushoutBaseChangeTarget
     (@Algebra.toModule (K ⊗[M] A) (K ⊗[M] B₁) _ _ leftAlgebra)
     (@Algebra.toModule (K ⊗[M] A) (K ⊗[M] B₂) _ _ rightAlgebra)
 
+/-- A pure tensor in an explicitly pinned target carrier. -/
+abbrev tensorProductPushoutBaseChangeTargetTmul
+    (leftAlgebra : Algebra (K ⊗[M] A) (K ⊗[M] B₁))
+    (rightAlgebra : Algebra (K ⊗[M] A) (K ⊗[M] B₂))
+    (x : K ⊗[M] B₁) (y : K ⊗[M] B₂) :
+    tensorProductPushoutBaseChangeTarget leftAlgebra rightAlgebra :=
+  @TensorProduct.tmul (K ⊗[M] A) _ (K ⊗[M] B₁) (K ⊗[M] B₂) _ _
+    (@Algebra.toModule (K ⊗[M] A) (K ⊗[M] B₁) _ _ leftAlgebra)
+    (@Algebra.toModule (K ⊗[M] A) (K ⊗[M] B₂) _ _ rightAlgebra) x y
+
 /-- A scalar-extension pushout equivalence with its two target algebra witnesses pinned.
 
 The witnesses are explicit parameters of the package rather than locally regenerated
@@ -510,6 +520,108 @@ theorem inv_hom
 
 end TensorProductPushoutBaseChangePackage
 
+/-! ## Explicit map data -/
+
+/- The package above stores an equivalence.  This record is the map-level
+interface for clients that need to transport the two directions separately.
+Its target carrier uses the explicit module arguments above, so all four
+fields share one pinned carrier without relying on instance search. -/
+structure TensorProductPushoutBaseChangeMaps
+    (leftAlgebra : Algebra (K ⊗[M] A) (K ⊗[M] B₁))
+    (rightAlgebra : Algebra (K ⊗[M] A) (K ⊗[M] B₂)) where
+  /-- The forward base-change map. -/
+  hom :
+    (K ⊗[M] (B₁ ⊗[A] B₂)) →ₐ[K]
+      tensorProductPushoutBaseChangeTarget leftAlgebra rightAlgebra
+  /-- The inverse base-change map. -/
+  inv :
+    tensorProductPushoutBaseChangeTarget leftAlgebra rightAlgebra →ₐ[K]
+      (K ⊗[M] (B₁ ⊗[A] B₂))
+  /-- The inverse followed by the forward map is the identity on the source. -/
+  left_inv :
+    inv.comp hom = AlgHom.id K (K ⊗[M] (B₁ ⊗[A] B₂))
+  /-- The forward followed by the inverse map is the identity on the target. -/
+  right_inv :
+    hom.comp inv =
+      AlgHom.id K (tensorProductPushoutBaseChangeTarget leftAlgebra rightAlgebra)
+
+namespace TensorProductPushoutBaseChangeMaps
+
+/-- Recover the algebra equivalence represented by explicit maps and inverse laws. -/
+noncomputable def equiv
+    {leftAlgebra : Algebra (K ⊗[M] A) (K ⊗[M] B₁)}
+    {rightAlgebra : Algebra (K ⊗[M] A) (K ⊗[M] B₂)}
+    (P : TensorProductPushoutBaseChangeMaps
+      (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)
+      leftAlgebra rightAlgebra) :
+    (K ⊗[M] (B₁ ⊗[A] B₂)) ≃ₐ[K]
+      tensorProductPushoutBaseChangeTarget leftAlgebra rightAlgebra :=
+  AlgEquiv.ofAlgHom P.hom P.inv P.right_inv P.left_inv
+
+omit [IsScalarTower M A B₂] in
+@[simp]
+theorem left_inv_apply
+    {leftAlgebra : Algebra (K ⊗[M] A) (K ⊗[M] B₁)}
+    {rightAlgebra : Algebra (K ⊗[M] A) (K ⊗[M] B₂)}
+    (P : TensorProductPushoutBaseChangeMaps
+      (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)
+      leftAlgebra rightAlgebra)
+    (x : K ⊗[M] (B₁ ⊗[A] B₂)) :
+    P.inv (P.hom x) = x := by
+  exact DFunLike.congr_fun P.left_inv x
+
+omit [IsScalarTower M A B₂] in
+@[simp]
+theorem right_inv_apply
+    {leftAlgebra : Algebra (K ⊗[M] A) (K ⊗[M] B₁)}
+    {rightAlgebra : Algebra (K ⊗[M] A) (K ⊗[M] B₂)}
+    (P : TensorProductPushoutBaseChangeMaps
+      (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)
+      leftAlgebra rightAlgebra)
+    (x : tensorProductPushoutBaseChangeTarget leftAlgebra rightAlgebra) :
+    P.hom (P.inv x) = x := by
+  exact DFunLike.congr_fun P.right_inv x
+
+end TensorProductPushoutBaseChangeMaps
+
+/-! ### Package adapter -/
+
+/-- View a pinned equivalence package as explicit forward and inverse map data. -/
+noncomputable def TensorProductPushoutBaseChangePackage.toMaps
+    {leftAlgebra : Algebra (K ⊗[M] A) (K ⊗[M] B₁)}
+    {rightAlgebra : Algebra (K ⊗[M] A) (K ⊗[M] B₂)}
+    (P : TensorProductPushoutBaseChangePackage
+      (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)
+      leftAlgebra rightAlgebra) :
+    TensorProductPushoutBaseChangeMaps
+      (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)
+      leftAlgebra rightAlgebra := by
+  refine { hom := P.equivalence.toAlgHom
+           inv := P.equivalence.symm.toAlgHom
+           left_inv := ?_
+           right_inv := ?_ }
+  · apply DFunLike.ext _ _
+    intro x
+    exact P.equivalence.left_inv x
+  · apply DFunLike.ext _ _
+    intro x
+    exact P.equivalence.right_inv x
+
+/-! ### Canonical map data -/
+
+/- These names expose the particular algebra witnesses used by the canonical
+comparison.  Keeping them as reducible definitions lets clients state maps and
+carriers with short, reusable types while retaining definitional transparency. -/
+@[reducible]
+noncomputable def tensorProductPushoutBaseChangeLeftAlgebra :
+    Algebra (K ⊗[M] A) (K ⊗[M] B₁) :=
+  (scalarExtensionMap (M := M) (K := K) (A := A) (B := B₁)).toRingHom.toAlgebra
+
+@[reducible]
+noncomputable def tensorProductPushoutBaseChangeRightAlgebra :
+    Algebra (K ⊗[M] A) (K ⊗[M] B₂) :=
+  (scalarExtensionMap (M := M) (K := K) (A := A) (B := B₂)).toRingHom.toAlgebra
+
 /-- The canonical package associated with the scalar-extension maps in this file. -/
 noncomputable def tensorProductPushoutBaseChangePackage :
     TensorProductPushoutBaseChangePackage
@@ -540,6 +652,59 @@ theorem tensorProductPushoutBaseChangePackage_tmul
       (k ⊗ₜ[M] b₁) ⊗ₜ[K ⊗[M] A] (1 ⊗ₜ[M] b₂) := by
   dsimp only [tensorProductPushoutBaseChangePackage]
   exact tensorProductPushoutBaseChange_tmul k b₁ b₂
+
+/- The canonical maps are now available as one object.  In particular, a
+consumer can carry this value through a larger record instead of reconstructing
+the equivalence (and its target instances) at every use site. -/
+noncomputable def tensorProductPushoutBaseChangeMaps :
+    TensorProductPushoutBaseChangeMaps
+      (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)
+      (tensorProductPushoutBaseChangeLeftAlgebra
+        (M := M) (K := K) (A := A) (B₁ := B₁))
+      (tensorProductPushoutBaseChangeRightAlgebra
+        (M := M) (K := K) (A := A) (B₂ := B₂)) :=
+  TensorProductPushoutBaseChangePackage.toMaps
+    (tensorProductPushoutBaseChangePackage
+      (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂))
+
+@[simp]
+theorem tensorProductPushoutBaseChangeMaps_hom_tmul
+    (k : K) (b₁ : B₁) (b₂ : B₂) :
+    (tensorProductPushoutBaseChangeMaps
+      (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)).hom
+        (k ⊗ₜ[M] (b₁ ⊗ₜ[A] b₂)) =
+      tensorProductPushoutBaseChangeTargetTmul
+        (tensorProductPushoutBaseChangeLeftAlgebra
+          (M := M) (K := K) (A := A) (B₁ := B₁))
+        (tensorProductPushoutBaseChangeRightAlgebra
+          (M := M) (K := K) (A := A) (B₂ := B₂))
+        (k ⊗ₜ[M] b₁) (1 ⊗ₜ[M] b₂) := by
+  change (tensorProductPushoutBaseChangePackage
+      (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)).equivalence
+      (k ⊗ₜ[M] (b₁ ⊗ₜ[A] b₂)) = _
+  exact tensorProductPushoutBaseChangePackage_tmul k b₁ b₂
+
+@[simp]
+theorem tensorProductPushoutBaseChangeMaps_inv_tmul
+    (k₁ k₂ : K) (b₁ : B₁) (b₂ : B₂) :
+    (tensorProductPushoutBaseChangeMaps
+      (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)).inv
+        (tensorProductPushoutBaseChangeTargetTmul
+          (tensorProductPushoutBaseChangeLeftAlgebra
+            (M := M) (K := K) (A := A) (B₁ := B₁))
+          (tensorProductPushoutBaseChangeRightAlgebra
+            (M := M) (K := K) (A := A) (B₂ := B₂))
+          (k₁ ⊗ₜ[M] b₁) (k₂ ⊗ₜ[M] b₂)) =
+      (k₁ * k₂) ⊗ₜ[M] (b₁ ⊗ₜ[A] b₂) := by
+  change (tensorProductPushoutBaseChangePackage
+      (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)).equivalence.symm
+      (tensorProductPushoutBaseChangeTargetTmul
+        (tensorProductPushoutBaseChangeLeftAlgebra
+          (M := M) (K := K) (A := A) (B₁ := B₁))
+        (tensorProductPushoutBaseChangeRightAlgebra
+          (M := M) (K := K) (A := A) (B₂ := B₂))
+        (k₁ ⊗ₜ[M] b₁) (k₂ ⊗ₜ[M] b₂)) = _
+  exact tensorProductPushoutBaseChange_symm_tmul k₁ k₂ b₁ b₂
 
 end PinnedPackage
 
