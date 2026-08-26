@@ -20,6 +20,7 @@ set_option autoImplicit false
 universe u
 
 open CategoryTheory
+open CategoryTheory.Limits
 open AlgebraicGeometry
 
 namespace AlgebraicJacobian
@@ -46,6 +47,39 @@ the chart restrictions. -/
 def ofMap (map : D.glued ⟶ Y) (chartMap : ∀ i : D.J, D.U i ⟶ Y)
     (factor : ∀ i, D.ι i ≫ map = chartMap i) : GluedMapData D Y :=
   ⟨map, chartMap, factor⟩
+
+/-- Glue a compatible family of chart maps into a map out of `D.glued`.
+
+The compatibility equation is stated on the explicit overlap maps in `D`; no pullback or
+other limit instance is inferred by this constructor.  This is the stable counterpart of
+repeating `Multicoequalizer.desc` in each finite-stage consumer. -/
+noncomputable def ofChartMaps
+    (chartMap : ∀ i : D.J, D.U i ⟶ Y)
+    (compatibility : ∀ i j,
+      D.f i j ≫ chartMap i = (D.t i j ≫ D.f j i) ≫ chartMap j) :
+    GluedMapData D Y := by
+  let h : ∀ a : (D.J × D.J),
+      D.diagram.fst a ≫ chartMap a.1 =
+        D.diagram.snd a ≫ chartMap a.2 := by
+    rintro ⟨i, j⟩
+    change D.f i j ≫ chartMap i = (D.t i j ≫ D.f j i) ≫ chartMap j
+    exact compatibility i j
+  let map : D.glued ⟶ Y := Multicoequalizer.desc D.diagram Y chartMap h
+  exact
+    { map := map
+      chartMap := chartMap
+      chartMap_factor := fun i =>
+        Multicoequalizer.π_desc D.diagram Y chartMap h i }
+
+/-- Maps out of a gluing are determined by their restrictions to all charts. -/
+theorem map_ext (P Q : GluedMapData D Y)
+    (h : ∀ i, P.chartMap i = Q.chartMap i) : P.map = Q.map := by
+  apply D.openCover.hom_ext
+  intro i
+  calc
+    D.ι i ≫ P.map = P.chartMap i := P.chartMap_factor i
+    _ = Q.chartMap i := h i
+    _ = D.ι i ≫ Q.map := (Q.chartMap_factor i).symm
 
 /-- Compose an explicit glued map with a map of targets. -/
 def comp {Z : Scheme.{u}} (P : GluedMapData D Y) (f : Y ⟶ Z) :
