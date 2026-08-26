@@ -105,6 +105,66 @@ theorem BasicOpenCocycleDatum.exists_finiteStageData_tensorStage
   dsimp [DatG0.FiniteStageData.ofFinSubext]
   exact hM
 
+/-! ## Stable finite-stage cocycle data
+
+`exists_finiteStageData_tensorStage` is retained for compatibility, but its result still
+contains a chain of local instances.  The record below names the stage, the descended datum,
+and the exact tensor algebra/tower used for the comparison.  Consumers can therefore carry one
+value across later base-change lemmas without reopening the existential or asking typeclass
+search to choose a different action.
+-/
+
+/-- A cocycle datum together with one pinned finite tensor stage over which it descends. -/
+structure FiniteStageCocycleDatum
+    {F K B : Type u} [Field F] [Field K] [Algebra F K]
+    [CommRing B] [Algebra F B]
+    {C : Over (Spec (.of F))} {pi : C.left ⟶ P1 F} [IsAffineHom pi]
+    (D : BasicOpenCocycleDatum C (K ⊗[F] B) pi) where
+  stage : DatG0.FiniteStageData F K
+  datum : BasicOpenCocycleDatum C (stage.stage ⊗[F] B) pi
+  baseChange_eq :
+    letI : Algebra (stage.stage ⊗[F] B) (K ⊗[F] B) :=
+      stage.tensorAlgebra (A := B)
+    letI : IsScalarTower F (stage.stage ⊗[F] B) (K ⊗[F] B) :=
+      stage.tensorTower (A := B)
+    datum.baseChange (B' := K ⊗[F] B) = D
+
+namespace FiniteStageCocycleDatum
+
+/-- The canonical map from the selected finite tensor stage to the ambient tensor product. -/
+abbrev map
+    {F K B : Type u} [Field F] [Field K] [Algebra F K]
+    [CommRing B] [Algebra F B]
+    {C : Over (Spec (.of F))} {pi : C.left ⟶ P1 F} [IsAffineHom pi]
+    {D : BasicOpenCocycleDatum C (K ⊗[F] B) pi}
+    (P : FiniteStageCocycleDatum D) :
+    P.stage.stage ⊗[F] B →ₐ[F] K ⊗[F] B :=
+  P.stage.tensorMap (A := B)
+
+/-- Package the legacy nested existential without changing its selected witnesses. -/
+theorem of_raw
+    {F K B : Type u} [Field F] [Field K] [Algebra F K] [Algebra.IsAlgebraic F K]
+    [CommRing B] [Algebra F B]
+    {C : Over (Spec (.of F))} {pi : C.left ⟶ P1 F} [IsAffineHom pi]
+    (D : BasicOpenCocycleDatum C (K ⊗[F] B) pi) :
+    Nonempty (FiniteStageCocycleDatum D) := by
+  obtain ⟨S, hS⟩ := D.exists_finiteStageData_tensorStage
+  dsimp only at hS
+  obtain ⟨D_M, hD⟩ := hS
+  exact ⟨{ stage := S, datum := D_M, baseChange_eq := hD }⟩
+
+@[simp]
+theorem map_apply_tmul
+    {F K B : Type u} [Field F] [Field K] [Algebra F K]
+    [CommRing B] [Algebra F B]
+    {C : Over (Spec (.of F))} {pi : C.left ⟶ P1 F} [IsAffineHom pi]
+    {D : BasicOpenCocycleDatum C (K ⊗[F] B) pi}
+    (P : FiniteStageCocycleDatum D) (x : P.stage.stage) (b : B) :
+    P.map (x ⊗ₜ[F] b) = (x : K) ⊗ₜ[F] b := by
+  exact P.stage.tensorMap_apply_tmul x b
+
+end FiniteStageCocycleDatum
+
 end
 
 end AlgebraicGeometry
