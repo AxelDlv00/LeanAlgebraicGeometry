@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import Mathlib.CategoryTheory.Limits.Shapes.Pullback.PullbackCone
 import Mathlib.CategoryTheory.Limits.Shapes.Pullback.HasPullback
+import Mathlib.AlgebraicGeometry.Pullbacks
 
 /-!
 # Explicit pullback data for finite-stage constructions
@@ -284,6 +285,40 @@ theorem comparison_naturality
         (Category.assoc _ _ _).symm
 
 end PullbackMapData
+
+open AlgebraicGeometry
+
+/-! ### The canonical pullback underlying a scheme gluing -/
+
+variable {X Y Z : Scheme.{u}} (𝒰 : Scheme.OpenCover X) (f : X ⟶ Z) (g : Y ⟶ Z)
+variable [∀ i, HasPullback (𝒰.f i ≫ f) g]
+
+/-- The pullback presentation supplied by Mathlib's scheme-gluing construction.
+
+`Scheme.Pullback.gluedIsLimit` is the canonical universal-property proof for the glued
+scheme.  Capturing it here prevents downstream code from selecting a fresh `HasPullback`
+witness every time it mentions the same gluing. -/
+noncomputable def schemeGluingPullbackData : PullbackData f g :=
+  { cone := PullbackCone.mk
+      (Scheme.Pullback.p1 𝒰 f g)
+      (Scheme.Pullback.p2 𝒰 f g)
+      (Scheme.Pullback.p_comm 𝒰 f g)
+    isLimit := Scheme.Pullback.gluedIsLimit 𝒰 f g }
+
+@[simp]
+theorem schemeGluingPullbackData_pt :
+    (schemeGluingPullbackData 𝒰 f g).pt = (Scheme.Pullback.gluing 𝒰 f g).glued :=
+  rfl
+
+@[simp]
+theorem schemeGluingPullbackData_fst :
+    (schemeGluingPullbackData 𝒰 f g).fst = Scheme.Pullback.p1 𝒰 f g :=
+  rfl
+
+@[simp]
+theorem schemeGluingPullbackData_snd :
+    (schemeGluingPullbackData 𝒰 f g).snd = Scheme.Pullback.p2 𝒰 f g :=
+  rfl
 
 end
 
