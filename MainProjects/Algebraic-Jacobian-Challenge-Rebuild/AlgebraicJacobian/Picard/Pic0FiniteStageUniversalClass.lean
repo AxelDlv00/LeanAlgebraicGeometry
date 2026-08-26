@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.Pic0FiniteStageOverlapRings
+import AlgebraicJacobian.Descent.RepresenterData
 
 /-!
 # The universal Picard class on the finite affine atlas
@@ -29,11 +30,21 @@ variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
 variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
   [GeometricallyIrreducible C.hom] [IsSepClosed k]
 
+/-- The separably closed representer kept as a named package.
+
+The legacy API returns a dependent sigma; this projection is the migration boundary used by
+the universal-class declarations below.  The package does not select a new representer. -/
+noncomputable def pic0SepClosedRepresenterData :
+    AlgebraicJacobian.RepresenterData
+      (Over (Spec (.of k))) (pic0TypeFunctor C) :=
+  AlgebraicJacobian.RepresenterData.ofSigma
+    (pic0_sepClosed_representableBy (C := C))
+
 /-- The universal degree-zero Picard class pinned by the separably closed
 `RepresentableBy` certificate. -/
 noncomputable def pic0SepClosedUniversalClass :
     pic0Subgroup C (pic0_sepClosed_representableBy (C := C)).1 :=
-  (pic0_sepClosed_representableBy (C := C)).2.homEquiv (𝟙 _)
+  (pic0SepClosedRepresenterData C).representation.homEquiv (𝟙 _)
 
 /-- The restriction of the pinned universal class to one affine chart. -/
 noncomputable def pic0FiniteStageUniversalChartClass

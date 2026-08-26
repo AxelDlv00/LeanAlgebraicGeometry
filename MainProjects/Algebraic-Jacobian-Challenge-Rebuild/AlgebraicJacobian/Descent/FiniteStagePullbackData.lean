@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import Mathlib.CategoryTheory.Limits.Shapes.Pullback.PullbackCone
+import Mathlib.CategoryTheory.Limits.Shapes.Pullback.HasPullback
 
 /-!
 # Explicit pullback data for finite-stage constructions
@@ -41,6 +42,16 @@ their producers rather than silently selecting the ambient `pullback` object.
 structure PullbackData {X Y Z : C} (f : X ⟶ Z) (g : Y ⟶ Z) where
   cone : PullbackCone f g
   isLimit : IsLimit cone
+
+/-- Package the pullback selected by the ambient `HasPullback` instance.
+
+This is an explicit migration boundary for legacy declarations whose statements still use
+`pullback`, `pullback.fst`, and `pullback.snd`.  The instance is consulted exactly once, when
+the package is built; consumers subsequently use the stored cone and limit proof. -/
+noncomputable def PullbackData.ofHasPullback
+    {X Y Z : C} (f : X ⟶ Z) (g : Y ⟶ Z) [HasPullback f g] : PullbackData f g :=
+  { cone := pullback.cone f g
+    isLimit := pullback.isLimit f g }
 
 namespace PullbackData
 
