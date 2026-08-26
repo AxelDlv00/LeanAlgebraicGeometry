@@ -162,7 +162,7 @@ structure FiniteStageTensorPreimageFamilyData
     (F K B : Type u) [Field F] [Field K] [Algebra F K]
     [CommRing B] [Algebra F B] {ι : Type*} (x : ι → K ⊗[F] B) where
   stage : FiniteStageData F K
-  preimage : ∀ i, stage.stage ⊗[F] B
+  preimage : ι → stage.stage ⊗[F] B
   map_eq : ∀ i, stage.tensorMap (A := B) (preimage i) = x i
 
 namespace FiniteStageTensorPreimageFamilyData
@@ -395,6 +395,25 @@ structure FiniteStageMapFamily
 
 namespace FiniteStageMapFamily
 
+/-- Convert the lower-level finite-subextension family into the canonical stage package.
+
+The lower package pins the actual descended maps and their comparison equations.  This
+adapter installs the same stage as `FiniteStageData`, so consumers can use the stable
+`tensorMap` API without reopening the raw existential. -/
+def ofFinSubextData
+    {F K : Type u} [Field F] [Field K] [Algebra F K]
+    [Algebra.IsAlgebraic F K] {ι : Type*}
+    {A B : ι → Type u}
+    [∀ i, CommRing (A i)] [∀ i, Algebra F (A i)]
+    [∀ i, CommRing (B i)] [∀ i, Algebra F (B i)]
+    (phi : ∀ i, K ⊗[F] A i →ₐ[K] K ⊗[F] B i)
+    (D : FinSubextTensorAlgHomFamilyData A B phi) :
+    FiniteStageMapFamily F K A B :=
+  { stage := FiniteStageData.ofFinSubext D.stage
+    ambientMap := phi
+    stageMap := D.map
+    compatibility := D.commutes }
+
 /-- Each family member is a first-class comparison package. -/
 def comparison {F K : Type u} [Field F] [Field K] [Algebra F K]
     {ι : Type*} {A B : ι → Type u}
@@ -417,15 +436,8 @@ theorem exists_of_raw
     [∀ i, CommRing (B i)] [∀ i, Algebra F (B i)]
     (phi : ∀ i, K ⊗[F] A i →ₐ[K] K ⊗[F] B i) :
     Nonempty (FiniteStageMapFamily F K A B) := by
-  obtain ⟨L, hL⟩ :=
-    exists_finSubext_tensorProduct_algHom_finite
-      (F := F) (K := K) A B phi
-  choose phiL hphiL using hL
-  exact ⟨{
-    stage := FiniteStageData.ofFinSubext L
-    ambientMap := phi
-    stageMap := phiL
-    compatibility := hphiL }⟩
+  obtain ⟨D⟩ := FinSubextTensorAlgHomFamilyData.of_exists A B phi
+  exact ⟨FiniteStageMapFamily.ofFinSubextData phi D⟩
 
 end FiniteStageMapFamily
 
