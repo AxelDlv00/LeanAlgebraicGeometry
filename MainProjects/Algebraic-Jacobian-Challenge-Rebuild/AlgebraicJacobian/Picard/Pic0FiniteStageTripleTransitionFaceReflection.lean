@@ -196,6 +196,62 @@ left-tensor action at every chart tag. -/
     Algebra M.1 (Pic0FiniteStageOverlapModelRing C L n m relation M U V) :=
   faceModelRingAlgebra C L n m relation M (Sum.inr (U, V))
 
+/-! The triple model is itself a tensor pushout.  Its ambient `Algebra M.1`
+instance is therefore sensitive to the two map-induced scalar towers.  Keep
+that construction explicit as well, so consumers do not ask typeclass search
+to rebuild the tower while elaborating a dependent face package. -/
+set_option synthInstance.maxHeartbeats 3200000 in
+-- The nested tensor-pushout algebra and scalar towers are expensive to normalize.
+set_option maxHeartbeats 6400000 in
+@[reducible] noncomputable def faceTripleModelRingAlgebra
+    (U V W : Pic0FiniteStageChartIndex C) :
+    Algebra M.1
+      (Pic0FiniteStageTripleModelRing C L n m relation M mapM U V W) := by
+  letI : Algebra M.1 (Pic0FiniteStageChartModelRing C L n m relation M U) :=
+    faceChartModelRingAlgebra C L n m relation M U
+  letI : Algebra M.1 (Pic0FiniteStageOverlapModelRing C L n m relation M U V) :=
+    faceOverlapModelRingAlgebra C L n m relation M U V
+  letI : Algebra M.1 (Pic0FiniteStageOverlapModelRing C L n m relation M U W) :=
+    faceOverlapModelRingAlgebra C L n m relation M U W
+  let f₁ := pic0FiniteStageRestrictionLeftModel C L n m relation M mapM U V
+  let f₂ := pic0FiniteStageRestrictionLeftModel C L n m relation M mapM U W
+  letI : Algebra (Pic0FiniteStageChartModelRing C L n m relation M U)
+      (Pic0FiniteStageOverlapModelRing C L n m relation M U V) :=
+    pic0FiniteStageAlgebraOfMap f₁
+  letI : Algebra (Pic0FiniteStageChartModelRing C L n m relation M U)
+      (Pic0FiniteStageOverlapModelRing C L n m relation M U W) :=
+    pic0FiniteStageAlgebraOfMap f₂
+  letI : SMul (Pic0FiniteStageChartModelRing C L n m relation M U)
+      (Pic0FiniteStageOverlapModelRing C L n m relation M U V) :=
+    (pic0FiniteStageAlgebraOfMap f₁).toSMul
+  letI : SMul (Pic0FiniteStageChartModelRing C L n m relation M U)
+      (Pic0FiniteStageOverlapModelRing C L n m relation M U W) :=
+    (pic0FiniteStageAlgebraOfMap f₂).toSMul
+  letI := pic0FiniteStageTowerOfMap f₁
+  letI := pic0FiniteStageTowerOfMap f₂
+  dsimp only [Pic0FiniteStageTripleModelRing]
+  exact @Algebra.TensorProduct.leftAlgebra
+    (Pic0FiniteStageChartModelRing C L n m relation M U) M.1
+    (Pic0FiniteStageOverlapModelRing C L n m relation M U V)
+    (Pic0FiniteStageOverlapModelRing C L n m relation M U W)
+    (inferInstance : CommSemiring
+      (Pic0FiniteStageChartModelRing C L n m relation M U))
+    (inferInstance : Semiring
+      (Pic0FiniteStageOverlapModelRing C L n m relation M U V))
+    (inferInstance : Algebra
+      (Pic0FiniteStageChartModelRing C L n m relation M U)
+      (Pic0FiniteStageOverlapModelRing C L n m relation M U V))
+    (inferInstance : Semiring
+      (Pic0FiniteStageOverlapModelRing C L n m relation M U W))
+    (inferInstance : Algebra
+      (Pic0FiniteStageChartModelRing C L n m relation M U)
+      (Pic0FiniteStageOverlapModelRing C L n m relation M U W))
+    (inferInstance : CommSemiring M.1)
+    (faceOverlapModelRingAlgebra C L n m relation M U V)
+    (SMulCommClass.of_commMonoid
+      (Pic0FiniteStageChartModelRing C L n m relation M U) M.1
+      (Pic0FiniteStageOverlapModelRing C L n m relation M U V))
+
 set_option synthInstance.maxHeartbeats 400000 in
 -- The comparison equivalences contain dependent quotient-algebra towers.
 set_option maxHeartbeats 6400000 in
@@ -244,8 +300,10 @@ theorem scalarExtensionMapOfPairModel_eq_pairModelComparisonTransition
   rw [EUV.apply_symm_apply]
   exact DFunLike.congr_fun hnat x
 
-set_option synthInstance.maxHeartbeats 400000 in
--- The comparison family contains two dependent quotient-algebra towers.
+set_option synthInstance.maxHeartbeats 3200000 in
+-- The comparison family contains two dependent quotient-algebra towers; keep this
+-- constructor boundary explicit so instance search does not time out before the
+-- bundled face data is available to downstream declarations.
 set_option maxHeartbeats 6400000 in
 -- The package simultaneously infers four tensor-product model carriers.
 /-- The inferred package for one Picard triple-transition face. -/
@@ -313,6 +371,12 @@ noncomputable def pic0FiniteStageTripleTransitionFacePackage
   letI : Algebra M.1
       (Pic0FiniteStageOverlapModelRing C L n m relation M V W) :=
     faceOverlapModelRingAlgebra C L n m relation M V W
+  letI : Algebra M.1
+      (Pic0FiniteStageTripleModelRing C L n m relation M mapM V W U) :=
+    faceTripleModelRingAlgebra C L n m relation M mapM V W U
+  letI : Algebra M.1
+      (Pic0FiniteStageTripleModelRing C L n m relation M mapM U V W) :=
+    faceTripleModelRingAlgebra C L n m relation M mapM U V W
   let right := pic0FiniteStageTripleModelFaceRight
     C L n m relation M mapM V W U
   let tau := mapM (Sum.inr (U, V))
@@ -362,8 +426,9 @@ noncomputable def pic0FiniteStageTripleTransitionFacePackage
     (scalarExtensionMapOfAlgHom_tower_finSubext (K := k) N left)
     hfaceK
 
-set_option synthInstance.maxHeartbeats 400000 in
--- The theorem statement repeats the dependent comparison family.
+set_option synthInstance.maxHeartbeats 3200000 in
+-- The theorem statement repeats the dependent comparison family; keep the
+-- migration wrapper on the same explicit synthesis budget as its producer.
 set_option maxHeartbeats 6400000 in
 -- The theorem boundary repeats the dependent comparison family used by the package.
 /-- The ambient triple-transition face equation reflects to the common finite stage `N`.
