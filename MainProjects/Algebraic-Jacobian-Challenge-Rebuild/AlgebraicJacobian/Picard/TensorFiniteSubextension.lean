@@ -127,7 +127,7 @@ structure FinSubextTensorPreimageFamilyData
   stage : FinSubext F K
   map : stage.1 ⊗[F] B →ₐ[F] K ⊗[F] B
   map_spec : map = Algebra.TensorProduct.map stage.1.val (AlgHom.id F B)
-  preimage : ∀ i, stage.1 ⊗[F] B
+  preimage : ι → stage.1 ⊗[F] B
   map_eq : ∀ i, map (preimage i) = x i
 
 namespace FinSubextTensorPreimageFamilyData
@@ -315,5 +315,66 @@ theorem exists_finSubext_tensorProduct_eq_finite
   let M : FinSubext F K := ⟨M0, inferInstance⟩
   have hLM : L.1 ≤ M.1 := hLA0
   exact ⟨M, hLM, hxyA0⟩
+
+/-! ## Bundled finite-stage equality families -/
+
+/-- A family of tensor equalities together with one finite stage containing the original
+stage.  The transported equality is stored as a field, so consumers can keep the chosen
+stage and inclusion without reopening the nested existential returned by
+`exists_finSubext_tensorProduct_eq_finite`. -/
+structure FiniteStageTensorEqualityFamilyData
+    (F K B : Type u) [Field F] [Field K] [Algebra F K]
+    [CommRing B] [Algebra F B] {ι : Type*}
+    (L : FinSubext F K) (x y : ι → L.1 ⊗[F] B) where
+  stage : FinSubext F K
+  inclusion : L.1 ≤ stage.1
+  map : L.1 →ₐ[F] stage.1
+  map_spec : map = IntermediateField.inclusion inclusion
+  equality : ∀ i,
+    LinearMap.rTensor B map.toLinearMap (x i) =
+      LinearMap.rTensor B map.toLinearMap (y i)
+
+namespace FiniteStageTensorEqualityFamilyData
+
+/-- Package the raw common-stage finite-family equality theorem. -/
+theorem of_raw
+    {F K B : Type u} [Field F] [Field K] [Algebra F K]
+    [Algebra.IsAlgebraic F K] [CommRing B] [Algebra F B]
+    {ι : Type*} [Finite ι]
+    (L : FinSubext F K) (x y : ι → L.1 ⊗[F] B)
+    (hxy : ∀ i, LinearMap.rTensor B L.1.val.toLinearMap (x i) =
+      LinearMap.rTensor B L.1.val.toLinearMap (y i)) :
+    Nonempty (FiniteStageTensorEqualityFamilyData F K B L x y) := by
+  obtain ⟨M, hLM, hM⟩ :=
+    exists_finSubext_tensorProduct_eq_finite (L := L) (x := x) (y := y) hxy
+  exact ⟨{
+    stage := M
+    inclusion := hLM
+    map := IntermediateField.inclusion hLM
+    map_spec := rfl
+    equality := hM }⟩
+
+theorem equality_apply
+    {F K B : Type u} [Field F] [Field K] [Algebra F K]
+    [CommRing B] [Algebra F B] {ι : Type*}
+    {L : FinSubext F K} {x y : ι → L.1 ⊗[F] B}
+    (D : FiniteStageTensorEqualityFamilyData F K B L x y) (i : ι) :
+    LinearMap.rTensor B D.map.toLinearMap (x i) =
+      LinearMap.rTensor B D.map.toLinearMap (y i) :=
+  D.equality i
+
+/-- Recover the legacy nested-existential shape from a packaged equality family. -/
+theorem exists_raw
+    {F K B : Type u} [Field F] [Field K] [Algebra F K]
+    [CommRing B] [Algebra F B] {ι : Type*}
+    {L : FinSubext F K} {x y : ι → L.1 ⊗[F] B}
+    (D : FiniteStageTensorEqualityFamilyData F K B L x y) :
+    ∃ M : FinSubext F K, ∃ hLM : L.1 ≤ M.1, ∀ i,
+      LinearMap.rTensor B (IntermediateField.inclusion hLM).toLinearMap (x i) =
+        LinearMap.rTensor B (IntermediateField.inclusion hLM).toLinearMap (y i) :=
+  ⟨D.stage, D.inclusion, fun i => by
+    simpa only [D.map_spec] using D.equality i⟩
+
+end FiniteStageTensorEqualityFamilyData
 
 end AlgebraicGeometry.DatG0
