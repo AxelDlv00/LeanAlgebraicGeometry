@@ -20,7 +20,6 @@ records without introducing new hypotheses.
 -/
 
 set_option autoImplicit false
-set_option maxHeartbeats 200000
 
 universe u
 
@@ -166,6 +165,7 @@ end FiniteStageInclusion
 /-! ## Presented models at one stage -/
 
 set_option synthInstance.maxHeartbeats 100000 in
+-- The dependent quotient in the model type needs one larger local synthesis budget.
 /-- A finite-presentation model of a `K`-algebra at one finite stage. -/
 structure FiniteStageModelData
     (F K A : Type u) [Field F] [Field K] [Algebra F K]
@@ -206,6 +206,7 @@ theorem exists_of_raw
 end FiniteStageModelData
 
 set_option synthInstance.maxHeartbeats 100000 in
+-- A family-indexed quotient otherwise makes synthesis revisit the same carrier parents.
 /-- A simultaneous family of finite-presentation models at one common stage. -/
 structure FiniteStageModelFamilyData
     (F K : Type u) [Field F] [Field K] [Algebra F K]
@@ -223,6 +224,7 @@ structure FiniteStageModelFamilyData
 namespace FiniteStageModelFamilyData
 
 set_option synthInstance.maxHeartbeats 200000 in
+-- The raw family existential carries a dependent quotient for each index.
 /-- Adapter from the raw simultaneous finite-presentation existential. -/
 theorem exists_of_raw
     {F K : Type u} [Field F] [Field K] [Algebra F K]

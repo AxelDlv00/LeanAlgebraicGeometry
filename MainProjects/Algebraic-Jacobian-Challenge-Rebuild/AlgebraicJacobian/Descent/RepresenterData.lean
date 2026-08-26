@@ -52,9 +52,10 @@ theorem ofSigma_toSigma (s : Σ X : C, F.RepresentableBy X) :
   rfl
 
 @[simp]
-theorem toSigma_ofSigma (s : Σ X : C, F.RepresentableBy X) :
-    (ofSigma (C := C) s).toSigma = s := by
-  exact ofSigma_toSigma s
+theorem toSigma_ofSigma (P : RepresenterData C F) :
+    ofSigma (C := C) P.toSigma = P := by
+  cases P
+  rfl
 
 /-- The canonical comparison between two chosen representing objects. -/
 noncomputable def uniqueIso (P Q : RepresenterData C F) : P.object ≅ Q.object :=
