@@ -7,6 +7,7 @@ import AlgebraicJacobian.Descent.FiniteStagePullbackData
 import AlgebraicJacobian.Descent.GluedMapData
 import AlgebraicJacobian.Descent.RepresenterData
 import AlgebraicJacobian.Descent.TensorProductPushoutData
+import AlgebraicJacobian.Descent.AffineRingGlueData
 import AlgebraicJacobian.Picard.FiniteStageData
 
 /-!
