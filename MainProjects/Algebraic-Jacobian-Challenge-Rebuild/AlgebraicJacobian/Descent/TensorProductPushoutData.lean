@@ -364,6 +364,179 @@ abbrev TensorProductPushoutData.target
       (B₁ := B₁) (B₂ := B₂)}
     (_D : TensorProductPushoutData C) : Type u := C.target
 
+/-! ### Let-free pinned facade
+
+`TensorProductPushoutData` remains the compatibility record used by the first-generation
+descent files.  Its dependent fields deliberately retain local `letI` bindings.  The facade
+below names the target algebra and uses fully explicit `AlgHom` parameters, so new consumers can
+carry maps and inverse laws without replaying those bindings at every projection.
+-/
+
+/-- The target carrier of a carrier package, with both module structures pinned. -/
+abbrev tensorProductPushoutPinnedTarget
+    (C : TensorProductPushoutCarriers (M := M) (K := K) (A := A)
+      (B₁ := B₁) (B₂ := B₂)) : Type u :=
+  tensorProductPushoutBaseChangeTarget C.leftAlgebra C.rightAlgebra
+
+/-- The base-algebra structure on the pinned target carrier. -/
+@[reducible] noncomputable def tensorProductPushoutPinnedTargetAlgebra
+    (C : TensorProductPushoutCarriers (M := M) (K := K) (A := A)
+      (B₁ := B₁) (B₂ := B₂)) :
+    Algebra (K ⊗[M] A) (tensorProductPushoutPinnedTarget C) := by
+  letI := C.leftAlgebra
+  letI := C.rightAlgebra
+  exact Algebra.TensorProduct.instAlgebra
+
+/-- A left factor inclusion whose source and target algebra structures are explicit. -/
+abbrev tensorProductPushoutPinnedLeftInclusion
+    (C : TensorProductPushoutCarriers (M := M) (K := K) (A := A)
+      (B₁ := B₁) (B₂ := B₂)) :=
+  @AlgHom (K ⊗[M] A) (K ⊗[M] B₁) (tensorProductPushoutPinnedTarget C)
+    _ _ _ C.leftAlgebra (tensorProductPushoutPinnedTargetAlgebra C)
+
+/-- A right factor inclusion whose source and target algebra structures are explicit. -/
+abbrev tensorProductPushoutPinnedRightInclusion
+    (C : TensorProductPushoutCarriers (M := M) (K := K) (A := A)
+      (B₁ := B₁) (B₂ := B₂)) :=
+  @AlgHom (K ⊗[M] A) (K ⊗[M] B₂) (tensorProductPushoutPinnedTarget C)
+    _ _ _ C.rightAlgebra (tensorProductPushoutPinnedTargetAlgebra C)
+
+/-- The forward map type for a pinned carrier package. -/
+abbrev tensorProductPushoutPinnedHom
+    (C : TensorProductPushoutCarriers (M := M) (K := K) (A := A)
+      (B₁ := B₁) (B₂ := B₂)) :=
+  @AlgHom K (tensorProductPushoutSourceCarrier M K A B₁ B₂)
+    (tensorProductPushoutPinnedTarget C) _ _ _
+    (inferInstance : Algebra K (tensorProductPushoutSourceCarrier M K A B₁ B₂))
+    (inferInstance : Algebra K (tensorProductPushoutPinnedTarget C))
+
+/-- The inverse map type for a pinned carrier package. -/
+abbrev tensorProductPushoutPinnedInv
+    (C : TensorProductPushoutCarriers (M := M) (K := K) (A := A)
+      (B₁ := B₁) (B₂ := B₂)) :=
+  @AlgHom K (tensorProductPushoutPinnedTarget C)
+    (tensorProductPushoutSourceCarrier M K A B₁ B₂) _ _ _
+    (inferInstance : Algebra K (tensorProductPushoutPinnedTarget C))
+    (inferInstance : Algebra K (tensorProductPushoutSourceCarrier M K A B₁ B₂))
+
+/-- A tensor pushout package with no dependent `letI` expressions in its public fields. -/
+structure TensorProductPushoutPinnedData
+    (C : TensorProductPushoutCarriers (M := M) (K := K) (A := A)
+      (B₁ := B₁) (B₂ := B₂)) where
+  /-- The left factor inclusion into the pinned target. -/
+  leftInclusion : tensorProductPushoutPinnedLeftInclusion C
+  /-- The right factor inclusion into the pinned target. -/
+  rightInclusion : tensorProductPushoutPinnedRightInclusion C
+  /-- The forward scalar-extension map. -/
+  hom : tensorProductPushoutPinnedHom C
+  /-- The inverse scalar-extension map. -/
+  inv : tensorProductPushoutPinnedInv C
+  /-- The inverse followed by the forward map is the identity. -/
+  left_inv : inv.comp hom = AlgHom.id K _
+  /-- The forward followed by the inverse map is the identity. -/
+  right_inv : hom.comp inv = AlgHom.id K _
+
+namespace TensorProductPushoutPinnedData
+
+/-- Recover the algebra equivalence represented by a pinned data package. -/
+noncomputable def equiv
+    {C : TensorProductPushoutCarriers (M := M) (K := K) (A := A)
+      (B₁ := B₁) (B₂ := B₂)}
+    (D : TensorProductPushoutPinnedData C) :
+    tensorProductPushoutSourceCarrier M K A B₁ B₂ ≃ₐ[K]
+      tensorProductPushoutPinnedTarget C :=
+  AlgEquiv.ofAlgHom D.hom D.inv D.right_inv D.left_inv
+
+@[simp]
+theorem left_inv_apply
+    {C : TensorProductPushoutCarriers (M := M) (K := K) (A := A)
+      (B₁ := B₁) (B₂ := B₂)}
+    (D : TensorProductPushoutPinnedData C)
+    (x : tensorProductPushoutSourceCarrier M K A B₁ B₂) :
+    D.inv (D.hom x) = x :=
+  DFunLike.congr_fun D.left_inv x
+
+@[simp]
+theorem right_inv_apply
+    {C : TensorProductPushoutCarriers (M := M) (K := K) (A := A)
+      (B₁ := B₁) (B₂ := B₂)}
+    (D : TensorProductPushoutPinnedData C)
+    (x : tensorProductPushoutPinnedTarget C) :
+    D.hom (D.inv x) = x :=
+  DFunLike.congr_fun D.right_inv x
+
+end TensorProductPushoutPinnedData
+
+/-! ### Compatibility and canonical constructors -/
+
+/-- Convert the original dependent record to the let-free pinned facade. -/
+noncomputable def TensorProductPushoutData.toPinned
+    {C : TensorProductPushoutCarriers (M := M) (K := K) (A := A)
+      (B₁ := B₁) (B₂ := B₂)}
+    (D : TensorProductPushoutData C) : TensorProductPushoutPinnedData C := by
+  letI := C.leftAlgebra
+  letI := C.rightAlgebra
+  refine
+    { leftInclusion := D.leftInclusion
+      rightInclusion := D.rightInclusion
+      hom := D.hom
+      inv := D.inv
+      left_inv := ?_
+      right_inv := ?_ }
+  · apply DFunLike.ext _ _
+    intro x
+    rw [D.inv_equiv, D.hom_equiv]
+    exact D.equiv.left_inv x
+  · apply DFunLike.ext _ _
+    intro x
+    rw [D.hom_equiv, D.inv_equiv]
+    exact D.equiv.right_inv x
+
+/-- The canonical let-free package for the canonical carrier witnesses. -/
+noncomputable def tensorProductPushoutPinnedData :
+    TensorProductPushoutPinnedData
+      (tensorProductPushoutCarriers (M := M) (K := K) (A := A)
+        (B₁ := B₁) (B₂ := B₂)) := by
+  let C := tensorProductPushoutCarriers (M := M) (K := K) (A := A)
+    (B₁ := B₁) (B₂ := B₂)
+  letI := C.leftAlgebra
+  letI := C.rightAlgebra
+  refine
+    { leftInclusion := Algebra.TensorProduct.includeLeft
+      rightInclusion := Algebra.TensorProduct.includeRight
+      hom := ?_
+      inv := ?_
+      left_inv := ?_
+      right_inv := ?_ }
+  · exact (tensorProductPushoutBaseChangeMaps
+      (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)).hom
+  · exact (tensorProductPushoutBaseChangeMaps
+      (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)).inv
+  · apply DFunLike.ext _ _
+    intro x
+    exact (tensorProductPushoutBaseChangeMaps
+      (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)).left_inv_apply x
+  · apply DFunLike.ext _ _
+    intro x
+    exact (tensorProductPushoutBaseChangeMaps
+      (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)).right_inv_apply x
+
+@[simp]
+theorem canonical_hom_tmul (k : K) (b₁ : B₁) (b₂ : B₂) :
+    (tensorProductPushoutPinnedData
+      (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)).hom
+        (k ⊗ₜ[M] (b₁ ⊗ₜ[A] b₂)) =
+      tensorProductPushoutBaseChangeTargetTmul
+        (tensorProductPushoutBaseChangeLeftAlgebra
+          (M := M) (K := K) (A := A) (B₁ := B₁))
+        (tensorProductPushoutBaseChangeRightAlgebra
+          (M := M) (K := K) (A := A) (B₂ := B₂))
+        (k ⊗ₜ[M] b₁) (1 ⊗ₜ[M] b₂) := by
+  change (tensorProductPushoutBaseChangeMaps
+      (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)).hom
+      (k ⊗ₜ[M] (b₁ ⊗ₜ[A] b₂)) = _
+  exact tensorProductPushoutBaseChangeMaps_hom_tmul k b₁ b₂
+
 /-! ### Pure-tensor adapters -/
 
 /-- The pinned forward map on a pure tensor. -/
