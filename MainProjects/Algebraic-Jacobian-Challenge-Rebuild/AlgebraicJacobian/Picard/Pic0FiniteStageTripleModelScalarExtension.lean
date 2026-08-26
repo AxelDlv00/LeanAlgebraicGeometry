@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleOverlapRings
+import AlgebraicJacobian.Descent.TensorProductPushoutData
 
 /-!
 # Scalar extension of finite-stage triple-overlap models
@@ -62,7 +63,13 @@ noncomputable def finiteStageTensorPushoutScalarExtension
     [CommRing R] [CommRing K] [CommRing A] [CommRing B₁] [CommRing B₂]
     [Algebra R K] [Algebra R A] [Algebra R B₁] [Algebra R B₂]
     (f₁ : A →ₐ[R] B₁) (f₂ : A →ₐ[R] B₂) :=
-  pic0FiniteStageTensorPushoutBaseChange (K := K) f₁ f₂
+  by
+    letI : Algebra A B₁ := pic0FiniteStageAlgebraOfMap f₁
+    letI : Algebra A B₂ := pic0FiniteStageAlgebraOfMap f₂
+    letI : IsScalarTower R A B₁ := pic0FiniteStageTowerOfMap f₁
+    letI : IsScalarTower R A B₂ := pic0FiniteStageTowerOfMap f₂
+    exact AlgebraicJacobian.tensorProductPushoutBaseChangeEquivPinned
+      (M := R) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)
 
 /-- The arbitrary-scalar tensor-pushout equivalence on a pure tensor. -/
 theorem finiteStageTensorPushoutScalarExtension_tmul
