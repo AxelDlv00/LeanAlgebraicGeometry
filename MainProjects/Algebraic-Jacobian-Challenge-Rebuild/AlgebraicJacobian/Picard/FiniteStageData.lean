@@ -96,6 +96,66 @@ theorem tensorMap_apply_tmul {F K A : Type u}
 
 end FiniteStageData
 
+/-! ## Tensor-element presentations -/
+
+/-- A tensor element together with the finite stage and preimage chosen for it.
+
+The older `exists_finSubext_tensorProduct_preimage` theorem returns the stage as a
+`FinSubext` and the map as a raw `LinearMap.rTensor` expression.  This package keeps
+the stage and its canonical algebra map together, so a consumer does not have to
+reconstruct either witness (or the equality between the linear and algebra maps).
+-/
+structure FiniteStageTensorPreimageData
+    (F K B : Type u) [Field F] [Field K] [Algebra F K]
+    [CommRing B] [Algebra F B] (x : K ⊗[F] B) where
+  stage : FiniteStageData F K
+  preimage : stage.stage ⊗[F] B
+  map_eq : stage.tensorMap (A := B) preimage = x
+
+namespace FiniteStageTensorPreimageData
+
+/-- Package the raw finite-subextension preimage theorem. -/
+theorem of_raw
+    {F K B : Type u} [Field F] [Field K] [Algebra F K]
+    [Algebra.IsAlgebraic F K] [CommRing B] [Algebra F B]
+    (x : K ⊗[F] B) :
+    Nonempty (FiniteStageTensorPreimageData F K B x) := by
+  obtain ⟨L, xL, hx⟩ := exists_finSubext_tensorProduct_preimage x
+  let S : FiniteStageData F K := FiniteStageData.ofFinSubext L
+  have hx' : S.tensorMap (A := B) xL = x := by
+    change LinearMap.rTensor B L.1.val.toLinearMap xL = x
+    exact hx
+  exact ⟨⟨S, xL, hx'⟩⟩
+
+end FiniteStageTensorPreimageData
+
+/-- A finite family of tensor elements presented over one common finite stage. -/
+structure FiniteStageTensorPreimageFamilyData
+    (F K B : Type u) [Field F] [Field K] [Algebra F K]
+    [CommRing B] [Algebra F B] {ι : Type*} (x : ι → K ⊗[F] B) where
+  stage : FiniteStageData F K
+  preimage : ∀ i, stage.stage ⊗[F] B
+  map_eq : ∀ i, stage.tensorMap (A := B) (preimage i) = x i
+
+namespace FiniteStageTensorPreimageFamilyData
+
+/-- Package the common-stage finite-family preimage theorem. -/
+theorem of_raw
+    {F K B : Type u} [Field F] [Field K] [Algebra F K]
+    [Algebra.IsAlgebraic F K] [CommRing B] [Algebra F B]
+    {ι : Type*} [Finite ι] (x : ι → K ⊗[F] B) :
+    Nonempty (FiniteStageTensorPreimageFamilyData F K B x) := by
+  obtain ⟨L, xL, hx⟩ :=
+    exists_finSubext_tensorProduct_preimage_finite (x := x)
+  let S : FiniteStageData F K := FiniteStageData.ofFinSubext L
+  have hx' : ∀ i, S.tensorMap (A := B) (xL i) = x i := by
+    intro i
+    change LinearMap.rTensor B L.1.val.toLinearMap (xL i) = x i
+    exact hx i
+  exact ⟨⟨S, xL, hx'⟩⟩
+
+end FiniteStageTensorPreimageFamilyData
+
 /-! ## Explicit inclusions between stages -/
 
 /-- A pinned map between two finite stages, together with its ambient
