@@ -353,6 +353,23 @@ structure FiniteStageComparisonData
 
 namespace FiniteStageComparisonData
 
+/-- Build a comparison package from an already chosen finite subextension and stage map. -/
+def ofFinSubextData
+    {F K A B : Type u} [Field F] [Field K] [Algebra F K]
+    [CommRing A] [Algebra F A] [CommRing B] [Algebra F B]
+    (L : FinSubext F K) (ambientMap : K ⊗[F] A →ₐ[K] K ⊗[F] B)
+    (stageMap : L.1 ⊗[F] A →ₐ[L.1] L.1 ⊗[F] B)
+    (compatibility :
+      (Algebra.TensorProduct.map L.1.val (AlgHom.id F B)).comp
+          (stageMap.restrictScalars F) =
+        (ambientMap.restrictScalars F).comp
+          (Algebra.TensorProduct.map L.1.val (AlgHom.id F A))) :
+    FiniteStageComparisonData F K A B :=
+  { stage := FiniteStageData.ofFinSubext L
+    ambientMap := ambientMap
+    stageMap := stageMap
+    compatibility := compatibility }
+
 @[simp]
 theorem compatibility_apply
     {F K A B : Type u} [Field F] [Field K] [Algebra F K]
@@ -372,11 +389,7 @@ theorem exists_of_raw
     Nonempty (FiniteStageComparisonData F K A B) := by
   obtain ⟨L, phiL, hphi⟩ :=
     exists_finSubext_tensorProduct_algHom (F := F) (K := K) (A := A) (B := B) phi
-  exact ⟨{
-    stage := FiniteStageData.ofFinSubext L
-    ambientMap := phi
-    stageMap := phiL
-    compatibility := hphi }⟩
+  exact ⟨FiniteStageComparisonData.ofFinSubextData L phi phiL hphi⟩
 
 end FiniteStageComparisonData
 
