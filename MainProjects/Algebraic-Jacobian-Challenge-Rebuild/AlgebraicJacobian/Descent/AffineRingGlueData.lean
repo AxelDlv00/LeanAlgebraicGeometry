@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import Mathlib.AlgebraicGeometry.Gluing
 import Mathlib.AlgebraicGeometry.Pullbacks
+import AlgebraicJacobian.Descent.GluedMapData
 
 /-!
 # Gluing affine schemes from ring maps
@@ -208,8 +209,87 @@ def affineRingGlueData
       t_fac := affineTripleTransition_fac A B tau theta thetaFac
       cocycle := affineTripleTransition_cocycle A B theta thetaCocycle }
 
-/-- The algebra structure maps on the affine charts descend to a structure map on the
-glued scheme. -/
+/-- The algebra structure maps on the affine charts, together with their compatibility on
+the overlap diagram.  Keeping this family in one record prevents callers from rebuilding a
+second `Multicoequalizer.desc` against a propositionally equal glue datum. -/
+noncomputable def affineRingGluedMapData
+    (tau : ∀ i j, B j i →ₐ[R] B i j)
+    (theta : ∀ i j k,
+      AffineTripleTensor A B j k i →ₐ[R] AffineTripleTensor A B i j k)
+    (fId : ∀ i, IsIso (affineRestriction A B i i))
+    (fOpen : ∀ i j, IsOpenImmersion (affineRestriction A B i j))
+    (tauId : ∀ i, tau i i = AlgHom.id R (B i i))
+    (thetaFac : ∀ i j k,
+      (theta i j k).comp (affineTensorIncludeRight A B j k i) =
+        (affineTensorIncludeLeft A B i j k).comp (tau i j))
+    (thetaCocycle : ∀ i j k,
+      (theta i j k).comp ((theta j k i).comp (theta k i j)) =
+        AlgHom.id R (AffineTripleTensor A B i j k)) :
+    GluedMapData
+      (affineRingGlueData A B tau theta fId fOpen tauId thetaFac thetaCocycle)
+      (Spec (CommRingCat.of R)) := by
+  let chartMap : ∀ i : J, Spec (CommRingCat.of (A i)) ⟶
+      Spec (CommRingCat.of R) := fun i =>
+    Spec.map (CommRingCat.ofHom (algebraMap R (A i)))
+  refine GluedMapData.ofChartMaps chartMap ?_
+  intro i j
+  change J at i j
+  change
+    Spec.map (CommRingCat.ofHom (algebraMap (A i) (B i j))) ≫
+        Spec.map (CommRingCat.ofHom (algebraMap R (A i))) =
+      (Spec.map (CommRingCat.ofHom (tau i j).toRingHom) ≫
+        Spec.map (CommRingCat.ofHom (algebraMap (A j) (B j i)))) ≫
+          Spec.map (CommRingCat.ofHom (algebraMap R (A j)))
+  rw [← Spec.map_comp, ← CommRingCat.ofHom_comp]
+  rw [Category.assoc, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
+  rw [← Spec.map_comp, ← CommRingCat.ofHom_comp]
+  congr 1
+  ext r
+  simp only [CommRingCat.ofHom_comp, CommRingCat.hom_comp,
+    ConcreteCategory.hom_ofHom, RingHom.coe_comp, Function.comp_apply,
+    AlgHom.toRingHom_eq_coe, Category.assoc, RingHom.coe_coe]
+  rw [← IsScalarTower.algebraMap_apply R (A i) (B i j)]
+  rw [← IsScalarTower.algebraMap_apply R (A j) (B j i)]
+  exact (tau i j).commutes r |>.symm
+
+/-- A complete affine glue presentation.  The map is stored together with the exact
+`Scheme.GlueData` expression it was constructed from, so consumers do not have to
+reconstruct a propositionally equal multicoequalizer map. -/
+structure AffineRingGluePackage
+    (tau : ∀ i j, B j i →ₐ[R] B i j)
+    (theta : ∀ i j k,
+      AffineTripleTensor A B j k i →ₐ[R] AffineTripleTensor A B i j k)
+    (fId : ∀ i, IsIso (affineRestriction A B i i))
+    (fOpen : ∀ i j, IsOpenImmersion (affineRestriction A B i j))
+    (tauId : ∀ i, tau i i = AlgHom.id R (B i i))
+    (thetaFac : ∀ i j k,
+      (theta i j k).comp (affineTensorIncludeRight A B j k i) =
+        (affineTensorIncludeLeft A B i j k).comp (tau i j))
+    (thetaCocycle : ∀ i j k,
+      (theta i j k).comp ((theta j k i).comp (theta k i j)) =
+        AlgHom.id R (AffineTripleTensor A B i j k)) where
+  mapData : GluedMapData
+    (affineRingGlueData A B tau theta fId fOpen tauId thetaFac thetaCocycle)
+    (Spec (CommRingCat.of R))
+
+/-- Construct the complete affine glue presentation in one elaboration scope. -/
+noncomputable def affineRingGluePackage
+    (tau : ∀ i j, B j i →ₐ[R] B i j)
+    (theta : ∀ i j k,
+      AffineTripleTensor A B j k i →ₐ[R] AffineTripleTensor A B i j k)
+    (fId : ∀ i, IsIso (affineRestriction A B i i))
+    (fOpen : ∀ i j, IsOpenImmersion (affineRestriction A B i j))
+    (tauId : ∀ i, tau i i = AlgHom.id R (B i i))
+    (thetaFac : ∀ i j k,
+      (theta i j k).comp (affineTensorIncludeRight A B j k i) =
+        (affineTensorIncludeLeft A B i j k).comp (tau i j))
+    (thetaCocycle : ∀ i j k,
+      (theta i j k).comp ((theta j k i).comp (theta k i j)) =
+        AlgHom.id R (AffineTripleTensor A B i j k)) :
+    AffineRingGluePackage A B tau theta fId fOpen tauId thetaFac thetaCocycle :=
+  ⟨affineRingGluedMapData A B tau theta fId fOpen tauId thetaFac thetaCocycle⟩
+
+/-- The underlying structure map from the bundled affine glue/map datum. -/
 def affineRingGluedMap
     (tau : ∀ i j, B j i →ₐ[R] B i j)
     (theta : ∀ i j k,
@@ -224,30 +304,8 @@ def affineRingGluedMap
       (theta i j k).comp ((theta j k i).comp (theta k i j)) =
         AlgHom.id R (AffineTripleTensor A B i j k)) :
     (affineRingGlueData A B tau theta fId fOpen tauId thetaFac thetaCocycle).glued ⟶
-      Spec (CommRingCat.of R) := by
-  fapply Multicoequalizer.desc
-  · intro i
-    change J at i
-    exact Spec.map (CommRingCat.ofHom (algebraMap R (A i)))
-  · rintro ⟨i, j⟩
-    change J at i j
-    change
-      Spec.map (CommRingCat.ofHom (algebraMap (A i) (B i j))) ≫
-          Spec.map (CommRingCat.ofHom (algebraMap R (A i))) =
-        (Spec.map (CommRingCat.ofHom (tau i j).toRingHom) ≫
-          Spec.map (CommRingCat.ofHom (algebraMap (A j) (B j i)))) ≫
-            Spec.map (CommRingCat.ofHom (algebraMap R (A j)))
-    rw [← Spec.map_comp, ← CommRingCat.ofHom_comp]
-    rw [Category.assoc, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
-    rw [← Spec.map_comp, ← CommRingCat.ofHom_comp]
-    congr 1
-    ext r
-    simp only [CommRingCat.ofHom_comp, CommRingCat.hom_comp,
-      ConcreteCategory.hom_ofHom, RingHom.coe_comp, Function.comp_apply,
-      AlgHom.toRingHom_eq_coe, Category.assoc, RingHom.coe_coe]
-    rw [← IsScalarTower.algebraMap_apply R (A i) (B i j)]
-    rw [← IsScalarTower.algebraMap_apply R (A j) (B j i)]
-    exact (tau i j).commutes r |>.symm
+      Spec (CommRingCat.of R) :=
+  (affineRingGluePackage A B tau theta fId fOpen tauId thetaFac thetaCocycle).mapData.map
 
 /-- Each affine chart inclusion lies over its canonical structure map. -/
 @[reassoc]
@@ -268,7 +326,7 @@ theorem affineRingGlueData_ι_affineRingGluedMap
     (affineRingGlueData A B tau theta fId fOpen tauId thetaFac thetaCocycle).ι i ≫
         affineRingGluedMap A B tau theta fId fOpen tauId thetaFac thetaCocycle =
       Spec.map (CommRingCat.ofHom (algebraMap R (A i))) :=
-  Multicoequalizer.π_desc _ _ _ _ _
+  (affineRingGluePackage A B tau theta fId fOpen tauId thetaFac thetaCocycle).mapData.chartMap_factor i
 
 /-- The scheme obtained by gluing affine `R`-algebras, retained as an object over
 `Spec R`. -/
