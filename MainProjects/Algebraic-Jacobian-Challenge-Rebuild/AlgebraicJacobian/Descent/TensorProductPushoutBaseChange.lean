@@ -409,6 +409,20 @@ variable [Algebra A B₁] [Algebra A B₂]
 variable [Algebra M B₁] [Algebra M B₂]
 variable [IsScalarTower M A B₁] [IsScalarTower M A B₂]
 
+/-! ### Explicit target carrier -/
+
+/- The usual notation for the target tensor product obtains its module structures
+from the two `Algebra` instances by typeclass search.  The carrier below passes
+those module structures as explicit arguments instead.  Under `leftAlgebra` and
+`rightAlgebra` this is definitionally the same tensor product, but its public
+type no longer contains a `letI` block that callers must reproduce. -/
+abbrev tensorProductPushoutBaseChangeTarget
+    (leftAlgebra : Algebra (K ⊗[M] A) (K ⊗[M] B₁))
+    (rightAlgebra : Algebra (K ⊗[M] A) (K ⊗[M] B₂)) : Type u :=
+  @TensorProduct (K ⊗[M] A) _ (K ⊗[M] B₁) (K ⊗[M] B₂) _ _
+    (@Algebra.toModule (K ⊗[M] A) (K ⊗[M] B₁) _ _ leftAlgebra)
+    (@Algebra.toModule (K ⊗[M] A) (K ⊗[M] B₂) _ _ rightAlgebra)
+
 /-- A scalar-extension pushout equivalence with its two target algebra witnesses pinned.
 
 The witnesses are explicit parameters of the package rather than locally regenerated
@@ -419,10 +433,8 @@ structure TensorProductPushoutBaseChangePackage
     (leftAlgebra : Algebra (K ⊗[M] A) (K ⊗[M] B₁))
     (rightAlgebra : Algebra (K ⊗[M] A) (K ⊗[M] B₂)) where
   equivalence :
-    letI := leftAlgebra
-    letI := rightAlgebra
     (K ⊗[M] (B₁ ⊗[A] B₂)) ≃ₐ[K]
-      ((K ⊗[M] B₁) ⊗[K ⊗[M] A] (K ⊗[M] B₂))
+      tensorProductPushoutBaseChangeTarget leftAlgebra rightAlgebra
 
 namespace TensorProductPushoutBaseChangePackage
 
@@ -442,9 +454,7 @@ abbrev target
     (_P : TensorProductPushoutBaseChangePackage
       (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)
       leftAlgebra rightAlgebra) : Type u :=
-  letI := leftAlgebra
-  letI := rightAlgebra
-  (K ⊗[M] B₁) ⊗[K ⊗[M] A] (K ⊗[M] B₂)
+  tensorProductPushoutBaseChangeTarget leftAlgebra rightAlgebra
 
 /-- The forward map carried by a pinned package. -/
 noncomputable def hom
@@ -453,8 +463,6 @@ noncomputable def hom
     (P : TensorProductPushoutBaseChangePackage
       (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)
       leftAlgebra rightAlgebra) :
-    letI := leftAlgebra
-    letI := rightAlgebra
     P.source →ₐ[K] P.target :=
   P.equivalence.toAlgHom
 
@@ -465,8 +473,6 @@ noncomputable def inv
     (P : TensorProductPushoutBaseChangePackage
       (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)
       leftAlgebra rightAlgebra) :
-    letI := leftAlgebra
-    letI := rightAlgebra
     P.target →ₐ[K] P.source :=
   P.equivalence.symm.toAlgHom
 
@@ -478,9 +484,9 @@ theorem hom_inv
     (P : TensorProductPushoutBaseChangePackage
       (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)
       leftAlgebra rightAlgebra) :
-    letI := leftAlgebra
-    letI := rightAlgebra
     P.inv.comp P.hom = AlgHom.id K P.source := by
+  letI := leftAlgebra
+  letI := rightAlgebra
   dsimp only [inv, hom]
   apply DFunLike.ext _ _
   intro x
@@ -494,9 +500,9 @@ theorem inv_hom
     (P : TensorProductPushoutBaseChangePackage
       (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)
       leftAlgebra rightAlgebra) :
-    letI := leftAlgebra
-    letI := rightAlgebra
     P.hom.comp P.inv = AlgHom.id K P.target := by
+  letI := leftAlgebra
+  letI := rightAlgebra
   dsimp only [inv, hom]
   apply DFunLike.ext _ _
   intro x
