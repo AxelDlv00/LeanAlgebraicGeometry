@@ -166,6 +166,36 @@ variable (mapM : ∀ q : Pic0FiniteStageMapIndex C,
     Pic0FiniteStageModelRing C L n m relation M
       (Pic0FiniteStageMapTarget C q))
 
+/-! The model-ring aliases are tensor products, but their `Algebra M.1` witness is
+not recoverable from the alias alone once high-priority global instances are removed.
+Keep one explicit provider here so the face package elaborates against the same
+left-tensor action at every chart tag. -/
+@[reducible] noncomputable def faceModelRingAlgebra
+    (j : Pic0FiniteStageRingIndex C) :
+    Algebra M.1 (Pic0FiniteStageModelRing C L n m relation M j) := by
+  dsimp only [Pic0FiniteStageModelRing]
+  exact @Algebra.TensorProduct.leftAlgebra
+    L.1 M.1 M.1
+    (DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j))
+    (inferInstance : CommSemiring L.1)
+    (inferInstance : Semiring M.1)
+    (inferInstance : Algebra L.1 M.1)
+    (DatG0.finiteRelationAlgebraCommRing L.1 (n j) (m j) (relation j)).toSemiring
+    (DatG0.finiteRelationAlgebraAlgebra L.1 (n j) (m j) (relation j))
+    (inferInstance : CommSemiring M.1)
+    (inferInstance : Algebra M.1 M.1)
+    (inferInstance : SMulCommClass L.1 M.1 M.1)
+
+@[reducible] noncomputable def faceChartModelRingAlgebra
+    (U : Pic0FiniteStageChartIndex C) :
+    Algebra M.1 (Pic0FiniteStageChartModelRing C L n m relation M U) :=
+  faceModelRingAlgebra C L n m relation M (Sum.inl U)
+
+@[reducible] noncomputable def faceOverlapModelRingAlgebra
+    (U V : Pic0FiniteStageChartIndex C) :
+    Algebra M.1 (Pic0FiniteStageOverlapModelRing C L n m relation M U V) :=
+  faceModelRingAlgebra C L n m relation M (Sum.inr (U, V))
+
 set_option synthInstance.maxHeartbeats 400000 in
 -- The comparison equivalences contain dependent quotient-algebra towers.
 set_option maxHeartbeats 6400000 in
@@ -257,8 +287,32 @@ noncomputable def pic0FiniteStageTripleTransitionFacePackage
             M.1).comp
           (Algebra.TensorProduct.map N.1.val
             (AlgHom.id M.1
-              (Pic0FiniteStageTripleTransitionModelSource
-                C L n m relation M mapM p)))) :=
+                (Pic0FiniteStageTripleTransitionModelSource
+                  C L n m relation M mapM p)))) :=
+  -- A dependent `∀ j, Algebra ...` declaration is not used as a typeclass
+  -- instance after the chart/overlap abbreviations are unfolded.  Pin each
+  -- carrier that occurs in this face explicitly at the boundary.
+  letI : Algebra M.1
+      (Pic0FiniteStageChartModelRing C L n m relation M U) :=
+    faceChartModelRingAlgebra C L n m relation M U
+  letI : Algebra M.1
+      (Pic0FiniteStageChartModelRing C L n m relation M V) :=
+    faceChartModelRingAlgebra C L n m relation M V
+  letI : Algebra M.1
+      (Pic0FiniteStageChartModelRing C L n m relation M W) :=
+    faceChartModelRingAlgebra C L n m relation M W
+  letI : Algebra M.1
+      (Pic0FiniteStageOverlapModelRing C L n m relation M U V) :=
+    faceOverlapModelRingAlgebra C L n m relation M U V
+  letI : Algebra M.1
+      (Pic0FiniteStageOverlapModelRing C L n m relation M U W) :=
+    faceOverlapModelRingAlgebra C L n m relation M U W
+  letI : Algebra M.1
+      (Pic0FiniteStageOverlapModelRing C L n m relation M V U) :=
+    faceOverlapModelRingAlgebra C L n m relation M V U
+  letI : Algebra M.1
+      (Pic0FiniteStageOverlapModelRing C L n m relation M V W) :=
+    faceOverlapModelRingAlgebra C L n m relation M V W
   let right := pic0FiniteStageTripleModelFaceRight
     C L n m relation M mapM V W U
   let tau := mapM (Sum.inr (U, V))

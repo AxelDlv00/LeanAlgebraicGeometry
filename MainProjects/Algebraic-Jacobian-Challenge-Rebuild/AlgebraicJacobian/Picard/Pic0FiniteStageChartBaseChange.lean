@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.Pic0FiniteStageFinalBaseChange
+import AlgebraicJacobian.Picard.Pic0FiniteStageGluedOver
 
 /-!
 # Base change of the finite-stage Picard charts
@@ -45,8 +46,8 @@ theorem glueData_ι_gluedMap
         (algebraMap P.N.1
           (Pic0FiniteStageChartBaseChangeRing
             C P.L P.n P.m P.relation P.M P.N U))) := by
-  unfold gluedMap
-  exact Multicoequalizer.π_desc _ _ _ _ _
+  simpa only [gluedMap, gluedMapData_chartMap] using
+    P.gluedMapData.chartMap_factor U
 
 set_option synthInstance.maxHeartbeats 3200000 in
 -- The composite infers the same nested tensor-product instances as the ring comparison.

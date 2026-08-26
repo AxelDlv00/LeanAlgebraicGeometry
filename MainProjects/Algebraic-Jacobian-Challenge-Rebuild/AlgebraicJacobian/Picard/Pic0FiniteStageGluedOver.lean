@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.Pic0FiniteStageGluePackage
+import AlgebraicJacobian.Descent.GluedMapData
 
 /-!
 # The finite-stage Picard glue as a scheme over its field of definition
@@ -36,10 +37,10 @@ set_option synthInstance.maxHeartbeats 3200000 in
 -- Projecting the dependent scalar towers from `P` requires a larger local synthesis budget.
 set_option maxHeartbeats 12800000 in
 /-- The structure map from the finite-stage glued scheme to its field of definition. -/
-noncomputable def gluedMap
+noncomputable def gluedMapData
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F) :
-    P.glueData.glued ⟶ Spec (.of P.N.1) := by
+    AlgebraicJacobian.GluedMapData P.glueData (Spec (.of P.N.1)) := by
   letI : Algebra.IsAlgebraic P.L.1 k := by infer_instance
   letI : Algebra.IsAlgebraic P.M.1 k := by infer_instance
   let A : Pic0FiniteStageChartIndex C -> Type u := fun U =>
@@ -97,11 +98,11 @@ noncomputable def gluedMap
   let tau : ∀ U V, B V U →ₐ[P.N.1] B U V := fun U V =>
     pic0FiniteStageTransitionBaseChange
       C P.L P.n P.m P.relation P.M P.mapM P.N U V
-  fapply Multicoequalizer.desc
+  refine AlgebraicJacobian.GluedMapData.ofChartMaps ?_ ?_
   · intro U
     change Pic0FiniteStageChartIndex C at U
     exact Spec.map (CommRingCat.ofHom (algebraMap P.N.1 (A U)))
-  · rintro ⟨U, V⟩
+  · intro U V
     change Pic0FiniteStageChartIndex C at U V
     change
       Spec.map (CommRingCat.ofHom (algebraMap (A U) (B U V))) ≫
@@ -120,6 +121,25 @@ noncomputable def gluedMap
     rw [← IsScalarTower.algebraMap_apply P.N.1 (A U) (B U V)]
     rw [← IsScalarTower.algebraMap_apply P.N.1 (A V) (B V U)]
     exact (tau U V).commutes x |>.symm
+
+/-- The structure map from the finite-stage glued scheme to its field of definition. -/
+noncomputable def gluedMap
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F) :
+    P.glueData.glued ⟶ Spec (.of P.N.1) :=
+  P.gluedMapData.map
+
+@[simp]
+theorem gluedMapData_chartMap
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F)
+    (U : Pic0FiniteStageChartIndex C) :
+    P.gluedMapData.chartMap U =
+      Spec.map (CommRingCat.ofHom
+        (algebraMap P.N.1
+          (Pic0FiniteStageChartBaseChangeRing
+            C P.L P.n P.m P.relation P.M P.N U))) := by
+  rfl
 
 /-- The finite-stage Picard glue, retained over the finite field `P.N.1`. -/
 noncomputable def gluedOver
