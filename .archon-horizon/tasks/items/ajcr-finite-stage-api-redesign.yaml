@@ -1,0 +1,30 @@
+id: ajcr-finite-stage-api-redesign
+project: Algebraic-Jacobian-Challenge-Rebuild
+objective: Recent runs appear to be looping on formalization rather than making mathematical
+  progress. This is likely caused by poorly designed Lean APIs that make downstream
+  use unstable. Inspect recent run logs, reports, and the current code to identify
+  those APIs, then rewrite them with higher quality—substantial refactoring is allowed
+  if needed—so later work can proceed stably.
+title: 'AJCR: diagnose and rewrite unstable formalization APIs'
+explanation: ''
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+priority: urgent
+status: running
+write_set:
+  files: []
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+roadmap_refs: []
+inbox_refs: []
+artifact_refs: []
+created_at: '2026-08-26T02:00:38.014890+00:00'
+updated_at: '2026-08-26T14:09:22.144699+00:00'
+metadata:
+  author: human
