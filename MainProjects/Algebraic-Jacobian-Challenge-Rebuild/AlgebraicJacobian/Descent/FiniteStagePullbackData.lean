@@ -243,6 +243,46 @@ def id : PullbackMapData P P where
 theorem map_id : (PullbackMapData.id (P := P)).map = 𝟙 P.pt := by
   apply P.hom_ext <;> simp [PullbackMapData.id]
 
+/-- Comparison isomorphisms are natural for square data with the same two legs.
+
+The source and target pullback cones may be chosen independently.  If two induced maps
+use equal left and right legs, this equation transports the map across both canonical
+comparison isomorphisms. -/
+theorem comparison_naturality
+    {P P' : PullbackData f₁ g₁} {Q Q' : PullbackData f₂ g₂}
+    (m : PullbackMapData P Q) (m' : PullbackMapData P' Q')
+    (hleft : m.left = m'.left) (hright : m.right = m'.right) :
+    (P.comparison P').hom ≫ m'.map = m.map ≫ (Q.comparison Q').hom := by
+  apply Q'.hom_ext
+  · calc
+      ((P.comparison P').hom ≫ m'.map) ≫ Q'.fst =
+          (P.comparison P').hom ≫ (m'.map ≫ Q'.fst) := Category.assoc _ _ _
+      _ = (P.comparison P').hom ≫ (P'.fst ≫ m'.left) := by
+        rw [PullbackMapData.map_fst]
+      _ = ((P.comparison P').hom ≫ P'.fst) ≫ m'.left :=
+        (Category.assoc _ _ _).symm
+      _ = P.fst ≫ m'.left := by rw [PullbackData.comparison_hom_fst]
+      _ = P.fst ≫ m.left := by rw [hleft]
+      _ = m.map ≫ Q.fst := by rw [PullbackMapData.map_fst]
+      _ = m.map ≫ ((Q.comparison Q').hom ≫ Q'.fst) := by
+        rw [PullbackData.comparison_hom_fst]
+      _ = (m.map ≫ (Q.comparison Q').hom) ≫ Q'.fst :=
+        (Category.assoc _ _ _).symm
+  · calc
+      ((P.comparison P').hom ≫ m'.map) ≫ Q'.snd =
+          (P.comparison P').hom ≫ (m'.map ≫ Q'.snd) := Category.assoc _ _ _
+      _ = (P.comparison P').hom ≫ (P'.snd ≫ m'.right) := by
+        rw [PullbackMapData.map_snd]
+      _ = ((P.comparison P').hom ≫ P'.snd) ≫ m'.right :=
+        (Category.assoc _ _ _).symm
+      _ = P.snd ≫ m'.right := by rw [PullbackData.comparison_hom_snd]
+      _ = P.snd ≫ m.right := by rw [hright]
+      _ = m.map ≫ Q.snd := by rw [PullbackMapData.map_snd]
+      _ = m.map ≫ ((Q.comparison Q').hom ≫ Q'.snd) := by
+        rw [PullbackData.comparison_hom_snd]
+      _ = (m.map ≫ (Q.comparison Q').hom) ≫ Q'.snd :=
+        (Category.assoc _ _ _).symm
+
 end PullbackMapData
 
 end
