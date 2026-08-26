@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.TensorFiniteSubextension
+import AlgebraicJacobian.Picard.FiniteStageData
 import AlgebraicJacobian.Cohomology.DatumDescent
 import AlgebraicJacobian.Picard.DivisorFamilyWindowBaseChange
 
@@ -75,6 +76,34 @@ theorem BasicOpenCocycleDatum.exists_finSubext_tensorStage
   dsimp only
   exact ⟨D₀.baseChange (M.1 ⊗[F] B),
     (D₀.baseChange_baseChange C (A₀ : Type u) (M.1 ⊗[F] B) (K ⊗[F] B)).trans hD₀⟩
+
+/-- Package the finite tensor-stage descent witness as `FiniteStageData`.
+
+This is an additive adapter for consumers that need to retain the stage and
+its finite-dimensionality witness as a single object.  The explicit local
+instances mirror `exists_finSubext_tensorStage`, so the resulting datum has
+the same canonical tensor-stage map.
+-/
+theorem BasicOpenCocycleDatum.exists_finiteStageData_tensorStage
+    {F K B : Type u} [Field F] [Field K] [Algebra F K] [Algebra.IsAlgebraic F K]
+    [CommRing B] [Algebra F B]
+    {C : Over (Spec (.of F))} {pi : C.left ⟶ P1 F} [IsAffineHom pi]
+    (D : BasicOpenCocycleDatum C (K ⊗[F] B) pi) :
+    ∃ S : DatG0.FiniteStageData F K,
+      letI : Algebra F (S.stage ⊗[F] B) := Algebra.TensorProduct.instAlgebra
+      let ι : S.stage ⊗[F] B →ₐ[F] K ⊗[F] B :=
+        Algebra.TensorProduct.map S.inclusion (AlgHom.id F B)
+      letI : Algebra (S.stage ⊗[F] B) (K ⊗[F] B) := ι.toAlgebra
+      letI : IsScalarTower F (S.stage ⊗[F] B) (K ⊗[F] B) :=
+        @IsScalarTower.of_algebraMap_eq F (S.stage ⊗[F] B) (K ⊗[F] B)
+          inferInstance inferInstance inferInstance inferInstance inferInstance inferInstance
+          (fun x => (ι.commutes x).symm)
+      ∃ D_M : BasicOpenCocycleDatum C (S.stage ⊗[F] B) pi,
+        D_M.baseChange (K ⊗[F] B) = D := by
+  obtain ⟨M, hM⟩ := D.exists_finSubext_tensorStage
+  refine ⟨DatG0.FiniteStageData.ofFinSubext M, ?_⟩
+  dsimp [DatG0.FiniteStageData.ofFinSubext]
+  exact hM
 
 end
 
