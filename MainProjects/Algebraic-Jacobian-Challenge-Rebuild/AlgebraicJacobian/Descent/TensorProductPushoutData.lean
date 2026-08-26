@@ -319,6 +319,16 @@ structure TensorProductPushoutData
     letI := C.leftAlgebra
     letI := C.rightAlgebra
     tensorProductPushoutSourceCarrier M K A B₁ B₂ ≃ₐ[K] C.target
+  /-- The forward map agrees with the chosen equivalence. -/
+  hom_equiv :
+    letI := C.leftAlgebra
+    letI := C.rightAlgebra
+    hom = equiv.toAlgHom
+  /-- The inverse map agrees with the inverse of the chosen equivalence. -/
+  inv_equiv :
+    letI := C.leftAlgebra
+    letI := C.rightAlgebra
+    inv = equiv.symm.toAlgHom
 
 /-- The canonical tensor pushout data package. -/
 noncomputable def tensorProductPushoutData :
@@ -337,7 +347,9 @@ noncomputable def tensorProductPushoutData :
       inv := tensorProductPushoutBaseChangeInvPinned
         (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)
       equiv := tensorProductPushoutBaseChangeEquivPinned
-        (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂) }
+        (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)
+      hom_equiv := by rfl
+      inv_equiv := by rfl }
 
 /-- The source carrier of a data package. -/
 abbrev TensorProductPushoutData.source
