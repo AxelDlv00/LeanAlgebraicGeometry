@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Descent.TensorProductPushoutBaseChange
+import AlgebraicJacobian.Descent.TensorProductPushoutData
 import AlgebraicJacobian.Descent.TensorProductFiniteType
 import AlgebraicJacobian.Picard.Pic0FiniteStageTransitionModels
 
@@ -330,7 +331,10 @@ noncomputable def pic0FiniteStageTensorPushoutBaseChange
   letI : Algebra A B₂ := pic0FiniteStageAlgebraOfMap f₂
   letI : IsScalarTower R A B₁ := pic0FiniteStageTowerOfMap f₁
   letI : IsScalarTower R A B₂ := pic0FiniteStageTowerOfMap f₂
-  exact AlgebraicJacobian.tensorProductPushoutBaseChange
+  -- Freeze the scalar-extension algebra witnesses once.  The old entry point
+  -- reconstructs these `Algebra` instances in its dependent result type;
+  -- the pinned facade keeps the carrier stable for downstream face maps.
+  exact AlgebraicJacobian.tensorProductPushoutBaseChangeEquivPinned
     (M := R) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)
 
 /-- The descended model of the coordinate ring of a chart. -/
