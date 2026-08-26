@@ -222,6 +222,47 @@ theorem exists_finSubext_fg_subalgebra_tensorProduct_factor
   change ι (e.symm ⟨a.1, hArange a.2⟩) = a.1
   exact congrArg Subtype.val (e.apply_symm_apply ⟨a.1, hArange a.2⟩)
 
+/-! ## Bundled finite tensor factors -/
+
+/-- A finitely generated tensor subalgebra together with its pinned finite factor.
+
+The legacy factorization theorem returns the finite stage, factor map, and compatibility
+equation as nested witnesses.  This record retains the canonical tensor map alongside those
+witnesses, so downstream consumers can use one stable carrier without re-synthesizing its
+`AlgHom` structure.
+-/
+structure FinSubextTensorFactorData
+    (F K B : Type u) [Field F] [Field K] [Algebra F K]
+    [CommRing B] [Algebra F B]
+    (A₀ : Subalgebra F (K ⊗[F] B)) where
+  stage : FinSubext F K
+  map : stage.1 ⊗[F] B →ₐ[F] K ⊗[F] B
+  map_spec : map = Algebra.TensorProduct.map stage.1.val (AlgHom.id F B)
+  factor : A₀ →ₐ[F] stage.1 ⊗[F] B
+  factor_spec : map.comp factor = A₀.val
+
+namespace FinSubextTensorFactorData
+
+/-- Package the raw finitely generated tensor-factor theorem. -/
+theorem of_raw
+    {F K B : Type u} [Field F] [Field K] [Algebra F K]
+    [Algebra.IsAlgebraic F K] [CommRing B] [Algebra F B]
+    (A₀ : Subalgebra F (K ⊗[F] B)) (hA₀ : A₀.FG) :
+    Nonempty (FinSubextTensorFactorData F K B A₀) := by
+  obtain ⟨M, f, hf⟩ :=
+    exists_finSubext_fg_subalgebra_tensorProduct_factor A₀ hA₀
+  let map : M.1 ⊗[F] B →ₐ[F] K ⊗[F] B :=
+    Algebra.TensorProduct.map M.1.val (AlgHom.id F B)
+  refine ⟨{
+    stage := M
+    map := map
+    map_spec := by rfl
+    factor := f
+    factor_spec := ?_ }⟩
+  simpa only [map] using hf
+
+end FinSubextTensorFactorData
+
 /-- A finite family of tensor equalities that holds over `K` already holds over one common
 finite subextension containing the original stage. -/
 theorem exists_finSubext_tensorProduct_eq_finite
