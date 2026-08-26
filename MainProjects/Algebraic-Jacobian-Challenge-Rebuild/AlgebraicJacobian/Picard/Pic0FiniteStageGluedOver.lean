@@ -122,12 +122,81 @@ noncomputable def gluedMapData
     rw [← IsScalarTower.algebraMap_apply P.N.1 (A V) (B V U)]
     exact (tau U V).commutes x |>.symm
 
+/-- The finite-stage glue datum and its structure map, retained as one dependent value.
+
+The `mapData` field is indexed by `P.glueData` itself.  This is intentional: consumers can
+pass the package projections together without transporting a map across a propositionally
+equal copy of the glue datum or rebuilding the chart-factor proof.
+-/
+structure GluedOverData
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F) where
+  mapData : AlgebraicJacobian.GluedMapData P.glueData (Spec (.of P.N.1))
+
+namespace GluedOverData
+
+/-- The exact glue datum indexed by the packaged map. -/
+abbrev glueData
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    {P : Pic0FiniteStageGluePackage C F}
+    (_Q : GluedOverData C P) : Scheme.GlueData :=
+  P.glueData
+
+/-- The map carried by the packaged glue datum. -/
+def map
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    {P : Pic0FiniteStageGluePackage C F}
+    (Q : GluedOverData C P) : P.glueData.glued ⟶ Spec (.of P.N.1) :=
+  Q.mapData.map
+
+/-- The packaged glue as an object of the slice over its finite-stage field. -/
+def over
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    {P : Pic0FiniteStageGluePackage C F}
+    (Q : GluedOverData C P) : Over (Spec (.of P.N.1)) :=
+  Over.mk Q.map
+
+@[simp]
+theorem map_eq
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    {P : Pic0FiniteStageGluePackage C F}
+    (Q : GluedOverData C P) : Q.map = Q.mapData.map :=
+  rfl
+
+@[simp]
+theorem chartMap
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    {P : Pic0FiniteStageGluePackage C F}
+    (Q : GluedOverData C P) (U : Pic0FiniteStageChartIndex C) :
+    Q.mapData.chartMap U =
+      Spec.map (CommRingCat.ofHom
+        (algebraMap P.N.1
+          (Pic0FiniteStageChartBaseChangeRing
+            C P.L P.n P.m P.relation P.M P.N U))) := by
+  rfl
+
+/-- The chart-factor equation exposed without opening the generic map package. -/
+theorem chartMap_factor
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    {P : Pic0FiniteStageGluePackage C F}
+    (Q : GluedOverData C P) (U : Pic0FiniteStageChartIndex C) :
+    P.glueData.ι U ≫ Q.map = Q.mapData.chartMap U := by
+  exact Q.mapData.chartMap_factor U
+
+end GluedOverData
+
+/-- The canonical finite-stage glue package, built once from `P.gluedMapData`. -/
+noncomputable def gluedOverData
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F) : GluedOverData C P :=
+  ⟨P.gluedMapData⟩
+
 /-- The structure map from the finite-stage glued scheme to its field of definition. -/
 noncomputable def gluedMap
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F) :
     P.glueData.glued ⟶ Spec (.of P.N.1) :=
-  P.gluedMapData.map
+  P.gluedOverData.map
 
 @[simp]
 theorem gluedMapData_chartMap
@@ -145,7 +214,7 @@ theorem gluedMapData_chartMap
 noncomputable def gluedOver
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (P : Pic0FiniteStageGluePackage C F) : Over (Spec (.of P.N.1)) :=
-  Over.mk P.gluedMap
+  P.gluedOverData.over
 
 end Pic0FiniteStageGluePackage
 
