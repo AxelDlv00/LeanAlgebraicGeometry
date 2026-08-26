@@ -1,0 +1,11 @@
+id: '0162'
+focus:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  task: ajcr-finite-stage-api-redesign
+  tasks:
+  - ajcr-finite-stage-api-redesign
+rounds_requested: 1
+start_round: 0
+created_at: '2026-08-26T02:10:01.390140+00:00'
+metadata: {}
