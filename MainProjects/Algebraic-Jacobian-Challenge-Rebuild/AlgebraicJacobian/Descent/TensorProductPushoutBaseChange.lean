@@ -392,6 +392,151 @@ theorem tensorProductPushoutBaseChange_symm_tmul {M K A B₁ B₂ : Type u}
       ((k₁ ⊗ₜ[M] b₁) ⊗ₜ[K ⊗[M] A] (k₂ ⊗ₜ[M] b₂)) = _
   exact tensorProductPushoutBaseChangeInvHom_tmul k₁ k₂ b₁ b₂
 
+/-! ## Core pinned package
+
+The definitions above predate the data facade and expose their generated tensor-product
+`Algebra` instances through nested `letI` expressions.  The following small package keeps
+those two witnesses as parameters of one object, so a lower-layer consumer can carry the
+equivalence without recreating the dependent target type at every call site.
+-/
+
+section PinnedPackage
+
+variable {M K A B₁ B₂ : Type u}
+variable [CommRing M] [CommRing K] [CommRing A] [CommRing B₁] [CommRing B₂]
+variable [Algebra M K] [Algebra M A]
+variable [Algebra A B₁] [Algebra A B₂]
+variable [Algebra M B₁] [Algebra M B₂]
+variable [IsScalarTower M A B₁] [IsScalarTower M A B₂]
+
+/-- A scalar-extension pushout equivalence with its two target algebra witnesses pinned.
+
+The witnesses are explicit parameters of the package rather than locally regenerated
+instances.  This is intentionally a small core object; richer carrier/map records can
+decorate it in modules that also need the factor inclusions.
+-/
+structure TensorProductPushoutBaseChangePackage
+    (leftAlgebra : Algebra (K ⊗[M] A) (K ⊗[M] B₁))
+    (rightAlgebra : Algebra (K ⊗[M] A) (K ⊗[M] B₂)) where
+  equivalence :
+    letI := leftAlgebra
+    letI := rightAlgebra
+    (K ⊗[M] (B₁ ⊗[A] B₂)) ≃ₐ[K]
+      ((K ⊗[M] B₁) ⊗[K ⊗[M] A] (K ⊗[M] B₂))
+
+namespace TensorProductPushoutBaseChangePackage
+
+/-- The source carrier of a pinned package. -/
+abbrev source
+    {leftAlgebra : Algebra (K ⊗[M] A) (K ⊗[M] B₁)}
+    {rightAlgebra : Algebra (K ⊗[M] A) (K ⊗[M] B₂)}
+    (_P : TensorProductPushoutBaseChangePackage
+      (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)
+      leftAlgebra rightAlgebra) : Type u :=
+  K ⊗[M] (B₁ ⊗[A] B₂)
+
+/-- The target carrier of a pinned package. -/
+abbrev target
+    {leftAlgebra : Algebra (K ⊗[M] A) (K ⊗[M] B₁)}
+    {rightAlgebra : Algebra (K ⊗[M] A) (K ⊗[M] B₂)}
+    (_P : TensorProductPushoutBaseChangePackage
+      (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)
+      leftAlgebra rightAlgebra) : Type u :=
+  letI := leftAlgebra
+  letI := rightAlgebra
+  (K ⊗[M] B₁) ⊗[K ⊗[M] A] (K ⊗[M] B₂)
+
+/-- The forward map carried by a pinned package. -/
+noncomputable def hom
+    {leftAlgebra : Algebra (K ⊗[M] A) (K ⊗[M] B₁)}
+    {rightAlgebra : Algebra (K ⊗[M] A) (K ⊗[M] B₂)}
+    (P : TensorProductPushoutBaseChangePackage
+      (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)
+      leftAlgebra rightAlgebra) :
+    letI := leftAlgebra
+    letI := rightAlgebra
+    P.source →ₐ[K] P.target :=
+  P.equivalence.toAlgHom
+
+/-- The inverse map carried by a pinned package. -/
+noncomputable def inv
+    {leftAlgebra : Algebra (K ⊗[M] A) (K ⊗[M] B₁)}
+    {rightAlgebra : Algebra (K ⊗[M] A) (K ⊗[M] B₂)}
+    (P : TensorProductPushoutBaseChangePackage
+      (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)
+      leftAlgebra rightAlgebra) :
+    letI := leftAlgebra
+    letI := rightAlgebra
+    P.target →ₐ[K] P.source :=
+  P.equivalence.symm.toAlgHom
+
+omit [IsScalarTower M A B₂] in
+@[simp]
+theorem hom_inv
+    {leftAlgebra : Algebra (K ⊗[M] A) (K ⊗[M] B₁)}
+    {rightAlgebra : Algebra (K ⊗[M] A) (K ⊗[M] B₂)}
+    (P : TensorProductPushoutBaseChangePackage
+      (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)
+      leftAlgebra rightAlgebra) :
+    letI := leftAlgebra
+    letI := rightAlgebra
+    P.inv.comp P.hom = AlgHom.id K P.source := by
+  dsimp only [inv, hom]
+  apply DFunLike.ext _ _
+  intro x
+  exact P.equivalence.left_inv x
+
+omit [IsScalarTower M A B₂] in
+@[simp]
+theorem inv_hom
+    {leftAlgebra : Algebra (K ⊗[M] A) (K ⊗[M] B₁)}
+    {rightAlgebra : Algebra (K ⊗[M] A) (K ⊗[M] B₂)}
+    (P : TensorProductPushoutBaseChangePackage
+      (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)
+      leftAlgebra rightAlgebra) :
+    letI := leftAlgebra
+    letI := rightAlgebra
+    P.hom.comp P.inv = AlgHom.id K P.target := by
+  dsimp only [inv, hom]
+  apply DFunLike.ext _ _
+  intro x
+  exact P.equivalence.right_inv x
+
+end TensorProductPushoutBaseChangePackage
+
+/-- The canonical package associated with the scalar-extension maps in this file. -/
+noncomputable def tensorProductPushoutBaseChangePackage :
+    TensorProductPushoutBaseChangePackage
+      (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)
+      ((scalarExtensionMap (M := M) (K := K) (A := A) (B := B₁)).toRingHom.toAlgebra)
+      ((scalarExtensionMap (M := M) (K := K) (A := A) (B := B₂)).toRingHom.toAlgebra) := by
+  let leftAlgebra :=
+    (scalarExtensionMap (M := M) (K := K) (A := A) (B := B₁)).toRingHom.toAlgebra
+  let rightAlgebra :=
+    (scalarExtensionMap (M := M) (K := K) (A := A) (B := B₂)).toRingHom.toAlgebra
+  letI := leftAlgebra
+  letI := rightAlgebra
+  exact ⟨tensorProductPushoutBaseChange
+    (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)⟩
+
+@[simp]
+theorem tensorProductPushoutBaseChangePackage_tmul
+    (k : K) (b₁ : B₁) (b₂ : B₂) :
+    let leftAlgebra :=
+      (scalarExtensionMap (M := M) (K := K) (A := A) (B := B₁)).toRingHom.toAlgebra
+    let rightAlgebra :=
+      (scalarExtensionMap (M := M) (K := K) (A := A) (B := B₂)).toRingHom.toAlgebra
+    letI := leftAlgebra
+    letI := rightAlgebra
+    (tensorProductPushoutBaseChangePackage
+      (M := M) (K := K) (A := A) (B₁ := B₁) (B₂ := B₂)).equivalence
+        (k ⊗ₜ[M] (b₁ ⊗ₜ[A] b₂)) =
+      (k ⊗ₜ[M] b₁) ⊗ₜ[K ⊗[M] A] (1 ⊗ₜ[M] b₂) := by
+  dsimp only [tensorProductPushoutBaseChangePackage]
+  exact tensorProductPushoutBaseChange_tmul k b₁ b₂
+
+end PinnedPackage
+
 end
 
 end AlgebraicJacobian
