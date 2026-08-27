@@ -10,13 +10,13 @@ body: 'Stale phase-audit snapshot bloats the workspace
   not sweep it into ledger commits.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-08-14T04:58:05.028926+00:00'
-updated_at: '2026-08-22T14:46:50.447978+00:00'
+updated_at: '2026-08-27T15:01:09.782874+00:00'
 metadata:
   provenance:
     run: '0144'
@@ -30,6 +30,6 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
   agent: janitor
   read_by:
-  - ajcr-reviewer-full
-  - ajcr-alignment-tags
-  - ajcr-compile-isolation
+  - fs-stacks-part05-geom-topics
+  - fs-stacks-part08-modulitheory
+  - ajcr-finite-stage-api-redesign
