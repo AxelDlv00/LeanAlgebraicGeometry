@@ -95,6 +95,23 @@ theorem vanishingIdeal_commonZeroSet_eq_radical [IsAlgClosed k]
   rw [commonZeroSet_eq_zeroLocus, vanishingIdeal_eq_mvPolynomial]
   exact MvPolynomial.vanishingIdeal_zeroLocus_eq_radical I
 
+/-! The radical equality above is equivalent to the power-membership form used
+in Hartshorne's statement of the affine Nullstellensatz. -/
+
+/-- Hilbert's Nullstellensatz: a polynomial vanishing on `V(I)` has a positive
+power in `I`. -/
+theorem hilbertNullstellensatz [IsAlgClosed k]
+    (I : Ideal (AffinePolynomial k n)) (f : AffinePolynomial k n)
+    (hf : ∀ P ∈ commonZeroSet k n (I : Set (AffinePolynomial k n)),
+      evaluate k n f P = 0) :
+    ∃ r : ℕ, 0 < r ∧ f ^ r ∈ I := by
+  have hfvan : f ∈ vanishingIdeal k n
+      (commonZeroSet k n (I : Set (AffinePolynomial k n))) := hf
+  rw [vanishingIdeal_commonZeroSet_eq_radical] at hfvan
+  rcases (Ideal.mem_radical_iff.mp hfvan) with ⟨m, hm⟩
+  refine ⟨m + 1, Nat.zero_lt_succ m, ?_⟩
+  simpa [pow_succ] using I.mul_mem_right f hm
+
 /-- The affine coordinate ring of an algebraic set is the quotient by its
 vanishing ideal. -/
 abbrev AffineCoordinateRing (Y : Set (AffinePoint k n)) :=
