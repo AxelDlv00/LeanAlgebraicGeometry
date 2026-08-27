@@ -1,4 +1,5 @@
 import StacksPart03Lib.Basic
+import StacksPart03Lib.Periodic
 
 /-!
 # StacksPart03Lib
