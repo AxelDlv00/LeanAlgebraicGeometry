@@ -52,7 +52,7 @@ theorem map_homOfRel (r : Setoid α) (s : Setoid β) (f : α → β)
       homOfRel s (hf h) := by
   rfl
 
-/-! Relation functors compose by composing their object maps and proofs. -/
+/-- Relation functors compose by composing their object maps and proofs. -/
 def mapComp (r : Setoid α) (s : Setoid β) (t : Setoid γ)
     (f : α → β) (g : β → γ)
     (hf : ∀ ⦃x y : α⦄, r.r x y → s.r (f x) (f y))
@@ -70,7 +70,7 @@ end RelationCategory
 
 namespace RelationQuotient
 
-/-! The map on orbit quotients induced by a relation-preserving map. -/
+/-- The map on orbit quotients induced by a relation-preserving map. -/
 def map (r : Setoid α) (s : Setoid β) (f : α → β)
     (hf : ∀ ⦃x y : α⦄, r.r x y → s.r (f x) (f y)) :
     Quotient r → Quotient s :=
@@ -81,7 +81,7 @@ theorem map_mk (r : Setoid α) (s : Setoid β) (f : α → β)
     (hf : ∀ ⦃x y : α⦄, r.r x y → s.r (f x) (f y)) (x : α) :
     map r s f hf (Quotient.mk r x) = Quotient.mk s (f x) := rfl
 
-/-! Quotienting after the identity relation map gives the identity map. -/
+/-- Quotienting after the identity relation map gives the identity map. -/
 @[simp]
 theorem map_id (r : Setoid α) :
     map r r id (fun {_ _} h => h) = id := by
@@ -90,7 +90,7 @@ theorem map_id (r : Setoid α) :
   intro x
   rfl
 
-/-! Quotient maps induced by relation-preserving maps compose. -/
+/-- Quotient maps induced by relation-preserving maps compose. -/
 theorem map_comp (r : Setoid α) (s : Setoid β) (t : Setoid γ)
     (f : α → β) (g : β → γ)
     (hf : ∀ ⦃x y : α⦄, r.r x y → s.r (f x) (f y))
@@ -102,7 +102,7 @@ theorem map_comp (r : Setoid α) (s : Setoid β) (t : Setoid γ)
   intro x
   rfl
 
-/-! Orbit-quotient maps commute with the canonical quotient projections. -/
+/-- Orbit-quotient maps commute with the canonical quotient projections. -/
 theorem map_mk_comp (r : Setoid α) (s : Setoid β) (f : α → β)
     (hf : ∀ ⦃x y : α⦄, r.r x y → s.r (f x) (f y)) :
     map r s f hf ∘ Quotient.mk r = Quotient.mk s ∘ f := by
