@@ -42,7 +42,7 @@ theorem scheme_standardOpen_isAffine
     IsAffine (X.basicOpen f) := by
   infer_instance
 
-/-- Two affine opens admit a common affine standard-open neighbourhood
+/-- Two affine opens have a common affine standard-open neighbourhood
 (Stacks, Tag 01IW). -/
 theorem scheme_standardOpen_two_affines
     (X : Scheme.{u}) {U V : X.Opens} (hU : IsAffineOpen U) (hV : IsAffineOpen V)
