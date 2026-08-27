@@ -14,7 +14,8 @@ extraction idempotent.  Final `horizon check StacksPart05Lib` passed with 2502
 jobs; source/axiom audits found no `sorry`, `admit`, or project axioms.  Hgraph
 sync is clean at 822 nodes (774 blueprint, 48 Lean), 282 edges, and zero stale
 nodes; its 48 unattached Lean declarations are expected because the blueprint
-is frozen without `\\lean` links.  Task checkpoint comments are in `647864d27e`.
+is frozen without `\\lean` links.  Task checkpoint comments are in
+`3ddb102b32` and `647864d27e`.
 
 ## Issues
 
