@@ -6,6 +6,7 @@ Authors: The StacksPart08Lib Contributors
 
 import StacksPart08Lib.ModuliCurves
 import StacksPart08Lib.Numerical
+import StacksPart08Lib.Representability
 
 /-!
 # StacksPart08Lib.Basic
