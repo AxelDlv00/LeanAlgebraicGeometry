@@ -85,6 +85,16 @@ theorem closed_subset_of_quasiCompact_space {X : Type*} [TopologicalSpace X]
     IsQuasiCompact t := by
   exact closed_subset_quasiCompact hX ht (Set.subset_univ t)
 
+/-- A family of closed subsets of a quasi-compact space with the finite
+intersection property has nonempty total intersection (Stacks, Tag 005D). -/
+theorem iInter_nonempty_of_closed_finite_intersections {X : Type*}
+    [TopologicalSpace X] (hX : QuasiCompactSpace X) {ι : Type*}
+    (Z : ι → Set X) (hZ : ∀ i, IsClosed (Z i))
+    (hfinite : ∀ s : Finset ι, (⋂ i ∈ s, Z i).Nonempty) :
+    (⋂ i, Z i).Nonempty := by
+  letI : CompactSpace X := ⟨hX⟩
+  exact CompactSpace.iInter_nonempty hZ hfinite
+
 /-- In a compact Hausdorff space, quasi-compact subsets are exactly closed
 subsets (Stacks, Tag 08YC). -/
 theorem quasiCompact_iff_closed {X : Type*} [TopologicalSpace X]
@@ -100,6 +110,14 @@ theorem quasiCompact_iff_closed {X : Type*} [TopologicalSpace X]
 theorem quasiCompact_isClosed {X : Type*} [TopologicalSpace X]
     [T2Space X] {s : Set X} (hs : IsQuasiCompact s) : IsClosed s := by
   exact hs.isClosed
+
+/-- Disjoint quasi-compact subsets of a Hausdorff space admit disjoint
+neighbourhoods (Stacks, Tag 08YB). -/
+theorem separatedNhds_of_disjoint_quasiCompact {X : Type*}
+    [TopologicalSpace X] [T2Space X] {s t : Set X}
+    (hs : IsQuasiCompact s) (ht : IsQuasiCompact t)
+    (hdis : Disjoint s t) : SeparatedNhds s t := by
+  exact SeparatedNhds.of_isCompact_isCompact hs ht hdis
 
 /-- Finite unions of quasi-compact subsets are quasi-compact. -/
 theorem quasiCompact_union {X : Type*} [TopologicalSpace X]
