@@ -11,6 +11,7 @@
 - I.5.11 remains open at the sheaf layer: coherent stalks must be shown finite, residue fibres identified with maximal-ideal quotients, and the invertible-sheaf conclusion derived.
 - Graph sync reports 14 intentionally unattached helper declarations; the relevant boundaries are documented on I.5.11 rather than claimed as complete blueprint nodes.
 - The workspace task queue remains above its advisory limit. The janitor audited it this session and found no Milne-specific action; unrelated task decisions were left to their owners.
+- Shared-index pollution caused an unrelated run's `git add -A` to capture this report and task comment in `5e9d03e264` before the intended path-only commit. The files are intact; this recurrence is tracked by inbox issue I-2039.
 
 ## Why I stopped
 
