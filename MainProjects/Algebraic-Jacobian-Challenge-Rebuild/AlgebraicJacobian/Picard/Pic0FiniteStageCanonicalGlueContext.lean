@@ -38,7 +38,7 @@ variable {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
 /-! ## The canonical comparison family -/
 
 /-- The comparison family determined by one bundled transition-model datum. -/
-noncomputable def canonicalComparisonFamily
+noncomputable opaque canonicalComparisonFamily
     (D : Pic0FiniteStageTransitionModelsData C F) :
     ∀ q : Pic0FiniteStageTripleTransitionIndex C,
       k ⊗[D.M.1] Pic0FiniteStageTripleTransitionModelTarget
