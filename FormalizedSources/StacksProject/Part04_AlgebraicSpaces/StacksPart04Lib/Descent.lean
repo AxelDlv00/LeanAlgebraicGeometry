@@ -51,6 +51,19 @@ theorem ext {s t : DescentSection F} (h : ∀ X : C, s.value X = t.value X) : s 
       funext X
       exact h X
 
+/-- On a presentation connected from a chosen object, a compatible section is
+determined by its value at that object. -/
+theorem ext_of_component {X₀ : C}
+    (reachable : ∀ X : C, Nonempty (X₀ ⟶ X))
+    {s t : DescentSection F} (h₀ : s.value X₀ = t.value X₀) : s = t := by
+  apply ext
+  intro X
+  obtain ⟨f⟩ := reachable X
+  calc
+    s.value X = F.map f (s.value X₀) := (s.compatible f).symm
+    _ = F.map f (t.value X₀) := congrArg (fun z => F.map f z) h₀
+    _ = t.value X := t.compatible f
+
 /-! ### Groupoid transport -/
 
 /-- Compatibility in the reverse direction is automatic for a groupoid: use
