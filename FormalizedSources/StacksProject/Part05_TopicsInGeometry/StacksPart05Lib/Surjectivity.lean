@@ -29,6 +29,16 @@ def schemeSurjective : MorphismProperty Scheme :=
 theorem schemeSurjective_iff {X Y : Scheme} (f : X ⟶ Y) :
     schemeSurjective f ↔ AlgebraicGeometry.Surjective f := Iff.rfl
 
+/-- A scheme morphism is surjective exactly when its underlying map has full range. -/
+theorem scheme_surjective_iff_range_eq_univ {X Y : Scheme} (f : X ⟶ Y) :
+    schemeSurjective f ↔ Set.range f = Set.univ := by
+  constructor
+  · intro h
+    letI : AlgebraicGeometry.Surjective f := h
+    exact AlgebraicGeometry.range_eq_univ f
+  · intro h
+    exact ⟨Set.range_eq_univ.mp h⟩
+
 /-- Surjectivity is preserved by composition of scheme morphisms. -/
 theorem scheme_surjective_comp {X Y Z : Scheme} (f : X ⟶ Y) (g : Y ⟶ Z)
     [AlgebraicGeometry.Surjective f] [AlgebraicGeometry.Surjective g] :
