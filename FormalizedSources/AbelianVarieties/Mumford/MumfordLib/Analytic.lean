@@ -40,6 +40,18 @@ theorem mem_productTorus_torsion_iff {d : Type*} {n : ℕ} (x : ProductTorus d) 
     funext i
     exact hx i
 
+/-- Membership in integer-scalar torsion of a product torus is coordinatewise. -/
+theorem mem_productTorus_zsmul_torsion_iff {d : Type*} {n : ℤ} (x : ProductTorus d) :
+    x ∈ {x : ProductTorus d | n • x = 0} ↔ ∀ i, n • x i = 0 := by
+  constructor
+  · intro hx i
+    have hi := congrFun hx i
+    simpa only [Pi.smul_apply, Pi.zero_apply] using hi
+  · intro hx
+    change n • x = 0
+    funext i
+    exact hx i
+
 /-- The `n`-torsion of a finite product torus is finite. -/
 theorem productTorus_torsion_finite {d : Type*} [Finite d] {n : ℕ} (hn : 0 < n) :
     {x : ProductTorus d | n • x = 0}.Finite := by
