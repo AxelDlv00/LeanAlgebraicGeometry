@@ -109,6 +109,16 @@ def genusRealVectorQuotientAddEquiv (g : ℕ) :
     GenusRealVector g ⧸ integerPeriodLattice g ≃+ GenusTorus g :=
   (standardGenusTorusPeriodLatticeQuotient g).quotientAddEquiv
 
+/-- The standard quotient equivalence evaluates on a representative by the
+coordinatewise additive exponential. -/
+@[simp]
+theorem genusRealVectorQuotientAddEquiv_mk (g : ℕ) (v : GenusRealVector g) :
+    genusRealVectorQuotientAddEquiv g
+        (QuotientAddGroup.mk' (integerPeriodLattice g) v) =
+      genusTorusExponential g v := by
+  exact PeriodLatticeQuotient.quotientAddEquiv_mk
+    (standardGenusTorusPeriodLatticeQuotient g) v
+
 /-- The standard real exponential transported to a chosen uniformized group. -/
 def exponential_to {X : Type*} [AddCommGroup X] {g : ℕ}
     (u : GenusTorusUniformization X g) : GenusRealVector g →+ X :=
@@ -160,6 +170,28 @@ def uniformizedQuotientAddEquiv {X : Type*} [AddCommGroup X] {g : ℕ}
     (u : GenusTorusUniformization X g) :
     GenusRealVector g ⧸ integerPeriodLattice g ≃+ X :=
   (uniformizedPeriodLatticeQuotient u).quotientAddEquiv
+
+/-- The transported quotient equivalence evaluates on representatives by the
+transported exponential map. -/
+@[simp]
+theorem uniformizedQuotientAddEquiv_mk {X : Type*} [AddCommGroup X] {g : ℕ}
+    (u : GenusTorusUniformization X g) (v : GenusRealVector g) :
+    uniformizedQuotientAddEquiv u
+        (QuotientAddGroup.mk' (integerPeriodLattice g) v) =
+      exponential_to u v := by
+  exact PeriodLatticeQuotient.quotientAddEquiv_mk
+    (uniformizedPeriodLatticeQuotient u) v
+
+/-- The quotient model for a chosen uniformization factors through the standard
+torus model and the chosen additive equivalence. -/
+theorem uniformizedQuotientAddEquiv_eq_trans {X : Type*} [AddCommGroup X] {g : ℕ}
+    (u : GenusTorusUniformization X g) :
+    uniformizedQuotientAddEquiv u =
+      (genusRealVectorQuotientAddEquiv g).trans u.equiv.symm := by
+  apply AddEquiv.ext
+  intro q
+  obtain ⟨v, rfl⟩ := QuotientAddGroup.mk'_surjective (integerPeriodLattice g) q
+  rfl
 
 end
 end Uniformization
