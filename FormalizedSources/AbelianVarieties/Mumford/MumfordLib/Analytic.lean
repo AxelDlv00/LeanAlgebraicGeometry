@@ -174,6 +174,159 @@ theorem productTorus_zsmul_torsion_card {d : Type*} [Fintype d] {n : ℤ} (hn : 
   rw [Nat.card_congr e]
   exact productTorus_torsion_card hpos
 
+/-!
+The torsion carriers are additive subgroups, so the preceding type
+equivalences can be upgraded to additive equivalences.  This is the group
+level form needed for the abstract-group statement in the blueprint.
+-/
+
+/-- The positive `n`-torsion additive subgroup of the unit additive circle. -/
+def unitAddCircle_torsionSubgroup (n : ℕ) : AddSubgroup UnitAddCircle where
+  carrier := {u : UnitAddCircle | n • u = 0}
+  zero_mem' := by simp
+  add_mem' := by
+    intro a b ha hb
+    simp only [Set.mem_setOf_eq] at ha hb ⊢
+    rw [nsmul_add, ha, hb, add_zero]
+  neg_mem' := by
+    intro a ha
+    simp only [Set.mem_setOf_eq] at ha ⊢
+    rw [neg_nsmul, ha, neg_zero]
+
+/-- The unit-circle torsion subgroup is additively equivalent to `ZMod n`. -/
+def unitAddCircle_torsion_addEquiv_zmod {n : ℕ} (hn : 0 < n) :
+    unitAddCircle_torsionSubgroup n ≃+ ZMod n := by
+  letI : NeZero n := ⟨Nat.ne_of_gt hn⟩
+  have hmem (j : ZMod n) : ZMod.toAddCircle j ∈ unitAddCircle_torsionSubgroup n := by
+    change n • ZMod.toAddCircle j = 0
+    apply (AddCircle.nsmul_eq_zero_iff hn).2
+    refine ⟨j.val, j.val_lt, ?_⟩
+    rw [ZMod.toAddCircle_apply]
+    norm_num
+  let f : ZMod n →+ unitAddCircle_torsionSubgroup n :=
+    ZMod.toAddCircle.codRestrict (unitAddCircle_torsionSubgroup n) hmem
+  have hf : Function.Bijective f := by
+    constructor
+    · intro a b hab
+      apply ZMod.toAddCircle_injective n
+      exact congrArg Subtype.val hab
+    · intro u
+      obtain ⟨m, hm, hu⟩ := (AddCircle.nsmul_eq_zero_iff hn).1 u.property
+      refine ⟨(m : ZMod n), ?_⟩
+      apply Subtype.ext
+      change ZMod.toAddCircle (m : ZMod n) = u.val
+      rw [ZMod.toAddCircle_apply]
+      simpa [Nat.mod_eq_of_lt hm] using hu
+  exact (AddEquiv.ofBijective f hf).symm
+
+/-- The positive `n`-torsion additive subgroup of a product torus. -/
+def productTorus_torsionSubgroup (d : Type*) (n : ℕ) :
+    AddSubgroup (ProductTorus d) where
+  carrier := {x : ProductTorus d | n • x = 0}
+  zero_mem' := by simp
+  add_mem' := by
+    intro a b ha hb
+    simp only [Set.mem_setOf_eq] at ha hb ⊢
+    rw [nsmul_add, ha, hb, add_zero]
+  neg_mem' := by
+    intro a ha
+    simp only [Set.mem_setOf_eq] at ha ⊢
+    rw [neg_nsmul, ha, neg_zero]
+
+/-- Product-torus torsion is additively equivalent to a product of `ZMod`s. -/
+def productTorus_torsion_addEquiv_pi_zmod {d : Type*} {n : ℕ} (hn : 0 < n) :
+    productTorus_torsionSubgroup d n ≃+ (d → ZMod n) := by
+  letI : NeZero n := ⟨Nat.ne_of_gt hn⟩
+  let H := productTorus_torsionSubgroup d n
+  have hmem (z : d → ZMod n) :
+      (AddMonoidHom.piMap (fun _ : d => ZMod.toAddCircle)) z ∈ H := by
+    change n • (AddMonoidHom.piMap (fun _ : d => ZMod.toAddCircle)) z = 0
+    funext i
+    rw [Pi.smul_apply, AddMonoidHom.piMap_apply]
+    apply (AddCircle.nsmul_eq_zero_iff hn).2
+    refine ⟨(z i).val, (z i).val_lt, ?_⟩
+    rw [ZMod.toAddCircle_apply]
+    norm_num
+  let f : (d → ZMod n) →+ H :=
+    (AddMonoidHom.piMap (fun _ : d => ZMod.toAddCircle)).codRestrict H hmem
+  have hf : Function.Bijective f := by
+    constructor
+    · intro a b hab
+      funext i
+      apply ZMod.toAddCircle_injective n
+      have hi := congrFun (congrArg Subtype.val hab) i
+      change ZMod.toAddCircle (a i) = ZMod.toAddCircle (b i) at hi
+      exact hi
+    · intro x
+      have hx : ∀ i, n • x.val i = 0 :=
+        (mem_productTorus_torsion_iff (n := n) x.val).1 x.property
+      have hex (i : d) : ∃ z : ZMod n, ZMod.toAddCircle z = x.val i := by
+        obtain ⟨m, hm, hu⟩ := (AddCircle.nsmul_eq_zero_iff hn).1 (hx i)
+        refine ⟨(m : ZMod n), ?_⟩
+        rw [ZMod.toAddCircle_apply]
+        simpa [Nat.mod_eq_of_lt hm] using hu
+      choose z hz using hex
+      refine ⟨z, ?_⟩
+      apply Subtype.ext
+      funext i
+      change (AddMonoidHom.piMap (fun _ : d => ZMod.toAddCircle)) z i = x.val i
+      rw [AddMonoidHom.piMap_apply]
+      exact hz i
+  exact (AddEquiv.ofBijective f hf).symm
+
+/-- The nonzero-integer torsion additive subgroup of the unit circle. -/
+def unitAddCircle_zsmul_torsionSubgroup (n : ℤ) : AddSubgroup UnitAddCircle where
+  carrier := {u : UnitAddCircle | n • u = 0}
+  zero_mem' := by simp
+  add_mem' := by
+    intro a b ha hb
+    simp only [Set.mem_setOf_eq] at ha hb ⊢
+    rw [zsmul_add, ha, hb, add_zero]
+  neg_mem' := by
+    intro a ha
+    simp only [Set.mem_setOf_eq] at ha ⊢
+    rw [zsmul_neg, ha, neg_zero]
+
+/-- Integer torsion on the unit circle is additively equivalent to `ZMod |n|`. -/
+def unitAddCircle_zsmul_torsion_addEquiv_zmod {n : ℤ} (hn : n ≠ 0) :
+    unitAddCircle_zsmul_torsionSubgroup n ≃+ ZMod n.natAbs := by
+  have hpos : 0 < n.natAbs := Int.natAbs_pos.mpr hn
+  let f : unitAddCircle_zsmul_torsionSubgroup n ≃+
+      unitAddCircle_torsionSubgroup n.natAbs :=
+    { toFun := fun u => ⟨u.val, (natAbs_nsmul_eq_zero).2 u.property⟩
+      invFun := fun u => ⟨u.val, (natAbs_nsmul_eq_zero).1 u.property⟩
+      left_inv := by intro u; exact Subtype.ext rfl
+      right_inv := by intro u; exact Subtype.ext rfl
+      map_add' := by intro a b; rfl }
+  exact f.trans (unitAddCircle_torsion_addEquiv_zmod hpos)
+
+/-- The nonzero-integer torsion additive subgroup of a product torus. -/
+def productTorus_zsmul_torsionSubgroup (d : Type*) (n : ℤ) :
+    AddSubgroup (ProductTorus d) where
+  carrier := {x : ProductTorus d | n • x = 0}
+  zero_mem' := by simp
+  add_mem' := by
+    intro a b ha hb
+    simp only [Set.mem_setOf_eq] at ha hb ⊢
+    rw [zsmul_add, ha, hb, add_zero]
+  neg_mem' := by
+    intro a ha
+    simp only [Set.mem_setOf_eq] at ha ⊢
+    rw [zsmul_neg, ha, neg_zero]
+
+/-- Integer product-torus torsion is additively equivalent to a product of `ZMod`s. -/
+def productTorus_zsmul_torsion_addEquiv_pi_zmod {d : Type*} {n : ℤ} (hn : n ≠ 0) :
+    productTorus_zsmul_torsionSubgroup d n ≃+ (d → ZMod n.natAbs) := by
+  have hpos : 0 < n.natAbs := Int.natAbs_pos.mpr hn
+  let f : productTorus_zsmul_torsionSubgroup d n ≃+
+      productTorus_torsionSubgroup d n.natAbs :=
+    { toFun := fun x => ⟨x.val, (natAbs_nsmul_eq_zero).2 x.property⟩
+      invFun := fun x => ⟨x.val, (natAbs_nsmul_eq_zero).1 x.property⟩
+      left_inv := by intro x; exact Subtype.ext rfl
+      right_inv := by intro x; exact Subtype.ext rfl
+      map_add' := by intro a b; rfl }
+  exact f.trans (productTorus_torsion_addEquiv_pi_zmod hpos)
+
 end
 
 end Mumford
