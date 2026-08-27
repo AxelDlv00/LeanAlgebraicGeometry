@@ -41,9 +41,36 @@ variable {F : Cᵒᵖ ⥤ Type w}
 def ofSigma (s : Σ X : C, F.RepresentableBy X) : RepresenterData C F :=
   ⟨s.1, s.2⟩
 
+/-! A producer usually proves representability as a nonempty dependent sigma, or in
+the logically equivalent form `∃ X, Nonempty (F.RepresentableBy X)`.  Keeping the choice
+at this boundary means downstream declarations carry one
+`RepresenterData` value instead of repeating `Classical.choose` and silently selecting
+different objects at different call sites. -/
+
+/-- Select one representing datum from a nonempty sigma certificate.
+
+This is the one intentional use of choice in the representer API.  The selected object and
+its representation are thereafter carried together by `RepresenterData`; consumers should
+pass this value rather than unpacking the certificate again. -/
+noncomputable def ofNonempty
+    (h : Nonempty (Σ X : C, F.RepresentableBy X)) : RepresenterData C F :=
+  ofSigma (Classical.choice h)
+
+/-- Select one representing datum from the usual existential certificate. -/
+noncomputable def ofExists
+    (h : ∃ X : C, Nonempty (F.RepresentableBy X)) : RepresenterData C F :=
+  ofNonempty
+    (⟨⟨Classical.choose h, Classical.choice (Classical.choose_spec h)⟩⟩)
+
 /-- Recover the dependent-sigma form when an API still expects it. -/
 def toSigma (P : RepresenterData C F) : Σ X : C, F.RepresentableBy X :=
   ⟨P.object, P.representation⟩
+
+@[simp]
+theorem ofNonempty_toSigma
+    (h : Nonempty (Σ X : C, F.RepresentableBy X)) :
+    (ofNonempty (C := C) h).toSigma = Classical.choice h := by
+  rfl
 
 @[simp]
 theorem ofSigma_toSigma (s : Σ X : C, F.RepresentableBy X) :
