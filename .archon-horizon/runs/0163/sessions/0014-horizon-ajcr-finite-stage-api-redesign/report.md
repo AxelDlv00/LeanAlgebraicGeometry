@@ -27,3 +27,10 @@ the pinned affine presentation, and the explicit producer choices.  The next bou
 is to build or split `Pic0FiniteStageGlueData`/`GlueDataFace` so the context comparison family
 `D.Q` can be consumed without the legacy separately supplied certificate; no mathematical
 endpoint or representability claim was manufactured.
+
+## Review
+
+- Fresh ground review found the four code commits coherent and free of new `sorry`/`admit`
+  or nonstandard axioms, but confirmed that no Assembly/GlueData consumer has migrated yet.
+- Janitor review found only generated hgraph timestamp churn in the AJCR worktree, including
+  stale `lean_ok` Assembly nodes without artifacts; those paths were deliberately not staged.
