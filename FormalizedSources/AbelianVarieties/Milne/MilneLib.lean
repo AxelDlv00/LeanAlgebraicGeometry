@@ -1,5 +1,6 @@
 import MilneLib.Basic
 import MilneLib.LinearAlgebra
+import MilneLib.Tensor
 
 /-!
 # MilneLib
