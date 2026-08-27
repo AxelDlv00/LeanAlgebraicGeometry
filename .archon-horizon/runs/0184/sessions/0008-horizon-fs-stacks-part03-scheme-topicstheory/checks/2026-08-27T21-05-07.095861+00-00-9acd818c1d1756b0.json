@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "9acd818c1d1756b0",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part03_TopicsInSchemeTheory/StacksPart03Lib/PeriodicLength.lean"
+  ],
+  "cwd": "FormalizedSources/StacksProject/Part03_TopicsInSchemeTheory",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.0,
+  "duration_seconds": 5.228,
+  "started_at": "2026-08-27T21:05:01.867370+00:00",
+  "finished_at": "2026-08-27T21:05:07.095861+00:00",
+  "finished_epoch": 1787864707.095861
+}
