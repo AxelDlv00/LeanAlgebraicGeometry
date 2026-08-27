@@ -1,1 +1,1 @@
-{"path": "StacksPart03Lib.lean", "size": 139, "content": "import StacksPart03Lib.Basic\n\n/-!\n# StacksPart03Lib\n\nLean formalization library for the source-faithful blueprint at this project root.\n-/\n"}
+{"path": "StacksPart03Lib.lean", "size": 273, "content": "import StacksPart03Lib.Basic\nimport StacksPart03Lib.Periodic\nimport StacksPart03Lib.Cohomology\nimport StacksPart03Lib.PeriodicLength\nimport StacksPart03Lib.Cycles\n\n/-!\n# StacksPart03Lib\n\nLean formalization library for the source-faithful blueprint at this project root.\n-/\n"}
