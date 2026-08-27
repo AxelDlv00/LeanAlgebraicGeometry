@@ -5,7 +5,10 @@ Authors: The StacksPart02Lib Contributors
 -/
 
 import StacksPart02Lib.AffineBasics
+import StacksPart02Lib.AffineOpens
+import StacksPart02Lib.OpenImmersion
 import StacksPart02Lib.Schemes
+import StacksPart02Lib.StandardOpen
 
 /-!
 # StacksPart02Lib.Basic

@@ -1,0 +1,33 @@
+/-
+Copyright (c) 2026 The StacksPart02Lib authors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: The StacksPart02Lib Contributors
+-/
+
+import Mathlib.AlgebraicGeometry.AffineScheme
+
+/-!
+# Affine open covers
+
+The scheme-level affine opens form a topological basis and cover the whole
+underlying space.  These wrappers expose the corresponding Mathlib facts under
+the namespace used by the Stacks Part 02 development.
+-/
+
+namespace StacksPart02
+
+open AlgebraicGeometry TopologicalSpace
+
+universe u
+
+/-- Affine opens form a basis for the topology of a scheme. -/
+theorem scheme_affine_opens_is_basis (X : Scheme.{u}) :
+    Opens.IsBasis X.affineOpens := by
+  exact Scheme.isBasis_affineOpens X
+
+/-- The affine opens cover the underlying space of a scheme. -/
+theorem scheme_affine_opens_iSup_eq_top (X : Scheme.{u}) :
+    ⨆ i : X.affineOpens, (i : X.Opens) = ⊤ := by
+  exact AlgebraicGeometry.iSup_affineOpens_eq_top X
+
+end StacksPart02
