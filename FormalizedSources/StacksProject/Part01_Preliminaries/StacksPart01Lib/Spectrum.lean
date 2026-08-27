@@ -13,7 +13,7 @@ that description.
 
 namespace StacksPart01
 
-open Set
+open Set Topology
 
 /-- The spectrum is nonempty exactly when the ring is nontrivial. -/
 theorem spectrum_nonempty_iff_nontrivial {R : Type*} [CommSemiring R] :
@@ -118,5 +118,38 @@ noncomputable def standardOpen_homeomorph {R : Type*} [CommSemiring R] (f : R) :
   exact h.isEmbedding.toHomeomorph.trans
     (Homeomorph.setCongr
       (PrimeSpectrum.localization_away_comap_range (Localization.Away f) f))
+
+/-- The spectrum of a quotient is homeomorphic to the corresponding closed
+zero locus (Stacks, Tag 00E5). -/
+noncomputable def spec_quotient_homeomorph {R : Type*} [CommRing R] (I : Ideal R) :
+    PrimeSpectrum (R ⧸ I) ≃ₜ
+      (PrimeSpectrum.zeroLocus (I : Set R)) := by
+  let q : R →+* R ⧸ I := Ideal.Quotient.mk I
+  have hmem : ∀ p : PrimeSpectrum (R ⧸ I),
+      PrimeSpectrum.comap q p ∈ PrimeSpectrum.zeroLocus (I : Set R) := by
+    intro p
+    rw [PrimeSpectrum.mem_zeroLocus, PrimeSpectrum.comap_asIdeal]
+    intro x hx
+    change q x ∈ p.asIdeal
+    have hzero' : (Ideal.Quotient.mk I) x = 0 :=
+      Ideal.Quotient.eq_zero_iff_mem.mpr hx
+    have hzero : q x = 0 := by simpa [q] using hzero'
+    rw [hzero]
+    exact p.asIdeal.zero_mem
+  let g := Set.codRestrict (PrimeSpectrum.comap q)
+      (PrimeSpectrum.zeroLocus (I : Set R)) hmem
+  have hEmb : IsEmbedding g := by
+    exact (PrimeSpectrum.isClosedEmbedding_comap_of_surjective
+      (R := R) (S := R ⧸ I) q Ideal.Quotient.mk_surjective).isEmbedding.codRestrict
+      _ hmem
+  have hsurj : Function.Surjective g := by
+    intro z
+    let e := Ideal.primeSpectrumQuotientOrderIsoZeroLocus I
+    obtain ⟨p, hp⟩ := e.surjective z
+    refine ⟨p, ?_⟩
+    apply Subtype.ext
+    dsimp [g]
+    exact congrArg Subtype.val hp
+  exact hEmb.toHomeomorphOfSurjective hsurj
 
 end StacksPart01
