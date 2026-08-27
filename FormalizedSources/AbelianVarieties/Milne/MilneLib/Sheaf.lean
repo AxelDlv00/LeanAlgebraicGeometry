@@ -5,6 +5,7 @@ Authors: The Milne Contributors
 -/
 
 import Mathlib.AlgebraicGeometry.Modules.Sheaf
+import Mathlib.Topology.Sheaves.LocallySurjective
 
 /-!
 # Sheaf evaluation
@@ -18,6 +19,21 @@ open CategoryTheory
 open AlgebraicGeometry
 
 namespace MilneLib
+
+/-- A morphism of sheaves of modules that is surjective on every stalk is an
+epimorphism. -/
+theorem schemeModule_epi_of_surjective_on_stalks {X : Scheme} {M N : X.Modules}
+    (f : M ⟶ N)
+    (hf : ∀ x : X, Function.Surjective
+      ((TopCat.Presheaf.stalkFunctor AddCommGrpCat x).map f.mapPresheaf)) :
+    Epi f := by
+  let F := SheafOfModules.toSheaf X.ringCatSheaf
+  have hlocal : TopCat.Presheaf.IsLocallySurjective (F.map f).hom :=
+    (TopCat.Presheaf.locally_surjective_iff_surjective_on_stalks _).2 hf
+  have : Epi (F.map f) := by
+    letI : CategoryTheory.Sheaf.IsLocallySurjective (F.map f) := hlocal
+    infer_instance
+  exact F.epi_of_epi_map this
 
 /-- The counit of the pullback--pushforward adjunction for a scheme morphism. -/
 noncomputable def schemeSheafEvaluation {W V : Scheme} (f : W ⟶ V) :
