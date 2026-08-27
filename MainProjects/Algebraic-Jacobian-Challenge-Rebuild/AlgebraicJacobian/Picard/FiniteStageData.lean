@@ -250,6 +250,88 @@ theorem refl_map {F K : Type u} [Field F] [Field K] [Algebra F K]
 
 end FiniteStageInclusion
 
+/-! ## A stable tensor-equality context -/
+
+/-- The context shared by finite-stage tensor comparisons.
+
+The old finite-subextension equality theorem exposes a raw `LinearMap.rTensor` and
+leaves each consumer to recreate the stage inclusion and its tensor algebra map.  This
+record pins those two maps together.  In particular, a consumer can carry one
+`FiniteStageTensorEqualityContext` through several comparison records without asking
+typeclass search to choose a new tensor carrier.
+-/
+structure FiniteStageTensorEqualityContext
+    (F K B : Type u) [Field F] [Field K] [Algebra F K]
+    [CommRing B] [Algebra F B]
+    (S T : FiniteStageData F K) where
+  inclusion : FiniteStageInclusion S T
+  tensorMap : S.stage ⊗[F] B →ₐ[F] T.stage ⊗[F] B
+  tensorMap_spec :
+    tensorMap = Algebra.TensorProduct.map inclusion.map (AlgHom.id F B)
+
+namespace FiniteStageTensorEqualityContext
+
+@[simp]
+theorem tensorMap_apply_tmul
+    {F K B : Type u} [Field F] [Field K] [Algebra F K]
+    [CommRing B] [Algebra F B]
+    {S T : FiniteStageData F K}
+    (D : FiniteStageTensorEqualityContext F K B S T)
+    (x : S.stage) (b : B) :
+    D.tensorMap (x ⊗ₜ[F] b) = D.inclusion.map x ⊗ₜ[F] b := by
+  rw [D.tensorMap_spec]
+  rfl
+
+end FiniteStageTensorEqualityContext
+
+namespace FiniteStageTensorEqualityFamilyData
+
+/-- Convert a raw finite-subextension equality family to the stable stage context. -/
+noncomputable def toContext
+    {F K B : Type u} [Field F] [Field K] [Algebra F K]
+    [CommRing B] [Algebra F B] {ι : Type*}
+    {L : FinSubext F K} {x y : ι → L.1 ⊗[F] B}
+    (D : FiniteStageTensorEqualityFamilyData F K B L x y) :
+    FiniteStageTensorEqualityContext F K B
+      (FiniteStageData.ofFinSubext L)
+      (FiniteStageData.ofFinSubext D.stage) := by
+  let source : FiniteStageData F K := FiniteStageData.ofFinSubext L
+  let target : FiniteStageData F K := FiniteStageData.ofFinSubext D.stage
+  let inclusion : FiniteStageInclusion source target :=
+    { le := D.inclusion
+      map := D.map
+      map_spec := by
+        intro z
+        change (D.map z : K) = (z : K)
+        rw [D.map_spec]
+        rfl }
+  exact
+    { inclusion := inclusion
+      tensorMap := Algebra.TensorProduct.map D.map (AlgHom.id F B)
+      tensorMap_spec := by rfl }
+
+@[simp]
+theorem toContext_inclusion_le
+    {F K B : Type u} [Field F] [Field K] [Algebra F K]
+    [CommRing B] [Algebra F B] {ι : Type*}
+    {L : FinSubext F K} {x y : ι → L.1 ⊗[F] B}
+    (D : FiniteStageTensorEqualityFamilyData F K B L x y) :
+    D.toContext.inclusion.le = D.inclusion :=
+  rfl
+
+theorem equality_via_context
+    {F K B : Type u} [Field F] [Field K] [Algebra F K]
+    [CommRing B] [Algebra F B] {ι : Type*}
+    {L : FinSubext F K} {x y : ι → L.1 ⊗[F] B}
+    (D : FiniteStageTensorEqualityFamilyData F K B L x y) (i : ι) :
+    D.toContext.tensorMap.toLinearMap (x i) =
+      D.toContext.tensorMap.toLinearMap (y i) := by
+  change LinearMap.rTensor B D.map.toLinearMap (x i) =
+    LinearMap.rTensor B D.map.toLinearMap (y i)
+  exact D.equality i
+
+end FiniteStageTensorEqualityFamilyData
+
 /-! ## Presented models at one stage -/
 
 set_option synthInstance.maxHeartbeats 100000 in
