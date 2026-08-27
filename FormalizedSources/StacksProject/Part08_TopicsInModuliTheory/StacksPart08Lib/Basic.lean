@@ -9,6 +9,7 @@ import StacksPart08Lib.MorphismProperties
 import StacksPart08Lib.Numerical
 import StacksPart08Lib.ProductRepresentability
 import StacksPart08Lib.Representability
+import StacksPart08Lib.StackFoundations
 
 /-!
 # StacksPart08Lib.Basic
