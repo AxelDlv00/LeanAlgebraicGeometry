@@ -17,6 +17,7 @@ import StacksPart01Lib.Localization
 import StacksPart01Lib.LocalizationExtras
 import StacksPart01Lib.CommutativeAlgebra
 import StacksPart01Lib.FiniteModule
+import StacksPart01Lib.FiniteType
 import StacksPart01Lib.Artinian
 
 /-!
