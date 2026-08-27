@@ -105,6 +105,16 @@ theorem zsmulTorsion_card_of_uniformization {X : Type*} [AddCommGroup X] {g : �
   rw [Nat.card_congr (zsmulTorsion_addEquiv_of_uniformization u hn).toEquiv]
   rw [Nat.card_fun, Nat.card_zmod, Nat.card_eq_fintype_card, Fintype.card_fin]
 
+/-- A chosen genus-torus uniformization makes every nonzero-integer torsion
+subgroup finite. -/
+theorem zsmulTorsion_finite_of_uniformization {X : Type*} [AddCommGroup X] {g : ℕ}
+    (u : GenusTorusUniformization X g) {n : ℤ} (hn : n ≠ 0) :
+    Finite (zsmulTorsionSubgroup X n) := by
+  letI : NeZero n.natAbs := ⟨Int.natAbs_pos.mpr hn |>.ne'⟩
+  exact Finite.of_injective
+    (zsmulTorsion_addEquiv_of_uniformization u hn).toEquiv
+    (zsmulTorsion_addEquiv_of_uniformization u hn).injective
+
 end
 end Uniformization
 end Mumford
