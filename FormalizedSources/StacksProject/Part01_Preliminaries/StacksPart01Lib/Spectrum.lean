@@ -14,6 +14,21 @@ namespace StacksPart01
 
 open Set
 
+/-- The spectrum is nonempty exactly when the ring is nontrivial. -/
+theorem spectrum_nonempty_iff_nontrivial {R : Type*} [CommSemiring R] :
+    Nonempty (PrimeSpectrum R) ↔ Nontrivial R := by
+  exact PrimeSpectrum.nonempty_iff_nontrivial
+
+/-- The spectrum is empty exactly for a subsingleton ring. -/
+theorem spectrum_isEmpty_iff_subsingleton {R : Type*} [CommSemiring R] :
+    IsEmpty (PrimeSpectrum R) ↔ Subsingleton R := by
+  exact PrimeSpectrum.isEmpty_iff_subsingleton
+
+/-- A basic open is empty exactly when its defining element is nilpotent. -/
+theorem standardOpen_eq_bot_iff_isNilpotent {R : Type*} [CommSemiring R] (f : R) :
+    PrimeSpectrum.basicOpen f = ⊥ ↔ IsNilpotent f := by
+  exact PrimeSpectrum.basicOpen_eq_bot_iff f
+
 /-- Membership in the standard open `D(f)` means that `f` is not in the prime
 ideal represented by the point (Stacks, Tag 00E1). -/
 theorem mem_standardOpen_iff {R : Type*} [CommSemiring R]
@@ -50,6 +65,20 @@ theorem continuous_spectrum_comap {R S : Type*} [CommSemiring R] [CommSemiring S
     (f : R →+* S) : Continuous (PrimeSpectrum.comap f) := by
   exact PrimeSpectrum.continuous_comap f
 
+/-- Pullback on spectra respects composition of ring homomorphisms. -/
+theorem spectrum_comap_comp {R S T : Type*} [CommSemiring R] [CommSemiring S]
+    [CommSemiring T] (f : R →+* S) (g : S →+* T) :
+    PrimeSpectrum.comap (g.comp f) =
+      (PrimeSpectrum.comap f).comp (PrimeSpectrum.comap g) := by
+  exact PrimeSpectrum.comap_comp f g
+
+/-- Pointwise form of `spectrum_comap_comp`. -/
+theorem spectrum_comap_comp_apply {R S T : Type*} [CommSemiring R] [CommSemiring S]
+    [CommSemiring T] (f : R →+* S) (g : S →+* T) (x : PrimeSpectrum T) :
+    PrimeSpectrum.comap (g.comp f) x =
+      PrimeSpectrum.comap f (PrimeSpectrum.comap g x) := by
+  exact PrimeSpectrum.comap_comp_apply f g x
+
 /-- Pulling a standard open back along `Spec(f)` gives the standard open of
 the image of its defining element (Stacks, Tag 00E2). -/
 theorem spectrum_comap_preimage_standardOpen {R S : Type*}
@@ -60,5 +89,13 @@ theorem spectrum_comap_preimage_standardOpen {R S : Type*}
   have h' := congrArg
     (fun U : TopologicalSpace.Opens (PrimeSpectrum S) => (U : Set (PrimeSpectrum S))) h
   simpa only [TopologicalSpace.Opens.coe_comap, ContinuousMap.coe_mk] using h'
+
+/-- The inverse image of a zero locus under `Spec(f)` is the zero locus of the
+image of its defining set. -/
+theorem spectrum_comap_preimage_zeroLocus {R S : Type*}
+    [CommSemiring R] [CommSemiring S] (f : R →+* S) (s : Set R) :
+    (PrimeSpectrum.comap f) ⁻¹' PrimeSpectrum.zeroLocus s =
+      PrimeSpectrum.zeroLocus (f '' s) := by
+  exact PrimeSpectrum.preimage_comap_zeroLocus f s
 
 end StacksPart01
