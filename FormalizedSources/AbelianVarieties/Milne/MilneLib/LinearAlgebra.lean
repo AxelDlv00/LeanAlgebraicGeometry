@@ -5,6 +5,8 @@ Authors: The Milne Contributors
 -/
 
 import Mathlib.RingTheory.PicardGroup
+import Mathlib.LinearAlgebra.FreeModule.Finite.CardQuotient
+import Mathlib.LinearAlgebra.Charpoly.BaseChange
 
 /-!
 # Rank-one module maps
@@ -39,5 +41,41 @@ theorem LinearMap.bijective_of_surjective_rank_one
     apply eM.injective
     apply hginj
     simpa [g] using congrArg eN hxy, hf⟩
+
+/-- The index of the image of an injective endomorphism of a finite free
+integer module is the absolute value of its determinant. -/
+theorem LinearMap.natCard_quotient_range_eq_natAbs_det
+    {M : Type*} [AddCommGroup M] [Module.Free ℤ M] [Module.Finite ℤ M]
+    (f : M →ₗ[ℤ] M) (hf : Function.Injective f) :
+    Nat.card (M ⧸ LinearMap.range f) = (LinearMap.det f).natAbs := by
+  have hcomp :
+      (LinearMap.range f).subtype ∘ₗ
+        (LinearEquiv.ofInjective f hf).toLinearMap = f := by
+    ext x
+    rfl
+  rw [← hcomp]
+  exact (Submodule.natAbs_det_equiv (LinearMap.range f)
+    (LinearEquiv.ofInjective f hf)).symm
+
+/-- Milne's index--determinant formula under the source hypothesis that the
+endomorphism becomes an isomorphism after extending scalars to `ℚ`. -/
+theorem LinearMap.natCard_quotient_range_eq_natAbs_det_of_baseChange_bijective
+    {M : Type*} [AddCommGroup M] [Module.Free ℤ M] [Module.Finite ℤ M]
+    (f : M →ₗ[ℤ] M)
+    (hf : Function.Bijective (LinearMap.baseChange ℚ f)) :
+    Nat.card (M ⧸ LinearMap.range f) = (LinearMap.det f).natAbs := by
+  have hdetQ : LinearMap.det (LinearMap.baseChange ℚ f) ≠ 0 := by
+    intro h
+    have hker : (LinearMap.baseChange ℚ f).ker ≠ ⊥ :=
+      LinearMap.det_eq_zero_iff_ker_ne_bot.mp h
+    exact hker (LinearMap.ker_eq_bot.mpr hf.1)
+  have hdetZ : LinearMap.det f ≠ 0 := by
+    intro h
+    apply hdetQ
+    rw [LinearMap.det_baseChange, h, map_zero]
+  apply LinearMap.natCard_quotient_range_eq_natAbs_det f
+  rw [← LinearMap.ker_eq_bot]
+  exact not_ne_iff.mp
+    (mt LinearMap.det_eq_zero_iff_ker_ne_bot.mpr hdetZ)
 
 end MilneLib
