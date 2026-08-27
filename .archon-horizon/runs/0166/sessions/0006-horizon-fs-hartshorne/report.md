@@ -11,7 +11,7 @@
 ## Issues
 
 - The frozen blueprint has no `\\lean{}` annotations for 499 TeX nodes, so hgraph continues to report those nodes as `lean_status=empty`; this is an intentional protection-boundary warning.
-- The shared workspace has unrelated concurrent runtime and other-project modifications; none were staged or committed by this session.
+- The shared workspace has unrelated concurrent changes, including `.archon-horizon/events.jsonl`, other run/session state under `.archon-horizon/runs/`, `FormalizedSources/StacksProject/Part01_Preliminaries/StacksPart01Lib/Basic.lean`, and AJCR/Mumford/Milne source files; none were staged or committed by this session.
 
 ## Why I stopped
 
