@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The Milne Contributors
 -/
 
+import Mathlib.LinearAlgebra.TensorProduct.Quotient
 import Mathlib.LinearAlgebra.TensorProduct.Tower
 
 /-!
@@ -54,5 +55,41 @@ theorem tensorProductEval_eq_of_tmul
   | zero => simp
   | tmul s m => exact h s m
   | add x y hx hy => simp [hx, hy]
+
+/-!
+## Tensoring with a ring quotient
+
+The quotient/residue fibre that occurs in Milne I.5.11 is canonically the
+quotient of the module by the corresponding ideal action.  This is a small
+MilneLib-facing alias for Mathlib's universal-property construction, together
+with the formulas needed to use it on pure tensors and quotient maps.
+-/
+
+/-- The canonical equivalence
+`(R ⧸ I) ⊗[R] M ≃ₗ[R] M ⧸ (I • ⊤)`.
+
+This re-exports Mathlib's `TensorProduct.quotTensorEquivQuotSMul` under the
+MilneLib namespace so residue-fibre arguments can use a project-local API.
+-/
+noncomputable def quotTensorEquivQuotSMul
+    {R M : Type*} [CommRing R] [AddCommGroup M] [Module R M]
+    (I : Ideal R) :
+    ((R ⧸ I) ⊗[R] M) ≃ₗ[R] M ⧸ (I • (⊤ : Submodule R M)) :=
+  TensorProduct.quotTensorEquivQuotSMul M I
+
+@[simp]
+theorem quotTensorEquivQuotSMul_mk_tmul
+    {R M : Type*} [CommRing R] [AddCommGroup M] [Module R M]
+    (I : Ideal R) (r : R) (x : M) :
+    quotTensorEquivQuotSMul (M := M) I (Ideal.Quotient.mk I r ⊗ₜ[R] x) =
+      Submodule.Quotient.mk (r • x) := by
+  exact TensorProduct.quotTensorEquivQuotSMul_mk_tmul (M := M) I r x
+
+theorem quotTensorEquivQuotSMul_comp_mkQ_rTensor
+    {R M : Type*} [CommRing R] [AddCommGroup M] [Module R M]
+    (I : Ideal R) :
+    quotTensorEquivQuotSMul (M := M) I ∘ₗ I.mkQ.rTensor M =
+      (I • (⊤ : Submodule R M)).mkQ ∘ₗ TensorProduct.lid R M := by
+  exact TensorProduct.quotTensorEquivQuotSMul_comp_mkQ_rTensor (M := M) I
 
 end MilneLib
