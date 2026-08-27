@@ -90,6 +90,55 @@ theorem locus_eq_iInter {X I : Type*} [TopologicalSpace X]
   ext x
   simp [NumericalSituation.locus]
 
+/-! ### Reindexing profiles -/
+
+/-- Reindex a numerical situation along a map of profile indices. -/
+def reindex {X I J : Type*} [TopologicalSpace X]
+    (s : NumericalSituation X I) (f : J → I) : NumericalSituation X J where
+  invariant := fun j => s.invariant (f j)
+  prescribed := fun j => s.prescribed (f j)
+
+@[simp]
+theorem reindex_invariant {X I J : Type*} [TopologicalSpace X]
+    (s : NumericalSituation X I) (f : J → I) (j : J) :
+    (s.reindex f).invariant j = s.invariant (f j) := rfl
+
+@[simp]
+theorem reindex_prescribed {X I J : Type*} [TopologicalSpace X]
+    (s : NumericalSituation X I) (f : J → I) (j : J) :
+    (s.reindex f).prescribed j = s.prescribed (f j) := rfl
+
+@[simp]
+theorem reindex_id {X I : Type*} [TopologicalSpace X]
+    (s : NumericalSituation X I) : s.reindex id = s := by
+  cases s
+  rfl
+
+theorem reindex_comp {X I J K : Type*} [TopologicalSpace X]
+    (s : NumericalSituation X I) (f : J → I) (g : K → J) :
+    (s.reindex f).reindex g = s.reindex (f ∘ g) := by
+  cases s
+  rfl
+
+/-- The full locus is contained in every reindexed locus. -/
+theorem locus_subset_reindex {X I J : Type*} [TopologicalSpace X]
+    (s : NumericalSituation X I) (f : J → I) :
+    s.locus ⊆ (s.reindex f).locus := by
+  intro x hx j
+  exact hx (f j)
+
+/-- A surjective reindexing does not change the full numerical locus. -/
+theorem locus_reindex_eq {X I J : Type*} [TopologicalSpace X]
+    (s : NumericalSituation X I) (f : J → I) (hf : Function.Surjective f) :
+    (s.reindex f).locus = s.locus := by
+  ext x
+  constructor
+  · intro hx i
+    obtain ⟨j, rfl⟩ := hf i
+    exact hx j
+  · intro hx
+    exact s.locus_subset_reindex f hx
+
 /-! ### Finite subprofiles -/
 
 /-- The locus cut out by the invariants whose indices lie in `J`. -/
