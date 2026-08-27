@@ -3,10 +3,10 @@ title: Certify the left overlap projection
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'Declarations: gluingOverlapIso_pre_fst and gluingOverlapIso_fst in Pic0FiniteStageGluingDiagramIso.lean.
-  Dependency: compile-diagram-iso. Run 0154 owns this file and is actively compiling
-  it; source sync is lean_ok but no GluingDiagramIso.olean is present. Acceptance
-  is a native artifact plus a fresh root import, not a source scan.'
-status: active
+  Source sync is lean_ok, but GluingDiagramIso.olean is absent. The former compile-frontier
+  lane was stopped and superseded by API diagnosis (human task comment C-0010); no
+  current owner. Acceptance requires a native artifact plus a fresh root import.'
+status: blocked
 kind: proof
 priority: urgent
 depends_on: []
@@ -28,6 +28,5 @@ metadata:
     task_title: AJCR blocked-route decomposition and roadmap repair
     projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
   parent: AJCR.review-plan.p7-galois-descent.base-change.compile-diagram-iso
-  owner: ajcr-compile-frontier-repair
   milestone: AJCR.review-plan
-  updated_at: '2026-08-23T02:45:18.718959+00:00'
+  updated_at: '2026-08-27T14:33:18.223724+00:00'

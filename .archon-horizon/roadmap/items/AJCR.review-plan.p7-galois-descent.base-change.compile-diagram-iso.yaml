@@ -3,11 +3,11 @@ title: Compile the overlap base-change diagram
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'Declaration: overlapBaseChangeIso_hom_ι and the surrounding GluingDiagramIso
-  API. Dependency: compile-glue-package. The source declaration is present and source-synced
-  lean_ok, but GluingDiagramIso.olean is absent; the first expensive dependent elaboration
-  is the private overlapBaseChangeIso_hom_ι at line 276. Run 0154 owns this four-file
-  frontier; downstream rows must wait for its artifact.'
-status: active
+  API. Source is present and source-synced lean_ok, but GluingDiagramIso.olean is
+  absent. The former compile-frontier lane was stopped and superseded by API diagnosis
+  (human task comment C-0010); no current owner. Downstream work waits for a fresh
+  artifact and root import.'
+status: blocked
 kind: proof
 priority: urgent
 depends_on: []
@@ -29,6 +29,5 @@ metadata:
     task_title: AJCR blocked-route decomposition and roadmap repair
     projects: Algebraic-Jacobian-Challenge-Rebuild,Algebraic-Jacobian-Challenge
   parent: AJCR.review-plan.p7-galois-descent.base-change.compile-glue-package
-  owner: ajcr-compile-frontier-repair
   milestone: AJCR.review-plan
-  updated_at: '2026-08-23T02:45:14.361658+00:00'
+  updated_at: '2026-08-27T14:43:44.729247+00:00'
