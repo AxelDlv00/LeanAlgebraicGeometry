@@ -1,4 +1,5 @@
 import MilneLib.Basic
+import MilneLib.GroupScheme
 import MilneLib.LinearAlgebra
 import MilneLib.Tensor
 import MilneLib.Sheaf
