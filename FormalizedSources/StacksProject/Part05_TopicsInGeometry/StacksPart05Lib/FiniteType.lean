@@ -63,4 +63,34 @@ theorem scheme_finiteType_baseChange_fst_of_mem {X Y S : Scheme} (f : X ⟶ S)
     schemeFiniteType (pullback.fst f g) := by
   exact MorphismProperty.pullback_fst (P := schemeFiniteType) f g hg
 
+/-! ## Cancellation along isomorphisms -/
+
+/-- A finite-type morphism may be cancelled on the left when the cancelled
+map is an isomorphism. -/
+theorem scheme_finiteType_comp_iff_of_isIso_left {X Y Z : Scheme}
+    (f : X ⟶ Y) (g : Y ⟶ Z) [IsIso f] :
+    schemeFiniteType (f ≫ g) ↔ schemeFiniteType g := by
+  exact MorphismProperty.cancel_left_of_respectsIso schemeFiniteType f g
+
+/-- A finite-type morphism may be cancelled on the right when the cancelled
+map is an isomorphism. -/
+theorem scheme_finiteType_comp_iff_of_isIso_right {X Y Z : Scheme}
+    (f : X ⟶ Y) (g : Y ⟶ Z) [IsIso g] :
+    schemeFiniteType (f ≫ g) ↔ schemeFiniteType f := by
+  exact MorphismProperty.cancel_right_of_respectsIso schemeFiniteType f g
+
+/-- Finite type descends across an isomorphic postcomposition. -/
+theorem scheme_finiteType_of_comp_of_isIso_right {X Y Z : Scheme}
+    (f : X ⟶ Y) (g : Y ⟶ Z) [IsIso g]
+    (hfg : schemeFiniteType (f ≫ g)) :
+    schemeFiniteType f :=
+  (scheme_finiteType_comp_iff_of_isIso_right f g).mp hfg
+
+/-- Finite type descends across an isomorphic precomposition. -/
+theorem scheme_finiteType_of_comp_of_isIso_left {X Y Z : Scheme}
+    (f : X ⟶ Y) (g : Y ⟶ Z) [IsIso f]
+    (hfg : schemeFiniteType (f ≫ g)) :
+    schemeFiniteType g :=
+  (scheme_finiteType_comp_iff_of_isIso_left f g).mp hfg
+
 end StacksPart05Lib
