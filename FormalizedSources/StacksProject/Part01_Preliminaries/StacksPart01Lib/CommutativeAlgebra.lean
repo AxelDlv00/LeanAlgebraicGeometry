@@ -34,4 +34,9 @@ theorem noetherian_basic {R M : Type*} [Ring R] [AddCommGroup M] [Module R M]
   intro N
   exact Module.Finite.of_fg (Submodule.FG.of_le Module.Finite.fg_top le_top)
 
+/- An Artinian ring has finitely many maximal ideals (Stacks, Tag 00J7). -/
+theorem artinian_finite_maximal_ideals {R : Type*} [CommSemiring R]
+    [IsArtinianRing R] : {I : Ideal R | I.IsMaximal}.Finite := by
+  exact IsArtinianRing.setOf_isMaximal_finite R
+
 end StacksPart01
