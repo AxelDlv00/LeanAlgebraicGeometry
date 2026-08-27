@@ -5,6 +5,7 @@ Authors: The StacksPart02Lib Contributors
 -/
 
 import Mathlib.AlgebraicGeometry.AffineScheme
+import Mathlib.Algebra.Module.LocalizedModule.Basic
 import Mathlib.RingTheory.Localization.Away.Basic
 
 /-!
@@ -129,5 +130,77 @@ theorem standardOpenLocalizationMapOfSubset_comp {f g h : R}
   simp [standardOpenLocalizationMapOfSubset]
 
 end Inclusion
+
+section ModuleInclusion
+
+variable {R M : Type*} [CommSemiring R] [AddCommMonoid M] [Module R M]
+
+/-- Powers of `f` act by units on the module localized away from `g` whenever
+`D(g) ⊆ D(f)`. -/
+theorem standardOpen_module_isUnit_of_subset {f g : R}
+    (hsub : PrimeSpectrum.basicOpen g ≤ PrimeSpectrum.basicOpen f) :
+    ∀ x : Submonoid.powers f,
+      IsUnit (algebraMap R (Module.End R (LocalizedModule.Away g M)) (x : R)) := by
+  have hf : IsUnit (algebraMap R (Localization.Away g) f) :=
+    standardOpen_isUnit_of_subset hsub
+  have hfend :
+      IsUnit (algebraMap R (Module.End R (LocalizedModule.Away g M)) f) := by
+    rw [show algebraMap R (Module.End R (LocalizedModule.Away g M)) f =
+        Algebra.lsmul R R (LocalizedModule.Away g M)
+          (algebraMap R (Localization.Away g) f) by
+          ext m
+          simp]
+    exact hf.map (Algebra.lsmul R R (LocalizedModule.Away g M)).toMonoidHom
+  rintro ⟨x, hx⟩
+  obtain ⟨n, rfl⟩ := (Submonoid.mem_powers_iff x f).mp hx
+  simpa only [map_pow] using hfend.pow n
+
+/-- The canonical map between module localizations associated to an inclusion
+of standard opens. -/
+noncomputable def standardOpenLocalizedModuleMapOfSubset {f g : R}
+    (hsub : PrimeSpectrum.basicOpen g ≤ PrimeSpectrum.basicOpen f) :
+    LocalizedModule.Away f M →ₗ[R] LocalizedModule.Away g M :=
+  IsLocalizedModule.lift (Submonoid.powers f)
+    (LocalizedModule.mkLinearMap (Submonoid.powers f) M)
+    (LocalizedModule.mkLinearMap (Submonoid.powers g) M)
+    (standardOpen_module_isUnit_of_subset hsub)
+
+@[simp]
+theorem standardOpenLocalizedModuleMapOfSubset_mkLinearMap {f g : R}
+    (hsub : PrimeSpectrum.basicOpen g ≤ PrimeSpectrum.basicOpen f) (m : M) :
+    standardOpenLocalizedModuleMapOfSubset hsub
+        (LocalizedModule.mkLinearMap (Submonoid.powers f) M m) =
+      LocalizedModule.mkLinearMap (Submonoid.powers g) M m := by
+  exact IsLocalizedModule.lift_apply
+    (Submonoid.powers f)
+    (LocalizedModule.mkLinearMap (Submonoid.powers f) M)
+    (LocalizedModule.mkLinearMap (Submonoid.powers g) M)
+    (standardOpen_module_isUnit_of_subset hsub) m
+
+/-- The canonical module maps compose along inclusions of standard opens. -/
+theorem standardOpenLocalizedModuleMapOfSubset_comp {f g h : R}
+    (hfg : PrimeSpectrum.basicOpen g ≤ PrimeSpectrum.basicOpen f)
+    (hgh : PrimeSpectrum.basicOpen h ≤ PrimeSpectrum.basicOpen g) :
+    (standardOpenLocalizedModuleMapOfSubset (M := M) hgh).comp
+        (standardOpenLocalizedModuleMapOfSubset (M := M) hfg) =
+      standardOpenLocalizedModuleMapOfSubset (M := M) (hgh.trans hfg) := by
+  refine IsLocalizedModule.ext
+    (S := Submonoid.powers f)
+    (M := M)
+    (M' := LocalizedModule.Away f M)
+    (M'' := LocalizedModule.Away h M)
+    (LocalizedModule.mkLinearMap (Submonoid.powers f) M)
+    (standardOpen_module_isUnit_of_subset (M := M) (hgh.trans hfg)) ?_
+  rw [LinearMap.comp_assoc]
+  apply LinearMap.ext
+  intro m
+  change (standardOpenLocalizedModuleMapOfSubset (M := M) hgh)
+      ((standardOpenLocalizedModuleMapOfSubset (M := M) hfg)
+        (LocalizedModule.mkLinearMap (Submonoid.powers f) M m)) =
+    standardOpenLocalizedModuleMapOfSubset (M := M) (hgh.trans hfg)
+      (LocalizedModule.mkLinearMap (Submonoid.powers f) M m)
+  simp only [standardOpenLocalizedModuleMapOfSubset_mkLinearMap]
+
+end ModuleInclusion
 
 end StacksPart02
