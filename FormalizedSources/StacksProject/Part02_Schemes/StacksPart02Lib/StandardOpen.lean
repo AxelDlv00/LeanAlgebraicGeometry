@@ -78,4 +78,45 @@ theorem standardOpenLocalizationMap_comp_algebraMap
 
 end RingMap
 
+section Inclusion
+
+variable {R : Type*} [CommSemiring R]
+
+/-- The containment `D(g) ⊆ D(f)` is equivalent to an exponent relation
+`g^n = a f` (Stacks, Tag 01HS(1)(b)). -/
+theorem standardOpen_subset_iff_exists_pow_eq_mul {f g : R}
+    (hsub : PrimeSpectrum.basicOpen g ≤ PrimeSpectrum.basicOpen f) :
+    ∃ n : ℕ, ∃ a : R, g ^ n = a * f := by
+  have h' := (PrimeSpectrum.basicOpen_le_basicOpen_iff g f).mp hsub
+  rw [Ideal.mem_radical_iff] at h'
+  obtain ⟨n, hn⟩ := h'
+  obtain ⟨a, ha⟩ := Ideal.mem_span_singleton'.mp hn
+  exact ⟨n, a, by simpa [mul_comm] using ha.symm⟩
+
+/-- The defining element of a larger standard open is invertible after
+localizing at a smaller standard open. -/
+theorem standardOpen_isUnit_of_subset {f g : R}
+    (hsub : PrimeSpectrum.basicOpen g ≤ PrimeSpectrum.basicOpen f) :
+    IsUnit (algebraMap R (Localization.Away g) f) := by
+  exact (PrimeSpectrum.basicOpen_le_basicOpen_iff_algebraMap_isUnit
+    (S := Localization.Away g) (f := g) (g := f)).mp hsub
+
+/-- The canonical localization map associated to an inclusion of standard
+opens `D(g) ⊆ D(f)`. -/
+noncomputable def standardOpenLocalizationMapOfSubset {f g : R}
+    (hsub : PrimeSpectrum.basicOpen g ≤ PrimeSpectrum.basicOpen f) :
+    Localization.Away f →+* Localization.Away g :=
+  IsLocalization.Away.lift f
+    (g := algebraMap R (Localization.Away g))
+    (standardOpen_isUnit_of_subset hsub)
+
+@[simp]
+theorem standardOpenLocalizationMapOfSubset_algebraMap {f g : R}
+    (hsub : PrimeSpectrum.basicOpen g ≤ PrimeSpectrum.basicOpen f) (a : R) :
+    standardOpenLocalizationMapOfSubset hsub (algebraMap R (Localization.Away f) a) =
+      algebraMap R (Localization.Away g) a := by
+  exact IsLocalization.Away.lift_eq f (standardOpen_isUnit_of_subset hsub) a
+
+end Inclusion
+
 end StacksPart02
