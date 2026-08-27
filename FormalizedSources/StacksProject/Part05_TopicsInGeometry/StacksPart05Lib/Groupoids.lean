@@ -63,10 +63,9 @@ theorem categorical_quotient_unique_up_to_unique_iso
   apply Iso.ext
   exact he_unique e'.hom he'
 
-/-! A categorical quotient map is an epimorphism: its universal property
+/-- A categorical quotient map is an epimorphism: its universal property
 forces any two maps out of the quotient that agree after precomposition to
 coincide. -/
-
 theorem categorical_quotient_epi
     {C : Type u} [Category.{v} C] {R U X : C}
     {s t : R ⟶ U} {φ : U ⟶ X}
