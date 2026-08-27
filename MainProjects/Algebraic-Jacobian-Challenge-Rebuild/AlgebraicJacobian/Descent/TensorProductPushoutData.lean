@@ -489,6 +489,112 @@ theorem right_inv_apply
     D.hom (D.inv x) = x :=
   DFunLike.congr_fun D.right_inv x
 
+/-! ### Explicit projections
+
+The structure fields above already use pinned map aliases, but a consumer still had to know
+which carrier and `Algebra K` witness each alias denoted.  These projections make that choice
+part of the namespace API.  In particular, none of the result types below asks typeclass
+inference to rebuild a tensor-product algebra, and no result type contains a `letI` binder.
+-/
+
+/-- The source carrier selected by a pinned data package. -/
+abbrev source
+    {C : TensorProductPushoutCarriers (M := M) (K := K) (A := A)
+      (B₁ := B₁) (B₂ := B₂)}
+    (_D : TensorProductPushoutPinnedData C) : Type u :=
+  tensorProductPushoutSourceCarrier M K A B₁ B₂
+
+/-- The target carrier selected by a pinned data package. -/
+abbrev target
+    {C : TensorProductPushoutCarriers (M := M) (K := K) (A := A)
+      (B₁ := B₁) (B₂ := B₂)}
+    (_D : TensorProductPushoutPinnedData C) : Type u :=
+  tensorProductPushoutPinnedTarget C
+
+/-- The explicit `K`-algebra witness on the source carrier. -/
+abbrev sourceAlgebra
+    {C : TensorProductPushoutCarriers (M := M) (K := K) (A := A)
+      (B₁ := B₁) (B₂ := B₂)}
+    (D : TensorProductPushoutPinnedData C) : Algebra K D.source :=
+  tensorProductPushoutPinnedSourceKAlgebra
+
+/-- The explicit `K`-algebra witness on the target carrier. -/
+abbrev targetAlgebra
+    {C : TensorProductPushoutCarriers (M := M) (K := K) (A := A)
+      (B₁ := B₁) (B₂ := B₂)}
+    (D : TensorProductPushoutPinnedData C) : Algebra K D.target :=
+  tensorProductPushoutPinnedTargetKAlgebra C
+
+/-- The forward map with both source and target `Algebra K` witnesses explicit. -/
+abbrev forward
+    {C : TensorProductPushoutCarriers (M := M) (K := K) (A := A)
+      (B₁ := B₁) (B₂ := B₂)}
+    (D : TensorProductPushoutPinnedData C) :
+    @AlgHom K D.source D.target _ _ _ D.sourceAlgebra D.targetAlgebra :=
+  D.hom
+
+/-- The inverse map with both source and target `Algebra K` witnesses explicit. -/
+abbrev backward
+    {C : TensorProductPushoutCarriers (M := M) (K := K) (A := A)
+      (B₁ := B₁) (B₂ := B₂)}
+    (D : TensorProductPushoutPinnedData C) :
+    @AlgHom K D.target D.source _ _ _ D.targetAlgebra D.sourceAlgebra :=
+  D.inv
+
+/-- The inverse followed by the forward map, with the identity algebra pinned. -/
+@[simp]
+theorem backward_comp_forward
+    {C : TensorProductPushoutCarriers (M := M) (K := K) (A := A)
+      (B₁ := B₁) (B₂ := B₂)}
+    (D : TensorProductPushoutPinnedData C) :
+    D.backward.comp D.forward = @AlgHom.id K D.source _ _ D.sourceAlgebra :=
+  D.left_inv
+
+/-- The forward followed by the inverse map, with the identity algebra pinned. -/
+@[simp]
+theorem forward_comp_backward
+    {C : TensorProductPushoutCarriers (M := M) (K := K) (A := A)
+      (B₁ := B₁) (B₂ := B₂)}
+    (D : TensorProductPushoutPinnedData C) :
+    D.forward.comp D.backward = @AlgHom.id K D.target _ _ D.targetAlgebra :=
+  D.right_inv
+
+/-- Pointwise cancellation of the forward and backward maps on the source. -/
+@[simp]
+theorem backward_comp_forward_apply
+    {C : TensorProductPushoutCarriers (M := M) (K := K) (A := A)
+      (B₁ := B₁) (B₂ := B₂)}
+    (D : TensorProductPushoutPinnedData C) (x : D.source) :
+    D.backward (D.forward x) = x :=
+  D.left_inv_apply x
+
+/-- Pointwise cancellation of the backward and forward maps on the target. -/
+@[simp]
+theorem forward_comp_backward_apply
+    {C : TensorProductPushoutCarriers (M := M) (K := K) (A := A)
+      (B₁ := B₁) (B₂ := B₂)}
+    (D : TensorProductPushoutPinnedData C) (x : D.target) :
+    D.forward (D.backward x) = x :=
+  D.right_inv_apply x
+
+/-- The equivalence projection is definitionally the pinned forward map. -/
+@[simp]
+theorem equiv_toAlgHom
+    {C : TensorProductPushoutCarriers (M := M) (K := K) (A := A)
+      (B₁ := B₁) (B₂ := B₂)}
+    (D : TensorProductPushoutPinnedData C) :
+    D.equiv.toAlgHom = D.forward := by
+  rfl
+
+/-- The inverse equivalence projection is definitionally the pinned backward map. -/
+@[simp]
+theorem equiv_symm_toAlgHom
+    {C : TensorProductPushoutCarriers (M := M) (K := K) (A := A)
+      (B₁ := B₁) (B₂ := B₂)}
+    (D : TensorProductPushoutPinnedData C) :
+    D.equiv.symm.toAlgHom = D.backward := by
+  rfl
+
 end TensorProductPushoutPinnedData
 
 /-! ### Compatibility and canonical constructors -/
