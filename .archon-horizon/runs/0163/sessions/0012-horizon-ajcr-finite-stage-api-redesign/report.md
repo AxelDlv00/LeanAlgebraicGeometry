@@ -8,6 +8,7 @@
 ## Issues
 
 - `Pic0FiniteStageGlueDataAssembly` and the restored legacy package still hit the dependent tensor/import boundary: serialized 600-second and 300-second overlay checks produced no fresh `.olean`, and an earlier 180-second `FiniteStageApi` retry timed out under shared workspace resource contention. After clearing the stale workers, both a bounded foreground source check and `lake build AlgebraicJacobian.Descent.FiniteStageApi` completed successfully (the latter rebuilt 9,362 jobs in 155 seconds); no new legacy kernel check is claimed.
+- A fresh presentation-bridge retry (attempt `0005`) also timed out after 900 seconds while `Pic0FiniteStageGlueDataFace.olean` was still absent; it emitted no diagnostics or artifact, and the experimental Assembly source was restored unchanged.
 - The stable `ofContext`/`ofPresentation` boundary accepts a selected presentation independently of the context maps. It is a migration adapter, not yet a canonical finite-stage producer; a compatibility certificate is still needed. Fresh `#print axioms` probes for `ofContext`, `ofPresentation`, and `gluedOverData` report only `propext`, `Classical.choice`, and `Quot.sound`.
 - Generated hgraph state still contains stale `presentation` nodes and broad pre-existing churn. I left it untouched rather than commit misleading generated declarations; no blueprint files were edited. The I-2049 roadmap mismatch was acknowledged and left to its owner.
 
