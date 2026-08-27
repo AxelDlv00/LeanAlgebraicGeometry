@@ -74,6 +74,20 @@ def zsmulTorsion_map {X Y : Type*} [AddCommGroup X] [AddCommGroup Y]
       rw [← map_zsmul, x.property, map_zero])
 
 @[simp]
+theorem zsmulTorsion_map_apply {X Y : Type*} [AddCommGroup X] [AddCommGroup Y]
+    (f : X →+ Y) (n : ℤ) (x : zsmulTorsionSubgroup X n) :
+    ((zsmulTorsion_map f n) x : Y) = f (x : X) := by
+  rfl
+
+theorem zsmulTorsion_map_injective {X Y : Type*} [AddCommGroup X] [AddCommGroup Y]
+    (f : X →+ Y) (n : ℤ) (hf : Function.Injective f) :
+    Function.Injective (zsmulTorsion_map f n) := by
+  intro x y hxy
+  apply Subtype.ext
+  apply hf
+  exact congrArg Subtype.val hxy
+
+@[simp]
 theorem zsmulTorsion_map_id {X : Type*} [AddCommGroup X] (n : ℤ) :
     zsmulTorsion_map (AddMonoidHom.id X) n = AddMonoidHom.id _ := by
   ext x
@@ -173,6 +187,14 @@ theorem natCast_zsmulTorsion_card_of_uniformization {X : Type*} [AddCommGroup X]
     Nat.card (zsmulTorsionSubgroup X (n : ℤ)) = n ^ (2 * g) := by
   have hne : (n : ℤ) ≠ 0 := by exact_mod_cast (Nat.ne_of_gt hn)
   simpa using (zsmulTorsion_card_of_uniformization u hne)
+
+/-- The positive-natural torsion classification for a chosen uniformization. -/
+noncomputable def natCast_zsmulTorsion_addEquiv_of_uniformization
+    {X : Type*} [AddCommGroup X] {g n : ℕ}
+    (u : GenusTorusUniformization X g) (hn : 0 < n) :
+    zsmulTorsionSubgroup X (n : ℤ) ≃+ (Fin (2 * g) → ZMod n) := by
+  have hne : (n : ℤ) ≠ 0 := by exact_mod_cast (Nat.ne_of_gt hn)
+  exact zsmulTorsion_addEquiv_of_uniformization u hne
 
 /-- A chosen genus-torus uniformization makes every nonzero-integer torsion
 subgroup finite. -/
