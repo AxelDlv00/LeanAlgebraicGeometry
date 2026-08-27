@@ -60,8 +60,7 @@ theorem vanishingIdeal_isPrime_of_isAffineVariety
       intro P hP
       exact hg hP
 
-/-! The converse direction uses only that `Y` is algebraic: a prime vanishing
-ideal rules out a decomposition of `Y` by two proper closed subsets. -/
+/-- An algebraic set with prime vanishing ideal is irreducible. -/
 theorem isAffineVariety_of_isAlgebraicSet_of_vanishingIdeal_isPrime
     {Y : Set (AffinePoint k n)} (hY : IsAlgebraicSet k n Y)
     (hprime : (vanishingIdeal k n Y).IsPrime) :
