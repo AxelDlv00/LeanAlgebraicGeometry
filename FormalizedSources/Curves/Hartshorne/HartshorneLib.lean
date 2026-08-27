@@ -9,6 +9,7 @@ import HartshorneLib.Chapter1Coordinates
 import HartshorneLib.Chapter1Prime
 import HartshorneLib.Chapter1QuasiAffine
 import HartshorneLib.Chapter1Spectrum
+import HartshorneLib.Chapter2
 
 /-!
 # HartshorneLib
