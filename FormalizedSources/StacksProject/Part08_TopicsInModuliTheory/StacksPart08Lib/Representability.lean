@@ -66,6 +66,11 @@ theorem morphismScheme_representable {C : Type u} [Category.{v} C]
     RepresentableTransformation C (morphismScheme f) := by
   exact Functor.relativelyRepresentable.map yoneda f
 
+/-- Scheme-specialized form of `morphismScheme_representable`. -/
+theorem scheme_morphism_representable {X Y : Scheme.{u}} (f : X ⟶ Y) :
+    RepresentableTransformation Scheme.{u} (morphismScheme f) := by
+  exact Functor.relativelyRepresentable.map yoneda f
+
 @[simp]
 theorem morphismScheme_id {C : Type u} [Category.{v} C] {X : C} :
     morphismScheme (𝟙 X) = 𝟙 (yoneda.obj X) :=
@@ -95,6 +100,28 @@ theorem representableTransformation_baseChange {C : Type u} [Category.{v} C]
     (ha : RepresentableTransformation C a) :
     RepresentableTransformation C a' := by
   exact MorphismProperty.IsStableUnderBaseChange.of_isPullback sq ha
+
+/-! Representability is unchanged after replacing source and target by
+isomorphic presheaves. -/
+
+theorem representableTransformation_iff_of_iso {C : Type u} [Category.{v} C]
+    {F F' G G' : Presheaf C} (eF : F' ≅ F) (eG : G' ≅ G)
+    (a : F ⟶ G) :
+    RepresentableTransformation C (eF.hom ≫ a ≫ eG.inv) ↔
+      RepresentableTransformation C a := by
+  constructor
+  · intro h
+    have h1 : RepresentableTransformation C (a ≫ eG.inv) :=
+      MorphismProperty.cancel_left_of_respectsIso
+        (RepresentableTransformation C) eF.hom (a ≫ eG.inv) |>.mp h
+    exact MorphismProperty.cancel_right_of_respectsIso
+      (RepresentableTransformation C) a eG.inv |>.mp h1
+  · intro h
+    have h1 : RepresentableTransformation C (a ≫ eG.inv) :=
+      MorphismProperty.cancel_right_of_respectsIso
+        (RepresentableTransformation C) a eG.inv |>.mpr h
+    exact MorphismProperty.cancel_left_of_respectsIso
+      (RepresentableTransformation C) eF.hom (a ≫ eG.inv) |>.mpr h1
 
 /-- Every isomorphism of presheaves is representable. -/
 theorem representableTransformation_of_isIso {C : Type u} [Category.{v} C]
