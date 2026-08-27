@@ -1,3 +1,4 @@
+import StacksPart01Lib.Topology
 import Mathlib.RingTheory.Spectrum.Prime.Basic
 import Mathlib.RingTheory.Spectrum.Prime.Topology
 
@@ -97,5 +98,15 @@ theorem spectrum_comap_preimage_zeroLocus {R S : Type*}
     (PrimeSpectrum.comap f) ⁻¹' PrimeSpectrum.zeroLocus s =
       PrimeSpectrum.zeroLocus (f '' s) := by
   exact PrimeSpectrum.preimage_comap_zeroLocus f s
+
+/- The spectrum is quasi-compact (Stacks, Tag 00E8). -/
+theorem spectrum_quasiCompact {R : Type*} [CommSemiring R] :
+    QuasiCompactSpace (PrimeSpectrum R) := by
+  exact isCompact_univ
+
+/- Every standard open is quasi-compact. -/
+theorem standardOpen_quasiCompact {R : Type*} [CommSemiring R] (f : R) :
+    IsQuasiCompact (PrimeSpectrum.basicOpen f : Set (PrimeSpectrum R)) := by
+  exact PrimeSpectrum.isCompact_basicOpen f
 
 end StacksPart01
