@@ -6,6 +6,7 @@ Authors: The StacksPart01Lib Contributors
 
 import Mathlib.Algebra.Module.LocalizedModule.Exact
 import Mathlib.Algebra.Module.LocalizedModule.Submodule
+import Mathlib.RingTheory.Localization.Finiteness
 
 /-!
 # Localization of modules
@@ -138,5 +139,41 @@ theorem localizedModule_map_surjective (S : Submonoid R)
       (IsLocalizedModule.map S (LocalizedModule.mkLinearMap S M)
         (LocalizedModule.mkLinearMap S N) g) := by
   exact LocalizedModule.map_surjective S g hg
+
+/-!
+The kernel of the canonical map is precisely the submodule of elements killed
+by some denominator.  This is the elementwise form of the localization
+equivalence relation.
+-/
+theorem localizedModule_mem_ker_iff
+    {A : Type*} [CommRing A] (S : Submonoid A)
+    {M : Type*} [AddCommMonoid M] [Module A M] {m : M} :
+    m ∈ (LocalizedModule.mkLinearMap S M).ker ↔
+      ∃ r : A, r ∈ S ∧ r • m = 0 := by
+  exact LocalizedModule.mem_ker_mkLinearMap_iff (S := S) (m := m)
+
+/- The localization of a quotient module agrees with the quotient of the
+localized module (Stacks, Tag 02C8 and the surrounding construction). -/
+noncomputable def localizedModule_quotient_equiv
+    {A : Type*} [CommRing A] (S : Submonoid A) {M : Type*}
+    [AddCommGroup M] [Module A M] (N : Submodule A M) :
+    (LocalizedModule S M ⧸ Submodule.localized S N) ≃ₗ[Localization S]
+      LocalizedModule S (M ⧸ N) :=
+  localizedQuotientEquiv S N
+
+/- Finite generation is preserved by localization. -/
+theorem localizedModule_finite (S : Submonoid R)
+    {M : Type*} [AddCommMonoid M] [Module R M] [Module.Finite R M] :
+    Module.Finite (Localization S) (LocalizedModule S M) := by
+  infer_instance
+
+theorem localizedModule_finite_of_isLocalized
+    (S : Submonoid R) {Rₚ : Type*} [CommSemiring Rₚ] [Algebra R Rₚ]
+    [IsLocalization S Rₚ] {M : Type*} [AddCommMonoid M] [Module R M]
+    {Mₚ : Type*} [AddCommMonoid Mₚ] [Module R Mₚ] [Module Rₚ Mₚ]
+    [IsScalarTower R Rₚ Mₚ] (f : M →ₗ[R] Mₚ)
+    [IsLocalizedModule S f] [Module.Finite R M] :
+    Module.Finite Rₚ Mₚ := by
+  exact Module.Finite.of_isLocalizedModule S f
 
 end StacksPart01

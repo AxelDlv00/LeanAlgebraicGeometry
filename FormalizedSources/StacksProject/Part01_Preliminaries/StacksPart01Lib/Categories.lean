@@ -75,6 +75,32 @@ theorem isIso_mono_of {C : Type*} [Category C] {X Y : C} (f : X ⟶ Y)
 theorem isIso_epi_of {C : Type*} [Category C] {X Y : C} (f : X ⟶ Y)
     [IsIso f] : Epi f := by infer_instance
 
+/-!
+Cancellation gives the concrete form of the mono and epi conditions used
+throughout the categorical preliminaries.
+-/
+theorem mono_cancel_iff {C : Type*} [Category C] {X Y Z : C}
+    (f : Y ⟶ X) [Mono f] {g h : Z ⟶ Y} :
+    g ≫ f = h ≫ f ↔ g = h := by
+  exact CategoryTheory.cancel_mono f
+
+theorem epi_cancel_iff {C : Type*} [Category C] {X Y Z : C}
+    (f : X ⟶ Y) [Epi f] {g h : Y ⟶ Z} :
+    f ≫ g = f ≫ h ↔ g = h := by
+  exact CategoryTheory.cancel_epi f
+
+/- Finite products and equalizers (respectively coproducts and coequalizers)
+are enough to construct all finite limits (respectively colimits). -/
+theorem hasFiniteLimitsOfFiniteProductsAndEqualizers
+    (C : Type u) [Category.{v} C] [Limits.HasFiniteProducts C]
+    [Limits.HasEqualizers C] : Limits.HasFiniteLimits C :=
+  Limits.hasFiniteLimits_of_hasEqualizers_and_finite_products
+
+theorem hasFiniteColimitsOfFiniteCoproductsAndCoequalizers
+    (C : Type u) [Category.{v} C] [Limits.HasFiniteCoproducts C]
+    [Limits.HasCoequalizers C] : Limits.HasFiniteColimits C :=
+  Limits.hasFiniteColimits_of_hasCoequalizers_and_finite_coproducts
+
 /- Products and equalizers suffice to construct all limits (Stacks, Tag 002N). -/
 theorem hasLimitsOfProductsAndEqualizers
     (C : Type u) [Category.{v} C] [Limits.HasProducts.{w} C]
