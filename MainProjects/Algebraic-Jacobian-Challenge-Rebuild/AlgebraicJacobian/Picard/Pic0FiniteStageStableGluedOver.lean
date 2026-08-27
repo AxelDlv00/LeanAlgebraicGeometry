@@ -75,6 +75,14 @@ end GluedOverData
 def gluedOverData (P : Pic0FiniteStageStableGluePackage C F) : GluedOverData C P :=
   { mapData := P.presentation.mapData }
 
+/-! Compatibility names for consumers that previously projected the legacy package's
+`gluedOver`.  The stable object is definitionally the selected presentation's `Over`, so
+these wrappers do not reconstruct any finite-stage data. -/
+
+noncomputable def gluedOver (P : Pic0FiniteStageStableGluePackage C F) :
+    Over (Spec (.of P.context.triple.N.1)) :=
+  P.gluedOverData.asOver
+
 @[simp]
 theorem gluedOverData_map (P : Pic0FiniteStageStableGluePackage C F) :
     (P.gluedOverData C).map = P.presentation.map :=
@@ -83,6 +91,11 @@ theorem gluedOverData_map (P : Pic0FiniteStageStableGluePackage C F) :
 @[simp]
 theorem gluedOverData_asOver (P : Pic0FiniteStageStableGluePackage C F) :
     (P.gluedOverData C).asOver = P.presentation.over :=
+  rfl
+
+@[simp]
+theorem gluedOver_hom (P : Pic0FiniteStageStableGluePackage C F) :
+    P.gluedOver.hom = P.presentation.map :=
   rfl
 
 end Pic0FiniteStageStableGluePackage
