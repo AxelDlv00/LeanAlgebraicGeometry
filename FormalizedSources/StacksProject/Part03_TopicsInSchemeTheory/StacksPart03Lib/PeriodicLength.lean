@@ -5,7 +5,7 @@ Authors: The StacksPart03Lib Contributors
 -/
 
 import Mathlib.RingTheory.Length
-import StacksPart03Lib.Periodic
+import StacksPart03Lib.Cohomology
 
 /-!
 # Finite-length cohomology of two-periodic complexes
@@ -23,29 +23,13 @@ variable {R M N : Type*} [Ring R]
 
 namespace TwoPeriodicComplex
 
-/-- The even cycles and boundaries, with boundaries regarded as a submodule of
-the cycle module via the kernel subtype. -/
-abbrev evenCycles (C : TwoPeriodicComplex R M N) := LinearMap.ker C.d₀
-
-abbrev evenBoundaries (C : TwoPeriodicComplex R M N) :
-    Submodule R C.evenCycles :=
-  (LinearMap.range C.d₁).comap C.evenCycles.subtype
-
 /-- The even cohomology module `ker(d₀) / range(d₁)`. -/
 abbrev evenCohomology (C : TwoPeriodicComplex R M N) :=
-  C.evenCycles ⧸ C.evenBoundaries
-
-/-- The odd cycles and boundaries, with boundaries regarded as a submodule of
-the cycle module via the kernel subtype. -/
-abbrev oddCycles (C : TwoPeriodicComplex R M N) := LinearMap.ker C.d₁
-
-abbrev oddBoundaries (C : TwoPeriodicComplex R M N) :
-    Submodule R C.oddCycles :=
-  (LinearMap.range C.d₀).comap C.oddCycles.subtype
+  C.HZero
 
 /-- The odd cohomology module `ker(d₁) / range(d₀)`. -/
 abbrev oddCohomology (C : TwoPeriodicComplex R M N) :=
-  C.oddCycles ⧸ C.oddBoundaries
+  C.HOne
 
 /-- Both cohomology modules have finite length. -/
 def HasFiniteLength (C : TwoPeriodicComplex R M N) : Prop :=
@@ -82,14 +66,12 @@ theorem oddLength_eq_zero_iff (C : TwoPeriodicComplex R M N) :
 /-- Exactness identifies the even cohomology quotient with the zero module. -/
 theorem exact_evenCohomology_subsingleton (C : TwoPeriodicComplex R M N)
     (hC : C.IsExact) : Subsingleton C.evenCohomology := by
-  rw [Submodule.Quotient.subsingleton_iff]
-  simp [evenBoundaries, hC.1]
+  exact C.hZero_subsingleton_iff.mpr hC.1.symm
 
 /-- Exactness identifies the odd cohomology quotient with the zero module. -/
 theorem exact_oddCohomology_subsingleton (C : TwoPeriodicComplex R M N)
     (hC : C.IsExact) : Subsingleton C.oddCohomology := by
-  rw [Submodule.Quotient.subsingleton_iff]
-  simp [oddBoundaries, hC.2]
+  exact C.hOne_subsingleton_iff.mpr hC.2.symm
 
 @[simp]
 theorem exact_evenLength_eq_zero (C : TwoPeriodicComplex R M N)
