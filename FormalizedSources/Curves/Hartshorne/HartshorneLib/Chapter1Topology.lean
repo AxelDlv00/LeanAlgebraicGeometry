@@ -62,7 +62,9 @@ def affineZariskiTopology : TopologicalSpace (AffinePoint k n) :=
       intro A hA B hB
       exact isAlgebraicSet_union k n hA hB)
 
-instance affineZariskiTopology_inst : TopologicalSpace (AffinePoint k n) :=
+/-- The affine Zariski topology is opt-in because `AffinePoint` is definitionally
+the same function type as Mathlib's product topology. -/
+scoped instance affineZariskiTopology_inst : TopologicalSpace (AffinePoint k n) :=
   affineZariskiTopology k n
 
 theorem isClosed_iff_isAlgebraicSet (Y : Set (AffinePoint k n)) :
