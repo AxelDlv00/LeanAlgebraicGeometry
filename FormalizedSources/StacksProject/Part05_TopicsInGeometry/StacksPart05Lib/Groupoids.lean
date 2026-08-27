@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The StacksPart05Lib Contributors
 -/
 
+import Mathlib.CategoryTheory.Limits.Shapes.Equalizers
 import Mathlib.Logic.Relation
 
 /-!
@@ -15,9 +16,67 @@ set-theoretic form underlying Stacks, Tag 048F.
 
 namespace StacksPart05Lib
 
+open CategoryTheory
+
+universe u v
+
 /-- A map is invariant for a setoid when it is constant on related points. -/
 def Invariant {U X : Type _} (r : Setoid U) (φ : U → X) : Prop :=
   ∀ ⦃a b : U⦄, r.r a b → φ a = φ b
+
+/-! ## Categorical quotients -/
+
+/-- A categorical quotient equalizes a parallel pair and has the expected
+universal factorization property.  This is the abstract categorical core of
+the quotient definition in the source. -/
+def CategoricalQuotient {C : Type u} [Category.{v} C]
+    {R U X : C} (s t : R ⟶ U) (φ : U ⟶ X) : Prop :=
+  s ≫ φ = t ≫ φ ∧
+    ∀ {Y : C} (ψ : U ⟶ Y), s ≫ ψ = t ≫ ψ →
+      ∃ χ : X ⟶ Y, φ ≫ χ = ψ ∧
+        ∀ χ' : X ⟶ Y, φ ≫ χ' = ψ → χ' = χ
+
+/-- Two categorical quotients of the same parallel pair are uniquely
+isomorphic over the quotient map. -/
+theorem categorical_quotient_unique_up_to_unique_iso
+    {C : Type u} [Category.{v} C] {R U X Y : C}
+    {s t : R ⟶ U} {φ : U ⟶ X} {ψ : U ⟶ Y}
+    (hφ : CategoricalQuotient s t φ)
+    (hψ : CategoricalQuotient s t ψ) :
+    ∃ e : X ≅ Y, φ ≫ e.hom = ψ ∧
+      ∀ e' : X ≅ Y, φ ≫ e'.hom = ψ → e' = e := by
+  obtain ⟨e, he, he_unique⟩ := hφ.2 ψ hψ.1
+  obtain ⟨d, hd, hd_unique⟩ := hψ.2 φ hφ.1
+  obtain ⟨a, ha, ha_unique⟩ := hφ.2 φ hφ.1
+  obtain ⟨b, hb, hb_unique⟩ := hψ.2 ψ hψ.1
+  have hed : e ≫ d = 𝟙 X := by
+    have hcomp : φ ≫ (e ≫ d) = φ := by rw [← Category.assoc, he, hd]
+    have hident : φ ≫ 𝟙 X = φ := Category.comp_id φ
+    exact (ha_unique (e ≫ d) hcomp).trans (ha_unique (𝟙 X) hident).symm
+  have hde : d ≫ e = 𝟙 Y := by
+    have hcomp : ψ ≫ (d ≫ e) = ψ := by rw [← Category.assoc, hd, he]
+    have hident : ψ ≫ 𝟙 Y = ψ := Category.comp_id ψ
+    exact (hb_unique (d ≫ e) hcomp).trans (hb_unique (𝟙 Y) hident).symm
+  let i : X ≅ Y := { hom := e, inv := d, hom_inv_id := hed, inv_hom_id := hde }
+  refine ⟨i, he, ?_⟩
+  intro e' he'
+  apply Iso.ext
+  exact he_unique e'.hom he'
+
+/-! A categorical quotient map is an epimorphism: its universal property
+forces any two maps out of the quotient that agree after precomposition to
+coincide. -/
+
+theorem categorical_quotient_epi
+    {C : Type u} [Category.{v} C] {R U X : C}
+    {s t : R ⟶ U} {φ : U ⟶ X}
+    (hφ : CategoricalQuotient s t φ) : Epi φ := by
+  constructor
+  intro Y f g hfg
+  have hinvf : s ≫ (φ ≫ f) = t ≫ (φ ≫ f) := by
+    simpa only [Category.assoc] using congrArg (fun k => k ≫ f) hφ.1
+  obtain ⟨χ, hχ, hχ_unique⟩ := hφ.2 (φ ≫ f) hinvf
+  exact (hχ_unique f rfl).trans (hχ_unique g hfg.symm).symm
 
 /-- An invariant map factors through the quotient by the relation. -/
 theorem invariant_iff_factors_through_quotient {U X : Type _} (r : Setoid U)
