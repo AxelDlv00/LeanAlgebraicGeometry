@@ -10,7 +10,7 @@
 
 - The frozen blueprint contains no actual `\\lean{}`/`\\leanok` annotations, so sync intentionally emits 31 unattached-declaration warnings and leaves all 2,010 TeX nodes with empty Lean status. The generated node files remain runtime artifacts; authored mappings/comments are persisted.
 - The diagonal theorem formalizes only the first two clauses of Tag `025W`; the pairwise fibre-product clause is open. The `025V` alias does not yet model fppf-locality/site hypotheses, and the algebraic-space groupoid septuple remains open.
-- Workspace-wide volatile-file and open-queue warnings belong to the shared tooling lanes; no unrelated cleanup was attempted under the single-project write protection.
+- Workspace-wide volatile-file and open-queue warnings belong to the shared tooling lanes; shared `.archon-horizon/` and other-project paths observed in the concurrent ledger were explicitly excluded from every Part04 commit.
 
 ## Why I stopped
 
