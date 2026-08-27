@@ -70,6 +70,20 @@ theorem commonZeroSet_span (T : Set (AffinePolynomial k n)) :
       exact h x hx
     exact hle hf P rfl
 
+/-- A polynomial family has a finite subfamily with the same common zero set. -/
+theorem commonZeroSet_span_finite (T : Set (AffinePolynomial k n)) :
+    ∃ S : Finset (AffinePolynomial k n), (↑S : Set (AffinePolynomial k n)) ⊆ T ∧
+      commonZeroSet k n (Ideal.span (↑S : Set (AffinePolynomial k n))) =
+        commonZeroSet k n T := by
+  have hfg : (Ideal.span T).FG := Ideal.FG.of_isNoetherianRing _
+  obtain ⟨S, hsub, hspan⟩ :=
+    (Submodule.fg_span_iff_fg_span_finset_subset (R := AffinePolynomial k n) T).mp hfg
+  have hspan' : Ideal.span T = Ideal.span (↑S : Set (AffinePolynomial k n)) := by
+    exact hspan
+  refine ⟨S, hsub, ?_⟩
+  rw [← hspan']
+  exact commonZeroSet_span k n T
+
 /-- Zero sets are unchanged on passing from an ideal to its radical. -/
 theorem commonZeroSet_radical (I : Ideal (AffinePolynomial k n)) :
     commonZeroSet k n (I.radical : Set (AffinePolynomial k n)) =
