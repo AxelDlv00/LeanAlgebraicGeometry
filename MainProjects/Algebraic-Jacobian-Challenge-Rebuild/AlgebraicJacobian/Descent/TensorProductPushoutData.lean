@@ -387,6 +387,30 @@ abbrev tensorProductPushoutPinnedTarget
   letI := C.rightAlgebra
   exact Algebra.TensorProduct.instAlgebra
 
+/-- The `K`-algebra structure on a pinned target carrier.
+
+The target tensor product has two natural scalar structures: the base algebra
+`K ⊗[M] A` and the outer scalar field `K`.  Leaving the latter to typeclass
+inference in an `AlgHom` type is particularly fragile: a caller that rebuilds
+the tensor tower gets a propositionally equal, but not definitionally equal,
+`Algebra K` witness.  Naming the witness here gives every pinned map one
+canonical target instance. -/
+@[reducible] noncomputable def tensorProductPushoutPinnedTargetKAlgebra
+    (C : TensorProductPushoutCarriers (M := M) (K := K) (A := A)
+      (B₁ := B₁) (B₂ := B₂)) :
+    Algebra K (tensorProductPushoutPinnedTarget C) := by
+  letI := C.leftAlgebra
+  letI := C.rightAlgebra
+  infer_instance
+
+/-- The `K`-algebra structure on the scalar-extension source carrier.
+
+This is named alongside the target witness so the two `AlgHom` aliases below
+contain no hidden instance search at all. -/
+@[reducible] noncomputable def tensorProductPushoutPinnedSourceKAlgebra :
+    Algebra K (tensorProductPushoutSourceCarrier M K A B₁ B₂) := by
+  infer_instance
+
 /-- A left factor inclusion whose source and target algebra structures are explicit. -/
 abbrev tensorProductPushoutPinnedLeftInclusion
     (C : TensorProductPushoutCarriers (M := M) (K := K) (A := A)
@@ -407,8 +431,8 @@ abbrev tensorProductPushoutPinnedHom
       (B₁ := B₁) (B₂ := B₂)) :=
   @AlgHom K (tensorProductPushoutSourceCarrier M K A B₁ B₂)
     (tensorProductPushoutPinnedTarget C) _ _ _
-    (inferInstance : Algebra K (tensorProductPushoutSourceCarrier M K A B₁ B₂))
-    (inferInstance : Algebra K (tensorProductPushoutPinnedTarget C))
+    tensorProductPushoutPinnedSourceKAlgebra
+    (tensorProductPushoutPinnedTargetKAlgebra C)
 
 /-- The inverse map type for a pinned carrier package. -/
 abbrev tensorProductPushoutPinnedInv
@@ -416,8 +440,8 @@ abbrev tensorProductPushoutPinnedInv
       (B₁ := B₁) (B₂ := B₂)) :=
   @AlgHom K (tensorProductPushoutPinnedTarget C)
     (tensorProductPushoutSourceCarrier M K A B₁ B₂) _ _ _
-    (inferInstance : Algebra K (tensorProductPushoutPinnedTarget C))
-    (inferInstance : Algebra K (tensorProductPushoutSourceCarrier M K A B₁ B₂))
+    (tensorProductPushoutPinnedTargetKAlgebra C)
+    tensorProductPushoutPinnedSourceKAlgebra
 
 /-- A tensor pushout package with no dependent `letI` expressions in its public fields. -/
 structure TensorProductPushoutPinnedData
