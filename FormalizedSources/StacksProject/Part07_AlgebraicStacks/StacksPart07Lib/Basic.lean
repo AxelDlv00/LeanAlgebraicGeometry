@@ -6,6 +6,7 @@ Authors: The StacksPart07Lib Contributors
 
 import StacksPart07Lib.Representability
 import StacksPart07Lib.Groupoids
+import StacksPart07Lib.ProductRepresentability
 
 /-!
 # StacksPart07Lib.Basic
