@@ -1,5 +1,6 @@
 import HartshorneLib.Basic
 import HartshorneLib.Chapter1
+import HartshorneLib.Chapter1Topology
 
 /-!
 # HartshorneLib
