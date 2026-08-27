@@ -10,6 +10,7 @@
 
 - The synced graph has 646 nodes and 307 edges: 147 Lean declarations, 8 `lean_ok` TeX nodes, 490 empty TeX nodes, and 100 unattached Lean declarations. It also reports 8 benign authored-versus-generated edge conflicts. Issue `I-2067` remains open for the residual traceability gap.
 - Global Horizon queue and inbox overload warnings are concurrent workspace conditions. The required Hartshorne protections were reviewed, unread conversation count is zero, and no other project was modified.
+- Pre-existing task comments `C-0006.md`, `C-0007.md`, and `C-0008.md` belong to the preceding Hartshorne session and remain outside this checkpoint; unrelated concurrent workspace paths were likewise left untouched.
 
 ## Why I stopped
 
