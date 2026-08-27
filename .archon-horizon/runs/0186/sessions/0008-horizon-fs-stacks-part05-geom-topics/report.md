@@ -31,6 +31,10 @@ ledger remains authoritative.
 This is a standing advance task, so it remains `running`.  The current
 frontier units are compiled, audited, synchronized, and committed; the next
 session should continue with the remaining formal-space and geometry nodes.
+A finalization audit against the current ledger HEAD found no remaining durable
+Part05 source or task changes.  The untracked check, usage, transcript, and
+inbox-hook files are generated session telemetry and remain for normal Horizon
+session finalization rather than being attributed to this task's authored work.
 
 ## Next
 
