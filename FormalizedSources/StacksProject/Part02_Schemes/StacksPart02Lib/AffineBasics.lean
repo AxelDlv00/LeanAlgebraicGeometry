@@ -66,6 +66,37 @@ theorem standardOpen_mul_set {R : Type*} [CommSemiring R] (f g : R) :
   exact congrArg (fun U : TopologicalSpace.Opens (PrimeSpectrum R) =>
     (U : Set (PrimeSpectrum R))) h
 
+/-- A positive power does not change a standard open (Stacks, Tag 00E0). -/
+@[simp] theorem standardOpen_pow {R : Type*} [CommSemiring R] (f : R) (n : ℕ)
+    (hn : 0 < n) :
+    PrimeSpectrum.basicOpen (f ^ n) = PrimeSpectrum.basicOpen f := by
+  exact PrimeSpectrum.basicOpen_pow f n hn
+
+/-- Every standard open in an affine spectrum is quasi-compact. -/
+theorem standardOpen_isQuasiCompact {R : Type*} [CommSemiring R] (f : R) :
+    IsCompact (PrimeSpectrum.basicOpen f : Set (PrimeSpectrum R)) := by
+  exact PrimeSpectrum.isCompact_basicOpen f
+
+/-- A family of standard opens covers an affine spectrum exactly when its
+elements generate the unit ideal (Stacks, Tag 00E0). -/
+theorem standardOpen_iSup_eq_top_iff {R : Type*} [CommSemiring R] {ι : Type*}
+    (f : ι → R) :
+    (⨆ i : ι, PrimeSpectrum.basicOpen (f i)) = ⊤ ↔
+      Ideal.span (Set.range f) = ⊤ := by
+  exact PrimeSpectrum.iSup_basicOpen_eq_top_iff
+
+/-- A cover of a standard open by standard opens has a finite refinement. -/
+theorem exists_finset_standardOpen_cover {R : Type*} [CommSemiring R] {ι : Type*}
+    (g : R) (f : ι → R)
+    (hcover : (PrimeSpectrum.basicOpen g : Set (PrimeSpectrum R)) ⊆
+      ⋃ i, (PrimeSpectrum.basicOpen (f i) : Set (PrimeSpectrum R))) :
+    ∃ s : Finset ι,
+      (PrimeSpectrum.basicOpen g : Set (PrimeSpectrum R)) ⊆
+        ⋃ i ∈ s, (PrimeSpectrum.basicOpen (f i) : Set (PrimeSpectrum R)) := by
+  exact (PrimeSpectrum.isCompact_basicOpen g).elim_finite_subcover
+    (fun i => (PrimeSpectrum.basicOpen (f i) : Set (PrimeSpectrum R)))
+    (fun i => PrimeSpectrum.isOpen_basicOpen) hcover
+
 /-- Standard opens form a basis for the Zariski topology. -/
 theorem standardOpen_isTopologicalBasis {R : Type*} [CommSemiring R] :
     TopologicalSpace.IsTopologicalBasis
