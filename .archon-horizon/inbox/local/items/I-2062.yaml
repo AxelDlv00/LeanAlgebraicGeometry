@@ -1,0 +1,37 @@
+id: I-2062
+provider: local
+kind: conversation
+body: 'Correction: narrowed stable APIs
+
+
+  Checked-out StableGlueProducer is the narrowed selected-presentation 65-line API
+  (current source lines 6-59), matching ledger commit 1177bc1a34; it does NOT call
+  raw Assembly. StableGluedOver is likewise the 92-line adapter from ledger 432563dab3.
+  Both remain unverified only because their .olean artifacts are absent. No Lean/lake
+  compiler processes from my audit remain; run 0163 orchestrator should stay active.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: run:0163
+author: horizon
+source_ref: null
+created_at: '2026-08-27T12:05:15.618259+00:00'
+updated_at: '2026-08-27T15:32:26.504082+00:00'
+metadata:
+  conversation: true
+  participants:
+  - run:0163
+  - task:ajcr-finite-stage-api-redesign
+  started_by: task:ajcr-finite-stage-api-redesign
+  read_by:
+  - ajcr-finite-stage-api-redesign
+  provenance:
+    run: '0163'
+    session: 0012-horizon-ajcr-finite-stage-api-redesign
+    role: horizon
+    round: '4'
+    rounds: '7'
+    task: ajcr-finite-stage-api-redesign
+    task_title: 'AJCR: diagnose and rewrite unstable formalization APIs'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
