@@ -6,6 +6,7 @@ Authors: The Milne Contributors
 
 import Mathlib.LinearAlgebra.TensorProduct.Quotient
 import Mathlib.LinearAlgebra.TensorProduct.Tower
+import Mathlib.RingTheory.LocalRing.ResidueField.Basic
 
 /-!
 # Tensor evaluation
@@ -76,6 +77,17 @@ noncomputable def quotTensorEquivQuotSMul
     (I : Ideal R) :
     ((R ⧸ I) ⊗[R] M) ≃ₗ[R] M ⧸ (I • (⊤ : Submodule R M)) :=
   TensorProduct.quotTensorEquivQuotSMul M I
+
+/-- The quotient--tensor equivalence for the residue field of a local ring.
+
+This is the local form used to compare a residue fibre with reduction modulo
+the maximal ideal. -/
+noncomputable def residueFieldTensorEquivQuotSMul
+    {R M : Type*} [CommRing R] [IsLocalRing R]
+    [AddCommGroup M] [Module R M] :
+    IsLocalRing.ResidueField R ⊗[R] M ≃ₗ[R]
+      M ⧸ (IsLocalRing.maximalIdeal R • (⊤ : Submodule R M)) :=
+  quotTensorEquivQuotSMul (M := M) (IsLocalRing.maximalIdeal R)
 
 @[simp]
 theorem quotTensorEquivQuotSMul_mk_tmul
