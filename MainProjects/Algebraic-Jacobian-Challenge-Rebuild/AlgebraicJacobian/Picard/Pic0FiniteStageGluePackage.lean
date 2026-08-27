@@ -13,6 +13,12 @@ import AlgebraicJacobian.Picard.Pic0FiniteStageTripleTransitionModels
 The simultaneous pair- and triple-transition descent theorems supply every input of
 `pic0FiniteStageAffineRingGlueData`.  This file records those dependent inputs in one
 package and immediately exposes the resulting scheme glue datum.
+
+This is the compatibility boundary for the historical flat API.  Its `glueData`
+constructor intentionally stays the original `Scheme.GlueData` interface: the assembly
+module does not yet provide a certified context-to-presentation bridge.  New consumers
+should use `Pic0FiniteStageStableGluePackage` with an explicit selected presentation,
+which keeps that expensive dependent construction out of downstream projections.
 -/
 
 set_option autoImplicit false
