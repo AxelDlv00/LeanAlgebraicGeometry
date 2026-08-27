@@ -133,4 +133,27 @@ theorem matrix_left_inverse_one_mem_minorIdeal
   refine ⟨e, ?_⟩
   simp [e]
 
+/-- For a square matrix, a left inverse up to a scalar puts the corresponding
+power of that scalar in the maximal-minor ideal (the square specialization of
+07DQ(2)). -/
+theorem matrix_left_inverse_square_mem_minorIdeal
+    {R ι : Type*} [CommRing R] [Fintype ι] [DecidableEq ι]
+    (A B : Matrix ι ι R) {f : R}
+    (hBA : B * A = f • (1 : Matrix ι ι R)) :
+    f ^ Fintype.card ι ∈ minorIdeal A := by
+  classical
+  change f ^ Fintype.card ι ∈ Submodule.span R
+    (Set.range fun e : ι ↪ ι => (A.submatrix e id).det)
+  have hdet : f ^ Fintype.card ι = B.det * A.det := by
+    calc
+      f ^ Fintype.card ι = (f • (1 : Matrix ι ι R)).det := by simp
+      _ = (B * A).det := by rw [hBA]
+      _ = B.det * A.det := Matrix.det_mul _ _
+  rw [hdet]
+  refine Submodule.smul_mem _ B.det ?_
+  apply Submodule.subset_span
+  rw [Set.mem_range]
+  refine ⟨Function.Embedding.refl ι, ?_⟩
+  congr 1
+
 end StacksPart01
