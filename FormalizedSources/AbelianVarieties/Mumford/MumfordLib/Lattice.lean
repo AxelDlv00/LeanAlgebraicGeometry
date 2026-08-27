@@ -119,6 +119,42 @@ theorem genusRealVectorQuotientAddEquiv_mk (g : ℕ) (v : GenusRealVector g) :
   exact PeriodLatticeQuotient.quotientAddEquiv_mk
     (standardGenusTorusPeriodLatticeQuotient g) v
 
+/-- Integer torsion of the standard real lattice quotient is a product of
+cyclic groups indexed by the `2 * g` coordinates. -/
+def genusRealVectorQuotient_zsmulTorsion_addEquiv {g : ℕ} {n : ℤ} (hn : n ≠ 0) :
+    zsmulTorsionSubgroup (GenusRealVector g ⧸ integerPeriodLattice g) n ≃+
+      (Fin (2 * g) → ZMod n.natAbs) := by
+  exact (zsmulTorsion_addEquiv_of_addEquiv (genusRealVectorQuotientAddEquiv g) n).trans
+    (productTorus_zsmul_torsion_addEquiv_pi_zmod hn)
+
+/-- The standard real lattice quotient has the expected finite torsion order. -/
+theorem genusRealVectorQuotient_zsmulTorsion_card {g : ℕ} {n : ℤ} (hn : n ≠ 0) :
+    Nat.card (zsmulTorsionSubgroup (GenusRealVector g ⧸ integerPeriodLattice g) n) =
+      n.natAbs ^ (2 * g) := by
+  calc
+    Nat.card (zsmulTorsionSubgroup (GenusRealVector g ⧸ integerPeriodLattice g) n) =
+        Nat.card (zsmulTorsionSubgroup (GenusTorus g) n) :=
+      zsmulTorsion_card_eq_of_addEquiv (genusRealVectorQuotientAddEquiv g) n
+    _ = n.natAbs ^ (2 * g) := genusTorus_zsmulTorsion_card g hn
+
+/-- Every nonzero integer acts surjectively on the standard real lattice
+quotient. -/
+theorem genusRealVectorQuotient_exists_division {g : ℕ}
+    (x : GenusRealVector g ⧸ integerPeriodLattice g) {n : ℤ} (hn : n ≠ 0) :
+    ∃ y, n • y = x := by
+  obtain ⟨z, hz⟩ := genusTorus_exists_division g (genusRealVectorQuotientAddEquiv g x) hn
+  refine ⟨(genusRealVectorQuotientAddEquiv g).symm z, ?_⟩
+  apply (genusRealVectorQuotientAddEquiv g).injective
+  simpa only [map_zsmul, AddEquiv.apply_symm_apply] using hz
+
+/-- The integer torsion of the standard real lattice quotient is finite. -/
+theorem genusRealVectorQuotient_zsmulTorsion_finite {g : ℕ} {n : ℤ} (hn : n ≠ 0) :
+    Finite (zsmulTorsionSubgroup (GenusRealVector g ⧸ integerPeriodLattice g) n) := by
+  let u : GenusTorusUniformization
+      (GenusRealVector g ⧸ integerPeriodLattice g) g :=
+    ⟨genusRealVectorQuotientAddEquiv g⟩
+  exact zsmulTorsion_finite_of_uniformization u hn
+
 /-- The standard real exponential transported to a chosen uniformized group. -/
 def exponential_to {X : Type*} [AddCommGroup X] {g : ℕ}
     (u : GenusTorusUniformization X g) : GenusRealVector g →+ X :=
