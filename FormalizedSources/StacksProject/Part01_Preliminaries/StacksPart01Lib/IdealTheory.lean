@@ -44,4 +44,11 @@ theorem zeroLocus_radical {R : Type*} [CommSemiring R] (I : Ideal R) :
       PrimeSpectrum.zeroLocus (↑I : Set R) := by
   exact PrimeSpectrum.zeroLocus_radical I
 
+/-- A prime ideal containing a product of ideals contains one factor
+(Stacks, Tag 07K1). -/
+theorem prime_ideal_contains_mul {R : Type*} [CommSemiring R]
+    {I J P : Ideal R} (hP : P.IsPrime) (hIJ : I * J ≤ P) :
+    I ≤ P ∨ J ≤ P := by
+  exact hP.mul_le.mp hIJ
+
 end StacksPart01
