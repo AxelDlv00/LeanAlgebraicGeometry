@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.Pic0FiniteStageGlueDataAssembly
+import AlgebraicJacobian.Picard.Pic0FiniteStageGlueContext
 import AlgebraicJacobian.Picard.Pic0FiniteStageTransitionModels
 import AlgebraicJacobian.Picard.Pic0FiniteStageTripleTransitionModels
 
@@ -145,48 +146,32 @@ Picard atlas.  The fields are outputs of the simultaneous finite-subextension pr
 not additional geometric hypotheses. -/
 structure Pic0FiniteStageGluePackage
     (F : Type u) [Field F] [Algebra F k] [Algebra.IsAlgebraic F k] where
-  L : DatG0.FinSubext F k
-  n : Pic0FiniteStageRingIndex C -> Nat
-  m : Pic0FiniteStageRingIndex C -> Nat
-  relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1
-  e : forall j,
-    k ⊗[L.1] DatG0.FiniteRelationAlgebra L.1 (n j) (m j) (relation j) ≃ₐ[k]
-      Pic0FiniteStageRing C j
-  M : DatG0.FinSubext L.1 k
-  mapM : forall q : Pic0FiniteStageMapIndex C,
-    Pic0FiniteStageModelRing C L n m relation M
-        (Pic0FiniteStageMapSource C q) →ₐ[M.1]
-      Pic0FiniteStageModelRing C L n m relation M
-        (Pic0FiniteStageMapTarget C q)
-  hmapM : forall q,
-    (Algebra.TensorProduct.map M.1.val
-        (AlgHom.id L.1
-          (DatG0.FiniteRelationAlgebra L.1
-            (n (Pic0FiniteStageMapTarget C q))
-            (m (Pic0FiniteStageMapTarget C q))
-            (relation (Pic0FiniteStageMapTarget C q))))).comp
-        ((mapM q).restrictScalars L.1) =
-      ((pic0FiniteStageTransportedMap C L n m relation e q).restrictScalars
-        L.1).comp
-        (Algebra.TensorProduct.map M.1.val
-          (AlgHom.id L.1
-            (DatG0.FiniteRelationAlgebra L.1
-              (n (Pic0FiniteStageMapSource C q))
-              (m (Pic0FiniteStageMapSource C q))
-              (relation (Pic0FiniteStageMapSource C q)))))
+  context : Pic0FiniteStageGlueContext C F
   hOpen : forall i : Pic0FiniteStageRestrictionIndex C,
     IsOpenImmersion
       (Spec.map
-        (pic0FiniteStageModelMapToRingHom C L n m relation M mapM (Sum.inl i)))
-  N : DatG0.FinSubext M.1 k
-  thetaN : forall p : Pic0FiniteStageTripleTransitionIndex C,
-    Pic0FiniteStageTripleTransitionModelAlgHom
-      C L n m relation M mapM N p
-  hthetaN : forall p : Pic0FiniteStageTripleTransitionIndex C,
-    Pic0FiniteStageTripleTransitionModelComparison
-      C L n m relation e M mapM hmapM N thetaN p
+        (pic0FiniteStageModelMapToRingHom C context.models.L context.models.n
+          context.models.m context.models.relation context.models.M
+          context.models.mapM (Sum.inl i)))
+  
 
 namespace Pic0FiniteStageGluePackage
+
+variable {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+
+/-! These projections are compatibility adapters for the former flat package API. -/
+abbrev L (P : Pic0FiniteStageGluePackage C F) := P.context.models.L
+abbrev n (P : Pic0FiniteStageGluePackage C F) := P.context.models.n
+abbrev m (P : Pic0FiniteStageGluePackage C F) := P.context.models.m
+abbrev relation (P : Pic0FiniteStageGluePackage C F) := P.context.models.relation
+abbrev e (P : Pic0FiniteStageGluePackage C F) := P.context.models.e
+abbrev M (P : Pic0FiniteStageGluePackage C F) := P.context.models.M
+abbrev mapM (P : Pic0FiniteStageGluePackage C F) := P.context.models.mapM
+abbrev hmapM (P : Pic0FiniteStageGluePackage C F) := P.context.models.comparison
+abbrev N (P : Pic0FiniteStageGluePackage C F) := P.context.triple.N
+abbrev thetaN (P : Pic0FiniteStageGluePackage C F) := P.context.triple.thetaN
+abbrev hthetaN (P : Pic0FiniteStageGluePackage C F) := P.context.triple.comparison
+
 
 set_option synthInstance.maxHeartbeats 400000 in
 set_option maxHeartbeats 3200000 in
@@ -313,14 +298,16 @@ noncomputable instance pic0FiniteStageChartBaseChangeRingAlgebra
     (B := Pic0FiniteStageChartModelRing C L n m relation M U)
 
 set_option maxHeartbeats 25600000 in
--- The package projections retain the dependent tensor-product instances of the constructor.
-/-- The scheme glue datum computed from an inhabited finite-stage package. -/
-noncomputable def glueData
+/-! The package boundary keeps one affine presentation rather than rebuilding its
+    dependent chart and overlap instances for each projection. -/
+/-- The pinned affine gluing presentation computed from an inhabited package. -/
+noncomputable def presentation
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (P : Pic0FiniteStageGluePackage C F) : Scheme.GlueData := by
+    (P : Pic0FiniteStageGluePackage C F) :
+    AlgebraicJacobian.AffineRingGluePresentation P.N.1 := by
   letI : Algebra.IsAlgebraic P.L.1 k := by infer_instance
   letI : Algebra.IsAlgebraic P.M.1 k := by infer_instance
-  refine pic0FiniteStageAffineRingGlueData
+  refine pic0FiniteStageAffineRingGluePresentation
     C P.L P.n P.m P.relation P.M P.mapM P.N
       P.e P.hmapM ?_ P.thetaN P.hthetaN
   intro i
@@ -337,6 +324,12 @@ noncomputable def glueData
       (Pic0FiniteStageModelRing C P.L P.n P.m P.relation P.M
         (Pic0FiniteStageMapTarget C (Sum.inl i)))).toSemiring
   simpa only [pic0FiniteStageModelMapToRingHom] using P.hOpen i
+
+/-- The scheme glue datum is the projection of the pinned presentation. -/
+noncomputable def glueData
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (P : Pic0FiniteStageGluePackage C F) : Scheme.GlueData :=
+  P.presentation.glueData
 
 end Pic0FiniteStageGluePackage
 
@@ -373,7 +366,7 @@ theorem exists_pic0FiniteStageGluePackage
     simpa only [Pic0FiniteStageTripleTransitionModelComparison, Q,
       pic0FiniteStageTransportedTripleTransitionOfModels] using
       hthetaN p
-  exact ⟨{
+  let models : Pic0FiniteStageTransitionModelsData C F := {
     L := L
     n := n
     m := m
@@ -381,11 +374,25 @@ theorem exists_pic0FiniteStageGluePackage
     e := e
     M := M
     mapM := mapM
-    hmapM := hmapM
-    hOpen := hOpen'
+    comparison := hmapM
+    openImmersion := by
+      intro i
+      exact hOpenOld i
+    inverse := by
+      intro U V
+      exact pic0FiniteStageTransition_inverse C U V
+  }
+  let triple : Pic0FiniteStageTripleTransitionFamilyData
+      C L n m relation M mapM Q := {
     N := N
     thetaN := thetaN
-    hthetaN := hthetaN'
+    comparison := by
+      intro p
+      exact hthetaN p
+  }
+  exact ⟨{
+    context := { models := models, Q := Q, triple := triple }
+    hOpen := hOpen'
   }⟩
 
 end
