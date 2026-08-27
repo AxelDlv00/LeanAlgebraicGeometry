@@ -1,6 +1,7 @@
 import Mathlib.CategoryTheory.Groupoid
 import Mathlib.CategoryTheory.Iso
 import Mathlib.CategoryTheory.Limits.Constructions.LimitsOfProductsAndEqualizers
+import Mathlib.CategoryTheory.Yoneda
 
 universe u v w
 
@@ -13,6 +14,14 @@ Basic categorical facts corresponding to Stacks tags 0017, 0018, and 003B.
 namespace StacksPart01Lib
 
 open CategoryTheory
+
+/-- The Yoneda correspondence identifies natural transformations from a
+representable functor with the value of the target functor (Stacks, Tag 001P).
+-/
+noncomputable def yoneda_equiv {C : Type u} [Category.{v} C] {X : C}
+    {F : Cᵒᵖ ⥤ Type v} :
+    (yoneda.obj X ⟶ F) ≃ F.obj (Opposite.op X) := by
+  exact CategoryTheory.yonedaEquiv
 
 /-!
 An isomorphism is exactly a morphism admitting a two-sided inverse.  This is
