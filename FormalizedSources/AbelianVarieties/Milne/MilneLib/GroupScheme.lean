@@ -97,6 +97,25 @@ theorem pointTranslationIso_inv (x y : 𝟙_ (Over S) ⟶ G) :
     (pointTranslationIso G x y).inv = (pointTranslation G x y).inv.left :=
   rfl
 
+@[simp]
+theorem pointTranslationIso_self (x : 𝟙_ (Over S) ⟶ G) :
+    pointTranslationIso G x x = Iso.refl G.left := by
+  apply Iso.ext
+  simp [pointTranslationIso]
+
+@[simp]
+theorem pointTranslationIso_symm (x y : 𝟙_ (Over S) ⟶ G) :
+    (pointTranslationIso G x y).symm = pointTranslationIso G y x := by
+  apply Iso.ext
+  simp [pointTranslationIso, pointTranslation]
+
+@[simp]
+theorem pointTranslationIso_trans (x y z : 𝟙_ (Over S) ⟶ G) :
+    pointTranslationIso G x y ≪≫ pointTranslationIso G y z =
+      pointTranslationIso G x z := by
+  apply Iso.ext
+  simp [pointTranslationIso, pointTranslation, Iso.trans_assoc]
+
 @[reassoc (attr := simp)]
 theorem pointTranslationIso_hom_comp (x y : 𝟙_ (Over S) ⟶ G) :
     (pointTranslationIso G x y).hom ≫ G.hom = G.hom :=
