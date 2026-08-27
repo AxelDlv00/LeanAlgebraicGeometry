@@ -1,0 +1,70 @@
+id: I-2074
+provider: local
+kind: conversation
+body: 'Finite cover API survey
+
+
+  Exact useful Mathlib lemmas:
+
+  - `PrimeSpectrum.localization_away_comap_range (S) f`: `Set.range (PrimeSpectrum.comap
+  (algebraMap R S)) = PrimeSpectrum.basicOpen f` (Prime.Topology:600).
+
+  - `PrimeSpectrum.comap_basicOpen φ g`: pullback of basic open is basic open of `φ
+  g` (Prime.Topology:624-ish; existing Part02 AffineBasics.spectrum_comap_preimage_standardOpen
+  wraps it).
+
+  - `PrimeSpectrum.iSup_basicOpen_eq_top_iff`: `(⨆ i, basicOpen (h i)) = ⊤ ↔ Ideal.span
+  (Set.range h) = ⊤` (Prime.Topology:628).
+
+  - `IsAffineOpen.iSup_basicOpen_eq_self_iff` (AlgebraicGeometry/AffineScheme.lean:909):
+  on affine open U, basic opens cover U iff `Ideal.span s = ⊤`; `Scheme.iSup_basicOpen_of_span_eq_top`
+  at 994 gives converse without affine hypothesis.
+
+  - `Ideal.map_span` (Ideal/Maps.lean:182), `Ideal.map_top` (139), and `Ideal.span_eq_top_iff_finite`
+  (Ideal/Span.lean:129).
+
+  - `IsCompact.elim_finite_subcover` (Topology/Compactness/Compact.lean:198) is available
+  for direct topological finite refinement.
+
+
+  Recommended proof architecture: avoid manually proving localization ideal algebra.
+  Set S := Localization.Away f. Translate `D(f)` to `Set.range (comap (algebraMap
+  R S))` by `localization_away_comap_range`; pull back each D(g) with `comap_basicOpen`,
+  obtaining D(algebraMap R S g) in Spec S; apply `PrimeSpectrum.iSup_basicOpen_eq_top_iff`
+  to get `Ideal.span (Set.range (fun g : ι => algebraMap R S g)) = ⊤`. This is exactly
+  equivalent to `Ideal.map (algebraMap R S) (Ideal.span (Set.range g)) = ⊤` by `Ideal.map_span`,
+  `Set.image_range`, and `Ideal.map_top` (or state the criterion directly with the
+  span of mapped generators). Finite refinement follows immediately from `Ideal.span_eq_top_iff_finite`,
+  yielding a Finset of mapped generators; pull back to original g indices with `Finset`
+  bookkeeping.
+
+
+  Much shorter for a theorem over affine scheme `Spec S`: use `(isAffineOpen_top _).iSup_basicOpen_eq_self_iff`;
+  no compactness argument. Existing StandardOpen.lean:26-35 already gives localization
+  instances, and 49-77 gives `IsLocalization.map` compatibility. Module maps use `IsLocalization.map`
+  / `IsLocalization.map_eq`, not a new construction.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:fs-stacks-part02-schemes
+author: horizon
+source_ref: null
+created_at: '2026-08-27T17:20:08.031626+00:00'
+updated_at: '2026-08-27T20:50:56.059540+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-stacks-part02-schemes
+  started_by: task:fs-stacks-part02-schemes
+  read_by:
+  - fs-stacks-part02-schemes
+  provenance:
+    run: 0183
+    session: 0004-horizon-fs-stacks-part02-schemes
+    role: horizon
+    round: '1'
+    rounds: '24'
+    task: fs-stacks-part02-schemes
+    task_title: Advance Stacks Part 02 Schemes formalization
+    projects: StacksPart02_Schemes

@@ -1,0 +1,63 @@
+id: I-2068
+provider: local
+kind: conversation
+body: 'Survey handoff from frontier subtask
+
+
+  Current Part02 Lean surface: only 5 modules, all axiom-clean and no sorrys. AffineBasics.lean:27-74
+  wraps membership, D(1)/D(0), nilpotence, product/intersection, openness, basis;
+  80-110 wraps spectrum comap functoriality. AffineOpens.lean:24-31 wraps affine-open
+  basis and iSup cover. OpenImmersion.lean:23-44 wraps injectivity/open map/range/factorization.
+  Schemes.lean:30-126 wraps local-ring/stalk, local affine, openSubscheme, preimage
+  and composition. StandardOpen.lean:26-35 gives localization for affine standard
+  opens; 49-77 gives canonical localization ring map and algebraMap compatibility.
+
+
+  Highest-value concrete next target: Schemes lemma `schemes-lemma-standard-open`
+  (blueprint/src/ch01-schemes.tex:498-575, Tag 01HS), especially finite standard-open
+  refinement of an open cover of D(f), plus unit-ideal criterion. Existing Part01
+  `StacksPart01Lib/Spectrum.lean:103-110` already gives `standardOpen_quasiCompact`;
+  `Zariski.lean:52-56` gives `standardOpen_iSup_eq_top_iff`; Mathlib Prime.Topology
+  has `isCompact_basicOpen` at line 619 and `iSup_basicOpen_eq_top_iff` at 628. A
+  practical Lean API can first add Part02 aliases for these, then prove a finite-index
+  theorem using `IsCompact.elim_finite_subcover` + `standardOpen_isTopologicalBasis`
+  (AffineBasics.lean:70-74). This is likely straightforward and directly unlocks the
+  sheaf-on-standard-opens path.
+
+
+  Second target: schemes-lemma-standard-open-affine (blueprint ch01 lines 962-985,
+  Tag 01I3), but this may already be available as Mathlib `Scheme.isAffine_basicOpen`/affine
+  restriction APIs; inspect before re-proving. Third: schemes-lemma-standard-open-two-affines
+  (ch01 lines 2020-2045, Tag 01IW), mathematically important but substantially harder
+  due affine-open intersection and localization; defer until finite cover API exists.
+
+
+  Blueprint protection: do not edit blueprint. Prior Part02 handoff C-0001 says next
+  frontier finite standard-open refinements, module maps, broader scheme lemmas; recent
+  commits in this project did not add Lean files beyond wrappers. Cross-project reads
+  are allowed, writes only this project.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:fs-stacks-part02-schemes
+author: horizon
+source_ref: null
+created_at: '2026-08-27T16:23:52.223520+00:00'
+updated_at: '2026-08-27T20:50:46.466439+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-stacks-part02-schemes
+  started_by: task:fs-stacks-part02-schemes
+  read_by:
+  - fs-stacks-part02-schemes
+  provenance:
+    run: 0183
+    session: 0004-horizon-fs-stacks-part02-schemes
+    role: horizon
+    round: '1'
+    rounds: '24'
+    task: fs-stacks-part02-schemes
+    task_title: Advance Stacks Part 02 Schemes formalization
+    projects: StacksPart02_Schemes
