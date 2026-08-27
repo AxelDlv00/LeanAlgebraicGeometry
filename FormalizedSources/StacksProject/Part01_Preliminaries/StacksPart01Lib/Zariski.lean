@@ -55,6 +55,44 @@ theorem standardOpen_iSup_eq_top_iff {R : Type*} [CommSemiring R] {ι : Type*}
       Ideal.span (Set.range f) = ⊤ := by
   exact PrimeSpectrum.iSup_basicOpen_eq_top_iff
 
+/-- An idempotent splits the spectrum into complementary standard opens
+(Stacks, Tag 00EC). -/
+theorem idempotent_spec_decomposition {R : Type*} [CommRing R] (e : R)
+    (he : IsIdempotentElem e) :
+    ((PrimeSpectrum.basicOpen e : Set (PrimeSpectrum R)) ∪
+      (PrimeSpectrum.basicOpen (1 - e) : Set (PrimeSpectrum R)) = Set.univ) ∧
+      Disjoint (PrimeSpectrum.basicOpen e : Set (PrimeSpectrum R))
+        (PrimeSpectrum.basicOpen (1 - e) : Set (PrimeSpectrum R)) := by
+  have hmul : e * (1 - e) = 0 := by
+    calc
+      e * (1 - e) = e - e * e := by ring
+      _ = 0 := by rw [he.eq]; exact sub_self e
+  have hadd : e + (1 - e) = 1 := by ring
+  constructor
+  · apply Set.eq_univ_iff_forall.mpr
+    intro x
+    rw [Set.mem_union]
+    by_cases he_mem : e ∈ x.asIdeal
+    · right
+      exact (PrimeSpectrum.mem_basicOpen (1 - e) x).2 (by
+        intro hcomp
+        apply (Ideal.IsPrime.one_notMem x.isPrime)
+        rw [← hadd]
+        exact x.asIdeal.add_mem he_mem hcomp)
+    · left
+      exact (PrimeSpectrum.mem_basicOpen e x).2 he_mem
+  · rw [Set.disjoint_left]
+    intro x hx hcomp
+    have hx' : e ∉ x.asIdeal := (PrimeSpectrum.mem_basicOpen e x).1 hx
+    have hcomp' : 1 - e ∉ x.asIdeal :=
+      (PrimeSpectrum.mem_basicOpen (1 - e) x).1 hcomp
+    have hz : e * (1 - e) ∈ x.asIdeal := by
+      rw [hmul]
+      exact x.asIdeal.zero_mem
+    rcases (x.isPrime.mul_mem_iff_mem_or_mem.mp hz) with h | h
+    · exact hx' h
+    · exact hcomp' h
+
 end Zariski
 
 end StacksPart01
