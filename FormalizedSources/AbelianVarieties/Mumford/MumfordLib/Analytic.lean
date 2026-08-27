@@ -327,6 +327,23 @@ def productTorus_zsmul_torsion_addEquiv_pi_zmod {d : Type*} {n : ℤ} (hn : n �
       map_add' := by intro a b; rfl }
   exact f.trans (productTorus_torsion_addEquiv_pi_zmod hpos)
 
+/-! The additive-subgroup carriers inherit the explicit cardinality formulas. -/
+
+/-- The positive `n`-torsion subgroup of a finite product torus has order
+`n ^ |d|`. -/
+theorem productTorus_torsionSubgroup_card {d : Type*} [Fintype d] {n : ℕ}
+    (hn : 0 < n) :
+    Nat.card (productTorus_torsionSubgroup d n) = n ^ Fintype.card d := by
+  simpa [productTorus_torsionSubgroup] using (productTorus_torsion_card (d := d) hn)
+
+/-- The nonzero-integer torsion subgroup of a finite product torus has order
+`|n| ^ |d|`. -/
+theorem productTorus_zsmul_torsionSubgroup_card {d : Type*} [Fintype d] {n : ℤ}
+    (hn : n ≠ 0) :
+    Nat.card (productTorus_zsmul_torsionSubgroup d n) = n.natAbs ^ Fintype.card d := by
+  simpa [productTorus_zsmul_torsionSubgroup] using
+    (productTorus_zsmul_torsion_card (d := d) hn)
+
 end
 
 end Mumford
