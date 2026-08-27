@@ -1,0 +1,166 @@
+/-
+Copyright (c) 2026 The Mumford Contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: The Mumford Contributors
+-/
+
+import MumfordLib.Uniformization
+
+/-!
+# Period-lattice quotients
+
+This file packages the additive quotient data supplied by analytic uniformization
+and constructs the standard real period-lattice model of the genus torus.
+-/
+
+namespace Mumford
+namespace Uniformization
+
+noncomputable section
+
+/-- An additive uniformization certificate with a specified period lattice.
+
+For an analytic exponential map, `kernel_exponential` identifies the periods
+with the kernel. Surjectivity then identifies the lattice quotient with the
+target additive group.
+-/
+structure PeriodLatticeQuotient (V X : Type*) [AddCommGroup V] [AddCommGroup X] where
+  periodLattice : AddSubgroup V
+  exponential : V →+ X
+  exponential_surjective : Function.Surjective exponential
+  kernel_exponential : exponential.ker = periodLattice
+
+namespace PeriodLatticeQuotient
+
+/-- The first isomorphism theorem for a period-lattice quotient certificate. -/
+def quotientAddEquiv {V X : Type*} [AddCommGroup V] [AddCommGroup X]
+    (u : PeriodLatticeQuotient V X) : V ⧸ u.periodLattice ≃+ X :=
+  (QuotientAddGroup.quotientAddEquivOfEq u.kernel_exponential.symm).trans
+    (QuotientAddGroup.quotientKerEquivOfSurjective
+      u.exponential u.exponential_surjective)
+
+/-- The quotient equivalence agrees with the exponential map on representatives. -/
+@[simp]
+theorem quotientAddEquiv_mk {V X : Type*} [AddCommGroup V] [AddCommGroup X]
+    (u : PeriodLatticeQuotient V X) (v : V) :
+    u.quotientAddEquiv (QuotientAddGroup.mk' u.periodLattice v) = u.exponential v := by
+  simp only [quotientAddEquiv, AddEquiv.trans_apply, QuotientAddGroup.mk'_apply,
+    QuotientAddGroup.quotientAddEquivOfEq_mk]
+  change QuotientAddGroup.kerLift u.exponential (v : V ⧸ u.exponential.ker) =
+    u.exponential v
+  rw [QuotientAddGroup.kerLift_mk]
+
+end PeriodLatticeQuotient
+
+/-- The real vector group underlying a complex torus of dimension `g`. -/
+abbrev GenusRealVector (g : ℕ) := Fin (2 * g) → ℝ
+
+/-- The coordinatewise integer lattice in the real vector group of dimension `2 * g`. -/
+def integerPeriodLattice (g : ℕ) : AddSubgroup (GenusRealVector g) :=
+  AddSubgroup.pi Set.univ (fun _ => AddSubgroup.zmultiples (1 : ℝ))
+
+/-- The additive exponential map from the real line to the unit additive circle. -/
+def unitAddCircleExponential : ℝ →+ UnitAddCircle :=
+  QuotientAddGroup.mk' (AddSubgroup.zmultiples (1 : ℝ))
+
+/-- The coordinatewise exponential from the real vector group to the genus torus. -/
+def genusTorusExponential (g : ℕ) : GenusRealVector g →+ GenusTorus g :=
+  AddMonoidHom.piMap (fun _ => unitAddCircleExponential)
+
+/-- The coordinatewise exponential to the genus torus is surjective. -/
+theorem genusTorusExponential_surjective (g : ℕ) :
+    Function.Surjective (genusTorusExponential g) := by
+  exact Function.Surjective.piMap
+    (fun _ => QuotientAddGroup.mk'_surjective (AddSubgroup.zmultiples (1 : ℝ)))
+
+/-- The kernel of the coordinatewise exponential is exactly the integer period lattice. -/
+theorem genusTorusExponential_ker (g : ℕ) :
+    (genusTorusExponential g).ker = integerPeriodLattice g := by
+  ext x
+  rw [AddMonoidHom.mem_ker]
+  simp only [integerPeriodLattice, AddSubgroup.mem_pi, Set.mem_univ, forall_const]
+  constructor
+  · intro hx i
+    have hxi := congrFun hx i
+    change unitAddCircleExponential (x i) = 0 at hxi
+    rw [← AddMonoidHom.mem_ker] at hxi
+    change x i ∈
+      (QuotientAddGroup.mk' (AddSubgroup.zmultiples (1 : ℝ))).ker at hxi
+    simpa only [QuotientAddGroup.ker_mk'] using hxi
+  · intro hx
+    funext i
+    rw [Pi.zero_apply]
+    change unitAddCircleExponential (x i) = 0
+    rw [← AddMonoidHom.mem_ker]
+    change x i ∈
+      (QuotientAddGroup.mk' (AddSubgroup.zmultiples (1 : ℝ))).ker
+    simpa only [QuotientAddGroup.ker_mk'] using hx i
+
+/-- The standard real period-lattice certificate for the genus torus. -/
+def standardGenusTorusPeriodLatticeQuotient (g : ℕ) :
+    PeriodLatticeQuotient (GenusRealVector g) (GenusTorus g) where
+  periodLattice := integerPeriodLattice g
+  exponential := genusTorusExponential g
+  exponential_surjective := genusTorusExponential_surjective g
+  kernel_exponential := genusTorusExponential_ker g
+
+/-- The standard additive equivalence between the real lattice quotient and the genus torus. -/
+def genusRealVectorQuotientAddEquiv (g : ℕ) :
+    GenusRealVector g ⧸ integerPeriodLattice g ≃+ GenusTorus g :=
+  (standardGenusTorusPeriodLatticeQuotient g).quotientAddEquiv
+
+/-- The standard real exponential transported to a chosen uniformized group. -/
+def exponential_to {X : Type*} [AddCommGroup X] {g : ℕ}
+    (u : GenusTorusUniformization X g) : GenusRealVector g →+ X :=
+  u.equiv.symm.toAddMonoidHom.comp (genusTorusExponential g)
+
+/-- The transported exponential to a chosen uniformized group is surjective. -/
+theorem exponential_to_surjective {X : Type*} [AddCommGroup X] {g : ℕ}
+    (u : GenusTorusUniformization X g) : Function.Surjective (exponential_to u) := by
+  intro x
+  obtain ⟨y, hy⟩ := genusTorusExponential_surjective g (u.equiv x)
+  refine ⟨y, ?_⟩
+  change u.equiv.symm (genusTorusExponential g y) = x
+  rw [hy, u.equiv.symm_apply_apply]
+
+/-- The transported exponential has the same coordinatewise integer kernel. -/
+theorem exponential_to_ker {X : Type*} [AddCommGroup X] {g : ℕ}
+    (u : GenusTorusUniformization X g) :
+    (exponential_to u).ker = integerPeriodLattice g := by
+  ext x
+  rw [AddMonoidHom.mem_ker]
+  constructor
+  · intro hx
+    change u.equiv.symm (genusTorusExponential g x) = 0 at hx
+    have hx' : genusTorusExponential g x = 0 := by
+      apply u.equiv.symm.injective
+      simpa only [map_zero] using hx
+    have hx'' : x ∈ (genusTorusExponential g).ker := (AddMonoidHom.mem_ker).mpr hx'
+    rw [genusTorusExponential_ker g] at hx''
+    exact hx''
+  · intro hx
+    have hx' : x ∈ (genusTorusExponential g).ker := by
+      rw [genusTorusExponential_ker g]
+      exact hx
+    have hx'' : genusTorusExponential g x = 0 := (AddMonoidHom.mem_ker).mp hx'
+    change u.equiv.symm (genusTorusExponential g x) = 0
+    rw [hx'', map_zero]
+
+/-- The period-lattice quotient certificate induced by a genus-torus uniformization. -/
+def uniformizedPeriodLatticeQuotient {X : Type*} [AddCommGroup X] {g : ℕ}
+    (u : GenusTorusUniformization X g) :
+    PeriodLatticeQuotient (GenusRealVector g) X where
+  periodLattice := integerPeriodLattice g
+  exponential := exponential_to u
+  exponential_surjective := exponential_to_surjective u
+  kernel_exponential := exponential_to_ker u
+
+/-- A genus-torus uniformization identifies the standard real lattice quotient with its group. -/
+def uniformizedQuotientAddEquiv {X : Type*} [AddCommGroup X] {g : ℕ}
+    (u : GenusTorusUniformization X g) :
+    GenusRealVector g ⧸ integerPeriodLattice g ≃+ X :=
+  (uniformizedPeriodLatticeQuotient u).quotientAddEquiv
+
+end
+end Uniformization
+end Mumford

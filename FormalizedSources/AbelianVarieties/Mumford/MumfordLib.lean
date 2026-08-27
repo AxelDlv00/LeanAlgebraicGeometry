@@ -2,6 +2,7 @@ import MumfordLib.Basic
 import MumfordLib.GroupScheme
 import MumfordLib.Analytic
 import MumfordLib.Uniformization
+import MumfordLib.Lattice
 
 /-!
 # MumfordLib
