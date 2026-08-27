@@ -179,6 +179,16 @@ theorem of_raw
     exact hx
   exact ⟨⟨S, xL, hx'⟩⟩
 
+/-- Select one finite-stage tensor preimage from `of_raw`.
+
+This pins the classical choice at the producer boundary, so consumers can pass a
+single presentation without reopening the existential certificate. -/
+noncomputable def choose
+    {F K B : Type u} [Field F] [Field K] [Algebra F K]
+    [Algebra.IsAlgebraic F K] [CommRing B] [Algebra F B]
+    (x : K ⊗[F] B) : FiniteStageTensorPreimageData F K B x :=
+  Classical.choice (of_raw x)
+
 end FiniteStageTensorPreimageData
 
 /-- A finite family of tensor elements presented over one common finite stage. -/
@@ -205,6 +215,16 @@ theorem of_raw
     change LinearMap.rTensor B L.1.val.toLinearMap (xL i) = x i
     exact hx i
   exact ⟨⟨S, xL, hx'⟩⟩
+
+/-- Select one common finite stage and family of tensor preimages from `of_raw`.
+
+The choice is made once here and can then be reused by all family consumers. -/
+noncomputable def choose
+    {F K B : Type u} [Field F] [Field K] [Algebra F K]
+    [Algebra.IsAlgebraic F K] [CommRing B] [Algebra F B]
+    {ι : Type*} [Finite ι] (x : ι → K ⊗[F] B) :
+    FiniteStageTensorPreimageFamilyData F K B x :=
+  Classical.choice (of_raw x)
 
 end FiniteStageTensorPreimageFamilyData
 
@@ -415,6 +435,18 @@ theorem exists_of_raw
     relation := relation
     comparison := e }⟩
 
+/-- Select one finite-presentation model from `exists_of_raw`.
+
+The selected stage, relations, and comparison are bundled so downstream code
+does not make independent choices from the same existence theorem. -/
+noncomputable def choose
+    {F K A : Type u} [Field F] [Field K] [Algebra F K]
+    [Algebra.IsAlgebraic F K]
+    [CommRing A] [Algebra K A]
+    [Algebra.FinitePresentation K A] :
+    FiniteStageModelData F K A :=
+  Classical.choice (exists_of_raw (F := F) (K := K) (A := A))
+
 end FiniteStageModelData
 
 set_option synthInstance.maxHeartbeats 100000 in
@@ -457,6 +489,18 @@ theorem exists_of_raw
     relationCount := m
     relation := relation
     comparison := e }⟩
+
+/-- Select one common finite-presentation model family from `exists_of_raw`.
+
+The common finite stage is chosen once, rather than separately for each index. -/
+noncomputable def choose
+    {F K : Type u} [Field F] [Field K] [Algebra F K]
+    [Algebra.IsAlgebraic F K] {ι : Type*} [Finite ι]
+    (A : ι → Type u)
+    [∀ i, CommRing (A i)] [∀ i, Algebra K (A i)]
+    [∀ i, Algebra.FinitePresentation K (A i)] :
+    FiniteStageModelFamilyData F K A :=
+  Classical.choice (exists_of_raw (F := F) (K := K) A)
 
 end FiniteStageModelFamilyData
 
@@ -514,6 +558,19 @@ theorem exists_of_raw
   obtain ⟨L, phiL, hphi⟩ :=
     exists_finSubext_tensorProduct_algHom (F := F) (K := K) (A := A) (B := B) phi
   exact ⟨FiniteStageComparisonData.ofFinSubextData L phi phiL hphi⟩
+
+/-- Select one finite-stage comparison from `exists_of_raw`.
+
+The ambient map, stage map, and compatibility square are kept together in the
+resulting package. -/
+noncomputable def choose
+    {F K A B : Type u} [Field F] [Field K] [Algebra F K]
+    [Algebra.IsAlgebraic F K]
+    [CommRing A] [Algebra F A] [Algebra.FiniteType F A]
+    [CommRing B] [Algebra F B]
+    (phi : K ⊗[F] A →ₐ[K] K ⊗[F] B) :
+    FiniteStageComparisonData F K A B :=
+  Classical.choice (exists_of_raw (F := F) (K := K) (A := A) (B := B) phi)
 
 end FiniteStageComparisonData
 
@@ -575,6 +632,21 @@ theorem exists_of_raw
     Nonempty (FiniteStageMapFamily F K A B) := by
   obtain ⟨D⟩ := FinSubextTensorAlgHomFamilyData.of_exists A B phi
   exact ⟨FiniteStageMapFamily.ofFinSubextData phi D⟩
+
+/-- Select one common finite stage and map family from `exists_of_raw`.
+
+All descended maps and their compatibility equations are therefore obtained
+from one stable producer choice. -/
+noncomputable def choose
+    {F K : Type u} [Field F] [Field K] [Algebra F K]
+    [Algebra.IsAlgebraic F K] {ι : Type*} [Finite ι]
+    (A B : ι → Type u)
+    [∀ i, CommRing (A i)] [∀ i, Algebra F (A i)]
+    [∀ i, Algebra.FiniteType F (A i)]
+    [∀ i, CommRing (B i)] [∀ i, Algebra F (B i)]
+    (phi : ∀ i, K ⊗[F] A i →ₐ[K] K ⊗[F] B i) :
+    FiniteStageMapFamily F K A B :=
+  Classical.choice (exists_of_raw (F := F) (K := K) A B phi)
 
 end FiniteStageMapFamily
 
