@@ -4,6 +4,7 @@ import StacksPart04Lib.Representability
 import StacksPart04Lib.RepresentabilityAdvanced
 import StacksPart04Lib.Products
 import StacksPart04Lib.Descent
+import StacksPart04Lib.DescentFunctoriality
 
 /-!
 # StacksPart04Lib
