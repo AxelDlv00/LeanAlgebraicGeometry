@@ -367,6 +367,27 @@ theorem productTorus_zsmul_torsionSubgroup_card {d : Type*} [Fintype d] {n : ℤ
   simpa [productTorus_zsmul_torsionSubgroup] using
     (productTorus_zsmul_torsion_card (d := d) hn)
 
+/-! The set-level finiteness statements also apply directly to subgroup
+carriers, which is useful when switching between set and additive-subgroup
+interfaces. -/
+
+/-- The positive torsion subgroup has a finite carrier on a finite product torus. -/
+theorem productTorus_torsionSubgroup_carrier_finite
+    {d : Type*} [Finite d] {n : ℕ} (hn : 0 < n) :
+    ((productTorus_torsionSubgroup d n : AddSubgroup (ProductTorus d)) :
+      Set (ProductTorus d)).Finite := by
+  simpa [productTorus_torsionSubgroup] using
+    (productTorus_torsion_finite (d := d) hn)
+
+/-- The nonzero-integer torsion subgroup has a finite carrier on a finite
+product torus. -/
+theorem productTorus_zsmul_torsionSubgroup_carrier_finite
+    {d : Type*} [Finite d] {n : ℤ} (hn : n ≠ 0) :
+    ((productTorus_zsmul_torsionSubgroup d n : AddSubgroup (ProductTorus d)) :
+      Set (ProductTorus d)).Finite := by
+  simpa [productTorus_zsmul_torsionSubgroup] using
+    (productTorus_zsmul_torsion_finite (d := d) hn)
+
 end
 
 end Mumford
