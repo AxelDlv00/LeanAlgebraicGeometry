@@ -26,13 +26,13 @@ variable {R M N : Type*} [Ring R]
 /-! ## Cohomology carriers -/
 
 /-- The even cohomology module `ker d₀ / im d₁` of a two-periodic complex. -/
-def HZero (C : TwoPeriodicComplex R M N) : Type _ :=
-  (LinearMap.ker C.d₀) /
+abbrev HZero (C : TwoPeriodicComplex R M N) : Type _ :=
+  (LinearMap.ker C.d₀) ⧸
     (LinearMap.range C.d₁).comap (LinearMap.ker C.d₀).subtype
 
 /-- The odd cohomology module `ker d₁ / im d₀` of a two-periodic complex. -/
-def HOne (C : TwoPeriodicComplex R M N) : Type _ :=
-  (LinearMap.ker C.d₁) /
+abbrev HOne (C : TwoPeriodicComplex R M N) : Type _ :=
+  (LinearMap.ker C.d₁) ⧸
     (LinearMap.range C.d₀).comap (LinearMap.ker C.d₁).subtype
 
 theorem hZero_subsingleton_iff (C : TwoPeriodicComplex R M N) :
