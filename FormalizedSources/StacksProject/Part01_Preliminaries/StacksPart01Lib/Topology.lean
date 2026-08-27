@@ -132,6 +132,16 @@ theorem quasiCompact_prod {X Y : Type*}
     IsQuasiCompact (s ×ˢ t) := by
   exact hs.prod ht
 
+/-- Compact subsets of a product admit product neighbourhoods inside any open
+neighbourhood of their product (Stacks, Tag 005N). -/
+theorem quasiCompact_tube {X Y : Type*}
+    [TopologicalSpace X] [TopologicalSpace Y] {s : Set X} {t : Set Y}
+    {n : Set (X × Y)} (hs : IsQuasiCompact s) (ht : IsQuasiCompact t)
+    (hn : IsOpen n) (hst : s ×ˢ t ⊆ n) :
+    ∃ u : Set X, ∃ v : Set Y,
+      IsOpen u ∧ IsOpen v ∧ s ⊆ u ∧ t ⊆ v ∧ u ×ˢ v ⊆ n := by
+  exact generalized_tube_lemma hs ht hn hst
+
 /-- In a Hausdorff space, intersections of quasi-compact subsets are quasi-compact. -/
 theorem quasiCompact_inter {X : Type*} [TopologicalSpace X] [T2Space X]
     {s t : Set X} (hs : IsQuasiCompact s) (ht : IsQuasiCompact t) :
