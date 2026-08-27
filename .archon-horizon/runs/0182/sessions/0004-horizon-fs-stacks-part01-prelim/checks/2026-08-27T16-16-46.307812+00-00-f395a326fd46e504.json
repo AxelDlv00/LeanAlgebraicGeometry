@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "f395a326fd46e504",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part01_Preliminaries/StacksPart01Lib/Spectrum.lean"
+  ],
+  "cwd": "FormalizedSources/StacksProject/Part01_Preliminaries",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.0,
+  "duration_seconds": 4.325,
+  "started_at": "2026-08-27T16:16:41.982563+00:00",
+  "finished_at": "2026-08-27T16:16:46.307812+00:00",
+  "finished_epoch": 1787847406.307812
+}

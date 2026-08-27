@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "5fe256ea41d5c645",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/StacksProject/Part01_Preliminaries/StacksPart01Lib/CommutativeAlgebra.lean"
+  ],
+  "cwd": "FormalizedSources/StacksProject/Part01_Preliminaries",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.0,
+  "duration_seconds": 34.447,
+  "started_at": "2026-08-27T15:46:18.335617+00:00",
+  "finished_at": "2026-08-27T15:46:52.782575+00:00",
+  "finished_epoch": 1787845612.782575
+}
