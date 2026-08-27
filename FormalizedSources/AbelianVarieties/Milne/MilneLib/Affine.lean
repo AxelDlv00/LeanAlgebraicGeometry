@@ -54,7 +54,8 @@ theorem pushforward_globalSections_top
 
 /-- The preceding affine construction for a finite-dimensional vector space. -/
 noncomputable def affineVectorSpaceSheaf
-    {k : Type u} [Field k] (M : ModuleCat (CommRingCat.of k)) :
+    {k : Type u} [Field k] (M : ModuleCat (CommRingCat.of k))
+    [Module.Finite (CommRingCat.of k) M] :
     (Spec (CommRingCat.of k)).Modules :=
   affineModuleSheaf (CommRingCat.of k) M
 
