@@ -16,7 +16,7 @@ The pinned Mathlib release does not provide predicates for catenary schemes or
 dimension functions. The latter is defined here from the source definition;
 universal catenarity is therefore retained as an explicit proposition in
 `ChowSituation`, so downstream results can state the hypothesis without
-silently introducing an axiom or a global instance.
+silently introducing an unproved global assumption.
 -/
 
 namespace StacksPart03
@@ -76,8 +76,8 @@ theorem IsDimensionFunction.add_const {X : Type*} [TopologicalSpace X]
 
 `IsLocallyNoetherian` is Mathlib's scheme predicate. Mathlib v4.31 has no
 universal-catenarity predicate, so that part of the source hypothesis is kept
-as an explicit proposition supplied by each situation; this is an assumption,
-not a project axiom or an instance. -/
+as an explicit proposition supplied by each situation; this is a local
+hypothesis rather than an unproved global typeclass. -/
 structure ChowSituation where
   S : Scheme
   locallyNoetherian : IsLocallyNoetherian S
