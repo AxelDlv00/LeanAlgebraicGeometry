@@ -139,6 +139,18 @@ theorem productTorus_torsion_card {d : Type*} [Fintype d] {n : ℕ} (hn : 0 < n)
   rw [Nat.card_congr (productTorus_torsion_equiv_pi_zmod hn)]
   rw [Nat.card_fun, Nat.card_zmod, Nat.card_eq_fintype_card]
 
+/-- Integer scalar torsion agrees with natural torsion at the absolute value. -/
+def unitAddCircle_zsmul_torsion_equiv_zmod {n : ℤ} (hn : n ≠ 0) :
+    {u : UnitAddCircle | n • u = 0} ≃ ZMod n.natAbs := by
+  have hpos : 0 < n.natAbs := Int.natAbs_pos.mpr hn
+  let f : {u : UnitAddCircle | n • u = 0} ≃
+      {u : UnitAddCircle | n.natAbs • u = 0} :=
+    { toFun := fun u => ⟨u.val, (natAbs_nsmul_eq_zero).2 u.property⟩
+      invFun := fun u => ⟨u.val, (natAbs_nsmul_eq_zero).1 u.property⟩
+      left_inv := by intro u; exact Subtype.ext rfl
+      right_inv := by intro u; exact Subtype.ext rfl }
+  exact f.trans (unitAddCircle_torsion_equiv_zmod hpos)
+
 end
 
 end Mumford
