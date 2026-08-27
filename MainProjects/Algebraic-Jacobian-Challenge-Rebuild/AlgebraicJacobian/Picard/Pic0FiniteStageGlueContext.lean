@@ -56,15 +56,15 @@ variable {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
 
 /-! ## Transparent projections -/
 
-abbrev L (D : Pic0FiniteStageGlueContext C F) := D.models.L
-abbrev n (D : Pic0FiniteStageGlueContext C F) := D.models.n
-abbrev m (D : Pic0FiniteStageGlueContext C F) := D.models.m
-abbrev relation (D : Pic0FiniteStageGlueContext C F) := D.models.relation
-abbrev e (D : Pic0FiniteStageGlueContext C F) := D.models.e
-abbrev M (D : Pic0FiniteStageGlueContext C F) := D.models.M
-abbrev mapM (D : Pic0FiniteStageGlueContext C F) := D.models.mapM
-abbrev N (D : Pic0FiniteStageGlueContext C F) := D.triple.N
-abbrev thetaN (D : Pic0FiniteStageGlueContext C F) := D.triple.thetaN
+def L (D : Pic0FiniteStageGlueContext C F) := D.models.L
+def n (D : Pic0FiniteStageGlueContext C F) := D.models.n
+def m (D : Pic0FiniteStageGlueContext C F) := D.models.m
+def relation (D : Pic0FiniteStageGlueContext C F) := D.models.relation
+def e (D : Pic0FiniteStageGlueContext C F) := D.models.e
+def M (D : Pic0FiniteStageGlueContext C F) := D.models.M
+def mapM (D : Pic0FiniteStageGlueContext C F) := D.models.mapM
+def N (D : Pic0FiniteStageGlueContext C F) := D.triple.N
+def thetaN (D : Pic0FiniteStageGlueContext C F) := D.triple.thetaN
 
 /-! ## Stored compatibility certificates -/
 
