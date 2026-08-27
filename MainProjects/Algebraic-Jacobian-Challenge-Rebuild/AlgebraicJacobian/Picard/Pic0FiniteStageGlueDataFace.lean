@@ -198,6 +198,49 @@ theorem pic0FiniteStageAffineTripleTransition_fac
       (pic0FiniteStageRestrictionBaseChange C L n m relation M mapM N U W))
     hright htau hleft hface
 
+set_option maxHeartbeats 6400000 in
+/- The bundled facade keeps the stable stage data together.  The explicit
+   certificate is retained because the legacy face package uses the canonical
+   model comparison family rather than the arbitrary family stored in `D.Q`. -/
+theorem pic0FiniteStageAffineTripleTransition_fac_of_context
+    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
+    (D : Pic0FiniteStageGlueContext C F)
+    (hthetaN : ∀ p : Pic0FiniteStageTripleTransitionIndex C,
+      D.N.1 ⊗[D.M.1] Pic0FiniteStageTripleTransitionModelSource
+          C D.L D.n D.m D.relation D.M D.mapM p →ₐ[D.N.1]
+        D.N.1 ⊗[D.M.1] Pic0FiniteStageTripleTransitionModelTarget
+          C D.L D.n D.m D.relation D.M D.mapM p) →
+      ((Algebra.TensorProduct.map D.N.1.val
+          (AlgHom.id D.M.1
+            (Pic0FiniteStageTripleTransitionModelTarget
+              C D.L D.n D.m D.relation D.M D.mapM p))).comp
+          ((hthetaN p).restrictScalars D.M.1) =
+        ((pic0FiniteStageTransportedTripleTransitionOfModels
+          C D.L D.n D.m D.relation D.e D.M D.mapM D.models.comparison
+          p.1 p.2.1 p.2.2).restrictScalars D.M.1).comp
+          (Algebra.TensorProduct.map D.N.1.val
+            (AlgHom.id D.M.1
+              (Pic0FiniteStageTripleTransitionModelSource
+                C D.L D.n D.m D.relation D.M D.mapM p))))
+    (U V W : Pic0FiniteStageChartIndex C) :
+    (pic0FiniteStageAffineTripleTransition
+        C D.L D.n D.m D.relation D.M D.mapM D.N D.thetaN U V W).comp
+        (finiteStageTensorPushoutFaceRight
+          (pic0FiniteStageRestrictionBaseChange
+            C D.L D.n D.m D.relation D.M D.mapM D.N V W)
+          (pic0FiniteStageRestrictionBaseChange
+            C D.L D.n D.m D.relation D.M D.mapM D.N V U)) =
+      (finiteStageTensorPushoutFaceLeft
+        (pic0FiniteStageRestrictionBaseChange
+          C D.L D.n D.m D.relation D.M D.mapM D.N U V)
+        (pic0FiniteStageRestrictionBaseChange
+          C D.L D.n D.m D.relation D.M D.mapM D.N U W)).comp
+        (pic0FiniteStageTransitionBaseChange
+          C D.L D.n D.m D.relation D.M D.mapM D.N U V) := by
+  exact pic0FiniteStageAffineTripleTransition_fac
+    C D.L D.n D.m D.relation D.M D.mapM D.N D.e D.models.comparison
+    D.thetaN hthetaN U V W
+
 end
 
 end
