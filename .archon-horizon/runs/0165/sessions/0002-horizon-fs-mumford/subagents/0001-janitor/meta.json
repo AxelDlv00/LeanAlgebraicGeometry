@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Carson",
+  "agent_path": "/root/janitor_start",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "janitor",
+  "native_subagent_id": "01a04258-9a7b-7160-9014-e9c361e04e9a",
+  "ok": true,
+  "parent_session": "0002-horizon-fs-mumford",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Hygiene audit complete. Mumford itself is clean and intentionally bootstrap-level: 216 blueprint nodes, 0 Lean declarations, and 164 generated graph edges; no Lean, blueprint, or documentation edits were made.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 7783275,
+    "tokens_out": 28925
+  }
+}
