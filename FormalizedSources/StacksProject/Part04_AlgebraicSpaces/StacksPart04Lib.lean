@@ -5,6 +5,8 @@ import StacksPart04Lib.RepresentabilityAdvanced
 import StacksPart04Lib.Products
 import StacksPart04Lib.Descent
 import StacksPart04Lib.DescentFunctoriality
+import StacksPart04Lib.GroupoidFunctoriality
+import StacksPart04Lib.RelationGroupoid
 
 /-!
 # StacksPart04Lib

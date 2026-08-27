@@ -66,6 +66,22 @@ theorem pullback_transport_comp {D : Type u} [Category.{v} D]
       map (K.whiskerLeft β) (map (K.whiskerLeft α) (pullback K s)) := by
   rw [pullback_map, K.whiskerLeft_comp, transport_comp]
 
+/-! ### Coefficient isomorphisms -/
+
+/-- Transport along the two directions of a coefficient isomorphism cancels. -/
+theorem map_iso_hom_inv (e : F ≅ G) (s : DescentSection F) :
+    map e.inv (map e.hom s) = s := by
+  apply ext
+  intro X
+  simp [map_value]
+
+/-- Transport along the inverse directions of a coefficient isomorphism cancels. -/
+theorem map_iso_inv_hom (e : F ≅ G) (t : DescentSection G) :
+    map e.hom (map e.inv t) = t := by
+  apply ext
+  intro X
+  simp [map_value]
+
 end DescentSection
 
 end StacksPart04Lib
