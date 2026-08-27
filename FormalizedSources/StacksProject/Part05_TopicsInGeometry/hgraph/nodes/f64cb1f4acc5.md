@@ -1,6 +1,6 @@
 ---
 author: sync
-content_type: def
+content_type: definition
 created: '2026-08-28T04:39:22'
 decl: StacksPart05Lib.CategoricalQuotient
 docstring: 'A categorical quotient equalizes a parallel pair and has the expected
@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: StacksPart05Lib.CategoricalQuotient
 type: lean
-updated: '2026-08-28T04:39:22'
+updated: '2026-08-28T04:48:03'
 ---
 def CategoricalQuotient {C : Type u} [Category.{v} C]
     {R U X : C} (s t : R ⟶ U) (φ : U ⟶ X) : Prop :=
