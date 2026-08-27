@@ -36,4 +36,23 @@ theorem tensorProductEval_tmul
     tensorProductEval R S M (s ⊗ₜ[R] m) = s • m := by
   rfl
 
+/-
+The pure-tensor formula characterizes the evaluation map.  This is useful when
+an evaluation map is constructed by a different universal-property interface.
+-/
+theorem tensorProductEval_eq_of_tmul
+    (R S M : Type*)
+    [CommSemiring R] [CommSemiring S] [Algebra R S]
+    [AddCommMonoid M] [Module R M] [Module S M]
+    [IsScalarTower R S M]
+    (f : S ⊗[R] M →ₗ[S] M)
+    (h : ∀ s m, f (s ⊗ₜ[R] m) = s • m) :
+    f = tensorProductEval R S M := by
+  apply LinearMap.ext
+  intro z
+  induction z using TensorProduct.induction_on with
+  | zero => simp
+  | tmul s m => exact h s m
+  | add x y hx hy => simp [hx, hy]
+
 end MilneLib
