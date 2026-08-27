@@ -47,6 +47,16 @@ theorem spectrumZeroLocus_sup {R : Type*} [CommSemiring R]
     spectrumZeroLocus (I ⊔ J) = spectrumZeroLocus I ∩ spectrumZeroLocus J := by
   exact PrimeSpectrum.zeroLocus_sup I J
 
+theorem spectrumZeroLocus_iSup {R : Type*} [CommSemiring R] {ι : Sort*}
+    (I : ι → Ideal R) :
+    spectrumZeroLocus (⨆ i, I i) = ⋂ i, spectrumZeroLocus (I i) := by
+  exact PrimeSpectrum.zeroLocus_iSup I
+
+theorem spectrumZeroLocus_eq_iff {R : Type*} [CommSemiring R]
+    {I J : Ideal R} :
+    spectrumZeroLocus I = spectrumZeroLocus J ↔ I.radical = J.radical := by
+  exact PrimeSpectrum.zeroLocus_eq_iff
+
 theorem spectrumZeroLocus_mul {R : Type*} [CommRing R]
     (I J : Ideal R) :
     spectrumZeroLocus (I * J) = spectrumZeroLocus I ∪ spectrumZeroLocus J := by
@@ -74,6 +84,11 @@ theorem mem_spectrumBasicOpen {R : Type*} [CommSemiring R]
 theorem isOpen_spectrumBasicOpen {R : Type*} [CommSemiring R] (f : R) :
     IsOpen (spectrumBasicOpen f : Set (AffineSpectrum R)) := by
   exact PrimeSpectrum.isOpen_basicOpen
+
+theorem spectrumBasicOpen_isTopologicalBasis {R : Type*} [CommSemiring R]
+    : TopologicalSpace.IsTopologicalBasis
+      (Set.range (fun f : R => (spectrumBasicOpen f : Set (AffineSpectrum R)))) := by
+  exact PrimeSpectrum.isTopologicalBasis_basic_opens
 
 @[simp]
 theorem spectrumBasicOpen_eq_compl_zeroLocus {R : Type*} [CommSemiring R]
