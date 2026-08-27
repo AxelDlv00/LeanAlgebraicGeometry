@@ -1,0 +1,1 @@
+{"path": "MilneLib.lean", "size": 252, "content": "import MilneLib.Basic\nimport MilneLib.GroupScheme\nimport MilneLib.Isogeny\nimport MilneLib.LinearAlgebra\nimport MilneLib.Tensor\nimport MilneLib.Sheaf\n\n/-!\n# MilneLib\n\nLean formalization library for the source-faithful blueprint at this project root.\n-/\n"}

@@ -1,0 +1,1 @@
+{"path": "StacksPart07Lib.lean", "size": 139, "content": "import StacksPart07Lib.Basic\n\n/-!\n# StacksPart07Lib\n\nLean formalization library for the source-faithful blueprint at this project root.\n-/\n"}

@@ -1,0 +1,1 @@
+{"path": "MumfordLib.lean", "size": 186, "content": "import MumfordLib.Basic\nimport MumfordLib.GroupScheme\nimport MumfordLib.Analytic\n\n/-!\n# MumfordLib\n\nLean formalization library for the source-faithful blueprint at this project root.\n-/\n"}
