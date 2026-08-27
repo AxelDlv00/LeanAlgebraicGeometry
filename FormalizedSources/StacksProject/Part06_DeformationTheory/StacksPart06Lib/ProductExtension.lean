@@ -205,6 +205,42 @@ theorem squareZeroExtensionProductRingEquiv_inclusion (r : R) :
        squareZeroExtensionInclusion (R := R) (M := N) r) := by
   apply Prod.ext <;> simp [squareZeroExtensionProductRingEquiv]
 
+section Subsingleton
+
+variable {P : Type w}
+variable [AddCommGroup P] [Module R P] [Module Rᵐᵒᵖ P] [IsCentralScalar R P]
+variable [Subsingleton P]
+
+/-- A square-zero extension by a subsingleton module is the base ring. -/
+noncomputable def squareZeroExtensionSubsingletonRingEquiv :
+    SquareZeroExtension R P ≃+* R :=
+  RingEquiv.ofBijective
+    (squareZeroExtensionProjection (R := R) (M := P)).toRingHom
+    (by
+      constructor
+      · intro x y h
+        apply TrivSqZeroExt.ext
+        · exact h
+        · exact Subsingleton.elim _ _
+      · intro r
+        exact
+          ⟨squareZeroExtensionInclusion (R := R) (M := P) r,
+            squareZeroExtensionProjection_inclusion (R := R) (M := P) r⟩)
+
+@[simp]
+theorem squareZeroExtensionSubsingletonRingEquiv_apply
+    (x : SquareZeroExtension R P) :
+    squareZeroExtensionSubsingletonRingEquiv (R := R) (P := P) x = x.fst := by
+  rfl
+
+@[simp]
+theorem squareZeroExtensionSubsingletonRingEquiv_inclusion (r : R) :
+    squareZeroExtensionSubsingletonRingEquiv (R := R) (P := P)
+      (squareZeroExtensionInclusion (R := R) (M := P) r) = r := by
+  rfl
+
+end Subsingleton
+
 end
 
 end StacksPart06Lib
