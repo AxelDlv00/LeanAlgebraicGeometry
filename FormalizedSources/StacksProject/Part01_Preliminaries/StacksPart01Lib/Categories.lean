@@ -1,5 +1,8 @@
 import Mathlib.CategoryTheory.Groupoid
 import Mathlib.CategoryTheory.Iso
+import Mathlib.CategoryTheory.Limits.Constructions.LimitsOfProductsAndEqualizers
+
+universe u v w
 
 /-!
 # StacksPart01Lib.Categories
@@ -62,5 +65,18 @@ theorem isIso_mono_of {C : Type*} [Category C] {X Y : C} (f : X ⟶ Y)
 
 theorem isIso_epi_of {C : Type*} [Category C] {X Y : C} (f : X ⟶ Y)
     [IsIso f] : Epi f := by infer_instance
+
+/- Products and equalizers suffice to construct all limits (Stacks, Tag 002N). -/
+theorem hasLimitsOfProductsAndEqualizers
+    (C : Type u) [Category.{v} C] [Limits.HasProducts.{w} C]
+    [Limits.HasEqualizers C] : Limits.HasLimitsOfSize.{w, w} C :=
+  Limits.has_limits_of_hasEqualizers_and_products
+
+/- Coproducts and coequalizers suffice to construct all colimits
+(Stacks, Tag 002P). -/
+theorem hasColimitsOfCoproductsAndCoequalizers
+    (C : Type u) [Category.{v} C] [Limits.HasCoproducts.{w} C]
+    [Limits.HasCoequalizers C] : Limits.HasColimitsOfSize.{w, w} C :=
+  Limits.has_colimits_of_hasCoequalizers_and_coproducts
 
 end StacksPart01Lib
