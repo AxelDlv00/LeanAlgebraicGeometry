@@ -126,6 +126,25 @@ def zsmulTorsion_addEquiv_of_addEquiv {X Y : Type*} [AddCommGroup X] [AddCommGro
         apply Subtype.ext
         exact e.map_add (a : X) (b : X) }
 
+@[simp]
+theorem zsmulTorsion_addEquiv_of_addEquiv_apply {X Y : Type*} [AddCommGroup X] [AddCommGroup Y]
+    (e : X ≃+ Y) (n : ℤ) (x : zsmulTorsionSubgroup X n) :
+    ((zsmulTorsion_addEquiv_of_addEquiv e n) x : Y) = e (x : X) := by
+  rfl
+
+@[simp]
+theorem zsmulTorsion_addEquiv_of_addEquiv_symm_apply {X Y : Type*} [AddCommGroup X] [AddCommGroup Y]
+    (e : X ≃+ Y) (n : ℤ) (y : zsmulTorsionSubgroup Y n) :
+    ((zsmulTorsion_addEquiv_of_addEquiv e n).symm y : X) = e.symm (y : Y) := by
+  rfl
+
+theorem zsmulTorsion_map_of_addEquiv {X Y : Type*} [AddCommGroup X] [AddCommGroup Y]
+    (e : X ≃+ Y) (n : ℤ) :
+    zsmulTorsion_map e.toAddMonoidHom n =
+      (zsmulTorsion_addEquiv_of_addEquiv e n).toAddMonoidHom := by
+  ext x
+  rfl
+
 /- The torsion cardinality is invariant under an additive equivalence.  Keeping
 this as a separate theorem avoids repeating the subtype-equivalence argument
 when a uniformization is composed with another group isomorphism. -/
