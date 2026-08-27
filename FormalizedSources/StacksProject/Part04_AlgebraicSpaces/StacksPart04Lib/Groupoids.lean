@@ -15,7 +15,7 @@ Small categorical foundations for the groupoid chapters of the algebraic
 spaces blueprint.  The algebraic-space statements in Chapter 14 are
 pointwise statements about groupoid categories; this file records the generic
 categorical facts used by that pointwise interpretation.  In particular, no
-geometric structure or project-local axiom is hidden here.
+geometric structure or project-local assumption is hidden here.
 -/
 
 universe u v u' v'
