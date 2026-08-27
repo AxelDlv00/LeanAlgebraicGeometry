@@ -2,6 +2,7 @@ import MilneLib.Basic
 import MilneLib.Affine
 import MilneLib.Nakayama
 import MilneLib.LocalProperties
+import MilneLib.Localization
 import MilneLib.GroupScheme
 import MilneLib.Isogeny
 import MilneLib.LinearAlgebra
