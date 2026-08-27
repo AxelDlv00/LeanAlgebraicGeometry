@@ -14,7 +14,7 @@ The moduli-stack chapter uses representable transformations and relative
 morphism properties as its categorical substrate.  This module exposes that
 substrate through Mathlib's `Functor.relativelyRepresentable` API.  The
 geometric existence and algebraicity statements in the blueprint are not
-asserted here; these are source-facing, axiom-free closure lemmas for the
+asserted here; these are source-facing, kernel-checked closure lemmas for the
 representability layer.
 -/
 
