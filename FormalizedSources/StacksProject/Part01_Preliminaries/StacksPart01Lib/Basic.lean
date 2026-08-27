@@ -11,6 +11,7 @@ import StacksPart01Lib.SetTheory
 import StacksPart01Lib.Zariski
 import StacksPart01Lib.IdealTheory
 import StacksPart01Lib.Localization
+import StacksPart01Lib.CommutativeAlgebra
 
 /-!
 # StacksPart01Lib.Basic
