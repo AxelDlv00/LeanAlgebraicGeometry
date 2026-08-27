@@ -55,6 +55,26 @@ theorem hasFiniteLength_iff (C : TwoPeriodicComplex R M N) :
       IsFiniteLength R C.evenCohomology ∧ IsFiniteLength R C.oddCohomology :=
   Iff.rfl
 
+/-- Finite-length ambient modules give finite-length periodic cohomology. -/
+theorem hasFiniteLength_of_finite_ambient (C : TwoPeriodicComplex R M N)
+    (hM : IsFiniteLength R M) (hN : IsFiniteLength R N) : C.HasFiniteLength := by
+  constructor
+  · apply IsFiniteLength.of_surjective ?_ (Submodule.mkQ_surjective _)
+    apply IsFiniteLength.of_injective hM
+    exact Submodule.subtype_injective _
+  · apply IsFiniteLength.of_surjective ?_ (Submodule.mkQ_surjective _)
+    apply IsFiniteLength.of_injective hN
+    exact Submodule.subtype_injective _
+
+/-- Exact periodic complexes have finite-length (indeed zero) cohomology. -/
+theorem hasFiniteLength_of_isExact (C : TwoPeriodicComplex R M N)
+    (hC : C.IsExact) : C.HasFiniteLength := by
+  constructor
+  · letI : Subsingleton C.evenCohomology := C.hZero_subsingleton_iff.mpr hC.1.symm
+    exact IsFiniteLength.of_subsingleton
+  · letI : Subsingleton C.oddCohomology := C.hOne_subsingleton_iff.mpr hC.2.symm
+    exact IsFiniteLength.of_subsingleton
+
 theorem evenLength_eq_zero_iff (C : TwoPeriodicComplex R M N) :
     C.evenLength = 0 ↔ Subsingleton C.evenCohomology := by
   exact Module.length_eq_zero_iff
