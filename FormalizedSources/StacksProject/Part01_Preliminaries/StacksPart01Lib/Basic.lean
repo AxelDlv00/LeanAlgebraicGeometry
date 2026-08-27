@@ -9,6 +9,7 @@ import StacksPart01Lib.Spectrum
 import StacksPart01Lib.Categories
 import StacksPart01Lib.SetTheory
 import StacksPart01Lib.Zariski
+import StacksPart01Lib.IdealTheory
 
 /-!
 # StacksPart01Lib.Basic
