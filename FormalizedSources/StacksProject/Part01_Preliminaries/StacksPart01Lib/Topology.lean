@@ -182,4 +182,16 @@ theorem isConnected_range {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y
   simpa only [Set.image_univ] using
     (isConnected_univ.image f hf.continuousOn)
 
+/-- The closure of a connected set is connected (Stacks, Tag 08ZJ). -/
+theorem isConnected_closure {X : Type*} [TopologicalSpace X] {s : Set X}
+    (hs : IsConnected s) : IsConnected (closure s) :=
+  hs.closure
+
+/-- Two connected sets with a common point have connected union
+(Stacks, Tag 08ZK). -/
+theorem isConnected_union {X : Type*} [TopologicalSpace X] {s t : Set X}
+    (hinter : (s ∩ t).Nonempty) (hs : IsConnected s) (ht : IsConnected t) :
+    IsConnected (s ∪ t) :=
+  hs.union hinter ht
+
 end StacksPart01
