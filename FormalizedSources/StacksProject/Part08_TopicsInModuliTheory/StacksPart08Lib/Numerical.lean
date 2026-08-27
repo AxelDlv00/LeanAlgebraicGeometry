@@ -42,6 +42,22 @@ theorem pullback_value {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]
     (ν : NumericalInvariant X) (f : Y → X) (hf : Continuous f) (y : Y) :
     (ν.pullback f hf).value y = ν.value (f y) := rfl
 
+@[simp]
+theorem pullback_id {X : Type*} [TopologicalSpace X]
+    (ν : NumericalInvariant X) :
+    ν.pullback id continuous_id = ν := by
+  cases ν
+  rfl
+
+theorem pullback_comp {X Y Z : Type*} [TopologicalSpace X]
+    [TopologicalSpace Y] [TopologicalSpace Z]
+    (ν : NumericalInvariant X) (f : Y → X) (g : Z → Y)
+    (hf : Continuous f) (hg : Continuous g) :
+    (ν.pullback f hf).pullback g hg =
+      ν.pullback (f ∘ g) (hf.comp hg) := by
+  cases ν
+  rfl
+
 theorem fiber_isClopen {X : Type*} [TopologicalSpace X]
     (ν : NumericalInvariant X) (n : ℤ) :
     IsClopen {x | ν.value x = n} :=
@@ -74,6 +90,73 @@ theorem locus_eq_iInter {X I : Type*} [TopologicalSpace X]
   ext x
   simp [NumericalSituation.locus]
 
+/-! ### Finite subprofiles -/
+
+/-- The locus cut out by the invariants whose indices lie in `J`. -/
+def locusOn {X I : Type*} [TopologicalSpace X]
+    (s : NumericalSituation X I) (J : Set I) : Set X :=
+  {x | ∀ i, i ∈ J → (s.invariant i).value x = s.prescribed i}
+
+theorem mem_locusOn_iff {X I : Type*} [TopologicalSpace X]
+    (s : NumericalSituation X I) (J : Set I) (x : X) :
+    x ∈ s.locusOn J ↔
+      ∀ i, i ∈ J → (s.invariant i).value x = s.prescribed i :=
+  Iff.rfl
+
+theorem locusOn_eq_biInter {X I : Type*} [TopologicalSpace X]
+    (s : NumericalSituation X I) (J : Set I) :
+    s.locusOn J =
+      ⋂ i ∈ J, {x | (s.invariant i).value x = s.prescribed i} := by
+  ext x
+  simp [NumericalSituation.locusOn]
+
+theorem locusOn_isClosed {X I : Type*} [TopologicalSpace X]
+    (s : NumericalSituation X I) (J : Set I) :
+    IsClosed (s.locusOn J) := by
+  rw [s.locusOn_eq_biInter J]
+  apply isClosed_iInter
+  intro i
+  apply isClosed_iInter
+  intro hi
+  exact ((s.invariant i).fiber_isClopen (s.prescribed i)).isClosed
+
+/-- A finite subprofile defines an open-and-closed locus, even when the full
+index type is infinite. -/
+theorem locusOn_isClopen {X I : Type*} [TopologicalSpace X]
+    (s : NumericalSituation X I) (J : Set I) (hJ : J.Finite) :
+    IsClopen (s.locusOn J) := by
+  rw [s.locusOn_eq_biInter J]
+  apply hJ.isClopen_biInter
+  intro i hi
+  exact (s.invariant i).fiber_isClopen (s.prescribed i)
+
+theorem locusOn_isOpen {X I : Type*} [TopologicalSpace X]
+    (s : NumericalSituation X I) (J : Set I) (hJ : J.Finite) :
+    IsOpen (s.locusOn J) :=
+  (s.locusOn_isClopen J hJ).isOpen
+
+theorem locusOn_mono {X I : Type*} [TopologicalSpace X]
+    (s : NumericalSituation X I) {J K : Set I} (hJK : J ⊆ K) :
+    s.locusOn K ⊆ s.locusOn J := by
+  intro x hx i hi
+  exact hx i (hJK hi)
+
+theorem locusOn_union {X I : Type*} [TopologicalSpace X]
+    (s : NumericalSituation X I) (J K : Set I) :
+    s.locusOn (J ∪ K) = s.locusOn J ∩ s.locusOn K := by
+  ext x
+  constructor
+  · intro hx
+    constructor
+    · intro i hi
+      exact hx i (Or.inl hi)
+    · intro i hi
+      exact hx i (Or.inr hi)
+  · rintro ⟨hxJ, hxK⟩ i hi
+    rcases hi with hi | hi
+    · exact hxJ i hi
+    · exact hxK i hi
+
 /-- A finite numerical profile defines an open-and-closed subspace. -/
 theorem locus_isClopen {X I : Type*} [TopologicalSpace X]
     [Finite I] (s : NumericalSituation X I) : IsClopen s.locus := by
@@ -100,11 +183,34 @@ def pullback {X Y I : Type*} [TopologicalSpace X] [TopologicalSpace Y]
   invariant := fun i => (s.invariant i).pullback f hf
   prescribed := s.prescribed
 
+@[simp]
+theorem pullback_id {X I : Type*} [TopologicalSpace X]
+    (s : NumericalSituation X I) :
+    s.pullback id continuous_id = s := by
+  cases s
+  rfl
+
+theorem pullback_comp {X Y Z I : Type*} [TopologicalSpace X]
+    [TopologicalSpace Y] [TopologicalSpace Z]
+    (s : NumericalSituation X I) (f : Y → X) (g : Z → Y)
+    (hf : Continuous f) (hg : Continuous g) :
+    (s.pullback f hf).pullback g hg =
+      s.pullback (f ∘ g) (hf.comp hg) := by
+  cases s
+  rfl
+
 theorem pullback_locus {X Y I : Type*} [TopologicalSpace X] [TopologicalSpace Y]
     (s : NumericalSituation X I) (f : Y → X) (hf : Continuous f) :
     (s.pullback f hf).locus = f ⁻¹' s.locus := by
   ext y
   simp [NumericalSituation.locus, NumericalSituation.pullback]
+
+theorem pullback_locusOn {X Y I : Type*} [TopologicalSpace X]
+    [TopologicalSpace Y] (s : NumericalSituation X I) (J : Set I)
+    (f : Y → X) (hf : Continuous f) :
+    (s.pullback f hf).locusOn J = f ⁻¹' s.locusOn J := by
+  ext y
+  simp [NumericalSituation.locusOn, NumericalSituation.pullback]
 
 theorem mem_pullback_locus_iff {X Y I : Type*} [TopologicalSpace X]
     [TopologicalSpace Y] (s : NumericalSituation X I) (f : Y → X)
