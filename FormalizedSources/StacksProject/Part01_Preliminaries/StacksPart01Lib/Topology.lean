@@ -142,6 +142,16 @@ theorem quasiCompact_tube {X Y : Type*}
       IsOpen u ∧ IsOpen v ∧ s ⊆ u ∧ t ⊆ v ∧ u ×ˢ v ⊆ n := by
   exact generalized_tube_lemma hs ht hn hst
 
+/- A subbasis cover criterion for quasi-compactness (Stacks, Tag 08ZP). -/
+def IsSubbase {X : Type*} [TopologicalSpace X] (B : Set (Set X)) : Prop :=
+  ‹TopologicalSpace X› = TopologicalSpace.generateFrom B
+
+theorem compactSpace_of_subbase {X : Type*} [TopologicalSpace X]
+    {B : Set (Set X)} (hB : IsSubbase B)
+    (hcover : ∀ P ⊆ B, ⋃₀ P = Set.univ →
+      ∃ Q ⊆ P, Q.Finite ∧ ⋃₀ Q = Set.univ) : CompactSpace X := by
+  exact compactSpace_generateFrom hB hcover
+
 /-- In a Hausdorff space, intersections of quasi-compact subsets are quasi-compact. -/
 theorem quasiCompact_inter {X : Type*} [TopologicalSpace X] [T2Space X]
     {s t : Set X} (hs : IsQuasiCompact s) (ht : IsQuasiCompact t) :
