@@ -95,6 +95,9 @@ $(\mathcal F/\mathcal F')_x=\mathcal F_x/\mathcal F'_x$.
 \label{lem:II-2-1}
 \source{hartshorne-algebraic-geometry:II.2.1}
 \dcref{II.2.1}
+\lean{Hartshorne.spectrumZeroLocus_mul, Hartshorne.spectrumZeroLocus_iSup,
+Hartshorne.spectrumZeroLocus_eq_iff}
+\leanok
 For ideals $\mathfrak a,\mathfrak b\subset A$,
 $V(\mathfrak a\mathfrak b)=V(\mathfrak a)\cup V(\mathfrak b)$,
 $V(\sum_i\mathfrak a_i)=\bigcap_iV(\mathfrak a_i)$, and
@@ -108,6 +111,9 @@ the fact that the radical is the intersection of all primes containing an ideal.
 \begin{definition}[Affine spectrum]
 \label{def:II-2-spectrum}
 \source{hartshorne-algebraic-geometry:II.2}
+\lean{Hartshorne.AffineSpectrum, Hartshorne.spectrumZeroLocus,
+Hartshorne.spectrumBasicOpen, Hartshorne.spectrumBasicOpen_isTopologicalBasis,
+Hartshorne.affineSpec, Hartshorne.affineStructureSheaf}
  $\operatorname{Spec}A$ is the set of prime ideals with closed sets $V(\mathfrak a)$. Its structure
 sheaf consists of locally represented fractions in the local rings $A_{\mathfrak p}$; $D(f)$ is a
 basis of opens.
@@ -118,6 +124,14 @@ basis of opens.
 \label{prop:II-2-2}
 \source{hartshorne-algebraic-geometry:II.2.2}
 \dcref{II.2.2}
+\lean{Hartshorne.affineStructureSheaf_stalk_isLocalization,
+Hartshorne.affineStructureSheaf_stalk_iso, Hartshorne.affineSpec_stalk_iso,
+Hartshorne.affineStructureSheaf_basicOpen_isLocalization,
+Hartshorne.affineStructureSheaf_basicOpen_iso,
+Hartshorne.affineStructureSheaf_globalSections_bijective,
+Hartshorne.affineStructureSheaf_globalSectionsIso,
+Hartshorne.affineSpec_globalSectionsIso}
+\leanok
 For $X=\operatorname{Spec}A$,
 $\mathcal O_{X,\mathfrak p}=A_{\mathfrak p},\qquad
 \Gamma(D(f),\mathcal O_X)=A_f,\qquad\Gamma(X,\mathcal O_X)=A$.
@@ -143,6 +157,12 @@ morphisms induce local homomorphisms.
 \label{prop:II-2-3}
 \source{hartshorne-algebraic-geometry:II.2.3}
 \dcref{II.2.3}
+\lean{Hartshorne.affineSpecMap, Hartshorne.affineSpecMap_apply,
+Hartshorne.affineSpecMap_continuous, Hartshorne.affineSpec_homEquiv,
+Hartshorne.affineSpec_homEquiv_map, Hartshorne.affineSpec_map_homEquiv,
+Hartshorne.affineSpec_stalk_isLocalRing,
+Hartshorne.affineSpecMap_stalkMap_isLocalHom}
+\leanok
 $\operatorname{Spec}A$ is locally ringed. A ring map $A\to B$ induces
 $\operatorname{Spec}B\to\operatorname{Spec}A$, and every morphism
 $\operatorname{Spec}B\to\operatorname{Spec}A$ arises uniquely in this way.
