@@ -78,6 +78,120 @@ theorem hasFiniteLength_of_finite_ambient (C : TwoPeriodicComplex R M N)
     apply IsFiniteLength.of_injective hN
     exact Submodule.subtype_injective _
 
+/-! ## Integer lengths and multiplicity -/
+
+/-- The integer represented by a finite module length.
+
+The finiteness witness prevents the `⊤` value of `ℕ∞` from being silently
+interpreted as an integer. -/
+noncomputable def finiteLengthInt (R P : Type*) [Ring R]
+    [AddCommGroup P] [Module R P] (_hP : IsFiniteLength R P) : ℤ :=
+  Int.ofNat (Module.length R P).toNat
+
+/-- Additivity of finite integer lengths along a short exact sequence. -/
+theorem finiteLengthInt_eq_add_of_exact
+    {P Q S : Type*} [AddCommGroup P] [AddCommGroup Q] [AddCommGroup S]
+    [Module R P] [Module R Q] [Module R S]
+    (f : P →ₗ[R] Q) (g : Q →ₗ[R] S)
+    (hf : Function.Injective f) (hg : Function.Surjective g)
+    (hfg : Function.Exact f g)
+    (hP : IsFiniteLength R P) (hQ : IsFiniteLength R Q)
+    (hS : IsFiniteLength R S) :
+    finiteLengthInt R Q hQ =
+      finiteLengthInt R P hP + finiteLengthInt R S hS := by
+  have hPtop : Module.length R P ≠ ⊤ := Module.length_ne_top_iff.mpr hP
+  have hStop : Module.length R S ≠ ⊤ := Module.length_ne_top_iff.mpr hS
+  have hlen := Module.length_eq_add_of_exact f g hf hg hfg
+  have hNat := congrArg ENat.toNat hlen
+  rw [ENat.toNat_add hPtop hStop] at hNat
+  simpa [finiteLengthInt] using congrArg Int.ofNat hNat
+
+/-- A linear equivalence preserves finite integer length. -/
+theorem finiteLengthInt_eq_of_linearEquiv
+    {P Q : Type*} [AddCommGroup P] [AddCommGroup Q]
+    [Module R P] [Module R Q] (e : P ≃ₗ[R] Q)
+    (hP : IsFiniteLength R P) (hQ : IsFiniteLength R Q) :
+    finiteLengthInt R P hP = finiteLengthInt R Q hQ := by
+  change Int.ofNat (Module.length R P).toNat = Int.ofNat (Module.length R Q).toNat
+  rw [e.length_eq]
+
+private theorem rangeRestrict_surjective
+    {P Q : Type*} [AddCommGroup P] [AddCommGroup Q] [Module R P] [Module R Q]
+    (f : P →ₗ[R] Q) : Function.Surjective f.rangeRestrict := by
+  intro y
+  obtain ⟨x, hx⟩ := y.property
+  refine ⟨x, ?_⟩
+  apply Subtype.ext
+  exact hx
+
+/-- The additive periodic multiplicity, as an integer difference of lengths. -/
+noncomputable def multiplicity (C : TwoPeriodicComplex R M N)
+    (hC : C.HasFiniteLength) : ℤ :=
+  finiteLengthInt R C.evenCohomology hC.1 -
+    finiteLengthInt R C.oddCohomology hC.2
+
+/-- For finite ambient modules, periodic multiplicity is the ambient length
+difference (the finite-periodic-length lemma). -/
+theorem multiplicity_eq_ambient_length_sub
+    (C : TwoPeriodicComplex R M N)
+    (hM : IsFiniteLength R M) (hN : IsFiniteLength R N) :
+    C.multiplicity (C.hasFiniteLength_of_finite_ambient hM hN) =
+      finiteLengthInt R M hM - finiteLengthInt R N hN := by
+  let hC := C.hasFiniteLength_of_finite_ambient hM hN
+  have hK0 : IsFiniteLength R C.d₀.ker :=
+    IsFiniteLength.of_injective hM (Submodule.subtype_injective _)
+  have hK1 : IsFiniteLength R C.d₁.ker :=
+    IsFiniteLength.of_injective hN (Submodule.subtype_injective _)
+  have hR0 : IsFiniteLength R C.d₀.range :=
+    IsFiniteLength.of_surjective hM (rangeRestrict_surjective C.d₀)
+  have hR1 : IsFiniteLength R C.d₁.range :=
+    IsFiniteLength.of_surjective hN (rangeRestrict_surjective C.d₁)
+  let B0 := (LinearMap.range C.d₀).comap C.d₁.ker.subtype
+  let B1 := (LinearMap.range C.d₁).comap C.d₀.ker.subtype
+  have hB0 : IsFiniteLength R B0 := by
+    let e := Submodule.comapSubtypeEquivOfLe C.range_d₀_le_ker_d₁
+    exact IsFiniteLength.of_injective hR0 e.injective
+  have hB1 : IsFiniteLength R B1 := by
+    let e := Submodule.comapSubtypeEquivOfLe C.range_d₁_le_ker_d₀
+    exact IsFiniteLength.of_injective hR1 e.injective
+  have hM_eq : finiteLengthInt R M hM =
+      finiteLengthInt R C.d₀.ker hK0 + finiteLengthInt R C.d₀.range hR0 :=
+    finiteLengthInt_eq_add_of_exact C.d₀.ker.subtype C.d₀.rangeRestrict
+      (Submodule.subtype_injective _) (rangeRestrict_surjective C.d₀) (by
+        rw [LinearMap.exact_iff, LinearMap.ker_rangeRestrict,
+          Submodule.range_subtype]) hK0 hM hR0
+  have hN_eq : finiteLengthInt R N hN =
+      finiteLengthInt R C.d₁.ker hK1 + finiteLengthInt R C.d₁.range hR1 :=
+    finiteLengthInt_eq_add_of_exact C.d₁.ker.subtype C.d₁.rangeRestrict
+      (Submodule.subtype_injective _) (rangeRestrict_surjective C.d₁) (by
+        rw [LinearMap.exact_iff, LinearMap.ker_rangeRestrict,
+          Submodule.range_subtype]) hK1 hN hR1
+  have hK0_eq : finiteLengthInt R C.d₀.ker hK0 =
+      finiteLengthInt R B1 hB1 + finiteLengthInt R C.HZero hC.1 :=
+    finiteLengthInt_eq_add_of_exact B1.subtype B1.mkQ
+      (Submodule.subtype_injective _) (Submodule.mkQ_surjective _)
+      (LinearMap.exact_subtype_mkQ _) hB1 hK0 hC.1
+  have hK1_eq : finiteLengthInt R C.d₁.ker hK1 =
+      finiteLengthInt R B0 hB0 + finiteLengthInt R C.HOne hC.2 :=
+    finiteLengthInt_eq_add_of_exact B0.subtype B0.mkQ
+      (Submodule.subtype_injective _) (Submodule.mkQ_surjective _)
+      (LinearMap.exact_subtype_mkQ _) hB0 hK1 hC.2
+  have hB0_eq : finiteLengthInt R B0 hB0 = finiteLengthInt R C.d₀.range hR0 :=
+    finiteLengthInt_eq_of_linearEquiv
+      (Submodule.comapSubtypeEquivOfLe C.range_d₀_le_ker_d₁) hB0 hR0
+  have hB1_eq : finiteLengthInt R B1 hB1 = finiteLengthInt R C.d₁.range hR1 :=
+    finiteLengthInt_eq_of_linearEquiv
+      (Submodule.comapSubtypeEquivOfLe C.range_d₁_le_ker_d₀) hB1 hR1
+  change finiteLengthInt R C.HZero hC.1 - finiteLengthInt R C.HOne hC.2 =
+    finiteLengthInt R M hM - finiteLengthInt R N hN
+  linarith [hM_eq, hN_eq, hK0_eq, hK1_eq, hB0_eq, hB1_eq]
+
+/-- A finite `(2, 1)`-periodic complex has zero additive multiplicity. -/
+theorem multiplicity_eq_zero_of_finite_ambient
+    (C : TwoOnePeriodicComplex R M) (hM : IsFiniteLength R M) :
+    C.multiplicity (C.hasFiniteLength_of_finite_ambient hM hM) = 0 := by
+  simpa using C.multiplicity_eq_ambient_length_sub hM hM
+
 /-- Exact periodic complexes have finite-length (indeed zero) cohomology. -/
 theorem hasFiniteLength_of_isExact (C : TwoPeriodicComplex R M N)
     (hC : C.IsExact) : C.HasFiniteLength := by
