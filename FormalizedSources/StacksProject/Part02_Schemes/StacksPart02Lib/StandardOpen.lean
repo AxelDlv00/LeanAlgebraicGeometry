@@ -203,4 +203,65 @@ theorem standardOpenLocalizedModuleMapOfSubset_comp {f g h : R}
 
 end ModuleInclusion
 
+/-! ### Covers of a standard open -/
+
+/-- A family of standard opens covers `D(f)` exactly when its defining
+sections generate the unit ideal after localizing away from `f` (Stacks,
+Tag 01HS(3)). -/
+theorem standardOpen_subset_iUnion_iff_span_eq_top_localization
+    {R : Type*} [CommSemiring R] {ι : Type*}
+    (f : R) (g : ι → R) :
+    (PrimeSpectrum.basicOpen f : Set (PrimeSpectrum R)) ⊆
+        ⋃ i, (PrimeSpectrum.basicOpen (g i) : Set (PrimeSpectrum R)) ↔
+      Ideal.span (Set.range (fun i =>
+        algebraMap R (Localization.Away f) (g i))) = ⊤ := by
+  let c : PrimeSpectrum (Localization.Away f) → PrimeSpectrum R :=
+    PrimeSpectrum.comap (algebraMap R (Localization.Away f))
+  have hc (x : ι) :
+      c ⁻¹' (PrimeSpectrum.basicOpen (g x) : Set (PrimeSpectrum R)) =
+        (PrimeSpectrum.basicOpen
+          (algebraMap R (Localization.Away f) (g x)) :
+            Set (PrimeSpectrum (Localization.Away f))) := by
+    exact congrArg
+      (fun U : TopologicalSpace.Opens (PrimeSpectrum (Localization.Away f)) =>
+        (U : Set (PrimeSpectrum (Localization.Away f))))
+      (PrimeSpectrum.comap_basicOpen (algebraMap R (Localization.Away f)) (g x))
+  have hrange : Set.range c = (PrimeSpectrum.basicOpen f : Set (PrimeSpectrum R)) := by
+    exact PrimeSpectrum.localization_away_comap_range (Localization.Away f) f
+  constructor
+  · intro h
+    have htop : (⨆ i, PrimeSpectrum.basicOpen
+        (algebraMap R (Localization.Away f) (g i))) = ⊤ := by
+      apply TopologicalSpace.Opens.ext
+      apply Set.ext
+      intro q
+      constructor
+      · intro _
+        trivial
+      · intro _
+        have hq : c q ∈ (PrimeSpectrum.basicOpen f : Set (PrimeSpectrum R)) := by
+          rw [← hrange]
+          exact ⟨q, rfl⟩
+        rcases Set.mem_iUnion.mp (h hq) with ⟨i, hi⟩
+        change q ∈ (⨆ i, PrimeSpectrum.basicOpen
+          (algebraMap R (Localization.Away f) (g i)))
+        rw [TopologicalSpace.Opens.mem_iSup]
+        refine ⟨i, ?_⟩
+        change q ∈ c ⁻¹' (PrimeSpectrum.basicOpen (g i) : Set (PrimeSpectrum R))
+        rw [hc i]
+        exact hi
+    exact PrimeSpectrum.iSup_basicOpen_eq_top_iff.mp htop
+  · intro h
+    have htop : (⨆ i, PrimeSpectrum.basicOpen
+        (algebraMap R (Localization.Away f) (g i))) = ⊤ :=
+      PrimeSpectrum.iSup_basicOpen_eq_top_iff.mpr h
+    intro p hp
+    rw [← hrange] at hp
+    rcases hp with ⟨q, rfl⟩
+    rcases TopologicalSpace.Opens.mem_iSup.mp (htop.ge (Set.mem_univ q)) with ⟨i, hi⟩
+    apply Set.mem_iUnion.mpr ⟨i, ?_⟩
+    change q ∈ c ⁻¹' (PrimeSpectrum.basicOpen (g i) : Set (PrimeSpectrum R))
+    rw [hc i]
+    exact hi
+
 end StacksPart02
