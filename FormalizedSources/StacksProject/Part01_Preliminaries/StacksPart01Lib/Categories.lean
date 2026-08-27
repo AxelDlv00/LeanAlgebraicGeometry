@@ -89,6 +89,27 @@ theorem epi_cancel_iff {C : Type*} [Category C] {X Y Z : C}
     f ≫ g = f ≫ h ↔ g = h := by
   exact CategoryTheory.cancel_epi f
 
+theorem mono_comp {C : Type*} [Category C] {X Y Z : C}
+    (g : Z ⟶ Y) (f : Y ⟶ X) [Mono g] [Mono f] : Mono (g ≫ f) := by
+  exact CategoryTheory.mono_comp g f
+
+theorem epi_comp {C : Type*} [Category C] {X Y Z : C}
+    (f : X ⟶ Y) (g : Y ⟶ Z) [Epi f] [Epi g] : Epi (f ≫ g) := by
+  exact CategoryTheory.epi_comp f g
+
+theorem isIso_comp {C : Type*} [Category C] {X Y Z : C}
+    (f : X ⟶ Y) (g : Y ⟶ Z) [IsIso f] [IsIso g] : IsIso (f ≫ g) := by
+  exact CategoryTheory.IsIso.comp_isIso
+
+theorem functor_map_id {C D : Type*} [Category C] [Category D]
+    (F : C ⥤ D) (X : C) : F.map (𝟙 X) = 𝟙 (F.obj X) := by
+  exact F.map_id X
+
+theorem functor_map_comp {C D : Type*} [Category C] [Category D]
+    (F : C ⥤ D) {X Y Z : C} (f : X ⟶ Y) (g : Y ⟶ Z) :
+    F.map (f ≫ g) = F.map f ≫ F.map g := by
+  exact F.map_comp f g
+
 /- Finite products and equalizers (respectively coproducts and coequalizers)
 are enough to construct all finite limits (respectively colimits). -/
 theorem hasFiniteLimitsOfFiniteProductsAndEqualizers
