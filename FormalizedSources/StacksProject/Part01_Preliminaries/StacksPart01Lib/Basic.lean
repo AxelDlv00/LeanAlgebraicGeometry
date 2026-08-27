@@ -8,6 +8,7 @@ import StacksPart01Lib.Topology
 import StacksPart01Lib.Spectrum
 import StacksPart01Lib.Categories
 import StacksPart01Lib.SetTheory
+import StacksPart01Lib.Zariski
 
 /-!
 # StacksPart01Lib.Basic
