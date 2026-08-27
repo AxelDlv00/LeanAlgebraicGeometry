@@ -12,6 +12,7 @@
 - Hgraph retains one pre-existing dangling dependency, `derived-lemma-ss-filtered-derived` using `equation-definition-filtered-derived-functor`.
 - The authoritative Part 01 ledger path is clean. The wider workspace has concurrent Horizon runs and runtime metadata/index noise; it was not modified. Historical commit `5e9d03e264` mixed Part 06/07 paths into a Part 01 session; owners verified those files and no history rewrite was attempted.
 - A final `task comment` attempt was interrupted after a shared-state lock wait; the existing C-0006 checkpoint and this report preserve the verified progress, and no source/build check was affected.
+- Boundary commands continue to warn that the global task queue and inbox exceed advisory collection limits; those unrelated items were left for the workspace janitor and were not changed here.
 
 ## Why I stopped
 
