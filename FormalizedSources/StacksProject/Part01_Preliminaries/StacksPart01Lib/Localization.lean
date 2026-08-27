@@ -1,0 +1,124 @@
+/-
+Copyright (c) 2026 The StacksPart01Lib authors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: The StacksPart01Lib Contributors
+-/
+
+import Mathlib.Algebra.Module.LocalizedModule.Exact
+import Mathlib.Algebra.Module.LocalizedModule.Submodule
+
+/-!
+# Localization of modules
+
+The Stacks Project's localization chapter uses the localization of modules as
+an exact functor.  This module exposes the corresponding Mathlib API under the
+project namespace, together with the canonical-map identities used in the
+universal-property arguments.
+-/
+
+namespace StacksPart01
+
+open Function IsLocalizedModule
+
+variable {R : Type*} [CommSemiring R]
+
+/-!
+The canonical localization map sends an element to the fraction with
+denominator `1`, and the localized map agrees with it on such elements.
+-/
+@[simp]
+theorem localizedModule_map_mk (S : Submonoid R) {M N : Type*}
+    [AddCommMonoid M] [AddCommMonoid N] [Module R M] [Module R N]
+    (g : M →ₗ[R] N) (m : M) :
+    IsLocalizedModule.map S (LocalizedModule.mkLinearMap S M)
+        (LocalizedModule.mkLinearMap S N) g
+        (LocalizedModule.mkLinearMap S M m) =
+      LocalizedModule.mkLinearMap S N (g m) := by
+  exact IsLocalizedModule.map_apply S (LocalizedModule.mkLinearMap S M)
+    (LocalizedModule.mkLinearMap S N) g m
+
+/-!
+Localization preserves composition of module maps.
+-/
+theorem localizedModule_map_comp (S : Submonoid R)
+    {M N P : Type*} [AddCommMonoid M] [AddCommMonoid N] [AddCommMonoid P]
+    [Module R M] [Module R N] [Module R P]
+    (g : M →ₗ[R] N) (h : N →ₗ[R] P) :
+    IsLocalizedModule.map S (LocalizedModule.mkLinearMap S M)
+        (LocalizedModule.mkLinearMap S P) (h.comp g) =
+      (IsLocalizedModule.map S (LocalizedModule.mkLinearMap S N)
+        (LocalizedModule.mkLinearMap S P) h).comp
+        (IsLocalizedModule.map S (LocalizedModule.mkLinearMap S M)
+    (LocalizedModule.mkLinearMap S N) g) := by
+  exact IsLocalizedModule.map_comp' S
+    (LocalizedModule.mkLinearMap S M)
+    (LocalizedModule.mkLinearMap S N)
+    (LocalizedModule.mkLinearMap S P) g h
+
+/-!
+The localized module has the expected universal property: maps out of it are
+uniquely determined by their restriction along the canonical map whenever the
+elements of `S` act invertibly on the target.
+-/
+theorem localizedModule_universal (S : Submonoid R)
+    {M N : Type*} [AddCommMonoid M] [AddCommMonoid N]
+    [Module R M] [Module R N] (g : M →ₗ[R] N)
+    (h : ∀ s : S, IsUnit ((algebraMap R (Module.End R N)) s)) :
+    ∃! l : LocalizedModule S M →ₗ[R] N,
+      l.comp (LocalizedModule.mkLinearMap S M) = g := by
+  exact IsLocalizedModule.is_universal S
+    (LocalizedModule.mkLinearMap S M) g h
+
+/-!
+The localized identity map is the identity, a useful normalization for
+iterated localization constructions.
+-/
+@[simp]
+theorem localizedModule_map_id (S : Submonoid R) (M : Type*)
+    [AddCommMonoid M] [Module R M] :
+    IsLocalizedModule.map S (LocalizedModule.mkLinearMap S M)
+      (LocalizedModule.mkLinearMap S M) LinearMap.id = LinearMap.id := by
+  exact IsLocalizedModule.map_id S (LocalizedModule.mkLinearMap S M)
+
+/-!
+Kernels and ranges of localized maps are the localizations of the original
+kernels and ranges.  These identities are the submodule form of exactness.
+-/
+theorem localizedModule_ker_map (S : Submonoid R)
+    {M N : Type*} [AddCommMonoid M] [AddCommMonoid N]
+    [Module R M] [Module R N] (g : M →ₗ[R] N) :
+    (IsLocalizedModule.map S (LocalizedModule.mkLinearMap S M)
+      (LocalizedModule.mkLinearMap S N) g).ker =
+      Submodule.localized₀ S (LocalizedModule.mkLinearMap S M) g.ker := by
+  exact LinearMap.ker_localizedMap_eq_localized₀_ker S
+    (LocalizedModule.mkLinearMap S M)
+    (LocalizedModule.mkLinearMap S N) g
+
+theorem localizedModule_range_map (S : Submonoid R)
+    {M N : Type*} [AddCommMonoid M] [AddCommMonoid N]
+    [Module R M] [Module R N] (g : M →ₗ[R] N) :
+    (IsLocalizedModule.map S (LocalizedModule.mkLinearMap S M)
+      (LocalizedModule.mkLinearMap S N) g).range =
+      Submodule.localized₀ S (LocalizedModule.mkLinearMap S N) g.range := by
+  exact LinearMap.range_localizedMap_eq_localized₀_range S
+    (LocalizedModule.mkLinearMap S M)
+    (LocalizedModule.mkLinearMap S N) g
+
+/-!
+Localization preserves exactness of a sequence of module maps.  This is the
+formal counterpart of Stacks Tag 00CS.
+-/
+theorem localization_exact (S : Submonoid R)
+    {M₀ M₁ M₂ : Type*}
+    [AddCommMonoid M₀] [AddCommMonoid M₁] [AddCommMonoid M₂]
+    [Module R M₀] [Module R M₁] [Module R M₂]
+    (g : M₀ →ₗ[R] M₁) (h : M₁ →ₗ[R] M₂)
+    (hex : Function.Exact g h) :
+    Function.Exact
+      (IsLocalizedModule.map S (LocalizedModule.mkLinearMap S M₀)
+        (LocalizedModule.mkLinearMap S M₁) g)
+      (IsLocalizedModule.map S (LocalizedModule.mkLinearMap S M₁)
+        (LocalizedModule.mkLinearMap S M₂) h) := by
+  exact LocalizedModule.map_exact S g h hex
+
+end StacksPart01

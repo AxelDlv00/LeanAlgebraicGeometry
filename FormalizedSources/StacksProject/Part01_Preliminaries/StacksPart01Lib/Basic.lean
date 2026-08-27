@@ -10,6 +10,7 @@ import StacksPart01Lib.Categories
 import StacksPart01Lib.SetTheory
 import StacksPart01Lib.Zariski
 import StacksPart01Lib.IdealTheory
+import StacksPart01Lib.Localization
 
 /-!
 # StacksPart01Lib.Basic
