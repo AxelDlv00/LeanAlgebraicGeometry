@@ -9,6 +9,10 @@ import AlgebraicJacobian.Descent.RepresenterData
 import AlgebraicJacobian.Descent.TensorProductPushoutData
 import AlgebraicJacobian.Descent.AffineRingGlueData
 import AlgebraicJacobian.Picard.FiniteStageData
+import AlgebraicJacobian.Picard.Pic0FiniteStageStableGluePackage
+import AlgebraicJacobian.Picard.Pic0FiniteStageStableGlueProducer
+import AlgebraicJacobian.Picard.Pic0FiniteStageStableGluedOver
+import AlgebraicJacobian.Picard.Pic0FiniteStageStableRestrictionBaseChange
 
 /-!
 # Public finite-stage API
