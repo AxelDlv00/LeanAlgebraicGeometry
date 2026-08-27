@@ -7,6 +7,7 @@ Authors: The StacksPart01Lib Contributors
 import Mathlib.Data.Set.Lattice
 import Mathlib.Data.Set.Function
 import Mathlib.Order.Basic
+import Mathlib.SetTheory.Cardinal.Regular
 
 /-!
 # StacksPart01Lib.SetTheory
@@ -64,5 +65,15 @@ lifts`). -/
 theorem map_from_set_bounded {ι α : Type*} [LinearOrder α] (f : ι → α)
     (h : ¬ IsCofinal (Set.range f)) : ∃ a, ∀ i, f i < a :=
   (not_isCofinal_range_iff f).mp h
+
+/-- For every cardinal there is an ordinal with strictly larger cofinality.
+
+This is the existence statement in Stacks Project Tag 05N3. -/
+theorem exists_ordinal_with_large_cofinality (κ : Cardinal) :
+    ∃ o : Ordinal, κ < o.cof := by
+  let c : Cardinal := max κ Cardinal.aleph0
+  refine ⟨(Order.succ c).ord, ?_⟩
+  rw [(Cardinal.isRegular_succ (le_max_right κ Cardinal.aleph0)).cof_ord]
+  exact (le_max_left κ Cardinal.aleph0).trans_lt (Order.lt_succ c)
 
 end StacksPart01Lib
