@@ -60,6 +60,64 @@ theorem vanishingIdeal_isPrime_of_isAffineVariety
       intro P hP
       exact hg hP
 
+/-! The converse direction uses only that `Y` is algebraic: a prime vanishing
+ideal rules out a decomposition of `Y` by two proper closed subsets. -/
+theorem isAffineVariety_of_isAlgebraicSet_of_vanishingIdeal_isPrime
+    {Y : Set (AffinePoint k n)} (hY : IsAlgebraicSet k n Y)
+    (hprime : (vanishingIdeal k n Y).IsPrime) :
+    IsAffineVariety k n Y := by
+  have hne : Y.Nonempty := by
+    by_contra hne
+    have hYempty : Y = (∅ : Set (AffinePoint k n)) :=
+      Set.not_nonempty_iff_eq_empty.mp hne
+    subst Y
+    exact hprime.ne_top (vanishingIdeal_empty k n)
+  refine ⟨hY, ⟨hne, ?_⟩⟩
+  rw [isPreirreducible_iff_isClosed_union_isClosed]
+  intro Z₁ Z₂ hZ₁ hZ₂ hcover
+  rcases (isClosed_iff_isAlgebraicSet k n Z₁).1 hZ₁ with ⟨T₁, hT₁⟩
+  rcases (isClosed_iff_isAlgebraicSet k n Z₂).1 hZ₂ with ⟨T₂, hT₂⟩
+  by_cases hsub₁ : Y ⊆ Z₁
+  · exact Or.inl hsub₁
+  by_cases hsub₂ : Y ⊆ Z₂
+  · exact Or.inr hsub₂
+  exfalso
+  obtain ⟨P₁, hP₁Y, hP₁Z₁⟩ := Set.not_subset.mp hsub₁
+  obtain ⟨P₂, hP₂Y, hP₂Z₂⟩ := Set.not_subset.mp hsub₂
+  have hP₁not : P₁ ∉ commonZeroSet k n T₁ := by
+    rw [hT₁]
+    exact hP₁Z₁
+  have hP₂not : P₂ ∉ commonZeroSet k n T₂ := by
+    rw [hT₂]
+    exact hP₂Z₂
+  have hpoly₁ : ∃ f ∈ T₁, evaluate k n f P₁ ≠ 0 := by
+    simpa [commonZeroSet] using hP₁not
+  have hpoly₂ : ∃ g ∈ T₂, evaluate k n g P₂ ≠ 0 := by
+    simpa [commonZeroSet] using hP₂not
+  rcases hpoly₁ with ⟨f, hfT₁, hfP₁⟩
+  rcases hpoly₂ with ⟨g, hgT₂, hgP₂⟩
+  have hfg : f * g ∈ vanishingIdeal k n Y := by
+    intro P hPY
+    rw [evaluate_mul]
+    by_cases hPZ₁ : P ∈ Z₁
+    · have hfzero : evaluate k n f P = 0 := by
+        have hPT₁ : P ∈ commonZeroSet k n T₁ := by
+          rw [hT₁]
+          exact hPZ₁
+        exact hPT₁ f hfT₁
+      rw [hfzero, zero_mul]
+    · have hPZ₂ : P ∈ Z₂ := by
+        exact (hcover hPY).resolve_left hPZ₁
+      have hgzero : evaluate k n g P = 0 := by
+        have hPT₂ : P ∈ commonZeroSet k n T₂ := by
+          rw [hT₂]
+          exact hPZ₂
+        exact hPT₂ g hgT₂
+      rw [hgzero, mul_zero]
+  rcases (Ideal.isPrime_iff.mp hprime).2 hfg with hf | hg
+  · exact hfP₁ (hf P₁ hP₁Y)
+  · exact hgP₂ (hg P₂ hP₂Y)
+
 /-- The vanishing ideal of an affine variety is radical. -/
 theorem vanishingIdeal_radical_of_isAffineVariety
     {Y : Set (AffinePoint k n)} (hY : IsAffineVariety k n Y) :
