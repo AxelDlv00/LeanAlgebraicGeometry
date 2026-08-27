@@ -122,6 +122,30 @@ from a dependent tensor expression. -/
     inferInstance inferInstance inferInstance inferInstance inferInstance inferInstance
     (fun x => (S.tensorMap (A := A)).commutes x)
 
+/-! The legacy `tensorTower` keeps its local algebra in the result type for compatibility.
+    New code should use this explicitly pinned form: its three scalar actions are determined by
+    the named tensor algebras, so changing the ambient instance environment cannot change the
+    proposition being transported. -/
+
+theorem tensorTower_pinned {F K A : Type u}
+    [Field F] [Field K] [Algebra F K]
+    [CommRing A] [Algebra F A]
+    (S : FiniteStageData F K) :
+    @IsScalarTower F (S.stage ⊗[F] A) (K ⊗[F] A)
+      (Algebra.toSMul
+        (self := Algebra.TensorProduct.instAlgebra (R := F) (A := S.stage) (B := A)))
+      (Algebra.toSMul (self := S.tensorAlgebra (A := A)))
+      (Algebra.toSMul
+        (self := Algebra.TensorProduct.instAlgebra (R := F) (A := K) (B := A))) := by
+  exact @IsScalarTower.of_algebraMap_eq F (S.stage ⊗[F] A) (K ⊗[F] A)
+    (inferInstance : CommSemiring F)
+    (inferInstance : CommSemiring (S.stage ⊗[F] A))
+    (inferInstance : Semiring (K ⊗[F] A))
+    (Algebra.TensorProduct.instAlgebra (R := F) (A := S.stage) (B := A))
+    (S.tensorAlgebra (A := A))
+    (Algebra.TensorProduct.instAlgebra (R := F) (A := K) (B := A))
+    (fun x => (S.tensorMap (A := A)).commutes x)
+
 end FiniteStageData
 
 /-! ## Tensor-element presentations -/
