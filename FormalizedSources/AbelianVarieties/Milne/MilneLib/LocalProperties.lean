@@ -1,10 +1,14 @@
 /-
 Copyright (c) 2026 The Milne Contributors. All rights reserved.
-Released under Apache 2.0 license as described in the file LICENSE
+Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The Milne Contributors
 -/
 
 import Mathlib.RingTheory.LocalProperties.Exactness
+import Mathlib.RingTheory.LocalProperties.Basic
+import Mathlib.RingTheory.Localization.Finiteness
+
+import MilneLib.Nakayama
 
 /-!
 # Local exactness
@@ -51,5 +55,44 @@ theorem LinearMap.surjective_of_localized_at_maximal
           (LocalizedModule.mkLinearMap J.primeCompl N) f)) :
     Function.Surjective f := by
   exact surjective_of_localized_maximal f h
+
+/-- A map to a finite module is surjective if its reductions modulo every
+maximal ideal are surjective. -/
+theorem LinearMap.surjective_of_surjective_residue_at_maximal
+    {R M N : Type*} [CommRing R]
+    [AddCommGroup M] [AddCommGroup N]
+    [Module R M] [Module R N] [Module.Finite R N]
+    (f : M →ₗ[R] N)
+    (h : ∀ (J : Ideal R) [J.IsMaximal],
+      Function.Surjective (((J • (⊤ : Submodule R N)).mkQ) ∘ₗ f)) :
+    Function.Surjective f := by
+  apply LinearMap.surjective_of_localized_at_maximal f
+  intro J hJ
+  change Function.Surjective
+    (LinearMap.extendScalarsOfIsLocalization J.primeCompl
+      (Localization J.primeCompl)
+      (IsLocalizedModule.map J.primeCompl
+        (LocalizedModule.mkLinearMap J.primeCompl M)
+        (LocalizedModule.mkLinearMap J.primeCompl N) f))
+  letI : Module.Finite (Localization J.primeCompl) (LocalizedModule J.primeCompl N) :=
+    Module.Finite.of_isLocalizedModule J.primeCompl
+      (LocalizedModule.mkLinearMap J.primeCompl N)
+  apply LinearMap.surjective_of_surjective_residue
+  have hrange : J • (⊤ : Submodule R N) ⊔ f.range = ⊤ := by
+    rw [← Submodule.map_mkQ_eq_top, ← LinearMap.range_comp]
+    exact LinearMap.range_eq_top.mpr (h J)
+  have hlocal := congrArg
+    (Submodule.localized'FrameHom (Localization J.primeCompl) J.primeCompl
+      (LocalizedModule.mkLinearMap J.primeCompl N)) hrange
+  rw [map_sup] at hlocal
+  simp only [Submodule.IsLocalizedModule.localized'FrameHom_apply] at hlocal
+  rw [LinearMap.localized'_range_eq_range_localizedMap
+    (Localization J.primeCompl) J.primeCompl
+    (LocalizedModule.mkLinearMap J.primeCompl M)
+    (LocalizedModule.mkLinearMap J.primeCompl N) f] at hlocal
+  apply LinearMap.range_eq_top.mp
+  rw [LinearMap.range_comp, Submodule.map_mkQ_eq_top]
+  simpa only [Submodule.localized'_smul, Ideal.localized'_eq_map,
+    Localization.AtPrime.map_eq_maximalIdeal, Submodule.localized'_top] using hlocal
 
 end MilneLib
