@@ -109,4 +109,14 @@ theorem standardOpen_quasiCompact {R : Type*} [CommSemiring R] (f : R) :
     IsQuasiCompact (PrimeSpectrum.basicOpen f : Set (PrimeSpectrum R)) := by
   exact PrimeSpectrum.isCompact_basicOpen f
 
+/-- The spectrum of a localization away from `f` is the standard open `D(f)`
+(Stacks, Tag 00E4). -/
+noncomputable def standardOpen_homeomorph {R : Type*} [CommSemiring R] (f : R) :
+    PrimeSpectrum (Localization.Away f) ≃ₜ
+      (PrimeSpectrum.basicOpen f : Set (PrimeSpectrum R)) := by
+  let h := PrimeSpectrum.localization_away_isOpenEmbedding (Localization.Away f) f
+  exact h.isEmbedding.toHomeomorph.trans
+    (Homeomorph.setCongr
+      (PrimeSpectrum.localization_away_comap_range (Localization.Away f) f))
+
 end StacksPart01
