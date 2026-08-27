@@ -36,4 +36,10 @@ theorem scheme_standardOpen_isAffineOpen
     IsAffineOpen (X.basicOpen f) := by
   exact (isAffineOpen_top X).basicOpen f
 
+/- A standard open of an affine scheme is affine (Stacks, Tag 01I3). -/
+theorem scheme_standardOpen_isAffine
+    (X : Scheme.{u}) [IsAffine X] (f : Γ(X, ⊤)) :
+    IsAffine (X.basicOpen f) := by
+  infer_instance
+
 end StacksPart02
