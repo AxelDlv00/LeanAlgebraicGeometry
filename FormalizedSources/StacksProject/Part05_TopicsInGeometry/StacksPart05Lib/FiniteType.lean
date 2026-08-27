@@ -49,11 +49,9 @@ theorem scheme_finiteType_comp_of_mem {X Y Z : Scheme} (f : X ⟶ Y) (g : Y ⟶ 
     schemeFiniteType (f ≫ g) := by
   exact MorphismProperty.comp_mem schemeFiniteType f g hf hg
 
-/-!
-The second projection of a pullback is finite type when the map being
+/-- The second projection of a pullback is finite type when the map being
 base-changed is finite type.  The other projection is supplied symmetrically
-by `scheme_finiteType_baseChange_fst_of_mem` below.
--/
+by `scheme_finiteType_baseChange_fst_of_mem` below. -/
 theorem scheme_finiteType_baseChange_of_mem {X Y S : Scheme} (f : X ⟶ S)
     (g : Y ⟶ S) (hf : schemeFiniteType f) :
     schemeFiniteType (pullback.snd f g) := by
