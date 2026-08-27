@@ -1,4 +1,5 @@
 ---
+author: fs-stacks-part08-modulitheory
 created: '2026-08-27T23:03:53'
 date: '2026-08-27T23:03:53'
 title: Abstract helper scope
