@@ -141,6 +141,35 @@ abbrev map
     P.stage.stage ⊗[F] B →ₐ[F] K ⊗[F] B :=
   P.stage.tensorMap (A := B)
 
+/-! The record field above preserves the historical existential shape.  This theorem is the
+    migration boundary for consumers: every algebra and tower witness is an explicit argument
+    of `baseChange`, so the equality no longer depends on whichever instances happen to be in
+    scope at the call site. -/
+
+theorem baseChange_eq_pinned
+    {F K B : Type u} [Field F] [Field K] [Algebra F K]
+    [CommRing B] [Algebra F B]
+    {C : Over (Spec (.of F))} {pi : C.left ⟶ P1 F} [IsAffineHom pi]
+    {D : BasicOpenCocycleDatum C (K ⊗[F] B) pi}
+    (P : FiniteStageCocycleDatum D) :
+    @BasicOpenCocycleDatum.baseChange F (inferInstance : Field F) C
+      (P.stage.stage ⊗[F] B)
+      (inferInstance : CommRing (P.stage.stage ⊗[F] B))
+      (inferInstance : Algebra F (P.stage.stage ⊗[F] B))
+      (K ⊗[F] B)
+      (inferInstance : CommRing (K ⊗[F] B))
+      (inferInstance : Algebra F (K ⊗[F] B))
+      (P.stage.tensorAlgebra (A := B))
+      (P.stage.tensorTower (A := B))
+      pi
+      (inferInstance : IsAffineHom pi)
+      P.datum = D := by
+  letI : Algebra (P.stage.stage ⊗[F] B) (K ⊗[F] B) :=
+    P.stage.tensorAlgebra (A := B)
+  letI : IsScalarTower F (P.stage.stage ⊗[F] B) (K ⊗[F] B) :=
+    P.stage.tensorTower (A := B)
+  simpa only using P.baseChange_eq
+
 /-- Package the legacy nested existential without changing its selected witnesses. -/
 theorem of_raw
     {F K B : Type u} [Field F] [Field K] [Algebra F K] [Algebra.IsAlgebraic F K]
