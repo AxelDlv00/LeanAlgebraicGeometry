@@ -178,4 +178,40 @@ theorem relation_invariant_iff_factors_through_quotient {U X : Type _}
     rw [← hψ]
     exact congrArg ψ (Quotient.sound (Relation.EqvGen.rel a b hab))
 
+/-! ## Orbit classes and quotient representatives -/
+
+/-- Two points lie in the same generated orbit exactly when they have the
+same representative in the quotient by the generated equivalence relation. -/
+theorem mem_orbit_iff_quotient_mk_eq {U : Type _} {ρ : U → U → Prop}
+    {u v : U} :
+    v ∈ orbit ρ u ↔
+      Quotient.mk (Relation.EqvGen.setoid ρ) u =
+        Quotient.mk (Relation.EqvGen.setoid ρ) v := by
+  change Relation.EqvGen ρ u v ↔ _
+  rw [Quotient.eq]
+  rfl
+
+/-- Generated orbit sets are the equivalence classes of the generated
+relation: two orbit sets agree precisely when their base points are related. -/
+theorem orbit_eq_iff_mem {U : Type _} {ρ : U → U → Prop} {u v : U} :
+    orbit ρ u = orbit ρ v ↔ v ∈ orbit ρ u := by
+  constructor
+  · intro h
+    rw [h]
+    exact mem_orbit_self v
+  · intro h
+    exact (orbit_eq_of_mem h).symm
+
+/-- Constancy on generated orbits is equivalent to invariance under the
+generating relation. -/
+theorem invariant_iff_constant_on_orbits {U X : Type _}
+    {ρ : U → U → Prop} (φ : U → X) :
+    (∀ ⦃a b : U⦄, ρ a b → φ a = φ b) ↔
+      ∀ ⦃a b : U⦄, b ∈ orbit ρ a → φ a = φ b := by
+  constructor
+  · intro h a b hab
+    exact invariant_map_constant_on_orbit φ h hab
+  · intro h a b hab
+    exact h (Relation.EqvGen.rel a b hab)
+
 end StacksPart05Lib
