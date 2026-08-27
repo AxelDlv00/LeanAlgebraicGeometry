@@ -97,6 +97,32 @@ theorem representableTransformation_baseChange {C : Type u} [Category.{v} C]
     RepresentableTransformation C a' := by
   exact MorphismProperty.IsStableUnderBaseChange.of_isPullback sq ha
 
+/-! ### Invariance under equivalence -/
+
+/-
+At the presheaf level, the equivalence-invariance statement from Stacks tag
+0456 is the `RespectsIso` property: replacing the source and target by
+isomorphic presheaves does not change representability.
+-/
+theorem representableTransformation_iff_of_iso {C : Type u} [Category.{v} C]
+    {F F' G G' : Presheaf C} (eF : F' ≅ F) (eG : G' ≅ G)
+    (a : F ⟶ G) :
+    RepresentableTransformation C (eF.hom ≫ a ≫ eG.inv) ↔
+      RepresentableTransformation C a := by
+  constructor
+  · intro h
+    have h1 : RepresentableTransformation C (a ≫ eG.inv) :=
+      MorphismProperty.cancel_left_of_respectsIso
+        (RepresentableTransformation C) eF.hom (a ≫ eG.inv) |>.mp h
+    exact MorphismProperty.cancel_right_of_respectsIso
+      (RepresentableTransformation C) a eG.inv |>.mp h1
+  · intro h
+    have h1 : RepresentableTransformation C (a ≫ eG.inv) :=
+      MorphismProperty.cancel_right_of_respectsIso
+        (RepresentableTransformation C) a eG.inv |>.mpr h
+    exact MorphismProperty.cancel_left_of_respectsIso
+      (RepresentableTransformation C) eF.hom (a ≫ eG.inv) |>.mpr h1
+
 /-- Every isomorphism of presheaves is representable. -/
 theorem representableTransformation_of_isIso {C : Type u} [Category.{v} C]
     {F G : Presheaf C} (a : F ⟶ G) [IsIso a] :
