@@ -10,7 +10,7 @@
 
 - Two earlier shared-build check records are marked failed, but subsequent serialized builds and narrow checks passed; no source proof failure remains.
 - The graph reports Lean declarations unattached to blueprint nodes because the frozen blueprint has no corresponding `\\lean{}` links.
-- The pre-existing scaffold/blueprint baseline remains untracked (I-2082) and was intentionally not staged. Shared queue/inbox warnings remain workspace-wide.
+- The pre-existing scaffold/blueprint baseline remains untracked (I-2082) and was intentionally not staged. Concurrent writers currently own `.archon-horizon/blueprints/Algebraic-Jacobian-Challenge-Rebuild.json`, `.archon-horizon/blueprints/Mumford.json`, and `.archon-horizon/events.jsonl`; those paths were intentionally left untouched.
 
 ## Why I stopped
 
