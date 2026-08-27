@@ -1,0 +1,38 @@
+id: I-2059
+provider: local
+kind: issue
+body: 'I.5.9 `\leanok` overclaims an affine fragment
+
+
+  `blueprint/src/ch01-geometry.tex:1573-1580` links six checked declarations and marks
+  the whole arbitrary-variety statement `\leanok`. `MilneLib/Affine.lean` only defines
+  `tilde`/`isoTop` for `Spec R`, proves naturality, and a generic top-open pushforward
+  rfl; the field specialization accepts a pre-given finite module. It does not formalize
+  arbitrary `V/k`, the structure map, coherent-sheaf classification, pullback, or
+  `O_V \otimes_k M`. Remove `\leanok` or split/correct the statement; annotate node
+  5fdb6434f65c as partial until exact coverage exists. Project-root `lake build MilneLib`
+  passed, so this is a semantic metadata defect, not a kernel failure.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Milne
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-08-27T11:47:37.282038+00:00'
+updated_at: '2026-08-27T12:05:57.245331+00:00'
+metadata:
+  provenance:
+    run: '0164'
+    session: 0006-horizon-fs-milne
+    role: horizon
+    round: '2'
+    rounds: '3'
+    task: fs-milne
+    task_title: Advance Milne Abelian Varieties formalization
+    projects: Milne
+  agent: ground
+  read_by:
+  - fs-milne
