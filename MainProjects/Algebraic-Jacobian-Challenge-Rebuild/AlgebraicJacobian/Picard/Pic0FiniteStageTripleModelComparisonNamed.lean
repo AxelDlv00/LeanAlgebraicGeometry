@@ -79,7 +79,10 @@ set_option maxHeartbeats 6400000 in
 /-- Scalar extension of a descended triple model is canonically the exact
 triple-intersection ring. -/
 noncomputable def pic0FiniteStageTripleModelComparison
-    (U V W : Pic0FiniteStageChartIndex C) :=
+    (U V W : Pic0FiniteStageChartIndex C) :
+    (k ⊗[M.1] Pic0FiniteStageTripleModelRing
+      C L n m relation M mapM U V W) ≃ₐ[k]
+      Pic0FiniteStageTripleRing C U V W :=
   finiteStageTensorPushoutComparison
     (R := M.1) (K := k)
     (A := Pic0FiniteStageChartModelRing C L n m relation M U)
@@ -116,9 +119,11 @@ noncomputable def pic0FiniteStageTripleModelComparison
     (isPushout_pic0FiniteStageTripleRing C U V W)
 
 set_option maxHeartbeats 3200000 in
--- The inferred codomain preserves the named dependent pushout instances.
+-- Pin the codomain so consumers do not infer the dependent pushout instances.
 noncomputable def pic0FiniteStageTripleModelFaceLeft
-    (U V W : Pic0FiniteStageChartIndex C) :=
+    (U V W : Pic0FiniteStageChartIndex C) :
+    Pic0FiniteStageOverlapModelRing C L n m relation M U V →ₐ[M.1]
+      Pic0FiniteStageTripleModelRing C L n m relation M mapM U V W :=
   finiteStageTensorPushoutFaceLeft
     (R := M.1)
     (A := Pic0FiniteStageChartModelRing C L n m relation M U)
@@ -128,9 +133,11 @@ noncomputable def pic0FiniteStageTripleModelFaceLeft
     (pic0FiniteStageRestrictionLeftModel C L n m relation M mapM U W)
 
 set_option maxHeartbeats 3200000 in
--- The inferred codomain preserves the named dependent pushout instances.
+-- Pin the codomain so consumers do not infer the dependent pushout instances.
 noncomputable def pic0FiniteStageTripleModelFaceRight
-    (U V W : Pic0FiniteStageChartIndex C) :=
+    (U V W : Pic0FiniteStageChartIndex C) :
+    Pic0FiniteStageOverlapModelRing C L n m relation M U W →ₐ[M.1]
+      Pic0FiniteStageTripleModelRing C L n m relation M mapM U V W :=
   finiteStageTensorPushoutFaceRight
     (R := M.1)
     (A := Pic0FiniteStageChartModelRing C L n m relation M U)
