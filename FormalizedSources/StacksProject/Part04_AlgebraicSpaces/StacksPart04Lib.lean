@@ -7,6 +7,12 @@ import StacksPart04Lib.Descent
 import StacksPart04Lib.DescentFunctoriality
 import StacksPart04Lib.GroupoidFunctoriality
 import StacksPart04Lib.RelationGroupoid
+import StacksPart04Lib.QuotientFoundations
+import StacksPart04Lib.RelationFunctor
+import StacksPart04Lib.ActionGroupoid
+import StacksPart04Lib.ActionQuotient
+import StacksPart04Lib.FiberedGroupoids
+import StacksPart04Lib.FiberedSetoids
 
 /-!
 # StacksPart04Lib
