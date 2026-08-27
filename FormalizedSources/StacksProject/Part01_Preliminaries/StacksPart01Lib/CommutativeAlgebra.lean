@@ -23,4 +23,15 @@ theorem charpoly {R n : Type*} [CommRing R] [Fintype n] [DecidableEq n]
     (A : Matrix n n R) : aeval A A.charpoly = 0 := by
   exact Matrix.aeval_self_charpoly A
 
+/- Finite modules over a Noetherian ring have finite presentations, finite
+submodules, and the Noetherian module property (Stacks, Tag 00IK). -/
+theorem noetherian_basic {R M : Type*} [Ring R] [AddCommGroup M] [Module R M]
+    [IsNoetherianRing R] [Module.Finite R M] :
+    Module.FinitePresentation R M ∧
+      (∀ N : Submodule R M, Module.Finite R N) ∧
+      IsNoetherian R M := by
+  refine ⟨Module.finitePresentation_of_finite R M, ?_, inferInstance⟩
+  intro N
+  exact Module.Finite.of_fg (Submodule.FG.of_le Module.Finite.fg_top le_top)
+
 end StacksPart01
