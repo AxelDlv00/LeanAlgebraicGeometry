@@ -87,8 +87,11 @@ theorem locus_isOpen {X I : Type*} [TopologicalSpace X]
   (s.locus_isClopen).isOpen
 
 theorem locus_isClosed {X I : Type*} [TopologicalSpace X]
-    [Finite I] (s : NumericalSituation X I) : IsClosed s.locus :=
-  (s.locus_isClopen).isClosed
+    (s : NumericalSituation X I) : IsClosed s.locus := by
+  rw [s.locus_eq_iInter]
+  apply isClosed_iInter
+  intro i
+  exact ((s.invariant i).fiber_isClopen (s.prescribed i)).isClosed
 
 /-- Pull a numerical situation back along a continuous map of bases. -/
 def pullback {X Y I : Type*} [TopologicalSpace X] [TopologicalSpace Y]
