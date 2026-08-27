@@ -53,6 +53,39 @@ def zsmulTorsionSubgroup (X : Type*) [AddCommGroup X] (n : ℤ) : AddSubgroup X 
     simp only [Set.mem_setOf_eq] at ha ⊢
     rw [zsmul_neg, ha, neg_zero]
 
+/- Divisibility of scalars induces inclusion of the corresponding torsion. -/
+theorem zsmulTorsionSubgroup_mono_of_dvd {X : Type*} [AddCommGroup X]
+    {n m : ℤ} (h : n ∣ m) :
+    zsmulTorsionSubgroup X n ≤ zsmulTorsionSubgroup X m := by
+  rintro x hx
+  rcases h with ⟨k, rfl⟩
+  change n • x = 0 at hx
+  calc
+    (n * k) • x = k • (n • x) := by rw [mul_comm, smul_smul]
+    _ = 0 := by rw [hx, smul_zero]
+
+/- Additive maps restrict functorially to integer torsion subgroups. -/
+def zsmulTorsion_map {X Y : Type*} [AddCommGroup X] [AddCommGroup Y]
+    (f : X →+ Y) (n : ℤ) :
+    zsmulTorsionSubgroup X n →+ zsmulTorsionSubgroup Y n :=
+  (f.comp (zsmulTorsionSubgroup X n).subtype).codRestrict _
+    (fun x => by
+      change n • f (x : X) = 0
+      rw [← map_zsmul, x.property, map_zero])
+
+@[simp]
+theorem zsmulTorsion_map_id {X : Type*} [AddCommGroup X] (n : ℤ) :
+    zsmulTorsion_map (AddMonoidHom.id X) n = AddMonoidHom.id _ := by
+  ext x
+  rfl
+
+theorem zsmulTorsion_map_comp {X Y Z : Type*} [AddCommGroup X] [AddCommGroup Y]
+    [AddCommGroup Z] (f : X →+ Y) (g : Y →+ Z) (n : ℤ) :
+    zsmulTorsion_map (g.comp f) n =
+      (zsmulTorsion_map g n).comp (zsmulTorsion_map f n) := by
+  ext x
+  rfl
+
 /-- An additive equivalence transports the corresponding integer torsion subgroups. -/
 def zsmulTorsion_addEquiv_of_addEquiv {X Y : Type*} [AddCommGroup X] [AddCommGroup Y]
     (e : X ≃+ Y) (n : ℤ) :
@@ -133,6 +166,13 @@ theorem zsmulTorsion_card_of_uniformization {X : Type*} [AddCommGroup X] {g : �
         Nat.card (zsmulTorsionSubgroup (GenusTorus g) n) :=
       zsmulTorsion_card_eq_of_addEquiv u.equiv n
     _ = n.natAbs ^ (2 * g) := genusTorus_zsmulTorsion_card g hn
+
+/- The same formula in the natural-number notation used for positive torsion. -/
+theorem natCast_zsmulTorsion_card_of_uniformization {X : Type*} [AddCommGroup X]
+    {g n : ℕ} (u : GenusTorusUniformization X g) (hn : 0 < n) :
+    Nat.card (zsmulTorsionSubgroup X (n : ℤ)) = n ^ (2 * g) := by
+  have hne : (n : ℤ) ≠ 0 := by exact_mod_cast (Nat.ne_of_gt hn)
+  simpa using (zsmulTorsion_card_of_uniformization u hne)
 
 /-- A chosen genus-torus uniformization makes every nonzero-integer torsion
 subgroup finite. -/
