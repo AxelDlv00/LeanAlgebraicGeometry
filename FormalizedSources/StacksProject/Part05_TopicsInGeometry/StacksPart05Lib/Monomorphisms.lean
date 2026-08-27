@@ -38,7 +38,7 @@ theorem base_change_monomorphism {C : Type*} [Category C] [HasPullbacks C]
     Mono (pullback.snd f g) := by
   infer_instance
 
-/- The symmetric pullback leg is useful when the base-change map is presented
+/-- The symmetric pullback leg is useful when the base-change map is presented
 with the other projection. -/
 theorem base_change_monomorphism_fst {C : Type*} [Category C] [HasPullbacks C]
     {X Y Z : C} (f : X ⟶ Z) (g : Y ⟶ Z) [Mono g] :
