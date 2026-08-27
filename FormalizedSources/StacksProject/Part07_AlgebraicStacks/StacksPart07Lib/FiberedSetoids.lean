@@ -63,4 +63,21 @@ theorem fiber_inclusion_hom_eq (p : 𝒳 ⥤ 𝒮) [IsFiberedInSetoids p]
   exact congrArg (fun q => (Fiber.fiberInclusion : Fiber p S ⥤ 𝒳).map q)
     (fiber_hom_eq p f g)
 
+/-- Thin fibers can equivalently be specified by uniqueness of all vertical
+arrows in the total category's standard fibers. -/
+theorem isFiberedInSetoids_iff_vertical_hom_eq (p : 𝒳 ⥤ 𝒮)
+    [IsFiberedInGroupoids p] :
+    IsFiberedInSetoids p ↔
+      ∀ (S : 𝒮) (a b : Fiber p S) (f g : a ⟶ b), f = g := by
+  constructor
+  · intro h
+    letI : IsFiberedInSetoids p := h
+    intro S a b f g
+    exact fiber_hom_eq p f g
+  · intro h
+    exact {
+      toIsFiberedInGroupoids := inferInstance
+      fiber_isThin := fun S a b => ⟨fun f g => h S a b f g⟩
+    }
+
 end CategoryTheory.Functor
