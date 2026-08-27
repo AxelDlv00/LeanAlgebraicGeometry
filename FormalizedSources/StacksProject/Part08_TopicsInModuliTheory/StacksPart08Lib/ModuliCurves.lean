@@ -260,4 +260,28 @@ theorem Stable.reindex {GeometricFiber : Type u} {J : Type v}
     (g : J → GeometricFiber) : Stable (f.reindex g) :=
   f.reindex_stable g hf
 
+/-- A surjective reindexing preserves semistability in both directions. -/
+theorem FamilyOfCurves.reindex_semistable_iff_of_surjective
+    {GeometricFiber : Type u} {J : Type v}
+    (f : FamilyOfCurves GeometricFiber) (g : J → GeometricFiber)
+    (hg : Function.Surjective g) :
+    Semistable (f.reindex g) ↔ Semistable f := by
+  constructor
+  · intro h
+    exact f.reindex_semistable_of_surjective g hg h
+  · intro h
+    exact f.reindex_semistable g h
+
+/-- A surjective reindexing preserves stability in both directions. -/
+theorem FamilyOfCurves.reindex_stable_iff_of_surjective
+    {GeometricFiber : Type u} {J : Type v}
+    (f : FamilyOfCurves GeometricFiber) (g : J → GeometricFiber)
+    (hg : Function.Surjective g) :
+    Stable (f.reindex g) ↔ Stable f := by
+  constructor
+  · intro h
+    exact f.reindex_stable_of_surjective g hg h
+  · intro h
+    exact f.reindex_stable g h
+
 end StacksPart08

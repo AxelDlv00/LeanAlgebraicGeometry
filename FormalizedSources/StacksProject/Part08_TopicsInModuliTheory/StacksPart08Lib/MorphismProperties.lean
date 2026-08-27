@@ -7,6 +7,7 @@ Authors: The StacksPart08Lib Contributors
 import Mathlib.AlgebraicGeometry.Morphisms.Affine
 import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
 import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
+import Mathlib.AlgebraicGeometry.Morphisms.Separated
 import Mathlib.CategoryTheory.MorphismProperty.Limits
 
 /-!
@@ -49,6 +50,14 @@ instance schemeFinitePresentation_isStableUnderBaseChange :
     ⟨MorphismProperty.of_isPullback (P := @LocallyOfFinitePresentation) sq hg.1,
       MorphismProperty.of_isPullback (P := @QuasiCompact) sq hg.2⟩
 
+instance schemeFinitePresentation_containsIdentities :
+    MorphismProperty.ContainsIdentities schemeFinitePresentation where
+  id_mem _ := ⟨inferInstance, inferInstance⟩
+
+theorem schemeFinitePresentation_id (X : Scheme) :
+    schemeFinitePresentation (𝟙 X) :=
+  MorphismProperty.ContainsIdentities.id_mem X
+
 theorem schemeFinitePresentation_comp {X Y Z : Scheme} (f : X ⟶ Y)
     (g : Y ⟶ Z) [LocallyOfFinitePresentation f]
     [LocallyOfFinitePresentation g] [QuasiCompact f] [QuasiCompact g] :
@@ -90,6 +99,14 @@ instance schemeAffineFinitePresentation_isStableUnderBaseChange :
   of_isPullback sq hg :=
     ⟨MorphismProperty.of_isPullback (P := @IsAffineHom) sq hg.1,
       MorphismProperty.of_isPullback (P := schemeFinitePresentation) sq hg.2⟩
+
+instance schemeAffineFinitePresentation_containsIdentities :
+    MorphismProperty.ContainsIdentities schemeAffineFinitePresentation where
+  id_mem X := ⟨inferInstance, schemeFinitePresentation_id X⟩
+
+theorem schemeAffineFinitePresentation_id (X : Scheme) :
+    schemeAffineFinitePresentation (𝟙 X) :=
+  MorphismProperty.ContainsIdentities.id_mem X
 
 theorem schemeAffineFinitePresentation_comp {X Y Z : Scheme} (f : X ⟶ Y)
     (g : Y ⟶ Z) [IsAffineHom f] [IsAffineHom g]
@@ -137,6 +154,14 @@ instance schemeClosedFinitePresentation_isStableUnderBaseChange :
     ⟨MorphismProperty.of_isPullback (P := @IsClosedImmersion) sq hg.1,
       MorphismProperty.of_isPullback (P := schemeFinitePresentation) sq hg.2⟩
 
+instance schemeClosedFinitePresentation_containsIdentities :
+    MorphismProperty.ContainsIdentities schemeClosedFinitePresentation where
+  id_mem X := ⟨inferInstance, schemeFinitePresentation_id X⟩
+
+theorem schemeClosedFinitePresentation_id (X : Scheme) :
+    schemeClosedFinitePresentation (𝟙 X) :=
+  MorphismProperty.ContainsIdentities.id_mem X
+
 theorem schemeClosedFinitePresentation_comp {X Y Z : Scheme} (f : X ⟶ Y)
     (g : Y ⟶ Z) [IsClosedImmersion f] [IsClosedImmersion g]
     [LocallyOfFinitePresentation f] [LocallyOfFinitePresentation g]
@@ -158,6 +183,60 @@ theorem schemeClosedFinitePresentation_baseChange_fst {X Y S : Scheme}
     [LocallyOfFinitePresentation g] [QuasiCompact g] :
     schemeClosedFinitePresentation (pullback.fst f g) := by
   exact MorphismProperty.pullback_fst (P := schemeClosedFinitePresentation) f g
+    ⟨inferInstance, ⟨inferInstance, inferInstance⟩⟩
+
+/-! ### Separated finite-presentation morphisms -/
+
+/-- A separated morphism equipped with the finite-presentation hypotheses. -/
+def schemeSeparatedFinitePresentation : MorphismProperty Scheme :=
+  @IsSeparated ⊓ schemeFinitePresentation
+
+@[simp]
+theorem schemeSeparatedFinitePresentation_iff {X Y : Scheme} (f : X ⟶ Y) :
+    schemeSeparatedFinitePresentation f ↔
+      IsSeparated f ∧ schemeFinitePresentation f := Iff.rfl
+
+instance schemeSeparatedFinitePresentation_isStableUnderComposition :
+    MorphismProperty.IsStableUnderComposition schemeSeparatedFinitePresentation where
+  comp_mem f g hf hg :=
+    ⟨MorphismProperty.comp_mem (@IsSeparated) f g hf.1 hg.1,
+      MorphismProperty.comp_mem schemeFinitePresentation f g hf.2 hg.2⟩
+
+instance schemeSeparatedFinitePresentation_isStableUnderBaseChange :
+    MorphismProperty.IsStableUnderBaseChange schemeSeparatedFinitePresentation where
+  of_isPullback sq hg :=
+    ⟨MorphismProperty.of_isPullback (P := @IsSeparated) sq hg.1,
+      MorphismProperty.of_isPullback (P := schemeFinitePresentation) sq hg.2⟩
+
+instance schemeSeparatedFinitePresentation_containsIdentities :
+    MorphismProperty.ContainsIdentities schemeSeparatedFinitePresentation where
+  id_mem X := ⟨inferInstance, schemeFinitePresentation_id X⟩
+
+theorem schemeSeparatedFinitePresentation_id (X : Scheme) :
+    schemeSeparatedFinitePresentation (𝟙 X) :=
+  MorphismProperty.ContainsIdentities.id_mem X
+
+theorem schemeSeparatedFinitePresentation_comp {X Y Z : Scheme} (f : X ⟶ Y)
+    (g : Y ⟶ Z) [IsSeparated f] [IsSeparated g]
+    [LocallyOfFinitePresentation f] [LocallyOfFinitePresentation g]
+    [QuasiCompact f] [QuasiCompact g] :
+    schemeSeparatedFinitePresentation (f ≫ g) := by
+  exact MorphismProperty.comp_mem schemeSeparatedFinitePresentation f g
+    ⟨inferInstance, ⟨inferInstance, inferInstance⟩⟩
+    ⟨inferInstance, ⟨inferInstance, inferInstance⟩⟩
+
+theorem schemeSeparatedFinitePresentation_baseChange {X Y S : Scheme}
+    (f : X ⟶ S) (g : Y ⟶ S) [IsSeparated f]
+    [LocallyOfFinitePresentation f] [QuasiCompact f] :
+    schemeSeparatedFinitePresentation (pullback.snd f g) := by
+  exact MorphismProperty.pullback_snd (P := schemeSeparatedFinitePresentation) f g
+    ⟨inferInstance, ⟨inferInstance, inferInstance⟩⟩
+
+theorem schemeSeparatedFinitePresentation_baseChange_fst {X Y S : Scheme}
+    (f : X ⟶ S) (g : Y ⟶ S) [IsSeparated g]
+    [LocallyOfFinitePresentation g] [QuasiCompact g] :
+    schemeSeparatedFinitePresentation (pullback.fst f g) := by
+  exact MorphismProperty.pullback_fst (P := schemeSeparatedFinitePresentation) f g
     ⟨inferInstance, ⟨inferInstance, inferInstance⟩⟩
 
 end StacksPart08

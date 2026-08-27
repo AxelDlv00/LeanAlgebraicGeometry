@@ -79,6 +79,57 @@ def locus {X I : Type*} [TopologicalSpace X]
     (s : NumericalSituation X I) : Set X :=
   {x | ∀ i, (s.invariant i).value x = s.prescribed i}
 
+/-! ### Complete numerical profiles -/
+
+/-- The complete numerical profile evaluated at a point of the base. -/
+def profile {X I : Type*} [TopologicalSpace X]
+    (s : NumericalSituation X I) (x : X) : I → ℤ :=
+  fun i => (s.invariant i).value x
+
+/-- The locus on which the complete numerical profile has a prescribed value. -/
+def profileLocus {X I : Type*} [TopologicalSpace X]
+    (s : NumericalSituation X I) (P : I → ℤ) : Set X :=
+  {x | s.profile x = P}
+
+theorem mem_profileLocus_iff {X I : Type*} [TopologicalSpace X]
+    (s : NumericalSituation X I) (P : I → ℤ) (x : X) :
+    x ∈ s.profileLocus P ↔
+      ∀ i, (s.invariant i).value x = P i := by
+  constructor
+  · intro h i
+    exact congrFun h i
+  · intro h
+    funext i
+    exact h i
+
+theorem profileLocus_eq_iInter {X I : Type*} [TopologicalSpace X]
+    (s : NumericalSituation X I) (P : I → ℤ) :
+    s.profileLocus P = ⋂ i, {x | (s.invariant i).value x = P i} := by
+  ext x
+  simpa only [Set.mem_iInter, Set.mem_setOf_eq] using s.mem_profileLocus_iff P x
+
+theorem profileLocus_prescribed_eq_locus {X I : Type*} [TopologicalSpace X]
+    (s : NumericalSituation X I) :
+    s.profileLocus s.prescribed = s.locus := by
+  ext x
+  exact s.mem_profileLocus_iff s.prescribed x
+
+theorem profileLocus_isClosed {X I : Type*} [TopologicalSpace X]
+    (s : NumericalSituation X I) (P : I → ℤ) :
+    IsClosed (s.profileLocus P) := by
+  rw [s.profileLocus_eq_iInter P]
+  apply isClosed_iInter
+  intro i
+  exact ((s.invariant i).fiber_isClopen (P i)).isClosed
+
+theorem profileLocus_isClopen {X I : Type*} [TopologicalSpace X]
+    [Finite I] (s : NumericalSituation X I) (P : I → ℤ) :
+    IsClopen (s.profileLocus P) := by
+  rw [s.profileLocus_eq_iInter P]
+  apply isClopen_iInter_of_finite
+  intro i
+  exact (s.invariant i).fiber_isClopen (P i)
+
 theorem mem_locus_iff {X I : Type*} [TopologicalSpace X]
     (s : NumericalSituation X I) (x : X) :
     x ∈ s.locus ↔ ∀ i, (s.invariant i).value x = s.prescribed i :=
@@ -260,6 +311,24 @@ theorem pullback_locusOn {X Y I : Type*} [TopologicalSpace X]
     (s.pullback f hf).locusOn J = f ⁻¹' s.locusOn J := by
   ext y
   simp [NumericalSituation.locusOn, NumericalSituation.pullback]
+
+theorem pullback_profileLocus {X Y I : Type*} [TopologicalSpace X]
+    [TopologicalSpace Y] (s : NumericalSituation X I) (P : I → ℤ)
+    (f : Y → X) (hf : Continuous f) :
+    (s.pullback f hf).profileLocus P = f ⁻¹' s.profileLocus P := by
+  ext y
+  change ((s.pullback f hf).profile y = P) ↔ (s.profile (f y) = P)
+  constructor
+  · intro h
+    funext i
+    have hi := congrFun h i
+    simpa [NumericalSituation.profile, NumericalSituation.pullback,
+      NumericalInvariant.pullback] using hi
+  · intro h
+    funext i
+    have hi := congrFun h i
+    simpa [NumericalSituation.profile, NumericalSituation.pullback,
+      NumericalInvariant.pullback] using hi
 
 theorem mem_pullback_locus_iff {X Y I : Type*} [TopologicalSpace X]
     [TopologicalSpace Y] (s : NumericalSituation X I) (f : Y → X)
