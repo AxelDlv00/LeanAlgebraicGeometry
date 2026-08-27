@@ -15,7 +15,7 @@ of schemes in the namespace used by the Stacks Part 02 development.
 
 namespace StacksPart02
 
-open AlgebraicGeometry TopologicalSpace CategoryTheory
+open AlgebraicGeometry TopologicalSpace CategoryTheory CategoryTheory.Limits
 
 universe u
 
@@ -42,5 +42,25 @@ theorem scheme_openImmersion_factorization
     {X Y : Scheme.{u}} (f : X ⟶ Y) [IsOpenImmersion f] :
     f.isoOpensRange.hom ≫ f.opensRange.ι = f := by
   exact f.isoOpensRange_hom_ι
+
+/-- The composite of two open immersions is an open immersion. -/
+theorem scheme_openImmersion_comp
+    {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+    [IsOpenImmersion f] [IsOpenImmersion g] :
+    IsOpenImmersion (f ≫ g) := by
+  exact IsOpenImmersion.comp f g
+
+/-- Pullback preserves open immersions along the first projection. -/
+theorem scheme_openImmersion_pullback_fst
+    {X Y Z : Scheme.{u}} (f : X ⟶ Z) (g : Y ⟶ Z) [IsOpenImmersion f] :
+    IsOpenImmersion (pullback.fst g f) := by
+  infer_instance
+
+/-- The image of the pullback projection is the preimage of the original
+open immersion's range. -/
+theorem scheme_openImmersion_pullback_fst_range
+    {X Y Z : Scheme.{u}} (f : X ⟶ Z) (g : Y ⟶ Z) [IsOpenImmersion f] :
+    Set.range (pullback.fst g f) = g ⁻¹ᵁ f.opensRange := by
+  exact IsOpenImmersion.range_pullbackFst f g
 
 end StacksPart02
