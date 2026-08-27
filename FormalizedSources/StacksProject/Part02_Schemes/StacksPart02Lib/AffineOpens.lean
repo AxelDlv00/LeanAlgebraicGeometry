@@ -42,4 +42,16 @@ theorem scheme_standardOpen_isAffine
     IsAffine (X.basicOpen f) := by
   infer_instance
 
+/-- Two affine opens admit a common affine standard-open neighbourhood
+(Stacks, Tag 01IW). -/
+theorem scheme_standardOpen_two_affines
+    (X : Scheme.{u}) {U V : X.Opens} (hU : IsAffineOpen U) (hV : IsAffineOpen V)
+    (x : X) (hx : x ∈ U ⊓ V) :
+    ∃ (f : Γ(X, U)) (g : Γ(X, V)),
+      X.basicOpen f = X.basicOpen g ∧
+        x ∈ X.basicOpen f ∧ IsAffineOpen (X.basicOpen f) := by
+  obtain ⟨f, g, hfg, hxf⟩ :=
+    AlgebraicGeometry.exists_basicOpen_le_affine_inter hU hV x hx
+  exact ⟨f, g, hfg, hxf, hU.basicOpen f⟩
+
 end StacksPart02
