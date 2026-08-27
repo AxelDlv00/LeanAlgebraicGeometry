@@ -43,12 +43,24 @@ noncomputable def evenLength (C : TwoPeriodicComplex R M N) : ℕ∞ :=
 noncomputable def oddLength (C : TwoPeriodicComplex R M N) : ℕ∞ :=
   Module.length R C.oddCohomology
 
+theorem HasFiniteLength.evenLength_ne_top (C : TwoPeriodicComplex R M N)
+    (hC : C.HasFiniteLength) : C.evenLength ≠ ⊤ :=
+  Module.length_ne_top_iff.mpr hC.1
+
+theorem HasFiniteLength.oddLength_ne_top (C : TwoPeriodicComplex R M N)
+    (hC : C.HasFiniteLength) : C.oddLength ≠ ⊤ :=
+  Module.length_ne_top_iff.mpr hC.2
+
 /-- The alternating (even minus odd) cohomology length in `ℕ∞`.
 
 Subtraction is the canonical truncated subtraction on `ℕ∞`; under
 `HasFiniteLength` this is the usual difference of finite natural lengths. -/
 noncomputable def lengthDifference (C : TwoPeriodicComplex R M N) : ℕ∞ :=
   C.evenLength - C.oddLength
+
+theorem lengthDifference_eq_zero_iff_le (C : TwoPeriodicComplex R M N) :
+    C.lengthDifference = 0 ↔ C.evenLength ≤ C.oddLength := by
+  exact tsub_eq_zero_iff_le
 
 theorem hasFiniteLength_iff (C : TwoPeriodicComplex R M N) :
     C.HasFiniteLength ↔
