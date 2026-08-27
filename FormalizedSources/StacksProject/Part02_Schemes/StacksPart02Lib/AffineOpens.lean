@@ -30,4 +30,10 @@ theorem scheme_affine_opens_iSup_eq_top (X : Scheme.{u}) :
     ⨆ i : X.affineOpens, (i : X.Opens) = ⊤ := by
   exact AlgebraicGeometry.iSup_affineOpens_eq_top X
 
+/-- A standard open in an affine scheme is affine (Stacks, Tag 01I3). -/
+theorem scheme_standardOpen_isAffineOpen
+    (X : Scheme.{u}) [IsAffine X] (f : Γ(X, ⊤)) :
+    IsAffineOpen (X.basicOpen f) := by
+  exact (isAffineOpen_top X).basicOpen f
+
 end StacksPart02

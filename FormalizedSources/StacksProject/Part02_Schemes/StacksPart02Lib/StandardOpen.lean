@@ -117,6 +117,17 @@ theorem standardOpenLocalizationMapOfSubset_algebraMap {f g : R}
       algebraMap R (Localization.Away g) a := by
   exact IsLocalization.Away.lift_eq f (standardOpen_isUnit_of_subset hsub) a
 
+/-- Inclusion maps of standard opens compose along inclusions. -/
+theorem standardOpenLocalizationMapOfSubset_comp {f g h : R}
+    (hfg : PrimeSpectrum.basicOpen g ≤ PrimeSpectrum.basicOpen f)
+    (hgh : PrimeSpectrum.basicOpen h ≤ PrimeSpectrum.basicOpen g) :
+    (standardOpenLocalizationMapOfSubset hgh).comp
+        (standardOpenLocalizationMapOfSubset hfg) =
+      standardOpenLocalizationMapOfSubset (hgh.trans hfg) := by
+  apply IsLocalization.ringHom_ext (Submonoid.powers f)
+  ext a
+  simp [standardOpenLocalizationMapOfSubset]
+
 end Inclusion
 
 end StacksPart02
