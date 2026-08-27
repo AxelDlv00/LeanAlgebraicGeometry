@@ -268,6 +268,9 @@ structure FiniteStageTensorEqualityContext
   tensorMap : S.stage ⊗[F] B →ₐ[F] T.stage ⊗[F] B
   tensorMap_spec :
     tensorMap = Algebra.TensorProduct.map inclusion.map (AlgHom.id F B)
+  ambientMap : T.stage ⊗[F] B →ₐ[F] K ⊗[F] B
+  ambientMap_spec :
+    ambientMap = Algebra.TensorProduct.map T.inclusion (AlgHom.id F B)
 
 namespace FiniteStageTensorEqualityContext
 
@@ -280,6 +283,17 @@ theorem tensorMap_apply_tmul
     (x : S.stage) (b : B) :
     D.tensorMap (x ⊗ₜ[F] b) = D.inclusion.map x ⊗ₜ[F] b := by
   rw [D.tensorMap_spec]
+  rfl
+
+@[simp]
+theorem ambientMap_apply_tmul
+    {F K B : Type u} [Field F] [Field K] [Algebra F K]
+    [CommRing B] [Algebra F B]
+    {S T : FiniteStageData F K}
+    (D : FiniteStageTensorEqualityContext F K B S T)
+    (x : T.stage) (b : B) :
+    D.ambientMap (x ⊗ₜ[F] b) = (x : K) ⊗ₜ[F] b := by
+  rw [D.ambientMap_spec]
   rfl
 
 end FiniteStageTensorEqualityContext
@@ -298,17 +312,18 @@ noncomputable def toContext
   let source : FiniteStageData F K := FiniteStageData.ofFinSubext L
   let target : FiniteStageData F K := FiniteStageData.ofFinSubext D.stage
   let inclusion : FiniteStageInclusion source target :=
-    { le := D.inclusion
-      map := D.map
-      map_spec := by
-        intro z
-        change (D.map z : K) = (z : K)
-        rw [D.map_spec]
-        rfl }
+    by
+      refine { le := D.inclusion, map := D.map, map_spec := ?_ }
+      intro z
+      change (D.map z : K) = (z : K)
+      rw [D.map_spec]
+      rfl
   exact
     { inclusion := inclusion
       tensorMap := Algebra.TensorProduct.map D.map (AlgHom.id F B)
-      tensorMap_spec := by rfl }
+      tensorMap_spec := by rfl
+      ambientMap := Algebra.TensorProduct.map target.inclusion (AlgHom.id F B)
+      ambientMap_spec := by rfl }
 
 @[simp]
 theorem toContext_inclusion_le
@@ -326,8 +341,11 @@ theorem equality_via_context
     (D : FiniteStageTensorEqualityFamilyData F K B L x y) (i : ι) :
     D.toContext.tensorMap.toLinearMap (x i) =
       D.toContext.tensorMap.toLinearMap (y i) := by
-  change LinearMap.rTensor B D.map.toLinearMap (x i) =
-    LinearMap.rTensor B D.map.toLinearMap (y i)
+  change
+    (Algebra.TensorProduct.map D.map (AlgHom.id F B)).toLinearMap (x i) =
+      (Algebra.TensorProduct.map D.map (AlgHom.id F B)).toLinearMap (y i)
+  rw [Algebra.TensorProduct.toLinearMap_map,
+    TensorProduct.AlgebraTensorModule.map_eq]
   exact D.equality i
 
 end FiniteStageTensorEqualityFamilyData
