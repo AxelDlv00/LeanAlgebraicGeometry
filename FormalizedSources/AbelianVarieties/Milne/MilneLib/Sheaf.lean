@@ -34,4 +34,57 @@ noncomputable def schemeSheafEvaluationAt {W V : Scheme} (f : W ⟶ V)
 theorem schemeSheafEvaluation_app {W V : Scheme} (f : W ⟶ V) (M : W.Modules) :
     (schemeSheafEvaluation f).app M = schemeSheafEvaluationAt f M := rfl
 
+/-- Evaluation is natural in the sheaf of modules. -/
+theorem schemeSheafEvaluationAt_naturality {W V : Scheme} (f : W ⟶ V)
+    {M N : W.Modules} (g : M ⟶ N) :
+    (Scheme.Modules.pullback f).map ((Scheme.Modules.pushforward f).map g) ≫
+        schemeSheafEvaluationAt f N =
+      schemeSheafEvaluationAt f M ≫ g := by
+  exact (schemeSheafEvaluation f).naturality g
+
+/-- The unit of the pullback--pushforward adjunction for a scheme morphism. -/
+noncomputable def schemeSheafCoevaluation {W V : Scheme} (f : W ⟶ V) :
+    Functor.id V.Modules ⟶
+      (Scheme.Modules.pullback f ⋙ Scheme.Modules.pushforward f) :=
+  (Scheme.Modules.pullbackPushforwardAdjunction f).unit
+
+/-- Coevaluation on a particular sheaf of modules. -/
+noncomputable def schemeSheafCoevaluationAt {W V : Scheme} (f : W ⟶ V)
+    (M : V.Modules) :
+    M ⟶ (Scheme.Modules.pushforward f).obj
+      ((Scheme.Modules.pullback f).obj M) :=
+  (Scheme.Modules.pullbackPushforwardAdjunction f).unit.app M
+
+@[simp]
+theorem schemeSheafCoevaluation_app {W V : Scheme} (f : W ⟶ V)
+    (M : V.Modules) :
+    (schemeSheafCoevaluation f).app M = schemeSheafCoevaluationAt f M := rfl
+
+/-- Coevaluation is natural in the sheaf of modules. -/
+theorem schemeSheafCoevaluationAt_naturality {W V : Scheme} (f : W ⟶ V)
+    {M N : V.Modules} (g : M ⟶ N) :
+    g ≫ schemeSheafCoevaluationAt f N =
+      schemeSheafCoevaluationAt f M ≫
+        (Scheme.Modules.pushforward f).map
+          ((Scheme.Modules.pullback f).map g) := by
+  exact (schemeSheafCoevaluation f).naturality g
+
+/-- Pulling back coevaluation and then evaluating is the identity. -/
+@[simp]
+theorem schemeSheafCoevaluation_evaluation {W V : Scheme} (f : W ⟶ V)
+    (M : V.Modules) :
+    (Scheme.Modules.pullback f).map (schemeSheafCoevaluationAt f M) ≫
+        schemeSheafEvaluationAt f ((Scheme.Modules.pullback f).obj M) =
+      𝟙 ((Scheme.Modules.pullback f).obj M) := by
+  exact (Scheme.Modules.pullbackPushforwardAdjunction f).left_triangle_components M
+
+/-- Coevaluating a pushforward and then pushing forward evaluation is the identity. -/
+@[simp]
+theorem schemeSheafEvaluation_coevaluation {W V : Scheme} (f : W ⟶ V)
+    (M : W.Modules) :
+    schemeSheafCoevaluationAt f ((Scheme.Modules.pushforward f).obj M) ≫
+        (Scheme.Modules.pushforward f).map (schemeSheafEvaluationAt f M) =
+      𝟙 ((Scheme.Modules.pushforward f).obj M) := by
+  exact (Scheme.Modules.pullbackPushforwardAdjunction f).right_triangle_components M
+
 end MilneLib
