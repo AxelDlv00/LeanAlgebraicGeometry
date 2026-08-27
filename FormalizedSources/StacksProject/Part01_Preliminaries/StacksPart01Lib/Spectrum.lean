@@ -44,4 +44,21 @@ theorem isOpen_standardOpen {R : Type*} [CommSemiring R] (f : R) :
     IsOpen (PrimeSpectrum.basicOpen f : Set (PrimeSpectrum R)) := by
   exact PrimeSpectrum.isOpen_basicOpen
 
+/-- The map on spectra induced by a ring homomorphism is continuous
+(Stacks, Tag 00E2). -/
+theorem continuous_spectrum_comap {R S : Type*} [CommSemiring R] [CommSemiring S]
+    (f : R →+* S) : Continuous (PrimeSpectrum.comap f) := by
+  exact PrimeSpectrum.continuous_comap f
+
+/-- Pulling a standard open back along `Spec(f)` gives the standard open of
+the image of its defining element (Stacks, Tag 00E2). -/
+theorem spectrum_comap_preimage_standardOpen {R S : Type*}
+    [CommSemiring R] [CommSemiring S] (f : R →+* S) (x : R) :
+    (PrimeSpectrum.comap f) ⁻¹' (PrimeSpectrum.basicOpen x : Set (PrimeSpectrum R)) =
+      (PrimeSpectrum.basicOpen (f x) : Set (PrimeSpectrum S)) := by
+  have h := PrimeSpectrum.comap_basicOpen f x
+  have h' := congrArg
+    (fun U : TopologicalSpace.Opens (PrimeSpectrum S) => (U : Set (PrimeSpectrum S))) h
+  simpa only [TopologicalSpace.Opens.coe_comap, ContinuousMap.coe_mk] using h'
+
 end StacksPart01

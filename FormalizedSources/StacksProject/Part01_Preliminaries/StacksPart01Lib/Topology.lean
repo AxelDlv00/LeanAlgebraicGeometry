@@ -1,5 +1,7 @@
 import Mathlib.Topology.Compactness.Compact
+import Mathlib.Topology.Connected.Basic
 import Mathlib.Topology.Separation.Hausdorff
+import Mathlib.Data.Rel
 
 /-!
 # Quasi-compactness and separation
@@ -123,5 +125,61 @@ theorem quasiCompact_inter {X : Type*} [TopologicalSpace X] [T2Space X]
 theorem hausdorff_iff_closed_diagonal (X : Type*) [TopologicalSpace X] :
     T2Space X ↔ IsClosed (Set.diagonal X) :=
   t2_iff_isClosed_diagonal
+
+/-- The graph of a continuous map into a Hausdorff space is closed
+(Stacks, Tag 08ZF). -/
+theorem isClosed_graph {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]
+    [T2Space Y] {f : X → Y} (hf : Continuous f) :
+    IsClosed (Function.graph f) := by
+  rw [show Function.graph f = {p : X × Y | f p.1 = p.2} by
+    ext p
+    exact Function.mem_graph]
+  exact isClosed_eq (hf.comp continuous_fst) continuous_snd
+
+/-- The image of a continuous section is closed when the source of the
+section is Hausdorff (Stacks, Tag 08ZG). -/
+theorem isClosed_section_image {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]
+    [T2Space X] (f : X → Y) (s : Y → X) (hf : Continuous f) (hs : Continuous s)
+    (hfs : f ∘ s = id) : IsClosed (s '' (Set.univ : Set Y)) := by
+  have heq : IsClosed {x : X | id x = s (f x)} :=
+    isClosed_eq continuous_id (hs.comp hf)
+  have himage : s '' (Set.univ : Set Y) = {x : X | id x = s (f x)} := by
+    ext x
+    constructor
+    · rintro ⟨y, -, rfl⟩
+      have hy : f (s y) = y := by
+        simpa [Function.comp_def] using congrFun hfs y
+      change s y = s (f (s y))
+      rw [hy]
+    · intro hx
+      refine ⟨f x, Set.mem_univ _, ?_⟩
+      change x = s (f x) at hx
+      exact hx.symm
+  rw [himage]
+  exact heq
+
+/-- The fiber-product locus of two maps into a Hausdorff space is closed in
+the product (Stacks, Tag 08ZH). -/
+def fiberProductSet {X Y Z : Type*} (f : X → Z) (g : Y → Z) : Set (X × Y) :=
+  {p | f p.1 = g p.2}
+
+theorem isClosed_fiberProductSet {X Y Z : Type*}
+    [TopologicalSpace X] [TopologicalSpace Y] [TopologicalSpace Z] [T2Space Z]
+    (f : X → Z) (g : Y → Z) (hf : Continuous f) (hg : Continuous g) :
+    IsClosed (fiberProductSet f g) := by
+  exact isClosed_eq (hf.comp continuous_fst) (hg.comp continuous_snd)
+
+/-- Continuous images of connected sets are connected. -/
+theorem isConnected_image {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]
+    {s : Set X} (hs : IsConnected s) (f : X → Y) (hf : ContinuousOn f s) :
+    IsConnected (f '' s) :=
+  hs.image f hf
+
+/-- The image of a connected space under a continuous map is connected. -/
+theorem isConnected_range {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]
+    [ConnectedSpace X] (f : X → Y) (hf : Continuous f) :
+    IsConnected (Set.range f) := by
+  simpa only [Set.image_univ] using
+    (isConnected_univ.image f hf.continuousOn)
 
 end StacksPart01
