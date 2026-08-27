@@ -26,6 +26,20 @@ abbrev GenusTorus (g : ℕ) := ProductTorus (Fin (2 * g))
 structure GenusTorusUniformization (X : Type*) [AddCommGroup X] (g : ℕ) where
   equiv : X ≃+ GenusTorus g
 
+/- A uniformization transports the division operation on the model torus. -/
+@[reducible]
+noncomputable def divisibleBy_of_uniformization {X : Type*} [AddCommGroup X] {g : ℕ}
+    (u : GenusTorusUniformization X g) : DivisibleBy X ℤ where
+  div x n := u.equiv.symm (DivisibleBy.div (u.equiv x) n)
+  div_zero x := by
+    apply u.equiv.injective
+    simp only [AddEquiv.apply_symm_apply, map_zero]
+    exact DivisibleBy.div_zero _
+  div_cancel {n} x hn := by
+    apply u.equiv.injective
+    simp only [AddEquiv.apply_symm_apply, map_zsmul]
+    exact DivisibleBy.div_cancel (u.equiv x) hn
+
 /-- The subgroup annihilated by a (possibly negative) integer scalar. -/
 def zsmulTorsionSubgroup (X : Type*) [AddCommGroup X] (n : ℤ) : AddSubgroup X where
   carrier := {x : X | n • x = 0}
@@ -107,10 +121,8 @@ def zsmulTorsion_addEquiv_of_uniformization {X : Type*} [AddCommGroup X] {g : �
 theorem exists_division_of_uniformization {X : Type*} [AddCommGroup X] {g : ℕ}
     (u : GenusTorusUniformization X g) (x : X) {n : ℤ} (hn : n ≠ 0) :
     ∃ y : X, n • y = x := by
-  obtain ⟨y, hy⟩ := genusTorus_exists_division g (u.equiv x) hn
-  refine ⟨u.equiv.symm y, ?_⟩
-  apply u.equiv.injective
-  simpa only [map_zsmul, u.equiv.apply_symm_apply] using hy
+  letI : DivisibleBy X ℤ := divisibleBy_of_uniformization u
+  exact ⟨DivisibleBy.div x n, DivisibleBy.div_cancel x hn⟩
 
 /-- The torsion cardinality transported across a chosen genus-torus uniformization. -/
 theorem zsmulTorsion_card_of_uniformization {X : Type*} [AddCommGroup X] {g : ℕ}
