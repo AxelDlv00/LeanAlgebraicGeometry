@@ -202,9 +202,11 @@ theorem relativeMorphismProperty_mono {C : Type u} [Category.{v} C]
     RelativeMorphismProperty F P ≤ RelativeMorphismProperty F P' :=
   MorphismProperty.relative_monotone h
 
-/-- The diagonal criterion for relative representability (Stacks, Tag
-`025W`).  The explicit preservation assumptions record the products and
-pullbacks used by the categorical theorem. -/
+/-- The core (diagonal-to-point-map) criterion for relative representability,
+corresponding to the first two clauses of Stacks Tag `025W`.  The explicit
+preservation assumptions record the products and pullbacks used by the
+categorical theorem; the blueprint's separate pairwise-fibre-product clause
+is left for a later extension. -/
 theorem relativeRepresentable_diag_iff {C : Type u} [Category.{v} C]
     {D : Type u'} [Category.{v'} D] {F : C ⥤ D} {X : D}
     [HasBinaryProducts C] [HasPullbacks C]
