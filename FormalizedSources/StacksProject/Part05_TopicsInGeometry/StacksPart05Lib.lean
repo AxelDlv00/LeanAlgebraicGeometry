@@ -1,6 +1,7 @@
 import StacksPart05Lib.Basic
 import StacksPart05Lib.FormalSpaces
 import StacksPart05Lib.Surjectivity
+import StacksPart05Lib.FiniteType
 
 /-!
 # StacksPart05Lib
