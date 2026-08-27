@@ -27,6 +27,8 @@ $Z(T)=Z(\mathfrak a)$; since $A$ is noetherian, $\mathfrak a$ has finitely many 
 \begin{definition}[Algebraic set]
 \label{def:ha-ch1-algebraic-set}
 \source{hartshorne-algebraic-geometry:I.1}
+\lean{Hartshorne.IsAlgebraicSet, Hartshorne.isAlgebraicSet_iff}
+\leanok
 A subset $Y\subseteq\mathbb A^n$ is algebraic if and only if $Y=Z(T)$ for some subset
 $T\subseteq A$.
 \uses{def:ha-ch1-polynomial-evaluation}
@@ -78,6 +80,8 @@ A quasi-affine variety is an open subset of an affine algebraic variety.
 \begin{definition}[Vanishing ideal]
 \label{def:ha-ch1-vanishing-ideal}
 \source{hartshorne-algebraic-geometry:I.1}
+\lean{Hartshorne.vanishingIdeal, Hartshorne.mem_vanishingIdeal}
+\leanok
 For $Y\subseteq\mathbb A^n$, its ideal is
 \[
  I(Y)=\{f\in A:f(P)=0\text{ for every }P\in Y\}.
