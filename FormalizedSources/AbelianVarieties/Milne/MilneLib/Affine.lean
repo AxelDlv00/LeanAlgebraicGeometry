@@ -5,6 +5,7 @@ Authors: The Milne Contributors
 -/
 
 import Mathlib.AlgebraicGeometry.Modules.Tilde
+import Mathlib.RingTheory.Localization.Finiteness
 
 /-!
 # Affine modules and global sections
@@ -51,6 +52,19 @@ theorem pushforward_globalSections_top
     Γ((Scheme.Modules.pushforward f).obj M, (⊤ : Y.Opens)) =
       Γ(M, (⊤ : X.Opens)) := by
   rfl
+
+/-- A finite affine module has finite stalks after applying the tilde
+construction.  The stalk is viewed as a module over the corresponding
+structure-sheaf stalk. -/
+theorem moduleFinite_tilde_stalk
+    {R : CommRingCat.{u}} (M : ModuleCat R) [Module.Finite R M]
+    (x : PrimeSpectrum.Top R) :
+    Module.Finite
+      ((AlgebraicGeometry.structurePresheafInCommRingCat R).stalk x)
+      ((TopCat.Presheaf.stalk (C := Ab.{u})
+        (AlgebraicGeometry.moduleStructurePresheaf R M).presheaf x) : Ab.{u}) := by
+  exact Module.Finite.of_isLocalizedModule x.asIdeal.primeCompl
+    (AlgebraicGeometry.StructureSheaf.toStalkₗ R M x)
 
 /-- The preceding affine construction for a finite-dimensional vector space. -/
 noncomputable def affineVectorSpaceSheaf
