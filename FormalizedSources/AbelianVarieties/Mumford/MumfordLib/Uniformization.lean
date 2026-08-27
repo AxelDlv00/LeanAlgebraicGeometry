@@ -65,6 +65,20 @@ def zsmulTorsion_addEquiv_of_addEquiv {X Y : Type*} [AddCommGroup X] [AddCommGro
         apply Subtype.ext
         exact e.map_add (a : X) (b : X) }
 
+/- The torsion cardinality is invariant under an additive equivalence.  Keeping
+this as a separate theorem avoids repeating the subtype-equivalence argument
+when a uniformization is composed with another group isomorphism. -/
+theorem zsmulTorsion_card_eq_of_addEquiv {X Y : Type*} [AddCommGroup X] [AddCommGroup Y]
+    (e : X ≃+ Y) (n : ℤ) :
+    Nat.card (zsmulTorsionSubgroup X n) = Nat.card (zsmulTorsionSubgroup Y n) := by
+  exact Nat.card_congr (zsmulTorsion_addEquiv_of_addEquiv e n).toEquiv
+
+/- The finiteness of integer torsion is invariant under an additive equivalence. -/
+theorem zsmulTorsion_finite_iff_of_addEquiv {X Y : Type*} [AddCommGroup X] [AddCommGroup Y]
+    (e : X ≃+ Y) (n : ℤ) :
+    Finite (zsmulTorsionSubgroup X n) ↔ Finite (zsmulTorsionSubgroup Y n) := by
+  exact (zsmulTorsion_addEquiv_of_addEquiv e n).toEquiv.finite_iff
+
 /-- Nonzero integer division exists on the genus torus model. -/
 theorem genusTorus_exists_division (g : ℕ) (x : GenusTorus g) {n : ℤ} (hn : n ≠ 0) :
     ∃ y : GenusTorus g, n • y = x := by
@@ -102,18 +116,22 @@ theorem exists_division_of_uniformization {X : Type*} [AddCommGroup X] {g : ℕ}
 theorem zsmulTorsion_card_of_uniformization {X : Type*} [AddCommGroup X] {g : ℕ}
     (u : GenusTorusUniformization X g) {n : ℤ} (hn : n ≠ 0) :
     Nat.card (zsmulTorsionSubgroup X n) = n.natAbs ^ (2 * g) := by
-  rw [Nat.card_congr (zsmulTorsion_addEquiv_of_uniformization u hn).toEquiv]
-  rw [Nat.card_fun, Nat.card_zmod, Nat.card_eq_fintype_card, Fintype.card_fin]
+  calc
+    Nat.card (zsmulTorsionSubgroup X n) =
+        Nat.card (zsmulTorsionSubgroup (GenusTorus g) n) :=
+      zsmulTorsion_card_eq_of_addEquiv u.equiv n
+    _ = n.natAbs ^ (2 * g) := genusTorus_zsmulTorsion_card g hn
 
 /-- A chosen genus-torus uniformization makes every nonzero-integer torsion
 subgroup finite. -/
 theorem zsmulTorsion_finite_of_uniformization {X : Type*} [AddCommGroup X] {g : ℕ}
     (u : GenusTorusUniformization X g) {n : ℤ} (hn : n ≠ 0) :
     Finite (zsmulTorsionSubgroup X n) := by
+  rw [zsmulTorsion_finite_iff_of_addEquiv u.equiv n]
   letI : NeZero n.natAbs := ⟨Int.natAbs_pos.mpr hn |>.ne'⟩
   exact Finite.of_injective
-    (zsmulTorsion_addEquiv_of_uniformization u hn).toEquiv
-    (zsmulTorsion_addEquiv_of_uniformization u hn).injective
+    (productTorus_zsmul_torsion_addEquiv_pi_zmod (d := Fin (2 * g)) hn).toEquiv
+    (productTorus_zsmul_torsion_addEquiv_pi_zmod (d := Fin (2 * g)) hn).injective
 
 end
 end Uniformization
