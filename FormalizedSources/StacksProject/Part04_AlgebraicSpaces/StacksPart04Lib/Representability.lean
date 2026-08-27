@@ -183,6 +183,38 @@ theorem relativeMorphismProperty_baseChange {C : Type u} [Category.{v} C]
     RelativeMorphismProperty F P g' := by
   exact (MorphismProperty.relative_isStableUnderBaseChange P).of_isPullback sq hg
 
+/-! ### Comparison and diagonal criteria -/
+
+/-- The morphism-scheme sanity check: a Yoneda morphism has a relative
+morphism property exactly when the original morphism has it (Stacks, Tag
+`02WJ`). -/
+theorem morphismScheme_property_iff {C : Type u} [Category.{v} C]
+    [HasPullbacks C] (P : MorphismProperty C)
+    [P.IsStableUnderBaseChange] {X Y : C} (f : X ⟶ Y) :
+    PresheafMorphismProperty P (morphismScheme f) ↔ P f := by
+  exact MorphismProperty.relative_map_iff
+
+/-- Relative morphism properties are monotone in the underlying scheme
+property (Stacks, Tag `02YO`). -/
+theorem relativeMorphismProperty_mono {C : Type u} [Category.{v} C]
+    {D : Type u'} [Category.{v'} D] {F : C ⥤ D}
+    {P P' : MorphismProperty C} (h : P ≤ P') :
+    RelativeMorphismProperty F P ≤ RelativeMorphismProperty F P' :=
+  MorphismProperty.relative_monotone h
+
+/-- The diagonal criterion for relative representability (Stacks, Tag
+`025W`).  The explicit preservation assumptions record the products and
+pullbacks used by the categorical theorem. -/
+theorem relativeRepresentable_diag_iff {C : Type u} [Category.{v} C]
+    {D : Type u'} [Category.{v'} D] {F : C ⥤ D} {X : D}
+    [HasBinaryProducts C] [HasPullbacks C]
+    [HasPullbacks D] [HasBinaryProducts D] [HasTerminal D]
+    [F.Full] [PreservesLimitsOfShape (Discrete WalkingPair) F]
+    [PreservesLimitsOfShape WalkingCospan F] :
+    RelativeRepresentable F (Limits.diag X) ↔
+      ∀ ⦃a : C⦄ (g : F.obj a ⟶ X), RelativeRepresentable F g :=
+  Functor.relativelyRepresentable.diag_iff
+
 /-- An isomorphism has a relative morphism property whenever the underlying
 property is multiplicative (and hence contains isomorphisms). -/
 theorem relativeMorphismProperty_of_isIso {C : Type u} [Category.{v} C]
