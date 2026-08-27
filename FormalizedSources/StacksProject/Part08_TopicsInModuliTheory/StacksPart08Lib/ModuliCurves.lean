@@ -128,6 +128,14 @@ def FamilyOfCurves.SatisfiesFamilyConditions {GeometricFiber : Type u}
   f.isFlat ∧ f.isProper ∧ f.isOfFinitePresentation ∧
     f.hasRelativeDimensionAtMostOne
 
+/-- Reindexing preserves the four ambient conditions of a family of curves. -/
+theorem FamilyOfCurves.reindex_satisfiesFamilyConditions
+    {GeometricFiber : Type u} {J : Type v}
+    (f : FamilyOfCurves GeometricFiber) (g : J → GeometricFiber) :
+    (f.reindex g).SatisfiesFamilyConditions ↔
+      f.SatisfiesFamilyConditions := by
+  simp [FamilyOfCurves.SatisfiesFamilyConditions, FamilyOfCurves.reindex]
+
 /-- A family of curves is prestable when it is at worst nodal of relative
 dimension one and the equality `f_* O_X = O_S` holds universally (Stacks tag
 0E6T). -/
