@@ -1,4 +1,5 @@
 import MilneLib.Basic
+import MilneLib.Affine
 import MilneLib.GroupScheme
 import MilneLib.Isogeny
 import MilneLib.LinearAlgebra
