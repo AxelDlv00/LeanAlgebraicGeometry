@@ -329,6 +329,17 @@ def productTorus_zsmul_torsion_addEquiv_pi_zmod {d : Type*} {n : ℤ} (hn : n �
 
 /-! The additive-subgroup carriers inherit the explicit cardinality formulas. -/
 
+/-- The positive `n`-torsion subgroup of the unit circle has order `n`. -/
+theorem unitAddCircle_torsionSubgroup_card {n : ℕ} (hn : 0 < n) :
+    Nat.card (unitAddCircle_torsionSubgroup n) = n := by
+  simpa [unitAddCircle_torsionSubgroup] using (unitAddCircle_torsion_card hn)
+
+/-- The nonzero-integer torsion subgroup of the unit circle has order `|n|`. -/
+theorem unitAddCircle_zsmul_torsionSubgroup_card {n : ℤ} (hn : n ≠ 0) :
+    Nat.card (unitAddCircle_zsmul_torsionSubgroup n) = n.natAbs := by
+  simpa [unitAddCircle_zsmul_torsionSubgroup] using
+    (unitAddCircle_zsmul_torsion_card hn)
+
 /-- The positive `n`-torsion subgroup of a finite product torus has order
 `n ^ |d|`. -/
 theorem productTorus_torsionSubgroup_card {d : Type*} [Fintype d] {n : ℕ}
