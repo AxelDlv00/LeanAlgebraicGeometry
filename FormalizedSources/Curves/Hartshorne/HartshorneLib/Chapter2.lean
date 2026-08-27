@@ -92,6 +92,50 @@ theorem affineSpecMap_injective {R S : CommRingCat} :
       (AlgebraicGeometry.Spec S ⟶ AlgebraicGeometry.Spec R)) := by
   exact Spec.map_injective
 
+/-! ### Source-facing affine consequences -/
+
+/-- The inverse image of a basic open under an affine spectrum map. -/
+@[simp]
+theorem affineSpecMap_preimage_basicOpen {R S : Type u} [CommRing R] [CommRing S]
+    (f : R →+* S) (r : R) :
+    (affineSpecMap f) ⁻¹ᵁ (spectrumBasicOpen r) = spectrumBasicOpen (f r) := by
+  exact AlgebraicGeometry.SpecMap_preimage_basicOpen (CommRingCat.ofHom f) r
+
+/-- Basic opens in an affine spectrum are affine open subschemes. -/
+theorem affineSpec_basicOpen_isAffineOpen {R : CommRingCat} (r : R) :
+    IsAffineOpen (X := AlgebraicGeometry.Spec R) (PrimeSpectrum.basicOpen r) := by
+  exact IsAffineOpen.Spec_basicOpen r
+
+/-- Sections on a basic open of an affine spectrum form the expected localization. -/
+theorem affineSpec_basicOpen_sections_isLocalization {R : CommRingCat} (r : R) :
+    IsLocalization.Away r Γ(AlgebraicGeometry.Spec R, PrimeSpectrum.basicOpen r) := by
+  infer_instance
+
+/-- The two affine-spectrum constructions are inverse under the hom equivalence. -/
+@[simp]
+theorem affineSpec_homEquiv_map {R S : CommRingCat} (f : R ⟶ S) :
+    affineSpec_homEquiv R S (Spec.map f) = f := by
+  exact AlgebraicGeometry.Spec.preimage_map f
+
+@[simp]
+theorem affineSpec_map_homEquiv {R S : CommRingCat}
+    (f : AlgebraicGeometry.Spec S ⟶ AlgebraicGeometry.Spec R) :
+    Spec.map (affineSpec_homEquiv R S f) = f := by
+  exact AlgebraicGeometry.Spec.map_preimage f
+
+/-- The global-sections map of an affine spectrum morphism is the original ring map. -/
+@[reassoc (attr := simp)]
+theorem affineSpecMap_globalSections_naturality {R S : CommRingCat} (f : R ⟶ S) :
+    (Spec.map f).appTop ≫ (Scheme.ΓSpecIso S).hom =
+      (Scheme.ΓSpecIso R).hom ≫ f := by
+  exact Scheme.ΓSpecIso_naturality f
+
+/-- Affine spectrum morphisms induce local maps on all stalks. -/
+theorem affineSpecMap_stalkMap_isLocalHom {R S : Type u} [CommRing R] [CommRing S]
+    (f : R →+* S) (p : PrimeSpectrum S) :
+    IsLocalHom ((affineSpecMap f).stalkMap p).hom := by
+  infer_instance
+
 /-! ### Sections and stalks -/
 
 /-- The stalk of the affine structure sheaf is localized at the corresponding prime. -/
@@ -114,6 +158,17 @@ def affineSpec_stalk_iso
     (AlgebraicGeometry.Spec R).presheaf.stalk p ≅
       CommRingCat.of (Localization.AtPrime p.asIdeal) := by
   exact Spec.stalkIso R p
+
+/-! The affine stalk identifications are functorial for ring maps. -/
+
+@[reassoc]
+theorem affineSpecMap_stalkIso_naturality {R S : CommRingCat} (f : R ⟶ S)
+    (p : PrimeSpectrum S) :
+    (affineSpec_stalk_iso R (p.comap f.hom)).hom ≫
+      (CommRingCat.ofHom <| Localization.localRingHom
+        (p.comap f.hom).asIdeal p.asIdeal f.hom rfl) ≫
+      (affineSpec_stalk_iso S p).inv = (Spec.map f).stalkMap p := by
+  exact Scheme.localRingHom_comp_stalkIso f p
 
 /-- Sections on a basic open are the localization away from its defining element. -/
 theorem affineStructureSheaf_basicOpen_isLocalization
