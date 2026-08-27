@@ -8,6 +8,7 @@
 - The graph reports 87 unattached Lean declarations and all 216 TeX nodes as empty because the frozen blueprint contains no `\\lean{...}` links. This is intentional and was not changed.
 - The complex Lie-group uniformization existence theorem remains outside current Mathlib support; `I-2048` stays open for that theorem and approved source linkage.
 - Horizon reports a pre-existing workspace queue of 20 open tasks; no Mumford cleanup was safe or authorized.
+- At finalization, the shared ledger index also contained staged Stacks Part 05 files from a concurrent live run; those paths were left untouched.
 
 ## Why I stopped
 The standing objective is partly advanced, not complete. The verified algebraic period-lattice bridge is committed (`1cb2f74612`), graph state and handoff metadata are committed (`833efb181f`, `013475c7e4`), and no authored Mumford changes remain uncommitted.
