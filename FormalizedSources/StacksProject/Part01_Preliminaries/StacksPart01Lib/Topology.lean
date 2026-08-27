@@ -94,6 +94,30 @@ theorem quasiCompact_iff_closed {X : Type*} [TopologicalSpace X]
   · intro hs
     exact hs.isCompact
 
+/- Quasi-compact subsets of a Hausdorff space are closed (Stacks, Tag 08YB). -/
+theorem quasiCompact_isClosed {X : Type*} [TopologicalSpace X]
+    [T2Space X] {s : Set X} (hs : IsQuasiCompact s) : IsClosed s := by
+  exact hs.isClosed
+
+/- Finite unions of quasi-compact subsets are quasi-compact. -/
+theorem quasiCompact_union {X : Type*} [TopologicalSpace X]
+    {s t : Set X} (hs : IsQuasiCompact s) (ht : IsQuasiCompact t) :
+    IsQuasiCompact (s ∪ t) := by
+  exact hs.union ht
+
+/- Finite products of quasi-compact subsets are quasi-compact. -/
+theorem quasiCompact_prod {X Y : Type*}
+    [TopologicalSpace X] [TopologicalSpace Y]
+    {s : Set X} {t : Set Y} (hs : IsQuasiCompact s) (ht : IsQuasiCompact t) :
+    IsQuasiCompact (s ×ˢ t) := by
+  exact hs.prod ht
+
+/- In a Hausdorff space, intersections of quasi-compact subsets are quasi-compact. -/
+theorem quasiCompact_inter {X : Type*} [TopologicalSpace X] [T2Space X]
+    {s t : Set X} (hs : IsQuasiCompact s) (ht : IsQuasiCompact t) :
+    IsQuasiCompact (s ∩ t) := by
+  exact hs.inter ht
+
 /-- Hausdorffness is equivalent to closedness of the diagonal
 (Stacks, Tag 08ZE). -/
 theorem hausdorff_iff_closed_diagonal (X : Type*) [TopologicalSpace X] :
