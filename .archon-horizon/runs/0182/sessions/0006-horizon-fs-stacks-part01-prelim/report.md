@@ -11,6 +11,7 @@
 - The frozen blueprint still has no `\\lean{...}` pins: hgraph reports 5,501 TeX nodes with `lean_status=empty` and 127 unattached Lean declarations. This is intentional under protections I-2034/I-2051; the link-gap issue was updated from 52 to 125 declarations.
 - Hgraph retains one pre-existing dangling dependency, `derived-lemma-ss-filtered-derived` using `equation-definition-filtered-derived-functor`.
 - The authoritative Part 01 ledger path is clean. The wider workspace has concurrent Horizon runs and runtime metadata/index noise; it was not modified. Historical commit `5e9d03e264` mixed Part 06/07 paths into a Part 01 session; owners verified those files and no history rewrite was attempted.
+- A final `task comment` attempt was interrupted after a shared-state lock wait; the existing C-0006 checkpoint and this report preserve the verified progress, and no source/build check was affected.
 
 ## Why I stopped
 
