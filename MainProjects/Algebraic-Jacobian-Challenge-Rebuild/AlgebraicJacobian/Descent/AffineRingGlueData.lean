@@ -367,6 +367,31 @@ structure AffineRingGluePresentation (R : Type u) [CommRing R] where
 
 namespace AffineRingGluePresentation
 
+/-! The constructor below is deliberately data-first.  Once a producer has selected its
+`Scheme.GlueData` and map datum, later consumers no longer mention the proof arguments that
+were used to construct them. -/
+
+/-- Package an already selected glue datum and map without re-elaborating the gluing proof. -/
+def ofData {R : Type u} [CommRing R]
+    (D : Scheme.GlueData.{u})
+    (M : GluedMapData D (Spec (CommRingCat.of R))) :
+    AffineRingGluePresentation R :=
+  { glueData := D, mapData := M }
+
+@[simp]
+theorem ofData_glueData {R : Type u} [CommRing R]
+    (D : Scheme.GlueData.{u})
+    (M : GluedMapData D (Spec (CommRingCat.of R))) :
+    (ofData D M).glueData = D :=
+  rfl
+
+@[simp]
+theorem ofData_mapData {R : Type u} [CommRing R]
+    (D : Scheme.GlueData.{u})
+    (M : GluedMapData D (Spec (CommRingCat.of R))) :
+    (ofData D M).mapData = M :=
+  rfl
+
 /-- The selected glued scheme. -/
 abbrev glued (P : AffineRingGluePresentation R) : Scheme.{u} := P.glueData.glued
 
@@ -405,6 +430,58 @@ noncomputable def toPresentation
     AffineRingGluePresentation R :=
   { glueData := affineRingGlueData A B tau theta fId fOpen tauId thetaFac thetaCocycle
     mapData := P.mapData }
+
+/-! The explicit-argument adapter above is retained for source compatibility.  `pin` is the
+consumer-facing projection: all legacy parameters are inferred from one package value, while
+the result has the proof-independent `AffineRingGluePresentation` type. -/
+
+/-- Pin a legacy package once at the stable presentation boundary. -/
+noncomputable def pin
+    {A : J → Type u} {B : J → J → Type u}
+    [∀ i, CommRing (A i)] [∀ i j, CommRing (B i j)]
+    [∀ i, Algebra R (A i)] [∀ i j, Algebra R (B i j)]
+    [∀ i j, Algebra (A i) (B i j)]
+    [∀ i j, IsScalarTower R (A i) (B i j)]
+    {tau : ∀ i j, B j i →ₐ[R] B i j}
+    {theta : ∀ i j k,
+      AffineTripleTensor A B j k i →ₐ[R] AffineTripleTensor A B i j k}
+    {fId : ∀ i, IsIso (affineRestriction A B i i)}
+    {fOpen : ∀ i j, IsOpenImmersion (affineRestriction A B i j)}
+    {tauId : ∀ i, tau i i = AlgHom.id R (B i i)}
+    {thetaFac : ∀ i j k,
+      (theta i j k).comp (affineTensorIncludeRight A B j k i) =
+        (affineTensorIncludeLeft A B i j k).comp (tau i j)}
+    {thetaCocycle : ∀ i j k,
+      (theta i j k).comp ((theta j k i).comp (theta k i j)) =
+        AlgHom.id R (AffineTripleTensor A B i j k)}
+    (P : AffineRingGluePackage A B tau theta fId fOpen tauId thetaFac thetaCocycle) :
+    AffineRingGluePresentation R :=
+  AffineRingGluePresentation.ofData
+    (affineRingGlueData A B tau theta fId fOpen tauId thetaFac thetaCocycle)
+    P.mapData
+
+@[simp]
+theorem pin_mapData
+    {A : J → Type u} {B : J → J → Type u}
+    [∀ i, CommRing (A i)] [∀ i j, CommRing (B i j)]
+    [∀ i, Algebra R (A i)] [∀ i j, Algebra R (B i j)]
+    [∀ i j, Algebra (A i) (B i j)]
+    [∀ i j, IsScalarTower R (A i) (B i j)]
+    {tau : ∀ i j, B j i →ₐ[R] B i j}
+    {theta : ∀ i j k,
+      AffineTripleTensor A B j k i →ₐ[R] AffineTripleTensor A B i j k}
+    {fId : ∀ i, IsIso (affineRestriction A B i i)}
+    {fOpen : ∀ i j, IsOpenImmersion (affineRestriction A B i j)}
+    {tauId : ∀ i, tau i i = AlgHom.id R (B i i)}
+    {thetaFac : ∀ i j k,
+      (theta i j k).comp (affineTensorIncludeRight A B j k i) =
+        (affineTensorIncludeLeft A B i j k).comp (tau i j)}
+    {thetaCocycle : ∀ i j k,
+      (theta i j k).comp ((theta j k i).comp (theta k i j)) =
+        AlgHom.id R (AffineTripleTensor A B i j k)}
+    (P : AffineRingGluePackage A B tau theta fId fOpen tauId thetaFac thetaCocycle) :
+    (P.pin).mapData = P.mapData :=
+  rfl
 
 @[simp]
 theorem toPresentation_glueData
