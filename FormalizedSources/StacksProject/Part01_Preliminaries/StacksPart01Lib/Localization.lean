@@ -121,4 +121,22 @@ theorem localization_exact (S : Submonoid R)
         (LocalizedModule.mkLinearMap S M₂) h) := by
   exact LocalizedModule.map_exact S g h hex
 
+/-- Localization preserves injectivity of a linear map. -/
+theorem localizedModule_map_injective (S : Submonoid R)
+    {M N : Type*} [AddCommMonoid M] [AddCommMonoid N]
+    [Module R M] [Module R N] (g : M →ₗ[R] N) (hg : Function.Injective g) :
+    Function.Injective
+      (IsLocalizedModule.map S (LocalizedModule.mkLinearMap S M)
+        (LocalizedModule.mkLinearMap S N) g) := by
+  exact LocalizedModule.map_injective S g hg
+
+/-- Localization preserves surjectivity of a linear map. -/
+theorem localizedModule_map_surjective (S : Submonoid R)
+    {M N : Type*} [AddCommMonoid M] [AddCommMonoid N]
+    [Module R M] [Module R N] (g : M →ₗ[R] N) (hg : Function.Surjective g) :
+    Function.Surjective
+      (IsLocalizedModule.map S (LocalizedModule.mkLinearMap S M)
+        (LocalizedModule.mkLinearMap S N) g) := by
+  exact LocalizedModule.map_surjective S g hg
+
 end StacksPart01

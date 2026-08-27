@@ -1,4 +1,5 @@
 import StacksPart06Lib.Basic
+import StacksPart06Lib.ProductExtension
 
 /-!
 # StacksPart06Lib
