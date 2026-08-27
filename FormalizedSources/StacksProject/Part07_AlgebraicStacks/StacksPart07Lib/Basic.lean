@@ -8,6 +8,9 @@ import StacksPart07Lib.Representability
 import StacksPart07Lib.Groupoids
 import StacksPart07Lib.ProductRepresentability
 import StacksPart07Lib.RepresentabilityAdvanced
+import StacksPart07Lib.FiberedGroupoids
+import StacksPart07Lib.Descent
+import StacksPart07Lib.RelativeProducts
 
 /-!
 # StacksPart07Lib.Basic
