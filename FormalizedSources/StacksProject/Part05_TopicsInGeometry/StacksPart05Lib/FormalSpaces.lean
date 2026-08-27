@@ -50,6 +50,14 @@ instance schemeFiniteType_isStableUnderBaseChange :
     ⟨MorphismProperty.of_isPullback (P := @LocallyOfFiniteType) sq hg.1,
       MorphismProperty.of_isPullback (P := @QuasiCompact) sq hg.2⟩
 
+instance schemeFiniteType_containsIdentities :
+    MorphismProperty.ContainsIdentities schemeFiniteType where
+  id_mem _X := ⟨inferInstance, inferInstance⟩
+
+/-- Every identity scheme morphism is of finite type. -/
+theorem scheme_finiteType_id (X : Scheme) : schemeFiniteType (𝟙 X) := by
+  exact MorphismProperty.ContainsIdentities.id_mem X
+
 /-! The source's composition and base-change lemmas for the representable
 scheme case. -/
 
