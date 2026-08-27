@@ -151,6 +151,29 @@ def unitAddCircle_zsmul_torsion_equiv_zmod {n : ℤ} (hn : n ≠ 0) :
       right_inv := by intro u; exact Subtype.ext rfl }
   exact f.trans (unitAddCircle_torsion_equiv_zmod hpos)
 
+/-- The cardinality of positive torsion on the unit additive circle. -/
+theorem unitAddCircle_torsion_card {n : ℕ} (hn : 0 < n) :
+    Nat.card {u : UnitAddCircle | n • u = 0} = n := by
+  rw [Nat.card_congr (unitAddCircle_torsion_equiv_zmod hn), Nat.card_zmod]
+
+/-- The cardinality of nonzero-integer torsion on the unit additive circle. -/
+theorem unitAddCircle_zsmul_torsion_card {n : ℤ} (hn : n ≠ 0) :
+    Nat.card {u : UnitAddCircle | n • u = 0} = n.natAbs := by
+  rw [Nat.card_congr (unitAddCircle_zsmul_torsion_equiv_zmod hn), Nat.card_zmod]
+
+/-- The cardinality formula for nonzero-integer torsion on a finite product torus. -/
+theorem productTorus_zsmul_torsion_card {d : Type*} [Fintype d] {n : ℤ} (hn : n ≠ 0) :
+    Nat.card {x : ProductTorus d | n • x = 0} = n.natAbs ^ Fintype.card d := by
+  have hpos : 0 < n.natAbs := Int.natAbs_pos.mpr hn
+  let e : {x : ProductTorus d | n • x = 0} ≃
+      {x : ProductTorus d | n.natAbs • x = 0} :=
+    { toFun := fun x => ⟨x.val, (natAbs_nsmul_eq_zero).2 x.property⟩
+      invFun := fun x => ⟨x.val, (natAbs_nsmul_eq_zero).1 x.property⟩
+      left_inv := by intro x; exact Subtype.ext rfl
+      right_inv := by intro x; exact Subtype.ext rfl }
+  rw [Nat.card_congr e]
+  exact productTorus_torsion_card hpos
+
 end
 
 end Mumford
