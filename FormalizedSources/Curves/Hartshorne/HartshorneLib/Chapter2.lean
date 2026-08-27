@@ -136,6 +136,16 @@ theorem affineSpecMap_stalkMap_isLocalHom {R S : Type u} [CommRing R] [CommRing 
     IsLocalHom ((affineSpecMap f).stalkMap p).hom := by
   infer_instance
 
+/-- Restriction of the affine structure sheaf to a basic open is functorial. -/
+@[simp]
+theorem affineStructureSheaf_comap_basicOpen {R S : Type u} [CommRing R] [CommRing S]
+    (f : R →+* S) (r : R) :
+    StructureSheaf.comap f (PrimeSpectrum.basicOpen r) (PrimeSpectrum.basicOpen (f r))
+      (PrimeSpectrum.comap_basicOpen f r).le =
+      IsLocalization.map (M := .powers r) (T := .powers (f r)) _ f
+        (Submonoid.powers_le.mpr (Submonoid.mem_powers _)) := by
+  exact StructureSheaf.comap_basicOpen f r
+
 /-! ### Sections and stalks -/
 
 /-- The stalk of the affine structure sheaf is localized at the corresponding prime. -/
