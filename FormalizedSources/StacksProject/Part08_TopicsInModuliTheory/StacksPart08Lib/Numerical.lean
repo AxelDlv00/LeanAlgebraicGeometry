@@ -171,6 +171,28 @@ theorem reindex_comp {X I J K : Type*} [TopologicalSpace X]
   cases s
   rfl
 
+@[simp]
+theorem reindex_profile {X I J : Type*} [TopologicalSpace X]
+    (s : NumericalSituation X I) (f : J → I) (x : X) :
+    (s.reindex f).profile x = s.profile x ∘ f := by
+  funext j
+  rfl
+
+theorem profileLocus_reindex_eq_of_surjective {X I J : Type*}
+    [TopologicalSpace X] (s : NumericalSituation X I) (f : J → I)
+    (P : I → ℤ) (hf : Function.Surjective f) :
+    (s.reindex f).profileLocus (P ∘ f) = s.profileLocus P := by
+  ext x
+  change (s.profile x ∘ f = P ∘ f) ↔ s.profile x = P
+  constructor
+  · intro h
+    funext i
+    obtain ⟨j, rfl⟩ := hf i
+    exact congrFun h j
+  · intro h
+    funext j
+    exact congrFun h (f j)
+
 /-- The full locus is contained in every reindexed locus. -/
 theorem locus_subset_reindex {X I J : Type*} [TopologicalSpace X]
     (s : NumericalSituation X I) (f : J → I) :
@@ -196,6 +218,17 @@ theorem locus_reindex_eq {X I J : Type*} [TopologicalSpace X]
 def locusOn {X I : Type*} [TopologicalSpace X]
     (s : NumericalSituation X I) (J : Set I) : Set X :=
   {x | ∀ i, i ∈ J → (s.invariant i).value x = s.prescribed i}
+
+theorem locusOn_reindex_image {X I J : Type*} [TopologicalSpace X]
+    (s : NumericalSituation X I) (f : J → I) (K : Set J) :
+    (s.reindex f).locusOn K = s.locusOn (f '' K) := by
+  ext x
+  constructor
+  · intro hx i hi
+    rcases hi with ⟨j, hj, rfl⟩
+    exact hx j hj
+  · intro hx j hj
+    exact hx (f j) ⟨j, hj, rfl⟩
 
 theorem mem_locusOn_iff {X I : Type*} [TopologicalSpace X]
     (s : NumericalSituation X I) (J : Set I) (x : X) :
@@ -235,6 +268,12 @@ theorem locusOn_isOpen {X I : Type*} [TopologicalSpace X]
     IsOpen (s.locusOn J) :=
   (s.locusOn_isClopen J hJ).isOpen
 
+theorem locusOn_reindex_isClopen {X I J : Type*} [TopologicalSpace X]
+    (s : NumericalSituation X I) (f : J → I) (K : Set J)
+    (hK : K.Finite) : IsClopen ((s.reindex f).locusOn K) := by
+  rw [s.locusOn_reindex_image f K]
+  exact s.locusOn_isClopen (f '' K) (hK.image f)
+
 theorem locusOn_mono {X I : Type*} [TopologicalSpace X]
     (s : NumericalSituation X I) {J K : Set I} (hJK : J ⊆ K) :
     s.locusOn K ⊆ s.locusOn J := by
@@ -256,6 +295,25 @@ theorem locusOn_union {X I : Type*} [TopologicalSpace X]
     rcases hi with hi | hi
     · exact hxJ i hi
     · exact hxK i hi
+
+theorem locusOn_insert {X I : Type*} [TopologicalSpace X]
+    (s : NumericalSituation X I) (i : I) (J : Set I) :
+    s.locusOn (insert i J) =
+      {x | (s.invariant i).value x = s.prescribed i} ∩ s.locusOn J := by
+  ext x
+  change (∀ j, j ∈ insert i J →
+      (s.invariant j).value x = s.prescribed j) ↔
+    ((s.invariant i).value x = s.prescribed i ∧
+      ∀ j, j ∈ J → (s.invariant j).value x = s.prescribed j)
+  constructor
+  · intro h
+    refine ⟨h i (Set.mem_insert i J), ?_⟩
+    intro j hj
+    exact h j (Set.mem_insert_of_mem i hj)
+  · rintro ⟨hi, hJ⟩ j hj
+    rcases Set.mem_insert_iff.mp hj with rfl | hj
+    · exact hi
+    · exact hJ j hj
 
 /-- A finite numerical profile defines an open-and-closed subspace. -/
 theorem locus_isClopen {X I : Type*} [TopologicalSpace X]
@@ -282,6 +340,13 @@ def pullback {X Y I : Type*} [TopologicalSpace X] [TopologicalSpace Y]
     NumericalSituation Y I where
   invariant := fun i => (s.invariant i).pullback f hf
   prescribed := s.prescribed
+
+theorem pullback_reindex {X Y I J : Type*} [TopologicalSpace X]
+    [TopologicalSpace Y] (s : NumericalSituation X I) (f : J → I)
+    (g : Y → X) (hg : Continuous g) :
+    (s.reindex f).pullback g hg = (s.pullback g hg).reindex f := by
+  cases s
+  rfl
 
 @[simp]
 theorem pullback_id {X I : Type*} [TopologicalSpace X]
