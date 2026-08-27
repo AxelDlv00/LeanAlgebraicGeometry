@@ -77,6 +77,33 @@ theorem comp_pointTranslation_hom (x y : 𝟙_ C ⟶ G) :
 
 end Categorical
 
+section Scheme
+
+open AlgebraicGeometry
+
+variable {S : Scheme.{u}} (G : Over S) [GrpObj G]
+
+/-- The underlying-scheme isomorphism induced by a translation of sections. -/
+noncomputable def pointTranslationIso (x y : 𝟙_ (Over S) ⟶ G) : G.left ≅ G.left :=
+  (Over.forget S).mapIso (pointTranslation G x y)
+
+@[simp]
+theorem pointTranslationIso_hom (x y : 𝟙_ (Over S) ⟶ G) :
+    (pointTranslationIso G x y).hom = (pointTranslation G x y).hom.left :=
+  rfl
+
+@[simp]
+theorem pointTranslationIso_inv (x y : 𝟙_ (Over S) ⟶ G) :
+    (pointTranslationIso G x y).inv = (pointTranslation G x y).inv.left :=
+  rfl
+
+@[reassoc (attr := simp)]
+theorem pointTranslationIso_hom_comp (x y : 𝟙_ (Over S) ⟶ G) :
+    (pointTranslationIso G x y).hom ≫ G.hom = G.hom :=
+  Over.w _
+
+end Scheme
+
 end GroupVariety
 
 open AlgebraicGeometry
