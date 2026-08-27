@@ -41,6 +41,14 @@ theorem scheme_surjective_of_comp {X Y Z : Scheme} (f : X ⟶ Y) (g : Y ⟶ Z)
     schemeSurjective g := by
   exact AlgebraicGeometry.Surjective.of_comp f g
 
+/-- When the first leg is surjective, a composite is surjective exactly when
+the second leg is surjective. -/
+theorem scheme_surjective_comp_iff {X Y Z : Scheme} (f : X ⟶ Y) (g : Y ⟶ Z)
+    [AlgebraicGeometry.Surjective f] :
+    schemeSurjective (f ≫ g) ↔ schemeSurjective g := by
+  change AlgebraicGeometry.Surjective (f ≫ g) ↔ AlgebraicGeometry.Surjective g
+  exact AlgebraicGeometry.Surjective.comp_iff f g
+
 /-- Surjectivity is preserved by pullback on the second leg. -/
 theorem scheme_surjective_baseChange {X Y S : Scheme} (f : X ⟶ S)
     (g : Y ⟶ S) [AlgebraicGeometry.Surjective f] :
