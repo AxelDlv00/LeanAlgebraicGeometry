@@ -44,6 +44,14 @@ theorem commonZeroSet_vanishingIdeal_eq_closure
       (subset_commonZeroSet_vanishingIdeal k n Y)
       (isClosed_commonZeroSet k n (vanishingIdeal k n Y))
 
+/-! Algebraic sets are already closed, so the preceding closure formula
+specializes to the usual zero-locus identity. -/
+theorem commonZeroSet_vanishingIdeal_eq_self
+    {Y : Set (AffinePoint k n)} (hY : IsAlgebraicSet k n Y) :
+    commonZeroSet k n (vanishingIdeal k n Y) = Y := by
+  rw [commonZeroSet_vanishingIdeal_eq_closure]
+  exact ((isClosed_iff_isAlgebraicSet k n Y).2 hY).closure_eq
+
 end AffineClosure
 
 end
