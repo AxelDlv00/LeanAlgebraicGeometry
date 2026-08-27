@@ -10,6 +10,7 @@ import StacksPart08Lib.Numerical
 import StacksPart08Lib.ProductRepresentability
 import StacksPart08Lib.Representability
 import StacksPart08Lib.StackFoundations
+import StacksPart08Lib.ModuliDiagonals
 
 /-!
 # StacksPart08Lib.Basic
