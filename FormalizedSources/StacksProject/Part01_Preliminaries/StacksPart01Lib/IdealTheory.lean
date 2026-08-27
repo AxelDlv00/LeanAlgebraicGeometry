@@ -1,0 +1,47 @@
+import Mathlib.RingTheory.Spectrum.Prime.Basic
+
+/-!
+# Elementary ideal and zero-locus identities
+
+These are the affine ideal-theoretic identities used repeatedly in the
+Stacks Project's preliminaries (for example, `V(IJ) = V(I) ∪ V(J)`).
+-/
+
+namespace StacksPart01
+
+open Set
+
+/- For a prime ideal, membership of a product is equivalent to membership of
+either factor (Stacks, Tag 00E0). -/
+theorem prime_mul_mem_iff {R : Type*} [CommSemiring R] {I : Ideal R}
+    (hI : I.IsPrime) (f g : R) :
+    f * g ∈ I ↔ f ∈ I ∨ g ∈ I := by
+  exact hI.mul_mem_iff_mem_or_mem
+
+/-- In a prime ideal, a positive power belongs exactly when its base does. -/
+theorem prime_pow_mem_iff {R : Type*} [CommSemiring R] {I : Ideal R}
+    (hI : I.IsPrime) (f : R) {n : ℕ} (hn : 0 < n) :
+    f ^ n ∈ I ↔ f ∈ I := by
+  exact hI.pow_mem_iff_mem n hn
+
+/-- The zero locus of a product of ideals is the union of their zero loci
+(Stacks, Tag 00E0). -/
+theorem zeroLocus_mul {R : Type*} [CommSemiring R] (I J : Ideal R) :
+    PrimeSpectrum.zeroLocus (↑(I * J) : Set R) =
+      PrimeSpectrum.zeroLocus (↑I : Set R) ∪ PrimeSpectrum.zeroLocus (↑J : Set R) := by
+  exact PrimeSpectrum.zeroLocus_mul I J
+
+/-- The zero locus of a sum of ideals is the intersection of their zero loci
+(Stacks, Tag 00E0). -/
+theorem zeroLocus_sup {R : Type*} [CommSemiring R] (I J : Ideal R) :
+    PrimeSpectrum.zeroLocus (↑(I ⊔ J) : Set R) =
+      PrimeSpectrum.zeroLocus (↑I : Set R) ∩ PrimeSpectrum.zeroLocus (↑J : Set R) := by
+  exact PrimeSpectrum.zeroLocus_sup I J
+
+/-- Passing to the radical does not change a zero locus (Stacks, Tag 00E0). -/
+theorem zeroLocus_radical {R : Type*} [CommSemiring R] (I : Ideal R) :
+    PrimeSpectrum.zeroLocus (↑I.radical : Set R) =
+      PrimeSpectrum.zeroLocus (↑I : Set R) := by
+  exact PrimeSpectrum.zeroLocus_radical I
+
+end StacksPart01
