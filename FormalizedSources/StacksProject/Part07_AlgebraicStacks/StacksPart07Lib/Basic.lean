@@ -14,6 +14,7 @@ import StacksPart07Lib.Descent
 import StacksPart07Lib.DescentFunctoriality
 import StacksPart07Lib.RelativeProducts
 import StacksPart07Lib.RelationGroupoid
+import StacksPart07Lib.GroupoidFunctoriality
 
 /-!
 # StacksPart07Lib.Basic
