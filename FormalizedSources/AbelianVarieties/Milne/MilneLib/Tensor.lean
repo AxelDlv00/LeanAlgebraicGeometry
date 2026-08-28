@@ -10,6 +10,8 @@ import Mathlib.Algebra.Category.ModuleCat.Stalk
 import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.RingTheory.LocalRing.ResidueField.Basic
 
+import MilneLib.Nakayama
+
 /-!
 # Tensor evaluation
 
@@ -284,5 +286,17 @@ theorem LinearMap.surjective_lTensor_residueField_iff_surjective_residue
       qf ((I • (⊤ : Submodule R M)).mkQ x) =
           ((I • (⊤ : Submodule R N)).mkQ ∘ₗ f) x := he
       _ = y := hx
+
+/-- The finite-target Nakayama step can therefore be stated directly for the
+residue-field scalar extension. -/
+theorem LinearMap.surjective_lTensor_residueField_iff_surjective
+    {R M N : Type*} [CommRing R] [IsLocalRing R]
+    [AddCommGroup M] [AddCommGroup N]
+    [Module R M] [Module R N] [Module.Finite R N]
+    (f : M →ₗ[R] N) :
+    Function.Surjective (f.lTensor (IsLocalRing.ResidueField R)) ↔
+      Function.Surjective f := by
+  exact (surjective_lTensor_residueField_iff_surjective_residue f).trans
+    (MilneLib.LinearMap.surjective_iff_surjective_residue f).symm
 
 end MilneLib
