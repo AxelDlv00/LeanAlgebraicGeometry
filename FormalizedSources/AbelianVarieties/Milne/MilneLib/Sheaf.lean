@@ -35,6 +35,41 @@ theorem schemeModule_epi_of_surjective_on_stalks {X : Scheme} {M N : X.Modules}
     infer_instance
   exact F.epi_of_epi_map this
 
+/-- A morphism of scheme modules whose additive stalk maps are bijective is an
+isomorphism.  This stalk-level criterion is useful for the invertible-sheaf
+conclusion in Milne I.5.11 without assuming a separate formalization of
+coherence or local freeness. -/
+theorem schemeModule_isIso_of_bijective_on_stalks
+    {X : Scheme} {M N : X.Modules} (f : M ⟶ N)
+    (hf : ∀ x : X, Function.Bijective
+      ((TopCat.Presheaf.stalkFunctor AddCommGrpCat x).map f.mapPresheaf)) :
+    IsIso f := by
+  apply Scheme.Modules.Hom.isIso_iff_isIso_app.mpr
+  intro U
+  rw [ConcreteCategory.isIso_iff_bijective]
+  exact TopCat.Presheaf.app_bijective_of_stalkFunctor_map_bijective
+    ((SheafOfModules.toSheaf X.ringCatSheaf).map f) U
+    (fun x _ => hf x)
+
+/-- A morphism of scheme modules is an isomorphism exactly when all of its
+additive stalk maps are isomorphisms. -/
+theorem schemeModule_isIso_iff_isIso_on_stalks
+    {X : Scheme} {M N : X.Modules} (f : M ⟶ N) :
+    IsIso f ↔ ∀ x : X, IsIso
+      ((TopCat.Presheaf.stalkFunctor AddCommGrpCat x).map f.mapPresheaf) := by
+  constructor
+  · intro h x
+    letI : IsIso f := h
+    change IsIso ((TopCat.Presheaf.stalkFunctor AddCommGrpCat x).map
+      ((Scheme.Modules.toPresheaf X).map f))
+    infer_instance
+  · intro h
+    apply schemeModule_isIso_of_bijective_on_stalks f
+    intro x
+    letI : IsIso
+        ((TopCat.Presheaf.stalkFunctor AddCommGrpCat x).map f.mapPresheaf) := h x
+    exact ConcreteCategory.bijective_of_isIso _
+
 /-- The counit of the pullback--pushforward adjunction for a scheme morphism. -/
 noncomputable def schemeSheafEvaluation {W V : Scheme} (f : W ⟶ V) :
     (Scheme.Modules.pushforward f ⋙ Scheme.Modules.pullback f) ⟶ 𝟭 W.Modules :=
