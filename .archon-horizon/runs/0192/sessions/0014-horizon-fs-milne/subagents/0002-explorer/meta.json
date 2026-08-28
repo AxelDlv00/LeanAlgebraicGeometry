@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Darwin",
+  "agent_path": "/root/isogeny_scan",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a04913-2f4f-70a3-aec6-2f7b4c6a4091",
+  "ok": true,
+  "parent_session": "0014-horizon-fs-milne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Read-only scan complete; no files were edited.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 7017465,
+    "tokens_out": 18360
+  }
+}

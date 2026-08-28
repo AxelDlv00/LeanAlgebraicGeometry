@@ -3,16 +3,23 @@
   "round": 6,
   "project": "Milne",
   "task_id": "fs-milne",
-  "status": "running",
-  "started_at": "2026-08-28T15:50:39.866759+00:00",
   "projects": [
     "Milne"
   ],
+  "status": "queued",
+  "started_at": "2026-08-28T15:50:39.866759+00:00",
+  "ended_at": "2026-08-28T16:40:01.068742+00:00",
   "harness_name": "codex",
   "harness_kind": "codex",
   "model": "gpt-5.6-sol",
   "effort": "ultra",
   "config_dir": "/home/axel/.codex-temp",
   "auth": "api-key",
-  "workspace_sha": "7f2a48dbca9aa9758ade8fb207590c0bdd346084"
+  "usage": {
+    "tokens_in": 17671708,
+    "tokens_out": 41814,
+    "cost_usd": null
+  },
+  "engine_session_id": "01a04910-ec22-74e1-a87a-2a44bb4fb200",
+  "workspace_sha": "7e2f36972022be2ab38f73f2e5138abc3fc39e2d"
 }

@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "fingerprint": "6c1da5d142f3f29d",
+  "command": [
+    "lake",
+    "build",
+    "MilneLib"
+  ],
+  "cwd": ".",
+  "status": "failed",
+  "ok": false,
+  "returncode": 1,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.0,
+  "duration_seconds": 0.065,
+  "started_at": "2026-08-28T16:24:57.442283+00:00",
+  "finished_at": "2026-08-28T16:24:57.506814+00:00",
+  "finished_epoch": 1787934297.506814
+}

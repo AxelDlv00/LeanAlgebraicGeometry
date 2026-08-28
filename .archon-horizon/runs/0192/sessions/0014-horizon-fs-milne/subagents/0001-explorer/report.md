@@ -1,0 +1,1 @@
+I’ve confirmed the isogeny composition declarations are concurrent parent work, so I’m excluding them as new recommendations. I’m tightening the remaining candidates against the exact Milne namespace and theorem signatures, then I’ll send a ranked report with proof dependencies and the I.5.11 boundary.
