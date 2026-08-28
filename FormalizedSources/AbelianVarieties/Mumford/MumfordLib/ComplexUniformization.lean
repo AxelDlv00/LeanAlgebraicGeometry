@@ -63,6 +63,22 @@ def complexUniformization_zsmulTorsion_addEquiv
       u.toGenusTorusUniformization.equiv n).trans
     (productTorus_zsmul_torsion_addEquiv_pi_zmod hn)
 
+/- The complex torsion classification factors through the complex quotient
+   equivalence before applying the coordinatewise cyclic classification. -/
+theorem complexUniformization_zsmulTorsion_addEquiv_eq_trans
+    {X : Type*} [AddCommGroup X] {g : ℕ} {n : ℤ}
+    (u : ComplexTorusUniformization X g) (hn : n ≠ 0) :
+    complexUniformization_zsmulTorsion_addEquiv u hn =
+        (zsmulTorsion_addEquiv_of_addEquiv u.equiv n).trans
+        (complexGenusQuotient_zsmulTorsion_addEquiv hn) := by
+  simp only [complexUniformization_zsmulTorsion_addEquiv,
+    ComplexTorusUniformization.toGenusTorusUniformization,
+    complexGenusQuotient_zsmulTorsion_addEquiv]
+  rw [zsmulTorsion_addEquiv_of_addEquiv_trans]
+  apply AddEquiv.ext
+  intro x
+  rfl
+
 @[simp]
 theorem complexUniformization_zsmulTorsion_addEquiv_apply
     {X : Type*} [AddCommGroup X] {g : ℕ} {n : ℤ}
