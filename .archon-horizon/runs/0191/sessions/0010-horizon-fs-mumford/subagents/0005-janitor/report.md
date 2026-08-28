@@ -1,0 +1,1 @@
+The provenance check confirms all five current Mumford commits are project-only; the dirty worktree entries are entirely outside Mumford (plus runtime artifacts). Roadmap top level has no Mumford item or mismatch warning. I’m rerunning the compact health counts now so the handoff has explicit unchanged before/after values.

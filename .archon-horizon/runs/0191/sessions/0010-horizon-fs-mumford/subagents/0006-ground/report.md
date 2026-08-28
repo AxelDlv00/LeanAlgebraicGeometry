@@ -1,0 +1,1 @@
+The five commits each touch exactly one Mumford library file; I’m now checking the three modules against the kernel and reviewing the quotient/commutator identities for orientation and hidden assumptions.

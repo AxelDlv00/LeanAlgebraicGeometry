@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Laplace",
+  "agent_path": "/root/ground_recheck",
+  "agent_role": "ground",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "ground",
+  "native_subagent_id": "01a048e0-dfa6-7c20-a21b-80115ab002b2",
+  "ok": false,
+  "parent_session": "0010-horizon-fs-mumford",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "interrupted",
+  "subagent_type": "ground",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 2118563,
+    "tokens_out": 9489
+  }
+}

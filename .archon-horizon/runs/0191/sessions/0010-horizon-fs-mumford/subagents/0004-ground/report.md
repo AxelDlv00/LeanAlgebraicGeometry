@@ -1,0 +1,1 @@
+The scoped kernel checks for all four touched modules pass on the current working tree, including the uncommitted `Analytic.lean` additions. I’m doing the final convergence audit now: full build output, source/axiom scan, and whether the graph’s “closed” count is being mistaken for blueprint closure.

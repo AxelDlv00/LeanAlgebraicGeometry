@@ -1,0 +1,23 @@
+## Progress
+
+- `ComplexUniformization.lean`: added real/complex witness round-trips, an equivalence of witness interfaces, and positive-natural torsion transport (`6c5c9b34cd`, `c8e37c4e94`, `a6fd2f44ec`).
+- `ComplexModel.lean`: added the converse quotient representative formula and exact equality criterion (`5ac3b6ce4e`).
+- `Theta.lean`: added inverse laws for scalar commutators and negation laws for quotient theta pairings (`217a8297f1`).
+- Recorded the task delta in `C-0018` (`00f1d04213`); consumed explorer conversations were archived in `139b547dfd`.
+- Hgraph sync: 216 blueprint nodes, 220 Lean declarations, 164 edges, stale 0.
+
+Verification passed: `horizon check MumfordLib` and `lake build MumfordLib` completed all 3,078 jobs. LSP diagnostics and representative axiom scans are clean; MumfordLib contains no `sorry`, `admit`, `axiom`, or `native_decide`.
+
+## Issues
+
+The analytic complex-Lie uniformization existence theorem and approved frozen-blueprint `\lean`/Form-I linkage remain unresolved. All 216 TeX nodes are still intentionally unattached under protection I-2034, producing the expected unattached-declaration warning.
+
+No Mumford source or task-comment changes remain uncommitted. The remaining modified session files (`inbox-hook-state.json`, `notify_cache.json`, and `report.md`) are orchestrator-owned runtime artifacts; unrelated dirty paths belong to concurrent projects and were not touched. The ground recheck was interrupted by shared filesystem contention; the janitor audit confirmed the Mumford scope is clean.
+
+## Why I stopped
+
+The standing objective is partly advanced, not complete. The task remains `running` as required.
+
+## Next
+
+Continue with an analytic uniformization input when available, or add another source-faithful GroupScheme/Theta bridge after obtaining approval for any blueprint linkage.
