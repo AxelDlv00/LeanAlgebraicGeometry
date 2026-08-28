@@ -6,6 +6,8 @@ Authors: The Milne Contributors
 
 import Mathlib.LinearAlgebra.TensorProduct.Quotient
 import Mathlib.LinearAlgebra.TensorProduct.Tower
+import Mathlib.Algebra.Category.ModuleCat.Stalk
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.RingTheory.LocalRing.ResidueField.Basic
 
 /-!
@@ -16,6 +18,7 @@ pure tensor `s ⊗ m` to the scalar action `s • m`.
 -/
 
 open scoped TensorProduct
+open AlgebraicGeometry
 
 namespace MilneLib
 
@@ -103,5 +106,66 @@ theorem quotTensorEquivQuotSMul_comp_mkQ_rTensor
     quotTensorEquivQuotSMul (M := M) I ∘ₗ I.mkQ.rTensor M =
       (I • (⊤ : Submodule R M)).mkQ ∘ₗ TensorProduct.lid R M := by
   exact TensorProduct.quotTensorEquivQuotSMul_comp_mkQ_rTensor (M := M) I
+
+/-!
+## Residue fibres of scheme modules
+
+The stalk of a scheme module is naturally a module over the local structure
+ring.  This wrapper exposes the preceding quotient--tensor equivalence with
+the scheme notation, so residue-fibre arguments can stay at the sheaf level.
+-/
+
+/-- The canonical module structure on the stalk of a scheme module over the
+corresponding structure-sheaf stalk. -/
+noncomputable abbrev schemeModuleStalkModule
+    {X : Scheme.{u}} (F : X.Modules) (x : X) :
+    Module (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u) :=
+  PresheafOfModules.instModuleCarrierStalkCommRingCatCarrierAbPresheafOpensCarrier
+    F.val x
+
+/-- The residue fibre of a scheme module is the stalk modulo the maximal-ideal
+action.  The source is written as tensoring the stalk with its residue field,
+which is the form used by base-change arguments. -/
+noncomputable def schemeModuleStalkResidueTensorEquiv
+    {X : Scheme.{u}} (F : X.Modules) (x : X) :
+    letI : Module (X.presheaf.stalk x)
+        (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u) :=
+      schemeModuleStalkModule F x
+    IsLocalRing.ResidueField (X.presheaf.stalk x) ⊗[X.presheaf.stalk x]
+        (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u) ≃ₗ[
+          X.presheaf.stalk x]
+      (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u) ⧸
+        (IsLocalRing.maximalIdeal (X.presheaf.stalk x) •
+          (⊤ : Submodule (X.presheaf.stalk x)
+            (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u))) := by
+  letI : Module (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk F.val.presheaf x) : Type u) :=
+    schemeModuleStalkModule F x
+  exact residueFieldTensorEquivQuotSMul
+
+/-! The quotient model is functorial for maps preserving the ideal action. -/
+
+/-- The tensor--quotient equivalence commutes with a linear map that carries
+the `I`-action submodule into the target `I`-action submodule. -/
+theorem quotTensorEquivQuotSMul_naturality
+    {R M N : Type*} [CommRing R] [AddCommGroup M] [AddCommGroup N]
+    [Module R M] [Module R N] (I : Ideal R) (f : M →ₗ[R] N)
+    (hI : I • (⊤ : Submodule R M) ≤
+      (I • (⊤ : Submodule R N)).comap f) :
+    (quotTensorEquivQuotSMul (M := N) I).toLinearMap ∘ₗ
+        (f.lTensor (R ⧸ I)) =
+      ((I • (⊤ : Submodule R M)).mapQ (I • (⊤ : Submodule R N)) f hI) ∘ₗ
+        (quotTensorEquivQuotSMul (M := M) I).toLinearMap := by
+  apply LinearMap.ext
+  intro z
+  induction z using TensorProduct.induction_on with
+  | zero => simp
+  | tmul r m =>
+      obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective r
+      simp [LinearMap.comp_apply]
+  | add x y hx hy =>
+      simpa only [map_add, LinearMap.comp_apply] using
+        congrArg₂ (fun a b => a + b) hx hy
 
 end MilneLib
