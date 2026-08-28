@@ -210,6 +210,18 @@ theorem commutatorScalar_mul_right (x y z : G) :
     _ = ⁅x, y⁆ * ⁅x, z⁆ := by
       rw [(E.commutator_commute x z y).symm.mul_inv_cancel]
 
+theorem commutatorScalar_inv_left (x y : G) :
+    E.commutatorScalar x⁻¹ y = (E.commutatorScalar x y)⁻¹ := by
+  apply eq_inv_of_mul_eq_one_left
+  rw [← E.commutatorScalar_mul_left x⁻¹ x y]
+  simp
+
+theorem commutatorScalar_inv_right (x y : G) :
+    E.commutatorScalar x y⁻¹ = (E.commutatorScalar x y)⁻¹ := by
+  apply eq_inv_of_mul_eq_one_left
+  rw [← E.commutatorScalar_mul_right x y⁻¹ y]
+  simp
+
 noncomputable def commutatorHom (x : G) : G →* S where
   toFun := E.commutatorScalar x
   map_one' := E.commutatorScalar_one_right x
@@ -336,6 +348,38 @@ theorem commutatorPairing_swap (k l : K) :
     E.commutatorPairing l k = (E.commutatorPairing k l)⁻¹ := by
   unfold commutatorPairing
   exact E.commutatorScalar_swap _ _
+
+theorem commutatorPairing_neg_left (k l : K) :
+    E.commutatorPairing (-k) l = (E.commutatorPairing k l)⁻¹ := by
+  unfold commutatorPairing
+  rw [E.commutatorScalar_eq_of_quotient_eq_left
+    (x := E.quotientLift (-k)) (x' := (E.quotientLift k)⁻¹)
+    (y := E.quotientLift l)]
+  · exact E.commutatorScalar_inv_left _ _
+  calc
+    E.quotientHom (E.quotientLift (-k)) = Multiplicative.ofAdd (-k) :=
+      E.quotientHom_quotientLift (-k)
+    _ = (Multiplicative.ofAdd k)⁻¹ := ofAdd_neg k
+    _ = (E.quotientHom (E.quotientLift k))⁻¹ :=
+      congrArg Inv.inv (E.quotientHom_quotientLift k).symm
+    _ = E.quotientHom (E.quotientLift k)⁻¹ :=
+      (map_inv E.quotientHom _).symm
+
+theorem commutatorPairing_neg_right (k l : K) :
+    E.commutatorPairing k (-l) = (E.commutatorPairing k l)⁻¹ := by
+  unfold commutatorPairing
+  rw [E.commutatorScalar_eq_of_quotient_eq_right
+    (x := E.quotientLift k) (y := E.quotientLift (-l))
+    (y' := (E.quotientLift l)⁻¹)]
+  · exact E.commutatorScalar_inv_right _ _
+  calc
+    E.quotientHom (E.quotientLift (-l)) = Multiplicative.ofAdd (-l) :=
+      E.quotientHom_quotientLift (-l)
+    _ = (Multiplicative.ofAdd l)⁻¹ := ofAdd_neg l
+    _ = (E.quotientHom (E.quotientLift l))⁻¹ :=
+      congrArg Inv.inv (E.quotientHom_quotientLift l).symm
+    _ = E.quotientHom (E.quotientLift l)⁻¹ :=
+      (map_inv E.quotientHom _).symm
 
 /- The alternating law can be used without unpacking the inverse identity. -/
 theorem commutatorPairing_mul_swap_eq_one (k l : K) :
