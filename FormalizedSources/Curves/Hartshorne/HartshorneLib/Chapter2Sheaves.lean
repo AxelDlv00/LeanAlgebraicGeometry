@@ -163,6 +163,62 @@ theorem sheaf_iso_iff_stalkMap_iso
     IsIso f ↔ ∀ x : X, IsIso (stalkMap f.hom x) := by
   exact TopCat.Presheaf.isIso_iff_stalkFunctor_map_iso f
 
+/-! ### Ringed and locally ringed spaces -/
+
+/-- A ringed space is a topological space equipped with a sheaf of commutative rings. -/
+abbrev RingedSpace := AlgebraicGeometry.RingedSpace
+
+/-- A locally ringed space is a ringed space whose stalks are local rings. -/
+abbrev LocallyRingedSpace := AlgebraicGeometry.LocallyRingedSpace
+
+/-- The structure sheaf of a ringed space. -/
+def ringedSpaceStructureSheaf (X : RingedSpace.{u}) :
+    Sheaf CommRingCat (X : TopCat) :=
+  X.sheaf
+
+/-- The contravariant map of structure sheaves carried by a ringed-space morphism. -/
+noncomputable def ringedSpaceSheafMap {X Y : RingedSpace.{u}} (f : X ⟶ Y) :
+    ringedSpaceStructureSheaf Y ⟶
+      (directImage f.hom.base).obj (ringedSpaceStructureSheaf X) :=
+  (TopCat.Sheaf.forget CommRingCat (Y : TopCat)).preimage f.hom.c
+
+/-- Forgetting the sheaf condition recovers the defining presheaf morphism. -/
+@[simp]
+theorem ringedSpaceSheafMap_forget {X Y : RingedSpace.{u}} (f : X ⟶ Y) :
+    (TopCat.Sheaf.forget CommRingCat (Y : TopCat)).map
+      (ringedSpaceSheafMap f) = f.hom.c := by
+  exact Functor.map_preimage _ _
+
+/-- The underlying map of a ringed-space morphism is continuous. -/
+theorem ringedSpaceHom_continuous {X Y : RingedSpace.{u}} (f : X ⟶ Y) :
+    Continuous f.hom.base :=
+  f.hom.base.hom.continuous
+
+/-- Every stalk of a locally ringed space is a local ring. -/
+theorem locallyRingedSpace_stalk_isLocalRing
+    (X : LocallyRingedSpace.{u}) (x : X) :
+    IsLocalRing (X.presheaf.stalk x) := by
+  infer_instance
+
+/-- Stalk maps of locally ringed-space morphisms are local homomorphisms. -/
+theorem locallyRingedSpace_stalkMap_isLocalHom
+    {X Y : LocallyRingedSpace.{u}} (f : X ⟶ Y) (x : X) :
+    IsLocalHom (f.stalkMap x).hom := by
+  infer_instance
+
+/-- The identity morphism induces the identity map on every stalk. -/
+@[simp]
+theorem locallyRingedSpace_stalkMap_id (X : LocallyRingedSpace.{u}) (x : X) :
+    (𝟙 X : X ⟶ X).stalkMap x = 𝟙 (X.presheaf.stalk x) := by
+  exact AlgebraicGeometry.LocallyRingedSpace.stalkMap_id X x
+
+/-- Stalk maps compose contravariantly under composition of morphisms. -/
+theorem locallyRingedSpace_stalkMap_comp
+    {X Y Z : LocallyRingedSpace.{u}}
+    (f : X ⟶ Y) (g : Y ⟶ Z) (x : X) :
+    (f ≫ g).stalkMap x = g.stalkMap (f.base x) ≫ f.stalkMap x := by
+  exact AlgebraicGeometry.LocallyRingedSpace.stalkMap_comp f g x
+
 end
 
 end Hartshorne
