@@ -7,6 +7,8 @@ Authors: The StacksPart07Lib Contributors
 import StacksPart07Lib.Representability
 import StacksPart07Lib.Groupoids
 import StacksPart07Lib.ActionGroupoid
+import StacksPart07Lib.QuotientFoundations
+import StacksPart07Lib.ActionQuotient
 import StacksPart07Lib.ProductRepresentability
 import StacksPart07Lib.RepresentabilityAdvanced
 import StacksPart07Lib.FiberedGroupoids
