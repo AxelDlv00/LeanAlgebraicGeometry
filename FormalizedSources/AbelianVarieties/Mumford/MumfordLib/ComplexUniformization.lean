@@ -79,6 +79,39 @@ theorem complexUniformization_zsmulTorsion_addEquiv_eq_trans
   intro x
   rfl
 
+/- The complex torsion classification can also be computed through the real
+   period quotient. -/
+theorem complexUniformization_zsmulTorsion_addEquiv_eq_real
+    {X : Type*} [AddCommGroup X] {g : ℕ} {n : ℤ}
+    (u : ComplexTorusUniformization X g) (hn : n ≠ 0) :
+    complexUniformization_zsmulTorsion_addEquiv u hn =
+      (zsmulTorsion_addEquiv_of_addEquiv u.equiv n).trans
+        ((zsmulTorsion_addEquiv_of_addEquiv
+          (complexQuotientToRealQuotientAddEquiv g) n).trans
+          (genusRealVectorQuotient_zsmulTorsion_addEquiv hn)) := by
+  rw [complexUniformization_zsmulTorsion_addEquiv_eq_trans u hn]
+  have htor :
+      zsmulTorsion_addEquiv_of_addEquiv (complexGenusQuotientAddEquiv g) n =
+        (zsmulTorsion_addEquiv_of_addEquiv
+          (complexQuotientToRealQuotientAddEquiv g) n).trans
+          (zsmulTorsion_addEquiv_of_addEquiv
+            (genusRealVectorQuotientAddEquiv g) n) := by
+    rw [← complexQuotientToRealQuotientAddEquiv_trans_genusRealVectorQuotient]
+    exact zsmulTorsion_addEquiv_of_addEquiv_trans _ _ n
+  change
+    (zsmulTorsion_addEquiv_of_addEquiv u.equiv n).trans
+        ((zsmulTorsion_addEquiv_of_addEquiv
+          (complexGenusQuotientAddEquiv g) n).trans
+          (productTorus_zsmul_torsion_addEquiv_pi_zmod hn)) =
+      (zsmulTorsion_addEquiv_of_addEquiv u.equiv n).trans
+        ((zsmulTorsion_addEquiv_of_addEquiv
+          (complexQuotientToRealQuotientAddEquiv g) n).trans
+          ((zsmulTorsion_addEquiv_of_addEquiv
+            (genusRealVectorQuotientAddEquiv g) n).trans
+            (productTorus_zsmul_torsion_addEquiv_pi_zmod hn)))
+  rw [htor]
+  rfl
+
 @[simp]
 theorem complexUniformization_zsmulTorsion_addEquiv_apply
     {X : Type*} [AddCommGroup X] {g : ℕ} {n : ℤ}
