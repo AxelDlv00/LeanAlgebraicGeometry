@@ -4,6 +4,7 @@ import StacksPart06Lib.TangentModule
 import StacksPart06Lib.ProductExtensionAlgebra
 import StacksPart06Lib.ProductExtensionBase
 import StacksPart06Lib.TangentModuleFunctoriality
+import StacksPart06Lib.TangentAlgebraFunctor
 
 /-!
 # StacksPart06Lib
