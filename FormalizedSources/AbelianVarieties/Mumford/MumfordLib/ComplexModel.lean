@@ -10,6 +10,8 @@ import Mathlib.LinearAlgebra.Complex.Module
 import Mathlib.LinearAlgebra.Pi
 import Mathlib.Logic.Equiv.Fin.Basic
 import Mathlib.Logic.Equiv.Prod
+import Mathlib.Topology.Algebra.Module.FiniteDimension
+import Mathlib.Topology.Instances.Complex
 
 /-!
 # The complex vector-space model
@@ -72,6 +74,12 @@ def genusComplexVectorRealification (g : ℕ) :
     ((LinearEquiv.piCongrRight (fun _ => realPairToFinTwoLinearEquiv)).trans
       ((uncurryGenusLinearEquiv g).trans (reindexGenusRealLinearEquiv g)))
 
+/- The realification is continuous for the standard finite-dimensional
+   topologies. -/
+theorem genusComplexVectorRealification_continuous (g : ℕ) :
+    Continuous (genusComplexVectorRealification g) :=
+  (genusComplexVectorRealification g).toLinearMap.continuous_of_finiteDimensional
+
 /-- The complex-to-real coordinate change evaluated on a paired index. -/
 @[simp]
 theorem genusComplexVectorRealification_at_index (g : ℕ)
@@ -105,6 +113,12 @@ def complexGenusTorusExponential (g : ℕ) :
     GenusComplexVector g →+ GenusTorus g :=
   (genusTorusExponential g).comp
     (genusComplexVectorRealification g).toAddMonoidHom
+
+/- The realified complex-coordinate exponential is continuous. -/
+theorem complexGenusTorusExponential_continuous (g : ℕ) :
+    Continuous (complexGenusTorusExponential g) := by
+  exact (genusTorusExponential_continuous g).comp
+    (genusComplexVectorRealification_continuous g)
 
 /-- The realified exponential is surjective. -/
 theorem complexGenusTorusExponential_surjective (g : ℕ) :
