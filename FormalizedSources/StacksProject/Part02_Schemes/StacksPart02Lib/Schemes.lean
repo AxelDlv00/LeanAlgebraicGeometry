@@ -125,4 +125,18 @@ theorem scheme_hom_comp_preimage {X Y Z : Scheme.{u}} (f : X ⟶ Y)
     (f ≫ g) ⁻¹ᵁ U = f ⁻¹ᵁ (g ⁻¹ᵁ U) := by
   exact Scheme.Hom.comp_preimage f g U
 
+/-- A basic open defined by a section of a scheme's structure sheaf is open
+(Stacks, Tag 01HZ). -/
+theorem scheme_basicOpen_isOpen {X : Scheme.{u}} {U : X.Opens}
+    (f : X.presheaf.obj (op U)) :
+    IsOpen (X.basicOpen f : Set X) := by
+  exact (X.basicOpen f).isOpen
+
+/-- A section becomes a unit after restricting to the basic open it defines
+(Stacks, Tag 01HZ). -/
+theorem scheme_isUnit_res_basicOpen {X : Scheme.{u}} {U : X.Opens}
+    (f : X.presheaf.obj (op U)) :
+    IsUnit (X.presheaf.map (@homOfLE (Opens X) _ _ _ (X.basicOpen_le f)).op f) := by
+  exact X.toRingedSpace.isUnit_res_basicOpen f
+
 end StacksPart02
