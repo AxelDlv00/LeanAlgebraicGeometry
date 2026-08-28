@@ -159,6 +159,11 @@ def singletonCoordinateRingEquiv (P : AffinePoint k n) :
       (vanishingIdeal_eq_ker_evaluation k n P)).trans
     (Ideal.quotientKerAlgEquivOfSurjective (eval_surjective k n P))
 
+/-- The one-point coordinate-ring equivalence is surjective. -/
+theorem singletonCoordinateRingEquiv_surjective (P : AffinePoint k n) :
+    Function.Surjective (singletonCoordinateRingEquiv k n P) :=
+  (singletonCoordinateRingEquiv k n P).surjective
+
 @[simp]
 theorem singletonCoordinateRingEquiv_mk (P : AffinePoint k n)
     (f : AffinePolynomial k n) :
