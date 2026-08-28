@@ -79,6 +79,7 @@ variable (mapM : forall q : Pic0FiniteStageMapIndex C,
       (Pic0FiniteStageMapTarget C q))
 variable (N : DatG0.FinSubext M.1 k)
 
+set_option synthInstance.maxHeartbeats 400000 in
 set_option maxHeartbeats 6400000 in
 -- The package projections keep all four dependent tensor-product carriers aligned.
 /-- The descended affine triple transition intertwines the overlap transition with the
@@ -199,55 +200,15 @@ theorem pic0FiniteStageAffineTripleTransition_fac
       (pic0FiniteStageRestrictionBaseChange C L n m relation M mapM N U W))
     hright htau hleft hface
 
+set_option synthInstance.maxHeartbeats 400000 in
 set_option maxHeartbeats 6400000 in
-/- The bundled facade keeps the stable stage data together.  The explicit
-   certificate is retained because the legacy face package uses the canonical
-   model comparison family rather than the arbitrary family stored in `D.Q`. -/
-theorem pic0FiniteStageAffineTripleTransition_fac_of_context
-    {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
-    (D : Pic0FiniteStageGlueContext C F)
-    (hthetaN : ∀ p : Pic0FiniteStageTripleTransitionIndex C,
-      D.N.1 ⊗[D.M.1] Pic0FiniteStageTripleTransitionModelSource
-          C D.L D.n D.m D.relation D.M D.mapM p →ₐ[D.N.1]
-        D.N.1 ⊗[D.M.1] Pic0FiniteStageTripleTransitionModelTarget
-          C D.L D.n D.m D.relation D.M D.mapM p) →
-      ((Algebra.TensorProduct.map D.N.1.val
-          (AlgHom.id D.M.1
-            (Pic0FiniteStageTripleTransitionModelTarget
-              C D.L D.n D.m D.relation D.M D.mapM p))).comp
-          ((hthetaN p).restrictScalars D.M.1) =
-        ((pic0FiniteStageTransportedTripleTransitionOfModels
-          C D.L D.n D.m D.relation D.e D.M D.mapM D.models.comparison
-          p.1 p.2.1 p.2.2).restrictScalars D.M.1).comp
-          (Algebra.TensorProduct.map D.N.1.val
-            (AlgHom.id D.M.1
-              (Pic0FiniteStageTripleTransitionModelSource
-                C D.L D.n D.m D.relation D.M D.mapM p))))
-    (U V W : Pic0FiniteStageChartIndex C) :
-    (pic0FiniteStageAffineTripleTransition
-        C D.L D.n D.m D.relation D.M D.mapM D.N D.thetaN U V W).comp
-        (finiteStageTensorPushoutFaceRight
-          (pic0FiniteStageRestrictionBaseChange
-            C D.L D.n D.m D.relation D.M D.mapM D.N V W)
-          (pic0FiniteStageRestrictionBaseChange
-            C D.L D.n D.m D.relation D.M D.mapM D.N V U)) =
-      (finiteStageTensorPushoutFaceLeft
-        (pic0FiniteStageRestrictionBaseChange
-          C D.L D.n D.m D.relation D.M D.mapM D.N U V)
-        (pic0FiniteStageRestrictionBaseChange
-          C D.L D.n D.m D.relation D.M D.mapM D.N U W)).comp
-        (pic0FiniteStageTransitionBaseChange
-          C D.L D.n D.m D.relation D.M D.mapM D.N U V) := by
-  exact pic0FiniteStageAffineTripleTransition_fac
-    C D.L D.n D.m D.relation D.M D.mapM D.N D.e D.models.comparison
-    D.thetaN hthetaN U V W
-
-set_option maxHeartbeats 6400000 in
-/-! The canonical facade supplies the comparison square from its stored model invariant,
-so face consumers no longer need to rebuild or thread that dependent certificate. -/
+/-! The canonical facade supplies the comparison square from its stored model invariant.
+Face consumers therefore pass one context and do not rebuild a dependent certificate. -/
 theorem pic0FiniteStageAffineTripleTransition_fac_of_canonical_context
     {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
     (D : Pic0FiniteStageCanonicalGlueContext C F)
+    [Algebra.IsAlgebraic D.context.models.L.1 k]
+    [Algebra.IsAlgebraic D.context.models.M.1 k]
     (U V W : Pic0FiniteStageChartIndex C) :
     (pic0FiniteStageAffineTripleTransition
         C D.context.L D.context.n D.context.m D.context.relation D.context.M
@@ -269,8 +230,11 @@ theorem pic0FiniteStageAffineTripleTransition_fac_of_canonical_context
         (pic0FiniteStageTransitionBaseChange
           C D.context.L D.context.n D.context.m D.context.relation D.context.M
           D.context.mapM D.context.N U V) := by
-  exact pic0FiniteStageAffineTripleTransition_fac_of_context
-    C D.context D.context.thetaN (fun p => D.comparison_of_models C p) U V W
+  exact pic0FiniteStageAffineTripleTransition_fac
+    C D.context.models.L D.context.models.n D.context.models.m
+      D.context.models.relation D.context.models.M D.context.models.mapM
+      D.context.triple.N D.context.models.e D.context.models.comparison
+      D.context.triple.thetaN (fun p => D.comparison_of_models C p) U V W
 
 end
 
