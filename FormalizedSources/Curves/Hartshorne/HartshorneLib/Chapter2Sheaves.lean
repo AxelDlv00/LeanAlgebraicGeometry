@@ -68,6 +68,25 @@ def germ {C : Type u} [Category.{v} C] {X : TopCat.{v}} [HasColimits C]
     F.map i.op ≫ germ F U x hx = germ F V x (i.le hx) := by
   exact TopCat.Presheaf.germ_res F i x hx
 
+/-- Taking germs commutes with a morphism of presheaves. -/
+@[reassoc] theorem germ_stalkMap {C : Type u} [Category.{v} C] {X : TopCat.{v}}
+    [HasColimits C] {F G : Presheaf C X} (φ : F ⟶ G)
+    (U : Opens X) (x : X) (hx : x ∈ U) :
+    germ F U x hx ≫ stalkMap φ x = φ.app (op U) ≫ germ G U x hx := by
+  exact TopCat.Presheaf.stalkFunctor_map_germ U x hx φ
+
+/-- An isomorphism of presheaves induces an isomorphism on every stalk. -/
+instance stalkMap_isIso {C : Type u} [Category.{v} C] {X : TopCat.{v}}
+    [HasColimits C] {F G : Presheaf C X} (φ : F ⟶ G) [IsIso φ] (x : X) :
+    IsIso (stalkMap φ x) := by
+  exact Functor.map_isIso (TopCat.Presheaf.stalkFunctor C x) φ
+
+/-- The stalk map induced by an inverse is the inverse of the induced stalk map. -/
+@[simp] theorem stalkMap_inv {C : Type u} [Category.{v} C] {X : TopCat.{v}}
+    [HasColimits C] {F G : Presheaf C X} (φ : F ⟶ G) [IsIso φ] (x : X) :
+    stalkMap (inv φ) x = inv (stalkMap φ x) := by
+  simp [stalkMap]
+
 abbrev TypePresheaf (X : TopCat.{u}) := TopCat.Presheaf (Type u) X
 
 abbrev TypeSheaf (X : TopCat.{u}) := TopCat.Sheaf (Type u) X
