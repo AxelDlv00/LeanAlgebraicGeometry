@@ -76,6 +76,25 @@ theorem ComplexTorusUniformization.toGenusTorusUniformization_toComplexTorusUnif
   intro x
   simp
 
+/-- The complex and real witness interfaces carry exactly the same data. -/
+def genusTorusUniformizationEquivComplexTorusUniformization
+    {X : Type*} [AddCommGroup X] {g : ℕ} :
+    GenusTorusUniformization X g ≃ ComplexTorusUniformization X g where
+  toFun := GenusTorusUniformization.toComplexTorusUniformization
+  invFun := ComplexTorusUniformization.toGenusTorusUniformization
+  left_inv := GenusTorusUniformization.toComplexTorusUniformization_toGenusTorusUniformization
+  right_inv := ComplexTorusUniformization.toGenusTorusUniformization_toComplexTorusUniformization
+
+theorem complexTorusUniformization_nonempty_iff_genusTorusUniformization_nonempty
+    {X : Type*} [AddCommGroup X] {g : ℕ} :
+    Nonempty (ComplexTorusUniformization X g) ↔
+      Nonempty (GenusTorusUniformization X g) := by
+  constructor
+  · rintro ⟨u⟩
+    exact ⟨u.toGenusTorusUniformization⟩
+  · rintro ⟨u⟩
+    exact ⟨u.toComplexTorusUniformization⟩
+
 /-- Division by every nonzero integer transported through complex
 uniformization. -/
 theorem complexUniformization_exists_division
