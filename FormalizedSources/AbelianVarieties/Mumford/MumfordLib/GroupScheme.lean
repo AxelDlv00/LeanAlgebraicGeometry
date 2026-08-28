@@ -124,6 +124,40 @@ theorem snd_left_isClosedMap
 
 end RigidityGeometry
 
+section ClosedPointExtensionality
+
+open AlgebraicGeometry
+
+variable {W Z : Scheme.{u}} [IsReduced W] [JacobsonSpace W] [Z.IsSeparated]
+
+/-- Two morphisms from a reduced Jacobson scheme into a separated scheme are
+equal when their residue-field probes agree at every closed point. -/
+theorem morphism_eq_of_eqAt_closedPoints
+    {g₁ g₂ : W ⟶ Z}
+    (h : ∀ x ∈ closedPoints W,
+      W.fromSpecResidueField x ≫ g₁ = W.fromSpecResidueField x ≫ g₂) :
+    g₁ = g₂ := by
+  let F : closedPoints W → Scheme.{u} := fun x => Spec (W.residueField x.1)
+  let probe : (∐ F) ⟶ W := Sigma.desc fun x => W.fromSpecResidueField x.1
+  haveI : IsDominant probe := by
+    refine ⟨(dense_iff_closure_eq.mpr (closure_closedPoints (X := W))).mono ?_⟩
+    intro x hx
+    obtain ⟨pt⟩ : Nonempty (Spec (W.residueField x)) := inferInstance
+    refine ⟨(Sigma.ι F ⟨x, hx⟩).base pt, ?_⟩
+    have hcomp : Sigma.ι F ⟨x, hx⟩ ≫ probe = W.fromSpecResidueField x :=
+      Sigma.ι_desc _ _
+    have e1 : probe.base ((Sigma.ι F ⟨x, hx⟩).base pt) =
+        (W.fromSpecResidueField x).base pt := by
+      rw [← Scheme.Hom.comp_apply, hcomp]
+    rw [e1]
+    exact Set.eq_of_mem_singleton
+      (Scheme.range_fromSpecResidueField x ▸ Set.mem_range_self pt)
+  refine ext_of_isDominant probe (Sigma.hom_ext _ _ fun x => ?_)
+  rw [← Category.assoc, ← Category.assoc, Sigma.ι_desc]
+  exact h x.1 x.2
+
+end ClosedPointExtensionality
+
 section Scheme
 
 open AlgebraicGeometry
