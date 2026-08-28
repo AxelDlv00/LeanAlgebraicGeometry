@@ -217,6 +217,30 @@ theorem relativeRepresentable_diag_iff {C : Type u} [Category.{v} C]
       ∀ ⦃a : C⦄ (g : F.obj a ⟶ X), RelativeRepresentable F g :=
   Functor.relativelyRepresentable.diag_iff
 
+/-! A pairwise fibre-product form of the diagonal criterion. -/
+
+/-- Relative representability of a diagonal is equivalent to represented
+pullbacks for every pair of maps from test objects. -/
+theorem relativeRepresentable_diag_iff_pairwise {C : Type u} [Category.{v} C]
+    {D : Type u'} [Category.{v'} D] {F : C ⥤ D} {X : D}
+    [HasBinaryProducts C] [HasPullbacks C]
+    [HasPullbacks D] [HasBinaryProducts D] [HasTerminal D]
+    [F.Full] [PreservesLimitsOfShape (Discrete WalkingPair) F]
+    [PreservesLimitsOfShape WalkingCospan F] :
+    RelativeRepresentable F (Limits.diag X) ↔
+      ∀ ⦃a b : C⦄ (g : F.obj a ⟶ X) (h : F.obj b ⟶ X),
+        ∃ (c : C) (p : c ⟶ a) (q : c ⟶ b),
+          IsPullback (F.map p) (F.map q) g h := by
+  rw [relativeRepresentable_diag_iff]
+  constructor
+  · intro hdiag a b g h
+    obtain ⟨c, q, fst, sq⟩ := hdiag g h
+    refine ⟨c, F.preimage fst, q, ?_⟩
+    simpa only [Functor.map_preimage] using sq
+  · intro hdiag a g b h
+    obtain ⟨c, p, q, sq⟩ := hdiag g h
+    exact ⟨c, q, F.map p, sq⟩
+
 /-- An isomorphism has a relative morphism property whenever the underlying
 property is multiplicative and respects isomorphisms. -/
 theorem relativeMorphismProperty_of_isIso {C : Type u} [Category.{v} C]
