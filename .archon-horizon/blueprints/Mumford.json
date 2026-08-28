@@ -727,7 +727,7 @@
     },
     "states": {
       "blocked": 116,
-      "closed": 155,
+      "closed": 156,
       "formalized_open": 0,
       "informal": 216,
       "ready": 100
@@ -741,6 +741,7 @@
       "Mumford.GroupScheme.isReduced_stalk_iff_of_isOpenImmersion: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.isReduced_stalk_pointTranslationIso_iff: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.mem_smoothLocus_iff_of_comp_eq: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.GroupScheme.morphism_eq_of_eqAt_closedPoints: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.pointTranslation: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.pointTranslationIso: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.GroupScheme.pointTranslationIso_hom: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -781,8 +782,7 @@
       "Mumford.Uniformization.ComplexTorusUniformization.toGenusTorusUniformization_apply: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Uniformization.GenusComplexVector: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.Uniformization.GenusRealVector: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Uniformization.GenusTorus: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.Uniformization.GenusTorusUniformization: Lean declaration is not referenced by any blueprint \\lean{...}"
+      "Mumford.Uniformization.GenusTorus: Lean declaration is not referenced by any blueprint \\lean{...}"
     ]
   },
   "nodes": [
