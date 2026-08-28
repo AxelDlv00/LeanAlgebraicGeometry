@@ -238,7 +238,7 @@ theorem complexQuotientToRealQuotientAddEquiv_trans_genusRealVectorQuotient
     complexGenusQuotientAddEquiv_mk]
   rfl
 
-/- The complex-coordinate quotient has the expected signed-integer torsion
+/-- The complex-coordinate quotient has the expected signed-integer torsion
 classification. -/
 def complexGenusQuotient_zsmulTorsion_addEquiv {g : ℕ} {n : ℤ} (hn : n ≠ 0) :
     zsmulTorsionSubgroup
