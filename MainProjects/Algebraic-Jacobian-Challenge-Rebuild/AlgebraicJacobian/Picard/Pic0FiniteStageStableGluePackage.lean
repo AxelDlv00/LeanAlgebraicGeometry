@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Descent.AffineRingGlueData
-import AlgebraicJacobian.Picard.Pic0FiniteStageGlueContext
+import AlgebraicJacobian.Picard.Pic0FiniteStageCanonicalGlueContext
 
 /-!
 # Stable finite-stage gluing boundary
@@ -12,7 +12,7 @@ import AlgebraicJacobian.Picard.Pic0FiniteStageGlueContext
 The historical `Pic0FiniteStageGluePackage` repeats every finite-stage witness as a
 field and reconstructs the affine gluing presentation from those fields.  That makes
 the type of each downstream projection depend on a large collection of instance
-choices.  This facade carries the already bundled `Pic0FiniteStageGlueContext` and
+choices.  This facade carries a certified `Pic0FiniteStageCanonicalGlueContext` and
 one `AffineRingGluePresentation` instead.
 
 The two fields are independent values: consumers can use the context for algebraic
@@ -41,7 +41,7 @@ instance-producing `let` expressions in its public fields.
 -/
 structure Pic0FiniteStageStableGluePackage
     (F : Type u) [Field F] [Algebra F k] [Algebra.IsAlgebraic F k] where
-  context : Pic0FiniteStageGlueContext C F
+  context : Pic0FiniteStageCanonicalGlueContext C F
   presentation : AlgebraicJacobian.AffineRingGluePresentation context.triple.N.1
 
 namespace Pic0FiniteStageStableGluePackage
@@ -50,7 +50,7 @@ variable {F : Type u} [Field F] [Algebra F k] [Algebra.IsAlgebraic F k]
 
 /-- Build the stable package from a context and an already selected presentation. -/
 noncomputable def ofContext
-    (D : Pic0FiniteStageGlueContext C F)
+    (D : Pic0FiniteStageCanonicalGlueContext C F)
     (P : AlgebraicJacobian.AffineRingGluePresentation D.triple.N.1) :
     Pic0FiniteStageStableGluePackage C F :=
   { context := D, presentation := P }
@@ -65,7 +65,8 @@ def models (P : Pic0FiniteStageStableGluePackage C F) :
 def triple (P : Pic0FiniteStageStableGluePackage C F) :
     Pic0FiniteStageTripleTransitionFamilyData
       C P.context.models.L P.context.models.n P.context.models.m
-      P.context.models.relation P.context.models.M P.context.models.mapM P.context.Q :=
+      P.context.models.relation P.context.models.M P.context.models.mapM
+        P.context.context.Q :=
   P.context.triple
 
 def L (P : Pic0FiniteStageStableGluePackage C F) := P.context.models.L
@@ -109,7 +110,7 @@ theorem comparison
       P.context.models.L P.context.models.n P.context.models.m
       P.context.models.relation P.context.models.e P.context.models.M
       P.context.models.mapM q :=
-  P.context.models.comparison q
+  P.context.context.models.comparison q
 
 @[simp]
 theorem openImmersion
@@ -118,17 +119,12 @@ theorem openImmersion
     Pic0FiniteStageTransitionOpenImmersion C
       P.context.models.L P.context.models.n P.context.models.m
       P.context.models.relation P.context.models.M P.context.models.mapM i :=
-  P.context.models.openImmersion i
+  P.context.context.models.openImmersion i
 
-@[simp]
-theorem tripleComparison
+def tripleComparison
     (P : Pic0FiniteStageStableGluePackage C F)
-    (p : Pic0FiniteStageTripleTransitionIndex C) :
-    Pic0FiniteStageTripleTransitionFamilyComparison
-      C P.context.models.L P.context.models.n P.context.models.m
-      P.context.models.relation P.context.models.M P.context.models.mapM
-      P.context.Q P.context.triple.N p (P.context.triple.thetaN p) :=
-  P.context.triple.comparison p
+    (p : Pic0FiniteStageTripleTransitionIndex C) :=
+  P.context.context.triple.comparison p
 
 end Pic0FiniteStageStableGluePackage
 

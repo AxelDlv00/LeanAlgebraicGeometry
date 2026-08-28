@@ -154,6 +154,18 @@ def models (D : Pic0FiniteStageCanonicalGlueContext C F) :=
 def triple (D : Pic0FiniteStageCanonicalGlueContext C F) :=
   D.context.triple
 
+/-- The comparison family stored by the underlying general context. -/
+def Q (D : Pic0FiniteStageCanonicalGlueContext C F) :=
+  D.context.Q
+
+/-- The final finite scalar stage selected by a canonical context. -/
+def N (D : Pic0FiniteStageCanonicalGlueContext C F) :=
+  D.context.triple.N
+
+/-- The descended cyclic transition family at the final scalar stage. -/
+def thetaN (D : Pic0FiniteStageCanonicalGlueContext C F) :=
+  D.context.triple.thetaN
+
 @[simp]
 theorem ofModels_models
     (D : Pic0FiniteStageTransitionModelsData C F)
