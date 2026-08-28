@@ -79,14 +79,66 @@ variable (N : DatG0.FinSubext M.1 k)
 
 /-- The literal triple tensor ring made from the scalar-extended chart and overlap rings. -/
 noncomputable abbrev Pic0FiniteStageTripleBaseChangeRing
-    (U V W : Pic0FiniteStageChartIndex C) : Type u :=
-  Pic0FiniteStageTensorPushoutRing
-    (pic0FiniteStageRestrictionBaseChange C L n m relation M mapM N U V)
-    (pic0FiniteStageRestrictionBaseChange C L n m relation M mapM N U W)
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (M : DatG0.FinSubext L.1 k)
+    (mapM : forall q : Pic0FiniteStageMapIndex C,
+      Pic0FiniteStageModelRing C L n m relation M
+          (Pic0FiniteStageMapSource C q) →ₐ[M.1]
+        Pic0FiniteStageModelRing C L n m relation M
+          (Pic0FiniteStageMapTarget C q))
+    (N : DatG0.FinSubext M.1 k)
+    (U V W : Pic0FiniteStageChartIndex C) : Type u := by
+  letI : CommRing
+      (Pic0FiniteStageChartBaseChangeRing C L n m relation M N U) :=
+    pic0FiniteStageChartBaseChangeCommRing C L n m relation M N U
+  letI : CommRing
+      (Pic0FiniteStageOverlapBaseChangeRing C L n m relation M N U V) :=
+    pic0FiniteStageOverlapBaseChangeCommRing C L n m relation M N U V
+  letI : CommRing
+      (Pic0FiniteStageOverlapBaseChangeRing C L n m relation M N U W) :=
+    pic0FiniteStageOverlapBaseChangeCommRing C L n m relation M N U W
+  letI : Algebra N.1
+      (Pic0FiniteStageChartBaseChangeRing C L n m relation M N U) :=
+    pic0FiniteStageChartBaseChangeAlgebra C L n m relation M N U
+  letI : Algebra N.1
+      (Pic0FiniteStageOverlapBaseChangeRing C L n m relation M N U V) :=
+    pic0FiniteStageOverlapBaseChangeAlgebra C L n m relation M N U V
+  letI : Algebra N.1
+      (Pic0FiniteStageOverlapBaseChangeRing C L n m relation M N U W) :=
+    pic0FiniteStageOverlapBaseChangeAlgebra C L n m relation M N U W
+  let fUV := pic0FiniteStageRestrictionBaseChange C L n m relation M mapM N U V
+  let fUW := pic0FiniteStageRestrictionBaseChange C L n m relation M mapM N U W
+  exact @Pic0FiniteStageTensorPushoutRing
+    N.1
+    (Pic0FiniteStageChartBaseChangeRing C L n m relation M N U)
+    (Pic0FiniteStageOverlapBaseChangeRing C L n m relation M N U V)
+    (Pic0FiniteStageOverlapBaseChangeRing C L n m relation M N U W)
+    (inferInstance : CommRing N.1)
+    (pic0FiniteStageChartBaseChangeCommRing C L n m relation M N U)
+    (pic0FiniteStageOverlapBaseChangeCommRing C L n m relation M N U V)
+    (pic0FiniteStageOverlapBaseChangeCommRing C L n m relation M N U W)
+    (pic0FiniteStageChartBaseChangeAlgebra C L n m relation M N U)
+    (pic0FiniteStageOverlapBaseChangeAlgebra C L n m relation M N U V)
+    (pic0FiniteStageOverlapBaseChangeAlgebra C L n m relation M N U W)
+    fUV fUW
 
 /-- Scalar extension of a descended triple model is canonically the literal tensor
 pushout of the scalar-extended restriction legs. -/
 noncomputable def pic0FiniteStageTripleBaseChangeEquiv
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (M : DatG0.FinSubext L.1 k)
+    (mapM : forall q : Pic0FiniteStageMapIndex C,
+      Pic0FiniteStageModelRing C L n m relation M
+          (Pic0FiniteStageMapSource C q) →ₐ[M.1]
+        Pic0FiniteStageModelRing C L n m relation M
+          (Pic0FiniteStageMapTarget C q))
+    (N : DatG0.FinSubext M.1 k)
     (U V W : Pic0FiniteStageChartIndex C) :
     N.1 ⊗[M.1] Pic0FiniteStageTripleModelRing
         C L n m relation M mapM U V W ≃ₐ[N.1]
@@ -99,6 +151,17 @@ noncomputable def pic0FiniteStageTripleBaseChangeEquiv
 /-- A descended cyclic triple transition, conjugated onto the literal tensor-pushout
 rings used by affine gluing. -/
 noncomputable def pic0FiniteStageAffineTripleTransition
+    {F : Type u} [Field F] [Algebra F k]
+    (L : DatG0.FinSubext F k)
+    (n m : Pic0FiniteStageRingIndex C -> Nat)
+    (relation : forall j, Fin (m j) -> MvPolynomial (Fin (n j)) L.1)
+    (M : DatG0.FinSubext L.1 k)
+    (mapM : forall q : Pic0FiniteStageMapIndex C,
+      Pic0FiniteStageModelRing C L n m relation M
+          (Pic0FiniteStageMapSource C q) →ₐ[M.1]
+        Pic0FiniteStageModelRing C L n m relation M
+          (Pic0FiniteStageMapTarget C q))
+    (N : DatG0.FinSubext M.1 k)
     (thetaN : forall p : Pic0FiniteStageTripleTransitionIndex C,
       N.1 ⊗[M.1] Pic0FiniteStageTripleTransitionModelSource
           C L n m relation M mapM p →ₐ[N.1]
