@@ -37,6 +37,25 @@ theorem rigidity_snd_lift
       lift (toUnit (X ⊗ Y) ≫ x₀) (snd X Y) := by
   ext1 <;> simp
 
+/- Invariance under replacing the first coordinate by `x₀` is equivalent to
+   factoring through the second projection. -/
+theorem factors_through_snd_iff
+    {X Y Z : C} (x₀ : 𝟙_ C ⟶ X) (f : X ⊗ Y ⟶ Z) :
+    (∃ g : Y ⟶ Z, f = snd X Y ≫ g) ↔
+      lift (toUnit (X ⊗ Y) ≫ x₀) (snd X Y) ≫ f = f := by
+  constructor
+  · rintro ⟨g, rfl⟩
+    rw [← rigidity_snd_lift x₀]
+    simp
+  · intro h
+    refine ⟨lift (toUnit Y ≫ x₀) (𝟙 Y) ≫ f, ?_⟩
+    calc
+      f = lift (toUnit (X ⊗ Y) ≫ x₀) (snd X Y) ≫ f := h.symm
+      _ = (snd X Y ≫ lift (toUnit Y ≫ x₀) (𝟙 Y)) ≫ f := by
+        rw [rigidity_snd_lift x₀]
+      _ = snd X Y ≫ (lift (toUnit Y ≫ x₀) (𝟙 Y) ≫ f) :=
+        Category.assoc _ _ _
+
 /-- The group-valued functor of points of a group object. -/
 abbrev pointsFunctor (G : C) [GrpObj G] : Cᵒᵖ ⥤ GrpCat :=
   CategoryTheory.yonedaGrpObj G
@@ -82,6 +101,13 @@ theorem comp_pointTranslation_hom (x y : 𝟙_ C ⟶ G) :
   rw [pointTranslation, Iso.trans_hom, Iso.symm_hom, ← Category.assoc,
     comp_mulRight_inv, comp_mulRight_hom, toUnit_unit,
     Category.id_comp, Category.id_comp, mul_inv_cancel, _root_.one_mul]
+
+/- The inverse translation carries `y` back to `x`; keeping this as a named
+   simp lemma avoids repeating the symmetry rewrite at geometric use sites. -/
+@[reassoc (attr := simp)]
+theorem comp_pointTranslation_inv (x y : 𝟙_ C ⟶ G) :
+    y ≫ (pointTranslation G x y).inv = x := by
+  exact comp_pointTranslation_hom (G := G) y x
 
 end Categorical
 
