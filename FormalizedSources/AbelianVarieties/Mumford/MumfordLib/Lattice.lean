@@ -229,6 +229,35 @@ theorem uniformizedQuotientAddEquiv_eq_trans {X : Type*} [AddCommGroup X] {g : �
   obtain ⟨v, rfl⟩ := QuotientAddGroup.mk'_surjective (integerPeriodLattice g) q
   rfl
 
+/-- Torsion transport through a quotient and then a chosen uniformization
+agrees with the direct quotient classification. -/
+theorem uniformizedQuotient_zsmulTorsion_addEquiv_eq_direct
+    {X : Type*} [AddCommGroup X] {g : ℕ}
+    (u : GenusTorusUniformization X g) {n : ℤ} (hn : n ≠ 0) :
+    (zsmulTorsion_addEquiv_of_addEquiv (uniformizedQuotientAddEquiv u) n).trans
+        (zsmulTorsion_addEquiv_of_uniformization u hn) =
+      genusRealVectorQuotient_zsmulTorsion_addEquiv (g := g) hn := by
+  rw [uniformizedQuotientAddEquiv_eq_trans u]
+  apply AddEquiv.ext
+  intro x
+  have htransport :
+      (zsmulTorsion_addEquiv_of_addEquiv u.equiv n)
+          ((zsmulTorsion_addEquiv_of_addEquiv
+            ((genusRealVectorQuotientAddEquiv g).trans u.equiv.symm) n) x) =
+        (zsmulTorsion_addEquiv_of_addEquiv
+          (genusRealVectorQuotientAddEquiv g) n) x := by
+    apply Subtype.ext
+    simp
+  rw [show ((zsmulTorsion_addEquiv_of_addEquiv
+      ((genusRealVectorQuotientAddEquiv g).trans u.equiv.symm) n).trans
+      (zsmulTorsion_addEquiv_of_uniformization u hn)) x =
+      (productTorus_zsmul_torsion_addEquiv_pi_zmod hn)
+        ((zsmulTorsion_addEquiv_of_addEquiv u.equiv n)
+          ((zsmulTorsion_addEquiv_of_addEquiv
+            ((genusRealVectorQuotientAddEquiv g).trans u.equiv.symm) n) x)) by rfl]
+  rw [htransport]
+  rfl
+
 end
 end Uniformization
 end Mumford
