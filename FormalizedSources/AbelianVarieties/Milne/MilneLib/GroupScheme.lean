@@ -29,6 +29,14 @@ section Categorical
 variable {C : Type u} [Category.{v} C] [CartesianMonoidalCategory C]
   {G : C} [GrpObj G] {X : C}
 
+/- The cartesian identity used when reducing the geometric rigidity lemma to
+   its projection/slice equation. -/
+theorem rigidity_snd_lift
+    {X Y : C} (x₀ : 𝟙_ C ⟶ X) :
+    snd X Y ≫ lift (toUnit Y ≫ x₀) (𝟙 Y) =
+      lift (toUnit (X ⊗ Y) ≫ x₀) (snd X Y) := by
+  ext1 <;> simp
+
 /-- The group-valued functor of points of a group object. -/
 abbrev pointsFunctor (G : C) [GrpObj G] : Cᵒᵖ ⥤ GrpCat :=
   CategoryTheory.yonedaGrpObj G
