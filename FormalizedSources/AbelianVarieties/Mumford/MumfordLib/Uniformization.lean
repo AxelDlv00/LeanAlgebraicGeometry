@@ -64,6 +64,73 @@ theorem zsmulTorsionSubgroup_mono_of_dvd {X : Type*} [AddCommGroup X]
     (n * k) • x = k • (n • x) := by rw [mul_comm, smul_smul]
     _ = 0 := by rw [hx, smul_zero]
 
+/- The subgroup inclusion associated to scalar divisibility. -/
+def zsmulTorsion_inclusion_of_dvd {X : Type*} [AddCommGroup X]
+    {n m : ℤ} (h : n ∣ m) :
+    zsmulTorsionSubgroup X n →+ zsmulTorsionSubgroup X m :=
+  AddSubgroup.inclusion (zsmulTorsionSubgroup_mono_of_dvd h)
+
+@[simp]
+theorem zsmulTorsion_inclusion_of_dvd_apply {X : Type*} [AddCommGroup X]
+    {n m : ℤ} (h : n ∣ m) (x : zsmulTorsionSubgroup X n) :
+    ((zsmulTorsion_inclusion_of_dvd h) x : X) = (x : X) := by
+  exact AddSubgroup.coe_inclusion _ _
+
+theorem zsmulTorsion_inclusion_of_dvd_injective {X : Type*} [AddCommGroup X]
+    {n m : ℤ} (h : n ∣ m) :
+    Function.Injective (zsmulTorsion_inclusion_of_dvd (X := X) h) := by
+  exact AddSubgroup.inclusion_injective _
+
+@[simp]
+theorem zsmulTorsion_inclusion_of_dvd_refl {X : Type*} [AddCommGroup X] (n : ℤ) :
+    zsmulTorsion_inclusion_of_dvd (X := X) (dvd_refl n) =
+      AddMonoidHom.id (zsmulTorsionSubgroup X n) := by
+  apply AddMonoidHom.ext
+  intro x
+  apply Subtype.ext
+  rfl
+
+theorem zsmulTorsion_inclusion_of_dvd_comp {X : Type*} [AddCommGroup X]
+    {n m k : ℤ} (hnm : n ∣ m) (hmk : m ∣ k) :
+    (zsmulTorsion_inclusion_of_dvd (X := X) hmk).comp
+        (zsmulTorsion_inclusion_of_dvd (X := X) hnm) =
+      zsmulTorsion_inclusion_of_dvd (X := X) (dvd_trans hnm hmk) := by
+  apply AddMonoidHom.ext
+  intro x
+  apply Subtype.ext
+  rfl
+
+/- The same inclusion can be indexed by natural scalars. -/
+def natCast_zsmulTorsion_inclusion_of_dvd {X : Type*} [AddCommGroup X]
+    {n m : ℕ} (h : n ∣ m) :
+    zsmulTorsionSubgroup X (n : ℤ) →+ zsmulTorsionSubgroup X (m : ℤ) :=
+  zsmulTorsion_inclusion_of_dvd (X := X) (Int.ofNat_dvd.mpr h)
+
+@[simp]
+theorem natCast_zsmulTorsion_inclusion_of_dvd_apply {X : Type*} [AddCommGroup X]
+    {n m : ℕ} (h : n ∣ m) (x : zsmulTorsionSubgroup X (n : ℤ)) :
+    ((natCast_zsmulTorsion_inclusion_of_dvd h) x : X) = (x : X) := by
+  change ((zsmulTorsion_inclusion_of_dvd (X := X) (Int.ofNat_dvd.mpr h)) x : X) =
+    (x : X)
+  exact AddSubgroup.coe_inclusion _ _
+
+theorem natCast_zsmulTorsion_inclusion_of_dvd_injective {X : Type*} [AddCommGroup X]
+    {n m : ℕ} (h : n ∣ m) :
+    Function.Injective (natCast_zsmulTorsion_inclusion_of_dvd (X := X) h) := by
+  change Function.Injective
+    (zsmulTorsion_inclusion_of_dvd (X := X) (Int.ofNat_dvd.mpr h))
+  exact AddSubgroup.inclusion_injective _
+
+theorem natCast_zsmulTorsion_inclusion_of_dvd_comp {X : Type*} [AddCommGroup X]
+    {n m k : ℕ} (hnm : n ∣ m) (hmk : m ∣ k) :
+    (natCast_zsmulTorsion_inclusion_of_dvd (X := X) hmk).comp
+        (natCast_zsmulTorsion_inclusion_of_dvd (X := X) hnm) =
+      natCast_zsmulTorsion_inclusion_of_dvd (X := X) (Nat.dvd_trans hnm hmk) := by
+  apply AddMonoidHom.ext
+  intro x
+  apply Subtype.ext
+  rfl
+
 /- Additive maps restrict functorially to integer torsion subgroups. -/
 def zsmulTorsion_map {X Y : Type*} [AddCommGroup X] [AddCommGroup Y]
     (f : X →+ Y) (n : ℤ) :
@@ -98,6 +165,18 @@ theorem zsmulTorsion_map_comp {X Y Z : Type*} [AddCommGroup X] [AddCommGroup Y]
     zsmulTorsion_map (g.comp f) n =
       (zsmulTorsion_map g n).comp (zsmulTorsion_map f n) := by
   ext x
+  rfl
+
+/- Additive maps commute with the canonical inclusions of torsion subgroups. -/
+theorem zsmulTorsion_map_inclusion_of_dvd {X Y : Type*} [AddCommGroup X]
+    [AddCommGroup Y] (f : X →+ Y) {n m : ℤ} (h : n ∣ m) :
+    (zsmulTorsion_map f m).comp
+        (zsmulTorsion_inclusion_of_dvd (X := X) h) =
+      (zsmulTorsion_inclusion_of_dvd (X := Y) h).comp
+        (zsmulTorsion_map f n) := by
+  apply AddMonoidHom.ext
+  intro x
+  apply Subtype.ext
   rfl
 
 /-- An additive equivalence transports the corresponding integer torsion subgroups. -/
