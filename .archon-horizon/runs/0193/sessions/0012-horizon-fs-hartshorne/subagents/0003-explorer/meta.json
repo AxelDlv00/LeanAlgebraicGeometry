@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Einstein",
+  "agent_path": "/root/degree_zero_api_probe",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a048e1-e9d2-7f92-8010-b0511f518ae5",
+  "ok": true,
+  "parent_session": "0012-horizon-fs-hartshorne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "The full construction compiled with `lean_run_code`:",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 8780561,
+    "tokens_out": 25562
+  }
+}

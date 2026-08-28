@@ -727,7 +727,7 @@
     },
     "states": {
       "blocked": 116,
-      "closed": 207,
+      "closed": 220,
       "formalized_open": 0,
       "informal": 216,
       "ready": 100
@@ -780,9 +780,9 @@
       "Mumford.ThetaExtension.commutatorPairing_add_right: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.ThetaExtension.commutatorPairing_eq_one_iff_commute: Lean declaration is not referenced by any blueprint \\lean{...}",
       "Mumford.ThetaExtension.commutatorPairing_mul_swap_eq_one: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.ThetaExtension.commutatorPairing_self: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.ThetaExtension.commutatorPairing_swap: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "Mumford.ThetaExtension.commutatorPairing_zero_left: Lean declaration is not referenced by any blueprint \\lean{...}"
+      "Mumford.ThetaExtension.commutatorPairing_neg_left: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.ThetaExtension.commutatorPairing_neg_right: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "Mumford.ThetaExtension.commutatorPairing_self: Lean declaration is not referenced by any blueprint \\lean{...}"
     ]
   },
   "nodes": [

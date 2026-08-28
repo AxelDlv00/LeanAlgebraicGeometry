@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Halley",
+  "agent_path": "/root/hartshorne_frontier_survey",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a048d2-14e5-7bb2-b4c9-b663816384bb",
+  "ok": true,
+  "parent_session": "0012-horizon-fs-hartshorne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Survey complete; no files were edited.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 7396524,
+    "tokens_out": 23518
+  }
+}

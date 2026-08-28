@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Schrodinger",
+  "agent_path": "/root/final_ground_review",
+  "agent_role": "ground",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "ground",
+  "native_subagent_id": "01a048f5-e71a-7232-a083-bf6fa06aace4",
+  "ok": true,
+  "parent_session": "0012-horizon-fs-hartshorne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "ground",
+  "summary": "Checkpoint clears commits `dfcca8c003` and `09020e6b58`.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 14718807,
+    "tokens_out": 52680
+  }
+}

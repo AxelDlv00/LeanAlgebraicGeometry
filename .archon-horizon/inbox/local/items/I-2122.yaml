@@ -1,0 +1,34 @@
+id: I-2122
+provider: local
+kind: issue
+body: 'Milne generated graph snapshot is ahead of ledger HEAD
+
+
+  Live .archon-horizon/blueprints/Milne.json reports 90 closed nodes and includes
+  round-4 helper warnings; ledger HEAD b7ab119ce2 records the prior 80-closed snapshot.
+  Milne source and blueprint files are clean, and hgraph stats are stale=0. Reconcile/commit
+  the generated snapshot at an integration boundary, without staging concurrent projects.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Milne
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-08-28T15:16:30.889323+00:00'
+updated_at: '2026-08-28T15:18:52.179267+00:00'
+metadata:
+  provenance:
+    run: 0192
+    session: 0012-horizon-fs-milne
+    role: horizon
+    round: '5'
+    rounds: '16'
+    task: fs-milne
+    task_title: Advance Milne Abelian Varieties formalization
+    projects: Milne
+  agent: ground_round5
+  read_by:
+  - fs-milne
