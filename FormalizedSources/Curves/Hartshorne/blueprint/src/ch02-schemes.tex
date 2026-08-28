@@ -8,6 +8,8 @@
 \begin{definition}[Presheaf and sheaf]
 \label{def:II-1-presheaf}
 \source{hartshorne-algebraic-geometry:II.1}
+\lean{Hartshorne.Presheaf, Hartshorne.Sheaf, Hartshorne.IsSheaf}
+\leanok
 A presheaf $\mathcal F$ on $X$ assigns an object $\mathcal F(U)$ to every open $U$ and restriction maps
 $\mathcal F(U)\to\mathcal F(V)$ for $V\subset U$, functorially, with $\mathcal F(\varnothing)=0$.
 It is a sheaf when sections that agree locally glue uniquely. The definitions apply to sets,
@@ -20,6 +22,8 @@ $s_i|_{U_i\cap U_j}=s_j|_{U_i\cap U_j}$ comes from a unique $s\in\mathcal F(U)$.
 \begin{definition}[Stalks and morphisms]
 \label{def:II-1-stalk}
 \source{hartshorne-algebraic-geometry:II.1}
+\lean{Hartshorne.Stalk, Hartshorne.germ, Hartshorne.stalkMap, Hartshorne.germ_restrict}
+\leanok
 The stalk is $\mathcal F_x=\varinjlim_{x\in U}\mathcal F(U)$. A morphism is a compatible family
 of maps on opens and induces maps on stalks.  A germ is represented by a pair $(U,s)$ with $x\in U$;
 $(U,s)$ and $(V,t)$ define the same germ exactly when $s$ and $t$ agree on some neighborhood of $x$
@@ -31,6 +35,8 @@ contained in $U\cap V$.
 \label{prop:II-1-1}
 \source{hartshorne-algebraic-geometry:II.1.1}
 \dcref{II.1.1}
+\lean{Hartshorne.sheaf_iso_iff_stalkMap_iso}
+\leanok
 A morphism of sheaves is an isomorphism if and only if it induces an isomorphism on every stalk.
 \uses{def:II-1-presheaf,def:II-1-stalk}
 \end{proposition}
@@ -46,6 +52,13 @@ axiom glues them. The glued lift maps to the target section.
 \label{prop:II-1-2}
 \source{hartshorne-algebraic-geometry:II.1.2}
 \dcref{II.1.2}
+\lean{Hartshorne.sheafification, Hartshorne.sheafification_condition,
+Hartshorne.sheafification_stalkIso, Hartshorne.categoricalSheafification,
+Hartshorne.categoricalSheafificationUnit, Hartshorne.categoricalSheafificationLift,
+Hartshorne.categoricalSheafificationUnit_lift,
+Hartshorne.categoricalSheafificationLift_unique,
+Hartshorne.categoricalSheafificationUnit_stalk_isIso}
+\leanok
 Every presheaf $\mathcal F$ admits a sheafification $\mathcal F^a$ and a universal map
 $\mathcal F\to\mathcal F^a$; it is unique up to unique isomorphism and has the same stalks as
 $\mathcal F$.
@@ -60,6 +73,11 @@ restriction; the germ map is universal because any map to a sheaf is determined 
 \begin{definition}[Direct and inverse image]
 \label{def:II-1-direct-inverse}
 \source{hartshorne-algebraic-geometry:II.1}
+\lean{Hartshorne.directImage, Hartshorne.presheafDirectImage,
+Hartshorne.presheafInverseImage, Hartshorne.sheafInverseImage,
+Hartshorne.sheafInverseImageDirectImageAdjunction,
+Hartshorne.directImage_presheaf_isSheaf}
+\leanok
 For a continuous $f:X\to Y$, define $(f_*\mathcal F)(V)=\mathcal F(f^{-1}V)$. The inverse image
 $f^{-1}\mathcal G$ is the sheafification of $U\mapsto\varinjlim_{f(U)\subset V}\mathcal G(V)$.
 Restriction to a subspace is inverse image under its inclusion.
