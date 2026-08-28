@@ -126,6 +126,51 @@ noncomputable abbrev schemeModuleStalkModule
   PresheafOfModules.instModuleCarrierStalkCommRingCatCarrierAbPresheafOpensCarrier
     F.val x
 
+/-- The `X.presheaf.stalk x`-linear map induced by a morphism of scheme
+modules.  The two `letI` binders make the canonical stalk module structures
+explicit, since the scheme-module and presheaf presentations use different
+typeclass paths for the same structure. -/
+noncomputable def schemeModuleStalkLinearMap
+    {X : Scheme.{u}} {M N : X.Modules} (f : M ⟶ N) (x : X) :
+    letI : Module (X.presheaf.stalk x)
+        (↑(TopCat.Presheaf.stalk M.val.presheaf x) : Type u) :=
+      schemeModuleStalkModule M x
+    letI : Module (X.presheaf.stalk x)
+        (↑(TopCat.Presheaf.stalk N.val.presheaf x) : Type u) :=
+      schemeModuleStalkModule N x
+    (↑(TopCat.Presheaf.stalk M.val.presheaf x) : Type u) →ₗ[↑(X.presheaf.stalk x)]
+      (↑(TopCat.Presheaf.stalk N.val.presheaf x) : Type u) := by
+  letI : Module (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk M.val.presheaf x) : Type u) :=
+    schemeModuleStalkModule M x
+  letI : Module (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk N.val.presheaf x) : Type u) :=
+    schemeModuleStalkModule N x
+  exact PresheafOfModules.stalkLinearMap (R := X.presheaf) f.val x
+
+@[simp]
+theorem schemeModuleStalkLinearMap_germ
+    {X : Scheme.{u}} {M N : X.Modules} (f : M ⟶ N) (x : X)
+    (U : X.Opens) (hx : x ∈ U)
+    (s : (↑(M.val.obj (op U)) : Type u)) :
+    letI : Module (X.presheaf.stalk x)
+        (↑(TopCat.Presheaf.stalk M.val.presheaf x) : Type u) :=
+      schemeModuleStalkModule M x
+    letI : Module (X.presheaf.stalk x)
+        (↑(TopCat.Presheaf.stalk N.val.presheaf x) : Type u) :=
+      schemeModuleStalkModule N x
+    schemeModuleStalkLinearMap f x
+        ((ConcreteCategory.hom (TopCat.Presheaf.germ M.val.presheaf U x hx)) s) =
+      (ConcreteCategory.hom (TopCat.Presheaf.germ N.val.presheaf U x hx))
+        ((ConcreteCategory.hom (f.val.app (op U))) s) := by
+  letI : Module (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk M.val.presheaf x) : Type u) :=
+    schemeModuleStalkModule M x
+  letI : Module (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk N.val.presheaf x) : Type u) :=
+    schemeModuleStalkModule N x
+  exact PresheafOfModules.stalkLinearMap_germ f.val x U hx s
+
 /-- The residue fibre of a scheme module is the stalk modulo the maximal-ideal
 action.  The source is written as tensoring the stalk with its residue field,
 which is the form used by base-change arguments. -/

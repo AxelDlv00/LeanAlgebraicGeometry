@@ -6,6 +6,7 @@ Authors: The Milne Contributors
 
 import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.Topology.Sheaves.LocallySurjective
+import MilneLib.Tensor
 
 /-!
 # Sheaf evaluation
@@ -17,6 +18,8 @@ the functor and object levels.
 
 open CategoryTheory
 open AlgebraicGeometry
+
+universe u
 
 namespace MilneLib
 
@@ -69,6 +72,44 @@ theorem schemeModule_isIso_iff_isIso_on_stalks
     letI : IsIso
         ((TopCat.Presheaf.stalkFunctor AddCommGrpCat x).map f.mapPresheaf) := h x
     exact ConcreteCategory.bijective_of_isIso _
+
+/-- A residue-fibre surjection gives a sheaf epimorphism once the target
+stalks are known to be finite.  The finite-stalk hypothesis is explicit: the
+general coherent-stalk theorem needed by Milne I.5.11 is not yet available in
+Mathlib, while affine tilde modules can supply it through
+`moduleFinite_affineModuleSheaf_stalk`. -/
+theorem schemeModule_epi_of_surjective_on_residue_fibres
+    {X : Scheme.{u}} {M N : X.Modules} (f : M ⟶ N)
+    (hfinite : ∀ x : X,
+      letI : Module (X.presheaf.stalk x)
+          (↑(TopCat.Presheaf.stalk N.val.presheaf x) : Type u) :=
+        schemeModuleStalkModule N x
+      Module.Finite (X.presheaf.stalk x)
+        (↑(TopCat.Presheaf.stalk N.val.presheaf x) : Type u))
+    (hres : ∀ x : X,
+      letI : Module (X.presheaf.stalk x)
+          (↑(TopCat.Presheaf.stalk M.val.presheaf x) : Type u) :=
+        schemeModuleStalkModule M x
+      letI : Module (X.presheaf.stalk x)
+          (↑(TopCat.Presheaf.stalk N.val.presheaf x) : Type u) :=
+        schemeModuleStalkModule N x
+      Function.Surjective
+        ((schemeModuleStalkLinearMap f x).lTensor
+          (IsLocalRing.ResidueField (X.presheaf.stalk x)))) :
+    Epi f := by
+  apply schemeModule_epi_of_surjective_on_stalks f
+  intro x
+  letI : Module (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk M.val.presheaf x) : Type u) :=
+    schemeModuleStalkModule M x
+  letI : Module (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk N.val.presheaf x) : Type u) :=
+    schemeModuleStalkModule N x
+  letI : Module.Finite (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk N.val.presheaf x) : Type u) :=
+    hfinite x
+  exact (LinearMap.surjective_lTensor_residueField_iff_surjective
+    (schemeModuleStalkLinearMap f x)).mp (hres x)
 
 /-- The counit of the pullback--pushforward adjunction for a scheme morphism. -/
 noncomputable def schemeSheafEvaluation {W V : Scheme} (f : W ⟶ V) :
