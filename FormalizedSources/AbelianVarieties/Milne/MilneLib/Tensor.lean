@@ -11,6 +11,7 @@ import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.RingTheory.LocalRing.ResidueField.Basic
 
 import MilneLib.Nakayama
+import MilneLib.Stalk
 
 /-!
 # Tensor evaluation
@@ -20,7 +21,9 @@ pure tensor `s ⊗ m` to the scalar action `s • m`.
 -/
 
 open scoped TensorProduct
+open CategoryTheory
 open AlgebraicGeometry
+open Opposite
 
 namespace MilneLib
 
