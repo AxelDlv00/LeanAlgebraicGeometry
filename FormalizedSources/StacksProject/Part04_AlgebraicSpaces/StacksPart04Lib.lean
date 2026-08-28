@@ -11,6 +11,7 @@ import StacksPart04Lib.QuotientFoundations
 import StacksPart04Lib.RelationFunctor
 import StacksPart04Lib.ActionGroupoid
 import StacksPart04Lib.ActionQuotient
+import StacksPart04Lib.FreeAction
 import StacksPart04Lib.FiberedGroupoids
 import StacksPart04Lib.FiberedSetoids
 
