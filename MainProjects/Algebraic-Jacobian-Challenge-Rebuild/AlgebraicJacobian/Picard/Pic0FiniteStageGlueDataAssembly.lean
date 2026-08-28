@@ -99,12 +99,36 @@ noncomputable def pic0FiniteStageAffineRingGlueData
     Pic0FiniteStageChartBaseChangeRing C L n m relation M N U
   let B : Pic0FiniteStageChartIndex C -> Pic0FiniteStageChartIndex C -> Type u :=
     fun U V => Pic0FiniteStageOverlapBaseChangeRing C L n m relation M N U V
+  /- Keep the chart and overlap carriers tied to the explicit tensor-product
+     witnesses used by the scalar-extension maps below.  Inferring these from
+     the reducible aliases can select a propositionally equal, but different,
+     semiring instance and make `Algebra (A U) (B U V)` ill-typed. -/
+  letI (U : Pic0FiniteStageChartIndex C) : CommRing (A U) :=
+    pic0FiniteStageChartBaseChangeCommRing C L n m relation M N U
+  letI (U V : Pic0FiniteStageChartIndex C) : CommRing (B U V) :=
+    pic0FiniteStageOverlapBaseChangeCommRing C L n m relation M N U V
+  letI (U : Pic0FiniteStageChartIndex C) : Algebra N.1 (A U) :=
+    pic0FiniteStageChartBaseChangeAlgebra C L n m relation M N U
+  letI (U V : Pic0FiniteStageChartIndex C) : Algebra N.1 (B U V) :=
+    pic0FiniteStageOverlapBaseChangeAlgebra C L n m relation M N U V
   let r : ∀ U V, A U →ₐ[N.1] B U V := fun U V =>
     pic0FiniteStageRestrictionBaseChange C L n m relation M mapM N U V
   letI : ∀ U V, Algebra (A U) (B U V) := fun U V =>
-    pic0FiniteStageAlgebraOfMap (r U V)
+    @pic0FiniteStageAlgebraOfMap N.1 (A U) (B U V)
+      (inferInstance : CommRing N.1)
+      (inferInstance : CommRing (A U))
+      (inferInstance : CommRing (B U V))
+      (inferInstance : Algebra N.1 (A U))
+      (inferInstance : Algebra N.1 (B U V))
+      (r U V)
   letI : ∀ U V, IsScalarTower N.1 (A U) (B U V) := fun U V =>
-    pic0FiniteStageTowerOfMap (r U V)
+    @pic0FiniteStageTowerOfMap N.1 (A U) (B U V)
+      (inferInstance : CommRing N.1)
+      (inferInstance : CommRing (A U))
+      (inferInstance : CommRing (B U V))
+      (inferInstance : Algebra N.1 (A U))
+      (inferInstance : Algebra N.1 (B U V))
+      (r U V)
   let tau : ∀ U V, B V U →ₐ[N.1] B U V := fun U V =>
     pic0FiniteStageTransitionBaseChange C L n m relation M mapM N U V
   let theta : ∀ U V W,
