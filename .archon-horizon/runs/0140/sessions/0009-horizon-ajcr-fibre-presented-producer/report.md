@@ -1,1 +1,0 @@
-The fresh-context audit validates the source shapes and pins the next theorem exactly: restriction from `D(f)` to `D(fg)` must equal direct construction on `D(fg)`, with a right-hand analogue. Before extending to that longer `DivEq` proof, I’m establishing a clean kernel check for the current unit against the live modified dependency without writing into its owner’s build output.

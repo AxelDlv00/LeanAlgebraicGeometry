@@ -1,1 +1,0 @@
-The only plausible small integration brick is a finite-stage specialization: consume the existing immersion-based orbit-affineness wrapper, then feed the already-landed finite-Galois `JacobianData` constructor with the finite-stage lft/qc certificates. I’m kernel-testing that exact composition in an isolated probe before deciding whether it merits a source edit.

@@ -1,7 +1,0 @@
-Captured the bounded pre-edit LSP baseline and sent it to `/root`.
-
-- 9 representative formalizes-linked modules checked across Algebra, AbelianVariety, Curve, Cohomology, Divisor, Picard, RiemannRoch, Tangent, and Challenge.
-- 8 were clean after sequential retry.
-- `AbelianVariety/GroupSeparated.lean` consistently reports the pre-existing stale-import diagnostic.
-- `Challenge.lean` reports only 13 pre-existing `sorry` warnings.
-- No files, git indexes, roadmap, inbox state, or builds were modified.

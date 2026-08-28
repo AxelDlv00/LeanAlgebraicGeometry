@@ -1,1 +1,0 @@
-Waiting on the Cech probe build (~8 min). I'll continue when it completes.

@@ -1,7 +1,0 @@
-Audit complete; no source changes were justified.
-
-The sibling challenge’s exact headline is `AlgebraicGeometry.nonempty_jacobianWitness` in [Jacobian.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/Jacobian.lean:897), with the public universal-property theorem `AlgebraicGeometry.Jacobian.exists_unique_ofCurve_comp` in [AbelJacobi.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/AbelJacobi.lean:91).
-
-The rebuild’s `PicRepDatum` to `JacobianData` bridge is already definitionally clean in [JacobianDataHandoff.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/JacobianDataHandoff.lean:39) and the Abel-lift variant in [JacobianDataFromPicRepDatum.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/JacobianDataFromPicRepDatum.lean:81). However, no unconditional `jacobianData C` producer exists, and the sibling project cannot import rebuild without creating an architectural cycle. Therefore no clean sibling-side bridge or `Challenge.lean` repair can be added without changing the frozen API or introducing unsupported assumptions.
-
-LSP diagnostics were clean on all inspected files. Narrow `lake env lean` checks exited successfully; only pre-existing `sorry` warnings remained.

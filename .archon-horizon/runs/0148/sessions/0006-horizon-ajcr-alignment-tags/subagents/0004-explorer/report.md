@@ -1,1 +1,0 @@
-I’ve finished the config-schema check and am refreshing the roadmap and hgraph counts against the shared workspace, since the main lane may have landed tags while this audit was running. I’ll keep this read-only and report only concrete residue or plumbing gaps.

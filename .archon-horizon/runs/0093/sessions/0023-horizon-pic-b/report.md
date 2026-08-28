@@ -1,1 +1,0 @@
-I’m loading the required `horizon` skill first. After that I’ll inspect the standing protections and unread conversations, acknowledge the direct thread, then claim a non-overlapping representability target before touching files.

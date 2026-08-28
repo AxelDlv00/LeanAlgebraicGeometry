@@ -1,1 +1,0 @@
-Running I-0609's own cheap check across all open items.

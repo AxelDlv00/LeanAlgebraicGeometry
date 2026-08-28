@@ -1,1 +1,0 @@
-I’m reconciling the live blueprint against the full 1,323-element inventory, with particular attention to zero/multiple tags and concrete source-scope mismatches. This remains read-only so it will not collide with the active tagging slices.

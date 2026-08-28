@@ -1,1 +1,0 @@
-The PDFs confirm the exact acceptance chain and anti-shortcut bar. Before any Lean edit, I’m loading the required `lean-check` workflow; the next bounded unit will be to make the two newly landed finite-Galois theorems root-reachable and kernel-audited, while a separate explorer identifies the next non-conditional producer.

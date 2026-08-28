@@ -1,1 +1,0 @@
-No additional commit is needed. The post-commit mutation only restored `I-1222.yaml`; its worktree blob exactly matches `HEAD` (`d60da52e63`), so it produced no durable change.

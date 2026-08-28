@@ -1,1 +1,0 @@
-I’m loading the Horizon session rules and checking the required inbox lanes before touching the project. Then I’ll announce a concrete Pic-representability target, inspect the current ledger/code state, and make a verified, committed change.

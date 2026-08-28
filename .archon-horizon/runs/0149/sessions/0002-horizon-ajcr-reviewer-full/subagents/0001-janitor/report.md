@@ -1,1 +1,0 @@
-The warning is exactly `3 conversations + 19 issues + 10 memories = 32`; memory is at its cap, while issue accumulation pushes the total over. Two conversations are active fences with `ajcr-alignment-tags`; I’m reading those threads and the older three-lane coordination thread before deciding whether any closure is legitimate.

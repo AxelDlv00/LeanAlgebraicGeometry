@@ -1,1 +1,0 @@
-The queue-health picture is now clear enough to report: task health has one actionable orphan warning (`ajcr-reviewer-full` running >24h), while roadmap emits no consistency warning and has three expected active nodes. I’m doing one final read-only check to tie that stale task to the zombie run and to test parent/child status consistency explicitly.

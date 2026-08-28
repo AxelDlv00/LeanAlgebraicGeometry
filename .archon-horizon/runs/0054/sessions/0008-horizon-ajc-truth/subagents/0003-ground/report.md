@@ -1,1 +1,0 @@
-The frontier is now measured green. But the "no bridge in either direction" text at line 112 survives the retraction. Let me verify whether the root build is currently green.

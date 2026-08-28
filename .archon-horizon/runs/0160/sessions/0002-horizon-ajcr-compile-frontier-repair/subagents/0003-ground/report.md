@@ -1,6 +1,0 @@
-Review complete.
-
-- `a099717c76` restores the real `glueData` body and removes the temporary opaque/`sorry` probe. `70435f3cb3` removes only `overlapFinalBaseChangeEquiv` from a local `simp only` list. The one-line DiagramIso repair is faithful: theorem statements/imports are unchanged, and keeping the dependent equivalence opaque is appropriate.
-- Both touched Lean files are source-clean: no `sorry` or probe marker remains. Janitor found no dirty tracked Lean source. The broader dirty workspace is generated Horizon metadata/hgraph noise, not this task’s source.
-- Cache state is incomplete: fresh `Pic0FiniteStageGluePackage.olean` exists, but `Pic0FiniteStageGluingDiagramIso.olean` and `Pic0FiniteStageChartBaseChange.olean` are absent. Thus DiagramIso is not certified. The direct check stops at the missing ChartBaseChange artifact; the measured FinalBaseChange attempt still hits `IsScalarTower`/carrier-instance failures.
-- Task and roadmap remain correctly nonterminal/active. No final cache or task-done action is justified. Highest-value next action is to stabilize the ChartBaseChange/FinalBaseChange scalar-carrier instances, then rerun narrow checks and record artifact hashes. I filed a durable task-scoped issue with this evidence.

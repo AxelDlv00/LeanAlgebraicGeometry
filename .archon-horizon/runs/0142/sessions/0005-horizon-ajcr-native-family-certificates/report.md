@@ -1,9 +1,0 @@
-Advanced the certificate lane, but the full actual-lambda producer remains blocked.
-
-Implemented arbitrary-ring descent certificates in [RankOneFamilyCertificatesDescent.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Cohomology/RankOneFamilyCertificatesDescent.lean:85) and H0 scalar-extension/tower coherence in [Pic0RankOneFamilyCertificatesH0BaseChange.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0RankOneFamilyCertificatesH0BaseChange.lean:329). The final ring is arbitrary; Noetherian assumptions are confined to the descent stage.
-
-Narrow Lean checks passed for the core, descent, and H0 coherence files. Axiom audits report only `propext`, `Classical.choice`, and `Quot.sound`; no `sorry` or `admit` occurs. No full build was run.
-
-The remaining gap is recorded in `I-1968` and handed to protected integration through `I-1927`: the actual-lambda adapter’s protected import closure currently fails in `Pic0AdmissibleAbelEtaleSurjectiveH0BaseChange`, and the producer still requires explicit descent-stage geometric witnesses. I therefore did not claim the requested end-to-end producer complete.
-
-Commits: `44aae80396`, `216dfacf0d`, `b3c2c2c13`, `8e2d0a2207`, `4e819dc749`, and final Horizon checkpoint `60e3258755`. Mixed concurrent ledger aggregates and other writers’ session state were intentionally left untouched.

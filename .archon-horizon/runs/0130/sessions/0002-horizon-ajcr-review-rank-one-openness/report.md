@@ -1,1 +1,0 @@
-I’m continuing at the producer boundary: first I’m checking the latest coordination replies, then I’ll test whether the existing arbitrary H0 base-change machinery can genuinely discharge the native sheaf-level base-change field. I won’t edit a locus file unless that yields a real family-level theorem consumed by the existing openness chain.

@@ -1,1 +1,0 @@
-The indexed search finds only the wrapper already added for positive twisting; it does not reveal a theorem that constructs a divisor presentation from an arbitrary Picard class. I’m checking the lower-level drop and chart modules directly now, including the newly committed openness API, to separate a missing composition lemma from genuinely absent mathematics.

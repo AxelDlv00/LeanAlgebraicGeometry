@@ -1,1 +1,0 @@
-Status: one new sorry-free theorem is written, `canonicalRankOneDivisorOfMem_mapAlgHom`, and rooted in `Pic0CriticalPath`. Its proof is five lines via uniqueness. Verification is currently blocked by the missing `Pic0RankOneCanonicalDivisorFree.olean`; I have stopped my redundant check, and I’m notifying root before doing anything else.

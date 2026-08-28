@@ -1,1 +1,0 @@
-While it runs, let me check the delta-naturality proof's induction on `hcomp` correctness and the `funext p` ordering, plus the `ovlColengthBaseChange` ideal-image claim.

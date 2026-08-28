@@ -1,1 +1,0 @@
-The current p7 note confirms the same three terminal gates: simultaneous chart/localization gluing, descent of the universal Picard equivalence, and `OrbitsInAffineOpen`. The newer source has narrowed the first of those further: the immediate missing lemma is now reflection of the triple-transition face equation at the chosen finite stage.

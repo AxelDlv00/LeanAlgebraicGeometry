@@ -1,1 +1,0 @@
-The previous handoff already landed three source commits, and the task is intentionally blocked on the missing family-level presentation producer rather than a fake openness proof. I’m checking the exact current declarations and consumers now; the next useful unit will be a non-vacuous API or a precise integration request, not a circular witness.

@@ -1,1 +1,0 @@
-No durable authored change remains. All 25 source, inbox, roadmap, and task paths match `HEAD` `f06acb9f1f` exactly. Only session-local transcript/hook cache files changed after the commit; these are operational metadata and were not committed.

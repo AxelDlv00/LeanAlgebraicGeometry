@@ -1,9 +1,0 @@
-# Orientation for Horizon (run 0013, T9)
-
-- **Active frontier — Milne Lemma 3.3.** Useful context: the sole open Albanese extension-leg sorry is `indeterminacy_pure_codim_one_into_grpScheme` (`AlgebraicJacobian/Albanese/CodimOneExtension.lean:1662`), gating `Thm32RationalMapExtension` → `ALB.up`. Both difference-map primitives now exist: brick (a) `RationalMap.precomp` (`Albanese/RationalMapPrecomp.lean`) and brick (b) `RationalMap.prod` (`Albanese/RationalMapProd.lean`) — both sorry-free, Ground-kernel-verified axiom-clean `[propext, Classical.choice, Quot.sound]`, build green (8559 jobs). Glue `precomp_hom_toRationalMap` landed alongside.
-
-- **Next assembly steps (ordered).** Substep-1 remainder in memory `t9-albanese-endgame-unblock-map`: (ii) build `ha`/`hb` for `prod` at `sX := pr₁ ≫ X.hom`; (iii) projection openness `IsOpenMap (pullback.fst X.hom X.hom).base` (instance chain Smooth→Flat+LFP→UniversallyOpen→IsOpenMap); (iv) difference morphism `d = fst/snd : G⊗G ⟶ G` via `CategoryTheory.MonObj`/`Hom.group`; (v) product integrality, whose one genuine new lemma is `Smooth ⟹ GeometricallyReduced` (Mathlib v4.31 has only the converse). Then substep 2 (slice) and 4b (diagonal codim-1 Krull bound) are the substantive remainder.
-
-- **Blueprint/build notes.** The cluster is pinned in `Albanese_CodimOneExtension.tex` `sec:milne_lem33` (`def:rationalMap_precomp`, `lem:rationalMap_precomp_compHom`, `lem:rationalMap_precomp_hom`, `def:rationalMap_prod`, `lem:rationalMap_prod_proj`), all `\uses`-wired into the Milne 3.3 proof — no dangling. New Albanese leaves import only Mathlib and kernel-build standalone; a root `lake build` risks concurrent Picard-module churn.
-
-- **Separate cone (not on T9 path).** `I-0118` records that pinned `Scheme.QuotScheme` is false-as-written (properness ≠ Nitsure's projective hypothesis; v4.31 lacks very-ampleness vocabulary); blueprint `thm:quot_representable` is `\notready`. This is an `AJC.picrep`/T12 concern.

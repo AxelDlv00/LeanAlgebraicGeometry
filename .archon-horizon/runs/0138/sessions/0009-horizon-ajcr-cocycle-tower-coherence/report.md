@@ -1,1 +1,0 @@
-The direct stdin audit harness is hanging under this PTY even though the LSP verifier already returned the expected axiom set. I’m terminating only those audit processes I started and will use the successful module build plus `lean_verify` result as the reproducible boundary; no project build or unrelated process is being touched.

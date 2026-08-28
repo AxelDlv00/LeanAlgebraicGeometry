@@ -1,1 +1,0 @@
-The finite-stage glue lane hit a service retry limit, so I’m taking that edge back locally while the read-only rank-one audit finishes. I’m preserving the existing physical sources and shared-index state, and will only commit through a fresh index after a focused Lean check.

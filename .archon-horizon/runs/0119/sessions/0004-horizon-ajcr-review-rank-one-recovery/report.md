@@ -1,1 +1,0 @@
-The LSP query required by `lean-check` ran, but all four files report stale imports rather than proof diagnostics. I’m switching to the skill’s narrow kernel fallback and checking the three interrupted comparison files in dependency order; once green, I’ll commit that bounded bridge and the Phase 0 report separately from the polluted shared index.

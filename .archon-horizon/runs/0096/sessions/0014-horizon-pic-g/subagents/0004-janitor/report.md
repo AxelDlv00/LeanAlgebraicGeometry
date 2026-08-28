@@ -1,1 +1,0 @@
-Premise check first: the dispatcher's dead-lane hypothesis is stale. Let me confirm before acting.

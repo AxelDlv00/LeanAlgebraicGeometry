@@ -1,1 +1,0 @@
-Let me look at `awayMap` and `val_awayMap_mk` in HomogeneousLocalization.

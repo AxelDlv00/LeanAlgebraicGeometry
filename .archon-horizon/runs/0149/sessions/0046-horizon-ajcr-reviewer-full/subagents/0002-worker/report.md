@@ -1,7 +1,0 @@
-Audit complete. The honest bridge is already present in AJCR:
-
-- `Picard/JacobianDataHandoff.lean:39`: `PicRepDatum k k C` plus `QuasiCompact d.J.hom` produces `JacobianData C`.
-- Its `J`, `rep`, `grpObj`, and `homEquiv` compatibility lemmas are definitional (`rfl`).
-- `JacobianDataFromPicRepDatum.lean:81` adds the Abel-lift route for supplying quasi-compactness.
-
-The sibling AJC headline uses `JacobianWitness`/`picardJacobianWitness` without a rational-point binder. AJCR `Challenge.Jacobian` remains an opaque `sorry` definition, so no sound theorem can identify an arbitrary `JacobianData.J` with it until a producer/equality edge is added. Both handoff modules pass LSP diagnostics and `lake env lean`; they are root-reachable. No edit was made.

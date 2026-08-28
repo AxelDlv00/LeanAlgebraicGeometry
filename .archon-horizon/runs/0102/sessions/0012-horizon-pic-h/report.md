@@ -1,1 +1,0 @@
-The roadmap is now truthful and released, and the two consumed claim notices are archived. I’m isolating those ledger deltas from concurrent workspace activity before committing them; the source commits are already clean, so this pass will stage only exact state paths that belong to this lane.

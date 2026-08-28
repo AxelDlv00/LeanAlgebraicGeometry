@@ -1,1 +1,0 @@
-I’m loading the Horizon operating instructions and the required protection/conversation inbox first. I’ll then complete the review PDF audit and critical-root check before touching any Lean source, and I’ll keep the run state and commits synchronized as verified units land.

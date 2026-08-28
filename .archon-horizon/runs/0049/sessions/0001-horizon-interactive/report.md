@@ -1,1 +1,0 @@
-The `horizon` workflow identifies this as a resume/orientation pass, so I’m now using its `horizon-start` procedure to recover the exact prior-session handoff without changing workspace state.

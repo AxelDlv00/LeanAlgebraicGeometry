@@ -1,7 +1,0 @@
-Read-only audit complete; no files were edited, committed, built, or otherwise mutated.
-
-The central conclusion is that no generic API currently yields binder-free arbitrary-field `RepresentableBy` from base-change data alone. `RepresentableBy.ofIso`, `ofObjectIso`, `ofLeftAdjoint`, `uniqueUpToIsoOfIso`, and the project’s cocycle/descent helpers all require an existing representation. The only actual base-field constructor is `pic0RepresentableBy_finiteGaloisDescent` (`Pic0FiniteGaloisRepresentable.lean:35-45`), which requires finite-dimensional/Galois extension data, an extension-side representation, and `OrbitsInAffineOpen`.
-
-The project’s overlap/descent files construct natural-isomorphism cocycles and `DescentData'` (`Pic0RepresentabilityOverlap.lean`, `Pic0RepresentabilityDescentData.lean:398-423`), but no effective-descent consumer or `IsStack` instance exists. Element-level Galois invariant descent is not scheme-level representability. `finiteStageBaseChangeIso` (`Pic0FiniteStageGluedComparison.lean:284-292`) is only a raw scheme isomorphism and cannot create a representation.
-
-Additional conditional producers were identified: chart assembly (`Pic0SigmaSheaf.lean:161-169`), subsingleton/terminal representation (`Pic0VanishingRoute.lean:175-185`), and the separably closed endpoint (`Pic0SepClosedRepresentable.lean:443-446`). None is an unconditional arbitrary-field theorem.

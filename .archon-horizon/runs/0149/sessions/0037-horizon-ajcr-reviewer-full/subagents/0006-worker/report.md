@@ -1,1 +1,0 @@
-Standalone verification failed. Lean could not synthesize the chart/overlap base-change ring and algebra instances in `hAffineStructure`; the file is not kernel-clean and should not be committed as-is. No further edits were made.

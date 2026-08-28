@@ -1,1 +1,0 @@
-The transparency override is materially improving the profile: the helper is at ~20 GiB after eleven minutes, versus ~38 GiB at the same phase before. No diagnostics have appeared, so I’m continuing this bounded run toward completion.

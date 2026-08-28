@@ -1,1 +1,0 @@
-The current static census matches the predecessor’s endpoint state: `958/977` AJCR modules rooted, `19` unrooted, `15` rooted `sorry` tokens confined to the protected challenge file, and zero explicit project axioms. I’m now replaying all six immutable Phase 0 pins, then the narrow kernel root under the normal build budget.

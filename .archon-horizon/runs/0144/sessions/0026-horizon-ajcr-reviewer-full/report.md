@@ -1,1 +1,0 @@
-The roadmap now records the exact partial closure and the three remaining Phase 7 gates; Phase 8 stays pending rather than being overstated. I’m also re-running the sibling project’s full build while the two bounded bridge ports work, since the user asked for both projects to remain green.

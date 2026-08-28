@@ -1,1 +1,0 @@
-The graph confirms the distinction rather than closing it: the three new declarations are `lean_ok` Lean-only nodes with no hard edges or ancestors, while the corresponding blueprint nodes remain `empty` and `\notready`. I’m checking the session’s retained build and axiom output now, without launching a new build or mutating `.lake`.

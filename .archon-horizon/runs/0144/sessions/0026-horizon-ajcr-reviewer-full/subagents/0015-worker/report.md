@@ -1,1 +1,0 @@
-Kernel verification and the three projective transport endpoints are clean, using only Lean’s standard classical axioms and no suspicious source patterns. I’m doing the final scoped diff and API scan, then I’ll hand the exact missing H-quasi-projectivity dependency back to the parent task.

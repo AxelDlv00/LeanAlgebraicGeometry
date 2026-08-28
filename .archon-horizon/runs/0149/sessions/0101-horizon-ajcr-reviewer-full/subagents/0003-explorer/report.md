@@ -1,1 +1,0 @@
-Reconciliation sent to the parent. Key result: no unconditional endpoint landed. `GlueDataFace.olean` now exists, but top-level `PreSnd`, `OverlapIsoSnd`, and `GluedComparison` artifacts remain absent. The mathematical blocker is still binder-free `RepresentableBy P.gluedOver`, followed independently by exact-carrier projectivity/orbit-affineness.

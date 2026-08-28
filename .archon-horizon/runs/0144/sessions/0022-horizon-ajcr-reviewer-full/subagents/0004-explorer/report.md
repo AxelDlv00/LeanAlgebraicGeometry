@@ -1,1 +1,0 @@
-The protection state confirms the AJCR ownership fences: I’m only reading canonical files, especially recovery/translated-cover lanes, and will report interfaces rather than touch them. The Horizon search index is returning no declaration payloads, so I’m supplementing with exact-name/file searches and lightweight source inspection.

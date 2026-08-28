@@ -1,1 +1,0 @@
-The Horizon skill routes this audit through `horizon-start`, `horizon-inbox`, and `task-status`; I’m using those now because they define the launch-state checks, ownership/closure rules, and safe status transitions. After that I’ll capture the before counts before making any hygiene changes.

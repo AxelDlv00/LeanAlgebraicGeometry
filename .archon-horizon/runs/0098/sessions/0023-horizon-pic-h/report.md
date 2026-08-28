@@ -1,1 +1,0 @@
-I’m loading the Horizon workflow and checking the required protection and conversation lanes first. I’ll then inspect the shared roadmap and peer announcements, announce a non-overlapping Pic-representability target, and carry a verified Lean unit through commit and final measurement.

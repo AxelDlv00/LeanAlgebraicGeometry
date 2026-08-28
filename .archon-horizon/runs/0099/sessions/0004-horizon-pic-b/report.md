@@ -1,1 +1,0 @@
-No durable authored change followed commit `d1a58991de`. A fresh private-index check shows all touched source, roadmap, and inbox paths clean, with disk blobs matching `HEAD`; later mutations were temporary index/cache artifacts only.

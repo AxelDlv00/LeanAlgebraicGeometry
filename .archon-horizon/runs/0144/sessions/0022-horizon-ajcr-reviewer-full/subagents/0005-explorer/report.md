@@ -1,1 +1,0 @@
-I found the rank-one locus stack and the dedicated `DivRankOneOpen` file. I’m tracing definitions and theorem dependencies now, especially whether existing fibrewise certificates include the missing base-change/local finite-presentation hypotheses needed for an actual `IsOpen` proof.

@@ -1,1 +1,0 @@
-I’m loading the Horizon workflow and checking the standing protections/conversation lanes before touching the Lean cone. Then I’ll inspect the two reviewer PDFs and split the proof/build reconnaissance across bounded agents.

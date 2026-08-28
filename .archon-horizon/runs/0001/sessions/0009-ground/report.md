@@ -1,1 +1,0 @@
-I'll stop polling and let the Monitor event notify me when the build finishes. Standing by for the build result.

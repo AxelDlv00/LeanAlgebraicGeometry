@@ -1,1 +1,0 @@
-The audit has established the main signal: the current AJC continuation is adding `RepresentableBy` consumers, while the real Picard representability producer remains unresolved. I’m now tightening the source/blueprint corrections, checking the projectivity import seam, and preparing an explicit-path commit so the review changes survive the shared-index hazard.

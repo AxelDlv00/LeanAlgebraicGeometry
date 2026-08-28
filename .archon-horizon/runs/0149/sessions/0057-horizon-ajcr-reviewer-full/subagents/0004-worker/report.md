@@ -1,1 +1,0 @@
-The live goal confirms the right sequence: normalize associativity first, then rewrite each terminal projection from the inside out (`congrHom`, affine base-change map, then the outer `congrHom`). I’m replacing the broad `simpa` with that explicit sequence so Lean does not depend on reassociation matching heuristics.

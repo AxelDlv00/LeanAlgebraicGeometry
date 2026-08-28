@@ -1,7 +1,0 @@
-Canonical-instance build exited 1 after 430 seconds.
-
-At line 120, the Spec.map_comp rewrite cannot see a composable pattern because
-the restriction map source remains displayed as Pic0FiniteStageModelRing at
-the dependent MapSource index, while chartMap uses the literal chart tensor
-carrier. Lean reports that the target is not type-correct at instances
-transparency. No olean or axiom audit was produced.

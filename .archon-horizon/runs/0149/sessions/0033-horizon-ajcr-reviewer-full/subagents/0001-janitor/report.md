@@ -1,5 +1,0 @@
-Janitor audit complete; no files or inbox items were modified.
-
-Existing issues cover all hazards: `I-1222` shared-index discipline, `I-1986` concurrent dashboard publishers, `I-1913` tracked lock/tmp artifacts, and `I-1985` Horizon version drift. Four dashboard writers plus cron remain live, so commits must use explicit private-index pathspecs.
-
-Health remained unchanged before/after: inbox `5/0/4/10/0/0` for protection/conversation/issue/memory/info/hint; tasks `75` (`1 running`, `4 queued`); roadmap `388` (`3 active`, `10 blocked`); CLI warnings none. The audit was recorded on task `ajcr-reviewer-full`.

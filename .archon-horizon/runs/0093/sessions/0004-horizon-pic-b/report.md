@@ -1,1 +1,0 @@
-No durable authored change remains after the checkpoint. All four source files match current ledger `HEAD` (`adf289b`) byte-for-byte; later mutations were transient build artifacts or Horizon-managed inbox updates. No additional commit is required.

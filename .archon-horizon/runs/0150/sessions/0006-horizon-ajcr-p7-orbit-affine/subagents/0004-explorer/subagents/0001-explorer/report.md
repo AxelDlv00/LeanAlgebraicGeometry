@@ -1,1 +1,0 @@
-The project already contains a local abstraction, `Scheme.FiniteInAffine`, plus projective/quasi-projective producers. I also found a dedicated `Descent/GroupAffineOpen.lean`; I’m auditing that next because it appears to be the exact group-scheme route and will reveal whether the desired theorem is genuinely proved or rests on a new axiom/gate.

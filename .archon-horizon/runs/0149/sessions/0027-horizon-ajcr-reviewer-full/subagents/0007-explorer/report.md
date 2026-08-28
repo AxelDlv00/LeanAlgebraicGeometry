@@ -1,3 +1,0 @@
-No canned base-change distribution equivalence exists in Mathlib. The concrete route and the exact `GlueData.t'` construction were sent to the parent, including the required ring identities for `t_fac` and cocycle reflection.
-
-The genuine next blocker is finite-stage models for the triple tensor rings and their simultaneous map/equation descent; pairwise restriction models alone cannot supply `t'`.

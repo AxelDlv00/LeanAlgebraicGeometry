@@ -1,1 +1,0 @@
-The latest ledger commit is still metadata-only (`1e344a199f`, run 0149 session 0101). The continuation session 0104 is live and has now switched to explicit Lake `+Module:olean` targets; I’m checking once for a newly materialized artifact/commit before freezing the audit.

@@ -1,1 +1,0 @@
-This is round 2 of the same run, and the preceding Horizon session finished cleanly. I’m reading its handoff alongside the task record and mandatory protection/conversation lanes; this will distinguish genuinely stale metadata from state that is actively owned by the current run.

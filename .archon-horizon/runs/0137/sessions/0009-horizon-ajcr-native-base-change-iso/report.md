@@ -1,1 +1,0 @@
-The characterization proof reduces to the unit compatibility of uniqueness of left adjoints, exactly as expected. The language server is slow on this dependency cone, so I’m letting the isolated probe finish before touching the source; there is no project-wide build running.

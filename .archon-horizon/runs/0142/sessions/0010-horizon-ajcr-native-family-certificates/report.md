@@ -1,1 +1,0 @@
-The corrected file is actively elaborating now, with its source process visible and no diagnostic output yet. This target is expensive enough to warrant preserving the successful `.olean` once it lands; I’ll commit it as the first verified unit before building on top of it.

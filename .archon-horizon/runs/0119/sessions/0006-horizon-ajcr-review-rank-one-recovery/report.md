@@ -1,1 +1,0 @@
-The serialized critical-root build has completed successfully: all 8,810 jobs passed, including the umbrella `AlgebraicJacobian` root. I’m now treating Phase 0 as kernel-verified and moving to the first reviewed production unit: a small canonical `relCurve` bridge plus an explicit endgame contract surface, with no placeholder theorem bodies or hidden axioms.

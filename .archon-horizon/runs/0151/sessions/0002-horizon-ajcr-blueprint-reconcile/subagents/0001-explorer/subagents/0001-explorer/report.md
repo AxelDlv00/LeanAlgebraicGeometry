@@ -1,1 +1,0 @@
-The first structural difference is clear: the sibling does not define the Rebuild endpoint names `rankOneAbel_isOpenImmersion`, `pic0_representableBy`, `PicRepDatum`, or `JacobianData`; those names belong to Rebuild. I’m tracing the sibling’s analogous route now, especially its concrete finite-Galois quotient/descent stack and the unconditional Phase 8 consumers it feeds.

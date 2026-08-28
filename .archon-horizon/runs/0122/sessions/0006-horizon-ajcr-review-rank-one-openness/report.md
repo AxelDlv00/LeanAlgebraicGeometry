@@ -1,1 +1,0 @@
-The named open-object map elaborates cleanly. LSP diagnostics are empty, the file kernel-checks with exit 0, and both new declarations use only the standard three axioms; I’m checkpointing this as its own commit before the final audit.

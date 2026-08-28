@@ -1,1 +1,0 @@
-No durable authored change remains after the last commit. The mutations only created and deleted two `/tmp` import probes; both are absent, and all five authored Lean files match HEAD `ae9e5ae8be`. No additional commit is warranted.
