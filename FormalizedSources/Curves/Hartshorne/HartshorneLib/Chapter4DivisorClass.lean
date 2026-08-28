@@ -96,6 +96,13 @@ theorem divisorClass_principalDivisor (g : X.left.functionFieldˣ) :
   apply (QuotientAddGroup.eq_zero_iff (principalDivisor g)).mpr
   exact (mem_principalDivisors_iff (principalDivisor g)).mpr ⟨g, rfl⟩
 
+/-- Two divisors have the same class exactly when their difference is principal. -/
+theorem divisorClass_eq_iff_exists_principal (D E : CurveDivisor k X) :
+    divisorClass D = divisorClass E ↔
+      ∃ g : X.left.functionFieldˣ, D - E = principalDivisor g := by
+  rw [← linearlyEquivalent_iff_divisorClass_eq,
+    linearlyEquivalent_iff_exists]
+
 /-- A divisor represents the zero class exactly when it is principal. -/
 theorem divisorClass_eq_zero_iff_exists_principal (D : CurveDivisor k X) :
     divisorClass D = 0 ↔
