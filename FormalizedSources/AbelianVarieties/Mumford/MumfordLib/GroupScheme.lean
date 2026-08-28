@@ -64,6 +64,31 @@ theorem factors_through_snd_iff
       _ = snd X Y ≫ (lift (toUnit Y ≫ x₀) (𝟙 Y) ≫ f) :=
         Category.assoc _ _ _
 
+/-- The factor through the second projection is unique. -/
+theorem factor_through_snd_unique
+    {X Y Z : C} (x₀ : 𝟙_ C ⟶ X) (f : X ⊗ Y ⟶ Z)
+    {g₁ g₂ : Y ⟶ Z} (h₁ : f = snd X Y ≫ g₁)
+    (h₂ : f = snd X Y ≫ g₂) : g₁ = g₂ := by
+  have h := congrArg (fun q => lift (toUnit Y ≫ x₀) (𝟙 Y) ≫ q)
+    (h₁.symm.trans h₂)
+  simpa using h
+
+/-- The rigidity factorization can be stated with a unique factor. -/
+theorem existsUnique_factor_through_snd_iff
+    {X Y Z : C} (x₀ : 𝟙_ C ⟶ X) (f : X ⊗ Y ⟶ Z) :
+    (∃! g : Y ⟶ Z, f = snd X Y ≫ g) ↔
+      lift (toUnit (X ⊗ Y) ≫ x₀) (snd X Y) ≫ f = f := by
+  constructor
+  · rintro ⟨g, hg, _⟩
+    exact (factors_through_snd_iff x₀ f).mp ⟨g, hg⟩
+  · intro h
+    have hex : ∃ g : Y ⟶ Z, f = snd X Y ≫ g :=
+      (factors_through_snd_iff x₀ f).mpr h
+    obtain ⟨g, hg⟩ := hex
+    refine ⟨g, hg, ?_⟩
+    intro g' hg'
+    exact factor_through_snd_unique x₀ f hg' hg
+
 /-- The group-valued functor of points of a group object. -/
 abbrev pointsFunctor (G : C) [GrpObj G] : Cᵒᵖ ⥤ GrpCat :=
   CategoryTheory.yonedaGrpObj G
