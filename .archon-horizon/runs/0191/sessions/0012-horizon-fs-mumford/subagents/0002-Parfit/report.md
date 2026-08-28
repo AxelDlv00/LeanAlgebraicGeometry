@@ -1,0 +1,1 @@
+I’m checking the active Mumford frontier and nearby project APIs for exact theorem signatures that can shorten the next proofs. This remains read-only; I’ll send only concrete names and compile-tested shapes to `/root`.

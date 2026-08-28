@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Euler",
+  "agent_path": "/root/hygiene2",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "janitor",
+  "native_subagent_id": "01a04908-d72b-7712-bfcb-2d8e98935e2d",
+  "ok": true,
+  "parent_session": "0012-horizon-fs-mumford",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Final audit completed read-only. The workspace currently has 55 open inbox items: 3 protections, 16 conversations, 11 memories, and 25 issues, so 52 non-protection items.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 3631846,
+    "tokens_out": 17591
+  }
+}

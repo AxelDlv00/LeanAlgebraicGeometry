@@ -852,7 +852,7 @@
     },
     "states": {
       "blocked": 124,
-      "closed": 97,
+      "closed": 102,
       "formalized_open": 0,
       "informal": 258,
       "ready": 138
@@ -871,7 +871,9 @@
       "MilneLib.GroupVariety.rigidity_lemma: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.GroupVariety.rigidity_snd_lift: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.GroupVariety.snd_left_isClosedMap: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.Isogeny.comp_of_finite: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.Isogeny.id: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.Isogeny.of_isIso: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.LinearMap.exact_of_localized_at_maximal: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.LinearMap.natCard_quotient_range_eq_natAbs_det: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.LinearMap.surjective_iff_surjective_residue: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -885,6 +887,9 @@
       "MilneLib.LinearMap.surjective_of_surjective_residue_at_maximal: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.affineModuleSheaf_epi_of_surjective_on_residue_fibres: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.moduleFinite_affineModuleSheaf_stalk: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.moduleFinite_of_finite_generating_family: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.moduleFinite_of_finite_generating_set: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.moduleFinite_of_surjective_of_finite_basis: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.moduleFinite_tilde_stalk: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.quotTensorEquivQuotSMul: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.quotTensorEquivQuotSMul_comp_mkQ_rTensor: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -902,12 +907,7 @@
       "MilneLib.schemeModule_epi_of_surjective_on_stalks: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.schemeModule_isIso_iff_isIso_on_stalks: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.schemeModule_isIso_of_bijective_on_stalks: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.schemeModule_isIso_of_surjective_on_residue_fibres_of_invertible_stalks: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.schemeSheafCoevaluation: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.schemeSheafCoevaluationAt: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.schemeSheafCoevaluationAt_naturality: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.schemeSheafCoevaluation_app: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.schemeSheafCoevaluation_evaluation: Lean declaration is not referenced by any blueprint \\lean{...}"
+      "MilneLib.schemeModule_isIso_of_surjective_on_residue_fibres_of_invertible_stalks: Lean declaration is not referenced by any blueprint \\lean{...}"
     ]
   },
   "nodes": [
@@ -3929,7 +3929,7 @@
     },
     {
       "chapter": "Geometry of Abelian Varieties",
-      "comment_count": 0,
+      "comment_count": 1,
       "dep_count": 0,
       "descendant_count": 23,
       "group": "c109",
@@ -4973,7 +4973,7 @@
     },
     {
       "chapter": "Geometry of Abelian Varieties",
-      "comment_count": 12,
+      "comment_count": 13,
       "dep_count": 1,
       "descendant_count": 0,
       "group": "c140",
