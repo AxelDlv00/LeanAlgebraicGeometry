@@ -19,6 +19,7 @@
 - `GlueDataFace` and `GlueDataAssembly` artifacts remain absent, while the legacy `GluePackage` artifact is stale. Their raw constructors and repeated instance reconstruction remain the expensive boundary.
 - `Pic0FiniteStageFinalBaseChange.lean` still has the open final base-change naturality proof.
 - The ignored `hgraph/` tree predates this session and is stale. It should be synchronized only after the parallel runs quiesce.
+- The final ledger scan still shows unrelated concurrent or pre-existing changes in `.archon-horizon/blueprints/Mumford.json`, `FormalizedSources/StacksProject/**`, `README.md`, `references/**`, and other live-run state; none were staged for this task.
 
 ## Why I stopped
 
