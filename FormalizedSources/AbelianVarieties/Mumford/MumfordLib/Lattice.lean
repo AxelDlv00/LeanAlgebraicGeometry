@@ -118,6 +118,14 @@ theorem genusTorus_isPathConnected (g : ℕ) : PathConnectedSpace (GenusTorus g)
         intro x y
         exact ⟨Path.pi (fun i => PathConnectedSpace.somePath (x i) (y i))⟩ }
 
+/-- The standard exponential is an open quotient map onto the genus torus. -/
+theorem genusTorusExponential_isOpenQuotientMap (g : ℕ) :
+    IsOpenQuotientMap (genusTorusExponential g) := by
+  change IsOpenQuotientMap (Pi.map (fun _ : Fin (2 * g) =>
+    (QuotientAddGroup.mk' (AddSubgroup.zmultiples (1 : ℝ)) :
+      ℝ → UnitAddCircle)))
+  exact IsOpenQuotientMap.piMap (fun _ => QuotientAddGroup.isOpenQuotientMap_mk)
+
 /-- The coordinatewise exponential to the genus torus is surjective. -/
 theorem genusTorusExponential_surjective (g : ℕ) :
     Function.Surjective (genusTorusExponential g) := by
