@@ -6,6 +6,7 @@ Authors: The Milne Contributors
 
 import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.Topology.Sheaves.LocallySurjective
+import MilneLib.Affine
 import MilneLib.Tensor
 
 /-!
@@ -110,6 +111,33 @@ theorem schemeModule_epi_of_surjective_on_residue_fibres
     hfinite x
   exact (LinearMap.surjective_lTensor_residueField_iff_surjective
     (schemeModuleStalkLinearMap f x)).mp (hres x)
+
+/-- Affine tilde specialization of the residue-fibre epi bridge.  For a
+finite target module, the required finite-stalk instances are supplied by
+`moduleFinite_affineModuleSheaf_stalk`; only the residue-fibre maps remain as
+an input. -/
+theorem affineModuleSheaf_epi_of_surjective_on_residue_fibres
+    {R : CommRingCat.{u}} {M N : ModuleCat R} [Module.Finite R N]
+    (f : M ⟶ N)
+    (hres : ∀ x : Spec R,
+      letI : Module ((Spec R).presheaf.stalk x)
+          (↑(TopCat.Presheaf.stalk
+            ((AlgebraicGeometry.tilde.functor R).obj M).val.presheaf x) : Type u) :=
+        schemeModuleStalkModule ((AlgebraicGeometry.tilde.functor R).obj M) x
+      letI : Module ((Spec R).presheaf.stalk x)
+          (↑(TopCat.Presheaf.stalk
+            ((AlgebraicGeometry.tilde.functor R).obj N).val.presheaf x) : Type u) :=
+        schemeModuleStalkModule ((AlgebraicGeometry.tilde.functor R).obj N) x
+      Function.Surjective
+        ((schemeModuleStalkLinearMap
+          ((AlgebraicGeometry.tilde.functor R).map f) x).lTensor
+          (IsLocalRing.ResidueField ((Spec R).presheaf.stalk x)))) :
+    Epi ((AlgebraicGeometry.tilde.functor R).map f) := by
+  apply schemeModule_epi_of_surjective_on_residue_fibres
+    ((AlgebraicGeometry.tilde.functor R).map f)
+  · intro x
+    exact moduleFinite_affineModuleSheaf_stalk N x
+  · exact hres
 
 /-- The counit of the pullback--pushforward adjunction for a scheme morphism. -/
 noncomputable def schemeSheafEvaluation {W V : Scheme} (f : W ⟶ V) :
