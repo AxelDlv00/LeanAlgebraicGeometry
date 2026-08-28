@@ -218,6 +218,53 @@ theorem complexQuotientToRealQuotientAddEquiv_mk (g : ℕ)
       (QuotientAddGroup.mk' (complexPeriodLattice g) z) = _
   simp [complexQuotientToRealQuotientAddHom]
 
+@[simp]
+theorem realQuotientToComplexQuotientAddEquiv_mk (g : ℕ)
+    (v : GenusRealVector g) :
+    (complexQuotientToRealQuotientAddEquiv g).symm
+        (QuotientAddGroup.mk' (integerPeriodLattice g) v) =
+      QuotientAddGroup.mk' (complexPeriodLattice g)
+        ((genusComplexVectorRealification g).symm v) := by
+  change realQuotientToComplexQuotientAddHom g
+      (QuotientAddGroup.mk' (integerPeriodLattice g) v) = _
+  simp [realQuotientToComplexQuotientAddHom]
+
+/- The converse representative criterion is useful when a real period
+   calculation is transported back to complex coordinates. -/
+theorem realQuotientToComplexQuotientAddEquiv_mk_eq_iff (g : ℕ)
+    (v w : GenusRealVector g) :
+    (complexQuotientToRealQuotientAddEquiv g).symm
+        (QuotientAddGroup.mk' (integerPeriodLattice g) v) =
+      (complexQuotientToRealQuotientAddEquiv g).symm
+        (QuotientAddGroup.mk' (integerPeriodLattice g) w) ↔
+      v - w ∈ integerPeriodLattice g := by
+  constructor
+  · intro h
+    have h' : QuotientAddGroup.mk' (integerPeriodLattice g) v =
+        QuotientAddGroup.mk' (integerPeriodLattice g) w := by
+      simpa only [AddEquiv.apply_symm_apply] using
+        congrArg (complexQuotientToRealQuotientAddEquiv g) h
+    have hreal :
+        genusRealVectorQuotientAddEquiv g
+            (QuotientAddGroup.mk' (integerPeriodLattice g) v) =
+          genusRealVectorQuotientAddEquiv g
+            (QuotientAddGroup.mk' (integerPeriodLattice g) w) :=
+      congrArg (genusRealVectorQuotientAddEquiv g) h'
+    exact (PeriodLatticeQuotient.quotientAddEquiv_mk_eq_iff
+      (standardGenusTorusPeriodLatticeQuotient g) v w).mp hreal
+  · intro h
+    have hreal :
+        genusRealVectorQuotientAddEquiv g
+            (QuotientAddGroup.mk' (integerPeriodLattice g) v) =
+          genusRealVectorQuotientAddEquiv g
+            (QuotientAddGroup.mk' (integerPeriodLattice g) w) :=
+      (PeriodLatticeQuotient.quotientAddEquiv_mk_eq_iff
+        (standardGenusTorusPeriodLatticeQuotient g) v w).mpr h
+    have h' : QuotientAddGroup.mk' (integerPeriodLattice g) v =
+        QuotientAddGroup.mk' (integerPeriodLattice g) w :=
+      (genusRealVectorQuotientAddEquiv g).injective hreal
+    exact congrArg (complexQuotientToRealQuotientAddEquiv g).symm h'
+
 /- The quotient equivalence intertwines the two exponential models. -/
 theorem complexQuotientToRealQuotientAddEquiv_trans_genusRealVectorQuotient
     (g : ℕ) :
