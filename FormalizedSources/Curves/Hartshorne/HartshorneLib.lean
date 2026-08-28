@@ -10,6 +10,7 @@ import HartshorneLib.Chapter1Prime
 import HartshorneLib.Chapter1Correspondence
 import HartshorneLib.Chapter1QuasiAffine
 import HartshorneLib.Chapter1Spectrum
+import HartshorneLib.Chapter1Curves
 import HartshorneLib.Chapter2
 import HartshorneLib.Chapter2Sheaves
 
