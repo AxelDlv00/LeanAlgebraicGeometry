@@ -49,6 +49,38 @@ theorem Isogeny.id (A : Over (Spec (.of K))) [GrpObj A] :
   · dsimp [isogenyKernelToBase, isogenyKernel]
     infer_instance
 
+/- An isomorphism of group schemes has trivial (hence finite) kernel.  The
+   explicit forgetful transport is needed because the slice-category `IsIso`
+   instance is not reducible through `Over.Hom.left` during synthesis. -/
+theorem Isogeny.of_isIso (f : A ⟶ B) [IsMonHom f] [IsIso f] :
+    Isogeny f := by
+  letI : IsIso f.left := (Over.forget (Spec (CommRingCat.of K))).map_isIso f
+  constructor
+  · infer_instance
+  · dsimp [isogenyKernelToBase, isogenyKernel]
+    infer_instance
+
+/- When the underlying homomorphisms are finite, the usual closure of finite
+   and surjective morphisms under composition gives the corresponding
+   isogeny.  The finite-map hypotheses are explicit until the full
+   finite-kernel-to-finite-map theorem is available in Mathlib. -/
+theorem Isogeny.comp_of_finite
+    {C : Over (Spec (.of K))} [GrpObj C]
+    (f : A ⟶ B) (g : B ⟶ C) [IsMonHom f] [IsMonHom g]
+    [IsFinite f.left] [IsFinite g.left]
+    (hf : Isogeny f) (hg : Isogeny g) :
+    Isogeny (f ≫ g) := by
+  letI : Surjective f.left := hf.1
+  letI : Surjective g.left := hg.1
+  constructor
+  · rw [Over.comp_left]
+    infer_instance
+  · dsimp [isogenyKernelToBase, isogenyKernel]
+    haveI : IsFinite ((f ≫ g).left) := by
+      rw [Over.comp_left]
+      infer_instance
+    infer_instance
+
 theorem Isogeny.surjective (f : A ⟶ B) [IsMonHom f] (h : Isogeny f) :
     Surjective f.left :=
   h.1
