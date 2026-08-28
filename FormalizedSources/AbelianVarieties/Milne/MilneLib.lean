@@ -5,6 +5,7 @@ import MilneLib.LocalProperties
 import MilneLib.Localization
 import MilneLib.GroupScheme
 import MilneLib.Isogeny
+import MilneLib.Coherent
 import MilneLib.LinearAlgebra
 import MilneLib.Stalk
 import MilneLib.Tensor
