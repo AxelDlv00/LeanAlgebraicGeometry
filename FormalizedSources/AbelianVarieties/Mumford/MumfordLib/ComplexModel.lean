@@ -158,7 +158,87 @@ theorem complexGenusQuotientAddEquiv_mk_eq_iff (g : ℕ)
   exact PeriodLatticeQuotient.quotientAddEquiv_mk_eq_iff
     (standardComplexGenusPeriodLatticeQuotient g) z w
 
-/-- The complex-coordinate quotient has the expected signed-integer torsion
+/- The realification carries the complex period quotient to the standard real
+   period quotient. -/
+def complexQuotientToRealQuotientAddHom (g : ℕ) :
+    (GenusComplexVector g ⧸ complexPeriodLattice g) →+
+      (GenusRealVector g ⧸ integerPeriodLattice g) :=
+  QuotientAddGroup.map (complexPeriodLattice g) (integerPeriodLattice g)
+    (genusComplexVectorRealification g).toAddMonoidHom (by
+      intro z hz
+      exact AddSubgroup.mem_comap.mp hz)
+
+def realQuotientToComplexQuotientAddHom (g : ℕ) :
+    (GenusRealVector g ⧸ integerPeriodLattice g) →+
+      (GenusComplexVector g ⧸ complexPeriodLattice g) :=
+  QuotientAddGroup.map (integerPeriodLattice g) (complexPeriodLattice g)
+    (genusComplexVectorRealification g).symm.toAddMonoidHom (by
+      intro v hv
+      change genusComplexVectorRealification g
+          ((genusComplexVectorRealification g).symm v) ∈ integerPeriodLattice g
+      simpa only [LinearEquiv.apply_symm_apply] using hv)
+
+theorem realQuotientToComplexQuotientAddHom_comp (g : ℕ) :
+    (realQuotientToComplexQuotientAddHom g).comp
+        (complexQuotientToRealQuotientAddHom g) = AddMonoidHom.id _ := by
+  apply AddMonoidHom.ext
+  intro q
+  refine QuotientAddGroup.induction_on q ?_
+  intro z
+  simp [complexQuotientToRealQuotientAddHom,
+    realQuotientToComplexQuotientAddHom]
+
+theorem complexQuotientToRealQuotientAddHom_comp (g : ℕ) :
+    (complexQuotientToRealQuotientAddHom g).comp
+        (realQuotientToComplexQuotientAddHom g) = AddMonoidHom.id _ := by
+  apply AddMonoidHom.ext
+  intro q
+  refine QuotientAddGroup.induction_on q ?_
+  intro v
+  simp [complexQuotientToRealQuotientAddHom,
+    realQuotientToComplexQuotientAddHom]
+
+/-- The additive equivalence between the complex and real period quotients. -/
+def complexQuotientToRealQuotientAddEquiv (g : ℕ) :
+    (GenusComplexVector g ⧸ complexPeriodLattice g) ≃+
+      (GenusRealVector g ⧸ integerPeriodLattice g) :=
+  AddMonoidHom.toAddEquiv (complexQuotientToRealQuotientAddHom g)
+    (realQuotientToComplexQuotientAddHom g)
+    (realQuotientToComplexQuotientAddHom_comp g)
+    (complexQuotientToRealQuotientAddHom_comp g)
+
+@[simp]
+theorem complexQuotientToRealQuotientAddEquiv_mk (g : ℕ)
+    (z : GenusComplexVector g) :
+    complexQuotientToRealQuotientAddEquiv g
+        (QuotientAddGroup.mk' (complexPeriodLattice g) z) =
+      QuotientAddGroup.mk' (integerPeriodLattice g)
+        (genusComplexVectorRealification g z) := by
+  change complexQuotientToRealQuotientAddHom g
+      (QuotientAddGroup.mk' (complexPeriodLattice g) z) = _
+  simp [complexQuotientToRealQuotientAddHom]
+
+/- The quotient equivalence intertwines the two exponential models. -/
+theorem complexQuotientToRealQuotientAddEquiv_trans_genusRealVectorQuotient
+    (g : ℕ) :
+    (complexQuotientToRealQuotientAddEquiv g).trans
+        (genusRealVectorQuotientAddEquiv g) =
+      complexGenusQuotientAddEquiv g := by
+  apply AddEquiv.ext
+  intro q
+  refine QuotientAddGroup.induction_on q ?_
+  intro z
+  change genusRealVectorQuotientAddEquiv g
+      (complexQuotientToRealQuotientAddEquiv g
+        (QuotientAddGroup.mk' (complexPeriodLattice g) z)) =
+    complexGenusQuotientAddEquiv g
+      (QuotientAddGroup.mk' (complexPeriodLattice g) z)
+  rw [complexQuotientToRealQuotientAddEquiv_mk,
+    genusRealVectorQuotientAddEquiv_mk,
+    complexGenusQuotientAddEquiv_mk]
+  rfl
+
+/- The complex-coordinate quotient has the expected signed-integer torsion
 classification. -/
 def complexGenusQuotient_zsmulTorsion_addEquiv {g : ℕ} {n : ℤ} (hn : n ≠ 0) :
     zsmulTorsionSubgroup
