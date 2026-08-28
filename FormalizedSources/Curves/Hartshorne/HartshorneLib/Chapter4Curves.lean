@@ -50,6 +50,9 @@ noncomputable instance : AddCommGroup (CurveDivisor k X) :=
 instance : PartialOrder (CurveDivisor k X) :=
   inferInstanceAs (PartialOrder ({x : X.left // x ≠ genericPoint X.left} →₀ ℤ))
 
+noncomputable instance : Lattice (CurveDivisor k X) :=
+  inferInstanceAs (Lattice ({x : X.left // x ≠ genericPoint X.left} →₀ ℤ))
+
 /-- The unweighted degree, appropriate over an algebraically closed base field. -/
 noncomputable def degree (D : CurveDivisor k X) : ℤ :=
   D.sum fun _ n => n
@@ -88,6 +91,18 @@ theorem coeffAt_sub {x : X.left} (hx : x ≠ genericPoint X.left)
     coeffAt hx (D - E) = coeffAt hx D - coeffAt hx E := by
   rfl
 
+@[simp]
+theorem coeffAt_inf {x : X.left} (hx : x ≠ genericPoint X.left)
+    (D E : CurveDivisor k X) :
+    coeffAt hx (D ⊓ E) = min (coeffAt hx D) (coeffAt hx E) := by
+  rfl
+
+@[simp]
+theorem coeffAt_sup {x : X.left} (hx : x ≠ genericPoint X.left)
+    (D E : CurveDivisor k X) :
+    coeffAt hx (D ⊔ E) = max (coeffAt hx D) (coeffAt hx E) := by
+  rfl
+
 /-- Coefficients at all closed points determine a curve divisor. -/
 theorem ext_coeffAt {D E : CurveDivisor k X}
     (h : ∀ (x : X.left) (hx : x ≠ genericPoint X.left),
@@ -95,6 +110,14 @@ theorem ext_coeffAt {D E : CurveDivisor k X}
   apply Finsupp.ext
   intro x
   exact h x.1 x.2
+
+/-- Pointwise minimum plus maximum equals the sum of the two divisors. -/
+theorem inf_add_sup (D E : CurveDivisor k X) :
+    (D ⊓ E) + (D ⊔ E) = D + E := by
+  apply ext_coeffAt
+  intro x hx
+  rw [coeffAt_add, coeffAt_add, coeffAt_inf, coeffAt_sup]
+  exact min_add_max _ _
 
 /-- The divisor order is the pointwise coefficient order. -/
 theorem le_iff_coeffAt {D E : CurveDivisor k X} :
@@ -170,10 +193,45 @@ theorem degree_sub (D E : CurveDivisor k X) :
   rw [← degreeHom_apply, ← degreeHom_apply, ← degreeHom_apply]
   exact map_sub degreeHom D E
 
+/-- Degree is monotone for the pointwise divisor order. -/
+theorem degree_mono {D E : CurveDivisor k X} (hDE : D ≤ E) :
+    degree D ≤ degree E := by
+  have hdiff : 0 ≤ E - D := by
+    rw [le_iff_coeffAt]
+    intro x hx
+    rw [coeffAt_sub, coeffAt_zero]
+    exact sub_nonneg.mpr (le_iff_coeffAt.mp hDE x hx)
+  have hdegree := degree_nonneg hdiff
+  rw [degree_sub] at hdegree
+  omega
+
+/-- The degrees of the infimum and supremum balance those of the two divisors. -/
+theorem degree_inf_add_degree_sup (D E : CurveDivisor k X) :
+    degree (D ⊓ E) + degree (D ⊔ E) = degree D + degree E := by
+  rw [← degree_add, inf_add_sup, degree_add]
+
 @[simp]
 theorem degree_single (x : {x : X.left // x ≠ genericPoint X.left}) (n : ℤ) :
     degree (Finsupp.single x n : CurveDivisor k X) = n := by
   simp [degree]
+
+/-- The support of an effective divisor has at most as many points as its degree. -/
+theorem support_card_le_degree {D : CurveDivisor k X} (hD : 0 ≤ D) :
+    ((show PointDivisor X.left from D).support.card : ℤ) ≤ degree D := by
+  rw [degree]
+  calc
+    ((show PointDivisor X.left from D).support.card : ℤ) =
+        ∑ x ∈ (show PointDivisor X.left from D).support, (1 : ℤ) := by
+      simp
+    _ ≤ ∑ x ∈ (show PointDivisor X.left from D).support,
+        (show PointDivisor X.left from D).toFun x := by
+      gcongr with x hx
+      have hxnonneg : 0 ≤ (show PointDivisor X.left from D).toFun x :=
+        Finsupp.le_def.mp hD x
+      have hxne : (show PointDivisor X.left from D).toFun x ≠ 0 :=
+        Finsupp.mem_support_iff.mp hx
+      omega
+    _ = (show PointDivisor X.left from D).sum (fun _ n => n) := rfl
 
 end CurveDivisor
 
