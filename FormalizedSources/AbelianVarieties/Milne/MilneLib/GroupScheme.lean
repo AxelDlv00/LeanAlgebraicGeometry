@@ -549,6 +549,41 @@ theorem rigidity_lemma
   rw [← Category.assoc, rigidity_snd_lift]
   exact rigidity_core f x₀ y₀ z₀ _hf
 
+/- The two-axis form in Milne's statement: once the first-axis collapse gives
+   factorisation through the second projection, the second-axis collapse makes
+   that factor constant. -/
+theorem rigidity_constant_of_two_axes
+    [IsAlgClosed kbar]
+    {X Y Z : Over (Spec (.of kbar))}
+    [IsProper X.hom]
+    [GeometricallyIrreducible (X ⊗ Y).hom]
+    [LocallyOfFiniteType (X ⊗ Y).hom]
+    [IsReduced (X ⊗ Y).left]
+    [IsSeparated Z.hom]
+    (f : (X ⊗ Y) ⟶ Z)
+    (x₀ : 𝟙_ (Over (Spec (.of kbar))) ⟶ X)
+    (y₀ : 𝟙_ (Over (Spec (.of kbar))) ⟶ Y)
+    (z₀ : 𝟙_ (Over (Spec (.of kbar))) ⟶ Z)
+    (h₁ : lift (𝟙 X) (toUnit X ≫ y₀) ≫ f = toUnit X ≫ z₀)
+    (h₂ : lift (toUnit Y ≫ x₀) (𝟙 Y) ≫ f = toUnit Y ≫ z₀) :
+    f = toUnit (X ⊗ Y) ≫ z₀ := by
+  obtain ⟨g, hg⟩ := rigidity_lemma f x₀ y₀ z₀ h₁
+  have hsg : g = toUnit Y ≫ z₀ := by
+    calc
+      g = (lift (toUnit Y ≫ x₀) (𝟙 Y) ≫ snd X Y) ≫ g := by
+        rw [lift_snd]
+        simp
+      _ = lift (toUnit Y ≫ x₀) (𝟙 Y) ≫ (snd X Y ≫ g) := by
+        rw [Category.assoc]
+      _ = lift (toUnit Y ≫ x₀) (𝟙 Y) ≫ f := by rw [hg]
+      _ = toUnit Y ≫ z₀ := h₂
+  calc
+    f = snd X Y ≫ g := hg
+    _ = snd X Y ≫ (toUnit Y ≫ z₀) := by rw [hsg]
+    _ = toUnit (X ⊗ Y) ≫ z₀ := by
+      rw [← Category.assoc]
+      rw [toUnit_unique (snd X Y ≫ toUnit Y) (toUnit (X ⊗ Y))]
+
 end RigidityChain
 
 section Scheme
