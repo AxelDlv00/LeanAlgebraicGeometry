@@ -174,6 +174,52 @@ theorem schemeModuleStalkLinearMap_germ
     schemeModuleStalkModule N x
   exact PresheafOfModules.stalkLinearMap_germ f.val x U hx s
 
+/-- An isomorphism on the underlying additive stalks gives a bijective linear
+map on the stalks of scheme modules. -/
+theorem schemeModuleStalkLinearMap_bijective_of_isIso
+    {X : Scheme.{u}} {M N : X.Modules} (f : M ⟶ N) (x : X)
+    (h : IsIso ((TopCat.Presheaf.stalkFunctor AddCommGrpCat x).map
+      f.mapPresheaf)) :
+    letI : Module (X.presheaf.stalk x)
+        (↑(TopCat.Presheaf.stalk M.val.presheaf x) : Type u) :=
+      schemeModuleStalkModule M x
+    letI : Module (X.presheaf.stalk x)
+        (↑(TopCat.Presheaf.stalk N.val.presheaf x) : Type u) :=
+      schemeModuleStalkModule N x
+    Function.Bijective (schemeModuleStalkLinearMap f x) := by
+  letI : Module (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk M.val.presheaf x) : Type u) :=
+    schemeModuleStalkModule M x
+  letI : Module (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk N.val.presheaf x) : Type u) :=
+    schemeModuleStalkModule N x
+  change Function.Bijective ⇑(ConcreteCategory.hom
+    ((TopCat.Presheaf.stalkFunctor AddCommGrpCat x).map f.mapPresheaf))
+  exact ConcreteCategory.bijective_of_isIso _
+
+/-- The stalkwise linear equivalence induced by an isomorphism of scheme
+modules on the underlying additive stalks. -/
+noncomputable def schemeModuleStalkLinearEquivOfIsIso
+    {X : Scheme.{u}} {M N : X.Modules} (f : M ⟶ N) (x : X)
+    (h : IsIso ((TopCat.Presheaf.stalkFunctor AddCommGrpCat x).map
+      f.mapPresheaf)) :
+    letI : Module (X.presheaf.stalk x)
+        (↑(TopCat.Presheaf.stalk M.val.presheaf x) : Type u) :=
+      schemeModuleStalkModule M x
+    letI : Module (X.presheaf.stalk x)
+        (↑(TopCat.Presheaf.stalk N.val.presheaf x) : Type u) :=
+      schemeModuleStalkModule N x
+    (↑(TopCat.Presheaf.stalk M.val.presheaf x) : Type u) ≃ₗ[↑(X.presheaf.stalk x)]
+      (↑(TopCat.Presheaf.stalk N.val.presheaf x) : Type u) := by
+  letI : Module (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk M.val.presheaf x) : Type u) :=
+    schemeModuleStalkModule M x
+  letI : Module (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk N.val.presheaf x) : Type u) :=
+    schemeModuleStalkModule N x
+  exact LinearEquiv.ofBijective (schemeModuleStalkLinearMap f x)
+    (schemeModuleStalkLinearMap_bijective_of_isIso f x h)
+
 /-- The residue fibre of a scheme module is the stalk modulo the maximal-ideal
 action.  The source is written as tensoring the stalk with its residue field,
 which is the form used by base-change arguments. -/
