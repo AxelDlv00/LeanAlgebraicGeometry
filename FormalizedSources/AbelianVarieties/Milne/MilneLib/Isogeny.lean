@@ -40,6 +40,15 @@ noncomputable def isogenyKernelToBase (f : A ⟶ B) :
 def Isogeny (f : A ⟶ B) [IsMonHom f] : Prop :=
   Surjective f.left ∧ IsFinite (isogenyKernelToBase f)
 
+/-- The identity homomorphism is an isogeny. -/
+@[simp]
+theorem Isogeny.id (A : Over (Spec (.of K))) [GrpObj A] :
+    Isogeny (𝟙 A) := by
+  constructor
+  · infer_instance
+  · dsimp [isogenyKernelToBase, isogenyKernel]
+    infer_instance
+
 theorem Isogeny.surjective (f : A ⟶ B) [IsMonHom f] (h : Isogeny f) :
     Surjective f.left :=
   h.1
