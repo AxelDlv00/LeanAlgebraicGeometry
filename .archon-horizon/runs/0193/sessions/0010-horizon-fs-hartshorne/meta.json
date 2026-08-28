@@ -3,16 +3,23 @@
   "round": 4,
   "project": "Hartshorne",
   "task_id": "fs-hartshorne",
-  "status": "running",
-  "started_at": "2026-08-28T13:12:25.814247+00:00",
   "projects": [
     "Hartshorne"
   ],
+  "status": "queued",
+  "started_at": "2026-08-28T13:12:25.814247+00:00",
+  "ended_at": "2026-08-28T14:37:34.451974+00:00",
   "harness_name": "codex",
   "harness_kind": "codex",
   "model": "gpt-5.6-sol",
   "effort": "ultra",
   "config_dir": "/home/axel/.codex-temp",
   "auth": "api-key",
-  "workspace_sha": "ec880331a4620bebddf6914a340459b4ceb0d5f7"
+  "usage": {
+    "tokens_in": 27508229,
+    "tokens_out": 62561,
+    "cost_usd": null
+  },
+  "engine_session_id": "01a04880-0b8f-7ce3-91ea-7a16e94a4f49",
+  "workspace_sha": "219774373efc6592e5bc58ad8cec97a3df0dbefe"
 }

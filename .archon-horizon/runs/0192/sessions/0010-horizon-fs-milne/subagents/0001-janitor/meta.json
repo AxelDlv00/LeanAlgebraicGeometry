@@ -6,16 +6,17 @@
   "model": "gpt-5.6-sol",
   "name": "janitor",
   "native_subagent_id": "01a048a6-4690-7de0-9fda-7dcaeaed9f56",
+  "ok": true,
   "parent_session": "0010-horizon-fs-milne",
   "parent_subagent_id": null,
   "report_ref": "report.md",
   "role": "subagent",
-  "status": "running",
+  "status": "completed",
   "subagent_type": "janitor",
-  "summary": "",
+  "summary": "Read-only hygiene audit complete; no Milne source, README, blueprint, task, or inbox files were edited.",
   "usage": {
     "cost_usd": null,
-    "tokens_in": 1055583,
-    "tokens_out": 6920
+    "tokens_in": 12610533,
+    "tokens_out": 35855
   }
 }

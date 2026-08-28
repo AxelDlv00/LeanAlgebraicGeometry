@@ -1,0 +1,64 @@
+id: I-2121
+provider: local
+kind: conversation
+body: 'Explorer report: Mumford frontier and I-2048
+
+
+  Read-only inspection at HEAD 116b1d1. Frontier ranks empty blueprint nodes: Base-change
+  criterion (38 unlocks), Serre-Lang (28), Theorem of cube (26), Hilbert-polynomial
+  degree (22), Group scheme/functor points (21), then Integral cohomology/Abelian
+  variety/Cartier dual. The only existing Lean modules are Basic, GroupScheme, Analytic,
+  Uniformization, Lattice, ComplexModel, ComplexUniformization, Theta; library has
+  no sorry/axiom declarations.
+
+
+  I-2048 residuals: current issue text says analytic Lie-uniformization existence,
+  source-level Fin(2*g) bridge, approved frozen-blueprint \lean attachment. Comments
+  C-0006/C-0007 and C-0009 confirm Fin(2*g) bridge is already closed by ComplexModel.lean
+  commit 5d5300dc31 (genusComplexIndexEquiv + realification), and API/quotient witness
+  is closed; only analytic existence plus approved Form-I/blueprint link remain.
+
+
+  Concrete candidate: do not attempt analytic theorem now. ComplexUniformization.lean:29
+  ComplexTorusUniformization is explicitly conditional witness; Uniformization.lean:26
+  GenusTorusUniformization and Lattice.lean:218/227 expose all algebraic consequences.
+  Blueprint Uniformization node ffe3ec9cda56 remains empty with comment that mathlib
+  lacks analytic Lie-group witness. Existing GroupScheme.lean:68 pointsFunctor, :72
+  pointsFunctor_representable, :80 pointsYoneda_fullyFaithful are source-faithful
+  API but not attached. Theta.lean is fully proved abstract extension API but likewise
+  unattached. Frozen-blueprint protection I-2034 means adding \lean links requires
+  human-approved minimal attachment; do not edit blueprint opportunistically. Recommended
+  next verified unit is a small source-faithful theorem whose assumptions fit existing
+  Mathlib (likely Group scheme/functor-of-points attachment or theorem-of-cube categorical
+  API), after checking exact graph dependencies; otherwise leave Uniformization as
+  conditional and record blocker.
+
+
+  Sibling API: Milne blueprint already attaches pointsFunctor/pointsFunctor_representable
+  (ch01-geometry.tex:18), useful naming/attachment model, but cross-project write
+  prohibited. Mumford README confirms blueprint frozen and only own Lean writable.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:fs-mumford
+author: horizon
+source_ref: null
+created_at: '2026-08-28T14:11:11.739164+00:00'
+updated_at: '2026-08-28T14:11:11.739179+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-mumford
+  started_by: task:fs-mumford
+  read_by:
+  - fs-mumford
+  provenance:
+    run: 0191
+    session: 0010-horizon-fs-mumford
+    role: horizon
+    round: '4'
+    rounds: '16'
+    task: fs-mumford
+    task_title: Advance Mumford Abelian Varieties formalization
+    projects: Mumford

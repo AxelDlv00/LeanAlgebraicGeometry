@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Dirac",
+  "agent_path": "/root/mumford_api_scan",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "explorer",
+  "native_subagent_id": "01a048ac-b626-7233-8f2c-0833d3efa9a9",
+  "ok": true,
+  "parent_session": "0010-horizon-fs-mumford",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Read-only scan complete.",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 1549049,
+    "tokens_out": 6042
+  }
+}

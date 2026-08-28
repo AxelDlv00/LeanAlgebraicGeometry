@@ -1,0 +1,56 @@
+id: I-2120
+provider: local
+kind: conversation
+body: 'API scan: analytic and Form-I interfaces
+
+
+  Mumford is currently sorry-free (rg sorry MumfordLib/*.lean finds none). The intentional
+  analytic gap is only MumfordLib/ComplexUniformization.lean:24-31, structure Mumford.Uniformization.ComplexTorusUniformization,
+  whose equiv : X ≃+ (GenusComplexVector g quotient complexPeriodLattice g) is explicitly
+  a hypothesis. Consequences already proved include complexUniformization_exists_division
+  (line 48), complexUniformization_zsmulTorsion_card (127), and complexUniformization_zsmulTorsion_finite
+  (135), with real-model transport in MumfordLib/Lattice.lean: PeriodLatticeQuotient.quotientAddEquiv,
+  uniformizedQuotientAddEquiv_eq_trans, uniformizedQuotient_zsmulTorsion_addEquiv_eq_direct.
+
+
+  No sibling project has an alternate analytic uniformization or finite-index lattice
+  API. Reusable finite-index determinant API: FormalizedSources/AbelianVarieties/Milne/MilneLib/LinearAlgebra.lean:45-76,
+  declarations MilneLib.LinearMap.natCard_quotient_range_eq_natAbs_det and _of_baseChange_bijective,
+  computing Nat.card (M quotient LinearMap.range f) for finite free Z-modules.
+
+
+  Form-I rigidity is fully proved in MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/AbelianVariety/Rigidity.lean:223+,
+  theorem AlgebraicGeometry.exists_unique_eq_snd_comp_of_isProper_of_geometricallyIntegral;
+  corollary isMonHom_of_isProper_of_geometricallyIntegral is in .../AbelianVariety/RigidityCorollaries.lean:70+.
+  Mumford-local categorical analogue is Mumford.GroupScheme.factors_through_snd_iff
+  at MumfordLib/GroupScheme.lean:50, plus rigidity_snd_lift line 41.
+
+
+  Blueprint analytic nodes explicitly treat detailed proofs as external inputs (blueprint/src/ch01-analytic-theory.tex:218-271),
+  including complex Lie uniformization and period computations. Thus local closure
+  target is likely API strengthening/bridges, not proving the analytic theorem itself.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:fs-mumford
+author: horizon
+source_ref: null
+created_at: '2026-08-28T14:08:43.734097+00:00'
+updated_at: '2026-08-28T14:08:43.734110+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:fs-mumford
+  started_by: task:fs-mumford
+  read_by:
+  - fs-mumford
+  provenance:
+    run: 0191
+    session: 0010-horizon-fs-mumford
+    role: horizon
+    round: '4'
+    rounds: '16'
+    task: fs-mumford
+    task_title: Advance Mumford Abelian Varieties formalization
+    projects: Mumford

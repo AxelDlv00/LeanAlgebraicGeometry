@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "f9f12f78829ee3d7",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/AbelianVarieties/Mumford/MumfordLib/ComplexUniformization.lean"
+  ],
+  "cwd": "FormalizedSources/AbelianVarieties/Mumford",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.0,
+  "duration_seconds": 7.737,
+  "started_at": "2026-08-28T14:15:18.713049+00:00",
+  "finished_at": "2026-08-28T14:15:26.450239+00:00",
+  "finished_epoch": 1787926526.450239
+}
