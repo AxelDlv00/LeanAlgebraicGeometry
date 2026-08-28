@@ -11,8 +11,10 @@ import HartshorneLib.Chapter1Correspondence
 import HartshorneLib.Chapter1QuasiAffine
 import HartshorneLib.Chapter1Spectrum
 import HartshorneLib.Chapter1Curves
+import HartshorneLib.Chapter4Curves
 import HartshorneLib.Chapter2
 import HartshorneLib.Chapter2Sheaves
+import HartshorneLib.Chapter2LineBundles
 
 /-!
 # HartshorneLib
