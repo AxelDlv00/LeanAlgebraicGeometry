@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "476a8eae7b784b47",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/AbelianVarieties/Mumford/MumfordLib/Lattice.lean"
+  ],
+  "cwd": ".",
+  "status": "failed",
+  "ok": false,
+  "returncode": 1,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.215,
+  "duration_seconds": 0.265,
+  "started_at": "2026-08-28T16:17:47.266646+00:00",
+  "finished_at": "2026-08-28T16:17:47.531485+00:00",
+  "finished_epoch": 1787933867.531485
+}

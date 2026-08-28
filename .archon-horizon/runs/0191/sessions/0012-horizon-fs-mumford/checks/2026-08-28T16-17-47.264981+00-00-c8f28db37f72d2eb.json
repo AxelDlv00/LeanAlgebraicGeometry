@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "c8f28db37f72d2eb",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/AbelianVarieties/Mumford/MumfordLib/ComplexModel.lean"
+  ],
+  "cwd": ".",
+  "status": "failed",
+  "ok": false,
+  "returncode": 1,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.0,
+  "duration_seconds": 0.215,
+  "started_at": "2026-08-28T16:17:47.050376+00:00",
+  "finished_at": "2026-08-28T16:17:47.264981+00:00",
+  "finished_epoch": 1787933867.264981
+}

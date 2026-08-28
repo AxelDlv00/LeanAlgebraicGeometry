@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "fingerprint": "933f9475f467b436",
+  "command": [
+    "lake",
+    "build"
+  ],
+  "cwd": "FormalizedSources/Curves/Hartshorne",
+  "status": "passed",
+  "ok": true,
+  "returncode": 0,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.0,
+  "duration_seconds": 5.928,
+  "started_at": "2026-08-28T15:58:12.389783+00:00",
+  "finished_at": "2026-08-28T15:58:18.317471+00:00",
+  "finished_epoch": 1787932698.317471
+}

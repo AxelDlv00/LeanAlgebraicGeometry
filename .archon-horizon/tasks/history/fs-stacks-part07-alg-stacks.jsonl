@@ -11,3 +11,4 @@
 {"at": "2026-08-27T20:17:15.661924+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
 {"at": "2026-08-27T21:31:32.223095+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
 {"at": "2026-08-27T21:37:00.388175+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-08-28T16:12:38.911362+00:00", "actor": "horizon", "field": "status", "from": "running", "to": "queued", "note": "", "provenance": {"run": "0193", "session": "0014-horizon-fs-hartshorne", "role": "horizon", "round": "6", "rounds": "16", "task": "fs-hartshorne", "task_title": "Advance Hartshorne Algebraic Geometry formalization", "projects": "Hartshorne"}}

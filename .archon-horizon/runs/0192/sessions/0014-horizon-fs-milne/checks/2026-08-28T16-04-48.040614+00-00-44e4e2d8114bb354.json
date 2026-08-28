@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "44e4e2d8114bb354",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/AbelianVarieties/Milne/MilneLib/Isogeny.lean"
+  ],
+  "cwd": ".",
+  "status": "failed",
+  "ok": false,
+  "returncode": 1,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.001,
+  "duration_seconds": 0.216,
+  "started_at": "2026-08-28T16:04:47.824920+00:00",
+  "finished_at": "2026-08-28T16:04:48.040614+00:00",
+  "finished_epoch": 1787933088.040614
+}

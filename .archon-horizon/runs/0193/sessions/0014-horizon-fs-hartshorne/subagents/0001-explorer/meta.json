@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Schrodinger",
+  "agent_path": "/root/principal_degree_explorer",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a04901-4012-70c0-87aa-19584a13cbfa",
+  "ok": true,
+  "parent_session": "0014-horizon-fs-hartshorne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "explorer",
+  "summary": "Investigation complete. The current Hartshorne API has:",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 12040935,
+    "tokens_out": 32963
+  }
+}

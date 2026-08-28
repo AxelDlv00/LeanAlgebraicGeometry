@@ -1,0 +1,18 @@
+{
+  "role": "horizon",
+  "round": 6,
+  "project": "Milne",
+  "task_id": "fs-milne",
+  "status": "running",
+  "started_at": "2026-08-28T15:50:39.866759+00:00",
+  "projects": [
+    "Milne"
+  ],
+  "harness_name": "codex",
+  "harness_kind": "codex",
+  "model": "gpt-5.6-sol",
+  "effort": "ultra",
+  "config_dir": "/home/axel/.codex-temp",
+  "auth": "api-key",
+  "workspace_sha": "7f2a48dbca9aa9758ade8fb207590c0bdd346084"
+}

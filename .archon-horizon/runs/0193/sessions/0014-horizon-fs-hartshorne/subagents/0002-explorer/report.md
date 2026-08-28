@@ -1,0 +1,1 @@
+The source audit confirms the exact Stacks proof obligation: tensor-inverse preservation under pullback (Modules on Ringed Spaces, Lemma `lemma-pullback-invertible`, lines 4142–4155). I’m doing one final integration check and then I’ll send the bounded recommendation with the precise dependency chain.

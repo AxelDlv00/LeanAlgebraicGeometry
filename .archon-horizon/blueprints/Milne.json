@@ -851,10 +851,10 @@
       "\\uses": ""
     },
     "states": {
-      "blocked": 125,
-      "closed": 90,
+      "blocked": 124,
+      "closed": 97,
       "formalized_open": 0,
-      "informal": 259,
+      "informal": 258,
       "ready": 138
     },
     "warnings": [
@@ -864,6 +864,11 @@
       "MilneLib.GroupVariety.isIntegral_of_retract: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.GroupVariety.morphism_eq_of_eqAt_closedPoints: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.GroupVariety.pointTranslationIso_hom_apply: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.GroupVariety.rigidity_core: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.GroupVariety.rigidity_eqAt_closedPoint_of_proper_into_affine: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.GroupVariety.rigidity_eqOn_dense_open: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.GroupVariety.rigidity_eqOn_saturated_open_to_affine: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.GroupVariety.rigidity_lemma: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.GroupVariety.rigidity_snd_lift: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.GroupVariety.snd_left_isClosedMap: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.Isogeny.id: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -902,12 +907,7 @@
       "MilneLib.schemeSheafCoevaluationAt: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.schemeSheafCoevaluationAt_naturality: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.schemeSheafCoevaluation_app: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.schemeSheafCoevaluation_evaluation: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.schemeSheafEvaluationAt_naturality: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "MilneLib.schemeSheafEvaluation_coevaluation: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "PresheafOfModules.stalkLinearEquivOfIsIso: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "PresheafOfModules.stalkLinearMap: Lean declaration is not referenced by any blueprint \\lean{...}",
-      "PresheafOfModules.stalkLinearMap_bijective_of_isIso: Lean declaration is not referenced by any blueprint \\lean{...}"
+      "MilneLib.schemeSheafCoevaluation_evaluation: Lean declaration is not referenced by any blueprint \\lean{...}"
     ]
   },
   "nodes": [
@@ -3001,27 +3001,27 @@
     },
     {
       "chapter": "Geometry of Abelian Varieties",
-      "comment_count": 0,
+      "comment_count": 1,
       "dep_count": 0,
       "descendant_count": 8,
       "group": "c75",
       "has_sorry": false,
       "hgraph_id": "cba6826f35d5",
       "id": "thm:milne-rigidity",
-      "lean_file": null,
-      "lean_name": null,
-      "lean_source": null,
-      "lean_status": "empty",
+      "lean_file": "MilneLib/GroupScheme.lean",
+      "lean_name": "MilneLib.GroupVariety.rigidity_constant_of_two_axes",
+      "lean_source": "theorem rigidity_constant_of_two_axes\n    [IsAlgClosed kbar]\n    {X Y Z : Over (Spec (.of kbar))}\n    [IsProper X.hom]\n    [GeometricallyIrreducible (X \u2297 Y).hom]\n    [LocallyOfFiniteType (X \u2297 Y).hom]\n    [IsReduced (X \u2297 Y).left]\n    [IsSeparated Z.hom]\n    (f : (X \u2297 Y) \u27f6 Z)\n    (x\u2080 : \ud835\udfd9_ (Over (Spec (.of kbar))) \u27f6 X)\n    (y\u2080 : \ud835\udfd9_ (Over (Spec (.of kbar))) \u27f6 Y)\n    (z\u2080 : \ud835\udfd9_ (Over (Spec (.of kbar))) \u27f6 Z)\n    (h\u2081 : lift (\ud835\udfd9 X) (toUnit X \u226b y\u2080) \u226b f = toUnit X \u226b z\u2080)\n    (h\u2082 : lift (toUnit Y \u226b x\u2080) (\ud835\udfd9 Y) \u226b f = toUnit Y \u226b z\u2080) :\n    f = toUnit (X \u2297 Y) \u226b z\u2080 := by\n  obtain \u27e8g, hg\u27e9 := rigidity_lemma f x\u2080 y\u2080 z\u2080 h\u2081\n  have hsg : g = toUnit Y \u226b z\u2080 := by\n    calc\n      g = (lift (toUnit Y \u226b x\u2080) (\ud835\udfd9 Y) \u226b snd X Y) \u226b g := by\n        rw [lift_snd]\n        simp\n      _ = lift (toUnit Y \u226b x\u2080) (\ud835\udfd9 Y) \u226b (snd X Y \u226b g) := by\n        rw [Category.assoc]\n      _ = lift (toUnit Y \u226b x\u2080) (\ud835\udfd9 Y) \u226b f := by rw [hg]\n      _ = toUnit Y \u226b z\u2080 := h\u2082\n  calc\n    f = snd X Y \u226b g := hg\n    _ = snd X Y \u226b (toUnit Y \u226b z\u2080) := by rw [hsg]\n    _ = toUnit (X \u2297 Y) \u226b z\u2080 := by\n      rw [\u2190 Category.assoc]\n      rw [toUnit_unique (snd X Y \u226b toUnit Y) (toUnit (X \u2297 Y))]\n\nend RigidityChain\n\nsection Scheme\n\nopen AlgebraicGeometry\n\nvariable {S : Scheme.{u}} (G : Over S) [GrpObj G]",
+      "lean_status": "lean_ok",
       "level": "coarse",
       "mathlib_ok": false,
       "order": 2,
-      "proved": false,
+      "proved": true,
       "rdep_count": 4,
       "review_count": 0,
       "sources": [
         "MI:ch1:1.1"
       ],
-      "state": "ready",
+      "state": "closed",
       "statement": "Consider a regular map $\\alpha:V\\times W\\to U$, and assume that $V$ is\ncomplete and that $V\\times W$ is geometrically irreducible.  If there are\npoints $u_0\\in U(k)$, $v_0\\in V(k)$, and $w_0\\in W(k)$ such that\n\\[\n \\alpha(V\\times\\{w_0\\})=\\{u_0\\}=\\alpha(\\{v_0\\}\\times W),\n\\]\nthen $\\alpha(V\\times W)=\\{u_0\\}$.",
       "title": "Rigidity theorem",
       "type": "theorem",
@@ -3050,7 +3050,7 @@
       "sources": [
         "MI:ch1:1.2"
       ],
-      "state": "blocked",
+      "state": "ready",
       "statement": "Every regular map $\\alpha:A\\to B$ of abelian varieties is the composite of a\nhomomorphism with a translation.",
       "title": "Morphisms of abelian varieties",
       "type": "corollary",

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "5e3cb653732a36ef",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/AbelianVarieties/Milne/MilneLib/Coherent.lean"
+  ],
+  "cwd": ".",
+  "status": "failed",
+  "ok": false,
+  "returncode": 1,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 0.0,
+  "duration_seconds": 0.215,
+  "started_at": "2026-08-28T16:10:06.297658+00:00",
+  "finished_at": "2026-08-28T16:10:06.512200+00:00",
+  "finished_epoch": 1787933406.5122
+}
