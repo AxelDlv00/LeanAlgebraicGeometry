@@ -146,6 +146,18 @@ theorem complexGenusQuotientAddEquiv_mk (g : ℕ) (z : GenusComplexVector g) :
   exact PeriodLatticeQuotient.quotientAddEquiv_mk
     (standardComplexGenusPeriodLatticeQuotient g) z
 
+/- Two complex representatives define the same quotient point exactly when
+   their difference is a complex period. -/
+theorem complexGenusQuotientAddEquiv_mk_eq_iff (g : ℕ)
+    (z w : GenusComplexVector g) :
+    complexGenusQuotientAddEquiv g
+        (QuotientAddGroup.mk' (complexPeriodLattice g) z) =
+      complexGenusQuotientAddEquiv g
+        (QuotientAddGroup.mk' (complexPeriodLattice g) w) ↔
+      z - w ∈ complexPeriodLattice g := by
+  exact PeriodLatticeQuotient.quotientAddEquiv_mk_eq_iff
+    (standardComplexGenusPeriodLatticeQuotient g) z w
+
 /-- The complex-coordinate quotient has the expected signed-integer torsion
 classification. -/
 def complexGenusQuotient_zsmulTorsion_addEquiv {g : ℕ} {n : ℤ} (hn : n ≠ 0) :
