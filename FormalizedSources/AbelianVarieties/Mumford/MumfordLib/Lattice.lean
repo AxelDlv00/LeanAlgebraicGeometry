@@ -89,6 +89,26 @@ def unitAddCircleExponential : ℝ →+ UnitAddCircle :=
 def genusTorusExponential (g : ℕ) : GenusRealVector g →+ GenusTorus g :=
   AddMonoidHom.piMap (fun _ => unitAddCircleExponential)
 
+/-- The coordinatewise exponential is continuous for the product topologies. -/
+theorem genusTorusExponential_continuous (g : ℕ) :
+    Continuous (genusTorusExponential g) := by
+  apply continuous_pi
+  intro i
+  change Continuous (fun x : Fin (2 * g) → ℝ =>
+    QuotientAddGroup.mk' (AddSubgroup.zmultiples (1 : ℝ)) (x i))
+  exact (AddCircle.continuous_mk' (1 : ℝ)).comp (continuous_apply i)
+
+/-- The standard genus torus is connected, including the zero-dimensional case. -/
+theorem genusTorus_isConnected (g : ℕ) :
+    IsConnected (Set.univ : Set (GenusTorus g)) := by
+  change IsConnected (Set.univ : Set (Fin (2 * g) → UnitAddCircle))
+  have hpi : IsConnected ((Set.univ : Set (Fin (2 * g))).pi
+      (fun _ : Fin (2 * g) => (Set.univ : Set UnitAddCircle))) := by
+    rw [isConnected_univ_pi]
+    intro i
+    exact isConnected_univ
+  simpa only [Set.pi_univ] using hpi
+
 /-- The coordinatewise exponential to the genus torus is surjective. -/
 theorem genusTorusExponential_surjective (g : ℕ) :
     Function.Surjective (genusTorusExponential g) := by
