@@ -66,6 +66,26 @@ theorem moduleFinite_tilde_stalk
   exact Module.Finite.of_isLocalizedModule x.asIdeal.primeCompl
     (AlgebraicGeometry.StructureSheaf.toStalkₗ R M x)
 
+/- The affine-module stalk finiteness statement with the scheme-module stalk
+   instance made explicit for later residue-fibre arguments. -/
+theorem moduleFinite_affineModuleSheaf_stalk
+    {R : CommRingCat.{u}} (M : ModuleCat R) [Module.Finite R M]
+    (x : Spec R) :
+    letI : Module ((Spec R).presheaf.stalk x)
+        ((TopCat.Presheaf.stalk (C := Ab.{u})
+          ((affineModuleSheaf R M).val.presheaf) x) : Type u) :=
+      PresheafOfModules.instModuleCarrierStalkCommRingCatCarrierAbPresheafOpensCarrier
+        (affineModuleSheaf R M).val x
+    Module.Finite ((Spec R).presheaf.stalk x)
+      ((TopCat.Presheaf.stalk (C := Ab.{u})
+        ((affineModuleSheaf R M).val.presheaf) x) : Ab.{u}) := by
+  letI : Module ((Spec R).presheaf.stalk x)
+      ((TopCat.Presheaf.stalk (C := Ab.{u})
+        ((affineModuleSheaf R M).val.presheaf) x) : Type u) :=
+    PresheafOfModules.instModuleCarrierStalkCommRingCatCarrierAbPresheafOpensCarrier
+      (affineModuleSheaf R M).val x
+  exact moduleFinite_tilde_stalk M x
+
 /-- The preceding affine construction for a finite-dimensional vector space. -/
 noncomputable def affineVectorSpaceSheaf
     {k : Type u} [Field k] (M : ModuleCat (CommRingCat.of k))
