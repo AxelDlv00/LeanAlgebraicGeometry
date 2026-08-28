@@ -299,6 +299,15 @@ def unitAddCircle_zsmul_torsionSubgroup (n : ℤ) : AddSubgroup UnitAddCircle wh
     simp only [Set.mem_setOf_eq] at ha ⊢
     rw [zsmul_neg, ha, neg_zero]
 
+/- Signed torsion is the natural torsion subgroup at the absolute value. -/
+theorem unitAddCircle_zsmul_torsionSubgroup_eq_torsion (n : ℤ) :
+    unitAddCircle_zsmul_torsionSubgroup n =
+      unitAddCircle_torsionSubgroup n.natAbs := by
+  apply AddSubgroup.ext
+  intro u
+  change n • u = 0 ↔ n.natAbs • u = 0
+  exact natAbs_nsmul_eq_zero.symm
+
 /-- Integer torsion on the unit circle is additively equivalent to `ZMod |n|`. -/
 def unitAddCircle_zsmul_torsion_addEquiv_zmod {n : ℤ} (hn : n ≠ 0) :
     unitAddCircle_zsmul_torsionSubgroup n ≃+ ZMod n.natAbs := by
@@ -325,6 +334,15 @@ def productTorus_zsmul_torsionSubgroup (d : Type*) (n : ℤ) :
     intro a ha
     simp only [Set.mem_setOf_eq] at ha ⊢
     rw [zsmul_neg, ha, neg_zero]
+
+/- The product-torus version of the absolute-value identification. -/
+theorem productTorus_zsmul_torsionSubgroup_eq_torsion (d : Type*) (n : ℤ) :
+    productTorus_zsmul_torsionSubgroup d n =
+      productTorus_torsionSubgroup d n.natAbs := by
+  apply AddSubgroup.ext
+  intro x
+  change n • x = 0 ↔ n.natAbs • x = 0
+  exact natAbs_nsmul_eq_zero.symm
 
 /-- Integer product-torus torsion is additively equivalent to a product of `ZMod`s. -/
 def productTorus_zsmul_torsion_addEquiv_pi_zmod {d : Type*} {n : ℤ} (hn : n ≠ 0) :
