@@ -230,6 +230,141 @@ theorem commutatorBihom_apply (x y : G) :
     E.commutatorBihom x y = E.commutatorScalar x y :=
   rfl
 
+/-! Passing to the quotient makes the scalar commutator independent of the
+chosen lifts.  We encode the scalar group additively in the resulting
+`AddMonoidHom`, matching the additive structure on the quotient. -/
+
+noncomputable def quotientLift (k : K) : G :=
+  Classical.choose (E.quotientHom_surjective (Multiplicative.ofAdd k))
+
+@[simp]
+theorem quotientHom_quotientLift (k : K) :
+    E.quotientHom (E.quotientLift k) = Multiplicative.ofAdd k :=
+  Classical.choose_spec (E.quotientHom_surjective (Multiplicative.ofAdd k))
+
+theorem commutatorScalar_eq_of_quotient_eq_left {x x' y : G}
+    (h : E.quotientHom x = E.quotientHom x') :
+    E.commutatorScalar x y = E.commutatorScalar x' y := by
+  have hk : x * x'⁻¹ ∈ E.quotientHom.ker := by
+    rw [MonoidHom.mem_ker, map_mul, map_inv, h, mul_inv_cancel]
+  obtain ⟨s, hs⟩ := (E.mem_quotientHom_ker_iff (x * x'⁻¹)).mp hk
+  have hx : E.includeScalar s * x' = x := by
+    calc
+      E.includeScalar s * x' = (x * x'⁻¹) * x' := by rw [hs]
+      _ = x := by simp
+  rw [← hx, E.commutatorScalar_mul_left,
+    E.commutatorScalar_includeScalar_left, one_mul]
+
+theorem commutatorScalar_eq_of_quotient_eq_right {x y y' : G}
+    (h : E.quotientHom y = E.quotientHom y') :
+    E.commutatorScalar x y = E.commutatorScalar x y' := by
+  have hh := E.commutatorScalar_eq_of_quotient_eq_left
+    (x := y) (x' := y') (y := x) h
+  calc
+    E.commutatorScalar x y = (E.commutatorScalar y x)⁻¹ := by
+      simpa using (congrArg Inv.inv (E.commutatorScalar_swap x y)).symm
+    _ = (E.commutatorScalar y' x)⁻¹ := congrArg Inv.inv hh
+    _ = E.commutatorScalar x y' := by
+      simpa using congrArg Inv.inv (E.commutatorScalar_swap x y')
+
+noncomputable def commutatorPairing (k l : K) : S :=
+  E.commutatorScalar (E.quotientLift k) (E.quotientLift l)
+
+@[simp]
+theorem commutatorPairing_zero_left (l : K) :
+    E.commutatorPairing 0 l = 1 := by
+  unfold commutatorPairing
+  calc
+    E.commutatorScalar (E.quotientLift 0) (E.quotientLift l) =
+        E.commutatorScalar (1 : G) (E.quotientLift l) :=
+      E.commutatorScalar_eq_of_quotient_eq_left (by
+        rw [E.quotientHom_quotientLift, map_one]
+        simp)
+    _ = 1 := E.commutatorScalar_one_left _
+
+@[simp]
+theorem commutatorPairing_zero_right (k : K) :
+    E.commutatorPairing k 0 = 1 := by
+  unfold commutatorPairing
+  calc
+    E.commutatorScalar (E.quotientLift k) (E.quotientLift 0) =
+        E.commutatorScalar (E.quotientLift k) (1 : G) :=
+      E.commutatorScalar_eq_of_quotient_eq_right (by
+        rw [E.quotientHom_quotientLift, map_one]
+        simp)
+    _ = 1 := E.commutatorScalar_one_right _
+
+theorem commutatorPairing_add_left (k₁ k₂ l : K) :
+    E.commutatorPairing (k₁ + k₂) l =
+      E.commutatorPairing k₁ l * E.commutatorPairing k₂ l := by
+  unfold commutatorPairing
+  calc
+    E.commutatorScalar (E.quotientLift (k₁ + k₂)) (E.quotientLift l) =
+        E.commutatorScalar (E.quotientLift k₁ * E.quotientLift k₂)
+          (E.quotientLift l) :=
+      E.commutatorScalar_eq_of_quotient_eq_left (by
+        rw [E.quotientHom_quotientLift, map_mul, E.quotientHom_quotientLift,
+          E.quotientHom_quotientLift]
+        rfl)
+    _ = E.commutatorScalar (E.quotientLift k₁) (E.quotientLift l) *
+        E.commutatorScalar (E.quotientLift k₂) (E.quotientLift l) :=
+      E.commutatorScalar_mul_left _ _ _
+
+theorem commutatorPairing_add_right (k l₁ l₂ : K) :
+    E.commutatorPairing k (l₁ + l₂) =
+      E.commutatorPairing k l₁ * E.commutatorPairing k l₂ := by
+  unfold commutatorPairing
+  calc
+    E.commutatorScalar (E.quotientLift k) (E.quotientLift (l₁ + l₂)) =
+        E.commutatorScalar (E.quotientLift k)
+          (E.quotientLift l₁ * E.quotientLift l₂) :=
+      E.commutatorScalar_eq_of_quotient_eq_right (by
+        rw [E.quotientHom_quotientLift, map_mul, E.quotientHom_quotientLift,
+          E.quotientHom_quotientLift]
+        rfl)
+    _ = E.commutatorScalar (E.quotientLift k) (E.quotientLift l₁) *
+        E.commutatorScalar (E.quotientLift k) (E.quotientLift l₂) :=
+      E.commutatorScalar_mul_right _ _ _
+
+@[simp]
+theorem commutatorPairing_self (k : K) :
+    E.commutatorPairing k k = 1 := by
+  unfold commutatorPairing
+  exact E.commutatorScalar_self _
+
+theorem commutatorPairing_swap (k l : K) :
+    E.commutatorPairing l k = (E.commutatorPairing k l)⁻¹ := by
+  unfold commutatorPairing
+  exact E.commutatorScalar_swap _ _
+
+noncomputable def commutatorPairingHom (k : K) : K →+ Additive S where
+  toFun l := Additive.ofMul (E.commutatorPairing k l)
+  map_zero' := by
+    change Additive.ofMul (E.commutatorPairing k 0) = Additive.ofMul 1
+    rw [E.commutatorPairing_zero_right]
+  map_add' l₁ l₂ := by
+    change Additive.ofMul (E.commutatorPairing k (l₁ + l₂)) =
+      Additive.ofMul (E.commutatorPairing k l₁ * E.commutatorPairing k l₂)
+    rw [E.commutatorPairing_add_right]
+
+noncomputable def commutatorPairingBihom : K →+ K →+ Additive S where
+  toFun k := E.commutatorPairingHom k
+  map_zero' := by
+    ext l
+    change Additive.ofMul (E.commutatorPairing 0 l) = Additive.ofMul 1
+    rw [E.commutatorPairing_zero_left]
+  map_add' k₁ k₂ := by
+    ext l
+    change Additive.ofMul (E.commutatorPairing (k₁ + k₂) l) =
+      Additive.ofMul (E.commutatorPairing k₁ l * E.commutatorPairing k₂ l)
+    rw [E.commutatorPairing_add_left]
+
+@[simp]
+theorem commutatorPairingBihom_apply (k l : K) :
+    E.commutatorPairingBihom k l =
+      Additive.ofMul (E.commutatorPairing k l) :=
+  rfl
+
 end ThetaExtension
 
 end Mumford
