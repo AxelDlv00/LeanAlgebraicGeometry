@@ -250,6 +250,307 @@ theorem isIntegral_of_retract {S T : Scheme.{u}} [IsIntegral T]
 
 end ProperAffineConstancy
 
+section RigidityChain
+
+open AlgebraicGeometry
+
+variable {kbar : Type u} [Field kbar]
+
+/-!
+The geometric rigidity chain is kept in this file so the Milne project can use
+the same scheme-level API as the Jacobian formalization without importing that
+project.  The first step is the pointwise slice-constancy statement.
+-/
+
+theorem rigidity_eqAt_closedPoint_of_proper_into_affine
+    [IsAlgClosed kbar]
+    {X Y Z : Over (Spec (.of kbar))}
+    [IsProper X.hom]
+    [GeometricallyIrreducible (X ⊗ Y).hom]
+    [LocallyOfFiniteType (X ⊗ Y).hom]
+    [IsReduced (X ⊗ Y).left]
+    [IsSeparated Z.hom]
+    (f : (X ⊗ Y) ⟶ Z)
+    (x₀ : 𝟙_ (Over (Spec (.of kbar))) ⟶ X)
+    (U : (X ⊗ Y).left.Opens)
+    (Vset : Set Y.left)
+    (_hUV : (U : Set (X ⊗ Y).left) = (snd X Y).left.base ⁻¹' Vset)
+    (U₀ : Z.left.Opens) (_hU₀ : IsAffineOpen U₀)
+    (_hfU : ∀ u ∈ (U : Set (X ⊗ Y).left), f.left.base u ∈ U₀)
+    (x : (U : (X ⊗ Y).left.Opens).toScheme)
+    (_hx : x ∈ closedPoints (U : (X ⊗ Y).left.Opens).toScheme) :
+    (U : (X ⊗ Y).left.Opens).toScheme.fromSpecResidueField x ≫
+        ((U.ι : (U : (X ⊗ Y).left.Opens).toScheme ⟶ (X ⊗ Y).left) ≫ f.left) =
+      (U : (X ⊗ Y).left.Opens).toScheme.fromSpecResidueField x ≫
+        ((U.ι : (U : (X ⊗ Y).left.Opens).toScheme ⟶ (X ⊗ Y).left) ≫
+          (lift (toUnit (X ⊗ Y) ≫ x₀) (snd X Y) ≫ f).left) := by
+  have hxc : IsClosed {x} := _hx
+  set wU : (U : (X ⊗ Y).left.Opens).toScheme ⟶ Spec (CommRingCat.of kbar) :=
+    U.ι ≫ (X ⊗ Y).hom with hwU
+  set px : Spec (CommRingCat.of kbar) ⟶ (U : (X ⊗ Y).left.Opens).toScheme :=
+    pointOfClosedPoint wU x hxc with hpx
+  rw [← cancel_epi (Spec.map (residueFieldIsoBase wU x hxc).hom)]
+  suffices h : px ≫ U.ι ≫ Over.Hom.left f =
+      px ≫ U.ι ≫ Over.Hom.left (lift (toUnit (X ⊗ Y) ≫ x₀) (snd X Y) ≫ f) by
+    rw [hpx] at h
+    simpa only [pointOfClosedPoint, Category.assoc] using h
+  set q : Spec (CommRingCat.of kbar) ⟶ (X ⊗ Y).left := px ≫ U.ι with hq
+  have hqsec : q ≫ (X ⊗ Y).hom = 𝟙 _ := by
+    rw [hq, Category.assoc]
+    exact pointOfClosedPoint_comp wU x hxc
+  rw [Over.comp_left]
+  set retract : X ⊗ Y ⟶ X ⊗ Y := lift (toUnit (X ⊗ Y) ≫ x₀) (snd X Y) with hretract
+  have htoUnit : (toUnit X).left = X.hom := by simp
+  set qhat : 𝟙_ (Over (Spec (CommRingCat.of kbar))) ⟶ X ⊗ Y :=
+    Over.homMk q hqsec with hqhat
+  have hqhatL : qhat.left = q := rfl
+  set yhat : 𝟙_ (Over (Spec (CommRingCat.of kbar))) ⟶ Y := qhat ≫ snd X Y with hyhat
+  set xq : 𝟙_ (Over (Spec (CommRingCat.of kbar))) ⟶ X := qhat ≫ fst X Y with hxq
+  set sec : X ⟶ X ⊗ Y := lift (𝟙 X) (toUnit X ≫ yhat) with hsecdef
+  clear_value qhat xq yhat
+  have hIover : qhat = xq ≫ sec := by
+    apply CartesianMonoidalCategory.hom_ext
+    · rw [Category.assoc, hsecdef, lift_fst, Category.comp_id]
+      exact hxq.symm
+    · rw [Category.assoc, hsecdef, lift_snd, ← Category.assoc,
+        toUnit_unique (xq ≫ toUnit X) (𝟙 _), Category.id_comp]
+      exact hyhat.symm
+  have hIIover : qhat ≫ retract = x₀ ≫ sec := by
+    apply CartesianMonoidalCategory.hom_ext
+    · rw [hretract, hsecdef, Category.assoc, lift_fst, ← Category.assoc,
+        toUnit_unique (qhat ≫ toUnit (X ⊗ Y)) (𝟙 _), Category.id_comp, Category.assoc,
+        lift_fst, Category.comp_id]
+    · rw [hretract, hsecdef, Category.assoc, lift_snd, Category.assoc, lift_snd,
+        ← Category.assoc, toUnit_unique (x₀ ≫ toUnit X) (𝟙 _), Category.id_comp, hyhat]
+  have hsecLfst : sec.left ≫ (fst X Y).left = 𝟙 X.left := by
+    rw [← Over.comp_left, hsecdef, lift_fst, Over.id_left]
+  have hyhatL : yhat.left = q ≫ (snd X Y).left := by
+    rw [hyhat, Over.comp_left]
+    exact congrArg (· ≫ Over.Hom.left (snd X Y)) hqhatL
+  have hsecLsnd : sec.left ≫ (snd X Y).left = X.hom ≫ q ≫ (snd X Y).left := by
+    rw [← Over.comp_left, hsecdef, lift_snd, ← hyhatL]
+    simp [htoUnit]
+  haveI : IsIntegral (X ⊗ Y).left := by
+    haveI : IrreducibleSpace (X ⊗ Y).left :=
+      GeometricallyIrreducible.irreducibleSpace_of_subsingleton (X ⊗ Y).hom
+    exact isIntegral_of_irreducibleSpace_of_isReduced _
+  haveI : IsIntegral X.left := isIntegral_of_retract sec.left (fst X Y).left hsecLfst
+  haveI : IsAffine U₀.toScheme := _hU₀
+  have hsecU : ∀ t : X.left, sec.left.base t ∈ (↑U : Set (X ⊗ Y).left) := by
+    intro t
+    rw [_hUV, Set.mem_preimage]
+    have e1 : (snd X Y).left.base (sec.left.base t) =
+        (snd X Y).left.base (q.base (X.hom.base t)) := by
+      have h2 := congrArg (fun m : X.left ⟶ Y.left => m.base t) hsecLsnd
+      simpa only [Scheme.Hom.comp_apply] using h2
+    rw [e1]
+    have hqmem : q.base (X.hom.base t) ∈ (↑U : Set (X ⊗ Y).left) := by
+      rw [hq, Scheme.Hom.comp_apply, pointOfClosedPoint_apply, ← Scheme.Opens.range_ι]
+      exact Set.mem_range_self x
+    rw [_hUV, Set.mem_preimage] at hqmem
+    exact hqmem
+  have hrange : Set.range ((sec ≫ f).left).base ⊆ Set.range U₀.ι.base := by
+    rw [Scheme.Opens.range_ι]
+    rintro _ ⟨t, rfl⟩
+    have hfin := _hfU (sec.left.base t) (hsecU t)
+    rw [Over.comp_left, Scheme.Hom.comp_apply]
+    exact hfin
+  set g : X.left ⟶ U₀.toScheme := IsOpenImmersion.lift U₀.ι (sec ≫ f).left hrange with hgdef
+  have hgfac : g ≫ U₀.ι = (sec ≫ f).left := IsOpenImmersion.lift_fac _ _ hrange
+  have key : xq.left ≫ g = x₀.left ≫ g :=
+    eq_comp_of_isAffine_of_properIntegral X.hom g xq.left x₀.left (Over.w xq) (Over.w x₀)
+  have hqf : qhat ≫ f = xq ≫ sec ≫ f := by
+    rw [← Category.assoc, ← hIover]
+  have hqrf : qhat ≫ retract ≫ f = x₀ ≫ sec ≫ f := by
+    rw [← Category.assoc, hIIover, Category.assoc]
+  have hxqf : q ≫ f.left = xq.left ≫ (sec ≫ f).left := by
+    have h := congrArg Over.Hom.left hqf
+    simp only [Over.comp_left, hqhatL] at h
+    exact h
+  have hx₀f : q ≫ retract.left ≫ f.left = x₀.left ≫ (sec ≫ f).left := by
+    have h := congrArg Over.Hom.left hqrf
+    simp only [Over.comp_left, hqhatL] at h
+    exact h
+  have hbridge : xq.left ≫ (sec ≫ f).left = x₀.left ≫ (sec ≫ f).left := by
+    rw [← hgfac, ← Category.assoc, ← Category.assoc]
+    exact congrArg (· ≫ U₀.ι) key
+  have hgoalq : q ≫ f.left = q ≫ retract.left ≫ f.left :=
+    hxqf.trans (hbridge.trans hx₀f.symm)
+  rw [hq] at hgoalq
+  simpa only [Category.assoc] using hgoalq
+
+/- The pointwise slice equality globalizes over the dense closed points of a
+   saturated open. -/
+theorem rigidity_eqOn_saturated_open_to_affine
+    [IsAlgClosed kbar]
+    {X Y Z : Over (Spec (.of kbar))}
+    [IsProper X.hom]
+    [GeometricallyIrreducible (X ⊗ Y).hom]
+    [LocallyOfFiniteType (X ⊗ Y).hom]
+    [IsReduced (X ⊗ Y).left]
+    [IsSeparated Z.hom]
+    (f : (X ⊗ Y) ⟶ Z)
+    (x₀ : 𝟙_ (Over (Spec (.of kbar))) ⟶ X)
+    (U : (X ⊗ Y).left.Opens)
+    (Vset : Set Y.left)
+    (_hUV : (U : Set (X ⊗ Y).left) = (snd X Y).left.base ⁻¹' Vset)
+    (U₀ : Z.left.Opens) (_hU₀ : IsAffineOpen U₀)
+    (_hfU : ∀ u ∈ (U : Set (X ⊗ Y).left), f.left.base u ∈ U₀) :
+    (U.ι : (U : (X ⊗ Y).left.Opens).toScheme ⟶ (X ⊗ Y).left) ≫ f.left =
+      (U.ι : (U : (X ⊗ Y).left.Opens).toScheme ⟶ (X ⊗ Y).left) ≫
+        (lift (toUnit (X ⊗ Y) ≫ x₀) (snd X Y) ≫ f).left := by
+  haveI : Z.left.IsSeparated := by
+    rw [Scheme.isSeparated_iff]
+    have heq : terminal.from Z.left = Z.hom ≫ terminal.from (Spec (CommRingCat.of kbar)) :=
+      terminal.hom_ext _ _
+    rw [heq]
+    infer_instance
+  haveI : JacobsonSpace ((U : (X ⊗ Y).left.Opens).toScheme) := by
+    haveI : JacobsonSpace (X ⊗ Y).left :=
+      LocallyOfFiniteType.jacobsonSpace (X ⊗ Y).hom
+    exact JacobsonSpace.of_isOpenEmbedding U.ι.isOpenEmbedding
+  exact morphism_eq_of_eqAt_closedPoints fun x hx =>
+    rigidity_eqAt_closedPoint_of_proper_into_affine f x₀ U Vset _hUV U₀ _hU₀ _hfU x hx
+
+/- The dense open used in the global rigidity step.  The complement of an
+   affine chart is pushed forward along the proper projection. -/
+theorem rigidity_eqOn_dense_open
+    [IsAlgClosed kbar]
+    {X Y Z : Over (Spec (.of kbar))}
+    [IsProper X.hom]
+    [GeometricallyIrreducible (X ⊗ Y).hom]
+    [LocallyOfFiniteType (X ⊗ Y).hom]
+    [IsReduced (X ⊗ Y).left]
+    [IsSeparated Z.hom]
+    (f : (X ⊗ Y) ⟶ Z)
+    (x₀ : 𝟙_ (Over (Spec (.of kbar))) ⟶ X)
+    (y₀ : 𝟙_ (Over (Spec (.of kbar))) ⟶ Y)
+    (z₀ : 𝟙_ (Over (Spec (.of kbar))) ⟶ Z)
+    (_hf : lift (𝟙 X) (toUnit X ≫ y₀) ≫ f = toUnit X ≫ z₀) :
+    ∃ U : (X ⊗ Y).left.Opens, (U : Set (X ⊗ Y).left).Nonempty ∧
+      (U.ι : (U : (X ⊗ Y).left.Opens).toScheme ⟶ (X ⊗ Y).left) ≫ f.left =
+        (U.ι : (U : (X ⊗ Y).left.Opens).toScheme ⟶ (X ⊗ Y).left) ≫
+          (lift (toUnit (X ⊗ Y) ≫ x₀) (snd X Y) ≫ f).left := by
+  have hclosed : IsClosedMap (snd X Y).left.base := snd_left_isClosedMap
+  haveI hsub : Subsingleton (↥(𝟙_ (Over (Spec (CommRingCat.of kbar)))).left) :=
+    inferInstanceAs (Subsingleton (Spec (CommRingCat.of kbar)))
+  have ptk : (𝟙_ (Over (Spec (CommRingCat.of kbar)))).left :=
+    (inferInstance : Inhabited (Spec (CommRingCat.of kbar))).default
+  let z₀pt : Z.left := z₀.left.base ptk
+  obtain ⟨U₀, _hU₀aff, hz₀U₀, -⟩ := exists_isAffineOpen_mem_and_subset (X := Z.left)
+    (x := z₀pt) (U := ⊤) trivial
+  set Gset := (snd X Y).left.base '' (f.left.base ⁻¹' (U₀ : Set Z.left)ᶜ) with hGdef
+  have hG : IsClosed Gset := hclosed _ (U₀.isOpen.isClosed_compl.preimage f.left.base.hom.2)
+  have hUopen : IsOpen ((snd X Y).left.base ⁻¹' Gsetᶜ) :=
+    (hG.isOpen_compl).preimage (snd X Y).left.base.hom.2
+  let s := (lift (𝟙 X) (toUnit X ≫ y₀)).left
+  let y₀pt : Y.left := y₀.left.base ptk
+  let x₀pt : X.left := x₀.left.base ptk
+  have hfib : (snd X Y).left.base ⁻¹' {y₀pt} ⊆ Set.range s.base := by
+    set p₁ := pullback.fst X.hom Y.hom with hp₁def
+    set p₂ := pullback.snd X.hom Y.hom with hp₂def
+    have htoUnit : (toUnit X).left = X.hom := by simp
+    have hsp1 : s ≫ p₁ = 𝟙 X.left := by
+      rw [hp₁def, ← Over.fst_left, ← Over.comp_left, lift_fst, Over.id_left]
+    have hsp2 : s ≫ p₂ = X.hom ≫ y₀.left := by
+      rw [hp₂def, ← Over.snd_left, ← Over.comp_left, lift_snd, Over.comp_left]
+      exact congrArg (· ≫ y₀.left) htoUnit
+    have hsec : y₀.left ≫ Y.hom = 𝟙 (Spec (.of kbar)) := by simpa using Over.w y₀
+    have houter : IsPullback (s ≫ p₁) X.hom X.hom (y₀.left ≫ Y.hom) := by
+      have hiso : IsPullback (𝟙 X.left) X.hom X.hom (𝟙 (Spec (.of kbar))) :=
+        IsPullback.of_horiz_isIso ⟨by simp⟩
+      rwa [← hsp1, ← hsec] at hiso
+    have hL : IsPullback s X.hom p₂ y₀.left :=
+      IsPullback.of_right houter hsp2 (IsPullback.of_hasPullback X.hom Y.hom)
+    have hrange : Set.range s.base = p₂.base ⁻¹' Set.range y₀.left.base := by
+      have h := AlgebraicGeometry.Scheme.image_preimage_eq_of_isPullback hL.flip Set.univ
+      simp only [Set.image_univ, Set.preimage_univ] at h
+      exact h
+    rw [Over.snd_left, ← hp₂def, hrange]
+    exact Set.preimage_mono (Set.singleton_subset_iff.mpr ⟨ptk, rfl⟩)
+  have hy₀ : y₀pt ∉ Gset := by
+    rintro ⟨q, hq, hsndq⟩
+    obtain ⟨x, rfl⟩ := hfib hsndq
+    apply hq
+    have hcomp : s ≫ f.left = (toUnit X ≫ z₀).left := by
+      rw [← Over.comp_left]
+      exact congrArg Over.Hom.left _hf
+    have hfx : f.left.base (s.base x) = z₀pt := by
+      rw [← Scheme.Hom.comp_apply, hcomp, Over.comp_left, Scheme.Hom.comp_apply]
+      change z₀.left.base ((toUnit X).left.base x) = z₀.left.base ptk
+      congr 1
+      exact Subsingleton.elim _ _
+    rw [hfx]
+    exact hz₀U₀
+  refine ⟨⟨_, hUopen⟩, ⟨s.base x₀pt, ?_⟩, ?_⟩
+  · change (snd X Y).left.base (s.base x₀pt) ∈ Gsetᶜ
+    have hsnd : (snd X Y).left.base (s.base x₀pt) = y₀pt := by
+      have hcomp : s ≫ (snd X Y).left = (toUnit X ≫ y₀).left := by
+        rw [← Over.comp_left]
+        exact congrArg Over.Hom.left (lift_snd (𝟙 X) (toUnit X ≫ y₀))
+      rw [← Scheme.Hom.comp_apply, hcomp, Over.comp_left, Scheme.Hom.comp_apply]
+      change y₀.left.base ((toUnit X).left.base x₀pt) = y₀.left.base ptk
+      congr 1
+      exact Subsingleton.elim _ _
+    rw [Set.mem_compl_iff, hsnd]
+    exact hy₀
+  · have hfU : ∀ u ∈ ((⟨_, hUopen⟩ : (X ⊗ Y).left.Opens) : Set (X ⊗ Y).left),
+        f.left.base u ∈ U₀ := by
+      intro u hu
+      by_contra hcon
+      exact hu ⟨u, hcon, rfl⟩
+    exact rigidity_eqOn_saturated_open_to_affine f x₀ ⟨_, hUopen⟩ Gsetᶜ rfl U₀ _hU₀aff hfU
+
+/- The nonempty-open equality extends across the geometrically irreducible
+   reduced source by dominant-open extensionality. -/
+theorem rigidity_core
+    [IsAlgClosed kbar]
+    {X Y Z : Over (Spec (.of kbar))}
+    [IsProper X.hom]
+    [GeometricallyIrreducible (X ⊗ Y).hom]
+    [LocallyOfFiniteType (X ⊗ Y).hom]
+    [IsReduced (X ⊗ Y).left]
+    [IsSeparated Z.hom]
+    (f : (X ⊗ Y) ⟶ Z)
+    (x₀ : 𝟙_ (Over (Spec (.of kbar))) ⟶ X)
+    (y₀ : 𝟙_ (Over (Spec (.of kbar))) ⟶ Y)
+    (z₀ : 𝟙_ (Over (Spec (.of kbar))) ⟶ Z)
+    (_hf : lift (𝟙 X) (toUnit X ≫ y₀) ≫ f = toUnit X ≫ z₀) :
+    f = lift (toUnit (X ⊗ Y) ≫ x₀) (snd X Y) ≫ f := by
+  obtain ⟨U, hU, h⟩ := rigidity_eqOn_dense_open f x₀ y₀ z₀ _hf
+  haveI : IrreducibleSpace (X ⊗ Y).left :=
+    GeometricallyIrreducible.irreducibleSpace_of_subsingleton (X ⊗ Y).hom
+  haveI : IsDominant (U.ι : (U : (X ⊗ Y).left.Opens).toScheme ⟶ (X ⊗ Y).left) := by
+    rw [isDominant_iff, DenseRange, Scheme.Opens.range_ι]
+    exact IsOpen.dense U.isOpen hU
+  haveI : IsSeparated (Z.left ↘ Spec (CommRingCat.of kbar)) := ‹IsSeparated Z.hom›
+  refine Over.OverMorphism.ext ?_
+  exact ext_of_isDominant_of_isSeparated' (S := Spec (.of kbar))
+    (X := (X ⊗ Y).left) (Y := Z.left) (f := f.left)
+    (g := (lift (toUnit (X ⊗ Y) ≫ x₀) (snd X Y) ≫ f).left) U.ι h
+
+/- The categorical reduction turns the core equality into factorization through
+   the second projection, with the witness given by the distinguished slice. -/
+theorem rigidity_lemma
+    [IsAlgClosed kbar]
+    {X Y Z : Over (Spec (.of kbar))}
+    [IsProper X.hom]
+    [GeometricallyIrreducible (X ⊗ Y).hom]
+    [LocallyOfFiniteType (X ⊗ Y).hom]
+    [IsReduced (X ⊗ Y).left]
+    [IsSeparated Z.hom]
+    (f : (X ⊗ Y) ⟶ Z)
+    (x₀ : 𝟙_ (Over (Spec (.of kbar))) ⟶ X)
+    (y₀ : 𝟙_ (Over (Spec (.of kbar))) ⟶ Y)
+    (z₀ : 𝟙_ (Over (Spec (.of kbar))) ⟶ Z)
+    (_hf : lift (𝟙 X) (toUnit X ≫ y₀) ≫ f = toUnit X ≫ z₀) :
+    ∃ g : Y ⟶ Z, f = snd X Y ≫ g := by
+  refine ⟨lift (toUnit Y ≫ x₀) (𝟙 Y) ≫ f, ?_⟩
+  rw [← Category.assoc, rigidity_snd_lift]
+  exact rigidity_core f x₀ y₀ z₀ _hf
+
+end RigidityChain
+
 section Scheme
 
 open AlgebraicGeometry
