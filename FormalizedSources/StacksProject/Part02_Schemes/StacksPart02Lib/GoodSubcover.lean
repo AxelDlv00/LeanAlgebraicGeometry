@@ -94,4 +94,19 @@ theorem exists_finset_standardOpen_refinement
   obtain ⟨s, hs⟩ := hV.isCompact.elim_finite_subcover W hWopen hWcover
   exact ⟨s, hs⟩
 
+/-- The finite standard-open refinement covers the affine open exactly. -/
+theorem exists_finset_standardOpen_refinement_eq
+    {X : Scheme.{u}} {ι : Type v} (V : X.Opens)
+    (hV : IsAffineOpen V) (U : ι → X.Opens)
+    (hU : ∀ i, IsAffineOpen (U i))
+    (hcover : (⨆ i, U i) = ⊤) :
+    ∃ s : Finset (StandardOpenRefinement V U),
+      (V : Set X) = ⋃ w ∈ s, (X.basicOpen w.sectionV : Set X) := by
+  obtain ⟨s, hs⟩ := exists_finset_standardOpen_refinement V hV U hU hcover
+  refine ⟨s, Set.Subset.antisymm hs ?_⟩
+  intro x hx
+  rcases Set.mem_iUnion.mp hx with ⟨w, hx⟩
+  rcases Set.mem_iUnion.mp hx with ⟨hw, hx⟩
+  exact w.le_source hx
+
 end StacksPart02
