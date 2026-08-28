@@ -35,6 +35,13 @@ def ComplexTorusUniformization.toGenusTorusUniformization
     (u : ComplexTorusUniformization X g) : GenusTorusUniformization X g :=
   { equiv := u.equiv.trans (complexGenusQuotientAddEquiv g) }
 
+/-- Repackage a real genus-torus uniformization as a complex period-quotient
+uniformization. -/
+def GenusTorusUniformization.toComplexTorusUniformization
+    {X : Type*} [AddCommGroup X] {g : ℕ}
+    (u : GenusTorusUniformization X g) : ComplexTorusUniformization X g :=
+  { equiv := u.equiv.trans (complexGenusQuotientAddEquiv g).symm }
+
 @[simp]
 theorem ComplexTorusUniformization.toGenusTorusUniformization_apply
     {X : Type*} [AddCommGroup X] {g : ℕ}
@@ -42,6 +49,32 @@ theorem ComplexTorusUniformization.toGenusTorusUniformization_apply
     u.toGenusTorusUniformization.equiv x =
       complexGenusQuotientAddEquiv g (u.equiv x) :=
   rfl
+
+@[simp]
+theorem GenusTorusUniformization.toComplexTorusUniformization_apply
+    {X : Type*} [AddCommGroup X] {g : ℕ}
+    (u : GenusTorusUniformization X g) (x : X) :
+    u.toComplexTorusUniformization.equiv x =
+      (complexGenusQuotientAddEquiv g).symm (u.equiv x) :=
+  rfl
+
+theorem GenusTorusUniformization.toComplexTorusUniformization_toGenusTorusUniformization
+    {X : Type*} [AddCommGroup X] {g : ℕ}
+    (u : GenusTorusUniformization X g) :
+    u.toComplexTorusUniformization.toGenusTorusUniformization = u := by
+  apply congrArg (fun e => GenusTorusUniformization.mk e)
+  apply AddEquiv.ext
+  intro x
+  simp
+
+theorem ComplexTorusUniformization.toGenusTorusUniformization_toComplexTorusUniformization
+    {X : Type*} [AddCommGroup X] {g : ℕ}
+    (u : ComplexTorusUniformization X g) :
+    u.toGenusTorusUniformization.toComplexTorusUniformization = u := by
+  apply congrArg (fun e => ComplexTorusUniformization.mk e)
+  apply AddEquiv.ext
+  intro x
+  simp
 
 /-- Division by every nonzero integer transported through complex
 uniformization. -/
