@@ -167,6 +167,51 @@ end ClosedPointExtensionality
 
 end RigidityGeometry
 
+section ProperAffineConstancy
+
+open AlgebraicGeometry
+
+variable {kbar : Type u} [Field kbar]
+
+/- A proper integral scheme over an algebraically closed field has no
+nonconstant maps to an affine scheme. -/
+theorem eq_comp_of_isAffine_of_properIntegral
+    [IsAlgClosed kbar]
+    {W : Scheme.{u}} [IsIntegral W] (wk : W ⟶ Spec (CommRingCat.of kbar))
+    [UniversallyClosed wk] [LocallyOfFiniteType wk]
+    {V : Scheme.{u}} [IsAffine V] (g : W ⟶ V)
+    (a b : Spec (CommRingCat.of kbar) ⟶ W)
+    (ha : a ≫ wk = 𝟙 _) (hb : b ≫ wk = 𝟙 _) :
+    a ≫ g = b ≫ g := by
+  letI : Field Γ(W, ⊤) :=
+    (isField_of_universallyClosed (CommRingCat.of kbar) wk).toField
+  set F : CommRingCat.of kbar ⟶ Γ(W, ⊤) :=
+    (Scheme.ΓSpecIso (CommRingCat.of kbar)).inv ≫ wk.appTop with hF
+  have hint : F.hom.IsIntegral := by
+    apply RingHom.isIntegral_respectsIso.2
+      (e := (Scheme.ΓSpecIso _).symm.commRingCatIsoToRingEquiv)
+    exact isIntegral_appTop_of_universallyClosed wk
+  haveI : IsIso F := (ConcreteCategory.isIso_iff_bijective F).mpr
+    (IsAlgClosed.ringHom_bijective_of_isIntegral F.hom hint)
+  haveI : IsIso wk.appTop := by
+    have heq : wk.appTop = (Scheme.ΓSpecIso (CommRingCat.of kbar)).hom ≫ F := by
+      rw [hF]
+      simp
+    rw [heq]
+    infer_instance
+  have haa : wk.appTop ≫ a.appTop = 𝟙 _ := by
+    rw [← Scheme.Hom.comp_appTop, ha]
+    simp
+  have hbb : wk.appTop ≫ b.appTop = 𝟙 _ := by
+    rw [← Scheme.Hom.comp_appTop, hb]
+    simp
+  have hab : a.appTop = b.appTop := by
+    rw [← cancel_epi wk.appTop, haa, hbb]
+  apply ext_of_isAffine
+  rw [Scheme.Hom.comp_appTop, Scheme.Hom.comp_appTop, hab]
+
+end ProperAffineConstancy
+
 section Scheme
 
 open AlgebraicGeometry
