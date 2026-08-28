@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "1ea34a10f2ed60eb",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/Curves/Hartshorne/HartshorneLib/Chapter4EffectiveRepresentative.lean"
+  ],
+  "cwd": ".",
+  "status": "failed",
+  "ok": false,
+  "returncode": 1,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 7.064,
+  "duration_seconds": 0.315,
+  "started_at": "2026-08-28T14:04:32.039499+00:00",
+  "finished_at": "2026-08-28T14:04:32.354636+00:00",
+  "finished_epoch": 1787925872.354636
+}

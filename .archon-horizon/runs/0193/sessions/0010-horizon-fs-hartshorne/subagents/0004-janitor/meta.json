@@ -1,0 +1,22 @@
+{
+  "agent_nickname": "Lovelace",
+  "agent_path": "/root/janitor_check",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "janitor",
+  "native_subagent_id": "01a048ba-d9d0-7852-8064-dc3d9d82de6d",
+  "ok": true,
+  "parent_session": "0010-horizon-fs-hartshorne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "completed",
+  "subagent_type": "janitor",
+  "summary": "Read-only hygiene findings for `fs-hartshorne`:",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 464125,
+    "tokens_out": 3447
+  }
+}

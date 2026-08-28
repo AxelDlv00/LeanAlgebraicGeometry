@@ -1,0 +1,1 @@
+The targeted checks are resource-contended by other Horizon builds; one direct `lake env lean` check completed cleanly, while the principal/sheaf checks are still running in the shared toolchain. I’ll wait for definitive exits before treating verification as sufficient.

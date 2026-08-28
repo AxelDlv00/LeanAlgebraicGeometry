@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "fingerprint": "ac4d9cc95de137d8",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "/home/axel/LeanAlgebraicGeometry-Horizon/FormalizedSources/Curves/Hartshorne/HartshorneLib/Chapter4PrincipalDivisors.lean"
+  ],
+  "cwd": ".",
+  "status": "failed",
+  "ok": false,
+  "returncode": 1,
+  "timed_out": false,
+  "reused": false,
+  "wait_seconds": 6.698,
+  "duration_seconds": 0.365,
+  "started_at": "2026-08-28T14:04:31.673084+00:00",
+  "finished_at": "2026-08-28T14:04:32.038283+00:00",
+  "finished_epoch": 1787925872.038283
+}
