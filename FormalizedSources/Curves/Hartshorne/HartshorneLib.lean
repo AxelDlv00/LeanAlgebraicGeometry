@@ -15,6 +15,7 @@ import HartshorneLib.Chapter1CurveStalks
 import HartshorneLib.Chapter4Curves
 import HartshorneLib.Chapter4Effective
 import HartshorneLib.Chapter4PrincipalDivisors
+import HartshorneLib.Chapter4PrincipalDivisorDegree
 import HartshorneLib.Chapter4DivisorClass
 import HartshorneLib.Chapter4DegreeClass
 import HartshorneLib.Chapter4EffectiveRepresentative
