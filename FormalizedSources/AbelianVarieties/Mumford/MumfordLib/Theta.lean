@@ -337,6 +337,26 @@ theorem commutatorPairing_swap (k l : K) :
   unfold commutatorPairing
   exact E.commutatorScalar_swap _ _
 
+/-- The quotient commutator pairing detects commutativity of its chosen lifts. -/
+theorem commutatorPairing_eq_one_iff_commute (k l : K) :
+    E.commutatorPairing k l = 1 ↔
+      Commute (E.quotientLift k) (E.quotientLift l) := by
+  unfold commutatorPairing
+  constructor
+  · intro h
+    apply commutatorElement_eq_one_iff_commute.mp
+    calc
+      ⁅E.quotientLift k, E.quotientLift l⁆ =
+          E.includeScalar (E.commutatorScalar (E.quotientLift k)
+            (E.quotientLift l)) :=
+        (E.includeScalar_commutatorScalar _ _).symm
+      _ = E.includeScalar 1 := by rw [h]
+      _ = 1 := map_one E.includeScalar
+  · intro h
+    apply E.includeScalar_injective
+    rw [E.includeScalar_commutatorScalar,
+      commutatorElement_eq_one_iff_commute.mpr h, map_one]
+
 noncomputable def commutatorPairingHom (k : K) : K →+ Additive S where
   toFun l := Additive.ofMul (E.commutatorPairing k l)
   map_zero' := by
