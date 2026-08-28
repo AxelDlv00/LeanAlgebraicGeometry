@@ -5,6 +5,8 @@ import StacksPart03Lib.PeriodicLength
 import StacksPart03Lib.Cycles
 import StacksPart03Lib.PeriodicExact
 import StacksPart03Lib.PeriodicSplit
+import StacksPart03Lib.CycleScheme
+import StacksPart03Lib.PeriodicEuler
 
 /-!
 # StacksPart03Lib

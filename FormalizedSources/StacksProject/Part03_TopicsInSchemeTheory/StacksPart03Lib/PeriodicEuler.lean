@@ -6,10 +6,6 @@ Authors: The StacksPart03Lib Contributors
 
 import StacksPart03Lib.PeriodicLength
 
-namespace StacksPart03
-
-namespace TwoPeriodicComplex
-
 /-!
 # Euler characteristic of an exact six-cycle
 
@@ -17,6 +13,10 @@ An exact cycle splits at every vertex into the image entering that vertex and
 the image leaving it.  Additivity of finite length for those six short exact
 sequences makes the image lengths cancel in the alternating sum.
 -/
+
+namespace StacksPart03
+
+namespace TwoPeriodicComplex
 
 variable {R V₀ V₁ V₂ V₃ V₄ V₅ : Type*} [Ring R]
   [AddCommGroup V₀] [AddCommGroup V₁] [AddCommGroup V₂]
