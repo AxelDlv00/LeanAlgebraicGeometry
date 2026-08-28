@@ -10,6 +10,7 @@ import Mathlib.LinearAlgebra.Complex.Module
 import Mathlib.LinearAlgebra.Pi
 import Mathlib.Logic.Equiv.Fin.Basic
 import Mathlib.Logic.Equiv.Prod
+import Mathlib.Topology.Algebra.Group.Quotient
 import Mathlib.Topology.Algebra.Module.FiniteDimension
 import Mathlib.Topology.Instances.Complex
 
@@ -192,6 +193,28 @@ def realQuotientToComplexQuotientAddHom (g : ℕ) :
           ((genusComplexVectorRealification g).symm v) ∈ integerPeriodLattice g
       simpa only [LinearEquiv.apply_symm_apply] using hv)
 
+/- The quotient map induced by realification is continuous. -/
+theorem complexQuotientToRealQuotientAddHom_continuous (g : ℕ) :
+    Continuous (complexQuotientToRealQuotientAddHom g) := by
+  rw [(QuotientAddGroup.isQuotientMap_mk
+    (complexPeriodLattice g)).continuous_iff]
+  change Continuous (fun z : GenusComplexVector g =>
+    QuotientAddGroup.mk' (integerPeriodLattice g)
+      (genusComplexVectorRealification g z))
+  exact QuotientAddGroup.continuous_mk.comp
+    (genusComplexVectorRealification_continuous g)
+
+/- The inverse quotient map induced by the inverse realification is continuous. -/
+theorem realQuotientToComplexQuotientAddHom_continuous (g : ℕ) :
+    Continuous (realQuotientToComplexQuotientAddHom g) := by
+  rw [(QuotientAddGroup.isQuotientMap_mk
+    (integerPeriodLattice g)).continuous_iff]
+  change Continuous (fun v : GenusRealVector g =>
+    QuotientAddGroup.mk' (complexPeriodLattice g)
+      ((genusComplexVectorRealification g).symm v))
+  exact QuotientAddGroup.continuous_mk.comp
+    ((genusComplexVectorRealification g).symm.toLinearMap.continuous_of_finiteDimensional)
+
 theorem realQuotientToComplexQuotientAddHom_comp (g : ℕ) :
     (realQuotientToComplexQuotientAddHom g).comp
         (complexQuotientToRealQuotientAddHom g) = AddMonoidHom.id _ := by
@@ -220,6 +243,14 @@ def complexQuotientToRealQuotientAddEquiv (g : ℕ) :
     (realQuotientToComplexQuotientAddHom g)
     (realQuotientToComplexQuotientAddHom_comp g)
     (complexQuotientToRealQuotientAddHom_comp g)
+
+/-- The complex and real period quotients are homeomorphic as additive groups. -/
+noncomputable def complexQuotientToRealQuotientHomeomorph (g : ℕ) :
+    (GenusComplexVector g ⧸ complexPeriodLattice g) ≃ₜ
+      (GenusRealVector g ⧸ integerPeriodLattice g) :=
+  { complexQuotientToRealQuotientAddEquiv g with
+    continuous_toFun := complexQuotientToRealQuotientAddHom_continuous g
+    continuous_invFun := realQuotientToComplexQuotientAddHom_continuous g }
 
 @[simp]
 theorem complexQuotientToRealQuotientAddEquiv_mk (g : ℕ)
