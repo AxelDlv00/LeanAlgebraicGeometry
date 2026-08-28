@@ -5,6 +5,8 @@ Authors: The Hartshorne Contributors
 -/
 
 import Mathlib.AlgebraicGeometry.Modules.Sheaf
+import Mathlib.Algebra.Category.ModuleCat.Sheaf.PullbackFree
+import Mathlib.AlgebraicGeometry.Pullbacks
 import Mathlib.AlgebraicGeometry.Restrict
 
 /-!
@@ -41,5 +43,38 @@ theorem IsLineBundle.of_iso {X : Scheme.{u}} {M N : X.Modules}
 theorem isLineBundle_iff_of_iso {X : Scheme.{u}} {M N : X.Modules}
     (e : M ≅ N) : IsLineBundle M ↔ IsLineBundle N :=
   ⟨fun hM ↦ hM.of_iso e, fun hN ↦ hN.of_iso e.symm⟩
+
+/-! ### Pullback of line bundles -/
+
+/-- Pullback preserves the local triviality condition defining a line bundle.
+
+The proof refines a trivialising neighbourhood to an affine open, factors the
+restricted morphism through that chart, and transports the chart isomorphism
+through the standard pullback/restriction comparison isomorphisms. -/
+theorem IsLineBundle.pullback {X Y : Scheme.{u}} (f : Y ⟶ X) {M : X.Modules}
+    (hM : IsLineBundle M) :
+    IsLineBundle ((Scheme.Modules.pullback f).obj M) := by
+  intro y
+  obtain ⟨U, hxU, eM⟩ := hM (f.base y)
+  have hyU' : y ∈ f ⁻¹ᵁ U := hxU
+  obtain ⟨V, hV_aff, hyV, hVU⟩ := exists_isAffineOpen_mem_and_subset hyU'
+  refine ⟨V, hyV, ?_⟩
+  obtain ⟨eM⟩ := eM
+  set g : (V : Scheme) ⟶ (U : Scheme) := f.resLE U V hVU with hg_def
+  have hg_comp : g ≫ U.ι = V.ι ≫ f := Scheme.Hom.resLE_comp_ι f hVU
+  haveI : (TopologicalSpace.Opens.map g.base).Final :=
+    CategoryTheory.final_of_representablyFlat _
+  refine ⟨?_⟩
+  let i1 :=
+    (Scheme.Modules.restrictFunctorIsoPullback V.ι).app
+      ((Scheme.Modules.pullback f).obj M)
+  let i2 := (Scheme.Modules.pullbackComp V.ι f).app M
+  let i3 := (Scheme.Modules.pullbackCongr hg_comp.symm).app M
+  let i4 := ((Scheme.Modules.pullbackComp g U.ι).symm).app M
+  let i5 := (Scheme.Modules.pullback g).mapIso
+    ((Scheme.Modules.restrictFunctorIsoPullback U.ι).symm.app M)
+  let i6 := (Scheme.Modules.pullback g).mapIso eM
+  let i7 := asIso (SheafOfModules.pullbackObjUnitToUnit g.toRingCatSheafHom)
+  exact i1 ≪≫ i2 ≪≫ i3 ≪≫ i4 ≪≫ i5 ≪≫ i6 ≪≫ i7
 
 end Hartshorne
