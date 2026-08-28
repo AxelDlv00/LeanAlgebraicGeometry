@@ -93,6 +93,12 @@ theorem pointTranslationIso_hom (x y : 𝟙_ (Over S) ⟶ G) :
   rfl
 
 @[simp]
+theorem pointTranslationIso_hom_apply (x y : 𝟙_ (Over S) ⟶ G) (s : S) :
+    (pointTranslationIso G x y).hom (x.left s) = y.left s := by
+  rw [pointTranslationIso_hom, ← Scheme.Hom.comp_apply, ← Over.comp_left,
+    comp_pointTranslation_hom]
+
+@[simp]
 theorem pointTranslationIso_inv (x y : 𝟙_ (Over S) ⟶ G) :
     (pointTranslationIso G x y).inv = (pointTranslation G x y).inv.left :=
   rfl
