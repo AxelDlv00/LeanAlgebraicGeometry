@@ -1,0 +1,1 @@
+The CLI is unusually slow and emits only its banner in this environment, so I’m falling back to direct on-disk graph/blueprint inspection while preserving the same read-only scope. I’ll correlate node states with recent session reports and the Lean declarations that actually exist.

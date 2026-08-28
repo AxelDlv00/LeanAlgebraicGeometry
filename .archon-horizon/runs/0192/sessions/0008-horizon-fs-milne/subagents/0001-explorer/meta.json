@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Kant",
+  "agent_path": "/root/frontier_scan",
+  "agent_role": "explorer",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "explorer",
+  "native_subagent_id": "01a047d3-4b06-7563-bec7-8df1d889b9eb",
+  "parent_session": "0008-horizon-fs-milne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "running",
+  "subagent_type": "explorer",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 2564449,
+    "tokens_out": 8098
+  }
+}

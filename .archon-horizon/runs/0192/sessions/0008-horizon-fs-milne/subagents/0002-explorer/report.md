@@ -1,0 +1,1 @@
+The Milne tree already contains substantial local infrastructure (`Nakayama.lean`, `LocalProperties.lean`, `Tensor.lean`, `Affine.lean`, `Sheaf.lean`). I’m now comparing those against the strongest downstream implementations in the MainProjects, especially the affine epi/Nakayama and stalk-localization files.

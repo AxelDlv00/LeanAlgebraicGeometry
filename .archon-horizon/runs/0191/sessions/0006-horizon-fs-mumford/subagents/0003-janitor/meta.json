@@ -6,16 +6,17 @@
   "model": "gpt-5.6-sol",
   "name": "janitor",
   "native_subagent_id": "01a047af-0f5d-73b0-9019-7de5da775260",
+  "ok": true,
   "parent_session": "0006-horizon-fs-mumford",
   "parent_subagent_id": null,
   "report_ref": "report.md",
   "role": "subagent",
-  "status": "running",
+  "status": "completed",
   "subagent_type": "janitor",
-  "summary": "",
+  "summary": "Read-only reconciliation complete.",
   "usage": {
     "cost_usd": null,
-    "tokens_in": 9442830,
-    "tokens_out": 24809
+    "tokens_in": 10015718,
+    "tokens_out": 29209
   }
 }

@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Bohr",
+  "agent_path": "/root/janitor_health",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-luna",
+  "name": "janitor",
+  "native_subagent_id": "01a047e1-2cdc-7531-965f-a92c414ef944",
+  "parent_session": "0008-horizon-fs-hartshorne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "running",
+  "subagent_type": "janitor",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 304844,
+    "tokens_out": 2369
+  }
+}

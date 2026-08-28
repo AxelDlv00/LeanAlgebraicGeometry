@@ -3,16 +3,23 @@
   "round": 2,
   "project": "Mumford",
   "task_id": "fs-mumford",
-  "status": "running",
-  "started_at": "2026-08-28T08:31:14.821367+00:00",
   "projects": [
     "Mumford"
   ],
+  "status": "queued",
+  "started_at": "2026-08-28T08:31:14.821367+00:00",
+  "ended_at": "2026-08-28T10:18:54.790538+00:00",
   "harness_name": "codex",
   "harness_kind": "codex",
   "model": "gpt-5.6-sol",
   "effort": "ultra",
   "config_dir": "/home/axel/.codex-temp",
   "auth": "api-key",
-  "workspace_sha": "58f8e24104eb077f57cbf792bc4f4b0f859a97c8"
+  "usage": {
+    "tokens_in": 40619391,
+    "tokens_out": 62809,
+    "cost_usd": null
+  },
+  "engine_session_id": "01a0477f-f107-7ce0-9bff-d791ea02f693",
+  "workspace_sha": "f1b75fa5d4dfa3cfe4faa32c1133a905a48b244e"
 }

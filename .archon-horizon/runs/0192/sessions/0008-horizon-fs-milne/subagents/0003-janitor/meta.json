@@ -1,0 +1,21 @@
+{
+  "agent_nickname": "Kuhn",
+  "agent_path": "/root/janitor_audit",
+  "agent_role": "janitor",
+  "depth": 1,
+  "model": "gpt-5.6-sol",
+  "name": "janitor",
+  "native_subagent_id": "01a047d5-50a2-7611-87ab-504a741d02ec",
+  "parent_session": "0008-horizon-fs-milne",
+  "parent_subagent_id": null,
+  "report_ref": "report.md",
+  "role": "subagent",
+  "status": "running",
+  "subagent_type": "janitor",
+  "summary": "",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 4519675,
+    "tokens_out": 14093
+  }
+}

@@ -852,12 +852,15 @@
     },
     "states": {
       "blocked": 125,
-      "closed": 69,
+      "closed": 73,
       "formalized_open": 0,
       "informal": 259,
       "ready": 138
     },
     "warnings": [
+      "MilneLib.GroupVariety.pointTranslationIso_hom_apply: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.GroupVariety.rigidity_snd_lift: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.Isogeny.id: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.LinearMap.exact_of_localized_at_maximal: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.LinearMap.natCard_quotient_range_eq_natAbs_det: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.LinearMap.surjective_iff_surjective_residue: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -869,6 +872,7 @@
       "MilneLib.LinearMap.surjective_of_localized_at_maximal: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.LinearMap.surjective_of_surjective_residue: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.LinearMap.surjective_of_surjective_residue_at_maximal: Lean declaration is not referenced by any blueprint \\lean{...}",
+      "MilneLib.moduleFinite_affineModuleSheaf_stalk: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.moduleFinite_tilde_stalk: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.quotTensorEquivQuotSMul: Lean declaration is not referenced by any blueprint \\lean{...}",
       "MilneLib.quotTensorEquivQuotSMul_comp_mkQ_rTensor: Lean declaration is not referenced by any blueprint \\lean{...}",
@@ -3918,7 +3922,7 @@
       "id": "def:milne-isogeny",
       "lean_file": "MilneLib/Isogeny.lean",
       "lean_name": "MilneLib.isogenyKernel, MilneLib.Isogeny, MilneLib.isogenyKernelToBase, MilneLib.Isogeny.surjective, MilneLib.Isogeny.finite_kernel",
-      "lean_source": "noncomputable def isogenyKernel (f : A \u27f6 B) : Scheme :=\n  pullback f.left (\u03b7[B].left)\n\ndef Isogeny (f : A \u27f6 B) [IsMonHom f] : Prop :=\n  Surjective f.left \u2227 IsFinite (isogenyKernelToBase f)\n\nnoncomputable def isogenyKernelToBase (f : A \u27f6 B) :\n    isogenyKernel f \u27f6 Spec (.of K) :=\n  pullback.snd f.left (\u03b7[B].left)\n\ntheorem Isogeny.surjective (f : A \u27f6 B) [IsMonHom f] (h : Isogeny f) :\n    Surjective f.left :=\n  h.1\n\ntheorem Isogeny.finite_kernel (f : A \u27f6 B) [IsMonHom f] (h : Isogeny f) :\n    IsFinite (isogenyKernelToBase f) :=\n  h.2",
+      "lean_source": "noncomputable def isogenyKernel (f : A \u27f6 B) : Scheme :=\n  pullback f.left (\u03b7[B].left)\n\ndef Isogeny (f : A \u27f6 B) [IsMonHom f] : Prop :=\n  Surjective f.left \u2227 IsFinite (isogenyKernelToBase f)\n\n/-- The identity homomorphism is an isogeny. -/\n@[simp]\n\nnoncomputable def isogenyKernelToBase (f : A \u27f6 B) :\n    isogenyKernel f \u27f6 Spec (.of K) :=\n  pullback.snd f.left (\u03b7[B].left)\n\ntheorem Isogeny.surjective (f : A \u27f6 B) [IsMonHom f] (h : Isogeny f) :\n    Surjective f.left :=\n  h.1\n\ntheorem Isogeny.finite_kernel (f : A \u27f6 B) [IsMonHom f] (h : Isogeny f) :\n    IsFinite (isogenyKernelToBase f) :=\n  h.2",
       "lean_status": "linked",
       "level": "coarse",
       "mathlib_ok": false,
@@ -4953,7 +4957,7 @@
     },
     {
       "chapter": "Geometry of Abelian Varieties",
-      "comment_count": 8,
+      "comment_count": 9,
       "dep_count": 1,
       "descendant_count": 0,
       "group": "c140",

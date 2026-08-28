@@ -6,16 +6,17 @@
   "model": "gpt-5.6-sol",
   "name": "worker",
   "native_subagent_id": "01a047b4-2da9-7191-ad87-d982a1a05b0e",
+  "ok": true,
   "parent_session": "0008-horizon-fs-hartshorne",
   "parent_subagent_id": null,
   "report_ref": "report.md",
   "role": "subagent",
-  "status": "running",
+  "status": "completed",
   "subagent_type": "worker",
-  "summary": "",
+  "summary": "Baseline complete; no Hartshorne source edits made.",
   "usage": {
     "cost_usd": null,
-    "tokens_in": 4587810,
-    "tokens_out": 13135
+    "tokens_in": 15985556,
+    "tokens_out": 27642
   }
 }

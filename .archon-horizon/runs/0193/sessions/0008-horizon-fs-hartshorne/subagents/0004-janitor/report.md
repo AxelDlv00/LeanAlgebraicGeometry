@@ -1,0 +1,1 @@
+The earlier sessions in this run all handed off cleanly; the current session has no report yet, as expected. The CLI is returning only its banner for the list calls, so I’m checking invocation/configuration and the on-disk state directly enough to distinguish “empty” from a command/runtime issue.
