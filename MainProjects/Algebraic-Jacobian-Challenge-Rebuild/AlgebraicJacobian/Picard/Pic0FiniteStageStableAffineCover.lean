@@ -3,8 +3,8 @@ Copyright (c) 2026 The AlgebraicJacobian Contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
-import AlgebraicJacobian.Picard.Pic0FiniteStageOrbitAffine
 import AlgebraicJacobian.Picard.Pic0FiniteGaloisRepresentable
+import AlgebraicJacobian.Picard.Pic0FiniteStageStableOrbitAffine
 
 /-!
 # Stable affine covers from the finite-stage Picard glue
